@@ -1,0 +1,88 @@
+Short description: Remove build warning due to -NDEBUG usage for production.
+Author(s): Carlos O'Donell
+Origin: PATCH
+Bug-RHEL: NA
+Bug-Fedora: NA
+Bug-Upstream: NA
+Upstream status: not-submitted
+# This is the same fix that went into the generic/dl-hash.h function.
+# Really what needs to happen is someone needs to write a microbenchmark
+# to show this function is slow and then remove it in favour of the
+# generic C function.
+Index: glibc-2.23-5-gf0029f1/sysdeps/i386/i686/dl-hash.h
+===================================================================
+--- glibc-2.23-5-gf0029f1.orig/sysdeps/i386/i686/dl-hash.h
++++ glibc-2.23-5-gf0029f1/sysdeps/i386/i686/dl-hash.h
+@@ -26,6 +26,7 @@
+    would be much slower than the generic C implementation.  So don't
+    use it.  */
+ static unsigned int
++__attribute__ ((__unused__))
+ _dl_elf_hash (const char *name)
+ {
+   unsigned int result;
+Index: glibc-2.23-5-gf0029f1/catgets/tst-catgets.c
+===================================================================
+--- glibc-2.23-5-gf0029f1.orig/catgets/tst-catgets.c
++++ glibc-2.23-5-gf0029f1/catgets/tst-catgets.c
+@@ -22,7 +22,7 @@ do_bz17905 (void)
+ {
+   char *buf;
+   struct rlimit rl;
+-  nl_catd result;
++  nl_catd result __attribute__ ((__unused__));
+ 
+   const int sz = 1024 * 1024;
+ 
+Index: glibc-2.23-5-gf0029f1/dlfcn/bug-dl-leaf-lib.c
+===================================================================
+--- glibc-2.23-5-gf0029f1.orig/dlfcn/bug-dl-leaf-lib.c
++++ glibc-2.23-5-gf0029f1/dlfcn/bug-dl-leaf-lib.c
+@@ -50,7 +50,7 @@ void check_val_fini (void)
+ 
+ int lib_main (void)
+ {
+-  int ret;
++  int ret __attribute__ ((__unused__));
+   void *hdl;
+ 
+   /* Make sure the constructor sees the updated val.  */
+Index: glibc-2.23-5-gf0029f1/math/atest-exp.c
+===================================================================
+--- glibc-2.23-5-gf0029f1.orig/math/atest-exp.c
++++ glibc-2.23-5-gf0029f1/math/atest-exp.c
+@@ -61,7 +61,7 @@ exp_mpn (mp1 ex, mp1 x)
+    unsigned n;
+    mp1 xp;
+    mp2 tmp;
+-   mp_limb_t chk;
++   mp_limb_t chk __attribute__ ((__unused__));
+    mp1 tol;
+ 
+    memset (xp, 0, sizeof (mp1));
+Index: glibc-2.23-5-gf0029f1/math/atest-exp2.c
+===================================================================
+--- glibc-2.23-5-gf0029f1.orig/math/atest-exp2.c
++++ glibc-2.23-5-gf0029f1/math/atest-exp2.c
+@@ -87,7 +87,7 @@ exp_mpn (mp1 ex, mp1 x)
+    unsigned int n;
+    mp1 xp;
+    mp2 tmp;
+-   mp_limb_t chk;
++   mp_limb_t chk __attribute__ ((__unused__));
+    mp1 tol;
+ 
+    memset (xp, 0, sizeof (mp1));
+Index: glibc-2.23-5-gf0029f1/sysdeps/arm/dl-machine.h
+===================================================================
+--- glibc-2.23-5-gf0029f1.orig/sysdeps/arm/dl-machine.h
++++ glibc-2.23-5-gf0029f1/sysdeps/arm/dl-machine.h
+@@ -581,7 +581,7 @@ elf_machine_rela (struct link_map *map,
+ #  ifdef RESOLVE_CONFLICT_FIND_MAP
+ 	case R_ARM_TLS_DESC:
+ 	  {
+-	    struct tlsdesc volatile *td =
++	    struct tlsdesc volatile *td __attribute__ ((__unused__)) =
+ 	      (struct tlsdesc volatile *) reloc_addr;
+ 
+ 	    RESOLVE_CONFLICT_FIND_MAP (map, reloc_addr);

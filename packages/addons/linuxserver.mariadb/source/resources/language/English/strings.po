@@ -1,0 +1,30 @@
+msgid ""
+msgstr ""
+
+msgctxt "#30000"
+msgid "Configuration"
+msgstr ""
+
+msgctxt "#30001"
+msgid "Note: Kodi remote sources can not be used as Docker volume host sources"
+msgstr ""
+
+msgctxt "#30002"
+msgid "-p 3306"
+msgstr ""
+
+msgctxt "#30003"
+msgid "-e PUID"
+msgstr ""
+
+msgctxt "#30004"
+msgid "-e PGID"
+msgstr ""
+
+msgctxt "#30005"
+msgid "-e MYSQL_ROOT_PASSWORD"
+msgstr ""
+
+msgctxt "#30006"
+msgid "-v config"
+msgstr ""

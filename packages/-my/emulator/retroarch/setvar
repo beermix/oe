@@ -1,0 +1,11 @@
+#!/bin/sh
+
+PKG_BUILD=/opt/dev/RetroArch
+DEV_REP=/opt/dev
+OPENELEC=/opt/dev/OpenELEC.tv
+
+LIB="lib"
+if [ $ARCH == "x86_64" ]
+then
+        LIB="lib64"
+fi

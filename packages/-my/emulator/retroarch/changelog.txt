@@ -1,0 +1,12 @@
+3.2.4
+ -Add compatibility to Openelec 3.2.4
+ -Re order some compilation tasks
+
+3.0.6
+ - Add Hatari core file
+ - Change retroarch logo
+ - Add newer default config file
+
+3.0.5
+ - Initial Compile
+

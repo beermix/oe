@@ -1,0 +1,45 @@
+################################################################################
+#      This file is part of OpenELEC - http://www.openelec.tv
+#      Copyright (C) 2009-2014 Stephan Raue (stephan@openelec.tv)
+#
+#  OpenELEC is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  OpenELEC is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
+################################################################################
+
+PKG_NAME="oem"
+PKG_VERSION=""
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="various"
+PKG_SITE="http://www.openelec.tv"
+PKG_URL=""
+
+if [ "$PROJECT" = "RPi" ]; then
+PKG_DEPENDS_TARGET="gtk+ gdk-pixbuf alsa ffmpeg rutorrent cmake flex gettext libtool scons swig distutilscross simplejson setuptools idplay-libs chromium-browser initramfs lua zliben linux-drivers"
+fi
+
+# if [ "$PROJECT" = "RPi2" ]; then
+# PKG_DEPENDS_TARGET=" dnscrypt-proxy libtorrent-rasterbar libtorrent toolchain libtorrent-rasterbar chromium-browser rtorrent toolchain setuptools libfontenc libICE libpciaccess libX11 libXau libxcb libtorrent-rasterbar libXcomposite libXdamage libXext libXfixes libXfont libXrender libxshmfence libXt libXtst pixman xtrans libSM libstatgrab rlog atk libmtp libnfsidmap libpcap libsigc++ libXft libXcursor  libsigc++ libXft libXcursor wxWidgets wxWidgets x11#PKG_DEPENDS_TARGET="util-linux M2Crypto PyAMF arm-mem attr autoconf autoconf-archive automake binutils bison boost ccache dbus-glib elfutils enca fakeroot fribidi glib glibc gmp intltool libcap libcec libdaemon libffi libftdi1 libirman libplist libpthread-stubs lockdev m4 make mpc mpfr ncurses pcre pkg-config readline swig yajl autoconf llvm gcc yasm sidplay-libs bzip2 lzo unzip xz zip zlib sqlite shadowsocks-libev shadowvpn fuse fuse-exfat libtorrent-rasterbar  libXi libXinerama libxkbfile libXmu libXrandr bitstream libmediainfo  util-linux u-boot initramfs rtorrent util-linux u-boot   lzo unzip zip zlib x264 shadowserver libtorrent-rasterbar u-boot shadowvpn toolchain sqlite ethtool bzip2 libtorrent-rasterbar rlog libtorrent-rasterbar  plugin.program.i2p plugin.program.linksbrowser script.module.mechanize script.web.viewer i2p.Seedless iskdev_cmds dosfstools e2fsprogs fuse fuse-exfat ntfs-3g_ntfsprogs pciutils systemd udevil usbutils v4l-utils util-linux nano syslinux pycurl Headphones bitstream libevent libmediainfo libstatgrab rlog miniupnpc whois unrar alsa autotools yaml alsa-utils alsa-lib sidplay-libs tor-browser-linux32 bitcoin pulseaudio wpa_supplicant SDL_mixer  i2p obfs4proxy hiawatha script.web.viewer v4l2grab obfs4proxy hiawatha"
+# fi bitcoin script.web.viewer obfs4proxy
+
+if [ "$PROJECT" = "Generic" ]; then
+PKG_DEPENDS_TARGET="toolchain acestream shadowsocks-libev pptp openvpn syslinux nano"
+fi
+
+PKG_PRIORITY="optional"
+PKG_SECTION="virtual"
+PKG_SHORTDESC="OEM: Metapackage for various OEM packages"
+PKG_LONGDESC="OEM: Metapackage for various OEM packages"
+
+PKG_IS_ADDON="no"
+PKG_AUTORECONF="no"

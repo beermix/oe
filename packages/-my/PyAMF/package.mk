@@ -1,0 +1,33 @@
+PKG_NAME="PyAMF"
+PKG_VERSION="0.8.0"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="MIT License"
+PKG_SITE="https://pypi.python.org/pypi/PyAMF/"
+PKG_URL="http://pypi.python.org/packages/source/P/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"
+PKG_PRIORITY="optional"
+PKG_SECTION="python/system"
+PKG_IS_ADDON="no"
+PKG_AUTORECONF="no"
+
+pre_configure_target() {
+  cd $ROOT/$PKG_BUILD
+  rm -rf .$TARGET_NAME
+  export PYTHONXCPREFIX="$SYSROOT_PREFIX/usr"
+  export LDFLAGS="$LDFLAGS -L$SYSROOT_PREFIX/usr/lib -L$SYSROOT_PREFIX/lib"
+  export LDSHARED="$CC -shared"
+}
+
+make_target() {
+  python setup.py build --cross-compile
+}
+
+makeinstall_target() {
+  python setup.py install --root=$INSTALL --prefix=/usr
+}
+
+post_makeinstall_target() {
+  find $INSTALL/usr/lib -name "*.py" -exec rm -rf "{}" ";"
+  rm -rf $INSTALL/usr/lib/python*/site-packages/*/tests
+}

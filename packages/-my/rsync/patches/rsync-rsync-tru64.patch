@@ -1,0 +1,20 @@
+This is an adapted version of the original by Zoong Pham.
+
+To use this patch, run these commands for a successful build:
+
+    patch -p1 <patches/tru64.diff
+    ./configure                          (optional if already run)
+    make
+
+based-on: 16b49716d55a50f2e985b879b720b2c53c892a3a
+diff --git a/syscall.c b/syscall.c
+--- a/syscall.c
++++ b/syscall.c
+@@ -23,6 +23,7 @@
+ #include "rsync.h"
+ 
+ #if !defined MKNOD_CREATES_SOCKETS && defined HAVE_SYS_UN_H
++#define _SOCKADDR_LEN
+ #include <sys/un.h>
+ #endif
+ #ifdef HAVE_SYS_ATTR_H

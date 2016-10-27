@@ -1,0 +1,87 @@
+#!/bin/sh
+
+#################################################################################
+#      This file is part of OpenELEC - http://www.openelec.tv
+#      Copyright (C) 2009-2011 Stephan Raue (stephan@openelec.tv)
+#
+#  This Program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2, or (at your option)
+#  any later version.
+#
+#  This Program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with OpenELEC.tv; see the file COPYING.  If not, write to
+#  Free Software Foundation, 51 Franklin Street, Suite 500, Boston, MA 02110, USA
+#  http://www.gnu.org/copyleft/gpl.html
+#################################################################################
+
+. config/options $1
+
+# As a FYI, if libspotify does not get correctly installed during the build,
+# xbmc compile fails with message: "Could not find libva. VAAPI support disabled"
+# This is a bit misleading and might send someone to troubleshooting in the wrong direction.
+
+# should not be needed, but better safe than sorry
+if [ "$SPOTIFY_SUPPORT" = yes ]; then
+
+# Cleaning up any previous builds that possibly can be another libspotify version.
+
+  if [ -e $BUILD/toolchain/$TARGET_NAME/sysroot/usr/include/libspotify ]
+  then
+    rm -rf --preserve-root $BUILD/toolchain/$TARGET_NAME/sysroot/usr/include/libspotify
+  fi
+
+  #lists files matching wildcard and count them
+  NR_OF_FILES=$(ls $BUILD/toolchain/$TARGET_NAME/sysroot/usr/lib/libspotify.* 2> /dev/null | wc -l)
+  if [ "$NR_OF_FILES" != "0" ] #if there are 1 or more files, delete them.
+  then
+    rm $BUILD/toolchain/$TARGET_NAME/sysroot/usr/lib/libspotify.*
+  fi
+
+  if [ -e  $BUILD/toolchain/$TARGET_NAME/sysroot/usr/lib/pkgconfig/libspotify.pc ]
+  then
+    rm $BUILD/toolchain/$TARGET_NAME/sysroot/usr/lib/pkgconfig/libspotify.pc
+  fi
+
+# The rest of this script copies libspotify to fakeroot.
+# This allows XBMC to compile with spotify-support.
+
+  mkdir -p $BUILD/toolchain/$TARGET_NAME/sysroot/usr/include
+  mkdir -p $BUILD/toolchain/$TARGET_NAME/sysroot/usr/include/libspotify
+  cp $BUILD/$LIBSPOTIFY_FOLDERNAME/include/libspotify/api.h $BUILD/toolchain/$TARGET_NAME/sysroot/usr/include/libspotify
+  mkdir -p $BUILD/toolchain/$TARGET_NAME/sysroot/usr/lib
+
+  if [ `echo $PKG_VERSION | cut -d. -f1` = 9 ]; then
+    cp $BUILD/$LIBSPOTIFY_FOLDERNAME/lib/libspotify.so.9  $BUILD/toolchain/$TARGET_NAME/sysroot/usr/lib/libspotify.so.$PKG_VERSION
+    cd $BUILD/toolchain/$TARGET_NAME/sysroot/usr/lib/
+    ln -sf libspotify.so.$PKG_VERSION libspotify.so.9
+    ln -sf libspotify.so.$PKG_VERSION libspotify.so
+  fi
+
+  if [ `echo $PKG_VERSION | cut -d. -f1` = 10 ]; then
+    cp $BUILD/$LIBSPOTIFY_FOLDERNAME/lib/libspotify.so.10  $BUILD/toolchain/$TARGET_NAME/sysroot/usr/lib/libspotify.so.$PKG_VERSION
+    cd $BUILD/toolchain/$TARGET_NAME/sysroot/usr/lib/
+    ln -sf libspotify.so.$PKG_VERSION libspotify.so.10
+    ln -sf libspotify.so.$PKG_VERSION libspotify.so
+  fi
+
+  mkdir -p pkgconfig
+  cd pkgconfig
+# TODO, -fix echo cheating-, libspotify.pc exists in the downloaded libspotify-tarball and should be used
+  echo "prefix=/usr">libspotify.pc
+  echo "exec_prefix=${prefix}">>libspotify.pc
+  echo "libdir=${exec_prefix}/lib">>libspotify.pc
+  echo "includedir=${prefix}/include">>libspotify.pc
+  echo " ">>libspotify.pc
+  echo "Name: libspotify">>libspotify.pc
+  echo "Description: Spotify client library">>libspotify.pc
+  echo "Version: "$PKG_VERSION>>libspotify.pc
+  echo "Libs: -L${libdir} -lspotify">>libspotify.pc
+  echo "Cflags: -I${includedir}">>libspotify.pc
+  cd ../../../../../../..
+fi

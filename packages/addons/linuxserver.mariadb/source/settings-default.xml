@@ -1,0 +1,7 @@
+<settings>
+    <setting id="E_MYSQL_ROOT_PASSWORD" value="libreelec" />
+    <setting id="E_PGID" value="0" />
+    <setting id="E_PUID" value="0" />
+    <setting id="P_3306" value="3306" />
+    <setting id="V_config" value="/storage/.kodi/userdata/addon_data/docker.linuxserver.mariadb" />
+</settings>

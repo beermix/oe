@@ -1,0 +1,30 @@
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=434417
+
+Patch by Jim Paris <jim@jtan.com>
+
+Index: less-481/main.c
+===================================================================
+--- less-481.orig/main.c
++++ less-481/main.c
+@@ -127,7 +127,7 @@ main(argc, argv)
+ 		if (s[-1] == PATHNAME_SEP[0])
+ 			break;
+ 	}
+-	if (strcmp(s, "more") == 0)
++	if (strcmp(s, "more") == 0 && lgetenv("LESS_IS_MORE") == NULL)
+ 		less_is_more = 1;
+ 
+ 	init_prompt();
+Index: less-481/opttbl.c
+===================================================================
+--- less-481.orig/opttbl.c
++++ less-481/opttbl.c
+@@ -470,7 +470,7 @@ init_option()
+ 	char *p;
+ 
+ 	p = lgetenv("LESS_IS_MORE");
+-	if (p != NULL && *p != '\0')
++	if (p != NULL && p[0] == '1' && p[1] == '\0')
+ 		less_is_more = 1;
+ 
+ 	for (o = option;  o->oletter != '\0';  o++)

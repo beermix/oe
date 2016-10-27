@@ -1,0 +1,33 @@
+Last-Update: 2015-11-12
+Forwarded: not-needed
+Bug-Debian: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=764226
+Bug-Upstream: http://www.midnight-commander.org/ticket/3285
+Author: Dmitry Smirnov <onlyjob@member.fsf.org>
+Description: 'mcedit' status line to show full path to file, like in 'mcview'.
+
+--- a/src/editor/edit.c
++++ b/src/editor/edit.c
+@@ -89,9 +89,9 @@
+ int option_cursor_beyond_eol = 0;
+ int option_line_state = 0;
+ int option_line_state_width = 0;
+ gboolean option_cursor_after_inserted_block = FALSE;
+-int option_state_full_filename = 0;
++int option_state_full_filename = 1;
+ 
+ int enable_show_tabs_tws = 1;
+ int option_check_nl_at_eof = 0;
+ int option_group_undo = 0;
+--- a/doc/man/mcedit.1.in
++++ b/doc/man/mcedit.1.in
+@@ -600,9 +600,9 @@
+ will be untouched. Default value is
+ "\fB-\fR\fB+\fR\fB*\fR\fB\\\fR\fB,\fR\fB.\fR\fB;\fR\fB:\fR\fB&\fR\fB>\fR".
+ .TP
+ .I editor_state_full_filename
+-Show full path name in the status line. If disabled (default), only base name of the
++Show full path name in the status line. If disabled, only base name of the
+ file is shown.
+ .SH MISCELLANEOUS
+ You can use scanf search and replace to search and replace a C format
+ string.  First take a look at the

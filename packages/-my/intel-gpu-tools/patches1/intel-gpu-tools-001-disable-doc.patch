@@ -1,0 +1,12 @@
+diff -Naur intel-gpu-tools-1.16.orig/Makefile.in intel-gpu-tools-1.16/Makefile.in
+--- intel-gpu-tools-1.16.orig/Makefile.in	2016-09-13 04:14:33.610468972 +0300
++++ intel-gpu-tools-1.16/Makefile.in	2016-09-13 04:14:39.918695267 +0300
+@@ -186,7 +186,7 @@
+ CTAGS = ctags
+ CSCOPE = cscope
+ DIST_SUBDIRS = lib man tools scripts benchmarks tests assembler \
+-	debugger overlay demos docs
++	debugger overlay demos
+ am__DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/config.h.in \
+ 	$(top_srcdir)/build-aux/compile \
+ 	$(top_srcdir)/build-aux/config.guess \

@@ -1,0 +1,12 @@
+diff -up M2Crypto-0.21.1/tests/test_ssl.py.ssl23 M2Crypto-0.21.1/tests/test_ssl.py
+--- M2Crypto-0.21.1/tests/test_ssl.py.ssl23	2015-07-11 05:19:39.431153831 +0200
++++ M2Crypto-0.21.1/tests/test_ssl.py	2015-07-11 05:29:14.007597596 +0200
+@@ -360,7 +360,7 @@ class MiscSSLClientTestCase(BaseSSLClien
+             try:
+                 s.connect(self.srv_addr)
+             except SSL.SSLError, e:
+-                self.failUnlessEqual(e[0], 'wrong version number')
++                self.assertIn(e[0], ['wrong version number', 'unexpected eof'])
+             s.close()
+         finally:
+             self.stop_server(pid)

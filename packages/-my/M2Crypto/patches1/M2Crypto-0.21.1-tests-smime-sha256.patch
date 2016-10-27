@@ -1,0 +1,16 @@
+Account for SHA-256 signatures.
+
+The test case uses OpenSSL’s default algorithm; the length 1243 corresponds to SHA-1, 1263 to SHA-256.
+
+diff -up M2Crypto-0.21.1/tests/test_smime.py.sha256 M2Crypto-0.21.1/tests/test_smime.py
+--- M2Crypto-0.21.1/tests/test_smime.py.sha256	2015-07-13 20:56:16.201862066 +0200
++++ M2Crypto-0.21.1/tests/test_smime.py	2015-07-13 20:56:30.465428800 +0200
+@@ -219,7 +219,7 @@ class WriteLoadTestCase(unittest.TestCas
+         buf = BIO.MemoryBuffer()
+         assert SMIME.load_pkcs7(self.filename).write_der(buf) == 1
+         s = buf.read()
+-        assert len(s) in (1188, 1204, 1243), len(s)
++        assert len(s) in (1188, 1204, 1243, 1263), len(s)
+         
+     def test_load_pkcs7(self):
+         assert SMIME.load_pkcs7(self.filename).type() == SMIME.PKCS7_SIGNED

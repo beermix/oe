@@ -1,0 +1,25 @@
+diff -up lua-5.3.3/src/lparser.c.crashfix lua-5.3.3/src/lparser.c
+--- lua-5.3.3/src/lparser.c.crashfix	2016-07-25 16:00:14.206121141 -0400
++++ lua-5.3.3/src/lparser.c	2016-07-25 16:00:51.910865872 -0400
+@@ -323,6 +323,8 @@ static void adjust_assign (LexState *ls,
+       luaK_nil(fs, reg, extra);
+     }
+   }
++  if (nexps > nvars)
++    ls->fs->freereg -= nexps - nvars;  /* remove extra values */
+ }
+ 
+ 
+@@ -1160,11 +1162,8 @@ static void assignment (LexState *ls, st
+     int nexps;
+     checknext(ls, '=');
+     nexps = explist(ls, &e);
+-    if (nexps != nvars) {
++    if (nexps != nvars)
+       adjust_assign(ls, nvars, nexps, &e);
+-      if (nexps > nvars)
+-        ls->fs->freereg -= nexps - nvars;  /* remove extra values */
+-    }
+     else {
+       luaK_setoneret(ls->fs, &e);  /* close last expression */
+       luaK_storevar(ls->fs, &lh->v, &e);

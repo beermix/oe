@@ -1,0 +1,68 @@
+#################################################################################
+#      This file is part of OpenELEC - http://www.openelec.tv
+#      Copyright (C) 2009-2011 Stephan Raue (stephan@openelec.tv)
+#
+#  This Program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2, or (at your option)
+#  any later version.
+#
+#  This Program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with OpenELEC.tv; see the file COPYING.  If not, write to
+#  Free Software Foundation, 51 Franklin Street, Suite 500, Boston, MA 02110, USA
+#  http://www.gnu.org/copyleft/gpl.html
+#################################################################################
+
+PKG_NAME="libspotify"
+PKG_VERSION="10.1.16"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="OSS"
+PKG_SITE="http://developer.spotify.com/en/libspotify/application-key/"
+
+if [ "$TARGET_ARCH" = i386 ]; then
+  if [ "$PKG_VERSION" = 9.1.32 ]; then
+    PKG_URL="https://developer.spotify.com/download/libspotify/$PKG_NAME-$PKG_VERSION-Linux-i686.tar.gz"
+    LIBSPOTIFY_FOLDERNAME="$PKG_NAME-$PKG_VERSION-Linux-i686"
+  fi
+  if [ "$PKG_VERSION" = 10.1.16 ]; then
+    PKG_URL="http://developer.spotify.com/download/libspotify/$PKG_NAME-$PKG_VERSION-Linux-i686-release.tar.gz"
+    LIBSPOTIFY_FOLDERNAME="$PKG_NAME-Linux-i686-release"
+  fi
+fi
+
+if [ "$TARGET_ARCH" = x86_64 ]; then
+  if [ "$PKG_VERSION" = 9.1.32 ]; then
+    PKG_URL="https://developer.spotify.com/download/libspotify/$PKG_NAME-$PKG_VERSION-Linux-x86_64.tar."
+    LIBSPOTIFY_FOLDERNAME="$PKG_NAME-$PKG_VERSION-Linux-x86_64"
+  fi
+  if [ "$PKG_VERSION" = 10.1.16 ]; then
+    PKG_URL="http://developer.spotify.com/download/libspotify/$PKG_NAME-$PKG_VERSION-Linux-x86_64-release.tar.gz"
+    LIBSPOTIFY_FOLDERNAME="$PKG_NAME-Linux-x86_64-release"
+  fi
+fi
+
+if [ "$TARGET_ARCH" = arm ]; then
+  if [ "$PKG_VERSION" = 10.1.16 ]; then
+    PKG_URL="http://developer.spotify.com/download/libspotify/$PKG_NAME-$PKG_VERSION-Linux-armv7-release.tar.gz"
+    LIBSPOTIFY_FOLDERNAME="$PKG_NAME-Linux-armv7-release"
+  fi
+  if [ "$TARGET_CPU" = arm1176jzf-s ]; then
+    PKG_URL="http://developer.spotify.com/download/libspotify/$PKG_NAME-$PKG_VERSION-Linux-armv6-release.tar.gz"
+    LIBSPOTIFY_FOLDERNAME="$PKG_NAME-Linux-armv6-release"
+  fi
+fi
+
+PKG_DEPENDS=""
+PKG_BUILD_DEPENDS="toolchain"
+PKG_PRIORITY="optional"
+PKG_SECTION="audio"
+PKG_SHORTDESC="libspotify: A library for Spotify, needs developer appkey and Premium account"
+PKG_LONGDESC="libspotify is a library for streaming music from the spotify backend. The appkey.h needs to be put in the folder directly above your git repository, you get it from http://developer.spotify.com. Then, to actually use the application you will need to login with a valid premium account username and password."
+PKG_IS_ADDON="no"
+PKG_AUTORECONF="no"

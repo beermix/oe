@@ -1,0 +1,17 @@
+PKG_NAME="retroarch"
+PKG_VERSION="master"
+PKG_REV=`git show --format="%ci %cr" master | head -n 1 | cut -d " " -f 1`
+PKG_ARCH="any"
+PKG_SITE="https://github.com/libretro/RetroArch"
+#PKG_URL="https://github.com/libretro/RetroArch/archive/master.zip"
+PKG_DEPENDS=""
+PKG_BUILD_DEPENDS="toolchain Mesa openal-soft alsa SDL pulseaudio libxml2 freetype ffmpeg libsndfile SDL_image json-c"
+PKG_PRIORITY="optional"
+PKG_SECTION="emulator"
+PKG_SHORTDESC="Simple Multi-emulator frontend based on libretro"
+PKG_LONGDESC="Simple Multi-emulator frontend based on libretro"
+PKG_ADDON_TYPE="xbmc.python.script"
+
+PKG_IS_ADDON="yes"
+ADDON_VERSION="3.2.4"
+PKG_AUTORECONF="no"

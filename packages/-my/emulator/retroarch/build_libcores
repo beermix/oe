@@ -1,0 +1,23 @@
+#!/bin/sh
+#################
+## Add Libcore ##
+#################
+if [ ! -d $DEV_REP/libretro-super ]
+        then
+                git clone https://github.com/libretro/libretro-super.git $DEV_REP/libretro-super
+        else
+                cd $DEV_REP/libretro-super
+		git pull
+fi
+
+cd $DEV_REP/libretro-super
+		#sed -i "s/git:\/\/gitorious.org\/bsnes\/bsnes.git/https:\/\/git.gitorious.org\/bsnes\/bsnes.git/g" libretro-fetch.sh
+		#sed -i "s/git:\/\/github.com/https:\/\/github.com/g" libretro-config.sh
+./libretro-fetch.sh
+./libretro-build.sh
+
+#cd $OPENELEC
+#cd $ADDON_BUILD/$PKG_ADDON_ID/cores/
+#rename s/_libretro// bsnes_* && rename s/.so/-libretro.so/ bsnes_*
+#for file in `ls -1 * | grep -v "bsnes_"` ;do  BASE=`basename $file _libretro.so`; mv $file $BASE-libretro.so ;done
+

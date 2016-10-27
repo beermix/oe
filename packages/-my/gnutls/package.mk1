@@ -1,0 +1,15 @@
+PKG_NAME="gnutls"
+PKG_VERSION="3.4.11"
+PKG_URL="ftp://ftp.gnutls.org/gcrypt/gnutls/v3.4/gnutls-3.4.11.tar.xz"
+PKG_DEPENDS_TARGET="toolchain linux libressl libtasn1 libidn p11-kit"
+PKG_PRIORITY="optional"
+PKG_SECTION="my"
+PKG_IS_ADDON="no"
+PKG_AUTORECONF="no"
+
+pre_configure_target() {
+strip_lto
+strip_gold
+}
+
+PKG_CONFIGURE_OPTS_TARGET="--disable-static --with-sysroot=$SYSROOT_PREFIX"

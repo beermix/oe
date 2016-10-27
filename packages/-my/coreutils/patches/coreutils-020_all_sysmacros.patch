@@ -1,0 +1,40 @@
+patch sent to upstream gnulib
+
+https://bugs.gentoo.org/580014
+
+From 45eae8fd19089c4ba2b66c063fe127ee131f0b00 Mon Sep 17 00:00:00 2001
+From: Mike Frysinger <vapier@gentoo.org>
+Date: Sat, 16 Apr 2016 01:59:07 -0400
+Subject: [PATCH] mountlist/ptsname_r: leverage AC_HEADER_MAJOR
+
+These two modules use makedev/major/minor but don't have explicit
+checks for the functions.  Use the existing autoconf macro which
+will probe some headers for use and set up some defines.
+
+* lib/mountlist.c [MAJOR_IN_MKDEV]: Include sys/mkdev.h.
+[MAJOR_IN_SYSMACROS]: Include sys/sysmacros.h.
+* lib/ptsname_r.c: Likewise.
+[__sun]: Delete sys/sysmacros.h include.
+[_AIX || __osf__]: Likewise.
+* m4/mountlist.m4 (gl_MOUNTLIST): Require AC_HEADER_MAJOR.
+* m4/ptsname_r.m4 (gl_FUNC_PTSNAME_R): Likewise.
+---
+ lib/mountlist.c |  7 +++++++
+ lib/ptsname_r.c | 12 ++++++++----
+ m4/mountlist.m4 |  1 +
+ m4/ptsname_r.m4 |  2 ++
+ 4 files changed, 18 insertions(+), 4 deletions(-)
+
+--- a/lib/mountlist.c
++++ b/lib/mountlist.c
+@@ -37,6 +37,10 @@
+ # include <sys/param.h>
+ #endif
+ 
++#ifdef __linux__
++# include <sys/sysmacros.h>
++#endif
++
+ #if defined MOUNTED_GETFSSTAT   /* OSF_1 and Darwin1.3.x */
+ # if HAVE_SYS_UCRED_H
+ #  include <grp.h> /* needed on OSF V4.0 for definition of NGROUPS,

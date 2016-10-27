@@ -1,0 +1,25 @@
+diff --git a/Makefile b/Makefile
+old mode 100644
+new mode 100755
+index 8a44acc..032d546
+--- a/Makefile
++++ b/Makefile
+@@ -62,8 +62,7 @@ LibUtilHdr = au_util.h
+ $(foreach v, CPPFLAGS CFLAGS INSTALL Install ManDir LibUtilHdr, \
+ 	$(eval MAKE += ${v}="$${${v}}"))
+ 
+-all: ver_test ${Man} ${Bin} ${Etc}
+-	${MAKE} -C libau $@
++all: 	${MAKE} -C libau $@
+ 	ln -sf ./libau/libau*.so .
+ 	$(call MakeFHSM, $@)
+ 
+@@ -73,8 +72,6 @@ clean:
+ 	${MAKE} -C libau $@
+ 	$(call MakeFHSM, $@)
+ 
+-ver_test: ver
+-	./ver
+ 
+ ${Bin}: override LDFLAGS += -static -s
+ ${Bin}: LDLIBS = -L. -lautil

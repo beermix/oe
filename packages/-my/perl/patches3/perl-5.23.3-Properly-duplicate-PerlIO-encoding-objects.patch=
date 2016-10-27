@@ -1,0 +1,160 @@
+From 0ee3fa26f660ac426e3e082f77d806c9d1471f93 Mon Sep 17 00:00:00 2001
+From: Vincent Pit <perl@profvince.com>
+Date: Fri, 28 Aug 2015 14:17:00 -0300
+Subject: [PATCH] Properly duplicate PerlIO::encoding objects
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+PerlIO::encoding objects are usually initialized by calling Perl methods,
+essentially from the pushed() and getarg() callbacks. During cloning, the
+PerlIO API will by default call these methods to initialize the duplicate
+struct when the PerlIOBase parent struct is itself duplicated. This does
+not behave so well because the perl interpreter is not ready to call
+methods at this point, for the stacks are not set up yet.
+
+The proper way to duplicate the PerlIO::encoding object is to call sv_dup()
+on its members from the dup() PerlIO callback. So the only catch is to make
+the getarg() and pushed() calls implied by the duplication of the underlying
+PerlIOBase object aware that they are called during cloning, and make them
+wait that the control flow returns to the dup() callback. Fortunately,
+getarg() knows since its param argument is then non-null, and its return
+value is passed immediately to pushed(), so it is enough to tag this
+returned value with a custom magic so that pushed() can see it is being
+called during cloning.
+
+This fixes [RT #31923].
+
+Signed-off-by: Petr Písař <ppisar@redhat.com>
+---
+ MANIFEST                        |  1 +
+ ext/PerlIO-encoding/encoding.pm |  2 +-
+ ext/PerlIO-encoding/encoding.xs | 25 +++++++++++++++++++++++--
+ ext/PerlIO-encoding/t/threads.t | 35 +++++++++++++++++++++++++++++++++++
+ 4 files changed, 60 insertions(+), 3 deletions(-)
+ create mode 100644 ext/PerlIO-encoding/t/threads.t
+
+diff --git a/MANIFEST b/MANIFEST
+index f79df00..34c2e24 100644
+--- a/MANIFEST
++++ b/MANIFEST
+@@ -3753,6 +3753,7 @@ ext/PerlIO-encoding/encoding.xs	PerlIO::encoding
+ ext/PerlIO-encoding/t/encoding.t	See if PerlIO encoding conversion works
+ ext/PerlIO-encoding/t/fallback.t	See if PerlIO fallbacks work
+ ext/PerlIO-encoding/t/nolooping.t	Tests for PerlIO::encoding
++ext/PerlIO-encoding/t/threads.t		Tests PerlIO::encoding and threads
+ ext/PerlIO-mmap/mmap.pm	PerlIO layer for memory maps
+ ext/PerlIO-mmap/mmap.xs	PerlIO layer for memory maps
+ ext/PerlIO-scalar/scalar.pm	PerlIO layer for scalars
+diff --git a/ext/PerlIO-encoding/encoding.pm b/ext/PerlIO-encoding/encoding.pm
+index 4cff76d..97f05ec 100644
+--- a/ext/PerlIO-encoding/encoding.pm
++++ b/ext/PerlIO-encoding/encoding.pm
+@@ -1,7 +1,7 @@
+ package PerlIO::encoding;
+ 
+ use strict;
+-our $VERSION = '0.21';
++our $VERSION = '0.22';
+ our $DEBUG = 0;
+ $DEBUG and warn __PACKAGE__, " called by ", join(", ", caller), "\n";
+ 
+diff --git a/ext/PerlIO-encoding/encoding.xs b/ext/PerlIO-encoding/encoding.xs
+index 03b8850..3575d72 100644
+--- a/ext/PerlIO-encoding/encoding.xs
++++ b/ext/PerlIO-encoding/encoding.xs
+@@ -49,13 +49,23 @@ typedef struct {
+ 
+ #define NEEDS_LINES	1
+ 
++static const MGVTBL PerlIOEncode_tag = { 0, 0, 0, 0, 0, 0, 0, 0 };
++
+ SV *
+ PerlIOEncode_getarg(pTHX_ PerlIO * f, CLONE_PARAMS * param, int flags)
+ {
+     PerlIOEncode *e = PerlIOSelf(f, PerlIOEncode);
+-    SV *sv = &PL_sv_undef;
+-    PERL_UNUSED_ARG(param);
++    SV *sv;
+     PERL_UNUSED_ARG(flags);
++    /* During cloning, return an undef token object so that _pushed() knows
++     * that it should not call methods and wait for _dup() to actually dup the
++     * encoding object. */
++    if (param) {
++	sv = newSV(0);
++	sv_magicext(sv, NULL, PERL_MAGIC_ext, &PerlIOEncode_tag, 0, 0);
++	return sv;
++    }
++    sv = &PL_sv_undef;
+     if (e->enc) {
+ 	dSP;
+ 	/* Not 100% sure stack swap is right thing to do during dup ... */
+@@ -85,6 +95,14 @@ PerlIOEncode_pushed(pTHX_ PerlIO * f, const char *mode, SV * arg, PerlIO_funcs *
+     IV  code = PerlIOBuf_pushed(aTHX_ f, mode, Nullsv,tab);
+     SV *result = Nullsv;
+ 
++    if (SvTYPE(arg) >= SVt_PVMG
++		&& mg_findext(arg, PERL_MAGIC_ext, &PerlIOEncode_tag)) {
++	e->enc = NULL;
++	e->chk = NULL;
++	e->inEncodeCall = 0;
++	return code;
++    }
++
+     PUSHSTACKi(PERLSI_MAGIC);
+     ENTER;
+     SAVETMPS;
+@@ -566,6 +584,9 @@ PerlIOEncode_dup(pTHX_ PerlIO * f, PerlIO * o,
+ 	if (oe->enc) {
+ 	    fe->enc = PerlIO_sv_dup(aTHX_ oe->enc, params);
+ 	}
++	if (oe->chk) {
++	    fe->chk = PerlIO_sv_dup(aTHX_ oe->chk, params);
++	}
+     }
+     return f;
+ }
+diff --git a/ext/PerlIO-encoding/t/threads.t b/ext/PerlIO-encoding/t/threads.t
+new file mode 100644
+index 0000000..64f0e55
+--- /dev/null
++++ b/ext/PerlIO-encoding/t/threads.t
+@@ -0,0 +1,35 @@
++#!perl
++
++use strict;
++use warnings;
++
++BEGIN {
++    use Config;
++    if ($Config{extensions} !~ /\bEncode\b/) {
++	print "1..0 # Skip: no Encode\n";
++	exit 0;
++    }
++    unless ($Config{useithreads}) {
++	print "1..0 # Skip: no threads\n";
++	exit 0;
++    }
++}
++
++use threads;
++
++use Test::More tests => 3 + 1;
++
++binmode *STDOUT, ':encoding(UTF-8)';
++
++SKIP: {
++    local $@;
++    my $ret = eval {
++	my $thread = threads->create(sub { pass 'in thread'; return 1 });
++	skip 'test thread could not be spawned' => 3 unless $thread;
++	$thread->join;
++    };
++    is $@, '', 'thread did not croak';
++    is $ret, 1, 'thread returned the right value';
++}
++
++pass 'passes at least one test';
+-- 
+2.5.5
+

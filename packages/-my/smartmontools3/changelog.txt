@@ -1,0 +1,30 @@
+7.0.0
+- rebuild for OpenELEC-7.0
+6.0.0
+- rebuild for OpenELEC-6.0
+[B]4.3.2[/B]
+- rebuild
+
+[B]4.3.0[/B]
+- rebuild
+
+[B]1.0.6[/B]
+- update to kodi
+
+[B]1.0.5[/B]
+- rebuild for addon api bump
+
+[B]1.0.4[/B]
+- no changes, version bump
+
+[B]1.0.3[/B]
+- rebuild for addon api bump
+
+[B]1.0.2[/B]
+- rebuild
+
+[B]1.0.1[/B]
+fixed: shout down properly on XBMC request
+
+[B]1.0.0[/B]
+- initial public version of smartmontools addon

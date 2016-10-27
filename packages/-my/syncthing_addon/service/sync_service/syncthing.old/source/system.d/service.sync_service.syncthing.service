@@ -1,0 +1,14 @@
+[Unit]
+Description=Syncthing
+After=graphical.target
+
+[Service]
+ExecStart=/bin/sh -c "exec sh 
+/storage/.kodi/addons/service.sync_service.syncthing/bin/syncthing.start"
+TimeoutStopSec=1
+Restart=always
+RestartSec=2
+StartLimitInterval=0
+
+[Install]
+WantedBy=kodi.target

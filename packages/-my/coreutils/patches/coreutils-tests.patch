@@ -1,0 +1,40 @@
+this test only gets run as non-root, so giving it temp write access to the
+root dir is safe since normal unix access will deny it #259876
+--- a/tests/touch/not-owner.sh
++++ b/tests/touch/not-owner.sh
+@@ -34,6 +34,7 @@
+ # Before fileutils-4.1, we'd get the following misleading
+ # diagnostic instead of '...: Permission denied'.
+ # touch: creating '/': Is a directory
++env SANDBOX_WRITE=${SANDBOX_WRITE}:/ \
+ touch / > out 2>&1 && fail=1
+ 
+ # On SunOS4, EPERM is 'Not owner'.
+
+the dd test looks up a device and tries to test seeking on it.  it shouldnt
+cause any corruption because it uses a count of 0 and seeks past the end of
+the device
+--- a/tests/dd/skip-seek-past-dev.sh
++++ b/tests/dd/skip-seek-past-dev.sh
+@@ -48,6 +48,7 @@
+ 0+0 records out" > err_ok || framework_failure_
+ compare err_ok err || fail=1
+ 
++env SANDBOX_WRITE=${SANDBOX_WRITE}:$device \
+ timeout 10 dd bs=1 seek=$DEV_OFLOW count=0 status=noxfer > "$device" 2> err
+ test "$?" = "1" || fail=1
+ echo "dd: 'standard output': cannot seek: Invalid argument
+
+running through strace and counting stat syscalls is off when using sandbox
+https://bugs.gentoo.org/415487
+--- a/tests/ls/stat-free-color.sh
++++ b/tests/ls/stat-free-color.sh
+@@ -19,6 +19,8 @@
+ . "${srcdir=.}/tests/init.sh"; path_prepend_ ./src
+ print_ver_ ls
+ 
++skip_ 'strace does not work under sandbox #415487'
++
+ # Note this list of _file name_ stat functions must be
+ # as cross platform as possible and so doesn't include
+ # fstatat64 as that's not available on aarch64 for example.

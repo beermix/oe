@@ -1,0 +1,45 @@
+From 12914ffb8af4f850637ee92bc2997218de6a179c Mon Sep 17 00:00:00 2001
+From: Peter Stephenson <pws@zsh.org>
+Date: Tue, 6 Oct 2015 09:28:07 +0100
+Subject: [PATCH] 36780: Fix crash in ksh mode with -n and $HOME.
+
+If home variable is NULL ensure HOME is unset.
+
+Upstream-commit: 83a175795a444e8169fcb592a110d4d15a09b907
+Signed-off-by: Kamil Dudka <kdudka@redhat.com>
+---
+ Src/params.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
+
+diff --git a/Src/params.c b/Src/params.c
+index de151a4..a8abb28 100644
+--- a/Src/params.c
++++ b/Src/params.c
+@@ -775,17 +775,18 @@ createparamtable(void)
+ #endif
+     opts[ALLEXPORT] = oae;
+ 
++    /*
++     * For native emulation we always set the variable home
++     * (see setupvals()).
++     */
++    pm = (Param) paramtab->getnode(paramtab, "HOME");
+     if (EMULATION(EMULATE_ZSH))
+     {
+-	/*
+-	 * For native emulation we always set the variable home
+-	 * (see setupvals()).
+-	 */
+-	pm = (Param) paramtab->getnode(paramtab, "HOME");
+ 	pm->node.flags &= ~PM_UNSET;
+ 	if (!(pm->node.flags & PM_EXPORTED))
+ 	    addenv(pm, home);
+-    }
++    } else if (!home)
++	pm->node.flags |= PM_UNSET;
+     pm = (Param) paramtab->getnode(paramtab, "LOGNAME");
+     if (!(pm->node.flags & PM_EXPORTED))
+ 	addenv(pm, pm->u.str);
+-- 
+2.5.2
+

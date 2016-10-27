@@ -1,0 +1,60 @@
+diff --git a/Makefile.shared b/Makefile.shared
+old mode 100644
+new mode 100755
+index e8d222a..f68d6ff
+--- a/Makefile.shared
++++ b/Makefile.shared
+@@ -153,7 +153,7 @@ DO_GNU_SO=$(CALC_VERSIONS); \
+ 	NOALLSYMSFLAGS='-Wl,--no-whole-archive'; \
+ 	SHAREDFLAGS="$(CFLAGS) $(SHARED_LDFLAGS) -shared -Wl,-Bsymbolic -Wl,-soname=$$SHLIB$$SHLIB_SOVER$$SHLIB_SUFFIX"
+ 
+-DO_GNU_APP=LDFLAGS="$(CFLAGS) -Wl,-rpath,$(LIBRPATH)"
++DO_GNU_APP=LDFLAGS="$(CFLAGS)"
+ 
+ #This is rather special.  It's a special target with which one can link
+ #applications without bothering with any features that have anything to
+diff --git a/apps/CA.pl.in b/apps/CA.pl.in
+old mode 100644
+new mode 100755
+index 3bf4c99..09474ca
+--- a/apps/CA.pl.in
++++ b/apps/CA.pl.in
+@@ -53,7 +53,7 @@ $VERIFY="$openssl verify";
+ $X509="$openssl x509";
+ $PKCS12="$openssl pkcs12";
+ 
+-$CATOP="./demoCA";
++$CATOP="/etc/ssl";
+ $CAKEY="cakey.pem";
+ $CAREQ="careq.pem";
+ $CACERT="cacert.pem";
+diff --git a/apps/CA.sh b/apps/CA.sh
+old mode 100644
+new mode 100755
+index 7ad6b8c..d5b4d8f
+--- a/apps/CA.sh
++++ b/apps/CA.sh
+@@ -68,7 +68,7 @@ VERIFY="$OPENSSL verify"
+ X509="$OPENSSL x509"
+ PKCS12="openssl pkcs12"
+ 
+-if [ -z "$CATOP" ] ; then CATOP=./demoCA ; fi
++if [ -z "$CATOP" ] ; then CATOP=/etc/ssl ; fi
+ CAKEY=./cakey.pem
+ CAREQ=./careq.pem
+ CACERT=./cacert.pem
+diff --git a/apps/openssl.cnf b/apps/openssl.cnf
+old mode 100644
+new mode 100755
+index 1eb86c4..a1af719
+--- a/apps/openssl.cnf
++++ b/apps/openssl.cnf
+@@ -39,7 +39,7 @@ default_ca	= CA_default		# The default ca section
+ ####################################################################
+ [ CA_default ]
+ 
+-dir		= ./demoCA		# Where everything is kept
++dir		= /etc/ssl		# Where everything is kept
+ certs		= $dir/certs		# Where the issued certs are kept
+ crl_dir		= $dir/crl		# Where the issued crl are kept
+ database	= $dir/index.txt	# database index file.

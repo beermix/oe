@@ -1,0 +1,127 @@
+From 50f7c251523f6be3be3426aa6499e5495a18b442 Mon Sep 17 00:00:00 2001
+From: Mark Hamzy <hamzy@us.ibm.com>
+Date: Wed, 6 Aug 2014 14:06:45 -0500
+Subject: [PATCH] use Py_ssize_t
+
+>Starting with Python 2.5 the type of the length argument can be controlled by
+>defining the macro PY_SSIZE_T_CLEAN before including Python.h. If the macro is
+>defined, length is a Py_ssize_t rather than an int.
+
+dmalcolm@redhat.com says:
+"and IIRC that *does* in fact affect "et#" and the other hash-suffixed codes
+i.e. PyArg_ParseTupleAndKeywords was expecting bufsize to be a Py_ssize_t, not an int."
+
+So, changing size_t to Py_ssize_t and ints used as sizes to Py_ssize_t.
+
+---
+ xattr.c | 24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
+
+diff --git a/xattr.c b/xattr.c
+index cc1fa44..2529e90 100644
+--- a/xattr.c
++++ b/xattr.c
+@@ -193,7 +193,7 @@ static int merge_ns(const char *ns, const char *name,
+     return 0;
+ }
+ 
+-static ssize_t _list_obj(target_t *tgt, char *list, size_t size) {
++static Py_ssize_t _list_obj(target_t *tgt, char *list, Py_ssize_t size) {
+     if(tgt->type == T_FD)
+         return flistxattr(tgt->fd, list, size);
+     else if (tgt->type == T_LINK)
+@@ -202,8 +202,8 @@ static ssize_t _list_obj(target_t *tgt, char *list, size_t size) {
+         return listxattr(tgt->name, list, size);
+ }
+ 
+-static ssize_t _get_obj(target_t *tgt, const char *name, void *value,
+-                        size_t size) {
++static Py_ssize_t _get_obj(target_t *tgt, const char *name, void *value,
++                        Py_ssize_t size) {
+     if(tgt->type == T_FD)
+         return fgetxattr(tgt->fd, name, value, size);
+     else if (tgt->type == T_LINK)
+@@ -213,7 +213,7 @@ static ssize_t _get_obj(target_t *tgt, const char *name, void *value,
+ }
+ 
+ static int _set_obj(target_t *tgt, const char *name,
+-                    const void *value, size_t size, int flags) {
++                    const void *value, Py_ssize_t size, int flags) {
+     if(tgt->type == T_FD)
+         return fsetxattr(tgt->fd, name, value, size, flags);
+     else if (tgt->type == T_LINK)
+@@ -242,7 +242,7 @@ static int _remove_obj(target_t *tgt, const char *name) {
+ 
+ */
+ const char *matches_ns(const char *ns, const char *name) {
+-    size_t ns_size;
++    Py_ssize_t ns_size;
+     if (ns == NULL || *ns == '\0')
+         return name;
+     ns_size = strlen(ns);
+@@ -275,7 +275,7 @@ pygetxattr(PyObject *self, PyObject *args)
+     int nofollow = 0;
+     char *attrname = NULL;
+     char *buf;
+-    ssize_t nalloc, nret;
++    Py_ssize_t nalloc, nret;
+     PyObject *res;
+ 
+     /* Parse the arguments */
+@@ -352,7 +352,7 @@ xattr_get(PyObject *self, PyObject *args, PyObject *keywds)
+     const char *fullname;
+     char *buf;
+     const char *ns = NULL;
+-    ssize_t nalloc, nret;
++    Py_ssize_t nalloc, nret;
+     PyObject *res;
+     static char *kwlist[] = {"item", "name", "nofollow", "namespace", NULL};
+ 
+@@ -451,7 +451,7 @@ get_all(PyObject *self, PyObject *args, PyObject *keywds)
+     const char *ns = NULL;
+     char *buf_list, *buf_val;
+     const char *s;
+-    ssize_t nalloc, nlist, nval;
++    Py_ssize_t nalloc, nlist, nval;
+     PyObject *mylist;
+     target_t tgt;
+     static char *kwlist[] = {"item", "nofollow", "namespace", NULL};
+@@ -604,7 +604,7 @@ pysetxattr(PyObject *self, PyObject *args)
+     int nofollow = 0;
+     char *attrname = NULL;
+     char *buf = NULL;
+-    int bufsize;
++    Py_ssize_t bufsize;
+     int nret;
+     int flags = 0;
+     target_t tgt;
+@@ -670,7 +670,7 @@ xattr_set(PyObject *self, PyObject *args, PyObject *keywds)
+     int nofollow = 0;
+     char *attrname = NULL;
+     char *buf = NULL;
+-    int bufsize;
++    Py_ssize_t bufsize;
+     int nret;
+     int flags = 0;
+     target_t tgt;
+@@ -856,7 +856,7 @@ pylistxattr(PyObject *self, PyObject *args)
+ {
+     char *buf;
+     int nofollow=0;
+-    ssize_t nalloc, nret;
++    Py_ssize_t nalloc, nret;
+     PyObject *myarg;
+     PyObject *mylist;
+     Py_ssize_t nattrs;
+@@ -956,7 +956,7 @@ xattr_list(PyObject *self, PyObject *args, PyObject *keywds)
+ {
+     char *buf;
+     int nofollow = 0;
+-    ssize_t nalloc, nret;
++    Py_ssize_t nalloc, nret;
+     PyObject *myarg;
+     PyObject *res;
+     const char *ns = NULL;
+-- 
+2.0.0
+

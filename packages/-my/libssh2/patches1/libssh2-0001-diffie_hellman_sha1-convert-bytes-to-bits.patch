@@ -1,0 +1,25 @@
+From ca5222ea819cc5ed797860070b4c6c1aeeb28420 Mon Sep 17 00:00:00 2001
+From: Daniel Stenberg <daniel@haxx.se>
+Date: Thu, 11 Feb 2016 13:52:20 +0100
+Subject: [PATCH] diffie_hellman_sha1: convert bytes to bits
+
+As otherwise we get far too small numbers.
+
+Reported-by: Andreas Schneider
+
+CVE-2016-0787
+---
+ src/kex.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+--- a/src/kex.c
++++ b/src/kex.c
+@@ -103,7 +103,7 @@ static int diffie_hellman_sha1(LIBSSH2_S
+         memset(&exchange_state->req_state, 0, sizeof(packet_require_state_t));
+ 
+         /* Generate x and e */
+-        _libssh2_bn_rand(exchange_state->x, group_order, 0, -1);
++        _libssh2_bn_rand(exchange_state->x, group_order * 8 - 1, 0, -1);
+         _libssh2_bn_mod_exp(exchange_state->e, g, exchange_state->x, p,
+                             exchange_state->ctx);
+ 

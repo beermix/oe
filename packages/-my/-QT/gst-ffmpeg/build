@@ -1,0 +1,65 @@
+#!/bin/sh
+
+################################################################################
+#
+#  Copyright (C) 2012 4K-IT UG (info@4kit.de)
+#
+#  This Program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2, or (at your option)
+#  any later version.
+#
+#  This Program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with OpenELEC.tv; see the file COPYING.  If not, write to
+#  the Free Software Foundation, 51 Franklin Street, Suite 500, Boston, MA 02110, USA.
+#  http://www.gnu.org/copyleft/gpl.html
+#
+################################################################################
+
+. config/options $1
+
+cd $BUILD/${PKG_NAME}-${PKG_VERSION}
+
+case $TARGET_ARCH in
+	i386)
+		./configure \
+			-prefix=/usr \
+			-target=$TARGET_NAME \
+			-host=$TARGET_NAME \
+			--disable-maintainer-mode \
+			--disable-dependency-tracking \
+			--disable-silent-rules \
+			--disable-examples \
+            --with-ffmpeg-extra-configure="--prefix=/usr --target-os=linux --cpu=$TARGET_CPU --cross-prefix=$TARGET_PREFIX --sysroot=$SYSROOT_PREFIX --sysinclude=$SYSROOT_PREFIX/usr/include --disable-asm"
+	;;
+	x86_64)
+		./configure \
+			-prefix=/usr \
+			-target=$TARGET_NAME \
+			-host=$TARGET_NAME \
+			--disable-maintainer-mode \
+			--disable-dependency-tracking \
+			--disable-silent-rules \
+			--disable-examples \
+            --with-ffmpeg-extra-configure="--prefix=/usr --target-os=linux --cpu=$TARGET_CPU --cross-prefix=$TARGET_PREFIX --sysroot=$SYSROOT_PREFIX --sysinclude=$SYSROOT_PREFIX/usr/include --disable-asm"
+	;;
+	arm)
+		./configure \
+			-prefix=/usr \
+			-target=$TARGET_NAME \
+			-host=$TARGET_NAME \
+			--disable-maintainer-mode \
+			--disable-dependency-tracking \
+			--disable-silent-rules \
+			--disable-examples \
+            --with-ffmpeg-extra-configure="--prefix=/usr --target-os=linux --cpu=$TARGET_CPU --cross-prefix=$TARGET_PREFIX --sysroot=$SYSROOT_PREFIX --sysinclude=$SYSROOT_PREFIX/usr/include --disable-asm"
+	;;
+esac
+
+make && $MAKEINSTALL
+

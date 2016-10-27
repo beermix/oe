@@ -1,0 +1,62 @@
+#!/bin/sh
+
+#################################################################################
+#      This file is part of OpenELEC - http://www.openelec.tv
+#      Copyright (C) 2009-2011 Stephan Raue (stephan@openelec.tv)
+#
+#  This Program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2, or (at your option)
+#  any later version.
+#
+#  This Program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with OpenELEC.tv; see the file COPYING.  If not, write to
+#  Free Software Foundation, 51 Franklin Street, Suite 500, Boston, MA 02110, USA
+#  http://www.gnu.org/copyleft/gpl.html
+#################################################################################
+
+. config/options $1
+
+#should not be needed, but better safe than sorry...
+if [ "$SPOTIFY_SUPPORT" = yes ]; then
+
+  mkdir -p $BUILD/image/system/usr/include
+  mkdir -p $BUILD/image/system/usr/include/libspotify
+  cp $BUILD/$LIBSPOTIFY_FOLDERNAME/include/libspotify/api.h $BUILD/image/system/usr/include/libspotify
+  mkdir -p $BUILD/image/system/usr/lib
+
+  if [ `echo $PKG_VERSION | cut -d. -f1` = 9 ]; then
+    cp $BUILD/$LIBSPOTIFY_FOLDERNAME/lib/libspotify.so.9 $BUILD/image/system/usr/lib/libspotify.so.$PKG_VERSION
+    cd $BUILD/image/system/usr/lib
+    ln -sf libspotify.so.$PKG_VERSION libspotify.so.9
+    ln -sf libspotify.so.$PKG_VERSION libspotify.so
+  fi
+
+ if [ `echo $PKG_VERSION | cut -d. -f1` = 10 ]; then
+    cp $BUILD/$LIBSPOTIFY_FOLDERNAME/lib/libspotify.so.10 $BUILD/image/system/usr/lib/libspotify.so.$PKG_VERSION
+    cd $BUILD/image/system/usr/lib
+    ln -sf libspotify.so.$PKG_VERSION libspotify.so.10
+    ln -sf libspotify.so.$PKG_VERSION libspotify.so
+  fi
+
+  mkdir -p pkgconfig
+  cd pkgconfig
+# TODO, -fix echo cheating- libspotify.pc exists in the libspotify tarball and should be used.
+  echo "prefix=/usr">libspotify.pc
+  echo "exec_prefix=${prefix}">>libspotify.pc
+  echo "libdir=${exec_prefix}/lib">>libspotify.pc
+  echo "includedir=${prefix}/include">>libspotify.pc
+  echo " ">>libspotify.pc
+  echo "Name: libspotify">>libspotify.pc
+  echo "Description: Spotify client library">>libspotify.pc
+  echo "Version: "$PKG_VERSION>>libspotify.pc
+  echo "Libs: -L${libdir} -lspotify">>libspotify.pc
+  echo "Cflags: -I${includedir}">>libspotify.pc
+  cd ../../../../../..
+fi
+

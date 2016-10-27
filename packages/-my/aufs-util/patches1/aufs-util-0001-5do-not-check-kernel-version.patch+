@@ -1,0 +1,20 @@
+Description: Drop pointless kernel version check.
+Author: Dimitri John Ledkov <xnox@ubuntu.com>
+
+--- aufs-tools-3.2+20130722.orig/Makefile
++++ aufs-tools-3.2+20130722/Makefile
+@@ -49,13 +49,10 @@ LibUtilObj = proc_mnt.o br.o plink.o mta
+ LibUtilHdr = au_util.h
+ export
+ 
+-all: ver_test ${Man} ${Bin} ${Etc}
++all: ${Man} ${Bin} ${Etc}
+ 	${MAKE} -C libau $@
+ 	ln -sf ./libau/libau*.so .
+ 
+-ver_test: ver
+-	./ver
+-
+ ${Bin}: LDLIBS = -L. -lautil
+ ${BinObj}: %.o: %.c ${LibUtilHdr} ${LibUtil}
+ 

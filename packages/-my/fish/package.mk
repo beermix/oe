@@ -1,0 +1,18 @@
+PKG_NAME="fish"
+PKG_VERSION="2.2.0"
+PKG_URL="http://fishshell.com/files/2.2.0/fish-2.2.0.tar.gz"
+PKG_DEPENDS_HOST="toolchain"
+PKG_DEPENDS_TARGET="toolchain netbsd-curses"
+PKG_PRIORITY="optional"
+PKG_SECTION="devel"
+PKG_AUTORECONF="no"
+
+pre_configure_target() {
+  cd $ROOT/$PKG_BUILD
+  ./configure   --prefix=/usr  --sysconfdir=/storage/.config  --datarootdir=/storage/.config/fish/share
+}
+
+
+#post_makeinstall_target() {
+#  rm -rf $INSTALL/storage/
+#}
