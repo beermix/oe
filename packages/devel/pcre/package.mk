@@ -35,18 +35,27 @@ PKG_USE_CMAKE="no"
 PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$ROOT/$TOOLCHAIN \
-             --enable-utf8 \
-             --enable-unicode-properties \
-             --with-gnu-ld"
+			 --enable-utf8 \
+			 --enable-unicode-properties \
+			 --with-gnu-ld \
+			 --disable-shared \
+			 --enable-pcre16 \
+			 --with-gnu-ld"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
-             --enable-static \
-             --enable-utf8 \
-             --enable-pcre16 \
-             --enable-unicode-properties \
-             --with-gnu-ld"
+			   --enable-static \
+			   --enable-utf8 \
+			   --enable-pcre16 \
+			   --enable-unicode-properties \
+			   --with-gnu-ld"
 
 pre_configure_target() {
+  CFLAGS="$CFLAGS -fPIC"
+  CXXFLAGS="$CXXFLAGS -fPIC"
+  LDFLAGS="$LDFLAGS -fPIC"
+}
+
+pre_configure_host() {
   CFLAGS="$CFLAGS -fPIC"
   CXXFLAGS="$CXXFLAGS -fPIC"
   LDFLAGS="$LDFLAGS -fPIC"

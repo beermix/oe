@@ -37,7 +37,7 @@ PKG_AUTORECONF="no"
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
 
 make_target() {
-  make HOSTCC="$HOST_CC" CFLAGS="$CFLAGS -D_GNU_SOURCE" PREFIX=/usr all-static
+  make HOSTCC="$HOST_CC" CFLAGS="$CFLAGS" PREFIX=/usr all-static
 }
 
 makeinstall_target() {

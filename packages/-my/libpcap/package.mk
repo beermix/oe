@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libpcap"
-PKG_VERSION="dc8a2b8"
+PKG_VERSION="371b9e4"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
