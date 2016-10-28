@@ -1,5 +1,5 @@
 # Name of the Distro to build (full name, without special characters)
-  DISTRONAME="OpenELEC"
+  DISTRONAME="OE"
 
 # short project description
   DESCRIPTION="OpenELEC is a fast and user-friendly Kodi Entertainment Center distribution."
