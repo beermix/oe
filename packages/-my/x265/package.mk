@@ -8,19 +8,16 @@ PKG_SECTION="multimedia"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-post_unpack() {
-  cp -r $PKG_BUILD/source/* $PKG_BUILD/
-}
 
-PKG_CMAKE_OPTS_TARGET="-DEXPORT_C_API=OFF \
-		       -DENABLE_SHARED=OFF \
+PKG_CMAKE_SCRIPT_TARGET="source/CMakeLists.txt"
+
+PKG_CMAKE_OPTS_TARGET="-DEXPORT_C_API=0 \
+		       -DHAVE_INT_TYPES_H=1 \
+		       -DHIGH_BIT_DEPTH=1 \
+		       -DX265_ARCH_X86=1 \
+		       -DX265_DEPTH=10 \
+		       -DX265_NS=x265_10bit \
+		       -DX86_64=1 -D__STDC_LIMIT_MACROS=1 \
 		       -DENABLE_CLI=OFF"
 
 
-makeinstall_target() {
-  mkdir -p $SYSROOT_PREFIX/usr/lib/pkgconfig
-  cp x265.pc $SYSROOT_PREFIX/usr/lib/pkgconfig
-  cp libx265.a $SYSROOT_PREFIX/usr/lib/
-  cp x265_config.h $SYSROOT_PREFIX/usr/include/
-  cp ../x265.h $SYSROOT_PREFIX/usr/include/
-}

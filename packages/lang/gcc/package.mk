@@ -22,17 +22,16 @@ PKG_USE_SNAPSHOT="true"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://gcc.gnu.org/"
-PKG_URL="http://ftpmirror.gnu.org/gcc/$PKG_NAME-$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
 if [ x"$PKG_USE_SNAPSHOT" == x"true" ]; then
-    PKG_VERSION="6.2.1"
+    PKG_MAJOR_VERSION="6"
     PKG_SNAPSHOT_DATESTAMP="20161020"
-    PKG_MAJOR_VERSION=$(echo $PKG_VERSION | awk -F'.' '{print $1}')
+    PKG_VERSION="$PKG_MAJOR_VERSION-$PKG_SNAPSHOT_DATESTAMP"
     PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/$PKG_MAJOR_VERSION-$PKG_SNAPSHOT_DATESTAMP/gcc-$PKG_MAJOR_VERSION-$PKG_SNAPSHOT_DATESTAMP.tar.bz2"
 else
     PKG_VERSION="6.2.0"
     PKG_URL="http://ftpmirror.gnu.org/gcc/$PKG_NAME-$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
 fi
-PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host cloog:host"
+PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host cloog:host remake:host"
 PKG_DEPENDS_TARGET="gcc:host"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host cloog:host glibc"
 PKG_SECTION="lang"
@@ -69,9 +68,9 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libgomp \
                            --disable-libmpx \
                            --disable-libssp \
-                           --with-tune=corei7"
+                           --with-tune=ivybridge"
 
-PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
+PKG_CONFIGURE_OPTS_BOOTSTRAP="MAKEINFO=missing $GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
                               --disable-libsanitizer \
@@ -102,12 +101,6 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-libitm \
                          $GCC_OPTS"
 
-pre_patch() {
-  if [ x"$PKG_USE_SNAPSHOT" == x"true" ]; then
-    [ -d $ROOT/$BUILD/gcc-$PKG_VERSION ] && rm -fr $ROOT/$BUILD/gcc-$PKG_VERSION
-    mv $ROOT/$BUILD/gcc-$PKG_MAJOR_VERSION-$PKG_SNAPSHOT_DATESTAMP $ROOT/$BUILD/gcc-$PKG_VERSION
-  fi
-}
 pre_configure_host() {
   export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP

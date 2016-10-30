@@ -35,25 +35,8 @@ PKG_AUTORECONF="no"
 #LDFLAGS="-s -Wl,--gc-sections -Wl,-z,relro,-z,now"
 
 pre_make_target() {
-  case $TARGET_ARCH in
-    x86_64)
-      export GOARCH=amd64
-      ;;
-    arm)
-      export GOARCH=arm
-
-      case $TARGET_CPU in
-        arm1176jzf-s)
-          export GOARM=6
-          ;;
-        cortex-a7)
-         export GOARM=7
-         ;;
-      esac
-      ;;
-  esac
-
   export GOOS=linux
+  export GOARCH=amd64
   export CGO_ENABLED=1
   export CGO_NO_EMULATION=1
   export CGO_CFLAGS=$CFLAGS

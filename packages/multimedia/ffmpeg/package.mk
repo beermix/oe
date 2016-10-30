@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="LGPLv2.1+"
 PKG_SITE="https://ffmpeg.org"
 PKG_URL="https://ffmpeg.org/releases/${PKG_NAME}-${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl dcadec speex"
+PKG_DEPENDS_TARGET="toolchain yasm:host libz bzip2 openssl dcadec speex x264 faac"
 PKG_PRIORITY="optional"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
@@ -32,8 +32,6 @@ PKG_LONGDESC="FFmpeg is a complete, cross-platform solution to record, convert a
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-#CFLAGS="-march=corei7-avx -mtune=corei7-avx -fdata-sections -ffunction-sections -O3 -Wa,--noexecstack"
-#LDFLAGS="-s -Wl,-O1,--as-needed"
 
 # configure GPU drivers and dependencies:
   get_graphicdrivers
@@ -198,7 +196,7 @@ configure_target() {
               --disable-libopencv \
               --disable-libdc1394 \
               --enable-libdcadec \
-              --disable-libfaac \
+              --enable-libfaac \
               --disable-libfreetype \
               --disable-libgsm \
               --disable-libmp3lame \
@@ -212,7 +210,7 @@ configure_target() {
               --disable-libvo-amrwbenc \
               --disable-libvorbis \
               --disable-libvpx \
-              --disable-libx264 \
+              --enable-libx264 \
               --disable-libxavs \
               --disable-libxvid \
               --enable-zlib \
@@ -222,7 +220,7 @@ configure_target() {
               $FFMPEG_FPU \
               --enable-yasm \
               --disable-symver \
-              --disable-lto
+              --enable-lto
 }
 
 post_makeinstall_target() {

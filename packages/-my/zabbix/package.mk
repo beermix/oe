@@ -1,15 +1,16 @@
 PKG_NAME="zabbix"
-PKG_VERSION="3.2.0beta2"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="OSS"
-PKG_URL="http://sourceforge.net/projects/zabbix/files/ZABBIX%20Latest%20Development/3.2.0beta2/zabbix-3.2.0beta2.tar.gz"
-PKG_DEPENDS_TARGET="toolchain curl libxml2 netbsd-curses openssl libssh2"
+PKG_VERSION="8d1f0fe"
+PKG_GIT_URL="https://github.com/zabbix/zabbix"
+PKG_DEPENDS_TARGET="toolchain curl libxml2 mariadb netbsd-curses openssl libssh2"
 PKG_PRIORITY="optional"
 PKG_SECTION="devel"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
+pre_configure_target() {
+  export LIBS="-lterminfo"
+  #export MAKEFLAGS=-j1
+}
 
 PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
 			   --bindir=/usr/bin \

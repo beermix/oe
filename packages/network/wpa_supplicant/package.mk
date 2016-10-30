@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://hostap.epitest.fi/wpa_supplicant/"
 PKG_URL="http://hostap.epitest.fi/releases/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain dbus libnl-tiny openssl"
+PKG_DEPENDS_TARGET="toolchain dbus libnl-tiny openssl readline"
 PKG_PRIORITY="optional"
 PKG_SECTION="network"
 PKG_SHORTDESC="wpa_supplicant: An IEEE 802.11i supplicant implementation"
@@ -39,40 +39,14 @@ configure_target() {
   LDFLAGS="$LDFLAGS -lpthread -lm"
   CFLAGS="$CFLAGS -D_GNU_SOURCE -DCONFIG_LIBNL20 -I$SYSROOT_PREFIX/usr/include/libnl-tiny"
   cp $PKG_DIR/config/makefile.config wpa_supplicant/.config
-
-#echo "CONFIG_TLS=gnutls" >> .config
-#echo "CONFIG_GNUTLS_EXTRA=y" >> .config
-echo "CONFIG_P2P=y" >> .config
-echo "CONFIG_WIFI_DISPLAY=y" >> .config
-echo "CONFIG_CTRL_IFACE_DBUS_NEW=y" >> .config
-echo "CONFIG_DRIVER_TEST=y" >> .config
-echo "CONFIG_DRIVER_WIRED=y" >> .config
-echo "CONFIG_IEEE8021X_EAPOL=y" >> .config
-echo "CONFIG_EAP_FAST=y" >> .config
-echo "CONFIG_EAP_MD5=y" >> .config
-echo "CONFIG_EAP_MSCHAPV2=y" >> .config
-echo "CONFIG_EAP_TLS=y" >> .config
-echo "CONFIG_EAP_PEAP=y" >> .config
-echo "CONFIG_EAP_TTLS=y" >> .config
-echo "CONFIG_EAP_GTC=y" >> .config
-echo "CONFIG_EAP_OTP=y" >> .config
-echo "CONFIG_EAP_LEAP=y" >> .config
-echo "CONFIG_WPS=y" >> .config
-echo "CONFIG_PKCS12=y" >> .config
-echo "CONFIG_CTRL_IFACE=y" >> .config
-echo "CONFIG_PEERKEY=y" >> .config
-echo "CONFIG_IEEE80211W=y" >> .config
-echo "CONFIG_TLS=internal" >> .config
-echo "CONFIG_INTERNAL_LIBTOMMATH_FAST=y" >> .config
-echo "CONFIG_IEEE80211R=y" >> .config
-echo "CONFIG_NO_RANDOM_POOL=y" >> .config
-echo "CONFIG_IBSS_RSN=y" >> .config
-echo "NEED_80211_COMMON=y" >> .config
-echo "CONFIG_READLINE=y" >> .config
+  #echo "CONFIG_TLS=gnutls" >> .config
+  #echo "CONFIG_GNUTLS_EXTRA=y" >> .config
+  #echo "CONFIG_P2P=y" >> .config
+  echo "CONFIG_READLINE=y" >> .config
 }
 
 post_makeinstall_target() {
-  rm -r $INSTALL/usr/bin/wpa_cli
+  #rm -r $INSTALL/usr/bin/wpa_cli
 
 mkdir -p $INSTALL/etc/dbus-1/system.d
   cp wpa_supplicant/dbus/dbus-wpa_supplicant.conf $INSTALL/etc/dbus-1/system.d

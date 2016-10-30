@@ -5,20 +5,18 @@ PKG_DEPENDS_TARGET="toolchain sqlite libpcap"
 PKG_PRIORITY="optional"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 post_unpack() {
   cp -r $PKG_BUILD/src/* $PKG_BUILD/
 }
 
-#CFLAGS="-march=corei7-avx -mtune=corei7-avx -fdata-sections -ffunction-sections -O3 -Wa,--noexecstack"
-#LDFLAGS="-s -Wl,-O1,--as-needed"
 
 pre_configure_target() {
    cd $ROOT/$PKG_BUILD
    export MAKEFLAGS="-j1"
-   strip_lto
-   LDFLAGS="-lsqlite3"
+   export LDFLAGS="-lpthread"
+   #LDFLAGS="-lsqlite3"
 }
 
 

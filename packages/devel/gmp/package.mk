@@ -33,10 +33,5 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_HOST="--enable-cxx --enable-static --disable-shared --with-pic"
-PKG_CONFIGURE_OPTS_TARGET="--enable-cxx \
-			   --enable-static \
-			   --disable-shared \
-			   --without-pic \
-			   --with-gnu-ld \
-			   --without-readline \
-			   --disable-assert"
+
+PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"

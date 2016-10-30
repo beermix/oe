@@ -1,6 +1,5 @@
 PKG_NAME="bwm-ng"
-PKG_VERSION="a6285a0"
-PKG_SITE="http://www.gropp.org/?id=projects&sub=bwm-ng"
+PKG_VERSION="9baf9c0"
 PKG_GIT_URL="https://github.com/vgropp/bwm-ng"
 PKG_DEPENDS_TARGET="toolchain libstatgrab"
 PKG_PRIORITY="optional"
@@ -20,7 +19,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
 			   --with-sysctl \
 			   --with-sysctldisk \
 			   --with-procnetdev \
-			   --with-partitions 
+			   --with-partitions \ 
 			   --enable-64bit \
 			   --enable-netstatbyte \
 			   --enable-netstatlink \

@@ -9,8 +9,7 @@ PKG_AUTORECONF="no"
 
 pre_configure_target() {
    strip_lto
-   export LIBS=-pthread
-   cd $ROOT/$PKG_BUILD
+   export LIBS="-pthread"
 }
 
 

@@ -1,5 +1,5 @@
 PKG_NAME="LVM2"
-PKG_VERSION="2.02.165"
+PKG_VERSION="2.02.166"
 PKG_SITE="http://sources.redhat.com/lvm2/"
 PKG_URL="ftp://sources.redhat.com/pub/lvm2/${PKG_NAME}.${PKG_VERSION}.tgz"
 PKG_SOURCE_DIR="${PKG_NAME}.${PKG_VERSION}"
@@ -9,19 +9,12 @@ PKG_SECTION="system"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
+
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
 			   ac_cv_func_realloc_0_nonnull=yes \
-			   --disable-lvm1_fallback \
+			   ac_cv_flag_HAVE_PIE=no \
+			   --disable-testing \
+			   --disable-blkid_wiping \
 			   --disable-readline \
-			   --enable-realtime \
-			   --disable-profiling \
-			   --enable-devmapper \
-			   --disable-compat \
-			   --enable-o_direct \
-			   --enable-applib \
-			   --enable-cmdlib \
-			   --enable-pkgconfig \
-			   --enable-fsadm \
-			   --disable-dmeventd \
-			   --disable-selinux \
-			   --disable-nls"
+			   --with-lvm1=none \
+			   --with-optimisation="

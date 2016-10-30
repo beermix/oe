@@ -45,7 +45,9 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-gold \
                          --enable-ld=default \
                          --enable-lto \
-                         --disable-nls"
+                         --disable-nls \
+                         --enable-static \
+                         --disable-shared"
 
 
 makeinstall_host() {
