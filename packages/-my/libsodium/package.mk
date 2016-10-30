@@ -11,5 +11,6 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static \
 			   --disable-shared \
 			   --with-gnu-ld \
 			   --enable-minimal=yes \
+			   --disable-silent-rules \
 			   --disable-ssp"
 		

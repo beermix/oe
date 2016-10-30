@@ -1,5 +1,5 @@
 PKG_NAME="aria2"
-PKG_VERSION="release-1.28.0"
+PKG_VERSION="90452ae"
 PKG_GIT_URL="https://github.com/aria2/aria2"
 PKG_DEPENDS_TARGET="toolchain libssh2 expat pcre curl libidn libuv jemalloc libev libxml2"
 PKG_PRIORITY="optional"

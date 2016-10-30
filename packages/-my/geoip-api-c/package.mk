@@ -1,6 +1,6 @@
 PKG_NAME="geoip-api-c"
-PKG_VERSION="6e18deb"
-PKG_URL="https://github.com/maxmind/geoip-api-c/archive/$PKG_VERSION.tar.gz"
+PKG_VERSION="89e1b85"
+PKG_GIT_URL="https://github.com/maxmind/geoip-api-c"
 PKG_DEPENDS_TARGET="toolchain gawk"
 PKG_PRIORITY="optional"
 PKG_SECTION="tools"

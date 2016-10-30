@@ -8,9 +8,6 @@ PKG_AUTORECONF="yes"
 
 #CFLAGS="$CFLAGS -fPIC -std=gnu99"
 
-CFLAGS="-march=corei7-avx -mtune=corei7-avx -fdata-sections -ffunction-sections -O3 -Wa,--noexecstack -fPIC -std=gnu99"
-LDFLAGS="-s -Wl,-O1,--as-needed -fPIC"
-
 PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
 			   --with-openssl-dir=$SYSROOT_PREFIX/usr \
 			   --disable-gcc-hardening \

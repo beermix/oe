@@ -19,7 +19,7 @@
 PKG_NAME="go"
 PKG_VERSION="go1.7.3"
 PKG_GIT_URL="https://github.com/golang/go"
-PKG_DEPENDS_HOST="toolchain go1.4:host"
+PKG_DEPENDS_HOST="toolchain"
 PKG_SECTION="system"
 PKG_SHORTDESC="Go is an open source programming language that makes it easy to build simple, reliable, and efficient software."
 PKG_LONGDESC="Go is an open source programming language that makes it easy to build simple, reliable, and efficient software."
@@ -39,14 +39,16 @@ PKG_AUTORECONF="no"
 configure_host() {
   export GOOS=linux
   export GOROOT_FINAL=$ROOT/$TOOLCHAIN/lib/golang
-  export GOROOT_BOOTSTRAP=$ROOT/$TOOLCHAIN/lib/golang-1.4
+  #export GOROOT_BOOTSTRAP=$ROOT/$TOOLCHAIN/lib/golang-1.4
   export GOARCH=amd64
   export CGO_ENABLED=1
+  export CC="$CC"
+  export CXX="$CXX"
 }
 
 make_host() {
   cd $ROOT/$PKG_BUILD/src
-  ./make.bash --no-banner
+  bash make.bash --no-banner
 }
 
 makeinstall_host() {

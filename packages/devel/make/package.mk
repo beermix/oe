@@ -31,19 +31,10 @@ PKG_LONGDESC="The 'make' utility automatically determines which pieces of a larg
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-CFLAGS="-march=native -O3 -Wall -pipe"
-LDFLAGS="-s -Wl,--export-dynamic -Wl,-Bsymbolic-functions -Wl,-z,relro"
 
-
-PKG_CONFIGURE_OPTS_HOST="--without-libiconv-prefix \
-			 --without-libintl-prefix \
-			 --enable-silent-rules \
-			 --with-gnu-ld \
-			 --disable-nls \
-			 --disable-load \
-			 --enable-option-checking"
+PKG_CONFIGURE_OPTS_HOST="--disable-load --without-guile"
 			 
-PKG_CONFIGURE_OPTS_TARGET="PKG_CONFIGURE_OPTS_HOST"
+PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
 			 
 post_makeinstall_host() {
   ln -sf make $ROOT/$TOOLCHAIN/bin/gmake

@@ -8,6 +8,7 @@ PKG_PRIORITY="optional"
 PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
 PKG_AUTORECONF="yes"
+
 pre_configure_target() {
   export CFLAGS="$CFLAGS -fPIC"
 }
@@ -23,7 +24,6 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared \
                            --without-ssl \
                            --without-crypto \
                            --without-crypt \
-                           --with-sysroot=$SYSROOT_PREFIX \
                            --with-gnu-ld \
                            --without-client-gcrypt \
                            --without-gnutls \

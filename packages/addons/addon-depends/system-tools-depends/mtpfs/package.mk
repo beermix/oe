@@ -37,6 +37,3 @@ pre_configure_target() {
   export LIBS="-lusb-1.0 -ludev"
 }
 
-makeinstall_target() {
-  : # nop
-}

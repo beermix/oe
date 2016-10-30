@@ -54,51 +54,51 @@ PKG_DEPENDS_TARGET="toolchain \
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin/
     # bwm-ng
-    cp -P $(get_pkg_build bwm-ng)/.$TARGET_NAME/src/bwm-ng $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp -P $(get_build_dir bwm-ng)/.$TARGET_NAME/src/bwm-ng $ADDON_BUILD/$PKG_ADDON_ID/bin
 
     # iftop
-    cp -P $(get_pkg_build iftop)/.$TARGET_NAME/iftop $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp -P $(get_build_dir iftop)/.$TARGET_NAME/iftop $ADDON_BUILD/$PKG_ADDON_ID/bin
 
     # iperf
-    cp -P $(get_pkg_build iperf)/.$TARGET_NAME/src/iperf3 $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp -P $(get_build_dir iperf)/.$TARGET_NAME/src/iperf3 $ADDON_BUILD/$PKG_ADDON_ID/bin
     ln -s iperf3 $ADDON_BUILD/$PKG_ADDON_ID/bin/iperf
 
     # irssi
-    cp -P $(get_pkg_build irssi)/.$TARGET_NAME/src/fe-text/irssi $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp -P $(get_build_dir irssi)/.$TARGET_NAME/src/fe-text/irssi $ADDON_BUILD/$PKG_ADDON_ID/bin
 
     # iw
-    cp -P $(get_pkg_build iw)/iw $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp -P $(get_build_dir iw)/iw $ADDON_BUILD/$PKG_ADDON_ID/bin
 
     # lftp
-    cp -P $(get_pkg_build lftp)/.$TARGET_NAME/src/lftp $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp -P $(get_build_dir lftp)/.$TARGET_NAME/src/lftp $ADDON_BUILD/$PKG_ADDON_ID/bin
 
     # ncftp
-    cp -P $(get_pkg_build ncftp)/.$TARGET_NAME/bin/ncftp $ADDON_BUILD/$PKG_ADDON_ID/bin
-    cp -P $(get_pkg_build ncftp)/.$TARGET_NAME/bin/ncftpbatch $ADDON_BUILD/$PKG_ADDON_ID/bin
-    cp -P $(get_pkg_build ncftp)/.$TARGET_NAME/bin/ncftpget $ADDON_BUILD/$PKG_ADDON_ID/bin
-    cp -P $(get_pkg_build ncftp)/.$TARGET_NAME/bin/ncftpls $ADDON_BUILD/$PKG_ADDON_ID/bin
-    cp -P $(get_pkg_build ncftp)/.$TARGET_NAME/bin/ncftpput $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp -P $(get_build_dir ncftp)/.$TARGET_NAME/bin/ncftp $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp -P $(get_build_dir ncftp)/.$TARGET_NAME/bin/ncftpbatch $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp -P $(get_build_dir ncftp)/.$TARGET_NAME/bin/ncftpget $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp -P $(get_build_dir ncftp)/.$TARGET_NAME/bin/ncftpls $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp -P $(get_build_dir ncftp)/.$TARGET_NAME/bin/ncftpput $ADDON_BUILD/$PKG_ADDON_ID/bin
 
     # ngrep
-    cp -P $(get_pkg_build ngrep)/.$TARGET_NAME/ngrep $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp -P $(get_build_dir ngrep)/.$TARGET_NAME/ngrep $ADDON_BUILD/$PKG_ADDON_ID/bin
 
     # nmap
-    cp -P $(get_pkg_build nmap)/nmap $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp -P $(get_build_dir nmap)/nmap $ADDON_BUILD/$PKG_ADDON_ID/bin
 
     # rsync
-    cp -P $(get_pkg_build rsync)/.$TARGET_NAME/rsync $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp -P $(get_build_dir rsync)/.$TARGET_NAME/rsync $ADDON_BUILD/$PKG_ADDON_ID/bin
 
     # sshfs
-    cp -P $(get_pkg_build sshfs)/.$TARGET_NAME/sshfs $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp -P $(get_build_dir sshfs)/.$TARGET_NAME/sshfs $ADDON_BUILD/$PKG_ADDON_ID/bin
 
     # tcpdump
-    cp -P $(get_pkg_build tcpdump)/.$TARGET_NAME/tcpdump $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp -P $(get_build_dir tcpdump)/.$TARGET_NAME/tcpdump $ADDON_BUILD/$PKG_ADDON_ID/bin
 
     # udpxy
-    cp -P $(get_pkg_build udpxy)/udpxy $ADDON_BUILD/$PKG_ADDON_ID/bin/
+    cp -P $(get_build_dir udpxy)/udpxy $ADDON_BUILD/$PKG_ADDON_ID/bin/
 
     # wireless_tools
-    cp -P $(get_pkg_build wireless_tools)/iwmulticall $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp -P $(get_build_dir wireless_tools)/iwmulticall $ADDON_BUILD/$PKG_ADDON_ID/bin
     ln -s iwmulticall $ADDON_BUILD/$PKG_ADDON_ID/bin/iwconfig
     ln -s iwmulticall $ADDON_BUILD/$PKG_ADDON_ID/bin/iwgetid
     ln -s iwmulticall $ADDON_BUILD/$PKG_ADDON_ID/bin/iwlist

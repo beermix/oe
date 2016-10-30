@@ -1,16 +1,20 @@
 PKG_NAME="lm_sensors"
-PKG_VERSION="3.4.0"
-PKG_URL="http://sources.libreelec.tv/mirror/lm_sensors/lm_sensors-3.4.0.tar.bz2"
+PKG_VERSION="45ffa15"
+PKG_GIT_URL="https://github.com/groeck/lm-sensors"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_PRIORITY="optional"
 PKG_SECTION="devel"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_MAKE_OPTS_TARGET="PREFIX=/usr CC=$CC AR=$AR"
-PKG_MAKEINSTALL_OPTS_TARGET="PREFIX=/usr"
+PKG_MAKE_OPTS_TARGET="BUILD_STATIC_LIB=1 SBINDIR=/usr/bin CC=$CC AR=$AR"
+PKG_MAKEINSTALL_OPTS_TARGET="BUILD_STATIC_LIB=1 BINDIR=/usr/bin SBINDIR=/usr/bin LIBDIR=/usr/lib CC=$CC AR=$AR"
 
 pre_make_target() {
   export CFLAGS="$CFLAGS"
   export CPPFLAGS="$CPPFLAGS"
+}
+
+post_makeinstall_target() {
+  rm -rf $INSTALL/usr/local
 }

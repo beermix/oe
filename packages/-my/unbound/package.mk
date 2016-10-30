@@ -1,5 +1,5 @@
 PKG_NAME="unbound"
-PKG_VERSION="d3f9585"
+PKG_VERSION="8e3c8ef"
 PKG_GIT_URL="https://github.com/jedisct1/unbound"
 PKG_DEPENDS_TARGET="toolchain expat flex libevent openssl"
 PKG_PRIORITY="optional"

@@ -1,24 +1,23 @@
 PKG_NAME="openssl"
 PKG_VERSION="1.0.2j"
 PKG_URL="https://www.openssl.org/source/openssl-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain libz gmp lksctp-tools"
+PKG_DEPENDS_TARGET="toolchain libz gmp"
 PKG_PRIORITY="optional"
 PKG_SECTION="security"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-# experimental-store
-MAKEFLAGS="-j1"
-
+pre_configure_target() {
+  export MAKEFLAGS="-j1"
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O2||g"`
+}
 
 configure_target() {
   ./Configure --prefix=/usr \
               --libdir=lib \
               --openssldir=/etc/ssl \
-              -march=corei7-avx \
               shared \
               threads \
-              sctp \
               zlib-dynamic \
               enable-camellia \
               enable-seed \
@@ -32,10 +31,10 @@ configure_target() {
               no-rc5 \
               enable-tlsext \
               enable-ec_nistp_64_gcc_128 \
-              experimental-libunbound \
               enable-gmp \
               no-ssl3-method \
-              linux-x86_64
+              linux-x86_64 \
+              "-Wa,--noexecstack $CPPFLAGS $CFLAGS -pthread $LDFLAGS"
 }
 
 make_target() {
@@ -61,7 +60,7 @@ makeinstall_target() {
 post_makeinstall_target() {
   rm -rf $INSTALL/etc/pki/tls/misc
   rm -rf $INSTALL/usr/bin/c_rehash
-  $STRIP $INSTALL/usr/bin/openssl
+  #$STRIP $INSTALL/usr/bin/openssl
   
 # ca-certification: provides a tool to download and create ca-bundle.crt
 # download url: http://curl.haxx.se

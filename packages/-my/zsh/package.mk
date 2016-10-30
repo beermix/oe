@@ -1,7 +1,7 @@
 PKG_NAME="zsh"
-PKG_VERSION="364c404"
+PKG_VERSION="9cfd26b"
 PKG_GIT_URL="https://github.com/zsh-users/zsh"
-PKG_DEPENDS_TARGET="toolchain libcap pcre readline gdbm libcap"
+PKG_DEPENDS_TARGET="toolchain libcap pcre readline gdbm libpcap"
 PKG_PRIORITY="optional"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
@@ -25,11 +25,11 @@ PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
 			   --disable-etcdir \
 			   --enable-function-subdirs \
 			   --with-tcsetpgrp \
-			   --enable-gdbm"
+			   --enable-gdbm \
+			   --enable-zsh-secure-free \
+			   --enable-readnullcmd=pager"
 
 post_makeinstall_target() {
   rm $INSTALL/bin/zsh-5*
   rm -rf $INSTALL/usr/share/zsh/$PKG_VERSION/help
 }
-
-# --enable-readnullcmd=pager  --enable-zsh-secure-free

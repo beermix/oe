@@ -49,7 +49,7 @@ configure_host() {
         -DLLVM_ENABLE_ZLIB=OFF \
         -DLLVM_ENABLE_TERMINFO=OFF \
         -DLLVM_OPTIMIZED_TABLEGEN=ON \
-        -DLLVM_TARGETS_TO_BUILD=AMDGPU \
+        -DLLVM_TARGETS_TO_BUILD=X86 \
         ..
 }
 
@@ -77,7 +77,7 @@ configure_target() {
         -DLLVM_TABLEGEN=$ROOT/$TOOLCHAIN/bin/llvm-tblgen \
         -DLLVM_ENABLE_BACKTRACES=OFF \
         -DLLVM_OPTIMIZED_TABLEGEN=ON \
-        -DLLVM_TARGETS_TO_BUILD="AMDGPU" \
+        -DLLVM_TARGETS_TO_BUILD="X86" \
         -DLLVM_BUILD_LLVM_DYLIB=ON \
         -DLLVM_LINK_LLVM_DYLIB=ON \
         ..
@@ -96,5 +96,4 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
   rm -rf $INSTALL/usr/lib/LLVMHello.so
   rm -rf $INSTALL/usr/lib/libLTO.so
-  rm -rf $INSTALL/usr/share
 }

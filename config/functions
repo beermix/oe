@@ -131,11 +131,6 @@ get_pkg_build() {
     local _PKG_DIR=$(get_pkg_dir $1)
     if [ -d "$_PKG_DIR" -a -f $_PKG_DIR/package.mk ] ; then
       . $_PKG_DIR/package.mk
-    else
-      local _PKG_DIR=$(find $ROOT/packages -name $1 2>/dev/null)
-      if [ -d "$_PKG_DIR" -a -f $_PKG_DIR/package.mk ] ; then
-        . $_PKG_DIR/package.mk
-      fi
     fi
     echo $ROOT/$BUILD/${PKG_NAME}-${PKG_VERSION}
   fi
@@ -231,15 +226,19 @@ strip_lto() {
   if [ -n "$GCC_OPTIM_LTO" ] ; then
     CFLAGS=`echo $CFLAGS | sed -e "s|$GCC_OPTIM_LTO||g"`
     CXXFLAGS=`echo $CXXFLAGS | sed -e "s|$GCC_OPTIM_LTO||g"`
+    TARGET_CFLAGS=`echo $TARGET_CFLAGS | sed -e "s|$GCC_OPTIM_LTO||g"`
+    TARGET_CXXFLAGS=`echo $TARGET_CXXFLAGS | sed -e "s|$GCC_OPTIM_LTO||g"`
   fi
   if [ -n "$LD_OPTIM_LTO" ] ; then
     LDFLAGS=`echo $LDFLAGS | sed -e "s|$LD_OPTIM_LTO||g"`
+    TARGET_LDFLAGS=`echo $TARGET_LDFLAGS | sed -e "s|$LD_OPTIM_LTO||g"`
   fi
 }
 
 strip_gold() {
   # strip out usage from GOLD linker
   LDFLAGS=`echo $LDFLAGS | sed -e "s|-fuse-ld=gold||g"`
+  TARGET_LDFLAGS=`echo $TARGET_LDFLAGS | sed -e "s|-fuse-ld=gold||g"`
 }
 
 fix_module_depends() {
@@ -337,3 +336,14 @@ show_config() {
   
   echo -e "$show_message"
 }
+# strip
+debug_strip() {
+  if [ ! "$DEBUG" = yes ]; then
+    find $* -type f -executable | xargs $STRIP 1>/dev/null || :
+  fi
+}
+
+# Use distribution functions if any
+if [ -f "distributions/$DISTRO/config/functions" ]; then
+  . distributions/$DISTRO/config/functions
+fi

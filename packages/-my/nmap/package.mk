@@ -10,9 +10,6 @@ PKG_PRIORITY="optional"
 PKG_SECTION="tools"
 PKG_AUTORECONF="no"
 
-CFLAGS="-march=corei7-avx -mtune=corei7-avx -fdata-sections -ffunction-sections -O3 -Wa,--noexecstack"
-LDFLAGS="-s -Wl,-O1,--as-needed"
-
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME

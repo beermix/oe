@@ -11,11 +11,14 @@ PKG_AUTORECONF="no"
 
 pre_make_target() {
   export GOARCH=amd64
+  export HOST_GO_CGO_ENABLED=1
+  export CC="$CC"
+  export CXX="$CXX"
   export GOOS=linux
   export CGO_ENABLED=0
   export CGO_NO_EMULATION=1
   export CGO_CFLAGS=$CFLAGS
-  export LDFLAGS="-w -extldflags -static -X github.com/docker/containerd.GitCommit=${PKG_VERSION} -extld $CC"
+  export LDFLAGS="-s -w -extldflags -static -X github.com/docker/containerd.GitCommit=${PKG_VERSION} -extld $CC"
   export GOLANG=$ROOT/$TOOLCHAIN/lib/golang/bin/go
   export GOPATH=$ROOT/$PKG_BUILD.gopath:$ROOT/$PKG_BUILD/vendor/
   export GOROOT=$ROOT/$TOOLCHAIN/lib/golang

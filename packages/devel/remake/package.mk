@@ -28,12 +28,9 @@ PKG_LONGDESC="Patched GNU Make 4.1 sources to add improved error reporting, trac
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-CFLAGS="-march=native -O3 -Wall -pipe"
-LDFLAGS="-s -Wl,--export-dynamic -Wl,-Bsymbolic-functions -Wl,-z,relro"
+LDFLAGS="-s -Wl,-O1,--as-needed -Wl,-Bsymbolic-functions -Wl,-z,relro -Wl,-rpath,$ROOT/$TOOLCHAIN/lib -L$ROOT/$TOOLCHAIN/lib"
   
 PKG_CONFIGURE_OPTS_HOST="ac_cv_func_gettimeofday=yes \
-			 --without-libiconv-prefix \
-			 --without-libintl-prefix \
 			 --disable-silent-rules \
 			 --with-gnu-ld \
 			 --disable-nls"

@@ -53,17 +53,9 @@ post_makeinstall_host() {
 make_target() {
   cd $ROOT/$PKG_BUILD/nss
 
-    
-     export BUILD_OPT=1
-     export PKG_CONFIG_ALLOW_SYSTEM_LIBS=1
-     export PKG_CONFIG_ALLOW_SYSTEM_CFLAGS=1
-     export FREEBL_NO_DEPEND=0
-     #export NSS_USE_SYSTEM_SQLITE=1
-     export NSS_ENABLE_WERROR=1
-     export NSPR_INCLUDE_DIR=`pkgconf--cflags-only-I nspr | sed 's/-I//'`
-     export NSPR_LIB_DIR=`pkgconf --libs-only-L nspr | sed 's/-L.//'`
-     
-     make BUILD_OPT=1 USE_64=1 \
+  [ "$TARGET_ARCH" = "x86_64" ] && TARGET_USE_64="USE_64=1"
+
+  make BUILD_OPT=1 $TARGET_USE_64 \
      NSPR_INCLUDE_DIR=$SYSROOT_PREFIX/usr/include/nspr \
      USE_SYSTEM_ZLIB=1 ZLIB_LIBS=-lz \
      OS_TEST=$TARGET_ARCH \

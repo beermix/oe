@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libpng"
-PKG_VERSION="1.6.25"
+PKG_VERSION="1.6.26"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
@@ -32,6 +32,10 @@ PKG_LONGDESC="PNG (Portable Network Graphics) is an extensible file format for t
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
+
+#pre_configure_target() {
+#  sed -i -e '/^check/s:scripts/symbols.chk::' $ROOT/$PKG_BUILD/Makefile.in
+#}
 
 PKG_CMAKE_OPTS_HOST="-DPNG_SHARED=OFF -DPNG_STATIC=ON -DPNG_TESTS=OFF"
 PKG_CMAKE_OPTS_TARGET="-DPNG_SHARED=OFF -DPNG_STATIC=ON -DPNG_TESTS=OFF"

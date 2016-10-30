@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="go1.4"
-PKG_VERSION="50eb39b"
+PKG_VERSION="79d85a4"
 PKG_GIT_URL="https://github.com/golang/go"
 PKG_DEPENDS_HOST="toolchain"
 PKG_PRIORITY="optional"
@@ -41,7 +41,10 @@ configure_host() {
   export GOOS=linux
   export GOROOT_FINAL=$ROOT/$TOOLCHAIN/lib/golang-1.4
   export GOARCH=amd64
-  export CGO_ENABLED=0
+  export CGO_ENABLED=1
+  export HOST_GO_CGO_ENABLED=1
+  export CC="$CC"
+  export CXX="$CXX"
 }
 
 make_host() {

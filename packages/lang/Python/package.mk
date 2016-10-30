@@ -24,7 +24,7 @@ PKG_LICENSE="OSS"
 PKG_SITE="http://www.python.org/"
 PKG_URL="http://www.python.org/ftp/python/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="libz:host bzip2:host"
-PKG_DEPENDS_TARGET="toolchain sqlite expat libz bzip2 libressl libffi Python:host"
+PKG_DEPENDS_TARGET="toolchain sqlite expat libz bzip2 openssl libffi Python:host"
 PKG_SECTION="lang"
 PKG_SHORTDESC="python: The Python programming language"
 PKG_LONGDESC="Python is an interpreted object-oriented programming language, and is often compared with Tcl, Perl, Java or Scheme."
@@ -89,6 +89,12 @@ makeinstall_host() {
 
 pre_configure_target() {
   export PYTHON_FOR_BUILD=$ROOT/$TOOLCHAIN/bin/python
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O2||g"`
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-Os||g"`
+}
+
+pre_configure_host() {
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O2||g"`
 }
 
 make_target() {

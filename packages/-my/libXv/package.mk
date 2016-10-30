@@ -10,4 +10,4 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-malloc0returnsnull --disable-shared --enable-static --with-gnu-ld"
+PKG_CONFIGURE_OPTS_TARGET="--disable-malloc0returnsnull --disable-shared --enable-static --with-gnu-ld"

@@ -13,4 +13,4 @@ PKG_CONFIGURE_OPTS_HOST="--enable-static \
 			 --with-gmp=$ROOT/$TOOLCHAIN \
 			 --without-clang \
 			 --disable-silent-rules \
-			 --with-gcc-arch=corei7"
+			 --with-gcc-arch=ivybridge"

@@ -48,30 +48,30 @@ PKG_DEPENDS_TARGET="toolchain \
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin/
     # alsamixer
-    cp -P $(get_pkg_build alsa-utils)/.$TARGET_NAME/alsamixer/alsamixer $ADDON_BUILD/$PKG_ADDON_ID/bin/
+    cp -P $(get_build_dir alsa-utils)/.$TARGET_NAME/alsamixer/alsamixer $ADDON_BUILD/$PKG_ADDON_ID/bin/
 
     # mediainfo
-    cp -P $(get_pkg_build mediainfo)/Project/GNU/CLI/mediainfo $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp -P $(get_build_dir mediainfo)/Project/GNU/CLI/mediainfo $ADDON_BUILD/$PKG_ADDON_ID/bin
 
     # mesa-demos
-    cp -P $(get_pkg_build mesa-demos)/.$TARGET_NAME/src/xdemos/glxdemo $ADDON_BUILD/$PKG_ADDON_ID/bin 2>/dev/null || :
-    cp -P $(get_pkg_build mesa-demos)/.$TARGET_NAME/src/xdemos/glxgears $ADDON_BUILD/$PKG_ADDON_ID/bin 2>/dev/null || :
-    cp -P $(get_pkg_build mesa-demos)/.$TARGET_NAME/src/xdemos/glxinfo $ADDON_BUILD/$PKG_ADDON_ID/bin 2>/dev/null || :
+    cp -P $(get_build_dir mesa-demos)/.$TARGET_NAME/src/xdemos/glxdemo $ADDON_BUILD/$PKG_ADDON_ID/bin 2>/dev/null || :
+    cp -P $(get_build_dir mesa-demos)/.$TARGET_NAME/src/xdemos/glxgears $ADDON_BUILD/$PKG_ADDON_ID/bin 2>/dev/null || :
+    cp -P $(get_build_dir mesa-demos)/.$TARGET_NAME/src/xdemos/glxinfo $ADDON_BUILD/$PKG_ADDON_ID/bin 2>/dev/null || :
 
     # mpg123
-    cp -P $(get_pkg_build mpg123)/.install_pkg/usr/bin/* $ADDON_BUILD/$PKG_ADDON_ID/bin/
+    cp -P $(get_build_dir mpg123)/.install_pkg/usr/bin/* $ADDON_BUILD/$PKG_ADDON_ID/bin/
 
     # opencaster
-    cp -P $(get_pkg_build opencaster)/.install_pkg/* $ADDON_BUILD/$PKG_ADDON_ID/bin/
+    cp -P $(get_build_dir opencaster)/.install_pkg/* $ADDON_BUILD/$PKG_ADDON_ID/bin/
 
     # squeezelite
-    cp -P $(get_pkg_build squeezelite)/squeezelite $ADDON_BUILD/$PKG_ADDON_ID/bin/
+    cp -P $(get_build_dir squeezelite)/squeezelite $ADDON_BUILD/$PKG_ADDON_ID/bin/
 
     # tsdecrypt
-    cp -P $(get_pkg_build tsdecrypt)/tsdecrypt $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp -P $(get_build_dir tsdecrypt)/tsdecrypt $ADDON_BUILD/$PKG_ADDON_ID/bin
 
     # tstools
-    cp -P $(get_pkg_build tstools)/bin/* $ADDON_BUILD/$PKG_ADDON_ID/bin/
+    cp -P $(get_build_dir tstools)/bin/* $ADDON_BUILD/$PKG_ADDON_ID/bin/
 
   debug_strip $ADDON_BUILD/$PKG_ADDON_ID/bin
 }

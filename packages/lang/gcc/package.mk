@@ -24,16 +24,16 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://gcc.gnu.org/"
 if [ x"$PKG_USE_SNAPSHOT" == x"true" ]; then
     PKG_MAJOR_VERSION="6"
-    PKG_SNAPSHOT_DATESTAMP="20161020"
+    PKG_SNAPSHOT_DATESTAMP="20161027"
     PKG_VERSION="$PKG_MAJOR_VERSION-$PKG_SNAPSHOT_DATESTAMP"
     PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/$PKG_MAJOR_VERSION-$PKG_SNAPSHOT_DATESTAMP/gcc-$PKG_MAJOR_VERSION-$PKG_SNAPSHOT_DATESTAMP.tar.bz2"
 else
     PKG_VERSION="6.2.0"
     PKG_URL="http://ftpmirror.gnu.org/gcc/$PKG_NAME-$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
 fi
-PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host cloog:host remake:host"
+PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host"
 PKG_DEPENDS_TARGET="gcc:host"
-PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host cloog:host glibc"
+PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host glibc"
 PKG_SECTION="lang"
 PKG_SHORTDESC="gcc: The GNU Compiler Collection Version 4 (aka GNU C Compiler)"
 PKG_LONGDESC="This package contains the GNU Compiler Collection. It includes compilers for the languages C, C++, Objective C, Fortran 95, Java and others ... This GCC contains the Stack-Smashing Protector Patch which can be enabled with the -fstack-protector command-line option. More information about it ca be found at http://www.research.ibm.com/trl/projects/security/ssp/."
@@ -47,14 +47,12 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-mpfr=$ROOT/$TOOLCHAIN \
                            --with-mpc=$ROOT/$TOOLCHAIN \
                            --with-isl=$ROOT/$TOOLCHAIN \
-                           --with-cloog=$ROOT/$TOOLCHAIN \
-                           --enable-graphite \
+                           --without-cloog \
                            --with-gnu-as \
                            --with-gnu-ld \
                            --enable-plugin \
                            --enable-lto \
-                           --enable-linker-build-id \
-                           --enable-gnu-indirect-function \
+                           --with-system-zlib \
                            --enable-gold \
                            --enable-ld=default \
                            --disable-multilib \
@@ -67,10 +65,12 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libquadmath \
                            --disable-libgomp \
                            --disable-libmpx \
+                           --disable-libitm \
                            --disable-libssp \
-                           --with-tune=ivybridge"
+                           --with-tune=ivybridge \
+                           MAKEINFO=missing"
 
-PKG_CONFIGURE_OPTS_BOOTSTRAP="MAKEINFO=missing $GCC_COMMON_CONFIGURE_OPTS \
+PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
                               --disable-libsanitizer \
@@ -92,13 +92,16 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-shared \
                          --disable-static \
                          --enable-c99 \
+                         --enable-linker-build-id \
+                         --enable-gnu-indirect-function \
+                         --enable-gnu-unique-object \
+                         --with-linker-hash-style=gnu \
                          --enable-long-long \
                          --enable-threads=posix \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time \
                          --enable-clocale=gnu \
                          --enable-libatomic \
-                         --enable-libitm \
                          $GCC_OPTS"
 
 pre_configure_host() {
@@ -138,7 +141,7 @@ makeinstall_target() {
     cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libgcc/libgcc_s.so* $INSTALL/usr/lib
     cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libstdc++-v3/src/.libs/libstdc++.so* $INSTALL/usr/lib
     cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libatomic/.libs/libatomic*.so* $INSTALL/usr/lib
-    cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libitm/.libs/libitm*.so* $INSTALL/usr/lib
+    #cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libitm/.libs/libitm*.so* $INSTALL/usr/lib
 }
 
 configure_init() {
