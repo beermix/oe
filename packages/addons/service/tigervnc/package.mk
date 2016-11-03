@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="tigervnc"
-PKG_VERSION="feca443"
+PKG_VERSION="6c0181c"
 PKG_REV="100"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPLv2"
