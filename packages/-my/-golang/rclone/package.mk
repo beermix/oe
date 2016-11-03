@@ -1,13 +1,13 @@
 PKG_NAME="rclone"
-PKG_VERSION="6846a1c"
+PKG_VERSION="11301a6"
 PKG_GIT_URL="https://github.com/ncw/rclone"
 PKG_DEPENDS_TARGET="toolchain go:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="tools"
 PKG_AUTORECONF="no"
 
-CFLAGS="-march=corei7-avx -mtune=corei7-avx -O3 -pipe"
-LDFLAGS="-Wl,-O1 -Wl,--as-needed"
+#CFLAGS="-march=corei7-avx -mtune=corei7-avx -O3 -pipe"
+#LDFLAGS="-Wl,-O1 -Wl,--as-needed"
 
 pre_make_target() {
   export GOOS=linux

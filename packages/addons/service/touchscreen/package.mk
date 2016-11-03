@@ -16,40 +16,43 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="spotify-connect-web"
-PKG_VERSION="0.0.3-alpha"
-PKG_REV="103"
-PKG_ARCH="arm"
-PKG_ADDON_PROJECTS="RPi2 WeTek_Core WeTek_Play"
-PKG_LICENSE="prop."
-PKG_SITE="https://github.com/Fornoth/spotify-connect-web"
-PKG_URL="https://github.com/Fornoth/spotify-connect-web/releases/download/$PKG_VERSION/${PKG_NAME}_$PKG_VERSION.tar.gz"
-PKG_SOURCE_DIR="spotify-connect-web"
-PKG_DEPENDS_TARGET="toolchain avahi"
+PKG_NAME="touchscreen"
+PKG_VERSION="1.0"
+PKG_REV="100"
+PKG_ARCH="any"
+PKG_ADDON_PROJECTS="Generic RPi RPi2 imx6"
+PKG_LICENSE="GPL"
+PKG_SITE=""
+PKG_URL=""
+PKG_DEPENDS_TARGET="toolchain tslib evtest"
 PKG_SECTION="service"
-PKG_SHORTDESC="Spotify Connect Web: play Spotify through LibreELEC"
-PKG_LONGDESC="Spotify Connect Web ($PKG_VERSION) plays Spotify through LibreELEC, using a Spotify app as a remote."
+PKG_SHORTDESC="Touchscreen: support addon for Touchscreens"
+PKG_LONGDESC="Touchscreen: addon creates new virtual input device and \
+converts data from touchscreen to Kodi. Short tap sends button press event \
+and long tap sends only xy coordinates. Also includes calibration program."
 PKG_AUTORECONF="no"
 
 PKG_IS_ADDON="yes"
-PKG_ADDON_NAME="Spotify Connect Web"
+PKG_ADDON_NAME="Touchscreen"
 PKG_ADDON_TYPE="xbmc.service"
-PKG_MAINTAINER="Anton Voyl (awiouy)"
 
 make_target() {
-  : # nop
+  : # only pack everything
 }
 
 makeinstall_target() {
-  : # nop
+  : # only pack everything
 }
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
 
-  cp -P $(get_build_dir avahi)/avahi-utils/.libs/avahi-publish \
-        $ADDON_BUILD/$PKG_ADDON_ID/bin/
+  cp $PKG_DIR/addon.xml $ADDON_BUILD/$PKG_ADDON_ID
 
-  cp -PR $PKG_BUILD/* $ADDON_BUILD/$PKG_ADDON_ID/
-  rm $ADDON_BUILD/$PKG_ADDON_ID/libasound.so.2
+  # set version (no need to edit xml file on version bump)
+  $SED -e "s|@ADDON_VERSION@|$ADDON_VERSION.$PKG_REV|g" \
+       -i $ADDON_BUILD/$PKG_ADDON_ID/addon.xml
+
+  cp $(get_build_dir tslib)/.install_pkg/usr/bin/* $ADDON_BUILD/$PKG_ADDON_ID/bin
+  cp $(get_build_dir evtest)/.$TARGET_NAME/evtest  $ADDON_BUILD/$PKG_ADDON_ID/bin
 }

@@ -12,14 +12,6 @@ pre_configure_target() {
   export MAKEFLAGS=-j1
 }
 
-PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
-			   --sysconfdir=/storage/.config \
-			   --datarootdir=/storage/.config \
-			   --enable-static \
-			   --disable-shared"
-
-#post_makeinstall_target() {
-#   mkdir -p $INSTALL/usr/bin/
-#   cp wash $INSTALL/usr/bin/wash
-#   cp reaver $INSTALL/usr/bin/reaver
-#}
+make_target() {
+make CC="$CC" AR="$AR" LD="$LD" XCFLAGS="$CFLAGS" RANLIB="$RANLIB" XLDFLAGS="$LDFLAGS" CFLAGS="$CFLAGS"
+}

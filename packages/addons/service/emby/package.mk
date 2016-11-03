@@ -55,12 +55,12 @@ addon() {
       $ADDON_BUILD/$PKG_ADDON_ID/Emby.Mono/System.Data.SQLite.dll.config
 
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
-  cp -L $(get_pkg_build ffmpegx)/.install_pkg/usr/local/bin/ffmpegx  \
-        $(get_pkg_build ffmpegx)/.install_pkg/usr/local/bin/ffprobex \
+  cp -L $(get_build_dir ffmpegx)/.install_pkg/usr/local/bin/ffmpegx  \
+        $(get_build_dir ffmpegx)/.install_pkg/usr/local/bin/ffprobex \
         $ADDON_BUILD/$PKG_ADDON_ID/bin/
 
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/lib
-  cp -L $(get_pkg_build imagemagick)/.install_pkg/usr/lib/libMagickCore-6.Q8.so.2 \
-        $(get_pkg_build imagemagick)/.install_pkg/usr/lib/libMagickWand-6.Q8.so   \
+  cp -L $(get_build_dir imagemagick)/.install_pkg/usr/lib/libMagickCore-6.Q8.so.2 \
+        $(get_build_dir imagemagick)/.install_pkg/usr/lib/libMagickWand-6.Q8.so   \
         $ADDON_BUILD/$PKG_ADDON_ID/lib/
 }

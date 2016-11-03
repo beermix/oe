@@ -18,7 +18,7 @@
 
 PKG_NAME="sapphire"
 PKG_VERSION="6.6"
-PKG_REV="101"
+PKG_REV="102"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="https://libreelec.tv"
@@ -39,8 +39,15 @@ else
   INPUT_H="$SYSROOT_PREFIX/usr/include/linux/input.h"
 fi
 
+pre_make_target() {
+  unset LDFLAGS
+}
+
 make_target() {
-  KVER=$(kernel_version) KDIR=$(kernel_path) INPUT_H=$INPUT_H make
+  make V=1 \
+       KVER=$(kernel_version) \
+       KDIR=$(kernel_path) \
+       INPUT_H=$INPUT_H
 }
 
 post_make_target() {
@@ -70,5 +77,5 @@ addon() {
     cp $PKG_BUILD/sapphire_keymap.sh $ADDON_BUILD/$PKG_ADDON_ID/bin
 
   # bash
-    cp $(get_pkg_build bash)/.install_pkg/usr/bin/bash $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp $(get_build_dir bash)/.install_pkg/usr/bin/bash $ADDON_BUILD/$PKG_ADDON_ID/bin
 }
