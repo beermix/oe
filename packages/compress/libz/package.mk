@@ -52,4 +52,3 @@ post_makeinstall_target() {
  # Install minizip
  make -C $ROOT/$PKG_BUILD/contrib/minizip DESTDIR=$SYSROOT_PREFIX install
 }
-

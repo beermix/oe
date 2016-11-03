@@ -38,8 +38,3 @@ post_makeinstall_target() {
   mkdir -p $INSTALL/usr/lib/xorg
     cp -P $PKG_DIR/scripts/intel-fullrange $INSTALL/usr/lib/xorg
 }
-
-post_install() {
-  enable_service intel-fullrange.service
-  enable_service intel-fullrange-resume.service
-}

@@ -17,11 +17,13 @@ setup_toolchain() {
       export CFLAGS="$TARGET_CFLAGS"
       export CXXFLAGS="$TARGET_CXXFLAGS"
       export LDFLAGS="$TARGET_LDFLAGS"
+      export LDSHARED="$CC -shared"
       export PKG_CONFIG_PATH=""
       export PKG_CONFIG_LIBDIR="$SYSROOT_PREFIX/usr/lib/pkgconfig:$SYSROOT_PREFIX/usr/share/pkgconfig"
       export PKG_CONFIG_SYSROOT_DIR="$SYSROOT_PREFIX"
       export CMAKE_CONF=$ROOT/$TOOLCHAIN/etc/cmake-$TARGET_NAME.conf
       export CMAKE="cmake -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF -DCMAKE_INSTALL_PREFIX=/usr"
+      export PYTHONXCPREFIX="$SYSROOT_PREFIX/usr"
       if [ ! -f $CMAKE_CONF ] ; then
         mkdir -p $ROOT/$TOOLCHAIN/etc
         echo "SET(CMAKE_SYSTEM_NAME Linux)" >> $CMAKE_CONF
@@ -65,6 +67,7 @@ setup_toolchain() {
       export CFLAGS="$HOST_CFLAGS"
       export CXXFLAGS="$HOST_CXXFLAGS"
       export LDFLAGS="$HOST_LDFLAGS"
+      export LDSHARED="$CC -shared"
       export PKG_CONFIG_PATH=""
       export PKG_CONFIG_LIBDIR="$ROOT/$TOOLCHAIN/lib/pkgconfig:$ROOT/$TOOLCHAIN/share/pkgconfig"
       export PKG_CONFIG_SYSROOT_DIR=""
@@ -83,6 +86,7 @@ setup_toolchain() {
         echo "SET(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY BOTH)" >> $CMAKE_CONF
         echo "SET(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE BOTH)" >> $CMAKE_CONF
       fi
+      export PYTHONXCPREFIX="$ROOT/$TOOLCHAIN"
       export HOST_CC="$CC"
       export HOST_CXX="$CXX"
       export HOSTCC="$CC"
@@ -226,19 +230,15 @@ strip_lto() {
   if [ -n "$GCC_OPTIM_LTO" ] ; then
     CFLAGS=`echo $CFLAGS | sed -e "s|$GCC_OPTIM_LTO||g"`
     CXXFLAGS=`echo $CXXFLAGS | sed -e "s|$GCC_OPTIM_LTO||g"`
-    TARGET_CFLAGS=`echo $TARGET_CFLAGS | sed -e "s|$GCC_OPTIM_LTO||g"`
-    TARGET_CXXFLAGS=`echo $TARGET_CXXFLAGS | sed -e "s|$GCC_OPTIM_LTO||g"`
   fi
   if [ -n "$LD_OPTIM_LTO" ] ; then
     LDFLAGS=`echo $LDFLAGS | sed -e "s|$LD_OPTIM_LTO||g"`
-    TARGET_LDFLAGS=`echo $TARGET_LDFLAGS | sed -e "s|$LD_OPTIM_LTO||g"`
   fi
 }
 
 strip_gold() {
   # strip out usage from GOLD linker
   LDFLAGS=`echo $LDFLAGS | sed -e "s|-fuse-ld=gold||g"`
-  TARGET_LDFLAGS=`echo $TARGET_LDFLAGS | sed -e "s|-fuse-ld=gold||g"`
 }
 
 fix_module_depends() {
@@ -336,14 +336,3 @@ show_config() {
   
   echo -e "$show_message"
 }
-# strip
-debug_strip() {
-  if [ ! "$DEBUG" = yes ]; then
-    find $* -type f -executable | xargs $STRIP 1>/dev/null || :
-  fi
-}
-
-# Use distribution functions if any
-if [ -f "distributions/$DISTRO/config/functions" ]; then
-  . distributions/$DISTRO/config/functions
-fi

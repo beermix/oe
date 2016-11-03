@@ -1,5 +1,5 @@
 PKG_NAME="shadowsocks-libev"
-PKG_VERSION="v2.5.5"
+PKG_VERSION="v2.5.6"
 PKG_GIT_URL="https://github.com/shadowsocks/shadowsocks-libev"
 PKG_GIT_BRANCH="master"
 PKG_KEEP_CHECKOUT="yes"

@@ -16,7 +16,6 @@
 
 # Root password to integrate in the target system
   ROOT_PASSWORD="openelec"
-
   LLVM_SUPPORT="no"
 # Install glibc locales to the build (yes / no)
   GLIBC_LOCALES="yes"
@@ -63,22 +62,21 @@
 # (DVD decryption support in KODI) (yes / no)
   KODI_DVDCSS_SUPPORT="yes"
 
-# additional drivers to install:
-# for a list of additinoal drivers see packages/linux-drivers
-# Space separated list is supported,
-# e.g. ADDITIONAL_DRIVERS="DRIVER1 DRIVER2 RTL8192CU RTL8192DU RTL8192EU RTL8812AU"
-  ADDITIONAL_DRIVERS="" # todo: mt7610u dvbhdhomerun
-
 # install extra kernel drivers, see configfiles in packages/linux/config/*.config
 # or projects/*/linux/*.config or distributions/*/linux/*.config
 # please add all configfiles which should be included without the suffix and prefix
 # except the default-*.config and the ones included in packages/linux/package.mk
-# Space separated list is supported, # touchscreen dvb-usb dvb-other
-  KERNEL_EXTRA_CONFIG+="filesystem hid-drivers remote"
-  KERNEL_EXTRA_CONFIG+="lan-usb lan-phy lan-pci"
-  KERNEL_EXTRA_CONFIG+="wlan-usb wlan-other"
-  KERNEL_EXTRA_CONFIG+="aufs bluetooth lan-pci sata scsi samba wlan-other wlan-usb"
-  
+# Space separated list is supported,
+  KERNEL_EXTRA_CONFIG+=" filesystem hid-drivers remote joystick audio"
+  KERNEL_EXTRA_CONFIG+=" lan-usb lan-phy"
+  KERNEL_EXTRA_CONFIG+=" wlan-usb wlan-other"
+  KERNEL_EXTRA_CONFIG+="aufs bluetooth lan-pci sata samba"
+
+# additional drivers to install:
+# for a list of additinoal drivers see packages/linux-drivers
+# Space separated list is supported,
+# e.g. ADDITIONAL_DRIVERS="DRIVER1 DRIVER2"
+  ADDITIONAL_DRIVERS="RTL8192CU RTL8192DU RTL8192EU RTL8812AU" # todo: mt7610u dvbhdhomerun
 # build and install bluetooth support (yes / no)
   BLUETOOTH_SUPPORT="yes"
 
@@ -101,10 +99,10 @@
   KODI_OPTICAL_SUPPORT="no"
 
 # build with AirPlay support (stream videos from iDevices to KODI) (yes / no)
-  KODI_AIRPLAY_SUPPORT="yes"
+  KODI_AIRPLAY_SUPPORT="no"
 
 # build with AirTunes support (stream music from iDevices to KODI) (yes / no)
-  KODI_AIRTUNES_SUPPORT="yes"
+  KODI_AIRTUNES_SUPPORT="no"
 
 # build with libnfs support (mounting nfs shares with KODI) (yes / no)
   KODI_NFS_SUPPORT="no"
@@ -131,7 +129,7 @@
   PPTP_SUPPORT="no"
 
 # build and install OpenVPN support (yes / no)
-  OPENVPN_SUPPORT="yes"
+  OPENVPN_SUPPORT="no"
 
 # build and install diskmounter support (udevil)
 # this service provide auto mounting support for external drives in the
@@ -210,6 +208,9 @@
 
 # cron support (yes / no)
   CRON_SUPPORT="yes"
+
+# Locales to install. format: "locale.charmap" (eg. de_DE.UTF-8)
+  GLIBC_LOCALES="ru_RU.UTF-8"
 
 # Distribution Specific source location
   DISTRO_MIRROR="http://sources.openelec.tv/mirror"

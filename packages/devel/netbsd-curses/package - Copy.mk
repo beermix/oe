@@ -22,7 +22,6 @@ PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_GIT_URL="https://github.com/sabotage-linux/netbsd-curses"
-#PKG_URL="https://github.com/sabotage-linux/netbsd-curses/releases/download/v${PKG_VERSION}/${PKG_NAME}-${PKG_VERSION}.tar.xz"
 PKG_DEPENDS_TARGET="toolchain libz"
 PKG_PRIORITY="optional"
 PKG_SECTION="devel"
@@ -35,12 +34,12 @@ MAKEFLAGS=-j1
 
 pre_configure_target() {
 cd $ROOT/$PKG_BUILD
- cat << EOF > config.mak
+cat << EOF > config.mak
 CC=$CC
 HOSTCC=$HOSTCC
 AR=$AR
 RANLIB=$RANLIB
-CFLAGS=-"O3 -pipe -fPIC"
-LDFLAGS="-s -static"
+CFLAGS="-O3 -Wall"
+LDFLAGS="-s -Wl,-O1,--sort-common,--as-needed -static"
 EOF
 }

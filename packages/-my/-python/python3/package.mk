@@ -7,12 +7,6 @@ PKG_PRIORITY="optional"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-pre_configure_target() {
-  cd $ROOT/$PKG_BUILD
-  rm -rf .$TARGET_NAME
-  export LIBS="$LIBS -ltermcap"
-}
-
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            ac_cv_file_dev_ptmx=yes \
                            ac_cv_func_lchflags_works=no \

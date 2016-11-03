@@ -7,5 +7,13 @@ PKG_SECTION="my"
 PKG_AUTORECONF="no"
 PKG_USE_CMAKE="no"
 
+pre_configure_target() {
+  cd $ROOT/$PKG_BUILD
+  mkdir -p $INSTALL/usr/bin
+}
 
-PKG_MAKE_OPTS_TARGET="prefix=/usr"
+MAKEFLAGS="-j1"
+
+make_target() {
+  make prefix=/usr CC="$CC" LD="$LD" AR="$AR" XCFLAGS="$CFLAGS" XLDFLAGS="$LDFLAGS"
+}

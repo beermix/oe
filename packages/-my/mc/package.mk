@@ -1,4 +1,4 @@
-aPKG_NAME="mc"
+PKG_NAME="mc"
 PKG_VERSION="4.8.18"
 PKG_URL="http://ftp.midnight-commander.org/${PKG_NAME}-${PKG_VERSION}.tar.xz"
 #PKG_GIT_URL="https://github.com/MidnightCommander/mc.git"
@@ -12,10 +12,19 @@ PKG_AUTORECONF="yes"
 pre_configure_target() {
   export LIBS="$LIBS -lssh2 -lz -pthread"
 }
-CFLAGS="-march=corei7-avx -mtune=corei7-avx -O3 -Wa,--noexecstack"
-LDFLAGS="-s -Wl,-O1,--as-needed"
 
 PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
+                           --sysconfdir=/storage/.config \
+                           --datadir=/storage/.config \
+                           --libdir=/storage/.config \
+                           --libexecdir=/storage/.config \
+                           --sharedstatedir=/storage/.config \
+                           --localstatedir=/storage/.config \
+                           --includedir=/storage/.config \
+                           --oldincludedir=/storage/.config \
+                           --datarootdir=/storage/.config \
+                           --infodir=/storage/.config \     
+                           --localedir=/storage/.config \
                            --disable-doxygen-doc \
                            --disable-doxygen-rtf \
                            --disable-doxygen-xml \

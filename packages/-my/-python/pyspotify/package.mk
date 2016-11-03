@@ -8,20 +8,6 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 
-
-pre_configure_target() {
-  cd $ROOT/$PKG_BUILD
-  strip_gold
-  rm -rf .$TARGET_NAME
-  export PYTHON_VERSION="2.7"
-  export PYTHON_CPPFLAGS="-I$SYSROOT_PREFIX/usr/include/python$PYTHON_VERSION"
-  export PYTHON_LDFLAGS="-L$SYSROOT_PREFIX/usr/lib/python$PYTHON_VERSION -lpython$PYTHON_VERSION"
-  export PYTHON_SITE_PKG="$SYSROOT_PREFIX/usr/lib/python$PYTHON_VERSION/site-packages"
-  export LDSHARED="$CC -shared"
-  pip install pyspotify
-
-}
-
 make_target() {
   python setup.py build --cross-compile
 }

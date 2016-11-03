@@ -55,7 +55,8 @@ else
 fi
 
 # package specific configure options
-PKG_CONFIGURE_OPTS_TARGET="--disable-nls \
+PKG_CONFIGURE_OPTS_TARGET="--disable-silent-rules \
+                           --disable-nls \
                            --enable-largefile \
                            --disable-rpath \
                            $PULSEAUDIO_NEON \

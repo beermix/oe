@@ -26,7 +26,7 @@ if [ x"$PKG_USE_SNAPSHOT" == x"true" ]; then
     PKG_MAJOR_VERSION="6"
     PKG_SNAPSHOT_DATESTAMP="20161027"
     PKG_VERSION="$PKG_MAJOR_VERSION-$PKG_SNAPSHOT_DATESTAMP"
-    PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/$PKG_MAJOR_VERSION-$PKG_SNAPSHOT_DATESTAMP/gcc-$PKG_MAJOR_VERSION-$PKG_SNAPSHOT_DATESTAMP.tar.bz2"
+    PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/LATEST-6/gcc-$PKG_MAJOR_VERSION-$PKG_SNAPSHOT_DATESTAMP.tar.bz2"
 else
     PKG_VERSION="6.2.0"
     PKG_URL="http://ftpmirror.gnu.org/gcc/$PKG_NAME-$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
@@ -47,7 +47,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-mpfr=$ROOT/$TOOLCHAIN \
                            --with-mpc=$ROOT/$TOOLCHAIN \
                            --with-isl=$ROOT/$TOOLCHAIN \
-                           --without-cloog \
                            --with-gnu-as \
                            --with-gnu-ld \
                            --enable-plugin \
@@ -60,6 +59,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
                            --without-ppl \
+                           --without-cloog \
                            --disable-libada \
                            --disable-libmudflap \
                            --disable-libquadmath \
@@ -115,8 +115,8 @@ post_make_host() {
   ln -sf libgcc_s.so.1 $TARGET_NAME/libgcc/libgcc_s.so
 
   if [ ! "$DEBUG" = yes ]; then
-    ${TARGET_PREFIX}strip $TARGET_NAME/libgcc/libgcc_s.so*
-    ${TARGET_PREFIX}strip $TARGET_NAME/libstdc++-v3/src/.libs/libstdc++.so*
+    ${TARGET_NAME}-strip $TARGET_NAME/libgcc/libgcc_s.so*
+    ${TARGET_NAME}-strip $TARGET_NAME/libstdc++-v3/src/.libs/libstdc++.so*
   fi
 }
 
