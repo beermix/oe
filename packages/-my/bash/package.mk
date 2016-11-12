@@ -5,7 +5,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/bash/bash.html"
 PKG_URL="ftp://ftp.gnu.org/gnu/bash/bash-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain netbsd-curses"
+PKG_DEPENDS_TARGET="toolchain netbsd-curses readline"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
@@ -15,6 +15,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --disable-shared \
                            --bindir=/bin \
                            --enable-readline \
+                           --with-installed-readline \
                            --without-bash-malloc \
                            --enable-static-link \
 			   --enable-casemod-expansions \

@@ -68,96 +68,96 @@ addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/data/
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin/
     # autossh
-    cp -P $(get_pkg_build autossh)/.$TARGET_NAME/autossh $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp -P $(get_build_dir autossh)/.$TARGET_NAME/autossh $ADDON_BUILD/$PKG_ADDON_ID/bin
 
     # diffutils
-    cp -P $(get_pkg_build diffutils)/.$TARGET_NAME/src/cmp $ADDON_BUILD/$PKG_ADDON_ID/bin
-    cp -P $(get_pkg_build diffutils)/.$TARGET_NAME/src/diff $ADDON_BUILD/$PKG_ADDON_ID/bin
-    cp -P $(get_pkg_build diffutils)/.$TARGET_NAME/src/diff3 $ADDON_BUILD/$PKG_ADDON_ID/bin
-    cp -P $(get_pkg_build diffutils)/.$TARGET_NAME/src/sdiff $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp -P $(get_build_dir diffutils)/.$TARGET_NAME/src/cmp $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp -P $(get_build_dir diffutils)/.$TARGET_NAME/src/diff $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp -P $(get_build_dir diffutils)/.$TARGET_NAME/src/diff3 $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp -P $(get_build_dir diffutils)/.$TARGET_NAME/src/sdiff $ADDON_BUILD/$PKG_ADDON_ID/bin
 
     # dtach
-    cp -P $(get_pkg_build dtach)/.$TARGET_NAME/dtach $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp -P $(get_build_dir dtach)/.$TARGET_NAME/dtach $ADDON_BUILD/$PKG_ADDON_ID/bin
 
     # efibootmgr
-    cp -P $(get_pkg_build efibootmgr)/src/efibootmgr/efibootmgr $ADDON_BUILD/$PKG_ADDON_ID/bin 2>/dev/null || :
+    cp -P $(get_build_dir efibootmgr)/src/efibootmgr/efibootmgr $ADDON_BUILD/$PKG_ADDON_ID/bin 2>/dev/null || :
 
     # evtest
-    cp -P $(get_pkg_build evtest)/.$TARGET_NAME/evtest $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp -P $(get_build_dir evtest)/.$TARGET_NAME/evtest $ADDON_BUILD/$PKG_ADDON_ID/bin
 
     # fdupes
-    cp -P $(get_pkg_build fdupes)/fdupes $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp -P $(get_build_dir fdupes)/fdupes $ADDON_BUILD/$PKG_ADDON_ID/bin
 
     # file
-    cp -P $(get_pkg_build file)/.$TARGET_NAME/src/file $ADDON_BUILD/$PKG_ADDON_ID/bin
-    cp -P $(get_pkg_build file)/.$TARGET_NAME/magic/magic.mgc $ADDON_BUILD/$PKG_ADDON_ID/data
+    cp -P $(get_build_dir file)/.$TARGET_NAME/src/file $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp -P $(get_build_dir file)/.$TARGET_NAME/magic/magic.mgc $ADDON_BUILD/$PKG_ADDON_ID/data
 
     # getscancodes
-    cp -P $(get_pkg_build getscancodes)/getscancodes $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp -P $(get_build_dir getscancodes)/getscancodes $ADDON_BUILD/$PKG_ADDON_ID/bin
 
     # hddtemp
-    cp -P $(get_pkg_build hddtemp)/.$TARGET_NAME/src/hddtemp $ADDON_BUILD/$PKG_ADDON_ID/bin
-    cp -P $(get_pkg_build hddtemp)/debian/hddtemp.db $ADDON_BUILD/$PKG_ADDON_ID/data
+    cp -P $(get_build_dir hddtemp)/.$TARGET_NAME/src/hddtemp $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp -P $(get_build_dir hddtemp)/debian/hddtemp.db $ADDON_BUILD/$PKG_ADDON_ID/data
 
     # hd-idle
-    cp -P $(get_pkg_build hd-idle)/hd-idle $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp -P $(get_build_dir hd-idle)/hd-idle $ADDON_BUILD/$PKG_ADDON_ID/bin
 
     # hid_mapper
-    cp -P $(get_pkg_build hid_mapper)/hid_mapper $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp -P $(get_build_dir hid_mapper)/hid_mapper $ADDON_BUILD/$PKG_ADDON_ID/bin
 
     # i2c-tools
-    cp -P $(get_pkg_build i2c-tools)/tools/i2cdetect $ADDON_BUILD/$PKG_ADDON_ID/bin
-    cp -P $(get_pkg_build i2c-tools)/tools/i2cdump $ADDON_BUILD/$PKG_ADDON_ID/bin
-    cp -P $(get_pkg_build i2c-tools)/tools/i2cget $ADDON_BUILD/$PKG_ADDON_ID/bin
-    cp -P $(get_pkg_build i2c-tools)/tools/i2cset $ADDON_BUILD/$PKG_ADDON_ID/bin
-    cp -P $(get_pkg_build i2c-tools)/py-smbus/build/lib.linux-*/smbus.so $ADDON_BUILD/$PKG_ADDON_ID/lib
+    cp -P $(get_build_dir i2c-tools)/tools/i2cdetect $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp -P $(get_build_dir i2c-tools)/tools/i2cdump $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp -P $(get_build_dir i2c-tools)/tools/i2cget $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp -P $(get_build_dir i2c-tools)/tools/i2cset $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp -P $(get_build_dir i2c-tools)/py-smbus/build/lib.linux-*/smbus.so $ADDON_BUILD/$PKG_ADDON_ID/lib
 
     # inotify-tools
-    cp -P $(get_pkg_build inotify-tools)/.$TARGET_NAME/src/inotifywait $ADDON_BUILD/$PKG_ADDON_ID/bin
-    cp -P $(get_pkg_build inotify-tools)/.$TARGET_NAME/src/inotifywatch $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp -P $(get_build_dir inotify-tools)/.$TARGET_NAME/src/inotifywait $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp -P $(get_build_dir inotify-tools)/.$TARGET_NAME/src/inotifywatch $ADDON_BUILD/$PKG_ADDON_ID/bin
 
     # jq
-    cp -P $(get_pkg_build jq)/.$TARGET_NAME/jq $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp -P $(get_build_dir jq)/.$TARGET_NAME/jq $ADDON_BUILD/$PKG_ADDON_ID/bin
 
     # lm_sensors
-    cp -P $(get_pkg_build lm_sensors)/prog/sensors/sensors $ADDON_BUILD/$PKG_ADDON_ID/bin 2>/dev/null || :
+    cp -P $(get_build_dir lm_sensors)/prog/sensors/sensors $ADDON_BUILD/$PKG_ADDON_ID/bin 2>/dev/null || :
 
     # lshw
-    cp -P $(get_pkg_build lshw)/src/lshw $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp -P $(get_build_dir lshw)/src/lshw $ADDON_BUILD/$PKG_ADDON_ID/bin
 
     # mc
-    cp -Pa $(get_pkg_build mc)/.install_pkg/usr/bin/* $ADDON_BUILD/$PKG_ADDON_ID/bin/
-    cp -Pa $(get_pkg_build mc)/.install_pkg/storage/.kodi/addons/virtual.system-tools/* $ADDON_BUILD/$PKG_ADDON_ID
+    cp -Pa $(get_build_dir mc)/.install_pkg/usr/bin/* $ADDON_BUILD/$PKG_ADDON_ID/bin/
+    cp -Pa $(get_build_dir mc)/.install_pkg/storage/.kodi/addons/virtual.system-tools/* $ADDON_BUILD/$PKG_ADDON_ID
 
     # mrxvt
-    cp -P $(get_pkg_build mrxvt)/.$TARGET_NAME/src/mrxvt $ADDON_BUILD/$PKG_ADDON_ID/bin 2>/dev/null || :
+    cp -P $(get_build_dir mrxvt)/.$TARGET_NAME/src/mrxvt $ADDON_BUILD/$PKG_ADDON_ID/bin 2>/dev/null || :
 
     # mtpfs
-    cp -P $(get_pkg_build mtpfs)/.$TARGET_NAME/mtpfs $ADDON_BUILD/$PKG_ADDON_ID/bin/
+    cp -P $(get_build_dir mtpfs)/.$TARGET_NAME/mtpfs $ADDON_BUILD/$PKG_ADDON_ID/bin/
 
     # p7zip
-    cp -P $(get_pkg_build p7zip)/bin/7z.so $ADDON_BUILD/$PKG_ADDON_ID/bin
-    cp -PR $(get_pkg_build p7zip)/bin/Codecs $ADDON_BUILD/$PKG_ADDON_ID/bin
-    cp -P $(get_pkg_build p7zip)/bin/7z $ADDON_BUILD/$PKG_ADDON_ID/bin
-    cp -P $(get_pkg_build p7zip)/bin/7za $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp -P $(get_build_dir p7zip)/bin/7z.so $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp -PR $(get_build_dir p7zip)/bin/Codecs $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp -P $(get_build_dir p7zip)/bin/7z $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp -P $(get_build_dir p7zip)/bin/7za $ADDON_BUILD/$PKG_ADDON_ID/bin
 
     # patch
-    cp -P $(get_pkg_build patch)/.$TARGET_NAME/src/patch $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp -P $(get_build_dir patch)/.$TARGET_NAME/src/patch $ADDON_BUILD/$PKG_ADDON_ID/bin
 
     # pv
-    cp -P $(get_pkg_build pv)/.$TARGET_NAME/pv $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp -P $(get_build_dir pv)/.$TARGET_NAME/pv $ADDON_BUILD/$PKG_ADDON_ID/bin
 
     # screen
-    cp -P $(get_pkg_build screen)/screen $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp -P $(get_build_dir screen)/screen $ADDON_BUILD/$PKG_ADDON_ID/bin
 
     # strace
-    cp -P $(get_pkg_build strace)/.$TARGET_NAME/strace $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp -P $(get_build_dir strace)/.$TARGET_NAME/strace $ADDON_BUILD/$PKG_ADDON_ID/bin
 
     # unrar
-    cp -P $(get_pkg_build unrar)/unrar $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp -P $(get_build_dir unrar)/unrar $ADDON_BUILD/$PKG_ADDON_ID/bin
 
     # usb-modeswitch
-    cp -P $(get_pkg_build usb-modeswitch)/usb_modeswitch $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp -P $(get_build_dir usb-modeswitch)/usb_modeswitch $ADDON_BUILD/$PKG_ADDON_ID/bin
 
   debug_strip $ADDON_BUILD/$PKG_ADDON_ID/bin
 }

@@ -16,7 +16,7 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 PKG_NAME="webgrabplus"
-PKG_VERSION="c0e7b9f"
+PKG_VERSION="56.29pre-20161021"
 PKG_REV="104"
 PKG_ARCH="any"
 PKG_LICENSE="prop."

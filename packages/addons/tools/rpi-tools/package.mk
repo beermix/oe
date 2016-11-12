@@ -39,11 +39,11 @@ PKG_AUTORECONF="no"
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/lib/RPi/
-    cp -PR $(get_pkg_build RPi.GPIO)/build/lib.linux-*/RPi/* $ADDON_BUILD/$PKG_ADDON_ID/lib/RPi
-    cp -PR $(get_pkg_build picamera)/picamera $ADDON_BUILD/$PKG_ADDON_ID/lib/
-    cp -PR $(get_pkg_build gpiozero)/gpiozero $ADDON_BUILD/$PKG_ADDON_ID/lib/
+    cp -PR $(get_build_dir RPi.GPIO)/build/lib.linux-*/RPi/* $ADDON_BUILD/$PKG_ADDON_ID/lib/RPi
+    cp -PR $(get_build_dir picamera)/picamera $ADDON_BUILD/$PKG_ADDON_ID/lib/
+    cp -PR $(get_build_dir gpiozero)/gpiozero $ADDON_BUILD/$PKG_ADDON_ID/lib/
 
-  BCM2835_DIR="$(get_pkg_build bcm2835-driver)"
+  BCM2835_DIR="$(get_build_dir bcm2835-driver)"
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin/
     cp -P $BCM2835_DIR/hardfp/opt/vc/bin/raspistill $ADDON_BUILD/$PKG_ADDON_ID/bin
     cp -P $BCM2835_DIR/hardfp/opt/vc/bin/raspiyuv $ADDON_BUILD/$PKG_ADDON_ID/bin
