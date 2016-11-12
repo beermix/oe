@@ -1,5 +1,5 @@
 PKG_NAME="bitcoin"
-PKG_VERSION="0.13.0"
+PKG_VERSION="0.13.1"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="MIT"
@@ -23,7 +23,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-malloc0returnsnull \
 			   --enable-static \
 			   --with-miniupnpc \
 			   --disable-ccache \
-			   --enable-hardening \
+			   --disable-hardening \
 			   --disable-tests \
 			   --enable-upnp-default \
 			   --disable-shared \

@@ -23,3 +23,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
                            --datarootdir=/storage/.config \
                            --infodir=/storage/.config \     
                            --localedir=/storage/.config"
+                           
+post_makeinstall_target() {
+  rm -rf $INSTALL/storage
+}

@@ -1,6 +1,6 @@
 PKG_NAME="daemonize"
 PKG_VERSION="18869a7"
-PKG_URL="https://github.com/bmc/daemonize/archive/$PKG_VERSION.tar.gz"
+PKG_GIT_URL="https://github.com/bmc/daemonize"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_PRIORITY="optional"
 PKG_AUTORECONF="no"

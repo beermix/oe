@@ -24,7 +24,7 @@ PKG_LICENSE="GPLv2"
 PKG_SITE="http://www.mariadb.org"
 PKG_URL="https://downloads.mariadb.org/interstitial/$PKG_NAME-$PKG_VERSION/source/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain netbsd-curses openssl mariadb:host"
+PKG_DEPENDS_TARGET="toolchain netbsd-curses openssl libaio mariadb:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="database"
 PKG_SHORTDESC="mariadb: A community developed branch of MySQL"
@@ -33,7 +33,7 @@ PKG_LONGDESC="MariaDB is a community-developed fork and a drop-in replacement fo
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_MARIADB_SERVER="yes"
+PKG_MARIADB_SERVER="no"
 
 # MariaDB Feature set. Selection of features. Options are
 # - xsmall : 
@@ -138,18 +138,18 @@ configure_target() {
         $MARIADB_IMPORT_EXECUTABLES \
         -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
         -DCMAKE_INSTALL_PREFIX=/usr \
-        -DINSTALL_DOCDIR=share/doc/mariadb \
-        -DINSTALL_DOCREADMEDIR=share/doc/mariadb \
-        -DINSTALL_INCLUDEDIR=include/mysql \
-        -DINSTALL_MANDIR=share/man \
-        -DINSTALL_MYSQLSHAREDIR=share/mysql \
-        -DINSTALL_MYSQLTESTDIR=share/mysql/test \
-        -DINSTALL_PLUGINDIR=lib/mysql/plugin \
+        -DINSTALL_DOCDIR=/storage/.config/mariadb/share/doc/mariadb \
+        -DINSTALL_DOCREADMEDIR=/storage/.config/mariadb/share/doc/mariadb \
+        -DINSTALL_INCLUDEDIR=/storage/.config/mariadb/include/mysql \
+        -DINSTALL_MANDIR=/storage/.config/mariadb/share/man \
+        -DINSTALL_MYSQLSHAREDIR=/storage/.config/mariadb/share/mysql \
+        -DINSTALL_MYSQLTESTDIR=/storage/.config/mariadb/share/mysql/test \
+        -DINSTALL_PLUGINDIR=/storage/.config/mariadb/lib/mysql/plugin \
         -DINSTALL_SBINDIR=sbin \
-        -DINSTALL_SCRIPTDIR=share/mysql/scripts \
-        -DINSTALL_SQLBENCHDIR=share/mysql/bench \
-        -DINSTALL_SUPPORTFILESDIR=share/mysql/support-files \
-        -DMYSQL_DATADIR=/storage/mysql \
+        -DINSTALL_SCRIPTDIR=/storage/.config/mariadb/share/mysql/scripts \
+        -DINSTALL_SQLBENCHDIR=/storage/.config/mariadb/share/mysql/bench \
+        -DINSTALL_SUPPORTFILESDIR=/storage/.config/mariadb/share/mysql/support-files \
+        -DMYSQL_DATADIR=/storage/.config/mariadb \
         -DMYSQL_UNIX_ADDR=/var/tmp/mysql.socket \
         -DWITH_EXTRA_CHARSETS=complex \
         -DTOKUDB_OK=0 \
@@ -174,6 +174,7 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/share/mysql/support-files
   rm -rf $INSTALL/usr/share/mysql/test
   rm -rf $INSTALL/usr/share/mysql/bench
+  rm -rf $INSTALL/storage
   
   if [ "$PKG_MARIADB_SERVER" = "no" ]; then
     rm -rf $INSTALL/usr/bin
