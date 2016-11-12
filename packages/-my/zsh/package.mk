@@ -1,5 +1,5 @@
 PKG_NAME="zsh"
-PKG_VERSION="ae4c035"
+PKG_VERSION="2ba985f"
 PKG_GIT_URL="https://github.com/zsh-users/zsh"
 PKG_DEPENDS_TARGET="toolchain libcap pcre readline gdbm libpcap libedit"
 PKG_PRIORITY="optional"

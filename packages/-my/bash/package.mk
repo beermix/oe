@@ -15,7 +15,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --disable-shared \
                            --bindir=/bin \
                            --enable-readline \
-                           --with-installed-readline \
+                           --without-installed-readline \
                            --without-bash-malloc \
                            --enable-static-link \
 			   --enable-casemod-expansions \

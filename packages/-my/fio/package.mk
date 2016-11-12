@@ -1,5 +1,5 @@
 PKG_NAME="fio"
-PKG_VERSION="a029096"
+PKG_VERSION="fio-2.15"
 PKG_GIT_URL="https://github.com/axboe/fio"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_PRIORITY="optional"
@@ -13,6 +13,7 @@ configure_target() {
   ./configure --enable-lex \
   	      --enable-pmemblk \
   	      --prefix=/usr \
+  	      --build-static \
   	      --esx \
   	      --cc=$CC
 }
