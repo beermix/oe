@@ -8,10 +8,7 @@ PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-#CFLAGS="-Ofast -O3 -fPIC"
-
-CFLAGS="-march=corei7-avx -mtune=corei7-avx -fdata-sections -ffunction-sections -O3 -Wa,--noexecstack"
-LDFLAGS="-s -Wl,-O1,--as-needed"
+CFLAGS="$CFLAGS -Ofast -O3 -fPIC"
 
 
 PKG_CONFIGURE_OPTS_TARGET="\

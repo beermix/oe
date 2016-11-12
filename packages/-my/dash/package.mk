@@ -12,9 +12,6 @@ LC_CTYPE=C
 #LDFLAGS="$LDFLAGS -static"
 LIBS="-lcurses -lterminfo"
 
-CFLAGS="-march=corei7-avx -mtune=corei7-avx -fdata-sections -ffunction-sections -O3 -Wa,--noexecstack"
-LDFLAGS="-s -Wl,-O1,--as-needed -static"
-
 PKG_CONFIGURE_OPTS_TARGET="--enable-statcic \
 			   --enable-fnmatch \
 			   --bindir=/bin \

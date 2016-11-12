@@ -7,14 +7,11 @@ PKG_SECTION="service/downloadmanager"
 PKG_ADDON_TYPE="kodi.service" ## -DHAVE_XFS_XFS_H=1 -DCMAKE_BUILD_TYPE=Release
 PKG_AUTORECONF="no"
 
-CFLAGS="-march=corei7-avx -mtune=corei7-avx -fdata-sections -ffunction-sections -O3 -Wa,--noexecstack"
-LDFLAGS="-s -Wl,-O1,--as-needed"
-
 PKG_CMAKE_OPTS_TARGET="-DWITH_CRYPTO=openssl \
 		       -DWITH_INOTIFY=OFF \
 		       -DWITH_KQUEUE=OFF \
 		       -DWITH_SYSTEMD=ON \
-		       -DINSTALL_LIB=ON \
+		       -DINSTALL_LIB=OFF \
 		       -DINSTALL_DOC=OFF \
 		       -DENABLE_UTP=ON \
 		       -DENABLE_TESTS=OFF \

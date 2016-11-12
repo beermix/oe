@@ -7,8 +7,8 @@ PKG_DEPENDS_TARGET="toolchain zlib"
 PKG_PRIORITY="optional"
 
 strip_lto
-CFLAGS="-march=corei7-avx -mtune=corei7-avx -fdata-sections -ffunction-sections -O3 -Wa,--noexecstack"
-LDFLAGS="-s -Wl,-O1,--as-needed"
+#CFLAGS="-march=corei7-avx -mtune=corei7-avx -fdata-sections -ffunction-sections -O3 -Wa,--noexecstack"
+#LDFLAGS="-s -Wl,-O1,--as-needed"
 
 PKG_CMAKE_SCRIPT_TARGET="CPP/7zip/CMAKE/CMakeLists.txt"
 

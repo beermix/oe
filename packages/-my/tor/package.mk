@@ -1,12 +1,14 @@
 PKG_NAME="tor"
-PKG_VERSION="0.2.8.9"
+PKG_VERSION="91f06ba"
+PKG_GIT_URL="https://github.com/torproject/tor"
+PKG_GIT_BRANCH="maint-0.2.8"
 PKG_URL="https://archive.torproject.org/tor-package-archive/tor-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libz libevent"
 PKG_PRIORITY="optional"
 PKG_SECTION="security"
 PKG_AUTORECONF="yes"
 
-#CFLAGS="$CFLAGS -fPIC -std=gnu99"
+CFLAGS="$CFLAGS -fPIC -std=gnu99"
 
 PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
 			   --with-openssl-dir=$SYSROOT_PREFIX/usr \

@@ -1,1 +1,0 @@
-/root/-f2fs/oe/build.OE-Generic.x86_64-8.0-devel/toolchain/share/libtool/build-aux/ltmain.sh
