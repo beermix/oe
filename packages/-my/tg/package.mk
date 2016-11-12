@@ -1,7 +1,7 @@
 PKG_NAME="tg"
 PKG_VERSION="03"
 PKG_URL="https://dl.dropboxusercontent.com/s/4e2ghw5njzz60tz/tg-03.tar.xz"
-PKG_DEPENDS_TARGET="toolchain readline libevent jansson zlib libconfig openssl libedit"
+PKG_DEPENDS_TARGET="toolchain readline libevent jansson zlib libconfig openssl"
 PKG_PRIORITY="optional"
 PKG_SECTION="debug/tools"
 PKG_AUTORECONF="yes"
@@ -9,7 +9,7 @@ PKG_AUTORECONF="yes"
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
-  export LIBS="-lreadline -ledit -lterminfo"
+  export LIBS="-lreadline -lterminfo"
   #export LDFLAGS=-static
   #git submodule update --init --recursive
 }

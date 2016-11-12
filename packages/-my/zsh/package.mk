@@ -8,7 +8,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 pre_configure_target() {
-  export LIBS="-ledit -lterminfo"
+  export LIBS="-lterminfo"
   export MAKEFLAGS=-j1
 }
 
