@@ -24,16 +24,16 @@ PKG_ADDON_PROJECTS="Generic RPi RPi2 imx6"
 PKG_LICENSE="ASL"
 PKG_SITE="http://www.docker.com/"
 PKG_GIT_URL="https://github.com/docker/docker"
-PKG_DEPENDS_TARGET="toolchain sqlite go:host containerd runc aufs-util LVM2"
+PKG_DEPENDS_TARGET="toolchain sqlite go:host containerd runc aufs-util"
 PKG_SECTION="service/system"
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Docker"
 PKG_ADDON_TYPE="xbmc.service"
 
 configure_target() {
-  strip_lto
   export DOCKER_BUILDTAGS="daemon \
                            autogen \
+                           exclude_graphdriver_devicemapper \
                            exclude_graphdriver_btrfs"
 
   export GOOS=linux

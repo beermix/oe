@@ -17,14 +17,14 @@
 ################################################################################
 
 PKG_NAME="Python"
-PKG_VERSION="2.7.11"
+PKG_VERSION="2.7.12"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.python.org/"
 PKG_URL="http://www.python.org/ftp/python/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="libz:host"
-PKG_DEPENDS_TARGET="toolchain sqlite expat libz bzip2 libressl libffi Python:host"
+PKG_DEPENDS_TARGET="toolchain sqlite expat libz bzip2 openssl libffi Python:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="lang"
 PKG_SHORTDESC="python: The Python programming language"

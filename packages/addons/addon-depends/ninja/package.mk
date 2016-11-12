@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="ninja"
-PKG_VERSION="6a2b876"
+PKG_VERSION="3082aa6"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="Apache"

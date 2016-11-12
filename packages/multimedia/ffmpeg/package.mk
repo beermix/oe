@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="LGPLv2.1+"
 PKG_SITE="https://ffmpeg.org"
 PKG_URL="https://ffmpeg.org/releases/${PKG_NAME}-${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_TARGET="toolchain yasm:host libz bzip2 openssl dcadec speex faac"
+PKG_DEPENDS_TARGET="toolchain yasm:host libz bzip2 openssl dcadec speex"
 PKG_PRIORITY="optional"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
@@ -196,7 +196,7 @@ configure_target() {
               --disable-libopencv \
               --disable-libdc1394 \
               --enable-libdcadec \
-              --enable-libfaac \
+              --disable-libfaac \
               --disable-libfreetype \
               --disable-libgsm \
               --disable-libmp3lame \
@@ -220,7 +220,7 @@ configure_target() {
               $FFMPEG_FPU \
               --enable-yasm \
               --disable-symver \
-              --enable-lto
+              --disable-lto
 }
 
 post_makeinstall_target() {

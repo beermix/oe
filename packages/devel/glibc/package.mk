@@ -62,7 +62,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/bash \
 NSS_CONF_DIR="$PKG_BUILD/nss"
 
 GLIBC_EXCLUDE_BIN="catchsegv gencat getconf iconv iconvconfig ldconfig"
-GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN makedb mtrace pcprofiledump"
+GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN localedef makedb mtrace pcprofiledump"
 GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN pldd rpcgen sln sotruss sprof xtrace"
 
 pre_build_target() {
@@ -137,16 +137,11 @@ post_makeinstall_target() {
 # remove locales and charmaps
   rm -rf $INSTALL/usr/share/i18n/charmaps
   if [ ! "$GLIBC_LOCALES" = yes ]; then
-    # remove locales and charmaps
-    rm -rf $INSTALL/usr/share/i18n/charmaps
     rm -rf $INSTALL/usr/share/i18n/locales
 
     mkdir -p $INSTALL/usr/share/i18n/locales
       cp -PR $ROOT/$PKG_BUILD/localedata/locales/POSIX $INSTALL/usr/share/i18n/locales
-    mkdir -p $INSTALL/usr/share/i18n/charmaps
-      cp -PR $ROOT/$PKG_BUILD/localedata/charmaps/UTF* $INSTALL/usr/share/i18n/charmaps
   fi
-  ln -s /storage/.config/locale $INSTALL/usr/lib/locale
 
 # create default configs
   mkdir -p $INSTALL/etc

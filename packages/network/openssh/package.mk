@@ -35,7 +35,7 @@ PKG_AUTORECONF="yes"
 PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/etc/ssh \
                            --libexecdir=/usr/lib/openssh \
                            --disable-strip \
-                           --disable-lastlog \
+                           --enable-lastlog \
                            --with-sandbox=no \
                            --disable-utmp \
                            --disable-utmpx \

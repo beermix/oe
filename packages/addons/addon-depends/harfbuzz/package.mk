@@ -19,7 +19,7 @@
 ################################################################################
 
 PKG_NAME="harfbuzz"
-PKG_VERSION="1.2.5"
+PKG_VERSION="1.3.3"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"

@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="cmake"
-PKG_VERSION="3.6.2"
+PKG_VERSION="3.7.0"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="BSD"
 PKG_SITE="http://www.cmake.org/"
-PKG_URL="http://www.cmake.org/files/v3.6/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_URL="http://www.cmake.org/files/v3.7/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="ccache:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="toolchain/devel"
@@ -36,8 +36,8 @@ configure_host() {
   ../configure --prefix=$ROOT/$TOOLCHAIN \
                --no-qt-gui --no-system-libs  \
                -- \
-               -DCMAKE_C_FLAGS="-O2 -pipe -Wno-format-security" \
-               -DCMAKE_CXX_FLAGS="-O2 -pipe -Wno-format-security" \
+               -DCMAKE_C_FLAGS="-march=haswell -mtune=haswell -O2 -pipe -Wno-format-security" \
+               -DCMAKE_CXX_FLAGS="-march=haswell -mtune=haswell -O2 -pipe -Wno-format-security" \
                -DCMAKE_EXE_LINKER_FLAGS="$HOST_LDFLAGS" \
                -DCMAKE_USE_OPENSSL=ON \
                -DBUILD_CursesDialog=0

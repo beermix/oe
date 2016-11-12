@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="xf86-video-intel"
-PKG_VERSION="714052f"
+PKG_VERSION="b617f80"
 PKG_REV="1"
 PKG_ARCH="x86_64"
 PKG_LICENSE="OSS"
@@ -46,12 +46,12 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-backlight \
                            --disable-ums --disable-ums-only \
                            --enable-sna \
                            --enable-uxa \
-                           --enable-xvmc \
-                           --enable-xaa \
-                           --enable-dga \
-                           --enable-tear-free \
-                           --enable-create2 \
-                           --enable-async-swap \
+                           --disable-xvmc \
+                           --disable-xaa \
+                           --disable-dga \
+                           --disable-tear-free \
+                           --disable-create2 \
+                           --disable-async-swap \
                            --with-default-dri=3 \
                            --with-xorg-module-dir=/usr/lib/xorg/modules"
 
