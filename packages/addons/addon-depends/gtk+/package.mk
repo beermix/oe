@@ -19,7 +19,7 @@
 ################################################################################
 
 PKG_NAME="gtk+"
-PKG_VERSION="2.24.30"
+PKG_VERSION="2.24.31"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
@@ -32,6 +32,10 @@ PKG_LONGDESC="This is GTK+. GTK+, which stands for the Gimp ToolKit, is a librar
 PKG_IS_ADDON="no"
 
 PKG_AUTORECONF="yes"
+
+#pre_configure_target() {
+#  strip_lto
+#}
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_path_GLIB_GENMARSHAL=$ROOT/$TOOLCHAIN/bin/glib-genmarshal \
                            --disable-glibtest \

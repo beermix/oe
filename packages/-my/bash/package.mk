@@ -9,7 +9,11 @@ PKG_DEPENDS_TARGET="toolchain netbsd-curses readline"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-MAKEFLAGS=-j1
+pre_configure_target() {
+  export LIBS="-ledit"
+  export MAKEFLAGS=-j1
+}
+
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --disable-shared \

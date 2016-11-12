@@ -180,5 +180,6 @@ post_makeinstall_target() {
     rm -rf $INSTALL/usr/bin
     rm -rf $INSTALL/usr/lib
     rm -rf $INSTALL/usr/share/mysql/*.sql
+    rm -rf $INSTALL/storage
   fi
 }

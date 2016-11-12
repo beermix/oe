@@ -33,7 +33,6 @@ PKG_AUTORECONF="no"
 
 pre_build_target() {
   strip_lto
-  LDFLAGS="-lpcre -lpthread"
 }
 
 make_target() {

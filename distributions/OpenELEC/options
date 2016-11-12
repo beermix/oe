@@ -16,7 +16,7 @@
 
 # Root password to integrate in the target system
   ROOT_PASSWORD="openelec"
-  LLVM_SUPPORT="no"
+  LLVM_SUPPORT="yes"
 # Install glibc locales to the build (yes / no)
   GLIBC_LOCALES="yes"
 
@@ -69,7 +69,7 @@
 # Space separated list is supported,
   KERNEL_EXTRA_CONFIG+=" filesystem hid-drivers audio"
   KERNEL_EXTRA_CONFIG+=" lan-phy"
-  #KERNEL_EXTRA_CONFIG+=" wlan-usb wlan-other"
+  KERNEL_EXTRA_CONFIG+=" wlan-usb wlan-other"
   KERNEL_EXTRA_CONFIG+="aufs bluetooth lan-pci sata samba"
 
 # additional drivers to install:

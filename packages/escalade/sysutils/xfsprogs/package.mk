@@ -24,7 +24,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://www.xfs.org"
 PKG_URL="https://git.kernel.org/cgit/fs/xfs/xfsprogs-dev.git/snapshot/xfsprogs-dev-$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="xfsprogs-dev-$PKG_VERSION"
-PKG_DEPENDS_TARGET="toolchain util-linux"
+PKG_DEPENDS_TARGET="toolchain util-linux readline"
 PKG_DEPENDS_INIT="xfsprogs"
 PKG_SECTION="tools"
 PKG_SHORTDESC="xfsprogs: Utilities for use with the xfs filesystem"
@@ -32,7 +32,7 @@ PKG_IS_ADDON="no"
 
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-shared=no --with-gnu-ld --enable-readline=no"
+PKG_CONFIGURE_OPTS_TARGET="--enable-shared=no --with-gnu-ld --enable-readline=yes"
 
 pre_configure_target() {
   make configure
