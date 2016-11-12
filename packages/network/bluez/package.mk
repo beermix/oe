@@ -43,7 +43,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-dependency-tracking \
                            --enable-tools \
                            --enable-datafiles \
                            --disable-experimental \
-                           --enable-sixaxis \
+                           --disable-sixaxis \
                            --with-gnu-ld \
                            storagedir=/storage/.cache/bluetooth"
 
