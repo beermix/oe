@@ -32,7 +32,7 @@ PKG_LONGDESC="Bison is a general-purpose parser generator that converts a gramma
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_HOST="--disable-rpath --with-gnu-ld"
+PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared --disable-rpath --with-gnu-ld"
 
 post_configure_host() {
 # The configure system causes Bison to be built without support for

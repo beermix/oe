@@ -41,6 +41,8 @@ PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
 PKG_AUTORECONF="yes"
 
+PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
+
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            ac_cv_header_librtmp_rtmp_h=yes \
                            --disable-debug \

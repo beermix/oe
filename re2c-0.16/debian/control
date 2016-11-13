@@ -1,0 +1,20 @@
+Source: re2c
+Section: devel
+Priority: optional
+Maintainer: JCF Ploemen (jcfp) <linux@jcf.pm>
+Build-Depends: debhelper (>= 9), bison
+Standards-Version: 3.9.6
+Homepage: http://re2c.org
+Vcs-Git: git://github.com/jcfp/debpkg-re2c.git
+Vcs-Browser: https://github.com/jcfp/debpkg-re2c/
+
+Package: re2c
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: tool for generating fast C-based recognizers
+ re2c is a great tool for writing fast and flexible lexers. Unlike 
+ other such tools, re2c concentrates solely on generating efficient
+ code for matching regular expressions. Not only does this singleness
+ make re2c more suitable for a wider variety of applications, it
+ allows one to generate scanners which approach hand-crafted ones in
+ terms of size and speed.

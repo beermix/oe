@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="ncurses"
-PKG_VERSION="6.0-20161105"
+PKG_VERSION="6.0-20161112"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="MIT"
 PKG_SITE="http://www.gnu.org/software/ncurses/"
-PKG_URL="https://dl.dropboxusercontent.com/s/8tbfc1h0dmxum31/ncurses-6.0-20160625.tar.xz"
+PKG_URL="ftp://invisible-island.net/ncurses/current/ncurses-$PKG_VERSION.tgz"
 PKG_DEPENDS_TARGET="toolchain libz"
 PKG_PRIORITY="optional"
 PKG_SECTION="devel"
@@ -56,7 +56,7 @@ PKG_CONFIGURE_OPTS_TARGET="--without-ada \
                            --enable-getcap-cache \
                            --enable-symlinks \
                            --enable-ext-funcs \
-                           --enable-pc-files \
+                           --disable-pc-files \
                            --enable-widec"
 
 pre_configure_target() {

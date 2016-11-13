@@ -1,13 +1,13 @@
 PKG_NAME="mc"
 PKG_VERSION="4.8.18"
 PKG_URL="http://ftp.midnight-commander.org/${PKG_NAME}-${PKG_VERSION}.tar.xz"
+#PKG_GIT_URL="https://github.com/MidnightCommander/mc.git"
 PKG_DEPENDS_TARGET="toolchain libtool:host gettext:host e2fsprogs util-linux glib pcre fuse libssh2 libevent expat git gawk"
 PKG_SECTION="tools"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 pre_configure_target() {
-  export LIBS="$LIBS -lssh2 -lz -ledit -ldl -lpthread"
-  export MAKEFLAGS=-j1
+  export LIBS="$LIBS -lssh2 -lz -pthread"
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \

@@ -1,8 +1,5 @@
 PKG_NAME="libtorrent"
 PKG_VERSION="0.13.6"
-PKG_REV="2"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://libtorrent.rakshasa.no"
 PKG_URL="http://rtorrent.net/downloads/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain openssl curl zlib netbsd-curses libsigc++"
