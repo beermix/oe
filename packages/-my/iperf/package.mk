@@ -1,5 +1,5 @@
 PKG_NAME="iperf"
-PKG_VERSION="6bd93f6"
+PKG_VERSION="69e6751"
 PKG_SITE="https://iperf.fr/"
 PKG_GIT_URL="https://github.com/esnet/iperf"
 PKG_DEPENDS_TARGET="toolchain"
