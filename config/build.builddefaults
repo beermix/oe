@@ -33,7 +33,9 @@
                          --disable-static \
                          --enable-shared"
 
-  TARGET_CMAKE_OPTS="-DCMAKE_BUILD_TYPE=Release \
+  TARGET_CMAKE_OPTS="-GNinja \
+  		     -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
+  		     -DCMAKE_BUILD_TYPE=Release \
   		     -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
   		     -DCMAKE_INSTALL_PREFIX=/usr"
 
@@ -49,7 +51,9 @@
                        --disable-static \
                        --enable-shared"
 
-  HOST_CMAKE_OPTS="-DCMAKE_BUILD_TYPE=Release \
+  HOST_CMAKE_OPTS="-GNinja \
+  		   -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
+  		   -DCMAKE_BUILD_TYPE=Release \
   		   -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
   		   -DCMAKE_INSTALL_PREFIX=$ROOT/$TOOLCHAIN"
 

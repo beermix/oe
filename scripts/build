@@ -244,6 +244,16 @@ if [ ! -f $STAMP ]; then
       fi
       if [ "$(type -t make_$TARGET)" = "function" ]; then
         make_$TARGET
+      elif [ -f "$PKG_CMAKE_SCRIPT" -a ! "$PKG_USE_CMAKE" = "no" ]; then
+        if [ "$TARGET" = "target" ]; then
+          ninja $PKG_MAKE_OPTS_TARGET
+        elif [ "$TARGET" = "host" ]; then
+          ninja $PKG_MAKE_OPTS_HOST
+        elif [ "$TARGET" = "init" ]; then
+          ninja $PKG_MAKE_OPTS_INIT
+        elif [ "$TARGET" = "bootstrap" ]; then
+          ninja $PKG_MAKE_OPTS_BOOTSTRAP
+        fi
       else
         case "$TARGET" in
           target)
@@ -270,6 +280,17 @@ if [ ! -f $STAMP ]; then
       fi
       if [ "$(type -t makeinstall_$TARGET)" = "function" ]; then
         makeinstall_$TARGET
+      elif [ -f "$PKG_CMAKE_SCRIPT" -a ! "$PKG_USE_CMAKE" = "no" ]; then
+        if [ "$TARGET" = "target" ]; then
+          DESTDIR=$SYSROOT_PREFIX ninja install $PKG_MAKEINSTALL_OPTS_TARGET
+          DESTDIR=$INSTALL ninja install $PKG_MAKEINSTALL_OPTS_TARGET
+        elif [ "$TARGET" = "host" ]; then
+          ninja install $PKG_MAKEINSTALL_OPTS_HOST
+        elif [ "$TARGET" = "init" ]; then
+          DESTDIR=$INSTALL ninja install $PKG_MAKEINSTALL_OPTS_INIT
+        elif [ "$TARGET" = "bootstrap" ]; then
+          ninja install $PKG_MAKEINSTALL_OPTS_BOOTSTRAP
+        fi
       else
         case "$TARGET" in
           target)
@@ -328,6 +349,8 @@ if [ ! -f $STAMP ]; then
                 $STRIP --strip-debug $MOD
               done
             fi
+            $STRIP `find $INSTALL/bin $INSTALL/usr/bin $INSTALL/sbin $INSTALL/usr/sbin \
+              -type f -executable 2>/dev/null` 2>/dev/null || :
           fi
         fi
       fi
