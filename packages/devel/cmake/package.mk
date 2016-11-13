@@ -47,12 +47,3 @@ configure_host() {
                -DBUILD_CursesDialog=OFF \
                -DCMAKE_USE_SYSTEM_CURL=OFF
 }
-
-make_host() {
-make
-}
-
-makeinstall_host() {
-make install
-}
-

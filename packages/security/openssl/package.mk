@@ -1,7 +1,7 @@
 PKG_NAME="openssl"
 PKG_VERSION="1.0.2j"
 PKG_URL="https://www.openssl.org/source/openssl-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain libz gmp"
+PKG_DEPENDS_TARGET="toolchain libz gmp pcre"
 PKG_PRIORITY="optional"
 PKG_SECTION="security"
 PKG_IS_ADDON="no"
@@ -65,7 +65,7 @@ post_makeinstall_target() {
 # download url: http://curl.haxx.se
 # create new cert: perl ./mk-ca-bundle.pl
   #mkdir -p $INSTALL/$SSL_CERTIFICATES
-  #perl $PKG_DIR/cert/mk-ca-bundle.pl
+  perl $PKG_DIR/cert/mk-ca-bundle.pl
   mkdir -p $INSTALL/etc/ssl
   
   #cp $PKG_DIR/cert/ca-bundle.crt $INSTALL/$SSL_CERTIFICATES/cacert.pem

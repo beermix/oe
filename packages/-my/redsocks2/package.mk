@@ -1,6 +1,6 @@
-PKG_NAME="redsocks"
-PKG_VERSION="78a73fc"
-PKG_GIT_URL="https://github.com/darkk/redsocks"
+PKG_NAME="redsocks2"
+PKG_VERSION="03b4825"
+PKG_GIT_URL="https://github.com/semigodking/redsocks"
 PKG_DEPENDS_TARGET="toolchain openssl libevent"
 PKG_PRIORITY="optional"
 PKG_SECTION="my"
@@ -12,5 +12,5 @@ PKG_MAKE_OPTS_TARGET="CC=$CC ENABLE_STATIC=true"
 
 post_make_target() {
   mkdir -p $INSTALL/usr/bin
-  cp -v redsocks $INSTALL/usr/bin/
+  cp -v redsocks2 $INSTALL/usr/bin/
 }

@@ -33,7 +33,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 configure_host() {
-  cmake -GNinja -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_INSTALL_PREFIX=$ROOT/$TOOLCHAIN \
+  cmake -DCMAKE_INSTALL_PREFIX=$ROOT/$TOOLCHAIN \
         -DCMAKE_BUILD_TYPE=Release \
         $LLVM_OPTS \
         -DLLVM_BUILD_TOOLS=ON \
@@ -52,7 +52,7 @@ configure_host() {
 }
 
 make_host() {
-  ninja llvm-config llvm-tblgen
+  make llvm-config llvm-tblgen
 }
 
 makeinstall_host() {

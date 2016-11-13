@@ -1,16 +1,12 @@
 PKG_NAME="mc"
 PKG_VERSION="4.8.18"
 PKG_URL="http://ftp.midnight-commander.org/${PKG_NAME}-${PKG_VERSION}.tar.xz"
-#PKG_GIT_URL="https://github.com/MidnightCommander/mc.git"
-#PKG_GIT_BRANCH="master"
-#PKG_KEEP_CHECKOUT="no"
-PKG_DEPENDS_TARGET="toolchain libtool:host gettext:host glib pcre fuse libssh2 ncurses"
-PKG_PRIORITY="optional"
+PKG_DEPENDS_TARGET="toolchain libtool:host gettext:host e2fsprogs util-linux glib pcre fuse libssh2 libevent expat"
 PKG_SECTION="tools"
 PKG_AUTORECONF="yes"
 
 pre_configure_target() {
-  export LIBS="$LIBS -lssh2 -lz -pthread"
+  export LIBS="$LIBS -lssh2 -ldl -lpthread"
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
@@ -34,7 +30,7 @@ PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
                            --disable-doxygen-html \
                            --without-internal-edit \
                            --disable-silent-rules \
-                           --enable-nls \
+                           --disable-nls \
                            --enable-background \
                            --enable-charset \
                            --without-gpm-mouse \

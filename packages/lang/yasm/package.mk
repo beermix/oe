@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="BSD"
 PKG_SITE="http://www.tortall.net/projects/yasm/"
 PKG_URL="http://www.tortall.net/projects/yasm/releases/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_HOST="cmake:host ninja:host"
+PKG_DEPENDS_HOST="cmake:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="toolchain/lang"
 PKG_SHORTDESC="yasm: A complete rewrite of the NASM assembler"
@@ -32,9 +32,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 configure_host() {
-  cmake -GNinja \
-  	-DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
-  	-DCMAKE_INSTALL_PREFIX=$ROOT/$TOOLCHAIN \
+  cmake -DCMAKE_INSTALL_PREFIX=$ROOT/$TOOLCHAIN \
   	-DCMAKE_BUILD_TYPE=Release \
   	-DBUILD_SHARED_LIBS=OFF \
   	-DENABLE_NLS=OFF \

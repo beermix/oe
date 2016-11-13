@@ -32,7 +32,7 @@ PKG_LONGDESC="Libgcrypt is a general purpose cryptographic library based on the 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
+PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$CC \
                            ac_cv_sys_symbol_underscore=no \
                            --enable-asm \
                            --with-gnu-ld \
