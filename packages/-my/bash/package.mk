@@ -5,14 +5,11 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/bash/bash.html"
 PKG_URL="ftp://ftp.gnu.org/gnu/bash/bash-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain netbsd-curses readline"
+PKG_DEPENDS_TARGET="toolchain netbsd-curses"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-pre_configure_target() {
-  export LIBS="-ledit"
-  export MAKEFLAGS=-j1
-}
+MAKEFLAGS=-j1
 
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \

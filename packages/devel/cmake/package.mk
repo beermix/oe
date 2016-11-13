@@ -36,8 +36,8 @@ configure_host() {
   ../configure --prefix=$ROOT/$TOOLCHAIN \
                --no-qt-gui --no-system-libs  \
                -- \
-               -DCMAKE_C_FLAGS="-march=haswell -mtune=haswell -O2 -pipe -Wno-format-security" \
-               -DCMAKE_CXX_FLAGS="-march=haswell -mtune=haswell -O2 -pipe -Wno-format-security" \
+               -DCMAKE_C_FLAGS="-march=native -O2 -pipe -Wno-format-security" \
+               -DCMAKE_CXX_FLAGS="-march=native -O2 -pipe -Wno-format-security" \
                -DCMAKE_EXE_LINKER_FLAGS="$HOST_LDFLAGS" \
                -DCMAKE_USE_OPENSSL=ON \
                -DBUILD_CursesDialog=0
