@@ -39,6 +39,8 @@ configure_target() {
   LDFLAGS="$LDFLAGS -lpthread -lm"
   CFLAGS="$CFLAGS -D_GNU_SOURCE -DCONFIG_LIBNL20 -I$SYSROOT_PREFIX/usr/include/libnl-tiny"
   cp $PKG_DIR/config/makefile.config wpa_supplicant/.config
+  echo "CONFIG_IEEE80211W=y" >> .config
+  echo "CONFIG_TLS=internal" >> .config
 # echo "CONFIG_TLS=gnutls" >> .config
 # echo "CONFIG_GNUTLS_EXTRA=y" >> .config
 }

@@ -33,9 +33,6 @@ PKG_IS_ADDON="no"
 
 PKG_AUTORECONF="yes"
 
-#pre_configure_target() {
-#  strip_lto
-#}
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_path_GLIB_GENMARSHAL=$ROOT/$TOOLCHAIN/bin/glib-genmarshal \
                            --disable-glibtest \

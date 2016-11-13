@@ -8,8 +8,9 @@ PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-CFLAGS="$CFLAGS -Ofast -O3 -fPIC"
-
+pre_configure_target() {
+  export CFLAGS="$CFLAGS -Ofast"
+}
 
 PKG_CONFIGURE_OPTS_TARGET="\
 		--prefix=/usr \
