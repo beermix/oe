@@ -18,7 +18,7 @@
   ROOT_PASSWORD="openelec"
   LLVM_SUPPORT="no"
 # Install glibc locales to the build (yes / no)
-  GLIBC_LOCALES="yes"
+  GLIBC_LOCALES="no"
 
 # Mediacenter to use (kodi / no)
   MEDIACENTER="kodi"

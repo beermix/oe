@@ -17,12 +17,11 @@
 ################################################################################
 
 PKG_NAME="configtools"
-PKG_VERSION="daabcd0"
+PKG_VERSION="master"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://git.savannah.gnu.org/cgit/config.git"
 PKG_GIT_URL="http://git.savannah.gnu.org/r/config.git"
-PKG_GIT_BRANCH="master"
 PKG_DEPENDS_HOST=""
 PKG_SHORTDESC="configtools"
 PKG_LONGDESC="configtools"

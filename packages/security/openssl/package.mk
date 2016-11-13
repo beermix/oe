@@ -10,6 +10,7 @@ PKG_AUTORECONF="no"
 pre_configure_target() {
   export MAKEFLAGS="-j1"
   export CFLAGS=`echo $CFLAGS | sed -e "s|-O2||g"`
+  #export CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
 }
 
 configure_target() {
@@ -34,7 +35,7 @@ configure_target() {
               enable-gmp \
               no-ssl3-method \
               linux-x86_64 \
-              "-Wa,--noexecstack -fstack-protector-strong -pthread"
+              "-pthread -m64 -DL_ENDIAN -Wa,--noexecstack"
 }
 
 make_target() {
@@ -47,8 +48,6 @@ make_target() {
        MAKEDEPPROG="$CC" \
        depend all build-shared
 }
-
-
 
 makeinstall_target() {
   make INSTALL_PREFIX=$SYSROOT_PREFIX install_sw

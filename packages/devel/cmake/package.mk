@@ -17,13 +17,13 @@
 ################################################################################
 
 PKG_NAME="cmake"
-PKG_VERSION="3.6.3"
+PKG_VERSION="3.7.0"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="BSD"
 PKG_SITE="http://www.cmake.org/"
-PKG_URL="http://www.cmake.org/files/v3.6/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_HOST="ccache:host ninja:host"
+PKG_URL="http://www.cmake.org/files/v3.7/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_DEPENDS_HOST="ccache:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="cmake: A cross-platform, open-source make system"
@@ -40,5 +40,19 @@ configure_host() {
                -DCMAKE_CXX_FLAGS="-march=native -O2 -pipe -Wno-format-security" \
                -DCMAKE_EXE_LINKER_FLAGS="$HOST_LDFLAGS" \
                -DCMAKE_USE_OPENSSL=ON \
-               -DBUILD_CursesDialog=0
+               -DKWSYS_LFS_WORKS=TRUE \
+               -DKWSYS_CHAR_IS_SIGNED=TRUE \
+               -DCMAKE_USE_SYSTEM_LIBRARIES=0 \
+               -DCTEST_USE_XMLRPC=OFF \
+               -DBUILD_CursesDialog=OFF \
+               -DCMAKE_USE_SYSTEM_CURL=OFF
 }
+
+make_host() {
+make
+}
+
+makeinstall_host() {
+make install
+}
+
