@@ -37,4 +37,4 @@ pre_configure_target() {
   export CFLAGS="$CFLAGS -fPIC"
 }
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-malloc0returnsnull"
+PKG_CONFIGURE_OPTS_TARGET="--enable-malloc0returnsnull --enable-static --disable-shared"

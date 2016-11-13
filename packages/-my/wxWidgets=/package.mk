@@ -5,7 +5,7 @@ PKG_URL="ftp://ftp.wxwidgets.org/pub/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2
 PKG_DEPENDS_TARGET="toolchain gtk+ expat"
 PKG_PRIORITY="optional"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \

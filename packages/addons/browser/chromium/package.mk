@@ -25,7 +25,7 @@ PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_SITE="http://www.chromium.org/Home"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain pciutils dbus libXcomposite libXcursor libXtst alsa-lib bzip2 yasm nss libXScrnSaver libexif ninja:host libpng harfbuzz atk gtk+ libva-vdpau-driver unclutter xdotool libevent"
+PKG_DEPENDS_TARGET="toolchain pciutils libgcrypt systemd dbus libXcomposite libXcursor libXtst alsa-lib bzip2 yasm nss libXScrnSaver libexif ninja:host libpng harfbuzz atk gtk+ libxss unclutter xdotool libevent pulseaudio"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -80,13 +80,13 @@ make_target() {
     -Dtracing_like_official_build=1
     -Dfieldtrial_testing_like_official_build=1
     -Dremove_webcore_debug_symbols=1
-    -Drelease_extra_cflags="$CFLAGS"
+    -Drelease_extra_cflags="-march=ivybridge -mtune=ivybridge -O3 -pipe"
     -Dlibspeechd_h_prefix=speech-dispatcher/
     -Dffmpeg_branding=Chrome
     -Dproprietary_codecs=1
     -Duse_system_bzip2=1
     -Duse_system_flac=0
-    -Duse_system_ffmpeg=0
+    -Duse_system_ffmpeg=1
     -Duse_system_harfbuzz=1
     -Duse_system_icu=0
     -Duse_system_libevent=1
@@ -101,7 +101,7 @@ make_target() {
     -Duse_mojo=0
     -Duse_gconf=0
     -Duse_gnome_keyring=0
-    -Duse_pulseaudio=0
+    -Duse_pulseaudio=1
     -Duse_kerberos=0
     -Duse_cups=0
     -Denable_hangout_services_extension=1
@@ -158,23 +158,23 @@ addon() {
 
   # pixbuf loaders
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules
-  cp -PL $(get_pkg_build gdk-pixbuf)/.install_pkg/usr/lib/gdk-pixbuf-2.0/2.10.0/loaders/* $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules
+  #cp -PL $(get_pkg_build gdk-pixbuf)/.install_pkg/usr/lib/gdk-pixbuf-2.0/2.10.0/loaders/* $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules
 
   # nss
-  cp -PL $(get_pkg_build nss)/dist/Linux*OPT.OBJ/lib/*.so $ADDON_BUILD/$PKG_ADDON_ID/lib
+  #cp -PL $(get_pkg_build nss)/dist/Linux*OPT.OBJ/lib/*.so $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # nspr
-  cp -PL $(get_pkg_build nspr)/.install_pkg/usr/lib/*.so $ADDON_BUILD/$PKG_ADDON_ID/lib
+  #cp -PL $(get_pkg_build nspr)/.install_pkg/usr/lib/*.so $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # libexif
-  cp -PL $(get_pkg_build libexif)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  #cp -PL $(get_pkg_build libexif)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # libva-vdpau-driver
-  cp -PL $(get_pkg_build libva-vdpau-driver)/.install_pkg/usr/lib/va/*.so $ADDON_BUILD/$PKG_ADDON_ID/lib
+  #cp -PL $(get_pkg_build libva-vdpau-driver)/.install_pkg/usr/lib/va/*.so $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # unclutter
-  cp -P $(get_pkg_build unclutter)/.install_pkg/usr/bin/unclutter $ADDON_BUILD/$PKG_ADDON_ID/bin
+  #cp -P $(get_pkg_build unclutter)/.install_pkg/usr/bin/unclutter $ADDON_BUILD/$PKG_ADDON_ID/bin
 
   # xdotool
-  cp -P $(get_pkg_build xdotool)/xdotool $ADDON_BUILD/$PKG_ADDON_ID/bin
+ # cp -P $(get_pkg_build xdotool)/xdotool $ADDON_BUILD/$PKG_ADDON_ID/bin
 }

@@ -10,10 +10,12 @@ PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			   --enable-static \
+			   --enable-lib-only \
 			   --disable-app \
-			   --disable-hpack-tools \
 			   --disable-silent-rules \
 			   --with-gnu-ld \
+			   --enable-examples=no \
+			   --disable-python-bindings \
 			   --with-boost=no"
 			   
 post_makeinstall_target() {

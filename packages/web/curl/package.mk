@@ -31,7 +31,7 @@ PKG_ARCH="any"
 PKG_LICENSE="MIT"
 PKG_SITE="http://curl.haxx.se"
 PKG_URL="http://curl.haxx.se/download/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain libz openssl rtmpdump libidn libssh2"
+PKG_DEPENDS_TARGET="toolchain libz openssl rtmpdump libidn libssh2 nghttp2"
 PKG_PRIORITY="optional"
 PKG_SECTION="web"
 PKG_SHORTDESC="curl: Client and library for (HTTP, HTTPS, FTP, ...) transfers"
@@ -97,7 +97,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            --with-libssh2 \
                            --with-librtmp=$SYSROOT_PREFIX/usr \
                            --with-libidn \
-                           --without-nghttp2"
+                           --with-nghttp2"
 
 pre_configure_target() {
 # link against librt because of undefined reference to 'clock_gettime'

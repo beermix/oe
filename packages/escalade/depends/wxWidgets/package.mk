@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="wxWidgets"
-PKG_VERSION="3.0.2"
+PKG_VERSION="v3.1.0"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="wxWindows Licence"
 PKG_SITE="http://www.wxwidgets.org/"
-PKG_URL="https://github.com/wxWidgets/wxWidgets/archive/v$PKG_VERSION.tar.gz"
+PKG_GIT_URL="https://github.com/wxWidgets/wxWidgets"
 PKG_DEPENDS_TARGET="toolchain gtk+ libSM"
 PKG_SECTION="depends"
 PKG_SHORTDESC="A cross-platform GUI and tools library for GTK, MS Windows, and MacOS."

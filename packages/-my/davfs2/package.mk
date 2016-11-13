@@ -5,16 +5,20 @@ PKG_DEPENDS_TARGET="toolchain fuse neon"
 PKG_PRIORITY="optional"
 PKG_SECTION="system"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
-
-AM_CFLAGS="-Wall -Werror=format-security"
+pre_configure_target() {
+   export LIBS="-lpthread"
+   cd $ROOT/$PKG_BUILD
+   export MAKEFLAGS="-j1"
+}
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
 			   ne_cv_lib_neonver=yes \
 			   --with-neon=$SYSROOT_PREFIX/usr \
 			   --sysconfdir=/storage/.config \
-			   --datarootdir=/storage/.config"
+			   --datarootdir=/storage/.config \
+			   --disable-silent-rules"
 			  
 post_makeinstall_target() {
   rm -rf $INSTALL/sbin/
