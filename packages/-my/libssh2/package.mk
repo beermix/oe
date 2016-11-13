@@ -7,9 +7,9 @@ PKG_IS_ADDON="no"
 PKG_USE_CMAKE="yes"
 PKG_AUTORECONF="no"
 
-#pre_configure_target() {
-#   export CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
-#}
+pre_configure_target() {
+   export CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
+}
 
 PKG_CMAKE_OPTS_TARGET="-DBUILD_EXAMPLES=OFF \
 		       -DBUILD_SHARED_LIBS=OFF \

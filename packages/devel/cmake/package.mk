@@ -17,13 +17,13 @@
 ################################################################################
 
 PKG_NAME="cmake"
-PKG_VERSION="3.7.0"
+PKG_VERSION="3.6.3"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="BSD"
 PKG_SITE="http://www.cmake.org/"
-PKG_URL="http://www.cmake.org/files/v3.7/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_HOST="ccache:host libarchive:host ninja:host"
+PKG_URL="http://www.cmake.org/files/v3.6/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_DEPENDS_HOST="ccache:host ninja:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="cmake: A cross-platform, open-source make system"

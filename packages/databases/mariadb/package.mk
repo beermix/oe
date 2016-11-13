@@ -42,7 +42,7 @@ PKG_MARIADB_SERVER="no"
 # - large :  embedded + archive + federated + blackhole + innodb
 # - xlarge:  embedded + archive + federated + blackhole + innodb + partition
 # - community:  all  features (currently == xlarge)
-  MARIADB_OPTS="$MARIADB_OPTS -DFEATURE_SET=xlarge"
+  MARIADB_OPTS="$MARIADB_OPTS -DFEATURE_SET=xsmall"
 
 # Build MariaDB Server support
   if [ "$PKG_MARIADB_SERVER" = "no" ]; then
@@ -103,7 +103,7 @@ PKG_MARIADB_SERVER="no"
   MARIADB_IMPORT_EXECUTABLES="-DIMPORT_EXECUTABLES=$ROOT/$PKG_BUILD/.$HOST_NAME/import_executables.cmake"
 
 configure_host() {
-  cmake -DCMAKE_PREFIX_PATH=$ROOT/$TOOLCHAIN/ \
+  cmake -GNinja -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_PREFIX_PATH=$ROOT/$TOOLCHAIN/ \
         -DCMAKE_BUILD_TYPE=Release \
         -DFEATURE_SET=xsmall \
         -DWITHOUT_SERVER=OFF \
@@ -130,7 +130,7 @@ makeinstall_host() {
 }
 
 configure_target() {
-  cmake -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
+  cmake -GNinja -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
         -DDISABLE_SHARED=ON \
         -DCMAKE_C_FLAGS="${TARGET_CFLAGS} -fPIC -DPIC -fno-strict-aliasing -DBIG_JOINS=1 -fomit-frame-pointer -fno-delete-null-pointer-checks" \
         -DCMAKE_CXX_FLAGS="${TARGET_CXXFLAGS} -fPIC -DPIC -fno-strict-aliasing -DBIG_JOINS=1 -felide-constructors -fno-delete-null-pointer-checks" \
