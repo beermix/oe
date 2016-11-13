@@ -8,8 +8,13 @@ PKG_AUTORECONF="no"
 PKG_USE_CMAKE="yes"
 
 pre_configure_target() {
+  cd $ROOT/$PKG_BUILD
+  mkdir -p $INSTALL/usr/bin
   export LDFLAGS="-lX11 -lXrandr -lXxf86vm -lXext -lm"
-  export MAKEFLAGS="-j1"
 }
 
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_INSTALL_PREFIX=/usr"
+MAKEFLAGS="-j1"
+
+make_target() {
+  make prefix=/usr CC="$CC" LD="$LD" AR="$AR" XCFLAGS="$CFLAGS" XLDFLAGS="$LDFLAGS"
+}
