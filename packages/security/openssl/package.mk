@@ -53,7 +53,7 @@ makeinstall_target() {
   make INSTALL_PREFIX=$SYSROOT_PREFIX install_sw
   make INSTALL_PREFIX=$INSTALL install_sw
   chmod 755 $INSTALL/usr/lib/*.so*
-  chmod 755 $INSTALL/usr/lib/engines/*.so
+  #chmod 755 $INSTALL/usr/lib/engines/*.so
 }
 
 post_makeinstall_target() {
@@ -65,7 +65,7 @@ post_makeinstall_target() {
 # download url: http://curl.haxx.se
 # create new cert: perl ./mk-ca-bundle.pl
   #mkdir -p $INSTALL/$SSL_CERTIFICATES
-  perl $PKG_DIR/cert/mk-ca-bundle.pl
+  #perl $PKG_DIR/cert/mk-ca-bundle.pl
   mkdir -p $INSTALL/etc/ssl
   
   #cp $PKG_DIR/cert/ca-bundle.crt $INSTALL/$SSL_CERTIFICATES/cacert.pem
