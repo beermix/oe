@@ -69,7 +69,7 @@
 # Space separated list is supported,
   KERNEL_EXTRA_CONFIG+=" filesystem hid-drivers audio"
   KERNEL_EXTRA_CONFIG+=" lan-phy"
-  KERNEL_EXTRA_CONFIG+=" wlan-usb wlan-other"
+  KERNEL_EXTRA_CONFIG+=" wlan-usb"
   KERNEL_EXTRA_CONFIG+="aufs bluetooth lan-pci sata samba"
 
 # additional drivers to install:
