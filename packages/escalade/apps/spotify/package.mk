@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="Freeware"
 PKG_SITE="http://www.spotify.com"
 PKG_URL="custom"
-PKG_DEPENDS_TARGET="toolchain gtk+ libX11 openssl libcurl-compat freetype zlib"
+PKG_DEPENDS_TARGET="toolchain gtk+ libX11 openssl libcurl freetype zlib"
 PKG_SECTION="apps"
 PKG_SHORTDESC="A proprietary music streaming service"
 

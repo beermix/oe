@@ -1,4 +1,4 @@
-#################################################################################
+################################################################################
 #      This file is part of LibreELEC - https://libreelec.tv
 #      Copyright (C) 2016 Team LibreELEC
 #
@@ -16,22 +16,27 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="libconfig"
-PKG_VERSION="v1.5"
+PKG_NAME="dstat"
+PKG_VERSION="master"
 PKG_REV="1"
 PKG_ARCH="any"
-PKG_LICENSE="LGPL"
-PKG_SITE="http://hyperrealm.com/libconfig/libconfig.html"
-PKG_GIT_URL="https://github.com/hyperrealm/libconfig"
-PKG_DEPENDS_TARGET="toolchain"
-PKG_SECTION="lib"
-PKG_SHORTDESC="C/C++ Configuration File Library"
-PKG_LONGDESC="C/C++ Configuration File Library"
-
+PKG_LICENSE="GPL"
+PKG_SITE="http://dag.wiee.rs/home-made/dstat"
+PKG_GIT_URL="https://github.com/dagwieers/dstat"
+PKG_DEPENDS_TARGET="toolchain Python"
+PKG_SECTION="tools"
+PKG_SHORTDESC="Versatile resource statistics tool"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static \
-                           --disable-shared \
-                           --disable-examples \
-                           --with-sysroot=$SYSROOT_PREFIX"
+PKG_AUTORECONF="no"
+
+make_target() {
+  :
+}
+
+makeinstall_target() {
+  mkdir -p $INSTALL/usr/bin
+  mkdir -p $INSTALL/usr/share
+  cp dstat $INSTALL/usr/bin/
+  cp -R plugins $INSTALL/usr/share/dstat
+}

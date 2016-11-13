@@ -16,24 +16,25 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="dolphin"
-PKG_VERSION="e05553a"
+PKG_NAME="wxWidgets"
+PKG_VERSION="v3.1.0"
 PKG_REV="1"
-PKG_ARCH="x86_64"
-PKG_LICENSE="GPLv2"
-PKG_SITE="https://github.com/dolphin-emu/dolphin"
-PKG_GIT_URL="https://github.com/dolphin-emu/dolphin"
-PKG_DEPENDS_TARGET="toolchain cmake:host openal-soft libevdev gtk+ ffmpeg zlib bluez portaudio pulseaudio alsa-lib libogg libvorbis libSM enet"
-PKG_SECTION="emulation"
-PKG_SHORTDESC="Dolphin GameCube/Wii emulator"
+PKG_ARCH="any"
+PKG_LICENSE="wxWindows Licence"
+PKG_SITE="http://www.wxwidgets.org/"
+PKG_GIT_URL="https://github.com/wxWidgets/wxWidgets"
+PKG_DEPENDS_TARGET="toolchain gtk+ libSM"
+PKG_SECTION="depends"
+PKG_SHORTDESC="A cross-platform GUI and tools library for GTK, MS Windows, and MacOS."
+PKG_LONGDESC="A cross-platform GUI and tools library for GTK, MS Windows, and MacOS."
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CMAKE_OPTS_TARGET="-DSYSTEM_PORTAUDIO_EXITCODE=0 -DENABLE_LTO=on -DUSE_SHARED_ENET=on"
+PKG_CONFIGURE_OPTS_TARGET="--disable-precomp-headers"
 
 post_makeinstall_target() {
-  cp $PKG_DIR/scripts/* $INSTALL/usr/bin/
-  mkdir -p $INSTALL/usr/config/dolphin-emu
-  cp -PR $PKG_DIR/config/* $INSTALL/usr/config/dolphin-emu/
+  ln -sf $SYSROOT_PREFIX/usr/lib/wx/config/i686-libreelec-linux-gnu-gtk2-unicode-3.0 $SYSROOT_PREFIX/usr/bin/wx-config
+  $SED "s:^prefix=.*:prefix=$SYSROOT_PREFIX/usr:g" $SYSROOT_PREFIX/usr/bin/wx-config
+  rm -rf $INSTALL/usr/bin
 }

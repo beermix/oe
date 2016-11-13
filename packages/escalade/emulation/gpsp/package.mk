@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of LibreELEC - http://www.libreelec.tv
-#      Copyright (C) 2009-2016 Lukas Rusak (lrusak@libreelec.tv)
+#      Copyright (C) 2016 Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,37 +16,30 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="common-shaders"
-PKG_VERSION="latest"
+PKG_NAME="gpsp"
+PKG_VERSION="4d860ae"
 PKG_REV="1"
 PKG_ARCH="any"
-PKG_LICENSE="MIT"
-PKG_SITE="https://github.com/libretro/common-shaders"
-PKG_URL=""
+PKG_LICENSE="GPLv2"
+PKG_SITE="https://github.com/libretro/gpsp"
+PKG_URL="https://github.com/libretro/gpsp/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_SECTION="emulation"
-PKG_SHORTDESC="Collection of commonly used shaders"
+PKG_SECTION="libretro"
+PKG_SHORTDESC="gpSP for libretro."
+PKG_LONGDESC="gameplaySP is a Gameboy Advance emulator for Playstation Portable"
 
-PKG_AUTORECONF="no"
 PKG_IS_ADDON="no"
-
-unpack() {
-  mkdir -p $PKG_BUILD && cd $PKG_BUILD
-  wget http://buildbot.libretro.com/assets/frontend/shaders_glsl.zip
-  unzip -o -d common shaders_glsl.zip
-  git clone --depth 1 https://github.com/RetroPie/common-shaders.git retropie
-  git clone --depth 1 https://github.com/libretro/slang-shaders.git slang
-  find . -type f -exec chmod 644 {} \;
-  cd $ROOT
-}
+PKG_AUTORECONF="no"
 
 make_target() {
-  :
+  if [ "$ARCH" == "arm" ]; then
+    make CC=$CC platform=armv
+  else
+    make CC=$CC
+  fi  
 }
 
 makeinstall_target() {
-  mkdir -p $INSTALL/usr/share/retroarch/shaders
-  cp -R common/* $INSTALL/usr/share/retroarch/shaders
-  cp -R retropie/retropie $INSTALL/usr/share/retroarch/shaders
-  cp -R slang/* $INSTALL/usr/share/retroarch/shaders
+  mkdir -p $INSTALL/usr/lib/libretro
+  cp gpsp_libretro.so $INSTALL/usr/lib/libretro/
 }

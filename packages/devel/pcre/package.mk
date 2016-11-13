@@ -35,19 +35,15 @@ PKG_USE_CMAKE="no"
 PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$ROOT/$TOOLCHAIN \
-			 --enable-utf8 \
-			 --enable-unicode-properties \
-			 --with-gnu-ld \
-			 --enable-static \
-			 --disable-shared \
-			 --disable-cpp \
-			 --enable-pcre16 \
-			 --with-gnu-ld"
+                         --disable-shared \
+                         --enable-static
+                         --enable-utf8 \
+                         --enable-unicode-properties \
+                         --with-gnu-ld"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			   --enable-static \
 			   --enable-utf8 \
-			   --disable-cpp \
 			   --enable-pcre16 \
 			   --enable-unicode-properties \
 			   --with-gnu-ld"

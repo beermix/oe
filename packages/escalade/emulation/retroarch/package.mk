@@ -17,12 +17,11 @@
 ################################################################################
 
 PKG_NAME="retroarch"
-PKG_VERSION="1b9d925"
+PKG_VERSION="14f56e1"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv3"
-PKG_SITE="https://github.com/libretro/RetroArch.git"
-PKG_URL="custom"
+PKG_GIT_URL="https://github.com/libretro/RetroArch.git"
 PKG_DEPENDS_TARGET="toolchain alsa-lib freetype libz retroarch-assets core-info retroarch-joypad-autoconfig common-shaders libretro-database ffmpeg"
 PKG_SECTION="emulation"
 PKG_SHORTDESC="Reference frontend for the libretro API."
@@ -31,13 +30,6 @@ PKG_LONGDESC="RetroArch is the reference frontend for the libretro API. Popular 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-unpack() {
-  git clone --recursive https://github.com/libretro/RetroArch $PKG_BUILD
-  cd $PKG_BUILD
-  git reset --hard $PKG_VERSION
-  rm -rf .git
-  cd $ROOT
-}
 
 if [ "$OPENGLES_SUPPORT" = yes ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET $OPENGLES"
