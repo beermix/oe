@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="xf86-video-intel"
-PKG_VERSION="b617f80"
+PKG_VERSION="master"
 PKG_REV="1"
 PKG_ARCH="x86_64"
 PKG_LICENSE="OSS"
@@ -31,7 +31,6 @@ PKG_LONGDESC="The Xorg driver for Intel i810, i815, 830M, 845G, 852GM, 855GM, 86
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-#export CFLAGS="-D_GNU_SOURCE -O2"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-backlight \
                            --disable-backlight-helper \
