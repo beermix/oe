@@ -2,9 +2,6 @@ PKG_NAME="transmission"
 PKG_VERSION="d8dd6f9"
 PKG_GIT_URL="https://github.com/transmission/transmission"
 PKG_DEPENDS_TARGET="toolchain zlib openssl libpcap pcre libevent curl miniupnpc libdaemon xfsprogs-dev"
-PKG_PRIORITY="optional"
-PKG_SECTION="service/downloadmanager"
-PKG_ADDON_TYPE="kodi.service" ## -DHAVE_XFS_XFS_H=1 -DCMAKE_BUILD_TYPE=Release
 PKG_AUTORECONF="no"
 
 PKG_CMAKE_OPTS_TARGET="-DWITH_CRYPTO=openssl \

@@ -15,8 +15,7 @@ post_unpack() {
 pre_configure_target() {
    cd $ROOT/$PKG_BUILD
    export MAKEFLAGS="-j1"
-   export LDFLAGS="-lpthread"
-   #LDFLAGS="-lsqlite3"
+   export LDFLAGS="-ldl -lpthread -lsqlite3"
 }
 
 

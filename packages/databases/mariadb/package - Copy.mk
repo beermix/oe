@@ -24,7 +24,7 @@ PKG_LICENSE="GPLv2"
 PKG_SITE="http://www.mariadb.org"
 PKG_URL="https://downloads.mariadb.org/interstitial/$PKG_NAME-$PKG_VERSION/source/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain netbsd-curses openssl libaio lz4 libevent mariadb:host"
+PKG_DEPENDS_TARGET="toolchain netbsd-curses openssl libaio mariadb:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="database"
 PKG_SHORTDESC="mariadb: A community developed branch of MySQL"
@@ -138,29 +138,28 @@ configure_target() {
         $MARIADB_IMPORT_EXECUTABLES \
         -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
         -DCMAKE_INSTALL_PREFIX=/usr \
-        -DINSTALL_DOCDIR=share/doc/mariadb \
-        -DINSTALL_DOCREADMEDIR=share/doc/mariadb \
-        -DINSTALL_INCLUDEDIR=include/mysql \
-        -DINSTALL_MANDIR=share/man \
-        -DINSTALL_MYSQLSHAREDIR=share/mysql \
-        -DINSTALL_MYSQLTESTDIR=share/mysql/test \
-        -DINSTALL_PLUGINDIR=lib/mysql/plugin \
+        -DINSTALL_DOCDIR=/storage/.config/mariadb/share/doc/mariadb \
+        -DINSTALL_DOCREADMEDIR=/storage/.config/mariadb/share/doc/mariadb \
+        -DINSTALL_INCLUDEDIR=/storage/.config/mariadb/include/mysql \
+        -DINSTALL_MANDIR=/storage/.config/mariadb/share/man \
+        -DINSTALL_MYSQLSHAREDIR=/storage/.config/mariadb/share/mysql \
+        -DINSTALL_MYSQLTESTDIR=/storage/.config/mariadb/share/mysql/test \
+        -DINSTALL_PLUGINDIR=/storage/.config/mariadb/lib/mysql/plugin \
         -DINSTALL_SBINDIR=sbin \
-        -DINSTALL_SCRIPTDIR=share/mysql/scripts \
-        -DINSTALL_SQLBENCHDIR=share/mysql/bench \
-        -DINSTALL_SUPPORTFILESDIR=share/mysql/support-files \
-        -DMYSQL_DATADIR=/storage/mysql \
-        -DMYSQL_UNIX_ADDR=/run/mysqld/mysqld.sock \
-        -DWITH_EXTRA_CHARSETS=all \
+        -DINSTALL_SCRIPTDIR=/storage/.config/mariadb/share/mysql/scripts \
+        -DINSTALL_SQLBENCHDIR=/storage/.config/mariadb/share/mysql/bench \
+        -DINSTALL_SUPPORTFILESDIR=/storage/.config/mariadb/share/mysql/support-files \
+        -DMYSQL_DATADIR=/storage/.config/mariadb \
+        -DMYSQL_UNIX_ADDR=/var/tmp/mysql.socket \
+        -DWITH_EXTRA_CHARSETS=complex \
         -DTOKUDB_OK=0 \
         -DDISABLE_LIBMYSQLCLIENT_SYMBOL_VERSIONING=TRUE \
         -DENABLE_DTRACE=OFF \
-        -DWITH_READLINE=ON \
+        -DWITH_READLINE=OFF \
         -DWITH_PCRE=bundled \
         -DWITH_ZLIB=bundled \
-        -DWITH_SYSTEMD=ON \
+        -DWITH_SYSTEMD=OFF \
         -DWITH_LIBWRAP=OFF \
-        -DGRN_WITH_LZ4=ON \
         -DWITH_SSL=$SYSROOT_PREFIX/usr \
         $MARIADB_OPTS \
         ..
@@ -181,5 +180,6 @@ post_makeinstall_target() {
     rm -rf $INSTALL/usr/bin
     rm -rf $INSTALL/usr/lib
     rm -rf $INSTALL/usr/share/mysql/*.sql
+    rm -rf $INSTALL/storage
   fi
 }

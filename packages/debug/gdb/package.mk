@@ -32,12 +32,13 @@ PKG_LONGDESC="The purpose of a debugger such as GDB is to allow you to see what 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-CC_FOR_BUILD="$HOST_CC"
-CFLAGS_FOR_BUILD="$HOST_CFLAGS"
+#CC_FOR_BUILD="$HOST_CC"
+#CFLAGS_FOR_BUILD="$HOST_CFLAGS"
 
 pre_configure_target() {
   # gdb could fail on runtime if build with LTO support
     strip_lto
+    export CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
 }
 
 PKG_CONFIGURE_OPTS_TARGET="bash_cv_have_mbstate_t=set \
@@ -53,7 +54,7 @@ PKG_CONFIGURE_OPTS_TARGET="bash_cv_have_mbstate_t=set \
                            --disable-libquadmath \
                            --disable-libquadmath-support \
                            --enable-libada \
-                           --enable-libssp \
+                           --disable-libssp \
                            --disable-werror"
 
 post_makeinstall_target() {

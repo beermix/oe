@@ -6,7 +6,7 @@ PKG_SECTION="tools"
 PKG_AUTORECONF="yes"
 
 pre_configure_target() {
-  export LIBS="$LIBS -lssh2 -lz -ledit -pthread"
+  export LIBS="$LIBS -lssh2 -lz -ledit -ldl -lpthread"
   export MAKEFLAGS=-j1
 }
 

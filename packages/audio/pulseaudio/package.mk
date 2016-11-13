@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://pulseaudio.org/"
 PKG_URL="http://www.freedesktop.org/software/pulseaudio/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain libtool json-c alsa-lib libsndfile soxr dbus systemd openssl libcap"
+PKG_DEPENDS_TARGET="toolchain libtool json-c alsa-lib libsndfile soxr dbus systemd openssl libcap libsamplerate"
 PKG_PRIORITY="optional"
 PKG_SECTION="audio"
 PKG_SHORTDESC="pulseaudio: Yet another sound server for Unix"
@@ -55,14 +55,14 @@ else
 fi
 
 # package specific configure options
-PKG_CONFIGURE_OPTS_TARGET="--disable-silent-rules \
+PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
                            --disable-nls \
                            --enable-largefile \
                            --disable-rpath \
                            $PULSEAUDIO_NEON \
                            --disable-x11 \
                            --disable-tests \
-                           --disable-samplerate \
+                           --enable-samplerate \
                            --disable-oss-output \
                            --disable-oss-wrapper \
                            --disable-coreaudio-output \
