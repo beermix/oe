@@ -16,27 +16,32 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="readline"
-PKG_VERSION="7.0"
+PKG_NAME="netbsd-curses"
+PKG_VERSION="2cb5395"
 PKG_REV="1"
 PKG_ARCH="any"
-PKG_LICENSE="MIT"
-PKG_SITE="http://www.gnu.org/readline"
-PKG_URL="http://ftp.gnu.org/gnu/readline/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain netbsd-curses libedit"
+PKG_LICENSE="GPL"
+PKG_SITE="https://github.com/sabotage-linux/netbsd-curses"
+PKG_GIT_URL="https://github.com/sabotage-linux/netbsd-curses"
+PKG_DEPENDS_TARGET="toolchain libz"
 PKG_PRIORITY="optional"
 PKG_SECTION="devel"
-PKG_SHORTDESC="readline: The GNU Readline library provides a set of functions for use by applications that allow users to edit command lines as they are typed in."
-PKG_LONGDESC="The GNU Readline library provides a set of functions for use by applications that allow users to edit command lines as they are typed in."
+PKG_SHORTDESC="netbsd-curses: netbsd-libcurses portable edition"
+PKG_LONGDESC="netbsd-curses: netbsd-libcurses portable edition"
+
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
+# remove some problematic *FLAGS
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
+  export CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
+  export MAKEFLAGS="-j1"
 
-PKG_CONFIGURE_OPTS_TARGET="bash_cv_wcwidth_broken=no \
-                           --disable-shared \
-                           --enable-static \
-                           --with-curses"
+make_target() {
+  make HOSTCC="$HOST_CC" CFLAGS="$CFLAGS -D_GNU_SOURCE" PREFIX=/usr all-static
+}
 
-post_makeinstall_target() {
-  rm -rf $INSTALL/usr/share/readline
+makeinstall_target() {
+  make HOSTCC="$HOST_CC" PREFIX=$SYSROOT_PREFIX/usr install-static
 }

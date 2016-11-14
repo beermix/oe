@@ -33,7 +33,8 @@
                          --disable-static \
                          --enable-shared"
 
-  TARGET_CMAKE_OPTS="-DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
+  TARGET_CMAKE_OPTS="-DCMAKE_BUILD_TYPE=Release \
+  		     -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
   		     -DCMAKE_INSTALL_PREFIX=/usr"
 
 # configure HOST build defaults
@@ -45,8 +46,8 @@
                        --sysconfdir=$ROOT/$TOOLCHAIN/etc \
                        --libexecdir=$ROOT/$TOOLCHAIN/lib \
                        --localstatedir=$ROOT/$TOOLCHAIN/var \
-                       --disable-static \
-                       --enable-shared"
+                       --enable-static \
+                       --disable-shared"
 
   HOST_CMAKE_OPTS="-DCMAKE_BUILD_TYPE=Release \
   		   -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \

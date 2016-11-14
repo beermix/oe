@@ -30,7 +30,7 @@ PKG_SHORTDESC="gettext: A program internationalization library and tools"
 PKG_LONGDESC="This is the GNU gettext package. It is interesting for authors or maintainers of other packages or programs which they want to see internationalized. As one step the handling of messages in different languages should be implemented. For this task GNU gettext provides the needed tools and library functions."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 
 PKG_CONFIGURE_SCRIPT="gettext-tools/configure"
@@ -49,6 +49,4 @@ PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared \
                          --with-included-libunistring \
                          --with-included-libxml \
                          --with-included-glib \
-                         --disable-silent-rules"
-
-PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
+                         --enable-silent-rules"

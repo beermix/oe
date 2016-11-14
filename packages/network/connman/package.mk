@@ -74,7 +74,7 @@ PKG_CONFIGURE_OPTS_TARGET="WPASUPPLICANT=/usr/bin/wpa_supplicant \
                            --disable-pacrunner \
                            --disable-neard \
                            --disable-wispr \
-                           --disable-tools \
+                           --enable-tools \
                            --enable-client \
                            --enable-datafiles \
                            --with-dbusconfdir=/etc \
