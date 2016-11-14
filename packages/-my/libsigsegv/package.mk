@@ -6,8 +6,10 @@ PKG_DEPENDS_TARGET=""
 PKG_PRIORITY="optional"
 PKG_SECTION="devel"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_HOST="--enable-static \
 			 --disable-shared \
 			 --disable-silent-rules"
+			 
+PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
