@@ -36,7 +36,7 @@ PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
                            --without-gpm-mouse \
                            --with-screen=ncurses \
                            --without-x \
-                           --without-subshell \
+                           --with-subshell \
                            --enable-vfs-sftp \
                            --enable-vfs-tar \
                            --enable-vfs-extfs \

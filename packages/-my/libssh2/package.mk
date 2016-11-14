@@ -4,13 +4,11 @@ PKG_ARCH="any"
 PKG_URL="https://www.libssh2.org/download/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libz openssl"
 PKG_IS_ADDON="no"
-PKG_USE_CMAKE="no"
-PKG_AUTORECONF="yes"
+PKG_USE_CMAKE="yes"
+PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-shared \
-			   --enable-static \
-			   --with-libz \
-			   --with-openssl \
-			   --disable-silent-rules \
-			   --disable-examples-build \
-			   --disable-debug"
+PKG_CMAKE_OPTS_TARGET="-DBUILD_EXAMPLES=OFF \
+		       -DBUILD_SHARED_LIBS=OFF \
+		       -DBUILD_TESTING=OFF \
+		       -DCRYPTO_BACKEND=OpenSSL \
+		       -DENABLE_GEX_NEW=ON"
