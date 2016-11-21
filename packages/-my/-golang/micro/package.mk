@@ -1,5 +1,5 @@
 PKG_NAME="micro"
-PKG_VERSION="6acda99"
+PKG_VERSION="master"
 PKG_GIT_URL="https://github.com/zyedidia/micro"
 PKG_DEPENDS_TARGET="toolchain go:host"
 PKG_GIT_BRANCH="master"
@@ -14,7 +14,7 @@ pre_make_target() {
   export CGO_ENABLED=1
   export CGO_NO_EMULATION=1
   export CGO_CFLAGS=$CFLAGS
-  export LDFLAGS="-w -extldflags -static -X github.com/docker/containerd.GitCommit=${PKG_VERSION} -extld $CC"
+  export LDFLAGS="-s -w -extldflags -static -extld $CC"
   export GOLANG=$ROOT/$TOOLCHAIN/lib/golang/bin/go
   export GOPATH=$ROOT/$PKG_BUILD.gopath:$ROOT/$PKG_BUILD/vendor/
   export GOROOT=$ROOT/$TOOLCHAIN/lib/golang
