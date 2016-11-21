@@ -17,27 +17,25 @@
 ################################################################################
 
 PKG_NAME="libselinux"
-PKG_VERSION="2.5"
+PKG_VERSION="20161014"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/SELinuxProject/selinux"
-PKG_URL="https://github.com/SELinuxProject/selinux/archive/libselinux-$PKG_VERSION.tar.gz"
-PKG_SOURCE_DIR="selinux-libselinux-$PKG_VERSION"
+PKG_GIT_URL="https://github.com/SELinuxProject/selinux"
+#PKG_SOURCE_DIR="selinux-libselinux-$PKG_VERSION"
 PKG_DEPENDS_TARGET="toolchain pcre"
 PKG_SECTION="tools"
 PKG_SHORTDESC="Security Enhanced Linux (SELinux) userland libraries."
 PKG_IS_ADDON="no"
-
 PKG_AUTORECONF="no"
 
-pre_build_target() {
-  strip_lto
+CFLAGS="-O1 -fno-strict-aliasing"
 
-}
 
 make_target() {
-  make install DESTDIR=$SYSROOT_PREFIX
+  make DESTDIR=$SYSROOT_PREFIX LIBDIR=$SYSROOT_PREFIX/lib
+  make install
 }
 
 makeinstall_target() {

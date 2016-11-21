@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="tigervnc"
-PKG_VERSION="v1.7.0"
+PKG_VERSION="7e8b8b1"
 PKG_REV="100"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPLv2"
