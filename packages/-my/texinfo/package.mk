@@ -7,7 +7,7 @@ PKG_SECTION="security"
 PKG_AUTORECONF="no"
 
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --with-gnu-ld"
+PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared"
 			  
 			  
 PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
