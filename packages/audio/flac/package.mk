@@ -43,7 +43,9 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --disable-xmms-plugin \
                            --disable-oggtest \
                            --with-ogg=$SYSROOT_PREFIX/usr \
-                           --with-gnu-ld"
+                           --with-gnu-ld \
+                           --enable-sse \
+                           --enable-avx"
 
 if [ $TARGET_ARCH = "x86_64" ]; then
   PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET --enable-sse"
