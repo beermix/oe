@@ -152,6 +152,10 @@ EOF
 
   # To avoid cache trashing
   touch -c -t $DATE $CROSS_CXX
+  
+  mkdir -p $ROOT/$TOOLCHAIN/lib/ccache
+  ln -sf $ROOT/$TOOLCHAIN/bin/ccache $ROOT/$TOOLCHAIN/lib/ccache/${TARGET_NAME}-gcc
+  ln -sf $ROOT/$TOOLCHAIN/bin/ccache $ROOT/$TOOLCHAIN/lib/ccache/${TARGET_NAME}-g++
 }
 
 configure_target() {

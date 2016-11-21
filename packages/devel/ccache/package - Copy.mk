@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://ccache.samba.org/"
 PKG_URL="http://samba.org/ftp/ccache/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_HOST="make:host libz:host"
+PKG_DEPENDS_HOST="make:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="devel"
 PKG_SHORTDESC="ccache: A fast compiler cache"
@@ -37,9 +37,17 @@ post_makeinstall_host() {
   $ROOT/$TOOLCHAIN/bin/ccache --max-size=$CCACHE_CACHE_SIZE
   $ROOT/$TOOLCHAIN/bin/ccache --set-config=compiler_check=string:$(gcc -dumpversion)-$(get_pkg_version gcc)
 
-  mkdir -p $ROOT/$TOOLCHAIN/lib/ccache
-    ln -sf $ROOT/$TOOLCHAIN/bin/ccache $ROOT/$TOOLCHAIN/lib/ccache/gcc
-    ln -sf $ROOT/$TOOLCHAIN/bin/ccache $ROOT/$TOOLCHAIN/lib/ccache/g++
-    ln -sf $ROOT/$TOOLCHAIN/bin/ccache $ROOT/$TOOLCHAIN/lib/ccache/${HOST_NAME}-gcc
-    ln -sf $ROOT/$TOOLCHAIN/bin/ccache $ROOT/$TOOLCHAIN/lib/ccache/${HOST_NAME}-g++
+  cat > $ROOT/$TOOLCHAIN/bin/host-gcc <<EOF
+#!/bin/sh
+$ROOT/$TOOLCHAIN/bin/ccache $CC "\$@"
+EOF
+
+  chmod +x $ROOT/$TOOLCHAIN/bin/host-gcc
+
+  cat > $ROOT/$TOOLCHAIN/bin/host-g++ <<EOF
+#!/bin/sh
+$ROOT/$TOOLCHAIN/bin/ccache $CXX "\$@"
+EOF
+
+  chmod +x $ROOT/$TOOLCHAIN/bin/host-g++
 }
