@@ -54,15 +54,16 @@ PKG_CONFIGURE_OPTS_TARGET="--without-ada \
                            --with-ticlib \
                            --enable-getcap \
                            --enable-getcap-cache \
-                           --enable-symlinks \
+                           --disable-symlinks \
                            --enable-ext-funcs \
-                           --disable-pc-files \
+                           --enable-pc-files \
                            --enable-widec"
 
 pre_configure_target() {
   # causes some segmentation fault's (dialog) when compiled with gcc's link time optimization.
   strip_lto
-  CFLAGS="$CFLAGS -D_GNU_SOURCE -fPIC"
+  #CFLAGS="$CFLAGS -D_GNU_SOURCE -fPIC"
+  CFLAGS="$CFLAGS -D_DEFAULT_SOURCE -fPIC"
 }
 
 post_makeinstall_target() {
