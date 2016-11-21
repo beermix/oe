@@ -29,6 +29,6 @@ mkpkg-temp
 # crap
 .DS_Store
 
-/projects/Generic/filesystem/usr/lib/locale/locale-archive
+#/projects/Generic/filesystem/usr/lib/locale/locale-archive
 ltmain.sh
 /tmp/
