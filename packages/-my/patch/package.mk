@@ -7,7 +7,7 @@ PKG_PRIORITY="optional"
 PKG_SECTION="devel"
 PKG_SHORTDESC="GNU patch"
 PKG_LONGDESC="Patch takes a patch file containing a difference listing produced by the diff program and applies those differences to one or more original files, producing patched versions"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 #export CC=$LOCAL_CC
 export LIBS="$LIBS -ldl"

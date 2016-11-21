@@ -7,7 +7,8 @@ PKG_PRIORITY="optional"
 PKG_SECTION="tools"
 PKG_SHORTDESC="GNU Diffutils"
 PKG_LONGDESC="GNU Diffutils is a package of several programs related to finding differences between files."
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr --enable-static --disable-shared --disable-silent-rules"
-PKG_CONFIGURE_OPTS_HOST="--prefix=/usr --enable-static --disable-shared --disable-silent-rules"
+
+PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
