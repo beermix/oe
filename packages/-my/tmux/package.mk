@@ -6,6 +6,10 @@ PKG_PRIORITY="optional"
 PKG_SECTION="security"
 PKG_AUTORECONF="yes"
 
+pre_configure_target() {
+  export LIBS="-lterminfo"
+  export MAKEFLAGS=-j1
+}
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared"
 			  
