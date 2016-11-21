@@ -6,7 +6,7 @@ PKG_BUILD_DEPENDS_TARGET="toolchain readline gettext pcre libcap texinfo libxml2
 PKG_PRIORITY="optional"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 pre_configure_target() {
   export CFLAGS="$CFLAGS -Ofast"
