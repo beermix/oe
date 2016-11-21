@@ -40,7 +40,6 @@ PKG_CONFIGURE_OPTS_TARGET="LIBPNG_CFLAGS=-I$SYSROOT_PREFIX/usr/include \
                            --disable-shared \
                            --with-zlib=yes \
                            --with-bzip2=no \
-                           --with-png=no \
                            --with-harfbuzz=no"
 
 pre_configure_target() {
