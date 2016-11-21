@@ -30,13 +30,12 @@ PKG_PRIORITY="optional"
 PKG_SECTION="accessibility"
 PKG_SHORTDESC="json-c"
 PKG_LONGDESC="JSON-C implements a reference counting object model that allows you to easily construct JSON objects in C, output them as JSON formatted strings and parse JSON formatted strings back into the C representation of JSON objects"
-
 PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared"
-
-if [ $TARGET_ARCH = "x86_64" ]; then
-  PKG_CONFIGURE_OPTS_TARGET+=" --enable-rdrand"
-fi
+PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_realloc_0_nonnull=yes \
+                           ac_cv_func_malloc_0_nonnull=yes \
+                           --enable-static --disable-shared \
+                           --disable-oldname-compat \
+                           --enable-rdrand"

@@ -28,12 +28,16 @@ PKG_PRIORITY="optional"
 PKG_SECTION="toolchain/archivers"
 PKG_SHORTDESC="xz: a free general-purpose data compression software with high compression ratio."
 PKG_LONGDESC="XZ Utils is free general-purpose data compression software with high compression ratio. XZ Utils were written for POSIX-like systems, but also work on some not-so-POSIX systems. XZ Utils are the successor to LZMA Utils."
-
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 # never build shared or k0p happens when building
 # on fedora due to host selinux/liblzma
+
+pre_configure_target() {
+  export MAKEFLAGS=-j1
+}
+
 PKG_CONFIGURE_OPTS_HOST="ac_cv_prog_cc_c99=-std=gnu99 \
 			 --disable-shared \
 			 --enable-static \
@@ -43,7 +47,4 @@ PKG_CONFIGURE_OPTS_HOST="ac_cv_prog_cc_c99=-std=gnu99 \
 			 --disable-scripts \
 			 --enable-threads"
                          
-PKG_CONFIGURE_OPTS_TARGET="ac_cv_prog_cc_c99=-std=gnu99 \
-			   --disable-shared \
-			   --enable-static \
-			   --enable-threads"
+PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
