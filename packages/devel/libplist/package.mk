@@ -32,7 +32,7 @@ PKG_LONGDESC="libplist is a library for manipulating Apple Binary and XML Proper
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--without-cython"
+PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --without-cython"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
