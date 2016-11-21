@@ -33,15 +33,17 @@ PKG_USE_CMAKE="yes"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-pre_configure_target() {
-  #strip_lto
-  #strip_gold
-  export LIBS="-lterminfo"
-  export CFLAGS="$CFLAGS -fPIC -DPIC"
-  export CXXFLAGS="$CXXFLAGS -fPIC -DPIC"
-}
-
 PKG_CMAKE_OPTS_TARGET="-DBUILD_SHARED_LIBS=ON"
+
+#pre_configure_target() {
+#  #strip_lto
+#  #strip_gold
+#  export LIBS="-lterminfo"
+#  export CFLAGS="$CFLAGS -fPIC -DPIC"
+#  export CXXFLAGS="$CXXFLAGS -fPIC -DPIC"
+#}
+
+
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
