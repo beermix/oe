@@ -15,20 +15,20 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 HOST_CONFIGURE_OPTS="--prefix=$ROOT/$TOOLCHAIN \
-  --bindir=$ROOT/$TOOLCHAIN/bin \
-  --sbindir=$ROOT/$TOOLCHAIN/sbin \
-  --sysconfdir=$ROOT/$TOOLCHAIN/etc \
-  --libexecdir=$ROOT/$TOOLCHAIN/lib \
-  --localstatedir=$ROOT/$TOOLCHAIN/var \
-  --extra-cflags=-I$ROOT/$TOOLCHAIN/include \
-  --extra-ldflags=-L$ROOT/$TOOLCHAIN/lib \
-  --static \
-  --disable-vnc \
-  --disable-werror \
-  --disable-blobs \
-  --disable-system \
-  --disable-user \
-  --disable-docs"
+		    --bindir=$ROOT/$TOOLCHAIN/bin \
+		    --sbindir=$ROOT/$TOOLCHAIN/sbin \
+		    --sysconfdir=$ROOT/$TOOLCHAIN/etc \
+		    --libexecdir=$ROOT/$TOOLCHAIN/lib \
+		    --localstatedir=$ROOT/$TOOLCHAIN/var \
+		    --extra-cflags=-I$ROOT/$TOOLCHAIN/include \
+		    --extra-ldflags=-L$ROOT/$TOOLCHAIN/lib \
+		    --static \
+		    --disable-vnc \
+		    --disable-werror \
+		    --disable-blobs \
+		    --disable-system \
+		    --disable-user \
+		    --disable-docs"
   
 pre_configure_target() {
    cd $ROOT/$PKG_BUILD
