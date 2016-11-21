@@ -6,7 +6,7 @@ PKG_PRIORITY="optional"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            ac_cv_func_realloc_0_nonnull=yes--disable-shared \
