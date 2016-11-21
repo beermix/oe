@@ -126,29 +126,29 @@ post_makeinstall_host() {
 
   GCC_VERSION=`$ROOT/$TOOLCHAIN/bin/${TARGET_NAME}-gcc -dumpversion`
   DATE="0501`echo $GCC_VERSION | sed 's/\([0-9]\)/0\1/g' | sed 's/\.//g'`"
-  CROSS_CC=${TARGET_PREFIX}gcc-${GCC_VERSION}
-  CROSS_CXX=${TARGET_PREFIX}g++-${GCC_VERSION}
+  CROSS_CC=${TARGET_NAME}gcc-${GCC_VERSION}
+  CROSS_CXX=${TARGET_NAME}g++-${GCC_VERSION}
 
-  rm -f ${TARGET_PREFIX}gcc
+  rm -f ${TARGET_NAME}gcc
 
-cat > ${TARGET_PREFIX}gcc <<EOF
+cat > ${TARGET_NAME}gcc <<EOF
 #!/bin/sh
 $ROOT/$TOOLCHAIN/bin/ccache $CROSS_CC "\$@"
 EOF
 
-  chmod +x ${TARGET_PREFIX}gcc
+  chmod +x ${TARGET_NAME}gcc
 
   # To avoid cache trashing
   touch -c -t $DATE $CROSS_CC
 
-  [ ! -f "$CROSS_CXX" ] && mv ${TARGET_PREFIX}g++ $CROSS_CXX
+  [ ! -f "$CROSS_CXX" ] && mv ${TARGET_NAME}g++ $CROSS_CXX
 
-cat > ${TARGET_PREFIX}g++ <<EOF
+cat > ${TARGET_NAME}g++ <<EOF
 #!/bin/sh
 $ROOT/$TOOLCHAIN/bin/ccache $CROSS_CXX "\$@"
 EOF
 
-  chmod +x ${TARGET_PREFIX}g++
+  chmod +x ${TARGET_NAME}g++
 
   # To avoid cache trashing
   touch -c -t $DATE $CROSS_CXX
