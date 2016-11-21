@@ -6,7 +6,7 @@ PKG_DEPENDS_TARGET="toolchain sqlite libcap"
 PKG_PRIORITY="optional"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 post_unpack() {
   cp -r $PKG_BUILD/src/* $PKG_BUILD/

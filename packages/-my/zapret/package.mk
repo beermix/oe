@@ -1,5 +1,5 @@
 PKG_NAME="zapret"
-PKG_VERSION="778d011"
+PKG_VERSION="b8ad407"
 PKG_GIT_URL="https://github.com/bol-van/zapret"
 #PKG_DEPENDS_TARGET="toolchain linux systemd libnfnetlink libnetfilter_queue libnetfilter_conntrack ipset"
 PKG_DEPENDS_TARGET="toolchain linux systemd libnetfilter_queue ipset"
