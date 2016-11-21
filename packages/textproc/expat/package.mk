@@ -31,5 +31,9 @@ PKG_USE_CMAKE="yes"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
+PKG_CMAKE_OPTS_TARGET="-DBUILD_tools=OFF -DBUILD_examples=OFF -DBUILD_tests=OFF -DBUILD_shared=ON"
 
-PKG_CMAKE_OPTS_TARGET="-DBUILD_tools=ON -DBUILD_examples=OFF -DBUILD_tests=OFF -DBUILD_shared=ON -DXML_DTD=ON -DXML_NS=ON -DCMAKE_BUILD_TYPE=Release"
+pre_make_target() {
+  # fix builderror when building in subdirs
+  cp -r ../doc .
+}

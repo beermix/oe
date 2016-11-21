@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="jsoncpp"
-PKG_VERSION="d84702c"
+PKG_VERSION="1.7.7"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
