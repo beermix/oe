@@ -40,7 +40,8 @@ PKG_CONFIGURE_OPTS_HOST="ac_cv_prog_cc_c99=-std=gnu99 \
 			 --disable-lzmadec \
 			 --disable-lzmainfo \
 			 --enable-lzma-links \
-			 --disable-scripts"
+			 --disable-scripts \
+			 --enable-threads"
                          
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_prog_cc_c99=-std=gnu99 \
 			   --disable-shared \
