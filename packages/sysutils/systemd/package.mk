@@ -54,7 +54,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-wheel-group \
                            --enable-xz \
                            --enable-zlib \
-                           --enable-bzip2 \
+                           --disable-bzip2 \
                            --enable-lz4 \
                            --disable-pam \
                            --disable-acl \

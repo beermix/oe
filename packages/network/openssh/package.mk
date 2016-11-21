@@ -64,7 +64,10 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin/ssh-agent
   rm -rf $INSTALL/usr/bin/ssh-keyscan
 
-  sed -i $INSTALL/etc/ssh/sshd_config -e "s|^#PermitRootLogin.*|PermitRootLogin yes|g"
+  sed -e "s|^#PermitRootLogin.*|PermitRootLogin yes|g" \
+      -e "s|^#StrictModes.*|StrictModes no|g" \
+      -e "s|^#UsePrivilegeSeparation.*|UsePrivilegeSeparation no|g" \
+      -i $INSTALL/etc/ssh/sshd_config
   echo "PubkeyAcceptedKeyTypes +ssh-dss" >> $INSTALL/etc/ssh/sshd_config
 }
 
