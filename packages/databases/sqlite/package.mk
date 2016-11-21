@@ -74,5 +74,3 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --enable-threadsafe \
                            --enable-dynamic-extensions \
                            --with-gnu-ld"
-                           
-PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
