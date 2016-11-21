@@ -5,7 +5,7 @@ PKG_DEPENDS_TARGET="toolchain glib"
 PKG_PRIORITY="optional"
 PKG_SECTION="devel"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \
 			   --disable-shared \
