@@ -1,7 +1,7 @@
 PKG_NAME="jemalloc"
 PKG_VERSION="4.3.1"
 PKG_ARCH="any"
-PKG_GIT_URL="https://github.com/jemalloc/jemalloc/releases/download/$PKG_VERSION/jemalloc-$PKG_VERSION.tar.bz2"
+PKG_URL="https://github.com/jemalloc/jemalloc/releases/download/$PKG_VERSION/jemalloc-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_IS_ADDON="no"
 PKG_IS_ADDON="no"
