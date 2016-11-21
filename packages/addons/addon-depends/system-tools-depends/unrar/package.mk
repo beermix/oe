@@ -39,12 +39,3 @@ make_target() {
      STRIP="$STRIP" \
      -f makefile
 }
-
-post_make_target() {
-  mkdir -p $INSTALL/usr/bin/
-  cp $ROOT/$PKG_BUILD/unrar $INSTALL/usr/bin/
-}
-
-makeinstall_target() {
-  : # nop
-}
