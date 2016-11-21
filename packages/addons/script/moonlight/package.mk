@@ -23,7 +23,7 @@ PKG_REV="103"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/dead/script.moonlight"
-PKG_GIT_URL="https://github.com/dead/script.moonlight"
+PKG_URL="https://github.com/dead/script.moonlight/archive/$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="script.moonlight-$PKG_VERSION*"
 PKG_DEPENDS_TARGET="toolchain moonlight-embedded"
 PKG_SECTION="script"
@@ -52,25 +52,25 @@ addon() {
     rm $ADDON_BUILD/$PKG_ADDON_ID/addon.xml
 
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
-    cp -P $(get_pkg_build moonlight-embedded)/.$TARGET_NAME/moonlight $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp -P $(get_build_dir moonlight-embedded)/.$TARGET_NAME/moonlight $ADDON_BUILD/$PKG_ADDON_ID/bin
 
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/lib
-    cp -P $(get_pkg_build moonlight-embedded)/.$TARGET_NAME/libgamestream/libgamestream.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
-    cp -P $(get_pkg_build moonlight-embedded)/.$TARGET_NAME/libgamestream/libmoonlight-common.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
+    cp -P $(get_build_dir moonlight-embedded)/.$TARGET_NAME/libgamestream/libgamestream.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
+    cp -P $(get_build_dir moonlight-embedded)/.$TARGET_NAME/libgamestream/libmoonlight-common.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
 
     if [ "$KODIPLAYER_DRIVER" = "bcm2835-driver" ]; then
-      cp -P $(get_pkg_build moonlight-embedded)/.$TARGET_NAME/libmoonlight-pi.so $ADDON_BUILD/$PKG_ADDON_ID/lib
+      cp -P $(get_build_dir moonlight-embedded)/.$TARGET_NAME/libmoonlight-pi.so $ADDON_BUILD/$PKG_ADDON_ID/lib
     elif [ "$KODIPLAYER_DRIVER" = "libfslvpuwrap" ]; then
-      cp -P $(get_pkg_build moonlight-embedded)/.$TARGET_NAME/libmoonlight-imx.so $ADDON_BUILD/$PKG_ADDON_ID/lib
+      cp -P $(get_build_dir moonlight-embedded)/.$TARGET_NAME/libmoonlight-imx.so $ADDON_BUILD/$PKG_ADDON_ID/lib
     elif [ "$KODIPLAYER_DRIVER" = "libamcodec" ]; then
-      cp -P $(get_pkg_build moonlight-embedded)/.$TARGET_NAME/libmoonlight-aml.so $ADDON_BUILD/$PKG_ADDON_ID/lib
+      cp -P $(get_build_dir moonlight-embedded)/.$TARGET_NAME/libmoonlight-aml.so $ADDON_BUILD/$PKG_ADDON_ID/lib
     fi
 
-    cp -P $(get_pkg_build libevdev)/.install_pkg/usr/lib/libevdev.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
+    cp -P $(get_build_dir libevdev)/.install_pkg/usr/lib/libevdev.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/etc
-    cp -P $(get_pkg_build moonlight-embedded)/moonlight.conf $ADDON_BUILD/$PKG_ADDON_ID/etc
+    cp -P $(get_build_dir moonlight-embedded)/moonlight.conf $ADDON_BUILD/$PKG_ADDON_ID/etc
 
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/share/moonlight
-    cp -PR $(get_pkg_build moonlight-embedded)/mappings $ADDON_BUILD/$PKG_ADDON_ID/share/moonlight
+    cp -PR $(get_build_dir moonlight-embedded)/mappings $ADDON_BUILD/$PKG_ADDON_ID/share/moonlight
 }

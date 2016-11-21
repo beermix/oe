@@ -30,7 +30,7 @@ PKG_SHORTDESC="mesa: 3-D graphics library with OpenGL API"
 PKG_LONGDESC="Mesa is a 3-D graphics library with an API which is very similar to that of OpenGL*. To the extent that Mesa utilizes the OpenGL command syntax or state machine, it is being used with authorization from Silicon Graphics, Inc. However, the author makes no claim that Mesa is in any way a compatible replacement for OpenGL or associated with Silicon Graphics, Inc. Those who want a licensed implementation of OpenGL should contact a licensed vendor. While Mesa is not a licensed OpenGL implementation, it is currently being tested with the OpenGL conformance tests. For the current conformance status see the CONFORM file included in the Mesa distribution."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 # configure GPU drivers and dependencies:
   get_graphicdrivers
@@ -50,6 +50,17 @@ else
   MESA_VDPAU="--disable-vdpau"
 fi
 
+XA_CONFIG="--disable-xa"
+for drv in $GRAPHIC_DRIVERS; do
+  [ "$drv" = "vmware" ] && XA_CONFIG="--enable-xa"
+done
+
+if [ "$OPENGLES_SUPPORT" = "yes" ]; then
+  MESA_GLES="--enable-gles2"
+else
+  MESA_GLES="--disable-gles2"
+fi
+ 
 PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            CXX_FOR_BUILD=$HOST_CXX \
                            CFLAGS_FOR_BUILD= \
@@ -82,6 +93,8 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --disable-va \
                            --disable-opencl \
                            --enable-opencl-icd \
+                           --disable-xlib-glx \
+                           --disable-r600-llvm-compiler \
                            --disable-gallium-tests \
                            --enable-shared-glapi \
                            --enable-shader-cache \
@@ -93,6 +106,7 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --with-osmesa-lib-name=OSMesa \
                            --with-gallium-drivers=$GALLIUM_DRIVERS \
                            --with-dri-drivers=$DRI_DRIVERS \
+                           --with-vulkan-drivers=no \
                            --with-sysroot=$SYSROOT_PREFIX"
 
 pre_configure_target() {

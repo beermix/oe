@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="tslib"
-PKG_VERSION="63cdc38"
+PKG_VERSION="1.2"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"

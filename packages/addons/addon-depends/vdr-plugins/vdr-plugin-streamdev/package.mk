@@ -33,7 +33,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 make_target() {
-  VDR_DIR=$(get_pkg_build vdr)
+  VDR_DIR=$(get_build_dir vdr)
   export PKG_CONFIG_PATH=$VDR_DIR:$PKG_CONFIG_PATH
   export CPLUS_INCLUDE_PATH=$VDR_DIR/include
 
@@ -44,7 +44,7 @@ make_target() {
 }
 
 post_make_target() {
-  VDR_DIR=$(get_pkg_build vdr)
+  VDR_DIR=$(get_build_dir vdr)
   VDR_APIVERSION=`sed -ne '/define APIVERSION/s/^.*"\(.*\)".*$/\1/p' $VDR_DIR/config.h`
   LIB_NAME=lib${PKG_NAME/-plugin/}
   cp --remove-destination $ROOT/$PKG_BUILD/server/${LIB_NAME}-server.so $ROOT/$PKG_BUILD/server/${LIB_NAME}-server.so.${VDR_APIVERSION}

@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libgdiplus"
-PKG_VERSION="109aeea"
+PKG_VERSION="4.2"
 PKG_REV="0"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"

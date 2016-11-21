@@ -54,7 +54,7 @@ PKG_CONFIGURE_OPTS_TARGET="bash_cv_have_mbstate_t=set \
                            --disable-libquadmath \
                            --disable-libquadmath-support \
                            --enable-libada \
-                           --disable-libssp \
+                           --enable-libssp \
                            --disable-werror"
 
 post_makeinstall_target() {
