@@ -79,7 +79,7 @@ make_target() {
     -Duse_system_icu=0
     -Duse_system_libevent=1
     -Duse_system_libjpeg=1
-    -Duse_system_libpng=0
+    -Duse_system_libpng=1
     -Duse_system_libvpx=0
     -Duse_system_libxml=0
     -Duse_system_snappy=0
