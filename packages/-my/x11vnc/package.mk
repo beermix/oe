@@ -1,11 +1,11 @@
 PKG_NAME="x11vnc"
-PKG_VERSION="0.9.13"
-PKG_SITE="http://www.karlrunge.com/x11vnc/"
-PKG_URL="http://downloads.sourceforge.net/project/libvncserver/x11vnc/${PKG_VERSION}/x11vnc-${PKG_VERSION}.tar.gz"
+PKG_VERSION="0.9.14"
+PKG_SITE="http://www.karlrunge.com/x11vnc/#downloading"
+PKG_URL="http://x11vnc.sourceforge.net/dev/x11vnc-0.9.14-dev.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libX11 libXext libXtst libjpeg-turbo"
 PKG_PRIORITY="optional"
 PKG_SECTION="service/system"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 pre_build_target() {
 	mkdir -p $PKG_BUILD/.$TARGET_NAME
