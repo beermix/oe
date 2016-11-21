@@ -17,11 +17,11 @@
 ################################################################################
 
 PKG_NAME="procps-ng"
-PKG_VERSION="v3.3.12"
+PKG_VERSION="3.3.12"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_GIT_SITE="https://gitlab.com/procps-ng"
+#PKG_GIT_URL="https://gitlab.com/procps-ng"
 PKG_URL="$SOURCEFORGE_SRC/$PKG_NAME/Production/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain netbsd-curses"
 PKG_SECTION="tools"
