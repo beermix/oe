@@ -34,12 +34,11 @@ PKG_AUTORECONF="no"
 PKG_USE_CMAKE="no"
 
 # package specific configure options
-PKG_CONFIGURE_OPTS_TARGET="LIBPNG_CFLAGS=-I$SYSROOT_PREFIX/usr/include \
-                           LIBPNG_LDFLAGS=-L$SYSROOT_PREFIX/usr/lib \
-                           --enable-static \
+PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --disable-shared \
                            --with-zlib=yes \
                            --with-bzip2=no \
+                           --with-png=no \
                            --with-harfbuzz=no"
 
 pre_configure_target() {
