@@ -10,7 +10,7 @@ PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_SITE="http://www.chromium.org/Home"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain pciutils dbus libXcomposite libXcursor libXtst alsa-lib bzip2 yasm nss libXScrnSaver libexif ninja:host libpng harfbuzz atk gtk+ libva-vdpau-driver"
+PKG_DEPENDS_TARGET="toolchain pciutils dbus libXcomposite libXcursor libXtst alsa-lib bzip2 yasm nss libXScrnSaver libexif ninja:host libpng harfbuzz atk gtk+ libva-vdpau-driver libevent"
 PKG_PRIORITY="optional"
 PKG_SECTION="xmedia/browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
@@ -77,7 +77,7 @@ make_target() {
     -Duse_system_ffmpeg=0
     -Duse_system_harfbuzz=1
     -Duse_system_icu=0
-    -Duse_system_libevent=0
+    -Duse_system_libevent=1
     -Duse_system_libjpeg=1
     -Duse_system_libpng=0
     -Duse_system_libvpx=0
