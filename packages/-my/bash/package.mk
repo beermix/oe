@@ -9,31 +9,16 @@ PKG_DEPENDS_TARGET="toolchain netbsd-curses"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
+MAKEFLAGS="-j1"
+
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --disable-shared \
                            --bindir=/bin \
+                           --with-curses \
                            --enable-readline \
-                           --with-installed-readline \
                            --without-bash-malloc \
-                           --enable-static-link \
-			   --enable-casemod-expansions \
-			   --enable-process-substitution \
-			   --enable-coprocesses \
-			   --enable-history \
-			   --enable-cond-regexp \
-			   --enable-alias \
-			   --enable-select \
-			   --enable-net-redirections \
-			   --enable-dparen-arithmetic \
-			   --enable-directory-stack \
-			   --enable-direxpand-default \
-			   --enable-cond-command \
-			   --enable-command-timing \
-			   --enable-bang-history \
-			   --enable-array-variables \
-			   --enable-glob-asciiranges-default \
-			   --enable-restricted \
-			   --enable-coprocesses"
+                           --with-installed-readline \
+                           --enable-static-link"
 			   
 			   
 post_makeinstall_target() {
