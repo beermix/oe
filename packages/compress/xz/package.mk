@@ -37,7 +37,6 @@ PKG_AUTORECONF="no"
 PKG_CONFIGURE_OPTS_HOST="--disable-shared --enable-static \
                          --disable-lzmadec \
                          --disable-lzmainfo \
-                         --enable-lzma-links \
-                         --disable-scripts \
-                         --disable-nls"
-
+                         --enable-lzma-links"
+                         
+#PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
