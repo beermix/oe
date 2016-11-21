@@ -58,7 +58,6 @@ make_target() {
   make BUILD_OPT=1 $TARGET_USE_64 \
      NSPR_INCLUDE_DIR=$SYSROOT_PREFIX/usr/include/nspr \
      USE_SYSTEM_ZLIB=1 ZLIB_LIBS=-lz \
-     NSS_USE_SYSTEM_SQLITE3=1 \
      OS_TEST=$TARGET_ARCH \
      NSS_TESTS="dummy" \
      NSINSTALL=$ROOT/$TOOLCHAIN/bin/nsinstall \
