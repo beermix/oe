@@ -4,4 +4,4 @@ PKG_URL="https://sourceforge.net/projects/re2c/files/$PKG_VERSION/re2c-$PKG_VERS
 PKG_DEPENDS_HOST="bison:host"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
