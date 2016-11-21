@@ -9,12 +9,11 @@ PKG_DEPENDS_TARGET="toolchain netbsd-curses"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-MAKEFLAGS="-j1"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --disable-shared \
                            --bindir=/bin \
-                           --with-curses \
+                           --without-curses \
                            --enable-readline \
                            --without-bash-malloc \
                            --with-installed-readline \
