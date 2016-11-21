@@ -5,10 +5,10 @@ PKG_DEPENDS_TARGET="toolchain fuse neon"
 PKG_PRIORITY="optional"
 PKG_SECTION="system"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 pre_configure_target() {
-   export LIBS="-lpthread"
+   export LIBS="-ldl -lpthread"
    cd $ROOT/$PKG_BUILD
    export MAKEFLAGS="-j1"
 }
