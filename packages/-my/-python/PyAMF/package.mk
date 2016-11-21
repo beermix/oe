@@ -1,5 +1,5 @@
 PKG_NAME="PyAMF"
-PKG_VERSION="0.8.0"
+PKG_VERSION="0.7.2"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="MIT License"
@@ -21,5 +21,6 @@ makeinstall_target() {
 
 post_makeinstall_target() {
   find $INSTALL/usr/lib -name "*.py" -exec rm -rf "{}" ";"
+  rm -rf $INSTALL/usr/lib/python*/site-packages/$PKG_NAME-*.egg-info
   rm -rf $INSTALL/usr/lib/python*/site-packages/*/tests
 }

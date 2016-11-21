@@ -31,3 +31,4 @@ mkpkg-temp
 
 /projects/Generic/filesystem/usr/lib/locale/locale-archive
 ltmain.sh
+/tmp/

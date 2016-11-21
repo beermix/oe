@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="libusb"
-PKG_VERSION="1.0.20"
+PKG_VERSION="v1.0.21"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="LGPLv2.1"
 PKG_SITE="http://libusb.info/"
-PKG_URL="$SOURCEFORGE_SRC/libusb/files/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_GIT_URL="https://github.com/libusb/libusb"
 PKG_DEPENDS_TARGET="toolchain systemd"
 PKG_PRIORITY="optional"
 PKG_SECTION="system"

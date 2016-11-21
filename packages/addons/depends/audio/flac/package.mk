@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="flac"
-PKG_VERSION="1.3.1"
+PKG_VERSION="55fba7e"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://xiph.org/flac/"
-PKG_URL="http://downloads.xiph.org/releases/flac/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_GIT_URL="https://github.com/xiph/flac"
 PKG_DEPENDS_TARGET="toolchain libogg"
 PKG_PRIORITY="optional"
 PKG_SECTION="audio"

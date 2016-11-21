@@ -8,8 +8,12 @@ PKG_SECTION="devel"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
+pre_configure_target() {
+   strip_lto
+   cd $ROOT/$PKG_BUILD
+}
+
 PKG_CONFIGURE_OPTS_HOST="--enable-static \
-			 --disable-shared \
-			 --disable-silent-rules"
+			 --disable-shared"
 			 
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"

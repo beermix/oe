@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="systemd"
-PKG_VERSION="231"
+PKG_VERSION="v231"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/systemd"
-PKG_URL="https://github.com/systemd/systemd/archive/v$PKG_VERSION.tar.gz"
+PKG_GIT_URL="https://github.com/systemd/systemd"
 PKG_DEPENDS_TARGET="toolchain libcap kmod util-linux entropy lz4 xz bzip2 lzo zlib libidn"
 PKG_PRIORITY="required"
 PKG_SECTION="system"
@@ -77,7 +77,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-firstboot \
                            --disable-randomseed \
                            --disable-backlight \
-                           --disable-rfkill \
+                           --enable-rfkill \
                            --enable-logind --without-kill-user-processes \
                            --disable-machined \
                            --disable-importd \
@@ -108,10 +108,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --with-dbussystemservicedir=/usr/share/dbus-1/system-services \
                            --with-rootprefix=/usr \
                            --with-rootlibdir=/lib"
-
-unpack() {
-  tar xf $ROOT/$SOURCES/systemd/v$PKG_VERSION.tar.gz -C $ROOT/$BUILD
-}
 
 pre_build_target() {
 # broken autoreconf

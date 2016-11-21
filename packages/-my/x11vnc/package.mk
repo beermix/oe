@@ -1,6 +1,6 @@
 PKG_NAME="x11vnc"
-PKG_VERSION="36a46c7"
-PKG_GIT_URL="https://github.com/LibVNC/x11vnc"
+PKG_VERSION="0.9.14"
+PKG_URL="https://dl.dropboxusercontent.com/s/op6flmf34zabkvf/x11vnc-0.9.14-dev.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libX11 libXext libXtst libjpeg-turbo libxcb libXau libvncserver"
 PKG_PRIORITY="optional"
 PKG_AUTORECONF="yes"
@@ -34,7 +34,7 @@ PKG_CONFIGURE_OPTS_TARGET="-enable-static \
 			   LDFLAGS=-lpthread"
 
 pre_configure_target() {
-  export LIBS="-ljpeg -lpng -lz"
+  export LIBS="-lxcb -lXau -ldl -pthread -ljpeg -lz"
 }
 
 pre_build_target() {

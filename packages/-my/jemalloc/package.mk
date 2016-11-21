@@ -1,11 +1,15 @@
 PKG_NAME="jemalloc"
-PKG_VERSION="4.2.1"
+PKG_VERSION="4.3.1"
 PKG_ARCH="any"
-PKG_URL="http://www.canonware.com/download/jemalloc/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_GIT_URL="https://github.com/jemalloc/jemalloc"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_IS_ADDON="no"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
+
+pre_configure_target() {
+  sh autogen.sh
+}
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static --disable-valgrind --with-gnu-ld"
 

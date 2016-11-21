@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="glib"
-PKG_VERSION="2.51.0"
+PKG_VERSION="2.50.2"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://www.gtk.org/"
-PKG_URL="http://ftp.gnome.org/pub/gnome/sources/glib/2.51/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="http://ftp.gnome.org/pub/gnome/sources/glib/2.50/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain libz libffi util-linux Python:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="devel"

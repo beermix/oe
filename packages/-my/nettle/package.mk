@@ -12,18 +12,7 @@ PKG_SHORTDESC="nettle: a cryptographic library"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-#pre_configure_target() {
-# dont build parallel
- # MAKEFLAGS=-j1
-  #export CFLAGS="$CFLAGS -fPIC"
-#}
-
-PKG_CONFIGURE_OPTS_TARGET="--disable-openssl \
-			   --disable-documentation \
-			   --enable-static \
-			   --enable-public-key \
-			   --disable-shared \
-			   --with-gnu-ld"
+PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --disable-openssl --disable-documentation --enable-mini-gmp"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin

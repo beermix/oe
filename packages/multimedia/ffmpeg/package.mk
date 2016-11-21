@@ -17,13 +17,13 @@
 ################################################################################
 
 PKG_NAME="ffmpeg"
-PKG_VERSION="2.8.8"
+PKG_VERSION="3.2"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="LGPLv2.1+"
 PKG_SITE="https://ffmpeg.org"
 PKG_URL="https://ffmpeg.org/releases/${PKG_NAME}-${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_TARGET="toolchain yasm:host libz bzip2 openssl dcadec speex"
+PKG_DEPENDS_TARGET="toolchain yasm:host libz bzip2 libressl speex flac"
 PKG_PRIORITY="optional"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
@@ -31,7 +31,6 @@ PKG_LONGDESC="FFmpeg is a complete, cross-platform solution to record, convert a
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
-
 
 # configure GPU drivers and dependencies:
   get_graphicdrivers
@@ -62,14 +61,10 @@ fi
 
 case "$TARGET_ARCH" in
   arm)
-      FFMPEG_CPU=""
       FFMPEG_TABLES="--enable-hardcoded-tables"
-      FFMPEG_PIC="--enable-pic"
   ;;
-  x86_64)
-      FFMPEG_CPU=""
+  *)
       FFMPEG_TABLES="--disable-hardcoded-tables"
-      FFMPEG_PIC="--enable-pic"
   ;;
 esac
 
@@ -195,8 +190,6 @@ configure_target() {
               --disable-libopencore-amrwb \
               --disable-libopencv \
               --disable-libdc1394 \
-              --enable-libdcadec \
-              --disable-libfaac \
               --disable-libfreetype \
               --disable-libgsm \
               --disable-libmp3lame \
@@ -206,7 +199,6 @@ configure_target() {
               --disable-libschroedinger \
               --enable-libspeex \
               --disable-libtheora \
-              --disable-libvo-aacenc \
               --disable-libvo-amrwbenc \
               --disable-libvorbis \
               --disable-libvpx \
@@ -216,11 +208,9 @@ configure_target() {
               --enable-zlib \
               --enable-asm \
               --disable-altivec \
-              $FFMPEG_CPU \
               $FFMPEG_FPU \
               --enable-yasm \
-              --disable-symver \
-              --disable-lto
+              --disable-symver
 }
 
 post_makeinstall_target() {

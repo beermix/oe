@@ -1,65 +1,53 @@
 ################################################################################
-#      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2012 Stephan Raue (stephan@openelec.tv)
-#
-#  This Program is free software; you can redistribute it and/or modify
-#  it under the terms of the GNU General Public License as published by
-#  the Free Software Foundation; either version 2, or (at your option)
-#  any later version.
-#
-#  This Program is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-#  GNU General Public License for more details.
-#
-#  You should have received a copy of the GNU General Public License
-#  along with OpenELEC.tv; see the file COPYING.  If not, write to
-#  the Free Software Foundation, 51 Franklin Street, Suite 500, Boston, MA 02110, USA.
-#  http://www.gnu.org/copyleft/gpl.html
+#      This file is part of Alex@ELEC - http://www.alexelec.in.ua
+#      Copyright (C) 2011-2016 Alexandr Zuyev (alex@alexelec.in.ua)
 ################################################################################
 
 PKG_NAME="chromium"
-PKG_VERSION="53.0.2785.92"
-PKG_REV="104"
+PKG_VERSION="53.0.2785.143"
+PKG_REV="1"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_SITE="http://www.chromium.org/Home"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain pciutils libgcrypt systemd dbus libXcomposite libXcursor libXtst alsa-lib bzip2 yasm nss libXScrnSaver libexif ninja:host libpng harfbuzz atk gtk+ unclutter xdotool libevent pulseaudio"
-PKG_SECTION="browser"
+PKG_DEPENDS_TARGET="toolchain pciutils dbus libXcomposite libXcursor libXtst alsa-lib bzip2 yasm nss libXScrnSaver libexif ninja:host libpng harfbuzz atk gtk+ libva-vdpau-driver"
+PKG_PRIORITY="optional"
+PKG_SECTION="xmedia/browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
-PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
+PKG_LONGDESC="Chromium Browser: the open-source web browser from Google"
 PKG_AUTORECONF="no"
-
-PKG_IS_ADDON="yes"
-PKG_ADDON_NAME="Chromium"
-PKG_ADDON_TYPE="xbmc.python.script"
-PKG_ADDON_PROVIDES="executable"
+PKG_IS_ADDON="no"
 
 pre_make_target() {
   export MAKEFLAGS="-j4"
-
   strip_lto
-
-  # https://groups.google.com/a/chromium.org/d/topic/chromium-packagers/9JX1N2nf4PU/discussion
   touch chrome/test/data/webui/i18n_process_css_test.html
-
   sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' third_party/widevine/cdm/stub/widevine_cdm_version.h
+
+  # Native Client (NaCl)
+  python build/download_nacl_toolchains.py \
+      --packages nacl_x86_newlib,pnacl_newlib,pnacl_translator \
+      sync --extract
 }
 
 make_target() {
-  # CFLAGS are passed through release_extra_cflags below
   export -n CFLAGS CXXFLAGS
-
   export LDFLAGS="$LDFLAGS -ludev"
 
   # Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
-  # Note: These are for OpenELEC use ONLY. For your own distribution, please
+  # Note: These are for AlexELEC use ONLY. For your own distribution, please
   # get your own set of keys.
 
-  _google_api_key=AIzaSyAQ6L9vt9cnN4nM0weaa6Y38K4eyPvtKgI
-  _google_default_client_id=740889307901-4bkm4e0udppnp1lradko85qsbnmkfq3b.apps.googleusercontent.com
-  _google_default_client_secret=9TJlhL661hvShQub4cWhANXa
+  _google_api_key=AIzaSyADWILIfivEgonwYkoO3w6xwyWfuNlPzeM
+  _google_default_client_id=1058644186824-i9jgfv72cd3p032tnluchqpklgnlejsr.apps.googleusercontent.com
+  _google_default_client_secret=3NN7qvE3D0TpB1HbNMYMBu_Z
+
+  ## workaround for gcc-6
+  mv -f /usr/lib/x86_64-linux-gnu/libstdc++.so.6 /usr/lib/x86_64-linux-gnu/libstdc++.so.6.org || true
+  mv -f /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.19 /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.19.org || true
+  cp -fP $SYSROOT_PREFIX/usr/lib/libstdc++.so.6 /usr/lib/x86_64-linux-gnu
+  cp -fP $SYSROOT_PREFIX/usr/lib/libstdc++.so.6.0.22 /usr/lib/x86_64-linux-gnu
+  ## workaround for gcc-6
 
   local _chromium_conf=(
     -Dgoogle_api_key=$_google_api_key
@@ -80,16 +68,16 @@ make_target() {
     -Dtracing_like_official_build=1
     -Dfieldtrial_testing_like_official_build=1
     -Dremove_webcore_debug_symbols=1
-    -Drelease_extra_cflags="-march=ivybridge -mtune=ivybridge -O3 -pipe"
+    -Drelease_extra_cflags="$CFLAGS"
     -Dlibspeechd_h_prefix=speech-dispatcher/
     -Dffmpeg_branding=Chrome
     -Dproprietary_codecs=1
     -Duse_system_bzip2=1
     -Duse_system_flac=0
-    -Duse_system_ffmpeg=1
+    -Duse_system_ffmpeg=0
     -Duse_system_harfbuzz=1
     -Duse_system_icu=0
-    -Duse_system_libevent=1
+    -Duse_system_libevent=0
     -Duse_system_libjpeg=1
     -Duse_system_libpng=0
     -Duse_system_libvpx=0
@@ -101,7 +89,7 @@ make_target() {
     -Duse_mojo=0
     -Duse_gconf=0
     -Duse_gnome_keyring=0
-    -Duse_pulseaudio=1
+    -Duse_pulseaudio=0
     -Duse_kerberos=0
     -Duse_cups=0
     -Denable_hangout_services_extension=1
@@ -109,72 +97,33 @@ make_target() {
     -Dsysroot=$SYSROOT_PREFIX
     -Ddisable_glibc=1
     -Denable_widevine=1
-    -Ddisable_nacl=1
-    -Ddisable_pnacl=1)
+    -Denable_nacl=1
+    -Denable_pnacl=1)
 
   ./build/linux/unbundle/replace_gyp_files.py "${_chromium_conf[@]}"
   ./build/gyp_chromium --depth=. "${_chromium_conf[@]}"
 
   ninja -C out/Release chrome chrome_sandbox
+
+  ## workaround for gcc-6
+  rm -f /usr/lib/x86_64-linux-gnu/libstdc++.so.6
+  rm -f /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.22
+  mv -f /usr/lib/x86_64-linux-gnu/libstdc++.so.6.org /usr/lib/x86_64-linux-gnu/libstdc++.so.6 || true
+  mv -f /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.19.org /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.19 || true
+  ## workaround for gcc-6
 }
 
 makeinstall_target() {
-  :
+  mkdir -p $INSTALL/usr/config/chromium
+    cp -P out/Release/chrome $INSTALL/usr/config/chromium/chromium.bin
+    cp -P out/Release/chrome_sandbox $INSTALL/usr/config/chromium/chrome-sandbox
+    cp -P out/Release/{*.pak,*.dat,*.bin,libwidevinecdmadapter.so} $INSTALL/usr/config/chromium
+    cp -P out/Release/nacl_helper{,_bootstrap} $INSTALL/usr/config/chromium
+    cp -P out/Release/nacl_irt_*.nexe $INSTALL/usr/config/chromium
+    cp -P out/Release/gen/content/content_resources.pak $INSTALL/usr/config/chromium
+    cp -a out/Release/locales $INSTALL/usr/config/chromium
+
+  $STRIP $INSTALL/usr/config/chromium/chromium.bin
+  $STRIP $INSTALL/usr/config/chromium/chrome-sandbox
 }
 
-addon() {
-  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
-  cp -P  $PKG_BUILD/out/Release/chrome $ADDON_BUILD/$PKG_ADDON_ID/bin/chromium.bin
-  cp -P  $PKG_BUILD/out/Release/chrome_sandbox $ADDON_BUILD/$PKG_ADDON_ID/bin/chrome-sandbox
-  cp -P  $PKG_BUILD/out/Release/{*.pak,*.dat,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
-  cp -PR $PKG_BUILD/out/Release/locales $ADDON_BUILD/$PKG_ADDON_ID/bin/
-
-  $STRIP $ADDON_BUILD/$PKG_ADDON_ID/bin/chromium.bin
-  $STRIP $ADDON_BUILD/$PKG_ADDON_ID/bin/chrome-sandbox
-
-  # config
-  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/config
-  cp -P $PKG_DIR/config/* $ADDON_BUILD/$PKG_ADDON_ID/config
-
-  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/lib
-
-  # pango
-  cp -PL $(get_pkg_build pango)/.install_pkg/usr/lib/libpangocairo-1.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
-  cp -PL $(get_pkg_build pango)/.install_pkg/usr/lib/libpango-1.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
-  cp -PL $(get_pkg_build pango)/.install_pkg/usr/lib/libpangoft2-1.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
-
-  # cairo
-  cp -PL $(get_pkg_build cairo)/.install_pkg/usr/lib/libcairo.so.2 $ADDON_BUILD/$PKG_ADDON_ID/lib
-
-  # gtk
-  cp -PL $(get_pkg_build gtk+)/.install_pkg/usr/lib/libgdk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
-  cp -PL $(get_pkg_build gtk+)/.install_pkg/usr/lib/libgtk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
-
-  # harfbuzz
-  cp -PL $(get_pkg_build harfbuzz)/.install_pkg/usr/lib/libharfbuzz.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
-
-  # gdk-pixbuf
-  cp -PL $(get_pkg_build gdk-pixbuf)/.install_pkg/usr/lib/libgdk_pixbuf-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
-
-  # pixbuf loaders
-  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules
-  #cp -PL $(get_pkg_build gdk-pixbuf)/.install_pkg/usr/lib/gdk-pixbuf-2.0/2.10.0/loaders/* $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules
-
-  # nss
-  #cp -PL $(get_pkg_build nss)/dist/Linux*OPT.OBJ/lib/*.so $ADDON_BUILD/$PKG_ADDON_ID/lib
-
-  # nspr
-  #cp -PL $(get_pkg_build nspr)/.install_pkg/usr/lib/*.so $ADDON_BUILD/$PKG_ADDON_ID/lib
-
-  # libexif
-  #cp -PL $(get_pkg_build libexif)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
-
-  # libva-vdpau-driver
-  #cp -PL $(get_pkg_build libva-vdpau-driver)/.install_pkg/usr/lib/va/*.so $ADDON_BUILD/$PKG_ADDON_ID/lib
-
-  # unclutter
-  #cp -P $(get_pkg_build unclutter)/.install_pkg/usr/bin/unclutter $ADDON_BUILD/$PKG_ADDON_ID/bin
-
-  # xdotool
- # cp -P $(get_pkg_build xdotool)/xdotool $ADDON_BUILD/$PKG_ADDON_ID/bin
-}

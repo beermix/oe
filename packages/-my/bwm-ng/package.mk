@@ -26,4 +26,9 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
 			   --with-ncurses \
 			   --with-getopt_long \
 			   --with-netstatlinux \
-			   --without-strip"
+			   --with-strip \
+			   --enable-configfile \
+			   --enable-html \
+			   --enable-extendedstats \
+			   --with-getopt_long \
+			   --without-diskstats"

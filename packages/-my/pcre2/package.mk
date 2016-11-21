@@ -1,8 +1,5 @@
 PKG_NAME="pcre2"
 PKG_VERSION="10.22"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="OSS"
 PKG_SITE="http://www.pcre.org/"
 PKG_URL="http://ftp.csx.cam.ac.uk/pub/software/programming/pcre/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST=""
@@ -23,7 +20,6 @@ PKG_CONFIGURE_OPTS_HOST="--prefix=$ROOT/$TOOLCHAIN \
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			   --enable-static \
 			   --enable-utf8 \
-			   --enable-pcre16 \
 			   --enable-unicode-properties \
 			   --with-gnu-ld"
 

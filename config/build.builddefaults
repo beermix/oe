@@ -46,8 +46,8 @@
                        --sysconfdir=$ROOT/$TOOLCHAIN/etc \
                        --libexecdir=$ROOT/$TOOLCHAIN/lib \
                        --localstatedir=$ROOT/$TOOLCHAIN/var \
-                       --enable-static \
-                       --disable-shared"
+                       --disable-static \
+                       --enable-shared"
 
   HOST_CMAKE_OPTS="-DCMAKE_BUILD_TYPE=Release \
   		   -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
