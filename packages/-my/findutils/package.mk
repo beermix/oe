@@ -5,14 +5,16 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_PRIORITY="optional"
 PKG_SECTION="network"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
-strip_lto
+pre_configure_target() {
+  strip_lto
+  export MAKEFLAGS=-j1
+}
 
 PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
 			   --without-selinux \
 			   --disable-debug \
 			   --disable-nls \
 			   --enable-threads=posix \
-			   --disable-silent-rules \
 			   --enable-static"
