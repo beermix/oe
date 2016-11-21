@@ -25,7 +25,6 @@ PKG_SITE="http://www.wetek.com/"
 PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain linux"
 PKG_NEED_UNPACK="$LINUX_DEPENDS"
-PKG_PRIORITY="optional"
 PKG_SECTION="driver"
 PKG_SHORTDESC="wetekdvb: Wetek DVB driver"
 PKG_LONGDESC="These package contains Wetek's DVB driver "
@@ -33,19 +32,17 @@ PKG_LONGDESC="These package contains Wetek's DVB driver "
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-if [ $LINUX = "amlogic-3.10" ]; then
-  WETEK_DVB_MODULE="wetekdvb.ko"
-elif [ $LINUX = "amlogic-3.14" ]; then
-  WETEK_DVB_MODULE="wetekdvb_play2.ko"
-fi
-
 make_target() {
   : # nothing todo
 }
 
 makeinstall_target() {
   mkdir -p $INSTALL/lib/modules/$(get_module_dir)/$PKG_NAME
-    cp driver/$WETEK_DVB_MODULE $INSTALL/lib/modules/$(get_module_dir)/$PKG_NAME/wetekdvb.ko
+  if [ $PROJECT = "WeTek_Play_2" ]; then
+    cp driver/wetekdvb_play2.ko $INSTALL/lib/modules/$(get_module_dir)/$PKG_NAME/wetekdvb.ko
+  else
+    cp driver/wetekdvb.ko $INSTALL/lib/modules/$(get_module_dir)/$PKG_NAME
+  fi
 
   mkdir -p $INSTALL/lib/firmware
     cp firmware/* $INSTALL/lib/firmware
