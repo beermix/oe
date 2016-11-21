@@ -76,10 +76,9 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --disable-selinux \
                            --enable-opengl \
                            --disable-gles1 \
-                           --enable-gles2 \
+                           $MESA_GLES \
                            --enable-dri \
                            --enable-dri3 \
-                           --with-vulkan-drivers=no \
                            --enable-glx \
                            --disable-osmesa \
                            --disable-gallium-osmesa \
@@ -102,6 +101,7 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --enable-driglx-direct \
                            --enable-glx-tls \
                            $MESA_GALLIUM_LLVM \
+                           --enable-silent-rules \
                            --with-gl-lib-name=GL \
                            --with-osmesa-lib-name=OSMesa \
                            --with-gallium-drivers=$GALLIUM_DRIVERS \

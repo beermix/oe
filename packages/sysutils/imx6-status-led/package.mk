@@ -24,7 +24,6 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://www.openelec.tv/"
 PKG_URL=""
 PKG_DEPENDS_TARGET=""
-PKG_PRIORITY="optional"
 PKG_SECTION="system"
 PKG_SHORTDESC="i.MX6 status LED control"
 PKG_LONGDESC="Front status LED control for i.MX6 systems"
@@ -36,8 +35,8 @@ make_target() {
 }
 
 makeinstall_target() {
-  mkdir -p $INSTALL/usr/lib/openelec
-  cp $PKG_DIR/scripts/* $INSTALL/usr/lib/openelec
+  mkdir -p $INSTALL/usr/lib/libreelec
+  cp $PKG_DIR/scripts/* $INSTALL/usr/lib/libreelec
 }
 
 post_install() {

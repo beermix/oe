@@ -24,6 +24,7 @@ PKG_LICENSE="LGPLv3+"
 PKG_SITE="http://gmplib.org/"
 PKG_URL="https://gmplib.org/download/gmp/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="ccache:host"
+PKG_DEPENDS_TARGET="toolchain netbsd-curses"
 PKG_PRIORITY="optional"
 PKG_SECTION="devel"
 PKG_SHORTDESC="gmp: The GNU MP (multiple precision arithmetic) library"
@@ -35,3 +36,7 @@ PKG_AUTORECONF="no"
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
+
+pre_configure_target() {
+  export LIBS="-lterminfo"
+}

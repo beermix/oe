@@ -17,11 +17,13 @@
 ################################################################################
 
 PKG_NAME="x86-firmware"
-PKG_VERSION="master"
+PKG_VERSION="c4c07a8"
 PKG_REV="1"
 PKG_ARCH="x86_64"
 PKG_LICENSE="other"
-PKG_GIT_URL="https://kernel.googlesource.com/pub/scm/linux/kernel/git/firmware/linux-firmware.git"
+PKG_SITE="http://git.kernel.org/cgit/linux/kernel/git/firmware/linux-firmware.git/"
+PKG_GIT_URL="http://git.kernel.org/cgit/linux/kernel/git/firmware/linux-firmware.git"
+PKG_SOURCE_DIR="$PKG_VERSION"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="linux-firmware"
 PKG_SHORTDESC="x86-firmware: x86 related firmware"
