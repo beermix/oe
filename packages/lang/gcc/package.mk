@@ -105,7 +105,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          $GCC_OPTS"
 
 pre_configure_host() {
-  export CXXFLAGS="$CXXFLAGS -std=gnu++14"
+  export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
 }
 
@@ -123,38 +123,9 @@ post_make_host() {
 post_makeinstall_host() {
   cp -PR $TARGET_NAME/libstdc++-v3/src/.libs/libstdc++.so* $SYSROOT_PREFIX/usr/lib
 
-  GCC_VERSION=`$ROOT/$TOOLCHAIN/bin/${TARGET_NAME}-gcc -dumpversion`
-  DATE="0501`echo $GCC_VERSION | sed 's/\([0-9]\)/0\1/g' | sed 's/\.//g'`"
-  CROSS_CC=${TARGET_NAME}gcc-${GCC_VERSION}
-  CROSS_CXX=${TARGET_NAME}g++-${GCC_VERSION}
-
-  rm -f ${TARGET_NAME}gcc
-
-cat > ${TARGET_NAME}gcc <<EOF
-#!/bin/sh
-$ROOT/$TOOLCHAIN/bin/ccache $CROSS_CC "\$@"
-EOF
-
-  chmod +x ${TARGET_NAME}gcc
-
-  # To avoid cache trashing
-  touch -c -t $DATE $CROSS_CC
-
-  [ ! -f "$CROSS_CXX" ] && mv ${TARGET_NAME}g++ $CROSS_CXX
-
-cat > ${TARGET_NAME}g++ <<EOF
-#!/bin/sh
-$ROOT/$TOOLCHAIN/bin/ccache $CROSS_CXX "\$@"
-EOF
-
-  chmod +x ${TARGET_NAME}g++
-
-  # To avoid cache trashing
-  touch -c -t $DATE $CROSS_CXX
-  
   mkdir -p $ROOT/$TOOLCHAIN/lib/ccache
-  ln -sf $ROOT/$TOOLCHAIN/bin/ccache $ROOT/$TOOLCHAIN/lib/ccache/${TARGET_NAME}-gcc
-  ln -sf $ROOT/$TOOLCHAIN/bin/ccache $ROOT/$TOOLCHAIN/lib/ccache/${TARGET_NAME}-g++
+    ln -sf $ROOT/$TOOLCHAIN/bin/ccache $ROOT/$TOOLCHAIN/lib/ccache/${TARGET_NAME}-gcc
+    ln -sf $ROOT/$TOOLCHAIN/bin/ccache $ROOT/$TOOLCHAIN/lib/ccache/${TARGET_NAME}-g++
 }
 
 configure_target() {
