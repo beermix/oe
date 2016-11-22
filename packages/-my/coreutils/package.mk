@@ -6,7 +6,7 @@ PKG_BUILD_DEPENDS_TARGET="toolchain acl libunwind attr libcap readline"
 PKG_PRIORITY="optional"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="gl_cv_func_working_mktime=yes \
 			   gl_cv_func_linkat_follow=yes \
@@ -15,4 +15,4 @@ PKG_CONFIGURE_OPTS_TARGET="gl_cv_func_working_mktime=yes \
 			   fu_cv_sys_stat_statfs2_bsize=yes \
 			   --prefix=/usr \
 			   --without-selinux \
-			   --enable-no-install-program=hostname,su,kill,uptime,env,mkdir,cp,mv,rm"
+			   --enable-no-install-program=hostname,su,kill,uptime,env,mkdir,cp,mv,rm,ln"

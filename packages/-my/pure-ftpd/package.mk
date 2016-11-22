@@ -5,13 +5,13 @@ PKG_DEPENDS_TARGET="toolchain libsodium libevent"
 PKG_PRIORITY="optional"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
+strip_lto
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			   --enable-static \
 			   --prefix=/usr \
-			   --with-minimal \
 			   --sysconfdir=/storage/.config \
                            --datadir=/storage/.config \
                            --libdir=/storage/.config \
