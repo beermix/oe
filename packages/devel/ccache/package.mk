@@ -32,6 +32,8 @@ PKG_LONGDESC="Ccache is a compiler cache. It speeds up re-compilation of C/C++ c
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
+PKG_CONFIGURE_OPTS_HOST="--with-bundled-zlib"
+
 post_makeinstall_host() {
 # setup ccache
   $ROOT/$TOOLCHAIN/bin/ccache --max-size=$CCACHE_CACHE_SIZE
