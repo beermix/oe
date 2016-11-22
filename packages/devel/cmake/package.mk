@@ -42,7 +42,7 @@ configure_host() {
                -DCMAKE_USE_OPENSSL=ON \
                -DKWSYS_LFS_WORKS=TRUE \
                -DKWSYS_CHAR_IS_SIGNED=TRUE \
-               -DCMAKE_USE_SYSTEM_LIBRARIES=0 \
+               -DCMAKE_USE_SYSTEM_LIBRARIES=1 \
                -DCTEST_USE_XMLRPC=OFF \
                -DBUILD_CursesDialog=OFF \
                -DCMAKE_USE_SYSTEM_CURL=OFF
