@@ -105,7 +105,6 @@ PKG_MARIADB_SERVER="yes"
 
 configure_host() {
   cmake -DCMAKE_PREFIX_PATH=$ROOT/$TOOLCHAIN/ \
-        -DCMAKE_BUILD_TYPE=MinSizeRel \
         -DFEATURE_SET=xsmall \
         -DWITHOUT_SERVER=OFF \
         -DWITH_EMBEDDED_SERVER=OFF \
@@ -135,7 +134,6 @@ configure_target() {
         -DDISABLE_SHARED=ON \
         -DCMAKE_C_FLAGS="${TARGET_CFLAGS} -fPIC -DPIC -fno-strict-aliasing -DBIG_JOINS=1 -fomit-frame-pointer -fno-delete-null-pointer-checks" \
         -DCMAKE_CXX_FLAGS="${TARGET_CXXFLAGS} -fPIC -DPIC -fno-strict-aliasing -DBIG_JOINS=1 -felide-constructors -fno-delete-null-pointer-checks" \
-        -DCMAKE_BUILD_TYPE=MinSizeRel \
         $MARIADB_IMPORT_EXECUTABLES \
         -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
         -DCMAKE_INSTALL_PREFIX=/ \
