@@ -32,7 +32,7 @@ PKG_LONGDESC="GNU 'M4' is an implementation of the traditional Unix macro proces
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_HOST="gl_cv_func_gettimeofday_clobber=no --target=$TARGET_NAME --disable-static"
+PKG_CONFIGURE_OPTS_HOST="gl_cv_func_gettimeofday_clobber=no --target=$TARGET_NAME"
 
 post_makeinstall_host() {
   make prefix=$SYSROOT_PREFIX/usr install

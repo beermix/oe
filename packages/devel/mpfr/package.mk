@@ -36,4 +36,5 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-static --disable-shared \
                          --prefix=$ROOT/$TOOLCHAIN \
                          --with-gmp-lib=$ROOT/$TOOLCHAIN/lib \
-                         --with-gmp-include=$ROOT/$TOOLCHAIN/include"
+                         --with-gmp-include=$ROOT/$TOOLCHAIN/include \
+                         --enable-silent-rules"
