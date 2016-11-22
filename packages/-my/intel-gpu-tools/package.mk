@@ -7,11 +7,15 @@ PKG_SECTION="tools"
 PKG_SHORTDESC="x11-utils"
 PKG_AUTORECONF="no"
 
+pre_configure_target() {
+libtoolize --automake --copy --force
+}
+
 PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
 			   --disable-shared \
 			   --enable-static \
 			   --with-gnu-ld \
-			   --disable-silent-rules \
+			   --enable-silent-rules \
 			   --disable-debug \
 			   --without-libunwind \
 			   --disable-gtk-doc \

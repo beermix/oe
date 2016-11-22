@@ -52,13 +52,14 @@ PKG_CONFIGURE_OPTS_TARGET="export ac_cv_have_abstract_sockets=yes \
                            --without-x \
                            --with-dbus-user=dbus"
 
+
 post_makeinstall_target() {
   rm -rf $INSTALL/etc/rc.d
   rm -rf $INSTALL/usr/lib/dbus-1.0/include
 }
 
 post_install() {
-  add_user dbus x 81 81 "System message bus" "/" "/bin/sh"
+  add_user dbus x 81 81 "System message bus" "/" "/bin/bash"
   add_group dbus 81
   add_group netdev 497
 
