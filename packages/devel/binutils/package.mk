@@ -50,7 +50,10 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --disable-shared \
                          --enable-poison-system-directories \
                          --disable-deterministic-archives \
-                         --disable-gdb"
+                         --disable-gdb \
+                         --disable-sim \
+                         --enable-install-libiberty \
+                         --enable-build-warnings=no"
 
 
 makeinstall_host() {
