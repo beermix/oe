@@ -36,13 +36,13 @@ configure_host() {
   ../configure --prefix=$ROOT/$TOOLCHAIN \
                --no-qt-gui --no-system-libs  \
                -- \
-               -DCMAKE_C_FLAGS="-march=haswell -mtune=haswell -O2 -pipe -Wno-format-security" \
-               -DCMAKE_CXX_FLAGS="-march=haswell -mtune=haswell -O2 -pipe -Wno-format-security" \
+               -DCMAKE_C_FLAGS="-march=haswell -mtune=haswell -g0 -O2 -pipe -Wno-format-security" \
+               -DCMAKE_CXX_FLAGS="-march=haswell -mtune=haswell -g0 -O2 -pipe -Wno-format-security" \
                -DCMAKE_EXE_LINKER_FLAGS="$HOST_LDFLAGS" \
                -DCMAKE_USE_OPENSSL=ON \
                -DKWSYS_LFS_WORKS=TRUE \
                -DKWSYS_CHAR_IS_SIGNED=TRUE \
-               -DCMAKE_USE_SYSTEM_LIBRARIES=1 \
+               -DCMAKE_USE_SYSTEM_LIBRARIES=0 \
                -DCTEST_USE_XMLRPC=OFF \
                -DBUILD_CursesDialog=OFF \
                -DCMAKE_USE_SYSTEM_CURL=OFF
