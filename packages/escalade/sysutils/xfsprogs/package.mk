@@ -28,15 +28,23 @@ PKG_DEPENDS_INIT="xfsprogs"
 PKG_SECTION="tools"
 PKG_SHORTDESC="xfsprogs: Utilities for use with the xfs filesystem"
 PKG_IS_ADDON="no"
-
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-shared=no --with-gnu-ld --enable-readline=yes"
+PKG_CONFIGURE_OPTS_TARGET="ac_cv_header_aio_h=yes \
+			   ac_cv_lib_rt_lio_listio=yes \
+			   --prefix=/usr \
+			   --enable-lib64=no \
+			   --enable-gettext=no \
+			   --enable-static \
+			   --disable-shared \
+			   --enable-readline=yes \
+			   --enable-blkid=yes \
+			   INSTALL_USER=root \
+			   INSTALL_GROUP=root"
 
 pre_configure_target() {
   make configure
 }
-
 configure_init() {
   : # reuse target
 }
