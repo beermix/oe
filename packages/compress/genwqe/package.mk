@@ -8,17 +8,10 @@ PKG_AUTORECONF="no"
 
 
 make_host() {
-   make lib DISABLE_LIBCXL=1
+   make tools DISABLE_LIBCXL=1
  }
 
 makeinstall_host() {
   make LIB_INSTALL_PATH=$ROOT/$TOOLCHAIN/lib install
 }
 
-post_makeinstall_host() {
-  rm $ROOT/$TOOLCHAIN/lib/libz.so
-  rm $ROOT/$TOOLCHAIN/lib/libz.so.1
-  rm $ROOT/$TOOLCHAIN/lib/libzADC.so
-  rm $ROOT/$TOOLCHAIN/lib/libzADC.so.4
-  rm $ROOT/$TOOLCHAIN/lib/libzADC.so.4.0.17
-}
