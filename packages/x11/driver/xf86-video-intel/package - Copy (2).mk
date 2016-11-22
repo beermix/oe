@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="xf86-video-intel"
-PKG_VERSION="master"
+PKG_VERSION="2.99.917"
 PKG_REV="1"
 PKG_ARCH="x86_64"
 PKG_LICENSE="OSS"
@@ -36,26 +36,13 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-backlight \
                            --disable-backlight-helper \
                            --disable-gen4asm \
                            --enable-udev \
-                           --disable-tools \
-                           --enable-dri \
-                           --disable-dri1 \
-                           --enable-dri2 \
-                           --enable-dri3 \
-                           --enable-sna \
-                           --enable-uxa \
-                           --disable-xvmc \
-                           --disable-xaa \
-                           --disable-dga \
-                           --disable-tear-free \
-                           --disable-create2 \
-                           --enable-async-swap \
                            --with-default-dri=3 \
+                           --disable-selective-werror \
                            --with-xorg-module-dir=/usr/lib/xorg/modules"
 
 pre_configure_target() {
 # xf86-video-intel is broken enough. dont link with LTO
   strip_lto
-  CFLAGS="$CFLAGS -D_GNU_SOURCE -fPIC"
 }
 
 post_makeinstall_target() {

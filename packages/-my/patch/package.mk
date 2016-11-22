@@ -9,8 +9,9 @@ PKG_SHORTDESC="GNU patch"
 PKG_LONGDESC="Patch takes a patch file containing a difference listing produced by the diff program and applies those differences to one or more original files, producing patched versions"
 PKG_AUTORECONF="no"
 
-#export CC=$LOCAL_CC
-export LIBS="$LIBS -ldl"
+pre_configure_target() {
+  export LIBS="$LIBS -ldl"
+}
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_sys_long_file_names=yes \
 			   ac_cv_path_ED=ed \

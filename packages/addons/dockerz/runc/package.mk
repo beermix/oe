@@ -31,8 +31,7 @@ PKG_LONGDESC="runc is a CLI tool for spawning and running containers according t
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-#CFLAGS="-march=corei7-avx -mtune=corei7-avx -fdata-sections -ffunction-sections -O3 -Wa,--noexecstack"
-#LDFLAGS="-s -Wl,--gc-sections -Wl,-z,relro,-z,now"
+strip_lto
 
 pre_make_target() {
   case $TARGET_ARCH in

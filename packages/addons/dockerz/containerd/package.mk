@@ -31,8 +31,7 @@ PKG_LONGDESC="containerd is a daemon to control runC, built for performance and 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-#CFLAGS="-march=corei7-avx -mtune=corei7-avx -fdata-sections -ffunction-sections -O3 -Wa,--noexecstack"
-#LDFLAGS="-s -Wl,--gc-sections -Wl,-z,relro,-z,now"
+strip_lto
 
 pre_make_target() {
   export GOOS=linux
