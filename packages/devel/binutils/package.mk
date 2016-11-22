@@ -32,6 +32,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 CFLAGS="-O1 -pipe -I$ROOT/$TOOLCHAIN/include"
+LDFLAGS="-Wl,-rpath,$ROOT/$TOOLCHAIN/lib -L$ROOT/$TOOLCHAIN/lib -s"
 
 PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --with-sysroot=$SYSROOT_PREFIX \
@@ -56,7 +57,6 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --disable-sim \
                          --enable-install-libiberty \
                          --enable-build-warnings=no"
-
 
 makeinstall_host() {
   cp -v ../include/libiberty.h $SYSROOT_PREFIX/usr/include

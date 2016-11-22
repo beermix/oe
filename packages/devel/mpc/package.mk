@@ -32,7 +32,12 @@ PKG_LONGDESC="pc is a C library for the arithmetic of complex numbers with arbit
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
+pre_configure_host() {
+  export CFLAGS="-march=native -O3 -pipe -I$ROOT/$TOOLCHAIN/include"
+}
+
 PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-static --disable-shared \
                          --with-gmp=$ROOT/$TOOLCHAIN \
-                         --with-mpfr=$ROOT/$TOOLCHAIN"
+                         --with-mpfr=$ROOT/$TOOLCHAIN \
+                         --enable-silent-rules"

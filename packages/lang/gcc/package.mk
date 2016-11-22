@@ -106,7 +106,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
 
 pre_configure_host() {
   export CXXFLAGS="$CXXFLAGS -std=gnu++14"
-  export CFLAGS="$CFLAGS -fno-stack-protector"
+  export export CFLAGS="-march=haswell -mtune=haswell -O3 -pipe -fno-stack-protector -I$ROOT/$TOOLCHAIN/include"
   unset CPP
 }
 

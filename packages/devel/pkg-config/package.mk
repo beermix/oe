@@ -32,9 +32,11 @@ PKG_LONGDESC="pkg-config is a system for managing library compile/link flags tha
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_HOST="--disable-silent-rules \
-                         --with-internal-glib --disable-dtrace \
-                         --with-gnu-ld"
+pre_configure_host() {
+  export CFLAGS="-march=native -O3 -pipe -I$ROOT/$TOOLCHAIN/include"
+}
+
+PKG_CONFIGURE_OPTS_HOST="--disable-silent-rules --with-internal-glib --disable-dtrace --with-gnu-ld"
 
 post_makeinstall_host() {
   mkdir -p $SYSROOT_PREFIX/usr/share/aclocal

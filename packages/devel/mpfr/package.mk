@@ -32,6 +32,10 @@ PKG_LONGDESC="The MPFR library is a C library for multiple-precision floating-po
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
+pre_configure_host() {
+  export CFLAGS="-march=native -O3 -pipe -I$ROOT/$TOOLCHAIN/include"
+}
+
 PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-static --disable-shared \
                          --prefix=$ROOT/$TOOLCHAIN \

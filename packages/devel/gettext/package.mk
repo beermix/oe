@@ -32,6 +32,10 @@ PKG_LONGDESC="This is the GNU gettext package. It is interesting for authors or 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
+pre_configure_host() {
+  export CFLAGS="-march=native -O3 -pipe -I$ROOT/$TOOLCHAIN/include"
+}
+
 PKG_CONFIGURE_SCRIPT="gettext-tools/configure"
 
 PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared \
