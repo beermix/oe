@@ -6,6 +6,9 @@ PKG_PRIORITY="optional"
 PKG_SECTION="security"
 PKG_AUTORECONF="no"
 
+pre_configure_host() {
+  export CFLAGS="-march=native -O3 -pipe -I$ROOT/$TOOLCHAIN/include"
+}
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared"
 			  
