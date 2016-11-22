@@ -71,9 +71,7 @@ PKG_CONFIGURE_OPTS_TARGET="$UTILLINUX_CONFIG_DEFAULT \
                            --enable-libsmartcols \
                            --enable-losetup \
                            --enable-fsck \
-                           --enable-blkid \
-                           --without-systemd \
-                           --enable-static"
+                           --enable-blkid"
 
 if [ "$SWAP_SUPPORT" = "yes" ]; then
   PKG_CONFIGURE_OPTS_TARGET+=" --enable-swapon"
