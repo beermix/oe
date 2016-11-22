@@ -147,7 +147,7 @@ configure_target() {
         -DINSTALL_SQLBENCHDIR=/storage/.kodi/addons/service.web.lamp/mariadb/test \
         -DINSTALL_SUPPORTFILESDIR=/storage/.kodi/addons/service.web.lamp/mariadb/support \
         -DMYSQL_DATADIR=/storage/.kodi/userdata/addon_data/service.web.lamp/mariadb/data \
-        -DMYSQL_UNIX_ADDR=/var/tmp/mysql.socket \
+        -DMYSQL_UNIX_ADDR=/var/run/mysqld.sock \
         -DWITH_EXTRA_CHARSETS=all \
         -DTOKUDB_OK=0 \
         -DDISABLE_LIBMYSQLCLIENT_SYMBOL_VERSIONING=TRUE \
