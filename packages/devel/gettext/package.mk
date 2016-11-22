@@ -47,4 +47,5 @@ PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared \
                          --enable-silent-rules \
                          --disable-native-java \
                          --disable-csharp \
-                         --without-emacs"
+                         --without-emacs \
+                         --disable-nls"
