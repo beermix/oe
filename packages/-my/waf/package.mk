@@ -1,6 +1,6 @@
 PKG_NAME="waf"
-PKG_VERSION="cfb97d6"
-PKG_URL="https://github.com/waf-project/waf/archive/$PKG_VERSION.tar.gz"
+PKG_VERSION="master"
+PKG_GIT_URL="https://github.com/waf-project/waf"
 PKG_DEPENDS_TARGET="toolchain Python:host boost"
 PKG_DEPENDS_HOST="toolchain Python:host boost"
 PKG_PRIORITY="optional"

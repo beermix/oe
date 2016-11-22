@@ -34,7 +34,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 
-PKG_MARIADB_SERVER="yes"
+PKG_MARIADB_SERVER="no"
 
 # MariaDB Feature set. Selection of features. Options are
 # - xsmall : 
@@ -169,7 +169,7 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/share/mysql/support-files
   rm -rf $INSTALL/usr/share/mysql/test
   rm -rf $INSTALL/usr/share/mysql/bench
-  #rm -rf $INSTALL/storage
+  rm -rf $INSTALL/storage
   
   if [ "$PKG_MARIADB_SERVER" = "no" ]; then
     rm -rf $INSTALL/usr/bin
