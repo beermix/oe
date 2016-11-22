@@ -56,7 +56,7 @@ PKG_CONFIGURE_OPTS_TARGET="--without-ada \
                            --enable-getcap-cache \
                            --disable-symlinks \
                            --enable-ext-funcs \
-                           --enable-pc-files \
+                           --disable-pc-files \
                            --enable-widec"
 
 pre_configure_target() {
