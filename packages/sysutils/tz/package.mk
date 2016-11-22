@@ -16,26 +16,36 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="libc"
-PKG_VERSION=""
+PKG_NAME="tz"
+PKG_VERSION="2016i"
 PKG_REV="1"
 PKG_ARCH="any"
-PKG_LICENSE="GPL"
-PKG_SITE="http://www.openelec.tv"
-PKG_URL=""
-PKG_DEPENDS_TARGET="toolchain glibc tz"
-PKG_DEPENDS_INIT="toolchain glibc:init"
-PKG_PRIORITY="optional"
-PKG_SECTION="virtual"
-PKG_SHORTDESC="libc: Metapackage"
-PKG_LONGDESC=""
-PKG_SHORTDESC="libc: Meta package for installing various tools and libs needed for libc"
-PKG_LONGDESC="Meta package for installing various tools and libs needed for libc"
+PKG_LICENSE="Public Domain"
+PKG_SITE="http://www.iana.org/time-zones"
+PKG_GIT_URL="https://github.com/eggert/tz"
+PKG_DEPENDS_TARGET="toolchain"
+PKG_SECTION="system"
+PKG_SHORTDESC="tzdata"
+PKG_LONGDESC="tzdata"
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-if [ "$BOOTLOADER" = "bcm2835-firmware" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET arm-mem"
-  PKG_DEPENDS_INIT="$PKG_DEPENDS_INIT arm-mem:init"
-fi
+PKG_MAKE_OPTS_TARGET="CC=$HOST_CC LDFLAGS="
+
+makeinstall_target() {
+  make TOPDIR="$INSTALL" install
+}
+
+post_makeinstall_target() {
+  mkdir -p $INSTALL/usr/share/zoneinfo
+  mv $INSTALL/etc/zoneinfo/* $INSTALL/usr/share/zoneinfo
+
+  rm -rf $INSTALL/etc
+  mkdir -p $INSTALL/etc
+    ln -sf /var/run/localtime $INSTALL/etc/localtime
+}
+
+post_install() {
+  enable_service tz-data.service
+}
