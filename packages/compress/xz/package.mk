@@ -38,6 +38,10 @@ pre_configure_target() {
   export MAKEFLAGS=-j1
 }
 
+pre_configure_host() {
+  export CFLAGS="-march=native -O3 -pipe -I$ROOT/$TOOLCHAIN/include"
+}
+
 PKG_CONFIGURE_OPTS_HOST="ac_cv_prog_cc_c99=-std=gnu99 \
 			 --disable-shared \
 			 --enable-static \
