@@ -32,6 +32,7 @@ PKG_LONGDESC="The Apache Portable Runtime Utility Library provides a predictable
 PKG_MAINTAINER="ultraman"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
+PKG_USE_CMAKE="no"
 
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
@@ -39,9 +40,9 @@ pre_configure_target() {
   export CXX="g++ -static -static-libgcc -fno-exceptions"
   export LIBS="-lc"
   
-  #APR_DIR_TARGET=$(get_build_dir apr)/.install_dev/usr
-  #APR_DIR_TARGET=$(get_build_dir apr)/.$TARGET_NAME
-  APR_DIR_TARGET=$(get_build_dir apr)/.install_dev
+  #APR_DIR_TARGET=$(get_pkg_build apr)/.install_dev/usr
+  #APR_DIR_TARGET=$(get_pkg_build apr)/.$TARGET_NAME
+  APR_DIR_TARGET=$(get_pkg_build apr)/.install_dev
   
   #export TARGET_PKG_CONFIG_LIBDIR="TARGET_PKG_CONFIG_LIBDIR $APR_DIR_TARGET/usr/lib/pkgconfig"
   

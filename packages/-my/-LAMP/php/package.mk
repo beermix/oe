@@ -47,7 +47,7 @@ else
 fi
 
 # add some other libraries which are need by php extensions
-PKG_DEPENDS_TARGET="toolchain zlib pcre curl libxml2 openssl libmcrypt libiconv mysql httpd"
+PKG_DEPENDS_TARGET="toolchain zlib pcre curl libxml2 openssl libmcrypt libiconv httpd"
 PKG_PRIORITY="optional"
 PKG_SECTION="web"
 PKG_SHORTDESC="php: Scripting language especially suited for Web development"
@@ -59,7 +59,7 @@ PKG_AUTORECONF="yes"
 #export MAKEFLAGS=-j1
 
 post_unpack() {
-	PHP_BUILD_DIR=$(get_build_dir php)
+	PHP_BUILD_DIR=$(get_pkg_build php)
 	echo "downloading pear..."
 	if [ ! -f "$PHP_BUILD_DIR/../go-pear.phar" ]; then
 		wget -O $PHP_BUILD_DIR/../go-pear.phar http://pear.php.net/go-pear.phar
@@ -78,9 +78,9 @@ configure_target() {
   # not for new
   #sed -i "s|freetype2/freetype/freetype.h|freetype2/freetype.h|g" configure
   
-  ICONV_DIR=$(get_build_dir libiconv)/.install_dev
-  LIBMCRYPT_DIR_TARGET=$(get_build_dir libmcrypt)/.install_dev
-  HTTPD_DIR=$(get_build_dir httpd)/.install_dev
+  ICONV_DIR=$(get_pkg_build libiconv)/.install_dev
+  LIBMCRYPT_DIR_TARGET=$(get_pkg_build libmcrypt)/.install_dev
+  HTTPD_DIR=$(get_pkg_build httpd)/.install_dev
 
 	export CFLAGS="$CFLAGS -DSQLITE_OMIT_LOAD_EXTENSION"
 	export CFLAGS="$CFLAGS -I$HTTPD_DIR/usr/include"
@@ -88,7 +88,7 @@ configure_target() {
   # Dynamic Library support
   export LDFLAGS="$LDFLAGS -ldl -lpthread"
 
-  APXS_FILE=$(get_build_dir httpd)/.install_dev/usr/bin/apxs
+  APXS_FILE=$(get_pkg_build httpd)/.install_dev/usr/bin/apxs
   chmod +x $APXS_FILE
     
   PKG_CONFIGURE_OPTS_TARGET="--enable-cli \
@@ -166,7 +166,7 @@ makeinstall_target() {
   export INSTALL_DEV=$(pwd)/.install_dev
   
   mkdir -p $INSTALL_DEV/etc/
-  cp $(get_build_dir httpd)/.install_dev/etc/httpd.conf $INSTALL_DEV/etc/httpd.conf 
+  cp $(get_pkg_build httpd)/.install_dev/etc/httpd.conf $INSTALL_DEV/etc/httpd.conf 
   
   #sed -i "s|install-pear-installer:.*|install-pear-installer:\ndummy123:|g" Makefile
   

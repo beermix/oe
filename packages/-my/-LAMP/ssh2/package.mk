@@ -35,8 +35,8 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 pre_configure_target() {
-	LIBSSH2_DIR=$(get_build_dir libssh2)/.install_dev
-	PHP_DIR=$(get_build_dir php)/.install_dev
+	LIBSSH2_DIR=$(get_pkg_build libssh2)/.install_dev
+	PHP_DIR=$(get_pkg_build php)/.install_dev
 
 	PKG_CONFIGURE_OPTS_TARGET="--with-ssh2=$LIBSSH2_DIR/usr \
 														 --with-php-config=$PHP_DIR/usr/bin/php-config"

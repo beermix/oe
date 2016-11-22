@@ -24,7 +24,7 @@ PKG_LICENSE="GPLv2"
 PKG_SITE="http://www.mariadb.org"
 PKG_URL="https://downloads.mariadb.org/interstitial/$PKG_NAME-$PKG_VERSION/source/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain netbsd-curses readline systemd openssl xz lz4 zlib attr expat libev mariadb:host"
+PKG_DEPENDS_TARGET="toolchain systemd netbsd-curses readline openssl xz lz4 zlib attr expat libev libevent mariadb:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="database"
 PKG_SHORTDESC="mariadb: A community developed branch of MySQL"
@@ -42,7 +42,7 @@ PKG_MARIADB_SERVER="yes"
 # - large :  embedded + archive + federated + blackhole + innodb
 # - xlarge:  embedded + archive + federated + blackhole + innodb + partition
 # - community:  all  features (currently == xlarge)
-  MARIADB_OPTS="$MARIADB_OPTS -DFEATURE_SET=xsmall"
+  MARIADB_OPTS="$MARIADB_OPTS -DFEATURE_SET=community"
 
 # Build MariaDB Server support
   if [ "$PKG_MARIADB_SERVER" = "no" ]; then
@@ -56,8 +56,8 @@ PKG_MARIADB_SERVER="yes"
 
 # Set MariaDB server storage engines
   MARIADB_OPTS="$MARIADB_OPTS -DWITH_INNOBASE_STORAGE_ENGINE=ON"
-  MARIADB_OPTS="$MARIADB_OPTS -WITH_PARTITION_STORAGE_ENGINE=OFF"
-  MARIADB_OPTS="$MARIADB_OPTS -WITH_PERFSCHEMA_STORAGE_ENGINE=OFF"
+  MARIADB_OPTS="$MARIADB_OPTS -WITH_PARTITION_STORAGE_ENGINE=ON"
+  MARIADB_OPTS="$MARIADB_OPTS -WITH_PERFSCHEMA_STORAGE_ENGINE=ON"
 
 # According to MariaDB galera cluster documentation these options must be passed
 # to CMake, set to '0' if galera cluster support is not wanted:
@@ -122,7 +122,6 @@ configure_host() {
         -DWITH_SYSTEMD=OFF \
         -DWITH_LIBWRAP=OFF \
         -DWITH_WSREP=OFF \
-        -DSECURITY_HARDENED=OFF \
         ..
 }
 
@@ -138,32 +137,28 @@ configure_target() {
         -DCMAKE_BUILD_TYPE=Release \
         $MARIADB_IMPORT_EXECUTABLES \
         -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
-        -DCMAKE_INSTALL_PREFIX=/usr \
-        -DINSTALL_DOCDIR=share/doc/mariadb \
-        -DINSTALL_DOCREADMEDIR=share/doc/mariadb \
-        -DINSTALL_INCLUDEDIR=include/mysql \
-        -DINSTALL_MANDIR=share/man \
-        -DINSTALL_MYSQLSHAREDIR=share/mysql \
-        -DINSTALL_MYSQLTESTDIR=share/mysql/test \
-        -DINSTALL_PLUGINDIR=lib/mysql/plugin \
-        -DINSTALL_SBINDIR=sbin \
-        -DINSTALL_SCRIPTDIR=share/mysql/scripts \
-        -DINSTALL_SQLBENCHDIR=share/mysql/bench \
-        -DINSTALL_SUPPORTFILESDIR=share/mysql/support-files \
-        -DMYSQL_DATADIR=/storage/mysql \
-        -DMYSQL_UNIX_ADDR=/run/mysqld/mysqld.sock \
-        -DWITH_EXTRA_CHARSETS=complex \
+        -DCMAKE_INSTALL_PREFIX=/ \
+        -DINSTALL_MYSQLSHAREDIR=/storage/.kodi/addons/service.web.lamp/mariadb/share \
+        -DINSTALL_MYSQLTESTDIR=/storage/.kodi/addons/service.web.lamp/mariadb/test \
+        -DINSTALL_PLUGINDIR=/storage/.kodi/addons/service.web.lamp/mariadb/pluin \
+        -DINSTALL_SBINDIR=/storage/.kodi/addons/service.web.lamp/bin \
+        -DINSTALL_BINDIR=/storage/.kodi/addons/service.web.lamp/bin \
+        -DINSTALL_SCRIPTDIR=/storage/.kodi/addons/service.web.lamp/mariadb/script \
+        -DINSTALL_SQLBENCHDIR=/storage/.kodi/addons/service.web.lamp/mariadb/test \
+        -DINSTALL_SUPPORTFILESDIR=/storage/.kodi/addons/service.web.lamp/mariadb/support \
+        -DMYSQL_DATADIR=/storage/.kodi/userdata/addon_data/service.web.lamp/mariadb/data \
+        -DMYSQL_UNIX_ADDR=/var/tmp/mysql.socket \
+        -DWITH_EXTRA_CHARSETS=all \
         -DTOKUDB_OK=0 \
         -DDISABLE_LIBMYSQLCLIENT_SYMBOL_VERSIONING=TRUE \
         -DENABLE_DTRACE=OFF \
-        -DWITH_READLINE=OFF \
+        -DWITH_READLINE=ON \
         -DWITH_PCRE=bundled \
         -DWITH_ZLIB=bundled \
         -DWITH_SYSTEMD=ON \
         -DWITH_LIBWRAP=OFF \
         -DWITH_SSL=$SYSROOT_PREFIX/usr \
         $MARIADB_OPTS \
-        -DSECURITY_HARDENED=OFF \
         ..
 }
 

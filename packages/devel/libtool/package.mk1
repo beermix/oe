@@ -16,26 +16,23 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="readline"
-PKG_VERSION="7.0"
+PKG_NAME="libtool"
+PKG_VERSION="2.4.6"
 PKG_REV="1"
 PKG_ARCH="any"
-PKG_LICENSE="MIT"
-PKG_SITE="http://www.gnu.org/readline"
-PKG_URL="http://ftp.gnu.org/gnu/readline/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain netbsd-curses"
+PKG_LICENSE="GPL"
+PKG_SITE="http://www.gnu.org/software/libtool/libtool.html"
+PKG_URL="http://ftp.gnu.org/gnu/libtool/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_DEPENDS_HOST="ccache:host autoconf:host"
+PKG_DEPENDS_TARGET="toolchain"
 PKG_PRIORITY="optional"
 PKG_SECTION="devel"
-PKG_SHORTDESC="readline: The GNU Readline library provides a set of functions for use by applications that allow users to edit command lines as they are typed in."
-PKG_LONGDESC="The GNU Readline library provides a set of functions for use by applications that allow users to edit command lines as they are typed in."
+PKG_SHORTDESC="libtool: Generic library support script"
+PKG_LONGDESC="This is GNU Libtool, a generic library support script. Libtool hides the complexity of using shared libraries behind a consistent, portable interface."
 PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="bash_cv_wcwidth_broken=no \
-                           --disable-shared \
-                           --enable-static \
-                           --with-curses"
+PKG_CONFIGURE_OPTS_HOST="lt_cv_sys_lib_dlsearch_path_spec="$SYSROOT_PREFIX/lib:$SYSROOT_PREFIX/usr/lib" \
+			 --enable-static --disable-shared"
 
-post_makeinstall_target() {
-  rm -rf $INSTALL/usr/share/readline
-}

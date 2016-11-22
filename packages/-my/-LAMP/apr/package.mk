@@ -32,6 +32,7 @@ PKG_LONGDESC="The Apache Portable Runtime (APR) is a supporting library for the 
 PKG_MAINTAINER="vpeter"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
+PKG_USE_CMAKE="no"
 
 export CFLAGS="$CFLAGS -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64"
 
@@ -51,8 +52,7 @@ else
 	              ac_cv_sizeof_struct_iovec=8"
 fi
 
-PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=gcc \
-                           CFLAGS_FOR_BUILD= \
+PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$CC \
                            ac_cv_file__dev_zero=yes \
                            ac_cv_func_setpgrp_void=yes \
                            apr_cv_tcp_nodelay_with_cork=no \

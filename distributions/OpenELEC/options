@@ -111,7 +111,7 @@
   KODI_SAMBA_SUPPORT="yes"
 
 # include initial language addons for Kodi (yes / no)
-  KODI_LANGUAGE_ADDONS="yes"
+  KODI_LANGUAGE_ADDONS="no"
 
 # build with NFS support (mounting nfs shares via the OS) (yes / no)
   NFS_SUPPORT="no"

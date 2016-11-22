@@ -33,7 +33,7 @@ PKG_LONGDESC="TinyXML2 is a simple, small, C++ XML parser that can be easily int
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CMAKE_OPTS_TARGET="-DBUILD_SHARED_LIBS=off -DBUILD_STATIC_LIBS=on"
+PKG_CMAKE_OPTS_TARGET="-DBUILD_SHARED_LIBS=OFF -DBUILD_STATIC_LIBS=ON"
 
 pre_configure_target() {
   export CFLAGS="$CFLAGS -fPIC"

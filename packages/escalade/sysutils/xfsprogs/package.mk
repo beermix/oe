@@ -23,12 +23,20 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.xfs.org"
 PKG_GIT_URL="git://git.kernel.org/pub/scm/fs/xfs/xfsprogs-dev.git"
-PKG_DEPENDS_TARGET="toolchain util-linux"
-PKG_DEPENDS_INIT="xfsprogs"
+PKG_DEPENDS_TARGET="toolchain util-linux readline"
+PKG_DEPENDS_INIT="readline xfsprogs"
 PKG_SECTION="tools"
 PKG_SHORTDESC="xfsprogs: Utilities for use with the xfs filesystem"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
+
+pre_configure_init() {
+  export LDFLAGS="-lcurses -lterminfo"
+}
+
+pre_configure_target() {
+  export LDFLAGS="-lcurses -lterminfo"
+}
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_header_aio_h=yes \
 			   ac_cv_lib_rt_lio_listio=yes \
@@ -42,9 +50,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_header_aio_h=yes \
 			   INSTALL_USER=root \
 			   INSTALL_GROUP=root"
 
-pre_configure_target() {
-  make configure
-}
 configure_init() {
   : # reuse target
 }

@@ -18,12 +18,12 @@
 ################################################################################
 
 PKG_NAME="libmcrypt"
-PKG_VERSION="2.6.7"
+PKG_VERSION="8c26221"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OpenSource"
 PKG_SITE="http://sourceforge.net/projects/mcrypt/"
-PKG_URL="http://sourceforge.net/projects/mcrypt/files/Libmcrypt/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_GIT_URL="https://github.com/winlibs/libmcrypt"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_PRIORITY="optional"
 PKG_SECTION="security"
@@ -31,7 +31,7 @@ PKG_SHORTDESC="crypt library"
 PKG_LONGDESC="mcrypt, and the accompanying libmcrypt, are intended to be replacements for the old Unix crypt, except that they are under the GPL and support an ever-wider range of algorithms and modes."
 PKG_MAINTAINER="ultraman"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_realloc_0_nonnull=yes \
                            ac_cv_func_malloc_0_nonnull=yes \
@@ -42,6 +42,7 @@ pre_configure_target() {
 	# doesn't like to be build in target folder
 	cd $ROOT/$PKG_BUILD
 	rm -fr .$TARGET_NAME
+	chmod +x -R $ROOT/$PKG_BUILD
 }
 
 makeinstall_target() {

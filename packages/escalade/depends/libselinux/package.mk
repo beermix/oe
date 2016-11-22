@@ -30,7 +30,11 @@ PKG_SHORTDESC="Security Enhanced Linux (SELinux) userland libraries."
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-CFLAGS="-O1 -fno-strict-aliasing"
+pre_configure_target() {
+# xf86-video-intel is broken enough. dont link with LTO
+  strip_lto
+  export LDFLAGS="-ldl -lpthread"
+}
 
 
 make_target() {
