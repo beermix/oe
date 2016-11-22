@@ -42,11 +42,13 @@ fi
 PKG_CONFIGURE_OPTS_TARGET="--with-plugindir=/usr/lib/alsa \
                            --enable-symbolic-functions \
                            --disable-python \
+                           --without-versioned \
                            $ALSA_DEBUG \
                            --disable-dependency-tracking"
 
 pre_configure_target() {
   CFLAGS="$CFLAGS -fPIC -DPIC"
+  CPPFLAGS="-D_POSIX_C_SOURCE=1"
 
   # alsa-lib fails building with LTO support
     strip_lto
