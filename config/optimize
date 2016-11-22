@@ -5,7 +5,7 @@ fi
 
 if [ "$OPTIMIZATIONS" = size ];then
   GCC_OPTIM=""
-  LDFLAGS="-Wl,-O1,--sort-common,--as-needed"
+  LDFLAGS="-Wl,-O1,--sort-common,--as-needed,-z,relro"
 fi
 
 if [ "$LTO_SUPPORT" = yes ];then

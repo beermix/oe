@@ -33,7 +33,7 @@ PKG_LONGDESC="MariaDB is a community-developed fork and a drop-in replacement fo
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_MARIADB_SERVER="no"
+PKG_MARIADB_SERVER="yes"
 
 # MariaDB Feature set. Selection of features. Options are
 # - xsmall : 
@@ -42,7 +42,7 @@ PKG_MARIADB_SERVER="no"
 # - large :  embedded + archive + federated + blackhole + innodb
 # - xlarge:  embedded + archive + federated + blackhole + innodb + partition
 # - community:  all  features (currently == xlarge)
-  MARIADB_OPTS="$MARIADB_OPTS -DFEATURE_SET=xsmall"
+  MARIADB_OPTS="$MARIADB_OPTS -DFEATURE_SET=xlarge"
 
 # Build MariaDB Server support
   if [ "$PKG_MARIADB_SERVER" = "no" ]; then
@@ -138,20 +138,20 @@ configure_target() {
         $MARIADB_IMPORT_EXECUTABLES \
         -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
         -DCMAKE_INSTALL_PREFIX=/usr \
-        -DINSTALL_DOCDIR=share/doc/mariadb \
-        -DINSTALL_DOCREADMEDIR=share/doc/mariadb \
-        -DINSTALL_INCLUDEDIR=include/mysql \
-        -DINSTALL_MANDIR=share/man \
-        -DINSTALL_MYSQLSHAREDIR=share/mysql \
-        -DINSTALL_MYSQLTESTDIR=share/mysql/test \
-        -DINSTALL_PLUGINDIR=lib/mysql/plugin \
+        -DINSTALL_DOCDIR=/storage/.config/mariadb/share/doc/mariadb \
+        -DINSTALL_DOCREADMEDIR=/storage/.config/mariadb/share/doc/mariadb \
+        -DINSTALL_INCLUDEDIR=/storage/.config/mariadb/include/mysql \
+        -DINSTALL_MANDIR=/storage/.config/mariadb/share/man \
+        -DINSTALL_MYSQLSHAREDIR=/storage/.config/mariadb/share/mysql \
+        -DINSTALL_MYSQLTESTDIR=/storage/.config/mariadb/share/mysql/test \
+        -DINSTALL_PLUGINDIR=/storage/.config/mariadb/lib/mysql/plugin \
         -DINSTALL_SBINDIR=sbin \
-        -DINSTALL_SCRIPTDIR=share/mysql/scripts \
-        -DINSTALL_SQLBENCHDIR=share/mysql/bench \
-        -DINSTALL_SUPPORTFILESDIR=share/mysql/support-files \
-        -DMYSQL_DATADIR=/storage/mysql \
-        -DMYSQL_UNIX_ADDR=/run/mysqld/mysqld.sock \
-        -DWITH_EXTRA_CHARSETS=all \
+        -DINSTALL_SCRIPTDIR=/storage/.config/mariadb/share/mysql/scripts \
+        -DINSTALL_SQLBENCHDIR=/storage/.config/mariadb/share/mysql/bench \
+        -DINSTALL_SUPPORTFILESDIR=/storage/.config/mariadb/share/mysql/support-files \
+        -DMYSQL_DATADIR=/storage/.config/mariadb \
+        -DMYSQL_UNIX_ADDR=/var/tmp/mysql.socket \
+        -DWITH_EXTRA_CHARSETS=complex \
         -DTOKUDB_OK=0 \
         -DDISABLE_LIBMYSQLCLIENT_SYMBOL_VERSIONING=TRUE \
         -DENABLE_DTRACE=OFF \
@@ -160,7 +160,6 @@ configure_target() {
         -DWITH_ZLIB=bundled \
         -DWITH_SYSTEMD=ON \
         -DWITH_LIBWRAP=OFF \
-        -DGRN_WITH_LZ4=ON \
         -DWITH_SSL=$SYSROOT_PREFIX/usr \
         $MARIADB_OPTS \
         ..
