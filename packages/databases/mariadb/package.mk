@@ -24,7 +24,7 @@ PKG_LICENSE="GPLv2"
 PKG_SITE="http://www.mariadb.org"
 PKG_URL="https://downloads.mariadb.org/interstitial/$PKG_NAME-$PKG_VERSION/source/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain netbsd-curses readline systemd openssl libaio xz lz4 zlib attr expat boost libevent libxml2 mariadb:host"
+PKG_DEPENDS_TARGET="toolchain netbsd-curses readline systemd openssl xz lz4 zlib attr expat libevent libxml2 mariadb:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="database"
 PKG_SHORTDESC="mariadb: A community developed branch of MySQL"
@@ -122,6 +122,7 @@ configure_host() {
         -DWITH_SYSTEMD=OFF \
         -DWITH_LIBWRAP=OFF \
         -DWITH_WSREP=OFF \
+        -DSECURITY_HARDENED=OFF \
         ..
 }
 
@@ -138,8 +139,19 @@ configure_target() {
         $MARIADB_IMPORT_EXECUTABLES \
         -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
         -DCMAKE_INSTALL_PREFIX=/usr \
+        -DINSTALL_DOCDIR=share/doc/mariadb \
+        -DINSTALL_DOCREADMEDIR=share/doc/mariadb \
+        -DINSTALL_INCLUDEDIR=include/mysql \
+        -DINSTALL_MANDIR=share/man \
+        -DINSTALL_MYSQLSHAREDIR=share/mysql \
+        -DINSTALL_MYSQLTESTDIR=share/mysql/test \
+        -DINSTALL_PLUGINDIR=lib/mysql/plugin \
         -DINSTALL_SBINDIR=sbin \
-        -DMYSQL_UNIX_ADDR=/var/tmp/mysql.socket \
+        -DINSTALL_SCRIPTDIR=share/mysql/scripts \
+        -DINSTALL_SQLBENCHDIR=share/mysql/bench \
+        -DINSTALL_SUPPORTFILESDIR=share/mysql/support-files \
+        -DMYSQL_DATADIR=/storage/mysql \
+        -DMYSQL_UNIX_ADDR=/run/mysqld/mysqld.sock \
         -DWITH_EXTRA_CHARSETS=complex \
         -DTOKUDB_OK=0 \
         -DDISABLE_LIBMYSQLCLIENT_SYMBOL_VERSIONING=TRUE \
@@ -147,10 +159,11 @@ configure_target() {
         -DWITH_READLINE=OFF \
         -DWITH_PCRE=bundled \
         -DWITH_ZLIB=bundled \
-        -DWITH_SYSTEMD=ON \
+        -DWITH_SYSTEMD=OFF \
         -DWITH_LIBWRAP=OFF \
         -DWITH_SSL=$SYSROOT_PREFIX/usr \
         $MARIADB_OPTS \
+        -DSECURITY_HARDENED=OFF \
         ..
 }
 

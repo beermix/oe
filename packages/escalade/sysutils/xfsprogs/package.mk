@@ -31,12 +31,7 @@ PKG_IS_ADDON="no"
 
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static \
-			   --disable-shared \
-			   --enable-lib64=no \
-			   --enable-gettext=no \
-			   --enable-readline=no \
-			   --enable-blkid=yes"
+PKG_CONFIGURE_OPTS_TARGET="--enable-shared=no --with-gnu-ld --enable-readline=yes"
 
 pre_configure_target() {
   make configure
