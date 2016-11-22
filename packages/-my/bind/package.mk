@@ -1,11 +1,11 @@
 PKG_NAME="bind"
 PKG_VERSION="master"
 PKG_GIT_URL="https://source.isc.org/git/bind9.git"
-PKG_DEPENDS_TARGET="toolchain sqlite libcap json-c openssl readline libedit"
+PKG_DEPENDS_TARGET="toolchain sqlite libcap json-c openssl readline"
 PKG_PRIORITY="optional"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="BUILD_CC="$CC" \
                            --prefix=/usr \
