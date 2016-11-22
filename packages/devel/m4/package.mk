@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="ftp://ftp.gnu.org/pub/gnu/m4/"
 PKG_URL="http://ftp.gnu.org/gnu/m4/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_HOST="ccache:host libsigsegv:host"
+PKG_DEPENDS_HOST="ccache:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="devel"
 PKG_SHORTDESC="m4: The m4 macro processor"
@@ -32,7 +32,7 @@ PKG_LONGDESC="GNU 'M4' is an implementation of the traditional Unix macro proces
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_HOST="gl_cv_func_gettimeofday_clobber=no --target=$TARGET_NAME"
+PKG_CONFIGURE_OPTS_HOST="gl_cv_func_gettimeofday_clobber=no --target=$TARGET_NAME --disable-static"
 
 post_makeinstall_host() {
   make prefix=$SYSROOT_PREFIX/usr install
