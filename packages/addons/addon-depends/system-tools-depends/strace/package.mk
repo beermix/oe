@@ -29,3 +29,7 @@ PKG_SECTION="tools"
 PKG_SHORTDESC="strace: Trace system calls and signals"
 PKG_LONGDESC="In the simplest case strace runs the specified command until it exits. It intercepts and records the system calls which are called by a process and the signals which are received by a process. The name of each system call, its arguments and its return value are printed on standard error or to the file specified with the -o option."
 PKG_AUTORECONF="no"
+
+CFLAGS="-march=corei7-avx -O2 -pipe"
+LDFLAGS="-Wl,-O1 -Wl,--as-needed"
+CPPFLAGS="$CFLAGS -D_FORTIFY_SOURCE=2"
