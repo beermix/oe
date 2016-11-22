@@ -39,6 +39,7 @@ PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared \
                          --with-gnu-ld \
                          --disable-java \
                          --disable-curses \
+                         --enable-threads=posix \
                          --without-libxml2-prefix \
                          --with-included-libcroco \
                          --with-included-libunistring \
