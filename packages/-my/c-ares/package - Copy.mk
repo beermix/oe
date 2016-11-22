@@ -1,15 +1,15 @@
 PKG_NAME="c-ares"
-PKG_VERSION="d6823a5"
+PKG_VERSION="cares-1_12_0"
 PKG_GIT_URL="https://github.com/c-ares/c-ares"
 PKG_DEPENDS_TARGET="toolchain zlib openssl libgpg-error"
 PKG_DEPENDS_HOST="toolchain zlib openssl libgpg-error"
 PKG_PRIORITY="optional"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
-PKG_CMAKE_OPTS_TARGET="-DCARES_SHARED=OFF -DCARES_STATIC=ON"
-
-post_makeinstall_target() {
-  rm -rf $INSTALL
-}
+PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
+			   --disable-debug \
+			   --disable-shared \
+			   --enable-static \
+			   --with-gnu-ld"
