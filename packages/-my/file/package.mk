@@ -9,15 +9,10 @@ PKG_DEPENDS_HOST=""
 PKG_DEPENDS_TARGET="toolchain zlib attr expat file:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="tools"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
-
-PKG_CONFIGURE_OPTS_HOST="--enable-static \
-			 --disable-shared \
-			 --with-gnu-ld"
+PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared --with-gnu-ld"
 			 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static \
-			   --disable-shared \
-			   --with-gnu-ld"
+PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET"
 
 
