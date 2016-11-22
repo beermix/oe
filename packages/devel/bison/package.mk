@@ -33,6 +33,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_HOST="--disable-rpath --with-gnu-ld --enable-static --disable-shared"
+PKG_CONFIGURE_OPTS_TAREGT="$PKG_CONFIGURE_OPTS_HOST"
 
 post_configure_host() {
 # The configure system causes Bison to be built without support for
