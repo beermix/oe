@@ -1,5 +1,5 @@
 PKG_NAME="zsh"
-PKG_VERSION="85ba685"
+PKG_VERSION="dae2187"
 PKG_GIT_URL="https://github.com/zsh-users/zsh"
 PKG_DEPENDS_TARGET="toolchain netbsd-curses libcap pcre readline gdbm libpcap"
 PKG_PRIORITY="optional"

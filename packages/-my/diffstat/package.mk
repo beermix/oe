@@ -14,6 +14,5 @@ pre_configure_host() {
   export CFLAGS="$CFLAGS -fPIC -DPIC"
 }
 
-
 PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr --enable-static --disable-shared"
-PKG_CONFIGURE_OPTS_HOST="--prefix=/usr --enable-static --disable-shared"
+PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
