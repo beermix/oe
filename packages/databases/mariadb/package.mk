@@ -24,7 +24,7 @@ PKG_LICENSE="GPLv2"
 PKG_SITE="http://www.mariadb.org"
 PKG_URL="https://downloads.mariadb.org/interstitial/$PKG_NAME-$PKG_VERSION/source/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain netbsd-curses openssl libaio lz4 libevent mariadb:host"
+PKG_DEPENDS_TARGET="toolchain netbsd-curses readline systemd openssl libaio lz4 libevent mariadb:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="database"
 PKG_SHORTDESC="mariadb: A community developed branch of MySQL"
@@ -42,7 +42,7 @@ PKG_MARIADB_SERVER="yes"
 # - large :  embedded + archive + federated + blackhole + innodb
 # - xlarge:  embedded + archive + federated + blackhole + innodb + partition
 # - community:  all  features (currently == xlarge)
-  MARIADB_OPTS="$MARIADB_OPTS -DFEATURE_SET=xlarge"
+  MARIADB_OPTS="$MARIADB_OPTS -DFEATURE_SET=community"
 
 # Build MariaDB Server support
   if [ "$PKG_MARIADB_SERVER" = "no" ]; then
@@ -56,7 +56,7 @@ PKG_MARIADB_SERVER="yes"
 
 # Set MariaDB server storage engines
   MARIADB_OPTS="$MARIADB_OPTS -DWITH_INNOBASE_STORAGE_ENGINE=ON"
-  MARIADB_OPTS="$MARIADB_OPTS -WITH_PARTITION_STORAGE_ENGINE=OFF"
+  MARIADB_OPTS="$MARIADB_OPTS -WITH_PARTITION_STORAGE_ENGINE=ON"
   MARIADB_OPTS="$MARIADB_OPTS -WITH_PERFSCHEMA_STORAGE_ENGINE=OFF"
 
 # According to MariaDB galera cluster documentation these options must be passed
@@ -138,13 +138,13 @@ configure_target() {
         $MARIADB_IMPORT_EXECUTABLES \
         -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
         -DCMAKE_INSTALL_PREFIX=/usr \
-        -DINSTALL_DOCDIR=/storage/.config/mariadb/share/doc/mariadb \
-        -DINSTALL_DOCREADMEDIR=/storage/.config/mariadb/share/doc/mariadb \
-        -DINSTALL_INCLUDEDIR=/storage/.config/mariadb/include/mysql \
-        -DINSTALL_MANDIR=/storage/.config/mariadb/share/man \
-        -DINSTALL_MYSQLSHAREDIR=/storage/.config/mariadb/share/mysql \
-        -DINSTALL_MYSQLTESTDIR=/storage/.config/mariadb/share/mysql/test \
-        -DINSTALL_PLUGINDIR=/storage/.config/mariadb/lib/mysql/plugin \
+        -DINSTALL_DOCDIR="/storage/.kodi/userdata/addon_data/service.web.lamp/doc" \
+        -DINSTALL_DOCREADMEDIR="/storage/.kodi/userdata/addon_data/service.web.lamp/doc" \
+        -DINSTALL_INCLUDEDIR="/storage/.kodi/userdata/addon_data/service.web.lamp" \
+        -DINSTALL_MANDIR="/storage/.kodi/userdata/addon_data/service.web.lamp" \
+        -DINSTALL_MYSQLSHAREDIR="/storage/.kodi/userdata/addon_data/service.web.lamp" \
+        -DINSTALL_MYSQLTESTDIR="/storage/.kodi/userdata/addon_data/service.web.lamp" \
+        -DINSTALL_PLUGINDIR="/storage/.kodi/userdata/addon_data/service.web.lamp" \
         -DINSTALL_SBINDIR=sbin \
         -DINSTALL_SCRIPTDIR=/storage/.config/mariadb/share/mysql/scripts \
         -DINSTALL_SQLBENCHDIR=/storage/.config/mariadb/share/mysql/bench \
@@ -174,7 +174,7 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/share/mysql/support-files
   rm -rf $INSTALL/usr/share/mysql/test
   rm -rf $INSTALL/usr/share/mysql/bench
-  rm -rf $INSTALL/storage
+  #rm -rf $INSTALL/storage
   
   if [ "$PKG_MARIADB_SERVER" = "no" ]; then
     rm -rf $INSTALL/usr/bin
