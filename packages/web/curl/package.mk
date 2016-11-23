@@ -49,7 +49,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            --enable-optimize \
                            --enable-warnings \
                            --disable-curldebug \
-                           --enable-ares \
+                           --disable-ares \
                            --enable-largefile \
                            --enable-http \
                            --enable-ftp \
@@ -71,7 +71,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            --disable-ipv6 \
                            --enable-versioned-symbols \
                            --enable-nonblocking \
-                           --disable-threaded-resolver \
+                           --enable-threaded-resolver \
                            --enable-verbose \
                            --disable-sspi \
                            --enable-crypto-auth \

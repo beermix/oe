@@ -33,7 +33,7 @@ PKG_USE_CMAKE="yes"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CMAKE_OPTS_TARGET="-DBUILD_SHARED_LIBS=OFF"
+#PKG_CMAKE_OPTS_TARGET="-DBUILD_SHARED_LIBS=OFF"
 
 #pre_configure_target() {
 #  #strip_lto
@@ -42,8 +42,6 @@ PKG_CMAKE_OPTS_TARGET="-DBUILD_SHARED_LIBS=OFF"
 #  export CFLAGS="$CFLAGS -fPIC -DPIC"
 #  export CXXFLAGS="$CXXFLAGS -fPIC -DPIC"
 #}
-
-
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
