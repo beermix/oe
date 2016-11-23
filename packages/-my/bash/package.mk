@@ -7,8 +7,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 pre_configure_target() {
-  export LIBS="-ledit -ltermcap"
-  export MAKEFLAGS="-j1"
+  export LIBS="-lterminfo -ltermcap"
 }
 
 PKG_CONFIGURE_OPTS_TARGET="bash_cv_getenv_redef=no \
