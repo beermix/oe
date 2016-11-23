@@ -1,14 +1,14 @@
 PKG_NAME="pkgconf"
 PKG_VERSION="082fd4a"
 PKG_GIT_URL="https://github.com/pkgconf/pkgconf"
-PKG_DEPENDS_HOST="ccache:host gettext:host pkg-config:host"
+PKG_DEPENDS_HOST="ccache:host gettext:host pkg-config:host autotools:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="toolchain/devel"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 
-PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared --disable-silent-rules"
+PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
 
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
 
