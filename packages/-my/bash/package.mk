@@ -11,7 +11,9 @@ pre_configure_target() {
   export MAKEFLAGS="-j1"
 }
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static \
+PKG_CONFIGURE_OPTS_TARGET="bash_cv_getenv_redef=no \
+                           bash_cv_job_control_missing=yes \
+                           --enable-static \
                            --disable-shared \
                            --bindir=/bin \
                            --with-curses \
@@ -35,7 +37,8 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static \
 			   --enable-bang-history \
 			   --enable-array-variables \
 			   --enable-glob-asciiranges-default \
-			   --enable-restricted"   
+			   --enable-restricted \
+			   --enable-job-control"   
 			   
 post_makeinstall_target() {
   rm -rf $INSTALL/bin/bashbug

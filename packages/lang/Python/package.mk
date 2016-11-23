@@ -50,6 +50,8 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            ac_cv_file__dev_ptmx=no \
                            ac_cv_file__dev_ptc=no \
                            ac_cv_have_long_long_format=yes \
+                           ac_cv_little_endian_double=yes \
+                           ac_cv_big_endian_double=yes \
                            --with-threads \
                            --enable-unicode=ucs4 \
                            --disable-ipv6 \
