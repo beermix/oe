@@ -16,26 +16,31 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="pkg-config"
-PKG_VERSION="a38d5c5"
+PKG_NAME="netbsd-curses"
+PKG_VERSION="2cb5395"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="http://www.freedesktop.org/software/pkgconfig/"
-PKG_GIT_URL="git://anongit.freedesktop.org/pkg-config"
-PKG_DEPENDS_HOST="ccache:host gettext:host autoconf:host autoconf-archive:host"
+PKG_SITE="https://github.com/sabotage-linux/netbsd-curses"
+PKG_GIT_URL="https://github.com/sabotage-linux/netbsd-curses"
+PKG_DEPENDS_TARGET="toolchain libz"
 PKG_PRIORITY="optional"
-PKG_SECTION="toolchain/devel"
+PKG_SECTION="devel"
+PKG_SHORTDESC="netbsd-curses: netbsd-libcurses portable edition"
+PKG_LONGDESC="netbsd-curses: netbsd-libcurses portable edition"
+
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-pre_configure_host() {
-   NOCONFIGURE=1 ./autogen.sh
+# remove some problematic 
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
+  export CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
+
+make_target() {
+  make HOSTCC="$CC" CFLAGS="$CFLAGS -D_DEFAULT_SOURCE" PREFIX=/usr all-static -j1
 }
 
-PKG_CONFIGURE_OPTS_HOST="--disable-silent-rules --with-internal-glib --disable-dtrace --with-gnu-ld"
-
-#post_makeinstall_host() {
-#  mkdir -p $SYSROOT_PREFIX/usr/share/aclocal
-#  cp pkg.m4 $SYSROOT_PREFIX/usr/share/aclocal
-#}
+makeinstall_target() {
+  make HOSTCC="$CC" PREFIX=$SYSROOT_PREFIX/usr install-static -j1
+}
