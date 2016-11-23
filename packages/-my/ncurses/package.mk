@@ -43,7 +43,7 @@ PKG_CONFIGURE_OPTS_TARGET="--without-ada \
                            --with-versioned-syms \
                            --with-xterm-kbs=del \
                            --with-ncursesw \
-                           --without-progs \
+                           --with-progs \
                            --without-tests \
                            --with-curses-h \
                            --without-shared \
@@ -62,8 +62,7 @@ PKG_CONFIGURE_OPTS_TARGET="--without-ada \
 pre_configure_target() {
   # causes some segmentation fault's (dialog) when compiled with gcc's link time optimization.
   strip_lto
-  CFLAGS="$CFLAGS -D_GNU_SOURCE -fPIC"
-  #CFLAGS="$CFLAGS -D_DEFAULT_SOURCE -fPIC"
+  export CFLAGS="$CFLAGS -D_DEFAULT_SOURCE -D_POSIX_C_SOURCE=200809C -fPIC"
 }
 
 post_makeinstall_target() {

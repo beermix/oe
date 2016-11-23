@@ -5,8 +5,6 @@ PKG_DEPENDS_TARGET="toolchain libz"
 PKG_SECTION="devel"
 PKG_USE_CMAKE="no"
 PKG_AUTORECONF="no"
-
-PKG_CMAKE_OPTS_TARGET="-DBUILD_SHARED_LIBS=OFF"
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="LIBS=-lpthread \
@@ -28,3 +26,5 @@ pre_configure_target() {
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
 }
+
+#PKG_CMAKE_OPTS_TARGET="-DBUILD_SHARED_LIBS=OFF"
