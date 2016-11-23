@@ -19,7 +19,7 @@
 ################################################################################
 
 PKG_NAME="nspr"
-PKG_VERSION="4.13"
+PKG_VERSION="4.12"
 PKG_REV="2"
 PKG_ARCH="any"
 PKG_LICENSE="Mozilla Public License"
@@ -42,6 +42,6 @@ PKG_MAKE_OPTS_TARGET="NSINSTALL=$ROOT/$TOOLCHAIN/bin/nsinstall"
 PKG_MAKEINSTALL_OPTS_TARGET="NSINSTALL=$ROOT/$TOOLCHAIN/bin/nsinstall"
 
 configure_target() {
-  cd $(get_build_dir nss)/nspr
+  cd $(get_pkg_build nss)/nspr
   ./configure --with-pthreads $TARGET_USE_64 $TARGET_CONFIGURE_OPTS 
 }
