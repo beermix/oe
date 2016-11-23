@@ -31,9 +31,7 @@ PKG_AUTORECONF="yes"
 CFLAGS="-march=native -O3 -pipe -fno-stack-protector -I$ROOT/$TOOLCHAIN/include"
 LDFLAGS="-Wl,-O1,--as-needed -Wl,-Bsymbolic-functions -Wl,-z,relro -Wl,-rpath,$ROOT/$TOOLCHAIN/lib -L$ROOT/$TOOLCHAIN/lib -static -s"
   
-PKG_CONFIGURE_OPTS_HOST="ac_cv_func_gettimeofday=yes have_readline=no vl_cv_lib_readline_history=no \
-				 --disable-silent-rules \
-				 --disable-nls"
+PKG_CONFIGURE_OPTS_HOST="ac_cv_func_gettimeofday=yes --disable-silent-rules --disable-nls"
 			 
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
 			 
