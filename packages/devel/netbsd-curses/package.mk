@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="netbsd-curses"
-PKG_VERSION="0.1.1"
+PKG_VERSION="2cb5395"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/sabotage-linux/netbsd-curses"
-PKG_URL="https://github.com/sabotage-linux/netbsd-curses/releases/download/v${PKG_VERSION}/${PKG_NAME}-${PKG_VERSION}.tar.xz"
+PKG_GIT_URL="https://github.com/sabotage-linux/netbsd-curses"
 PKG_DEPENDS_TARGET="toolchain libz"
 PKG_PRIORITY="optional"
 PKG_SECTION="devel"
@@ -32,15 +32,15 @@ PKG_LONGDESC="netbsd-curses: netbsd-libcurses portable edition"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-# remove some problematic *FLAGS
+# remove some problematic 
   export CFLAGS=`echo $CFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
   export CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
 
 make_target() {
-  make HOSTCC="$HOST_CC" CFLAGS="$CFLAGS -D_GNU_SOURCE" PREFIX=/usr all-static
+  make HOSTCC="$CC" CFLAGS="$CFLAGS -D_DEFAULT_SOURCE" PREFIX=/usr all-static -j1
 }
 
 makeinstall_target() {
-  make HOSTCC="$HOST_CC" PREFIX=$SYSROOT_PREFIX/usr install-static
+  make HOSTCC="$CC" PREFIX=$SYSROOT_PREFIX/usr install-static -j1
 }

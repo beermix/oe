@@ -24,6 +24,7 @@ PKG_LICENSE="PublicDomain"
 PKG_SITE="https://www.sqlite.org/"
 PKG_URL="https://www.sqlite.org/2016/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain tcl"
+PKG_DEPENDS_HOST="tcl:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="database"
 PKG_SHORTDESC="sqlite: An Embeddable SQL Database Engine"
@@ -76,4 +77,4 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --with-gnu-ld \
                            --disable-silent-rules"
                            
-PKG_CONFIGURE_OPTS_HOST="--disable-shared --enable-threadsafe --disable-readline --disable-silent-rules"
+PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
