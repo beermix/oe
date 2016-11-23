@@ -24,7 +24,7 @@ PKG_LICENSE="OSS"
 PKG_SITE="http://www.python.org/"
 PKG_URL="http://www.python.org/ftp/python/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="zlib:host bzip2:host"
-PKG_DEPENDS_TARGET="toolchain sqlite expat libz tcl bzip2 openssl libffi Python:host"
+PKG_DEPENDS_TARGET="toolchain sqlite expat pcre libz tcl bzip2 readline editline openssl libffi tcl Python:host"
 PKG_SECTION="lang"
 PKG_SHORTDESC="python: The Python programming language"
 PKG_LONGDESC="Python is an interpreted object-oriented programming language, and is often compared with Tcl, Perl, Java or Scheme."
@@ -101,7 +101,7 @@ pre_configure_target() {
 
 
 make_target() {
-  make  -j3 CC="$CC" LDFLAGS="$TARGET_LDFLAGS -L. -fPIC" \
+  make  -j1 CC="$CC" LDFLAGS="$TARGET_LDFLAGS -L. -fPIC" \
         PYTHON_DISABLE_MODULES="$PY_DISABLED_MODULES" \
         PYTHON_MODULES_INCLUDE="$TARGET_INCDIR" \
         PYTHON_MODULES_LIB="$TARGET_LIBDIR"
