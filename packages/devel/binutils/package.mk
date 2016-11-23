@@ -31,8 +31,9 @@ PKG_LONGDESC="The GNU binutils are utilities of use when dealing with object fil
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-CFLAGS="-g -O2 -Wno-format-security -I$ROOT/$TOOLCHAIN/include"
-LDFLAGS="-Wl,-rpath,$ROOT/$TOOLCHAIN/lib -L$ROOT/$TOOLCHAIN/lib -s"
+pre_configure_host() {
+  export CFLAGS="-g -O2 -Wno-format-security -I$ROOT/$TOOLCHAIN/include"
+}
 
 PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --with-sysroot=$SYSROOT_PREFIX \
