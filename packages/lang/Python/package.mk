@@ -24,7 +24,7 @@ PKG_LICENSE="OSS"
 PKG_SITE="http://www.python.org/"
 PKG_URL="http://www.python.org/ftp/python/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="zlib:host bzip2:host"
-PKG_DEPENDS_TARGET="toolchain sqlite expat pcre libz tcl bzip2 readline editline openssl libffi tcl Python:host"
+PKG_DEPENDS_TARGET="toolchain sqlite expat pcre libz tcl bzip2 readline libedit openssl libffi gdbm Python:host"
 PKG_SECTION="lang"
 PKG_SHORTDESC="python: The Python programming language"
 PKG_LONGDESC="Python is an interpreted object-oriented programming language, and is often compared with Tcl, Perl, Java or Scheme."
@@ -32,7 +32,7 @@ PKG_LONGDESC="Python is an interpreted object-oriented programming language, and
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PY_DISABLED_MODULES="_tkinter nis gdbm bsddb ossaudiodev"
+PY_DISABLED_MODULES="_tkinter nis bsddb ossaudiodev"
 
 PKG_CONFIGURE_OPTS_HOST="--cache-file=config.cache \
                          --without-cxx-main \
@@ -64,6 +64,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            --without-cxx-main \
                            --with-system-ffi \
                            --with-system-expat \
+                           --with-system-zlib \
                            --enable-shared \
                            --with-lto"
 post_patch() {
@@ -94,9 +95,8 @@ pre_configure_target() {
   export PYTHON_FOR_BUILD=$ROOT/$TOOLCHAIN/bin/python
   export CFLAGS=`echo $CFLAGS | sed -e "s|-O2||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-O3||g"`
-  strip_lto 
-  export CFLAGS="$CFLAGS -D_DEFAULT_SOURCE -fPIC"
-  export CXXFLAGS="$CXXFLAGS -D_DEFAULT_SOURCE -fPIC"
+  strip_lto
+  export CFLAGS="-D_DEFAULT_SOURCE -O2 $CFLAGS -fPIC"
 }
 
 
@@ -122,7 +122,7 @@ makeinstall_target() {
 }
 
 post_makeinstall_target() {
-  EXCLUDE_DIRS="bsddb idlelib lib-tk lib2to3 msilib pydoc_data test unittest"
+  EXCLUDE_DIRS="bsddb idlelib lib-tk lib2to3 msilib pydoc_data"
   for dir in $EXCLUDE_DIRS; do
     rm -rf $INSTALL/usr/lib/python*/$dir
   done

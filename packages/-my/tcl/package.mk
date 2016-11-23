@@ -15,3 +15,6 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-threads --enable-64bit"
 
 PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_HOST"
 
+post_makeinstall_target() {
+  rm -rf $INSTALL
+}
