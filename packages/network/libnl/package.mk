@@ -31,7 +31,11 @@ PKG_LONGDESC="libnl is a library for applications dealing with netlink socket. I
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-cli"
+pre_configure_target() {
+  export CFLAGS="$CFLAGS -D_GNU_SOURCE"
+}
+
+PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --with-gnu-ld --disable-cli"
 
 #post_makeinstall_target() {
 #  rm -rf $INSTALL
