@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="libnl"
-PKG_VERSION="d9840f6"
+PKG_VERSION="3.2.28"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://people.suug.ch/~tgr/libnl/"
-PKG_GIT_URL="https://github.com/thom311/libnl"
+PKG_URL="https://github.com/thom311/libnl/releases/download/libnl3_2_28/libnl-3.2.28.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_PRIORITY="optional"
 PKG_SECTION="network"
@@ -31,8 +31,8 @@ PKG_LONGDESC="libnl is a library for applications dealing with netlink socket. I
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-pre_configure_target() {
-sh autogen.sh
+PKG_CONFIGURE_OPTS_TARGET="--disable-cli"
 
-}
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --disable-cli"
+#post_makeinstall_target() {
+#  rm -rf $INSTALL
+#}
