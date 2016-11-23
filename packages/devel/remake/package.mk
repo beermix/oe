@@ -20,7 +20,7 @@ PKG_NAME="remake"
 PKG_VERSION="689f5cf"
 PKG_REV="1"
 PKG_GIT_URL="https://github.com/rocky/remake.git"
-PKG_DEPENDS_HOST="autotools:host readline:host"
+PKG_DEPENDS_HOST="autotools:host libedit:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="make: GNU make utility to maintain groups of programs"
@@ -31,7 +31,7 @@ PKG_AUTORECONF="yes"
 CFLAGS="-march=native -O3 -pipe -fno-stack-protector -I$ROOT/$TOOLCHAIN/include"
 LDFLAGS="-Wl,-O1,--as-needed -Wl,-Bsymbolic-functions -Wl,-z,relro -Wl,-rpath,$ROOT/$TOOLCHAIN/lib -L$ROOT/$TOOLCHAIN/lib -static -s"
   
-PKG_CONFIGURE_OPTS_HOST="ac_cv_func_gettimeofday=yes \
+PKG_CONFIGURE_OPTS_HOST="ac_cv_func_gettimeofday=yes have_readline=no vl_cv_lib_readline_history=no \
 				 --disable-silent-rules \
 				 --disable-nls"
 			 
