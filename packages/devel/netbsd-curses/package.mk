@@ -33,14 +33,11 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 # remove some problematic *FLAGS
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
-  export CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
 
 make_target() {
-  make HOSTCC="$HOST_CC" CFLAGS="$CFLAGS -D_DEFAULT_SOURCE -D_POSIX_C_SOURCE=200809C" PREFIX=/usr all-static
+  make CC="$CC" CFLAGS="$CFLAGS -D_DEFAULT_SOURCE -D_POSIX_C_SOURCE=200809C" PREFIX=/usr all-static
 }
 
 makeinstall_target() {
-  make HOSTCC="$HOST_CC" PREFIX=$SYSROOT_PREFIX/usr install-static
+  make CC="$CC" PREFIX=$SYSROOT_PREFIX/usr install-static
 }
