@@ -77,4 +77,4 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --with-gnu-ld \
                            --disable-silent-rules"
                            
-PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
+#PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
