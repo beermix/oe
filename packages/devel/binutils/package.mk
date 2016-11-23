@@ -32,7 +32,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 pre_configure_host() {
-  export CFLAGS="-g -O2 -Wno-format-security -I$ROOT/$TOOLCHAIN/include"
+  export CFLAGS="-g0 -O2 -Wno-format-security -I$ROOT/$TOOLCHAIN/include"
 }
 
 PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
@@ -54,7 +54,6 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --disable-shared \
                          --enable-poison-system-directories \
                          --disable-deterministic-archives \
-                         --disable-compressed-debug-sections \
                          --disable-gdb \
                          --disable-sim \
                          --with-system-zlib \
