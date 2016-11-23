@@ -31,10 +31,10 @@ PKG_LONGDESC="The 'make' utility automatically determines which pieces of a larg
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-#pre_configure_host() {
-#  export CFLAGS="-march=native -O3 -pipe -I$ROOT/$TOOLCHAIN/include"
-#  export LDFLAGS="-s -Wl,-O1,--as-needed -Wl,-Bsymbolic-functions -Wl,-z,relro -Wl,-rpath,$ROOT/$TOOLCHAIN/lib #-L$ROOT/$TOOLCHAIN/lib"
-#}
+pre_configure_host() {
+  export CFLAGS="-march=native -O3 -pipe -I$ROOT/$TOOLCHAIN/include"
+  export LDFLAGS="-Wl,-O1,--as-needed -Wl,-Bsymbolic-functions -Wl,-z,relro -Wl,-rpath,$ROOT/$TOOLCHAIN/lib -L$ROOT/$TOOLCHAIN/lib -s"
+}
 
 PKG_CONFIGURE_OPTS_HOST="--disable-load --without-guile"
 			 

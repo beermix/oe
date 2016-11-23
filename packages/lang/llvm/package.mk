@@ -52,7 +52,7 @@ configure_host() {
 }
 
 make_host() {
-  ninja llvm-config llvm-tblgen
+  make llvm-config llvm-tblgen
 }
 
 makeinstall_host() {
