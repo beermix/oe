@@ -1,6 +1,0 @@
-/usr/include/tcl@VER@					/usr/include/tk
-/usr/lib/@DEB_HOST_MULTIARCH@/libtk@VER@.a		/usr/lib/@DEB_HOST_MULTIARCH@/libtk.a
-/usr/lib/@DEB_HOST_MULTIARCH@/libtk@VER@.so		/usr/lib/@DEB_HOST_MULTIARCH@/libtk.so
-/usr/lib/@DEB_HOST_MULTIARCH@/libtkstub@VER@.a		/usr/lib/@DEB_HOST_MULTIARCH@/libtkstub.a
-/usr/lib/@DEB_HOST_MULTIARCH@/tk@VER@/tkConfig.sh	/usr/lib/@DEB_HOST_MULTIARCH@/tkConfig.sh
-/usr/lib/tk@VER@/tkConfig.sh				/usr/lib/tkConfig.sh
