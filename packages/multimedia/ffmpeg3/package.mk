@@ -17,8 +17,12 @@
 ################################################################################
 
 PKG_NAME="ffmpeg"
-PKG_VERSION="ac42b26"
-PKG_GIT_URL="https://github.com/xbmc/FFmpeg"
+PKG_VERSION="3.2"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="LGPLv2.1+"
+PKG_SITE="https://ffmpeg.org"
+PKG_URL="https://ffmpeg.org/releases/${PKG_NAME}-${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain yasm:host libz bzip2 libressl speex"
 PKG_PRIORITY="optional"
 PKG_SECTION="multimedia"
@@ -209,7 +213,7 @@ configure_target() {
               $FFMPEG_FPU \
               --enable-yasm \
               --disable-symver \
-              --disable-lto \
+              --enable-lto \
               $FFMPEG_X11GRAB
 }
 

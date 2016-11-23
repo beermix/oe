@@ -49,7 +49,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            --enable-optimize \
                            --enable-warnings \
                            --disable-curldebug \
-                           --disable-ares \
+                           --enable-ares \
                            --enable-largefile \
                            --enable-http \
                            --enable-ftp \
@@ -71,7 +71,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            --disable-ipv6 \
                            --enable-versioned-symbols \
                            --enable-nonblocking \
-                           --enable-threaded-resolver \
+                           --disable-threaded-resolver \
                            --enable-verbose \
                            --disable-sspi \
                            --enable-crypto-auth \
@@ -101,7 +101,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
 
 pre_configure_target() {
 # link against librt because of undefined reference to 'clock_gettime'
-  export LIBS="-lrt -lm -lrtmp -lssh2 -lmbedcrypto"
+  export LIBS="-lrt -lm -lrtmp -lssh2 -lmbedcrypto -ldl -lpthread"
 }
 
 post_makeinstall_target() {

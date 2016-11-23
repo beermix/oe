@@ -37,7 +37,7 @@ case "$KODIPLAYER_DRIVER" in
     PKG_KEEP_CHECKOUT="no"
     ;;
   *)
-    PKG_VERSION="6120ee9"
+    PKG_VERSION="aee2e0d"
     PKG_GIT_URL="https://github.com/xbmc/xbmc.git"
     PKG_GIT_BRANCH="master"
     PKG_KEEP_CHECKOUT="no"
@@ -259,7 +259,7 @@ makeinstall_host() {
 }
 
 pre_configure_target() {
-  export LIBS="$LIBS -lssp -ltermcap"
+  export LIBS="$LIBS -ltermcap"
 }
 
 pre_make_target() {

@@ -8,23 +8,23 @@ PKG_AUTORECONF="no"
 
 
 PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
-			   --enable-static \
-			   --sysconfdir=/storage/.config \
+                           --enable-static \
+                           --sysconfdir=/storage/.config \
                            --datadir=/storage/.config \
                            --libdir=/storage/.config \
                            --libexecdir=/storage/.config \
                            --without-libnettle \
-			   --with-openssl \
-			   --disable-ipv6 \
-			   --with-libgmp \
-			   --without-gnutls \
-			   --with-libssh2 \
-			   --with-libexpat \
-			   --with-zlib \
-			   --with-libuv \
-			   --without-libgcrypt \
-			   --with-sqlite3 \
-			   --with-xmltest \
-			   --with-libxml2 \
-			   --with-libcares=$SYSROOT_PREFIX/usr \
-			   --with-ca-bundle=/etc/ssl/cert.pem"
+                           --with-openssl \
+                           --disable-ipv6 \
+                           --with-libgmp \
+                           --without-gnutls \
+                           --with-libssh2 \
+                           --with-libexpat \
+                           --with-zlib \
+                           --with-libuv \
+                           --without-libgcrypt \
+                           --with-sqlite3 \
+                           --with-xmltest \
+                           --with-libxml2 \
+                           --with-libcares=$SYSROOT_PREFIX/usr \
+                           --with-ca-bundle=/etc/ssl/cert.pem"
