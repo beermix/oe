@@ -1,0 +1,27 @@
+.TH tcltk-depends 1 "2014-05-15" "0.4" "Tcl/Tk packages for Debian GNU/Linux"
+.SH "NAME"
+tcltk\-depends \- calculates Tcl/Tk dependencies
+
+.SH "SYNOPSIS"
+\&\fBtcltk-depends\fR [\fIdebhelper\ options\fR]
+
+.SH "DESCRIPTION"
+tcltk-depends is a debhelper-like program which is responsible for generating
+the ${libtclXY:Depends}, ${libtkXY:Depends}, ${libtcl:Depends}, ${libtk:Depends},
+${tclXY:Depends}, ${tkXY:Depends}, ${tcl:Depends} and ${tk:Depends}
+substitution variables and adding them to substvars files.
+.PP
+If you use this program, your package must build-depend on tcl-dev
+or tk-dev. If you use ${tclXY:Depends} or ${tkXY:Depends} variables,
+your package must build-depend on tcl-dev (>= 8.6.0+7) or tk-dev (>= 8.6.0+7).
+If you use ${libtclXY:Depends}, ${libtkXY:Depends}, ${libtcl:Depends}
+or {libtk:Depends} variables, your package must build-depend on
+tcl-dev (>= 8.6.0+9) or tk-dev (>= 8.6.0+9).
+
+.SH "SEE ALSO"
+\&\fIdebhelper\fR\|(7), /usr/share/doc/tcl-doc/tcltk-policy.txt.gz
+.PP
+This program is not a part of debhelper.
+
+.SH "AUTHOR"
+Sergei Golovan <sgolovan@debian.org>

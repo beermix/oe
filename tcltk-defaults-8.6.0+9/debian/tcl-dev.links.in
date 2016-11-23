@@ -1,0 +1,9 @@
+/usr/include/tcl@VER@					/usr/include/tcl
+/usr/lib/@DEB_HOST_MULTIARCH@/libtcl@VER@.a		/usr/lib/@DEB_HOST_MULTIARCH@/libtcl.a
+/usr/lib/@DEB_HOST_MULTIARCH@/libtcl@VER@.so		/usr/lib/@DEB_HOST_MULTIARCH@/libtcl.so
+/usr/lib/@DEB_HOST_MULTIARCH@/libtclstub@VER@.a		/usr/lib/@DEB_HOST_MULTIARCH@/libtclstub.a
+/usr/lib/@DEB_HOST_MULTIARCH@/tcl@VER@/tclConfig.sh	/usr/lib/@DEB_HOST_MULTIARCH@/tclConfig.sh
+/usr/lib/@DEB_HOST_MULTIARCH@/tcl@VER@/tclooConfig.sh	/usr/lib/@DEB_HOST_MULTIARCH@/tclooConfig.sh
+/usr/lib/tcl@VER@/tclConfig.sh				/usr/lib/tclConfig.sh
+/usr/lib/tcl@VER@/tclooConfig.sh			/usr/lib/tclooConfig.sh
+/usr/share/aclocal/tcl@VER@.m4				/usr/share/aclocal/tcl.m4

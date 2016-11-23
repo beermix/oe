@@ -1,0 +1,5 @@
+#! /usr/bin/dh-exec
+usr/lib/${DEB_HOST_MULTIARCH}/libzzipwrap.so usr/lib/${DEB_HOST_MULTIARCH}/libzzipwrap-0.so
+usr/lib/${DEB_HOST_MULTIARCH}/libzzip.so usr/lib/${DEB_HOST_MULTIARCH}/libzzip-0.so
+usr/lib/${DEB_HOST_MULTIARCH}/libzzipfseeko.so usr/lib/${DEB_HOST_MULTIARCH}/libzzipfseeko-0.so
+usr/lib/${DEB_HOST_MULTIARCH}/libzzipmmapped.so usr/lib/${DEB_HOST_MULTIARCH}/libzzipmmapped-0.so

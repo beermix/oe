@@ -1,0 +1,524 @@
+<!-- $Id: tcltk-policy.sgml 1562 2014-02-08 20:28:02Z sgolovan $ -->
+<!DOCTYPE debiandoc system [
+<!ENTITY XY           "<var>X</var>.<var>Y</var>">
+<!ENTITY tclsh        "<package>tclsh</package>">
+<!ENTITY wish         "<package>wish</package>">
+<!ENTITY tcl          "<package>tcl</package>">
+<!ENTITY libtcl       "<package>libtcl</package>">
+<!ENTITY tcl-doc      "<package>tcl-doc</package>">
+<!ENTITY tcl-dev      "<package>tcl-dev</package>">
+<!ENTITY tclXY        "<package>tcl&XY;</package>">
+<!ENTITY libtclXY     "<package>libtcl&XY;</package>">
+<!ENTITY tclXY-doc    "<package>tcl&XY;-doc</package>">
+<!ENTITY tclXY-dev    "<package>tcl&XY;-dev</package>">
+<!ENTITY tk           "<package>tk</package>">
+<!ENTITY libtk        "<package>libtk</package>">
+<!ENTITY tk-doc       "<package>tk-doc</package>">
+<!ENTITY tk-dev       "<package>tk-dev</package>">
+<!ENTITY tkXY         "<package>tk&XY;</package>">
+<!ENTITY libtkXY      "<package>libtk&XY;</package>">
+<!ENTITY tkXY-doc     "<package>tk&XY;-doc</package>">
+<!ENTITY tkXY-dev     "<package>tk&XY;-dev</package>">
+]>
+<debiandoc>
+ <book>
+  <titlepag>
+    <title>Debian Tcl/Tk Policy</title>
+    <author>
+	<name>Francesco Paolo Lovergine</name>
+	<email>frankie@debian.org</email>
+    </author>
+    <author>
+	<name>Sergei Golovan</name>
+	<email>sgolovan@debian.org</email>
+    </author>
+    <version>version 0.3.0</version>
+
+    <abstract>
+      This document describes the packaging of Tcl/Tk within the Debian
+      distribution and the policy requirements for Tcl/Tk extensions
+      and packages. This policy has been defined during Jessie release
+      cycle, so pre-Jessie releases can violate this policy in one or 
+      more aspects. Backporters are warned.
+    </abstract>
+
+    <copyright>
+      <copyrightsummary>
+        Copyright &copy; 2007-2013 Software in the Public Interest
+      </copyrightsummary>
+      <p>
+	  This manual is free software; you can redistribute it and/or
+	  modify it under the terms of the GNU General Public License
+	  as published by the Free Software Foundation; either version
+	  2 of the License, or (at your option) any later version.
+	</p>
+	<p>
+	  This is distributed in the hope that it will be useful, but
+	  WITHOUT ANY WARRANTY; without even the implied warranty of
+	  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See
+	  the GNU General Public License for more details.
+	</p>
+	<p>
+	  A copy of the GNU General Public License is available as
+	  <tt>/usr/share/common-licenses/GPL</tt> in the Debian GNU/Linux
+	  distribution or on the World Wide Web at 
+	  <url id="http://www.gnu.org/copyleft/gpl.html"
+	  name="The GNU Public Licence">.
+	</p>
+	<p>
+	  You can also obtain it by writing to the
+	  Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+	  Boston, MA 02111-1307, USA.
+	</p>
+      </copyright>
+    </titlepag>
+
+    <toc detail="sect">
+
+    <chapt id="tcltk">
+      <heading>Tcl/Tk Packaging</heading>
+      <sect id="versions">
+	<heading>Versions</heading>
+	<p>
+	  At any given time, the binary packages &tcl; and &tk; represent
+	  the current default Debian Tcl/Tk version. They contain Tcl and Tk shells
+	  <file>/usr/bin/tclsh</file> and <file>/usr/bin/wish</file> which are
+	  symlinks to the current default
+	  version binaries. For backward compatibility they provide the virtual
+	  packages &tclsh; and &wish; but it isn't recommended to reference them
+	  in packages dependencies anymore. The packages &tcl; and &tk; are
+	  provided by the Debian <file>tcltk-defaults</file> source package,
+	  in order to manage modules and extensions packaging and upgrading better.
+	  Modules should preferably use those packages when appropriate 
+	  (i.e. they are either version independent
+	  or properly versioned to inhibit the use of a non compatible versions, 
+	  see <ref id="dependencies">), but it is
+	  not mandatory.
+	  The default packages are
+	  <example>
+	tcl
+	tk
+	tcl-dev
+	tk-dev
+	tcl-doc
+	tk-doc
+	  </example>
+	</p>
+	<p>
+	  The default Debian Tcl/Tk version should always be the latest stable
+	  upstream release that can be integrated in the distribution. Starting
+	  from 8.0, Tcl and Tk share the same version numbering. The default packages
+	  depend on the appropriate versioned packages and provide useful additional
+	  symlinks. Default packages versions follow upstream versions,
+	  so that packages can use appropriate versioning constraints on them when
+	  it is needed.
+	</p>
+	<p>
+	  Apart from the default version, legacy versions of Tcl/Tk
+	  may be included as well in the distribution, as long as they
+	  are needed by other packages, or as long as it seems
+	  reasonable to provide them.  (Note: For the scope of this
+	  document, Tcl/Tk versions mean the result of 'info tclversion' command, 
+	  i.e. Tcl/Tk 8.5 and 8.5.14 are subminor versions of
+	  the same Tcl/Tk version 8.5, but Tcl 8.6 and 8.5 are
+	  indeed different versions. The patchlevel intends the result of 
+	  the 'info patchlevel' command, i.e. Tcl/Tk 8.5.14 and 8.5.13 have the
+	  same version but different patchlevels).
+	</p>
+        <p>In addition, unstable/development version of Tcl/Tk
+          may be included in the unstable/experimental distribution.
+        </p>
+	<p>
+	  For any version, the main Tcl and Tk packages are called
+	  &tclXY; and &tkXY; respectively. 
+	  They are always packaged as separate sources, as for upstream.
+	  Names of related packages or extensions must follow the same
+	  convention if the inclusion of multiple versions make sense
+	  or if they work only with specific versions of Tcl or Tk.
+	</p>
+	<p>
+	  To avoid definition clashes with Debian terminology, we will call 
+	  <em>modules</em> any Tcl/Tk packages which consist uniquely of 
+	  Tcl/Tk sources, and <em>extension</em> any program which
+	  extends consistently Tcl/Tk using TEA and shared libraries.
+	  Note that this is not completely consistent with Tcl terminology, 
+	  which started from version 8.5 also introduces <em>.tm modules</em>
+	  and traditionally deals with <em>packages</em> and <em>script
+	  libraries</em>.
+	</p>
+      </sect>
+
+      <sect id="base">
+	<heading>Main packages</heading>
+	<p>
+	  For every Tcl/Tk versions provided in the distribution, the
+	  packages &libtclXY; and &libtkXY; comprise a corresponding Tcl/Tk
+	  libraries, core modules and extensions of the upstream Tcl/Tk
+	  distribution. They provide infrastructure for embedding Tcl into
+	  external programs. Any such packages includes a <var>Provides:</var>
+	  item of the virtual package &libtcl; and a <var>Provides:</var> 
+	  item for the &libtk; virtual package.
+	</p>
+	<p>
+	  Also, the packages &tclXY; and &tkXY; ship the binaries
+	  <file>/usr/bin/tclsh&XY;</file>,
+	  <file>/usr/bin/wish&XY;</file>.
+	  Starting from Jessie they don't provide alternatives for files
+	  <file>/usr/bin/tclsh</file> and
+	  <file>/usr/bin/wish</file>. If an application uses one of those, it
+	  has to depend on &tcl; or &tk; package.
+	</p>
+	<p>
+	  Tools and files for the <em>development</em> of Tcl/Tk extensions are split off in two
+	  separate packages &tclXY-dev; and &tkXY-dev;.
+	  Documentation is provided separately in packages &tclXY-doc; and &tkXY-doc;.
+	</p>
+      </sect>
+
+      <sect id="interpreter">
+        <heading>Tcl and Tk Interpreters</heading>
+        <sect1 id="interpreter_name">
+          <heading>Interpreters Names</heading>
+          <p>
+	    Tcl/Tk scripts depending on the default Tcl/Tk version (see <ref
+	    id="base">) or not depending on a specific Tcl/Tk version must
+	    use <file>tclsh</file> and/or <file>wish</file>
+	    (unversioned) as the interpreter name and must depend on &tcl; and/or
+	    &tk; package.
+	    </p>
+          <p>
+	    Tcl/Tk scripts that only work with a specific Tcl/Tk version must
+	    explicitly use the versioned interpreter name
+	    (<file>tclsh&XY;</file> and/or <file>wish&XY;</file>)
+	    and must depend on the specific Tcl/Tk versioned package (&tclXY;
+	    and/or &tkXY; respectively).
+          </p>
+        </sect1>
+        <sect1 id="interpreter_loc">
+          <heading>Interpreters Locations</heading>
+          <p>
+	    The path name for the Tcl interpreter is
+            <file>/usr/bin/tclsh</file> or
+            <file>/usr/bin/tclsh&XY;</file>.
+          </p>
+          <p>
+	    The path name for the Tk interpreter is
+            <file>/usr/bin/wish</file> or
+            <file>/usr/bin/wish&XY;</file>.
+          </p>
+          <p>
+	    If a maintainer would like to provide the user a
+	    possibility to override the Debian Tcl interpreter, he
+	    may want to use <file>/usr/bin/env tclsh</file> or
+	    <file>/usr/bin/env tclsh&XY;</file>. The same consideration
+	    applies for Tk and the <file>wish</file> interpreter.
+	    Starting from Jessie administrators no longer can
+	    override default versions of the interpreters 
+	    using <tt>update-alternatives</tt>, which provided some
+	    flexibility but caused confusion for program maintainers before.
+	  </p>
+        </sect1>
+      </sect>
+
+      <sect id="libtcltk">
+        <heading>Tcl/Tk libraries</heading>
+        <p>
+         The Tcl and Tk libraries are provided by 
+	 &libtclXY; and &libtkXY; respectively.
+	 These packages install
+	<file>/usr/lib/$(DEB_HOST_MULTIARCH)/libtcl&XY;.so</file>
+         (soname is <tt>libtcl&XY;.so</tt>)
+         and <file>/usr/lib/$(DEB_HOST_MULTIARCH)/libtk&XY;.so</file>
+	 (soname is <tt>libtk&XY;.so</tt>).
+       </p>
+      </sect>
+
+      <sect id="tcltk-dev">
+        <heading>Tools/files for Development of Tcl/Tk modules and extensions</heading>
+        <p>
+          Some tools and files for development of Tcl/Tk modules and extensions are
+	  packaged as &tclXY-dev; and &tkXY-dev;.
+	  These packages provide header files as well as static and stub libraries.
+	  Header files are installed in <file>/usr/include/tcl&XY;</file>
+	  directory (for both Tcl and Tk).
+	  Default packages &tcl-dev; and &tk-dev; provide
+	  symlinks to the right versioned header files directory
+	  <example>
+	/usr/include/tcl -> /usr/include/tcl&XY;
+	/usr/include/tk -> /usr/include/tcl&XY;
+	  </example>
+	  See net section and <ref id="debian_oddities"> for more information about 
+	  possible issues with extension building due to Debian customizations.
+        </p>
+      </sect>
+
+      <sect id="multiarch">
+        <heading>Multiarch support</heading>
+        <p>
+         The Tcl and Tk libraries and development packages can be installed
+	 for several architectures simultaneously. They ship architecture
+	 dependent files in <file>/usr/lib/$(DEB_HOST_MULTIARCH)</file> directory.
+	 See also section <ref id="debian_oddities"> for information on how to package
+	 multiarchified Tcl/Tk extension.
+       </p>
+      </sect>
+
+      <sect id="paths">
+	<heading>Auto_load Path</heading>
+	<p>
+	  The package search path (<var>auto_path</var>) for both Tcl and Tk
+	  is a list searched in the following order:
+	  <taglist>
+	  <tag>Site modules and extensions:</tag>
+	  	<item>
+		 <example>
+	/usr/local/lib/tcltk (architecture dependent files)
+	/usr/local/share/tcltk (architecture independent files)
+		 </example>
+		</item>
+	  <tag>Packaged modules and extensions:</tag>
+	  	<item>
+		 <example>
+	/usr/lib/tcltk/$(DEB_HOST_MULTIARCH) (architecture dependent files)
+	/usr/lib/tcltk (architecture dependent files)
+	/usr/share/tcltk (architecture independent files)
+		 </example>
+		</item>
+	  <tag>Version specific core modules and extensions:</tag>
+	  	<item>
+		<example>
+	/usr/share/tcltk/tcl&XY;
+	/usr/share/tcltk/tk&XY; (for Tk only)
+		</example>
+		</item>
+	  </taglist>
+	</p>
+	<p>
+	Maintainers must ensure that modules and extensions are correctly installed in subdirs of
+	the paths above consistently. See <ref id="modules_loading"> for more information 
+	about Tcl/Tk specific ways of dealing with modules and extensions loading.
+	Developers must consider that these defaults impact TEA-based modules and use
+	preferably system-wide <file>tcl.m4</file> (it isn't TEA-compatible though) instead
+	of private one (see <ref id="debian_oddities">).
+	</p>
+      </sect>
+
+      <sect id="docs">
+	<heading>Documentation</heading>
+	<p>
+	Default packages &tcl-doc; and &tk-doc; which depend
+	on default versioned &tclXY-doc; and &tkXY-doc; are provided.
+	Since different &tclXY-doc; and &tkXY-doc; conflict in files and cannot be installed
+	simultaneously, &tcl-doc; and &tk-doc; only recommend
+	&tclXY-doc; and &tkXY-doc; to allow administrators to install
+	any desirable package with Tcl/Tk manual pages.
+	The package
+	&tcl-doc; also includes a copy of the up-to-date version of this policy.
+	</p>
+      </sect>
+    </chapt>
+
+    <chapt id="module_packages">
+      <heading>Packaged Modules</heading>
+
+      <sect id="package_names">
+	<heading>Module Names</heading>
+	<p>
+	  Packages should be named by the primary module
+	  provided. The naming convention for a module <tt>foo</tt> is
+	  <package>tcl<var>-foo</var></package> or <package>tk<var>-foo</var></package>
+          when the module is version independent.
+	</p>
+	<p>
+	  The naming convention for a module <tt>foo</tt> is
+	  <package>tcl<var>X.Y-foo</var></package> or <package>tkX.Y<var>-foo</var></package>
+          when the module is version dependent.
+	</p>
+        <p>
+         If the package already uses the name 
+	 <package>tcl<var>foo</var></package> or <package>tk<var>foo</var></package>, that is,
+	 naming without Tcl/Tk versioning even if version-dependent and/or without hyphen, may use 
+	 the name for now. However, the package naming proposed above is recommended for consistency.
+	</p>
+      </sect>
+
+      <sect id="dependencies">
+	<heading>Dependencies</heading>
+	<p>
+	  Packaged modules available for one particular version of Tcl/Tk must
+	  depend on the corresponding &libtclXY; and/or &libtkXY; package if they don't
+	  contain Tcl/Tk scripts, and on &tclXY; and/or &tkXY; package if they do.
+	</p>
+        <p>
+	  The recommended dependencies of version-independent packages are the following:
+	  If the package works in all available Tcl/Tk versions it should depend on
+	  &libtcl; or &libtk; (&tcl; or &tk; if it includes Tcl/Tk scripts). If the package
+	  works for several Tcl/Tk versions (but not for all) it should depend on all
+	  of them alternatively (e.g. <package>libtcl8.5</package> | <package>libtcl8.4</package>).
+	</p>
+      </sect>
+
+    <chapt id="programs">
+      <heading>Tcl/Tk Programs</heading>
+
+      <sect id="version_indep_progs">
+	<heading>Version Independent Programs</heading>
+	<p>
+	  Programs that can run with any version of Tcl/Tk should be started
+	  with <tt>#!/usr/bin/tclsh</tt> or <tt>#!/usr/bin/wish</tt>.  
+	  They must also specify a dependency on default 
+	  packages &tcl; and/or &tk;.
+
+	  You're free to use <tt>#!/usr/bin/env tclsh</tt> and <tt>#!/usr/bin/env wish</tt>, 
+	  if you'd like to give the user a chance to override the Debian Tcl/Tk package with a
+	  local version.
+	</p>
+      </sect>
+
+      <sect id="version_dep_progs">
+	<heading>Version Dependent Programs</heading>
+	<p>
+	  Programs which require a specific version of Tcl must start with
+	  <tt>#!/usr/bin/tclsh&XY;</tt>.  They must also
+	  specify a strict dependency on &tclXY;.
+	  Programs which require a specific version of Tk must start with
+	  <tt>#!/usr/bin/wish&XY;</tt>.  They must also
+	  specify a strict dependency on &tkXY;.
+
+	  Again, if you're using <tt>#!/usr/bin/env tclsh&XY;</tt>, 
+	  or <tt>#!/usr/bin/env wish&XY;</tt>
+	  please be aware that a user might override the Debian Tcl/Tk packages with a local version
+	  and that release default packages can change also.
+	</p>
+      </sect>
+
+    </chapt>
+
+    <appendix id="build_dependencies">
+      <heading>Build Dependencies</heading>
+      <p>
+	Build dependencies for Tcl/Tk dependent packages must be
+	declared for every Tcl/Tk version, that the package is built
+	for. In order to build for a specific version, add the versioned Tcl/Tk packages
+	dependencies; it is generally better and recommended depending on the appropriate default
+	packages with an eventual strict or relaxed versioning.
+      </p>
+      <p>
+	Extension packages and applications which link to Tcl/Tk libraries should depend
+	appropriately on one or more of the 
+	following packages (with or without additional package version 
+	relationships):
+	<example>
+	tcl-dev
+	tk-dev
+	tcl&XY;-dev
+	tk&XY;-dev
+	</example>
+      </p>
+      <p>
+        For example, <package>tclreadline</package> build dependencies are the following:
+	<example>
+	Build-Depends: debhelper (>= 8.0.0), dpkg-dev (>= 1.16.1~), <var>tcl-dev</var>,
+	 libreadline5-dev, autotools-dev
+	</example>
+      </p>
+      <p>
+	Module packages, script libraries and Tcl-only applications should depend on the
+	<example>
+	tcl
+	tk
+	tcl&XY;
+	tk&XY;
+	</example>
+      </p>
+      <p>
+        For example, <package>tcllib</package> build dependencies are the following:
+	<example>
+	Build-Depends: debhelper (>= 8.9.7)
+	Build-Depends-Indep: <var>tcl</var>
+	</example>
+      </p>
+      <p>
+	Due to limitations of current autobuild daemon
+	it is forbidden to use build dependencies on the virtual packages
+	&libtcl; or &libtk; only. These dependencies cannot guarantee consistent build environment,
+	so it is mandatory to prepend a preferred Tcl/Tk version before each of the virtual packages.
+      </p>
+    </appendix>
+
+    <appendix id="modules_loading">
+      <heading>Tcl/Tk modules loading</heading>
+      <p>
+      Tcl/Tk supports a few alternative ways for modules loading. 
+      Modules can be implemented as shared libraries, Tcl/Tk scripts or a combination
+      of them. Generally, specific index scripts are used for that and they
+      need to be placed in a directory included in the <tt>auto_path</tt> list along
+      with scripts and libraries. 
+      Old non-package script libraries require a <tt>tclIndex</tt> generated with
+      the <tt>auto_mkindex</tt> Tcl instruction. 
+      Packages require a <tt>pkgIndex.tcl</tt> file generated with the <tt>pkg_mkIndex</tt> 
+      Tcl instruction. Tcl 8.5 introduced Tcl Modules scripts (.tm) which do not require 
+      an index script for single file implementations. 
+      Another peculiar way of modules providing is based on <em>Starkit</em> and the use of the
+      Tcl Virtual File System (TclVFS). 
+      In each of those cases, the maintainer must ensure that the all required files are 
+      included and installed in the right place to allow using of the module.
+      </p>
+    </appendix>
+
+    <appendix id="debian_oddities">
+      <heading>Possible issues building Tcl/Tk extensions</heading>
+      <p>
+      In order to support this policy, a number of changes have been applied in upstream
+      <file>init.tcl</file>, <file>tclConfig.sh</file>, <file>tkConfig.sh</file> and <file>tcl.m4</file> files.
+      Extensions using TEA with local copies of <file>tcl.m4</file>,
+      or which use custom guesses about Tcl/Tk configuration could require explicit use of
+      <example>
+	--with-tcl=/usr/lib/tcl&XY;
+	--with-tk=/usr/lib/tk&XY;
+	--with-tclincludes=/usr/include/tcl&XY;
+      </example>
+      or other custom hacks.
+      </p>
+    </appendix>
+
+    <appendix id="check_list">
+      <heading>Maintainer's Checklist</heading>
+      <p>
+      <enumlist>
+      	<item>
+        Tcl/Tk has in general a very backward compatible API both at C and commands set levels.
+	When packaging a module or extension, verify if it requires a specific minimal version
+	and if it includes run-time checks about that, possibly (which is always convenient).
+	Scripts can include a <file>package require ?-exact? Tcl X.Y</file> or 
+	<file>package require ?-exact? Tk X.Y</file>, for instance.
+	In those cases, use a versioned
+	dependency on one of the default packages (&tcl;, &tk;, &tcl-dev; or
+	&tk-dev;), e.g. &tcl; (>= &XY;).
+	That is recommend instead of versioned packages dependencies, which are anyway
+	supported for compatibility with past conventions. Note also that &tk;
+	depends on &tcl; and &tk-dev; depends on &tcl-dev;.
+	</item>
+	<item>
+	Always install your package stuff in a per-package sub-directory of
+	<file>/usr/share/tcltk</file> (for scripted modules) and/or <file>/usr/lib/tcltk</file> (for
+	shared library extensions) along with the needed index file (see <ref id="modules_loading">).
+	</item>
+	<item>
+	If your package supports multiarch install its index file into a subdirectory of
+	<file>/usr/lib/tcltk/$(DEB_HOST_MULTIARCH)</file> directory. Tcl/Tk cannot determine
+	multiarch triplet in runtime, so package indices for different architectures must differ.
+	</item>
+	<item>
+	This policy customizes <var>auto_path</var> differently with respect to
+	generic upstream UNIX platforms, so that you should use preferably
+	system provided <file>tcl.m4</file>. Occasionally 
+	that could either require custom hacks for non TEA-based building systems, or 
+	using <file>--with-tcl</file> or <file>--with-tk</file> argument for TEA scripts.
+	</item>
+      </enumlist>
+      </p>
+    </appendix>
+
+  </book>
+</debiandoc>

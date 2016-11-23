@@ -1,0 +1,24 @@
+#!/usr/bin/make -f
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+%:
+	dh $@ --with autoreconf
+
+override_dh_clean:
+	dh_clean
+	rm -rf Makefile Linux_*.d/ testdata.d/ docs/zzipdoc/*.pyc
+
+override_dh_install:
+	# need to refresh patch and do it in debian/tmp/usr/share/man/man3
+	#cd $(CURDIR)/debian/libzzip-dev/usr/share/man/ \
+	#	&& tar xf $(CURDIR)/docs/zziplib-manpages.tar
+	#cd $(CURDIR)/debian/libzzip-dev/usr/share/man/man3/ \
+	#	&& patch -p1 < $(CURDIR)/debian/man3.patch
+	dh_install
+	# empty dependency_libs in .la files
+	sed -i "/dependency_libs/ s/'.*'/''/" `find debian/ -name '*.la'`
+	# remove pkg-config-bad-directive
+	sed -i "s/\-D_FORTIFY_SOURCE=2//" `find debian/ -name '*.pc'`
+
+get-orig-source:
+	uscan --download-current-version --rename
