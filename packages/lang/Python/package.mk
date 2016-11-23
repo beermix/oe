@@ -24,7 +24,7 @@ PKG_LICENSE="OSS"
 PKG_SITE="http://www.python.org/"
 PKG_URL="http://www.python.org/ftp/python/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="zlib:host bzip2:host"
-PKG_DEPENDS_TARGET="toolchain sqlite expat libz bzip2 openssl readline libffi gdbm Python:host"
+PKG_DEPENDS_TARGET="toolchain sqlite expat zlib bzip2 openssl libffi"
 PKG_SECTION="lang"
 PKG_SHORTDESC="python: The Python programming language"
 PKG_LONGDESC="Python is an interpreted object-oriented programming language, and is often compared with Tcl, Perl, Java or Scheme."
@@ -32,7 +32,7 @@ PKG_LONGDESC="Python is an interpreted object-oriented programming language, and
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PY_DISABLED_MODULES="_tkinter nis bsddb ossaudiodev"
+PY_DISABLED_MODULES="_tkinter nis gdbm bsddb ossaudiodev"
 
 PKG_CONFIGURE_OPTS_HOST="--cache-file=config.cache \
                          --without-cxx-main \
@@ -62,7 +62,9 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            --with-wctype-functions \
                            --without-cxx-main \
                            --with-system-ffi \
-                           --with-system-expat"
+                           --with-system-expat \
+                           --enable-shared \
+                           --disable-static"
 post_patch() {
   # This is needed to make sure the Python build process doesn't try to
   # regenerate those files with the pgen program. Otherwise, it builds
