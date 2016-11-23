@@ -6,7 +6,7 @@ diff -Naur bluez-5.35/Makefile.tools bluez-5.35.patch/Makefile.tools
  					monitor/uuid.h monitor/uuid.c
  client_bluetoothctl_LDADD = gdbus/libgdbus-internal.la @GLIB_LIBS@ @DBUS_LIBS@ \
 -				-lreadline
-+				-ledit -lncurses 
++				-lreadline -lncurses
  endif
  
  if MONITOR
@@ -15,13 +15,13 @@ diff -Naur bluez-5.35/Makefile.tools bluez-5.35.patch/Makefile.tools
  				client/display.h
  attrib_gatttool_LDADD = lib/libbluetooth-internal.la \
 -			src/libshared-glib.la @GLIB_LIBS@ -lreadline
-+			src/libshared-glib.la @GLIB_LIBS@ -ledit -lncurses 
++			src/libshared-glib.la @GLIB_LIBS@ -lreadline -lncurses
  
  tools_obex_client_tool_SOURCES = $(gobex_sources) $(btio_sources) \
  						tools/obex-client-tool.c
  tools_obex_client_tool_LDADD = lib/libbluetooth-internal.la \
 -						@GLIB_LIBS@ -lreadline
-+						@GLIB_LIBS@ -ledit -lncurses 
++						@GLIB_LIBS@ -lreadline -lncurses
  
  tools_obex_server_tool_SOURCES = $(gobex_sources) $(btio_sources) \
  						tools/obex-server-tool.c
@@ -30,18 +30,18 @@ diff -Naur bluez-5.35/Makefile.tools bluez-5.35.patch/Makefile.tools
  				client/display.h client/display.c
  tools_bluetooth_player_LDADD = gdbus/libgdbus-internal.la \
 -				@GLIB_LIBS@ @DBUS_LIBS@ -lreadline
-+				@GLIB_LIBS@ @DBUS_LIBS@ -ledit -lncurses 
++				@GLIB_LIBS@ @DBUS_LIBS@ -lreadline -lncurses
  
  tools_obexctl_SOURCES = tools/obexctl.c \
  				client/display.h client/display.c
  tools_obexctl_LDADD = gdbus/libgdbus-internal.la \
 -				@GLIB_LIBS@ @DBUS_LIBS@ -lreadline
-+				@GLIB_LIBS@ @DBUS_LIBS@ -ledit -lncurses 
++				@GLIB_LIBS@ @DBUS_LIBS@ -lreadline -lncurses
  
  tools_btmgmt_SOURCES = tools/btmgmt.c src/uuid-helper.c client/display.c
  tools_btmgmt_LDADD = lib/libbluetooth-internal.la src/libshared-mainloop.la \
 -				-lreadline
-+				-ledit -lncurses 
++				-lreadline -lncurses
  endif
  
  if EXPERIMENTAL

@@ -32,8 +32,7 @@ PKG_LONGDESC="Bluetooth Tools and System Daemons for Linux."
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-dependency-tracking \
-                           --disable-silent-rules \
+PKG_CONFIGURE_OPTS_TARGET="--disable-silent-rules \
                            --disable-library \
                            --enable-udev \
                            --disable-cups \
