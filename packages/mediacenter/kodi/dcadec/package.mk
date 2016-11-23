@@ -16,29 +16,29 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="kodi-platform"
-PKG_VERSION="15edaf7"
+PKG_NAME="dcadec"
+PKG_VERSION="b93deed"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="http://www.kodi.tv"
-PKG_GIT_URL="https://github.com/xbmc/kodi-platform"
-PKG_GIT_BRANCH="master"
-PKG_DEPENDS_TARGET="toolchain tinyxml kodi platform"
+PKG_SITE="https://github.com/foo86/dcadec"
+PKG_GIT_URL="https://github.com/foo86/dcadec"
+PKG_DEPENDS_TARGET="toolchain"
 PKG_PRIORITY="optional"
-PKG_SECTION="multimedia"
-PKG_SHORTDESC="kodi-platform:"
-PKG_LONGDESC="kodi-platform:"
+PKG_SECTION="audio"
+PKG_SHORTDESC="DTS Coherent Acoustics decoder with support for HD extensions"
+PKG_LONGDESC="DTS Coherent Acoustics decoder with support for HD extensions"
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_INSTALL_PREFIX=/usr \
-		       -DCMAKE_INSTALL_PREFIX_TOOLCHAIN=$SYSROOT_PREFIX/usr \
-		       -DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
-		       -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
-		       -DBUILD_SHARED_LIBS=0"
-		       
-post_makeinstall_target() {
-  rm -rf $INSTALL/usr/lib/kodiplatform
+# todo: we need to build as shared library, otherwise sond dont work
+# in kodi with enabled dcadec support and we have 100% CPU usage
+# (to test disable passtrough and use a DTS-HD sample)
+PKG_MAKE_OPTS_TARGET="PREFIX=/usr BINDIR=/usr/bin LIBDIR=/usr/lib INCLUDEDIR=/usr/include PKG_CONFIG_PATH=/usr/lib/pkgconfig CONFIG_SHARED=1"
+PKG_MAKEINSTALL_OPTS_TARGET="$PKG_MAKE_OPTS_TARGET"
+
+pre_configure_target() {
+  export CFLAGS="$CFLAGS -fPIC -DPIC"
+  export LDFLAGS="$LDFLAGS -fPIC -DPIC"
 }

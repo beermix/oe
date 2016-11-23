@@ -16,39 +16,25 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="libxml2"
-PKG_VERSION="2.9.4"
+PKG_NAME="libmpeg2"
+PKG_VERSION="0.5.1"
 PKG_REV="1"
 PKG_ARCH="any"
-PKG_LICENSE="MIT"
-PKG_SITE="http://xmlsoft.org"
-PKG_URL="ftp://xmlsoft.org/libxml2/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_HOST="toolchain libz:host"
-PKG_DEPENDS_TARGET="toolchain libz"
+PKG_LICENSE="GPL"
+PKG_SITE="http://libmpeg2.sourceforge.net/"
+PKG_URL="http://libmpeg2.sourceforge.net/files/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_DEPENDS_TARGET="toolchain"
 PKG_PRIORITY="optional"
-PKG_SECTION="textproc"
-PKG_SHORTDESC="libxml: XML parser library for Gnome"
-PKG_LONGDESC="The libxml package contains an XML library, which allows you to manipulate XML files. XML (eXtensible Markup Language) is a data format for structured document interchange via the Web."
+PKG_SECTION="multimedia"
+PKG_SHORTDESC="libmpeg2: The MPEG Library - version 2"
+PKG_LONGDESC="The MPEG Library is a collection of C routines to decode MPEG-1 and MPEG-2 movies and dither them in a variety of colour schemes."
 PKG_IS_ADDON="no"
 
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_ALL="ac_cv_header_ansidecl_h=no \
-				--enable-static \
-				--enable-shared \
-				--disable-silent-rules \
-				--disable-ipv6 \
-				--without-python \
-				--with-zlib=$ROOT/$TOOLCHAIN \
-				--without-lzma"
-
-PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_ALL --with-zlib=$ROOT/$TOOLCHAIN"
-
-PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_ALL --with-zlib=$SYSROOT_PREFIX/usr --with-sysroot=$SYSROOT_PREFIX"
+PKG_CONFIGURE_OPTS_TARGET="--disable-sdl --without-x"
 
 post_makeinstall_target() {
-  $SED "s:\(['= ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" $SYSROOT_PREFIX/usr/bin/xml2-config
-
   rm -rf $INSTALL/usr/bin
-  rm -rf $INSTALL/usr/lib/xml2Conf.sh
 }
+
