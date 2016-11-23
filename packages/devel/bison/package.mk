@@ -32,10 +32,6 @@ PKG_LONGDESC="Bison is a general-purpose parser generator that converts a gramma
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-pre_configure_host() {
-  export CFLAGS="-march=native -O3 -pipe -I$ROOT/$TOOLCHAIN/include"
-}
-
 PKG_CONFIGURE_OPTS_HOST="--disable-rpath --with-gnu-ld --enable-static --disable-shared"
 PKG_CONFIGURE_OPTS_TAREGT="$PKG_CONFIGURE_OPTS_HOST"
 

@@ -34,10 +34,6 @@ PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
 PKG_AUTORECONF="no"
 
-pre_configure_host() {
-  export CFLAGS="-march=native -O3 -pipe -I$ROOT/$TOOLCHAIN/include"
-}
-
 PKG_CONFIGURE_OPTS_HOST="--prefix=$ROOT/$TOOLCHAIN \
                          --disable-shared \
                          --enable-static

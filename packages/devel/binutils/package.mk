@@ -58,9 +58,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --disable-gdb \
                          --disable-sim \
                          --with-system-zlib \
-                         --enable-install-libiberty \
-                         --enable-build-warnings=no \
-                         --enable-targets=x86_64-linux-gnux32,x86_64-pep"
+                         --enable-build-warnings=no"
 
 makeinstall_host() {
   cp -v ../include/libiberty.h $SYSROOT_PREFIX/usr/include

@@ -8,16 +8,11 @@ PKG_SECTION="devel"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-pre_configure_host() {
-  export CFLAGS="-march=native -O3 -pipe -I$ROOT/$TOOLCHAIN/include"
-}
-
-
 PKG_CONFIGURE_OPTS_HOST="--enable-static \
 			 --disable-shared \
 			 --with-gmp=$ROOT/$TOOLCHAIN \
 			 --without-clang \
-			 --disable-silent-rules \
+			 --enable-silent-rules \
 			 --with-gcc-arch=ivybridge"
 			 
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"

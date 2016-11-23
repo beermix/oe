@@ -32,9 +32,6 @@ PKG_LONGDESC="GNU 'M4' is an implementation of the traditional Unix macro proces
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-pre_configure_host() {
-  export CFLAGS="-march=native -O3 -pipe -I$ROOT/$TOOLCHAIN/include"
-}
 
 PKG_CONFIGURE_OPTS_HOST="gl_cv_func_gettimeofday_clobber=no --target=$TARGET_NAME --disable-static"
 

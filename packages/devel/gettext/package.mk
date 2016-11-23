@@ -32,25 +32,15 @@ PKG_LONGDESC="This is the GNU gettext package. It is interesting for authors or 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-pre_configure_host() {
-  export CFLAGS="-march=native -O3 -pipe -I$ROOT/$TOOLCHAIN/include"
-}
-
 PKG_CONFIGURE_SCRIPT="gettext-tools/configure"
 
 PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared \
                          --disable-rpath \
                          --with-gnu-ld \
-                         --disable-java \
                          --disable-curses \
                          --enable-threads=posix \
-                         --without-libxml2-prefix \
-                         --with-included-libcroco \
-                         --with-included-libunistring \
                          --with-included-libxml \
                          --with-included-glib \
-                         --enable-silent-rules \
                          --disable-native-java \
                          --disable-csharp \
-                         --without-emacs \
-                         --disable-nls"
+                         --without-emacs"

@@ -1,7 +1,7 @@
 PKG_NAME="pkgconf"
 PKG_VERSION="082fd4a"
 PKG_GIT_URL="https://github.com/pkgconf/pkgconf"
-PKG_DEPENDS_HOST="ccache:host gettext:host"
+PKG_DEPENDS_HOST="ccache:host gettext:host pkg-config:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="toolchain/devel"
 PKG_IS_ADDON="no"

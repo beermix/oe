@@ -36,7 +36,5 @@ PKG_LONGDESC="fakeroot provides a fake root environment by means of LD_PRELOAD a
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-pre_configure_host() {
-  export CFLAGS="-march=native -O3 -pipe -I$ROOT/$TOOLCHAIN/include"
-}
+
 PKG_CONFIGURE_OPTS_HOST="--with-gnu-ld"
