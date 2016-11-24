@@ -1,6 +1,6 @@
 PKG_NAME="libtorrent-rasterbar"
-PKG_VERSION="1.1.1"
-PKG_URL="https://github.com/arvidn/libtorrent/releases/download/libtorrent-1_1_1/libtorrent-rasterbar-$PKG_VERSION.tar.gz"
+PKG_VERSION="1.0.10"
+PKG_URL="https://github.com/arvidn/libtorrent/releases/download/libtorrent-1_0_10/libtorrent-rasterbar-1.0.10.tar.gz"
 #PKG_SOURCE_DIR="libtorrent_libtorrent-$PKG_VERSION"
 PKG_DEPENDS_HOST="toolchain"
 PKG_DEPENDS_TARGET="toolchain boost Python:host Python:target zlib bzip2 curl"
