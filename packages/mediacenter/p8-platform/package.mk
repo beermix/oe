@@ -16,32 +16,29 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-# addons profile.d/*.profile
-for config in /storage/.kodi/addons/*/profile.d/*.profile; do
-  if [ -f "$config" ] ; then
-    . $config
-  fi
-done
+PKG_NAME="p8-platform"
+PKG_VERSION="38343e0"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
+PKG_SITE="http://www.kodi.tv"
+PKG_GIT_URL="https://github.com/Pulse-Eight/platform.git"
+PKG_GIT_BRANCH="master"
+PKG_DEPENDS_TARGET="toolchain"
+PKG_PRIORITY="optional"
+PKG_SECTION="multimedia"
+PKG_SHORTDESC="Platform support library used by libCEC and binary add-ons for Kodi"
+PKG_LONGDESC="Platform support library used by libCEC and binary add-ons for Kodi"
 
-oe_setup_addon() {
-  if [ ! -z $1 ] ; then
-    DEF="/storage/.kodi/addons/$1/settings-default.xml"
-    CUR="/storage/.kodi/userdata/addon_data/$1/settings.xml"
+PKG_IS_ADDON="no"
+PKG_AUTORECONF="no"
 
-    # export some useful variables
-    ADDON_DIR="$HOME/.kodi/addons/$1"
-    ADDON_HOME="$HOME/.kodi/userdata/addon_data/$1"
-    ADDON_LOG_FILE="$ADDON_HOME/service.log"
+PKG_CMAKE_OPTS_TARGET="-DCMAKE_INSTALL_LIBDIR=/usr/lib \
+                       -DCMAKE_INSTALL_LIBDIR_NOARCH=/usr/lib \
+                       -DCMAKE_INSTALL_PREFIX_TOOLCHAIN=$SYSROOT_PREFIX/usr \
+                       -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
+                       -DBUILD_SHARED_LIBS=0"
 
-    [ ! -d $ADDON_HOME ] && mkdir -p $ADDON_HOME
-
-    # copy defaults
-    if [ -f "$DEF" -a ! -f "$CUR" ] ; then
-      cp "$DEF" "$CUR"
-    fi
-
-    # parse config
-    [ -f "$DEF" ] && eval $(cat "$DEF" | awk -F\" '{print $2"=\""$4"\""}' | sed '/^=/d')
-    [ -f "$CUR" ] && eval $(cat "$CUR" | awk -F\" '{print $2"=\""$4"\""}' | sed '/^=/d')
-  fi
+post_makeinstall_target() {
+  rm -rf $INSTALL/usr
 }
