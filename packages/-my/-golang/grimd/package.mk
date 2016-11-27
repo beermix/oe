@@ -1,5 +1,5 @@
 PKG_NAME="grimd"
-PKG_VERSION="6caf50f"
+PKG_VERSION="f167ff0"
 PKG_GIT_URL="https://github.com/looterz/grimd"
 PKG_DEPENDS_TARGET="toolchain go:host"
 PKG_GIT_BRANCH="master"
@@ -7,6 +7,8 @@ PKG_KEEP_CHECKOUT="no"
 PKG_PRIORITY="optional"
 PKG_SECTION="tools"
 PKG_AUTORECONF="no"
+
+strip_lto
 
 pre_make_target() {
   export GOARCH=amd64
