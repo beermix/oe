@@ -8,7 +8,7 @@ PKG_SECTION="toolchain/devel"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME --disable-silent-rules"
+PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME --disable-silent-rules --program-suffix=-1.10"
 
 post_makeinstall_host() {
   make prefix=$SYSROOT_PREFIX/usr install
