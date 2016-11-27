@@ -21,18 +21,16 @@ pre_configure_target() {
   export USE_LIBPCRE="1"
   #export XDL_FAST_HASH="YesPlease"
 }
-  
-#LDFLAGS='-Wl,-Bsymbolic-functions -Wl,-z,relro'
 
 PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
-			   --with-curl \
-			   --with-openssl \
-			   --with-libpcre \
-			   --with-expat \
-			   --enable-pthreads=-lpthread \
-			   --with-zlib=$ROOT/$TOOLCHAIN \
-			   --with-tcltk=no \
-			   --with-editor=nano \
-			   --with-iconv"
+				   --with-curl \
+				   --with-openssl \
+				   --with-libpcre \
+				   --with-expat \
+				   --enable-pthreads=-lpthread \
+				   --with-zlib=$ROOT/$TOOLCHAIN \
+				   --with-tcltk=no \
+				   --with-editor=nano \
+				   --with-iconv"
 
 
