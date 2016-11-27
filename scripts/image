@@ -153,6 +153,8 @@ fi
 
 # LCD support
   [ ! "$LCD_DRIVER" = "none" ] && $SCRIPTS/install lcdproc
+# nano text editor
+  [ "$NANO_EDITOR" = "yes" ] && $SCRIPTS/install nano
 
 # Installer support
   [ "$INSTALLER_SUPPORT" = "yes" ] && $SCRIPTS/install installer
