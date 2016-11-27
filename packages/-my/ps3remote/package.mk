@@ -15,6 +15,7 @@ make CC="$CC" AR="$AR" LD="$LD" XCFLAGS="$CFLAGS" RANLIB="$RANLIB" XLDFLAGS="$LD
 
 post_make_target() {
   mkdir -p $INSTALL/usr/sbin/
+  mkdir -p $INSTALL_DEV/usr/sbin/
   cp $ROOT/$PKG_BUILD/ps3remote $INSTALL/usr/sbin/
 }
 

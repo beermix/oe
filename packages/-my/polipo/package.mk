@@ -10,9 +10,6 @@ PKG_DISCLAIMER="this is an unofficial addon. please don't ask for support in ope
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-#PKG_MAKE_OPTS_TARGET="CC=$TARGET_CC AR=$TARGET_AR BUILD_CC=$HOST_CC -j1"
-
-
 make_target() {
 make CC="$CC" AR="$AR" LD="$LD" XCFLAGS="$CFLAGS" RANLIB="$RANLIB" XLDFLAGS="$LDFLAGS" MAKEDEPPROG="$CC" CFLAGS="$CFLAGS" LDFLAGS="$LDFLAGS -pthread" -j1
 }
@@ -23,5 +20,6 @@ install_target(){
 
 post_make_target() {
   mkdir -p $INSTALL/usr/bin/
+  mkdir -p $INSTALL_DEV/usr/bin/
   cp $ROOT/$PKG_BUILD/polipo $INSTALL/usr/bin/
 }
