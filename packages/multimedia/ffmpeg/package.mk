@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="ffmpeg"
-PKG_VERSION="ac42b26"
+PKG_VERSION="7f2166d"
 PKG_GIT_URL="https://github.com/xbmc/FFmpeg"
 PKG_DEPENDS_TARGET="toolchain yasm:host libz bzip2 libressl speex"
 PKG_PRIORITY="optional"
