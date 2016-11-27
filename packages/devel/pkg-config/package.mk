@@ -35,7 +35,7 @@ pre_configure_host() {
 
 PKG_CONFIGURE_OPTS_HOST="--disable-silent-rules --with-internal-glib --disable-dtrace --with-gnu-ld"
 
-#post_makeinstall_host() {
-#  mkdir -p $SYSROOT_PREFIX/usr/share/aclocal
-#  cp pkg.m4 $SYSROOT_PREFIX/usr/share/aclocal
-#}
+post_makeinstall_host() {
+  mkdir -p $SYSROOT_PREFIX/usr/share/aclocal
+  cp pkg.m4 $SYSROOT_PREFIX/usr/share/aclocal
+}
