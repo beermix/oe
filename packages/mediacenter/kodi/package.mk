@@ -37,7 +37,7 @@ case "$KODIPLAYER_DRIVER" in
     PKG_KEEP_CHECKOUT="no"
     ;;
   *)
-    PKG_VERSION="fd7fcfa"
+    PKG_VERSION="0a7da65"
     PKG_GIT_URL="https://github.com/xbmc/xbmc.git"
     PKG_GIT_BRANCH="master"
     PKG_KEEP_CHECKOUT="no"
@@ -75,7 +75,18 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$ROOT/$TOOLCHAIN \
                        -DENABLE_LIBUSB=OFF \
                        -DENABLE_UDEV=ON \
                        -DENABLE_XSLT=OFF \
-                       -DENABLE_DBUS=ON"
+                       -DENABLE_DBUS=ON \
+                       -DENABLE_AVX=ON \
+                       -DENABLE_AVX2=OFF \
+                       -DENABLE_SSE=ON \
+                       -DENABLE_SSE2=ON \
+                       -DENABLE_SSE4_1=ON \
+                       -DENABLE_SSE4_2=ON \
+                       -DENABLE_SSSE3=ON \
+                       -DHAVE_SSE=TRUE \
+                       -DHAVE_SSE2=TRUE \
+                       -DHAVE_SSE4_1=TRUE \
+                       -DHAVE_SSSE3=TRUE"
 
 
 if [ "$DISPLAYSERVER" = "x11" ]; then
@@ -248,7 +259,7 @@ makeinstall_host() {
 }
 
 pre_configure_target() {
-  export LIBS="$LIBS -lssp -ltermcap"
+  export LIBS="$LIBS -ltermcap"
 }
 
 pre_make_target() {
