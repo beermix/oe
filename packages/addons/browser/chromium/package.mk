@@ -42,13 +42,6 @@ make_target() {
   _google_default_client_id=1058644186824-i9jgfv72cd3p032tnluchqpklgnlejsr.apps.googleusercontent.com
   _google_default_client_secret=3NN7qvE3D0TpB1HbNMYMBu_Z
 
-  ## workaround for gcc-6
-  #mv -f /usr/lib/x86_64-linux-gnu/libstdc++.so.6 /usr/lib/x86_64-linux-gnu/libstdc++.so.6.org || true
-  #mv -f /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.19 /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.19.org || true
-  #cp -fP $SYSROOT_PREFIX/usr/lib/libstdc++.so.6 /usr/lib/x86_64-linux-gnu
-  #cp -fP $SYSROOT_PREFIX/usr/lib/libstdc++.so.6.0.22 /usr/lib/x86_64-linux-gnu
-  ## workaround for gcc-6
-
   local _chromium_conf=(
     -Dgoogle_api_key=$_google_api_key
     -Dgoogle_default_client_id=$_google_default_client_id
@@ -79,7 +72,7 @@ make_target() {
     -Duse_system_icu=0
     -Duse_system_libevent=1
     -Duse_system_libjpeg=1
-    -Duse_system_libpng=0
+    -Duse_system_libpng=1
     -Duse_system_libvpx=0
     -Duse_system_libxml=0
     -Duse_system_snappy=0
@@ -104,14 +97,6 @@ make_target() {
   ./build/gyp_chromium --depth=. "${_chromium_conf[@]}"
 
   ninja -C out/Release chrome chrome_sandbox
-
-  ## workaround for gcc-6
-  #rm -f /usr/lib/x86_64-linux-gnu/libstdc++.so.6
-  #rm -f /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.22
-  #mv -f /usr/lib/x86_64-linux-gnu/libstdc++.so.6.org /usr/lib/x86_64-linux-gnu/libstdc++.so.6 || true
-  #mv -f /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.19.org /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.19 || true
-  ## workaround for gcc-6
-}
 
 makeinstall_target() {
   mkdir -p $INSTALL/usr/config/chromium
