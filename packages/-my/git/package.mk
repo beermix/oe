@@ -1,7 +1,7 @@
 PKG_NAME="git"
 PKG_VERSION="2.10.2"
 PKG_URL="https://www.kernel.org/pub/software/scm/git/git-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain curl pcre expat libz libssh2 libiconv"
+PKG_DEPENDS_TARGET="toolchain curl pcre expat libz libssh2 libiconv gnutls"
 PKG_PRIORITY="optional"
 PKG_SECTION="devel"
 PKG_IS_ADDON="no"
@@ -24,7 +24,7 @@ pre_configure_target() {
 
 PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
 				   --with-curl \
-				   --with-openssl \
+				   --with-gnutls \
 				   --with-libpcre \
 				   --with-expat \
 				   --enable-pthreads=-lpthread \
