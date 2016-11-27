@@ -1,10 +1,10 @@
 PKG_NAME="aria2"
-PKG_VERSION="release-1.29.0"
-PKG_GIT_URL="https://github.com/aria2/aria2"
+PKG_VERSION="1.29.0"
+PKG_URL="https://github.com/aria2/aria2/releases/download/release-$PKG_VERSION/aria2-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain libssh2 expat pcre curl libidn libuv libev xmlstarlet libxml2 c-ares"
 PKG_PRIORITY="optional"
 PKG_SECTION="tools"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 
 PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
