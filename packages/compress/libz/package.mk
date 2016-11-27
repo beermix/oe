@@ -50,3 +50,9 @@ pre_build_host() {
   mkdir -p $PKG_BUILD/.$HOST_NAME
   cp -RP $PKG_BUILD/* $PKG_BUILD/.$HOST_NAME
 }
+
+post_makeinstall_host() {
+  rm $ROOT/$TOOLCHAIN/lib/libz.so
+  rm $ROOT/$TOOLCHAIN/lib/libz.so.1
+  rm $ROOT/$TOOLCHAIN/lib/libz.so.1.2.8
+}
