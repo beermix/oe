@@ -8,10 +8,10 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
-			   --sysconfdir=/storage/.config/smartmontools \
-			   --datarootdir=/storage/.config/smartmontools/share \
-			   --disable-silent-rules \
-			   --with-systemdsystemunitdir=/usr/lib/systemd/system"
+			      --sysconfdir=/storage/.config/smartmontools \
+			      --datarootdir=/storage/.config/smartmontools/share \
+			      --disable-silent-rules \
+			      --with-systemdsystemunitdir=/usr/lib/systemd/system"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/storage
