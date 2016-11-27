@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="ffmpeg"
-PKG_VERSION="7f2166d"
+PKG_VERSION="3.1.5-Krypton-Beta6"
 PKG_GIT_URL="https://github.com/xbmc/FFmpeg"
 PKG_DEPENDS_TARGET="toolchain yasm:host libz bzip2 libressl speex"
 PKG_PRIORITY="optional"
@@ -209,8 +209,8 @@ configure_target() {
               $FFMPEG_FPU \
               --enable-yasm \
               --disable-symver \
-              --disable-lto \
-              $FFMPEG_X11GRAB
+              --enable-lto \
+              --enable-indev=x11grab_xcb
 }
 
 post_makeinstall_target() {
