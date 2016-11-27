@@ -59,7 +59,7 @@ post_makeinstall_target() {
 }
 
 post_install() {
-  add_user dbus x 81 81 "System message bus" "/" "/bin/bash"
+  add_user dbus x 81 81 "System message bus" "/" "/bin/sh"
   add_group dbus 81
   add_group netdev 497
 

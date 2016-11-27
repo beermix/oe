@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="RTL8812AU"
-PKG_VERSION="d716b38"
+PKG_VERSION="d3c7f0e"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"

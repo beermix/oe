@@ -24,6 +24,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://www.openelec.tv/"
 PKG_URL=""
 PKG_DEPENDS_TARGET="imx6-status-led"
+PKG_PRIORITY="optional"
 PKG_SECTION="system"
 PKG_SHORTDESC="i.MX6 SoC fan monitor"
 PKG_LONGDESC="i.MX6 SoC fan monitor for TBS Matrix system"
@@ -41,8 +42,8 @@ makeinstall_target() {
   mkdir -p $INSTALL/usr/bin
   cp $PKG_DIR/bin/* $INSTALL/usr/bin
 
-  mkdir -p $INSTALL/usr/lib/libreelec
-  cp $PKG_DIR/scripts/* $INSTALL/usr/lib/libreelec
+  mkdir -p $INSTALL/usr/lib/openelec
+  cp $PKG_DIR/scripts/* $INSTALL/usr/lib/openelec
 }
 
 post_install() {

@@ -30,8 +30,16 @@ PKG_SHORTDESC="xrandr: A primitive command line interface to RandR extension"
 PKG_LONGDESC="Xrandr is a primitive command line interface to the RandR extension and used to set the screen size, orientation and/or reflection."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin/xkeystone
+
+  mkdir -p $INSTALL/usr/lib/xorg
+    cp -P $PKG_DIR/scripts/intel-fullrange $INSTALL/usr/lib/xorg
+}
+
+post_install() {
+  enable_service intel-fullrange.service
+  enable_service intel-fullrange-resume.service
 }

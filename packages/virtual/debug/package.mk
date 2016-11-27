@@ -38,7 +38,3 @@ PKG_AUTORECONF="no"
 if [ "$VDPAU_SUPPORT" = "yes" -a "$DISPLAYSERVER" = "x11" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET vdpauinfo"
 fi
-
-if [ "$DEBUG" = "yes" -a "$VALGRIND" = "yes" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET valgrind"
-fi

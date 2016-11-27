@@ -142,6 +142,7 @@ pre_configure_target() {
 # hack to prevent a build error
   CFLAGS=`echo $CFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|"`
   LDFLAGS=`echo $LDFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|"`
+  PKG_CONFIG="$ROOT/$TOOLCHAIN/bin/pkg-config --static"
 }
 
 post_makeinstall_target() {

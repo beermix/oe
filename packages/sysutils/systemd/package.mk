@@ -17,13 +17,12 @@
 ################################################################################
 
 PKG_NAME="systemd"
-PKG_VERSION="v231"
+PKG_VERSION="232"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/systemd"
-PKG_GIT_URL="https://github.com/systemd/systemd"
-PKG_DEPENDS_TARGET="toolchain libcap kmod util-linux entropy libz lz4 xz bzip2 lzo"
+PKG_DEPENDS_TARGET="toolchain libcap kmod util-linux entropy"
 PKG_PRIORITY="required"
 PKG_SECTION="system"
 PKG_SHORTDESC="systemd: a system and session manager"
@@ -35,10 +34,9 @@ PKG_AUTORECONF="yes"
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            ac_cv_have_decl_IFLA_BOND_AD_INFO=no \
                            ac_cv_have_decl_IFLA_BRPORT_UNICAST_FLOOD=no \
-                           ac_cv_path_MOUNT_PATH="/bin/mount"
-                           ac_cv_path_UMOUNT_PATH="/bin/umount"
+                           ac_cv_path_MOUNT_PATH=/bin/mount \
+                           ac_cv_path_UMOUNT_PATH=/bin/umount \
                            KMOD=/usr/bin/kmod \
-                           --with-support-url="$SUPPORT_URL" \
                            --disable-nls \
                            --disable-dbus \
                            --disable-utmp \
@@ -107,7 +105,11 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --with-dbussessionservicedir=/usr/share/dbus-1/services \
                            --with-dbussystemservicedir=/usr/share/dbus-1/system-services \
                            --with-rootprefix=/usr \
-                           --with-rootlibdir=/lib"
+                           --with-rootlibdir=/usr/lib"
+
+unpack() {
+  tar xf $ROOT/$SOURCES/systemd/v$PKG_VERSION.tar.gz -C $ROOT/$BUILD
+}
 
 pre_build_target() {
 # broken autoreconf

@@ -26,6 +26,7 @@ PKG_URL="http://www.tbsdtv.com/download/document/common/tbs-linux-drivers_v${PKG
 PKG_SOURCE_DIR="$PKG_NAME"
 PKG_DEPENDS_TARGET="toolchain linux"
 PKG_NEED_UNPACK="$LINUX_DEPENDS"
+PKG_PRIORITY="optional"
 PKG_SECTION="driver"
 PKG_SHORTDESC="Linux TBS tuner drivers"
 PKG_LONGDESC="Linux TBS tuner drivers"
@@ -40,8 +41,8 @@ post_unpack() {
 make_target() {
   cd $ROOT/$PKG_BUILD/linux-tbs-drivers
   ./v4l/tbs-x86_64.sh
-  LDFLAGS="" make DIR=$(kernel_path) prepare
-  LDFLAGS="" make DIR=$(kernel_path)
+  LDFLAGS="" make DIR=$(get_pkg_build linux) prepare
+  LDFLAGS="" make DIR=$(get_pkg_build linux)
 }
 
 makeinstall_target() {

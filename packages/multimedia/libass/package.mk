@@ -30,7 +30,7 @@ PKG_SHORTDESC="libass: a portable subtitle renderer for the ASS/SSA (Advanced Su
 PKG_LONGDESC="libass is a portable subtitle renderer for the ASS/SSA (Advanced Substation Alpha/Substation Alpha) subtitle format. It is mostly compatible with VSFilter"
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-test \
                            --enable-fontconfig \
@@ -40,5 +40,5 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-test \
 
 if [ $TARGET_ARCH = "x86_64" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET yasm:host"
-  PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET --enable-asm"
+  PKG_CONFIGURE_OPTS_TARGET+=" --enable-asm"
 fi
