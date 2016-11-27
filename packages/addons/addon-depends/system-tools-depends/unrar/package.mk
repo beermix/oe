@@ -33,7 +33,7 @@ PKG_AUTORECONF="no"
 
 make_target() {
   make CXX="$CXX" \
-     CXXFLAGS="$CXXFLAGS" \
+     CXXFLAGS="$TARGET_CXXFLAGS" \
      RANLIB="$RANLIB" \
      AR="$AR" \
      STRIP="$STRIP" \

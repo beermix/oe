@@ -1,5 +1,5 @@
 ################################################################################
-#      This file is part of LibreELEC - https://LibreELEC.tv
+#      This file is part of LibreELEC - https://libreelec.tv
 #      Copyright (C) 2016 Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
@@ -16,35 +16,34 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="repository.kodinerds"
-PKG_VERSION="8.1"
-PKG_REV="102"
+PKG_NAME="nmon"
+PKG_VERSION="411b08f"
+PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="http://www.kodinerds.net"
-PKG_URL=""
-PKG_DEPENDS_TARGET="toolchain xmlstarlet:host"
-PKG_SECTION=""
-PKG_SHORTDESC="Kodinerds add-on repository"
-PKG_LONGDESC="Kodinerds add-on repository"
+PKG_SITE="https://github.com/axibase/nmon"
+PKG_URL="https://github.com/axibase/nmon/archive/$PKG_VERSION.tar.gz"
+PKG_DEPENDS_TARGET="toolchain netbsd-curses"
+PKG_SECTION="tools"
+PKG_SHORTDESC="Systems administrator, tuner, benchmark tool gives you a huge amount of important performance information in one go"
+PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
-PKG_IS_ADDON="yes"
-PKG_ADDON_NAME="Kodinerds Repository"
-PKG_ADDON_TYPE="xbmc.addon.repository"
-
-
 make_target() {
-  $SED -e "s|@PKG_VERSION@|$PKG_VERSION|g" \
-       -e "s|@PKG_REV@|$PKG_REV|g" \
-       -i addon.xml
+  case $ARCH in
+    x86_64)
+      arch="X86"
+      ;;
+    *)
+      arch="arm"
+      ;;
+  esac
+  CFLAGS="$CFLAGS -g -O3 -Wall -D JFS -D GETUSER -D LARGEMEM"
+  LDFLAGS="$LDFLAGS -lncurses -ltermcap -lm -g"
+  $CC -o nmon lmon*.c $CFLAGS $LDFLAGS -D $arch -D KERNEL_2_6_18
 }
 
 makeinstall_target() {
-  : # nop
-}
-
-addon() {
-  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID
-  cp -R $PKG_BUILD/* $ADDON_BUILD/$PKG_ADDON_ID
+  :
 }

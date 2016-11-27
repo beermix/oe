@@ -32,4 +32,5 @@ PKG_AUTORECONF="no"
 PKG_CONFIGURE_OPTS_TARGET="--disable-nls \
                            --without-gnutls \
                            --with-openssl \
-                           --with-readline=$SYSROOT_PREFIX/usr"
+                           --with-readline=$SYSROOT_PREFIX/usr \
+                           --with-zlib=$SYSROOT_PREFIX/usr"
