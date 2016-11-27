@@ -24,7 +24,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://www.busybox.net"
 PKG_URL="http://busybox.net/downloads/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain busybox:host less hdparm dosfstools e2fsprogs expat pcre pcre2 openssl attr libev libuv zip unzip unrar xz bzip2 libffi libarchive pciutils usbutils parted procps-ng coreutils bash findutils grep gawk"
+PKG_DEPENDS_TARGET="toolchain busybox:host less hdparm dosfstools e2fsprogs expat pcre pcre2 openssl attr libev libuv zip unzip unrar xz bzip2 libffi libarchive tar pciutils usbutils parted procps-ng coreutils bash findutils grep gawk"
 PKG_DEPENDS_INIT="toolchain"
 PKG_PRIORITY="required"
 PKG_SECTION="system"
@@ -170,6 +170,7 @@ makeinstall_target() {
     cp $PKG_DIR/scripts/pastebinit $INSTALL/usr/bin/
     ln -sf pastebinit $INSTALL/usr/bin/paste
     rm $INSTALL/bin/bash
+    rm $INSTALL/bin/tar
     
 
   mkdir -p $INSTALL/usr/lib/openelec
