@@ -33,5 +33,10 @@ PKG_LONGDESC="libsquish"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
+pre_configure_target() {
+   mkdir -p $INSTALL_DEV/usr/bin/
+   mkdir -p $INSTALL/usr/bin/
+}
+
 PKG_MAKE_OPTS_TARGET="PREFIX=/usr INSTALL_DIR=$SYSROOT_PREFIX/usr"
 PKG_MAKEINSTALL_OPTS_TARGET="$PKG_MAKE_OPTS_TARGET"
