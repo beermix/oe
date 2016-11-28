@@ -9,8 +9,6 @@ Environment=__GL_YIELD=USLEEP
 Environment=DISPLAY=:0.0
 Environment=SDL_MOUSE_RELATIVE=0
 Environment=HOME=/storage
-Environment=KODI_TEMP=/storage/.kodi/temp
-Environment=KODI_HOME=/usr/share/kodi/
 EnvironmentFile=-/run/openelec/kodi.conf
 EnvironmentFile=-/run/openelec/debug/kodi.conf
 ExecStartPre=-/usr/lib/kodi/kodi-config
@@ -23,4 +21,4 @@ StartLimitInterval=0
 LimitNOFILE=16384
 
 [Install]
-WantedBy=default.target
+WantedBy=kodi.target
