@@ -111,4 +111,4 @@ makeinstall_target() {
   $STRIP $INSTALL/usr/config/chromium/chromium.bin
   $STRIP $INSTALL/usr/config/chromium/chrome-sandbox
 }
-
+}
