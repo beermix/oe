@@ -17,10 +17,10 @@
 ################################################################################
 
 PKG_NAME="inputstream.mpd"
-PKG_VERSION="4c8013f"
+PKG_VERSION="2d8ddb6"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
-PKG_URL="https://github.com/liberty-developer/inputstream.mpd/archive/$PKG_VERSION.tar.gz"
+PKG_GIT_URL="https://github.com/liberty-developer/inputstream.mpd"
 PKG_DEPENDS_TARGET="toolchain kodi-platform"
 PKG_SECTION=""
 PKG_SHORTDESC="inputstream.mpd"
