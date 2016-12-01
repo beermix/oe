@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="icu"
-PKG_VERSION="57.1"
+PKG_VERSION="58.1"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="Custom"
@@ -31,6 +31,10 @@ PKG_LONGDESC="International Components for Unicode library"
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
+
+pre_configure_target() {
+  strip_lto
+}
 
 PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
 
