@@ -14,7 +14,6 @@ pre_configure_target() {
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-malloc0returnsnull \
 			      --with-boost-libdir=$SYSROOT_PREFIX/usr/lib \
-			      --disable-silent-rules \
 			      --enable-static \
 			      --with-miniupnpc \
 			      --disable-ccache \
