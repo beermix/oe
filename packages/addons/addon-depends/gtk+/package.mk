@@ -49,7 +49,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_path_GLIB_GENMARSHAL=$ROOT/$TOOLCHAIN/bin/glib-
 
 make_target() {
   make SRC_SUBDIRS="gdk gtk modules"
-  #$MAKEINSTALL SRC_SUBDIRS="gdk gtk modules"
+  make -j1 DESTDIR=$SYSROOT_PREFIX install SRC_SUBDIRS="gdk gtk modules"
 }
 
 makeinstall_target() {
