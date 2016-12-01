@@ -9,10 +9,12 @@ PKG_USE_CMAKE="yes"
 PKG_AUTORECONF="no"
 
 PKG_CMAKE_OPTS_TARGET="-DBUILD_TESTING=OFF \
-			     -DENABLE_CAT_SHARED=OFF \
-			     -DENABLE_CPIO_SHARED=OFF \
-			     -DENABLE_LibGCC=ON \
-			     -DENABLE_TEST=OFF"
+			  -DENABLE_CAT_SHARED=OFF \
+			  -DENABLE_CPIO_SHARED=OFF \
+			  -DENABLE_LibGCC=ON \
+			  -DENABLE_TEST=OFF"
+			  
+PKG_CMAKE_OPTS_HOST="$PKG_CMAKE_OPTS_TARGET"
 		       
 #post_makeinstall_target() {
 #  ln -sf $INSTALL/usr/bin/bsdtar $INSTALL/usr/bin/tar
