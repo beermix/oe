@@ -25,7 +25,7 @@ index 6fbce38..e8f5dd4
 +CC = gcc
  CDEBUGFLAGS = -Os -g -Wall -fno-strict-aliasing
 -
-+# CFLAGS = -g0 -fdata-sections -ffunction-sections -Os -fno-unwind-tables -fno-asynchronous-unwind-tables -Wa,--noexecstack
++# CFLAGS = -g0 -fdata-sections -ffunction-sections -O3 -fno-unwind-tables -fno-asynchronous-unwind-tables -Wa,--noexecstack
 +LDFLAGS = -static
 +CFLAGS = -O2
  # To compile on a pure POSIX system:
@@ -36,7 +36,7 @@ index 6fbce38..e8f5dd4
  # On Solaris, you need the following:
  
 -# LDLIBS = -lsocket -lnsl -lresolv
-+# LDLIBS = -lnsl -lresolv
++# LDLIBS = -lsocket -lnsl -lresolv
  
  # On mingw, you need
  
