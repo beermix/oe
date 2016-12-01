@@ -8,22 +8,22 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
-			   --enable-static \
-			   --prefix=/usr \
-			   --disable-ssp \
-			   --sysconfdir=/storage/.config \
-                           --datadir=/storage/.config \
-                           --libdir=/storage/.config \
-                           --libexecdir=/storage/.config \
-                           --sharedstatedir=/storage/.config \
-                           --localstatedir=/storage/.config \
-                           --includedir=/storage/.config \
-                           --oldincludedir=/storage/.config \
-                           --datarootdir=/storage/.config \
-                           --infodir=/storage/.config \     
-                           --localedir=/storage/.config \
-                           --with-language=russian \
-                           --with-rfc2640"
+			      --enable-static \
+			      --prefix=/usr \
+			      --disable-ssp \
+			      --sysconfdir=/storage/.config \
+			      --datadir=/storage/.config \
+			      --libdir=/storage/.config \
+			      --libexecdir=/storage/.config \
+			      --sharedstatedir=/storage/.config \
+			      --localstatedir=/storage/.config \
+			      --includedir=/storage/.config \
+			      --oldincludedir=/storage/.config \
+			      --datarootdir=/storage/.config \
+			      --infodir=/storage/.config \     
+			      --localedir=/storage/.config \
+			      --with-language=russian \
+			      --with-rfc2640"
                            
 post_makeinstall_target() {
   rm -rf $INSTALL/storage

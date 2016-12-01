@@ -11,14 +11,15 @@ pre_configure_target() {
    export LIBS="-ldl -lpthread"
    cd $ROOT/$PKG_BUILD
    export MAKEFLAGS="-j1"
+   export CPPFLAGS="$CPPFLAGS -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE"
 }
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
-			   ne_cv_lib_neonver=yes \
-			   --with-neon=$SYSROOT_PREFIX/usr \
-			   --sysconfdir=/storage/.config \
-			   --datarootdir=/storage/.config \
-			   --disable-silent-rules"
+			      ne_cv_lib_neonver=yes \
+			      --with-gnu-ld \
+			      --with-neon=$SYSROOT_PREFIX/usr \
+			      --sysconfdir=/storage/.config \
+			      --datarootdir=/storage/.config"
 			  
 post_makeinstall_target() {
   rm -rf $INSTALL/sbin/
