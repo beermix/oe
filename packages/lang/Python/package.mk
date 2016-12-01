@@ -128,4 +128,5 @@ post_makeinstall_target() {
   cd $INSTALL/usr/lib/python2.7
   python -Wi -t -B $ROOT/$PKG_BUILD/Lib/compileall.py -d /usr/lib/python2.7 -f .
   find $INSTALL/usr/lib/python2.7 -name "*.py" -exec rm -f {} \; &>/dev/null
+  chmod u+w $INSTALL/usr/lib/libpython*.so.*
 }
