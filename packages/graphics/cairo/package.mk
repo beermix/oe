@@ -33,8 +33,8 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes" # ToDo
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-silent-rules \
-                           --disable-shared \
-                           --enable-static \
+                           --enable-shared \
+                           --disable-static \
                            --disable-gtk-doc \
                            --enable-largefile \
                            --enable-atomic \
