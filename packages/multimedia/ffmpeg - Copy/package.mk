@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="ffmpeg"
-PKG_VERSION="2.8.8"
-PKG_URL="https://ffmpeg.org/releases/ffmpeg-$PKG_VERSION.tar.xz"
+PKG_VERSION="3.1.6-Krypton-Beta6"
+PKG_GIT_URL="https://github.com/xbmc/FFmpeg"
 PKG_DEPENDS_TARGET="toolchain yasm:host libz bzip2 libressl speex"
 PKG_PRIORITY="optional"
 PKG_SECTION="multimedia"
