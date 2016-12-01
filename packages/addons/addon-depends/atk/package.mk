@@ -33,7 +33,8 @@ PKG_IS_ADDON="no"
 
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --disable-rebuilds --disable-glibtest"
+PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared \
+                           --disable-rebuilds --disable-glibtest"
 
 pre_configure_target() {
   export CFLAGS="$CFLAGS -fPIC"
