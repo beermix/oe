@@ -9,8 +9,7 @@ PKG_AUTORECONF="yes"
 
 
 PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
-			   --enable-static \
-			   --disable-nls \
-			   --without-gssapi \
-			   --disable-option-checking \
-			   --disable-ipv6"
+			      --enable-static \
+			      --without-gssapi \
+			      --disable-option-checking \
+			      --disable-ipv6"

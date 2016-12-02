@@ -34,4 +34,5 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-shared \
                            --disable-modern-top \
                            --enable-static \
-                           --disable-kill"
+                           --disable-kill \
+                           --with-systemd"
