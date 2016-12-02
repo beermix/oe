@@ -9,6 +9,7 @@ PKG_AUTORECONF="no"
 #CFLAGS="-march=corei7-avx -mtune=corei7-avx -fstack-protector-strong -O3 -pipe"
 #LDFLAGS="-Wl,-O1 -Wl,--as-needed"
 #CPPFLAGS="-D_FORTIFY_SOURCE=2"
+strip_lto
 
 pre_make_target() {
   export GOOS=linux
@@ -21,7 +22,6 @@ pre_make_target() {
   export GOPATH=$ROOT/$PKG_BUILD.gopath:$ROOT/$PKG_BUILD/vendor/
   export GOROOT=$ROOT/$TOOLCHAIN/lib/golang
   export PATH=$PATH:$GOROOT/bin
-  strip_lto
 }
  
 make_target() {
