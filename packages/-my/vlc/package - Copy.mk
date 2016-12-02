@@ -4,13 +4,13 @@
 ################################################################################
 
 PKG_NAME="vlc"
-PKG_VERSION="2.2.5"
+PKG_VERSION="2.2.4"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.videolan.org"
-PKG_URL="https://nightlies.videolan.org/build/source/vlc-2.2.5-20161202-0231.tar.xz"
-PKG_DEPENDS_TARGET="toolchain dbus libdvbpsi flac ffmpeg libvorbis zlib lua gnutls"
+PKG_URL="http://download.videolan.org/$PKG_NAME/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_DEPENDS_TARGET="toolchain dbus libdvbpsi gnutls flac ffmpeg zlib lua"
 PKG_PRIORITY="optional"
 PKG_SECTION="xmedia/tools"
 PKG_SHORTDESC="VideoLAN multimedia player and streamer"
@@ -21,6 +21,7 @@ PKG_AUTORECONF="yes"
 pre_configure_target() {
 # vlc fails to build with LTO optimization
   strip_lto
+
   export LUA_LIBS="-L$SYSROOT_PREFIX/usr/lib -llua -lm"
 }
 

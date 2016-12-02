@@ -7,6 +7,10 @@ PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
+pre_configure_target() {
+   CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
+}
+
 PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
 			      --disable-shared \
 			      --enable-static \
