@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="xfsprogs-dev"
-PKG_VERSION="v4.8.0"
+PKG_VERSION="53cefc4"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
