@@ -24,7 +24,7 @@ PKG_LICENSE="GPLv2"
 PKG_SITE="http://www.mariadb.org"
 PKG_URL="https://downloads.mariadb.org/interstitial/$PKG_NAME-$PKG_VERSION/source/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain netbsd-curses openssl lz4 boost mariadb:host"
+PKG_DEPENDS_TARGET="toolchain netbsd-curses openssl mariadb:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="database"
 PKG_SHORTDESC="mariadb: A community developed branch of MySQL"
@@ -122,7 +122,6 @@ configure_host() {
         -DWITH_SYSTEMD=OFF \
         -DWITH_LIBWRAP=OFF \
         -DWITH_WSREP=OFF \
-        -DSECURITY_HARDENED=OFF \
         ..
 }
 
@@ -162,7 +161,6 @@ configure_target() {
         -DWITH_SYSTEMD=OFF \
         -DWITH_LIBWRAP=OFF \
         -DWITH_SSL=$SYSROOT_PREFIX/usr \
-        -DSECURITY_HARDENED=OFF \
         $MARIADB_OPTS \
         ..
 }
@@ -174,9 +172,7 @@ post_makeinstall_target() {
   ln -sf $SYSROOT_PREFIX/usr/bin/mysql_config $ROOT/$TOOLCHAIN/bin/mysql_config
  
   rm -rf $INSTALL/usr/share/mysql/support-files
-  rm -rf $INSTALL/usr/share/mysql/test
-  rm -rf $INSTALL/usr/share/mysql/bench
-  
+
   if [ "$PKG_MARIADB_SERVER" = "no" ]; then
     rm -rf $INSTALL/usr/bin
     rm -rf $INSTALL/usr/lib
