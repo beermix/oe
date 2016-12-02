@@ -82,9 +82,8 @@ make_target() {
     'use_sysroot=true'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_hangout_services_extension=true'
-    'enable_pnacl=true'
     'enable_widevine=true'
-    'enable_nacl=true'
+    'enable_nacl=false'
     'enable_nacl_nonsfi=false'
     "google_api_key=\"${_google_api_key}\""
     "google_default_client_id=\"${_google_default_client_id}\""
@@ -118,7 +117,7 @@ make_target() {
   ./tools/gn/bootstrap/bootstrap.py --gn-gen-args "${_flags[*]}"
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$ROOT/$TOOLCHAIN/bin/python
 
-  ninja -C out/Release -j 4 chrome chrome_sandbox widevinecdmadapter
+  ninja -j4 -C out/Release chrome chrome_sandbox widevinecdmadapter
 }
 
 makeinstall_target() {

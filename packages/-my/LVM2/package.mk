@@ -10,20 +10,10 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
-			      ac_cv_func_realloc_0_nonnull=yes \
-			      --disable-lvm1_fallback \
-			      --disable-static_link \
-			      --disable-readline \
-			      --enable-realtime \
-			      --disable-debug \
-			      --disable-profiling \
-			      --enable-devmapper \
-			      --disable-compat \
-			      --enable-o_direct \
-			      --enable-applib \
-			      --enable-cmdlib \
-			      --enable-pkgconfig \
-			      --enable-fsadm \
-			      --disable-dmeventd \
-			      --disable-selinux \
-			      --disable-nls"
+			   ac_cv_func_realloc_0_nonnull=yes \
+			   ac_cv_flag_HAVE_PIE=no \
+			   --disable-testing \
+			   --disable-blkid_wiping \
+			   --disable-readline \
+			   --with-lvm1=none \
+			   --with-optimisation="

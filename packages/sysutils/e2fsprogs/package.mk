@@ -37,9 +37,7 @@ if [ "$HFSTOOLS" = "yes" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET diskdev_cmds"
 fi
 
-PKG_CONFIGURE_OPTS_HOST="ac_cv_header_magic_h=no \
-                         ac_cv_lib_magic_magic_file=no \
-                         --prefix=/usr \
+PKG_CONFIGURE_OPTS_HOST="--prefix=/usr \
                          --bindir=/bin \
                          --sbindir=/sbin"
 
