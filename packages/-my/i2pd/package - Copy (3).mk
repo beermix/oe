@@ -9,20 +9,12 @@ PKG_AUTORECONF="no"
 
 pre_configure_target() {
    strip_lto
+   strip_gold
+  # export LDFLAGS="-ldl -lpthread"
 }
-
-PKG_CMAKE_SCRIPT_TARGET="build/CMakeLists.txt"
-
-PKG_CMAKE_OPTS_TARGET="-DWITH_LIBRARY=ON \
-			  -DWITH_PCH=OFF \
-			  -DWITH_MESHNET=OFF \
-			  -DWITH_STATIC=OFF \
-			  -DWITH_UPNP=ON \
-			  -DTHREADS_PTHREAD_ARG=4 \
-			  -DWITH_HARDENING=OFF \
-			  -DWITH_AESNI=ON"
 
 post_makeinstall_target() {
  rm -rf $INSTALL/usr/src/
  rm  $INSTALL/usr/LICENSE
+ $STRIP i2pd
 }
