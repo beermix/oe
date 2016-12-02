@@ -54,6 +54,7 @@ index 377a49c..2fda194 100644
  void OnPostInstall(const AddonPtr& addon, bool update, bool modal)
  {
    AddonPtr localAddon;
++
 +  // OE: systemctl stop & disable / enable & start on addon upgrade
 +  if (CAddonMgr::GetInstance().GetAddon(addon->ID(), localAddon, ADDON_SERVICE))
 +  {
