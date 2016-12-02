@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="jasper"
-PKG_VERSION="1.900.1"
+PKG_VERSION="version-1.900.31"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OpenSource"
 PKG_SITE="http://www.ece.uvic.ca/~mdadams/jasper/"
-PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_GIT_URL="https://github.com/mdadams/jasper"
 PKG_DEPENDS_TARGET="toolchain libjpeg-turbo"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="jasper: JPEG-2000 Part-1 standard (i.e., ISO/IEC 15444-1) implementation"
@@ -30,8 +30,9 @@ PKG_LONGDESC="This distribution contains the public release of the an open-sourc
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
+PKG_USE_CMAKE="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static"
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static --disable-strict"
 
 pre_configure_target() {
   export CFLAGS="$CFLAGS -fPIC -DPIC"
