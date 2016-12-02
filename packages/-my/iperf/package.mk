@@ -6,4 +6,8 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="network/testing"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared"
+pre_configure_target() {
+   CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
+}
+
+PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --with-gnu-ld"

@@ -1,5 +1,5 @@
 PKG_NAME="shadowsocks-libev"
-PKG_VERSION="135ceed"
+PKG_VERSION="v2.5.6"
 PKG_GIT_URL="https://github.com/shadowsocks/shadowsocks-libev"
 PKG_DEPENDS_TARGET="toolchain openssl libevent pcre libsodium udns libev"
 PKG_PRIORITY="optional"

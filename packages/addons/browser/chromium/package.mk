@@ -44,6 +44,7 @@ pre_make_target() {
 
 make_target() {
   export LDFLAGS="$LDFLAGS -ludev"
+  #export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
   export LD=$CXX
 
   # Use Python 2
@@ -116,7 +117,7 @@ make_target() {
   ./tools/gn/bootstrap/bootstrap.py --gn-gen-args "${_flags[*]}"
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$ROOT/$TOOLCHAIN/bin/python
 
-  ninja -C out/Release chrome chrome_sandbox widevinecdmadapter
+  ninja -C out/Release -j 4 chrome chrome_sandbox widevinecdmadapter
 }
 
 makeinstall_target() {
