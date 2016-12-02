@@ -22,8 +22,8 @@ PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_URL="http://www.kernel.org/pub/linux/utils/util-linux/v2.29/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain netbsd-curses readline libz"
-PKG_DEPENDS_INIT="toolchain gcc:init netbsd-curses readline libz"
+PKG_DEPENDS_TARGET="toolchain netbsd-curses readline"
+PKG_DEPENDS_INIT="toolchain gcc:init netbsd-curses readline"
 PKG_PRIORITY="optional"
 PKG_SECTION="system"
 PKG_SHORTDESC="util-linux: Miscellaneous system utilities for Linux"
@@ -58,6 +58,8 @@ UTILLINUX_CONFIG_DEFAULT="--disable-gtk-doc \
                           --without-ncurses \
                           --without-slang \
                           --without-utempter \
+                          --without-util \
+                          --without-libz \
                           --without-user \
                           --without-systemd \
                           --without-smack \
@@ -92,7 +94,6 @@ PKG_CONFIGURE_OPTS_INIT="--prefix=/ \
                          $UTILLINUX_CONFIG_DEFAULT \
                          --enable-libblkid \
                          --enable-libmount \
-                         --enable-libuuid \
                          --enable-fsck"
 
 if [ "$INITRAMFS_PARTED_SUPPORT" = "yes" ]; then

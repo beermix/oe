@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="systemd"
-PKG_VERSION="v232"
+PKG_VERSION="cd66af2"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -51,9 +51,9 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-adm-group \
                            --disable-wheel-group \
                            --disable-xz \
-                           --enable-zlib \
-                           --enable-bzip2 \
-                           --enable-lz4 \
+                           --disable-zlib \
+                           --disable-bzip2 \
+                           --disable-lz4 \
                            --disable-pam \
                            --disable-acl \
                            --disable-smack \
