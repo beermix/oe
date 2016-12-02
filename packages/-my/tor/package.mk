@@ -1,26 +1,27 @@
 PKG_NAME="tor"
 PKG_VERSION="maint-0.2.8"
 PKG_GIT_URL="https://github.com/torproject/tor"
-#PKG_GIT_BRANCH="maint-0.2.9"
 PKG_DEPENDS_TARGET="toolchain libz libevent"
-PKG_PRIORITY="optional"
 PKG_SECTION="security"
 PKG_AUTORECONF="yes"
 
-CFLAGS="$CFLAGS -fPIC -std=gnu99"
+pre_configure_target() {
+   CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
+}
 
 PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
-			   --with-openssl-dir=$SYSROOT_PREFIX/usr \
-			   --disable-gcc-hardening \
-			   --disable-unittests \
-			   --disable-seccomp \
-			   --disable-gcc-hardening \
-			   --sysconfdir=/storage/.config \
-			   --datarootdir=/storage/.cache/tor \
-			   --datadir=/storage/.cache/tor \
-			   --with-zlib-dir=$ROOT/$TOOLCHAIN \
-			   --disable-asciidoc \
-			   ac_cv_prog_cc_c99=-std=gnu99"
+			      --with-openssl-dir=$SYSROOT_PREFIX/usr \
+			      --disable-gcc-hardening \
+			      --disable-unittests \
+			      --disable-seccomp \
+			      --disable-gcc-hardening \
+			      --sysconfdir=/storage/.config \
+			      --datarootdir=/storage/.cache/tor \
+			      --datadir=/storage/.cache/tor \
+			      --with-zlib-dir=$ROOT/$TOOLCHAIN \
+			      --disable-asciidoc \
+			      --disable-silent-rules \
+			      ac_cv_prog_cc_c99=-std=gnu99"
 
 
 post_install() {
