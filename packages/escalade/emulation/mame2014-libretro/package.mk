@@ -16,41 +16,50 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="fsuae-libretro"
-PKG_VERSION="1a2b8b7"
+PKG_NAME="mame2014-libretro"
+PKG_VERSION="9e8ae1d"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
-PKG_SITE="http://fs-uae.net"
-PKG_GIT_URL="https://github.com/libretro/libretro-fsuae"
-PKG_DEPENDS_TARGET="toolchain libmpeg2 openal-soft glib"
-PKG_SECTION="emulation"
-PKG_SHORTDESC="FS-UAE amiga emulator libretro core."
+PKG_SITE="https://github.com/libretro/mame2014-libretro"
+PKG_URL="https://github.com/libretro/mame2014-libretro/archive/$PKG_VERSION.tar.gz"
+PKG_DEPENDS_TARGET="toolchain"
+PKG_SECTION="libretro"
+PKG_SHORTDESC="Late 2014 version of MAME (0.159-ish) for libretro and MAME 0.159 romsets"
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
-case $PROJECT in
-  RPi*)
-    PKG_CONFIGURE_OPTS_TARGET="--disable-jit --enable-neon"
-    ;;
-esac
-
-pre_configure_target() {
-  cd $ROOT/$BUILD/$PKG_NAME-$PKG_VERSION
-  rm -rf .$TARGET_NAME
-  export ac_cv_func_realloc_0_nonnull=yes
+pre_make_target() {
+  export REALCC=$CC
+  export CC=$CXX
+  export LD=$CXX
   strip_lto
 }
-
 make_target() {
-  make CC=$HOST_CC CFLAGS= gen
-  make CC=$CC
+  case $PROJECT in
+    RPi)
+      make platform=armv6-hardfloat-arm1176jzf-s
+      ;;
+    RPi2)
+      make platform=armv7-neon-hardfloat-cortex-a7
+      ;;
+    imx6)
+      make platform=armv7-neon-hardfloat-cortex-a9
+      ;;
+    WeTek_Play)
+      make platform=armv7-neon-hardfloat-cortex-a9
+      ;;
+    Odroid_C2|WeTek_Hub|WeTek_Play_2)
+      make platform=aarch64
+      ;;
+    Generic)
+      make
+      ;;
+  esac
 }
 
 makeinstall_target() {
   mkdir -p $INSTALL/usr/lib/libretro
-  cp fsuae_libretro.so $INSTALL/usr/lib/libretro/
-  mkdir -p $INSTALL/usr/share/fs-uae
-  cp fs-uae.dat $INSTALL/usr/share/fs-uae/
+  cp mame2014_libretro.so $INSTALL/usr/lib/libretro/
 }

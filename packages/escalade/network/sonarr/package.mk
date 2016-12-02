@@ -16,36 +16,26 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="dosbox-sdl2"
-PKG_VERSION="71d6832"
+PKG_NAME="sonarr"
+PKG_VERSION="2.0.0.4409"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv3"
-PKG_SITE="https://github.com/duganchen/dosbox"
-PKG_GIT_URL="https://github.com/duganchen/dosbox"
-PKG_DEPENDS_TARGET="toolchain alsa-lib SDL2 SDL2_net munt fluidsynth libpng glew"
-PKG_SECTION="emulation"
-PKG_SHORTDESC="DOSBox emulator SDL2 fork by duganchen"
+PKG_SITE="https://sonarr.tv"
+PKG_URL="http://update.sonarr.tv/v2/master/mono/NzbDrone.master.$PKG_VERSION.mono.tar.gz"
+PKG_SOURCE_DIR="NzbDrone"
+PKG_DEPENDS_TARGET="toolchain libmediainfo"
+PKG_SECTION="service/downloadmanager"
+PKG_SHORTDESC="Smart PVR for newsgroup and bittorrent users."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
-			   --enable-core-inline \
-                           --enable-dynrec \
-			   --enable-unaligned_memory \
-                           --with-sdl=sdl2 \
-                           --with-sdl-prefix=$SYSROOT_PREFIX/usr"
-
-pre_make_target() {
-  if [[ "$PROJECT" =~ "RPi" ]]; then
-    sed -i s/C_TARGETCPU.*/C_TARGETCPU\ ARMV7LE/g config.h
-  fi
-  sed -i s/SVN/SDL2/g config.h
+make_target() {
+  : # nothing to do here
 }
 
-post_makeinstall_target() {
-  cp $PKG_DIR/scripts/* $INSTALL/usr/bin/
-  mkdir -p $INSTALL/etc
-  cp $PKG_DIR/config/dosbox-SDL2.conf $INSTALL/etc/
+makeinstall_target() {
+  mkdir -p $INSTALL/opt/sonarr
+  cp -PR * $INSTALL/opt/sonarr/
 }

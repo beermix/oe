@@ -19,12 +19,12 @@
 ################################################################################
 
 PKG_NAME="pcsx_rearmed-libretro"
-PKG_VERSION="6f7b363"
+PKG_VERSION="6a0ea0d"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/pcsx_rearmed"
-PKG_URL="https://github.com/libretro/pcsx_rearmed/archive/$PKG_VERSION.tar.gz"
+PKG_GIT_URL="https://github.com/libretro/pcsx_rearmed"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="emulation"
 PKG_SHORTDESC="ARM optimized PCSX fork"
@@ -33,22 +33,23 @@ PKG_LONGDESC="PCSX ReARMed is yet another PCSX fork based on the PCSX-Reloaded p
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-unpack() {
-  tar -zxf $SOURCES/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.gz -C $BUILD
-  mv $BUILD/pcsx_rearmed* $BUILD/$PKG_NAME-$PKG_VERSION
-}
-
 configure_target() {
-  :
+  cd ../
+  rm -rf .$TARGET_NAME
 }
 
 make_target() {
-  cd $ROOT/$PKG_BUILD
-  if [[ "$TARGET_FPU" =~ "neon" ]]; then
-    make -f Makefile.libretro HAVE_NEON=1 USE_DYNAREC=1 BUILTIN_GPU=neon
-  else
-    make -f Makefile.libretro USE_DYNAREC=1 BUILTIN_GPU=neon
-  fi
+  case $PROJECT in
+    RPi)
+      make -f Makefile.libretro platform=armv
+      ;;
+    RPi2)
+      make -f Makefile.libretro platform=rpi2
+      ;;
+    *)
+      make -f Makefile.libretro USE_DYNAREC=1 BUILTIN_GPU=neon
+      ;;
+  esac
 }
 
 makeinstall_target() {

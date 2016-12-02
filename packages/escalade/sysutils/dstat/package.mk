@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="dstat"
-PKG_VERSION="master"
+PKG_VERSION="4c47a34"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"

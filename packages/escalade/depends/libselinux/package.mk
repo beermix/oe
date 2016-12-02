@@ -17,29 +17,31 @@
 ################################################################################
 
 PKG_NAME="libselinux"
-PKG_VERSION="20161014"
+PKG_VERSION="libselinux-2.6"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/SELinuxProject/selinux"
 PKG_GIT_URL="https://github.com/SELinuxProject/selinux"
-#PKG_SOURCE_DIR="selinux-libselinux-$PKG_VERSION"
 PKG_DEPENDS_TARGET="toolchain pcre"
 PKG_SECTION="tools"
 PKG_SHORTDESC="Security Enhanced Linux (SELinux) userland libraries."
 PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
-pre_configure_target() {
-# xf86-video-intel is broken enough. dont link with LTO
+pre_build_target() {
   strip_lto
-  export LDFLAGS="-ldl -lpthread"
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong||g"`
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
+  export CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-fstack-protector-strong||g"`
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
 }
 
 
 make_target() {
-  make DESTDIR=$SYSROOT_PREFIX LIBDIR=$SYSROOT_PREFIX/lib
-  make install
+  make install DESTDIR=$SYSROOT_PREFIX -j1
 }
 
 makeinstall_target() {

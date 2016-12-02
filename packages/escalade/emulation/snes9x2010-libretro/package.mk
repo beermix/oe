@@ -19,12 +19,12 @@
 ################################################################################
 
 PKG_NAME="snes9x2010-libretro"
-PKG_VERSION="1c0f69f"
+PKG_VERSION="74953d8"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="Non-commercial"
 PKG_SITE="https://github.com/libretro/snes9x2010.git"
-PKG_URL="https://github.com/libretro/snes9x2010/archive/$PKG_VERSION.tar.gz"
+PKG_GIT_URL="https://github.com/libretro/snes9x2010"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="emulation"
 PKG_SHORTDESC="Optimized port/rewrite of SNES9x 1.52+ to Libretro."

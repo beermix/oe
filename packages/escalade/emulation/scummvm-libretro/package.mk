@@ -19,12 +19,12 @@
 ################################################################################
 
 PKG_NAME="scummvm-libretro"
-PKG_VERSION="ecb2dc1"
+PKG_VERSION="47bb6e5"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/scummvm"
-PKG_URL="https://github.com/libretro/scummvm/archive/$PKG_VERSION.tar.gz"
+PKG_GIT_URL="https://github.com/libretro/scummvm"
 PKG_DEPENDS_TARGET="toolchain flac libmad"
 PKG_SECTION="emulation"
 PKG_SHORTDESC="ScummVM with libretro backend."
@@ -37,18 +37,17 @@ pre_configure_target() {
   strip_lto
 }
 
-post_unpack() {
-  mv $BUILD/scummvm* $BUILD/$PKG_NAME-$PKG_VERSION
-}
 
 configure_target() {
   :
 }
 
 make_target() {
-  CXXFLAGS="$CXXFLAGS -DHAVE_POSIX_MEMALIGN=1 -DUSE_FLAC -DUSE_MAD -DUSE_MT32EMU"
+  export CXXFLAGS="$CXXFLAGS -DHAVE_POSIX_MEMALIGN=1"
+  export LDFLAGS="$LDFLAGS -lmt32emu -lFLAC"
+  export ar="$AR cru"
   cd ../backends/platform/libretro/build/
-  make
+  make USE_FLAC=1 HAVE_MT32EMU=1
 }
 
 makeinstall_target() {

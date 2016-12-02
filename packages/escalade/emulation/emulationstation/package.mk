@@ -30,8 +30,8 @@ PKG_SHORTDESC="Emulationstation emulator frontend"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-post_unpack() {
-  mv $BUILD/EmulationStation* $BUILD/$PKG_NAME-$PKG_VERSION
+pre_configure_target() {
+  strip_gold
 }
 
 post_makeinstall_target() {  

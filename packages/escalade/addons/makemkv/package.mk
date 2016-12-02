@@ -35,7 +35,6 @@ PKG_ADDON_REPOVERSION="8.0"
 
 PKG_AUTORECONF="no"
 
-PKG_MAINTAINER="unofficial.addon.pro"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-gui --enable-noec"
 
