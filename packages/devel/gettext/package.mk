@@ -32,9 +32,6 @@ PKG_LONGDESC="This is the GNU gettext package. It is interesting for authors or 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-pre_configure_host() {
-   CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
-}
 
 PKG_CONFIGURE_SCRIPT="gettext-tools/configure"
 
