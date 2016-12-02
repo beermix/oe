@@ -118,6 +118,7 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
 
 pre_configure_target() {
   export LIBS="-lxcb-dri3 -lxcb-present -lxcb-sync -lxshmfence -lz"
+  CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
 }
 
 post_makeinstall_target() {

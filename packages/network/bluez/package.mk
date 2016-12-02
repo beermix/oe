@@ -62,8 +62,9 @@ fi
 pre_configure_target() {
 # bluez fails to build in subdirs
   cd $ROOT/$PKG_BUILD
-    rm -rf .$TARGET_NAME
-
+  rm -rf .$TARGET_NAME
+  
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
   export LIBS="-lncurses -lterminfo"
 }
 

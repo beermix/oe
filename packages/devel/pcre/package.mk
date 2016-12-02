@@ -52,12 +52,14 @@ pre_configure_target() {
   CFLAGS="$CFLAGS -fPIC"
   CXXFLAGS="$CXXFLAGS -fPIC"
   LDFLAGS="$LDFLAGS -fPIC"
+  CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
 }
 
 pre_configure_host() {
   CFLAGS="$CFLAGS -fPIC"
   CXXFLAGS="$CXXFLAGS -fPIC"
   LDFLAGS="$LDFLAGS -fPIC"
+  CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
 }
 
 post_makeinstall_target() {

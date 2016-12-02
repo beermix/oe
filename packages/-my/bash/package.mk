@@ -8,6 +8,7 @@ PKG_AUTORECONF="no"
 
 pre_configure_target() {
   export LIBS="-lterminfo -ltermcap"
+  CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
 }
 
 PKG_CONFIGURE_OPTS_TARGET="bash_cv_getenv_redef=no \

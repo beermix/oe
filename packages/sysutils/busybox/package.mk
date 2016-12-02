@@ -124,8 +124,8 @@ configure_target() {
     fi
 
     # optimize for size
-    CFLAGS=`echo $CFLAGS | sed -e "s|-Ofast|-O2|"`
-    CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O2|"`
+    CFLAGS=`echo $CFLAGS | sed -e "s|-Ofast|-O3|"`
+    CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
 
     # busybox fails to build with GOLD support enabled with binutils-2.25
     strip_gold
@@ -143,8 +143,8 @@ configure_init() {
     sed -i -e "s|^CONFIG_PREFIX=.*$|CONFIG_PREFIX=\"$INSTALL\"|" .config
 
     # optimize for size
-    CFLAGS=`echo $CFLAGS | sed -e "s|-Ofast|-O2|"`
-    CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O2|"`
+    CFLAGS=`echo $CFLAGS | sed -e "s|-Ofast|-O3|"`
+    CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
 
     # busybox fails to build with GOLD support enabled with binutils-2.25
     strip_gold
