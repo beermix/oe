@@ -32,11 +32,11 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="bash_cv_wcwidth_broken=no \
-				   bash_cv_func_sigsetjmp=yes \
-				   --disable-shared \
-				   --enable-static \
-				   --with-curses \
-				   --without-purify"
+			      bash_cv_func_sigsetjmp=yes \
+			      --disable-shared \
+			      --enable-static \
+			      --with-curses \
+			      --without-purify"
                            
 PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
 
