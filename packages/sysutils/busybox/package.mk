@@ -45,11 +45,6 @@ PKG_MAKE_OPTS_INIT="ARCH=$TARGET_ARCH \
                     KBUILD_VERBOSE=1 \
                     install"
 
-# nano text editor
-  if [ "$NANO_EDITOR" = "yes" ]; then
-    PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET nano"
-  fi
-
 # nfs support
 if [ "$NFS_SUPPORT" = yes ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET rpcbind"
@@ -124,8 +119,8 @@ configure_target() {
     fi
 
     # optimize for size
-    CFLAGS=`echo $CFLAGS | sed -e "s|-Ofast|-O3|"`
-    CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
+    CFLAGS=`echo $CFLAGS | sed -e "s|-Ofast|-Os|"`
+    CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
 
     # busybox fails to build with GOLD support enabled with binutils-2.25
     strip_gold
@@ -143,8 +138,8 @@ configure_init() {
     sed -i -e "s|^CONFIG_PREFIX=.*$|CONFIG_PREFIX=\"$INSTALL\"|" .config
 
     # optimize for size
-    CFLAGS=`echo $CFLAGS | sed -e "s|-Ofast|-O3|"`
-    CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
+    CFLAGS=`echo $CFLAGS | sed -e "s|-Ofast|-Os|"`
+    CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
 
     # busybox fails to build with GOLD support enabled with binutils-2.25
     strip_gold
@@ -172,7 +167,6 @@ makeinstall_target() {
     rm $INSTALL/bin/bash
     rm $INSTALL/bin/tar
     
-
   mkdir -p $INSTALL/usr/lib/openelec
     cp $PKG_DIR/scripts/fs-resize $INSTALL/usr/lib/openelec
       sed -e "s/@DISTRONAME@/$DISTRONAME/g" -i $INSTALL/usr/lib/openelec/fs-resize
