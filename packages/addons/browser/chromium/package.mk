@@ -44,7 +44,7 @@ pre_make_target() {
 
 make_target() {
   export LDFLAGS="$LDFLAGS -ludev"
-  #export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
   export LD=$CXX
 
   # Use Python 2
@@ -82,8 +82,9 @@ make_target() {
     'use_sysroot=true'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_hangout_services_extension=true'
+    'enable_pnacl=true'
     'enable_widevine=true'
-    'enable_nacl=false'
+    'enable_nacl=true'
     'enable_nacl_nonsfi=false'
     "google_api_key=\"${_google_api_key}\""
     "google_default_client_id=\"${_google_default_client_id}\""

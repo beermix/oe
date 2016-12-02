@@ -16,24 +16,29 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="xf86-video-ati"
-PKG_VERSION="7.8.0"
+PKG_NAME="visualization.vsxu"
+PKG_VERSION="990332f"
 PKG_REV="1"
-PKG_ARCH="x86_64"
-PKG_LICENSE="OSS"
-PKG_SITE="http://www.x.org/"
-PKG_URL="http://xorg.freedesktop.org/archive/individual/driver/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain libXcomposite xorg-server"
-PKG_SECTION="x11/driver"
-PKG_SHORTDESC="xf86-video-ati: The Xorg driver for ATI video chips"
-PKG_LONGDESC="The ati driver supports various ATi, know AMD, video chips."
+PKG_ARCH="i386 x86_64"
+PKG_LICENSE="GPL"
+PKG_SITE="https://github.com/notspiff/visualization.vsxu"
+PKG_GIT_URL="https://github.com/notspiff/visualization.vsxu"
+PKG_GIT_BRANCH="master"
+PKG_DEPENDS_TARGET="toolchain kodi-platform vsxu"
+PKG_PRIORITY="optional"
+PKG_SECTION=""
+PKG_SHORTDESC="visualization.vsxu"
+PKG_LONGDESC="visualization.vsxu"
+PKG_AUTORECONF="no"
 
-PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_IS_ADDON="yes"
+PKG_ADDON_TYPE="xbmc.player.musicviz"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-glamor --with-xorg-module-dir=$XORG_PATH_MODULES"
+PKG_CMAKE_OPTS_TARGET="-DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
+        -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr"
 
-post_makeinstall_target() {
-  mkdir -p $INSTALL/etc/X11
-    cp $PKG_DIR/config/*.conf $INSTALL/etc/X11
+addon() {
+  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/
+  cp -PR $PKG_BUILD/.install_pkg/usr/share/kodi/addons/$PKG_NAME/* $ADDON_BUILD/$PKG_ADDON_ID/
+  cp -PL $PKG_BUILD/.install_pkg/usr/lib/kodi/addons/$PKG_NAME/*.so $ADDON_BUILD/$PKG_ADDON_ID/
 }

@@ -16,24 +16,34 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="xf86-video-ati"
-PKG_VERSION="7.8.0"
+PKG_NAME="pvr.hts"
+PKG_VERSION="7a3b3a3"
 PKG_REV="1"
-PKG_ARCH="x86_64"
-PKG_LICENSE="OSS"
-PKG_SITE="http://www.x.org/"
-PKG_URL="http://xorg.freedesktop.org/archive/individual/driver/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain libXcomposite xorg-server"
-PKG_SECTION="x11/driver"
-PKG_SHORTDESC="xf86-video-ati: The Xorg driver for ATI video chips"
-PKG_LONGDESC="The ati driver supports various ATi, know AMD, video chips."
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
+PKG_SITE="http://www.kodi.tv"
+PKG_GIT_URL="https://github.com/kodi-pvr/pvr.hts"
+PKG_GIT_BRANCH="master"
+PKG_DEPENDS_TARGET="toolchain kodi-platform"
+PKG_PRIORITY="optional"
+PKG_SECTION=""
+PKG_SHORTDESC="pvr.hts"
+PKG_LONGDESC="pvr.hts"
+PKG_AUTORECONF="no"
 
-PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_IS_ADDON="yes"
+PKG_ADDON_TYPE="xbmc.pvrclient"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-glamor --with-xorg-module-dir=$XORG_PATH_MODULES"
+configure_target() {
+  cmake -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+        -DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
+        -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
+        ..
+}
 
-post_makeinstall_target() {
-  mkdir -p $INSTALL/etc/X11
-    cp $PKG_DIR/config/*.conf $INSTALL/etc/X11
+addon() {
+  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/
+  cp -PR $PKG_BUILD/.install_pkg/usr/share/kodi/addons/$PKG_NAME/* $ADDON_BUILD/$PKG_ADDON_ID/
+  cp -PL $PKG_BUILD/.install_pkg/usr/lib/kodi/addons/$PKG_NAME/*.so $ADDON_BUILD/$PKG_ADDON_ID/
 }
