@@ -67,7 +67,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
                            --enable-oss-wrapper \
                            --disable-coreaudio-output \
                            --enable-alsa \
-                           --disable-esound \
+                           --enable-esound \
                            --disable-solaris \
                            --disable-waveout \
                            --enable-glib2 \
@@ -77,7 +77,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
                            --disable-jack \
                            --disable-asyncns \
                            --disable-tcpwrap \
-                           --disable-lirc \
+                           --enable-lirc \
                            --enable-dbus \
                            --disable-bluez4 \
                            $PULSEAUDIO_BLUETOOTH \
