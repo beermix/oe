@@ -72,6 +72,7 @@ makeinstall_target() {
                                 --with-thread \
                                 --with-random \
                                 --with-system \
+                                --with-python \
                                 --with-iostreams \
                                 --with-program_options \
                                 --with-atomic \
