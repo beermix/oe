@@ -9,21 +9,22 @@ PKG_AUTORECONF="no"
 
 pre_configure_target() {
    cd $ROOT/$PKG_BUILD
-   LDFLAGS="-lpthread -lrt"
+   export LDFLAGS="-lpthread -lrt"
+   export LIBS="$LIBS -lssh2 -lmbedcrypto"
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
-			   --bindir=/usr/bin \
-			   --sbindir=/usr/sbin \
-			   --datadir=/storage/.config \
-			   --sysconfdir=/storage/.config/zabbix \
-			   --enable-server \
-			   --enable-proxy \
-			   --enable-agent \
-			   --with-mysql \
-			   --without-net-snmp \
-			   --without-ssh2 \
-			   --with-openssl=$SYSROOT_PREFIX/usr"
+			      --bindir=/usr/bin \
+			      --sbindir=/usr/sbin \
+			      --datadir=/storage/.config \
+			      --sysconfdir=/storage/.config/zabbix \
+			      --enable-server \
+			      --enable-proxy \
+			      --enable-agent \
+			      --with-mysql \
+			      --without-net-snmp \
+			      --with-ssh2=$SYSROOT_PREFIX/usr \
+			      --with-openssl=$SYSROOT_PREFIX/usr"
 
 
 post_install() {
