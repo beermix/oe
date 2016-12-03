@@ -1,0 +1,297 @@
+#!/usr/bin/make -f
+
+package = gettext
+
+export DEB_BUILD_MAINT_OPTIONS = hardening=-format
+
+DEB_BUILD_ARCH := $(shell dpkg-architecture -qDEB_BUILD_ARCH)
+DEB_BUILD_GNU_TYPE := $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
+DEB_HOST_GNU_TYPE := $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
+
+CC = $(DEB_HOST_GNU_TYPE)-gcc
+CFLAGS := `dpkg-buildflags --get CFLAGS` -Wall
+CXXFLAGS := `dpkg-buildflags --get CXXFLAGS` -Wall
+LDFLAGS := `dpkg-buildflags --get LDFLAGS`
+CPPFLAGS := `dpkg-buildflags --get CPPFLAGS`
+INSTALL_PROGRAM = install
+INSTALL_SCRIPT = install
+
+DEB_HOST_ARCH := $(shell dpkg-architecture -qDEB_HOST_ARCH)
+DEB_HOST_MULTIARCH := $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+
+STRIP = true
+
+ifeq (,$(findstring nostrip,$(DEB_BUILD_OPTIONS)))
+ # FIXME: libtool seems to call strip directly
+ ifeq ($(DEB_HOST_ARCH),$(DEB_BUILD_ARCH))
+   INSTALL_PROGRAM += -s
+   STRIP=strip --strip-unneeded --remove-section=.comment --remove-section=.note
+ else
+   STRIP=$(DEB_HOST_GNU_TYPE)-strip --strip-unneeded --remove-section=.comment --remove-section=.note
+ endif
+endif
+
+export AM_UPDATE_INFO_DIR = no
+
+# PNET_ARCHS = %alpha%amd64%hppa%i386%ia64%mips%mipsel%powerpc%s390%sparc%
+# ifneq (,$(findstring %$(DEB_HOST_ARCH)%,$(PNET_ARCHS)))
+#   CSHARP = --enable-csharp=pnet
+# endif
+
+# MONO_ARCHS = %amd64%arm%i386%ia64%lpia%powerpc%
+# ifneq (,$(findstring %$(DEB_HOST_ARCH)%,$(MONO_ARCHS)))
+#   CSHARP = --enable-csharp=mono
+# endif
+
+CSHARP = --disable-csharp
+
+NOJAVA_ARCHS = %none%
+
+build:
+	./configure --prefix=/usr --enable-threads $(CSHARP) \
+		--build=$(DEB_BUILD_GNU_TYPE) --host=$(DEB_HOST_GNU_TYPE) \
+		--disable-native-java CC="$(CC)" CFLAGS="$(CFLAGS)" \
+		LDFLAGS="$(LDFLAGS)" \
+		JAVAC=/usr/lib/jvm/default-java/bin/javac \
+		CPPFLAGS="$(CPPFLAGS)" \
+		CXXFLAGS="$(CXXFLAGS)" \
+		LDFLAGS="$(LDFLAGS)"
+	$(MAKE)
+	$(MAKE) install DESTDIR=`pwd`/debian/tmp \
+		INSTALL_PROGRAM="$(INSTALL_PROGRAM)" \
+		INSTALL_SCRIPT="$(INSTALL_SCRIPT)"
+	touch build
+
+clean:
+	rm -f build
+	[ ! -f Makefile ] || $(MAKE) distclean
+	rm -f `find . -name "*~"`
+	rm -rf debian/tmp debian/files* core debian/substvars debian/a.out
+	cd debian && rm -rf gettext-base gettext gettext-el gettext-doc \
+		autopoint libgettextpo0 libasprintf0v5 libgettextpo-dev libasprintf-dev
+
+binary-arch: build
+	debian/rules gettext-base
+	debian/rules gettext
+	debian/rules libgettextpo0
+	debian/rules libasprintf0v5
+	debian/rules libgettextpo-dev
+	debian/rules libasprintf-dev
+	dh_fixperms -a
+	dh_strip -a
+	dh_shlibdeps -a
+	dh_gencontrol -a
+	dh_md5sums -a
+	dh_builddeb -a
+
+binary-indep: build
+	debian/rules gettext-el
+	debian/rules gettext-doc
+	debian/rules autopoint
+	dh_fixperms -i
+	dh_strip -i
+	dh_shlibdeps -i
+	dh_gencontrol -i
+	dh_md5sums -i
+	dh_builddeb -i
+
+gettext-base: build
+	rm -rf debian/$@
+	install -d debian/$@/DEBIAN debian/$@/usr/share/doc/$@
+	cd debian/$@ && install -d usr/share/man/man1 usr/bin usr/lib \
+		usr/share/lintian/overrides
+	cp -p debian/$@.lintian-overrides \
+		debian/$@/usr/share/lintian/overrides/$@
+	cp -p debian/tmp/usr/share/man/man1/gettext.1 \
+		debian/$@/usr/share/man/man1
+	cp -p debian/tmp/usr/share/man/man1/ngettext.1 \
+		debian/$@/usr/share/man/man1
+	cp -p debian/tmp/usr/share/man/man1/envsubst.1 \
+		debian/$@/usr/share/man/man1
+	cp -a debian/tmp/usr/share/man/man3 debian/$@/usr/share/man
+	cd debian/$@/usr/share/man/man3 && \
+		rm -f dcgettext.3 dcngettext.3 dgettext.3 dngettext.3
+	cp -p debian/tmp/usr/bin/gettext debian/$@/usr/bin
+	cp -p debian/tmp/usr/bin/ngettext debian/$@/usr/bin
+	cp -p debian/tmp/usr/bin/envsubst debian/$@/usr/bin
+	cp -p debian/tmp/usr/bin/gettext.sh debian/$@/usr/bin
+	cp -a debian/tmp/usr/share/locale debian/$@/usr/share
+	if [ -f debian/tmp/usr/lib/GNU.Gettext.dll ]; then \
+		cp -p debian/tmp/usr/lib/GNU.Gettext.dll debian/$@/usr/lib; \
+	fi
+	find debian/$@/usr/share/locale | grep gettext-tools | xargs rm
+ifeq (,$(findstring %$(DEB_HOST_ARCH)%,$(NOJAVA_ARCHS)))
+ifeq ($(filter stage1,$(DEB_BUILD_PROFILES)),)
+	install -d debian/$@/usr/share/java
+	cp -p debian/tmp/usr/share/gettext/libintl.jar \
+		debian/$@/usr/share/java
+endif
+endif
+	cp -p gettext-tools/ABOUT-NLS debian/$@/usr/share/doc/$@
+	cp -p debian/copyright debian/$@/usr/share/doc/$@
+	cp -p ChangeLog debian/$@/usr/share/doc/$@/changelog
+	cp -p debian/changelog debian/$@/usr/share/doc/$@/changelog.Debian
+	cd debian/$@/usr/share/doc/$@ && gzip -9n changelog changelog.Debian
+	gzip -r9n debian/$@/usr/share/man
+	ln -s gettext.3.gz debian/$@/usr/share/man/man3/dcgettext.3.gz
+	ln -s gettext.3.gz debian/$@/usr/share/man/man3/dgettext.3.gz
+	ln -s ngettext.3.gz debian/$@/usr/share/man/man3/dcngettext.3.gz
+	ln -s ngettext.3.gz debian/$@/usr/share/man/man3/dngettext.3.gz
+
+gettext: build
+	rm -rf debian/$@
+	install -d debian/$@/DEBIAN debian/$@/usr/share/doc/$@
+	cd debian/$@ && install -d usr/share/man usr/share/java \
+		usr/share/lintian/overrides
+	cd debian && install -m 755 $@.postinst $@/DEBIAN/postinst
+	cp -p debian/$@.lintian-overrides \
+		debian/$@/usr/share/lintian/overrides/$@
+	cp -p gettext-runtime/BUGS gettext-tools/misc/DISCLAIM NEWS README \
+		debian/copyright debian/$@/usr/share/doc/$@
+	cp -p ChangeLog debian/$@/usr/share/doc/$@/changelog
+	cp -p debian/changelog debian/$@/usr/share/doc/$@/changelog.Debian
+	cd debian/$@/usr/share/doc/$@ && ln -s ../../$(package)/ABOUT-NLS
+	cd debian/$@/usr/share/doc/$@ && gzip -9n changelog changelog.Debian
+	cp -a debian/tmp/usr/bin debian/$@/usr
+	cp -a debian/tmp/usr/lib debian/$@/usr
+	cp -a debian/tmp/usr/share/info debian/$@/usr/share
+	cp -a debian/tmp/usr/share/aclocal debian/$@/usr/share
+	cp -a debian/tmp/usr/share/gettext* debian/$@/usr/share
+	rm -f debian/$@/usr/share/gettext/libintl.jar
+ifeq (,$(findstring %$(DEB_HOST_ARCH)%,$(NOJAVA_ARCHS)))
+ifeq ($(filter stage1,$(DEB_BUILD_PROFILES)),)
+	mv debian/$@/usr/share/gettext/gettext.jar debian/$@/usr/share/java
+endif
+endif
+	rm -f debian/$@/usr/lib/GNU.Gettext.dll
+	cp -a debian/tmp/usr/share/man/man1 debian/$@/usr/share/man
+	cp -a debian/tmp/usr/share/locale debian/$@/usr/share
+	find debian/$@/usr/share/locale | grep gettext-runtime | xargs rm
+	cd debian/$@/usr/bin && rm -f gettext ngettext envsubst gettext.sh
+	cd debian/$@/usr/lib && rm -f libasprintf* libgettextpo* *.la
+	cd debian/$@/usr/share/man/man1 && \
+		rm -f gettext.1 ngettext.1 envsubst.1
+	cd debian/$@/usr/lib && chmod 644 libgettextlib* libgettextsrc*
+	mkdir -p debian/$@/usr/lib/$(DEB_HOST_MULTIARCH)
+	mv debian/$@/usr/lib/libgettextlib*.so debian/$@/usr/lib/libgettextsrc*.so debian/$@/usr/lib/preloadable_libintl.so \
+		debian/$@/usr/lib/$(DEB_HOST_MULTIARCH)
+	rm -f debian/$@/usr/bin/autopoint
+	rm -f debian/$@/usr/share/man/man1/autopoint.1
+	rm -f debian/$@/usr/share/gettext/archive.dir.tar.xz
+	rm -f debian/$@/usr/lib/libgettextlib.so
+	rm -f debian/$@/usr/lib/libgettextsrc.so
+	gzip -9n debian/$@/usr/share/info/*
+	gzip -r9n debian/$@/usr/share/man
+
+libgettextpo0: build
+	rm -rf debian/$@
+	install -d debian/$@/DEBIAN debian/$@/usr/share/doc/$@
+	cd debian/$@ && install -d usr/lib/$(DEB_HOST_MULTIARCH)
+	cd debian && install -m 644 $@.shlibs $@/DEBIAN/shlibs
+	install -m 755 debian/$@.postinst debian/$@/DEBIAN/postinst
+	cp -p debian/copyright debian/$@/usr/share/doc/$@
+	cp -p debian/changelog debian/$@/usr/share/doc/$@/changelog.Debian
+	cp -p ChangeLog debian/$@/usr/share/doc/$@/changelog
+	cd debian/$@/usr/share/doc/$@ && gzip -9n changelog changelog.Debian
+	cp -a debian/tmp/usr/lib/libgettextpo.so.* debian/$@/usr/lib/$(DEB_HOST_MULTIARCH)
+
+libasprintf0v5: build
+	rm -rf debian/$@
+	install -d debian/$@/DEBIAN debian/$@/usr/share/doc/$@
+	cd debian/$@ && install -d usr/lib/$(DEB_HOST_MULTIARCH)
+	cd debian && install -m 644 $@.shlibs $@/DEBIAN/shlibs
+	install -m 755 debian/$@.postinst debian/$@/DEBIAN/postinst
+	cp -p debian/copyright debian/$@/usr/share/doc/$@
+	cp -p debian/changelog debian/$@/usr/share/doc/$@/changelog.Debian
+	cp -p ChangeLog debian/$@/usr/share/doc/$@/changelog
+	cd debian/$@/usr/share/doc/$@ && gzip -9n changelog changelog.Debian
+	cp -a debian/tmp/usr/lib/libasprintf.so.* debian/$@/usr/lib/$(DEB_HOST_MULTIARCH)
+
+libgettextpo-dev: build
+	rm -rf debian/$@
+	install -d debian/$@/DEBIAN debian/$@/usr/share/doc/$@
+	cp -p debian/copyright debian/$@/usr/share/doc/$@
+	cp -p ChangeLog debian/$@/usr/share/doc/$@/changelog
+	cp -p debian/changelog debian/$@/usr/share/doc/$@/changelog.Debian
+	cd debian/$@/usr/share/doc/$@ && gzip -9n changelog changelog.Debian
+	install -d debian/$@/usr/lib/$(DEB_HOST_MULTIARCH)
+	cp -a debian/tmp/usr/lib/libgettextpo.a debian/$@/usr/lib/$(DEB_HOST_MULTIARCH)
+	cp -a debian/tmp/usr/lib/libgettextpo.so debian/$@/usr/lib/$(DEB_HOST_MULTIARCH)
+	install -d debian/$@/usr/include
+	cp -a debian/tmp/usr/include/gettext-po.h debian/$@/usr/include
+
+libasprintf-dev: build
+	rm -rf debian/$@
+	install -d debian/$@/DEBIAN debian/$@/usr/share/doc/$@
+	cp -p debian/copyright debian/$@/usr/share/doc/$@
+	cp -p ChangeLog debian/$@/usr/share/doc/$@/changelog
+	cp -p debian/changelog debian/$@/usr/share/doc/$@/changelog.Debian
+	cd debian/$@/usr/share/doc/$@ && gzip -9n changelog changelog.Debian
+	install -d debian/$@/usr/lib/$(DEB_HOST_MULTIARCH)
+	cp -a debian/tmp/usr/lib/libasprintf.a debian/$@/usr/lib/$(DEB_HOST_MULTIARCH)
+	cp -a debian/tmp/usr/lib/libasprintf.so debian/$@/usr/lib/$(DEB_HOST_MULTIARCH)
+	install -d debian/$@/usr/include
+	cp -a debian/tmp/usr/include/autosprintf.h debian/$@/usr/include
+
+gettext-el: build
+	rm -rf debian/$@
+	install -d debian/$@/DEBIAN debian/$@/usr/share/doc/$@
+	cd debian/$@ && install -d \
+		etc/emacs/site-start.d \
+		usr/share/emacs/site-lisp/$(package) \
+		usr/lib/emacsen-common/packages/install \
+		usr/lib/emacsen-common/packages/remove
+	install -m 644 gettext-tools/misc/po-mode.el \
+		debian/$@/usr/share/emacs/site-lisp/$(package)
+	install -m 644 gettext-tools/misc/po-compat.el \
+		debian/$@/usr/share/emacs/site-lisp/$(package)
+	cd debian && install -m 755 $@.emacsen-install \
+		$@/usr/lib/emacsen-common/packages/install/$@
+	cd debian && install -m 755 $@.emacsen-remove \
+		$@/usr/lib/emacsen-common/packages/remove/$@
+	install -m 755 debian/$@.prerm debian/$@/DEBIAN/prerm
+	install -m 755 debian/$@.postinst debian/$@/DEBIAN/postinst
+	install -m 644 debian/$@.conffiles debian/$@/DEBIAN/conffiles
+	install -m 644 debian/50gettext.el debian/$@/etc/emacs/site-start.d
+	cp -p debian/copyright debian/$@/usr/share/doc/$@
+	cp -p ChangeLog debian/$@/usr/share/doc/$@/changelog
+	cp -p debian/changelog debian/$@/usr/share/doc/$@/changelog.Debian
+	cd debian/$@/usr/share/doc/$@ && gzip -9n changelog changelog.Debian
+
+gettext-doc: build
+	rm -rf debian/$@
+	install -d debian/$@/DEBIAN debian/$@/usr/share/doc/$@
+	install -d debian/$@/usr/share/doc-base
+	install -m 644 debian/$@.doc-base debian/$@/usr/share/doc-base/$@
+	cp -a debian/tmp/usr/share/doc/gettext/* debian/$@/usr/share/doc/$@
+	cp -a debian/tmp/usr/share/doc/libasprintf/* debian/$@/usr/share/doc/$@
+	rm -f debian/$@/usr/share/doc/$@/javadoc2/package-list
+	ln -s $(package)_toc.html debian/$@/usr/share/doc/$@/index.html
+	cp -p debian/copyright debian/$@/usr/share/doc/$@
+	cp -p ChangeLog debian/$@/usr/share/doc/$@/changelog
+	cp -p debian/changelog debian/$@/usr/share/doc/$@/changelog.Debian
+	cd debian/$@/usr/share/doc/$@ && gzip -9n changelog changelog.Debian
+
+autopoint:
+	rm -rf debian/$@
+	install -d debian/$@/DEBIAN debian/$@/usr/share/doc/$@
+	cd debian/$@ && install -d usr/bin usr/share/gettext usr/share/man/man1
+	cp -p debian/tmp/usr/bin/autopoint debian/$@/usr/bin
+	cp -p debian/tmp/usr/share/gettext/archive.dir.tar.xz \
+		debian/$@/usr/share/gettext
+	cp -p debian/tmp/usr/share/man/man1/autopoint.1 \
+		debian/$@/usr/share/man/man1
+	gzip -r9n debian/$@/usr/share/man
+	cp -p debian/copyright debian/$@/usr/share/doc/$@
+	cp -p ChangeLog debian/$@/usr/share/doc/$@/changelog
+	cp -p debian/changelog debian/$@/usr/share/doc/$@/changelog.Debian
+	cd debian/$@/usr/share/doc/$@ && gzip -9n changelog changelog.Debian
+
+binary: binary-indep binary-arch
+
+build-arch: build
+
+build-indep: build
+
+.PHONY: binary binary-arch binary-indep build-arch build-indep clean
+.PHONY: gettext-base gettext gettext-el gettext-doc autopoint libgettextpo0 libasprintf0v5 libgettextpo-dev libasprintf-dev

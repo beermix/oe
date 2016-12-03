@@ -1,0 +1,18 @@
+Package: libasprintf0v5
+Source: gettext
+Version: 0.19.8.1-1ubuntu2
+Architecture: amd64
+Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+Installed-Size: 52
+Depends: libc6 (>= 2.14), libstdc++6 (>= 5.2)
+Breaks: gettext-base (<< 0.18.1.1-6), libasprintf0c2
+Replaces: gettext-base (<< 0.18.1.1-6), libasprintf0c2
+Section: libs
+Priority: optional
+Multi-Arch: same
+Homepage: http://www.gnu.org/software/gettext/
+Description: GNU library to use fprintf and friends in C++
+ This package contains the libasprintf shared library which makes the
+ C formatted output routines (fprintf et al.) usable in C++ programs,
+ for use with the <string> strings and the <iostream> streams.
+Original-Maintainer: Santiago Vila <sanvila@debian.org>

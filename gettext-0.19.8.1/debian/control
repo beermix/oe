@@ -1,0 +1,106 @@
+Source: gettext
+Section: devel
+Priority: optional
+Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+XSBC-Original-Maintainer: Santiago Vila <sanvila@debian.org>
+Standards-Version: 3.9.6
+Build-Depends: debhelper (>= 9), fastjar, default-jdk, file, libncurses5-dev, libxml2-dev, libglib2.0-dev, libcroco3-dev, xz-utils, libunistring-dev
+Homepage: http://www.gnu.org/software/gettext/
+
+Package: gettext-base
+Section: utils
+Priority: standard
+Architecture: any
+Multi-Arch: foreign
+Depends: ${shlibs:Depends}
+Description: GNU Internationalization utilities for the base system
+ This package includes the gettext and ngettext programs which allow
+ other packages to internationalize the messages given by shell scripts.
+
+Package: gettext
+Architecture: any
+Multi-Arch: foreign
+Depends: ${shlibs:Depends}, gettext-base, dpkg (>= 1.15.4) | install-info
+Recommends: curl | wget | lynx-cur
+Breaks: autopoint (<= 0.17-11)
+Suggests: gettext-doc, autopoint, libasprintf-dev, libgettextpo-dev
+Description: GNU Internationalization utilities
+ Interesting for authors or maintainers of other packages or programs
+ which they want to see internationalized.
+
+Package: gettext-el
+Section: lisp
+Architecture: all
+Depends: gettext, emacs | emacsen
+Description: Emacs po-mode for editing gettext .po files
+ This package contains po-mode.el for easy .po editing using emacs.
+
+Package: gettext-doc
+Section: doc
+Priority: optional
+Architecture: all
+Description: Documentation for GNU gettext
+ This package contains the HTML documentation for GNU gettext, as well as
+ simple "hello world" examples in several programming languages.
+
+Package: autopoint
+Section: devel
+Priority: optional
+Architecture: all
+Multi-Arch: foreign
+Depends: xz-utils
+Replaces: gettext (<= 0.17-11)
+Description: The autopoint program from GNU gettext
+ The `autopoint' program copies standard gettext infrastructure files
+ into a source package.  It extracts from a macro call of the form
+ `AM_GNU_GETTEXT_VERSION(VERSION)', found in the package's
+ `configure.in' or `configure.ac' file, the gettext version used by the
+ package, and copies the infrastructure files belonging to this version
+ into the package.
+
+Package: libgettextpo0
+Section: libs
+Priority: optional
+Architecture: any
+Multi-Arch: same
+Depends: ${shlibs:Depends}
+Breaks: gettext (<< 0.18.1.1-6)
+Replaces: gettext (<< 0.18.1.1-6)
+Description: GNU Internationalization library
+ This package contains the libgettextpo shared library for interfacing
+ programmatically with GNU gettext .po files.
+
+Package: libasprintf0v5
+Section: libs
+Priority: optional
+Architecture: any
+Multi-Arch: same
+Depends: ${shlibs:Depends}
+Breaks: gettext-base (<< 0.18.1.1-6), libasprintf0c2
+Replaces: gettext-base (<< 0.18.1.1-6), libasprintf0c2
+Description: GNU library to use fprintf and friends in C++
+ This package contains the libasprintf shared library which makes the
+ C formatted output routines (fprintf et al.) usable in C++ programs,
+ for use with the <string> strings and the <iostream> streams.
+
+Package: libgettextpo-dev
+Section: libdevel
+Architecture: any
+Multi-Arch: same
+Depends: libgettextpo0 (= ${binary:Version})
+Suggests: gettext-doc
+Breaks: gettext (<< 0.18.1.1-10)
+Replaces: gettext (<< 0.18.1.1-10)
+Description: GNU Internationalization library development files
+ This package contains development files for the libgettextpo library.
+ 
+Package: libasprintf-dev
+Section: libdevel
+Architecture: any
+Multi-Arch: same
+Depends: libasprintf0v5 (= ${binary:Version})
+Suggests: gettext-doc
+Breaks: gettext (<< 0.18.1.1-10)
+Replaces: gettext (<< 0.18.1.1-10)
+Description: GNU Internationalization library development files
+ This package contains development files for the libasprintf library.

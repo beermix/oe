@@ -1,0 +1,17 @@
+Package: libgettextpo0
+Source: gettext
+Version: 0.19.8.1-1ubuntu2
+Architecture: amd64
+Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+Installed-Size: 404
+Depends: libc6 (>= 2.14)
+Breaks: gettext (<< 0.18.1.1-6)
+Replaces: gettext (<< 0.18.1.1-6)
+Section: libs
+Priority: optional
+Multi-Arch: same
+Homepage: http://www.gnu.org/software/gettext/
+Description: GNU Internationalization library
+ This package contains the libgettextpo shared library for interfacing
+ programmatically with GNU gettext .po files.
+Original-Maintainer: Santiago Vila <sanvila@debian.org>

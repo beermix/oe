@@ -1,0 +1,17 @@
+Package: gettext
+Version: 0.19.8.1-1ubuntu2
+Architecture: amd64
+Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+Installed-Size: 7803
+Depends: libc6 (>= 2.17), libgomp1 (>= 4.9), libtinfo5 (>= 6), gettext-base, dpkg (>= 1.15.4) | install-info
+Recommends: curl | wget | lynx-cur
+Suggests: gettext-doc, autopoint, libasprintf-dev, libgettextpo-dev
+Breaks: autopoint (<= 0.17-11)
+Section: devel
+Priority: optional
+Multi-Arch: foreign
+Homepage: http://www.gnu.org/software/gettext/
+Description: GNU Internationalization utilities
+ Interesting for authors or maintainers of other packages or programs
+ which they want to see internationalized.
+Original-Maintainer: Santiago Vila <sanvila@debian.org>

@@ -1,0 +1,48 @@
+# Variable needed by LTLIBINTL.
+top_builddir=../..
+
+# Variable needed by xgettext.
+GETTEXTDATADIR="$abs_top_srcdir"
+export GETTEXTDATADIR
+
+OBJEXT="o"
+EXEEXT=""
+CC="x86_64-linux-gnu-gcc"
+CFLAGS="-g -O2 -fdebug-prefix-map=/root/-f2fs/oe/gettext-0.19.8.1=. -fstack-protector-strong -Wall"
+CXX="x86_64-linux-gnu-g++"
+CXXFLAGS="-g -O2 -fdebug-prefix-map=/root/-f2fs/oe/gettext-0.19.8.1=. -fstack-protector-strong -Wall"
+CPPFLAGS="-Wdate-time -D_FORTIFY_SOURCE=2"
+LDFLAGS="-Wl,-Bsymbolic-functions -Wl,-z,relro"
+LTLIBINTL=""
+JAVA_CHOICE="bytecode"
+BUILDJAVA="yes"
+TESTJAVA="yes"
+CSHARP_CHOICE="no"
+BUILDCSHARP="no"
+TESTCSHARP="no"
+TESTLIBASPRINTF="yes"
+GLIBC2="yes"
+LOCALE_FR="none"
+LOCALE_FR_UTF8="none"
+LOCALE_JA="none"
+host_os="linux-gnu"
+ARCHIVE_VERSION="0.19.8"
+
+: ${GETTEXT=tstgettext}
+: ${NGETTEXT=tstngettext}
+: ${XGETTEXT=xgettext}
+: ${MSGATTRIB=msgattrib}
+: ${MSGCAT=msgcat}
+: ${MSGCMP=msgcmp}
+: ${MSGCOMM=msgcomm}
+: ${MSGCONV=msgconv}
+: ${MSGEN=msgen}
+: ${MSGEXEC=msgexec}
+: ${MSGFILTER=msgfilter}
+: ${MSGFMT=msgfmt}
+: ${MSGGREP=msggrep}
+: ${MSGINIT=msginit}
+: ${MSGMERGE=msgmerge}
+: ${MSGUNFMT=msgunfmt}
+: ${MSGUNIQ=msguniq}
+: ${RECODE=recode}

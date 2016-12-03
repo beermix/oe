@@ -1,0 +1,17 @@
+Package: libasprintf-dev
+Source: gettext
+Version: 0.19.8.1-1ubuntu2
+Architecture: amd64
+Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+Installed-Size: 51
+Depends: libasprintf0v5 (= 0.19.8.1-1ubuntu2)
+Suggests: gettext-doc
+Breaks: gettext (<< 0.18.1.1-10)
+Replaces: gettext (<< 0.18.1.1-10)
+Section: libdevel
+Priority: optional
+Multi-Arch: same
+Homepage: http://www.gnu.org/software/gettext/
+Description: GNU Internationalization library development files
+ This package contains development files for the libasprintf library.
+Original-Maintainer: Santiago Vila <sanvila@debian.org>
