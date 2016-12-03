@@ -24,7 +24,7 @@ PKG_LICENSE="GPLv2"
 PKG_SITE="http://www.mariadb.org"
 PKG_URL="https://downloads.mariadb.org/interstitial/$PKG_NAME-$PKG_VERSION/source/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain netbsd-curses openssl mariadb:host"
+PKG_DEPENDS_TARGET="toolchain netbsd-curses openssl libevent mariadb:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="database"
 PKG_SHORTDESC="mariadb: A community developed branch of MySQL"
@@ -33,7 +33,7 @@ PKG_LONGDESC="MariaDB is a community-developed fork and a drop-in replacement fo
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_MARIADB_SERVER="no"
+PKG_MARIADB_SERVER="yes"
 
 # MariaDB Feature set. Selection of features. Options are
 # - xsmall : 
@@ -136,8 +136,8 @@ configure_target() {
         -DCMAKE_CXX_FLAGS="${TARGET_CXXFLAGS} -fPIC -DPIC -fno-strict-aliasing -DBIG_JOINS=1 -felide-constructors -fno-delete-null-pointer-checks" \
         -DCMAKE_BUILD_TYPE=Release \
         $MARIADB_IMPORT_EXECUTABLES \
-        -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
-        -DCMAKE_INSTALL_PREFIX=/usr \
+        -DCMAKE_PREFIX_PATH=/ \
+        -DCMAKE_INSTALL_PREFIX=/storage/.kodi/addons/service.web.lamp \
         -DINSTALL_DOCDIR=share/doc/mariadb \
         -DINSTALL_DOCREADMEDIR=share/doc/mariadb \
         -DINSTALL_INCLUDEDIR=include/mysql \
@@ -154,7 +154,7 @@ configure_target() {
         -DTOKUDB_OK=0 \
         -DDISABLE_LIBMYSQLCLIENT_SYMBOL_VERSIONING=TRUE \
         -DENABLE_DTRACE=OFF \
-        -DWITH_READLINE=OFF \
+        -DWITH_READLINE=ON \
         -DWITH_PCRE=bundled \
         -DWITH_ZLIB=bundled \
         -DWITH_SYSTEMD=ON \
