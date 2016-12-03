@@ -63,14 +63,14 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
                            --disable-x11 \
                            --disable-tests \
                            --enable-samplerate \
-                           --disable-oss-output \
-                           --disable-oss-wrapper \
+                           --enable-oss-output \
+                           --enable-oss-wrapper \
                            --disable-coreaudio-output \
                            --enable-alsa \
                            --disable-esound \
                            --disable-solaris \
                            --disable-waveout \
-                           --disable-glib2 \
+                           --enable-glib2 \
                            --disable-gtk3 \
                            --disable-gconf \
                            $PULSEAUDIO_AVAHI \
@@ -86,7 +86,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
                            --enable-udev \
                            --with-udev-rules-dir=/usr/lib/udev/rules.d
                            --disable-hal-compat \
-                           --enable-ipv6 \
+                           --disable-ipv6 \
                            --enable-openssl \
                            --disable-xen \
                            --disable-orc \
@@ -120,6 +120,7 @@ post_makeinstall_target() {
     cp -PR $PKG_DIR/config/pulse-daemon.conf.d $INSTALL/usr/config
 
   ln -sf /storage/.config/pulse-daemon.conf.d $INSTALL/etc/pulse/daemon.conf.d
+  #ln -sf /storage/.config/pulse-default.pa $INSTALL/etc/pulse/default.pa
 }
 
 post_install() {
