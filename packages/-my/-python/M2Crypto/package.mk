@@ -1,8 +1,7 @@
 PKG_NAME="M2Crypto"
-PKG_VERSION="0.24.0"
-PKG_SITE="https://pypi.python.org/pypi/M2Crypto"
+PKG_VERSION="0.25.1"
 PKG_GIT_URL="https://gitlab.com/m2crypto/m2crypto"
-PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"
+PKG_DEPENDS_TARGET="toolchain Python distutilscross:host openssl swig:host"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
