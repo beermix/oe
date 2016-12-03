@@ -22,13 +22,12 @@ PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/kergoth/tslib"
-PKG_GIT_URL="https://github.com/kergoth/tslib"
+PKG_URL="https://github.com/kergoth/tslib/releases/download/1.2/tslib-1.2.tar.xz"
 PKG_DEPENDS_TARGET="toolchain evtest"
 PKG_SECTION="service/system"
 PKG_SHORTDESC="Touchscreen access library with ts_uinput_touch daemon."
 PKG_LONGDESC="Touchscreen access library with ts_uinput_touch daemon."
 PKG_AUTORECONF="yes"
-
 PKG_IS_ADDON="no"
 
 TSLIB_MODULES_ENABLED="linear dejitter variance pthres ucb1x00 tatung input galax dmc touchkit st1232 waveshare"
@@ -56,6 +55,4 @@ pre_configure_target() {
 post_makeinstall_target() {
   rm -fr $INSTALL/etc
   rm -fr $INSTALL/storage
-
-  debug_strip $INSTALL/usr/bin
 }

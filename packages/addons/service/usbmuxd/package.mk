@@ -16,34 +16,33 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="webgrabplus"
-PKG_VERSION="56.29pre-20161021"
-PKG_REV="104"
+PKG_NAME="usbmuxd"
+PKG_VERSION="1.1.0"
+PKG_REV="100"
 PKG_ARCH="any"
-PKG_LICENSE="prop."
-PKG_SITE="http://www.webgrabplus.com/"
-PKG_GIT_URL="https://github.com/awiouy/webgrabplus"
-PKG_DEPENDS_TARGET="toolchain"
+PKG_LICENSE="GPL"
+PKG_SITE="http://www.libimobiledevice.org"
+PKG_URL="http://www.libimobiledevice.org/downloads/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_DEPENDS_TARGET="toolchain libusb libimobiledevice"
 PKG_SECTION="service"
-PKG_SHORTDESC="WebGrab+Plus: a multi-site incremental xmltv epg grabber"
-PKG_LONGDESC="WebGrab+Plus ($PKG_VERSION) collects tv-program guide data from selected tvguide sites for your favourite channels."
+PKG_SHORTDESC="USB Multiplex Daemon"
+PKG_LONGDESC="USB Multiplex Daemon"
 PKG_AUTORECONF="no"
 
 PKG_IS_ADDON="yes"
-PKG_ADDON_NAME="WebGrab+Plus"
+PKG_ADDON_NAME="iPhone Tether"
 PKG_ADDON_TYPE="xbmc.service"
-PKG_ADDON_REQUIRES="tools.mono:0.0.0"
-PKG_MAINTAINER="Anton Voyl (awiouy)"
 
-make_target() {
-  : # nop
-}
+PKG_DISCLAIMER="Additional data charges may occur. The LibreELEC team doesn't take any resposibility for extra data charges."
+
+PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
+                           ac_cv_func_realloc_0_nonnull=yes"
 
 makeinstall_target() {
-  : # nop
+  :
 }
 
 addon() {
-  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID
-  cp -PR $PKG_BUILD/* $ADDON_BUILD/$PKG_ADDON_ID
+  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp -P $PKG_BUILD/.$TARGET_NAME/src/usbmuxd $ADDON_BUILD/$PKG_ADDON_ID/bin/
 }
