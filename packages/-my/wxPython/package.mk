@@ -18,3 +18,7 @@ PKG_CONFIGURE_OPTS_TARGET="--libdir=/usr/lib \
 			     --with-libxpm=sys \
 			     --with-libjpeg=sys \
 			     --with-libtiff=sys"
+			     
+make_target() {
+  python2 setup.py WXPORT=gtk2 UNICODE=1 build
+} 
