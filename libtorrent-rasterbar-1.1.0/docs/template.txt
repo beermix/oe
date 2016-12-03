@@ -1,0 +1,29 @@
+%(head_prefix)s
+%(head)s
+<link rel="stylesheet" type="text/css" href="css/base.css" />
+<link rel="stylesheet" type="text/css" href="css/rst.css" />
+%(stylesheet)s
+<style type="text/css">
+/* Hides from IE-mac \*/
+* html pre { height: 1%%; }
+/* End hide from IE-mac */
+</style>
+%(body_prefix)s
+    <div id="container">
+    <div id="headerNav">
+    <ul>
+    <li class="first"><a href="index.html">Home</a></li>
+    <li><a href="http://www.rasterbar.com/products.html">Products</a></li>
+    <li><a href="http://www.rasterbar.com/contact.html">Contact</a></li>
+    </ul>
+    </div>
+    <div id="main">
+%(body_pre_docinfo)s
+%(docinfo)s
+%(body)s
+    </div>
+    <div id="footer">
+    <span>Copyright &copy; 2005 Rasterbar Software.</span>
+    </div>
+    </div>
+%(body_suffix)s

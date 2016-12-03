@@ -35,7 +35,7 @@ configure_target() {
               enable-gmp \
               no-ssl3-method \
               linux-x86_64 \
-              "-lpthread -Wa,--noexecstack -fstack-protector-strong -D_FORTIFY_SOURCE=2"
+              "-pthread -m64 -DL_ENDIAN  -Wa,--noexecstack"
 }
 
 make_target() {

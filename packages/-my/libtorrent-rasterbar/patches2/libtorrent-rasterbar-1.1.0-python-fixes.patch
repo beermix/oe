@@ -1,0 +1,81 @@
+Origin: OpenSUSE, https://build.opensuse.org/package/view_file/devel:libraries:c_c++/libtorrent-rasterbar/libtorrent-rasterbar-1.1.0-python-fixes.patch
+Bug: https://github.com/arvidn/libtorrent/issues/648
+Vendor-Bug: https://bugzilla.opensuse.org/show_bug.cgi?id=988986
+Description: Backport upstream fixes for Python bindings
+ (commits e4fd45e, 80710ab, f01ac8f, 42c6376)
+
+Index: libtorrent-rasterbar/bindings/python/src/session.cpp
+===================================================================
+--- libtorrent-rasterbar.orig/bindings/python/src/session.cpp	2016-08-23 20:40:44.197788033 -0400
++++ libtorrent-rasterbar/bindings/python/src/session.cpp	2016-08-23 20:40:44.153787286 -0400
+@@ -106,7 +106,7 @@
+ 			std::string key = extract<std::string>(iterkeys[i]);
+ 
+ 			int sett = setting_by_name(key);
+-			if (sett == 0) continue;
++			if (sett < 0) continue;
+ 
+ 			TORRENT_TRY
+ 			{
+@@ -497,9 +497,6 @@
+        }
+        return pieces;
+     }
+-
+-    void load_asnum_db(lt::session& s, std::string file) {}
+-    void load_country_db(lt::session& s, std::string file) {}
+ #endif
+ 
+     entry save_state(lt::session const& s, boost::uint32_t flags)
+@@ -810,7 +807,7 @@
+ #ifndef TORRENT_NO_DEPRECATE
+         .def("add_feed", &add_feed)
+         .def("status", allow_threads(&lt::session::status))
+-        .def("settings", &session_get_settings)
++        .def("settings", &lt::session::settings)
+         .def("set_settings", &session_set_settings)
+ #endif
+         .def("get_settings", &session_get_settings)
+@@ -874,8 +871,6 @@
+         .def("set_max_connections", allow_threads(&lt::session::set_max_connections))
+         .def("max_connections", allow_threads(&lt::session::max_connections))
+         .def("num_connections", allow_threads(&lt::session::num_connections))
+-        .def("load_asnum_db", &load_asnum_db)
+-        .def("load_country_db", &load_country_db)
+         .def("set_max_half_open_connections", allow_threads(&lt::session::set_max_half_open_connections))
+         .def("set_severity_level", allow_threads(&lt::session::set_severity_level))
+         .def("set_alert_queue_size_limit", allow_threads(&lt::session::set_alert_queue_size_limit))
+Index: libtorrent-rasterbar/bindings/python/src/torrent_handle.cpp
+===================================================================
+--- libtorrent-rasterbar.orig/bindings/python/src/torrent_handle.cpp	2016-08-23 20:40:44.197788033 -0400
++++ libtorrent-rasterbar/bindings/python/src/torrent_handle.cpp	2016-08-23 20:40:44.197788033 -0400
+@@ -193,9 +193,9 @@
+    if (d.has_key("source"))
+       ae.source = extract<int>(d["source"]);
+    if (d.has_key("verified"))
+-      ae.verified = extract<int>(d["verified"]);
++      ae.verified = extract<bool>(d["verified"]);
+    if (d.has_key("send_stats"))
+-      ae.send_stats = extract<int>(d["send_stats"]);
++      ae.send_stats = extract<bool>(d["send_stats"]);
+ }
+ 
+ void replace_trackers(torrent_handle& h, object trackers)
+Index: libtorrent-rasterbar/bindings/python/src/torrent_info.cpp
+===================================================================
+--- libtorrent-rasterbar.orig/bindings/python/src/torrent_info.cpp	2016-08-23 20:40:44.197788033 -0400
++++ libtorrent-rasterbar/bindings/python/src/torrent_info.cpp	2016-08-23 20:40:44.197788033 -0400
+@@ -113,10 +113,10 @@
+ 
+     int get_tier(announce_entry const& ae) { return ae.tier; }
+     void set_tier(announce_entry& ae, int v) { ae.tier = v; }
+-    bool get_fail_limit(announce_entry const& ae) { return ae.fail_limit; }
++    int get_fail_limit(announce_entry const& ae) { return ae.fail_limit; }
+     void set_fail_limit(announce_entry& ae, int l) { ae.fail_limit = l; }
+-    bool get_fails(announce_entry const& ae) { return ae.fails; }
+-    bool get_source(announce_entry const& ae) { return ae.source; }
++    int get_fails(announce_entry const& ae) { return ae.fails; }
++    int get_source(announce_entry const& ae) { return ae.source; }
+     bool get_verified(announce_entry const& ae) { return ae.verified; }
+     bool get_updating(announce_entry const& ae) { return ae.updating; }
+     bool get_start_sent(announce_entry const& ae) { return ae.start_sent; }

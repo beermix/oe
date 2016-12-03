@@ -1,0 +1,23 @@
+From 680eddf3d421f97ba01e8c162b263f31693ba352 Mon Sep 17 00:00:00 2001
+From: arvidn <arvid@cs.umu.se>
+Date: Fri, 15 Apr 2016 23:50:45 -0400
+Subject: [PATCH] remove -msse4.2 commandline option from configure script
+
+---
+ configure.ac            | 2 --
+ simulation/libsimulator | 2 +-
+ 2 files changed, 1 insertion(+), 3 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index efa1943..413da26 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -536,8 +536,6 @@ AM_CONDITIONAL([WITH_OPENSSL], [test "x$ARG_ENABLE_ENCRYPTION" = "xyes" -o "x$AR
+ AC_DEFINE([BOOST_ASIO_HASH_MAP_BUCKETS],[1021],[Define to fix a wrong behavior in boost 1.39.])
+ COMPILETIME_OPTIONS="$COMPILETIME_OPTIONS -DBOOST_ASIO_HASH_MAP_BUCKETS=1021 "
+ 
+-COMPILETIME_OPTIONS="$COMPILETIME_OPTIONS -msse4.2 "
+-
+ AC_DEFINE([BOOST_EXCEPTION_DISABLE],[1],[Define to disable the boost.exception features.])
+ COMPILETIME_OPTIONS="$COMPILETIME_OPTIONS -DBOOST_EXCEPTION_DISABLE "
+ 

@@ -1,0 +1,6 @@
+remove-msse4.2.patch
+python-dbg-build-fix.patch
+fix-html-docs.patch
+fix-get-ip-filter.patch
+1.1.0-python-fixes.patch
+fix-invalid-input-crash.patch

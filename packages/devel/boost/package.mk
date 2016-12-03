@@ -70,6 +70,7 @@ makeinstall_target() {
                                 --ignore-site-config \
                                 --with-date_time \
                                 --with-thread \
+                                --with-random \
                                 --with-system \
                                 --with-iostreams \
                                 --with-program_options \
