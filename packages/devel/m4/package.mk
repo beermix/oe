@@ -1,4 +1,3 @@
-
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
 #      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
@@ -32,10 +31,6 @@ PKG_LONGDESC="GNU 'M4' is an implementation of the traditional Unix macro proces
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
-
-pre_configure_host() {
-   CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
-}
 
 PKG_CONFIGURE_OPTS_HOST="gl_cv_func_gettimeofday_clobber=no --target=$TARGET_NAME"
 

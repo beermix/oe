@@ -36,13 +36,9 @@ configure_host() {
   ../configure --prefix=$ROOT/$TOOLCHAIN \
                --no-qt-gui --no-system-libs  \
                -- \
-               -DCMAKE_C_FLAGS="-march=native -O3 -pipe -Wno-format-security" \
-               -DCMAKE_CXX_FLAGS="-march=native -O3 -pipe -Wno-format-security" \
+               -DCMAKE_C_FLAGS="-O2 -Wall -pipe -Wno-format-security" \
+               -DCMAKE_CXX_FLAGS="-O2 -Wall -pipe -Wno-format-security" \
                -DCMAKE_EXE_LINKER_FLAGS="$HOST_LDFLAGS" \
                -DCMAKE_USE_OPENSSL=ON \
-               -DKWSYS_LFS_WORKS=TRUE \
-               -DKWSYS_CHAR_IS_SIGNED=TRUE \
-               -DCMAKE_USE_SYSTEM_LIBRARIES=0 \
-               -DCTEST_USE_XMLRPC=OFF \
-               -DBUILD_CursesDialog=OFF
+               -DBUILD_CursesDialog=0
 }
