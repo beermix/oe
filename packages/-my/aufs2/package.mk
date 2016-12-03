@@ -1,8 +1,0 @@
-PKG_NAME="aufs2"
-PKG_VERSION="util"
-PKG_URL="https://dl.dropboxusercontent.com/s/ow78zb6ktr2x5mk/aufs2-util.tar.gz"
-PKG_DEPENDS_TARGET="toolchain linux"
-PKG_PRIORITY="optional"
-PKG_SECTION="my"
-PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
