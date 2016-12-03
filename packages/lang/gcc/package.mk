@@ -66,6 +66,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libquadmath \
                            --disable-libgomp \
                            --disable-libmpx \
+                           --disable-browser-plugin \
                            --with-tune=ivybridge \
                            MAKEINFO=missing"
 
