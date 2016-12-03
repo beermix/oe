@@ -44,6 +44,5 @@ configure_host() {
                -DKWSYS_CHAR_IS_SIGNED=TRUE \
                -DCMAKE_USE_SYSTEM_LIBRARIES=0 \
                -DCTEST_USE_XMLRPC=OFF \
-               -DBUILD_CursesDialog=OFF \
-               -DCMAKE_USE_SYSTEM_CURL=OFF
+               -DBUILD_CursesDialog=OFF
 }

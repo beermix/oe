@@ -1,0 +1,12 @@
+diff -Naurp inputlirc-23/inputlircd.c inputlirc-23-patch/inputlircd.c
+--- inputlirc-23/inputlircd.c	2015-12-09 13:06:36.000000000 +0200
++++ inputlirc-23-patch/inputlircd.c	2015-12-09 13:10:27.000000000 +0200
+@@ -62,7 +62,7 @@ static int sockfd;
+ 
+ static bool grab = false;
+ static int key_min = 88;
+-static char *device = "/var/run/lirc/lircd";
++static char *device = "/run/lirc/lircd";
+ 
+ static bool capture_modifiers = false;
+ static bool meta = false;

@@ -1,0 +1,35 @@
+diff --git a/inputlircd.c b/inputlircd.c
+index 6afae16..74021f3 100644
+--- a/inputlircd.c
++++ b/inputlircd.c
+@@ -369,6 +369,15 @@ static void processevent(evdev_t *evdev, fd_set *permset) {
+ 	}
+ }
+ 
++static void usage(void) {
++  fprintf(stderr, "inputlircd [-d socket] [-f] [-c] [-r repeat-rate] [-m keycode] [-n device name] [-u username] device [device ...]\n");
++  fprintf(stderr, "\n");
++  fprintf(stderr, "  -f    Run in the foreground\n");
++  fprintf(stderr, "  -c    Capture modifier keys\n");
++  fprintf(stderr, "  -g    Grab the input device(s)\n");
++  fprintf(stderr, "\n");
++}
++
+ static void main_loop(void) {
+ 	fd_set permset;
+ 	fd_set fdset;
+@@ -459,12 +468,14 @@ int main(int argc, char *argv[]) {
+ 				break;
+                         default:
+ 				fprintf(stderr, "Unknown option!\n");
++				usage();
+                                 return EX_USAGE;
+                 }
+         }
+ 
+ 	if(argc <= optind && !named) {
+ 		fprintf(stderr, "Not enough arguments.\n");
++		usage();
+ 		return EX_USAGE;
+ 	}
+ 

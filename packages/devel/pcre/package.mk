@@ -42,24 +42,22 @@ PKG_CONFIGURE_OPTS_HOST="--prefix=$ROOT/$TOOLCHAIN \
                          --with-gnu-ld"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
-			   --enable-static \
-			   --enable-utf8 \
-			   --enable-pcre16 \
-			   --enable-unicode-properties \
-			   --with-gnu-ld"
+			      --enable-static \
+			      --enable-utf8 \
+			      --enable-pcre16 \
+			      --enable-unicode-properties \
+			      --with-gnu-ld"
 
 pre_configure_target() {
   CFLAGS="$CFLAGS -fPIC"
   CXXFLAGS="$CXXFLAGS -fPIC"
   LDFLAGS="$LDFLAGS -fPIC"
-  CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
 }
 
 pre_configure_host() {
   CFLAGS="$CFLAGS -fPIC"
   CXXFLAGS="$CXXFLAGS -fPIC"
   LDFLAGS="$LDFLAGS -fPIC"
-  CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
 }
 
 post_makeinstall_target() {
