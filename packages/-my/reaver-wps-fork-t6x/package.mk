@@ -1,5 +1,5 @@
 PKG_NAME="reaver-wps-fork-t6x"
-PKG_VERSION="4a19674"
+PKG_VERSION="70f6b92"
 PKG_GIT_URL="https://github.com/t6x/reaver-wps-fork-t6x"
 PKG_DEPENDS_TARGET="toolchain sqlite libpcap"
 PKG_PRIORITY="optional"

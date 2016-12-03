@@ -42,7 +42,7 @@ PKG_MARIADB_SERVER="no"
 # - large :  embedded + archive + federated + blackhole + innodb
 # - xlarge:  embedded + archive + federated + blackhole + innodb + partition
 # - community:  all  features (currently == xlarge)
-  MARIADB_OPTS="$MARIADB_OPTS -DFEATURE_SET=xsmall"
+  MARIADB_OPTS="$MARIADB_OPTS -DFEATURE_SET=community"
 
 # Build MariaDB Server support
   if [ "$PKG_MARIADB_SERVER" = "no" ]; then
@@ -56,8 +56,8 @@ PKG_MARIADB_SERVER="no"
 
 # Set MariaDB server storage engines
   MARIADB_OPTS="$MARIADB_OPTS -DWITH_INNOBASE_STORAGE_ENGINE=ON"
-  MARIADB_OPTS="$MARIADB_OPTS -WITH_PARTITION_STORAGE_ENGINE=OFF"
-  MARIADB_OPTS="$MARIADB_OPTS -WITH_PERFSCHEMA_STORAGE_ENGINE=OFF"
+  MARIADB_OPTS="$MARIADB_OPTS -WITH_PARTITION_STORAGE_ENGINE=ON"
+  MARIADB_OPTS="$MARIADB_OPTS -WITH_PERFSCHEMA_STORAGE_ENGINE=ON"
 
 # According to MariaDB galera cluster documentation these options must be passed
 # to CMake, set to '0' if galera cluster support is not wanted:
@@ -136,29 +136,28 @@ configure_target() {
         -DCMAKE_CXX_FLAGS="${TARGET_CXXFLAGS} -fPIC -DPIC -fno-strict-aliasing -DBIG_JOINS=1 -felide-constructors -fno-delete-null-pointer-checks" \
         -DCMAKE_BUILD_TYPE=Release \
         $MARIADB_IMPORT_EXECUTABLES \
-        -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
-        -DCMAKE_INSTALL_PREFIX=/usr \
+        -DCMAKE_PREFIX_PATH=/usr \
+        -DCMAKE_INSTALL_PREFIX=/storage/.kodi/addons/service.web.lamp \
         -DINSTALL_DOCDIR=share/doc/mariadb \
         -DINSTALL_DOCREADMEDIR=share/doc/mariadb \
         -DINSTALL_INCLUDEDIR=include/mysql \
         -DINSTALL_MANDIR=share/man \
         -DINSTALL_MYSQLSHAREDIR=share/mysql \
-        -DINSTALL_MYSQLTESTDIR=share/mysql/test \
         -DINSTALL_PLUGINDIR=lib/mysql/plugin \
-        -DINSTALL_SBINDIR=sbin \
+        -DINSTALL_SBINDIR=bin \
         -DINSTALL_SCRIPTDIR=share/mysql/scripts \
         -DINSTALL_SQLBENCHDIR=share/mysql/bench \
         -DINSTALL_SUPPORTFILESDIR=share/mysql/support-files \
-        -DMYSQL_DATADIR=/storage/mysql \
-        -DMYSQL_UNIX_ADDR=/run/mysqld/mysqld.sock \
-        -DWITH_EXTRA_CHARSETS=complex \
+        -DMYSQL_DATADIR=/storage/.kodi/userdata/addon_data/service.web.lamp/data \
+        -DMYSQL_UNIX_ADDR=/var/tmp/mysqld.sock \
+        -DWITH_EXTRA_CHARSETS=all \
         -DTOKUDB_OK=0 \
         -DDISABLE_LIBMYSQLCLIENT_SYMBOL_VERSIONING=TRUE \
         -DENABLE_DTRACE=OFF \
         -DWITH_READLINE=OFF \
         -DWITH_PCRE=bundled \
         -DWITH_ZLIB=bundled \
-        -DWITH_SYSTEMD=OFF \
+        -DWITH_SYSTEMD=ON \
         -DWITH_LIBWRAP=OFF \
         -DWITH_SSL=$SYSROOT_PREFIX/usr \
         $MARIADB_OPTS \
