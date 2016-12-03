@@ -34,7 +34,7 @@ PKG_AUTORECONF="no"
 
 # Additional packages we need for using xorg-server:
 # Fonts
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET encodings font-xfree86-type1 font-bitstream-type1 font-misc-misc xf86-video-intel"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET encodings font-xfree86-type1 font-bitstream-type1 font-misc-misc"
 
 # Server
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET xkeyboard-config xkbcomp"

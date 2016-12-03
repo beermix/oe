@@ -136,8 +136,8 @@ configure_target() {
         -DCMAKE_CXX_FLAGS="${TARGET_CXXFLAGS} -fPIC -DPIC -fno-strict-aliasing -DBIG_JOINS=1 -felide-constructors -fno-delete-null-pointer-checks" \
         -DCMAKE_BUILD_TYPE=Release \
         $MARIADB_IMPORT_EXECUTABLES \
-        -DCMAKE_PREFIX_PATH=/usr \
-        -DCMAKE_INSTALL_PREFIX=/storage/.kodi/addons/service.web.lamp \
+        -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
+        -DCMAKE_INSTALL_PREFIX=/usr \
         -DINSTALL_DOCDIR=share/doc/mariadb \
         -DINSTALL_DOCREADMEDIR=share/doc/mariadb \
         -DINSTALL_INCLUDEDIR=include/mysql \
@@ -149,7 +149,7 @@ configure_target() {
         -DINSTALL_SQLBENCHDIR=share/mysql/bench \
         -DINSTALL_SUPPORTFILESDIR=share/mysql/support-files \
         -DMYSQL_DATADIR=/storage/.kodi/userdata/addon_data/service.web.lamp/data \
-        -DMYSQL_UNIX_ADDR=/var/tmp/mysqld.sock \
+        -DMYSQL_UNIX_ADDR=/var/run/mysqld.sock \
         -DWITH_EXTRA_CHARSETS=all \
         -DTOKUDB_OK=0 \
         -DDISABLE_LIBMYSQLCLIENT_SYMBOL_VERSIONING=TRUE \
