@@ -19,7 +19,7 @@
 ################################################################################
 
 PKG_NAME="whois"
-PKG_VERSION="5.2.12"
+PKG_VERSION="5.2.13"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"

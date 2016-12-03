@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="gstreamer"
-PKG_VERSION="1.2.3"
+PKG_VERSION="0.10.36"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://gstreamer.freedesktop.org/gstreamer"
-PKG_URL="http://gstreamer.freedesktop.org/src/gstreamer/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="https://gstreamer.freedesktop.org/src/gstreamer/gstreamer-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain libpng tiff dbus fontconfig eglibc zlib"
 PKG_PRIORITY="optional"
 PKG_SECTION="lib"
@@ -32,14 +32,10 @@ PKG_LONGDESC="gstreamer library and components"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-if [ "$XBMCPLAYER_DRIVER" = "bcm2835-driver" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET bcm2835-driver"
-fi
 
-PKG_CONFIGURE_OPTS_TARGET="\
-		--disable-maintainer-mode \
-		--disable-dependency-tracking \
-        --disable-silent-rules \
-        --disable-failing-tests \
-        --disable-fatal-warnings \
-		--enable-static"
+PKG_CONFIGURE_OPTS_TARGET="as_cv_unaligned_access=no \
+				--disable-examples \
+				--disable-tests \
+				--disable-failing-tests \
+				--disable-loadsave \
+				--enable-static"

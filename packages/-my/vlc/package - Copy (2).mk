@@ -10,7 +10,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.videolan.org"
 PKG_URL="https://nightlies.videolan.org/build/source/vlc-2.2.5-20161202-0231.tar.xz"
-PKG_DEPENDS_TARGET="toolchain dbus libdvbpsi flac ffmpeg libvorbis zlib lua"
+PKG_DEPENDS_TARGET="toolchain dbus libdvbpsi flac ffmpeg libvorbis zlib lua gnutls"
 PKG_PRIORITY="optional"
 PKG_SECTION="xmedia/tools"
 PKG_SHORTDESC="VideoLAN multimedia player and streamer"
@@ -22,7 +22,6 @@ pre_configure_target() {
 # vlc fails to build with LTO optimization
   strip_lto
   export LUA_LIBS="-L$SYSROOT_PREFIX/usr/lib -llua -lm"
-  export CFLAGS="$CFLAGS -D_DEFAULT_SOURCE -fPIC"
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
@@ -88,7 +87,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-speex \
 			      --disable-theora \
 			      --disable-schroedinger \
-			      --enable-png \
+			      --disable-png \
 			      --disable-x264 \
 			      --disable-fluidsynth \
 			      --disable-zvbi \
@@ -96,16 +95,16 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-libass \
 			      --disable-kate \
 			      --disable-tiger \
-			      --enable-libva \
+			      --disable-libva \
 			      --disable-vdpau \
 			      --without-x \
 			      --disable-xcb \
 			      --disable-xvideo \
 			      --disable-sdl \
 			      --disable-sdl-image \
-			      --enable-freetype \
-			      --enable-fribidi \
-			      --enable-fontconfig \
+			      --disable-freetype \
+			      --disable-fribidi \
+			      --disable-fontconfig \
 			      --enable-libxml2 \
 			      --disable-svg \
 			      --disable-directx \
@@ -133,11 +132,11 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-mtp \
 			      --disable-lirc \
 			      --disable-libgcrypt \
-			      --disable-gnutls \
+			      --enable-gnutls \
 			      --disable-update-check \
 			      --disable-kva \
 			      --disable-bluray \
-			      --enable-samplerate \
+			      --disable-samplerate \
 			      --disable-sid \
 			      --disable-crystalhd \
 			      --disable-dxva2 \
