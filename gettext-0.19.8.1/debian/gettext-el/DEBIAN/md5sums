@@ -1,7 +1,0 @@
-3400fe63a12340658ca0642d5c000844  usr/lib/emacsen-common/packages/install/gettext-el
-ace08cbd6c3894b640ff318184945d11  usr/lib/emacsen-common/packages/remove/gettext-el
-4d4d8674d6227d8488437ffad00b3a30  usr/share/doc/gettext-el/changelog.Debian.gz
-69dbc835299f9b5bc72835993fe830f5  usr/share/doc/gettext-el/changelog.gz
-5830e13f2fcfda79e176a1f2f097e972  usr/share/doc/gettext-el/copyright
-d478e3fe841a73fc6a21f8fcd13c5c7b  usr/share/emacs/site-lisp/gettext/po-compat.el
-7dc8c24ac41caac15211c8d73090cd0e  usr/share/emacs/site-lisp/gettext/po-mode.el
