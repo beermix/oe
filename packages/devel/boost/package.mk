@@ -75,6 +75,7 @@ makeinstall_target() {
                                 --with-python \
                                 --with-iostreams \
                                 --with-program_options \
+                                --with-signals \
                                 --with-atomic \
                                 --with-chrono \
                                 --with-exception \

@@ -6,7 +6,7 @@ PKG_DEPENDS_TARGET="toolchain openssl expat libiconv boost"
 PKG_SECTION="devel"
 PKG_USE_CMAKE="no"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 #PKG_CMAKE_OPTS_TARGET="-Dunicode=ON -Dstatic_runtime=ON -Dshared=OFF -Dlibiconv=OFF -Dencryption=ON"
 
