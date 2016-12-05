@@ -43,7 +43,6 @@ make_target() {
        CC="$CC" \
        LD="$LD" \
        AR="$AR" \
-       SHARED=no \
        CRYPTO="OPENSSL" \
        OPT="" \
        XCFLAGS="$CFLAGS" \
@@ -60,7 +59,6 @@ makeinstall_target() {
        CC="$CC" \
        LD="$LD" \
        AR="$AR" \
-       SHARED=no \
        CRYPTO="OPENSSL" \
        OPT="" \
        XCFLAGS="$CFLAGS" \
@@ -76,7 +74,6 @@ makeinstall_target() {
        CC="$CC" \
        LD="$LD" \
        AR="$AR" \
-       SHARED=no \
        CRYPTO="OPENSSL" \
        OPT="" \
        XCFLAGS="$CFLAGS" \
@@ -90,5 +87,5 @@ post_makeinstall_target() {
 
   # to be removed: hack for "compatibility"
   mkdir -p $INSTALL/usr/lib
-  ln -sf librtmp.so.1 $INSTALL/usr/lib/librtmp.so.0
+    ln -sf librtmp.so.1 $INSTALL/usr/lib/librtmp.so.0
 }
