@@ -331,7 +331,7 @@ pre_configure_target() {
 
   export CFLAGS="$CFLAGS $KODI_CFLAGS"
   export CXXFLAGS="$CXXFLAGS $KODI_CXXFLAGS"
-  export CFLAGS="$CFLAGS -D_POSIX_C_SOURCE"
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
   export LIBS="$LIBS -lz -lssp -lterminfo"
 
   export JSON_BUILDER=$ROOT/$TOOLCHAIN/bin/JsonSchemaBuilder
