@@ -1,6 +1,6 @@
 diff -urN lzma-4.65/CPP/7zip/Common/FileStreams.h lzma-4.65.new/CPP/7zip/Common/FileStreams.h
---- lzma-4.65/CPP/7zip/Common/FileStreams.h	2009-05-15 23:33:51.000000000 +0200
-+++ lzma-4.65.new/CPP/7zip/Common/FileStreams.h	2009-06-01 22:30:01.000000000 +0200
+--- a/CPP/7zip/Common/FileStreams.h	2009-05-15 23:33:51.000000000 +0200
++++ b/CPP/7zip/Common/FileStreams.h	2009-06-01 22:30:01.000000000 +0200
 @@ -72,6 +72,7 @@
    public IOutStream,
    public CMyUnknownImp
@@ -10,8 +10,8 @@ diff -urN lzma-4.65/CPP/7zip/Common/FileStreams.h lzma-4.65.new/CPP/7zip/Common/
    NWindows::NFile::NIO::COutFile File;
    #else
 diff -urN lzma-4.65/CPP/Common/MyWindows.h lzma-4.65.new/CPP/Common/MyWindows.h
---- lzma-4.65/CPP/Common/MyWindows.h	2009-05-15 23:33:51.000000000 +0200
-+++ lzma-4.65.new/CPP/Common/MyWindows.h	2009-06-01 22:29:26.000000000 +0200
+--- aCPP/Common/MyWindows.h	2009-05-15 23:33:51.000000000 +0200
++++ b/CPP/Common/MyWindows.h	2009-06-01 22:29:26.000000000 +0200
 @@ -101,8 +101,11 @@
  
  #ifdef __cplusplus
