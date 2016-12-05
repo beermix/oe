@@ -31,14 +31,14 @@ PKG_SHORTDESC="libxslt"
 PKG_LONGDESC="libxslt"
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_HOST="ac_cv_header_ansidecl_h=no \
-			 --enable-static \
-			 --disable-shared \
-			 --without-python \
-			 --with-libxml-prefix=$ROOT/$TOOLCHAIN \
-			 --without-crypto"
+PKG_CONFIGURE_OPTS_HOST="  ac_cv_header_ansidecl_h=no \
+                           --enable-static \
+                           --disable-shared \
+                           --without-python \
+                           --with-libxml-prefix=$ROOT/$TOOLCHAIN \
+                           --without-crypto"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_header_ansidecl_h=no \
                            --enable-static \

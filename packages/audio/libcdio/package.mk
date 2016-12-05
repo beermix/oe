@@ -32,7 +32,6 @@ PKG_LONGDESC="This library is to encapsulate CD-ROM reading and control. Applica
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-# package specific configure options
 PKG_CONFIGURE_OPTS_TARGET="--enable-cxx \
                            --disable-cpp-progs \
                            --disable-shared \

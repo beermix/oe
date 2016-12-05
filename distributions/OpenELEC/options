@@ -42,7 +42,7 @@
   PULSEAUDIO_SUPPORT="yes"
 
 # build and install espeak support (yes / no)
-  ESPEAK_SUPPORT="no"
+  ESPEAK_SUPPORT="yes"
 
 # build and install with non-free support
 # (RAR compression support in KODI) (yes / no)
@@ -184,7 +184,7 @@
 
 # Support for partitioning and formating disks in initramfs (yes / no)
 # This adds support for parted and mkfs.ext3/4 to initramfs for OEM usage
-  INITRAMFS_PARTED_SUPPORT="yes"
+  INITRAMFS_PARTED_SUPPORT="no"
 
 # build with swap support (yes / no)
   SWAP_SUPPORT="no"
@@ -211,7 +211,7 @@
   CRON_SUPPORT="yes"
 
 # Locales to install. format: "locale.charmap" (eg. de_DE.UTF-8)
-  GLIBC_LOCALES="ru_RU.UTF-8"
+  GLIBC_LOCALES="en_US.UTF-8"
 
 # Distribution Specific source location
   DISTRO_MIRROR="http://sources.openelec.tv/mirror"

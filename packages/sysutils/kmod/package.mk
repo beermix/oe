@@ -54,7 +54,8 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-tools \
                            --disable-test-modules \
                            --with-gnu-ld \
                            --without-xz \
-                           --without-zlib"
+                           --without-zlib \
+                           --with-rootlibdir=/lib"
 
 post_makeinstall_host() {
   ln -sf kmod $ROOT/$TOOLCHAIN/bin/depmod
@@ -71,6 +72,8 @@ post_makeinstall_target() {
 
   mkdir -p $INSTALL/etc
     ln -sf /storage/.config/modprobe.d $INSTALL/etc/modprobe.d
+  mkdir -p $INSTALL/lib
+    ln -sf /usr/lib/modprobe.d $INSTALL/lib/modprobe.d
 
 # add user modprobe.d dir
   mkdir -p $INSTALL/usr/config/modprobe.d

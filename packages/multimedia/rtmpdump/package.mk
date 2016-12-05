@@ -43,6 +43,7 @@ make_target() {
        CC="$CC" \
        LD="$LD" \
        AR="$AR" \
+       SHARED=no \
        CRYPTO="OPENSSL" \
        OPT="" \
        XCFLAGS="$CFLAGS" \
@@ -59,6 +60,7 @@ makeinstall_target() {
        CC="$CC" \
        LD="$LD" \
        AR="$AR" \
+       SHARED=no \
        CRYPTO="OPENSSL" \
        OPT="" \
        XCFLAGS="$CFLAGS" \
@@ -74,6 +76,7 @@ makeinstall_target() {
        CC="$CC" \
        LD="$LD" \
        AR="$AR" \
+       SHARED=no \
        CRYPTO="OPENSSL" \
        OPT="" \
        XCFLAGS="$CFLAGS" \

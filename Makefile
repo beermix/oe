@@ -1,5 +1,3 @@
-BUILD_DIRS=build.*
-
 all: release
 
 system:

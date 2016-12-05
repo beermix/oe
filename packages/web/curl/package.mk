@@ -89,7 +89,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            --without-gnutls \
                            --with-ssl \
                            --without-polarssl \
-                           --with-nss \
+                           --without-nss \
                            --with-ca-bundle=/etc/ssl/cert.pem \
                            --without-ca-path \
                            --without-libpsl \
