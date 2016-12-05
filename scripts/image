@@ -112,14 +112,9 @@ fi
 
 
 # create /etc/issue
-#  echo "$GREETING0" >  $INSTALL/etc/issue
-#  echo "$GREETING1" >> $INSTALL/etc/issue
-#  echo "$GREETING2" >> $INSTALL/etc/issue
-#  echo "$GREETING3" >> $INSTALL/etc/issue
-#  echo "$GREETING4" >> $INSTALL/etc/issue
   echo "$DISTRONAME ($([ "$OFFICIAL" = "yes" ] && echo "official" ||  echo "community")) Version: $OPENELEC_VERSION" >> $INSTALL/etc/issue
-#  if [ -n "$GIT_HASH" ]; then
-#    echo "$DISTRONAME git: $GIT_HASH" >> $INSTALL/etc/issue
+  if [ -n "$GIT_HASH" ]; then
+    echo "$DISTRONAME git: $GIT_HASH" >> $INSTALL/etc/issue
   fi
 
   ln -sf /etc/issue $INSTALL/etc/motd
@@ -206,10 +201,10 @@ fi
   fi
 
 # run depmod
-  MODVER=$(basename $(ls -d $INSTALL/lib/modules/*))
-  find $INSTALL/lib/modules/$MODVER/ -name *.ko | \
-    sed -e "s,$INSTALL/lib/modules/$MODVER/,," > $INSTALL/lib/modules/$MODVER/modules.order
-  $ROOT/$TOOLCHAIN/bin/depmod -b $INSTALL $MODVER 2> /dev/null
+  MODVER=$(basename $(ls -d $INSTALL/usr/lib/modules/*))
+  find $INSTALL/usr/lib/modules/$MODVER/ -name *.ko | \
+    sed -e "s,$INSTALL/usr/lib/modules/$MODVER/,," > $INSTALL/usr/lib/modules/$MODVER/modules.order
+  $ROOT/$TOOLCHAIN/bin/depmod -b $INSTALL/usr $MODVER 2> /dev/null
 
 # make target dir
   mkdir -p $TARGET_IMG
