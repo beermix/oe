@@ -147,7 +147,6 @@ get_module_dir() {
 
 get_build_dir="$get_pkg_build"
 
-
 tolower(){
   echo "$@" | tr ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz
 }

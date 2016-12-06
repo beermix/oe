@@ -70,6 +70,10 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libatomic \
                            --disable-libitm \
                            --with-tune=ivybridge \
+                           --enable-linker-build-id \
+                           --enable-gnu-indirect-function \
+                           --enable-gnu-unique-object \
+                           --with-linker-hash-style=gnu \
                            MAKEINFO=missing"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
@@ -94,10 +98,6 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-shared \
                          --disable-static \
                          --enable-c99 \
-                         --enable-linker-build-id \
-                         --enable-gnu-indirect-function \
-                         --enable-gnu-unique-object \
-                         --with-linker-hash-style=gnu \
                          --enable-long-long \
                          --enable-threads=posix \
                          --disable-libstdcxx-pch \
