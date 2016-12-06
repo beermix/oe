@@ -8,9 +8,14 @@ PKG_USE_CMAKE="no"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-#PKG_CMAKE_OPTS_TARGET="-Dunicode=ON -Dstatic_runtime=ON -Dshared=OFF -Dlibiconv=OFF -Dencryption=ON"
+pre_configure_target() {
+  cd $ROOT/$PKG_BUILD
+}
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \
 			      --enable-python-binding \
 			      --with-libiconv \
 			      --with-boost-libdir=$SYSROOT_PREFIX/usr/lib"
+			      
+			      
+#PKG_CMAKE_OPTS_TARGET="-Dunicode=ON -Dstatic_runtime=ON -Dshared=OFF -Dlibiconv=OFF -Dencryption=ON"
