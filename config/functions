@@ -145,6 +145,8 @@ get_module_dir() {
   basename $(ls -d $(get_pkg_build linux)/.install_pkg/usr/lib/modules/*)
 }
 
+get_build_dir="$get_pkg_build"
+
 
 tolower(){
   echo "$@" | tr ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz
