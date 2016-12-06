@@ -19,7 +19,7 @@
 ################################################################################
 
 PKG_NAME="harfbuzz"
-PKG_VERSION="1.3.3"
+PKG_VERSION="1.3.4"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -31,8 +31,6 @@ PKG_SHORTDESC="harfbuzz: an OpenType text shaping engine."
 PKG_LONGDESC="HarfBuzz is an OpenType text shaping engine."
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
-
-PKG_MAINTAINER="none"
 
 PKG_CONFIGURE_OPTS_TARGET="--with-icu=yes"
 

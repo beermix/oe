@@ -30,16 +30,9 @@ PKG_SHORTDESC="xorg-server: The Xorg X server"
 PKG_LONGDESC="Xorg is a full featured X server that was originally designed for UNIX and UNIX-like operating systems running on Intel x86 hardware."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 get_graphicdrivers
-
-if [ "$COMPOSITE_SUPPORT" = "yes" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libXcomposite"
-  XORG_COMPOSITE="--enable-composite"
-else
-  XORG_COMPOSITE="--disable-composite"
-fi
 
 if [ "$OPENGL" = "mesa" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET glproto opengl libepoxy glu"

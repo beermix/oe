@@ -31,6 +31,7 @@ PKG_LONGDESC="runc is a CLI tool for spawning and running containers according t
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
+strip_lto
 
 pre_make_target() {
   case $TARGET_ARCH in
