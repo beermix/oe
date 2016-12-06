@@ -34,7 +34,6 @@ PKG_AUTORECONF="no"
 # never build shared or k0p happens when building
 # on fedora due to host selinux/liblzma
 
-
 PKG_CONFIGURE_OPTS_HOST="ac_cv_prog_cc_c99=-std=gnu99 \
 			 --disable-shared \
 			 --enable-static \

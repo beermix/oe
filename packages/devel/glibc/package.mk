@@ -106,7 +106,7 @@ pre_configure_target() {
   unset LD_LIBRARY_PATH
 
   # set some CFLAGS we need
-  export CFLAGS="$CFLAGS -g -fno-stack-protector"
+  export CFLAGS="$CFLAGS -g0 -fno-stack-protector"
 
   export OBJDUMP_FOR_HOST=objdump
 
@@ -115,13 +115,10 @@ libc_cv_forced_unwind=yes
 libc_cv_c_cleanup=yes
 libc_cv_ssp=no
 libc_cv_ssp_strong=no
-libc_cv_slibdir=/lib
 EOF
 
-echo "libdir=/usr/lib" >> configparms
-echo "slibdir=/lib" >> configparms
-echo "sbindir=/usr/bin" >> configparms
-echo "rootsbindir=/usr/bin" >> configparms
+  echo "sbindir=/usr/bin" >> configparms
+  echo "rootsbindir=/usr/bin" >> configparms
 }
 
 post_makeinstall_target() {
@@ -165,9 +162,6 @@ post_makeinstall_target() {
     cp $PKG_DIR/config/nsswitch.conf $INSTALL/etc
     cp $PKG_DIR/config/host.conf $INSTALL/etc
     cp $PKG_DIR/config/gai.conf $INSTALL/etc
-  if [ "$TARGET_ARCH" = "arm" -a "$TARGET_FLOAT" = "hard" ]; then
-    ln -sf ld.so $INSTALL/lib/ld-linux.so.3
-  fi
 }
 
 configure_init() {
