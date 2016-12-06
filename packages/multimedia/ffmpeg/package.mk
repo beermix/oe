@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="ffmpeg"
-PKG_VERSION="2.8.8"
+PKG_VERSION="2.8.10"
 PKG_URL="https://ffmpeg.org/releases/ffmpeg-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl dcadec speex"
 PKG_PRIORITY="optional"
@@ -182,7 +182,6 @@ configure_target() {
               --enable-parsers \
               --enable-bsfs \
               --enable-protocol=http \
-              --disable-indevs \
               --disable-outdevs \
               --enable-filters \
               --disable-avisynth \
