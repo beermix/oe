@@ -42,7 +42,7 @@ configure_host() {
   export GOOS=linux
   export GOROOT_FINAL=$ROOT/$TOOLCHAIN/lib/golang-1.4
   export GOARCH=amd64
-  export CGO_ENABLED=1
+  export CGO_ENABLED=0
   export HOST_GO_CGO_ENABLED=1
 }
 
