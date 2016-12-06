@@ -17,15 +17,15 @@
 ################################################################################
 
 PKG_NAME="boost"
-PKG_VERSION="1_62_0"
+PKG_VERSION="1_60_0"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.boost.org/"
-PKG_URL="$SOURCEFORGE_SRC/boost/boost/1.62.0/${PKG_NAME}_${PKG_VERSION}.tar.bz2"
+PKG_URL="$SOURCEFORGE_SRC/boost/boost/1.60.0/${PKG_NAME}_${PKG_VERSION}.tar.bz2"
 PKG_SOURCE_DIR="${PKG_NAME}_${PKG_VERSION}"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain boost:host Python zlib bzip2"
+PKG_DEPENDS_TARGET="toolchain boost:host Python:host zlib bzip2"
 PKG_PRIORITY="optional"
 PKG_SECTION="devel"
 PKG_SHORTDESC="boost: Peer-reviewed STL style libraries for C++"
@@ -64,7 +64,7 @@ make_target() {
 }
 
 makeinstall_target() {
-  $ROOT/$TOOLCHAIN/bin/bjam -d2 --toolset=gcc link=static debug-symbols=off threading=multi variant=release \
+  $ROOT/$TOOLCHAIN/bin/bjam -d2 --toolset=gcc link=static debug-symbols=off threading=multi variant=release cflags=-fno-strict-aliasing  \
                                 --prefix=$SYSROOT_PREFIX/usr \
                                 --ignore-site-config \
                                 --layout=system \
@@ -81,6 +81,6 @@ makeinstall_target() {
                                 --with-exception \
                                 --with-serialization \
                                 --with-filesystem \
-                                --with-regex -sICU_PATH="$SYSROOT_PREFIX/usr" \
+                                --with-regex -sICU_PATH="$SYSROOT_PREFIX/usr" -j2 \
                                 install
 }
