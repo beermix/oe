@@ -1,5 +1,5 @@
 PKG_NAME="libevent"
-PKG_VERSION="32adf43"
+PKG_VERSION="release-2.1.7-rc"
 PKG_GIT_URL="https://github.com/libevent/libevent"
 PKG_DEPENDS_TARGET="toolchain openssl"
 PKG_PRIORITY="optional"

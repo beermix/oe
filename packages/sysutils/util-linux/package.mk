@@ -32,14 +32,19 @@ PKG_LONGDESC="The util-linux package contains a large variety of low-level syste
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
+pre_configure_init() {
+  export LDFLAGS="-lcurses -lterminfo"
+}
+
+pre_configure_target() {
+  export LDFLAGS="-lcurses -lterminfo"
+}
+
 UTILLINUX_CONFIG_DEFAULT="--disable-gtk-doc \
                           --disable-nls \
                           --disable-rpath \
                           --enable-tls \
-                          --disable-all-programs \
                           --enable-chsh-only-listed \
-                          --disable-bash-completion \
-                          --disable-colors-default \
                           --disable-pylibmount \
                           --disable-pg-bell \
                           --disable-use-tty-group \
@@ -50,18 +55,14 @@ UTILLINUX_CONFIG_DEFAULT="--disable-gtk-doc \
                           --without-audit \
                           --without-udev \
                           --without-ncurses \
-                          --without-readline \
                           --without-slang \
-                          --without-termcap \
-                          --without-tinfo \
                           --without-utempter \
-                          --without-util \
-                          --without-libz \
                           --without-user \
                           --without-systemd \
                           --without-smack \
                           --without-python \
-                          --without-systemdsystemunitdir"
+                          --without-systemdsystemunitdir \
+                          --without-ncursesw"
 
 PKG_CONFIGURE_OPTS_TARGET="--sbindir=/sbin \
                            --libexecdir=/lib \
