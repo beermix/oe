@@ -35,7 +35,7 @@
 
   # set needed variables
   MODULE_DIR=/lib/modules
-  SYSTEMD_BIN=/usr/lib/systemd/systemd
+  SYSTEMD_BIN=/lib/systemd/systemd
 
   UPDATE_DIR=/storage/.update
   UPDATE_KERNEL="KERNEL"
