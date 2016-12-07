@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="expat"
-PKG_VERSION="25a40af"
+PKG_VERSION="2.2.0"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://expat.sourceforge.net/"
-PKG_GIT_URL=git://git.code.sf.net/p/expat/code_git"
+PKG_URL="$SOURCEFORGE_SRC/$PKG_NAME/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="textproc"
 PKG_SHORTDESC="expat: XML parser library"
@@ -31,7 +31,4 @@ PKG_USE_CMAKE="yes"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CMAKE_OPTS_TARGET="-DBUILD_tools=OFF \
-			  -DBUILD_examples=OFF \
-			  -DBUILD_tests=OFF \
-			  -DBUILD_shared=ON"
+PKG_CMAKE_OPTS_TARGET="-DBUILD_tools=OFF -DBUILD_examples=OFF -DBUILD_tests=OFF -DBUILD_shared=ON"
