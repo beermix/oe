@@ -18,7 +18,7 @@
 
 PKG_NAME="gcc"
 PKG_REV="1"
-PKG_USE_SNAPSHOT="false"
+PKG_USE_SNAPSHOT="true"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://gcc.gnu.org/"
