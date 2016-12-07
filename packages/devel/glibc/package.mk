@@ -66,7 +66,7 @@ fi
 NSS_CONF_DIR="$PKG_BUILD/nss"
 
 GLIBC_EXCLUDE_BIN="catchsegv gencat getconf iconv iconvconfig ldconfig"
-GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN localedef makedb mtrace pcprofiledump"
+GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN makedb mtrace pcprofiledump"
 GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN pldd rpcgen sln sotruss sprof xtrace"
 
 pre_build_target() {
@@ -147,16 +147,11 @@ post_makeinstall_target() {
 
 # remove locales and charmaps
   rm -rf $INSTALL/usr/share/i18n/charmaps
-  if [ -n "$GLIBC_LOCALES" ]; then
-    mkdir -p $INSTALL/usr/lib/locale
-    for locale in $GLIBC_LOCALES; do
-      echo ">>> install inputfile $(echo $locale | cut -f1 -d ".") with charmap $(echo $locale | cut -f2 -d ".") as $locale <<<"
-      I18NPATH=../localedata \
-      $ROOT/$TOOLCHAIN/bin/localedef \
-        -i ../localedata/locales/$(echo $locale | cut -f1 -d ".") \
-        -f ../localedata/charmaps/$(echo $locale | cut -f2 -d ".") \
-        $locale --prefix=$INSTALL
-    done
+# add UTF-8 charmap for Generic (charmap is needed for installer)
+  if [ "$PROJECT" = "Generic" ]; then
+    mkdir -p $INSTALL/usr/share/i18n/charmaps
+    cp -PR $ROOT/$PKG_BUILD/localedata/charmaps/UTF-8 $INSTALL/usr/share/i18n/charmaps
+    gzip $INSTALL/usr/share/i18n/charmaps/UTF-8
   fi
   if [ ! "$GLIBC_LOCALES" = yes ]; then
     rm -rf $INSTALL/usr/share/i18n/locales

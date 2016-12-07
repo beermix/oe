@@ -114,6 +114,11 @@ pre_configure_host() {
   unset CPP
 }
 
+pre_configure_bootstrap() {
+  export CFLAGS="$CFLAGS -fno-stack-protector"
+  export CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
+}
+
 post_make_host() {
   # fix wrong link
   rm -rf $TARGET_NAME/libgcc/libgcc_s.so

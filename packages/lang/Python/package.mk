@@ -24,7 +24,7 @@ PKG_LICENSE="OSS"
 PKG_SITE="http://www.python.org/"
 PKG_URL="http://www.python.org/ftp/python/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="zlib:host bzip2:host"
-PKG_DEPENDS_TARGET="toolchain sqlite expat libz bzip2 openssl libffi gdbm Python:host"
+PKG_DEPENDS_TARGET="toolchain sqlite expat libz bzip2 openssl libffi Python:host"
 PKG_SECTION="lang"
 PKG_SHORTDESC="python: The Python programming language"
 PKG_LONGDESC="Python is an interpreted object-oriented programming language, and is often compared with Tcl, Perl, Java or Scheme."
@@ -32,7 +32,7 @@ PKG_LONGDESC="Python is an interpreted object-oriented programming language, and
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PY_DISABLED_MODULES="_tkinter nis bsddb ossaudiodev"
+PY_DISABLED_MODULES="_tkinter nis gdbm bsddb ossaudiodev"
 
 PKG_CONFIGURE_OPTS_HOST="--cache-file=config.cache \
                          --without-cxx-main \
@@ -93,7 +93,7 @@ pre_configure_target() {
 }
 
 make_target() {
-  make -j1 CROSS_COMPILE=yes CC="$CC" LDFLAGS="$TARGET_LDFLAGS -L." \
+  make  -j1 CC="$CC" LDFLAGS="$TARGET_LDFLAGS -L." \
         PYTHON_DISABLE_MODULES="$PY_DISABLED_MODULES" \
         PYTHON_MODULES_INCLUDE="$TARGET_INCDIR" \
         PYTHON_MODULES_LIB="$TARGET_LIBDIR"
