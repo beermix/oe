@@ -35,12 +35,13 @@ PKG_AUTORECONF="no"
 # on fedora due to host selinux/liblzma
 
 PKG_CONFIGURE_OPTS_HOST="ac_cv_prog_cc_c99=-std=gnu99 \
-			 --disable-shared \
-			 --enable-static \
-			 --disable-lzmadec \
-			 --disable-lzmainfo \
-			 --enable-lzma-links \
-			 --disable-scripts \
-			 --enable-threads"
+			   --enable-assembler=x86_64 \
+			   --disable-shared \
+			   --enable-static \
+			   --disable-lzmadec \
+			   --disable-lzmainfo \
+			   --enable-lzma-links \
+			   --disable-scripts \
+			   --enable-threads"
                          
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"

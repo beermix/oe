@@ -87,7 +87,7 @@ if [ "$TARGET" = target ] ; then
   fi
 
   if [ -d $PKG_DIR/generators.d ]; then
-   mkdir -p $INSTALL/usr/lib/systemd/system-generators
+    mkdir -p $INSTALL/usr/lib/systemd/system-generators
     cp $PKG_DIR/generators.d/* $INSTALL/usr/lib/systemd/system-generators
   fi
 
