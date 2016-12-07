@@ -68,7 +68,7 @@
 # please add all configfiles which should be included without the suffix and prefix
 # except the default-*.config and the ones included in packages/linux/package.mk
 # Space separated list is supported,
-  KERNEL_EXTRA_CONFIG+=" filesystem hid-drivers remote audio"
+  KERNEL_EXTRA_CONFIG+=" filesystem hid-drivers remote joystick audio"
   KERNEL_EXTRA_CONFIG+=" lan-phy"
   KERNEL_EXTRA_CONFIG+=" wlan-usb wlan-other"
   KERNEL_EXTRA_CONFIG+=" aufs bluetooth lan-pci sata samba"
