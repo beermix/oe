@@ -42,6 +42,6 @@ PKG_MAKE_OPTS_TARGET="NSINSTALL=$ROOT/$TOOLCHAIN/bin/nsinstall"
 PKG_MAKEINSTALL_OPTS_TARGET="NSINSTALL=$ROOT/$TOOLCHAIN/bin/nsinstall"
 
 configure_target() {
-  cd $(get_pkg_build nss)/nspr
+  cd $(get_build_dir nss)/nspr
   ./configure --with-pthreads $TARGET_USE_64 $TARGET_CONFIGURE_OPTS 
 }

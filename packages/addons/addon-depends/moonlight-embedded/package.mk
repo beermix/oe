@@ -36,7 +36,7 @@ if [ "$KODIPLAYER_DRIVER" = "bcm2835-driver" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET bcm2835-driver"
 elif [ "$KODIPLAYER_DRIVER" = "libfslvpuwrap" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libfslvpuwrap gpu-viv-bin-mx6q v4l-utils"
-  FREESCALE_V4L_INCLUDE="-DFREESCALE_INCLUDE_DIR=$(get_pkg_build v4l-utils)/lib/include"
+  FREESCALE_V4L_INCLUDE="-DFREESCALE_INCLUDE_DIR=$(get_build_dir v4l-utils)/lib/include"
 elif [ "$KODIPLAYER_DRIVER" = "libamcodec" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libamcodec"
 elif [ "$DISPLAYSERVER" = "x11" ]; then
@@ -48,7 +48,7 @@ PKG_CMAKE_OPTS_TARGET="-DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
                        $FREESCALE_V4L_INCLUDE"
 
 pre_build_target() {
-  cp -a $(get_pkg_build moonlight-common-c)/* $ROOT/$PKG_BUILD/third_party/moonlight-common-c
+  cp -a $(get_build_dir moonlight-common-c)/* $ROOT/$PKG_BUILD/third_party/moonlight-common-c
 }
 
 pre_configure_target() {
