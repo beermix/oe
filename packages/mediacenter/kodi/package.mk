@@ -235,8 +235,6 @@ export PYTHON_LDFLAGS="-L$SYSROOT_PREFIX/usr/lib/python$PYTHON_VERSION -lpython$
 export PYTHON_SITE_PKG="$SYSROOT_PREFIX/usr/lib/python$PYTHON_VERSION/site-packages"
 export ac_python_version="$PYTHON_VERSION"
 
-export GIT_REV="$PKG_VERSION"
-
 PKG_CONFIGURE_OPTS_TARGET="gl_cv_func_gettimeofday_clobber=no \
                            ac_cv_lib_bluetooth_hci_devid=no \
                            --disable-debug \
@@ -284,8 +282,6 @@ pre_configure_host() {
 # kodi fails to build in subdirs
   cd $ROOT/$PKG_BUILD
     rm -rf .$HOST_NAME
-
-  echo "$PKG_VERSION" > VERSION
 }
 
 make_host() {
@@ -339,11 +335,6 @@ make_target() {
     make kodi-xrandr
   fi
 
-  if [ "$SKIN_REMOVE_SHIPPED" = "yes" ]; then
-    rm -rf addons/skin.confluence
-  else
-    TexturePacker -input addons/skin.confluence/media/ -output Textures.xbt -dupecheck -use_none
-  fi
 }
 
 post_makeinstall_target() {
@@ -378,15 +369,6 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/share/kodi/addons/service.xbmc.versioncheck
   rm -rf $INSTALL/usr/share/kodi/addons/visualization.vortex
   rm -rf $INSTALL/usr/share/xsessions
-
-  if [ ! "$SKIN_REMOVE_SHIPPED" = "yes" ]; then
-    # Rebrand
-      sed -e "s,@DISTRONAME@,$DISTRONAME,g" -i $INSTALL/usr/share/kodi/addons/skin.confluence/720p/IncludesHomeMenuItems.xml
-
-    rm -rf $INSTALL/usr/share/kodi/addons/skin.confluence/media
-    mkdir -p $INSTALL/usr/share/kodi/addons/skin.confluence/media
-    cp Textures.xbt $INSTALL/usr/share/kodi/addons/skin.confluence/media
-  fi
 
   mkdir -p $INSTALL/usr/share/kodi/addons
     cp -R $PKG_DIR/config/os.openelec.tv $INSTALL/usr/share/kodi/addons

@@ -44,7 +44,7 @@ makeinstall_target() {
     cp -R */ $INSTALL/usr/share/kodi/addons/skin.confluence
     cp *.txt $INSTALL/usr/share/kodi/addons/skin.confluence
     cp *.xml $INSTALL/usr/share/kodi/addons/skin.confluence
-    cp *.png $INSTALL/usr/share/kodi/addons/skin.confluence
+    #cp *.png $INSTALL/usr/share/kodi/addons/skin.confluence
       rm -rf $INSTALL/usr/share/kodi/addons/skin.confluence/media
 
   mkdir -p $INSTALL/usr/share/kodi/addons/skin.confluence/media
