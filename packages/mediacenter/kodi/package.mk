@@ -323,7 +323,7 @@ pre_build_target() {
 pre_configure_target() {
 # kodi fails to build in subdirs
   cd $ROOT/$PKG_BUILD
-    rm -rf .$TARGET_NAME
+  rm -rf .$TARGET_NAME
 
 # kodi should never be built with lto
   strip_lto
@@ -349,12 +349,6 @@ make_target() {
 
   if [ "$DISPLAYSERVER" = "x11" ]; then
     make kodi-xrandr
-  fi
-
-  if [ "$SKIN_REMOVE_SHIPPED" = "yes" ]; then
-    rm -rf addons/skin.confluence
-  else
-    TexturePacker -input addons/skin.confluence/media/ -output Textures.xbt -dupecheck -use_none
   fi
 }
 
@@ -390,14 +384,6 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/share/kodi/addons/service.xbmc.versioncheck
   rm -rf $INSTALL/usr/share/kodi/addons/visualization.vortex
   rm -rf $INSTALL/usr/share/xsessions
-  if [ ! "$SKIN_REMOVE_SHIPPED" = "yes" ]; then
-    # Rebrand
-      sed -e "s,@DISTRONAME@,$DISTRONAME,g" -i $INSTALL/usr/share/kodi/addons/skin.confluence/720p/IncludesHomeMenuItems.xml
-
-    rm -rf $INSTALL/usr/share/kodi/addons/skin.confluence/media
-    mkdir -p $INSTALL/usr/share/kodi/addons/skin.confluence/media
-    cp Textures.xbt $INSTALL/usr/share/kodi/addons/skin.confluence/media
-  fi
 
   mkdir -p $INSTALL/usr/share/kodi/addons
     cp -R $PKG_DIR/config/os.openelec.tv $INSTALL/usr/share/kodi/addons
