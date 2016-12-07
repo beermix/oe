@@ -32,8 +32,8 @@ PKG_LONGDESC="The purpose of a debugger such as GDB is to allow you to see what 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-#CC_FOR_BUILD="$HOST_CC"
-#CFLAGS_FOR_BUILD="$HOST_CFLAGS"
+CC_FOR_BUILD="$HOST_CC"
+CFLAGS_FOR_BUILD="$HOST_CFLAGS"
 
 pre_configure_target() {
   # gdb could fail on runtime if build with LTO support

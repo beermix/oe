@@ -24,7 +24,6 @@ PKG_LICENSE="LGPLv2.1"
 PKG_SITE="https://www.gnu.org/software/libmicrohttpd/"
 PKG_URL="https://ftp.gnu.org/gnu/libmicrohttpd/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
 PKG_SECTION="web"
 PKG_SHORTDESC="libmicrohttpd: a small webserver C library"
 PKG_LONGDESC="GNU libmicrohttpd is a small C library that is supposed to make it easy to run an HTTP server as part of another application."
@@ -33,18 +32,13 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 pre_configure_target() {
- export LDFLAGS="-ldl -lpthread"
  export CFLAGS="$CFLAGS -D_REENTRANT"
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
                            --enable-static \
-                           --disable-silent-rules \
                            --disable-curl \
                            --disable-https \
-                           --disable-examples \
-                           --disable-curl \
-                           --enable-threads=posix \
                            --with-libgcrypt-prefix=$SYSROOT_PREFIX/usr"
 
 post_makeinstall_target() {
