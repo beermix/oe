@@ -696,12 +696,12 @@
       fi
       echo ""
       echo "NEVER TOUCH boot= in extlinux.conf / cmdline.txt"
-      #echo "if you dont know what you are doing"
-      #echo ""
-      #echo "your installation is now broken"
-      #echo ""
-      #echo "normal boot in 60s..."
-      #usleep 60000000
+      echo "if you dont know what you are doing"
+      echo ""
+      echo "your installation is now broken"
+      echo ""
+      echo "normal boot in 60s..."
+      usleep 60000000
     fi
 
 
