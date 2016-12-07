@@ -17,13 +17,12 @@
 ################################################################################
 
 PKG_NAME="systemd"
-PKG_VERSION="232"
+PKG_VERSION="e7330df"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="http://www.freedesktop.org/wiki/Software/systemd"
-PKG_URL="https://github.com/systemd/systemd/archive/v$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain libcap kmod util-linux entropy"
+PKG_GIT_URL="https://github.com/systemd/systemd"
+PKG_DEPENDS_TARGET="toolchain libcap kmod util-linux entropy bzip2 lz4 libz xz"
 PKG_PRIORITY="required"
 PKG_SECTION="system"
 PKG_SHORTDESC="systemd: a system and session manager"
@@ -108,9 +107,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --with-rootprefix=/ \
                            --with-rootlibdir=/usr/lib"
 
-unpack() {
-  tar xf $ROOT/$SOURCES/systemd/v$PKG_VERSION.tar.gz -C $ROOT/$BUILD
-}
 
 pre_build_target() {
 # broken autoreconf
