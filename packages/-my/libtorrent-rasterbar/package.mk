@@ -10,11 +10,16 @@ PKG_AUTORECONF="no"
 
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
+  strip_lto
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Ofast|"`
+  sed -i 's/$PKG_CONFIG openssl --libs-only-l/$PKG_CONFIG openssl --static --libs-only-l/' ./configure
+  sed -i -e s/Windows.h/windows.h/ -e s/Wincrypt.h/wincrypt.h/ ./ed25519/src/seed.cpp
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \
 			      --enable-python-binding \
 			      --without-libiconv \
+			      --with-boost=$SYSROOT_PREFIX/usr \
 			      --with-boost-libdir=$SYSROOT_PREFIX/usr/lib"
 			      
 			      
