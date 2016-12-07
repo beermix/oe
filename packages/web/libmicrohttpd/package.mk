@@ -30,14 +30,13 @@ PKG_SHORTDESC="libmicrohttpd: a small webserver C library"
 PKG_LONGDESC="GNU libmicrohttpd is a small C library that is supposed to make it easy to run an HTTP server as part of another application."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
                            --enable-static \
                            --disable-curl \
                            --disable-https \
-                           --with-threads=posix \
-                           --disable-doc"
+                           --with-libgcrypt-prefix=$SYSROOT_PREFIX/usr"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
