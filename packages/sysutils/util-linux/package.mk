@@ -45,6 +45,9 @@ UTILLINUX_CONFIG_DEFAULT="--disable-gtk-doc \
                           --disable-rpath \
                           --enable-tls \
                           --enable-chsh-only-listed \
+                          --enable-libmount-force-mountinfo \
+                          --disable-bash-completion \
+                          --disable-colors-default \
                           --disable-pylibmount \
                           --disable-pg-bell \
                           --disable-use-tty-group \
@@ -55,14 +58,14 @@ UTILLINUX_CONFIG_DEFAULT="--disable-gtk-doc \
                           --without-audit \
                           --without-udev \
                           --without-ncurses \
+                          --without-ncursesw \
                           --without-slang \
                           --without-utempter \
                           --without-user \
                           --without-systemd \
                           --without-smack \
                           --without-python \
-                          --without-systemdsystemunitdir \
-                          --without-ncursesw"
+                          --without-systemdsystemunitdir"
 
 PKG_CONFIGURE_OPTS_TARGET="--sbindir=/sbin \
                            --libexecdir=/lib \
