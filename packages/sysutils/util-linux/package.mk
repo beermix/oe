@@ -33,11 +33,11 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 pre_configure_init() {
-  export LDFLAGS="-lcurses -lterminfo"
+  export LDFLAGS="-lcurses -lterminfo -lreadline"
 }
 
 pre_configure_target() {
-  export LDFLAGS="-lcurses -lterminfo"
+  export LDFLAGS="-lcurses -lterminfo -lreadline"
 }
 
 UTILLINUX_CONFIG_DEFAULT="--disable-gtk-doc \
@@ -45,7 +45,6 @@ UTILLINUX_CONFIG_DEFAULT="--disable-gtk-doc \
                           --disable-rpath \
                           --enable-tls \
                           --enable-chsh-only-listed \
-                          --enable-libmount-force-mountinfo \
                           --disable-pylibmount \
                           --disable-pg-bell \
                           --disable-use-tty-group \
