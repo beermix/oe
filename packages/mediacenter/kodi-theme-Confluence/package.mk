@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="kodi-theme-Confluence"
-PKG_VERSION="b8f3391"
+PKG_VERSION="16.1-c327c53"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
-PKG_GIT_URL="https://github.com/xbmc/skin.confluence"
+PKG_URL="http://sources.libreelec.tv/7.0.3/kodi-theme-Confluence-16.1-c327c53.tar.xz"
 PKG_DEPENDS_TARGET="toolchain kodi:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="mediacenter"
@@ -44,8 +44,8 @@ makeinstall_target() {
     cp -R */ $INSTALL/usr/share/kodi/addons/skin.confluence
     cp *.txt $INSTALL/usr/share/kodi/addons/skin.confluence
     cp *.xml $INSTALL/usr/share/kodi/addons/skin.confluence
-    #cp *.png $INSTALL/usr/share/kodi/addons/skin.confluence
-      rm -rf $INSTALL/usr/share/kodi/addons/skin.confluence/media
+    cp *.png $INSTALL/usr/share/kodi/addons/skin.confluence
+    rm -rf $INSTALL/usr/share/kodi/addons/skin.confluence/media
 
   mkdir -p $INSTALL/usr/share/kodi/addons/skin.confluence/media
     cp Textures.xbt $INSTALL/usr/share/kodi/addons/skin.confluence/media

@@ -38,9 +38,9 @@ PKG_AUTORECONF="no"
   export CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
 
 make_target() {
-  make HOSTCC="$CC" CFLAGS="$CFLAGS -D_DEFAULT_SOURCE" PREFIX=/usr all-static -j1
+  make HOSTCC="$HOSTCC" CFLAGS="$CFLAGS -D_DEFAULT_SOURCE" PREFIX=/usr all-static -j1
 }
 
 makeinstall_target() {
-  make HOSTCC="$CC" PREFIX=$SYSROOT_PREFIX/usr install-static -j1
+  make HOSTCC="$HOSTCC" PREFIX=$SYSROOT_PREFIX/usr install-static -j1
 }
