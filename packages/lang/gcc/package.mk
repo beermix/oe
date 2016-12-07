@@ -107,6 +107,8 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
 
 pre_configure_host() {
   export CXXFLAGS="$CXXFLAGS -std=gnu++98"
+  export CFLAGS="$CFLAGS -fno-stack-protector"
+  export CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
   #export CXXFLAGS="$CXXFLAGS -std=gnu++1z"
   #export CXXFLAGS="$CXXFLAGS -std=gnu++14"
   unset CPP
