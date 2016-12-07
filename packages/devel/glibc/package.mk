@@ -133,7 +133,9 @@ post_makeinstall_target() {
   done
   rm -rf $INSTALL/usr/lib/audit
   rm -rf $INSTALL/usr/lib/glibc
+  rm -rf $INSTALL/usr/lib/libc_pic
   rm -rf $INSTALL/usr/lib/*.o
+  rm -rf $INSTALL/usr/lib/*.map
   rm -rf $INSTALL/var
 
 # remove unneeded libs
@@ -142,8 +144,8 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/lib/libmemusage.so
   rm -rf $INSTALL/usr/lib/libpcprofile.so
 # remove ldscripts
-  rm -rf $INSTALL/usr/lib/libc.so
-  rm -rf $INSTALL/usr/lib/libpthread.so
+ # rm -rf $INSTALL/usr/lib/libc.so
+  #rm -rf $INSTALL/usr/lib/libpthread.so
 
 # remove locales and charmaps
   rm -rf $INSTALL/usr/share/i18n/charmaps
@@ -183,8 +185,4 @@ makeinstall_init() {
     cp $ROOT/$PKG_BUILD/.$TARGET_NAME/math/libm.so* $INSTALL/lib
     cp $ROOT/$PKG_BUILD/.$TARGET_NAME/nptl/libpthread.so.0 $INSTALL/lib
     cp -PR $ROOT/$PKG_BUILD/.$TARGET_NAME/rt/librt.so* $INSTALL/lib
-
-    if [ "$TARGET_ARCH" = "arm" -a "$TARGET_FLOAT" = "hard" ]; then
-      ln -sf ld.so $INSTALL/lib/ld-linux.so.3
-    fi
 }
