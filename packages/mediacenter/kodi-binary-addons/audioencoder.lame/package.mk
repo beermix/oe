@@ -16,29 +16,36 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="platform"
-PKG_VERSION="081032f"
+PKG_NAME="audioencoder.lame"
+PKG_VERSION="52f84dd"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
-PKG_GIT_URL="https://github.com/Pulse-Eight/platform.git"
-PKG_GIT_BRANCH="master"
-PKG_DEPENDS_TARGET="toolchain"
+PKG_URL="https://github.com/xbmc/audioencoder.lame/archive/$PKG_VERSION.tar.gz"
+PKG_DEPENDS_TARGET="toolchain kodi-platform lame"
 PKG_PRIORITY="optional"
-PKG_SECTION="multimedia"
-PKG_SHORTDESC="platform:"
-PKG_LONGDESC="platform:"
-
-PKG_IS_ADDON="no"
+PKG_SECTION=""
+PKG_SHORTDESC="audioencoder.lame: A audioencoder addon for Kodi"
+PKG_LONGDESC="audioencoder.lame is a audioencoder addon for Kodi"
 PKG_AUTORECONF="no"
 
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_INSTALL_LIBDIR=/usr/lib \
-			  -DCMAKE_INSTALL_LIBDIR_NOARCH=/usr/lib \
-			  -DCMAKE_INSTALL_PREFIX_TOOLCHAIN=$SYSROOT_PREFIX/usr \
-			  -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
-			  -DBUILD_SHARED_LIBS=0"
+PKG_IS_ADDON="yes"
+PKG_ADDON_TYPE="xbmc.audioencoder"
 
-post_makeinstall_target() {
-  rm -rf $INSTALL/usr
+configure_target() {
+  cmake -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+        -DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
+        -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
+        -DLAME_INCLUDE_DIRS=$SYSROOT_PREFIX/usr/include \
+        ..
+}
+
+addon() {
+  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/
+  cp -R $PKG_BUILD/.install_pkg/usr/share/kodi/addons/$PKG_NAME/* $ADDON_BUILD/$PKG_ADDON_ID/
+
+  ADDONSO=$(xmlstarlet sel -t -v "/addon/extension/@library_linux" $ADDON_BUILD/$PKG_ADDON_ID/addon.xml)
+  cp -L $PKG_BUILD/.install_pkg/usr/lib/kodi/addons/$PKG_NAME/$ADDONSO $ADDON_BUILD/$PKG_ADDON_ID/
 }
