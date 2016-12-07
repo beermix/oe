@@ -2,13 +2,8 @@ PKG_NAME="db"
 PKG_VERSION="4.8.30.NC"
 #PKG_VERSION="5.3.28.NC"
 #PKG_VERSION="6.1.26.NC"
-PKG_SITE="https://www.oracle.com/"
 PKG_URL="http://download.oracle.com/berkeley-db/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
-PKG_SECTION="web"
-PKG_SHORTDESC="Berkeley DB"
-PKG_LONGDESC="Berkeley Database Libraries"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
@@ -19,15 +14,16 @@ pre_configure_target() {
 }
 
 PKG_CONFIGURE_SCRIPT="dist/configure"
+
 PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
-			   --enable-cxx \
-			   --enable-static \
-			   --disable-shared \
-			   --enable-compat185 \
-			   --enable-o_direct \
-			   --enable-smallbuild \
-			   --disable-atomicsupport \
-			   --enable-compression"
+			      --enable-cxx \
+			      --enable-static \
+			      --disable-shared \
+			      --enable-compat185 \
+			      --enable-o_direct \
+			      --enable-smallbuild \
+			      --disable-atomicsupport \
+			      --enable-compression"
 			   
 post_makeinstall_target() {
   rm -rf $INSTALL
