@@ -22,7 +22,7 @@ PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://expat.sourceforge.net/"
-PKG_GIT_URL=git://git.code.sf.net/p/expat/code_git"
+PKG_GIT_URL="git://git.code.sf.net/p/expat/code_git"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="textproc"
 PKG_SHORTDESC="expat: XML parser library"
@@ -30,6 +30,10 @@ PKG_LONGDESC="Expat is an XML parser library written in C. It is a stream-orient
 PKG_USE_CMAKE="yes"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
+
+post_unpack() {
+  cp -r $PKG_BUILD/expat/* $PKG_BUILD/
+}
 
 PKG_CMAKE_OPTS_TARGET="-DBUILD_tools=OFF \
 			  -DBUILD_examples=OFF \
