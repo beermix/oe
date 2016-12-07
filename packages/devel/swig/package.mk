@@ -17,25 +17,24 @@
 ################################################################################
 
 PKG_NAME="swig"
-#PKG_VERSION="rel-3.0.10"
-PKG_VERSION="d21bb11"
+PKG_VERSION="3.0.10"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.swig.org"
-PKG_GIT_URL="https://github.com/swig/swig"
-PKG_DEPENDS_HOST="ccache:host Python:host boost"
+PKG_URL="$SOURCEFORGE_SRC/swig/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_DEPENDS_HOST="ccache:host Python:host boost pcre"
 PKG_PRIORITY="optional"
 PKG_SECTION="devel"
 PKG_SHORTDESC="SWIG: a software development tool that connects programs written in C and C++ with a variety of high-level programming languages."
 PKG_LONGDESC="SWIG is a software development tool that connects programs written in C and C++ with a variety of high-level programming languages."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_HOST="--with-pcre-prefix=$ROOT/$TOOLCHAIN \
                          --with-boost=no \
-                         --with-pcre \
+                         --without-pcre \
                          --without-x \
                          --without-tcl \
                          --with-python \

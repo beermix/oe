@@ -6,6 +6,7 @@ PKG_PRIORITY="optional"
 PKG_SECTION="tools"
 PKG_AUTORECONF="no"
 
+strip_lto
 
 pre_make_target() {
   export GOOS=linux
@@ -13,13 +14,13 @@ pre_make_target() {
   export CGO_ENABLED=1
   export CGO_NO_EMULATION=1
   export CGO_CFLAGS=$CFLAGS
-  export LDFLAGS="-w -extldflags -static -X github.com/docker/containerd.GitCommit=${PKG_VERSION} -extld $TARGET_CC"
+  export LDFLAGS="-s -w -extldflags -extld $CC"
   export GOLANG=$ROOT/$TOOLCHAIN/lib/golang/bin/go
   export GOPATH=$ROOT/$PKG_BUILD.gopath:$ROOT/$PKG_BUILD/vendor/
   export GOROOT=$ROOT/$TOOLCHAIN/lib/golang
   export PATH=$PATH:$GOROOT/bin
 }
- 
+
 make_target() {
   mkdir -p bin
   go get -u -v -t github.com/zpeters/speedtest
