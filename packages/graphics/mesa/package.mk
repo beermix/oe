@@ -99,6 +99,7 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --disable-gallium-tests \
                            --enable-shared-glapi \
                            --enable-shader-cache \
+                           --enable-sysfs \
                            --enable-driglx-direct \
                            --enable-glx-tls \
                            --disable-glx-read-only-text \
