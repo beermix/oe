@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="setuptools"
-PKG_VERSION="30.0.0"
+PKG_VERSION="30.2.0"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="https://pypi.python.org/pypi/setuptools"
-PKG_URL="https://pypi.python.org/packages/66/6d/dad0d39ce1cfa98ef3634463926e7324e342c956aecb066968e2e3696300/setuptools-30.0.0.tar.gz"
+PKG_URL="https://pypi.python.org/packages/f1/92/12c7251039b274c30106c3e0babdcb040cbd13c3ad4b3f0ef9a7c217e36a/setuptools-30.2.0.tar.gz"
 PKG_DEPENDS_HOST="Python:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="python/devel"
