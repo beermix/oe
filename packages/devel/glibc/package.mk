@@ -122,8 +122,10 @@ EOF
 }
 
 post_makeinstall_target() {
-# we are linking against ld.so, so symlink
-  ln -sf $(basename $INSTALL/lib/ld-*.so) $INSTALL/lib/ld.so
+  ln -sf ld-$PKG_VERSION.so $INSTALL/lib/ld.so
+  if [ "$TARGET_ARCH" = "arm" -a "$TARGET_FLOAT" = "hard" ]; then
+    ln -sf ld-$PKG_VERSION.so $INSTALL/lib/ld-linux.so.3
+  fi
 
 # cleanup
   for i in $GLIBC_EXCLUDE_BIN; do
@@ -131,9 +133,7 @@ post_makeinstall_target() {
   done
   rm -rf $INSTALL/usr/lib/audit
   rm -rf $INSTALL/usr/lib/glibc
-  rm -rf $INSTALL/usr/lib/libc_pic
   rm -rf $INSTALL/usr/lib/*.o
-  rm -rf $INSTALL/usr/lib/*.map
   rm -rf $INSTALL/var
 
 # remove unneeded libs
@@ -142,13 +142,21 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/lib/libmemusage.so
   rm -rf $INSTALL/usr/lib/libpcprofile.so
 # remove ldscripts
-  rm -rf $INSTALL/usr/share/i18n/charmaps
+  rm -rf $INSTALL/usr/lib/libc.so
+  rm -rf $INSTALL/usr/lib/libpthread.so
 
 # remove locales and charmaps
-  if [ "$PROJECT" = "Generic" ]; then
-    mkdir -p $INSTALL/usr/share/i18n/charmaps
-    cp -PR $ROOT/$PKG_BUILD/localedata/charmaps/UTF-8 $INSTALL/usr/share/i18n/charmaps
-    gzip $INSTALL/usr/share/i18n/charmaps/UTF-8
+  rm -rf $INSTALL/usr/share/i18n/charmaps
+  if [ -n "$GLIBC_LOCALES" ]; then
+    mkdir -p $INSTALL/usr/lib/locale
+    for locale in $GLIBC_LOCALES; do
+      echo ">>> install inputfile $(echo $locale | cut -f1 -d ".") with charmap $(echo $locale | cut -f2 -d ".") as $locale <<<"
+      I18NPATH=../localedata \
+      $ROOT/$TOOLCHAIN/bin/localedef \
+        -i ../localedata/locales/$(echo $locale | cut -f1 -d ".") \
+        -f ../localedata/charmaps/$(echo $locale | cut -f2 -d ".") \
+        $locale --prefix=$INSTALL
+    done
   fi
   if [ ! "$GLIBC_LOCALES" = yes ]; then
     rm -rf $INSTALL/usr/share/i18n/locales
@@ -160,8 +168,8 @@ post_makeinstall_target() {
 # create default configs
   mkdir -p $INSTALL/etc
     cp $PKG_DIR/config/nsswitch.conf $INSTALL/etc
-    cp $PKG_DIR/config/host.conf $INSTALL/etc
     cp $PKG_DIR/config/gai.conf $INSTALL/etc
+    echo "multi on" > $INSTALL/etc/host.conf
 }
 
 configure_init() {

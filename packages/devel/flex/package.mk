@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="flex"
-PKG_VERSION="6bea32e"
+PKG_VERSION="2.6.2"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://flex.sourceforge.net/"
-PKG_GIT_URL="https://github.com/westes/flex"
+PKG_URL="https://github.com/westes/flex/releases/download/v$PKG_VERSION/flex-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="ccache:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="toolchain/devel"
