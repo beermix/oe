@@ -106,7 +106,7 @@ pre_configure_target() {
   unset LD_LIBRARY_PATH
 
   # set some CFLAGS we need
-  export CFLAGS="$CFLAGS -g0 -fno-stack-protector"
+  export CFLAGS="$CFLAGS -g -fno-stack-protector"
 
   export OBJDUMP_FOR_HOST=objdump
 
@@ -144,8 +144,8 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/lib/libmemusage.so
   rm -rf $INSTALL/usr/lib/libpcprofile.so
 # remove ldscripts
- # rm -rf $INSTALL/usr/lib/libc.so
-  #rm -rf $INSTALL/usr/lib/libpthread.so
+# rm -rf $INSTALL/usr/lib/libc.so
+# rm -rf $INSTALL/usr/lib/libpthread.so
 
 # remove locales and charmaps
   rm -rf $INSTALL/usr/share/i18n/charmaps
