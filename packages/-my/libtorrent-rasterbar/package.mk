@@ -2,7 +2,7 @@ PKG_NAME="libtorrent-rasterbar"
 PKG_VERSION="1.0.10"
 PKG_URL="https://github.com/arvidn/libtorrent/releases/download/libtorrent-1_0_10/libtorrent-rasterbar-1.0.10.tar.gz"
 PKG_DEPENDS_HOST="toolchain"
-PKG_DEPENDS_TARGET="toolchain openssl expat libiconv boost"
+PKG_DEPENDS_TARGET="toolchain openssl expat boost"
 PKG_SECTION="devel"
 PKG_USE_CMAKE="no"
 PKG_IS_ADDON="no"
@@ -14,7 +14,7 @@ pre_configure_target() {
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \
 			      --enable-python-binding \
-			      --with-libiconv \
+			      --without-libiconv \
 			      --with-boost-libdir=$SYSROOT_PREFIX/usr/lib"
 			      
 			      
