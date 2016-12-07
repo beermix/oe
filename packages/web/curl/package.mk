@@ -25,12 +25,12 @@
 #   there: http://forum.xbmc.org/showthread.php?tid=177557
 
 PKG_NAME="curl"
-PKG_VERSION="dacfecb"
+PKG_VERSION="7.51.0"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="MIT"
 PKG_SITE="http://curl.haxx.se"
-PKG_GIT_URL="https://github.com/curl/curl"
+PKG_URL="http://curl.haxx.se/download/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain libz openssl rtmpdump libidn"
 PKG_PRIORITY="optional"
 PKG_SECTION="web"
