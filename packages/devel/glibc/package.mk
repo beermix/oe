@@ -33,7 +33,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
-                           libc_cv_slibdir=/lib \
+                           libc_cv_slibdir=/usr/lib \
                            ac_cv_path_PERL= \
                            ac_cv_prog_MAKEINFO= \
                            --libexecdir=/usr/lib/glibc \
@@ -115,17 +115,18 @@ libc_cv_forced_unwind=yes
 libc_cv_c_cleanup=yes
 libc_cv_ssp=no
 libc_cv_ssp_strong=no
+libc_cv_slibdir=/usr/lib
 EOF
 
-  echo "sbindir=/usr/bin" >> configparms
-  echo "rootsbindir=/usr/bin" >> configparms
+echo "libdir=/usr/lib" >> configparms
+echo "slibdir=/usr/lib" >> configparms
+echo "sbindir=/usr/bin" >> configparms
+echo "rootsbindir=/usr/bin" >> configparms
 }
 
 post_makeinstall_target() {
-  ln -sf ld-$PKG_VERSION.so $INSTALL/lib/ld.so
-  if [ "$TARGET_ARCH" = "arm" -a "$TARGET_FLOAT" = "hard" ]; then
-    ln -sf ld-$PKG_VERSION.so $INSTALL/lib/ld-linux.so.3
-  fi
+# we are linking against ld.so, so symlink
+  ln -sf $(basename $INSTALL/usr/lib/ld-*.so) $INSTALL/usr/lib/ld.so
 
 # cleanup
   for i in $GLIBC_EXCLUDE_BIN; do
@@ -166,7 +167,10 @@ rm -rf $INSTALL/usr/lib/libpthread.so
   mkdir -p $INSTALL/etc
     cp $PKG_DIR/config/nsswitch.conf $INSTALL/etc
     cp $PKG_DIR/config/gai.conf $INSTALL/etc
-    echo "multi on" > $INSTALL/etc/host.conf
+
+  if [ "$TARGET_ARCH" = "arm" -a "$TARGET_FLOAT" = "hard" ]; then
+    ln -sf ld.so $INSTALL/usr/lib/ld-linux.so.3
+  fi
 }
 
 configure_init() {
@@ -179,10 +183,14 @@ make_init() {
 }
 
 makeinstall_init() {
-  mkdir -p $INSTALL/lib
-    cp -PR $ROOT/$PKG_BUILD/.$TARGET_NAME/elf/ld*.so* $INSTALL/lib
-    cp $ROOT/$PKG_BUILD/.$TARGET_NAME/libc.so.6 $INSTALL/lib
-    cp $ROOT/$PKG_BUILD/.$TARGET_NAME/math/libm.so* $INSTALL/lib
-    cp $ROOT/$PKG_BUILD/.$TARGET_NAME/nptl/libpthread.so.0 $INSTALL/lib
-    cp -PR $ROOT/$PKG_BUILD/.$TARGET_NAME/rt/librt.so* $INSTALL/lib
+  mkdir -p $INSTALL/usr/lib
+    cp -PR $ROOT/$PKG_BUILD/.$TARGET_NAME/elf/ld*.so* $INSTALL/usr/lib
+    cp $ROOT/$PKG_BUILD/.$TARGET_NAME/libc.so.6 $INSTALL/usr/lib
+    cp $ROOT/$PKG_BUILD/.$TARGET_NAME/math/libm.so* $INSTALL/usr/lib
+    cp $ROOT/$PKG_BUILD/.$TARGET_NAME/nptl/libpthread.so.0 $INSTALL/usr/lib
+    cp -PR $ROOT/$PKG_BUILD/.$TARGET_NAME/rt/librt.so* $INSTALL/usr/lib
+
+    if [ "$TARGET_ARCH" = "arm" -a "$TARGET_FLOAT" = "hard" ]; then
+      ln -sf ld.so $INSTALL/usr/lib/ld-linux.so.3
+    fi
 }
