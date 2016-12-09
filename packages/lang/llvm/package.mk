@@ -47,7 +47,7 @@ configure_host() {
         -DLLVM_ENABLE_ZLIB=OFF \
         -DLLVM_ENABLE_TERMINFO=OFF \
         -DLLVM_OPTIMIZED_TABLEGEN=ON \
-        -DLLVM_TARGETS_TO_BUILD=AMDGPU \
+        -DLLVM_TARGETS_TO_BUILD=X86 \
         ..
 }
 
