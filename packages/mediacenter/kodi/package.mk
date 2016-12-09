@@ -394,6 +394,11 @@ post_makeinstall_target() {
     cp -R $PKG_DIR/config/repository.libreelec.tv $INSTALL/usr/share/kodi/addons
     $SED "s|@ADDON_URL@|$ADDON_URL|g" -i $INSTALL/usr/share/kodi/addons/repository.libreelec.tv/addon.xml
 
+    cp -R $PKG_DIR/config/os.alexelec $INSTALL/usr/share/kodi/addons
+    $SED "s|@OS_VERSION@|$OS_VERSION|g" -i $INSTALL/usr/share/kodi/addons/os.alexelec/addon.xml
+    cp -R $PKG_DIR/config/repository.alexelec $INSTALL/usr/share/kodi/addons
+    $SED "s|@ADDON_URL@|$ADDON_URL|g" -i $INSTALL/usr/share/kodi/addons/repository.alexelec/addon.xml
+
   mkdir -p $INSTALL/usr/lib/python"$PYTHON_VERSION"/site-packages/kodi
     cp -R tools/EventClients/lib/python/* $INSTALL/usr/lib/python"$PYTHON_VERSION"/site-packages/kodi
 
@@ -416,6 +421,9 @@ post_makeinstall_target() {
     else
       cp $PKG_DIR/config/advancedsettings.xml $INSTALL/usr/share/kodi/system/
     fi
+    if [ -f $PROJECT_DIR/$PROJECT/kodi/Lircmap.xml ]; then
+      cp -f $PROJECT_DIR/$PROJECT/kodi/Lircmap.xml $INSTALL/usr/share/kodi/system/
+    fi
 
   mkdir -p $INSTALL/usr/share/kodi/system/settings
     if [ -f $PROJECT_DIR/$PROJECT/kodi/appliance.xml ]; then
@@ -428,6 +436,23 @@ post_makeinstall_target() {
     mkdir -p $INSTALL/usr/share/kodi/media/Fonts
       cp $PKG_DIR/fonts/*.ttf $INSTALL/usr/share/kodi/media/Fonts
   fi
+  # install AlexELEC addons
+  if [ -f $PKG_DIR/config/addons-alexelec/plugins.tbz2 ]; then
+      mkdir -p $INSTALL/usr/share/kodi/config/addons-alexelec
+      cp $PKG_DIR/config/addons-alexelec/plugins.tbz2 $INSTALL/usr/share/kodi/config/addons-alexelec
+  fi
+
+  # install addons config
+  if [ -d $PKG_DIR/config/weather.yahoo ]; then
+    cp -R $PKG_DIR/config/weather.yahoo $INSTALL/usr/share/kodi/config
+  fi
+
+  # disable Wizard in System addon
+  if [ -d $PKG_DIR/config/service.system.settings ]; then
+    cp -R $PKG_DIR/config/service.system.settings $INSTALL/usr/share/kodi/config
+  fi
+  
+  debug_strip $INSTALL/usr/lib/kodi/kodi.bin
 }
 
 post_install() {
@@ -443,4 +468,10 @@ post_install() {
   enable_service kodi-waitonnetwork.service
   enable_service kodi.service
   enable_service kodi-lirc-suspend.service
+# GUI switch service
+  enable_service gui-switch.service
+# Drop RAM service
+  enable_service drop-ram.service
+# resolution service
+  enable_service kodi-setresmode.service
 }

@@ -17,13 +17,13 @@
 ################################################################################
 
 PKG_NAME="cairo"
-PKG_VERSION="1.14.6"
+PKG_VERSION="1.15.2"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://cairographics.org/"
 PKG_URL="http://cairographics.org/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
-#PKG_URL="http://cairographics.org/snapshots/cairo-1.15.2.tar.xz"
+PKG_URL="https://www.cairographics.org/snapshots/cairo-1.15.2.tar.xz"
 PKG_DEPENDS_TARGET="toolchain libz freetype fontconfig libpng pixman"
 
 PKG_SECTION="graphics"

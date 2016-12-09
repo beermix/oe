@@ -1,36 +1,3 @@
-From 8f82e51563f0e1bc9b7a8adf669ad2b66e7ce3e5 Mon Sep 17 00:00:00 2001
-From: Bernd Kuhls <bernd.kuhls@t-online.de>
-Date: Thu, 28 Apr 2016 17:17:40 +0200
-Subject: [PATCH] lib/cximage-6.0: fix compilation with gcc6
-
-For a quick fix I renamed min() to cxmin() and max() to cxmax() to
-prevent the conflict with the gcc definition.
-
-Forum thread for reference:
-http://forum.kodi.tv/showthread.php?tid=263884
-
-Signed-off-by: Bernd Kuhls <bernd.kuhls@t-online.de>
-(Patch sent upstream: https://github.com/xbmc/xbmc/pull/9703)
----
- lib/cximage-6.0/CxImage/ximabmp.cpp  |   6 +-
- lib/cximage-6.0/CxImage/ximadef.h    |   8 +-
- lib/cximage-6.0/CxImage/ximadsp.cpp  | 182 +++++++++++++++++------------------
- lib/cximage-6.0/CxImage/ximage.cpp   |   4 +-
- lib/cximage-6.0/CxImage/ximagif.cpp  |   6 +-
- lib/cximage-6.0/CxImage/ximahist.cpp |  12 +--
- lib/cximage-6.0/CxImage/ximaint.cpp  |   8 +-
- lib/cximage-6.0/CxImage/ximaiter.h   |   4 +-
- lib/cximage-6.0/CxImage/ximajbg.cpp  |   2 +-
- lib/cximage-6.0/CxImage/ximapal.cpp  |  14 +--
- lib/cximage-6.0/CxImage/ximapng.cpp  |  12 +--
- lib/cximage-6.0/CxImage/ximaraw.cpp  |   4 +-
- lib/cximage-6.0/CxImage/ximasel.cpp  |  50 +++++-----
- lib/cximage-6.0/CxImage/ximath.cpp   |   8 +-
- lib/cximage-6.0/CxImage/ximatif.cpp  |   6 +-
- lib/cximage-6.0/CxImage/ximatran.cpp | 138 +++++++++++++-------------
- lib/cximage-6.0/CxImage/ximawnd.cpp  |  16 +--
- 17 files changed, 236 insertions(+), 244 deletions(-)
-
 diff --git a/lib/cximage-6.0/CxImage/ximabmp.cpp b/lib/cximage-6.0/CxImage/ximabmp.cpp
 index 726ff91..55842b1 100644
 --- a/lib/cximage-6.0/CxImage/ximabmp.cpp
@@ -1433,6 +1400,3 @@ index 2ae2f93..7029cc7 100644
  
  						if (bAlpha) a=pAlpha[alphaoffset+sx]; else a=255;
  						a =(BYTE)((a*(1+info.nAlphaMax))>>8);
--- 
-2.8.0.rc3
-

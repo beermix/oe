@@ -93,6 +93,7 @@ fi
 
 # clean up any stale cores. just in case
 rm -f /storage/.cache/cores/*
+clear_ram
 
 /usr/lib/kodi/kodi.bin $SAVED_ARGS
 RET=$?
