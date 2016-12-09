@@ -33,7 +33,7 @@ PKG_LONGDESC="GNU MP is a library for arbitrary precision arithmetic, operating 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_HOST="--enable-cxx --enable-static --disable-shared --with-pic --enable-silent-rules"
 
