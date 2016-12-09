@@ -5,11 +5,11 @@ PKG_DEPENDS_TARGET="toolchain libz libevent"
 PKG_SECTION="security"
 PKG_AUTORECONF="yes"
 
-pre_configure_target() {
-   CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
-}
+#pre_configure_target() {
+#   CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
+#}
 
-PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
+PKG_CONFIGURE_OPTS_TARGET="ac_cv_prog_cc_c99=-std=gnu99 \
 			      --with-openssl-dir=$SYSROOT_PREFIX/usr \
 			      --disable-gcc-hardening \
 			      --disable-unittests \
@@ -19,9 +19,7 @@ PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
 			      --datarootdir=/storage/.cache/tor \
 			      --datadir=/storage/.cache/tor \
 			      --with-zlib-dir=$ROOT/$TOOLCHAIN \
-			      --disable-asciidoc \
-			      --disable-silent-rules \
-			      ac_cv_prog_cc_c99=-std=gnu99"
+			      --disable-asciidoc"
 
 
 post_install() {
