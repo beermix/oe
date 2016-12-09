@@ -14,7 +14,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################ gdb
+################################################################################
 
 PKG_NAME="debug"
 PKG_VERSION=""

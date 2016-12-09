@@ -94,4 +94,5 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
   rm -rf $INSTALL/usr/lib/LLVMHello.so
   rm -rf $INSTALL/usr/lib/libLTO.so
+  rm -rf $INSTALL/usr/share
 }

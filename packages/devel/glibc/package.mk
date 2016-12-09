@@ -33,7 +33,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
-                           libc_cv_slibdir=/usr/lib \
+                           libc_cv_slibdir=/lib \
                            ac_cv_path_PERL= \
                            ac_cv_prog_MAKEINFO= \
                            --libexecdir=/usr/lib/glibc \
@@ -54,8 +54,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --disable-build-nscd \
                            --disable-nscd \
                            --enable-lock-elision \
-                           --disable-timezone-tools \
-                           --disable-debug"
+                           --disable-timezone-tools"
 
 if [ "$DEBUG" = yes ]; then
   PKG_CONFIGURE_OPTS_TARGET+=" --enable-debug"
@@ -115,18 +114,17 @@ libc_cv_forced_unwind=yes
 libc_cv_c_cleanup=yes
 libc_cv_ssp=no
 libc_cv_ssp_strong=no
-libc_cv_slibdir=/usr/lib
 EOF
 
-echo "libdir=/usr/lib" >> configparms
-echo "slibdir=/usr/lib" >> configparms
-echo "sbindir=/usr/bin" >> configparms
-echo "rootsbindir=/usr/bin" >> configparms
+  echo "sbindir=/usr/bin" >> configparms
+  echo "rootsbindir=/usr/bin" >> configparms
 }
 
 post_makeinstall_target() {
-# we are linking against ld.so, so symlink
-  ln -sf $(basename $INSTALL/usr/lib/ld-*.so) $INSTALL/usr/lib/ld.so
+  ln -sf ld-$PKG_VERSION.so $INSTALL/lib/ld.so
+  if [ "$TARGET_ARCH" = "arm" -a "$TARGET_FLOAT" = "hard" ]; then
+    ln -sf ld-$PKG_VERSION.so $INSTALL/lib/ld-linux.so.3
+  fi
 
 # cleanup
   for i in $GLIBC_EXCLUDE_BIN; do
@@ -134,27 +132,30 @@ post_makeinstall_target() {
   done
   rm -rf $INSTALL/usr/lib/audit
   rm -rf $INSTALL/usr/lib/glibc
-  rm -rf $INSTALL/usr/lib/libc_pic
   rm -rf $INSTALL/usr/lib/*.o
-  rm -rf $INSTALL/usr/lib/*.map
   rm -rf $INSTALL/var
 
 # remove unneeded libs
-rm -rf $INSTALL/usr/lib/libBrokenLocale*
-rm -rf $INSTALL/usr/lib/libSegFault.so
-rm -rf $INSTALL/usr/lib/libmemusage.so
-rm -rf $INSTALL/usr/lib/libpcprofile.so
+  rm -rf $INSTALL/usr/lib/libBrokenLocale*
+  rm -rf $INSTALL/usr/lib/libSegFault.so
+  rm -rf $INSTALL/usr/lib/libmemusage.so
+  rm -rf $INSTALL/usr/lib/libpcprofile.so
 # remove ldscripts
-rm -rf $INSTALL/usr/lib/libc.so
-rm -rf $INSTALL/usr/lib/libpthread.so
+  rm -rf $INSTALL/usr/lib/libc.so
+  rm -rf $INSTALL/usr/lib/libpthread.so
 
 # remove locales and charmaps
   rm -rf $INSTALL/usr/share/i18n/charmaps
-# add UTF-8 charmap for Generic (charmap is needed for installer)
-  if [ "$PROJECT" = "Generic" ]; then
-    mkdir -p $INSTALL/usr/share/i18n/charmaps
-    cp -PR $ROOT/$PKG_BUILD/localedata/charmaps/UTF-8 $INSTALL/usr/share/i18n/charmaps
-    gzip $INSTALL/usr/share/i18n/charmaps/UTF-8
+  if [ -n "$GLIBC_LOCALES" ]; then
+    mkdir -p $INSTALL/usr/lib/locale
+    for locale in $GLIBC_LOCALES; do
+      echo ">>> install inputfile $(echo $locale | cut -f1 -d ".") with charmap $(echo $locale | cut -f2 -d ".") as $locale <<<"
+      I18NPATH=../localedata \
+      $ROOT/$TOOLCHAIN/bin/localedef \
+        -i ../localedata/locales/$(echo $locale | cut -f1 -d ".") \
+        -f ../localedata/charmaps/$(echo $locale | cut -f2 -d ".") \
+        $locale --prefix=$INSTALL
+    done
   fi
   if [ ! "$GLIBC_LOCALES" = yes ]; then
     rm -rf $INSTALL/usr/share/i18n/locales
@@ -168,9 +169,7 @@ rm -rf $INSTALL/usr/lib/libpthread.so
     cp $PKG_DIR/config/nsswitch.conf $INSTALL/etc
     cp $PKG_DIR/config/gai.conf $INSTALL/etc
 
-  if [ "$TARGET_ARCH" = "arm" -a "$TARGET_FLOAT" = "hard" ]; then
-    ln -sf ld.so $INSTALL/usr/lib/ld-linux.so.3
-  fi
+    echo "multi on" > $INSTALL/etc/host.conf
 }
 
 configure_init() {
@@ -183,14 +182,14 @@ make_init() {
 }
 
 makeinstall_init() {
-  mkdir -p $INSTALL/usr/lib
-    cp -PR $ROOT/$PKG_BUILD/.$TARGET_NAME/elf/ld*.so* $INSTALL/usr/lib
-    cp $ROOT/$PKG_BUILD/.$TARGET_NAME/libc.so.6 $INSTALL/usr/lib
-    cp $ROOT/$PKG_BUILD/.$TARGET_NAME/math/libm.so* $INSTALL/usr/lib
-    cp $ROOT/$PKG_BUILD/.$TARGET_NAME/nptl/libpthread.so.0 $INSTALL/usr/lib
-    cp -PR $ROOT/$PKG_BUILD/.$TARGET_NAME/rt/librt.so* $INSTALL/usr/lib
+  mkdir -p $INSTALL/lib
+    cp -PR $ROOT/$PKG_BUILD/.$TARGET_NAME/elf/ld*.so* $INSTALL/lib
+    cp $ROOT/$PKG_BUILD/.$TARGET_NAME/libc.so.6 $INSTALL/lib
+    cp $ROOT/$PKG_BUILD/.$TARGET_NAME/math/libm.so* $INSTALL/lib
+    cp $ROOT/$PKG_BUILD/.$TARGET_NAME/nptl/libpthread.so.0 $INSTALL/lib
+    cp -PR $ROOT/$PKG_BUILD/.$TARGET_NAME/rt/librt.so* $INSTALL/lib
 
     if [ "$TARGET_ARCH" = "arm" -a "$TARGET_FLOAT" = "hard" ]; then
-      ln -sf ld.so $INSTALL/usr/lib/ld-linux.so.3
+      ln -sf ld.so $INSTALL/lib/ld-linux.so.3
     fi
 }

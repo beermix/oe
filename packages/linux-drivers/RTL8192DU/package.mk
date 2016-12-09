@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="RTL8192DU"
-PKG_VERSION="9e7eb15"
+PKG_VERSION="69552b2"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -47,6 +47,6 @@ make_target() {
 }
 
 makeinstall_target() {
-  mkdir -p $INSTALL/lib/modules/$(get_module_dir)/$PKG_NAME
-    cp *.ko $INSTALL/lib/modules/$(get_module_dir)/$PKG_NAME
+  mkdir -p $INSTALL/usr/lib/modules/$(get_module_dir)/$PKG_NAME
+    cp *.ko $INSTALL/usr/lib/modules/$(get_module_dir)/$PKG_NAME
 }
