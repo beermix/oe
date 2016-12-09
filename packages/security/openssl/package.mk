@@ -1,6 +1,9 @@
 PKG_NAME="openssl"
-PKG_VERSION="1.0.2j"
-PKG_URL="https://www.openssl.org/source/openssl-$PKG_VERSION.tar.gz"
+#PKG_VERSION="1.0.2j"
+#PKG_URL="https://www.openssl.org/source/openssl-$PKG_VERSION.tar.gz"
+PKG_VERSION="5ae285e"
+PKG_GIT_URL="https://github.com/openssl/openssl"
+PKG_GIT_BRANCH="OpenSSL_1_0_2-stable"
 PKG_DEPENDS_TARGET="toolchain libz gmp pcre"
 
 PKG_SECTION="security"
@@ -31,9 +34,9 @@ configure_target() {
               enable-ecdsa \
               no-rc5 \
               enable-tlsext \
-              enable-ec_nistp_64_gcc_128 \
-              enable-gmp \
               no-ssl3-method \
+              enable-gmp \
+              enable-ec_nistp_64_gcc_128 \
               linux-x86_64 \
               "-lpthread -m64 -DL_ENDIAN  -Wa,--noexecstack"
 }
