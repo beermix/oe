@@ -23,7 +23,7 @@ PKG_ARCH="arm"
 PKG_ADDON_PROJECTS="RPi2 WeTek_Core WeTek_Play"
 PKG_LICENSE="prop."
 PKG_SITE="https://github.com/Fornoth/spotify-connect-web"
-PKG_GIT_URL="https://github.com/Fornoth/spotify-connect-web"
+PKG_URL="https://github.com/Fornoth/spotify-connect-web/releases/download/$PKG_VERSION/${PKG_NAME}_$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="spotify-connect-web"
 PKG_DEPENDS_TARGET="toolchain avahi"
 PKG_SECTION="service"
@@ -47,7 +47,7 @@ makeinstall_target() {
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
 
-  cp -P $(get_pkg_build avahi)/avahi-utils/.libs/avahi-publish \
+  cp -P $(get_build_dir avahi)/avahi-utils/.libs/avahi-publish \
         $ADDON_BUILD/$PKG_ADDON_ID/bin/
 
   cp -PR $PKG_BUILD/* $ADDON_BUILD/$PKG_ADDON_ID/

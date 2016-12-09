@@ -34,3 +34,4 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-nls \
                            --with-openssl \
                            --with-readline=$SYSROOT_PREFIX/usr \
                            --with-zlib=$SYSROOT_PREFIX/usr"
+

@@ -28,12 +28,8 @@ PKG_PRIORITY="optional"
 PKG_SECTION="tools"
 PKG_SHORTDESC="strace: Trace system calls and signals"
 PKG_LONGDESC="In the simplest case strace runs the specified command until it exits. It intercepts and records the system calls which are called by a process and the signals which are received by a process. The name of each system call, its arguments and its return value are printed on standard error or to the file specified with the -o option."
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 pre_configure_target() {
   unset CPPFLAGS
-}
-
-make_target() {
-make CC="$CC" AR="$AR" LD="$LD" XCFLAGS="$CFLAGS" RANLIB="$RANLIB" XLDFLAGS="$LDFLAGS" CFLAGS="$CFLAGS"
 }
