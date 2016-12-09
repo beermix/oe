@@ -53,7 +53,7 @@ configure_host() {
 
 configure_target() {
   cmake -DCMAKE_INSTALL_PREFIX=/usr \
-        -DCMAKE_BUILD_TYPE=MinSizeRel \
+        -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_SYSTEM_NAME=Linux \
         -DLIBCXX_INSTALL_LIBRARY=OFF \
         -DLLVM_NATIVE_ARCH=X86 \
