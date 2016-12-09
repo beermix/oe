@@ -142,23 +142,7 @@ get_pkg_build() {
 
 # get kernel module dir
 get_module_dir() {
-  basename $(ls -d $(get_pkg_build linux)/.install_pkg/lib/modules/*)
-}
-
-get_build_dir() {
-  if [ ! -z $1 ] ; then
-    local _PKG_DIR=$(find $ROOT/projects/$PROJECT/packages -name $1 2>/dev/null)
-    if [ -d "$_PKG_DIR" -a -f $_PKG_DIR/package.mk ] ; then
-      . $_PKG_DIR/package.mk
-    else
-      local _PKG_DIR=$(find $ROOT/packages -name $1 2>/dev/null)
-      if [ -d "$_PKG_DIR" -a -f $_PKG_DIR/package.mk ] ; then
-        . $_PKG_DIR/package.mk
-      fi
-    fi
-
-    echo $ROOT/$BUILD/${PKG_NAME}-${PKG_VERSION}
-  fi
+  basename $(ls -d $(get_pkg_build linux)/.install_pkg/usr/lib/modules/*)
 }
 
 tolower(){

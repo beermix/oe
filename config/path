@@ -164,7 +164,7 @@ SED="sed -i"
 . config/optimize
 
 if [ -z "$CCACHE_DIR" ]; then
-    export CCACHE_DIR=/root/.CCACHEI
+    export CCACHE_DIR=$HOME/.ccache-oe
 fi
 export MAKEFLAGS=-j$CONCURRENCY_MAKE_LEVEL
 export PKG_CONFIG=$ROOT/$TOOLCHAIN/bin/pkg-config
