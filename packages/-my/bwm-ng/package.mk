@@ -2,7 +2,7 @@ PKG_NAME="bwm-ng"
 PKG_VERSION="9baf9c0"
 PKG_GIT_URL="https://github.com/vgropp/bwm-ng"
 PKG_DEPENDS_TARGET="toolchain libstatgrab"
-PKG_PRIORITY="optional"
+
 PKG_AUTORECONF="yes"
 
 pre_configure_target() {

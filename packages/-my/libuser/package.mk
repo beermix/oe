@@ -2,7 +2,7 @@ PKG_NAME="libuser"
 PKG_VERSION="0.62"
 PKG_URL="https://copy.com/GLr9VInlymb3/libuser-0.62.tar.xz"
 PKG_DEPENDS_TARGET="toolchain Python sqlite netbsd-curses"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"

@@ -3,7 +3,7 @@ PKG_VERSION="4.0.7"
 PKG_URL="http://www.rarlab.com/rar/unrarsrc-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain openssl zlib"
 PKG_SOURCE_DIR="unrar"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"

@@ -2,7 +2,7 @@ PKG_NAME="torrent2http"
 PKG_VERSION="9ce9952"
 PKG_GIT_URL="https://github.com/anteo/torrent2http"
 PKG_DEPENDS_TARGET="toolchain go:host libtorrent-rasterbar boost openssl swig:host"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="tools"
 PKG_AUTORECONF="no"
 

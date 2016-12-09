@@ -11,7 +11,7 @@ PKG_LICENSE="OSS"
 PKG_SITE="http://www.imagemagick.org"
 PKG_URL="http://www.imagemagick.org/download/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain libX11 libtool:target"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="xmedia/libs"
 PKG_SHORTDESC="image manipulation library"
 PKG_LONGDESC="ImageMagick is a software suite to create, edit, and compose bitmap images. It can read, convert and write images in a variety of formats (over 100)."

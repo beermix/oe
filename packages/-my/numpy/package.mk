@@ -3,7 +3,7 @@ PKG_VERSION="master"
 PKG_SITE="https://pypi.python.org/pypi/PyAMF/"
 PKG_GIT_URL="https://github.com/numpy/numpy.git"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="python/system"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"

@@ -2,7 +2,7 @@ PKG_NAME="speedtest"
 PKG_VERSION="f77fc9e"
 PKG_GIT_URL="https://github.com/zpeters/speedtest"
 PKG_DEPENDS_TARGET="toolchain go:host"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="tools"
 PKG_AUTORECONF="no"
 

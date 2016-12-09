@@ -2,7 +2,7 @@ PKG_NAME="htop"
 PKG_VERSION="8af4d9f"
 PKG_GIT_URL="https://github.com/hishamhm/htop"
 PKG_DEPENDS_TARGET="toolchain hwloc"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="debug/tools"
 PKG_AUTORECONF="yes"
 

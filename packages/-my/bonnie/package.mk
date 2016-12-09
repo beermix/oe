@@ -3,7 +3,7 @@ PKG_VERSION="1.03e"
 PKG_URL="http://www.coker.com.au/bonnie++/bonnie++-$PKG_VERSION.tgz"
 PKG_SOURCE_DIR="bonnie++-$PKG_VERSION"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"

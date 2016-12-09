@@ -24,7 +24,7 @@ PKG_LICENSE="BSD"
 PKG_SITE="http://downloads.us.xiph.org/releases/speex"
 PKG_GIT_URL="https://github.com/xiph/speex"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="audio"
 PKG_SHORTDESC="Speex / OPUS audio codec"
 PKG_LONGDESC="Speex / OPUS audio codec"

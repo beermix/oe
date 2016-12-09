@@ -3,7 +3,7 @@ PKG_VERSION="0.24.0"
 PKG_SITE="https://pypi.python.org/pypi/M2Crypto/"
 PKG_URL="https://pypi.python.org/packages/source/M/M2Crypto/M2Crypto-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host openssl"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="python/security"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"

@@ -11,7 +11,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://www.videolan.org"
 PKG_URL="https://nightlies.videolan.org/build/source/vlc-2.2.5-20161202-0231.tar.xz"
 PKG_DEPENDS_TARGET="toolchain dbus libdvbpsi flac ffmpeg libvorbis zlib lua libsamplerate"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="xmedia/tools"
 PKG_SHORTDESC="VideoLAN multimedia player and streamer"
 PKG_LONGDESC="VLC is the VideoLAN project's media player. It plays MPEG, MPEG2, MPEG4, DivX, MOV, WMV, QuickTime, mp3, Ogg/Vorbis files, DVDs, VCDs, and multimedia streams from various network sources."

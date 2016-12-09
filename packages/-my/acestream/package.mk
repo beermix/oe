@@ -11,7 +11,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://www.acestream.com/"
 PKG_URL="$ALEXELEC_SRC/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain M2Crypto PyAMF setuptools"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="xmedia/network"
 PKG_SHORTDESC="This is an innovative media platform of a new generation, which will take you to a new high-quality level of multimedia space on the Internet."
 PKG_LONGDESC="This is an innovative media platform of a new generation, which will take you to a new high-quality level of multimedia space on the Internet."

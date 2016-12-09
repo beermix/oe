@@ -6,7 +6,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://miniupnp.free.fr"
 PKG_URL="http://miniupnp.free.fr/files/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="system"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"

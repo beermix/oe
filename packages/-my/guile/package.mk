@@ -4,7 +4,7 @@ PKG_SITE="http://sources.redhat.com/autogen/"
 PKG_URL="ftp://ftp.gnu.org/gnu/guile/guile-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain libffi libunistring readline"
 PKG_DEPENDS_TARGET="toolchain zlib readline libtool gmp libunistring libffi"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="toolchain/devel"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"

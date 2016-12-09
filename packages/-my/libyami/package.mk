@@ -4,7 +4,7 @@ PKG_GIT_URL="https://github.com/01org/libyami"
 PKG_GIT_BRANCH="master"
 PKG_KEEP_CHECKOUT="no"
 PKG_DEPENDS_TARGET="toolchain libva-intel-driver"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="security"
 PKG_AUTORECONF="yes"
 

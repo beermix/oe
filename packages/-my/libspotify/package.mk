@@ -4,7 +4,7 @@ PKG_SITE="https://pypi.python.org/pypi/PyAMF/"
 PKG_URL="https://developer.spotify.com/download/libspotify/libspotify-12.1.51-Linux-x86_64-release.tar.gz"
 #PKG_DEPENDS_TARGET="toolchain"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="python/system"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"

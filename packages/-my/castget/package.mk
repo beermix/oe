@@ -22,7 +22,7 @@ PKG_REV="2"
 PKG_ARCH="x86_64"
 PKG_URL="http://savannah.nongnu.org/download/castget/castget-1.2.2.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain libxml2 sqlite"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="tools"
 PKG_AUTORECONF="no"
 

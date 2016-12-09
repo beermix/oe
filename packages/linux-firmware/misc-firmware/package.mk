@@ -25,7 +25,7 @@ PKG_SITE="https://github.com/OpenELEC/misc-firmware"
 PKG_GIT_URL="https://github.com/OpenELEC/misc-firmware.git"
 PKG_GIT_BRANCH="master"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="firmware"
 PKG_SHORTDESC="misc-firmware: firmwares for various drivers"
 PKG_LONGDESC="misc-firmware: firmwares for various drivers"

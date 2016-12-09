@@ -25,7 +25,7 @@ PKG_SITE="http://www.kodi.tv"
 PKG_GIT_URL="https://github.com/kodi-pvr/pvr.hdhomerun"
 PKG_GIT_BRANCH="master"
 PKG_DEPENDS_TARGET="toolchain kodi-platform jsoncpp libhdhomerun"
-PKG_PRIORITY="optional"
+
 PKG_SECTION=""
 PKG_SHORTDESC="pvr.hdhomerun"
 PKG_LONGDESC="pvr.hdhomerun"

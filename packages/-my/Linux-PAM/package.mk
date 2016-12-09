@@ -3,7 +3,7 @@ PKG_VERSION="1.2.0"
 PKG_URL="https://dl.dropboxusercontent.com/s/cjds2bp5okus09y/Linux-PAM-1.2.0.tar.bz2"
 PKG_DEPENDS_HOST="toolchain linux"
 PKG_DEPENDS_TARGET="toolchain linux"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="devel"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"

@@ -24,7 +24,7 @@ PKG_LICENSE="Apache"
 PKG_SITE="http://martine.github.io/ninja/"
 PKG_GIT_URL="https://github.com/ninja-build/ninja"
 PKG_DEPENDS_HOST="re2c:host"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="devel"
 PKG_SHORTDESC="Small build system with a focus on speed"
 PKG_LONGDESC="Small build system with a focus on speed"

@@ -25,7 +25,7 @@ PKG_SITE="http://www.kodi.tv"
 PKG_GIT_URL="https://github.com/kodi-adsp/adsp.basic"
 PKG_GIT_BRANCH="master"
 PKG_DEPENDS_TARGET="toolchain kodi-platform libsamplerate"
-PKG_PRIORITY="optional"
+
 PKG_SECTION=""
 PKG_SHORTDESC="adsp.basic"
 PKG_LONGDESC="adsp.basic"

@@ -3,7 +3,7 @@ PKG_VERSION="1.3.2"
 PKG_URL="https://github.com/tatsuhiro-t/spdylay/releases/download/v1.3.2/spdylay-1.3.2.tar.xz"
 PKG_SOURCE_DIR="x11vnc-0.9.14"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="service/system"
 PKG_AUTORECONF="yes"
 

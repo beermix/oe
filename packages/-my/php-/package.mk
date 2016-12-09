@@ -6,7 +6,7 @@ PKG_LICENSE="OpenSource"
 PKG_SITE="http://www.php.net"
 PKG_URL="http://www.php.net/distributions/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain zlib pcre curl openssl sqlite pcre pcre2 freetype libpng libjpeg-turbo tiff glu glu giflib"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="tools"
 PKG_AUTORECONF="no"
 

@@ -3,7 +3,7 @@ PKG_VERSION="master"
 PKG_URL="https://github.com/gcc-mirror/gcc/archive/gccgo.zip"
 PKG_SOURCE_DIR="gcc-gccgo"
 PKG_DEPENDS_TARGET=""
-PKG_PRIORITY="optional"
+
 PKG_SECTION="devel"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"

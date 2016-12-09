@@ -2,7 +2,7 @@ PKG_NAME="flickcurl"
 PKG_VERSION="1.26"
 PKG_URL="http://download.dajobe.org/flickcurl/flickcurl-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libz openssl curl libxml2"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"

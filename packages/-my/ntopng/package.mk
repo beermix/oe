@@ -2,7 +2,7 @@ PKG_NAME="ntopng"
 PKG_VERSION="2.4-stable"
 PKG_URL="http://downloads.sourceforge.net/project/ntop/ntopng/ntopng-2.4-stable.tar.gz"
 PKG_DEPENDS_TARGET="toolchain readline"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="tools"
 PKG_AUTORECONF="no"
 

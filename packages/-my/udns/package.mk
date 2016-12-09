@@ -2,7 +2,7 @@ PKG_NAME="udns"
 PKG_VERSION="3afeb27"
 PKG_GIT_URL="https://github.com/lparam/udns"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"

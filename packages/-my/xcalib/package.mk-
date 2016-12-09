@@ -5,7 +5,7 @@ PKG_URL="https://github.com/OpenICC/xcalib/archive/$PKG_VERSION.tar.gz"
 #PKG_URL="https://sourceforge.net/projects/xcalib/files/xcalib/0.8/xcalib-source-0.8.tar.gz"
 PKG_DEPENDS_TARGET="toolchain xorg-server libX11 libXau libXext libXrandr libXxf86vm libxcb"
 #PKG_DEPENDS_TARGET="toolchain libICE libpciaccess libSM libX11 libXau libxcb libXcomposite libXdamage libXext libXfixes libXfont libXi libXinerama libxkbfile libXmu libXrandr libXrender libxshmfence libXt libXtst libXxf86vm"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="my"
 PKG_AUTORECONF="no"
 

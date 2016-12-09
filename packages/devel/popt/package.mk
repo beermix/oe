@@ -24,7 +24,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://rpm5.org/"
 PKG_URL="http://rpm5.org/files/popt/${PKG_NAME}-${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="devel"
 PKG_SHORTDESC="popt: contains the popt libraries which are used by some programs to parse command-line options"
 PKG_LONGDESC="The popt package contains the popt libraries which are used by some programs to parse command-line options."

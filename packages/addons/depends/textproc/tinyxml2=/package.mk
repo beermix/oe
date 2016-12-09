@@ -25,7 +25,7 @@ PKG_SITE="http://www.grinninglizard.com/tinyxml2/index.html"
 PKG_GIT_URL="https://github.com/leethomason/tinyxml2.git"
 PKG_GIT_BRANCH="master"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="textproc"
 PKG_SHORTDESC="tinyxml2: XML parser library"
 PKG_LONGDESC="TinyXML2 is a simple, small, C++ XML parser that can be easily integrating into other programs."

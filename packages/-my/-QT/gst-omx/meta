@@ -25,7 +25,7 @@ PKG_SITE="http://gstreamer.freedesktop.org/gstreamer"
 #PKG_URL="http://gstreamer.freedesktop.org/src/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS="glib gstreamer gst-plugins-base"
 PKG_BUILD_DEPENDS="glib gstreamer gst-plugins-base"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="lib"
 PKG_SHORTDESC="gstreamer omx module"
 PKG_LONGDESC="gstreamer omx module"

@@ -3,7 +3,7 @@ PKG_VERSION="1.5.2"
 PKG_SITE="https://www.dlitz.net/software/pycrypto/"
 PKG_URL="http://pypi.python.org/packages/source/c/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="python/security"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"

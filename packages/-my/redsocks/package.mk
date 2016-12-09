@@ -2,7 +2,7 @@ PKG_NAME="redsocks"
 PKG_VERSION="78a73fc"
 PKG_GIT_URL="https://github.com/darkk/redsocks"
 PKG_DEPENDS_TARGET="toolchain openssl libevent"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"

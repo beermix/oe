@@ -2,7 +2,7 @@ PKG_NAME="bashhub-client"
 PKG_VERSION="1.1.0"
 PKG_URL="https://github.com/rcaloras/bashhub-client/archive/1.1.0.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="python/system"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"

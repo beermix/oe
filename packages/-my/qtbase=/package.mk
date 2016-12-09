@@ -24,7 +24,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://aria2.sourceforge.net/"
 PKG_URL="https://copy.com/sz4feD6FONLP/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libxml2 sqlite"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="tools"
 PKG_SHORTDESC=""
 PKG_LONGDESC=""

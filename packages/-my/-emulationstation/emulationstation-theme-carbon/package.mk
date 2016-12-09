@@ -12,7 +12,7 @@ PKG_SITE="https://github.com/RetroPie/es-theme-carbon"
 PKG_GIT_URL="https://github.com/RetroPie/es-theme-carbon"
 PKG_SOURCE_DIR="es-theme-carbon*"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="xmedia/games"
 PKG_SHORTDESC="Carbon theme for Emulationstation"
 PKG_IS_ADDON="no"

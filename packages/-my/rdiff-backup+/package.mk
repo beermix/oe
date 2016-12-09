@@ -7,7 +7,7 @@ PKG_SITE="http://www.boost.org/"
 PKG_URL="http://savannah.nongnu.org/download/rdiff-backup/rdiff-backup-1.2.8.tar.gz"
 #PKG_SOURCE_DIR="${PKG_NAME}-${PKG_VERSION}"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host libpthread-stubs"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="python/system"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"

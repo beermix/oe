@@ -2,7 +2,7 @@ PKG_NAME="acl"
 PKG_VERSION="2.2.52"
 PKG_URL="http://download.savannah.gnu.org/releases/acl/acl-2.2.52.src.tar.gz"
 PKG_DEPENDS_TARGET="toolchain attr"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="tools"
 PKG_AUTORECONF="no"
 

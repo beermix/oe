@@ -25,7 +25,7 @@ PKG_SITE="https://github.com/OpenELEC/dvb-firmware"
 PKG_GIT_URL="https://github.com/OpenELEC/dvb-firmware.git"
 PKG_GIT_BRANCH="master"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="firmware"
 PKG_SHORTDESC="dvb-firmware: firmwares for various DVB drivers"
 PKG_LONGDESC="dvb-firmware: firmwares for various DVB drivers"

@@ -27,7 +27,7 @@ PKG_SITE="http://rutorrent.googlecode.com/"
 PKG_URL="http://dl.bintray.com/novik65/generic/:ruTorrent-3.7.zip"
 PKG_SOURCE_DIR="$PKG_NAME"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
+
 PKG_SHORTDESC=""
 PKG_LONGDESC=""
 

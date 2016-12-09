@@ -24,7 +24,7 @@ PKG_LICENSE="LGPL"
 PKG_SITE="http://people.suug.ch/~tgr/libnl/"
 PKG_URL="https://github.com/thom311/libnl/releases/download/libnl3_2_28/libnl-3.2.28.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="network"
 PKG_SHORTDESC="libnl: libnl - netlink library"
 PKG_LONGDESC="libnl is a library for applications dealing with netlink socket. It provides an easy to use interface for raw netlink message but also netlink family specific APIs."

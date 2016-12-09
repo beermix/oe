@@ -22,7 +22,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="https://rufus.akeo.ie/"
 PKG_URL="https://github.com/pbatard/${PKG_NAME}/archive/${PKG_VERSION}.zip"
 PKG_DEPENDS_HOST="x86-mingw32-build:host"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="tools"
 PKG_SHORTDESC="rufus: Create bootable USB drives the easy way "
 PKG_LONGDESC="Rufus is a utility that helps format and create bootable USB flash drives, such as USB keys/pendrives, memory sticks, etc."

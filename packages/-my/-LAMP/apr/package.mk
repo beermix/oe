@@ -25,7 +25,7 @@ PKG_LICENSE="Apache License"
 PKG_SITE="http://apr.apache.org/"
 PKG_URL="http://archive.apache.org/dist/apr/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="web"
 PKG_SHORTDESC="The Apache Portable Runtime"
 PKG_LONGDESC="The Apache Portable Runtime (APR) is a supporting library for the Apache web server."

@@ -24,7 +24,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://sources.redhat.com/automake/"
 PKG_URL="http://ftp.gnu.org/gnu/automake/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="ccache:host autoconf:host automake-1.10:host automake-1.11:host automake-1.12:host automake-1.13:host automake-1.14:host"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="automake: A GNU tool for automatically creating Makefiles"
 PKG_LONGDESC="This is Automake, a Makefile generator. It was inspired by the 4.4BSD make and include files, but aims to be portable and to conform to the GNU standards for Makefile variables and targets. Automake is a Perl script. The input files are called Makefile.am. The output files are called Makefile.in; they are intended for use with Autoconf. Automake requires certain things to be done in your configure.in."

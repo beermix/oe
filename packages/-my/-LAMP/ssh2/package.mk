@@ -26,7 +26,7 @@ PKG_SITE="http://pecl.php.net/package/ssh2"
 PKG_URL="http://pecl.php.net/get/$PKG_NAME-$PKG_VERSION.tgz"
 #PKG_DEPENDS_TARGET="toolchain libssh2 php"
 PKG_DEPENDS_TARGET="toolchain libssh2"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="security"
 PKG_SHORTDESC="ssh2 php extension"
 PKG_LONGDESC="ssh2 php extension"

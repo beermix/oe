@@ -26,7 +26,7 @@ PKG_SITE="http://www.eglibc.org/"
 PKG_URL="http://sources.openelec.tv/devel/eglibc-localedef-2.19-25249.tar.xz" 
 PKG_DEPENDS_HOST="eglibc:host"
 PKG_DEPENDS_TARGET="toolchain eglibc eglibc-localedef:host"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="utility"
 PKG_SHORTDESC="locale"
 PKG_LONGDESC="locale"

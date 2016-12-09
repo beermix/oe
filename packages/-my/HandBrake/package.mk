@@ -3,7 +3,7 @@ PKG_VERSION="0.10.5"
 PKG_URL="https://github.com/HandBrake/HandBrake/archive/$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="HandBrake-$PKG_VERSION"
 PKG_BUILD_DEPENDS_TARGET="toolchain openssl ffmpeg libdvdnav lame flac opus"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="devel"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"

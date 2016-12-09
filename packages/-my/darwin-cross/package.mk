@@ -25,7 +25,7 @@ PKG_SITE="http://gcc.gnu.org/"
 PKG_URL="http://atv-bootloader.googlecode.com/files/$PKG_NAME.tar.gz"
 PKG_SOURCE_DIR="$PKG_NAME"
 PKG_DEPENDS_TARGET=""
-PKG_PRIORITY="optional"
+
 PKG_SECTION="toolchain/toolchains"
 PKG_SHORTDESC="darwin-cross: darwin gcc etc"
 PKG_LONGDESC="This package contains the GNU Compiler Collection to build for darwin systems"

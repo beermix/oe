@@ -2,7 +2,7 @@ PKG_NAME="f2fs-tools"
 PKG_VERSION="v1.6.1"
 PKG_GIT_URL="git://git.kernel.org/pub/scm/linux/kernel/git/jaegeuk/f2fs-tools.git"
 PKG_DEPENDS_TARGET="toolchain util-linux"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="security"
 PKG_AUTORECONF="yes"
 

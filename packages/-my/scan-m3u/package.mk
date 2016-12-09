@@ -11,7 +11,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://www.alexelec.in.ua"
 PKG_URL=""
 PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="xmedia/tools"
 PKG_SHORTDESC="scan-m3u: scan IPTV channels for VDR"
 PKG_LONGDESC="scan-m3u: scan IPTV channels for VDR."

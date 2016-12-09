@@ -8,7 +8,7 @@ PKG_URL="http://downloads.sourceforge.net/project/libtorrent/libtorrent/${PKG_NA
 #PKG_SOURCE_DIR="${PKG_NAME}-${PKG_VERSION}"
 PKG_DEPENDS_HOST="toolchain"
 PKG_DEPENDS_TARGET="toolchain boost Python:host Python:target zlib bzip2"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="devel"
 PKG_SHORTDESC=" --with-openssl=$SYSROOT_PREFIX/usr \"
 PKG_LONGDESC="libtorrent is a feature complete C++ bittorrent implementation focusing on efficiency and scalability. It runs on embedded devices as well as desktops. It boasts a well documented library interface that is easy to use. It comes with a simple bittorrent client demonstrating the use of the library."

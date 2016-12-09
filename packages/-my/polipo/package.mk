@@ -2,7 +2,7 @@ PKG_NAME="polipo"
 PKG_VERSION="ab52932"
 PKG_GIT_URL="https://github.com/jech/polipo"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="service/proxy"
 PKG_SHORTDESC="Polipo - a caching web proxy"
 PKG_LONGDESC="Polipo - a caching web proxy"

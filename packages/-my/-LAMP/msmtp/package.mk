@@ -25,7 +25,7 @@ PKG_LICENSE=""
 PKG_SITE="http://msmtp.sourceforge.net/"
 PKG_URL="http://sourceforge.net/projects/msmtp/files/msmtp/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="security"
 PKG_SHORTDESC="msmtp is an SMTP client."
 PKG_LONGDESC="msmtp is an SMTP client."

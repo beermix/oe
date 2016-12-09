@@ -24,7 +24,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://www.openelec.tv/"
 PKG_URL=""
 PKG_DEPENDS_TARGET="toolchain busybox dialog parted e2fsprogs syslinux"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="tools"
 PKG_SHORTDESC="installer: OpenELEC.tv Install manager"
 PKG_LONGDESC="OpenELEC.tv Install manager to install the system on any disk"

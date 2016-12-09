@@ -3,7 +3,7 @@ PKG_VERSION="15b374a"
 PKG_GIT_URL="https://github.com/open-mpi/hwloc"
 PKG_DEPENDS_TARGET="toolchain zlib libevent libpciaccess"
 #PKG_DEPENDS_TARGET="toolchain zlib libevent libpciaccess cairo"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="security"
 PKG_AUTORECONF="yes"
 

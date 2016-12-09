@@ -24,7 +24,7 @@ PKG_LICENSE="LGPL"
 PKG_SITE="http://cairographics.org/"
 PKG_URL="http://cairographics.org/snapshots/cairo-1.15.2.tar.xz"
 PKG_DEPENDS_TARGET="toolchain libz freetype fontconfig libpng pixman"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="graphics"
 PKG_SHORTDESC="cairo: Multi-platform 2D graphics library"
 PKG_LONGDESC="Cairo is a vector graphics library with cross-device output support. Currently supported output targets include the X Window System and in-memory image buffers. PostScript and PDF file output is planned. Cairo is designed to produce identical output on all output media while taking advantage of display hardware acceleration when available."

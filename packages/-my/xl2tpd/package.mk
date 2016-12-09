@@ -2,7 +2,7 @@ PKG_NAME="xl2tpd"
 PKG_VERSION="cec1ebe"
 PKG_GIT_URL="https://github.com/xelerance/xl2tpd"
 PKG_DEPENDS_TARGET="toolchain systemd pptp ppp openssl libpcap"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="network"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"

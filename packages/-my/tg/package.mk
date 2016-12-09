@@ -2,7 +2,7 @@ PKG_NAME="tg"
 PKG_VERSION="master"
 PKG_URL=""
 PKG_DEPENDS_TARGET="toolchain readline libevent jansson zlib libconfig openssl"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="debug/tools"
 PKG_AUTORECONF="yes"
 

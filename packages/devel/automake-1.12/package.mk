@@ -3,7 +3,7 @@ PKG_VERSION="1.12"
 PKG_URL="http://ftp.gnu.org/gnu/automake/automake-1.12.6.tar.xz"
 PKG_SOURCE_DIR="automake-1.12.6"
 PKG_DEPENDS_HOST="ccache:host autoconf:host"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="toolchain/devel"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"

@@ -24,7 +24,7 @@ PKG_LICENSE="PD"
 PKG_SITE="http://www.lonesock.net/soil.html"
 PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="mesa"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="graphics"
 PKG_SHORTDESC="libsoil: Simple OpenGL Image Library"
 PKG_LONGDESC="libsoil: Simple OpenGL Image Library"

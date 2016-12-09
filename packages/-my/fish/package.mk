@@ -3,7 +3,7 @@ PKG_VERSION="2.2.0"
 PKG_URL="http://fishshell.com/files/2.2.0/fish-2.2.0.tar.gz"
 PKG_DEPENDS_HOST="toolchain"
 PKG_DEPENDS_TARGET="toolchain netbsd-curses"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="devel"
 PKG_AUTORECONF="no"
 

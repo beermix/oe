@@ -24,7 +24,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://unofficial.addon.pro"
 PKG_URL=""
 PKG_DEPENDS_TARGET=""
-PKG_PRIORITY="optional"
+
 PKG_SECTION=""
 PKG_SHORTDESC="Unfficial OpenELEC.tv Add-on Repository"
 PKG_LONGDESC="Unfficial OpenELEC.tv Add-on Repository"

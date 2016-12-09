@@ -2,7 +2,7 @@ PKG_NAME="libtorrent-go"
 PKG_VERSION="9ea7cd2"
 PKG_GIT_URL="https://github.com/anteo/libtorrent-go.git"
 PKG_DEPENDS_TARGET="toolchain go:host boost"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="system"
 PKG_AUTORECONF="no"
 

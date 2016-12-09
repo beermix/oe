@@ -27,7 +27,7 @@ PKG_SITE="http://freecode.com/projects/rlog"
 PKG_URL="http://rlog.googlecode.com/files/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="libs"
-PKG_PRIORITY="optional"
+
 PKG_SHORTDESC="flexible message logging facility"
 PKG_LONGDESC="flexible message logging facility"
 

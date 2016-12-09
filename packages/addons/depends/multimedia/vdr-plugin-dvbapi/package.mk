@@ -25,7 +25,7 @@ PKG_SITE="https://github.com/manio/vdr-plugin-dvbapi"
 PKG_GIT_URL="https://github.com/manio/vdr-plugin-dvbapi.git"
 PKG_GIT_BRANCH="master"
 PKG_DEPENDS_TARGET="toolchain vdr libdvbcsa"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="TV"
 PKG_LONGDESC="TV"

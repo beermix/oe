@@ -21,7 +21,7 @@ PKG_VERSION="689f5cf"
 PKG_REV="1"
 PKG_GIT_URL="https://github.com/rocky/remake.git"
 PKG_DEPENDS_HOST="autotools:host libedit:host"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="make: GNU make utility to maintain groups of programs"
 PKG_LONGDESC="Patched GNU Make 4.1 sources to add improved error reporting, tracing, target listing, graph visualization, and profiling. It also contains debugger. See the remake-3-82 branch for a patched GNU Make 3.82."

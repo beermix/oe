@@ -2,7 +2,7 @@ PKG_NAME="CloudDNSBenchmark"
 PKG_VERSION="fb526af"
 PKG_GIT_URL="https://github.com/NeuralSpaz/CloudDNSBenchmark"
 PKG_DEPENDS_TARGET="toolchain go:host"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="tools"
 PKG_AUTORECONF="no"
 

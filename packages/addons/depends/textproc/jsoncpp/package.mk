@@ -25,7 +25,7 @@ PKG_SITE="http://www.kodi.tv"
 PKG_GIT_URL="https://github.com/open-source-parsers/jsoncpp.git"
 PKG_GIT_BRANCH="master"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="jsoncpp"
 PKG_LONGDESC="jsoncpp"

@@ -25,7 +25,7 @@ PKG_SITE="http://www.kodi.tv"
 PKG_GIT_URL="https://github.com/notspiff/audiodecoder.openmpt"
 PKG_GIT_BRANCH="master"
 PKG_DEPENDS_TARGET="toolchain kodi-platform libopenmpt"
-PKG_PRIORITY="optional"
+
 PKG_SECTION=""
 PKG_SHORTDESC="audiodecoder.openmpt"
 PKG_LONGDESC="audiodecoder.openmpt"

@@ -3,7 +3,7 @@ PKG_VERSION="2.7.5"
 PKG_SITE="http://savannah.gnu.org/projects/patch/"
 PKG_URL="ftp://ftp.gnu.org/gnu/patch/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain attr"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="devel"
 PKG_SHORTDESC="GNU patch"
 PKG_LONGDESC="Patch takes a patch file containing a difference listing produced by the diff program and applies those differences to one or more original files, producing patched versions"

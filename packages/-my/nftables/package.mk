@@ -2,7 +2,7 @@ PKG_NAME="nftables"
 PKG_VERSION="master"
 PKG_GIT_URL="git://git.netfilter.org/nftables"
 PKG_DEPENDS_TARGET="toolchain libnfnetlink libnl libmnl libmnl libnftnl jansson"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"

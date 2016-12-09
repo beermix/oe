@@ -2,7 +2,7 @@ PKG_NAME="fio"
 PKG_VERSION="fio-2.15"
 PKG_GIT_URL="https://github.com/axboe/fio"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="tools"
 PKG_AUTORECONF="no"
 

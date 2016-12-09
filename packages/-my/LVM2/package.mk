@@ -4,7 +4,7 @@ PKG_SITE="http://sources.redhat.com/lvm2/"
 PKG_URL="ftp://sources.redhat.com/pub/lvm2/${PKG_NAME}.${PKG_VERSION}.tgz"
 PKG_SOURCE_DIR="${PKG_NAME}.${PKG_VERSION}"
 PKG_DEPENDS_TARGET="toolchain libdaemon readline"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="system"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"

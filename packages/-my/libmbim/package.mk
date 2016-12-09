@@ -2,7 +2,7 @@ PKG_NAME="libmbim"
 PKG_VERSION="1.12.4"
 PKG_URL="https://www.freedesktop.org/software/libmbim/libmbim-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain Python swig:host"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="devel"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"

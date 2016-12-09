@@ -2,7 +2,7 @@ PKG_NAME="x11vnc"
 PKG_VERSION="0.9.14"
 PKG_URL="https://dl.dropboxusercontent.com/s/op6flmf34zabkvf/x11vnc-0.9.14-dev.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libX11 libXext libXtst libjpeg-turbo libxcb libXau libvncserver"
-PKG_PRIORITY="optional"
+
 PKG_AUTORECONF="yes"
 
 

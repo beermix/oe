@@ -2,7 +2,7 @@ PKG_NAME="privoxy"
 PKG_VERSION="3.0.26-stable"
 PKG_URL="http://www.silvester.org.uk/privoxy/source/3.0.26%20%28stable%29/privoxy-3.0.26-stable-src.tar.gz"
 PKG_DEPENDS_TARGET="toolchain pcre"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="security"
 PKG_SHORTDESC="Privoxy"
 PKG_LONGDESC=""

@@ -2,7 +2,7 @@ PKG_NAME="pyspotify"
 PKG_VERSION="2.0.5"
 PKG_URL="https://dl.dropboxusercontent.com/s/8o0t82j8vt5ulnv/pyspotify-2.0.5.tar.xz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="python/security"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"

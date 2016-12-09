@@ -2,7 +2,7 @@ PKG_NAME="zlib"
 PKG_VERSION=""
 PKG_URL=""
 PKG_DEPENDS_TARGET="libz"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="virtual"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"

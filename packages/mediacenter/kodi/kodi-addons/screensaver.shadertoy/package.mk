@@ -25,7 +25,7 @@ PKG_SITE="https://github.com/popcornmix/screensaver.shadertoy"
 PKG_GIT_URL="https://github.com/popcornmix/screensaver.shadertoy.git"
 PKG_GIT_BRANCH="master"
 PKG_DEPENDS_TARGET="toolchain kodi-platform"
-PKG_PRIORITY="optional"
+
 PKG_SECTION=""
 PKG_SHORTDESC="screensaver.shadertoy"
 PKG_LONGDESC="screensaver.shadertoy"

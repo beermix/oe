@@ -24,7 +24,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/OpenELEC/OpenELEC.tv"
 PKG_URL=""
 PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="firmware"
 PKG_SHORTDESC="brcm_patchram: firmware loader for SDIO BRCM bluetooth chips"
 PKG_LONGDESC="brcm-patchram downloads a patchram file in the HCD format to the Bluetooth based silicon and combo chips and other utility functions."

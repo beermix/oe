@@ -24,7 +24,7 @@ PKG_LICENSE="MIT License"
 PKG_SITE="https://pypi.python.org/pypi/PyAMF/"
 PKG_URL="https://pypi.python.org/packages/source/x/xbmcswift2/xbmcswift2-0.3.0.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="python/system"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"

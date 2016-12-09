@@ -35,7 +35,7 @@ case $PROJECT in
 	;;
 esac
 
-PKG_PRIORITY="optional"
+
 PKG_SECTION="lib"
 PKG_SHORTDESC="Qt GUI toolkit"
 PKG_LONGDESC="Qt GUI toolkit"

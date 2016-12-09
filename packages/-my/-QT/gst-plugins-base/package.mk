@@ -24,7 +24,7 @@ PKG_LICENSE="OSS"
 PKG_SITE="http://gstreamer.freedesktop.org/gstreamer"
 PKG_URL="http://gstreamer.freedesktop.org/src/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain libpng tiff dbus fontconfig eglibc zlib gstreamer"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="lib"
 PKG_SHORTDESC="gst-plugins-base"
 PKG_LONGDESC="gst-plugins-base"

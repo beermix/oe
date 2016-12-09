@@ -5,7 +5,7 @@ PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_DEPENDS_TARGET="toolchain go"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="web"
 PKG_SHORTDESC="Obfs4proxy is a pluggable transport proxy written in Go."
 PKG_LONGDESC=""

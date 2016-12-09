@@ -6,7 +6,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://www.gropp.org/?id=projects&sub=bwm-ng"
 PKG_URL="http://www.gropp.org/bwm-ng/bwm-ng-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libstatgrab"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="network/analyzer"
 PKG_AUTORECONF="no"
 

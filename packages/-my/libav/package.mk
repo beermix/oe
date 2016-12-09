@@ -3,7 +3,7 @@ PKG_VERSION="master"
 PKG_GIT_URL="https://git.libav.org/?p=libav.git"
 PKG_SOURCE_DIR="aufs2-util"
 PKG_BUILD_DEPENDS_TARGET="toolchain openssl libsodium libevent"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"

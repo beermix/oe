@@ -25,7 +25,7 @@ PKG_SITE="http://gstreamer.freedesktop.org/gstreamer"
 #PKG_URL="http://gstreamer.freedesktop.org/src/gst-plugins-base/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS="gstreamer libvorbis"
 PKG_BUILD_DEPENDS="gstreamer libvorbis"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="lib"
 PKG_SHORTDESC="gstreamer plugins base"
 PKG_LONGDESC="gstreamer plugins base"

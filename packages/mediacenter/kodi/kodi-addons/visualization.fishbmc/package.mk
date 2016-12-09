@@ -25,7 +25,7 @@ PKG_SITE="http://www.kodi.tv"
 PKG_GIT_URL="https://github.com/notspiff/visualization.fishbmc"
 PKG_GIT_BRANCH="master"
 PKG_DEPENDS_TARGET="toolchain kodi-platform"
-PKG_PRIORITY="optional"
+
 PKG_SECTION=""
 PKG_SHORTDESC="visualization.fishbmc"
 PKG_LONGDESC="visualization.fishbmc"

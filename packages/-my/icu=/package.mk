@@ -4,7 +4,7 @@ PKG_URL="http://download.icu-project.org/files/icu4c/58.1/icu4c-$PKG_VERSION-src
 PKG_SOURCE_DIR="icu"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_DEPENDS_HOST="toolchain Python:host"
-PKG_PRIORITY="optional"
+
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_SCRIPT="source/configure"

@@ -3,7 +3,7 @@ PKG_VERSION="668eb7c"
 PKG_GIT_URL="https://github.com/syncthing/syncthing.git"
 PKG_GIT_BRANCH="master"
 PKG_DEPENDS_TARGET="toolchain go:host"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="tools"
 PKG_AUTORECONF="no"
 

@@ -3,7 +3,7 @@ PKG_VERSION="master"
 PKG_GIT_URL="https://github.com/waf-project/waf"
 PKG_DEPENDS_TARGET="toolchain Python:host boost"
 PKG_DEPENDS_HOST="toolchain Python:host boost"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="tools"
 PKG_AUTORECONF="no"
 

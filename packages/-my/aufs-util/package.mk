@@ -3,7 +3,7 @@ PKG_VERSION="e345b59"
 PKG_GIT_URL="git://git.code.sf.net/p/aufs/aufs-util"
 #PKG_SOURCE_DIR="aufs2-util"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"

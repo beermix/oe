@@ -24,7 +24,7 @@ PKG_LICENSE="GPL"
 PKG_SITE=""
 PKG_URL=""
 PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="system"
 PKG_SHORTDESC="xxd - make a hexdump or do the reverse"
 PKG_LONGDESC="xxd - make a hexdump or do the reverse"

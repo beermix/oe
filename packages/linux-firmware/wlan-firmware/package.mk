@@ -25,7 +25,7 @@ PKG_SITE="https://github.com/OpenELEC/wlan-firmware"
 PKG_GIT_URL="https://github.com/OpenELEC/wlan-firmware.git"
 PKG_GIT_BRANCH="master"
 PKG_DEPENDS_TARGET="toolchain brcm_patchram"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="firmware"
 PKG_SHORTDESC="wlan-firmware: firmwares for various WLAN drivers"
 PKG_LONGDESC="wlan-firmware: firmwares for various WLAN drivers"

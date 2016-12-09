@@ -4,7 +4,7 @@ PKG_SITE="http://p7zip.sourceforge.net/"
 PKG_URL="http://downloads.sourceforge.net/project/p7zip/p7zip/${PKG_VERSION}/p7zip_${PKG_VERSION}_src_all.tar.bz2"
 PKG_SOURCE_DIR="${PKG_NAME}_${PKG_VERSION}"
 PKG_DEPENDS_TARGET="toolchain zlib"
-PKG_PRIORITY="optional"
+
 
 #CFLAGS="-march=corei7-avx -O3 -pipe -fstack-protector-strong"
 #LDFLAGS="-Wl,-O1 -Wl,--as-needed"

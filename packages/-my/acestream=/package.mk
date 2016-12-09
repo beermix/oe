@@ -24,7 +24,7 @@ PKG_LICENSE="LGPL"
 PKG_SITE="http://www.acestream.com/"
 PKG_URL="https://www.oneevil.ru/sources/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="torrenter"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"

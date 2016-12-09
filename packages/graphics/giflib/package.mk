@@ -25,7 +25,7 @@ PKG_SITE="http://giflib.sourceforge.net/"
 PKG_URL="$SOURCEFORGE_SRC/giflib/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST="libz:host"
 PKG_DEPENDS_TARGET="toolchain libz"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="graphics"
 PKG_SHORTDESC="giflib: giflib service library"
 PKG_LONGDESC="giflib: giflib service library"

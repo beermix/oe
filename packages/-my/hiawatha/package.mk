@@ -7,7 +7,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="https://www.hiawatha-webserver.org/"
 PKG_URL="https://www.hiawatha-webserver.org/files/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libxslt cmake:host zlib"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="web"
 PKG_SHORTDESC="hiawatha"
 PKG_LONGDESC="An advanced and secure webserver for Unix"

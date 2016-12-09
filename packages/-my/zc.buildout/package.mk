@@ -24,7 +24,7 @@ PKG_LICENSE="MIT License"
 PKG_SITE="https://pypi.python.org/pypi/PyAMF/"
 PKG_URL="https://pypi.python.org/packages/source/z/zc.buildout/zc.buildout-2.4.3.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host cffi libffi"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="python/system"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"

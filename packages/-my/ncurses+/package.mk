@@ -7,7 +7,7 @@ PKG_SITE="http://www.gnu.org/software/ncurses/"
 PKG_URL="http://ftp.gnu.org/pub/gnu/ncurses/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain zlib termcap"
 #PKG_DEPENDS_HOST="toolchain zlib termcap"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="devel"
 PKG_SHORTDESC="ncurses: The ncurses (new curses) library"
 PKG_IS_ADDON="no"

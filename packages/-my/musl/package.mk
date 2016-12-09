@@ -3,7 +3,7 @@ PKG_VERSION="1.1.14"
 PKG_URL="https://dl.dropboxusercontent.com/s/7s506a9a5cv1cby/musl-1.1.14.tar.gz"
 PKG_DEPENDS_TARGET="autotools:host autoconf:host linux:host gcc:bootstrap"
 PKG_DEPENDS_HOST="musl"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"

@@ -21,7 +21,7 @@ PKG_VERSION="2.1.4"
 PKG_URL="https://github.com/apple/cups/releases/download/release-2.1.4/cups-2.1.4-source.tar.gz"
 PKG_DEPENDS=""
 PKG_BUILD_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="print"
 PKG_SHORTDESC="CUPS open source printing system"
 PKG_LONGDESC="CUPS is the standards-based, open source printing system developed by Apple Inc. for OS X® and other UNIX®-like operating systems. CUPS uses the Internet Printing Protocol (IPP) to support printing to local and network printers."

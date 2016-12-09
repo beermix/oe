@@ -2,7 +2,7 @@ PKG_NAME="pseudo"
 PKG_VERSION="45eca34c754d416a38bee90fb2d3c110a0b6cc5f"
 PKG_GIT_URL="https://git.yoctoproject.org/git/pseudo"
 PKG_DEPENDS_HOST="ccache:host sqlite:host attr:host"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="toolchain/devel"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"

@@ -11,7 +11,7 @@ PKG_LICENSE="OSS"
 PKG_SITE="https://pypi.python.org/pypi/psutil/"
 PKG_URL="https://pypi.python.org/packages/source/p/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="xmedia/depends"
 PKG_SHORTDESC="A cross-platform process and system utilities module for Python2"
 PKG_LONGDESC="psutil is a cross-platform library for retrieving information onrunning processes and system utilization (CPU, memory, disks, network)in Python."

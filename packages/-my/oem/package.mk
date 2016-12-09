@@ -24,7 +24,7 @@ PKG_DEPENDS_TARGET="aufs-util kodi-theme-Confluence wget pure-ftpd xcalib bzip2 
 # flickcurl pciutils dbus libXcomposite libXcursor libXtst alsa-lib libXScrnSaver libexif harfbuzz atk gtk+
 fi
 
-PKG_PRIORITY="optional"
+
 PKG_SECTION="virtual"
 PKG_SHORTDESC="OEM: Metapackage for various OEM packages"
 PKG_LONGDESC="OEM: Metapackage for various OEM packages"

@@ -27,7 +27,7 @@ PKG_SITE=""
 PKG_URL=""
 PKG_DEPENDS="gstreamer gst-plugins-base gst-plugins-good gst-plugins-bad gst-plugins-ugly gst-omx qt5:host"
 #PKG_BUILD_DEPENDS="Python:host toolchain"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="virtual"
 PKG_SHORTDESC="QT5Dev: Metapackage for various qt5/multimedia packages"
 PKG_LONGDESC=""

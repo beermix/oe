@@ -10,7 +10,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_GIT_URL="https://github.com/AndreyPavlenko/aceproxy"
 PKG_DEPENDS_TARGET="toolchain gevent psutil M2Crypto"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="xmedia/network"
 PKG_SHORTDESC="AceProxy: Ace Stream HTTP Proxy"
 PKG_LONGDESC="AceProxy: Ace Stream HTTP Proxy."

@@ -3,7 +3,7 @@ PKG_VERSION="4.7.0"
 PKG_URL="ftp://oss.sgi.com/projects/xfs/cmd_tars/xfsprogs-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_INIT="toolchain readline"
 PKG_DEPENDS_TARGET="toolchain util-linux readline"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="devel"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"

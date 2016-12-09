@@ -3,7 +3,7 @@ PKG_VERSION="2.1-3"
 PKG_URL="https://dl.dropboxusercontent.com/s/jdon3iktja5roh7/CUnit-2.1-3.tar.bz2"
 PKG_SOURCE_DIR="x11vnc-0.9.14"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="service/system"
 PKG_AUTORECONF="yes"
 

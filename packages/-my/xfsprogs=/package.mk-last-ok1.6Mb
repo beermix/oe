@@ -3,7 +3,7 @@ PKG_VERSION="2ab8ecb"
 PKG_GIT_URL="git://oss.sgi.com/xfs/cmds/xfsprogs.git"
 PKG_DEPENDS_HOST="toolchain"
 PKG_DEPENDS_TARGET="toolchain util-linux zlib lzo linux"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="devel"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"

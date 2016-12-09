@@ -7,7 +7,7 @@ PKG_LICENSE="OSS"
 PKG_SITE="http://www.proftpd.org/"
 PKG_URL="https://github.com/proftpd/proftpd/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libcap whois pcre libsodium openssl"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="service/system"
 PKG_AUTORECONF="no"
 

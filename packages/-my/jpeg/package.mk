@@ -3,7 +3,7 @@ PKG_VERSION="9b"
 PKG_URL="http://www.ijg.org/files/jpegsrc.v9b.tar.gz"
 #PKG_SOURCE_DIR="aufs2-util"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"

@@ -24,7 +24,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://pptpclient.sourceforge.net"
 PKG_URL="$SOURCEFORGE_SRC/project/pptpclient/pptp/$PKG_NAME-$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain ppp"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="network"
 PKG_SHORTDESC="pptp: a Linux, FreeBSD, NetBSD and OpenBSD client for the proprietary Microsoft Point-to-Point Tunneling Protocol, PPTP"
 PKG_LONGDESC="PPTP Client is a Linux, FreeBSD, NetBSD and OpenBSD client for the proprietary Microsoft Point-to-Point Tunneling Protocol, PPTP. Allows connection to a PPTP based Virtual Private Network (VPN)."

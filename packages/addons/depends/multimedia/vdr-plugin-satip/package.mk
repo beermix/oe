@@ -25,7 +25,7 @@ PKG_SITE="http://www.saunalahti.fi/~rahrenbe/vdr/satip/"
 PKG_GIT_URL="https://github.com/rofafor/vdr-plugin-satip.git"
 PKG_GIT_BRANCH="vdr-2.2.x"
 PKG_DEPENDS_TARGET="toolchain vdr curl tinyxml"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="vdr-plugin-satip: SAT>IP plugin for VDR"
 PKG_LONGDESC="vdr-plugin-satip is a SAT>IP plugin for VDR"

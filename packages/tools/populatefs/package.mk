@@ -25,7 +25,7 @@ PKG_SITE="https://github.com/oskarirauta/populatefs"
 PKG_GIT_URL="https://github.com/oskarirauta/populatefs.git"
 PKG_GIT_BRANCH="master"
 PKG_DEPENDS_HOST="e2fsprogs:host"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="tools"
 PKG_SHORTDESC="populatefs: Tool for replacing genext2fs when creating ext4 images"
 PKG_LONGDESC="populatefs: Tool for replacing genext2fs when creating ext4 images"

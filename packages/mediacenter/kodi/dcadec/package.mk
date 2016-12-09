@@ -24,7 +24,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/foo86/dcadec"
 PKG_GIT_URL="https://github.com/foo86/dcadec"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="audio"
 PKG_SHORTDESC="DTS Coherent Acoustics decoder with support for HD extensions"
 PKG_LONGDESC="DTS Coherent Acoustics decoder with support for HD extensions"

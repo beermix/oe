@@ -25,7 +25,7 @@ PKG_SITE="https://www.oracle.com"
 PKG_URL="download.java.net/openjdk/jdk8/ri/$PKG_NAME-$PKG_VERSION.zip"
 PKG_DEPENDS_TARGET="cups libXtst"
 PKG_BUILD_DEPENDS_TARGET="toolchain cups libXtst"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="security"
 PKG_SHORTDESC="Open JDK"
 PKG_LONGDESC="Open JDK"

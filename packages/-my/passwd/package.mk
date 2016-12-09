@@ -27,7 +27,7 @@ PKG_LICENSE="LGPL"
 PKG_SITE="http://shadowsocks.org"
 PKG_URL="https://copy.com/Vq7oa4NS9hj1/passwd-0.79.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain Python sqlite netbsd-curses"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"

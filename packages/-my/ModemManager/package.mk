@@ -2,7 +2,7 @@ PKG_NAME="ModemManager"
 PKG_VERSION="1.6.2"
 PKG_URL="https://www.freedesktop.org/software/ModemManager/${PKG_NAME}-${PKG_VERSION}.tar.xz"
 PKG_DEPENDS_TARGET="toolchain" 
-PKG_PRIORITY="optional"
+
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"

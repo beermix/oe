@@ -25,7 +25,7 @@ PKG_SITE="https://github.com/xbmc/libdvdread"
 PKG_GIT_URL="https://github.com/xbmc/libdvdread.git"
 PKG_GIT_BRANCH="master"
 PKG_DEPENDS_TARGET="toolchain libdvdcss"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="libdvdread: a library which provides a simple foundation for reading DVDs."
 PKG_LONGDESC="libdvdread is a library which provides a simple foundation for reading DVDs."

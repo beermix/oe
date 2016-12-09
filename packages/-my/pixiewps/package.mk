@@ -2,7 +2,7 @@ PKG_NAME="pixiewps"
 PKG_VERSION="953cdd4"
 PKG_GIT_URL="https://github.com/wiire/pixiewps"
 #PKG_DEPENDS_TARGET="toolchain sqlite libpcap"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"

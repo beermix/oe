@@ -24,7 +24,7 @@ PKG_LICENSE="OSS"
 PKG_SITE="http://www.openelec.tv"
 PKG_URL=""
 PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="driver/remote"
 PKG_SHORTDESC="imon-mce: a driver to add support for MCE remotes to the imon driver"
 PKG_LONGDESC="imon-mce is a driver to add support for MCE remotes to the imon driver. To readd imon remote support uninstall or disable this addon again."

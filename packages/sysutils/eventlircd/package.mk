@@ -25,7 +25,7 @@ PKG_SITE="http://code.google.com/p/eventlircd"
 PKG_GIT_URL="https://github.com/OpenELEC/eventlircd.git"
 PKG_GIT_BRANCH="master"
 PKG_DEPENDS_TARGET="toolchain systemd lirc"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="system/remote"
 PKG_SHORTDESC="eventlircd:The eventlircd daemon provides various functions for LIRC devices"
 PKG_LONGDESC="The eventlircd daemon provides four functions for LIRC devices"

@@ -2,7 +2,7 @@ PKG_NAME="libarchive"
 PKG_VERSION="412bae0"
 PKG_GIT_URL="https://github.com/libarchive/libarchive"
 PKG_DEPENDS_TARGET="toolchain expat pcre libz xz bzip2 openssl"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="x11/lib"
 PKG_IS_ADDON="no"
 PKG_USE_CMAKE="yes"

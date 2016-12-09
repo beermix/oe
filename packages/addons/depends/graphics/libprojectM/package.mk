@@ -24,7 +24,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://projectm.sourceforge.net/"
 PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain ftgl freetype opengl"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="libprojectM:"
 PKG_LONGDESC="libprojectM:"

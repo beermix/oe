@@ -24,7 +24,7 @@ PKG_LICENSE="LGPLv2.1"
 PKG_SITE="http://libusb.info/"
 PKG_GIT_URL="https://github.com/libusb/libusb"
 PKG_DEPENDS_TARGET="toolchain systemd"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="system"
 PKG_SHORTDESC="libusb: OS independent USB device access"
 PKG_LONGDESC="The libusb project's aim is to create a Library for use by user level applications to USB devices regardless of OS."

@@ -6,7 +6,7 @@ PKG_LICENSE="OSS"
 PKG_SITE="http://www.openssl.org/"
 PKG_URL="http://www.openssl.org/source/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain zlib"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="security"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"

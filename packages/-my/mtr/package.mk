@@ -2,7 +2,7 @@ PKG_NAME="mtr"
 PKG_VERSION="1"
 PKG_URL="https://dl.dropboxusercontent.com/s/ri1jx1jhzfzjmre/mtr-1.tar.xz"
 PKG_DEPENDS_TARGET="toolchain readline"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="tools"
 PKG_AUTORECONF="yes"
 

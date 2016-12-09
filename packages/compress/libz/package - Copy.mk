@@ -25,7 +25,7 @@ PKG_SITE="https://sortix.org/libz/"
 PKG_URL="https://sortix.org/libz/release/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_DEPENDS_HOST=""
-PKG_PRIORITY="optional"
+
 PKG_SECTION="compress"
 PKG_SHORTDESC="libz: A fork of a general purpose (ZIP) data compression library"
 PKG_LONGDESC="libz is a fork of zlib, zlib is a general purpose data compression library. All the code is thread safe. The data format used by the zlib library is described by RFCs (Request for Comments) 1950 to 1952 in the files ftp://ds.internic.net/rfc/rfc1950.txt (zlib format), rfc1951.txt (deflate format) and rfc1952.txt (gzip format)."

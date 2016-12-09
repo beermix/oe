@@ -2,7 +2,7 @@ PKG_NAME="shellinabox"
 PKG_VERSION="e6c25e8"
 PKG_URL="https://github.com/shellinabox/shellinabox/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain zlib"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="security"
 PKG_AUTORECONF="yes"
 

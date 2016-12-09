@@ -12,7 +12,7 @@ PKG_SITE="https://github.com/RetroPie/es-theme-turtle-pi"
 PKG_GIT_URL="https://github.com/RetroPie/es-theme-turtle-pi"
 PKG_SOURCE_DIR="es-theme-turtle-pi*"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="xmedia/games"
 PKG_SHORTDESC="Turtle-Pi theme for Emulationstation"
 PKG_IS_ADDON="no"

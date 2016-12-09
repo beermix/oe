@@ -3,7 +3,7 @@ PKG_VERSION="master"
 PKG_URL="https://dl.dropboxusercontent.com/s/pbxk3oculo9hfat/ifconfigd-master.tar"
 PKG_KEEP_CHECKOUT="yes"
 PKG_DEPENDS_TARGET="toolchain go:host"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="tools"
 PKG_AUTORECONF="no"
 

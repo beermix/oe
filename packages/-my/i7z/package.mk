@@ -2,7 +2,7 @@ PKG_NAME="i7z"
 PKG_VERSION="5023138"
 PKG_GIT_URL="https://github.com/ajaiantilal/i7z"
 PKG_DEPENDS_TARGET="toolchain readline"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="tools"
 PKG_AUTORECONF="no"
 

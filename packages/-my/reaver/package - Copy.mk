@@ -3,7 +3,7 @@ PKG_VERSION="1.4"
 PKG_URL="https://dl.dropboxusercontent.com/s/zu77hev68w81o67/reaver-1.4-src.tar.xz"
 #PKG_URL="https://dl.dropboxusercontent.com/s/khspnon2cudamxo/reaver-1.4.tar.gz"
 PKG_DEPENDS_TARGET="toolchain sqlite libpcap"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"

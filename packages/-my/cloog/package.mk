@@ -3,7 +3,7 @@ PKG_VERSION="0.18.4"
 PKG_URL="http://www.bastoul.net/cloog/pages/download/cloog-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="isl:host"
 PKG_DEPENDS_TARGET=""
-PKG_PRIORITY="optional"
+
 PKG_SECTION="devel"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"

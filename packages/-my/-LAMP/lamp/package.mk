@@ -29,7 +29,7 @@ PKG_URL=""
 PKG_DEPENDS_TARGET="toolchain httpd php ssh2 phpMyAdmin eglibc-localedef:host smbclient msmtp aria2"
 # only httpd for debug
 #PKG_DEPENDS_TARGET="toolchain httpd"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="service/web"
 PKG_SHORTDESC="LAMP (Linux Apache MySQL PHP) software bundle."
 PKG_LONGDESC="LAMP (Linux Apache MySQL PHP) software bundle. Done by ultraman, streppuiu, dominic7il"

@@ -25,7 +25,7 @@ PKG_SITE="https://github.com/juhovh/shairplay"
 PKG_GIT_URL="https://github.com/juhovh/shairplay.git"
 PKG_GIT_BRANCH="master"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="network"
 PKG_SHORTDESC="libshairplay: emulates AirPort Express"
 PKG_LONGDESC="libshairPlay emulates an AirPort Express for the purpose of streaming music from iTunes and compatible iPods."

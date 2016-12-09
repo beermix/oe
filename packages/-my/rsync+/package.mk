@@ -2,7 +2,7 @@ PKG_NAME="rsync"
 PKG_VERSION="master"
 PKG_GIT_URL="git://git.samba.org/rsync.git"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="network/backup"
 PKG_IS_ADDON="yes"
 PKG_ADDON_PROVIDES=""

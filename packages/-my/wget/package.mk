@@ -3,7 +3,7 @@ PKG_VERSION="1.18"
 PKG_SITE="http://www.wget-editor.org/"
 PKG_URL="http://ftpmirror.gnu.org/wget/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain openssl libidn"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="tools"
 PKG_AUTORECONF="no"
 

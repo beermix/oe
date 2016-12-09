@@ -2,7 +2,7 @@ PKG_NAME="davfs2"
 PKG_VERSION="1.5.4"
 PKG_URL="http://download.savannah.gnu.org/releases/davfs2/davfs2-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain fuse neon"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="system"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"

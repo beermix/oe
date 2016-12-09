@@ -2,7 +2,7 @@ PKG_NAME="libaio"
 PKG_VERSION="0.3.110"
 PKG_URL="http://ftp.debian.org/debian/pool/main/liba/libaio/libaio_0.3.110.orig.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"

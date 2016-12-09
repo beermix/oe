@@ -4,7 +4,7 @@ PKG_URL="https://github.com/rofl0r/proxychains-ng/archive/$PKG_VERSION.tar.gz"
 #PKG_SOURCE_DIR="${PKG_NAME}-${PKG_VERSION}"
 PKG_DEPENDS_HOST="toolchain"
 PKG_DEPENDS_TARGET="toolchain openssl curl"
-PKG_PRIORITY="optional"
+
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 

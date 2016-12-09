@@ -6,7 +6,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://www.midnight-commander.org"
 PKG_URL="http://nginx.org/download/nginx-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain openssl"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="tools"
 PKG_AUTORECONF="no"
 

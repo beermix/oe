@@ -2,7 +2,7 @@ PKG_NAME="aria2"
 PKG_VERSION="release-1.29.0"
 PKG_GIT_URL="https://github.com/aria2/aria2"
 PKG_DEPENDS_TARGET="toolchain libssh2 expat pcre curl libidn libuv libev xmlstarlet libxml2"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="tools"
 PKG_AUTORECONF="yes"
 

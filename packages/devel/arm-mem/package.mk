@@ -26,7 +26,7 @@ PKG_GIT_URL="https://github.com/bavison/arm-mem.git"
 PKG_GIT_BRANCH="master"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_DEPENDS_INIT="toolchain arm-mem"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="devel"
 PKG_SHORTDESC="arm-mem: ARM-accelerated versions of selected functions from string.h"
 PKG_LONGDESC="arm-mem is a ARM-accelerated versions of selected functions from string.h"

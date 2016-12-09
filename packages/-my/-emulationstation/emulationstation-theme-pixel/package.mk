@@ -12,7 +12,7 @@ PKG_SITE="https://github.com/RetroPie/es-theme-pixel"
 PKG_GIT_URL="https://github.com/RetroPie/es-theme-pixel"
 PKG_SOURCE_DIR="es-theme-pixel*"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="xmedia/games"
 PKG_SHORTDESC="Pixel theme for Emulationstation"
 PKG_IS_ADDON="no"

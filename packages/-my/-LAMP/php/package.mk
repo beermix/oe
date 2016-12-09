@@ -48,7 +48,7 @@ fi
 
 # add some other libraries which are need by php extensions
 PKG_DEPENDS_TARGET="toolchain zlib pcre curl libxml2 openssl libmcrypt libiconv httpd"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="web"
 PKG_SHORTDESC="php: Scripting language especially suited for Web development"
 PKG_LONGDESC="PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML."

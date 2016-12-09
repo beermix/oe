@@ -6,7 +6,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://secure.netroedge.com/~lm78/"
 PKG_URL="http://sources.libreelec.tv/mirror/lm_sensors/lm_sensors-3.4.0.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="system"
 PKG_SHORTDESC="lm_sensors: Hardware monitoring via the SMBus"
 PKG_LONGDESC="lm_sensors is a package to get data from the SMB (System Management Bus - an i2c bus) on modern mainboards. It consists of kernel modules and users space tools to get stuff like cpu / mb temperature, voltages, fan speed..."

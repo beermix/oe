@@ -4,7 +4,7 @@ PKG_URL="https://assets.nagios.com/downloads/nagios-log-server/1/nagioslogserver
 PKG_SOURCE_DIR="${PKG_NAME}"
 PKG_DEPENDS_HOST="toolchain"
 PKG_DEPENDS_TARGET="toolchain boost Python"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="devel"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"

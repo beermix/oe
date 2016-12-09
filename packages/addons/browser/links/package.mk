@@ -25,7 +25,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://links.twibright.com/"
 PKG_URL="http://links.twibright.com/download/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libressl libjpeg-turbo libpng libX11 libxcb libXau zlib"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="browser"
 PKG_SHORTDESC="Links web browser plugin for OpenELEC"
 PKG_LONGDESC="Links is a popular small-footprint graphics and text mode privacy-oriented web browser, released under GPL. Visit http://www.antiprism.ca for more privacy tools."

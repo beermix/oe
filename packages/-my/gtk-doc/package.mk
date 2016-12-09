@@ -4,7 +4,7 @@ PKG_URL="http://download.gnome.org/sources/gtk-doc/1.24/gtk-doc-$PKG_VERSION.tar
 #PKG_SOURCE_DIR="libevent-c51b159cff9f5e86696f5b9a4c6f517276056258"
 PKG_BUILD_DEPENDS_TARGET="toolchain openssl"
 PKG_BUILD_DEPENDS_HOST=""
-PKG_PRIORITY="optional"
+
 PKG_SECTION="devel"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"

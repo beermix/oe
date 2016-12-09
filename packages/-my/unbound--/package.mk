@@ -2,7 +2,7 @@ PKG_NAME="unbound"
 PKG_VERSION="master"
 PKG_URL="https://github.com/jedisct1/unbound/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain openssl libevent expat"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"

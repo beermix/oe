@@ -24,7 +24,7 @@ PKG_LICENSE="BSD"
 PKG_SITE="http://code.google.com/p/libdnet/"
 PKG_GIT_URL="https://github.com/dugsong/libdnet"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="network"
 PKG_SHORTDESC="A simplified, portable interface to several low-level networking routines"
 PKG_LONGDESC="A simplified, portable interface to several low-level networking routines"

@@ -25,7 +25,7 @@ PKG_SITE="http://projects.vdr-developer.org/projects/plg-streamdev"
 PKG_GIT_URL="https://projects.vdr-developer.org/git/vdr-plugin-streamdev.git"
 PKG_GIT_BRANCH="master"
 PKG_DEPENDS_TARGET="toolchain vdr openssl"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="TV"
 PKG_LONGDESC="TV"

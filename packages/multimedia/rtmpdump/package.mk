@@ -25,7 +25,7 @@ PKG_SITE="http://rtmpdump.mplayerhq.hu/"
 PKG_GIT_URL="git://git.ffmpeg.org/rtmpdump"
 PKG_GIT_BRANCH="master"
 PKG_DEPENDS_TARGET="toolchain libz openssl"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="rtmpdump: a toolkit for RTMP streams."
 PKG_LONGDESC="rtmpdump is a toolkit for RTMP streams. All forms of RTMP are supported, including rtmp://, rtmpt://, rtmpe://, rtmpte://, and rtmps://."

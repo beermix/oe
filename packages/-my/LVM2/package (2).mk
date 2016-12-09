@@ -27,7 +27,7 @@ PKG_SITE="http://sources.redhat.com/lvm2/"
 PKG_URL="ftp://sources.redhat.com/pub/lvm2/${PKG_NAME}.${PKG_VERSION}.tgz"
 PKG_SOURCE_DIR="${PKG_NAME}.${PKG_VERSION}"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="system"
 PKG_SHORTDESC="lvm2: Logical Volume Management (Version 2)"
 PKG_LONGDESC="LVM includes all of the support for handling read/write operations on physical volumes (hard disks, RAID-Systems, magneto optical, etc., multiple devices (MD), see mdadd(8) or even loop devices, see losetup(8)), creating volume groups (kind of virtual disks) from one or more physical volumes and creating one or more logical volumes (kind of logical partitions) in volume groups. This 2nd version is based on device-mapper available in linux-2.6."

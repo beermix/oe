@@ -24,7 +24,7 @@ PKG_LICENSE="LGPL"
 PKG_SITE="http://www.acestream.com/"
 PKG_URL="https://copy.com/jJVzJEtWmFpJ/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain M2Crypto PyAMF"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="torrenter"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"

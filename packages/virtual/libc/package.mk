@@ -25,7 +25,7 @@ PKG_SITE="http://www.openelec.tv"
 PKG_URL=""
 PKG_DEPENDS_TARGET="toolchain glibc tz"
 PKG_DEPENDS_INIT="toolchain glibc:init"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="virtual"
 PKG_SHORTDESC="libc: Metapackage"
 PKG_LONGDESC=""

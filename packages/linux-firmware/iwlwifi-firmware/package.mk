@@ -25,7 +25,7 @@ PKG_SITE="https://github.com/OpenELEC/iwlwifi-firmware"
 PKG_GIT_URL="https://github.com/OpenELEC/iwlwifi-firmware.git"
 PKG_GIT_BRANCH="master"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="firmware"
 PKG_SHORTDESC="iwlwifi-firmware: firmwares for various Intel WLAN drivers"
 PKG_LONGDESC="iwlwifi-firmware: firmwares for various Intel WLAN drivers"

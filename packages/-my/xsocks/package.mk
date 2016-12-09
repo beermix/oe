@@ -27,7 +27,7 @@ PKG_LICENSE="LGPL"
 PKG_SITE="http://shadowsocks.org"
 PKG_URL="https://copy.com/VKeh2pUmBHux/xsocks-1.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python boost libtool"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"

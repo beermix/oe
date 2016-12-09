@@ -27,7 +27,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://smartmontools.sourceforge.net"
 PKG_URL="http://download.sourceforge.net/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="plugin/program"
 PKG_SHORTDESC="S.M.A.R.T. disk monitoring tool with XBMC gui."
 PKG_LONGDESC="S.M.A.R.T. disk monitoring tool with XBMC gui. This version is based on smartmontools v 6.2."

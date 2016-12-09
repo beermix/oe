@@ -6,7 +6,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://torfone.org/onionphone/"
 PKG_DEPENDS_TARGET="toolchain tor alsa-lib"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="security"
 PKG_SHORTDESC="OnionPhone"
 PKG_LONGDESC="OnionPhone is a VOIP tool for calling over Tor network."

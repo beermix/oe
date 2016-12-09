@@ -26,7 +26,7 @@ PKG_URL="http://busybox.net/downloads/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST=""
 PKG_DEPENDS_TARGET="toolchain busybox:host less hdparm dosfstools e2fsprogs libiconv expat pcre pcre2 openssl attr libev libuv zip unzip unrar xz bzip2 libffi tar pciutils usbutils parted procps-ng coreutils bash findutils grep gawk"
 PKG_DEPENDS_INIT="toolchain"
-PKG_PRIORITY="required"
+
 PKG_SECTION="system"
 PKG_SHORTDESC="BusyBox: The Swiss Army Knife of Embedded Linux"
 PKG_LONGDESC="BusyBox combines tiny versions of many common UNIX utilities into a single small executable. It provides replacements for most of the utilities you usually find in GNU fileutils, shellutils, etc. The utilities in BusyBox generally have fewer options than their full-featured GNU cousins; however, the options that are included provide the expected functionality and behave very much like their GNU counterparts. BusyBox provides a fairly complete environment for any small or embedded system."

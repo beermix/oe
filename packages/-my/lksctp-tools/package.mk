@@ -2,7 +2,7 @@ PKG_NAME="lksctp-tools"
 PKG_VERSION="18272a1"
 PKG_GIT_URL="https://github.com/sctp/lksctp-tools"
 PKG_DEPENDS_TARGET="toolchain libz"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="security"
 PKG_AUTORECONF="yes"
 

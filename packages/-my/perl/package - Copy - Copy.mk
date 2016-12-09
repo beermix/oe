@@ -2,7 +2,7 @@ PKG_NAME="perl"
 PKG_VERSION="5.24.0"
 PKG_URL="http://www.cpan.org/src/5.0/perl-${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libressl db less:host"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"

@@ -24,7 +24,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://sourceforge.net/projects/afpfs-ng/"
 PKG_URL="$SOURCEFORGE_SRC/$PKG_NAME/$PKG_NAME/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain libgpg-error libgcrypt netbsd-curses"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="network"
 PKG_SHORTDESC="afpfs-ng: an Apple Filing Protocol client"
 PKG_LONGDESC="afpfs-ng is an Apple Filing Protocol client that will allow BSD, Linux and Mac OS X systems to access files exported from a Mac OS system with AFP over TCP."

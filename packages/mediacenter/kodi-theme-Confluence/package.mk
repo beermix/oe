@@ -24,7 +24,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
 PKG_URL="http://sources.libreelec.tv/7.0.3/kodi-theme-Confluence-16.1-c327c53.tar.xz"
 PKG_DEPENDS_TARGET="toolchain kodi:host"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="mediacenter"
 PKG_SHORTDESC="kodi-theme-Confluence: Kodi Mediacenter default theme"
 PKG_LONGDESC="Kodi Media Center (which was formerly named Xbox Media Center and XBMC) is a free and open source cross-platform media player and home entertainment system software with a 10-foot user interface designed for the living-room TV. Its graphical user interface allows the user to easily manage video, photos, podcasts, and music from a computer, optical disk, local network, and the internet using a remote control."

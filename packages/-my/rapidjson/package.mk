@@ -5,7 +5,7 @@ PKG_ARCH="any"
 PKG_LICENSE="meh"
 PKG_GIT_URL="https://github.com/miloyip/rapidjson"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="devel"
 PKG_SHORTDESC="rapidjson: JSON parser/generator"
 PKG_LONGDESC="A fast JSON parser/generator for C++ with both SAX/DOM style API"

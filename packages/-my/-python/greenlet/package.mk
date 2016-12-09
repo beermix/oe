@@ -11,7 +11,7 @@ PKG_LICENSE="OSS"
 PKG_SITE="https://pypi.python.org/pypi/greenlet"
 PKG_URL="https://pypi.python.org/packages/f2/3f/09412b656067f280cf017ce5b6465e6339089129212425111117be5557d9/greenlet-0.4.10.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="xmedia/depends"
 PKG_SHORTDESC="Lightweight in-process concurrent programming"
 PKG_LONGDESC="Lightweight in-process concurrent programming."

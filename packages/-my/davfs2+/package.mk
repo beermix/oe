@@ -24,7 +24,7 @@ PKG_LICENSE="LGPL"
 PKG_SITE="https://shadowvpn.org/"
 PKG_URL="http://download.savannah.gnu.org/releases/davfs2/davfs2-${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain neon"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="torrenter"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"

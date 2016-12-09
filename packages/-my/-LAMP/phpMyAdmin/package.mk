@@ -27,7 +27,7 @@ PKG_LICENSE="GPL2"
 PKG_SITE="http://www.phpmyadmin.net/home_page/index.php"
 PKG_URL="https://files.phpmyadmin.net/phpMyAdmin/4.6.2/phpMyAdmin-4.6.2-all-languages.zip"
 PKG_DEPENDS_TARGET=""
-PKG_PRIORITY="optional"
+
 PKG_SECTION="tools"
 PKG_SHORTDESC="phpMyAdmin is a tool to handle the administration of MySQL databases."
 PKG_LONGDESC="phpMyAdmin is a free software tool written in PHP, intended to handle the administration of MySQL over the Web."

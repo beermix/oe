@@ -2,7 +2,7 @@ PKG_NAME="geoip-api-c"
 PKG_VERSION="89e1b85"
 PKG_GIT_URL="https://github.com/maxmind/geoip-api-c"
 PKG_DEPENDS_TARGET="toolchain gawk"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="tools"
 PKG_AUTORECONF="yes"
 

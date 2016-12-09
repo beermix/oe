@@ -25,7 +25,7 @@ PKG_SITE="https://github.com/kodi-game/repository.kodi.game"
 PKG_GIT_URL="https://github.com/kodi-game/repository.kodi.game.git"
 PKG_GIT_BRANCH="master"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
+
 PKG_SECTION=""
 PKG_SHORTDESC="repository.kodi.game: Kodi addon repository"
 PKG_LONGDESC="repository.kodi.game: Kodi addon repository"

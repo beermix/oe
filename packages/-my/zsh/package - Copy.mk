@@ -3,7 +3,7 @@ PKG_VERSION="5.1.1"
 #PKG_URL="https://github.com/zsh-users/zsh/archive/$PKG_VERSION.tar.gz"
 PKG_URL="https://sourceforge.net/projects/zsh/files/zsh/${PKG_VERSION}/zsh-${PKG_VERSION}.tar.xz"
 PKG_DEPENDS_TARGET="toolchain libcap pcre gawk readline gdbm libsigc++ jansson which valgrind"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"

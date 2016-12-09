@@ -2,7 +2,7 @@ PKG_NAME="wireshark"
 PKG_VERSION="2.2.1"
 PKG_URL="https://www.wireshark.org/download/src/all-versions/wireshark-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain libz libevent"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="security"
 PKG_USE_CMAKE="no"
 PKG_AUTORECONF="no"

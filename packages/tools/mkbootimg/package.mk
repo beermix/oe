@@ -25,7 +25,7 @@ PKG_SITE="https://android.googlesource.com/platform/system/core/+/master/mkbooti
 PKG_GIT_URL="https://github.com/codesnake/mkbootimg.git"
 PKG_GIT_BRANCH="master"
 PKG_DEPENDS_HOST=""
-PKG_PRIORITY="optional"
+
 PKG_SECTION="tools"
 PKG_SHORTDESC="mkbootimg: Creates kernel boot images for Android"
 PKG_LONGDESC="mkbootimg: Creates kernel boot images for Android"

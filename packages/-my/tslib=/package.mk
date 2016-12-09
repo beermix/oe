@@ -24,7 +24,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/kergoth/tslib"
 PKG_GIT_URL="https://github.com/kergoth/tslib"
 PKG_DEPENDS_TARGET="toolchain evtest"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="system"
 PKG_SHORTDESC="Touchscreen access library"
 PKG_LONGDESC="Touchscreen access library"

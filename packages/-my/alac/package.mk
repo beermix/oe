@@ -2,7 +2,7 @@ PKG_NAME="alac"
 PKG_VERSION="a18c8a6"
 PKG_URL="https://github.com/alicebob/alac/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libxml2 sqlite"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="tools"
 PKG_AUTORECONF="no"
 

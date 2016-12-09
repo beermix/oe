@@ -3,7 +3,7 @@ PKG_VERSION="2015.12.26"
 PKG_URL="https://dl.dropboxusercontent.com/s/luq5cd912w8s420/libzz-2015.12.26.tar.xz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_DEPENDS_HOST=""
-PKG_PRIORITY="optional"
+
 PKG_SECTION="compress"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
