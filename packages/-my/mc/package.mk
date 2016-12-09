@@ -8,7 +8,6 @@ PKG_AUTORECONF="yes"
 pre_configure_target() {
   export LIBS="$LIBS -lssh2 -lmbedcrypto"
   export MAKEFLAGS="-j1"
-  #strip_lto
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
