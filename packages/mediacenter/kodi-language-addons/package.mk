@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="kodi-language-addons"
-PKG_VERSION="ce9947c"
+PKG_VERSION="a8158f7"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -38,5 +38,7 @@ make_target() {
 
 makeinstall_target() {
   mkdir -p $INSTALL/usr/share/kodi/addons/
-    cp -PR $ROOT/$PKG_BUILD/* $INSTALL/usr/share/kodi/addons/
+    for lng in $KODI_LANGUAGE_LIST; do
+        cp -PR $ROOT/$PKG_BUILD/*.$lng $INSTALL/usr/share/kodi/addons/
+    done
 }
