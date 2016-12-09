@@ -82,11 +82,11 @@ configure_target() {
 }
 
 make_host() {
-  make llvm-tblgen llvm-config -j8
+  make llvm-tblgen llvm-config -j9
 }
 
 make_target() {
-  make -j8
+  make -j9
 }
 
 makeinstall_host() {
