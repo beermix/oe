@@ -32,6 +32,8 @@ PKG_LONGDESC="Low-Level Virtual Machine (LLVM) is a compiler infrastructure desi
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
+CONCURRENCY_MAKE_LEVEL=7
+
 configure_host() {
   cmake -DCMAKE_INSTALL_PREFIX=$ROOT/$TOOLCHAIN \
         -DCMAKE_BUILD_TYPE=Release \
@@ -53,7 +55,7 @@ configure_host() {
 
 configure_target() {
   cmake -DCMAKE_INSTALL_PREFIX=/usr \
-        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_BUILD_TYPE=MinSizeRel \
         -DCMAKE_SYSTEM_NAME=Linux \
         -DLIBCXX_INSTALL_LIBRARY=OFF \
         -DLLVM_NATIVE_ARCH=X86 \
@@ -82,11 +84,7 @@ configure_target() {
 }
 
 make_host() {
-  make llvm-tblgen llvm-config -j9
-}
-
-make_target() {
-  make -j9
+  make llvm-tblgen llvm-config
 }
 
 makeinstall_host() {
