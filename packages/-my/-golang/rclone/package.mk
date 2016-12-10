@@ -22,7 +22,9 @@ pre_make_target() {
  
 make_target() {
   mkdir -p bin
-  go get -u -v -t "github.com/ncw/rclone"
+  go get -u -v -t "github.com/ncw/rclone/cmd"
+  go get -u -v -t "github.com/ncw/rclone/cmd/all"
+  go get -u -v -t "github.com/ncw/rclone/fs/all"
   $GOLANG build -v -o bin/$PKG_NAME -a -ldflags "$LDFLAGS" ./
   $STRIP bin/$PKG_NAME
 }
