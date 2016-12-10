@@ -5,11 +5,6 @@ PKG_URL="http://downloads.sourceforge.net/project/p7zip/p7zip/${PKG_VERSION}/p7z
 PKG_SOURCE_DIR="${PKG_NAME}_${PKG_VERSION}"
 PKG_DEPENDS_TARGET="toolchain zlib"
 
-
-#CFLAGS="-march=corei7-avx -O3 -pipe -fstack-protector-strong"
-#LDFLAGS="-Wl,-O1 -Wl,--as-needed"
-#CPPFLAGS="-march=corei7-avx -O3 -pipe -D_FORTIFY_SOURCE=2"
-
 PKG_CMAKE_SCRIPT_TARGET="CPP/7zip/CMAKE/CMakeLists.txt"
 
 PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release"
