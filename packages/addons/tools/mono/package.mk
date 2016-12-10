@@ -1,3 +1,21 @@
+################################################################################
+#      This file is part of LibreELEC - https://libreelec.tv
+#      Copyright (C) 2016 Team LibreELEC
+#
+#  LibreELEC is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  LibreELEC is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
+################################################################################
+
 PKG_NAME="mono"
 PKG_VERSION="4.6.0.245"
 PKG_REV="101"
@@ -7,23 +25,35 @@ PKG_SITE="http://www.mono-project.com"
 PKG_URL="http://download.mono-project.com/sources/mono/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_SOURCE_DIR="$PKG_NAME-${PKG_VERSION%.*}"
 PKG_DEPENDS_TARGET="toolchain mono:host libgdiplus sqlite zlib"
-PKG_IS_ADDON="yes"
+PKG_SECTION="tools"
+PKG_SHORTDESC="Mono: a cross platform, open source .NET framework"
+PKG_LONGDESC="Mono ($PKG_VERSION) is a software platform designed to allow developers to easily create cross platform applications part of the .NET Foundation"
 PKG_AUTORECONF="yes"
 
+PKG_IS_ADDON="yes"
+PKG_ADDON_NAME="Mono"
+PKG_ADDON_TYPE="xbmc.python.script"
+PKG_MAINTAINER="Anton Voyl (awiouy)"
 
 prefix="/storage/.kodi/addons/$PKG_SECTION.$PKG_NAME"
-options=""
+options="--build=$HOST_NAME \
+         --prefix=$prefix \
+         --bindir=$prefix/bin \
+         --sbindir=$prefix/sbin \
+         --sysconfdir=$prefix/etc \
+         --libexecdir=$prefix/lib \
+         --localstatedir=/var \
+         --disable-gtk-doc \
+         --with-mcs-docs=no \
+         --with-moonlight=no \
+         --disable-libraries \
+         --with-ikvm-native=no \
+         --enable-minimal=profiler,debug \
+         --enable-static"
 
 configure_host() {
   cp -PR ../* .
-  ./configure --disable-gtk-doc \
-  		--with-mcs-docs=no \
-  		--with-moonlight=no \
-  		--disable-libraries \
-  		--with-ikvm-native=no \
-  		--enable-minimal=profiler,debug \
-  		--enable-static \
-  		--host=$HOST_NAME
+  ./configure $options --host=$HOST_NAME
 }
 
 makeinstall_host() {
@@ -33,14 +63,8 @@ makeinstall_host() {
 configure_target() {
   cp -PR ../* .
   strip_lto
-  ./configure --disable-gtk-doc \
-  		--with-mcs-docs=no \
-  		--with-moonlight=no \
-  		--with-ikvm-native=no \
-  		--enable-minimal=profiler,debug \
-  		--disable-mcs-build \
-  		--enable-static \
-  		--host=$TARGET_NAME
+  ./configure $options --host=$TARGET_NAME \
+                       --disable-mcs-build
 }
 
 makeinstall_target() {
