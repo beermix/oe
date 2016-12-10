@@ -25,7 +25,6 @@ PKG_SITE="https://github.com/graeme-hill/crossguid"
 PKG_GIT_URL="https://github.com/graeme-hill/crossguid.git"
 PKG_GIT_BRANCH="master"
 PKG_DEPENDS_TARGET="toolchain"
-
 PKG_SECTION="devel"
 PKG_SHORTDESC="minimal, cross platform, C++ GUID library"
 PKG_LONGDESC="minimal, cross platform, C++ GUID library"
