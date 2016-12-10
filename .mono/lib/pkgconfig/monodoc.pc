@@ -1,9 +1,0 @@
-prefix=/storage/.kodi/addons/.mono
-exec_prefix=${prefix}
-libdir=/storage/.kodi/addons/.mono/lib
-sourcesdir=${libdir}/monodoc/sources
-
-Name: Monodoc
-Description: Monodoc - Mono Documentation Tools
-Version: 4.2.1
-Libs: /r:${prefix}/lib/mono/monodoc/monodoc.dll 
