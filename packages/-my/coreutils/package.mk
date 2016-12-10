@@ -4,7 +4,7 @@ PKG_URL="http://ftpmirror.gnu.org/coreutils/coreutils-$PKG_VERSION.tar.xz"
 PKG_BUILD_DEPENDS_TARGET="toolchain acl libunwind attr libcap readline"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="gl_cv_func_working_mktime=yes \
 			      gl_cv_func_linkat_follow=yes \
