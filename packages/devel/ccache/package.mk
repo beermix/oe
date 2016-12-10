@@ -34,7 +34,6 @@ PKG_AUTORECONF="no"
 
 MAKEFLAGS=-j1
 
-
 post_makeinstall_host() {
 # setup ccache
   $ROOT/$TOOLCHAIN/bin/ccache --max-size=$CCACHE_CACHE_SIZE
