@@ -93,7 +93,7 @@ pre_configure_target() {
   export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O2|g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
-  export CFLAGS=`echo $CPPFLAGS | sed -e "s|-Wp,-D_FORTIFY_SOURCE=.||g"`
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-Wp.||g"`
 
   if [ -n "$PROJECT_CFLAGS" ]; then
     export CFLAGS=`echo $CFLAGS | sed -e "s|$PROJECT_CFLAGS||g"`
@@ -110,7 +110,7 @@ pre_configure_target() {
   unset LD_LIBRARY_PATH
 
   # set some CFLAGS we need
-  export CFLAGS="$CFLAGS -g"
+  export CFLAGS="$CFLAGS -g0 -D_FORTIFY_SOURCE=0 -fno-stack-protector"
   export OBJDUMP_FOR_HOST=objdump
 
 cat >config.cache <<EOF
