@@ -24,7 +24,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://www.busybox.net"
 PKG_URL="http://busybox.net/downloads/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain busybox:host less hdparm dosfstools e2fsprogs libiconv expat pcre pcre2 openssl attr libev libuv zip unzip unrar xz bzip2 libffi tar pciutils usbutils parted procps-ng coreutils bash findutils grep gawk"
+PKG_DEPENDS_TARGET="toolchain busybox:host less hdparm dosfstools e2fsprogs libiconv expat pcre pcre2 openssl attr libev zip unzip unrar xz bzip2 libffi tar pciutils usbutils parted procps-ng coreutils bash findutils grep gawk"
 PKG_DEPENDS_INIT="toolchain"
 
 PKG_SECTION="system"
