@@ -25,7 +25,7 @@ PKG_SITE="https://www.oracle.com"
 PKG_URL="download.java.net/openjdk/jdk8/ri/$PKG_NAME-$PKG_VERSION.zip"
 PKG_DEPENDS_TARGET="cups libXtst"
 PKG_BUILD_DEPENDS_TARGET="toolchain cups libXtst"
-PKG_PRIORITY="optional"
+
 PKG_SECTION="security"
 PKG_SHORTDESC="Open JDK"
 PKG_LONGDESC="Open JDK"
@@ -37,16 +37,16 @@ configure_target() {
   test -n "$JAVA_HOME" || JAVA_HOME="`which javac | xargs -i{} readlink -f {}  | sed s%/bin/javac\$%% 2>/dev/null`"
   test -n "$JAVA_HOME" || (echo "JAVA_HOME must be set" >&2; exit 2)
 
-  CC=`basename $TARGET_CC` \
-  CXX=`basename $TARGET_CXX` \
-  LD=`basename $TARGET_LD` \
-  AS=`basename $TARGET_AS` \
-  AR=`basename $TARGET_AR` \
-  NM=`basename $TARGET_NM` \
-  RANLIB=`basename $TARGET_RANLIB` \
-  OBJCOPY=`basename $TARGET_OBJCOPY` \
-  OBJDUMP=`basename $TARGET_OBJDUMP` \
-  STRIP=`basename $TARGET_STRIP` \
+  CC=`basename $CC` \
+  CXX=`basename $CXX` \
+  LD=`basename $LD` \
+  AS=`basename $AS` \
+  AR=`basename $AR` \
+  NM=`basename $NM` \
+  RANLIB=`basename $RANLIB` \
+  OBJCOPY=`basename $OBJCOPY` \
+  OBJDUMP=`basename $OBJDUMP` \
+  STRIP=`basename $STRIP` \
   BUILD_CC=`which gcc` \
   BUILD_LD=`which gcc` \
   MAKEFLAGS="" \
@@ -79,16 +79,16 @@ make_target() {
   test -n "$JAVA_HOME" || JAVA_HOME="`which javac | xargs -i{} readlink -f {}  | sed s%/bin/javac\$%% 2>/dev/null`"
   test -n "$JAVA_HOME" || (echo "JAVA_HOME must be set" >&2; exit 2)
 
-  CC=`basename $TARGET_CC` \
-  CXX=`basename $TARGET_CXX` \
-  LD=`basename $TARGET_LD` \
-  AS=`basename $TARGET_AS` \
-  AR=`basename $TARGET_AR` \
-  NM=`basename $TARGET_NM` \
-  RANLIB=`basename $TARGET_RANLIB` \
-  OBJCOPY=`basename $TARGET_OBJCOPY` \
-  OBJDUMP=`basename $TARGET_OBJDUMP` \
-  STRIP=`basename $TARGET_STRIP` \
+  CC=`basename $CC` \
+  CXX=`basename $CXX` \
+  LD=`basename $LD` \
+  AS=`basename $AS` \
+  AR=`basename $AR` \
+  NM=`basename $NM` \
+  RANLIB=`basename $RANLIB` \
+  OBJCOPY=`basename $OBJCOPY` \
+  OBJDUMP=`basename $OBJDUMP` \
+  STRIP=`basename $STRIP` \
   MAKEFLAGS="-d" \
     $MAKE \
       JOBS=$CONCURRENCY_MAKE_LEVEL \
