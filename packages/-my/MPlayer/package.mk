@@ -21,7 +21,7 @@ configure_target() {
               --ar="$AR" \
               --as="$CC" \
               --cc="$CC" \
-              --host-cc="$CC" \
+              --host-cc="$HOST_CC" \
   	      --enable-iconv \
   	      --disable-smb \
   	      --disable-faad \
