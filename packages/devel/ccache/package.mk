@@ -33,6 +33,8 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 MAKEFLAGS=-j1
+CFLAGS="-march=native -O3 -pipe -fno-stack-protector -I$ROOT/$TOOLCHAIN/include"
+LDFLAGS="-Wl,-O1,--as-needed -Wl,-Bsymbolic-functions -Wl,-z,relro -Wl,-rpath,$ROOT/$TOOLCHAIN/lib -L$ROOT/$TOOLCHAIN/lib -static -s"
 
 post_makeinstall_host() {
 # setup ccache
