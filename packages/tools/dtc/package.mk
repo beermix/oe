@@ -25,7 +25,6 @@ PKG_SITE="https://git.kernel.org/cgit/utils/dtc/dtc.git"
 PKG_GIT_URL="https://git.kernel.org/pub/scm/utils/dtc/dtc.git"
 PKG_GIT_BRANCH="master"
 PKG_DEPENDS_TARGET="toolchain"
-
 PKG_SECTION="tools"
 PKG_SHORTDESC="The Device Tree Compiler"
 PKG_LONGDESC="The Device Tree Compiler"
