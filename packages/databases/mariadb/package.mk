@@ -161,6 +161,7 @@ configure_target() {
         -DWITH_SYSTEMD=OFF \
         -DWITH_LIBWRAP=OFF \
         -DWITH_SSL=$SYSROOT_PREFIX/usr \
+        -DSECURITY_HARDENED=OFF \
         $MARIADB_OPTS \
         ..
 }
