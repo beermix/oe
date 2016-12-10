@@ -32,7 +32,10 @@ PKG_LONGDESC="Ccache is a compiler cache. It speeds up re-compilation of C/C++ c
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-CFLAGS="-march=native -O3 -pipe -fno-stack-protector -I$ROOT/$TOOLCHAIN/include"
+pre_configure_host() {
+   export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
+   export MAKEFLAGS=-j1
+}
 
 post_makeinstall_host() {
 # setup ccache
