@@ -27,14 +27,14 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL3"
 PKG_SITE="http://fakeroot.alioth.debian.org/"
 PKG_URL="http://ftp.debian.org/debian/pool/main/f/fakeroot/${PKG_NAME}_${PKG_VERSION}.orig.tar.gz"
-PKG_DEPENDS_HOST="ccache:host libcap:host"
-
+PKG_DEPENDS_HOST="ccache:host libcap:host attr:host"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="fakeroot: provides a fake root environment by means of LD_PRELOAD and SYSV IPC (or TCP) trickery."
 PKG_LONGDESC="fakeroot provides a fake root environment by means of LD_PRELOAD and SYSV IPC (or TCP) trickery."
-
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 
 PKG_CONFIGURE_OPTS_HOST="--with-gnu-ld"
+
+PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
