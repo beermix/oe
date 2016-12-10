@@ -24,7 +24,7 @@ pre_make_target() {
  
 make_target() {
   mkdir -p bin
-  go get -u -v github.com/BurntSushi/toml github.com/miekg/dns github.com/gin-gonic/gin
+  go get -u -v github.com/BurntSushi/toml github.com/miekg/dns github.com/gin-gonic/gin gopkg.in/gin-contrib/cors.v1
   $GOLANG build -v -o bin/$PKG_NAME -a -ldflags "$LDFLAGS" ./
   $STRIP bin/$PKG_NAME
 }
