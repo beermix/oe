@@ -24,11 +24,9 @@ PKG_LICENSE="OSS"
 PKG_SITE="http://freedesktop.org"
 PKG_URL="http://xorg.freedesktop.org/archive/individual/lib/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain util-macros libz"
-
 PKG_SECTION="x11/lib"
 PKG_SHORTDESC="libpciaccess: X.org libpciaccess library"
 PKG_LONGDESC="X.org libpciaccess library."
-
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 

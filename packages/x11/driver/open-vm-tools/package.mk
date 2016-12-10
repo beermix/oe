@@ -18,15 +18,14 @@
 ################################################################################
 
 PKG_NAME="open-vm-tools"
-PKG_VERSION="master"
+PKG_VERSION="41c0f08"
 PKG_REV="1"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPL"
 PKG_SITE="http://open-vm-tools.sourceforge.net"
-PKG_URL="https://dl.dropboxusercontent.com/s/jsxhm3s1kvi2vwf/open-vm-tools-master.tar.xz"
+PKG_GIT_URL="https://github.com/vmware/open-vm-tools"
 #PKG_SOURCE_DIR="open-vm-tools-10.0.7-3227872"
 PKG_DEPENDS_TARGET="toolchain glib:host libffi:host glib libdnet"
-
 PKG_SECTION="virtualization"
 PKG_SHORTDESC="open-vm-tools: open source implementation of VMware Tools"
 PKG_LONGDESC="open-vm-tools: open source implementation of VMware Tools"
