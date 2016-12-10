@@ -30,4 +30,4 @@ PKG_LONGDESC="A library to parse an EXIF file and read the data from those tags"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static"
+#PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static"

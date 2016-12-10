@@ -32,7 +32,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 CFLAGS="-march=native -O3 -pipe -I$ROOT/$TOOLCHAIN/include"
-LDFLAGS="-s -Wl,-rpath,$ROOT/$TOOLCHAIN/lib -L$ROOT/$TOOLCHAIN/lib -static"
+LDFLAGS="$LDFLAGS -static -s"
 
 post_makeinstall_host() {
 # setup ccache
