@@ -9,6 +9,7 @@ PKG_AUTORECONF="yes"
 pre_configure_target() {
    CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
    MAKEFLAGS="-j1"
+   strip_lto
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --with-gnu-ld --disable-silent-rules"
