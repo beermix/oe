@@ -96,11 +96,11 @@ makeinstall_target() {
   cp -R $PKG_DIR/config/* $INSTALL/usr/config
 
   # containerd
-  cp -P $(get_pkg_build containerd)/bin/containerd $INSTALL/usr/sbin/docker-containerd
-  cp -P $(get_pkg_build containerd)/bin/containerd-shim $INSTALL/usr/sbin/docker-containerd-shim
+  cp -P $(get_build_dir containerd)/bin/containerd $INSTALL/usr/sbin/docker-containerd
+  cp -P $(get_build_dir containerd)/bin/containerd-shim $INSTALL/usr/sbin/docker-containerd-shim
 
   # runc
-  cp -P $(get_pkg_build runc)/bin/runc $INSTALL/usr/sbin/docker-runc
+  cp -P $(get_build_dir runc)/bin/runc $INSTALL/usr/sbin/docker-runc
 }
 
 post_install() {
