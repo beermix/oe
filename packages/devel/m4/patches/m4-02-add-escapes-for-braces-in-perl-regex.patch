@@ -1,0 +1,15 @@
+Description: build-aux/update-copyright: Add escapes for braces in perl regex
+Author: Santiago Vila <sanvila@debian.org>
+Bug-Debian: https://bugs.debian.org/808917
+
+--- a/build-aux/update-copyright
++++ b/build-aux/update-copyright
+@@ -124,7 +124,7 @@
+ use warnings;
+ 
+ my $copyright_re = 'Copyright';
+-my $circle_c_re = '(?:\([cC]\)|@copyright{}|&copy;)';
++my $circle_c_re = '(?:\([cC]\)|@copyright\{\}|&copy;)';
+ my $holder = $ENV{UPDATE_COPYRIGHT_HOLDER};
+ $holder ||= 'Free Software Foundation, Inc.';
+ my $prefix_max = 5;
