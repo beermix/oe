@@ -2,7 +2,7 @@ PKG_NAME="docker"
 PKG_VERSION="v1.12.3"
 PKG_SITE="http://www.docker.com/"
 PKG_GIT_URL="https://github.com/docker/docker"
-PKG_DEPENDS_TARGET="toolchain sqlite go:host containerd runc"
+PKG_DEPENDS_TARGET="toolchain sqlite go:host containerd runc aufs-util"
 PKG_SECTION="service/system"
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Docker"
@@ -14,7 +14,6 @@ configure_target() {
   export DOCKER_BUILDTAGS="daemon \
                            autogen \
                            exclude_graphdriver_devicemapper \
-                           exclude_graphdriver_aufs \
                            exclude_graphdriver_btrfs"
 
   export GOOS=linux
@@ -55,9 +54,9 @@ addon() {
     cp -P $ROOT/$PKG_BUILD/bin/docker-proxy $ADDON_BUILD/$PKG_ADDON_ID/bin
 
     # containerd
-    cp -P $(get_pkg_build containerd)/bin/containerd $ADDON_BUILD/$PKG_ADDON_ID/bin/docker-containerd
-    cp -P $(get_pkg_build containerd)/bin/containerd-shim $ADDON_BUILD/$PKG_ADDON_ID/bin/docker-containerd-shim
+    cp -P $(get_build_dir containerd)/bin/containerd $ADDON_BUILD/$PKG_ADDON_ID/bin/docker-containerd
+    cp -P $(get_build_dir containerd)/bin/containerd-shim $ADDON_BUILD/$PKG_ADDON_ID/bin/docker-containerd-shim
 
     # runc
-    cp -P $(get_pkg_build runc)/bin/runc $ADDON_BUILD/$PKG_ADDON_ID/bin/docker-runc
+    cp -P $(get_build_dir runc)/bin/runc $ADDON_BUILD/$PKG_ADDON_ID/bin/docker-runc
 }
