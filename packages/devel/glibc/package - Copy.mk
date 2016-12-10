@@ -36,11 +36,6 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            libc_cv_slibdir=/lib \
                            ac_cv_path_PERL= \
                            ac_cv_prog_MAKEINFO= \
-                           libc_cv_forced_unwind=yes \
-                           libc_cv_cc_with_libunwind=yes \
-                           libc_cv_c_cleanup=yes \
-                           libc_cv_gnu99_inline=yes \
-                           libc_cv_initfini_array=yes \
                            --libexecdir=/usr/lib/glibc \
                            --cache-file=config.cache \
                            --disable-profile \
@@ -59,7 +54,9 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --disable-build-nscd \
                            --disable-nscd \
                            --enable-lock-elision \
-                           --disable-timezone-tools"
+                           --disable-timezone-tools \
+                           --enable-stackguard-randomization \
+                           --disable-werror"
 
 if [ "$DEBUG" = yes ]; then
   PKG_CONFIGURE_OPTS_TARGET+=" --enable-debug"
@@ -114,6 +111,8 @@ pre_configure_target() {
   export OBJDUMP_FOR_HOST=objdump
 
 cat >config.cache <<EOF
+libc_cv_forced_unwind=yes
+libc_cv_c_cleanup=yes
 libc_cv_ssp=no
 libc_cv_ssp_strong=no
 EOF
