@@ -20,7 +20,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --with-liblinear=included \
                            --with-libpcre=$SYSROOT_PREFIX/usr \
                            --without-ncat \
-                           --without-ndiff \
+                           --with-ndiff \
                            --without-zenmap"
 
 
