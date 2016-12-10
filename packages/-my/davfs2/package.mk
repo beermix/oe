@@ -2,16 +2,15 @@ PKG_NAME="davfs2"
 PKG_VERSION="1.5.4"
 PKG_URL="http://download.savannah.gnu.org/releases/davfs2/davfs2-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain fuse neon"
-
 PKG_SECTION="system"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 pre_configure_target() {
    export LIBS="-ldl -lpthread"
    cd $ROOT/$PKG_BUILD
    export MAKEFLAGS="-j1"
-   export CPPFLAGS="$CPPFLAGS -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE"
+   export CPPFLAGS="$CPPFLAGS -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64 -D_DEFAULT_SOURCE"
 }
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
