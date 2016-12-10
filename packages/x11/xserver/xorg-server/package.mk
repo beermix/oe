@@ -23,8 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.X.org"
 PKG_URL="http://xorg.freedesktop.org/archive/individual/xserver/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain util-macros font-util fontsproto randrproto recordproto renderproto dri2proto dri3proto fixesproto damageproto videoproto inputproto xf86dgaproto xf86vidmodeproto xf86driproto xf86miscproto presentproto libpciaccess libX11 libXfont libXfont2 libXinerama libxshmfence libxkbfile libdrm openssl freetype pixman fontsproto systemd xorg-launch-helper libXcomposite libgudev libxvmc"
-
+PKG_DEPENDS_TARGET="toolchain util-macros font-util fontsproto randrproto recordproto renderproto dri2proto dri3proto fixesproto damageproto videoproto inputproto xf86dgaproto xf86vidmodeproto xf86driproto xf86miscproto presentproto libpciaccess libX11 libXfont libXfont2 libXinerama libxshmfence libxkbfile libdrm openssl freetype pixman fontsproto systemd xorg-launch-helper libXcomposite"
 PKG_SECTION="x11/xserver"
 PKG_SHORTDESC="xorg-server: The Xorg X server"
 PKG_LONGDESC="Xorg is a full featured X server that was originally designed for UNIX and UNIX-like operating systems running on Intel x86 hardware."
@@ -140,11 +139,7 @@ post_makeinstall_target() {
 
   mkdir -p $INSTALL/usr/lib/xorg
     cp -P $PKG_DIR/scripts/xorg-configure $INSTALL/usr/lib/xorg
-#      . $ROOT/packages/x11/driver/xf86-video-nvidia/package.mk
-#      sed -i -e "s|@NVIDIA_VERSION@|${PKG_VERSION}|g" $INSTALL/usr/lib/xorg/xorg-configure
-#      . $ROOT/packages/x11/driver/xf86-video-nvidia-legacy/package.mk
-#      sed -i -e "s|@NVIDIA_LEGACY_VERSION@|${PKG_VERSION}|g" $INSTALL/usr/lib/xorg/xorg-configure
-      . $ROOT/packages/x11/xserver/xorg-server/package.mk
+    . $ROOT/packages/x11/xserver/xorg-server/package.mk
 
   if [ ! "$OPENGL" = "no" ]; then
     if [ -f $INSTALL/usr/lib/xorg/modules/extensions/libglx.so ]; then
