@@ -27,7 +27,6 @@ PKG_DEPENDS_TARGET="toolchain mesa glu"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="glfw:"
 PKG_LONGDESC="glfw:"
-
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
@@ -36,9 +35,9 @@ if [ "$OPENGL" = "no" ] ; then
 fi
 
 make_target() {
-  make x11 PREFIX=$SYSROOT_PREFIX/usr
+  make x11 PREFIX=$SYSROOT_PREFIX/usr -j1 
 }
 
 makeinstall_target() {
-  make x11-install PREFIX=$SYSROOT_PREFIX/usr
+  make x11-install PREFIX=$SYSROOT_PREFIX/usr -j1
 }

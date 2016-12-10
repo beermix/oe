@@ -18,14 +18,13 @@
 ################################################################################
 
 PKG_NAME="links"
-PKG_VERSION="2.12"
+PKG_VERSION="2.14"
 PKG_REV="0"
 PKG_ARCH="i386 x86_64"
 PKG_LICENSE="GPL"
 PKG_SITE="http://links.twibright.com/"
 PKG_URL="http://links.twibright.com/download/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libressl libjpeg-turbo libpng libX11 libxcb libXau zlib"
-
 PKG_SECTION="browser"
 PKG_SHORTDESC="Links web browser plugin for OpenELEC"
 PKG_LONGDESC="Links is a popular small-footprint graphics and text mode privacy-oriented web browser, released under GPL. Visit http://www.antiprism.ca for more privacy tools."
@@ -33,9 +32,7 @@ PKG_MAINTAINER="AntiPrism.ca (antiprism@antiprism.ca)"
 PKG_DISCLAIMER="this is an unofficial addon. please don't ask for support in openelec forum / irc channel"
 PKG_IS_ADDON="yes"
 PKG_ADDON_TYPE="xbmc.python.script"
-PKG_ADDON_PROVIDES=""
-PKG_ADDON_REPOVERSION="7.0"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--x-includes=$SYSROOT_PREFIX/usr/include/X11/ \
         --x-libraries=$SYSROOT_PREFIX/usr/X11/lib/ \

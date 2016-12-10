@@ -22,15 +22,13 @@ PKG_REV="1"
 PKG_ARCH="i386 x86_64"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.vsxu.com"
-# repackaged from https://github.com/vovoid/vsxu/archive/$PKG_VERSION.tar.gz
 PKG_GIT_URL="https://github.com/vovoid/vsxu"
 PKG_DEPENDS_TARGET="toolchain $OPENGL libX11 glew glfw zlib libpng libjpeg-turbo freetype"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="vsxu:"
 PKG_LONGDESC="vsxu:"
-
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 export LDFLAGS="$LDFLAGS -lX11"
 
