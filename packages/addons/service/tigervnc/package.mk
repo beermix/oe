@@ -32,7 +32,7 @@ PKG_ADDON_TYPE="xbmc.service"
 PKG_SHORTDESC="$PKG_ADDON_NAME server"
 PKG_LONGDESC="$PKG_ADDON_NAME ($PKG_VERSION) is a high-performance, platform-neutral implementation of Virtual Network Computing, a client/server application that allows users to launch and interact with graphical applications on remote machines"
 
-PKG_CMAKE_OPTS_TARGET="-DBUILD_VIEWER=off"
+PKG_CMAKE_OPTS_TARGET="-DBUILD_VIEWER=OFF"
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
