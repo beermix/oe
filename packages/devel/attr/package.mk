@@ -46,7 +46,7 @@ fi
 pre_configure_target() {
 # attr fails to build in subdirs
   cd $ROOT/$PKG_BUILD
-    rm -rf .$TARGET_NAME
+  rm -rf .$TARGET_NAME
 }
 
 makeinstall_target() {
