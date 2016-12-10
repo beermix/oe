@@ -17,7 +17,8 @@
 ################################################################################
 
 PKG_NAME="containerd"
-PKG_VERSION="v0.2.4"
+#PKG_VERSION="v0.2.4"
+PKG_VERSION="9c21822"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="APL"

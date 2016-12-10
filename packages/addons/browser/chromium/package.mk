@@ -44,7 +44,7 @@ pre_make_target() {
 
 make_target() {
   export LDFLAGS="$LDFLAGS -ludev"
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
+  #export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
   export LD=$CXX
 
   # Use Python 2
