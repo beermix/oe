@@ -17,13 +17,11 @@
 ################################################################################
 
 PKG_NAME="kodi"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
-PKG_SITE="http://www.kodi.tv"
+PKG_VERSION="beac347"
+PKG_GIT_URL="https://github.com/xbmc/xbmc.git"
+PKG_GIT_BRANCH="Jarvis"
 PKG_DEPENDS_TARGET="toolchain kodi:host xmlstarlet:host libsquish boost Python zlib bzip2 systemd pciutils lzo pcre swig:host libass curl rtmpdump fontconfig fribidi tinyxml libjpeg-turbo libpng tiff freetype jasper libcdio libogg libvorbis libmpeg2 taglib libxml2 libxslt yajl sqlite ffmpeg crossguid giflib"
 PKG_DEPENDS_HOST="lzo:host libpng:host libjpeg-turbo:host giflib:host"
-
 PKG_SECTION="mediacenter"
 PKG_SHORTDESC="kodi: Kodi Mediacenter"
 PKG_LONGDESC="Kodi Media Center (which was formerly named Xbox Media Center or XBMC) is a free and open source cross-platform media player and home entertainment system software with a 10-foot user interface designed for the living-room TV. Its graphical user interface allows the user to easily manage video, photos, podcasts, and music from a computer, optical disk, local network, and the internet using a remote control."
@@ -31,20 +29,6 @@ PKG_LONGDESC="Kodi Media Center (which was formerly named Xbox Media Center or X
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-case "$KODIPLAYER_DRIVER" in
-  bcm2835-firmware)
-    PKG_VERSION="ce88c8c"
-    PKG_GIT_URL="https://github.com/OpenELEC/xbmc.git"
-    PKG_GIT_BRANCH="jarvis_rbp_backports"
-    PKG_KEEP_CHECKOUT="no"
-    ;;
-  *)
-    PKG_VERSION="beac347"
-    PKG_GIT_URL="https://github.com/xbmc/xbmc.git"
-    PKG_GIT_BRANCH="Jarvis"
-    PKG_KEEP_CHECKOUT="no"
-    ;;
-esac
 # configure GPU drivers and dependencies:
   get_graphicdrivers
 
@@ -323,7 +307,7 @@ pre_build_target() {
 pre_configure_target() {
 # kodi fails to build in subdirs
   cd $ROOT/$PKG_BUILD
-  rm -rf .$TARGET_NAME
+    rm -rf .$TARGET_NAME
 
 # kodi should never be built with lto
   strip_lto
@@ -373,6 +357,12 @@ post_makeinstall_target() {
       ln -sf cputemp $INSTALL/usr/bin/gputemp
     cp $PKG_DIR/scripts/setwakeup.sh $INSTALL/usr/bin
     cp tools/EventClients/Clients/Kodi\ Send/kodi-send.py $INSTALL/usr/bin/kodi-send
+    # GUI switch service
+    cp $PKG_DIR/scripts/gui-switch.start $INSTALL/usr/bin
+    # Drop RAM service
+    cp $PKG_DIR/scripts/drop-ram.start $INSTALL/usr/bin
+    # resolution service
+    cp $PKG_DIR/scripts/kodi-setres $INSTALL/usr/bin
 
   if [ ! "$DISPLAYSERVER" = "x11" ]; then
     rm -rf $INSTALL/usr/lib/kodi/kodi-xrandr
@@ -405,7 +395,7 @@ post_makeinstall_target() {
     cp -R tools/EventClients/lib/python/* $INSTALL/usr/lib/python"$PYTHON_VERSION"/site-packages/kodi
 
   mkdir -p $INSTALL/usr/share/kodi/config
-    cp $PKG_DIR/config/guisettings.xml $INSTALL/usr/share/kodi/config
+    #cp $PKG_DIR/config/guisettings.xml $INSTALL/usr/share/kodi/config
     cp $PKG_DIR/config/sources.xml $INSTALL/usr/share/kodi/config
 
 # install project specific configs

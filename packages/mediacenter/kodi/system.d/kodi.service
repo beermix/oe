@@ -3,6 +3,7 @@ Description=Kodi Media Center
 After=network-online.target graphical.target gui-switch.service
 Requires=graphical.target gui-switch.service
 Wants=network-online.target
+ConditionPathExists=/var/lock/start.kodi
 
 [Service]
 Environment=DISPLAY=:0.0
