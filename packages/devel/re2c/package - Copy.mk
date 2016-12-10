@@ -1,7 +1,0 @@
-PKG_NAME="re2c"
-PKG_VERSION="0.16"
-PKG_URL="https://sourceforge.net/projects/re2c/files/$PKG_VERSION/re2c-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_HOST="bison:host"
-PKG_SECTION="my"
-PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"

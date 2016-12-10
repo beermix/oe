@@ -6,7 +6,10 @@ PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-
 post_unpack() {
   cp -r $PKG_BUILD/re2c/* $PKG_BUILD/
 }
+
+PKG_CONFIGURE_OPTS_HOST="--disable-docs --disable-silent-rules"
+
+PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
