@@ -12,16 +12,18 @@ PKG_AUTORECONF="yes"
 
 
 prefix="/storage/.kodi/addons/$PKG_SECTION.$PKG_NAME"
-options="--disable-gtk-doc \
-	  --with-mcs-docs=no \
-	  --with-moonlight=no \
-	  --with-ikvm-native=no \
-	  --enable-minimal=profiler,debug \
-	  --enable-static"
+options=""
 
 configure_host() {
   cp -PR ../* .
-  ./configure $options --host=$HOST_NAME
+  ./configure --disable-gtk-doc \
+  		--with-mcs-docs=no \
+  		--with-moonlight=no \
+  		--disable-libraries \
+  		--with-ikvm-native=no \
+  		--enable-minimal=profiler,debug \
+  		--enable-static \
+  		--host=$HOST_NAME
 }
 
 makeinstall_host() {
@@ -31,8 +33,14 @@ makeinstall_host() {
 configure_target() {
   cp -PR ../* .
   strip_lto
-  ./configure $options --host=$TARGET_NAME \
-                       --disable-mcs-build
+  ./configure --disable-gtk-doc \
+  		--with-mcs-docs=no \
+  		--with-moonlight=no \
+  		--with-ikvm-native=no \
+  		--enable-minimal=profiler,debug \
+  		--disable-mcs-build \
+  		--enable-static \
+  		--host=$TARGET_NAME
 }
 
 makeinstall_target() {
