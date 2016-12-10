@@ -22,7 +22,7 @@ PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
-PKG_URL="https://github.com/kodi-adsp/adsp.biquad.filters/archive/$PKG_VERSION.tar.gz"
+PKG_GIT_URL="https://github.com/kodi-adsp/adsp.biquad.filters"
 PKG_DEPENDS_TARGET="toolchain kodi-platform asplib tinyxml"
 
 PKG_SECTION=""
@@ -33,15 +33,10 @@ PKG_AUTORECONF="no"
 PKG_IS_ADDON="yes"
 PKG_ADDON_TYPE="kodi.adsp"
 
-configure_target() {
-  cmake -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
-        -DCMAKE_INSTALL_PREFIX=/usr \
-        -DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
+PKG_CMAKE_OPTS_TARGET="-DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
         -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
         -DFLAC_INCLUDE_DIRS=$SYSROOT_PREFIX/usr/include \
-        -DOGG_INCLUDE_DIRS=$SYSROOT_PREFIX/usr/include \
-        ..
-}
+        -DOGG_INCLUDE_DIRS=$SYSROOT_PREFIX/usr/include"
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/

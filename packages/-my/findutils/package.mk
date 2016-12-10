@@ -7,7 +7,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 pre_configure_target() {
-  #strip_lto
+  strip_lto
   export MAKEFLAGS=-j1
   #export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
 }

@@ -9,8 +9,7 @@ PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="prop."
 PKG_SITE="http://www.alexelec.in.ua"
-PKG_URL="https://github.com/AlexELEC/service.system.settings/archive/$PKG_VERSION.tar.gz"
-PKG_SOURCE_DIR="service.system.settings-$PKG_VERSION*"
+PKG_GIT_URL="https://github.com/AlexELEC/service.system.settings"
 PKG_DEPENDS_TARGET="toolchain Python connman pygobject dbus-python setxkbmap"
 PKG_PRIORITY="optional"
 PKG_SECTION=""
@@ -19,7 +18,7 @@ PKG_LONGDESC="System-settings: is a settings dialog for AlexELEC"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_MAKE_OPTS_TARGET="DISTRONAME=$DISTRONAME ROOT_PASSWORD=$ROOT_PASSWORD"
+PKG_MAKE_OPTS_TARGET="DISTRONAME=AlexELEC ROOT_PASSWORD=$ROOT_PASSWORD"
 
 post_makeinstall_target() {
   mkdir -p $INSTALL/usr/lib/alexelec
