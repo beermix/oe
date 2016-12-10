@@ -18,7 +18,7 @@
 
 PKG_NAME="gcc"
 PKG_REV="1"
-PKG_USE_SNAPSHOT="false"
+PKG_USE_SNAPSHOT="true"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://gcc.gnu.org/"
@@ -65,12 +65,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libmpx \
                            --disable-browser-plugin \
                            --disable-libitm \
-                           --with-tune=ivybridge \
-                           --enable-linker-build-id \
-                           --enable-gnu-indirect-function \
-                           --enable-gnu-unique-object \
-                           --with-linker-hash-style=gnu \
-                           MAKEINFO=missing"
+                           --with-tune=ivybridge"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
@@ -91,6 +86,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-__cxa_atexit \
                          --enable-decimal-float \
                          --enable-libssp \
+                         --enable-libatomic \
                          --enable-tls \
                          --enable-shared \
                          --disable-static \
@@ -100,7 +96,6 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time \
                          --enable-clocale=gnu \
-                         --enable-libatomic \
                          $GCC_OPTS"
 
 pre_configure_host() {
