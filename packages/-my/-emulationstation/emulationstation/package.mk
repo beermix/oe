@@ -25,18 +25,14 @@ PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET emulationstation-theme-carbon-nometa"
 PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET emulationstation-theme-pixel"
 PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET emulationstation-theme-turtle-pi"
 
-configure_target() {
-  cmake -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
-        -DBUILD_SHARED_LIBS=1 \
+PKG_CMAKE_OPTS_TARGET="-DBUILD_SHARED_LIBS=1 \
         -DCMAKE_INSTALL_PREFIX=/usr \
         -DCMAKE_INSTALL_LIBDIR=/usr/lib \
         -DCMAKE_INSTALL_LIBDIR_NOARCH=/usr/lib \
         -DCMAKE_INSTALL_PREFIX_TOOLCHAIN=$SYSROOT_PREFIX/usr \
         -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
-	    -DCMAKE_FIND_ROOT_PATH=$SYSROOT_PREFIX/usr \
-        $EXTRA_CMAKE_OPTS \
-        ..
-}
+        -DCMAKE_FIND_ROOT_PATH=$SYSROOT_PREFIX/usr \
+        $EXTRA_CMAKE_OPTS"
 
 post_makeinstall_target() {
   mkdir -p $INSTALL/usr/bin

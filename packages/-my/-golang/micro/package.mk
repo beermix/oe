@@ -4,7 +4,6 @@ PKG_GIT_URL="https://github.com/zyedidia/micro"
 PKG_DEPENDS_TARGET="toolchain go:host"
 PKG_GIT_BRANCH="master"
 PKG_KEEP_CHECKOUT="no"
-
 PKG_SECTION="tools"
 PKG_AUTORECONF="no"
 
@@ -14,7 +13,7 @@ pre_make_target() {
   export CGO_ENABLED=1
   export CGO_NO_EMULATION=1
   export CGO_CFLAGS=$CFLAGS
-  export LDFLAGS="-s -w -extldflags -static -extld $CC"
+  export LDFLAGS="-s -w"
   export GOLANG=$ROOT/$TOOLCHAIN/lib/golang/bin/go
   export GOPATH=$ROOT/$PKG_BUILD.gopath:$ROOT/$PKG_BUILD/vendor/
   export GOROOT=$ROOT/$TOOLCHAIN/lib/golang

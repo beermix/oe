@@ -2,12 +2,10 @@ PKG_NAME="CloudDNSBenchmark"
 PKG_VERSION="fb526af"
 PKG_GIT_URL="https://github.com/NeuralSpaz/CloudDNSBenchmark"
 PKG_DEPENDS_TARGET="toolchain go:host"
-
 PKG_SECTION="tools"
 PKG_AUTORECONF="no"
 
-CFLAGS="-march=corei7-avx -mtune=corei7-avx -O3 -pipe"
-LDFLAGS="-Wl,-O1 -Wl,--as-needed"
+strip_lto
 
 pre_make_target() {
   export GOOS=linux
@@ -15,7 +13,7 @@ pre_make_target() {
   export CGO_ENABLED=1
   export CGO_NO_EMULATION=1
   export CGO_CFLAGS=$CFLAGS
-  export LDFLAGS="-s -w -extldflags -static -X github.com/docker/containerd.GitCommit=${PKG_VERSION} -extld $CC"
+  export LDFLAGS="-s -w"
   export GOLANG=$ROOT/$TOOLCHAIN/lib/golang/bin/go
   export GOPATH=$ROOT/$PKG_BUILD.gopath:$ROOT/$PKG_BUILD/vendor/
   export GOROOT=$ROOT/$TOOLCHAIN/lib/golang

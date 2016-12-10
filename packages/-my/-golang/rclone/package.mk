@@ -1,5 +1,5 @@
 PKG_NAME="rclone"
-PKG_VERSION="2656a0e"
+PKG_VERSION="v1.34"
 PKG_GIT_URL="https://github.com/ncw/rclone"
 PKG_DEPENDS_TARGET="toolchain go:host"
 PKG_SECTION="tools"

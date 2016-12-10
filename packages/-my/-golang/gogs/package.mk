@@ -2,7 +2,6 @@ PKG_NAME="gogs"
 PKG_VERSION="2bec8a4"
 PKG_GIT_URL="https://github.com/gogits/gogs"
 PKG_DEPENDS_TARGET="toolchain go:host"
-
 PKG_SECTION="tools"
 PKG_AUTORECONF="no"
 
