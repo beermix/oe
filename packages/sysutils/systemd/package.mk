@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/systemd"
 PKG_GIT_URL="https://github.com/systemd/systemd"
-PKG_DEPENDS_TARGET="toolchain libcap kmod util-linux entropy icu libiconv"
+PKG_DEPENDS_TARGET="toolchain libcap kmod util-linux entropy icu"
 
 PKG_SECTION="system"
 PKG_SHORTDESC="systemd: a system and session manager"
