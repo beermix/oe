@@ -23,6 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/libtool/libtool.html"
 PKG_URL="http://ftp.gnu.org/gnu/libtool/$PKG_NAME-$PKG_VERSION.tar.gz"
+#PKG_URL="https://dl.dropboxusercontent.com/s/vxmbfs1bsekwo0a/libtool-2.4.6.tar.xz"
 PKG_DEPENDS_HOST="ccache:host autoconf:host"
 PKG_DEPENDS_TARGET="toolchain"
 
@@ -34,4 +35,6 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
+
+PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
 
