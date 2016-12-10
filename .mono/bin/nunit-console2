@@ -1,0 +1,2 @@
+#!/bin/sh
+exec /storage/.kodi/addons/.mono/bin/mono --debug $MONO_OPTIONS /storage/.kodi/addons/.mono/lib/mono/2.0/nunit-console.exe "$@"

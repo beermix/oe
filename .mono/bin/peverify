@@ -1,0 +1,2 @@
+#!/bin/sh
+exec /storage/.kodi/addons/.mono/bin/pedump $MONO_OPTIONS --verify metadata,code "$@"

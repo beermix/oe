@@ -1,0 +1,2 @@
+#!/bin/sh
+exec /storage/.kodi/addons/.mono/bin/mono $MONO_OPTIONS /storage/.kodi/addons/.mono/lib/mono/4.5/csharp.exe "$@"
