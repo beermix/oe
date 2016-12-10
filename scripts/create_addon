@@ -123,16 +123,6 @@ pack_addon() {
     cp $PKG_DIR/icon/icon.png $ADDON_BUILD/$PKG_ADDON_ID
   fi
 
-  if [ -f $DISTRO_DIR/$DISTRO/addons/fanart.png ]; then
-   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/resources
-   cp $DISTRO_DIR/$DISTRO/addons/fanart.png $ADDON_BUILD/$PKG_ADDON_ID/resources
-  fi
-
-  for f in $PKG_DIR/source/resources/screenshot-*.{jpg,png}; do
-    if [ -f "$f" ]; then
-      PKG_ADDON_SCREENSHOT+="<screenshot>resources/$(basename $f)</screenshot>\n"
-    fi
-  done
   if [ -f $PKG_DIR/changelog.txt ]; then
     cp $PKG_DIR/changelog.txt $ADDON_BUILD/$PKG_ADDON_ID
   fi
@@ -156,7 +146,6 @@ pack_addon() {
        -e "s|@PKG_DISCLAIMER@|$PKG_DISCLAIMER|g" \
        -e "s|@PROVIDER_NAME@|$PROVIDER_NAME|g" \
        -e "s|@PKG_ADDON_PROVIDES@|$PKG_ADDON_PROVIDES|g" \
-       -e "s|@PKG_ADDON_SCREENSHOT@|$PKG_ADDON_SCREENSHOT|g" \
        -i $ADDON_BUILD/$PKG_ADDON_ID/addon.xml
 
   if [ "$2" != "-test" ] ; then

@@ -30,15 +30,11 @@ if [ ! -f $PKG_DIR/package.mk ]; then
   exit 1
 fi
 
-  PKG_CONFIGURE_SCRIPT=""
-  PKG_MAKE_OPTS=""
-  PKG_MAKEINSTALL_OPTS=""
-
-  PACKAGE_NAME=$(echo $1 | awk -F : '{print $1}')
-  TARGET=$(echo $1 | awk -F : '{print $2}')
-  if [ -z "$TARGET" ]; then
-    TARGET="target"
-  fi
+PACKAGE_NAME=$(echo $1 | awk -F : '{print $1}')
+TARGET=$(echo $1 | awk -F : '{print $2}')
+if [ -z "$TARGET" ]; then
+  TARGET="target"
+fi
 
 if [ -n "$PKG_ARCH" -a ! "$PKG_ARCH" = "any" ]; then
   echo "$PKG_ARCH" | grep -q "$TARGET_ARCH" || exit 0
@@ -53,7 +49,6 @@ STAMP=$STAMPS/$PACKAGE_NAME/build_$TARGET
 $SCRIPTS/unpack $PACKAGE_NAME
 
 STAMP_DEPENDS="$PKG_DIR $PKG_NEED_UNPACK $PROJECT_DIR/$PROJECT/patches/$PKG_NAME"
-[ -n "$DEVICE" ] && STAMP_DEPENDS="$STAMP_DEPENDS $PROJECT_DIR/$PROJECT/devices/$DEVICE/patches/$PKG_NAME"
 
 if [ -f $STAMP ] ; then
   . $STAMP
