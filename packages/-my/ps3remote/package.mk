@@ -2,7 +2,6 @@ PKG_NAME="ps3remote"
 PKG_VERSION="7d20fa3"
 PKG_GIT_URL="https://github.com/rootlis/ps3remote"
 PKG_DEPENDS_TARGET="toolchain systemd"
-
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
