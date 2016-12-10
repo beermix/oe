@@ -75,3 +75,5 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --enable-dynamic-extensions \
                            --with-gnu-ld \
                            --disable-silent-rules"
+                           
+#PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
