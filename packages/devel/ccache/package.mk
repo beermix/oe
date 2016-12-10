@@ -27,11 +27,11 @@ PKG_DEPENDS_HOST="make:host"
 PKG_SECTION="devel"
 PKG_SHORTDESC="ccache: A fast compiler cache"
 PKG_LONGDESC="Ccache is a compiler cache. It speeds up re-compilation of C/C++ code by caching previous compiles and detecting when the same compile is being done again."
-
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-LDFLAGS="$LDFLAGS -static"
+CFLAGS="-march=native -O3 -pipe"
+CXXFLAGS="-march=native -O3 -pipe"
 
 post_makeinstall_host() {
 # setup ccache

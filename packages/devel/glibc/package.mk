@@ -93,7 +93,7 @@ pre_configure_target() {
   export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O2|g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
-  export CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
+  export CFLAGS=`echo $CPPFLAGS | sed -e "s|-Wp,-D_FORTIFY_SOURCE=.||g"`
 
   if [ -n "$PROJECT_CFLAGS" ]; then
     export CFLAGS=`echo $CFLAGS | sed -e "s|$PROJECT_CFLAGS||g"`
@@ -120,6 +120,8 @@ EOF
 
   echo "sbindir=/usr/bin" >> configparms
   echo "rootsbindir=/usr/bin" >> configparms
+  echo "CC += -fstack-protector-strong -D_FORTIFY_SOURCE=2" >> configparms
+  echo "CXX += -fstack-protector-strong -D_FORTIFY_SOURCE=2" >> configparms
 }
 
 post_makeinstall_target() {
