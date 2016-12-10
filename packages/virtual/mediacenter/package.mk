@@ -48,11 +48,11 @@ done
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET kodi-addon-xvdr"
 
 # kodi visualization addons
- # PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET visualization.spectrum"
- # PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET visualization.waveform"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET visualization.spectrum"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET visualization.waveform"
 
 # kodi audioencoder addons
- # PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET audioencoder.flac"
- # PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET audioencoder.lame"
- # PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET audioencoder.vorbis"
-  #PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET audioencoder.wav"
+ PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET audioencoder.flac"
+ PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET audioencoder.lame"
+ PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET audioencoder.vorbis"
+ PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET audioencoder.wav"
