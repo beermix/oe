@@ -9,11 +9,10 @@ PKG_AUTORECONF="no"
 pre_configure_target() {
   strip_lto
   export MAKEFLAGS=-j1
-  #export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Ofast|"`
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--without-selinux \
 			      --disable-debug \
 			      --disable-nls \
-			      --enable-threads=posix \
-			      --enable-static"
+			      --enable-threads=posix"
