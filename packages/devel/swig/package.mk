@@ -37,7 +37,7 @@ PKG_CONFIGURE_OPTS_HOST="--with-pcre-prefix=$ROOT/$TOOLCHAIN \
                          --without-pcre \
                          --without-x \
                          --without-tcl \
-                         --without-python \
+                         --with-python \
                          --without-python3 \
                          --without-perl5 \
                          --without-octave \
