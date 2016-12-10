@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="mono"
-PKG_VERSION="4.6.1.3"
+PKG_VERSION="4.6.0.245"
 PKG_REV="101"
 PKG_ARCH="any"
 PKG_LICENSE="MIT"
@@ -43,17 +43,16 @@ options="--build=$HOST_NAME \
          --sysconfdir=$prefix/etc \
          --libexecdir=$prefix/lib \
          --localstatedir=/var \
-         --with-mcs-docs=no \
          --disable-boehm \
          --disable-libraries \
+         --without-mcs-docs \
          --with-crosspkgdir="$ROOT/$TOOLCHAIN/bin/pkg-config" \
-         --with-llvm="$SYSROOT_PREFIX/usr/bin/llvm-config-host" \
          --enable-static"
          
 
 configure_host() {
   cp -PR ../* .
-  ./configure $options --host=$HOST_NAME
+  ./configure EXTERNAL_MCS=false $options --host=$HOST_NAME
 }
 
 makeinstall_host() {
@@ -63,8 +62,7 @@ makeinstall_host() {
 configure_target() {
   cp -PR ../* .
   strip_lto
-  ./configure $options --host=$TARGET_NAME \
-                       --disable-mcs-build
+  ./configure $options --host=$TARGET_NAME --disable-mcs-build
 }
 
 makeinstall_target() {
