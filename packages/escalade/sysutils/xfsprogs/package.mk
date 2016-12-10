@@ -30,25 +30,11 @@ PKG_SHORTDESC="xfsprogs: Utilities for use with the xfs filesystem"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-pre_configure_init() {
-  export LDFLAGS="-lcurses -lterminfo"
-}
-
-pre_configure_target() {
-  export LDFLAGS="-lcurses -lterminfo"
-}
-
-PKG_CONFIGURE_OPTS_TARGET="ac_cv_header_aio_h=yes \
-			   ac_cv_lib_rt_lio_listio=yes \
-			   --prefix=/usr \
-			   --enable-lib64=no \
-			   --enable-gettext=no \
-			   --enable-static \
-			   --disable-shared \
-			   --enable-readline=yes \
-			   --enable-blkid=yes \
-			   INSTALL_USER=root \
-			   INSTALL_GROUP=root"
+PKG_CONFIGURE_OPTS_TARGET="--enable-lib64=no \
+			      --enable-gettext=no \
+			      --enable-static \
+			      --disable-shared \
+			      --enable-readline=no"
 
 configure_init() {
   : # reuse target

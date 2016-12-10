@@ -32,7 +32,8 @@ PKG_LONGDESC="Bluetooth Tools and System Daemons for Linux."
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-silent-rules \
+PKG_CONFIGURE_OPTS_TARGET="--disable-dependency-tracking \
+                           --disable-silent-rules \
                            --disable-library \
                            --enable-udev \
                            --disable-cups \
@@ -62,9 +63,7 @@ fi
 pre_configure_target() {
 # bluez fails to build in subdirs
   cd $ROOT/$PKG_BUILD
-  rm -rf .$TARGET_NAME
-  
-  #export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
+    rm -rf .$TARGET_NAME
   export LIBS="-lncurses -lterminfo"
 }
 
