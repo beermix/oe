@@ -27,7 +27,6 @@ PKG_DEPENDS_HOST="ccache:host re2c:host"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="flex: Fast lexical analyzer generator"
 PKG_LONGDESC="flex is a tool for generating programs that perform pattern-matching on text."
-
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
