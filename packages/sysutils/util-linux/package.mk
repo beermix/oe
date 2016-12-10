@@ -22,8 +22,8 @@ PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_URL="http://www.kernel.org/pub/linux/utils/util-linux/v2.29/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain"
-PKG_DEPENDS_INIT="toolchain gcc:init"
+PKG_DEPENDS_TARGET="toolchain readline"
+PKG_DEPENDS_INIT="toolchain gcc:init readline"
 
 PKG_SECTION="system"
 PKG_SHORTDESC="util-linux: Miscellaneous system utilities for Linux"
@@ -32,14 +32,19 @@ PKG_LONGDESC="The util-linux package contains a large variety of low-level syste
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
+pre_configure_init() {
+  export LDFLAGS="-lcurses -lterminfo"
+}
+
+pre_configure_target() {
+  export LDFLAGS="-lcurses -lterminfo"
+}
+
 UTILLINUX_CONFIG_DEFAULT="--disable-gtk-doc \
                           --disable-nls \
                           --disable-rpath \
                           --enable-tls \
-                          --disable-all-programs \
                           --enable-chsh-only-listed \
-                          --disable-bash-completion \
-                          --disable-colors-default \
                           --disable-pylibmount \
                           --disable-pg-bell \
                           --disable-use-tty-group \
@@ -50,12 +55,8 @@ UTILLINUX_CONFIG_DEFAULT="--disable-gtk-doc \
                           --without-audit \
                           --without-udev \
                           --without-ncurses \
-                          --without-readline \
                           --without-slang \
-                          --without-tinfo \
                           --without-utempter \
-                          --without-util \
-                          --without-libz \
                           --without-user \
                           --without-systemd \
                           --without-smack \
@@ -92,6 +93,7 @@ PKG_CONFIGURE_OPTS_INIT="--prefix=/ \
                          $UTILLINUX_CONFIG_DEFAULT \
                          --enable-libblkid \
                          --enable-libmount \
+                         --enable-libuuid \
                          --enable-fsck"
 
 if [ "$INITRAMFS_PARTED_SUPPORT" = "yes" ]; then
