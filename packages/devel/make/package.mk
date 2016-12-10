@@ -30,10 +30,7 @@ PKG_LONGDESC="The 'make' utility automatically determines which pieces of a larg
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-pre_configure_host() {
-   export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
-   export MAKEFLAGS=-j1
-}
+MAKEFLAGS=-j1
 
 PKG_CONFIGURE_OPTS_HOST="--disable-load --without-guile"
 			 
