@@ -24,13 +24,11 @@ PKG_LICENSE="LGPL"
 PKG_SITE="https://www.dlitz.net/software/pycrypto/"
 PKG_URL="http://pypi.python.org/packages/source/p/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"
-
 PKG_SECTION="python/security"
 PKG_SHORTDESC="PyCrypto - The Python Cryptography Toolkit"
 PKG_LONGDESC="The Python Cryptography Toolkit describes a package containing various cryptographic modules for the Python programming language"
-
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_realloc_0_nonnull=yes \
                            ac_cv_func_malloc_0_nonnull=yes \
