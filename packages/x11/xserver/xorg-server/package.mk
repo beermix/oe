@@ -30,7 +30,7 @@ PKG_SHORTDESC="xorg-server: The Xorg X server"
 PKG_LONGDESC="Xorg is a full featured X server that was originally designed for UNIX and UNIX-like operating systems running on Intel x86 hardware."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 get_graphicdrivers
 
@@ -48,10 +48,8 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
                            --enable-visibility \
                            --disable-unit-tests \
                            --disable-sparkle \
-                           --disable-install-libxf86config \
                            --disable-xselinux \
                            --enable-aiglx \
-                           --enable-glx-tls \
                            --enable-composite \
                            --enable-mitshm \
                            --disable-xres \
