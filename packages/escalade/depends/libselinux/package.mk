@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="libselinux"
-PKG_VERSION="libselinux-2.6"
+PKG_VERSION="2.5"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/SELinuxProject/selinux"
-PKG_GIT_URL="https://github.com/SELinuxProject/selinux"
+PKG_SOURCE_DIR="selinux-libselinux-$PKG_VERSION"
 PKG_DEPENDS_TARGET="toolchain pcre"
 PKG_SECTION="tools"
 PKG_SHORTDESC="Security Enhanced Linux (SELinux) userland libraries."
@@ -41,7 +41,7 @@ pre_build_target() {
 
 
 make_target() {
-  make install DESTDIR=$SYSROOT_PREFIX -j1
+  make install DESTDIR=$SYSROOT_PREFIX
 }
 
 makeinstall_target() {

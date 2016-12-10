@@ -16,39 +16,30 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="reicast"
-PKG_VERSION="ed47c72"
+PKG_NAME="frodo-libretro"
+#PKG_VERSION="4c15016"
+PKG_VERSION="a4952d2"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
-PKG_SITE="https://github.com/reicast/reicast-emulator"
-PKG_URL="https://github.com/reicast/reicast-emulator/archive/$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain alsa-utils"
+PKG_SITE="https://github.com/r-type/frodo-libretro"
+#PKG_URL="https://github.com/r-type/frodo-libretro/archive/$PKG_VERSION.tar.gz"
+PKG_URL="https://github.com/diablodiab/frodo-libretro/archive/$PKG_VERSION.tar.gz"
+PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="emulation"
-PKG_SHORTDESC="Reicast is a multi-platform Sega Dreamcast emulator"
+PKG_SHORTDESC="Frodo C64 emulator libretro core"
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-post_unpack() {
-  mv $BUILD/reicast-emulator-$PKG_VERSION* $BUILD/$PKG_NAME-$PKG_VERSION
-}
+#post_unpack() {
+#  mv $BUILD/libretro-fsuae* $BUILD/$PKG_NAME-$PKG_VERSION
+#}
 
 make_target() {
-  strip_lto
-  cd shell/linux
-  case $PROJECT in
-    RPi2)
-      make CC=$CC CXX=$CXX AS=$AS STRIP=$STRIP SYSROOT_PREFIX=$SYSROOT_PREFIX platform=rpi2
-      ;;
-    Generic)
-      make CC=$CC CXX=$CXX AS=$AS STRIP=$STRIP SYSROOT_PREFIX=$SYSROOT_PREFIX platform=x64
-      ;;
-  esac
+  make -f Makefile.libretro
 }
 
 makeinstall_target() {
-  mkdir -p $INSTALL/usr/bin
-  cp reicast.elf $INSTALL/usr/bin/reicast
-  cp $PKG_DIR/scripts/* $INSTALL/usr/bin/
+  :
 }
