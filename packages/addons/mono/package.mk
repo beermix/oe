@@ -45,6 +45,7 @@ options="--build=$HOST_NAME \
          --localstatedir=/var \
          --disable-boehm \
          --disable-libraries \
+         --with-crosspkgdir="$ROOT/$TOOLCHAIN/bin/pkg-config" \
          --without-mcs-docs"
 
 configure_host() {

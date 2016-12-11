@@ -23,7 +23,6 @@ PKG_ARCH="any"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://cairographics.org/"
 PKG_URL="http://cairographics.org/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_URL="https://cairographics.org/releases/cairo-1.14.8.tar.xz"
 PKG_DEPENDS_TARGET="toolchain libz freetype fontconfig libpng pixman"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="cairo: Multi-platform 2D graphics library"
@@ -34,8 +33,6 @@ PKG_AUTORECONF="yes" # ToDo
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-silent-rules \
                            --enable-shared \
-                           --disable-lto \
-                           --enable-tee \
                            --disable-static \
                            --disable-gtk-doc \
                            --enable-largefile \
@@ -56,9 +53,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-silent-rules \
                            --disable-beos \
                            --disable-cogl \
                            --disable-drm \
-                           --disable-drm-xr \
                            --disable-gallium \
-                           --disable-xcb-drm \
                            --enable-png \
                            --disable-directfb \
                            --disable-vg \
