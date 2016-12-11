@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="systemd"
-PKG_VERSION="1ac7a93"
+PKG_VERSION="86bcce5"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -38,7 +38,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            ac_cv_path_UMOUNT_PATH=/bin/umount \
                            KMOD=/usr/bin/kmod \
                            --disable-nls \
-                           --disable-dbus \
+                           --enable-dbus \
                            --disable-utmp \
                            --disable-coverage \
                            --enable-kmod \
