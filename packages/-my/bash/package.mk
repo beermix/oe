@@ -19,7 +19,7 @@ PKG_CONFIGURE_OPTS_TARGET="bash_cv_getenv_redef=no \
                            --enable-readline \
                            --without-bash-malloc \
                            --with-installed-readline \
-                           --disable-static-link \
+                           --enable-static-link \
                            --enable-casemod-expansions \
                            --enable-process-substitution \
                            --enable-coprocesses \

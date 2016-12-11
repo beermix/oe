@@ -1,20 +1,14 @@
 PKG_NAME="lz4"
-PKG_VERSION="r131"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="BSD"
-PKG_SITE="http://www.lz4.org/"
+PKG_VERSION="v1.7.4.2"
 PKG_GIT_URL="https://github.com/Cyan4973/lz4"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="compress"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-make_target() {
-  :
-}
+PKG_CMAKE_SCRIPT_TARGET="contrib/cmake_unofficial/CMakeLists.txt"
 
-makeinstall_target() {
-  cd $ROOT/$PKG_BUILD/lib
-  PREFIX=$SYSROOT_PREFIX/usr make install
-}
+
+PKG_CMAKE_OPTS_TARGET="-DBUILD_SHARED_LIBS=OFF -DLZ4_POSITION_INDEPENDENT_LIB=ON"
+
+#-DCMAKE_BUILD_TYPE=Release 

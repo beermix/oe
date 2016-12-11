@@ -8,7 +8,7 @@ PKG_USE_CMAKE="no"
 PKG_AUTORECONF="yes"
 
 pre_configure_host() {
-  export CFLAGS="$CFLAGS -Wall -Wswitch -fno-strict-aliasing"
+  export CFLAGS="$CFLAGS -Wswitch -fno-strict-aliasing"
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \

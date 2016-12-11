@@ -64,13 +64,10 @@ make_target() {
 }
 
 makeinstall_target() {
-  $ROOT/$TOOLCHAIN/bin/bjam -d2 --toolset=gcc link=static target-os=linux variant=release binary-format=elf threading=multi \
+  $ROOT/$TOOLCHAIN/bin/bjam -d2 --toolset=gcc link=static target-os=linux variant=release threading=multi \
                                 --prefix=$SYSROOT_PREFIX/usr \
                                 --ignore-site-config \
                                 --layout=system \
-                                --disable-long-double \
-                                -sNO_BZIP2=1 \
-                                -sZLIB_LIBPATH=$SYSROOT_PREFIX/usr/lib \
                                 --with-date_time \
                                 --with-thread \
                                 --with-random \
@@ -84,6 +81,6 @@ makeinstall_target() {
                                 --with-exception \
                                 --with-serialization \
                                 --with-filesystem \
-                                --with-regex -sICU_PATH="$SYSROOT_PREFIX/usr" \
+                                --with-regex -sICU_PATH="$SYSROOT_PREFIX/usr" -j3 \
                                 install
 }

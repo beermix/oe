@@ -23,7 +23,7 @@ make_target() {
 }
 
 makeinstall_target() {
-  DESTDIR=$INSTALL ./install
+  DESTDIR=$INSTALL .$INSTALL
 
   mkdir -p $INSTALL/usr/bin
     cp $PKG_DIR/scripts/* $INSTALL/usr/bin

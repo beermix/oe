@@ -17,19 +17,18 @@
 ################################################################################
 
 PKG_NAME="f2fs-tools"
-PKG_VERSION="1.6.1"
+PKG_VERSION="v1.6.1"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://sourceforge.net/projects/f2fs-tools/"
-PKG_URL="http://git.kernel.org/cgit/linux/kernel/git/jaegeuk/f2fs-tools.git/snapshot/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_GIT_URL="git://git.kernel.org/pub/scm/linux/kernel/git/jaegeuk/f2fs-tools.git"
 PKG_DEPENDS_TARGET="toolchain util-linux"
 PKG_DEPENDS_INIT="f2fs-tools"
 PKG_SECTION="tools"
 PKG_SHORTDESC="f2fs-tools: Utilities for use with the f2fs filesystem"
 PKG_LONGDESC="The filesystem utilities for the f2fs filesystem"
 PKG_IS_ADDON="no"
-
 PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="cross_compiling=maybe \

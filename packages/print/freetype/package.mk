@@ -54,3 +54,13 @@ post_makeinstall_target() {
 
   rm -rf $INSTALL/usr/bin
 }
+PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
+
+pre_configure_host() {
+  # unset LIBTOOL because freetype uses its own
+    ( cd ..
+      unset LIBTOOL
+      sh autogen.sh
+    )
+}
+
