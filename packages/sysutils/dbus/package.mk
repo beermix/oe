@@ -48,7 +48,7 @@ PKG_CONFIGURE_OPTS_TARGET="export ac_cv_have_abstract_sockets=yes \
                            --enable-systemd \
                            --enable-inotify \
                            --without-valgrind \
-                           --without-x \
+                           --with-x \
                            --with-dbus-user=dbus \
                            --with-xml=expat"
 

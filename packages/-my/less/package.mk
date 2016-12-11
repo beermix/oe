@@ -1,7 +1,7 @@
 PKG_NAME="less"
 PKG_VERSION="487"
 PKG_URL="http://www.greenwoodsoftware.com/less/less-$PKG_VERSION.tar.gz"
-PKG_BUILD_DEPENDS_TARGET="toolchain readline"
+PKG_DEPENDS_TARGET="toolchain readline"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"

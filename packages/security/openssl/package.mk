@@ -1,11 +1,7 @@
 PKG_NAME="openssl"
-#PKG_VERSION="1.0.2j"
-#PKG_URL="https://www.openssl.org/source/openssl-$PKG_VERSION.tar.gz"
-PKG_VERSION="5ae285e"
+PKG_VERSION="OpenSSL_1_0_2-stable"
 PKG_GIT_URL="https://github.com/openssl/openssl"
-PKG_GIT_BRANCH="OpenSSL_1_0_2-stable"
 PKG_DEPENDS_TARGET="toolchain libz gmp pcre"
-
 PKG_SECTION="security"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
@@ -38,7 +34,7 @@ configure_target() {
               enable-gmp \
               enable-ec_nistp_64_gcc_128 \
               linux-x86_64 \
-              "-lpthread -m64 -DL_ENDIAN  -Wa,--noexecstack"
+              "-Wa,--noexecstack"
 }
 
 make_target() {
@@ -68,9 +64,10 @@ post_makeinstall_target() {
 # download url: http://curl.haxx.se
 # create new cert: perl ./mk-ca-bundle.pl
   #mkdir -p $INSTALL/$SSL_CERTIFICATES
-  perl $PKG_DIR/cert/mk-ca-bundle.pl
   mkdir -p $INSTALL/etc/ssl
-  
+  perl $PKG_DIR/cert/mk-ca-bundle.pl
+  cp $ROOT/$PKG_BUILD/ca-bundle.crt $INSTALL/etc/ssl/cert.pem
+    
   #cp $PKG_DIR/cert/ca-bundle.crt $INSTALL/$SSL_CERTIFICATES/cacert.pem
   cp $PKG_DIR/cert/ca-bundle.crt $INSTALL/etc/ssl/cert.pem
 }
