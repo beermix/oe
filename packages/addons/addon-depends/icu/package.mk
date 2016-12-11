@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="icu"
-PKG_VERSION="58.1"
+PKG_VERSION="58.2"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="Custom"
