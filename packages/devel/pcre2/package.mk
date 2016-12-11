@@ -7,7 +7,7 @@ PKG_DEPENDS_TARGET="toolchain readline"
 PKG_SECTION="devel"
 PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$ROOT/$TOOLCHAIN \
                          --disable-shared \
