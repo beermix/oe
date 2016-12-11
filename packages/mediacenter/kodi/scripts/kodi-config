@@ -62,18 +62,18 @@ if [ ! -f $HOME/.kodi/userdata/guisettings.xml ] ; then
   fi
 fi
 
-if [ ! -f $HOME/.kodi/userdata/Lircmap.xml ] ; then
-  cp /usr/share/kodi/system/Lircmap.xml $HOME/.kodi/userdata
-fi
+# if [ ! -f $HOME/.kodi/userdata/Lircmap.xml ] ; then
+#  cp /usr/share/kodi/system/Lircmap.xml $HOME/.kodi/userdata
+# fi
 # cleanup *.fi cache files from .kodi/temp as old version
-mkdir -p $HOME/.kodi/userdata/keymaps
-if [ ! -f $HOME/.kodi/userdata/keymaps/remote.xml ] ; then
-  cp /usr/share/kodi/system/keymaps/remote.xml $HOME/.kodi/userdata/keymaps
-fi
-
-if [ ! -f $HOME/.kodi/userdata/keymaps/keyboard.xml ] ; then
-  cp /usr/share/kodi/system/keymaps/keyboard.xml $HOME/.kodi/userdata/keymaps
-fi
+# mkdir -p $HOME/.kodi/userdata/keymaps
+# if [ ! -f $HOME/.kodi/userdata/keymaps/remote.xml ] ; then
+#  cp /usr/share/kodi/system/keymaps/remote.xml $HOME/.kodi/userdata/keymaps
+#fi
+#
+#if [ ! -f $HOME/.kodi/userdata/keymaps/keyboard.xml ] ; then
+#  cp /usr/share/kodi/system/keymaps/keyboard.xml $HOME/.kodi/userdata/keymaps
+#fi
 # of these files can cause random problems/crashes, particularly
 # after an upgrade
 if [ -d $HOME/.kodi/temp ]; then
