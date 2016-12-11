@@ -30,7 +30,6 @@ PKG_LONGDESC="Ccache is a compiler cache. It speeds up re-compilation of C/C++ c
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-LDFLAGS="-Wl,-O1,--as-needed -static -s"
 
 post_makeinstall_host() {
 # setup ccache
