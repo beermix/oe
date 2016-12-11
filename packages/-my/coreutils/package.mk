@@ -45,6 +45,5 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_c_restrict=no \
 			      MAKEINFO=missing \
 			      --without-selinux \
 			      --with-openssl \
-			      --enable-single-binary=shebangs \
 			      --enable-install-program=cat chgrp chmod chown cp date dd df dir echo false ln ls mkdir mknod mv pwd rm rmdir vdir sleep stty sync touch true uname join"
 			      
