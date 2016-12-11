@@ -24,7 +24,7 @@ PKG_LICENSE="MIT"
 PKG_SITE="http://www.mono-project.com"
 PKG_URL="http://download.mono-project.com/sources/mono/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_SOURCE_DIR="$PKG_NAME-${PKG_VERSION%.*}"
-PKG_DEPENDS_TARGET="toolchain mono:host libgdiplus sqlite zlib cairo libX11 libXext libexif libgdiplus mono_sqlite pixman"
+PKG_DEPENDS_TARGET="toolchain mono:host libgdiplus sqlite mono_sqlite zlib"
 PKG_SECTION="tools"
 PKG_SHORTDESC="Mono: a cross platform, open source .NET framework"
 PKG_LONGDESC="Mono ($PKG_VERSION) is a software platform designed to allow developers to easily create cross platform applications part of the .NET Foundation"
@@ -45,14 +45,11 @@ options="--build=$HOST_NAME \
          --localstatedir=/var \
          --disable-boehm \
          --disable-libraries \
-         --without-mcs-docs \
-         --with-crosspkgdir="$ROOT/$TOOLCHAIN/bin/pkg-config" \
-         --enable-static"
-         
+         --without-mcs-docs"
 
 configure_host() {
   cp -PR ../* .
-  ./configure EXTERNAL_MCS=false $options --host=$HOST_NAME
+  ./configure $options --host=$HOST_NAME
 }
 
 makeinstall_host() {
@@ -62,7 +59,8 @@ makeinstall_host() {
 configure_target() {
   cp -PR ../* .
   strip_lto
-  ./configure $options --host=$TARGET_NAME --disable-mcs-build
+  ./configure $options --host=$TARGET_NAME \
+                       --disable-mcs-build
 }
 
 makeinstall_target() {
