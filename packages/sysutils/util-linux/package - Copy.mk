@@ -22,8 +22,8 @@ PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_URL="http://www.kernel.org/pub/linux/utils/util-linux/v2.29/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain netbsd-curses readline libz"
-PKG_DEPENDS_INIT="toolchain gcc:init netbsd-curses readline libz"
+PKG_DEPENDS_TARGET="toolchain readline"
+PKG_DEPENDS_INIT="toolchain gcc:init readline"
 
 PKG_SECTION="system"
 PKG_SHORTDESC="util-linux: Miscellaneous system utilities for Linux"
@@ -45,7 +45,6 @@ UTILLINUX_CONFIG_DEFAULT="--disable-gtk-doc \
                           --disable-rpath \
                           --enable-tls \
                           --enable-chsh-only-listed \
-                          --enable-libmount-force-mountinfo \
                           --disable-pylibmount \
                           --disable-pg-bell \
                           --disable-use-tty-group \
@@ -64,7 +63,9 @@ UTILLINUX_CONFIG_DEFAULT="--disable-gtk-doc \
                           --without-python \
                           --without-systemdsystemunitdir"
 
-PKG_CONFIGURE_OPTS_TARGET="$UTILLINUX_CONFIG_DEFAULT \
+PKG_CONFIGURE_OPTS_TARGET="--sbindir=/sbin \
+                           --libexecdir=/lib \
+                           $UTILLINUX_CONFIG_DEFAULT \
                            --enable-libuuid \
                            --enable-libblkid \
                            --enable-libmount \

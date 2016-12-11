@@ -24,7 +24,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://www.busybox.net"
 PKG_URL="http://busybox.net/downloads/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain busybox:host less hdparm dosfstools e2fsprogs expat pcre pcre2 openssl attr libev zip unrar xz bzip2 libffi tar pciutils usbutils parted procps-ng coreutils bash findutils"
+PKG_DEPENDS_TARGET="toolchain busybox:host less hdparm dosfstools e2fsprogs tar pciutils usbutils parted procps-ng coreutils bash findutils"
 PKG_DEPENDS_INIT="toolchain"
 PKG_SECTION="system"
 PKG_SHORTDESC="BusyBox: The Swiss Army Knife of Embedded Linux"
@@ -118,8 +118,8 @@ configure_target() {
     fi
 
     # optimize for size
-    #CFLAGS=`echo $CFLAGS | sed -e "s|-Ofast|-Os|"`
-    #CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
+    CFLAGS=`echo $CFLAGS | sed -e "s|-Ofast|-Os|"`
+    CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
 
     # busybox fails to build with GOLD support enabled with binutils-2.25
     strip_gold
@@ -137,8 +137,8 @@ configure_init() {
     sed -i -e "s|^CONFIG_PREFIX=.*$|CONFIG_PREFIX=\"$INSTALL\"|" .config
 
     # optimize for size
-    #CFLAGS=`echo $CFLAGS | sed -e "s|-Ofast|-Os|"`
-    #CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
+    CFLAGS=`echo $CFLAGS | sed -e "s|-Ofast|-Os|"`
+    CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
 
     # busybox fails to build with GOLD support enabled with binutils-2.25
     strip_gold
