@@ -38,7 +38,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            ac_cv_path_UMOUNT_PATH=/bin/umount \
                            KMOD=/usr/bin/kmod \
                            --disable-nls \
-                           --enable-dbus \
+                           --disable-dbus \
                            --disable-utmp \
                            --disable-coverage \
                            --enable-kmod \

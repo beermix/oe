@@ -70,10 +70,10 @@
 # please add all configfiles which should be included without the suffix and prefix
 # except the default-*.config and the ones included in packages/linux/package.mk
 # Space separated list is supported, joystick
-  KERNEL_EXTRA_CONFIG+=" filesystem hid-drivers remote audio"
+  KERNEL_EXTRA_CONFIG+=" filesystem hid-drivers remote audio joystick audio"
   KERNEL_EXTRA_CONFIG+=" lan-phy"
   KERNEL_EXTRA_CONFIG+=" wlan-usb wlan-other"
-  KERNEL_EXTRA_CONFIG+=" aufs bluetooth lan-pci sata samba"
+  KERNEL_EXTRA_CONFIG+=" aufs bluetooth lan-pci sata samba sound-usb usb-serial"
 
 # additional drivers to install:
 # for a list of additinoal drivers see packages/linux-drivers
@@ -187,7 +187,7 @@
 
 # Support for partitioning and formating disks in initramfs (yes / no)
 # This adds support for parted and mkfs.ext3/4 to initramfs for OEM usage
-  INITRAMFS_PARTED_SUPPORT="yes"
+  INITRAMFS_PARTED_SUPPORT="no"
 
 # build with swap support (yes / no)
   SWAP_SUPPORT="no"
