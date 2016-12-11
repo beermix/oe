@@ -1,7 +1,7 @@
 PKG_NAME="openssl"
 PKG_VERSION="OpenSSL_1_0_2-stable"
 PKG_GIT_URL="https://github.com/openssl/openssl"
-PKG_DEPENDS_TARGET="toolchain libz gmp pcre"
+PKG_DEPENDS_TARGET="toolchain libz pcre"
 PKG_SECTION="security"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
@@ -31,7 +31,6 @@ configure_target() {
               no-rc5 \
               enable-tlsext \
               no-ssl3-method \
-              enable-gmp \
               enable-ec_nistp_64_gcc_128 \
               linux-x86_64 \
               "-Wa,--noexecstack"
