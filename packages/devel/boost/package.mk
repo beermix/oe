@@ -81,6 +81,6 @@ makeinstall_target() {
                                 --with-exception \
                                 --with-serialization \
                                 --with-filesystem \
-                                --with-regex -sICU_PATH="$SYSROOT_PREFIX/usr" -j3 \
+                                --with-regex -sICU_PATH="$SYSROOT_PREFIX/usr" \
                                 install
 }
