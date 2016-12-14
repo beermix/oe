@@ -1,5 +1,5 @@
 PKG_NAME="docker"
-PKG_VERSION="f29c255"
+PKG_VERSION="v1.12.4"
 PKG_SITE="http://www.docker.com/"
 PKG_GIT_URL="https://github.com/docker/docker"
 PKG_DEPENDS_TARGET="toolchain sqlite go:host containerd runc aufs-util"
