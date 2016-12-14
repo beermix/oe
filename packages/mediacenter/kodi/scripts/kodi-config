@@ -1,51 +1,30 @@
 #!/bin/sh
+################################################################################
+#      This file is part of OpenELEC - http://www.openelec.tv
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+#
+#  OpenELEC is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  OpenELEC is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
+################################################################################
 
 # hack: make addon-bins executable
 # done in kodi on addon install. but just in case..
 chmod +x /storage/.kodi/addons/*/bin/*
 
 # hack: update RSSnews.xml in userdata
-if [ ! -f $HOME/.kodi/userdata/sources.xml ]; then
-  if [ -f /usr/share/kodi/config/sources.xml ]; then
-    cp /usr/share/kodi/config/sources.xml $HOME/.kodi/userdata
-  fi
-fi
-
-# common setup guisettings
-if [ ! -f $HOME/.kodi/userdata/guisettings.xml ] ; then
-  echo "<settings>" > $HOME/.kodi/userdata/guisettings.xml
-
-  cat >> $HOME/.kodi/userdata/guisettings.xml << EOF
-  <debug>
-    <screenshotpath pathversion="1">/storage/screenshots/</screenshotpath>
-  </debug>
-  <general>
-    <settinglevel>2</settinglevel>
-  </general>
-EOF
-
-  # include project specific options
-  if [ -f /usr/share/kodi/config/guisettings.xml ]; then
-    cat /usr/share/kodi/config/guisettings.xml >> $HOME/.kodi/userdata/guisettings.xml
-  fi
-
-  echo "</settings>" >> $HOME/.kodi/userdata/guisettings.xml
-fi
-
-# add AlexELEC addons
-if [ ! -d $HOME/.kodi/addons ]; then
-  if [ -e /usr/share/kodi/config/addons-alexelec/plugins.tbz2 ]; then
-    mkdir -p $HOME/.kodi/addons
-    tar xjf /usr/share/kodi/config/addons-alexelec/plugins.tbz2 -C $HOME/.kodi/addons/
-  fi
-fi
-
-# add default addons settings
-if [ ! -d $HOME/.kodi/userdata/addon_data/weather.yahoo ]; then
-  if [ -d /usr/share/kodi/config/weather.yahoo ]; then
-    mkdir -p $HOME/.kodi/userdata/addon_data
-    cp -R /usr/share/kodi/config/weather.yahoo $HOME/.kodi/userdata/addon_data
-  fi
+if [ -f /storage/.kodi/userdata/RssFeeds.xml ]; then
+  sed -e "s,http://openelec.tv/news?format=feed&type=rss,http://feeds.openelec.tv/news,g" \
+      -i /storage/.kodi/userdata/RssFeeds.xml
 fi
 
 # setup Kodi sources
@@ -62,18 +41,8 @@ if [ ! -f $HOME/.kodi/userdata/guisettings.xml ] ; then
   fi
 fi
 
-# if [ ! -f $HOME/.kodi/userdata/Lircmap.xml ] ; then
-#  cp /usr/share/kodi/system/Lircmap.xml $HOME/.kodi/userdata
-# fi
 # cleanup *.fi cache files from .kodi/temp as old version
-# mkdir -p $HOME/.kodi/userdata/keymaps
-# if [ ! -f $HOME/.kodi/userdata/keymaps/remote.xml ] ; then
-#  cp /usr/share/kodi/system/keymaps/remote.xml $HOME/.kodi/userdata/keymaps
-#fi
-#
-#if [ ! -f $HOME/.kodi/userdata/keymaps/keyboard.xml ] ; then
-#  cp /usr/share/kodi/system/keymaps/keyboard.xml $HOME/.kodi/userdata/keymaps
-#fi
+
 # of these files can cause random problems/crashes, particularly
 # after an upgrade
 if [ -d $HOME/.kodi/temp ]; then

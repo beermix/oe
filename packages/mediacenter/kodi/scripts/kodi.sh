@@ -45,9 +45,7 @@ single_stacktrace()
 
 print_crash_report()
 {
-  if [ ! -d $CRASHLOG_DIR ] ; then
-    mkdir -p $CRASHLOG_DIR
-  fi
+  mkdir -p $CRASHLOG_DIR
 
   DATE=`date +%Y%m%d%H%M%S`
   FILE="$CRASHLOG_DIR/.kodi_crashlog.log"
@@ -93,7 +91,6 @@ fi
 
 # clean up any stale cores. just in case
 rm -f /storage/.cache/cores/*
-clear_ram
 
 /usr/lib/kodi/kodi.bin $SAVED_ARGS
 RET=$?

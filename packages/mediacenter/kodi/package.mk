@@ -357,12 +357,6 @@ post_makeinstall_target() {
       ln -sf cputemp $INSTALL/usr/bin/gputemp
     cp $PKG_DIR/scripts/setwakeup.sh $INSTALL/usr/bin
     cp tools/EventClients/Clients/Kodi\ Send/kodi-send.py $INSTALL/usr/bin/kodi-send
-    # GUI switch service
-    cp $PKG_DIR/scripts/gui-switch.start $INSTALL/usr/bin
-    # Drop RAM service
-    cp $PKG_DIR/scripts/drop-ram.start $INSTALL/usr/bin
-    # resolution service
-    cp $PKG_DIR/scripts/kodi-setres $INSTALL/usr/bin
 
   if [ ! "$DISPLAYSERVER" = "x11" ]; then
     rm -rf $INSTALL/usr/lib/kodi/kodi-xrandr
@@ -412,9 +406,6 @@ post_makeinstall_target() {
       cp $PROJECT_DIR/$PROJECT/kodi/advancedsettings.xml $INSTALL/usr/share/kodi/system/
     else
       cp $PKG_DIR/config/advancedsettings.xml $INSTALL/usr/share/kodi/system/
-    fi
-    if [ -f $PROJECT_DIR/$PROJECT/kodi/Lircmap.xml ]; then
-      cp -f $PROJECT_DIR/$PROJECT/kodi/Lircmap.xml $INSTALL/usr/share/kodi/system/
     fi
 
   mkdir -p $INSTALL/usr/share/kodi/system/settings
