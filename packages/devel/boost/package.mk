@@ -17,16 +17,15 @@
 ################################################################################
 
 PKG_NAME="boost"
-PKG_VERSION="1_62_0"
+PKG_VERSION="1_63_0"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.boost.org/"
-PKG_URL="$SOURCEFORGE_SRC/boost/boost/1.62.0/${PKG_NAME}_${PKG_VERSION}.tar.bz2"
+PKG_URL="$SOURCEFORGE_SRC/boost/boost/1.63.0/${PKG_NAME}_${PKG_VERSION}.tar.bz2"
 PKG_SOURCE_DIR="${PKG_NAME}_${PKG_VERSION}"
 PKG_DEPENDS_HOST=""
 PKG_DEPENDS_TARGET="toolchain boost:host Python:host libz bzip2"
-
 PKG_SECTION="devel"
 PKG_SHORTDESC="boost: Peer-reviewed STL style libraries for C++"
 PKG_LONGDESC="Boost provides free peer-reviewed portable C++ source libraries. The emphasis is on libraries which work well with the C++ Standard Library. One goal is to establish existing practice and provide reference implementations so that the Boost libraries are suitable for eventual standardization. Some of the libraries have already been proposed for inclusion in the C++ Standards Committee's upcoming C++ Standard Library Technical Report."
@@ -81,6 +80,6 @@ makeinstall_target() {
                                 --with-exception \
                                 --with-serialization \
                                 --with-filesystem \
-                                --with-regex -sICU_PATH="$SYSROOT_PREFIX/usr" \
+                                --with-regex -sICU_PATH="$SYSROOT_PREFIX/usr" -j2 \
                                 install
 }
