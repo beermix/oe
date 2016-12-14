@@ -5,12 +5,47 @@ Description: <short summary of the patch>
  information below has been extracted from the changelog. Adjust it or drop
  it.
  .
- mono (4.2.1.102+dfsg2-8) unstable; urgency=medium
+ mono (4.2.1.102+dfsg2-7) unstable; urgency=medium
  .
-   * [cf4937c] Fixes for ARM64 packages. Thanks to Matthias Klose
-   * [ec6abc9] Further packaging fixes for ARM64 (Closes: 825497)
-Author: Jo Shields <joshield@microsoft.com>
-Bug-Debian: https://bugs.debian.org/825497
+   [ Jo Shields ]
+   * [ddd8779] Suggest reference assemblies for mono-devel. Not needed, but
+     sometimes useful.
+   * [1975195] Use X509 serial number in Mono cert store filename.
+     The Mono cert store traditionally uses the SKI for the filename of a
+     certificate, but this does not handle cases where a cert has been
+     reissued with the same SKI but different serial (seen in the wild
+     with StartCom certs). This patch appends the serial to all new
+     imported certs, and attempts to interoperate cleanly with existing
+     serial-less certificate stores to avoid duplication.
+     (Closes: #30902)
+   * [4725363] Fix cert store mover (symlinks to directories are -d)
+   * [6da2dfa] Prerequisite near-empty commit for arm64 patch to apply
+   * [bba162f] Backport 3cd04f97199ff38d7316587e44381638ba469565 to 4.2 branch
+   * [2e9629f] Fix edge case in new certdir migration code (Closes: #820082)
+   * [1c25daa] Add ARM64 packages - SGen only (Closes: #789771)
+   * [664b438] Fix up sgen-only packackaging rules
+ .
+   [ Rodrigo Kumpera ]
+   * [609e2d7] [utils] Fix amd64 version of MONO_CONTEXT_GET_CURRENT.
+     (Closes: #818329)
+     Registers must be saved in MonoContext in the same order as
+     mono_sigctx_to_monoctx.
+     This caused crashes on linux when unified suspend was enabled.
+     https://bugzilla.xamarin.com/show_bug.cgi?id=33020
+     https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=818329
+     (cherry picked from upstream commit 23e34d77f2fd23ab5d61f6ba4aa905817f57668a)
+ .
+   [ Zoltan Varga ]
+   * [efc7a57] Implement handler block guard trampolines.
+     (cherry picked from commit d93dab827831b94fc65ab9dae5ce531e8ccd7ebe)
+   * [9414811] Fix the generation of static rgctx trampolines when using aot
+     on linux.
+     (cherry picked from commit 455d2b81e2e662569b9654c79b5e1763bf133fa0)
+Author: Jo Shields <jo.shields@xamarin.com>
+Bug-Debian: https://bugs.debian.org/30902
+Bug-Debian: https://bugs.debian.org/789771
+Bug-Debian: https://bugs.debian.org/818329
+Bug-Debian: https://bugs.debian.org/820082
 
 ---
 The information above should follow the Patch Tagging Guidelines, please
@@ -12672,4 +12707,3 @@ Last-Update: <YYYY-MM-DD>
  	return 0;
  }
  
-
