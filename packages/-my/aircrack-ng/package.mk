@@ -1,5 +1,5 @@
 PKG_NAME="aircrack-ng"
-PKG_VERSION="0119897"
+PKG_VERSION="bd3ad83"
 PKG_GIT_URL="https://github.com/aircrack-ng/aircrack-ng"
 PKG_KEEP_CHECKOUT="yes"
 PKG_DEPENDS_TARGET="toolchain openssl libdnet libnl libpcap openssl pcre libgpg-error usbutils iw"
@@ -9,7 +9,6 @@ PKG_AUTORECONF="no"
 
 pre_configure_target() {
    export LDFLAGS="-ldl -lpthread -lsqlite3"
-   strip_lto
 }
 
 PKG_MAKE_OPTS_TARGET="prefix=/usr sqlite=true experimental=true ext_scripts=true pcre=true libnl=true"
