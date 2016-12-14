@@ -1,6 +1,6 @@
 PKG_NAME="netdata"
 PKG_VERSION="1.4.0"
-PKG_URL="https://github.com/firehol/netdata/releases/download/v1.4.0/netdata-1.4.0.tar.xz"
+PKG_URL="https://github.com/firehol/netdata/releases/download/v$PKG_VERSION/netdata-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
