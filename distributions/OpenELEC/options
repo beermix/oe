@@ -73,7 +73,7 @@
   KERNEL_EXTRA_CONFIG+=" filesystem hid-drivers remote audio joystick audio"
   KERNEL_EXTRA_CONFIG+=" lan-phy"
   KERNEL_EXTRA_CONFIG+=" wlan-usb wlan-other"
-  KERNEL_EXTRA_CONFIG+=" aufs bluetooth lan-pci sata samba sound-usb usb-serial"
+  KERNEL_EXTRA_CONFIG+=" aufs zen bluetooth lan-pci sata samba sound-usb usb-serial"
 
 # additional drivers to install:
 # for a list of additinoal drivers see packages/linux-drivers
