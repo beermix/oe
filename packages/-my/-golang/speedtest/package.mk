@@ -1,5 +1,5 @@
 PKG_NAME="speedtest"
-PKG_VERSION="f77fc9e"
+PKG_VERSION="7d194d0"
 PKG_GIT_URL="https://github.com/zpeters/speedtest"
 PKG_DEPENDS_TARGET="toolchain go:host"
 PKG_SECTION="tools"
@@ -20,7 +20,7 @@ pre_make_target() {
 
 make_target() {
   mkdir -p bin
-  go get -u -v -t github.com/zpeters/speedtest github.com/zpeters/speedtest/internal/print github.com/zpeters/speedtest/internal/sthttp github.com/zpeters/speedtest/internal/tests
+  go get -u -v -t github.com/zpeters/speedtest github.com/zpeters/speedtest/internal/print github.com/zpeters/speedtest/internal/sthttp github.com/zpeters/speedtest/internal/tests "github.com/zpeters/speedtest/internal/print"
   $GOLANG build -v -o bin/$PKG_NAME -a -ldflags "$LDFLAGS" ./
   $STRIP bin/$PKG_NAME
 }
