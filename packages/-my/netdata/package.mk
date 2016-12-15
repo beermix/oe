@@ -21,3 +21,13 @@ PKG_CONFIGURE_OPTS_TARGET="--with-webdir=/storage/.config/netdata/webdir \
                            --datarootdir=/storage/.config/netdata \
                            --infodir=/storage/.config/netdata \
                            --localedir=/storage/.config/netdata"
+                           
+                           
+post_install() {
+  add_user nobody x 990 990 "netdata" "/storage" "/bin/bash"
+  add_group nobody 990
+}
+
+post_makeinstall_target() {
+  rm -rf $INSTALL/storage
+}

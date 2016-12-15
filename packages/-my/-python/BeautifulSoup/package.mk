@@ -1,16 +1,11 @@
 PKG_NAME="BeautifulSoup"
 PKG_VERSION="3.2.1"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="MIT License"
 PKG_SITE="https://pypi.python.org/pypi/PyAMF/"
 PKG_URL="https://pypi.python.org/packages/source/B/BeautifulSoup/BeautifulSoup-3.2.1.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"
-
 PKG_SECTION="python/system"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
-
 
 make_target() {
   python setup.py build
