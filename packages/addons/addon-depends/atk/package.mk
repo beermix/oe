@@ -19,12 +19,12 @@
 ################################################################################
 
 PKG_NAME="atk"
-PKG_VERSION="gd57f97d"
+PKG_VERSION="2.20.0"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://library.gnome.org/devel/atk/"
-PKG_GIT_URL="git://git.gnome.org/atk"
+PKG_URL="http://ftp.gnome.org/pub/gnome/sources/$PKG_NAME/2.20/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain glib"
 PKG_SECTION="accessibility"
 PKG_SHORTDESC="ATK - Accessibility Toolkit"
@@ -38,5 +38,4 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared \
 
 pre_configure_target() {
   export CFLAGS="$CFLAGS -fPIC"
-  NOCONFIGURE=1 ./autogen.sh
 }
