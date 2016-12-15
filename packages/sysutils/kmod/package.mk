@@ -23,7 +23,8 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://git.profusion.mobi/cgit.cgi/kmod.git/"
 PKG_URL="http://ftp.kernel.org/pub/linux/utils/kernel/kmod/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain xz zlib"
+PKG_DEPENDS_TARGET="toolchain"
+
 PKG_SECTION="system"
 PKG_SHORTDESC="kmod offers the needed flexibility and fine grained control over insertion, removal, configuration and listing of kernel modules."
 PKG_LONGDESC="kmod offers the needed flexibility and fine grained control over insertion, removal, configuration and listing of kernel modules."
@@ -40,8 +41,8 @@ PKG_CONFIGURE_OPTS_HOST="--enable-tools \
                          --disable-manpages \
                          --disable-test-modules \
                          --with-gnu-ld \
-                         --with-xz \
-                         --with-zlib"
+                         --without-xz \
+                         --without-zlib"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-tools \
                            --enable-logging \
@@ -52,8 +53,8 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-tools \
                            --disable-manpages \
                            --disable-test-modules \
                            --with-gnu-ld \
-                           --with-xz \
-                           --with-zlib \
+                           --without-xz \
+                           --without-zlib \
                            --with-rootlibdir=/lib"
 
 post_makeinstall_host() {
