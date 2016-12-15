@@ -82,7 +82,6 @@ configure_target() {
         -DLLVM_TARGETS_TO_BUILD="X86" \
         -DLLVM_BUILD_LLVM_DYLIB=ON \
         -DLLVM_LINK_LLVM_DYLIB=ON \
-        -DLLDB_DISABLE_LIBEDIT=1 \
         ..
 }
 

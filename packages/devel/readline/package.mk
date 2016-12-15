@@ -32,7 +32,6 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="bash_cv_wcwidth_broken=no \
-			      bash_cv_func_sigsetjmp=yes \
 			      --disable-shared \
 			      --enable-static \
 			      --with-curses \
