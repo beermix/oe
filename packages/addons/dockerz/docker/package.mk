@@ -2,7 +2,7 @@ PKG_NAME="docker"
 PKG_VERSION="v1.12.4"
 PKG_SITE="http://www.docker.com/"
 PKG_GIT_URL="https://github.com/docker/docker"
-PKG_DEPENDS_TARGET="toolchain sqlite go:host containerd runc aufs-util"
+PKG_DEPENDS_TARGET="toolchain sqlite go:host containerd runc"
 PKG_SECTION="service/system"
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Docker"
@@ -14,6 +14,7 @@ configure_target() {
   export DOCKER_BUILDTAGS="daemon \
                            autogen \
                            exclude_graphdriver_devicemapper \
+                           exclude_graphdriver_aufs \
                            exclude_graphdriver_btrfs"
 
   export GOOS=linux

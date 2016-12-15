@@ -50,7 +50,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-apparmor \
                            --disable-adm-group \
                            --disable-wheel-group \
-                           --enable-xz \
+                           --disable-xz \
                            --enable-zlib \
                            --enable-bzip2 \
                            --enable-lz4 \
