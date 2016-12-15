@@ -9,7 +9,6 @@ pre_configure_target() {
   export LIBS="-lterminfo"
 }
 
-
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static --enable-widec"
 
 PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
