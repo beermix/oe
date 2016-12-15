@@ -5,9 +5,9 @@ PKG_DEPENDS_TARGET="toolchain libz libevent"
 PKG_SECTION="security"
 PKG_AUTORECONF="yes"
 
-#pre_configure_target() {
-#   CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
-#}
+pre_configure_target() {
+   CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
+}
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_prog_cc_c99=-std=gnu99 \
 			      --with-openssl-dir=$SYSROOT_PREFIX/usr \
@@ -23,7 +23,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_prog_cc_c99=-std=gnu99 \
 
 
 post_install() {
-  add_user tor x 990 990 "Tor Server" "/storage" "/bin/bash"
+  add_user tor x 990 990 "Tor Server" "/storage" "/bin/sh"
   add_group tor 990
 }
 
