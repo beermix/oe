@@ -25,7 +25,7 @@ PKG_SITE="http://www.boost.org/"
 PKG_URL="https://sourceforge.net/projects/boost/files/boost/1.62.0/boost_$PKG_VERSION.tar.bz2"
 PKG_SOURCE_DIR="${PKG_NAME}_${PKG_VERSION}"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain boost:host Python:host libz bzip2"
+PKG_DEPENDS_TARGET="toolchain boost:host Python:host libz bzip2 icu"
 PKG_SECTION="devel"
 PKG_SHORTDESC="boost: Peer-reviewed STL style libraries for C++"
 PKG_LONGDESC="Boost provides free peer-reviewed portable C++ source libraries. The emphasis is on libraries which work well with the C++ Standard Library. One goal is to establish existing practice and provide reference implementations so that the Boost libraries are suitable for eventual standardization. Some of the libraries have already been proposed for inclusion in the C++ Standards Committee's upcoming C++ Standard Library Technical Report."
@@ -63,7 +63,7 @@ make_target() {
 }
 
 makeinstall_target() {
-  $ROOT/$TOOLCHAIN/bin/bjam -d2 --toolset=gcc link=static target-os=linux variant=release threading=multi \
+  $ROOT/$TOOLCHAIN/bin/bjam -d2 --toolset=gcc --with-icu link=static target-os=linux variant=release threading=multi debug-symbols=off cflags="$CPPFLAGS $CFLAGS -fPIC -O3" cxxflags="$CPPFLAGS $CXXFLAGS -std=c++14 -fPIC -O3" linkflags="$LDFLAGS" \
                                 --prefix=$SYSROOT_PREFIX/usr \
                                 --ignore-site-config \
                                 --layout=system \
