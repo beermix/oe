@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="inadyn"
-PKG_VERSION="2.0"
+PKG_VERSION="v2.1"
 PKG_REV="101"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="http://troglobit.com/inadyn.html"
-PKG_URL="ftp://troglobit.com/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_GIT_URL="https://github.com/troglobit/inadyn"
 PKG_DEPENDS_TARGET="toolchain libconfuse libite libressl"
 PKG_SECTION="service/system"
 PKG_SHORTDESC="Inadyn: a small and simple Dynamic Domain Name System client"
