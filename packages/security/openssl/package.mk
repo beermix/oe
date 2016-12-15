@@ -1,6 +1,6 @@
 PKG_NAME="openssl"
-PKG_VERSION="OpenSSL_1_0_2-stable"
-PKG_GIT_URL="https://github.com/openssl/openssl"
+PKG_VERSION="1.0.2j"
+PKG_URL="https://www.openssl.org/source/openssl-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libz pcre"
 PKG_SECTION="security"
 PKG_IS_ADDON="no"
@@ -9,7 +9,7 @@ PKG_AUTORECONF="no"
 pre_configure_target() {
   export MAKEFLAGS="-j1"
   export CFLAGS=`echo $CFLAGS | sed -e "s|-O2||g"`
-  export CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
+  #export CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
 }
 
 configure_target() {
@@ -68,5 +68,5 @@ post_makeinstall_target() {
   cp $ROOT/$PKG_BUILD/ca-bundle.crt $INSTALL/etc/ssl/cert.pem
     
   #cp $PKG_DIR/cert/ca-bundle.crt $INSTALL/$SSL_CERTIFICATES/cacert.pem
-  cp $PKG_DIR/cert/ca-bundle.crt $INSTALL/etc/ssl/cert.pem
+  #cp $PKG_DIR/cert/ca-bundle.crt $INSTALL/etc/ssl/cert.pem
 }
