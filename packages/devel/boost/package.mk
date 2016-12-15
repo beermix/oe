@@ -63,7 +63,7 @@ make_target() {
 }
 
 makeinstall_target() {
-  $ROOT/$TOOLCHAIN/bin/bjam -d2 --toolset=gcc --with-icu link=static target-os=linux variant=release threading=multi debug-symbols=off cflags="$CPPFLAGS $CFLAGS -fPIC -O3" cxxflags="$CPPFLAGS $CXXFLAGS -std=c++14 -fPIC -O3" linkflags="$LDFLAGS" \
+  $ROOT/$TOOLCHAIN/bin/bjam -d2 --toolset=gcc link=static target-os=linux variant=release threading=multi debug-symbols=off cflags="$CPPFLAGS $CFLAGS -O3" cxxflags="$CPPFLAGS $CXXFLAGS -std=c++14 -O3" \
                                 --prefix=$SYSROOT_PREFIX/usr \
                                 --ignore-site-config \
                                 --layout=system \
