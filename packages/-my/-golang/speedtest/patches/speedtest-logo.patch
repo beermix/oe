@@ -9,7 +9,7 @@ index 6b0ed62..4787cd9
  	// if we are *not* running a report then say hello to everyone
  	if !tester.Report {
 -		fmt.Printf("github.com/zpeters/speedtest -- unofficial cli for speedtest.net\n")
-+		fmt.Printf("<<<><>><>>>><<<>>>>><<>>><><>>><>\n")
++		fmt.Printf("● ● ● ● ● ● ●\n")
  	}
  
  	// if we are in debug mode print outa an environment report

@@ -7,15 +7,13 @@ PKG_KEEP_CHECKOUT="no"
 PKG_SECTION="tools"
 PKG_AUTORECONF="no"
 
-strip_lto
-
 pre_make_target() {
   export GOOS=linux
   export GOARCH=amd64
   export CGO_ENABLED=1
   export CGO_NO_EMULATION=1
   export CGO_CFLAGS=$CFLAGS
-  export LDFLAGS="-s -w -linkmode external -extldflags -Wl,--unresolved-symbols=ignore-in-shared-libs -extld $CC"
+  export LDFLAGS="-s -w -linkmode external -extld $CC"
   export GOLANG=$ROOT/$TOOLCHAIN/lib/golang/bin/go
   export GOPATH=$ROOT/$PKG_BUILD.gopath:$ROOT/$PKG_BUILD/vendor/
   export GOROOT=$ROOT/$TOOLCHAIN/lib/golang

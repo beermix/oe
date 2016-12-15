@@ -1,17 +1,12 @@
-PKG_NAME="go-peerflix"
-PKG_VERSION="abb60b4"
-PKG_GIT_URL="https://github.com/Sioro-Neoku/go-peerflix"
+PKG_NAME="ipd"
+PKG_VERSION="faf2f62"
+PKG_GIT_URL="https://github.com/martinp/ipd"
 PKG_DEPENDS_TARGET="toolchain go:host"
-PKG_GIT_BRANCH="master"
-PKG_KEEP_CHECKOUT="no"
 PKG_SECTION="tools"
 PKG_AUTORECONF="no"
 
 pre_make_target() {
   export GOARCH=amd64
-  export HOST_GO_CGO_ENABLED=1
-  export CC="$CC"
-  export CXX="$CXX"
   export GOOS=linux
   export CGO_ENABLED=1
   export CGO_NO_EMULATION=1
@@ -25,7 +20,7 @@ pre_make_target() {
  
 make_target() {
   mkdir -p bin
-  go get -v "github.com/Sioro-Neoku/go-peerflix"
+  go get -u -v "github.com/martinp/ipd"
   $GOLANG build -v -o bin/$PKG_NAME -a -ldflags "$LDFLAGS" ./
   $STRIP bin/$PKG_NAME
 }

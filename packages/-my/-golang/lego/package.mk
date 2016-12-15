@@ -1,5 +1,5 @@
 PKG_NAME="lego"
-PKG_VERSION="cbd5d04"
+PKG_VERSION="master"
 PKG_GIT_URL="https://github.com/xenolf/lego.git"
 PKG_GIT_BRANCH="master"
 PKG_DEPENDS_TARGET="toolchain go:host"
@@ -11,7 +11,7 @@ configure_target() {
   export CGO_ENABLED=1
   export CGO_NO_EMULATION=1
   export CGO_CFLAGS=$CFLAGS
-  export LDFLAGS="-s -w"
+  export LDFLAGS="-s -w -linkmode external -extld $CC"
   export GOLANG=$ROOT/$TOOLCHAIN/lib/golang/bin/go
   export GOPATH=$ROOT/$PKG_BUILD/.gopath:$ROOT/$PKG_BUILD/vendor
   export GOROOT=$ROOT/$TOOLCHAIN/lib/golang
