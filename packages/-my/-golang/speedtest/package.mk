@@ -5,15 +5,13 @@ PKG_DEPENDS_TARGET="toolchain go:host"
 PKG_SECTION="tools"
 PKG_AUTORECONF="no"
 
-strip_lto
-
 pre_make_target() {
   export GOOS=linux
   export GOARCH=amd64
   export CGO_ENABLED=1
   export CGO_NO_EMULATION=1
   export CGO_CFLAGS=$CFLAGS
-  export LDFLAGS="-s -w"
+  export LDFLAGS="-s -w -linkmode external -extldflags -Wl,--unresolved-symbols=ignore-in-shared-libs -extld $CC"
   export GOLANG=$ROOT/$TOOLCHAIN/lib/golang/bin/go
   export GOPATH=$ROOT/$PKG_BUILD.gopath:$ROOT/$PKG_BUILD/vendor/
   export GOROOT=$ROOT/$TOOLCHAIN/lib/golang
@@ -22,7 +20,7 @@ pre_make_target() {
 
 make_target() {
   mkdir -p bin
-  go get -u -v -t github.com/zpeters/speedtest
+  go get -u -v -t github.com/zpeters/speedtest github.com/zpeters/speedtest/internal/print github.com/zpeters/speedtest/internal/sthttp github.com/zpeters/speedtest/internal/tests
   $GOLANG build -v -o bin/$PKG_NAME -a -ldflags "$LDFLAGS" ./
   $STRIP bin/$PKG_NAME
 }
