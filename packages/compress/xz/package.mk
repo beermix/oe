@@ -38,6 +38,8 @@ PKG_CONFIGURE_OPTS_HOST="--disable-shared --enable-static \
                          --enable-lzma-links \
                          --disable-scripts \
                          --disable-nls \
-                         --enable-silent-rules"
+                         --enable-silent-rules \
+                         --disable-werror \
+                         --disable-rpath"
                          
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
