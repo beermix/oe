@@ -6,7 +6,9 @@ PKG_SECTION="devel"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static \
+PKG_CONFIGURE_OPTS_TARGET="ac_cv_prog_swig_found=no \
+			      --enable-static \
 			      --disable-shared \
 			      --with-gnu-ld \
-			      --without-python3"
+			      --without-python3 \
+			      --without-python"
