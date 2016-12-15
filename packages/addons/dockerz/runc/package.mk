@@ -31,7 +31,6 @@ PKG_LONGDESC="runc is a CLI tool for spawning and running containers according t
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-
 pre_make_target() {
   case $TARGET_ARCH in
     x86_64)
@@ -48,6 +47,9 @@ pre_make_target() {
          export GOARM=7
          ;;
       esac
+      ;;
+    aarch64)
+      export GOARCH=arm64
       ;;
   esac
 
