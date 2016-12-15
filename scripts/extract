@@ -66,13 +66,13 @@ for i in $FILE; do
         unzip -q $f -d $3
         ;;
       *.diff | *.patch)
-        cat $f | patch -d $3 -p1
+        cat $f | patch -d $3 -pN1
         ;;
       *.diff.bz2 | *.patch.bz2 | patch-*.bz2)
-        bzcat $f | patch -d $3 -p1
+        bzcat $f | patch -d $3 -pN1
         ;;
       *.diff.gz | *.patch.gz | patch-*.gz)
-        zcat $f | patch -d $3 -p1
+        zcat $f | patch -d $3 -pN1
         ;;
       *)
         cp -pPR $f $3
