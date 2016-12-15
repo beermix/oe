@@ -18,7 +18,7 @@ configure_target() {
               --openssldir=/etc/ssl \
               shared \
               threads \
-              zlib \
+              zlib-dynamic \
               enable-camellia \
               enable-seed \
               enable-rfc3779 \
