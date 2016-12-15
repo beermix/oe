@@ -1,10 +1,9 @@
 PKG_NAME="htop"
 PKG_VERSION="8af4d9f"
 PKG_GIT_URL="https://github.com/hishamhm/htop"
-PKG_DEPENDS_TARGET="toolchain hwloc"
+PKG_DEPENDS_TARGET="toolchain hwloc ncurses"
 PKG_SECTION="debug/tools"
 PKG_AUTORECONF="yes"
-
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-cgroup \
 			      --enable-vserver \
