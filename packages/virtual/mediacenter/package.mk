@@ -38,8 +38,6 @@ if [ "$MEDIACENTER" = "kodi" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET simplejson"
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pycrypto"
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET xmlstarlet"
-#  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pvr.iptvsimple"
-#  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pvr.iptvsimple.multi"
 
 # other packages
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET OpenELEC-settings"
@@ -53,4 +51,4 @@ if [ "$MEDIACENTER" = "kodi" ]; then
  # if [ "$KODI_LANGUAGE_ADDONS" = "yes" ]; then
  #   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET kodi-language-addons"
 #  fi
-#fi
+fi
