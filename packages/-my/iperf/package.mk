@@ -6,4 +6,4 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="network/testing"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --with-gnu-ld --disable-silent-rules"
+PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared"

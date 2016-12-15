@@ -10,9 +10,7 @@ pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
   export CPPFLAGS="$CPPFLAGS -Iliblua"
-  CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
 }
-
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --with-pcap=linux \
@@ -20,7 +18,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --with-liblinear=included \
                            --with-libpcre=$SYSROOT_PREFIX/usr \
                            --without-ncat \
-                           --with-ndiff \
+                           --without-ndiff \
                            --without-zenmap"
 
 
