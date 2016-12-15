@@ -8,10 +8,9 @@ PKG_VERSION="26e79d1"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/AndreyPavlenko/aceproxy"
-PKG_URL="$ALEXELEC_SRC/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain gevent psutil M2Crypto"
-PKG_PRIORITY="optional"
+PKG_GIT_URL="https://github.com/AndreyPavlenko/aceproxy"
+PKG_DEPENDS_TARGET="toolchain psutil M2Crypto"
+
 PKG_SECTION="xmedia/network"
 PKG_SHORTDESC="AceProxy: Ace Stream HTTP Proxy"
 PKG_LONGDESC="AceProxy: Ace Stream HTTP Proxy."
@@ -24,7 +23,7 @@ make_target() {
 }
 
 makeinstall_target() {
-  DESTDIR=$INSTALL ./install
+  DESTDIR=$INSTALL .$INSTALL
 
   mkdir -p $INSTALL/usr/bin
     cp $PKG_DIR/scripts/* $INSTALL/usr/bin

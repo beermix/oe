@@ -1,5 +1,5 @@
-diff -Naurp aceproxy-26e79d1/aceproxy/aceconfig.py aceproxy-26e79d1-patch/aceproxy/aceconfig.py
---- aceproxy-26e79d1/aceproxy/aceconfig.py	2016-08-23 13:29:03.000000000 +0300
+diff -Naurp a/aceconfig.py aceproxy-26e79d1-patch/aceproxy/aceconfig.py
+--- a/aceconfig.py	2016-08-23 13:29:03.000000000 +0300
 +++ aceproxy-26e79d1-patch/aceproxy/aceconfig.py	2016-10-18 13:26:35.000000000 +0300
 @@ -30,7 +30,7 @@ class AceConfig(acedefconfig.AceDefConfi
      aceport = 62062
