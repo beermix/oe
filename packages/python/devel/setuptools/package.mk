@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="setuptools"
-PKG_VERSION="v32.0.0"
+PKG_VERSION="32.0.0"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="https://pypi.python.org/pypi/setuptools"
-PKG_GIT_URL="https://github.com/pypa/setuptools"
+PKG_URL="https://pypi.python.org/packages/dc/37/f01d823fd312ba8ea6c3aea906d2d6ac9e9e8bf9e7853e34f296e94b0d0d/setuptools-32.0.0.tar.gz"
 PKG_DEPENDS_HOST="Python:host"
 PKG_SECTION="python/devel"
 PKG_SHORTDESC="setuptools: A collection of enhancements to the Python distutils"
