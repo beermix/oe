@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="boost"
-PKG_VERSION="1_63_0"
+PKG_VERSION="1_62_0"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.boost.org/"
-PKG_URL="$SOURCEFORGE_SRC/boost/boost/1.63.0/${PKG_NAME}_${PKG_VERSION}.tar.bz2"
+PKG_URL="https://sourceforge.net/projects/boost/files/boost/1.62.0/boost_$PKG_VERSION.tar.bz2"
 PKG_SOURCE_DIR="${PKG_NAME}_${PKG_VERSION}"
 PKG_DEPENDS_HOST=""
 PKG_DEPENDS_TARGET="toolchain boost:host Python:host libz bzip2"
