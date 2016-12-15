@@ -216,7 +216,7 @@ configure_target() {
               $FFMPEG_FPU \
               --enable-yasm \
               --disable-symver \
-              --disable-lto \
+              --enable-lto \
               --enable-indev=x11grab_xcb
 }
 
