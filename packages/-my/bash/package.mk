@@ -9,18 +9,14 @@ pre_configure_target() {
   export LIBS="-ltermcap -lcurses" 
 }
 
-PKG_CONFIGURE_OPTS_TARGET="bash_cv_getcwd_malloc=yes \
-                           bash_cv_sys_named_pipes=present \
-                           bash_cv_func_sigsetjmp=present \
-                           bash_cv_printf_a_format=yes \
-                           --enable-static \
+PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --disable-shared \
                            --bindir=/bin \
                            --with-curses \
                            --enable-readline \
                            --without-bash-malloc \
                            --with-installed-readline \
-                           --disable-static-link \
+                           --enable-static-link \
                            --disable-rpath \
                            --cache-file=/dev/null \
                            --enable-history \
