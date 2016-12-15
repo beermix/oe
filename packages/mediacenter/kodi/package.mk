@@ -389,7 +389,7 @@ post_makeinstall_target() {
     cp -R tools/EventClients/lib/python/* $INSTALL/usr/lib/python"$PYTHON_VERSION"/site-packages/kodi
 
   mkdir -p $INSTALL/usr/share/kodi/config
-    #cp $PKG_DIR/config/guisettings.xml $INSTALL/usr/share/kodi/config
+    cp $PKG_DIR/config/guisettings.xml $INSTALL/usr/share/kodi/config
     cp $PKG_DIR/config/sources.xml $INSTALL/usr/share/kodi/config
 
 # install project specific configs
@@ -451,10 +451,4 @@ post_install() {
   enable_service kodi-waitonnetwork.service
   enable_service kodi.service
   enable_service kodi-lirc-suspend.service
-# GUI switch service
-  enable_service gui-switch.service
-# Drop RAM service
-  enable_service drop-ram.service
-# resolution service
-  enable_service kodi-setresmode.service
 }
