@@ -34,9 +34,8 @@ PKG_ADDON_NAME="Syncthing"
 PKG_ADDON_TYPE="xbmc.service"
 PKG_MAINTAINER="Anton Voyl (awiouy)"
 
-strip_lto
-
 configure_target() {
+  go run build.go assets
 
   mkdir -p $ROOT/$PKG_BUILD $ROOT/$PKG_BUILD/src/github.com/syncthing
   ln -fs $ROOT/$PKG_BUILD $ROOT/$PKG_BUILD/src/github.com/syncthing/syncthing
