@@ -1,6 +1,6 @@
 PKG_NAME="ifconfigd"
 PKG_VERSION="master"
-PKG_URL="https://dl.dropboxusercontent.com/s/pbxk3oculo9hfat/ifconfigd-master.tar"
+PKG_GIT_URL="https://github.com/juniorjbn/ifconfig"
 PKG_KEEP_CHECKOUT="yes"
 PKG_DEPENDS_TARGET="toolchain go:host"
 PKG_SECTION="tools"
@@ -20,7 +20,7 @@ configure_target() {
  
 make_target() {
   mkdir -p bin
-  go get -u -v -t "github.com/zpeters/ifconfigd"
+  go get -u -v -t "github.com/juniorjbn/ifconfig"
   $GOLANG build -v -o bin/ifconfigd -a -tags "$DOCKER_BUILDTAGS" -ldflags "$LDFLAGS"
 }
 
