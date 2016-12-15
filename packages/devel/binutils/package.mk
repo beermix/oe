@@ -17,13 +17,13 @@
 ################################################################################
 
 PKG_NAME="binutils"
-PKG_VERSION="2.27"
+PKG_VERSION="2870b1ba"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/binutils/binutils.html"
 #PKG_URL="http://ftp.gnu.org/gnu/binutils/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_URL="https://dl.dropboxusercontent.com/s/e933mndc98ql07v/binutils-2.27.tar.xz"
+PKG_GIT_URL="git://sourceware.org/git/binutils-gdb.git"
 PKG_DEPENDS_HOST="ccache:host bison:host flex:host linux:host"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="binutils: A GNU collection of binary utilities"

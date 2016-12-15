@@ -119,7 +119,6 @@ libc_cv_forced_unwind=yes
 libc_cv_c_cleanup=yes
 libc_cv_ssp=no
 libc_cv_ssp_strong=no
-build-programs=no
 EOF
 
   echo "sbindir=/usr/bin" >> configparms

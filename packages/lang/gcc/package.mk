@@ -18,7 +18,7 @@
 
 PKG_NAME="gcc"
 PKG_REV="1"
-PKG_USE_SNAPSHOT="true"
+PKG_USE_SNAPSHOT="false"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://gcc.gnu.org/"
@@ -28,8 +28,8 @@ if [ x"$PKG_USE_SNAPSHOT" == x"true" ]; then
     PKG_VERSION="$PKG_MAJOR_VERSION-$PKG_SNAPSHOT_DATESTAMP"
     PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/LATEST-6/gcc-$PKG_MAJOR_VERSION-$PKG_SNAPSHOT_DATESTAMP.tar.bz2"
 else
-    PKG_VERSION="6.2.0"
-    PKG_URL="http://ftpmirror.gnu.org/gcc/$PKG_NAME-$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
+    PKG_VERSION="c2103c17"
+    PKG_GIT_URL="git://gcc.gnu.org/git/gcc.git"
 fi
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host"
 PKG_DEPENDS_TARGET="gcc:host"
