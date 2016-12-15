@@ -1,5 +1,5 @@
 PKG_NAME="rclone"
-PKG_VERSION="4428615"
+PKG_VERSION="master"
 PKG_GIT_URL="https://github.com/ncw/rclone"
 PKG_DEPENDS_TARGET="toolchain go:host"
 PKG_SECTION="tools"
@@ -20,7 +20,7 @@ pre_make_target() {
  
 make_target() {
   mkdir -p bin
-  go get -u -v -t github.com/ncw/rclone
+  go get -u -v -t "github.com/ncw/rclone/cmd" "github.com/ncw/rclone/cmd/all" "github.com/ncw/rclone/fs/all"
   $GOLANG build -v -o bin/$PKG_NAME -a -ldflags "$LDFLAGS" ./
   $STRIP bin/$PKG_NAME
 }
