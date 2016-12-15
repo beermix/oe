@@ -8,8 +8,6 @@ PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Docker"
 PKG_ADDON_TYPE="xbmc.service"
 
-strip_lto
-
 configure_target() {
   export DOCKER_BUILDTAGS="daemon \
                            autogen \

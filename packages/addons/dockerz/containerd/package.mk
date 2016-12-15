@@ -17,8 +17,7 @@
 ################################################################################
 
 PKG_NAME="containerd"
-#PKG_VERSION="v0.2.4"
-PKG_VERSION="9c21822"
+PKG_VERSION="v0.2.4"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="APL"
@@ -31,8 +30,6 @@ PKG_LONGDESC="containerd is a daemon to control runC, built for performance and 
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
-
-strip_lto
 
 pre_make_target() {
   export GOOS=linux
