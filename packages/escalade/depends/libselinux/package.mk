@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libselinux"
-PKG_VERSION="libselinux-2.5"
+PKG_VERSION="master"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -40,6 +40,7 @@ pre_build_target() {
 
 
 make_target() {
+  make -j1
   make install DESTDIR=$SYSROOT_PREFIX
 }
 
