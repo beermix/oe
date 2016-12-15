@@ -51,7 +51,8 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_mmap_fixed_mapped=yes \
                            --enable-Bsymbolic \
                            --with-gnu-ld \
                            --with-threads=posix \
-                           --with-pcre=internal"
+                           --with-pcre=internal \
+                           --disable-installed-tests"
                            
 PKG_CONFIGURE_OPTS_HOST="--with-pcre=internal --enable-static --disable-shared --with-threads=posix"
 			   
