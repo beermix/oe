@@ -24,8 +24,7 @@ PKG_LICENSE="GPLv2"
 PKG_SITE="http://www.mariadb.org"
 PKG_URL="https://downloads.mariadb.org/interstitial/$PKG_NAME-$PKG_VERSION/source/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain systemd netbsd-curses readline openssl xz lz4 zlib expat libev mariadb:host"
-
+PKG_DEPENDS_TARGET="toolchain netbsd-curses openssl lz4 libevent mariadb:host"
 PKG_SECTION="database"
 PKG_SHORTDESC="mariadb: A community developed branch of MySQL"
 PKG_LONGDESC="MariaDB is a community-developed fork and a drop-in replacement for the MySQL relational database management system."
@@ -33,8 +32,7 @@ PKG_LONGDESC="MariaDB is a community-developed fork and a drop-in replacement fo
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-
-PKG_MARIADB_SERVER="no"
+PKG_MARIADB_SERVER="yes"
 
 # MariaDB Feature set. Selection of features. Options are
 # - xsmall : 
@@ -105,6 +103,7 @@ PKG_MARIADB_SERVER="no"
 
 configure_host() {
   cmake -DCMAKE_PREFIX_PATH=$ROOT/$TOOLCHAIN/ \
+        -DCMAKE_BUILD_TYPE=Release \
         -DFEATURE_SET=xsmall \
         -DWITHOUT_SERVER=OFF \
         -DWITH_EMBEDDED_SERVER=OFF \
@@ -146,11 +145,13 @@ configure_target() {
         -DINSTALL_SQLBENCHDIR=/storage/.kodi/addons/service.web.lamp/mariadb/test \
         -DINSTALL_SUPPORTFILESDIR=/storage/.kodi/addons/service.web.lamp/mariadb/support \
         -DMYSQL_DATADIR=/storage/.kodi/userdata/addon_data/service.web.lamp/mariadb/data \
-        -DWITH_EXTRA_CHARSETS=all \
+        -DWITH_ARCHIVE_STORAGE_ENGINE=1 \
+        -DWITHOUT_PBXT_STORAGE_ENGINE=1 \
+        -DWITH_EXTRA_CHARSETS=complex \
         -DTOKUDB_OK=0 \
         -DDISABLE_LIBMYSQLCLIENT_SYMBOL_VERSIONING=TRUE \
         -DENABLE_DTRACE=OFF \
-        -DWITH_READLINE=OFF \
+        -DWITH_READLINE=ON \
         -DWITH_PCRE=bundled \
         -DWITH_ZLIB=bundled \
         -DWITH_SYSTEMD=ON \
@@ -167,10 +168,7 @@ post_makeinstall_target() {
   ln -sf $SYSROOT_PREFIX/usr/bin/mysql_config $ROOT/$TOOLCHAIN/bin/mysql_config
  
   rm -rf $INSTALL/usr/share/mysql/support-files
-  rm -rf $INSTALL/usr/share/mysql/test
-  rm -rf $INSTALL/usr/share/mysql/bench
-  rm -rf $INSTALL/storage
-  
+
   if [ "$PKG_MARIADB_SERVER" = "no" ]; then
     rm -rf $INSTALL/usr/bin
     rm -rf $INSTALL/usr/lib
