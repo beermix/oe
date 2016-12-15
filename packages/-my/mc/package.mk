@@ -10,8 +10,7 @@ pre_configure_target() {
   export MAKEFLAGS="-j1"
 }
 
-PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
-                           --sysconfdir=/storage/.config \
+PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config \
                            --datadir=/storage/.config \
                            --libdir=/storage/.config \
                            --libexecdir=/storage/.config \
