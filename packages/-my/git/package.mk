@@ -8,7 +8,7 @@ PKG_AUTORECONF="yes"
 
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
-  export NO_EXPAT="YesPlease"
+  #export NO_EXPAT="YesPlease"
   export NO_MKSTEMPS="YesPlease"
   export NO_GETTEXT="YesPlease"
   #export NO_UNIX_SOCKETS="YesPlease"
