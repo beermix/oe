@@ -24,7 +24,6 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://www.bluez.org/"
 PKG_URL="http://www.kernel.org/pub/linux/bluetooth/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain dbus glib readline netbsd-curses systemd"
-
 PKG_SECTION="network"
 PKG_SHORTDESC="bluez: Bluetooth Tools and System Daemons for Linux."
 PKG_LONGDESC="Bluetooth Tools and System Daemons for Linux."
@@ -43,7 +42,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-dependency-tracking \
                            --enable-tools \
                            --enable-datafiles \
                            --disable-experimental \
-                           --enable-sixaxis \
+                           --disable-sixaxis \
                            --with-gnu-ld \
                            storagedir=/storage/.cache/bluetooth"
 
