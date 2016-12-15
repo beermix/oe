@@ -30,7 +30,7 @@ PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config \
                            --disable-doxygen-html \
                            --without-internal-edit \
                            --disable-silent-rules \
-                           --enable-largefile \
+                           --disable-nls \
                            --enable-background \
                            --enable-charset \
                            --without-gpm-mouse \
@@ -45,8 +45,4 @@ PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config \
                            --with-gnu-ld \
                            --with-mmap \
                            --with-pcre=$SYSROOT_PREFIX/usr \
-                           --with-mmap \
-                           --without-debug \
-                           --without-gnome \
-                           --without-included-gettext \
-                           --without-samba"
+                           --with-search-engine=glib"
