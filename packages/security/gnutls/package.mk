@@ -1,7 +1,7 @@
 PKG_NAME="gnutls"
 PKG_VERSION="3.4.17"
 PKG_URL="ftp://ftp.gnutls.org/gcrypt/gnutls/v3.4/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain zlib gmp libgpg-error lzo nettle"
+PKG_DEPENDS_TARGET="toolchain gmp zlib nettle"
 PKG_SECTION="security"
 PKG_SHORTDESC="gnutls: Development Library for TLS applications"
 PKG_IS_ADDON="no"
@@ -26,7 +26,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static \
 			      --disable-nls \
 			      --disable-guile \
 			      --disable-valgrind-tests \
-			      --with-lzo \
+			      --without-lzo \
 			      --with-gnu-ld"
 
 post_makeinstall_target() {
