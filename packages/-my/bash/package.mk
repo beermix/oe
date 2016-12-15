@@ -7,7 +7,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 pre_configure_target() {
-  export LIBS="-ltermcap"
+  export LIBS="-ltermcap -lcurses" 
 }
 
 PKG_CONFIGURE_OPTS_TARGET="bash_cv_getenv_redef=no \
@@ -19,7 +19,7 @@ PKG_CONFIGURE_OPTS_TARGET="bash_cv_getenv_redef=no \
                            --enable-readline \
                            --without-bash-malloc \
                            --with-installed-readline \
-                           --enable-static-link \
+                           --disable-static-link \
                            --enable-casemod-expansions \
                            --enable-process-substitution \
                            --enable-coprocesses \
@@ -37,7 +37,8 @@ PKG_CONFIGURE_OPTS_TARGET="bash_cv_getenv_redef=no \
                            --enable-array-variables \
                            --enable-glob-asciiranges-default \
                            --enable-restricted \
-                           --enable-job-control"   
+                           --enable-job-control \
+                           --with-sysroot=$SYSROOT_PREFIX"   
 			   
 post_makeinstall_target() {
   rm -rf $INSTALL/bin/bashbug
