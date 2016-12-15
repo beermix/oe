@@ -7,10 +7,11 @@ PKG_KEEP_CHECKOUT="no"
 PKG_SECTION="tools"
 PKG_AUTORECONF="no"
 
+strip_lto
 
 pre_make_target() {
+  export GOOS=linux
   export GOARCH=amd64
-  export GOOS=windows
   export CGO_ENABLED=1
   export CGO_NO_EMULATION=1
   export CGO_CFLAGS=$CFLAGS
