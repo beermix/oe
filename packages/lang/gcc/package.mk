@@ -66,7 +66,8 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libmpx \
                            --disable-browser-plugin \
                            --disable-libitm \
-                           --with-tune=ivybridge"
+                           --with-tune=ivybridge \
+                           --enable-poison-system-directories"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \

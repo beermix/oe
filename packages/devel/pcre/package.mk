@@ -48,8 +48,6 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-pcre16 \
 			      --enable-pcre32 \
 			      --enable-jit \
-			      --enable-pcregrep-libz \
-			      --enable-pcregrep-libbz2 \
 			      --enable-unicode-properties \
 			      --with-gnu-ld"
 pre_configure_target() {
