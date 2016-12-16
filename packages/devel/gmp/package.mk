@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="gmp"
-PKG_VERSION="6.1.1"
+PKG_VERSION="6.1.2"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="LGPLv3+"
@@ -32,8 +32,13 @@ PKG_LONGDESC="GNU MP is a library for arbitrary precision arithmetic, operating 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-
-PKG_CONFIGURE_OPTS_HOST="--enable-cxx --enable-fat --enable-static --disable-shared --with-pic --enable-silent-rules"
+PKG_CONFIGURE_OPTS_HOST="--enable-cxx \
+			    --enable-fat \
+			    --enable-mpbsd \
+			    --with-pic \
+			    --enable-static \
+			    --disable-shared  \
+			    --enable-silent-rules"
 
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
 

@@ -7,23 +7,23 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC"
-  export CXXFLAGS="$CXXFLAGS -fPIC"
-  export LDFLAGS="$LDFLAGS -fPIC"
-}
+#pre_configure_target() {
+#  export CFLAGS="$CFLAGS -fPIC"
+#  export CXXFLAGS="$CXXFLAGS -fPIC"
+#  export LDFLAGS="$LDFLAGS -fPIC"
+#}
 
 PKG_CONFIGURE_SCRIPT="dist/configure"
 
-PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
-			      --enable-cxx \
-			      --enable-static \
+PKG_CONFIGURE_OPTS_TARGET="--enable-compat185 \
 			      --disable-shared \
-			      --enable-compat185 \
-			      --enable-o_direct \
-			      --enable-smallbuild \
-			      --disable-atomicsupport \
-			      --enable-compression"
+			      --enable-static \
+			      --enable-cxx \
+			      --enable-stl \
+			      --disable-java \
+			      --with-mutex=POSIX/pthreads/library \
+			      --disable-tcl \
+			      --disable-debug"
 			   
 post_makeinstall_target() {
   rm -rf $INSTALL
