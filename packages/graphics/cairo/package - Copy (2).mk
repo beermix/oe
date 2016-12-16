@@ -23,39 +23,15 @@ PKG_ARCH="any"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://cairographics.org/"
 PKG_URL="http://cairographics.org/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain zlib freetype fontconfig libpng pixman"
+PKG_DEPENDS_TARGET="toolchain libz freetype fontconfig libpng pixman"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="cairo: Multi-platform 2D graphics library"
 PKG_LONGDESC="Cairo is a vector graphics library with cross-device output support. Currently supported output targets include the X Window System and in-memory image buffers. PostScript and PDF file output is planned. Cairo is designed to produce identical output on all output media while taking advantage of display hardware acceleration when available."
-PKG_IS_ADDON="no"
 
+PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes" # ToDo
 
-if [ "$DISPLAYSERVER" = "x11" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libXrender libX11 mesa glu"
-  PKG_CAIRO_CONFIG="--x-includes="$SYSROOT_PREFIX/usr/include" \
-                    --x-libraries="$SYSROOT_PREFIX/usr/lib" \
-                    --enable-xlib \
-                    --enable-xlib-xrender \
-                    --enable-gl \
-                    --enable-glx \
-                    --disable-glesv2 \
-                    --disable-egl \
-                    --with-x"
-
-
-elif [ "$DISPLAYSERVER" = "weston" ]; then
-  PKG_CAIRO_CONFIG="--disable-xlib \
-                    --disable-xlib-xrender \
-                    --disable-gl \
-                    --disable-glx \
-                    --enable-glesv2 \
-                    --enable-egl \
-                    --without-x"
-fi
-
-PKG_CONFIGURE_OPTS_TARGET="$PKG_CAIRO_CONFIG \
-                           --enable-silent-rules \
+PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
                            --enable-shared \
                            --disable-static \
                            --disable-gtk-doc \
@@ -77,9 +53,7 @@ PKG_CONFIGURE_OPTS_TARGET="$PKG_CAIRO_CONFIG \
                            --disable-beos \
                            --disable-cogl \
                            --disable-drm \
-                           --disable-drm-xr \
                            --disable-gallium \
-                           --disable-xcb-drm \
                            --enable-png \
                            --disable-directfb \
                            --disable-vg \
@@ -91,7 +65,6 @@ PKG_CONFIGURE_OPTS_TARGET="$PKG_CAIRO_CONFIG \
                            --enable-pdf \
                            --enable-svg \
                            --disable-test-surfaces \
-                           --disable-tee \
                            --disable-xml \
                            --enable-pthread \
                            --disable-gobject \
@@ -101,3 +74,24 @@ PKG_CONFIGURE_OPTS_TARGET="$PKG_CAIRO_CONFIG \
                            --disable-symbol-lookup \
                            --enable-some-floating-point \
                            --with-gnu-ld"
+
+if [ "$DISPLAYSERVER" = "x11" ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libXrender libX11 mesa glu"
+  PKG_CONFIGURE_OPTS_TARGET+=" --x-includes="$SYSROOT_PREFIX/usr/include" \
+                               --x-libraries="$SYSROOT_PREFIX/usr/lib" \
+                               --enable-xlib \
+                               --enable-xlib-xrender \
+                               --enable-gl \
+                               --enable-glx \
+                               --disable-glesv2 \
+                               --disable-egl \
+                               --with-x"
+elif [ "$DISPLAYSERVER" = "weston" ]; then
+  PKG_CONFIGURE_OPTS_TARGET+=" --disable-xlib \
+                               --disable-xlib-xrender \
+                               --disable-gl \
+                               --disable-glx \
+                               --enable-glesv2 \
+                               --enable-egl \
+                               --without-x"
+fi
