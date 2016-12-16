@@ -32,3 +32,4 @@ mkpkg-temp
 ltmain.sh
 /tmp/
 cpack
+*OE-Generic*
