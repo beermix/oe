@@ -1,6 +1,6 @@
 PKG_NAME="bind"
-PKG_VERSION="master"
-PKG_GIT_URL="https://source.isc.org/git/bind9.git"
+PKG_VERSION="9.11.0-P1"
+PKG_GIT_URL="ftp://ftp.isc.org/isc/bind9/$PKG_VERSION/bind-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain sqlite libcap json-c openssl readline"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
