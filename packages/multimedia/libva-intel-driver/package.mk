@@ -24,12 +24,13 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://freedesktop.org/wiki/Software/vaapi"
 PKG_URL="http://www.freedesktop.org/software/vaapi/releases/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain libva libdrm"
-
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="libva-driver-intel: Intel G45+ driver for VAAPI"
 PKG_LONGDESC="libva-driver-intel: Intel G45+ driver for VAAPI"
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
+
+MAKEFLAGS=-j1
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-silent-rules --with-drivers-path=/usr/lib/va"

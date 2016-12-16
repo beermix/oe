@@ -1,0 +1,11 @@
+--- lib/global.h~       2016-09-22 20:24:12.000000000 +0200
++++ lib/global.h        2016-12-09 11:34:47.376367101 +0100
+@@ -125,7 +125,7 @@
+ #define PATH_SEP_STR "/"
+ #define IS_PATH_SEP(c) ((c) == PATH_SEP)
+ #define PATH_ENV_SEP ':'
+-#define TMPDIR_DEFAULT "/tmp"
++#define TMPDIR_DEFAULT "/var/tmp"
+ #define SCRIPT_SUFFIX ""
+ #define get_default_editor() "vi"
+ #define OS_SORT_CASE_SENSITIVE_DEFAULT 1

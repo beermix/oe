@@ -1,6 +1,6 @@
 PKG_NAME="zsh"
-PKG_VERSION="5.3"
-PKG_URL="https://sourceforge.net/projects/zsh/files/zsh/5.3/zsh-5.3.tar.xz"
+PKG_VERSION="dc1f3aa"
+PKG_GIT_URL="https://github.com/zsh-users/zsh"
 PKG_DEPENDS_TARGET="toolchain netbsd-curses libcap pcre readline gdbm libpcap"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
@@ -11,7 +11,8 @@ pre_configure_target() {
   export MAKEFLAGS=-j1
 }
 
-PKG_CONFIGURE_OPTS_TARGET="--bindir=/bin \
+PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
+			      --bindir=/bin \
 			      --enable-multibyte \
 			      --disable-silent-rules \
 			      --enable-cap \
@@ -20,16 +21,12 @@ PKG_CONFIGURE_OPTS_TARGET="--bindir=/bin \
 			      --disable-dynamic \
 			      --sysconfdir=/storage/.config \
 			      --with-term-lib=ncursesw \
-			      --enable-etcdir \
+			      --disable-etcdir \
 			      --enable-function-subdirs \
 			      --with-tcsetpgrp \
 			      --enable-gdbm \
 			      --enable-zsh-secure-free \
-			      --enable-readnullcmd=pager \
-			      --enable-max-jobtable-size=256 \
-			      --with-term-lib=tinfo \
-			      --disable-dynamic-nss \
-			      --disable-zsh-debug"
+			      --enable-readnullcmd=pager"
 
 post_makeinstall_target() {
   rm $INSTALL/bin/zsh-5*

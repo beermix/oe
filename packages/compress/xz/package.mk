@@ -30,6 +30,8 @@ PKG_LONGDESC="XZ Utils is free general-purpose data compression software with hi
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
+export CFLAGS="$CFLAGS -D_FILE_OFFSET_BITS=64"	
+
 # never build shared or k0p happens when building
 # on fedora due to host selinux/liblzma
 PKG_CONFIGURE_OPTS_HOST="--disable-shared --enable-static \
@@ -38,8 +40,20 @@ PKG_CONFIGURE_OPTS_HOST="--disable-shared --enable-static \
                          --enable-lzma-links \
                          --disable-scripts \
                          --disable-nls \
-                         --enable-silent-rules \
+                         --disable-silent-rules \
                          --disable-werror \
                          --disable-rpath"
                          
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
+
+make_target() {
+sed -iv 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
+sed -iv 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
+make
+}
+
+make_host() {
+sed -iv 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
+sed -iv 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
+make
+}

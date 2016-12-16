@@ -42,11 +42,9 @@ PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config \
                            --enable-vfs-extfs \
                            --enable-vfs-cpio \
                            --disable-vfs-smb \
-                           --with-gnu-ld \
-                           --with-mmap \
+                           --without-mmap \
                            --with-pcre=$SYSROOT_PREFIX/usr \
-                           --with-mmap \
                            --without-debug \
                            --without-gnome \
-                           --without-included-gettext \
-                           --without-samba"
+                           --without-samba \
+                            fu_cv_sys_stat_statfs2_bsize=yes"
