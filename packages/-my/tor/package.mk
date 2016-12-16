@@ -1,5 +1,5 @@
 PKG_NAME="tor"
-PKG_VERSION="maint-0.2.9"
+PKG_VERSION="maint-0.2.8"
 PKG_GIT_URL="https://github.com/torproject/tor"
 PKG_DEPENDS_TARGET="toolchain openssl libz libevent"
 PKG_SECTION="security"

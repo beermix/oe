@@ -24,7 +24,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://gcc.gnu.org/"
 if [ x"$PKG_USE_SNAPSHOT" == x"true" ]; then
     PKG_MAJOR_VERSION="6"
-    PKG_SNAPSHOT_DATESTAMP="20161208"
+    PKG_SNAPSHOT_DATESTAMP="20161215"
     PKG_VERSION="$PKG_MAJOR_VERSION-$PKG_SNAPSHOT_DATESTAMP"
     PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/LATEST-6/gcc-$PKG_MAJOR_VERSION-$PKG_SNAPSHOT_DATESTAMP.tar.bz2"
 else
@@ -88,6 +88,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-decimal-float \
                          --disable-libssp \
                          --disable-libatomic \
+                         --enable-graphite \
                          --enable-tls \
                          --enable-shared \
                          --disable-static \

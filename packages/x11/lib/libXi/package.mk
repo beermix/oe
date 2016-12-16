@@ -16,25 +16,28 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="dtc"
-PKG_VERSION="beef80b"
+PKG_NAME="libXi"
+PKG_VERSION="1.7.8"
 PKG_REV="1"
 PKG_ARCH="any"
-PKG_LICENSE="GPL"
-PKG_SITE="https://git.kernel.org/cgit/utils/dtc/dtc.git"
-PKG_GIT_URL="https://git.kernel.org/pub/scm/utils/dtc/dtc.git"
-PKG_GIT_BRANCH="master"
-PKG_DEPENDS_TARGET="toolchain"
-PKG_SECTION="tools"
-PKG_SHORTDESC="The Device Tree Compiler"
-PKG_LONGDESC="The Device Tree Compiler"
+PKG_LICENSE="OSS"
+PKG_SITE="http://www.x.org/"
+PKG_URL="http://xorg.freedesktop.org/archive/individual/lib/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_DEPENDS_TARGET="toolchain util-macros libX11 inputproto libXfixes"
+PKG_SECTION="x11/lib"
+PKG_SHORTDESC="libxi: X11 Input extension library"
+PKG_LONGDESC="LibXi provides an X Window System client interface to the XINPUT extension to the X protocol."
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_MAKE_OPTS_TARGET="dtc"
-
-makeinstall_target() {
-  mkdir -p $INSTALL/usr/bin
-    cp -P $ROOT/$PKG_BUILD/dtc $INSTALL/usr/bin
-}
+PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared \
+                           --enable-malloc0returnsnull \
+                           --disable-silent-rules \
+                           --disable-docs \
+                           --disable-specs \
+                           --without-xmlto \
+                           --without-fop \
+                           --without-xsltproc \
+                           --without-asciidoc \
+                           --with-gnu-ld"

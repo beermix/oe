@@ -16,25 +16,25 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="dtc"
-PKG_VERSION="beef80b"
+PKG_NAME="xf86-video-amdgpu"
+PKG_VERSION="1.2.0"
 PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
-PKG_SITE="https://git.kernel.org/cgit/utils/dtc/dtc.git"
-PKG_GIT_URL="https://git.kernel.org/pub/scm/utils/dtc/dtc.git"
-PKG_GIT_BRANCH="master"
-PKG_DEPENDS_TARGET="toolchain"
-PKG_SECTION="tools"
-PKG_SHORTDESC="The Device Tree Compiler"
-PKG_LONGDESC="The Device Tree Compiler"
+PKG_ARCH="x86_64"
+PKG_LICENSE="OSS"
+PKG_SITE="http://www.x.org/"
+PKG_URL="http://xorg.freedesktop.org/archive/individual/driver/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_DEPENDS_TARGET="toolchain xorg-server"
+PKG_SECTION="x11/driver"
+PKG_SHORTDESC="xf86-video-amdgpu - AMD Radeon video driver for the Xorg X server"
+PKG_LONGDESC="AMD Xorg video driver"
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
-PKG_MAKE_OPTS_TARGET="dtc"
+PKG_CONFIGURE_OPTS_TARGET="--enable-udev \
+                           --enable-glamor \
+                           --with-xorg-module-dir=$XORG_PATH_MODULES"
 
-makeinstall_target() {
-  mkdir -p $INSTALL/usr/bin
-    cp -P $ROOT/$PKG_BUILD/dtc $INSTALL/usr/bin
+post_makeinstall_target() {
+  rm -r $INSTALL/usr/share
 }

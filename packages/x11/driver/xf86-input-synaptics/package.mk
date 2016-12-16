@@ -16,38 +16,19 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="intel-ucode"
-PKG_VERSION="20161104"
-wwPKG_REV="1"
-PKG_ARCH="x86_64"
-PKG_LICENSE="other"
-PKG_SITE="https://downloadcenter.intel.com/search?keyword=linux+microcode"
-PKG_URL="https://downloadmirror.intel.com/26400/eng/microcode-${PKG_VERSION}.tgz"
-PKG_DEPENDS_TARGET="toolchain intel-ucode:host"
-PKG_SECTION="linux-firmware"
-PKG_SHORTDESC="intel-ucode: Intel CPU microcodes"
-PKG_LONGDESC="intel-ucode: Intel CPU microcodes"
+PKG_NAME="xf86-input-synaptics"
+PKG_VERSION="1.9.0"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
+PKG_SITE="http://lists.freedesktop.org/mailman/listinfo/xorg"
+PKG_URL="http://xorg.freedesktop.org/archive/individual/driver/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_DEPENDS_TARGET="toolchain libXi"
+PKG_SECTION="x11/driver"
+PKG_SHORTDESC="Synaptics touchpad driver for X.Org."
+PKG_LONGDESC="Synaptics touchpad driver for X.Org."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
-unpack() {
-  mkdir -p $ROOT/$PKG_BUILD
-  tar xf $SOURCES/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tgz -C $ROOT/$PKG_BUILD
-}
-
-make_host() {
-  $CC $CFLAGS -o intel-microcode2ucode intel-microcode2ucode.c
-}
-
-makeinstall_host() {
-  cp intel-microcode2ucode $ROOT/$TOOLCHAIN/bin/
-}
-
-make_target() {
-  intel-microcode2ucode ./microcode.dat
-}
-
-makeinstall_target() {
-  :
-}
+PKG_CONFIGURE_OPTS_TARGET="--with-xorg-module-dir=$XORG_PATH_MODULES"

@@ -49,11 +49,8 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --disable-nls \
                          --enable-static \
                          --disable-shared \
-                         --disable-gdb \
                          --with-pic \
-                         --disable-sim \
-                         --with-system-zlib \
-                         --enable-poison-system-directories"
+                         --with-system-zlib"
 
 makeinstall_host() {
   cp -v ../include/libiberty.h $SYSROOT_PREFIX/usr/include

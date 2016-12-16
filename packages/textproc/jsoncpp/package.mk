@@ -16,25 +16,25 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="dtc"
-PKG_VERSION="beef80b"
+PKG_NAME="jsoncpp"
+PKG_VERSION="src-0.5.0"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="https://git.kernel.org/cgit/utils/dtc/dtc.git"
-PKG_GIT_URL="https://git.kernel.org/pub/scm/utils/dtc/dtc.git"
-PKG_GIT_BRANCH="master"
+PKG_SITE="http://www.kodi.tv"
+PKG_URL="http://sources.openelec.tv/mirror/jsoncpp/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_SECTION="tools"
-PKG_SHORTDESC="The Device Tree Compiler"
-PKG_LONGDESC="The Device Tree Compiler"
+PKG_SECTION="multimedia"
+PKG_SHORTDESC="jsoncpp"
+PKG_LONGDESC="jsoncpp"
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_MAKE_OPTS_TARGET="dtc"
+pre_configure_target() {
+  export CFLAGS="$CFLAGS -fPIC"
+}
 
-makeinstall_target() {
-  mkdir -p $INSTALL/usr/bin
-    cp -P $ROOT/$PKG_BUILD/dtc $INSTALL/usr/bin
+pre_build_target() {
+  cp $PKG_DIR/config/CMakeLists.txt $ROOT/$PKG_BUILD
 }
