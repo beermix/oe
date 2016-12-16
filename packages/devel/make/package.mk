@@ -36,5 +36,4 @@ PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
 			 
 post_makeinstall_host() {
   ln -sf make $ROOT/$TOOLCHAIN/bin/gmake
-  make check
 }
