@@ -41,4 +41,5 @@ PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared \
                          --with-included-libxml \
                          --disable-native-java \
                          --disable-csharp \
-                         --without-emacs"
+                         --without-emacs \
+                         --enable-threads=posix"
