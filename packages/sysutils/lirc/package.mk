@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="lirc"
-PKG_VERSION="0.9.4"
+PKG_VERSION="0.9.4c"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -27,9 +27,10 @@ PKG_DEPENDS_TARGET="toolchain libftdi1 libusb-compat libxslt"
 PKG_SECTION="sysutils/remote"
 PKG_SHORTDESC="lirc: Linux Infrared Remote Control"
 PKG_LONGDESC="LIRC is a package that allows you to decode and send infra-red signals of many (but not all) commonly used remote controls."
-
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
+
+CONCURRENCY_MAKE_LEVEL=1
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_path_LIBUSB_CONFIG= /
                            ac_cv_func_forkpty=no \
