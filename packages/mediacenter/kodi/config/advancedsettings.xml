@@ -17,20 +17,4 @@
   <samba>
     <clienttimeout>30</clienttimeout>
   </samba>
-  <videodatabase>
-    <name>video.db</name>
-    <host>127.0.0.1</host>
-    <user>kodi</user>
-    <pass>kodi</pass>
-    <type>mysql</type>
-    <port>3306</port>
-  </videodatabase>
-  <musicdatabase>
-    <name>music.db</name>
-    <host>127.0.0.1</host>
-    <user>kodi</user>
-    <pass>kodi</pass>
-    <type>mysql</type>
-    <port>3306</port>
-  </musicdatabase>
 </advancedsettings>
