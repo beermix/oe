@@ -8,7 +8,7 @@ PKG_AUTORECONF="no"
 
 configure_target() {
   cd $ROOT/$PKG_BUILD
-  #strip_lto
+  strip_lto
   ./configure --enable-runtime-cpudetection \
   		--disable-inet6 \
   		--enable-big-endian \
