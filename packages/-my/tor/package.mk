@@ -1,5 +1,5 @@
 PKG_NAME="tor"
-PKG_VERSION="maint-0.2.8"
+PKG_VERSION="tor-0.2.8.12"
 PKG_GIT_URL="https://github.com/torproject/tor"
 PKG_DEPENDS_TARGET="toolchain openssl libz libevent"
 PKG_SECTION="security"
@@ -17,7 +17,7 @@ PKG_CONFIGURE_OPTS_TARGET="--with-openssl-dir=$SYSROOT_PREFIX/usr \
 
 
 post_install() {
-  add_user tor x 990 990 "Tor Server" "/storage" "/bin/bash"
+  add_user tor x 990 990 "Tor Server" "/storage" "/bin/sh"
   add_group tor 990
 }
 
