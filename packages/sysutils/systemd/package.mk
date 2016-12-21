@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="systemd"
-PKG_VERSION="ebc8968"
+PKG_VERSION="fee8963"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
