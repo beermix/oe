@@ -5,6 +5,8 @@ PKG_DEPENDS_TARGET="toolchain go:host"
 PKG_SECTION="tools"
 PKG_AUTORECONF="no"
 
+CONCURRENCY_MAKE_LEVEL=1
+
 pre_make_target() {
   export GOOS=linux
   export GOARCH=amd64
