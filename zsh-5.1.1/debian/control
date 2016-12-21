@@ -1,0 +1,137 @@
+Source: zsh
+Section: shells
+Priority: optional
+Build-Depends: autotools-dev,
+               bsdmainutils,
+               cm-super-minimal,
+               debhelper (>= 9.20141221~),
+               dh-autoreconf,
+               dpkg-dev (>= 1.16.2~),
+               ghostscript,
+               groff,
+               groff-base,
+               libcap-dev [linux-any],
+               libelf-dev,
+               libncursesw5-dev,
+               libncurses5-dev,
+               libpcre3-dev,
+               texinfo (>= 5~),
+               texlive-fonts-recommended,
+               texlive-latex-base,
+               texlive-latex-recommended,
+Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+XSBC-Original-Maintainer: Debian Zsh Maintainers <pkg-zsh-devel@lists.alioth.debian.org>
+Uploaders: Michael Prokop <mika@debian.org>,
+           Axel Beckert <abe@debian.org>,
+           Frank Terbeck <ft@bewatermyfriend.org>,
+           Richard Hartmann <richih@debian.org>
+Standards-Version: 3.9.6
+Homepage: http://www.zsh.org/
+Vcs-Git: git://anonscm.debian.org/collab-maint/zsh.git -b debian
+Vcs-Browser: https://anonscm.debian.org/cgit/collab-maint/zsh.git
+
+Package: zsh-common
+Architecture: all
+Depends: ${misc:Depends}
+Pre-Depends: ${misc:Pre-Depends}
+Replaces: zsh (<= 5.0.2-1)
+Recommends: zsh
+Suggests: zsh-doc
+Description: architecture independent files for Zsh
+ Zsh is a UNIX command interpreter (shell) usable as an
+ interactive login shell and as a shell script command
+ processor. Of the standard shells, zsh most closely resembles
+ ksh but includes many enhancements. Zsh has command-line editing,
+ built-in spelling correction, programmable command completion,
+ shell functions (with autoloading), a history mechanism, and a
+ host of other features.
+ .
+ This package contains the common zsh files shared by all
+ architectures.
+
+Package: zsh
+Architecture: any
+Depends: zsh-common (= ${source:Version}),
+         ${misc:Depends},
+         ${shlibs:Depends}
+Pre-Depends: ${misc:Pre-Depends}
+Recommends: ${shlibs:Recommends}
+Suggests: zsh-doc
+Description: shell with lots of features
+ Zsh is a UNIX command interpreter (shell) usable as an
+ interactive login shell and as a shell script command
+ processor. Of the standard shells, zsh most closely resembles
+ ksh but includes many enhancements. Zsh has command-line editing,
+ built-in spelling correction, programmable command completion,
+ shell functions (with autoloading), a history mechanism, and a
+ host of other features.
+
+Package: zsh-doc
+Architecture: all
+Section: doc
+Depends: zsh-common (= ${source:Version}),
+         ${misc:Depends}
+Description: zsh documentation - info/HTML format
+ Zsh is a UNIX command interpreter (shell) usable as an
+ interactive login shell and as a shell script command
+ processor. Of the standard shells, zsh most closely resembles
+ ksh but includes many enhancements. Zsh has command-line editing,
+ built-in spelling correction, programmable command completion,
+ shell functions (with autoloading), a history mechanism, and a
+ host of other features.
+ .
+ This contains the documentation in GNU info and HTML formats.
+
+Package: zsh-static
+Architecture: any
+Depends: zsh,
+         ${misc:Depends}
+Suggests: zsh-doc
+Built-Using: ${Built-Using}
+Description: shell with lots of features (static link)
+ Zsh is a UNIX command interpreter (shell) usable as an
+ interactive login shell and as a shell script command
+ processor. Of the standard shells, zsh most closely resembles
+ ksh but includes many enhancements. Zsh has command-line editing,
+ built-in spelling correction, programmable command completion,
+ shell functions (with autoloading), a history mechanism, and a
+ host of other features.
+ .
+ This is the statically-compiled version of the shell.
+
+Package: zsh-dev
+Architecture: any
+Depends: zsh-common (= ${source:Version}),
+         ${misc:Depends}
+Pre-Depends: ${misc:Pre-Depends}
+Section: libdevel
+Description: shell with lots of features (development files)
+ Zsh is a UNIX command interpreter (shell) usable as an
+ interactive login shell and as a shell script command
+ processor. Of the standard shells, zsh most closely resembles
+ ksh but includes many enhancements. Zsh has command-line editing,
+ built-in spelling correction, programmable command completion,
+ shell functions (with autoloading), a history mechanism, and a
+ host of other features.
+ .
+ This package contains headers and scripts necessary to compile
+ third-party modules.
+
+Package: zsh-dbg
+Architecture: any
+Section: debug
+Priority: extra
+Depends: zsh (= ${binary:Version}),
+         zsh-common (= ${source:Version}),
+         ${misc:Depends}
+Description: shell with lots of features (debugging symbols)
+ Zsh is a UNIX command interpreter (shell) usable as an
+ interactive login shell and as a shell script command
+ processor. Of the standard shells, zsh most closely resembles
+ ksh but includes many enhancements. Zsh has command-line editing,
+ built-in spelling correction, programmable command completion,
+ shell functions (with autoloading), a history mechanism, and a
+ host of other features.
+ .
+ This package contains gdb debugging symbols for the 'zsh'
+ package.

@@ -1,0 +1,259 @@
+#!/usr/bin/make -f
+INSTALL = install
+INSTALL_PROGRAM = $(INSTALL) -p -o root -g root -m 755
+
+# Disable -fstack-protector-strong on s390x as it causes endless loops
+# in gcc-4.9. See https://bugs.debian.org/759870 for details
+ifeq (s390x,$(shell dpkg-architecture -qDEB_BUILD_ARCH))
+export DEB_BUILD_MAINT_OPTIONS=hardening=-stackprotectorstrong
+endif
+
+DPKG_EXPORT_BUILDFLAGS = 1
+include /usr/share/dpkg/buildflags.mk
+include /usr/share/dpkg/architecture.mk
+H_LDFLAGS = $(LDFLAGS)
+
+VENDOR=$(shell dpkg-vendor --query vendor | env LC_ALL=C tr A-Z a-z | env LC_ALL=C tr -d -c '[:alnum:]')
+
+CFLAGS += -Wall -g
+
+CONFIGFLAGS =  --prefix=/usr
+CONFIGFLAGS += --mandir=/usr/share/man
+CONFIGFLAGS += --bindir=/bin
+CONFIGFLAGS += LDFLAGS="-Wl,--as-needed -g $(H_LDFLAGS)"
+
+CONFIGFLAGS += --infodir=/usr/share/info
+CONFIGFLAGS += --enable-maildir-support
+CONFIGFLAGS += --enable-max-jobtable-size=256
+CONFIGFLAGS += --enable-etcdir=/etc/zsh
+CONFIGFLAGS += --enable-function-subdirs
+CONFIGFLAGS += --enable-site-fndir=/usr/local/share/zsh/site-functions
+CONFIGFLAGS += --enable-fndir=/usr/share/zsh/functions
+CONFIGFLAGS += --with-tcsetpgrp
+CONFIGFLAGS += --with-term-lib="ncursesw tinfo"
+CONFIGFLAGS += --enable-cap --enable-pcre
+CONFIGFLAGS += --enable-readnullcmd=pager
+CONFIGFLAGS += --enable-custom-patchlevel=Debian
+CONFIGFLAGS += --enable-additional-fpath=/usr/share/zsh/vendor-functions,/usr/share/zsh/vendor-completions
+CONFIGFLAGS += --disable-ansi2knr
+
+STATICFLAGS =  --disable-dynamic
+STATICFLAGS += --enable-ldflags=-static
+STATICFLAGS += --disable-dynamic-nss
+
+ifneq (,$(findstring debug,$(DEB_BUILD_OPTIONS)))
+CONFIGFLAGS += --enable-zsh-debug
+CONFIGFLAGS += --enable-zsh-mem-debug
+CONFIGFLAGS += --enable-zsh-mem-warning
+CONFIGFLAGS += --enable-zsh-secure-free
+CONFIGFLAGS += --enable-zsh-hash-debug
+endif
+
+BUILT_USING=$(shell dpkg-query -f '$${source:Package} (= $${source:Version}), ' -W libcap-dev libncursesw5-dev libpcre3-dev libc-dev-bin)
+
+build: build-arch build-indep
+
+build-arch: configure-stamp
+	dh_auto_build -B obj --parallel
+	if dpkg-architecture -qDEB_BUILD_ARCH_OS | grep -qv hurd; then \
+		HOME="$(CURDIR)/obj/testhome" ZTST_verbose=1 dh_auto_test -B obj --parallel; \
+	fi
+	touch $@
+
+build-indep: configure-stamp
+	dh_auto_build -B obj --parallel -- pdf
+	touch $@
+
+build-static: configure-static-stamp
+	dh_testdir
+	dh_auto_build -B obj-static --parallel
+	#HOME="$(CURDIR)/obj-static/testhome" ZTST_verbose=1 dh_auto_test -B obj-static --parallel || true
+	touch $@
+
+build-debug: DEB_BUILD_OPTIONS+=debug
+build-debug: build
+
+configure-common-stamp:
+	touch stamp-h.in
+	dh_autotools-dev_updateconfig
+	dh_autoreconf
+	touch $@
+
+configure-stamp: configure-common-stamp
+	dh_testdir
+	chmod 755 configure
+	mkdir -p obj/testhome
+	dh_auto_configure -B obj -- $(CONFIGFLAGS)
+	sed -e 's/#define VENDOR "pc"/#define VENDOR "$(VENDOR)"/' -i obj/config.h
+	touch $@
+
+configure-static-stamp: configure-common-stamp
+	dh_testdir
+	mkdir -p obj-static/testhome
+	dh_auto_configure -B obj-static -- $(CONFIGFLAGS) $(STATICFLAGS)
+#	cp debian/static.conf obj-static/Src/mymods.conf
+	sed -i -e 's/files.mdd link=no/files.mdd link=static/;s/stat.mdd link=no/stat.mdd link=static/' \
+	    obj-static/config.modules
+	sed -e 's/#define VENDOR "pc"/#define VENDOR "$(VENDOR)"/' -i obj-static/config.h
+	touch $@
+
+clean:
+	dh_testdir
+	dh_autoreconf_clean
+	dh_autotools-dev_restoreconfig
+	rm -f build build-static
+	dh_auto_clean -B obj        --parallel
+	dh_auto_clean -B obj-static --parallel
+	dh_auto_clean               --parallel
+	dh_clean
+	rm -rf config.cache obj obj-static autom4te.cache
+
+binary-indep: build-indep binary-arch-dynamic
+	dh_testdir
+	dh_testroot
+	dh_installdocs -i --link-doc=zsh-common
+	dh_installdirs -i
+
+	cd obj && $(MAKE) install.man DESTDIR=$(CURDIR)/debian/zsh-common
+	perl $(CURDIR)/Util/helpfiles Doc/zshbuiltins.1 debian/zsh-common/usr/share/zsh/help
+
+# functions
+	dh_installexamples -pzsh-common -X.distfiles
+	cd debian/zsh-common/usr/share/doc/zsh-common/examples/; mv Example Functions
+	sed -i -e '1!b;s:^#!.*[ /]zsh:#!/bin/zsh:;s#/usr/local/bin#/usr/bin#' \
+	   debian/zsh-common/usr/share/doc/zsh-common/examples/Misc/*
+
+	cd obj && $(MAKE) install.fns DESTDIR=$(CURDIR)/debian/zsh-common
+	rm -r debian/zsh-common/usr/local
+
+# move this to a non-root section; also drop it for cross-compiles
+ifeq ($(DEB_HOST_GNU_TYPE),$(DEB_BUILD_GNU_TYPE))
+	awk '/^#define FPATH_DIR/     { head=$$3;       gsub(/"/,"",head); };        \
+             /^#define FPATH_SUBDIRS/ { $$1=""; $$2=""; gsub(/[" ]/,""); tail=$$0; } \
+             END                      { printf "%s/%s\n", head, tail; };'            \
+	    obj/Src/zshpaths.h >obj/Src/zshpaths.temp
+	debian/zsh/bin/zsh5 -fc \
+            'setopt extendedglob; \
+	     for i in debian/zsh-common/'`cat obj/Src/zshpaths.temp`'; do \
+		 zcompile -U -M $$i.zwc $$i/*~*.zwc(^/);                  \
+		 chmod 644 $$i.zwc;                                       \
+	     done'
+endif
+
+# Docs: Info + HTML
+	cd obj && $(MAKE) install.info DESTDIR=$(CURDIR)/debian/zsh-doc
+	rm -f debian/zsh-doc/usr/share/info/dir*
+	cd obj && $(MAKE) install.html DESTDIR=$(CURDIR)/debian/zsh-doc htmldir=/usr/share/doc/zsh-doc/html
+
+# Work around texi2html unfriendliness
+	sed -i -e 's/<BODY.*>/<BODY LANG="EN">/' debian/zsh-doc/usr/share/doc/zsh-doc/html/*.html
+
+	dh_install -i
+
+# Doesn't this need to go before we zcompile stuff into .zwc files? -- Axel
+	sed -i -e 's,^local HELPDIR=.*,local HELPDIR=$${HELPDIR:-/usr/share/zsh/help},; s,:-more,:-/usr/bin/pager,;' \
+		debian/zsh-common/usr/share/zsh/functions/Misc/run-help
+	sed -i -e '1!b;s:^#!.*[ /]zsh:#!/bin/zsh:;s#/usr/local/bin#/usr/bin#;' \
+		`find debian/zsh-common/usr/share/zsh/functions -type f`
+
+	dh_link              -i
+	dh_bugfiles          -i
+	dh_installmenu                    -pzsh-common
+	dh_installdocs                    -pzsh-common
+	dh_installchangelogs    -pzsh-doc -pzsh-common
+	dh_lintian           -i
+	dh_compress          -i                        -Xpdf
+	dh_fixperms          -i
+	dh_installdeb        -i
+	dh_md5sums           -i
+	dh_gencontrol        -i
+	dh_builddeb          -i
+
+binary-arch-dynamic: build-arch
+	dh_testdir
+	dh_testroot
+
+	dh_installdirs -pzsh             -pzsh-dbg
+
+# modules
+	cd obj && $(MAKE) install.bin     DESTDIR=$(CURDIR)/debian/zsh INSTALL_PROGRAM='$(INSTALL_PROGRAM)'
+	cd obj && $(MAKE) install.modules DESTDIR=$(CURDIR)/debian/zsh INSTALL_PROGRAM='$(INSTALL_PROGRAM)'
+
+	mv debian/zsh/bin/zsh debian/zsh/bin/zsh5
+	rm debian/zsh/bin/zsh-5.[0-9]*
+
+	dh_bugfiles    -pzsh
+	dh_strip       -pzsh --dbg-package=zsh-dbg
+	dh_install     -pzsh             -pzsh-dbg
+
+	dh_shlibdeps   -pzsh             -pzsh-dbg -- \
+		-dDepends    debian/zsh/bin/*   \
+		-dRecommends debian/zsh/usr/lib/*/zsh/*/zsh/*.so
+
+	dh_installdocs -pzsh             -pzsh-dbg --link-doc=zsh
+	dh_installchangelogs -pzsh
+
+binary-arch-static: build-static
+	dh_testdir
+	dh_testroot
+
+	dh_installdirs       -pzsh-static
+
+	# Do not symlink /usr/share/doc/zsh-static to
+	# /usr/share/doc/zsh-common because zsh-static has a unique,
+	# generated README.Debian, and because --link-doc between
+	# arch-dep and arch-indep packages breaks binNMUs
+	dh_installdocs       -pzsh-static
+	awk 'BEGIN { print "The following modules are statically-compiled into the static zsh binary:\n"; } /link=static/ { printf "%s (%s %s)\n", substr($$1,6), $$4, $$5; }' obj-static/config.modules >debian/zsh-static/usr/share/doc/zsh-static/README.Debian
+
+	dh_bugfiles          -pzsh-static
+	dh_install           -pzsh-static
+	dh_strip             -pzsh-static
+
+	mv debian/zsh-static/bin/zsh  debian/zsh-static/bin/zsh5-static
+
+	dh_installchangelogs -pzsh-static
+
+binary-arch-dev: build-arch
+	dh_testdir
+	dh_testroot
+
+	dh_installdirs -pzsh-dev
+	dh_install     -pzsh-dev
+	find debian/zsh-dev/usr/include/zsh -name '*.h' -o -name '*.mdh' | \
+	  xargs sed -e 's@\.\./config\.h@config.h@;s@#\(\s*\)include "\([^"]\+\)"@#\1include <zsh/\2>@' -i
+
+	cd debian/zsh-dev/usr/share/aclocal; mv aczshoot.m4 zshoot.m4
+
+	dh_installdocs -pzsh-dev
+	dh_installchangelogs -pzsh-dev
+
+binary-arch: binary-arch-dynamic binary-arch-static binary-arch-dev
+	dh_lintian    -a
+	dh_link       -a
+	dh_compress   -a
+	dh_fixperms   -a
+	dh_installdeb -a
+	dh_gencontrol -a -- -VBuilt-Using="$(BUILT_USING)"
+	dh_md5sums    -a
+	dh_builddeb   -a
+
+binary: binary-indep binary-arch binary-arch-static binary-arch-dev
+
+prebuild:
+	sed -i 's/\(^#Doc.*\)/\1/;s/\(^#META-FAQ\)/\1/' debian/clean
+	./debian/rules clean
+	Util/preconfig
+	./configure
+	make -C Doc
+	make distclean
+	rm -rf autom4te.cache
+	sed -i 's/\(^Doc.*\)/#\1/;s/\(^META-FAQ\)/#\1/' debian/clean
+	./debian/rules clean
+
+get-orig-source: version=$(shell git describe --tags --abbrev=0 --match='zsh-*' | sed -e 's/^zsh-//')
+get-orig-source:
+	git archive --format=tar --output=../zsh_$(version).orig.tar --prefix=zsh-$(version)/ zsh-$(version)
+	xz -7v ../zsh_$(version).orig.tar
+
+.PHONY: binary binary-arch binary-indep clean binary-arch-dynamic binary-arch-static binary-arch-dev get-orig-source

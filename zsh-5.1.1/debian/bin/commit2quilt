@@ -1,0 +1,68 @@
+#!/bin/sh
+
+# commit2quilt, based on patch2quilt
+# Copyright (c) 2011, Frank Terbeck <ft@bewatermyfriend.org>
+# Copyright (c) 2014, Axel Beckert <abe@debian.org>
+#
+# Permission to use, copy, modify, and/or distribute this software for any
+# purpose with or without fee is hereby granted, provided that the above
+# copyright notice and this permission notice appear in all copies.
+#
+# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+#
+# Often, we may want to backport a patch from upstream to our package. If
+# that's just a matter of cherry-picking a patch from upstream, this script can
+# help. We don't really want to git cherry-pick, but rather add a new patch to
+# our quilt series. In short, this script automates doing that.
+#
+# Call it like this:
+#   % git fetch zsh
+#   % debian/bin/commit2quilt $commit_id
+#
+# `commit2quilt' requires `quilt', `git' and $GIT_EDITOR or
+# emacsclient available.
+
+set -e
+
+for where in ./ ../ ../../ ../../../ ../../../../ ../../../../../; do
+    if [ -e ${where}debian/rules -a -d ${where}debian/patches ]; then
+        export QUILT_PATCHES=debian/patches
+        break
+    fi
+done
+
+export GIT_EDITOR=${GIT_EDITOR:-emacsclient}
+
+if [ $# -ne 1 ]; then
+    printf 'usage: patch2quilt <commit-id>\n'
+    exit 1
+fi
+
+commitid="$1"
+shortid="`echo -n $commitid | cut -c1-8`"
+desc="`git show $commitid | egrep '^    [^ ]' | head -1 | sed -e 's/^[- *:]*//'`"
+filename="cherry-pick-$shortid-`echo "$desc" | tr -c 'a-zA-Z0-9' '-' | tr 'A-Z' 'a-z' | sed -e 's/--*/-/g;s/-$//'`.patch"
+echo "$filename"
+
+if quilt series | fgrep -q "$filename"; then
+    echo "Patch $filename ($commitid) already existing" 1>&2
+    exit 1
+fi
+
+git show "$commitid" | filterdiff -x a/ChangeLog > "${where}debian/patches/$filename"
+echo "$filename" >> "${where}debian/patches/series"
+sed -e '1 s/^commit/Origin: commit/; 4 d; 5 s/^    /Description: /; 6 d' -i "${where}debian/patches/$filename"
+"${GIT_EDITOR}" "${where}debian/patches/$filename"
+git add "${where}debian/patches/$filename" "${where}debian/patches/series"
+quilt push -a
+quilt pop -a
+git commit -m "Cherry-pick $shortid ($desc) from upstream" -v --edit
+
+exit 0
+
