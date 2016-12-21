@@ -1,5 +1,5 @@
 PKG_NAME="nmap"
-PKG_VERSION="7.31"
+PKG_VERSION="7.40"
 PKG_SITE="http://nmap.org/"
 PKG_URL="http://nmap.org/dist/${PKG_NAME}-${PKG_VERSION}.tgz"
 PKG_DEPENDS_TARGET="toolchain netbsd-curses libpcap libdnet pcre"

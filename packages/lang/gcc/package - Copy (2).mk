@@ -17,16 +17,23 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="6.3.0"
 PKG_REV="1"
+PKG_USE_SNAPSHOT="false"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://gcc.gnu.org/"
-PKG_URL="http://ftp.gnu.org/gnu/gcc/$PKG_NAME-$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host"
+if [ x"$PKG_USE_SNAPSHOT" == x"true" ]; then
+    PKG_MAJOR_VERSION="6"
+    PKG_SNAPSHOT_DATESTAMP="20161215"
+    PKG_VERSION="$PKG_MAJOR_VERSION-$PKG_SNAPSHOT_DATESTAMP"
+    PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/LATEST-6/gcc-$PKG_MAJOR_VERSION-$PKG_SNAPSHOT_DATESTAMP.tar.bz2"
+else
+    PKG_VERSION="c2103c17"
+    PKG_GIT_URL="git://gcc.gnu.org/git/gcc.git"
+fi
+PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host cloog:host"
 PKG_DEPENDS_TARGET="gcc:host"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
-PKG_PRIORITY="optional"
 PKG_SECTION="lang"
 PKG_SHORTDESC="gcc: The GNU Compiler Collection Version 4 (aka GNU C Compiler)"
 PKG_LONGDESC="This package contains the GNU Compiler Collection. It includes compilers for the languages C, C++, Objective C, Fortran 95, Java and others ... This GCC contains the Stack-Smashing Protector Patch which can be enabled with the -fstack-protector command-line option. More information about it ca be found at http://www.research.ibm.com/trl/projects/security/ssp/."
