@@ -24,7 +24,7 @@ PKG_LICENSE="OSS"
 PKG_SITE="http://www.python.org/"
 PKG_URL="http://www.python.org/ftp/python/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="icu zlib:host bzip2:host"
-PKG_DEPENDS_TARGET="toolchain sqlite expat zlib bzip2 openssl libffi gdbm db Python:host"
+PKG_DEPENDS_TARGET="toolchain sqlite expat zlib bzip2 openssl libffi Python:host"
 PKG_SECTION="lang"
 PKG_SHORTDESC="python: The Python programming language"
 PKG_LONGDESC="Python is an interpreted object-oriented programming language, and is often compared with Tcl, Perl, Java or Scheme."
@@ -32,7 +32,7 @@ PKG_LONGDESC="Python is an interpreted object-oriented programming language, and
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PY_DISABLED_MODULES="_tkinter nis ossaudiodev"
+PY_DISABLED_MODULES="_tkinter nis gdbm bsddb ossaudiodev"
 
 PKG_CONFIGURE_OPTS_HOST="--cache-file=config.cache \
                          --without-cxx-main \
@@ -113,13 +113,10 @@ makeinstall_target() {
 }
 
 post_makeinstall_target() {
-  EXCLUDE_DIRS="bsddb idlelib lib-tk lib2to3 msilib pydoc_data test"
+  EXCLUDE_DIRS="bsddb idlelib lib-tk lib2to3 msilib pydoc_data test unittest"
   for dir in $EXCLUDE_DIRS; do
     rm -rf $INSTALL/usr/lib/python*/$dir
   done
-
-  python -Wi -t -B ../Lib/compileall.py $INSTALL/usr/lib/python*/ -f
-  rm -rf `find $INSTALL/usr/lib/python*/ -name "*.py"`
 
   rm -rf $INSTALL/usr/lib/python*/config
   rm -rf $INSTALL/usr/bin/2to3
@@ -127,6 +124,9 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin/pydoc
   rm -rf $INSTALL/usr/bin/smtpd.py
   rm -rf $INSTALL/usr/bin/python*-config
+  cd $INSTALL/usr/lib/python2.7
+  python -Wi -t -B $ROOT/$PKG_BUILD/Lib/compileall.py -d /usr/lib/python2.7 -f .
+  find $INSTALL/usr/lib/python2.7 -name "*.py" -exec rm -f {} \; &>/dev/null
 
   # strip
   chmod u+w $INSTALL/usr/lib/libpython*.so.*
