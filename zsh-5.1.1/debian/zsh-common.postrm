@@ -1,9 +1,0 @@
-#!/bin/sh
-
-set -e
-
-if [ "$1" = "purge" ]; then
-    rmdir -p /usr/local/share/zsh/site-functions || true
-fi
-
-#DEBHELPER#

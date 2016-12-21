@@ -1,2 +1,0 @@
-# Only one of many files affected -> likely a false positive
-zsh: hardening-no-fortify-functions usr/lib*/zsh/*/zsh/zleparameter.so

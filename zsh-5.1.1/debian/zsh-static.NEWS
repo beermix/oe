@@ -1,7 +1,0 @@
-zsh (5.0.7-dev-2-1) experimental; urgency=low
-
-  * zsh-static will go away soon. Object now if you need it and tell us
-    why at pkg-zsh-devel@lists.alioth.debian.org.  See also
-    http://noone.org/blog?-tags=zsh-static
-
- -- Axel Beckert <abe@debian.org>  Tue, 05 May 2015 12:09:14 +0200
