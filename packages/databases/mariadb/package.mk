@@ -148,7 +148,7 @@ configure_target() {
         -DINSTALL_SQLBENCHDIR=share/mysql/bench \
         -DINSTALL_SUPPORTFILESDIR=share/mysql/support-files \
         -DMYSQL_DATADIR=/storage/mysql \
-        -DMYSQL_UNIX_ADDR=/run/mysqld/mysqld.sock \
+        -DMYSQL_UNIX_ADDR=/var/run/mysqld.sock \
         -DWITH_ARCHIVE_STORAGE_ENGINE=1 \
         -DWITHOUT_PBXT_STORAGE_ENGINE=1 \
         -DWITH_EXTRA_CHARSETS=complex \
