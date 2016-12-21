@@ -2,17 +2,15 @@ PKG_NAME="go-peerflix"
 PKG_VERSION="abb60b4"
 PKG_GIT_URL="https://github.com/Sioro-Neoku/go-peerflix"
 PKG_DEPENDS_TARGET="toolchain go:host"
-PKG_GIT_BRANCH="master"
 PKG_KEEP_CHECKOUT="no"
 PKG_SECTION="tools"
 PKG_AUTORECONF="no"
 
+CONCURRENCY_MAKE_LEVEL=1
+
 pre_make_target() {
-  export GOARCH=amd64
-  export HOST_GO_CGO_ENABLED=1
-  export CC="$CC"
-  export CXX="$CXX"
   export GOOS=linux
+  export GOARCH=amd64
   export CGO_ENABLED=1
   export CGO_NO_EMULATION=1
   export CGO_CFLAGS=$CFLAGS
