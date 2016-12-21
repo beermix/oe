@@ -19,7 +19,7 @@ PKG_CMAKE_OPTS_TARGET="-DWITH_LIBRARY=ON \
 			  -DWITH_UPNP=ON \
 			  -DTHREADS_PTHREAD_ARG=4 \
 			  -DWITH_HARDENING=OFF \
-			  -DWITH_AESNI=ON '
+			  -DWITH_AESNI=ON \
 			  -DCMAKE_BUILD_TYPE=Release"
 
 post_makeinstall_target() {
