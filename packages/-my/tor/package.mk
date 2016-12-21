@@ -1,6 +1,6 @@
 PKG_NAME="tor"
-PKG_VERSION="tor-0.2.8.12"
-PKG_GIT_URL="https://github.com/torproject/tor"
+PKG_VERSION="0.2.9.8"
+PKG_URL="https://archive.torproject.org/tor-package-archive/tor-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain openssl libz libevent"
 PKG_SECTION="security"
 PKG_AUTORECONF="yes"
