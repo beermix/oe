@@ -24,7 +24,7 @@ PKG_CONFIGURE_OPTS_TARGET="--with-webdir=/storage/.config/netdata/webdir \
                            
                            
 post_install() {
-  add_user nobody x 990 990 "netdata" "/storage" "/bin/bash"
+  add_user nobody x 990 990 "netdata" "/storage" "/bin/sh"
   add_group nobody 990
 }
 
