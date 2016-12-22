@@ -4,12 +4,12 @@
 ################################################################################
 
 PKG_NAME="pvr.iptvsimple.multi"
-PKG_VERSION="ab6ac4e"
+PKG_VERSION="ae9bc1d"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
-PKG_GIT_URL="https://github.com/AlexELEC/pvr.iptvsimple.multi"
+PKG_URL="https://dl.dropboxusercontent.com/s/wrftt8dtchzm8f0/pvr.iptvsimple.multi-ae9bc1d.tar.xz"
 PKG_DEPENDS_TARGET="toolchain kodi-platform zlib"
 PKG_PRIORITY="optional"
 PKG_SECTION=""
