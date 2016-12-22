@@ -4,11 +4,12 @@
 ################################################################################
 
 PKG_NAME="aceproxy"
-PKG_VERSION="c94c0c1"
+PKG_VERSION="26e79d1"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_GIT_URL="https://github.com/AlexELEC/acephproxy"
+PKG_SITE="https://github.com/AndreyPavlenko/aceproxy"
+PKG_URL="$ALEXELEC_SRC/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain gevent psutil M2Crypto"
 PKG_PRIORITY="optional"
 PKG_SECTION="xmedia/network"
@@ -24,6 +25,9 @@ make_target() {
 
 makeinstall_target() {
   DESTDIR=$INSTALL ./install
+
+  mkdir -p $INSTALL/usr/bin
+    cp $PKG_DIR/scripts/* $INSTALL/usr/bin
 }
 
 post_install() {
