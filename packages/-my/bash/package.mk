@@ -16,7 +16,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --enable-readline \
                            --without-bash-malloc \
                            --with-installed-readline \
-                           --enable-static-link \
+                           --disable-static-link \
                            --disable-rpath \
                            --cache-file=/dev/null \
                            --enable-history \
