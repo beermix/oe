@@ -130,6 +130,11 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
                            --without-xmlto \
                            --without-fop"
 
+pre_configure_target() {
+# hack to prevent a build error
+  CFLAGS=`echo $CFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|"`
+  LDFLAGS=`echo $LDFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|"`
+}
 post_makeinstall_target() {
   rm -rf $INSTALL/var/cache/xkb
 
