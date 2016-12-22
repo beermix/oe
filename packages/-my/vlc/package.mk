@@ -142,6 +142,8 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
             --disable-crystalhd \
             --disable-dxva2 \
             --enable-vlc \
+            --enable-dbus \
+            --disable-qt \
             LUAC=$SYSROOT_PREFIX/usr/bin/luac"
 
 post_makeinstall_target() {
