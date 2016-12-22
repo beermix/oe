@@ -121,6 +121,7 @@ configure_host() {
         -DWITH_SYSTEMD=OFF \
         -DWITH_LIBWRAP=OFF \
         -DWITH_WSREP=OFF \
+        -DSECURITY_HARDENED=OFF \
         ..
 }
 
@@ -159,6 +160,7 @@ configure_target() {
         -DWITH_ZLIB=bundled \
         -DWITH_SYSTEMD=OFF \
         -DWITH_LIBWRAP=OFF \
+        -DSECURITY_HARDENED=OFF \
         -DWITH_SSL=$SYSROOT_PREFIX/usr \
         $MARIADB_OPTS \
         ..
