@@ -1,5 +1,5 @@
 PKG_NAME="transmission"
-PKG_VERSION="f48c0cc"
+PKG_VERSION="2.92"
 PKG_GIT_URL="https://github.com/transmission/transmission"
 PKG_GIT_BRANCH="master"
 PKG_KEEP_CHECKOUT="yes"
