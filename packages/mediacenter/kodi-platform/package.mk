@@ -25,7 +25,6 @@ PKG_SITE="http://www.kodi.tv"
 PKG_GIT_URL="https://github.com/xbmc/kodi-platform"
 PKG_GIT_BRANCH="master"
 PKG_DEPENDS_TARGET="toolchain tinyxml kodi platform"
-
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="kodi-platform:"
 PKG_LONGDESC="kodi-platform:"
@@ -34,10 +33,10 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 PKG_CMAKE_OPTS_TARGET="-DCMAKE_INSTALL_PREFIX=/usr \
-		       -DCMAKE_INSTALL_PREFIX_TOOLCHAIN=$SYSROOT_PREFIX/usr \
-		       -DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
-		       -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
-		       -DBUILD_SHARED_LIBS=0"
+			  -DCMAKE_INSTALL_PREFIX_TOOLCHAIN=$SYSROOT_PREFIX/usr \
+			  -DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
+			  -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
+			  -DBUILD_SHARED_LIBS=0"
 		       
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/lib/kodiplatform

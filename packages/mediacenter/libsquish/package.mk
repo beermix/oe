@@ -25,7 +25,6 @@ PKG_SITE=""
 PKG_GIT_URL="https://github.com/OpenELEC/libsquish.git"
 PKG_GIT_BRANCH="master"
 PKG_DEPENDS_HOST="toolchain"
-
 PKG_SECTION=""
 PKG_SHORTDESC="libsquish"
 PKG_LONGDESC="libsquish"

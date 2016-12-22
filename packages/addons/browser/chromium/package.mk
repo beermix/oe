@@ -37,6 +37,7 @@ PKG_ADDON_PROVIDES="executable"
 
 pre_make_target() {
   strip_lto
+  unset CPPFLAGS
 
   sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' third_party/widevine/cdm/stub/widevine_cdm_version.h
 }

@@ -25,7 +25,6 @@ PKG_SITE="http://www.openelec.tv"
 PKG_GIT_URL="https://github.com/OpenELEC/service.openelec.settings.git"
 PKG_GIT_BRANCH="master"
 PKG_DEPENDS_TARGET="toolchain Python connman pygobject dbus-python"
-
 PKG_SECTION=""
 PKG_SHORTDESC="OpenELEC-settings: Settings dialog for OpenELEC"
 PKG_LONGDESC="OpenELEC-settings: is a settings dialog for OpenELEC"

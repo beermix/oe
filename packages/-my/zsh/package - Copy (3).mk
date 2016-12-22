@@ -1,6 +1,6 @@
 PKG_NAME="zsh"
-PKG_VERSION="zsh-5.3.1"
-PKG_GIT_URL="https://github.com/zsh-users/zsh"
+PKG_VERSION="5.3"
+PKG_URL="https://sourceforge.net/projects/zsh/files/zsh/$PKG_VERSION/zsh-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain netbsd-curses libcap pcre readline gdbm libpcap"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
@@ -30,8 +30,7 @@ PKG_CONFIGURE_OPTS_TARGET="--bindir=/bin \
 			      --enable-max-jobtable-size=256 \
 			      --with-term-lib=tinfo \
 			      --disable-dynamic-nss \
-			      --disable-zsh-debug \
-			      --enable-unicode9"
+			      --disable-zsh-debug"
 
 post_makeinstall_target() {
   rm $INSTALL/bin/zsh-5*
