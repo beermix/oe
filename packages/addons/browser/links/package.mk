@@ -19,9 +19,6 @@
 
 PKG_NAME="links"
 PKG_VERSION="2.14"
-PKG_REV="0"
-PKG_ARCH="i386 x86_64"
-PKG_LICENSE="GPL"
 PKG_SITE="http://links.twibright.com/"
 PKG_URL="http://links.twibright.com/download/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libressl libjpeg-turbo libpng libX11 libxcb libXau zlib"
@@ -34,19 +31,16 @@ PKG_IS_ADDON="yes"
 PKG_ADDON_TYPE="xbmc.python.script"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--x-includes=$SYSROOT_PREFIX/usr/include/X11/ \
-        --x-libraries=$SYSROOT_PREFIX/usr/X11/lib/ \
-        --enable-graphics \
-        --with-ssl \
-        --disable-ssl-pkgconfig \
-        --without-libevent \
-        --without-bzip2 \
-        --without-bzlib \
-        --without-lzma \
-        --without-svgalib \
-        --with-x \
-        --without-directfb \
-        --without-libtiff"
+PKG_CONFIGURE_OPTS_TARGET="--enable-graphics \
+			      --with-ssl \
+			      --without-libevent \
+			      --without-bzip2 \
+			      --without-bzlib \
+			      --without-lzma \
+			      --without-svgalib \
+			      --with-x \
+			      --without-directfb \
+			      --without-libtiff"
 
 makeinstall_target() {
   : # nope
