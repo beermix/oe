@@ -51,7 +51,7 @@ PKG_CONFIGURE_OPTS_TARGET="py_cv_mod_gtk_=yes \
                            --disable-python \
                            --disable-pygtk \
                            --disable-python-dbus \
-                           --enable-mono \
+                           --disable-mono \
                            --disable-monodoc \
                            --disable-autoipd \
                            --disable-doxygen-doc \
