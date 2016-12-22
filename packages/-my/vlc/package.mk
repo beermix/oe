@@ -10,7 +10,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.videolan.org"
 PKG_URL="http://download.videolan.org/$PKG_NAME/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain dbus libdvbpsi gnutls ffmpeg zlib lua libvorbis libogg flac"
+PKG_DEPENDS_TARGET="toolchain dbus libdvbpsi ffmpeg zlib lua libvorbis libogg flac"
 PKG_PRIORITY="optional"
 PKG_SECTION="xmedia/tools"
 PKG_SHORTDESC="VideoLAN multimedia player and streamer"
@@ -132,8 +132,8 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
             --enable-udev \
             --disable-mtp \
             --disable-lirc \
-            --disable-libgcrypt \
-            --enable-gnutls \
+            --enable-libgcrypt \
+            --disable-gnutls \
             --disable-update-check \
             --disable-kva \
             --disable-bluray \
