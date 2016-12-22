@@ -41,7 +41,7 @@ PKG_MARIADB_SERVER="yes"
 # - large :  embedded + archive + federated + blackhole + innodb
 # - xlarge:  embedded + archive + federated + blackhole + innodb + partition
 # - community:  all  features (currently == xlarge)
-  MARIADB_OPTS="$MARIADB_OPTS -DFEATURE_SET=large"
+  MARIADB_OPTS="$MARIADB_OPTS -DFEATURE_SET=xlarge"
 
 # Build MariaDB Server support
   if [ "$PKG_MARIADB_SERVER" = "no" ]; then
@@ -55,7 +55,7 @@ PKG_MARIADB_SERVER="yes"
 
 # Set MariaDB server storage engines
   MARIADB_OPTS="$MARIADB_OPTS -DWITH_INNOBASE_STORAGE_ENGINE=ON"
-  MARIADB_OPTS="$MARIADB_OPTS -WITH_PARTITION_STORAGE_ENGINE=OFF"
+  MARIADB_OPTS="$MARIADB_OPTS -WITH_PARTITION_STORAGE_ENGINE=ON"
   MARIADB_OPTS="$MARIADB_OPTS -WITH_PERFSCHEMA_STORAGE_ENGINE=OFF"
 
 # According to MariaDB galera cluster documentation these options must be passed
@@ -150,7 +150,7 @@ configure_target() {
         -DINSTALL_SUPPORTFILESDIR=share/mysql/support-files \
         -DMYSQL_DATADIR=/storage/mysql \
         -DMYSQL_UNIX_ADDR=/run/mysqld/mysqld.sock \
-        -DWITH_EXTRA_CHARSETS=complex \
+        -DWITH_EXTRA_CHARSETS=all \
         -DTOKUDB_OK=0 \
         -DDISABLE_LIBMYSQLCLIENT_SYMBOL_VERSIONING=TRUE \
         -DENABLE_DTRACE=OFF \
