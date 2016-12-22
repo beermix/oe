@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="tigervnc"
-PKG_VERSION="7e8b8b1"
+PKG_VERSION="14f3fc0"
 PKG_REV="100"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPLv2"
@@ -25,7 +25,6 @@ PKG_SITE="http://www.tigervnc.org"
 PKG_GIT_URL="https://github.com/TigerVNC/tigervnc"
 PKG_DEPENDS_TARGET="toolchain cmake:host libX11 libXext libXtst libz libjpeg-turbo"
 PKG_SECTION="service"
-
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="TigerVNC"
 PKG_ADDON_TYPE="xbmc.service"

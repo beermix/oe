@@ -24,7 +24,6 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://www.alsa-project.org/"
 PKG_URL="ftp://ftp.alsa-project.org/pub/utils/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain alsa-lib netbsd-curses"
-
 PKG_SECTION="audio"
 PKG_SHORTDESC="alsa-utils: Advanced Linux Sound Architecture utilities"
 PKG_LONGDESC="This package includes the utilities for ALSA, like alsamixer, aplay, arecord, alsactl, iecset and speaker-test."
@@ -35,8 +34,8 @@ PKG_AUTORECONF="yes"
 # package specific configure options
 PKG_CONFIGURE_OPTS_TARGET="--disable-dependency-tracking \
                            --disable-xmlto \
-                           --disable-alsaconf \
-                           --disable-alsaloop \
+                           --enable-alsaconf \
+                           --enable-alsaloop \
                            --enable-alsatest \
                            --disable-bat \
                            --disable-nls"
