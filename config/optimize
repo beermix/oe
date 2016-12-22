@@ -4,8 +4,8 @@ if [ "$OPTIMIZATIONS" = normal ];then
 fi
 
 if [ "$OPTIMIZATIONS" = size ];then
-  GCC_OPTIM="-O2"
-  LDFLAGS="-Wl,-O1,--as-needed"
+  GCC_OPTIM="-g0 -fdata-sections -ffunction-sections -O2 -fno-asynchronous-unwind-tables -Wa,--noexecstack"
+  LDFLAGS="-Wl,--gc-sections,--as-needed -Wl,-z,relro,-z,now"
 fi
 
 if [ "$LTO_SUPPORT" = yes ];then
