@@ -17,13 +17,13 @@
 ################################################################################
 
 PKG_NAME="freetype"
-PKG_VERSION="2.7"
+PKG_VERSION="2.6.3"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.freetype.org"
 PKG_URL="http://download.savannah.gnu.org/releases/freetype/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain libz"
+PKG_DEPENDS_TARGET="toolchain zlib libpng"
 PKG_SECTION="print"
 PKG_SHORTDESC="freetype: TrueType font rendering library"
 PKG_LONGDESC="The FreeType engine is a free and portable TrueType font rendering engine. It has been developed to provide TT support to a great variety of platforms and environments."
@@ -33,12 +33,9 @@ PKG_AUTORECONF="no"
 PKG_USE_CMAKE="no"
 
 # package specific configure options
-PKG_CONFIGURE_OPTS_TARGET="--enable-static \
-                           --disable-shared \
-                           --with-zlib=yes \
-                           --with-bzip2=no \
-                           --with-png=no \
-                           --with-harfbuzz=no"
+PKG_CONFIGURE_OPTS_TARGET="LIBPNG_CFLAGS=-I$SYSROOT_PREFIX/usr/include \
+                           LIBPNG_LDFLAGS=-L$SYSROOT_PREFIX/usr/lib \
+                           --with-zlib"
 
 pre_configure_target() {
   # unset LIBTOOL because freetype uses its own
@@ -53,14 +50,5 @@ post_makeinstall_target() {
   ln -v -sf $SYSROOT_PREFIX/usr/include/freetype2 $SYSROOT_PREFIX/usr/include/freetype
 
   rm -rf $INSTALL/usr/bin
-}
-PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
-
-pre_configure_host() {
-  # unset LIBTOOL because freetype uses its own
-    ( cd ..
-      unset LIBTOOL
-      sh autogen.sh
-    )
 }
 
