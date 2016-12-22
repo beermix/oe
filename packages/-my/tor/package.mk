@@ -1,15 +1,12 @@
 PKG_NAME="tor"
-PKG_VERSION="0.2.9.8"
+PKG_VERSION="0.2.8.12"
 PKG_URL="https://archive.torproject.org/tor-package-archive/tor-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain openssl libz libevent libcap"
 PKG_SECTION="security"
 PKG_AUTORECONF="yes"
 
-pre_configure_target() {
-  export CFLAGS="$CFLAGS -std=gnu99"
-}
-
-PKG_CONFIGURE_OPTS_TARGET="--with-openssl-dir=$SYSROOT_PREFIX/usr \
+PKG_CONFIGURE_OPTS_TARGET="ac_cv_prog_cc_c99=-std=gnu99 \
+			      --with-openssl-dir=$SYSROOT_PREFIX/usr \
 			      --disable-gcc-hardening \
 			      --disable-unittests \
 			      --disable-seccomp \
