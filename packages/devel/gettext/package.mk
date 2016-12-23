@@ -42,4 +42,4 @@ PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared \
                          --disable-native-java \
                          --disable-csharp \
                          --without-emacs \
-                         --enable-threads=posix"
+                         --disable-libasprintf"
