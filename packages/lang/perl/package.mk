@@ -1,14 +1,12 @@
 PKG_NAME="perl"
-PKG_VERSION="5.25.5"
+PKG_VERSION="5.25.8"
 PKG_URL="http://www.cpan.org/src/5.0/perl-${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain openssl gdbm"
-
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 configure_target() {
-  sed -i 's,-fstack-protector,-fnostack-protector,g' ./Configure
   ./Configure -des -Duselargefiles \
   		   -Duse64bitint \
   		   -Dusethreads \
@@ -16,7 +14,7 @@ configure_target() {
   		   -Dprefix=/usr \
   		   -Dvendorprefix=/usr \
   		   -Dusedevel \
-  		   -Accflags="-fno-stack-protector $CFLAGS -fPIC -DPIC" \
+  		   -Accflags="$CFLAGS -fPIC -DPIC" \
   		   -Dld="$LD" \
   		   -Dar="$AR" \
   		   -Dcc="$CC" \
