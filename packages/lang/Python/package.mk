@@ -34,8 +34,7 @@ PKG_AUTORECONF="yes"
 
 PY_DISABLED_MODULES="_tkinter nis gdbm bsddb ossaudiodev"
 
-PKG_CONFIGURE_OPTS_HOST="LDFLAGS="$HOST_LDFLAGS -Wl,--enable-new-dtags" \
-			    ac_cv_prog_HAS_HG=/bin/false \
+PKG_CONFIGURE_OPTS_HOST="ac_cv_prog_HAS_HG=/bin/false \
 			    ac_cv_prog_SVNVERSION=/bin/false--cache-file=config.cache \
 			    --without-cxx-main \
                          --with-threads \
