@@ -160,7 +160,7 @@ configure_target() {
         -DWITH_ZLIB=bundled \
         -DWITH_SYSTEMD=ON \
         -DWITH_LIBWRAP=OFF \
-        -DSECURITY_HARDENED=ON \
+        -DSECURITY_HARDENED=OFF \
         -DCMAKE_CROSSCOMPILING=1 \
         -DSTACK_DIRECTION=-1 \
         -DWITH_JEMALLOC=no \
