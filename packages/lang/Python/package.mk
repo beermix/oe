@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.python.org/"
 PKG_URL="http://www.python.org/ftp/python/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_HOST="zlib:host bzip2:host icu"
+PKG_DEPENDS_HOST="zlib:host bzip2:host expat:host icu"
 PKG_DEPENDS_TARGET="toolchain sqlite expat zlib bzip2 openssl libffi Python:host"
 PKG_SECTION="lang"
 PKG_SHORTDESC="python: The Python programming language"
@@ -34,8 +34,10 @@ PKG_AUTORECONF="yes"
 
 PY_DISABLED_MODULES="_tkinter nis gdbm bsddb ossaudiodev"
 
-PKG_CONFIGURE_OPTS_HOST="--cache-file=config.cache \
-                         --without-cxx-main \
+PKG_CONFIGURE_OPTS_HOST="LDFLAGS="$HOST_LDFLAGS -Wl,--enable-new-dtags" \
+			    ac_cv_prog_HAS_HG=/bin/false \
+			    ac_cv_prog_SVNVERSION=/bin/false--cache-file=config.cache \
+			    --without-cxx-main \
                          --with-threads \
                          --enable-unicode=ucs4 \
                          --disable-ipv6"
@@ -51,6 +53,8 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            ac_cv_file__dev_ptmx=no \
                            ac_cv_file__dev_ptc=no \
                            ac_cv_have_long_long_format=yes \
+                           ac_cv_working_tzset=yes \
+                           ac_cv_prog_HAS_HG=/bin/false \
                            --with-threads \
                            --enable-unicode=ucs4 \
                            --disable-ipv6 \
