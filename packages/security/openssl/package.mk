@@ -6,11 +6,7 @@ PKG_SECTION="security"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-pre_configure_target() {
-  export MAKEFLAGS="-j1"
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O2||g"`
-  #export CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
-}
+MAKEFLAGS="-j1"
 
 configure_target() {
   ./Configure --prefix=/usr \
@@ -51,7 +47,7 @@ makeinstall_target() {
   make INSTALL_PREFIX=$SYSROOT_PREFIX install_sw
   make INSTALL_PREFIX=$INSTALL install_sw
   chmod 755 $INSTALL/usr/lib/*.so*
-  chmod 755 $INSTALL/usr/lib/engines/*.so
+  #chmod 755 $INSTALL/usr/lib/engines/*.so
 }
 
 post_makeinstall_target() {
@@ -64,9 +60,8 @@ post_makeinstall_target() {
 # create new cert: perl ./mk-ca-bundle.pl
   #mkdir -p $INSTALL/$SSL_CERTIFICATES
   mkdir -p $INSTALL/etc/ssl
-  perl $PKG_DIR/cert/mk-ca-bundle.pl
-  cp $ROOT/$PKG_BUILD/ca-bundle.crt $INSTALL/etc/ssl/cert.pem
+  #perl $PKG_DIR/cert/mk-ca-bundle.pl
+  #cp $ROOT/$PKG_BUILD/ca-bundle.crt $INSTALL/etc/ssl/cert.pem
     
-  #cp $PKG_DIR/cert/ca-bundle.crt $INSTALL/$SSL_CERTIFICATES/cacert.pem
-  #cp $PKG_DIR/cert/ca-bundle.crt $INSTALL/etc/ssl/cert.pem
+  cp $PKG_DIR/cert/ca-bundle.crt $INSTALL/etc/ssl/cert.pem
 }
