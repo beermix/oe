@@ -32,9 +32,18 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 PKG_CMAKE_OPTS_TARGET="-DBUILD_tools=OFF -DBUILD_examples=OFF -DBUILD_tests=OFF -DBUILD_shared=ON"
-PKG_CMAKE_OPTS_HOST="-DBUILD_tools=OFF -DBUILD_examples=OFF -DBUILD_tests=OFF -DBUILD_shared=ON"
 
 pre_make_target() {
   # fix builderror when building in subdirs
   cp -r ../doc .
+}
+
+configure_host() {
+  cmake -DCMAKE_INSTALL_PREFIX=$ROOT/$TOOLCHAIN \
+  	 -DCMAKE_BUILD_TYPE=Release \
+  	 -DBUILD_tools=OFF \
+  	 -DBUILD_examples=OFF \
+  	 -DBUILD_tests=OFF \
+  	 -DBUILD_shared=OFF \
+  	 ..
 }
