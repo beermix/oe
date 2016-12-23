@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.netfilter.org/"
 PKG_URL="http://www.netfilter.org/projects/iptables/files/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain linux libmnl libnftnl libnetfilter_acct libnetfilter_conntrack libnetfilter_log libnetfilter_queue"
+PKG_DEPENDS_TARGET="toolchain linux libpcap libmnl libnftnl libnetfilter_acct libnetfilter_conntrack libnetfilter_log libnetfilter_queue"
 PKG_SECTION="network"
 PKG_SHORTDESC="iptables: IP packet filter administration"
 PKG_LONGDESC="Iptables is used to set up, maintain, and inspect the tables of IP packet filter rules in the Linux kernel. There are several different tables which may be defined, and each table contains a number of built-in chains, and may contain user-defined chains."
@@ -31,4 +31,6 @@ PKG_LONGDESC="Iptables is used to set up, maintain, and inspect the tables of IP
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--with-kernel=$(get_pkg_build linux)"
+PKG_CONFIGURE_OPTS_TARGET="--with-kernel=$(get_pkg_build linux) \
+			      --enable-bpf-compiler \
+			      --enable-nfsynproxy"
