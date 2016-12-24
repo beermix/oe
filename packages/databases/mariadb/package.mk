@@ -103,10 +103,7 @@ PKG_MARIADB_SERVER="yes"
 
 
 configure_host() {
-  cmake -GNinja \
-        -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DCMAKE_PREFIX_PATH=$ROOT/$TOOLCHAIN/ \
+  cmake -DCMAKE_PREFIX_PATH=$ROOT/$TOOLCHAIN/ \
         -DCMAKE_BUILD_TYPE=Release \
         -DFEATURE_SET=xsmall \
         -DWITHOUT_SERVER=OFF \
@@ -125,7 +122,6 @@ configure_host() {
         -DWITH_SYSTEMD=OFF \
         -DWITH_LIBWRAP=OFF \
         -DWITH_WSREP=OFF \
-        -DSTACK_DIRECTION=1 \
         ..
 }
 
@@ -133,10 +129,10 @@ makeinstall_host() {
  : # nothing todo
 }
 
-#pre_configure_target() {
-#  export TARGET_CFLAGS="$TARGET_CFLAGS -fPIC -DPIC -fno-strict-aliasing -DBIG_JOINS=1 -fomit-frame-pointer -fno-delete-null-pointer-checks"
-#  export TARGET_CXXFLAGS="$TARGET_CXXFLAGS -fPIC -DPIC -fno-strict-aliasing -DBIG_JOINS=1 -felide-constructors -fno-delete-null-pointer-checks"
-#}
+pre_configure_target() {
+  export TARGET_CFLAGS="$TARGET_CFLAGS -fPIC -DPIC -fno-strict-aliasing -DBIG_JOINS=1 -fomit-frame-pointer -fno-delete-null-pointer-checks"
+  export TARGET_CXXFLAGS="$TARGET_CXXFLAGS -fPIC -DPIC -fno-strict-aliasing -DBIG_JOINS=1 -felide-constructors -fno-delete-null-pointer-checks"
+}
 
 PKG_CMAKE_OPTS_TARGET="-DDISABLE_SHARED=ON \
 			  -DCMAKE_C_FLAGS=$TARGET_CFLAGS \
