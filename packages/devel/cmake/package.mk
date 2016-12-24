@@ -42,11 +42,11 @@ configure_host() {
                -DBUILD_CursesDialog=0
 }
 
-make_host() {
-  make
-}
+#make_host() {
+#  make
+#}
 
-makeinstall_host() {
-  make install -j1
-}
+#makeinstall_host() {
+#  make install -j1
+#}
   

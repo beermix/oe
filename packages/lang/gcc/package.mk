@@ -59,13 +59,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-browser-plugin \
                            --disable-libitm \
                            --with-tune=generic \
-                           --with-diagnostics-color=auto-if-env \
-                           --with-linker-hash-style=gnu \
-                           --enable-linker-build-id \
-                           --disable-libunwind-exceptions \
-                           --enable-gnu-unique-object \
-                           --enable-gnu-indirect-function \
-                           --enable-default-pie"
+                           --disable-libunwind-exceptions"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
@@ -83,7 +77,7 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               $GCC_OPTS"
 
 PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
-                         --enable-languages=c,c++,objc,obj-c++ \
+                         --enable-languages=c,c++ \
                          --enable-__cxa_atexit \
                          --enable-decimal-float \
                          --disable-libssp \
@@ -99,6 +93,10 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-clocale=gnu \
                          --enable-libmpx \
                          --enable-poison-system-directories \
+                         --enable-gnu-unique-object \
+                         --enable-gnu-indirect-function \
+                         --enable-linker-build-id \
+                         --with-linker-hash-style=gnu \
                          $GCC_OPTS"
 
 pre_configure_host() {
