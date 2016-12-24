@@ -56,7 +56,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libmudflap \
                            --disable-libquadmath \
                            --disable-libgomp \
-                           --disable-libmpx \
                            --disable-browser-plugin \
                            --disable-libitm \
                            --with-tune=generic -v \
@@ -67,6 +66,7 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-__cxa_atexit \
                               --disable-libsanitizer \
                               --disable-libssp \
+                              --disable-libmpx \
                               --disable-libatomic \
                               --enable-cloog-backend=isl \
                               --disable-shared \
@@ -89,8 +89,15 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-long-long \
                          --enable-threads=posix \
                          --disable-libstdcxx-pch \
+                         --disable-libunwind-exceptions \
                          --enable-libstdcxx-time \
                          --enable-clocale=gnu \
+                         --with-linker-hash-style=gnu \
+                         --enable-linker-build-id \
+                         --enable-gnu-unique-object \
+                         --enable-gnu-indirect-function \
+                         --enable-default-pie \
+                         --enable-libmpx \
                          --enable-poison-system-directories \
                          $GCC_OPTS"
 
