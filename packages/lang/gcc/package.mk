@@ -58,8 +58,14 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libgomp \
                            --disable-browser-plugin \
                            --disable-libitm \
-                           --with-tune=generic -v \
-                           --with-diagnostics-color=auto-if-env"
+                           --with-tune=generic \
+                           --with-diagnostics-color=auto-if-env \
+                           --with-linker-hash-style=gnu \
+                           --enable-linker-build-id \
+                           --disable-libunwind-exceptions \
+                           --enable-gnu-unique-object \
+                           --enable-gnu-indirect-function \
+                           --enable-default-pie"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
@@ -77,7 +83,7 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               $GCC_OPTS"
 
 PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
-                         --enable-languages=c,c++ \
+                         --enable-languages=c,c++,objc,obj-c++ \
                          --enable-__cxa_atexit \
                          --enable-decimal-float \
                          --disable-libssp \
@@ -89,20 +95,14 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-long-long \
                          --enable-threads=posix \
                          --disable-libstdcxx-pch \
-                         --disable-libunwind-exceptions \
                          --enable-libstdcxx-time \
                          --enable-clocale=gnu \
-                         --with-linker-hash-style=gnu \
-                         --enable-linker-build-id \
-                         --enable-gnu-unique-object \
-                         --enable-gnu-indirect-function \
-                         --enable-default-pie \
                          --enable-libmpx \
                          --enable-poison-system-directories \
                          $GCC_OPTS"
 
 pre_configure_host() {
-  export CXXFLAGS="$CXXFLAGS -std=gnu++98"
+  export CXXFLAGS="$CXXFLAGS -std=gnu++98 -fno-stack-protector"
   unset CPP
 }
 
@@ -137,9 +137,6 @@ make_target() {
 makeinstall_target() {
   mkdir -p $INSTALL/lib
     cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libgcc/libgcc_s.so* $INSTALL/lib
-    #cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libgo/src/.libs/libstdc++.so* $INSTALL/usr/lib
-    #cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libssp/.libs/libssp.so* $INSTALL/lib
-    #cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libatomic/.libs/libatomic*.so* $INSTALL/lib
   mkdir -p $INSTALL/usr/lib
     cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libstdc++-v3/src/.libs/libstdc++.so* $INSTALL/usr/lib
     
@@ -156,6 +153,4 @@ make_init() {
 makeinstall_init() {
   mkdir -p $INSTALL/lib
     cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libgcc/libgcc_s.so* $INSTALL/lib
-    #cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libssp/.libs/libssp.so* $INSTALL/lib
-    #cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libatomic/.libs/libatomic*.so* $INSTALL/lib
 }
