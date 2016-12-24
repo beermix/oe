@@ -10,7 +10,7 @@ pre_build_target() {
 	mkdir -p $PKG_BUILD/.$TARGET_NAME
 	cp -RP $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME
 	export CFLAGS="$CFLAGS -fPIC -DPIC"
-	export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Ofast|"`
+	export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
 	export MAKEFLAGS="-j1"
 }
 

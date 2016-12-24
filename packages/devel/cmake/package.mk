@@ -32,7 +32,7 @@ PKG_AUTORECONF="no"
 
 configure_host() {
   ../configure --prefix=$ROOT/$TOOLCHAIN \
-               --qt-gui \
+               --no-qt-gui \
                --no-system-libs \
                -- \
                -DCMAKE_C_FLAGS="-O2 -Wall -pipe -Wno-format-security" \
@@ -41,3 +41,12 @@ configure_host() {
                -DCMAKE_USE_OPENSSL=ON \
                -DBUILD_CursesDialog=0
 }
+
+make_host() {
+  make
+}
+
+makeinstall_host() {
+  make install -j1
+}
+  
