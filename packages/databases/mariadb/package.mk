@@ -41,7 +41,7 @@ PKG_MARIADB_SERVER="yes"
 # - large :  embedded + archive + federated + blackhole + innodb
 # - xlarge:  embedded + archive + federated + blackhole + innodb + partition
 # - community:  all  features (currently == xlarge)
-  MARIADB_OPTS="$MARIADB_OPTS -DFEATURE_SET=large"
+  MARIADB_OPTS="$MARIADB_OPTS -DFEATURE_SET=community"
 
 # Build MariaDB Server support
   if [ "$PKG_MARIADB_SERVER" = "no" ]; then
@@ -122,6 +122,7 @@ configure_host() {
         -DWITH_SYSTEMD=OFF \
         -DWITH_LIBWRAP=OFF \
         -DWITH_WSREP=OFF \
+        -DSTACK_DIRECTION=-1 \
         ..
 }
 
@@ -158,7 +159,7 @@ PKG_CMAKE_OPTS_TARGET="-DDISABLE_SHARED=ON \
 			  -DTOKUDB_OK=0 \
 			  -DDISABLE_LIBMYSQLCLIENT_SYMBOL_VERSIONING=TRUE \
 			  -DENABLE_DTRACE=OFF \
-			  -DWITH_READLINE=ON \
+			  -DWITH_READLINE=OFF \
 			  -DWITH_PCRE=bundled \
 			  -DWITH_ZLIB=bundled \
 			  -DWITH_SYSTEMD=ON \
@@ -170,8 +171,11 @@ PKG_CMAKE_OPTS_TARGET="-DDISABLE_SHARED=ON \
 			  -DWITHOUT_TOKUDB=1 \
 			  -DWITHOUT_MROONGA=1 \
 			  -DWITH_UNIT_TESTS=0 \
-			  -DGRN_WITH_LIBEVENT=$SYSROOT_PREFIX/usr \
-			  -DWITH_SSL=$SYSROOT_PREFIX/usr \
+			  -DWITHOUT_MROONGA=1 \
+			  -DWITH_JEMALLOC=no \
+			  -DWITHOUT_TOKUDB=1 \
+			  -DCMAKE_CROSSCOMPILING=1 \
+			  -DWITH_LIBEVENT=bundled \
 			  $MARIADB_OPTS"
 
 post_makeinstall_target() {

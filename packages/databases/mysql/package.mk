@@ -55,7 +55,7 @@ PKG_CMAKE_OPTS_HOST="-DCMAKE_BUILD_TYPE=Release \
                      -DWITH_EDITLINE=bundled \
                      -DWITH_LIBEVENT=bundled \
                      -DDOWNLOAD_BOOST=0 \
-                     -DLOCAL_BOOST_DIR=$(get_build_dir boost) \
+                     -DLOCAL_BOOST_DIR=$(get_pkg_build boost) \
                      -DWITH_UNIT_TESTS=OFF \
                      -DWITH_ZLIB=bundled"
 
@@ -93,7 +93,7 @@ PKG_CMAKE_OPTS_TARGET="-DINSTALL_INCLUDEDIR=include/mysql \
                        -DWITH_ZLIB=system \
                        -DWITH_SSL=$SYSROOT_PREFIX/usr \
                        -DDOWNLOAD_BOOST=0 \
-                       -DLOCAL_BOOST_DIR=$(get_build_dir boost) \
+                       -DLOCAL_BOOST_DIR=$(get_pkg_build boost) \
                        -DSTACK_DIRECTION=1 \
                        -DHAVE_LLVM_LIBCPP=1"
 
