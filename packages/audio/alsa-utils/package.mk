@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="alsa-utils"
-PKG_VERSION="1.1.3"
+PKG_VERSION="1.1.2"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -34,8 +34,9 @@ PKG_AUTORECONF="yes"
 # package specific configure options
 PKG_CONFIGURE_OPTS_TARGET="--disable-dependency-tracking \
                            --disable-xmlto \
+                           --enable-alsamixer \
                            --enable-alsaconf \
-                           --enable-alsaloop \
+                           --disable-alsaloop \
                            --enable-alsatest \
                            --disable-bat \
                            --disable-nls"
