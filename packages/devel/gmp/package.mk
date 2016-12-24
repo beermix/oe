@@ -37,11 +37,6 @@ PKG_CONFIGURE_OPTS_HOST="--enable-cxx \
 			    --enable-mpbsd \
 			    --with-pic \
 			    --enable-static \
-			    --disable-shared  \
-			    --enable-silent-rules"
+			    --disable-shared"
 
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
-
-pre_configure_target() {
-  export LIBS="-lterminfo"
-}

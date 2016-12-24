@@ -24,7 +24,6 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://www.freedesktop.org/software/pkgconfig/"
 PKG_GIT_URL="git://anongit.freedesktop.org/pkg-config"
 PKG_DEPENDS_HOST="ccache:host gettext:host autoconf:host autoconf-archive:host"
-
 PKG_SECTION="toolchain/devel"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
