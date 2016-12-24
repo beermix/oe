@@ -41,7 +41,7 @@ PKG_MARIADB_SERVER="yes"
 # - large :  embedded + archive + federated + blackhole + innodb
 # - xlarge:  embedded + archive + federated + blackhole + innodb + partition
 # - community:  all  features (currently == xlarge)
-  MARIADB_OPTS="$MARIADB_OPTS -DFEATURE_SET=community"
+  MARIADB_OPTS="$MARIADB_OPTS -DFEATURE_SET=large"
 
 # Build MariaDB Server support
   if [ "$PKG_MARIADB_SERVER" = "no" ]; then
@@ -102,34 +102,41 @@ PKG_MARIADB_SERVER="yes"
   MARIADB_IMPORT_EXECUTABLES="-DIMPORT_EXECUTABLES=$ROOT/$PKG_BUILD/.$HOST_NAME/import_executables.cmake"
 
 
-PKG_CMAKE_OPTS_HOST="-DCMAKE_BUILD_TYPE=Release \
-			-DFEATURE_SET=xsmall \
-			-DWITHOUT_SERVER=OFF \
-			-DWITH_EMBEDDED_SERVER=OFF \
-			-DWITH_INNOBASE_STORAGE_ENGINE=OFF \
-			-DWITH_PARTITION_STORAGE_ENGINE=OFF \
-			-DWITH_PERFSCHEMA_STORAGE_ENGINE=OFF \
-			-DWITH_EXTRA_CHARSETS=none \
-			-DWITH_UNIT_TESTS=OFF \
-			-DTOKUDB_OK=0 \
-			-DDISABLE_LIBMYSQLCLIENT_SYMBOL_VERSIONING=TRUE \
-			-DENABLE_DTRACE=OFF \
-			-DWITH_READLINE=OFF \
-			-DWITH_PCRE=bundled \
-			-DWITH_ZLIB=bundled \
-			-DWITH_SYSTEMD=OFF \
-			-DWITH_LIBWRAP=OFF \
-			-DWITH_WSREP=OFF \
-			-DSTACK_DIRECTION=-1 \
-			-DSECURITY_HARDENED=OFF"
+configure_host() {
+  cmake -DCMAKE_PREFIX_PATH=$ROOT/$TOOLCHAIN/ \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DFEATURE_SET=xsmall \
+        -DWITHOUT_SERVER=OFF \
+        -DWITH_EMBEDDED_SERVER=OFF \
+        -DWITH_INNOBASE_STORAGE_ENGINE=OFF \
+        -DWITH_PARTITION_STORAGE_ENGINE=OFF \
+        -DWITH_PERFSCHEMA_STORAGE_ENGINE=OFF \
+        -DWITH_EXTRA_CHARSETS=none \
+        -DWITH_UNIT_TESTS=OFF \
+        -DTOKUDB_OK=0 \
+        -DDISABLE_LIBMYSQLCLIENT_SYMBOL_VERSIONING=TRUE \
+        -DENABLE_DTRACE=OFF \
+        -DWITH_READLINE=OFF \
+        -DWITH_PCRE=bundled \
+        -DWITH_ZLIB=bundled \
+        -DWITH_SYSTEMD=OFF \
+        -DWITH_LIBWRAP=OFF \
+        -DWITH_WSREP=OFF \
+        ..
+}
 
 makeinstall_host() {
  : # nothing todo
 }
 
+pre_configure_target() {
+  export TARGET_CFLAGS="$TARGET_CFLAGS -fPIC -DPIC -fno-strict-aliasing -DBIG_JOINS=1 -fomit-frame-pointer -fno-delete-null-pointer-checks"
+  export TARGET_CXXFLAGS="$TARGET_CXXFLAGS -fPIC -DPIC -fno-strict-aliasing -DBIG_JOINS=1 -felide-constructors -fno-delete-null-pointer-checks"
+}
+
 PKG_CMAKE_OPTS_TARGET="-DDISABLE_SHARED=ON \
-			  -DCMAKE_C_FLAGS='${TARGET_CFLAGS} -fPIC -DPIC -fno-strict-aliasing -DBIG_JOINS=1 -fomit-frame-pointer -fno-delete-null-pointer-checks' \
-			  -DCMAKE_CXX_FLAGS='${TARGET_CXXFLAGS} -fPIC -DPIC -fno-strict-aliasing -DBIG_JOINS=1 -felide-constructors -fno-delete-null-pointer-checks' \
+			  -DCMAKE_C_FLAGS=$TARGET_CFLAGS \
+			  -DCMAKE_CXX_FLAGS=$TARGET_CXXFLAGS \
 			  -DCMAKE_BUILD_TYPE=Release \
 			  $MARIADB_IMPORT_EXECUTABLES \
 			  -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
@@ -163,6 +170,7 @@ PKG_CMAKE_OPTS_TARGET="-DDISABLE_SHARED=ON \
 			  -DWITHOUT_TOKUDB=1 \
 			  -DWITHOUT_MROONGA=1 \
 			  -DWITH_UNIT_TESTS=0 \
+			  -DGRN_WITH_LIBEVENT=$SYSROOT_PREFIX/usr \
 			  -DWITH_SSL=$SYSROOT_PREFIX/usr \
 			  $MARIADB_OPTS"
 

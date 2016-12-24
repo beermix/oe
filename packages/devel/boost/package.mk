@@ -67,7 +67,6 @@ makeinstall_target() {
   $ROOT/$TOOLCHAIN/bin/bjam -d2 --toolset=gcc link=static target-os=linux variant=release threading=multi debug-symbols=off \
                                 --prefix=$SYSROOT_PREFIX/usr \
                                 --ignore-site-config \
-                                --disable-long-double \
                                 --layout=system \
                                 --with-date_time \
                                 --with-thread \
@@ -82,6 +81,8 @@ makeinstall_target() {
                                 --with-exception \
                                 --with-serialization \
                                 --with-filesystem \
-                                --with-regex -sICU_PATH="$SYSROOT_PREFIX/usr" -j3 \
+                                --with-graph \
+                                --disable-long-double \
+                                --with-regex -sICU_PATH="$SYSROOT_PREFIX/usr" \
                                 install
 }

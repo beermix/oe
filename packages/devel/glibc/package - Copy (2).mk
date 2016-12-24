@@ -110,9 +110,8 @@ pre_configure_target() {
 
   unset LD_LIBRARY_PATH
 
-# set some CFLAGS we need
-  export CFLAGS="$CFLAGS -g"
-
+  # set some CFLAGS we need
+  export CFLAGS="-O2 -pipe"
   export OBJDUMP_FOR_HOST=objdump
 
 cat >config.cache <<EOF
@@ -120,7 +119,6 @@ libc_cv_forced_unwind=yes
 libc_cv_c_cleanup=yes
 libc_cv_ssp=no
 libc_cv_ssp_strong=no
-libc_cv_slibdir=/usr/lib
 EOF
 
   echo "sbindir=/usr/bin" >> configparms
@@ -139,7 +137,9 @@ post_makeinstall_target() {
   done
   rm -rf $INSTALL/usr/lib/audit
   rm -rf $INSTALL/usr/lib/glibc
+  rm -rf $INSTALL/usr/lib/libc_pic
   rm -rf $INSTALL/usr/lib/*.o
+  rm -rf $INSTALL/usr/lib/*.map
   rm -rf $INSTALL/var
 
 # remove unneeded libs
