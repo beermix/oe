@@ -24,7 +24,6 @@ PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/foo86/dcadec"
 PKG_GIT_URL="https://github.com/foo86/dcadec"
 PKG_DEPENDS_TARGET="toolchain"
-
 PKG_SECTION="audio"
 PKG_SHORTDESC="DTS Coherent Acoustics decoder with support for HD extensions"
 PKG_LONGDESC="DTS Coherent Acoustics decoder with support for HD extensions"
@@ -41,4 +40,5 @@ PKG_MAKEINSTALL_OPTS_TARGET="$PKG_MAKE_OPTS_TARGET"
 pre_configure_target() {
   export CFLAGS="$CFLAGS -fPIC -DPIC"
   export LDFLAGS="$LDFLAGS -fPIC -DPIC"
+  export CXXFLAGS="$CXXFLAGS -std=gnu++98"
 }

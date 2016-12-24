@@ -1,5 +1,6 @@
 PKG_NAME="lz4"
-PKG_VERSION="v1.7.4.2"
+#PKG_VERSION="v1.7.4.2"
+PKG_VERSION="19c0f21"
 PKG_GIT_URL="https://github.com/Cyan4973/lz4"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_DEPENDS_HOST="cmake:host"

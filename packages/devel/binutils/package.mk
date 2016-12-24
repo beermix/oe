@@ -48,7 +48,6 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --disable-nls \
                          --enable-static \
                          --disable-shared \
-                         --with-pic \
                          --with-system-zlib \
                          --disable-sim \
                          --disable-gdb \

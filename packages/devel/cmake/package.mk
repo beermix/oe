@@ -27,13 +27,12 @@ PKG_DEPENDS_HOST="ccache:host"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="cmake: A cross-platform, open-source make system"
 PKG_LONGDESC="CMake is used to control the software compilation process using simple platform and compiler independent configuration files. CMake generates native makefiles and workspaces that can be used in the compiler environment of your choice. CMake is quite sophisticated: it is possible to support complex environments requiring system configuration, preprocessor generation, code generation, and template instantiation."
-
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 configure_host() {
   ../configure --prefix=$ROOT/$TOOLCHAIN \
-               --no-qt-gui --no-system-libs  \
+               --no-qt-gui --no-system-libs \
                -- \
                -DCMAKE_C_FLAGS="-O2 -Wall -pipe -Wno-format-security" \
                -DCMAKE_CXX_FLAGS="-O2 -Wall -pipe -Wno-format-security" \

@@ -24,7 +24,7 @@ PKG_LICENSE="GPLv2"
 PKG_SITE="http://www.mariadb.org"
 PKG_URL="https://downloads.mariadb.org/interstitial/$PKG_NAME-$PKG_VERSION/source/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain netbsd-curses readline openssl libaio libxml2 mariadb:host"
+PKG_DEPENDS_TARGET="toolchain netbsd-curses readline libedit openssl libaio libxml2 mariadb:host"
 PKG_SECTION="database"
 PKG_SHORTDESC="mariadb: A community developed branch of MySQL"
 PKG_LONGDESC="MariaDB is a community-developed fork and a drop-in replacement for the MySQL relational database management system."
@@ -41,7 +41,7 @@ PKG_MARIADB_SERVER="yes"
 # - large :  embedded + archive + federated + blackhole + innodb
 # - xlarge:  embedded + archive + federated + blackhole + innodb + partition
 # - community:  all  features (currently == xlarge)
-  MARIADB_OPTS="$MARIADB_OPTS -DFEATURE_SET=xlarge"
+  MARIADB_OPTS="$MARIADB_OPTS -DFEATURE_SET=community"
 
 # Build MariaDB Server support
   if [ "$PKG_MARIADB_SERVER" = "no" ]; then
@@ -56,7 +56,7 @@ PKG_MARIADB_SERVER="yes"
 # Set MariaDB server storage engines
   MARIADB_OPTS="$MARIADB_OPTS -DWITH_INNOBASE_STORAGE_ENGINE=ON"
   MARIADB_OPTS="$MARIADB_OPTS -WITH_PARTITION_STORAGE_ENGINE=ON"
-  MARIADB_OPTS="$MARIADB_OPTS -WITH_PERFSCHEMA_STORAGE_ENGINE=OFF"
+  MARIADB_OPTS="$MARIADB_OPTS -WITH_PERFSCHEMA_STORAGE_ENGINE=ON"
 
 # According to MariaDB galera cluster documentation these options must be passed
 # to CMake, set to '0' if galera cluster support is not wanted:
@@ -101,76 +101,70 @@ PKG_MARIADB_SERVER="yes"
   PKG_MAKE_OPTS_HOST="import_executables"
   MARIADB_IMPORT_EXECUTABLES="-DIMPORT_EXECUTABLES=$ROOT/$PKG_BUILD/.$HOST_NAME/import_executables.cmake"
 
-configure_host() {
-  cmake -DCMAKE_PREFIX_PATH=$ROOT/$TOOLCHAIN/ \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DFEATURE_SET=xsmall \
-        -DWITHOUT_SERVER=OFF \
-        -DWITH_EMBEDDED_SERVER=OFF \
-        -DWITH_INNOBASE_STORAGE_ENGINE=OFF \
-        -DWITH_PARTITION_STORAGE_ENGINE=OFF \
-        -DWITH_PERFSCHEMA_STORAGE_ENGINE=OFF \
-        -DWITH_EXTRA_CHARSETS=none \
-        -DWITH_UNIT_TESTS=OFF \
-        -DTOKUDB_OK=0 \
-        -DDISABLE_LIBMYSQLCLIENT_SYMBOL_VERSIONING=TRUE \
-        -DENABLE_DTRACE=OFF \
-        -DWITH_READLINE=OFF \
-        -DWITH_PCRE=bundled \
-        -DWITH_ZLIB=bundled \
-        -DWITH_SYSTEMD=OFF \
-        -DWITH_LIBWRAP=OFF \
-        -DWITH_WSREP=OFF \
-        -DSECURITY_HARDENED=OFF \
-        ..
-}
+
+PKG_CMAKE_OPTS_HOST="-DCMAKE_BUILD_TYPE=Release \
+			-DFEATURE_SET=xsmall \
+			-DWITHOUT_SERVER=OFF \
+			-DWITH_EMBEDDED_SERVER=OFF \
+			-DWITH_INNOBASE_STORAGE_ENGINE=OFF \
+			-DWITH_PARTITION_STORAGE_ENGINE=OFF \
+			-DWITH_PERFSCHEMA_STORAGE_ENGINE=OFF \
+			-DWITH_EXTRA_CHARSETS=none \
+			-DWITH_UNIT_TESTS=OFF \
+			-DTOKUDB_OK=0 \
+			-DDISABLE_LIBMYSQLCLIENT_SYMBOL_VERSIONING=TRUE \
+			-DENABLE_DTRACE=OFF \
+			-DWITH_READLINE=OFF \
+			-DWITH_PCRE=bundled \
+			-DWITH_ZLIB=bundled \
+			-DWITH_SYSTEMD=OFF \
+			-DWITH_LIBWRAP=OFF \
+			-DWITH_WSREP=OFF \
+			-DSTACK_DIRECTION=-1 \
+			-DSECURITY_HARDENED=OFF"
 
 makeinstall_host() {
  : # nothing todo
 }
 
-configure_target() {
-  cmake -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
-        -DDISABLE_SHARED=ON \
-        -DCMAKE_C_FLAGS="${TARGET_CFLAGS} -fPIC -DPIC -fno-strict-aliasing -DBIG_JOINS=1 -fomit-frame-pointer -fno-delete-null-pointer-checks" \
-        -DCMAKE_CXX_FLAGS="${TARGET_CXXFLAGS} -fPIC -DPIC -fno-strict-aliasing -DBIG_JOINS=1 -felide-constructors -fno-delete-null-pointer-checks" \
-        -DCMAKE_BUILD_TYPE=Release \
-        $MARIADB_IMPORT_EXECUTABLES \
-        -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
-        -DCMAKE_INSTALL_PREFIX=/usr \
-        -DINSTALL_DOCDIR=share/doc/mariadb \
-        -DINSTALL_DOCREADMEDIR=share/doc/mariadb \
-        -DINSTALL_INCLUDEDIR=include/mysql \
-        -DINSTALL_MANDIR=share/man \
-        -DINSTALL_MYSQLSHAREDIR=share/mysql \
-        -DINSTALL_MYSQLTESTDIR=share/mysql/test \
-        -DINSTALL_PLUGINDIR=lib/mysql/plugin \
-        -DINSTALL_SBINDIR=sbin \
-        -DINSTALL_SCRIPTDIR=share/mysql/scripts \
-        -DINSTALL_SQLBENCHDIR=share/mysql/bench \
-        -DINSTALL_SUPPORTFILESDIR=share/mysql/support-files \
-        -DMYSQL_DATADIR=/storage/mysql \
-        -DMYSQL_UNIX_ADDR=/var/run/mysqld.sock \
-        -DWITH_EXTRA_CHARSETS=all \
-        -DTOKUDB_OK=0 \
-        -DDISABLE_LIBMYSQLCLIENT_SYMBOL_VERSIONING=TRUE \
-        -DENABLE_DTRACE=OFF \
-        -DWITH_READLINE=ON \
-        -DWITH_PCRE=bundled \
-        -DWITH_ZLIB=bundled \
-        -DWITH_SYSTEMD=ON \
-        -DWITH_LIBWRAP=OFF \
-        -DSECURITY_HARDENED=OFF \
-        -DCMAKE_CROSSCOMPILING=1 \
-        -DSTACK_DIRECTION=-1 \
-        -DWITH_JEMALLOC=no \
-        -DWITHOUT_TOKUDB=1 \
-        -DWITHOUT_MROONGA=1 \
-        -DWITH_UNIT_TESTS=0 \
-        -DWITH_SSL=$SYSROOT_PREFIX/usr \
-        $MARIADB_OPTS \
-        ..
-}
+PKG_CMAKE_OPTS_TARGET="-DDISABLE_SHARED=ON \
+			  -DCMAKE_C_FLAGS='${TARGET_CFLAGS} -fPIC -DPIC -fno-strict-aliasing -DBIG_JOINS=1 -fomit-frame-pointer -fno-delete-null-pointer-checks' \
+			  -DCMAKE_CXX_FLAGS='${TARGET_CXXFLAGS} -fPIC -DPIC -fno-strict-aliasing -DBIG_JOINS=1 -felide-constructors -fno-delete-null-pointer-checks' \
+			  -DCMAKE_BUILD_TYPE=Release \
+			  $MARIADB_IMPORT_EXECUTABLES \
+			  -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
+			  -DCMAKE_INSTALL_PREFIX=/usr \
+			  -DINSTALL_DOCDIR=share/doc/mariadb \
+			  -DINSTALL_DOCREADMEDIR=share/doc/mariadb \
+			  -DINSTALL_INCLUDEDIR=include/mysql \
+			  -DINSTALL_MANDIR=share/man \
+			  -DINSTALL_MYSQLSHAREDIR=share/mysql \
+			  -DINSTALL_MYSQLTESTDIR=share/mysql/test \
+			  -DINSTALL_PLUGINDIR=lib/mysql/plugin \
+			  -DINSTALL_SBINDIR=sbin \
+			  -DINSTALL_SCRIPTDIR=share/mysql/scripts \
+			  -DINSTALL_SQLBENCHDIR=share/mysql/bench \
+			  -DINSTALL_SUPPORTFILESDIR=share/mysql/support-files \
+			  -DMYSQL_DATADIR=/storage/mysql \
+			  -DMYSQL_UNIX_ADDR=/var/run/mysqld.sock \
+			  -DWITH_EXTRA_CHARSETS=all \
+			  -DTOKUDB_OK=0 \
+			  -DDISABLE_LIBMYSQLCLIENT_SYMBOL_VERSIONING=TRUE \
+			  -DENABLE_DTRACE=OFF \
+			  -DWITH_READLINE=ON \
+			  -DWITH_PCRE=bundled \
+			  -DWITH_ZLIB=bundled \
+			  -DWITH_SYSTEMD=ON \
+			  -DWITH_LIBWRAP=OFF \
+			  -DSECURITY_HARDENED=OFF \
+			  -DCMAKE_CROSSCOMPILING=1 \
+			  -DSTACK_DIRECTION=-1 \
+			  -DWITH_JEMALLOC=no \
+			  -DWITHOUT_TOKUDB=1 \
+			  -DWITHOUT_MROONGA=1 \
+			  -DWITH_UNIT_TESTS=0 \
+			  -DWITH_SSL=$SYSROOT_PREFIX/usr \
+			  $MARIADB_OPTS"
 
 post_makeinstall_target() {
   sed -i "s|pkgincludedir=.*|pkgincludedir=\'$SYSROOT_PREFIX/usr/include/mysql\'|" scripts/mysql_config

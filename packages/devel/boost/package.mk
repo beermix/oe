@@ -53,6 +53,7 @@ configure_target() {
   sh bootstrap.sh --prefix=/usr \
                   --with-bjam=$ROOT/$TOOLCHAIN/bin/bjam \
                   --with-python=$ROOT/$TOOLCHAIN/bin/python \
+                  --with-icu=$ROOT/$TOOLCHAIN/usr \
 
   echo "using gcc : `$CC -v 2>&1  | tail -n 1 |awk '{print $3}'` : $CC  : <compileflags>\"$CFLAGS\" <linkflags>\"$LDFLAGS\" ;" \
     > tools/build/src/user-config.jam
@@ -66,6 +67,7 @@ makeinstall_target() {
   $ROOT/$TOOLCHAIN/bin/bjam -d2 --toolset=gcc link=static target-os=linux variant=release threading=multi debug-symbols=off \
                                 --prefix=$SYSROOT_PREFIX/usr \
                                 --ignore-site-config \
+                                --disable-long-double \
                                 --layout=system \
                                 --with-date_time \
                                 --with-thread \
@@ -80,6 +82,6 @@ makeinstall_target() {
                                 --with-exception \
                                 --with-serialization \
                                 --with-filesystem \
-                                --with-regex -sICU_PATH="$SYSROOT_PREFIX/usr" \
+                                --with-regex -sICU_PATH="$SYSROOT_PREFIX/usr" -j3 \
                                 install
 }
