@@ -44,8 +44,8 @@ makeinstall_host() {
 }
 
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC"
-  export CXXFLAGS="$CXXFLAGS -fPIC"
+  export CFLAGS="$CFLAGS -fPIC -O3"
+  export CXXFLAGS="$CXXFLAGS -std=c++14 -fPIC -O3"
   export LDFLAGS="$LDFLAGS -fPIC"
 }
 
@@ -64,7 +64,11 @@ make_target() {
 }
 
 makeinstall_target() {
-  $ROOT/$TOOLCHAIN/bin/bjam -d2 --toolset=gcc link=static target-os=linux variant=release threading=multi debug-symbols=off \
+  $ROOT/$TOOLCHAIN/bin/bjam -d2 --toolset=gcc \
+    				      link=static \
+  				      target-os=linux variant=release \
+  				      threading=multi \
+  				      debug-symbols=off \
                                 --prefix=$SYSROOT_PREFIX/usr \
                                 --ignore-site-config \
                                 --layout=system \
