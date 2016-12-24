@@ -24,7 +24,7 @@ pre_make_target() {
 make_target() {
   mkdir -p bin
   go get -v "github.com/Sioro-Neoku/go-peerflix"
-  $GOLANG build -v -o bin/$PKG_NAME -a -ldflags "$LDFLAGS" ./
+  $GOLANG build -buildmode=pie -v -o bin/$PKG_NAME -a -ldflags "$LDFLAGS" ./
   $STRIP bin/$PKG_NAME
 }
 
