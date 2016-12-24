@@ -1,0 +1,44 @@
+diff --git a/package/iperf3/0002-musl.patch b/package/iperf3/0002-musl.patch
+new file mode 100644
+index 0000000..764c00b
+--- /dev/null
++++ b/package/iperf3/0002-musl.patch
+@@ -0,0 +1,27 @@
++Fix musl build
++
++Signed-off-by: Bernd Kuhls <bernd.kuhls@t-online.de>
++
++diff -uNr iperf-3.1.1.org/src/cjson.h iperf-3.1.1/src/cjson.h
++--- iperf-3.1.1.org/src/cjson.h	2015-11-19 18:23:48.000000000 +0100
+++++ iperf-3.1.1/src/cjson.h	2016-01-23 22:45:28.000000000 +0100
++@@ -23,6 +23,8 @@
++ #ifndef cJSON__h
++ #define cJSON__h
++ 
+++#include <stdint.h>
+++
++ #ifdef __cplusplus
++ extern "C"
++ {
++diff -uNr iperf-3.1.1.org/src/timer.h iperf-3.1.1/src/timer.h
++--- iperf-3.1.1.org/src/timer.h	2015-11-19 18:23:48.000000000 +0100
+++++ iperf-3.1.1/src/timer.h	2016-01-23 22:42:30.000000000 +0100
++@@ -30,6 +30,7 @@
++ #ifndef __TIMER_H
++ #define __TIMER_H
++ 
+++#include <stdint.h>
++ #include <sys/time.h>
++ 
++ /* TimerClientData is an opaque value that tags along with a timer.  The
+diff --git a/package/iperf3/iperf3.mk b/package/iperf3/iperf3.mk
+index 885a599..74d6cce 100644
+--- a/package/iperf3/iperf3.mk
++++ b/package/iperf3/iperf3.mk
+@@ -9,4 +9,6 @@ IPERF3_SITE = $(call github,esnet,iperf,$(IPERF3_VERSION))
+ IPERF3_LICENSE = BSD-3c, BSD-2c, MIT
+ IPERF3_LICENSE_FILES = LICENSE
+ 
++IPERF3_CONF_ENV += CFLAGS="$(TARGET_CFLAGS) -D_GNU_SOURCE"
++
+ $(eval $(autotools-package))

@@ -31,6 +31,4 @@ PKG_LONGDESC="Iptables is used to set up, maintain, and inspect the tables of IP
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--with-kernel=$(get_pkg_build linux) \
-			      --enable-bpf-compiler \
-			      --enable-nfsynproxy"
+PKG_CONFIGURE_OPTS_TARGET="--with-kernel=$(get_pkg_build linux) --enable-bpf-compiler --enable-nfsynproxy"
