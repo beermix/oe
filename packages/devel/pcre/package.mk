@@ -50,6 +50,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-jit \
 			      --enable-unicode-properties \
 			      --with-gnu-ld"
+
 pre_configure_target() {
   CFLAGS="$CFLAGS -fPIC"
   CXXFLAGS="$CXXFLAGS -fPIC"

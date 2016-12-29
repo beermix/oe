@@ -16,19 +16,19 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="vdr-plugin-satip"
-PKG_VERSION="581ac49"
+PKG_NAME="vdr-plugin-iptv"
+PKG_VERSION="2226be2"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="http://www.saunalahti.fi/~rahrenbe/vdr/satip/"
-PKG_GIT_URL="https://github.com/rofafor/vdr-plugin-satip.git"
+PKG_SITE="http://www.saunalahti.fi/~rahrenbe/vdr/iptv/"
+PKG_GIT_URL="https://github.com/rofafor/vdr-plugin-iptv.git"
 PKG_GIT_BRANCH="vdr-2.2.x"
-PKG_DEPENDS_TARGET="toolchain vdr curl tinyxml"
+PKG_DEPENDS_TARGET="toolchain vdr curl"
 PKG_PRIORITY="optional"
 PKG_SECTION="multimedia"
-PKG_SHORTDESC="vdr-plugin-satip: SAT>IP plugin for VDR"
-PKG_LONGDESC="vdr-plugin-satip is a SAT>IP plugin for VDR"
+PKG_SHORTDESC="vdr-iptv: an IPTV plugin for the Video Disk Recorder (VDR)"
+PKG_LONGDESC="vdr-iptv is an IPTV plugin for the Video Disk Recorder (VDR)"
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
@@ -39,7 +39,6 @@ make_target() {
   export CPLUS_INCLUDE_PATH=$VDR_DIR/include
 
   make \
-    SATIP_USE_TINYXML=1 \
     LIBDIR="." \
     LOCDIR="./locale" \
     all install-i18n
