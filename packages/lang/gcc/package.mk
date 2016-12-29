@@ -100,7 +100,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          $GCC_OPTS"
 
 pre_configure_host() {
-  export CXXFLAGS="$CXXFLAGS -std=gnu++14"
+  #export CXXFLAGS="$CXXFLAGS -std=gnu++14"
   export CFLAGS="$CFLAGS -fno-stack-protector"
   unset CPP
 }
