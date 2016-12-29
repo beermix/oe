@@ -5,7 +5,7 @@ fi
 
 if [ "$OPTIMIZATIONS" = size ];then
   GCC_OPTIM="-O2"
-  LDFLAGS="-s -Wl,-O1,--sort-common,--as-needed" 
+  LDFLAGS="-Wl,-O1,--sort-common,--as-needed" 
 fi
 
 if [ "$LTO_SUPPORT" = yes ];then
@@ -27,17 +27,17 @@ else
   TARGET_LDFLAGS="$TARGET_LDFLAGS -s"
 fi
 
-TARGET_CFLAGS="$TARGET_CFLAGS $GCC_OPTIM -pipe --fstack-protector-strong $GCC_OPTIM_LTO $PROJECT_CFLAGS"
+TARGET_CFLAGS="$TARGET_CFLAGS $GCC_OPTIM -pipe -fstack-protector-strong $GCC_OPTIM_LTO $PROJECT_CFLAGS"
 TARGET_CXXFLAGS="$TARGET_CFLAGS"
 TARGET_CPPFLAGS="-D_FORTIFY_SOURCE=2"
 TARGET_LDFLAGS="$TARGET_LDFLAGS $LD_OPTIM $LD_OPTIM_GOLD $LD_OPTIM_LTO"
 TARGET_LIBDIR="$SYSROOT_PREFIX/lib $SYSROOT_PREFIX/usr/lib"
 TARGET_INCDIR="$SYSROOT_PREFIX/include $SYSROOT_PREFIX/usr/include"
 
-HOST_CFLAGS="-O2 -pipe -I$ROOT/$TOOLCHAIN/include"
+HOST_CFLAGS="-march=native -O2 -pipe -I$ROOT/$TOOLCHAIN/include"
 HOST_CXXFLAGS="$HOST_CFLAGS"
 HOST_CPPFLAGS="-I$ROOT/$TOOLCHAIN/include"
-HOST_LDFLAGS="-s -Wl,-rpath,$ROOT/$TOOLCHAIN/lib -L$ROOT/$TOOLCHAIN/lib"
+HOST_LDFLAGS="-s -Wl,-rpath,$ROOT/$TOOLCHAIN/lib -L$ROOT/$TOOLCHAIN/lib -Wl,-O1,--sort-common,--as-needed"
 HOST_LIBDIR="$ROOT/$TOOLCHAIN/lib"
 
 # work around Ubuntu default C*FLAGS 
