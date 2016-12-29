@@ -18,7 +18,7 @@
 
 PKG_NAME="system-tools"
 PKG_VERSION=""
-PKG_REV="103"
+PKG_REV="104"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE=""
@@ -138,6 +138,7 @@ addon() {
 
     # nmon
     cp -P $(get_build_dir nmon)/nmon $ADDON_BUILD/$PKG_ADDON_ID/bin/
+
     # p7zip
     cp -P $(get_build_dir p7zip)/bin/7z.so $ADDON_BUILD/$PKG_ADDON_ID/bin
     cp -PR $(get_build_dir p7zip)/bin/Codecs $ADDON_BUILD/$PKG_ADDON_ID/bin
