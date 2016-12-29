@@ -24,7 +24,7 @@ PKG_LICENSE="GPLv2"
 PKG_SITE="http://www.mariadb.org"
 PKG_URL="https://downloads.mariadb.org/interstitial/$PKG_NAME-$PKG_VERSION/source/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain netbsd-curses readline libedit openssl libaio libxml2 libevent mariadb:host"
+PKG_DEPENDS_TARGET="toolchain netbsd-curses readline libedit openssl libaio libxml2 mariadb:host"
 PKG_SECTION="database"
 PKG_SHORTDESC="mariadb: A community developed branch of MySQL"
 PKG_LONGDESC="MariaDB is a community-developed fork and a drop-in replacement for the MySQL relational database management system."
@@ -161,6 +161,7 @@ configure_target() {
         -DWITH_SYSTEMD=ON \
         -DWITH_LIBWRAP=OFF \
         -DWITH_SSL=$SYSROOT_PREFIX/usr \
+        -DSECURITY_HARDENED=ON \
         $MARIADB_OPTS \
         ..
 }
