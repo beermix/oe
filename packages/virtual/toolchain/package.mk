@@ -13,7 +13,7 @@
 #  GNU General Public License for more details.
 #
 #  You should have received a copy of the GNU General Public License
-#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>. texinfo:host
+#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
 PKG_NAME="toolchain"
@@ -23,7 +23,8 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.openelec.tv"
 PKG_URL=""
-PKG_DEPENDS_TARGET="configtools:host make:host xz:host sed:host gettext:host autoconf:host automake:host libtool:host intltool:host autoconf-archive:host pkg-config:host gcc:host bison:host flex:host cmake:host yasm:host"
+PKG_DEPENDS_TARGET="configtools:host make:host xz:host sed:host pkg-config:host autoconf:host automake:host libtool:host intltool:host autoconf-archive:host gcc:host bison:host flex:host cmake:host yasm:host"
+PKG_PRIORITY="optional"
 PKG_SECTION="virtual"
 PKG_SHORTDESC="toolchain: OpenELEC.tv' toolchain"
 PKG_LONGDESC="a crosscompiling toolchain to compile all packages"

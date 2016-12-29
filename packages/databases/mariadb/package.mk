@@ -129,48 +129,41 @@ makeinstall_host() {
  : # nothing todo
 }
 
-pre_configure_target() {
-  export TARGET_CFLAGS="$TARGET_CFLAGS -fPIC -DPIC -fno-strict-aliasing -DBIG_JOINS=1 -fomit-frame-pointer -fno-delete-null-pointer-checks"
-  export TARGET_CXXFLAGS="$TARGET_CXXFLAGS -fPIC -DPIC -fno-strict-aliasing -DBIG_JOINS=1 -felide-constructors -fno-delete-null-pointer-checks"
+configure_target() {
+  cmake -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
+        -DDISABLE_SHARED=ON \
+        -DCMAKE_C_FLAGS="${TARGET_CFLAGS} -fPIC -DPIC -fno-strict-aliasing -DBIG_JOINS=1 -fomit-frame-pointer -fno-delete-null-pointer-checks" \
+        -DCMAKE_CXX_FLAGS="${TARGET_CXXFLAGS} -fPIC -DPIC -fno-strict-aliasing -DBIG_JOINS=1 -felide-constructors -fno-delete-null-pointer-checks" \
+        -DCMAKE_BUILD_TYPE=Release \
+        $MARIADB_IMPORT_EXECUTABLES \
+        -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+        -DINSTALL_DOCDIR=share/doc/mariadb \
+        -DINSTALL_DOCREADMEDIR=share/doc/mariadb \
+        -DINSTALL_INCLUDEDIR=include/mysql \
+        -DINSTALL_MANDIR=share/man \
+        -DINSTALL_MYSQLSHAREDIR=share/mysql \
+        -DINSTALL_MYSQLTESTDIR=share/mysql/test \
+        -DINSTALL_PLUGINDIR=lib/mysql/plugin \
+        -DINSTALL_SBINDIR=sbin \
+        -DINSTALL_SCRIPTDIR=share/mysql/scripts \
+        -DINSTALL_SQLBENCHDIR=share/mysql/bench \
+        -DINSTALL_SUPPORTFILESDIR=share/mysql/support-files \
+        -DMYSQL_DATADIR=/storage/mysql \
+        -DMYSQL_UNIX_ADDR=/run/mysqld/mysqld.sock \
+        -DWITH_EXTRA_CHARSETS=complex \
+        -DTOKUDB_OK=0 \
+        -DDISABLE_LIBMYSQLCLIENT_SYMBOL_VERSIONING=TRUE \
+        -DENABLE_DTRACE=OFF \
+        -DWITH_READLINE=ON \
+        -DWITH_PCRE=bundled \
+        -DWITH_ZLIB=bundled \
+        -DWITH_SYSTEMD=ON \
+        -DWITH_LIBWRAP=OFF \
+        -DWITH_SSL=$SYSROOT_PREFIX/usr \
+        $MARIADB_OPTS \
+        ..
 }
-
-PKG_CMAKE_OPTS_TARGET="-DDISABLE_SHARED=ON \
-			  -DCMAKE_C_FLAGS=$TARGET_CFLAGS \
-			  -DCMAKE_CXX_FLAGS=$TARGET_CXXFLAGS \
-			  -DCMAKE_BUILD_TYPE=Release \
-			  $MARIADB_IMPORT_EXECUTABLES \
-			  -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
-			  -DCMAKE_INSTALL_PREFIX=/usr \
-			  -DINSTALL_DOCDIR=share/doc/mariadb \
-			  -DINSTALL_DOCREADMEDIR=share/doc/mariadb \
-			  -DINSTALL_INCLUDEDIR=include/mysql \
-			  -DINSTALL_MANDIR=share/man \
-			  -DINSTALL_MYSQLSHAREDIR=share/mysql \
-			  -DINSTALL_MYSQLTESTDIR=share/mysql/test \
-			  -DINSTALL_PLUGINDIR=lib/mysql/plugin \
-			  -DINSTALL_SBINDIR=sbin \
-			  -DINSTALL_SCRIPTDIR=share/mysql/scripts \
-			  -DINSTALL_SQLBENCHDIR=share/mysql/bench \
-			  -DINSTALL_SUPPORTFILESDIR=share/mysql/support-files \
-			  -DMYSQL_DATADIR=/storage/mysql \
-			  -DMYSQL_UNIX_ADDR=/var/run/mysqld.sock \
-			  -DWITH_EXTRA_CHARSETS=all \
-			  -DTOKUDB_OK=0 \
-			  -DDISABLE_LIBMYSQLCLIENT_SYMBOL_VERSIONING=TRUE \
-			  -DENABLE_DTRACE=OFF \
-			  -DWITH_READLINE=OFF \
-			  -DWITH_PCRE=bundled \
-			  -DWITH_ZLIB=bundled \
-			  -DWITH_SYSTEMD=ON \
-			  -DWITH_LIBWRAP=OFF \
-			  -DSTACK_DIRECTION=-1 \
-			  -DWITH_JEMALLOC=no \
-			  -DWITH_UNIT_TESTS=0 \
-			  -DWITHOUT_MROONGA=1 \
-			  -DWITHOUT_TOKUDB=1 \
-			  -DCMAKE_CROSSCOMPILING=1 \
-			  -DWITH_LIBEVENT=$SYSROOT_PREFIX/usr \
-			  $MARIADB_OPTS"
 
 post_makeinstall_target() {
   sed -i "s|pkgincludedir=.*|pkgincludedir=\'$SYSROOT_PREFIX/usr/include/mysql\'|" scripts/mysql_config

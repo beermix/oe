@@ -144,7 +144,7 @@ post_makeinstall_target() {
       sed -i -e "s|@NVIDIA_VERSION@|${PKG_VERSION}|g" $INSTALL/usr/lib/xorg/xorg-configure
       . $ROOT/packages/x11/driver/xf86-video-nvidia-legacy/package.mk
       sed -i -e "s|@NVIDIA_LEGACY_VERSION@|${PKG_VERSION}|g" $INSTALL/usr/lib/xorg/xorg-configure
-    . $ROOT/packages/x11/xserver/xorg-server/package.mk
+      . $ROOT/packages/x11/xserver/xorg-server/package.mk
 
   if [ ! "$OPENGL" = "no" ]; then
     if [ -f $INSTALL/usr/lib/xorg/modules/extensions/libglx.so ]; then

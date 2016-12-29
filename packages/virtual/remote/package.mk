@@ -24,7 +24,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://www.openelec.tv"
 PKG_URL=""
 PKG_DEPENDS_TARGET="toolchain eventlircd v4l-utils"
-
+PKG_PRIORITY="optional"
 PKG_SECTION="virtual"
 PKG_SHORTDESC="remote: Meta package for installing various tools needed for remote support"
 PKG_LONGDESC="Meta package for installing various tools needed for remote support"

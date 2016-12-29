@@ -28,6 +28,7 @@ PKG_PRIORITY="optional"
 PKG_SECTION="textproc"
 PKG_SHORTDESC="expat: XML parser library"
 PKG_LONGDESC="Expat is an XML parser library written in C. It is a stream-oriented parser in which an application registers handlers for things the parser might find in the XML document (like start tags). An introductory article on using Expat is available on xml.com."
+
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
@@ -36,14 +37,4 @@ PKG_CMAKE_OPTS_TARGET="-DBUILD_tools=OFF -DBUILD_examples=OFF -DBUILD_tests=OFF 
 pre_make_target() {
   # fix builderror when building in subdirs
   cp -r ../doc .
-}
-
-configure_host() {
-  cmake -DCMAKE_INSTALL_PREFIX=$ROOT/$TOOLCHAIN \
-  	 -DCMAKE_BUILD_TYPE=Release \
-  	 -DBUILD_tools=OFF \
-  	 -DBUILD_examples=OFF \
-  	 -DBUILD_tests=OFF \
-  	 -DBUILD_shared=OFF \
-  	 ..
 }

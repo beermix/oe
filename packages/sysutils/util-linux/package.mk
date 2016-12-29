@@ -92,7 +92,6 @@ PKG_CONFIGURE_OPTS_INIT="--prefix=/ \
                          $UTILLINUX_CONFIG_DEFAULT \
                          --enable-libblkid \
                          --enable-libmount \
-                         --enable-libuuid \
                          --enable-fsck"
 
 if [ "$INITRAMFS_PARTED_SUPPORT" = "yes" ]; then

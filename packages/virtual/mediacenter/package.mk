@@ -24,6 +24,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://www.openelec.tv"
 PKG_URL=""
 PKG_DEPENDS_TARGET="toolchain $MEDIACENTER"
+PKG_PRIORITY="optional"
 PKG_SECTION="virtual"
 PKG_SHORTDESC="Mediacenter: Metapackage"
 PKG_LONGDESC=""
@@ -41,13 +42,13 @@ if [ "$MEDIACENTER" = "kodi" ]; then
 # other packages
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET OpenELEC-settings"
 
-  #if [ -n "$SKINS" ]; then
- #   for i in $SKINS; do
-  #    PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET $MEDIACENTER-theme-$i"
-  #  done
-  #fi
+  if [ -n "$SKINS" ]; then
+    for i in $SKINS; do
+      PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET $MEDIACENTER-theme-$i"
+    done
+  fi
 
-  #if [ "$KODI_LANGUAGE_ADDONS" = "yes" ]; then
-  #  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET kodi-language-addons"
-  #fi
+  if [ "$KODI_LANGUAGE_ADDONS" = "yes" ]; then
+    PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET kodi-language-addons"
+  fi
 fi

@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.openssh.com/"
 PKG_URL="http://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain libz openssl"
+PKG_DEPENDS_TARGET="toolchain zlib openssl"
 
 PKG_SECTION="network"
 PKG_SHORTDESC="openssh: An open re-implementation of the SSH package"
@@ -35,7 +35,7 @@ PKG_AUTORECONF="yes"
 PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/etc/ssh \
                            --libexecdir=/usr/lib/openssh \
                            --disable-strip \
-                           --enable-lastlog \
+                           --disable-lastlog \
                            --with-sandbox=no \
                            --disable-utmp \
                            --disable-utmpx \

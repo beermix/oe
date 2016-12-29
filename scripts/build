@@ -245,16 +245,6 @@ if [ ! -f $STAMP ]; then
       fi
       if [ "$(type -t make_$TARGET)" = "function" ]; then
         make_$TARGET
-#        elif [ -f "$PKG_CMAKE_SCRIPT" -a ! "$PKG_USE_CMAKE" = "no" ]; then
-#        if [ "$TARGET" = "target" ]; then
-#          ninja $PKG_MAKE_OPTS_TARGET
-#        elif [ "$TARGET" = "host" ]; then
-#          ninja $PKG_MAKE_OPTS_HOST
-#        elif [ "$TARGET" = "init" ]; then
-#          ninja $PKG_MAKE_OPTS_INIT
-#        elif [ "$TARGET" = "bootstrap" ]; then
-#          ninja $PKG_MAKE_OPTS_BOOTSTRAP
-#        fi
       else
         case "$TARGET" in
           target)
