@@ -5,6 +5,4 @@ PKG_DEPENDS_TARGET="toolchain pcre acl attr"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--with-posix-acls \
-			      --with-xattrs \
-			      --without-selinux"
+PKG_CONFIGURE_OPTS_TARGET="--with-posix-acls --with-xattrs --without-selinux"
