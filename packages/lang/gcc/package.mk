@@ -69,7 +69,6 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-__cxa_atexit \
                               --disable-libsanitizer \
                               --disable-libssp \
-                              --disable-libatomic \
                               --enable-cloog-backend=isl \
                               --disable-shared \
                               --disable-threads \
@@ -82,8 +81,6 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-languages=c,c++ \
                          --enable-__cxa_atexit \
                          --enable-decimal-float \
-                         --disable-libssp \
-                         --disable-libatomic \
                          --enable-tls \
                          --enable-shared \
                          --disable-static \

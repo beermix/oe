@@ -24,13 +24,12 @@ PKG_LICENSE="BSD"
 PKG_SITE="http://code.google.com/p/libdnet/"
 PKG_GIT_URL="https://github.com/dugsong/libdnet"
 PKG_DEPENDS_TARGET="toolchain"
-
 PKG_SECTION="network"
 PKG_SHORTDESC="A simplified, portable interface to several low-level networking routines"
 PKG_LONGDESC="A simplified, portable interface to several low-level networking routines"
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_strlcat=no \
                            ac_cv_func_strlcpy=no \

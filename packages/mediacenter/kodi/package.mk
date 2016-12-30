@@ -314,7 +314,7 @@ pre_configure_target() {
 
   export CFLAGS="$CFLAGS $KODI_CFLAGS"
   export CXXFLAGS="$CXXFLAGS $KODI_CXXFLAGS"
-  export LIBS="$LIBS -lz -lterminfo"
+  export LIBS="$LIBS -lz"
 
   export JSON_BUILDER=$ROOT/$TOOLCHAIN/bin/JsonSchemaBuilder
 }
@@ -419,22 +419,6 @@ post_makeinstall_target() {
     mkdir -p $INSTALL/usr/share/kodi/media/Fonts
       cp $PKG_DIR/fonts/*.ttf $INSTALL/usr/share/kodi/media/Fonts
   fi
-  # install AlexELEC addons
-  if [ -f $PKG_DIR/config/addons-alexelec/plugins.tbz2 ]; then
-      mkdir -p $INSTALL/usr/share/kodi/config/addons-alexelec
-      cp $PKG_DIR/config/addons-alexelec/plugins.tbz2 $INSTALL/usr/share/kodi/config/addons-alexelec
-  fi
-
-  # install addons config
-  if [ -d $PKG_DIR/config/weather.yahoo ]; then
-    cp -R $PKG_DIR/config/weather.yahoo $INSTALL/usr/share/kodi/config
-  fi
-  # disable Wizard in System addon
-  if [ -d $PKG_DIR/config/service.system.settings ]; then
-    cp -R $PKG_DIR/config/service.system.settings $INSTALL/usr/share/kodi/config
-  fi
-  
-  debug_strip $INSTALL/usr/lib/kodi/kodi.bin
 }
 
 post_install() {
