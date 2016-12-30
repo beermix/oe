@@ -36,11 +36,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_path_BASH_SHELL=/bin/bash \
                            libc_cv_slibdir=/lib \
                            ac_cv_path_PERL= \
                            ac_cv_prog_MAKEINFO= \
-                           libc_cv_forced_unwind=yes \
-                           libc_cv_cc_with_libunwind=yes \
-                           libc_cv_c_cleanup=yes \
-                           libc_cv_gnu99_inline=yes \
-                           libc_cv_initfini_array=yes \
                            --libexecdir=/usr/lib/glibc \
                            --cache-file=config.cache \
                            --disable-profile \
@@ -118,6 +113,9 @@ libc_cv_forced_unwind=yes
 libc_cv_c_cleanup=yes
 libc_cv_ssp=no
 libc_cv_ssp_strong=no
+libc_cv_c_cleanup=yes
+libc_cv_gnu99_inline=yes
+libc_cv_initfini_array=yes
 EOF
 
   echo "sbindir=/usr/bin" >> configparms
