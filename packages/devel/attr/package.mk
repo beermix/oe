@@ -31,6 +31,8 @@ PKG_LONGDESC="Extended attributes are name:value pairs associated permanently wi
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
+MAKEFLAGS="-j1"
+
 PKG_CONFIGURE_OPTS_TARGET="OPTIMIZER= \
                            CONFIG_SHELL=/bin/bash \
                            INSTALL_USER=root INSTALL_GROUP=root \
