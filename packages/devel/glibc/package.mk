@@ -92,8 +92,7 @@ pre_configure_target() {
   export CFLAGS=`echo $CFLAGS | sed -e "s|-Ofast|-O2|g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O2|g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong||g"`
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
-  unset CPPFLAGS
+  export CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
 
   if [ -n "$PROJECT_CFLAGS" ]; then
     export CFLAGS=`echo $CFLAGS | sed -e "s|$PROJECT_CFLAGS||g"`
@@ -109,8 +108,8 @@ pre_configure_target() {
 
   unset LD_LIBRARY_PATH
 
-  # set some CFLAGS we need
-  export CFLAGS="$CFLAGS -g -fno-stack-protector"
+# set some CFLAGS we need
+  export CFLAGS="$CFLAGS -g"
 
   export OBJDUMP_FOR_HOST=objdump
 
@@ -137,19 +136,17 @@ post_makeinstall_target() {
   done
   rm -rf $INSTALL/usr/lib/audit
   rm -rf $INSTALL/usr/lib/glibc
-  rm -rf $INSTALL/usr/lib/libc_pic
   rm -rf $INSTALL/usr/lib/*.o
-  rm -rf $INSTALL/usr/lib/*.map
   rm -rf $INSTALL/var
 
 # remove unneeded libs
-#  rm -rf $INSTALL/usr/lib/libBrokenLocale*
-#  rm -rf $INSTALL/usr/lib/libSegFault.so
-#  rm -rf $INSTALL/usr/lib/libmemusage.so
-#  rm -rf $INSTALL/usr/lib/libpcprofile.so
+  rm -rf $INSTALL/usr/lib/libBrokenLocale*
+  rm -rf $INSTALL/usr/lib/libSegFault.so
+  rm -rf $INSTALL/usr/lib/libmemusage.so
+  rm -rf $INSTALL/usr/lib/libpcprofile.so
 # remove ldscripts
-#  rm -rf $INSTALL/usr/lib/libc.so
-#  rm -rf $INSTALL/usr/lib/libpthread.so
+  rm -rf $INSTALL/usr/lib/libc.so
+  rm -rf $INSTALL/usr/lib/libpthread.so
 
 # remove locales and charmaps
   rm -rf $INSTALL/usr/share/i18n/charmaps
