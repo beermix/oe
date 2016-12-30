@@ -26,7 +26,6 @@ PKG_SITE="https://github.com/json-c/json-c/wiki"
 PKG_GIT_URL="https://github.com/json-c/json-c.git"
 PKG_GIT_BRANCH="master"
 PKG_DEPENDS_TARGET="toolchain"
-
 PKG_SECTION="accessibility"
 PKG_SHORTDESC="json-c"
 PKG_LONGDESC="JSON-C implements a reference counting object model that allows you to easily construct JSON objects in C, output them as JSON formatted strings and parse JSON formatted strings back into the C representation of JSON objects"
