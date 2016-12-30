@@ -42,7 +42,8 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --disable-libssp \
                          --enable-version-specific-runtime-libs \
                          --enable-plugins \
-                         --enable-gold \
+                         --enable-gold=yes \
+                         --disable-relro \
                          --enable-ld=default \
                          --enable-lto \
                          --disable-nls \
@@ -51,7 +52,10 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --disable-gdb \
                          --disable-sim \
                          --with-system-zlib \
-                         --enable-poison-system-directories"
+                         --enable-poison-system-directories \
+                         --enable-64-bit-bfd \
+                         --enable-relro \
+                         --enable-deterministic-archives"
 
 makeinstall_host() {
   cp -v ../include/libiberty.h $SYSROOT_PREFIX/usr/include

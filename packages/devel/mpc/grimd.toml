@@ -1,0 +1,64 @@
+# version this config was generated from
+version = "1.0.2"
+
+# list of sources to pull blocklists from, stores them in ./sources
+sources = [
+"https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts",
+"http://sysctl.org/cameleon/hosts",
+"https://s3.amazonaws.com/lists.disconnect.me/simple_tracking.txt",
+"https://s3.amazonaws.com/lists.disconnect.me/simple_ad.txt",
+"http://hosts-file.net/ad_servers.txt",
+"https://raw.githubusercontent.com/quidsup/notrack/master/trackers.txt"
+]
+# "https://zeustracker.abuse.ch/blocklist.php?download=domainblocklist"
+# list of locations to recursively read blocklists from (warning, every file found is assumed to be a hosts-file or domain list)
+sourcedirs = [
+"sources"
+]
+
+# location of the log file
+log = "/dev/null"
+
+# what kind of information should be logged, 0 = errors and important operations, 1 = dns queries, 2 = debug
+loglevel = 0
+
+# address to bind to for the DNS server
+
+bind = "0.0.0.0:53"
+
+# address to bind to for the API server
+api = "127.0.0.1:8089"
+
+# ipv4 address to forward blocked queries to
+nullroute = "0.0.0.0"
+
+# ipv6 address to forward blocked queries to
+#nullroutev6 = "0:0:0:0:0:0:0:0"
+
+# nameservers to forward queries to
+nameservers = ["8.8.4.4:53", "208.67.220.220:53"]
+
+# concurrency interval for lookups in miliseconds
+interval = 200
+
+# query timeout for dns lookups in seconds
+timeout = 10
+
+# cache entry lifespan in seconds
+expire = 600
+
+# cache capacity, 0 for infinite
+maxcount = 0
+
+# question cache capacity, 0 for infinite but not recommended (this is used for storing logs)
+questioncachecap = 5000
+
+# manual blocklist entries
+blocklist = []
+
+# manual whitelist entries
+whitelist = [
+	"getsentry.com",
+	"www.getsentry.com",
+	"docker.io"
+]
