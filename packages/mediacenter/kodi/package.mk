@@ -425,6 +425,10 @@ post_makeinstall_target() {
       cp $PKG_DIR/config/addons-alexelec/plugins.tbz2 $INSTALL/usr/share/kodi/config/addons-alexelec
   fi
 
+  # install addons config
+  if [ -d $PKG_DIR/config/weather.yahoo ]; then
+    cp -R $PKG_DIR/config/weather.yahoo $INSTALL/usr/share/kodi/config
+  fi
   # disable Wizard in System addon
   if [ -d $PKG_DIR/config/service.system.settings ]; then
     cp -R $PKG_DIR/config/service.system.settings $INSTALL/usr/share/kodi/config

@@ -46,7 +46,7 @@ fi
 pre_configure_target() {
 # attr fails to build in subdirs
   cd $ROOT/$PKG_BUILD
-    rm -rf .$TARGET_NAME
+  rm -rf .$TARGET_NAME
 }
 
 makeinstall_target() {
@@ -55,4 +55,27 @@ makeinstall_target() {
 
   mkdir -p $SYSROOT_PREFIX/usr/include/attr
     cp include/*.h $SYSROOT_PREFIX/usr/include/attr
+}
+
+post_makeinstall_target() {
+  mkdir -p $INSTALL/usr/bin/
+  cp attr/attr $INSTALL/usr/bin/
+  cp setfattr/setfattr $INSTALL/usr/bin/
+  cp getfattr/getfattr $INSTALL/usr/bin/
+}
+
+PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
+
+pre_configure_host() {
+# attr fails to build in subdirs
+  cd $ROOT/$PKG_BUILD
+    rm -rf .$TARGET_NAME
+}
+
+makeinstall_host() {
+  mkdir -p $ROOT/$TOOLCHAIN/lib/
+    cp libattr/.libs/libattr.a $ROOT/$TOOLCHAIN/lib/
+
+  mkdir -p $ROOT/$TOOLCHAIN/usr/include/attr
+    cp include/*.h $ROOT/$TOOLCHAIN/usr/include/attr
 }

@@ -25,7 +25,6 @@ PKG_SITE="https://github.com/sahlberg/libnfs"
 PKG_GIT_URL="https://github.com/sahlberg/libnfs.git"
 PKG_GIT_BRANCH="master"
 PKG_DEPENDS_TARGET="toolchain"
-
 PKG_SECTION="network"
 PKG_SHORTDESC="libnfs: a client library for accessing NFS shares over a network."
 PKG_LONGDESC="LIBNFS is a client library for accessing NFS shares over a network."

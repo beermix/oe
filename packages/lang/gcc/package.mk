@@ -68,6 +68,8 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
                               --disable-libsanitizer \
+                              --disable-libssp \
+                              --disable-libatomic \
                               --enable-cloog-backend=isl \
                               --disable-shared \
                               --disable-threads \
@@ -80,6 +82,8 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-languages=c,c++ \
                          --enable-__cxa_atexit \
                          --enable-decimal-float \
+                         --disable-libssp \
+                         --disable-libatomic \
                          --enable-tls \
                          --enable-shared \
                          --disable-static \
@@ -93,7 +97,6 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
 
 pre_configure_host() {
   export CXXFLAGS="$CXXFLAGS -std=gnu++98"
-  export CFLAGS="$CFLAGS -fno-stack-protector"
   unset CPP
 }
 

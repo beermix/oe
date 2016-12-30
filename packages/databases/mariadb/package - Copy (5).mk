@@ -24,8 +24,7 @@ PKG_LICENSE="GPLv2"
 PKG_SITE="http://www.mariadb.org"
 PKG_URL="https://downloads.mariadb.org/interstitial/$PKG_NAME-$PKG_VERSION/source/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain netbsd-curses openssl mariadb:host"
-PKG_PRIORITY="optional"
+PKG_DEPENDS_TARGET="toolchain netbsd-curses openssl libxml2 mariadb:host"
 PKG_SECTION="database"
 PKG_SHORTDESC="mariadb: A community developed branch of MySQL"
 PKG_LONGDESC="MariaDB is a community-developed fork and a drop-in replacement for the MySQL relational database management system."
@@ -33,7 +32,7 @@ PKG_LONGDESC="MariaDB is a community-developed fork and a drop-in replacement fo
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_MARIADB_SERVER="no"
+PKG_MARIADB_SERVER="yes"
 
 # MariaDB Feature set. Selection of features. Options are
 # - xsmall : 
@@ -42,7 +41,7 @@ PKG_MARIADB_SERVER="no"
 # - large :  embedded + archive + federated + blackhole + innodb
 # - xlarge:  embedded + archive + federated + blackhole + innodb + partition
 # - community:  all  features (currently == xlarge)
-  MARIADB_OPTS="$MARIADB_OPTS -DFEATURE_SET=xsmall"
+  MARIADB_OPTS="$MARIADB_OPTS -DFEATURE_SET=community"
 
 # Build MariaDB Server support
   if [ "$PKG_MARIADB_SERVER" = "no" ]; then
@@ -56,8 +55,8 @@ PKG_MARIADB_SERVER="no"
 
 # Set MariaDB server storage engines
   MARIADB_OPTS="$MARIADB_OPTS -DWITH_INNOBASE_STORAGE_ENGINE=ON"
-  MARIADB_OPTS="$MARIADB_OPTS -WITH_PARTITION_STORAGE_ENGINE=OFF"
-  MARIADB_OPTS="$MARIADB_OPTS -WITH_PERFSCHEMA_STORAGE_ENGINE=OFF"
+  MARIADB_OPTS="$MARIADB_OPTS -WITH_PARTITION_STORAGE_ENGINE=ON"
+  MARIADB_OPTS="$MARIADB_OPTS -WITH_PERFSCHEMA_STORAGE_ENGINE=ON"
 
 # According to MariaDB galera cluster documentation these options must be passed
 # to CMake, set to '0' if galera cluster support is not wanted:
@@ -102,6 +101,7 @@ PKG_MARIADB_SERVER="no"
   PKG_MAKE_OPTS_HOST="import_executables"
   MARIADB_IMPORT_EXECUTABLES="-DIMPORT_EXECUTABLES=$ROOT/$PKG_BUILD/.$HOST_NAME/import_executables.cmake"
 
+
 configure_host() {
   cmake -DCMAKE_PREFIX_PATH=$ROOT/$TOOLCHAIN/ \
         -DCMAKE_BUILD_TYPE=Release \
@@ -122,6 +122,7 @@ configure_host() {
         -DWITH_SYSTEMD=OFF \
         -DWITH_LIBWRAP=OFF \
         -DWITH_WSREP=OFF \
+        -DSECURITY_HARDENED=OFF \
         ..
 }
 
@@ -150,7 +151,7 @@ configure_target() {
         -DINSTALL_SQLBENCHDIR=share/mysql/bench \
         -DINSTALL_SUPPORTFILESDIR=share/mysql/support-files \
         -DMYSQL_DATADIR=/storage/mysql \
-        -DMYSQL_UNIX_ADDR=/run/mysqld/mysqld.sock \
+        -DMYSQL_UNIX_ADDR=/var/run/mysqld.sock \
         -DWITH_EXTRA_CHARSETS=all \
         -DTOKUDB_OK=0 \
         -DDISABLE_LIBMYSQLCLIENT_SYMBOL_VERSIONING=TRUE \
@@ -158,9 +159,10 @@ configure_target() {
         -DWITH_READLINE=OFF \
         -DWITH_PCRE=bundled \
         -DWITH_ZLIB=bundled \
-        -DWITH_SYSTEMD=OFF \
+        -DWITH_SYSTEMD=ON \
         -DWITH_LIBWRAP=OFF \
         -DWITH_SSL=$SYSROOT_PREFIX/usr \
+        -DSECURITY_HARDENED=OFF \
         $MARIADB_OPTS \
         ..
 }
@@ -172,6 +174,7 @@ post_makeinstall_target() {
   ln -sf $SYSROOT_PREFIX/usr/bin/mysql_config $ROOT/$TOOLCHAIN/bin/mysql_config
  
   rm -rf $INSTALL/usr/share/mysql/support-files
+  rm -rf $INSTALL/usr/share/mysql/test
 
   if [ "$PKG_MARIADB_SERVER" = "no" ]; then
     rm -rf $INSTALL/usr/bin
