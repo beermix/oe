@@ -6,8 +6,6 @@ PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-CONCURRENCY_MAKE_LEVEL=1
-
 pre_configure_target() {
   export LIBS="-lterminfo"
 }
