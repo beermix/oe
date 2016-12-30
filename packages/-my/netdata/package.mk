@@ -1,7 +1,7 @@
 PKG_NAME="netdata"
 PKG_VERSION="1.4.0"
 PKG_URL="https://github.com/firehol/netdata/releases/download/v$PKG_VERSION/netdata-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain util-linux netbsd-curses"
+PKG_DEPENDS_TARGET="toolchain util-linux netbsd-curses sysstat"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
@@ -27,7 +27,7 @@ PKG_CONFIGURE_OPTS_TARGET="--with-zlib \
                            --localedir=/storage/.config/netdata"
                  
 post_install() {
-  add_user nobody x 990 990 "netdata" "/storage" "/bin/sh"
+  add_user nobody x 990 990 "netdata" "/storage" "/bin/bash"
   add_group netdev 990
 }
 
