@@ -43,7 +43,6 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-version-specific-runtime-libs \
                          --enable-plugins \
                          --enable-gold=yes \
-                         --disable-relro \
                          --enable-ld=default \
                          --enable-lto \
                          --disable-nls \
@@ -54,7 +53,6 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --with-system-zlib \
                          --enable-poison-system-directories \
                          --enable-64-bit-bfd \
-                         --enable-relro \
                          --enable-deterministic-archives"
 
 makeinstall_host() {
