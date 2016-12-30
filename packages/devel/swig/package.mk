@@ -55,7 +55,5 @@ PKG_CONFIGURE_OPTS_HOST="--with-pcre-prefix=$ROOT/$TOOLCHAIN \
                          --without-allegrocl \
                          --without-clisp \
                          --without-r \
-                         --with-go \
-                         --without-d \
-                         --enable-static \
-                         --disable-shared"
+                         --without-go \
+                         --without-d"

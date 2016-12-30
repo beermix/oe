@@ -48,26 +48,26 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-ld=default \
                            --disable-multilib \
                            --disable-nls \
+                           --disable-libssp \
                            --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
                            --disable-libmudflap \
+                           --disable-libatomic \
+                           --disable-libitm \
                            --disable-libquadmath \
+                           --disable-libmpx \
                            --disable-libgomp \
                            --disable-browser-plugin \
-                           --disable-libitm \
                            --with-tune=generic \
-                           --disable-libunwind-exceptions"
+                           --enable-poison-system-directories"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
                               --disable-libsanitizer \
-                              --disable-libssp \
-                              --disable-libmpx \
-                              --disable-libatomic \
                               --enable-cloog-backend=isl \
                               --disable-shared \
                               --disable-threads \
@@ -80,8 +80,6 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-languages=c,c++ \
                          --enable-__cxa_atexit \
                          --enable-decimal-float \
-                         --disable-libssp \
-                         --disable-libatomic \
                          --enable-tls \
                          --enable-shared \
                          --disable-static \
@@ -91,12 +89,6 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time \
                          --enable-clocale=gnu \
-                         --enable-libmpx \
-                         --enable-poison-system-directories \
-                         --enable-gnu-unique-object \
-                         --enable-gnu-indirect-function \
-                         --enable-linker-build-id \
-                         --with-linker-hash-style=gnu \
                          $GCC_OPTS"
 
 pre_configure_host() {
