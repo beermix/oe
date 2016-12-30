@@ -24,13 +24,12 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://ftp.gnu.org/gnu/autoconf-archive"
 PKG_URL="http://ftp.gnu.org/gnu/autoconf-archive/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="ccache:host"
-
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="autoconf-archive: macros for autoconf"
 PKG_LONGDESC="autoconf-archive is an package of m4 macros"
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME --prefix=$ROOT/$TOOLCHAIN"
 

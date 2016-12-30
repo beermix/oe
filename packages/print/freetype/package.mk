@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.freetype.org"
 PKG_URL="http://download.savannah.gnu.org/releases/freetype/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain zlib"
+PKG_DEPENDS_TARGET="toolchain zlib libpng"
 PKG_PRIORITY="optional"
 PKG_SECTION="print"
 PKG_SHORTDESC="freetype: TrueType font rendering library"
@@ -38,7 +38,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --disable-shared \
                            --with-zlib=yes \
                            --with-bzip2=no \
-                           --with-png=no \
+                           --with-png=yes \
                            --with-harfbuzz=no"
 
 pre_configure_target() {

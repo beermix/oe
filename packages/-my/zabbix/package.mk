@@ -1,8 +1,7 @@
 PKG_NAME="zabbix"
-PKG_VERSION="3.2.1"
-PKG_URL="http://sourceforge.net/projects/zabbix/files/ZABBIX%20Latest%20Stable/$PKG_VERSION/zabbix-$PKG_VERSION.tar.gz"
+PKG_VERSION="3.2.3"
+PKG_URL="https://fossies.org/linux/misc/zabbix-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain curl libxml2 mariadb netbsd-curses openssl libssh2 net-snmp"
-
 PKG_SECTION="devel"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"

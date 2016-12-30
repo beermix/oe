@@ -60,9 +60,9 @@ PKG_CMAKE_OPTS_HOST="-DCMAKE_BUILD_TYPE=Release \
                      -DWITH_ZLIB=bundled"
 
 make_host() {
-  ninja comp_err
-  ninja gen_lex_hash
-  ninja comp_sql
+  make comp_err
+  make gen_lex_hash
+  make comp_sql
 }
 
 post_make_host() {

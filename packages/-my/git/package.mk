@@ -14,16 +14,15 @@ pre_configure_target() {
   #export NO_UNIX_SOCKETS="YesPlease"
   export NO_NSEC="YesPlease"
   export NO_PERL="YesPlease"
-  #export NO_PYTHON="YesPlease" 
+  export NO_PYTHON="YesPlease" 
   export NO_TCLTK="YesPlease"
   export NO_SVN_TESTS="YesPlease"
   export USE_LIBPCRE="1"
-  #export XDL_FAST_HASH="YesPlease"
+  export XDL_FAST_HASH="YesPlease"
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
 			      --with-curl \
-			      --without-gnutls \
 			      --with-libpcre \
 			      --with-expat \
 			      --enable-pthreads=-lpthread \

@@ -40,5 +40,4 @@ PKG_MAKEINSTALL_OPTS_TARGET="$PKG_MAKE_OPTS_TARGET"
 pre_configure_target() {
   export CFLAGS="$CFLAGS -fPIC -DPIC"
   export LDFLAGS="$LDFLAGS -fPIC -DPIC"
-  export CXXFLAGS="$CXXFLAGS -std=gnu++98"
 }

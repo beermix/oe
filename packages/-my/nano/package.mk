@@ -9,8 +9,7 @@ PKG_LONGDESC="GNU nano (Nano's ANOther editor, or Not ANOther editor) is an enha
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
-			      --enable-utf8 \
+PKG_CONFIGURE_OPTS_TARGET="--enable-utf8 \
 			      --enable-extra \
 			      --enable-libmagic \
 			      --with-wordbounds \
@@ -25,8 +24,7 @@ PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
 			      --disable-tabcomp \
 			      --disable-wrapping \
 			      --without-slang \
-			      --sysconfdir=/storage/.config/nano \
-			      --disable-nls"
+			      --sysconfdir=/storage/.config/nano"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin/rnano

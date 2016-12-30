@@ -16,13 +16,12 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --enable-readline \
                            --without-bash-malloc \
                            --with-installed-readline \
-                           --disable-static-link \
+                           --enable-static-link \
                            --disable-rpath \
                            --cache-file=/dev/null \
                            --enable-history \
                            --enable-alias \
-                           --enable-job-control \
-                           --with-sysroot=$SYSROOT_PREFIX"   
+                           --enable-job-control"   
 			   
 post_makeinstall_target() {
   rm -rf $INSTALL/bin/bashbug

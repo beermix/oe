@@ -17,14 +17,13 @@
 ################################################################################
 
 PKG_NAME="netbsd-curses"
-PKG_VERSION="2cb5395"
+PKG_VERSION="ec06880"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/sabotage-linux/netbsd-curses"
 PKG_GIT_URL="https://github.com/sabotage-linux/netbsd-curses"
-PKG_DEPENDS_TARGET="toolchain libz"
-PKG_PRIORITY="optional"
+PKG_DEPENDS_TARGET="toolchain zlib"
 PKG_SECTION="devel"
 PKG_SHORTDESC="netbsd-curses: netbsd-libcurses portable edition"
 PKG_LONGDESC="netbsd-curses: netbsd-libcurses portable edition"
@@ -38,7 +37,7 @@ PKG_AUTORECONF="no"
   export CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
   
 make_target() {
-  make HOSTCC="$HOST_CC" CFLAGS="$CFLAGS -D_DEFAULT_SOURCE" PREFIX=/usr all-static -j1
+  make HOSTCC="$HOST_CC" CFLAGS="-Os -D_DEFAULT_SOURCE" PREFIX=/usr all-static -j1
 }
 
 makeinstall_target() {

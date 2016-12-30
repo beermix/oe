@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libev"
-PKG_VERSION="4.23"
+PKG_VERSION="4.24"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"

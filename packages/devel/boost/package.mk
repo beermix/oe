@@ -25,7 +25,8 @@ PKG_SITE="http://www.boost.org/"
 PKG_URL="$SOURCEFORGE_SRC/boost/boost/1.63.0/${PKG_NAME}_${PKG_VERSION}.tar.bz2"
 PKG_SOURCE_DIR="${PKG_NAME}_${PKG_VERSION}"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain boost:host Python:host zlib bzip2 icu"
+PKG_DEPENDS_TARGET="toolchain boost:host Python:host zlib bzip2"
+PKG_PRIORITY="optional"
 PKG_SECTION="devel"
 PKG_SHORTDESC="boost: Peer-reviewed STL style libraries for C++"
 PKG_LONGDESC="Boost provides free peer-reviewed portable C++ source libraries. The emphasis is on libraries which work well with the C++ Standard Library. One goal is to establish existing practice and provide reference implementations so that the Boost libraries are suitable for eventual standardization. Some of the libraries have already been proposed for inclusion in the C++ Standards Committee's upcoming C++ Standard Library Technical Report."
@@ -53,7 +54,6 @@ configure_target() {
   sh bootstrap.sh --prefix=/usr \
                   --with-bjam=$ROOT/$TOOLCHAIN/bin/bjam \
                   --with-python=$ROOT/$TOOLCHAIN/bin/python \
-                  --with-icu=$ROOT/$TOOLCHAIN/usr \
 
   echo "using gcc : `$CC -v 2>&1  | tail -n 1 |awk '{print $3}'` : $CC  : <compileflags>\"$CFLAGS\" <linkflags>\"$LDFLAGS\" ;" \
     > tools/build/src/user-config.jam
@@ -64,29 +64,15 @@ make_target() {
 }
 
 makeinstall_target() {
-  $ROOT/$TOOLCHAIN/bin/bjam -d2 --toolset=gcc \
-    				      link=static \
-  				      target-os=linux variant=release \
-  				      threading=multi \
-  				      debug-symbols=off \
+  $ROOT/$TOOLCHAIN/bin/bjam -d2 --toolset=gcc link=static \
                                 --prefix=$SYSROOT_PREFIX/usr \
                                 --ignore-site-config \
                                 --layout=system \
-                                --with-date_time \
                                 --with-thread \
-                                --with-random \
-                                --with-system \
-                                --with-python \
                                 --with-iostreams \
-                                --with-program_options \
-                                --with-signals \
-                                --with-atomic \
-                                --with-chrono \
-                                --with-exception \
+                                --with-system \
                                 --with-serialization \
                                 --with-filesystem \
-                                --with-graph \
-                                --disable-long-double \
                                 --with-regex -sICU_PATH="$SYSROOT_PREFIX/usr" \
                                 install
 }
