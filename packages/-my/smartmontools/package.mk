@@ -1,5 +1,5 @@
 PKG_NAME="smartmontools"
-PKG_VERSION="9e3cb9e"
+PKG_VERSION="ef73764"
 PKG_GIT_URL="https://github.com/mirror/smartmontools"
 #PKG_DEPENDS_TARGET="toolchain netbsd-curses libcap-ng"
 PKG_SECTION="my"
