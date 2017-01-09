@@ -5,7 +5,7 @@ PKG_DEPENDS_TARGET="toolchain openssl pcre libsodium udns libev"
 #PKG_DEPENDS_TARGET="toolchain openssl pcre"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-static \
