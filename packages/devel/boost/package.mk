@@ -68,9 +68,18 @@ makeinstall_target() {
                                 --prefix=$SYSROOT_PREFIX/usr \
                                 --ignore-site-config \
                                 --layout=system \
+                                --with-date_time \
                                 --with-thread \
                                 --with-iostreams \
                                 --with-system \
+                                --with-python \
+                                --with-iostreams \
+                                --with-program_options \
+                                --with-signals \
+                                --with-atomic \
+                                --with-chrono \
+                                --with-random \
+                                --with-exception \
                                 --with-serialization \
                                 --with-filesystem \
                                 --with-regex -sICU_PATH="$SYSROOT_PREFIX/usr" \
