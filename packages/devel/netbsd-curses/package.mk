@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="netbsd-curses"
-PKG_VERSION="ec06880"
+PKG_VERSION="c5778d5"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"

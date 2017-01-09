@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="xz"
-PKG_VERSION="5.2.2"
+PKG_VERSION="5.2.3"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -30,7 +30,6 @@ PKG_LONGDESC="XZ Utils is free general-purpose data compression software with hi
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-export CFLAGS="$CFLAGS -D_FILE_OFFSET_BITS=64"	
 
 # never build shared or k0p happens when building
 # on fedora due to host selinux/liblzma
