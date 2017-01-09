@@ -17,13 +17,13 @@
 ################################################################################
 
 PKG_NAME="pkg-config"
-PKG_VERSION="a38d5c5"
+PKG_VERSION="c53385b"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.freedesktop.org/software/pkgconfig/"
 PKG_GIT_URL="git://anongit.freedesktop.org/pkg-config"
-PKG_DEPENDS_HOST="ccache:host gettext:host autoconf:host autoconf-archive:host"
+PKG_DEPENDS_HOST="ccache:host gettext:host autotools:host autoconf:host"
 PKG_SECTION="toolchain/devel"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
@@ -33,8 +33,3 @@ pre_configure_host() {
 }
 
 PKG_CONFIGURE_OPTS_HOST="--disable-silent-rules --with-internal-glib --disable-dtrace --with-gnu-ld"
-
-#post_makeinstall_host() {
-#  mkdir -p $SYSROOT_PREFIX/usr/share/aclocal
-#  cp pkg.m4 $SYSROOT_PREFIX/usr/share/aclocal
-#}
