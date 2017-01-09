@@ -1,5 +1,5 @@
 PKG_NAME="aircrack-ng"
-PKG_VERSION="9a18465"
+PKG_VERSION="313c774"
 PKG_GIT_URL="https://github.com/aircrack-ng/aircrack-ng"
 PKG_KEEP_CHECKOUT="yes"
 PKG_DEPENDS_TARGET="toolchain openssl libdnet libnl libpcap openssl pcre libgpg-error usbutils iw"
