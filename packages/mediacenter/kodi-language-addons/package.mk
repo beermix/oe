@@ -17,13 +17,14 @@
 ################################################################################
 
 PKG_NAME="kodi-language-addons"
-PKG_VERSION="a8158f7"
+PKG_VERSION="ce9947c"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/xbmc/repo-resources"
 PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain"
+PKG_PRIORITY="optional"
 PKG_SECTION="mediacenter"
 PKG_SHORTDESC="kodi language add-ons"
 PKG_LONGDESC="kodi language add-ons"
@@ -37,7 +38,5 @@ make_target() {
 
 makeinstall_target() {
   mkdir -p $INSTALL/usr/share/kodi/addons/
-    for lng in $KODI_LANGUAGE_LIST; do
-        cp -PR $ROOT/$PKG_BUILD/*.$lng $INSTALL/usr/share/kodi/addons/
-    done
+    cp -PR $ROOT/$PKG_BUILD/* $INSTALL/usr/share/kodi/addons/
 }
