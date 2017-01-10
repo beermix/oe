@@ -31,7 +31,7 @@
   SKINS="Estouchy"
 
 # remove default skin included in Kodi (yes/no)
-  SKIN_REMOVE_SHIPPED="yes"
+  SKIN_REMOVE_SHIPPED="no"
 
 # Default Skin (Confluence, or any from above)
   SKIN_DEFAULT="Estouchy"
