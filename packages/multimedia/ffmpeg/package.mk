@@ -17,10 +17,12 @@
 ################################################################################
 
 PKG_NAME="ffmpeg"
-PKG_VERSION="2.8.10"
-PKG_URL="https://ffmpeg.org/releases/ffmpeg-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl dcadec speex x265"
-
+PKG_VERSION="3.1.6-Krypton"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="LGPLv2.1+"
+PKG_GIT_URL="https://github.com/xbmc/FFmpeg.git"
+PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl speex x265"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
 PKG_LONGDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
@@ -55,16 +57,13 @@ if [ "$KODIPLAYER_DRIVER" = "bcm2835-firmware" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET bcm2835-firmware"
 fi
 
+
 case "$TARGET_ARCH" in
   arm)
-      FFMPEG_CPU=""
       FFMPEG_TABLES="--enable-hardcoded-tables"
-      FFMPEG_PIC="--enable-pic"
   ;;
-  x86_64)
-      FFMPEG_CPU=""
+  *)
       FFMPEG_TABLES="--disable-hardcoded-tables"
-      FFMPEG_PIC="--enable-pic"
   ;;
 esac
 
@@ -80,9 +79,6 @@ case "$TARGET_FPU" in
   ;;
 esac
 
-if [ "$DISPLAYSERVER" = "x11" ]; then
-  FFMPEG_X11GRAB="--enable-indev=x11grab_xcb"
-fi
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
@@ -118,7 +114,7 @@ configure_target() {
               --host-cflags="$HOST_CFLAGS" \
               --host-ldflags="$HOST_LDFLAGS" \
               --host-libs="-lm" \
-              --extra-cflags="$CFLAGS -D_DEFAULT_SOURCE" \
+              --extra-cflags="$CFLAGS" \
               --extra-ldflags="$LDFLAGS -fPIC" \
               --extra-libs="$FFMPEG_LIBS" \
               --extra-version="" \
@@ -182,6 +178,7 @@ configure_target() {
               --enable-parsers \
               --enable-bsfs \
               --enable-protocol=http \
+              --disable-indevs \
               --disable-outdevs \
               --enable-filters \
               --disable-avisynth \
@@ -191,8 +188,6 @@ configure_target() {
               --disable-libopencore-amrwb \
               --disable-libopencv \
               --disable-libdc1394 \
-              --enable-libdcadec \
-              --disable-libfaac \
               --disable-libfreetype \
               --disable-libgsm \
               --disable-libmp3lame \
@@ -202,7 +197,6 @@ configure_target() {
               --disable-libschroedinger \
               --enable-libspeex \
               --disable-libtheora \
-              --disable-libvo-aacenc \
               --disable-libvo-amrwbenc \
               --disable-libvorbis \
               --disable-libvpx \
@@ -216,7 +210,6 @@ configure_target() {
               $FFMPEG_FPU \
               --enable-yasm \
               --disable-symver \
-              --disable-lto \
               --enable-indev=x11grab_xcb
 }
 

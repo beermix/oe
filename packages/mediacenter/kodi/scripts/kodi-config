@@ -17,6 +17,7 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
+
 # hack: make addon-bins executable
 # done in kodi on addon install. but just in case..
 chmod +x /storage/.kodi/addons/*/bin/*
@@ -39,14 +40,6 @@ if [ ! -f $HOME/.kodi/userdata/guisettings.xml ] ; then
   if [ -f /usr/share/kodi/config/guisettings.xml ]; then
     cp /usr/share/kodi/config/guisettings.xml $HOME/.kodi/userdata
   fi
-fi
-
-# cleanup *.fi cache files from .kodi/temp as old version
-
-# of these files can cause random problems/crashes, particularly
-# after an upgrade
-if [ -d $HOME/.kodi/temp ]; then
-  rm -f $HOME/.kodi/temp/*.fi
 fi
 
 if [ -e /run/lirc/lircd.irtrans ]; then
