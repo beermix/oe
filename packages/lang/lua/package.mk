@@ -11,7 +11,6 @@ PKG_LICENSE="MIT"
 PKG_SITE="http://www.lua.org/"
 PKG_URL="http://www.lua.org/ftp/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain readline"
-
 PKG_SECTION="xmedia/depends"
 PKG_SHORTDESC="lua: A lightweight, extensible programming language"
 PKG_LONGDESC="Lua is a powerful light-weight programming language designed for extending applications. Lua is also frequently used as a general-purpose, stand-alone language."
@@ -21,7 +20,7 @@ PKG_AUTORECONF="no"
 _MAJORVER=${PKG_VERSION%.*}
 
 make_target() {
-  make CC="$CC" CFLAGS="$CFLAGS -fPIC" MYCFLAGS="-DLUA_COMPAT_5_2 -DLUA_COMPAT_5_1" linux
+  make CC="$HOST_CC" CFLAGS="$CFLAGS -fPIC" MYCFLAGS="-DLUA_COMPAT_5_2 -DLUA_COMPAT_5_1" linux
 }
 
 makeinstall_target() {
