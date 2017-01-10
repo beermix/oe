@@ -25,7 +25,6 @@ PKG_SITE="https://github.com/xbmc/libdvdnav"
 PKG_GIT_URL="https://github.com/xbmc/libdvdnav.git"
 PKG_GIT_BRANCH="master"
 PKG_DEPENDS_TARGET="toolchain libdvdread"
-
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="libdvdnav: a library that allows easy use of sophisticated DVD navigation features such as DVD menus, multiangle playback and even interactive DVD games."
 PKG_LONGDESC="libdvdnav is a library that allows easy use of sophisticated DVD navigation features such as DVD menus, multiangle playback and even interactive DVD games."
@@ -37,4 +36,8 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --with-pic"
 
 pre_configure_target() {
   export CFLAGS="$CFLAGS -D_XBMC -DHAVE_DVDCSS_DVDCSS_H"
+}
+
+post_makeinstall_target() {
+  ln -sf dvdnav.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/libdvdnav.pc
 }

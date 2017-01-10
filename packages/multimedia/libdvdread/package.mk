@@ -25,7 +25,6 @@ PKG_SITE="https://github.com/xbmc/libdvdread"
 PKG_GIT_URL="https://github.com/xbmc/libdvdread.git"
 PKG_GIT_BRANCH="master"
 PKG_DEPENDS_TARGET="toolchain libdvdcss"
-
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="libdvdread: a library which provides a simple foundation for reading DVDs."
 PKG_LONGDESC="libdvdread is a library which provides a simple foundation for reading DVDs."
@@ -37,4 +36,8 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --with-libdvdcss --w
 
 pre_configure_target() {
   export CFLAGS="$CFLAGS -D_XBMC -DHAVE_DVDCSS_DVDCSS_H"
+}
+
+post_makeinstall_target() {
+  ln -sf dvdread.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/libdvdread.pc
 }

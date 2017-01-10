@@ -1,4 +1,4 @@
-# Path to your oh-my-zsh installation.
+	# Path to your oh-my-zsh installation.
 export ZSH=/storage/.cache/.oh-my-zsh
 
 # Set name of the theme to load.
@@ -20,26 +20,34 @@ DISABLE_UPDATE_PROMPT=true
 ZSH_THEME="flazz"
 
 DISABLE_UPDATE_PROMPT=true
-
+export LS_COLORS='*.swp=-1;44;37:*,v=5;34;93:*.vim=35:no=0:fi=0:di=32:ln=36:or=1;40:mi=1;40:pi=31:so=33:bd=44;37:cd=44;37:*.jpg=1;32:*.jpeg=1;32:*.JPG=1;32:*.gif=1;32:*.png=1;32:*.jpeg=1;32:*.ppm=1;32:*.pgm=1;32:*.pbm=1;32:*.c=1;32:*.C=1;33:*.h=1;33:*.cc=1;33:*.awk=1;33:*.pl=1;33:*.gz=0;33:*.tar=0;33:*.zip=0;33:*.lha=0;33:*.lzh=0;33:*.arj=0;33:*.bz2=0;33:*.tgz=0;33:*.taz=33:*.html=36:*.htm=1;34:*.doc=1;34:*.txt=1;34:*.o=1;36:*.a=1;36'
+export ZLS_COLORS='*.swp=00;44;37:*,v=5;34;93:*.vim=35:no=0:fi=0:di=32:ln=36:or=1;40:mi=1;40:pi=31:so=33:bd=44;37:cd=44;37:*.jpg=1;32:*.jpeg=1;32:*.JPG=1;32:*.gif=1;32:*.png=1;32:*.jpeg=1;32:*.ppm=1;32:*.pgm=1;32:*.pbm=1;32:*.c=1;32:*.C=1;33:*.h=1;33:*.cc=1;33:*.awk=1;33:*.pl=1;33:*.gz=0;33:*.tar=0;33:*.zip=0;33:*.lha=0;33:*.lzh=0;33:*.arj=0;33:*.bz2=0;33:*.tgz=0;33:*.taz=33:*.html=36:*.htm=1;34:*.doc=1;34:*.txt=1;34:*.o=1;36:*.a=1;36'
+export CLICOLOR=1       # some shells need this to enable colorized out
+export GREP_COLOR=32    # some greps have colorized ouput. enable...
+export GREPCOLOR=32     # dito here
+PROMPT=$'[%{\e[1;37m%}%n%{\e[0m%}]%# '
+#RPROMPT=$'[%m : %~]'
+autoload -U colors && colors
+autoload -U zmv
 
 #setopt    GLOB
-#setopt    EXTENDED_HISTORY
-#setopt    INC_APPEND_HISTORY
-#setopt    SHARE_HISTORY
-#setopt    HIST_IGNORE_DUPS
-#setopt    HIST_FIND_NO_DUPS
-#setopt    HIST_IGNORE_SPACE
-#setopt    HIST_VERIFY
-#setopt    NO_HIST_BEEP
-#setopt    NO_BEEP
-#setopt    NO_HUP
-#autoload -Uz bracketed-paste-magic
-#autoload -U zutil
-#autoload -U compinit
+setopt    EXTENDED_HISTORY
+setopt    INC_APPEND_HISTORY
+setopt    SHARE_HISTORY
+setopt    HIST_IGNORE_DUPS
+setopt    HIST_FIND_NO_DUPS
+setopt    HIST_IGNORE_SPACE
+setopt    HIST_VERIFY
+setopt    NO_HIST_BEEP
+setopt    NO_BEEP
+setopt    NO_HUP
+autoload -Uz bracketed-paste-magic
+autoload -U zutil
+autoload -U compinit
 
 
-#bindkey '\e[A' history-search-backward
-#bindkey '\e[B' history-search-forward
+bindkey '\e[A' history-search-backward
+bindkey '\e[B' history-search-forward
 bindkey '^K' kill-whole-line
 bindkey "\e[H" beginning-of-line        # Home (xorg)
 bindkey "\e[1~" beginning-of-line       # Home (console)
@@ -193,7 +201,6 @@ alias ar='apt-get -y install'
 alias clou='nohup cloud &'
 alias ip2='curl http://wtfismyip.com/json'
 alias legoren='lego --path=/root/.lego --email="andrey.vd@gmail.com" --domains="router.is.my" renew'
-alias d='daemonize'
 alias mm='make menuconfig'
 alias ms='make kernel_menuconfig CONFIG_TARGET=subtarget -j4'
 alias ddd='dnf download'
@@ -223,8 +230,6 @@ alias gl='git pull'
 alias gd='git diff'
 alias gget='go get -v -t -u'
 alias mw='make world'
-alias m='make'
-alias gg='git add -A .;git commit -m '\''autocommit on change'\'';git push -u origin master'
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
@@ -277,7 +282,7 @@ alias getsync='aria2c http://download-new.utorrent.com/endpoint/btsync/os/linux-
 alias gf='git fetch'
 alias gfa='git fetch --all --prune'
 alias gfo='git fetch origin'
-#alias gg='git gui citool'
+alias gg='git gui citool'
 alias gga='git gui citool --amend'
 alias gget='go get -u -v'
 alias gget2='go get -u -t -v'
@@ -356,6 +361,7 @@ alias h='history'
 alias history='fc -il 1'
 alias hsi='hs -i'
 alias ht='htop'
+alias l='l -lah'
 alias la='ls -lAh'
 alias ll='lnav'
 alias llj='journalctl -xef'
@@ -389,7 +395,7 @@ alias s='systemctl'
 alias s2='iperf3 -c wat.is.my && iperf3 -c wat.is.my -R'
 alias sre='systemctl daemon-reload'
 alias t='~/.bin/sensors.sh'
-alias trim='fstrim -a'
+alias trim='time -c fstrim'
 alias tt='tar xpvf'
 alias uu='ulimit -n 51200'
 alias wh='which'
@@ -402,6 +408,7 @@ alias zb2='docker exec -ti zabbix-db bash -c "mysqldump -u zabbix -pASDewq123 za
 alias cmake-='cmake . -LH'
 alias lsdir="for dir in *;do;if [ -d \$dir ];then;du -hsL \$dir;fi;done"
 alias g='grep -Hrn'
+alias l='ls -lah --color=auto'
 alias bb='/storage/data/ubuntu/usr/sbin/chroot /storage/data/ubuntu/ /bin/bash'
 alias trim='time -c "fstrim ~"'
 alias ss='strip -s'
@@ -423,6 +430,7 @@ alias ff='/storage/data/fedora/usr/sbin/chroot /storage/data/fedora/ /bin/zsh'
 alias moow='sshfs -o reconnect,ServerAliveInterval=15 root@192.168.1.1:/ /storage/..OWrt -o password_stdin <~/passwd.txt'
 alias prch='proxychains4 -f /storage/.config/proxychains/proxychains.conf'
 alias dost='docker stats $(docker ps --format '{{.Names}}')'
+alias wui='/storage/.git-webui/release/libexec/git-core/git-webui --no-browser --host 192.168.1.4'
 #alias gc='git clean -dfx'
 alias trim='time -c 'fstrim -a''
 alias gogo='export GOPATH=/storage/.bin/.go'
@@ -431,7 +439,7 @@ alias ms='make kernel_menuconfig' ## CONFIG_TARGET=subtarget
 alias rmc='rm -rf /root/.ccache-openelec/'
 alias bu='/storage/data/ubuntu/usr/sbin/chroot /storage/data/ubuntu/ /bin/zsh'
 alias d='docker'
-alias ww='/storage/.cache/.git-webui/release/libexec/git-core/git-webui --port 80 --no-browser --host 192.168.1.4'
+alias ww='/storage/.bin/.git-webui/release/libexec/git-core/git-webui --port 80 --no-browser --host 192.168.1.4'
 alias ht='htop'
 #alias yt='/bin/bash /storage/.bin/yt'
 alias sreb='systemctl daemon-reload'
@@ -439,7 +447,6 @@ alias sstat='systemctl status'
 alias lib2='export LD_LIBRARY_PATH=/storage/lib2'
 alias ar='arch-chroot ~/chroot/arch zsh'
 alias ub='arch-chroot ~/chroot/ubuntu zsh'
-alias ubb='arch-chroot ~/chroot/ubuntu bash'
 alias fe='arch-chroot ~/chroot/fedora zsh'
 alias al='arch-chroot ~/chroot/alpine zsh'
 alias sr='systemctl daemon-reload'
@@ -452,10 +459,7 @@ alias am='airmon-ng start wlan0'
 alias crashlog='paste $(ls -1art /storage/.kodi/temp/kodi_crashlog* | tail -1)'
 alias lg='journalctl -xe | lnav'
 alias gcl1='git clone --recursive --depth 1'
-alias dd='dd status=progress'
-alias db='docker build -t my-docker -f Dockerfile .'
-alias dbb='docker run -i -t -P my-docker:latest bash'
-
+alias dyt='daemonize /storage/.bin/yt'
 
 
 ulimit -n 51200
@@ -481,7 +485,7 @@ fi
 
 #export LC_ALL=C
 #export LC_ALL=en_US.UTF-8
-export EDITOR=/usr/bin/nano
+#export EDITOR=/usr/bin/nano
 export TERM=xterm-256color
 #export CLICOLOR=1
 #export GREP_COLOR=24
@@ -493,5 +497,6 @@ export HISTSIZE=2000
 export HISTFILE="$HOME/.cache/.zsh-history"
 
 export REPORTTIME=3 # display commands with execution time >= 3 seconds
-#setopt xtrace
-#export PATH="/storage/miniconda3/bin:$PATH"
+#setop xtrace
+
+export PATH="$HOME/node_modules/.bin/:$PATH"alias crashlog='paste /storage/.kodi/temp/kodi_crashlog_20160818004925.log'
