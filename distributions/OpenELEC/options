@@ -28,13 +28,13 @@
 # Skins to install (Estuary)
 # Space separated list is supported,
 # e.g. SKINS="Estuary"
-  SKINS=""
+  SKINS="Estouchy"
 
 # remove default skin included in Kodi (yes/no)
   SKIN_REMOVE_SHIPPED="yes"
 
 # Default Skin (Confluence, or any from above)
-  SKIN_DEFAULT="Estuary"
+  SKIN_DEFAULT="Estouchy"
 
 # install extra subtitle Fonts for KODI (yes / no)
   KODI_EXTRA_FONTS="yes"
