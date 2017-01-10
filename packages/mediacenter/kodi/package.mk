@@ -37,7 +37,7 @@ case "$KODIPLAYER_DRIVER" in
     PKG_KEEP_CHECKOUT="no"
     ;;
   *)
-    PKG_VERSION="17.0rc2-Krypton"
+    PKG_VERSION="74509b8"
     PKG_GIT_URL="https://github.com/xbmc/xbmc.git"
     PKG_GIT_BRANCH="Krypton"
     PKG_KEEP_CHECKOUT="no"
