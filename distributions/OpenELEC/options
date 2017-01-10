@@ -166,7 +166,7 @@
   IRSERVER_SUPPORT="no"
 
 # build and install CEC adapter support (yes / no)
-  CEC_SUPPORT="no"
+  CEC_SUPPORT="yes"
 
 # build and install iSCSI support - iscsistart (yes / no)
   ISCSI_SUPPORT="no"
