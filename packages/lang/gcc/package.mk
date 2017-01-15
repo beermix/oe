@@ -62,7 +62,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libgomp \
                            --disable-browser-plugin \
                            --disable-libatomic \
-                           --with-linker-hash-style=gnu \
                            --with-tune=generic"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
@@ -74,7 +73,6 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-shared \
                               --disable-threads \
                               --without-headers \
-                              --disable-libatomic \
                               --with-newlib \
                               --disable-decimal-float \
                               $GCC_OPTS"
