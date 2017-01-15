@@ -1,0 +1,41 @@
+diff -Naurp kodi-theme-Confluence-16.0-beta1-9a5ddf5/720p/DialogPVRChannelsOSD.xml kodi-theme-Confluence-16.0-beta1-9a5ddf5-patch/720p/DialogPVRChannelsOSD.xml
+--- kodi-theme-Confluence-16.0-beta1-9a5ddf5/720p/DialogPVRChannelsOSD.xml	2016-04-26 10:59:06.000000000 +0300
++++ kodi-theme-Confluence-16.0-beta1-9a5ddf5-patch/720p/DialogPVRChannelsOSD.xml	2016-08-14 11:26:31.000000000 +0300
+@@ -88,7 +88,7 @@
+ 				<width>410</width>
+ 				<height>520</height>
+ 				<onleft>PreviousChannelGroup</onleft>
+-				<onright>60</onright>
++				<onright>NextChannelGroup</onright>
+ 				<onup>11</onup>
+ 				<ondown>11</ondown>
+ 				<viewtype label="535">list</viewtype>
+diff -Naurp kodi-theme-Confluence-16.0-beta1-9a5ddf5/720p/IncludesPVR.xml kodi-theme-Confluence-16.0-beta1-9a5ddf5-patch/720p/IncludesPVR.xml
+--- kodi-theme-Confluence-16.0-beta1-9a5ddf5/720p/IncludesPVR.xml	2016-08-14 12:17:17.000000000 +0300
++++ kodi-theme-Confluence-16.0-beta1-9a5ddf5-patch/720p/IncludesPVR.xml	2016-08-14 11:43:24.000000000 +0300
+@@ -97,6 +97,12 @@
+ 					<align>center</align>
+ 					<aligny>center</aligny>
+ 				</control>
++				<control type="button" id="28">
++					<description>Channel Groups</description>
++					<textwidth>235</textwidth>
++					<include>ButtonCommonValues</include>
++					<label>-</label>
++				</control>
+ 				<control type="button" id="100">
+ 					<description>Channels</description>
+ 					<textwidth>235</textwidth>
+@@ -148,12 +154,6 @@
+ 					<align>center</align>
+ 					<aligny>center</aligny>
+ 				</control>
+-				<control type="button" id="28">
+-					<description>Channel Groups</description>
+-					<textwidth>235</textwidth>
+-					<include>ButtonCommonValues</include>
+-					<label>-</label>
+-				</control>
+ 				<control type="button" id="2">
+ 					<description>View As button</description>
+ 					<textwidth>235</textwidth>

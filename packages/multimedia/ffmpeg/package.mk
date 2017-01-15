@@ -17,12 +17,14 @@
 ################################################################################
 
 PKG_NAME="ffmpeg"
-PKG_VERSION="3.1.6-Krypton"
+PKG_VERSION="2.8.10"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="LGPLv2.1+"
-PKG_GIT_URL="https://github.com/xbmc/FFmpeg.git"
-PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl speex x265"
+PKG_SITE="https://ffmpeg.org"
+PKG_URL="https://ffmpeg.org/releases/${PKG_NAME}-${PKG_VERSION}.tar.gz"
+PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl dcadec speex"
+PKG_PRIORITY="optional"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
 PKG_LONGDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
@@ -57,7 +59,6 @@ if [ "$KODIPLAYER_DRIVER" = "bcm2835-firmware" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET bcm2835-firmware"
 fi
 
-
 case "$TARGET_ARCH" in
   arm)
       FFMPEG_TABLES="--enable-hardcoded-tables"
@@ -91,7 +92,7 @@ pre_configure_target() {
 
   if [ "$KODIPLAYER_DRIVER" = "bcm2835-firmware" ]; then
     export CFLAGS="-I$SYSROOT_PREFIX/usr/include/interface/vcos/pthreads -I$SYSROOT_PREFIX/usr/include/interface/vmcs_host/linux -DRPI=1 $CFLAGS"
-    export FFMPEG_LIBS="-lbcm_host -lvcos -lvchiq_arm -lmmal -lmmal_core -lmmal_util -lvcsm -lx265"
+    export FFMPEG_LIBS="-lbcm_host -lvcos -lvchiq_arm -lmmal -lmmal_core -lmmal_util -lvcsm"
   fi
 }
 
@@ -144,6 +145,7 @@ configure_target() {
               --disable-devices \
               --enable-pthreads \
               --disable-w32threads \
+              --enable-x11grab \
               --enable-network \
               --disable-gnutls --enable-openssl \
               --disable-gray \
@@ -188,6 +190,8 @@ configure_target() {
               --disable-libopencore-amrwb \
               --disable-libopencv \
               --disable-libdc1394 \
+              --enable-libdcadec \
+              --disable-libfaac \
               --disable-libfreetype \
               --disable-libgsm \
               --disable-libmp3lame \
@@ -197,20 +201,20 @@ configure_target() {
               --disable-libschroedinger \
               --enable-libspeex \
               --disable-libtheora \
+              --disable-libvo-aacenc \
               --disable-libvo-amrwbenc \
               --disable-libvorbis \
               --disable-libvpx \
               --disable-libx264 \
-              --enable-libx265 \
               --disable-libxavs \
               --disable-libxvid \
               --enable-zlib \
               --enable-asm \
               --disable-altivec \
+              $FFMPEG_CPU \
               $FFMPEG_FPU \
               --enable-yasm \
-              --disable-symver \
-              --enable-indev=x11grab_xcb
+              --disable-symver
 }
 
 post_makeinstall_target() {
