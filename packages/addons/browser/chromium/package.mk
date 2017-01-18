@@ -42,7 +42,6 @@ pre_make_target() {
 }
 
 make_target() {
-  export -n CFLAGS CXXFLAGS
   export LDFLAGS="$LDFLAGS -ludev"
   export LD=$CXX
 
@@ -116,7 +115,7 @@ make_target() {
   ./tools/gn/bootstrap/bootstrap.py --gn-gen-args "${_flags[*]}"
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$ROOT/$TOOLCHAIN/bin/python
 
-  ninja -j3 -C out/Release chrome chrome_sandbox
+  ninja -j3 -C out/Release chrome chrome_sandbox widevinecdmadapter
 }
 makeinstall_target() {
   :
