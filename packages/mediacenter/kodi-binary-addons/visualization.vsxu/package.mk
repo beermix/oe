@@ -16,22 +16,22 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="pvr.vdr.vnsi"
-PKG_VERSION="76652c2"
+PKG_NAME="visualization.vsxu"
+PKG_VERSION="990332f"
 PKG_REV="1"
-PKG_ARCH="any"
+PKG_ARCH="i386 x86_64"
 PKG_LICENSE="GPL"
-PKG_SITE="http://www.kodi.tv"
-PKG_GIT_URL="https://github.com/kodi-pvr/pvr.vdr.vnsi"
-PKG_DEPENDS_TARGET="toolchain kodi-platform"
-
+PKG_SITE="https://github.com/notspiff/visualization.vsxu"
+PKG_URL="https://github.com/notspiff/visualization.vsxu/archive/$PKG_VERSION.tar.gz"
+PKG_DEPENDS_TARGET="toolchain kodi-platform vsxu"
+PKG_PRIORITY="optional"
 PKG_SECTION=""
-PKG_SHORTDESC="pvr.vdr.vnsi"
-PKG_LONGDESC="pvr.vdr.vnsi"
+PKG_SHORTDESC="visualization.vsxu"
+PKG_LONGDESC="visualization.vsxu"
 PKG_AUTORECONF="no"
 
 PKG_IS_ADDON="yes"
-PKG_ADDON_TYPE="xbmc.pvrclient"
+PKG_ADDON_TYPE="xbmc.player.musicviz"
 
 configure_target() {
   cmake -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
