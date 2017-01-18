@@ -38,15 +38,10 @@ PKG_ADDON_PROVIDES="executable"
 pre_make_target() {
   strip_lto
 
-  touch chrome/test/data/webui/i18n_process_css_test.html
   sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' third_party/widevine/cdm/stub/widevine_cdm_version.h
-  python build/download_nacl_toolchains.py \
-      --packages nacl_x86_newlib,pnacl_newlib,pnacl_translator \
-      sync --extract
 }
 
 make_target() {
-  export -n CFLAGS CXXFLAGS
   export LDFLAGS="$LDFLAGS -ludev"
   export LD=$CXX
 
@@ -93,56 +88,6 @@ make_target() {
     "google_default_client_secret=\"${_google_default_client_secret}\""
   )
 
-  local _chromium_conf=(
-    -Dgoogle_api_key=$_google_api_key
-    -Dgoogle_default_client_id=$_google_default_client_id
-    -Dgoogle_default_client_secret=$_google_default_client_secret
-    -Dtarget_arch=x64
-    -Dfastbuild=2
-    -Dwerror=
-    -Dclang=0
-    -Dpython_ver=2.7
-    -Dlinux_link_gsettings=0
-    -Dlinux_strip_binary=1
-    -Dlinux_use_bundled_binutils=0
-    -Dlinux_use_bundled_gold=0
-    -Dlinux_use_gold_flags=0
-    -Dicu_use_data_file_flag=1
-    -Dlogging_like_official_build=1
-    -Dtracing_like_official_build=1
-    -Dfieldtrial_testing_like_official_build=1
-    -Dremove_webcore_debug_symbols=1
-    -Drelease_extra_cflags="$CFLAGS"
-    -Dlibspeechd_h_prefix=speech-dispatcher/
-    -Dffmpeg_branding=Chrome
-    -Dproprietary_codecs=1
-    -Duse_system_bzip2=1
-    -Duse_system_flac=0
-    -Duse_system_ffmpeg=0
-    -Duse_system_harfbuzz=1
-    -Duse_system_icu=0
-    -Duse_system_libevent=0
-    -Duse_system_libjpeg=1
-    -Duse_system_libpng=1
-    -Duse_system_libvpx=0
-    -Duse_system_libxml=0
-    -Duse_system_snappy=0
-    -Duse_system_xdg_utils=0
-    -Duse_system_yasm=1
-    -Duse_system_zlib=0
-    -Duse_mojo=0
-    -Duse_gconf=0
-    -Duse_gnome_keyring=0
-    -Duse_pulseaudio=0
-    -Duse_kerberos=0
-    -Duse_cups=0
-    -Denable_hangout_services_extension=1
-    -Ddisable_fatal_linker_warnings=1
-    -Dsysroot=$SYSROOT_PREFIX
-    -Ddisable_glibc=1
-    -Denable_widevine=1
-    -Denable_nacl=1
-    -Denable_pnacl=1)
   # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
   local _system_libs=(
     harfbuzz-ng
@@ -169,9 +114,6 @@ make_target() {
 
   ./tools/gn/bootstrap/bootstrap.py --gn-gen-args "${_flags[*]}"
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$ROOT/$TOOLCHAIN/bin/python
-  
-  ./build/linux/unbundle/replace_gyp_files.py "${_chromium_conf[@]}"
-  ./build/gyp_chromium --depth=. "${_chromium_conf[@]}"
 
   ninja -j4 -C out/Release chrome chrome_sandbox widevinecdmadapter
 }
