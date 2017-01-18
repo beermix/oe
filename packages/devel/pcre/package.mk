@@ -44,6 +44,8 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-static \
 			      --enable-utf8 \
 			      --enable-pcre16 \
+			      --enable-pcre32 \
+			      --enable-jit \
 			      --enable-unicode-properties \
 			      --with-gnu-ld"
 

@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="binutils"
-PKG_VERSION="2870b1ba"
+PKG_VERSION="2.27"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/binutils/binutils.html"
-PKG_GIT_URL="git://sourceware.org/git/binutils-gdb.git"
+PKG_URL="http://ftp.gnu.org/gnu/binutils/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="ccache:host bison:host flex:host linux:host"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="binutils: A GNU collection of binary utilities"
@@ -51,9 +51,10 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --disable-gdb \
                          --disable-sim \
                          --with-system-zlib \
+                         --with-pic \
                          --enable-poison-system-directories"
 
 makeinstall_host() {
   cp -v ../include/libiberty.h $SYSROOT_PREFIX/usr/include
-  make install
+  make install -j1
 }
