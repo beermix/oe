@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="irqbalance"
-PKG_VERSION="3c9a009"
+PKG_VERSION="v1.2.0"
 PKG_REV="1"
 PKG_ARCH="i386 x86_64 arm"
 PKG_LICENSE="GPLv2"
