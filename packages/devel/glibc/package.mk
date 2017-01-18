@@ -72,7 +72,6 @@ pre_build_target() {
   cd $PKG_BUILD
     aclocal --force --verbose
     autoconf --force --verbose
-    autoreconf --verbose --force -I m4
   cd -
 }
 
@@ -105,7 +104,7 @@ pre_configure_target() {
   unset LD_LIBRARY_PATH
 
 # set some CFLAGS we need
-  export CFLAGS="$CFLAGS -g"
+  export CFLAGS="$CFLAGS -g -fno-stack-protector"
 
   export OBJDUMP_FOR_HOST=objdump
 
