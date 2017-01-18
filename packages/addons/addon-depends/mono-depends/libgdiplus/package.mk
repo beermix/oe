@@ -16,13 +16,26 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="libite"
-PKG_VERSION="1.8.3"
-PKG_LICENSE="MIT"
-PKG_SITE="https://github.com/troglobit/libite"
-PKG_URL="https://github.com/troglobit/libite/archive/v$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain"
-PKG_LONGDESC="That missing frog DNA you've been looking for"
-PKG_AUTORECONF="yes"
+PKG_NAME="libgdiplus"
+PKG_VERSION="4.2"
+PKG_REV="0"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
+PKG_SITE="https://github.com/mono/libgdiplus"
+PKG_URL="https://github.com/mono/libgdiplus/archive/$PKG_VERSION.tar.gz"
+PKG_DEPENDS_TARGET="toolchain giflib libjpeg-turbo tiff libXext libexif glib cairo"
+PKG_SECTION="tools"
+PKG_SHORTDESC="libgiplus"
+PKG_LONGDESC="An Open Source implementation of the GDI+ API"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared"
+PKG_IS_ADDON="no"
+
+PKG_AUTORECONF="yes"
+PKG_CONFIGURE_OPTS_TARGET="--enable-shared \
+                           --with-libgif   \
+                           --with-libjpeg  \
+                           --with-libtiff"
+
+makeinstall_target() {
+  make install DESTDIR=$INSTALL
+}

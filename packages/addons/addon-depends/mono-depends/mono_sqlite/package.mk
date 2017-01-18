@@ -16,13 +16,21 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="libite"
-PKG_VERSION="1.8.3"
-PKG_LICENSE="MIT"
-PKG_SITE="https://github.com/troglobit/libite"
-PKG_URL="https://github.com/troglobit/libite/archive/v$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain"
-PKG_LONGDESC="That missing frog DNA you've been looking for"
-PKG_AUTORECONF="yes"
+. "$ROOT/packages/databases/sqlite/package.mk"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared"
+PKG_NAME="mono_sqlite"
+PKG_URL=""
+PKG_DEPENDS_TARGET="toolchain sqlite"
+PKG_SHORTDESC="sqlite for mono"
+PKG_LONGDESC="libsqlite built shared for mono"
+
+PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET --disable-static --enable-shared"
+
+unpack() {
+  mkdir -p $PKG_BUILD
+  cp -r $(get_build_dir sqlite)/* $PKG_BUILD/
+}
+
+makeinstall_target() {
+  make install DESTDIR=$INSTALL
+}
