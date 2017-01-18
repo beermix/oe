@@ -34,12 +34,10 @@ PKG_AUTORECONF="yes"
 
 PY_DISABLED_MODULES="_tkinter nis gdbm bsddb ossaudiodev"
 
-PKG_CONFIGURE_OPTS_HOST="ac_cv_prog_HAS_HG=/bin/false \
-			    ac_cv_prog_SVNVERSION=/bin/false--cache-file=config.cache \
-			    --without-cxx-main \
+PKG_CONFIGURE_OPTS_HOST="--cache-file=config.cache \
+                         --without-cxx-main \
                          --with-threads \
-                         --enable-unicode=ucs4 \
-                         --disable-ipv6"
+                         --enable-unicode=ucs4"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            ac_cv_file_dev_ptmx=yes \
@@ -52,8 +50,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            ac_cv_file__dev_ptmx=no \
                            ac_cv_file__dev_ptc=no \
                            ac_cv_have_long_long_format=yes \
-                           ac_cv_working_tzset=yes \
-                           ac_cv_prog_HAS_HG=/bin/false \
                            --with-threads \
                            --enable-unicode=ucs4 \
                            --disable-ipv6 \

@@ -47,7 +47,6 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
                            --enable-visibility \
                            --disable-unit-tests \
                            --disable-sparkle \
-                           --disable-install-libxf86config \
                            --disable-xselinux \
                            --enable-aiglx \
                            --enable-glx-tls \
@@ -111,8 +110,8 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
                            --disable-ipv6 \
                            --disable-local-transport \
                            --disable-secure-rpc \
-                           --enable-xtrans-send-fds \
                            --enable-input-thread \
+                           --enable-xtrans-send-fds \
                            --disable-docs \
                            --disable-devel-docs \
                            --with-int10=x86emu \
@@ -129,6 +128,11 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
                            --with-serverconfig-path=/usr/lib/xserver \
                            --without-xmlto \
                            --without-fop"
+pre_configure_target() {
+# hack to prevent a build error
+  CFLAGS=`echo $CFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|"`
+  LDFLAGS=`echo $LDFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|"`
+}
 
 post_makeinstall_target() {
   rm -rf $INSTALL/var/cache/xkb

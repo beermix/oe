@@ -49,6 +49,17 @@ else
   MESA_VDPAU="--disable-vdpau"
 fi
 
+XA_CONFIG="--disable-xa"
+for drv in $GRAPHIC_DRIVERS; do
+  [ "$drv" = "vmware" ] && XA_CONFIG="--enable-xa"
+done
+
+if [ "$OPENGLES_SUPPORT" = "yes" ]; then
+  MESA_GLES="--enable-gles2"
+else
+  MESA_GLES="--disable-gles2"
+fi
+ 
 PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            CXX_FOR_BUILD=$HOST_CXX \
                            CFLAGS_FOR_BUILD= \
@@ -59,23 +70,20 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            DRI_DRIVER_SEARCH_DIR=/usr/lib/dri \
                            --disable-debug \
                            --enable-silent-rules \
-                           --disable-profile \
                            --disable-mangling \
                            --enable-texture-float \
                            --enable-asm \
                            --disable-selinux \
-                           --disable-libglvnd \
-                           --disable-lmsensors \
                            --enable-opengl \
                            --disable-gles1 \
-                           --enable-gles2 \
+                           $MESA_GLES \
                            --enable-dri \
                            --enable-dri3 \
                            --enable-glx \
                            --disable-osmesa \
                            --disable-gallium-osmesa \
                            --enable-egl --with-egl-platforms=x11,drm \
-                           --disable-xa \
+                           $XA_CONFIG \
                            --enable-gbm \
                            --disable-nine \
                            --disable-xvmc \
@@ -84,19 +92,12 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --disable-va \
                            --disable-opencl \
                            --enable-opencl-icd \
-                           --disable-xlib-glx \
-                           --disable-r600-llvm-compiler \
                            --disable-gallium-tests \
                            --enable-shared-glapi \
                            --enable-shader-cache \
-                           --enable-sysfs \
                            --enable-driglx-direct \
                            --enable-glx-tls \
-                           --disable-glx-read-only-text \
                            $MESA_GALLIUM_LLVM \
-                           --disable-gallium-extra-hud \
-                           --disable-valgrind \
-                           --with-sha1=libcrypto \
                            --with-gl-lib-name=GL \
                            --with-osmesa-lib-name=OSMesa \
                            --with-gallium-drivers=$GALLIUM_DRIVERS \

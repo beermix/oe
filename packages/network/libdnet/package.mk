@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libdnet"
-PKG_VERSION="54a0c14"
+PKG_VERSION="libdnet-1.12"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="BSD"
