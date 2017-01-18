@@ -116,8 +116,8 @@ make_target() {
   ./tools/gn/bootstrap/bootstrap.py --gn-gen-args "${_flags[*]}"
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$ROOT/$TOOLCHAIN/bin/python
 
-  ninja -j4 -C out/Release chrome chrome_sandbox
-
+  ninja -j3 -C out/Release chrome chrome_sandbox
+}
 makeinstall_target() {
   :
 }
