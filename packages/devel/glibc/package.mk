@@ -72,6 +72,7 @@ pre_build_target() {
   cd $PKG_BUILD
     aclocal --force --verbose
     autoconf --force --verbose
+    autoreconf --verbose --install --force -I m4
   cd -
 }
 
