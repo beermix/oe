@@ -34,7 +34,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-lib64=no \
 			      --enable-gettext=no \
 			      --enable-static \
 			      --disable-shared \
-			      --enable-readline=no"
+			      --enable-readline=yes"
 
 configure_init() {
   : # reuse target
