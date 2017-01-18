@@ -56,7 +56,7 @@ post_makeinstall_target() {
 
   #for i in aconnect alsaucm amidi aplaymidi arecord arecordmidi aseqdump aseqnet iecset; do
   #  rm -rf $INSTALL/usr/bin/$i
-  done
+  #done
 
   mkdir -p $INSTALL/usr/lib/udev
     cp $PKG_DIR/scripts/soundconfig $INSTALL/usr/lib/udev
