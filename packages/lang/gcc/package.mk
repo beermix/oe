@@ -94,6 +94,12 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-default-pie \
                          --disable-fixed-point \
                          --enable-poison-system-directories \
+                         --disable-libunwind-exceptions \
+                         --enable-gnu-unique-object \
+                         --enable-linker-build-id \
+                         --enable-install-libiberty \
+                         --with-linker-hash-style=gnu \
+                         --enable-gnu-indirect-function \
                          $GCC_OPTS"
 
 pre_configure_host() {
