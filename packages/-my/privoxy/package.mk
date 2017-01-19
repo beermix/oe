@@ -1,8 +1,7 @@
 PKG_NAME="privoxy"
 PKG_VERSION="3.0.26-stable"
 PKG_URL="http://www.silvester.org.uk/privoxy/source/3.0.26%20%28stable%29/privoxy-3.0.26-stable-src.tar.gz"
-PKG_DEPENDS_TARGET="toolchain pcre"
-
+PKG_DEPENDS_TARGET="toolchain openssl zlib pcre"
 PKG_SECTION="security"
 PKG_SHORTDESC="Privoxy"
 PKG_LONGDESC=""
@@ -10,30 +9,30 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 pre_configure_target() {
-  export LDFLAGS="-Wl,-static -static -static-libgcc -s"
+  export LDFLAGS="$LDFLAGS -static -static-libgcc"
   export MAKEFLAGS=-j1
   cd $ROOT/$PKG_BUILD
   autoreconf --verbose --install --force -I m4
 }
 
 PKG_CONFIGURE_TARGET="--enable-compression \
-		      --disable-ipv6-support \
-		      --disable-dynamic-pcre \
-		      --enable-accept-filter \
-		      --enable-external-filters \
-		      --enable-extended-host-patterns \
-		      --enable-graceful-termination \
-		      --enable-large-file-support \
-		      --disable-silent-rules \
-		      --sysconfdir=/storage/.config \
-		      --datadir=/storage/.config \
-		      --libdir=/storage/.config \
-		      --libexecdir=/storage/.config \
-		      --sharedstatedir=/storage/.config \
-		      --includedir=/storage/.config \
-		      --datarootdir=/storage/.config \
-		      --infodir=/storage/.config \
-		      --localedir=/storage/.config"
+			 --disable-ipv6-support \
+			 --disable-dynamic-pcre \
+			 --enable-accept-filter \
+			 --enable-external-filters \
+			 --enable-extended-host-patterns \
+			 --enable-graceful-termination \
+			 --enable-large-file-support \
+			 --disable-silent-rules \
+			 --sysconfdir=/storage/.config \
+			 --datadir=/storage/.config \
+			 --libdir=/storage/.config \
+			 --libexecdir=/storage/.config \
+			 --sharedstatedir=/storage/.config \
+			 --includedir=/storage/.config \
+			 --datarootdir=/storage/.config \
+			 --infodir=/storage/.config \
+			 --localedir=/storage/.config"
 
 
 makeinstall_target() {
