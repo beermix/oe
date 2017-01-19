@@ -58,9 +58,9 @@ pre_configure_host() {
   sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" ../libiberty/configure
 }
 
-make_host() {
-  make LDFLAGS=""
-}
+#make_host() {
+#  make LDFLAGS=""
+#}
 
 makeinstall_host() {
   cp -v ../include/libiberty.h $SYSROOT_PREFIX/usr/include
