@@ -17,13 +17,11 @@
 ################################################################################
 
 PKG_NAME="libselinux"
-PKG_VERSION="2.5"
+PKG_VERSION="master"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/SELinuxProject/selinux"
-PKG_URL="https://github.com/SELinuxProject/selinux/archive/libselinux-$PKG_VERSION.tar.gz"
-PKG_SOURCE_DIR="selinux-libselinux-$PKG_VERSION"
+PKG_GIT_URL="https://github.com/SELinuxProject/selinux"
 PKG_DEPENDS_TARGET="toolchain pcre"
 PKG_SECTION="tools"
 PKG_SHORTDESC="Security Enhanced Linux (SELinux) userland libraries."
@@ -33,9 +31,16 @@ PKG_AUTORECONF="no"
 
 pre_build_target() {
   strip_lto
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong||g"`
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
+  export CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-fstack-protector-strong||g"`
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
 }
 
+
 make_target() {
+  make -j1
   make install DESTDIR=$SYSROOT_PREFIX
 }
 
