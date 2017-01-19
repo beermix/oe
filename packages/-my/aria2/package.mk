@@ -1,7 +1,7 @@
 PKG_NAME="aria2"
 PKG_VERSION="1.31.0"
 PKG_URL="https://github.com/aria2/aria2/releases/download/release-$PKG_VERSION/aria2-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain libssh2 expat gmp pcre curl libuv libev xmlstarlet libxml2"
+PKG_DEPENDS_TARGET="toolchain expat gmp pcre curl libuv libev xmlstarlet libxml2 gnutls"
 PKG_SECTION="tools"
 PKG_AUTORECONF="yes"
 
@@ -11,11 +11,11 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --libdir=/storage/.config \
                            --libexecdir=/storage/.config \
                            --without-libnettle \
-                           --with-openssl \
+                           --without-openssl \
                            --disable-ipv6 \
                            --with-libgmp \
-                           --without-gnutls \
-                           --with-libssh2 \
+                           --with-gnutls \
+                           --without-libssh2 \
                            --with-libexpat \
                            --with-zlib \
                            --with-libuv \

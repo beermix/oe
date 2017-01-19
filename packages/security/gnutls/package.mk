@@ -1,7 +1,7 @@
 PKG_NAME="gnutls"
-PKG_VERSION="3.4.17"
-PKG_URL="ftp://ftp.gnutls.org/gcrypt/gnutls/v3.4/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain gmp zlib nettle"
+PKG_VERSION="3.5.8"
+PKG_URL="ftp://ftp.gnutls.org/gcrypt/gnutls/v3.5/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_DEPENDS_TARGET="toolchain gmp nettle"
 PKG_SECTION="security"
 PKG_SHORTDESC="gnutls: Development Library for TLS applications"
 PKG_IS_ADDON="no"
@@ -24,10 +24,15 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static \
 			      --disable-libdane \
 			      --disable-doc \
 			      --disable-nls \
+			      --without-zlib \
 			      --disable-guile \
 			      --disable-valgrind-tests \
 			      --without-lzo \
-			      --with-gnu-ld"
+			      --with-gnu-ld \
+			      --disable-rpath \
+			      --disable-tests \
+			      --disable-crywrap \
+			      --with-included-unistring"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin

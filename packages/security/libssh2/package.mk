@@ -1,5 +1,5 @@
 PKG_NAME="libssh2"
-PKG_VERSION="f7daf31"
+PKG_VERSION="b3f9557"
 PKG_GIT_URL="https://github.com/libssh2/libssh2"
 PKG_DEPENDS_TARGET="toolchain libz mbedtls"
 PKG_IS_ADDON="no"

@@ -1,13 +1,13 @@
 PKG_NAME="libuv"
-PKG_VERSION="v1.10.1"
+PKG_VERSION="v1.10.2"
 PKG_GIT_URL="https://github.com/libuv/libuv"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="devel"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
-pre_configure_target() {
-  sh autogen.sh
+post_unpack() {
+  echo "m4_define([UV_EXTRA_AUTOMAKE_FLAGS], [serial-tests])" >$ROOT/$PKG_BUILD/m4/libuv-extra-automake-flags.m4
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static --with-gnu-ld"
