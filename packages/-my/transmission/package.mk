@@ -1,5 +1,5 @@
 PKG_NAME="transmission"
-PKG_VERSION="2.92"
+PKG_VERSION="88505c3"
 PKG_GIT_URL="git://github.com/transmission/transmission"
 PKG_DEPENDS_TARGET="toolchain zlib openssl libpcap pcre libevent curl miniupnpc libdaemon"
 #PKG_DEPENDS_TARGET="toolchain zlib openssl libpcap pcre libevent curl"
