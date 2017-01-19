@@ -20,7 +20,7 @@ PKG_NAME="kodi"
 PKG_VERSION="c6f6e0b"
 PKG_GIT_URL="https://github.com/xbmc/xbmc.git"
 PKG_GIT_BRANCH="Jarvis"
-PKG_DEPENDS_TARGET="toolchain kodi:host xmlstarlet:host libsquish boost Python zlib bzip2 systemd pciutils lzo pcre swig:host libass curl rtmpdump fontconfig fribidi tinyxml libjpeg-turbo libpng tiff freetype jasper libcdio libmpeg2 taglib libxml2 libxslt yajl sqlite libogg libvorbis ffmpeg crossguid giflib"
+PKG_DEPENDS_TARGET="toolchain kodi:host xmlstarlet:host libsquish boost Python zlib bzip2 systemd pciutils lzo pcre swig:host libass curl rtmpdump fontconfig fribidi tinyxml libjpeg-turbo libpng tiff freetype jasper libcdio libmpeg2 taglib libxml2 libxslt yajl sqlite ffmpeg crossguid giflib"
 PKG_DEPENDS_HOST="lzo:host libpng:host libjpeg-turbo:host giflib:host"
 PKG_SECTION="mediacenter"
 PKG_SHORTDESC="kodi: Kodi Mediacenter"
@@ -370,6 +370,8 @@ post_makeinstall_target() {
   mkdir -p $INSTALL/usr/share/kodi/addons
     cp -R $PKG_DIR/config/os.openelec.tv $INSTALL/usr/share/kodi/addons
     $SED "s|@OS_VERSION@|$OS_VERSION|g" -i $INSTALL/usr/share/kodi/addons/os.openelec.tv/addon.xml
+    cp -R $PKG_DIR/config/repository.openelec.tv $INSTALL/usr/share/kodi/addons
+    $SED "s|@ADDON_URL@|$ADDON_URL|g" -i $INSTALL/usr/share/kodi/addons/repository.openelec.tv/addon.xml
     cp -R $PKG_DIR/config/os.libreelec.tv $INSTALL/usr/share/kodi/addons
     $SED "s|@OS_VERSION@|$OS_VERSION|g" -i $INSTALL/usr/share/kodi/addons/os.libreelec.tv/addon.xml
     cp -R $PKG_DIR/config/repository.openelec.tv $INSTALL/usr/share/kodi/addons
@@ -413,22 +415,6 @@ post_makeinstall_target() {
     mkdir -p $INSTALL/usr/share/kodi/media/Fonts
       cp $PKG_DIR/fonts/*.ttf $INSTALL/usr/share/kodi/media/Fonts
   fi
-  if [ -f $PKG_DIR/config/addons-alexelec/plugins.tbz2 ]; then
-      mkdir -p $INSTALL/usr/share/kodi/config/addons-alexelec
-      cp $PKG_DIR/config/addons-alexelec/plugins.tbz2 $INSTALL/usr/share/kodi/config/addons-alexelec
-  fi
-
-  # install addons config
-  if [ -d $PKG_DIR/config/weather.yahoo ]; then
-    cp -R $PKG_DIR/config/weather.yahoo $INSTALL/usr/share/kodi/config
-  fi
-
-  # disable Wizard in System addon
-  if [ -d $PKG_DIR/config/service.system.settings ]; then
-    cp -R $PKG_DIR/config/service.system.settings $INSTALL/usr/share/kodi/config
-  fi
-  
-  debug_strip $INSTALL/usr/lib/kodi/kodi.bin
 }
 
 post_install() {
