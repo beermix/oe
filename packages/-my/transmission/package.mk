@@ -1,8 +1,8 @@
 PKG_NAME="transmission"
-PKG_VERSION="c199eef"
-PKG_GIT_URL="https://github.com/transmission/transmission"
-#PKG_DEPENDS_TARGET="toolchain zlib openssl libpcap pcre libevent curl miniupnpc libdaemon"
-PKG_DEPENDS_TARGET="toolchain zlib openssl libpcap pcre libevent curl"
+PKG_VERSION="2.92"
+PKG_GIT_URL="git://github.com/transmission/transmission"
+PKG_DEPENDS_TARGET="toolchain zlib openssl libpcap pcre libevent curl miniupnpc libdaemon"
+#PKG_DEPENDS_TARGET="toolchain zlib openssl libpcap pcre libevent curl"
 PKG_AUTORECONF="no"
 PKG_IS_ADDON="yes"
 PKG_ADDON_TYPE="xbmc.service"
@@ -11,7 +11,7 @@ PKG_ADDON_REPOVERSION="8.0"
 
 PKG_AUTORECONF="no"
 
-PGK_CMAKE_OPTS_TARGET="-DENABLE_CLI=ON -DENABLE_LIGHTWEIGHT=ON"
+PGK_CMAKE_OPTS_TARGET="-DENABLE_CLI=On -DENABLE_LIGHTWEIGHT=On"
 
 post_makeinstall_target() {
   mkdir -p $INSTALL/usr/config/transmission-daemon
