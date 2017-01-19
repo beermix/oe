@@ -13,7 +13,7 @@ post_unpack() {
 pre_configure_target() {
    cd $ROOT/$PKG_BUILD
    export MAKEFLAGS="-j1"
-   #strip_lto
+   strip_lto
    export LDFLAGS="-ldl -lpthread -lsqlite3"
    mkdir -p $INSTALL_DEV/usr/bin/
    mkdir -p $INSTALL/usr/bin/

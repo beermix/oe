@@ -7,11 +7,11 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 pre_configure_target() {
-   #export LDFLAGS="-ldl -lpthread -lsqlite3"
-   strip_lto
+   export LDFLAGS="-ldl -lpthread -lsqlite3"
+   #strip_lto
    export MAKEFLAGS="-j1"
 }
 
-PKG_MAKE_OPTS_TARGET="prefix=/usr sqlite=false unstable=false ext_scripts=true pcre=true libnl=true OSNAME=Linux"
+PKG_MAKE_OPTS_TARGET="prefix=/usr sqlite=true experimental=true ext_scripts=true pcre=true libnl=true"
 
 PKG_MAKEINSTALL_OPTS_TARGET="$PKG_MAKE_OPTS_TARGET"
