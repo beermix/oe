@@ -1,11 +1,12 @@
 PKG_NAME="libpcap"
-PKG_VERSION="libpcap-1.8.1"
+#PKG_VERSION="libpcap-1.8.1"
+PKG_VERSION="d61d4ed"
 PKG_GIT_URL="https://github.com/the-tcpdump-group/libpcap"
 PKG_DEPENDS_TARGET="toolchain libz"
 PKG_SECTION="devel"
 PKG_USE_CMAKE="no"
 PKG_AUTORECONF="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="LIBS=-lpthread \
                            ac_cv_header_libusb_1_0_libusb_h=no \
