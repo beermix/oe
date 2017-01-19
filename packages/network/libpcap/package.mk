@@ -17,13 +17,12 @@
 ################################################################################
 
 PKG_NAME="libpcap"
-PKG_VERSION="libpcap-1.8.1"
-#PKG_VERSION="d61d4ed"
+PKG_VERSION="1.8.1"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.tcpdump.org/"
-PKG_GIT_URL="https://github.com/the-tcpdump-group/libpcap"
+PKG_URL="http://www.tcpdump.org/release/libpcap-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="devel"
 PKG_SHORTDESC="system interface for user-level packet capture"
