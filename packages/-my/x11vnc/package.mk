@@ -10,8 +10,8 @@ pre_build_target() {
 	mkdir -p $PKG_BUILD/.$TARGET_NAME
 	cp -RP $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME
 	export CFLAGS="$CFLAGS -fPIC -DPIC"
-	export CXXFLAGS="$CXXFLAGS -std=gnu++98"
-	export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
+	#export CXXFLAGS="$CXXFLAGS -std=gnu++98"
+	export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Ofast|"`
 	export MAKEFLAGS="-j1"
 }
 
@@ -39,4 +39,5 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static \
 			      --without-libz \
 			      --without-zlib \
 			      --without-gnutls \
-			      --without-client-tls"
+			      --without-client-tls \
+			      --disable-silent-rules"
