@@ -1,6 +1,6 @@
 PKG_NAME="re2c"
-#PKG_VERSION="0.16"
-PKG_VERSION="0def065"
+PKG_VERSION="0.16"
+#PKG_VERSION="0def065"
 PKG_GIT_URL="https://github.com/skvadrik/re2c"
 PKG_DEPENDS_HOST="bison:host"
 PKG_SECTION="my"
