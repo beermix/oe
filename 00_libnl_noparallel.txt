@@ -1,0 +1,13 @@
+diff --git a/packages/network/libnl/package.mk b/packages/network/libnl/package.mk
+index 0965cd5..9757eda 100644
+--- a/packages/network/libnl/package.mk
++++ b/packages/network/libnl/package.mk
+@@ -32,3 +32,8 @@ PKG_IS_ADDON="no"
+ PKG_AUTORECONF="no"
+ 
+ PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --disable-cli"
++
++pre_make_target() {
++  # dont build parallel
++    MAKEFLAGS=-j1
++}
