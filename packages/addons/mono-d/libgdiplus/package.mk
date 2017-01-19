@@ -30,9 +30,9 @@ PKG_LONGDESC="An Open Source implementation of the GDI+ API"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static \
-                           --with-libgif \
-                           --with-libjpeg \
+PKG_CONFIGURE_OPTS_TARGET="--enable-shared \
+			      --with-libgif \
+			      --with-libjpeg \
                            --with-libtiff"
 
 makeinstall_target() {
