@@ -1,0 +1,11 @@
+--- packages/network/samba/config/smb.conf
++++ packages/network/samba/config/smb.conf
+@@ -51,7 +51,7 @@
+   # os level = 20
+ 
+   strict allocate = yes
+-  allocation roundup size = 0
++  allocation roundup size = 1024
+ 
+ # Using the following configurations as a template allows you to add
+ # writable shares of disks and paths under /storage

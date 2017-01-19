@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="pulseaudio"
-PKG_VERSION="9.0"
+PKG_VERSION="10.0"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -54,7 +54,8 @@ else
 fi
 
 # package specific configure options
-PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
+PKG_CONFIGURE_OPTS_TARGET="ac_cv_header_atomic_ops_h=no \
+                           --enable-silent-rules \
                            --disable-nls \
                            --enable-largefile \
                            --disable-rpath \

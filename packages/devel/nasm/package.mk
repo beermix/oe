@@ -24,16 +24,15 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://nasm.sourceforge.net/"
 PKG_URL="http://www.nasm.us/pub/nasm/releasebuilds/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST=""
-
 PKG_SECTION="lang"
 PKG_SHORTDESC="nasm: A 80x86 assembler which can create a wide rande of object formats"
 PKG_LONGDESC="The Netwide Assembler, NASM, is an 80x86 assembler designed for portability and modularity. It supports a range of object file formats, including Linux, Microsoft 16-bit OBJ and Win32. It will also output plain binary files. Its syntax is designed to be sim- ple and easy to understand, similar to Intel's but less complex. It supports Pentium, P6 and MMX opcodes, and has macro capability. It includes a disassembler as well."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
-pre_configure_host() {
+#pre_configure_host() {
 # nasm fails to build in subdirs
-  cd $ROOT/$PKG_BUILD
-    rm -rf .$HOST_NAME
-}
+#  cd $ROOT/$PKG_BUILD
+#    rm -rf .$HOST_NAME
+#}
