@@ -37,8 +37,6 @@ PKG_CONFIGURE_OPTS_TARGET="MOUNT_FUSE_PATH=/usr/sbin \
                            --disable-example \
                            --enable-mtab \
                            --disable-rpath \
-                           --enable-static \
-                           --disable-shared \
                            --with-gnu-ld"
 
 post_makeinstall_target() {
