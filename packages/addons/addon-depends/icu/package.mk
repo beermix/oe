@@ -33,7 +33,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 pre_configure_target() {
-  export CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
+  export CPPFLAGS="$CPPFLAGS -O2"
 }
 
 PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"

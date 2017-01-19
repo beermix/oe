@@ -16,35 +16,23 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="libxcb"
-PKG_VERSION="1.12"
+PKG_NAME="libSM"
+PKG_VERSION="1.2.2"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
-PKG_SITE="http://xcb.freedesktop.org"
-PKG_URL="http://xcb.freedesktop.org/dist/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain util-macros Python:host xcb-proto libpthread-stubs libXau"
+PKG_SITE="http://www.X.org"
+PKG_URL="http://xorg.freedesktop.org/archive/individual/lib/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_DEPENDS_TARGET="toolchain util-macros util-linux libICE"
 PKG_SECTION="x11/lib"
-PKG_SHORTDESC="libxcb: X C-language Bindings library"
-PKG_LONGDESC="X C-language Bindings library."
+PKG_SHORTDESC="libSM: X11 Inter-Client Exchange library"
+PKG_LONGDESC="This package provides the main interface to the X11 Session Management library, which allows for applications to both manage sessions, and make use of session managers to save and restore their state for later use."
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared \
-                           --disable-screensaver \
-                           --disable-xprint \
-                           --disable-selinux \
-                           --disable-xvmc"
-
-pre_configure_target() {
-  PYTHON_LIBDIR="`ls -d $SYSROOT_PREFIX/usr/lib/python*`"
-  PYTHON_TOOLCHAIN_PATH=`ls -d $PYTHON_LIBDIR/site-packages`
-
-  PKG_MAKE_OPTS_TARGET="XCBPROTO_XCBINCLUDEDIR=$SYSROOT_PREFIX/usr/share/xcb \
-                        XCBPROTO_XCBPYTHONDIR=$PYTHON_TOOLCHAIN_PATH"
-
-  PKG_MAKEINSTALL_OPTS_TARGET="$PKG_MAKE_OPTS_TARGET"
-
-  CFLAGS="$CFLAGS -fPIC -DPIC"
-}
+PKG_CONFIGURE_OPTS_TARGET="--enable-static \
+                           --disable-shared \
+                           --with-libuuid \
+                           --without-xmlto \
+                           --without-fop"

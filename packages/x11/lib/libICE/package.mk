@@ -16,35 +16,22 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="libxcb"
-PKG_VERSION="1.12"
+PKG_NAME="libICE"
+PKG_VERSION="1.0.9"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
-PKG_SITE="http://xcb.freedesktop.org"
-PKG_URL="http://xcb.freedesktop.org/dist/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain util-macros Python:host xcb-proto libpthread-stubs libXau"
+PKG_SITE="http://www.X.org"
+PKG_URL="http://xorg.freedesktop.org/archive/individual/lib/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_DEPENDS_TARGET="toolchain util-macros xtrans"
 PKG_SECTION="x11/lib"
-PKG_SHORTDESC="libxcb: X C-language Bindings library"
-PKG_LONGDESC="X C-language Bindings library."
+PKG_SHORTDESC="libICE: X Inter-Client Exchange (ICE) protocol library"
+PKG_LONGDESC="X Inter-Client Exchange (ICE) protocol library."
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared \
-                           --disable-screensaver \
-                           --disable-xprint \
-                           --disable-selinux \
-                           --disable-xvmc"
-
-pre_configure_target() {
-  PYTHON_LIBDIR="`ls -d $SYSROOT_PREFIX/usr/lib/python*`"
-  PYTHON_TOOLCHAIN_PATH=`ls -d $PYTHON_LIBDIR/site-packages`
-
-  PKG_MAKE_OPTS_TARGET="XCBPROTO_XCBINCLUDEDIR=$SYSROOT_PREFIX/usr/share/xcb \
-                        XCBPROTO_XCBPYTHONDIR=$PYTHON_TOOLCHAIN_PATH"
-
-  PKG_MAKEINSTALL_OPTS_TARGET="$PKG_MAKE_OPTS_TARGET"
-
-  CFLAGS="$CFLAGS -fPIC -DPIC"
-}
+PKG_CONFIGURE_OPTS_TARGET="--enable-static \
+                           --disable-shared \
+                           --disable-ipv6 \
+                           --without-xmlto"

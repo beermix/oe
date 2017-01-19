@@ -30,12 +30,14 @@ PKG_LONGDESC="Libiconv converts from one character encoding to another through U
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
-			      --includedir=/usr/include/iconv \
-			      --libdir=/usr/lib/iconv \
-			      --sysconfdir=/etc \
-			      --enable-static \
-			      --disable-shared \
-			      --disable-nls \
-			      --disable-extra-encodings \
-			      --with-gnu-ld"
+PKG_CONFIGURE_OPTS_TARGET="--host=$TARGET_NAME \
+            --build=$HOST_NAME \
+            --prefix=/usr \
+            --includedir=/usr/include/iconv \
+            --libdir=/usr/lib/iconv \
+            --sysconfdir=/etc \
+            --enable-static \
+            --disable-shared \
+            --disable-nls \
+            --disable-extra-encodings \
+            --with-gnu-ld"

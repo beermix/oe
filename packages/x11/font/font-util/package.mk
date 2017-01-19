@@ -25,13 +25,12 @@ PKG_SITE="http://www.X.org"
 PKG_URL="http://xorg.freedesktop.org/archive/individual/font/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain util-macros"
 PKG_DEPENDS_HOST="util-macros"
-
 PKG_SECTION="x11/font"
 PKG_SHORTDESC="font-util: X.org font utilities"
 PKG_LONGDESC="X.org font utilities."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--with-mapdir=/usr/share/fonts/util"
 
