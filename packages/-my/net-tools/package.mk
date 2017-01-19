@@ -1,0 +1,7 @@
+PKG_NAME="net-tools"
+PKG_VERSION="3f170bff115303e92319791cbd56371e33dcbf6d"
+PKG_GIT_URL="git://git.code.sf.net/p/net-tools/code"
+PKG_DEPENDS_TARGET="toolchain acl attr libcap readline openssl"
+PKG_SECTION="my"
+PKG_IS_ADDON="no"
+PKG_AUTORECONF="no"
