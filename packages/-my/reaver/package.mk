@@ -5,7 +5,7 @@ PKG_URL="https://storage.googleapis.com/google-code-archive-downloads/v2/code.go
 PKG_DEPENDS_TARGET="toolchain sqlite libcap"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 post_unpack() {
   cp -r $PKG_BUILD/src/* $PKG_BUILD/
@@ -14,10 +14,12 @@ post_unpack() {
 pre_configure_target() {
    cd $ROOT/$PKG_BUILD
    export MAKEFLAGS="-j1"
-   export LDFLAGS="-ldl -lpthread -lsqlite3 -lpcap"
+   strip_lto
+   export LDFLAGS="-ldl -lpthread -lsqlite3"
    mkdir -p $INSTALL_DEV/usr/bin/
    mkdir -p $INSTALL/usr/bin/
 }
+
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_sqlite3_sqlite3_open=yes \
 			      --sysconfdir=/storage/.config \

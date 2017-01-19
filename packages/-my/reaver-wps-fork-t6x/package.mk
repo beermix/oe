@@ -21,7 +21,12 @@ pre_configure_target() {
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_sqlite3_sqlite3_open=yes \
 			      --sysconfdir=/storage/.config \
-			      --datarootdir=/storage/.config"
+			      --datarootdir=/storage/.config \
+			      --disable-silent-rules"
+			      
+makeinstall_target() {
+  :
+}
 
 post_makeinstall_target() {
    cp wash $INSTALL/usr/bin/wash
