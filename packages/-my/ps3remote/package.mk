@@ -6,6 +6,9 @@ PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
+pre_configure_target() {
+   strip_lto
+}
 make_target() {
   make CC="$CC" AR="$AR" LD="$LD" XCFLAGS="$CFLAGS" RANLIB="$RANLIB" XLDFLAGS="$LDFLAGS" CFLAGS="$CFLAGS -DDEBUG=0" -j1
 }

@@ -115,7 +115,7 @@ make_target() {
   ./tools/gn/bootstrap/bootstrap.py --gn-gen-args "${_flags[*]}"
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$ROOT/$TOOLCHAIN/bin/python
 
-  ninja -j5 -C out/Release chrome chrome_sandbox widevinecdmadapter
+  ninja -j6 -C out/Release chrome chrome_sandbox widevinecdmadapter
 }
 makeinstall_target() {
   :
