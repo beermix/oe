@@ -17,20 +17,21 @@
 ################################################################################
 
 PKG_NAME="freetype"
-PKG_VERSION="2.6.5"
+PKG_VERSION="2.7.1"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.freetype.org"
 PKG_URL="http://download.savannah.gnu.org/releases/freetype/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain zlib libpng"
+PKG_PRIORITY="optional"
 PKG_SECTION="print"
 PKG_SHORTDESC="freetype: TrueType font rendering library"
 PKG_LONGDESC="The FreeType engine is a free and portable TrueType font rendering engine. It has been developed to provide TT support to a great variety of platforms and environments."
 
 PKG_IS_ADDON="no"
-PKG_USE_CMAKE="no"
 PKG_AUTORECONF="no"
+PKG_USE_CMAKE="no"
 
 # package specific configure options
 PKG_CONFIGURE_OPTS_TARGET="LIBPNG_CFLAGS=-I$SYSROOT_PREFIX/usr/include \
