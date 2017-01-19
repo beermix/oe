@@ -17,11 +17,11 @@
 ################################################################################
 
 PKG_NAME="qtbase"
-PKG_VERSION="5.6.2"
+PKG_VERSION="5.7.1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://qt-project.org"
-PKG_URL="http://download.qt.io/official_releases/qt/5.6/$PKG_VERSION/submodules/$PKG_NAME-opensource-src-$PKG_VERSION.tar.xz"
+PKG_URL="http://download.qt.io/official_releases/qt/5.7/$PKG_VERSION/submodules/$PKG_NAME-opensource-src-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="pcre zlib harfbuzz"
 PKG_SOURCE_DIR="$PKG_NAME-opensource-src-$PKG_VERSION"
 PKG_SHORTDESC="A cross-platform application and UI framework"
