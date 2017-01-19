@@ -73,6 +73,11 @@ makeinstall_target() {
                                 --with-system \
                                 --with-serialization \
                                 --with-filesystem \
+                                --without-python \
+                                --without-program_options \
+                                --without-signals \
+                                --without-atomic \
+                                --without-exception \
                                 --with-date_time \
                                 --with-chrono \
                                 --with-random \
