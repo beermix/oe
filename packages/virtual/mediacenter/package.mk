@@ -47,3 +47,5 @@ if [ "$MEDIACENTER" = "kodi" ]; then
       PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET $MEDIACENTER-theme-$i"
     done
   fi
+
+fi
