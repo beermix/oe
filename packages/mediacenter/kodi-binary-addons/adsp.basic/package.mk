@@ -18,9 +18,6 @@
 
 PKG_NAME="adsp.basic"
 PKG_VERSION="cb56e0e"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
 PKG_URL="https://github.com/kodi-adsp/adsp.basic/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain kodi-platform libsamplerate"

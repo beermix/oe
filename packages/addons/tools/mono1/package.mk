@@ -1,8 +1,5 @@
 PKG_NAME="mono"
 PKG_VERSION="4.2.1.102"
-PKG_REV="101"
-PKG_ARCH="any"
-PKG_LICENSE="MIT"
 PKG_SITE="http://www.mono-project.com"
 PKG_URL="http://download.mono-project.com/sources/mono/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_SOURCE_DIR="$PKG_NAME-${PKG_VERSION%.*}"

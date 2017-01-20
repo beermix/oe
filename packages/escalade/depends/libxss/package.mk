@@ -18,9 +18,6 @@
 
 PKG_NAME="libxss"
 PKG_VERSION="1.2.2"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="OSS"
 PKG_SITE="http://www.X.org"
 PKG_URL="http://xorg.freedesktop.org/archive/individual/lib/libXScrnSaver-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain util-macros libXext scrnsaverproto"

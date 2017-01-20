@@ -18,9 +18,6 @@
 
 PKG_NAME="ffmpegx"
 PKG_VERSION="libreelec"
-PKG_REV="6"
-PKG_ARCH="any"
-PKG_LICENSE="LGPLv2.1+"
 PKG_SITE="https://ffmpeg.org"
 PKG_DEPENDS_TARGET="toolchain ffmpeg lame x264"
 PKG_SECTION="multimedia"

@@ -18,9 +18,6 @@
 
 PKG_NAME="pkg-config"
 PKG_VERSION="c53385b"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.freedesktop.org/software/pkgconfig/"
 PKG_GIT_URL="git://anongit.freedesktop.org/pkg-config"
 PKG_DEPENDS_HOST="ccache:host gettext:host autotools:host autoconf:host"

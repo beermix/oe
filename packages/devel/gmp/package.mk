@@ -18,9 +18,6 @@
 
 PKG_NAME="gmp"
 PKG_VERSION="6.1.2"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="LGPLv3+"
 PKG_SITE="http://gmplib.org/"
 PKG_URL="https://gmplib.org/download/gmp/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="ccache:host"

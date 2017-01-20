@@ -21,9 +21,6 @@
 
 PKG_NAME="proxychains"
 PKG_VERSION="9"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="LGPL"
 PKG_SITE="http://shadowsocks.org"
 PKG_URL="https://copy.com/sRQVkgwemZrx/proxychains-9.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python boost openssl Libevent"

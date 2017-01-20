@@ -18,9 +18,7 @@
 
 PKG_NAME="rpi-tools"
 PKG_VERSION=""
-PKG_REV="102"
 PKG_ARCH="arm"
-PKG_LICENSE="GPL"
 PKG_SITE=""
 PKG_URL=""
 PKG_DEPENDS_TARGET="toolchain RPi.GPIO picamera gpiozero"

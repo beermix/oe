@@ -18,9 +18,6 @@
 
 PKG_NAME="dvbhdhomerun"
 PKG_VERSION="20130704"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://sourceforge.net/projects/dvbhdhomerun/"
 PKG_URL="${DISTRO_SRC}/${PKG_NAME}-${PKG_VERSION}.tar.xz"
 #PKG_URL="$SOURCEFORGE_SRC/project/dvbhdhomerun/${PKG_NAME}_${PKG_VERSION}.tar.gz"

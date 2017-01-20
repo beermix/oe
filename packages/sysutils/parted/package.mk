@@ -18,9 +18,6 @@
 
 PKG_NAME="parted"
 PKG_VERSION="3.2"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/parted/"
 PKG_URL="http://ftp.gnu.org/gnu/parted/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain util-linux:host"

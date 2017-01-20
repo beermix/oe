@@ -18,9 +18,7 @@
 
 PKG_NAME="x86-firmware"
 PKG_VERSION="c4c07a8"
-PKG_REV="1"
 PKG_ARCH="x86_64"
-PKG_LICENSE="other"
 PKG_SITE="http://git.kernel.org/cgit/linux/kernel/git/firmware/linux-firmware.git/"
 PKG_GIT_URL="http://git.kernel.org/cgit/linux/kernel/git/firmware/linux-firmware.git"
 PKG_SOURCE_DIR="$PKG_VERSION"

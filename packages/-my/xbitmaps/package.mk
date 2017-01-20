@@ -18,9 +18,6 @@
 
 PKG_NAME="xbitmaps"
 PKG_VERSION="1.1.1"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="OSS"
 PKG_SITE="http://www.X.org"
 PKG_URL="http://xorg.freedesktop.org/releases/individual/data/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain util-macros randrproto libX11 libXrender libXext"

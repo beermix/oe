@@ -18,9 +18,6 @@
 
 PKG_NAME="NzbDrone"
 PKG_VERSION="2.0.0.4326"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPLv3"
 PKG_SITE="https://sonarr.tv"
 PKG_URL="http://update.sonarr.tv/v2/master/mono/$PKG_NAME.master.$PKG_VERSION.mono.tar.gz"
 PKG_SOURCE_DIR="NzbDrone"

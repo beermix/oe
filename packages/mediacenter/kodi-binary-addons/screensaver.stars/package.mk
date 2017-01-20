@@ -18,9 +18,6 @@
 
 PKG_NAME="screensaver.stars"
 PKG_VERSION="28bf79d"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/notspiff/screensaver.stars"
 PKG_URL="https://github.com/notspiff/screensaver.stars/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain kodi-platform"

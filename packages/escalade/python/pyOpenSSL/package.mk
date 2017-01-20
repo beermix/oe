@@ -18,9 +18,6 @@
 
 PKG_NAME="pyOpenSSL"
 PKG_VERSION="16.0.0"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="LGPL"
 PKG_SITE="https://pypi.python.org/pypi/pyOpenSSL"
 PKG_URL="https://pypi.python.org/packages/source/p/pyOpenSSL/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host libressl cryptography"

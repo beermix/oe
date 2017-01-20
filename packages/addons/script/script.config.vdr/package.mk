@@ -18,9 +18,6 @@
 
 PKG_NAME="script.config.vdr"
 PKG_VERSION="61c2dde"
-PKG_REV="100"
-PKG_ARCH="any"
-PKG_LICENSE="OSS"
 PKG_SITE="https://libreelec.tv"
 PKG_URL="https://github.com/LibreELEC/script.config.vdr/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET=""

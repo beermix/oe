@@ -5,9 +5,6 @@
 
 PKG_NAME="emulationstation-theme-simple-dark"
 PKG_VERSION="4c33193"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/RetroPie/es-theme-simple-dark"
 PKG_GIT_URL="https://github.com/RetroPie/es-theme-simple-dark/archive/$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="es-theme-simple-dark*"

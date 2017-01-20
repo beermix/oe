@@ -18,9 +18,6 @@
 
 PKG_NAME="dtc"
 PKG_VERSION="1ed45d4"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="https://git.kernel.org/cgit/utils/dtc/dtc.git"
 PKG_GIT_URL="https://git.kernel.org/pub/scm/utils/dtc/dtc.git"
 PKG_GIT_BRANCH="master"

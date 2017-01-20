@@ -19,9 +19,6 @@
 
 PKG_NAME="slang"
 PKG_VERSION="2.3.1a"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.jedsoft.org/slang"
 PKG_URL="http://www.jedsoft.org/releases/slang/slang-2.3.1a.tar.bz2"
 PKG_DEPENDS_TARGET=""

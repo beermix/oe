@@ -18,7 +18,6 @@
 
 PKG_NAME="rufus"
 PKG_VERSION="d32e9dcb451b7d3a8d37241be73e5a3ae7837e8f"
-PKG_LICENSE="GPL"
 PKG_SITE="https://rufus.akeo.ie/"
 PKG_URL="https://github.com/pbatard/${PKG_NAME}/archive/${PKG_VERSION}.zip"
 PKG_DEPENDS_HOST="x86-mingw32-build:host"

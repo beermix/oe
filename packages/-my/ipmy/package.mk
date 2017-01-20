@@ -18,9 +18,6 @@
 
 PKG_NAME="ipmy"
 PKG_VERSION="1"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="LGPL"
 PKG_SITE="http://www.acestream.com/"
 PKG_URL="https://copy.com/jJVzJEtWmFpJ/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain M2Crypto PyAMF"

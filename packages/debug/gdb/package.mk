@@ -18,9 +18,6 @@
 
 PKG_NAME="gdb"
 PKG_VERSION="7.12"
-PKG_REV="2"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/gdb/"
 PKG_URL="http://ftp.gnu.org/gnu/gdb/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain zlib netbsd-curses expat"

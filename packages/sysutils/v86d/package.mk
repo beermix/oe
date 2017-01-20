@@ -18,9 +18,7 @@
 
 PKG_NAME="v86d"
 PKG_VERSION="0.1.10"
-PKG_REV="1"
 PKG_ARCH="x86_64"
-PKG_LICENSE="GPL"
 PKG_SITE="http://dev.gentoo.org/~spock/projects/uvesafb/"
 PKG_URL="http://dev.gentoo.org/~spock/projects/uvesafb/archive/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_INIT="toolchain"

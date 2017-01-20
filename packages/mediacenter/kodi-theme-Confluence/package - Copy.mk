@@ -18,9 +18,6 @@
 
 PKG_NAME="kodi-theme-Confluence"
 PKG_VERSION="16.1-c327c53"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
 PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain kodi:host"

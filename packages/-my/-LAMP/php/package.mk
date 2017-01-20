@@ -34,9 +34,6 @@ else
   PKG_VERSION="$PHP_VERSION"
 fi
 
-PKG_REV="0"
-PKG_ARCH="any"
-PKG_LICENSE="OpenSource"
 PKG_SITE="http://www.php.net"
 
 if [ -z "$PHP_VERSION" ]; then

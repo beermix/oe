@@ -18,9 +18,6 @@
 
 PKG_NAME="gnupg"
 PKG_VERSION="1.4.19"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="LGPL"
 PKG_SITE="http://www.gnupg.org/"
 PKG_URL="ftp://ftp.gnupg.org/gcrypt/gnupg/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain zlib curl"

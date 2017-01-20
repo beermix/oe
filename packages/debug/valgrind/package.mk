@@ -18,9 +18,6 @@
 
 PKG_NAME="valgrind"
 PKG_VERSION="3.12.0"
-PKG_REV="0"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://valgrind.org/"
 PKG_URL="http://valgrind.org/downloads/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain"

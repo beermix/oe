@@ -18,9 +18,6 @@
 
 PKG_NAME="unrar"
 PKG_VERSION="5.4.5"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="free"
 PKG_SITE="http://www.rarlab.com"
 PKG_URL="http://www.rarlab.com/rar/unrarsrc-$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="${PKG_NAME}"

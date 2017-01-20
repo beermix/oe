@@ -5,9 +5,6 @@
 
 PKG_NAME="psutil"
 PKG_VERSION="4.1.0"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="OSS"
 PKG_SITE="https://pypi.python.org/pypi/psutil/"
 PKG_URL="https://pypi.python.org/packages/source/p/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"

@@ -18,9 +18,6 @@
 
 PKG_NAME="keyutils"
 PKG_VERSION="1.5.9"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://people.redhat.com/~dhowells/keyutils/"
 PKG_URL="http://people.redhat.com/~dhowells/keyutils/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain"

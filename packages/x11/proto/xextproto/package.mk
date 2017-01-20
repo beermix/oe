@@ -18,9 +18,6 @@
 
 PKG_NAME="xextproto"
 PKG_VERSION="7.3.0"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="OSS"
 PKG_SITE="http://www.x.org/"
 PKG_URL="http://xorg.freedesktop.org/archive/individual/proto/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain util-macros"

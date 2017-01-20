@@ -18,9 +18,6 @@
 
 PKG_NAME="dialog"
 PKG_VERSION="1.3-20160828"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://invisible-island.net/dialog/"
 PKG_URL="ftp://invisible-island.net/dialog/$PKG_NAME-$PKG_VERSION.tgz"
 PKG_DEPENDS_TARGET="toolchain netbsd-curses"

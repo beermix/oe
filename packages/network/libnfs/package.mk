@@ -18,9 +18,6 @@
 
 PKG_NAME="libnfs"
 PKG_VERSION="libnfs-1.11.0"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/sahlberg/libnfs"
 PKG_GIT_URL="https://github.com/sahlberg/libnfs.git"
 PKG_GIT_BRANCH="master"

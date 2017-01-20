@@ -1,8 +1,5 @@
 PKG_NAME="oem"
 PKG_VERSION=""
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="various"
 PKG_SITE="http://www.openelec.tv"
 PKG_URL=""
 

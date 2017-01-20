@@ -18,10 +18,7 @@
 
 PKG_NAME="docker-system"
 PKG_VERSION="1.12.3"
-PKG_REV="1"
-PKG_ARCH="any"
 PKG_PROJECTS="Generic RPi RPi2"
-PKG_LICENSE="ASL"
 PKG_SITE="http://www.docker.com/"
 PKG_URL="https://github.com/docker/docker/archive/v${PKG_VERSION}.tar.gz"
 PKG_SOURCE_DIR="docker-$PKG_VERSION"

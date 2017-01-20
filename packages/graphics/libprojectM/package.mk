@@ -18,9 +18,6 @@
 
 PKG_NAME="libprojectM"
 PKG_VERSION="2.0.0"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://projectm.sourceforge.net/"
 PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain ftgl freetype $OPENGL"

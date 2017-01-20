@@ -20,9 +20,6 @@
 
 PKG_NAME="scummvm-libretro"
 PKG_VERSION="47bb6e5"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/scummvm"
 PKG_GIT_URL="https://github.com/libretro/scummvm"
 PKG_DEPENDS_TARGET="toolchain flac libmad munt"

@@ -18,9 +18,6 @@
 
 PKG_NAME="libnftnl"
 PKG_VERSION="1.0.7"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://netfilter.org/projects/libnftnl"
 PKG_URL="http://netfilter.org/projects/libnftnl/files/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain libmnl"

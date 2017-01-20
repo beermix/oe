@@ -18,9 +18,6 @@
 
 PKG_NAME="soil"
 PKG_VERSION="1.07"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="PD"
 PKG_SITE="http://www.lonesock.net/soil.html"
 PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="mesa"

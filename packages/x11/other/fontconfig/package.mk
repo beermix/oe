@@ -18,9 +18,6 @@
 
 PKG_NAME="fontconfig"
 PKG_VERSION="2.12.1"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="OSS"
 PKG_SITE="http://www.fontconfig.org"
 PKG_URL="http://www.freedesktop.org/software/fontconfig/release/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain util-macros freetype libxml2 zlib expat"

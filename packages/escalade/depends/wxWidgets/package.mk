@@ -17,9 +17,6 @@
 ################################################################################
 PKG_NAME="wxWidgets"
 PKG_VERSION="v3.1.0"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="wxWindows Licence"
 PKG_SITE="http://www.wxwidgets.org/"
 PKG_GIT_URL="https://github.com/wxWidgets/wxWidgets"
 PKG_DEPENDS_TARGET="toolchain gtk+ libSM"

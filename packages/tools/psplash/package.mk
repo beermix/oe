@@ -18,9 +18,6 @@
 
 PKG_NAME="psplash"
 PKG_VERSION="5b3c1cc"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://git.yoctoproject.org/cgit/cgit.cgi/psplash"
 PKG_GIT_URL="http://git.yoctoproject.org/git/psplash"
 PKG_DEPENDS_INIT="toolchain"

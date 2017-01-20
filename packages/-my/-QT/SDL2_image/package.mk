@@ -18,9 +18,6 @@
 
 PKG_NAME="SDL2_image"
 PKG_VERSION="2.0.1"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.libsdl.org/"
 PKG_URL="http://www.libsdl.org/projects/SDL_image/release/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="SDL2:host libpng:host libjpeg-turbo:host"

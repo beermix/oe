@@ -18,9 +18,6 @@
 
 PKG_NAME="flac"
 PKG_VERSION="1.3.1"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="LGPL"
 PKG_SITE="http://flac.sourceforge.net/"
 PKG_URL="http://downloads.xiph.org/releases/flac/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain libxml2 sqlite"

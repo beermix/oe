@@ -5,9 +5,6 @@
 
 PKG_NAME="gevent"
 PKG_VERSION="1.1.1"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="OSS"
 PKG_SITE="https://pypi.python.org/pypi/gevent"
 PKG_URL="https://pypi.python.org/packages/source/g/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host greenlet"

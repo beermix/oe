@@ -18,9 +18,6 @@
 
 PKG_NAME="screensaver.pingpong"
 PKG_VERSION="5c7cf6f"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/notspiff/screensaver.pingpong"
 PKG_URL="https://github.com/notspiff/screensaver.pingpong/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain kodi-platform"

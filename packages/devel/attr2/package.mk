@@ -19,9 +19,6 @@
 
 PKG_NAME="attr"
 PKG_VERSION="315af30d0c1a198dc662a90e6e6ae2456abf2489"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE=""
 PKG_GIT_URL="http://git.savannah.gnu.org/r/attr.git"
 PKG_DEPENDS_TARGET="toolchain"

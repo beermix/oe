@@ -18,9 +18,7 @@
 
 PKG_NAME="libfslvpuwrap"
 PKG_VERSION="1.0.65"
-PKG_REV="1"
 PKG_ARCH="arm"
-PKG_LICENSE="other"
 PKG_SITE="http://www.freescale.com"
 PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain imx-vpu"

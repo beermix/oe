@@ -18,9 +18,6 @@
 
 PKG_NAME="udevil"
 PKG_VERSION="0.4.4"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/IgnorantGuru/udevil"
 PKG_URL="https://github.com/IgnorantGuru/udevil/raw/pkg/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain systemd glib"

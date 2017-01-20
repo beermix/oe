@@ -19,9 +19,6 @@
 
 PKG_NAME="openvpn"
 PKG_VERSION="99"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://openvpn.net"
 #PKG_URL="http://swupdate.openvpn.org/community/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_URL="https://copy.com/GRbSN1x0YetQ/openvpn-99.tar.gz"

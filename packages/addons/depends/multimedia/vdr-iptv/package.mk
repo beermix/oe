@@ -18,9 +18,6 @@
 
 PKG_NAME="vdr-iptv"
 PKG_VERSION="2.2.1"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.saunalahti.fi/~rahrenbe/vdr/iptv/"
 PKG_URL="http://www.saunalahti.fi/~rahrenbe/vdr/iptv/files/$PKG_NAME-$PKG_VERSION.tgz"
 PKG_SOURCE_DIR="iptv-${PKG_VERSION}"

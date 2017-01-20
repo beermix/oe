@@ -18,9 +18,6 @@
 
 PKG_NAME="bzip2"
 PKG_VERSION="1.0.6"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.bzip.org"
 PKG_URL="http://www.bzip.org/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="toolchain"

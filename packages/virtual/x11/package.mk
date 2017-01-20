@@ -18,9 +18,6 @@
 
 PKG_NAME="x11"
 PKG_VERSION=""
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="OSS"
 PKG_SITE="http://www.X.org"
 PKG_URL=""
 PKG_DEPENDS_TARGET="toolchain xorg-server"

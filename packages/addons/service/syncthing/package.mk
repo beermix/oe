@@ -18,9 +18,6 @@
 
 PKG_NAME="syncthing"
 PKG_VERSION="v0.14.13"
-PKG_REV="103"
-PKG_ARCH="any"
-PKG_LICENSE="MPLv2"
 PKG_SITE="https://syncthing.net/"
 PKG_GIT_URL="https://github.com/syncthing/syncthing"
 PKG_DEPENDS_TARGET="toolchain go:host"

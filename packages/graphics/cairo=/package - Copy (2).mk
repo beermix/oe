@@ -18,9 +18,6 @@
 
 PKG_NAME="cairo"
 PKG_VERSION="1.14.8"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="LGPL"
 PKG_SITE="http://cairographics.org/"
 PKG_URL="http://cairographics.org/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain libz freetype fontconfig libpng pixman"

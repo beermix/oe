@@ -18,9 +18,6 @@
 
 PKG_NAME="lcms2"
 PKG_VERSION="2.8"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="MIT"
 PKG_SITE="http://www.littlecms.com"
 PKG_URL="http://downloads.sourceforge.net/sourceforge/lcms/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain zlib libjpeg-turbo tiff"

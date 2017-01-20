@@ -18,9 +18,6 @@
 
 PKG_NAME="ttf-tlwg"
 PKG_VERSION="0.6.1"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="https://linux.thai.net/fonts/tlwg"
 PKG_URL="https://linux.thai.net/pub/thailinux/software/thai-ttf/ttf-tlwg-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain util-macros"

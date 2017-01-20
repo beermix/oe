@@ -18,9 +18,7 @@
 
 PKG_NAME="qt"
 PKG_VERSION="5.5.0"
-PKG_REV="2"
 PKG_ARCH="x86_64"
-PKG_LICENSE="GPL"
 PKG_SITE="http://aria2.sourceforge.net/"
 PKG_URL="https://copy.com/0aRj1jrBCG16/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libxml2 sqlite"

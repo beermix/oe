@@ -18,9 +18,7 @@
 
 PKG_NAME="lame"
 PKG_VERSION="3.99.5"
-PKG_REV="2"
 PKG_ARCH="x86_64"
-PKG_LICENSE="GPL"
 PKG_SITE="http://lame.sourceforge.net/"
 PKG_URL="$SOURCEFORGE_SRC/lame/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libxml2 sqlite"

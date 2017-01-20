@@ -18,9 +18,6 @@
 
 PKG_NAME="avahi"
 PKG_VERSION="0.6.32"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://avahi.org/"
 PKG_URL="http://sources.openelec.tv/mirror/avahi/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain expat libdaemon dbus connman"

@@ -18,9 +18,6 @@
 
 PKG_NAME="jasper"
 PKG_VERSION="version-1.900.31"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="OpenSource"
 PKG_SITE="http://www.ece.uvic.ca/~mdadams/jasper/"
 PKG_GIT_URL="https://github.com/mdadams/jasper"
 PKG_DEPENDS_TARGET="toolchain libjpeg-turbo"

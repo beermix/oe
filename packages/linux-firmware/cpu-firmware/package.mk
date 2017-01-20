@@ -18,9 +18,7 @@
 
 PKG_NAME="cpu-firmware"
 PKG_VERSION="0920a7f"
-PKG_REV="1"
 PKG_ARCH="i386 x86_64"
-PKG_LICENSE="other"
 PKG_SITE="https://git.fedorahosted.org/cgit/microcode_ctl.git/"
 PKG_GIT_URL="https://github.com/OpenELEC/cpu-firmware.git"
 PKG_GIT_BRANCH="master"

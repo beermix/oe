@@ -18,9 +18,6 @@
 
 PKG_NAME="rtmpdump"
 PKG_VERSION="fa8646d"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://rtmpdump.mplayerhq.hu/"
 PKG_GIT_URL="git://git.ffmpeg.org/rtmpdump"
 PKG_GIT_BRANCH="master"

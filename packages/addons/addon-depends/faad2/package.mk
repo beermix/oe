@@ -18,9 +18,6 @@
 
 PKG_NAME="faad2"
 PKG_VERSION="2.7"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.audiocoding.com/"
 PKG_URL="$SOURCEFORGE_SRC/faac/faad2-src/$PKG_NAME-$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"

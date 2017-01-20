@@ -18,9 +18,6 @@
 
 PKG_NAME="irserver"
 PKG_VERSION="6.03.08"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="Freeware"
 PKG_SITE="http://http://www.irtrans.de"
 PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain"

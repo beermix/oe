@@ -18,9 +18,6 @@
 
 PKG_NAME="residualvm"
 PKG_VERSION="27cb3aa"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/residualvm/residualvm"
 PKG_URL="https://github.com/residualvm/residualvm/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain SDL2 libmpeg2 flac libogg libmad libjpeg-turbo libpng zlib alsa-lib freetype"

@@ -5,9 +5,6 @@
 
 PKG_NAME="emulationstation-theme-turtle-pi"
 PKG_VERSION="9f57155"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/RetroPie/es-theme-turtle-pi"
 PKG_GIT_URL="https://github.com/RetroPie/es-theme-turtle-pi"
 PKG_SOURCE_DIR="es-theme-turtle-pi*"

@@ -18,9 +18,6 @@
 
 PKG_NAME="reicast"
 PKG_VERSION="ed47c72"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/reicast/reicast-emulator"
 PKG_URL="https://github.com/reicast/reicast-emulator/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain alsa-utils"

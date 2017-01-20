@@ -20,9 +20,6 @@
 
 PKG_NAME="rlog"
 PKG_VERSION="1.4"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://freecode.com/projects/rlog"
 PKG_URL="http://rlog.googlecode.com/files/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"

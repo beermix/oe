@@ -18,9 +18,7 @@
 
 PKG_NAME="gpu-viv-g2d"
 PKG_VERSION="3.10.17-1.0.2"
-PKG_REV="1"
 PKG_ARCH="arm"
-PKG_LICENSE="nonfree"
 PKG_SITE="http://www.freescale.com"
 PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain"

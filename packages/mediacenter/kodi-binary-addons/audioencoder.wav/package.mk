@@ -18,9 +18,6 @@
 
 PKG_NAME="audioencoder.wav"
 PKG_VERSION="0c6ec77"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
 PKG_GIT_URL="https://github.com/xbmc/audioencoder.wav"
 PKG_DEPENDS_TARGET="toolchain kodi-platform"

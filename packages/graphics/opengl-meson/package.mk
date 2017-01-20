@@ -17,9 +17,7 @@
 ################################################################################
 
 PKG_NAME="opengl-meson"
-PKG_REV="1"
 PKG_ARCH="arm aarch64"
-PKG_LICENSE="nonfree"
 PKG_SITE="http://openlinux.amlogic.com:8000/download/ARM/filesystem/"
 case $MESON_FAMILY in
   8)

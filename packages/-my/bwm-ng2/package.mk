@@ -1,8 +1,5 @@
 PKG_NAME="bwm-ng"
 PKG_VERSION="0.6.1"
-PKG_REV="0"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.gropp.org/?id=projects&sub=bwm-ng"
 PKG_URL="http://www.gropp.org/bwm-ng/bwm-ng-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libstatgrab"

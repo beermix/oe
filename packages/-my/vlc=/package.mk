@@ -1,8 +1,5 @@
 PKG_NAME="vlc"
 PKG_VERSION="2.2.4"
-PKG_REV="0"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.videolan.org"
 PKG_URL="http://download.videolan.org/pub/videolan/vlc/$PKG_VERSION/vlc-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain libdvbpsi ffmpeg x264 mesa flac madplay libgcrypt libsamplerate libjpeg-turbo libsamplerate libdvdnav SDL2 libva"

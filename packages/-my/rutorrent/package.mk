@@ -20,9 +20,6 @@
 
 PKG_NAME="rutorrent"
 PKG_VERSION="3.7"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://rutorrent.googlecode.com/"
 PKG_URL="http://dl.bintray.com/novik65/generic/:ruTorrent-3.7.zip"
 PKG_SOURCE_DIR="$PKG_NAME"

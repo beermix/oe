@@ -18,9 +18,6 @@
 
 PKG_NAME="pvr.njoy"
 PKG_VERSION="480c159"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
 PKG_URL="https://github.com/kodi-pvr/pvr.njoy/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain kodi-platform"

@@ -18,9 +18,6 @@
 
 PKG_NAME="simplejson"
 PKG_VERSION="3.8.2"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="OSS"
 PKG_SITE="http://pypi.python.org/pypi/simplejson"
 PKG_URL="http://pypi.python.org/packages/source/s/simplejson/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"

@@ -18,9 +18,6 @@
 
 PKG_NAME="LibreELEC-settings"
 PKG_VERSION="08f0750"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="prop."
 PKG_SITE="http://www.libreelec.tv"
 PKG_GIT_URL="https://github.com/LibreELEC/service.libreelec.settings"
 PKG_SOURCE_DIR="service.libreelec.settings-$PKG_VERSION*"

@@ -18,9 +18,6 @@
 
 PKG_NAME="audiodecoder.gsf"
 PKG_VERSION="80d301a"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/notspiff/audiodecoder.gsf"
 PKG_URL="https://github.com/notspiff/audiodecoder.gsf/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain kodi-platform"

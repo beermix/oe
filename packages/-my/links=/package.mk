@@ -19,9 +19,7 @@
 
 PKG_NAME="links"
 PKG_VERSION="2.12"
-PKG_REV="0"
 PKG_ARCH="x86_64"
-PKG_LICENSE="GPL"
 PKG_SITE="http://links.twibright.com/"
 PKG_URL="http://links.twibright.com/download/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain openssl libjpeg-turbo libpng libX11 libxcb libXau zlib"

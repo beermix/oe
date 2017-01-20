@@ -18,9 +18,6 @@
 
 PKG_NAME="iana-etc"
 PKG_VERSION="2.30"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.linuxfromscratch.org/lfs/view/development/chapter06/iana-etc.html"
 PKG_URL="http://anduin.linuxfromscratch.org/sources/LFS/lfs-packages/conglomeration/iana-etc/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain"

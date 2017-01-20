@@ -18,9 +18,6 @@
 
 PKG_NAME="libvdpau"
 PKG_VERSION="1.1.1"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="MIT"
 PKG_SITE="https://wiki.freedesktop.org/www/Software/VDPAU/"
 PKG_URL="https://secure.freedesktop.org/~aplattner/vdpau/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libX11 dri2proto libXext"

@@ -18,9 +18,6 @@
 
 PKG_NAME="localedef-eglibc"
 PKG_VERSION="2.14.1-r17443-ptx1"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://public.pengutronix.de"
 PKG_URL="http://public.pengutronix.de/mirror/software/ptxdist/temporary-src/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST="ccache:host"

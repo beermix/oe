@@ -18,9 +18,6 @@
 
 PKG_NAME="lcdd"
 PKG_VERSION="1554506"
-PKG_REV="101"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://lcdproc.org/"
 PKG_URL="https://github.com/lcdproc/lcdproc/archive/$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="lcdproc-$PKG_VERSION*"

@@ -18,9 +18,6 @@
 
 PKG_NAME="mediacenter"
 PKG_VERSION=""
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.openelec.tv"
 PKG_URL=""
 PKG_DEPENDS_TARGET="toolchain $MEDIACENTER"

@@ -18,9 +18,6 @@
 
 PKG_NAME="eglibc"
 PKG_VERSION="2.19-25441"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.eglibc.org/"
 PKG_URL="http://sources.openelec.tv/devel/eglibc-2.19-25441.tar.xz"
 PKG_DEPENDS_TARGET=""

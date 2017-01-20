@@ -18,9 +18,6 @@
 
 PKG_NAME="gstreamer"
 PKG_VERSION="0.10.36"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="OSS"
 PKG_SITE="http://gstreamer.freedesktop.org/gstreamer"
 PKG_URL="https://gstreamer.freedesktop.org/src/gstreamer/gstreamer-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain libpng tiff dbus fontconfig eglibc zlib"

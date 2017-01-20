@@ -18,9 +18,6 @@
 
 PKG_NAME="libvorbis"
 PKG_VERSION="1.3.5"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="BSD"
 PKG_SITE="http://www.vorbis.com/"
 PKG_URL="http://downloads.xiph.org/releases/vorbis/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain libogg"

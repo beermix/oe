@@ -18,9 +18,6 @@
 
 PKG_NAME="libnl-tiny"
 PKG_VERSION="1.0.1"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="LGPL"
 PKG_SITE="https://github.com/sabotage-linux/libnl-tiny"
 PKG_URL="http://ftp.barfooze.de/pub/sabotage/tarballs/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain"

@@ -18,9 +18,6 @@
 
 PKG_NAME="craft-libretro"
 PKG_VERSION="ccf83df"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="MAME"
 PKG_SITE="https://github.com/libretro/Craft"
 PKG_URL="https://github.com/libretro/Craft/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain retroarch"

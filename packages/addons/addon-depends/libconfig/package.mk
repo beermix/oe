@@ -18,9 +18,6 @@
 
 PKG_NAME="libconfig"
 PKG_VERSION="v1.5"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="LGPL"
 PKG_SITE="http://hyperrealm.com/libconfig/libconfig.html"
 PKG_GIT_URL="https://github.com/hyperrealm/libconfig"
 PKG_DEPENDS_TARGET="toolchain"

@@ -18,9 +18,6 @@
 
 PKG_NAME="cffi"
 PKG_VERSION="1.7"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="OSS"
 PKG_SITE="http://cffi.readthedocs.org"
 PKG_URL="https://bitbucket.org/cffi/cffi/get/release-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host pycparser libffi"

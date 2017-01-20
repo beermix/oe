@@ -18,9 +18,7 @@
 
 PKG_NAME="makemkv"
 PKG_VERSION="1.10.2"
-PKG_REV="0"
 PKG_ARCH="x86_64"
-PKG_LICENSE="OSS"
 PKG_SITE="http://www.makemkv.com/forum2/viewforum.php?f=3"
 PKG_URL="http://www.makemkv.com/download/${PKG_NAME}-oss-${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain openssl expat ffmpeg"

@@ -18,9 +18,6 @@
 
 PKG_NAME="libelf"
 PKG_VERSION="0.8.13"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="LGPL"
 PKG_SITE="http://www.mpfr.org/"
 PKG_URL="http://www.mr511.de/software/libelf-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="ccache:host intltool:host"

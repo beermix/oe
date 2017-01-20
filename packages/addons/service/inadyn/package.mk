@@ -18,9 +18,6 @@
 
 PKG_NAME="inadyn"
 PKG_VERSION="v2.1"
-PKG_REV="101"
-PKG_ARCH="any"
-PKG_LICENSE="GPLv2"
 PKG_SITE="http://troglobit.com/inadyn.html"
 PKG_GIT_URL="https://github.com/troglobit/inadyn"
 PKG_DEPENDS_TARGET="toolchain libconfuse libite libressl"

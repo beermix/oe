@@ -18,9 +18,6 @@
 
 PKG_NAME="audiodecoder.upse"
 PKG_VERSION="a6a41d1"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/notspiff/audiodecoder.upse"
 PKG_URL="https://github.com/notspiff/audiodecoder.upse/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain kodi-platform"

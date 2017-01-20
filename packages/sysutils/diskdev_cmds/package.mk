@@ -18,9 +18,6 @@
 
 PKG_NAME="diskdev_cmds"
 PKG_VERSION="332.14"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="APSL"
 PKG_SITE="http://src.gnu-darwin.org/DarwinSourceArchive/expanded/diskdev_cmds/"
 PKG_URL="http://www.opensource.apple.com/tarballs/diskdev_cmds/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain openssl"

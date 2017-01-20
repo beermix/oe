@@ -18,9 +18,6 @@
 
 PKG_NAME="automake"
 PKG_VERSION="1.15"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://sources.redhat.com/automake/"
 PKG_URL="http://ftp.gnu.org/gnu/automake/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="ccache:host autoconf:host automake-1.10:host automake-1.11:host automake-1.12:host automake-1.13:host automake-1.14:host"

@@ -1,9 +1,6 @@
 
 PKG_NAME="obfs4proxy"
 PKG_VERSION="0.0.3"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="OSS"
 PKG_DEPENDS_TARGET="toolchain go"
 
 PKG_SECTION="web"

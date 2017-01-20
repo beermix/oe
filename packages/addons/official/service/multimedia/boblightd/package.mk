@@ -18,9 +18,6 @@
 
 PKG_NAME="boblightd"
 PKG_VERSION="478"
-PKG_REV="0"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://code.google.com/p/boblight"
 PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain libusb"

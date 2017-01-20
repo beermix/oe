@@ -18,9 +18,6 @@
 
 PKG_NAME="mt7610u"
 PKG_VERSION="34a7865"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 # mediatek: PKG_SITE="http://www.mediatek.com/en/downloads/mt7610u-usb/"
 PKG_SITE="https://github.com/sohaib17/mt7610u"
 PKG_GIT_URL="https://github.com/sohaib17/mt7610u.git"

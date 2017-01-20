@@ -18,9 +18,7 @@
 
 PKG_NAME="gtkmm"
 PKG_VERSION="3.22.0"
-PKG_REV="2"
 PKG_ARCH="x86_64"
-PKG_LICENSE="GPL"
 PKG_URL="https://download.gnome.org/sources/gtkmm/3.22/gtkmm-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain libxml2 sqlite"
 

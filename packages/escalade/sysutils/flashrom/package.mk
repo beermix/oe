@@ -18,9 +18,7 @@
 
 PKG_NAME="flashrom"
 PKG_VERSION="0.9.9"
-PKG_REV="1"
 PKG_ARCH="x86_64"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.flashrom.org"
 PKG_URL="http://download.flashrom.org/releases/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain zlib pciutils libftdi1"

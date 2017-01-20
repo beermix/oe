@@ -17,9 +17,7 @@
 ################################################################################
 
 PKG_NAME="libamcodec"
-PKG_REV="1"
 PKG_ARCH="arm aarch64"
-PKG_LICENSE="other"
 PKG_SITE="http://openlinux.amlogic.com"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="multimedia"

@@ -5,9 +5,6 @@
 
 PKG_NAME="AlexELEC-settings"
 PKG_VERSION="db4f7ba"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="prop."
 PKG_SITE="http://www.alexelec.in.ua"
 PKG_GIT_URL="https://github.com/AlexELEC/service.alexelec.settings"
 PKG_DEPENDS_TARGET="toolchain Python pygobject dbus-python"

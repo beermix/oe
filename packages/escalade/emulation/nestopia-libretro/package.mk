@@ -20,9 +20,6 @@
 
 PKG_NAME="nestopia-libretro"
 PKG_VERSION="4ac5d2a"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/nestopia"
 PKG_URL="https://github.com/libretro/nestopia/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"

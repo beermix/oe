@@ -18,9 +18,6 @@
 
 PKG_NAME="libpcap"
 PKG_VERSION="1.8.1"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.tcpdump.org/"
 PKG_URL="http://www.tcpdump.org/release/libpcap-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"

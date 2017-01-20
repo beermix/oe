@@ -18,9 +18,7 @@
 
 PKG_NAME="visualization.vsxu"
 PKG_VERSION="990332f"
-PKG_REV="1"
 PKG_ARCH="i386 x86_64"
-PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/notspiff/visualization.vsxu"
 PKG_URL="https://github.com/notspiff/visualization.vsxu/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain kodi-platform vsxu"

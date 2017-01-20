@@ -1,8 +1,5 @@
 PKG_NAME="rdiff-backup"
 PKG_VERSION="1.2.8"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="OSS"
 PKG_SITE="http://www.boost.org/"
 PKG_URL="http://savannah.nongnu.org/download/rdiff-backup/rdiff-backup-1.2.8.tar.gz"
 #PKG_SOURCE_DIR="${PKG_NAME}-${PKG_VERSION}"

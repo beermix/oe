@@ -18,9 +18,6 @@
 
 PKG_NAME="dosbox-sdl"
 PKG_VERSION="4000"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="https://www.dosbox.com"
 PKG_URL="custom"
 PKG_DEPENDS_TARGET="toolchain alsa-lib SDL SDL_net SDL_sound munt libpng"

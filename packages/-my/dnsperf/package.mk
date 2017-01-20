@@ -21,9 +21,6 @@
 
 PKG_NAME="dnsperf"
 PKG_VERSION="1"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="LGPL"
 PKG_SITE="http://shadowsocks.org"
 PKG_URL="https://copy.com/LOUO6tehjZJy/dnsperf-1.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python sqlite netbsd-curses"

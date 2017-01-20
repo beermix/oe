@@ -18,9 +18,7 @@
 
 PKG_NAME="plexmediaserver-script"
 PKG_VERSION="1.0"
-PKG_REV="1"
 PKG_ARCH="x86_64 arm"
-PKG_LICENSE="GPL"
 PKG_SITE="https://plex.tv"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="service"

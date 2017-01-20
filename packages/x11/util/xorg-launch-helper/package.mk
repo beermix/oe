@@ -18,9 +18,6 @@
 
 PKG_NAME="xorg-launch-helper"
 PKG_VERSION="12b30bf"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL-2"
 PKG_SITE="https://github.com/sofar/xorg-launch-helper"
 PKG_GIT_URL="https://github.com/sofar/xorg-launch-helper.git"
 PKG_GIT_BRANCH="master"

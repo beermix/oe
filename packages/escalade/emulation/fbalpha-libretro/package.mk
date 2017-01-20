@@ -20,9 +20,6 @@
 
 PKG_NAME="fbalpha-libretro"
 PKG_VERSION="6d36b3a"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="Non-commercial"
 PKG_SITE="https://github.com/libretro/fbalpha"
 PKG_URL="https://github.com/libretro/fbalpha/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"

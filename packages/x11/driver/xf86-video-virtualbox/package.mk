@@ -18,9 +18,7 @@
 
 PKG_NAME="xf86-video-virtualbox"
 PKG_VERSION="5.1.8"
-PKG_REV="1"
 PKG_ARCH="x86_64"
-PKG_LICENSE="OSS"
 PKG_SITE="http://www.virtualbox.org"
 PKG_URL="http://download.virtualbox.org/virtualbox/$PKG_VERSION/VirtualBox-$PKG_VERSION.tar.bz2"
 PKG_SOURCE_DIR="VirtualBox-$PKG_VERSION"

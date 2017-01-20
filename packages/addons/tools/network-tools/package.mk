@@ -18,9 +18,6 @@
 
 PKG_NAME="network-tools"
 PKG_VERSION=""
-PKG_REV="100"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE=""
 PKG_URL=""
 PKG_DEPENDS_TARGET="toolchain"

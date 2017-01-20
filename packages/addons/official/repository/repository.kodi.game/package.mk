@@ -18,9 +18,6 @@
 
 PKG_NAME="repository.kodi.game"
 PKG_VERSION="7480ae2"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/kodi-game/repository.kodi.game"
 PKG_GIT_URL="https://github.com/kodi-game/repository.kodi.game.git"
 PKG_GIT_BRANCH="master"

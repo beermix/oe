@@ -18,9 +18,6 @@
 
 PKG_NAME="binutils"
 PKG_VERSION="81ff47b"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/binutils/binutils.html"
 PKG_GIT_URL="git://sourceware.org/git/binutils-gdb.git"
 PKG_DEPENDS_HOST="ccache:host bison:host flex:host dejagnu:host linux:host"

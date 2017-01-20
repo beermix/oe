@@ -18,9 +18,6 @@
 
 PKG_NAME="QuickCut"
 PKG_VERSION="0.0.1"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="MIT License"
 PKG_SITE="https://pypi.python.org/pypi/PyAMF/"
 PKG_URL="https://pypi.python.org/packages/source/Q/QuickCut/QuickCut-0.0.1.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"

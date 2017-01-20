@@ -19,9 +19,6 @@
 PKG_NAME="connman"
 # DO NOT UPGRADE!!
 PKG_VERSION="1.33"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.connman.net"
 PKG_URL="https://www.kernel.org/pub/linux/network/connman/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain glib readline netbsd-curses dbus iptables wpa_supplicant"

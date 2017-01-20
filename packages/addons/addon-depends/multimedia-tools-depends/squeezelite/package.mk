@@ -18,9 +18,6 @@
 
 PKG_NAME="squeezelite"
 PKG_VERSION="33cca7e"
-PKG_REV="0"
-PKG_ARCH="any"
-PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/ralph-irving/squeezelite"
 PKG_URL="https://github.com/ralph-irving/squeezelite/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain faad2 ffmpeg flac libmad libvorbis mpg123 soxr"

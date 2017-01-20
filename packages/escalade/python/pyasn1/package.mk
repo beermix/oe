@@ -18,9 +18,6 @@
 
 PKG_NAME="pyasn1"
 PKG_VERSION="0.1.9"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="OSS"
 PKG_SITE="http://sourceforge.net/projects/pyasn1"
 PKG_URL="http://pypi.python.org/packages/source/p/pyasn1/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"

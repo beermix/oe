@@ -18,9 +18,6 @@
 
 PKG_NAME="emulationstation"
 PKG_VERSION="76c1538"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/Herdinger/EmulationStation.git"
 PKG_URL="https://github.com/Herdinger/EmulationStation/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain SDL2 boost freetype curl cmake:host freeimage eigen emulationstation-theme-carbon"

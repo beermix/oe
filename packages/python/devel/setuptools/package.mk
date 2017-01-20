@@ -17,9 +17,6 @@
 ################################################################################
 PKG_NAME="setuptools"
 PKG_VERSION="33.1.1"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="OSS"
 PKG_SITE="https://pypi.python.org/pypi/setuptools"
 PKG_URL="https://pypi.python.org/packages/dc/8c/7c9869454bdc53e72fb87ace63eac39336879eef6f2bf96e946edbf03e90/setuptools-33.1.1.zip"
 PKG_DEPENDS_HOST="Python:host"

@@ -18,9 +18,6 @@
 
 PKG_NAME="rpcbind"
 PKG_VERSION="0.2.4"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="OSS"
 PKG_SITE="http://rpcbind.sourceforge.net/"
 PKG_URL="$SOURCEFORGE_SRC/rpcbind/rpcbind/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain libtirpc"

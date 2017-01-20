@@ -18,9 +18,6 @@
 
 PKG_NAME="openssl-portable"
 PKG_VERSION="2.5.0"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="BSD"
 PKG_SITE="http://www.openssl.org/"
 PKG_URL="http://ftp.openbsd.org/pub/OpenBSD/openssl/openssl-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="ccache:host"

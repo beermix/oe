@@ -18,9 +18,6 @@
 
 PKG_NAME="tinyxml2"
 PKG_VERSION="584af57"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="zlib"
 PKG_SITE="http://www.grinninglizard.com/tinyxml2/index.html"
 PKG_GIT_URL="https://github.com/leethomason/tinyxml2.git"
 PKG_GIT_BRANCH="master"

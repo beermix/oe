@@ -18,9 +18,6 @@
 
 PKG_NAME="nasm"
 PKG_VERSION="2.12.02"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://nasm.sourceforge.net/"
 PKG_URL="http://www.nasm.us/pub/nasm/releasebuilds/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST=""

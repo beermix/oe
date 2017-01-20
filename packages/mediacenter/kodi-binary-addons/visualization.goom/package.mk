@@ -18,9 +18,6 @@
 
 PKG_NAME="visualization.goom"
 PKG_VERSION="16747b7"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/notspiff/visualization.goom"
 PKG_URL="https://github.com/notspiff/visualization.goom/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain kodi-platform"

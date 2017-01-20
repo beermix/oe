@@ -18,9 +18,6 @@
 
 PKG_NAME="apparmor"
 PKG_VERSION="2.9.2"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="OSS"
 PKG_SITE="http://apparmor.net"
 PKG_URL="https://launchpad.net/apparmor/2.9/${PKG_VERSION}/+download/${PKG_NAME}-${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_INIT="busybox:init linux:init"

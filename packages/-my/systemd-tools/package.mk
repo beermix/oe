@@ -18,9 +18,6 @@
 
 PKG_NAME="systemd-tools"
 PKG_VERSION="0"
-PKG_REV="0"
-PKG_ARCH="any"
-PKG_LICENSE=""
 PKG_SITE=""
 PKG_URL=""
 PKG_DEPENDS_TARGET="systemd"

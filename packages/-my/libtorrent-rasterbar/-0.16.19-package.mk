@@ -1,8 +1,5 @@
 PKG_NAME="libtorrent-rasterbar"
 PKG_VERSION="0.16.19"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="OSS"
 PKG_SITE="http://www.boost.org/"
 PKG_URL="http://downloads.sourceforge.net/project/libtorrent/libtorrent/${PKG_NAME}-${PKG_VERSION}.tar.gz"
 #PKG_SOURCE_DIR="${PKG_NAME}-${PKG_VERSION}"

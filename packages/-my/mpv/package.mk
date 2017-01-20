@@ -1,8 +1,5 @@
 PKG_NAME="mpv"
 PKG_VERSION="0.17.0"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="OSS"
 PKG_SITE="http://qt-project.org"
 PKG_URL="https://github.com/mpv-player/mpv/archive/v0.17.0.tar.gz"
 PKG_DEPENDS="bcm2835-driver bzip2 Python zlib:host zlib libpng tiff dbus glib fontconfigeglibc liberation-fonts-ttf font-util font-xfree86-type1 font-misc-misc gstreamer gst-plugins-base gst-plugins-good gst-omx gst-plugins-bad alsa"

@@ -18,9 +18,6 @@
 
 PKG_NAME="dvb-firmware"
 PKG_VERSION="967e545"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="Free-to-use"
 PKG_SITE="https://github.com/OpenELEC/dvb-firmware"
 PKG_GIT_URL="https://github.com/OpenELEC/dvb-firmware.git"
 PKG_GIT_BRANCH="master"

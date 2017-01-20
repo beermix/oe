@@ -19,8 +19,6 @@
 
 PKG_NAME="attr"
 PKG_VERSION="2.4.47"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE=""
 PKG_URL="http://download.savannah.gnu.org/releases-noredirect/attr/$PKG_NAME-$PKG_VERSION.src.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"

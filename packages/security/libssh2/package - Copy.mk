@@ -1,6 +1,5 @@
 PKG_NAME="libssh2"
 PKG_VERSION="1.8.0"
-PKG_ARCH="any"
 PKG_URL="https://www.libssh2.org/download/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libz mbedtls"
 PKG_IS_ADDON="no"

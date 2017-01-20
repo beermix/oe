@@ -18,9 +18,6 @@
 
 PKG_NAME="dejagnu"
 PKG_VERSION="1.6"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="LGPL"
 PKG_SITE="http://www.mpfr.org/"
 PKG_URL="http://ftp.gnu.org/gnu/dejagnu/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="ccache:host intltool:host"

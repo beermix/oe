@@ -1,8 +1,5 @@
 PKG_NAME="nginx"
 PKG_VERSION="1.12.0"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.midnight-commander.org"
 PKG_URL="http://nginx.org/download/nginx-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain openssl"

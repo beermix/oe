@@ -18,9 +18,6 @@
 
 PKG_NAME="sundtek-mediatv"
 PKG_VERSION="8.0"
-PKG_REV="0"
-PKG_ARCH="any"
-PKG_LICENSE="nonfree"
 PKG_SITE="http://support.sundtek.com/"
 PKG_URL=""
 PKG_DEPENDS_TARGET=""

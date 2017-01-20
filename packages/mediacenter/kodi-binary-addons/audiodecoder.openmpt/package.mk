@@ -18,9 +18,6 @@
 
 PKG_NAME="audiodecoder.openmpt"
 PKG_VERSION="8b680eb"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
 PKG_URL="https://github.com/notspiff/audiodecoder.openmpt/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain kodi-platform libopenmpt"

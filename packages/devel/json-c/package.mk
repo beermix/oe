@@ -19,9 +19,6 @@
 
 PKG_NAME="json-c"
 PKG_VERSION="ea1499a"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/json-c/json-c/wiki"
 PKG_GIT_URL="https://github.com/json-c/json-c.git"
 PKG_GIT_BRANCH="master"

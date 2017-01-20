@@ -18,7 +18,6 @@
 
 PKG_NAME="gsmartcontrol"
 PKG_VERSION="0.8.7"
-PKG_REV="2"
 PKG_ARCH="x86_64"
 PKG_URL="https://sourceforge.net/projects/gsmartcontrol/files/0.8.7/gsmartcontrol-0.8.7.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain"

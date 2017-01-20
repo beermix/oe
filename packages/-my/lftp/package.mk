@@ -20,9 +20,6 @@
 
 PKG_NAME="lftp"
 PKG_VERSION="4.6.4"
-PKG_REV="0"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://lftp.yar.ru/"
 PKG_URL="http://lftp.yar.ru/ftp/${PKG_NAME}-${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain readline"

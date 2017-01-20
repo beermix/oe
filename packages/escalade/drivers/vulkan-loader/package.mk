@@ -18,9 +18,6 @@
 
 PKG_NAME="vulkan-loader"
 PKG_VERSION="03359bf"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="Apache 2.0"
 PKG_SITE="https://www.khronos.org"
 PKG_GIT_URL="https://github.com/KhronosGroup/Vulkan-LoaderAndValidationLayers"
 PKG_DEPENDS_TARGET="toolchain cmake:host"

@@ -18,9 +18,7 @@
 
 PKG_NAME="efibootmgr-devel"
 PKG_VERSION="0bb83cf"
-PKG_REV="1"
 PKG_ARCH="x86_64"
-PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/vathpela/efibootmgr"
 PKG_GIT_URL="https://github.com/vathpela/efibootmgr-devel"
 #PKG_SOURCE_DIR="efibootmgr-devel-$PKG_VERSION*"

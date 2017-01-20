@@ -18,9 +18,6 @@
 
 PKG_NAME="enum"
 PKG_VERSION="0.4.6"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="OSS"
 PKG_SITE="http://pypi.python.org/pypi/enum"
 PKG_URL="http://pypi.python.org/packages/source/e/enum/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"

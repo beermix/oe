@@ -20,9 +20,6 @@
 
 PKG_NAME="qt5dev"
 PKG_VERSION=""
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="various"
 PKG_SITE=""
 PKG_URL=""
 PKG_DEPENDS="gstreamer gst-plugins-base gst-plugins-good gst-plugins-bad gst-plugins-ugly gst-omx qt5"

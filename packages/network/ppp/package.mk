@@ -18,9 +18,6 @@
 
 PKG_NAME="ppp"
 PKG_VERSION="2.4.7"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://samba.org/"
 PKG_URL="http://samba.org/ftp/ppp/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"

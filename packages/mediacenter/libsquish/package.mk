@@ -18,9 +18,6 @@
 
 PKG_NAME="libsquish"
 PKG_VERSION="52e7d93"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE=""
 PKG_GIT_URL="https://github.com/OpenELEC/libsquish.git"
 PKG_GIT_BRANCH="master"

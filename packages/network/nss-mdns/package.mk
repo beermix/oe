@@ -18,9 +18,6 @@
 
 PKG_NAME="nss-mdns"
 PKG_VERSION="0.10"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://0pointer.de/lennart/projects/nss-mdns/"
 # PKG_URL="http://0pointer.de/lennart/projects/nss-mdns/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_URL="http://sources.openelec.tv/mirror/nss-mdns/$PKG_NAME-$PKG_VERSION.tar.gz"

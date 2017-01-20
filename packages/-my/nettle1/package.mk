@@ -1,8 +1,5 @@
 PKG_NAME="nettle"
 PKG_VERSION="3.2"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.lysator.liu.se/~nisse/nettle"
 PKG_URL="http://www.lysator.liu.se/~nisse/archive/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"

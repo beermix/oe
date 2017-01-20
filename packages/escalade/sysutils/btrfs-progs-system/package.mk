@@ -18,9 +18,6 @@
 
 PKG_NAME="btrfs-progs-system"
 PKG_VERSION="v4.8.4"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/kdave/btrfs-progs"
 PKG_URL="https://www.kernel.org/pub/linux/kernel/people/kdave/btrfs-progs/btrfs-progs-$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="btrfs-progs-$PKG_VERSION"

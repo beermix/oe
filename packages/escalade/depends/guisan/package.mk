@@ -18,9 +18,6 @@
 
 PKG_NAME="guisan"
 PKG_VERSION="ae7ea55"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="OSS"
 PKG_SITE="https://github.com/kallisti5/guisan"
 PKG_URL="https://github.com/kallisti5/guisan/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain SDL2 SDL2_image SDL2_ttf"

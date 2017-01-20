@@ -19,9 +19,6 @@
 PKG_NAME="fluxbox"
 # dont bump or go back to ratpoison then f*** all 3rdparty stuff.
 PKG_VERSION="1.3.7"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="OSS"
 PKG_SITE="http://fluxbox.org/"
 PKG_URL="http://sourceforge.net/projects/fluxbox/files/fluxbox/${PKG_VERSION}/$PKG_NAME-${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libX11 libXrandr libXext libXrender"

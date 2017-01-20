@@ -18,9 +18,6 @@
 
 PKG_NAME="unzip"
 PKG_VERSION="60"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="OSS"
 PKG_SITE="http://www.info-zip.org/pub/infozip/"
 PKG_URL="http://ftp.uk.i-scream.org/sites/www.ibiblio.org/gentoo/distfiles/$PKG_NAME$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="${PKG_NAME}${PKG_VERSION}"

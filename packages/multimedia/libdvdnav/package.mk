@@ -18,9 +18,6 @@
 
 PKG_NAME="libdvdnav"
 PKG_VERSION="43b5f81"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/xbmc/libdvdnav"
 PKG_GIT_URL="https://github.com/xbmc/libdvdnav.git"
 PKG_GIT_BRANCH="master"

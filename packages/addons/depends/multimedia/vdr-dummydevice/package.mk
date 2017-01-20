@@ -18,9 +18,6 @@
 
 PKG_NAME="vdr-dummydevice"
 PKG_VERSION="2.0.0"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.vdr-wiki.de/wiki/index.php/Dummydevice-plugin"
 PKG_URL="http://phivdr.dyndns.org/vdr/vdr-dummydevice/$PKG_NAME-$PKG_VERSION.tgz"
 PKG_SOURCE_DIR="dummydevice-${PKG_VERSION}"

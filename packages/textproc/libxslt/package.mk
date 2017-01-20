@@ -18,9 +18,6 @@
 
 PKG_NAME="libxslt"
 PKG_VERSION="1.1.29"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="MIT"
 PKG_SITE="http://xmlsoft.org/xslt/"
 PKG_URL="ftp://xmlsoft.org/libxml2/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="toolchain libxml2:host"

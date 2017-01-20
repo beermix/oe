@@ -18,9 +18,6 @@
 
 PKG_NAME="dosbox-sdl2"
 PKG_VERSION="71d6832"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/duganchen/dosbox"
 PKG_DEPENDS_TARGET="toolchain alsa-lib SDL2 SDL2_net fluidsynth munt libpng glew"
 PKG_SECTION="emulation"

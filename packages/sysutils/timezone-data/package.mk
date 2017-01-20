@@ -18,9 +18,6 @@
 
 PKG_NAME="timezone-data"
 PKG_VERSION="2016a"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="Public Domain"
 PKG_SITE="http://www.iana.org/time-zones"
 # this package actually contains both packages tzcode and tzdate in a single package
 # duplicate files are the same files

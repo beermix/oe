@@ -18,9 +18,7 @@
 
 PKG_NAME="imx6-soc-fan"
 PKG_VERSION="1.0"
-PKG_REV="1"
 PKG_ARCH="arm"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.openelec.tv/"
 PKG_URL=""
 PKG_DEPENDS_TARGET="imx6-status-led"

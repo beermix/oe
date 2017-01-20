@@ -18,9 +18,6 @@
 
 PKG_NAME="uae4arm"
 PKG_VERSION="a33d65d"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/Chips-fr/uae4arm-rpi.git"
 PKG_URL="https://github.com/Chips-fr/uae4arm-rpi/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain alsa-lib freetype zlib SDL SDL_image SDL_ttf SDL_gfx libpng guichan flac mpg123 libjpeg-turbo"

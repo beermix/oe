@@ -5,9 +5,6 @@
 
 PKG_NAME="emulationstation-theme-pixel"
 PKG_VERSION="37bd4fc"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/RetroPie/es-theme-pixel"
 PKG_GIT_URL="https://github.com/RetroPie/es-theme-pixel"
 PKG_SOURCE_DIR="es-theme-pixel*"

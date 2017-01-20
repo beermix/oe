@@ -18,9 +18,6 @@
 
 PKG_NAME="snes9xherd-libretro"
 PKG_VERSION="0d34187"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/snes9xherd"
 PKG_URL="https://github.com/libretro/snes9xherd/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"

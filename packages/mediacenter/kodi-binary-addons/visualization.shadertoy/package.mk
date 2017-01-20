@@ -18,9 +18,6 @@
 
 PKG_NAME="visualization.shadertoy"
 PKG_VERSION="f998800"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/notspiff/visualization.shadertoy"
 PKG_URL="https://github.com/notspiff/visualization.shadertoy/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain kodi-platform"

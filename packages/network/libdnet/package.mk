@@ -18,9 +18,6 @@
 
 PKG_NAME="libdnet"
 PKG_VERSION="libdnet-1.12"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="BSD"
 PKG_SITE="http://code.google.com/p/libdnet/"
 PKG_GIT_URL="https://github.com/dugsong/libdnet"
 PKG_DEPENDS_TARGET="toolchain"

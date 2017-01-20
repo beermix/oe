@@ -18,9 +18,7 @@
 
 PKG_NAME="vsxu"
 PKG_VERSION="v0.5.1"
-PKG_REV="1"
 PKG_ARCH="i386 x86_64"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.vsxu.com"
 PKG_GIT_URL="https://github.com/vovoid/vsxu"
 PKG_DEPENDS_TARGET="toolchain $OPENGL libX11 glew glfw zlib libpng libjpeg-turbo freetype"

@@ -5,9 +5,6 @@
 
 PKG_NAME="emulationstation-theme-carbon-nometa"
 PKG_VERSION="e76a6f6"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/RetroPie/es-theme-carbon-nometa"
 PKG_GIT_URL="https://github.com/RetroPie/es-theme-carbon-nometa"
 PKG_SOURCE_DIR="es-theme-carbon-nometa*"

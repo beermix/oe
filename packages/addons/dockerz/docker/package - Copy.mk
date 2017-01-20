@@ -18,10 +18,7 @@
 
 PKG_NAME="docker"
 PKG_VERSION="v1.12.4"
-PKG_REV="109"
-PKG_ARCH="any"
 PKG_ADDON_PROJECTS="Generic RPi RPi2 imx6 WeTek_Hub WeTek_Play_2 Odroid_C2"
-PKG_LICENSE="ASL"
 PKG_SITE="http://www.docker.com/"
 PKG_GIT_URL="https://github.com/docker/docker"
 PKG_DEPENDS_TARGET="toolchain sqlite go:host containerd runc"

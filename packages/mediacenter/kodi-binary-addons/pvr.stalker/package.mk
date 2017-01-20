@@ -18,9 +18,6 @@
 
 PKG_NAME="pvr.stalker"
 PKG_VERSION="72a064a"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
 PKG_GIT_URL="https://github.com/kodi-pvr/pvr.stalker"
 PKG_DEPENDS_TARGET="toolchain kodi-platform jsoncpp tinyxml"

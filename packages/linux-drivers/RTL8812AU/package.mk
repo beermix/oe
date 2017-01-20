@@ -18,9 +18,6 @@
 
 PKG_NAME="RTL8812AU"
 PKG_VERSION="d3c7f0e"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/Grawp/rtl8812au_rtl8821au"
 PKG_GIT_URL="https://github.com/Grawp/rtl8812au_rtl8821au"
 PKG_GIT_BRANCH="4.3.20"

@@ -5,9 +5,6 @@
 
 PKG_NAME="inputlirc"
 PKG_VERSION="23"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.alexelec.in.ua"
 PKG_URL="$ALEXELEC_SRC/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"

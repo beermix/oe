@@ -18,9 +18,6 @@
 
 PKG_NAME="script.config.vdr"
 PKG_VERSION="1.0.8"
-PKG_REV="0"
-PKG_ARCH="any"
-PKG_LICENSE="OSS"
 PKG_SITE="http://www.openelec.tv"
 PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET=""

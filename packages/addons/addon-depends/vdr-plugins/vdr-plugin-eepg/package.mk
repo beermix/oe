@@ -18,9 +18,6 @@
 
 PKG_NAME="vdr-plugin-eepg"
 PKG_VERSION="9cd9a75"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://projects.vdr-developer.org/projects/plg-eepg"
 PKG_URL="http://projects.vdr-developer.org/git/vdr-plugin-eepg.git/snapshot/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain vdr"

@@ -18,9 +18,6 @@
 
 PKG_NAME="gst-plugins-ugly"
 PKG_VERSION="1.2.3"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="OSS"
 PKG_SITE="http://gstreamer.freedesktop.org/gstreamer"
 PKG_URL="http://gstreamer.freedesktop.org/src/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain libpng tiff dbus fontconfig eglibc zlib gstreamer"

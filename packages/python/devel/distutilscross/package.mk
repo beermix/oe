@@ -18,9 +18,6 @@
 
 PKG_NAME="distutilscross"
 PKG_VERSION="0.1"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://bitbucket.org/lambacck/distutilscross/"
 PKG_URL="http://pypi.python.org/packages/source/d/distutilscross/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="Python:host setuptools:host"

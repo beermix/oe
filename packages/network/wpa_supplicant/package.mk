@@ -18,9 +18,6 @@
 
 PKG_NAME="wpa_supplicant"
 PKG_VERSION="2.6"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://hostap.epitest.fi/wpa_supplicant/"
 PKG_URL="http://hostap.epitest.fi/releases/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain dbus libnl openssl"

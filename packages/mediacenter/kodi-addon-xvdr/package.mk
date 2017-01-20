@@ -5,9 +5,6 @@
 
 PKG_NAME="kodi-addon-xvdr"
 PKG_VERSION="ae66610"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_GIT_URL="https://github.com/pipelka/xbmc-addon-xvdr"
 PKG_DEPENDS_TARGET="toolchain zlib kodi"
 PKG_SECTION="mediacenter"

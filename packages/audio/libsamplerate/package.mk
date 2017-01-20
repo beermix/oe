@@ -18,9 +18,6 @@
 
 PKG_NAME="libsamplerate"
 PKG_VERSION="092f717"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.mega-nerd.com/SRC/"
 PKG_GIT_URL="https://github.com/erikd/libsamplerate"
 PKG_DEPENDS_TARGET="toolchain libsndfile libvorbis libogg flac"

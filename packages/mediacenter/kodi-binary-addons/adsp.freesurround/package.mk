@@ -18,9 +18,6 @@
 
 PKG_NAME="adsp.freesurround"
 PKG_VERSION="08b691d"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
 PKG_URL="https://github.com/kodi-adsp/adsp.freesurround/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain kodi-platform"

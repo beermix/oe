@@ -18,9 +18,6 @@
 
 PKG_NAME="visualization.fishbmc"
 PKG_VERSION="50c38c2"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
 PKG_URL="https://github.com/notspiff/visualization.fishbmc/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain kodi-platform"

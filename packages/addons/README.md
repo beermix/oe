@@ -22,10 +22,7 @@ This file shows a skeleton example of an add-on package.mk with content notes. E
 
 PKG_NAME="myprogram"                               # same as the folder name
 PKG_VERSION="1.0.1"                                # version or 7 digit-hash
-PKG_REV="100"                                      # currently we start at 100 to solve OE update problems
-PKG_ARCH="any"                                     # for available architectures, see LE/config/arch.* files
 # PKG_ADDON_PROJECTS="RPi RPi2"                    # for available projects, see projects subdirectory
-PKG_LICENSE="GPL"                                  # program licenses, see licenses subdirectory for a list
 PKG_SITE="http://www.site.org"
 PKG_URL="http://www.site.org/$PKG_VERSION.tar.xz"  # for github see the other packages, prefer tar.xz over .gz
 # PKG_SOURCE_DIR="somename-${PKG_VERSION}*"        # if the folder inside the zip is different to the pkg name

@@ -20,9 +20,6 @@
 
 PKG_NAME="dvblast"
 PKG_VERSION="3.0"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.videolan.org"
 PKG_URL="http://downloads.videolan.org/pub/videolan/dvblast/${PKG_VERSION}/dvblast-${PKG_VERSION}.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain bitstream libev"

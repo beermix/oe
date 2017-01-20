@@ -18,9 +18,6 @@
 
 PKG_NAME="qt5"
 PKG_VERSION="5.2.1"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="OSS"
 PKG_SITE="http://qt-project.org"
 PKG_URL="http://download.qt-project.org/official_releases/qt/5.2/5.2.1/single/qt-everywhere-opensource-src-5.2.1.tar.gz"
 

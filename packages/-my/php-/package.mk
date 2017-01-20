@@ -1,8 +1,5 @@
 PKG_NAME="php"
 PKG_VERSION="5.6.21"
-PKG_REV="0"
-PKG_ARCH="any"
-PKG_LICENSE="OpenSource"
 PKG_SITE="http://www.php.net"
 PKG_URL="http://www.php.net/distributions/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain zlib pcre curl openssl sqlite pcre pcre2 freetype libpng libjpeg-turbo tiff glu glu giflib"

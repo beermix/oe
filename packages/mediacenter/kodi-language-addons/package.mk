@@ -18,9 +18,6 @@
 
 PKG_NAME="kodi-language-addons"
 PKG_VERSION="a8158f7"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/xbmc/repo-resources"
 PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain"

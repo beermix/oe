@@ -18,9 +18,6 @@
 
 PKG_NAME="sapphire"
 PKG_VERSION="6.6"
-PKG_REV="102"
-PKG_ARCH="any"
-PKG_LICENSE="OSS"
 PKG_SITE="https://libreelec.tv"
 PKG_URL="http://www.rtr.ca/sapphire_remote/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain linux bash"

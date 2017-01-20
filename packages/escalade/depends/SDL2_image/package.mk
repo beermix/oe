@@ -18,9 +18,6 @@
 
 PKG_NAME="SDL2_image"
 PKG_VERSION="2.0.1"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.libsdl.org/"
 PKG_URL="https://www.libsdl.org/projects/SDL_image/release/SDL2_image-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain SDL2"

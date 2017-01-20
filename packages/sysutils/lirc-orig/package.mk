@@ -18,9 +18,6 @@
 
 PKG_NAME="lirc"
 PKG_VERSION="0.9.0"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.lirc.org"
 PKG_URL="$SOURCEFORGE_SRC/lirc/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain libftdi1 libusb-compat libirman"

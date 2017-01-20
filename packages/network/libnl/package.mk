@@ -18,9 +18,6 @@
 
 PKG_NAME="libnl"
 PKG_VERSION="3.2.29"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="LGPL"
 PKG_SITE="http://people.suug.ch/~tgr/libnl/"
 PKG_URL="https://github.com/thom311/libnl/releases/download/libnl3_2_29/libnl-3.2.29.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"

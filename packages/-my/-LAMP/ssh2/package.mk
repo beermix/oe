@@ -19,9 +19,6 @@
 
 PKG_NAME="ssh2"
 PKG_VERSION="0.12"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE=""
 PKG_SITE="http://pecl.php.net/package/ssh2"
 PKG_URL="http://pecl.php.net/get/$PKG_NAME-$PKG_VERSION.tgz"
 #PKG_DEPENDS_TARGET="toolchain libssh2 php"

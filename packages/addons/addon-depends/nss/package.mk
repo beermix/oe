@@ -20,9 +20,6 @@
 
 PKG_NAME="nss"
 PKG_VERSION="3.27.2"
-PKG_REV="2"
-PKG_ARCH="any"
-PKG_LICENSE="Mozilla Public License"
 PKG_SITE="http://ftp.mozilla.org/"
 PKG_URL="https://ftp.mozilla.org/pub/security/nss/releases/NSS_3_27_2_RTM/src/nss-3.27.2-with-nspr-4.13.1.tar.gz"
 PKG_DEPENDS_TARGET="toolchain nss:host nspr zlib"

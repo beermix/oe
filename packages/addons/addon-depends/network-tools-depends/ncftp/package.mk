@@ -18,9 +18,6 @@
 
 PKG_NAME="ncftp"
 PKG_VERSION="3.2.5"
-PKG_REV="0"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.ncftp.com/ncftp/"
 PKG_URL="ftp://ftp.ncftp.com/ncftp/ncftp-${PKG_VERSION}-src.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain"

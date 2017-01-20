@@ -18,9 +18,7 @@
 
 PKG_NAME="mrxvt"
 PKG_VERSION="0.5.4"
-PKG_REV="0"
 PKG_ARCH="i386 x86_64"
-PKG_LICENSE="GPL"
 PKG_SITE="http://materm.sourceforge.net/"
 PKG_URL="$SOURCEFORGE_SRC/materm/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libX11"

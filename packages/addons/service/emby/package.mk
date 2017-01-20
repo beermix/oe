@@ -18,9 +18,6 @@
 
 PKG_NAME="emby"
 PKG_VERSION="3.0.8500"
-PKG_REV="109"
-PKG_ARCH="any"
-PKG_LICENSE="OSS"
 PKG_SITE="http://emby.media"
 PKG_URL="https://github.com/MediaBrowser/Emby/releases/download/$PKG_VERSION/Emby.Mono.zip"
 PKG_DEPENDS_TARGET="toolchain ffmpegx imagemagick"

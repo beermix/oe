@@ -18,9 +18,6 @@
 
 PKG_NAME="btrfs-progs"
 PKG_VERSION="4.8.4"
-PKG_REV="100"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="https://btrfs.wiki.kernel.org/index.php/Main_Page"
 PKG_URL="https://github.com/kdave/btrfs-progs/archive/v$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain util-linux zlib lzo"

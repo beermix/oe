@@ -5,9 +5,6 @@
 
 PKG_NAME="System-settings"
 PKG_VERSION="4c01b39"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="prop."
 PKG_SITE="http://www.alexelec.in.ua"
 PKG_GIT_URL="https://github.com/AlexELEC/service.system.settings"
 PKG_DEPENDS_TARGET="toolchain Python connman pygobject dbus-python setxkbmap"

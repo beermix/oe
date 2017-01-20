@@ -18,7 +18,6 @@
 
 PKG_NAME="libconfuse"
 PKG_VERSION="v3.0"
-PKG_LICENSE="https://github.com/martinh/libconfuse/blob/master/LICENSE"
 PKG_SITE="https://github.com/martinh/libconfuse"
 PKG_GIT_URL="https://github.com/martinh/libconfuse"
 PKG_DEPENDS_TARGET="toolchain"

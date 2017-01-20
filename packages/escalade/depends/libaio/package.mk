@@ -18,9 +18,6 @@
 
 PKG_NAME="libaio"
 PKG_VERSION="0.3.110-1"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://http://lse.sourceforge.net/io/aio.html"
 PKG_URL="https://git.fedorahosted.org/cgit/libaio.git/snapshot/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"

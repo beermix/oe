@@ -17,9 +17,6 @@
 ################################################################################
 PKG_NAME="portaudio"
 PKG_VERSION="master"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.portaudio.com"
 PKG_GIT_URL="https://git.assembla.com/portaudio.git"
 PKG_DEPENDS_TARGET="toolchain"

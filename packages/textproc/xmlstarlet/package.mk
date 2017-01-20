@@ -18,9 +18,6 @@
 
 PKG_NAME="xmlstarlet"
 PKG_VERSION="1.6.1"
-PKG_REV="0"
-PKG_ARCH="any"
-PKG_LICENSE="MIT"
 PKG_SITE="http://xmlstar.sourceforge.net"
 PKG_URL="http://netcologne.dl.sourceforge.net/project/xmlstar/$PKG_NAME/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="toolchain libxml2:host libxslt:host"

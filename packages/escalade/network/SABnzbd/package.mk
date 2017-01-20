@@ -18,9 +18,6 @@
 
 PKG_NAME="SABnzbd"
 PKG_VERSION="1.1.1"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="OSS"
 PKG_SITE="http://sabnzbd.org/"
 PKG_URL="https://github.com/sabnzbd/sabnzbd/releases/download/$PKG_VERSION/$PKG_NAME-$PKG_VERSION-src.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python Cheetah yenc six par2cmdline unrar pyOpenSSL"

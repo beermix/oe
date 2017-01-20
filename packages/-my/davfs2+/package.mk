@@ -18,9 +18,6 @@
 
 PKG_NAME="davfs2"
 PKG_VERSION="1.5.2"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="LGPL"
 PKG_SITE="https://shadowvpn.org/"
 PKG_URL="http://download.savannah.gnu.org/releases/davfs2/davfs2-${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain neon"

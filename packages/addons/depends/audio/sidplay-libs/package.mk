@@ -18,9 +18,6 @@
 
 PKG_NAME="sidplay-libs"
 PKG_VERSION="2.1.1"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://sidplay2.sourceforge.net/"
 PKG_URL="http://mirrors.xbmc.org/build-deps/sources/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"

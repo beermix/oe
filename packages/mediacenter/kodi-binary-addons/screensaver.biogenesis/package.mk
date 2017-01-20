@@ -18,9 +18,6 @@
 
 PKG_NAME="screensaver.biogenesis"
 PKG_VERSION="39928ee"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/notspiff/screensaver.biogenesis"
 PKG_URL="https://github.com/notspiff/screensaver.biogenesis/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain kodi-platform"

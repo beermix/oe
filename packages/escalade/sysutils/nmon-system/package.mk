@@ -18,9 +18,6 @@
 
 PKG_NAME="nmon-system"
 PKG_VERSION="411b08f"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/axibase/nmon"
 PKG_URL="https://github.com/axibase/nmon/archive/$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="nmon-$PKG_VERSION*"

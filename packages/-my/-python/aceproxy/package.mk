@@ -5,9 +5,6 @@
 
 PKG_NAME="aceproxy"
 PKG_VERSION="c94c0c1"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_GIT_URL="https://github.com/AlexELEC/acephproxy"
 PKG_DEPENDS_TARGET="toolchain gevent psutil"
 PKG_PRIORITY="optional"

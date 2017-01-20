@@ -20,9 +20,7 @@
 
 PKG_NAME="chromium"
 PKG_VERSION="55.0.2883.87"
-PKG_REV="110"
 PKG_ARCH="x86_64"
-PKG_LICENSE="Mixed"
 PKG_SITE="http://www.chromium.org/Home"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain pciutils dbus libXcomposite libXcursor libXtst alsa-lib bzip2 yasm libXScrnSaver libexif libpng harfbuzz atk gtk+ unclutter xdotool ninja:host nss"

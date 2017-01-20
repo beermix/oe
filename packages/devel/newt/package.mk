@@ -19,9 +19,6 @@
 
 PKG_NAME="newt"
 PKG_VERSION="0.52.19"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="LGPL"
 PKG_SITE="https://fedorahosted.org/newt/"
 PKG_URL="https://fedorahosted.org/releases/n/e/newt/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain popt slang"

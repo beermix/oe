@@ -18,9 +18,6 @@
 
 PKG_NAME="cups"
 PKG_VERSION="v2.2.1"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.cups.org"
 PKG_GIT_URL="https://github.com/apple/cups"
 PKG_DEPENDS_TARGET="toolchain avahi zlib openssl"

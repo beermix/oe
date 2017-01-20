@@ -19,9 +19,6 @@
 
 PKG_NAME="msmtp"
 PKG_VERSION="1.6.5"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE=""
 PKG_SITE="http://msmtp.sourceforge.net/"
 PKG_URL="http://sourceforge.net/projects/msmtp/files/msmtp/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain"

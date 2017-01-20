@@ -18,9 +18,6 @@
 
 PKG_NAME="bcm2835-firmware"
 PKG_VERSION="2190eba"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="nonfree"
 PKG_SITE="http://www.broadcom.com"
 PKG_GIT_URL="https://github.com/raspberrypi/firmware.git"
 PKG_GIT_BRANCH="master"

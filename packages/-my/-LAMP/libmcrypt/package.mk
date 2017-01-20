@@ -19,9 +19,6 @@
 
 PKG_NAME="libmcrypt"
 PKG_VERSION="8c26221"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="OpenSource"
 PKG_SITE="http://sourceforge.net/projects/mcrypt/"
 PKG_GIT_URL="https://github.com/winlibs/libmcrypt"
 PKG_DEPENDS_TARGET="toolchain"

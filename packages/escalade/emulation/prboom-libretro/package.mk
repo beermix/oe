@@ -20,9 +20,6 @@
 
 PKG_NAME="prboom-libretro"
 PKG_VERSION="b326bff"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/libretro-prboom"
 PKG_URL="https://github.com/libretro/libretro-prboom/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"

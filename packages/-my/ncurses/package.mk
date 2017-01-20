@@ -18,9 +18,6 @@
 
 PKG_NAME="ncurses"
 PKG_VERSION="6.0-20170114"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="MIT"
 PKG_SITE="http://www.gnu.org/software/ncurses/"
 PKG_URL="ftp://invisible-island.net/ncurses/current/ncurses-6.0-20170114.tgz"
 PKG_DEPENDS_TARGET="toolchain zlib"

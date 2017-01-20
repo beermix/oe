@@ -5,9 +5,6 @@
 
 PKG_NAME="vlc"
 PKG_VERSION="2.2.5"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.videolan.org"
 PKG_URL="https://nightlies.videolan.org/build/source/vlc-2.2.5-20161202-0231.tar.xz"
 PKG_DEPENDS_TARGET="toolchain dbus libdvbpsi flac ffmpeg libvorbis zlib lua gnutls"

@@ -18,7 +18,6 @@
 
 PKG_NAME="linuxserver.mariadb"
 PKG_VERSION="24" # Update bin/docker.linuxserver.mariadb accordingly
-PKG_REV="100"
 PKG_ARCH="x86_64"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="docker"

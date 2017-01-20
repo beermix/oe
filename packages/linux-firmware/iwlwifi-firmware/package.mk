@@ -18,9 +18,6 @@
 
 PKG_NAME="iwlwifi-firmware"
 PKG_VERSION="f83d1ab"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="Free-to-use"
 PKG_SITE="https://github.com/OpenELEC/iwlwifi-firmware"
 PKG_GIT_URL="https://github.com/OpenELEC/iwlwifi-firmware.git"
 PKG_GIT_BRANCH="master"

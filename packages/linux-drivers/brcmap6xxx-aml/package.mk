@@ -19,9 +19,7 @@
 ################################################################################
 
 PKG_NAME="brcmap6xxx-aml"
-PKG_REV="1"
 PKG_ARCH="arm aarch64"
-PKG_LICENSE="GPL"
 PKG_SITE="http://openlinux.amlogic.com:8000/download/ARM/wifi/"
 PKG_VERSION="2016-08-18-88f3d466c6"
 PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.xz"

@@ -18,9 +18,6 @@
 
 PKG_NAME="samba"
 PKG_VERSION="3.6.25"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.samba.org"
 PKG_URL="http://samba.org/samba/ftp/stable/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain zlib connman"

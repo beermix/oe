@@ -20,9 +20,6 @@
 
 PKG_NAME="nspr"
 PKG_VERSION="4.13.1"
-PKG_REV="2"
-PKG_ARCH="any"
-PKG_LICENSE="Mozilla Public License"
 PKG_SITE="http://www.linuxfromscratch.org/blfs/view/svn/general/nspr.html"
 PKG_DEPENDS_TARGET="toolchain nss:host"
 PKG_SECTION="security"

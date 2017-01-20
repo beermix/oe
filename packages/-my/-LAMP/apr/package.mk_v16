@@ -19,9 +19,6 @@
 
 PKG_NAME="apr"
 PKG_VERSION="1.5.1"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="Apache License"
 PKG_SITE="http://apr.apache.org/"
 PKG_URL="http://archive.apache.org/dist/apr/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"

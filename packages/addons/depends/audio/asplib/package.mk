@@ -18,9 +18,6 @@
 
 PKG_NAME="asplib"
 PKG_VERSION="2fac1bf"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/AchimTuran/asplib"
 PKG_GIT_URL="https://github.com/AchimTuran/asplib.git"
 PKG_GIT_BRANCH="master"

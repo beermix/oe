@@ -18,9 +18,6 @@
 
 PKG_NAME="RTL8192DU"
 PKG_VERSION="69552b2"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/lwfinger/rtl8192du"
 PKG_GIT_URL="https://github.com/lwfinger/rtl8192du.git"
 PKG_GIT_BRANCH="master"

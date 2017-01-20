@@ -1,8 +1,5 @@
 PKG_NAME="beautifulsoup4"
 PKG_VERSION="4.5.1"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="MIT License"
 PKG_SITE="https://pypi.python.org/pypi/PyAMF/"
 PKG_URL="https://www.crummy.com/software/BeautifulSoup/bs4/download/4.5/beautifulsoup4-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"

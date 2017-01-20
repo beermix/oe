@@ -18,9 +18,6 @@
 
 PKG_NAME="mpg123"
 PKG_VERSION="1.23.6"
-PKG_REV="0"
-PKG_ARCH="any"
-PKG_LICENSE="LGPLv2"
 PKG_SITE="http://www.mpg123.org/"
 PKG_URL="http://netcologne.dl.sourceforge.net/project/$PKG_NAME/$PKG_NAME/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain alsa-lib SDL2"

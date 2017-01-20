@@ -18,9 +18,6 @@
 
 PKG_NAME="steamcontroller"
 PKG_VERSION="02f27c4"
-PKG_REV="100"
-PKG_ARCH="any"
-PKG_LICENSE="MIT"
 PKG_SITE="https://github.com/ynsta/steamcontroller"
 PKG_URL="https://github.com/ynsta/steamcontroller/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host python-libusb1 enum34 linux"

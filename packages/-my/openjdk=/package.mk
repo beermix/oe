@@ -18,9 +18,6 @@
 
 PKG_NAME="openjdk"
 PKG_VERSION="8-src-b129-06_feb_2014"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="OSS"
 PKG_SITE="https://www.oracle.com"
 PKG_URL="download.java.net/openjdk/jdk8/ri/$PKG_NAME-$PKG_VERSION.zip"
 PKG_DEPENDS_TARGET="cups libXtst"

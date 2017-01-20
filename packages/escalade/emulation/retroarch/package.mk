@@ -18,9 +18,6 @@
 
 PKG_NAME="retroarch"
 PKG_VERSION="07a9a75"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPLv3"
 PKG_GIT_URL="https://github.com/libretro/RetroArch.git"
 PKG_DEPENDS_TARGET="toolchain alsa-lib freetype zlib retroarch-assets core-info retroarch-joypad-autoconfig common-shaders libretro-database ffmpeg"
 PKG_SECTION="emulation"

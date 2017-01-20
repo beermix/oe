@@ -18,9 +18,6 @@
 
 PKG_NAME="libX11"
 PKG_VERSION="1.6.4"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="OSS"
 PKG_SITE="http://www.x.org/"
 PKG_URL="http://xorg.freedesktop.org/archive/individual/lib/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain xproto:host xproto util-macros xextproto xcmiscproto bigreqsproto kbproto inputproto xtrans libXau libxcb util-macros"

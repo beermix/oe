@@ -5,9 +5,6 @@
 
 PKG_NAME="acestream"
 PKG_VERSION="3.1.0-b3-pre4"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.acestream.com/"
 PKG_URL="$ALEXELEC_SRC/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain M2Crypto PyAMF setuptools"

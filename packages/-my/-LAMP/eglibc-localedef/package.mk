@@ -19,9 +19,6 @@
 
 PKG_NAME="eglibc-localedef"
 PKG_VERSION="2.19-25249"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.eglibc.org/"
 PKG_URL="http://sources.openelec.tv/devel/eglibc-localedef-2.19-25249.tar.xz" 
 PKG_DEPENDS_HOST="eglibc:host"

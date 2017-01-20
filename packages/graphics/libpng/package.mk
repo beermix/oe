@@ -18,9 +18,6 @@
 
 PKG_NAME="libpng"
 PKG_VERSION="1.6.28"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="OSS"
 PKG_SITE="http://www.libpng.org/"
 PKG_URL="$SOURCEFORGE_SRC/libpng/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="zlib:host"

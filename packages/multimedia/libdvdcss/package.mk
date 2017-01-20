@@ -18,9 +18,6 @@
 
 PKG_NAME="libdvdcss"
 PKG_VERSION="2f12236"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/xbmc/libdvdcss"
 PKG_GIT_URL="https://github.com/xbmc/libdvdcss.git"
 PKG_GIT_BRANCH="master"

@@ -18,9 +18,6 @@
 
 PKG_NAME="pygobject"
 PKG_VERSION="2.28.6"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="LGPL"
 PKG_SITE="http://www.pygtk.org/"
 PKG_URL="http://ftp.gnome.org/pub/GNOME/sources/pygobject/2.28/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain Python glib libffi"

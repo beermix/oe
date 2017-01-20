@@ -18,9 +18,6 @@
 
 PKG_NAME="liberation-fonts-ttf"
 PKG_VERSION="2.00.1"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="OFL1_1"
 PKG_SITE="https://www.redhat.com/promo/fonts/"
 PKG_URL="https://fedorahosted.org/releases/l/i/liberation-fonts/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain util-macros"

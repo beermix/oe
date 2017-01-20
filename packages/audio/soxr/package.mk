@@ -18,9 +18,6 @@
 
 PKG_NAME="soxr"
 PKG_VERSION="0.1.2"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="LGPL"
 PKG_SITE="http://sourceforge.net/p/soxr/wiki/Home/"
 PKG_URL="$SOURCEFORGE_SRC/soxr/$PKG_NAME-$PKG_VERSION-Source.tar.xz"
 PKG_SOURCE_DIR="$PKG_NAME-$PKG_VERSION-Source"

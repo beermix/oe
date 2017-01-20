@@ -18,9 +18,6 @@
 
 PKG_NAME="libgdiplus"
 PKG_VERSION="4.2"
-PKG_REV="0"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/mono/libgdiplus"
 PKG_GIT_URL="https://github.com/mono/libgdiplus"
 PKG_DEPENDS_TARGET="toolchain giflib libjpeg-turbo tiff libXext libexif glib cairo"

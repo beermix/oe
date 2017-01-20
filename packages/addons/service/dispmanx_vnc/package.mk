@@ -18,10 +18,8 @@
 
 PKG_NAME="dispmanx_vnc"
 PKG_VERSION="78e6673"
-PKG_REV="102"
 PKG_ARCH="arm"
 PKG_ADDON_PROJECTS="RPi RPi2"
-PKG_LICENSE="OSS"
 PKG_SITE="https://github.com/patrikolausson/dispmanx_vnc"
 PKG_URL="https://github.com/patrikolausson/dispmanx_vnc/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libvncserver bcm2835-bootloader bcm2835-driver libconfig openssl"

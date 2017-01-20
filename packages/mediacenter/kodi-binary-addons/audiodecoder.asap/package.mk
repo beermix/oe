@@ -18,9 +18,6 @@
 
 PKG_NAME="audiodecoder.asap"
 PKG_VERSION="53566f4"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/notspiff/audiodecoder.asap"
 PKG_URL="https://github.com/notspiff/audiodecoder.asap/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain kodi-platform"

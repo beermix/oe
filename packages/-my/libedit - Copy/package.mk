@@ -18,9 +18,6 @@
 
 PKG_NAME="libedit"
 PKG_VERSION="20160903-3.1"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="MIT"
 PKG_SITE="http://www.gnu.org/readline"
 PKG_URL="http://thrysoee.dk/editline/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"

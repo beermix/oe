@@ -18,9 +18,7 @@
 
 PKG_NAME="picamera"
 PKG_VERSION="1.10"
-PKG_REV="1"
 PKG_ARCH="arm"
-PKG_LICENSE="BSD"
 PKG_SITE="https://github.com/waveform80/picamera"
 PKG_URL="https://pypi.python.org/packages/source/p/picamera/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host bcm2835-driver"

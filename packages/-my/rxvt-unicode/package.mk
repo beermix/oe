@@ -1,9 +1,6 @@
 
 PKG_NAME="rxvt-unicode"
 PKG_VERSION="9.21"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://software.schmorp.de/pkg/rxvt-unicode.html"
 PKG_URL="http://dist.schmorp.de/rxvt-unicode/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS="toolchain"

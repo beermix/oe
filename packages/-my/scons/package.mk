@@ -1,8 +1,5 @@
 PKG_NAME="scons"
 PKG_VERSION="2.5.0"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="OSS"
 PKG_SITE="http://www.scons.org/"
 PKG_URL="$SOURCEFORGE_SRC/scons/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="Python:host"

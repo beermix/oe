@@ -18,9 +18,6 @@
 
 PKG_NAME="giflib"
 PKG_VERSION="5.1.4"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="OSS"
 PKG_SITE="http://giflib.sourceforge.net/"
 PKG_URL="$SOURCEFORGE_SRC/giflib/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST="zlib:host"

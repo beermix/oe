@@ -18,9 +18,6 @@
 
 PKG_NAME="serdisplib"
 PKG_VERSION="1.97.9"
-PKG_REV="0"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://serdisplib.sourceforge.net/"
 PKG_URL="$SOURCEFORGE_SRC/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libusb-compat"

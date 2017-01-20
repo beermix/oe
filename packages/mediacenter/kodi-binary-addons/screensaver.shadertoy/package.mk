@@ -18,9 +18,6 @@
 
 PKG_NAME="screensaver.shadertoy"
 PKG_VERSION="7a6f6fe"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/popcornmix/screensaver.shadertoy"
 PKG_URL="https://github.com/popcornmix/screensaver.shadertoy/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain kodi-platform"

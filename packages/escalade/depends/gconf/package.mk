@@ -18,9 +18,6 @@
 
 PKG_NAME="gconf"
 PKG_VERSION="3.2.6"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://eigen.tuxfamily.org/index.php?title=Main_Page"
 PKG_URL="https://download.gnome.org/sources/GConf/3.2/GConf-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain zlib glib"

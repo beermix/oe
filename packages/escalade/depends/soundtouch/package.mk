@@ -18,9 +18,6 @@
 
 PKG_NAME="soundtouch"
 PKG_VERSION="1.9.2"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.surina.net"
 PKG_URL="http://www.surina.net/soundtouch/soundtouch-$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="soundtouch"

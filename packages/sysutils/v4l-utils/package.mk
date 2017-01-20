@@ -20,9 +20,6 @@
 
 PKG_NAME="v4l-utils"
 PKG_VERSION="1.10.1"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://linuxtv.org/"
 PKG_URL="http://linuxtv.org/downloads/v4l-utils/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain"

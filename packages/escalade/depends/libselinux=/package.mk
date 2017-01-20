@@ -18,9 +18,6 @@
 
 PKG_NAME="libselinux"
 PKG_VERSION="master"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_GIT_URL="https://github.com/SELinuxProject/selinux"
 PKG_DEPENDS_TARGET="toolchain pcre"
 PKG_SECTION="tools"

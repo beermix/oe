@@ -18,9 +18,6 @@
 
 PKG_NAME="libopenmpt"
 PKG_VERSION="0.2.5787-beta16"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="BSD"
 PKG_SITE="http://lib.openmpt.org/libopenmpt/"
 PKG_URL="http://lib.openmpt.org/files/libopenmpt/src/${PKG_NAME}-${PKG_VERSION}-autotools.tar.gz"
 PKG_SOURCE_DIR="${PKG_NAME}-${PKG_VERSION//-beta*/}-autotools"

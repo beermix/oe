@@ -18,9 +18,7 @@
 
 PKG_NAME="vsxu"
 PKG_VERSION="0.5.1"
-PKG_REV="1"
 PKG_ARCH="i386 x86_64"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.vsxu.com"
 # repackaged from https://github.com/vovoid/vsxu/archive/$PKG_VERSION.tar.gz
 PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.gz"

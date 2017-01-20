@@ -18,9 +18,6 @@
 
 PKG_NAME="scraper"
 PKG_VERSION="1.1.10"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="MIT"
 PKG_SITE="https://github.com/sselph/scraper"
 PKG_URL="custom"
 PKG_DEPENDS_TARGET="toolchain"

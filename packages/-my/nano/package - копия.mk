@@ -18,9 +18,6 @@
 
 PKG_NAME="nano"
 PKG_VERSION="2.7.3"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.nano-editor.org/"
 PKG_URL="https://www.nano-editor.org/dist/v2.7/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain netbsd-curses file sed"

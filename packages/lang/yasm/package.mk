@@ -18,9 +18,6 @@
 
 PKG_NAME="yasm"
 PKG_VERSION="1.3.0"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="BSD"
 PKG_SITE="http://www.tortall.net/projects/yasm/"
 PKG_URL="http://www.tortall.net/projects/yasm/releases/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST=""

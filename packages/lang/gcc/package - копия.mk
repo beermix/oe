@@ -18,9 +18,6 @@
 
 PKG_NAME="gcc"
 PKG_VERSION="4ca53f06ff7d346ef8021a23108f23a5406a0417"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://gcc.gnu.org/"
 PKG_GIT_URL="git://gcc.gnu.org/git/gcc.git"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host"

@@ -20,9 +20,6 @@
 
 PKG_NAME="dvb-fe-tool"
 PKG_VERSION="fa2f7d9"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://linuxtv.org/"
 PKG_URL="https://git.linuxtv.org/cgit.cgi/v4l-utils.git/snapshot/$PKG_VERSION.tar.xz"
 PKG_SOURCE_DIR="$PKG_VERSION*"

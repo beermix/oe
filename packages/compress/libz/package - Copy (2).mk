@@ -18,9 +18,6 @@
 
 PKG_NAME="libz"
 PKG_VERSION="1.2.8.2015.12.26"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="OSS"
 PKG_SITE="https://sortix.org/libz/"
 PKG_URL="https://sortix.org/libz/release/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"

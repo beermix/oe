@@ -18,9 +18,6 @@
 
 PKG_NAME="fsuae-libretro"
 PKG_VERSION="1a2b8b7"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPLv2"
 PKG_SITE="http://fs-uae.net"
 PKG_GIT_URL="https://github.com/libretro/libretro-fsuae"
 PKG_DEPENDS_TARGET="toolchain libmpeg2 openal-soft glib"

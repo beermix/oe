@@ -18,9 +18,7 @@
 
 PKG_NAME="bluez-firmware"
 PKG_VERSION="1.2"
-PKG_REV="1"
 PKG_ARCH="x86_64"
-PKG_LICENSE="other"
 PKG_SITE="https://downloadcenter.intel.com/search?keyword=linux+microcode"
 PKG_URL="http://bluez.sf.net/download/bluez-firmware-1.2.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"	

@@ -20,9 +20,6 @@
 
 PKG_NAME="proftpd"
 PKG_VERSION="1.3.5b"
-PKG_REV="100"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.proftpd.org/"
 PKG_URL="https://github.com/proftpd/proftpd/archive/v$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libcap libressl netbsd-curses pcre whois"

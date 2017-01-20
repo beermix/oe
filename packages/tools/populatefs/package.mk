@@ -18,9 +18,6 @@
 
 PKG_NAME="populatefs"
 PKG_VERSION="95cc98b"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/oskarirauta/populatefs"
 PKG_GIT_URL="https://github.com/oskarirauta/populatefs.git"
 PKG_GIT_BRANCH="master"

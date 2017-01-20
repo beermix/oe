@@ -18,9 +18,6 @@
 
 PKG_NAME="SDL"
 PKG_VERSION="1.2.15"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.libsdl.org/"
 PKG_URL="http://www.libsdl.org/release/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="yasm:host"

@@ -18,9 +18,6 @@
 
 PKG_NAME="vdr-plugin-streamdev"
 PKG_VERSION="fc52e92"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://projects.vdr-developer.org/projects/plg-streamdev"
 PKG_GIT_URL="https://projects.vdr-developer.org/git/vdr-plugin-streamdev.git"
 PKG_GIT_BRANCH="master"

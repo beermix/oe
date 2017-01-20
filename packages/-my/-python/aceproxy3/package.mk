@@ -5,9 +5,6 @@
 
 PKG_NAME="aceproxy"
 PKG_VERSION="26e79d1"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/AndreyPavlenko/aceproxy"
 PKG_URL="$ALEXELEC_SRC/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain gevent psutil M2Crypto"

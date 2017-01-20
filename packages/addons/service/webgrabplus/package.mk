@@ -18,9 +18,6 @@
 
 PKG_NAME="webgrabplus"
 PKG_VERSION="56.29pre-20161021"
-PKG_REV="104"
-PKG_ARCH="any"
-PKG_LICENSE="prop."
 PKG_SITE="http://www.webgrabplus.com/"
 PKG_GIT_URL="https://github.com/awiouy/webgrabplus"
 PKG_DEPENDS_TARGET="toolchain"

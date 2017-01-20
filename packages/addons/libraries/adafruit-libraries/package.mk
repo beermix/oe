@@ -18,10 +18,7 @@
 
 PKG_NAME="adafruit-libraries"
 PKG_VERSION=""
-PKG_REV="101"
-PKG_ARCH="any"
 PKG_ADDON_PROJECTS="RPi RPi2"
-PKG_LICENSE="MIT"
 PKG_SITE=""
 PKG_URL=""
 PKG_DEPENDS_TARGET="Adafruit_Python_ADS1x15 Adafruit_Python_ADXL345 Adafruit_Python_BMP Adafruit_Python_CharLCD Adafruit_Python_DHT Adafruit_Python_GPIO Adafruit_Python_LED_Backpack Adafruit_Python_LSM303 Adafruit_Python_MCP3008 Adafruit_Python_MCP4725 Adafruit_Python_PCA9685 Adafruit_Python_PureIO Adafruit_Python_SI1145 Adafruit_Python_TCS34725 Adafruit_Python_VCNL40xx Adafruit_Python_WS2801"

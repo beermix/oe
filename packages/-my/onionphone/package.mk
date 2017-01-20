@@ -1,9 +1,6 @@
 
 PKG_NAME="onionphone"
 PKG_VERSION="0.1"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://torfone.org/onionphone/"
 PKG_DEPENDS_TARGET="toolchain tor alsa-lib"
 

@@ -18,9 +18,6 @@
 
 PKG_NAME="openvpn"
 PKG_VERSION="2.4.0"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://openvpn.net"
 PKG_URL="http://swupdate.openvpn.org/community/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain lzo openssl"

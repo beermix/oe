@@ -18,9 +18,6 @@
 
 PKG_NAME="libcdio"
 PKG_VERSION="0.94"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPLv3"
 PKG_SITE="https://www.gnu.org/software/libcdio/"
 PKG_URL="https://ftp.gnu.org/gnu/libcdio/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"

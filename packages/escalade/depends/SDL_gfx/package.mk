@@ -18,9 +18,6 @@
 
 PKG_NAME="SDL_gfx"
 PKG_VERSION="2.0.25"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.ferzkopp.net/"
 PKG_URL="http://www.ferzkopp.net/Software/SDL_gfx-2.0/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain SDL"

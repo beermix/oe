@@ -18,9 +18,6 @@
 
 PKG_NAME="SDL_ttf"
 PKG_VERSION="2.0.11"
-PKG_REV="0"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.libsdl.org/"
 PKG_URL="http://www.libsdl.org/projects/SDL_ttf/release/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain SDL freetype"

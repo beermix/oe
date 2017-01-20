@@ -18,9 +18,6 @@
 
 PKG_NAME="system-tools"
 PKG_VERSION=""
-PKG_REV="104"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE=""
 PKG_URL=""
 PKG_DEPENDS_TARGET="toolchain"

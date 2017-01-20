@@ -18,9 +18,6 @@
 
 PKG_NAME="darwin-cross"
 PKG_VERSION="1"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://gcc.gnu.org/"
 PKG_URL="http://atv-bootloader.googlecode.com/files/$PKG_NAME.tar.gz"
 PKG_SOURCE_DIR="$PKG_NAME"

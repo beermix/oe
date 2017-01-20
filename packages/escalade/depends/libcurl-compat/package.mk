@@ -18,9 +18,6 @@
 
 PKG_NAME="libcurl-compat"
 PKG_VERSION="7.51.0"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="MIT"
 PKG_SITE="http://curl.haxx.se"
 PKG_URL="http://curl.haxx.se/download/curl-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain zlib libressl rtmpdump"

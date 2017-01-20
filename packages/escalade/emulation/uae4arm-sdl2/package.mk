@@ -18,9 +18,7 @@
 
 PKG_NAME="uae4arm-sdl2"
 PKG_VERSION="36d98b9"
-PKG_REV="1"
 PKG_ARCH="arm"
-PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/midwan/uae4arm-rpi"
 PKG_URL="https://github.com/midwan/uae4arm-rpi/archive/sdl2/$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="uae4arm-rpi-sdl2"

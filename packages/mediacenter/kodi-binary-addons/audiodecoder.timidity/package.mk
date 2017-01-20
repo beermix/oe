@@ -18,9 +18,6 @@
 
 PKG_NAME="audiodecoder.timidity"
 PKG_VERSION="1aa2378"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
 PKG_URL="https://github.com/notspiff/audiodecoder.timidity/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain kodi-platform"

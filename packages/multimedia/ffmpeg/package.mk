@@ -18,9 +18,6 @@
 
 PKG_NAME="ffmpeg"
 PKG_VERSION="2.8.10"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="LGPLv2.1+"
 PKG_SITE="https://ffmpeg.org"
 PKG_URL="https://ffmpeg.org/releases/${PKG_NAME}-${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl dcadec speex"

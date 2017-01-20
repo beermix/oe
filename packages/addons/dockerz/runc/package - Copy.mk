@@ -1,8 +1,5 @@
 PKG_NAME="runc"
 PKG_VERSION="02f8fa7"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="APL"
 PKG_SITE="https://github.com/opencontainers/runc"
 PKG_GIT_URL="https://github.com/opencontainers/runc"
 PKG_DEPENDS_HOST="toolchain go"

@@ -18,9 +18,6 @@
 
 PKG_NAME="wlan-firmware"
 PKG_VERSION="3da1769"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="Free-to-use"
 PKG_SITE="https://github.com/OpenELEC/wlan-firmware"
 PKG_GIT_URL="https://github.com/OpenELEC/wlan-firmware.git"
 PKG_GIT_BRANCH="master"

@@ -18,9 +18,6 @@
 
 PKG_NAME="common-shaders"
 PKG_VERSION="latest"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="MIT"
 PKG_SITE="https://github.com/libretro/common-shaders"
 PKG_URL=""
 PKG_DEPENDS_TARGET="toolchain"

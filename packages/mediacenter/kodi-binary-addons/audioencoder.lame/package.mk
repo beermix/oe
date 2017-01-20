@@ -18,9 +18,6 @@
 
 PKG_NAME="audioencoder.lame"
 PKG_VERSION="52f84dd"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
 PKG_GIT_URL="https://github.com/xbmc/audioencoder.lame"
 PKG_DEPENDS_TARGET="toolchain kodi-platform lame"

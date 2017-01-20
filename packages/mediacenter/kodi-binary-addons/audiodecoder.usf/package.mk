@@ -18,9 +18,6 @@
 
 PKG_NAME="audiodecoder.usf"
 PKG_VERSION="85bd171"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/notspiff/audiodecoder.usf"
 PKG_URL="https://github.com/notspiff/audiodecoder.usf/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain kodi-platform"

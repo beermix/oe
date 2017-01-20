@@ -20,9 +20,6 @@
 
 PKG_NAME="vlc"
 PKG_VERSION="2.0.7"
-PKG_REV="0"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.videolan.org"
 PKG_URL="http://download.videolan.org/pub/videolan/vlc/$PKG_VERSION/vlc-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain libdvbpsi"

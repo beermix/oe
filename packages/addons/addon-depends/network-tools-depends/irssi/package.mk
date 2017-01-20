@@ -18,9 +18,6 @@
 
 PKG_NAME="irssi"
 PKG_VERSION="0.8.19"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.irssi.org/"
 PKG_URL="https://github.com/irssi-import/irssi/releases/download/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain glib netbsd-curses libressl"

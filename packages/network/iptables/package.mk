@@ -18,9 +18,6 @@
 
 PKG_NAME="iptables"
 PKG_VERSION="1.6.0"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.netfilter.org/"
 PKG_URL="http://www.netfilter.org/projects/iptables/files/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain linux libmnl libnftnl libnetfilter_conntrack libnetfilter_queue libnetfilter_acct"
