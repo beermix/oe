@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="4ca53f06ff7d346ef8021a23108f23a5406a0417"
+PKG_VERSION="6-20170119"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://gcc.gnu.org/"
-PKG_GIT_URL="git://gcc.gnu.org/git/gcc.git"
+PKG_URL="https://fossies.org/linux/misc/gcc-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host"
 PKG_DEPENDS_TARGET="gcc:host"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
@@ -48,27 +48,24 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-ld=default \
                            --disable-multilib \
                            --disable-nls \
-                           --disable-libssp \
-                           --disable-werror \
                            --enable-checking=release \
-                           --with-default-libstdcxx-abi=gcc4-compatible \
+                           --with-default-libstdcxx-abi=new \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
                            --disable-libmudflap \
+                           --disable-libatomic \
                            --disable-libitm \
                            --disable-libquadmath \
-                           --disable-libmpx \
                            --disable-libgomp \
-                           --disable-browser-plugin \
-                           --disable-libatomic \
-                           --with-tune=generic"
+                           --disable-libmpx \
+                           --disable-libssp \
+                           --with-tune=generic -v"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
                               --disable-libsanitizer \
-                              --disable-libssp \
                               --enable-cloog-backend=isl \
                               --disable-shared \
                               --disable-threads \
@@ -88,22 +85,15 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-long-long \
                          --enable-threads=posix \
                          --disable-libstdcxx-pch \
-                         --enable-libstdcxx-time \
+                         --enable-libstdcxx-time=yes \
                          --enable-clocale=gnu \
-                         --disable-fixed-point \
                          --enable-default-pie \
-                         --disable-fixed-point \
-                         --enable-poison-system-directories \
-                         --disable-libunwind-exceptions \
                          --enable-gnu-unique-object \
-                         --enable-linker-build-id \
-                         --enable-install-libiberty \
-                         --with-linker-hash-style=gnu \
-                         --enable-gnu-indirect-function \
+                         --enable-nls \
                          $GCC_OPTS"
 
 pre_configure_host() {
-  export CXXFLAGS="$CXXFLAGS -std=gnu++98"
+  #export CXXFLAGS="$CXXFLAGS -std=gnu++1z"
   unset CPP
 }
 
@@ -137,7 +127,6 @@ make_target() {
 makeinstall_target() {
   mkdir -p $INSTALL/lib
     cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libgcc/libgcc_s.so* $INSTALL/lib
-    #cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libatomic/.libs/libatomic*.so* $INSTALL/lib
   mkdir -p $INSTALL/usr/lib
     cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libstdc++-v3/src/.libs/libstdc++.so* $INSTALL/usr/lib
 }
@@ -153,5 +142,4 @@ make_init() {
 makeinstall_init() {
   mkdir -p $INSTALL/lib
     cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libgcc/libgcc_s.so* $INSTALL/lib
-    #cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libatomic/.libs/libatomic*.so* $INSTALL/lib
 }

@@ -89,7 +89,7 @@ makeinstall_host() {
 
 pre_configure_target() {
   export PYTHON_FOR_BUILD=$ROOT/$TOOLCHAIN/bin/python
-  #export CPPFLAGS="-DNCURSES_WIDECHAR -D_XOPEN_SOURCE_EXTENDED"
+  export CPPFLAGS="-DNCURSES_WIDECHAR -D_XOPEN_SOURCE_EXTENDED"
 }
 
 make_target() {

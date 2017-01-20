@@ -31,6 +31,6 @@ PKG_LONGDESC="GNU MP is a library for arbitrary precision arithmetic, operating 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_HOST="--enable-cxx --enable-static --disable-shared --with-pic --disable-assembly"
+PKG_CONFIGURE_OPTS_HOST="--enable-cxx --enable-static --disable-shared --with-pic --disable-assembly --enable-mpbsd"
 
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"

@@ -38,7 +38,11 @@ PKG_CONFIGURE_OPTS_HOST="--disable-debug \
                          --disable-gcov \
                          --disable-python \
                          --disable-python-bindings \
+                         --disable-multilib \
+                         --disable-werror \
                          --enable-nls \
+                         --disable-sim \
+                         --disable-gdb \
                          --disable-rpath \
                          --without-dmalloc \
                          --with-gnu-ld \

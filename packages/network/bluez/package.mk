@@ -63,7 +63,7 @@ pre_configure_target() {
 # bluez fails to build in subdirs
   cd $ROOT/$PKG_BUILD
     rm -rf .$TARGET_NAME
-  #export LIBS="-ltermcap"
+  export LIBS="-ltermcap"
 }
 
 post_makeinstall_target() {

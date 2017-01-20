@@ -6,4 +6,4 @@ PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --with-gnu-ld --disable-ssp"
+PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --disable-ssp --enable-minimal=yes"

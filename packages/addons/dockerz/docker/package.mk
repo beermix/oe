@@ -17,14 +17,9 @@
 ################################################################################
 
 PKG_NAME="docker"
-PKG_VERSION="v1.12.5"
-PKG_REV="109"
-PKG_ARCH="any"
-PKG_ADDON_PROJECTS="Generic RPi RPi2 imx6 WeTek_Hub WeTek_Play_2 Odroid_C2"
-PKG_LICENSE="ASL"
-PKG_SITE="http://www.docker.com/"
-PKG_GIT_URL="https://github.com/docker/docker"
-PKG_DEPENDS_TARGET="toolchain sqlite go:host containerd runc libseccomp aufs-util"
+PKG_VERSION="175f182"
+PKG_GIT_URL="https://github.com/docker/docker.git"
+PKG_DEPENDS_TARGET="toolchain sqlite go:host containerd runc aufs-util"
 PKG_SECTION="service/system"
 PKG_SHORTDESC="Docker is an open-source engine that automates the deployment of any application as a lightweight, portable, self-sufficient container that will run virtually anywhere."
 PKG_LONGDESC="Docker containers can encapsulate any payload, and will run consistently on and between virtually any server. The same container that a developer builds and tests on a laptop will run at scale, in production*, on VMs, bare-metal servers, OpenStack clusters, public instances, or combinations of the above."

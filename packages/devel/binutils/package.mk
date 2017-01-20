@@ -54,15 +54,11 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --with-pic \
                          --enable-poison-system-directories"
 
-pre_configure_host() {
-  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" ../libiberty/configure
-}
-
-#make_host() {
-#  make LDFLAGS=""
-#}
-
 makeinstall_host() {
   cp -v ../include/libiberty.h $SYSROOT_PREFIX/usr/include
-  make install -j1
+  make install
+}
+
+pre_configure_host() {
+  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $ROOT/$PKG_BUILD/libiberty/configure
 }

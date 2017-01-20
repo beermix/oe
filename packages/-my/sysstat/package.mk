@@ -1,5 +1,5 @@
 PKG_NAME="sysstat"
-PKG_VERSION="11.3.3"
+PKG_VERSION="11.4.3"
 PKG_URL="http://pagesperso-orange.fr/sebastien.godard/sysstat-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain util-linux netbsd-curses"
 PKG_SECTION="devel"

@@ -1,7 +1,7 @@
 PKG_NAME="openssl"
 PKG_VERSION="1.0.2j"
 PKG_URL="https://www.openssl.org/source/openssl-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain libz pcre"
+PKG_DEPENDS_TARGET="toolchain zlib pcre"
 PKG_SECTION="security"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
