@@ -31,13 +31,6 @@ PKG_LONGDESC="The util-linux package contains a large variety of low-level syste
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-pre_configure_init() {
-  export LDFLAGS="-lcurses -lterminfo"
-}
-
-pre_configure_target() {
-  export LDFLAGS="-lcurses -lterminfo"
-}
 
 UTILLINUX_CONFIG_DEFAULT="--disable-gtk-doc \
                           --disable-nls \
@@ -53,7 +46,7 @@ UTILLINUX_CONFIG_DEFAULT="--disable-gtk-doc \
                           --without-selinux \
                           --without-audit \
                           --without-udev \
-                          --without-ncurses \
+                          --with-ncurses \
                           --without-slang \
                           --without-utempter \
                           --without-user \

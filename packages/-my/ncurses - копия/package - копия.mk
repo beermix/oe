@@ -22,7 +22,7 @@ PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="MIT"
 PKG_SITE="http://www.gnu.org/software/ncurses/"
-PKG_URL="ftp://invisible-island.net/ncurses/current/ncurses-6.0-20170114.tgz"
+PKG_URL="ftp://invisible-island.net/ncurses/current/ncurses-$PKG_VERSION.tgz"
 PKG_DEPENDS_TARGET="toolchain zlib"
 PKG_SECTION="devel"
 PKG_SHORTDESC="ncurses: The ncurses (new curses) library"
@@ -30,36 +30,43 @@ PKG_LONGDESC="The ncurses (new curses) library is a free software emulation of c
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
-                        
-PKG_CONFIGURE_OPTS_TARGET="--with-pkg-config-libdir=/usr/lib/pkgconfig \
-			      --enable-pc-files \
-			      --enable-echo \
-			      --enable-const \
-			      --enable-overwrite \
-			      --disable-rpath \
-			      --without-ada \
-			      --without-debug \
-			      --without-manpages \
-			      --without-profile \
-			      --without-progs \
-			      --without-tests \
-			      --disable-big-core \
-			      --disable-home-terminfo \
-			      --with-normal \
-			      --with-shared \
-			      --with-terminfo-dirs=/usr/share/terminfo \
-			      --with-default-terminfo-dir=/usr/share/terminfo \
-			      --with-pkg-config-libdir=/usr/lib/pkgconfig \
-			      --enable-widec \
-			      --with-build-cppflags=-D_GNU_SOURCE"
+
+PKG_CONFIGURE_OPTS_TARGET="--without-ada \
+                           --with-cxx \
+                           --without-cxx-binding \
+                           --disable-db-install \
+                           --without-manpages \
+                           --without-profile \
+                           --enable-echo \
+                           --enable-const \
+                           --with-versioned-syms \
+                           --with-xterm-kbs=del \
+                           --with-ncursesw \
+                           --with-progs \
+                           --without-tests \
+                           --with-curses-h \
+                           --without-shared \
+                           --with-normal \
+                           --without-debug \
+                           --disable-rpath \
+                           --with-fallbacks=linux,screen,xterm,xterm-256color \
+                           --with-ticlib \
+                           --enable-getcap \
+                           --enable-getcap-cache \
+                           --disable-symlinks \
+                           --enable-ext-funcs \
+                           --disable-pc-files \
+                           --enable-widec \
+                           --enable-sigwinch \
+                           --disable-nls \
+                           --without-dlsym"
 
 pre_configure_target() {
   # causes some segmentation fault's (dialog) when compiled with gcc's link time optimization.
-  strip_lto
-  #export CFLAGS="$CFLAGS -D_DEFAULT_SOURCE -D_POSIX_C_SOURCE=200809C -fPIC" --without-curses-h
-  #export CFLAGS="$CFLAGS -fPIC"
-  #export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
-  
+  #strip_lto
+  #export CFLAGS="$CFLAGS -D_DEFAULT_SOURCE -D_POSIX_C_SOURCE=200809C -fPIC"
+  export CFLAGS="$CFLAGS -fPIC"
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
 }
 
 post_makeinstall_target() {
@@ -70,11 +77,4 @@ post_makeinstall_target() {
   ln -sf ncurses5-config $ROOT/$TOOLCHAIN/bin/ncurses6-config
 
   rm -rf $INSTALL/usr/bin/ncurses*-config
-  #rm -rf $INSTALL/root
-  #cp misc/formw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig
-  #cp misc/menuw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig
-  #cp misc/ncursesw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig
-  #cp misc/ticw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig
-  #cp misc/tinfow.pc $SYSROOT_PREFIX/usr/lib/pkgconfig
-  #rm -rf $SYSROOT_PREFIX/root/-f2fs
 }

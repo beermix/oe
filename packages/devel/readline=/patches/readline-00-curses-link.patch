@@ -10,7 +10,7 @@ it doesn't make much sense in a Linux world
  
  SHLIB_XLDFLAGS=
 -SHLIB_LIBS=
-+SHLIB_LIBS=-lterminfo
++SHLIB_LIBS=-lncurses
  
  SHLIB_DOT='.'
  SHLIB_LIBPREF='lib'
