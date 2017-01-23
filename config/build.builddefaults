@@ -34,7 +34,8 @@
                          --enable-shared"
 
   TARGET_CMAKE_OPTS="-DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
-                     -DCMAKE_INSTALL_PREFIX=/usr"
+                     -DCMAKE_INSTALL_PREFIX=/usr \
+                     -DCMAKE_BUILD_TYPE=Release"
 
 # configure HOST build defaults
   HOST_CONFIGURE_OPTS="--host=$HOST_NAME \
