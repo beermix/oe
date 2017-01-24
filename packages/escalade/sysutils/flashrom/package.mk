@@ -22,7 +22,6 @@ PKG_ARCH="x86_64"
 PKG_SITE="http://www.flashrom.org"
 PKG_URL="http://download.flashrom.org/releases/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain zlib pciutils libftdi1"
-
 PKG_SECTION="tools"
 PKG_SHORTDESC="flashrom: linux BIOS programmer"
 PKG_LONGDESC="flashrom is a utility for identifying, reading, writing, verifying and erasing flash chips. It is designed to flash BIOS/EFI/coreboot/firmware/optionROM images on mainboards, network/graphics/storage controller cards, and various programmer devices."
