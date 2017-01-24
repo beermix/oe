@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="docker"
-PKG_VERSION="175f182"
+PKG_VERSION="v1.13.0"
 PKG_GIT_URL="https://github.com/docker/docker.git"
 PKG_DEPENDS_TARGET="toolchain sqlite go:host containerd runc aufs-util"
 PKG_SECTION="service/system"

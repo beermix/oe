@@ -16,9 +16,9 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 PKG_NAME="setuptools"
-PKG_VERSION="33.1.1"
+PKG_VERSION="34.0.1"
 PKG_SITE="https://pypi.python.org/pypi/setuptools"
-PKG_URL="https://pypi.python.org/packages/dc/8c/7c9869454bdc53e72fb87ace63eac39336879eef6f2bf96e946edbf03e90/setuptools-33.1.1.zip"
+PKG_URL="https://pypi.python.org/packages/b1/d1/3df86b914d72b18d37266f964a11576f135eadbb7d2e3c5165377e4263bc/setuptools-34.0.1.zip"
 PKG_DEPENDS_HOST="Python:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="python/devel"
