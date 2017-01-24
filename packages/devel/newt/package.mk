@@ -19,10 +19,13 @@
 
 PKG_NAME="newt"
 PKG_VERSION="0.52.19"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="LGPL"
 PKG_SITE="https://fedorahosted.org/newt/"
 PKG_URL="https://fedorahosted.org/releases/n/e/newt/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain popt slang"
-
+PKG_PRIORITY="optional"
 PKG_SECTION="devel"
 PKG_SHORTDESC="newt: library for color text mode, widget based user interfaces"
 PKG_LONGDESC="Newt is a programming library for color text mode, widget based user interfaces. Newt can be used to add stacked windows, entry widgets, checkboxes, radio buttons, labels, plain text fields, scrollbars, etc., to text mode user interfaces. Newt is based on the S-Lang library."
