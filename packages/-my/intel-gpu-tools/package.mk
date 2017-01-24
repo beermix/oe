@@ -6,9 +6,12 @@ PKG_SECTION="tools"
 PKG_SHORTDESC="x11-utils"
 PKG_AUTORECONF="no"
 
+pre_configure_host() {
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
+}
+
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-static \
-			      --with-gnu-ld \
 			      --disable-silent-rules \
 			      --disable-debug \
 			      --without-libunwind \
