@@ -1,5 +1,6 @@
 PKG_NAME="hwloc"
-PKG_VERSION="hwloc-1.11.5"
+#PKG_VERSION="hwloc-1.11.5"
+PKG_VERSION="e58ade8"
 PKG_GIT_URL="https://github.com/open-mpi/hwloc"
 PKG_DEPENDS_TARGET="toolchain zlib libevent libpciaccess"
 PKG_SECTION="security"

@@ -50,14 +50,13 @@ PKG_CONFIGURE_OPTS_TARGET="--with-pkg-config-libdir=/usr/lib/pkgconfig \
 			      --enable-widec \
 			      --with-build-cppflags=-D_GNU_SOURCE"
 
-pre_configure_target() {
+#pre_configure_target() {
   # causes some segmentation fault's (dialog) when compiled with gcc's link time optimization.
-  strip_lto
+  #strip_lto
   #export CFLAGS="$CFLAGS -D_DEFAULT_SOURCE -D_POSIX_C_SOURCE=200809C -fPIC" --without-curses-h
   #export CFLAGS="$CFLAGS -fPIC"
   #export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
-  
-}
+#}
 
 post_makeinstall_target() {
   cp misc/ncurses-config $ROOT/$TOOLCHAIN/bin
