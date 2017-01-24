@@ -17,13 +17,16 @@
 ################################################################################
 
 PKG_NAME="libcec"
-#PKG_VERSION="2fc92b5"
+#PKG_VERSION="5388d3a"
 PKG_VERSION="libcec-4.0.1"
+PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://libcec.pulse-eight.com/"
-PKG_GIT_URL="https://github.com/Pulse-Eight/libcec"
+PKG_GIT_URL="https://github.com/Pulse-Eight/libcec.git"
+PKG_GIT_BRANCH="master"
 PKG_DEPENDS_TARGET="toolchain systemd lockdev p8-platform"
+PKG_PRIORITY="optional"
 PKG_SECTION="system"
 PKG_SHORTDESC="libCEC is an open-source dual licensed library designed for communicating with the Pulse-Eight USB - CEC Adaptor"
 PKG_LONGDESC="libCEC is an open-source dual licensed library designed for communicating with the Pulse-Eight USB - CEC Adaptor."
@@ -49,7 +52,7 @@ fi
 
 if [ "$KODIPLAYER_DRIVER" = "libamcodec" ]; then
   PKG_CMAKE_OPTS_TARGET+=" -DHAVE_AOCEC_API=1"
-  else
+else
   PKG_CMAKE_OPTS_TARGET+=" -DHAVE_AOCEC_API=0"
 fi
 
@@ -65,5 +68,5 @@ pre_configure_target() {
 }
 
 post_makeinstall_target() {
-    mv $INSTALL/usr/lib/python2.7/dist-packages $INSTALL/usr/lib/python2.7/site-packages
+  mv $INSTALL/usr/lib/python2.7/dist-packages $INSTALL/usr/lib/python2.7/site-packages
 }
