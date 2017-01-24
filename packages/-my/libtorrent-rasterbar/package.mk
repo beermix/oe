@@ -30,6 +30,5 @@ PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release \
 			  -Dunicode=ON \
 			  -Dstatic_runtime=ON \
 			  -Dshared=OFF \
-			  -DCMAKE_CXX_FLAGS="-std=c++11" \
 			  -Dlibiconv=OFF \
-			  -Dencryption=ON \"
+			  -Dencryption=ON"

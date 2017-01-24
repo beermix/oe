@@ -70,6 +70,10 @@ makeinstall_target() {
                                 --with-system \
                                 --with-serialization \
                                 --with-filesystem \
+                                --with-python \
+                                --with-program_options \
+                                --with-signals \
+                                --with-exception \
                                 --with-date_time \
                                 --with-chrono \
                                 --with-random \
