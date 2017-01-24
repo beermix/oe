@@ -17,9 +17,12 @@
 ################################################################################
 
 PKG_NAME="cffi"
-PKG_VERSION="1.9"
+PKG_VERSION="1.9.1"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="OSS"
 PKG_SITE="http://cffi.readthedocs.org"
-PKG_URL="https://bitbucket.org/cffi/cffi/get/release-$PKG_VERSION.tar.bz2"
+PKG_URL="https://pypi.python.org/packages/a1/32/e3d6c3a8b5461b903651dd6ce958ed03c093d2e00128e3f33ea69f1d7965/cffi-1.9.1.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host pycparser libffi"
 PKG_DEPENDS_HOST="toolchain Python:host libffi:host"
 PKG_SECTION="python/devel"

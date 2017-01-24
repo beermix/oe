@@ -21,7 +21,6 @@ PKG_VERSION="1.1.6"
 PKG_SITE="http://fluidsynth.org/"
 PKG_URL="$SOURCEFORGE_SRC/project/fluidsynth/fluidsynth-$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain"
-
 PKG_SECTION="audio"
 PKG_SHORTDESC="FluidSynth: A SoundFont Synthesizer."
 PKG_LONGDESC="FluidSynth renders midi music files as raw audio data, for playing or conversion. "

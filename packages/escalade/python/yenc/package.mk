@@ -18,6 +18,9 @@
 
 PKG_NAME="yenc"
 PKG_VERSION="0.4.0"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="OSS"
 PKG_SITE="http://www.golug.it/yenc.html"
 PKG_URL="http://www.golug.it/pub/yenc/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"

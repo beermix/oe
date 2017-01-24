@@ -19,7 +19,7 @@
 PKG_NAME="dosbox-libretro"
 PKG_VERSION="dfe0f31"
 PKG_SITE="https://github.com/libretro/dosbox-libretro"
-PKG_URL="https://github.com/libretro/dosbox-libretro/archive/$PKG_VERSION.tar.gz"
+PKG_GIT_URL="https://github.com/libretro/dosbox-libretro"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="libretro"
 PKG_SHORTDESC="libretro wrapper for the DOSBox emulator"

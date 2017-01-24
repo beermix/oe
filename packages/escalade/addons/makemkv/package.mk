@@ -18,10 +18,12 @@
 
 PKG_NAME="makemkv"
 PKG_VERSION="1.10.4"
+PKG_REV="0"
 PKG_ARCH="x86_64"
+PKG_LICENSE="OSS"
 PKG_SITE="http://www.makemkv.com/forum2/viewforum.php?f=3"
 PKG_URL="http://www.makemkv.com/download/${PKG_NAME}-oss-${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_TARGET="toolchain openssl expat ffmpeg"
+PKG_DEPENDS_TARGET="toolchain libressl expat ffmpeg"
 PKG_SECTION="lib/multimedia"
 PKG_SHORTDESC="MakeMKV converts the video clips from proprietary (and usually encrypted) disc into a set of MKV files, preserving most information but not changing it in any way."
 PKG_LONGDESC="MakeMKV can instantly stream decrypted video without intermediate conversion to wide range of players, so you may watch Blu-ray and DVD discs with your favorite player on your favorite OS or on your favorite device."
@@ -32,7 +34,6 @@ PKG_ADDON_PROVIDES=""
 PKG_ADDON_REPOVERSION="8.0"
 
 PKG_AUTORECONF="no"
-
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-gui --enable-noec"
 

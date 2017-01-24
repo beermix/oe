@@ -19,7 +19,7 @@
 PKG_NAME="munt"
 PKG_VERSION="599162b"
 PKG_SITE="https://github.com/munt/munt"
-PKG_URL="https://github.com/munt/munt/archive/$PKG_VERSION.tar.gz"
+PKG_GIT_URL="https://github.com/munt/munt"
 PKG_DEPENDS_TARGET="toolchain cmake:host"
 PKG_SECTION="emulation/depends"
 PKG_SHORTDESC="Software synthesizer capable of emulating Roland MT-32"

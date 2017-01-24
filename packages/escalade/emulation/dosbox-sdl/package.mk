@@ -32,9 +32,9 @@ unpack() {
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
-			   --enable-core-inline \
+                           --enable-core-inline \
                            --enable-dynrec \
-			   --enable-unaligned_memory \
+                           --enable-unaligned_memory \
                            --disable-opengl \
                            --with-sdl-prefix=$SYSROOT_PREFIX/usr"
 

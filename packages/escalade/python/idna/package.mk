@@ -18,8 +18,11 @@
 
 PKG_NAME="idna"
 PKG_VERSION="2.2"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="OSS"
 PKG_SITE="https://github.com/kjd/idna"
-PKG_URL="http://pypi.python.org/packages/source/i/idna/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_URL="https://github.com/kjd/idna/archive/v$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"
 PKG_SECTION="python/devel"
 PKG_SHORTDESC="A library to support the Internationalised Domain Names in IDNA protocol"

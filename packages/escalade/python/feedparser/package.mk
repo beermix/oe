@@ -18,6 +18,9 @@
 
 PKG_NAME="feedparser"
 PKG_VERSION="5.2.1"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="OSS"
 PKG_SITE="https://github.com/kurtmckee/feedparser"
 PKG_URL="http://pypi.python.org/packages/source/f/feedparser/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"
