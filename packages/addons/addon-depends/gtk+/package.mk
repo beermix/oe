@@ -19,7 +19,7 @@
 ################################################################################
 
 PKG_NAME="gtk+"
-PKG_VERSION="2.24.30"
+PKG_VERSION="2.24.31"
 PKG_SITE="http://www.gtk.org/"
 PKG_URL="http://ftp.gnome.org/pub/gnome/sources/gtk+/2.24/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain atk libX11 libXrandr libXi glib pango cairo gdk-pixbuf"

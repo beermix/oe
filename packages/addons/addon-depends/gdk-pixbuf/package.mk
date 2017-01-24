@@ -19,9 +19,10 @@
 ################################################################################
 
 PKG_NAME="gdk-pixbuf"
-PKG_VERSION="2.34.0"
+#PKG_VERSION="2.34.0"
+PKG_VERSION="2.36.4"
 PKG_SITE="http://www.gtk.org/"
-PKG_URL="http://ftp.acc.umu.se/pub/gnome/sources/gdk-pixbuf/2.34/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="http://ftp.acc.umu.se/pub/gnome/sources/gdk-pixbuf/2.36/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain glib libjpeg-turbo libpng jasper tiff"
 PKG_SECTION="x11/toolkits"
 PKG_SHORTDESC="gdk-pixbuf: a GNOME library for image loading and manipulation."
