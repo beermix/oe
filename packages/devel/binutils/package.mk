@@ -18,7 +18,7 @@
 
 PKG_NAME="binutils"
 #PKG_VERSION="81ff47b" --with-system-zlib
-PKG_VERSION="077c11e"
+PKG_VERSION="fae1616"
 PKG_SITE="http://www.gnu.org/software/binutils/binutils.html"
 PKG_GIT_URL="git://sourceware.org/git/binutils-gdb.git"
 PKG_DEPENDS_HOST="ccache:host bison:host flex:host linux:host"

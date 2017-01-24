@@ -84,11 +84,18 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-threads=posix \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time=yes \
+                         --disable-libunwind-exceptions \
                          --enable-clocale=gnu \
+                         --enable-default-pie \
+                         --enable-gnu-unique-object \
+                         --enable-linker-build-id \
+                         --enable-install-libiberty \
+                         --with-linker-hash-style=gnu \
+                         --enable-gnu-indirect-function \
                          $GCC_OPTS"
 
 pre_configure_host() {
-  export CXXFLAGS="$CXXFLAGS -std=gnu++98"
+  #export CXXFLAGS="$CXXFLAGS -std=gnu++1z"
   unset CPP
 }
 
