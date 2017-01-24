@@ -4,7 +4,7 @@ PKG_URL="http://xorg.freedesktop.org/releases/individual/app/intel-gpu-tools-${P
 PKG_DEPENDS_TARGET="toolchain systemd mesa libdrm libpciaccess cairo"
 PKG_SECTION="tools"
 PKG_SHORTDESC="x11-utils"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 pre_configure_host() {
   export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
