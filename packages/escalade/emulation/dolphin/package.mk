@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="dolphin"
-PKG_VERSION="7192789"
+PKG_VERSION="0eaeca9"
 PKG_ARCH="x86_64"
 PKG_SITE="https://github.com/dolphin-emu/dolphin"
 PKG_GIT_URL="https://github.com/dolphin-emu/dolphin"

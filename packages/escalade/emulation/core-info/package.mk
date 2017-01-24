@@ -19,7 +19,7 @@
 ################################################################################
 
 PKG_NAME="core-info"
-PKG_VERSION="b8d1a0c"
+PKG_VERSION="adb2940"
 PKG_SITE="https://github.com/libretro/libretro-super"
 PKG_GIT_URL="https://github.com/libretro/libretro-super"
 PKG_DEPENDS_TARGET="toolchain"
