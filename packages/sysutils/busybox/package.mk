@@ -17,11 +17,11 @@
 ################################################################################
 
 PKG_NAME="busybox"
-PKG_VERSION="1.26.0"
+PKG_VERSION="1.26.2"
 PKG_SITE="http://www.busybox.net"
 PKG_URL="http://busybox.net/downloads/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain busybox:host hdparm dosfstools e2fsprogs less tar pciutils usbutils parted procps-ng coreutils findutils time bash"
+PKG_DEPENDS_TARGET="toolchain busybox:host hdparm dosfstools e2fsprogs zip unzip less tar pciutils usbutils parted procps-ng coreutils findutils time bash"
 PKG_DEPENDS_INIT="toolchain"
 PKG_SECTION="system"
 PKG_SHORTDESC="BusyBox: The Swiss Army Knife of Embedded Linux"

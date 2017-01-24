@@ -22,16 +22,18 @@ if [ "$UBOOT_VERSION" = "default" ]; then
   PKG_SITE="http://www.denx.de/wiki/U-Boot/WebHome"
   PKG_URL="ftp://ftp.denx.de/pub/u-boot/$PKG_NAME-$PKG_VERSION.tar.bz2"
 elif [ "$UBOOT_VERSION" = "imx6-cuboxi" ]; then
-  PKG_VERSION="73d683b"
+  PKG_VERSION="10acd12"
   PKG_SITE="http://imx.solid-run.com/wiki/index.php?title=Building_the_kernel_and_u-boot_for_the_CuBox-i_and_the_HummingBoard"
   PKG_GIT_URL="https://github.com/SolidRun/u-boot-imx6.git"
   PKG_GIT_BRANCH="imx6"
 else
   exit 0
 fi
+PKG_REV="1"
 PKG_ARCH="arm aarch64"
+PKG_LICENSE="GPL"
 PKG_DEPENDS_TARGET="toolchain"
-
+PKG_PRIORITY="optional"
 PKG_SECTION="tools"
 PKG_SHORTDESC="u-boot: Universal Bootloader project"
 PKG_LONGDESC="Das U-Boot is a cross-platform bootloader for embedded systems, used as the default boot loader by several board vendors. It is intended to be easy to port and to debug, and runs on many supported architectures, including PPC, ARM, MIPS, x86, m68k, NIOS, and Microblaze."

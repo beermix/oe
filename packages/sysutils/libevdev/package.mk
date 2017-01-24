@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libevdev"
-PKG_VERSION="1.5.5"
+PKG_VERSION="1.5.6"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/libevdev/"
 PKG_URL="http://www.freedesktop.org/software/libevdev/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain"

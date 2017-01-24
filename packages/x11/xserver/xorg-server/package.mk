@@ -45,6 +45,8 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
                            --disable-unit-tests \
                            --disable-sparkle \
                            --disable-xselinux \
+                           --enable-aiglx \
+                           --enable-glx-tls \
                            --enable-composite \
                            --enable-mitshm \
                            --disable-xres \

@@ -67,7 +67,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_header_atomic_ops_h=no \
                            --disable-esound \
                            --disable-solaris \
                            --disable-waveout \
-                           --enable-glib2 \
+                           --disable-glib2 \
                            --disable-gtk3 \
                            --disable-gconf \
                            $PULSEAUDIO_AVAHI \

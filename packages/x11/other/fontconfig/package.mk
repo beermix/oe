@@ -41,6 +41,7 @@ pre_configure_target() {
   CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O3|-O2|"`
   CFLAGS="$CFLAGS -I$ROOT/$PKG_BUILD"
   CXXFLAGS="$CXXFLAGS -I$ROOT/$PKG_BUILD"
+  LDFLAGS="$LDFLAGS -lz"
 }
 
 post_makeinstall_target() {
