@@ -1,5 +1,5 @@
 PKG_NAME="fdk-aac"
-PKG_VERSION="5fd7e65"
+PKG_VERSION="74c1a2a"
 PKG_GIT_URL="https://github.com/mstorsjo/fdk-aac"
 PKG_DEPENDS_TARGET="toolchain libxml2 sqlite"
 PKG_SECTION="tools"
@@ -11,4 +11,4 @@ pre_configure_target() {
   export LDFLAGS="$LDFLAGS -fPIC"
 }
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared --disable-silent-rules"
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared"

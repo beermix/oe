@@ -13,4 +13,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
 			   ac_cv_flag_HAVE_PIE=no \
 			   --disable-testing \
 			   --disable-blkid_wiping \
-			   --with-lvm1=none"
+			   --disable-readline \
+			   --with-lvm1=none \
+			   --with-optimisation="

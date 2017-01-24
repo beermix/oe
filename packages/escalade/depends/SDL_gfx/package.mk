@@ -28,7 +28,7 @@ PKG_LONGDESC="SDL_image is an image loading library that is used with the SDL li
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared --disable-mmx"
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-mmx"
 
 pre_configure_target() {
   export SDL_CONFIG=$SYSROOT_PREFIX/usr/bin/sdl-config

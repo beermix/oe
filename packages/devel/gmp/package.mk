@@ -30,4 +30,4 @@ PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_HOST="--enable-cxx --enable-static --disable-shared --with-pic --disable-assembly --enable-mpbsd"
 
-PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
+PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --disable-assembly"

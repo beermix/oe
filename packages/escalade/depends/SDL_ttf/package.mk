@@ -30,6 +30,6 @@ PKG_ADDON_TYPE="xbmc.python.pluginsource"
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--with-gnu-ld \
-			   --disable-shared \
-			   --with-freetype-prefix=$SYSROOT_PREFIX/usr \
-                           --with-sdl-prefix=$SYSROOT_PREFIX/usr"
+			      --disable-shared \
+			      --with-freetype-prefix=$SYSROOT_PREFIX/usr \
+			      --with-sdl-prefix=$SYSROOT_PREFIX/usr"
