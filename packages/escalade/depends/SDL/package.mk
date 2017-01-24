@@ -40,7 +40,9 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-video-directfb \
 			   --disable-diskaudio \
 			   --disable-dummyaudio \
 			   --disable-mintaudio \
-			   --disable-input-tslib"
+			   --disable-input-tslib \
+			   --disable-rpath \
+			   --with-gnu-ld"
 
 if [[ "$PROJECT" =~ "RPi" ]]; then
   PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET --disable-video-x11 --enable-video-dispmanx"

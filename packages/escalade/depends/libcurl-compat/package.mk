@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libcurl-compat"
-PKG_VERSION="7.51.0"
+PKG_VERSION="7.52.1"
 PKG_SITE="http://curl.haxx.se"
 PKG_URL="http://curl.haxx.se/download/curl-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain zlib libressl rtmpdump"
@@ -53,7 +53,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            --disable-gopher \
                            --disable-manual \
                            --enable-libgcc \
-                           --enable-ipv6 \
+                           --disable-ipv6 \
                            --enable-versioned-symbols \
                            --enable-nonblocking \
                            --enable-threaded-resolver \
