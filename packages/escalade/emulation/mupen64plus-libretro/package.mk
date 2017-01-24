@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="mupen64plus-libretro"
-PKG_VERSION="97176fc"
+PKG_VERSION="fcad51c"
 PKG_SITE="https://github.com/libretro/mupen64plus-libretro"
 PKG_URL="https://github.com/libretro/mupen64plus-libretro/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
@@ -50,13 +50,13 @@ make_target() {
       make WITH_DYNAREC=$TARGET_ARCH
       mv *.so out/
       make clean
-      make WITH_DYNAREC=$TARGET_ARCH HAVE_VULKAN=1
-      mv *.so out/
+      make WITH_DYNAREC=$TARGET_ARCH HAVE_OPENGL=0 HAVE_PARALLEL_ONLY=1
+      mv out/*.so .
       ;;
   esac
 }
 
 makeinstall_target() {
   mkdir -p $INSTALL/usr/lib/libretro
-  cp `find . -name "*.so" | xargs echo` $INSTALL/usr/lib/libretro/
+  cp *.so $INSTALL/usr/lib/libretro/
 }

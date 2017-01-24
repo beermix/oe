@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="evdev"
-PKG_VERSION="0.6.1"
+PKG_VERSION="0.6.4"
 PKG_SITE="https://github.com/gvalkov/python-evdev"
 PKG_URL="https://github.com/gvalkov/python-evdev/archive/v$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="python-evdev-$PKG_VERSION"

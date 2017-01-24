@@ -19,7 +19,7 @@
 ################################################################################
 
 PKG_NAME="scummvm-libretro"
-PKG_VERSION="47bb6e5"
+PKG_VERSION="cfc6a88"
 PKG_SITE="https://github.com/libretro/scummvm"
 PKG_GIT_URL="https://github.com/libretro/scummvm"
 PKG_DEPENDS_TARGET="toolchain flac libmad munt"
@@ -41,10 +41,10 @@ configure_target() {
 
 make_target() {
   export CXXFLAGS="$CXXFLAGS -DHAVE_POSIX_MEMALIGN=1"
-  export LDFLAGS="$LDFLAGS -lmt32emu -lFLAC"
+  export LDFLAGS="$LDFLAGS -lmt32emu"
   export ar="$AR cru"
   cd ../backends/platform/libretro/build/
-  make USE_FLAC=1 HAVE_MT32EMU=1
+  make HAVE_MT32EMU=1
 }
 
 makeinstall_target() {

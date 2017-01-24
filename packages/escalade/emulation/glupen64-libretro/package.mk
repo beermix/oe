@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="glupen64-libretro"
-PKG_VERSION="96a9e0e"
+PKG_VERSION="510c673"
 PKG_SITE="https://github.com/loganmc10/GLupeN64"
 PKG_URL="custom"
 PKG_DEPENDS_TARGET="toolchain"

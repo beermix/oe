@@ -19,7 +19,7 @@
 ################################################################################
 
 PKG_NAME="retroarch-assets"
-PKG_VERSION="54a05a6"
+PKG_VERSION="41b3b3c"
 PKG_SITE="https://github.com/libretro/retroarch-assets"
 PKG_GIT_URL="https://github.com/libretro/retroarch-assets"
 PKG_DEPENDS_TARGET="toolchain"

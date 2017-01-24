@@ -19,7 +19,7 @@
 ################################################################################
 
 PKG_NAME="genesis-plus-gx-libretro"
-PKG_VERSION="257bb97"
+PKG_VERSION="3bcc5f0"
 PKG_SITE="https://github.com/libretro/Genesis-Plus-GX"
 PKG_URL="https://github.com/libretro/Genesis-Plus-GX/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"

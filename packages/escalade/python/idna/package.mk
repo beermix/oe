@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="idna"
-PKG_VERSION="2.1"
+PKG_VERSION="2.2"
 PKG_SITE="https://github.com/kjd/idna"
 PKG_URL="http://pypi.python.org/packages/source/i/idna/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"

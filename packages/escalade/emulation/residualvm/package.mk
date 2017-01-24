@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="residualvm"
-PKG_VERSION="27cb3aa"
+PKG_VERSION="36145d3"
 PKG_SITE="https://github.com/residualvm/residualvm"
 PKG_URL="https://github.com/residualvm/residualvm/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain SDL2 libmpeg2 flac libogg libmad libjpeg-turbo libpng zlib alsa-lib freetype"
@@ -39,7 +39,6 @@ TARGET_CONFIGURE_OPTS="--prefix=/usr \
 		       --disable-debug \
 		       --enable-opengl-shaders \
 		       $GLEW \
-		       --enable-safedisc \
 		       --enable-release \
 		       --enable-vkeybd \
 		       --enable-keymapper \

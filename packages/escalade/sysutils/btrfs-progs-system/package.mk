@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="btrfs-progs-system"
-PKG_VERSION="v4.8.4"
+PKG_VERSION="v4.9"
 PKG_SITE="https://github.com/kdave/btrfs-progs"
 PKG_URL="https://www.kernel.org/pub/linux/kernel/people/kdave/btrfs-progs/btrfs-progs-$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="btrfs-progs-$PKG_VERSION"
@@ -49,8 +49,8 @@ make_init() {
 }
 
 makeinstall_init() {
-  mkdir -p $INSTALL/sbin
-  cp ../.install_pkg/usr/bin/btrfs $INSTALL/sbin
-  cp ../.install_pkg/usr/bin/fsck.btrfs $INSTALL/sbin
-  cp ../.install_pkg/usr/bin/mkfs.btrfs $INSTALL/sbin
+  mkdir -p $INSTALL/usr/sbin
+  cp ../.install_pkg/usr/bin/btrfs $INSTALL/usr/sbin
+  cp ../.install_pkg/usr/bin/fsck.btrfs $INSTALL/usr/sbin
+  cp ../.install_pkg/usr/bin/mkfs.btrfs $INSTALL/usr/sbin
 }

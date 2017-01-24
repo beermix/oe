@@ -19,7 +19,7 @@
 ################################################################################
 
 PKG_NAME="tyrquake-libretro"
-PKG_VERSION="ff67c16"
+PKG_VERSION="7f3c540"
 PKG_SITE="https://github.com/libretro/tyrquake"
 PKG_URL="https://github.com/libretro/tyrquake/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"

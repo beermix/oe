@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="mgba-libretro"
-PKG_VERSION="359ea24"
+PKG_VERSION="ad3d35d"
 PKG_SITE="https://github.com/libretro/mgba"
 PKG_URL="https://github.com/libretro/mgba/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"

@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="cryptography"
-PKG_VERSION="1.6"
+PKG_VERSION="1.7.1"
 PKG_SITE="https://github.com/pyca/cryptography"
 PKG_GIT_URL="https://github.com/pyca/cryptography"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host cffi:host cffi enum idna ipaddress pyasn1 six"
