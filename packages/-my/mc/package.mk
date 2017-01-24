@@ -10,7 +10,8 @@ pre_configure_target() {
   export MAKEFLAGS="-j1"
 }
 
-PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config \
+PKG_CONFIGURE_OPTS_TARGET="fu_cv_sys_stat_statfs2_bsize=yes \
+                           --sysconfdir=/storage/.config \
                            --datadir=/storage/.config \
                            --libdir=/storage/.config \
                            --libexecdir=/storage/.config \
@@ -35,7 +36,7 @@ PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config \
                            --enable-charset \
                            --without-gpm-mouse \
                            --with-screen=ncurses \
-                           --without-x \
+                           --with-x \
                            --with-subshell \
                            --enable-vfs-sftp \
                            --enable-vfs-tar \
@@ -47,4 +48,4 @@ PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config \
                            --without-debug \
                            --without-gnome \
                            --without-samba \
-                            fu_cv_sys_stat_statfs2_bsize=yes"
+                           --with-search-engine=glib"

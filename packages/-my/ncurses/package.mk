@@ -56,15 +56,16 @@ PKG_CONFIGURE_OPTS_TARGET="--without-ada \
                            --enable-widec \
                            --enable-sigwinch \
                            --disable-nls \
-                           --without-dlsym"
+                           --without-dlsym \
+                           --with-x"
 
-pre_configure_target() {
+#pre_configure_target() {
   # causes some segmentation fault's (dialog) when compiled with gcc's link time optimization.
   #strip_lto
   #export CFLAGS="$CFLAGS -D_DEFAULT_SOURCE -D_POSIX_C_SOURCE=200809C -fPIC"
-  export CFLAGS="$CFLAGS -fPIC"
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
-}
+#  export CFLAGS="$CFLAGS -fPIC"
+#  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
+#}
 
 post_makeinstall_target() {
   cp misc/ncurses-config $ROOT/$TOOLCHAIN/bin
