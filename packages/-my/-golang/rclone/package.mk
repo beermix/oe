@@ -1,11 +1,9 @@
 PKG_NAME="rclone"
-PKG_VERSION="master"
+PKG_VERSION="v1.35"
 PKG_GIT_URL="https://github.com/ncw/rclone"
 PKG_DEPENDS_TARGET="toolchain go:host"
 PKG_SECTION="tools"
 PKG_AUTORECONF="no"
-
-CONCURRENCY_MAKE_LEVEL=1
 
 pre_make_target() {
   export GOOS=linux
