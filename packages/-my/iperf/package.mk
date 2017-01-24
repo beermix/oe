@@ -1,5 +1,5 @@
 PKG_NAME="iperf"
-PKG_VERSION="3.1.4"
+PKG_VERSION="3.1.5"
 PKG_SITE="https://iperf.fr/"
 PKG_URL="http://downloads.es.net/pub/iperf/iperf-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"

@@ -49,7 +49,7 @@ PKG_AUTORECONF="no"
 PKG_CONFIGURE_OPTS_TARGET="--disable-precomp-headers"
 
 post_makeinstall_target() {
-  ln -sf $SYSROOT_PREFIX/usr/lib/wx/config/i686-libreelec-linux-gnu-gtk2-unicode-3.0 $SYSROOT_PREFIX/usr/bin/wx-config
+  #ln -sf $SYSROOT_PREFIX/usr/lib/wx/config/i686-libreelec-linux-gnu-gtk2-unicode-3.0 $SYSROOT_PREFIX/usr/bin/wx-config
   $SED "s:^prefix=.*:prefix=$SYSROOT_PREFIX/usr:g" $SYSROOT_PREFIX/usr/bin/wx-config
   rm -rf $INSTALL/usr/bin
 }
