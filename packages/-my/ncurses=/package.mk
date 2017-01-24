@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="ncurses"
-PKG_VERSION="5.9"
+PKG_VERSION="6.0-20170114"
 PKG_SITE="http://www.gnu.org/software/ncurses/"
-PKG_URL="ftp://invisible-island.net/ncurses/current/ncurses-$PKG_VERSION.tgz"
+PKG_URL="ftp://invisible-island.net/ncurses/current/ncurses-6.0-20170114.tgz"
 PKG_DEPENDS_TARGET="toolchain zlib"
 PKG_SECTION="devel"
 PKG_SHORTDESC="ncurses: The ncurses (new curses) library"
@@ -29,22 +29,34 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
                         
 PKG_CONFIGURE_OPTS_TARGET="--with-pkg-config-libdir=/usr/lib/pkgconfig \
-			      --with-shared \
-			      --with-normal \
-			      --without-debug \
-			      --without-ada \
-			      --enable-widec \
 			      --enable-pc-files \
-			      --with-cxx-shared"
+			      --enable-echo \
+			      --enable-const \
+			      --enable-overwrite \
+			      --disable-rpath \
+			      --without-ada \
+			      --without-debug \
+			      --without-manpages \
+			      --without-profile \
+			      --without-progs \
+			      --without-tests \
+			      --disable-big-core \
+			      --disable-home-terminfo \
+			      --with-normal \
+			      --with-shared \
+			      --with-terminfo-dirs=/usr/share/terminfo \
+			      --with-default-terminfo-dir=/usr/share/terminfo \
+			      --with-pkg-config-libdir=/usr/lib/pkgconfig \
+			      --enable-widec \
+			      --with-build-cppflags=-D_GNU_SOURCE"
 
-pre_configure_target() {
+#pre_configure_target() {
   # causes some segmentation fault's (dialog) when compiled with gcc's link time optimization.
   #strip_lto
   #export CFLAGS="$CFLAGS -D_DEFAULT_SOURCE -D_POSIX_C_SOURCE=200809C -fPIC" --without-curses-h
   #export CFLAGS="$CFLAGS -fPIC"
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
-  
-}
+  #export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
+#}
 
 post_makeinstall_target() {
   cp misc/ncurses-config $ROOT/$TOOLCHAIN/bin
