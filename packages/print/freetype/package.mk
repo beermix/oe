@@ -17,7 +17,8 @@
 ################################################################################
 
 PKG_NAME="freetype"
-PKG_VERSION="2.6.5"
+#PKG_VERSION="2.6.5"
+PKG_VERSION="2.7.1"
 PKG_SITE="http://www.freetype.org"
 PKG_URL="http://download.savannah.gnu.org/releases/freetype/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain zlib libpng"
