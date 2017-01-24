@@ -16,6 +16,4 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-malloc0returnsnull \
 			      --disable-tests \
 			      --enable-upnp-default \
 			      --disable-shared \
-			      --with-gnu-ld \
 			      --with-daemon"
-

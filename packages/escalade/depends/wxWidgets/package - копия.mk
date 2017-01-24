@@ -26,7 +26,27 @@ PKG_LONGDESC="A cross-platform GUI and tools library for GTK, MS Windows, and Ma
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-precomp-headers --enable-silent-rules"
+
+#PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
+#			   --enable-static \
+#			   --disable-debug_flag \
+#			   --enable-unicode \
+#			   --enable-graphics_ctx \
+#			   --disable-mediactrl \
+#			   --disable-monolithic \
+#			   --disable-mslu \
+#			   --enable-silent-rules \
+#			   --disable-precomp-headers \
+#			   --with-opengl"
+
+
+#pre_configure_target() {
+#  export CFLAGS="$CFLAGS -fPIC"
+#  export CXXFLAGS="$CXXFLAGS -fPIC"
+#  export LDFLAGS="$LDFLAGS -fPIC"
+#}
+
+PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules --disable-precomp-headers"
 
 post_makeinstall_target() {
   ln -sfv $SYSROOT_PREFIX/usr/lib/wx/config/x86_64-openelec-linux-gnu-gtk2-unicode-3.0 $SYSROOT_PREFIX/usr/bin/wx-config

@@ -17,12 +17,10 @@
 ################################################################################
 
 PKG_NAME="qtbase"
-PKG_VERSION="5.6.2"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
+PKG_VERSION="5.7.1"
 PKG_SITE="http://qt-project.org"
-PKG_URL="http://download.qt.io/official_releases/qt/5.6/$PKG_VERSION/submodules/$PKG_NAME-opensource-src-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="pcre zlib"
+PKG_URL="http://download.qt.io/official_releases/qt/5.7/$PKG_VERSION/submodules/$PKG_NAME-opensource-src-$PKG_VERSION.tar.xz"
+PKG_DEPENDS_TARGET="pcre zlib harfbuzz libinput"
 PKG_SOURCE_DIR="$PKG_NAME-opensource-src-$PKG_VERSION"
 PKG_SHORTDESC="A cross-platform application and UI framework"
 PKG_LONGDESC="A cross-platform application and UI framework"
@@ -45,14 +43,14 @@ PKG_CONFIGURE_OPTS_TARGET="-prefix /usr
                            -no-mtdev
                            -no-gif
                            -no-libpng
-                           -no-libjpeg
-                           -no-harfbuzz
-                           -no-openssl
+                           -libjpeg
+                           -harfbuzz
+                           -openssl
                            -no-libproxy
                            -system-pcre
-                           -no-glib
+                           -glib
                            -no-pulseaudio
-                           -no-alsa
+                           -alsa
                            -silent
                            -no-cups
                            -no-iconv
@@ -60,11 +58,11 @@ PKG_CONFIGURE_OPTS_TARGET="-prefix /usr
                            -no-tslib
                            -no-icu
                            -no-strip
-                           -no-fontconfig
-                           -no-dbus
-                           -no-opengl
-                           -no-libudev
-                           -no-libinput
+                           -fontconfig
+                           -dbus
+                           -opengl
+                           -libudev
+                           -libinput
                            -no-gstreamer
                            -no-eglfs"
 
