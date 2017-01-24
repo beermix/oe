@@ -50,6 +50,10 @@ configure_host() {
   ./configure $options --host=$HOST_NAME
 }
 
+pre_configure_taret() {
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
+}
+
 makeinstall_host() {
   : # nop
 }

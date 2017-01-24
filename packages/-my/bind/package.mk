@@ -1,10 +1,14 @@
 PKG_NAME="bind"
-PKG_VERSION="9.11.0-P1"
+PKG_VERSION="9.10.4-P5"
 PKG_GIT_URL="ftp://ftp.isc.org/isc/bind9/$PKG_VERSION/bind-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain sqlite libcap json-c openssl readline"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
+
+pre_configure_taret() {
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
+}
 
 PKG_CONFIGURE_OPTS_TARGET="BUILD_CC="$HOST_CC" \
                            --with-openssl=$SYSROOT_PREFIX/usr \
