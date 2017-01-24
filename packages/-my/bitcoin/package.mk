@@ -5,7 +5,7 @@ PKG_URL="https://bitcoin.org/bin/bitcoin-core-$PKG_VERSION/$PKG_NAME-$PKG_VERSIO
 PKG_DEPENDS_TARGET="toolchain db miniupnpc libdaemon boost libevent"
 PKG_SECTION="web"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-malloc0returnsnull \
 			      --with-boost-libdir=$SYSROOT_PREFIX/usr/lib \
