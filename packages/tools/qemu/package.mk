@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="qemu"
-PKG_VERSION="2.5.1"
+PKG_VERSION="2.7.0"
 PKG_SITE="http://wiki.qemu.org"
 PKG_URL="http://wiki.qemu-project.org/download/qemu-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST="toolchain Python:host zlib:host glib:host"

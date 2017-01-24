@@ -1,5 +1,6 @@
 PKG_NAME="runc"
-PKG_VERSION="v1.0.0-rc2"
+#PKG_VERSION="v1.0.0-rc2"
+PKG_VERSION="2f7393a"
 PKG_SITE="https://github.com/opencontainers/runc"
 PKG_GIT_URL="https://github.com/opencontainers/runc"
 PKG_DEPENDS_HOST="toolchain go"
