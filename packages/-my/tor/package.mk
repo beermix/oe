@@ -1,5 +1,5 @@
 PKG_NAME="tor"
-PKG_VERSION="0.2.9.8"
+PKG_VERSION="0.2.9.9"
 PKG_URL="https://archive.torproject.org/tor-package-archive/tor-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain openssl libz libevent libcap"
 PKG_SECTION="security"
