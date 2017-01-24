@@ -5,6 +5,10 @@ PKG_DEPENDS_TARGET="toolchain expat gmp pcre curl libuv libev xmlstarlet libxml2
 PKG_SECTION="tools"
 PKG_AUTORECONF="no"
 
+pre_configure_taret() {
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
+}
+
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --sysconfdir=/storage/.config \
                            --datadir=/storage/.config \
