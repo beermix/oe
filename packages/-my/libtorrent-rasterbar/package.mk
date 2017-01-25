@@ -12,7 +12,7 @@ PKG_AUTORECONF="no"
 
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
-  #export CFLAGS="$CFLAGS -ffast-math"
+  export CFLAGS="$CFLAGS -O3 -ffast-math"
   export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   #./autotool.sh
   #sed -i 's/$PKG_CONFIG openssl --libs-only-/$PKG_CONFIG openssl --static --libs-only-/' ./configure
