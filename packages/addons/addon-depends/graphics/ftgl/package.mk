@@ -16,17 +16,30 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="libprojectM"
-PKG_VERSION="2.0.0"
-PKG_SITE="http://projectm.sourceforge.net/"
+PKG_NAME="ftgl"
+PKG_VERSION="2.1.2"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
+PKG_SITE="http://sourceforge.net/projects/ftgl/"
 PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain ftgl freetype $OPENGL"
+PKG_DEPENDS_TARGET="toolchain freetype"
+PKG_PRIORITY="optional"
 PKG_SECTION="multimedia"
-PKG_SHORTDESC="libprojectM:"
-PKG_LONGDESC="libprojectM:"
+PKG_SHORTDESC="ftgl:"
+PKG_LONGDESC="ftgl:"
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
+PKG_USE_CMAKE="no"
 
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
-                       -DBUILD_PROJECTM_STATIC=1"
+PKG_CONFIGURE_SCRIPT="unix/configure"
+PKG_CONFIGURE_OPTS_TARGET="--with-freetype-prefix=$SYSROOT_PREFIX/usr --with-pic"
+
+pre_configure_target() {
+# ftgl fails to build in subdirs
+  cd $ROOT/$PKG_BUILD/unix
+    rm -rf ../$TARGET_NAME
+
+  CXXFLAGS=-fpermissive
+}

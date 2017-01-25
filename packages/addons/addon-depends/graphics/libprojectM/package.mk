@@ -16,16 +16,21 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="ftgl"
-PKG_VERSION="2.1.2"
-PKG_SITE="http://sourceforge.net/projects/ftgl/"
+PKG_NAME="libprojectM"
+PKG_VERSION="2.0.0"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
+PKG_SITE="http://projectm.sourceforge.net/"
 PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain freetype"
+PKG_DEPENDS_TARGET="toolchain ftgl freetype opengl glew"
+PKG_PRIORITY="optional"
 PKG_SECTION="multimedia"
-PKG_SHORTDESC="ftgl:"
-PKG_LONGDESC="ftgl:"
+PKG_SHORTDESC="libprojectM:"
+PKG_LONGDESC="libprojectM:"
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CMAKE_OPTS_TARGET="-DOUTPUT_DIR=$SYSROOT_PREFIX/usr"
+PKG_CMAKE_OPTS_TARGET="-DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
+                       -DBUILD_PROJECTM_STATIC=1"

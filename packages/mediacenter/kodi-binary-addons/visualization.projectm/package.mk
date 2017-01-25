@@ -17,8 +17,7 @@
 ################################################################################
 
 PKG_NAME="visualization.projectm"
-#PKG_VERSION="8ca7efb"
-PKG_VERSION="8064b36"
+PKG_VERSION="8ca7efb"
 PKG_SITE="https://github.com/notspiff/visualization.projectm"
 PKG_GIT_URL="https://github.com/notspiff/visualization.projectm"
 PKG_DEPENDS_TARGET="toolchain kodi-platform libprojectM"

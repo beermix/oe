@@ -16,32 +16,31 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="glew"
-PKG_VERSION="2.0.0"
-PKG_SITE="http://glew.sourceforge.net/"
-PKG_URL="$SOURCEFORGE_SRC/glew/glew/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tgz"
-PKG_DEPENDS_TARGET="toolchain libX11"
+PKG_NAME="soil"
+PKG_VERSION="1.07"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="PD"
+PKG_SITE="http://www.lonesock.net/soil.html"
+PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_DEPENDS_TARGET="mesa"
 PKG_PRIORITY="optional"
 PKG_SECTION="graphics"
-PKG_SHORTDESC="glew: The OpenGL Extension Wrangler Library"
-PKG_LONGDESC="The OpenGL Extension Wrangler Library (GLEW) is a cross-platform C/C++ extension loading library. GLEW provides efficient run-time mechanisms for determining which OpenGL extensions are supported on the target platform. OpenGL core and extension functionality is exposed in a single header file."
+PKG_SHORTDESC="libsoil: Simple OpenGL Image Library"
+PKG_LONGDESC="libsoil: Simple OpenGL Image Library"
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 make_target() {
-  make CC="$CC" LD="$CC" AR="$AR" \
-       POPT="$CFLAGS" LDFLAGS.EXTRA="$LDFLAGS" \
-       GLEW_DEST="/usr" LIBDIR="/usr/lib" lib/libGLEW.a glew.pc
+  mkdir projects/makefile/obj
+  make CXX="$CXX" CC="$CC" LD="$CC" AR="$AR" CFLAGS="-fPIC -O2" CXXFLAGS="-fPIC -O2" -C projects/makefile
 }
 
 makeinstall_target() {
   mkdir -p $SYSROOT_PREFIX/usr/lib
-    cp -PR lib/libGLEW.a $SYSROOT_PREFIX/usr/lib
+    cp -PR lib/libSOIL.a $SYSROOT_PREFIX/usr/lib
 
-  mkdir -p $SYSROOT_PREFIX/usr/lib/pkgconfig
-    cp -PR glew.pc $SYSROOT_PREFIX/usr/lib/pkgconfig
-
-  mkdir -p $SYSROOT_PREFIX/usr/include
-    cp -PR include/GL $SYSROOT_PREFIX/usr/include
+  mkdir -p $SYSROOT_PREFIX/usr/include/SOIL
+    cp -P src/SOIL.h $SYSROOT_PREFIX/usr/include/SOIL
 }
