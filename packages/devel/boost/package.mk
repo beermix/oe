@@ -79,6 +79,5 @@ makeinstall_target() {
                                 --with-chrono \
                                 --with-random \
                                 --with-regex -sICU_PATH="$SYSROOT_PREFIX/usr" \
-                                python=2.7 \
                                 install
 }

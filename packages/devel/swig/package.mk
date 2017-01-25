@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="swig"
-PKG_VERSION="3.0.10"
+PKG_VERSION="3.0.11"
 PKG_SITE="http://www.swig.org"
 PKG_URL="https://master.dl.sourceforge.net/project/swig/swig/swig-$PKG_VERSION/swig-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="ccache:host"

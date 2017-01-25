@@ -6,22 +6,22 @@ PKG_URL="https://github.com/arvidn/libtorrent/releases/download/libtorrent-1_0_1
 PKG_DEPENDS_HOST="toolchain Python boost libiconv"
 PKG_DEPENDS_TARGET="toolchain openssl expat boost libiconv"
 PKG_SECTION="devel"
-PKG_USE_CMAKE="yes"
+PKG_USE_CMAKE="no"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 pre_configure_target() {
   #cd $ROOT/$PKG_BUILD
   #sh autotool.sh
-  #export CFLAGS="$CFLAGS -O3 -ffast-math"
   #export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   #./autotool.sh
   #strip_lto
+  export CFLAGS="$CFLAGS -O3 -ffast-math"
   sed -iv 's/$PKG_CONFIG openssl --libs-only-/$PKG_CONFIG openssl --static --libs-only-/' $ROOT/$PKG_BUILD/configure
   sed -iv -e s/Windows.h/windows.h/ -e s/Wincrypt.h/wincrypt.h/ $ROOT/$PKG_BUILD/ed25519/src/seed.cpp
 }
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static \
+PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared \
 			      --disable-python-binding \
 			      --with-libiconv \
 			      --disable-geoip \

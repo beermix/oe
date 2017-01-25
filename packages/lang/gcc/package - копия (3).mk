@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="6-20170119"
+PKG_VERSION="4ca53f06ff7d346ef8021a23108f23a5406a0417"
 PKG_SITE="http://gcc.gnu.org/"
-PKG_URL="https://fossies.org/linux/misc/gcc-$PKG_VERSION.tar.xz"
+PKG_GIT_URL="git://gcc.gnu.org/git/gcc.git"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host"
 PKG_DEPENDS_TARGET="gcc:host"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
@@ -84,9 +84,11 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time=yes \
                          --enable-clocale=gnu \
+                         --enable-default-pie \
                          --enable-gnu-unique-object \
                          --enable-linker-build-id \
                          --with-linker-hash-style=gnu \
+                         --enable-gnu-indirect-function \
                          --enable-poison-system-directories \
                          $GCC_OPTS"
 

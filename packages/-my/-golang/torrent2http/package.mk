@@ -21,7 +21,7 @@ configure_target() {
 make_target() {
   mkdir -p bin
   go get -u -v -t "github.com/beermix/torrent2http"
-  $GOLANG build -ldflags "-w -extldflags" .
+  $GOLANG build -v -o bin/$PKG_NAME -a -ldflags "$LDFLAGS" ./
 }
 
 makeinstall_target() {
