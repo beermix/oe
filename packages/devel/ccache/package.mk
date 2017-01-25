@@ -27,12 +27,12 @@ PKG_LONGDESC="Ccache is a compiler cache. It speeds up re-compilation of C/C++ c
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-pre_build_host() {
-  export CFLAGS="$CFLAGS -fPIE -fstack-protector-strong"
-  export CPPFLAGS="$CPPFLAGS -D_FORTIFY_SOURCE=2"
-  export LDFLAGS="$LDFLAGS -Wl,-Bsymbolic-functions -fPIE -pie -Wl,-z,relro -Wl,-z,now -s"
-  export CONCURRENCY_MAKE_LEVEL=1
-}
+#pre_build_host() {
+#  export CFLAGS="$CFLAGS -fPIE -fstack-protector-strong"
+#  export CPPFLAGS="$CPPFLAGS -D_FORTIFY_SOURCE=2"
+#  export LDFLAGS="$LDFLAGS -Wl,-Bsymbolic-functions -fPIE -pie -Wl,-z,relro -Wl,-z,now -s"
+#  export CONCURRENCY_MAKE_LEVEL=1
+#}
 
 PKG_CONFIGURE_OPTS_HOST="--disable-silent-rules"
 
