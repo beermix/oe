@@ -21,8 +21,7 @@ pre_configure_target() {
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_sqlite3_sqlite3_open=yes \
 			      --sysconfdir=/storage/.config \
-			      --datarootdir=/storage/.config \
-			      --disable-silent-rules"
+			      --datarootdir=/storage/.config"
 			      
 makeinstall_target() {
   :
