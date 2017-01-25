@@ -13,11 +13,12 @@ PKG_LONGDESC="GnuTLS is a project that aims to develop a library which provides 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
+
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \
 			      --disable-shared \
 			      --enable-hardware-acceleration \
 			      --disable-openssl-compatibility \
-			      --disable-cxx \
+			      --enable-cxx \
 			      --without-p11-kit \
 			      --enable-local-libopts \
 			      --with-included-libtasn1 \

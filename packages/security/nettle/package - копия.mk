@@ -18,15 +18,7 @@ PKG_LONGDESC="Nettle is a cryptographic library that is designed to fit easily i
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-pre_configure_target() {
-   strip_lto
-}
-
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
-			      --enable-fat \
-			      --disable-openssl \
-			      --disable-documentation \
-			      --enable-static"
+PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --disable-openssl --disable-documentation --disable-mini-gmp"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin

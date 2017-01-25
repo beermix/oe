@@ -8,8 +8,7 @@ PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
-			   --disable-debug \
-			   --disable-shared \
-			   --enable-static \
-			   --with-gnu-ld"
+PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
+			      --disable-shared \
+			      --enable-static \
+			      --with-gnu-ld"
