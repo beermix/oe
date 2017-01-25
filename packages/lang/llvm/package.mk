@@ -30,6 +30,8 @@ PKG_LONGDESC="Low-Level Virtual Machine (LLVM) is a compiler infrastructure desi
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
+MAKEFLAGS=-j7
+
 PKG_CMAKE_OPTS_HOST="-DLLVM_BUILD_TOOLS=ON \
 			-DLLVM_INCLUDE_TOOLS=ON \
 			-DLLVM_BUILD_EXAMPLES=OFF \
