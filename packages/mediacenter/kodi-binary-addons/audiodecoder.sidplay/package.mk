@@ -17,10 +17,9 @@
 ################################################################################
 
 PKG_NAME="audiodecoder.sidplay"
-#PKG_VERSION="d832f05"
-PKG_VERSION="3e8a22e"
+PKG_VERSION="d832f05"
 PKG_SITE="http://www.kodi.tv"
-PKG_URL="https://github.com/notspiff/audiodecoder.sidplay"
+PKG_GIT_URL="https://github.com/notspiff/audiodecoder.sidplay"
 PKG_DEPENDS_TARGET="toolchain kodi-platform sidplay-libs"
 PKG_SECTION=""
 PKG_SHORTDESC="audiodecoder.sidplay"

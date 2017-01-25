@@ -17,10 +17,9 @@
 ################################################################################
 
 PKG_NAME="audiodecoder.modplug"
-#PKG_VERSION="03b772d"
-PKG_VERSION="8a8e961"
+PKG_VERSION="03b772d"
 PKG_SITE="http://www.kodi.tv"
-PKG_URL="https://github.com/notspiff/audiodecoder.modplug"
+PKG_GIT_URL="https://github.com/notspiff/audiodecoder.modplug"
 PKG_DEPENDS_TARGET="toolchain kodi-platform libmodplug"
 PKG_SECTION=""
 PKG_SHORTDESC="audiodecoder.modplug"

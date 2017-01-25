@@ -17,8 +17,7 @@
 ################################################################################
 
 PKG_NAME="adsp.biquad.filters"
-#PKG_VERSION="d63d8ac"
-PKG_VERSION="e08990f"
+PKG_VERSION="d63d8ac"
 PKG_SITE="http://www.kodi.tv"
 PKG_GIT_URL="https://github.com/kodi-adsp/adsp.biquad.filters"
 PKG_DEPENDS_TARGET="toolchain kodi-platform asplib tinyxml"
