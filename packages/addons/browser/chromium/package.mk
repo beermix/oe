@@ -37,6 +37,16 @@ pre_make_target() {
   strip_lto
 
   sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' third_party/widevine/cdm/stub/widevine_cdm_version.h
+  #export CFLAGS=`echo $CFLAGS | sed -e "s|-ffast-math||g"`
+  #export CFLAGS=`echo $CFLAGS | sed -e "s|-Ofast|-O2|g"`
+  #export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O2|g"`
+  #export CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong||g"`
+  #export CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
+  #export CFLAGS=`echo $CFLAGS | sed -e "s|$PROJECT_CFLAGS||g"`
+  #export LDFLAGS=`echo $LDFLAGS | sed -e "s|-ffast-math||g"`
+  #export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Ofast|-O2|g"`
+  #export LDFLAGS=`echo $LDFLAGS | sed -e "s|-O.|-O2|g"`
+  #export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed||"`
 }
 
 make_target() {

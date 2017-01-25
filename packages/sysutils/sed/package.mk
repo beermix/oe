@@ -33,4 +33,4 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_HOST="--disable-nls --disable-acl --without-selinux"
-PKG_CONFIGURE_OPTS_TARGET="--without-selinux"
+PKG_CONFIGURE_OPTS_TARGET="--disable-nls --without-selinux"

@@ -14,7 +14,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+################################################################################ visualization.vsxu
 
 PKG_NAME="mediacenter"
 PKG_VERSION=""
@@ -35,7 +35,7 @@ if [ "$MEDIACENTER" = "kodi" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET simplejson"
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pycrypto"
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET xmlstarlet pvr.iptvsimple.multi kodi-theme-Confluence"
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET visualization.waveform visualization.wavforhue screensaver.stars screensaver.asteroids visualization.fishbmc visualization.goom visualization.projectm visualization.spectrum visualization.vsxu visualization.waveform visualization.wavforhue adsp.basic audiodecoder.modplug audiodecoder.sidplay audioencoder.wav audioencoder.flac audioencoder.lame audioencoder.vorbis"
+ # PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET visualization.waveform visualization.wavforhue screensaver.stars screensaver.asteroids visualization.fishbmc visualization.goom visualization.projectm visualization.spectrum  visualization.waveform visualization.wavforhue adsp.basic audiodecoder.modplug audiodecoder.sidplay audioencoder.wav audioencoder.flac audioencoder.lame audioencoder.vorbis"
 
 # other packages
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET OpenELEC-settings"

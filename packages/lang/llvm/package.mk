@@ -22,7 +22,7 @@ PKG_ARCH="x86_64"
 PKG_SITE="http://llvm.org/"
 PKG_URL="http://llvm.org/releases/$PKG_VERSION/${PKG_NAME}-${PKG_VERSION}.src.tar.xz"
 PKG_SOURCE_DIR="${PKG_NAME}-${PKG_VERSION}.src"
-PKG_DEPENDS_TARGET="toolchain llvm:host zlib ninja:host"
+PKG_DEPENDS_TARGET="toolchain llvm:host zlib"
 PKG_SECTION="lang"
 PKG_SHORTDESC="llvm: Low Level Virtual Machine"
 PKG_LONGDESC="Low-Level Virtual Machine (LLVM) is a compiler infrastructure designed for compile-time, link-time, run-time, and idle-time optimization of programs from arbitrary programming languages. It currently supports compilation of C, Objective-C, and C++ programs, using front-ends derived from GCC 4.0, GCC 4.2, and a custom new front-end, "clang". It supports x86, x86-64, ia64, PowerPC, and SPARC, with support for Alpha and ARM under development."
@@ -30,10 +30,9 @@ PKG_LONGDESC="Low-Level Virtual Machine (LLVM) is a compiler infrastructure desi
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-#MAKEFLAGS=-j7
+MAKEFLAGS=-j7
 
-PKG_CMAKE_OPTS_HOST="-GNinja \
-			$LLVM_OPTS \
+PKG_CMAKE_OPTS_HOST="$LLVM_OPTS \
 			-DLLVM_BUILD_TOOLS=ON \
 			-DLLVM_INCLUDE_TOOLS=ON \
 			-DLLVM_BUILD_EXAMPLES=OFF \
@@ -47,8 +46,7 @@ PKG_CMAKE_OPTS_HOST="-GNinja \
 			-DLLVM_OPTIMIZED_TABLEGEN=ON \
 			-DLLVM_TARGETS_TO_BUILD=X86"
 
-PKG_CMAKE_OPTS_TARGET="-GNinja \
-			  -DCMAKE_SYSTEM_NAME=Linux \
+PKG_CMAKE_OPTS_TARGET="-DCMAKE_SYSTEM_NAME=Linux \
 			  -DLIBCXX_INSTALL_LIBRARY=OFF \
 			  -DLLVM_NATIVE_ARCH=X86 \
 			  -DLLVM_DEFAULT_TARGET_TRIPLE=$TARGET_NAME \
@@ -74,7 +72,7 @@ PKG_CMAKE_OPTS_TARGET="-GNinja \
 			  -DLLVM_LINK_LLVM_DYLIB=ON"
 
 make_host() {
-  ninja llvm-tblgen llvm-config
+  make llvm-tblgen llvm-config
 }
 
 makeinstall_host() {
