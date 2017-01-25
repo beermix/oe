@@ -17,11 +17,11 @@
 ################################################################################
 
 PKG_NAME="audiodecoder.modplug"
-PKG_VERSION="03b772d"
+#PKG_VERSION="03b772d"
+PKG_VERSION="8a8e961"
 PKG_SITE="http://www.kodi.tv"
-PKG_URL="https://github.com/notspiff/audiodecoder.modplug/archive/$PKG_VERSION.tar.gz"
+PKG_URL="https://github.com/notspiff/audiodecoder.modplug"
 PKG_DEPENDS_TARGET="toolchain kodi-platform libmodplug"
-
 PKG_SECTION=""
 PKG_SHORTDESC="audiodecoder.modplug"
 PKG_LONGDESC="audiodecoder.modplug"
@@ -30,13 +30,8 @@ PKG_AUTORECONF="no"
 PKG_IS_ADDON="yes"
 PKG_ADDON_TYPE="kodi.audiodecoder"
 
-configure_target() {
-  cmake -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
-        -DCMAKE_INSTALL_PREFIX=/usr \
-        -DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
-        -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
-        ..
-}
+PKG_CMAKE_OPTS_TARGET="-DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
+        -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr"
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/

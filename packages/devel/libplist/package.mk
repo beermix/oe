@@ -29,6 +29,6 @@ PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--without-cython"
 
-post_makeinstall_target() {
-  rm -rf $INSTALL/usr/bin
-}
+#post_makeinstall_target() {
+#  rm -rf $INSTALL/usr/bin
+#}
