@@ -17,8 +17,7 @@
 ################################################################################
 
 PKG_NAME="visualization.wavforhue"
-#PKG_VERSION="e57e436"
-PKG_VERSION="b1805db"
+PKG_VERSION="e57e436"
 PKG_SITE="http://www.kodi.tv"
 PKG_GIT_URL="https://github.com/hardyt/visualization.wavforhue"
 PKG_DEPENDS_TARGET="toolchain kodi-platform"
