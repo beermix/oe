@@ -4,9 +4,9 @@
 ################################################################################
 
 PKG_NAME="gevent"
-PKG_VERSION="1.1.1"
+PKG_VERSION="1.2.1"
 PKG_SITE="https://pypi.python.org/pypi/gevent"
-PKG_URL="https://pypi.python.org/packages/source/g/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_URL="https://pypi.python.org/packages/54/dd/17dc7e899ac7c1de2d19b367b29d90fdb4cfe83bda8c2581464906c9399d/gevent-1.2.1.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host greenlet libev c-ares"
 PKG_SECTION="xmedia/depends"
 PKG_SHORTDESC="gevent is a coroutine-based Python networking library"
