@@ -4,6 +4,6 @@ PKG_URL="http://www.netfilter.org/projects/libnetfilter_queue/files/libnetfilter
 PKG_DEPENDS_TARGET="toolchain libnfnetlink libnl"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static"
