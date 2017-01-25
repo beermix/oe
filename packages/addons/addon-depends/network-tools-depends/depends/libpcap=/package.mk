@@ -21,7 +21,6 @@ PKG_VERSION="1.7.4"
 PKG_SITE="http://www.tcpdump.org/"
 PKG_URL="http://www.tcpdump.org/release/libpcap-${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
-
 PKG_SECTION="devel"
 PKG_SHORTDESC="system interface for user-level packet capture"
 PKG_LONGDESC="libpcap (Packet CAPture) provides a portable framework for low-level network monitoring. Applications include network statistics collection, security monitoring, network debugging, etc."
