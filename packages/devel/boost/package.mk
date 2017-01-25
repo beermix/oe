@@ -43,7 +43,7 @@ makeinstall_host() {
 
 pre_configure_target() {
   export CFLAGS="$CFLAGS -fPIC -O3"
-  export CXXFLAGS="$CXXFLAGS -fPIC -O3"
+  export CXXFLAGS="$CXXFLAGS -std=c++14 -fPIC -O3"
   #export CXXFLAGS="$CXXFLAGS -std=c++14 -fPIC -O3"
   #export LDFLAGS="$LDFLAGS -fPIC"
 }
