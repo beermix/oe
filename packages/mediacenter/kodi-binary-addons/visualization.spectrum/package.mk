@@ -17,7 +17,8 @@
 ################################################################################
 
 PKG_NAME="visualization.spectrum"
-PKG_VERSION="9dbe53a"
+#PKG_VERSION="9dbe53a"
+PKG_VERSION="73c8786"
 PKG_SITE="http://www.kodi.tv"
 PKG_GIT_URL="https://github.com/notspiff/visualization.spectrum"
 PKG_DEPENDS_TARGET="toolchain kodi-platform"
@@ -29,14 +30,8 @@ PKG_AUTORECONF="no"
 PKG_IS_ADDON="yes"
 PKG_ADDON_TYPE="xbmc.player.musicviz"
 
-configure_target() {
-  cmake -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
-        -DCMAKE_INSTALL_PREFIX=/usr \
-        -DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
-        -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
-        ..
-}
-
+PKG_CMAKE_OPTS_TARGET="-DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
+        -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr"
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/
   cp -R $PKG_BUILD/.install_pkg/usr/share/kodi/addons/$PKG_NAME/* $ADDON_BUILD/$PKG_ADDON_ID/

@@ -17,11 +17,11 @@
 ################################################################################
 
 PKG_NAME="visualization.shadertoy"
-PKG_VERSION="f998800"
+#PKG_VERSION="f998800"
+PKG_VERSION="6a9a5ca"
 PKG_SITE="https://github.com/notspiff/visualization.shadertoy"
-PKG_URL="https://github.com/notspiff/visualization.shadertoy/archive/$PKG_VERSION.tar.gz"
+PKG_GIT_URL="https://github.com/notspiff/visualization.shadertoy"
 PKG_DEPENDS_TARGET="toolchain kodi-platform"
-
 PKG_SECTION=""
 PKG_SHORTDESC="visualization.shadertoy"
 PKG_LONGDESC="visualization.shadertoy"
@@ -50,14 +50,11 @@ configure_target() {
     export CFLAGS="$CFLAGS -DLINUX -DEGL_API_FB"
     export CXXFLAGS="$CXXFLAGS -DLINUX -DEGL_API_FB"
   fi
-
-  cmake -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
-        -DCMAKE_INSTALL_PREFIX=/usr \
-        -DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
-        -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
-        ..
 }
 
+PKG_CMAKE_OPTS_TARGET="-DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
+        -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr"
+        
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/
   cp -R $PKG_BUILD/.install_pkg/usr/share/kodi/addons/$PKG_NAME/* $ADDON_BUILD/$PKG_ADDON_ID/
