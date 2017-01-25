@@ -37,16 +37,6 @@ pre_make_target() {
   strip_lto
 
   sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' third_party/widevine/cdm/stub/widevine_cdm_version.h
-  #export CFLAGS=`echo $CFLAGS | sed -e "s|-ffast-math||g"`
-  #export CFLAGS=`echo $CFLAGS | sed -e "s|-Ofast|-O2|g"`
-  #export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O2|g"`
-  #export CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong||g"`
-  #export CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
-  #export CFLAGS=`echo $CFLAGS | sed -e "s|$PROJECT_CFLAGS||g"`
-  #export LDFLAGS=`echo $LDFLAGS | sed -e "s|-ffast-math||g"`
-  #export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Ofast|-O2|g"`
-  #export LDFLAGS=`echo $LDFLAGS | sed -e "s|-O.|-O2|g"`
-  #export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed||"`
 }
 
 make_target() {
@@ -87,7 +77,7 @@ make_target() {
     'use_pulseaudio=false'
     'use_sysroot=true'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
-    'enable_hangout_services_extension=true'
+    'enable_hangout_services_extension=false'
     'enable_widevine=true'
     'enable_nacl=false'
     'enable_nacl_nonsfi=false'
@@ -123,7 +113,7 @@ make_target() {
   ./tools/gn/bootstrap/bootstrap.py --gn-gen-args "${_flags[*]}"
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$ROOT/$TOOLCHAIN/bin/python
 
-  ninja -j5 -C out/Release chrome chrome_sandbox widevinecdmadapter
+  ninja -j4 -C out/Release chrome chrome_sandbox widevinecdmadapter
 }
 makeinstall_target() {
   :
