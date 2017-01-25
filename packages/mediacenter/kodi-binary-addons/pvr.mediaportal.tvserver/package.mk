@@ -19,9 +19,8 @@
 PKG_NAME="pvr.mediaportal.tvserver"
 PKG_VERSION="7437171"
 PKG_SITE="http://www.kodi.tv"
-PKG_URL="https://github.com/kodi-pvr/pvr.mediaportal.tvserver/archive/$PKG_VERSION.tar.gz"
+PKG_GIT_URL="https://github.com/kodi-pvr/pvr.mediaportal.tvserver"
 PKG_DEPENDS_TARGET="toolchain kodi-platform"
-
 PKG_SECTION=""
 PKG_SHORTDESC="pvr.mediaportal.tvserver"
 PKG_LONGDESC="pvr.mediaportal.tvserver"

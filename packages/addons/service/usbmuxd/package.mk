@@ -25,12 +25,15 @@ PKG_SECTION="service"
 PKG_SHORTDESC="USB Multiplex Daemon"
 PKG_LONGDESC="USB Multiplex Daemon"
 PKG_AUTORECONF="no"
-
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="iPhone Tether"
 PKG_ADDON_TYPE="xbmc.service"
 
 PKG_DISCLAIMER="Additional data charges may occur. The LibreELEC team doesn't take any resposibility for extra data charges."
+
+pre_configure_target() {
+  export CFLAGS="$CFLAGS -D_DEFAULT_SOURCE"
+}
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            ac_cv_func_realloc_0_nonnull=yes"
