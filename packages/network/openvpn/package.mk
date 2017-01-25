@@ -52,7 +52,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_have_decl_TUNSETPERSIST=no \
                            --enable-def-auth \
                            --enable-pf \
                            --disable-selinux \
-                           --disable-systemd"
+                           --enable-systemd"
 
 post_makeinstall_target() {
   mkdir -p $INSTALL/usr/bin
