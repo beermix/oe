@@ -5,9 +5,10 @@ PKG_DEPENDS_TARGET="toolchain openssl libz libevent libcap"
 PKG_SECTION="security"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="ac_cv_prog_cc_c99=-std=gnu99 \
-			      --with-openssl-dir=$SYSROOT_PREFIX/usr \
-			      --disable-gcc-hardening \
+PKG_CONFIGURE_OPTS_TARGET="--disable-gcc-hardening \
+			      --disable-linker-hardening \
+			      --enable-systemd \
+			      --disable-asciidoc \
 			      --disable-unittests \
 			      --disable-seccomp \
 			      --sysconfdir=/storage/.config \
@@ -15,7 +16,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_prog_cc_c99=-std=gnu99 \
 			      --datadir=/storage/.cache/tor \
 			      --with-zlib-dir=$ROOT/$TOOLCHAIN \
 			      --with-libevent-dir=$SYSROOT_PREFIX/usr \
-			      --disable-asciidoc"
+			      --with-openssl-dir=$SYSROOT_PREFIX/usr"
 
 
 post_install() {
@@ -26,3 +27,4 @@ post_install() {
 post_makeinstall_target() {
   rm -rf $INSTALL/storage
 }
+#ac_cv_prog_cc_c99=-std=gnu99

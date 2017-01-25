@@ -10,7 +10,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.lysator.liu.se/~nisse/nettle"
 PKG_URL="https://ftp.gnu.org/gnu/nettle/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain gmp"
+PKG_DEPENDS_TARGET="toolchain"
 PKG_PRIORITY="optional"
 PKG_SECTION="xmedia/depends"
 PKG_SHORTDESC="nettle: a cryptographic library"
@@ -18,15 +18,10 @@ PKG_LONGDESC="Nettle is a cryptographic library that is designed to fit easily i
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-pre_configure_target() {
-   strip_lto
-}
-
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
+PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared \
 			      --enable-fat \
 			      --disable-openssl \
-			      --disable-documentation \
-			      --enable-static"
+			      --disable-documentation"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin

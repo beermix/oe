@@ -4,9 +4,9 @@
 ################################################################################
 
 PKG_NAME="vlc"
-PKG_VERSION="3.0.0-git"
+PKG_VERSION="2.2.4"
 PKG_SITE="http://www.videolan.org"
-PKG_URL="https://nightlies.videolan.org/build/source/vlc-3.0.0-20170125-0238-git.tar.xz"
+PKG_URL="http://download.videolan.org/$PKG_NAME/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain dbus libdvbpsi ffmpeg zlib lua libvorbis libogg flac gnutls fdk-aac faac fdkaac"
 PKG_PRIORITY="optional"
 PKG_SECTION="xmedia/tools"
