@@ -44,6 +44,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
                            --enable-visibility \
                            --disable-unit-tests \
                            --disable-sparkle \
+                           --disable-install-libxf86config \
                            --disable-xselinux \
                            --enable-aiglx \
                            --enable-glx-tls \
@@ -107,8 +108,8 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
                            --disable-ipv6 \
                            --disable-local-transport \
                            --disable-secure-rpc \
-                           --enable-input-thread \
                            --enable-xtrans-send-fds \
+                           --enable-input-thread \
                            --disable-docs \
                            --disable-devel-docs \
                            --with-int10=x86emu \
