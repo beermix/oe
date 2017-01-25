@@ -17,7 +17,8 @@
 ################################################################################
 
 PKG_NAME="libusb"
-PKG_VERSION="v1.0.21"
+#PKG_VERSION="v1.0.21"
+PKG_VERSION="ffdf3c0"
 PKG_SITE="http://libusb.info/"
 PKG_GIT_URL="https://github.com/libusb/libusb"
 PKG_DEPENDS_TARGET="toolchain systemd"
@@ -29,11 +30,11 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-shared \
-			     --enable-static \
-			     --disable-log \
-			     --disable-debug-log \
-			     --enable-udev \
-			     --disable-examples-build"
+			      --enable-static \
+			      --disable-log \
+			      --disable-debug-log \
+			      --enable-udev \
+			      --disable-examples-build"
 
 pre_configure_target () {
   #libusb sometimes fails to build if building paralell

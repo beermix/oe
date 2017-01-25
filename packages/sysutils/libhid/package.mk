@@ -21,7 +21,6 @@ PKG_VERSION="0.2.16"
 PKG_SITE="http://libhid.alioth.debian.org/"
 PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libusb-compat libusb"
-
 PKG_SECTION="system"
 PKG_SHORTDESC="libhid: userspace USB HID access library"
 PKG_LONGDESC="libhid provides a generic and flexible way to access and interact with USB HID devices, much like libusb does for plain USB devices"

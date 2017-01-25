@@ -21,7 +21,6 @@ PKG_VERSION="0"
 PKG_SITE=""
 PKG_URL=""
 PKG_DEPENDS_TARGET="toolchain"
-
 PKG_SECTION="system"
 PKG_SHORTDESC="A simple way to add entropy at boot"
 PKG_LONGDESC="A simple way to add entropy at boot"
