@@ -18,10 +18,11 @@ configure_target() {
   export PATH=$PATH:$GOROOT/bin
 }
  
+
 make_target() {
   mkdir -p bin
-  go get -u -v -t "github.com/beermix/torrent2http"
-  $GOLANG build -v -o bin/$PKG_NAME -a -ldflags "$LDFLAGS" ./
+  $GOLANG get -v "github.com/anteo/libtorrent-go" "github.com/saintfish/chardet" "golang.org/x/net/html/charset" "golang.org/x/text/transform"
+  $GOLANG build -v -o bin/torrent2http -a -ldflags "$LDFLAGS" .
 }
 
 makeinstall_target() {

@@ -17,10 +17,10 @@
 ################################################################################
 
 PKG_NAME="swig"
-PKG_VERSION="3.0.11"
+PKG_VERSION="3.0.10"
 PKG_SITE="http://www.swig.org"
 PKG_URL="https://master.dl.sourceforge.net/project/swig/swig/swig-$PKG_VERSION/swig-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_HOST="ccache:host"
+PKG_DEPENDS_HOST="ccache:host pcre:host"
 PKG_SECTION="devel"
 PKG_SHORTDESC="SWIG: a software development tool that connects programs written in C and C++ with a variety of high-level programming languages."
 PKG_LONGDESC="SWIG is a software development tool that connects programs written in C and C++ with a variety of high-level programming languages."
