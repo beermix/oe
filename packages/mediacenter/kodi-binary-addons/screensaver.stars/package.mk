@@ -17,11 +17,11 @@
 ################################################################################
 
 PKG_NAME="screensaver.stars"
-PKG_VERSION="28bf79d"
+#PKG_VERSION="28bf79d"
+PKG_VERSION="9d8e966"
 PKG_SITE="https://github.com/notspiff/screensaver.stars"
-PKG_URL="https://github.com/notspiff/screensaver.stars/archive/$PKG_VERSION.tar.gz"
+PKG_GIT_URL="https://github.com/notspiff/screensaver.stars"
 PKG_DEPENDS_TARGET="toolchain kodi-platform"
-
 PKG_SECTION=""
 PKG_SHORTDESC="screensaver.stars"
 PKG_LONGDESC="screensaver.stars"
@@ -34,14 +34,8 @@ if [ "$OPENGL" = "no" ] ; then
   exit 0
 fi
 
-configure_target() {
-  cmake -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
-        -DCMAKE_INSTALL_PREFIX=/usr \
-        -DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
-        -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
-        ..
-}
-
+PKG_CMAKE_OPTS_TARGET="-DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
+        -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr"
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/
   cp -R $PKG_BUILD/.install_pkg/usr/share/kodi/addons/$PKG_NAME/* $ADDON_BUILD/$PKG_ADDON_ID/
