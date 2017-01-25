@@ -46,17 +46,6 @@ else
   MESA_VDPAU="--disable-vdpau"
 fi
 
-XA_CONFIG="--disable-xa"
-for drv in $GRAPHIC_DRIVERS; do
-  [ "$drv" = "vmware" ] && XA_CONFIG="--enable-xa"
-done
-
-if [ "$OPENGLES_SUPPORT" = "yes" ]; then
-  MESA_GLES="--enable-gles2"
-else
-  MESA_GLES="--disable-gles2"
-fi
- 
 PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            CXX_FOR_BUILD=$HOST_CXX \
                            CFLAGS_FOR_BUILD= \
@@ -67,13 +56,16 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            DRI_DRIVER_SEARCH_DIR=/usr/lib/dri \
                            --disable-debug \
                            --enable-silent-rules \
+                           --disable-profile \
                            --disable-mangling \
                            --enable-texture-float \
                            --enable-asm \
                            --disable-selinux \
+                           --disable-libglvnd \
+                           --disable-lmsensors \
                            --enable-opengl \
                            --disable-gles1 \
-                           $MESA_GLES \
+                           --enable-gles2 \
                            --enable-dri \
                            --enable-dri3 \
                            --enable-glx \
@@ -94,15 +86,19 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --enable-shader-cache \
                            --enable-driglx-direct \
                            --enable-glx-tls \
+                           --disable-glx-read-only-text \
                            $MESA_GALLIUM_LLVM \
+                           --disable-gallium-extra-hud \
+                           --disable-valgrind \
+                           --with-sysroot=$SYSROOT_PREFIX \
+                           --with-sha1=libcrypto \
                            --with-gl-lib-name=GL \
                            --with-osmesa-lib-name=OSMesa \
                            --with-gallium-drivers=$GALLIUM_DRIVERS \
                            --with-dri-driverdir=/usr/lib/dri \
                            --with-dri-searchpath=/usr/lib/dri \
                            --with-dri-drivers=$DRI_DRIVERS \
-                           --with-vulkan-drivers=no \
-                           --with-sysroot=$SYSROOT_PREFIX"
+                           --without-vulkan-drivers"
 
 pre_configure_target() {
   export LIBS="-lxcb-dri3 -lxcb-present -lxcb-sync -lxshmfence -lz"

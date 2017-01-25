@@ -35,7 +35,7 @@ PKG_CONFIGURE_OPTS_TARGET="export ac_cv_have_abstract_sockets=yes \
                            --disable-asserts \
                            --enable-checks \
                            --disable-tests \
-                           --enable-ansi \
+                           --disable-ansi \
                            --disable-xml-docs \
                            --disable-doxygen-docs \
                            --enable-abstract-sockets \
