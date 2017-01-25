@@ -4,7 +4,7 @@ PKG_GIT_URL="https://github.com/t6x/reaver-wps-fork-t6x"
 PKG_DEPENDS_TARGET="toolchain sqlite libpcap"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 post_unpack() {
   cp -r $PKG_BUILD/src/* $PKG_BUILD/
