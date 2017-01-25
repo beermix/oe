@@ -31,8 +31,7 @@
                          --libexecdir=/usr/lib \
                          --localstatedir=/var \
                          --disable-static \
-                         --enable-shared \
-                         --disable-option-checking"
+                         --enable-shared"
 
   TARGET_CMAKE_OPTS="-DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
                      -DCMAKE_INSTALL_PREFIX=/usr \
