@@ -18,11 +18,14 @@
 
 PKG_NAME="vdr-plugin-epgfixer"
 PKG_VERSION="1ad4aaf"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://projects.vdr-developer.org/projects/plg-epgfixer"
 PKG_GIT_URL="https://projects.vdr-developer.org/git/vdr-plugin-epgfixer.git"
 PKG_GIT_BRANCH="master"
 PKG_DEPENDS_TARGET="toolchain vdr pcre"
-
+PKG_PRIORITY="optional"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="vdr-plugin-epgfixer"
 PKG_LONGDESC="Plugin for modifying EPG data using regular expressions."
