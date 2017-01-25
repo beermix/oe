@@ -54,7 +54,7 @@
    PROJECT_CFLAGS="-mmmx -msse -msse2 -msse3 -mssse3 -mcx16 -msahf -maes -mpclmul -mpopcnt -mavx -msse4.2 -msse4.1 -mrdrnd -mf16c -mfsgsbase -mfxsr -mxsave -mxsaveopt -mtune=ivybridge -mfpmath=sse"
 
   # LTO (Link Time Optimization) support
-    LTO_SUPPORT="no"
+    LTO_SUPPORT="yes"
 
   # GOLD (Google Linker) support
     GOLD_SUPPORT="yes"

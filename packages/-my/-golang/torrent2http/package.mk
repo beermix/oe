@@ -5,6 +5,7 @@ PKG_DEPENDS_TARGET="toolchain go:host libtorrent-rasterbar boost openssl swig:ho
 PKG_SECTION="tools"
 PKG_AUTORECONF="no"
 
+strip_lto
 
 configure_target() {
   export GOOS=linux
@@ -18,7 +19,6 @@ configure_target() {
   export PATH=$PATH:$GOROOT/bin
 }
  
-
 make_target() {
   mkdir -p bin
   $GOLANG get -v "github.com/anteo/libtorrent-go" "github.com/saintfish/chardet" "golang.org/x/net/html/charset" "golang.org/x/text/transform"
