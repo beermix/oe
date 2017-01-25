@@ -4,7 +4,7 @@ PKG_URL="https://github.com/arvidn/libtorrent/releases/download/libtorrent-1_0_1
 #PKG_VERSION="libtorrent-1_0_10"
 #PKG_GIT_URL="https://github.com/arvidn/libtorrent"
 PKG_DEPENDS_HOST="toolchain"
-PKG_DEPENDS_TARGET="toolchain openssl expat boost"
+PKG_DEPENDS_TARGET="toolchain openssl expat boost libiconv"
 PKG_SECTION="devel"
 PKG_USE_CMAKE="no"
 PKG_IS_ADDON="no"
@@ -23,7 +23,7 @@ pre_configure_target() {
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \
 			      --enable-python-binding \
-			      --without-libiconv \
+			      --with-libiconv \
 			      --disable-geoip \
 			      --with-boost=$SYSROOT_PREFIX/usr \
 			      --with-boost-libdir=$SYSROOT_PREFIX/usr/lib"

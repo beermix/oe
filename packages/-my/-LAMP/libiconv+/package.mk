@@ -22,7 +22,6 @@ PKG_VERSION="1.14"
 PKG_SITE="https://www.gnu.org/software/libiconv/"
 PKG_URL="http://ftp.gnu.org/pub/gnu/libiconv/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
-
 PKG_SECTION="security"
 PKG_SHORTDESC="libiconv library"
 PKG_LONGDESC="libiconv library"
