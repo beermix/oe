@@ -12,10 +12,8 @@ PKG_AUTORECONF="no"
 
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
-  export PYTHON_VERSION="2.7"
-  export PYTHON_CPPFLAGS="-I$SYSROOT_PREFIX/usr/include/python$PYTHON_VERSION"
-  export PYTHON_LDFLAGS="-L$SYSROOT_PREFIX/usr/lib/python$PYTHON_VERSION -lpython$PYTHON_VERSION"
-  export PYTHON_SITE_PKG="$SYSROOT_PREFIX/usr/lib/python$PYTHON_VERSION/site-packages"
+  CFLAGS="${CFLAGS} -O3 -ffast-math"
+  CXXFLAGS="${CXXFLAGS} -std=gnu++98 -O3"
   #./autotool.sh
   #sed -i 's/$PKG_CONFIG openssl --libs-only-/$PKG_CONFIG openssl --static --libs-only-/' ./configure
   #sed -i -e s/Windows.h/windows.h/ -e s/Wincrypt.h/wincrypt.h/ ./ed25519/src/seed.cpp
