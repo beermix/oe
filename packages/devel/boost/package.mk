@@ -43,8 +43,7 @@ makeinstall_host() {
 
 pre_configure_target() {
   export CFLAGS="$CFLAGS -fPIC -O3"
-  export CXXFLAGS="$CXXFLAGS -std=c++98 -fPIC -O3"
-  #export CXXFLAGS="$CXXFLAGS -std=c++14 -fPIC -O3"
+  export CXXFLAGS="$CXXFLAGS -fPIC -O3"
   #export LDFLAGS="$LDFLAGS -fPIC"
 }
 
@@ -54,8 +53,8 @@ configure_target() {
                   --with-bjam=$ROOT/$TOOLCHAIN/bin/bjam \
                   --with-python=$ROOT/$TOOLCHAIN/bin/python \
 
-  echo "using gcc : `$CC -v 2>&1  | tail -n 1 |awk '{print $3}'` : $CC  : <compileflags>\"$CFLAGS\" <linkflags>\"$LDFLAGS\" ;" \
-    > tools/build/src/user-config.jam
+  #echo "using gcc : `$CC -v 2>&1  | tail -n 1 |awk '{print $3}'` : $CC  : <compileflags>\"$CFLAGS\" <linkflags>\"$LDFLAGS\" ;" > tools/build/src/user-config.jam
+  echo "using gcc : `$CC 2>&1  | tail -n 1 |awk '{print $3}'` : $CC  : <compileflags>\"$CFLAGS\" ;" > tools/build/src/user-config.jam
 }
 
 make_target() {

@@ -12,8 +12,8 @@ PKG_AUTORECONF="no"
 
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
-  CFLAGS="${CFLAGS} -O3 -ffast-math"
-  CXXFLAGS="${CXXFLAGS} -std=gnu++98 -O3"
+  #export CFLAGS="$CFLAGS -ffast-math"
+  export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   #./autotool.sh
   #sed -i 's/$PKG_CONFIG openssl --libs-only-/$PKG_CONFIG openssl --static --libs-only-/' ./configure
   #sed -i -e s/Windows.h/windows.h/ -e s/Wincrypt.h/wincrypt.h/ ./ed25519/src/seed.cpp
