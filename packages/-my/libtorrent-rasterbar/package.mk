@@ -19,8 +19,7 @@ pre_configure_target() {
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \
-			      --enable-python-binding \
-			      --without-libiconv \
+			      --disable-shared \
 			      --disable-geoip \
 			      --with-boost=$SYSROOT_PREFIX/usr \
 			      --with-boost-libdir=$SYSROOT_PREFIX/usr/lib"

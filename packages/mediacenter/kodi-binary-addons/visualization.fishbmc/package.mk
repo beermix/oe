@@ -17,11 +17,11 @@
 ################################################################################
 
 PKG_NAME="visualization.fishbmc"
-PKG_VERSION="50c38c2"
+#PKG_VERSION="50c38c2"
+PKG_VERSION="9704420"
 PKG_SITE="http://www.kodi.tv"
-PKG_URL="https://github.com/notspiff/visualization.fishbmc/archive/$PKG_VERSION.tar.gz"
+PKG_URL="https://github.com/notspiff/visualization.fishbmc"
 PKG_DEPENDS_TARGET="toolchain kodi-platform"
-
 PKG_SECTION=""
 PKG_SHORTDESC="visualization.fishbmc"
 PKG_LONGDESC="visualization.fishbmc"
@@ -34,13 +34,8 @@ if [ "$OPENGL" = "no" ] ; then
   exit 0
 fi
 
-configure_target() {
-  cmake -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
-        -DCMAKE_INSTALL_PREFIX=/usr \
-        -DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
-        -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
-        ..
-}
+PKG_CMAKE_OPTS_TARGET="-DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
+        -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr"
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/

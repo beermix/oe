@@ -17,11 +17,11 @@
 ################################################################################
 
 PKG_NAME="visualization.projectm"
-PKG_VERSION="8ca7efb"
+#PKG_VERSION="8ca7efb"
+PKG_VERSION="8064b36"
 PKG_SITE="https://github.com/notspiff/visualization.projectm"
-PKG_URL="https://github.com/notspiff/visualization.projectm/archive/$PKG_VERSION.tar.gz"
+PKG_GIT_URL="https://github.com/notspiff/visualization.projectm"
 PKG_DEPENDS_TARGET="toolchain kodi-platform libprojectM"
-
 PKG_SECTION=""
 PKG_SHORTDESC="visualization.projectm"
 PKG_LONGDESC="visualization.projectm"
@@ -38,13 +38,8 @@ pre_configure_target() {
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed||"`
 }
 
-configure_target() {
-  cmake -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
-        -DCMAKE_INSTALL_PREFIX=/usr \
-        -DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
-        -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
-        ..
-}
+PKG_CMAKE_OPTS_TARGET="-DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
+        -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr"
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/
