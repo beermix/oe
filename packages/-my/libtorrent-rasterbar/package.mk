@@ -14,7 +14,7 @@ pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   sh autotool.sh
   #export CFLAGS="$CFLAGS -O3 -ffast-math"
-  #export CXXFLAGS="$CXXFLAGS -std=gnu++98"
+  export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   #./autotool.sh
   #sed -i 's/$PKG_CONFIG openssl --libs-only-/$PKG_CONFIG openssl --static --libs-only-/' ./configure
   #sed -i -e s/Windows.h/windows.h/ -e s/Wincrypt.h/wincrypt.h/ ./ed25519/src/seed.cpp
