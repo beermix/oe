@@ -31,13 +31,7 @@ PKG_AUTORECONF="no"
 
 PKG_MAINTAINER="none"
 
-PKG_CONFIGURE_OPTS_TARGET="--with-icu=yes \
-			      --with-coretext=no \
-			      --with-uniscribe=no \
-			      --with-graphite2=no \
-			      --with-cairo=yes \
-			      --with-freetype=yes \
-			      --with-glib=yes"
+PKG_CONFIGURE_OPTS_TARGET="--with-icu=yes"
 
 pre_configure_target() {
   export LIBS="-ldl"
