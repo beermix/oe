@@ -15,7 +15,7 @@ pre_make_target() {
   export CGO_ENABLED=1
   export CGO_NO_EMULATION=1
   export CGO_CFLAGS=$CFLAGS
-  export LDFLAGS="-s -w -extld $CC"
+  export LDFLAGS="-s -w -linkmode external -extld $CC"
   export GOLANG=$ROOT/$TOOLCHAIN/lib/golang/bin/go
   export GOPATH=$ROOT/$PKG_BUILD.gopath:$ROOT/$PKG_BUILD/vendor/
   export GOROOT=$ROOT/$TOOLCHAIN/lib/golang
@@ -26,7 +26,7 @@ pre_make_target() {
 
 make_target() {
   mkdir -p bin
-  #go get -v "github.com/ncw/rclone/cmd" "github.com/ncw/rclone/cmd/all" "github.com/ncw/rclone/fs/all"
+  go get -v "github.com/ncw/rclone/cmd" "github.com/ncw/rclone/cmd/all" "github.com/ncw/rclone/fs/all"
   $GOLANG build -v -o bin/$PKG_NAME -a -ldflags "$LDFLAGS" ./
   $STRIP bin/$PKG_NAME
 }

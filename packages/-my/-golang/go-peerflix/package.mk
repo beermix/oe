@@ -6,7 +6,8 @@ PKG_KEEP_CHECKOUT="no"
 PKG_SECTION="tools"
 PKG_AUTORECONF="no"
 
-CONCURRENCY_MAKE_LEVEL=1
+PKG_IS_ADDON="no"
+PKG_AUTORECONF="no"
 
 pre_make_target() {
   export GOOS=linux
@@ -16,15 +17,15 @@ pre_make_target() {
   export CGO_CFLAGS=$CFLAGS
   export LDFLAGS="-s -w -linkmode external -extld $CC"
   export GOLANG=$ROOT/$TOOLCHAIN/lib/golang/bin/go
-  export GOPATH=$ROOT/$PKG_BUILD.gopath:$ROOT/$PKG_BUILD/vendor/
+  export GOPATH=$ROOT/$PKG_BUILD.gopath:$ROOT/$PKG_BUILD/
   export GOROOT=$ROOT/$TOOLCHAIN/lib/golang
   export PATH=$PATH:$GOROOT/bin
 }
- 
+
 make_target() {
   mkdir -p bin
-  go get -v "github.com/Sioro-Neoku/go-peerflix"
-  $GOLANG build -buildmode=pie -v -o bin/$PKG_NAME -a -ldflags "$LDFLAGS" ./
+  go get -v "github.com/anacrolix/torrent" "github.com/anacrolix/torrent/iplist" "github.com/dustin/go-humanize"
+  $GOLANG build -v -o bin/$PKG_NAME -a -ldflags "$LDFLAGS" ./
   $STRIP bin/$PKG_NAME
 }
 
@@ -36,6 +37,3 @@ post_make_target() {
   mkdir -p $INSTALL/usr/bin/
   cp $ROOT/$PKG_BUILD/bin/$PKG_NAME $INSTALL/usr/bin/
 }
-
-CFLAGS="-march=corei7-avx -mtune=corei7-avx -O3 -pipe"
-LDFLAGS="-Wl,-O1 -Wl,--as-needed"
