@@ -52,9 +52,8 @@ configure_target() {
                   --with-bjam=$ROOT/$TOOLCHAIN/bin/bjam \
                   --with-python=$ROOT/$TOOLCHAIN/bin/python \
 
-  #echo "using gcc : `$CC -v 2>&1  | tail -n 1 |awk '{print $3}'` : $CC  : <compileflags>\"$CFLAGS\" <linkflags>\"$LDFLAGS\" ;" > tools/build/src/user-config.jam
-  #echo "using gcc : `$CC 2>&1  | tail -n 1 |awk '{print $3}'` : $CC  : <compileflags>\"$CFLAGS\" ;" > tools/build/src/user-config.jam
-  echo "using gcc : `$CC -dumpversion` : $CXX : <cxxflags>\"$CXXFLAGS\" <linkflags>\"$LDFLAGS\" ;" > tools/build/src/user-config.jam
+  echo "using gcc : `$CC -v 2>&1  | tail -n 1 |awk '{print $3}'` : $CC  : <compileflags>\"$CFLAGS\" <linkflags>\"$LDFLAGS\" ;" \
+    > tools/build/src/user-config.jam
 }
 
 make_target() {
@@ -62,7 +61,7 @@ make_target() {
 }
 
 makeinstall_target() {
-  $ROOT/$TOOLCHAIN/bin/bjam -d2 --toolset=gcc link=static runtime-link=static target-os=linux variant=release threading=multi debug-symbols=off \
+  $ROOT/$TOOLCHAIN/bin/bjam -d2 --toolset=gcc link=static target-os=linux variant=release threading=multi debug-symbols=off \
                                 --prefix=$SYSROOT_PREFIX/usr \
                                 --ignore-site-config \
                                 --layout=system \
@@ -74,6 +73,7 @@ makeinstall_target() {
                                 --with-python \
                                 --with-program_options \
                                 --with-signals \
+                                --with-atomic \
                                 --with-exception \
                                 --with-date_time \
                                 --with-chrono \
