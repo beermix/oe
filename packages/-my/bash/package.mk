@@ -7,7 +7,6 @@ PKG_AUTORECONF="no"
 
 pre_configure_target() {
   export LIBS="-lterminfo -ltermcap"
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--bindir=/bin \
@@ -15,7 +14,7 @@ PKG_CONFIGURE_OPTS_TARGET="--bindir=/bin \
                            --enable-readline \
                            --without-bash-malloc \
                            --with-installed-readline \
-                           --enable-static-link"
+                           --disable-static-link"
 			   
 post_makeinstall_target() {
   mkdir -p $INSTALL/bin
