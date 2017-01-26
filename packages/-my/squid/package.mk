@@ -3,7 +3,7 @@ PKG_VERSION="3.5.23"
 PKG_URL="http://www.squid-cache.org/Versions/v3/3.5/squid-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain fuse netbsd-curses openssl glib libcap libnetfilter_conntrack"
 PKG_SECTION="tools"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_epoll_works=yes \
@@ -29,12 +29,10 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_epoll_works=yes \
                            --enable-useragent-log \
                            --enable-cache-digests \
                            --enable-referer-log \
-                           --enable-arp-acl \
                            --enable-htcp \
                            --enable-carp \
                            --enable-epoll \
                            --with-large-files \
-                           --enable-arp-acl \
                            --with-default-user=proxy \
                            --enable-async-io \
                            --enable-truncate \
@@ -55,6 +53,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_epoll_works=yes \
                            --infodir=/storage/.config/squid \     
                            --localedir=/storage/.config/squid"
                            
-#post_makeinstall_target() {
-#  rm -rf $INSTALL/storage
-#}
+post_makeinstall_target() {
+  rm -rf $INSTALL/storage
+}
