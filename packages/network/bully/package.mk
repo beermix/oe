@@ -11,20 +11,6 @@ post_unpack() {
 }
 
 pre_configure_target() {
-   cd $ROOT/$PKG_BUILD
    export MAKEFLAGS="-j1"
-   strip_lto
-   export LDFLAGS="-ldl -lpthread -lsqlite3"
-   mkdir -p $INSTALL_DEV/usr/bin/
-   mkdir -p $INSTALL/usr/bin/
 }
 
-
-PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_sqlite3_sqlite3_open=yes \
-			      --sysconfdir=/storage/.config \
-			      --datarootdir=/storage/.config"
-
-post_makeinstall_target() {
-   cp wash $INSTALL/usr/bin/wash2
-   cp reaver $INSTALL/usr/bin/reaver2
-}
