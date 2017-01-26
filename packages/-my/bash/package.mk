@@ -15,12 +15,33 @@ PKG_CONFIGURE_OPTS_TARGET="bash_cv_getcwd_malloc=yes \
 			      bash_cv_func_sigsetjmp=present \
 			      bash_cv_printf_a_format=yes \
 			      bash_cv_getenv_redef=no \
-			      --enable-static-link \
-			      --without-bash-malloc \
+                           --enable-static \
+                           --disable-shared \
                            --bindir=/bin \
                            --with-curses \
                            --enable-readline \
-                           --with-installed-readline"  
+                           --without-bash-malloc \
+                           --with-installed-readline \
+                           --disable-static-link \
+                           --enable-casemod-expansions \
+                           --enable-process-substitution \
+                           --enable-coprocesses \
+                           --enable-history \
+                           --enable-cond-regexp \
+                           --enable-alias \
+                           --enable-select \
+                           --enable-net-redirections \
+                           --enable-dparen-arithmetic \
+                           --enable-directory-stack \
+                           --enable-direxpand-default \
+                           --enable-cond-command \
+                           --enable-command-timing \
+                           --enable-bang-history \
+                           --enable-array-variables \
+                           --enable-glob-asciiranges-default \
+                           --enable-restricted \
+                           --enable-job-control \
+                           --with-sysroot=$SYSROOT_PREFIX"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/bin/bashbug
