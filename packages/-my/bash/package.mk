@@ -7,7 +7,6 @@ PKG_AUTORECONF="no"
 
 pre_configure_target() {
   export LIBS="-ltermcap -lcurses"
-  export CFLAGS="$CFLAGS -Wformat -Werror=format-security -Wall -no-pie -Wno-parentheses -Wno-format-security"
   CONCURRENCY_MAKE_LEVEL=1
 }
 
@@ -39,9 +38,10 @@ PKG_CONFIGURE_OPTS_TARGET="bash_cv_getcwd_malloc=yes \
                            --enable-bang-history \
                            --enable-array-variables \
                            --enable-restricted \
+                           --enable-largefile \
                            --enable-job-control"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/bin/bashbug
   ln -s /bin/bash $INSTALL/bin/sh
-}
+ }
