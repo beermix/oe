@@ -9,38 +9,13 @@ pre_configure_target() {
   export LIBS="-lterminfo -ltermcap"
 }
 
-PKG_CONFIGURE_OPTS_TARGET="bash_cv_getcwd_malloc=yes \
-			      bash_cv_job_control_missing=present \
-			      bash_cv_sys_named_pipes=present \
-			      bash_cv_func_sigsetjmp=present \
-			      bash_cv_getenv_redef=no \
-                           --disable-shared \
-                           --bindir=/bin \
+PKG_CONFIGURE_OPTS_TARGET="--bindir=/bin \
                            --with-curses \
                            --enable-readline \
                            --without-bash-malloc \
-                           --with-installed-readline \
-                           --disable-static-link \
-                           --enable-casemod-expansions \
-                           --enable-process-substitution \
-                           --enable-coprocesses \
-                           --enable-history \
-                           --enable-cond-regexp \
-                           --enable-alias \
-                           --enable-select \
-                           --enable-net-redirections \
-                           --enable-dparen-arithmetic \
-                           --enable-directory-stack \
-                           --enable-direxpand-default \
-                           --enable-cond-command \
-                           --enable-command-timing \
-                           --enable-bang-history \
-                           --enable-array-variables \
-                           --enable-glob-asciiranges-default \
-                           --enable-restricted \
-                           --enable-job-control"
+                           --with-installed-readline"
 			   
 post_makeinstall_target() {
+  mkdir -p $INSTALL/bin
   ln -sfv bash $INSTALL/bin/rbash
-  ln -sfv dash $INSTALL/bin/sh
 }

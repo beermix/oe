@@ -5,12 +5,6 @@ PKG_DEPENDS_TARGET="toolchain netbsd-curses readline"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--bindir=/bin \
-			      --enable-fnmatch \
-			      --without-libedit \
-			      --enable-glob"
-
 post_makeinstall_target() {
-  mkdir -p $INSTALL/bin
   ln -sfv dash $INSTALL/bin/sh
 }
