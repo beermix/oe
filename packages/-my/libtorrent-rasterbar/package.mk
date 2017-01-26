@@ -20,8 +20,8 @@ pre_configure_target() {
   sed -iv -e s/Windows.h/windows.h/ -e s/Wincrypt.h/wincrypt.h/ $ROOT/$PKG_BUILD/ed25519/src/seed.cpp
 }
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared \
-			      --disable-python-binding \
+PKG_CONFIGURE_OPTS_TARGET="--enable-static \
+			      --enable-python-binding \
 			      --without-libiconv \
 			      --disable-geoip \
 			      --enable-silent-rules \
