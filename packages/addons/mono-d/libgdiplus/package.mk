@@ -32,10 +32,6 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-shared \
 			      --with-libjpeg \
                            --with-libtiff"
                            
-pre_configure_taret() {
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
-}
-
 makeinstall_target() {
   make install DESTDIR=$INSTALL
 }

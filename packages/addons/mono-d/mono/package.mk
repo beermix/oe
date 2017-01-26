@@ -62,7 +62,7 @@ configure_target() {
   cp -PR ../* .
   strip_lto
   ./configure $options --host=$TARGET_NAME \
-                       --disable-mcs-build
+                       --enable-mcs-build
 }
 
 makeinstall_target() {
