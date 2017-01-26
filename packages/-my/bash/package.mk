@@ -6,15 +6,15 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 pre_configure_target() {
-  export LIBS="-ltermcap -lcurses" 
+  export LIBS="-ltermcap -lcurses"
+  export CFLAGS="$CFLAGS -Wformat -Werror=format-security -Wall -no-pie -Wno-parentheses -Wno-format-security"
+  CONCURRENCY_MAKE_LEVEL=1
 }
 
 PKG_CONFIGURE_OPTS_TARGET="bash_cv_getcwd_malloc=yes \
 			      bash_cv_job_control_missing=present \
 			      bash_cv_sys_named_pipes=present \
 			      bash_cv_func_sigsetjmp=present \
-			      bash_cv_printf_a_format=yes \
-			      bash_cv_getenv_redef=no \
                            --enable-static \
                            --disable-shared \
                            --bindir=/bin \
@@ -38,12 +38,10 @@ PKG_CONFIGURE_OPTS_TARGET="bash_cv_getcwd_malloc=yes \
                            --enable-command-timing \
                            --enable-bang-history \
                            --enable-array-variables \
-                           --enable-glob-asciiranges-default \
                            --enable-restricted \
-                           --enable-job-control \
-                           --with-sysroot=$SYSROOT_PREFIX"
+                           --enable-job-control"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/bin/bashbug
-  ln -sf /bin/bash $INSTALL/bin/sh
+  ln -s /bin/bash $INSTALL/bin/sh
 }
