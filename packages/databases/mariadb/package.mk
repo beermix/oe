@@ -30,7 +30,7 @@ PKG_LONGDESC="MariaDB is a community-developed fork and a drop-in replacement fo
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_MARIADB_SERVER="yes"
+PKG_MARIADB_SERVER="no"
 
 # MariaDB Feature set. Selection of features. Options are
 # - xsmall : 
@@ -148,7 +148,7 @@ configure_target() {
         -DINSTALL_SQLBENCHDIR=share/mysql/bench \
         -DINSTALL_SUPPORTFILESDIR=share/mysql/support-files \
         -DMYSQL_DATADIR=/storage/mysql \
-        -DMYSQL_UNIX_ADDR=/var/run/mysqld.sock \
+        -DMYSQL_UNIX_ADDR=/var/tmp/mysql.socket \
         -DWITH_EXTRA_CHARSETS=all \
         -DTOKUDB_OK=0 \
         -DDISABLE_LIBMYSQLCLIENT_SYMBOL_VERSIONING=TRUE \
@@ -156,7 +156,7 @@ configure_target() {
         -DWITH_READLINE=OFF \
         -DWITH_PCRE=bundled \
         -DWITH_ZLIB=bundled \
-        -DWITH_SYSTEMD=OFF \
+        -DWITH_SYSTEMD=ON \
         -DWITH_LIBWRAP=OFF \
         -DSECURITY_HARDENED=OFF \
         -DWITH_SSL=$SYSROOT_PREFIX/usr \

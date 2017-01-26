@@ -28,5 +28,5 @@ PKG_CONFIGURE_OPTS_TARGET="bash_cv_getcwd_malloc=yes \
 			   
 post_makeinstall_target() {
   rm -rf $INSTALL/bin/bashbug
-  ln -sf $INSTALL/bin/bash $INSTALL/bin/sh
+  ln -sf /bin/bash $INSTALL/bin/sh
 }

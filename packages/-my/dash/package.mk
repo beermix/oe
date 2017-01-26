@@ -10,3 +10,7 @@ PKG_CONFIGURE_OPTS_TARGET="--bindir=/bin \
 			      --enable-fnmatch \
 			      --without-libedit \
 			      --enable-glob"
+	      
+post_makeinstall_target() {
+  mv $INSTALL/bin/dash $INSTALL/bin/sh
+}
