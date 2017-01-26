@@ -7,8 +7,7 @@ PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--bindir=/bin \
 			      --enable-fnmatch \
-			      --without-libedit \
-			      --enable-glob"
+			      --without-libedit"
 
 post_makeinstall_target() {
   mkdir -p $INSTALL/bin
