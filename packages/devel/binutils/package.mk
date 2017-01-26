@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="binutils"
-PKG_VERSION="2964cf5"
+PKG_VERSION="8e87a59"
 PKG_SITE="http://www.gnu.org/software/binutils/binutils.html"
 PKG_GIT_URL="git://sourceware.org/git/binutils-gdb.git"
 PKG_DEPENDS_HOST="ccache:host bison:host flex:host linux:host"
@@ -47,14 +47,10 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --disable-shared \
                          --disable-gdb \
                          --disable-sim \
-                         --with-pic \
+                         --with-system-zlib \
                          --enable-poison-system-directories"
 
 makeinstall_host() {
   cp -v ../include/libiberty.h $SYSROOT_PREFIX/usr/include
-  make install
-}
-
-pre_configure_host() {
-  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $ROOT/$PKG_BUILD/libiberty/configure
+  make install -j1
 }
