@@ -1,6 +1,6 @@
 PKG_NAME="bully"
 PKG_VERSION="1.0-22"
-PKG_URL="https://dl.dropboxusercontent.com/s/wec0256lxwboku5/bully_1.0-22.orig.tar.gz"
+PKG_URL="https://dl.dropboxusercontent.com/s/s8qsadctg9m00tr/bully-1.0-22.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain sqlite libcap"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
