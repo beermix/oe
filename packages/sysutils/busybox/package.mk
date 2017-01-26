@@ -21,7 +21,7 @@ PKG_VERSION="1.26.2"
 PKG_SITE="http://www.busybox.net"
 PKG_URL="http://busybox.net/downloads/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain busybox:host hdparm dosfstools e2fsprogs zip unzip pciutils usbutils parted procps-ng coreutils bash"
+PKG_DEPENDS_TARGET="toolchain busybox:host hdparm dosfstools e2fsprogs zip unzip pciutils usbutils parted procps-ng coreutils bash time"
 PKG_DEPENDS_INIT="toolchain"
 PKG_SECTION="system"
 PKG_SHORTDESC="BusyBox: The Swiss Army Knife of Embedded Linux"
@@ -160,9 +160,12 @@ makeinstall_target() {
     ln -sf /bin/busybox $INSTALL/usr/bin/env          #/usr/bin/env is needed for most python scripts
     cp $PKG_DIR/scripts/pastebinit $INSTALL/usr/bin/
     ln -sf pastebinit $INSTALL/usr/bin/paste
+    
     rm $INSTALL/bin/bash
     rm $INSTALL/bin/tar
     rm $INSTALL/bin/time
+    rm $INSTALL/bin/sh
+    
     
   mkdir -p $INSTALL/usr/lib/openelec
     cp $PKG_DIR/scripts/fs-resize $INSTALL/usr/lib/openelec
