@@ -44,7 +44,7 @@ else
 fi
 
 # add some other libraries which are need by php extensions
-PKG_DEPENDS_TARGET="toolchain zlib pcre curl libxml2 openssl libmcrypt libiconv httpd"
+PKG_DEPENDS_TARGET="toolchain zlib pcre curl libxml2 openssl libmcrypt libiconv"
 
 PKG_SECTION="web"
 PKG_SHORTDESC="php: Scripting language especially suited for Web development"

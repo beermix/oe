@@ -22,13 +22,13 @@ PKG_NAME="httpd"
 PKG_VERSION="2.4.23"
 PKG_SITE="http://www.linuxfromscratch.org/blfs/view/svn/server/apache.html"
 PKG_URL="http://archive.apache.org/dist/httpd/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain libressl pcre"
+PKG_DEPENDS_TARGET="toolchain openssl pcre expat"
 PKG_SECTION="web"
 PKG_SHORTDESC="The Apache web server."
 PKG_LONGDESC="The Apache web server."
 PKG_MAINTAINER="vpeter"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 # If you still desire to serve pages as root
 APACHE_RUN_AS_ROOT=
@@ -37,7 +37,7 @@ APACHE_RUN_AS_ROOT=
 configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
-  strip_lto
+  #strip_lto
 
 
   if [ "$APACHE_RUN_AS_ROOT" == "yes" ]; then
@@ -50,7 +50,7 @@ configure_target() {
   export CFLAGS="$CFLAGS -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64"
 
   export CFLAGS="$CFLAGS -I$SYSROOT_PREFIX/usr/include"
-  export LDFLAGS="$LDFLAGS -L$SYSROOT_PREFIX/usr/lib -lpthread -ldl -expat"
+  export LDFLAGS="$LDFLAGS -L$SYSROOT_PREFIX/usr/lib -lpthread"
 
 if [ "$TARGET_ARCH" = x86_64 ]; then
 	SIZEOF_SIZES="ac_cv_sizeof_struct_iovec=16"

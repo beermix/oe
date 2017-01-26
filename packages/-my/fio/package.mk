@@ -7,9 +7,5 @@ PKG_AUTORECONF="no"
 
 configure_target() {
   cd $ROOT/$PKG_BUILD
-  ./configure --enable-lex \
-  		--prefix=/usr \
-  		--esx \
-  		--build-static \
-  		--cc=$CC
+  ./configure --enable-lex --esx --build-static --cc=$CC
 }
