@@ -17,10 +17,9 @@
 ################################################################################
 
 PKG_NAME="binutils"
-PKG_VERSION="24c87ca"
+PKG_VERSION="2964cf5"
 PKG_SITE="http://www.gnu.org/software/binutils/binutils.html"
 PKG_GIT_URL="git://sourceware.org/git/binutils-gdb.git"
-PKG_GIT_BRANCH="binutils-2_28-branch"
 PKG_DEPENDS_HOST="ccache:host bison:host flex:host linux:host"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="binutils: A GNU collection of binary utilities"
