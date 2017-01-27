@@ -96,7 +96,9 @@ pre_configure_target() {
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-fstack-protector-strong||g"`
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed||"`
-
+  
+  unset CPPFLAGS
+  
   unset LD_LIBRARY_PATH
 
 # set some CFLAGS we need
