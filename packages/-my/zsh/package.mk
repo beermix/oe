@@ -12,14 +12,11 @@ pre_configure_target() {
 
 PKG_CONFIGURE_OPTS_TARGET="--bindir=/bin \
 			      --enable-multibyte \
-			      --disable-silent-rules \
-			      --enable-cap \
 			      --enable-pcre \
 			      --disable-ansi2knr \
 			      --disable-dynamic \
 			      --sysconfdir=/storage/.config \
 			      --with-term-lib=ncursesw \
-			      --enable-etcdir \
 			      --enable-function-subdirs \
 			      --with-tcsetpgrp \
 			      --enable-gdbm \
@@ -29,9 +26,5 @@ PKG_CONFIGURE_OPTS_TARGET="--bindir=/bin \
 			      --with-term-lib=tinfo \
 			      --disable-dynamic-nss \
 			      --disable-zsh-debug \
+			      --disable-cap \
 			      --enable-unicode9"
-
-post_makeinstall_target() {
-  rm $INSTALL/bin/zsh-5*
-  rm -rf $INSTALL/usr/share/zsh/$PKG_VERSION/help
-}

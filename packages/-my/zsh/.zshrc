@@ -499,4 +499,4 @@ export HISTFILE="$HOME/.cache/.zsh-history"
 export REPORTTIME=3 # display commands with execution time >= 3 seconds
 #setop xtrace
 
-export PATH="$HOME/node_modules/.bin/:$PATH"alias crashlog='paste /storage/.kodi/temp/kodi_crashlog_20160818004925.log'
+export PATH="$PATH:/storage/.bin"
