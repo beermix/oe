@@ -1,6 +1,6 @@
 PKG_NAME="bully"
-PKG_VERSION="c110c39"
-PKG_GIT_URL="https://github.com/aanarchyy/bully"
+PKG_VERSION="1.0-22"
+PKG_URL="https://dl.dropboxusercontent.com/s/s8qsadctg9m00tr/bully-1.0-22.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain libcap"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
