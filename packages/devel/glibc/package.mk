@@ -35,7 +35,6 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/bash \
                            ac_cv_prog_MAKEINFO= \
                            libc_cv_forced_unwind=yes \
                            libc_cv_ssp=no \
-                           --with-pkgversion="OE" \
                            --libexecdir=/usr/lib/glibc \
                            --cache-file=config.cache \
                            --disable-profile \
@@ -105,9 +104,8 @@ pre_configure_target() {
   unset LD_LIBRARY_PATH
 
 # set some CFLAGS we need
-  export CFLAGS="-O2 -g"
-  export CPPFLAGS=""
-  export CXXFLAGS="-O2"
+  export CFLAGS="$CFLAGS -g -fno-stack-protector"
+  export CXXFLAGS="$CFLAGS"
 
   export OBJDUMP_FOR_HOST=objdump
 
