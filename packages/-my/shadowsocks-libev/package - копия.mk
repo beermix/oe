@@ -5,9 +5,12 @@ PKG_DEPENDS_TARGET="toolchain mbedtls pcre libsodium udns libev"
 #PKG_DEPENDS_TARGET="toolchain pcre mbedtls"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-static \
 			      --disable-ssp \
-			      --disable-documentation"
+			      --enable-silent-rules \
+			      --disable-documentation \
+			      --disable-system-shared-lib \
+			      --with-pcre=$SYSROOT_PREFIX/usr"
