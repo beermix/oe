@@ -27,6 +27,6 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-utf8 \
 			      --sysconfdir=/storage/.config/nano"
 
 post_makeinstall_target() {
-  rm -rf $INSTALL/usr/bin/rnano
+  #rm -rf $INSTALL/usr/bin/rnano
   rm -rf $INSTALL/storage
 }
