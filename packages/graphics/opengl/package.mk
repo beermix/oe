@@ -26,7 +26,7 @@ case $OPENGL in
     PKG_SITE="http://www.openelec.tv"
     PKG_URL=""
     PKG_DEPENDS_TARGET="toolchain $OPENGL"
-    
+    PKG_PRIORITY="optional"
     PKG_SECTION="virtual"
     PKG_SHORTDESC="opengl: virtual package to build OpenGL(X/ES) support"
     PKG_LONGDESC="opengl is a virtual package to build OpenGL(X/ES) support."
@@ -39,7 +39,7 @@ case $OPENGL in
     PKG_SITE="http://www.freescale.com"
     PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.xz"
     PKG_DEPENDS_TARGET="toolchain gpu-viv-g2d"
-    
+    PKG_PRIORITY="optional"
     PKG_SECTION="graphics"
     PKG_SHORTDESC="gpu-viv-bin-mx6q: OpenGL-ES and VIVANTE driver for imx6q"
     PKG_LONGDESC="gpu-viv-bin-mx6q: OpenGL-ES and VIVANTE driver for imx6q"
@@ -52,7 +52,7 @@ case $OPENGL in
     PKG_SITE="http://www.freescale.com"
     PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.xz"
     PKG_DEPENDS_TARGET="toolchain"
-    
+    PKG_PRIORITY="optional"
     PKG_SECTION="graphics"
     PKG_SHORTDESC="opengl-imx-gpu-viv: OpenGL-ES and VIVANTE driver for imx6q"
     PKG_LONGDESC="opengl-imx-gpu-viv: OpenGL-ES and VIVANTE driver for imx6q"
@@ -65,7 +65,7 @@ case $OPENGL in
     PKG_SITE="http://openlinux.amlogic.com:8000/download/ARM/filesystem/"
     PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.xz"
     PKG_DEPENDS_TARGET="toolchain"
-    
+    PKG_PRIORITY="optional"
     PKG_SECTION="graphics"
     PKG_SHORTDESC="opengl-meson6: OpenGL ES pre-compiled libraries for Mali 400 GPUs found in Amlogic Meson6 SoCs"
     PKG_LONGDESC="opengl-meson6: OpenGL ES pre-compiled libraries for Mali 400 GPUs found in Amlogic Meson6 SoCs. The libraries could be found in a Linux buildroot released by Amlogic at http://openlinux.amlogic.com:8000/download/ARM/filesystem/. See the opengl package."
@@ -78,7 +78,7 @@ case $OPENGL in
     PKG_SITE="http://openlinux.amlogic.com:8000/download/ARM/filesystem/"
     PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.xz"
     PKG_DEPENDS_TARGET="toolchain"
-    
+    PKG_PRIORITY="optional"
     PKG_SECTION="graphics"
     PKG_SHORTDESC="opengl-meson8: OpenGL ES pre-compiled libraries for Mali 450 GPUs found in Amlogic Meson8 SoCs"
     PKG_LONGDESC="opengl-meson8: OpenGL ES pre-compiled libraries for Mali 450 GPUs found in Amlogic Meson8 SoCs. The libraries could be found in a Linux buildroot released by Amlogic at http://openlinux.amlogic.com:8000/download/ARM/filesystem/. See the opengl package."
@@ -91,7 +91,7 @@ case $OPENGL in
     PKG_SITE="http://openlinux.amlogic.com:8000/download/ARM/filesystem/"
     PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.xz"
     PKG_DEPENDS_TARGET="toolchain"
-    
+    PKG_PRIORITY="optional"
     PKG_SECTION="graphics"
     PKG_SHORTDESC="opengl-meson-gxbb: OpenGL ES pre-compiled libraries for Mali 450 GPUs found in Amlogic Meson8 SoCs"
     PKG_LONGDESC="opengl-meson-gxbb: OpenGL ES pre-compiled libraries for Mali 450 GPUs found in Amlogic Meson8 SoCs. The libraries could be found in a Linux buildroot released by Amlogic at http://openlinux.amlogic.com:8000/download/ARM/filesystem/. See the opengl package."
