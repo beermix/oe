@@ -1,24 +1,19 @@
 PKG_NAME="udns"
-PKG_VERSION="3afeb27"
-PKG_GIT_URL="https://github.com/lparam/udns"
+PKG_VERSION="0.4"
+PKG_URL="https://dl.dropboxusercontent.com/s/g37xuuj31w7fzjr/udns-0.4.tar.xz"
 PKG_DEPENDS_TARGET="toolchain"
-
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 configure_target() {
   cd $ROOT/$PKG_BUILD
-  #mkdir -p $INSTALL/usr/lib
-  #mkdir -p $INSTALL/usr/include
   mkdir -p $INSTALL/usr/bin
  ./configure --disable-ipv6
 }  
 
-MAKEFLAGS="-j1"
-
 make_target() {
-make CC="$CC" AR="$AR" XCFLAGS="$CFLAGS" RANLIB="$RANLIB" XLDFLAGS="$LDFLAGS" CFLAGS="$CFLAGS"
+  make CC="$CC" AR="$AR" XCFLAGS="$CFLAGS" RANLIB="$RANLIB" XLDFLAGS="$LDFLAGS" CFLAGS="$CFLAGS" -j1
 }
 
 post_make_target() {
