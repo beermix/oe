@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="glibc"
-PKG_VERSION="2.24"
+PKG_VERSION="fdfc9260"
 PKG_SITE="http://www.gnu.org/software/libc/"
-PKG_URL="https://fossies.org/linux/misc/glibc-$PKG_VERSION.tar.xz"
+PKG_GIT_URL="git://sourceware.org/git/glibc.git"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap"
 PKG_DEPENDS_INIT="glibc"
 PKG_SECTION="toolchain/devel"
@@ -33,9 +33,6 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/bash \
                            libc_cv_slibdir=/lib \
                            ac_cv_path_PERL= \
                            ac_cv_prog_MAKEINFO= \
-                           libc_cv_forced_unwind=yes \
-                           libc_cv_ssp=no \
-                           --with-pkgversion="OE" \
                            --libexecdir=/usr/lib/glibc \
                            --cache-file=config.cache \
                            --disable-profile \
@@ -105,9 +102,7 @@ pre_configure_target() {
   unset LD_LIBRARY_PATH
 
 # set some CFLAGS we need
-  export CFLAGS="-O2 -g"
-  export CPPFLAGS=""
-  export CXXFLAGS="-O2"
+  export CFLAGS="$CFLAGS -g -fno-stack-protector"
 
   export OBJDUMP_FOR_HOST=objdump
 
