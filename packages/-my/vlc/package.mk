@@ -6,7 +6,7 @@
 PKG_NAME="vlc"
 PKG_VERSION="2.2.5"
 PKG_SITE="http://www.videolan.org"
-PKG_URL="https://nightlies.videolan.org/build/source/vlc-2.2.5-20170125-0218.tar.xz"
+PKG_URL="https://nightlies.videolan.org/build/source/vlc-2.2.5-20170201-0219.tar.xz"
 PKG_DEPENDS_TARGET="toolchain dbus libdvbpsi ffmpeg zlib lua libvorbis libogg flac gnutls"
 PKG_PRIORITY="optional"
 PKG_SECTION="xmedia/tools"
