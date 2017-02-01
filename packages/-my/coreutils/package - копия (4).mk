@@ -1,5 +1,5 @@
 PKG_NAME="coreutils"
-PKG_VERSION="8.25"
+PKG_VERSION="8.26"
 PKG_URL="http://ftpmirror.gnu.org/coreutils/coreutils-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain acl attr libcap pcre readline gmp openssl"
 PKG_SECTION="my"
@@ -42,11 +42,10 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_c_restrict=no \
 			      gl_cv_have_proc_uptime=yes \
 			      utils_cv_localtime_cache=no \
 			      PERL=missing \
-			      MAKEINFO=missing \
+			      MAKEINFO=true \
 			      --with-gmp \
 			      --without-selinux \
 			      --with-openssl \
 			      --disable-silent-rules \
-			      --with-gnu-ld \
-			      --enable-threads=posix \
 			      --enable-no-install-program=hostname,su,kill,uptime,uname,mv,mkdir,pwd,readlink,seq"
+
