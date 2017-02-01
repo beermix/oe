@@ -1,5 +1,5 @@
 PKG_NAME="aufs-util"
-PKG_VERSION="285fac3"
+PKG_VERSION="68be3d8"
 PKG_GIT_URL="git://git.code.sf.net/p/aufs/aufs-util"
 #PKG_SOURCE_DIR="aufs2-util"
 PKG_SECTION="my"

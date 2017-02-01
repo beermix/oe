@@ -1,6 +1,6 @@
-diff -Naur linux-4.9-clean/fs/aufs/aufs.h linux-4.9/fs/aufs/aufs.h
---- linux-4.9-clean/fs/aufs/aufs.h	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/aufs.h	2016-12-14 21:20:40.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/aufs.h linux-4.9.7/fs/aufs/aufs.h
+--- linux-4.9.7-orig/fs/aufs/aufs.h	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/aufs.h	2017-02-01 15:51:06.428601900 +0000
 @@ -0,0 +1,59 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -61,9 +61,9 @@ diff -Naur linux-4.9-clean/fs/aufs/aufs.h linux-4.9/fs/aufs/aufs.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_H__ */
-diff -Naur linux-4.9-clean/fs/aufs/branch.c linux-4.9/fs/aufs/branch.c
---- linux-4.9-clean/fs/aufs/branch.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/branch.c	2016-12-14 21:20:40.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/branch.c linux-4.9.7/fs/aufs/branch.c
+--- linux-4.9.7-orig/fs/aufs/branch.c	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/branch.c	2017-02-01 15:51:06.428601900 +0000
 @@ -0,0 +1,1412 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -1477,9 +1477,9 @@ diff -Naur linux-4.9-clean/fs/aufs/branch.c linux-4.9/fs/aufs/branch.c
 +
 +	return err;
 +}
-diff -Naur linux-4.9-clean/fs/aufs/branch.h linux-4.9/fs/aufs/branch.h
---- linux-4.9-clean/fs/aufs/branch.h	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/branch.h	2016-12-14 21:20:40.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/branch.h linux-4.9.7/fs/aufs/branch.h
+--- linux-4.9.7-orig/fs/aufs/branch.h	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/branch.h	2017-02-01 15:51:06.428601900 +0000
 @@ -0,0 +1,309 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -1790,9 +1790,9 @@ diff -Naur linux-4.9-clean/fs/aufs/branch.h linux-4.9/fs/aufs/branch.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_BRANCH_H__ */
-diff -Naur linux-4.9-clean/fs/aufs/conf.mk linux-4.9/fs/aufs/conf.mk
---- linux-4.9-clean/fs/aufs/conf.mk	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/conf.mk	2016-12-14 21:20:40.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/conf.mk linux-4.9.7/fs/aufs/conf.mk
+--- linux-4.9.7-orig/fs/aufs/conf.mk	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/conf.mk	2017-02-01 15:51:06.428601900 +0000
 @@ -0,0 +1,38 @@
 +
 +AuConfStr = CONFIG_AUFS_FS=${CONFIG_AUFS_FS}
@@ -1832,9 +1832,9 @@ diff -Naur linux-4.9-clean/fs/aufs/conf.mk linux-4.9/fs/aufs/conf.mk
 +${obj}/sysfs.o: ${AuConfName}
 +
 +-include ${srctree}/${src}/conf_priv.mk
-diff -Naur linux-4.9-clean/fs/aufs/cpup.c linux-4.9/fs/aufs/cpup.c
---- linux-4.9-clean/fs/aufs/cpup.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/cpup.c	2016-12-17 05:18:52.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/cpup.c linux-4.9.7/fs/aufs/cpup.c
+--- linux-4.9.7-orig/fs/aufs/cpup.c	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/cpup.c	2017-02-01 15:51:06.428601900 +0000
 @@ -0,0 +1,1394 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -3230,9 +3230,9 @@ diff -Naur linux-4.9-clean/fs/aufs/cpup.c linux-4.9/fs/aufs/cpup.c
 +	dput(parent);
 +	return err;
 +}
-diff -Naur linux-4.9-clean/fs/aufs/cpup.h linux-4.9/fs/aufs/cpup.h
---- linux-4.9-clean/fs/aufs/cpup.h	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/cpup.h	2016-12-14 21:20:40.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/cpup.h linux-4.9.7/fs/aufs/cpup.h
+--- linux-4.9.7-orig/fs/aufs/cpup.h	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/cpup.h	2017-02-01 15:51:06.428601900 +0000
 @@ -0,0 +1,94 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -3328,9 +3328,9 @@ diff -Naur linux-4.9-clean/fs/aufs/cpup.h linux-4.9/fs/aufs/cpup.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_CPUP_H__ */
-diff -Naur linux-4.9-clean/fs/aufs/dbgaufs.c linux-4.9/fs/aufs/dbgaufs.c
---- linux-4.9-clean/fs/aufs/dbgaufs.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/dbgaufs.c	2016-12-14 21:20:40.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/dbgaufs.c linux-4.9.7/fs/aufs/dbgaufs.c
+--- linux-4.9.7-orig/fs/aufs/dbgaufs.c	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/dbgaufs.c	2017-02-01 15:51:06.428601900 +0000
 @@ -0,0 +1,438 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -3770,9 +3770,9 @@ diff -Naur linux-4.9-clean/fs/aufs/dbgaufs.c linux-4.9/fs/aufs/dbgaufs.c
 +		err = 0;
 +	return err;
 +}
-diff -Naur linux-4.9-clean/fs/aufs/dbgaufs.h linux-4.9/fs/aufs/dbgaufs.h
---- linux-4.9-clean/fs/aufs/dbgaufs.h	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/dbgaufs.h	2016-12-14 21:20:40.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/dbgaufs.h linux-4.9.7/fs/aufs/dbgaufs.h
+--- linux-4.9.7-orig/fs/aufs/dbgaufs.h	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/dbgaufs.h	2017-02-01 15:51:06.428601900 +0000
 @@ -0,0 +1,48 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -3822,9 +3822,9 @@ diff -Naur linux-4.9-clean/fs/aufs/dbgaufs.h linux-4.9/fs/aufs/dbgaufs.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __DBGAUFS_H__ */
-diff -Naur linux-4.9-clean/fs/aufs/dcsub.c linux-4.9/fs/aufs/dcsub.c
---- linux-4.9-clean/fs/aufs/dcsub.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/dcsub.c	2016-12-14 21:20:40.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/dcsub.c linux-4.9.7/fs/aufs/dcsub.c
+--- linux-4.9.7-orig/fs/aufs/dcsub.c	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/dcsub.c	2017-02-01 15:51:06.432606200 +0000
 @@ -0,0 +1,225 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -4051,9 +4051,9 @@ diff -Naur linux-4.9-clean/fs/aufs/dcsub.c linux-4.9/fs/aufs/dcsub.c
 +
 +	return path_is_under(path + 0, path + 1);
 +}
-diff -Naur linux-4.9-clean/fs/aufs/dcsub.h linux-4.9/fs/aufs/dcsub.h
---- linux-4.9-clean/fs/aufs/dcsub.h	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/dcsub.h	2016-12-14 21:20:40.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/dcsub.h linux-4.9.7/fs/aufs/dcsub.h
+--- linux-4.9.7-orig/fs/aufs/dcsub.h	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/dcsub.h	2017-02-01 15:51:06.432606200 +0000
 @@ -0,0 +1,136 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -4191,9 +4191,9 @@ diff -Naur linux-4.9-clean/fs/aufs/dcsub.h linux-4.9/fs/aufs/dcsub.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DCSUB_H__ */
-diff -Naur linux-4.9-clean/fs/aufs/debug.c linux-4.9/fs/aufs/debug.c
---- linux-4.9-clean/fs/aufs/debug.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/debug.c	2016-12-14 21:20:40.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/debug.c linux-4.9.7/fs/aufs/debug.c
+--- linux-4.9.7-orig/fs/aufs/debug.c	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/debug.c	2017-02-01 15:51:06.432606200 +0000
 @@ -0,0 +1,440 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -4635,9 +4635,9 @@ diff -Naur linux-4.9-clean/fs/aufs/debug.c linux-4.9/fs/aufs/debug.c
 +
 +	return 0;
 +}
-diff -Naur linux-4.9-clean/fs/aufs/debug.h linux-4.9/fs/aufs/debug.h
---- linux-4.9-clean/fs/aufs/debug.h	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/debug.h	2016-12-14 21:20:40.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/debug.h linux-4.9.7/fs/aufs/debug.h
+--- linux-4.9.7-orig/fs/aufs/debug.h	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/debug.h	2017-02-01 15:51:06.432606200 +0000
 @@ -0,0 +1,225 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -4864,9 +4864,9 @@ diff -Naur linux-4.9-clean/fs/aufs/debug.h linux-4.9/fs/aufs/debug.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DEBUG_H__ */
-diff -Naur linux-4.9-clean/fs/aufs/dentry.c linux-4.9/fs/aufs/dentry.c
---- linux-4.9-clean/fs/aufs/dentry.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/dentry.c	2016-12-14 21:20:40.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/dentry.c linux-4.9.7/fs/aufs/dentry.c
+--- linux-4.9.7-orig/fs/aufs/dentry.c	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/dentry.c	2017-02-01 15:51:06.432606200 +0000
 @@ -0,0 +1,1130 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -5998,9 +5998,9 @@ diff -Naur linux-4.9-clean/fs/aufs/dentry.c linux-4.9/fs/aufs/dentry.c
 +const struct dentry_operations aufs_dop_noreval = {
 +	.d_release		= aufs_d_release
 +};
-diff -Naur linux-4.9-clean/fs/aufs/dentry.h linux-4.9/fs/aufs/dentry.h
---- linux-4.9-clean/fs/aufs/dentry.h	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/dentry.h	2016-12-14 21:20:40.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/dentry.h linux-4.9.7/fs/aufs/dentry.h
+--- linux-4.9.7-orig/fs/aufs/dentry.h	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/dentry.h	2017-02-01 15:51:06.432606200 +0000
 @@ -0,0 +1,255 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -6257,9 +6257,9 @@ diff -Naur linux-4.9-clean/fs/aufs/dentry.h linux-4.9/fs/aufs/dentry.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DENTRY_H__ */
-diff -Naur linux-4.9-clean/fs/aufs/dinfo.c linux-4.9/fs/aufs/dinfo.c
---- linux-4.9-clean/fs/aufs/dinfo.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/dinfo.c	2016-12-14 21:20:40.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/dinfo.c linux-4.9.7/fs/aufs/dinfo.c
+--- linux-4.9.7-orig/fs/aufs/dinfo.c	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/dinfo.c	2017-02-01 15:51:06.432606200 +0000
 @@ -0,0 +1,553 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -6814,9 +6814,9 @@ diff -Naur linux-4.9-clean/fs/aufs/dinfo.c linux-4.9/fs/aufs/dinfo.c
 +			return bindex;
 +	return -1;
 +}
-diff -Naur linux-4.9-clean/fs/aufs/dir.c linux-4.9/fs/aufs/dir.c
---- linux-4.9-clean/fs/aufs/dir.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/dir.c	2016-12-14 21:20:40.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/dir.c linux-4.9.7/fs/aufs/dir.c
+--- linux-4.9.7-orig/fs/aufs/dir.c	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/dir.c	2017-02-01 15:51:06.432606200 +0000
 @@ -0,0 +1,762 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -7580,9 +7580,9 @@ diff -Naur linux-4.9-clean/fs/aufs/dir.c linux-4.9/fs/aufs/dir.c
 +	.flush		= aufs_flush_dir,
 +	.fsync		= aufs_fsync_dir
 +};
-diff -Naur linux-4.9-clean/fs/aufs/dir.h linux-4.9/fs/aufs/dir.h
---- linux-4.9-clean/fs/aufs/dir.h	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/dir.h	2016-12-14 21:20:40.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/dir.h linux-4.9.7/fs/aufs/dir.h
+--- linux-4.9.7-orig/fs/aufs/dir.h	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/dir.h	2017-02-01 15:51:06.432606200 +0000
 @@ -0,0 +1,137 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -7721,9 +7721,9 @@ diff -Naur linux-4.9-clean/fs/aufs/dir.h linux-4.9/fs/aufs/dir.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DIR_H__ */
-diff -Naur linux-4.9-clean/fs/aufs/dynop.c linux-4.9/fs/aufs/dynop.c
---- linux-4.9-clean/fs/aufs/dynop.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/dynop.c	2016-12-14 21:20:40.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/dynop.c linux-4.9.7/fs/aufs/dynop.c
+--- linux-4.9.7-orig/fs/aufs/dynop.c	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/dynop.c	2017-02-01 15:51:06.432606200 +0000
 @@ -0,0 +1,371 @@
 +/*
 + * Copyright (C) 2010-2016 Junjiro R. Okajima
@@ -8096,9 +8096,9 @@ diff -Naur linux-4.9-clean/fs/aufs/dynop.c linux-4.9/fs/aufs/dynop.c
 +	for (i = 0; i < AuDyLast; i++)
 +		WARN_ON(!hlist_empty(&dynop[i].head));
 +}
-diff -Naur linux-4.9-clean/fs/aufs/dynop.h linux-4.9/fs/aufs/dynop.h
---- linux-4.9-clean/fs/aufs/dynop.h	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/dynop.h	2016-12-14 21:20:40.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/dynop.h linux-4.9.7/fs/aufs/dynop.h
+--- linux-4.9.7-orig/fs/aufs/dynop.h	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/dynop.h	2017-02-01 15:51:06.436610400 +0000
 @@ -0,0 +1,74 @@
 +/*
 + * Copyright (C) 2010-2016 Junjiro R. Okajima
@@ -8174,9 +8174,9 @@ diff -Naur linux-4.9-clean/fs/aufs/dynop.h linux-4.9/fs/aufs/dynop.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DYNOP_H__ */
-diff -Naur linux-4.9-clean/fs/aufs/export.c linux-4.9/fs/aufs/export.c
---- linux-4.9-clean/fs/aufs/export.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/export.c	2016-12-17 05:18:52.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/export.c linux-4.9.7/fs/aufs/export.c
+--- linux-4.9.7-orig/fs/aufs/export.c	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/export.c	2017-02-01 15:51:06.436610400 +0000
 @@ -0,0 +1,836 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -9014,9 +9014,9 @@ diff -Naur linux-4.9-clean/fs/aufs/export.c linux-4.9/fs/aufs/export.c
 +	BUILD_BUG_ON(sizeof(u) != sizeof(int));
 +	atomic_set(&sbinfo->si_xigen_next, u);
 +}
-diff -Naur linux-4.9-clean/fs/aufs/fhsm.c linux-4.9/fs/aufs/fhsm.c
---- linux-4.9-clean/fs/aufs/fhsm.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/fhsm.c	2016-12-14 21:20:40.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/fhsm.c linux-4.9.7/fs/aufs/fhsm.c
+--- linux-4.9.7-orig/fs/aufs/fhsm.c	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/fhsm.c	2017-02-01 15:51:06.436610400 +0000
 @@ -0,0 +1,426 @@
 +/*
 + * Copyright (C) 2011-2016 Junjiro R. Okajima
@@ -9444,9 +9444,9 @@ diff -Naur linux-4.9-clean/fs/aufs/fhsm.c linux-4.9/fs/aufs/fhsm.c
 +	if (u != AUFS_FHSM_CACHE_DEF_SEC)
 +		seq_printf(seq, ",fhsm_sec=%u", u);
 +}
-diff -Naur linux-4.9-clean/fs/aufs/file.c linux-4.9/fs/aufs/file.c
---- linux-4.9-clean/fs/aufs/file.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/file.c	2016-12-14 21:20:40.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/file.c linux-4.9.7/fs/aufs/file.c
+--- linux-4.9.7-orig/fs/aufs/file.c	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/file.c	2017-02-01 15:51:06.436610400 +0000
 @@ -0,0 +1,857 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -10305,9 +10305,9 @@ diff -Naur linux-4.9-clean/fs/aufs/file.c linux-4.9/fs/aufs/file.c
 +	.swap_deactivate	= aufs_swap_deactivate
 +#endif /* CONFIG_AUFS_DEBUG */
 +};
-diff -Naur linux-4.9-clean/fs/aufs/file.h linux-4.9/fs/aufs/file.h
---- linux-4.9-clean/fs/aufs/file.h	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/file.h	2016-12-14 21:20:40.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/file.h linux-4.9.7/fs/aufs/file.h
+--- linux-4.9.7-orig/fs/aufs/file.h	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/file.h	2017-02-01 15:51:06.436610400 +0000
 @@ -0,0 +1,294 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -10603,9 +10603,9 @@ diff -Naur linux-4.9-clean/fs/aufs/file.h linux-4.9/fs/aufs/file.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_FILE_H__ */
-diff -Naur linux-4.9-clean/fs/aufs/finfo.c linux-4.9/fs/aufs/finfo.c
---- linux-4.9-clean/fs/aufs/finfo.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/finfo.c	2016-12-14 21:20:40.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/finfo.c linux-4.9.7/fs/aufs/finfo.c
+--- linux-4.9.7-orig/fs/aufs/finfo.c	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/finfo.c	2017-02-01 15:51:06.436610400 +0000
 @@ -0,0 +1,151 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -10758,9 +10758,9 @@ diff -Naur linux-4.9-clean/fs/aufs/finfo.c linux-4.9/fs/aufs/finfo.c
 +out:
 +	return err;
 +}
-diff -Naur linux-4.9-clean/fs/aufs/f_op.c linux-4.9/fs/aufs/f_op.c
---- linux-4.9-clean/fs/aufs/f_op.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/f_op.c	2016-12-17 05:18:52.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/f_op.c linux-4.9.7/fs/aufs/f_op.c
+--- linux-4.9.7-orig/fs/aufs/f_op.c	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/f_op.c	2017-02-01 15:51:06.436610400 +0000
 @@ -0,0 +1,723 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -11485,9 +11485,9 @@ diff -Naur linux-4.9-clean/fs/aufs/f_op.c linux-4.9/fs/aufs/f_op.c
 +#endif
 +	.fallocate	= aufs_fallocate
 +};
-diff -Naur linux-4.9-clean/fs/aufs/fstype.h linux-4.9/fs/aufs/fstype.h
---- linux-4.9-clean/fs/aufs/fstype.h	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/fstype.h	2016-12-14 21:20:40.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/fstype.h linux-4.9.7/fs/aufs/fstype.h
+--- linux-4.9.7-orig/fs/aufs/fstype.h	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/fstype.h	2017-02-01 15:51:06.436610400 +0000
 @@ -0,0 +1,400 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -11889,9 +11889,9 @@ diff -Naur linux-4.9-clean/fs/aufs/fstype.h linux-4.9/fs/aufs/fstype.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_FSTYPE_H__ */
-diff -Naur linux-4.9-clean/fs/aufs/hfsnotify.c linux-4.9/fs/aufs/hfsnotify.c
---- linux-4.9-clean/fs/aufs/hfsnotify.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/hfsnotify.c	2016-12-14 21:20:40.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/hfsnotify.c linux-4.9.7/fs/aufs/hfsnotify.c
+--- linux-4.9.7-orig/fs/aufs/hfsnotify.c	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/hfsnotify.c	2017-02-01 15:51:06.436610400 +0000
 @@ -0,0 +1,287 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -12180,9 +12180,9 @@ diff -Naur linux-4.9-clean/fs/aufs/hfsnotify.c linux-4.9/fs/aufs/hfsnotify.c
 +	.fin_br		= au_hfsn_fin_br,
 +	.init_br	= au_hfsn_init_br
 +};
-diff -Naur linux-4.9-clean/fs/aufs/hfsplus.c linux-4.9/fs/aufs/hfsplus.c
---- linux-4.9-clean/fs/aufs/hfsplus.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/hfsplus.c	2016-12-14 21:20:40.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/hfsplus.c linux-4.9.7/fs/aufs/hfsplus.c
+--- linux-4.9.7-orig/fs/aufs/hfsplus.c	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/hfsplus.c	2017-02-01 15:51:06.436610400 +0000
 @@ -0,0 +1,56 @@
 +/*
 + * Copyright (C) 2010-2016 Junjiro R. Okajima
@@ -12240,9 +12240,9 @@ diff -Naur linux-4.9-clean/fs/aufs/hfsplus.c linux-4.9/fs/aufs/hfsplus.c
 +		au_sbr_put(dentry->d_sb, bindex);
 +	}
 +}
-diff -Naur linux-4.9-clean/fs/aufs/hnotify.c linux-4.9/fs/aufs/hnotify.c
---- linux-4.9-clean/fs/aufs/hnotify.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/hnotify.c	2016-12-14 21:20:40.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/hnotify.c linux-4.9.7/fs/aufs/hnotify.c
+--- linux-4.9.7-orig/fs/aufs/hnotify.c	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/hnotify.c	2017-02-01 15:51:06.440614700 +0000
 @@ -0,0 +1,723 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -12967,9 +12967,9 @@ diff -Naur linux-4.9-clean/fs/aufs/hnotify.c linux-4.9/fs/aufs/hnotify.c
 +	if (cp->cache)
 +		au_hn_destroy_cache();
 +}
-diff -Naur linux-4.9-clean/fs/aufs/iinfo.c linux-4.9/fs/aufs/iinfo.c
---- linux-4.9-clean/fs/aufs/iinfo.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/iinfo.c	2016-12-14 21:20:40.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/iinfo.c linux-4.9.7/fs/aufs/iinfo.c
+--- linux-4.9.7-orig/fs/aufs/iinfo.c	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/iinfo.c	2017-02-01 15:51:06.444619000 +0000
 @@ -0,0 +1,285 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -13256,9 +13256,9 @@ diff -Naur linux-4.9-clean/fs/aufs/iinfo.c linux-4.9/fs/aufs/iinfo.c
 +	au_delayed_kfree(iinfo->ii_hinode);
 +	AuRwDestroy(&iinfo->ii_rwsem);
 +}
-diff -Naur linux-4.9-clean/fs/aufs/inode.c linux-4.9/fs/aufs/inode.c
---- linux-4.9-clean/fs/aufs/inode.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/inode.c	2016-12-14 21:20:40.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/inode.c linux-4.9.7/fs/aufs/inode.c
+--- linux-4.9.7-orig/fs/aufs/inode.c	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/inode.c	2017-02-01 15:51:06.444619000 +0000
 @@ -0,0 +1,519 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -13779,10 +13779,10 @@ diff -Naur linux-4.9-clean/fs/aufs/inode.c linux-4.9/fs/aufs/inode.c
 +		mask |= MAY_READ; /* force permission check */
 +	return au_test_h_perm(h_inode, mask);
 +}
-diff -Naur linux-4.9-clean/fs/aufs/inode.h linux-4.9/fs/aufs/inode.h
---- linux-4.9-clean/fs/aufs/inode.h	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/inode.h	2016-12-17 05:18:52.000000000 +0000
-@@ -0,0 +1,691 @@
+diff -Naur linux-4.9.7-orig/fs/aufs/inode.h linux-4.9.7/fs/aufs/inode.h
+--- linux-4.9.7-orig/fs/aufs/inode.h	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/inode.h	2017-02-01 15:51:06.444619000 +0000
+@@ -0,0 +1,692 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
 + *
@@ -13995,7 +13995,8 @@ diff -Naur linux-4.9-clean/fs/aufs/inode.h linux-4.9/fs/aufs/inode.h
 +int au_pin_and_icpup(struct dentry *dentry, struct iattr *ia,
 +		     struct au_icpup_args *a);
 +
-+int au_h_path_getattr(struct dentry *dentry, int force, struct path *h_path);
++int au_h_path_getattr(struct dentry *dentry, int force, struct path *h_path,
++		      int locked);
 +
 +/* i_op_add.c */
 +int au_may_add(struct dentry *dentry, aufs_bindex_t bindex,
@@ -14474,9 +14475,9 @@ diff -Naur linux-4.9-clean/fs/aufs/inode.h linux-4.9/fs/aufs/inode.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_INODE_H__ */
-diff -Naur linux-4.9-clean/fs/aufs/ioctl.c linux-4.9/fs/aufs/ioctl.c
---- linux-4.9-clean/fs/aufs/ioctl.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/ioctl.c	2016-12-14 21:20:40.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/ioctl.c linux-4.9.7/fs/aufs/ioctl.c
+--- linux-4.9.7-orig/fs/aufs/ioctl.c	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/ioctl.c	2017-02-01 15:51:06.444619000 +0000
 @@ -0,0 +1,219 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -14697,9 +14698,9 @@ diff -Naur linux-4.9-clean/fs/aufs/ioctl.c linux-4.9/fs/aufs/ioctl.c
 +	return aufs_ioctl_nondir(file, cmd, (unsigned long)compat_ptr(arg));
 +}
 +#endif
-diff -Naur linux-4.9-clean/fs/aufs/i_op_add.c linux-4.9/fs/aufs/i_op_add.c
---- linux-4.9-clean/fs/aufs/i_op_add.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/i_op_add.c	2016-12-17 05:18:52.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/i_op_add.c linux-4.9.7/fs/aufs/i_op_add.c
+--- linux-4.9.7-orig/fs/aufs/i_op_add.c	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/i_op_add.c	2017-02-01 15:51:06.440614700 +0000
 @@ -0,0 +1,928 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -15629,10 +15630,10 @@ diff -Naur linux-4.9-clean/fs/aufs/i_op_add.c linux-4.9/fs/aufs/i_op_add.c
 +out:
 +	return err;
 +}
-diff -Naur linux-4.9-clean/fs/aufs/i_op.c linux-4.9/fs/aufs/i_op.c
---- linux-4.9-clean/fs/aufs/i_op.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/i_op.c	2016-12-17 05:18:52.000000000 +0000
-@@ -0,0 +1,1444 @@
+diff -Naur linux-4.9.7-orig/fs/aufs/i_op.c linux-4.9.7/fs/aufs/i_op.c
+--- linux-4.9.7-orig/fs/aufs/i_op.c	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/i_op.c	2017-02-01 15:51:06.440614700 +0000
+@@ -0,0 +1,1449 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
 + *
@@ -16767,7 +16768,8 @@ diff -Naur linux-4.9-clean/fs/aufs/i_op.c linux-4.9/fs/aufs/i_op.c
 + * returns zero or negative (an error).
 + * @dentry will be read-locked in success.
 + */
-+int au_h_path_getattr(struct dentry *dentry, int force, struct path *h_path)
++int au_h_path_getattr(struct dentry *dentry, int force, struct path *h_path,
++		      int locked)
 +{
 +	int err;
 +	unsigned int mnt_flags, sigen;
@@ -16783,6 +16785,9 @@ diff -Naur linux-4.9-clean/fs/aufs/i_op.c linux-4.9/fs/aufs/i_op.c
 +	sb = dentry->d_sb;
 +	mnt_flags = au_mntflags(sb);
 +	udba_none = !!au_opt_test(mnt_flags, UDBA_NONE);
++
++	if (unlikely(locked))
++		goto body; /* skip locking dinfo */
 +
 +	/* support fstat(2) */
 +	if (!d_unlinked(dentry) && !udba_none) {
@@ -16811,6 +16816,7 @@ diff -Naur linux-4.9-clean/fs/aufs/i_op.c linux-4.9/fs/aufs/i_op.c
 +	} else
 +		di_read_lock_child(dentry, AuLock_IR);
 +
++body:
 +	inode = d_inode(dentry);
 +	bindex = au_ibtop(inode);
 +	h_path->mnt = au_sbr_mnt(sb, bindex);
@@ -16849,7 +16855,7 @@ diff -Naur linux-4.9-clean/fs/aufs/i_op.c linux-4.9/fs/aufs/i_op.c
 +	err = si_read_lock(sb, AuLock_FLUSH | AuLock_NOPLM);
 +	if (unlikely(err))
 +		goto out;
-+	err = au_h_path_getattr(dentry, /*force*/0, &h_path);
++	err = au_h_path_getattr(dentry, /*force*/0, &h_path, /*locked*/0);
 +	if (unlikely(err))
 +		goto out_si;
 +	if (unlikely(!h_path.dentry))
@@ -17077,9 +17083,9 @@ diff -Naur linux-4.9-clean/fs/aufs/i_op.c linux-4.9/fs/aufs/i_op.c
 +		.update_time	= aufs_update_time
 +	}
 +};
-diff -Naur linux-4.9-clean/fs/aufs/i_op_del.c linux-4.9/fs/aufs/i_op_del.c
---- linux-4.9-clean/fs/aufs/i_op_del.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/i_op_del.c	2016-12-14 21:20:40.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/i_op_del.c linux-4.9.7/fs/aufs/i_op_del.c
+--- linux-4.9.7-orig/fs/aufs/i_op_del.c	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/i_op_del.c	2017-02-01 15:51:06.440614700 +0000
 @@ -0,0 +1,511 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -17592,9 +17598,9 @@ diff -Naur linux-4.9-clean/fs/aufs/i_op_del.c linux-4.9/fs/aufs/i_op_del.c
 +	AuTraceErr(err);
 +	return err;
 +}
-diff -Naur linux-4.9-clean/fs/aufs/i_op_ren.c linux-4.9/fs/aufs/i_op_ren.c
---- linux-4.9-clean/fs/aufs/i_op_ren.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/i_op_ren.c	2016-12-17 05:18:52.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/i_op_ren.c linux-4.9.7/fs/aufs/i_op_ren.c
+--- linux-4.9.7-orig/fs/aufs/i_op_ren.c	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/i_op_ren.c	2017-02-01 15:51:06.440614700 +0000
 @@ -0,0 +1,1165 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -18761,9 +18767,9 @@ diff -Naur linux-4.9-clean/fs/aufs/i_op_ren.c linux-4.9/fs/aufs/i_op_ren.c
 +	AuTraceErr(err);
 +	return err;
 +}
-diff -Naur linux-4.9-clean/fs/aufs/Kconfig linux-4.9/fs/aufs/Kconfig
---- linux-4.9-clean/fs/aufs/Kconfig	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/Kconfig	2016-12-14 21:20:40.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/Kconfig linux-4.9.7/fs/aufs/Kconfig
+--- linux-4.9.7-orig/fs/aufs/Kconfig	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/Kconfig	2017-02-01 15:51:06.428601900 +0000
 @@ -0,0 +1,185 @@
 +config AUFS_FS
 +	tristate "Aufs (Advanced multi layered unification filesystem) support"
@@ -18950,9 +18956,9 @@ diff -Naur linux-4.9-clean/fs/aufs/Kconfig linux-4.9/fs/aufs/Kconfig
 +	Automatic configuration for internal use.
 +	When aufs supports Magic SysRq, enabled automatically.
 +endif
-diff -Naur linux-4.9-clean/fs/aufs/loop.c linux-4.9/fs/aufs/loop.c
---- linux-4.9-clean/fs/aufs/loop.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/loop.c	2016-12-14 21:20:40.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/loop.c linux-4.9.7/fs/aufs/loop.c
+--- linux-4.9.7-orig/fs/aufs/loop.c	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/loop.c	2017-02-01 15:51:06.444619000 +0000
 @@ -0,0 +1,147 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -19101,9 +19107,9 @@ diff -Naur linux-4.9-clean/fs/aufs/loop.c linux-4.9/fs/aufs/loop.c
 +		symbol_put(loop_backing_file);
 +	au_delayed_kfree(au_warn_loopback_array);
 +}
-diff -Naur linux-4.9-clean/fs/aufs/loop.h linux-4.9/fs/aufs/loop.h
---- linux-4.9-clean/fs/aufs/loop.h	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/loop.h	2016-12-14 21:20:40.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/loop.h linux-4.9.7/fs/aufs/loop.h
+--- linux-4.9.7-orig/fs/aufs/loop.h	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/loop.h	2017-02-01 15:51:06.444619000 +0000
 @@ -0,0 +1,52 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -19157,9 +19163,9 @@ diff -Naur linux-4.9-clean/fs/aufs/loop.h linux-4.9/fs/aufs/loop.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_LOOP_H__ */
-diff -Naur linux-4.9-clean/fs/aufs/magic.mk linux-4.9/fs/aufs/magic.mk
---- linux-4.9-clean/fs/aufs/magic.mk	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/magic.mk	2016-12-14 21:20:40.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/magic.mk linux-4.9.7/fs/aufs/magic.mk
+--- linux-4.9.7-orig/fs/aufs/magic.mk	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/magic.mk	2017-02-01 15:51:06.444619000 +0000
 @@ -0,0 +1,30 @@
 +
 +# defined in ${srctree}/fs/fuse/inode.c
@@ -19191,9 +19197,9 @@ diff -Naur linux-4.9-clean/fs/aufs/magic.mk linux-4.9/fs/aufs/magic.mk
 +ifdef CONFIG_HFSPLUS_FS
 +ccflags-y += -DHFSPLUS_SUPER_MAGIC=0x482b
 +endif
-diff -Naur linux-4.9-clean/fs/aufs/Makefile linux-4.9/fs/aufs/Makefile
---- linux-4.9-clean/fs/aufs/Makefile	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/Makefile	2016-12-14 21:20:40.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/Makefile linux-4.9.7/fs/aufs/Makefile
+--- linux-4.9.7-orig/fs/aufs/Makefile	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/Makefile	2017-02-01 15:51:06.428601900 +0000
 @@ -0,0 +1,44 @@
 +
 +include ${src}/magic.mk
@@ -19239,9 +19245,9 @@ diff -Naur linux-4.9-clean/fs/aufs/Makefile linux-4.9/fs/aufs/Makefile
 +aufs-$(CONFIG_AUFS_BR_HFSPLUS) += hfsplus.o
 +aufs-$(CONFIG_AUFS_DEBUG) += debug.o
 +aufs-$(CONFIG_AUFS_MAGIC_SYSRQ) += sysrq.o
-diff -Naur linux-4.9-clean/fs/aufs/module.c linux-4.9/fs/aufs/module.c
---- linux-4.9-clean/fs/aufs/module.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/module.c	2016-12-14 21:20:40.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/module.c linux-4.9.7/fs/aufs/module.c
+--- linux-4.9.7-orig/fs/aufs/module.c	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/module.c	2017-02-01 15:51:06.444619000 +0000
 @@ -0,0 +1,333 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -19576,9 +19582,9 @@ diff -Naur linux-4.9-clean/fs/aufs/module.c linux-4.9/fs/aufs/module.c
 +
 +module_init(aufs_init);
 +module_exit(aufs_exit);
-diff -Naur linux-4.9-clean/fs/aufs/module.h linux-4.9/fs/aufs/module.h
---- linux-4.9-clean/fs/aufs/module.h	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/module.h	2016-12-14 21:20:40.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/module.h linux-4.9.7/fs/aufs/module.h
+--- linux-4.9.7-orig/fs/aufs/module.h	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/module.h	2017-02-01 15:51:06.444619000 +0000
 @@ -0,0 +1,156 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -19736,9 +19742,9 @@ diff -Naur linux-4.9-clean/fs/aufs/module.h linux-4.9/fs/aufs/module.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_MODULE_H__ */
-diff -Naur linux-4.9-clean/fs/aufs/mvdown.c linux-4.9/fs/aufs/mvdown.c
---- linux-4.9-clean/fs/aufs/mvdown.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/mvdown.c	2016-12-14 21:20:40.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/mvdown.c linux-4.9.7/fs/aufs/mvdown.c
+--- linux-4.9.7-orig/fs/aufs/mvdown.c	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/mvdown.c	2017-02-01 15:51:06.444619000 +0000
 @@ -0,0 +1,704 @@
 +/*
 + * Copyright (C) 2011-2016 Junjiro R. Okajima
@@ -20444,9 +20450,9 @@ diff -Naur linux-4.9-clean/fs/aufs/mvdown.c linux-4.9/fs/aufs/mvdown.c
 +	AuTraceErr(err);
 +	return err;
 +}
-diff -Naur linux-4.9-clean/fs/aufs/opts.c linux-4.9/fs/aufs/opts.c
---- linux-4.9-clean/fs/aufs/opts.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/opts.c	2016-12-17 05:18:52.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/opts.c linux-4.9.7/fs/aufs/opts.c
+--- linux-4.9.7-orig/fs/aufs/opts.c	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/opts.c	2017-02-01 15:51:06.448623300 +0000
 @@ -0,0 +1,1870 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -22318,9 +22324,9 @@ diff -Naur linux-4.9-clean/fs/aufs/opts.c linux-4.9/fs/aufs/opts.c
 +{
 +	return au_mntflags(sb) & AuOptMask_UDBA;
 +}
-diff -Naur linux-4.9-clean/fs/aufs/opts.h linux-4.9/fs/aufs/opts.h
---- linux-4.9-clean/fs/aufs/opts.h	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/opts.h	2016-12-17 05:18:52.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/opts.h linux-4.9.7/fs/aufs/opts.h
+--- linux-4.9.7-orig/fs/aufs/opts.h	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/opts.h	2017-02-01 15:51:06.448623300 +0000
 @@ -0,0 +1,213 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -22535,9 +22541,9 @@ diff -Naur linux-4.9-clean/fs/aufs/opts.h linux-4.9/fs/aufs/opts.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_OPTS_H__ */
-diff -Naur linux-4.9-clean/fs/aufs/plink.c linux-4.9/fs/aufs/plink.c
---- linux-4.9-clean/fs/aufs/plink.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/plink.c	2016-12-14 21:20:40.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/plink.c linux-4.9.7/fs/aufs/plink.c
+--- linux-4.9.7-orig/fs/aufs/plink.c	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/plink.c	2017-02-01 15:51:06.448623300 +0000
 @@ -0,0 +1,514 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -23053,9 +23059,9 @@ diff -Naur linux-4.9-clean/fs/aufs/plink.c linux-4.9/fs/aufs/plink.c
 +		}
 +	}
 +}
-diff -Naur linux-4.9-clean/fs/aufs/poll.c linux-4.9/fs/aufs/poll.c
---- linux-4.9-clean/fs/aufs/poll.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/poll.c	2016-12-14 21:20:40.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/poll.c linux-4.9.7/fs/aufs/poll.c
+--- linux-4.9.7-orig/fs/aufs/poll.c	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/poll.c	2017-02-01 15:51:06.448623300 +0000
 @@ -0,0 +1,52 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -23109,10 +23115,10 @@ diff -Naur linux-4.9-clean/fs/aufs/poll.c linux-4.9/fs/aufs/poll.c
 +	AuTraceErr((int)mask);
 +	return mask;
 +}
-diff -Naur linux-4.9-clean/fs/aufs/posix_acl.c linux-4.9/fs/aufs/posix_acl.c
---- linux-4.9-clean/fs/aufs/posix_acl.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/posix_acl.c	2016-12-17 05:18:52.000000000 +0000
-@@ -0,0 +1,98 @@
+diff -Naur linux-4.9.7-orig/fs/aufs/posix_acl.c linux-4.9.7/fs/aufs/posix_acl.c
+--- linux-4.9.7-orig/fs/aufs/posix_acl.c	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/posix_acl.c	2017-02-01 15:51:06.448623300 +0000
+@@ -0,0 +1,102 @@
 +/*
 + * Copyright (C) 2014-2016 Junjiro R. Okajima
 + *
@@ -23164,6 +23170,8 @@ diff -Naur linux-4.9-clean/fs/aufs/posix_acl.c linux-4.9/fs/aufs/posix_acl.c
 +
 +	/* always topmost only */
 +	acl = get_acl(h_inode, type);
++	if (!IS_ERR_OR_NULL(acl))
++		set_cached_acl(inode, type, acl);
 +
 +out:
 +	ii_read_unlock(inode);
@@ -23205,15 +23213,17 @@ diff -Naur linux-4.9-clean/fs/aufs/posix_acl.c linux-4.9/fs/aufs/posix_acl.c
 +	ssz = au_sxattr(dentry, inode, &arg);
 +	dput(dentry);
 +	err = ssz;
-+	if (ssz >= 0)
++	if (ssz >= 0) {
 +		err = 0;
++		set_cached_acl(inode, type, acl);
++	}
 +
 +out:
 +	return err;
 +}
-diff -Naur linux-4.9-clean/fs/aufs/procfs.c linux-4.9/fs/aufs/procfs.c
---- linux-4.9-clean/fs/aufs/procfs.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/procfs.c	2016-12-14 21:20:40.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/procfs.c linux-4.9.7/fs/aufs/procfs.c
+--- linux-4.9.7-orig/fs/aufs/procfs.c	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/procfs.c	2017-02-01 15:51:06.448623300 +0000
 @@ -0,0 +1,169 @@
 +/*
 + * Copyright (C) 2010-2016 Junjiro R. Okajima
@@ -23384,9 +23394,9 @@ diff -Naur linux-4.9-clean/fs/aufs/procfs.c linux-4.9/fs/aufs/procfs.c
 +out:
 +	return err;
 +}
-diff -Naur linux-4.9-clean/fs/aufs/rdu.c linux-4.9/fs/aufs/rdu.c
---- linux-4.9-clean/fs/aufs/rdu.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/rdu.c	2016-12-14 21:20:40.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/rdu.c linux-4.9.7/fs/aufs/rdu.c
+--- linux-4.9.7-orig/fs/aufs/rdu.c	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/rdu.c	2017-02-01 15:51:06.448623300 +0000
 @@ -0,0 +1,381 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -23769,9 +23779,9 @@ diff -Naur linux-4.9-clean/fs/aufs/rdu.c linux-4.9/fs/aufs/rdu.c
 +	return err;
 +}
 +#endif
-diff -Naur linux-4.9-clean/fs/aufs/rwsem.h linux-4.9/fs/aufs/rwsem.h
---- linux-4.9-clean/fs/aufs/rwsem.h	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/rwsem.h	2016-12-14 21:20:40.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/rwsem.h linux-4.9.7/fs/aufs/rwsem.h
+--- linux-4.9.7-orig/fs/aufs/rwsem.h	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/rwsem.h	2017-02-01 15:51:06.448623300 +0000
 @@ -0,0 +1,198 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -23971,9 +23981,9 @@ diff -Naur linux-4.9-clean/fs/aufs/rwsem.h linux-4.9/fs/aufs/rwsem.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_RWSEM_H__ */
-diff -Naur linux-4.9-clean/fs/aufs/sbinfo.c linux-4.9/fs/aufs/sbinfo.c
---- linux-4.9-clean/fs/aufs/sbinfo.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/sbinfo.c	2016-12-14 21:20:40.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/sbinfo.c linux-4.9.7/fs/aufs/sbinfo.c
+--- linux-4.9.7-orig/fs/aufs/sbinfo.c	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/sbinfo.c	2017-02-01 15:51:06.448623300 +0000
 @@ -0,0 +1,355 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -24330,9 +24340,9 @@ diff -Naur linux-4.9-clean/fs/aufs/sbinfo.c linux-4.9/fs/aufs/sbinfo.c
 +	set_bit(bit, bitmap);
 +	/* smp_mb(); */
 +}
-diff -Naur linux-4.9-clean/fs/aufs/spl.h linux-4.9/fs/aufs/spl.h
---- linux-4.9-clean/fs/aufs/spl.h	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/spl.h	2016-12-14 21:20:40.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/spl.h linux-4.9.7/fs/aufs/spl.h
+--- linux-4.9.7-orig/fs/aufs/spl.h	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/spl.h	2017-02-01 15:51:06.448623300 +0000
 @@ -0,0 +1,113 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -24447,10 +24457,10 @@ diff -Naur linux-4.9-clean/fs/aufs/spl.h linux-4.9/fs/aufs/spl.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_SPL_H__ */
-diff -Naur linux-4.9-clean/fs/aufs/super.c linux-4.9/fs/aufs/super.c
---- linux-4.9-clean/fs/aufs/super.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/super.c	2016-12-17 05:18:52.000000000 +0000
-@@ -0,0 +1,1046 @@
+diff -Naur linux-4.9.7-orig/fs/aufs/super.c linux-4.9.7/fs/aufs/super.c
+--- linux-4.9.7-orig/fs/aufs/super.c	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/super.c	2017-02-01 15:51:06.448623300 +0000
+@@ -0,0 +1,1044 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
 + *
@@ -24900,12 +24910,10 @@ diff -Naur linux-4.9-clean/fs/aufs/super.c linux-4.9/fs/aufs/super.c
 +			continue;
 +
 +		h_sb = au_sbr_sb(sb, bindex);
-+		if (h_sb->s_op->sync_fs) {
-+			e = h_sb->s_op->sync_fs(h_sb, wait);
-+			if (unlikely(e && !err))
-+				err = e;
-+			/* go on even if an error happens */
-+		}
++		e = vfsub_sync_filesystem(h_sb);
++		if (unlikely(e && !err))
++			err = e;
++		/* go on even if an error happens */
 +	}
 +	si_read_unlock(sb);
 +
@@ -25497,9 +25505,9 @@ diff -Naur linux-4.9-clean/fs/aufs/super.c linux-4.9/fs/aufs/super.c
 +	/* no need to __module_get() and module_put(). */
 +	.owner		= THIS_MODULE,
 +};
-diff -Naur linux-4.9-clean/fs/aufs/super.h linux-4.9/fs/aufs/super.h
---- linux-4.9-clean/fs/aufs/super.h	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/super.h	2016-12-17 05:18:52.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/super.h linux-4.9.7/fs/aufs/super.h
+--- linux-4.9.7-orig/fs/aufs/super.h	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/super.h	2017-02-01 15:51:06.452627600 +0000
 @@ -0,0 +1,639 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -26140,9 +26148,9 @@ diff -Naur linux-4.9-clean/fs/aufs/super.h linux-4.9/fs/aufs/super.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_SUPER_H__ */
-diff -Naur linux-4.9-clean/fs/aufs/sysaufs.c linux-4.9/fs/aufs/sysaufs.c
---- linux-4.9-clean/fs/aufs/sysaufs.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/sysaufs.c	2016-12-14 21:20:40.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/sysaufs.c linux-4.9.7/fs/aufs/sysaufs.c
+--- linux-4.9.7-orig/fs/aufs/sysaufs.c	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/sysaufs.c	2017-02-01 15:51:06.452627600 +0000
 @@ -0,0 +1,104 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -26248,9 +26256,9 @@ diff -Naur linux-4.9-clean/fs/aufs/sysaufs.c linux-4.9/fs/aufs/sysaufs.c
 +out:
 +	return err;
 +}
-diff -Naur linux-4.9-clean/fs/aufs/sysaufs.h linux-4.9/fs/aufs/sysaufs.h
---- linux-4.9-clean/fs/aufs/sysaufs.h	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/sysaufs.h	2016-12-14 21:20:40.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/sysaufs.h linux-4.9.7/fs/aufs/sysaufs.h
+--- linux-4.9.7-orig/fs/aufs/sysaufs.h	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/sysaufs.h	2017-02-01 15:51:06.452627600 +0000
 @@ -0,0 +1,101 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -26353,9 +26361,9 @@ diff -Naur linux-4.9-clean/fs/aufs/sysaufs.h linux-4.9/fs/aufs/sysaufs.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __SYSAUFS_H__ */
-diff -Naur linux-4.9-clean/fs/aufs/sysfs.c linux-4.9/fs/aufs/sysfs.c
---- linux-4.9-clean/fs/aufs/sysfs.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/sysfs.c	2016-12-14 21:20:40.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/sysfs.c linux-4.9.7/fs/aufs/sysfs.c
+--- linux-4.9.7-orig/fs/aufs/sysfs.c	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/sysfs.c	2017-02-01 15:51:06.452627600 +0000
 @@ -0,0 +1,376 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -26733,9 +26741,9 @@ diff -Naur linux-4.9-clean/fs/aufs/sysfs.c linux-4.9/fs/aufs/sysfs.c
 +		}
 +	}
 +}
-diff -Naur linux-4.9-clean/fs/aufs/sysrq.c linux-4.9/fs/aufs/sysrq.c
---- linux-4.9-clean/fs/aufs/sysrq.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/sysrq.c	2016-12-14 21:20:40.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/sysrq.c linux-4.9.7/fs/aufs/sysrq.c
+--- linux-4.9.7-orig/fs/aufs/sysrq.c	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/sysrq.c	2017-02-01 15:51:06.452627600 +0000
 @@ -0,0 +1,157 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -26894,9 +26902,9 @@ diff -Naur linux-4.9-clean/fs/aufs/sysrq.c linux-4.9/fs/aufs/sysrq.c
 +	if (unlikely(err))
 +		pr_err("err %d (ignored)\n", err);
 +}
-diff -Naur linux-4.9-clean/fs/aufs/vdir.c linux-4.9/fs/aufs/vdir.c
---- linux-4.9-clean/fs/aufs/vdir.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/vdir.c	2016-12-14 21:20:40.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/vdir.c linux-4.9.7/fs/aufs/vdir.c
+--- linux-4.9.7-orig/fs/aufs/vdir.c	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/vdir.c	2017-02-01 15:51:06.456631900 +0000
 @@ -0,0 +1,900 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -27798,10 +27806,10 @@ diff -Naur linux-4.9-clean/fs/aufs/vdir.c linux-4.9/fs/aufs/vdir.c
 +	/* smp_mb(); */
 +	return 0;
 +}
-diff -Naur linux-4.9-clean/fs/aufs/vfsub.c linux-4.9/fs/aufs/vfsub.c
---- linux-4.9-clean/fs/aufs/vfsub.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/vfsub.c	2016-12-17 05:18:52.000000000 +0000
-@@ -0,0 +1,886 @@
+diff -Naur linux-4.9.7-orig/fs/aufs/vfsub.c linux-4.9.7/fs/aufs/vfsub.c
+--- linux-4.9.7-orig/fs/aufs/vfsub.c	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/vfsub.c	2017-02-01 15:51:06.456631900 +0000
+@@ -0,0 +1,899 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
 + *
@@ -27845,6 +27853,19 @@ diff -Naur linux-4.9-clean/fs/aufs/vfsub.c linux-4.9/fs/aufs/vfsub.c
 +	return real_mount(mnt)->mnt_ns == ns->mnt_ns ? 0 : -EACCES;
 +}
 +#endif
++
++int vfsub_sync_filesystem(struct super_block *h_sb)
++{
++	int err;
++
++	lockdep_off();
++	down_read(&h_sb->s_umount);
++	err = sync_filesystem(h_sb);
++	up_read(&h_sb->s_umount);
++	lockdep_on();
++
++	return err;
++}
 +
 +/* ---------------------------------------------------------------------- */
 +
@@ -28688,10 +28709,10 @@ diff -Naur linux-4.9-clean/fs/aufs/vfsub.c linux-4.9/fs/aufs/vfsub.c
 +
 +	return err;
 +}
-diff -Naur linux-4.9-clean/fs/aufs/vfsub.h linux-4.9/fs/aufs/vfsub.h
---- linux-4.9-clean/fs/aufs/vfsub.h	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/vfsub.h	2016-12-17 05:18:52.000000000 +0000
-@@ -0,0 +1,316 @@
+diff -Naur linux-4.9.7-orig/fs/aufs/vfsub.h linux-4.9.7/fs/aufs/vfsub.h
+--- linux-4.9.7-orig/fs/aufs/vfsub.h	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/vfsub.h	2017-02-01 15:51:06.456631900 +0000
+@@ -0,0 +1,318 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
 + *
@@ -28776,6 +28797,8 @@ diff -Naur linux-4.9-clean/fs/aufs/vfsub.h linux-4.9/fs/aufs/vfsub.h
 +#else
 +AuStubInt0(vfsub_test_mntns, struct vfsmount *mnt, struct super_block *h_sb);
 +#endif
++
++int vfsub_sync_filesystem(struct super_block *h_sb);
 +
 +/* ---------------------------------------------------------------------- */
 +
@@ -29008,9 +29031,9 @@ diff -Naur linux-4.9-clean/fs/aufs/vfsub.h linux-4.9/fs/aufs/vfsub.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_VFSUB_H__ */
-diff -Naur linux-4.9-clean/fs/aufs/wbr_policy.c linux-4.9/fs/aufs/wbr_policy.c
---- linux-4.9-clean/fs/aufs/wbr_policy.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/wbr_policy.c	2016-12-17 05:18:52.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/wbr_policy.c linux-4.9.7/fs/aufs/wbr_policy.c
+--- linux-4.9.7-orig/fs/aufs/wbr_policy.c	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/wbr_policy.c	2017-02-01 15:51:06.456631900 +0000
 @@ -0,0 +1,830 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -29842,9 +29865,9 @@ diff -Naur linux-4.9-clean/fs/aufs/wbr_policy.c linux-4.9/fs/aufs/wbr_policy.c
 +		.fin	= au_wbr_create_fin_mfs
 +	}
 +};
-diff -Naur linux-4.9-clean/fs/aufs/whout.c linux-4.9/fs/aufs/whout.c
---- linux-4.9-clean/fs/aufs/whout.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/whout.c	2016-12-17 05:18:52.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/whout.c linux-4.9.7/fs/aufs/whout.c
+--- linux-4.9.7-orig/fs/aufs/whout.c	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/whout.c	2017-02-01 15:51:06.456631900 +0000
 @@ -0,0 +1,1061 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -30907,9 +30930,9 @@ diff -Naur linux-4.9-clean/fs/aufs/whout.c linux-4.9/fs/aufs/whout.c
 +		au_whtmp_rmdir_free(args);
 +	}
 +}
-diff -Naur linux-4.9-clean/fs/aufs/whout.h linux-4.9/fs/aufs/whout.h
---- linux-4.9-clean/fs/aufs/whout.h	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/whout.h	2016-12-14 21:20:40.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/whout.h linux-4.9.7/fs/aufs/whout.h
+--- linux-4.9.7-orig/fs/aufs/whout.h	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/whout.h	2017-02-01 15:51:06.456631900 +0000
 @@ -0,0 +1,85 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -30996,9 +31019,9 @@ diff -Naur linux-4.9-clean/fs/aufs/whout.h linux-4.9/fs/aufs/whout.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_WHOUT_H__ */
-diff -Naur linux-4.9-clean/fs/aufs/wkq.c linux-4.9/fs/aufs/wkq.c
---- linux-4.9-clean/fs/aufs/wkq.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/wkq.c	2016-12-14 21:20:40.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/wkq.c linux-4.9.7/fs/aufs/wkq.c
+--- linux-4.9.7-orig/fs/aufs/wkq.c	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/wkq.c	2017-02-01 15:51:06.456631900 +0000
 @@ -0,0 +1,213 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -31213,9 +31236,9 @@ diff -Naur linux-4.9-clean/fs/aufs/wkq.c linux-4.9/fs/aufs/wkq.c
 +
 +	return err;
 +}
-diff -Naur linux-4.9-clean/fs/aufs/wkq.h linux-4.9/fs/aufs/wkq.h
---- linux-4.9-clean/fs/aufs/wkq.h	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/wkq.h	2016-12-14 21:20:40.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/wkq.h linux-4.9.7/fs/aufs/wkq.h
+--- linux-4.9.7-orig/fs/aufs/wkq.h	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/wkq.h	2017-02-01 15:51:06.456631900 +0000
 @@ -0,0 +1,93 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -31310,10 +31333,10 @@ diff -Naur linux-4.9-clean/fs/aufs/wkq.h linux-4.9/fs/aufs/wkq.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_WKQ_H__ */
-diff -Naur linux-4.9-clean/fs/aufs/xattr.c linux-4.9/fs/aufs/xattr.c
---- linux-4.9-clean/fs/aufs/xattr.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/xattr.c	2016-12-17 05:18:52.000000000 +0000
-@@ -0,0 +1,332 @@
+diff -Naur linux-4.9.7-orig/fs/aufs/xattr.c linux-4.9.7/fs/aufs/xattr.c
+--- linux-4.9.7-orig/fs/aufs/xattr.c	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/xattr.c	2017-02-01 15:51:06.460636200 +0000
+@@ -0,0 +1,357 @@
 +/*
 + * Copyright (C) 2014-2016 Junjiro R. Okajima
 + *
@@ -31335,6 +31358,8 @@ diff -Naur linux-4.9-clean/fs/aufs/xattr.c linux-4.9/fs/aufs/xattr.c
 + * handling xattr functions
 + */
 +
++#include <linux/fs.h>
++#include <linux/posix_acl_xattr.h>
 +#include <linux/xattr.h>
 +#include "aufs.h"
 +
@@ -31507,6 +31532,19 @@ diff -Naur linux-4.9-clean/fs/aufs/xattr.c linux-4.9/fs/aufs/xattr.c
 +
 +/* ---------------------------------------------------------------------- */
 +
++static int au_smack_reentering(struct super_block *sb)
++{
++#if IS_ENABLED(CONFIG_SECURITY_SMACK)
++	/*
++	 * as a part of lookup, smack_d_instantiate() is called, and it calls
++	 * i_op->getxattr(). ouch.
++	 */
++	return si_pid_test(sb);
++#else
++	return 0;
++#endif
++}
++
 +enum {
 +	AU_XATTR_LIST,
 +	AU_XATTR_GET
@@ -31530,14 +31568,18 @@ diff -Naur linux-4.9-clean/fs/aufs/xattr.c linux-4.9/fs/aufs/xattr.c
 +static ssize_t au_lgxattr(struct dentry *dentry, struct au_lgxattr *arg)
 +{
 +	ssize_t err;
++	int reenter;
 +	struct path h_path;
 +	struct super_block *sb;
 +
 +	sb = dentry->d_sb;
-+	err = si_read_lock(sb, AuLock_FLUSH | AuLock_NOPLM);
-+	if (unlikely(err))
-+		goto out;
-+	err = au_h_path_getattr(dentry, /*force*/1, &h_path);
++	reenter = au_smack_reentering(sb);
++	if (!reenter) {
++		err = si_read_lock(sb, AuLock_FLUSH | AuLock_NOPLM);
++		if (unlikely(err))
++			goto out;
++	}
++	err = au_h_path_getattr(dentry, /*force*/1, &h_path, reenter);
 +	if (unlikely(err))
 +		goto out_si;
 +	if (unlikely(!h_path.dentry))
@@ -31559,9 +31601,11 @@ diff -Naur linux-4.9-clean/fs/aufs/xattr.c linux-4.9/fs/aufs/xattr.c
 +	}
 +
 +out_di:
-+	di_read_unlock(dentry, AuLock_IR);
++	if (!reenter)
++		di_read_unlock(dentry, AuLock_IR);
 +out_si:
-+	si_read_unlock(sb);
++	if (!reenter)
++		si_read_unlock(sb);
 +out:
 +	AuTraceErr(err);
 +	return err;
@@ -31638,7 +31682,11 @@ diff -Naur linux-4.9-clean/fs/aufs/xattr.c linux-4.9/fs/aufs/xattr.c
 +};
 +
 +static const struct xattr_handler *au_xattr_handlers[] = {
-+	&au_xattr_handler,
++#ifdef CONFIG_FS_POSIX_ACL
++	&posix_acl_access_xattr_handler,
++	&posix_acl_default_xattr_handler,
++#endif
++	&au_xattr_handler, /* must be last */
 +	NULL
 +};
 +
@@ -31646,9 +31694,9 @@ diff -Naur linux-4.9-clean/fs/aufs/xattr.c linux-4.9/fs/aufs/xattr.c
 +{
 +	sb->s_xattr = au_xattr_handlers;
 +}
-diff -Naur linux-4.9-clean/fs/aufs/xino.c linux-4.9/fs/aufs/xino.c
---- linux-4.9-clean/fs/aufs/xino.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/fs/aufs/xino.c	2016-12-14 21:20:40.000000000 +0000
+diff -Naur linux-4.9.7-orig/fs/aufs/xino.c linux-4.9.7/fs/aufs/xino.c
+--- linux-4.9.7-orig/fs/aufs/xino.c	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/fs/aufs/xino.c	2017-02-01 15:51:06.460636200 +0000
 @@ -0,0 +1,1318 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -32968,9 +33016,9 @@ diff -Naur linux-4.9-clean/fs/aufs/xino.c linux-4.9/fs/aufs/xino.c
 +out:
 +	return err;
 +}
-diff -Naur linux-4.9-clean/include/uapi/linux/aufs_type.h linux-4.9/include/uapi/linux/aufs_type.h
---- linux-4.9-clean/include/uapi/linux/aufs_type.h	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9/include/uapi/linux/aufs_type.h	2016-12-17 05:18:52.000000000 +0000
+diff -Naur linux-4.9.7-orig/include/uapi/linux/aufs_type.h linux-4.9.7/include/uapi/linux/aufs_type.h
+--- linux-4.9.7-orig/include/uapi/linux/aufs_type.h	1970-01-01 00:00:00.000000000 +0000
++++ linux-4.9.7/include/uapi/linux/aufs_type.h	2017-02-01 15:51:06.460636200 +0000
 @@ -0,0 +1,419 @@
 +/*
 + * Copyright (C) 2005-2016 Junjiro R. Okajima
@@ -33013,7 +33061,7 @@ diff -Naur linux-4.9-clean/include/uapi/linux/aufs_type.h linux-4.9/include/uapi
 +
 +#include <linux/limits.h>
 +
-+#define AUFS_VERSION	"4.9-20161219"
++#define AUFS_VERSION	"4.9-20170130"
 +
 +/* todo? move this to linux-2.6.19/include/magic.h */
 +#define AUFS_SUPER_MAGIC	('a' << 24 | 'u' << 16 | 'f' << 8 | 's')
