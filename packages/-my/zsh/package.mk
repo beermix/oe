@@ -1,6 +1,6 @@
 PKG_NAME="zsh"
 PKG_VERSION="5.3.1"
-PKG_URL="https://master.dl.sourceforge.net/project/zsh/zsh/$PKG_VERSION/zsh-$PKG_VERSION.tar.xz"
+PKG_URL="https://fossies.org/linux/misc/zsh-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain netbsd-curses libcap pcre readline gdbm libpcap"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
