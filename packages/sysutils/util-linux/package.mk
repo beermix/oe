@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="util-linux"
-PKG_VERSION="2.29"
+PKG_VERSION="2.29.1"
 PKG_URL="http://www.kernel.org/pub/linux/utils/util-linux/v2.29/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain readline"
 PKG_DEPENDS_INIT="toolchain gcc:init readline"

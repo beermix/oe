@@ -4,7 +4,7 @@
 ################################################################################
 
 PKG_NAME="lua"
-PKG_VERSION="5.3.3"
+PKG_VERSION="5.3.4"
 PKG_SITE="http://www.lua.org/"
 PKG_URL="http://www.lua.org/ftp/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain readline"
