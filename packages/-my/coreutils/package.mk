@@ -6,9 +6,8 @@ PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-nls \
-			      --with-gmp \
-			      --enable-no-install-program=hostname,su,kill,uptime \
+PKG_CONFIGURE_OPTS_TARGET="--with-gmp \
 			      --without-selinux \
 			      --with-openssl \
-			      --disable-rpath"
+			      --disable-rpath \
+			      --enable-no-install-program=hostname,su,kill,uptime,uname,mv,mkdir,pwd,readlink,seq"
