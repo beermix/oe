@@ -17,7 +17,8 @@
 ################################################################################
 
 PKG_NAME="mesa"
-PKG_VERSION="17.0.0-rc2"
+#PKG_VERSION="17.0.0-rc2"
+PKG_VERSION="13.0.3"
 PKG_SITE="http://www.mesa3d.org/"
 PKG_URL="https://fossies.org/linux/misc/mesa-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain Python:host expat glproto dri2proto presentproto libdrm libXext libXdamage libXfixes libXxf86vm libxcb libX11 dri3proto libxshmfence openssl zlib systemd"
