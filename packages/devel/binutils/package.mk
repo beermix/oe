@@ -17,11 +17,10 @@
 ################################################################################
 
 PKG_NAME="binutils"
-#PKG_VERSION="0a09320"
-PKG_VERSION="2964cf5"
+PKG_VERSION="0a09320"
 PKG_SITE="http://www.gnu.org/software/binutils/binutils.html"
 PKG_GIT_URL="git://sourceware.org/git/binutils-gdb.git"
-PKG_GIT_BRANCH="binutils-2_27-branch"
+PKG_GIT_BRANCH="binutils-2_28-branch"
 PKG_KEEP_CHECKOUT="yes"
 PKG_DEPENDS_HOST="ccache:host bison:host flex:host linux:host"
 PKG_SECTION="toolchain/devel"
