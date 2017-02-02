@@ -12,7 +12,7 @@ post_unpack() {
 
 pre_configure_target() {
    export MAKEFLAGS="-j1"
-   strip_lto
-   strip_gold
+   #strip_lto
+   #strip_gold
 }
 

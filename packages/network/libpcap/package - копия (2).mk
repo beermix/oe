@@ -39,9 +39,12 @@ PKG_CONFIGURE_OPTS_TARGET="LIBS=-lpthread \
                            --disable-bluetooth \
                            --disable-can \
                            --without-libnl \
+                           --disable-dbus \
+                           --disable-canusb \
                            --disable-yydebug \
                            --without-septel \
-                           --without-dag"
+                           --without-dag \
+                           --without-snf"
 
 pre_configure_target() {
 # When cross-compiling, configure can't set linux version
