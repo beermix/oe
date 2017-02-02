@@ -24,8 +24,8 @@ pre_make_target() {
 
 make_target() {
   mkdir -p bin
-  $GOLANG build -v -o bin/containerd      -a -tags "static_build" -ldflags "$LDFLAGS" ./containerd
-  $GOLANG build -v -o bin/containerd-shim -a -tags "static_build" -ldflags "$LDFLAGS" ./containerd-shim
+  $GOLANG get -u -v "github.com/LunaNode/dnsbench"
+  $GOLANG build -v -o bin/dnsbench      -a -tags "static_build" -ldflags "$LDFLAGS" .
 }
 
 makeinstall_target() {

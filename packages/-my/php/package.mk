@@ -1,58 +1,60 @@
 PKG_NAME="php"
-PKG_VERSION="5.6.21"
+PKG_VERSION="7.0.15"
 PKG_SITE="http://www.php.net"
 PKG_URL="http://www.php.net/distributions/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain zlib pcre curl openssl sqlite pcre pcre2 freetype libpng libjpeg-turbo tiff glu glu giflib"
-
+PKG_DEPENDS_TARGET="toolchain zlib pcre curl openssl sqlite pcre pcre freetype libpng libjpeg-turbo tiff glu glu giflib gmp"
 PKG_SECTION="tools"
 PKG_AUTORECONF="no"
 
-
+pre_configure_target() {
+   export LIBS="-lterminfo"
+   strip_lto
+}
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-all \
                            --without-pear \
                            --prefix=/usr \
                            --with-config-file-path=/storage/.config/php \
                            --localstatedir=/var \
-                           --disable-cli \
+                           --enable-cli \
                            --enable-cgi \
-                           --disable-sockets \
+                           --enable-sockets \
                            --enable-posix \
-                           --disable-spl \
-                           --disable-session \
+                           --enable-spl \
+                           --enable-session \
                            --with-openssl=$SYSROOT_PREFIX/usr \
-                           --disable-libxml \
                            --disable-xml \
                            --disable-xmlreader \
                            --disable-xmlwriter \
                            --disable-simplexml \
                            --with-zlib=$SYSROOT_PREFIX/usr \
-                           --disable-exif \
+                           --enable-exif \
                            --disable-ftp \
-                           --without-gettext \
-                           --without-gmp \
+                           --with-gettext \
+                           --with-gmp=$SYSROOT_PREFIX/usr \
                            --enable-json \
                            --without-readline \
-                           --disable-pcntl \
-                           --disable-sysvmsg \
-                           --disable-sysvsem \
-                           --disable-sysvshm \
+                           --enable-pcntl \
+                           --enable-sysvmsg \
+                           --enable-sysvsem \
+                           --enable-sysvshm \
                            --disable-zip \
-                           --disable-filter \
+                           --enable-filter \
                            --disable-calendar \
                            --with-curl=$SYSROOT_PREFIX/usr \
                            --with-pcre-regex \
                            --without-sqlite3 \
-                           --disable-pdo \
+                           --enable-pdo \
                            --without-pdo-sqlite \
-                           --without-pdo-mysql"
+                           --with-pdo-mysql \
+                           --disable-libxml"
 
 makeinstall_target() {
-make
-make install
+  make
+  make install
 }
 
-addon() {
-  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
-    cp $PKG_BUILD/.$TARGET_NAME/sapi/cgi/php-cgi $ADDON_BUILD/$PKG_ADDON_ID/bin/php-cgi
+post_make_target() {
+  mkdir -p $INSTALL/usr/bin
+  cp sapi/cgi/php-cgi $INSTALL/usr/bin/php
 }
