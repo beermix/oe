@@ -8,5 +8,6 @@ PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-static \
-			      --disable-java \
-			      --enable-csharp=no"
+			      --disable-local-libopts \
+			      --disable-doc \
+			      --disable-crywrap"
