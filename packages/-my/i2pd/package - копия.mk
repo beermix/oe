@@ -8,6 +8,7 @@ PKG_AUTORECONF="no"
 
 pre_configure_target() {
    strip_lto
+   strip_gold
 }
 
 PKG_CMAKE_SCRIPT_TARGET="build/CMakeLists.txt"
