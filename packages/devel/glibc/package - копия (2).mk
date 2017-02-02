@@ -107,7 +107,6 @@ pre_configure_target() {
   export CFLAGS="$CFLAGS -g -fno-stack-protector"
   export CXXFLAGS="$CFLAGS"
 
-  export BUILD_CC=$HOST_CC
   export OBJDUMP_FOR_HOST=objdump
 
 cat >config.cache <<EOF
@@ -133,11 +132,18 @@ post_makeinstall_target() {
   done
   rm -rf $INSTALL/usr/lib/audit
   rm -rf $INSTALL/usr/lib/glibc
-  rm -rf $INSTALL/usr/lib/libc_pic
   rm -rf $INSTALL/usr/lib/*.o
-  rm -rf $INSTALL/usr/lib/*.map
   rm -rf $INSTALL/var
 
+# remove unneeded libs
+  rm -rf $INSTALL/usr/lib/libBrokenLocale*
+  rm -rf $INSTALL/usr/lib/libSegFault.so
+  rm -rf $INSTALL/usr/lib/libmemusage.so
+  rm -rf $INSTALL/usr/lib/libpcprofile.so
+
+# remove ldscripts
+  rm -rf $INSTALL/usr/lib/libc.so
+  rm -rf $INSTALL/usr/lib/libpthread.so
 # remove locales and charmaps
   rm -rf $INSTALL/usr/share/i18n/charmaps
 # add UTF-8 charmap for Generic (charmap is needed for installer)
@@ -171,11 +177,11 @@ make_init() {
 }
 
 makeinstall_init() {
-  mkdir -p $INSTALL/usr/lib
+  mkdir -p $INSTALL/lib
     cp -PR $ROOT/$PKG_BUILD/.$TARGET_NAME/elf/ld*.so* $INSTALL/lib
-    cp -PR $ROOT/$PKG_BUILD/.$TARGET_NAME/libc.so* $INSTALL/lib
-    cp -PR $ROOT/$PKG_BUILD/.$TARGET_NAME/math/libm.so* $INSTALL/lib
-    cp -PR $ROOT/$PKG_BUILD/.$TARGET_NAME/nptl/libpthread.so* $INSTALL/lib
+    cp $ROOT/$PKG_BUILD/.$TARGET_NAME/libc.so.6 $INSTALL/lib
+    cp $ROOT/$PKG_BUILD/.$TARGET_NAME/math/libm.so* $INSTALL/lib
+    cp $ROOT/$PKG_BUILD/.$TARGET_NAME/nptl/libpthread.so.0 $INSTALL/lib
     cp -PR $ROOT/$PKG_BUILD/.$TARGET_NAME/rt/librt.so* $INSTALL/lib
 
     if [ "$TARGET_ARCH" = "arm" -a "$TARGET_FLOAT" = "hard" ]; then
