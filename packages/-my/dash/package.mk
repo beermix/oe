@@ -1,9 +1,9 @@
 PKG_NAME="dash"
-PKG_VERSION="0.5.8"
-PKG_URL="https://dl.dropboxusercontent.com/s/zkdi9mb1jffe6e5/dash_0.5.8.orig.tar.gz"
+PKG_VERSION="0.5.9.1"
+PKG_URL="http://ftp.osuosl.org/pub/blfs/svn/d/dash-0.5.9.1.tar.gz"
 PKG_DEPENDS_TARGET="toolchain netbsd-curses readline"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--bindir=/bin \
 			      --enable-fnmatch \
