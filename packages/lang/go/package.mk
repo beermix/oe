@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="go"
-#PKG_VERSION="go1.7.5"
-PKG_VERSION="d8d2f03"
+PKG_VERSION="go1.7.5"
+#PKG_VERSION="d8d2f03"
 PKG_GIT_URL="https://github.com/golang/go"
 PKG_DEPENDS_HOST="toolchain"
 PKG_SECTION="system"
@@ -43,7 +43,7 @@ configure_host() {
   #export GOROOT_BOOTSTRAP=$ROOT/$TOOLCHAIN/lib/golang-1.4
   export GOARCH=amd64
   export CGO_ENABLED=1
-  export CC="$HOST_CC"
+  export CC="$CC"
   export CC_FOR_TARGET="$CC"
   export CXX_FOR_TARGET="$CXX"
 }

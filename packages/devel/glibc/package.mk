@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="glibc"
-PKG_VERSION="2.24"
+PKG_VERSION="2.24-33-ge9e69e4"
 PKG_SITE="http://www.gnu.org/software/libc/"
-PKG_URL="https://fossies.org/linux/misc/glibc-$PKG_VERSION.tar.xz"
+PKG_URL="https://dl.dropboxusercontent.com/s/9qour41s1ryu6rj/glibc-2.24-33-ge9e69e4.tar.gz"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap"
 PKG_DEPENDS_INIT="glibc"
 PKG_SECTION="toolchain/devel"

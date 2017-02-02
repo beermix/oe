@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="6-20170126"
+PKG_VERSION="6.3.1-20161221"
 PKG_SITE="http://gcc.gnu.org/"
-PKG_URL="https://fossies.org/linux/misc/gcc-$PKG_VERSION.tar.xz"
+PKG_URL="https://dl.dropboxusercontent.com/s/480wooqqlwrtldh/gcc-6.3.1-20161221.tar.bz2"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host"
 PKG_DEPENDS_TARGET="gcc:host"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
@@ -89,6 +89,9 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-linker-build-id \
                          --with-linker-hash-style=gnu \
                          --enable-poison-system-directories \
+                         --disable-libunwind-exceptions \
+                         --enable-initfini-array \
+                         --enable-gnu-indirect-function \
                          $GCC_OPTS"
 
 pre_configure_host() {

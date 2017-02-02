@@ -9,14 +9,12 @@ PKG_LONGDESC="containerd is a daemon to control runC, built for performance and 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-strip_lto
-
 pre_make_target() {
   export GOOS=linux
   export GOARCH=amd64
   export CGO_ENABLED=1
   export CGO_NO_EMULATION=1
-  export CGO_CFLAGS=$CFLAGS
+  export CGO_CFLAGS="-O3 -pipe -fstack-protector-strong"
   export LDFLAGS="-s -w -linkmode external -extld $CC"
   export GOLANG=$ROOT/$TOOLCHAIN/lib/golang/bin/go
   export GOPATH=$ROOT/$PKG_BUILD.gopath:$ROOT/$PKG_BUILD/vendor/
@@ -28,7 +26,7 @@ pre_make_target() {
 
 make_target() {
   mkdir -p bin
-  go get -v "github.com/ncw/rclone/cmd" "github.com/ncw/rclone/cmd/all" "github.com/ncw/rclone/fs/all"
+  $GOLANG get -v golang.org/x/tools/cmd/goimports github.com/golang/lint/golint  github.com/mitchellh/gox github.com/inconshreveable/mousetrap github.com/tools/godep github.com/ncw/rclone/cmd github.com/ncw/rclone/cmd/all
   $GOLANG build -v -o bin/$PKG_NAME -a -ldflags "$LDFLAGS" ./
   $STRIP bin/$PKG_NAME
 }
