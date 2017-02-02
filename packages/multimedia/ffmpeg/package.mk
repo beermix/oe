@@ -20,7 +20,7 @@ PKG_NAME="ffmpeg"
 PKG_VERSION="2.8.10"
 PKG_SITE="https://ffmpeg.org"
 PKG_URL="https://ffmpeg.org/releases/${PKG_NAME}-${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl dcadec speex"
+PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl dcadec speex x265"
 PKG_PRIORITY="optional"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
@@ -93,7 +93,7 @@ pre_configure_target() {
 
   if [ "$KODIPLAYER_DRIVER" = "bcm2835-firmware" ]; then
     export CFLAGS="-I$SYSROOT_PREFIX/usr/include/interface/vcos/pthreads -I$SYSROOT_PREFIX/usr/include/interface/vmcs_host/linux -DRPI=1 $CFLAGS"
-    export FFMPEG_LIBS="-lbcm_host -lvcos -lvchiq_arm -lmmal -lmmal_core -lmmal_util -lvcsm"
+    export FFMPEG_LIBS="-lbcm_host -lvcos -lvchiq_arm -lmmal -lmmal_core -lmmal_util -lvcsm -lx265"
   fi
 }
 
@@ -116,7 +116,7 @@ configure_target() {
               --host-cflags="$HOST_CFLAGS" \
               --host-ldflags="$HOST_LDFLAGS" \
               --host-libs="-lm" \
-              --extra-cflags="$CFLAGS -D_DEFAULT_SOURCE" \
+              --extra-cflags="$CFLAGS -D_DEFAULT_SOURCE -D_POSIX_C_SOURCE=200112 -D_XOPEN_SOURCE=600 -D_XOPEN_SOURCE_EXTENDED=1 -D_ALL_SOURCE" \
               --extra-ldflags="$LDFLAGS -fPIC" \
               --extra-libs="$FFMPEG_LIBS" \
               --extra-version="" \
@@ -216,6 +216,7 @@ configure_target() {
               $FFMPEG_FPU \
               --enable-yasm \
               --disable-symver \
+              --enable-libx265 \
               --disable-lto
 }
 
