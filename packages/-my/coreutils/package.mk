@@ -6,10 +6,9 @@ PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--bindir=/bin \
-			      --with-gmp \
+PKG_CONFIGURE_OPTS_TARGET="--with-gmp \
 			      --without-selinux \
 			      --with-openssl \
 			      --enable-silent-rules \
-			      --with-gnu-ld \
-			      --enable-no-install-program=env,hostname,su,kill,uptime,uname,pwd,readlink,seq,basename,mkfifo,mknod,mktemp,nohup,od,printenv,realpath,touch,mtab"
+			      --enable-threads=posix \
+			      --enable-no-install-program=printf,logname,pr,mv,ln,nl,numfmt,pathchk,true,md5sum,mkdir,env,hostname,su,kill,uptime,uname,pwd,readlink,seq,basename,mkfifo,mknod,mktemp,nohup,od,printenv,realpath,touch,mtab"
