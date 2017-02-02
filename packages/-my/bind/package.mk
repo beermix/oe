@@ -4,7 +4,7 @@ PKG_URL="http://www.mirrorservice.org/sites/ftp.isc.org/isc/bind9/$PKG_VERSION/b
 PKG_DEPENDS_TARGET="toolchain sqlite libcap openssl readline"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 pre_configure_taret() {
   export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
