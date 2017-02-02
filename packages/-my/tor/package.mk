@@ -5,9 +5,6 @@ PKG_DEPENDS_TARGET="toolchain openssl libz libevent libcap"
 PKG_SECTION="security"
 PKG_AUTORECONF="yes"
 
-pre_configure_target() {
-  export MAKEFLAGS="-j1"
-}
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-gcc-hardening \
 			      --disable-linker-hardening \
