@@ -40,6 +40,7 @@ PKG_CONFIGURE_OPTS_TARGET="LIBS=-lpthread \
                            --disable-can \
                            --without-libnl \
                            --disable-yydebug \
+                           --disable-dbus \
                            --without-septel \
                            --without-dag"
 
