@@ -50,4 +50,4 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_c_restrict=no \
 			      --disable-silent-rules \
 			      --with-gnu-ld \
 			      --enable-threads=posix \
-			      --enable-no-install-program=hostname,su,kill,uptime,uname,mv,mkdir,pwd,readlink,seq,[,basename,mkfifo,mknod,mktemp,nice,nohup,od,printenv,realpath,rm,rmdir,tail,tee,touch,tr,true,uniq"
+			      --enable-no-install-program=env,hostname,su,kill,uptime,uname,pwd,readlink,seq,basename,mkfifo,mknod,mktemp,nohup,od,printenv,realpath,rm,rmdir,touch,tr,true,uniq,mtab"
