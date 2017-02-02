@@ -40,13 +40,13 @@ pre_make_target() {
   strip_lto
 
   sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' third_party/widevine/cdm/stub/widevine_cdm_version.h
-  
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
 }
 
 make_target() {
   export LDFLAGS="$LDFLAGS -ludev"
   export LD=$CXX
+  
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
 
   # Use Python 2
   find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$ROOT/$TOOLCHAIN/bin/python|g" {} +

@@ -9,9 +9,8 @@ PKG_AUTORECONF="no"
 pre_configure_target() {
    strip_lto
    strip_gold
-   export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
 }
 
 make_target() {
-  make CC="$CC" AR="$AR" LD="$LD" XCFLAGS="$CFLAGS" RANLIB="$RANLIB" XLDFLAGS="$LDFLAGS" CFLAGS="$CFLAGS"
+  make CC="$CC" AR="$AR" LD="$LD" XCFLAGS="$CFLAGS" RANLIB="$RANLIB" XLDFLAGS="$LDFLAGS" CFLAGS="$CFLAGS" -j1
 }
