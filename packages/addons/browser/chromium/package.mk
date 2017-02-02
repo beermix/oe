@@ -99,7 +99,6 @@ make_target() {
     libxslt
     yasm
     ffmpeg
-    flac
   )
 
   # Remove bundled libraries for which we will use the system copies; this
