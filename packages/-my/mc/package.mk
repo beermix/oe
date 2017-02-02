@@ -47,5 +47,4 @@ PKG_CONFIGURE_OPTS_TARGET="fu_cv_sys_stat_statfs2_bsize=yes \
                            --with-pcre=$SYSROOT_PREFIX/usr \
                            --without-debug \
                            --without-gnome \
-                           --without-samba \
-                           --with-search-engine=glib"
+                           --with-samba"

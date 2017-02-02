@@ -60,7 +60,6 @@ make_target() {
      NSINSTALL=$ROOT/$TOOLCHAIN/bin/nsinstall \
      CPU_ARCH_TAG=$TARGET_ARCH \
      CC=$CC LDFLAGS="$LDFLAGS -L$SYSROOT_PREFIX/usr/lib" \
-     NSS_USE_SYSTEM_SQLITE=1 \
      NSS_ALLOW_SSLKEYLOGFILE=1 \
      NSS_ENABLE_ECC=1 \
      V=1
