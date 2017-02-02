@@ -39,6 +39,6 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared \
                            --enable-largefile \
                            --with-gnu-ld"
 
-post_makeinstall_target() {
-  rm -rf $INSTALL/usr/bin
-}
+#post_makeinstall_target() {
+#  rm -rf $INSTALL/usr/bin
+#}
