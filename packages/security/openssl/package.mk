@@ -1,13 +1,16 @@
 PKG_NAME="openssl"
-#PKG_VERSION="1.0.2k"
-PKG_VERSION="1.1.0d"
+PKG_VERSION="1.0.2k"
 PKG_URL="https://www.openssl.org/source/openssl-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain zlib pcre"
 PKG_SECTION="security"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-MAKEFLAGS="-j1"
+pre_configure_target() {
+  export MAKEFLAGS="-j1"
+  sed -i -e '/^"linux-x86_64"/ s/-m64 -DL_ENDIAN -O3 -Wall/-O2 -pipe -m64 -DL_ENDIAN -fstack-protector-strong -Wp,-D_FORTIFY_SOURCE=2/' $ROOT/$PKG_BUILD/Configure
+}
+
 
 configure_target() {
   ./Configure --prefix=/usr \
@@ -26,7 +29,6 @@ configure_target() {
               enable-ecdh \
               enable-ecdsa \
               no-rc5 \
-              enable-tlsext \
               no-ssl3-method \
               enable-ec_nistp_64_gcc_128 \
               linux-x86_64 \
