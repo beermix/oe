@@ -8,7 +8,7 @@ PKG_AUTORECONF="no"
 
 pre_configure_target() {
   export MAKEFLAGS="-j1"
-  sed -i -e '/^"linux-x86_64"/ s/-m64 -DL_ENDIAN -O3 -Wall/-O2 -pipe -m64 -DL_ENDIAN -fstack-protector-strong -Wp,-D_FORTIFY_SOURCE=2/' $ROOT/$PKG_BUILD/Configure
+  sed -i -e '/^"linux-x86_64"/ s/-m64 -DL_ENDIAN -O3 -Wall/-O2 -pipe -ffast-math -m64 -DL_ENDIAN -fstack-protector-strong/' $ROOT/$PKG_BUILD/Configure
 }
 
 
