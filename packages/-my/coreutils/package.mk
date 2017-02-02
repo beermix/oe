@@ -6,7 +6,7 @@ PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--bindir=/usr/bin \
+PKG_CONFIGURE_OPTS_TARGET="--bindir=/bin \
 			      --with-gmp \
 			      --without-selinux \
 			      --with-openssl \
