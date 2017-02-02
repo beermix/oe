@@ -5,9 +5,7 @@ PKG_DEPENDS_TARGET="toolchain openssl libz libevent libcap"
 PKG_SECTION="security"
 PKG_AUTORECONF="yes"
 
-pre_configure_target() {
-  export MAKEFLAGS="-j1"
-}
+MAKEFLAGS="-j1"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-gcc-hardening \
 			      --disable-linker-hardening \
@@ -24,7 +22,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-gcc-hardening \
 
 
 post_install() {
-  add_user tor x 990 990 "Tor Server" "/storage" "/bin/bash"
+  add_user tor x 990 990 "Tor Server" "/storage" "/bin/sh"
   add_group tor 990
 }
 
