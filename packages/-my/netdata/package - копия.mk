@@ -6,14 +6,12 @@ PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
 PKG_AUTORECONF="yes"
 
-pre_configure_target() {
-  export MAKEFLAGS="-j1"
-}
-
+MAKEFLAGS="-j1"
 
 PKG_CONFIGURE_OPTS_TARGET="--with-zlib \
 			      --with-math \
-			      --with-user=netdata \
+			      --enable-plugin-nfacct \
+			      --enable-pedantic \
 			      --with-webdir=/storage/.config/netdata/webdir \
 			      --sysconfdir=/storage/.config/netdata \
                            --datadir=/storage/.config/netdata \
@@ -28,7 +26,7 @@ PKG_CONFIGURE_OPTS_TARGET="--with-zlib \
                            --localedir=/storage/.config/netdata"
                  
 post_install() {
-  add_user nobody x 990 990 "netdata" "/storage" "/bin/bash"
+  add_user nobody x 990 990 "netdata" "/storage" "/bin/sh"
   add_group netdev 990
 }
 
