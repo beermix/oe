@@ -17,11 +17,11 @@
 ################################################################################
 
 PKG_NAME="libpcap"
-PKG_VERSION="1.8.1"
-#PKG_VERSION="b758645"
-PKG_URL="http://www.tcpdump.org/release/libpcap-$PKG_VERSION.tar.gz"
-#PKG_GIT_URL="https://github.com/the-tcpdump-group/libpcap"
-PKG_DEPENDS_TARGET="toolchain"
+#PKG_VERSION="1.8.1"
+PKG_VERSION="5c23535"
+#PKG_URL="http://www.tcpdump.org/release/libpcap-$PKG_VERSION.tar.gz"
+PKG_GIT_URL="https://github.com/the-tcpdump-group/libpcap"
+PKG_DEPENDS_TARGET="toolchain libusb dbus"
 PKG_SECTION="devel"
 PKG_SHORTDESC="system interface for user-level packet capture"
 PKG_LONGDESC="libpcap (Packet CAPture) provides a portable framework for low-level network monitoring. Applications include network statistics collection, security monitoring, network debugging, etc."
