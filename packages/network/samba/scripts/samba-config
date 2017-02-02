@@ -45,8 +45,8 @@ if [ "$SAMBA_AUTOSHARE" == "true" ] ; then
 fi
 
 # only letters & numbers permitted for username & password
-SAMBA_USERNAME=`echo $SAMBA_USERNAME | sed "s/[^a-zA-Z0-9]//g;"`
-SAMBA_PASSWORD=`echo $SAMBA_PASSWORD | sed "s/[^a-zA-Z0-9]//g;"`
+  SAMBA_USERNAME=`echo $SAMBA_USERNAME | sed "s/[^a-zA-Z0-9]//g;"`
+  SAMBA_PASSWORD=`echo $SAMBA_PASSWORD | sed "s/[^a-zA-Z0-9]//g;"`
 
 if [ "$SAMBA_SECURE" == "true" -a ! "$SAMBA_USERNAME" == "" -a ! "$SAMBA_PASSWORD" == "" ] ; then
   # username map: first line makes sure plain root does not work all the time
