@@ -19,16 +19,16 @@
 ################################################################################
 
 PKG_NAME="httpd"
-PKG_VERSION="2.4.23"
+PKG_VERSION="2.4.25"
 PKG_SITE="http://www.linuxfromscratch.org/blfs/view/svn/server/apache.html"
 PKG_URL="http://archive.apache.org/dist/httpd/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain openssl pcre expat"
+PKG_DEPENDS_TARGET="toolchain openssl pcre expat apr-util"
 PKG_SECTION="web"
 PKG_SHORTDESC="The Apache web server."
 PKG_LONGDESC="The Apache web server."
 PKG_MAINTAINER="vpeter"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 # If you still desire to serve pages as root
 APACHE_RUN_AS_ROOT=
@@ -38,6 +38,7 @@ configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
   #strip_lto
+  #export LDFLAGS="-ldl -lpthread"
 
 
   if [ "$APACHE_RUN_AS_ROOT" == "yes" ]; then
@@ -47,10 +48,10 @@ configure_target() {
   APR_DIR_TARGET="$(get_pkg_build apr)/.install_dev"
   APR_UTIL_DIR_TARGET="$(get_pkg_build apr-util)/.install_dev"
 
-  export CFLAGS="$CFLAGS -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64"
+  #export CFLAGS="$CFLAGS -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64"
 
-  export CFLAGS="$CFLAGS -I$SYSROOT_PREFIX/usr/include"
-  export LDFLAGS="$LDFLAGS -L$SYSROOT_PREFIX/usr/lib -lpthread"
+  #export CFLAGS="$CFLAGS -I$SYSROOT_PREFIX/usr/include"
+  #export LDFLAGS="$LDFLAGS -L$SYSROOT_PREFIX/usr/lib -lpthread -lexpat"
 
 if [ "$TARGET_ARCH" = x86_64 ]; then
 	SIZEOF_SIZES="ac_cv_sizeof_struct_iovec=16"
@@ -59,6 +60,11 @@ else
 fi
 
   PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$CC \
+                             --with-crypto \
+                             --enable-ssl \
+                             --enable-so \
+                             --enable-mods-shared=all \
+                             --with-mpm=prefork \
                              apr_cv_process_shared_works=no \
                              ap_cv_void_ptr_lt_long=no \
                              apr_cv_tcp_nodelay_with_cork=no
@@ -66,9 +72,18 @@ fi
                              ac_cv_file__dev_zero=yes \
                              cross_compiling=yes \
                              $SIZEOF_SIZES \
+                             \
+                             --enable-deflate \
+                             --with-z=$SYSROOT_PREFIX/usr \
+                             --enable-xml2enc \
+                             --with-libxml2=$SYSROOT_PREFIX/usr/include/libxml2 \
+                             --with-ssl \
+                             --enable-ssl \
+                             --with-openssl=$SYSROOT_PREFIX/usr \
                              --with-pcre=$SYSROOT_PREFIX/usr \
                              --with-apr=$APR_DIR_TARGET/usr/bin/apr-1-config \
                              --with-apr-util=$APR_UTIL_DIR_TARGET/usr/bin/apu-1-config"
+
 
   $PKG_CONFIGURE_SCRIPT $TARGET_CONFIGURE_OPTS $PKG_CONFIGURE_OPTS_TARGET
 }
