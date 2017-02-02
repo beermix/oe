@@ -27,7 +27,12 @@ PKG_SHORTDESC="cairo: Multi-platform 2D graphics library"
 PKG_LONGDESC="Cairo is a vector graphics library with cross-device output support. Currently supported output targets include the X Window System and in-memory image buffers. PostScript and PDF file output is planned. Cairo is designed to produce identical output on all output media while taking advantage of display hardware acceleration when available."
 PKG_IS_ADDON="no"
 
-PKG_AUTORECONF="yes" # ToDo
+PKG_AUTORECONF="yes"
+
+pre_configure_target() {
+  export CFLAGS="$CFLAGS -D_DEFAULT_SOURCE"
+}
+
 
 if [ "$DISPLAYSERVER" = "x11" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libXrender libX11 mesa glu"
@@ -53,7 +58,7 @@ elif [ "$DISPLAYSERVER" = "weston" ]; then
 fi
 
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CAIRO_CONFIG \
-                           --disable-silent-rules \
+                           --enable-silent-rules \
                            --enable-shared \
                            --disable-static \
                            --disable-gtk-doc \
@@ -92,7 +97,7 @@ PKG_CONFIGURE_OPTS_TARGET="$PKG_CAIRO_CONFIG \
                            --disable-tee \
                            --disable-xml \
                            --enable-pthread \
-                           --disable-gobject \
+                           --enable-gobject \
                            --disable-full-testing \
                            --disable-trace \
                            --enable-interpreter \
