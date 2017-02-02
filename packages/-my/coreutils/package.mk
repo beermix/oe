@@ -10,7 +10,6 @@ PKG_CONFIGURE_OPTS_TARGET="--bindir=/bin \
 			      --with-gmp \
 			      --without-selinux \
 			      --with-openssl \
-			      --disable-silent-rules \
+			      --enable-silent-rules \
 			      --with-gnu-ld \
-			      --enable-threads=posix \
 			      --enable-no-install-program=env,hostname,su,kill,uptime,uname,pwd,readlink,seq,basename,mkfifo,mknod,mktemp,nohup,od,printenv,realpath,touch,mtab"
