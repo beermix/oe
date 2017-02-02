@@ -4,7 +4,7 @@ PKG_GIT_URL="https://github.com/aanarchyy/bully"
 PKG_DEPENDS_TARGET="toolchain libcap"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 post_unpack() {
   cp -r $PKG_BUILD/src/* $PKG_BUILD/
