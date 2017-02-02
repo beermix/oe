@@ -43,7 +43,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_c_restrict=no \
 			      utils_cv_localtime_cache=no \
 			      PERL=missing \
 			      MAKEINFO=missing \
-			      --bindir=/bin \
+			      --bindir=/usr/bin \
 			      --with-gmp \
 			      --without-selinux \
 			      --with-openssl \
