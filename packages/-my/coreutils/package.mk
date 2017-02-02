@@ -43,10 +43,11 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_c_restrict=no \
 			      utils_cv_localtime_cache=no \
 			      PERL=missing \
 			      MAKEINFO=missing \
+			      --bindir=/bin \
 			      --with-gmp \
 			      --without-selinux \
 			      --with-openssl \
 			      --disable-silent-rules \
 			      --with-gnu-ld \
 			      --enable-threads=posix \
-			      --enable-no-install-program=hostname,su,kill,uptime,uname,mv,mkdir,pwd,readlink,seq"
+			      --enable-no-install-program=hostname,su,kill,uptime,uname,mv,mkdir,pwd,readlink,seq,[,basename,mkfifo,mknod,mktemp,nice,nohup,od,printenv,realpath,rm,rmdir,tail,tee,touch,tr,true,uniq"
