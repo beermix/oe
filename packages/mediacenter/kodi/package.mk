@@ -235,6 +235,7 @@ export ac_python_version="$PYTHON_VERSION"
 export GIT_REV="$PKG_VERSION"
 
 PKG_CONFIGURE_OPTS_TARGET="gl_cv_func_gettimeofday_clobber=no \
+                           ac_cv_lib_bluetooth_hci_devid=no \
                            --disable-debug \
                            --disable-optimizations \
                            $KODI_OPENGL \
