@@ -1,16 +1,16 @@
 KG_NAME="hashcat"
-PKG_VERSION="master"
-PKG_URL=""
+PKG_VERSION="c1d88f3"
+PKG_GIT_URL="https://github.com/hashcat/hashcat"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_SECTION="debug/tools"
+PKG_SECTION="my"
+PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-unpack() {
-  git clone --recursive -v --depth 1 https://github.com/hashcat/hashcat $PKG_BUILD
+pre_configure_target() {
+   strip_lto
 }
 
 make_target() {
-  cd $ROOT/$PKG_BUILD/src
   make CC="$CC" AR="$AR" LD="$LD" XCFLAGS="$CFLAGS" RANLIB="$RANLIB" XLDFLAGS="$LDFLAGS" CFLAGS="$CFLAGS" -j1
 }
 
