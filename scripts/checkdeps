@@ -28,8 +28,8 @@ if  [ -f /etc/os-release ]; then
   DISTRO=$(grep ^ID= /etc/os-release | cut -d "=" -f 2 | tr A-Z a-z)
 fi
 
-deps="wget bash bc gcc sed patch tar bzip2 gzip perl gawk gperf zip unzip diff makeinfo lzop"
-deps_pkg="wget bash bc gcc sed patch tar bzip2 gzip perl gawk gperf zip unzip diffutils texinfo lzop dejagnu"
+deps="wget bash bc gcc sed patch lsdiff tar bzip2 gzip perl gawk gperf zip unzip diff lzop"
+deps_pkg="wget bash bc gcc sed patch patchutils tar bzip2 gzip perl gawk gperf zip unzip diffutils lzop"
 
 files="/usr/include/stdio.h /usr/include/ncurses.h"
 files_pkg="libc6-dev libncurses5-dev"
@@ -37,7 +37,7 @@ files_pkg="libc6-dev libncurses5-dev"
 case "$DISTRO" in
     fedora|centos|rhel)
       deps="$deps g++ mkfontscale mkfontdir bdftopcf xsltproc java"
-      deps_pkg="$deps_pkg gcc-c++ xorg-x11-font-utils xorg-x11-font-utils xorg-x11-font-utils libxslt java-1.8.0-openjdk libglib2.0-dev"
+      deps_pkg="$deps_pkg gcc-c++ xorg-x11-font-utils xorg-x11-font-utils xorg-x11-font-utils libxslt java-1.8.0-openjdk"
       [[ ! `rpm -qa glibc-static` ]] && deps="$deps glibc-static" && deps_pkg="$deps_pkg glibc-static"
       [[ ! `rpm -qa libstdc++-static` ]] && deps="$deps libstdc++-static" && deps_pkg="$deps_pkg libstdc++-static"
       files_pkg="glibc-headers ncurses-devel"
@@ -70,6 +70,14 @@ if [ -n "$EXTRA_DEPS_PKG" ] ; then
   deps_pkg="$deps_pkg $EXTRA_DEPS_PKG"
 fi
 
+# distro specific dependencies
+if [ -n "$DISTRO_DEPS" ] ; then
+  deps="$deps $DISTRO_DEPS"
+fi
+if [ -n "$DISTRO_DEPS_PKG" ] ; then
+  deps_pkg="$deps_pkg $DISTRO_DEPS_PKG"
+fi
+
 getarg() {
   eval echo \${$(($1+2))}
 }
@@ -92,7 +100,7 @@ if [ -n "$need" ]; then
   echo "**** You seem to use a $DISTRO system ****"
 
   case "$DISTRO" in
-    ubuntu|debian)
+    ubuntu|debian|\"elementary\")
       read -p "would you like to install the needed tools ? (y/n) " ans
       [ "$ans" = "y" ] && sudo apt-get install $need_pkg
       ;;

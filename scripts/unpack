@@ -88,8 +88,12 @@ else
   fi
 fi
 
-if [ -n "$PKG_SOURCE_DIR" ]; then
-  mv $BUILD/$PKG_SOURCE_DIR $BUILD/$PKG_NAME-$PKG_VERSION
+if [ ! -d $BUILD/$PKG_NAME-$PKG_VERSION ]; then
+  if [ -n "$PKG_SOURCE_DIR" ]; then
+    mv $BUILD/$PKG_SOURCE_DIR $BUILD/$PKG_NAME-$PKG_VERSION
+  elif [ -d $BUILD/$PKG_NAME-$PKG_VERSION* ]; then
+    mv $BUILD/$PKG_NAME-$PKG_VERSION* $BUILD/$PKG_NAME-$PKG_VERSION
+  fi
 fi
 
 if [ -d "$PKG_DIR/sources" ]; then
