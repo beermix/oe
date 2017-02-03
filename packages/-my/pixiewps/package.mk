@@ -1,17 +1,14 @@
 PKG_NAME="pixiewps"
-PKG_VERSION="953cdd4"
+PKG_VERSION="fd62b81"
 PKG_GIT_URL="https://github.com/wiire/pixiewps"
 #PKG_DEPENDS_TARGET="toolchain sqlite libpcap"
-
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-
 post_unpack() {
   cp -r $PKG_BUILD/src/* $PKG_BUILD/
 }
-
 
 pre_configure_target() {
    cd $ROOT/$PKG_BUILD
