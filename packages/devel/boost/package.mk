@@ -41,11 +41,11 @@ makeinstall_host() {
     cp bin.*/bjam $ROOT/$TOOLCHAIN/bin
 }
 
-pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC"
-  export CXXFLAGS="$CXXFLAGS -fPIC"
-  export LDFLAGS="$LDFLAGS -fPIC"
-}
+#pre_configure_target() {
+#  export CFLAGS="$CFLAGS -fPIC"
+#  export CXXFLAGS="$CXXFLAGS -fPIC"
+#  export LDFLAGS="$LDFLAGS -fPIC"
+#}
 
 configure_target() {
   sh bootstrap.sh --prefix=/usr \
@@ -79,5 +79,6 @@ makeinstall_target() {
                                 --with-chrono \
                                 --with-random \
                                 --with-regex -sICU_PATH="$SYSROOT_PREFIX/usr" \
+                                cxxflags=-fPIC cflags=-fPIC \
                                 install
 }
