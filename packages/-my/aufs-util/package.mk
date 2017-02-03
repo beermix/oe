@@ -6,8 +6,6 @@ PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-CPPFLAGS="-I$(get_pkg_build linux)/usr/include/uapi"
-
 make_target() {
-  make CC="$CC" CFLAGS="$CFLAGS -D_GNU_SOURCE -D_DEFAULT_SOURCE" AR="$AR" LD="$LD" -j1
+  make CC="$CC" CFLAGS="$CFLAGS" AR="$AR" LD="$LD" CPPFLAGS="-I$(get_pkg_build linux)/usr/include/uapi -D_FORTIFY_SOURCE=2" -j1
 }
