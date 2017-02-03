@@ -33,7 +33,6 @@ PKG_CONFIGURE_OPTS_HOST="--prefix=$ROOT/$TOOLCHAIN \
                          --disable-shared \
                          --enable-static
                          --enable-utf8 \
-                         --enable-pcre16 \
                          --enable-unicode-properties \
                          --with-gnu-ld"
 
