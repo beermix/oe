@@ -40,12 +40,8 @@ PKG_AUTORECONF="no"
 configure_host() {
   export GOOS=linux
   export GOROOT_FINAL=$ROOT/$TOOLCHAIN/lib/golang
-  #export GOROOT_BOOTSTRAP=$ROOT/$TOOLCHAIN/lib/golang-1.4
+  #export GOROOT_BOOTSTRAP=/usr/lib/golang
   export GOARCH=amd64
-  export CGO_ENABLED=1
-  export CC="$CC"
-  export CC_FOR_TARGET="$CC"
-  export CXX_FOR_TARGET="$CXX"
 }
 
 make_host() {
