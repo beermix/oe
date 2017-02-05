@@ -17,14 +17,12 @@ make_target() {
 }
 
 post_make_target() {
-  #$STRIP $ROOT/$PKG_BUILD/libudns.a
+  $STRIP $ROOT/$PKG_BUILD/libudns.a
   cp $ROOT/$PKG_BUILD/libudns.a $SYSROOT_PREFIX/usr/lib
   cp $ROOT/$PKG_BUILD/udns.h $SYSROOT_PREFIX/usr/include
   cp -fv $ROOT/$PKG_BUILD/dnsget $INSTALL/usr/bin/
   cp -fv $ROOT/$PKG_BUILD/rblcheck $INSTALL/usr/bin/
   cp -fv $ROOT/$PKG_BUILD/ex-rdns $INSTALL/usr/bin/
-  #cp -fv $ROOT/$PKG_BUILD/libudns.a $INSTALL/usr/lib/
-  #cp -fv $ROOT/$PKG_BUILD/udns.h $INSTALL/usr/include/
 }
 
 makeinstall_target() {
