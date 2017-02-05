@@ -34,8 +34,7 @@
   SKIN_REMOVE_SHIPPED="yes"
 
 # Default Skin (Confluence, or any from above)
-  SKIN_DEFAULT="Confluence"
-  #SKIN_DEFAULT="Estuary"
+  SKIN_DEFAULT="Estuary"
 
 # install extra subtitle Fonts for KODI (yes / no)
   KODI_EXTRA_FONTS="yes"
@@ -109,7 +108,7 @@
   KODI_AIRTUNES_SUPPORT="no"
 
 # build with libnfs support (mounting nfs shares with KODI) (yes / no)
-  KODI_NFS_SUPPORT="no"
+  KODI_NFS_SUPPORT="yes"
 
 # build with Samba Client support (mounting SAMBA shares with KODI) (yes / no)
   KODI_SAMBA_SUPPORT="yes"
@@ -118,7 +117,7 @@
   KODI_LANGUAGE_ADDONS="no"
 
 # build with NFS support (mounting nfs shares via the OS) (yes / no)
-  NFS_SUPPORT="no"
+  NFS_SUPPORT="yes"
 
 # build with Samba Client support (mounting samba shares via the OS) (yes / no)
   SAMBA_SUPPORT="yes"
@@ -130,7 +129,7 @@
   SFTP_SERVER="yes"
 
 # build and install PPP support (yes / no)
-  PPTP_SUPPORT="no"
+  PPTP_SUPPORT="yes"
 
 # build and install OpenVPN support (yes / no)
   OPENVPN_SUPPORT="yes"
@@ -167,7 +166,7 @@
   IRSERVER_SUPPORT="no"
 
 # build and install CEC adapter support (yes / no)
-  CEC_SUPPORT="no"
+  CEC_SUPPORT="yes"
 
 # build and install iSCSI support - iscsistart (yes / no)
   ISCSI_SUPPORT="no"

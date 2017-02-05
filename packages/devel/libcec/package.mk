@@ -17,13 +17,12 @@
 ################################################################################
 
 PKG_NAME="libcec"
-#PKG_VERSION="2fc92b5"
-PKG_VERSION="libcec-4.0.1"
+PKG_VERSION="2fc92b5"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://libcec.pulse-eight.com/"
 PKG_GIT_URL="https://github.com/Pulse-Eight/libcec"
-PKG_DEPENDS_TARGET="toolchain systemd lockdev platform"
+PKG_DEPENDS_TARGET="toolchain systemd lockdev p8-platform"
 PKG_SECTION="system"
 PKG_SHORTDESC="libCEC is an open-source dual licensed library designed for communicating with the Pulse-Eight USB - CEC Adaptor"
 PKG_LONGDESC="libCEC is an open-source dual licensed library designed for communicating with the Pulse-Eight USB - CEC Adaptor."
