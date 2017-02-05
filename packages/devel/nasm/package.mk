@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="nasm"
-PKG_VERSION="2.12.02"
+PKG_VERSION="2.12.03rc1"
 PKG_SITE="http://nasm.sourceforge.net/"
-PKG_URL="http://www.nasm.us/pub/nasm/releasebuilds/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_URL="http://www.nasm.us/pub/nasm/releasebuilds/$PKG_VERSION/nasm-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST=""
 PKG_SECTION="lang"
 PKG_SHORTDESC="nasm: A 80x86 assembler which can create a wide rande of object formats"
@@ -27,9 +27,3 @@ PKG_LONGDESC="The Netwide Assembler, NASM, is an 80x86 assembler designed for po
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
-
-#pre_configure_host() {
-# nasm fails to build in subdirs
-#  cd $ROOT/$PKG_BUILD
-#    rm -rf .$HOST_NAME
-#}
