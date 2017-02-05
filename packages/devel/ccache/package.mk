@@ -12,7 +12,7 @@
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
 #
-#  You should have received a copy of the GNU General Public License --with-bundled-zlib
+#  You should have received a copy of the GNU General Public License
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
@@ -27,14 +27,7 @@ PKG_LONGDESC="Ccache is a compiler cache. It speeds up re-compilation of C/C++ c
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-#pre_build_host() {
-#  export CFLAGS="$CFLAGS -fPIE -fstack-protector-strong"
-#  export CPPFLAGS="$CPPFLAGS -D_FORTIFY_SOURCE=2"
-#  export LDFLAGS="$LDFLAGS -Wl,-Bsymbolic-functions -fPIE -pie -Wl,-z,relro -Wl,-z,now -s"
-#  export CONCURRENCY_MAKE_LEVEL=1
-#}
-
-PKG_CONFIGURE_OPTS_HOST="--disable-silent-rules"
+PKG_CONFIGURE_OPTS_HOST="--with-bundled-zlib"
 
 post_makeinstall_host() {
 # setup ccache
