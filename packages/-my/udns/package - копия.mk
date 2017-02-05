@@ -1,6 +1,6 @@
 PKG_NAME="udns"
-PKG_VERSION="6a0befd"
-PKG_GIT_URL="https://github.com/ortclib/udns"
+PKG_VERSION="0.4"
+PKG_URL="https://dl.dropboxusercontent.com/s/g37xuuj31w7fzjr/udns-0.4.tar.xz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
