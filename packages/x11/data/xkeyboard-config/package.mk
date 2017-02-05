@@ -17,11 +17,10 @@
 ################################################################################
 
 PKG_NAME="xkeyboard-config"
-PKG_VERSION="2.19"
+PKG_VERSION="2.20"
 PKG_SITE="http://www.X.org"
 PKG_URL="http://www.x.org/releases/individual/data/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain util-macros xkbcomp"
-
 PKG_SECTION="x11/data"
 PKG_SHORTDESC="xkeyboard-config: X keyboard extension data files"
 PKG_LONGDESC="X keyboard extension data files."
