@@ -7,6 +7,11 @@ PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
 PKG_AUTORECONF="yes"
 
+pre_configure_target() {
+   export LIBS="$LIBS -lz"
+   export CFLAGS="-D_GNU_SOURCE -D_BSD_SOURCE"
+}
+
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-static \
 			      --disable-samples \
