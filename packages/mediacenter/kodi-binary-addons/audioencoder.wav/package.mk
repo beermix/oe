@@ -17,8 +17,10 @@
 ################################################################################
 
 PKG_NAME="audioencoder.wav"
-#PKG_VERSION="0c6ec77"
 PKG_VERSION="10cc651"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
 PKG_GIT_URL="https://github.com/xbmc/audioencoder.wav"
 PKG_DEPENDS_TARGET="toolchain kodi-platform"
@@ -31,7 +33,7 @@ PKG_IS_ADDON="yes"
 PKG_ADDON_TYPE="xbmc.audioencoder"
 
 PKG_CMAKE_OPTS_TARGET="-DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
-        -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr"
+                       -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr"
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/

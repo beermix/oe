@@ -17,7 +17,10 @@
 ################################################################################
 
 PKG_NAME="adsp.basic"
-PKG_VERSION="cb56e0e"
+PKG_VERSION="2ae604e"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
 PKG_GIT_URL="https://github.com/kodi-adsp/adsp.basic"
 PKG_DEPENDS_TARGET="toolchain kodi-platform libsamplerate"
@@ -30,9 +33,8 @@ PKG_IS_ADDON="yes"
 PKG_ADDON_TYPE="kodi.adsp"
 
 PKG_CMAKE_OPTS_TARGET="-DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
-        -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
-        -DFLAC_INCLUDE_DIRS=$SYSROOT_PREFIX/usr/include \
-        -DOGG_INCLUDE_DIRS=$SYSROOT_PREFIX/usr/include"
+                       -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr"
+
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/
   cp -R $PKG_BUILD/.install_pkg/usr/share/kodi/addons/$PKG_NAME/* $ADDON_BUILD/$PKG_ADDON_ID/

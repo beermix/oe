@@ -17,10 +17,12 @@
 ################################################################################
 
 PKG_NAME="visualization.goom"
-#PKG_VERSION="16747b7"
-PKG_VERSION="745d8c9"
+PKG_VERSION="a23f4ad"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/notspiff/visualization.goom"
-PKG_GIT_URL="https://github.com/notspiff/visualization.goom"
+PKG_URL="https://github.com/notspiff/visualization.goom/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain kodi-platform"
 PKG_SECTION=""
 PKG_SHORTDESC="visualization.goom"
@@ -35,7 +37,7 @@ if [ "$OPENGL" = "no" ] ; then
 fi
 
 PKG_CMAKE_OPTS_TARGET="-DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
-        -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr"
+                       -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr"
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/

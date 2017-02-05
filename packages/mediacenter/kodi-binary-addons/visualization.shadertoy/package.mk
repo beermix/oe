@@ -17,9 +17,12 @@
 ################################################################################
 
 PKG_NAME="visualization.shadertoy"
-PKG_VERSION="6a9a5ca"
+PKG_VERSION="86ced78"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/notspiff/visualization.shadertoy"
-PKG_GIT_URL="https://github.com/notspiff/visualization.shadertoy"
+PKG_URL="https://github.com/notspiff/visualization.shadertoy/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain kodi-platform"
 PKG_SECTION=""
 PKG_SHORTDESC="visualization.shadertoy"
@@ -39,8 +42,11 @@ if [ "$OPENGLES_SUPPORT" = yes ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET $OPENGLES"
 fi
 
-configure_target() {
-  if [ "$KODIPLAYER_DRIVER" = bcm2835-driver ]; then
+PKG_CMAKE_OPTS_TARGET="-DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
+                       -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr"
+
+pre_configure_target() {
+  if [ "$KODIPLAYER_DRIVER" = bcm2835-firmware ]; then
     BCM2835_INCLUDES="-I$SYSROOT_PREFIX/usr/include/interface/vcos/pthreads/ \
                       -I$SYSROOT_PREFIX/usr/include/interface/vmcs_host/linux"
     export CFLAGS="$CFLAGS $BCM2835_INCLUDES"
@@ -51,9 +57,6 @@ configure_target() {
   fi
 }
 
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
-        -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr"
-        
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/
   cp -R $PKG_BUILD/.install_pkg/usr/share/kodi/addons/$PKG_NAME/* $ADDON_BUILD/$PKG_ADDON_ID/
