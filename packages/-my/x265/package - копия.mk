@@ -7,13 +7,17 @@ PKG_SECTION="multimedia"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-#pre_configure_target() {
+pre_configure_target() {
    #strip_lto
-   #export LIBS="-lterminfo"
-#}
+   export LIBS="-lterminfo"
+}
 
 PKG_CMAKE_SCRIPT_TARGET="source/CMakeLists.txt"
 
-PKG_CMAKE_OPTS_TARGET="-DEXPORT_C_API=ON -DENABLE_CLI=OFF -DENABLE_SHARED=ON"
+PKG_CMAKE_OPTS_TARGET="-DHIGH_BIT_DEPTH=ON \
+			  -DMAIN12=ON \
+			  -DEXPORT_C_API=ON \
+			  -DENABLE_CLI=ON \
+			  -DENABLE_SHARED=ON"
 
 

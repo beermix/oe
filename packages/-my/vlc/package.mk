@@ -4,10 +4,11 @@
 ################################################################################
 
 PKG_NAME="vlc"
-PKG_VERSION="2.2.5"
+#PKG_VERSION="2.2.5"
+PKG_VERSION="3.0.0-git"
 PKG_SITE="http://www.videolan.org"
-PKG_URL="https://nightlies.videolan.org/build/source/vlc-2.2.5-20170201-0219.tar.xz"
-PKG_DEPENDS_TARGET="toolchain dbus libdvbpsi ffmpeg zlib lua libvorbis libogg flac gnutls"
+PKG_URL="https://nightlies.videolan.org/build/source/vlc-3.0.0-20170204-0244-git.tar.xz"
+PKG_DEPENDS_TARGET="toolchain dbus libdvbpsi ffmpeg zlib lua libvorbis libogg flac gstreamer libcdio libmpeg2 x265 libsamplerate gnutls"
 PKG_PRIORITY="optional"
 PKG_SECTION="xmedia/tools"
 PKG_SHORTDESC="VideoLAN multimedia player and streamer"
@@ -134,7 +135,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-update-check \
 			      --disable-kva \
 			      --disable-bluray \
-			      --disable-samplerate \
+			      --enable-samplerate \
 			      --disable-sid \
 			      --disable-crystalhd \
 			      --disable-dxva2 \
