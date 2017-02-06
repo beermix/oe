@@ -1,15 +1,16 @@
 PKG_NAME="wine"
-PKG_VERSION="1.8.5"
-PKG_URL="http://dl.winehq.org/wine/source/1.8/wine-$PKG_VERSION.tar.bz2"
+PKG_VERSION="2.0"
+PKG_URL="http://dl.winehq.org/wine/source/2.0/wine-$PKG_VERSION.tar.bz2"
 #PKG_DEPENDS_TARGET="toolchain glib gmp x11 mesa xorg-server pcre libXcursor freetype fontconfig libjpeg-turbo libpng tiff libdrm glu libexif expat harfbuzz libxcb libXcursor libXrender libX11 x11 pulseaudio libXext libXtst wine:host"
 PKG_DEPENDS_TARGET="freetype:host wine:host"
 PKG_SECTION="tools"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-strip_lto
+
 pre_configure_target() {
   export LIBS="-lfreetype"
+  strip_lto
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-tests \
