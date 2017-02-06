@@ -16,11 +16,14 @@ PKG_CONFIGURE_OPTS_TARGET="--bindir=/bin \
 			      --disable-ansi2knr \
 			      --disable-dynamic \
 			      --sysconfdir=/storage/.config \
+			      --with-term-lib=ncursesw \
 			      --enable-function-subdirs \
 			      --with-tcsetpgrp \
 			      --enable-gdbm \
 			      --enable-zsh-secure-free \
-			      --with-term-lib=ncursesw \
+			      --enable-readnullcmd=pager \
+			      --enable-max-jobtable-size=256 \
+			      --with-term-lib=tinfo \
 			      --disable-dynamic-nss \
 			      --disable-zsh-debug \
 			      --enable-cap \
