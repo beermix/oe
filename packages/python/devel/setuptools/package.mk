@@ -1,5 +1,5 @@
 PKG_NAME="setuptools"
-PKG_VERSION=""
+PKG_VERSION="0"
 PKG_URL=""
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
