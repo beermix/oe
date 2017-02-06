@@ -53,9 +53,9 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --enable-lock-elision \
                            --enable-stack-protector=strong \
                            --with-pkgversion="OE" \
-                           --disable-werror \
                            --disable-debug \
-                           --disable-timezone-tools"
+                           --disable-timezone-tools \
+                           --disable-werror"
 
 
 NSS_CONF_DIR="$PKG_BUILD/nss"
@@ -84,6 +84,7 @@ pre_configure_target() {
   if [ -n "$PROJECT_CFLAGS" ]; then
     export CFLAGS=`echo $CFLAGS | sed -e "s|$PROJECT_CFLAGS||g"`
   fi
+  
   export CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed||"`
 
@@ -108,6 +109,7 @@ EOF
 
 post_makeinstall_target() {
   ln -sf ld-$PKG_VERSION.so $INSTALL/lib/ld.so
+  
   if [ "$TARGET_ARCH" = "arm" -a "$TARGET_FLOAT" = "hard" ]; then
     ln -sf ld-$PKG_VERSION.so $INSTALL/lib/ld-linux.so.3
   fi
@@ -118,9 +120,9 @@ post_makeinstall_target() {
   done
    rm -rf $INSTALL/usr/lib/audit
    rm -rf $INSTALL/usr/lib/glibc
-  rm -rf $INSTALL/usr/lib/libc_pic
+   rm -rf $INSTALL/usr/lib/libc_pic
    rm -rf $INSTALL/usr/lib/*.o
-  rm -rf $INSTALL/usr/lib/*.map
+   rm -rf $INSTALL/usr/lib/*.map
    rm -rf $INSTALL/var
 
 # remove unneeded libs
