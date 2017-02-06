@@ -1,7 +1,8 @@
 PKG_NAME="torrent2http"
-PKG_VERSION="9ce9952"
+#PKG_VERSION="9ce9952"
+PKG_VERSION="81d961a"
 PKG_GIT_URL="https://github.com/beermix/torrent2http"
-PKG_DEPENDS_TARGET="toolchain go:host libtorrent-rasterbar boost openssl swig:host"
+PKG_DEPENDS_TARGET="toolchain go:host openssl swig:host boost libtorrent-rasterbar"
 PKG_SECTION="tools"
 PKG_AUTORECONF="no"
 
@@ -21,7 +22,7 @@ configure_target() {
  
 make_target() {
   mkdir -p bin
-  $GOLANG get -v "github.com/anteo/libtorrent-go" "github.com/saintfish/chardet" "golang.org/x/net/html/charset" "golang.org/x/text/transform"
+  $GOLANG get -v "github.com/beermix/libtorrent-go" "github.com/saintfish/chardet" "golang.org/x/net/html/charset" "golang.org/x/text/transform"
   $GOLANG build -v -o bin/torrent2http -a -ldflags "$LDFLAGS" .
 }
 

@@ -12,8 +12,10 @@ pre_configure_target() {
   export CPPFLAGS="$CPPFLAGS -Iliblua"
 }
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static \
+PKG_CONFIGURE_OPTS_TARGET="ac_cv_c_bigendian=yes \
+                           --enable-static \
                            --with-pcap=linux \
+                           --with-liblua=included \
                            --with-liblinear=included \
                            --with-libpcre=$SYSROOT_PREFIX/usr \
                            --without-ncat \

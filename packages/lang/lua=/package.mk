@@ -5,9 +5,6 @@
 
 PKG_NAME="lua"
 PKG_VERSION="5.3.4"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="MIT"
 PKG_SITE="http://www.lua.org/"
 PKG_URL="http://www.lua.org/ftp/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain readline"
@@ -21,7 +18,9 @@ PKG_AUTORECONF="no"
 _MAJORVER=${PKG_VERSION%.*}
 
 make_target() {
-  make CC="$CC" LD="$LD" CFLAGS="$CFLAGS -fPIC" MYCFLAGS="-DLUA_COMPAT_5_2 -DLUA_COMPAT_5_1" linux -j1
+  #strip_lto
+  #strip_gold
+  make CC="$CC" CFLAGS="$CFLAGS -fPIC" LD="$LD" CPPFLAGS="$CPPFLAGS" linux -j1
 }
 
 makeinstall_target() {
@@ -37,15 +36,15 @@ makeinstall_target() {
 
   mkdir -p $SYSROOT_PREFIX/usr/lib/pkgconfig
     cp -P $PKG_DIR/config/lua.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/lua5.3.pc
-  ln -sf $SYSROOT_PREFIX/usr/lib/pkgconfig/lua5.3.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/lua.pc
+    ln -sf $SYSROOT_PREFIX/usr/lib/pkgconfig/lua5.3.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/lua.pc
 }
 
 post_make_target() {
   mkdir -p $INSTALL/usr/bin
     cp -P $ROOT/$PKG_BUILD/src/lua $INSTALL/usr/bin
     cp -P $ROOT/$PKG_BUILD/src/luac $INSTALL/usr/bin
-  ln -sf /usr/bin/lua $INSTALL/usr/bin/lua$_MAJORVER
-  ln -sf /usr/bin/luac $INSTALL/usr/bin/luac$_MAJORVER
+    ln -sf /usr/bin/lua $INSTALL/usr/bin/lua$_MAJORVER
+    ln -sf /usr/bin/luac $INSTALL/usr/bin/luac$_MAJORVER
 
   mkdir -p $INSTALL/usr/lib
     cp -P $ROOT/$PKG_BUILD/src/liblua.so $INSTALL/usr/lib
