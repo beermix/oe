@@ -18,6 +18,7 @@ PKG_AUTORECONF="no"
 _MAJORVER=${PKG_VERSION%.*}
 
 make_target() {
+  strip_lto
   make CC="$CC" CFLAGS="$CFLAGS -fPIC" linux -j1
 }
 
