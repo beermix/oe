@@ -14,6 +14,7 @@ pre_configure_target() {
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --with-pcap=linux \
+                           --with-liblua=included \
                            --with-liblinear=included \
                            --with-libpcre=$SYSROOT_PREFIX/usr \
                            --without-ncat \

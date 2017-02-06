@@ -17,7 +17,7 @@ pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
   export LIBS="-lreadline -lterminfo -lm"
-  #export LUA_LIBS="-L$SYSROOT_PREFIX/usr/lib -llua -lm"
+  export LUA_LIBS="-L$SYSROOT_PREFIX/usr/lib -llua -lm"
 }
 
 
@@ -32,7 +32,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
 			      --enable-extf \
 			      --disable-python \
 			      --disable-valgrind \
-			      --disable-liblua"
+			      --enable-liblua"
 		
 		
 post_make_target() {
