@@ -11,6 +11,5 @@ PKG_CONFIGURE_OPTS_TARGET="cross_compiling=maybe \
 			      --with-config=user \
 			      --with-blkid=no \
 			      --with-spec=generic \
-			      --with-sysroot=$SYSROOT_PREFIX \
 			      --with-linux=$(get_pkg_build linux) \
 			      --with-linux-obj=$(get_pkg_build linux)"
