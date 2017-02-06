@@ -48,3 +48,11 @@ makeinstall_target() {
   find $INSTALL/usr/lib/python*/site-packages/  -name "*.py" -exec rm -rf {} ";"
 }
 
+
+makeinstall_host() {
+  python setup.py install --prefix=$ROOT/$TOOLCHAIN
+}
+
+make_host() {
+  : # nop
+}
