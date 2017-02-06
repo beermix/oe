@@ -1,5 +1,5 @@
 PKG_NAME="isl"
-PKG_VERSION="0.18"
+PKG_VERSION="0.16.1"
 PKG_URL="http://isl.gforge.inria.fr/isl-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="gmp:host libtool:host intltool:host"
 PKG_DEPENDS_TARGET="gmp"
