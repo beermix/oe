@@ -17,9 +17,11 @@
 ################################################################################
 
 PKG_NAME="libmicrohttpd"
-PKG_VERSION="0.9.46"
-PKG_SITE="https://www.gnu.org/software/libmicrohttpd/"
-PKG_URL="https://ftp.gnu.org/gnu/libmicrohttpd/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_VERSION="0.9.52"
+PKG_ARCH="any"
+PKG_LICENSE="LGPLv2.1"
+PKG_SITE="http://www.gnu.org/software/libmicrohttpd/"
+PKG_URL="http://ftpmirror.gnu.org/libmicrohttpd/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="web"
 PKG_SHORTDESC="libmicrohttpd: a small webserver C library"

@@ -6,7 +6,7 @@
 PKG_NAME="gnutls"
 PKG_VERSION="3.5.8"
 PKG_URL="ftp://ftp.gnutls.org/gcrypt/gnutls/v3.5/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain gmp libidn nettle"
+PKG_DEPENDS_TARGET="toolchain libidn nettle"
 PKG_SECTION="xmedia/depends"
 PKG_SHORTDESC="gnutls: Development Library for TLS applications"
 PKG_LONGDESC="GnuTLS is a project that aims to develop a library which provides a secure layer, over a reliable transport layer. Currently the GnuTLS library implements the proposed standards by the IETF's TLS working group. Quoting from RFC2246 - the TLS 1.0 protocol specification: The TLS protocol provides communications privacy over the Internet. The protocol allows client/server applications to communicate in a way that is designed to prevent eavesdropping, tampering, or message forgery."

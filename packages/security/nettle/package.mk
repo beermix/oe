@@ -12,7 +12,7 @@ pre_configure_target() {
    export MAKEFLAGS="-j1"
 }
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared"
+PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --enable-mini-gmp"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
