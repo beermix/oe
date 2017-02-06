@@ -29,7 +29,7 @@ PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            ac_cv_sys_symbol_underscore=no \
-                           --enable-asm \
+                           --disable-asm \
                            --with-gnu-ld \
                            --disable-static \
                            --disable-padlock-support \
