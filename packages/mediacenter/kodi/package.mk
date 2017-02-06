@@ -258,12 +258,14 @@ makeinstall_host() {
 pre_configure_target() {
   export LIBS="$LIBS -ltermcap"
   strip_lto
+  strip_gold
 }
 
 pre_make_target() {
 # setup skin dir from default skin
   SKIN_DIR="skin.`tolower $SKIN_DEFAULT`"
 
+# setup default skin inside the sources
   sed -i -e "s|skin.estuary|$SKIN_DIR|g" $ROOT/$PKG_BUILD/xbmc/system.h
   sed -i -e "s|skin.estuary|$SKIN_DIR|g" $ROOT/$PKG_BUILD/system/settings/settings.xml
 }

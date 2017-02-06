@@ -129,7 +129,7 @@
   SFTP_SERVER="yes"
 
 # build and install PPP support (yes / no)
-  PPTP_SUPPORT="yes"
+  PPTP_SUPPORT="no"
 
 # build and install OpenVPN support (yes / no)
   OPENVPN_SUPPORT="yes"
@@ -166,7 +166,7 @@
   IRSERVER_SUPPORT="no"
 
 # build and install CEC adapter support (yes / no)
-  CEC_SUPPORT="yes"
+  CEC_SUPPORT="no"
 
 # build and install iSCSI support - iscsistart (yes / no)
   ISCSI_SUPPORT="no"
