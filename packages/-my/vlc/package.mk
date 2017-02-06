@@ -18,9 +18,10 @@ PKG_AUTORECONF="yes"
 
 pre_configure_target() {
 # vlc fails to build with LTO optimization
-  #strip_lto
+  strip_lto
 
   export LUA_LIBS="-L$SYSROOT_PREFIX/usr/lib -llua -lm"
+  export LIBS="-lterminfo"
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
@@ -122,7 +123,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-macosx-vlc-app \
 			      --disable-macosx-qtkit \
 			      --disable-macosx-quartztext \
-			      --disable-ncurses \
+			      --enable-ncurses \
 			      --disable-goom \
 			      --disable-projectm \
 			      --disable-atmo \
