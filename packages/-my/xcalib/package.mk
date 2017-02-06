@@ -7,7 +7,7 @@ PKG_AUTORECONF="no"
 PKG_USE_CMAKE="yes"
 
 pre_configure_target() {
-  #export LDFLAGS="-lX11 -lXext -lm"
+  export LDFLAGS="-lX11 -lXext -lm"
   export MAKEFLAGS="-j1"
   #unset CPPFLAGS
 }
