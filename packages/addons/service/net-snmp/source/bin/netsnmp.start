@@ -1,0 +1,16 @@
+#!/bin/sh
+
+. /etc/profile
+
+# service setup
+# service.net-snmp
+
+ADDON_ID=service.net-snmp
+ADDON_DIR="$HOME/.kodi/addons/$ADDON_ID"
+ADDON_HOME="$HOME/.kodi/userdata/addon_data/$ADDON_ID"
+
+# create separate sevices
+systemctl enable $ADDON_DIR/system.d/snmpd.service
+
+# and start them
+systemctl start snmpd.service

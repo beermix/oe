@@ -1,0 +1,15 @@
+#!/bin/sh
+
+. /etc/profile
+
+# service setup
+# service.net-snmp
+
+ADDON_ID=service.net-snmp
+ADDON_DIR="$HOME/.kodi/addons/$ADDON_ID"
+ADDON_HOME="$HOME/.kodi/userdata/addon_data/$ADDON_ID"
+
+chmod a+x $ADDON_DIR/bin/*
+chmod a+x $ADDON_DIR/sbin/*
+
+$ADDON_DIR/sbin/snmpd -LS0-6d -c $ADDON_DIR/snmpd.conf -M /storage/.kodi/addons/service.net-snmp/share/snmp/mibs
