@@ -17,7 +17,6 @@
 ################################################################################
 
 PKG_NAME="libusb"
-#PKG_VERSION="v1.0.21"
 PKG_VERSION="ffdf3c0"
 PKG_SITE="http://libusb.info/"
 PKG_GIT_URL="https://github.com/libusb/libusb"

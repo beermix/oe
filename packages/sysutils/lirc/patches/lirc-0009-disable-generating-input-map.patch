@@ -1,0 +1,17 @@
+--- lirc-0.9.4c.orig/lib/Makefile.am	2016-10-22 06:21:56.000000000 +0200
++++ lirc-0.9.4c/lib/Makefile.am	2017-02-05 09:30:38.160298439 +0100
+@@ -109,10 +109,10 @@
+ 	touch $@
+ 	touch touch input_map.inc
+ else
+-lirc/input_map.inc:
+-	ln -s . lirc || :
+-	$(top_srcdir)/tools/lirc-make-devinput -i > input_map.inc
+-	$(top_srcdir)/tools/lirc-make-devinput -i > $@
++#lirc/input_map.inc:
++#	ln -s . lirc || :
++#	$(top_srcdir)/tools/lirc-make-devinput -i > input_map.inc
++#	$(top_srcdir)/tools/lirc-make-devinput -i > $@
+ endif
+ 
+ checkfiles:

@@ -37,6 +37,19 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_forkpty=no \
                            --with-gnu-ld \
                            --without-x"
 
+pre_configure_target() {
+  (
+    cd ${ROOT}/${PKG_BUILD}
+    # patch lirc-make-devinput use target kernel include
+    sed -i \
+      "s|/usr/include/linux/|${SYSROOT_PREFIX}/usr/include/linux/|g" \
+      tools/lirc-make-devinput
+    # manually generate input_map.inc in source folder
+    ./tools/lirc-make-devinput -i > lib/input_map.inc
+    ./tools/lirc-make-devinput -i > lib/lirc/input_map.inc
+  )
+}
+
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/lib/systemd
   rm -rf $INSTALL/lib
