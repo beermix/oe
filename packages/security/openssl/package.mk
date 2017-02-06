@@ -24,10 +24,10 @@ configure_target() {
               enable-ecdh \
               enable-ecdsa \
               no-rc5 \
-              no-ssl3-method \
               no-idea \
               no-whirlpool \
               no-err \
+              no-ssl3-method \
               no-heartbeats \
               enable-ec_nistp_64_gcc_128 \
               debian-amd64
@@ -52,9 +52,9 @@ makeinstall_target() {
 }
 
 post_makeinstall_target() {
-  rm -rf $INSTALL/etc/pki/tls/misc
-  rm -rf $INSTALL/usr/bin/c_rehash
-  $STRIP $INSTALL/usr/bin/openssl
+  #rm -rf $INSTALL/etc/pki/tls/misc
+  #rm -rf $INSTALL/usr/bin/c_rehash
+  #$STRIP $INSTALL/usr/bin/openssl
   
 # ca-certification: provides a tool to download and create ca-bundle.crt
 # download url: http://curl.haxx.se
