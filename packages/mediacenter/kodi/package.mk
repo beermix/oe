@@ -231,9 +231,7 @@ else
 fi
 
 pre_configure_bootstrap() {
-  CXXFLAGS="$CXXFLAGS -std=c++11 -DTARGET_POSIX -DTARGET_LINUX -D_LINUX -I$(get_build_dir $MEDIACENTER)/xbmc/linux"
-  strip_lto
-  strip_gold
+  CXXFLAGS+=" -std=c++11 -DTARGET_POSIX -DTARGET_LINUX -D_LINUX -I$ROOT/$PKG_BUILD/xbmc/linux"
 }
 
 makeinstall_bootstrap() {
@@ -380,7 +378,6 @@ post_makeinstall_target() {
     mkdir -p $INSTALL/usr/share/kodi/media/Fonts
       cp $PKG_DIR/fonts/*.ttf $INSTALL/usr/share/kodi/media/Fonts
   fi
-  debug_strip $INSTALL/usr/lib/kodi/kodi.bin
 }
 
 post_install() {
