@@ -7,5 +7,5 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 make_target() {
-  make CC="$CC" CFLAGS="$CFLAGS" AR="$AR" LD="$LD" CPPFLAGS="$CPPFLAGS -I$(get_pkg_build linux)/usr/include/uapi" -j1
+  make CC="$CC" CFLAGS="$CFLAGS -D_DEFAULT_SOURCE" AR="$AR" LD="$LD" CPPFLAGS="$CPPFLAGS -I$(get_pkg_build linux)/usr/include/uapi" -j1
 }
