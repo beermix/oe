@@ -18,9 +18,13 @@
 
 PKG_NAME="localedef-eglibc"
 PKG_VERSION="2.14.1-r17443-ptx1"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://public.pengutronix.de"
 PKG_URL="http://public.pengutronix.de/mirror/software/ptxdist/temporary-src/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST="ccache:host"
+PKG_PRIORITY="optional"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="localedef: Locale definition compiler"
 PKG_LONGDESC="The localedef program reads the indicated charmap and input files, compiles them to a form usable by the locale(7) functions in the C library, and places the six output files in the outputpath directory."
