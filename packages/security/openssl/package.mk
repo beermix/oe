@@ -47,16 +47,14 @@ make_target() {
 makeinstall_target() {
   make -f Makefile install_sw DESTDIR=$SYSROOT_PREFIX
   make -f Makefile DESTDIR=$INSTALL install_sw
-  #make INSTALL_PREFIX=$SYSROOT_PREFIX install_sw
-  #make INSTALL_PREFIX=$INSTALL install_sw
-  #chmod 755 $INSTALL/usr/lib/*.so*
+  chmod 755 $INSTALL/usr/lib/*.so*
   #chmod 755 $INSTALL/usr/lib/engines/*.so
 }
 
 post_makeinstall_target() {
   rm -rf $INSTALL/etc/pki/tls/misc
   rm -rf $INSTALL/usr/bin/c_rehash
-  #$STRIP $INSTALL/usr/bin/openssl
+  $STRIP $INSTALL/usr/bin/openssl
   
 # ca-certification: provides a tool to download and create ca-bundle.crt
 # download url: http://curl.haxx.se

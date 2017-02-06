@@ -17,9 +17,6 @@
 ################################################################################
 
 PKG_NAME="glibc"
-#PKG_VERSION="d2d43afa113eb143303a3d4c1e31194648077642"
-#PKG_GIT_URL="git://sourceware.org/git/glibc.git"
-#PKG_KEEP_CHECKOUT="yes"
 PKG_VERSION="2.25"
 PKG_URL="http://ftp.gnu.org/pub/gnu/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap localedef-eglibc:host"
@@ -56,6 +53,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --enable-lock-elision \
                            --enable-stack-protector=strong \
                            --with-pkgversion="OE" \
+                           --disable-werror \
                            --disable-debug \
                            --disable-timezone-tools"
 
@@ -81,27 +79,18 @@ pre_configure_target() {
   strip_gold
 
 # Filter out some problematic *FLAGS
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-ffast-math||g"`
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-Ofast|-O2|g"`
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O2|g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong||g"`
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
 
   if [ -n "$PROJECT_CFLAGS" ]; then
     export CFLAGS=`echo $CFLAGS | sed -e "s|$PROJECT_CFLAGS||g"`
   fi
-
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-ffast-math||g"`
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Ofast|-O2|g"`
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-O.|-O2|g"`
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-fstack-protector-strong||g"`
   export CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed||"`
 
   unset LD_LIBRARY_PATH
 
 # set some CFLAGS we need
-  export CFLAGS="$CFLAGS -g"
+  export CFLAGS="$CFLAGS -g0"
   export OBJDUMP_FOR_HOST=objdump
 
 cat >config.cache <<EOF
@@ -134,6 +123,15 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/lib/*.map
    rm -rf $INSTALL/var
 
+# remove unneeded libs
+  rm -rf $INSTALL/usr/lib/libBrokenLocale*
+  rm -rf $INSTALL/usr/lib/libSegFault.so
+  rm -rf $INSTALL/usr/lib/libmemusage.so
+  rm -rf $INSTALL/usr/lib/libpcprofile.so
+
+# remove ldscripts
+  rm -rf $INSTALL/usr/lib/libc.so
+  rm -rf $INSTALL/usr/lib/libpthread.so
 # remove locales and charmaps
   rm -rf $INSTALL/usr/share/i18n/charmaps
   if [ -n "$GLIBC_LOCALES" ]; then
