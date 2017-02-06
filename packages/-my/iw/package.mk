@@ -13,5 +13,5 @@ configure_target() {
 }
 
 make_target() {
-  make CC="$CC" AR="$AR" LD="$LD" XCFLAGS="$CFLAGS -ffunction-sections -fdata-sections" RANLIB="$RANLIB" LDFLAGS="$LDFLAGS -Wl,--gc-sections -pthread" -j1
+  make CC="$CC" AR="$AR" LD="$LD" XCFLAGS="$CFLAGS -D_GNU_SOURCE -ffunction-sections -fdata-sections" RANLIB="$RANLIB" LDFLAGS="$LDFLAGS -Wl,--gc-sections -pthread" -j1
 }
