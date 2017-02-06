@@ -18,7 +18,7 @@ PKG_AUTORECONF="yes"
 
 pre_configure_target() {
 # vlc fails to build with LTO optimization
-  strip_lto
+  #strip_lto
 
   export LUA_LIBS="-L$SYSROOT_PREFIX/usr/lib -llua -lm"
 }
@@ -101,9 +101,9 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-xvideo \
 			      --disable-sdl \
 			      --disable-sdl-image \
-			      --disable-freetype \
+			      --enable-freetype \
 			      --disable-fribidi \
-			      --disable-fontconfig \
+			      --enable-fontconfig \
 			      --enable-libxml2 \
 			      --disable-svg \
 			      --disable-directx \

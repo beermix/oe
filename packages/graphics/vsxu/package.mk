@@ -17,24 +17,21 @@
 ################################################################################
 
 PKG_NAME="vsxu"
-PKG_VERSION="v0.5.1"
-PKG_ARCH="i386 x86_64"
-PKG_SITE="http://www.vsxu.com"
+PKG_VERSION="98bf097"
+#PKG_VERSION="eb18cff"
+#PKG_GIT_BRANCH="0.6.0"
 PKG_GIT_URL="https://github.com/vovoid/vsxu"
 PKG_DEPENDS_TARGET="toolchain $OPENGL libX11 glew glfw zlib libpng libjpeg-turbo freetype"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="vsxu:"
 PKG_LONGDESC="vsxu:"
+
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 export LDFLAGS="$LDFLAGS -lX11"
 
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_INSTALL_LIBDIR=/usr/lib \
-                       -DCMAKE_INSTALL_LIBDIR_NOARCH=/usr/lib \
-                       -DCMAKE_INSTALL_PREFIX_TOOLCHAIN=$SYSROOT_PREFIX/usr \
-                       -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
-                       -DBUILD_SHARED_LIBS=0 \
+PKG_CMAKE_OPTS_TARGET="-DBUILD_SHARED_LIBS=0 \
                        -DVSXU_STATIC=1 \
                        -DCMAKE_POSITION_INDEPENDENT_CODE=1 \
                        -DCMAKE_CXX_FLAGS=-I$SYSROOT_PREFIX/usr/include/freetype2"
