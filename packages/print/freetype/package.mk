@@ -24,6 +24,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://www.freetype.org"
 PKG_URL="http://downloads.sourceforge.net/freetype/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain zlib"
+PKG_DEPENDS_HOST="toolchain zlib:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="print"
 PKG_SHORTDESC="freetype: TrueType font rendering library"
@@ -54,4 +55,14 @@ post_makeinstall_target() {
   ln -v -sf $SYSROOT_PREFIX/usr/include/freetype2 $SYSROOT_PREFIX/usr/include/freetype
 
   rm -rf $INSTALL/usr/bin
+}
+
+PKG_CONFIGURE_OPTS_HOST="--with-zlib=yes --with-bzip2=no --with-png=no --with-harfbuzz=no"
+
+pre_configure_host() {
+  # unset LIBTOOL because freetype uses its own
+    ( cd ..
+      unset LIBTOOL
+      sh autogen.sh
+    )
 }
