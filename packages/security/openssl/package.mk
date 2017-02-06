@@ -36,8 +36,6 @@ configure_target() {
               no-whirlpool \
               no-jpake \
               no-err \
-              no-ssl2 \
-              no-ssl2-method \
               no-heartbeats \
               enable-ec_nistp_64_gcc_128 \
               linux-x86_64
