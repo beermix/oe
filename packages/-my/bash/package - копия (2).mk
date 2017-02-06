@@ -1,6 +1,6 @@
 PKG_NAME="bash"
-PKG_VERSION="bc00779"
-PKG_GIT_URL="https://github.com/bminor/bash"
+PKG_VERSION="4.4"
+PKG_URL="ftp://ftp.cwru.edu/pub/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain netbsd-curses readline"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
@@ -13,6 +13,8 @@ pre_configure_target() {
 PKG_CONFIGURE_OPTS_TARGET="bash_cv_getenv_redef=no \
 			      bash_cv_job_control_missing=yes \
                            --bindir=/bin \
+                           --enable-static \
+                           --disable-shared \
                            --with-curses \
                            --enable-readline \
                            --without-bash-malloc \
