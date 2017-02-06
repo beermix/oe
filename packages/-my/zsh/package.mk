@@ -1,7 +1,7 @@
 PKG_NAME="zsh"
 PKG_VERSION="5.3.1"
 PKG_URL="https://fossies.org/linux/misc/zsh-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain netbsd-curses libcap pcre readline gdbm"
+PKG_DEPENDS_TARGET="toolchain netbsd-curses pcre readline gdbm"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
@@ -14,7 +14,7 @@ PKG_CONFIGURE_OPTS_TARGET="--bindir=/bin \
 			      --enable-multibyte \
 			      --enable-pcre \
 			      --disable-ansi2knr \
-			      --disable-dynamic \
+			      --enable-dynamic \
 			      --sysconfdir=/storage/.config \
 			      --enable-function-subdirs \
 			      --with-tcsetpgrp \
@@ -23,5 +23,5 @@ PKG_CONFIGURE_OPTS_TARGET="--bindir=/bin \
 			      --with-term-lib=ncursesw \
 			      --disable-dynamic-nss \
 			      --disable-zsh-debug \
-			      --enable-cap \
+			      --disable-cap \
 			      --enable-unicode9"
