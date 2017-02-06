@@ -57,6 +57,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/bash \
                            --enable-lock-elision \
                            --disable-timezone-tools \
                            --enable-stack-protector=strong \
+                           --with-pkgversion="OE" \
                            --enable-static-nss"
 
 if [ "$DEBUG" = yes ]; then
