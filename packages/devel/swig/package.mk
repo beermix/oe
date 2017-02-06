@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="swig"
-PKG_VERSION="3.0.12"
+PKG_VERSION="3.0.10"
 PKG_SITE="http://www.swig.org"
 PKG_URL="https://master.dl.sourceforge.net/project/swig/swig/swig-$PKG_VERSION/swig-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="ccache:host pcre:host"
@@ -26,15 +26,12 @@ PKG_SHORTDESC="SWIG: a software development tool that connects programs written 
 PKG_LONGDESC="SWIG is a software development tool that connects programs written in C and C++ with a variety of high-level programming languages."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared \
-                         --with-boost=no \
                          --without-pcre \
                          --without-x \
                          --without-tcl \
-                         --without-python \
-                         --without-python3 \
                          --without-perl5 \
                          --without-octave \
                          --without-java \
@@ -47,10 +44,7 @@ PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared \
                          --without-ocaml \
                          --without-pike \
                          --without-chicken \
-                         --without-csharp \
-                         --without-lua \
                          --without-allegrocl \
                          --without-clisp \
                          --without-r \
-                         --with-go \
                          --without-d"
