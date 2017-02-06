@@ -5,9 +5,9 @@
 --- /dev/null
 +++ b/Configurations/20-debian.conf
 @@ -0,0 +1,134 @@
-+my $debian_cflags = `dpkg-buildflags --get CFLAGS` . `dpkg-buildflags --get CPPFLAGS` . "-Wa,--noexecstack -Wall";
++my $debian_cflags = `-fstack-protector-strong -Wformat -Werror=format-security` . `-Wdate-time -D_FORTIFY_SOURCE=2` . "-Wa,--noexecstack -Wall";
 +$debian_cflags =~ s/\n/ /g;
-+my $debian_ldflags = `dpkg-buildflags --get LDFLAGS`;
++my $debian_ldflags = `-Wl,-Bsymbolic-functions -Wl,-z,relro`;
 +$debian_ldflags =~ s/\n/ /g;
 +
 +%targets = (
