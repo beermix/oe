@@ -37,7 +37,7 @@ makeinstall_target() {
   ln -sf $SYSROOT_PREFIX/usr/lib/pkgconfig/lua5.3.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/lua.pc
 }
 
-post_install() {
+post_make_target() {
   mkdir -p $INSTALL/usr/bin
     cp -P $ROOT/$PKG_BUILD/src/lua $INSTALL/usr/bin
     cp -P $ROOT/$PKG_BUILD/src/luac $INSTALL/usr/bin
