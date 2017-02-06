@@ -29,10 +29,6 @@ PKG_LONGDESC="International Components for Unicode library"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-#pre_configure_target() {
-#  unset CPPFLAGS
-#}
-
 PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \
