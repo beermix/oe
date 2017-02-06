@@ -18,8 +18,6 @@
 
 PKG_NAME="glibc"
 PKG_VERSION="fdfc926"
-#PKG_VERSION="995635f"
-#PKG_KEEP_CHECKOUT="yes"
 PKG_SITE="http://www.gnu.org/software/libc/"
 PKG_GIT_URL="git://sourceware.org/git/glibc.git"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap localedef-eglibc:host"

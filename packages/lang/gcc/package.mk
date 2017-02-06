@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="6-20170202"
+PKG_VERSION="4ca53f0"
 PKG_SITE="http://gcc.gnu.org/"
-PKG_URL="https://fossies.org/linux/misc/gcc-6-20170202.tar.xz"
+PKG_GIT_URL="git://gcc.gnu.org/git/gcc.git"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host"
 PKG_DEPENDS_TARGET="gcc:host"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
@@ -92,6 +92,8 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-threads=posix \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time=yes \
+                         --enable-install-libiberty \
+                         --disable-werror \
                          $GCC_OPTS"
 
 pre_configure_host() {
