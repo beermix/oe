@@ -1,5 +1,5 @@
 PKG_NAME="c-ares"
-PKG_VERSION="9fe30b5"
+PKG_VERSION="fd6124c"
 PKG_GIT_URL="https://github.com/c-ares/c-ares"
 PKG_DEPENDS_TARGET="toolchain zlib openssl libgpg-error"
 PKG_SECTION="my"
