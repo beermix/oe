@@ -246,7 +246,7 @@ else
 fi
 
 pre_configure_bootstrap() {
-  CXXFLAGS+=" -DTARGET_POSIX -std=c++0x -I$ROOT/$PKG_BUILD/xbmc/linux"
+  CXXFLAGS="$CXXFLAGS -std=c++11 -DTARGET_POSIX -DTARGET_LINUX -D_LINUX -I$(get_build_dir $MEDIACENTER)/xbmc/linux"
   strip_lto
   strip_gold
 }
