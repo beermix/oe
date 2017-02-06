@@ -1,5 +1,5 @@
 PKG_NAME="openssl"
-PKG_VERSION="1.0.2k"
+PKG_VERSION="1.1.0d"
 PKG_URL="https://www.openssl.org/source/openssl-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain zlib pcre"
 PKG_SECTION="security"
@@ -49,13 +49,15 @@ make_target() {
        RANLIB="$RANLIB" \
        XLDFLAGS="$LDFLAGS" \
        MAKEDEPPROG="$CC" \
-       depend all build-shared
+       all -j1
 }
 
 makeinstall_target() {
-  make INSTALL_PREFIX=$SYSROOT_PREFIX install_sw
-  make INSTALL_PREFIX=$INSTALL install_sw
-  chmod 755 $INSTALL/usr/lib/*.so*
+  make -f Makefile install DESTDIR=`pwd`$SYSROOT_PREFIX
+  make -f Makefile DESTDIR=`pwd`$INSTALL install_sw
+  #make INSTALL_PREFIX=$SYSROOT_PREFIX install_sw
+ # make INSTALL_PREFIX=$INSTALL install_sw
+  #chmod 755 $INSTALL/usr/lib/*.so*
   #chmod 755 $INSTALL/usr/lib/engines/*.so
 }
 
