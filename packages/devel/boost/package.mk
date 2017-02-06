@@ -79,6 +79,6 @@ makeinstall_target() {
                                 --with-chrono \
                                 --with-random \
                                 --with-regex -sICU_PATH="$SYSROOT_PREFIX/usr" \
-                                cxxflags=-fPIC cflags=-fPIC \
+                                cxxflags=-fPIC cflags=-fPIC -j3 \
                                 install
 }

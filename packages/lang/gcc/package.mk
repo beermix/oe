@@ -17,10 +17,10 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="7-20170205"
-PKG_URL="https://fossies.org/linux/misc/gcc-7-20170205.tar.xz"
-#PKG_VERSION="4ca53f0"
-#PKG_GIT_URL="git://gcc.gnu.org/git/gcc.git"
+#PKG_VERSION="7-20170205"
+#PKG_URL="https://fossies.org/linux/misc/gcc-7-20170205.tar.xz"
+PKG_VERSION="4ca53f0"
+PKG_GIT_URL="git://gcc.gnu.org/git/gcc.git"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host"
 PKG_DEPENDS_TARGET="gcc:host"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
@@ -96,7 +96,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          $GCC_OPTS"
 
 pre_configure_host() {
-  #export CXXFLAGS="$CXXFLAGS -std=gnu++98"
+  export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
 }
 

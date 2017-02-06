@@ -28,23 +28,4 @@ PKG_LONGDESC="SWIG is a software development tool that connects programs written
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared \
-                         --without-pcre \
-                         --without-x \
-                         --without-tcl \
-                         --without-perl5 \
-                         --without-octave \
-                         --without-java \
-                         --without-gcj \
-                         --without-android \
-                         --without-guile \
-                         --without-mzscheme \
-                         --without-ruby \
-                         --without-php \
-                         --without-ocaml \
-                         --without-pike \
-                         --without-chicken \
-                         --without-allegrocl \
-                         --without-clisp \
-                         --without-r \
-                         --without-d"
+PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
