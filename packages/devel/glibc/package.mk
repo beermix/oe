@@ -17,11 +17,15 @@
 ################################################################################
 
 PKG_NAME="glibc"
-PKG_VERSION="fdfc926"
+PKG_VERSION="2.25"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/libc/"
-PKG_GIT_URL="git://sourceware.org/git/glibc.git"
+PKG_URL="http://ftp.gnu.org/pub/gnu/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap localedef-eglibc:host"
 PKG_DEPENDS_INIT="glibc"
+PKG_PRIORITY="optional"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="glibc: The GNU C library"
 PKG_LONGDESC="The Glibc package contains the main C library. This library provides the basic routines for allocating memory, searching directories, opening and closing files, reading and writing files, string handling, pattern matching, arithmetic, and so on."
@@ -124,10 +128,10 @@ post_makeinstall_target() {
   for i in $GLIBC_EXCLUDE_BIN; do
     rm -rf $INSTALL/usr/bin/$i
   done
-  rm -rf $INSTALL/usr/lib/audit
-  rm -rf $INSTALL/usr/lib/glibc
-  rm -rf $INSTALL/usr/lib/*.o
-  rm -rf $INSTALL/var
+   rm -rf $INSTALL/usr/lib/audit
+   rm -rf $INSTALL/usr/lib/glibc
+   rm -rf $INSTALL/usr/lib/*.o
+   rm -rf $INSTALL/var
 
 # remove unneeded libs
   rm -rf $INSTALL/usr/lib/libBrokenLocale*
