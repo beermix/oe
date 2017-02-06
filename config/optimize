@@ -23,7 +23,7 @@ if [ "$DEBUG" = yes ]; then
   TARGET_LDFLAGS="$TARGET_LDFLAGS -ggdb"
 else
   TARGET_CFLAGS="$TARGET_CFLAGS -fomit-frame-pointer -Wno-cpp"
-  TARGET_CXXFLAGS="$TARGET_CXXFLAGS -fomit-frame-pointer "
+  TARGET_CXXFLAGS="$TARGET_CXXFLAGS -fomit-frame-pointer -Wno-cpp"
   TARGET_CPPFLAGS="$TARGET_CPPFLAGS -Wno-cpp"
   TARGET_LDFLAGS="$TARGET_LDFLAGS -Wno-cpp -s"
 fi
