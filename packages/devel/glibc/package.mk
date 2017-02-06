@@ -55,7 +55,9 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/bash \
                            --disable-build-nscd \
                            --disable-nscd \
                            --enable-lock-elision \
-                           --disable-timezone-tools"
+                           --disable-timezone-tools \
+                           --enable-stack-protector=strong \
+                           --enable-static-nss"
 
 if [ "$DEBUG" = yes ]; then
   PKG_CONFIGURE_OPTS_TARGET+=" --enable-debug"
