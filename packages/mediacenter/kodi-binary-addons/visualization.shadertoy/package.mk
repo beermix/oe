@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="visualization.shadertoy"
-PKG_VERSION="86ced78"
+PKG_VERSION="6a9a5ca"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -41,9 +41,6 @@ if [ "$OPENGLES_SUPPORT" = yes ]; then
 # for OpenGL-ES support
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET $OPENGLES"
 fi
-
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
-                       -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr"
 
 pre_configure_target() {
   if [ "$KODIPLAYER_DRIVER" = bcm2835-firmware ]; then
