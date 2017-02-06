@@ -30,7 +30,6 @@ PKG_LONGDESC="pkg-config is a system for managing library compile/link flags tha
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-MAKEFLAGS=-j1
 
 PKG_CONFIGURE_OPTS_HOST="--disable-silent-rules \
                          --with-internal-glib --disable-dtrace \
