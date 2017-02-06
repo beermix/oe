@@ -1,40 +1,44 @@
 ################################################################################
-#      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+#      This file is part of LibreELEC - https://libreelec.tv
+#      Copyright (C) 2016 Team LibreELEC
 #
-#  OpenELEC is free software: you can redistribute it and/or modify
+#  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
 #  the Free Software Foundation, either version 2 of the License, or
 #  (at your option) any later version.
 #
-#  OpenELEC is distributed in the hope that it will be useful,
+#  LibreELEC is distributed in the hope that it will be useful,
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
 #
 #  You should have received a copy of the GNU General Public License
-#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
+#  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="screensaver.asteroids"
-PKG_VERSION="8c2e182"
-PKG_REV="1"
+PKG_NAME="game.libretro.fbalpha"
+PKG_VERSION="7dd0903"
+PKG_REV="100"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/notspiff/screensaver.asteroids"
-PKG_GIT_URL="https://github.com/notspiff/screensaver.asteroids"
-PKG_DEPENDS_TARGET="toolchain kodi-platform"
+PKG_SITE="https://github.com/kodi-game/game.libretro.fbalpha"
+PKG_GIT_URL="https://github.com/kodi-game/game.libretro.fbalpha"
+PKG_DEPENDS_TARGET="toolchain kodi-platform libretro-fbalpha"
 PKG_SECTION=""
-PKG_SHORTDESC="screensaver.asteroids"
-PKG_LONGDESC="screensaver.asteroids"
+PKG_SHORTDESC="game.libretro.fbalpha: fba for Kodi"
+PKG_LONGDESC="game.libretro.fbalpha: fba for Kodi"
 PKG_AUTORECONF="no"
 
 PKG_IS_ADDON="yes"
-PKG_ADDON_TYPE="xbmc.ui.screensaver"
+PKG_ADDON_TYPE="kodi.gameclient"
 
-if [ "$OPENGL" = "no" ] ; then
-  exit 0
-fi
+configure_target() {
+  cmake -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+        -DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
+        -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
+        ..
+}
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/
