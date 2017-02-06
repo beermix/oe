@@ -73,9 +73,11 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               $GCC_OPTS"
 
 PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
-                         --enable-languages=c,c++ \
+                         --enable-languages=c,c++,objc,obj-c++ \
                          --enable-__cxa_atexit \
                          --enable-decimal-float \
+                         --enable-libssp \
+                         --enable-libatomic \
                          --enable-tls \
                          --enable-shared \
                          --disable-static \
@@ -85,6 +87,12 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time \
                          --enable-clocale=gnu \
+                         --enable-gnu-unique-object \
+                         --enable-linker-build-id \
+                         --with-linker-hash-style=gnu \
+                         --enable-initfini-array \
+                         --enable-gnu-indirect-function \
+                         --enable-poison-system-directories \
                          $GCC_OPTS"
 
 pre_configure_host() {

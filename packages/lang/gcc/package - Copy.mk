@@ -93,6 +93,11 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time \
                          --enable-clocale=gnu \
+                         --enable-gnu-unique-object \
+                         --enable-linker-build-id \
+                         --with-linker-hash-style=gnu \
+                         --enable-initfini-array \
+                         --enable-gnu-indirect-function \
                          --enable-poison-system-directories \
                          $GCC_OPTS"
 
