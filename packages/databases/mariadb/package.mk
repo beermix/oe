@@ -172,7 +172,7 @@ post_makeinstall_target() {
  
   rm -rf $INSTALL/usr/share/mysql/support-files
   rm -rf $INSTALL/usr/share/mysql/test
-  rm -rf $INSTALL/usr/share/mysql/bench
+  #rm -rf $INSTALL/usr/share/mysql/bench
 
   if [ "$PKG_MARIADB_SERVER" = "no" ]; then
     rm -rf $INSTALL/usr/bin
