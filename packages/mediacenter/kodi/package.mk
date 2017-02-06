@@ -23,6 +23,8 @@ PKG_GIT_BRANCH="Krypton"
 PKG_KEEP_CHECKOUT="yes"
 PKG_PATCH_DIRS="$LINUX"
 PKG_DEPENDS_TARGET="toolchain kodi:host kodi:bootstrap xmlstarlet:host Python zlib systemd pciutils dbus lzo pcre swig:host libass curl fontconfig fribidi tinyxml libjpeg-turbo freetype libcdio libdvdnav taglib libxml2 libxslt yajl sqlite ffmpeg crossguid giflib opengl"
+
+PKG_DEPENDS_TARGET="toolchain JsonSchemaBuilder:host TexturePacker:host xmlstarlet:host Python zlib systemd pciutils lzo pcre swig:host libass curl fontconfig fribidi tinyxml libjpeg-turbo freetype libcdio taglib libxml2 libxslt yajl sqlite ffmpeg crossguid giflib libdvdnav libhdhomerun"
 PKG_DEPENDS_HOST="toolchain"
 PKG_DEPENDS_BOOTSTRAP="toolchain lzo:host libpng:host libjpeg-turbo:host giflib:host"
 PKG_PRIORITY="optional"
@@ -247,10 +249,11 @@ makeinstall_host() {
 }
 
 pre_configure_target() {
-  export LIBS="$LIBS -ltermcap"
+  export LIBS="$LIBS -lz -ltermcap"
+  strip_lto
+  strip_gold
 }
 
-pre_make_target() {
 # setup skin dir from default skin
   SKIN_DIR="skin.`tolower $SKIN_DEFAULT`"
 
@@ -262,12 +265,19 @@ pre_make_target() {
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin/kodi
   rm -rf $INSTALL/usr/bin/kodi-standalone
+  rm -rf $INSTALL/usr/bin/xbmc
+  rm -rf $INSTALL/usr/bin/xbmc-standalone
+  rm -rf $INSTALL/usr/share/kodi/cmake
   rm -rf $INSTALL/usr/share/applications
   rm -rf $INSTALL/usr/share/icons
-  rm -rf $INSTALL/usr/share/kodi/cmake
-  rm -rf $INSTALL/usr/share/kodi/userdata/iOS
+  rm -rf $INSTALL/usr/share/pixmaps
+  rm -rf $INSTALL/usr/share/kodi/addons/skin.estouchy
+  rm -rf $INSTALL/usr/share/kodi/addons/skin.estuary
+  rm -rf $INSTALL/usr/share/kodi/addons/service.xbmc.versioncheck
+  rm -rf $INSTALL/usr/share/kodi/addons/visualization.vortex
   rm -rf $INSTALL/usr/share/xsessions
 
+  
   # update addon manifest
     KODI_ADDON_MANIFEST="$INSTALL/usr/share/kodi/system/addon-manifest.xml"
     rm -rf $INSTALL/usr/share/kodi/addons/service.xbmc.versioncheck
@@ -282,7 +292,9 @@ post_makeinstall_target() {
     sed -e "s:INCLUDE_DIR /usr/include/kodi:INCLUDE_DIR $SYSROOT_PREFIX/usr/include/kodi:g" \
         -e "s:CMAKE_MODULE_PATH /usr/lib/kodi /usr/share/kodi/cmake:CMAKE_MODULE_PATH $SYSROOT_PREFIX/usr/share/kodi/cmake:g" \
         -i $SYSROOT_PREFIX/usr/share/kodi/cmake/KodiConfig.cmake
-
+  
+  mv $INSTALL/usr/lib/python2.7/dist-packages $INSTALL/usr/lib/python2.7/site-packages
+ 
   mkdir -p $INSTALL/usr/lib/kodi
     cp $PKG_DIR/scripts/kodi-config $INSTALL/usr/lib/kodi
     cp $PKG_DIR/scripts/kodi.sh $INSTALL/usr/lib/kodi
@@ -316,6 +328,11 @@ post_makeinstall_target() {
     $SED "s|@OS_VERSION@|$OS_VERSION|g" -i $INSTALL/usr/share/kodi/addons/os.openelec.tv/addon.xml
     cp -R $PKG_DIR/config/repository.openelec.tv $INSTALL/usr/share/kodi/addons
     $SED "s|@ADDON_URL@|$ADDON_URL|g" -i $INSTALL/usr/share/kodi/addons/repository.openelec.tv/addon.xml
+    cp -R $PKG_DIR/config/os.libreelec.tv $INSTALL/usr/share/kodi/addons
+    $SED "s|@OS_VERSION@|$OS_VERSION|g" -i $INSTALL/usr/share/kodi/addons/os.libreelec.tv/addon.xml
+    cp -R $PKG_DIR/config/repository.libreelec.tv $INSTALL/usr/share/kodi/addons
+    $SED "s|@ADDON_URL@|$ADDON_URL|g" -i $INSTALL/usr/share/kodi/addons/repository.libreelec.tv/addon.xml
+    cp -R $PKG_DIR/config/repository.kodi.game $INSTALL/usr/share/kodi/addons
 
   mkdir -p $INSTALL/usr/lib/python"$PKG_PYTHON_VERSION"/site-packages/kodi
     cp -R $ROOT/$PKG_BUILD/tools/EventClients/lib/python/*.py $INSTALL/usr/lib/python"$PKG_PYTHON_VERSION"/site-packages/kodi
@@ -325,36 +342,59 @@ post_makeinstall_target() {
     cp $PKG_DIR/config/sources.xml $INSTALL/usr/share/kodi/config
 
 # install project specific configs
-    if [ -f $PROJECT_DIR/$PROJECT/kodi/guisettings.xml ]; then
+    if [ -n "$DEVICE" -a -f $PROJECT_DIR/$PROJECT/devices/$DEVICE/kodi/guisettings.xml ]; then
+      cp -R $PROJECT_DIR/$PROJECT/devices/$DEVICE/kodi/guisettings.xml $INSTALL/usr/share/kodi/config
+    elif [ -f $PROJECT_DIR/$PROJECT/kodi/guisettings.xml ]; then
       cp -R $PROJECT_DIR/$PROJECT/kodi/guisettings.xml $INSTALL/usr/share/kodi/config
     fi
 
-    if [ -f $PROJECT_DIR/$PROJECT/kodi/sources.xml ]; then
+    if [ -n "$DEVICE" -a -f $PROJECT_DIR/$PROJECT/devices/$DEVICE/kodi/sources.xml ]; then
+      cp -R $PROJECT_DIR/$PROJECT/devices/$DEVICE/kodi/sources.xml $INSTALL/usr/share/kodi/config
+    elif [ -f $PROJECT_DIR/$PROJECT/kodi/sources.xml ]; then
       cp -R $PROJECT_DIR/$PROJECT/kodi/sources.xml $INSTALL/usr/share/kodi/config
     fi
 
   mkdir -p $INSTALL/usr/share/kodi/system/
-    if [ -f $PROJECT_DIR/$PROJECT/kodi/advancedsettings.xml ]; then
+    if [ -n "$DEVICE" -a -f $PROJECT_DIR/$PROJECT/devices/$DEVICE/kodi/advancedsettings.xml ]; then
+      cp $PROJECT_DIR/$PROJECT/devices/$DEVICE/kodi/advancedsettings.xml $INSTALL/usr/share/kodi/system/
+    elif [ -f $PROJECT_DIR/$PROJECT/kodi/advancedsettings.xml ]; then
       cp $PROJECT_DIR/$PROJECT/kodi/advancedsettings.xml $INSTALL/usr/share/kodi/system/
     else
       cp $PKG_DIR/config/advancedsettings.xml $INSTALL/usr/share/kodi/system/
     fi
 
   mkdir -p $INSTALL/usr/share/kodi/system/settings
-    if [ -f $PROJECT_DIR/$PROJECT/kodi/appliance.xml ]; then
+    if [ -n "$DEVICE" -a -f $PROJECT_DIR/$PROJECT/devices/$DEVICE/kodi/appliance.xml ]; then
+      cp $PROJECT_DIR/$PROJECT/devices/$DEVICE/kodi/appliance.xml $INSTALL/usr/share/kodi/system/settings
+    elif [ -f $PROJECT_DIR/$PROJECT/kodi/appliance.xml ]; then
       cp $PROJECT_DIR/$PROJECT/kodi/appliance.xml $INSTALL/usr/share/kodi/system/settings
     else
       cp $PKG_DIR/config/appliance.xml $INSTALL/usr/share/kodi/system/settings
     fi
 
+  ADDON_MANIFEST=$INSTALL/usr/share/kodi/system/addon-manifest.xml
+  xmlstarlet ed -L -d "/addons/addon[text()='service.xbmc.versioncheck']" $ADDON_MANIFEST
+  xmlstarlet ed -L -d "/addons/addon[text()='skin.estouchy']" $ADDON_MANIFEST
+  xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "repository.kodi.game" $ADDON_MANIFEST
+  xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "os.libreelec.tv" $ADDON_MANIFEST
+  xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "os.openelec.tv" $ADDON_MANIFEST
+  xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "repository.libreelec.tv" $ADDON_MANIFEST
+  xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "service.libreelec.settings" $ADDON_MANIFEST
+
+  # more binaddons cross compile badness meh
+  sed -e "s:INCLUDE_DIR /usr/include/kodi:INCLUDE_DIR $SYSROOT_PREFIX/usr/include/kodi:g" \
+      -e "s:CMAKE_MODULE_PATH /usr/lib/kodi /usr/share/kodi/cmake:CMAKE_MODULE_PATH $SYSROOT_PREFIX/usr/share/kodi/cmake:g" \
+      -i $SYSROOT_PREFIX/usr/share/kodi/cmake/KodiConfig.cmake
   if [ "$KODI_EXTRA_FONTS" = yes ]; then
     mkdir -p $INSTALL/usr/share/kodi/media/Fonts
       cp $PKG_DIR/fonts/*.ttf $INSTALL/usr/share/kodi/media/Fonts
   fi
+  debug_strip $INSTALL/usr/lib/kodi/kodi.bin
 }
 
 post_install() {
 # enable default services
+  enable_service kodi.target
   enable_service kodi-autostart.service
   enable_service kodi-cleanlogs.service
   enable_service kodi-halt.service

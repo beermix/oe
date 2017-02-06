@@ -1,3 +1,11 @@
+From f040af300925c03a1547ff02d71921bde9893330 Mon Sep 17 00:00:00 2001
+From: fritsch <Peter.Fruehberger@gmail.com>
+Date: Sat, 14 Jan 2017 10:23:11 +0100
+Subject: [PATCH] VAAPI/VDPAU: Integration specific to LibreELEC
+
+---
+ xbmc/settings/Settings.cpp | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 diff --git a/xbmc/settings/Settings.cpp b/xbmc/settings/Settings.cpp
 old mode 100644
 new mode 100755
