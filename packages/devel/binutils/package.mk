@@ -17,10 +17,10 @@
 ################################################################################
 
 PKG_NAME="binutils"
-PKG_VERSION="2.27"
-PKG_URL="https://fossies.org/linux/misc/binutils-$PKG_VERSION.tar.xz"
-#PKG_VERSION="a74504a"
-#PKG_GIT_URL="git://sourceware.org/git/binutils-gdb.git"
+#PKG_VERSION="2.27"
+#PKG_URL="https://fossies.org/linux/misc/binutils-$PKG_VERSION.tar.xz"
+PKG_VERSION="65f90e8"
+PKG_GIT_URL="git://sourceware.org/git/binutils-gdb.git"
 #PKG_GIT_BRANCH="binutils-2_28-branch"
 #PKG_KEEP_CHECKOUT="yes"
 PKG_DEPENDS_HOST="ccache:host bison:host flex:host linux:host texinfo:host"
@@ -55,7 +55,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
 
 makeinstall_host() {
   cp -v ../include/libiberty.h $SYSROOT_PREFIX/usr/include
-  make install -j1
+  make install
 }
 
 pre_configure_host() {
