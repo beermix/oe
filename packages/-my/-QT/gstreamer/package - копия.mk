@@ -17,30 +17,21 @@
 ################################################################################
 
 PKG_NAME="gstreamer"
-PKG_VERSION="master"
+PKG_VERSION="0.10.36"
 PKG_SITE="http://gstreamer.freedesktop.org/gstreamer"
-#PKG_URL="http://gstreamer.freedesktop.org/src/gstreamer/$PKG_NAME-$PKG_VERSION.tar.xz"
-
-case $TARGET_ARCH in
-	i386)
-		PKG_DEPENDS="toolchain libpng tiff dbus fontconfig linux-headers eglibc zlib"
-		PKG_BUILD_DEPENDS="toolchain libpng tiff dbus fontconfig linux-headers eglibc zlib"
-	;;
-	x86_64)
-		PKG_DEPENDS="toolchain libpng tiff dbus fontconfig linux-headers eglibc zlib"
-		PKG_BUILD_DEPENDS="toolchain libpng tiff dbus fontconfig linux-headers eglibc zlib"
-	;;
-	arm)
-		PKG_DEPENDS="bcm2835-driver toolchain libpng tiff dbus fontconfig linux-headers eglibc zlib"
-		PKG_BUILD_DEPENDS="bcm2835-driver toolchain libpng tiff dbus fontconfig linux-headers eglibc zlib"
-	;;
-esac
-
-
+PKG_URL="https://gstreamer.freedesktop.org/src/gstreamer/gstreamer-$PKG_VERSION.tar.xz"
+PKG_DEPENDS_TARGET="toolchain libpng tiff dbus fontconfig eglibc zlib"
 PKG_SECTION="lib"
 PKG_SHORTDESC="gstreamer library"
 PKG_LONGDESC="gstreamer library and components"
+
 PKG_IS_ADDON="no"
+PKG_AUTORECONF="yes"
 
-PKG_AUTORECONF="no"
 
+PKG_CONFIGURE_OPTS_TARGET="as_cv_unaligned_access=no \
+				--disable-examples \
+				--disable-tests \
+				--disable-failing-tests \
+				--disable-loadsave \
+				--enable-static"
