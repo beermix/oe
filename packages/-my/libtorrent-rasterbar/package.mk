@@ -1,6 +1,6 @@
 PKG_NAME="libtorrent-rasterbar"
-PKG_VERSION="d2f6104"
-PKG_GIT_URL="https://github.com/arvidn/libtorrent"
+PKG_VERSION="1.0.11"
+PKG_URL="https://github.com/arvidn/libtorrent/releases/download/libtorrent-1_0_11/libtorrent-rasterbar-1.0.11.tar.gz"
 PKG_DEPENDS_TARGET="toolchain openssl expat boost"
 PKG_SECTION="devel"
 PKG_USE_CMAKE="no"
@@ -9,15 +9,13 @@ PKG_AUTORECONF="no"
 
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
-  strip_lto
-  strip_gold
-  sh autotool.sh
-  export CFLAGS="$CFLAGS -Ofast -pipe"
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
+  #strip_lto
+  #strip_gold
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \
 			      --disable-shared \
-			      --with-gnu-ld \
 			      --disable-python-binding \
 			      --without-libiconv \
 			      --disable-geoip \

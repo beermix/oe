@@ -6,11 +6,6 @@ PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
 PKG_AUTORECONF="yes"
 
-pre_configure_target() {
-  export MAKEFLAGS="-j1"
-}
-
-
 PKG_CONFIGURE_OPTS_TARGET="--with-zlib \
 			      --with-math \
 			      --with-user=netdata \
