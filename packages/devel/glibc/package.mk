@@ -56,9 +56,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/bash \
                            --disable-nscd \
                            --enable-lock-elision \
                            --disable-timezone-tools \
-                           --enable-stack-protector=strong \
-                           --with-pkgversion="OE" \
-                           --enable-static-nss"
+                           --enable-stack-protector=strong"
 
 if [ "$DEBUG" = yes ]; then
   PKG_CONFIGURE_OPTS_TARGET+=" --enable-debug"
@@ -115,6 +113,8 @@ libc_cv_forced_unwind=yes
 libc_cv_c_cleanup=yes
 libc_cv_ssp=no
 libc_cv_ssp_strong=no
+libc_cv_gnu99_inline=yes
+libc_cv_initfini_array=yes
 EOF
 
   echo "sbindir=/usr/bin" >> configparms
