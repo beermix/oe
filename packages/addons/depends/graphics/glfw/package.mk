@@ -19,10 +19,10 @@
 PKG_NAME="glfw"
 PKG_VERSION="2.7.9"
 PKG_ARCH="x86_64"
+PKG_LICENSE="BSD"
 PKG_SITE="http://glfw.org"
 PKG_URL="$SOURCEFORGE_SRC/glfw/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain mesa glu"
-PKG_PRIORITY="optional"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="glfw:"
 PKG_LONGDESC="glfw:"
@@ -30,7 +30,7 @@ PKG_LONGDESC="glfw:"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-if [ ! "$OPENGL" = "mesa" ] ; then
+if [ "$OPENGL" = "no" ] ; then
   exit 0
 fi
 

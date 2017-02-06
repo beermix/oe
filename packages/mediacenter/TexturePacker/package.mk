@@ -16,29 +16,34 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="visualization.vsxu"
-PKG_VERSION="caedcbc"
-PKG_REV="1"
-PKG_ARCH="i386 x86_64"
+PKG_NAME="TexturePacker"
+PKG_VERSION="0"
+PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/notspiff/visualization.vsxu"
-PKG_GIT_URL="https://github.com/notspiff/visualization.vsxu"
-PKG_DEPENDS_TARGET="toolchain kodi-platform vsxu"
-PKG_SECTION=""
-PKG_SHORTDESC="visualization.vsxu"
-PKG_LONGDESC="visualization.vsxu"
+PKG_SITE="http://www.kodi.tv"
+PKG_URL=""
+PKG_DEPENDS_HOST="lzo:host libpng:host libjpeg-turbo:host giflib:host"
+PKG_NEED_UNPACK="$ROOT/packages/mediacenter/$MEDIACENTER/package.mk"
+PKG_SECTION="mediacenter"
+PKG_SHORTDESC="kodi-platform:"
+PKG_LONGDESC="kodi-platform:"
+
+PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_IS_ADDON="yes"
-PKG_ADDON_TYPE="xbmc.player.musicviz"
+PKG_CMAKE_SCRIPT="$(get_build_dir $MEDIACENTER)/tools/depends/native/TexturePacker/CMakeLists.txt"
 
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
-                       -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr"
+PKG_CMAKE_OPTS_HOST="-Wno-dev"
 
-addon() {
-  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/
-  cp -R $PKG_BUILD/.install_pkg/usr/share/kodi/addons/$PKG_NAME/* $ADDON_BUILD/$PKG_ADDON_ID/
+pre_build_host() {
+  $SCRIPTS/clean $PKG_NAME
+}
 
-  ADDONSO=$(xmlstarlet sel -t -v "/addon/extension/@library_linux" $ADDON_BUILD/$PKG_ADDON_ID/addon.xml)
-  cp -L $PKG_BUILD/.install_pkg/usr/lib/kodi/addons/$PKG_NAME/$ADDONSO $ADDON_BUILD/$PKG_ADDON_ID/
+pre_configure_host() {
+  export CXXFLAGS="$CXXFLAGS -std=c++11 -DTARGET_POSIX -DTARGET_LINUX -D_LINUX -I$(get_build_dir $MEDIACENTER)/xbmc/linux"
+}
+
+makeinstall_host() {
+  mkdir -p $ROOT/$TOOLCHAIN/bin
+    cp TexturePacker $ROOT/$TOOLCHAIN/bin
 }

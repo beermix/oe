@@ -16,29 +16,28 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="visualization.vsxu"
-PKG_VERSION="caedcbc"
-PKG_REV="1"
-PKG_ARCH="i386 x86_64"
-PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/notspiff/visualization.vsxu"
-PKG_GIT_URL="https://github.com/notspiff/visualization.vsxu"
-PKG_DEPENDS_TARGET="toolchain kodi-platform vsxu"
-PKG_SECTION=""
-PKG_SHORTDESC="visualization.vsxu"
-PKG_LONGDESC="visualization.vsxu"
+PKG_NAME="glfw"
+PKG_VERSION="2.7.9"
+PKG_ARCH="x86_64"
+PKG_SITE="http://glfw.org"
+PKG_URL="$SOURCEFORGE_SRC/glfw/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_DEPENDS_TARGET="toolchain mesa glu"
+PKG_PRIORITY="optional"
+PKG_SECTION="graphics"
+PKG_SHORTDESC="glfw:"
+PKG_LONGDESC="glfw:"
+
+PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_IS_ADDON="yes"
-PKG_ADDON_TYPE="xbmc.player.musicviz"
+if [ ! "$OPENGL" = "mesa" ] ; then
+  exit 0
+fi
 
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
-                       -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr"
+make_target() {
+  make x11 PREFIX=$SYSROOT_PREFIX/usr
+}
 
-addon() {
-  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/
-  cp -R $PKG_BUILD/.install_pkg/usr/share/kodi/addons/$PKG_NAME/* $ADDON_BUILD/$PKG_ADDON_ID/
-
-  ADDONSO=$(xmlstarlet sel -t -v "/addon/extension/@library_linux" $ADDON_BUILD/$PKG_ADDON_ID/addon.xml)
-  cp -L $PKG_BUILD/.install_pkg/usr/lib/kodi/addons/$PKG_NAME/$ADDONSO $ADDON_BUILD/$PKG_ADDON_ID/
+makeinstall_target() {
+  make x11-install PREFIX=$SYSROOT_PREFIX/usr
 }
