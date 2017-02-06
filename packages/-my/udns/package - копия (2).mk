@@ -1,6 +1,5 @@
 PKG_NAME="udns"
-PKG_VERSION="6a0befd"
-#PKG_VERSION="udns_0_4"
+PKG_VERSION="udns_0_4"
 PKG_GIT_URL="https://github.com/ortclib/udns"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="my"
@@ -18,6 +17,7 @@ make_target() {
 }
 
 post_make_target() {
+  $STRIP $ROOT/$PKG_BUILD/libudns.a
   cp $ROOT/$PKG_BUILD/libudns.a $SYSROOT_PREFIX/usr/lib
   cp $ROOT/$PKG_BUILD/udns.h $SYSROOT_PREFIX/usr/include
   cp -fv $ROOT/$PKG_BUILD/dnsget $INSTALL/usr/bin/
