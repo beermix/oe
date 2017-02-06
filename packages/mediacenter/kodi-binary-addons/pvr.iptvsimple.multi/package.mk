@@ -16,12 +16,8 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="pvr.iptvsimple"
+PKG_NAME="pvr.iptvsimple.multi"
 PKG_VERSION="455ebe8"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
-PKG_SITE="http://www.kodi.tv"
 PKG_GIT_URL="https://github.com/AlexELEC/pvr.iptvsimple.multi"
 PKG_DEPENDS_TARGET="toolchain kodi-platform zlib"
 PKG_SECTION=""
