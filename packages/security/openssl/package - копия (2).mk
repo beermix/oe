@@ -8,8 +8,9 @@ PKG_AUTORECONF="no"
 
 pre_configure_target() {
   export MAKEFLAGS="-j1"
-  sed -i -e '/^"linux-x86_64"/ s/-m64 -DL_ENDIAN -O3 -Wall/-O2 -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2 -Wl,-Bsymbolic-functions -Wl,-z,relro -Wa,--noexecstack -Wall/' $ROOT/$PKG_BUILD/Configure
+  sed -i -e '/^"linux-x86_64"/ s/-m64 -DL_ENDIAN -O3 -Wall/-O3 -pipe -m64 -DL_ENDIAN -fstack-protector-strong -Wa,--noexecstack/' $ROOT/$PKG_BUILD/Configure
 }
+
 
 configure_target() {
   ./Configure --prefix=/usr \
@@ -29,16 +30,6 @@ configure_target() {
               enable-ecdsa \
               no-rc5 \
               no-ssl3-method \
-              no-idea \
-              no-sha0 \
-              no-krb5 \
-              no-whrlpool \
-              no-whirlpool \
-              no-jpake \
-              no-err \
-              no-ssl2 \
-              no-ssl2-method \
-              no-heartbeats \
               enable-ec_nistp_64_gcc_128 \
               linux-x86_64
 }
