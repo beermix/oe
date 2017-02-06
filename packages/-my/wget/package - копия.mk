@@ -6,16 +6,14 @@ PKG_DEPENDS_TARGET="toolchain openssl libidn"
 PKG_SECTION="tools"
 PKG_AUTORECONF="no"
 
-pre_configure_taret() {
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
-}
-
 PKG_CONFIGURE_OPTS_TARGET="--with-ssl=openssl \
                            --without-libgnutls \
+                           --with-libpsl \
                            --enable-largefile \
                            --enable-opie \
                            --enable-digest \
                            --enable-ntlm \
+                           --enable-nls \
                            --disable-ipv6 \
                            --disable-rpath \
                            --with-metalink"

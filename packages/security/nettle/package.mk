@@ -8,7 +8,7 @@ PKG_SECTION="xmedia/depends"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --disable-mini-gmp"
+PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --disable-mini-gmp --disable-openssl --disable-documentation"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
