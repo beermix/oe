@@ -247,8 +247,8 @@ fi
 
 pre_configure_bootstrap() {
   CXXFLAGS+=" -DTARGET_POSIX -std=c++0x -I$ROOT/$PKG_BUILD/xbmc/linux"
-  #strip_lto
-  #strip_gold
+  strip_lto
+  strip_gold
 }
 
 makeinstall_bootstrap() {
