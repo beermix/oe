@@ -17,11 +17,11 @@
 ################################################################################
 
 PKG_NAME="glibc"
-PKG_VERSION="d2d43afa113eb143303a3d4c1e31194648077642"
-PKG_GIT_URL="git://sourceware.org/git/glibc.git"
-PKG_KEEP_CHECKOUT="yes"
-#PKG_VERSION="2.24"
-#PKG_URL="http://ftp.gnu.org/pub/gnu/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
+#PKG_VERSION="d2d43afa113eb143303a3d4c1e31194648077642"
+#PKG_GIT_URL="git://sourceware.org/git/glibc.git"
+#PKG_KEEP_CHECKOUT="yes"
+PKG_VERSION="2.25"
+PKG_URL="http://ftp.gnu.org/pub/gnu/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap localedef-eglibc:host"
 PKG_DEPENDS_INIT="glibc"
 PKG_PRIORITY="optional"
@@ -55,6 +55,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/bash \
                            --disable-nscd \
                            --enable-lock-elision \
                            --enable-stack-protector=strong \
+                           --with-pkgversion="OE" \
                            --disable-timezone-tools"
 
 if [ "$DEBUG" = yes ]; then
@@ -66,7 +67,7 @@ fi
 NSS_CONF_DIR="$PKG_BUILD/nss"
 
 GLIBC_EXCLUDE_BIN="catchsegv gencat getconf iconv iconvconfig ldconfig"
-GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN makedb mtrace pcprofiledump"
+GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN localedef makedb mtrace pcprofiledump"
 GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN pldd rpcgen sln sotruss sprof xtrace"
 
 pre_build_target() {
