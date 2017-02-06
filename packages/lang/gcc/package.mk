@@ -17,9 +17,10 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="4ca53f0"
-PKG_SITE="http://gcc.gnu.org/"
-PKG_GIT_URL="git://gcc.gnu.org/git/gcc.git"
+PKG_VERSION="7-20170205"
+PKG_URL="https://fossies.org/linux/misc/gcc-7-20170205.tar.xz"
+#PKG_VERSION="4ca53f0"
+#PKG_GIT_URL="git://gcc.gnu.org/git/gcc.git"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host"
 PKG_DEPENDS_TARGET="gcc:host"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
