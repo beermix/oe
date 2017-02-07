@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="binutils"
-PKG_VERSION="2.27.90.20170124"
-PKG_URL="https://dl.dropboxusercontent.com/s/pb38uifdaiy0d9o/binutils-2.27.90.20170124.tar.xz"
+PKG_VERSION="2.27-U16.10"
+PKG_URL="https://dl.dropboxusercontent.com/s/m4y218tnjhj1r0c/binutils-2.27-U16.10.tar.xz"
 #PKG_VERSION="9a055a8"
 #PKG_GIT_URL="git://sourceware.org/git/binutils-gdb.git"
 #PKG_GIT_BRANCH="binutils-2_28-branch"
