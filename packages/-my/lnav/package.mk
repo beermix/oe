@@ -4,14 +4,12 @@ PKG_GIT_URL="https://github.com/tstack/lnav"
 PKG_DEPENDS_HOST="toolchain sqlite"
 PKG_SECTION="tools"
 PKG_USE_CMAKE="no"
-PKG_AUTORECONF="no"
-
-CC_FOR_BUILD="$HOST_CC"
-CFLAGS_FOR_BUILD="$HOST_CFLAGS"
+PKG_AUTORECONF="yes"
 
 pre_configure_target() {
-  # gdb could fail on runtime if build with LTO support
-    strip_lto
-    cd $ROOT/$PKG_BUILD
-    sh autogen.sh
+  export LIBS="-lterminfo"
+  export CURSES_LIB="-lterminfo"
 }
+
+
+PKG_CONFIGURE_OPTS_TARGET="--disable-dependency-tracking --enable-silent-rules --with-pcre"
