@@ -22,7 +22,7 @@ PKG_NAME="gcc"
 #PKG_URL="http://192.168.1.2:8887/gcc-6.3.1+20170109.tar.xz"
 
 PKG_VERSION="6.3.0"
-PKG_URL="https://fossies.org/linux/misc/gcc-$PKG_URL.tar.xz"
+PKG_URL="https://fossies.org/linux/misc/gcc-$PKG_VERSION.tar.xz"
 
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host"
 PKG_DEPENDS_TARGET="gcc:host"
