@@ -62,12 +62,15 @@ pre_configure_target() {
   unset LD_LIBRARY_PATH
 
 # set some CFLAGS we need
-  export CFLAGS="$CFLAGS -g -U_FORTIFY_SOURCE"
-  export CXXFLAGS="$CXXFLAGS -fno-stack-protector -D_FORTIFY_SOURCE=0 -U_FORTIFY_SOURCE"
-  export LDFLAGS="$LDFLAGS -fno-stack-protector -D_FORTIFY_SOURCE=0 -U_FORTIFY_SOURCE"
-  export CPPFLAGS="$CPPFLAGS -fno-stack-protector -D_FORTIFY_SOURCE=0 -U_FORTIFY_SOURCE"
+  export LDFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong||g"`
+  export CXXFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed||"`
   
-  
+  export CFLAGS="$CFLAGS -g0"
+  #export CXXFLAGS="$CXXFLAGS -fno-stack-protector -D_FORTIFY_SOURCE=0 -U_FORTIFY_SOURCE"
+  #export LDFLAGS="$LDFLAGS -fno-stack-protector -D_FORTIFY_SOURCE=0 -U_FORTIFY_SOURCE"
+  #export CPPFLAGS="$CPPFLAGS -fno-stack-protector -D_FORTIFY_SOURCE=0 -U_FORTIFY_SOURCE"
+
   export OBJDUMP_FOR_HOST=objdump
 
 cat >config.cache <<EOF
