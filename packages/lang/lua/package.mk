@@ -21,7 +21,7 @@ PKG_AUTORECONF="no"
 _MAJORVER=${PKG_VERSION%.*}
 
 make_target() {
-  make CC="$CC" LD="$LD" CFLAGS="$CFLAGS -fPIC" MYCFLAGS="-DLUA_COMPAT_5_2 -DLUA_COMPAT_5_1" linux -j1
+  make CC="$CC" LD="$LD" CFLAGS="$CFLAGS -fPIC" MYCFLAGS="-DLUA_COMPAT_5_3 -DLUA_COMPAT_5_2 -DLUA_COMPAT_5_1" linux -j1
 }
 
 makeinstall_target() {
@@ -37,7 +37,7 @@ makeinstall_target() {
 
   mkdir -p $SYSROOT_PREFIX/usr/lib/pkgconfig
     cp -P $PKG_DIR/config/lua.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/lua5.3.pc
-  ln -sf $SYSROOT_PREFIX/usr/lib/pkgconfig/lua5.3.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/lua.pc
+    ln -sf $SYSROOT_PREFIX/usr/lib/pkgconfig/lua5.3.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/lua.pc
 }
 
 post_make_target() {

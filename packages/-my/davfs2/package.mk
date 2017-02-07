@@ -10,7 +10,7 @@ pre_configure_target() {
    export LIBS="-ldl -lpthread"
    cd $ROOT/$PKG_BUILD
    export MAKEFLAGS="-j1"
-   export CPPFLAGS="$CPPFLAGS -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64 -D_DEFAULT_SOURCE"
+   export CPPFLAGS="$CPPFLAGS -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64"
 }
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
