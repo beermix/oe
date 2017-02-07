@@ -5,7 +5,7 @@ fi
 
 if [ "$OPTIMIZATIONS" = size ];then
   GCC_OPTIM="-O2"
-  LD_OPTIM="-s -Wl,-O1,--sort-common,--as-needed,-z,relro"
+  LD_OPTIM="-Wl,-O1,--sort-common,--as-needed,-z,relro"
 fi
 
 if [ "$LTO_SUPPORT" = yes ];then
@@ -17,10 +17,10 @@ if [ "$GOLD_SUPPORT" = yes ];then
   LD_OPTIM_GOLD="-fuse-ld=gold"
 fi
 
-if [ "$DEBUG" = no ]; then
-  TARGET_CFLAGS="$TARGET_CFLAGS"
-  TARGET_CXXFLAGS="$TARGET_CXXFLAGS"
-  TARGET_LDFLAGS="$TARGET_LDFLAGS"
+if [ "$DEBUG" = yes ]; then
+  TARGET_CFLAGS="$TARGET_CFLAGS -ggdb"
+  TARGET_CXXFLAGS="$TARGET_CXXFLAGS -ggdb"
+  TARGET_LDFLAGS="$TARGET_LDFLAGS -ggdb"
 else
   TARGET_CFLAGS="$TARGET_CFLAGS -fomit-frame-pointer -Wno-cpp -Wno-unused-but-set-variable -Wno-unused-result"
   TARGET_CXXFLAGS="$TARGET_CXXFLAGS -fomit-frame-pointer -Wno-cpp -Wno-unused-but-set-variable -Wno-unused-result"
@@ -41,7 +41,7 @@ HOST_CPPFLAGS="-I$ROOT/$TOOLCHAIN/include"
 HOST_LDFLAGS="-Wl,-rpath,$ROOT/$TOOLCHAIN/lib -L$ROOT/$TOOLCHAIN/lib -s"
 HOST_LIBDIR="$ROOT/$TOOLCHAIN/lib"
 
-# work around Ubuntu default C*FLAGS 
+# work around Ubuntu default C*FLAGS  -fno-caller-saves -fno-plt
 # see https://wiki.ubuntu.com/ToolChain/CompilerFlags#A-Wformat_-Wformat-security 
 HOST_CFLAGS="$HOST_CFLAGS -Wno-format-security"
 HOST_CXXFLAGS="$HOST_CXXFLAGS -Wno-format-security" 

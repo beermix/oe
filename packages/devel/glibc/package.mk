@@ -1,3 +1,20 @@
+################################################################################
+#      This file is part of OpenELEC - http://www.openelec.tv
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+#
+#  OpenELEC is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  OpenELEC is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
+################################################################################
 PKG_NAME="glibc"
 PKG_VERSION="2.25"
 PKG_SITE="http://www.gnu.org/software/libc/"
@@ -34,12 +51,14 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/bash \
                            --disable-build-nscd \
                            --disable-nscd \
                            --enable-lock-elision \
-                           --disable-debug \
-                           --disable-timezone-tools \
-                           --disable-werror"
+                           --disable-timezone-tool"
 
 
-NSS_CONF_DIR="$PKG_BUILD/nss"
+if [ "$DEBUG" = yes ]; then
+  PKG_CONFIGURE_OPTS_TARGET+=" --enable-debug"
+else
+  PKG_CONFIGURE_OPTS_TARGET+=" --disable-debug"
+fi
 
 GLIBC_EXCLUDE_BIN="catchsegv gencat getconf iconv iconvconfig ldconfig"
 GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN localedef makedb mtrace pcprofiledump"
@@ -59,18 +78,28 @@ pre_configure_target() {
 # glibc dont support GOLD linker.
   strip_gold
 
+# Filter out some problematic *FLAGS
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-ffast-math||g"`
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-Ofast|-O2|g"`
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O2|g"`
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong||g"`
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
+
+  if [ -n "$PROJECT_CFLAGS" ]; then
+    export CFLAGS=`echo $CFLAGS | sed -e "s|$PROJECT_CFLAGS||g"`
+  fi
+
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-ffast-math||g"`
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Ofast|-O2|g"`
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-O.|-O2|g"`
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-fstack-protector-strong||g"`
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed||"`
+  
   unset LD_LIBRARY_PATH
 
 # set some CFLAGS we need
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong||g"`
-  export CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed||"`
-  
-  export CFLAGS="$CFLAGS -g0"
-  #export CXXFLAGS="$CXXFLAGS -fno-stack-protector -D_FORTIFY_SOURCE=0 -U_FORTIFY_SOURCE"
-  #export LDFLAGS="$LDFLAGS -fno-stack-protector -D_FORTIFY_SOURCE=0 -U_FORTIFY_SOURCE"
-  #export CPPFLAGS="$CPPFLAGS -fno-stack-protector -D_FORTIFY_SOURCE=0 -U_FORTIFY_SOURCE"
-
+  export CFLAGS="$CFLAGS -g"
   export OBJDUMP_FOR_HOST=objdump
 
 cat >config.cache <<EOF

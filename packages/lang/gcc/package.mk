@@ -20,7 +20,7 @@ PKG_NAME="gcc"
 PKG_VERSION="6.3.0"
 PKG_REV="1"
 PKG_URL="https://fossies.org/linux/misc/gcc-6.3.0.tar.xz"
-PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host"
+PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host"
 PKG_DEPENDS_TARGET="gcc:host"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
 PKG_PRIORITY="optional"
@@ -36,6 +36,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-gmp=$ROOT/$TOOLCHAIN \
                            --with-mpfr=$ROOT/$TOOLCHAIN \
                            --with-mpc=$ROOT/$TOOLCHAIN \
+                           --with-isl=$ROOT/$TOOLCHAIN \
                            --with-gnu-as \
                            --with-gnu-ld \
                            --enable-plugin \
@@ -57,13 +58,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libgomp \
                            --disable-libmpx \
                            --disable-libssp \
-                           --enable-install-libiberty \
-                           --disable-libunwind-exceptions \
-                           --enable-linker-build-id \
-                           --disable-libgcj \
-                           --with-tune=corei7 \
-                           --disable-werror \
-                           --enable-poison-system-directories"
+                           --with-tune=generic"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
@@ -88,16 +83,19 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-long-long \
                          --enable-threads=posix \
                          --disable-libstdcxx-pch \
-                         --enable-libstdcxx-time \
+                         --enable-libstdcxx-time=yes \
                          --enable-clocale=gnu \
                          --enable-gnu-unique-object \
+                         --enable-linker-build-id \
                          --with-linker-hash-style=gnu \
+                         --enable-poison-system-directories \
+                         --disable-libunwind-exceptions \
                          --enable-initfini-array \
                          --enable-gnu-indirect-function \
                          $GCC_OPTS"
 
 pre_configure_host() {
-  #export CXXFLAGS="$CXXFLAGS -std=gnu++98"
+  export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
 }
 
