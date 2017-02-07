@@ -1,7 +1,7 @@
 PKG_NAME="glibc"
-PKG_VERSION="2.24-33-ge9e69e4"
+PKG_VERSION="2.25"
 PKG_SITE="http://www.gnu.org/software/libc/"
-PKG_URL="http://192.168.1.2:8887/glibc-2.24-33-ge9e69e4.tar.gz"
+PKG_URL="https://fossies.org/linux/misc/glibc-2.25.tar.xz"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap localedef-eglibc:host"
 PKG_DEPENDS_INIT="glibc"
 PKG_PRIORITY="optional"
@@ -62,8 +62,8 @@ pre_configure_target() {
   unset LD_LIBRARY_PATH
 
 # set some CFLAGS we need
-  export LDFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong||g"`
-  export CXXFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong||g"`
+  export CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed||"`
   
   export CFLAGS="$CFLAGS -g0"
