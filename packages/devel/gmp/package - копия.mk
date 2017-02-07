@@ -31,3 +31,13 @@ PKG_AUTORECONF="no"
 PKG_CONFIGURE_OPTS_HOST="--enable-cxx --enable-static --disable-shared --with-pic --disable-assembly --enable-mpbsd"
 
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
+
+pre_configure_host() {
+  export CFLAGS="$CFLAGS -fPIC -DPIC"
+  export CPPFLAGS="$CPPFLAGS -fexceptions"
+}
+
+pre_configure_target() {
+  export CFLAGS="$CFLAGS -fPIC -DPIC"
+  export CPPFLAGS="$CPPFLAGS -fexceptions"
+}
