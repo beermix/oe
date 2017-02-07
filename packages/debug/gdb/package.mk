@@ -34,7 +34,6 @@ CFLAGS_FOR_BUILD="$HOST_CFLAGS"
 pre_configure_target() {
   # gdb could fail on runtime if build with LTO support
     strip_lto
-    export CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
     export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
 }
 
