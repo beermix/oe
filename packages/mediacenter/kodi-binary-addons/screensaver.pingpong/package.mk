@@ -17,13 +17,11 @@
 ################################################################################
 
 PKG_NAME="screensaver.pingpong"
-PKG_VERSION="f162213"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
+PKG_VERSION="5c7cf6f"
 PKG_SITE="https://github.com/notspiff/screensaver.pingpong"
-PKG_GIT_URL="https://github.com/notspiff/screensaver.pingpong"
+PKG_URL="https://github.com/notspiff/screensaver.pingpong/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain kodi-platform"
+
 PKG_SECTION=""
 PKG_SHORTDESC="screensaver.pingpong"
 PKG_LONGDESC="screensaver.pingpong"
@@ -36,8 +34,13 @@ if [ "$OPENGL" = "no" ] ; then
   exit 0
 fi
 
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
-                       -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr"
+configure_target() {
+  cmake -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+        -DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
+        -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
+        ..
+}
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/

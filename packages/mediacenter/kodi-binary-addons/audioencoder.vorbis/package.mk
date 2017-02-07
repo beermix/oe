@@ -17,10 +17,8 @@
 ################################################################################
 
 PKG_NAME="audioencoder.vorbis"
+#PKG_VERSION="42620de"
 PKG_VERSION="8c928ed"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
 PKG_GIT_URL="https://github.com/xbmc/audioencoder.vorbis"
 PKG_DEPENDS_TARGET="toolchain kodi-platform libogg libvorbis"
@@ -33,10 +31,10 @@ PKG_IS_ADDON="yes"
 PKG_ADDON_TYPE="xbmc.audioencoder"
 
 PKG_CMAKE_OPTS_TARGET="-DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
-                       -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
-                       -DOGG_INCLUDE_DIRS=$SYSROOT_PREFIX/usr/include \
-                       -DVORBIS_INCLUDE_DIRS=$SYSROOT_PREFIX/usr/include \
-                       -DVORBISENC_INCLUDE_DIRS=$SYSROOT_PREFIX/usr/include"
+        -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
+        -DOGG_INCLUDE_DIRS=$SYSROOT_PREFIX/usr/include \
+        -DVORBIS_INCLUDE_DIRS=$SYSROOT_PREFIX/usr/include \
+        -DVORBISENC_INCLUDE_DIRS=$SYSROOT_PREFIX/usr/include"
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/

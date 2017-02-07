@@ -1,0 +1,12 @@
+diff -Naurp kodi-language-addons-a8158f7/resource.language.ru_ru/addon.xml kodi-language-addons-a8158f7-patch/resource.language.ru_ru/addon.xml
+--- kodi-language-addons-a8158f7/resource.language.ru_ru/addon.xml	2016-06-15 21:29:43.361935706 +0300
++++ kodi-language-addons-a8158f7-patch/resource.language.ru_ru/addon.xml	2016-06-16 08:31:29.000000000 +0300
+@@ -1,7 +1,7 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <addon
+   id="resource.language.ru_ru"
+-  version="2.0.4"
++  version="3.0.4"
+   name="Russian"
+   provider-name="Team Kodi">
+   <requires>
