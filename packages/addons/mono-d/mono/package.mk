@@ -17,7 +17,8 @@
 ################################################################################
 
 PKG_NAME="mono"
-PKG_VERSION="4.2.1.102"
+#PKG_VERSION="4.2.1.102"
+PKG_VERSION="4.6.2.7"
 PKG_SITE="http://www.mono-project.com"
 PKG_URL="http://download.mono-project.com/sources/mono/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_SOURCE_DIR="$PKG_NAME-${PKG_VERSION%.*}"
