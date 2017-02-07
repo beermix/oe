@@ -1,6 +1,8 @@
 PKG_NAME="glibc"
-PKG_VERSION="2.24-patched"
-PKG_URL="http://192.168.1.2:8887/glibc-2.24-patched.tar.xz"
+PKG_VERSION="2.24"
+PKG_SITE="http://www.gnu.org/software/libc/"
+PKG_URL="http://ftp.gnu.org/pub/gnu/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
+#PKG_URL="http://192.168.1.2:8887/glibc-2.24-patched.tar.xz"
 #PKG_URL="https://dl.dropboxusercontent.com/s/z5xnrlgz7h3hu9e/glibc-2.24UX.tar.xz"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap localedef-eglibc:host"
 PKG_DEPENDS_INIT="glibc"
@@ -60,20 +62,15 @@ pre_configure_target() {
 # glibc dont support GOLD linker.
   strip_gold
 
-# Filter out some problematic *FLAGS
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong||g"`
-
-  if [ -n "$PROJECT_CFLAGS" ]; then
-    export CFLAGS=`echo $CFLAGS | sed -e "s|$PROJECT_CFLAGS||g"`
-  fi
-  
-  export CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed||"`
-
   unset LD_LIBRARY_PATH
 
 # set some CFLAGS we need
-  export CFLAGS="$CFLAGS -g"
+  export CFLAGS="$CFLAGS -g -fno-stack-protector -D_FORTIFY_SOURCE=0 -U_FORTIFY_SOURCE"
+  export CXXFLAGS="$CXXFLAGS -fno-stack-protector -D_FORTIFY_SOURCE=0 -U_FORTIFY_SOURCE"
+  export LDFLAGS="$LDFLAGS -fno-stack-protector -D_FORTIFY_SOURCE=0 -U_FORTIFY_SOURCE"
+  export CPPFLAGS="$CPPFLAGS -fno-stack-protector -D_FORTIFY_SOURCE=0 -U_FORTIFY_SOURCE"
+  
+  
   export OBJDUMP_FOR_HOST=objdump
 
 cat >config.cache <<EOF

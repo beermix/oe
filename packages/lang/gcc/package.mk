@@ -60,6 +60,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libssp \
                            --enable-install-libiberty \
                            --with-tune=corei7 \
+                           --disable-werror \
                            --enable-poison-system-directories"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
