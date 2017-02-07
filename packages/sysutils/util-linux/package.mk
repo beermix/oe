@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="util-linux"
-PKG_VERSION="2.29.1"
+PKG_VERSION="2.29"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -38,6 +38,7 @@ pre_configure_init() {
 
 pre_configure_target() {
   export LDFLAGS="-lcurses -lterminfo"
+  export LIBS="-lterminfo"
 }
 
 UTILLINUX_CONFIG_DEFAULT="--disable-gtk-doc \
@@ -57,7 +58,6 @@ UTILLINUX_CONFIG_DEFAULT="--disable-gtk-doc \
                           --without-ncurses \
                           --without-slang \
                           --without-utempter \
-                          --with-libz \
                           --without-user \
                           --without-systemd \
                           --without-smack \
