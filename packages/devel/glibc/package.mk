@@ -101,8 +101,6 @@ libc_cv_ssp=no
 libc_cv_ssp_strong=no
 EOF
 
-  echo "libdir=/lib" >> configparms
-  echo "slibdir=/lib" >> configparms
   echo "sbindir=/usr/bin" >> configparms
   echo "rootsbindir=/usr/bin" >> configparms
 }
