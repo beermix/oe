@@ -17,8 +17,9 @@
 ################################################################################
 
 PKG_NAME="glibc"
-PKG_VERSION="2.24U"
-PKG_URL="https://dl.dropboxusercontent.com/s/02bkpjno0qxvcsh/glibc-2.24U.tar.xz"
+PKG_VERSION="2.24"
+PKG_URL="http://ftp.gnu.org/pub/gnu/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
+#PKG_URL="https://dl.dropboxusercontent.com/s/z5xnrlgz7h3hu9e/glibc-2.24UX.tar.xz"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap localedef-eglibc:host"
 PKG_DEPENDS_INIT="glibc"
 PKG_PRIORITY="optional"
