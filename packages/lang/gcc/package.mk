@@ -58,7 +58,8 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libgomp \
                            --disable-libmpx \
                            --disable-libssp \
-                           --with-tune=corei7"
+                           --with-tune=corei7 \
+                           --enable-poison-system-directories"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
@@ -94,7 +95,6 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
 
 pre_configure_host() {
   export CXXFLAGS="$CXXFLAGS -std=gnu++98"
-  #--enable-poison-system-directories
   unset CPP
 }
 
