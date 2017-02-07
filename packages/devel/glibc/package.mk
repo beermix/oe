@@ -1,7 +1,7 @@
 PKG_NAME="glibc"
-PKG_VERSION="2.24"
+PKG_VERSION="2.24-33-ge9e69e4"
 PKG_SITE="http://www.gnu.org/software/libc/"
-PKG_URL="http://ftp.gnu.org/pub/gnu/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="http://192.168.1.2:8887/glibc-2.24-33-ge9e69e4.tar.gz"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap localedef-eglibc:host"
 PKG_DEPENDS_INIT="glibc"
 PKG_PRIORITY="optional"
@@ -12,7 +12,7 @@ PKG_LONGDESC="The Glibc package contains the main C library. This library provid
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
+PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/bash \
                            libc_cv_slibdir=/lib \
                            ac_cv_path_PERL= \
                            ac_cv_prog_MAKEINFO= \
@@ -34,7 +34,6 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --disable-build-nscd \
                            --disable-nscd \
                            --enable-lock-elision \
-                           --with-pkgversion="OELEC" \
                            --disable-debug \
                            --disable-timezone-tools \
                            --disable-werror"

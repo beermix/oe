@@ -9,7 +9,7 @@ PKG_USE_CMAKE="yes"
 pre_configure_target() {
   export LDFLAGS="-lX11 -lXext -lm"
   export MAKEFLAGS="-j1"
-  #unset CPPFLAGS
+  unset CPPFLAGS
 }
 
 PKG_CMAKE_OPTS_TARGET="-DCMAKE_INSTALL_PREFIX=/usr"

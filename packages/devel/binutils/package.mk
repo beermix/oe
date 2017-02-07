@@ -1,6 +1,6 @@
 PKG_NAME="binutils"
-PKG_VERSION="2.27"
-PKG_URL="https://fossies.org/linux/misc/binutils-2.27.tar.xz"
+PKG_VERSION="2.26.1"
+PKG_URL="http://192.168.1.2:8887/binutils-2.26.1.tar.bz2"
 PKG_DEPENDS_HOST="ccache:host bison:host flex:host linux:host texinfo:host"
 PKG_SECTION="toolchain/devel"
 PKG_IS_ADDON="no"

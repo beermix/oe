@@ -55,14 +55,10 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            DRI_DRIVER_INSTALL_DIR=/usr/lib/dri \
                            DRI_DRIVER_SEARCH_DIR=/usr/lib/dri \
                            --disable-debug \
-                           --enable-silent-rules \
-                           --disable-profile \
                            --disable-mangling \
                            --enable-texture-float \
                            --enable-asm \
                            --disable-selinux \
-                           --disable-libglvnd \
-                           --disable-lmsensors \
                            --enable-opengl \
                            --disable-gles1 \
                            --enable-gles2 \
@@ -72,7 +68,7 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --disable-osmesa \
                            --disable-gallium-osmesa \
                            --enable-egl --with-egl-platforms=x11,drm \
-                           $XA_CONFIG \
+                           --disable-xa \
                            --enable-gbm \
                            --disable-nine \
                            --disable-xvmc \

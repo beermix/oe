@@ -17,14 +17,16 @@
 ################################################################################
 
 PKG_NAME="qtbase"
-PKG_VERSION="5.7.1"
+PKG_VERSION="5.8.1"
 PKG_SITE="http://qt-project.org"
-PKG_URL="http://download.qt.io/official_releases/qt/5.7/$PKG_VERSION/submodules/$PKG_NAME-opensource-src-$PKG_VERSION.tar.xz"
+PKG_URL="http://download.qt.io/official_releases/qt/5.8/$PKG_VERSION/submodules/$PKG_NAME-opensource-src-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="pcre zlib harfbuzz libinput"
 PKG_SOURCE_DIR="$PKG_NAME-opensource-src-$PKG_VERSION"
 PKG_SHORTDESC="A cross-platform application and UI framework"
 PKG_LONGDESC="A cross-platform application and UI framework"
 PKG_AUTORECONF="no"
+
+strip_lto
 
 PKG_CONFIGURE_OPTS_TARGET="-prefix /usr
                            -sysroot $SYSROOT_PREFIX
@@ -43,7 +45,7 @@ PKG_CONFIGURE_OPTS_TARGET="-prefix /usr
                            -no-mtdev
                            -no-gif
                            -no-libpng
-                           -libjpeg
+                           -no-libjpeg
                            -harfbuzz
                            -openssl
                            -no-libproxy
@@ -58,11 +60,11 @@ PKG_CONFIGURE_OPTS_TARGET="-prefix /usr
                            -no-tslib
                            -no-icu
                            -no-strip
-                           -fontconfig
-                           -dbus
+                           -no-fontconfig
+                           -no--dbus
                            -opengl
-                           -libudev
-                           -libinput
+                           -no-libudev
+                           -no-libinput
                            -no-gstreamer
                            -no-eglfs"
 
