@@ -9,11 +9,15 @@ PKG_AUTORECONF="no"
 
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
+  #export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
   sed -i 's/$PKG_CONFIG openssl --libs-only-/$PKG_CONFIG openssl --static --libs-only-/' $ROOT/$PKG_BUILD/configure
   #strip_lto
   #strip_gold
 }
+
+CFLAGS="-O3 -pipe -fstack-protector-strong"
+CPPFLAGS="-D_FORTIFY_SOURCE=2"
+LDFLAGS="-Wl,-O1,--sort-common,--as-needed,-z,relro -s"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \
 			      --disable-shared \
@@ -21,5 +25,6 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static \
 			      --without-libiconv \
 			      --disable-geoip \
 			      --disable-silent-rules \
+			      --disable-deprecated-functions \
 			      --with-boost=$SYSROOT_PREFIX/usr \
 			      --with-boost-libdir=$SYSROOT_PREFIX/usr/lib"
