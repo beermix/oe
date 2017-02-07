@@ -63,7 +63,7 @@ pre_configure_target() {
   unset LD_LIBRARY_PATH
 
 # set some CFLAGS we need
-  export CFLAGS="$CFLAGS -g -fno-stack-protector -D_FORTIFY_SOURCE=0 -U_FORTIFY_SOURCE"
+  export CFLAGS="$CFLAGS -g -U_FORTIFY_SOURCE"
   export CXXFLAGS="$CXXFLAGS -fno-stack-protector -D_FORTIFY_SOURCE=0 -U_FORTIFY_SOURCE"
   export LDFLAGS="$LDFLAGS -fno-stack-protector -D_FORTIFY_SOURCE=0 -U_FORTIFY_SOURCE"
   export CPPFLAGS="$CPPFLAGS -fno-stack-protector -D_FORTIFY_SOURCE=0 -U_FORTIFY_SOURCE"
