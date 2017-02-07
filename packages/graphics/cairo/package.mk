@@ -17,10 +17,10 @@
 ################################################################################
 
 PKG_NAME="cairo"
-PKG_VERSION="1.15.4"
-PKG_SITE="http://cairographics.org/"
-#PKG_URL="http://cairographics.org/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_URL="http://cairographics.org/snapshots/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_VERSION="1.14.8"
+#@PKG_VERSION="1.15.4"
+PKG_URL="http://cairographics.org/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
+#PKG_URL="http://cairographics.org/snapshots/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain zlib freetype fontconfig libpng pixman"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="cairo: Multi-platform 2D graphics library"
@@ -28,10 +28,6 @@ PKG_LONGDESC="Cairo is a vector graphics library with cross-device output suppor
 PKG_IS_ADDON="no"
 
 PKG_AUTORECONF="yes"
-
-pre_configure_target() {
-  export CFLAGS="$CFLAGS -D_DEFAULT_SOURCE"
-}
 
 
 if [ "$DISPLAYSERVER" = "x11" ]; then
@@ -42,8 +38,6 @@ if [ "$DISPLAYSERVER" = "x11" ]; then
                     --enable-xlib-xrender \
                     --enable-gl \
                     --enable-glx \
-                    --disable-glesv2 \
-                    --disable-egl \
                     --with-x"
 
 
@@ -64,38 +58,10 @@ PKG_CONFIGURE_OPTS_TARGET="$PKG_CAIRO_CONFIG \
                            --disable-gtk-doc \
                            --enable-largefile \
                            --enable-atomic \
-                           --disable-gcov \
-                           --disable-valgrind \
-                           --disable-xcb \
-                           --disable-xlib-xcb \
-                           --disable-xcb-shm \
-                           --disable-qt \
-                           --disable-quartz \
-                           --disable-quartz-font \
-                           --disable-quartz-image \
-                           --disable-win32 \
-                           --disable-win32-font \
-                           --disable-skia \
-                           --disable-os2 \
-                           --disable-beos \
-                           --disable-cogl \
-                           --disable-drm \
-                           --disable-drm-xr \
-                           --disable-gallium \
-                           --disable-xcb-drm \
+                           --enable-xcb-drm \
                            --enable-png \
-                           --disable-directfb \
-                           --disable-vg \
-                           --disable-wgl \
-                           --disable-script \
-                           --enable-ft \
-                           --enable-fc \
-                           --enable-ps \
-                           --enable-pdf \
-                           --enable-svg \
                            --disable-test-surfaces \
-                           --disable-tee \
-                           --disable-xml \
+                           --enable-xml \
                            --enable-pthread \
                            --enable-gobject \
                            --disable-full-testing \

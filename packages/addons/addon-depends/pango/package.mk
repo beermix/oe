@@ -20,6 +20,8 @@
 
 PKG_NAME="pango"
 PKG_VERSION="1.40.3"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://www.pango.org/"
 PKG_URL="http://ftp.gnome.org/pub/gnome/sources/pango/1.40/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain glib cairo freetype fontconfig libX11 libXft harfbuzz"

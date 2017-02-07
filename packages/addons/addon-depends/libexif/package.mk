@@ -18,6 +18,8 @@
 
 PKG_NAME="libexif"
 PKG_VERSION="0.6.21"
+PKG_ARCH="any"
+PKG_LICENSE="LGPL"
 PKG_SITE="http://sourceforge.net/projects/libexif"
 PKG_URL="http://downloads.sf.net/sourceforge/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain"
