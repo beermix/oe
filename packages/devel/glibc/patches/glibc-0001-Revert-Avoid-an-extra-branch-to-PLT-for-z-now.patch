@@ -1,17 +1,3 @@
-From c903d7992134802ada495c137a4f1a2ac85af86e Mon Sep 17 00:00:00 2001
-From: Allan McRae <allan@archlinux.org>
-Date: Mon, 31 Oct 2016 15:10:23 +1000
-Subject: [PATCH] Revert "Avoid an extra branch to PLT for -z now"
-
-This reverts commit 6901def689b5c77465d34f07822989ec67e80c1e.
----
- ChangeLog               | 8 --------
- config.h.in             | 3 ---
- configure               | 4 ----
- configure.ac            | 3 ---
- sysdeps/x86_64/sysdep.h | 8 ++------
- 5 files changed, 2 insertions(+), 24 deletions(-)
-
 diff --git a/ChangeLog b/ChangeLog
 index b2f6372..e2119a3 100644
 --- a/ChangeLog

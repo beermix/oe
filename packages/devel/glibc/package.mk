@@ -16,9 +16,9 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 PKG_NAME="glibc"
-PKG_VERSION="2.25"
+PKG_VERSION="2.24"
 PKG_SITE="http://www.gnu.org/software/libc/"
-PKG_URL="https://fossies.org/linux/misc/glibc-2.25.tar.xz"
+PKG_URL="http://ftp.gnu.org/pub/gnu/glibc/glibc-2.24.tar.xz"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap localedef-eglibc:host"
 PKG_DEPENDS_INIT="glibc"
 PKG_PRIORITY="optional"
@@ -51,14 +51,9 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/bash \
                            --disable-build-nscd \
                            --disable-nscd \
                            --enable-lock-elision \
-                           --disable-timezone-tool"
+                           --disable-timezone-tool \
+                           --disable-debug"
 
-
-if [ "$DEBUG" = yes ]; then
-  PKG_CONFIGURE_OPTS_TARGET+=" --enable-debug"
-else
-  PKG_CONFIGURE_OPTS_TARGET+=" --disable-debug"
-fi
 
 NSS_CONF_DIR="$PKG_BUILD/nss"
 
