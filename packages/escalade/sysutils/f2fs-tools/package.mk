@@ -1,9 +1,9 @@
 PKG_NAME="f2fs-tools"
-PKG_VERSION="v1.7.0"
+PKG_VERSION="v1.8.0"
 PKG_SITE="https://sourceforge.net/projects/f2fs-tools/"
 PKG_GIT_URL="git://git.kernel.org/pub/scm/linux/kernel/git/jaegeuk/f2fs-tools.git"
-#PKG_DEPENDS_TARGET="toolchain util-linux libselinux"
-PKG_DEPENDS_TARGET="toolchain util-linux"
+PKG_DEPENDS_TARGET="toolchain util-linux libselinux"
+#PKG_DEPENDS_TARGET="toolchain util-linux"
 PKG_DEPENDS_INIT="f2fs-tools"
 PKG_SECTION="tools"
 PKG_IS_ADDON="no"
@@ -31,6 +31,6 @@ makeinstall_init() {
   mkdir -p $INSTALL/lib
   cp ../.install_pkg/sbin/fsck.f2fs $INSTALL/sbin
   cp ../.install_pkg/sbin/mkfs.f2fs $INSTALL/sbin
-  #cp -a $(get_pkg_build libselinux)/.install_pkg/usr/lib/libselinux* $INSTALL/lib
+  cp -a $(get_pkg_build libselinux)/.install_pkg/usr/lib/libselinux* $INSTALL/lib
   cp $(get_pkg_build glibc)/.install_pkg/lib/libdl.so.2 $INSTALL/lib
 }
