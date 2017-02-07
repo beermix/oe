@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="make"
-PKG_VERSION="4.2.1"
+PKG_VERSION="4.1"
 PKG_SITE="https://www.gnu.org/software/make/"
 PKG_URL="https://ftp.gnu.org/gnu/make/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST=""
