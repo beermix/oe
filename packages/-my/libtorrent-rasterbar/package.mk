@@ -11,7 +11,7 @@ pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
   sed -i 's/$PKG_CONFIG openssl --libs-only-/$PKG_CONFIG openssl --static --libs-only-/' $ROOT/$PKG_BUILD/configure
-  strip_lto
+  #strip_lto
   #strip_gold
 }
 
@@ -21,6 +21,5 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static \
 			      --without-libiconv \
 			      --disable-geoip \
 			      --disable-silent-rules \
-			      --enable-silent-rules \
 			      --with-boost=$SYSROOT_PREFIX/usr \
 			      --with-boost-libdir=$SYSROOT_PREFIX/usr/lib"
