@@ -37,3 +37,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-shared \
 makeinstall_target() {
   make install DESTDIR=$INSTALL
 }
+
+pre_configure_taret() {
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
+}
