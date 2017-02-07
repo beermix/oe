@@ -302,11 +302,11 @@ enable_service () {
       fi
     done
   fi
-}
-
-show_message() {
-  dashes="==========================="
-  show_message+="\n $@"
+  for target in `grep '^Alias' $target_dir/$unit_dir/$unit | cut -f2 -d=` ; do
+    if [ -n "$target" ]; then
+      ln -sf ${unit} ${target_dir}/$unit_dir/${target}
+    fi
+  done
 }
 
 check_path() {
