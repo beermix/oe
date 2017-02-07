@@ -1,0 +1,38 @@
+--- a/gcc/d/d-decls.cc
++++ b/gcc/d/d-decls.cc
+@@ -291,11 +291,17 @@ FuncDeclaration::toSymbol()
+       tree vindex = NULL_TREE;
+ 
+       // Run full semantic on symbols we need to know about during compilation.
+-      if (inferRetType && type && !type->nextOf() && !functionSemantic())
++      if (inferRetType && type && !type->nextOf())
+ 	{
+-	  csym = new Symbol();
+-	  csym->Stree = error_mark_node;
+-	  return csym;
++	  Module *old_current_module_decl = current_module_decl;
++	  current_module_decl = NULL;
++	  if (!functionSemantic())
++	    {
++	      csym = new Symbol();
++	      csym->Stree = error_mark_node;
++	      return csym;
++	    }
++	  current_module_decl = old_current_module_decl;
+ 	}
+ 
+       // Use same symbol for FuncDeclaration templates with same mangle
+--- a/gcc/d/d-objfile.cc
++++ b/gcc/d/d-objfile.cc
+@@ -1155,8 +1155,11 @@ FuncDeclaration::toObjFile()
+   // Ensure all semantic passes have ran.
+   if (semanticRun < PASSsemantic3)
+     {
++      Module *old_current_module_decl = current_module_decl;
++      current_module_decl = NULL;
+       functionSemantic3();
+       Module::runDeferredSemantic3();
++      current_module_decl = old_current_module_decl;
+     }
+ 
+   if (global.errors)

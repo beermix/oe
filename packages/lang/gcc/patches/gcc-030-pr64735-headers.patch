@@ -1,0 +1,60 @@
+--- a/libstdc++-v3/include/std/future
++++ b/libstdc++-v3/include/std/future
+@@ -183,7 +183,7 @@
+     async(_Fn&& __fn, _Args&&... __args);
+ 
+ #if defined(_GLIBCXX_HAS_GTHREADS) && defined(_GLIBCXX_USE_C99_STDINT_TR1) \
+-  && (ATOMIC_INT_LOCK_FREE > 1)
++  && ((ATOMIC_INT_LOCK_FREE > 1) || (defined(__ARM_EABI__) && !defined(__ARM_PCS_VFP)))
+ 
+   /// Base class and enclosing scope.
+   struct __future_base
+--- a/libstdc++-v3/libsupc++/exception_ptr.h
++++ b/libstdc++-v3/libsupc++/exception_ptr.h
+@@ -36,9 +36,11 @@
+ #include <bits/c++config.h>
+ #include <bits/exception_defines.h>
+ 
++#if !(defined(__ARM_EABI__) && !defined(__ARM_PCS_VFP))
+ #if ATOMIC_INT_LOCK_FREE < 2
+ #  error This platform does not support exception propagation.
+ #endif
++#endif
+ 
+ extern "C++" {
+ 
+--- a/libstdc++-v3/libsupc++/nested_exception.h
++++ b/libstdc++-v3/libsupc++/nested_exception.h
+@@ -39,9 +39,11 @@
+ #include <bits/c++config.h>
+ #include <bits/move.h>
+ 
++#if !(defined(__ARM_EABI__) && !defined(__ARM_PCS_VFP))
+ #if ATOMIC_INT_LOCK_FREE < 2
+ #  error This platform does not support exception propagation.
+ #endif
++#endif
+ 
+ extern "C++" {
+ 
+--- a/libstdc++-v3/libsupc++/exception
++++ b/libstdc++-v3/libsupc++/exception
+@@ -35,7 +35,9 @@
+ #pragma GCC visibility push(default)
+ 
+ #include <bits/c++config.h>
++#if !(defined(__ARM_EABI__) && !defined(__ARM_PCS_VFP))
+ #include <bits/atomic_lockfree_defines.h>
++#endif
+ 
+ extern "C++" {
+ 
+@@ -166,7 +168,7 @@
+ 
+ #pragma GCC visibility pop
+ 
+-#if (__cplusplus >= 201103L) && (ATOMIC_INT_LOCK_FREE > 1)
++#if (__cplusplus >= 201103L) && ((ATOMIC_INT_LOCK_FREE > 1) || (defined(__ARM_EABI__) && !defined(__ARM_PCS_VFP)))
+ #include <bits/exception_ptr.h>
+ #include <bits/nested_exception.h>
+ #endif

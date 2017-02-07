@@ -22,7 +22,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://sourceforge.net/projects/lirc"
 PKG_URL="http://downloads.sourceforge.net/project/libirman/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain systemd lirc"
+PKG_DEPENDS_TARGET="toolchain systemd"
 PKG_SECTION="system"
 PKG_SHORTDESC="libirman library for lircd"
 PKG_LONGDESC="libirman library for lircd"
@@ -30,7 +30,9 @@ PKG_LONGDESC="libirman library for lircd"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-swtest"
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
+                           --enable-static \
+                           --disable-swtest"
 
 pre_configure_target() {
   CFLAGS="$CFLAGS -fPIC -DPIC"

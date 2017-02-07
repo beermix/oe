@@ -17,10 +17,10 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="6-6.2.0-UB16.10"
-PKG_URL="https://dl.dropboxusercontent.com/s/z06ch4bqc9rpqdz/gcc-6-6.2.0-UB16.10.tar.xz"
-#PKG_VERSION="4ca53f0"
-#PKG_GIT_URL="git://gcc.gnu.org/git/gcc.git"
+PKG_VERSION="6.3.0"
+PKG_REV="1"
+PKG_URL="https://fossies.org/linux/misc/gcc-6.3.0.tar.xz"
+#PKG_URL="http://192.168.1.2:8887/gcc-6.2.0.tar.xz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host"
 PKG_DEPENDS_TARGET="gcc:host"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
@@ -58,6 +58,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libgomp \
                            --disable-libmpx \
                            --disable-libssp \
+                           --enable-install-libiberty \
                            --with-tune=corei7 \
                            --enable-poison-system-directories"
 
@@ -144,3 +145,8 @@ makeinstall_init() {
   mkdir -p $INSTALL/lib
     cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libgcc/libgcc_s.so* $INSTALL/lib
 }
+
+#post_unpack() {
+#cd $ROOT/$PKG_BUILD
+#  patch -sd < $PKG_DIR/pat/svn-updates.diff -p2
+#}

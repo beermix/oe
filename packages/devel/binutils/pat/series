@@ -1,0 +1,29 @@
+branch-updates.diff
+branch-version.diff
+001_ld_makefile_patch.patch
+002_gprof_profile_arcs.patch
+003_gprof_see_also_monitor.patch
+006_better_file_error.patch
+012_check_ldrunpath_length.patch
+013_bash_in_ld_testsuite.patch
+#014_hash_style-both.patch
+128_ppc64_powerpc_biarch.patch
+129_multiarch_libpath.patch
+130_gold_disable_testsuite_build.patch
+131_ld_bootstrap_testsuite.patch
+135_bfd_version.patch
+157_ar_scripts_with_tilde.patch
+#158_ld_system_root.patch
+161_gold_dummy_zoption.diff
+
+# only applied for GFDL builds
+164_ld_doc_remove_xref.diff
+
+gprof-build.diff
+aarch64-libpath.diff
+#pr-ld-16428.diff
+mips64-default-n64.diff
+gold-mips.diff
+mips-pt-gnu-stack.diff
+
+# patches taken from the trunk

@@ -1,0 +1,16 @@
+# DP: Fix gprof build error.
+
+Index: b/gprof/gconfig.in
+===================================================================
+--- a/gprof/gconfig.in
++++ b/gprof/gconfig.in
+@@ -96,9 +96,6 @@
+ #endif
+ 
+ 
+-/* Version number of package */
+-#undef VERSION
+-
+ /* Number of bits in a file offset, on hosts where this is settable. */
+ #undef _FILE_OFFSET_BITS
+ 

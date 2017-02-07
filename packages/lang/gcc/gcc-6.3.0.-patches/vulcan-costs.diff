@@ -1,0 +1,259 @@
+# DP: Add cost model for vulcan CPU
+
+From: jgreenhalgh <jgreenhalgh@138bc75d-0d04-0410-961f-82ee72b054a4>
+Date: Fri, 15 Jul 2016 11:17:53 +0000
+Subject: [PATCH] [PATCH/AARCH64] Add rtx_costs routine for vulcan.
+
+gcc/ChangeLog:
+
+2016-07-15  Virendra Pathak  <virendra.pathak@broadcom.com>
+	    Julian Brown  <julian@codesourcery.com>
+
+	* config/aarch64/aarch64-cores.def: Update vulcan COSTS.
+	* config/aarch64/aarch64-cost-tables.h
+	(vulcan_extra_costs): New variable.
+	* config/aarch64/aarch64.c
+	(vulcan_addrcost_table): Likewise.
+	(vulcan_regmove_cost): Likewise.
+	(vulcan_vector_cost): Likewise.
+	(vulcan_branch_cost): Likewise.
+	(vulcan_tunings): Likewise.
+
+[dannf: backported by removing approx_modes function pointer]
+
+diff -urpN a/gcc/config/aarch64/aarch64.c b/gcc/config/aarch64/aarch64.c
+--- a/gcc/config/aarch64/aarch64.c	2016-07-15 16:14:24.268328586 +0000
++++ b/gcc/config/aarch64/aarch64.c	2016-07-15 16:15:52.603299822 +0000
+@@ -250,6 +250,22 @@ static const struct cpu_addrcost_table x
+   0, /* imm_offset  */
+ };
+ 
++static const struct cpu_addrcost_table vulcan_addrcost_table =
++{
++    {
++      0, /* hi  */
++      0, /* si  */
++      0, /* di  */
++      2, /* ti  */
++    },
++  0, /* pre_modify  */
++  0, /* post_modify  */
++  2, /* register_offset  */
++  3, /* register_sextend  */
++  3, /* register_zextend  */
++  0, /* imm_offset  */
++};
++
+ static const struct cpu_regmove_cost generic_regmove_cost =
+ {
+   1, /* GP2GP  */
+@@ -308,6 +324,15 @@ static const struct cpu_regmove_cost xge
+   2 /* FP2FP  */
+ };
+ 
++static const struct cpu_regmove_cost vulcan_regmove_cost =
++{
++  1, /* GP2GP  */
++  /* Avoid the use of int<->fp moves for spilling.  */
++  8, /* GP2FP  */
++  8, /* FP2GP  */
++  4  /* FP2FP  */
++};
++
+ /* Generic costs for vector insn classes.  */
+ static const struct cpu_vector_cost generic_vector_cost =
+ {
+@@ -379,6 +404,24 @@ static const struct cpu_vector_cost xgen
+   1 /* cond_not_taken_branch_cost  */
+ };
+ 
++/* Costs for vector insn classes for Vulcan.  */
++static const struct cpu_vector_cost vulcan_vector_cost =
++{
++  6, /* scalar_stmt_cost  */
++  4, /* scalar_load_cost  */
++  1, /* scalar_store_cost  */
++  6, /* vec_stmt_cost  */
++  3, /* vec_permute_cost  */
++  6, /* vec_to_scalar_cost  */
++  5, /* scalar_to_vec_cost  */
++  8, /* vec_align_load_cost  */
++  8, /* vec_unalign_load_cost  */
++  4, /* vec_unalign_store_cost  */
++  4, /* vec_store_cost  */
++  2, /* cond_taken_branch_cost  */
++  1  /* cond_not_taken_branch_cost  */
++};
++
+ /* Generic costs for branch instructions.  */
+ static const struct cpu_branch_cost generic_branch_cost =
+ {
+@@ -393,6 +436,13 @@ static const struct cpu_branch_cost cort
+   3   /* Unpredictable.  */
+ };
+ 
++/* Branch costs for Vulcan.  */
++static const struct cpu_branch_cost vulcan_branch_cost =
++{
++  1,  /* Predictable.  */
++  3   /* Unpredictable.  */
++};
++
+ static const struct tune_params generic_tunings =
+ {
+   &cortexa57_extra_costs,
+@@ -589,6 +639,30 @@ static const struct tune_params xgene1_t
+   (AARCH64_EXTRA_TUNE_APPROX_RSQRT)	/* tune_flags.  */
+ };
+ 
++static const struct tune_params vulcan_tunings =
++{
++  &vulcan_extra_costs,
++  &vulcan_addrcost_table,
++  &vulcan_regmove_cost,
++  &vulcan_vector_cost,
++  &vulcan_branch_cost,
++  4, /* memmov_cost.  */
++  4, /* issue_rate.  */
++  AARCH64_FUSE_NOTHING, /* fuseable_ops.  */
++  16,	/* function_align.  */
++  8,	/* jump_align.  */
++  16,	/* loop_align.  */
++  3,	/* int_reassoc_width.  */
++  2,	/* fp_reassoc_width.  */
++  2,	/* vec_reassoc_width.  */
++  2,	/* min_div_recip_mul_sf.  */
++  2,	/* min_div_recip_mul_df.  */
++  0,	/* max_case_values.  */
++  0,	/* cache_line_size.  */
++  tune_params::AUTOPREFETCHER_OFF,	/* autoprefetcher_model.  */
++  (AARCH64_EXTRA_TUNE_NONE)	/* tune_flags.  */
++};
++
+ /* Support for fine-grained override of the tuning structures.  */
+ struct aarch64_tuning_override_function
+ {
+diff -urpN a/gcc/config/aarch64/aarch64-cores.def b/gcc/config/aarch64/aarch64-cores.def
+--- a/gcc/config/aarch64/aarch64-cores.def	2016-07-15 16:14:24.272328721 +0000
++++ b/gcc/config/aarch64/aarch64-cores.def	2016-07-15 16:15:26.730430056 +0000
+@@ -51,7 +51,7 @@ AARCH64_CORE("xgene1",      xgene1,    x
+ 
+ /* V8.1 Architecture Processors.  */
+ 
+-AARCH64_CORE("vulcan",  vulcan, cortexa57, 8_1A,  AARCH64_FL_FOR_ARCH8_1 | AARCH64_FL_CRYPTO, cortexa57, "0x42", "0x516")
++AARCH64_CORE("vulcan",  vulcan, cortexa57, 8_1A,  AARCH64_FL_FOR_ARCH8_1 | AARCH64_FL_CRYPTO, vulcan, "0x42", "0x516")
+ 
+ /* V8 big.LITTLE implementations.  */
+ 
+diff -urpN a/gcc/config/aarch64/aarch64-cost-tables.h b/gcc/config/aarch64/aarch64-cost-tables.h
+--- a/gcc/config/aarch64/aarch64-cost-tables.h	2016-07-15 16:14:24.272328721 +0000
++++ b/gcc/config/aarch64/aarch64-cost-tables.h	2016-07-15 16:15:26.730430056 +0000
+@@ -127,6 +127,108 @@ const struct cpu_cost_table thunderx_ext
+   }
+ };
+ 
++const struct cpu_cost_table vulcan_extra_costs =
++{
++  /* ALU */
++  {
++    0,			/* Arith.  */
++    0,			/* Logical.  */
++    0,			/* Shift.  */
++    0,			/* Shift_reg.  */
++    COSTS_N_INSNS (1),	/* Arith_shift.  */
++    COSTS_N_INSNS (1),	/* Arith_shift_reg.  */
++    COSTS_N_INSNS (1),	/* Log_shift.  */
++    COSTS_N_INSNS (1),	/* Log_shift_reg.  */
++    0,			/* Extend.  */
++    COSTS_N_INSNS (1),	/* Extend_arith.  */
++    0,			/* Bfi.  */
++    0,			/* Bfx.  */
++    COSTS_N_INSNS (3),	/* Clz.  */
++    0,			/* Rev.  */
++    0,			/* Non_exec.  */
++    true		/* Non_exec_costs_exec.  */
++  },
++  {
++    /* MULT SImode */
++    {
++      COSTS_N_INSNS (4),	/* Simple.  */
++      COSTS_N_INSNS (4),	/* Flag_setting.  */
++      COSTS_N_INSNS (4),	/* Extend.  */
++      COSTS_N_INSNS (5),	/* Add.  */
++      COSTS_N_INSNS (5),	/* Extend_add.  */
++      COSTS_N_INSNS (18)	/* Idiv.  */
++    },
++    /* MULT DImode */
++    {
++      COSTS_N_INSNS (4),       /* Simple.  */
++      0,                       /* Flag_setting.  */
++      COSTS_N_INSNS (4),       /* Extend.  */
++      COSTS_N_INSNS (5),       /* Add.  */
++      COSTS_N_INSNS (5),       /* Extend_add.  */
++      COSTS_N_INSNS (26)       /* Idiv.  */
++    }
++  },
++  /* LD/ST */
++  {
++    COSTS_N_INSNS (4),	/* Load.  */
++    COSTS_N_INSNS (4),	/* Load_sign_extend.  */
++    COSTS_N_INSNS (5),	/* Ldrd.  */
++    COSTS_N_INSNS (4),	/* Ldm_1st.  */
++    1,			/* Ldm_regs_per_insn_1st.  */
++    1,			/* Ldm_regs_per_insn_subsequent.  */
++    COSTS_N_INSNS (4),	/* Loadf.  */
++    COSTS_N_INSNS (4),	/* Loadd.  */
++    COSTS_N_INSNS (4),	/* Load_unaligned.  */
++    0,			/* Store.  */
++    0,			/* Strd.  */
++    0,			/* Stm_1st.  */
++    1,			/* Stm_regs_per_insn_1st.  */
++    1,			/* Stm_regs_per_insn_subsequent.  */
++    0,			/* Storef.  */
++    0,			/* Stored.  */
++    0,			/* Store_unaligned.  */
++    COSTS_N_INSNS (1),	/* Loadv.  */
++    COSTS_N_INSNS (1)	/* Storev.  */
++  },
++  {
++    /* FP SFmode */
++    {
++      COSTS_N_INSNS (4),	/* Div.  */
++      COSTS_N_INSNS (1),	/* Mult.  */
++      COSTS_N_INSNS (1),	/* Mult_addsub. */
++      COSTS_N_INSNS (1),	/* Fma.  */
++      COSTS_N_INSNS (1),	/* Addsub.  */
++      COSTS_N_INSNS (1),	/* Fpconst. */
++      COSTS_N_INSNS (1),	/* Neg.  */
++      COSTS_N_INSNS (1),	/* Compare.  */
++      COSTS_N_INSNS (2),	/* Widen.  */
++      COSTS_N_INSNS (2),	/* Narrow.  */
++      COSTS_N_INSNS (2),	/* Toint.  */
++      COSTS_N_INSNS (2),	/* Fromint.  */
++      COSTS_N_INSNS (2) 	/* Roundint.  */
++    },
++    /* FP DFmode */
++    {
++      COSTS_N_INSNS (6),	/* Div.  */
++      COSTS_N_INSNS (1),	/* Mult.  */
++      COSTS_N_INSNS (1),	/* Mult_addsub.  */
++      COSTS_N_INSNS (1),	/* Fma.  */
++      COSTS_N_INSNS (1),	/* Addsub.  */
++      COSTS_N_INSNS (1),	/* Fpconst.  */
++      COSTS_N_INSNS (1),	/* Neg.  */
++      COSTS_N_INSNS (1),	/* Compare.  */
++      COSTS_N_INSNS (2),	/* Widen.  */
++      COSTS_N_INSNS (2),	/* Narrow.  */
++      COSTS_N_INSNS (2),	/* Toint.  */
++      COSTS_N_INSNS (2),	/* Fromint.  */
++      COSTS_N_INSNS (2) 	/* Roundint.  */
++    }
++  },
++  /* Vector */
++  {
++    COSTS_N_INSNS (1)	/* Alu.  */
++  }
++};
+ 
+ 
+ #endif

@@ -1,0 +1,158 @@
+# DP: Proposed patch for PR ld/16428, disallow -shared/-pie, -shared/-static, -pie/-static.
+
+2014-01-10  H.J. Lu  <hongjiu.lu@intel.com>
+
+	PR ld/16428
+	* ld.texinfo: Updated for -static/-non_shared change.
+	* ldlex.h (option_values): Add OPTION_STATIC.
+	* lexsup.c (ld_options): Use OPTION_STATIC for -static/-non_shared.
+	(parse_args): Handle OPTION_STATIC.  Disallow -shared and -pie,
+	-shared and -static, -pie and -static.
+
+2014-01-10  H.J. Lu  <hongjiu.lu@intel.com>
+
+	PR ld/16428
+	* ld-elf/pr16428a.d: New file.
+	* ld-elf/pr16428b.d: Likewise.
+	* ld-elf/pr16428c.d: Likewise.
+	* ld-elf/pr16428d.d: Likewise.
+
+diff --git a/ld/ld.texinfo b/ld/ld.texinfo
+index ae3d568..bddfdfe 100644
+--- a/ld/ld.texinfo
++++ b/ld/ld.texinfo
+@@ -1204,11 +1204,11 @@ platforms for which shared libraries are supported.  The different
+ variants of this option are for compatibility with various systems.  You
+ may use this option multiple times on the command line: it affects
+ library searching for @option{-l} options which follow it.  This
+-option also implies @option{--unresolved-symbols=report-all}.  This
+-option can be used with @option{-shared}.  Doing so means that a
+-shared library is being created but that all of the library's external
+-references must be resolved by pulling in entries from static
+-libraries.
++option also implies @option{--unresolved-symbols=report-all}.
++@option{-Bstatic} and @option{-dn} can be used with @option{-shared}.
++Doing so means that a shared library is being created but that all of
++the library's external references must be resolved by pulling in entries
++from static libraries.
+ 
+ @kindex -Bsymbolic
+ @item -Bsymbolic
+diff --git a/ld/ldlex.h b/ld/ldlex.h
+index 99f4282..6f237dc 100644
+--- a/ld/ldlex.h
++++ b/ld/ldlex.h
+@@ -49,6 +49,7 @@ enum option_values
+   OPTION_NO_WARN_SEARCH_MISMATCH,
+   OPTION_NOINHIBIT_EXEC,
+   OPTION_NON_SHARED,
++  OPTION_STATIC,
+   OPTION_NO_WHOLE_ARCHIVE,
+   OPTION_OFORMAT,
+   OPTION_RELAX,
+diff --git a/ld/lexsup.c b/ld/lexsup.c
+index 2f71750..a366613 100644
+--- a/ld/lexsup.c
++++ b/ld/lexsup.c
+@@ -269,9 +269,9 @@ static const struct ld_option ld_options[] =
+     '\0', NULL, N_("Do not link against shared libraries"), ONE_DASH },
+   { {"dn", no_argument, NULL, OPTION_NON_SHARED},
+     '\0', NULL, NULL, ONE_DASH },
+-  { {"non_shared", no_argument, NULL, OPTION_NON_SHARED},
++  { {"non_shared", no_argument, NULL, OPTION_STATIC},
+     '\0', NULL, NULL, ONE_DASH },
+-  { {"static", no_argument, NULL, OPTION_NON_SHARED},
++  { {"static", no_argument, NULL, OPTION_STATIC},
+     '\0', NULL, NULL, ONE_DASH },
+   { {"Bsymbolic", no_argument, NULL, OPTION_SYMBOLIC},
+     '\0', NULL, N_("Bind global references locally"), ONE_DASH },
+@@ -523,6 +523,7 @@ parse_args (unsigned argc, char **argv)
+   struct option *really_longopts;
+   int last_optind;
+   enum report_method how_to_report_unresolved_symbols = RM_GENERATE_ERROR;
++  bfd_boolean seen_pie = FALSE, seen_shared = FALSE, seen_static = FALSE;
+ 
+   shortopts = (char *) xmalloc (OPTION_COUNT * 3 + 2);
+   longopts = (struct option *)
+@@ -707,6 +708,8 @@ parse_args (unsigned argc, char **argv)
+ 	case OPTION_CALL_SHARED:
+ 	  input_flags.dynamic = TRUE;
+ 	  break;
++	case OPTION_STATIC:
++	  seen_static = TRUE;
+ 	case OPTION_NON_SHARED:
+ 	  input_flags.dynamic = FALSE;
+ 	  break;
+@@ -1087,6 +1090,7 @@ parse_args (unsigned argc, char **argv)
+ 	case OPTION_SHARED:
+ 	  if (config.has_shared)
+ 	    {
++	      seen_shared = TRUE;
+ 	      link_info.shared = TRUE;
+ 	      /* When creating a shared library, the default
+ 		 behaviour is to ignore any unresolved references.  */
+@@ -1101,6 +1105,7 @@ parse_args (unsigned argc, char **argv)
+ 	case OPTION_PIE:
+ 	  if (config.has_shared)
+ 	    {
++	      seen_pie = TRUE;
+ 	      link_info.shared = TRUE;
+ 	      link_info.pie = TRUE;
+ 	    }
+@@ -1445,6 +1450,16 @@ parse_args (unsigned argc, char **argv)
+ 	}
+     }
+ 
++  if (seen_shared)
++    {
++      if (seen_pie)
++	einfo (_("%P%F: -shared and -pie are incompatible\n"));
++      if (seen_static)
++	einfo (_("%P%F: -shared and -static are incompatible\n"));
++    }
++  if (seen_pie && seen_static)
++    einfo (_("%P%F: -pie and -static are incompatible\n"));
++
+   while (ingroup)
+     {
+       lang_leave_group ();
+diff --git a/ld/testsuite/ld-elf/pr16428a.d b/ld/testsuite/ld-elf/pr16428a.d
+new file mode 100644
+index 0000000..8f5e833
+--- /dev/null
++++ b/ld/testsuite/ld-elf/pr16428a.d
+@@ -0,0 +1,4 @@
++#source: start.s
++#ld: -shared -static
++#target: *-*-linux* *-*-gnu* *-*-nacl*
++#error: -shared and -static are incompatible
+diff --git a/ld/testsuite/ld-elf/pr16428b.d b/ld/testsuite/ld-elf/pr16428b.d
+new file mode 100644
+index 0000000..f4ccba0
+--- /dev/null
++++ b/ld/testsuite/ld-elf/pr16428b.d
+@@ -0,0 +1,4 @@
++#source: start.s
++#ld: -shared -non_shared
++#target: *-*-linux* *-*-gnu* *-*-nacl*
++#error: -shared and -static are incompatible
+diff --git a/ld/testsuite/ld-elf/pr16428c.d b/ld/testsuite/ld-elf/pr16428c.d
+new file mode 100644
+index 0000000..747e8da
+--- /dev/null
++++ b/ld/testsuite/ld-elf/pr16428c.d
+@@ -0,0 +1,4 @@
++#source: start.s
++#ld: -shared -pie
++#target: *-*-linux* *-*-gnu* *-*-nacl*
++#error: -shared and -pie are incompatible
+diff --git a/ld/testsuite/ld-elf/pr16428d.d b/ld/testsuite/ld-elf/pr16428d.d
+new file mode 100644
+index 0000000..6e7a915
+--- /dev/null
++++ b/ld/testsuite/ld-elf/pr16428d.d
+@@ -0,0 +1,4 @@
++#source: start.s
++#ld: -pie -static
++#target: *-*-linux* *-*-gnu* *-*-nacl*
++#error: -pie and -static are incompatible

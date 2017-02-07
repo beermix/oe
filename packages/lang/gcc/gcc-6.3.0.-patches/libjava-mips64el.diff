@@ -1,0 +1,58 @@
+2016-07-13  Matthew Fortune  <matthew.fortune@imgtec.com>
+
+	* java/lang/reflect/natVMProxy.cc (unbox): Use ffi_arg for
+	integer return types smaller than a word.
+
+2016-07-13  Matthew Fortune  <matthew.fortune@imgtec.com>
+
+	* interpret-run.cc: Use ffi_arg for FFI integer return types.
+
+--- a/libjava/interpret-run.cc
++++ b/libjava/interpret-run.cc
+@@ -1838,7 +1838,7 @@ details.  */
+       return;
+ 
+     insn_ireturn:
+-      *(jint *) retp = POPI ();
++      *(ffi_arg *) retp = POPI ();
+       return;
+ 
+     insn_return:
+--- a/libjava/java/lang/reflect/natVMProxy.cc
++++ b/libjava/java/lang/reflect/natVMProxy.cc
+@@ -272,17 +272,17 @@ unbox (jobject o, jclass klass, void *rvalue, FFI_TYPE type)
+   if (klass == JvPrimClass (byte))
+     {
+       _Jv_CheckCast (&Byte::class$, o);
+-      *(jbyte*)rvalue = ((Byte*)o)->byteValue();
++      *(ffi_arg*)rvalue = ((Byte*)o)->byteValue();
+     }
+   else if (klass == JvPrimClass (short))
+     {
+       _Jv_CheckCast (&Short::class$, o);
+-      *(jshort*)rvalue = ((Short*)o)->shortValue();
++      *(ffi_arg*)rvalue = ((Short*)o)->shortValue();
+     }
+   else if (klass == JvPrimClass (int))
+     {
+       _Jv_CheckCast (&Integer::class$, o);
+-      *(jint*)rvalue = ((Integer*)o)->intValue();
++      *(ffi_arg*)rvalue = ((Integer*)o)->intValue();
+     }
+   else if (klass == JvPrimClass (long))
+     {
+@@ -302,12 +302,12 @@ unbox (jobject o, jclass klass, void *rvalue, FFI_TYPE type)
+   else if (klass == JvPrimClass (boolean))
+     {
+       _Jv_CheckCast (&Boolean::class$, o);
+-      *(jboolean*)rvalue = ((Boolean*)o)->booleanValue();
++      *(ffi_arg*)rvalue = ((Boolean*)o)->booleanValue();
+     }
+   else if (klass == JvPrimClass (char))
+     {
+       _Jv_CheckCast (&Character::class$, o);
+-      *(jchar*)rvalue = ((Character*)o)->charValue();
++      *(ffi_arg*)rvalue = ((Character*)o)->charValue();
+     }
+   else
+     JvFail ("Bad ffi type in proxy");

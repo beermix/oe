@@ -1,0 +1,1991 @@
+t
+# DP: - Introduce a new shared library named libgnatprj, containing
+# DP:   the GNAT project file manager licensed under the pure GPL, for
+# DP:   use in GNAT tools, GLADE and GPS.  Link the GNAT tools against
+# DP:   this new library.
+
+# This patch seems large, but the hunks in Makefile.in are actually
+# generated from Makefile.def using autogen.
+
+# !!! Must be applied after ada-libgnatvsn.dpatch
+
+Index: b/gcc/ada/gcc-interface/config-lang.in
+===================================================================
+--- a/gcc/ada/gcc-interface/config-lang.in
++++ b/gcc/ada/gcc-interface/config-lang.in
+@@ -34,8 +34,8 @@ gtfiles="\$(srcdir)/ada/gcc-interface/ad
+ 
+ outputs="ada/gcc-interface/Makefile ada/Makefile"
+ 
+-target_libs="target-libada target-libgnatvsn"
+-lang_dirs="libada libgnatvsn gnattools"
++target_libs="target-libada target-libgnatvsn target-libgnatprj"
++lang_dirs="libada libgnatvsn libgnatprj gnattools"
+ 
+ # Ada is not enabled by default for the time being.
+ build_by_default=no
+Index: b/libgnatprj/Makefile.in
+===================================================================
+--- /dev/null
++++ b/libgnatprj/Makefile.in
+@@ -0,0 +1,180 @@
++# Makefile for libgnatprj.
++#   Copyright (c) 2006 Ludovic Brenta <ludovic@ludovic-brenta.org>
++#
++# This file is free software; you can redistribute it and/or modify
++# it under the terms of the GNU General Public License as published by
++# the Free Software Foundation; either version 2 of the License, or
++# (at your option) any later version.
++# 
++# This program is distributed in the hope that it will be useful,
++# but WITHOUT ANY WARRANTY; without even the implied warranty of
++# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++# GNU General Public License for more details.
++# 
++# You should have received a copy of the GNU General Public License
++# along with this program; if not, write to the Free Software
++# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
++
++# Default target; must be first.
++all: libgnatprj
++
++.SUFFIXES:
++
++CPUS := $(shell getconf _NPROCESSORS_ONLN)
++LIB_VERSION := $(strip $(shell grep ' Library_Version :' \
++                 @srcdir@/../gcc/ada/gnatvsn.ads | \
++	         sed -e 's/.*"\(.*\)".*/\1/'))
++GCC=$(CC)
++GPP=$(CXX)
++LIBGNAT_JUST_BUILT := -nostdinc -I../../gcc/ada/rts
++LIBGNATVSN := -I../libgnatvsn
++CFLAGS := -g -O2
++ADAFLAGS := -g -O2 -gnatn
++BASEVER := $(shell cat @srcdir@/../gcc/BASE-VER)
++DEVPHASE := $(shell cat @srcdir@/../gcc/DEV-PHASE)
++DATESTAMP := $(shell cat @srcdir@/../gcc/DATESTAMP)
++TOOLS_TARGET_PAIRS := @TOOLS_TARGET_PAIRS@
++LN_S := @LN_S@
++
++ifneq (@build@,@host@)
++   CFLAGS += -b @host@
++endif
++
++.PHONY: libgnatprj install
++libgnatprj: libgnatprj.so.$(LIB_VERSION) libgnatprj.a
++
++# Here we list one file per Ada unit: the body file if the unit has a
++# body, the spec file otherwise.
++PRJ_SOURCES := ali.adb ali-util.adb butil.adb binderr.adb errout.adb \
++erroutc.adb errutil.adb err_vars.ads fname-uf.adb fmap.adb impunit.adb \
++lib-util.adb makeutl.adb mlib.adb mlib-fil.adb mlib-tgt.adb \
++mlib-tgt-specific.adb mlib-utl.adb osint.adb osint-c.adb prj.adb prj-attr.adb \
++prj-attr-pm.adb prj-com.ads prj-conf.adb prj-dect.adb prj-env.adb prj-err.adb \
++prj-ext.adb prj-makr.adb prj-nmsc.adb prj-pars.adb prj-part.adb prj-pp.adb \
++prj-proc.adb prj-strt.adb prj-tree.adb prj-util.adb restrict.adb rident.ads \
++scng.adb sfn_scan.adb sinfo-cn.adb sinput-c.adb sinput-p.adb style.adb \
++styleg.adb stylesw.adb switch.adb switch-m.adb targparm.adb tempdir.adb
++
++# Source files generated in build/gcc/ada, not src/gcc/ada.
++GENERATED_SOURCES := sdefault.adb
++
++SOURCES := $(PRJ_SOURCES) $(GENERATED_SOURCES)
++
++OBJECTS := $(patsubst %.ads,%.o,$(SOURCES:.adb=.o))
++
++# Add some object files compiled from C sources.  prefix.o requires
++# some objects from libiberty and from gcc.
++OBJECTS += link.o prefix.o
++
++# These object files have already been built, both PIC and non-PIC.
++# prefix.o depends on them.
++LIBIBERTY_OBJECTS := concat.o filename_cmp.o lrealpath.o safe-ctype.o xexit.o xmalloc.o xstrdup.o
++
++vpath %.c @srcdir@ @srcdir@/../gcc @srcdir@/../gcc/common @srcdir@/../gcc/ada
++
++libgnatprj.so.$(LIB_VERSION): $(addprefix obj-shared/,$(OBJECTS))
++	: # Make libgnatprj.so
++	$(GCC) -o $@ -shared -fPIC -Wl,--soname,$@ -Wl,--no-allow-shlib-undefined \
++	   $^ $(addprefix ../libiberty/pic/,$(LIBIBERTY_OBJECTS)) \
++	   -L../../gcc/ada/rts -lgnat-$(LIB_VERSION) \
++	   -L../libgnatvsn -lgnatvsn $(LDFLAGS)
++	$(LN_S) -f libgnatprj.so.$(LIB_VERSION) libgnatprj.so
++	chmod a=r obj-shared/*.ali
++# Make the .ali files, but not the .o files, visible to the gnat tools.
++	cp -lp obj-shared/*.ali .
++
++$(addprefix obj-shared/,$(OBJECTS)): | stamp-libgnatprj-sources obj-shared
++
++obj-shared/%.o: %.adb
++	$(GCC) -c -fPIC $(ADAFLAGS) $(LIBGNAT_JUST_BUILT) $(LIBGNATVSN) -DUSED_FOR_TARGET $< -o $@
++
++obj-shared/%.o: %.ads
++	$(GCC) -c -fPIC $(ADAFLAGS) $(LIBGNAT_JUST_BUILT) $(LIBGNATVSN) -DUSED_FOR_TARGET $< -o $@
++
++obj-shared/%.o: %.c
++	$(GPP) -c -fPIC $(CFLAGS) -DHAVE_CONFIG_H -pedantic \
++	   -I. -I@srcdir@/../gcc -I@srcdir@/../include -I@srcdir@/../libcpp/include -I../../gcc -DUSED_FOR_TARGET \
++	   $< -o $@
++
++obj-shared/prefix.o: @srcdir@/../gcc/prefix.c
++	$(GPP) -c -fPIC $(CFLAGS) -DPREFIX=\"@prefix@\" -DBASEVER=\"$(BASEVER)\" \
++	   -I. -I@srcdir@/../gcc -I@srcdir@/../include -I../../gcc -I@srcdir@/../libcpp/include -DUSED_FOR_TARGET \
++	   $< -o $@
++
++obj-shared:
++	-mkdir $@
++
++libgnatprj.a: $(addprefix obj-static/,$(OBJECTS))
++	: # Make libgnatprj.a
++	ar rc $@ $^ $(addprefix ../libiberty/,$(LIBIBERTY_OBJECTS))
++	ranlib $@
++
++$(addprefix obj-static/,$(OBJECTS)): | stamp-libgnatprj-sources obj-static
++
++obj-static/%.o: %.adb
++	$(GCC) -c $(ADAFLAGS) $(LIBGNAT_JUST_BUILT) $(LIBGNATVSN) -DUSED_FOR_TARGET $< -o $@
++
++obj-static/%.o: %.ads
++	$(GCC) -c $(ADAFLAGS) $(LIBGNAT_JUST_BUILT) $(LIBGNATVSN) -DUSED_FOR_TARGET $< -o $@
++
++obj-static/%.o: %.c
++	$(GPP) -c $(CFLAGS) -DHAVE_CONFIG_H -pedantic \
++	   -I. -I@srcdir@/../gcc -I@srcdir@/../include -I@srcdir@/../libcpp/include -I../../gcc -DUSED_FOR_TARGET \
++	   $< -o $@
++
++obj-static/prefix.o: @srcdir@/../gcc/prefix.c
++	$(GPP) -c $(CFLAGS) -DPREFIX=\"@prefix@\" -DBASEVER=\"$(BASEVER)\" \
++	   -I. -I@srcdir@/../gcc -I@srcdir@/../include -I../../gcc -I@srcdir@/../libcpp/include -DUSED_FOR_TARGET \
++	   $< -o $@
++
++obj-static:
++	-mkdir $@
++
++$(SOURCES): stamp-libgnatprj-sources
++
++stamp-libgnatprj-sources:
++	for file in $(PRJ_SOURCES); do \
++	   ads=$$(echo $$file | sed 's/\.adb/.ads/'); \
++	   if [ -f @srcdir@/../gcc/ada/$$file -a ! -L $$file ] ; then $(LN_S) @srcdir@/../gcc/ada/$$file .; fi; \
++	   if [ -f @srcdir@/../gcc/ada/$$ads -a ! -L $$ads ] ; then $(LN_S) @srcdir@/../gcc/ada/$$ads .; fi; \
++	done
++	for file in $(GENERATED_SOURCES); do \
++	   ads=$$(echo $$file | sed 's/\.adb/.ads/'); \
++	   if [ -f ../../gcc/ada/$$file -a ! -L $$file ] ; then $(LN_S) ../../gcc/ada/$$file .; fi; \
++	   if [ -f ../../gcc/ada/$$ads -a ! -L $$ads ] ; then $(LN_S) ../../gcc/ada/$$ads .; \
++	   else \
++	      if [ -f @srcdir@/../gcc/ada/$$ads -a ! -L $$ads ] ; then $(LN_S) @srcdir@/../gcc/ada/$$ads .; fi; \
++	   fi; \
++	done
++	$(foreach PAIR,$(TOOLS_TARGET_PAIRS), \
++	          rm -f $(word 1,$(subst <, ,$(PAIR)));\
++	          $(LN_S) @srcdir@/../gcc/ada/$(word 2,$(subst <, ,$(PAIR))) \
++	                  $(word 1,$(subst <, ,$(PAIR)));)
++	touch $@
++
++# Generate a list of source files (.ads and .adb) to install.  Almost
++# all of them are in src/gcc/ada, but some are generated during build
++# and are in build/gcc/ada.
++BODIES := $(filter %.adb,$(PRJ_SOURCES))
++SPECS := $(filter %.ads,$(PRJ_SOURCES)) $(patsubst %.adb,%.ads,$(BODIES) $(GENERATED_SOURCES))
++SOURCES_TO_INSTALL := \
++$(addprefix  @srcdir@/../gcc/ada/,$(SPECS) $(BODIES)) \
++$(addprefix ../../gcc/ada/,$(GENERATED_SOURCES))
++
++libdir = @libdir@
++
++install: libgnatprj
++	$(INSTALL_DATA) libgnatprj.a $(DESTDIR)$(libdir)
++	$(INSTALL_DATA) libgnatprj.so.$(LIB_VERSION) $(DESTDIR)$(libdir)
++	cd $(DESTDIR)$(libdir); ln -sf libgnatprj.so.$(LIB_VERSION) libgnatprj.so
++	mkdir -p $(DESTDIR)$(prefix)/share/ada/adainclude/gnatprj
++	$(INSTALL_DATA) $(SOURCES_TO_INSTALL) \
++	   $(DESTDIR)$(prefix)/share/ada/adainclude/gnatprj
++	mkdir -p $(DESTDIR)$(prefix)/lib/ada/adalib/gnatprj
++	$(INSTALL) -m 0444 obj-shared/*.ali \
++	   $(DESTDIR)$(prefix)/lib/ada/adalib/gnatprj
++	chmod a=r $(DESTDIR)$(prefix)/lib/ada/adalib/gnatprj/*.ali
++
++.PHONY: clean
++clean:
++	rm -rf *.ali obj-static obj-shared libgnatprj* *.adb *.ads stamp*
+Index: b/libgnatprj/targetm.c
+===================================================================
+--- /dev/null
++++ b/libgnatprj/targetm.c
+@@ -0,0 +1,7 @@
++#include "config.h"
++#include "system.h"
++#include "coretypes.h"
++#include "common/common-target.h"
++#include "common/common-target-def.h"
++
++struct gcc_targetm_common targetm_common = TARGETM_COMMON_INITIALIZER;
+Index: b/Makefile.def
+===================================================================
+--- a/Makefile.def
++++ b/Makefile.def
+@@ -190,6 +190,13 @@ target_modules = { module= libgnatvsn; n
+ 		   missing= TAGS;
+ 		   missing= install-info;
+ 		   missing= installcheck; };
++target_modules = { module= libgnatprj; no_check=true;
++		   missing= info;
++		   missing= dvi;
++		   missing= html;
++		   missing= TAGS;
++		   missing= install-info;
++		   missing= installcheck; };
+ target_modules = { module= libgomp; bootstrap= true; lib_path=.libs; };
+ target_modules = { module= libitm; lib_path=.libs; };
+ target_modules = { module= libatomic; lib_path=.libs; };
+@@ -389,8 +396,12 @@ dependencies = { module=all-fixincludes;
+ dependencies = { module=all-target-libada; on=all-gcc; };
+ dependencies = { module=all-gnattools; on=all-target-libada; };
+ dependencies = { module=all-gnattools; on=all-target-libgnatvsn; };
++dependencies = { module=all-gnattools; on=all-target-libgnatprj; };
+ dependencies = { module=all-target-libgnatvsn; on=all-target-libada; };
++dependencies = { module=all-target-libgnatprj; on=all-target-libgnatvsn; };
++dependencies = { module=all-target-libgnatprj; on=all-target-libiberty; };
+ dependencies = { module=all-gnattools; on=all-target-libstdc++-v3; };
++dependencies = { module=all-target-libgnatvsn; on=all-target-libstdc++-v3; };
+ 
+ // Depending on the specific configuration, the LTO plugin will either use the
+ // generic libiberty build or the specific build for linker plugins.
+Index: b/configure.ac
+===================================================================
+--- a/configure.ac
++++ b/configure.ac
+@@ -177,6 +177,7 @@ target_libraries="target-libgcc \
+ 		target-libada \
+ 		${target_libiberty} \
+ 		target-libgnatvsn \
++		target-libgnatprj \
+ 		target-libgo"
+ 
+ # these tools are built using the target libraries, and are intended to
+@@ -461,7 +462,7 @@ AC_ARG_ENABLE(libada,
+ ENABLE_LIBADA=$enableval,
+ ENABLE_LIBADA=yes)
+ if test "${ENABLE_LIBADA}" != "yes" ; then
+-  noconfigdirs="$noconfigdirs target-libgnatvsn gnattools"
++  noconfigdirs="$noconfigdirs target-libgnatvsn target-libgnatprj gnattools"
+ fi
+ 
+ AC_ARG_ENABLE(libssp,
+Index: b/libgnatprj/configure.ac
+===================================================================
+--- /dev/null
++++ b/libgnatprj/configure.ac
+@@ -0,0 +1,557 @@
++# Configure script for libada.
++#   Copyright 2003, 2004 Free Software Foundation, Inc.
++#
++# This file is free software; you can redistribute it and/or modify it
++# under the terms of the GNU General Public License as published by
++# the Free Software Foundation; either version 2 of the License, or
++# (at your option) any later version.
++#
++# This program is distributed in the hope that it will be useful, but
++# WITHOUT ANY WARRANTY; without even the implied warranty of
++# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++# General Public License for more details.
++#
++# You should have received a copy of the GNU General Public License
++# along with this program; if not, write to the Free Software
++# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
++
++AC_INIT
++AC_PREREQ([2.63])
++
++AC_CONFIG_SRCDIR([Makefile.in])
++
++# Start of actual configure tests
++
++AC_PROG_INSTALL
++
++AC_CANONICAL_BUILD
++AC_CANONICAL_HOST
++AC_CANONICAL_TARGET
++
++GCC_NO_EXECUTABLES
++AC_PROG_CC
++AC_GNU_SOURCE
++AC_PROG_CPP_WERROR
++
++AC_PROG_CC_C_O
++# autoconf is lame and doesn't give us any substitution variable for this.
++if eval "test \"`echo '$ac_cv_prog_cc_'${ac_cc}_c_o`\" = no"; then
++  NO_MINUS_C_MINUS_O=yes
++else
++  OUTPUT_OPTION='-o $@'
++fi
++AC_SUBST(NO_MINUS_C_MINUS_O)
++AC_SUBST(OUTPUT_OPTION)
++
++AC_C_CONST
++AC_C_INLINE
++AC_C_BIGENDIAN
++
++dnl When we start using libtool:
++dnl AM_PROG_LIBTOOL
++
++dnl When we start using automake:
++dnl AM_CONFIG_HEADER(config.h:config.in)
++AC_CONFIG_HEADER(config.h:config.in)
++
++sinclude(../config/acx.m4)
++ACX_NONCANONICAL_TARGET
++
++# Need to pass this down for now :-P
++AC_PROG_LN_S
++
++# It's OK to check for header files.  Although the compiler may not be
++# able to link anything, it had better be able to at least compile
++# something.
++AC_CHECK_HEADERS(sys/file.h sys/param.h limits.h stdlib.h malloc.h string.h unistd.h strings.h sys/time.h time.h sys/resource.h sys/stat.h sys/mman.h fcntl.h alloca.h sys/pstat.h sys/sysmp.h sys/sysinfo.h machine/hal_sysinfo.h sys/table.h sys/sysctl.h sys/systemcfg.h stdint.h stdio_ext.h process.h sys/prctl.h)
++AC_HEADER_SYS_WAIT
++AC_HEADER_TIME
++
++# Determine sizes of some types.
++AC_CHECK_SIZEOF([int])
++AC_CHECK_SIZEOF([long])
++AC_CHECK_SIZEOF([size_t])
++
++AC_TYPE_INTPTR_T
++AC_TYPE_UINTPTR_T
++AC_TYPE_SSIZE_T
++
++# Given the above check, we always have uintptr_t or a fallback
++# definition.  So define HAVE_UINTPTR_T in case any imported code
++# relies on it.
++AC_DEFINE(HAVE_UINTPTR_T, 1, [Define if you have the \`uintptr_t' type.])
++
++AC_TYPE_PID_T
++
++# This is the list of functions which libiberty will provide if they
++# are not available on the host.
++
++funcs="asprintf"
++funcs="$funcs atexit"
++funcs="$funcs basename"
++funcs="$funcs bcmp"
++funcs="$funcs bcopy"
++funcs="$funcs bsearch"
++funcs="$funcs bzero"
++funcs="$funcs calloc"
++funcs="$funcs clock"
++funcs="$funcs ffs"
++funcs="$funcs getcwd"
++funcs="$funcs getpagesize"
++funcs="$funcs gettimeofday"
++funcs="$funcs index"
++funcs="$funcs insque"
++funcs="$funcs memchr"
++funcs="$funcs memcmp"
++funcs="$funcs memcpy"
++funcs="$funcs memmem"
++funcs="$funcs memmove"
++funcs="$funcs mempcpy"
++funcs="$funcs memset"
++funcs="$funcs mkstemps"
++funcs="$funcs putenv"
++funcs="$funcs random"
++funcs="$funcs rename"
++funcs="$funcs rindex"
++funcs="$funcs setenv"
++funcs="$funcs snprintf"
++funcs="$funcs sigsetmask"
++funcs="$funcs stpcpy"
++funcs="$funcs stpncpy"
++funcs="$funcs strcasecmp"
++funcs="$funcs strchr"
++funcs="$funcs strdup"
++funcs="$funcs strncasecmp"
++funcs="$funcs strndup"
++funcs="$funcs strnlen"
++funcs="$funcs strrchr"
++funcs="$funcs strstr"
++funcs="$funcs strtod"
++funcs="$funcs strtol"
++funcs="$funcs strtoul"
++funcs="$funcs strtoll"
++funcs="$funcs strtoull"
++funcs="$funcs strverscmp"
++funcs="$funcs tmpnam"
++funcs="$funcs vasprintf"
++funcs="$funcs vfprintf"
++funcs="$funcs vprintf"
++funcs="$funcs vsnprintf"
++funcs="$funcs vsprintf"
++funcs="$funcs waitpid"
++funcs="$funcs setproctitle"
++
++# Also in the old function.def file: alloca, vfork, getopt.
++
++vars="sys_errlist sys_nerr sys_siglist"
++
++checkfuncs="__fsetlocking canonicalize_file_name dup3 getrlimit getrusage \
++ getsysinfo gettimeofday on_exit psignal pstat_getdynamic pstat_getstatic \
++ realpath setrlimit sbrk spawnve spawnvpe strerror strsignal sysconf sysctl \
++ sysmp table times wait3 wait4"
++
++# These are neither executed nor required, but they help keep
++# autoheader happy without adding a bunch of text to acconfig.h.
++if test "x" = "y"; then
++  AC_CHECK_FUNCS(asprintf atexit \
++    basename bcmp bcopy bsearch bzero \
++    calloc canonicalize_file_name clock \
++    dup3 \
++    ffs __fsetlocking \
++    getcwd getpagesize getrlimit getrusage getsysinfo gettimeofday \
++    index insque \
++    memchr memcmp memcpy memmem memmove memset mkstemps \
++    on_exit \
++    psignal pstat_getdynamic pstat_getstatic putenv \
++    random realpath rename rindex \
++    sbrk setenv setproctitle setrlimit sigsetmask snprintf spawnve spawnvpe \
++     stpcpy stpncpy strcasecmp strchr strdup \
++     strerror strncasecmp strndup strnlen strrchr strsignal strstr strtod \
++     strtol strtoul strtoll strtoull strverscmp sysconf sysctl sysmp \
++    table times tmpnam \
++    vasprintf vfprintf vprintf vsprintf \
++    wait3 wait4 waitpid)
++  AC_CHECK_DECLS([basename, ffs, asprintf, vasprintf, snprintf, vsnprintf, strtol, strtoul, strtoll, strtoull])
++  AC_DEFINE(HAVE_SYS_ERRLIST, 1, [Define if you have the sys_errlist variable.])
++  AC_DEFINE(HAVE_SYS_NERR,    1, [Define if you have the sys_nerr variable.])
++  AC_DEFINE(HAVE_SYS_SIGLIST, 1, [Define if you have the sys_siglist variable.])
++fi
++
++# For each of these functions, if the host does not provide the
++# function we want to put FN.o in LIBOBJS, and if the host does
++# provide the function, we want to define HAVE_FN in config.h.
++
++setobjs=
++CHECK=
++if test -n "${with_target_subdir}"; then
++
++  # We are being configured as a target library.  AC_REPLACE_FUNCS
++  # may not work correctly, because the compiler may not be able to
++  # link executables.  Note that we may still be being configured
++  # native.
++
++  # If we are being configured for newlib, we know which functions
++  # newlib provide and which ones we will be expected to provide.
++
++  if test "x${with_newlib}" = "xyes"; then
++    AC_LIBOBJ([asprintf])
++    AC_LIBOBJ([basename])
++    AC_LIBOBJ([insque])
++    AC_LIBOBJ([random])
++    AC_LIBOBJ([strdup])
++    AC_LIBOBJ([vasprintf])
++
++    for f in $funcs; do
++      case "$f" in
++	asprintf | basename | insque | random | strdup | vasprintf)
++	  ;;
++	*)
++	  n=HAVE_`echo $f | tr 'abcdefghijklmnopqrstuvwxyz' 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'`
++	  AC_DEFINE_UNQUOTED($n)
++	  ;;
++      esac
++    done
++
++    # newlib doesnt provide any of the variables in $vars, so we
++    # dont have to check them here.
++
++    # Of the functions in $checkfuncs, newlib only has strerror.
++    AC_DEFINE(HAVE_STRERROR)
++
++    setobjs=yes
++
++  fi
++
++  # If we are being configured for Mingw, we know which functions
++  # Mingw provides and which ones we will be expected to provide.
++
++  case "${host}" in
++  *-*-mingw*)
++    AC_LIBOBJ([asprintf])
++    AC_LIBOBJ([basename])
++    AC_LIBOBJ([bcmp])
++    AC_LIBOBJ([bcopy])
++    AC_LIBOBJ([bzero])
++    AC_LIBOBJ([clock])
++    AC_LIBOBJ([ffs])
++    AC_LIBOBJ([getpagesize])
++    AC_LIBOBJ([index])
++    AC_LIBOBJ([insque])
++    AC_LIBOBJ([mempcpy])
++    AC_LIBOBJ([mkstemps])
++    AC_LIBOBJ([random])
++    AC_LIBOBJ([rindex])
++    AC_LIBOBJ([sigsetmask])
++    AC_LIBOBJ([stpcpy])
++    AC_LIBOBJ([stpncpy])
++    AC_LIBOBJ([strndup])
++    AC_LIBOBJ([strnlen])
++    AC_LIBOBJ([strverscmp])
++    AC_LIBOBJ([vasprintf])
++    AC_LIBOBJ([waitpid])
++
++    for f in $funcs; do
++      case "$f" in
++	asprintf | basename | bcmp | bcopy | bzero | clock | ffs | getpagesize | index | insque | mempcpy | mkstemps | random | rindex | sigsetmask | stpcpy | stpncpy | strdup | strndup | strnlen | strverscmp | vasprintf | waitpid)
++	  ;;
++	*)
++	  n=HAVE_`echo $f | tr 'abcdefghijklmnopqrstuvwxyz' 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'`
++	  AC_DEFINE_UNQUOTED($n)
++	  ;;
++      esac
++    done
++
++    # Mingw doesnt provide any of the variables in $vars, so we
++    # dont have to check them here.
++
++    # Of the functions in $checkfuncs, Mingw only has strerror.
++    AC_DEFINE(HAVE_STRERROR)
++
++    setobjs=yes
++    ;;
++
++  *-*-msdosdjgpp)
++    AC_LIBOBJ([vasprintf])
++    AC_LIBOBJ([vsnprintf])
++    AC_LIBOBJ([snprintf])
++    AC_LIBOBJ([asprintf])
++
++    for f in atexit basename bcmp bcopy bsearch bzero calloc clock ffs \
++             getcwd getpagesize getrusage gettimeofday \
++             index insque memchr memcmp memcpy memmove memset psignal \
++             putenv random rename rindex sbrk setenv stpcpy strcasecmp \
++             strchr strdup strerror strncasecmp strrchr strstr strtod \
++             strtol strtoul sysconf times tmpnam vfprintf vprintf \
++             vsprintf waitpid
++    do
++      n=HAVE_`echo $f | tr 'abcdefghijklmnopqrstuvwxyz' 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'`
++      AC_DEFINE_UNQUOTED($n)
++    done
++
++
++    setobjs=yes
++    ;;
++
++  esac
++
++else
++
++   # Not a target library, so we set things up to run the test suite.
++   CHECK=really-check
++
++fi
++
++AC_SUBST(CHECK)
++AC_SUBST(target_header_dir)
++
++case "${host}" in
++  *-*-cygwin* | *-*-mingw*)
++    AC_DEFINE(HAVE_SYS_ERRLIST)
++    AC_DEFINE(HAVE_SYS_NERR)
++    ;;
++esac
++
++if test -z "${setobjs}"; then
++  case "${host}" in
++
++  *-*-vxworks*)
++    # Handle VxWorks configuration specially, since on VxWorks the
++    # libraries are actually on the target board, not in the file
++    # system.
++    AC_LIBOBJ([basename])
++    AC_LIBOBJ([getpagesize])
++    AC_LIBOBJ([insque])
++    AC_LIBOBJ([random])
++    AC_LIBOBJ([strcasecmp])
++    AC_LIBOBJ([strncasecmp])
++    AC_LIBOBJ([strdup])
++    AC_LIBOBJ([vfork])
++    AC_LIBOBJ([waitpid])
++    AC_LIBOBJ([vasprintf])
++    for f in $funcs; do
++      case "$f" in
++	basename | getpagesize | insque | random | strcasecmp)
++	  ;;
++	strncasecmp | strdup | vfork | waitpid | vasprintf)
++	  ;;
++	*)
++	  n=HAVE_`echo $f | tr 'abcdefghijklmnopqrstuvwxyz' 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'`
++	  AC_DEFINE_UNQUOTED($n)
++	  ;;
++      esac
++    done
++
++    # VxWorks doesn't provide any of the variables in $vars, so we
++    # don't have to check them here.
++
++    # Of the functions in $checkfuncs, VxWorks only has strerror.
++    AC_DEFINE(HAVE_STRERROR)
++
++    setobjs=yes
++    ;;
++
++  esac
++fi
++
++if test -z "${setobjs}"; then
++
++  case "${host}" in
++
++  *-*-android*)
++    # On android, getpagesize is defined in unistd.h as a static inline
++    # function, which AC_CHECK_FUNCS does not handle properly.
++    ac_cv_func_getpagesize=yes
++    ;;
++
++  *-*-mingw32*)
++    # Under mingw32, sys_nerr and sys_errlist exist, but they are
++    # macros, so the test below won't find them.
++    libgnatprj_cv_var_sys_nerr=yes
++    libgnatprj_cv_var_sys_errlist=yes
++    ;;
++
++  *-*-msdosdjgpp*)
++    # vfork and fork are stubs.
++    ac_cv_func_vfork_works=no
++    ;;
++
++  *-*-uwin*)
++    # Under some versions of uwin, vfork is notoriously buggy and the test 
++    # can hang configure; on other versions, vfork exists just as a stub.
++    # FIXME: This should be removed once vfork in uwin's runtime is fixed.
++    ac_cv_func_vfork_works=no
++    # Under uwin 2.0+, sys_nerr and sys_errlist exist, but they are
++    # macros (actually, these are imported from a DLL, but the end effect 
++    # is the same), so the test below won't find them.
++    libgnatprj_cv_var_sys_nerr=yes
++    libgnatprj_cv_var_sys_errlist=yes
++    ;;
++
++  *-*-*vms*)
++    # Under VMS, vfork works very different than on Unix. The standard test 
++    # won't work, and it isn't easily adaptable. It makes more sense to
++    # just force it.
++    ac_cv_func_vfork_works=yes
++    ;;
++
++  esac
++
++  # We haven't set the list of objects yet.  Use the standard autoconf
++  # tests.  This will only work if the compiler works.
++  AC_ISC_POSIX
++  AC_REPLACE_FUNCS($funcs)
++  AC_FUNC_FORK
++  if test $ac_cv_func_vfork_works = no; then
++    AC_LIBOBJ([vfork])
++  fi
++  # We only need _doprnt if we might use it to implement v*printf.
++  if test $ac_cv_func_vprintf != yes \
++     || test $ac_cv_func_vfprintf != yes \
++     || test $ac_cv_func_vsprintf != yes; then
++    AC_REPLACE_FUNCS(_doprnt)
++  else
++    AC_CHECK_FUNCS(_doprnt)
++  fi
++
++  for v in $vars; do
++    AC_MSG_CHECKING([for $v])
++    AC_CACHE_VAL(libgnatprj_cv_var_$v,
++      [AC_LINK_IFELSE([AC_LANG_PROGRAM([[int *p;]],[[extern int $v []; p = $v;]])],
++		      [eval "libgnatprj_cv_var_$v=yes"],
++		      [eval "libgnatprj_cv_var_$v=no"])])
++    if eval "test \"`echo '$libgnatprj_cv_var_'$v`\" = yes"; then
++      AC_MSG_RESULT(yes)
++      n=HAVE_`echo $v | tr 'abcdefghijklmnopqrstuvwxyz' 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'`
++      AC_DEFINE_UNQUOTED($n)
++    else
++      AC_MSG_RESULT(no)
++    fi
++  done
++
++  # special check for _system_configuration because AIX <4.3.2 do not
++  # contain the `physmem' member.
++  AC_MSG_CHECKING([for external symbol _system_configuration])
++  AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <sys/systemcfg.h>]],
++			[[double x = _system_configuration.physmem;]])],
++    [AC_MSG_RESULT([yes])
++    AC_DEFINE(HAVE__SYSTEM_CONFIGURATION, 1,
++	      [Define if you have the _system_configuration variable.])],
++    [AC_MSG_RESULT([no])])
++
++  AC_CHECK_FUNCS($checkfuncs)
++  AC_CHECK_DECLS([basename, ffs, asprintf, vasprintf, snprintf, vsnprintf])
++  AC_CHECK_DECLS([calloc, getenv, getopt, malloc, realloc, sbrk])
++  AC_CHECK_DECLS([strtol, strtoul, strtoll, strtoull])
++  AC_CHECK_DECLS([strverscmp])
++fi
++
++# Determine x_ada_cflags
++case $host in
++  hppa*) x_ada_cflags=-mdisable-indexing ;;
++  *) x_ada_cflags= ;;
++esac
++AC_SUBST([x_ada_cflags])
++
++# Determine what to build for 'gnattools'
++if test $build = $target ; then
++  # Note that build=target is almost certainly the wrong test; FIXME
++  default_gnattools_target="gnattools-native"
++else
++  default_gnattools_target="gnattools-cross"
++fi
++AC_SUBST([default_gnattools_target])
++
++# Target-specific stuff (defaults)
++TOOLS_TARGET_PAIRS=
++AC_SUBST(TOOLS_TARGET_PAIRS)
++
++# Per-target case statement
++# ---/----------------------
++case "${target}" in
++  alpha*-dec-vx*) # Unlike all other Vxworks
++    ;;
++  m68k*-wrs-vx* \
++  | powerpc*-wrs-vxworks \
++  | sparc*-wrs-vx* \
++  | *86-wrs-vxworks \
++  | xscale*-wrs-vx* \
++  | xscale*-wrs-coff \
++  | mips*-wrs-vx*)
++    TOOLS_TARGET_PAIRS="mlib-tgt-specific.adb<mlib-tgt-specific-vxworks.adb"
++    ;;
++  sparc-sun-solaris*)
++    TOOLS_TARGET_PAIRS="mlib-tgt-specific.adb<mlib-tgt-specific-solaris.adb"
++    ;;
++  *86-*-solaris2*)
++    TOOLS_TARGET_PAIRS="mlib-tgt-specific.adb<mlib-tgt-specific-solaris.adb"
++    ;;
++  *86-*-linux* \
++  | aarch64*-*-linux* \
++  | arm*-*-linux* \
++  | powerpc*-*-linux* \
++  | *ia64-*-linux* \
++  | alpha*-*-linux* \
++  | sparc*-*-linux* \
++  | hppa*-*-linux* \
++  | mips*-*-linux* \
++  | m68k-*-linux \
++  | *x86_64-*-linux* \
++  | *86-*-kfreebsd*-gnu \
++  | *86-*-gnu \
++  | *x86_64-*-kfreebsd*-gnu )
++    TOOLS_TARGET_PAIRS="\
++    mlib-tgt-specific.adb<mlib-tgt-specific-linux.adb"
++    ;;
++  s390*-*-linux*)
++    TOOLS_TARGET_PAIRS="mlib-tgt-specific.adb<mlib-tgt-specific-linux.adb"
++    ;;
++  *86-*-freebsd*)
++    TOOLS_TARGET_PAIRS="\
++    mlib-tgt-specific.adb<mlib-tgt-specific-linux.adb"
++    ;;
++  mips-sgi-irix*)
++    TOOLS_TARGET_PAIRS="mlib-tgt-specific.adb<mlib-tgt-specific-irix.adb"
++    ;;
++  hppa*-hp-hpux10*) # Unlike hpux11
++    ;;
++  hppa*-hp-hpux11*)
++    TOOLS_TARGET_PAIRS="mlib-tgt-specific.adb<mlib-tgt-specific-hpux.adb"
++    ;;
++  *-ibm-aix*)
++    TOOLS_TARGET_PAIRS="\
++    mlib-tgt-specific.adb<mlib-tgt-specific-aix.adb"
++    ;;
++  alpha*-dec-osf*)
++    TOOLS_TARGET_PAIRS="mlib-tgt-specific.adb<mlib-tgt-specific-tru64.adb"
++    ;;
++  alpha*-dec-vms* | alpha*-dec-openvms* | alpha*-dec-vms* \
++  | alpha*-hp-vms* | alpha*-hp-openvms* | alpha*-hp-vms*)
++    TOOLS_TARGET_PAIRS="\
++    mlib-tgt-specific.adb<mlib-tgt-specific-vms-alpha.adb \
++    symbols.adb<symbols-vms.adb \
++    symbols-processing.adb<symbols-processing-vms-alpha.adb"
++    ;;
++  ia64*-dec-vms* | ia64*-dec-openvms* | ia64*-dec-vms* \
++  | ia64*-hp-vms* | ia64*-hp-openvms* | ia64*-hp-vms*)
++    TOOLS_TARGET_PAIRS="\
++    mlib-tgt-specific.adb<mlib-tgt-vms-ia64.adb \
++    symbols.adb<symbols-vms.adb \
++    symbols-processing.adb<symbols-processing-vms-ia64.adb"
++    ;;
++  *-*-cygwin32* | *-*-mingw32* | *-*-pe)
++    TOOLS_TARGET_PAIRS="\
++    mlib-tgt-specific.adb<mlib-tgt-specific-mingw.adb"
++    ;;
++  powerpc-*-darwin*)
++    TOOLS_TARGET_PAIRS="mlib-tgt-specific.adb<mlib-tgt-specific-darwin.adb"
++    ;;
++  *-*-lynxos)
++    TOOLS_TARGET_PAIRS="\
++    mlib-tgt-specific.adb<mlib-tgt-specific-lynxos.adb"
++    ;;
++esac
++
++# Output: create a Makefile.
++AC_CONFIG_FILES([Makefile])
++
++AC_OUTPUT
+Index: b/Makefile.in
+===================================================================
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -977,6 +977,7 @@ configure-target:  \
+     maybe-configure-target-rda \
+     maybe-configure-target-libada \
+     maybe-configure-target-libgnatvsn \
++    maybe-configure-target-libgnatprj \
+     maybe-configure-target-libgomp \
+     maybe-configure-target-libitm \
+     maybe-configure-target-libatomic
+@@ -1146,6 +1147,7 @@ all-target: maybe-all-target-boehm-gc
+ all-target: maybe-all-target-rda
+ all-target: maybe-all-target-libada
+ all-target: maybe-all-target-libgnatvsn
++all-target: maybe-all-target-libgnatprj
+ @if target-libgomp-no-bootstrap
+ all-target: maybe-all-target-libgomp
+ @endif target-libgomp-no-bootstrap
+@@ -1242,6 +1244,7 @@ info-target: maybe-info-target-boehm-gc
+ info-target: maybe-info-target-rda
+ info-target: maybe-info-target-libada
+ info-target: maybe-info-target-libgnatvsn
++info-target: maybe-info-target-libgnatprj
+ info-target: maybe-info-target-libgomp
+ info-target: maybe-info-target-libitm
+ info-target: maybe-info-target-libatomic
+@@ -1331,6 +1334,7 @@ dvi-target: maybe-dvi-target-boehm-gc
+ dvi-target: maybe-dvi-target-rda
+ dvi-target: maybe-dvi-target-libada
+ dvi-target: maybe-dvi-target-libgnatvsn
++dvi-target: maybe-dvi-target-libgnatprj
+ dvi-target: maybe-dvi-target-libgomp
+ dvi-target: maybe-dvi-target-libitm
+ dvi-target: maybe-dvi-target-libatomic
+@@ -1420,6 +1424,7 @@ pdf-target: maybe-pdf-target-boehm-gc
+ pdf-target: maybe-pdf-target-rda
+ pdf-target: maybe-pdf-target-libada
+ pdf-target: maybe-pdf-target-libgnatvsn
++pdf-target: maybe-pdf-target-libgnatprj
+ pdf-target: maybe-pdf-target-libgomp
+ pdf-target: maybe-pdf-target-libitm
+ pdf-target: maybe-pdf-target-libatomic
+@@ -1509,6 +1514,7 @@ html-target: maybe-html-target-boehm-gc
+ html-target: maybe-html-target-rda
+ html-target: maybe-html-target-libada
+ html-target: maybe-html-target-libgnatvsn
++html-target: maybe-html-target-libgnatprj
+ html-target: maybe-html-target-libgomp
+ html-target: maybe-html-target-libitm
+ html-target: maybe-html-target-libatomic
+@@ -1598,6 +1604,7 @@ TAGS-target: maybe-TAGS-target-boehm-gc
+ TAGS-target: maybe-TAGS-target-rda
+ TAGS-target: maybe-TAGS-target-libada
+ TAGS-target: maybe-TAGS-target-libgnatvsn
++TAGS-target: maybe-TAGS-target-libgnatprj
+ TAGS-target: maybe-TAGS-target-libgomp
+ TAGS-target: maybe-TAGS-target-libitm
+ TAGS-target: maybe-TAGS-target-libatomic
+@@ -1687,6 +1694,7 @@ install-info-target: maybe-install-info-
+ install-info-target: maybe-install-info-target-rda
+ install-info-target: maybe-install-info-target-libada
+ install-info-target: maybe-install-info-target-libgnatvsn
++install-info-target: maybe-install-info-target-libgnatprj
+ install-info-target: maybe-install-info-target-libgomp
+ install-info-target: maybe-install-info-target-libitm
+ install-info-target: maybe-install-info-target-libatomic
+@@ -1776,6 +1784,7 @@ install-pdf-target: maybe-install-pdf-ta
+ install-pdf-target: maybe-install-pdf-target-rda
+ install-pdf-target: maybe-install-pdf-target-libada
+ install-pdf-target: maybe-install-pdf-target-libgnatvsn
++install-pdf-target: maybe-install-pdf-target-libgnatprj
+ install-pdf-target: maybe-install-pdf-target-libgomp
+ install-pdf-target: maybe-install-pdf-target-libitm
+ install-pdf-target: maybe-install-pdf-target-libatomic
+@@ -1865,6 +1874,7 @@ install-html-target: maybe-install-html-
+ install-html-target: maybe-install-html-target-rda
+ install-html-target: maybe-install-html-target-libada
+ install-html-target: maybe-install-html-target-libgnatvsn
++install-html-target: maybe-install-html-target-libgnatprj
+ install-html-target: maybe-install-html-target-libgomp
+ install-html-target: maybe-install-html-target-libitm
+ install-html-target: maybe-install-html-target-libatomic
+@@ -1954,6 +1964,7 @@ installcheck-target: maybe-installcheck-
+ installcheck-target: maybe-installcheck-target-rda
+ installcheck-target: maybe-installcheck-target-libada
+ installcheck-target: maybe-installcheck-target-libgnatvsn
++installcheck-target: maybe-installcheck-target-libgnatprj
+ installcheck-target: maybe-installcheck-target-libgomp
+ installcheck-target: maybe-installcheck-target-libitm
+ installcheck-target: maybe-installcheck-target-libatomic
+@@ -2043,6 +2054,7 @@ mostlyclean-target: maybe-mostlyclean-ta
+ mostlyclean-target: maybe-mostlyclean-target-rda
+ mostlyclean-target: maybe-mostlyclean-target-libada
+ mostlyclean-target: maybe-mostlyclean-target-libgnatvsn
++mostlyclean-target: maybe-mostlyclean-target-libgnatprj
+ mostlyclean-target: maybe-mostlyclean-target-libgomp
+ mostlyclean-target: maybe-mostlyclean-target-libitm
+ mostlyclean-target: maybe-mostlyclean-target-libatomic
+@@ -2132,6 +2144,7 @@ clean-target: maybe-clean-target-boehm-g
+ clean-target: maybe-clean-target-rda
+ clean-target: maybe-clean-target-libada
+ clean-target: maybe-clean-target-libgnatvsn
++clean-target: maybe-clean-target-libgnatprj
+ clean-target: maybe-clean-target-libgomp
+ clean-target: maybe-clean-target-libitm
+ clean-target: maybe-clean-target-libatomic
+@@ -2221,6 +2234,7 @@ distclean-target: maybe-distclean-target
+ distclean-target: maybe-distclean-target-rda
+ distclean-target: maybe-distclean-target-libada
+ distclean-target: maybe-distclean-target-libgnatvsn
++distclean-target: maybe-distclean-target-libgnatprj
+ distclean-target: maybe-distclean-target-libgomp
+ distclean-target: maybe-distclean-target-libitm
+ distclean-target: maybe-distclean-target-libatomic
+@@ -2310,6 +2324,7 @@ maintainer-clean-target: maybe-maintaine
+ maintainer-clean-target: maybe-maintainer-clean-target-rda
+ maintainer-clean-target: maybe-maintainer-clean-target-libada
+ maintainer-clean-target: maybe-maintainer-clean-target-libgnatvsn
++maintainer-clean-target: maybe-maintainer-clean-target-libgnatprj
+ maintainer-clean-target: maybe-maintainer-clean-target-libgomp
+ maintainer-clean-target: maybe-maintainer-clean-target-libitm
+ maintainer-clean-target: maybe-maintainer-clean-target-libatomic
+@@ -2455,6 +2470,7 @@ check-target:  \
+     maybe-check-target-rda \
+     maybe-check-target-libada \
+     maybe-check-target-libgnatvsn \
++    maybe-check-target-libgnatprj \
+     maybe-check-target-libgomp \
+     maybe-check-target-libitm \
+     maybe-check-target-libatomic
+@@ -2640,6 +2656,7 @@ install-target:  \
+     maybe-install-target-rda \
+     maybe-install-target-libada \
+     maybe-install-target-libgnatvsn \
++    maybe-install-target-libgnatprj \
+     maybe-install-target-libgomp \
+     maybe-install-target-libitm \
+     maybe-install-target-libatomic
+@@ -2749,6 +2766,7 @@ install-strip-target:  \
+     maybe-install-strip-target-rda \
+     maybe-install-strip-target-libada \
+     maybe-install-strip-target-libgnatvsn \
++    maybe-install-strip-target-libgnatprj \
+     maybe-install-strip-target-libgomp \
+     maybe-install-strip-target-libitm \
+     maybe-install-strip-target-libatomic
+@@ -46415,6 +46433,362 @@ maintainer-clean-target-libgnatvsn:
+ 
+ 
+ 
++.PHONY: configure-target-libgnatprj maybe-configure-target-libgnatprj
++maybe-configure-target-libgnatprj:
++@if gcc-bootstrap
++configure-target-libgnatprj: stage_current
++@endif gcc-bootstrap
++@if target-libgnatprj
++maybe-configure-target-libgnatprj: configure-target-libgnatprj
++configure-target-libgnatprj: 
++	@: $(MAKE); $(unstage)
++	@r=`${PWD_COMMAND}`; export r; \
++	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
++	echo "Checking multilib configuration for libgnatprj..."; \
++	$(SHELL) $(srcdir)/mkinstalldirs $(TARGET_SUBDIR)/libgnatprj ; \
++	$(CC_FOR_TARGET) --print-multi-lib > $(TARGET_SUBDIR)/libgnatprj/multilib.tmp 2> /dev/null ; \
++	if test -r $(TARGET_SUBDIR)/libgnatprj/multilib.out; then \
++	  if cmp -s $(TARGET_SUBDIR)/libgnatprj/multilib.tmp $(TARGET_SUBDIR)/libgnatprj/multilib.out; then \
++	    rm -f $(TARGET_SUBDIR)/libgnatprj/multilib.tmp; \
++	  else \
++	    rm -f $(TARGET_SUBDIR)/libgnatprj/Makefile; \
++	    mv $(TARGET_SUBDIR)/libgnatprj/multilib.tmp $(TARGET_SUBDIR)/libgnatprj/multilib.out; \
++	  fi; \
++	else \
++	  mv $(TARGET_SUBDIR)/libgnatprj/multilib.tmp $(TARGET_SUBDIR)/libgnatprj/multilib.out; \
++	fi; \
++	test ! -f $(TARGET_SUBDIR)/libgnatprj/Makefile || exit 0; \
++	$(SHELL) $(srcdir)/mkinstalldirs $(TARGET_SUBDIR)/libgnatprj ; \
++	$(NORMAL_TARGET_EXPORTS)  \
++	echo Configuring in $(TARGET_SUBDIR)/libgnatprj; \
++	cd "$(TARGET_SUBDIR)/libgnatprj" || exit 1; \
++	case $(srcdir) in \
++	  /* | [A-Za-z]:[\\/]*) topdir=$(srcdir) ;; \
++	  *) topdir=`echo $(TARGET_SUBDIR)/libgnatprj/ | \
++		sed -e 's,\./,,g' -e 's,[^/]*/,../,g' `$(srcdir) ;; \
++	esac; \
++	module_srcdir=libgnatprj; \
++	rm -f no-such-file || : ; \
++	CONFIG_SITE=no-such-file $(SHELL) \
++	  $$s/$$module_srcdir/configure \
++	  --srcdir=$${topdir}/$$module_srcdir \
++	  $(TARGET_CONFIGARGS) --build=${build_alias} --host=${target_alias} \
++	  --target=${target_alias}  \
++	  || exit 1
++@endif target-libgnatprj
++
++
++
++
++
++.PHONY: all-target-libgnatprj maybe-all-target-libgnatprj
++maybe-all-target-libgnatprj:
++@if gcc-bootstrap
++all-target-libgnatprj: stage_current
++@endif gcc-bootstrap
++@if target-libgnatprj
++TARGET-target-libgnatprj=all
++maybe-all-target-libgnatprj: all-target-libgnatprj
++all-target-libgnatprj: configure-target-libgnatprj
++	@: $(MAKE); $(unstage)
++	@r=`${PWD_COMMAND}`; export r; \
++	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
++	$(NORMAL_TARGET_EXPORTS)  \
++	(cd $(TARGET_SUBDIR)/libgnatprj && \
++	  $(MAKE) $(BASE_FLAGS_TO_PASS) $(EXTRA_TARGET_FLAGS)   \
++		$(TARGET-target-libgnatprj))
++@endif target-libgnatprj
++
++
++
++
++
++.PHONY: check-target-libgnatprj maybe-check-target-libgnatprj
++maybe-check-target-libgnatprj:
++@if target-libgnatprj
++maybe-check-target-libgnatprj: check-target-libgnatprj
++
++# Dummy target for uncheckable module.
++check-target-libgnatprj:
++
++@endif target-libgnatprj
++
++.PHONY: install-target-libgnatprj maybe-install-target-libgnatprj
++maybe-install-target-libgnatprj:
++@if target-libgnatprj
++maybe-install-target-libgnatprj: install-target-libgnatprj
++
++install-target-libgnatprj: installdirs
++	@: $(MAKE); $(unstage)
++	@r=`${PWD_COMMAND}`; export r; \
++	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
++	$(NORMAL_TARGET_EXPORTS) \
++	(cd $(TARGET_SUBDIR)/libgnatprj && \
++	  $(MAKE) $(TARGET_FLAGS_TO_PASS)  install)
++
++@endif target-libgnatprj
++
++.PHONY: install-strip-target-libgnatprj maybe-install-strip-target-libgnatprj
++maybe-install-strip-target-libgnatprj:
++@if target-libgnatprj
++maybe-install-strip-target-libgnatprj: install-strip-target-libgnatprj
++
++install-strip-target-libgnatprj: installdirs
++	@: $(MAKE); $(unstage)
++	@r=`${PWD_COMMAND}`; export r; \
++	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
++	$(NORMAL_TARGET_EXPORTS) \
++	(cd $(TARGET_SUBDIR)/libgnatprj && \
++	  $(MAKE) $(TARGET_FLAGS_TO_PASS)  install-strip)
++
++@endif target-libgnatprj
++
++# Other targets (info, dvi, pdf, etc.)
++
++.PHONY: maybe-info-target-libgnatprj info-target-libgnatprj
++maybe-info-target-libgnatprj:
++@if target-libgnatprj
++maybe-info-target-libgnatprj: info-target-libgnatprj
++
++# libgnatprj doesn't support info.
++info-target-libgnatprj:
++
++@endif target-libgnatprj
++
++.PHONY: maybe-dvi-target-libgnatprj dvi-target-libgnatprj
++maybe-dvi-target-libgnatprj:
++@if target-libgnatprj
++maybe-dvi-target-libgnatprj: dvi-target-libgnatprj
++
++# libgnatprj doesn't support dvi.
++dvi-target-libgnatprj:
++
++@endif target-libgnatprj
++
++.PHONY: maybe-pdf-target-libgnatprj pdf-target-libgnatprj
++maybe-pdf-target-libgnatprj:
++@if target-libgnatprj
++maybe-pdf-target-libgnatprj: pdf-target-libgnatprj
++
++pdf-target-libgnatprj: \
++    configure-target-libgnatprj 
++	@: $(MAKE); $(unstage)
++	@[ -f $(TARGET_SUBDIR)/libgnatprj/Makefile ] || exit 0 ; \
++	r=`${PWD_COMMAND}`; export r; \
++	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
++	$(NORMAL_TARGET_EXPORTS) \
++	echo "Doing pdf in $(TARGET_SUBDIR)/libgnatprj" ; \
++	for flag in $(EXTRA_TARGET_FLAGS); do \
++	  eval `echo "$$flag" | sed -e "s|^\([^=]*\)=\(.*\)|\1='\2'; export \1|"`; \
++	done; \
++	(cd $(TARGET_SUBDIR)/libgnatprj && \
++	  $(MAKE) $(BASE_FLAGS_TO_PASS) "AR=$${AR}" "AS=$${AS}" \
++	          "CC=$${CC}" "CXX=$${CXX}" "LD=$${LD}" "NM=$${NM}" \
++	          "RANLIB=$${RANLIB}" \
++	          "DLLTOOL=$${DLLTOOL}" "WINDRES=$${WINDRES}" "WINDMC=$${WINDMC}" \
++	           pdf) \
++	  || exit 1
++
++@endif target-libgnatprj
++
++.PHONY: maybe-html-target-libgnatprj html-target-libgnatprj
++maybe-html-target-libgnatprj:
++@if target-libgnatprj
++maybe-html-target-libgnatprj: html-target-libgnatprj
++
++# libgnatprj doesn't support html.
++html-target-libgnatprj:
++
++@endif target-libgnatprj
++
++.PHONY: maybe-TAGS-target-libgnatprj TAGS-target-libgnatprj
++maybe-TAGS-target-libgnatprj:
++@if target-libgnatprj
++maybe-TAGS-target-libgnatprj: TAGS-target-libgnatprj
++
++# libgnatprj doesn't support TAGS.
++TAGS-target-libgnatprj:
++
++@endif target-libgnatprj
++
++.PHONY: maybe-install-info-target-libgnatprj install-info-target-libgnatprj
++maybe-install-info-target-libgnatprj:
++@if target-libgnatprj
++maybe-install-info-target-libgnatprj: install-info-target-libgnatprj
++
++# libgnatprj doesn't support install-info.
++install-info-target-libgnatprj:
++
++@endif target-libgnatprj
++
++.PHONY: maybe-install-pdf-target-libgnatprj install-pdf-target-libgnatprj
++maybe-install-pdf-target-libgnatprj:
++@if target-libgnatprj
++maybe-install-pdf-target-libgnatprj: install-pdf-target-libgnatprj
++
++install-pdf-target-libgnatprj: \
++    configure-target-libgnatprj \
++    pdf-target-libgnatprj 
++	@: $(MAKE); $(unstage)
++	@[ -f $(TARGET_SUBDIR)/libgnatprj/Makefile ] || exit 0 ; \
++	r=`${PWD_COMMAND}`; export r; \
++	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
++	$(NORMAL_TARGET_EXPORTS) \
++	echo "Doing install-pdf in $(TARGET_SUBDIR)/libgnatprj" ; \
++	for flag in $(EXTRA_TARGET_FLAGS); do \
++	  eval `echo "$$flag" | sed -e "s|^\([^=]*\)=\(.*\)|\1='\2'; export \1|"`; \
++	done; \
++	(cd $(TARGET_SUBDIR)/libgnatprj && \
++	  $(MAKE) $(BASE_FLAGS_TO_PASS) "AR=$${AR}" "AS=$${AS}" \
++	          "CC=$${CC}" "CXX=$${CXX}" "LD=$${LD}" "NM=$${NM}" \
++	          "RANLIB=$${RANLIB}" \
++	          "DLLTOOL=$${DLLTOOL}" "WINDRES=$${WINDRES}" "WINDMC=$${WINDMC}" \
++	           install-pdf) \
++	  || exit 1
++
++@endif target-libgnatprj
++
++.PHONY: maybe-install-html-target-libgnatprj install-html-target-libgnatprj
++maybe-install-html-target-libgnatprj:
++@if target-libgnatprj
++maybe-install-html-target-libgnatprj: install-html-target-libgnatprj
++
++install-html-target-libgnatprj: \
++    configure-target-libgnatprj \
++    html-target-libgnatprj 
++	@: $(MAKE); $(unstage)
++	@[ -f $(TARGET_SUBDIR)/libgnatprj/Makefile ] || exit 0 ; \
++	r=`${PWD_COMMAND}`; export r; \
++	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
++	$(NORMAL_TARGET_EXPORTS) \
++	echo "Doing install-html in $(TARGET_SUBDIR)/libgnatprj" ; \
++	for flag in $(EXTRA_TARGET_FLAGS); do \
++	  eval `echo "$$flag" | sed -e "s|^\([^=]*\)=\(.*\)|\1='\2'; export \1|"`; \
++	done; \
++	(cd $(TARGET_SUBDIR)/libgnatprj && \
++	  $(MAKE) $(BASE_FLAGS_TO_PASS) "AR=$${AR}" "AS=$${AS}" \
++	          "CC=$${CC}" "CXX=$${CXX}" "LD=$${LD}" "NM=$${NM}" \
++	          "RANLIB=$${RANLIB}" \
++	          "DLLTOOL=$${DLLTOOL}" "WINDRES=$${WINDRES}" "WINDMC=$${WINDMC}" \
++	           install-html) \
++	  || exit 1
++
++@endif target-libgnatprj
++
++.PHONY: maybe-installcheck-target-libgnatprj installcheck-target-libgnatprj
++maybe-installcheck-target-libgnatprj:
++@if target-libgnatprj
++maybe-installcheck-target-libgnatprj: installcheck-target-libgnatprj
++
++# libgnatprj doesn't support installcheck.
++installcheck-target-libgnatprj:
++
++@endif target-libgnatprj
++
++.PHONY: maybe-mostlyclean-target-libgnatprj mostlyclean-target-libgnatprj
++maybe-mostlyclean-target-libgnatprj:
++@if target-libgnatprj
++maybe-mostlyclean-target-libgnatprj: mostlyclean-target-libgnatprj
++
++mostlyclean-target-libgnatprj: 
++	@: $(MAKE); $(unstage)
++	@[ -f $(TARGET_SUBDIR)/libgnatprj/Makefile ] || exit 0 ; \
++	r=`${PWD_COMMAND}`; export r; \
++	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
++	$(NORMAL_TARGET_EXPORTS) \
++	echo "Doing mostlyclean in $(TARGET_SUBDIR)/libgnatprj" ; \
++	for flag in $(EXTRA_TARGET_FLAGS); do \
++	  eval `echo "$$flag" | sed -e "s|^\([^=]*\)=\(.*\)|\1='\2'; export \1|"`; \
++	done; \
++	(cd $(TARGET_SUBDIR)/libgnatprj && \
++	  $(MAKE) $(BASE_FLAGS_TO_PASS) "AR=$${AR}" "AS=$${AS}" \
++	          "CC=$${CC}" "CXX=$${CXX}" "LD=$${LD}" "NM=$${NM}" \
++	          "RANLIB=$${RANLIB}" \
++	          "DLLTOOL=$${DLLTOOL}" "WINDRES=$${WINDRES}" "WINDMC=$${WINDMC}" \
++	           mostlyclean) \
++	  || exit 1
++
++@endif target-libgnatprj
++
++.PHONY: maybe-clean-target-libgnatprj clean-target-libgnatprj
++maybe-clean-target-libgnatprj:
++@if target-libgnatprj
++maybe-clean-target-libgnatprj: clean-target-libgnatprj
++
++clean-target-libgnatprj: 
++	@: $(MAKE); $(unstage)
++	@[ -f $(TARGET_SUBDIR)/libgnatprj/Makefile ] || exit 0 ; \
++	r=`${PWD_COMMAND}`; export r; \
++	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
++	$(NORMAL_TARGET_EXPORTS) \
++	echo "Doing clean in $(TARGET_SUBDIR)/libgnatprj" ; \
++	for flag in $(EXTRA_TARGET_FLAGS); do \
++	  eval `echo "$$flag" | sed -e "s|^\([^=]*\)=\(.*\)|\1='\2'; export \1|"`; \
++	done; \
++	(cd $(TARGET_SUBDIR)/libgnatprj && \
++	  $(MAKE) $(BASE_FLAGS_TO_PASS) "AR=$${AR}" "AS=$${AS}" \
++	          "CC=$${CC}" "CXX=$${CXX}" "LD=$${LD}" "NM=$${NM}" \
++	          "RANLIB=$${RANLIB}" \
++	          "DLLTOOL=$${DLLTOOL}" "WINDRES=$${WINDRES}" "WINDMC=$${WINDMC}" \
++	           clean) \
++	  || exit 1
++
++@endif target-libgnatprj
++
++.PHONY: maybe-distclean-target-libgnatprj distclean-target-libgnatprj
++maybe-distclean-target-libgnatprj:
++@if target-libgnatprj
++maybe-distclean-target-libgnatprj: distclean-target-libgnatprj
++
++distclean-target-libgnatprj: 
++	@: $(MAKE); $(unstage)
++	@[ -f $(TARGET_SUBDIR)/libgnatprj/Makefile ] || exit 0 ; \
++	r=`${PWD_COMMAND}`; export r; \
++	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
++	$(NORMAL_TARGET_EXPORTS) \
++	echo "Doing distclean in $(TARGET_SUBDIR)/libgnatprj" ; \
++	for flag in $(EXTRA_TARGET_FLAGS); do \
++	  eval `echo "$$flag" | sed -e "s|^\([^=]*\)=\(.*\)|\1='\2'; export \1|"`; \
++	done; \
++	(cd $(TARGET_SUBDIR)/libgnatprj && \
++	  $(MAKE) $(BASE_FLAGS_TO_PASS) "AR=$${AR}" "AS=$${AS}" \
++	          "CC=$${CC}" "CXX=$${CXX}" "LD=$${LD}" "NM=$${NM}" \
++	          "RANLIB=$${RANLIB}" \
++	          "DLLTOOL=$${DLLTOOL}" "WINDRES=$${WINDRES}" "WINDMC=$${WINDMC}" \
++	           distclean) \
++	  || exit 1
++
++@endif target-libgnatprj
++
++.PHONY: maybe-maintainer-clean-target-libgnatprj maintainer-clean-target-libgnatprj
++maybe-maintainer-clean-target-libgnatprj:
++@if target-libgnatprj
++maybe-maintainer-clean-target-libgnatprj: maintainer-clean-target-libgnatprj
++
++maintainer-clean-target-libgnatprj: 
++	@: $(MAKE); $(unstage)
++	@[ -f $(TARGET_SUBDIR)/libgnatprj/Makefile ] || exit 0 ; \
++	r=`${PWD_COMMAND}`; export r; \
++	s=`cd $(srcdir); ${PWD_COMMAND}`; export s; \
++	$(NORMAL_TARGET_EXPORTS) \
++	echo "Doing maintainer-clean in $(TARGET_SUBDIR)/libgnatprj" ; \
++	for flag in $(EXTRA_TARGET_FLAGS); do \
++	  eval `echo "$$flag" | sed -e "s|^\([^=]*\)=\(.*\)|\1='\2'; export \1|"`; \
++	done; \
++	(cd $(TARGET_SUBDIR)/libgnatprj && \
++	  $(MAKE) $(BASE_FLAGS_TO_PASS) "AR=$${AR}" "AS=$${AS}" \
++	          "CC=$${CC}" "CXX=$${CXX}" "LD=$${LD}" "NM=$${NM}" \
++	          "RANLIB=$${RANLIB}" \
++	          "DLLTOOL=$${DLLTOOL}" "WINDRES=$${WINDRES}" "WINDMC=$${WINDMC}" \
++	           maintainer-clean) \
++	  || exit 1
++
++@endif target-libgnatprj
++
++
++
++
++
+ .PHONY: configure-target-libgomp maybe-configure-target-libgomp
+ maybe-configure-target-libgomp:
+ @if gcc-bootstrap
+@@ -50620,6 +50994,7 @@ configure-target-boehm-gc: stage_last
+ configure-target-rda: stage_last
+ configure-target-libada: stage_last
+ configure-target-libgnatvsn: stage_last
++configure-target-libgnatprj: stage_last
+ configure-stage1-target-libgomp: maybe-all-stage1-gcc
+ configure-stage2-target-libgomp: maybe-all-stage2-gcc
+ configure-stage3-target-libgomp: maybe-all-stage3-gcc
+@@ -50656,6 +51031,7 @@ configure-target-boehm-gc: maybe-all-gcc
+ configure-target-rda: maybe-all-gcc
+ configure-target-libada: maybe-all-gcc
+ configure-target-libgnatvsn: maybe-all-gcc
++configure-target-libgnatprj: maybe-all-gcc
+ configure-target-libgomp: maybe-all-gcc
+ configure-target-libitm: maybe-all-gcc
+ configure-target-libatomic: maybe-all-gcc
+@@ -51030,8 +51406,12 @@ all-stagefeedback-fixincludes: maybe-all
+ all-target-libada: maybe-all-gcc
+ all-gnattools: maybe-all-target-libada
+ all-gnattools: maybe-all-target-libgnatvsn
++all-gnattools: maybe-all-target-libgnatprj
+ all-target-libgnatvsn: maybe-all-target-libada
++all-target-libgnatprj: maybe-all-target-libgnatvsn
++all-target-libgnatprj: maybe-all-target-libiberty
+ all-gnattools: maybe-all-target-libstdc++-v3
++all-target-libgnatvsn: maybe-all-target-libstdc++-v3
+ all-lto-plugin: maybe-all-libiberty
+ 
+ all-stage1-lto-plugin: maybe-all-stage1-libiberty
+@@ -51628,6 +52008,7 @@ configure-target-boehm-gc: maybe-all-tar
+ configure-target-rda: maybe-all-target-libgcc
+ configure-target-libada: maybe-all-target-libgcc
+ configure-target-libgnatvsn: maybe-all-target-libgcc
++configure-target-libgnatprj: maybe-all-target-libgcc
+ configure-target-libgomp: maybe-all-target-libgcc
+ configure-target-libitm: maybe-all-target-libgcc
+ configure-target-libatomic: maybe-all-target-libgcc
+@@ -51684,6 +52065,8 @@ configure-target-libada: maybe-all-targe
+ 
+ configure-target-libgnatvsn: maybe-all-target-newlib maybe-all-target-libgloss
+ 
++configure-target-libgnatprj: maybe-all-target-newlib maybe-all-target-libgloss
++
+ configure-target-libgomp: maybe-all-target-newlib maybe-all-target-libgloss
+ 
+ configure-target-libitm: maybe-all-target-newlib maybe-all-target-libgloss
+Index: b/libgnatprj/config.in
+===================================================================
+--- /dev/null
++++ b/libgnatprj/config.in
+@@ -0,0 +1,565 @@
++/* config.in.  Generated from configure.ac by autoheader.  */
++
++/* Define if building universal (internal helper macro) */
++#undef AC_APPLE_UNIVERSAL_BUILD
++
++/* Define to one of _getb67, GETB67, getb67 for Cray-2 and Cray-YMP systems.
++   This function is required for alloca.c support on those systems. */
++#undef CRAY_STACKSEG_END
++
++/* Define to 1 if you have the <alloca.h> header file. */
++#undef HAVE_ALLOCA_H
++
++/* Define to 1 if you have the `asprintf' function. */
++#undef HAVE_ASPRINTF
++
++/* Define to 1 if you have the `atexit' function. */
++#undef HAVE_ATEXIT
++
++/* Define to 1 if you have the `basename' function. */
++#undef HAVE_BASENAME
++
++/* Define to 1 if you have the `bcmp' function. */
++#undef HAVE_BCMP
++
++/* Define to 1 if you have the `bcopy' function. */
++#undef HAVE_BCOPY
++
++/* Define to 1 if you have the `bsearch' function. */
++#undef HAVE_BSEARCH
++
++/* Define to 1 if you have the `bzero' function. */
++#undef HAVE_BZERO
++
++/* Define to 1 if you have the `calloc' function. */
++#undef HAVE_CALLOC
++
++/* Define to 1 if you have the `canonicalize_file_name' function. */
++#undef HAVE_CANONICALIZE_FILE_NAME
++
++/* Define to 1 if you have the `clock' function. */
++#undef HAVE_CLOCK
++
++/* Define to 1 if you have the declaration of `asprintf', and to 0 if you
++   don't. */
++#undef HAVE_DECL_ASPRINTF
++
++/* Define to 1 if you have the declaration of `basename(char *)', and to 0 if
++   you don't. */
++#undef HAVE_DECL_BASENAME
++
++/* Define to 1 if you have the declaration of `calloc', and to 0 if you don't.
++   */
++#undef HAVE_DECL_CALLOC
++
++/* Define to 1 if you have the declaration of `ffs', and to 0 if you don't. */
++#undef HAVE_DECL_FFS
++
++/* Define to 1 if you have the declaration of `getenv', and to 0 if you don't.
++   */
++#undef HAVE_DECL_GETENV
++
++/* Define to 1 if you have the declaration of `getopt', and to 0 if you don't.
++   */
++#undef HAVE_DECL_GETOPT
++
++/* Define to 1 if you have the declaration of `malloc', and to 0 if you don't.
++   */
++#undef HAVE_DECL_MALLOC
++
++/* Define to 1 if you have the declaration of `realloc', and to 0 if you
++   don't. */
++#undef HAVE_DECL_REALLOC
++
++/* Define to 1 if you have the declaration of `sbrk', and to 0 if you don't.
++   */
++#undef HAVE_DECL_SBRK
++
++/* Define to 1 if you have the declaration of `snprintf', and to 0 if you
++   don't. */
++#undef HAVE_DECL_SNPRINTF
++
++/* Define to 1 if you have the declaration of `strtol', and to 0 if you don't.
++   */
++#undef HAVE_DECL_STRTOL
++
++/* Define to 1 if you have the declaration of `strtoll', and to 0 if you
++   don't. */
++#undef HAVE_DECL_STRTOLL
++
++/* Define to 1 if you have the declaration of `strtoul', and to 0 if you
++   don't. */
++#undef HAVE_DECL_STRTOUL
++
++/* Define to 1 if you have the declaration of `strtoull', and to 0 if you
++   don't. */
++#undef HAVE_DECL_STRTOULL
++
++/* Define to 1 if you have the declaration of `strverscmp', and to 0 if you
++   don't. */
++#undef HAVE_DECL_STRVERSCMP
++
++/* Define to 1 if you have the declaration of `vasprintf', and to 0 if you
++   don't. */
++#undef HAVE_DECL_VASPRINTF
++
++/* Define to 1 if you have the declaration of `vsnprintf', and to 0 if you
++   don't. */
++#undef HAVE_DECL_VSNPRINTF
++
++/* Define to 1 if you have the `dup3' function. */
++#undef HAVE_DUP3
++
++/* Define to 1 if you have the <fcntl.h> header file. */
++#undef HAVE_FCNTL_H
++
++/* Define to 1 if you have the `ffs' function. */
++#undef HAVE_FFS
++
++/* Define to 1 if you have the `fork' function. */
++#undef HAVE_FORK
++
++/* Define to 1 if you have the `getcwd' function. */
++#undef HAVE_GETCWD
++
++/* Define to 1 if you have the `getpagesize' function. */
++#undef HAVE_GETPAGESIZE
++
++/* Define to 1 if you have the `getrlimit' function. */
++#undef HAVE_GETRLIMIT
++
++/* Define to 1 if you have the `getrusage' function. */
++#undef HAVE_GETRUSAGE
++
++/* Define to 1 if you have the `getsysinfo' function. */
++#undef HAVE_GETSYSINFO
++
++/* Define to 1 if you have the `gettimeofday' function. */
++#undef HAVE_GETTIMEOFDAY
++
++/* Define to 1 if you have the `index' function. */
++#undef HAVE_INDEX
++
++/* Define to 1 if you have the `insque' function. */
++#undef HAVE_INSQUE
++
++/* Define to 1 if the system has the type `intptr_t'. */
++#undef HAVE_INTPTR_T
++
++/* Define to 1 if you have the <inttypes.h> header file. */
++#undef HAVE_INTTYPES_H
++
++/* Define to 1 if you have the <limits.h> header file. */
++#undef HAVE_LIMITS_H
++
++/* Define if you have the `long long' type. */
++#undef HAVE_LONG_LONG
++
++/* Define to 1 if you have the <machine/hal_sysinfo.h> header file. */
++#undef HAVE_MACHINE_HAL_SYSINFO_H
++
++/* Define to 1 if you have the <malloc.h> header file. */
++#undef HAVE_MALLOC_H
++
++/* Define to 1 if you have the `memchr' function. */
++#undef HAVE_MEMCHR
++
++/* Define to 1 if you have the `memcmp' function. */
++#undef HAVE_MEMCMP
++
++/* Define to 1 if you have the `memcpy' function. */
++#undef HAVE_MEMCPY
++
++/* Define to 1 if you have the `memmem' function. */
++#undef HAVE_MEMMEM
++
++/* Define to 1 if you have the `memmove' function. */
++#undef HAVE_MEMMOVE
++
++/* Define to 1 if you have the <memory.h> header file. */
++#undef HAVE_MEMORY_H
++
++/* Define to 1 if you have the `memset' function. */
++#undef HAVE_MEMSET
++
++/* Define to 1 if you have the `mkstemps' function. */
++#undef HAVE_MKSTEMPS
++
++/* Define to 1 if you have a working `mmap' system call. */
++#undef HAVE_MMAP
++
++/* Define to 1 if you have the `on_exit' function. */
++#undef HAVE_ON_EXIT
++
++/* Define to 1 if you have the <process.h> header file. */
++#undef HAVE_PROCESS_H
++
++/* Define to 1 if you have the `psignal' function. */
++#undef HAVE_PSIGNAL
++
++/* Define to 1 if you have the `pstat_getdynamic' function. */
++#undef HAVE_PSTAT_GETDYNAMIC
++
++/* Define to 1 if you have the `pstat_getstatic' function. */
++#undef HAVE_PSTAT_GETSTATIC
++
++/* Define to 1 if you have the `putenv' function. */
++#undef HAVE_PUTENV
++
++/* Define to 1 if you have the `random' function. */
++#undef HAVE_RANDOM
++
++/* Define to 1 if you have the `realpath' function. */
++#undef HAVE_REALPATH
++
++/* Define to 1 if you have the `rename' function. */
++#undef HAVE_RENAME
++
++/* Define to 1 if you have the `rindex' function. */
++#undef HAVE_RINDEX
++
++/* Define to 1 if you have the `sbrk' function. */
++#undef HAVE_SBRK
++
++/* Define to 1 if you have the `setenv' function. */
++#undef HAVE_SETENV
++
++/* Define to 1 if you have the `setproctitle' function. */
++#undef HAVE_SETPROCTITLE
++
++/* Define to 1 if you have the `setrlimit' function. */
++#undef HAVE_SETRLIMIT
++
++/* Define to 1 if you have the `sigsetmask' function. */
++#undef HAVE_SIGSETMASK
++
++/* Define to 1 if you have the `snprintf' function. */
++#undef HAVE_SNPRINTF
++
++/* Define to 1 if you have the `spawnve' function. */
++#undef HAVE_SPAWNVE
++
++/* Define to 1 if you have the `spawnvpe' function. */
++#undef HAVE_SPAWNVPE
++
++/* Define to 1 if you have the <stdint.h> header file. */
++#undef HAVE_STDINT_H
++
++/* Define to 1 if you have the <stdio_ext.h> header file. */
++#undef HAVE_STDIO_EXT_H
++
++/* Define to 1 if you have the <stdlib.h> header file. */
++#undef HAVE_STDLIB_H
++
++/* Define to 1 if you have the `stpcpy' function. */
++#undef HAVE_STPCPY
++
++/* Define to 1 if you have the `stpncpy' function. */
++#undef HAVE_STPNCPY
++
++/* Define to 1 if you have the `strcasecmp' function. */
++#undef HAVE_STRCASECMP
++
++/* Define to 1 if you have the `strchr' function. */
++#undef HAVE_STRCHR
++
++/* Define to 1 if you have the `strdup' function. */
++#undef HAVE_STRDUP
++
++/* Define to 1 if you have the `strerror' function. */
++#undef HAVE_STRERROR
++
++/* Define to 1 if you have the <strings.h> header file. */
++#undef HAVE_STRINGS_H
++
++/* Define to 1 if you have the <string.h> header file. */
++#undef HAVE_STRING_H
++
++/* Define to 1 if you have the `strncasecmp' function. */
++#undef HAVE_STRNCASECMP
++
++/* Define to 1 if you have the `strndup' function. */
++#undef HAVE_STRNDUP
++
++/* Define to 1 if you have the `strnlen' function. */
++#undef HAVE_STRNLEN
++
++/* Define to 1 if you have the `strrchr' function. */
++#undef HAVE_STRRCHR
++
++/* Define to 1 if you have the `strsignal' function. */
++#undef HAVE_STRSIGNAL
++
++/* Define to 1 if you have the `strstr' function. */
++#undef HAVE_STRSTR
++
++/* Define to 1 if you have the `strtod' function. */
++#undef HAVE_STRTOD
++
++/* Define to 1 if you have the `strtol' function. */
++#undef HAVE_STRTOL
++
++/* Define to 1 if you have the `strtoll' function. */
++#undef HAVE_STRTOLL
++
++/* Define to 1 if you have the `strtoul' function. */
++#undef HAVE_STRTOUL
++
++/* Define to 1 if you have the `strtoull' function. */
++#undef HAVE_STRTOULL
++
++/* Define to 1 if you have the `strverscmp' function. */
++#undef HAVE_STRVERSCMP
++
++/* Define to 1 if you have the `sysconf' function. */
++#undef HAVE_SYSCONF
++
++/* Define to 1 if you have the `sysctl' function. */
++#undef HAVE_SYSCTL
++
++/* Define to 1 if you have the `sysmp' function. */
++#undef HAVE_SYSMP
++
++/* Define if you have the sys_errlist variable. */
++#undef HAVE_SYS_ERRLIST
++
++/* Define to 1 if you have the <sys/file.h> header file. */
++#undef HAVE_SYS_FILE_H
++
++/* Define to 1 if you have the <sys/mman.h> header file. */
++#undef HAVE_SYS_MMAN_H
++
++/* Define if you have the sys_nerr variable. */
++#undef HAVE_SYS_NERR
++
++/* Define to 1 if you have the <sys/param.h> header file. */
++#undef HAVE_SYS_PARAM_H
++
++/* Define to 1 if you have the <sys/prctl.h> header file. */
++#undef HAVE_SYS_PRCTL_H
++
++/* Define to 1 if you have the <sys/pstat.h> header file. */
++#undef HAVE_SYS_PSTAT_H
++
++/* Define to 1 if you have the <sys/resource.h> header file. */
++#undef HAVE_SYS_RESOURCE_H
++
++/* Define if you have the sys_siglist variable. */
++#undef HAVE_SYS_SIGLIST
++
++/* Define to 1 if you have the <sys/stat.h> header file. */
++#undef HAVE_SYS_STAT_H
++
++/* Define to 1 if you have the <sys/sysctl.h> header file. */
++#undef HAVE_SYS_SYSCTL_H
++
++/* Define to 1 if you have the <sys/sysinfo.h> header file. */
++#undef HAVE_SYS_SYSINFO_H
++
++/* Define to 1 if you have the <sys/sysmp.h> header file. */
++#undef HAVE_SYS_SYSMP_H
++
++/* Define to 1 if you have the <sys/systemcfg.h> header file. */
++#undef HAVE_SYS_SYSTEMCFG_H
++
++/* Define to 1 if you have the <sys/table.h> header file. */
++#undef HAVE_SYS_TABLE_H
++
++/* Define to 1 if you have the <sys/time.h> header file. */
++#undef HAVE_SYS_TIME_H
++
++/* Define to 1 if you have the <sys/types.h> header file. */
++#undef HAVE_SYS_TYPES_H
++
++/* Define to 1 if you have <sys/wait.h> that is POSIX.1 compatible. */
++#undef HAVE_SYS_WAIT_H
++
++/* Define to 1 if you have the `table' function. */
++#undef HAVE_TABLE
++
++/* Define to 1 if you have the `times' function. */
++#undef HAVE_TIMES
++
++/* Define to 1 if you have the <time.h> header file. */
++#undef HAVE_TIME_H
++
++/* Define to 1 if you have the `tmpnam' function. */
++#undef HAVE_TMPNAM
++
++/* Define if you have the \`uintptr_t' type. */
++#undef HAVE_UINTPTR_T
++
++/* Define to 1 if you have the <unistd.h> header file. */
++#undef HAVE_UNISTD_H
++
++/* Define to 1 if you have the `vasprintf' function. */
++#undef HAVE_VASPRINTF
++
++/* Define to 1 if you have the `vfork' function. */
++#undef HAVE_VFORK
++
++/* Define to 1 if you have the <vfork.h> header file. */
++#undef HAVE_VFORK_H
++
++/* Define to 1 if you have the `vfprintf' function. */
++#undef HAVE_VFPRINTF
++
++/* Define to 1 if you have the `vprintf' function. */
++#undef HAVE_VPRINTF
++
++/* Define to 1 if you have the `vsprintf' function. */
++#undef HAVE_VSPRINTF
++
++/* Define to 1 if you have the `wait3' function. */
++#undef HAVE_WAIT3
++
++/* Define to 1 if you have the `wait4' function. */
++#undef HAVE_WAIT4
++
++/* Define to 1 if you have the `waitpid' function. */
++#undef HAVE_WAITPID
++
++/* Define to 1 if `fork' works. */
++#undef HAVE_WORKING_FORK
++
++/* Define to 1 if `vfork' works. */
++#undef HAVE_WORKING_VFORK
++
++/* Define to 1 if you have the `_doprnt' function. */
++#undef HAVE__DOPRNT
++
++/* Define if you have the _system_configuration variable. */
++#undef HAVE__SYSTEM_CONFIGURATION
++
++/* Define to 1 if you have the `__fsetlocking' function. */
++#undef HAVE___FSETLOCKING
++
++/* Define if canonicalize_file_name is not declared in system header files. */
++#undef NEED_DECLARATION_CANONICALIZE_FILE_NAME
++
++/* Define if errno must be declared even when <errno.h> is included. */
++#undef NEED_DECLARATION_ERRNO
++
++/* Define to 1 if your C compiler doesn't accept -c and -o together. */
++#undef NO_MINUS_C_MINUS_O
++
++/* Define to the address where bug reports for this package should be sent. */
++#undef PACKAGE_BUGREPORT
++
++/* Define to the full name of this package. */
++#undef PACKAGE_NAME
++
++/* Define to the full name and version of this package. */
++#undef PACKAGE_STRING
++
++/* Define to the one symbol short name of this package. */
++#undef PACKAGE_TARNAME
++
++/* Define to the home page for this package. */
++#undef PACKAGE_URL
++
++/* Define to the version of this package. */
++#undef PACKAGE_VERSION
++
++/* The size of `int', as computed by sizeof. */
++#undef SIZEOF_INT
++
++/* The size of `long', as computed by sizeof. */
++#undef SIZEOF_LONG
++
++/* The size of `long long', as computed by sizeof. */
++#undef SIZEOF_LONG_LONG
++
++/* The size of `size_t', as computed by sizeof. */
++#undef SIZEOF_SIZE_T
++
++/* Define if you know the direction of stack growth for your system; otherwise
++   it will be automatically deduced at run-time. STACK_DIRECTION > 0 => grows
++   toward higher addresses STACK_DIRECTION < 0 => grows toward lower addresses
++   STACK_DIRECTION = 0 => direction of growth unknown */
++#undef STACK_DIRECTION
++
++/* Define to 1 if you have the ANSI C header files. */
++#undef STDC_HEADERS
++
++/* Define to 1 if you can safely include both <sys/time.h> and <time.h>. */
++#undef TIME_WITH_SYS_TIME
++
++/* Define to an unsigned 64-bit type available in the compiler. */
++#undef UNSIGNED_64BIT_TYPE
++
++/* Enable extensions on AIX 3, Interix.  */
++#ifndef _ALL_SOURCE
++# undef _ALL_SOURCE
++#endif
++/* Enable GNU extensions on systems that have them.  */
++#ifndef _GNU_SOURCE
++# undef _GNU_SOURCE
++#endif
++/* Enable threading extensions on Solaris.  */
++#ifndef _POSIX_PTHREAD_SEMANTICS
++# undef _POSIX_PTHREAD_SEMANTICS
++#endif
++/* Enable extensions on HP NonStop.  */
++#ifndef _TANDEM_SOURCE
++# undef _TANDEM_SOURCE
++#endif
++/* Enable general extensions on Solaris.  */
++#ifndef __EXTENSIONS__
++# undef __EXTENSIONS__
++#endif
++
++
++/* Define WORDS_BIGENDIAN to 1 if your processor stores words with the most
++   significant byte first (like Motorola and SPARC, unlike Intel). */
++#if defined AC_APPLE_UNIVERSAL_BUILD
++# if defined __BIG_ENDIAN__
++#  define WORDS_BIGENDIAN 1
++# endif
++#else
++# ifndef WORDS_BIGENDIAN
++#  undef WORDS_BIGENDIAN
++# endif
++#endif
++
++/* Number of bits in a file offset, on hosts where this is settable. */
++#undef _FILE_OFFSET_BITS
++
++/* Define for large files, on AIX-style hosts. */
++#undef _LARGE_FILES
++
++/* Define to 1 if on MINIX. */
++#undef _MINIX
++
++/* Define to 2 if the system does not provide POSIX.1 features except with
++   this defined. */
++#undef _POSIX_1_SOURCE
++
++/* Define to 1 if you need to in order for `stat' and other things to work. */
++#undef _POSIX_SOURCE
++
++/* Define to empty if `const' does not conform to ANSI C. */
++#undef const
++
++/* Define to `__inline__' or `__inline' if that's what the C compiler
++   calls it, or to nothing if 'inline' is not supported under any name.  */
++#ifndef __cplusplus
++#undef inline
++#endif
++
++/* Define to the type of a signed integer type wide enough to hold a pointer,
++   if such a type exists, and if the system does not define it. */
++#undef intptr_t
++
++/* Define to `int' if <sys/types.h> does not define. */
++#undef pid_t
++
++/* Define to `int' if <sys/types.h> does not define. */
++#undef ssize_t
++
++/* Define to the type of an unsigned integer type wide enough to hold a
++   pointer, if such a type exists, and if the system does not define it. */
++#undef uintptr_t
++
++/* Define as `fork' if `vfork' does not work. */
++#undef vfork
+Index: b/gcc/prefix.c
+===================================================================
+--- a/gcc/prefix.c
++++ b/gcc/prefix.c
+@@ -70,7 +70,10 @@ License along with GCC; see the file COP
+ #include <windows.h>
+ #endif
+ #include "prefix.h"
++
++#ifndef USED_FOR_TARGET
+ #include "common/common-target.h"
++#endif
+ 
+ static const char *std_prefix = PREFIX;
+ 
+@@ -284,7 +287,11 @@ update_path (const char *path, const cha
+ 	  && (p != result && IS_DIR_SEPARATOR (p[-1])))
+ 	{
+ 	  *p = 0;
++#ifndef USED_FOR_TARGET
+ 	  if (!targetm_common.always_strip_dotdot
++#else
++	  if (true
++#endif
+ 	      && access (result, X_OK) == 0)
+ 	    {
+ 	      *p = '.';

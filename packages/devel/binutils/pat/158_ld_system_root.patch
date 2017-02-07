@@ -1,0 +1,42 @@
+Index: b/ld/configure.ac
+===================================================================
+--- a/ld/configure.ac
++++ b/ld/configure.ac
+@@ -56,7 +56,9 @@
+  *) TARGET_SYSTEM_ROOT=$with_sysroot ;;
+  esac
+ 
++ if test "x$TARGET_SYSTEM_ROOT" != x/; then
+  TARGET_SYSTEM_ROOT_DEFINE='-DTARGET_SYSTEM_ROOT=\"$(TARGET_SYSTEM_ROOT)\"'
++ fi
+  use_sysroot=yes
+ 
+  if test "x$prefix" = xNONE; then
+Index: b/ld/configure
+===================================================================
+--- a/ld/configure
++++ b/ld/configure
+@@ -4283,7 +4283,9 @@
+  *) TARGET_SYSTEM_ROOT=$with_sysroot ;;
+  esac
+ 
++ if test "x$TARGET_SYSTEM_ROOT" != x/; then
+  TARGET_SYSTEM_ROOT_DEFINE='-DTARGET_SYSTEM_ROOT=\"$(TARGET_SYSTEM_ROOT)\"'
++ fi
+  use_sysroot=yes
+ 
+  if test "x$prefix" = xNONE; then
+Index: b/ld/ldmain.c
+===================================================================
+--- a/ld/ldmain.c
++++ b/ld/ldmain.c
+@@ -226,8 +226,8 @@
+     {
+       if (*TARGET_SYSTEM_ROOT == 0)
+ 	{
+-	  einfo ("%P%F: this linker was not configured to use sysroots\n");
+ 	  ld_sysroot = "";
++	  ld_canon_sysroot = "";
+ 	}
+       else
+ 	ld_canon_sysroot = lrealpath (ld_sysroot);

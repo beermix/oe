@@ -1,0 +1,26 @@
+# DP: gdc: Always link with -ldl when linking with -lgphobos.
+
+--- a/gcc/d/d-spec.c
++++ b/gcc/d/d-spec.c
+@@ -75,6 +75,10 @@
+ #define LIBDRUNTIME_PROFILE LIBDRUNTIME
+ #endif
+ 
++#ifndef DL_LIBRARY
++#define DL_LIBRARY "dl"
++#endif
++
+ void
+ lang_specific_driver (cl_decoded_option **in_decoded_options,
+ 		      unsigned int *in_decoded_options_count,
+@@ -494,6 +498,10 @@
+ 		       CL_DRIVER, &new_decoded_options[j]);
+       added_libraries++;
+       j++;
++      generate_option (OPT_l, DL_LIBRARY, 1,
++		       CL_DRIVER, &new_decoded_options[j]);
++      added_libraries++;
++      j++;
+ 
+ #ifdef HAVE_LD_STATIC_DYNAMIC
+       if (library > 1 && !static_link)

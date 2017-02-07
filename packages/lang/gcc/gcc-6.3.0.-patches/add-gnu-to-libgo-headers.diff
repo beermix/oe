@@ -1,0 +1,793 @@
+Index: gcc-6-6.2.1-4.1/src/libgo/go/archive/tar/stat_atim.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/archive/tar/stat_atim.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/archive/tar/stat_atim.go
+@@ -2,7 +2,7 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-// +build linux dragonfly openbsd solaris
++// +build linux dragonfly openbsd solaris gnu
+ 
+ package tar
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/go/net/cgo_resnew.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/net/cgo_resnew.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/net/cgo_resnew.go
+@@ -3,7 +3,7 @@
+ // license that can be found in the LICENSE file.
+ 
+ // +build cgo,!netgo
+-// +build darwin linux,!android netbsd solaris
++// +build darwin linux,!android netbsd solaris gnu
+ 
+ package net
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/go/net/cgo_socknew.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/net/cgo_socknew.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/net/cgo_socknew.go
+@@ -3,7 +3,7 @@
+ // license that can be found in the LICENSE file.
+ 
+ // +build cgo,!netgo
+-// +build android linux solaris
++// +build android linux solaris gnu
+ 
+ package net
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/go/net/hook_cloexec.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/net/hook_cloexec.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/net/hook_cloexec.go
+@@ -2,7 +2,7 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-// +build freebsd linux
++// +build freebsd linux gnu
+ 
+ package net
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/go/net/main_unix_test.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/net/main_unix_test.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/net/main_unix_test.go
+@@ -2,7 +2,7 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-// +build darwin dragonfly freebsd linux nacl netbsd openbsd solaris
++// +build darwin dragonfly freebsd linux nacl netbsd openbsd solaris gnu
+ 
+ package net
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/go/net/sock_cloexec.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/net/sock_cloexec.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/net/sock_cloexec.go
+@@ -5,7 +5,7 @@
+ // This file implements sysSocket and accept for platforms that
+ // provide a fast path for setting SetNonblock and CloseOnExec.
+ 
+-// +build freebsd linux
++// +build freebsd linux gnu
+ 
+ package net
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/go/net/sockoptip_posix.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/net/sockoptip_posix.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/net/sockoptip_posix.go
+@@ -2,7 +2,7 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-// +build darwin dragonfly freebsd linux netbsd openbsd windows
++// +build darwin dragonfly freebsd linux netbsd openbsd windows gnu
+ 
+ package net
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/go/syscall/exec_unix.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/syscall/exec_unix.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/syscall/exec_unix.go
+@@ -2,7 +2,7 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-// +build darwin dragonfly freebsd linux netbsd openbsd solaris
++// +build darwin dragonfly freebsd linux netbsd openbsd solaris gnu
+ 
+ // Fork, exec, wait, etc.
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/runtime/netpoll_select.c
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/runtime/netpoll_select.c
++++ gcc-6-6.2.1-4.1/src/libgo/runtime/netpoll_select.c
+@@ -2,7 +2,7 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-// +build solaris
++// +build solaris gnu
+ 
+ #include "config.h"
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/go/os/exec/lp_unix.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/os/exec/lp_unix.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/os/exec/lp_unix.go
+@@ -2,7 +2,7 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-// +build darwin dragonfly freebsd linux nacl netbsd openbsd solaris
++// +build darwin dragonfly freebsd linux nacl netbsd openbsd solaris gnu
+ 
+ package exec
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/go/os/exec/lp_unix_test.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/os/exec/lp_unix_test.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/os/exec/lp_unix_test.go
+@@ -2,7 +2,7 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-// +build darwin dragonfly freebsd linux netbsd openbsd solaris
++// +build darwin dragonfly freebsd linux netbsd openbsd solaris gnu
+ 
+ package exec
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/go/os/os_unix_test.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/os/os_unix_test.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/os/os_unix_test.go
+@@ -2,7 +2,7 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-// +build darwin dragonfly freebsd linux netbsd openbsd solaris
++// +build darwin dragonfly freebsd linux netbsd openbsd solaris gnu
+ 
+ package os_test
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/go/os/signal/signal_test.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/os/signal/signal_test.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/os/signal/signal_test.go
+@@ -2,7 +2,7 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-// +build darwin dragonfly freebsd linux netbsd openbsd solaris
++// +build darwin dragonfly freebsd linux netbsd openbsd solaris gnu
+ 
+ package signal
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/go/os/signal/signal_unix.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/os/signal/signal_unix.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/os/signal/signal_unix.go
+@@ -2,7 +2,7 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-// +build darwin dragonfly freebsd linux nacl netbsd openbsd solaris windows
++// +build darwin dragonfly freebsd linux nacl netbsd openbsd solaris windows gnu
+ 
+ package signal
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/go/runtime/crash_unix_test.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/runtime/crash_unix_test.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/runtime/crash_unix_test.go
+@@ -2,7 +2,7 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-// +build darwin dragonfly freebsd linux netbsd openbsd solaris
++// +build darwin dragonfly freebsd linux netbsd openbsd solaris gnu
+ 
+ package runtime_test
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/go/syscall/exec_unix_test.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/syscall/exec_unix_test.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/syscall/exec_unix_test.go
+@@ -2,7 +2,7 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-// +build darwin dragonfly freebsd linux netbsd openbsd solaris
++// +build darwin dragonfly freebsd linux netbsd openbsd solaris gnu
+ 
+ package syscall_test
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/go/os/error_unix.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/os/error_unix.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/os/error_unix.go
+@@ -2,7 +2,7 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-// +build darwin dragonfly freebsd linux nacl netbsd openbsd solaris
++// +build darwin dragonfly freebsd linux nacl netbsd openbsd solaris gnu
+ 
+ package os
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/go/os/file_posix.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/os/file_posix.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/os/file_posix.go
+@@ -2,7 +2,7 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-// +build darwin dragonfly freebsd linux nacl netbsd openbsd solaris windows
++// +build darwin dragonfly freebsd linux nacl netbsd openbsd solaris windows gnu
+ 
+ package os
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/go/os/path_unix.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/os/path_unix.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/os/path_unix.go
+@@ -2,7 +2,7 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-// +build darwin dragonfly freebsd linux nacl netbsd openbsd solaris
++// +build darwin dragonfly freebsd linux nacl netbsd openbsd solaris gnu
+ 
+ package os
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/go/os/sys_unix.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/os/sys_unix.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/os/sys_unix.go
+@@ -2,7 +2,7 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-// +build dragonfly linux netbsd openbsd solaris
++// +build dragonfly linux netbsd openbsd solaris gnu
+ 
+ package os
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/go/os/user/decls_unix.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/os/user/decls_unix.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/os/user/decls_unix.go
+@@ -2,7 +2,7 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-// +build darwin dragonfly freebsd linux netbsd openbsd
++// +build darwin dragonfly freebsd linux netbsd openbsd gnu
+ // +build cgo
+ 
+ package user
+Index: gcc-6-6.2.1-4.1/src/libgo/go/os/user/lookup_unix.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/os/user/lookup_unix.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/os/user/lookup_unix.go
+@@ -2,7 +2,7 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-// +build darwin dragonfly freebsd !android,linux netbsd openbsd solaris
++// +build darwin dragonfly freebsd !android,linux netbsd openbsd solaris gnu
+ // +build cgo
+ 
+ package user
+Index: gcc-6-6.2.1-4.1/src/libgo/go/runtime/runtime_unix_test.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/runtime/runtime_unix_test.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/runtime/runtime_unix_test.go
+@@ -6,7 +6,7 @@
+ // We need a fast system call to provoke the race,
+ // and Close(-1) is nearly universally fast.
+ 
+-// +build darwin dragonfly freebsd linux netbsd openbsd plan9
++// +build darwin dragonfly freebsd linux netbsd openbsd plan9 gnu
+ 
+ package runtime_test
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/go/syscall/env_unix.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/syscall/env_unix.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/syscall/env_unix.go
+@@ -2,7 +2,7 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-// +build darwin dragonfly freebsd linux nacl netbsd openbsd solaris
++// +build darwin dragonfly freebsd linux nacl netbsd openbsd solaris gnu
+ 
+ // Unix environment variables.
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/go/syscall/exec_bsd.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/syscall/exec_bsd.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/syscall/exec_bsd.go
+@@ -2,7 +2,7 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-// +build darwin dragonfly freebsd netbsd openbsd
++// +build darwin dragonfly freebsd netbsd openbsd gnu
+ 
+ package syscall
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/go/syscall/export_unix_test.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/syscall/export_unix_test.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/syscall/export_unix_test.go
+@@ -2,7 +2,7 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-// +build darwin dragonfly freebsd linux netbsd openbsd
++// +build darwin dragonfly freebsd linux netbsd openbsd gnu
+ 
+ package syscall
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/go/syscall/mmap_unix_test.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/syscall/mmap_unix_test.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/syscall/mmap_unix_test.go
+@@ -2,7 +2,7 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-// +build darwin dragonfly freebsd linux netbsd openbsd
++// +build darwin dragonfly freebsd linux netbsd openbsd gnu
+ 
+ package syscall_test
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/go/syscall/sockcmsg_unix.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/syscall/sockcmsg_unix.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/syscall/sockcmsg_unix.go
+@@ -2,7 +2,7 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-// +build darwin dragonfly freebsd linux netbsd openbsd solaris
++// +build darwin dragonfly freebsd linux netbsd openbsd solaris gnu
+ 
+ // Socket control messages
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/go/syscall/syscall_unix.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/syscall/syscall_unix.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/syscall/syscall_unix.go
+@@ -2,7 +2,7 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-// +build darwin dragonfly freebsd linux netbsd openbsd solaris
++// +build darwin dragonfly freebsd linux netbsd openbsd solaris gnu
+ 
+ package syscall
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/go/time/sys_unix.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/time/sys_unix.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/time/sys_unix.go
+@@ -2,7 +2,7 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-// +build darwin dragonfly freebsd linux nacl netbsd openbsd solaris
++// +build darwin dragonfly freebsd linux nacl netbsd openbsd solaris gnu
+ 
+ package time
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/go/time/zoneinfo_unix.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/time/zoneinfo_unix.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/time/zoneinfo_unix.go
+@@ -2,7 +2,7 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-// +build darwin,386 darwin,amd64 dragonfly freebsd linux nacl netbsd openbsd solaris
++// +build darwin,386 darwin,amd64 dragonfly freebsd linux nacl netbsd openbsd solaris gnu
+ 
+ // Parse "zoneinfo" time zone file.
+ // This is a fairly standard file format used on OS X, Linux, BSD, Sun, and others.
+Index: gcc-6-6.2.1-4.1/src/libgo/go/net/addrselect.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/net/addrselect.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/net/addrselect.go
+@@ -2,7 +2,7 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-// +build darwin dragonfly freebsd linux netbsd openbsd solaris
++// +build darwin dragonfly freebsd linux netbsd openbsd solaris gnu
+ 
+ // Minimal RFC 6724 address selection.
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/go/net/addrselect_test.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/net/addrselect_test.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/net/addrselect_test.go
+@@ -2,7 +2,7 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-// +build darwin dragonfly freebsd linux netbsd openbsd solaris
++// +build darwin dragonfly freebsd linux netbsd openbsd solaris gnu
+ 
+ package net
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/go/net/cgo_unix.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/net/cgo_unix.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/net/cgo_unix.go
+@@ -3,7 +3,7 @@
+ // license that can be found in the LICENSE file.
+ 
+ // +build cgo,!netgo
+-// +build darwin dragonfly freebsd linux netbsd openbsd solaris
++// +build darwin dragonfly freebsd linux netbsd openbsd solaris gnu
+ 
+ package net
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/go/net/cgo_unix_test.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/net/cgo_unix_test.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/net/cgo_unix_test.go
+@@ -3,7 +3,7 @@
+ // license that can be found in the LICENSE file.
+ 
+ // +build cgo,!netgo
+-// +build darwin dragonfly freebsd linux netbsd openbsd solaris
++// +build darwin dragonfly freebsd linux netbsd openbsd solaris gnu
+ 
+ package net
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/go/net/conf.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/net/conf.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/net/conf.go
+@@ -2,7 +2,7 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-// +build darwin dragonfly freebsd linux netbsd openbsd solaris
++// +build darwin dragonfly freebsd linux netbsd openbsd solaris gnu
+ 
+ package net
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/go/net/conf_test.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/net/conf_test.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/net/conf_test.go
+@@ -2,7 +2,7 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-// +build darwin dragonfly freebsd linux netbsd openbsd solaris
++// +build darwin dragonfly freebsd linux netbsd openbsd solaris gnu
+ 
+ package net
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/go/net/dnsclient_unix.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/net/dnsclient_unix.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/net/dnsclient_unix.go
+@@ -2,7 +2,7 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-// +build darwin dragonfly freebsd linux netbsd openbsd solaris
++// +build darwin dragonfly freebsd linux netbsd openbsd solaris gnu
+ 
+ // DNS client: see RFC 1035.
+ // Has to be linked into package net for Dial.
+Index: gcc-6-6.2.1-4.1/src/libgo/go/net/dnsconfig_unix.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/net/dnsconfig_unix.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/net/dnsconfig_unix.go
+@@ -2,7 +2,7 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-// +build darwin dragonfly freebsd linux netbsd openbsd solaris
++// +build darwin dragonfly freebsd linux netbsd openbsd solaris gnu
+ 
+ // Read system DNS config from /etc/resolv.conf
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/go/net/dnsconfig_unix_test.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/net/dnsconfig_unix_test.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/net/dnsconfig_unix_test.go
+@@ -2,7 +2,7 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-// +build darwin dragonfly freebsd linux netbsd openbsd solaris
++// +build darwin dragonfly freebsd linux netbsd openbsd solaris gnu
+ 
+ package net
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/go/net/fd_posix.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/net/fd_posix.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/net/fd_posix.go
+@@ -2,7 +2,7 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-// +build darwin dragonfly freebsd linux nacl netbsd openbsd solaris windows
++// +build darwin dragonfly freebsd linux nacl netbsd openbsd solaris windows gnu
+ 
+ package net
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/go/net/fd_posix_test.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/net/fd_posix_test.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/net/fd_posix_test.go
+@@ -2,7 +2,7 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-// +build darwin dragonfly freebsd linux nacl netbsd openbsd solaris windows
++// +build darwin dragonfly freebsd linux nacl netbsd openbsd solaris windows gnu
+ 
+ package net
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/go/net/fd_unix.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/net/fd_unix.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/net/fd_unix.go
+@@ -2,7 +2,7 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-// +build darwin dragonfly freebsd linux nacl netbsd openbsd solaris
++// +build darwin dragonfly freebsd linux nacl netbsd openbsd solaris gnu
+ 
+ package net
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/go/net/file_unix.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/net/file_unix.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/net/file_unix.go
+@@ -2,7 +2,7 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-// +build darwin dragonfly freebsd linux netbsd openbsd solaris
++// +build darwin dragonfly freebsd linux netbsd openbsd solaris gnu
+ 
+ package net
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/go/net/hook_unix.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/net/hook_unix.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/net/hook_unix.go
+@@ -2,7 +2,7 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-// +build darwin dragonfly freebsd linux nacl netbsd openbsd solaris
++// +build darwin dragonfly freebsd linux nacl netbsd openbsd solaris gnu
+ 
+ package net
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/go/net/interface_stub.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/net/interface_stub.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/net/interface_stub.go
+@@ -2,7 +2,7 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-// +build nacl plan9 solaris
++// +build nacl plan9 solaris gnu
+ 
+ package net
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/go/net/iprawsock_posix.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/net/iprawsock_posix.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/net/iprawsock_posix.go
+@@ -2,7 +2,7 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-// +build darwin dragonfly freebsd linux nacl netbsd openbsd solaris windows
++// +build darwin dragonfly freebsd linux nacl netbsd openbsd solaris windows gnu
+ 
+ package net
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/go/net/ipsock_posix.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/net/ipsock_posix.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/net/ipsock_posix.go
+@@ -2,7 +2,7 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-// +build darwin dragonfly freebsd linux nacl netbsd openbsd solaris windows
++// +build darwin dragonfly freebsd linux nacl netbsd openbsd solaris windows gnu
+ 
+ // Internet protocol family sockets for POSIX
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/go/net/lookup_unix.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/net/lookup_unix.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/net/lookup_unix.go
+@@ -2,7 +2,7 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-// +build darwin dragonfly freebsd linux netbsd openbsd solaris
++// +build darwin dragonfly freebsd linux netbsd openbsd solaris gnu
+ 
+ package net
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/go/net/nss.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/net/nss.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/net/nss.go
+@@ -2,7 +2,7 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-// +build darwin dragonfly freebsd linux netbsd openbsd solaris
++// +build darwin dragonfly freebsd linux netbsd openbsd solaris gnu
+ 
+ package net
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/go/net/nss_test.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/net/nss_test.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/net/nss_test.go
+@@ -2,7 +2,7 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-// +build darwin dragonfly freebsd linux netbsd openbsd solaris
++// +build darwin dragonfly freebsd linux netbsd openbsd solaris gnu
+ 
+ package net
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/go/net/port_unix.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/net/port_unix.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/net/port_unix.go
+@@ -2,7 +2,7 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-// +build darwin dragonfly freebsd linux netbsd openbsd solaris
++// +build darwin dragonfly freebsd linux netbsd openbsd solaris gnu
+ 
+ // Read system port mappings from /etc/services
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/go/net/sockopt_posix.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/net/sockopt_posix.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/net/sockopt_posix.go
+@@ -2,7 +2,7 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-// +build darwin dragonfly freebsd linux netbsd openbsd solaris windows
++// +build darwin dragonfly freebsd linux netbsd openbsd solaris windows gnu
+ 
+ package net
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/go/net/sock_posix.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/net/sock_posix.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/net/sock_posix.go
+@@ -2,7 +2,7 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-// +build darwin dragonfly freebsd linux nacl netbsd openbsd solaris windows
++// +build darwin dragonfly freebsd linux nacl netbsd openbsd solaris windows gnu
+ 
+ package net
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/go/net/tcpsockopt_posix.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/net/tcpsockopt_posix.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/net/tcpsockopt_posix.go
+@@ -2,7 +2,7 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-// +build darwin dragonfly freebsd linux netbsd openbsd solaris windows
++// +build darwin dragonfly freebsd linux netbsd openbsd solaris windows gnu
+ 
+ package net
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/go/net/tcpsockopt_unix.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/net/tcpsockopt_unix.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/net/tcpsockopt_unix.go
+@@ -2,7 +2,7 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-// +build freebsd linux netbsd
++// +build freebsd linux netbsd gnu
+ 
+ package net
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/go/net/tcpsock_posix.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/net/tcpsock_posix.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/net/tcpsock_posix.go
+@@ -2,7 +2,7 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-// +build darwin dragonfly freebsd linux nacl netbsd openbsd solaris windows
++// +build darwin dragonfly freebsd linux nacl netbsd openbsd solaris windows gnu
+ 
+ package net
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/go/net/udpsock_posix.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/net/udpsock_posix.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/net/udpsock_posix.go
+@@ -2,7 +2,7 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-// +build darwin dragonfly freebsd linux nacl netbsd openbsd solaris windows
++// +build darwin dragonfly freebsd linux nacl netbsd openbsd solaris windows gnu
+ 
+ package net
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/go/net/unixsock_posix.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/net/unixsock_posix.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/net/unixsock_posix.go
+@@ -2,7 +2,7 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-// +build darwin dragonfly freebsd linux nacl netbsd openbsd solaris windows
++// +build darwin dragonfly freebsd linux nacl netbsd openbsd solaris windows gnu
+ 
+ package net
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/go/os/exec_posix.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/os/exec_posix.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/os/exec_posix.go
+@@ -2,7 +2,7 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-// +build darwin dragonfly freebsd linux nacl netbsd openbsd solaris windows
++// +build darwin dragonfly freebsd linux nacl netbsd openbsd solaris windows gnu
+ 
+ package os
+ 
+Index: gcc-6-6.2.1-4.1/src/libgo/go/os/file_unix.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/os/file_unix.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/os/file_unix.go
+@@ -2,7 +2,7 @@
+ // Use of this source code is governed by a BSD-style
+ // license that can be found in the LICENSE file.
+ 
+-// +build darwin dragonfly freebsd linux nacl netbsd openbsd solaris
++// +build darwin dragonfly freebsd linux nacl netbsd openbsd solaris gnu
+ 
+ package os
+ 

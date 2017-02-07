@@ -1,0 +1,246 @@
+# DP: Revert PR PR target/77455, already in the Linaro branch
+
+--- a/gcc/testsuite/gcc.target/aarch64/eh_return.c
++++ b/gcc/testsuite/gcc.target/aarch64/eh_return.c
+@@ -1,82 +0,0 @@
+-/* { dg-do run } */
+-/* { dg-options "-O2 -fno-inline" } */
+-
+-#include <stdlib.h>
+-#include <stdio.h>
+-
+-int val, test, failed;
+-
+-int main (void);
+-
+-void
+-eh0 (void *p)
+-{
+-  val = (int)(long)p & 7;
+-  if (val)
+-    abort ();
+-}
+-
+-void
+-eh1 (void *p, int x)
+-{
+-  void *q = __builtin_alloca (x);
+-  eh0 (q);
+-  __builtin_eh_return (0, p);
+-}
+-
+-void
+-eh2a (int a,int b,int c,int d,int e,int f,int g,int h, void *p)
+-{
+-  val = a + b + c + d + e + f + g + h +  (int)(long)p & 7;
+-}
+-
+-void
+-eh2 (void *p)
+-{
+-  eh2a (val, val, val, val, val, val, val, val, p);
+-  __builtin_eh_return (0, p);
+-}
+-
+-
+-void
+-continuation (void)
+-{
+-  test++;
+-  main ();
+-}
+-
+-void
+-fail (void)
+-{
+-  failed = 1;
+-  printf ("failed\n");
+-  continuation ();
+-}
+-
+-void
+-do_test1 (void)
+-{
+-  if (!val)
+-    eh1 (continuation, 100);
+-  fail ();
+-}
+-
+-void
+-do_test2 (void)
+-{
+-  if (!val)
+-    eh2 (continuation);
+-  fail ();
+-}
+-
+-int
+-main (void)
+-{
+-  if (test == 0)
+-    do_test1 ();
+-  if (test == 1)
+-    do_test2 ();
+-  if (failed || test != 2)
+-    exit (1);
+-  exit (0);
+-}
+--- a/gcc/config/aarch64/aarch64.md
++++ b/gcc/config/aarch64/aarch64.md
+@@ -587,6 +587,25 @@
+   [(set_attr "type" "branch")]
+ )
+ 
++(define_insn "eh_return"
++  [(unspec_volatile [(match_operand:DI 0 "register_operand" "r")]
++    UNSPECV_EH_RETURN)]
++  ""
++  "#"
++  [(set_attr "type" "branch")]
++
++)
++
++(define_split
++  [(unspec_volatile [(match_operand:DI 0 "register_operand" "")]
++    UNSPECV_EH_RETURN)]
++  "reload_completed"
++  [(set (match_dup 1) (match_dup 0))]
++  {
++    operands[1] = aarch64_final_eh_return_addr ();
++  }
++)
++
+ (define_insn "*cb<optab><mode>1"
+   [(set (pc) (if_then_else (EQL (match_operand:GPI 0 "register_operand" "r")
+ 				(const_int 0))
+--- a/gcc/config/aarch64/aarch64-protos.h
++++ b/gcc/config/aarch64/aarch64-protos.h
+@@ -338,7 +338,7 @@
+ int aarch64_simd_attr_length_move (rtx_insn *);
+ int aarch64_uxt_size (int, HOST_WIDE_INT);
+ int aarch64_vec_fpconst_pow_of_2 (rtx);
+-rtx aarch64_eh_return_handler_rtx (void);
++rtx aarch64_final_eh_return_addr (void);
+ rtx aarch64_legitimize_reload_address (rtx *, machine_mode, int, int, int);
+ rtx aarch64_mask_from_zextract_ops (rtx, rtx);
+ const char *aarch64_output_move_struct (rtx *operands);
+--- a/gcc/config/aarch64/aarch64.c
++++ b/gcc/config/aarch64/aarch64.c
+@@ -2480,10 +2480,6 @@
+       && (!crtl->is_leaf || df_regs_ever_live_p (LR_REGNUM)))
+     return true;
+ 
+-  /* Force a frame pointer for EH returns so the return address is at FP+8.  */
+-  if (crtl->calls_eh_return)
+-    return true;
+-
+   return false;
+ }
+ 
+@@ -3040,8 +3036,7 @@
+   rtx_insn *insn;
+   /* We need to add memory barrier to prevent read from deallocated stack.  */
+   bool need_barrier_p = (get_frame_size () != 0
+-			 || cfun->machine->frame.saved_varargs_size
+-			 || crtl->calls_eh_return);
++			 || cfun->machine->frame.saved_varargs_size);
+ 
+   aarch64_layout_frame ();
+ 
+@@ -3194,40 +3189,52 @@
+     emit_jump_insn (ret_rtx);
+ }
+ 
+-/* Implement EH_RETURN_HANDLER_RTX.  EH returns need to either return
+-   normally or return to a previous frame after unwinding.
++/* Return the place to copy the exception unwinding return address to.
++   This will probably be a stack slot, but could (in theory be the
++   return register).  */
++rtx
++aarch64_final_eh_return_addr (void)
++{
++  HOST_WIDE_INT fp_offset;
+ 
+-   An EH return uses a single shared return sequence.  The epilogue is
+-   exactly like a normal epilogue except that it has an extra input
+-   register (EH_RETURN_STACKADJ_RTX) which contains the stack adjustment
+-   that must be applied after the frame has been destroyed.  An extra label
+-   is inserted before the epilogue which initializes this register to zero,
+-   and this is the entry point for a normal return.
++  aarch64_layout_frame ();
+ 
+-   An actual EH return updates the return address, initializes the stack
+-   adjustment and jumps directly into the epilogue (bypassing the zeroing
+-   of the adjustment).  Since the return address is typically saved on the
+-   stack when a function makes a call, the saved LR must be updated outside
+-   the epilogue.
++  fp_offset = cfun->machine->frame.frame_size
++	      - cfun->machine->frame.hard_fp_offset;
+ 
+-   This poses problems as the store is generated well before the epilogue,
+-   so the offset of LR is not known yet.  Also optimizations will remove the
+-   store as it appears dead, even after the epilogue is generated (as the
+-   base or offset for loading LR is different in many cases).
++  if (cfun->machine->frame.reg_offset[LR_REGNUM] < 0)
++    return gen_rtx_REG (DImode, LR_REGNUM);
+ 
+-   To avoid these problems this implementation forces the frame pointer
+-   in eh_return functions so that the location of LR is fixed and known early.
+-   It also marks the store volatile, so no optimization is permitted to
+-   remove the store.  */
+-rtx
+-aarch64_eh_return_handler_rtx (void)
+-{
+-  rtx tmp = gen_frame_mem (Pmode,
+-    plus_constant (Pmode, hard_frame_pointer_rtx, UNITS_PER_WORD));
++  /* DSE and CSELIB do not detect an alias between sp+k1 and fp+k2.  This can
++     result in a store to save LR introduced by builtin_eh_return () being
++     incorrectly deleted because the alias is not detected.
++     So in the calculation of the address to copy the exception unwinding
++     return address to, we note 2 cases.
++     If FP is needed and the fp_offset is 0, it means that SP = FP and hence
++     we return a SP-relative location since all the addresses are SP-relative
++     in this case.  This prevents the store from being optimized away.
++     If the fp_offset is not 0, then the addresses will be FP-relative and
++     therefore we return a FP-relative location.  */
+ 
+-  /* Mark the store volatile, so no optimization is permitted to remove it.  */
+-  MEM_VOLATILE_P (tmp) = true;
+-  return tmp;
++  if (frame_pointer_needed)
++    {
++      if (fp_offset)
++        return gen_frame_mem (DImode,
++			      plus_constant (Pmode, hard_frame_pointer_rtx, UNITS_PER_WORD));
++      else
++        return gen_frame_mem (DImode,
++			      plus_constant (Pmode, stack_pointer_rtx, UNITS_PER_WORD));
++    }
++
++  /* If FP is not needed, we calculate the location of LR, which would be
++     at the top of the saved registers block.  */
++
++  return gen_frame_mem (DImode,
++			plus_constant (Pmode,
++				       stack_pointer_rtx,
++				       fp_offset
++				       + cfun->machine->frame.saved_regs_size
++				       - 2 * UNITS_PER_WORD));
+ }
+ 
+ /* Possibly output code to build up a constant in a register.  For
+--- a/gcc/config/aarch64/aarch64.h
++++ b/gcc/config/aarch64/aarch64.h
+@@ -389,9 +389,9 @@
+ #define ASM_DECLARE_FUNCTION_NAME(STR, NAME, DECL)	\
+   aarch64_declare_function_name (STR, NAME, DECL)
+ 
+-/* For EH returns X4 contains the stack adjustment.  */
+-#define EH_RETURN_STACKADJ_RTX	gen_rtx_REG (Pmode, R4_REGNUM)
+-#define EH_RETURN_HANDLER_RTX  aarch64_eh_return_handler_rtx ()
++/* The register that holds the return address in exception handlers.  */
++#define AARCH64_EH_STACKADJ_REGNUM	(R0_REGNUM + 4)
++#define EH_RETURN_STACKADJ_RTX	gen_rtx_REG (Pmode, AARCH64_EH_STACKADJ_REGNUM)
+ 
+ /* Don't use __builtin_setjmp until we've defined it.  */
+ #undef DONT_USE_BUILTIN_SETJMP

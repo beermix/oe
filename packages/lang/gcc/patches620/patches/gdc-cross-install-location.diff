@@ -1,0 +1,21 @@
+--- a/libphobos/configure.ac
++++ b/libphobos/configure.ac
+@@ -94,6 +94,7 @@
+ DRUNTIME_LIBBACKTRACE_SETUP
+ DRUNTIME_INSTALL_DIRECTORIES
+ DRUNTIME_VERSION
++# trigger rebuild of the configure file
+ 
+ # Set default flags (after DRUNTIME_WERROR!)
+ if test -z "$DFLAGS"; then
+--- a/libphobos/m4/druntime.m4
++++ b/libphobos/m4/druntime.m4
+@@ -78,7 +78,7 @@ AC_DEFUN([DRUNTIME_INSTALL_DIRECTORIES],
+   AC_SUBST(toolexeclibdir)
+ 
+   # Default case for install directory for D sources files.
+-  gdc_include_dir='${libdir}/gcc/${target_alias}'/${d_gcc_ver}/include/d
++  gdc_include_dir='${libdir}/gcc-cross/${target_alias}'/${d_gcc_ver}/include/d
+   AC_SUBST(gdc_include_dir)
+ ])
+ 

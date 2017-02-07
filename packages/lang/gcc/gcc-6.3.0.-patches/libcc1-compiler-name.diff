@@ -1,0 +1,24 @@
+# DP: Don't add the configured prefix to libcc1's compiler name.
+
+--- a/libcc1/Makefile.am
++++ b/libcc1/Makefile.am
+@@ -49,7 +49,7 @@
+ # Put this in a header so we don't run sed for each compilation.  This
+ # is also simpler to debug as one can easily see the constant.
+ compiler-name.h: Makefile
+-	echo "#define COMPILER_NAME \"`echo gcc | sed '$(transform)'`\"" > $@
++	echo "#define COMPILER_NAME \"`echo gcc-6`\"" > $@
+ 
+ 
+ shared_source = callbacks.cc callbacks.hh connection.cc connection.hh \
+--- a/libcc1/Makefile.in
++++ b/libcc1/Makefile.in
+@@ -674,7 +674,7 @@
+ # Put this in a header so we don't run sed for each compilation.  This
+ # is also simpler to debug as one can easily see the constant.
+ compiler-name.h: Makefile
+-	echo "#define COMPILER_NAME \"`echo gcc | sed '$(transform)'`\"" > $@
++	echo "#define COMPILER_NAME \"`echo gcc-6`\"" > $@
+ 
+ # Tell versions [3.59,3.63) of GNU make to not export all variables.
+ # Otherwise a system limit (for SysV at least) may be exceeded.
