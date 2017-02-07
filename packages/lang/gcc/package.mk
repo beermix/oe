@@ -90,11 +90,11 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --with-linker-hash-style=gnu \
                          --enable-initfini-array \
                          --enable-gnu-indirect-function \
-                         --enable-poison-system-directories \
                          $GCC_OPTS"
 
 pre_configure_host() {
   export CXXFLAGS="$CXXFLAGS -std=gnu++98"
+  #--enable-poison-system-directories
   unset CPP
 }
 

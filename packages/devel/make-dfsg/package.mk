@@ -19,7 +19,7 @@
 PKG_NAME="make-dfsg"
 PKG_VERSION="master"
 PKG_GIT_URL="https://anonscm.debian.org/git/users/srivasta/debian/make-dfsg.git"
-PKG_DEPENDS_HOST=""
+PKG_DEPENDS_HOST="autotools:host"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="make: GNU make utility to maintain groups of programs"
 PKG_LONGDESC="The 'make' utility automatically determines which pieces of a large program need to be recompiled, and issues commands to recompile them. This is GNU 'make', which was implemented by Richard Stallman and Roland McGrath. GNU 'make' conforms to section 6.2 of EEE Standard 1003.2-1992' (POSIX.2)."
