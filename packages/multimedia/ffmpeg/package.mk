@@ -20,7 +20,7 @@ PKG_NAME="ffmpeg"
 PKG_VERSION="2.8.10"
 PKG_SITE="https://ffmpeg.org"
 PKG_URL="https://ffmpeg.org/releases/${PKG_NAME}-${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl dcadec speex x265"
+PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl dcadec speex"
 PKG_PRIORITY="optional"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
@@ -143,7 +143,7 @@ configure_target() {
               --disable-devices \
               --enable-pthreads \
               --disable-w32threads \
-              --enable-x11grab \
+              --disable-x11grab \
               --enable-network \
               --disable-gnutls --enable-openssl \
               --disable-gray \
