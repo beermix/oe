@@ -18,7 +18,7 @@
 
 PKG_NAME="cairo"
 PKG_VERSION="1.14.8"
-#@PKG_VERSION="1.15.4"
+PKG_SITE="http://cairographics.org/"
 PKG_URL="http://cairographics.org/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
 #PKG_URL="http://cairographics.org/snapshots/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain zlib freetype fontconfig libpng pixman"
@@ -27,8 +27,7 @@ PKG_SHORTDESC="cairo: Multi-platform 2D graphics library"
 PKG_LONGDESC="Cairo is a vector graphics library with cross-device output support. Currently supported output targets include the X Window System and in-memory image buffers. PostScript and PDF file output is planned. Cairo is designed to produce identical output on all output media while taking advantage of display hardware acceleration when available."
 PKG_IS_ADDON="no"
 
-PKG_AUTORECONF="yes"
-
+PKG_AUTORECONF="yes" # ToDo
 
 if [ "$DISPLAYSERVER" = "x11" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libXrender libX11 mesa glu"
@@ -38,6 +37,8 @@ if [ "$DISPLAYSERVER" = "x11" ]; then
                     --enable-xlib-xrender \
                     --enable-gl \
                     --enable-glx \
+                    --disable-glesv2 \
+                    --disable-egl \
                     --with-x"
 
 
@@ -52,18 +53,46 @@ elif [ "$DISPLAYSERVER" = "weston" ]; then
 fi
 
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CAIRO_CONFIG \
-                           --enable-silent-rules \
+                           --disable-silent-rules \
                            --enable-shared \
                            --disable-static \
                            --disable-gtk-doc \
                            --enable-largefile \
                            --enable-atomic \
-                           --enable-xcb-drm \
+                           --disable-gcov \
+                           --disable-valgrind \
+                           --disable-xcb \
+                           --disable-xlib-xcb \
+                           --disable-xcb-shm \
+                           --disable-qt \
+                           --disable-quartz \
+                           --disable-quartz-font \
+                           --disable-quartz-image \
+                           --disable-win32 \
+                           --disable-win32-font \
+                           --disable-skia \
+                           --disable-os2 \
+                           --disable-beos \
+                           --disable-cogl \
+                           --disable-drm \
+                           --disable-drm-xr \
+                           --disable-gallium \
+                           --disable-xcb-drm \
                            --enable-png \
+                           --disable-directfb \
+                           --disable-vg \
+                           --disable-wgl \
+                           --disable-script \
+                           --enable-ft \
+                           --enable-fc \
+                           --enable-ps \
+                           --enable-pdf \
+                           --enable-svg \
                            --disable-test-surfaces \
-                           --enable-xml \
+                           --disable-tee \
+                           --disable-xml \
                            --enable-pthread \
-                           --enable-gobject \
+                           --disable-gobject \
                            --disable-full-testing \
                            --disable-trace \
                            --enable-interpreter \
