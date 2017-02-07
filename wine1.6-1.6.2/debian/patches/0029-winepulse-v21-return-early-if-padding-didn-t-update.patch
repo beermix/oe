@@ -1,0 +1,25 @@
+From 1d7e52afd87f0b37f625580f185d060f021f3fd3 Mon Sep 17 00:00:00 2001
+From: Maarten Lankhorst <maarten.lankhorst@canonical.com>
+Date: Sat, 31 Aug 2013 08:36:02 +0200
+Subject: [PATCH 29/41] winepulse v21: return early if padding didn't update
+
+---
+ dlls/winepulse.drv/mmdevdrv.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+Index: wine1.6-1.7.1-actually1.6/dlls/winepulse.drv/mmdevdrv.c
+===================================================================
+--- wine1.6-1.7.1-actually1.6.orig/dlls/winepulse.drv/mmdevdrv.c	2013-09-13 16:19:21.267219808 -0700
++++ wine1.6-1.7.1-actually1.6/dlls/winepulse.drv/mmdevdrv.c	2013-09-13 16:19:48.000000000 -0700
+@@ -531,7 +531,10 @@
+     else
+         This->pad = 0;
+ 
+-    assert(oldpad >= This->pad);
++    if (oldpad == This->pad)
++        return;
++
++    assert(oldpad > This->pad);
+ 
+     This->clock_written += oldpad - This->pad;
+     TRACE("New pad: %zu (-%zu)\n", This->pad / pa_frame_size(&This->ss), (oldpad - This->pad) / pa_frame_size(&This->ss));

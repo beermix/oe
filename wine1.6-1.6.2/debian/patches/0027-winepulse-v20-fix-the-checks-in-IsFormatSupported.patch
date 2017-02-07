@@ -1,0 +1,25 @@
+From e04f9881ce89fa1fd544d490b6dfbd7feb9ca9d9 Mon Sep 17 00:00:00 2001
+From: Maarten Lankhorst <maarten.lankhorst@canonical.com>
+Date: Sat, 31 Aug 2013 08:36:02 +0200
+Subject: [PATCH 27/41] winepulse v20: fix the checks in IsFormatSupported
+
+Thanks to DGhost001 for reporting and isolating the issue.
+---
+ dlls/winepulse.drv/mmdevdrv.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+Index: wine1.6-1.7.1-actually1.6/dlls/winepulse.drv/mmdevdrv.c
+===================================================================
+--- wine1.6-1.7.1-actually1.6.orig/dlls/winepulse.drv/mmdevdrv.c	2013-09-13 16:19:09.000000000 -0700
++++ wine1.6-1.7.1-actually1.6/dlls/winepulse.drv/mmdevdrv.c	2013-09-13 16:19:49.000000000 -0700
+@@ -1443,6 +1443,10 @@
+         }
+     }
+ 
++    if (fmt->nBlockAlign != fmt->nChannels * fmt->wBitsPerSample / 8 ||
++        fmt->nAvgBytesPerSec != fmt->nBlockAlign * fmt->nSamplesPerSec)
++        hr = S_FALSE;
++
+     if (hr == S_OK || !out) {
+         CoTaskMemFree(closest);
+         if (out)

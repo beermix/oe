@@ -1,0 +1,134 @@
+From 5a091534be9dcb6cdfa8bdf9f4e642b42acd35de Mon Sep 17 00:00:00 2001
+From: Maarten Lankhorst <maarten.lankhorst@canonical.com>
+Date: Sat, 31 Aug 2013 08:36:03 +0200
+Subject: [PATCH 39/41] winepulse: add support for IMarshal
+
+Fixes bug 32161 for winepulse. Based On Jeff Klein's patches for the
+other drivers.
+---
+ dlls/winepulse.drv/mmdevdrv.c | 31 +++++++++++++++++++++++++++++++
+ 1 file changed, 31 insertions(+)
+
+Index: wine1.6-1.7.1-actually1.6/dlls/winepulse.drv/mmdevdrv.c
+===================================================================
+--- wine1.6-1.7.1-actually1.6.orig/dlls/winepulse.drv/mmdevdrv.c	2013-09-13 16:19:21.527219814 -0700
++++ wine1.6-1.7.1-actually1.6/dlls/winepulse.drv/mmdevdrv.c	2013-09-13 16:19:21.519219814 -0700
+@@ -169,6 +169,7 @@
+     IAudioClock IAudioClock_iface;
+     IAudioClock2 IAudioClock2_iface;
+     IAudioStreamVolume IAudioStreamVolume_iface;
++    IUnknown *marshal;
+     IMMDevice *parent;
+     struct list entry;
+     float vol[PA_CHANNELS_MAX];
+@@ -834,6 +835,12 @@
+     This->parent = dev;
+     for (i = 0; i < PA_CHANNELS_MAX; ++i)
+         This->vol[i] = 1.f;
++
++    hr = CoCreateFreeThreadedMarshaler((IUnknown*)This, &This->marshal);
++    if (hr) {
++        HeapFree(GetProcessHeap(), 0, This);
++        return hr;
++    }
+     IMMDevice_AddRef(This->parent);
+ 
+     *out = &This->IAudioClient_iface;
+@@ -845,10 +852,13 @@
+ static HRESULT WINAPI AudioClient_QueryInterface(IAudioClient *iface,
+         REFIID riid, void **ppv)
+ {
++    ACImpl *This = impl_from_IAudioClient(iface);
++
+     TRACE("(%p)->(%s, %p)\n", iface, debugstr_guid(riid), ppv);
+ 
+     if (!ppv)
+         return E_POINTER;
++
+     *ppv = NULL;
+     if (IsEqualIID(riid, &IID_IUnknown) || IsEqualIID(riid, &IID_IAudioClient))
+         *ppv = iface;
+@@ -856,6 +866,10 @@
+         IUnknown_AddRef((IUnknown*)*ppv);
+         return S_OK;
+     }
++
++    if (IsEqualIID(riid, &IID_IMarshal))
++        return IUnknown_QueryInterface(This->marshal, riid, ppv);
++
+     WARN("Unknown interface %s\n", debugstr_guid(riid));
+     return E_NOINTERFACE;
+ }
+@@ -888,6 +902,7 @@
+             list_remove(&This->entry);
+             pthread_mutex_unlock(&pulse_lock);
+         }
++        IUnknown_Release(This->marshal);
+         IMMDevice_Release(This->parent);
+         HeapFree(GetProcessHeap(), 0, This->tmp_buffer);
+         HeapFree(GetProcessHeap(), 0, This);
+@@ -1826,6 +1841,7 @@
+ static HRESULT WINAPI AudioRenderClient_QueryInterface(
+         IAudioRenderClient *iface, REFIID riid, void **ppv)
+ {
++    ACImpl *This = impl_from_IAudioRenderClient(iface);
+     TRACE("(%p)->(%s, %p)\n", iface, debugstr_guid(riid), ppv);
+ 
+     if (!ppv)
+@@ -1840,6 +1856,9 @@
+         return S_OK;
+     }
+ 
++    if (IsEqualIID(riid, &IID_IMarshal))
++        return IUnknown_QueryInterface(This->marshal, riid, ppv);
++
+     WARN("Unknown interface %s\n", debugstr_guid(riid));
+     return E_NOINTERFACE;
+ }
+@@ -1969,6 +1988,7 @@
+ static HRESULT WINAPI AudioCaptureClient_QueryInterface(
+         IAudioCaptureClient *iface, REFIID riid, void **ppv)
+ {
++    ACImpl *This = impl_from_IAudioCaptureClient(iface);
+     TRACE("(%p)->(%s, %p)\n", iface, debugstr_guid(riid), ppv);
+ 
+     if (!ppv)
+@@ -1983,6 +2003,9 @@
+         return S_OK;
+     }
+ 
++    if (IsEqualIID(riid, &IID_IMarshal))
++        return IUnknown_QueryInterface(This->marshal, riid, ppv);
++
+     WARN("Unknown interface %s\n", debugstr_guid(riid));
+     return E_NOINTERFACE;
+ }
+@@ -2125,6 +2148,9 @@
+         return S_OK;
+     }
+ 
++    if (IsEqualIID(riid, &IID_IMarshal))
++        return IUnknown_QueryInterface(This->marshal, riid, ppv);
++
+     WARN("Unknown interface %s\n", debugstr_guid(riid));
+     return E_NOINTERFACE;
+ }
+@@ -2260,6 +2286,8 @@
+ static HRESULT WINAPI AudioStreamVolume_QueryInterface(
+         IAudioStreamVolume *iface, REFIID riid, void **ppv)
+ {
++    ACImpl *This = impl_from_IAudioStreamVolume(iface);
++
+     TRACE("(%p)->(%s, %p)\n", iface, debugstr_guid(riid), ppv);
+ 
+     if (!ppv)
+@@ -2274,6 +2302,9 @@
+         return S_OK;
+     }
+ 
++    if (IsEqualIID(riid, &IID_IMarshal))
++        return IUnknown_QueryInterface(This->marshal, riid, ppv);
++
+     WARN("Unknown interface %s\n", debugstr_guid(riid));
+     return E_NOINTERFACE;
+ }

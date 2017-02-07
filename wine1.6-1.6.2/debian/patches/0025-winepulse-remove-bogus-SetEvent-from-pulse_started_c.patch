@@ -1,0 +1,26 @@
+From 8720fd591a0f45d5e0df2ff874a494fac8e9c414 Mon Sep 17 00:00:00 2001
+From: Maarten Lankhorst <maarten.lankhorst@canonical.com>
+Date: Sat, 31 Aug 2013 08:36:01 +0200
+Subject: [PATCH 25/41] winepulse: remove bogus SetEvent from
+ pulse_started_callback
+
+---
+ dlls/winepulse.drv/mmdevdrv.c | 4 ----
+ 1 file changed, 4 deletions(-)
+
+Index: wine1.6-1.7.1-actually1.6/dlls/winepulse.drv/mmdevdrv.c
+===================================================================
+--- wine1.6-1.7.1-actually1.6.orig/dlls/winepulse.drv/mmdevdrv.c	2013-09-13 16:19:09.000000000 -0700
++++ wine1.6-1.7.1-actually1.6/dlls/winepulse.drv/mmdevdrv.c	2013-09-13 16:19:51.000000000 -0700
+@@ -559,11 +559,7 @@
+ 
+ static void pulse_started_callback(pa_stream *s, void *userdata)
+ {
+-    ACImpl *This = userdata;
+-
+     TRACE("(Re)started playing\n");
+-    if (This->event)
+-        SetEvent(This->event);
+ }
+ 
+ static void pulse_rd_loop(ACImpl *This, size_t bytes)

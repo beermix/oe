@@ -1,0 +1,24 @@
+From 7c89c29a77330d842a996afe4d1e942538c36c3c Mon Sep 17 00:00:00 2001
+From: Maarten Lankhorst <maarten.lankhorst@canonical.com>
+Date: Sat, 31 Aug 2013 08:36:01 +0200
+Subject: [PATCH 24/41] winepulse: drop realtime priority before thread
+ destruction
+
+prevents having to handle a kernel RT Watchdog Timeout.
+---
+ dlls/winepulse.drv/mmdevdrv.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+Index: wine1.6-1.7.1-actually1.6/dlls/winepulse.drv/mmdevdrv.c
+===================================================================
+--- wine1.6-1.7.1-actually1.6.orig/dlls/winepulse.drv/mmdevdrv.c	2013-09-13 16:19:09.000000000 -0700
++++ wine1.6-1.7.1-actually1.6/dlls/winepulse.drv/mmdevdrv.c	2013-09-13 16:19:51.000000000 -0700
+@@ -101,6 +101,8 @@
+         }
+         DisableThreadLibraryCalls(dll);
+     } else if (reason == DLL_PROCESS_DETACH) {
++        if (pulse_thread)
++           SetThreadPriority(pulse_thread, 0);
+         if (pulse_ctx) {
+            pa_context_disconnect(pulse_ctx);
+            pa_context_unref(pulse_ctx);

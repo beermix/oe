@@ -1,0 +1,102 @@
+From c131e87ff3f92eb75c0d4307b48050bd7da27902 Mon Sep 17 00:00:00 2001
+From: Maarten Lankhorst <maarten.lankhorst@canonical.com>
+Date: Sat, 31 Aug 2013 08:36:03 +0200
+Subject: [PATCH 37/41] dsound: kill unconditional memory allocation in mixing
+ thread
+
+Unfortunately this doesn't get rid of the memory allocation entirely,
+but it will decrease the chance of underruns due to locking immensely.
+
+Signed-off-by: Maarten Lankhorst <maarten.lankhorst@canonical.com>
+---
+ dlls/dsound/dsound.c         |  1 +
+ dlls/dsound/dsound_private.h |  4 ++--
+ dlls/dsound/mixer.c          | 27 ++++++++++++++++++---------
+ 3 files changed, 21 insertions(+), 11 deletions(-)
+
+Index: wine1.6-1.7.1-actually1.6/dlls/dsound/dsound.c
+===================================================================
+--- wine1.6-1.7.1-actually1.6.orig/dlls/dsound/dsound.c	2013-09-13 16:19:21.475219813 -0700
++++ wine1.6-1.7.1-actually1.6/dlls/dsound/dsound.c	2013-09-13 16:19:21.467219813 -0700
+@@ -692,6 +692,7 @@
+             IAudioStreamVolume_Release(device->volume);
+ 
+         HeapFree(GetProcessHeap(), 0, device->tmp_buffer);
++        HeapFree(GetProcessHeap(), 0, device->cp_buffer);
+         HeapFree(GetProcessHeap(), 0, device->buffer);
+         RtlDeleteResource(&device->buffer_list_lock);
+         device->mixlock.DebugInfo->Spare[0] = 0;
+Index: wine1.6-1.7.1-actually1.6/dlls/dsound/dsound_private.h
+===================================================================
+--- wine1.6-1.7.1-actually1.6.orig/dlls/dsound/dsound_private.h	2013-09-13 16:19:21.475219813 -0700
++++ wine1.6-1.7.1-actually1.6/dlls/dsound/dsound_private.h	2013-09-13 16:19:21.471219813 -0700
+@@ -77,8 +77,8 @@
+     CRITICAL_SECTION            mixlock;
+     IDirectSoundBufferImpl     *primary;
+     DWORD                       speaker_config;
+-    float *tmp_buffer;
+-    DWORD                       tmp_buffer_len, mix_buffer_len;
++    float *tmp_buffer, *cp_buffer;
++    DWORD                       tmp_buffer_len, mix_buffer_len, cp_buffer_len;
+ 
+     DSVOLUMEPAN                 volpan;
+ 
+Index: wine1.6-1.7.1-actually1.6/dlls/dsound/mixer.c
+===================================================================
+--- wine1.6-1.7.1-actually1.6.orig/dlls/dsound/mixer.c	2013-09-13 16:19:21.475219813 -0700
++++ wine1.6-1.7.1-actually1.6/dlls/dsound/mixer.c	2013-09-13 16:19:21.471219813 -0700
+@@ -251,7 +251,8 @@
+ {
+     UINT i, channel;
+     UINT istride = dsb->pwfx->nBlockAlign;
+-    UINT ostride = dsb->device->pwfx->nChannels * sizeof(float);
++    DirectSoundDevice *dev = dsb->device;
++    UINT ostride = dev->pwfx->nChannels * sizeof(float);
+ 
+     float freqAdjust = dsb->freqAdjust;
+     float freqAcc_start = *freqAcc;
+@@ -262,18 +263,29 @@
+ 
+     UINT fir_cachesize = (fir_len + dsbfirstep - 2) / dsbfirstep;
+     UINT required_input = max_ipos + fir_cachesize;
++    float *intermediate, *fir_copy, *itmp;
+ 
+-    float* intermediate = HeapAlloc(GetProcessHeap(), 0,
+-            sizeof(float) * required_input * channels);
++    DWORD len = required_input * channels;
++    len += fir_cachesize;
++    len *= sizeof(float);
++
++    if (!dev->cp_buffer) {
++        dev->cp_buffer = HeapAlloc(GetProcessHeap(), 0, len);
++        dev->cp_buffer_len = len;
++    } else if (len > dev->cp_buffer_len) {
++        dev->cp_buffer = HeapReAlloc(GetProcessHeap(), 0, dev->cp_buffer, len);
++        dev->cp_buffer_len = len;
++    }
++
++    fir_copy = dev->cp_buffer;
++    intermediate = fir_copy + fir_cachesize;
+ 
+-    float* fir_copy = HeapAlloc(GetProcessHeap(), 0,
+-            sizeof(float) * fir_cachesize);
+ 
+     /* Important: this buffer MUST be non-interleaved
+      * if you want -msse3 to have any effect.
+      * This is good for CPU cache effects, too.
+      */
+-    float* itmp = intermediate;
++    itmp = intermediate;
+     for (channel = 0; channel < channels; channel++)
+         for (i = 0; i < required_input; i++)
+             *(itmp++) = get_current_sample(dsb,
+@@ -309,9 +321,6 @@
+     freqAcc_end -= (int)freqAcc_end;
+     *freqAcc = freqAcc_end;
+ 
+-    HeapFree(GetProcessHeap(), 0, fir_copy);
+-    HeapFree(GetProcessHeap(), 0, intermediate);
+-
+     return max_ipos;
+ }
+ 
