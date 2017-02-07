@@ -1,0 +1,343 @@
+# DP: Backport r241072 from trunk
+
+syscall, internal/syscall/unix: Fix getrandom, clone on sparc64
+
+Since sparc is a valid architecture, the name of
+getrandom_linux_sparc.go means that it will be ignored on sparc64,
+even though it's whitelisted with a +build line.
+
+On SPARC, clone has a unique return value convention which requires
+some inline assembly to convert it to the normal convention.
+
+Reviewed-on: https://go-review.googlesource.com/30873
+
+Index: b/libgo/mksysinfo.sh
+===================================================================
+--- a/libgo/mksysinfo.sh
++++ b/libgo/mksysinfo.sh
+@@ -603,8 +603,10 @@ fi
+ sizeof_long=`grep '^const ___SIZEOF_LONG__ = ' gen-sysinfo.go | sed -e 's/.*= //'`
+ if test "$sizeof_long" = "4"; then
+   echo "type _C_long int32" >> ${OUT}
++  echo "type _C_ulong uint32" >> ${OUT}
+ elif test "$sizeof_long" = "8"; then
+   echo "type _C_long int64" >> ${OUT}
++  echo "type _C_ulong uint64" >> ${OUT}
+ else
+   echo 1>&2 "mksysinfo.sh: could not determine size of long (got $sizeof_long)"
+   exit 1
+Index: b/libgo/go/internal/syscall/unix/getrandom_linux_sparc.go
+===================================================================
+--- a/libgo/go/internal/syscall/unix/getrandom_linux_sparc.go
++++ b/libgo/go/internal/syscall/unix/getrandom_linux_sparc.go
+@@ -1,11 +0,0 @@
+-// Copyright 2016 The Go Authors. All rights reserved.
+-// Use of this source code is governed by a BSD-style
+-// license that can be found in the LICENSE file.
+-
+-// +build sparc sparc64
+-
+-package unix
+-
+-// Linux getrandom system call number.
+-// See GetRandom in getrandom_linux.go.
+-const randomTrap uintptr = 347
+Index: b/libgo/go/internal/syscall/unix/getrandom_linux_sparcx.go
+===================================================================
+--- /dev/null
++++ b/libgo/go/internal/syscall/unix/getrandom_linux_sparcx.go
+@@ -0,0 +1,11 @@
++// Copyright 2016 The Go Authors. All rights reserved.
++// Use of this source code is governed by a BSD-style
++// license that can be found in the LICENSE file.
++
++// +build sparc sparc64
++
++package unix
++
++// Linux getrandom system call number.
++// See GetRandom in getrandom_linux.go.
++const randomTrap uintptr = 347
+Index: b/libgo/go/syscall/clone_linux.c
+===================================================================
+--- /dev/null
++++ b/libgo/go/syscall/clone_linux.c
+@@ -0,0 +1,100 @@
++/* clone_linux.c -- consistent wrapper around Linux clone syscall
++
++   Copyright 2016 The Go Authors. All rights reserved.
++   Use of this source code is governed by a BSD-style
++   license that can be found in the LICENSE file.  */
++
++#include <errno.h>
++#include <asm/ptrace.h>
++#include <sys/syscall.h>
++
++#include "runtime.h"
++
++long rawClone (unsigned long flags, void *child_stack, void *ptid, void *ctid, struct pt_regs *regs) __asm__ (GOSYM_PREFIX "syscall.rawClone");
++
++long
++rawClone (unsigned long flags, void *child_stack, void *ptid, void *ctid, struct pt_regs *regs)
++{
++#if defined(__arc__) || defined(__aarch64__) || defined(__arm__) || defined(__mips__) || defined(__hppa__) || defined(__powerpc__) || defined(__score__) || defined(__i386__) || defined(__xtensa__)
++  // CLONE_BACKWARDS
++  return syscall(__NR_clone, flags, child_stack, ptid, regs, ctid);
++#elif defined(__s390__) || defined(__cris__)
++  // CLONE_BACKWARDS2
++  return syscall(__NR_clone, child_stack, flags, ptid, ctid, regs);
++#elif defined(__microblaze__)
++  // CLONE_BACKWARDS3
++  return syscall(__NR_clone, flags, child_stack, 0, ptid, ctid, regs);
++#elif defined(__sparc__)
++
++  /* SPARC has a unique return value convention:
++
++     Parent -->  %o0 == child's  pid, %o1 == 0
++     Child  -->  %o0 == parent's pid, %o1 == 1
++
++     Translate this to look like a normal clone.  */
++
++# if defined(__arch64__)
++
++#  define SYSCALL_STRING						\
++	"ta	0x6d;"							\
++	"bcc,pt	%%xcc, 1f;"						\
++	" mov	0, %%g1;"						\
++	"sub	%%g0, %%o0, %%o0;"					\
++	"mov	1, %%g1;"						\
++	"1:"
++
++#  define SYSCALL_CLOBBERS						\
++	"f0", "f1", "f2", "f3", "f4", "f5", "f6", "f7",			\
++	"f8", "f9", "f10", "f11", "f12", "f13", "f14", "f15",		\
++	"f16", "f17", "f18", "f19", "f20", "f21", "f22", "f23",		\
++	"f24", "f25", "f26", "f27", "f28", "f29", "f30", "f31",		\
++	"f32", "f34", "f36", "f38", "f40", "f42", "f44", "f46",		\
++	"f48", "f50", "f52", "f54", "f56", "f58", "f60", "f62",		\
++	"cc", "memory"
++
++# else /* __arch64__ */
++
++#  define SYSCALL_STRING						\
++	"ta	0x10;"							\
++	"bcc	1f;"							\
++	" mov	0, %%g1;"						\
++	"sub	%%g0, %%o0, %%o0;"					\
++	"mov	1, %%g1;"						\
++	"1:"
++
++#  define SYSCALL_CLOBBERS						\
++	"f0", "f1", "f2", "f3", "f4", "f5", "f6", "f7",			\
++	"f8", "f9", "f10", "f11", "f12", "f13", "f14", "f15",		\
++	"f16", "f17", "f18", "f19", "f20", "f21", "f22", "f23",		\
++	"f24", "f25", "f26", "f27", "f28", "f29", "f30", "f31",		\
++	"cc", "memory"
++
++# endif /* __arch64__ */
++
++  register long o0 __asm__ ("o0") = (long)flags;
++  register long o1 __asm__ ("o1") = (long)child_stack;
++  register long o2 __asm__ ("o2") = (long)ptid;
++  register long o3 __asm__ ("o3") = (long)ctid;
++  register long o4 __asm__ ("o4") = (long)regs;
++  register long g1 __asm__ ("g1") = __NR_clone;
++
++  __asm __volatile (SYSCALL_STRING :
++		    "=r" (g1), "=r" (o0), "=r" (o1) :
++		    "0" (g1), "1" (o0), "2" (o1),
++		    "r" (o2), "r" (o3), "r" (o4) :
++		    SYSCALL_CLOBBERS);
++
++  if (__builtin_expect(g1 != 0, 0))
++    {
++      errno = -o0;
++      o0 = -1L;
++    }
++  else
++    o0 &= (o1 - 1);
++
++  return o0;
++
++#else
++  return syscall(__NR_clone, flags, child_stack, ptid, ctid, regs);
++#endif
++}
+Index: b/libgo/go/syscall/exec_linux.go
+===================================================================
+--- a/libgo/go/syscall/exec_linux.go
++++ b/libgo/go/syscall/exec_linux.go
+@@ -7,7 +7,6 @@
+ package syscall
+ 
+ import (
+-	"runtime"
+ 	"unsafe"
+ )
+ 
+@@ -48,6 +47,9 @@ type SysProcAttr struct {
+ func runtime_BeforeFork()
+ func runtime_AfterFork()
+ 
++// Implemented in clone_linux.c
++func rawClone(flags _C_ulong, child_stack *byte, ptid *Pid_t, ctid *Pid_t, regs unsafe.Pointer) _C_long
++
+ // Fork, dup fd onto 0..len(fd), and exec(argv0, argvv, envv) in child.
+ // If a dup or exec fails, write the errno error to pipe.
+ // (Pipe is close-on-exec so if exec succeeds, it will be closed.)
+@@ -63,6 +65,7 @@ func forkAndExecInChild(argv0 *byte, arg
+ 	// declarations require heap allocation (e.g., err1).
+ 	var (
+ 		r1     uintptr
++		r2     _C_long
+ 		err1   Errno
+ 		err2   Errno
+ 		nextfd int
+@@ -97,20 +100,16 @@ func forkAndExecInChild(argv0 *byte, arg
+ 	// About to call fork.
+ 	// No more allocation or calls of non-assembly functions.
+ 	runtime_BeforeFork()
+-	if runtime.GOARCH == "s390x" || runtime.GOARCH == "s390" {
+-		r1, _, err1 = RawSyscall6(SYS_CLONE, 0, uintptr(SIGCHLD)|sys.Cloneflags, 0, 0, 0, 0)
+-	} else {
+-		r1, _, err1 = RawSyscall6(SYS_CLONE, uintptr(SIGCHLD)|sys.Cloneflags, 0, 0, 0, 0, 0)
+-	}
+-	if err1 != 0 {
++	r2 = rawClone(_C_ulong(uintptr(SIGCHLD)|sys.Cloneflags), nil, nil, nil, unsafe.Pointer(nil))
++	if r2 < 0 {
+ 		runtime_AfterFork()
+-		return 0, err1
++		return 0, GetErrno()
+ 	}
+ 
+-	if r1 != 0 {
++	if r2 != 0 {
+ 		// parent; return PID
+ 		runtime_AfterFork()
+-		pid = int(r1)
++		pid = int(r2)
+ 
+ 		if sys.UidMappings != nil || sys.GidMappings != nil {
+ 			Close(p[0])
+Index: b/libgo/Makefile.am
+===================================================================
+--- a/libgo/Makefile.am
++++ b/libgo/Makefile.am
+@@ -2145,6 +2145,12 @@ else
+ os_lib_inotify_lo =
+ endif
+ 
++if LIBGO_IS_LINUX
++syscall_lib_clone_lo = syscall/clone_linux.lo
++else
++syscall_lib_clone_lo =
++endif
++
+ libgo_go_objs = \
+ 	bufio.lo \
+ 	bytes.lo \
+@@ -2175,6 +2181,7 @@ libgo_go_objs = \
+ 	strings/index.lo \
+ 	sync.lo \
+ 	syscall.lo \
++	$(syscall_lib_clone_lo) \
+ 	syscall/errno.lo \
+ 	syscall/signame.lo \
+ 	syscall/wait.lo \
+@@ -3820,6 +3827,9 @@ syscall.lo.dep: $(go_syscall_files)
+ 	$(BUILDDEPS)
+ syscall.lo: $(go_syscall_files)
+ 	$(BUILDPACKAGE)
++syscall/clone_linux.lo: go/syscall/clone_linux.c
++	@$(MKDIR_P) syscall
++	$(LTCOMPILE) -c -o $@ $<
+ syscall/errno.lo: go/syscall/errno.c
+ 	@$(MKDIR_P) syscall
+ 	$(LTCOMPILE) -c -o $@ $<
+Index: b/libgo/Makefile.in
+===================================================================
+--- a/libgo/Makefile.in
++++ b/libgo/Makefile.in
+@@ -173,15 +173,16 @@ am__objects_3 = $(am__objects_2)
+ am_libnetgo_a_OBJECTS = $(am__objects_3)
+ libnetgo_a_OBJECTS = $(am_libnetgo_a_OBJECTS)
+ LTLIBRARIES = $(toolexeclib_LTLIBRARIES)
+-am__DEPENDENCIES_1 =
+-am__DEPENDENCIES_2 = bufio.lo bytes.lo bytes/index.lo crypto.lo \
++@LIBGO_IS_LINUX_TRUE@am__DEPENDENCIES_1 = syscall/clone_linux.lo
++am__DEPENDENCIES_2 =
++am__DEPENDENCIES_3 = bufio.lo bytes.lo bytes/index.lo crypto.lo \
+ 	encoding.lo errors.lo expvar.lo flag.lo fmt.lo hash.lo html.lo \
+ 	image.lo io.lo log.lo math.lo mime.lo net.lo os.lo path.lo \
+ 	reflect-go.lo reflect/makefunc_ffi_c.lo regexp.lo \
+ 	runtime-go.lo sort.lo strconv.lo strings.lo strings/index.lo \
+-	sync.lo syscall.lo syscall/errno.lo syscall/signame.lo \
+-	syscall/wait.lo testing.lo time-go.lo unicode.lo \
+-	archive/tar.lo archive/zip.lo compress/bzip2.lo \
++	sync.lo syscall.lo $(am__DEPENDENCIES_1) syscall/errno.lo \
++	syscall/signame.lo syscall/wait.lo testing.lo time-go.lo \
++	unicode.lo archive/tar.lo archive/zip.lo compress/bzip2.lo \
+ 	compress/flate.lo compress/gzip.lo compress/lzw.lo \
+ 	compress/zlib.lo container/heap.lo container/list.lo \
+ 	container/ring.lo crypto/aes.lo crypto/cipher.lo crypto/des.lo \
+@@ -213,18 +214,18 @@ am__DEPENDENCIES_2 = bufio.lo bytes.lo b
+ 	math/rand.lo mime/multipart.lo mime/quotedprintable.lo \
+ 	net/http.lo net/internal/socktest.lo net/mail.lo net/rpc.lo \
+ 	net/smtp.lo net/textproto.lo net/url.lo old/regexp.lo \
+-	old/template.lo os/exec.lo $(am__DEPENDENCIES_1) os/signal.lo \
++	old/template.lo os/exec.lo $(am__DEPENDENCIES_2) os/signal.lo \
+ 	os/user.lo path/filepath.lo regexp/syntax.lo \
+ 	net/rpc/jsonrpc.lo runtime/debug.lo runtime/pprof.lo \
+ 	sync/atomic.lo sync/atomic_c.lo text/scanner.lo \
+ 	text/tabwriter.lo text/template.lo text/template/parse.lo \
+ 	testing/iotest.lo testing/quick.lo unicode/utf16.lo \
+ 	unicode/utf8.lo
+-am__DEPENDENCIES_3 = $(am__DEPENDENCIES_2) \
+-	../libbacktrace/libbacktrace.la $(am__DEPENDENCIES_1) \
+-	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+-	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
+-libgo_llgo_la_DEPENDENCIES = $(am__DEPENDENCIES_3)
++am__DEPENDENCIES_4 = $(am__DEPENDENCIES_3) \
++	../libbacktrace/libbacktrace.la $(am__DEPENDENCIES_2) \
++	$(am__DEPENDENCIES_2) $(am__DEPENDENCIES_2) \
++	$(am__DEPENDENCIES_2) $(am__DEPENDENCIES_2)
++libgo_llgo_la_DEPENDENCIES = $(am__DEPENDENCIES_4)
+ @LIBGO_IS_LINUX_FALSE@am__objects_4 = lock_sema.lo thread-sema.lo
+ @LIBGO_IS_LINUX_TRUE@am__objects_4 = lock_futex.lo thread-linux.lo
+ @HAVE_SYS_MMAN_H_FALSE@am__objects_5 = mem_posix_memalign.lo
+@@ -276,7 +277,7 @@ libgo_llgo_la_LINK = $(LIBTOOL) --tag=CC
+ 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
+ 	$(libgo_llgo_la_LDFLAGS) $(LDFLAGS) -o $@
+ @GOC_IS_LLGO_TRUE@am_libgo_llgo_la_rpath = -rpath $(toolexeclibdir)
+-libgo_la_DEPENDENCIES = $(am__DEPENDENCIES_3)
++libgo_la_DEPENDENCIES = $(am__DEPENDENCIES_4)
+ am_libgo_la_OBJECTS = $(am__objects_9)
+ libgo_la_OBJECTS = $(am_libgo_la_OBJECTS)
+ libgo_la_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
+@@ -2156,6 +2157,8 @@ go_syscall_test_files = \
+ 
+ # os_lib_inotify_lo = os/inotify.lo
+ @LIBGO_IS_LINUX_TRUE@os_lib_inotify_lo = 
++@LIBGO_IS_LINUX_FALSE@syscall_lib_clone_lo = 
++@LIBGO_IS_LINUX_TRUE@syscall_lib_clone_lo = syscall/clone_linux.lo
+ libgo_go_objs = \
+ 	bufio.lo \
+ 	bytes.lo \
+@@ -2186,6 +2189,7 @@ libgo_go_objs = \
+ 	strings/index.lo \
+ 	sync.lo \
+ 	syscall.lo \
++	$(syscall_lib_clone_lo) \
+ 	syscall/errno.lo \
+ 	syscall/signame.lo \
+ 	syscall/wait.lo \
+@@ -6197,6 +6201,9 @@ syscall.lo.dep: $(go_syscall_files)
+ 	$(BUILDDEPS)
+ syscall.lo: $(go_syscall_files)
+ 	$(BUILDPACKAGE)
++syscall/clone_linux.lo: go/syscall/clone_linux.c
++	@$(MKDIR_P) syscall
++	$(LTCOMPILE) -c -o $@ $<
+ syscall/errno.lo: go/syscall/errno.c
+ 	@$(MKDIR_P) syscall
+ 	$(LTCOMPILE) -c -o $@ $<

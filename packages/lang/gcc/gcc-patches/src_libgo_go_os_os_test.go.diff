@@ -1,0 +1,15 @@
+Index: gcc-6-6.2.1-4.1/src/libgo/go/os/os_test.go
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/go/os/os_test.go
++++ gcc-6-6.2.1-4.1/src/libgo/go/os/os_test.go
+@@ -1192,8 +1192,9 @@ func TestSeek(t *testing.T) {
+ 	for i, tt := range tests {
+ 		off, err := f.Seek(tt.in, tt.whence)
+ 		if off != tt.out || err != nil {
+-			if e, ok := err.(*PathError); ok && e.Err == syscall.EINVAL && tt.out > 1<<32 {
++			if e, ok := err.(*PathError); ok && e.Err == syscall.EINVAL || e.Err == syscall.EFBIG && tt.out > 1<<32 {
+ 				// Reiserfs rejects the big seeks.
++				// GNU rejects the big seeks, returns EFBIG
+ 				// https://golang.org/issue/91
+ 				break
+ 			}

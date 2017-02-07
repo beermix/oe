@@ -1,0 +1,106 @@
+# DP: Backport r241051 from trunk
+# DP: src/libgo/go/debug/elf/testdata/go-relocation-test-gcc620-sparc64.obj is
+# DP: encoded in debian/go-relocation-test-gcc620-sparc64.obj.uue and is
+# DP: decoded at patch time.
+
+debug/elf: add sparc64 relocations
+
+This is a backport of https://go-review.googlesource.com/30870.
+
+Reviewed-on: https://go-review.googlesource.com/30916
+
+Index: b/libgo/go/debug/elf/file_test.go
+===================================================================
+--- a/libgo/go/debug/elf/file_test.go
++++ b/libgo/go/debug/elf/file_test.go
+@@ -473,6 +473,25 @@ var relocationTests = []relocationTest{
+ 		},
+ 	},
+ 	{
++		"testdata/go-relocation-test-gcc620-sparc64.obj",
++		[]relocationTestEntry{
++			{0, &dwarf.Entry{
++				Offset:   0xb,
++				Tag:      dwarf.TagCompileUnit,
++				Children: true,
++				Field: []dwarf.Field{
++					{Attr: dwarf.AttrProducer, Val: "GNU C11 6.2.0 20160914 -mcpu=v9 -g -fstack-protector-strong", Class: dwarf.ClassString},
++					{Attr: dwarf.AttrLanguage, Val: int64(12), Class: dwarf.ClassConstant},
++					{Attr: dwarf.AttrName, Val: "hello.c", Class: dwarf.ClassString},
++					{Attr: dwarf.AttrCompDir, Val: "/tmp", Class: dwarf.ClassString},
++					{Attr: dwarf.AttrLowpc, Val: uint64(0x0), Class: dwarf.ClassAddress},
++					{Attr: dwarf.AttrHighpc, Val: int64(0x2c), Class: dwarf.ClassConstant},
++					{Attr: dwarf.AttrStmtList, Val: int64(0), Class: dwarf.ClassLinePtr},
++				},
++			}},
++		},
++	},
++	{
+ 		"testdata/go-relocation-test-gcc493-mips64le.obj",
+ 		[]relocationTestEntry{
+ 			{0, &dwarf.Entry{
+Index: b/libgo/go/debug/elf/file.go
+===================================================================
+--- a/libgo/go/debug/elf/file.go
++++ b/libgo/go/debug/elf/file.go
+@@ -598,6 +598,8 @@ func (f *File) applyRelocations(dst []by
+ 		return f.applyRelocationsMIPS64(dst, rels)
+ 	case f.Class == ELFCLASS64 && f.Machine == EM_S390:
+ 		return f.applyRelocationsS390x(dst, rels)
++	case f.Class == ELFCLASS64 && f.Machine == EM_SPARCV9:
++		return f.applyRelocationsSPARC64(dst, rels)
+ 	default:
+ 		return errors.New("applyRelocations: not implemented")
+ 	}
+@@ -951,6 +953,51 @@ func (f *File) applyRelocationsS390x(dst
+ 		}
+ 	}
+ 
++	return nil
++}
++
++func (f *File) applyRelocationsSPARC64(dst []byte, rels []byte) error {
++	// 24 is the size of Rela64.
++	if len(rels)%24 != 0 {
++		return errors.New("length of relocation section is not a multiple of 24")
++	}
++
++	symbols, _, err := f.getSymbols(SHT_SYMTAB)
++	if err != nil {
++		return err
++	}
++
++	b := bytes.NewReader(rels)
++	var rela Rela64
++
++	for b.Len() > 0 {
++		binary.Read(b, f.ByteOrder, &rela)
++		symNo := rela.Info >> 32
++		t := R_SPARC(rela.Info & 0xffff)
++
++		if symNo == 0 || symNo > uint64(len(symbols)) {
++			continue
++		}
++		sym := &symbols[symNo-1]
++		if SymType(sym.Info&0xf) != STT_SECTION {
++			// We don't handle non-section relocations for now.
++			continue
++		}
++
++		switch t {
++		case R_SPARC_64, R_SPARC_UA64:
++			if rela.Off+8 >= uint64(len(dst)) || rela.Addend < 0 {
++				continue
++			}
++			f.ByteOrder.PutUint64(dst[rela.Off:rela.Off+8], uint64(rela.Addend))
++		case R_SPARC_32, R_SPARC_UA32:
++			if rela.Off+4 >= uint64(len(dst)) || rela.Addend < 0 {
++				continue
++			}
++			f.ByteOrder.PutUint32(dst[rela.Off:rela.Off+4], uint32(rela.Addend))
++		}
++	}
++
+ 	return nil
+ }
+ 

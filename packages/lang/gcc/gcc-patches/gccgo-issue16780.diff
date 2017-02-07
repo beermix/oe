@@ -1,0 +1,39 @@
+# DP: gccgo: Call default_file_start from s390_asm_file_start
+
+https://gcc.gnu.org/ml/gcc-patches/2016-08/msg01655.html
+
+gcc/
+
+2016-08-23  Ian Lance Taylor  <iant@golang.org>
+
+	* config/s390/s390.c (s390_asm_file_start): Call
+	default_file_start.
+
+gcc/testsuite/
+
+2016-08-23  Ian Lance Taylor  <iant@golang.org>
+
+	* gcc.target/s390/nolrl-1.c: Don't match the file name.
+
+Index: b/gcc/config/s390/s390.c
+===================================================================
+--- a/gcc/config/s390/s390.c
++++ b/gcc/config/s390/s390.c
+@@ -14973,6 +14973,7 @@ s390_vector_alignment (const_tree type)
+ static void
+ s390_asm_file_start (void)
+ {
++  default_file_start ();
+   s390_asm_output_machine_for_arch (asm_out_file);
+ }
+ #endif
+Index: b/gcc/testsuite/gcc.target/s390/nolrl-1.c
+===================================================================
+--- a/gcc/testsuite/gcc.target/s390/nolrl-1.c
++++ b/gcc/testsuite/gcc.target/s390/nolrl-1.c
+@@ -16,4 +16,4 @@ bar ()
+     foo (z);
+ }
+ 
+-/* { dg-final { scan-assembler-not "lrl" } } */
++/* { dg-final { scan-assembler-not "\tlrl" } } */

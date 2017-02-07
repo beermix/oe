@@ -1,0 +1,307 @@
+From eb5c0cb6c16d435f6797cd934ceaac73ac7db52c Mon Sep 17 00:00:00 2001
+From: clm <clm@138bc75d-0d04-0410-961f-82ee72b054a4>
+Date: Fri, 20 Jan 2017 01:05:25 +0000
+Subject: [PATCH] gcc/ 2017-01-19  Matthew Fortune 
+ <matthew.fortune@imgtec.com> 	    Yunqiang Su  <yunqiang.su@imgtec.com>
+
+	* config.gcc (supported_defaults): Add madd4.
+	(with_madd4): Add validation.
+	(all_defaults): Add madd4.
+	* config/mips/mips.opt (mmadd4): New option.
+	* gcc/config/mips/mips.h (OPTION_DEFAULT_SPECS): Add a default for
+	mmadd4.
+	(TARGET_CPU_CPP_BUILTINS): Add builtin_define for
+	__mips_no_madd4.
+	(ISA_HAS_UNFUSED_MADD4): Gate with mips_madd4.
+	(ISA_HAS_FUSED_MADD4): Likewise.
+	* gcc/doc/invoke.texi (-mmadd4): Document the new option.
+	* gcc/doc/install.texi (--with-madd4): Document the new option.
+
+gcc/testsuite/
+2017-01-19  Matthew Fortune  <matthew.fortune@imgtec.com>
+
+	* gcc.target/mips/madd4-1.c: New file.
+	* gcc.target/mips/madd4-2.c: Likewise.
+	* gcc.target/mips/mips.exp (mips_option_groups): Add ghost option
+	HAS_MADD4.
+	(mips_option_groups): Add -m[no-]madd4.
+	(mips-dg-init): Detect default -mno-madd4.
+	(mips-dg-options): Handle HAS_MADD4 arch upgrade/downgrade.
+	* gcc.target/mips/mips-ps-type.c: Add -mmadd4 test option.
+	* gcc.target/mips/mips-ps-type-2.c: Likewise.
+	* gcc.target/mips/nmadd-1.c: Likewise.
+	* gcc.target/mips/nmadd-2.c: Likewise.
+	* gcc.target/mips/nmadd-3.c: Likewise.
+
+
+git-svn-id: svn+ssh://gcc.gnu.org/svn/gcc/trunk@244676 138bc75d-0d04-0410-961f-82ee72b054a4
+---
+ gcc/ChangeLog                                  | 16 ++++++++++++++++
+ gcc/config.gcc                                 | 19 +++++++++++++++++--
+ gcc/config/mips/mips.h                         | 12 +++++++++---
+ gcc/config/mips/mips.opt                       |  4 ++++
+ gcc/doc/install.texi                           | 14 ++++++++++++++
+ gcc/doc/invoke.texi                            |  8 +++++++-
+ gcc/testsuite/ChangeLog                        | 15 +++++++++++++++
+ gcc/testsuite/gcc.target/mips/madd4-1.c        | 14 ++++++++++++++
+ gcc/testsuite/gcc.target/mips/madd4-2.c        | 14 ++++++++++++++
+ gcc/testsuite/gcc.target/mips/mips-ps-type-2.c |  2 +-
+ gcc/testsuite/gcc.target/mips/mips-ps-type.c   |  2 +-
+ gcc/testsuite/gcc.target/mips/mips.exp         | 12 +++++++++++-
+ gcc/testsuite/gcc.target/mips/nmadd-1.c        |  2 +-
+ gcc/testsuite/gcc.target/mips/nmadd-2.c        |  2 +-
+ gcc/testsuite/gcc.target/mips/nmadd-3.c        |  2 +-
+ 15 files changed, 126 insertions(+), 12 deletions(-)
+ create mode 100644 gcc/testsuite/gcc.target/mips/madd4-1.c
+ create mode 100644 gcc/testsuite/gcc.target/mips/madd4-2.c
+
+Index: b/gcc/config.gcc
+===================================================================
+--- a/gcc/config.gcc
++++ b/gcc/config.gcc
+@@ -3987,7 +3987,7 @@ case "${target}" in
+ 		;;
+ 
+ 	mips*-*-*)
+-		supported_defaults="abi arch arch_32 arch_64 float fpu nan fp_32 odd_spreg_32 tune tune_32 tune_64 divide llsc mips-plt synci lxc1-sxc1"
++		supported_defaults="abi arch arch_32 arch_64 float fpu nan fp_32 odd_spreg_32 tune tune_32 tune_64 divide llsc mips-plt synci lxc1-sxc1 madd4"
+ 
+ 		case ${with_float} in
+ 		"" | soft | hard)
+@@ -4125,6 +4125,21 @@ case "${target}" in
+ 			exit 1
+ 			;;
+ 		esac
++
++		case ${with_madd4} in
++		yes)
++			with_madd4=madd4
++			;;
++		no)
++			with_madd4=no-madd4
++			;;
++		"")
++			;;
++		*)
++			echo "Unknown madd4 type used in --with-madd4" 1>&2
++			exit 1
++			;;
++		esac
+ 		;;
+ 
+ 	nds32*-*-*)
+@@ -4558,7 +4573,7 @@ case ${target} in
+ esac
+ 
+ t=
+-all_defaults="abi cpu cpu_32 cpu_64 arch arch_32 arch_64 tune tune_32 tune_64 schedule float mode fpu nan fp_32 odd_spreg_32 divide llsc mips-plt synci tls lxc1-sxc1"
++all_defaults="abi cpu cpu_32 cpu_64 arch arch_32 arch_64 tune tune_32 tune_64 schedule float mode fpu nan fp_32 odd_spreg_32 divide llsc mips-plt synci tls lxc1-sxc1 madd4"
+ for option in $all_defaults
+ do
+ 	eval "val=\$with_"`echo $option | sed s/-/_/g`
+Index: b/gcc/config/mips/mips.h
+===================================================================
+--- a/gcc/config/mips/mips.h
++++ b/gcc/config/mips/mips.h
+@@ -621,6 +621,8 @@ struct mips_cpu_info {
+ 	builtin_define ("__GCC_HAVE_BUILTIN_MIPS_CACHE");		\
+       if (!ISA_HAS_LXC1_SXC1)						\
+ 	builtin_define ("__mips_no_lxc1_sxc1");				\
++      if (!ISA_HAS_UNFUSED_MADD4 && !ISA_HAS_FUSED_MADD4)		\
++	builtin_define ("__mips_no_madd4");				\
+     }									\
+   while (0)
+ 
+@@ -898,7 +900,8 @@ struct mips_cpu_info {
+   {"llsc", "%{!mllsc:%{!mno-llsc:-m%(VALUE)}}" }, \
+   {"mips-plt", "%{!mplt:%{!mno-plt:-m%(VALUE)}}" }, \
+   {"synci", "%{!msynci:%{!mno-synci:-m%(VALUE)}}" },			\
+-  {"lxc1-sxc1", "%{!mlxc1-sxc1:%{!mno-lxc1-sxc1:-m%(VALUE)}}" } \
++  {"lxc1-sxc1", "%{!mlxc1-sxc1:%{!mno-lxc1-sxc1:-m%(VALUE)}}" }, \
++  {"madd4", "%{!mmadd4:%{!mno-madd4:-m%(VALUE)}}" } \
+ 
+ /* A spec that infers the:
+    -mnan=2008 setting from a -mips argument,
+@@ -1089,11 +1092,14 @@ struct mips_cpu_info {
+ 
+ /* ISA has 4 operand fused madd instructions of the form
+    'd = [+-] (a * b [+-] c)'.  */
+-#define ISA_HAS_FUSED_MADD4	(TARGET_MIPS8000 || TARGET_LOONGSON_3A)
++#define ISA_HAS_FUSED_MADD4	(mips_madd4				\
++				 && (TARGET_MIPS8000			\
++				     || TARGET_LOONGSON_3A))
+ 
+ /* ISA has 4 operand unfused madd instructions of the form
+    'd = [+-] (a * b [+-] c)'.  */
+-#define ISA_HAS_UNFUSED_MADD4	(ISA_HAS_FP4				\
++#define ISA_HAS_UNFUSED_MADD4	(mips_madd4				\
++				 && ISA_HAS_FP4				\
+ 				 && !TARGET_MIPS8000			\
+ 				 && !TARGET_LOONGSON_3A)
+ 
+Index: b/gcc/config/mips/mips.opt
+===================================================================
+--- a/gcc/config/mips/mips.opt
++++ b/gcc/config/mips/mips.opt
+@@ -388,6 +388,10 @@ mlxc1-sxc1
+ Target Report Var(mips_lxc1_sxc1) Init(1)
+ Use lwxc1/swxc1/ldxc1/sdxc1 instructions where applicable.
+ 
++mmadd4
++Target Report Var(mips_madd4) Init(1)
++Use 4-operand madd.s/madd.d and related instructions where applicable.
++
+ mtune=
+ Target RejectNegative Joined Var(mips_tune_option) ToLower Enum(mips_arch_opt_value)
+ -mtune=PROCESSOR	Optimize the output for PROCESSOR.
+Index: b/gcc/testsuite/gcc.target/mips/madd4-1.c
+===================================================================
+--- /dev/null
++++ b/gcc/testsuite/gcc.target/mips/madd4-1.c
+@@ -0,0 +1,14 @@
++/* { dg-do compile } */
++/* { dg-options "-ffast-math -mno-madd4 (HAS_MADD4) -mhard-float" } */
++/* { dg-skip-if "code quality test" { *-*-* } { "-O0" } { "" } } */
++/* { dg-final { scan-assembler-not "\tmadd.s\t" } } */
++
++#ifndef __mips_no_madd4
++#error missing definition of __mips_no_madd4
++#endif
++
++NOMIPS16 float
++madd4 (float f, float g, float h)
++{
++  return (f * g) + h;
++}
+Index: b/gcc/testsuite/gcc.target/mips/madd4-2.c
+===================================================================
+--- /dev/null
++++ b/gcc/testsuite/gcc.target/mips/madd4-2.c
+@@ -0,0 +1,14 @@
++/* { dg-do compile } */
++/* { dg-options "-ffast-math -mmadd4 (HAS_MADD4) -mhard-float" } */
++/* { dg-skip-if "code quality test" { *-*-* } { "-O0" } { "" } } */
++/* { dg-final { scan-assembler "\tmadd.s\t" } } */
++
++#ifdef __mips_no_madd4
++#error unexpected definition of __mips_no_madd4
++#endif
++
++NOMIPS16 float
++madd4 (float f, float g, float h)
++{
++  return (f * g) + h;
++}
+Index: b/gcc/testsuite/gcc.target/mips/mips-ps-type-2.c
+===================================================================
+--- a/gcc/testsuite/gcc.target/mips/mips-ps-type-2.c
++++ b/gcc/testsuite/gcc.target/mips/mips-ps-type-2.c
+@@ -1,7 +1,7 @@
+ /* Test v2sf calculations.  The nmadd and nmsub patterns need
+    -ffinite-math-only.  */
+ /* { dg-do compile } */
+-/* { dg-options "(HAS_MADDPS) -mgp32 -mpaired-single -ffinite-math-only forbid_cpu=octeon.*" } */
++/* { dg-options "(HAS_MADDPS) -mmadd4 -mgp32 -mpaired-single -ffinite-math-only forbid_cpu=octeon.*" } */
+ /* { dg-skip-if "nmadd and nmsub need combine" { *-*-* } { "-O0" } { "" } } */
+ /* { dg-final { scan-assembler "\tcvt.ps.s\t" } } */
+ /* { dg-final { scan-assembler "\tmov.ps\t" } } */
+Index: b/gcc/testsuite/gcc.target/mips/mips-ps-type.c
+===================================================================
+--- a/gcc/testsuite/gcc.target/mips/mips-ps-type.c
++++ b/gcc/testsuite/gcc.target/mips/mips-ps-type.c
+@@ -1,7 +1,7 @@
+ /* Test v2sf calculations.  The nmadd and nmsub patterns need
+    -ffinite-math-only.  */
+ /* { dg-do compile } */ 
+-/* { dg-options "-mpaired-single -mgp64 -ffinite-math-only forbid_cpu=octeon.*" } */
++/* { dg-options "-mpaired-single -mmadd4 -mgp64 -ffinite-math-only forbid_cpu=octeon.*" } */
+ /* { dg-skip-if "nmadd and nmsub need combine" { *-*-* } { "-O0" } { "" } } */
+ /* { dg-final { scan-assembler "\tcvt.ps.s\t" } } */
+ /* { dg-final { scan-assembler "\tmov.ps\t" } } */
+Index: b/gcc/testsuite/gcc.target/mips/mips.exp
+===================================================================
+--- a/gcc/testsuite/gcc.target/mips/mips.exp
++++ b/gcc/testsuite/gcc.target/mips/mips.exp
+@@ -256,6 +256,7 @@ set mips_option_groups {
+     ldc "HAS_LDC"
+     movn "HAS_MOVN"
+     madd "HAS_MADD"
++    madd4_ghost "HAS_MADD4"
+     maddps "HAS_MADDPS"
+     lsa "(|!)HAS_LSA"
+     lxc1 "HAS_LXC1"
+@@ -283,6 +284,7 @@ foreach option {
+     local-sdata
+     long-calls
+     lxc1-sxc1
++    madd4
+     paired-single
+     plt
+     shared
+@@ -822,6 +824,12 @@ proc mips-dg-init {} {
+ 	    "-mlxc1-sxc1"
+ 	    #endif
+ 
++	    #ifdef __mips_no_madd4
++	    "-mno-madd4"
++	    #else
++	    "-mmadd4"
++	    #endif
++
+ 	    #ifdef __mips_synci
+ 	    "-msynci",
+ 	    #else
+@@ -1132,6 +1140,7 @@ proc mips-dg-options { args } {
+ 	#
+ 	} elseif { $isa < 4
+ +		   && ([mips_have_test_option_p options "HAS_LXC1"]
+++		       || [mips_have_test_option_p options "HAS_MADD4"]
+ +		       || [mips_have_test_option_p options "HAS_MOVN"]) } {
+ 	    mips_make_test_option options "-mips4"
+         # We need MIPS III or higher for:
+@@ -1174,8 +1183,9 @@ proc mips-dg-options { args } {
+ 		       || [mips_have_test_option_p options "-mfix-r10000"]
+ 		       || [mips_have_test_option_p options "NOT_HAS_DMUL"]
+ 		       || [mips_have_test_option_p options "HAS_LXC1"]
+-		       || [mips_have_test_option_p options "HAS_MOVN"]
+ 		       || [mips_have_test_option_p options "HAS_MADD"]
++		       || [mips_have_test_option_p options "HAS_MADD4"]
++		       || [mips_have_test_option_p options "HAS_MOVN"]
+ 		       || [mips_have_test_option_p options "-mpaired-single"]
+ 		       || [mips_have_test_option_p options "-mnan=legacy"]
+ 		       || [mips_have_test_option_p options "-mabs=legacy"]
+Index: b/gcc/testsuite/gcc.target/mips/nmadd-1.c
+===================================================================
+--- a/gcc/testsuite/gcc.target/mips/nmadd-1.c
++++ b/gcc/testsuite/gcc.target/mips/nmadd-1.c
+@@ -1,5 +1,5 @@
+ /* { dg-do compile } */
+-/* { dg-options "-ffast-math isa=4 -mhard-float" } */
++/* { dg-options "-ffast-math -mmadd4 isa=4 -mhard-float" } */
+ /* { dg-skip-if "code quality test" { *-*-* } { "-O0" } { "" } } */
+ /* { dg-final { scan-assembler "\tnmadd.s\t" } } */
+ /* { dg-final { scan-assembler "\tnmadd.d\t" } } */
+Index: b/gcc/testsuite/gcc.target/mips/nmadd-2.c
+===================================================================
+--- a/gcc/testsuite/gcc.target/mips/nmadd-2.c
++++ b/gcc/testsuite/gcc.target/mips/nmadd-2.c
+@@ -1,5 +1,5 @@
+ /* { dg-do compile } */
+-/* { dg-options "-fno-fast-math -ffinite-math-only isa=4 -mhard-float" } */
++/* { dg-options "-fno-fast-math -ffinite-math-only -mmadd4 isa=4 -mhard-float" } */
+ /* { dg-skip-if "code quality test" { *-*-* } { "-O0" } { "" } } */
+ /* { dg-final { scan-assembler "\tnmadd.s\t" } } */
+ /* { dg-final { scan-assembler "\tnmadd.d\t" } } */
+Index: b/gcc/testsuite/gcc.target/mips/nmadd-3.c
+===================================================================
+--- a/gcc/testsuite/gcc.target/mips/nmadd-3.c
++++ b/gcc/testsuite/gcc.target/mips/nmadd-3.c
+@@ -1,7 +1,7 @@
+ /* The same code as nmadd-2.c, but compiled with -fno-finite-math-only.
+    We can't use nmadd and nmsub in that case.  */
+ /* { dg-do compile } */
+-/* { dg-options "-fno-fast-math -fno-finite-math-only isa=4 -mhard-float" } */
++/* { dg-options "-fno-fast-math -fno-finite-math-only -mmadd4 isa=4 -mhard-float" } */
+ /* { dg-final { scan-assembler-not "\tnmadd" } } */
+ /* { dg-final { scan-assembler-not "\tnmsub" } } */
+ 

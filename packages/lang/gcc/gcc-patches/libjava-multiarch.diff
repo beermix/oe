@@ -1,0 +1,82 @@
+# DP: Install libjava libraries to multiarch location
+
+Index: b/libjava/configure.ac
+===================================================================
+--- a/libjava/configure.ac
++++ b/libjava/configure.ac
+@@ -1535,6 +1535,10 @@ case ${version_specific_libs} in
+       .) toolexeclibdir=$toolexecmainlibdir ;; # Avoid trailing /.
+       *) toolexeclibdir=$toolexecmainlibdir/$multi_os_directory ;;
+     esac
++    multiarch=`$CC -print-multiarch`
++    if test -n "$multiarch"; then
++        toolexeclibdir=$toolexecmainlibdir/$multiarch
++    fi
+     ;;
+ esac
+ AC_SUBST(toolexecdir)
+@@ -1552,6 +1556,10 @@ AC_DEFINE_UNQUOTED(GCJVERSION, "$GCJVERS
+ # libraries are found.
+ gcjsubdir=gcj-$gcjversion-$libgcj_soversion
+ dbexecdir='$(toolexeclibdir)/'$gcjsubdir
++multiarch=`$CC -print-multiarch`
++if test -n "$multiarch"; then
++    dbexecdir='$(libdir)/'$multiarch/$gcjsubdir
++fi
+ AC_SUBST(dbexecdir)
+ AC_SUBST(gcjsubdir)
+ 
+Index: b/libjava/Makefile.am
+===================================================================
+--- a/libjava/Makefile.am
++++ b/libjava/Makefile.am
+@@ -373,7 +373,7 @@ AM_CXXFLAGS = \
+ 	-DGCJ_VERSIONED_LIBDIR="\"$(dbexecdir)\"" \
+ 	-DPATH_SEPARATOR="\"$(CLASSPATH_SEPARATOR)\"" \
+ 	-DECJ_JAR_FILE="\"$(ECJ_JAR)\"" \
+-	-DLIBGCJ_DEFAULT_DATABASE="\"$(dbexecdir)/$(db_name)\"" \
++	-DLIBGCJ_DEFAULT_DATABASE="\"/var/lib/$(MULTIARCH_DIR)/gcj-6/$(db_name)\"" \
+ 	-DLIBGCJ_DEFAULT_DATABASE_PATH_TAIL="\"$(db_pathtail)\""
+ 
+ AM_GCJFLAGS = \
+Index: b/libjava/Makefile.in
+===================================================================
+--- a/libjava/Makefile.in
++++ b/libjava/Makefile.in
+@@ -1060,7 +1060,7 @@ AM_CXXFLAGS = \
+ 	-DGCJ_VERSIONED_LIBDIR="\"$(dbexecdir)\"" \
+ 	-DPATH_SEPARATOR="\"$(CLASSPATH_SEPARATOR)\"" \
+ 	-DECJ_JAR_FILE="\"$(ECJ_JAR)\"" \
+-	-DLIBGCJ_DEFAULT_DATABASE="\"$(dbexecdir)/$(db_name)\"" \
++	-DLIBGCJ_DEFAULT_DATABASE="\"/var/lib/$(MULTIARCH_DIR)/gcj-6/$(db_name)\"" \
+ 	-DLIBGCJ_DEFAULT_DATABASE_PATH_TAIL="\"$(db_pathtail)\""
+ 
+ AM_GCJFLAGS = \
+Index: b/libjava/classpath/m4/acinclude.m4
+===================================================================
+--- a/libjava/classpath/m4/acinclude.m4
++++ b/libjava/classpath/m4/acinclude.m4
+@@ -276,6 +276,10 @@ AC_DEFUN([CLASSPATH_TOOLEXECLIBDIR],
+       esac
+       ;;
+   esac
++  multiarch=`$CC -print-multiarch`
++  if test -n "$multiarch"; then
++    toolexeclibdir=${libdir}/${multiarch}
++  fi
+   AC_SUBST(toolexecdir)
+   AC_SUBST(toolexecmainlibdir)
+   AC_SUBST(toolexeclibdir)
+Index: b/libjava/classpath/configure.ac
+===================================================================
+--- a/libjava/classpath/configure.ac
++++ b/libjava/classpath/configure.ac
+@@ -16,6 +16,8 @@ dnl END GCJ LOCAL
+ 
+ AC_CANONICAL_TARGET
+ 
++dnl dummy change to run autoconf
++
+ dnl GCJ LOCAL
+ AC_ARG_ENABLE(java-maintainer-mode,
+ 	AS_HELP_STRING([--enable-java-maintainer-mode],

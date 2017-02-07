@@ -1,0 +1,17 @@
+Index: gcc-6-6.2.1-4.1/src/libgo/testsuite/gotest
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/testsuite/gotest
++++ gcc-6-6.2.1-4.1/src/libgo/testsuite/gotest
+@@ -618,7 +618,11 @@ xno)
+ 		wait $pid
+ 		status=$?
+ 		if ! test -f gotest-timeout; then
+-		    sleeppid=`ps -o pid,ppid,comm | grep " $alarmpid " | grep sleep | sed -e 's/ *\([0-9]*\) .*$/\1/'`
++		    if test "$goos" = "gnu"; then
++			sleeppid=`ps -o pid,ppid | grep " $alarmpid " | grep sleep | sed -e 's/ *\([0-9]*\) .*$/\1/'`
++		    else
++			sleeppid=`ps -o pid,ppid,comm | grep " $alarmpid " | grep sleep | sed -e 's/ *\([0-9]*\) .*$/\1/'`
++		    fi
+ 		    kill $alarmpid
+ 		    wait $alarmpid
+ 		    if test "$sleeppid" != ""; then

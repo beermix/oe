@@ -1,0 +1,42 @@
+Index: gcc-6-6.2.1-4.1/src/libgo/mksysinfo.sh
+===================================================================
+--- gcc-6-6.2.1-4.1.orig/src/libgo/mksysinfo.sh
++++ gcc-6-6.2.1-4.1/src/libgo/mksysinfo.sh
+@@ -304,6 +304,13 @@ echo '#include <errno.h>' | ${CC} -x c -
+   egrep '#define E[A-Z0-9_]+ ' | \
+   sed -e 's/^#define \(E[A-Z0-9_]*\) .*$/const \1 = Errno(_\1)/' >> ${OUT}
+ 
++# Special treatment of EWOULDBLOCK for GNU/Hurd
++# /usr/include/bits/errno.h: #define EWOULDBLOCK EAGAIN
++if egrep 'define EWOULDBLOCK EAGAIN' gen-sysinfo.go > /dev/null 2>&1; then
++  egrep '^const EWOULDBLOCK = Errno(_EWOULDBLOCK)' ${OUT} | \
++    sed -i -e 's/_EWOULDBLOCK/_EAGAIN/' ${OUT}
++fi
++
+ # The O_xxx flags.
+ egrep '^const _(O|F|FD)_' gen-sysinfo.go | \
+   sed -e 's/^\(const \)_\([^= ]*\)\(.*\)$/\1\2 = _\2/' >> ${OUT}
+@@ -319,6 +326,11 @@ if ! grep '^const F_DUPFD_CLOEXEC' ${OUT
+   echo "const F_DUPFD_CLOEXEC = 0" >> ${OUT}
+ fi
+ 
++# Special treatment of SYS_IOCTL for GNU/Hurd
++if ! grep '^const SYS_IOCTL' ${OUT} > /dev/null 2>&1; then
++  echo "const SYS_IOCTL = 0" >> ${OUT}
++fi
++
+ # These flags can be lost on i386 GNU/Linux when using
+ # -D_FILE_OFFSET_BITS=64, because we see "#define F_SETLK F_SETLK64"
+ # before we see the definition of F_SETLK64.
+@@ -676,6 +688,11 @@ grep '^type _tms ' gen-sysinfo.go | \
+ 
+ # The stat type.
+ # Prefer largefile variant if available.
++# Special treatment of st_dev for GNU/Hurd
++# /usr/include/i386-gnu/bits/stat.h: #define st_dev st_fsid
++if grep 'define st_dev st_fsid' gen-sysinfo.go > /dev/null 2>&1; then
++  sed -i -e 's/; st_fsid/; st_dev/' gen-sysinfo.go
++fi
+ stat=`grep '^type _stat64 ' gen-sysinfo.go || true`
+ if test "$stat" != ""; then
+   grep '^type _stat64 ' gen-sysinfo.go
