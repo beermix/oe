@@ -182,28 +182,3 @@ Index: b/gcc/config/mips/gnu-user.h
      %{!static: \
        %{rdynamic:-export-dynamic} \
 Index: b/libjava/Makefile.am
-===================================================================
---- a/libjava/Makefile.am
-+++ b/libjava/Makefile.am
-@@ -628,7 +628,7 @@ libgcj_bc.la: $(libgcj_bc_la_OBJECTS) $(
- 	rm .libs/libgcj_bc.so; \
- 	mv .libs/libgcj_bc.so.1.0.0 .libs/libgcj_bc.so; \
- 	$(libgcj_bc_dummy_LINK) -xc /dev/null -Wl,-soname,libgcj_bc.so.1 \
--	-o .libs/libgcj_bc.so.1.0.0 -lgcj || exit; \
-+	-o .libs/libgcj_bc.so.1.0.0 -Wl,--no-as-needed -lgcj || exit; \
- 	rm .libs/libgcj_bc.so.1; \
- 	$(LN_S) libgcj_bc.so.1.0.0 .libs/libgcj_bc.so.1
- 
-Index: b/libjava/Makefile.in
-===================================================================
---- a/libjava/Makefile.in
-+++ b/libjava/Makefile.in
-@@ -10646,7 +10646,7 @@ libgcj_bc.la: $(libgcj_bc_la_OBJECTS) $(
- 	rm .libs/libgcj_bc.so; \
- 	mv .libs/libgcj_bc.so.1.0.0 .libs/libgcj_bc.so; \
- 	$(libgcj_bc_dummy_LINK) -xc /dev/null -Wl,-soname,libgcj_bc.so.1 \
--	-o .libs/libgcj_bc.so.1.0.0 -lgcj || exit; \
-+	-o .libs/libgcj_bc.so.1.0.0 -Wl,--no-as-needed -lgcj || exit; \
- 	rm .libs/libgcj_bc.so.1; \
- 	$(LN_S) libgcj_bc.so.1.0.0 .libs/libgcj_bc.so.1
- 

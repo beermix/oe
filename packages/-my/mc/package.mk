@@ -36,7 +36,7 @@ PKG_CONFIGURE_OPTS_TARGET="fu_cv_sys_stat_statfs2_bsize=yes \
                            --enable-charset \
                            --without-gpm-mouse \
                            --with-screen=ncurses \
-                           --with-x \
+                           --without-x \
                            --with-subshell \
                            --enable-vfs-sftp \
                            --enable-vfs-tar \

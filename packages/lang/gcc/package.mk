@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="6.3.0"
+PKG_VERSION="6.3.1+20170109"
 PKG_REV="1"
-PKG_URL="https://fossies.org/linux/misc/gcc-6.3.0.tar.xz"
+PKG_URL="http://192.168.1.2:8887/gcc-6.3.1+20170109.tar.xz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host"
 PKG_DEPENDS_TARGET="gcc:host"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
@@ -56,7 +56,9 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libitm \
                            --disable-libquadmath \
                            --disable-libgomp \
-                           --disable-libmpx \
+                           --disable-libmpx
+                           --enable-linker-build-id \
+                           --disable-werror
                            --disable-libssp \
                            --with-tune=generic"
 
@@ -86,7 +88,6 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-libstdcxx-time=yes \
                          --enable-clocale=gnu \
                          --enable-gnu-unique-object \
-                         --enable-linker-build-id \
                          --with-linker-hash-style=gnu \
                          --enable-poison-system-directories \
                          --disable-libunwind-exceptions \
