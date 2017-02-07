@@ -37,3 +37,5 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-doc-cross-references \
                            --enable-debug=no \
                            --disable-silent-rules \
                            --with-xft"
+
+PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
