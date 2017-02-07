@@ -17,10 +17,10 @@
 ################################################################################
 
 PKG_NAME="gcc"
-#PKG_VERSION="7-20170205"
-#PKG_URL="https://fossies.org/linux/misc/gcc-7-20170205.tar.xz"
-PKG_VERSION="4ca53f0"
-PKG_GIT_URL="git://gcc.gnu.org/git/gcc.git"
+PKG_VERSION="6-6.3.0U"
+PKG_URL="https://dl.dropboxusercontent.com/s/457p66zqcyvehde/gcc-6-6.3.0U.tar.xz"
+#PKG_VERSION="4ca53f0"
+#PKG_GIT_URL="git://gcc.gnu.org/git/gcc.git"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host"
 PKG_DEPENDS_TARGET="gcc:host"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
@@ -73,11 +73,9 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               $GCC_OPTS"
 
 PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
-                         --enable-languages=c,c++,objc,obj-c++ \
+                         --enable-languages=c,c++ \
                          --enable-__cxa_atexit \
                          --enable-decimal-float \
-                         --enable-libssp \
-                         --enable-libatomic \
                          --enable-tls \
                          --enable-shared \
                          --disable-static \

@@ -17,10 +17,10 @@
 ################################################################################
 
 PKG_NAME="binutils"
-#PKG_VERSION="2.27"
-#PKG_URL="https://fossies.org/linux/misc/binutils-$PKG_VERSION.tar.xz"
-PKG_VERSION="65f90e8"
-PKG_GIT_URL="git://sourceware.org/git/binutils-gdb.git"
+PKG_VERSION="2.27.90.20170124"
+PKG_URL="https://dl.dropboxusercontent.com/s/pb38uifdaiy0d9o/binutils-2.27.90.20170124.tar.xz"
+#PKG_VERSION="9a055a8"
+#PKG_GIT_URL="git://sourceware.org/git/binutils-gdb.git"
 #PKG_GIT_BRANCH="binutils-2_28-branch"
 #PKG_KEEP_CHECKOUT="yes"
 PKG_DEPENDS_HOST="ccache:host bison:host flex:host linux:host texinfo:host"
