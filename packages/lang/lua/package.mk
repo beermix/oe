@@ -21,7 +21,7 @@ PKG_AUTORECONF="no"
 _MAJORVER=${PKG_VERSION%.*}
 
 make_target() {
-  make CC="$CC" LD="$LD" CFLAGS="$CFLAGS -fPIC" MYCFLAGS="-DLUA_COMPAT_5_3 -DLUA_COMPAT_5_2 -DLUA_COMPAT_5_1" linux -j1
+  make BUILD_CC="$HOSTCC" CC="$CC" LD="$LD" CFLAGS="$CFLAGS -fPIC" MYCFLAGS="-DLUA_COMPAT_5_3 -DLUA_COMPAT_5_2 -DLUA_COMPAT_5_1" linux -j1
 }
 
 makeinstall_target() {
