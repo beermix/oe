@@ -1,6 +1,0 @@
-MODULE    = msvcm90.dll
-
-C_SRCS = \
-	msvcm90_main.c
-
-@MAKE_DLL_RULES@

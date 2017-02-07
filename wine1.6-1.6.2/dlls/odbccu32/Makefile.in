@@ -1,5 +1,0 @@
-MODULE    = odbccu32.dll
-
-RC_SRCS = version.rc
-
-@MAKE_DLL_RULES@
