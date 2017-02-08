@@ -17,19 +17,19 @@
 ################################################################################
 
 PKG_NAME="libgdiplus"
-PKG_VERSION="4.2"
+PKG_VERSION="e1fb6fe92d4b1691d3ded9ba5356a7e782cfa234"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/mono/libgdiplus"
-PKG_URL="https://github.com/mono/libgdiplus/archive/$PKG_VERSION.tar.gz"
+PKG_GIT_URL="https://github.com/mono/libgdiplus"
 PKG_DEPENDS_TARGET="toolchain giflib libjpeg-turbo tiff libXext libexif glib cairo"
 PKG_SECTION="tools"
 PKG_SHORTDESC="libgiplus"
 PKG_LONGDESC="An Open Source implementation of the GDI+ API"
 
 PKG_IS_ADDON="no"
-
 PKG_AUTORECONF="yes"
+
 PKG_CONFIGURE_OPTS_TARGET="--enable-shared \
                            --with-libgif   \
                            --with-libjpeg  \
