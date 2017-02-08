@@ -30,11 +30,16 @@ if [ ! -f $PKG_DIR/package.mk ]; then
   exit 1
 fi
 
-PACKAGE_NAME=$(echo $1 | awk -F : '{print $1}')
-TARGET=$(echo $1 | awk -F : '{print $2}')
-if [ -z "$TARGET" ]; then
-  TARGET="target"
-fi
+# set defaults
+  PKG_CONFIGURE_SCRIPT=""
+  PKG_MAKE_OPTS=""
+  PKG_MAKEINSTALL_OPTS=""
+
+  PACKAGE_NAME=$(echo $1 | awk -F : '{print $1}')
+  TARGET=$(echo $1 | awk -F : '{print $2}')
+  if [ -z "$TARGET" ]; then
+    TARGET="target"
+  fi
 
 if [ -n "$PKG_ARCH" -a ! "$PKG_ARCH" = "any" ]; then
   echo "$PKG_ARCH" | grep -q "$TARGET_ARCH" || exit 0
@@ -49,6 +54,7 @@ STAMP=$STAMPS/$PACKAGE_NAME/build_$TARGET
 $SCRIPTS/unpack $PACKAGE_NAME
 
 STAMP_DEPENDS="$PKG_DIR $PKG_NEED_UNPACK $PROJECT_DIR/$PROJECT/patches/$PKG_NAME"
+[ -n "$DEVICE" ] && STAMP_DEPENDS="$STAMP_DEPENDS $PROJECT_DIR/$PROJECT/devices/$DEVICE/patches/$PKG_NAME"
 
 if [ -f $STAMP ] ; then
   . $STAMP
@@ -141,8 +147,12 @@ if [ ! -f $STAMP ]; then
           ;;
       esac
 
-      # clean up
-      [ -n "$INSTALL" ] && rm -rf $INSTALL
+       # clean up
+       if [ ! -z "$INSTALL" ] ; then
+         if [ -d "$INSTALL" ] ; then
+           rm -rf $INSTALL
+         fi
+       fi
 
       # setup configure script
       if [ -z "$PKG_CONFIGURE_SCRIPT" ]; then
@@ -168,7 +178,9 @@ if [ ! -f $STAMP ]; then
       fi
 
       # ensure $PKG_BUILD is there. (installer? PKG_URL="")
-      mkdir -p $PKG_BUILD
+      if [ ! -d $PKG_BUILD ] ; then
+        mkdir -p $PKG_BUILD
+      fi
 
       cd $PKG_BUILD
         case "$TARGET" in
@@ -205,35 +217,33 @@ if [ ! -f $STAMP ]; then
       if [ "$(type -t configure_$TARGET)" = "function" ]; then
         configure_$TARGET
       elif [ -f "$PKG_CMAKE_SCRIPT" -a ! "$PKG_USE_CMAKE" = "no" ]; then
-        case "$TARGET" in
-          target)
-            cmake $TARGET_CMAKE_OPTS $PKG_CMAKE_OPTS_TARGET $(dirname $PKG_CMAKE_SCRIPT)
-            ;;
-          host)
-            cmake $HOST_CMAKE_OPTS $PKG_CMAKE_OPTS_HOST $(dirname $PKG_CMAKE_SCRIPT)
-            ;;
-          init)
-            cmake $INIT_CMAKE_OPTS $PKG_CMAKE_OPTS_INIT $(dirname $PKG_CMAKE_SCRIPT)
-            ;;
-          bootstrap)
-            cmake $BOOTSTRAP_CMAKE_OPTS $PKG_CMAKE_OPTS_BOOTSTRAP $(dirname $PKG_CMAKE_SCRIPT)
-            ;;
-        esac
+        if [ "$TARGET" = "target" ]; then
+          echo "Executing (target): cmake $TARGET_CMAKE_OPTS $PKG_CMAKE_OPTS_TARGET $(dirname $PKG_CMAKE_SCRIPT)" | tr -s " "
+          cmake $TARGET_CMAKE_OPTS $PKG_CMAKE_OPTS_TARGET $(dirname $PKG_CMAKE_SCRIPT)
+        elif [ "$TARGET" = "host" ]; then
+          echo "Executing (host): cmake $HOST_CMAKE_OPTS $PKG_CMAKE_OPTS_HOST $(dirname $PKG_CMAKE_SCRIPT)" | tr -s " "
+          cmake $HOST_CMAKE_OPTS $PKG_CMAKE_OPTS_HOST $(dirname $PKG_CMAKE_SCRIPT)
+        elif [ "$TARGET" = "init" ]; then
+          echo "Executing (init): cmake $INIT_CMAKE_OPTS $PKG_CMAKE_OPTS_INIT $(dirname $PKG_CMAKE_SCRIPT)" | tr -s " "
+          cmake $INIT_CMAKE_OPTS $PKG_CMAKE_OPTS_INIT $(dirname $PKG_CMAKE_SCRIPT)
+        elif [ "$TARGET" = "bootstrap" ]; then
+          echo "Executing (bootstrap): cmake $BOOTSTRAP_CMAKE_OPTS $PKG_CMAKE_OPTS_BOOTSTRAP $(dirname $PKG_CMAKE_SCRIPT)" | tr -s " "
+          cmake $BOOTSTRAP_CMAKE_OPTS $PKG_CMAKE_OPTS_BOOTSTRAP $(dirname $PKG_CMAKE_SCRIPT)
+        fi
       elif [ -f "$PKG_CONFIGURE_SCRIPT" ]; then
-        case "$TARGET" in
-          target)
-            $PKG_CONFIGURE_SCRIPT $TARGET_CONFIGURE_OPTS $PKG_CONFIGURE_OPTS_TARGET
-            ;;
-          host)
-            $PKG_CONFIGURE_SCRIPT $HOST_CONFIGURE_OPTS $PKG_CONFIGURE_OPTS_HOST
-            ;;
-          init)
-            $PKG_CONFIGURE_SCRIPT $INIT_CONFIGURE_OPTS $PKG_CONFIGURE_OPTS_INIT
-            ;;
-          bootstrap)
-            $PKG_CONFIGURE_SCRIPT $BOOTSTRAP_CONFIGURE_OPTS $PKG_CONFIGURE_OPTS_BOOTSTRAP
-            ;;
-        esac
+        if [ "$TARGET" = "target" ]; then
+          echo "Executing (target): $PKG_CONFIGURE_SCRIPT $TARGET_CONFIGURE_OPTS $PKG_CONFIGURE_OPTS_TARGET" | tr -s " "
+          $PKG_CONFIGURE_SCRIPT $TARGET_CONFIGURE_OPTS $PKG_CONFIGURE_OPTS_TARGET
+        elif [ "$TARGET" = "host" ]; then
+          echo "Executing (host): $PKG_CONFIGURE_SCRIPT $HOST_CONFIGURE_OPTS $PKG_CONFIGURE_OPTS_HOST" | tr -s " "
+          $PKG_CONFIGURE_SCRIPT $HOST_CONFIGURE_OPTS $PKG_CONFIGURE_OPTS_HOST
+        elif [ "$TARGET" = "init" ]; then
+          echo "Executing (init): $PKG_CONFIGURE_SCRIPT $INIT_CONFIGURE_OPTS $PKG_CONFIGURE_OPTS_INIT" | tr -s " "
+          $PKG_CONFIGURE_SCRIPT $INIT_CONFIGURE_OPTS $PKG_CONFIGURE_OPTS_INIT
+        elif [ "$TARGET" = "bootstrap" ]; then
+          echo "Executing (bootstrap): $PKG_CONFIGURE_SCRIPT $BOOTSTRAP_CONFIGURE_OPTS $PKG_CONFIGURE_OPTS_BOOTSTRAP" | tr -s " "
+          $PKG_CONFIGURE_SCRIPT $BOOTSTRAP_CONFIGURE_OPTS $PKG_CONFIGURE_OPTS_BOOTSTRAP
+        fi
       fi
       if [ "$(type -t post_configure_$TARGET)" = "function" ]; then
         post_configure_$TARGET
