@@ -94,7 +94,7 @@ pre_configure_target() {
 
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed||"`
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--sort-common,--as-needed,-z,relro||"`
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--sort-common,--as-needed||"`
+  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-fstack-protector-strong||g"`
   
   
   unset LD_LIBRARY_PATH
