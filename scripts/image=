@@ -110,16 +110,7 @@ fi
     echo -e "OPENELEC_BUILD=\"community\"" >> $INSTALL/etc/os-release
   fi
 
-# create /etc/issue
-  echo "$GREETING0" >  $INSTALL/etc/issue
-  echo "$GREETING1" >> $INSTALL/etc/issue
-  echo "$GREETING2" >> $INSTALL/etc/issue
-  echo "$GREETING3" >> $INSTALL/etc/issue
-  echo "$GREETING4" >> $INSTALL/etc/issue
   echo "$DISTRONAME ($([ "$OFFICIAL" = "yes" ] && echo "official" ||  echo "community")) Version: $OPENELEC_VERSION" >> $INSTALL/etc/issue
-  if [ -n "$GIT_HASH" ]; then
-    echo "$DISTRONAME git: $GIT_HASH" >> $INSTALL/etc/issue
-  fi
 
   ln -sf /etc/issue $INSTALL/etc/motd
 
@@ -158,7 +149,6 @@ fi
 
 # LCD support
   [ ! "$LCD_DRIVER" = "none" ] && $SCRIPTS/install lcdproc
-
 # nano text editor
   [ "$NANO_EDITOR" = "yes" ] && $SCRIPTS/install nano
 
@@ -229,9 +219,13 @@ fi
   if [ -z "$SQUASHFS_COMPRESSION" ]; then
     SQUASHFS_COMPRESSION="gzip"
   fi
+  
+  if [ "$SQUASHFS_COMPRESSION" = "lz4" ]; then
+    SQUASHFS_COMPRESSION_LEVEL="-Xhc"
+  fi
 
   echo "rm -rf $TARGET_IMG/$IMAGE_NAME.system" >> $FAKEROOT_SCRIPT_SYSTEM
-  echo "$ROOT/$TOOLCHAIN/bin/mksquashfs $BUILD/image/system $TARGET_IMG/$IMAGE_NAME.system -noappend -comp $SQUASHFS_COMPRESSION" >> $FAKEROOT_SCRIPT_SYSTEM
+  echo "$ROOT/$TOOLCHAIN/bin/mksquashfs $BUILD/image/system $TARGET_IMG/$IMAGE_NAME.system -noappend -comp $SQUASHFS_COMPRESSION $SQUASHFS_COMPRESSION_LEVEL" >> $FAKEROOT_SCRIPT_SYSTEM
 
 # run fakeroot
   $ROOT/$TOOLCHAIN/bin/fakeroot -- $FAKEROOT_SCRIPT_SYSTEM
