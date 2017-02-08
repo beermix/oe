@@ -33,6 +33,8 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/bash \
                            libc_cv_slibdir=/lib \
                            ac_cv_path_PERL= \
                            ac_cv_prog_MAKEINFO= \
+                           libc_cv_forced_unwind=yes \
+                           libc_cv_ssp=no \
                            --libexecdir=/usr/lib/glibc \
                            --cache-file=config.cache \
                            --disable-profile \
@@ -51,9 +53,13 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/bash \
                            --disable-build-nscd \
                            --disable-nscd \
                            --enable-lock-elision \
-                           --disable-timezone-tool \
-                           --disable-debug"
+                           --disable-timezone-tools"
 
+if [ "$DEBUG" = yes ]; then
+  PKG_CONFIGURE_OPTS_TARGET+=" --enable-debug"
+else
+  PKG_CONFIGURE_OPTS_TARGET+=" --disable-debug"
+fi
 
 NSS_CONF_DIR="$PKG_BUILD/nss"
 
@@ -76,10 +82,11 @@ pre_configure_target() {
   strip_gold
 
 # Filter out some problematic *FLAGS
-CPPFLAGS=${CPPFLAGS/-D_FORTIFY_SOURCE=2/}
-  CFLAGS=${CFLAGS/-fstack-protector-strong/}
-  # this is handled properly by --enable-bind-now
-  LDFLAGS=${LDFLAGS/,-z,now/}
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-ffast-math||g"`
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-Ofast|-O2|g"`
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O2|g"`
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong||g"`
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
 
   if [ -n "$PROJECT_CFLAGS" ]; then
     export CFLAGS=`echo $CFLAGS | sed -e "s|$PROJECT_CFLAGS||g"`
@@ -89,30 +96,33 @@ CPPFLAGS=${CPPFLAGS/-D_FORTIFY_SOURCE=2/}
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Ofast|-O2|g"`
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-O.|-O2|g"`
 
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-fstack-protector-strong||g"`
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed||"`
+  unset CPPFLAGS
  
   unset LD_LIBRARY_PATH
 
 # set some CFLAGS we need
-  export CFLAGS="$CFLAGS -g -fno-stack-protector"
+  export CFLAGS="$CFLAGS -g"
+  export OBJDUMP_FOR_HOST=objdump
 
 cat >config.cache <<EOF
 libc_cv_forced_unwind=yes
 libc_cv_c_cleanup=yes
 libc_cv_ssp=no
 libc_cv_ssp_strong=no
-libc_cv_slibdir=/lib
 EOF
 
-  echo "libdir=/lib" >> configparms
-  echo "slibdir=/lib" >> configparms
   echo "sbindir=/usr/bin" >> configparms
   echo "rootsbindir=/usr/bin" >> configparms
 }
 
 post_makeinstall_target() {
-# we are linking against ld.so, so symlink
-  ln -sf $(basename $INSTALL/usr/lib/ld-*.so) $INSTALL/usr/lib/ld.so
+  ln -sf ld-$PKG_VERSION.so $INSTALL/lib/ld.so
+  if [ "$TARGET_ARCH" = "arm" -a "$TARGET_FLOAT" = "hard" ]; then
+    ln -sf ld-$PKG_VERSION.so $INSTALL/lib/ld-linux.so.3
+  fi
 
 # cleanup
   for i in $GLIBC_EXCLUDE_BIN; do

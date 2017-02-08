@@ -78,6 +78,6 @@ makeinstall_target() {
                                 --with-date_time \
                                 --with-chrono \
                                 --with-random \
-                                --with-regex -sICU_PATH="$SYSROOT_PREFIX/usr" -j2 \
+                                --with-regex -sICU_PATH="$SYSROOT_PREFIX/usr"  \
                                 install
 }

@@ -17,21 +17,12 @@
 ################################################################################
 
 PKG_NAME="gcc"
+PKG_VERSION="6-20170202"
 PKG_REV="1"
-PKG_USE_SNAPSHOT="true"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://gcc.gnu.org/"
-if [ x"$PKG_USE_SNAPSHOT" == x"true" ]; then
-    PKG_VERSION="6.2.1"
-    PKG_SNAPSHOT_DATESTAMP="20170202"
-    PKG_MAJOR_VERSION=$(echo $PKG_VERSION | awk -F'.' '{print $1}')
-    PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/$PKG_MAJOR_VERSION-$PKG_SNAPSHOT_DATESTAMP/gcc-$PKG_MAJOR_VERSION-$PKG_SNAPSHOT_DATESTAMP.tar.bz2"
-else
-    PKG_VERSION="6.2.0"
-    PKG_URL="http://ftpmirror.gnu.org/gcc/$PKG_NAME-$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
-fi
-PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host"
+PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host"
 PKG_DEPENDS_TARGET="gcc:host"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
 PKG_PRIORITY="optional"
@@ -42,11 +33,13 @@ PKG_LONGDESC="This package contains the GNU Compiler Collection. It includes com
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
+
 GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-sysroot=$SYSROOT_PREFIX \
                            --with-gmp=$ROOT/$TOOLCHAIN \
                            --with-mpfr=$ROOT/$TOOLCHAIN \
                            --with-mpc=$ROOT/$TOOLCHAIN \
+                           --with-isl=$ROOT/$TOOLCHAIN \
                            --with-gnu-as \
                            --with-gnu-ld \
                            --enable-plugin \
@@ -57,6 +50,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-nls \
                            --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
+                           --with-system-zlib \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
@@ -65,13 +59,14 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libitm \
                            --disable-libquadmath \
                            --disable-libgomp \
-                           --disable-libmpx"
+                           --disable-libmpx \
+                           --disable-libssp \
+                           --with-tune=generic"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
                               --disable-libsanitizer \
-                              --disable-libssp \
                               --enable-cloog-backend=isl \
                               --disable-shared \
                               --disable-threads \
@@ -84,7 +79,6 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-languages=c,c++ \
                          --enable-__cxa_atexit \
                          --enable-decimal-float \
-                         --enable-libssp \
                          --enable-tls \
                          --enable-shared \
                          --disable-static \
@@ -92,16 +86,16 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-long-long \
                          --enable-threads=posix \
                          --disable-libstdcxx-pch \
-                         --enable-libstdcxx-time \
+                         --enable-libstdcxx-time=yes \
                          --enable-clocale=gnu \
+                         --enable-gnu-unique-object \
+                         --enable-linker-build-id \
+                         --with-linker-hash-style=gnu \
+                         --enable-poison-system-directories \
+                         --disable-libunwind-exceptions \
+                         --enable-initfini-array \
+                         --enable-gnu-indirect-function \
                          $GCC_OPTS"
-
-pre_patch() {
-  if [ x"$PKG_USE_SNAPSHOT" == x"true" ]; then
-    [ -d $ROOT/$BUILD/gcc-$PKG_VERSION ] && rm -fr $ROOT/$BUILD/gcc-$PKG_VERSION
-    mv $ROOT/$BUILD/gcc-$PKG_MAJOR_VERSION-$PKG_SNAPSHOT_DATESTAMP $ROOT/$BUILD/gcc-$PKG_VERSION
-  fi
-}
 
 pre_configure_host() {
   export CXXFLAGS="$CXXFLAGS -std=gnu++98"
@@ -120,7 +114,7 @@ post_make_host() {
 }
 
 post_makeinstall_host() {
-  cp -PR $TARGET_NAME/libstdc++-v3/src/.libs/libstdc++.so* $SYSROOT_PREFIX/lib
+  cp -PR $TARGET_NAME/libstdc++-v3/src/.libs/libstdc++.so* $SYSROOT_PREFIX/usr/lib
 
   mkdir -p $ROOT/$TOOLCHAIN/lib/ccache
     ln -sf $ROOT/$TOOLCHAIN/bin/ccache $ROOT/$TOOLCHAIN/lib/ccache/${TARGET_NAME}-gcc
@@ -138,8 +132,8 @@ make_target() {
 makeinstall_target() {
   mkdir -p $INSTALL/lib
     cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libgcc/libgcc_s.so* $INSTALL/lib
-    cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libstdc++-v3/src/.libs/libstdc++.so* $INSTALL/lib
-    cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libssp/.libs/libssp.so* $INSTALL/lib
+  mkdir -p $INSTALL/usr/lib
+    cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libstdc++-v3/src/.libs/libstdc++.so* $INSTALL/usr/lib
 }
 
 configure_init() {
