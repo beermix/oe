@@ -17,13 +17,8 @@
 ################################################################################
 
 PKG_NAME="gcc"
-
-PKG_VERSION="6.3.1+20170109"
-PKG_URL="http://192.168.1.2:8887/gcc-6.3.1+20170109.tar.xz"
-
-#PKG_VERSION="6.3.0"
-#PKG_URL="https://fossies.org/linux/misc/gcc-$PKG_VERSION.tar.xz"
-
+PKG_VERSION="6.3.0"
+PKG_URL="https://fossies.org/linux/misc/gcc-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host"
 PKG_DEPENDS_TARGET="gcc:host"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
@@ -99,7 +94,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          $GCC_OPTS"
 
 pre_configure_host() {
-  #export CXXFLAGS="$CXXFLAGS -std=gnu++98"
+  export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
 }
 
