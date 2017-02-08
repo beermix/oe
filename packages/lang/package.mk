@@ -17,10 +17,21 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="6-20170202"
+PKG_REV="1"
+PKG_USE_SNAPSHOT="true"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://gcc.gnu.org/"
-PKG_URL="https://fossies.org/linux/misc/gcc-6-20170202.tar.xz"
-PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host"
+if [ x"$PKG_USE_SNAPSHOT" == x"true" ]; then
+    PKG_VERSION="6.3.1"
+    PKG_SNAPSHOT_DATESTAMP="20170202"
+    PKG_MAJOR_VERSION=$(echo $PKG_VERSION | awk -F'.' '{print $1}')
+    PKG_URL=https://fossies.org/linux/misc/gcc-6-$PKG_SNAPSHOT_DATESTAMP.tar.xz"
+else
+    PKG_VERSION="6.3.0"
+    PKG_URL="http://ftpmirror.gnu.org/gcc/$PKG_NAME-$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
+fi
+PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host"
 PKG_DEPENDS_TARGET="gcc:host"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
 PKG_PRIORITY="optional"
@@ -36,7 +47,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-gmp=$ROOT/$TOOLCHAIN \
                            --with-mpfr=$ROOT/$TOOLCHAIN \
                            --with-mpc=$ROOT/$TOOLCHAIN \
-                           --with-isl=$ROOT/$TOOLCHAIN \
                            --with-gnu-as \
                            --with-gnu-ld \
                            --enable-plugin \
@@ -55,8 +65,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libitm \
                            --disable-libquadmath \
                            --disable-libgomp \
-                           --disable-libmpx \
-                           --with-tune=corei7-avx"
+                           --disable-libmpx"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
@@ -85,14 +94,14 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time \
                          --enable-clocale=gnu \
-                         --enable-gnu-unique-object \
-                         --enable-linker-build-id \
-                         --with-linker-hash-style=gnu \
-                         --enable-poison-system-directories \
-                         --disable-libunwind-exceptions \
-                         --enable-initfini-array \
-                         --enable-gnu-indirect-function \
                          $GCC_OPTS"
+
+pre_patch() {
+  if [ x"$PKG_USE_SNAPSHOT" == x"true" ]; then
+    [ -d $ROOT/$BUILD/gcc-$PKG_VERSION ] && rm -fr $ROOT/$BUILD/gcc-$PKG_VERSION
+    mv $ROOT/$BUILD/gcc-$PKG_MAJOR_VERSION-$PKG_SNAPSHOT_DATESTAMP $ROOT/$BUILD/gcc-$PKG_VERSION
+  fi
+}
 
 pre_configure_host() {
   export CXXFLAGS="$CXXFLAGS -std=gnu++98"
@@ -127,11 +136,10 @@ make_target() {
 }
 
 makeinstall_target() {
-  mkdir -p $INSTALL/lib
-    cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libgcc/libgcc_s.so* $INSTALL/lib
-    cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libssp/.libs/libssp.so* $INSTALL/lib
   mkdir -p $INSTALL/usr/lib
+    cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libgcc/libgcc_s.so* $INSTALL/usr/lib
     cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libstdc++-v3/src/.libs/libstdc++.so* $INSTALL/usr/lib
+    cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libssp/.libs/libssp.so* $INSTALL/usr/lib
 }
 
 configure_init() {
@@ -145,5 +153,4 @@ make_init() {
 makeinstall_init() {
   mkdir -p $INSTALL/lib
     cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libgcc/libgcc_s.so* $INSTALL/lib
-    cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libssp/.libs/libssp.so* $INSTALL/lib
 }
