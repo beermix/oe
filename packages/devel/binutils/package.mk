@@ -17,11 +17,12 @@
 ################################################################################
 
 PKG_NAME="binutils"
-PKG_VERSION="2.27"
+PKG_VERSION="2.27-patches"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/binutils/"
-PKG_URL="http://ftpmirror.gnu.org/binutils/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_URL="https://dl.dropboxusercontent.com/s/5727jbjbzu5em6r/binutils-2.27-patches.tar.xz"
+#PKG_URL="http://ftpmirror.gnu.org/binutils/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="ccache:host bison:host flex:host linux:host"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="binutils: A GNU collection of binary utilities"
@@ -45,10 +46,6 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-ld=default \
                          --enable-lto \
                          --disable-nls \
-                         --enable-static \
-                         --disable-shared \
-                         --disable-gdb \
-                         --disable-sim \
                          --with-system-zlib \
                          --enable-poison-system-directories"
 

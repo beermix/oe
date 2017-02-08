@@ -16,7 +16,7 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 PKG_NAME="glibc"
-PKG_VERSION="2.25"
+PKG_VERSION="2.24"
 PKG_SITE="http://www.gnu.org/software/libc/"
 PKG_URL="http://ftp.gnu.org/pub/gnu/glibc/glibc-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap localedef-eglibc:host"
@@ -76,27 +76,12 @@ pre_configure_target() {
   strip_gold
 
 # Filter out some problematic *FLAGS
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-ffast-math||g"`
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-Ofast|-O2|g"`
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O2|g"`
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong||g"`
-  export CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
+CPPFLAGS=${CPPFLAGS/-D_FORTIFY_SOURCE=2/}
+  CFLAGS=${CFLAGS/-fstack-protector-strong/}
+  # this is handled properly by --enable-bind-now
+  LDFLAGS=${LDFLAGS/,-z,now/}
 
-  if [ -n "$PROJECT_CFLAGS" ]; then
-    export CFLAGS=`echo $CFLAGS | sed -e "s|$PROJECT_CFLAGS||g"`
-  fi
-
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-ffast-math||g"`
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Ofast|-O2|g"`
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-O.|-O2|g"`
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-fstack-protector-strong||g"`
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
-
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed||"`
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--sort-common,--as-needed,-z,relro||"`
-  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-fstack-protector-strong||g"`
-  
-  
+ 
   unset LD_LIBRARY_PATH
 
 # set some CFLAGS we need
