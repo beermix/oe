@@ -1,0 +1,18 @@
+Description: Fix setting of parameter values in compvalues
+Origin: ebd7fdd9326cf36feda3b0ca906d7b9b8bf79cb5
+Author: Peter Stephenson <p.w.stephenson@ntlworld.com>
+Reviewed-By: Daniel Shahaf <d.s@daniel.shahaf.name>
+
+--- a/Src/Zle/computil.c
++++ b/Src/Zle/computil.c
+@@ -3546,8 +3546,8 @@
+ 	    Cvval val = cv_get_val(cv_laststate.d, args[1]);
+ 
+ 	    if (val && val->arg) {
+-		setsparam(args[2], val->arg->descr);
+-		setsparam(args[3], val->arg->action);
++		setsparam(args[2], ztrdup(val->arg->descr));
++		setsparam(args[3], ztrdup(val->arg->action));
+ 
+ 		if (args[4])
+ 		    setsparam(args[4], ztrdup(val->name));
