@@ -54,13 +54,14 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libquadmath \
                            --disable-libgomp \
                            --disable-libmpx \
+                           --disable-libssp \
+                           --enable-poison-system-directories \
                            --with-tune=corei7"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
                               --disable-libsanitizer \
-                              --disable-libssp \
                               --disable-shared \
                               --disable-threads \
                               --without-headers \
@@ -70,36 +71,32 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
 
 PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-languages=c,c++ \
-                         --enable-__cxa_atexit \
-                         --enable-decimal-float \
-                         --disable-libssp \
-                         --enable-tls \
                          --enable-shared \
-                         --disable-static \
-                         --enable-c99 \
-                         --enable-long-long \
-                         --enable-threads=posix \
+                         --enable-tls \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time \
+                         --enable-threads=posix \
+                         --with-system-zlib \
+                         --enable-__cxa_atexit \
+                         --disable-libunwind-exceptions \
                          --enable-clocale=gnu \
+                         --disable-libstdcxx-pch \
                          --enable-gnu-unique-object \
                          --enable-linker-build-id \
+                         --enable-install-libiberty \
                          --with-linker-hash-style=gnu \
-                         --enable-poison-system-directories \
-                         --disable-libunwind-exceptions \
-                         --enable-initfini-array \
                          --enable-gnu-indirect-function \
-                         $GCC_OPTS"
+                         --disable-werror \
+                         --enable-checking=release"
 
-pre_configure_$TARGET() {
-  sed -iv 's@\./fixinc\.sh@-c true@' $ROOT/$PKG_BUILD/gcc/Makefile.in
-  sed -iv '/m64=/s/lib64/lib/' $ROOT/$PKG_BUILD/gcc/config/i386/t-linux64
-  sed -iv "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $ROOT/$PKG_BUILD/{libiberty,gcc}/configure
-}
-  
+
 pre_configure_host() {
   #export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
+  
+  sed -iv 's@\./fixinc\.sh@-c true@' $ROOT/$PKG_BUILD/gcc/Makefile.in
+  sed -iv '/m64=/s/lib64/lib/' $ROOT/$PKG_BUILD/gcc/config/i386/t-linux64
+  sed -iv "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $ROOT/$PKG_BUILD/{libiberty,gcc}/configure
 }
 
 post_make_host() {
