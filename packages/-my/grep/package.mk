@@ -1,5 +1,5 @@
 PKG_NAME="grep"
-PKG_VERSION="2.27"
+PKG_VERSION="2.28"
 PKG_URL="http://ftp.gnu.org/gnu/grep/grep-$PKG_VERSION.tar.xz"
 PKG_BUILD_DEPENDS_TARGET="toolchain readline gettext pcre libcap libxml2"
 PKG_SECTION="my"
