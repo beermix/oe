@@ -26,7 +26,6 @@ PKG_SHORTDESC="A cross-platform application and UI framework"
 PKG_LONGDESC="A cross-platform application and UI framework"
 PKG_AUTORECONF="no"
 
-strip_lto
 
 PKG_CONFIGURE_OPTS_TARGET="-prefix /usr
                            -sysroot $SYSROOT_PREFIX

@@ -30,6 +30,7 @@ PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared \
                            --disable-ipv6 \
+                           --without-bzip2 \
                            --enable-freetype \
                            --enable-builtins \
                            --disable-pcfformat \

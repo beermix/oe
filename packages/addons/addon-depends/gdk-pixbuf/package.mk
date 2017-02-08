@@ -19,7 +19,6 @@
 ################################################################################
 
 PKG_NAME="gdk-pixbuf"
-#PKG_VERSION="2.34.0"
 PKG_VERSION="2.36.4"
 PKG_SITE="http://www.gtk.org/"
 PKG_URL="http://ftp.acc.umu.se/pub/gnome/sources/gdk-pixbuf/2.36/$PKG_NAME-$PKG_VERSION.tar.xz"

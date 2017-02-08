@@ -16,25 +16,38 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="jasper"
-PKG_VERSION="version-1.900.31"
-PKG_SITE="http://www.ece.uvic.ca/~mdadams/jasper/"
-PKG_GIT_URL="https://github.com/mdadams/jasper"
-PKG_DEPENDS_TARGET="toolchain libjpeg-turbo"
-PKG_SECTION="graphics"
-PKG_SHORTDESC="jasper: JPEG-2000 Part-1 standard (i.e., ISO/IEC 15444-1) implementation"
-PKG_LONGDESC="This distribution contains the public release of the an open-source implementation of the ISO/IEC 15444-1 also known as JPEG-2000 standard for image compression."
+PKG_NAME="cxxtools"
+PKG_VERSION="2.2.1"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="GPL-2"
+PKG_SITE="http://www.tntnet.org/cxxtools.html"
+PKG_URL="http://www.tntnet.org/download/${PKG_NAME}-${PKG_VERSION}.tar.gz"
+PKG_DEPENDS_HOST=""
+PKG_DEPENDS_TARGET="toolchain"
+PKG_SECTION="python/web"
+PKG_SHORTDESC="cxxtools: a collection of general-purpose C++ classes"
+PKG_LONGDESC="Cxxtools is a collection of general-purpose C++ classes"
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
-PKG_USE_CMAKE="no"
+PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static --disable-strict"
+PKG_CONFIGURE_OPTS_HOST="--disable-demos --with-atomictype=pthread --disable-unittest"
+PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --disable-demos --with-atomictype=pthread --disable-unittest"
 
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC -DPIC"
+  CFLAGS="$CFLAGS -fPIC"
+  CXXFLAGS="$CXXFLAGS -fPIC"
+  LDFLAGS="$LDFLAGS -fPIC"
+}
+
+
+post_makeinstall_host() {
+  rm -rf $TOOLCHAIN/bin/cxxtools-config
 }
 
 post_makeinstall_target() {
+  $SED "s:\(['= ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" $SYSROOT_PREFIX/usr/bin/cxxtools-config
+
   rm -rf $INSTALL/usr/bin
 }
