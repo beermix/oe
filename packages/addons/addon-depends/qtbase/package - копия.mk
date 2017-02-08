@@ -26,6 +26,7 @@ PKG_SHORTDESC="A cross-platform application and UI framework"
 PKG_LONGDESC="A cross-platform application and UI framework"
 PKG_AUTORECONF="no"
 
+strip_lto
 
 PKG_CONFIGURE_OPTS_TARGET="-prefix /usr
                            -sysroot $SYSROOT_PREFIX
@@ -33,11 +34,6 @@ PKG_CONFIGURE_OPTS_TARGET="-prefix /usr
                            -device linux-openelec-g++
                            -opensource -confirm-license
                            -release
-                           -no-pch 
-                           -nomake examples 
-                           -nomake tests 
-                           -no-xcb 
-                           -eglfs
                            -static
                            -make libs
                            -force-pkg-config
@@ -47,48 +43,25 @@ PKG_CONFIGURE_OPTS_TARGET="-prefix /usr
                            -no-qml-debug
                            -system-zlib
                            -no-mtdev
-                           -no-gif
                            -no-libpng
                            -no-libjpeg
-                           -no-harfbuzz
-                           -no-openssl
                            -no-libproxy
                            -system-pcre
                            -no-glib
-                           -silent
                            -no-cups
                            -no-iconv
                            -no-evdev
                            -no-tslib
-                           -no-icu
+                           -icu
                            -no-strip
-                           -no-fontconfig
-                           -no-dbus
-                           -no-opengl
+                           -fontconfig
+                           -dbus
+                           -opengl
                            -no-libudev
                            -no-libinput
-                           -no-eglfs
-                           -openssl-linked
-                           -nomake examples
-                           -no-rpath
-                           -optimized-qmake
-                           -dbus-linked
-                           -system-harfbuzz
-                           -journald
-                           -no-use-gold-linker"
+                           -no-eglfs"
 
 configure_target() {
-  # Build qmake using Arch {C,LD}FLAGS
-  # This also sets default {C,CXX,LD}FLAGS for projects built using qmake
-  sed -i -e "s|^\(QMAKE_CFLAGS_RELEASE.*\)|\1 ${CFLAGS}|" \
-    $ROOT/$PKG_BUILD/mkspecs/common/gcc-base.conf
-  sed -i -e "s|^\(QMAKE_LFLAGS_RELEASE.*\)|\1 ${LDFLAGS}|" \
-    $ROOT/$PKG_BUILD/mkspecs/common/g++-unix.conf
-
-  # Use python2 for Python 2.x
-  find . -name '*.py' -exec sed -i \
-    's|#![ ]*/usr/bin/python$|&2|;s|#![ ]*/usr/bin/env python$|&2|' {} +
-
   QMAKE_CONF_DIR="mkspecs/devices/linux-openelec-g++"
   QMAKE_CONF="${QMAKE_CONF_DIR}/qmake.conf"
 
