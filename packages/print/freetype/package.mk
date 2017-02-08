@@ -22,7 +22,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.freetype.org"
 PKG_URL="http://download.savannah.gnu.org/releases/freetype/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain zlib"
+PKG_DEPENDS_TARGET="toolchain zlib bzip2"
 PKG_SECTION="print"
 PKG_SHORTDESC="freetype: TrueType font rendering library"
 PKG_LONGDESC="The FreeType engine is a free and portable TrueType font rendering engine. It has been developed to provide TT support to a great variety of platforms and environments."
@@ -35,7 +35,7 @@ PKG_AUTORECONF="no"
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --disable-shared \
                            --with-zlib=yes \
-                           --with-bzip2=no \
+                           --with-bzip2=yes \
                            --with-png=no \
                            --with-harfbuzz=no"
 
