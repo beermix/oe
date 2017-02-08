@@ -106,6 +106,57 @@ setup_toolchain() {
   esac
 }
 
+#=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+# get package's build dir
+get_build_dir() {
+  local _PKG_NAME="$(get_pkg_variable "$1" PKG_NAME)" _PKG_VERSION="$(get_pkg_version "$1")"
+  if [ -n "$_PKG_NAME" -a -n "$_PKG_VERSION" ]; then
+    echo $ROOT/$BUILD/${_PKG_NAME}-${_PKG_VERSION}
+  fi
+}
+
+# get kernel module dir
+get_module_dir() {
+  basename $(ls -d $(get_build_dir linux)/.install_pkg/usr/lib/modules/*)
+}
+
+# get package's build dir
+get_build_dir() {
+  local _PKG_NAME="$(get_pkg_variable "$1" PKG_NAME)" _PKG_VERSION="$(get_pkg_version "$1")"
+  if [ -n "$_PKG_NAME" -a -n "$_PKG_VERSION" ]; then
+    echo $ROOT/$BUILD/${_PKG_NAME}-${_PKG_VERSION}
+  fi
+}
+
+get_pkg_version() {
+  get_pkg_variable "$1" PKG_VERSION
+}
+
+get_pkg_directory() {
+  get_pkg_variable "$1" PKG_DIR
+}
+
+# get variable ($2) for package ($1)
+get_pkg_variable() {
+  if [ -n "$1" -a -n "$2" ] ; then
+    cd $ROOT
+    . config/options $1
+    echo "${!2}"
+  fi
+}
+
+tolower() {
+  echo "$@" | tr ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz
+}
+
+require_eglibc() {
+  if [ "$TARGET_LIBC" != eglibc ]; then
+    echo "$1 requires eglibc, aborting."
+    exit 1
+  fi
+}
+#=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
 get_pkg_dir() {
   PKG_EXTRA_FOLDERS="$HOME/.openelec/projects/$PROJECT/packages \
                      $HOME/.openelec/packages \
