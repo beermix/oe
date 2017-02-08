@@ -256,20 +256,19 @@ if [ ! -f $STAMP ]; then
       if [ "$(type -t make_$TARGET)" = "function" ]; then
         make_$TARGET
       else
-        case "$TARGET" in
-          target)
-            make $PKG_MAKE_OPTS_TARGET
-            ;;
-          host)
-            make $PKG_MAKE_OPTS_HOST
-            ;;
-          init)
-            make $PKG_MAKE_OPTS_INIT
-            ;;
-          bootstrap)
-            make $PKG_MAKE_OPTS_BOOTSTRAP
-            ;;
-        esac
+        if [ "$TARGET" = "target" ]; then
+          echo "Executing (target): make $PKG_MAKE_OPTS_TARGET" | tr -s " "
+          make $PKG_MAKE_OPTS_TARGET
+        elif [ "$TARGET" = "host" ]; then
+          echo "Executing (host): make $PKG_MAKE_OPTS_HOST" | tr -s " "
+          make $PKG_MAKE_OPTS_HOST
+        elif [ "$TARGET" = "init" ]; then
+          echo "Executing (init): make $PKG_MAKE_OPTS_INIT" | tr -s " "
+          make $PKG_MAKE_OPTS_INIT
+        elif [ "$TARGET" = "bootstrap" ]; then
+          echo "Executing (bootstrap): make $PKG_MAKE_OPTS_BOOTSTRAP" | tr -s " "
+          make $PKG_MAKE_OPTS_BOOTSTRAP
+        fi
       fi
       if [ "$(type -t post_make_$TARGET)" = "function" ]; then
         post_make_$TARGET
