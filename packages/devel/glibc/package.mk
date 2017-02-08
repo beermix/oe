@@ -81,31 +81,38 @@ CPPFLAGS=${CPPFLAGS/-D_FORTIFY_SOURCE=2/}
   # this is handled properly by --enable-bind-now
   LDFLAGS=${LDFLAGS/,-z,now/}
 
+  if [ -n "$PROJECT_CFLAGS" ]; then
+    export CFLAGS=`echo $CFLAGS | sed -e "s|$PROJECT_CFLAGS||g"`
+  fi
+
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-ffast-math||g"`
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Ofast|-O2|g"`
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-O.|-O2|g"`
+
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed||"`
  
   unset LD_LIBRARY_PATH
 
 # set some CFLAGS we need
-  export CFLAGS="$CFLAGS -g"
-  export OBJDUMP_FOR_HOST=objdump
-
+  export CFLAGS="$CFLAGS -g -fno-stack-protector"
 
 cat >config.cache <<EOF
 libc_cv_forced_unwind=yes
 libc_cv_c_cleanup=yes
 libc_cv_ssp=no
 libc_cv_ssp_strong=no
+libc_cv_slibdir=/lib
 EOF
 
+  echo "libdir=/lib" >> configparms
+  echo "slibdir=/lib" >> configparms
   echo "sbindir=/usr/bin" >> configparms
   echo "rootsbindir=/usr/bin" >> configparms
 }
 
 post_makeinstall_target() {
-  ln -sf ld-$PKG_VERSION.so $INSTALL/lib/ld.so
-  
-  if [ "$TARGET_ARCH" = "arm" -a "$TARGET_FLOAT" = "hard" ]; then
-    ln -sf ld-$PKG_VERSION.so $INSTALL/lib/ld-linux.so.3
-  fi
+# we are linking against ld.so, so symlink
+  ln -sf $(basename $INSTALL/usr/lib/ld-*.so) $INSTALL/usr/lib/ld.so
 
 # cleanup
   for i in $GLIBC_EXCLUDE_BIN; do
@@ -113,18 +120,11 @@ post_makeinstall_target() {
   done
    rm -rf $INSTALL/usr/lib/audit
    rm -rf $INSTALL/usr/lib/glibc
+  rm -rf $INSTALL/usr/lib/libc_pic
    rm -rf $INSTALL/usr/lib/*.o
+  rm -rf $INSTALL/usr/lib/*.map
    rm -rf $INSTALL/var
 
-# remove unneeded libs
-  rm -rf $INSTALL/usr/lib/libBrokenLocale*
-  rm -rf $INSTALL/usr/lib/libSegFault.so
-  rm -rf $INSTALL/usr/lib/libmemusage.so
-  rm -rf $INSTALL/usr/lib/libpcprofile.so
-
-# remove ldscripts
-  rm -rf $INSTALL/usr/lib/libc.so
-  rm -rf $INSTALL/usr/lib/libpthread.so
 # remove locales and charmaps
   rm -rf $INSTALL/usr/share/i18n/charmaps
   if [ -n "$GLIBC_LOCALES" ]; then

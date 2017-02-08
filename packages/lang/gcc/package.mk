@@ -17,8 +17,20 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="6.3.0"
-PKG_URL="https://fossies.org/linux/misc/gcc-$PKG_VERSION.tar.xz"
+PKG_REV="1"
+PKG_USE_SNAPSHOT="true"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
+PKG_SITE="http://gcc.gnu.org/"
+if [ x"$PKG_USE_SNAPSHOT" == x"true" ]; then
+    PKG_VERSION="6.2.1"
+    PKG_SNAPSHOT_DATESTAMP="20170202"
+    PKG_MAJOR_VERSION=$(echo $PKG_VERSION | awk -F'.' '{print $1}')
+    PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/$PKG_MAJOR_VERSION-$PKG_SNAPSHOT_DATESTAMP/gcc-$PKG_MAJOR_VERSION-$PKG_SNAPSHOT_DATESTAMP.tar.bz2"
+else
+    PKG_VERSION="6.2.0"
+    PKG_URL="http://ftpmirror.gnu.org/gcc/$PKG_NAME-$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
+fi
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host"
 PKG_DEPENDS_TARGET="gcc:host"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
@@ -45,7 +57,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-nls \
                            --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
-                           --with-system-zlib \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
@@ -54,10 +65,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libitm \
                            --disable-libquadmath \
                            --disable-libgomp \
-                           --disable-libmpx
-                           --enable-linker-build-id \
-                           --disable-werror
-                           --with-tune=generic"
+                           --disable-libmpx"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
@@ -84,14 +92,16 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-long-long \
                          --enable-threads=posix \
                          --disable-libstdcxx-pch \
-                         --enable-libstdcxx-time=yes \
+                         --enable-libstdcxx-time \
                          --enable-clocale=gnu \
-                         --enable-gnu-unique-object \
-                         --with-linker-hash-style=gnu \
-                         --enable-poison-system-directories \
-                         --enable-initfini-array \
-                         --enable-gnu-indirect-function \
                          $GCC_OPTS"
+
+pre_patch() {
+  if [ x"$PKG_USE_SNAPSHOT" == x"true" ]; then
+    [ -d $ROOT/$BUILD/gcc-$PKG_VERSION ] && rm -fr $ROOT/$BUILD/gcc-$PKG_VERSION
+    mv $ROOT/$BUILD/gcc-$PKG_MAJOR_VERSION-$PKG_SNAPSHOT_DATESTAMP $ROOT/$BUILD/gcc-$PKG_VERSION
+  fi
+}
 
 pre_configure_host() {
   export CXXFLAGS="$CXXFLAGS -std=gnu++98"
@@ -110,7 +120,7 @@ post_make_host() {
 }
 
 post_makeinstall_host() {
-  cp -PR $TARGET_NAME/libstdc++-v3/src/.libs/libstdc++.so* $SYSROOT_PREFIX/usr/lib
+  cp -PR $TARGET_NAME/libstdc++-v3/src/.libs/libstdc++.so* $SYSROOT_PREFIX/lib
 
   mkdir -p $ROOT/$TOOLCHAIN/lib/ccache
     ln -sf $ROOT/$TOOLCHAIN/bin/ccache $ROOT/$TOOLCHAIN/lib/ccache/${TARGET_NAME}-gcc
@@ -128,9 +138,8 @@ make_target() {
 makeinstall_target() {
   mkdir -p $INSTALL/lib
     cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libgcc/libgcc_s.so* $INSTALL/lib
+    cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libstdc++-v3/src/.libs/libstdc++.so* $INSTALL/lib
     cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libssp/.libs/libssp.so* $INSTALL/lib
-  mkdir -p $INSTALL/usr/lib
-    cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libstdc++-v3/src/.libs/libstdc++.so* $INSTALL/usr/lib
 }
 
 configure_init() {
@@ -144,5 +153,4 @@ make_init() {
 makeinstall_init() {
   mkdir -p $INSTALL/lib
     cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libgcc/libgcc_s.so* $INSTALL/lib
-    cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libssp/.libs/libssp.so* $INSTALL/lib
 }
