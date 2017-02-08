@@ -1,11 +1,10 @@
 PKG_NAME="tor"
-PKG_VERSION="0.2.8.12"
-PKG_URL="https://archive.torproject.org/tor-package-archive/tor-$PKG_VERSION.tar.gz"
+PKG_VERSION="1243c10"
+PKG_GIT_URL="https://github.com/torproject/tor.git"
 PKG_DEPENDS_TARGET="toolchain openssl libz libevent libcap"
 PKG_SECTION="security"
 PKG_AUTORECONF="yes"
 
-MAKEFLAGS="-j1"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-gcc-hardening \
 			      --disable-linker-hardening \
@@ -22,7 +21,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-gcc-hardening \
 
 
 post_install() {
-  add_user tor x 990 990 "Tor Server" "/storage" "/bin/sh"
+  add_user tor x 990 990 "Tor Server" "/storage" "/bin/bash"
   add_group tor 990
 }
 
