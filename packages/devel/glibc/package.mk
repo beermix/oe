@@ -79,28 +79,23 @@ pre_configure_target() {
   strip_gold
 
 # Filter out some problematic *FLAGS
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-ffast-math||g"`
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-Ofast|-O2|g"`
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O2|g"`
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong||g"`
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
 
   if [ -n "$PROJECT_CFLAGS" ]; then
     export CFLAGS=`echo $CFLAGS | sed -e "s|$PROJECT_CFLAGS||g"`
   fi
 
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-ffast-math||g"`
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Ofast|-O2|g"`
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-O.|-O2|g"`
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-fstack-protector-strong||g"`
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed||"`
+  CPPFLAGS=${CPPFLAGS/-D_FORTIFY_SOURCE=2/}
+  CFLAGS=${CFLAGS/-fstack-protector-strong/}
+  # this is handled properly by --enable-bind-now
+  LDFLAGS=${LDFLAGS/,-z,now/}
+
   
   unset LD_LIBRARY_PATH
 
 # set some CFLAGS we need
   export CFLAGS="$CFLAGS -g"
   export OBJDUMP_FOR_HOST=objdump
+
 
 cat >config.cache <<EOF
 libc_cv_forced_unwind=yes
@@ -109,6 +104,8 @@ libc_cv_ssp=no
 libc_cv_ssp_strong=no
 EOF
 
+  echo "slibdir=/lib" >> configparms
+  echo "rtlddir=/lib" >> configparms
   echo "sbindir=/usr/bin" >> configparms
   echo "rootsbindir=/usr/bin" >> configparms
 }
