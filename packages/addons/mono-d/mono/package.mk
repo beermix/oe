@@ -17,8 +17,10 @@
 ################################################################################
 
 PKG_NAME="mono"
-#PKG_VERSION="4.2.1.102"
-PKG_VERSION="4.6.2.7"
+PKG_VERSION="4.2.1.102"
+PKG_REV="101"
+PKG_ARCH="any"
+PKG_LICENSE="MIT"
 PKG_SITE="http://www.mono-project.com"
 PKG_URL="http://download.mono-project.com/sources/mono/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_SOURCE_DIR="$PKG_NAME-${PKG_VERSION%.*}"
@@ -43,16 +45,11 @@ options="--build=$HOST_NAME \
          --localstatedir=/var \
          --disable-boehm \
          --disable-libraries \
-         --with-crosspkgdir="$ROOT/$TOOLCHAIN/bin/pkg-config" \
          --without-mcs-docs"
 
 configure_host() {
   cp -PR ../* .
   ./configure $options --host=$HOST_NAME
-}
-
-pre_configure_taret() {
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
 }
 
 makeinstall_host() {
@@ -63,7 +60,7 @@ configure_target() {
   cp -PR ../* .
   strip_lto
   ./configure $options --host=$TARGET_NAME \
-                       --enable-mcs-build
+                       --disable-mcs-build
 }
 
 makeinstall_target() {
