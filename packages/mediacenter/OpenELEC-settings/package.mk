@@ -41,10 +41,10 @@ post_makeinstall_target() {
   mkdir -p $INSTALL/usr/lib/openelec
     cp $PKG_DIR/scripts/* $INSTALL/usr/lib/openelec
 
-  # bluetooth is optional
-    if [ ! "$BLUETOOTH_SUPPORT" = yes ]; then
-      rm -f resources/lib/modules/bluetooth.py
-    fi
+#  # bluetooth is optional
+#    if [ ! "$BLUETOOTH_SUPPORT" = yes ]; then
+#      rm -f resources/lib/modules/bluetooth.py
+#    fi
 
   python -Wi -t -B $ROOT/$TOOLCHAIN/lib/python2.7/compileall.py $INSTALL/usr/share/kodi/addons/service.openelec.settings/resources/lib/ -f
   rm -rf `find $INSTALL/usr/share/kodi/addons/service.openelec.settings/resources/lib/ -name "*.py"`

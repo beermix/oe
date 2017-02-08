@@ -34,7 +34,7 @@ PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_have_decl_TUNSETPERSIST=no \
                            --enable-lzo \
-                           --enable-lz4 \
+                           --disable-lz4 \
                            --enable-crypto \
                            --enable-ofb-cfb \
                            --disable-x509-alt-username \
@@ -52,7 +52,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_have_decl_TUNSETPERSIST=no \
                            --enable-def-auth \
                            --enable-pf \
                            --disable-selinux \
-                           --enable-systemd"
+                           --disable-systemd"
 
 post_makeinstall_target() {
   mkdir -p $INSTALL/usr/bin

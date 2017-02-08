@@ -17,11 +17,12 @@
 ################################################################################
 
 PKG_NAME="asplib"
-PKG_VERSION="da66f51"
+PKG_VERSION="2fac1bf"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/AchimTuran/asplib"
 PKG_GIT_URL="https://github.com/AchimTuran/asplib"
+PKG_GIT_BRANCH="master"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="audio"
 PKG_SHORTDESC="asplib: Achim's Signal Processing LIBrary"
