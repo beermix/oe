@@ -17,17 +17,18 @@
 ################################################################################
 
 PKG_NAME="docker"
-PKG_VERSION="v1.13.0"
+PKG_VERSION="v1.13.1"
 PKG_GIT_URL="https://github.com/docker/docker"
 PKG_DEPENDS_TARGET="toolchain sqlite go:host containerd runc libnetwork tini aufs-util curl"
 PKG_SECTION="service/system"
-PKG_SHORTDESC="Docker is an open-source engine that automates the deployment of any application as a lightweight, portable, self-sufficient container that will run virtually anywhere."
-PKG_LONGDESC="Docker containers can encapsulate any payload, and will run consistently on and between virtually any server. The same container that a developer builds and tests on a laptop will run at scale, in production*, on VMs, bare-metal servers, OpenStack clusters, public instances, or combinations of the above."
-PKG_AUTORECONF="no"
-
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Docker"
 PKG_ADDON_TYPE="xbmc.service"
+
+post_unpack() {
+  find $ROOT/$PKG_BUILD -name "*.go" -print | xargs sed -i
+  's/\/etc\/docker/\/storage\/.kodi\/userdata\/addon_data\/service.system.docker\/config/g'
+}
 
 configure_target() {
   export DOCKER_BUILDTAGS="daemon \
