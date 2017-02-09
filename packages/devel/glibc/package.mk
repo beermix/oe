@@ -15,9 +15,13 @@
 #  You should have received a copy of the GNU General Public License
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
+
 PKG_NAME="glibc"
 PKG_VERSION="3b2f603"
-#PKG_URL="http://ftp.gnu.org/pub/gnu/glibc/glibc-$PKG_VERSION.tar.xz"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
+PKG_SITE="http://www.gnu.org/software/libc/"
 PKG_GIT_URL="git://sourceware.org/git/glibc.git"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap localedef-eglibc:host"
 PKG_DEPENDS_INIT="glibc"
@@ -87,11 +91,14 @@ pre_configure_target() {
 
   if [ -n "$PROJECT_CFLAGS" ]; then
     export CFLAGS=`echo $CFLAGS | sed -e "s|$PROJECT_CFLAGS||g"`
-    
   fi
-   export LDFLAGS=`echo $LDFLAGS | sed -e "s|,-z,relro||"`
-    export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed||"`
 
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-ffast-math||g"`
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Ofast|-O2|g"`
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-O.|-O2|g"`
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|,-z,relro||g"`
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed||"`
 
   unset LD_LIBRARY_PATH
 
@@ -120,10 +127,10 @@ post_makeinstall_target() {
   for i in $GLIBC_EXCLUDE_BIN; do
     rm -rf $INSTALL/usr/bin/$i
   done
-   rm -rf $INSTALL/usr/lib/audit
-   rm -rf $INSTALL/usr/lib/glibc
-   rm -rf $INSTALL/usr/lib/*.o
-   rm -rf $INSTALL/var
+  rm -rf $INSTALL/usr/lib/audit
+  rm -rf $INSTALL/usr/lib/glibc
+  rm -rf $INSTALL/usr/lib/*.o
+  rm -rf $INSTALL/var
 
 # remove unneeded libs
   rm -rf $INSTALL/usr/lib/libBrokenLocale*
@@ -134,6 +141,7 @@ post_makeinstall_target() {
 # remove ldscripts
   rm -rf $INSTALL/usr/lib/libc.so
   rm -rf $INSTALL/usr/lib/libpthread.so
+
 # remove locales and charmaps
   rm -rf $INSTALL/usr/share/i18n/charmaps
   if [ -n "$GLIBC_LOCALES" ]; then
@@ -147,9 +155,9 @@ post_makeinstall_target() {
         $locale --prefix=$INSTALL
     done
   fi
+
   if [ ! "$GLIBC_LOCALES" = yes ]; then
     rm -rf $INSTALL/usr/share/i18n/locales
-
     mkdir -p $INSTALL/usr/share/i18n/locales
       cp -PR $ROOT/$PKG_BUILD/localedata/locales/POSIX $INSTALL/usr/share/i18n/locales
   fi
@@ -158,7 +166,6 @@ post_makeinstall_target() {
   mkdir -p $INSTALL/etc
     cp $PKG_DIR/config/nsswitch.conf $INSTALL/etc
     cp $PKG_DIR/config/gai.conf $INSTALL/etc
-
     echo "multi on" > $INSTALL/etc/host.conf
 }
 
