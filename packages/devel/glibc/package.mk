@@ -16,9 +16,9 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 PKG_NAME="glibc"
-PKG_VERSION="2.24"
-PKG_SITE="http://www.gnu.org/software/libc/"
-PKG_URL="http://ftp.gnu.org/pub/gnu/glibc/glibc-$PKG_VERSION.tar.xz"
+PKG_VERSION="3b2f603"
+#PKG_URL="http://ftp.gnu.org/pub/gnu/glibc/glibc-$PKG_VERSION.tar.xz"
+PKG_GIT_URL="git://sourceware.org/git/glibc.git"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap localedef-eglibc:host"
 PKG_DEPENDS_INIT="glibc"
 PKG_PRIORITY="optional"
@@ -53,13 +53,10 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/bash \
                            --disable-build-nscd \
                            --disable-nscd \
                            --enable-lock-elision \
-                           --disable-timezone-tools"
+                           --disable-timezone-tools \
+                           --enable-stack-protector=strong \
+                           --disable-debug"
 
-if [ "$DEBUG" = yes ]; then
-  PKG_CONFIGURE_OPTS_TARGET+=" --enable-debug"
-else
-  PKG_CONFIGURE_OPTS_TARGET+=" --disable-debug"
-fi
 
 NSS_CONF_DIR="$PKG_BUILD/nss"
 
@@ -90,16 +87,10 @@ pre_configure_target() {
 
   if [ -n "$PROJECT_CFLAGS" ]; then
     export CFLAGS=`echo $CFLAGS | sed -e "s|$PROJECT_CFLAGS||g"`
+    
   fi
-
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-ffast-math||g"`
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Ofast|-O2|g"`
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-O.|-O2|g"`
-
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-fstack-protector-strong||g"`
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed||"`
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|,-z,now||"`
+   export LDFLAGS=`echo $LDFLAGS | sed -e "s|,-z,relro||"`
+    export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed||"`
 
 
   unset LD_LIBRARY_PATH
