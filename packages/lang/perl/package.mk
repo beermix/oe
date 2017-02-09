@@ -1,6 +1,7 @@
 PKG_NAME="perl"
 PKG_VERSION="5.24.1"
-PKG_URL="http://www.cpan.org/src/5.0/perl-${PKG_VERSION}.tar.gz"
+#PKG_URL="http://www.cpan.org/src/5.0/perl-${PKG_VERSION}.tar.gz"
+PKG_URL="https://dl.dropboxusercontent.com/s/qxn0v8d0l9twehb/perl-5.24.1.tar.xz"
 PKG_DEPENDS_TARGET="toolchain openssl db gdbm"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
