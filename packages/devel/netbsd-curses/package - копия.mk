@@ -1,3 +1,4 @@
+
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
 #      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
@@ -17,10 +18,8 @@
 ################################################################################
 
 PKG_NAME="netbsd-curses"
-#PKG_VERSION="0.2.0"
 PKG_VERSION="22acb33"
-PKG_SITE="https://github.com/sabotage-linux/netbsd-curses"
-#PKG_URL="http://ftp.barfooze.de/pub/sabotage/tarballs/netbsd-curses-$PKG_VERSION.tar.xz"
+PKG_SITE="https://github.com/sabotage-linux/neytbsd-curses"
 PKG_GIT_URL="git://github.com/sabotage-linux/netbsd-curses"
 PKG_DEPENDS_TARGET="toolchain zlib"
 PKG_SECTION="devel"
