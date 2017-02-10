@@ -47,6 +47,7 @@
                        --localstatedir=$ROOT/$TOOLCHAIN/var \
                        --disable-static \
                        --enable-shared"
+                       --enable-silent-rules"
 
   HOST_CMAKE_OPTS="-DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
                    -DCMAKE_INSTALL_PREFIX=$ROOT/$TOOLCHAIN"
