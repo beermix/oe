@@ -63,6 +63,7 @@ post_make_target() {
 
 makeinstall_target() {
   mkdir -p $SYSROOT_PREFIX/usr/include
+  mkdir -p $INSTALL/usr/lib
     cp bzlib.h $SYSROOT_PREFIX/usr/include
   mkdir -p $SYSROOT_PREFIX/usr/lib
     cp -P libbz2.so* $SYSROOT_PREFIX/usr/lib

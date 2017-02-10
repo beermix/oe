@@ -20,7 +20,7 @@ PKG_NAME="systemd"
 PKG_VERSION="8367fea"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/systemd"
 PKG_GIT_URL="https://github.com/systemd/systemd"
-PKG_DEPENDS_TARGET="toolchain libcap kmod util-linux entropy xz zlib bzip2 lz4 openssl"
+PKG_DEPENDS_TARGET="toolchain libcap kmod util-linux entropy acl xz zlib bzip2 lz4 openssl"
 PKG_SECTION="system"
 PKG_SHORTDESC="systemd: a system and session manager"
 PKG_LONGDESC="systemd is a system and session manager for Linux, compatible with SysV and LSB init scripts. systemd provides aggressive parallelization capabilities, uses socket and D-Bus activation for starting services, offers on-demand starting of daemons, keeps track of processes using Linux cgroups, supports snapshotting and restoring of the system state, maintains mount and automount points and implements an elaborate transactional dependency-based service control logic. It can work as a drop-in replacement for sysvinit."
@@ -47,10 +47,10 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-apparmor \
                            --disable-adm-group \
                            --disable-wheel-group \
-                           --disable-xz \
-                           --disable-zlib \
+                           --enable-xz \
+                           --enable-zlib \
                            --disable-bzip2 \
-                           --disable-lz4 \
+                           --enable-lz4 \
                            --disable-pam \
                            --disable-acl \
                            --disable-smack \
