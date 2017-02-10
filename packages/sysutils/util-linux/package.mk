@@ -32,10 +32,12 @@ PKG_AUTORECONF="yes"
 UTILLINUX_CONFIG_DEFAULT="--disable-gtk-doc \
                           --disable-nls \
                           --disable-rpath \
-                          --enable-mount \
                           --enable-tls \
                           --disable-all-programs \
                           --enable-chsh-only-listed \
+                          --enable-libmount-force-mountinfo \
+                          --disable-bash-completion \
+                          --disable-colors-default \
                           --disable-pylibmount \
                           --disable-pg-bell \
                           --disable-use-tty-group \
