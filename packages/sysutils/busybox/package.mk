@@ -163,8 +163,7 @@ makeinstall_target() {
     
     #rm $INSTALL/bin/sh
     rm $INSTALL/bin/hostname
-    rm $INSTALL/bin/mtab
-    rm $INSTALL/bin/ip
+    rm $INSTALL/sbin/ip
 
     
   mkdir -p $INSTALL/usr/lib/openelec
