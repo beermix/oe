@@ -17,30 +17,21 @@
 ################################################################################
 
 PKG_NAME="util-linux"
-PKG_VERSION="2.29"
+PKG_VERSION="2.29.1"
 PKG_URL="http://www.kernel.org/pub/linux/utils/util-linux/v2.29/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain readline"
 PKG_DEPENDS_INIT="toolchain gcc:init readline"
-
 PKG_SECTION="system"
 PKG_SHORTDESC="util-linux: Miscellaneous system utilities for Linux"
 PKG_LONGDESC="The util-linux package contains a large variety of low-level system utilities that are necessary for a Linux system to function. Among many features, Util-linux contains the fdisk configuration tool and the login program."
 
-PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
-
-pre_configure_init() {
-  export LDFLAGS="-lcurses -lterminfo"
-}
-
-pre_configure_target() {
-  export LDFLAGS="-lcurses -lterminfo"
-}
 
 UTILLINUX_CONFIG_DEFAULT="--disable-gtk-doc \
                           --disable-nls \
                           --disable-rpath \
+                          --enable-mount \
                           --enable-tls \
+                          --disable-all-programs \
                           --enable-chsh-only-listed \
                           --disable-pylibmount \
                           --disable-pg-bell \
@@ -52,7 +43,10 @@ UTILLINUX_CONFIG_DEFAULT="--disable-gtk-doc \
                           --without-audit \
                           --without-udev \
                           --without-ncurses \
+                          --without-readline \
                           --without-slang \
+                          --without-termcap \
+                          --without-tinfo \
                           --without-utempter \
                           --without-user \
                           --without-systemd \
