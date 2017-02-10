@@ -61,12 +61,14 @@ post_makeinstall_target() {
   cp getfattr/getfattr $INSTALL/usr/bin/
 }
 
+
+
 PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
 
 pre_configure_host() {
 # attr fails to build in subdirs
   cd $ROOT/$PKG_BUILD
-    rm -rf .$TARGET_NAME
+  rm -rf .$TARGET_NAME
 }
 
 makeinstall_host() {
@@ -76,3 +78,5 @@ makeinstall_host() {
   mkdir -p $ROOT/$TOOLCHAIN/usr/include/attr
     cp include/*.h $ROOT/$TOOLCHAIN/usr/include/attr
 }
+
+

@@ -18,17 +18,24 @@
 
 PKG_NAME="ccache"
 PKG_VERSION="3.3.3"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://ccache.samba.org/"
-PKG_URL="http://samba.org/ftp/ccache/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_URL="https://samba.org/ftp/ccache/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST="make:host"
+PKG_PRIORITY="optional"
 PKG_SECTION="devel"
 PKG_SHORTDESC="ccache: A fast compiler cache"
 PKG_LONGDESC="Ccache is a compiler cache. It speeds up re-compilation of C/C++ code by caching previous compiles and detecting when the same compile is being done again."
+
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_HOST="--with-bundled-zlib"
 
+post_makeinstall_host() {
+# setup ccache
   $ROOT/$TOOLCHAIN/bin/ccache --max-size=$CCACHE_CACHE_SIZE
   $ROOT/$TOOLCHAIN/bin/ccache --set-config=compiler_check=string:$(gcc -dumpversion)-$(get_pkg_version gcc)
 

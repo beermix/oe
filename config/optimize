@@ -17,10 +17,10 @@ if [ "$GOLD_SUPPORT" = yes ];then
   LD_OPTIM_GOLD="-fuse-ld=gold"
 fi
 
-if [ "$DEBUG" = yes ]; then
-  TARGET_CFLAGS="$TARGET_CFLAGS -ggdb"
-  TARGET_CXXFLAGS="$TARGET_CXXFLAGS -ggdb"
-  TARGET_LDFLAGS="$TARGET_LDFLAGS -ggdb"
+if [ "$DEBUG" = no ]; then
+  TARGET_CFLAGS="$TARGET_CFLAGS"
+  TARGET_CXXFLAGS="$TARGET_CXXFLAGS"
+  TARGET_LDFLAGS="$TARGET_LDFLAGS"
 else
   TARGET_CFLAGS="$TARGET_CFLAGS -fomit-frame-pointer -Wno-cpp -Wno-unused-but-set-variable -Wno-unused-result"
   TARGET_CXXFLAGS="$TARGET_CXXFLAGS -fomit-frame-pointer -Wno-cpp -Wno-unused-but-set-variable -Wno-unused-result"
