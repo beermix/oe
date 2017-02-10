@@ -28,6 +28,10 @@ PKG_LONGDESC="GNU MP is a library for arbitrary precision arithmetic, operating 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_HOST="--enable-cxx --enable-static --disable-shared --with-pic"
+pre_configure_target() {
+ export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
+}
+
+PKG_CONFIGURE_OPTS_HOST="--enable-cxx --enable-static --disable-shared --enable-fat --with-pic"
 
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
