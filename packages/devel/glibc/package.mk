@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="glibc"
-PKG_VERSION="3b2f603"
+PKG_VERSION="3403a17f"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
