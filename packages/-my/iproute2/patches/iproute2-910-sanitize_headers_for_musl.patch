@@ -1,5 +1,5 @@
---- iproute2-4.5.0.orig/include/linux/if_bridge.h	2016-03-15 00:02:31.000000000 +0100
-+++ iproute2-4.5.0/include/linux/if_bridge.h	2016-04-21 02:44:12.713804912 +0200
+--- a/include/linux/if_bridge.h
++++ b/include/linux/if_bridge.h
 @@ -15,7 +15,6 @@
  
  #include <linux/types.h>
