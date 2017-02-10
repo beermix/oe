@@ -1,0 +1,36 @@
+From: Eric Dorland <eric@debian.org>
+Date: Sun, 20 Mar 2016 16:20:22 -0400
+Subject: Use system help2man if it is available
+
+---
+ configure.ac     | 3 +++
+ doc/Makefile.inc | 2 +-
+ 2 files changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/configure.ac b/configure.ac
+index beb9eab..a5c4984 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -107,6 +107,9 @@ AM_RUN_LOG([$TEX --version </dev/null])
+ AC_CHECK_PROGS([YACC], [yacc byacc 'bison -y'], [false])
+ AC_CHECK_PROGS([LEX], [lex flex], [false])
+ 
++# Use system help2man if its available
++AC_PATH_PROG([HELP2MAN], [help2man], ["$PERL \${srcdir}/doc/help2man"])
++
+ # Test for Autoconf.  We run Autoconf in a subdirectory to ease
+ # deletion of any files created (such as those added to
+ # autom4te.cache).  We used to perform only the last of the three
+diff --git a/doc/Makefile.inc b/doc/Makefile.inc
+index 62f5309..cad36f6 100644
+--- a/doc/Makefile.inc
++++ b/doc/Makefile.inc
+@@ -38,7 +38,7 @@ update_mans = \
+   $(AM_V_GEN): \
+     && $(MKDIR_P) %D% \
+     && $(extend_PATH) \
+-    && $(PERL) $(srcdir)/%D%/help2man --output=$@
++    && $(HELP2MAN) --output=$@
+ 
+ %D%/aclocal.1 %D%/automake.1:
+ 	$(AM_V_GEN): \
