@@ -55,6 +55,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libgomp \
                            --disable-libmpx \
                            --disable-libssp \
+                           --without-included-gettext 
                            --enable-poison-system-directories \
                            --with-tune=generic"
 

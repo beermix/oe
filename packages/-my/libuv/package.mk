@@ -11,3 +11,5 @@ post_unpack() {
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static --with-gnu-ld"
+
+PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
