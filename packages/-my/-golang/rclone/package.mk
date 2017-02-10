@@ -9,12 +9,17 @@ PKG_LONGDESC="containerd is a daemon to control runC, built for performance and 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
+#strip_lto
+
 pre_make_target() {
   export GOOS=linux
+  #export PKG_CONFIG="$ROOT/$TOOLCHAIN/bin/pkg-config"
+  export CC_FOR_TARGET="$CC"
+  export CXX_FOR_TARGET="$CXX"
   export GOARCH=amd64
   export CGO_ENABLED=1
   export CGO_NO_EMULATION=1
-  export CGO_CFLAGS="-O3 -pipe -fstack-protector-strong"
+  export CGO_CFLAGS=$CFLAGS
   export LDFLAGS="-s -w -linkmode external -extld $CC"
   export GOLANG=$ROOT/$TOOLCHAIN/lib/golang/bin/go
   export GOPATH=$ROOT/$PKG_BUILD.gopath:$ROOT/$PKG_BUILD/vendor/

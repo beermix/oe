@@ -41,7 +41,9 @@ configure_host() {
   export GOROOT_FINAL=$ROOT/$TOOLCHAIN/lib/golang-1.4
   export GOARCH=amd64
   export CGO_ENABLED=0
-  export HOST_GO_CGO_ENABLED=1
+  export PKG_CONFIG="$ROOT/$TOOLCHAIN/bin/pkg-config"
+  export CC_FOR_TARGET="$CC"
+  export CXX_FOR_TARGET="$CXX"
 }
 
 make_host() {

@@ -50,7 +50,7 @@ configure_host() {
 
 make_host() {
   cd $ROOT/$PKG_BUILD/src
-  bash make.bash --no-banner
+  ./make.bash --no-banner
 }
 
 makeinstall_host() {
