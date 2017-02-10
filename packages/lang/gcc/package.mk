@@ -56,7 +56,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libmpx \
                            --disable-libssp \
                            --enable-poison-system-directories \
-                           --with-tune=corei7"
+                           --with-tune=generic"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
@@ -76,7 +76,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time \
                          --enable-threads=posix \
-                         --with-system-zlib \
+                         --with-target-system-zlib \
                          --enable-__cxa_atexit \
                          --disable-libunwind-exceptions \
                          --enable-clocale=gnu \
@@ -87,8 +87,10 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --with-linker-hash-style=gnu \
                          --enable-gnu-indirect-function \
                          --disable-werror \
+                         --with-abi=m64 \
+                         --with-arch-directory=amd64 \
+                         --enable-objc-gc=auto \
                          --enable-checking=release"
-
 
 pre_configure_host() {
   #export CXXFLAGS="$CXXFLAGS -std=gnu++98"
