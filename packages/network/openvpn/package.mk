@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://openvpn.net"
 PKG_URL="http://swupdate.openvpn.org/community/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain lzo lz4 openssl"
+PKG_DEPENDS_TARGET="toolchain lzo lz4 lz4 openssl mbedtls iproute2"
 PKG_PRIORITY="optional"
 PKG_SECTION="network"
 PKG_SHORTDESC="openvpn: a full featured SSL VPN software solution that integrates OpenVPN server capabilities."
@@ -33,8 +33,9 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_have_decl_TUNSETPERSIST=no \
+                           --with-crypto-library=mbedtls \
                            --enable-lzo \
-                           --disable-lz4 \
+                           --enable-lz4 \
                            --enable-crypto \
                            --enable-ofb-cfb \
                            --disable-x509-alt-username \
@@ -52,7 +53,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_have_decl_TUNSETPERSIST=no \
                            --enable-def-auth \
                            --enable-pf \
                            --disable-selinux \
-                           --disable-systemd"
+                           --enable-systemd"
 
 post_makeinstall_target() {
   mkdir -p $INSTALL/usr/bin

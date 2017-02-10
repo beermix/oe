@@ -18,7 +18,7 @@
 ################################################################################
 
 PKG_NAME="attr"
-PKG_VERSION="c1a7b53"
+PKG_VERSION="315af30d0c1a198dc662a90e6e6ae2456abf2489"
 PKG_SITE=""
 PKG_GIT_URL="git://git.savannah.nongnu.org/attr.git"
 PKG_DEPENDS_TARGET="toolchain"

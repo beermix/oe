@@ -1,0 +1,27 @@
+diff -Naur iproute2-4.7.0.orig/Makefile iproute2-4.7.0/Makefile
+--- iproute2-4.7.0.orig/Makefile	2016-08-31 18:52:15.775131734 +0300
++++ iproute2-4.7.0/Makefile	2016-08-31 18:54:58.991720133 +0300
+@@ -1,5 +1,4 @@
+ ifndef VERBOSE
+-MAKEFLAGS += --no-print-directory
+ endif
+ 
+ PREFIX?=/usr
+@@ -16,7 +15,7 @@
+ # Path to db_185.h include
+ DBM_INCLUDE:=$(DESTDIR)/usr/include
+ 
+-SHARED_LIBS = y
++SHARED_LIBS = n
+ 
+ DEFINES= -DRESOLVE_HOSTNAMES -DLIBDIR=\"$(LIBDIR)\"
+ ifneq ($(SHARED_LIBS),y)
+@@ -34,7 +33,7 @@
+ #options for mpls
+ ADDLIB+=mpls_ntop.o mpls_pton.o
+ 
+-CC := gcc
++CC := "$CC"
+ HOSTCC ?= $(CC)
+ DEFINES += -D_GNU_SOURCE
+ # Turn on transparent support for LFS
