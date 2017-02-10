@@ -29,11 +29,7 @@ PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_HOST="--with-bundled-zlib"
 
-MAKEFLAGS=-j1
-
-post_makeinstall_host() {
-# setup ccache
-  $ROOT/$TOOLCHAIN/bin/ccache --max-size=10G
+  $ROOT/$TOOLCHAIN/bin/ccache --max-size=$CCACHE_CACHE_SIZE
   $ROOT/$TOOLCHAIN/bin/ccache --set-config=compiler_check=string:$(gcc -dumpversion)-$(get_pkg_version gcc)
 
   mkdir -p $ROOT/$TOOLCHAIN/lib/ccache
