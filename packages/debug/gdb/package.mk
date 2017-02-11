@@ -51,7 +51,8 @@ PKG_CONFIGURE_OPTS_TARGET="bash_cv_have_mbstate_t=set \
                            --disable-libquadmath-support \
                            --enable-libada \
                            --enable-libssp \
-                           --disable-werror"
+                           --disable-werror \
+                           --disable-silent-rules"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/share/gdb/python
