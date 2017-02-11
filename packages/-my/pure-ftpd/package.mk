@@ -10,6 +10,9 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-static \
 			      --disable-ssp \
 			      --with-nonroot \
+			      --with-rfc2640 \
+			      --disable-ssp \
+			      --enable-pie \
 			      --sysconfdir=/storage/.config \
 			      --datadir=/storage/.config \
 			      --libdir=/storage/.config \
