@@ -19,7 +19,6 @@
 
 PKG_NAME="attr"
 PKG_VERSION="315af30d0c1a198dc662a90e6e6ae2456abf2489"
-PKG_SITE=""
 PKG_GIT_URL="git://git.savannah.nongnu.org/attr.git"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="accessibility"
@@ -29,13 +28,13 @@ PKG_LONGDESC="Extended attributes are name:value pairs associated permanently wi
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-pre_configure_target() {
-   cd $ROOT/$PKG_BUILD
-}
+#pre_configure_target() {
+#   cd $ROOT/$PKG_BUILD
+#}
 
-pre_configure_target() {
-   cd $ROOT/$PKG_BUILD
-}
+#pre_configure_host() {
+#   cd $ROOT/$PKG_BUILD
+#}
 
 PKG_CONFIGURE_OPTS_TARGET="OPTIMIZER= \
                            CONFIG_SHELL=/bin/bash \
