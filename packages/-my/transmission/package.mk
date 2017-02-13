@@ -4,9 +4,6 @@ PKG_URL=""
 PKG_AUTORECONF="no"
 PKG_IS_ADDON="yes"
 PKG_ADDON_TYPE="xbmc.service"
-PKG_ADDON_PROVIDES=""
-PKG_ADDON_REPOVERSION="8.0"
-
 PKG_AUTORECONF="no"
 
 unpack() {
@@ -17,7 +14,7 @@ unpack() {
   cd $ROOT
 }
 
-PGK_CMAKE_OPTS_TARGET="-DENABLE_CLI=On -DENABLE_LIGHTWEIGHT=On -DENABLE_QT=ON"
+PGK_CMAKE_OPTS_TARGET="-DENABLE_CLI=ON -DENABLE_LIGHTWEIGHT=OFF -DENABLE_QT=OFF"
 
 post_makeinstall_target() {
   mkdir -p $INSTALL/usr/config/transmission-daemon

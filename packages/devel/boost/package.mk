@@ -45,6 +45,7 @@ pre_configure_target() {
   export CFLAGS="$CFLAGS -fPIC"
   export CXXFLAGS="$CXXFLAGS -fPIC"
   export LDFLAGS="$LDFLAGS -fPIC"
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
 }
 
 configure_target() {
