@@ -6,5 +6,5 @@ PKG_DEPENDS_INIT="toolchain"
 PKG_AUTORECONF="no"
 
 make_target() {
-make default
+  make default
 }
