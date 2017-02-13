@@ -82,19 +82,15 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --enable-shader-cache \
                            --enable-driglx-direct \
                            --enable-glx-tls \
-                           --disable-glx-read-only-text \
                            $MESA_GALLIUM_LLVM \
-                           --disable-gallium-extra-hud \
-                           --disable-valgrind \
-                           --with-sysroot=$SYSROOT_PREFIX \
-                           --with-sha1=libcrypto \
                            --with-gl-lib-name=GL \
                            --with-osmesa-lib-name=OSMesa \
                            --with-gallium-drivers=$GALLIUM_DRIVERS \
                            --with-dri-driverdir=/usr/lib/dri \
                            --with-dri-searchpath=/usr/lib/dri \
                            --with-dri-drivers=$DRI_DRIVERS \
-                           --without-vulkan-drivers"
+                           --with-vulkan-drivers=no \
+                           --with-sysroot=$SYSROOT_PREFIX"
 
 pre_configure_target() {
   export LIBS="-lxcb-dri3 -lxcb-present -lxcb-sync -lxshmfence -lz"

@@ -45,8 +45,6 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
                            --disable-unit-tests \
                            --disable-sparkle \
                            --disable-xselinux \
-                           --enable-aiglx \
-                           --enable-glx-tls \
                            --enable-composite \
                            --enable-mitshm \
                            --disable-xres \
@@ -107,8 +105,8 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
                            --disable-ipv6 \
                            --disable-local-transport \
                            --disable-secure-rpc \
-                           --enable-xtrans-send-fds \
                            --enable-input-thread \
+                           --enable-xtrans-send-fds \
                            --disable-docs \
                            --disable-devel-docs \
                            --with-int10=x86emu \
@@ -125,6 +123,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
                            --with-serverconfig-path=/usr/lib/xserver \
                            --without-xmlto \
                            --without-fop"
+
 pre_configure_target() {
 # hack to prevent a build error
   CFLAGS=`echo $CFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|"`
