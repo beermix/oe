@@ -49,7 +49,8 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --disable-shared \
                          --disable-gdb \
                          --disable-sim \
-                         --enable-poison-system-directories"
+                         --enable-poison-system-directories \
+                         --enable-deterministic-archives"
 
 makeinstall_host() {
   cp -v ../include/libiberty.h $SYSROOT_PREFIX/usr/include
