@@ -55,7 +55,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libgomp \
                            --disable-libmpx \
                            --disable-libssp \
-                           --without-included-gettext 
+                           --without-included-gettext \
                            --enable-poison-system-directories \
                            --with-tune=generic"
 
@@ -63,6 +63,7 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
                               --disable-libsanitizer \
+                              --enable-cloog-backend=isl \
                               --disable-shared \
                               --disable-threads \
                               --without-headers \
@@ -71,17 +72,20 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               $GCC_OPTS"
 
 PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
-                         --enable-languages=c,c++ \
-                         --enable-shared \
+                         --enable-languages=c,c++,fortran \
+                         --enable-__cxa_atexit \
+                         --enable-decimal-float \
                          --enable-tls \
+                         --enable-shared \
+                         --disable-static \
+                         --enable-c99 \
+                         --enable-long-long \
+                         --enable-threads=posix \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time \
-                         --enable-threads=posix \
-                         --with-target-system-zlib \
-                         --enable-__cxa_atexit \
-                         --disable-libunwind-exceptions \
                          --enable-clocale=gnu \
-                         --disable-libstdcxx-pch \
+                         --with-target-system-zlib \
+                         --disable-libunwind-exceptions \
                          --enable-gnu-unique-object \
                          --enable-linker-build-id \
                          --enable-install-libiberty \
@@ -92,7 +96,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --with-arch-directory=amd64 \
                          --enable-objc-gc=auto \
                          --enable-checking=release \
-                         --enable-poison-system-directories"
+                         $GCC_OPTS""
 
 pre_configure_host() {
   export CXXFLAGS="$CXXFLAGS -std=gnu++98"
