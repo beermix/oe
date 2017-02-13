@@ -33,6 +33,13 @@ PKG_AUTORECONF="no"
 
 MAKEFLAGS=-j7
 
+post_unpack() {
+  sed -i '/\(clang\|lldb\)\/cmake_install.cmake/d' $ROOT/$PKG_BUILD/tools/cmake_install.cmake
+  sed -i '/extra\/cmake_install.cmake/d' $ROOT/$PKG_BUILD/tools/clang/tools/cmake_install.cmake
+  sed -i '/compiler-rt\/cmake_install.cmake/d' $ROOT/$PKG_BUILD/projects/cmake_install.cmake
+}
+
+
 PKG_CMAKE_OPTS_HOST="-DLLVM_INCLUDE_TOOLS=ON \
                      -DLLVM_BUILD_TOOLS=OFF \
                      -DLLVM_BUILD_UTILS=OFF \
