@@ -1,5 +1,5 @@
 PKG_NAME="tor"
-PKG_VERSION="eca4a89"
+PKG_VERSION="23f1caf"
 PKG_GIT_URL="https://github.com/torproject/tor.git"
 PKG_DEPENDS_TARGET="toolchain openssl zlib libevent libcap"
 PKG_SECTION="security"
