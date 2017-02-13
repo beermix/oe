@@ -1,10 +1,10 @@
 PKG_NAME="gnutls"
-PKG_VERSION="3.5.8"
+PKG_VERSION="3.5.9"
 PKG_URL="ftp://ftp.gnutls.org/gcrypt/gnutls/v3.5/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain libidn nettle gmp"
 PKG_SECTION="xmedia/depends"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \
 			      --disable-shared \
