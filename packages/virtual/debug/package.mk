@@ -17,9 +17,6 @@
 ################################################################################
 
 PKG_NAME="debug"
-PKG_VERSION=""
-PKG_SITE="http://www.openelec.tv"
-PKG_URL=""
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.openelec.tv"
 PKG_URL=""

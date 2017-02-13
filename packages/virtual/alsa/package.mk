@@ -17,9 +17,6 @@
 ################################################################################
 
 PKG_NAME="alsa"
-PKG_VERSION=""
-PKG_SITE="http://www.alsa-project.org/"
-PKG_URL=""
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.alsa-project.org/"
 PKG_URL=""
