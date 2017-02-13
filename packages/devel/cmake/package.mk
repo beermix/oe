@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="cmake"
-PKG_VERSION="3.7.2"
+PKG_VERSION="3.8.0-rc1"
 PKG_SITE="http://www.cmake.org/"
-PKG_URL="http://www.cmake.org/files/v3.7/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_URL="https://fossies.org/linux/misc/cmake-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="ccache:host bzip2:host libffi:host libuv:host"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="cmake: A cross-platform, open-source make system"
