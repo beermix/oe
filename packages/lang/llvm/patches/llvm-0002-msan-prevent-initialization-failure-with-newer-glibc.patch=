@@ -1,7 +1,7 @@
 Index: lib/msan/msan_interceptors.cc
 ===================================================================
---- lib/msan/msan_interceptors.cc	(revision 282231)
-+++ lib/msan/msan_interceptors.cc	(revision 282232)
+--- a/lib/msan/msan_interceptors.cc	(revision 282231)
++++ b/lib/msan/msan_interceptors.cc	(revision 282232)
 @@ -64,6 +64,23 @@
    return in_interceptor_scope;
  }
@@ -86,8 +86,8 @@ Index: lib/msan/msan_interceptors.cc
  
 Index: lib/asan/asan_malloc_linux.cc
 ===================================================================
---- lib/asan/asan_malloc_linux.cc	(revision 282231)
-+++ lib/asan/asan_malloc_linux.cc	(revision 282232)
+--- a/lib/asan/asan_malloc_linux.cc	(revision 282231)
++++ b/lib/asan/asan_malloc_linux.cc	(revision 282232)
 @@ -78,7 +78,11 @@
    if (UNLIKELY(IsInDlsymAllocPool(ptr))) {
      uptr offset = (uptr)ptr - (uptr)alloc_memory_for_dlsym;

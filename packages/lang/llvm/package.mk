@@ -23,7 +23,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://llvm.org/"
 PKG_URL="http://llvm.org/releases/$PKG_VERSION/${PKG_NAME}-${PKG_VERSION}.src.tar.xz"
 PKG_SOURCE_DIR="${PKG_NAME}-${PKG_VERSION}.src"
-PKG_DEPENDS_TARGET="toolchain zlib:host libffi:host llvm:host zlib libffi libedit"
+PKG_DEPENDS_TARGET="toolchain zlib:host libffi:host python:host llvm:host zlib libffi libedit"
 PKG_SECTION="lang"
 PKG_SHORTDESC="llvm: Low Level Virtual Machine"
 PKG_LONGDESC="Low-Level Virtual Machine (LLVM) is a compiler infrastructure designed for compile-time, link-time, run-time, and idle-time optimization of programs from arbitrary programming languages. It currently supports compilation of C, Objective-C, and C++ programs, using front-ends derived from GCC 4.0, GCC 4.2, and a custom new front-end, "clang". It supports x86, x86-64, ia64, PowerPC, and SPARC, with support for Alpha and ARM under development."
@@ -32,13 +32,6 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 MAKEFLAGS=-j7
-
-post_unpack() {
-  sed -i '/\(clang\|lldb\)\/cmake_install.cmake/d' $ROOT/$PKG_BUILD/tools/cmake_install.cmake
-  sed -i '/extra\/cmake_install.cmake/d' $ROOT/$PKG_BUILD/tools/clang/tools/cmake_install.cmake
-  sed -i '/compiler-rt\/cmake_install.cmake/d' $ROOT/$PKG_BUILD/projects/cmake_install.cmake
-}
-
 
 PKG_CMAKE_OPTS_HOST="-DLLVM_INCLUDE_TOOLS=ON \
                      -DLLVM_BUILD_TOOLS=OFF \
