@@ -96,7 +96,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --with-arch-directory=amd64 \
                          --enable-objc-gc=auto \
                          --enable-checking=release \
-                         $GCC_OPTS""
+                         $GCC_OPTS"
 
 pre_configure_host() {
   export CXXFLAGS="$CXXFLAGS -std=gnu++98"
