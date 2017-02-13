@@ -9,6 +9,7 @@ setup_toolchain() {
       export AS="${TARGET_NAME}-as"
       export AR="${TARGET_NAME}-ar"
       export NM="${TARGET_NAME}-nm"
+      export LLVM_CONFIG="$SYSROOT_PREFIX/usr/bin/llvm-config-host"
       export RANLIB="${TARGET_NAME}-ranlib"
       export OBJCOPY="${TARGET_NAME}-objcopy"
       export OBJDUMP="${TARGET_NAME}-objdump"
