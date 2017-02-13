@@ -47,7 +47,6 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --disable-nls \
                          --enable-static \
                          --disable-shared \
-                         --disable-gdb \
                          --disable-sim \
                          --enable-poison-system-directories \
                          --enable-deterministic-archives"
