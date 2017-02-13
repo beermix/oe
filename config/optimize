@@ -17,7 +17,7 @@ if [ "$GOLD_SUPPORT" = yes ];then
   LD_OPTIM_GOLD="-fuse-ld=gold"
 fi
 
-if [ "$DEBUG" = no ]; then
+if [ "$DEBUG" = yes ]; then
   TARGET_CFLAGS="$TARGET_CFLAGS"
   TARGET_CXXFLAGS="$TARGET_CXXFLAGS"
   TARGET_LDFLAGS="$TARGET_LDFLAGS"
