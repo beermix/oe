@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="irqbalance"
-PKG_VERSION="v1.2.0"
+PKG_VERSION="54cb9bf"
 PKG_ARCH="i386 x86_64 arm"
 PKG_SITE="https://github.com/Irqbalance/irqbalance"
 PKG_GIT_URL="https://github.com/Irqbalance/irqbalance.git"

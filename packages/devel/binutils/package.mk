@@ -17,11 +17,13 @@
 ################################################################################
 
 PKG_NAME="binutils"
-PKG_VERSION="3877052"
+PKG_VERSION="2.27"
+PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="http://www.gnu.org/software/binutils/"
-PKG_GIT_URL="https://github.com/bminor/binutils-gdb.git"
+PKG_SITE="http://www.gnu.org/software/binutils/binutils.html"
+PKG_URL="https://fossies.org/linux/misc/binutils-$PKG_VERSION.tar.xz"
+#PKG_GIT_URL="git://sourceware.org/git/binutils-gdb.git"
 PKG_DEPENDS_HOST="ccache:host bison:host flex:host linux:host"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="binutils: A GNU collection of binary utilities"
@@ -47,6 +49,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --disable-nls \
                          --enable-static \
                          --disable-shared \
+                         --enable-gdb \
                          --disable-sim \
                          --enable-poison-system-directories"
 

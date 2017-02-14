@@ -5,7 +5,7 @@ PKG_URL="https://github.com/skvadrik/re2c/releases/download/$PKG_VERSION/re2c-$P
 PKG_DEPENDS_HOST="bison:host"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 #post_unpack() {
 #  cp -r $PKG_BUILD/re2c/* $PKG_BUILD/
