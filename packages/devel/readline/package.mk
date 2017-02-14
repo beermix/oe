@@ -28,11 +28,14 @@ PKG_IS_ADDON="no"
 
 PKG_AUTORECONF="no"
 
+pre_configure_target() {
+  strip_lto
+}
+
 PKG_CONFIGURE_OPTS_TARGET="bash_cv_wcwidth_broken=no \
                            --disable-shared \
                            --enable-static \
                            --with-curses \
-                           --with-gnu-ld \
                            --without-purify"
 
 post_makeinstall_target() {

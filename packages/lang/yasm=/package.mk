@@ -16,21 +16,17 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="make"
-PKG_VERSION="4.1"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPLv3"
-PKG_SITE="https://www.gnu.org/software/make/"
-PKG_URL="https://ftp.gnu.org/gnu/make/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_HOST=""
-PKG_SECTION="toolchain/devel"
-PKG_SHORTDESC="make: GNU make utility to maintain groups of programs"
-PKG_LONGDESC="The 'make' utility automatically determines which pieces of a large program need to be recompiled, and issues commands to recompile them. This is GNU 'make', which was implemented by Richard Stallman and Roland McGrath. GNU 'make' conforms to section 6.2 of EEE Standard 1003.2-1992' (POSIX.2)."
-
+PKG_NAME="yasm"
+PKG_VERSION="1.3.0"
+PKG_SITE="http://www.tortall.net/projects/yasm/"
+PKG_URL="http://www.tortall.net/projects/yasm/releases/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_DEPENDS_HOST="cmake:host"
+PKG_SECTION="toolchain/lang"
+PKG_SHORTDESC="yasm: A complete rewrite of the NASM assembler"
+PKG_LONGDESC="Yasm is a complete rewrite of the NASM assembler under the new BSD License (some portions are under other licenses, see COPYING for details). It is designed from the ground up to allow for multiple assembler syntaxes to be supported (eg, NASM, TASM, GAS, etc.) in addition to multiple output object formats and even multiple instruction sets. Another primary module of the overall design is an optimizer module."
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
+    
+PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DENABLE_NLS=OFF -DYASM_BUILD_TESTS=OFF"
 
-post_makeinstall_host() {
-  ln -sf make $ROOT/$TOOLCHAIN/bin/gmake
-}
+PKG_CMAKE_OPTS_HOST="$PKG_CMAKE_OPTS_TARGET"

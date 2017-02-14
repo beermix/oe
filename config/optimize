@@ -22,19 +22,14 @@ if [ "$DEBUG" = yes ]; then
   TARGET_CXXFLAGS="$TARGET_CXXFLAGS"
   TARGET_LDFLAGS="$TARGET_LDFLAGS"
 else
-  TARGET_CFLAGS="$TARGET_CFLAGS"
-  TARGET_CXXFLAGS="$TARGET_CXXFLAGS"
-  TARGET_CPPFLAGS="$TARGET_CPPFLAGS"
+  TARGET_CFLAGS="$TARGET_CFLAGS -fomit-frame-pointer"
+  TARGET_CXXFLAGS="$TARGET_CXXFLAGS -fomit-frame-pointer"
   TARGET_LDFLAGS="$TARGET_LDFLAGS -s"
-  #TARGET_CFLAGS="$TARGET_CFLAGS -fomit-frame-pointer -Wno-cpp -Wno-unused-but-set-variable -Wno-unused-result"
-  #TARGET_CXXFLAGS="$TARGET_CXXFLAGS -fomit-frame-pointer -Wno-cpp -Wno-unused-but-set-variable -Wno-unused-result"
-  #TARGET_CPPFLAGS="$TARGET_CPPFLAGS -Wno-cpp -Wno-unused-but-set-variable -Wno-unused-result"
-  #TARGET_LDFLAGS="$TARGET_LDFLAGS -Wno-cpp -Wno-unused-but-set-variable -Wno-unused-result -s"
 fi
 
-TARGET_CFLAGS="$TARGET_CFLAGS -fstack-protector-strong $GCC_OPTIM $GCC_OPTIM_LTO $PROJECT_CFLAGS"
+TARGET_CFLAGS="$TARGET_CFLAGS -Wall -pipe -fstack-protector-strong $GCC_OPTIM $GCC_OPTIM_LTO $PROJECT_CFLAGS"
 TARGET_CXXFLAGS="$TARGET_CFLAGS"
-TARGET_CPPFLAGS="-D_FORTIFY_SOURCE=2"
+TARGET_CPPFLAGS="-Wdate-time -D_FORTIFY_SOURCE=2"
 TARGET_LDFLAGS="$TARGET_LDFLAGS $LD_OPTIM $LD_OPTIM_GOLD $LD_OPTIM_LTO"
 TARGET_LIBDIR="$SYSROOT_PREFIX/lib $SYSROOT_PREFIX/usr/lib"
 TARGET_INCDIR="$SYSROOT_PREFIX/include $SYSROOT_PREFIX/usr/include"
@@ -42,7 +37,7 @@ TARGET_INCDIR="$SYSROOT_PREFIX/include $SYSROOT_PREFIX/usr/include"
 HOST_CFLAGS="-O2 -Wall -pipe -I$ROOT/$TOOLCHAIN/include"
 HOST_CXXFLAGS="$HOST_CFLAGS"
 HOST_CPPFLAGS="-I$ROOT/$TOOLCHAIN/include"
-HOST_LDFLAGS="-Wl,-rpath,$ROOT/$TOOLCHAIN/lib -L$ROOT/$TOOLCHAIN/lib -s"
+HOST_LDFLAGS="-s -Wl,-rpath,$ROOT/$TOOLCHAIN/lib -L$ROOT/$TOOLCHAIN/lib"
 HOST_LIBDIR="$ROOT/$TOOLCHAIN/lib"
 
 # work around Ubuntu default C*FLAGS 
