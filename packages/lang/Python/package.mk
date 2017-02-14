@@ -21,7 +21,7 @@ PKG_VERSION="2.7.13"
 PKG_SITE="http://www.python.org/"
 PKG_URL="http://www.python.org/ftp/python/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="zlib:host bzip2:host"
-PKG_DEPENDS_TARGET="toolchain zlib bzip2 expat sqlite openssl libffi readline Python:host"
+PKG_DEPENDS_TARGET="toolchain sqlite expat zlib bzip2 openssl libffi readline Python:host"
 PKG_SECTION="lang"
 PKG_SHORTDESC="python: The Python programming language"
 PKG_LONGDESC="Python is an interpreted object-oriented programming language, and is often compared with Tcl, Perl, Java or Scheme."
@@ -34,9 +34,7 @@ PY_DISABLED_MODULES="_tkinter nis gdbm bsddb ossaudiodev"
 PKG_CONFIGURE_OPTS_HOST="--cache-file=config.cache \
                          --without-cxx-main \
                          --with-threads \
-                         --enable-unicode=ucs4 \
-                         --enable-shared \
-                         --disable-static"
+                         --enable-unicode=ucs4"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            ac_cv_file_dev_ptmx=yes \
@@ -49,8 +47,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            ac_cv_file__dev_ptmx=no \
                            ac_cv_file__dev_ptc=no \
                            ac_cv_have_long_long_format=yes \
-                           --enable-shared \
-                           --disable-static \
                            --with-threads \
                            --enable-unicode=ucs4 \
                            --disable-ipv6 \
@@ -90,7 +86,7 @@ makeinstall_host() {
 
 pre_configure_target() {
   export PYTHON_FOR_BUILD=$ROOT/$TOOLCHAIN/bin/python
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
+  #export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
 }
 
 make_target() {

@@ -30,11 +30,11 @@ if [ ! -f $PKG_DIR/package.mk ]; then
   exit 1
 fi
 
-  PACKAGE_NAME=$(echo $1 | awk -F : '{print $1}')
-  TARGET=$(echo $1 | awk -F : '{print $2}')
-  if [ -z "$TARGET" ]; then
-    TARGET="target"
-  fi
+PACKAGE_NAME=$(echo $1 | awk -F : '{print $1}')
+TARGET=$(echo $1 | awk -F : '{print $2}')
+if [ -z "$TARGET" ]; then
+  TARGET="target"
+fi
 
 if [ -n "$PKG_ARCH" -a ! "$PKG_ARCH" = "any" ]; then
   echo "$PKG_ARCH" | grep -q "$TARGET_ARCH" || exit 0
@@ -141,7 +141,7 @@ if [ ! -f $STAMP ]; then
           ;;
       esac
 
-       # clean up
+      # clean up
       [ -n "$INSTALL" ] && rm -rf $INSTALL
 
       # setup configure script
@@ -168,7 +168,7 @@ if [ ! -f $STAMP ]; then
       fi
 
       # ensure $PKG_BUILD is there. (installer? PKG_URL="")
-        mkdir -p $PKG_BUILD
+      mkdir -p $PKG_BUILD
 
       cd $PKG_BUILD
         case "$TARGET" in
@@ -207,31 +207,31 @@ if [ ! -f $STAMP ]; then
       elif [ -f "$PKG_CMAKE_SCRIPT" -a ! "$PKG_USE_CMAKE" = "no" ]; then
         case "$TARGET" in
           target)
-          cmake $TARGET_CMAKE_OPTS $PKG_CMAKE_OPTS_TARGET $(dirname $PKG_CMAKE_SCRIPT)
+            cmake $TARGET_CMAKE_OPTS $PKG_CMAKE_OPTS_TARGET $(dirname $PKG_CMAKE_SCRIPT)
             ;;
           host)
-          cmake $HOST_CMAKE_OPTS $PKG_CMAKE_OPTS_HOST $(dirname $PKG_CMAKE_SCRIPT)
+            cmake $HOST_CMAKE_OPTS $PKG_CMAKE_OPTS_HOST $(dirname $PKG_CMAKE_SCRIPT)
             ;;
           init)
-          cmake $INIT_CMAKE_OPTS $PKG_CMAKE_OPTS_INIT $(dirname $PKG_CMAKE_SCRIPT)
+            cmake $INIT_CMAKE_OPTS $PKG_CMAKE_OPTS_INIT $(dirname $PKG_CMAKE_SCRIPT)
             ;;
           bootstrap)
-          cmake $BOOTSTRAP_CMAKE_OPTS $PKG_CMAKE_OPTS_BOOTSTRAP $(dirname $PKG_CMAKE_SCRIPT)
+            cmake $BOOTSTRAP_CMAKE_OPTS $PKG_CMAKE_OPTS_BOOTSTRAP $(dirname $PKG_CMAKE_SCRIPT)
             ;;
         esac
       elif [ -f "$PKG_CONFIGURE_SCRIPT" ]; then
         case "$TARGET" in
           target)
-          $PKG_CONFIGURE_SCRIPT $TARGET_CONFIGURE_OPTS $PKG_CONFIGURE_OPTS_TARGET
+            $PKG_CONFIGURE_SCRIPT $TARGET_CONFIGURE_OPTS $PKG_CONFIGURE_OPTS_TARGET
             ;;
           host)
-          $PKG_CONFIGURE_SCRIPT $HOST_CONFIGURE_OPTS $PKG_CONFIGURE_OPTS_HOST
+            $PKG_CONFIGURE_SCRIPT $HOST_CONFIGURE_OPTS $PKG_CONFIGURE_OPTS_HOST
             ;;
           init)
-          $PKG_CONFIGURE_SCRIPT $INIT_CONFIGURE_OPTS $PKG_CONFIGURE_OPTS_INIT
+            $PKG_CONFIGURE_SCRIPT $INIT_CONFIGURE_OPTS $PKG_CONFIGURE_OPTS_INIT
             ;;
           bootstrap)
-          $PKG_CONFIGURE_SCRIPT $BOOTSTRAP_CONFIGURE_OPTS $PKG_CONFIGURE_OPTS_BOOTSTRAP
+            $PKG_CONFIGURE_SCRIPT $BOOTSTRAP_CONFIGURE_OPTS $PKG_CONFIGURE_OPTS_BOOTSTRAP
             ;;
         esac
       fi
@@ -248,16 +248,16 @@ if [ ! -f $STAMP ]; then
       else
         case "$TARGET" in
           target)
-          make $PKG_MAKE_OPTS_TARGET
+            make $PKG_MAKE_OPTS_TARGET
             ;;
           host)
-          make $PKG_MAKE_OPTS_HOST
+            make $PKG_MAKE_OPTS_HOST
             ;;
           init)
-          make $PKG_MAKE_OPTS_INIT
+            make $PKG_MAKE_OPTS_INIT
             ;;
           bootstrap)
-          make $PKG_MAKE_OPTS_BOOTSTRAP
+            make $PKG_MAKE_OPTS_BOOTSTRAP
             ;;
         esac
       fi
