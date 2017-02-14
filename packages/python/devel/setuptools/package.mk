@@ -17,12 +17,11 @@
 ################################################################################
 
 PKG_NAME="setuptools"
-PKG_VERSION="32.1.0"
-PKG_REV="1"
+PKG_VERSION="v32.1.2"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="https://pypi.python.org/pypi/setuptools"
-PKG_URL="https://pypi.python.org/packages/26/d1/dc7fe14ce4a3ff3faebf1ac11350de4104ea2d2a80c98393b55c84362b0c/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_GIT_URL="https://github.com/pypa/setuptools"
 PKG_DEPENDS_HOST="Python:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="python/devel"
@@ -33,7 +32,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 make_host() {
-  : # nothing todo
+  python bootstrap.py
 }
 
 makeinstall_host() {
