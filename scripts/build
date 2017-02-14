@@ -30,11 +30,6 @@ if [ ! -f $PKG_DIR/package.mk ]; then
   exit 1
 fi
 
-# set defaults
-  PKG_CONFIGURE_SCRIPT=""
-  PKG_MAKE_OPTS=""
-  PKG_MAKEINSTALL_OPTS=""
-
   PACKAGE_NAME=$(echo $1 | awk -F : '{print $1}')
   TARGET=$(echo $1 | awk -F : '{print $2}')
   if [ -z "$TARGET" ]; then
@@ -147,11 +142,7 @@ if [ ! -f $STAMP ]; then
       esac
 
        # clean up
-       if [ ! -z "$INSTALL" ] ; then
-         if [ -d "$INSTALL" ] ; then
-           rm -rf $INSTALL
-         fi
-       fi
+      [ -n "$INSTALL" ] && rm -rf $INSTALL
 
       # setup configure script
       if [ -z "$PKG_CONFIGURE_SCRIPT" ]; then
@@ -177,9 +168,7 @@ if [ ! -f $STAMP ]; then
       fi
 
       # ensure $PKG_BUILD is there. (installer? PKG_URL="")
-      if [ ! -d $PKG_BUILD ] ; then
         mkdir -p $PKG_BUILD
-      fi
 
       cd $PKG_BUILD
         case "$TARGET" in
@@ -216,33 +205,35 @@ if [ ! -f $STAMP ]; then
       if [ "$(type -t configure_$TARGET)" = "function" ]; then
         configure_$TARGET
       elif [ -f "$PKG_CMAKE_SCRIPT" -a ! "$PKG_USE_CMAKE" = "no" ]; then
-        if [ "$TARGET" = "target" ]; then
-          echo "Executing (target): cmake $TARGET_CMAKE_OPTS $PKG_CMAKE_OPTS_TARGET $(dirname $PKG_CMAKE_SCRIPT)" | tr -s " "
+        case "$TARGET" in
+          target)
           cmake $TARGET_CMAKE_OPTS $PKG_CMAKE_OPTS_TARGET $(dirname $PKG_CMAKE_SCRIPT)
-        elif [ "$TARGET" = "host" ]; then
-          echo "Executing (host): cmake $HOST_CMAKE_OPTS $PKG_CMAKE_OPTS_HOST $(dirname $PKG_CMAKE_SCRIPT)" | tr -s " "
+            ;;
+          host)
           cmake $HOST_CMAKE_OPTS $PKG_CMAKE_OPTS_HOST $(dirname $PKG_CMAKE_SCRIPT)
-        elif [ "$TARGET" = "init" ]; then
-          echo "Executing (init): cmake $INIT_CMAKE_OPTS $PKG_CMAKE_OPTS_INIT $(dirname $PKG_CMAKE_SCRIPT)" | tr -s " "
+            ;;
+          init)
           cmake $INIT_CMAKE_OPTS $PKG_CMAKE_OPTS_INIT $(dirname $PKG_CMAKE_SCRIPT)
-        elif [ "$TARGET" = "bootstrap" ]; then
-          echo "Executing (bootstrap): cmake $BOOTSTRAP_CMAKE_OPTS $PKG_CMAKE_OPTS_BOOTSTRAP $(dirname $PKG_CMAKE_SCRIPT)" | tr -s " "
+            ;;
+          bootstrap)
           cmake $BOOTSTRAP_CMAKE_OPTS $PKG_CMAKE_OPTS_BOOTSTRAP $(dirname $PKG_CMAKE_SCRIPT)
-        fi
+            ;;
+        esac
       elif [ -f "$PKG_CONFIGURE_SCRIPT" ]; then
-        if [ "$TARGET" = "target" ]; then
-          echo "Executing (target): $PKG_CONFIGURE_SCRIPT $TARGET_CONFIGURE_OPTS $PKG_CONFIGURE_OPTS_TARGET" | tr -s " "
+        case "$TARGET" in
+          target)
           $PKG_CONFIGURE_SCRIPT $TARGET_CONFIGURE_OPTS $PKG_CONFIGURE_OPTS_TARGET
-        elif [ "$TARGET" = "host" ]; then
-          echo "Executing (host): $PKG_CONFIGURE_SCRIPT $HOST_CONFIGURE_OPTS $PKG_CONFIGURE_OPTS_HOST" | tr -s " "
+            ;;
+          host)
           $PKG_CONFIGURE_SCRIPT $HOST_CONFIGURE_OPTS $PKG_CONFIGURE_OPTS_HOST
-        elif [ "$TARGET" = "init" ]; then
-          echo "Executing (init): $PKG_CONFIGURE_SCRIPT $INIT_CONFIGURE_OPTS $PKG_CONFIGURE_OPTS_INIT" | tr -s " "
+            ;;
+          init)
           $PKG_CONFIGURE_SCRIPT $INIT_CONFIGURE_OPTS $PKG_CONFIGURE_OPTS_INIT
-        elif [ "$TARGET" = "bootstrap" ]; then
-          echo "Executing (bootstrap): $PKG_CONFIGURE_SCRIPT $BOOTSTRAP_CONFIGURE_OPTS $PKG_CONFIGURE_OPTS_BOOTSTRAP" | tr -s " "
+            ;;
+          bootstrap)
           $PKG_CONFIGURE_SCRIPT $BOOTSTRAP_CONFIGURE_OPTS $PKG_CONFIGURE_OPTS_BOOTSTRAP
-        fi
+            ;;
+        esac
       fi
       if [ "$(type -t post_configure_$TARGET)" = "function" ]; then
         post_configure_$TARGET
@@ -255,19 +246,20 @@ if [ ! -f $STAMP ]; then
       if [ "$(type -t make_$TARGET)" = "function" ]; then
         make_$TARGET
       else
-        if [ "$TARGET" = "target" ]; then
-          echo "Executing (target): make $PKG_MAKE_OPTS_TARGET" | tr -s " "
+        case "$TARGET" in
+          target)
           make $PKG_MAKE_OPTS_TARGET
-        elif [ "$TARGET" = "host" ]; then
-          echo "Executing (host): make $PKG_MAKE_OPTS_HOST" | tr -s " "
+            ;;
+          host)
           make $PKG_MAKE_OPTS_HOST
-        elif [ "$TARGET" = "init" ]; then
-          echo "Executing (init): make $PKG_MAKE_OPTS_INIT" | tr -s " "
+            ;;
+          init)
           make $PKG_MAKE_OPTS_INIT
-        elif [ "$TARGET" = "bootstrap" ]; then
-          echo "Executing (bootstrap): make $PKG_MAKE_OPTS_BOOTSTRAP" | tr -s " "
+            ;;
+          bootstrap)
           make $PKG_MAKE_OPTS_BOOTSTRAP
-        fi
+            ;;
+        esac
       fi
       if [ "$(type -t post_make_$TARGET)" = "function" ]; then
         post_make_$TARGET
@@ -354,9 +346,9 @@ if [ ! -f $STAMP ]; then
       cd $ROOT
     fi  # ! "$PKG_SECTION" = "virtual"
 
-    for i in `find $SYSROOT_PREFIX/usr/lib/ -name "*.la" 2>/dev/null`; do \
-      $SED "s:\(['= ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" $i; \
-    done
+  #  for i in `find $SYSROOT_PREFIX/usr/lib/ -name "*.la" 2>/dev/null`; do \
+   #   $SED "s:\(['= ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" $i; \
+  #  done
 
     PKG_DEEPMD5=$(find $STAMP_DEPENDS -exec md5sum {} \; 2>/dev/null | sort | md5sum | cut -d" " -f1)
     for i in PKG_NAME PKG_DEEPMD5; do
