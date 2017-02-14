@@ -37,6 +37,8 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/bash \
                            libc_cv_slibdir=/lib \
                            ac_cv_path_PERL= \
                            ac_cv_prog_MAKEINFO= \
+                           libc_cv_forced_unwind=yes \
+                           libc_cv_ssp=no \
                            --libexecdir=/usr/lib/glibc \
                            --cache-file=config.cache \
                            --disable-profile \
@@ -56,13 +58,8 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/bash \
                            --disable-nscd \
                            --enable-lock-elision \
                            --disable-timezone-tools \
-                           --enable-stack-protector=strong"
+                           --disable-debug"
 
-if [ "$DEBUG" = yes ]; then
-  PKG_CONFIGURE_OPTS_TARGET+=" --enable-debug"
-else
-  PKG_CONFIGURE_OPTS_TARGET+=" --disable-debug"
-fi
 
 NSS_CONF_DIR="$PKG_BUILD/nss"
 
@@ -89,7 +86,7 @@ pre_configure_target() {
   export CFLAGS=`echo $CFLAGS | sed -e "s|-Ofast|-O2|g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O2|g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong||g"`
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
+  export CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
 
   if [ -n "$PROJECT_CFLAGS" ]; then
     export CFLAGS=`echo $CFLAGS | sed -e "s|$PROJECT_CFLAGS||g"`
@@ -98,8 +95,8 @@ pre_configure_target() {
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-ffast-math||g"`
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Ofast|-O2|g"`
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-O.|-O2|g"`
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-fstack-protector-strong||g"`
-  export CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|,-z,relro||g"`
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed||"`
 
   unset LD_LIBRARY_PATH
@@ -113,8 +110,6 @@ libc_cv_forced_unwind=yes
 libc_cv_c_cleanup=yes
 libc_cv_ssp=no
 libc_cv_ssp_strong=no
-libc_cv_gnu99_inline=yes
-libc_cv_initfini_array=yes
 EOF
 
   echo "sbindir=/usr/bin" >> configparms
@@ -131,10 +126,10 @@ post_makeinstall_target() {
   for i in $GLIBC_EXCLUDE_BIN; do
     rm -rf $INSTALL/usr/bin/$i
   done
-   rm -rf $INSTALL/usr/lib/audit
-   rm -rf $INSTALL/usr/lib/glibc
-   rm -rf $INSTALL/usr/lib/*.o
-   rm -rf $INSTALL/var
+  rm -rf $INSTALL/usr/lib/audit
+  rm -rf $INSTALL/usr/lib/glibc
+  rm -rf $INSTALL/usr/lib/*.o
+  rm -rf $INSTALL/var
 
 # remove unneeded libs
   rm -rf $INSTALL/usr/lib/libBrokenLocale*
@@ -145,6 +140,7 @@ post_makeinstall_target() {
 # remove ldscripts
   rm -rf $INSTALL/usr/lib/libc.so
   rm -rf $INSTALL/usr/lib/libpthread.so
+
 # remove locales and charmaps
   rm -rf $INSTALL/usr/share/i18n/charmaps
   if [ -n "$GLIBC_LOCALES" ]; then
@@ -158,9 +154,9 @@ post_makeinstall_target() {
         $locale --prefix=$INSTALL
     done
   fi
+
   if [ ! "$GLIBC_LOCALES" = yes ]; then
     rm -rf $INSTALL/usr/share/i18n/locales
-
     mkdir -p $INSTALL/usr/share/i18n/locales
       cp -PR $ROOT/$PKG_BUILD/localedata/locales/POSIX $INSTALL/usr/share/i18n/locales
   fi
@@ -169,7 +165,6 @@ post_makeinstall_target() {
   mkdir -p $INSTALL/etc
     cp $PKG_DIR/config/nsswitch.conf $INSTALL/etc
     cp $PKG_DIR/config/gai.conf $INSTALL/etc
-
     echo "multi on" > $INSTALL/etc/host.conf
 }
 

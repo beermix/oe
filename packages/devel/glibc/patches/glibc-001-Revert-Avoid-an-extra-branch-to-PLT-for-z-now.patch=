@@ -1,3 +1,17 @@
+From c903d7992134802ada495c137a4f1a2ac85af86e Mon Sep 17 00:00:00 2001
+From: Allan McRae <allan@archlinux.org>
+Date: Mon, 31 Oct 2016 15:10:23 +1000
+Subject: [PATCH] Revert "Avoid an extra branch to PLT for -z now"
+
+This reverts commit 6901def689b5c77465d34f07822989ec67e80c1e.
+---
+ ChangeLog               | 8 --------
+ config.h.in             | 3 ---
+ configure               | 4 ----
+ configure.ac            | 3 ---
+ sysdeps/x86_64/sysdep.h | 8 ++------
+ 5 files changed, 2 insertions(+), 24 deletions(-)
+
 diff --git a/ChangeLog b/ChangeLog
 index b2f6372..e2119a3 100644
 --- a/ChangeLog
@@ -58,4 +72,28 @@ index 33bcd62..33701fa 100644
 -  AC_DEFINE(BIND_NOW)
 -fi
  
+ dnl On some platforms we cannot use dynamic loading.  We must provide
+ dnl static NSS modules.
+diff --git a/sysdeps/x86_64/sysdep.h b/sysdeps/x86_64/sysdep.h
+index 75ac747..fbe3560 100644
+--- a/sysdeps/x86_64/sysdep.h
++++ b/sysdeps/x86_64/sysdep.h
+@@ -90,13 +90,9 @@ lose:									      \
+ 
+ #undef JUMPTARGET
+ #ifdef PIC
+-# ifdef BIND_NOW
+-#  define JUMPTARGET(name)	*name##@GOTPCREL(%rip)
+-# else
+-#  define JUMPTARGET(name)	name##@PLT
+-# endif
++#define JUMPTARGET(name)	name##@PLT
+ #else
+-# define JUMPTARGET(name)	name
++#define JUMPTARGET(name)	name
+ #endif
+ 
+ /* Local label name for asm code. */
+-- 
+2.10.1
 
