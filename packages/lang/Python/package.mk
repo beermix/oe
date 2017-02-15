@@ -20,7 +20,7 @@ PKG_NAME="Python"
 PKG_VERSION="2.7.13"
 PKG_SITE="http://www.python.org/"
 PKG_URL="http://www.python.org/ftp/python/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_HOST="zlib:host bzip2:host"
+PKG_DEPENDS_HOST="zlib:host bzip2:host libffi:host"
 PKG_DEPENDS_TARGET="toolchain zlib bzip2 expat sqlite openssl libffi readline Python:host"
 PKG_SECTION="lang"
 PKG_SHORTDESC="python: The Python programming language"
@@ -86,7 +86,7 @@ makeinstall_host() {
 
 pre_configure_target() {
   export PYTHON_FOR_BUILD=$ROOT/$TOOLCHAIN/bin/python
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Ofast|"`
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
 }
 
 make_target() {

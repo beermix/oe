@@ -44,7 +44,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/bash \
                            --with-__thread \
                            --with-binutils=$ROOT/$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
-                           --enable-kernel=3.0.0 \
+                           --enable-kernel=4.0.0 \
                            --without-cvs \
                            --without-gd \
                            --enable-obsolete-rpc \
@@ -103,12 +103,12 @@ pre_configure_target() {
   export CFLAGS="$CFLAGS -g"
   export OBJDUMP_FOR_HOST=objdump
 
-#cat >config.cache <<EOF
-#libc_cv_forced_unwind=yes
-#libc_cv_c_cleanup=yes
-#libc_cv_ssp=no
-#libc_cv_ssp_strong=no
-#EOF
+cat >config.cache <<EOF
+libc_cv_forced_unwind=yes
+libc_cv_c_cleanup=yes
+libc_cv_ssp=no
+libc_cv_ssp_strong=no
+EOF
 
   echo "sbindir=/usr/bin" >> configparms
   echo "rootsbindir=/usr/bin" >> configparms
