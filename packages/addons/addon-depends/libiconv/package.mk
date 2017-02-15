@@ -22,7 +22,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://savannah.gnu.org/projects/libiconv/"
 PKG_URL="http://ftp.gnu.org/pub/gnu/libiconv/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET=""
+PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="devel"
 PKG_SHORTDESC="Libiconv converts from one character encoding to another through Unicode conversion."
 PKG_LONGDESC="Libiconv converts from one character encoding to another through Unicode conversion."
@@ -30,19 +30,14 @@ PKG_LONGDESC="Libiconv converts from one character encoding to another through U
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-pre_build_target() {
-# broken autoreconf
-  ( cd $PKG_BUILD
-    libtoolize --force
-    #aclocal --force
-    autoheader --force
-    automake --force-missing --add-missing
-    autoconf --force
-  )
-}
-
-PKG_CONFIGURE_OPTS_TARGET="--enable-static \
-			      --disable-shared \
-			      --disable-nls \
-			      --enable-extra-encodings \
-			      --with-gnu-ld"
+PKG_CONFIGURE_OPTS_TARGET="--host=$TARGET_NAME \
+            --build=$HOST_NAME \
+            --prefix=/usr \
+            --includedir=/usr/include/iconv \
+            --libdir=/usr/lib/iconv \
+            --sysconfdir=/etc \
+            --enable-static \
+            --disable-shared \
+            --disable-nls \
+            --disable-extra-encodings \
+            --with-gnu-ld"

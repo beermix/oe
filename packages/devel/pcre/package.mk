@@ -20,7 +20,7 @@ PKG_NAME="pcre"
 PKG_VERSION="8.40"
 PKG_SITE="http://www.pcre.org/"
 PKG_URL="http://ftp.csx.cam.ac.uk/pub/software/programming/pcre/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_HOST="pcre2:host"
+PKG_DEPENDS_HOST=""
 PKG_DEPENDS_TARGET="toolchain pcre2"
 PKG_SECTION="devel"
 PKG_SHORTDESC="pcre: Perl Compatible Regulat Expressions"
@@ -31,12 +31,12 @@ PKG_USE_CMAKE="no"
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$ROOT/$TOOLCHAIN \
-			      --enable-static \
-			      --enable-utf8 \
-			      --enable-pcre16 \
-			      --enable-pcre32 \
-			      --enable-unicode-properties \
-			      --with-gnu-ld"
+			    --enable-static \
+			    --enable-utf8 \
+			    --enable-pcre16 \
+			    --enable-pcre32 \
+			    --enable-unicode-properties \
+			    --with-gnu-ld"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-static \
