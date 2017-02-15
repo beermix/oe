@@ -107,6 +107,31 @@ setup_toolchain() {
   esac
 }
 
+# get package's build dir
+get_build_dir() {
+  local _PKG_NAME="$(get_pkg_variable "$1" PKG_NAME)" _PKG_VERSION="$(get_pkg_version "$1")"
+  if [ -n "$_PKG_NAME" -a -n "$_PKG_VERSION" ]; then
+    echo $ROOT/$BUILD/${_PKG_NAME}-${_PKG_VERSION}
+  fi
+}
+
+get_pkg_version() {
+  get_pkg_variable "$1" PKG_VERSION
+}
+
+get_pkg_directory() {
+  get_pkg_variable "$1" PKG_DIR
+}
+
+# get variable ($2) for package ($1)
+get_pkg_variable() {
+  if [ -n "$1" -a -n "$2" ] ; then
+    cd $ROOT
+    . config/options $1
+    echo "${!2}"
+  fi
+}
+
 get_pkg_dir() {
   PKG_EXTRA_FOLDERS="$HOME/.openelec/projects/$PROJECT/packages \
                      $HOME/.openelec/packages \
