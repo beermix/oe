@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libiconv"
-PKG_VERSION="1.14"
+PKG_VERSION="1.15"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://savannah.gnu.org/projects/libiconv/"
@@ -30,13 +30,18 @@ PKG_LONGDESC="Libiconv converts from one character encoding to another through U
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--host=$TARGET_NAME \
-			      --build=$HOST_NAME \
-			      --prefix=/usr \
-			      --includedir=/usr/include/iconv \
-			      --libdir=/usr/lib/iconv \
-			      --sysconfdir=/etc \
-			      --enable-static \
+pre_build_target() {
+# broken autoreconf
+  ( cd $PKG_BUILD
+    libtoolize --force
+    #aclocal --force
+    autoheader --force
+    automake --force-missing --add-missing
+    autoconf --force
+  )
+}
+
+PKG_CONFIGURE_OPTS_TARGET="--enable-static \
 			      --disable-shared \
 			      --disable-nls \
 			      --enable-extra-encodings \

@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="glibc"
-PKG_VERSION="b4e4172"
+PKG_VERSION="10303eb"
 PKG_GIT_URL="git://sourceware.org/git/glibc.git"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap localedef-eglibc:host"
 PKG_DEPENDS_INIT="glibc"
@@ -103,12 +103,12 @@ pre_configure_target() {
   export CFLAGS="$CFLAGS -g"
   export OBJDUMP_FOR_HOST=objdump
 
-cat >config.cache <<EOF
-libc_cv_forced_unwind=yes
-libc_cv_c_cleanup=yes
-libc_cv_ssp=no
-libc_cv_ssp_strong=no
-EOF
+#cat >config.cache <<EOF
+#libc_cv_forced_unwind=yes
+#libc_cv_c_cleanup=yes
+#libc_cv_ssp=no
+#libc_cv_ssp_strong=no
+#EOF
 
   echo "sbindir=/usr/bin" >> configparms
   echo "rootsbindir=/usr/bin" >> configparms
