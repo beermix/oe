@@ -1,5 +1,5 @@
 PKG_NAME="tor"
-PKG_VERSION="23f1caf"
+PKG_VERSION="4a2afd5"
 PKG_GIT_URL="https://github.com/torproject/tor.git"
 PKG_DEPENDS_TARGET="toolchain openssl zlib libevent libcap"
 PKG_SECTION="security"
@@ -12,6 +12,8 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-gcc-hardening \
 			      --disable-asciidoc \
 			      --disable-unittests \
 			      --disable-seccomp \
+			      --with-openssl-dir=$SYSROOT_PREFIX \
+			      --enable-static-openssl \
 			      --sysconfdir=/storage/.config \
 			      --datarootdir=/storage/.cache/tor \
 			      --datadir=/storage/.cache/tor \
