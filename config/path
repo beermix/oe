@@ -38,6 +38,7 @@ DOCS=DOCS
 TOOLCHAIN=$BUILD/toolchain
 SYSROOT_PREFIX=$ROOT/$TOOLCHAIN/$TARGET_NAME/sysroot
 LIB_PREFIX=$SYSROOT_PREFIX/usr
+TARGET_PREFIX=$ROOT/$TOOLCHAIN/bin/$TARGET_NAME-
 
 FAKEROOT_SCRIPT_SYSTEM=$ROOT/$BUILD/image/.fakeroot-system
 FAKEROOT_SCRIPT_INIT=$ROOT/$BUILD/image/.fakeroot-init
@@ -61,6 +62,7 @@ SED="sed -i"
   PKG_LICENSE="unknown"
   PKG_SITE=""
   PKG_URL=""
+  PKG_SOURCE_NAME=""
   PKG_GIT_URL=""
   PKG_GIT_BRANCH=""
   PKG_DEPENDS_TARGET=""
@@ -161,12 +163,12 @@ SED="sed -i"
 
   PKG_BUILD="$BUILD/${PKG_NAME}-${PKG_VERSION}"
 
-XORG_PATH_DRI=/usr/lib/dri
-XORG_PATH_XKB=/usr/share/X11/xkb
-XORG_PATH_XKB_OUTPUT=/var/lib/xkb
-XORG_PATH_RGB=/usr/lib/X11/rgb
-XORG_PATH_MODULES=/usr/lib/xorg/modules
-XORG_PATH_DRIVERS=/usr/lib/xorg/modules/drivers
+  XORG_PATH_DRI=/usr/lib/dri
+  XORG_PATH_XKB=/usr/share/X11/xkb
+  XORG_PATH_XKB_OUTPUT=/var/lib/xkb
+  XORG_PATH_RGB=/usr/lib/X11/rgb
+  XORG_PATH_MODULES=/usr/lib/xorg/modules
+  XORG_PATH_DRIVERS=/usr/lib/xorg/modules/drivers
 
 . config/optimize
 
@@ -178,6 +180,10 @@ export PKG_CONFIG=$ROOT/$TOOLCHAIN/bin/pkg-config
 
 if [ -z "$PATH" -o "$PATH" = "${PATH#$ROOT/$TOOLCHAIN/bin:}" ]; then
   export PATH="$ROOT/$TOOLCHAIN/lib/ccache:$ROOT/$TOOLCHAIN/bin:$ROOT/$TOOLCHAIN/sbin:$PATH"
+fi
+
+if [ -z "$LD_LIBRARY_PATH" -o "$LD_LIBRARY_PATH" = "${LD_LIBRARY_PATH#$ROOT/$TOOLCHAIN/lib:}" ]; then
+  export LD_LIBRARY_PATH="$ROOT/$TOOLCHAIN/lib:$LD_LIBRARY_PATH"
 fi
 
 VERSION_SUFFIX=$TARGET_ARCH

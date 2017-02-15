@@ -1,0 +1,141 @@
+---
+ Configurations/20-debian.conf |  133 ++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 133 insertions(+)
+
+--- /dev/null
++++ b/Configurations/20-debian.conf
+@@ -0,0 +1,134 @@
++my $debian_cflags = `dpkg-buildflags --get CFLAGS` . `dpkg-buildflags --get CPPFLAGS` . "-Wa,--noexecstack -Wall";
++$debian_cflags =~ s/\n/ /g;
++my $debian_ldflags = `dpkg-buildflags --get LDFLAGS`;
++$debian_ldflags =~ s/\n/ /g;
++
++%targets = (
++	"debian" => {
++		cflags => $debian_cflags,
++		lflags => add($debian_ldflags, "-pthread"),
++		shared_ldflag => add($debian_ldflags),
++	},
++	"debian-alpha" => {
++		inherit_from => [ "linux-alpha-gcc", "debian" ],
++	},
++	"debian-alpha-ev4" => {
++		inherit_from => [ "debian-alpha" ],
++		cflags => add("-mcpu=ev4"),
++	},
++	"debian-alpha-ev5" => {
++		inherit_from => [ "debian-alpha" ],
++		cflags => add("-mcpu=ev5"),
++	},
++	"debian-arm64" => {
++		inherit_from => [ "linux-aarch64", "debian" ],
++	},
++	"debian-armel" => {
++		inherit_from => [ "linux-armv4", "debian" ],
++	},
++	"debian-armhf" => {
++		inherit_from => [ "linux-armv4", "debian" ],
++	},
++	"debian-amd64" => {
++		inherit_from => [ "linux-x86_64", "debian" ],
++	},
++	"debian-i386" => {
++		inherit_from => [ "linux-elf", "debian" ],
++	},
++	"debian-avr32" => {
++		inherit_from => [ "linux-generic32", "debian" ],
++	},
++	"debian-kfreebsd-amd64" => {
++		inherit_from => [ "debian-amd64" ],
++	},
++	"debian-kfreebsd-i386" => {
++		inherit_from => [ "debian-i386" ],
++	},
++	"debian-hppa" => {
++		inherit_from => [ "linux-generic32", "debian" ],
++	},
++	"debian-hurd-i386" => {
++		inherit_from => [ "hurd-x86", "debian" ],
++	},
++	"debian-ia64" => {
++		inherit_from => [ "linux-ia64", "debian" ],
++	},
++	"debian-m68k" => {
++		inherit_from => [ "linux-generic32", "debian" ],
++	},
++	"debian-mips" => {
++		inherit_from => [ "linux-mips32", "debian" ],
++		cflags => add("-DB_ENDIAN"),
++	},
++	"debian-mipsel" => {
++		inherit_from => [ "linux-mips32", "debian" ],
++		cflags => add("-DL_ENDIAN"),
++	},
++	"debian-mipsn32" => {
++		inherit_from => [ "linux-mips64", "debian" ],
++		cflags => add("-DB_ENDIAN"),
++	},
++	"debian-mipsn32el" => {
++		inherit_from => [ "linux-mips64", "debian" ],
++		cflags => add("-DL_ENDIAN"),
++	},
++	"debian-mips64" => {
++		inherit_from => [ "linux64-mips64", "debian" ],
++		cflags => add("-DB_ENDIAN"),
++	},
++	"debian-mips64el" => {
++		inherit_from => [ "linux64-mips64", "debian" ],
++		cflags => add("-DL_ENDIAN"),
++	},
++	"debian-nios2" => {
++		inherit_from => [ "linux-generic32", "debian" ],
++	},
++	"debian-powerpc" => {
++		inherit_from => [ "linux-ppc", "debian" ],
++	},
++	"debian-powerpcspe" => {
++		inherit_from => [ "linux-ppc", "debian" ],
++	},
++	"debian-ppc64" => {
++		inherit_from => [ "linux-generic64", "debian", asm("ppc64_asm") ],
++		cflags => add("-DB_ENDIAN"),
++		perlasm_scheme => "linux64",
++	},
++	"debian-ppc64el" => {
++		inherit_from => [ "linux-ppc64le", "debian" ],
++	},
++	"debian-s390" => {
++		inherit_from => [ "linux-generic32", "debian" ],
++	},
++	"debian-s390x" => {
++		inherit_from => [ "linux64-s390x", "debian" ],
++	},
++	"debian-sh3" => {
++		inherit_from => [ "linux-generic32", "debian" ],
++	},
++	"debian-sh3eb" => {
++		inherit_from => [ "linux-generic32", "debian" ],
++	},
++	"debian-sh4" => {
++		inherit_from => [ "linux-generic32", "debian" ],
++	},
++	"debian-sh4eb" => {
++		inherit_from => [ "linux-generic32", "debian" ],
++	},
++	"debian-m32r" => {
++		inherit_from => [ "linux-generic32", "debian" ],
++	},
++	"debian-sparc" => {
++		inherit_from => [ "linux-generic32", "debian", asm("sparcv9_asm") ],
++		cflags => add("-DB_ENDIAN -DBN_DIV2W"),
++	},
++	"debian-sparc64" => {
++	        inherit_from => [ "linux-generic64", "debian", asm("sparcv9_asm") ],
++	        cflags => add("-m64 -mcpu=ultrasparc -DB_ENDIAN"),
++		bn_ops => "BN_LLONG RC4_CHAR",
++	},
++	"debian-x32" => {
++		inherit_from => [ "linux-x32", "debian" ],
++	},
++);
++
