@@ -29,16 +29,9 @@ PKG_LONGDESC="LibreSSL is a FREE version of the SSL/TLS protocol forked from Ope
 PKG_USE_CMAKE="no"
 PKG_AUTORECONF="no"
 
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_HOST="--disable-shared"
-
-
-pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC"
-  export CXXFLAGS="$CXXFLAGS -fPIC"
-  export LDFLAGS="$LDFLAGS -fPIC"
-}
+#PKG_CONFIGURE_OPTS_HOST="--disable-shared"
 
 
 pre_configure_target() {

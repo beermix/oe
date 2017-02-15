@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="readline"
-PKG_VERSION="7.0"
+PKG_VERSION="6c32f81"
 PKG_SITE="http://www.gnu.org/software/readline/"
-PKG_URL="http://ftpmirror.gnu.org/readline/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_GIT_URL="git://git.savannah.gnu.org/readline.git"
 PKG_DEPENDS_TARGET="toolchain netbsd-curses libedit"
 PKG_SECTION="devel"
 PKG_SHORTDESC="readline: The GNU Readline library provides a set of functions for use by applications that allow users to edit command lines as they are typed in."

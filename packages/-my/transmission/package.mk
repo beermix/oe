@@ -1,7 +1,7 @@
 PKG_NAME="transmission"
 PKG_VERSION="master"
 PKG_URL=""
-PKG_AUTORECONF="no"
+PKG_DEPENDS_TARGET="toolchain zlib openssl libpcap pcre libevent curl libdaemon"
 PKG_IS_ADDON="yes"
 PKG_ADDON_TYPE="xbmc.service"
 PKG_AUTORECONF="no"

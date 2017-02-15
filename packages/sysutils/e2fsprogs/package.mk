@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="e2fsprogs"
-PKG_VERSION="1.43.3"
+PKG_VERSION="v1.43.3"
 PKG_SITE="https://github.com/tytso/e2fsprogs"
 PKG_GIT_URL="git://github.com/tytso/e2fsprogs"
 PKG_DEPENDS_TARGET="toolchain"
