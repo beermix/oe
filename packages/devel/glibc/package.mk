@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="glibc"
-PKG_VERSION="10303eb"
+PKG_VERSION="f7db120"
 PKG_GIT_URL="git://sourceware.org/git/glibc.git"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap localedef-eglibc:host"
 PKG_DEPENDS_INIT="glibc"

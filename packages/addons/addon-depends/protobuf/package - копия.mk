@@ -26,8 +26,15 @@ PKG_LONGDESC="protobuf: Protocol Buffers - Google's data interchange format"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --with-zlib --with-pic"
+PKG_CMAKE_SCRIPT="cmake/CMakeLists.txt"
 
+PKG_CMAKE_OPTS_HOST="-DCMAKE_NO_SYSTEM_FROM_IMPORTED=1 \
+                     -DBUILD_SHARED_LIBS=0 \
+                     -Dprotobuf_BUILD_TESTS=0 \
+                     -Dprotobuf_BUILD_EXAMPLES=0 \
+                     -Dprotobuf_WITH_ZLIB=1"
+
+PKG_CMAKE_OPTS_TARGET="$PKG_CMAKE_OPTS_HOST"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
