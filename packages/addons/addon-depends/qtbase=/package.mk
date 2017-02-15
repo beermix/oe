@@ -13,20 +13,19 @@
 #  GNU General Public License for more details.
 #
 #  You should have received a copy of the GNU General Public License
-#  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
+#  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>. http://download.qt.io/official_releases/qt/5.8/5.8.0/single/qt-everywhere-opensource-src-5.8.0.tar.xz
 ################################################################################
 
 PKG_NAME="qtbase"
-PKG_VERSION="5.6.2"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
+PKG_VERSION="5.8.0"
 PKG_SITE="http://qt-project.org"
-PKG_URL="http://download.qt.io/official_releases/qt/5.6/$PKG_VERSION/submodules/$PKG_NAME-opensource-src-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="pcre zlib"
+PKG_URL="http://download.qt.io/official_releases/qt/5.8/$PKG_VERSION/submodules/$PKG_NAME-opensource-src-$PKG_VERSION.tar.xz"
+PKG_DEPENDS_TARGET="pcre zlib libinput udevil"
 PKG_SOURCE_DIR="$PKG_NAME-opensource-src-$PKG_VERSION"
 PKG_SHORTDESC="A cross-platform application and UI framework"
 PKG_LONGDESC="A cross-platform application and UI framework"
 PKG_AUTORECONF="no"
+
 
 PKG_CONFIGURE_OPTS_TARGET="-prefix /usr
                            -sysroot $SYSROOT_PREFIX
@@ -34,6 +33,11 @@ PKG_CONFIGURE_OPTS_TARGET="-prefix /usr
                            -device linux-openelec-g++
                            -opensource -confirm-license
                            -release
+                           -no-pch 
+                           -nomake examples 
+                           -nomake tests 
+                           -no-xcb 
+                           -eglfs
                            -static
                            -make libs
                            -force-pkg-config
@@ -51,8 +55,6 @@ PKG_CONFIGURE_OPTS_TARGET="-prefix /usr
                            -no-libproxy
                            -system-pcre
                            -no-glib
-                           -no-pulseaudio
-                           -no-alsa
                            -silent
                            -no-cups
                            -no-iconv
@@ -65,10 +67,28 @@ PKG_CONFIGURE_OPTS_TARGET="-prefix /usr
                            -no-opengl
                            -no-libudev
                            -no-libinput
-                           -no-gstreamer
-                           -no-eglfs"
+                           -no-eglfs
+                           -openssl-linked
+                           -nomake examples
+                           -no-rpath
+                           -optimized-qmake
+                           -dbus-linked
+                           -system-harfbuzz
+                           -journald
+                           -no-use-gold-linker"
 
 configure_target() {
+  # Build qmake using Arch {C,LD}FLAGS
+  # This also sets default {C,CXX,LD}FLAGS for projects built using qmake
+  sed -i -e "s|^\(QMAKE_CFLAGS_RELEASE.*\)|\1 ${CFLAGS}|" \
+    $ROOT/$PKG_BUILD/mkspecs/common/gcc-base.conf
+  sed -i -e "s|^\(QMAKE_LFLAGS_RELEASE.*\)|\1 ${LDFLAGS}|" \
+    $ROOT/$PKG_BUILD/mkspecs/common/g++-unix.conf
+
+  # Use python2 for Python 2.x
+  find . -name '*.py' -exec sed -i \
+    's|#![ ]*/usr/bin/python$|&2|;s|#![ ]*/usr/bin/env python$|&2|' {} +
+
   QMAKE_CONF_DIR="mkspecs/devices/linux-openelec-g++"
   QMAKE_CONF="${QMAKE_CONF_DIR}/qmake.conf"
 

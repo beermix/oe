@@ -19,7 +19,7 @@
 PKG_NAME="hyperion"
 PKG_VERSION="355a324"
 PKG_SITE="https://github.com/hyperion-project/hyperion"
-PKG_URL="https://github.com/hyperion-project/hyperion/archive/$PKG_VERSION.tar.gz"
+PKG_GIT_URL="https://github.com/hyperion-project/hyperion"
 PKG_DEPENDS_TARGET="toolchain Python libusb qtbase protobuf rpi_ws281x"
 PKG_SECTION="service"
 PKG_SHORTDESC="Hyperion: an AmbiLight controller"
