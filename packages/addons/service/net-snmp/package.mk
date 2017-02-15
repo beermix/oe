@@ -18,45 +18,51 @@
 
 PKG_NAME="net-snmp"
 PKG_VERSION="5.7.3"
-PKG_REV="0"
+PKG_REV="100"
 PKG_ARCH="any"
 PKG_LICENSE="BSD"
 PKG_SITE="http://www.net-snmp.org"
 PKG_URL="http://sourceforge.net/projects/net-snmp/files/$PKG_NAME/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
 PKG_SECTION="service"
 PKG_SHORTDESC="Simple Network Management Protocol utilities."
 PKG_LONGDESC="Simple Network Management Protocol (SNMP) is a widely used protocol for monitoring the health and welfare of network equipment."
-PKG_MAINTAINER=""
+PKG_AUTORECONF="yes"
 
 PKG_IS_ADDON="yes"
+PKG_ADDON_NAME="Net-SNMP"
 PKG_ADDON_TYPE="xbmc.service"
-PKG_ADDON_REPOVERSION="8.0"
 
-PKG_AUTORECONF="yes"
-PKG_CONFIGURE_OPTS_TARGET="--disable-applications \
-			      --disable-manuals \
-			      --disable-debugging \
-			      --disable-deprecated \
-			      --disable-snmptrapd-subagent \
-			      --disable-perl-cc-checks \
-			      --with-defaults \
-			      --with-perl-modules=no \
-			      --enable-mini-agent \
-			      --disable-embedded-perl"
+PKG_CONFIGURE_OPTS_TARGET="--with-defaults \
+        --disable-applications \
+        --disable-manuals \
+        --disable-debugging \
+        --disable-deprecated \
+        --disable-snmptrapd-subagent \
+        --disable-perl-cc-checks \
+        --with-perl-modules=no \
+        --enable-mini-agent \
+        --enable-static=no \
+        --enable-shared=yes \
+        --with-logfile=/storage/.kodi/userdata/addon_data/${PKG_ADDON_ID}/ \
+        --with-persistent-directory=/storage/.kodi/userdata/addon_data/${PKG_ADDON_ID}/ \
+        --disable-embedded-perl"
 
 make_target() {
   make
 }
 
 makeinstall_target() {
-  mkdir $ROOT/$PKG_BUILD/.install
-  make install INSTALL_PREFIX=$ROOT/$PKG_BUILD/.install
+  make install INSTALL_PREFIX=$ROOT/$PKG_BUILD/.$TARGET_NAME
 }
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID
-  cp -r $PKG_BUILD/.install/usr/* $ADDON_BUILD/$PKG_ADDON_ID/
+  mv $PKG_BUILD/.$TARGET_NAME/usr/sbin/snmpd $PKG_BUILD/.$TARGET_NAME/usr/bin/snmpd
+  rm -rf $PKG_BUILD/.$TARGET_NAME/usr/sbin/
+  rm -rf $PKG_BUILD/.$TARGET_NAME/usr/include/
+  cp -r $PKG_BUILD/.$TARGET_NAME/usr/* $ADDON_BUILD/$PKG_ADDON_ID/
+  $STRIP $ADDON_BUILD/$PKG_ADDON_ID/lib/*.so
+  $STRIP $ADDON_BUILD/$PKG_ADDON_ID/bin/snmpd
 }
 

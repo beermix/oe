@@ -45,7 +45,7 @@ pre_configure_target() {
 
 # ffmpeg does not build with libx264 on aarch64
   if [ "$TARGET_ARCH" != "aarch64" ]; then
-    FFMPEG_X264="--enable-libx264"
+    FFMPEG_X264="--enable-libx264 --enable-nonfree"
   fi
 
   if [ "$TARGET_ARCH" == "arm" ]; then
