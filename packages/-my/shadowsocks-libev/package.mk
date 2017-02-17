@@ -9,5 +9,4 @@ PKG_AUTORECONF="yes"
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-static \
 			      --disable-ssp \
-			      --with-gnu-ld \
 			      --disable-documentation"
