@@ -145,7 +145,7 @@ configure_target() {
               --disable-devices \
               --enable-pthreads \
               --disable-w32threads \
-              --disable-x11grab \
+              --enable-indev=x11grab_xcb \
               --enable-network \
               --disable-gnutls --enable-openssl \
               --disable-gray \
@@ -190,6 +190,7 @@ configure_target() {
               --disable-libopencore-amrwb \
               --disable-libopencv \
               --disable-libdc1394 \
+              --disable-libfaac \
               --disable-libfreetype \
               --disable-libgsm \
               --disable-libmp3lame \
