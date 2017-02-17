@@ -17,13 +17,10 @@
 ################################################################################
 
 PKG_NAME="binutils"
-PKG_VERSION="2.27"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
-PKG_SITE="http://www.gnu.org/software/binutils/binutils.html"
-PKG_URL="https://fossies.org/linux/misc/binutils-$PKG_VERSION.tar.xz"
-#PKG_GIT_URL="git://sourceware.org/git/binutils-gdb.git"
+PKG_VERSION="6c20b44"
+#PKG_URL="https://fossies.org/linux/misc/binutils-$PKG_VERSION.tar.xz"
+PKG_GIT_URL="git://sourceware.org/git/binutils-gdb.git"
+PKG_GIT_BRANCH="binutils-2_28-branch"
 PKG_DEPENDS_HOST="ccache:host bison:host flex:host linux:host"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="binutils: A GNU collection of binary utilities"
@@ -58,6 +55,6 @@ makeinstall_host() {
   make install -j1
 }
 
-pre_configure_host() {
-  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $ROOT/$PKG_BUILD/libiberty/configure
-}
+#pre_configure_host() {
+#  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $ROOT/$PKG_BUILD/libiberty/configure
+#}
