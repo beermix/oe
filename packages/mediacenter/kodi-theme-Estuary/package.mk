@@ -16,28 +16,25 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="p8-platform"
-PKG_VERSION="2d90f98"
-PKG_REV="1"
+PKG_NAME="kodi-theme-Estuary"
+PKG_VERSION="1.0"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
-PKG_GIT_URL="https://github.com/Pulse-Eight/platform.git"
-PKG_GIT_BRANCH="master"
-PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
-PKG_SECTION="multimedia"
-PKG_SHORTDESC="Platform support library used by libCEC and binary add-ons for Kodi"
-PKG_LONGDESC="Platform support library used by libCEC and binary add-ons for Kodi"
+PKG_URL=""
+PKG_DEPENDS_TARGET="toolchain kodi"
+PKG_SECTION="mediacenter"
+PKG_SHORTDESC="kodi-theme-Estuary: Kodi Mediacenter default theme"
+PKG_LONGDESC="Kodi Media Center (which was formerly named Xbox Media Center and XBMC) is a free and open source cross-platform media player and home entertainment system software with a 10-foot user interface designed for the living-room TV. Its graphical user interface allows the user to easily manage video, photos, podcasts, and music from a computer, optical disk, local network, and the internet using a remote control."
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_INSTALL_LIBDIR:STRING=lib \
-                       -DCMAKE_INSTALL_LIBDIR_NOARCH:STRING=lib \
-                       -DCMAKE_INSTALL_PREFIX_TOOLCHAIN=$SYSROOT_PREFIX/usr \
-                       -DBUILD_SHARED_LIBS=0"
+make_target() {
+  :
+}
 
-post_makeinstall_target() {
-  rm -rf $INSTALL/usr
+makeinstall_target() {
+  mkdir -p $INSTALL/usr/share/kodi/addons/
+    cp -a $(get_build_dir kodi)/.$TARGET_NAME/addons/skin.estuary $INSTALL/usr/share/kodi/addons/
 }
