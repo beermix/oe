@@ -17,10 +17,10 @@
 ################################################################################
 
 PKG_NAME="libva"
-PKG_VERSION="e677ad9"
+PKG_VERSION="1.7.3"
 PKG_ARCH="x86_64"
 PKG_SITE="http://freedesktop.org/wiki/Software/vaapi"
-PKG_GIT_URL="https://anongit.freedesktop.org/git/vaapi/libva.git"
+PKG_URL="http://www.freedesktop.org/software/vaapi/releases/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain libX11 libXext libXfixes libdrm mesa glu"
 PKG_PRIORITY="optional"
 PKG_SECTION="multimedia"

@@ -17,8 +17,10 @@
 ################################################################################
 
 PKG_NAME="visualization.fishbmc"
-#PKG_VERSION="50c38c2"
 PKG_VERSION="9704420"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
 PKG_GIT_URL="https://github.com/notspiff/visualization.fishbmc"
 PKG_DEPENDS_TARGET="toolchain kodi-platform"
@@ -33,9 +35,6 @@ PKG_ADDON_TYPE="xbmc.player.musicviz"
 if [ "$OPENGL" = "no" ] ; then
   exit 0
 fi
-
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
-        -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr"
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/

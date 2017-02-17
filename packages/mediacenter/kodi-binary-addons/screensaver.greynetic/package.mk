@@ -17,11 +17,13 @@
 ################################################################################
 
 PKG_NAME="screensaver.greynetic"
-PKG_VERSION="80e850e"
+PKG_VERSION="9c9064f"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/notspiff/screensaver.greynetic"
-PKG_URL="https://github.com/notspiff/screensaver.greynetic/archive/$PKG_VERSION.tar.gz"
+PKG_GIT_URL="https://github.com/notspiff/screensaver.greynetic"
 PKG_DEPENDS_TARGET="toolchain kodi-platform"
-
 PKG_SECTION=""
 PKG_SHORTDESC="screensaver.greynetic"
 PKG_LONGDESC="screensaver.greynetic"
@@ -33,14 +35,6 @@ PKG_ADDON_TYPE="xbmc.ui.screensaver"
 if [ "$OPENGL" = "no" ] ; then
   exit 0
 fi
-
-configure_target() {
-  cmake -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
-        -DCMAKE_INSTALL_PREFIX=/usr \
-        -DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
-        -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
-        ..
-}
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/

@@ -3,8 +3,6 @@
   <showexitbutton>false</showexitbutton>
   <cputempcommand>cputemp</cputempcommand>
   <gputempcommand>gputemp</gputempcommand>
-  <splash>false</splash>
-  <!-- <loglevel hide="false">2</loglevel> -->
   <video>
     <latency>
       <delay>0</delay>
