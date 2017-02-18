@@ -5,12 +5,11 @@ PKG_URL="http://downloads.sourceforge.net/project/p7zip/p7zip/${PKG_VERSION}/p7z
 PKG_SOURCE_DIR="${PKG_NAME}_${PKG_VERSION}"
 PKG_DEPENDS_TARGET="toolchain zlib"
 
-PKG_CMAKE_SCRIPT_TARGET="CPP/7zip/CMAKE/CMakeLists.txt"
-PKG_CMAKE_SCRIPT_HOST="CPP/7zip/CMAKE/CMakeLists.txt"
+PKG_CMAKE_SCRIPT="CPP/7zip/CMAKE/CMakeLists.txt"
 
 pre_configure_target() {
    strip_lto
-   export CXXFLAGS="-Wall -Wextra -Ofast -fomit-frame-pointer -fexpensive-optimizations -fstack-protector-strong"
+   export CXXFLAGS="-Wall -Wextra -Ofast -pipe -fomit-frame-pointer -fexpensive-optimizations -fstack-protector-strong"
    export CFLAGS="$CXXFLAGS"
    export CPPFLAGS="-D_FORTIFY_SOURCE=2"
 }
