@@ -32,15 +32,9 @@ PKG_LONGDESC="The sed (Stream EDitor) editor is a stream or batch (non-interacti
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_HOST="ac_cv_search_setfilecon=no \
-			    ac_cv_header_selinux_context_h=no \
-			    ac_cv_header_selinux_selinux_h=no \
-			    --disable-nls \
-			    --disable-acl \
-			    --without-selinux"
+PKG_CONFIGURE_OPTS_HOST="--disable-nls --disable-acl --without-selinux"
+PKG_MAKEINSTALL_OPTS_HOST="-C sed install"
 
-pre_configure_target() {
-  cd $ROOT/$PKG_BUILD
-}
 
-PKG_CONFIGURE_OPTS_TARGET="-C $PKG_CONFIGURE_OPTS_HOST"
+PKG_CONFIGURE_OPTS_TARGET="--disable-nls --disable-acl --without-selinux"
+PKG_MAKEINSTALL_OPTS_TARGET="-C sed install"
