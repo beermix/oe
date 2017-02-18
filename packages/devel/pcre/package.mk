@@ -36,6 +36,7 @@ PKG_CONFIGURE_OPTS_HOST="--prefix=$ROOT/$TOOLCHAIN \
 			    --enable-pcre16 \
 			    --enable-pcre32 \
 			    --enable-unicode-properties \
+			    --with-pic \
 			    --with-gnu-ld"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
@@ -44,19 +45,8 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-pcre16 \
 			      --enable-pcre32 \
 			      --enable-unicode-properties \
+			      --with-pic \
 			      --with-gnu-ld"
-
-pre_configure_target() {
-  CFLAGS="$CFLAGS -fPIC"
-  CXXFLAGS="$CXXFLAGS -fPIC"
-  LDFLAGS="$LDFLAGS -fPIC"
-}
-
-pre_configure_host() {
-  CFLAGS="$CFLAGS -fPIC"
-  CXXFLAGS="$CXXFLAGS -fPIC"
-  LDFLAGS="$LDFLAGS -fPIC"
-}
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin

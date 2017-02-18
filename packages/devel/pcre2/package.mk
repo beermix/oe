@@ -3,7 +3,7 @@ PKG_VERSION="10.23"
 PKG_SITE="http://www.pcre.org/"
 PKG_URL="http://ftp.csx.cam.ac.uk/pub/software/programming/pcre/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain readline"
+PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="devel"
 PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
@@ -16,6 +16,7 @@ PKG_CONFIGURE_OPTS_HOST="--prefix=$ROOT/$TOOLCHAIN \
                          --enable-pcre2-16 \
                          --enable-pcre2-32 \
                          --enable-unicode-properties \
+                         --with-pic \
                          --with-gnu-ld"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
@@ -24,19 +25,8 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-pcre2-16 \
 			      --enable-pcre2-32 \
 			      --enable-unicode-properties \
+			      --with-pic \
 			      --with-gnu-ld"
-
-pre_configure_target() {
-  CFLAGS="$CFLAGS -fPIC"
-  CXXFLAGS="$CXXFLAGS -fPIC"
-  LDFLAGS="$LDFLAGS -fPIC"
-}
-
-pre_configure_host() {
-  CFLAGS="$CFLAGS -fPIC"
-  CXXFLAGS="$CXXFLAGS -fPIC"
-  LDFLAGS="$LDFLAGS -fPIC"
-}
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin

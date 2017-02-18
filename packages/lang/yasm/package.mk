@@ -29,7 +29,7 @@ PKG_LONGDESC="Yasm is a complete rewrite of the NASM assembler under the new BSD
 
 PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_HOST="--disable-debug \
                          --disable-warnerror \
