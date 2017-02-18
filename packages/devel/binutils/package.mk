@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="binutils"
-PKG_VERSION="749984d"
+PKG_VERSION="6c20b44"
 PKG_GIT_URL="git://sourceware.org/git/binutils-gdb.git"
-PKG_GIT_BRANCH="binutils-2_27-branch"
+PKG_GIT_BRANCH="binutils-2_28-branch"
 PKG_DEPENDS_HOST="ccache:host bison:host flex:host linux:host"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="binutils: A GNU collection of binary utilities"
@@ -40,9 +40,6 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --disable-libssp \
                          --enable-version-specific-runtime-libs \
                          --enable-plugins \
-                         --enable-gold \
-                         --enable-ld=default \
-                         --enable-lto \
                          --disable-nls \
                          --enable-static \
                          --disable-shared \
@@ -55,6 +52,6 @@ makeinstall_host() {
   make install
 }
 
-#pre_configure_host() {
-#  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $ROOT/$PKG_BUILD/libiberty/configure
-#}
+pre_configure_host() {
+  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $ROOT/$PKG_BUILD/libiberty/configure
+}
