@@ -10,7 +10,8 @@ PKG_AUTORECONF="yes"
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-static \
 			      --disable-samples \
-			      --enable-openssl"
+			      --enable-openssl \
+			      --disable-debug-mode"
 			   
 post_makeinstall_target() {
   rm -rf $INSTALL
