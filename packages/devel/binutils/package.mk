@@ -19,7 +19,6 @@
 PKG_NAME="binutils"
 PKG_VERSION="2.27.90.20170124"
 PKG_URL="https://dl.dropboxusercontent.com/s/pb38uifdaiy0d9o/binutils-2.27.90.20170124.tar.xz"
-PKG_GIT_BRANCH="binutils-2_28-branch"
 PKG_DEPENDS_HOST="ccache:host bison:host flex:host linux:host"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="binutils: A GNU collection of binary utilities"
