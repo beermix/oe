@@ -39,6 +39,8 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-gnu-ld \
                            --enable-plugin \
                            --enable-lto \
+                           --enable-gold \
+                           --enable-ld=default \
                            --disable-multilib \
                            --disable-nls \
                            --enable-checking=release \
