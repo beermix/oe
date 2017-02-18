@@ -1,0 +1,35 @@
+From 7eac791dae06f3cdf8a00bd10c2ec6269983c053 Mon Sep 17 00:00:00 2001
+From: Nikos Mavrogiannopoulos <nmav@redhat.com>
+Date: Tue, 17 Jan 2017 13:34:33 +0100
+Subject: [PATCH] opencdk: improved error code checking in the stream reading
+ functions
+
+This ammends 49be4f7b82eba2363bb8d4090950dad976a77a3a
+
+Signed-off-by: Nikos Mavrogiannopoulos <nmav@redhat.com>
+---
+ lib/opencdk/read-packet.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/lib/opencdk/read-packet.c b/lib/opencdk/read-packet.c
+index fa4c604d8..8055a63ed 100644
+--- a/lib/opencdk/read-packet.c
++++ b/lib/opencdk/read-packet.c
+@@ -917,11 +917,12 @@ read_new_length(cdk_stream_t inp,
+ 		(*r_size)++;
+ 		*r_len = ((c - 192) << 8) + c1 + 192;
+ 	} else if (c == 255) {
+-		*r_len = read_32(inp);
+-		if (*r_len == (u32)-1) {
++		c1 = read_32(inp);
++		if (c1 == (u32)-1) {
+ 			return;
+ 		}
+ 
++		*r_len = c1;
+ 		(*r_size) += 4;
+ 	} else {
+ 		*r_len = 1 << (c & 0x1f);
+-- 
+2.11.0
+

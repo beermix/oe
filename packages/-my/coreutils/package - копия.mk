@@ -6,7 +6,9 @@ PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-nls \
+PKG_CONFIGURE_OPTS_TARGET="PERL=missing \
+			      MAKEINFO=missing \
+			      --disable-nls \
 			      --without-gmp \
 			      --enable-no-install-program=hostname,su,kill,uptime \
 			      --without-selinux \

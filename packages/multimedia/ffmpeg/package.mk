@@ -210,7 +210,8 @@ configure_target() {
               --disable-altivec \
               $FFMPEG_FPU \
               --enable-yasm \
-              --disable-symver
+              --disable-symver \
+              --enable-lto
 }
 
 post_makeinstall_target() {
