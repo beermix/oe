@@ -31,6 +31,8 @@ PKG_LONGDESC="bzip2 is a freely available, patent free (see below), high-quality
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
+MAKEFLAGS=-j1
+
 pre_build_host() {
   mkdir -p $ROOT/$PKG_BUILD/.$HOST_NAME
   cp -r $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$HOST_NAME
