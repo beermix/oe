@@ -49,7 +49,6 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --with-system-zlib \
                          --enbale-static \
                          --disable-shared \
-                         --with-gnu-ld \
                          --enable-poison-system-directories"
 
 makeinstall_host() {
