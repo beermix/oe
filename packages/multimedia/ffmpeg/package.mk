@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="ffmpeg"
-PKG_VERSION="3.2.2"
+PKG_VERSION="3.2.4"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="LGPLv2.1+"
@@ -117,7 +117,7 @@ configure_target() {
               --host-libs="-lm" \
               --extra-cflags="$CFLAGS" \
               --extra-ldflags="$LDFLAGS -fPIC" \
-              --extra-libs="$FFMPEG_LIBS -lz" \
+              --extra-libs="$FFMPEG_LIBS" \
               --extra-version="" \
               --build-suffix="" \
               --disable-static \
