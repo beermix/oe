@@ -8,8 +8,8 @@ PKG_AUTORECONF="no"
 
 pre_configure_target() {
   export MAKEFLAGS="-j1"
-  #  "-Wa,--noexecstack -D_FORTIFY_SOURCE=2 -march=x86-64 -mtune=generic -O2 -pipe -fstack-protector-strong -Wl,-O1,--sort-common,--as-needed,-z,relro"
-  sed -i -e '/^"linux-x86_64"/ s/-m64 -DL_ENDIAN -O3 -Wall/-m64 -DL_ENDIAN -O3 -fstack-protector-strong -Wformat -Werror=format-security -Wl,-Bsymbolic-functions -Wa,--noexecstack -Wall/' $ROOT/$PKG_BUILD/Configure
+  #"-Wa,--noexecstack -D_FORTIFY_SOURCE=2 -march=x86-64 -mtune=generic -O2 -pipe -fstack-protector-strong -Wall"
+  sed -i -e '/^"linux-x86_64"/ s/-m64 -DL_ENDIAN -O3 -Wall/-m64 -DL_ENDIAN -O2 -pipe -fstack-protector-strong -Wformat -Werror=format-security -Wl,-Bsymbolic-functions -Wa,--noexecstack -Wall/' $ROOT/$PKG_BUILD/Configure
 }
 
 configure_target() {
