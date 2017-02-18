@@ -22,12 +22,13 @@ PKG_GIT_URL="https://github.com/xbmc/xbmc.git"
 PKG_GIT_BRANCH="Krypton"
 PKG_KEEP_CHECKOUT="yes"
 PKG_PATCH_DIRS="$LINUX"
-PKG_DEPENDS_TARGET="toolchain kodi:host kodi:bootstrap xmlstarlet:host Python zlib systemd pciutils dbus lzo pcre swig:host libass curl fontconfig fribidi tinyxml libjpeg-turbo freetype libcdio libdvdnav taglib libxml2 libxslt yajl sqlite ffmpeg crossguid giflib libhdhomerun  opengl"
+PKG_DEPENDS_TARGET="toolchain kodi:host kodi:bootstrap xmlstarlet:host Python zlib systemd pciutils dbus lzo pcre swig:host libass curl fontconfig fribidi tinyxml libjpeg-turbo freetype libcdio libdvdnav taglib libxml2 libxslt yajl sqlite ffmpeg crossguid giflib opengl"
 PKG_DEPENDS_HOST="toolchain"
 PKG_DEPENDS_BOOTSTRAP="toolchain lzo:host libpng:host libjpeg-turbo:host giflib:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="mediacenter"
-
+PKG_SHORTDESC="kodi: Kodi Mediacenter"
+PKG_LONGDESC="Kodi Media Center (which was formerly named Xbox Media Center or XBMC) is a free and open source cross-platform media player and home entertainment system software with a 10-foot user interface designed for the living-room TV. Its graphical user interface allows the user to easily manage video, photos, podcasts, and music from a computer, optical disk, local network, and the internet using a remote control."
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
@@ -244,9 +245,11 @@ makeinstall_host() {
 }
 
 pre_configure_target() {
-  export LIBS="$LIBS -ltermcap"
-  #strip_lto
-  #strip_gold
+# kodi should never be built with lto
+  strip_lto
+  strip_gold
+
+  export LIBS="$LIBS -lz -lterminfo"
 }
 
 pre_make_target() {
@@ -266,7 +269,6 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/share/kodi/userdata/iOS
   rm -rf $INSTALL/usr/share/xsessions
 
-  
   # update addon manifest
     KODI_ADDON_MANIFEST="$INSTALL/usr/share/kodi/system/addon-manifest.xml"
     rm -rf $INSTALL/usr/share/kodi/addons/service.xbmc.versioncheck
@@ -281,7 +283,7 @@ post_makeinstall_target() {
     sed -e "s:INCLUDE_DIR /usr/include/kodi:INCLUDE_DIR $SYSROOT_PREFIX/usr/include/kodi:g" \
         -e "s:CMAKE_MODULE_PATH /usr/lib/kodi /usr/share/kodi/cmake:CMAKE_MODULE_PATH $SYSROOT_PREFIX/usr/share/kodi/cmake:g" \
         -i $SYSROOT_PREFIX/usr/share/kodi/cmake/KodiConfig.cmake
- 
+
   mkdir -p $INSTALL/usr/lib/kodi
     cp $PKG_DIR/scripts/kodi-config $INSTALL/usr/lib/kodi
     cp $PKG_DIR/scripts/kodi.sh $INSTALL/usr/lib/kodi
@@ -315,11 +317,11 @@ post_makeinstall_target() {
     $SED "s|@OS_VERSION@|$OS_VERSION|g" -i $INSTALL/usr/share/kodi/addons/os.openelec.tv/addon.xml
     cp -R $PKG_DIR/config/repository.openelec.tv $INSTALL/usr/share/kodi/addons
     $SED "s|@ADDON_URL@|$ADDON_URL|g" -i $INSTALL/usr/share/kodi/addons/repository.openelec.tv/addon.xml
-    cp -R $PKG_DIR/config/os.libreelec.tv $INSTALL/usr/share/kodi/addons
-    $SED "s|@OS_VERSION@|$OS_VERSION|g" -i $INSTALL/usr/share/kodi/addons/os.libreelec.tv/addon.xml
-    cp -R $PKG_DIR/config/repository.libreelec.tv $INSTALL/usr/share/kodi/addons
-    $SED "s|@ADDON_URL@|$ADDON_URL|g" -i $INSTALL/usr/share/kodi/addons/repository.libreelec.tv/addon.xml
-    cp -R $PKG_DIR/config/repository.kodi.game $INSTALL/usr/share/kodi/addons
+    #cp -R $PKG_DIR/config/os.libreelec.tv $INSTALL/usr/share/kodi/addons
+    #$SED "s|@OS_VERSION@|$OS_VERSION|g" -i $INSTALL/usr/share/kodi/addons/os.libreelec.tv/addon.xml
+    #cp -R $PKG_DIR/config/repository.libreelec.tv $INSTALL/usr/share/kodi/addons
+    #$SED "s|@ADDON_URL@|$ADDON_URL|g" -i $INSTALL/usr/share/kodi/addons/repository.libreelec.tv/addon.xml
+    #cp -R $PKG_DIR/config/repository.kodi.game $INSTALL/usr/share/kodi/addons
 
   mkdir -p $INSTALL/usr/lib/python"$PKG_PYTHON_VERSION"/site-packages/kodi
     cp -R $ROOT/$PKG_BUILD/tools/EventClients/lib/python/*.py $INSTALL/usr/lib/python"$PKG_PYTHON_VERSION"/site-packages/kodi
