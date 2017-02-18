@@ -31,7 +31,7 @@ PKG_AUTORECONF="no"
 
 PKG_AUTORECONF="yes"
 
-#PKG_CONFIGURE_OPTS_HOST="--disable-shared"
+PKG_CONFIGURE_OPTS_HOST="--enable-static --enable-shared --disable-hardening"
 
 
 pre_configure_target() {
