@@ -27,9 +27,6 @@ PKG_LONGDESC="libnl is a library for applications dealing with netlink socket. I
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --disable-cli"
+MAKEFLAGS=-j1
 
-pre_make_target() {
-  # dont build parallel
-    MAKEFLAGS=-j1
-}
+PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --disable-cli"
