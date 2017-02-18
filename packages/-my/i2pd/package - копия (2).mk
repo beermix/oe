@@ -1,5 +1,5 @@
 PKG_NAME="i2pd"
-PKG_VERSION="85e2137"
+PKG_VERSION="35b5dcd"
 PKG_GIT_URL="https://github.com/PurpleI2P/i2pd"
 PKG_DEPENDS_TARGET="toolchain boost zlib openssl miniupnpc"
 PKG_SECTION="my"
@@ -8,16 +8,9 @@ PKG_AUTORECONF="no"
 
 pre_configure_target() {
    strip_lto
-   export LIBS="-pthread"
+   #strip_gold
 }
 
-
 make_target() {
-  make \
-       CC="$CC" \
-       LD="$LD" \
-       AR="$AR" \
-       XCFLAGS="$CFLAGS" \
-       XLDFLAGS="$LDFLAGS" \
-       all
+  make CC="$CC" AR="$AR" LD="$LD" XCFLAGS="$CFLAGS" RANLIB="$RANLIB" XLDFLAGS="$LDFLAGS" CFLAGS="$CFLAGS"
 }
