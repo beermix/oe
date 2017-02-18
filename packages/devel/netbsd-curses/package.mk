@@ -30,11 +30,9 @@ PKG_AUTORECONF="no"
 
   
 make_target() {
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
   make HOSTCC="$HOST_CC" CFLAGS="$CFLAGS -D_DEFAULT_SOURCE" PREFIX=/usr all-static -j1
 }
 
 makeinstall_target() {
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
   make HOSTCC="$HOST_CC" PREFIX=$SYSROOT_PREFIX/usr install-static -j1
 }
