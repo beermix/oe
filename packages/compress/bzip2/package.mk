@@ -51,7 +51,6 @@ pre_build_target() {
 }
 
 pre_make_target() {
-  cd $ROOT/$PKG_BUILD/.$TARGET_NAME
   sed -e "s,ln -s (lib.*),ln -snf \$$1; ln -snf libbz2.so.$PKG_VERSION libbz2.so,g" -i Makefile-libbz2_so
 }
 
