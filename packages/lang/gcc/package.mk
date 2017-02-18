@@ -29,6 +29,8 @@ PKG_SECTION="lang"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
+export CFLAGS=`echo $CFLAGS | sed -e "s|-march=native||g"`
+
 GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-sysroot=$SYSROOT_PREFIX \
                            --with-gmp=$ROOT/$TOOLCHAIN \
