@@ -38,11 +38,11 @@ pre_build_host() {
 
 make_host() {
   cd $ROOT/$PKG_BUILD/.$HOST_NAME
-  make -f Makefile-libbz2_so CC=$HOST_CC CFLAGS="$CFLAGS" -j1
+  make -f Makefile-libbz2_so CC=$HOST_CC CFLAGS="$CFLAGS -fPIC -DPIC"
 }
 
 makeinstall_host() {
-  make install PREFIX=$ROOT/$TOOLCHAIN -j1
+  make install PREFIX=$ROOT/$TOOLCHAIN
 }
 
 pre_build_target() {
@@ -51,11 +51,12 @@ pre_build_target() {
 }
 
 pre_make_target() {
+  cd $ROOT/$PKG_BUILD/.$TARGET_NAME
   sed -e "s,ln -s (lib.*),ln -snf \$$1; ln -snf libbz2.so.$PKG_VERSION libbz2.so,g" -i Makefile-libbz2_so
 }
 
 make_target() {
-  make -f Makefile-libbz2_so CC=$CC CFLAGS="$CFLAGS" -j1
+  make -f Makefile-libbz2_so CC=$CC CFLAGS="$CFLAGS -fPIC -DPIC"
 }
 
 post_make_target() {
