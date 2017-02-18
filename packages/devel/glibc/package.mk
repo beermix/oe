@@ -100,6 +100,7 @@ pre_configure_target() {
   unset LD_LIBRARY_PATH
 
 # set some CFLAGS we need
+  export BUILD_CC=$HOST_CC
   export CFLAGS="$CFLAGS -g"
   export OBJDUMP_FOR_HOST=objdump
 
@@ -126,9 +127,7 @@ post_makeinstall_target() {
   done
   rm -rf $INSTALL/usr/lib/audit
   rm -rf $INSTALL/usr/lib/glibc
-  rm -rf $INSTALL/usr/lib/libc_pic
   rm -rf $INSTALL/usr/lib/*.o
-  rm -rf $INSTALL/usr/lib/*.map
   rm -rf $INSTALL/var
 
 # remove locales and charmaps
