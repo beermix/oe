@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="libaio"
-PKG_VERSION="0.3.110-1"
+PKG_VERSION="451979c"
 PKG_SITE="http://http://lse.sourceforge.net/io/aio.html"
-PKG_URL="https://git.fedorahosted.org/cgit/libaio.git/snapshot/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_GIT_URL="https://git.fedorahosted.org/cgit/libaio.git"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="depends"
 PKG_SHORTDESC="Kernel Asynchronous I/O (AIO) Support for Linux"
