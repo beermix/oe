@@ -21,21 +21,45 @@ PKG_VERSION="v1.13.1"
 PKG_GIT_URL="https://github.com/docker/docker"
 PKG_DEPENDS_TARGET="toolchain sqlite go:host containerd runc libnetwork tini aufs-util curl"
 PKG_SECTION="service/system"
+PKG_SHORTDESC="Docker is an open-source engine that automates the deployment of any application as a lightweight, portable, self-sufficient container that will run virtually anywhere."
+PKG_LONGDESC="Docker containers can encapsulate any payload, and will run consistently on and between virtually any server. The same container that a developer builds and tests on a laptop will run at scale, in production*, on VMs, bare-metal servers, OpenStack clusters, public instances, or combinations of the above."
+PKG_AUTORECONF="no"
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Docker"
 PKG_ADDON_TYPE="xbmc.service"
 
 configure_target() {
 
-  find $ROOT/$PKG_BUILD -name "*.go" -print | xargs sed -i 's/\/etc\/docker/\/storage\/.kodi\/userdata\/addon_data\/service.system.docker\/config/g'
+  find $ROOT/$PKG_BUILD -name "*.go" -print | xargs sed -i 's/\/etc\/docker/\/storage\/.config\/docker/g'
   
   export DOCKER_BUILDTAGS="daemon \
                            autogen \
                            exclude_graphdriver_devicemapper \
-                           exclude_graphdriver_btrfs"
+                           exclude_graphdriver_btrfs \
+                           journald"
+
+  case $TARGET_ARCH in
+    x86_64)
+      export GOARCH=amd64
+      ;;
+    arm)
+      export GOARCH=arm
+
+      case $TARGET_CPU in
+        arm1176jzf-s)
+          export GOARM=6
+          ;;
+        cortex-a7|cortex-a9)
+         export GOARM=7
+         ;;
+      esac
+      ;;
+    aarch64)
+      export GOARCH=arm64
+      ;;
+  esac
 
   export GOOS=linux
-  export GOARCH=amd64
   export CGO_ENABLED=1
   export CGO_NO_EMULATION=1
   export CGO_CFLAGS=$CFLAGS
@@ -46,7 +70,9 @@ configure_target() {
   export PATH=$PATH:$GOROOT/bin
 
   mkdir -p $ROOT/$PKG_BUILD/.gopath
-  mv $ROOT/$PKG_BUILD/vendor $ROOT/$PKG_BUILD/.gopath/src
+  if [ -d $ROOT/$PKG_BUILD/vendor ]; then
+    mv $ROOT/$PKG_BUILD/vendor $ROOT/$PKG_BUILD/.gopath/src
+  fi
   ln -fs $ROOT/$PKG_BUILD $ROOT/$PKG_BUILD/.gopath/src/github.com/docker/docker
 
   # used for docker version
