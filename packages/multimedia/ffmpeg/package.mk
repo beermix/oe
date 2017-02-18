@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="ffmpeg"
-PKG_VERSION="2a2f6b2"
+PKG_VERSION="3.2.4"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="LGPLv2.1+"
 PKG_SITE="https://ffmpeg.org"
-PKG_GIT_URL="https://github.com/FFmpeg/FFmpeg"
+PKG_URL="https://ffmpeg.org/releases/${PKG_NAME}-${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl speex x265"
 PKG_PRIORITY="optional"
 PKG_SECTION="multimedia"
