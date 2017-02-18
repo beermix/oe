@@ -22,7 +22,8 @@
   PKG_MAKEINSTALL_OPTS=""
 
 # configure TARGET build defaults
-TARGET_CONFIGURE_OPTS="--host=$TARGET_NAME \
+TARGET_CONFIGURE_OPTS="-C \
+			  --host=$TARGET_NAME \
 			  --build=$HOST_NAME \
 			  --prefix=/usr \
 			  --bindir=/usr/bin \
