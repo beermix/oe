@@ -18,9 +18,11 @@
 
 PKG_NAME="bzip2"
 PKG_VERSION="1.0.6"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://www.bzip.org"
 PKG_URL="http://www.bzip.org/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_HOST=""
+PKG_DEPENDS_HOST="toolchain"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="compress"
 PKG_SHORTDESC="bzip2 data compressor"
@@ -29,8 +31,6 @@ PKG_LONGDESC="bzip2 is a freely available, patent free (see below), high-quality
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-MAKEFLAGS=-j1
-
 pre_build_host() {
   mkdir -p $ROOT/$PKG_BUILD/.$HOST_NAME
   cp -r $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$HOST_NAME
@@ -38,11 +38,11 @@ pre_build_host() {
 
 make_host() {
   cd $ROOT/$PKG_BUILD/.$HOST_NAME
-  make -f Makefile-libbz2_so CC=$HOST_CC CFLAGS="$CFLAGS -fPIC"
+  make -f Makefile-libbz2_so CC=$HOST_CC CFLAGS="$CFLAGS -fPIC -DPIC" -j1
 }
 
 makeinstall_host() {
-  make install PREFIX=$ROOT/$TOOLCHAIN
+  make install PREFIX=$ROOT/$TOOLCHAIN -j1
 }
 
 pre_build_target() {
@@ -56,7 +56,7 @@ pre_make_target() {
 }
 
 make_target() {
-  make -f Makefile-libbz2_so CC=$CC CFLAGS="$CFLAGS -fPIC"
+  make -f Makefile-libbz2_so CC=$CC CFLAGS="-g -O2 -fstack-protector-strong -Wformat -Werror=format-security -D_REENTRANT -fPIC" -j1
 }
 
 post_make_target() {
@@ -65,8 +65,6 @@ post_make_target() {
 
 makeinstall_target() {
   mkdir -p $SYSROOT_PREFIX/usr/include
-  mkdir -p $SYSROOT_PREFIX/usr/bin
-  mkdir -p $INSTALL/usr/lib
     cp bzlib.h $SYSROOT_PREFIX/usr/include
   mkdir -p $SYSROOT_PREFIX/usr/lib
     cp -P libbz2.so* $SYSROOT_PREFIX/usr/lib

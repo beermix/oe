@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="6-20170216"
+PKG_VERSION="6-20170209"
 PKG_SITE="http://gcc.gnu.org/"
 PKG_URL="https://fossies.org/linux/misc/gcc-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host"
@@ -29,7 +29,6 @@ PKG_SECTION="lang"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-export CFLAGS=`echo $CFLAGS | sed -e "s|-march=native||g"`
 
 GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-sysroot=$SYSROOT_PREFIX \
@@ -98,9 +97,9 @@ pre_configure_host() {
   export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
   
-  sed -iv 's@\./fixinc\.sh@-c true@' $ROOT/$PKG_BUILD/gcc/Makefile.in
-  sed -iv '/m64=/s/lib64/lib/' $ROOT/$PKG_BUILD/gcc/config/i386/t-linux64
-  sed -iv "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $ROOT/$PKG_BUILD/{libiberty,gcc}/configure
+  #sed -iv 's@\./fixinc\.sh@-c true@' $ROOT/$PKG_BUILD/gcc/Makefile.in
+  #sed -iv '/m64=/s/lib64/lib/' $ROOT/$PKG_BUILD/gcc/config/i386/t-linux64
+  #sed -iv "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $ROOT/$PKG_BUILD/{libiberty,gcc}/configure
 }
 
 post_make_host() {

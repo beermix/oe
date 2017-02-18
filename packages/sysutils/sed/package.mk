@@ -43,4 +43,4 @@ pre_configure_target() {
   cd $ROOT/$PKG_BUILD
 }
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-nls --without-selinux"
+PKG_CONFIGURE_OPTS_TARGET="-C $PKG_CONFIGURE_OPTS_HOST"
