@@ -27,7 +27,7 @@ PKG_SHORTDESC="binutils: A GNU collection of binary utilities"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-MAKEFLAGS=-j1
+#MAKEFLAGS=-j6
 
 PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --with-sysroot=$SYSROOT_PREFIX \
@@ -40,13 +40,9 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --disable-libssp \
                          --enable-version-specific-runtime-libs \
                          --enable-plugins \
-                         --enable-gold \
-                         --enable-ld=default \
-                         --enable-lto \
                          --disable-nls \
                          --disable-gdb \
                          --disable-sim \
-                         --with-system-zlib \
                          --enable-static \
                          --disable-shared \
                          --enable-poison-system-directories"

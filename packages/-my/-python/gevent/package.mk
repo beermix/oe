@@ -4,10 +4,10 @@
 ################################################################################
 
 PKG_NAME="gevent"
-PKG_VERSION="1.1.1"
+PKG_VERSION="1.2.1"
 PKG_SITE="https://pypi.python.org/pypi/gevent"
-PKG_URL="https://pypi.python.org/packages/source/g/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain Python distutilscross:host greenlet"
+PKG_URL="https://pypi.python.org/packages/54/dd/17dc7e899ac7c1de2d19b367b29d90fdb4cfe83bda8c2581464906c9399d/gevent-1.2.1.tar.gz"
+PKG_DEPENDS_TARGET="toolchain Python distutilscross:host greenlet libevent"
 PKG_SECTION="xmedia/depends"
 PKG_SHORTDESC="gevent is a coroutine-based Python networking library"
 PKG_LONGDESC="gevent is a coroutine-based Python networking library."
@@ -16,8 +16,8 @@ PKG_AUTORECONF="no"
 
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
-    sed -i -e 's/^cross_compiling=no/cross_compiling=yes/' libev/configure
-    sed -i -e 's/^cross_compiling=no/cross_compiling=yes/' c-ares/configure
+    sed -i -e 's/^cross_compiling=no/cross_compiling=yes/' deps/libev/configure
+    sed -i -e 's/^cross_compiling=no/cross_compiling=yes/' deps/c-ares/configure
 
   export PYTHONXCPREFIX="$SYSROOT_PREFIX/usr"
   export LDSHARED="$CC -shared"

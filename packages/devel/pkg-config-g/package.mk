@@ -17,18 +17,16 @@
 ################################################################################
 
 PKG_NAME="pkg-config"
-PKG_VERSION="0.29.1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
+PKG_VERSION="c53385b"
 PKG_SITE="http://www.freedesktop.org/software/pkgconfig/"
-PKG_URL="http://pkg-config.freedesktop.org/releases/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_HOST="ccache:host gettext:host"
+PKG_GIT_URL="git://anongit.freedesktop.org/pkg-config"
+PKG_DEPENDS_HOST="ccache:host gettext:host autotools:host"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="pkg-config: A library configuration management system"
 PKG_LONGDESC="pkg-config is a system for managing library compile/link flags that works with automake and autoconf. It replaces the ubiquitous *-config scripts you may have seen with a single tool."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_HOST="--disable-silent-rules \
                          --with-internal-glib --disable-dtrace \
@@ -36,7 +34,7 @@ PKG_CONFIGURE_OPTS_HOST="--disable-silent-rules \
 
 post_makeinstall_host() {
   mkdir -p $SYSROOT_PREFIX/usr/share/aclocal
-    cp pkg.m4 $SYSROOT_PREFIX/usr/share/aclocal
+  cp pkg.m4 $SYSROOT_PREFIX/usr/share/aclocal
 }
 
 pre_configure_host() {
