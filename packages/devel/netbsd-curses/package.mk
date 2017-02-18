@@ -28,14 +28,13 @@ PKG_LONGDESC="netbsd-curses: netbsd-libcurses portable edition"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-pre_configure_taret() {
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
-}
   
 make_target() {
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
   make HOSTCC="$HOST_CC" CFLAGS="$CFLAGS -D_DEFAULT_SOURCE" PREFIX=/usr all-static -j1
 }
 
 makeinstall_target() {
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
   make HOSTCC="$HOST_CC" PREFIX=$SYSROOT_PREFIX/usr install-static -j1
 }
