@@ -31,21 +31,25 @@ PKG_AUTORECONF="no"
 
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_HOST="--enable-static --enable-shared --disable-hardening"
+PKG_CONFIGURE_OPTS_HOST="--enable-static --enable-shared"
 
 
 pre_configure_target() {
- :
+  :
 }
+
 post_makeinstall_target() {
   :
 }
+
 make_target() {
   :
 }
+
 post_make_target() {
   :
 }
+
 makeinstall_target() {
   :
 }
