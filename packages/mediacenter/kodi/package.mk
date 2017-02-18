@@ -245,8 +245,8 @@ makeinstall_host() {
 
 pre_configure_target() {
   export LIBS="$LIBS -ltermcap"
-  strip_lto
-  strip_gold
+  #strip_lto
+  #strip_gold
 }
 
 pre_make_target() {

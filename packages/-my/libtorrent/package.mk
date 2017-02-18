@@ -9,11 +9,11 @@ PKG_AUTORECONF="yes"
 
 
 PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr\
-			   --enable-static \
-			   --enable-aligned \
-			   --disable-shared \
-			   --disable-debug \
-			   --with-zlib=$ROOT/$TOOLCHAIN \
-			   --with-kqueue \
-			   --with-posix-fallocate"
+			      --enable-static \
+			      --enable-aligned \
+			      --disable-shared \
+			      --disable-debug \
+			      --with-zlib \
+			      --with-kqueue \
+			      --with-posix-fallocate"
 
