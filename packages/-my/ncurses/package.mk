@@ -19,7 +19,7 @@
 PKG_NAME="ncurses"
 PKG_VERSION="6.0-20170212"
 PKG_SITE="http://www.gnu.org/software/ncurses/"
-PKG_URL="ftp://invisible-island.net/ncurses/current/ncurses-6.0-20170212.tgz"
+PKG_URL="ftp://invisible-island.net/ncurses/current/ncurses-$PKG_VERSION.tgz"
 PKG_DEPENDS_TARGET="toolchain zlib"
 PKG_SECTION="devel"
 PKG_SHORTDESC="ncurses: The ncurses (new curses) library"
