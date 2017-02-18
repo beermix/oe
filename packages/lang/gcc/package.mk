@@ -25,6 +25,8 @@ PKG_DEPENDS_TARGET="gcc:host"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
 PKG_PRIORITY="optional"
 PKG_SECTION="lang"
+PKG_SHORTDESC="gcc: The GNU Compiler Collection Version 4 (aka GNU C Compiler)"
+PKG_LONGDESC="This package contains the GNU Compiler Collection. It includes compilers for the languages C, C++, Objective C, Fortran 95, Java and others ... This GCC contains the Stack-Smashing Protector Patch which can be enabled with the -fstack-protector command-line option. More information about it ca be found at http://www.research.ibm.com/trl/projects/security/ssp/."
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
@@ -56,7 +58,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libgomp \
                            --disable-libmpx \
                            --disable-libssp \
-                           --without-included-gettext \
                            --enable-poison-system-directories \
                            --with-tune=generic"
 
@@ -85,21 +86,15 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time \
                          --enable-clocale=gnu \
-                         --enable-gnu-unique-object \
-                         --enable-linker-build-id \
-                         --with-linker-hash-style=gnu \
-                         --enable-gnu-indirect-function \
-                         --disable-werror \
-                         --enable-checking=release \
                          $GCC_OPTS"
 
 pre_configure_host() {
   export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
   
-  #sed -iv 's@\./fixinc\.sh@-c true@' $ROOT/$PKG_BUILD/gcc/Makefile.in
-  #sed -iv '/m64=/s/lib64/lib/' $ROOT/$PKG_BUILD/gcc/config/i386/t-linux64
-  #sed -iv "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $ROOT/$PKG_BUILD/{libiberty,gcc}/configure
+  sed -iv 's@\./fixinc\.sh@-c true@' $ROOT/$PKG_BUILD/gcc/Makefile.in
+  sed -iv '/m64=/s/lib64/lib/' $ROOT/$PKG_BUILD/gcc/config/i386/t-linux64
+  sed -iv "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $ROOT/$PKG_BUILD/{libiberty,gcc}/configure
 }
 
 post_make_host() {

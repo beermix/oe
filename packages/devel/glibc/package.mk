@@ -17,13 +17,8 @@
 ################################################################################
 
 PKG_NAME="glibc"
-PKG_VERSION="2.24"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
-PKG_SITE="http://www.gnu.org/software/libc/"
-PKG_URL="http://ftp.gnu.org/pub/gnu/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap localedef-eglibc:host"
+PKG_VERSION="9174b4c"
+PKG_GIT_URL="git://sourceware.org/git/glibc.git"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap localedef-eglibc:host"
 PKG_DEPENDS_INIT="glibc"
 PKG_PRIORITY="optional"
@@ -57,6 +52,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/bash \
                            --disable-nscd \
                            --enable-lock-elision \
                            --disable-timezone-tools \
+                           --enable-stack-protector=strong \
                            --disable-debug"
 
 
@@ -130,18 +126,10 @@ post_makeinstall_target() {
   done
   rm -rf $INSTALL/usr/lib/audit
   rm -rf $INSTALL/usr/lib/glibc
+  rm -rf $INSTALL/usr/lib/libc_pic
   rm -rf $INSTALL/usr/lib/*.o
+  rm -rf $INSTALL/usr/lib/*.map
   rm -rf $INSTALL/var
-
-# remove unneeded libs
-  rm -rf $INSTALL/usr/lib/libBrokenLocale*
-  rm -rf $INSTALL/usr/lib/libSegFault.so
-  rm -rf $INSTALL/usr/lib/libmemusage.so
-  rm -rf $INSTALL/usr/lib/libpcprofile.so
-
-# remove ldscripts
-  rm -rf $INSTALL/usr/lib/libc.so
-  rm -rf $INSTALL/usr/lib/libpthread.so
 
 # remove locales and charmaps
   rm -rf $INSTALL/usr/share/i18n/charmaps

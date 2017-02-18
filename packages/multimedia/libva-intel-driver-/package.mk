@@ -16,16 +16,18 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="speex"
-PKG_VERSION="1.2rc2"
-PKG_SITE="http://downloads.us.xiph.org/releases/speex"
-PKG_URL="$PKG_SITE/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain"
-PKG_SECTION="audio"
-PKG_SHORTDESC="Speex / OPUS audio codec"
-PKG_LONGDESC="Speex / OPUS audio codec"
+PKG_NAME="libva-intel-driver"
+PKG_VERSION="05d2d25"
+PKG_ARCH="x86_64"
+PKG_SITE="http://freedesktop.org/wiki/Software/vaapi"
+PKG_GIT_URL="https://anongit.freedesktop.org/git/vaapi/intel-driver.git"
+PKG_DEPENDS_TARGET="toolchain libva libdrm"
+PKG_PRIORITY="optional"
+PKG_SECTION="multimedia"
+PKG_SHORTDESC="libva-driver-intel: Intel G45+ driver for VAAPI"
+PKG_LONGDESC="libva-driver-intel: Intel G45+ driver for VAAPI"
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static"
+PKG_CONFIGURE_OPTS_TARGET="--disable-silent-rules --with-drivers-path=/usr/lib/va"
