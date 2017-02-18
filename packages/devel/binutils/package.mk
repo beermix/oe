@@ -47,7 +47,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --disable-gdb \
                          --disable-sim \
                          --with-system-zlib \
-                         --enbale-static \
+                         --enable-static \
                          --disable-shared \
                          --enable-poison-system-directories"
 
