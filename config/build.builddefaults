@@ -23,15 +23,15 @@
 
 # configure TARGET build defaults
 TARGET_CONFIGURE_OPTS="--host=$TARGET_NAME \
-                         --build=$HOST_NAME \
-                         --prefix=/usr \
-                         --bindir=/usr/bin \
-                         --sbindir=/usr/sbin \
-                         --sysconfdir=/etc \
-                         --libexecdir=/usr/lib \
-                         --localstatedir=/var \
-                         --disable-static \
-                         --enable-shared"
+			  --build=$HOST_NAME \
+			  --prefix=/usr \
+			  --bindir=/usr/bin \
+			  --sbindir=/usr/sbin \
+			  --sysconfdir=/etc \
+			  --libexecdir=/usr/lib \
+			  --localstatedir=/var \
+			  --disable-static \
+			  --enable-shared"
 
 TARGET_CMAKE_OPTS="-DCMAKE_BUILD_TYPE=Release \
 		     -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
@@ -39,16 +39,16 @@ TARGET_CMAKE_OPTS="-DCMAKE_BUILD_TYPE=Release \
 
 # configure HOST build defaults
 HOST_CONFIGURE_OPTS="--host=$HOST_NAME \
-                       --build=$HOST_NAME \
-                       --prefix=$ROOT/$TOOLCHAIN \
-                       --bindir=$ROOT/$TOOLCHAIN/bin \
-                       --sbindir=$ROOT/$TOOLCHAIN/sbin \
-                       --sysconfdir=$ROOT/$TOOLCHAIN/etc \
-                       --libexecdir=$ROOT/$TOOLCHAIN/lib \
-                       --localstatedir=$ROOT/$TOOLCHAIN/var \
-                       --disable-static \
-                       --enable-shared \
-                       --enable-silent-rules"
+			--build=$HOST_NAME \
+			--prefix=$ROOT/$TOOLCHAIN \
+			--bindir=$ROOT/$TOOLCHAIN/bin \
+			--sbindir=$ROOT/$TOOLCHAIN/sbin \
+			--sysconfdir=$ROOT/$TOOLCHAIN/etc \
+			--libexecdir=$ROOT/$TOOLCHAIN/lib \
+			--localstatedir=$ROOT/$TOOLCHAIN/var \
+			--disable-static \
+			--enable-shared \
+			--enable-silent-rules"
 
 HOST_CMAKE_OPTS="-DCMAKE_BUILD_TYPE=Release \
 		   -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
