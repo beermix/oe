@@ -34,7 +34,7 @@
   SKIN_REMOVE_SHIPPED="no"
 
 # Default Skin (Confluence, or any from above)
-  SKIN_DEFAULT="Confluence"
+  SKIN_DEFAULT="Estuary"
 
 # install extra subtitle Fonts for KODI (yes / no)
   KODI_EXTRA_FONTS="yes"
@@ -62,7 +62,7 @@
 
 # build and install with DVDCSS support
 # (DVD decryption support in KODI) (yes / no)
-  KODI_DVDCSS_SUPPORT="no"
+  KODI_DVDCSS_SUPPORT="yes"
 
 # install extra kernel drivers, see configfiles in packages/linux/config/*.config
 # or projects/*/linux/*.config or distributions/*/linux/*.config

@@ -17,13 +17,11 @@
 ################################################################################
 
 PKG_NAME="pvr.dvblink"
-PKG_VERSION="0015079"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
+PKG_VERSION="026155e"
 PKG_SITE="http://www.kodi.tv"
 PKG_GIT_URL="https://github.com/kodi-pvr/pvr.dvblink"
 PKG_DEPENDS_TARGET="toolchain kodi-platform tinyxml2"
+PKG_PRIORITY="optional"
 PKG_SECTION=""
 PKG_SHORTDESC="pvr.dvblink"
 PKG_LONGDESC="pvr.dvblink"
@@ -32,6 +30,8 @@ PKG_AUTORECONF="no"
 PKG_IS_ADDON="yes"
 PKG_ADDON_TYPE="xbmc.pvrclient"
 
+PKG_CMAKE_OPTS_TARGET="-DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
+        -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr"
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/
   cp -R $PKG_BUILD/.install_pkg/usr/share/kodi/addons/$PKG_NAME/* $ADDON_BUILD/$PKG_ADDON_ID/
