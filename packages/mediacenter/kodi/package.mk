@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="kodi"
-PKG_VERSION="3bd7a6d"
+PKG_VERSION="4c792db"
 PKG_GIT_URL="https://github.com/xbmc/xbmc.git"
-PKG_GIT_BRANCH="Krypton"
+#PKG_GIT_BRANCH="Krypton"
 PKG_KEEP_CHECKOUT="yes"
 PKG_PATCH_DIRS="$LINUX"
 PKG_DEPENDS_TARGET="toolchain kodi:host kodi:bootstrap xmlstarlet:host Python zlib systemd pciutils dbus lzo pcre swig:host libass curl fontconfig fribidi tinyxml libjpeg-turbo freetype libcdio libdvdnav taglib libxml2 libxslt yajl sqlite ffmpeg crossguid giflib opengl"
@@ -27,8 +27,6 @@ PKG_DEPENDS_HOST="toolchain"
 PKG_DEPENDS_BOOTSTRAP="toolchain lzo:host libpng:host libjpeg-turbo:host giflib:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="mediacenter"
-PKG_SHORTDESC="kodi: Kodi Mediacenter"
-PKG_LONGDESC="Kodi Media Center (which was formerly named Xbox Media Center or XBMC) is a free and open source cross-platform media player and home entertainment system software with a 10-foot user interface designed for the living-room TV. Its graphical user interface allows the user to easily manage video, photos, podcasts, and music from a computer, optical disk, local network, and the internet using a remote control."
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
@@ -56,7 +54,7 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$ROOT/$TOOLCHAIN \
                        -DENABLE_INTERNAL_CROSSGUID=OFF \
                        -DENABLE_OPENSSL=ON \
                        -DENABLE_SDL=OFF \
-                       -DENABLE_CCACHE=OFF \
+                       -DENABLE_CCACHE=ON \
                        -DENABLE_LIRC=ON \
                        -DENABLE_EVENTCLIENTS=OFF \
                        -DENABLE_LIBUSB=OFF \
@@ -239,7 +237,7 @@ pre_configure_target() {
   strip_lto
   strip_gold
 
-  export LIBS="$LIBS -ltermcap"
+  export LIBS="$LIBS -lz -ltermcap"
 }
 
 pre_make_target() {

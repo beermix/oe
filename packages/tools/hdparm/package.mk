@@ -29,3 +29,8 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 PKG_MAKE_OPTS_TARGET="binprefix=/usr sbindir=/usr/bin"
+
+
+pre_configure_target() {
+  export CFLAGS="$CFLAGS -D_DEFAULT_SOURCE"
+}

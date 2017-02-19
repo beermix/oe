@@ -83,6 +83,9 @@ esac
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
+  
+  sed -i 's@/bin/sh@/bin/bash@' $ROOT/$PKG_BUILD/configure
+  sed -i 's@openssl_init;@openssl_init;\n#undef OPENSSL_VERSION_NUMBER\n#define OPENSSL_VERSION_NUMBER 1\n@' $ROOT/$PKG_BUILD/libavformat/tls_openssl.c
 
 # ffmpeg fails building with LTO support
   strip_lto
@@ -112,7 +115,7 @@ configure_target() {
               --cc="$CC" \
               --ld="$CC" \
               --host-cc="$HOST_CC" \
-              --host-cflags="$HOST_CFLAGS" \
+              --host-cflags="$HOST_CFLAGS -D_BSD_SOURCE" \
               --host-ldflags="$HOST_LDFLAGS" \
               --host-libs="-lm" \
               --extra-cflags="$CFLAGS" \
@@ -145,7 +148,7 @@ configure_target() {
               --disable-devices \
               --enable-pthreads \
               --disable-w32threads \
-              --disable-x11grab \
+              --enable-x11grab \
               --enable-network \
               --disable-gnutls --enable-openssl \
               --disable-gray \

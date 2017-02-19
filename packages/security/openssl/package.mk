@@ -9,7 +9,8 @@ PKG_AUTORECONF="no"
 pre_configure_target() {
   export MAKEFLAGS="-j1"
   #"-Wa,--noexecstack -D_FORTIFY_SOURCE=2 -march=x86-64 -mtune=generic -O2 -pipe -fstack-protector-strong -Wall"
-  sed -i -e '/^"linux-x86_64"/ s/-m64 -DL_ENDIAN -O3 -Wall/-m64 -DL_ENDIAN -O2 -pipe -fstack-protector-strong -Wformat -Werror=format-security -Wl,-Bsymbolic-functions -Wa,--noexecstack -Wall/' $ROOT/$PKG_BUILD/Configure
+  #sed -i -e '/^"linux-x86_64"/ s/-m64 -DL_ENDIAN -O3 -Wall/-m64 -DL_ENDIAN -O2 -pipe -Wa,--noexecstack -Wall/' $ROOT/$PKG_BUILD/Configure
+  sed -i -e '/^"linux-x86_64"/ s/-m64 -DL_ENDIAN -O3 -Wall/-DL_ENDIAN -Wall/' $ROOT/$PKG_BUILD/Configure
 }
 
 configure_target() {
@@ -36,10 +37,9 @@ configure_target() {
               no-whrlpool \
               no-whirlpool \
               no-jpake \
-              no-err \
               no-heartbeats \
               enable-ec_nistp_64_gcc_128 \
-              linux-x86_64
+              linux-x86_64 "-Wa,--noexecstack ${CFLAGS}"
 }
 
 make_target() {

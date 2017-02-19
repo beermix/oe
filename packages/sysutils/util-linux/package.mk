@@ -19,8 +19,8 @@
 PKG_NAME="util-linux"
 PKG_VERSION="2.29.1"
 PKG_URL="http://www.kernel.org/pub/linux/utils/util-linux/v2.29/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain"
-PKG_DEPENDS_INIT="toolchain gcc:init"
+PKG_DEPENDS_TARGET="toolchain zlib"
+PKG_DEPENDS_INIT="toolchain gcc:init zlib"
 PKG_PRIORITY="optional"
 PKG_SECTION="system"
 PKG_SHORTDESC="util-linux: Miscellaneous system utilities for Linux"
@@ -53,8 +53,6 @@ UTILLINUX_CONFIG_DEFAULT="--disable-gtk-doc \
                           --without-termcap \
                           --without-tinfo \
                           --without-utempter \
-                          --without-util \
-                          --without-libz \
                           --without-user \
                           --without-systemd \
                           --without-smack \
