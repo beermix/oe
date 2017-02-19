@@ -38,11 +38,11 @@ pre_build_host() {
 
 make_host() {
   cd $ROOT/$PKG_BUILD/.$HOST_NAME
-  make -f Makefile-libbz2_so CC=$HOST_CC CFLAGS="$CFLAGS -fPIC -DPIC" LDFLAGS="-Wl,-z,relro" -j1
+  make -f Makefile-libbz2_so CC=$HOST_CC CFLAGS="$CFLAGS -fPIC -DPIC" AR="$AR"-j1
 }
 
 makeinstall_host() {
-  : #make install PREFIX=$ROOT/$TOOLCHAIN -j1
+  make install PREFIX=$ROOT/$TOOLCHAIN -j1
 }
 
 pre_build_target() {
@@ -58,8 +58,8 @@ pre_make_target() {
 }
 
 make_target() {
-  make -f Makefile libbz2.a bzip2 bzip2recover CC=$CC CFLAGS="$CFLAGS -fPIC -DPIC" -j1
-  #make -f Makefile-libbz2_so CC=$CC CFLAGS="$CFLAGS -fPIC -DPIC" -j1
+  make -f Makefile libbz2.a bzip2 bzip2recover CC=$CC CFLAGS="$CFLAGS -fPIC -DPIC" AR="$AR" -j1
+  make -f Makefile-libbz2_so CC=$CC CFLAGS="$CFLAGS -fPIC -DPIC" AR="$AR" -j1
 }
 
 makeinstall_target() {
@@ -69,9 +69,9 @@ makeinstall_target() {
   
   cp libbz2.a $SYSROOT_PREFIX/usr/lib
   
-  #cp -P libbz2.so* $SYSROOT_PREFIX/usr/lib
-  #cp bzlib.h $SYSROOT_PREFIX/usr/include
-  #cp -P libbz2.so* $INSTALL/usr/lib
+  cp -P libbz2.so* $SYSROOT_PREFIX/usr/lib
+  cp bzlib.h $SYSROOT_PREFIX/usr/include
+  cp -P libbz2.so* $INSTALL/usr/lib
   
   cp bzip2 $INSTALL/usr/bin
   cp bzip2recover $INSTALL/usr/bin
