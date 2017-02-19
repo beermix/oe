@@ -17,13 +17,13 @@
 ################################################################################
 
 PKG_NAME="visualization.vsxu"
-#PKG_VERSION="990332f"
 PKG_VERSION="caedcbc"
+PKG_REV="1"
 PKG_ARCH="i386 x86_64"
+PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/notspiff/visualization.vsxu"
 PKG_GIT_URL="https://github.com/notspiff/visualization.vsxu"
 PKG_DEPENDS_TARGET="toolchain kodi-platform vsxu"
-PKG_PRIORITY="optional"
 PKG_SECTION=""
 PKG_SHORTDESC="visualization.vsxu"
 PKG_LONGDESC="visualization.vsxu"
@@ -31,9 +31,6 @@ PKG_AUTORECONF="no"
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_TYPE="xbmc.player.musicviz"
-
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
-        -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr"
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/

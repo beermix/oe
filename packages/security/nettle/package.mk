@@ -8,13 +8,12 @@ PKG_SECTION="xmedia/depends"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-MAKEFLAGS=-j1
-
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \
 			      --disable-shared \
 			      --enable-fat \
 			      --disable-mini-gmp \
 			      --disable-openssl \
+			      --with-gnu-ld \
 			      --disable-documentation"
 
 post_makeinstall_target() {
