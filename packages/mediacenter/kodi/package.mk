@@ -22,7 +22,7 @@ PKG_GIT_URL="https://github.com/xbmc/xbmc.git"
 #PKG_GIT_BRANCH="Krypton"
 PKG_KEEP_CHECKOUT="yes"
 PKG_PATCH_DIRS="$LINUX"
-PKG_DEPENDS_TARGET="toolchain kodi:host kodi:bootstrap xmlstarlet:host Python zlib systemd pciutils dbus lzo pcre swig:host libass curl fontconfig fribidi tinyxml libjpeg-turbo freetype libcdio libdvdnav taglib libxml2 libxslt yajl sqlite ffmpeg crossguid giflib opengl"
+PKG_DEPENDS_TARGET="toolchain JsonSchemaBuilder:host TexturePacker:host xmlstarlet:host Python zlib systemd pciutils lzo pcre swig:host libass curl fontconfig fribidi tinyxml libjpeg-turbo freetype libcdio taglib libxml2 libxslt yajl sqlite ffmpeg crossguid giflib libdvdnav libhdhomerun"
 PKG_DEPENDS_HOST="toolchain"
 PKG_DEPENDS_BOOTSTRAP="toolchain lzo:host libpng:host libjpeg-turbo:host giflib:host"
 PKG_PRIORITY="optional"
@@ -30,214 +30,225 @@ PKG_SECTION="mediacenter"
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
-PKG_CMAKE_SCRIPT_HOST="tools/depends/native/JsonSchemaBuilder/CMakeLists.txt"
-PKG_CMAKE_SCRIPT_BOOTSTRAP="tools/depends/native/TexturePacker/CMakeLists.txt"
-PKG_CMAKE_SCRIPT_TARGET="project/cmake/CMakeLists.txt"
-PKG_PYTHON_VERSION="2.7"
 
-# configure GPU drivers and dependencies:
-  get_graphicdrivers
+get_graphicdrivers
 
-
-PKG_CMAKE_OPTS_BOOTSTRAP="-DCORE_SOURCE_DIR=$ROOT/$PKG_BUILD"
-PKG_CMAKE_OPTS_HOST="-DCORE_SOURCE_DIR=$ROOT/$PKG_BUILD"
-PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$ROOT/$TOOLCHAIN \
-                       -DDEPENDS_PATH=$ROOT/$PKG_BUILD/depends \
-                       -DWITH_ARCH=$TARGET_ARCH \
-                       -DCMAKE_BUILD_TYPE=none \
-                       -DPYTHON_INCLUDE_DIRS=$SYSROOT_PREFIX/usr/include/python2.7 \
-                       -DGIT_VERSION=$PKG_VERSION \
-                       -DENABLE_LDGOLD=OFF \
-                       -DWITH_TEXTUREPACKER=$ROOT/$TOOLCHAIN/bin/TexturePacker \
-                       -DENABLE_INTERNAL_FFMPEG=OFF \
-                       -DFFMPEG_INCLUDE_DIRS=$SYSROOT_PREFIX/usr \
-                       -DENABLE_INTERNAL_CROSSGUID=OFF \
-                       -DENABLE_OPENSSL=ON \
-                       -DENABLE_SDL=OFF \
-                       -DENABLE_CCACHE=ON \
-                       -DENABLE_LIRC=ON \
-                       -DENABLE_EVENTCLIENTS=OFF \
-                       -DENABLE_LIBUSB=OFF \
-                       -DENABLE_UDEV=ON \
-                       -DENABLE_XSLT=OFF \
-                       -DENABLE_DBUS=ON"
-
+PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET dbus"
 
 if [ "$DISPLAYSERVER" = "x11" ]; then
-  PKG_DEPENDS_TARGET+=" libX11 libXext libdrm libXrandr"
-  PKG_CMAKE_OPTS_TARGET+=" -DENABLE_X11=ON"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libX11 libXext libdrm libXrandr"
+  KODI_XORG="-DENABLE_X11=ON"
 else
-  PKG_CMAKE_OPTS_TARGET+=" -DENABLE_X11=OFF"
+  KODI_XORG="-DENABLE_X11=OFF"
 fi
 
-if [ "$OPENGL" = "mesa" ]; then
-  PKG_DEPENDS_TARGET+=" glu"
-  PKG_CMAKE_OPTS_TARGET+=" -DENABLE_OPENGL=ON"
-  PKG_CMAKE_OPTS_TARGET+=" -DENABLE_OPENGLES=OFF"
+if [ ! "$OPENGL" = "no" ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET $OPENGL glu"
+  KODI_OPENGL="-DENABLE_OPENGL=ON"
 else
-  PKG_CMAKE_OPTS_TARGET+=" -DENABLE_OPENGL=OFF"
-  PKG_CMAKE_OPTS_TARGET+=" -DENABLE_OPENGLES=ON"
+  KODI_OPENGL="-DENABLE_OPENGL=OFF"
+fi
+
+if [ "$OPENGLES_SUPPORT" = yes ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET $OPENGLES"
+  KODI_OPENGLES="-DENABLE_OPENGLES=ON"
+else
+  KODI_OPENGLES="-DENABLE_OPENGLES=OFF"
 fi
 
 if [ "$ALSA_SUPPORT" = yes ]; then
-  PKG_DEPENDS_TARGET+=" alsa-lib"
-  PKG_CMAKE_OPTS_TARGET+=" -DENABLE_ALSA=ON"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET alsa-lib"
+  KODI_ALSA="-DENABLE_ALSA=ON"
 else
-  PKG_CMAKE_OPTS_TARGET+=" -DENABLE_ALSA=OFF"
+  KODI_ALSA="-DENABLE_ALSA=OFF"
 fi
 
 if [ "$PULSEAUDIO_SUPPORT" = yes ]; then
-  PKG_DEPENDS_TARGET+=" pulseaudio"
-  PKG_CMAKE_OPTS_TARGET+=" -DENABLE_PULSEAUDIO=ON"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pulseaudio"
+  KODI_PULSEAUDIO="-DENABLE_PULSEAUDIO=ON"
 else
-  PKG_CMAKE_OPTS_TARGET+=" -DENABLE_PULSEAUDIO=OFF"
+  KODI_PULSEAUDIO="-DENABLE_PULSEAUDIO=OFF"
 fi
 
 if [ "$ESPEAK_SUPPORT" = yes ]; then
-  PKG_DEPENDS_TARGET+=" espeak"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET espeak"
 fi
 
 if [ "$CEC_SUPPORT" = yes ]; then
-  PKG_DEPENDS_TARGET+=" libcec"
-  PKG_CMAKE_OPTS_TARGET+=" -DENABLE_CEC=ON"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libcec"
+  KODI_CEC="-DENABLE_CEC=ON"
 else
-  PKG_CMAKE_OPTS_TARGET+=" -DENABLE_CEC=OFF"
+  KODI_CEC="-DENABLE_CEC=OFF"
 fi
 
 if [ "$KODI_OPTICAL_SUPPORT" = yes ]; then
-  PKG_CMAKE_OPTS_TARGET+=" -DENABLE_OPTICAL=ON"
+  KODI_OPTICAL="-DENABLE_OPTICAL=ON"
 else
-  PKG_CMAKE_OPTS_TARGET+=" -DENABLE_OPTICAL=OFF"
+  KODI_OPTICAL="-DENABLE_OPTICAL=OFF"
 fi
 
 if [ "$KODI_NONFREE_SUPPORT" = yes ]; then
-  PKG_CMAKE_OPTS_TARGET+=" -DENABLE_NONFREE=ON"
+  KODI_NONFREE="-DENABLE_NONFREE=ON"
 else
-  PKG_CMAKE_OPTS_TARGET+=" -DENABLE_NONFREE=OFF"
+  KODI_NONFREE="-DENABLE_NONFREE=OFF"
 fi
 
 if [ "$KODI_DVDCSS_SUPPORT" = yes ]; then
-  PKG_CMAKE_OPTS_TARGET+=" -DENABLE_DVDCSS=ON"
+  KODI_DVDCSS="-DENABLE_DVDCSS=ON \
+               -DLIBDVDCSS_URL=$ROOT/$SOURCES/libdvdcss/libdvdcss-$(get_pkg_version libdvdcss).tar.gz"
 else
-  PKG_CMAKE_OPTS_TARGET+=" -DENABLE_DVDCSS=OFF"
+  KODI_DVDCSS="-DENABLE_DVDCSS=OFF"
 fi
 
 if [ "$KODI_BLURAY_SUPPORT" = yes ]; then
-  PKG_DEPENDS_TARGET+=" libbluray"
-  PKG_CMAKE_OPTS_TARGET+=" -DENABLE_BLURAY=ON"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libbluray"
+  KODI_BLURAY="-DENABLE_BLURAY=ON"
 else
-  PKG_CMAKE_OPTS_TARGET+=" -DENABLE_BLURAY=OFF"
+  KODI_BLURAY="-DENABLE_BLURAY=OFF"
 fi
 
 if [ "$AVAHI_DAEMON" = yes ]; then
-  PKG_DEPENDS_TARGET+=" avahi nss-mdns"
-  PKG_CMAKE_OPTS_TARGET+=" -DENABLE_AVAHI=ON"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET avahi nss-mdns"
+  KODI_AVAHI="-DENABLE_AVAHI=ON"
 else
-  PKG_CMAKE_OPTS_TARGET+=" -DENABLE_AVAHI=OFF"
+  KODI_AVAHI="-DENABLE_AVAHI=OFF"
 fi
 
 if [ "$KODI_MYSQL_SUPPORT" = yes ]; then
-  PKG_DEPENDS_TARGET+=" mariadb"
-  PKG_CMAKE_OPTS_TARGET+=" -DENABLE_MYSQLCLIENT=ON"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET mysql"
+  KODI_MYSQL="-DENABLE_MYSQLCLIENT=ON"
 else
-  PKG_CMAKE_OPTS_TARGET+=" -DENABLE_MYSQLCLIENT=OFF"
+  KODI_MYSQL="-DENABLE_MYSQLCLIENT=OFF"
 fi
 
 if [ "$KODI_AIRPLAY_SUPPORT" = yes ]; then
-  PKG_DEPENDS_TARGET+=" libplist"
-  PKG_CMAKE_OPTS_TARGET+=" -DENABLE_PLIST=ON"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libplist"
+  KODI_AIRPLAY="-DENABLE_PLIST=ON"
 else
-  PKG_CMAKE_OPTS_TARGET+=" -DENABLE_PLIST=OFF"
+  KODI_AIRPLAY="-DENABLE_PLIST=OFF"
 fi
 
 if [ "$KODI_AIRTUNES_SUPPORT" = yes ]; then
-  PKG_DEPENDS_TARGET+=" libshairplay"
-  PKG_CMAKE_OPTS_TARGET+=" -DENABLE_AIRTUNES=ON"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libshairplay"
+  KODI_AIRTUNES="-DENABLE_AIRTUNES=ON"
 else
-  PKG_CMAKE_OPTS_TARGET+=" -DENABLE_AIRTUNES=OFF"
+  KODI_AIRTUNES="-DENABLE_AIRTUNES=OFF"
 fi
 
 if [ "$KODI_NFS_SUPPORT" = yes ]; then
-  PKG_DEPENDS_TARGET+=" libnfs"
-  PKG_CMAKE_OPTS_TARGET+=" -DENABLE_NFS=ON"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libnfs"
+  KODI_NFS="-DENABLE_NFS=ON"
 else
-  PKG_CMAKE_OPTS_TARGET+=" -DENABLE_NFS=OFF"
+  KODI_NFS="-DENABLE_NFS=OFF"
 fi
 
 if [ "$KODI_SAMBA_SUPPORT" = yes ]; then
-  PKG_DEPENDS_TARGET+=" samba"
-  PKG_CMAKE_OPTS_TARGET+=" -DENABLE_SMBCLIENT=ON"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET samba"
+  KODI_SAMBA="-DENABLE_SMBCLIENT=ON"
 else
-  PKG_CMAKE_OPTS_TARGET+=" -DENABLE_SMBCLIENT=OFF"
+  KODI_SAMBA="-DENABLE_SMBCLIENT=OFF"
 fi
 
 if [ "$KODI_WEBSERVER_SUPPORT" = yes ]; then
-  PKG_DEPENDS_TARGET+=" libmicrohttpd"
-  PKG_CMAKE_OPTS_TARGET+=" -DENABLE_MICROHTTPD=ON"
-else
-  PKG_CMAKE_OPTS_TARGET+=" -DENABLE_MICROHTTPD=OFF"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libmicrohttpd"
 fi
 
 if [ "$KODI_UPNP_SUPPORT" = yes ]; then
-  PKG_CMAKE_OPTS_TARGET+=" -DENABLE_UPNP=ON"
+  KODI_UPNP="-DENABLE_UPNP=ON"
 else
-  PKG_CMAKE_OPTS_TARGET+=" -DENABLE_UPNP=OFF"
+  KODI_UPNP="-DENABLE_UPNP=OFF"
 fi
 
 if [ "$KODI_SSHLIB_SUPPORT" = yes ]; then
-  PKG_DEPENDS_TARGET+=" libssh"
-  PKG_CMAKE_OPTS_TARGET+=" -DENABLE_SSH=ON"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libssh"
+  KODI_SSH="-DENABLE_SSH=ON"
 else
-  PKG_CMAKE_OPTS_TARGET+=" -DENABLE_SSH=OFF"
-fi
-
-if [ ! "$KODIPLAYER_DRIVER" = default ]; then
-  PKG_DEPENDS_TARGET+=" $KODIPLAYER_DRIVER"
-
-  if [ "$KODIPLAYER_DRIVER" = bcm2835-firmware ]; then
-    PKG_CMAKE_OPTS_TARGET+=" -DENABLE_MMAL=ON -DCORE_SYSTEM_NAME=rbpi"
-  elif [ "$KODIPLAYER_DRIVER" = libfslvpuwrap ]; then
-    PKG_CMAKE_OPTS_TARGET+=" -DENABLE_IMXVPU=ON"
-    strip_lto # fails to build with LTO support (todo)
-  elif [ "$KODIPLAYER_DRIVER" = libamcodec ]; then
-    PKG_CMAKE_OPTS_TARGET+=" -DENABLE_AML=ON"
-  fi
+  KODI_SSH="-DENABLE_SSH=OFF"
 fi
 
 if [ "$VDPAU_SUPPORT" = "yes" -a "$DISPLAYSERVER" = "x11" ]; then
-  PKG_DEPENDS_TARGET+=" libvdpau"
-  PKG_CMAKE_OPTS_TARGET+=" -DENABLE_VDPAU=ON"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libvdpau"
+  KODI_VDPAU="-DENABLE_VDPAU=ON"
 else
-  PKG_CMAKE_OPTS_TARGET+=" -DENABLE_VDPAU=OFF"
+  KODI_VDPAU="-DENABLE_VDPAU=OFF"
 fi
 
 if [ "$VAAPI_SUPPORT" = yes ]; then
-  PKG_DEPENDS_TARGET+=" libva-intel-driver"
-  PKG_CMAKE_OPTS_TARGET+=" -DENABLE_VAAPI=ON"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libva-intel-driver"
+  KODI_VAAPI="-DENABLE_VAAPI=ON"
 else
-  PKG_CMAKE_OPTS_TARGET+=" -DENABLE_VAAPI=OFF"
+  KODI_VAAPI="-DENABLE_VAAPI=OFF"
 fi
 
-pre_configure_bootstrap() {
-  CXXFLAGS+=" -DTARGET_POSIX -std=c++0x -I$ROOT/$PKG_BUILD/xbmc/linux"
-}
+if [ "$TARGET_ARCH" = "x86_64" ]; then
+  KODI_ARCH="-DWITH_CPU=$TARGET_ARCH"
+else
+  KODI_ARCH="-DWITH_ARCH=$TARGET_ARCH"
+fi
 
-makeinstall_bootstrap() {
-  rm -f $ROOT/$TOOLCHAIN/bin/TexturePacker
-    cp -PR TexturePacker $ROOT/$TOOLCHAIN/bin
-}
+if [ ! "$KODIPLAYER_DRIVER" = default ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET $KODIPLAYER_DRIVER"
+  if [ "$KODIPLAYER_DRIVER" = bcm2835-driver ]; then
+    KODI_PLAYER="-DENABLE_MMAL=ON -DCORE_SYSTEM_NAME=rbpi"
+  elif [ "$KODIPLAYER_DRIVER" = libfslvpuwrap ]; then
+    KODI_PLAYER="-DENABLE_IMX=ON"
+    CFLAGS="$CFLAGS -DHAS_IMXVPU -DLINUX -DEGL_API_FB"
+    CXXFLAGS="$CXXFLAGS -DHAS_IMXVPU -DLINUX -DEGL_API_FB"
+  elif [ "$KODIPLAYER_DRIVER" = libamcodec ]; then
+    KODI_PLAYER="-DENABLE_AML=ON"
+  fi
+fi
 
-makeinstall_host() {
-  rm -f $ROOT/$TOOLCHAIN/bin/JsonSchemaBuilder
-    cp -PR JsonSchemaBuilder $ROOT/$TOOLCHAIN/bin
-}
+KODI_LIBDVD="$KODI_DVDCSS \
+             -DLIBDVDNAV_URL=$ROOT/$SOURCES/libdvdnav/libdvdnav-$(get_pkg_version libdvdnav).tar.gz \
+             -DLIBDVDREAD_URL=$ROOT/$SOURCES/libdvdread/libdvdread-$(get_pkg_version libdvdread).tar.gz"
+
+PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$ROOT/$TOOLCHAIN \
+                       -DWITH_TEXTUREPACKER=$ROOT/$TOOLCHAIN/bin/TexturePacker \
+                       -DDEPENDS_PATH=$ROOT/$PKG_BUILD/depends \
+                       -DPYTHON_INCLUDE_DIRS=$SYSROOT_PREFIX/usr/include/python2.7 \
+                       -DGIT_VERSION=$PKG_VERSION \
+                       -DENABLE_INTERNAL_FFMPEG=OFF \
+                       -DFFMPEG_INCLUDE_DIRS=$SYSROOT_PREFIX/usr \
+                       -DENABLE_INTERNAL_CROSSGUID=OFF \
+                       -DENABLE_SDL=OFF \
+                       -DENABLE_OPENSSL=ON \
+                       -DENABLE_UDEV=ON \
+                       -DENABLE_DBUS=ON \
+                       -DENABLE_XSLT=ON \
+                       -DENABLE_CCACHE=ON \
+                       -DENABLE_LIRC=ON \
+                       -DENABLE_EVENTCLIENTS=ON \
+                       -DENABLE_LDGOLD=OFF \
+                       $KODI_ARCH \
+                       $KODI_OPENGL \
+                       $KODI_OPENGLES \
+                       $KODI_OPENMAX \
+                       $KODI_VDPAU \
+                       $KODI_VAAPI \
+                       $KODI_JOYSTICK \
+                       $KODI_CEC \
+                       $KODI_XORG \
+                       $KODI_SAMBA \
+                       $KODI_NFS \
+                       $KODI_LIBDVD \
+                       $KODI_AVAHI \
+                       $KODI_UPNP \
+                       $KODI_MYSQL \
+                       $KODI_SSH \
+                       $KODI_AIRPLAY \
+                       $KODI_AIRTUNES \
+                       $KODI_NONFREE \
+                       $KODI_OPTICAL \
+                       $KODI_BLURAY \
+                       $KODI_PLAYER"
 
 pre_configure_target() {
 # kodi should never be built with lto
   strip_lto
   strip_gold
 
-  export LIBS="$LIBS -lz -ltermcap"
+  export LIBS="$LIBS -lz -lterminfo"
 }
 
 pre_make_target() {
@@ -251,34 +262,27 @@ pre_make_target() {
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin/kodi
   rm -rf $INSTALL/usr/bin/kodi-standalone
+  rm -rf $INSTALL/usr/bin/xbmc
+  rm -rf $INSTALL/usr/bin/xbmc-standalone
+  rm -rf $INSTALL/usr/share/kodi/cmake
   rm -rf $INSTALL/usr/share/applications
   rm -rf $INSTALL/usr/share/icons
-  rm -rf $INSTALL/usr/share/kodi/cmake
-  rm -rf $INSTALL/usr/share/kodi/userdata/iOS
+  rm -rf $INSTALL/usr/share/pixmaps
+  rm -rf $INSTALL/usr/share/kodi/addons/skin.estouchy
+  rm -rf $INSTALL/usr/share/kodi/addons/skin.estuary
+  rm -rf $INSTALL/usr/share/kodi/addons/service.xbmc.versioncheck
+  rm -rf $INSTALL/usr/share/kodi/addons/visualization.vortex
   rm -rf $INSTALL/usr/share/xsessions
 
 
-  # update addon manifest
-    KODI_ADDON_MANIFEST="$INSTALL/usr/share/kodi/system/addon-manifest.xml"
-    rm -rf $INSTALL/usr/share/kodi/addons/service.xbmc.versioncheck
-      xmlstarlet ed -L -d "/addons/addon[text()='service.xbmc.versioncheck']" $KODI_ADDON_MANIFEST
-    rm -rf $INSTALL/usr/share/kodi/addons/skin.estouchy
-      xmlstarlet ed -L -d "/addons/addon[text()='skin.estouchy']" $KODI_ADDON_MANIFEST
-    xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "os.openelec.tv" $KODI_ADDON_MANIFEST
-    xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "service.openelec.settings" $KODI_ADDON_MANIFEST
-    xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "repository.openelec.tv" $KODI_ADDON_MANIFEST
-
-  # more binaddons cross compile badness meh
-    sed -e "s:INCLUDE_DIR /usr/include/kodi:INCLUDE_DIR $SYSROOT_PREFIX/usr/include/kodi:g" \
-        -e "s:CMAKE_MODULE_PATH /usr/lib/kodi /usr/share/kodi/cmake:CMAKE_MODULE_PATH $SYSROOT_PREFIX/usr/share/kodi/cmake:g" \
-        -i $SYSROOT_PREFIX/usr/share/kodi/cmake/KodiConfig.cmake
+  mv $INSTALL/usr/lib/python2.7/dist-packages $INSTALL/usr/lib/python2.7/site-packages
 
   mkdir -p $INSTALL/usr/lib/kodi
     cp $PKG_DIR/scripts/kodi-config $INSTALL/usr/lib/kodi
     cp $PKG_DIR/scripts/kodi.sh $INSTALL/usr/lib/kodi
 
-  mkdir -p $INSTALL/usr/lib/openelec
-    cp $PKG_DIR/scripts/systemd-addon-wrapper $INSTALL/usr/lib/openelec
+  mkdir -p $INSTALL/usr/lib/libreelec
+    cp $PKG_DIR/scripts/systemd-addon-wrapper $INSTALL/usr/lib/libreelec
 
   mkdir -p $INSTALL/usr/bin
     cp $PKG_DIR/scripts/cputemp $INSTALL/usr/bin
@@ -320,11 +324,15 @@ post_makeinstall_target() {
     cp $PKG_DIR/config/sources.xml $INSTALL/usr/share/kodi/config
 
 # install project specific configs
-    if [ -f $PROJECT_DIR/$PROJECT/kodi/guisettings.xml ]; then
+    if [ -n "$DEVICE" -a -f $PROJECT_DIR/$PROJECT/devices/$DEVICE/kodi/guisettings.xml ]; then
+      cp -R $PROJECT_DIR/$PROJECT/devices/$DEVICE/kodi/guisettings.xml $INSTALL/usr/share/kodi/config
+    elif [ -f $PROJECT_DIR/$PROJECT/kodi/guisettings.xml ]; then
       cp -R $PROJECT_DIR/$PROJECT/kodi/guisettings.xml $INSTALL/usr/share/kodi/config
     fi
 
-    if [ -f $PROJECT_DIR/$PROJECT/kodi/sources.xml ]; then
+    if [ -n "$DEVICE" -a -f $PROJECT_DIR/$PROJECT/devices/$DEVICE/kodi/sources.xml ]; then
+      cp -R $PROJECT_DIR/$PROJECT/devices/$DEVICE/kodi/sources.xml $INSTALL/usr/share/kodi/config
+    elif [ -f $PROJECT_DIR/$PROJECT/kodi/sources.xml ]; then
       cp -R $PROJECT_DIR/$PROJECT/kodi/sources.xml $INSTALL/usr/share/kodi/config
     fi
 
