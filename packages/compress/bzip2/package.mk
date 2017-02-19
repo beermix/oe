@@ -42,7 +42,7 @@ make_host() {
 }
 
 makeinstall_host() {
-  make install PREFIX=$ROOT/$TOOLCHAIN -j1
+  : #make install PREFIX=$ROOT/$TOOLCHAIN -j1
 }
 
 pre_build_target() {
@@ -58,8 +58,8 @@ pre_make_target() {
 }
 
 make_target() {
-  make -f Makefile libbz2.a bzip2 bzip2recover CC=$CC CFLAGS="$CFLAGS -fPIC -DPIC" LDFLAGS="-Wl,-z,relro" -j1
-  #make -f Makefile-libbz2_so CC=$CC CFLAGS="$CFLAGS -fPIC -DPIC" LDFLAGS="-Wl,-z,relro" -j1
+  make -f Makefile libbz2.a bzip2 bzip2recover CC=$CC CFLAGS="$CFLAGS -fPIC -DPIC" -j1
+  #make -f Makefile-libbz2_so CC=$CC CFLAGS="$CFLAGS -fPIC -DPIC" -j1
 }
 
 makeinstall_target() {
