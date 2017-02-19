@@ -1,5 +1,5 @@
 PKG_NAME="squid"
-PKG_VERSION="3.5.23"
+PKG_VERSION="3.5.24"
 PKG_URL="http://www.squid-cache.org/Versions/v3/3.5/squid-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain fuse netbsd-curses openssl glib libcap libnetfilter_conntrack"
 PKG_SECTION="tools"
