@@ -40,7 +40,7 @@ pre_build_host() {
 
 make_host() {
   cd $ROOT/$PKG_BUILD/.$HOST_NAME
-  make -f Makefile-libbz2_so CC=$HOST_CC CFLAGS="$CFLAGS -fPIC -DPIC" LDFLAGS="$LDFLAGS" AR="$AR"
+  make -f Makefile-libbz2_so CC=$HOST_CC CFLAGS="$CFLAGS -fPIC -DPIC" -j1
 }
 
 makeinstall_host() {
@@ -53,7 +53,7 @@ pre_build_target() {
 }
 
 make_target() {
-  make bzip2 bzip2recover libbz2.a CC=$CC CFLAGS="$CFLAGS -fPIC -DPIC" LDFLAGS="$LDFLAGS" AR="$AR"
+  make bzip2 bzip2recover libbz2.a CC=$CC CFLAGS="$CFLAGS -fPIC -DPIC" LDFLAGS="$LDFLAGS" AR="$AR" -j1
 }
 
 makeinstall_target() {
