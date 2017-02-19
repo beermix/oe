@@ -31,7 +31,8 @@ TARGET_CONFIGURE_OPTS="--host=$TARGET_NAME \
 			  --libexecdir=/usr/lib \
 			  --localstatedir=/var \
 			  --disable-static \
-			  --enable-shared"
+			  --enable-shared \
+			  --enable-silent-rules"
 
 TARGET_CMAKE_OPTS="-DCMAKE_BUILD_TYPE=Release \
 		     -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
