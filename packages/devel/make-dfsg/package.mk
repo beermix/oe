@@ -28,7 +28,7 @@ PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_HOST="ac_cv_func_gettimeofday=no --enable-load --without-guile"
 			 
-PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
+PKG_CONFIGURE_OPTS_TARGET="-C $PKG_CONFIGURE_OPTS_HOST"
 			 
 post_makeinstall_host() {
   ln -sf make $ROOT/$TOOLCHAIN/bin/gmake
