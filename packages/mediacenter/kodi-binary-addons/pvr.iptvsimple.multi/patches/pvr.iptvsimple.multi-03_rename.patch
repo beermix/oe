@@ -1,0 +1,116 @@
+diff -Naurp pvr.iptvsimple.multi-ae9bc1d/pvr.iptvsimple.multi/addon.xml.in pvr.iptvsimple.multi-ae9bc1d-patch/pvr.iptvsimple.multi/addon.xml.in
+--- pvr.iptvsimple.multi-ae9bc1d/pvr.iptvsimple.multi/addon.xml.in	2016-02-23 17:05:20.000000000 +0200
++++ pvr.iptvsimple.multi-ae9bc1d-patch/pvr.iptvsimple.multi/addon.xml.in	2016-02-23 17:07:45.000000000 +0200
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <addon
+-  id="pvr.iptvsimple"
++  id="pvr.iptvsimple.multi"
+   version="3.0.1"
+   name="PVR IPTV Simple Client (multi)"
+   provider-name="nightik">
+diff -Naurp pvr.iptvsimple.multi-ae9bc1d/pvr.iptvsimple.multi/resources/gensettings.sh pvr.iptvsimple.multi-ae9bc1d-patch/pvr.iptvsimple.multi/resources/gensettings.sh
+--- pvr.iptvsimple.multi-ae9bc1d/pvr.iptvsimple.multi/resources/gensettings.sh	2016-02-23 17:05:20.000000000 +0200
++++ pvr.iptvsimple.multi-ae9bc1d-patch/pvr.iptvsimple.multi/resources/gensettings.sh	2016-02-23 17:11:38.000000000 +0200
+@@ -35,7 +35,7 @@ HEADER='<?xml version="1.0" encoding="ut
+ SOURCE_SETTINGS='
+     <!-- _______________________________ Source @SRC@ _____________________________________ -->
+     <setting label="" type="lsep" visible="gt(@POS@,@COUNT@)"/>
+-    <setting label="$ADDON[pvr.iptvsimple 30052] @SRC@" type="lsep" visible="gt(@POS@,@COUNT@)"/>
++    <setting label="$ADDON[pvr.iptvsimple.multi 30052] @SRC@" type="lsep" visible="gt(@POS@,@COUNT@)"/>
+     <setting type="sep" visible="gt(@POS@,@COUNT@)"/>
+ 
+     <!-- Channels list -->
+diff -Naurp pvr.iptvsimple.multi-ae9bc1d/pvr.iptvsimple.multi/resources/settings.xml pvr.iptvsimple.multi-ae9bc1d-patch/pvr.iptvsimple.multi/resources/settings.xml
+--- pvr.iptvsimple.multi-ae9bc1d/pvr.iptvsimple.multi/resources/settings.xml	2016-02-23 17:05:20.000000000 +0200
++++ pvr.iptvsimple.multi-ae9bc1d-patch/pvr.iptvsimple.multi/resources/settings.xml	2016-02-23 17:11:23.000000000 +0200
+@@ -29,7 +29,7 @@
+     
+     <!-- _______________________________ Source 1 _____________________________________ -->
+     <setting label="" type="lsep" visible="gt(-1,-1)"/>
+-    <setting label="$ADDON[pvr.iptvsimple 30052] 1" type="lsep" visible="gt(-2,-1)"/>
++    <setting label="$ADDON[pvr.iptvsimple.multi 30052] 1" type="lsep" visible="gt(-2,-1)"/>
+     <setting type="sep" visible="gt(-3,-1)"/>
+     
+     <!-- Channels list -->
+@@ -63,7 +63,7 @@
+     
+     <!-- _______________________________ Source 2 _____________________________________ -->
+     <setting label="" type="lsep" visible="gt(-25,0)"/>
+-    <setting label="$ADDON[pvr.iptvsimple 30052] 2" type="lsep" visible="gt(-26,0)"/>
++    <setting label="$ADDON[pvr.iptvsimple.multi 30052] 2" type="lsep" visible="gt(-26,0)"/>
+     <setting type="sep" visible="gt(-27,0)"/>
+     
+     <!-- Channels list -->
+@@ -97,7 +97,7 @@
+     
+     <!-- _______________________________ Source 3 _____________________________________ -->
+     <setting label="" type="lsep" visible="gt(-49,1)"/>
+-    <setting label="$ADDON[pvr.iptvsimple 30052] 3" type="lsep" visible="gt(-50,1)"/>
++    <setting label="$ADDON[pvr.iptvsimple.multi 30052] 3" type="lsep" visible="gt(-50,1)"/>
+     <setting type="sep" visible="gt(-51,1)"/>
+     
+     <!-- Channels list -->
+@@ -131,7 +131,7 @@
+     
+     <!-- _______________________________ Source 4 _____________________________________ -->
+     <setting label="" type="lsep" visible="gt(-73,2)"/>
+-    <setting label="$ADDON[pvr.iptvsimple 30052] 4" type="lsep" visible="gt(-74,2)"/>
++    <setting label="$ADDON[pvr.iptvsimple.multi 30052] 4" type="lsep" visible="gt(-74,2)"/>
+     <setting type="sep" visible="gt(-75,2)"/>
+     
+     <!-- Channels list -->
+@@ -165,7 +165,7 @@
+     
+     <!-- _______________________________ Source 5 _____________________________________ -->
+     <setting label="" type="lsep" visible="gt(-97,3)"/>
+-    <setting label="$ADDON[pvr.iptvsimple 30052] 5" type="lsep" visible="gt(-98,3)"/>
++    <setting label="$ADDON[pvr.iptvsimple.multi 30052] 5" type="lsep" visible="gt(-98,3)"/>
+     <setting type="sep" visible="gt(-99,3)"/>
+     
+     <!-- Channels list -->
+@@ -199,7 +199,7 @@
+     
+     <!-- _______________________________ Source 6 _____________________________________ -->
+     <setting label="" type="lsep" visible="gt(-121,4)"/>
+-    <setting label="$ADDON[pvr.iptvsimple 30052] 6" type="lsep" visible="gt(-122,4)"/>
++    <setting label="$ADDON[pvr.iptvsimple.multi 30052] 6" type="lsep" visible="gt(-122,4)"/>
+     <setting type="sep" visible="gt(-123,4)"/>
+     
+     <!-- Channels list -->
+@@ -233,7 +233,7 @@
+     
+     <!-- _______________________________ Source 7 _____________________________________ -->
+     <setting label="" type="lsep" visible="gt(-145,5)"/>
+-    <setting label="$ADDON[pvr.iptvsimple 30052] 7" type="lsep" visible="gt(-146,5)"/>
++    <setting label="$ADDON[pvr.iptvsimple.multi 30052] 7" type="lsep" visible="gt(-146,5)"/>
+     <setting type="sep" visible="gt(-147,5)"/>
+     
+     <!-- Channels list -->
+@@ -267,7 +267,7 @@
+     
+     <!-- _______________________________ Source 8 _____________________________________ -->
+     <setting label="" type="lsep" visible="gt(-169,6)"/>
+-    <setting label="$ADDON[pvr.iptvsimple 30052] 8" type="lsep" visible="gt(-170,6)"/>
++    <setting label="$ADDON[pvr.iptvsimple.multi 30052] 8" type="lsep" visible="gt(-170,6)"/>
+     <setting type="sep" visible="gt(-171,6)"/>
+     
+     <!-- Channels list -->
+@@ -301,7 +301,7 @@
+     
+     <!-- _______________________________ Source 9 _____________________________________ -->
+     <setting label="" type="lsep" visible="gt(-193,7)"/>
+-    <setting label="$ADDON[pvr.iptvsimple 30052] 9" type="lsep" visible="gt(-194,7)"/>
++    <setting label="$ADDON[pvr.iptvsimple.multi 30052] 9" type="lsep" visible="gt(-194,7)"/>
+     <setting type="sep" visible="gt(-195,7)"/>
+     
+     <!-- Channels list -->
+@@ -335,7 +335,7 @@
+     
+     <!-- _______________________________ Source 10 _____________________________________ -->
+     <setting label="" type="lsep" visible="gt(-217,8)"/>
+-    <setting label="$ADDON[pvr.iptvsimple 30052] 10" type="lsep" visible="gt(-218,8)"/>
++    <setting label="$ADDON[pvr.iptvsimple.multi 30052] 10" type="lsep" visible="gt(-218,8)"/>
+     <setting type="sep" visible="gt(-219,8)"/>
+     
+     <!-- Channels list -->

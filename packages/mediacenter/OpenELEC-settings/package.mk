@@ -17,15 +17,11 @@
 ################################################################################
 
 PKG_NAME="OpenELEC-settings"
-PKG_VERSION="0.8.0"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="prop."
+PKG_VERSION="0.6.13"
 PKG_SITE="http://www.openelec.tv"
 PKG_GIT_URL="https://github.com/OpenELEC/service.openelec.settings.git"
 PKG_GIT_BRANCH="master"
 PKG_DEPENDS_TARGET="toolchain Python connman pygobject dbus-python"
-PKG_PRIORITY="optional"
 PKG_SECTION=""
 PKG_SHORTDESC="OpenELEC-settings: Settings dialog for OpenELEC"
 PKG_LONGDESC="OpenELEC-settings: is a settings dialog for OpenELEC"
@@ -33,7 +29,7 @@ PKG_LONGDESC="OpenELEC-settings: is a settings dialog for OpenELEC"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_MAKE_OPTS_TARGET="DISTRONAME=$DISTRONAME ROOT_PASSWORD=$ROOT_PASSWORD"
+PKG_MAKE_OPTS_TARGET="DISTRONAME=OpenELEC ROOT_PASSWORD=$ROOT_PASSWORD"
 
 if [ "$DISPLAYSERVER" = "x11" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET setxkbmap"
