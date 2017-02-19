@@ -32,11 +32,6 @@ configure_target() {
               no-rc5 \
               no-ssl3-method \
               no-idea \
-              no-sha0 \
-              no-krb5 \
-              no-whrlpool \
-              no-whirlpool \
-              no-jpake \
               no-heartbeats \
               enable-ec_nistp_64_gcc_128 \
               linux-x86_64 "-Wa,--noexecstack ${CFLAGS}"
