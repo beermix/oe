@@ -115,10 +115,10 @@ configure_target() {
               --cc="$CC" \
               --ld="$CC" \
               --host-cc="$HOST_CC" \
-              --host-cflags="$HOST_CFLAGS -D_BSD_SOURCE" \
+              --host-cflags="$HOST_CFLAGS" \
               --host-ldflags="$HOST_LDFLAGS" \
               --host-libs="-lm" \
-              --extra-cflags="$CFLAGS" \
+              --extra-cflags="$CFLAGS -D_DEFAULT_SOURCE" \
               --extra-ldflags="$LDFLAGS -fPIC" \
               --extra-libs="$FFMPEG_LIBS" \
               --extra-version="" \
@@ -162,7 +162,6 @@ configure_target() {
               $FFMPEG_VAAPI \
               $FFMPEG_VDPAU \
               --disable-dxva2 \
-              --enable-runtime-cpudetect \
               $FFMPEG_TABLES \
               --disable-memalign-hack \
               --enable-encoders \
@@ -217,7 +216,24 @@ configure_target() {
               $FFMPEG_FPU \
               --enable-yasm \
               --disable-symver \
-              --disable-lto
+              --disable-lto \
+              --disable-iconv \
+              --enable-opengl \
+              --enable-thumb \
+              --enable-ftrapv \
+              --disable-runtime-cpudetect \
+              --enable-mmx \
+              --enable-sse \
+              --enable-sse2 \
+              --enable-sse3 \
+              --enable-ssse3 \
+              --enable-sse4 \
+              --enable-sse42 \
+              --enable-avx
+              
+              
+              
+              
 }
 
 post_makeinstall_target() {
