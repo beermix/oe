@@ -1,0 +1,73 @@
+diff -Naur a/720p/AddonBrowser.xml b/720p/AddonBrowser.xml
+--- a/720p/AddonBrowser.xml	2016-01-13 09:58:29.538536672 +0300
++++ b/720p/AddonBrowser.xml	2016-01-13 09:58:54.306835475 +0300
+@@ -1,9 +1,9 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <window>
+-	<defaultcontrol always="true">50</defaultcontrol>
++	<defaultcontrol always="true">51</defaultcontrol>
+ 	<menucontrol>9000</menucontrol>
+ 	<onload condition="!Skin.HasSetting(FirstTimeRun)">ActivateWindow(1112)</onload>
+-	<views>50,51,550,551</views>
++	<views>51,50,550,551</views>
+ 	<controls>
+ 		<include>CommonBackground</include>
+ 		<include>ContentPanelBackgrounds</include>
+diff -Naur a/720p/MyMusicNav.xml b/720p/MyMusicNav.xml
+--- a/720p/MyMusicNav.xml	2016-01-13 09:58:29.545536673 +0300
++++ b/720p/MyMusicNav.xml	2016-01-13 10:00:18.669424372 +0300
+@@ -1,9 +1,9 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <window>
+-	<defaultcontrol always="true">50</defaultcontrol>
++	<defaultcontrol always="true">51</defaultcontrol>
+ 	<menucontrol>9000</menucontrol>
+ 	<onload condition="!Skin.HasSetting(FirstTimeRun)">ActivateWindow(1112)</onload>
+-	<views>50,51,500,550,551,509,506,511,512,513</views>
++	<views>51,50,500,550,551,509,506,511,512,513</views>
+ 	<controls>
+ 		<include>CommonBackground</include>
+ 		<include>ContentPanelBackgrounds</include>
+--- a/720p/MyPics.xml	2016-01-13 09:58:29.533536672 +0300
++++ b/720p/MyPics.xml	2016-01-13 10:00:45.420925507 +0300
+@@ -1,9 +1,9 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <window>
+-	<defaultcontrol always="true">50</defaultcontrol>
++	<defaultcontrol always="true">500</defaultcontrol>
+ 	<menucontrol>9000</menucontrol>
+ 	<onload condition="!Skin.HasSetting(FirstTimeRun)">ActivateWindow(1112)</onload>
+-	<views>50,51,550,551,500,514,510</views>
++	<views>50,51,550,551,500,510,514</views>
+ 	<controls>
+ 		<include>CommonBackground</include>
+ 		<control type="image">
+diff -Naur a/720p/MyPrograms.xml b/720p/MyPrograms.xml
+--- a/720p/MyPrograms.xml	2016-01-13 09:58:29.533536672 +0300
++++ b/720p/MyPrograms.xml	2016-01-13 10:00:56.626692007 +0300
+@@ -1,9 +1,9 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <window>
+-	<defaultcontrol always="true">50</defaultcontrol>
++	<defaultcontrol always="true">51</defaultcontrol>
+ 	<menucontrol>9000</menucontrol>
+ 	<onload condition="!Skin.HasSetting(FirstTimeRun)">ActivateWindow(1112)</onload>
+-	<views>50,51,500,550,551</views>
++	<views>51,50,500,550,551</views>
+ 	<controls>
+ 		<include>CommonBackground</include>
+ 		<include>ContentPanelBackgrounds</include>
+diff -Naur a/720p/MyVideoNav.xml b/720p/MyVideoNav.xml
+--- a/720p/MyVideoNav.xml	2016-01-13 09:58:29.547536673 +0300
++++ b/720p/MyVideoNav.xml	2016-01-13 10:01:16.247157464 +0300
+@@ -1,8 +1,8 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <window>
+-	<defaultcontrol always="true">50</defaultcontrol>
++	<defaultcontrol always="true">51</defaultcontrol>
+ 	<menucontrol>9000</menucontrol>
+-	<views>50,51,500,550,551,560,501,508,504,503,515,505,511</views>
++	<views>51,50,500,550,551,560,501,508,504,503,515,505,511</views>
+ 	<onload condition="!Skin.HasSetting(FirstTimeRun)">ActivateWindow(1112)</onload>
+ 	<controls>
+ 		<include>CommonBackground</include>
