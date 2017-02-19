@@ -29,7 +29,7 @@ PKG_LONGDESC="The Glibc package contains the main C library. This library provid
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/bash \
+PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            libc_cv_slibdir=/lib \
                            ac_cv_path_PERL= \
                            ac_cv_prog_MAKEINFO= \
@@ -126,12 +126,10 @@ post_makeinstall_target() {
   done
   rm -rf $INSTALL/usr/lib/audit
   rm -rf $INSTALL/usr/lib/glibc
-  rm -rf $INSTALL/usr/lib/libc_pic
   rm -rf $INSTALL/usr/lib/*.o
-  rm -rf $INSTALL/usr/lib/*.map
   rm -rf $INSTALL/var
 
-# remove locales and charmaps
+# remove unneeded libs
   rm -rf $INSTALL/usr/lib/libBrokenLocale*
   rm -rf $INSTALL/usr/lib/libSegFault.so
   rm -rf $INSTALL/usr/lib/libmemusage.so
@@ -140,6 +138,7 @@ post_makeinstall_target() {
 # remove ldscripts
   rm -rf $INSTALL/usr/lib/libc.so
   rm -rf $INSTALL/usr/lib/libpthread.so
+# remove locales and charmaps
   rm -rf $INSTALL/usr/share/i18n/charmaps
   if [ -n "$GLIBC_LOCALES" ]; then
     mkdir -p $INSTALL/usr/lib/locale
