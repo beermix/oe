@@ -18,7 +18,13 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_vfork_works=no \
 			      --disable-tests \
 			      --disable-guile \
 			      --disable-valgrind-tests \
+			      --disable-full-test-suite \
 			      --with-included-unistring \
+			      --disable-tools \
+			      --without-idn \
+			      --with-gnu-ld \
+			      --disable-rpath \
+			      --with-pic \
 			      --without-lzo"
 
 post_makeinstall_target() {
