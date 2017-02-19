@@ -29,7 +29,6 @@ PKG_LONGDESC="Python is an interpreted object-oriented programming language, and
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-MAKEFLAGS=-j1
 
 PY_DISABLED_MODULES="_tkinter nis gdbm bsddb ossaudiodev"
 

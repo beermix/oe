@@ -31,6 +31,8 @@ PKG_LONGDESC="bzip2 is a freely available, patent free (see below), high-quality
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
+MAKEFLAGS=-j1
+
 pre_build_host() {
   mkdir -p $ROOT/$PKG_BUILD/.$HOST_NAME
   cp -r $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$HOST_NAME
@@ -38,7 +40,7 @@ pre_build_host() {
 
 make_host() {
   cd $ROOT/$PKG_BUILD/.$HOST_NAME
-  make -f Makefile-libbz2_so CC=$HOST_CC CFLAGS="$CFLAGS -fPIC -DPIC"
+  make -f Makefile-libbz2_so CC=$HOST_CC CFLAGS="-O2 -fstack-protector-strong -Wformat -Werror=format-security -fPIC -DPIC -Wall" LDFLAGS="-Wl,-z,relro" -j1
 }
 
 makeinstall_host() {
@@ -50,22 +52,17 @@ pre_build_target() {
   cp -r $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$TARGET_NAME
 }
 
-pre_make_target() {
-  cd $ROOT/$PKG_BUILD/.$TARGET_NAME
-  sed -e 's/^CFLAGS=\(.*\)$/CFLAGS=\1 \$(BIGFILES)/' -i ./Makefile-libbz2_so
-  sed -i "s|-O2|${CFLAGS}|g" Makefile
-  sed -i "s|-O2|${CFLAGS}|g" Makefile-libbz2_so
-}
-
 make_target() {
-  make -f Makefile libbz2.a bzip2 bzip2recover CC=$CC CFLAGS="$CFLAGS -fPIC -DPIC"
+  make bzip2 bzip2recover libbz2.a CC=$CC CFLAGS="-O2 -fstack-protector-strong -Wformat -Werror=format-security -fPIC -DPIC -Wall"  AR="$AR" LDFLAGS="-Wl,-z,relro" -j1
 }
 
 makeinstall_target() {
+  mkdir -p $SYSROOT_PREFIX/usr/include
+    cp bzlib.h $SYSROOT_PREFIX/usr/include
   mkdir -p $SYSROOT_PREFIX/usr/lib
-  cp libbz2.a $SYSROOT_PREFIX/usr/lib
-  
+    cp -P libbz2.a $SYSROOT_PREFIX/usr/lib
+
   mkdir -p $INSTALL/usr/bin
-  cp bzip2 $INSTALL/usr/bin
-  cp bzip2recover $INSTALL/usr/bin
+    cp -P bzip2 $INSTALL/usr/bin
+     cp -P bzip2recover $INSTALL/usr/bin
 }
