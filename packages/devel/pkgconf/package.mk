@@ -11,5 +11,5 @@ PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
 
 post_makeinstall_host() {
-  ln -sfi pkgconf $ROOT/$TOOLCHAIN/bin/pkg-config
+  ln -sfv pkgconf $ROOT/$TOOLCHAIN/bin/pkg-config
 }
