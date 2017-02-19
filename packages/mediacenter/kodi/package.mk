@@ -17,18 +17,22 @@
 ################################################################################
 
 PKG_NAME="kodi"
-#PKG_VERSION="c6f6e0b"
-PKG_VERSION="beac347"
-PKG_GIT_URL="https://github.com/xbmc/xbmc.git"
-PKG_GIT_BRANCH="Jarvis"
-PKG_DEPENDS_TARGET="toolchain kodi:host xmlstarlet:host libsquish boost Python zlib bzip2 systemd pciutils lzo pcre swig:host libass curl rtmpdump fontconfig fribidi tinyxml libjpeg-turbo libpng tiff freetype jasper libcdio libmpeg2 taglib libxml2 libxslt yajl sqlite ffmpeg crossguid giflib"
-PKG_DEPENDS_HOST="lzo:host libpng:host libjpeg-turbo:host giflib:host"
+PKG_VERSION="07daa55"
+PKG_GIT_URL="https://github.com/xbmc/xbmc"
+PKG_GIT_BRANCH="Krypton"
+PKG_KEEP_CHECKOUT="yes"
+PKG_PATCH_DIRS="$LINUX"
+PKG_DEPENDS_TARGET="toolchain kodi:host libsquish xmlstarlet:host Python zlib systemd pciutils dbus lzo pcre swig:host libass curl fontconfig fribidi tinyxml libjpeg-turbo freetype libcdio libdvdnav taglib libxml2 libxslt yajl sqlite ffmpeg crossguid giflib opengl"
+PKG_DEPENDS_HOST="toolchain"
+PKG_DEPENDS_BOOTSTRAP="toolchain lzo:host libpng:host libjpeg-turbo:host giflib:host"
+PKG_PRIORITY="optional"
 PKG_SECTION="mediacenter"
 PKG_SHORTDESC="kodi: Kodi Mediacenter"
 PKG_LONGDESC="Kodi Media Center (which was formerly named Xbox Media Center or XBMC) is a free and open source cross-platform media player and home entertainment system software with a 10-foot user interface designed for the living-room TV. Its graphical user interface allows the user to easily manage video, photos, podcasts, and music from a computer, optical disk, local network, and the internet using a remote control."
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
+PKG_USE_CMAKE="no"
 
 # configure GPU drivers and dependencies:
   get_graphicdrivers
@@ -46,7 +50,7 @@ fi
 
 if [ ! "$OPENGL" = "no" ]; then
 # for OpenGL (GLX) support
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET $OPENGL glu glew"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET $OPENGL glu"
   KODI_OPENGL="--enable-gl"
 else
   KODI_OPENGL="--disable-gl"
@@ -188,7 +192,7 @@ fi
 if [ ! "$KODIPLAYER_DRIVER" = default ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET $KODIPLAYER_DRIVER"
 
-  if [ "$KODIPLAYER_DRIVER" = bcm2835-firmware ]; then
+  if [ "$KODIPLAYER_DRIVER" = bcm2835-driver ]; then
     KODI_OPENMAX="--enable-openmax"
     KODI_PLAYER="--enable-player=omxplayer"
     KODI_CODEC="--with-platform=raspberry-pi"
@@ -198,7 +202,6 @@ if [ ! "$KODIPLAYER_DRIVER" = default ]; then
     KODI_CXXFLAGS="$KODI_CXXFLAGS $BCM2835_INCLUDES"
   elif [ "$KODIPLAYER_DRIVER" = libfslvpuwrap ]; then
     KODI_CODEC="--enable-codec=imxvpu"
-    PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET gpu-viv-g2d"
   elif [ "$KODIPLAYER_DRIVER" = libamcodec ]; then
     KODI_CODEC="--enable-codec=amcodec"
   else
@@ -220,21 +223,16 @@ else
   KODI_VAAPI="--disable-vaapi"
 fi
 
-export CXX_FOR_BUILD="$HOST_CXX"
-export CC_FOR_BUILD="$HOST_CC"
-export CXXFLAGS_FOR_BUILD="$HOST_CXXFLAGS"
-export CFLAGS_FOR_BUILD="$HOST_CFLAGS"
-export LDFLAGS_FOR_BUILD="$HOST_LDFLAGS"
 
-export PYTHON_VERSION="2.7"
+
+export PYTHON_VERSION=2.7
 export PYTHON_CPPFLAGS="-I$SYSROOT_PREFIX/usr/include/python$PYTHON_VERSION"
 export PYTHON_LDFLAGS="-L$SYSROOT_PREFIX/usr/lib/python$PYTHON_VERSION -lpython$PYTHON_VERSION"
 export PYTHON_SITE_PKG="$SYSROOT_PREFIX/usr/lib/python$PYTHON_VERSION/site-packages"
-export ac_python_version="$PYTHON_VERSION"
-
-export GIT_REV="$PKG_VERSION"
 
 PKG_CONFIGURE_OPTS_TARGET="gl_cv_func_gettimeofday_clobber=no \
+                           ac_python_version=$PYTHON_VERSION \
+                           --disable-libbluetooth \
                            --disable-debug \
                            --disable-optimizations \
                            $KODI_OPENGL \
@@ -278,36 +276,41 @@ PKG_CONFIGURE_OPTS_TARGET="gl_cv_func_gettimeofday_clobber=no \
 
 pre_configure_host() {
 # kodi fails to build in subdirs
-  cd $ROOT/$PKG_BUILD
-    rm -rf .$HOST_NAME
+  rm -rf $ROOT/$PKG_BUILD/.$HOST_NAME
+}
 
-  echo "$PKG_VERSION" > VERSION
+configure_host() {
+  : # not needed
 }
 
 make_host() {
-  make -C tools/depends/native/JsonSchemaBuilder
-  make -C tools/depends/native/TexturePacker
+  mkdir -p $ROOT/$PKG_BUILD/tools/depends/native/JsonSchemaBuilder/bin && cd $_
+  cmake -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+        ..
+  make
+  mkdir -p $ROOT/$PKG_BUILD/tools/depends/native/TexturePacker/bin && cd $_
+  cmake -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+        -DCORE_SOURCE_DIR=$ROOT/$PKG_BUILD \
+        -DCMAKE_CXX_FLAGS="-std=c++11 -DTARGET_POSIX -DTARGET_LINUX -D_LINUX -I$ROOT/$PKG_BUILD/xbmc/linux" \
+        ..
+  make
 }
 
 makeinstall_host() {
-  cp -PR tools/depends/native/JsonSchemaBuilder/native/JsonSchemaBuilder $ROOT/$TOOLCHAIN/bin
-  rm -f $ROOT/$TOOLCHAIN/bin/TexturePacker
-  cp -PR tools/depends/native/TexturePacker/native/TexturePacker $ROOT/$TOOLCHAIN/bin
+  cp -P $ROOT/$PKG_BUILD/tools/depends/native/TexturePacker/bin/TexturePacker $ROOT/$TOOLCHAIN/bin
 }
 
 pre_build_target() {
 # adding fake Makefile for stripped skin
-  mkdir -p $PKG_BUILD/addons/skin.confluence/media
-  touch $PKG_BUILD/addons/skin.confluence/media/Makefile.in
-
-# autoreconf
-  BOOTSTRAP_STANDALONE=1 make -C $PKG_BUILD -f bootstrap.mk
+  mkdir -p $ROOT/$PKG_BUILD/addons/skin.estuary/media
+  touch $ROOT/$PKG_BUILD/addons/skin.estuary/media/Makefile.in
 }
 
 pre_configure_target() {
 # kodi fails to build in subdirs
-  cd $ROOT/$PKG_BUILD
-    rm -rf .$TARGET_NAME
+  rm -rf $ROOT/$PKG_BUILD/.$TARGET_NAME
 
 # kodi should never be built with lto
   strip_lto
@@ -317,6 +320,9 @@ pre_configure_target() {
   export LIBS="$LIBS -lz"
 
   export JSON_BUILDER=$ROOT/$TOOLCHAIN/bin/JsonSchemaBuilder
+
+# autoreconf
+  BOOTSTRAP_STANDALONE=1 make -f $ROOT/$PKG_BUILD/bootstrap.mk
 }
 
 make_target() {
@@ -324,8 +330,8 @@ make_target() {
   SKIN_DIR="skin.`tolower $SKIN_DEFAULT`"
 
 # setup default skin inside the sources
-  sed -i -e "s|skin.confluence|$SKIN_DIR|g" $ROOT/$PKG_BUILD/xbmc/settings/Settings.h
-  sed -i -e "s|skin.confluence|$SKIN_DIR|g" $ROOT/$PKG_BUILD/system/settings/settings.xml
+  sed -i -e "s|skin.estuary|$SKIN_DIR|g" $ROOT/$PKG_BUILD/xbmc/system.h
+  sed -i -e "s|skin.estuary|$SKIN_DIR|g" $ROOT/$PKG_BUILD/system/settings/settings.xml
 
   make externals
   make kodi.bin
@@ -341,16 +347,19 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin/xbmc
   rm -rf $INSTALL/usr/bin/xbmc-standalone
   rm -rf $INSTALL/usr/lib/kodi/*.cmake
-
-  # more binaddons cross compile badness meh
-  sed -i -e "s:INCLUDE_DIR /usr/include/kodi:INCLUDE_DIR $SYSROOT_PREFIX/usr/include/kodi:g" $SYSROOT_PREFIX/usr/lib/kodi/kodi-config.cmake
+  rm -rf $INSTALL/usr/share/applications
+  rm -rf $INSTALL/usr/share/icons
+  rm -rf $INSTALL/usr/share/kodi/addons/skin.estouchy
+  rm -rf $INSTALL/usr/share/kodi/addons/service.xbmc.versioncheck
+  rm -rf $INSTALL/usr/share/kodi/addons/visualization.vortex
+  rm -rf $INSTALL/usr/share/xsessions
 
   mkdir -p $INSTALL/usr/lib/kodi
     cp $PKG_DIR/scripts/kodi-config $INSTALL/usr/lib/kodi
     cp $PKG_DIR/scripts/kodi.sh $INSTALL/usr/lib/kodi
 
-  mkdir -p $INSTALL/usr/lib/openelec
-    cp $PKG_DIR/scripts/systemd-addon-wrapper $INSTALL/usr/lib/openelec
+  mkdir -p $INSTALL/usr/lib/libreelec
+    cp $PKG_DIR/scripts/systemd-addon-wrapper $INSTALL/usr/lib/libreelec
 
   mkdir -p $INSTALL/usr/bin
     cp $PKG_DIR/scripts/cputemp $INSTALL/usr/bin
@@ -362,28 +371,16 @@ post_makeinstall_target() {
     rm -rf $INSTALL/usr/lib/kodi/kodi-xrandr
   fi
 
-  rm -rf $INSTALL/usr/share/applications
-  rm -rf $INSTALL/usr/share/icons
-  rm -rf $INSTALL/usr/share/kodi/addons/service.xbmc.versioncheck
-  rm -rf $INSTALL/usr/share/kodi/addons/visualization.vortex
-  rm -rf $INSTALL/usr/share/xsessions
-
   mkdir -p $INSTALL/usr/share/kodi/addons
     cp -R $PKG_DIR/config/os.openelec.tv $INSTALL/usr/share/kodi/addons
     $SED "s|@OS_VERSION@|$OS_VERSION|g" -i $INSTALL/usr/share/kodi/addons/os.openelec.tv/addon.xml
-    cp -R $PKG_DIR/config/repository.openelec.tv $INSTALL/usr/share/kodi/addons
-    $SED "s|@ADDON_URL@|$ADDON_URL|g" -i $INSTALL/usr/share/kodi/addons/repository.openelec.tv/addon.xml
     cp -R $PKG_DIR/config/os.libreelec.tv $INSTALL/usr/share/kodi/addons
     $SED "s|@OS_VERSION@|$OS_VERSION|g" -i $INSTALL/usr/share/kodi/addons/os.libreelec.tv/addon.xml
-    cp -R $PKG_DIR/config/repository.openelec.tv $INSTALL/usr/share/kodi/addons
-    $SED "s|@ADDON_URL@|$ADDON_URL|g" -i $INSTALL/usr/share/kodi/addons/repository.openelec.tv/addon.xml
-    cp -R $PKG_DIR/config/os.alexelec $INSTALL/usr/share/kodi/addons
-    $SED "s|@OS_VERSION@|$OS_VERSION|g" -i $INSTALL/usr/share/kodi/addons/os.alexelec/addon.xml
-    cp -R $PKG_DIR/config/repository.alexelec $INSTALL/usr/share/kodi/addons
-    $SED "s|@ADDON_URL@|$ADDON_URL|g" -i $INSTALL/usr/share/kodi/addons/repository.alexelec/addon.xml
+    cp -R $PKG_DIR/config/repository.libreelec.tv $INSTALL/usr/share/kodi/addons
+    $SED "s|@ADDON_URL@|$ADDON_URL|g" -i $INSTALL/usr/share/kodi/addons/repository.libreelec.tv/addon.xml
 
-  mkdir -p $INSTALL/usr/lib/python"$PYTHON_VERSION"/site-packages/kodi
-    cp -R tools/EventClients/lib/python/* $INSTALL/usr/lib/python"$PYTHON_VERSION"/site-packages/kodi
+  mkdir -p $INSTALL/usr/lib/python$PYTHON_VERSION/site-packages/kodi
+    cp -R tools/EventClients/lib/python/* $INSTALL/usr/lib/python$PYTHON_VERSION/site-packages/kodi
 
   mkdir -p $INSTALL/usr/share/kodi/config
     cp $PKG_DIR/config/guisettings.xml $INSTALL/usr/share/kodi/config
@@ -412,10 +409,25 @@ post_makeinstall_target() {
       cp $PKG_DIR/config/appliance.xml $INSTALL/usr/share/kodi/system/settings
     fi
 
+  # update addon manifest
+  ADDON_MANIFEST=$INSTALL/usr/share/kodi/system/addon-manifest.xml
+  xmlstarlet ed -L -d "/addons/addon[text()='service.xbmc.versioncheck']" $ADDON_MANIFEST
+  xmlstarlet ed -L -d "/addons/addon[text()='skin.estouchy']" $ADDON_MANIFEST
+  xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "peripheral.joystick" $ADDON_MANIFEST
+  xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "os.libreelec.tv" $ADDON_MANIFEST
+  xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "repository.libreelec.tv" $ADDON_MANIFEST
+  xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "service.libreelec.settings" $ADDON_MANIFEST
+
+  # more binaddons cross compile badness meh
+    sed -i -e "s:INCLUDE_DIR /usr/include/kodi:INCLUDE_DIR $SYSROOT_PREFIX/usr/include/kodi:g" $SYSROOT_PREFIX/usr/lib/kodi/kodi-config.cmake
+
+
   if [ "$KODI_EXTRA_FONTS" = yes ]; then
     mkdir -p $INSTALL/usr/share/kodi/media/Fonts
       cp $PKG_DIR/fonts/*.ttf $INSTALL/usr/share/kodi/media/Fonts
   fi
+
+  debug_strip $INSTALL/usr/lib/kodi/kodi.bin
 }
 
 post_install() {

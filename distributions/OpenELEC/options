@@ -62,7 +62,7 @@
 
 # build and install with DVDCSS support
 # (DVD decryption support in KODI) (yes / no)
-  KODI_DVDCSS_SUPPORT="yes"
+  KODI_DVDCSS_SUPPORT="no"
 
 # install extra kernel drivers, see configfiles in packages/linux/config/*.config
 # or projects/*/linux/*.config or distributions/*/linux/*.config

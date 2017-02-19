@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="mariadb"
-PKG_VERSION="10.1.21"
+PKG_VERSION="10.2.4"
 PKG_SITE="http://www.mariadb.org"
 PKG_URL="https://downloads.mariadb.org/interstitial/$PKG_NAME-$PKG_VERSION/source/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST=""
@@ -119,6 +119,7 @@ configure_host() {
         -DWITH_SYSTEMD=ON \
         -DWITH_LIBWRAP=OFF \
         -DWITH_WSREP=OFF \
+        -DSECURITY_HARDENED=OFF \
         ..
 }
 
@@ -158,6 +159,15 @@ configure_target() {
         -DWITH_SYSTEMD=ON \
         -DWITH_LIBWRAP=OFF \
         -DSECURITY_HARDENED=OFF \
+        -DWITH_UNIT_TESTS=OFF \
+        -DWITH_WSREP=OFF \
+        -DPLUGIN_WSREP_INFO=NO \
+        -DPLUGIN_LOCALES=AUTO \
+        -DPLUGIN_FEEDBACK=NO \
+        -DNOT_FOR_DISTRIBUTION=ON \
+        -DPLUGIN_QA_AUTH_SERVER=NO \
+        -DPLUGIN_QA_AUTH_INTERFACE=NO \
+        -DPLUGIN_QA_AUTH_CLIENT=NO \
         -DWITH_SSL=$SYSROOT_PREFIX/usr \
         $MARIADB_OPTS \
         ..
