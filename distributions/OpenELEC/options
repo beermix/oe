@@ -40,29 +40,29 @@
   KODI_EXTRA_FONTS="yes"
 
 # build and install PulseAudio support (yes / no)
-  PULSEAUDIO_SUPPORT="no"
+  PULSEAUDIO_SUPPORT="yes"
 
 # build and install espeak support (yes / no)
-  ESPEAK_SUPPORT="no"
+  ESPEAK_SUPPORT="yes"
 
 # build and install with non-free support
 # (RAR compression support in KODI) (yes / no)
   KODI_NONFREE_SUPPORT="yes"
 
 # build and install with BluRay support (yes / no)
-  KODI_BLURAY_SUPPORT="no"
+  KODI_BLURAY_SUPPORT="yes"
 
 # build and install with BD+ support
 # (BD+ decryption support in KODI) (yes / no)
-  BLURAY_BDPLUS_SUPPORT="no"
+  BLURAY_BDPLUS_SUPPORT="yes"
 
 # build and install with AACS support
 # (BD decryption support in KODI) (yes / no)
-  BLURAY_AACS_SUPPORT="no"
+  BLURAY_AACS_SUPPORT="yes"
 
 # build and install with DVDCSS support
 # (DVD decryption support in KODI) (yes / no)
-  KODI_DVDCSS_SUPPORT="no"
+  KODI_DVDCSS_SUPPORT="yes"
 
 # install extra kernel drivers, see configfiles in packages/linux/config/*.config
 # or projects/*/linux/*.config or distributions/*/linux/*.config
@@ -84,19 +84,19 @@
   BLUETOOTH_SUPPORT="yes"
 
 # build and install with KODI webfrontend (yes / no)
-  KODI_WEBSERVER_SUPPORT="no"
+  KODI_WEBSERVER_SUPPORT="yes"
 
 # build and install Avahi (Zeroconf) daemon (yes / no)
-  AVAHI_DAEMON="no"
+  AVAHI_DAEMON="yes"
 
 # build with UPnP support (yes / no)
-  KODI_UPNP_SUPPORT="no"
+  KODI_UPNP_SUPPORT="yes"
 
 # build with MySQL support (yes / no)
-  KODI_MYSQL_SUPPORT="no"
+  KODI_MYSQL_SUPPORT="yes"
 
 # build xbmc with sshlib support (yes / no)
-  KODI_SSHLIB_SUPPORT="no"
+  KODI_SSHLIB_SUPPORT="yes"
 
 # build xbmc with optical drive support (yes / no)
   KODI_OPTICAL_SUPPORT="no"
@@ -111,7 +111,7 @@
   KODI_NFS_SUPPORT="no"
 
 # build with Samba Client support (mounting SAMBA shares with KODI) (yes / no)
-  KODI_SAMBA_SUPPORT="no"
+  KODI_SAMBA_SUPPORT="yes"
 
 # include initial language addons for Kodi (yes / no)
   KODI_LANGUAGE_ADDONS="no"
@@ -120,13 +120,13 @@
   NFS_SUPPORT="no"
 
 # build with Samba Client support (mounting samba shares via the OS) (yes / no)
-  SAMBA_SUPPORT="no"
+  SAMBA_SUPPORT="yes"
 
 # build and install Samba Server (yes / no)
-  SAMBA_SERVER="no"
+  SAMBA_SERVER="yes"
 
 # build and install SFTP Server (yes / no)
-  SFTP_SERVER="no"
+  SFTP_SERVER="yes"
 
 # build and install PPP support (yes / no)
   PPTP_SUPPORT="no"
