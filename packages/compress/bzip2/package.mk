@@ -52,25 +52,17 @@ pre_build_target() {
   cp -r $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$TARGET_NAME
 }
 
-pre_make_target() {
-  cd $ROOT/$PKG_BUILD/.$TARGET_NAME
-  sed -e "s,ln -s (lib.*),ln -snf \$$1; ln -snf libbz2.so.$PKG_VERSION libbz2.so,g" -i Makefile-libbz2_so
-}
-
 make_target() {
-  make -f Makefile-libbz2_so CC=$CC CFLAGS="$CFLAGS -fPIC -DPIC" LDFLAGS="$LDFLAGS" AR="$AR"
-}
-
-post_make_target() {
-  ln -snf libbz2.so.1.0 libbz2.so
+  make bzip2 bzip2recover libbz2.a CC=$CC CFLAGS="$CFLAGS -fPIC -DPIC" LDFLAGS="$LDFLAGS" AR="$AR"
 }
 
 makeinstall_target() {
   mkdir -p $SYSROOT_PREFIX/usr/include
     cp bzlib.h $SYSROOT_PREFIX/usr/include
   mkdir -p $SYSROOT_PREFIX/usr/lib
-    cp -P libbz2.so* $SYSROOT_PREFIX/usr/lib
+    cp -P libbz2.a $SYSROOT_PREFIX/usr/lib
 
-  mkdir -p $INSTALL/usr/lib
-    cp -P libbz2.so* $INSTALL/usr/lib
+  mkdir -p $INSTALL/usr/bin
+    cp -P bzip2 $INSTALL/usr/bin
+     cp -P bzip2recover $INSTALL/usr/bin
 }
