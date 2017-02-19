@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="fixesproto"
-PKG_VERSION="5.0"
+PKG_VERSION="4292ec1"
 PKG_SITE="http://www.X.org"
-PKG_URL="http://xorg.freedesktop.org/archive/individual/proto/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_GIT_URL="https://anongit.freedesktop.org/git/xorg/proto/fixesproto"
 PKG_DEPENDS_TARGET="toolchain util-macros"
 PKG_SECTION="x11/proto"
 PKG_SHORTDESC="fixesproto: Fixes extension headers"
