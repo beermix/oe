@@ -108,7 +108,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
 pre_build_target() {
 # broken autoreconf
   ( cd $PKG_BUILD
-    intltoolize --force
+    intltoolize --force --verbose
   )
 }
 
