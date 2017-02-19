@@ -31,7 +31,7 @@ PKG_AUTORECONF="yes"
 # package specific configure options
 PKG_CONFIGURE_OPTS_TARGET="--disable-dependency-tracking \
                            --disable-xmlto \
-                           --enable-alsamixer \
+                           --disable-alsamixer \
                            --disable-alsaconf \
                            --disable-alsaloop \
                            --enable-alsatest \
@@ -51,9 +51,9 @@ post_makeinstall_target() {
 # so we avoid resetting our soundconfig
   rm -rf $INSTALL/usr/lib/udev/rules.d/90-alsa-restore.rules
 
-  #for i in aconnect alsaucm amidi aplaymidi arecord arecordmidi aseqdump aseqnet iecset; do
-  #  rm -rf $INSTALL/usr/bin/$i
-  #done
+  for i in aconnect alsaucm amidi aplaymidi arecord arecordmidi aseqdump aseqnet iecset; do
+    rm -rf $INSTALL/usr/bin/$i
+  done
 
   mkdir -p $INSTALL/usr/lib/udev
     cp $PKG_DIR/scripts/soundconfig $INSTALL/usr/lib/udev

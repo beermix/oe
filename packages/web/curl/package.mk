@@ -28,14 +28,14 @@ PKG_NAME="curl"
 PKG_VERSION="7.52.1"
 PKG_SITE="http://curl.haxx.se"
 PKG_URL="http://curl.haxx.se/download/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain zlib openssl rtmpdump mbedtls libidn"
+PKG_DEPENDS_TARGET="toolchain zlib openssl rtmpdump libidn"
 PKG_SECTION="web"
 PKG_SHORTDESC="curl: Client and library for (HTTP, HTTPS, FTP, ...) transfers"
 PKG_LONGDESC="Curl is a client to get documents/files from or send documents to a server, using any of the supported protocols (HTTP, HTTPS, FTP, FTPS, GOPHER, DICT, TELNET, LDAP or FILE). The command is designed to work without user interaction or any kind of interactivity."
 
 PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            ac_cv_header_librtmp_rtmp_h=yes \
@@ -91,6 +91,9 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            --without-libssh2 \
                            --with-librtmp=$SYSROOT_PREFIX/usr \
                            --with-libidn \
+                           --without-mbedtls \
+                           --without-polarssl \
+                           --without-gnutls \
                            --without-nghttp2"
 
 pre_configure_target() {

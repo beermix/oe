@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="hyperion"
-PKG_VERSION="355a324"
+PKG_VERSION="6445c35"
 PKG_SITE="https://github.com/hyperion-project/hyperion"
 PKG_GIT_URL="https://github.com/hyperion-project/hyperion"
 PKG_DEPENDS_TARGET="toolchain Python libusb qtbase protobuf rpi_ws281x"

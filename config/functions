@@ -99,31 +99,6 @@ setup_toolchain() {
   esac
 }
 
-# get package's build dir
-get_build_dir() {
-  local _PKG_NAME="$(get_pkg_variable "$1" PKG_NAME)" _PKG_VERSION="$(get_pkg_version "$1")"
-  if [ -n "$_PKG_NAME" -a -n "$_PKG_VERSION" ]; then
-    echo $ROOT/$BUILD/${_PKG_NAME}-${_PKG_VERSION}
-  fi
-}
-
-get_pkg_version() {
-  get_pkg_variable "$1" PKG_VERSION
-}
-
-get_pkg_directory() {
-  get_pkg_variable "$1" PKG_DIR
-}
-
-# get variable ($2) for package ($1)
-get_pkg_variable() {
-  if [ -n "$1" -a -n "$2" ] ; then
-    cd $ROOT
-    . config/options $1
-    echo "${!2}"
-  fi
-}
-
 get_pkg_dir() {
   PKG_EXTRA_FOLDERS="$HOME/.openelec/projects/$PROJECT/packages \
                      $HOME/.openelec/packages \
@@ -255,19 +230,20 @@ strip_lto() {
   if [ -n "$GCC_OPTIM_LTO" ] ; then
     CFLAGS=`echo $CFLAGS | sed -e "s|$GCC_OPTIM_LTO||g"`
     CXXFLAGS=`echo $CXXFLAGS | sed -e "s|$GCC_OPTIM_LTO||g"`
-    TARGET_CFLAGS=`echo $TARGET_CFLAGS | sed -e "s|$GCC_OPTIM_LTO||g"`
-    TARGET_CXXFLAGS=`echo $TARGET_CXXFLAGS | sed -e "s|$GCC_OPTIM_LTO||g"`
   fi
   if [ -n "$LD_OPTIM_LTO" ] ; then
     LDFLAGS=`echo $LDFLAGS | sed -e "s|$LD_OPTIM_LTO||g"`
-    TARGET_LDFLAGS=`echo $TARGET_LDFLAGS | sed -e "s|$LD_OPTIM_LTO||g"`
   fi
 }
 
 strip_gold() {
   # strip out usage from GOLD linker
   LDFLAGS=`echo $LDFLAGS | sed -e "s|-fuse-ld=gold||g"`
-  TARGET_LDFLAGS=`echo $TARGET_LDFLAGS | sed -e "s|-fuse-ld=gold||g"`
+}
+
+strip_hard() {
+  LDFLAGS=`echo $LDFLAGS | sed -e "s|-fstack-protector-strong||g"`
+  CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=2||g"`
 }
 
 fix_module_depends() {

@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <settings>
-
   <section id="system">
     <category id="display">
       <group id="1">
         <setting id="videoscreen.screen">
           <visible>false</visible>
-        </setting>
-        <setting id="videoscreen.limitedrange">
-          <level>1</level>
         </setting>
       </group>
       <group id="3">
@@ -25,7 +21,6 @@
       </group>
     </category>
   </section>
-
   <section id="services">
     <category id="airplay">
       <group id="1">
@@ -34,8 +29,14 @@
         </setting>
       </group>
     </category>
-
-    <category id="control">
+    <category id="general">
+      <group id="2">
+        <setting id="services.zeroconf">
+          <default>true</default>
+        </setting>
+      </group>
+    </category>
+    <category id="webserver">
       <group id="1">
         <setting id="services.webserver">
           <default>true</default>
@@ -43,7 +44,6 @@
       </group>
     </category>
   </section>
-
   <section id="pvr">
     <category id="pvrmanager">
       <group id="2">
@@ -52,7 +52,6 @@
         </setting>
       </group>
     </category>
-
     <category id="epg">
       <group id="2">
         <setting id="epg.preventupdateswhileplayingtv">
@@ -63,7 +62,6 @@
         </setting>
       </group>
     </category>
-
     <category id="pvrplayback">
       <group id="1">
         <setting id="pvrplayback.signalquality">
@@ -71,7 +69,6 @@
         </setting>
       </group>
     </category>
-
     <category id="pvrpowermanagement">
       <group id="1">
         <setting id="pvrpowermanagement.setwakeupcmd">
@@ -80,5 +77,4 @@
       </group>
     </category>
   </section>
-
 </settings>

@@ -19,7 +19,7 @@
 PKG_NAME="libdvdnav"
 PKG_VERSION="43b5f81"
 PKG_SITE="https://github.com/xbmc/libdvdnav"
-PKG_GIT_URL="https://github.com/xbmc/libdvdnav"
+PKG_GIT_URL="https://github.com/xbmc/libdvdnav.git"
 PKG_GIT_BRANCH="master"
 PKG_DEPENDS_TARGET="toolchain libdvdread"
 PKG_SECTION="multimedia"
