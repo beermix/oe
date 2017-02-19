@@ -11,9 +11,10 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-gcc-hardening \
 			      --enable-systemd \
 			      --disable-asciidoc \
 			      --disable-unittests \
+			      --enable-static-zlib \
 			      --disable-seccomp \
 			      --with-openssl-dir=$SYSROOT_PREFIX \
-			      --disable-static-openssl \
+			      --enable-static-openssl \
 			      --sysconfdir=/storage/.config \
 			      --datarootdir=/storage/.cache/tor \
 			      --datadir=/storage/.cache/tor \
