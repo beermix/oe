@@ -35,6 +35,10 @@ makeinstall_target() {
   : # nothing to do
 }
 
+pre_configure_target() {
+  export LIBS="$LIBS -lgnutls -lnettle"
+}
+
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp $PKG_BUILD/.$TARGET_NAME/unix/vncconfig/vncconfig     \

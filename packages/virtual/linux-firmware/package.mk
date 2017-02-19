@@ -19,7 +19,6 @@
 PKG_NAME="linux-firmware"
 PKG_VERSION=""
 PKG_SITE=""
-PKG_URL=""
 PKG_LICENSE="GPL"
 PKG_SITE=""
 PKG_URL=""
