@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="6-20170216"
+PKG_VERSION="6.3.0"
 PKG_SITE="http://gcc.gnu.org/"
 PKG_URL="https://fossies.org/linux/misc/gcc-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host"
