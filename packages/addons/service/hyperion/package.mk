@@ -47,7 +47,7 @@ elif [ "$DISPLAYSERVER" = "x11" ]; then
 fi
 
 pre_build_target() {
-  cp -a $(get_build_dir rpi_ws281x)/* $ROOT/$PKG_BUILD/dependencies/external/rpi_ws281x
+  cp -a $(get_pkg_build rpi_ws281x)/* $ROOT/$PKG_BUILD/dependencies/external/rpi_ws281x
 }
 
 pre_configure_target() {
