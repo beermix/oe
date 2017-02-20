@@ -17,7 +17,10 @@
 ################################################################################
 
 PKG_NAME="adsp.biquad.filters"
-PKG_VERSION="d63d8ac"
+PKG_VERSION="e08990f"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
 PKG_GIT_URL="https://github.com/kodi-adsp/adsp.biquad.filters"
 PKG_DEPENDS_TARGET="toolchain kodi-platform asplib tinyxml"
@@ -28,11 +31,6 @@ PKG_AUTORECONF="no"
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_TYPE="kodi.adsp"
-
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
-        -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
-        -DFLAC_INCLUDE_DIRS=$SYSROOT_PREFIX/usr/include \
-        -DOGG_INCLUDE_DIRS=$SYSROOT_PREFIX/usr/include"
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/
