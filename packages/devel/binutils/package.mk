@@ -17,14 +17,17 @@
 ################################################################################
 
 PKG_NAME="binutils"
-PKG_VERSION="2.27"
-PKG_URL="https://fossies.org/linux/misc/binutils-$PKG_VERSION.tar.xz"
+PKG_VERSION="b0138cd"
+PKG_GIT_URL="git://sourceware.org/git/binutils-gdb.git"
+PKG_GIT_BRANCH="binutils-2_28-branch"
 PKG_DEPENDS_HOST="ccache:host bison:host flex:host linux:host"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="binutils: A GNU collection of binary utilities"
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
+
+#MAKEFLAGS=-j6
 
 PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --with-sysroot=$SYSROOT_PREFIX \
@@ -38,14 +41,12 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-version-specific-runtime-libs \
                          --enable-plugins \
                          --enable-gold \
-                         --enable-ld=default \
                          --enable-lto \
                          --disable-nls \
                          --disable-gdb \
                          --disable-sim \
                          --enable-static \
                          --disable-shared \
-                         --disable-deterministic-archives \
                          --enable-poison-system-directories"
 
 makeinstall_host() {
@@ -53,6 +54,6 @@ makeinstall_host() {
   make install
 }
 
-#pre_configure_host() {
-#  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $ROOT/$PKG_BUILD/libiberty/configure
-#}
+pre_configure_host() {
+  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $ROOT/$PKG_BUILD/libiberty/configure
+}
