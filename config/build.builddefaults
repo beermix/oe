@@ -34,8 +34,7 @@ TARGET_CONFIGURE_OPTS="--host=$TARGET_NAME \
 			  --enable-shared \
 			  --enable-silent-rules"
 
-TARGET_CMAKE_OPTS="-DCMAKE_BUILD_TYPE=Release \
-		     -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
+TARGET_CMAKE_OPTS="-DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
 		     -DCMAKE_INSTALL_PREFIX=/usr"
 
 # configure HOST build defaults
