@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="mariadb"
-PKG_VERSION="10.1.21"
+PKG_VERSION="10.2.4"
 PKG_SITE="http://www.mariadb.org"
 PKG_URL="https://downloads.mariadb.org/interstitial/$PKG_NAME-$PKG_VERSION/source/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST=""
@@ -119,7 +119,7 @@ configure_host() {
         -DWITH_SYSTEMD=ON \
         -DWITH_LIBWRAP=OFF \
         -DWITH_WSREP=OFF \
-        -DSECURITY_HARDENED=OFF \
+        -DDISABLE_SHARED=OFF \
         ..
 }
 
@@ -132,7 +132,7 @@ configure_target() {
         -DDISABLE_SHARED=ON \
         -DCMAKE_C_FLAGS="${TARGET_CFLAGS} -fPIC -DPIC -fno-strict-aliasing -DBIG_JOINS=1 -fomit-frame-pointer -fno-delete-null-pointer-checks" \
         -DCMAKE_CXX_FLAGS="${TARGET_CXXFLAGS} -fPIC -DPIC -fno-strict-aliasing -DBIG_JOINS=1 -felide-constructors -fno-delete-null-pointer-checks" \
-        -DCMAKE_BUILD_TYPE=MinSizeRel \
+        -DCMAKE_BUILD_TYPE=Release \
         $MARIADB_IMPORT_EXECUTABLES \
         -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
         -DCMAKE_INSTALL_PREFIX=/usr \
@@ -162,12 +162,13 @@ configure_target() {
         -DWITH_UNIT_TESTS=OFF \
         -DWITH_WSREP=OFF \
         -DPLUGIN_WSREP_INFO=NO \
-        -DPLUGIN_LOCALES=AUTO \
-        -DPLUGIN_FEEDBACK=NO \
-        -DNOT_FOR_DISTRIBUTION=ON \
+        -DNOT_FOR_DISTRIBUTION=OFF \
         -DPLUGIN_QA_AUTH_SERVER=NO \
         -DPLUGIN_QA_AUTH_INTERFACE=NO \
         -DPLUGIN_QA_AUTH_CLIENT=NO \
+        -DPLUGIN_AWS_KEY_MANAGEMENT=NO \
+        -DWITH_WSREP=OFF \
+        -DWITH_SAFEMALLOC=OFF \
         -DWITH_SSL=$SYSROOT_PREFIX/usr \
         $MARIADB_OPTS \
         ..
