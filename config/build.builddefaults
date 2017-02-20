@@ -48,7 +48,8 @@ HOST_CONFIGURE_OPTS="--host=$HOST_NAME \
 			--libexecdir=$ROOT/$TOOLCHAIN/lib \
 			--localstatedir=$ROOT/$TOOLCHAIN/var \
 			--disable-static \
-			--enable-shared"
+			--enable-shared \
+			--enable-silent-rules"
 
 HOST_CMAKE_OPTS="-DCMAKE_BUILD_TYPE=Release \
 		   -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
