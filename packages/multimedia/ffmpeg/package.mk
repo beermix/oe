@@ -192,8 +192,6 @@ configure_target() {
               --disable-libopencore-amrwb \
               --disable-libopencv \
               --disable-libdc1394 \
-              --enable-libdcadec \
-              --disable-libfaac \
               --disable-libfreetype \
               --disable-libgsm \
               --disable-libmp3lame \
@@ -203,7 +201,6 @@ configure_target() {
               --disable-libschroedinger \
               --enable-libspeex \
               --disable-libtheora \
-              --disable-libvo-aacenc \
               --disable-libvo-amrwbenc \
               --disable-libvorbis \
               --disable-libvpx \
