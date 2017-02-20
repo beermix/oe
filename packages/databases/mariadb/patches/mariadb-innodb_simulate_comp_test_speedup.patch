@@ -1,0 +1,15 @@
+Description: Add options to innodb test that fixes possible test failure
+ It was noticed that the test innodb_simulate_comp_failures_small
+ repeatedly fails on some machines because the test is way too I/O
+ heavy and mysqld starts to time-out under heavy load.
+ .
+ Remove this once upstream has released an official fix.
+Author: Otto Kekäläinen <otto@seravo.fi>
+Bug: https://jira.mariadb.org/browse/MDEV-6682
+
+--- a/mysql-test/suite/innodb/t/innodb_simulate_comp_failures_small-master.opt
++++ b/mysql-test/suite/innodb/t/innodb_simulate_comp_failures_small-master.opt
+@@ -1,2 +1,3 @@
+ --innodb-file-per-table
++--innodb-flush-log-at-trx-commit=2
+ 

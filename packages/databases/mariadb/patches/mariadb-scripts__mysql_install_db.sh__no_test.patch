@@ -1,0 +1,17 @@
+## 41_scripts__mysql_install_db.sh__no_test.dpatch by  <ch@debian.org>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: scripts__mysql_install_db.sh__no_test
+## DP: http://bugs.mysql.com/bug.php?id=6901
+
+--- a/scripts/mysql_install_db.sh
++++ b/scripts/mysql_install_db.sh
+@@ -406,7 +406,7 @@ then
+ fi
+ 
+ # Create database directories
+-for dir in "$ldata" "$ldata/mysql" "$ldata/test"
++for dir in "$ldata" "$ldata/mysql"
+ do
+   if test ! -d "$dir"
+   then

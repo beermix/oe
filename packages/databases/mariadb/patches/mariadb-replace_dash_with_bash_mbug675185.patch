@@ -1,0 +1,15 @@
+## 61_replace_dash_with_bash_mbug675185.dpatch by  <knielsen@knielsen-hq.org>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: 61_replace_dash_with_bash_mbug675185
+## DP: A race in dash causes mysqld_safe to occasionally loop infinitely.
+## DP: Fix by using bash instead.
+## DP: https://bugs.launchpad.net/ubuntu/+source/mysql-dfsg-5.0/+bug/675185
+--- a/scripts/mysqld_safe.sh
++++ b/scripts/mysqld_safe.sh
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ # Copyright Abandoned 1996 TCX DataKonsult AB & Monty Program KB & Detron HB
+ # This file is public domain and comes with NO WARRANTY of any kind
+ #

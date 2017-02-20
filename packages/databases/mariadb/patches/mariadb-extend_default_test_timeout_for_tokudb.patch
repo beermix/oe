@@ -1,0 +1,16 @@
+Description: Extend timeout
+ Some Debian pbuilder/sbuilder chroots can be very slow and would timeout in
+ vain as given enough time the build result is fully correct.
+Forwarded: not-needed
+Author: Otto Kekäläinen <otto@seravo.fi>
+--- a/mysql-test/CMakeLists.txt
++++ b/mysql-test/CMakeLists.txt
+@@ -64,7 +64,7 @@ ELSE()
+ ENDIF()
+ 
+ 
+-SET(MTR_FORCE perl ./mysql-test-run.pl --force)
++SET(MTR_FORCE perl ./mysql-test-run.pl --force --testcase-timeout=30 --suite-timeout=540)
+ IF(EXISTS ${CMAKE_SOURCE_DIR}/mysql-test/suite/nist)
+   SET(TEST_NIST ${MTR_FORCE} --comment=nist suite=nist ${EXP} && 
+     ${MTR_FORCE} --comment=nist --force --suite=nist+ps ${EXP})
