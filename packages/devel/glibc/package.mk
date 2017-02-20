@@ -176,7 +176,7 @@ make_init() {
 }
 
 makeinstall_init() {
-  mkdir -p $INSTALL/usr/lib
+  mkdir -p $INSTALL/lib
     cp -PR $ROOT/$PKG_BUILD/.$TARGET_NAME/elf/ld*.so* $INSTALL/lib
     cp -PR $ROOT/$PKG_BUILD/.$TARGET_NAME/libc.so* $INSTALL/lib
     cp -PR $ROOT/$PKG_BUILD/.$TARGET_NAME/math/libm.so* $INSTALL/lib
