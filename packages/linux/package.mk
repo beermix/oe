@@ -55,15 +55,15 @@ case "$LINUX" in
     PKG_GIT_BRANCH="raspberry-rpi-4.9.y"
     PKG_PATCH_DIRS="linux-4.9"
     ;;
-  linux-4.8)
-    PKG_VERSION="4.8.15"
-    PKG_URL="http://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
-    PKG_PATCH_DIRS="linux-4.8"
-    ;;
-  *)
+  linux-4.9)
     PKG_VERSION="4.9.11"
     PKG_URL="http://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
     PKG_PATCH_DIRS="linux-4.9"
+    ;;
+  *)
+    PKG_VERSION="4.10"
+    PKG_URL="http://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
+    PKG_PATCH_DIRS="linux-4.10"
     ;;
 esac
 
