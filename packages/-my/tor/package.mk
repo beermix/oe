@@ -11,8 +11,9 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-gcc-hardening \
 			      --enable-systemd \
 			      --disable-asciidoc \
 			      --disable-unittests \
-			      --enable-static-zlib \
 			      --disable-seccomp \
+			      --disable-libscrypt \
+			      --disable-dependency-tracking \
 			      --with-openssl-dir=$SYSROOT_PREFIX \
 			      --enable-static-openssl \
 			      --sysconfdir=/storage/.config \
@@ -20,11 +21,19 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-gcc-hardening \
 			      --datadir=/storage/.cache/tor \
 			      --with-zlib-dir=$ROOT/$TOOLCHAIN \
 			      --with-libevent-dir=$SYSROOT_PREFIX/usr \
-			      --with-openssl-dir=$SYSROOT_PREFIX/usr"
+			      --with-openssl-dir=$SYSROOT_PREFIX/usr \
+			      --with-tor-user=tor \
+			      --with-tor-group=tor"
 
 post_install() {
   add_user tor x 990 990 "Tor Server" "/storage" "/bin/sh"
   add_group tor 990
+  
+  add_user privoxy x 990 990 "privoxyr" "/storage" "/bin/sh"
+  add_group privoxy 990
+  
+  add_user squid x 990 990 "squid" "/storage" "/bin/sh"
+  add_group squid 990
 }
 
 post_makeinstall_target() {
