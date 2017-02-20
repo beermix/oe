@@ -21,7 +21,7 @@ PKG_VERSION="10.2.4"
 PKG_SITE="http://www.mariadb.org"
 PKG_URL="https://downloads.mariadb.org/interstitial/$PKG_NAME-$PKG_VERSION/source/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain netbsd-curses openssl lz4 libxml2 curl libevent libaio mariadb:host"
+PKG_DEPENDS_TARGET="toolchain readline openssl lz4 libxml2 curl libevent mariadb:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="database"
 PKG_SHORTDESC="mariadb: A community developed branch of MySQL"
@@ -119,6 +119,7 @@ configure_host() {
         -DWITH_SYSTEMD=ON \
         -DWITH_LIBWRAP=OFF \
         -DWITH_WSREP=OFF \
+        -DSECURITY_HARDENED=OFF \
         -DDISABLE_SHARED=OFF \
         ..
 }
