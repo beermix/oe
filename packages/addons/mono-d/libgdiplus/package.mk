@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libgdiplus"
-PKG_VERSION="e1fb6fe92d4b1691d3ded9ba5356a7e782cfa234"
+PKG_VERSION="4.2"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/mono/libgdiplus"
