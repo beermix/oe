@@ -30,7 +30,7 @@ PKG_LONGDESC="MariaDB is a community-developed fork and a drop-in replacement fo
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_MARIADB_SERVER="yes"
+PKG_MARIADB_SERVER="no"
 
 # MariaDB Feature set. Selection of features. Options are
 # - xsmall : 
