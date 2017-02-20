@@ -44,7 +44,7 @@
 
 
 ################################################################################
-# setup build defaults  --param l1-cache-size=32 --param l1-cache-line-size=64 --param l2-cache-size=6144 -march=ivybridge  -mtune=ivybridge
+#
 ################################################################################
 
   # Build optimizations (size/normal)
