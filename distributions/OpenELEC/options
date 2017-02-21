@@ -72,7 +72,7 @@
   KERNEL_EXTRA_CONFIG+=" filesystem remote audio"
   KERNEL_EXTRA_CONFIG+=" lan-phy"
   KERNEL_EXTRA_CONFIG+=" wlan-other"
-  KERNEL_EXTRA_CONFIG+=" aufs bluetooth sata samba"
+  KERNEL_EXTRA_CONFIG+=" bluetooth sata samba"
 
 # additional drivers to install:
 # for a list of additinoal drivers see packages/linux-drivers
