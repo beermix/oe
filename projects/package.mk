@@ -4,17 +4,17 @@
 ################################################################################
 
 PKG_NAME="vlc"
-#PKG_VERSION="2.2.5"
-PKG_VERSION="3.0.0-git"
+PKG_VERSION="2.2.5"
+#PKG_VERSION="3.0.0-git"
 PKG_SITE="http://www.videolan.org"
-PKG_URL="https://nightlies.videolan.org/build/source/vlc-3.0.0-20170220-0237-git.tar.xz"
-PKG_DEPENDS_TARGET="toolchain dbus libdvbpsi ffmpeg zlib lua libvorbis libogg flac fribidi libcdio libmpeg2 libsamplerate madplay gnutls gstreamer"
+PKG_URL="https://nightlies.videolan.org/build/source/vlc-2.2.5-20170220-0218.tar.xz"
+PKG_DEPENDS_TARGET="toolchain dbus libdvbpsi ffmpeg zlib lua libvorbis libogg flac fribidi libcdio libmpeg2 libsamplerate madplay miniupnpc gnutls"
 PKG_PRIORITY="optional"
 PKG_SECTION="xmedia/tools"
 PKG_SHORTDESC="VideoLAN multimedia player and streamer"
 PKG_LONGDESC="VLC is the VideoLAN project's media player. It plays MPEG, MPEG2, MPEG4, DivX, MOV, WMV, QuickTime, mp3, Ogg/Vorbis files, DVDs, VCDs, and multimedia streams from various network sources."
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="np"
 
 pre_configure_target() {
 # vlc fails to build with LTO optimization
@@ -28,7 +28,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-dependency-tracking \
 			      --without-contrib \
 			      --disable-nls \
-			      --disable-rpath \
+			      --enable-rpath \
 			      --enable-dbus \
 			      --disable-gprof \
 			      --disable-cprof \
@@ -66,7 +66,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-wma-fixed \
 			      --disable-shine \
 			      --disable-omxil \
-			      --enable-mad \
+			      --disable-mad \
 			      --disable-merge-ffmpeg \
 			      --enable-avcodec \
 			      --enable-avformat \
@@ -97,7 +97,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-tiger \
 			      --enable-libva \
 			      --disable-vdpau \
-			      --without-x \
+			      --with-x \
 			      --disable-xcb \
 			      --disable-xvideo \
 			      --disable-sdl \
@@ -147,7 +147,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --enable-mmx \
 			      --enable-sse \
 			      --enable-optimize-memory \
-			      --disable-optimizations \
+			      --enable-optimizations \
 			      --disable-vnc \
 			      --disable-freerdp \
 			      LUAC=$SYSROOT_PREFIX/usr/bin/luac"

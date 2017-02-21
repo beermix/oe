@@ -29,6 +29,11 @@ PKG_LONGDESC="GLib is a library which includes support routines for C such as li
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
+pre_configure_target() {
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed|-Wl,--no-as-needed|"`
+}
+
+
 PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared --with-pcre=internal"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_mmap_fixed_mapped=yes \
@@ -41,17 +46,21 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_mmap_fixed_mapped=yes \
                            glib_cv_uscore=no \
                            glib_cv_va_val_copy=no \
                            --disable-selinux \
+                           --disable-libmount \
                            --disable-fam \
                            --enable-xattr \
                            --disable-libelf \
+                           --disable-modular-tests \
                            --disable-gtk-doc \
                            --disable-man \
+                           --enable-static \
                            --disable-dtrace \
                            --disable-systemtap \
                            --enable-Bsymbolic \
                            --with-gnu-ld \
                            --with-threads=posix \
                            --with-pcre=internal"
+                           
 	   
 post_makeinstall_target() {
   mkdir -p $SYSROOT_PREFIX/usr/lib/pkgconfig

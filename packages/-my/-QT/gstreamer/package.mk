@@ -22,8 +22,6 @@ PKG_SITE="http://gstreamer.freedesktop.org/gstreamer"
 PKG_URL="https://gstreamer.freedesktop.org/src/gstreamer/gstreamer-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain libpng tiff dbus fontconfig eglibc zlib"
 PKG_SECTION="lib"
-PKG_SHORTDESC="gstreamer library"
-PKG_LONGDESC="gstreamer library and components"
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
