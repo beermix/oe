@@ -29,7 +29,6 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --without-contrib \
 			      --disable-nls \
 			      --disable-rpath \
-			      --enable-dbus \
 			      --disable-gprof \
 			      --disable-cprof \
 			      --disable-debug \
@@ -66,7 +65,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-wma-fixed \
 			      --disable-shine \
 			      --disable-omxil \
-			      --enable-mad \
+			      --disable-mad \
 			      --disable-merge-ffmpeg \
 			      --enable-avcodec \
 			      --enable-avformat \
@@ -95,14 +94,14 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-libass \
 			      --disable-kate \
 			      --disable-tiger \
-			      --enable-libva \
+			      --disable-libva \
 			      --disable-vdpau \
 			      --without-x \
 			      --disable-xcb \
 			      --disable-xvideo \
 			      --disable-sdl \
 			      --disable-sdl-image \
-			      --enable-freetype \
+			      --disable-freetype \
 			      --enable-fribidi \
 			      --enable-fontconfig \
 			      --enable-libxml2 \
@@ -149,7 +148,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --enable-optimize-memory \
 			      --disable-optimizations \
 			      --disable-vnc \
-			      --disable-freerdp \
+			      --disable-freerdp \	
 			      LUAC=$SYSROOT_PREFIX/usr/bin/luac"
 
 post_makeinstall_target() {

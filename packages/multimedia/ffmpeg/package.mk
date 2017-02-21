@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="ffmpeg"
-PKG_VERSION="3.2.4"
+PKG_VERSION="2.8.11"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="LGPLv2.1+"
@@ -115,7 +115,7 @@ configure_target() {
               --cc="$CC" \
               --ld="$CC" \
               --host-cc="$HOST_CC" \
-              --host-cflags="$HOST_CFLAGS" \
+              --host-cflags="$HOST_CFLAGS -D_BSD_SOURCE" \
               --host-ldflags="$HOST_LDFLAGS" \
               --host-libs="-lm" \
               --extra-cflags="$CFLAGS" \
@@ -162,6 +162,7 @@ configure_target() {
               $FFMPEG_VAAPI \
               $FFMPEG_VDPAU \
               --disable-dxva2 \
+              --enable-runtime-cpudetect \
               $FFMPEG_TABLES \
               --disable-memalign-hack \
               --enable-encoders \
@@ -192,6 +193,8 @@ configure_target() {
               --disable-libopencore-amrwb \
               --disable-libopencv \
               --disable-libdc1394 \
+              --enable-libdcadec \
+              --disable-libfaac \
               --disable-libfreetype \
               --disable-libgsm \
               --disable-libmp3lame \
@@ -201,6 +204,7 @@ configure_target() {
               --disable-libschroedinger \
               --enable-libspeex \
               --disable-libtheora \
+              --disable-libvo-aacenc \
               --disable-libvo-amrwbenc \
               --disable-libvorbis \
               --disable-libvpx \
@@ -213,24 +217,7 @@ configure_target() {
               $FFMPEG_FPU \
               --enable-yasm \
               --disable-symver \
-              --disable-lto \
-              --disable-iconv \
-              --enable-opengl \
-              --enable-thumb \
-              --enable-ftrapv \
-              --disable-runtime-cpudetect \
-              --enable-mmx \
-              --enable-sse \
-              --enable-sse2 \
-              --enable-sse3 \
-              --enable-ssse3 \
-              --enable-sse4 \
-              --enable-sse42 \
-              --enable-avx
-              
-              
-              
-              
+              --disable-lto
 }
 
 post_makeinstall_target() {

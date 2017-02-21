@@ -1,0 +1,12 @@
+diff -Naurp kodi-theme-Confluence-16.0-beta1-9a5ddf5/720p/IncludesPVR.xml kodi-theme-Confluence-16.0-beta1-9a5ddf5-patch/720p/IncludesPVR.xml
+--- kodi-theme-Confluence-16.0-beta1-9a5ddf5/720p/IncludesPVR.xml	2015-11-02 11:54:41.000000000 +0200
++++ kodi-theme-Confluence-16.0-beta1-9a5ddf5-patch/720p/IncludesPVR.xml	2015-11-16 08:04:28.000000000 +0200
+@@ -18,7 +18,7 @@
+ 				<width>1000</width>
+ 				<height>30</height>
+ 				<orientation>horizontal</orientation>
+-				<align>left</align>
++				<align>center</align>
+ 				<itemgap>5</itemgap>
+ 				<control type="label">
+ 					<include>WindowTitleCommons</include>

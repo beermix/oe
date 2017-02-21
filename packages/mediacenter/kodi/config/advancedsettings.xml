@@ -3,6 +3,8 @@
   <showexitbutton>false</showexitbutton>
   <cputempcommand>cputemp</cputempcommand>
   <gputempcommand>gputemp</gputempcommand>
+  <splash>false</splash>
+  <!-- <loglevel hide="false">2</loglevel> -->
   <video>
     <latency>
       <delay>0</delay>
@@ -12,6 +14,7 @@
         <delay>175</delay>
       </refresh>
     </latency>
+    <busydialogdelayms>750</busydialogdelayms>
   </video>
   <samba>
     <clienttimeout>30</clienttimeout>
