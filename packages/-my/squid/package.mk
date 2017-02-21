@@ -3,16 +3,16 @@ PKG_VERSION="3.5.24"
 PKG_URL="http://www.squid-cache.org/Versions/v3/3.5/squid-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain fuse netbsd-curses openssl glib libcap libnetfilter_conntrack"
 PKG_SECTION="tools"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 
-PKG_CONFIGURE_OPTS_TARGET="ac_cv_epoll_works=yes \
+PKG_CONFIGURE_OPTS_TARGET="squid_cv_gnu_atomics=yes \ 
+			      ac_cv_epoll_works=yes \
 			      ac_cv_func_setresuid=yes \
 			      ac_cv_func_va_copy=yes \
 			      ac_cv_func___va_copy=yes \
 			      ac_cv_func_strnstr=no \
 			      ac_cv_have_squid=yes \
-			      squid_cv_gnu_atomics=no \
                            --with-pidfile=/var/run/squid.pid \
                            --enable-auth \
                            --enable-auth-basic \
