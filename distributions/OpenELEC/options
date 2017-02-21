@@ -34,7 +34,7 @@
   SKIN_REMOVE_SHIPPED="no"
 
 # Default Skin (Confluence, or any from above)
-  SKIN_DEFAULT="Estuary"
+  SKIN_DEFAULT="Confluence"
 
 # install extra subtitle Fonts for KODI (yes / no)
   KODI_EXTRA_FONTS="yes"
@@ -70,7 +70,7 @@
 # except the default-*.config and the ones included in packages/linux/package.mk
 # Space separated list is supported, joystick
   KERNEL_EXTRA_CONFIG+=" filesystem remote audio"
-  KERNEL_EXTRA_CONFIG+=" lan-phy"
+  KERNEL_EXTRA_CONFIG+=" lan-usb lan-phy"
   KERNEL_EXTRA_CONFIG+=" wlan-other"
   KERNEL_EXTRA_CONFIG+=" bluetooth sata samba"
 
@@ -198,7 +198,7 @@
   SWAPFILESIZE="256"
 
 # build with installer (yes / no)
-  INSTALLER_SUPPORT="no"
+  INSTALLER_SUPPORT="yes"
 
 # Testpackages for development (yes / no)
   TESTING="no"
