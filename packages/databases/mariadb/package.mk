@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="mariadb"
-PKG_VERSION="10.1.21"
+PKG_VERSION="10.2.3"
 PKG_SITE="http://www.mariadb.org"
 PKG_URL="https://downloads.mariadb.org/interstitial/$PKG_NAME-$PKG_VERSION/source/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST=""
@@ -30,7 +30,7 @@ PKG_LONGDESC="MariaDB is a community-developed fork and a drop-in replacement fo
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_MARIADB_SERVER="no"
+PKG_MARIADB_SERVER="yes"
 
 # MariaDB Feature set. Selection of features. Options are
 # - xsmall : 
@@ -55,17 +55,12 @@ PKG_MARIADB_SERVER="no"
   MARIADB_OPTS="$MARIADB_OPTS -DWITH_INNOBASE_STORAGE_ENGINE=ON"
   MARIADB_OPTS="$MARIADB_OPTS -DWITH_PARTITION_STORAGE_ENGINE=ON"
   MARIADB_OPTS="$MARIADB_OPTS -DWITH_PERFSCHEMA_STORAGE_ENGINE=ON"
-  MARIADB_OPTS="$MARIADB_OPTS -DWITH_ARCHIVE_STORAGE_ENGINE=ON"
-  MARIADB_OPTS="$MARIADB_OPTS -DWITH_BLACKHOLE_STORAGE_ENGINE=ON"
-  MARIADB_OPTS="$MARIADB_OPTS -DWITH_PARTITION_STORAGE_ENGINE=ON"
-  MARIADB_OPTS="$MARIADB_OPTS -DWITH_TOKUDB_STORAGE_ENGINE=ON"
+  
   MARIADB_OPTS="$MARIADB_OPTS -DWITHOUT_EXAMPLE_STORAGE_ENGINE=ON"
   MARIADB_OPTS="$MARIADB_OPTS -DWITHOUT_FEDERATED_STORAGE_ENGINE=ON"
   MARIADB_OPTS="$MARIADB_OPTS -DWITHOUT_PBXT_STORAGE_ENGINE=ON"
   
-  
-
-# According to MariaDB galera cluster documentation these options must be passed
+  # According to MariaDB galera cluster documentation these options must be passed
 # to CMake, set to '0' if galera cluster support is not wanted:
   MARIADB_OPTS="$MARIADB_OPTS -DWITH_WSREP=0"
   MARIADB_OPTS="$MARIADB_OPTS -DWITH_INNODB_DISALLOW_WRITES=0"
@@ -165,7 +160,7 @@ configure_target() {
         -DDISABLE_LIBMYSQLCLIENT_SYMBOL_VERSIONING=TRUE \
         -DENABLE_DTRACE=OFF \
         -DWITH_READLINE=OFF \
-        -DWITH_SYSTEMD=ON \
+        -DWITH_SYSTEMD=OFF \
         -DWITH_LIBWRAP=OFF \
         -DSECURITY_HARDENED=OFF \
         -DWITH_UNIT_TESTS=OFF \
@@ -181,6 +176,7 @@ configure_target() {
         -DWITH_PCRE=$SYSROOT_PREFIX/usr \
         -DWITH_ZLIB=$SYSROOT_PREFIX/usr \
         -DWITH_SSL=$SYSROOT_PREFIX/usr \
+        -DWITH_INNODB_LZMA=OFF \
         $MARIADB_OPTS \
         ..
 }
