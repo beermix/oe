@@ -32,6 +32,9 @@ PKG_AUTORECONF="no"
 PKG_CONFIGURE_OPTS_HOST="--disable-shared \
 			    --enable-static \
 			    --disable-xzdec \
-			    --disable-lzmadec"
+			    --disable-lzmadec \
+			    --enable-lzma-links \
+			    --disable-nls \
+			    --with-pic"
 
 PKG_CONFIGURE_OPTS_TARGET="-C $PKG_CONFIGURE_OPTS_HOST"
