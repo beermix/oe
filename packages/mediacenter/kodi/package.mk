@@ -193,7 +193,7 @@ if [ ! "$KODIPLAYER_DRIVER" = default ]; then
     KODI_CODEC="--with-platform=raspberry-pi"
     BCM2835_INCLUDES="-I$SYSROOT_PREFIX/usr/include/interface/vcos/pthreads/ \
                       -I$SYSROOT_PREFIX/usr/include/interface/vmcs_host/linux"
-    KODI_CFLAGS="$KODI_CFLAGS $BCM2835_INCLUDES"
+    KODI_CFLAGS="$KODI_CFLAGS $BCM2835_INCLUDES -DCURL_STATICLIB"
     KODI_CXXFLAGS="$KODI_CXXFLAGS $BCM2835_INCLUDES"
   elif [ "$KODIPLAYER_DRIVER" = libfslvpuwrap ]; then
     KODI_CODEC="--enable-codec=imxvpu"
@@ -224,6 +224,9 @@ export CC_FOR_BUILD="$HOST_CC"
 export CXXFLAGS_FOR_BUILD="$HOST_CXXFLAGS"
 export CFLAGS_FOR_BUILD="$HOST_CFLAGS"
 export LDFLAGS_FOR_BUILD="$HOST_LDFLAGS"
+
+#export LIBCURL_CFLAGS="-L/root/-f2fs/oe/build.OE-Generic.x86_64-8.0-devel/curl-7.52.1/.x86_64-openelec-linux-gnu/include -DCURL_STATICLIB"
+#export LIBCURL_LIBS="-lz -lgcc -lrt -lm -lrtmp"
 
 export PYTHON_VERSION="2.7"
 export PYTHON_CPPFLAGS="-I$SYSROOT_PREFIX/usr/include/python$PYTHON_VERSION"
@@ -310,10 +313,10 @@ pre_configure_target() {
 
 # kodi should never be built with lto
   strip_lto
-  unset CPPFLAGS
+  #unset CPPFLAGS
   export CFLAGS="$CFLAGS $KODI_CFLAGS"
   export CXXFLAGS="$CXXFLAGS $KODI_CXXFLAGS"
-  export LIBS="$LIBS -lbz2"
+  #export LIBS="$LIBS -lbz2"
 
   export JSON_BUILDER=$ROOT/$TOOLCHAIN/bin/JsonSchemaBuilder
 }

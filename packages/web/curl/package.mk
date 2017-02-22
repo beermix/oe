@@ -88,7 +88,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            --without-libssh2 \
                            --with-librtmp=$SYSROOT_PREFIX/usr \
                            --with-libidn \
-                           --enable-static \
                            --without-nghttp2 \
                            --without-ssl \
                            --with-gnutls \
