@@ -32,12 +32,9 @@ PKG_CONFIGURE_OPTS_HOST="--disable-shared \
 			    --enable-static \
 			    --enable-liblzma2-compat \
 			    --enable-unaligned-access \
-			    --disable-threads \
+			    --enable-threads=posix \
 			    --enable-assembler=x86_64 \
-			    --disable-lzmadec \
-                         --disable-lzmainfo \
-                         --enable-lzma-links \
-                         --disable-scripts \
-                         --disable-doc"
+			    --with-gnu-ld \
+			    --disable-doc"
 
 PKG_CONFIGURE_OPTS_TARGET="-C $PKG_CONFIGURE_OPTS_HOST"
