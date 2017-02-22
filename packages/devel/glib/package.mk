@@ -21,7 +21,7 @@ PKG_NAME="glib"
 PKG_VERSION="2.50.3"
 PKG_SITE="http://www.gtk.org/"
 PKG_URL="http://ftp.gnome.org/pub/gnome/sources/glib/2.50/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain zlib libffi attr util-linux Python:host"
+PKG_DEPENDS_TARGET="toolchain zlib libffi attr util-linux libiconv Python:host"
 PKG_DEPENDS_HOST="libiconv:host libffi:host"
 PKG_SECTION="devel"
 PKG_SHORTDESC="glib: C support library"
@@ -36,7 +36,6 @@ pre_configure_target() {
 
 
 PKG_CONFIGURE_OPTS_HOST="--disable-selinux \
-			    --with-libiconv \
 			    --with-pcre=internal \
 			    --enable-libmount=no \
 			    --enable-static \
@@ -69,7 +68,8 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_mmap_fixed_mapped=yes \
                            --with-threads=posix \
                            --enable-debug=no \
                            --enable-libmount=no \
-                           --with-pcre=internal"
+                           --with-pcre=internal \
+                           --with-libiconv"
                            
 	   
 post_makeinstall_target() {
