@@ -39,4 +39,5 @@ PKG_CONFIGURE_OPTS_TARGET="--host=$TARGET_NAME \
 			      --enable-static \
 			      --disable-shared \
 			      --disable-nls \
-			      --enable-extra-encodings"
+			      --enable-extra-encodings \
+			      --with-gnu-ld"
