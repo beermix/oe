@@ -161,7 +161,7 @@ makeinstall_target() {
     cp $PKG_DIR/scripts/pastebinit $INSTALL/usr/bin/
     ln -sf pastebinit $INSTALL/usr/bin/paste
     
-    #rm $INSTALL/bin/sh
+    rm $INSTALL/bin/sh
     #rm $INSTALL/bin/hostname
     #rm $INSTALL/sbin/ip
 
