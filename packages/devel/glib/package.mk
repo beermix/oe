@@ -1,3 +1,4 @@
+
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
 #      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
@@ -20,8 +21,8 @@ PKG_NAME="glib"
 PKG_VERSION="2.50.3"
 PKG_SITE="http://www.gtk.org/"
 PKG_URL="http://ftp.gnome.org/pub/gnome/sources/glib/2.50/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain zlib libffi util-linux Python:host"
-PKG_DEPENDS_HOST="libffi:host"
+PKG_DEPENDS_TARGET="toolchain zlib libffi attr util-linux Python:host"
+PKG_DEPENDS_HOST="libiconv:host libffi:host"
 PKG_SECTION="devel"
 PKG_SHORTDESC="glib: C support library"
 PKG_LONGDESC="GLib is a library which includes support routines for C such as lists, trees, hashes, memory allocation, and many other things."
@@ -34,7 +35,13 @@ pre_configure_target() {
 }
 
 
-PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared --with-pcre=internal"
+PKG_CONFIGURE_OPTS_HOST="--disable-selinux \
+			    --with-libiconv \
+			    --with-pcre=internal \
+			    --enable-libmount=no \
+			    --enable-static \
+			    --disable-shared \
+			    --with-pcre=internal"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_mmap_fixed_mapped=yes \
                            ac_cv_func_posix_getpwuid_r=yes \
@@ -45,8 +52,9 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_mmap_fixed_mapped=yes \
                            glib_cv_stack_grows=no \
                            glib_cv_uscore=no \
                            glib_cv_va_val_copy=no \
+                           ac_cv_path_GLIB_GENMARSHAL=$ROOT/$TOOLCHAIN/bin/glib-genmarshal \
+                           ac_cv_path_GLIB_MKENUMS=$ROOT/$TOOLCHAIN/bin/glib-mkenums \
                            --disable-selinux \
-                           --disable-libmount \
                            --disable-fam \
                            --enable-xattr \
                            --disable-libelf \
@@ -59,6 +67,8 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_mmap_fixed_mapped=yes \
                            --enable-Bsymbolic \
                            --with-gnu-ld \
                            --with-threads=posix \
+                           --enable-debug=no \
+                           --enable-libmount=no \
                            --with-pcre=internal"
                            
 	   
