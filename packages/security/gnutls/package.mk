@@ -9,6 +9,9 @@ PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_vfork_works=no \
 			      ac_cv_func_fork=no \
+			      --enable-hardware-acceleration \
+			      --disable-openssl-compatibility \
+			      --enable-cxx \
 			      --disable-shared \
 			      --without-p11-kit \
 			      --disable-nls \
