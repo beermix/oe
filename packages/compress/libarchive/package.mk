@@ -7,13 +7,16 @@ PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_HOST="--without-lzma \
+PKG_CONFIGURE_OPTS_HOST="--enable-static \
+			    --disable-shared \
+			    --with-gnu-ld \
+			    --with-pic \
+			    --disable-rpath \
 			    --disable-bsdtar \
 			    --disable-bsdcat \
 			    --disable-bsdcpio"
 			   
-PKG_CONFIGURE_OPTS_TARGET="-C \
-			      --enable-static \
+PKG_CONFIGURE_OPTS_TARGET="--enable-static \
 			      --disable-shared \
 			      --with-gnu-ld \
 			      --with-pic \
