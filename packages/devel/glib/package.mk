@@ -42,9 +42,7 @@ PKG_CONFIGURE_OPTS_HOST="--disable-selinux \
 			    --disable-shared \
 			    --with-pcre=internal"
 
-PKG_CONFIGURE_OPTS_TARGET="ac_cv_path_GLIB_GENMARSHAL=$ROOT/$BUILD/toolchain/bin/glib-genmarshal \
-                           ac_cv_path_GLIB_MKENUMS=$ROOT/$BUILD/toolchain/bin/glib-mkenums \
-                           ac_cv_func_mmap_fixed_mapped=yes \
+PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_mmap_fixed_mapped=yes \
                            ac_cv_func_posix_getpwuid_r=yes \
                            ac_cv_func_posix_getgrgid_r=yes \
                            ac_cv_func_printf_unix98=yes \
@@ -77,9 +75,6 @@ post_makeinstall_target() {
 
   mkdir -p $SYSROOT_PREFIX/usr/share/aclocal
     cp ../m4macros/glib-gettext.m4 $SYSROOT_PREFIX/usr/share/aclocal
-    
-  ln -sf $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/glib-genmarshal $ROOT/$BUILD/toolchain/bin/glib-genmarshal
-  ln -sf $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/glib-mkenums $ROOT/$BUILD/toolchain/bin/glib-mkenums
 }
 
 post_makeinstall_target() {
@@ -87,4 +82,7 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/lib/gdbus-2.0
   rm -rf $INSTALL/usr/lib/glib-2.0
   rm -rf $INSTALL/usr/share
+  
+  ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/glib-genmarshal $ROOT/$BUILD/toolchain/bin/
+  ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/glib-mkenums $ROOT/$BUILD/toolchain/bin/
 }
