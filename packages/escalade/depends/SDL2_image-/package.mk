@@ -1,5 +1,5 @@
 ################################################################################
-#      This file is part of LibreELEC - https://libreelec.tv
+#      This file is part of LibreELEC - https://LibreELEC.tv
 #      Copyright (C) 2016 Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
@@ -16,31 +16,14 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="icu"
-PKG_VERSION="58.2"
-PKG_SITE="http://www.icu-project.org"
-PKG_URL="http://download.icu-project.org/files/${PKG_NAME}4c/${PKG_VERSION}/${PKG_NAME}4c-${PKG_VERSION//./_}-src.tgz"
-PKG_SOURCE_DIR="icu"
-PKG_DEPENDS_TARGET="toolchain icu:host"
-PKG_SECTION="textproc"
-PKG_SHORTDESC="International Components for Unicode library"
-PKG_LONGDESC="International Components for Unicode library"
+PKG_NAME="SDL2_image"
+PKG_VERSION="2.0.1"
+PKG_SITE="http://www.libsdl.org/"
+PKG_URL="https://www.libsdl.org/projects/SDL_image/release/SDL2_image-$PKG_VERSION.tar.gz"
+PKG_DEPENDS_TARGET="toolchain SDL2"
+PKG_SECTION="depends"
+PKG_SHORTDESC="libsdl_image: A cross-platform Graphic API"
+PKG_LONGDESC="SDL_image is an image loading library that is used with the SDL library, and almost as portable. It allows a programmer to use multiple image formats without having to code all the loading and conversion algorithms themselves."
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
-
-post_unpack() {
-  cp -r $PKG_BUILD/source/* $PKG_BUILD/
-}
-
-PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
-
-PKG_CONFIGURE_OPTS_TARGET="--enable-static \
-                           --disable-shared \
-                           --with-cross-build=$ROOT/$PKG_BUILD/.$HOST_NAME"
-
-PKG_CONFIGURE_SCRIPT="source/configure"
-
-post_makeinstall_target() {
-  rm -rf $INSTALL
-}

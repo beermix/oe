@@ -22,17 +22,12 @@ PKG_SITE="http://www.libsdl.org/"
 PKG_URL="http://www.libsdl.org/projects/SDL_image/release/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="SDL2:host libpng:host libjpeg-turbo:host"
 PKG_DEPENDS_TARGET="toolchain SDL2 libjpeg-turbo libpng tiff"
-
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="libsdl_image: A cross-platform Graphic API"
 PKG_LONGDESC="SDL_image is an image loading library that is used with the SDL library, and almost as portable. It allows a programmer to use multiple image formats without having to code all the loading and conversion algorithms themselves."
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
-
-pre_configure_target() {
-  sh $ROOT/$PKG_BUILD/autogen.sh
-}
 
 PKG_CONFIGURE_OPTS_HOST="--disable-bmp \
                          --disable-gif \
