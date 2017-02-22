@@ -21,7 +21,14 @@ PKG_CONFIGURE_OPTS_TARGET="bash_cv_getenv_redef=no \
                            --cache-file=/dev/null \
                            --enable-history \
                            --enable-alias \
-                           --enable-job-control"
+                           --enable-job-control \
+                           --enable-restricted \
+                           --enable-process-substitution \
+                           --enable-net-redirections \
+                           --enable-coprocesses \
+                           --enable-command-timing \
+                           --enable-select \
+                           --with-gnu-ld"
 			   
 post_makeinstall_target() {
   mkdir -p $INSTALL/bin
