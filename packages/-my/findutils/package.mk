@@ -14,4 +14,5 @@ pre_configure_target() {
 
 PKG_CONFIGURE_OPTS_TARGET="--without-selinux \
 			      --disable-debug \
-			      --disable-nls"
+			      --disable-nls\
+			      --enable-threads=posix"

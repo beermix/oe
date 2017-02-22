@@ -15,4 +15,5 @@ PKG_CONFIGURE_OPTS_TARGET="PERL=missing \
 			      --without-selinux \
 			      --with-openssl \
 			      --disable-rpath \
+			      --enable-threads=posix \
 			      --enable-install-program=cat,chgrp,chmod,chown,cp,date,dd"
