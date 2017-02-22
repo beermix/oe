@@ -4,10 +4,12 @@
 ################################################################################
 
 PKG_NAME="vlc"
-PKG_VERSION="2.2.4"
-PKG_SITE="http://www.videolan.org"
-PKG_URL="http://download.videolan.org/$PKG_NAME/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain dbus libdvbpsi ffmpeg zlib lua libvorbis libogg flac gnutls fdk-aac faac fdkaac"
+#PKG_VERSION="2.2.4"
+#PKG_VERSION="2.2.5"
+PKG_VERSION="3.0.0-git"
+PKG_URL="https://nightlies.videolan.org/build/source/vlc-3.0.0-20170222-0238-git.tar.xz"
+#PKG_URL="http://download.videolan.org/$PKG_NAME/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_DEPENDS_TARGET="toolchain dbus libdvbpsi ffmpeg zlib lua libvorbis libogg flac gnutls fdk-aac faac fdkaac gstreamer"
 PKG_PRIORITY="optional"
 PKG_SECTION="xmedia/tools"
 PKG_SHORTDESC="VideoLAN multimedia player and streamer"
@@ -57,7 +59,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --enable-ogg \
 			      --enable-mux_ogg \
 			      --disable-shout\
-			      --disable-mkv \
+			      --enable-mkv \
 			      --disable-mod \
 			      --enable-mpc \
 			      --disable-gme \
@@ -93,9 +95,9 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-libass \
 			      --disable-kate \
 			      --disable-tiger \
-			      --disable-libva \
+			      --enable-libva \
 			      --disable-vdpau \
-			      --without-x \
+			      --with-x \
 			      --disable-xcb \
 			      --disable-xvideo \
 			      --disable-sdl \
@@ -141,6 +143,13 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --enable-vlc \
 			      --enable-dbus \
 			      --disable-qt \
+			      --disable-gst-decode \
+			      --enable-mmx \
+			      --enable-sse \
+			      --disable-optimize-memory \
+			      --disable-optimizations \
+			      --disable-vnc \
+			      --disable-freerdp \
 			      LUAC=$SYSROOT_PREFIX/usr/bin/luac"
 
 post_makeinstall_target() {

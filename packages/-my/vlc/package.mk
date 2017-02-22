@@ -4,10 +4,12 @@
 ################################################################################
 
 PKG_NAME="vlc"
-PKG_VERSION="2.2.4"
-PKG_SITE="http://www.videolan.org"
-PKG_URL="http://download.videolan.org/$PKG_NAME/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain dbus libdvbpsi ffmpeg zlib lua libvorbis libogg flac fribidi libcdio libmpeg2 libsamplerate madplay gnutls gstreamer"
+#PKG_VERSION="2.2.4"
+PKG_VERSION="2.2.5"
+#PKG_VERSION="3.0.0-git"
+PKG_URL="https://nightlies.videolan.org/build/source/vlc-2.2.5-20170222-0218.tar.xz"
+#PKG_URL="http://download.videolan.org/$PKG_NAME/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_DEPENDS_TARGET="toolchain dbus libdvbpsi ffmpeg zlib lua libvorbis libogg flac gnutls fdk-aac faac fdkaac gstreamer"
 PKG_PRIORITY="optional"
 PKG_SECTION="xmedia/tools"
 PKG_SHORTDESC="VideoLAN multimedia player and streamer"
@@ -20,14 +22,13 @@ pre_configure_target() {
   strip_lto
 
   export LUA_LIBS="-L$SYSROOT_PREFIX/usr/lib -llua -lm"
-  export LIBS="-lterminfo"
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-dependency-tracking \
 			      --without-contrib \
-			      --disable-nls \
 			      --disable-rpath \
+			      --disable-dbus \
 			      --disable-gprof \
 			      --disable-cprof \
 			      --disable-debug \
@@ -53,7 +54,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-vcd \
 			      --disable-libcddb \
 			      --enable-dvbpsi \
-			      --disable-screen \
+			      --enable-screen \
 			      --enable-ogg \
 			      --enable-mux_ogg \
 			      --disable-shout\
@@ -82,7 +83,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --enable-libmpeg2 \
 			      --enable-vorbis \
 			      --disable-tremor \
-			      --enable-speex \
+			      --disable-speex \
 			      --disable-theora \
 			      --disable-schroedinger \
 			      --disable-png \
@@ -93,7 +94,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-libass \
 			      --disable-kate \
 			      --disable-tiger \
-			      --disable-libva \
+			      --enable-libva \
 			      --disable-vdpau \
 			      --without-x \
 			      --disable-xcb \
@@ -101,8 +102,8 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-sdl \
 			      --disable-sdl-image \
 			      --disable-freetype \
-			      --enable-fribidi \
-			      --enable-fontconfig \
+			      --disable-fribidi \
+			      --disable-fontconfig \
 			      --enable-libxml2 \
 			      --disable-svg \
 			      --disable-directx \
@@ -134,21 +135,15 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-update-check \
 			      --disable-kva \
 			      --disable-bluray \
-			      --enable-samplerate \
+			      --disable-samplerate \
 			      --disable-sid \
 			      --disable-crystalhd \
 			      --disable-dxva2 \
 			      --enable-vlc \
 			      --enable-dbus \
 			      --disable-qt \
-			      --disable-gst-decode \
 			      --enable-mmx \
 			      --enable-sse \
-			      --enable-optimize-memory \
-			      --disable-optimizations \
-			      --disable-vnc \
-			      --disable-freerdp \	
-			      --disable-avcodec \
 			      LUAC=$SYSROOT_PREFIX/usr/bin/luac"
 
 post_makeinstall_target() {
