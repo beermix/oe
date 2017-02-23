@@ -64,8 +64,8 @@ post_makeinstall_target() {
 # download url: http://curl.haxx.se
 # create new cert: perl ./mk-ca-bundle.pl
   mkdir -p $INSTALL/etc/ssl
-  perl $PKG_DIR/cert/mk-ca-bundle.pl
-  cp $ROOT/$PKG_BUILD/ca-bundle.crt $INSTALL/etc/ssl/cert.pem
+  #perl $PKG_DIR/cert/mk-ca-bundle.pl
+  #cp $ROOT/$PKG_BUILD/ca-bundle.crt $INSTALL/etc/ssl/cert.pem
     
-  #cp $PKG_DIR/cert/ca-bundle.crt $INSTALL/etc/ssl/cert.pem
+  cp $PKG_DIR/cert/ca-bundle.crt $INSTALL/etc/ssl/cert.pem
 }
