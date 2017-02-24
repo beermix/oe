@@ -9,7 +9,7 @@ PKG_VERSION="2.2.5"
 #PKG_VERSION="3.0.0-git"
 PKG_URL="https://nightlies.videolan.org/build/source/vlc-2.2.5-20170222-0218.tar.xz"
 #PKG_URL="http://download.videolan.org/$PKG_NAME/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain dbus libdvbpsi ffmpeg zlib lua libvorbis libogg flac gnutls fdk-aac faac fdkaac gstreamer x265 x264"
+PKG_DEPENDS_TARGET="toolchain dbus libdvbpsi ffmpeg zlib lua libvorbis libogg flac gnutls fdk-aac faac fdkaac gstreamer x265 x264 madplay"
 PKG_PRIORITY="optional"
 PKG_SECTION="xmedia/tools"
 PKG_SHORTDESC="VideoLAN multimedia player and streamer"
@@ -36,7 +36,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --enable-run-as-root \
 			      --disable-coverage \
 			      --enable-sout \
-			      --enable-lua \
+			      --disable-lua \
 			      --enable-httpd \
 			      --enable-vlm \
 			      --disable-growl \
@@ -44,8 +44,8 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-taglib \
 			      --disable-live555 \
 			      --disable-dc1394 \
-			      --disable-dvdread \
-			      --disable-dvdnav \
+			      --enable-dvdread \
+			      --enable-dvdnav \
 			      --disable-opencv \
 			      --disable-decklink \
 			      --disable-sftp \
