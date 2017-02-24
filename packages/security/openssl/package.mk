@@ -8,6 +8,8 @@ PKG_AUTORECONF="no"
 
 pre_configure_target() {
   export MAKEFLAGS="-j1"
+  strip_lto
+  strip_gold
   #"-Wa,--noexecstack -D_FORTIFY_SOURCE=2 -march=x86-64 -mtune=generic -O2 -pipe -fstack-protector-strong -Wall"
   #sed -i -e '/^"linux-x86_64"/ s/-m64 -DL_ENDIAN -O3 -Wall/-m64 -DL_ENDIAN -O2 -pipe -Wa,--noexecstack -Wall/' $ROOT/$PKG_BUILD/Configure
   sed -i -e '/^"linux-x86_64"/ s/-m64 -DL_ENDIAN -O3 -fstack-protector-strong -Wall/-DL_ENDIAN -Wall/' $ROOT/$PKG_BUILD/Configure
@@ -33,7 +35,6 @@ configure_target() {
               no-ssl3-method \
               no-idea \
               no-heartbeats \
-              gmp \
               enable-ec_nistp_64_gcc_128 \
               linux-x86_64 "-Wa,--noexecstack ${CFLAGS}"
 }
@@ -65,8 +66,8 @@ post_makeinstall_target() {
 # download url: http://curl.haxx.se
 # create new cert: perl ./mk-ca-bundle.pl
   mkdir -p $INSTALL/etc/ssl
-  #perl $PKG_DIR/cert/mk-ca-bundle.pl
-  #cp $ROOT/$PKG_BUILD/ca-bundle.crt $INSTALL/etc/ssl/cert.pem
+  perl $PKG_DIR/cert/mk-ca-bundle.pl
+  cp $ROOT/$PKG_BUILD/ca-bundle.crt $INSTALL/etc/ssl/cert.pem
     
-  cp $PKG_DIR/cert/ca-bundle.crt $INSTALL/etc/ssl/cert.pem
+  #cp $PKG_DIR/cert/ca-bundle.crt $INSTALL/etc/ssl/cert.pem
 }
