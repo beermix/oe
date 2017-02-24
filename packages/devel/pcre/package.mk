@@ -20,8 +20,8 @@ PKG_NAME="pcre"
 PKG_VERSION="8.40"
 PKG_SITE="http://www.pcre.org/"
 PKG_URL="http://ftp.csx.cam.ac.uk/pub/software/programming/pcre/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain"
+PKG_DEPENDS_HOST="pcre2:host"
+PKG_DEPENDS_TARGET="toolchain pcre2"
 PKG_SECTION="devel"
 PKG_SHORTDESC="pcre: Perl Compatible Regulat Expressions"
 PKG_LONGDESC="The PCRE library is a set of functions that implement regular expression pattern matching using the same syntax and semantics as Perl 5. PCRE has its own native API, as well as a set of wrapper functions that correspond to the POSIX regular expression API. The PCRE library is free, even for building commercial software."
@@ -35,9 +35,10 @@ PKG_CONFIGURE_OPTS_HOST="--prefix=$ROOT/$TOOLCHAIN \
 			    --enable-utf8 \
 			    --enable-pcre8 \
 			    --enable-pcre16 \
-			    --disable-pcre32 \
+			    --enable-pcre32 \
 			    --enable-unicode-properties \
 			    --with-pic \
+			    --enable-cpp \
 			    --with-gnu-ld"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
@@ -46,11 +47,12 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --disable-stack-for-recursion \
 			      --enable-pcre8 \
 			      --enable-pcre16 \
-			      --disable-pcre32 \
+			      --enable-pcre32 \
 			      --enable-jit \
 			      --enable-newline-is-anycrlf \
 			      --enable-unicode-properties \
 			      --with-pic \
+			      --enable-cpp \
 			      --with-gnu-ld"
 
 post_makeinstall_target() {

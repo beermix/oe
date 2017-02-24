@@ -17,6 +17,7 @@ PKG_CONFIGURE_OPTS_HOST="--prefix=$ROOT/$TOOLCHAIN \
                          --enable-pcre2-32 \
                          --enable-unicode-properties \
                          --with-pic \
+                         --enable-cpp \
                          --with-gnu-ld"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
@@ -26,6 +27,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-pcre2-32 \
 			      --enable-unicode-properties \
 			      --with-pic \
+			      --enable-cpp \
 			      --with-gnu-ld"
 
 post_makeinstall_target() {
