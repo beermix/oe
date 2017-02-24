@@ -216,8 +216,29 @@ configure_target() {
               $FFMPEG_FPU \
               --enable-yasm \
               --disable-symver \
-              --disable-lto \
-              --enable-runtime-cpudetect
+              --enable-lto \
+              --disable-runtime-cpudetect \
+              --enable-asm \
+              --enable-sse \
+              --enable-sse2 \
+              --enable-sse3 \
+              --enable-ssse3 \
+              --enable-sse4 \
+              --enable-sse42 \
+              --enable-avx \
+              --disable-xop \
+              --disable-fma3 \
+              --disable-fma4 \
+              --disable-avx2 \
+              --disable-armv5te \
+              --disable-armv6 \
+              --disable-armv6t2 \
+              --disable-vfp \
+              --disable-neon \
+              --disable-msa \
+              --disable-mipsfpu \
+              --disable-mmi \
+              --disable-debug
 }
 
 post_makeinstall_target() {

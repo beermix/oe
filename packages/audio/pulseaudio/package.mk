@@ -52,7 +52,7 @@ fi
 
 # package specific configure options
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_header_atomic_ops_h=no \
-                           --enable-silent-rules \
+                           --disable-silent-rules \
                            --disable-nls \
                            --enable-largefile \
                            --disable-rpath \
@@ -67,7 +67,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_header_atomic_ops_h=no \
                            --disable-esound \
                            --disable-solaris \
                            --disable-waveout \
-                           --disable-glib2 \
+                           --enable-glib2 \
                            --disable-gtk3 \
                            --disable-gconf \
                            $PULSEAUDIO_AVAHI \
