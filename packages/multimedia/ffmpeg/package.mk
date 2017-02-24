@@ -162,7 +162,6 @@ configure_target() {
               $FFMPEG_VAAPI \
               $FFMPEG_VDPAU \
               --disable-dxva2 \
-              --enable-runtime-cpudetect \
               $FFMPEG_TABLES \
               --disable-memalign-hack \
               --enable-encoders \
@@ -217,7 +216,33 @@ configure_target() {
               $FFMPEG_FPU \
               --enable-yasm \
               --disable-symver \
-              --disable-lto
+              --enable-lto \
+              --disable-runtime-cpudetect \
+              --enable-asm \
+              --enable-sse \
+              --enable-sse2 \
+              --enable-sse3 \
+              --enable-ssse3 \
+              --enable-sse4 \
+              --enable-sse42 \
+              --enable-avx \
+              --disable-xop \
+              --disable-fma3 \
+              --disable-fma4 \
+              --disable-avx2 \
+              --enable-aesni \
+              --disable-armv5te \
+              --disable-armv6 \
+              --disable-armv6t2 \
+              --disable-vfp \
+              --disable-neon \
+              --disable-inline-asm \
+              --disable-mipsdsp \
+              --disable-mipsdspr2 \
+              --disable-msa \
+              --disable-mipsfpu \
+              --disable-mmi \
+              --disable-debug
 }
 
 post_makeinstall_target() {
