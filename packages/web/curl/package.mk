@@ -91,7 +91,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            --without-nghttp2 \
                            --with-ssl \
                            --without-gnutls \
-                           --with-mbedtls \
+                           --without-mbedtls \
                            --without-polarssl"
 
 pre_configure_target() {
