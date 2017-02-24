@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libgpg-error"
-PKG_VERSION="1.26"
+PKG_VERSION="1.24"
 PKG_SITE="https://www.gnupg.org"
 PKG_URL="https://www.gnupg.org/ftp/gcrypt/libgpg-error/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain"
@@ -27,7 +27,7 @@ PKG_LONGDESC="This is a library that defines common error values for all GnuPG c
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC --enable-static --disable-shared --disable-nls --disable-rpath --with-gnu-ld --disable-languages"
+PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC --enable-static --disable-shared --disable-nls --disable-rpath --with-gnu-ld"
 
 pre_configure_target() {
 # inspired by openembedded
