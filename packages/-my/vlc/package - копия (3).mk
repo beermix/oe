@@ -9,7 +9,7 @@ PKG_VERSION="2.2.5"
 #PKG_VERSION="3.0.0-git"
 PKG_URL="https://nightlies.videolan.org/build/source/vlc-2.2.5-20170222-0218.tar.xz"
 #PKG_URL="http://download.videolan.org/$PKG_NAME/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain dbus libdvbpsi ffmpeg zlib lua libvorbis libogg flac gnutls fdk-aac faac fdkaac gstreamer x265 x264"
+PKG_DEPENDS_TARGET="toolchain dbus libdvbpsi ffmpeg zlib lua libvorbis libogg flac gnutls fdk-aac faac fdkaac gstreamer"
 PKG_PRIORITY="optional"
 PKG_SECTION="xmedia/tools"
 PKG_SHORTDESC="VideoLAN multimedia player and streamer"
@@ -84,11 +84,11 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --enable-libmpeg2 \
 			      --enable-vorbis \
 			      --disable-tremor \
-			      --enable-speex \
+			      --disable-speex \
 			      --disable-theora \
 			      --disable-schroedinger \
-			      --enable-png \
-			      --enable-x264 \
+			      --disable-png \
+			      --disable-x264 \
 			      --disable-fluidsynth \
 			      --disable-zvbi \
 			      --disable-telx \
@@ -97,14 +97,14 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-tiger \
 			      --enable-libva \
 			      --disable-vdpau \
-			      --with-x \
-			      --enable-xcb \
-			      --enable-xvideo \
+			      --without-x \
+			      --disable-xcb \
+			      --disable-xvideo \
 			      --disable-sdl \
 			      --disable-sdl-image \
-			      --enable-freetype \
+			      --disable-freetype \
 			      --disable-fribidi \
-			      --enable-fontconfig \
+			      --disable-fontconfig \
 			      --enable-libxml2 \
 			      --disable-svg \
 			      --disable-directx \
@@ -130,7 +130,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-bonjour \
 			      --enable-udev \
 			      --disable-mtp \
-			      --enable-lirc \
+			      --disable-lirc \
 			      --disable-libgcrypt \
 			      --enable-gnutls \
 			      --disable-update-check \
