@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="6.3.0"
+PKG_VERSION="6-20170223"
 PKG_SITE="http://gcc.gnu.org/"
 PKG_URL="https://fossies.org/linux/misc/gcc-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host"
@@ -52,9 +52,9 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --without-cloog \
                            --disable-libada \
                            --disable-libmudflap \
-                           --disable-libitm \
-                           --disable-libquadmath \
-                           --disable-libgomp \
+                           --enable-libitm \
+                           --enable-libquadmath \
+                           --enable-libgomp \
                            --disable-libmpx \
                            --disable-libssp \
                            --enable-poison-system-directories \
@@ -69,7 +69,7 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-threads \
                               --without-headers \
                               --with-newlib \
-                              --disable-libatomic \
+                              --enable-libatomic \
                               --disable-decimal-float \
                               $GCC_OPTS"
 
@@ -87,11 +87,11 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time \
                          --enable-clocale=gnu \
-			 --enable-gnu-unique-object \
-			 --enable-linker-build-id \
-			 --enable-install-libiberty \
+                         --enable-gnu-unique-object \
+                         --enable-linker-build-id \
+                         --enable-install-libiberty \
                          --with-linker-hash-style=gnu \
-			 --enable-gnu-indirect-function 
+                         --enable-gnu-indirect-function 
                          $GCC_OPTS"
 
 pre_configure_host() {
