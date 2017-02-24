@@ -20,7 +20,7 @@ PKG_NAME="kodi"
 PKG_VERSION="beac347"
 PKG_GIT_URL="https://github.com/xbmc/xbmc.git"
 PKG_GIT_BRANCH="Jarvis"
-PKG_DEPENDS_TARGET="toolchain kodi:host xmlstarlet:host libsquish boost Python zlib bzip2 pciutils lzo pcre swig:host libass curl rtmpdump fontconfig fribidi tinyxml libjpeg-turbo libpng tiff freetype jasper libcdio libmpeg2 taglib libxml2 libxslt yajl sqlite ffmpeg crossguid giflib gnutls SDL_image SDL_mixer"
+PKG_DEPENDS_TARGET="toolchain kodi:host xmlstarlet:host libsquish boost Python zlib bzip2 pciutils lzo pcre swig:host libass curl rtmpdump fontconfig fribidi tinyxml libjpeg-turbo libpng tiff freetype jasper libcdio libmpeg2 taglib libxml2 libxslt yajl sqlite ffmpeg crossguid giflib"
 PKG_DEPENDS_HOST="lzo:host libpng:host libjpeg-turbo:host giflib:host"
 PKG_SECTION="mediacenter"
 PKG_SHORTDESC="kodi: Kodi Mediacenter"
@@ -193,7 +193,7 @@ if [ ! "$KODIPLAYER_DRIVER" = default ]; then
     KODI_CODEC="--with-platform=raspberry-pi"
     BCM2835_INCLUDES="-I$SYSROOT_PREFIX/usr/include/interface/vcos/pthreads/ \
                       -I$SYSROOT_PREFIX/usr/include/interface/vmcs_host/linux"
-    KODI_CFLAGS="$KODI_CFLAGS $BCM2835_INCLUDES -DCURL_STATICLIB"
+    KODI_CFLAGS="$KODI_CFLAGS $BCM2835_INCLUDES"
     KODI_CXXFLAGS="$KODI_CXXFLAGS $BCM2835_INCLUDES"
   elif [ "$KODIPLAYER_DRIVER" = libfslvpuwrap ]; then
     KODI_CODEC="--enable-codec=imxvpu"
@@ -224,9 +224,6 @@ export CC_FOR_BUILD="$HOST_CC"
 export CXXFLAGS_FOR_BUILD="$HOST_CXXFLAGS"
 export CFLAGS_FOR_BUILD="$HOST_CFLAGS"
 export LDFLAGS_FOR_BUILD="$HOST_LDFLAGS"
-
-#export LIBCURL_CFLAGS="-L/root/-f2fs/oe/build.OE-Generic.x86_64-8.0-devel/curl-7.52.1/.x86_64-openelec-linux-gnu/include -DCURL_STATICLIB"
-#export LIBCURL_LIBS="-lz -lgcc -lrt -lm -lrtmp"
 
 export PYTHON_VERSION="2.7"
 export PYTHON_CPPFLAGS="-I$SYSROOT_PREFIX/usr/include/python$PYTHON_VERSION"

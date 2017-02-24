@@ -78,7 +78,7 @@ post_makeinstall_target() {
 }
 
 post_makeinstall_target() {
-  #rm -rf $INSTALL/usr/bin
+  rm -rf $INSTALL/usr/bin
   rm -rf $INSTALL/usr/lib/gdbus-2.0
   rm -rf $INSTALL/usr/lib/glib-2.0
   rm -rf $INSTALL/usr/share
