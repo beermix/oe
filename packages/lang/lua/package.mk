@@ -28,7 +28,7 @@ make_target() {
 
 makeinstall_target() {
   make \
-  TO_LIB="liblua.a liblua.so liblua.so.$_MAJORVER liblua.so.$PKG_VERSION" \
+  TO_LIB="liblua.a" \
   INSTALL_DATA='cp -d' \
   INSTALL_TOP=$SYSROOT_PREFIX/usr \
   INSTALL_MAN=$SYSROOT_PREFIX/usr/share/man/man1 \
@@ -49,7 +49,7 @@ post_make_target() {
   ln -sf /usr/bin/lua $INSTALL/usr/bin/lua$_MAJORVER
   ln -sf /usr/bin/luac $INSTALL/usr/bin/luac$_MAJORVER
 
-  mkdir -p $INSTALL/usr/lib
-    cp -P $ROOT/$PKG_BUILD/src/liblua.so $INSTALL/usr/lib
+  #mkdir -p $INSTALL/usr/lib
+    #cp -P $ROOT/$PKG_BUILD/src/liblua.so $INSTALL/usr/lib
     #cp -P $ROOT/$PKG_BUILD/src/liblua.so.* $INSTALL/usr/lib
 }
