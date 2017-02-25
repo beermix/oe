@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="systemd"
-PKG_VERSION="4059584"
+PKG_VERSION="4ec426b"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/systemd"
 PKG_GIT_URL="https://github.com/systemd/systemd"
 PKG_DEPENDS_TARGET="toolchain libcap kmod util-linux entropy xz zlib lz4 lzo bzip2 lrzip"
@@ -72,7 +72,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-firstboot \
                            --disable-randomseed \
                            --disable-backlight \
-                           --enable-rfkill \
+                           --disable-rfkill \
                            --enable-logind --without-kill-user-processes \
                            --disable-machined \
                            --disable-importd \
