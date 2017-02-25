@@ -2,7 +2,7 @@ PKG_NAME="MPlayer"
 PKG_VERSION="1.3.0"
 PKG_URL="ftp://ftp.mplayerhq.hu/MPlayer/releases/MPlayer-$PKG_VERSION.tar.xz"
 #PKG_SOURCE_DIR="mplayer-export-2016-10-07"
-PKG_DEPENDS_TARGET="toolchain ffmpeg faad2` faac"
+PKG_DEPENDS_TARGET="toolchain ffmpeg faad2"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
@@ -28,6 +28,6 @@ configure_target() {
   		--enable-avx \
   		--disable-iconv \
   		--disable-smb \
-  		--disable-faad \
+  		--enable-faad \
   		--disable-faac
 }
