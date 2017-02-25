@@ -9,6 +9,7 @@ PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-static \
+			      --disable-gcc-hardening \
 			      --disable-samples \
 			      --enable-openssl \
 			      --disable-debug-mode"

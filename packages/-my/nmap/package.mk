@@ -2,7 +2,7 @@ PKG_NAME="nmap"
 PKG_VERSION="7.40"
 PKG_SITE="http://nmap.org/"
 PKG_URL="http://nmap.org/dist/${PKG_NAME}-${PKG_VERSION}.tgz"
-PKG_DEPENDS_TARGET="toolchain netbsd-curses libpcap libdnet pcre lua"
+PKG_DEPENDS_TARGET="toolchain netbsd-curses libpcap libdnet pcre"
 PKG_SECTION="tools"
 PKG_AUTORECONF="no"
 
@@ -14,7 +14,7 @@ pre_configure_target() {
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_c_bigendian=yes \
                            --enable-static \
-                           --with-pcap=linux \
+                           --with-pcap=$SYSROOT_PREFIX/usr \
                            --with-liblua=included \
                            --with-liblinear=included \
                            --with-libpcre=$SYSROOT_PREFIX/usr \
