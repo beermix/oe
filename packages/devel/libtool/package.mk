@@ -34,5 +34,5 @@ PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_HOST="--enable-ltdl-install --disable-shared"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared"
+PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared"
 
