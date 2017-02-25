@@ -17,9 +17,11 @@
 ################################################################################
 
 PKG_NAME="glibc"
-PKG_VERSION="4f5a9af"
-PKG_KEEP_CHECKOUT="yes"
-PKG_GIT_URL="git://sourceware.org/git/glibc.git"
+PKG_VERSION="2.24"
+PKG_URL="http://ftp.gnu.org/pub/gnu/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
+#PKG_VERSION="4f5a9af"
+#PKG_KEEP_CHECKOUT="yes"
+#PKG_GIT_URL="git://sourceware.org/git/glibc.git"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap localedef-eglibc:host"
 PKG_DEPENDS_INIT="glibc"
 PKG_PRIORITY="optional"
