@@ -44,8 +44,8 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-taglib \
 			      --disable-live555 \
 			      --disable-dc1394 \
-			      --enable-dvdread \
-			      --enable-dvdnav \
+			      --disable-dvdread \
+			      --disable-dvdnav \
 			      --disable-opencv \
 			      --disable-decklink \
 			      --disable-sftp \
