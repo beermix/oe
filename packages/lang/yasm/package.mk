@@ -43,3 +43,6 @@ PKG_CONFIGURE_OPTS_HOST="--disable-debug \
                          --with-gnu-ld \
                          --without-libiconv-prefix \
                          --without-libintl-prefix"
+
+
+PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
