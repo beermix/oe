@@ -19,7 +19,7 @@
 ################################################################################
 
 PKG_NAME="nss"
-PKG_VERSION="3.19.1"
+PKG_VERSION="3.29.1"
 PKG_SITE="http://ftp.mozilla.org/"
 PKG_URL="https://ftp.mozilla.org/pub/security/nss/releases/NSS_3_29_1_RTM/src/nss-3.29.1-with-nspr-4.13.1.tar.gz"
 PKG_DEPENDS_TARGET="toolchain nss:host nspr zlib"
