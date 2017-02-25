@@ -235,7 +235,7 @@ export GIT_REV="$PKG_VERSION"
 
 PKG_CONFIGURE_OPTS_TARGET="gl_cv_func_gettimeofday_clobber=no \
                            --disable-debug \
-                           --enable-optimizations \
+                           --disable-optimizations \
                            $KODI_OPENGL \
                            $KODI_OPENGLES \
                            $KODI_OPENMAX \

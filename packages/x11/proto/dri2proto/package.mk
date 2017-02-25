@@ -18,6 +18,8 @@
 
 PKG_NAME="dri2proto"
 PKG_VERSION="2.8"
+PKG_ARCH="any"
+PKG_LICENSE="OSS"
 PKG_SITE="http://www.X.org"
 PKG_URL="http://xorg.freedesktop.org/archive/individual/proto/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain util-macros"
@@ -26,7 +28,7 @@ PKG_SHORTDESC="dri2proto: X.Org DRI2 protocol headers"
 PKG_LONGDESC="X.Org DRI2 protocol headers."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 # package specific configure options
 PKG_CONFIGURE_OPTS_TARGET="--without-xmlto"
