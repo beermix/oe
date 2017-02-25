@@ -19,7 +19,7 @@
 PKG_NAME="docker"
 PKG_VERSION="v1.13.1"
 PKG_GIT_URL="https://github.com/docker/docker"
-PKG_DEPENDS_TARGET="toolchain sqlite go:host containerd runc libnetwork tini aufs-util curl"
+PKG_DEPENDS_TARGET="toolchain sqlite go:host containerd runc libnetwork tini curl"
 PKG_SECTION="service/system"
 PKG_SHORTDESC="Docker is an open-source engine that automates the deployment of any application as a lightweight, portable, self-sufficient container that will run virtually anywhere."
 PKG_LONGDESC="Docker containers can encapsulate any payload, and will run consistently on and between virtually any server. The same container that a developer builds and tests on a laptop will run at scale, in production*, on VMs, bare-metal servers, OpenStack clusters, public instances, or combinations of the above."
@@ -35,6 +35,7 @@ configure_target() {
   export DOCKER_BUILDTAGS="daemon \
                            autogen \
                            exclude_graphdriver_devicemapper \
+                           exclude_graphdriver_aufs \
                            exclude_graphdriver_btrfs \
                            journald"
 
