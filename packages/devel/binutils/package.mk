@@ -29,7 +29,7 @@ PKG_SHORTDESC="binutils: A GNU collection of binary utilities"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-#MAKEFLAGS=-j6
+#MAKEFLAGS=-j1
 
 PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --with-sysroot=$SYSROOT_PREFIX \

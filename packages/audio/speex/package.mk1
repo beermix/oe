@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="speex"
-PKG_VERSION="cae5026"
+PKG_VERSION="1.2rc2"
 PKG_SITE="http://downloads.us.xiph.org/releases/speex"
-PKG_GIT_URL="https://github.com/xiph/speex"
+PKG_URL="$PKG_SITE/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="audio"
 PKG_SHORTDESC="Speex / OPUS audio codec"
