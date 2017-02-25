@@ -234,6 +234,7 @@ export ac_python_version="$PYTHON_VERSION"
 export GIT_REV="$PKG_VERSION"
 
 PKG_CONFIGURE_OPTS_TARGET="gl_cv_func_gettimeofday_clobber=no \
+                           ac_cv_lib_bluetooth_hci_devid=no \
                            --disable-debug \
                            --disable-optimizations \
                            $KODI_OPENGL \
@@ -310,10 +311,10 @@ pre_configure_target() {
 
 # kodi should never be built with lto
   strip_lto
-  #unset CPPFLAGS
+
   export CFLAGS="$CFLAGS $KODI_CFLAGS"
   export CXXFLAGS="$CXXFLAGS $KODI_CXXFLAGS"
-  #export LIBS="$LIBS -lbz2"
+  export LIBS="$LIBS -lz"
 
   export JSON_BUILDER=$ROOT/$TOOLCHAIN/bin/JsonSchemaBuilder
 }
@@ -331,6 +332,12 @@ make_target() {
 
   if [ "$DISPLAYSERVER" = "x11" ]; then
     make kodi-xrandr
+  fi
+
+  if [ "$SKIN_REMOVE_SHIPPED" = "yes" ]; then
+    rm -rf addons/skin.confluence
+  else
+    TexturePacker -input addons/skin.confluence/media/ -output Textures.xbt -dupecheck -use_none
   fi
 }
 
