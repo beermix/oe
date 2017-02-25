@@ -7,7 +7,7 @@ PKG_NAME="vlc"
 #PKG_VERSION="2.2.4"
 PKG_VERSION="2.2.5"
 #PKG_VERSION="3.0.0-git"
-PKG_URL="https://nightlies.videolan.org/build/source/vlc-2.2.5-20170222-0218.tar.xz"
+PKG_URL="https://nightlies.videolan.org/build/source/vlc-2.2.5-20170225-0221.tar.xz"
 #PKG_URL="http://download.videolan.org/$PKG_NAME/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain dbus libdvbpsi ffmpeg zlib lua libvorbis libogg flac gnutls fdk-aac faac fdkaac gstreamer x265 x264 madplay"
 PKG_PRIORITY="optional"
@@ -36,7 +36,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --enable-run-as-root \
 			      --disable-coverage \
 			      --enable-sout \
-			      --disable-lua \
+			      --enable-lua \
 			      --enable-httpd \
 			      --enable-vlm \
 			      --disable-growl \
