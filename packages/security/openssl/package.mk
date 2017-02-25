@@ -36,7 +36,7 @@ configure_target() {
               no-idea \
               no-heartbeats \
               enable-ec_nistp_64_gcc_128 \
-              linux-x86_64 "-Wa,--noexecstack ${CFLAGS}"
+              linux-x86_64 "-Wa,--noexecstack"
 }
 
 make_target() {
