@@ -5,6 +5,7 @@ PKG_DEPENDS_TARGET="toolchain fuse netbsd-curses openssl glib libcap libnetfilte
 PKG_SECTION="tools"
 PKG_AUTORECONF="yes"
 
+CONCURRENCY_MAKE_LEVEL=7
 
 PKG_CONFIGURE_OPTS_TARGET="squid_cv_gnu_atomics=yes \ 
 			      ac_cv_epoll_works=yes \

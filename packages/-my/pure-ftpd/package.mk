@@ -4,15 +4,15 @@ PKG_URL="ftp://ftp.pureftpd.org/pub/pure-ftpd/releases/pure-ftpd-$PKG_VERSION.ta
 PKG_DEPENDS_TARGET="toolchain libsodium libevent"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-static \
+			      --with-gnu-ld \
 			      --disable-ssp \
 			      --with-nonroot \
 			      --with-rfc2640 \
 			      --disable-ssp \
-			      --enable-pie \
 			      --sysconfdir=/storage/.config \
 			      --datadir=/storage/.config \
 			      --libdir=/storage/.config \
