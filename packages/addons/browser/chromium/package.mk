@@ -19,7 +19,7 @@
 ################################################################################
 
 PKG_NAME="chromium"
-PKG_VERSION="55.0.2883.87"
+PKG_VERSION="55.0.2883.75"
 PKG_REV="106"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
@@ -40,7 +40,7 @@ pre_make_target() {
   strip_lto
 
   sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' third_party/widevine/cdm/stub/widevine_cdm_version.h
-  sed -i "/ac_cpp=/s/\--param=ssp-buffer-size=4/\-fstack-protector-strong/" build/config/compiler/BUILD.gn
+  #sed -i "/ac_cpp=/s/\--param=ssp-buffer-size=4/\-fstack-protector-strong/" build/config/compiler/BUILD.gn
 
 }
 
@@ -118,7 +118,7 @@ make_target() {
   ./tools/gn/bootstrap/bootstrap.py --gn-gen-args "${_flags[*]}"
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
 
-  ninja -j4 -C out/Release chrome chrome_sandbox
+  ninja -C out/Release chrome chrome_sandbox widevinecdmadapter
 }
 
 makeinstall_target() {
