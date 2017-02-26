@@ -30,10 +30,6 @@ PKG_IS_ADDON="no"
 
 PKG_AUTORECONF="no"
 
-pre_configure_target() {
-  #sed -i '1s/python$/&2/' $ROOT/$PKG_BUILD/build/identfilter.py
-  NOCONFIGURE=1 ./autogen.sh
-}
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-cups --with-included-immodules"
 
