@@ -32,14 +32,6 @@ TARGET_CONFIGURE_OPTS="--host=$TARGET_NAME \
 			  --localstatedir=/var \
 			  --disable-static \
 			  --enable-shared \
-			  --disable-gtk-doc \
-			  --disable-gtk-doc-html \
-			  --disable-doc \
-			  --disable-docs \
-			  --disable-documentation \
-			  --with-xmlto=no \
-			  --with-fop=no \
-			  --disable-dependency-tracking \
 			  --enable-silent-rules"
 
 TARGET_CMAKE_OPTS="-DCMAKE_BUILD_TYPE=Release \
@@ -57,15 +49,6 @@ HOST_CONFIGURE_OPTS="--host=$HOST_NAME \
 			--localstatedir=$ROOT/$TOOLCHAIN/var \
 			--disable-static \
 			--enable-shared \
-			--enable-silent-rules \
-			--disable-gtk-doc \
-			--disable-gtk-doc-html \
-			--disable-doc \
-			--disable-docs \
-			--disable-documentation \
-			--with-xmlto=no \
-			--with-fop=no \
-			--disable-dependency-tracking \
 			--enable-silent-rules"
 
 HOST_CMAKE_OPTS="-DCMAKE_BUILD_TYPE=Release \
