@@ -6,16 +6,5 @@ PKG_SECTION="network"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-pre_configure_target() {
-  cd $ROOT/$PKG_BUILD
-}
+PKG_CONFIGURE_OPTS_TARGET="--disable-silent-rules --disable-shared --enable-static"
 
-make_target() {
-  make \
-       CC="$CC" \
-       LD="$LD" \
-       AR="$AR" \
-       XCFLAGS="$CFLAGS" \
-       XLDFLAGS="$LDFLAGS" \
-       all -j1
-}
