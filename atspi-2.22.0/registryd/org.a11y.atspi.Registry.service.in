@@ -1,3 +1,0 @@
-[D-BUS Service]
-Name=org.a11y.atspi.Registry
-Exec=@LIBEXECDIR@/at-spi2-registryd --use-gnome-session
