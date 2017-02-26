@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="bluez"
-PKG_VERSION="5.43"
+PKG_VERSION="5.44"
 PKG_SITE="http://www.bluez.org/"
 PKG_URL="http://www.kernel.org/pub/linux/bluetooth/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain dbus glib readline netbsd-curses systemd"

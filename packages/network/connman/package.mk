@@ -43,6 +43,8 @@ else
   CONNMAN_OPENVPN="--disable-openvpn"
 fi
 
+export PKG_CONFIG="$ROOT/$TOOLCHAIN/bin/pkg-config"
+
 PKG_CONFIGURE_OPTS_TARGET="WPASUPPLICANT=/usr/bin/wpa_supplicant \
                            --disable-gtk-doc \
                            --srcdir=.. \
