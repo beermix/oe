@@ -57,7 +57,6 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/bash \
                            --disable-timezone-tools \
                            --enable-stack-protector=strong \
                            --enable-static-nss \
-                           --enable-all-warnings \
                            --with-fp \
                            --disable-debug"
 
