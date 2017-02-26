@@ -21,23 +21,19 @@ PKG_VERSION="5.2.3"
 PKG_SITE="http://tukaani.org/xz/"
 PKG_URL="http://tukaani.org/xz/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="ccache:host"
-PKG_DEPENDS_TARGET="xz:host"
+PKG_DEPENDS_TARGET="xz:host yasm:host"
 PKG_SECTION="toolchain/archivers"
 PKG_SHORTDESC="xz: a free general-purpose data compression software with high compression ratio."
 PKG_LONGDESC="XZ Utils is free general-purpose data compression software with high compression ratio. XZ Utils were written for POSIX-like systems, but also work on some not-so-POSIX systems. XZ Utils are the successor to LZMA Utils."
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_HOST="-enable-shared \
-			      --disable-static \
-			      --enable-assembler=x86_64 \
-			      --enable-threads=posix \
-			      --enable-liblzma2-compat \
-			      --enable-unaligned-access \
-			      --disable-doc"
+PKG_CONFIGURE_OPTS_HOST="--enable-shared \
+			    --enable-static \
+			    --enable-liblzma2-compat \
+			    --disable-doc"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-shared \
-			      --disable-static \
+PKG_CONFIGURE_OPTS_TARGET="--enable-shared --disable-static \
 			      --enable-assembler=x86_64 \
 			      --enable-threads=posix \
 			      --enable-liblzma2-compat \
