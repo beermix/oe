@@ -24,9 +24,9 @@ PKG_SECTION="depends"
 PKG_SHORTDESC="A cross-platform GUI and tools library for GTK, MS Windows, and MacOS."
 PKG_LONGDESC="A cross-platform GUI and tools library for GTK, MS Windows, and MacOS."
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-precomp-headers --enable-silent-rules"
+PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules"
 
 post_makeinstall_target() {
   ln -sfv $SYSROOT_PREFIX/usr/lib/wx/config/x86_64-openelec-linux-gnu-gtk2-unicode-3.0 $SYSROOT_PREFIX/usr/bin/wx-config

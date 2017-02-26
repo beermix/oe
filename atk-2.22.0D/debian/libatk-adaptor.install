@@ -1,0 +1,3 @@
+usr/lib/*/gtk-*
+usr/lib/*/gnome-settings-daemon-3.0 usr/lib
+debian/90atk-adaptor etc/X11/Xsession.d

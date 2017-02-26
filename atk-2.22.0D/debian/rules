@@ -1,0 +1,22 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@ --with autoreconf
+
+override_dh_auto_test:
+	# Tests fail
+
+override_dh_makeshlibs:
+	dh_makeshlibs -plibatk-bridge2.0-0 --add-udeb=libatk-bridge-2.0-0-udeb
+
+override_dh_strip:
+	dh_strip -plibatk-adaptor --ddeb-migration='libatk-adaptor-dbg (<< 2.18.1-2~)'
+	dh_strip -plibatk-adaptor-udeb
+	dh_strip -plibatk-bridge2.0-0 --ddeb-migration='libatk-bridge2.0-0-dbg (<< 2.18.1-2~)'
+	dh_strip -plibatk-bridge-2.0-0-udeb
+
+override_dh_auto_install:
+	dh_auto_install
+	for file in $$(find debian/tmp/usr/lib/ -name "*.la"); do \
+		rm $$file ; \
+	done
