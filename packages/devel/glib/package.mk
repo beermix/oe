@@ -42,30 +42,17 @@ PKG_CONFIGURE_OPTS_HOST="--disable-selinux \
 			    --disable-shared \
 			    --with-pcre=internal"
 
-PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_mmap_fixed_mapped=yes \
-                           ac_cv_func_posix_getpwuid_r=yes \
-                           ac_cv_func_posix_getgrgid_r=yes \
-                           ac_cv_func_printf_unix98=yes \
-                           ac_cv_func_snprintf_c99=yes \
-                           ac_cv_func_vsnprintf_c99=yes \
-                           glib_cv_stack_grows=no \
-                           glib_cv_uscore=no \
-                           glib_cv_va_val_copy=no \
-                           --disable-selinux \
-                           --disable-fam \
-                           --enable-xattr \
-                           --disable-libelf \
-                           --disable-modular-tests \
-                           --disable-gtk-doc \
-                           --disable-man \
+PKG_CONFIGURE_OPTS_TARGET="glib_cv_stack_grows=no \
+			      glib_cv_uscore=no \
+			      ac_cv_func_mmap_fixed_mapped=yes \
+			      ac_cv_func_posix_getpwuid_r=yes \
+			      ac_cv_func_posix_getgrgid_r=yes
+                           --enable-shared \
                            --enable-static \
-                           --disable-dtrace \
-                           --disable-systemtap \
-                           --enable-Bsymbolic \
-                           --with-gnu-ld \
-                           --with-threads \
                            --enable-debug=no \
+                           --disable-selinux \
                            --enable-libmount=no \
+                           --disable-fam \
                            --with-pcre=internal"
                            
 	   

@@ -17,19 +17,17 @@
 ################################################################################
 
 PKG_NAME="binutils"
-#PKG_VERSION="2.27"
-#PKG_URL="https://fossies.org/linux/misc/binutils-2.27.tar.xz"
-PKG_VERSION="3553db7"
-PKG_GIT_URL="git://sourceware.org/git/binutils-gdb.git"
-PKG_GIT_BRANCH="binutils-2_28-branch"
+PKG_VERSION="2.27.90"
+PKG_URL="https://dl.dropboxusercontent.com/s/2wv575aaqdm44pd/binutils-2.27.90.tar.xz"
+#PKG_VERSION="3553db7"
+#PKG_GIT_URL="git://sourceware.org/git/binutils-gdb.git"
+#PKG_GIT_BRANCH="binutils-2_28-branch"
 PKG_DEPENDS_HOST="ccache:host bison:host flex:host linux:host"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="binutils: A GNU collection of binary utilities"
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
-
-#MAKEFLAGS=-j1
 
 PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --with-sysroot=$SYSROOT_PREFIX \

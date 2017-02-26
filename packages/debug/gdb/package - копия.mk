@@ -19,7 +19,7 @@
 PKG_NAME="gdb"
 PKG_VERSION="7.12.1"
 PKG_SITE="http://www.gnu.org/software/gdb/"
-PKG_URL=""
+PKG_URL="http://ftp.gnu.org/gnu/gdb/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain zlib netbsd-curses expat"
 PKG_SECTION="debug"
 PKG_SHORTDESC="gdb: The GNU Debugger"
@@ -28,15 +28,14 @@ PKG_LONGDESC="The purpose of a debugger such as GDB is to allow you to see what 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-unpack() {
-  mkdir -p $PKG_BUILD
-  cp -r $(get_build_dir binutils)/* $PKG_BUILD/
-}
-
-
 CC_FOR_BUILD="$HOST_CC"
 CFLAGS_FOR_BUILD="$HOST_CFLAGS"
 
+pre_configure_target() {
+  # gdb could fail on runtime if build with LTO support
+    strip_lto
+    export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
+}
 
 PKG_CONFIGURE_OPTS_TARGET="bash_cv_have_mbstate_t=set \
                            --disable-shared \
@@ -50,7 +49,8 @@ PKG_CONFIGURE_OPTS_TARGET="bash_cv_have_mbstate_t=set \
                            --without-lzma \
                            --disable-libquadmath \
                            --disable-libquadmath-support \
-                           --disable-libssp \
+                           --enable-libada \
+                           --enable-libssp \
                            --disable-werror \
                            --disable-silent-rules"
 
