@@ -2,7 +2,7 @@
 +++ b/build/toolchain/linux/BUILD.gn	2016-11-10 20:33:18.200587987 -0800
 @@ -102,13 +102,14 @@
  }
-
+ 
  gcc_toolchain("x64") {
 -  cc = "gcc"
 -  cxx = "g++"

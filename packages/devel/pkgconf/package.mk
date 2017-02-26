@@ -6,10 +6,9 @@ PKG_SECTION="toolchain/devel"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
+PKG_CONFIGURE_OPTS_HOST="--disable-shared"
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared"
 
-PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
-
-
-#post_makeinstall_host() {
-#  ln -sfv pkgconf $ROOT/$TOOLCHAIN/bin/pkg-config
-#}
+post_makeinstall_host() {
+  ln -sfv pkgconf $ROOT/$TOOLCHAIN/bin/pkg-config
+}

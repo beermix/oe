@@ -43,8 +43,6 @@ else
   CONNMAN_OPENVPN="--disable-openvpn"
 fi
 
-export PKG_CONFIG="$ROOT/$TOOLCHAIN/bin/pkg-config"
-
 PKG_CONFIGURE_OPTS_TARGET="WPASUPPLICANT=/usr/bin/wpa_supplicant \
                            --disable-gtk-doc \
                            --srcdir=.. \
@@ -77,7 +75,7 @@ PKG_CONFIGURE_OPTS_TARGET="WPASUPPLICANT=/usr/bin/wpa_supplicant \
                            --enable-datafiles \
                            --with-dbusconfdir=/etc \
                            --with-systemdunitdir=/usr/lib/systemd/system \
-                           --disable-silent-rules"
+                           --enable-silent-rules"
 
 
 PKG_MAKE_OPTS_TARGET="storagedir=/storage/.cache/connman \
