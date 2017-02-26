@@ -1,4 +1,4 @@
-PKG_NAME="firefox"
+PKG_NAME="cyberfox"
 PKG_VERSION="e48d7e4"
 PKG_GIT_URL="https://github.com/InternalError503/cyberfox"
 PKG_DEPENDS_TARGET="toolchain"
