@@ -1,5 +1,5 @@
 PKG_NAME="lrzip"
-PKG_VERSION="v0.631"
+PKG_VERSION="ac393ef"
 PKG_GIT_URL="https://github.com/ckolivas/lrzip"
 PKG_DEPENDS_TARGET="toolchain lzo zlib bzip2"
 PKG_SECTION="network"
