@@ -18,6 +18,8 @@
 
 PKG_NAME="hddtemp"
 PKG_VERSION="0.3-beta15"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://www.guzu.net/linux/hddtemp.php"
 PKG_URL="http://download.savannah.gnu.org/releases/hddtemp/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain"

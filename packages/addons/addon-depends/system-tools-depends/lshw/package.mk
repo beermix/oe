@@ -18,6 +18,8 @@
 
 PKG_NAME="lshw"
 PKG_VERSION="B.02.17"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://ezix.org/project/wiki/HardwareLiSter"
 PKG_URL="http://ezix.org/software/files/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"

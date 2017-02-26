@@ -18,6 +18,8 @@
 
 PKG_NAME="tntnet"
 PKG_VERSION="2.2.1"
+PKG_ARCH="any"
+PKG_LICENSE="GPL-2"
 PKG_SITE="http://www.tntnet.org/"
 PKG_URL="http://www.tntnet.org/download/${PKG_NAME}-${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_HOST="cxxtools:host zlib:host"

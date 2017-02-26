@@ -19,6 +19,7 @@
 PKG_NAME="mrxvt"
 PKG_VERSION="0.5.4"
 PKG_ARCH="i386 x86_64"
+PKG_LICENSE="GPL"
 PKG_SITE="http://materm.sourceforge.net/"
 PKG_URL="$SOURCEFORGE_SRC/materm/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libX11"
@@ -29,37 +30,41 @@ PKG_AUTORECONF="yes"
 
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_setpgrp_void=no \
-			      --enable-minimal \
-			      --disable-frills \
-			      --enable-keepscrolling \
-			      --disable-selectionscrolling \
-			      --enable-mousewheel \
-			      --disable-mouseslipwheel \
-			      --enable-rxvt-scroll \
-			      --disable-half-shadow \
-			      --enable-lastlog \
-			      --enable-sessionmgr \
-			      --enable-linespace \
-			      --enable-24bits \
-			      --enable-256colors \
-			      --enable-cursor-blink \
-			      --enable-pointer-blank \
-			      --disable-text-shadow \
-			      --disable-menubar \
-			      --disable-transparency \
-			      --disable-tinting \
-			      --disable-xrender \
-			      --disable-xpm \
-			      --disable-jpeg \
-			      --disable-png \
-			      --disable-xft \
-			      --enable-ttygid \
-			      --enable-backspace-key \
-			      --enable-delete-key \
-			      --disable-resources \
-			      --disable-swapscreen \
-			      --disable-use-fifo \
-			      --disable-greek \
-			      --disable-xim \
-			      --disable-utempter\
-			      --with-term=xterm"
+            --enable-minimal \
+            --disable-frills \
+            --enable-keepscrolling \
+            --disable-selectionscrolling \
+            --enable-mousewheel \
+            --disable-mouseslipwheel \
+            --enable-rxvt-scroll \
+            --disable-half-shadow \
+            --enable-lastlog \
+            --enable-sessionmgr \
+            --enable-linespace \
+            --enable-24bits \
+            --enable-256colors \
+            --enable-cursor-blink \
+            --enable-pointer-blank \
+            --disable-text-shadow \
+            --disable-menubar \
+            --disable-transparency \
+            --disable-tinting \
+            --disable-xrender \
+            --disable-xpm \
+            --disable-jpeg \
+            --disable-png \
+            --disable-xft \
+            --enable-ttygid \
+            --enable-backspace-key \
+            --enable-delete-key \
+            --disable-resources \
+            --disable-swapscreen \
+            --disable-use-fifo \
+            --disable-greek \
+            --disable-xim \
+            --disable-utempter\
+            --with-term=xterm"
+
+makeinstall_target() {
+  : # nop
+}

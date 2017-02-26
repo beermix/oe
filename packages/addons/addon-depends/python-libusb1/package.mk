@@ -18,9 +18,12 @@
 
 PKG_NAME="python-libusb1"
 PKG_VERSION="1.5.3"
+PKG_ARCH="any"
+PKG_LICENSE="LGPL"
 PKG_SITE="https://github.com/vpelletier/python-libusb1"
 PKG_URL="https://github.com/vpelletier/$PKG_NAME/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"
+PKG_PRIORITY="optional"
 PKG_SECTION="python"
 PKG_SHORTDESC="Pure-python wrapper for libusb-1.0"
 PKG_LONGDESC="Pure-python wrapper for libusb-1.0"

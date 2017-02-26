@@ -18,6 +18,8 @@
 
 PKG_NAME="evtest"
 PKG_VERSION="1.33"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://cgit.freedesktop.org/evtest/"
 PKG_URL="http://cgit.freedesktop.org/evtest/snapshot/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain libxml2"

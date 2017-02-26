@@ -16,10 +16,12 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="ImageMagick"
-PKG_VERSION="7.0.4-9"
+PKG_NAME="imagemagick"
+PKG_VERSION="6.9.6-7"
+PKG_ARCH="any"
+PKG_LICENSE="http://www.imagemagick.org/script/license.php"
 PKG_SITE="http://www.imagemagick.org/"
-PKG_URL="https://fossies.org/linux/misc/ImageMagick-7.0.4-9.tar.xz"
+PKG_URL="http://www.imagemagick.org/download/releases/ImageMagick-$PKG_VERSION.tar.xz"
 PKG_SOURCE_DIR="ImageMagick-$PKG_VERSION"
 PKG_DEPENDS_TARGET="toolchain libX11"
 PKG_SECTION="graphics"

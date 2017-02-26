@@ -18,6 +18,8 @@
 
 PKG_NAME="tslib"
 PKG_VERSION="1.1"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/kergoth/tslib"
 PKG_URL="https://github.com/kergoth/tslib/releases/download/1.1/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain evtest"

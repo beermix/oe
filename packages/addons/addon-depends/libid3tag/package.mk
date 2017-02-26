@@ -20,6 +20,8 @@
 
 PKG_NAME="libid3tag"
 PKG_VERSION="0.15.1b"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://www.mars.org/home/rob/proj/mpeg/"
 PKG_URL="$SOURCEFORGE_SRC/mad/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain zlib"

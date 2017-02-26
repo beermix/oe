@@ -18,6 +18,8 @@
 
 PKG_NAME="fdupes"
 PKG_VERSION="1.51"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://premium.caribe.net/~adrian2/fdupes.html"
 PKG_URL="https://fdupes.googlecode.com/files/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"

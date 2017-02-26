@@ -19,6 +19,8 @@
 
 PKG_NAME="xdotool"
 PKG_VERSION="2.20110530.1"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://www.semicomplete.com/projects/xdotool/"
 PKG_URL="http://semicomplete.googlecode.com/files/${PKG_NAME}-${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libXinerama libXtst"

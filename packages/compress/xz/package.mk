@@ -28,21 +28,15 @@ PKG_LONGDESC="XZ Utils is free general-purpose data compression software with hi
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_HOST="--disable-shared \
-			    --enable-static \
-			    --enable-liblzma2-compat \
-			    --enable-unaligned-access \
-			    --disable-threads \
-			    --enable-assembler=x86_64 \
-			    --disable-lzmadec \
-                         --disable-lzmainfo \
-                         --disable-nls \
-                         --disable-lzma-links \
-                         --disable-scripts \
-                         --disable-doc"
+PKG_CONFIGURE_OPTS_HOST="-enable-shared \
+			      --disable-static \
+			      --enable-assembler=x86_64 \
+			      --enable-threads=posix \
+			      --enable-liblzma2-compat \
+			      --enable-unaligned-access \
+			      --disable-doc"
 
-PKG_CONFIGURE_OPTS_TARGET="-C \
-			      --enable-shared \
+PKG_CONFIGURE_OPTS_TARGET="--enable-shared \
 			      --disable-static \
 			      --enable-assembler=x86_64 \
 			      --enable-threads=posix \

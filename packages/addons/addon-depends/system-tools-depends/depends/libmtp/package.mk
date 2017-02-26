@@ -18,6 +18,8 @@
 
 PKG_NAME="libmtp"
 PKG_VERSION="1.1.11"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://libmtp.sourceforge.net/"
 PKG_URL="$SOURCEFORGE_SRC/project/$PKG_NAME/$PKG_NAME/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libusb"

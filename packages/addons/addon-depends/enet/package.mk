@@ -18,6 +18,8 @@
 
 PKG_NAME="enet"
 PKG_VERSION="1.3.13"
+PKG_ARCH="any"
+PKG_LICENSE=""
 PKG_SITE=""
 PKG_URL="http://enet.bespin.org/download/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"

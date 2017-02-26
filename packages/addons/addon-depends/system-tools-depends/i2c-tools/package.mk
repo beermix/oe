@@ -18,6 +18,8 @@
 
 PKG_NAME="i2c-tools"
 PKG_VERSION="3.1.2"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://www.lm-sensors.org/wiki/I2CTools"
 PKG_URL="http://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"

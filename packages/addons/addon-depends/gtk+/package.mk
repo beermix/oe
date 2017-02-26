@@ -19,7 +19,9 @@
 ################################################################################
 
 PKG_NAME="gtk+"
-PKG_VERSION="2.24.31"
+PKG_VERSION="2.24.30"
+PKG_ARCH="any"
+PKG_LICENSE="OSS"
 PKG_SITE="http://www.gtk.org/"
 PKG_URL="http://ftp.gnome.org/pub/gnome/sources/gtk+/2.24/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain atk libX11 libXrandr libXi glib pango cairo gdk-pixbuf"
@@ -30,7 +32,7 @@ PKG_IS_ADDON="no"
 
 PKG_AUTORECONF="yes"
 
-aPKG_CONFIGURE_OPTS_TARGET="ac_cv_path_GLIB_GENMARSHAL=$ROOT/$TOOLCHAIN/bin/glib-genmarshal \
+PKG_CONFIGURE_OPTS_TARGET="ac_cv_path_GLIB_GENMARSHAL=$TOOLCHAIN/bin/glib-genmarshal \
                            --disable-glibtest \
                            --enable-modules \
                            --enable-explicit-deps=no \
