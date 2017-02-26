@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="netbsd-curses"
-PKG_VERSION="ea1965a"
+PKG_VERSION="0.2.1"
 PKG_SITE="https://github.com/sabotage-linux/netbsd-curses"
-PKG_GIT_URL="git://github.com/sabotage-linux/netbsd-curses"
+PKG_URL="http://ftp.barfooze.de/pub/sabotage/tarballs/netbsd-curses-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain zlib"
 PKG_SECTION="devel"
 PKG_SHORTDESC="netbsd-curses: netbsd-libcurses portable edition"
