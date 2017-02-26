@@ -204,7 +204,7 @@ fi
   MODVER=$(basename $(ls -d $INSTALL/usr/lib/modules/*))
   find $INSTALL/usr/lib/modules/$MODVER/ -name *.ko | \
     sed -e "s,$INSTALL/usr/lib/modules/$MODVER/,," > $INSTALL/usr/lib/modules/$MODVER/modules.order
-  $ROOT/$TOOLCHAIN/bin/depmod -b $INSTALL/usr $MODVER 2> /dev/null
+  $ROOT/$TOOLCHAIN/bin/depmod -b $INSTALL/usr -a -e -F "$BUILD/linux-$(get_pkg_version linux)/System.map" $MODVER
 
 # make target dir
   mkdir -p $TARGET_IMG

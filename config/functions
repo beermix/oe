@@ -369,11 +369,11 @@ show_config() {
   echo -e "$show_message"
 }
 # strip
-debug_strip() {
-  if [ ! "$DEBUG" = yes ]; then
-    find $* -type f -executable | xargs $STRIP 1>/dev/null || :
-  fi
-}
+ debug_strip() {
+   if [ ! "$DEBUG" = yes ]; then
+    find $* -type f -executable | xargs $STRIP 2>/dev/null || :
+   fi
+ }
 
 # Use distribution functions if any
 if [ -f "distributions/$DISTRO/config/functions" ]; then
