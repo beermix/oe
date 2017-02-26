@@ -28,10 +28,12 @@ PKG_SHORTDESC="ATK - Accessibility Toolkit"
 PKG_LONGDESC="ATK provides the set of accessibility interfaces that are implemented by other toolkits and applications. Using the ATK interfaces, accessibility tools have full access to view and control running applications."
 PKG_IS_ADDON="no"
 
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --disable-rebuilds --disable-glibtest"
-
-pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC"
-}
+PKG_CONFIGURE_OPTS_TARGET="--enable-static \
+			      --disable-shared \
+			      --disable-rebuilds \
+			      --disable-glibtest \
+			      --disable-glibtest \
+			      --enable-explicit-deps=no \
+			      --with-pic"

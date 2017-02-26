@@ -17,6 +17,7 @@ PKG_AUTORECONF="no"
 pre_configure_target() {
     sed -i -e 's/^cross_compiling=no/cross_compiling=yes/' $ROOT/$PKG_BUILD/libev/configure
     sed -i -e 's/^cross_compiling=no/cross_compiling=yes/' $ROOT/$PKG_BUILD/c-ares/configure
+    strip_hard
 }
 
 make_target() {
