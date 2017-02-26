@@ -20,7 +20,7 @@
 
 PKG_NAME="harfbuzz"
 #PKG_VERSION="1.3.4"
-PKG_VERSION="1.4.2"
+PKG_VERSION="1.4.3"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/HarfBuzz"
@@ -33,14 +33,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 
-PKG_CONFIGURE_OPTS_TARGET="--with-icu=yes \
-			      --with-coretext=no \
-			      --with-uniscribe=no\
-			      --with-graphite2=no \
-			      --with-cairo=yes \
-			      --with-icu=yes \
-			      --with-freetype=yes \
-			      --with-glib=yes"
+PKG_CONFIGURE_OPTS_TARGET="--with-icu=yes"
 
 pre_configure_target() {
   export LIBS="-ldl"

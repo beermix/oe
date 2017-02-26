@@ -501,29 +501,29 @@ Index: dev/media/gpu/ipc/service/BUILD.gn
      configs += [ "//third_party/libva:libva_config" ]
    }
  
-diff -Naur chromium-56.0.2924.87-orig/media/gpu/ipc/service/gpu_video_decode_accelerator.cc chromium-56.0.2924.87/media/gpu/ipc/service/gpu_video_decode_accelerator.cc
---- chromium-56.0.2924.87-orig/media/gpu/ipc/service/gpu_video_decode_accelerator.cc	2017-02-26 09:23:09.853686107 +0300
-+++ chromium-56.0.2924.87/media/gpu/ipc/service/gpu_video_decode_accelerator.cc	2017-02-26 09:25:46.266797413 +0300
-@@ -58,8 +58,7 @@
+Index: dev/media/gpu/ipc/service/gpu_video_decode_accelerator.cc
+===================================================================
+--- dev.orig/media/gpu/ipc/service/gpu_video_decode_accelerator.cc
++++ dev/media/gpu/ipc/service/gpu_video_decode_accelerator.cc
+@@ -58,7 +58,7 @@ static bool MakeDecoderContextCurrent(
    return true;
  }
  
--#if (defined(OS_CHROMEOS) && defined(ARCH_CPU_X86_FAMILY)) || \
--    defined(OS_MACOSX) || defined(OS_WIN)
+-#if (defined(OS_CHROMEOS) && defined(ARCH_CPU_X86_FAMILY)) || defined(OS_MACOSX)
 +#if ((defined(OS_LINUX) || defined(OS_CHROMEOS)) && defined(ARCH_CPU_X86_FAMILY)) || defined(OS_MACOSX)
  static bool BindImage(const base::WeakPtr<gpu::GpuCommandBufferStub>& stub,
                        uint32_t client_texture_id,
                        uint32_t texture_target,
-@@ -172,8 +171,7 @@
+@@ -171,7 +171,7 @@ GpuVideoDecodeAccelerator::GpuVideoDecod
    get_gl_context_cb_ = base::Bind(&GetGLContext, stub_->AsWeakPtr());
    make_context_current_cb_ =
        base::Bind(&MakeDecoderContextCurrent, stub_->AsWeakPtr());
--#if (defined(OS_CHROMEOS) && defined(ARCH_CPU_X86_FAMILY)) || \
--    defined(OS_MACOSX) || defined(OS_WIN)
+-#if (defined(OS_CHROMEOS) && defined(ARCH_CPU_X86_FAMILY)) || defined(OS_MACOSX)
 +#if ((defined(OS_LINUX) || defined(OS_CHROMEOS)) && defined(ARCH_CPU_X86_FAMILY)) || defined(OS_MACOSX)
    bind_image_cb_ = base::Bind(&BindImage, stub_->AsWeakPtr());
  #endif
    get_gles2_decoder_cb_ = base::Bind(&GetGLES2Decoder, stub_->AsWeakPtr());
+Index: dev/media/gpu/va_stub_header.fragment
 ===================================================================
 --- dev.orig/media/gpu/va_stub_header.fragment
 +++ dev/media/gpu/va_stub_header.fragment

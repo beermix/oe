@@ -31,11 +31,10 @@ PKG_AUTORECONF="yes"
 pre_configure_target() {
   export CFLAGS="$CFLAGS -D_DEFAULT_SOURCE"
   export CPPLAGS="$CPPLAGS -DCAIRO_NO_MUTEX=1"
-  export LIBS="$LIBS -latomic"
+  #export LIBS="$LIBS -latomic"
 }
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-trace=no --enable-interpreter=no \
-                           --enable-shared \
+PKG_CONFIGURE_OPTS_TARGET="--enable-shared \
                            --disable-static \
                            --disable-gtk-doc \
                            --enable-largefile \
