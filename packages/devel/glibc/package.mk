@@ -17,11 +17,11 @@
 ################################################################################
 
 PKG_NAME="glibc"
-PKG_VERSION="2.24"
-PKG_URL="http://ftp.gnu.org/pub/gnu/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
-#PKG_VERSION="4f5a9af"
+#PKG_VERSION="2.24"
+#PKG_URL="http://ftp.gnu.org/pub/gnu/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_VERSION="963394a"
 #PKG_KEEP_CHECKOUT="yes"
-#PKG_GIT_URL="git://sourceware.org/git/glibc.git"
+PKG_GIT_URL="git://sourceware.org/git/glibc.git"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap localedef-eglibc:host"
 PKG_DEPENDS_INIT="glibc"
 PKG_PRIORITY="optional"
@@ -55,6 +55,10 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/bash \
                            --disable-nscd \
                            --enable-lock-elision \
                            --disable-timezone-tools \
+                           --enable-stack-protector=strong \
+                           --enable-static-nss \
+                           --enable-all-warnings \
+                           --with-fp \
                            --disable-debug"
 
 
@@ -103,7 +107,7 @@ pre_configure_target() {
   unset LD_LIBRARY_PATH
 
 # set some CFLAGS we need
-  export CFLAGS="$CFLAGS -g"
+  export CFLAGS="-O2 -g"
   export OBJDUMP_FOR_HOST=objdump
 
 cat >config.cache <<EOF
