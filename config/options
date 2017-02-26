@@ -64,7 +64,6 @@ done
 #  Try value 1 (default) to 4 on single CPU computer, or more on
 #  multi-processor computer (like hyperthreading SMP CPU)
   if test -z "${CONCURRENCY_MAKE_LEVEL}"; then
-    #CONCURRENCY_MAKE_LEVEL=`cat /proc/cpuinfo | grep -c '^processor[[:cntrl:]]*:'`
     CONCURRENCY_MAKE_LEVEL="7"
   fi
 
@@ -73,7 +72,7 @@ done
 # value in gigabytes, megabytes or kilobytes by appending a G, M or K to the
 # value. The default is gigabytes. The actual value stored is rounded down to
 # the nearest multiple of 16 kilobytes.
-  CCACHE_CACHE_SIZE="10G"
+  CCACHE_CACHE_SIZE="5G"
 
 # install devtools on development builds
   if [ "$OPENELEC_VERSION" = "devel" ]; then
