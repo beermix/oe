@@ -119,8 +119,6 @@ if [ ! -f $STAMP ]; then
         mkdir -p $PKG_BUILD/m4
         mkdir -p $PKG_BUILD/build-aux
         
-        export AUTOCONF_AC_CHECK_FILE_VAL="ac_cv_file_$(subst -,_,$(subst /,_,$(subst .,_,$(1))))"
-
         printf "%${BUILD_INDENT}c ${boldmagenta}AUTORECONF${endcolor}   $1\n" ' '>&$SILENT_OUT
         export BUILD_INDENT=$((${BUILD_INDENT:-1}+$BUILD_INDENT_SIZE))
 

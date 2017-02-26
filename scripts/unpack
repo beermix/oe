@@ -131,36 +131,24 @@ for i in $PKG_DIR/patches/$PKG_NAME-*.patch \
          $HOME/.openelec/patches/$PKG_NAME/*.patch \
          $HOME/.openelec/projects/$PROJECT/patches/$PKG_NAME/*.patch; do
 
-  thisdir="$(dirname "$i")"
-
-  if [ "$thisdir" = "$PKG_DIR/patches" ]; then
+  if [ $(dirname $i) = "$PKG_DIR/patches" ]; then
     PATCH_DESC="(common)"
-  elif [ "$thisdir" = "$PKG_DIR/patches/$PATCH_ARCH" ]; then
+  elif [ $(dirname $i) = "$PKG_DIR/patches/$PATCH_ARCH" ]; then
     PATCH_DESC="(common - $PATCH_ARCH)"
-  elif [ "$thisdir" = "$PKG_DIR/patches/$PKG_VERSION" ]; then
-    PATCH_DESC="(common - $PKG_VERSION)"
-  elif [ "$thisdir" = "$PKG_DIR/patches/$PKG_VERSION/$PATCH_ARCH" ]; then
+  elif [ $(dirname $i) = "$PKG_DIR/patches/$PKG_VERSION/$PATCH_ARCH" ]; then
     PATCH_DESC="($PKG_VERSION - $PATCH_ARCH)"
-  elif [ "$thisdir" = "$PROJECT_DIR/$PROJECT/patches/$PKG_NAME" ]; then
+  elif [ $(dirname $i) = "$PROJECT_DIR/$PROJECT/patches/$PKG_NAME" ]; then
     PATCH_DESC="(project)"
-  elif [ "$thisdir" = "$PROJECT_DIR/$PROJECT/patches/$PKG_NAME/$PATCH_ARCH" ]; then
-    PATCH_DESC="(project - $PATCH_ARCH)"
-  elif [ "$thisdir" = "$PROJECT_DIR/$PROJECT/patches/$PKG_NAME/$PKG_VERSION" ]; then
-    PATCH_DESC="(project - $PKG_VERSION)"
-  elif [ "$thisdir" = "$PROJECT_DIR/$PROJECT/devices/$DEVICE/patches/$PKG_NAME" ]; then
-    PATCH_DESC="(device)"
+  elif [ $(dirname $i) = "$HOME/.openelec/patches/$PKG_NAME" ]; then
+    PATCH_DESC="(vendor)"
+  elif [ $(dirname $i) = "$HOME/.openelec/projects/$PROJECT/patches/$PKG_NAME" ]; then
+    PATCH_DESC="(vendor - $PROJECT)"
   else
-    if [[ "$thisdir" =~ ^$PKG_DIR/.* ]]; then
-      PATCH_DESC="(common - $(basename "$thisdir"))"
-    elif [[ "$thisdir" =~ ^$PROJECT_DIR/.* ]]; then
-      PATCH_DESC="(project - $(basename "$thisdir"))"
-    else
-      PATCH_DESC="(unknown - $(basename "$thisdir"))"
-    fi
+    PATCH_DESC="(common - $(basename $(dirname $i)))"
   fi
 
   if [ -f "$i" ]; then
-    printf "%${BUILD_INDENT}c ${boldgreen}APPLY PATCH${endcolor} ${boldwhite}${PATCH_DESC}${endcolor}   ${i#$ROOT/}\n" ' '>&$SILENT_OUT
+    printf "%${BUILD_INDENT}c ${boldgreen}APPLY PATCH${endcolor} ${boldwhite}${PATCH_DESC}${endcolor}   $i\n" ' '>&$SILENT_OUT
     if [ -n "$(grep -E '^GIT binary patch$' $i)" ]; then
       cat $i | git apply --directory=`echo "$PKG_BUILD" | cut -f1 -d\ ` -p1 --verbose --whitespace=nowarn --unsafe-paths >&$VERBOSE_OUT
     else
