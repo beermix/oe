@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="make-dfsg"
-PKG_VERSION="master"
-PKG_GIT_URL="https://anonscm.debian.org/git/users/srivasta/debian/make-dfsg.git"
+PKG_VERSION="e4f294d"
+PKG_GIT_URL="git://anonscm.debian.org/git/users/srivasta/debian/make-dfsg.git"
 PKG_DEPENDS_HOST="autotools:host"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="make: GNU make utility to maintain groups of programs"

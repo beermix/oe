@@ -7,7 +7,7 @@ index 12f7f75..e94dc13
 @@ -1,17 +1,17 @@
  # Config
 -CC = /usr/bin/gcc
-+CC = x86_64-libreelec-linux-gnu-gcc
++CC = x86_64-openelec-linux-gnu-gcc
  CFLAGS = -Wall
  INSTALL = /usr/bin/install
  PREFIX = /usr
