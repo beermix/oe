@@ -48,12 +48,17 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-nls \
                            --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
+                           --enable-libstdcxx-time=yes	
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
                            --disable-libmudflap \
                            --disable-libmpx \
                            --disable-libssp \
+                           --with-target-system-zlib \
+                           --disable-vtable-verify \
+                           --enable-default-pie \
+                           --without-included-gettext \
                            --enable-poison-system-directories \
                            --with-tune=generic"
 
@@ -85,6 +90,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-libatomic \
                          --enable-libitm \
                          --enable-libquadmath \
+                         --enable-libmpx \
                          --disable-libgomp \
                          --enable-threads=posix \
                          --disable-libstdcxx-pch \
@@ -94,7 +100,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-linker-build-id \
                          --enable-install-libiberty \
                          --with-linker-hash-style=gnu \
-                         --enable-gnu-indirect-function 
+                         --enable-gnu-indirect-function \
                          $GCC_OPTS"
 
 pre_configure_host() {
@@ -139,6 +145,7 @@ makeinstall_target() {
     cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libatomic/.libs/libatomic.so* $INSTALL/lib
     cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libitm/.libs/libitm.so* $INSTALL/lib
     cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libquadmath/.libs/libquadmath.so* $INSTALL/lib
+    cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libmpx/.libs/libmpx.so* $INSTALL/lib
   mkdir -p $INSTALL/usr/lib
     cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libstdc++-v3/src/.libs/libstdc++.so* $INSTALL/usr/lib
 }
@@ -157,4 +164,5 @@ makeinstall_init() {
     cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libatomic/.libs/libatomic.so* $INSTALL/lib
     cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libitm/.libs/libitm.so* $INSTALL/lib
     cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libquadmath/.libs/libquadmath.so* $INSTALL/lib
+    cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libmpx/.libs/libmpx.so* $INSTALL/lib
 }

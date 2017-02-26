@@ -30,7 +30,7 @@ PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-dependency-tracking \
                            --disable-silent-rules \
-                           --enable-library \
+                           --disable-library \
                            --enable-udev \
                            --disable-cups \
                            --disable-obex \
@@ -38,15 +38,13 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-dependency-tracking \
                            --enable-systemd \
                            --enable-tools \
                            --enable-datafiles \
-                           --enable-experimental \
-                           --disable-sixaxis \
+                           --disable-experimental \
+                           --enable-sixaxis \
+                           --with-gnu-ld \
+                           --enable-monitor \
+                           --enable-test \
+                           $BLUEZ_CONFIG \
                            storagedir=/storage/.cache/bluetooth"
-
-if [ "$DEBUG" = "yes" ]; then
-  PKG_CONFIGURE_OPTS_TARGET+=" --enable-debug"
-else
-  PKG_CONFIGURE_OPTS_TARGET+=" --disable-debug"
-fi
 
 if [ "$DEVTOOLS" = "yes" ]; then
   PKG_CONFIGURE_OPTS_TARGET+=" --enable-monitor --enable-test"

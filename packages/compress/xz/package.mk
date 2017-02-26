@@ -14,7 +14,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################ ac_cv_prog_cc_c99="-std=gnu99"
+################################################################################
 
 PKG_NAME="xz"
 PKG_VERSION="5.2.3"
@@ -28,14 +28,20 @@ PKG_LONGDESC="XZ Utils is free general-purpose data compression software with hi
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_HOST="--enable-shared \
-			    --enable-static \
-			    --enable-liblzma2-compat \
-			    --disable-doc"
+# never build shared or k0p happens when building
+# on fedora due to host selinux/liblzma
+PKG_CONFIGURE_OPTS_HOST="--disable-shared --enable-static \
+                         --disable-lzmadec \
+                         --disable-lzmainfo \
+                         --enable-lzma-links \
+                         --disable-scripts \
+                         --enable-liblzma2-compat \
+                         --disable-nls"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-shared --disable-static \
 			      --enable-assembler=x86_64 \
 			      --enable-threads=posix \
 			      --enable-liblzma2-compat \
 			      --enable-unaligned-access \
-			      --disable-doc"
+			      --disable-doc \
+			      --disable-nls"
