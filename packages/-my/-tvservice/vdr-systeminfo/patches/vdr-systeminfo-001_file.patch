@@ -1,0 +1,21 @@
+diff -Naur vdr-systeminfo-0.1.2/systeminfo.c vdr-systeminfo-0.1.2-patch/systeminfo.c
+--- vdr-systeminfo-0.1.2/systeminfo.c	2010-11-28 15:44:27.000000000 +0200
++++ vdr-systeminfo-0.1.2-patch/systeminfo.c	2013-01-02 09:28:14.000000000 +0200
+@@ -92,7 +92,7 @@
+    // Initialize any member variables here.
+    // DON'T DO ANYTHING ELSE THAT MAY HAVE SIDE EFFECTS, REQUIRE GLOBAL
+    // VDR OBJECTS TO EXIST OR PRODUCE ANY OUTPUT!
+-   strncpy(scriptname, "/usr/local/bin/systeminfo.sh", sizeof(scriptname));
++   strncpy(scriptname, "/storage/.config/vdr/plugins/systeminfo/systeminfo.sh", sizeof(scriptname));
+ }
+ 
+ cPluginSysteminfo::~cPluginSysteminfo()
+@@ -104,7 +104,7 @@
+ {
+    // Return a string that describes all known command line options.
+    return "  -s SCRIPT, --script=SCRIPT   optional name and path of system info script\n"
+-          "                               (default: '/usr/local/bin/systeminfo.sh')\n";
++          "                               (default: '/storage/.config/vdr/plugins/systeminfo/systeminfo.sh')\n";
+ }
+ 
+ bool cPluginSysteminfo::ProcessArgs(int argc, char *argv[])

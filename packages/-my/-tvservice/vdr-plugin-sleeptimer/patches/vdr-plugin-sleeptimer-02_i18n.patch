@@ -1,0 +1,36 @@
+diff -Naurp vdr-sleeptimer-b777501/i18n.c vdr-sleeptimer-b777501-patch/i18n.c
+--- vdr-sleeptimer-b777501/i18n.c	2013-04-23 08:46:11.000000000 +0300
++++ vdr-sleeptimer-b777501-patch/i18n.c	2015-01-10 16:37:14.000000000 +0200
+@@ -10,7 +10,7 @@
+ 
+ #if VDRVERSNUM < 10507
+ 
+-const tI18nPhrase Phrases[] = {
++//const tI18nPhrase Phrases[] = {
+   { "Not active",// English
+     "Nicht aktiv", //Deutsch
+     "",// Slovenski
+diff -Naurp vdr-sleeptimer-b777501/i18n.h vdr-sleeptimer-b777501-patch/i18n.h
+--- vdr-sleeptimer-b777501/i18n.h	2013-04-23 08:46:11.000000000 +0300
++++ vdr-sleeptimer-b777501-patch/i18n.h	2015-01-10 16:37:45.000000000 +0200
+@@ -16,7 +16,7 @@
+ #define trNOOP(s) (s)
+ #define trVDR(s) tr(s)
+ 
+-extern const tI18nPhrase Phrases[];
++//extern const tI18nPhrase Phrases[];
+ 
+ #endif
+ 
+diff -Naurp vdr-sleeptimer-b777501/Makefile vdr-sleeptimer-b777501-patch/Makefile
+--- vdr-sleeptimer-b777501/Makefile	2015-01-10 16:33:58.000000000 +0200
++++ vdr-sleeptimer-b777501-patch/Makefile	2015-01-10 16:40:41.000000000 +0200
+@@ -53,7 +53,7 @@ DEFINES += -D_GNU_SOURCE -DPLUGIN_NAME_I
+ 
+ ### The object files (add further files here):
+ 
+-OBJS = $(PLUGIN).o i18n.o
++OBJS = $(PLUGIN).o
+ 
+ ### The main target:
+ 

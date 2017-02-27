@@ -1,0 +1,12 @@
+diff -Naurp vdr-plugin-tvscraper-1d16381/Makefile vdr-plugin-tvscraper-1d16381-patch/Makefile
+--- vdr-plugin-tvscraper-1d16381/Makefile	2013-10-04 17:56:08.304439877 +0300
++++ vdr-plugin-tvscraper-1d16381-patch/Makefile	2013-10-04 16:09:46.000000000 +0300
+@@ -48,7 +48,7 @@ SOFILE = libvdr-$(PLUGIN).so
+ 
+ ### Includes and Defines (add further entries here):
+ 
+-INCLUDES +=
++INCLUDES += -I$(VDRDIR)/include
+ 
+ DEFINES += -DPLUGIN_NAME_I18N='"$(PLUGIN)"'
+ DEFINES += $(shell xml2-config --cflags)

@@ -1,0 +1,14 @@
+#!/bin/sh
+
+OUTPUTFLDR="/tmp/skindesigner/"
+mkdir -p ${OUTPUTFLDR}
+
+# if the script is executed from system_information script set the locale back for "°C"
+LANG=ru_RU.UTF-8
+
+rm -f ${OUTPUTFLDR}/cpu ${OUTPUTFLDR}/pccase ${OUTPUTFLDR}/gpu ${OUTPUTFLDR}/motherboard
+
+CPU=$(echo $(cputemp) | awk '{print $1}')
+GPU=$(echo $(gputemp) | awk '{print $1}')
+echo "${CPU}°C" > ${OUTPUTFLDR}/cpu
+echo "${GPU}°C" > ${OUTPUTFLDR}/gpu

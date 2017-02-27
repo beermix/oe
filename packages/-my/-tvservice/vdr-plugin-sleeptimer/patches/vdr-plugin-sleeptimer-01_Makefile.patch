@@ -1,0 +1,12 @@
+diff -Naurp vdr-sleeptimer-b777501/Makefile vdr-sleeptimer-b777501-patch/Makefile
+--- vdr-sleeptimer-b777501/Makefile	2013-04-23 08:46:11.072981795 +0300
++++ vdr-sleeptimer-b777501-patch/Makefile	2013-04-23 06:46:28.000000000 +0300
+@@ -47,7 +47,7 @@ SOFILE = libvdr-$(PLUGIN).so
+ 
+ ### Includes and Defines (add further entries here):
+ 
+-INCLUDES +=
++INCLUDES += -I$(VDRDIR)/include
+ 
+ DEFINES += -D_GNU_SOURCE -DPLUGIN_NAME_I18N='"$(PLUGIN)"'
+ 

@@ -1,0 +1,140 @@
+diff -Naurp vdr-plugin-skindesigner-4076377/skins/estuary4vdr/svgtemplates/menuicons/pluginicons/channelscan_active.svg vdr-plugin-skindesigner-4076377-patch/skins/estuary4vdr/svgtemplates/menuicons/pluginicons/channelscan_active.svg
+--- vdr-plugin-skindesigner-4076377/skins/estuary4vdr/svgtemplates/menuicons/pluginicons/channelscan_active.svg	1970-01-01 03:00:00.000000000 +0300
++++ vdr-plugin-skindesigner-4076377-patch/skins/estuary4vdr/svgtemplates/menuicons/pluginicons/channelscan_active.svg	2016-04-26 15:13:57.000000000 +0300
+@@ -0,0 +1,65 @@
++<?xml version="1.0" encoding="UTF-8" standalone="no"?>
++<!-- Generator: Adobe Illustrator 18.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
++
++<svg
++   xmlns:dc="http://purl.org/dc/elements/1.1/"
++   xmlns:cc="http://creativecommons.org/ns#"
++   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
++   xmlns:svg="http://www.w3.org/2000/svg"
++   xmlns="http://www.w3.org/2000/svg"
++   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
++   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
++   version="1.1"
++   id="Capa_1"
++   x="0px"
++   y="0px"
++   viewBox="0 0 612 612"
++   style="enable-background:new 0 0 612 612;"
++   xml:space="preserve"
++   inkscape:version="0.91 r13725"
++   sodipodi:docname="ico_search.svg"><metadata
++     id="metadata43"><rdf:RDF><cc:Work
++         rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
++           rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><defs
++     id="defs41" /><sodipodi:namedview
++     pagecolor="#ffffff"
++     bordercolor="#666666"
++     borderopacity="1"
++     objecttolerance="10"
++     gridtolerance="10"
++     guidetolerance="10"
++     inkscape:pageopacity="0"
++     inkscape:pageshadow="2"
++     inkscape:window-width="1920"
++     inkscape:window-height="1017"
++     id="namedview39"
++     showgrid="false"
++     inkscape:zoom="0.38562092"
++     inkscape:cx="-471.9661"
++     inkscape:cy="306"
++     inkscape:window-x="-8"
++     inkscape:window-y="-8"
++     inkscape:window-maximized="1"
++     inkscape:current-layer="Capa_1" /><g
++     id="g3"
++     style="fill:#{sdcol(iconactive)};fill-opacity:1"><g
++       id="g5"
++       style="fill:#{sdcol(iconactive)};fill-opacity:1"><path
++         style="fill:#{sdcol(iconactive)};fill-opacity:1"
++         d="M406.369,248.166c3.672,9.588,5.508,19.38,5.508,29.376s-1.836,19.788-5.508,29.376    s-9.384,18.258-17.136,26.01s-16.425,13.566-26.013,17.442s-19.479,5.812-29.682,5.812s-20.094-1.938-29.682-5.812    c-9.588-3.876-18.258-9.69-26.01-17.442c-7.752-7.752-13.566-16.422-17.442-26.01s-5.814-19.38-5.814-29.376    s1.938-19.788,5.814-29.376s9.69-18.258,17.442-26.01c7.752-7.752,16.422-13.464,26.01-17.136s19.482-5.508,29.682-5.508    s20.094,1.836,29.682,5.508s18.261,9.384,26.013,17.136C396.985,229.908,402.697,238.578,406.369,248.166z M612,306    c0,28.152-3.672,55.284-11.016,81.396c-7.347,26.109-17.646,50.487-30.906,73.134c-13.26,22.644-29.172,43.248-47.736,61.812    c-18.562,18.564-39.168,34.479-61.812,47.736c-22.646,13.26-47.022,23.562-73.136,30.906C361.284,608.328,334.152,612,306,612    s-55.284-3.672-81.396-11.016c-26.112-7.347-50.49-17.646-73.134-30.906s-43.248-29.172-61.812-47.736    c-18.564-18.562-34.476-39.168-47.736-61.812c-13.26-22.646-23.562-47.022-30.906-73.135C3.672,361.284,0,334.152,0,306    s3.672-55.284,11.016-81.396s17.646-50.49,30.906-73.134s29.172-43.248,47.736-61.812s39.168-34.476,61.812-47.736    s47.022-23.562,73.134-30.906S277.848,0,306,0c42.024,0,81.702,8.058,119.034,24.174s69.768,37.944,97.308,65.484    s49.368,59.976,65.484,97.308S612,263.976,612,306z M474.3,277.849c0-17.952-3.366-35.598-10.098-52.938    s-17.034-32.946-30.906-46.818c-13.872-13.872-29.478-24.174-46.818-30.906c-17.34-6.732-34.983-10.098-52.938-10.098    s-35.598,3.366-52.938,10.098s-32.946,17.034-46.818,30.906c-11.832,11.832-21.114,24.99-27.846,39.474    s-10.914,29.58-12.546,45.288s-0.714,31.314,2.754,46.818s9.486,29.988,18.054,43.452l-61.2,61.2    c-7.344,7.344-11.016,16.116-11.016,26.313c0,10.2,3.672,18.771,11.016,25.704c6.936,7.347,15.606,11.019,26.01,11.019    c10.404,0,19.074-3.672,26.01-11.019l63.648-63.646c13.464,6.936,27.438,11.628,41.922,14.076    c14.484,2.445,28.968,2.649,43.452,0.609s28.56-6.426,42.228-13.157s26.012-15.605,37.026-26.623    c13.872-13.869,24.174-29.478,30.906-46.815C470.933,313.447,474.3,295.801,474.3,277.849z"
++         id="path7" /></g></g><g
++     id="g9" /><g
++     id="g11" /><g
++     id="g13" /><g
++     id="g15" /><g
++     id="g17" /><g
++     id="g19" /><g
++     id="g21" /><g
++     id="g23" /><g
++     id="g25" /><g
++     id="g27" /><g
++     id="g29" /><g
++     id="g31" /><g
++     id="g33" /><g
++     id="g35" /><g
++     id="g37" /></svg>
+\ В конце файла нет новой строки
+diff -Naurp vdr-plugin-skindesigner-4076377/skins/estuary4vdr/svgtemplates/menuicons/pluginicons/channelscan.svg vdr-plugin-skindesigner-4076377-patch/skins/estuary4vdr/svgtemplates/menuicons/pluginicons/channelscan.svg
+--- vdr-plugin-skindesigner-4076377/skins/estuary4vdr/svgtemplates/menuicons/pluginicons/channelscan.svg	1970-01-01 03:00:00.000000000 +0300
++++ vdr-plugin-skindesigner-4076377-patch/skins/estuary4vdr/svgtemplates/menuicons/pluginicons/channelscan.svg	2016-04-26 15:13:57.000000000 +0300
+@@ -0,0 +1,65 @@
++<?xml version="1.0" encoding="UTF-8" standalone="no"?>
++<!-- Generator: Adobe Illustrator 18.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
++
++<svg
++   xmlns:dc="http://purl.org/dc/elements/1.1/"
++   xmlns:cc="http://creativecommons.org/ns#"
++   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
++   xmlns:svg="http://www.w3.org/2000/svg"
++   xmlns="http://www.w3.org/2000/svg"
++   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
++   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
++   version="1.1"
++   id="Capa_1"
++   x="0px"
++   y="0px"
++   viewBox="0 0 612 612"
++   style="enable-background:new 0 0 612 612;"
++   xml:space="preserve"
++   inkscape:version="0.91 r13725"
++   sodipodi:docname="ico_search.svg"><metadata
++     id="metadata43"><rdf:RDF><cc:Work
++         rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
++           rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><defs
++     id="defs41" /><sodipodi:namedview
++     pagecolor="#ffffff"
++     bordercolor="#666666"
++     borderopacity="1"
++     objecttolerance="10"
++     gridtolerance="10"
++     guidetolerance="10"
++     inkscape:pageopacity="0"
++     inkscape:pageshadow="2"
++     inkscape:window-width="1920"
++     inkscape:window-height="1017"
++     id="namedview39"
++     showgrid="false"
++     inkscape:zoom="0.38562092"
++     inkscape:cx="-471.9661"
++     inkscape:cy="306"
++     inkscape:window-x="-8"
++     inkscape:window-y="-8"
++     inkscape:window-maximized="1"
++     inkscape:current-layer="Capa_1" /><g
++     id="g3"
++     style="fill:#{sdcol(icon)};fill-opacity:1"><g
++       id="g5"
++       style="fill:#{sdcol(icon)};fill-opacity:1"><path
++         style="fill:#{sdcol(icon)};fill-opacity:1"
++         d="M406.369,248.166c3.672,9.588,5.508,19.38,5.508,29.376s-1.836,19.788-5.508,29.376    s-9.384,18.258-17.136,26.01s-16.425,13.566-26.013,17.442s-19.479,5.812-29.682,5.812s-20.094-1.938-29.682-5.812    c-9.588-3.876-18.258-9.69-26.01-17.442c-7.752-7.752-13.566-16.422-17.442-26.01s-5.814-19.38-5.814-29.376    s1.938-19.788,5.814-29.376s9.69-18.258,17.442-26.01c7.752-7.752,16.422-13.464,26.01-17.136s19.482-5.508,29.682-5.508    s20.094,1.836,29.682,5.508s18.261,9.384,26.013,17.136C396.985,229.908,402.697,238.578,406.369,248.166z M612,306    c0,28.152-3.672,55.284-11.016,81.396c-7.347,26.109-17.646,50.487-30.906,73.134c-13.26,22.644-29.172,43.248-47.736,61.812    c-18.562,18.564-39.168,34.479-61.812,47.736c-22.646,13.26-47.022,23.562-73.136,30.906C361.284,608.328,334.152,612,306,612    s-55.284-3.672-81.396-11.016c-26.112-7.347-50.49-17.646-73.134-30.906s-43.248-29.172-61.812-47.736    c-18.564-18.562-34.476-39.168-47.736-61.812c-13.26-22.646-23.562-47.022-30.906-73.135C3.672,361.284,0,334.152,0,306    s3.672-55.284,11.016-81.396s17.646-50.49,30.906-73.134s29.172-43.248,47.736-61.812s39.168-34.476,61.812-47.736    s47.022-23.562,73.134-30.906S277.848,0,306,0c42.024,0,81.702,8.058,119.034,24.174s69.768,37.944,97.308,65.484    s49.368,59.976,65.484,97.308S612,263.976,612,306z M474.3,277.849c0-17.952-3.366-35.598-10.098-52.938    s-17.034-32.946-30.906-46.818c-13.872-13.872-29.478-24.174-46.818-30.906c-17.34-6.732-34.983-10.098-52.938-10.098    s-35.598,3.366-52.938,10.098s-32.946,17.034-46.818,30.906c-11.832,11.832-21.114,24.99-27.846,39.474    s-10.914,29.58-12.546,45.288s-0.714,31.314,2.754,46.818s9.486,29.988,18.054,43.452l-61.2,61.2    c-7.344,7.344-11.016,16.116-11.016,26.313c0,10.2,3.672,18.771,11.016,25.704c6.936,7.347,15.606,11.019,26.01,11.019    c10.404,0,19.074-3.672,26.01-11.019l63.648-63.646c13.464,6.936,27.438,11.628,41.922,14.076    c14.484,2.445,28.968,2.649,43.452,0.609s28.56-6.426,42.228-13.157s26.012-15.605,37.026-26.623    c13.872-13.869,24.174-29.478,30.906-46.815C470.933,313.447,474.3,295.801,474.3,277.849z"
++         id="path7" /></g></g><g
++     id="g9" /><g
++     id="g11" /><g
++     id="g13" /><g
++     id="g15" /><g
++     id="g17" /><g
++     id="g19" /><g
++     id="g21" /><g
++     id="g23" /><g
++     id="g25" /><g
++     id="g27" /><g
++     id="g29" /><g
++     id="g31" /><g
++     id="g33" /><g
++     id="g35" /><g
++     id="g37" /></svg>
+\ В конце файла нет новой строки

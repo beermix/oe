@@ -1,0 +1,395 @@
+diff -Naurp vdr-femon-a2a2a27/femon.c vdr-femon-a2a2a27-patch/femon.c
+--- vdr-femon-a2a2a27/femon.c	2016-01-19 09:39:27.000000000 +0200
++++ vdr-femon-a2a2a27-patch/femon.c	2016-01-19 09:50:51.000000000 +0200
+@@ -25,7 +25,7 @@
+ #define GITVERSION ""
+ #endif
+ 
+-static const char VERSION[]       = "2.2.1" GITVERSION;
++static const char VERSION[]       = "2.2.1";
+ static const char DESCRIPTION[]   = trNOOP("DVB Signal Information Monitor (OSD)");
+ static const char MAINMENUENTRY[] = trNOOP("Signal Information");
+ 
+diff -Naurp vdr-femon-a2a2a27/po/ru_RU.po vdr-femon-a2a2a27-patch/po/ru_RU.po
+--- vdr-femon-a2a2a27/po/ru_RU.po	2016-01-19 09:39:27.000000000 +0200
++++ vdr-femon-a2a2a27-patch/po/ru_RU.po	2016-01-19 10:15:48.000000000 +0200
+@@ -20,10 +20,10 @@ msgid "DVB Signal Information Monitor (O
+ msgstr "Монитор качества сигнала"
+ 
+ msgid "Signal Information"
+-msgstr "Сигнал"
++msgstr "Информация о сигнале"
+ 
+ msgid "Femon not available"
+-msgstr ""
++msgstr "Femon не доступен"
+ 
+ msgid "Video"
+ msgstr "Видео"
+@@ -56,79 +56,58 @@ msgid "Rid"
+ msgstr "Rid"
+ 
+ msgid "Coderate"
+-msgstr "Coderate"
++msgstr "Кодовая скорость"
+ 
+ msgid "Protocol"
+-msgstr ""
++msgstr "Протокол"
+ 
+ msgid "Bitrate"
+-msgstr ""
++msgstr "Битрейт"
+ 
+ msgid "Stream Information"
+-msgstr ""
++msgstr "Информация о потоке"
+ 
+ msgid "Video Stream"
+-msgstr ""
++msgstr "Видео Поток"
+ 
+ msgid "Codec"
+-msgstr ""
++msgstr "Кодек"
+ 
+ msgid "Aspect Ratio"
+-msgstr ""
++msgstr "Соотношение сторон"
+ 
+ msgid "Frame Rate"
+-msgstr ""
++msgstr "Кадровая частота"
+ 
+ msgid "Video Format"
+-msgstr ""
++msgstr "Формат Видео"
+ 
+ msgid "Resolution"
+-msgstr ""
++msgstr "Разрешение"
+ 
+ msgid "Audio Stream"
+-msgstr ""
++msgstr "Аудио поток"
+ 
+ msgid "Channel Mode"
+-msgstr ""
++msgstr "Режим канала"
+ 
+ msgid "Sampling Frequency"
+-msgstr ""
++msgstr "Частота дискретизации"
+ 
+ msgid "AC-3 Stream"
+-msgstr ""
+-
+-msgid "Bit Stream Mode"
+-msgstr ""
+-
+-msgid "Audio Coding Mode"
+-msgstr ""
+-
+-msgid "Center Mix Level"
+-msgstr ""
+-
+-msgid "Surround Mix Level"
+-msgstr ""
+-
+-msgid "Dolby Surround Mode"
+-msgstr ""
+-
+-msgid "Low Frequency Effects"
+-msgstr ""
+-
+-msgid "Dialogue Normalization"
+-msgstr ""
++msgstr "AC-3 поток"
+ 
+ msgid "basic"
+-msgstr ""
++msgstr "основной"
+ 
+ msgid "transponder"
+-msgstr ""
++msgstr "транспондер"
+ 
+ msgid "stream"
+-msgstr ""
++msgstr "поток"
+ 
+ msgid "Classic"
+-msgstr ""
++msgstr "Classic"
+ 
+ msgid "Elchi"
+ msgstr "Elchi"
+@@ -158,151 +137,121 @@ msgid "PearlHD"
+ msgstr "PearlHD"
+ 
+ msgid "Hide main menu entry"
+-msgstr "Скрыть команду в главном меню"
++msgstr "Скрыть в главном меню"
+ 
+ msgid "Define whether the main menu entry is hidden."
+-msgstr ""
++msgstr "Определить, является ли основной пункт меню скрытым."
+ 
+ msgid "Default display mode"
+ msgstr "Режим по умолчанию"
+ 
+ msgid "Define the default display mode at startup."
+-msgstr ""
++msgstr "Определить режим отображения по умолчанию при запуске"
+ 
+ msgid "Define the used OSD skin."
+-msgstr ""
++msgstr "Определите используемый OSD скин."
+ 
+ msgid "Define the used OSD theme."
+-msgstr ""
++msgstr "Определите используемую OSD тему."
+ 
+ msgid "Position"
+-msgstr "Размещение окна"
++msgstr "Позиция окна"
+ 
+ msgid "Define the position of OSD."
+-msgstr ""
++msgstr "Определить положение OSD."
+ 
+ msgid "Downscale OSD size [%]"
+-msgstr ""
++msgstr "Уменьшить размер OSD [%]"
+ 
+ msgid "Define the downscale ratio for OSD size."
+-msgstr ""
++msgstr "Определить уменьшение коэффициента размера для OSD."
+ 
+ msgid "Red limit [%]"
+ msgstr "Красная зона слабого сигнала до (%)"
+ 
+ msgid "Define a limit for red bar, which is used to indicate a bad signal."
+-msgstr ""
++msgstr "Определите предел для красной полосы, которая используется, чтобы указать плохой сигнал."
+ 
+ msgid "Green limit [%]"
+ msgstr "Зелёная зона сильного сигнала от (%)"
+ 
+ msgid "Define a limit for green bar, which is used to indicate a good signal."
+-msgstr ""
++msgstr "Определите предел для зеленой полосы, которая используется, чтобы указать хороший сигнал."
+ 
+ msgid "OSD update interval [0.1s]"
+ msgstr "Частота обновления (0,1 сек)"
+ 
+ msgid "Define an interval for OSD updates. The smaller interval generates higher CPU load."
+-msgstr ""
++msgstr "Определите интервал обновлений OSD. Чем меньше интервал тем больше нагрузка на процессор."
+ 
+ msgid "Analyze stream"
+ msgstr "Расчёт скорости потока данных"
+ 
+ msgid "Define whether the DVB stream is analyzed and bitrates calculated."
+-msgstr ""
++msgstr "Определить, является ли проанализированым поток DVB и скорость."
+ 
+ msgid "Calculation interval [0.1s]"
+ msgstr "Частота пересчёта (0,1 сек)"
+ 
+ msgid "Define an interval for calculation. The bigger interval generates more stable values."
+-msgstr ""
++msgstr "Определите интервал для расчета. Чем больше интервал тем больше стабильность значения."
+ 
+ msgid "Use SVDRP service"
+-msgstr ""
++msgstr "Использовать SVDRP сервис"
+ 
+ msgid "Define whether the SVDRP service is used in client/server setups."
+-msgstr ""
++msgstr "Определить, используется ли служба SVDRP в клиент / сервер установок."
+ 
+ msgid "SVDRP service port"
+-msgstr ""
++msgstr "SVDRP порт"
+ 
+ msgid "Define the port number of SVDRP service."
+-msgstr ""
++msgstr "Определить номер порта SVDRP службы."
+ 
+ msgid "SVDRP service IP"
+-msgstr ""
++msgstr "SVDRP IP-адрес"
+ 
+ msgid "Define the IP address of SVDRP service."
+-msgstr ""
++msgstr "Определите IP-адрес SVDRP службы."
+ 
+ msgid "Help"
+-msgstr ""
++msgstr "Помощь"
+ 
+ msgid "Fixed"
+-msgstr ""
++msgstr "Фиксированный"
+ 
+ msgid "Analog"
+-msgstr ""
+-
+-msgid "MPEG-2"
+-msgstr ""
+-
+-msgid "H.264"
+-msgstr ""
+-
+-msgid "MPEG-1 Layer I"
+-msgstr ""
+-
+-msgid "MPEG-1 Layer II"
+-msgstr ""
+-
+-msgid "MPEG-1 Layer III"
+-msgstr ""
+-
+-msgid "MPEG-2 Layer I"
+-msgstr ""
+-
+-msgid "MPEG-2 Layer II"
+-msgstr ""
+-
+-msgid "MPEG-2 Layer III"
+-msgstr ""
+-
+-msgid "HE-AAC"
+-msgstr ""
+-
+-msgid "LATM"
+-msgstr ""
++msgstr "Аналог"
+ 
+ msgid "stereo"
+-msgstr ""
++msgstr "стерео"
+ 
+ msgid "joint Stereo"
+-msgstr ""
++msgstr "об. стерео"
+ 
+ msgid "dual"
+-msgstr ""
++msgstr "двойной"
+ 
+ msgid "mono"
+-msgstr ""
++msgstr "моно"
+ 
+ msgid "interlaced"
+-msgstr ""
++msgstr "с чередованием"
+ 
+ msgid "progressive"
+-msgstr ""
++msgstr "прогрессивный"
+ 
+ msgid "reserved"
+-msgstr ""
++msgstr "зарезервированный"
+ 
+ msgid "extended"
+-msgstr ""
++msgstr "расширенный"
+ 
+ msgid "unknown"
+-msgstr ""
++msgstr "неизвестно"
+ 
+ msgid "component"
+-msgstr ""
++msgstr "компонент"
+ 
+ msgid "PAL"
+ msgstr "PAL"
+@@ -311,76 +260,34 @@ msgid "NTSC"
+ msgstr "NTSC"
+ 
+ msgid "SECAM"
+-msgstr ""
++msgstr "SECAM"
+ 
+ msgid "MAC"
+-msgstr ""
++msgstr "MAC"
+ 
+ msgid "Hz"
+ msgstr "Гц"
+ 
+-msgid "Complete Main (CM)"
+-msgstr ""
+-
+-msgid "Music and Effects (ME)"
+-msgstr ""
+-
+-msgid "Visually Impaired (VI)"
+-msgstr ""
+-
+-msgid "Hearing Impaired (HI)"
+-msgstr ""
+-
+-msgid "Dialogue (D)"
+-msgstr ""
+-
+-msgid "Commentary (C)"
+-msgstr ""
+-
+-msgid "Emergency (E)"
+-msgstr ""
+-
+-msgid "Voice Over (VO)"
+-msgstr ""
+-
+ msgid "Karaoke"
+-msgstr ""
++msgstr "Караоке"
+ 
+ msgid "Ch1"
+-msgstr ""
++msgstr "Кн1"
+ 
+ msgid "Ch2"
+-msgstr ""
+-
+-msgid "C"
+-msgstr ""
+-
+-msgid "L"
+-msgstr ""
+-
+-msgid "R"
+-msgstr ""
+-
+-msgid "S"
+-msgstr ""
+-
+-msgid "SL"
+-msgstr ""
+-
+-msgid "SR"
+-msgstr ""
++msgstr "Кн2"
+ 
+ msgid "dB"
+ msgstr "dB"
+ 
+ msgid "not indicated"
+-msgstr ""
++msgstr "не указано"
+ 
+ msgid "MHz"
+ msgstr "МГц"
+ 
+ msgid "free"
+-msgstr ""
++msgstr "свободно"
+ 
+ msgid "Mbit/s"
+ msgstr "Мбит/с"

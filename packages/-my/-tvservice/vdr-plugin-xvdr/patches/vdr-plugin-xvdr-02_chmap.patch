@@ -1,0 +1,36 @@
+diff -Naurp vdr-plugin-xvdr-2d5e3f6/src/tools/hash.c vdr-plugin-xvdr-2d5e3f6-patch/src/tools/hash.c
+--- vdr-plugin-xvdr-2d5e3f6/src/tools/hash.c	2015-10-09 11:44:32.000000000 +0300
++++ vdr-plugin-xvdr-2d5e3f6-patch/src/tools/hash.c	2015-11-19 17:15:55.000000000 +0200
+@@ -94,7 +94,9 @@ uint32_t CreateStringHash(const cString&
+ }
+ 
+ uint32_t CreateChannelUID(const cChannel* channel) {
+-  cString channelid = channel->GetChannelID().ToString();
++  cString channelid = cString::sprintf("%s%s",
++      (const char*)channel->GetChannelID().ToString(),
++      (const char*)channel->Name());
+   return CreateStringHash(channelid);
+ }
+ 
+@@ -105,7 +107,9 @@ const cChannel* FindChannelByUID(uint32_
+ 
+   // maybe we need to use a lookup table
+   for (cChannel *channel = channels->First(); channel; channel = channels->Next(channel)) {
+-    cString channelid = channel->GetChannelID().ToString();
++    cString channelid = cString::sprintf("%s%s",
++      (const char*)channel->GetChannelID().ToString(),
++      (const char*)channel->Name());
+     if(channelUID == CreateStringHash(channelid)) {
+       result = channel;
+       break;
+@@ -117,8 +121,9 @@ const cChannel* FindChannelByUID(uint32_
+ }
+ 
+ uint32_t CreateTimerUID(const cTimer* timer) {
+-  cString timerid = cString::sprintf("%s:%s:%04d:%04d:%s",
++  cString timerid = cString::sprintf("%s:%s:%s:%04d:%04d:%s",
+       *timer->Channel()->GetChannelID().ToString(),
++      (const char*)timer->Channel()->Name(),
+       *timer->PrintDay(timer->Day(), timer->WeekDays(), true),
+       timer->Start(),
+       timer->Stop(),

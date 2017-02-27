@@ -1,0 +1,12 @@
+diff -Naurp vdr-plugin-weatherforecast-842b086/weatherforecast.c vdr-plugin-weatherforecast-842b086-patch/weatherforecast.c
+--- vdr-plugin-weatherforecast-842b086/weatherforecast.c	2016-02-03 14:37:33.000000000 +0200
++++ vdr-plugin-weatherforecast-842b086-patch/weatherforecast.c	2016-04-13 08:00:15.000000000 +0300
+@@ -19,7 +19,7 @@
+ // Constants
+ //***************************************************************************
+ static const char *VERSION        = "0.2.0";
+-static const char *DESCRIPTION    = "Weatherforecast based on forecast.io";
++static const char *DESCRIPTION    = tr("Weatherforecast based on forecast.io");
+ 
+ //***************************************************************************
+ // Globals

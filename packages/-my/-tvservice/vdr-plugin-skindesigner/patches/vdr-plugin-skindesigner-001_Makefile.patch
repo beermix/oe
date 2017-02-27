@@ -1,0 +1,12 @@
+diff -Naurp vdr-plugin-skindesigner-b5c587b/libskindesignerapi/Makefile vdr-plugin-skindesigner-b5c587b-patch/libskindesignerapi/Makefile
+--- vdr-plugin-skindesigner-b5c587b/libskindesignerapi/Makefile	2015-08-02 10:12:51.000000000 +0300
++++ vdr-plugin-skindesigner-b5c587b-patch/libskindesignerapi/Makefile	2015-08-02 13:50:42.000000000 +0300
+@@ -70,7 +70,7 @@ $(LIBNAME).pc:
+ install-lib: $(TARGET_LIB)
+ 	install -D $^ $(DESTDIR)$(LIBDIR)/$^
+ 	if [ -z "$(DESTDIR)" ] ; then ldconfig; fi
+-	cd $(DESTDIR)$(LIBDIR) ; if [ ! -e $(LIBNAME).so ] ; then ln -s $(TARGET_LIB) $(LIBNAME).so; fi
++	cd $(DESTDIR)$(LIBDIR) ; if [ ! -e $(LIBNAME).so ] ; then ln -s $(TARGET_LIB) $(LIBNAME).so; fi; if [ ! -e $(SONAME) ] ; then ln -s $(TARGET_LIB) $(SONAME); fi
+ 
+ install-includes:
+ 	@mkdir -p $(DESTDIR)$(INCDIR)/$(LIBNAME)
