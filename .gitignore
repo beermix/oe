@@ -33,3 +33,4 @@ ltmain.sh
 /tmp/
 cpack
 *OE-Generic*
+/packages/devel/glibc/patches/glibc-uuupstream.patch
