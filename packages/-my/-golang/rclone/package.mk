@@ -1,5 +1,5 @@
 PKG_NAME="rclone"
-PKG_VERSION="v1.35"
+PKG_VERSION="6bad0ad"
 PKG_GIT_URL="https://github.com/ncw/rclone"
 PKG_DEPENDS_TARGET="toolchain go:host"
 PKG_SECTION="system"
@@ -9,7 +9,6 @@ PKG_LONGDESC="containerd is a daemon to control runC, built for performance and 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-#strip_lto
 
 pre_make_target() {
   export GOOS=linux
@@ -17,13 +16,11 @@ pre_make_target() {
   export CGO_ENABLED=1
   export CGO_NO_EMULATION=1
   export CGO_CFLAGS=$CFLAGS
-  export LDFLAGS="-s -w -linkmode external -extld $CC"
+  export LDFLAGS="-s -w"
   export GOLANG=$ROOT/$TOOLCHAIN/lib/golang/bin/go
   export GOPATH=$ROOT/$PKG_BUILD.gopath:$ROOT/$PKG_BUILD/vendor/
   export GOROOT=$ROOT/$TOOLCHAIN/lib/golang
   export PATH=$PATH:$GOROOT/bin
-
-  #ln -fs $ROOT/$PKG_BUILD $ROOT/$PKG_BUILD/vendor/github.com/ncw/rclone
 }
 
 make_target() {

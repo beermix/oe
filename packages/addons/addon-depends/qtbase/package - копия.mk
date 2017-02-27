@@ -28,7 +28,7 @@ PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="-prefix /usr
                            -sysroot $SYSROOT_PREFIX
-                           -hostprefix $TOOLCHAIN
+                           -hostprefix $ROOT/$TOOLCHAIN
                            -device linux-openelec-g++
                            -opensource -confirm-license
                            -release
@@ -41,29 +41,19 @@ PKG_CONFIGURE_OPTS_TARGET="-prefix /usr
                            -no-qml-debug
                            -system-zlib
                            -no-mtdev
-                           -no-gif
-                           -no-libpng
-                           -no-libjpeg
                            -no-harfbuzz
-                           -no-openssl
                            -no-libproxy
                            -system-pcre
-                           -no-glib
-                           -no-pulseaudio
-                           -no-alsa
                            -silent
                            -no-cups
                            -no-iconv
                            -no-evdev
                            -no-tslib
-                           -no-icu
                            -no-strip
                            -no-fontconfig
-                           -no-dbus
                            -no-opengl
                            -no-libudev
                            -no-libinput
-                           -no-gstreamer
                            -no-eglfs"
 
 configure_target() {
