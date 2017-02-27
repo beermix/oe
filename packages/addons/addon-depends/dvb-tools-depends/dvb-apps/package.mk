@@ -20,8 +20,6 @@
 
 PKG_NAME="dvb-apps"
 PKG_VERSION="3d43b280298c"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="https://www.linuxtv.org/wiki/index.php/LinuxTV_dvb-apps"
 PKG_URL="http://linuxtv.org/hg/dvb-apps/archive/${PKG_VERSION}.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain"

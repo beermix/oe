@@ -17,9 +17,7 @@
 ################################################################################
 
 PKG_NAME="opus"
-PKG_VERSION="1.1.2"
-PKG_ARCH="any"
-PKG_LICENSE="BSD"
+PKG_VERSION="1.1.4"
 PKG_SITE="http://www.opus-codec.org"
 PKG_URL="http://downloads.us.xiph.org/releases/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"

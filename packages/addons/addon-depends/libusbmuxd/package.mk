@@ -18,8 +18,6 @@
 
 PKG_NAME="libusbmuxd"
 PKG_VERSION="1.0.10"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.libimobiledevice.org"
 PKG_URL="http://www.libimobiledevice.org/downloads/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain libplist"

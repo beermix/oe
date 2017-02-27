@@ -18,9 +18,6 @@
 
 PKG_NAME="ffmpegx"
 PKG_VERSION="libreelec"
-PKG_REV="6"
-PKG_ARCH="any"
-PKG_LICENSE="LGPLv2.1+"
 PKG_SITE="https://ffmpeg.org"
 PKG_DEPENDS_TARGET="toolchain ffmpeg lame x264"
 PKG_SECTION="multimedia"
@@ -31,7 +28,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 pre_configure_target() {
-  cd "$PKG_BUILD"
+  cd "$ROOT/$PKG_BUILD"
   rm -rf ".$TARGET_NAME"
   cp -PR $(get_build_dir ffmpeg)/* .
   make clean
@@ -48,7 +45,7 @@ pre_configure_target() {
 
 # ffmpeg does not build with libx264 on aarch64
   if [ "$TARGET_ARCH" != "aarch64" ]; then
-    FFMPEG_X264="--enable-libx264"
+    FFMPEG_X264="--enable-libx264 --enable-nonfree"
   fi
 
   if [ "$TARGET_ARCH" == "arm" ]; then
@@ -86,7 +83,7 @@ configure_target() {
     --as="$CC" \
     --cc="$CC" \
     --ld="$CC" \
-    --pkg-config="$TOOLCHAIN/bin/pkg-config" \
+    --pkg-config="$ROOT/$TOOLCHAIN/bin/pkg-config" \
     --host-cc="$HOST_CC" \
     --host-cflags="$HOST_CFLAGS" \
     --host-ldflags="$HOST_LDFLAGS" \

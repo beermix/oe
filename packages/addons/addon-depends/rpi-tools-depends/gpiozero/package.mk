@@ -19,7 +19,6 @@
 PKG_NAME="gpiozero"
 PKG_VERSION="1.2.0"
 PKG_ARCH="arm"
-PKG_LICENSE="BSD"
 PKG_SITE="https://github.com/RPi-Distro/python-gpiozero"
 PKG_URL="https://pypi.python.org/packages/source/g/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"

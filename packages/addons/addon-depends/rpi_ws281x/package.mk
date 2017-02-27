@@ -18,10 +18,8 @@
 
 PKG_NAME="rpi_ws281x"
 PKG_VERSION="3e6ea50"
-PKG_ARCH="any"
-PKG_LICENSE=""
 PKG_SITE="https://github.com/hyperion-project/rpi_ws281x"
-PKG_URL="https://github.com/hyperion-project/rpi_ws281x/archive/$PKG_VERSION.tar.gz"
+PKG_GIT_URL="https://github.com/hyperion-project/rpi_ws281x"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION=""
 PKG_SHORTDESC="Userspace Raspberry Pi PWM library for WS281X LEDs"

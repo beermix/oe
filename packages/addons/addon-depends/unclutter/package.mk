@@ -18,8 +18,6 @@
 
 PKG_NAME="unclutter"
 PKG_VERSION="1.09"
-PKG_ARCH="any"
-PKG_LICENSE="Public Domain"
 PKG_SITE="https://sourceforge.net/projects/unclutter/"
 PKG_URL="http://jaist.dl.sourceforge.net/project/unclutter/unclutter/source_$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libX11"

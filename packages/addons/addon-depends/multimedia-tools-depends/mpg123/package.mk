@@ -18,8 +18,6 @@
 
 PKG_NAME="mpg123"
 PKG_VERSION="1.23.6"
-PKG_ARCH="any"
-PKG_LICENSE="LGPLv2"
 PKG_SITE="http://www.mpg123.org/"
 PKG_URL="http://netcologne.dl.sourceforge.net/project/$PKG_NAME/$PKG_NAME/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain alsa-lib SDL2"
@@ -28,6 +26,6 @@ PKG_SHORTDESC="mpg123"
 PKG_LONGDESC="A fast MP3 Player"
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static"

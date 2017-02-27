@@ -18,8 +18,6 @@
 
 PKG_NAME="libzen"
 PKG_VERSION="0.4.33"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://mediaarea.net/en/MediaInfo/"
 PKG_URL="http://mediaarea.net/download/source/libzen/$PKG_VERSION/libzen_$PKG_VERSION.tar.bz2"
 PKG_SOURCE_DIR="ZenLib"
@@ -50,5 +48,5 @@ post_makeinstall_target() {
     mkdir -p $SYSROOT_PREFIX/usr/include/ZenLib/$i/
     cp -aP ../../../Source/ZenLib/$i/*.h $SYSROOT_PREFIX/usr/include/ZenLib/$i/
   done
-  cp -P libzen-config $TOOLCHAIN/bin
+  cp -P libzen-config $ROOT/$TOOLCHAIN/bin
 }

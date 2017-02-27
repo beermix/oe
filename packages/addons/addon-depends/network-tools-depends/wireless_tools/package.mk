@@ -18,8 +18,6 @@
 
 PKG_NAME="wireless_tools"
 PKG_VERSION="29"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.hpl.hp.com/personal/Jean_Tourrilhes/Linux/Tools.html"
 PKG_URL="http://www.hpl.hp.com/personal/Jean_Tourrilhes/Linux/$PKG_NAME.$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="${PKG_NAME}.${PKG_VERSION}"

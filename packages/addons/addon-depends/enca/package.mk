@@ -18,8 +18,6 @@
 
 PKG_NAME="enca"
 PKG_VERSION="1.19"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://freshmeat.net/projects/enca/"
 PKG_URL="http://dl.cihar.com/enca/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain"

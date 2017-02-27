@@ -18,8 +18,6 @@
 
 PKG_NAME="liblognorm"
 PKG_VERSION="2.0.1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.liblognorm.com/"
 PKG_URL="http://www.liblognorm.com/files/download/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"

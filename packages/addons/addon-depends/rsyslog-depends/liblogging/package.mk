@@ -18,8 +18,6 @@
 
 PKG_NAME="liblogging"
 PKG_VERSION="1.0.5"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.liblogging.org/"
 PKG_URL="http://download.rsyslog.com/liblogging/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain systemd"
