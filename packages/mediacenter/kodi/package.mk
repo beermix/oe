@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="kodi"
-PKG_VERSION="1af50b2"
+PKG_VERSION="e3c872f"
 PKG_SITE="https://github.com/xbmc/xbmc/tree/Krypton"
 PKG_GIT_URL="https://github.com/xbmc/xbmc.git"
 PKG_GIT_BRANCH="Krypton"
