@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="docker"
-PKG_VERSION="v1.13.1"
+PKG_VERSION="v17.03.0-ce"
 PKG_GIT_URL="https://github.com/docker/docker"
 PKG_DEPENDS_TARGET="toolchain sqlite go:host containerd runc libnetwork tini curl"
 PKG_SECTION="service/system"
