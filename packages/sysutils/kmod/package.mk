@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,10 +17,14 @@
 ################################################################################
 
 PKG_NAME="kmod"
-PKG_VERSION="23"
+PKG_VERSION="24"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://git.profusion.mobi/cgit.cgi/kmod.git/"
 PKG_URL="http://ftp.kernel.org/pub/linux/utils/kernel/kmod/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain"
+PKG_PRIORITY="optional"
 PKG_SECTION="system"
 PKG_SHORTDESC="kmod offers the needed flexibility and fine grained control over insertion, removal, configuration and listing of kernel modules."
 PKG_LONGDESC="kmod offers the needed flexibility and fine grained control over insertion, removal, configuration and listing of kernel modules."
@@ -68,6 +72,7 @@ post_makeinstall_target() {
 
   mkdir -p $INSTALL/etc
     ln -sf /storage/.config/modprobe.d $INSTALL/etc/modprobe.d
+
   mkdir -p $INSTALL/lib
     ln -sf /usr/lib/modprobe.d $INSTALL/lib/modprobe.d
 

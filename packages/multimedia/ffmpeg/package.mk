@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="ffmpeg"
-PKG_VERSION="2.8.11"
+PKG_VERSION="3.2.4"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="LGPLv2.1+"
@@ -83,9 +83,6 @@ esac
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
-  
-  sed -i 's@/bin/sh@/bin/bash@' $ROOT/$PKG_BUILD/configure
-  sed -i 's@openssl_init;@openssl_init;\n#undef OPENSSL_VERSION_NUMBER\n#define OPENSSL_VERSION_NUMBER 1\n@' $ROOT/$PKG_BUILD/libavformat/tls_openssl.c
 
 # ffmpeg fails building with LTO support
   strip_lto
@@ -162,6 +159,7 @@ configure_target() {
               $FFMPEG_VAAPI \
               $FFMPEG_VDPAU \
               --disable-dxva2 \
+              --enable-runtime-cpudetect \
               $FFMPEG_TABLES \
               --disable-memalign-hack \
               --enable-encoders \
@@ -192,8 +190,6 @@ configure_target() {
               --disable-libopencore-amrwb \
               --disable-libopencv \
               --disable-libdc1394 \
-              --enable-libdcadec \
-              --disable-libfaac \
               --disable-libfreetype \
               --disable-libgsm \
               --disable-libmp3lame \
@@ -203,7 +199,6 @@ configure_target() {
               --disable-libschroedinger \
               --enable-libspeex \
               --disable-libtheora \
-              --disable-libvo-aacenc \
               --disable-libvo-amrwbenc \
               --disable-libvorbis \
               --disable-libvpx \
@@ -215,9 +210,7 @@ configure_target() {
               --disable-altivec \
               $FFMPEG_FPU \
               --enable-yasm \
-              --disable-symver \
-              --disable-lto \
-              --enable-runtime-cpudetect
+              --disable-symver
 }
 
 post_makeinstall_target() {

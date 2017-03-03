@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,8 +17,10 @@
 ################################################################################
 
 PKG_NAME="xf86-video-nvidia-legacy"
-PKG_VERSION="340.101"
+PKG_VERSION="340.102"
+PKG_REV="1"
 PKG_ARCH="x86_64"
+PKG_LICENSE="nonfree"
 PKG_SITE="http://www.nvidia.com/"
 PKG_URL="http://us.download.nvidia.com/XFree86/Linux-x86_64/$PKG_VERSION/NVIDIA-Linux-x86_64-$PKG_VERSION-no-compat32.run"
 PKG_DEPENDS_TARGET="toolchain util-macros linux xorg-server libvdpau"

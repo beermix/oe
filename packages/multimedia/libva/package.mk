@@ -44,6 +44,6 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
   if [ "$DEVTOOLS" = yes ]; then
     mkdir -p $INSTALL/usr/bin
-    #  cp test/vainfo/.libs/vainfo $INSTALL/usr/bin
+      cp test/vainfo/.libs/vainfo $INSTALL/usr/bin
   fi
 }

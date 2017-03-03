@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@ PKG_ARCH="x86_64"
 PKG_LICENSE="GPL"
 PKG_SITE="http://dev.gentoo.org/~spock/projects/uvesafb/"
 PKG_URL="http://dev.gentoo.org/~spock/projects/uvesafb/archive/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_INIT="toolchain gcc:init"
+PKG_DEPENDS_INIT="toolchain"
 PKG_PRIORITY="optional"
 PKG_SECTION="system"
 PKG_SHORTDESC="v86d: A userspace helper that runs x86 code in an emulated environment."
@@ -38,8 +38,4 @@ pre_configure_init() {
 # v86d fails to build in subdirs
   cd $ROOT/$PKG_BUILD
     rm -rf .$TARGET_NAME-init
-}
-
-makeinstall_init() {
-  DESTDIR=$INSTALL/usr make install
 }

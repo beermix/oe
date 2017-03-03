@@ -57,7 +57,7 @@ pre_configure_target() {
 # bluez fails to build in subdirs
   cd $ROOT/$PKG_BUILD
     rm -rf .$TARGET_NAME
-  export LIBS="-ltermcap"
+  export LIBS="-lncurses -lterminfo"
 }
 
 post_makeinstall_target() {
@@ -68,10 +68,8 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/share/dbus-1
 
   mkdir -p $INSTALL/etc/bluetooth
-    cp src/main.conf $INSTALL/etc/bluetooth
-    sed -i $INSTALL/etc/bluetooth/main.conf \
-        -e "s|^#\[Policy\]|\[Policy\]|g" \
-        -e "s|^#AutoEnable.*|AutoEnable=true|g"
+    echo "[Policy]" > $INSTALL/etc/bluetooth/main.conf
+    echo "AutoEnable=true" >> $INSTALL/etc/bluetooth/main.conf
 }
 
 post_install() {

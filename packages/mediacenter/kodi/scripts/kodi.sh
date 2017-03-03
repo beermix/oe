@@ -82,7 +82,6 @@ print_crash_report()
   OFILE="$FILE"
   FILE="$CRASHLOG_DIR/kodi_crashlog_$DATE.log"
   mv "$OFILE" "$FILE"
-  ln -sf "$FILE" "$CRASHLOG_DIR/kodi_crash.log"
   echo "Crash report available at $FILE"
 }
 

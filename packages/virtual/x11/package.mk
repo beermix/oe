@@ -55,5 +55,5 @@ else
 fi
 
 for drv in $XORG_DRIVERS; do
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET xf86-video-intel xf86-video-$drv"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET xf86-video-$drv"
 done

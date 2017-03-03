@@ -18,9 +18,12 @@
 
 PKG_NAME="systemd"
 PKG_VERSION="233"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/systemd"
-PKG_URL="https://fossies.org/linux/misc/systemd-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain libcap kmod util-linux entropy xz zlib lz4 lzo bzip2 lrzip"
+PKG_URL="https://github.com/systemd/systemd/archive/v$PKG_VERSION.tar.gz"
+PKG_DEPENDS_TARGET="toolchain libcap util-linux entropy xz zlib lz4 lzo bzip2 lrzip"
 PKG_SECTION="system"
 PKG_SHORTDESC="systemd: a system and session manager"
 PKG_LONGDESC="systemd is a system and session manager for Linux, compatible with SysV and LSB init scripts. systemd provides aggressive parallelization capabilities, uses socket and D-Bus activation for starting services, offers on-demand starting of daemons, keeps track of processes using Linux cgroups, supports snapshotting and restoring of the system state, maintains mount and automount points and implements an elaborate transactional dependency-based service control logic. It can work as a drop-in replacement for sysvinit."
@@ -33,22 +36,21 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            ac_cv_have_decl_IFLA_BRPORT_UNICAST_FLOOD=no \
                            ac_cv_path_MOUNT_PATH=/bin/mount \
                            ac_cv_path_UMOUNT_PATH=/bin/umount \
-                           KMOD=/usr/bin/kmod \
                            --disable-nls \
                            --disable-dbus \
                            --disable-utmp \
                            --disable-coverage \
-                           --enable-kmod \
+                           --disable-kmod \
                            --disable-xkbcommon \
-                           --enable-blkid \
+                           --disable-blkid \
                            --disable-seccomp \
                            --disable-ima \
                            --disable-selinux \
                            --disable-apparmor \
                            --disable-adm-group \
                            --disable-wheel-group \
-                           --enable-xz \
-                           --enable-zlib \
+                           --disable-xz \
+                           --disable-zlib \
                            --disable-bzip2 \
                            --disable-lz4 \
                            --disable-pam \
@@ -86,7 +88,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-networkd \
                            --disable-efi \
                            --disable-gnuefi \
-                           --disable-kdbus \
                            --disable-myhostname \
                            --enable-hwdb \
                            --disable-manpages \
@@ -104,6 +105,9 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --with-dbussystemservicedir=/usr/share/dbus-1/system-services \
                            --with-rootprefix=/usr \
                            --with-rootlibdir=/usr/lib"
+unpack() {
+  tar xf $ROOT/$SOURCES/systemd/v$PKG_VERSION.tar.gz -C $ROOT/$BUILD
+}
 
 pre_build_target() {
 # broken autoreconf

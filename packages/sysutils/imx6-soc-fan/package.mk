@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,11 +18,13 @@
 
 PKG_NAME="imx6-soc-fan"
 PKG_VERSION="1.0"
+PKG_REV="1"
 PKG_ARCH="arm"
+PKG_LICENSE="GPL"
 PKG_SITE="http://www.openelec.tv/"
 PKG_URL=""
 PKG_DEPENDS_TARGET="imx6-status-led"
-
+PKG_PRIORITY="optional"
 PKG_SECTION="system"
 PKG_SHORTDESC="i.MX6 SoC fan monitor"
 PKG_LONGDESC="i.MX6 SoC fan monitor for TBS Matrix system"

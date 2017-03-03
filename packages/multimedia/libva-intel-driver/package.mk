@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libva-intel-driver"
-PKG_VERSION="03a86fc"
+PKG_VERSION="481ec15"
 PKG_ARCH="x86_64"
 PKG_SITE="http://freedesktop.org/wiki/Software/vaapi"
 PKG_GIT_URL="https://github.com/01org/intel-vaapi-driver"

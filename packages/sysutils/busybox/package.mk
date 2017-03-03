@@ -14,14 +14,14 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################ libuv libev
+################################################################################
 
 PKG_NAME="busybox"
 PKG_VERSION="1.26.2"
 PKG_SITE="http://www.busybox.net"
 PKG_URL="http://busybox.net/downloads/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain busybox:host hdparm dosfstools e2fsprogs zip unzip pcre expat zlib bzip2 xz lz4 icu openssl mbedtls tar pciutils usbutils parted procps-ng coreutils time bash findutils gnutls libarchive"
+PKG_DEPENDS_TARGET="toolchain busybox:host hdparm dosfstools e2fsprogs zip unzip pcre expat zlib bzip2 xz lz4 icu openssl mbedtls tar pciutils usbutils parted procps-ng coreutils time bash findutils gnutls libarchive libuv libev"
 PKG_DEPENDS_INIT="toolchain"
 PKG_SECTION="system"
 PKG_SHORTDESC="BusyBox: The Swiss Army Knife of Embedded Linux"
