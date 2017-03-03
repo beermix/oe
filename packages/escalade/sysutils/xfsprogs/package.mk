@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="xfsprogs"
-PKG_VERSION="v4.10.0-rc1"
+PKG_VERSION="v4.10.0"
 PKG_SITE="http://www.xfs.org"
 PKG_GIT_URL="git://git.kernel.org/pub/scm/fs/xfs/xfsprogs-dev.git"
 PKG_DEPENDS_TARGET="toolchain util-linux readline"
