@@ -42,7 +42,7 @@ PKG_CONFIGURE_OPTS_TARGET="fu_cv_sys_stat_statfs2_bsize=yes \
                            --enable-vfs-tar \
                            --enable-vfs-extfs \
                            --enable-vfs-cpio \
-                           --disable-vfs-smb \
+                           --enable-vfs-smb \
                            --without-mmap \
                            --with-pcre=$SYSROOT_PREFIX/usr \
                            --without-debug \
