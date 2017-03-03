@@ -19,7 +19,7 @@
 PKG_NAME="libva"
 PKG_VERSION="e613327"
 PKG_ARCH="x86_64"
-PKG_SITE="http://freedesktop.org/wiki/Software/vaapi"
+PKG_SITE="https://github.com/01org/libva"
 PKG_GIT_URL="https://github.com/01org/libva"
 PKG_DEPENDS_TARGET="toolchain libX11 libXext libXfixes libdrm mesa glu"
 PKG_PRIORITY="optional"
@@ -36,14 +36,6 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-silent-rules \
                            --enable-x11 \
                            --enable-glx \
                            --enable-egl \
-                           --disable-wayland \
+                           --enable-wayland \
                            --disable-dummy-driver \
                            --with-drivers-path=/usr/lib/va"
-
-post_makeinstall_target() {
-  rm -rf $INSTALL/usr/bin
-  if [ "$DEVTOOLS" = yes ]; then
-    mkdir -p $INSTALL/usr/bin
-      cp test/vainfo/.libs/vainfo $INSTALL/usr/bin
-  fi
-}
