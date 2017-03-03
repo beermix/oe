@@ -78,8 +78,7 @@
 # for a list of additinoal drivers see packages/linux-drivers
 # Space separated list is supported,
 # e.g. ADDITIONAL_DRIVERS="DRIVER1 DRIVER2"
-  #ADDITIONAL_DRIVERS="RTL8192CU RTL8192DU RTL8192EU RTL8812AU" # todo: mt7610u dvbhdhomerun
-  #ADDITIONAL_DRIVERS="RTL8188EU RTL8192CU RTL8192DU RTL8192EU RTL8812AU"
+  #ADDITIONAL_DRIVERS="RTL8192DU RTL8192EU RTL8812AU mt7610u" # todo: dvbhdhomerun
 # build and install bluetooth support (yes / no)
   BLUETOOTH_SUPPORT="yes"
 
@@ -145,9 +144,6 @@
 # build and install NTFS-3G fuse support (yes / no)
   NTFS3G="yes"
 
-# build and install hfs filesystem utilities (yes / no)
-  HFSTOOLS="no"
-
 # Windowmanager to use (ratpoison / fluxbox / none)
   WINDOWMANAGER="fluxbox"
 
@@ -159,17 +155,12 @@
 # build and install remote support (yes / no)
   REMOTE_SUPPORT="yes"
 
-# build and install ATV IR remote support (yes / no)
-  ATVCLIENT_SUPPORT="no"
-
 # build and install IRServer IR/LCD support (yes / no)
   IRSERVER_SUPPORT="no"
+  LCD_DRIVER+="irtrans,"
 
 # build and install CEC adapter support (yes / no)
   CEC_SUPPORT="no"
-
-# build and install iSCSI support - iscsistart (yes / no)
-  ISCSI_SUPPORT="no"
 
 # LCD driver to Use - Possible drivers are ( Comma seperated:
 # bayrad,CFontz,CFontz633,CFontzPacket,curses,CwLnx,dm140,

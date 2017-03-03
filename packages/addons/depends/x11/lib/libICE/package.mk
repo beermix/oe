@@ -16,28 +16,23 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="glfw"
-PKG_VERSION="2.7.9"
-PKG_ARCH="x86_64"
-PKG_SITE="http://glfw.org"
-PKG_URL="$SOURCEFORGE_SRC/glfw/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain mesa glu"
+PKG_NAME="libICE"
+PKG_VERSION="1.0.9"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="OSS"
+PKG_SITE="http://www.X.org"
+PKG_URL="http://xorg.freedesktop.org/archive/individual/lib/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_DEPENDS_TARGET="toolchain util-macros xtrans"
 PKG_PRIORITY="optional"
-PKG_SECTION="graphics"
-PKG_SHORTDESC="glfw:"
-PKG_LONGDESC="glfw:"
+PKG_SECTION="x11/lib"
+PKG_SHORTDESC="libICE: X Inter-Client Exchange (ICE) protocol library"
+PKG_LONGDESC="X Inter-Client Exchange (ICE) protocol library."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
-if [ ! "$OPENGL" = "mesa" ] ; then
-  exit 0
-fi
-
-make_target() {
-  make x11 PREFIX=$SYSROOT_PREFIX/usr
-}
-
-makeinstall_target() {
-  make x11-install PREFIX=$SYSROOT_PREFIX/usr
-}
+PKG_CONFIGURE_OPTS_TARGET="--enable-static \
+                           --disable-shared \
+                           --disable-ipv6 \
+                           --without-xmlto"

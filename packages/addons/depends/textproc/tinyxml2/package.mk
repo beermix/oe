@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="tinyxml2"
-PKG_VERSION="584af57"
+PKG_VERSION="5b733ff"
 PKG_SITE="http://www.grinninglizard.com/tinyxml2/index.html"
 PKG_GIT_URL="https://github.com/leethomason/tinyxml2.git"
 PKG_GIT_BRANCH="master"

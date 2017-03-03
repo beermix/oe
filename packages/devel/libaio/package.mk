@@ -16,27 +16,30 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="zip"
-PKG_VERSION="30"
-PKG_SITE="http://www.info-zip.org/pub/infozip/"
-PKG_URL="$SOURCEFORGE_SRC/infozip/Zip%203.x%20%28latest%29/3.0/${PKG_NAME}${PKG_VERSION}.tar.gz"
-PKG_SOURCE_DIR="${PKG_NAME}${PKG_VERSION}"
-PKG_DEPENDS_TARGET="toolchain bzip2"
-
-PKG_SECTION="compress"
-PKG_SHORTDESC="zip: PKUNZIP compatible compression utility"
-PKG_LONGDESC="zip is a compression and file packaging utility for Unix, VMS, MSDOS, OS/2, Windows 9x/NT/XP, Minix, Atari, Macintosh, MVS, z/OS, Amiga, Acorn RISC, and other OS. It is analogous to a combination of the Unix commands tar(1) and compress(1) (or tar(1) and gzip(1)) and is compatible with PKZIP (Phil Katz's ZIP for MSDOS systems) and other major zip utilities."
+PKG_NAME="libaio"
+PKG_VERSION="0.3.110"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
+PKG_SITE="http://lse.sourceforge.net/io/aio.html"
+PKG_URL="https://fedorahosted.org/releases/l/i/libaio/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_DEPENDS_TARGET="toolchain"
+PKG_PRIORITY="optional"
+PKG_SECTION="devel"
+PKG_SHORTDESC="libaio: Kernel Asynchronous I/O (AIO) Support for Linux"
+PKG_LONGDESC="AIO enables even a single application thread to overlap I/O operations with other processing, by providing an interface for submitting one or more I/O requests in one system call (io_submit()) without waiting for completion, and a separate interface (io_getevents()) to reap completed I/O operations associated with a given completion group."
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 make_target() {
-  make CC=$CC CPP=$CPP RANLIB=$RANLIB AR=$AR STRIP=$STRIP LOCAL_ZIP="$CFLAGS" \
-       -f unix/Makefile generic
+  make -C src
 }
 
 makeinstall_target() {
-  mkdir -p $INSTALL/usr/bin
-    cp zip $INSTALL/usr/bin
-    $STRIP $INSTALL/usr/bin/zip
+  mkdir -p $SYSROOT_PREFIX/usr/lib
+    cp -PR src/libaio.a $SYSROOT_PREFIX/usr/lib
+
+  mkdir -p $SYSROOT_PREFIX/usr/include
+    cp -PR src/libaio.h $SYSROOT_PREFIX/usr/include
 }

@@ -18,9 +18,13 @@
 
 PKG_NAME="gdb"
 PKG_VERSION="7.12.1"
+PKG_REV="2"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/gdb/"
-PKG_URL=""
+PKG_URL="http://ftp.gnu.org/gnu/gdb/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain zlib netbsd-curses expat"
+PKG_PRIORITY="optional"
 PKG_SECTION="debug"
 PKG_SHORTDESC="gdb: The GNU Debugger"
 PKG_LONGDESC="The purpose of a debugger such as GDB is to allow you to see what is going on ``inside'' another program while it executes--or what another program was doing at the moment it crashed."
@@ -28,15 +32,13 @@ PKG_LONGDESC="The purpose of a debugger such as GDB is to allow you to see what 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-unpack() {
-  mkdir -p $PKG_BUILD
-  cp -r $(get_build_dir binutils)/* $PKG_BUILD/
-}
-
-
 CC_FOR_BUILD="$HOST_CC"
 CFLAGS_FOR_BUILD="$HOST_CFLAGS"
 
+pre_configure_target() {
+  # gdb could fail on runtime if build with LTO support
+    strip_lto
+}
 
 PKG_CONFIGURE_OPTS_TARGET="bash_cv_have_mbstate_t=set \
                            --disable-shared \
@@ -50,9 +52,9 @@ PKG_CONFIGURE_OPTS_TARGET="bash_cv_have_mbstate_t=set \
                            --without-lzma \
                            --disable-libquadmath \
                            --disable-libquadmath-support \
-                           --disable-libssp \
-                           --disable-werror \
-                           --disable-silent-rules"
+                           --enable-libada \
+                           --enable-libssp \
+                           --disable-werror"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/share/gdb/python
