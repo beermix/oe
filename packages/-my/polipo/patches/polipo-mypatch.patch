@@ -25,7 +25,7 @@ index 6fbce38..e8f5dd4
 +CC = gcc
  CDEBUGFLAGS = -Os -g -Wall -fno-strict-aliasing
 -
-+# CFLAGS = -g0 -fdata-sections -ffunction-sections -Ofast -fno-unwind-tables -fno-asynchronous-unwind-tables -Wa,--noexecstack
++# CFLAGS = -g0 -fdata-sections -ffunction-sections -O3 -fno-unwind-tables -fno-asynchronous-unwind-tables -Wa,--noexecstack
 +LDFLAGS = -static
 +CFLAGS = -O2
  # To compile on a pure POSIX system:
