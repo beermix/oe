@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="misc-firmware"
-PKG_VERSION="09a4de7"
+PKG_VERSION="9c155e6"
 PKG_SITE="https://github.com/OpenELEC/misc-firmware"
 PKG_GIT_URL="https://github.com/OpenELEC/misc-firmware.git"
 PKG_GIT_BRANCH="master"

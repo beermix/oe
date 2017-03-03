@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,13 +17,16 @@
 ################################################################################
 
 PKG_NAME="RTL8192EU"
-PKG_VERSION="0c80da7"
+PKG_VERSION="54a6b17"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/Mange/rtl8192eu-linux-driver"
 PKG_GIT_URL="https://github.com/Mange/rtl8192eu-linux-driver.git"
 PKG_GIT_BRANCH="master"
 PKG_DEPENDS_TARGET="toolchain linux"
 PKG_NEED_UNPACK="$LINUX_DEPENDS"
-
+PKG_PRIORITY="optional"
 PKG_SECTION="driver"
 PKG_SHORTDESC="Realtek RTL8192EU Linux 3.x driver"
 PKG_LONGDESC="Realtek RTL8192EU Linux 3.x driver"

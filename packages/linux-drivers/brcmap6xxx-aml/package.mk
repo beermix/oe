@@ -1,7 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2016 OpenELEC.tv
-#      Copyright (C) 2014-2016 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
 #      Copyright (C) 2016 Alex Deryskyba (alex@codesnake.com)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
@@ -19,13 +18,15 @@
 ################################################################################
 
 PKG_NAME="brcmap6xxx-aml"
+PKG_REV="1"
 PKG_ARCH="arm aarch64"
+PKG_LICENSE="GPL"
 PKG_SITE="http://openlinux.amlogic.com:8000/download/ARM/wifi/"
 PKG_VERSION="2016-08-18-88f3d466c6"
 PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain linux wlan-firmware"
 PKG_NEED_UNPACK="$LINUX_DEPENDS"
-
+PKG_PRIORITY="optional"
 PKG_SECTION="driver"
 PKG_SHORTDESC="brcmap6xxx-aml: Linux drivers for AP6xxx WLAN chips used in some devices based on Amlogic SoCs"
 PKG_LONGDESC="brcmap6xxx-aml: Linux drivers for AP6xxx WLAN chips used in some devices based on Amlogic SoCs"

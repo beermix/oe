@@ -19,8 +19,8 @@
 PKG_NAME="linux"
 PKG_SITE="http://www.kernel.org"
 PKG_DEPENDS_HOST="ccache:host"
-PKG_DEPENDS_TARGET="toolchain cpio:host kmod:host pciutils xz:host wireless-regdb keyutils irqbalance"
-PKG_DEPENDS_INIT="toolchain"
+PKG_DEPENDS_TARGET="toolchain cpio:host xz:host pciutils kmod wireless-regdb keyutils irqbalance"
+PKG_DEPENDS_INIT="toolchain cpu-firmware:init"
 PKG_NEED_UNPACK="$LINUX_DEPENDS"
 
 PKG_SECTION="linux"
@@ -28,14 +28,15 @@ PKG_SHORTDESC="linux26: The Linux kernel 2.6 precompiled kernel binary image and
 PKG_LONGDESC="This package contains a precompiled kernel image and the modules."
 case "$LINUX" in
   amlogic-3.10)
-    PKG_VERSION="8b1bb2b"
+    PKG_VERSION="de626d8"
+#    PKG_GIT_URL="https://github.com/codesnake/linux-amlogic.git"
     PKG_GIT_URL="https://github.com/codesnake/linux.git"
     PKG_GIT_BRANCH="amlogic-3.10.y"
     PKG_PATCH_DIRS="linux-3.10 amlogic-3.10"
     KERNEL_EXTRA_CONFIG+=" kernel-3.x"
     ;;
   amlogic-3.14)
-    PKG_VERSION="e28d454"
+    PKG_VERSION="eb7e852"
 #    PKG_GIT_URL="https://github.com/codesnake/linux-amlogic.git"
     PKG_GIT_URL="https://github.com/LibreELEC/linux-amlogic.git"
     PKG_GIT_BRANCH="amlogic-3.14.y"
@@ -43,22 +44,22 @@ case "$LINUX" in
     KERNEL_EXTRA_CONFIG+=" kernel-3.x"
     ;;
   imx6)
-    PKG_VERSION="f14907b"
+    PKG_VERSION="47b3547"
     PKG_GIT_URL="https://github.com/xbianonpi/xbian-sources-kernel.git"
-    PKG_GIT_BRANCH="imx6-4.4.y"
+    PKG_GIT_BRANCH="imx6-4.8.y"
     PKG_DEPENDS_TARGET+=" imx6-status-led imx6-soc-fan"
-    PKG_PATCH_DIRS="linux-4.4 imx6-4.4"
+    PKG_PATCH_DIRS="linux-4.8 imx6-4.8"
     ;;
   rpi)
-    PKG_VERSION="0595d86"
+    PKG_VERSION="883de20"
     PKG_GIT_URL="https://github.com/OpenELEC/linux.git"
     PKG_GIT_BRANCH="raspberry-rpi-4.9.y"
-    PKG_PATCH_DIRS="linux-4.9"
+    PKG_PATCH_DIRS="linux-4.9 rpi-4.9"
     ;;
-  linux-4.9)
-    PKG_VERSION="4.9.11"
+  linux-4.8)
+    PKG_VERSION="4.8.6"
     PKG_URL="http://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
-    PKG_PATCH_DIRS="linux-4.9"
+    PKG_PATCH_DIRS="linux-4.8"
     ;;
   *)
     PKG_VERSION="4.10.1"
@@ -76,7 +77,6 @@ PKG_MAKE_OPTS_HOST="headers_check"
 [ "$SWAP_SUPPORT" = yes ]            && KERNEL_EXTRA_CONFIG+=" swap"
 [ "$NFS_SUPPORT" = yes ]             && KERNEL_EXTRA_CONFIG+=" nfs"
 [ "$SAMBA_SUPPORT" = yes ]           && KERNEL_EXTRA_CONFIG+=" samba"
-[ "$ISCSI_SUPPORT" = yes ]           && KERNEL_EXTRA_CONFIG+=" iscsi"
 [ "$BLUETOOTH_SUPPORT" = yes ]       && KERNEL_EXTRA_CONFIG+=" bluetooth"
 [ "$UVESAFB_SUPPORT" = yes ]         && KERNEL_EXTRA_CONFIG+=" uvesafb"
 
@@ -166,7 +166,7 @@ make_target() {
   unset LDFLAGS
 
   make modules
-  make INSTALL_MOD_PATH=$INSTALL/usr DEPMOD="$ROOT/$TOOLCHAIN/bin/depmod" INSTALL_MOD_STRIP=1 modules_install
+  make INSTALL_MOD_PATH=$INSTALL/usr INSTALL_MOD_STRIP=1 modules_install
   rm -f $INSTALL/usr/lib/modules/*/build
   rm -f $INSTALL/usr/lib/modules/*/source
 
@@ -253,4 +253,5 @@ post_install() {
 
   # bluez looks in /etc/firmware/
     ln -sf /usr/lib/firmware/ $INSTALL/etc/firmware
+  enable_service module-load.service
 }

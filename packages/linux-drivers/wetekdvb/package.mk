@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,13 +17,15 @@
 ################################################################################
 
 PKG_NAME="wetekdvb"
-PKG_VERSION="20161127"
+PKG_VERSION="20170116"
+PKG_REV="1"
 PKG_ARCH="arm aarch64"
+PKG_LICENSE="nonfree"
 PKG_SITE="http://www.wetek.com/"
 PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain linux"
 PKG_NEED_UNPACK="$LINUX_DEPENDS"
-
+PKG_PRIORITY="optional"
 PKG_SECTION="driver"
 PKG_SHORTDESC="wetekdvb: Wetek DVB driver"
 PKG_LONGDESC="These package contains Wetek's DVB driver "

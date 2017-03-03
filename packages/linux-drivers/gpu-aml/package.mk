@@ -1,7 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2016 OpenELEC.tv
-#      Copyright (C) 2014-2016 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
 #      Copyright (C) 2016 Alex Deryskyba (alex@codesnake.com)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
@@ -20,12 +19,15 @@
 
 PKG_NAME="gpu-aml"
 PKG_VERSION="9b0fbbc"
+PKG_REV="1"
 PKG_ARCH="arm aarch64"
+PKG_LICENSE="GPL"
 # PKG_SITE="http://openlinux.amlogic.com:8000/download/ARM/gpu/"
 PKG_SITE="https://github.com/openwetek/gpu-aml.git"
+PKG_GIT_URL="https://github.com/openwetek/gpu-aml.git"
 PKG_DEPENDS_TARGET="toolchain linux"
 PKG_NEED_UNPACK="$LINUX_DEPENDS"
-
+PKG_PRIORITY="optional"
 PKG_SECTION="driver"
 PKG_SHORTDESC="gpu-aml: Linux drivers for Mali GPUs found in Amlogic Meson SoCs"
 PKG_LONGDESC="gpu-aml: Linux drivers for Mali GPUs found in Amlogic Meson SoCs"

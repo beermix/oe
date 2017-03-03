@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,13 +17,16 @@
 ################################################################################
 
 PKG_NAME="bcm2835-firmware"
-PKG_VERSION="2190eba"
+PKG_VERSION="bf5201e"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="nonfree"
 PKG_SITE="http://www.broadcom.com"
 PKG_GIT_URL="https://github.com/raspberrypi/firmware.git"
 PKG_GIT_BRANCH="master"
 PKG_KEEP_CHECKOUT="yes"
 PKG_DEPENDS_TARGET="toolchain dtc"
-
+PKG_PRIORITY="optional"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="OpenMAX-bcm2835: OpenGL-ES and OpenMAX driver for BCM2835"
 PKG_LONGDESC="OpenMAX-bcm2835: OpenGL-ES and OpenMAX driver for BCM2835"
@@ -57,6 +60,8 @@ make_target() {
     cp -PRv $FLOAT/opt/vc/lib/libmmal_core.so $SYSROOT_PREFIX/usr/lib
     cp -PRv $FLOAT/opt/vc/lib/libmmal_util.so $SYSROOT_PREFIX/usr/lib
     cp -PRv $FLOAT/opt/vc/lib/libmmal_vc_client.so $SYSROOT_PREFIX/usr/lib
+    cp -PRv $FLOAT/opt/vc/lib/libvchostif.a $SYSROOT_PREFIX/usr/lib
+    cp -PRv $FLOAT/opt/vc/lib/libvcilcs.a $SYSROOT_PREFIX/usr/lib
     cp -PRv $FLOAT/opt/vc/lib/libvcsm.so $SYSROOT_PREFIX/usr/lib
 }
 

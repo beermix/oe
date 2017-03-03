@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,12 +17,15 @@
 ################################################################################
 
 PKG_NAME="wlan-firmware"
-PKG_VERSION="3da1769"
+PKG_VERSION="3be9d82"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="Free-to-use"
 PKG_SITE="https://github.com/OpenELEC/wlan-firmware"
 PKG_GIT_URL="https://github.com/OpenELEC/wlan-firmware.git"
 PKG_GIT_BRANCH="master"
 PKG_DEPENDS_TARGET="toolchain brcm_patchram"
-
+PKG_PRIORITY="optional"
 PKG_SECTION="firmware"
 PKG_SHORTDESC="wlan-firmware: firmwares for various WLAN drivers"
 PKG_LONGDESC="wlan-firmware: firmwares for various WLAN drivers"
