@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,26 +16,19 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="netbsd-curses"
-PKG_VERSION="0.2.1"
-PKG_SITE="https://github.com/sabotage-linux/netbsd-curses"
-PKG_URL="http://ftp.barfooze.de/pub/sabotage/tarballs/netbsd-curses-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain zlib"
-PKG_SECTION="devel"
-PKG_SHORTDESC="netbsd-curses: netbsd-libcurses portable edition"
-PKG_LONGDESC="netbsd-curses: netbsd-libcurses portable edition"
+PKG_NAME="libugpio"
+PKG_VERSION="v0.0.6"
+PKG_ARCH="any"
+PKG_LICENSE="LGPLv2.1"
+PKG_SITE="https://github.com/mhei/libugpio"
+PKG_GIT_URL="https://github.com/mhei/libugpio.git"
+PKG_GIT_BRANCH="master"
+PKG_DEPENDS_TARGET="toolchain"
+PKG_SECTION="system"
+PKG_SHORTDESC="libugpio: library to use kernel's sysfs gpio interface from C programs and/or other libraries"
+PKG_LONGDESC="A free software library to ease the use of linux kernel's sysfs gpio interface from C programs and/or other libraries"
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
-# remove some problematic *FLAGS
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
-
-make_target() {
-  make HOSTCC="$HOST_CC" CFLAGS="$CFLAGS" PREFIX=/usr all-static -j1
-}
-
-makeinstall_target() {
-  make HOSTCC="$HOST_CC" PREFIX=$SYSROOT_PREFIX/usr install-static -j1
-}
+PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared"
