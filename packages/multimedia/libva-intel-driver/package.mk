@@ -18,8 +18,7 @@
 
 PKG_NAME="libva-intel-driver"
 PKG_VERSION="481ec15"
-PKG_ARCH="x86_64"
-PKG_SITE="http://freedesktop.org/wiki/Software/vaapi"
+PKG_SITE="https://github.com/01org/intel-vaapi-driver"
 PKG_GIT_URL="https://github.com/01org/intel-vaapi-driver"
 PKG_DEPENDS_TARGET="toolchain libva libdrm"
 PKG_PRIORITY="optional"
