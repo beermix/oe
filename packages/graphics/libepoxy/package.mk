@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -23,10 +23,13 @@
 
 PKG_NAME="libepoxy"
 PKG_VERSION="1.4.0"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/anholt/libepoxy"
-PKG_URL="https://github.com/anholt/libepoxy/releases/download/v$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_URL="https://github.com/anholt/libepoxy/releases/download/v1.4/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain opengl"
-
+PKG_PRIORITY="optional"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="libepoxy: a library for handling OpenGL function pointer management for you."
 PKG_LONGDESC="Epoxy is a library for handling OpenGL function pointer management for you."
