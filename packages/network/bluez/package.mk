@@ -30,7 +30,7 @@ PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-dependency-tracking \
                            --disable-silent-rules \
-                           --disable-library \
+                           --enable-library \
                            --enable-udev \
                            --disable-cups \
                            --disable-obex \
@@ -63,7 +63,7 @@ pre_configure_target() {
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/lib/systemd
   rm -rf $INSTALL/usr/bin/bccmd
-  rm -rf $INSTALL/usr/bin/bluemoon
+  #rm -rf $INSTALL/usr/bin/bluemoon
   rm -rf $INSTALL/usr/bin/ciptool
   rm -rf $INSTALL/usr/share/dbus-1
 

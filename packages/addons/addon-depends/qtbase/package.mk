@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="qtbase"
-PKG_VERSION="5.7.1"
+PKG_VERSION="5.8.0"
 PKG_SITE="http://qt-project.org"
-PKG_URL="http://download.qt.io/official_releases/qt/5.7/$PKG_VERSION/submodules/$PKG_NAME-opensource-src-$PKG_VERSION.tar.xz"
+PKG_URL="http://download.qt.io/official_releases/qt/5.8/$PKG_VERSION/submodules/$PKG_NAME-opensource-src-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="pcre zlib icu glib"
 PKG_SOURCE_DIR="$PKG_NAME-opensource-src-$PKG_VERSION"
 PKG_SHORTDESC="A cross-platform application and UI framework"
@@ -67,7 +67,9 @@ PKG_CONFIGURE_OPTS_TARGET="-prefix /usr
                            -no-eglfs"
 
 configure_target() {
-  strip_hard
+  #strip_hard
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed||"`
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--as-needed||"`
   
   QMAKE_CONF_DIR="mkspecs/devices/linux-openelec-g++"
   QMAKE_CONF="${QMAKE_CONF_DIR}/qmake.conf"
