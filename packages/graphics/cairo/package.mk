@@ -30,29 +30,6 @@ PKG_IS_ADDON="no"
 
 PKG_AUTORECONF="yes" # ToDo
 
-if [ "$DISPLAYSERVER" = "x11" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libXrender libX11 mesa glu"
-  PKG_CAIRO_CONFIG="--x-includes="$SYSROOT_PREFIX/usr/include" \
-                    --x-libraries="$SYSROOT_PREFIX/usr/lib" \
-                    --enable-xlib \
-                    --enable-xlib-xrender \
-                    --enable-gl \
-                    --enable-glx \
-                    --disable-glesv2 \
-                    --disable-egl \
-                    --with-x"
-
-
-elif [ "$DISPLAYSERVER" = "weston" ]; then
-  PKG_CAIRO_CONFIG="--disable-xlib \
-                    --disable-xlib-xrender \
-                    --disable-gl \
-                    --disable-glx \
-                    --enable-glesv2 \
-                    --enable-egl \
-                    --without-x"
-fi
-
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CAIRO_CONFIG \
                            --disable-silent-rules \
                            --enable-shared \
@@ -100,3 +77,24 @@ PKG_CONFIGURE_OPTS_TARGET="$PKG_CAIRO_CONFIG \
                            --disable-symbol-lookup \
                            --enable-some-floating-point \
                            --with-gnu-ld"
+
+if [ "$DISPLAYSERVER" = "x11" ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libXrender libX11 mesa glu"
+  PKG_CONFIGURE_OPTS_TARGET+=" --x-includes="$SYSROOT_PREFIX/usr/include" \
+                               --x-libraries="$SYSROOT_PREFIX/usr/lib" \
+                               --enable-xlib \
+                               --enable-xlib-xrender \
+                               --enable-gl \
+                               --enable-glx \
+                               --disable-glesv2 \
+                               --disable-egl \
+                               --with-x"
+elif [ "$DISPLAYSERVER" = "weston" ]; then
+  PKG_CONFIGURE_OPTS_TARGET+=" --disable-xlib \
+                               --disable-xlib-xrender \
+                               --disable-gl \
+                               --disable-glx \
+                               --enable-glesv2 \
+                               --enable-egl \
+                               --without-x"
+fi
