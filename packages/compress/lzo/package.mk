@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="lzo"
-PKG_VERSION="2.09"
+PKG_VERSION="2.10"
 PKG_SITE="http://www.oberhumer.com/opensource/lzo"
 PKG_URL="http://www.oberhumer.com/opensource/lzo/download/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST=""

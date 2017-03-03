@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="systemd"
-PKG_VERSION="4ec426b"
+PKG_VERSION="233"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/systemd"
-PKG_GIT_URL="https://github.com/systemd/systemd"
+PKG_URL="https://fossies.org/linux/misc/systemd-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain libcap kmod util-linux entropy xz zlib lz4 lzo bzip2 lrzip"
 PKG_SECTION="system"
 PKG_SHORTDESC="systemd: a system and session manager"

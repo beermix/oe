@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="binutils"
-PKG_VERSION="2.27"
+PKG_VERSION="2.28"
 PKG_URL="https://fossies.org/linux/misc/binutils-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="ccache:host bison:host flex:host linux:host"
 PKG_SECTION="toolchain/devel"
@@ -41,8 +41,6 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-ld=default \
                          --enable-lto \
                          --disable-nls \
-                         --disable-gdb \
-                         --disable-sim \
                          --enable-static \
                          --disable-shared \
                          --disable-deterministic-archives \
