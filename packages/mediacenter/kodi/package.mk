@@ -17,10 +17,12 @@
 ################################################################################
 
 PKG_NAME="kodi"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
-PKG_SITE="http://www.kodi.tv"
+PKG_VERSION="1af50b2"
+PKG_SITE="https://github.com/xbmc/xbmc/tree/Krypton"
+PKG_GIT_URL="https://github.com/xbmc/xbmc.git"
+PKG_GIT_BRANCH="Krypton"
+PKG_KEEP_CHECKOUT="yes"
+PKG_PATCH_DIRS="$LINUX"
 PKG_DEPENDS_TARGET="toolchain kodi:host kodi:bootstrap xmlstarlet:host Python zlib systemd pciutils dbus lzo pcre swig:host libass curl fontconfig fribidi tinyxml libjpeg-turbo freetype libcdio libdvdnav taglib libxml2 libxslt yajl sqlite ffmpeg crossguid giflib opengl"
 PKG_DEPENDS_HOST="toolchain"
 PKG_DEPENDS_BOOTSTRAP="toolchain lzo:host libpng:host libjpeg-turbo:host giflib:host"
@@ -29,21 +31,6 @@ PKG_SECTION="mediacenter"
 PKG_SHORTDESC="kodi: Kodi Mediacenter"
 PKG_LONGDESC="Kodi Media Center (which was formerly named Xbox Media Center or XBMC) is a free and open source cross-platform media player and home entertainment system software with a 10-foot user interface designed for the living-room TV. Its graphical user interface allows the user to easily manage video, photos, podcasts, and music from a computer, optical disk, local network, and the internet using a remote control."
 
-case "$KODIPLAYER_DRIVER" in
-  bcm2835-firmware)
-    PKG_VERSION="470e427"
-    PKG_GIT_URL="https://github.com/OpenELEC/xbmc.git"
-    PKG_GIT_BRANCH="krypton_rbp_backports"
-    PKG_KEEP_CHECKOUT="no"
-    ;;
-  *)
-    PKG_VERSION="e24de86"
-    PKG_GIT_URL="https://github.com/xbmc/xbmc.git"
-    PKG_GIT_BRANCH="Krypton"
-    PKG_KEEP_CHECKOUT="yes"
-    PKG_PATCH_DIRS="$LINUX"
-    ;;
-esac
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
@@ -76,7 +63,18 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$ROOT/$TOOLCHAIN \
                        -DENABLE_LIBUSB=OFF \
                        -DENABLE_UDEV=ON \
                        -DENABLE_XSLT=OFF \
-                       -DENABLE_DBUS=ON"
+                       -DENABLE_DBUS=ON \
+                       -DENABLE_AVX=ON \
+                       -DENABLE_AVX2=OFF \
+                       -DENABLE_SSE=ON \
+                       -DENABLE_SSE2=ON \
+                       -DENABLE_SSE4_1=ON \
+                       -DENABLE_SSE4_2=ON \
+                       -DENABLE_SSSE3=ON \
+                       -DHAVE_SSE=TRUE \
+                       -DHAVE_SSE2=TRUE \
+                       -DHAVE_SSE4_1=TRUE \
+                       -DHAVE_SSSE3=TRUE"
 
 
 if [ "$DISPLAYSERVER" = "x11" ]; then
@@ -249,7 +247,7 @@ makeinstall_host() {
 }
 
 pre_configure_target() {
-  export LIBS="$LIBS -lssp -ltermcap"
+  export LIBS="$LIBS -ltermcap"
 }
 
 pre_make_target() {
