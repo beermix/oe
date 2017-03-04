@@ -17,11 +17,8 @@
 ################################################################################
 
 PKG_NAME="glibc"
-PKG_VERSION="2.25"
-PKG_URL="http://ftp.gnu.org/pub/gnu/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
-#PKG_VERSION="963394a"
-#PKG_KEEP_CHECKOUT="yes"
-#PKG_GIT_URL="git://sourceware.org/git/glibc.git"
+PKG_VERSION="7eb5c06"
+PKG_GIT_URL="git://sourceware.org/git/glibc.git"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap localedef-eglibc:host"
 PKG_DEPENDS_INIT="glibc"
 PKG_PRIORITY="optional"
@@ -32,7 +29,7 @@ PKG_LONGDESC="The Glibc package contains the main C library. This library provid
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/bash \
+PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            libc_cv_slibdir=/lib \
                            ac_cv_path_PERL= \
                            ac_cv_prog_MAKEINFO= \
@@ -41,6 +38,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/bash \
                            --disable-profile \
                            --disable-sanity-checks \
                            --enable-add-ons \
+                           --enable-stack-protector=strong \
                            --enable-bind-now \
                            --with-elf \
                            --with-tls \
@@ -55,8 +53,6 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/bash \
                            --disable-nscd \
                            --enable-lock-elision \
                            --disable-timezone-tools \
-                           --enable-stack-protector=strong \
-                           --with-fp \
                            --disable-debug"
 
 
@@ -65,6 +61,7 @@ NSS_CONF_DIR="$PKG_BUILD/nss"
 GLIBC_EXCLUDE_BIN="catchsegv gencat getconf ldconfig"
 GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN makedb mtrace pcprofiledump"
 GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN pldd rpcgen sln sotruss sprof xtrace"
+
 
 pre_build_target() {
   cd $PKG_BUILD
@@ -105,7 +102,7 @@ pre_configure_target() {
   unset LD_LIBRARY_PATH
 
 # set some CFLAGS we need
-  export CFLAGS="-O2 -g"
+  export CFLAGS="$CFLAGS -g"
   export OBJDUMP_FOR_HOST=objdump
 
 cat >config.cache <<EOF

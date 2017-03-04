@@ -17,12 +17,9 @@
 ################################################################################
 
 PKG_NAME="systemd"
-PKG_VERSION="232"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
+PKG_VERSION="4ec426b"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/systemd"
-PKG_URL="https://github.com/systemd/systemd/archive/v$PKG_VERSION.tar.gz"
+PKG_GIT_URL="https://github.com/systemd/systemd"
 PKG_DEPENDS_TARGET="toolchain libcap util-linux entropy xz zlib lz4 lzo bzip2 lrzip"
 PKG_SECTION="system"
 PKG_SHORTDESC="systemd: a system and session manager"
@@ -49,8 +46,8 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-apparmor \
                            --disable-adm-group \
                            --disable-wheel-group \
-                           --disable-xz \
-                           --disable-zlib \
+                           --enable-xz \
+                           --enable-zlib \
                            --disable-bzip2 \
                            --disable-lz4 \
                            --disable-pam \
@@ -105,9 +102,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --with-dbussystemservicedir=/usr/share/dbus-1/system-services \
                            --with-rootprefix=/usr \
                            --with-rootlibdir=/usr/lib"
-unpack() {
-  tar xf $ROOT/$SOURCES/systemd/v$PKG_VERSION.tar.gz -C $ROOT/$BUILD
-}
 
 pre_build_target() {
 # broken autoreconf
