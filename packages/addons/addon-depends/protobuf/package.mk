@@ -14,7 +14,7 @@
 ################################################################################
 
 PKG_NAME="protobuf"
-PKG_VERSION="3.2.0"
+PKG_VERSION="3.1.0"
 PKG_SITE="https://developers.google.com/protocol-buffers/"
 PKG_URL="https://github.com/google/$PKG_NAME/releases/download/v$PKG_VERSION/$PKG_NAME-cpp-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="toolchain zlib:host"
@@ -23,11 +23,24 @@ PKG_SECTION="devel"
 PKG_SHORTDESC="protobuf: Protocol Buffers - Google's data interchange format"
 PKG_LONGDESC="protobuf: Protocol Buffers - Google's data interchange format"
 
+PKG_USE_CMAKE="yes"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --with-zlib --with-pic"
+PKG_CMAKE_OPTS_TARGET="-DBUILD_SHARED_LIBS=OFF"
 
+PKG_CMAKE_OPTS_TARGET="-DBUILD_SHARED_LIBS=OFF"
+
+PKG_CMAKE_SCRIPT_TARGET="cmake/CMakeLists.txt"
+PKG_CMAKE_SCRIPT_HOST="cmake/CMakeLists.txt"
+
+PKG_CMAKE_OPTS_HOST="-DCMAKE_NO_SYSTEM_FROM_IMPORTED=1 \
+                     -DBUILD_SHARED_LIBS=0 \
+                     -Dprotobuf_BUILD_TESTS=0 \
+                     -Dprotobuf_BUILD_EXAMPLES=0 \
+                     -Dprotobuf_WITH_ZLIB=1"
+
+PKG_CMAKE_OPTS_TARGET="$PKG_CMAKE_OPTS_HOST"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin

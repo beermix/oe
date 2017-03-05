@@ -21,7 +21,7 @@ PKG_VERSION="5f7bcf7"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/libretro-ppsspp"
-PKG_GIT_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain kodi-platform"
 PKG_SECTION="emulation"
 PKG_SHORTDESC="A PSP emulator for Android, Windows, Mac, Linux and Blackberry 10, written in C++."
@@ -36,7 +36,7 @@ PKG_LIBVAR="PPSSPP_LIB"
 
 pre_configure_target() {
   # fails to build in subdirs
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
   rm -rf .$TARGET_NAME
 }
 
@@ -57,7 +57,7 @@ make_target() {
     imx6)
       make -C libretro platform=armv7-neon-gles-hardfloat-cortex-a9
       ;;
-    WeTek_Play)
+    WeTek_Play|WeTek_Core)
       make -C libretro platform=armv7-neon-gles-hardfloat-cortex-a9
       ;;
     Generic)

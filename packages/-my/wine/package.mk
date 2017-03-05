@@ -1,18 +1,18 @@
 PKG_NAME="wine"
-PKG_VERSION="2.0"
-PKG_URL="http://dl.winehq.org/wine/source/2.0/wine-$PKG_VERSION.tar.bz2"
+PKG_VERSION="2.1"
+PKG_URL="https://dl.winehq.org/wine/source/2.x/wine-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain glib gmp x11 mesa xorg-server pcre libXcursor freetype fontconfig libjpeg-turbo libpng tiff libdrm glu libexif expat harfbuzz libxcb libXcursor libXrender libX11 x11 pulseaudio libXext libXtst wine:host"
-PKG_DEPENDS_TARGET="freetype:host wine:host"
 PKG_SECTION="tools"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 pre_configure_target() {
-  export LIBS="-lfreetype"
+  #export LIBS="-lfreetype"
   strip_lto
 }
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-tests \
+PKG_CONFIGURE_OPTS_TARGET="--with-wine-tools=$ROOT/$PKG_BUILD/.$HOST_NAME \
+			      --disable-tests \
 			      --with-x \
 			      --enable-win64 \
 			      --without-capi \
@@ -29,16 +29,15 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-tests \
 			      --with-jpeg \
 			      --with-png \
 			      --with-alsa \
+			      --without-gnutls \
+			      --without-gstreamer
 			      --without-curses \
 			      --with-dbus \
 			      --with-pthread \
-			      --with-pulse \
-			      --with-sysroot=$SYSROOT_PREFIX \
-			      --with-wine-tools=../.x86_64-linux-gnu"
+			      --without-pulse"
 			      
 PKG_CONFIGURE_OPTS_HOST="--enable-win64 \
 			    --disable-tests \
-			    --with-freetype \
 			    --without-alsa \
 			    --without-capi \
 			    --without-cms \
@@ -81,4 +80,6 @@ PKG_CONFIGURE_OPTS_HOST="--enable-win64 \
 			    --without-xshm \
 			    --without-xslt \
 			    --without-xxf86vm \
-			    --with-zlib"
+			    --without-zlib \
+			    --without-udev"
+

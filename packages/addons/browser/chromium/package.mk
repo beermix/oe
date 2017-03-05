@@ -25,12 +25,11 @@ PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_SITE="http://www.chromium.org/Home"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain pciutils dbus libXcomposite libXcursor libXtst alsa-lib bzip2 yasm nss libXScrnSaver libexif ninja:host libpng harfbuzz atk gtk+ libva-vdpau-driver unclutter xdotool"
+PKG_DEPENDS_TARGET="toolchain pciutils dbus libXcomposite libXcursor libXtst alsa-lib bzip2 yasm libXScrnSaver libexif libpng harfbuzz atk gtk+ unclutter xdotool flac ninja:host nss"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
 PKG_AUTORECONF="no"
-
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Chromium"
 PKG_ADDON_TYPE="xbmc.python.script"
@@ -40,16 +39,16 @@ pre_make_target() {
   strip_lto
 
   sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' third_party/widevine/cdm/stub/widevine_cdm_version.h
-  sed -i "/ac_cpp=/s/\--param=ssp-buffer-size=4/\-fstack-protector-strong/" build/config/compiler/BUILD.gn
-
 }
 
 make_target() {
   export LDFLAGS="$LDFLAGS -ludev"
   export LD=$CXX
+  
+  #export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
 
   # Use Python 2
-  find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$TOOLCHAIN/bin/python|g" {} +
+  find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$ROOT/$TOOLCHAIN/bin/python|g" {} +
 
   # Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
   # Note: These are for OpenELEC use ONLY. For your own distribution, please
@@ -98,6 +97,7 @@ make_target() {
     libpng
     libxslt
     yasm
+    ffmpeg
   )
 
   # Remove bundled libraries for which we will use the system copies; this
@@ -116,11 +116,10 @@ make_target() {
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
   ./tools/gn/bootstrap/bootstrap.py --gn-gen-args "${_flags[*]}"
-  ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
+  ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$ROOT/$TOOLCHAIN/bin/python
 
-  ninja -C out/Release chrome chrome_sandbox widevinecdmadapter
+  ninja -j4 -C out/Release chrome chrome_sandbox widevinecdmadapter
 }
-
 makeinstall_target() {
   :
 }
@@ -174,7 +173,7 @@ addon() {
   cp -PL $(get_build_dir libexif)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # libva-vdpau-driver
-  cp -PL $(get_build_dir libva-vdpau-driver)/.install_pkg/usr/lib/va/*.so $ADDON_BUILD/$PKG_ADDON_ID/lib
+  #cp -PL $(get_build_dir libva-vdpau-driver)/.install_pkg/usr/lib/va/*.so $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # unclutter
   cp -P $(get_build_dir unclutter)/.install_pkg/usr/bin/unclutter $ADDON_BUILD/$PKG_ADDON_ID/bin

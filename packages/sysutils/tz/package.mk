@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="tz"
-PKG_VERSION="2016j"
+PKG_VERSION="2017a"
 PKG_SITE="http://www.iana.org/time-zones"
 PKG_GIT_URL="https://github.com/eggert/tz.git"
 PKG_GIT_BRANCH="master"

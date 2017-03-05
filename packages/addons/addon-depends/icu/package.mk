@@ -27,7 +27,7 @@ PKG_SHORTDESC="International Components for Unicode library"
 PKG_LONGDESC="International Components for Unicode library"
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 post_unpack() {
   cp -r $PKG_BUILD/source/* $PKG_BUILD/

@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="qtbase"
-PKG_VERSION="5.8.0"
+PKG_VERSION="5.7.1"
 PKG_SITE="http://qt-project.org"
-PKG_URL="http://download.qt.io/official_releases/qt/5.8/$PKG_VERSION/submodules/$PKG_NAME-opensource-src-$PKG_VERSION.tar.xz"
+PKG_URL="http://download.qt.io/official_releases/qt/5.7/$PKG_VERSION/submodules/$PKG_NAME-opensource-src-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="pcre zlib icu glib"
 PKG_SOURCE_DIR="$PKG_NAME-opensource-src-$PKG_VERSION"
 PKG_SHORTDESC="A cross-platform application and UI framework"
@@ -28,6 +28,7 @@ PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="-prefix /usr
                            -sysroot $SYSROOT_PREFIX
+                           -device-option CROSS_COMPILE="linux-openelec"
                            -hostprefix $TOOLCHAIN
                            -device linux-openelec-g++
                            -opensource -confirm-license
@@ -61,7 +62,10 @@ PKG_CONFIGURE_OPTS_TARGET="-prefix /usr
                            -no-opengl
                            -no-libudev
                            -no-libinput
-                           -no-eglfs"
+                           -no-eglfs 
+                           -no-pch
+                           -nomake tests
+                           -nomake examples"
 
 configure_target() {
   #strip_hard

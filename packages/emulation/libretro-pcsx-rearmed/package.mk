@@ -40,7 +40,7 @@ configure_target() {
 }
 
 make_target() {
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
   case $PROJECT in
     RPi)
       make -f Makefile.libretro platform=armv6-hardfloat-arm1176jzf-s
@@ -51,7 +51,7 @@ make_target() {
     imx6)
       make -f Makefile.libretro platform=armv7-neon-hardfloat-cortex-a9
       ;;
-    WeTek_Play)
+    WeTek_Play|WeTek_Core)
       make -f Makefile.libretro platform=armv7-neon-hardfloat-cortex-a9
       ;;
     Odroid_C2|WeTek_Hub|WeTek_Play_2)

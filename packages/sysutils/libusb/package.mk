@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="libusb"
-PKG_VERSION="02e142f"
+PKG_VERSION="1.0.21"
 PKG_SITE="http://libusb.info/"
-PKG_GIT_URL="https://github.com/libusb/libusb"
+PKG_URL="https://github.com/libusb/libusb/releases/download/v$PKG_VERSION/libusb-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain systemd"
 PKG_SECTION="system"
 PKG_SHORTDESC="libusb: OS independent USB device access"

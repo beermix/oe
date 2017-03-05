@@ -72,23 +72,22 @@ post_patch() {
 make_host() {
   make PYTHON_MODULES_INCLUDE="$HOST_INCDIR" \
        PYTHON_MODULES_LIB="$HOST_LIBDIR" \
-       PYTHON_DISABLE_MODULES="readline _curses _curses_panel $PY_DISABLED_MODULES" -j1
+       PYTHON_DISABLE_MODULES="readline _curses _curses_panel $PY_DISABLED_MODULES"
 
   # python distutils per default adds -L$LIBDIR when linking binary extensions
     sed -e "s|^ 'LIBDIR':.*| 'LIBDIR': '/usr/lib',|g" -i $(cat pybuilddir.txt)/_sysconfigdata.py
 }
 
 makeinstall_host() {
-  make PYTHON_MODULES_INCLUDE="$HOST_INCDIR" \
+  make -j1 PYTHON_MODULES_INCLUDE="$HOST_INCDIR" \
        PYTHON_MODULES_LIB="$HOST_LIBDIR" \
        PYTHON_DISABLE_MODULES="readline _curses _curses_panel $PY_DISABLED_MODULES" \
-       install -j1
+       install
 }
 
 pre_configure_target() {
   export PYTHON_FOR_BUILD=$ROOT/$TOOLCHAIN/bin/python
 }
-
 
 make_target() {
   make  -j1 CC="$CC" LDFLAGS="$TARGET_LDFLAGS -L." \
@@ -112,7 +111,7 @@ makeinstall_target() {
 }
 
 post_makeinstall_target() {
-  EXCLUDE_DIRS="bsddb idlelib lib-tk lib2to3 msilib pydoc_data test"
+  EXCLUDE_DIRS="bsddb idlelib lib-tk lib2to3 msilib pydoc_data test unittest"
   for dir in $EXCLUDE_DIRS; do
     rm -rf $INSTALL/usr/lib/python*/$dir
   done
@@ -123,6 +122,7 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin/pydoc
   rm -rf $INSTALL/usr/bin/smtpd.py
   rm -rf $INSTALL/usr/bin/python*-config
+
   cd $INSTALL/usr/lib/python2.7
   python -Wi -t -B $ROOT/$PKG_BUILD/Lib/compileall.py -d /usr/lib/python2.7 -f .
   find $INSTALL/usr/lib/python2.7 -name "*.py" -exec rm -f {} \; &>/dev/null

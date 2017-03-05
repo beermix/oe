@@ -29,7 +29,7 @@ PKG_LONGDESC="Yasm is a complete rewrite of the NASM assembler under the new BSD
 
 PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_HOST="--disable-debug \
                          --disable-warnerror \
@@ -43,6 +43,9 @@ PKG_CONFIGURE_OPTS_HOST="--disable-debug \
                          --with-gnu-ld \
                          --without-libiconv-prefix \
                          --without-libintl-prefix"
+                         
+PKG_CMAKE_OPTS_HOST="-DBUILD_SHARED_LIBS=OFF -DENABLE_NLS=OFF -DYASM_BUILD_TESTS=OFF"
 
+PKG_CMAKE_OPTS_TARGET="$PKG_CMAKE_OPTS_HOST"
 
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"

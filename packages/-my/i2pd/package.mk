@@ -8,22 +8,18 @@ PKG_AUTORECONF="no"
 
 pre_configure_target() {
    strip_lto
-   #export LIBS="-pthread"
 }
 
 
-make_target() {
-  make \
-       CC="$CC" \
-       LD="$LD -Wall" \
-       AR="$AR" \
-       XCFLAGS="$CFLAGS" \
-       XLDFLAGS="$LDFLAGS" \
-       all
-}
 
-post_make_target() {
-  mkdir -p $INSTALL/usr/bin/
-  mkdir -p $INSTALL_DEV/usr/bin/
-  cp $ROOT/$PKG_BUILD/i2pd $INSTALL/usr/bin/
+PKG_CMAKE_SCRIPT_TARGET="build/CMakeLists.txt"
+
+PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release -DWITH_UPNP=ON \
+		       -DTHREADS_PTHREAD_ARG=4 \
+		       -DWITH_HARDENING=OFF \
+		       -DWITH_AESNI=ON"
+
+post_makeinstall_target() {
+ rm -rf $INSTALL/usr/src/
+ rm  $INSTALL/usr/LICENSE
 }

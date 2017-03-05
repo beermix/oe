@@ -43,7 +43,6 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --disable-nls \
                          --enable-static \
                          --disable-shared \
-                         --disable-deterministic-archives \
                          --enable-poison-system-directories"
 
 makeinstall_host() {

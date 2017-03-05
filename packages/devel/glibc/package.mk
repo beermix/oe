@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,8 +17,13 @@
 ################################################################################
 
 PKG_NAME="glibc"
-PKG_VERSION="7eb5c06"
-PKG_GIT_URL="git://sourceware.org/git/glibc.git"
+PKG_VERSION="2.24"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
+PKG_SITE="http://www.gnu.org/software/libc/"
+PKG_URL="http://ftp.gnu.org/pub/gnu/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap localedef-eglibc:host"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap localedef-eglibc:host"
 PKG_DEPENDS_INIT="glibc"
 PKG_PRIORITY="optional"
@@ -38,7 +43,6 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --disable-profile \
                            --disable-sanity-checks \
                            --enable-add-ons \
-                           --enable-stack-protector=strong \
                            --enable-bind-now \
                            --with-elf \
                            --with-tls \
@@ -58,10 +62,9 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
 
 NSS_CONF_DIR="$PKG_BUILD/nss"
 
-GLIBC_EXCLUDE_BIN="catchsegv gencat getconf ldconfig"
-GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN makedb mtrace pcprofiledump"
+GLIBC_EXCLUDE_BIN="catchsegv gencat getconf iconv iconvconfig ldconfig"
+GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN localedef makedb mtrace pcprofiledump"
 GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN pldd rpcgen sln sotruss sprof xtrace"
-
 
 pre_build_target() {
   cd $PKG_BUILD
@@ -92,10 +95,9 @@ pre_configure_target() {
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Ofast|-O2|g"`
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-O.|-O2|g"`
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|,-z,relro||g"`
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
 
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed||"`
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--as-needed||"`
   
   export CFLAGS=`echo $CFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|"`
 
@@ -140,6 +142,7 @@ post_makeinstall_target() {
 # remove ldscripts
   rm -rf $INSTALL/usr/lib/libc.so
   rm -rf $INSTALL/usr/lib/libpthread.so
+
 # remove locales and charmaps
   rm -rf $INSTALL/usr/share/i18n/charmaps
   if [ -n "$GLIBC_LOCALES" ]; then

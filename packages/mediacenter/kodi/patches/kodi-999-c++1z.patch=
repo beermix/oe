@@ -1,0 +1,147 @@
+diff --git a/m4/ax_cxx_compile_stdcxx_11.m4 b/m4/ax_cxx_compile_stdcxx_11.m4
+old mode 100644
+new mode 100755
+index cee493a1ef..8f9c988b71
+--- a/m4/ax_cxx_compile_stdcxx_11.m4
++++ b/m4/ax_cxx_compile_stdcxx_11.m4
+@@ -8,16 +8,16 @@
+ #
+ # DESCRIPTION
+ #
+-#   Check for baseline language coverage in the compiler for the C++11
++#   Check for baseline language coverage in the compiler for the c++1z
+ #   standard; if necessary, add switches to CXXFLAGS to enable support.
+ #
+ #   The first argument, if specified, indicates whether you insist on an
+ #   extended mode (e.g. -std=gnu++11) or a strict conformance mode (e.g.
+-#   -std=c++11).  If neither is specified, you get whatever works, with
++#   -std=c++1z).  If neither is specified, you get whatever works, with
+ #   preference for an extended mode.
+ #
+ #   The second argument, if specified 'mandatory' or if left unspecified,
+-#   indicates that baseline C++11 support is required and that the macro
++#   indicates that baseline c++1z support is required and that the macro
+ #   should error out if no mode with that support is found.  If specified
+ #   'optional', then configuration proceeds regardless, after defining
+ #   HAVE_CXX11 if and only if a supporting mode is found.
+@@ -74,7 +74,7 @@ AC_DEFUN([AX_CXX_COMPILE_STDCXX_11], [dnl
+         [m4_fatal([invalid second argument `$2' to AX_CXX_COMPILE_STDCXX_11])])
+   AC_LANG_PUSH([C++])dnl
+   ac_success=no
+-  AC_CACHE_CHECK(whether $CXX supports C++11 features by default,
++  AC_CACHE_CHECK(whether $CXX supports c++1z features by default,
+   ax_cv_cxx_compile_cxx11,
+   [AC_COMPILE_IFELSE([AC_LANG_SOURCE([_AX_CXX_COMPILE_STDCXX_11_testbody])],
+     [ax_cv_cxx_compile_cxx11=yes],
+@@ -87,7 +87,7 @@ AC_DEFUN([AX_CXX_COMPILE_STDCXX_11], [dnl
+   if test x$ac_success = xno; then
+     for switch in -std=gnu++11 -std=gnu++0x; do
+       cachevar=AS_TR_SH([ax_cv_cxx_compile_cxx11_$switch])
+-      AC_CACHE_CHECK(whether $CXX supports C++11 features with $switch,
++      AC_CACHE_CHECK(whether $CXX supports c++1z features with $switch,
+                      $cachevar,
+         [ac_save_CXXFLAGS="$CXXFLAGS"
+          CXXFLAGS="$CXXFLAGS $switch"
+@@ -107,9 +107,9 @@ AC_DEFUN([AX_CXX_COMPILE_STDCXX_11], [dnl
+ 
+   m4_if([$1], [ext], [], [dnl
+   if test x$ac_success = xno; then
+-    for switch in -std=c++11 -std=c++0x; do
++    for switch in -std=c++1z -std=c++0x; do
+       cachevar=AS_TR_SH([ax_cv_cxx_compile_cxx11_$switch])
+-      AC_CACHE_CHECK(whether $CXX supports C++11 features with $switch,
++      AC_CACHE_CHECK(whether $CXX supports c++1z features with $switch,
+                      $cachevar,
+         [ac_save_CXXFLAGS="$CXXFLAGS"
+          CXXFLAGS="$CXXFLAGS $switch"
+@@ -129,16 +129,16 @@ AC_DEFUN([AX_CXX_COMPILE_STDCXX_11], [dnl
+   AC_LANG_POP([C++])
+   if test x$ax_cxx_compile_cxx11_required = xtrue; then
+     if test x$ac_success = xno; then
+-      AC_MSG_ERROR([*** A compiler with support for C++11 language features is required.])
++      AC_MSG_ERROR([*** A compiler with support for c++1z language features is required.])
+     fi
+   else
+     if test x$ac_success = xno; then
+       HAVE_CXX11=0
+-      AC_MSG_NOTICE([No compiler with C++11 support was found])
++      AC_MSG_NOTICE([No compiler with c++1z support was found])
+     else
+       HAVE_CXX11=1
+       AC_DEFINE(HAVE_CXX11,1,
+-                [define if the compiler supports basic C++11 syntax])
++                [define if the compiler supports basic c++1z syntax])
+     fi
+ 
+     AC_SUBST(HAVE_CXX11)
+diff --git a/project/cmake/CMakeLists.txt b/project/cmake/CMakeLists.txt
+old mode 100644
+new mode 100755
+index cebc751de6..a2e8cd4d15
+--- a/project/cmake/CMakeLists.txt
++++ b/project/cmake/CMakeLists.txt
+@@ -445,7 +445,7 @@ endforeach()
+ 
+ set(APP_LIB_DIR ${CMAKE_BINARY_DIR}/${CORE_BUILD_DIR}/lib/${APP_NAME_LC})
+ set(APP_INCLUDE_DIR ${CMAKE_BINARY_DIR}/${CORE_BUILD_DIR}/include/${APP_NAME_LC})
+-set(CXX11_SWITCH "-std=c++11")
++set(CXX11_SWITCH "-std=c++1z")
+ configure_file(${PROJECT_SOURCE_DIR}/KodiConfig.cmake.in
+                ${CORE_BUILD_DIR}/lib/${APP_NAME_LC}/${APP_NAME}Config.cmake @ONLY)
+ configure_file(${PROJECT_SOURCE_DIR}/scripts/common/AddonHelpers.cmake
+diff --git a/project/cmake/modules/FindCXX11.cmake b/project/cmake/modules/FindCXX11.cmake
+old mode 100644
+new mode 100755
+index c0b9a52d20..fbd627252e
+--- a/project/cmake/modules/FindCXX11.cmake
++++ b/project/cmake/modules/FindCXX11.cmake
+@@ -1,10 +1,10 @@
+ include(TestCXXAcceptsFlag)
+ 
+-# try to use compiler flag -std=c++11
+-check_cxx_accepts_flag("-std=c++11" CXX_FLAG_CXX11)
++# try to use compiler flag -std=c++1z
++check_cxx_accepts_flag("-std=c++1z" CXX_FLAG_CXX11)
+ if(CXX_FLAG_CXX11)
+-  add_options (CXX ALL_BUILDS "-std=c++11")
+-  set(CXX_STD11_FLAGS "-std=c++11")
++  add_options (CXX ALL_BUILDS "-std=c++1z")
++  set(CXX_STD11_FLAGS "-std=c++1z")
+ else()
+   # try to use compiler flag -std=c++0x for older compilers
+   check_cxx_accepts_flag("-std=c++0x" CXX_FLAG_CXX0X)
+diff --git a/project/cmake/scripts/linux/Install.cmake b/project/cmake/scripts/linux/Install.cmake
+old mode 100644
+new mode 100755
+index 038110d146..be887bf285
+--- a/project/cmake/scripts/linux/Install.cmake
++++ b/project/cmake/scripts/linux/Install.cmake
+@@ -19,7 +19,7 @@ set(APP_PREFIX ${prefix})
+ set(APP_LIB_DIR ${libdir}/${APP_NAME_LC})
+ set(APP_DATA_DIR ${datarootdir}/${APP_NAME_LC})
+ set(APP_INCLUDE_DIR ${includedir}/${APP_NAME_LC})
+-set(CXX11_SWITCH "-std=c++11")
++set(CXX11_SWITCH "-std=c++1z")
+ 
+ # Set XBMC_STANDALONE_SH_PULSE so we can insert PulseAudio block into kodi-standalone
+ if(EXISTS ${CORE_SOURCE_DIR}/tools/Linux/kodi-standalone.sh.pulse)
+diff --git a/tools/depends/target/crossguid/FindCXX11.cmake b/tools/depends/target/crossguid/FindCXX11.cmake
+old mode 100644
+new mode 100755
+index fb2a58268f..5792be7e1c
+--- a/tools/depends/target/crossguid/FindCXX11.cmake
++++ b/tools/depends/target/crossguid/FindCXX11.cmake
+@@ -1,10 +1,10 @@
+ include(TestCXXAcceptsFlag)
+ 
+ # try to use compiler flag -std=c++11
+-check_cxx_accepts_flag("-std=c++11" CXX_FLAG_CXX11)
++check_cxx_accepts_flag("-std=c++1z" CXX_FLAG_CXX11)
+ if(CXX_FLAG_CXX11)
+-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+-  set(CXX_STD11_FLAGS "-std=c++11")
++  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z")
++  set(CXX_STD11_FLAGS "-std=c++1z")
+ else()
+   # try to use compiler flag -std=c++0x for older compilers
+   check_cxx_accepts_flag("-std=c++0x" CXX_FLAG_CXX0X)

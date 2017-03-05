@@ -18,12 +18,10 @@
 
 PKG_NAME="make"
 PKG_VERSION="4.2.1"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPLv3"
-PKG_SITE="https://www.gnu.org/software/make/"
+#PKG_VERSION="a95cb30"
 PKG_URL="https://ftp.gnu.org/gnu/make/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_HOST=""
+#PKG_GIT_URL="git://git.savannah.gnu.org/make.git"
+#PKG_DEPENDS_HOST="autotools:host pkg-config:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="make: GNU make utility to maintain groups of programs"
@@ -36,4 +34,4 @@ post_makeinstall_host() {
   ln -sf make $ROOT/$TOOLCHAIN/bin/gmake
 }
 
-PKG_CONFIGURE_OPTS_HOST="--disable-load --without-guile"
+PKG_CONFIGURE_OPTS_HOST="--enable-load --without-guile"

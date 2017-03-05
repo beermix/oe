@@ -18,28 +18,35 @@
 
 PKG_NAME="cairo"
 PKG_VERSION="1.14.8"
+PKG_ARCH="any"
+PKG_LICENSE="LGPL"
 PKG_SITE="http://cairographics.org/"
 PKG_URL="http://cairographics.org/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain zlib freetype fontconfig libpng pixman"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="cairo: Multi-platform 2D graphics library"
 PKG_LONGDESC="Cairo is a vector graphics library with cross-device output support. Currently supported output targets include the X Window System and in-memory image buffers. PostScript and PDF file output is planned. Cairo is designed to produce identical output on all output media while taking advantage of display hardware acceleration when available."
-
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+
+PKG_AUTORECONF="yes" # ToDo
 
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -D_DEFAULT_SOURCE"
+  #export CFLAGS="$CFLAGS -D_DEFAULT_SOURCE"
   export CPPLAGS="$CPPLAGS -DCAIRO_NO_MUTEX=1"
-  #export LIBS="$LIBS -latomic"
+  export LIBS="$LIBS -latomic"
 }
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-shared \
+PKG_CONFIGURE_OPTS_TARGET="$PKG_CAIRO_CONFIG \
+                           --disable-silent-rules \
+                           --enable-shared \
                            --disable-static \
                            --disable-gtk-doc \
                            --enable-largefile \
                            --enable-atomic \
+                           --disable-gcov \
                            --disable-valgrind \
+                           --disable-xlib-xcb \
+                           --disable-xcb-shm \
                            --disable-qt \
                            --disable-quartz \
                            --disable-quartz-font \
@@ -51,7 +58,12 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-shared \
                            --disable-beos \
                            --disable-cogl \
                            --disable-gallium \
+                           --disable-xcb-drm \
                            --enable-png \
+                           --disable-directfb \
+                           --disable-vg \
+                           --disable-wgl \
+                           --disable-script \
                            --enable-ft \
                            --enable-fc \
                            --enable-ps \
@@ -62,6 +74,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-shared \
                            --disable-full-testing \
                            --disable-trace \
                            --enable-interpreter \
+                           --disable-symbol-lookup \
                            --enable-some-floating-point \
                            --with-gnu-ld"
 
@@ -75,10 +88,7 @@ if [ "$DISPLAYSERVER" = "x11" ]; then
                                --enable-glx \
                                --disable-glesv2 \
                                --disable-egl \
-                               --with-x \
-                               --disable-drm \
-                               --disable-xlib-xcb"
-
+                               --with-x"
 elif [ "$DISPLAYSERVER" = "weston" ]; then
   PKG_CONFIGURE_OPTS_TARGET+=" --disable-xlib \
                                --disable-xlib-xrender \

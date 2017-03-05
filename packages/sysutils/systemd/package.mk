@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="systemd"
-PKG_VERSION="4ec426b"
+PKG_VERSION="v232-859-g179e679ed"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/systemd"
 PKG_GIT_URL="https://github.com/systemd/systemd"
 PKG_DEPENDS_TARGET="toolchain libcap util-linux entropy xz zlib lz4 lzo bzip2 lrzip"

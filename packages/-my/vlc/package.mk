@@ -5,8 +5,8 @@
 
 PKG_NAME="vlc"
 PKG_VERSION="3.0.0-git"
-PKG_URL="https://nightlies.videolan.org/build/source/vlc-3.0.0-20170303-0243-git.tar.xz"
-PKG_DEPENDS_TARGET="toolchain dbus libdvbpsi ffmpeg zlib lua libvorbis libogg flac gnutls gstreamer x265 x264"
+PKG_URL="https://nightlies.videolan.org/build/source/vlc-3.0.0-20170304-0240-git.tar.xz"
+PKG_DEPENDS_TARGET="toolchain dbus libdvbpsi ffmpeg zlib lua libvorbis libogg flac gnutls gstreamer x265 x264 libmpeg2"
 PKG_PRIORITY="optional"
 PKG_SECTION="xmedia/tools"
 PKG_SHORTDESC="VideoLAN multimedia player and streamer"
