@@ -14,5 +14,5 @@ post_makeinstall_target() {
 }
 
 post_install () {
-  enable pure-ftpd.service
+  enable_service pure-ftpd.service
 }
