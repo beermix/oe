@@ -1,0 +1,147 @@
+From a1197edbe050de3c81c7bf755cc5004224514d2c Mon Sep 17 00:00:00 2001
+From: Lukas Rusak <lorusak@gmail.com>
+Date: Wed, 15 Feb 2017 01:34:14 -0800
+Subject: [PATCH 1/2] kodi: adjust cputemp/gputemp script
+
+---
+ packages/mediacenter/kodi/scripts/cputemp | 59 +++++++++++++++----------------
+ 1 file changed, 29 insertions(+), 30 deletions(-)
+
+diff --git a/packages/mediacenter/kodi/scripts/cputemp b/packages/mediacenter/kodi/scripts/cputemp
+index 5d198f3..328e1bf 100755
+--- a/packages/mediacenter/kodi/scripts/cputemp
++++ b/packages/mediacenter/kodi/scripts/cputemp
+@@ -24,51 +24,50 @@
+ TEMP=0
+ 
+ if [ $(basename "$0") = "gputemp" -o "$1" = "gpu" ]; then
+-  if which lspci >/dev/null; then
++
++  if which lspci 2>/dev/null; then
+     if lspci -n | grep 0300 | grep -q 10de; then
+       [ -x /usr/bin/nvidia-smi ] && TEMP=`/usr/bin/nvidia-smi -q -x | grep '<gpu_temp>' | awk '{ print $1 }' | sed 's,<gpu_temp>,,g'`
+     fi
+   fi
+-fi
+-
+-if [ "$1" = "cpu" -o "$TEMP" = "0" ]; then
+ 
+-  # used with coretemp
+-  for hwmon in hwmon0 hwmon1; do
+-    for temp in temp1 temp2; do
+-      if [ "$TEMP" = "0" -a -f /sys/class/hwmon/${hwmon}/${temp}_input ]; then
+-        if [ -f /sys/class/hwmon/${hwmon}/name ]; then
+-          if [ ! "$(cat /sys/class/hwmon/${hwmon}/name)" = acpitz ]; then
+-            TEMP=$(cat /sys/class/hwmon/${hwmon}/${temp}_input)
+-          fi
+-        fi
++  if [ "$TEMP" = "0" ]; then
++    for hwmon in /sys/class/hwmon/*; do
++      if [ -f "${hwmon}/name" ]; then
++        case $(cat ${hwmon}/name) in
++          nouveau|radeon)
++            [[ -f "${hwmon}/temp1_input" ]] && TEMP="$(cat ${hwmon}/temp1_input)" && break
++            [[ -f "${hwmon}/temp2_input" ]] && TEMP="$(cat ${hwmon}/temp2_input)" && break
++            ;;
++        esac
+       fi
+     done
+-  done
+ 
+-  # used on AMD systems
+-  if [ "$TEMP" = "0" -a -f /sys/class/hwmon/hwmon0/device/temp1_input ]; then
+-    TEMP=`cat /sys/class/hwmon/hwmon0/device/temp1_input`
+-  fi
++    TEMP="$(( $TEMP / 1000 ))"
+ 
+-  # used on ION systems
+-  if [ "$TEMP" = "0" -a -f /sys/class/hwmon/hwmon0/device/temp2_input ]; then
+-    TEMP=`cat /sys/class/hwmon/hwmon0/device/temp2_input`
+   fi
++fi
+ 
+-  # used on some intel systems
+-  if [ "$TEMP" = "0" -a -f /sys/bus/acpi/devices/LNXTHERM\:00/thermal_zone/temp ]; then
+-    TEMP=`cat /sys/bus/acpi/devices/LNXTHERM\:00/thermal_zone/temp`
+-  fi
++if [ "$1" = "cpu" -o "$TEMP" = "0" ]; then
+ 
+-  # used on some intel systems
+-  if [ "$TEMP" = "0" -a -f /sys/devices/virtual/thermal/thermal_zone0/temp ]; then
+-    TEMP=`cat /sys/devices/virtual/thermal/thermal_zone0/temp`
++  for hwmon in /sys/class/hwmon/*; do
++    if [ -f "${hwmon}/name" ]; then
++      case $(cat ${hwmon}/name) in
++        coretemp|k10temp)
++          [[ -f "${hwmon}/temp1_input" ]] && TEMP="$(cat ${hwmon}/temp1_input)" && break
++          [[ -f "${hwmon}/temp2_input" ]] && TEMP="$(cat ${hwmon}/temp2_input)" && break
++          ;;
++      esac
++    fi
++  done
++
++  if [ "$TEMP" = "0" -a -f /sys/class/hwmon/hwmon0/device/temp1_input ]; then
++    TEMP=$(cat /sys/class/hwmon/hwmon0/device/temp1_input)
+   fi
+ 
+-  # used on RaspberryPi
++  # used on RaspberryPi and amlogic
+   if [ "$TEMP" = "0" -a -f /sys/class/thermal/thermal_zone0/temp ]; then
+-    TEMP=`cat /sys/class/thermal/thermal_zone0/temp`
++    TEMP=$(cat /sys/class/thermal/thermal_zone0/temp)
+   fi
+ 
+   TEMP="$(( $TEMP / 1000 ))"
+
+From 169c52236db2a8f422d02c43651f0c0de0aaf3b4 Mon Sep 17 00:00:00 2001
+From: Lukas Rusak <lorusak@gmail.com>
+Date: Mon, 27 Feb 2017 21:21:37 -0800
+Subject: [PATCH 2/2] fixup! kodi: adjust cputemp/gputemp script
+
+---
+ packages/mediacenter/kodi/scripts/cputemp | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
+
+diff --git a/packages/mediacenter/kodi/scripts/cputemp b/packages/mediacenter/kodi/scripts/cputemp
+index 328e1bf..624bdf7 100755
+--- a/packages/mediacenter/kodi/scripts/cputemp
++++ b/packages/mediacenter/kodi/scripts/cputemp
+@@ -25,10 +25,8 @@ TEMP=0
+ 
+ if [ $(basename "$0") = "gputemp" -o "$1" = "gpu" ]; then
+ 
+-  if which lspci 2>/dev/null; then
+-    if lspci -n | grep 0300 | grep -q 10de; then
+-      [ -x /usr/bin/nvidia-smi ] && TEMP=`/usr/bin/nvidia-smi -q -x | grep '<gpu_temp>' | awk '{ print $1 }' | sed 's,<gpu_temp>,,g'`
+-    fi
++  if [ -x /usr/bin/nvidia-smi ]; then
++    TEMP="$(/usr/bin/nvidia-smi -q -x | grep '<gpu_temp>' | awk '{ print $1 }' | sed 's,<gpu_temp>,,g')"
+   fi
+ 
+   if [ "$TEMP" = "0" ]; then
+@@ -39,6 +37,10 @@ if [ $(basename "$0") = "gputemp" -o "$1" = "gpu" ]; then
+             [[ -f "${hwmon}/temp1_input" ]] && TEMP="$(cat ${hwmon}/temp1_input)" && break
+             [[ -f "${hwmon}/temp2_input" ]] && TEMP="$(cat ${hwmon}/temp2_input)" && break
+             ;;
++          coretemp)
++            [[ -f "${hwmon}/temp1_input" ]] && TEMP="$(cat ${hwmon}/temp1_input)" && break
++            [[ -f "${hwmon}/temp2_input" ]] && TEMP="$(cat ${hwmon}/temp2_input)" && break
++            ;;
+         esac
+       fi
+     done
+@@ -62,12 +64,12 @@ if [ "$1" = "cpu" -o "$TEMP" = "0" ]; then
+   done
+ 
+   if [ "$TEMP" = "0" -a -f /sys/class/hwmon/hwmon0/device/temp1_input ]; then
+-    TEMP=$(cat /sys/class/hwmon/hwmon0/device/temp1_input)
++    TEMP="$(cat /sys/class/hwmon/hwmon0/device/temp1_input)"
+   fi
+ 
+   # used on RaspberryPi and amlogic
+   if [ "$TEMP" = "0" -a -f /sys/class/thermal/thermal_zone0/temp ]; then
+-    TEMP=$(cat /sys/class/thermal/thermal_zone0/temp)
++    TEMP="$(cat /sys/class/thermal/thermal_zone0/temp)"
+   fi
+ 
+   TEMP="$(( $TEMP / 1000 ))"

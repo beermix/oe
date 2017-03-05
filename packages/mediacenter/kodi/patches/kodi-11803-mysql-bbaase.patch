@@ -1,0 +1,30 @@
+From 8a2f70b2e2aa82fa18bd861a69f84e90d14b454b Mon Sep 17 00:00:00 2001
+From: DaveTBlake <oak99sky@yahoo.co.uk>
+Date: Fri, 3 Mar 2017 19:09:38 +0000
+Subject: [PATCH] Fix CleanupArtists from hanging on very large MySQL db when
+ there are few artists to remove.
+
+---
+ xbmc/music/MusicDatabase.cpp | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/xbmc/music/MusicDatabase.cpp b/xbmc/music/MusicDatabase.cpp
+index b37a620..47f12f7 100644
+--- a/xbmc/music/MusicDatabase.cpp
++++ b/xbmc/music/MusicDatabase.cpp
+@@ -3059,8 +3059,14 @@ bool CMusicDatabase::CleanupArtists()
+     m_pDS->exec("INSERT INTO tmp_delartists select idArtist from song_artist");
+     m_pDS->exec("INSERT INTO tmp_delartists select idArtist from album_artist");
+     m_pDS->exec(PrepareSQL("INSERT INTO tmp_delartists VALUES(%i)", BLANKARTIST_ID));
+-    m_pDS->exec("delete from artist where idArtist not in (select idArtist from tmp_delartists)");
++    // tmp_delartists contains duplicate ids, and on a large library with small changes can be very large.
++    // To avoid MySQL hanging or timeout create a table of unique ids with primary key
++    m_pDS->exec("CREATE TEMPORARY TABLE tmp_keep (idArtist INTEGER PRIMARY KEY)");
++    m_pDS->exec("INSERT INTO tmp_keep SELECT DISTINCT idArtist from tmp_delartists");
++    m_pDS->exec("DELETE FROM artist WHERE idArtist NOT IN (SELECT idArtist FROM tmp_keep)");
++    // Tidy up temp tables
+     m_pDS->exec("DROP TABLE tmp_delartists");
++    m_pDS->exec("DROP TABLE tmp_keep");
+ 
+     return true;
+   }

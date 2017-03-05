@@ -1,0 +1,67 @@
+From 85121a553b05a54f489f63d82d4b8c3bcc20b04f Mon Sep 17 00:00:00 2001
+From: Lukas Rusak <lorusak@gmail.com>
+Date: Tue, 28 Feb 2017 10:52:02 -0800
+Subject: [PATCH 1/2] libdrm: disable libkms
+
+---
+ packages/graphics/libdrm/package.mk | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
+
+diff --git a/packages/graphics/libdrm/package.mk b/packages/graphics/libdrm/package.mk
+index 757de8a..5261fb8 100644
+--- a/packages/graphics/libdrm/package.mk
++++ b/packages/graphics/libdrm/package.mk
+@@ -33,27 +33,25 @@ PKG_AUTORECONF="yes"
+ 
+ get_graphicdrivers
+ 
+-DRM_CONFIG="--disable-libkms --disable-intel --disable-radeon --disable-amdgpu"
++DRM_CONFIG="--disable-intel --disable-radeon --disable-amdgpu"
+ DRM_CONFIG="$DRM_CONFIG --disable-nouveau --disable-vmwgfx"
+ 
+ for drv in $GRAPHIC_DRIVERS; do
+   [ "$drv" = "i915" -o "$drv" = "i965" ] && \
+-    DRM_CONFIG=`echo $DRM_CONFIG | sed -e 's/disable-libkms/enable-libkms/'` && \
+     DRM_CONFIG=`echo $DRM_CONFIG | sed -e 's/disable-intel/enable-intel/'`
+ 
+   [ "$drv" = "r200" -o "$drv" = "r300" -o "$drv" = "r600" -o "$drv" = "radeonsi" ] && \
+-    DRM_CONFIG=`echo $DRM_CONFIG | sed -e 's/disable-libkms/enable-libkms/'` && \
+     DRM_CONFIG=`echo $DRM_CONFIG | sed -e 's/disable-radeon/enable-radeon/'` && \
+     DRM_CONFIG=`echo $DRM_CONFIG | sed -e 's/disable-amdgpu/enable-amdgpu/'`
+ 
+   [ "$drv" = "vmware" ] && \
+-    DRM_CONFIG=`echo $DRM_CONFIG | sed -e 's/disable-libkms/enable-libkms/'` && \
+     DRM_CONFIG=`echo $DRM_CONFIG | sed -e 's/disable-vmwgfx/enable-vmwgfx/'`
+ done
+ 
+ PKG_CONFIGURE_OPTS_TARGET="--disable-udev \
+                            --enable-largefile \
+                            --with-kernel-source=$(kernel_path) \
++                           --disable-libkms \
+                            $DRM_CONFIG \
+                            --disable-install-test-programs \
+                            --disable-cairo-tests \
+
+From 03facb55a046b99b962557f7a496c408b83a1163 Mon Sep 17 00:00:00 2001
+From: Lukas Rusak <lorusak@gmail.com>
+Date: Tue, 28 Feb 2017 10:52:26 -0800
+Subject: [PATCH 2/2] libdrm: disable uneeded options
+
+---
+ packages/graphics/libdrm/package.mk | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/packages/graphics/libdrm/package.mk b/packages/graphics/libdrm/package.mk
+index 5261fb8..71eccb0 100644
+--- a/packages/graphics/libdrm/package.mk
++++ b/packages/graphics/libdrm/package.mk
+@@ -53,6 +53,9 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-udev \
+                            --with-kernel-source=$(kernel_path) \
+                            --disable-libkms \
+                            $DRM_CONFIG \
++                           --disable-nouveau \
++                           --disable-freedreno \
++                           --disable-vc4 \
+                            --disable-install-test-programs \
+                            --disable-cairo-tests \
+                            --disable-manpages \
