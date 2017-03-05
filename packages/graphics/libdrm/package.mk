@@ -50,7 +50,7 @@ done
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-udev \
                            --enable-largefile \
-                           --with-kernel-source=$(kernel_path) \
+                           --with-kernel-source=$(get_pkg_build linux) \
                            --disable-libkms \
                            $DRM_CONFIG \
                            --disable-nouveau \
