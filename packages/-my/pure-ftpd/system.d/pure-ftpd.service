@@ -1,0 +1,12 @@
+[Unit]
+Description=pure-ftpd
+After=network.target
+
+[Service]
+ExecStart=/usr/sbin/pure-ftpd
+TimeoutStopSec=1
+RestartSec=2
+StartLimitInterval=4
+
+[Install]
+WantedBy=kodi.target

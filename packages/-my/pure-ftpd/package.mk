@@ -8,7 +8,11 @@ PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-ssp --with-altlog --with-puredb --with-nonroot --with-rfc2640 --disable-ssp --with-ftpwho --sysconfdir=/storage/.config --datadir=/storage/.config --libdir=/storage/.config --libexecdir=/storage/.config --sharedstatedir=/storage/.config --localstatedir=/storage/.config --includedir=/storage/.config --oldincludedir=/storage/.config --datarootdir=/storage/.config --infodir=/storage/.config --localedir=/storage/.config --enable-largefile"
                            
-                           
+ 
 post_makeinstall_target() {
   rm -rf $INSTALL/storage
+}
+
+post_install () {
+  enable pure-ftpd.service
 }
