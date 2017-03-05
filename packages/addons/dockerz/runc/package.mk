@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="runc"
-PKG_VERSION="a01dafd"
+PKG_VERSION="v1.0.0-rc2"
 PKG_ARCH="any"
 PKG_LICENSE="APL"
 PKG_SITE="https://github.com/opencontainers/runc"

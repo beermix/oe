@@ -29,6 +29,10 @@ PKG_LONGDESC=""
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
+_add_binary_addon() {
+  [ -f $ROOT/$PACKAGES/mediacenter/kodi-binary-addons/$1/package.mk ] && PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET $1" || true
+}
+
 if [ "$MEDIACENTER" = "kodi" ]; then
 # some python stuff needed for various addons
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET Pillow"

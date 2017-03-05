@@ -18,6 +18,9 @@
 
 PKG_NAME="Adafruit_Python_DHT"
 PKG_VERSION="310c59b"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="MIT"
 PKG_SITE="https://github.com/adafruit/${PKG_NAME}"
 PKG_URL="https://github.com/adafruit/${PKG_NAME}/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"
@@ -26,26 +29,8 @@ PKG_SHORTDESC="Adafruit Python DHT Library"
 PKG_LONGDESC="Python library to read the DHT series of humidity and temperature sensors on a Raspberry Pi or Beaglebone Black."
 PKG_AUTORECONF="no"
 
-case $PROJECT in
-  RPi)
-    RPI_VERSION="--force-pi"
-    ;;
-  RPi2)
-    RPI_VERSION="--force-pi2"
-    ;;
-esac
-
-pre_make_target() {
-  export PYTHONXCPREFIX="$SYSROOT_PREFIX/usr"
-  export LDSHARED="$CC -shared"
-
-  sed -e 's/from ez_setup import use_setuptools/\#from ez_setup import use_setuptools/' \
-      -e 's/use_setuptools()/\#use_setuptools()/' \
-      -i setup.py
-}
-
 make_target() {
-  python setup.py build $RPI_VERSION --cross-compile
+  : # nop
 }
 
 makeinstall_target() {
