@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="sonarr"
-PKG_VERSION="2.0.0.4409"
+PKG_VERSION="2.0.0.4613"
 PKG_SITE="https://sonarr.tv"
 PKG_URL="http://update.sonarr.tv/v2/master/mono/NzbDrone.master.$PKG_VERSION.mono.tar.gz"
 PKG_SOURCE_DIR="NzbDrone"

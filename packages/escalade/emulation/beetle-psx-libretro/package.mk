@@ -19,7 +19,7 @@
 ################################################################################
 
 PKG_NAME="beetle-psx-libretro"
-PKG_VERSION="f12cc2f"
+PKG_VERSION="99747d4"
 PKG_SITE="https://github.com/libretro/beetle-psx-libretro"
 PKG_URL="https://github.com/libretro/beetle-psx-libretro/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
@@ -33,10 +33,10 @@ PKG_AUTORECONF="no"
 make_target() {
   mkdir out
   make HAVE_OPENGL=0
-  mv mednafen_psx_libretro.so out/
+  mv *.so out/
   make clean
-  make HAVE_OPENGL=1
-  mv mednafen_psx_hw_libretro.so out/
+  make HAVE_HW=1
+  mv *.so out/
 }
 
 makeinstall_target() {

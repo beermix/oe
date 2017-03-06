@@ -18,6 +18,8 @@
 
 PKG_NAME="SDL_ttf"
 PKG_VERSION="2.0.11"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://www.libsdl.org/"
 PKG_URL="http://www.libsdl.org/projects/SDL_ttf/release/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain SDL freetype"
@@ -30,6 +32,6 @@ PKG_ADDON_TYPE="xbmc.python.pluginsource"
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--with-gnu-ld \
-			      --disable-shared \
-			      --with-freetype-prefix=$SYSROOT_PREFIX/usr \
-			      --with-sdl-prefix=$SYSROOT_PREFIX/usr"
+			   --disable-shared \
+			   --with-freetype-prefix=$SYSROOT_PREFIX/usr \
+                           --with-sdl-prefix=$SYSROOT_PREFIX/usr"

@@ -19,7 +19,7 @@
 ################################################################################
 
 PKG_NAME="snes9x2010-libretro"
-PKG_VERSION="74953d8"
+PKG_VERSION="b2a69de"
 PKG_SITE="https://github.com/libretro/snes9x2010.git"
 PKG_GIT_URL="https://github.com/libretro/snes9x2010"
 PKG_DEPENDS_TARGET="toolchain"

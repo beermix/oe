@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="mame2014-libretro"
-PKG_VERSION="2f669cb"
+PKG_VERSION="790dca5"
 PKG_SITE="https://github.com/libretro/mame2014-libretro"
 PKG_URL="https://github.com/libretro/mame2014-libretro/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"

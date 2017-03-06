@@ -19,7 +19,7 @@
 ################################################################################
 
 PKG_NAME="core-info"
-PKG_VERSION="adb2940"
+PKG_VERSION="176cdcd"
 PKG_SITE="https://github.com/libretro/libretro-super"
 PKG_GIT_URL="https://github.com/libretro/libretro-super"
 PKG_DEPENDS_TARGET="toolchain"
@@ -30,6 +30,9 @@ PKG_LONGDESC="Super repo for other libretro projects. Fetches, builds and instal
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
+post_unpack() {
+  mv $BUILD/libretro-super-$PKG_VERSION* $BUILD/$PKG_NAME-$PKG_VERSION
+}
 
 make_target() {
   :

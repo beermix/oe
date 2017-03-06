@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="fs-uae"
-PKG_VERSION="09428de"
+PKG_VERSION="4bec4fa"
 PKG_SITE="https://github.com/FrodeSolheim/fs-uae"
 PKG_GIT_URL="https://github.com/FrodeSolheim/fs-uae"
 PKG_DEPENDS_TARGET="toolchain SDL2 glew glu libmpeg2 libXi openal-soft"
@@ -30,8 +30,7 @@ PKG_AUTORECONF="yes"
 pre_configure_target() {
   export ac_cv_func_realloc_0_nonnull=yes
   export SYSROOT_PREFIX
-  # auto detection for DS4 bluetooth
-  cp ../share/fs-uae/input/sony_computer_entertainment_wireless_controller_14_10_1_0_linux.conf ../share/fs-uae/input/wireless_controller_14_6_1_0_linux.conf
+  cp $PKG_DIR/input/* ../share/fs-uae/input/
 }
 
 post_makeinstall_target() {
@@ -44,8 +43,8 @@ post_makeinstall_target() {
   ln -s /storage/roms/bios $INSTALL/usr/config/fs-uae/Kickstarts
 
   # install capsimg plugin for ipf support
-  wget https://fs-uae.net/devel/plugins/CAPSImg/CAPSImg_5.1fs2.zip
-  unzip -o -d $INSTALL/usr/config/fs-uae CAPSImg_5.1fs2.zip
+  wget https://fs-uae.net/devel/plugins/CAPSImg/CAPSImg_5.1fs3.zip
+  unzip -o -d $INSTALL/usr/config/fs-uae CAPSImg_5.1fs3.zip
   rm -rf $INSTALL/usr/config/fs-uae/Plugins/CAPSImg/OSX
   rm -rf $INSTALL/usr/config/fs-uae/Plugins/CAPSImg/SteamOS
   rm -rf $INSTALL/usr/config/fs-uae/Plugins/CAPSImg/Windows

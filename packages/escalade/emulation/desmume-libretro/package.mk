@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="desmume-libretro"
-PKG_VERSION="ab1bd5a"
+PKG_VERSION="63ed05b"
 PKG_SITE="https://github.com/libretro/desmume"
 PKG_URL="https://github.com/libretro/desmume/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"

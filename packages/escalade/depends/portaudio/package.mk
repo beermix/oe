@@ -16,7 +16,7 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 PKG_NAME="portaudio"
-PKG_VERSION="master"
+PKG_VERSION="190600_20161012"
 PKG_SITE="http://www.portaudio.com"
 PKG_GIT_URL="https://git.assembla.com/portaudio.git"
 PKG_DEPENDS_TARGET="toolchain"
@@ -24,4 +24,4 @@ PKG_SECTION="depends"
 PKG_SHORTDESC="Portable cross-platform audio I/O"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
-PKG_USE_CMAKE="yes"
+PKG_AUTORECONF="no"
