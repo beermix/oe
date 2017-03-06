@@ -16,7 +16,7 @@ if [ "$PROJECT" = "Generic" ]; then
  
 #PKG_DEPENDS_TARGET="isualization.shadertoy inputstream.adaptive inputstream.mpd inputstream.rtmp inputstream.smoothstream"
 
-PKG_DEPENDS_TARGET="ps3remote xcalib speedtest bash gawk xz grep findutils unrar file nano zsh git polipo PySocks gevent PyAMF M2Crypto pyxattr netdata pure-ftpd time coreutils psmisc psutil less tor iperf lm_sensors f2fs-tools bwm-ng davfs2 daemonize ncdu sshfs fio xfsprogs"
+PKG_DEPENDS_TARGET="ps3remote xcalib speedtest bash gawk xz grep findutils unrar inetutils file nano zsh git polipo PySocks gevent PyAMF M2Crypto pyxattr netdata pure-ftpd time coreutils psmisc psutil less tor iperf lm_sensors f2fs-tools bwm-ng davfs2 daemonize ncdu sshfs fio xfsprogs vlc"
 
 #PKG_DEPENDS_TARGET="zsh tor x11vnc squid rsyslog intel-gpu-tools"
 #pciutils dbus libXcomposite libXcursor libXtst alsa-lib bzip2 yasm nss libXScrnSaver libexif harfbuzz atk gtk+ libevent
