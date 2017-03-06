@@ -1,0 +1,1763 @@
+diff --git a/pvr.iptvsimple/addon.xml.in b/pvr.iptvsimple/addon.xml.in
+index b59235c..5e1a4da 100644
+--- a/pvr.iptvsimple/addon.xml.in
++++ b/pvr.iptvsimple/addon.xml.in
+@@ -1,7 +1,7 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <addon
+   id="pvr.iptvsimple"
+-  version="1.12.11"
++  version="2.0.0"
+   name="PVR IPTV Simple Client"
+   provider-name="nightik">
+   <requires>
+diff --git a/pvr.iptvsimple/changelog.txt b/pvr.iptvsimple/changelog.txt
+index 518af78..9041eff 100644
+--- a/pvr.iptvsimple/changelog.txt
++++ b/pvr.iptvsimple/changelog.txt
+@@ -1,3 +1,10 @@
++v2.0.0
++- Implemented support for multiple (up to 10) m3u sources
++- Added settings for channel, group and logo name format
++- Added support for the url-tvg tag
++- Fixed support for tvg-logo URLs
++- Enabled the pause button
++
+ v1.12.11
+ - updated language files from Transifex
+ 
+diff --git a/pvr.iptvsimple/resources/gensettings.sh b/pvr.iptvsimple/resources/gensettings.sh
+new file mode 100755
+index 0000000..2e05bcc
+--- /dev/null
++++ b/pvr.iptvsimple/resources/gensettings.sh
+@@ -0,0 +1,97 @@
++#!/bin/sh
++DIR="$(dirname "$0")"
++OUTPUT="$DIR/settings.xml"
++POS_SHIFT='-1'
++NUM_SOURCES='10'
++
++HEADER='<?xml version="1.0" encoding="utf-8" standalone="yes"?>
++<settings>
++  <category label="30010">
++    <!-- Channels list -->
++    <setting label="30053" type="lsep"/> 
++    <setting id="startNum" type="number" label="30013" default="1"/>
++    <setting id="groupNameFormat_0" type="text" label="30054" default="%s"/>
++    <setting id="channelNameFormat_0" type="text" label="30055" default="%s"/>
++    
++    <!-- EPG -->
++    <setting label="30020" type="lsep"/>
++    <setting id="epgPathType_0" type="enum" label="30000" lvalues="30001|30002" default="1"/>
++    <setting id="epgPath_0" type="file" label="30021" default="" visible="eq(-1,0)"/>
++    <setting id="epgUrl_0" type="text" label="30022" default="" visible="eq(-2,1)"/>
++    <setting id="epgCache_0" type="bool" label="30026" default="true" visible="eq(-3,1)"/>
++    <setting id="epgTimeShift_0" type="slider" label="30024" default="0" range="-12,.5,12" option="float"/>
++    <setting id="epgTSOverride_0" type="bool" label="30023" default="false"/>
++    
++    <!-- Logos -->
++    <setting label="30030" type="lsep"/>
++    <setting id="logoPathType_0" type="enum" label="30000" lvalues="30001|30002" default="1"/>
++    <setting id="logoPath_0" type="folder" label="30031" default="" visible="eq(-1,0)"/>
++    <setting id="logoBaseUrl_0" type="text" label="30032" default="" visible="eq(-2,1)"/>
++    <setting id="logoFileNameFormat_0" type="text" label="30056" default="%s"/>
++  </category>
++  
++  <category label="30050">
++    <setting id="sourceCount" type="enum" label="30051" default="0" values="@SOURCES@"/>'
++SOURCE_SETTINGS='
++    <!-- _______________________________ Source @SRC@ _____________________________________ -->
++    <setting label="" type="lsep" visible="gt(@POS@,@COUNT@)"/>
++    <setting label="$ADDON[pvr.iptvsimple 30052] @SRC@" type="lsep" visible="gt(@POS@,@COUNT@)"/>
++    <setting type="sep" visible="gt(@POS@,@COUNT@)"/>
++
++    <!-- Channels list -->
++    <setting label="30053" type="lsep" visible="gt(@POS@,@COUNT@)"/> 
++    <setting id="m3uPathType_@SRC@" type="enum" label="30000" lvalues="30001|30002" default="1" visible="gt(@POS@,@COUNT@)"/>
++    <setting id="m3uPath_@SRC@" type="file" label="30011" default="" visible="eq(-1,0)+gt(@POS@,@COUNT@)"/>
++    <setting id="m3uUrl_@SRC@" type="text" label="30012" default="" visible="eq(-2,1)+gt(@POS@,@COUNT@)"/>
++    <setting id="m3uCache_@SRC@" type="bool" label="30025" default="true" visible="eq(-3,1)+gt(@POS@,@COUNT@)"/>
++    <setting id="groupNameFormat_@SRC@" type="text" label="30054" default="%s" visible="gt(@POS@,@COUNT@)"/>
++    <setting id="channelNameFormat_@SRC@" type="text" label="30055" default="%s" visible="gt(@POS@,@COUNT@)"/>
++    
++    <!-- EPG -->
++    <setting label="30020" type="lsep" visible="gt(@POS@,@COUNT@)"/>
++    <setting id="epgPathType_@SRC@" type="enum" label="30000" lvalues="30001|30002" default="1" visible="gt(@POS@,@COUNT@)"/>
++    <setting id="epgPath_@SRC@" type="file" label="30021" default="" visible="eq(-1,0)+gt(@POS@,@COUNT@)"/>
++    <setting id="epgUrl_@SRC@" type="text" label="30022" default="" visible="eq(-2,1)+gt(@POS@,@COUNT@)"/>
++    <setting id="epgCache_@SRC@" type="bool" label="30026" default="true" visible="eq(-3,1)+gt(@POS@,@COUNT@)"/>
++    <setting id="epgTimeShift_@SRC@" type="slider" label="30024" default="0" range="-12,.5,12" option="float" visible="gt(@POS@,@COUNT@)"/>
++    <setting id="epgTSOverride_@SRC@" type="bool" label="30023" default="false" visible="gt(@POS@,@COUNT@)"/>
++    
++    <!-- Logos -->
++    <setting label="30030" type="lsep" visible="gt(@POS@,@COUNT@)"/>
++    <setting id="logoPathType_@SRC@" type="enum" label="30000" lvalues="30001|30002" default="1" visible="gt(@POS@,@COUNT@)"/>
++    <setting id="logoPath_@SRC@" type="folder" label="30031" default="" visible="eq(-1,0)+gt(@POS@,@COUNT@)"/>
++    <setting id="logoBaseUrl_@SRC@" type="text" label="30032" default="" visible="eq(-2,1)+gt(@POS@,@COUNT@)"/>
++    <setting id="logoFileNameFormat_@SRC@" type="text" label="30056" default="%s" visible="gt(@POS@,@COUNT@)"/>
++    <setting id="logoFromEpg_@SRC@" type="enum" label="30041" default="0" lvalues="30042|30043|30044" visible="gt(@POS@,@COUNT@)"/>
++
++    <setting type="sep" visible="gt(@POS@,@COUNT@)"/>
++    <!-- _____________________________________________________________________________ -->'
++FOOTER='
++  </category>
++</settings>'
++
++gen_source_settings() {
++    local src_num="$1"
++    local count="$(($src_num - 2))"
++    local pos_shift="$POS_SHIFT"
++    
++    echo "$SOURCE_SETTINGS" | while read line
++    do
++        echo "    $line" | sed "s/@SRC@/$src_num/g; s/@POS@/$pos_shift/g; s/@COUNT@/$count/g"
++        echo "$line" | grep -q '<setting ' && pos_shift="$((pos_shift - 1))"
++    done
++}
++
++gen_settings() {
++    echo "$HEADER" | sed "s/@SOURCES@/$(seq -s '|' 1 $NUM_SOURCES)/"
++    
++    for i in $(seq 1 $NUM_SOURCES)
++    do
++        gen_source_settings $i
++        POS_SHIFT="$((POS_SHIFT - $(echo "$SOURCE_SETTINGS" | grep '<setting ' | wc -l)))"
++    done
++    
++    echo "$FOOTER"
++}
++
++gen_settings | tee "$OUTPUT"
+diff --git a/pvr.iptvsimple/resources/language/resource.language.en_au/strings.po b/pvr.iptvsimple/resources/language/resource.language.en_au/strings.po
+index 3b75851..7bab396 100644
+--- a/pvr.iptvsimple/resources/language/resource.language.en_au/strings.po
++++ b/pvr.iptvsimple/resources/language/resource.language.en_au/strings.po
+@@ -87,3 +87,31 @@ msgstr "Channels Logos Base URL"
+ msgctxt "#30042"
+ msgid "Ignore"
+ msgstr "Ignore"
++
++msgctxt "#30050"
++msgid "Sources"
++msgstr ""
++
++msgctxt "#30051"
++msgid "Number of sources"
++msgstr ""
++
++msgctxt "#30052"
++msgid "Source"
++msgstr ""
++
++msgctxt "#30053"
++msgid "Channels list"
++msgstr ""
++
++msgctxt "#30054"
++msgid "Group name format"
++msgstr ""
++
++msgctxt "#30055"
++msgid "Channel name format"
++msgstr ""
++
++msgctxt "#30056"
++msgid "Logo file name format"
++msgstr ""
+diff --git a/pvr.iptvsimple/resources/language/resource.language.en_gb/strings.po b/pvr.iptvsimple/resources/language/resource.language.en_gb/strings.po
+index 7dff733..e93965b 100644
+--- a/pvr.iptvsimple/resources/language/resource.language.en_gb/strings.po
++++ b/pvr.iptvsimple/resources/language/resource.language.en_gb/strings.po
+@@ -113,3 +113,31 @@ msgstr ""
+ msgctxt "#30044"
+ msgid "Prefer XMLTV"
+ msgstr ""
++
++msgctxt "#30050"
++msgid "Sources"
++msgstr ""
++
++msgctxt "#30051"
++msgid "Number of sources"
++msgstr ""
++
++msgctxt "#30052"
++msgid "Source"
++msgstr ""
++
++msgctxt "#30053"
++msgid "Channels list"
++msgstr ""
++
++msgctxt "#30054"
++msgid "Group name format"
++msgstr ""
++
++msgctxt "#30055"
++msgid "Channel name format"
++msgstr ""
++
++msgctxt "#30056"
++msgid "Logo file name format"
++msgstr ""
+diff --git a/pvr.iptvsimple/resources/language/resource.language.en_nz/strings.po b/pvr.iptvsimple/resources/language/resource.language.en_nz/strings.po
+index ca3219a..4509c26 100644
+--- a/pvr.iptvsimple/resources/language/resource.language.en_nz/strings.po
++++ b/pvr.iptvsimple/resources/language/resource.language.en_nz/strings.po
+@@ -103,3 +103,31 @@ msgstr "Prefer M3U"
+ msgctxt "#30044"
+ msgid "Prefer XMLTV"
+ msgstr "Prefer XMLTV"
++
++msgctxt "#30050"
++msgid "Sources"
++msgstr ""
++
++msgctxt "#30051"
++msgid "Number of sources"
++msgstr ""
++
++msgctxt "#30052"
++msgid "Source"
++msgstr ""
++
++msgctxt "#30053"
++msgid "Channels list"
++msgstr ""
++
++msgctxt "#30054"
++msgid "Group name format"
++msgstr ""
++
++msgctxt "#30055"
++msgid "Channel name format"
++msgstr ""
++
++msgctxt "#30056"
++msgid "Logo file name format"
++msgstr ""
+diff --git a/pvr.iptvsimple/resources/language/resource.language.en_us/strings.po b/pvr.iptvsimple/resources/language/resource.language.en_us/strings.po
+index 13acf2f..b62aa76 100644
+--- a/pvr.iptvsimple/resources/language/resource.language.en_us/strings.po
++++ b/pvr.iptvsimple/resources/language/resource.language.en_us/strings.po
+@@ -103,3 +103,31 @@ msgstr "Prefer M3U"
+ msgctxt "#30044"
+ msgid "Prefer XMLTV"
+ msgstr "Prefer XMLTV"
++
++msgctxt "#30050"
++msgid "Sources"
++msgstr ""
++
++msgctxt "#30051"
++msgid "Number of sources"
++msgstr ""
++
++msgctxt "#30052"
++msgid "Source"
++msgstr ""
++
++msgctxt "#30053"
++msgid "Channels list"
++msgstr ""
++
++msgctxt "#30054"
++msgid "Group name format"
++msgstr ""
++
++msgctxt "#30055"
++msgid "Channel name format"
++msgstr ""
++
++msgctxt "#30056"
++msgid "Logo file name format"
++msgstr ""
+\ No newline at end of file
+diff --git a/pvr.iptvsimple/resources/language/resource.language.ru_ru/strings.po b/pvr.iptvsimple/resources/language/resource.language.ru_ru/strings.po
+index 477b710..b36d8b0 100644
+--- a/pvr.iptvsimple/resources/language/resource.language.ru_ru/strings.po
++++ b/pvr.iptvsimple/resources/language/resource.language.ru_ru/strings.po
+@@ -103,3 +103,31 @@ msgstr "Предпочтительно M3U"
+ msgctxt "#30044"
+ msgid "Prefer XMLTV"
+ msgstr "Предпочтительно XMLTV"
++
++msgctxt "#30050"
++msgid "Sources"
++msgstr "Источники"
++
++msgctxt "#30051"
++msgid "Number of sources"
++msgstr "Количество источников"
++
++msgctxt "#30052"
++msgid "Source"
++msgstr "Источник"
++
++msgctxt "#30053"
++msgid "Channels list"
++msgstr "Список каналов"
++
++msgctxt "#30054"
++msgid "Group name format"
++msgstr "Формат имени группы"
++
++msgctxt "#30055"
++msgid "Channel name format"
++msgstr "Формат имени канала"
++
++msgctxt "#30056"
++msgid "Logo file name format"
++msgstr "Формат имени файла логотипа"
+diff --git a/pvr.iptvsimple/resources/settings.xml b/pvr.iptvsimple/resources/settings.xml
+index f6bc365..f0e795f 100644
+--- a/pvr.iptvsimple/resources/settings.xml
++++ b/pvr.iptvsimple/resources/settings.xml
+@@ -1,33 +1,371 @@
+ <?xml version="1.0" encoding="utf-8" standalone="yes"?>
+ <settings>
+-  <!-- M3U -->
+   <category label="30010">
+-    <setting id="sep1" label="30010" type="lsep"/> 
+-    <setting id="m3uPathType" type="enum" label="30000" lvalues="30001|30002" default="1" />
+-    <setting id="m3uPath" type="file" label="30011" default="" visible="eq(-1,0)"/>
+-    <setting id="m3uUrl" type="text" label="30012" default="" visible="eq(-2,1)"/>
+-    <setting id="m3uCache" type="bool" label="30025" default="true" visible="eq(-3,1)"/>
+-    <setting id="startNum" type="number" label="30013" default="1" />
++    <!-- Channels list -->
++    <setting label="30053" type="lsep"/> 
++    <setting id="startNum" type="number" label="30013" default="1"/>
++    <setting id="groupNameFormat_0" type="text" label="30054" default="%s"/>
++    <setting id="channelNameFormat_0" type="text" label="30055" default="%s"/>
++    
++    <!-- EPG -->
++    <setting label="30020" type="lsep"/>
++    <setting id="epgPathType_0" type="enum" label="30000" lvalues="30001|30002" default="1"/>
++    <setting id="epgPath_0" type="file" label="30021" default="" visible="eq(-1,0)"/>
++    <setting id="epgUrl_0" type="text" label="30022" default="" visible="eq(-2,1)"/>
++    <setting id="epgCache_0" type="bool" label="30026" default="true" visible="eq(-3,1)"/>
++    <setting id="epgTimeShift_0" type="slider" label="30024" default="0" range="-12,.5,12" option="float"/>
++    <setting id="epgTSOverride_0" type="bool" label="30023" default="false"/>
++    
++    <!-- Logos -->
++    <setting label="30030" type="lsep"/>
++    <setting id="logoPathType_0" type="enum" label="30000" lvalues="30001|30002" default="1"/>
++    <setting id="logoPath_0" type="folder" label="30031" default="" visible="eq(-1,0)"/>
++    <setting id="logoBaseUrl_0" type="text" label="30032" default="" visible="eq(-2,1)"/>
++    <setting id="logoFileNameFormat_0" type="text" label="30056" default="%s"/>
+   </category>
++  
++  <category label="30050">
++    <setting id="sourceCount" type="enum" label="30051" default="0" values="1|2|3|4|5|6|7|8|9|10"/>
++    
++    <!-- _______________________________ Source 1 _____________________________________ -->
++    <setting label="" type="lsep" visible="gt(-1,-1)"/>
++    <setting label="$ADDON[pvr.iptvsimple 30052] 1" type="lsep" visible="gt(-2,-1)"/>
++    <setting type="sep" visible="gt(-3,-1)"/>
++    
++    <!-- Channels list -->
++    <setting label="30053" type="lsep" visible="gt(-4,-1)"/> 
++    <setting id="m3uPathType_1" type="enum" label="30000" lvalues="30001|30002" default="1" visible="gt(-5,-1)"/>
++    <setting id="m3uPath_1" type="file" label="30011" default="" visible="eq(-1,0)+gt(-6,-1)"/>
++    <setting id="m3uUrl_1" type="text" label="30012" default="" visible="eq(-2,1)+gt(-7,-1)"/>
++    <setting id="m3uCache_1" type="bool" label="30025" default="true" visible="eq(-3,1)+gt(-8,-1)"/>
++    <setting id="groupNameFormat_1" type="text" label="30054" default="%s" visible="gt(-9,-1)"/>
++    <setting id="channelNameFormat_1" type="text" label="30055" default="%s" visible="gt(-10,-1)"/>
++    
++    <!-- EPG -->
++    <setting label="30020" type="lsep" visible="gt(-11,-1)"/>
++    <setting id="epgPathType_1" type="enum" label="30000" lvalues="30001|30002" default="1" visible="gt(-12,-1)"/>
++    <setting id="epgPath_1" type="file" label="30021" default="" visible="eq(-1,0)+gt(-13,-1)"/>
++    <setting id="epgUrl_1" type="text" label="30022" default="" visible="eq(-2,1)+gt(-14,-1)"/>
++    <setting id="epgCache_1" type="bool" label="30026" default="true" visible="eq(-3,1)+gt(-15,-1)"/>
++    <setting id="epgTimeShift_1" type="slider" label="30024" default="0" range="-12,.5,12" option="float" visible="gt(-16,-1)"/>
++    <setting id="epgTSOverride_1" type="bool" label="30023" default="false" visible="gt(-17,-1)"/>
++    
++    <!-- Logos -->
++    <setting label="30030" type="lsep" visible="gt(-18,-1)"/>
++    <setting id="logoPathType_1" type="enum" label="30000" lvalues="30001|30002" default="1" visible="gt(-19,-1)"/>
++    <setting id="logoPath_1" type="folder" label="30031" default="" visible="eq(-1,0)+gt(-20,-1)"/>
++    <setting id="logoBaseUrl_1" type="text" label="30032" default="" visible="eq(-2,1)+gt(-21,-1)"/>
++    <setting id="logoFileNameFormat_1" type="text" label="30056" default="%s" visible="gt(-22,-1)"/>
++    <setting id="logoFromEpg_1" type="enum" label="30041" default="0" lvalues="30042|30043|30044" visible="gt(-23,-1)"/>
++    
++    <setting type="sep" visible="gt(-24,-1)"/>
++    <!-- _____________________________________________________________________________ -->
++    
++    <!-- _______________________________ Source 2 _____________________________________ -->
++    <setting label="" type="lsep" visible="gt(-25,0)"/>
++    <setting label="$ADDON[pvr.iptvsimple 30052] 2" type="lsep" visible="gt(-26,0)"/>
++    <setting type="sep" visible="gt(-27,0)"/>
++    
++    <!-- Channels list -->
++    <setting label="30053" type="lsep" visible="gt(-28,0)"/> 
++    <setting id="m3uPathType_2" type="enum" label="30000" lvalues="30001|30002" default="1" visible="gt(-29,0)"/>
++    <setting id="m3uPath_2" type="file" label="30011" default="" visible="eq(-1,0)+gt(-30,0)"/>
++    <setting id="m3uUrl_2" type="text" label="30012" default="" visible="eq(-2,1)+gt(-31,0)"/>
++    <setting id="m3uCache_2" type="bool" label="30025" default="true" visible="eq(-3,1)+gt(-32,0)"/>
++    <setting id="groupNameFormat_2" type="text" label="30054" default="%s" visible="gt(-33,0)"/>
++    <setting id="channelNameFormat_2" type="text" label="30055" default="%s" visible="gt(-34,0)"/>
++    
++    <!-- EPG -->
++    <setting label="30020" type="lsep" visible="gt(-35,0)"/>
++    <setting id="epgPathType_2" type="enum" label="30000" lvalues="30001|30002" default="1" visible="gt(-36,0)"/>
++    <setting id="epgPath_2" type="file" label="30021" default="" visible="eq(-1,0)+gt(-37,0)"/>
++    <setting id="epgUrl_2" type="text" label="30022" default="" visible="eq(-2,1)+gt(-38,0)"/>
++    <setting id="epgCache_2" type="bool" label="30026" default="true" visible="eq(-3,1)+gt(-39,0)"/>
++    <setting id="epgTimeShift_2" type="slider" label="30024" default="0" range="-12,.5,12" option="float" visible="gt(-40,0)"/>
++    <setting id="epgTSOverride_2" type="bool" label="30023" default="false" visible="gt(-41,0)"/>
++    
++    <!-- Logos -->
++    <setting label="30030" type="lsep" visible="gt(-42,0)"/>
++    <setting id="logoPathType_2" type="enum" label="30000" lvalues="30001|30002" default="1" visible="gt(-43,0)"/>
++    <setting id="logoPath_2" type="folder" label="30031" default="" visible="eq(-1,0)+gt(-44,0)"/>
++    <setting id="logoBaseUrl_2" type="text" label="30032" default="" visible="eq(-2,1)+gt(-45,0)"/>
++    <setting id="logoFileNameFormat_2" type="text" label="30056" default="%s" visible="gt(-46,0)"/>
++    <setting id="logoFromEpg_2" type="enum" label="30041" default="0" lvalues="30042|30043|30044" visible="gt(-47,0)"/>
++    
++    <setting type="sep" visible="gt(-48,0)"/>
++    <!-- _____________________________________________________________________________ -->
++    
++    <!-- _______________________________ Source 3 _____________________________________ -->
++    <setting label="" type="lsep" visible="gt(-49,1)"/>
++    <setting label="$ADDON[pvr.iptvsimple 30052] 3" type="lsep" visible="gt(-50,1)"/>
++    <setting type="sep" visible="gt(-51,1)"/>
++    
++    <!-- Channels list -->
++    <setting label="30053" type="lsep" visible="gt(-52,1)"/> 
++    <setting id="m3uPathType_3" type="enum" label="30000" lvalues="30001|30002" default="1" visible="gt(-53,1)"/>
++    <setting id="m3uPath_3" type="file" label="30011" default="" visible="eq(-1,0)+gt(-54,1)"/>
++    <setting id="m3uUrl_3" type="text" label="30012" default="" visible="eq(-2,1)+gt(-55,1)"/>
++    <setting id="m3uCache_3" type="bool" label="30025" default="true" visible="eq(-3,1)+gt(-56,1)"/>
++    <setting id="groupNameFormat_3" type="text" label="30054" default="%s" visible="gt(-57,1)"/>
++    <setting id="channelNameFormat_3" type="text" label="30055" default="%s" visible="gt(-58,1)"/>
++    
++    <!-- EPG -->
++    <setting label="30020" type="lsep" visible="gt(-59,1)"/>
++    <setting id="epgPathType_3" type="enum" label="30000" lvalues="30001|30002" default="1" visible="gt(-60,1)"/>
++    <setting id="epgPath_3" type="file" label="30021" default="" visible="eq(-1,0)+gt(-61,1)"/>
++    <setting id="epgUrl_3" type="text" label="30022" default="" visible="eq(-2,1)+gt(-62,1)"/>
++    <setting id="epgCache_3" type="bool" label="30026" default="true" visible="eq(-3,1)+gt(-63,1)"/>
++    <setting id="epgTimeShift_3" type="slider" label="30024" default="0" range="-12,.5,12" option="float" visible="gt(-64,1)"/>
++    <setting id="epgTSOverride_3" type="bool" label="30023" default="false" visible="gt(-65,1)"/>
++    
++    <!-- Logos -->
++    <setting label="30030" type="lsep" visible="gt(-66,1)"/>
++    <setting id="logoPathType_3" type="enum" label="30000" lvalues="30001|30002" default="1" visible="gt(-67,1)"/>
++    <setting id="logoPath_3" type="folder" label="30031" default="" visible="eq(-1,0)+gt(-68,1)"/>
++    <setting id="logoBaseUrl_3" type="text" label="30032" default="" visible="eq(-2,1)+gt(-69,1)"/>
++    <setting id="logoFileNameFormat_3" type="text" label="30056" default="%s" visible="gt(-70,1)"/>
++    <setting id="logoFromEpg_3" type="enum" label="30041" default="0" lvalues="30042|30043|30044" visible="gt(-71,1)"/>
++    
++    <setting type="sep" visible="gt(-72,1)"/>
++    <!-- _____________________________________________________________________________ -->
++    
++    <!-- _______________________________ Source 4 _____________________________________ -->
++    <setting label="" type="lsep" visible="gt(-73,2)"/>
++    <setting label="$ADDON[pvr.iptvsimple 30052] 4" type="lsep" visible="gt(-74,2)"/>
++    <setting type="sep" visible="gt(-75,2)"/>
++    
++    <!-- Channels list -->
++    <setting label="30053" type="lsep" visible="gt(-76,2)"/> 
++    <setting id="m3uPathType_4" type="enum" label="30000" lvalues="30001|30002" default="1" visible="gt(-77,2)"/>
++    <setting id="m3uPath_4" type="file" label="30011" default="" visible="eq(-1,0)+gt(-78,2)"/>
++    <setting id="m3uUrl_4" type="text" label="30012" default="" visible="eq(-2,1)+gt(-79,2)"/>
++    <setting id="m3uCache_4" type="bool" label="30025" default="true" visible="eq(-3,1)+gt(-80,2)"/>
++    <setting id="groupNameFormat_4" type="text" label="30054" default="%s" visible="gt(-81,2)"/>
++    <setting id="channelNameFormat_4" type="text" label="30055" default="%s" visible="gt(-82,2)"/>
++    
++    <!-- EPG -->
++    <setting label="30020" type="lsep" visible="gt(-83,2)"/>
++    <setting id="epgPathType_4" type="enum" label="30000" lvalues="30001|30002" default="1" visible="gt(-84,2)"/>
++    <setting id="epgPath_4" type="file" label="30021" default="" visible="eq(-1,0)+gt(-85,2)"/>
++    <setting id="epgUrl_4" type="text" label="30022" default="" visible="eq(-2,1)+gt(-86,2)"/>
++    <setting id="epgCache_4" type="bool" label="30026" default="true" visible="eq(-3,1)+gt(-87,2)"/>
++    <setting id="epgTimeShift_4" type="slider" label="30024" default="0" range="-12,.5,12" option="float" visible="gt(-88,2)"/>
++    <setting id="epgTSOverride_4" type="bool" label="30023" default="false" visible="gt(-89,2)"/>
++    
++    <!-- Logos -->
++    <setting label="30030" type="lsep" visible="gt(-90,2)"/>
++    <setting id="logoPathType_4" type="enum" label="30000" lvalues="30001|30002" default="1" visible="gt(-91,2)"/>
++    <setting id="logoPath_4" type="folder" label="30031" default="" visible="eq(-1,0)+gt(-92,2)"/>
++    <setting id="logoBaseUrl_4" type="text" label="30032" default="" visible="eq(-2,1)+gt(-93,2)"/>
++    <setting id="logoFileNameFormat_4" type="text" label="30056" default="%s" visible="gt(-94,2)"/>
++    <setting id="logoFromEpg_4" type="enum" label="30041" default="0" lvalues="30042|30043|30044" visible="gt(-95,2)"/>
++    
++    <setting type="sep" visible="gt(-96,2)"/>
++    <!-- _____________________________________________________________________________ -->
++    
++    <!-- _______________________________ Source 5 _____________________________________ -->
++    <setting label="" type="lsep" visible="gt(-97,3)"/>
++    <setting label="$ADDON[pvr.iptvsimple 30052] 5" type="lsep" visible="gt(-98,3)"/>
++    <setting type="sep" visible="gt(-99,3)"/>
++    
++    <!-- Channels list -->
++    <setting label="30053" type="lsep" visible="gt(-100,3)"/> 
++    <setting id="m3uPathType_5" type="enum" label="30000" lvalues="30001|30002" default="1" visible="gt(-101,3)"/>
++    <setting id="m3uPath_5" type="file" label="30011" default="" visible="eq(-1,0)+gt(-102,3)"/>
++    <setting id="m3uUrl_5" type="text" label="30012" default="" visible="eq(-2,1)+gt(-103,3)"/>
++    <setting id="m3uCache_5" type="bool" label="30025" default="true" visible="eq(-3,1)+gt(-104,3)"/>
++    <setting id="groupNameFormat_5" type="text" label="30054" default="%s" visible="gt(-105,3)"/>
++    <setting id="channelNameFormat_5" type="text" label="30055" default="%s" visible="gt(-106,3)"/>
++    
++    <!-- EPG -->
++    <setting label="30020" type="lsep" visible="gt(-107,3)"/>
++    <setting id="epgPathType_5" type="enum" label="30000" lvalues="30001|30002" default="1" visible="gt(-108,3)"/>
++    <setting id="epgPath_5" type="file" label="30021" default="" visible="eq(-1,0)+gt(-109,3)"/>
++    <setting id="epgUrl_5" type="text" label="30022" default="" visible="eq(-2,1)+gt(-110,3)"/>
++    <setting id="epgCache_5" type="bool" label="30026" default="true" visible="eq(-3,1)+gt(-111,3)"/>
++    <setting id="epgTimeShift_5" type="slider" label="30024" default="0" range="-12,.5,12" option="float" visible="gt(-112,3)"/>
++    <setting id="epgTSOverride_5" type="bool" label="30023" default="false" visible="gt(-113,3)"/>
++    
++    <!-- Logos -->
++    <setting label="30030" type="lsep" visible="gt(-114,3)"/>
++    <setting id="logoPathType_5" type="enum" label="30000" lvalues="30001|30002" default="1" visible="gt(-115,3)"/>
++    <setting id="logoPath_5" type="folder" label="30031" default="" visible="eq(-1,0)+gt(-116,3)"/>
++    <setting id="logoBaseUrl_5" type="text" label="30032" default="" visible="eq(-2,1)+gt(-117,3)"/>
++    <setting id="logoFileNameFormat_5" type="text" label="30056" default="%s" visible="gt(-118,3)"/>
++    <setting id="logoFromEpg_5" type="enum" label="30041" default="0" lvalues="30042|30043|30044" visible="gt(-119,3)"/>
++    
++    <setting type="sep" visible="gt(-120,3)"/>
++    <!-- _____________________________________________________________________________ -->
++    
++    <!-- _______________________________ Source 6 _____________________________________ -->
++    <setting label="" type="lsep" visible="gt(-121,4)"/>
++    <setting label="$ADDON[pvr.iptvsimple 30052] 6" type="lsep" visible="gt(-122,4)"/>
++    <setting type="sep" visible="gt(-123,4)"/>
++    
++    <!-- Channels list -->
++    <setting label="30053" type="lsep" visible="gt(-124,4)"/> 
++    <setting id="m3uPathType_6" type="enum" label="30000" lvalues="30001|30002" default="1" visible="gt(-125,4)"/>
++    <setting id="m3uPath_6" type="file" label="30011" default="" visible="eq(-1,0)+gt(-126,4)"/>
++    <setting id="m3uUrl_6" type="text" label="30012" default="" visible="eq(-2,1)+gt(-127,4)"/>
++    <setting id="m3uCache_6" type="bool" label="30025" default="true" visible="eq(-3,1)+gt(-128,4)"/>
++    <setting id="groupNameFormat_6" type="text" label="30054" default="%s" visible="gt(-129,4)"/>
++    <setting id="channelNameFormat_6" type="text" label="30055" default="%s" visible="gt(-130,4)"/>
++    
++    <!-- EPG -->
++    <setting label="30020" type="lsep" visible="gt(-131,4)"/>
++    <setting id="epgPathType_6" type="enum" label="30000" lvalues="30001|30002" default="1" visible="gt(-132,4)"/>
++    <setting id="epgPath_6" type="file" label="30021" default="" visible="eq(-1,0)+gt(-133,4)"/>
++    <setting id="epgUrl_6" type="text" label="30022" default="" visible="eq(-2,1)+gt(-134,4)"/>
++    <setting id="epgCache_6" type="bool" label="30026" default="true" visible="eq(-3,1)+gt(-135,4)"/>
++    <setting id="epgTimeShift_6" type="slider" label="30024" default="0" range="-12,.5,12" option="float" visible="gt(-136,4)"/>
++    <setting id="epgTSOverride_6" type="bool" label="30023" default="false" visible="gt(-137,4)"/>
++    
++    <!-- Logos -->
++    <setting label="30030" type="lsep" visible="gt(-138,4)"/>
++    <setting id="logoPathType_6" type="enum" label="30000" lvalues="30001|30002" default="1" visible="gt(-139,4)"/>
++    <setting id="logoPath_6" type="folder" label="30031" default="" visible="eq(-1,0)+gt(-140,4)"/>
++    <setting id="logoBaseUrl_6" type="text" label="30032" default="" visible="eq(-2,1)+gt(-141,4)"/>
++    <setting id="logoFileNameFormat_6" type="text" label="30056" default="%s" visible="gt(-142,4)"/>
++    <setting id="logoFromEpg_6" type="enum" label="30041" default="0" lvalues="30042|30043|30044" visible="gt(-143,4)"/>
++    
++    <setting type="sep" visible="gt(-144,4)"/>
++    <!-- _____________________________________________________________________________ -->
++    
++    <!-- _______________________________ Source 7 _____________________________________ -->
++    <setting label="" type="lsep" visible="gt(-145,5)"/>
++    <setting label="$ADDON[pvr.iptvsimple 30052] 7" type="lsep" visible="gt(-146,5)"/>
++    <setting type="sep" visible="gt(-147,5)"/>
++    
++    <!-- Channels list -->
++    <setting label="30053" type="lsep" visible="gt(-148,5)"/> 
++    <setting id="m3uPathType_7" type="enum" label="30000" lvalues="30001|30002" default="1" visible="gt(-149,5)"/>
++    <setting id="m3uPath_7" type="file" label="30011" default="" visible="eq(-1,0)+gt(-150,5)"/>
++    <setting id="m3uUrl_7" type="text" label="30012" default="" visible="eq(-2,1)+gt(-151,5)"/>
++    <setting id="m3uCache_7" type="bool" label="30025" default="true" visible="eq(-3,1)+gt(-152,5)"/>
++    <setting id="groupNameFormat_7" type="text" label="30054" default="%s" visible="gt(-153,5)"/>
++    <setting id="channelNameFormat_7" type="text" label="30055" default="%s" visible="gt(-154,5)"/>
++    
++    <!-- EPG -->
++    <setting label="30020" type="lsep" visible="gt(-155,5)"/>
++    <setting id="epgPathType_7" type="enum" label="30000" lvalues="30001|30002" default="1" visible="gt(-156,5)"/>
++    <setting id="epgPath_7" type="file" label="30021" default="" visible="eq(-1,0)+gt(-157,5)"/>
++    <setting id="epgUrl_7" type="text" label="30022" default="" visible="eq(-2,1)+gt(-158,5)"/>
++    <setting id="epgCache_7" type="bool" label="30026" default="true" visible="eq(-3,1)+gt(-159,5)"/>
++    <setting id="epgTimeShift_7" type="slider" label="30024" default="0" range="-12,.5,12" option="float" visible="gt(-160,5)"/>
++    <setting id="epgTSOverride_7" type="bool" label="30023" default="false" visible="gt(-161,5)"/>
++    
++    <!-- Logos -->
++    <setting label="30030" type="lsep" visible="gt(-162,5)"/>
++    <setting id="logoPathType_7" type="enum" label="30000" lvalues="30001|30002" default="1" visible="gt(-163,5)"/>
++    <setting id="logoPath_7" type="folder" label="30031" default="" visible="eq(-1,0)+gt(-164,5)"/>
++    <setting id="logoBaseUrl_7" type="text" label="30032" default="" visible="eq(-2,1)+gt(-165,5)"/>
++    <setting id="logoFileNameFormat_7" type="text" label="30056" default="%s" visible="gt(-166,5)"/>
++    <setting id="logoFromEpg_7" type="enum" label="30041" default="0" lvalues="30042|30043|30044" visible="gt(-167,5)"/>
++    
++    <setting type="sep" visible="gt(-168,5)"/>
++    <!-- _____________________________________________________________________________ -->
++    
++    <!-- _______________________________ Source 8 _____________________________________ -->
++    <setting label="" type="lsep" visible="gt(-169,6)"/>
++    <setting label="$ADDON[pvr.iptvsimple 30052] 8" type="lsep" visible="gt(-170,6)"/>
++    <setting type="sep" visible="gt(-171,6)"/>
++    
++    <!-- Channels list -->
++    <setting label="30053" type="lsep" visible="gt(-172,6)"/> 
++    <setting id="m3uPathType_8" type="enum" label="30000" lvalues="30001|30002" default="1" visible="gt(-173,6)"/>
++    <setting id="m3uPath_8" type="file" label="30011" default="" visible="eq(-1,0)+gt(-174,6)"/>
++    <setting id="m3uUrl_8" type="text" label="30012" default="" visible="eq(-2,1)+gt(-175,6)"/>
++    <setting id="m3uCache_8" type="bool" label="30025" default="true" visible="eq(-3,1)+gt(-176,6)"/>
++    <setting id="groupNameFormat_8" type="text" label="30054" default="%s" visible="gt(-177,6)"/>
++    <setting id="channelNameFormat_8" type="text" label="30055" default="%s" visible="gt(-178,6)"/>
++    
++    <!-- EPG -->
++    <setting label="30020" type="lsep" visible="gt(-179,6)"/>
++    <setting id="epgPathType_8" type="enum" label="30000" lvalues="30001|30002" default="1" visible="gt(-180,6)"/>
++    <setting id="epgPath_8" type="file" label="30021" default="" visible="eq(-1,0)+gt(-181,6)"/>
++    <setting id="epgUrl_8" type="text" label="30022" default="" visible="eq(-2,1)+gt(-182,6)"/>
++    <setting id="epgCache_8" type="bool" label="30026" default="true" visible="eq(-3,1)+gt(-183,6)"/>
++    <setting id="epgTimeShift_8" type="slider" label="30024" default="0" range="-12,.5,12" option="float" visible="gt(-184,6)"/>
++    <setting id="epgTSOverride_8" type="bool" label="30023" default="false" visible="gt(-185,6)"/>
++    
++    <!-- Logos -->
++    <setting label="30030" type="lsep" visible="gt(-186,6)"/>
++    <setting id="logoPathType_8" type="enum" label="30000" lvalues="30001|30002" default="1" visible="gt(-187,6)"/>
++    <setting id="logoPath_8" type="folder" label="30031" default="" visible="eq(-1,0)+gt(-188,6)"/>
++    <setting id="logoBaseUrl_8" type="text" label="30032" default="" visible="eq(-2,1)+gt(-189,6)"/>
++    <setting id="logoFileNameFormat_8" type="text" label="30056" default="%s" visible="gt(-190,6)"/>
++    <setting id="logoFromEpg_8" type="enum" label="30041" default="0" lvalues="30042|30043|30044" visible="gt(-191,6)"/>
++    
++    <setting type="sep" visible="gt(-192,6)"/>
++    <!-- _____________________________________________________________________________ -->
++    
++    <!-- _______________________________ Source 9 _____________________________________ -->
++    <setting label="" type="lsep" visible="gt(-193,7)"/>
++    <setting label="$ADDON[pvr.iptvsimple 30052] 9" type="lsep" visible="gt(-194,7)"/>
++    <setting type="sep" visible="gt(-195,7)"/>
++    
++    <!-- Channels list -->
++    <setting label="30053" type="lsep" visible="gt(-196,7)"/> 
++    <setting id="m3uPathType_9" type="enum" label="30000" lvalues="30001|30002" default="1" visible="gt(-197,7)"/>
++    <setting id="m3uPath_9" type="file" label="30011" default="" visible="eq(-1,0)+gt(-198,7)"/>
++    <setting id="m3uUrl_9" type="text" label="30012" default="" visible="eq(-2,1)+gt(-199,7)"/>
++    <setting id="m3uCache_9" type="bool" label="30025" default="true" visible="eq(-3,1)+gt(-200,7)"/>
++    <setting id="groupNameFormat_9" type="text" label="30054" default="%s" visible="gt(-201,7)"/>
++    <setting id="channelNameFormat_9" type="text" label="30055" default="%s" visible="gt(-202,7)"/>
++    
++    <!-- EPG -->
++    <setting label="30020" type="lsep" visible="gt(-203,7)"/>
++    <setting id="epgPathType_9" type="enum" label="30000" lvalues="30001|30002" default="1" visible="gt(-204,7)"/>
++    <setting id="epgPath_9" type="file" label="30021" default="" visible="eq(-1,0)+gt(-205,7)"/>
++    <setting id="epgUrl_9" type="text" label="30022" default="" visible="eq(-2,1)+gt(-206,7)"/>
++    <setting id="epgCache_9" type="bool" label="30026" default="true" visible="eq(-3,1)+gt(-207,7)"/>
++    <setting id="epgTimeShift_9" type="slider" label="30024" default="0" range="-12,.5,12" option="float" visible="gt(-208,7)"/>
++    <setting id="epgTSOverride_9" type="bool" label="30023" default="false" visible="gt(-209,7)"/>
++    
++    <!-- Logos -->
++    <setting label="30030" type="lsep" visible="gt(-210,7)"/>
++    <setting id="logoPathType_9" type="enum" label="30000" lvalues="30001|30002" default="1" visible="gt(-211,7)"/>
++    <setting id="logoPath_9" type="folder" label="30031" default="" visible="eq(-1,0)+gt(-212,7)"/>
++    <setting id="logoBaseUrl_9" type="text" label="30032" default="" visible="eq(-2,1)+gt(-213,7)"/>
++    <setting id="logoFileNameFormat_9" type="text" label="30056" default="%s" visible="gt(-214,7)"/>
++    <setting id="logoFromEpg_9" type="enum" label="30041" default="0" lvalues="30042|30043|30044" visible="gt(-215,7)"/>
++    
++    <setting type="sep" visible="gt(-216,7)"/>
++    <!-- _____________________________________________________________________________ -->
++    
++    <!-- _______________________________ Source 10 _____________________________________ -->
++    <setting label="" type="lsep" visible="gt(-217,8)"/>
++    <setting label="$ADDON[pvr.iptvsimple 30052] 10" type="lsep" visible="gt(-218,8)"/>
++    <setting type="sep" visible="gt(-219,8)"/>
++    
++    <!-- Channels list -->
++    <setting label="30053" type="lsep" visible="gt(-220,8)"/> 
++    <setting id="m3uPathType_10" type="enum" label="30000" lvalues="30001|30002" default="1" visible="gt(-221,8)"/>
++    <setting id="m3uPath_10" type="file" label="30011" default="" visible="eq(-1,0)+gt(-222,8)"/>
++    <setting id="m3uUrl_10" type="text" label="30012" default="" visible="eq(-2,1)+gt(-223,8)"/>
++    <setting id="m3uCache_10" type="bool" label="30025" default="true" visible="eq(-3,1)+gt(-224,8)"/>
++    <setting id="groupNameFormat_10" type="text" label="30054" default="%s" visible="gt(-225,8)"/>
++    <setting id="channelNameFormat_10" type="text" label="30055" default="%s" visible="gt(-226,8)"/>
++    
++    <!-- EPG -->
++    <setting label="30020" type="lsep" visible="gt(-227,8)"/>
++    <setting id="epgPathType_10" type="enum" label="30000" lvalues="30001|30002" default="1" visible="gt(-228,8)"/>
++    <setting id="epgPath_10" type="file" label="30021" default="" visible="eq(-1,0)+gt(-229,8)"/>
++    <setting id="epgUrl_10" type="text" label="30022" default="" visible="eq(-2,1)+gt(-230,8)"/>
++    <setting id="epgCache_10" type="bool" label="30026" default="true" visible="eq(-3,1)+gt(-231,8)"/>
++    <setting id="epgTimeShift_10" type="slider" label="30024" default="0" range="-12,.5,12" option="float" visible="gt(-232,8)"/>
++    <setting id="epgTSOverride_10" type="bool" label="30023" default="false" visible="gt(-233,8)"/>
++    
++    <!-- Logos -->
++    <setting label="30030" type="lsep" visible="gt(-234,8)"/>
++    <setting id="logoPathType_10" type="enum" label="30000" lvalues="30001|30002" default="1" visible="gt(-235,8)"/>
++    <setting id="logoPath_10" type="folder" label="30031" default="" visible="eq(-1,0)+gt(-236,8)"/>
++    <setting id="logoBaseUrl_10" type="text" label="30032" default="" visible="eq(-2,1)+gt(-237,8)"/>
++    <setting id="logoFileNameFormat_10" type="text" label="30056" default="%s" visible="gt(-238,8)"/>
++    <setting id="logoFromEpg_10" type="enum" label="30041" default="0" lvalues="30042|30043|30044" visible="gt(-239,8)"/>
++    
++    <setting type="sep" visible="gt(-240,8)"/>
++    <!-- _____________________________________________________________________________ -->
+ 
+-  <!-- EPG -->
+-  <category label="30020">
+-    <setting id="sep2" label="30020" type="lsep"/>
+-    <setting id="epgPathType" type="enum" label="30000" lvalues="30001|30002" default="1" />
+-    <setting id="epgPath" type="file" label="30021" default="" visible="eq(-1,0)"/>
+-    <setting id="epgUrl" type="text" label="30022" default="" visible="eq(-2,1)"/>
+-    <setting id="epgCache" type="bool" label="30026" default="true" visible="eq(-3,1)"/>
+-    <setting id="epgTimeShift" type="slider" label="30024" default="0" range="-12,.5,12" option="float"/>
+-    <setting id="epgTSOverride" type="bool" label="30023" default="false"/>
+-  </category>
+-
+-  <!-- Logos -->
+-  <category label="30030">
+-    <setting id="sep3" label="30030" type="lsep"/>
+-    <setting id="logoPathType" type="enum" label="30000" lvalues="30001|30002" default="1" />
+-    <setting id="logoPath" type="folder" label="30031" default="" visible="eq(-1,0)"/>
+-    <setting id="logoBaseUrl" type="text" label="30032" default="" visible="eq(-2,1)"/>
+-    <setting id="sep3" label="30040" type="lsep"/>
+-    <setting id="logoFromEpg" type="enum" label="30041" default="0" lvalues="30042|30043|30044"/>
+   </category>
+ </settings>
+diff --git a/src/PVRIptvData.cpp b/src/PVRIptvData.cpp
+index 9d68d3e..0dfdea7 100644
+--- a/src/PVRIptvData.cpp
++++ b/src/PVRIptvData.cpp
+@@ -34,6 +34,7 @@
+ 
+ #define M3U_START_MARKER        "#EXTM3U"
+ #define M3U_INFO_MARKER         "#EXTINF"
++#define TVG_INFO_URL_MARKER     "url-tvg="
+ #define TVG_INFO_ID_MARKER      "tvg-id="
+ #define TVG_INFO_NAME_MARKER    "tvg-name="
+ #define TVG_INFO_LOGO_MARKER    "tvg-logo="
+@@ -73,18 +74,10 @@ inline bool GetAttributeValue(const xml_node<Ch> * pNode, const char* strAttribu
+ 
+ PVRIptvData::PVRIptvData(void)
+ {
+-  m_strXMLTVUrl   = g_strTvgPath;
+-  m_strM3uUrl     = g_strM3UPath;
+-  m_strLogoPath   = g_strLogoPath;
+-  m_iEPGTimeShift = g_iEPGTimeShift;
+-  m_bTSOverride   = g_bTSOverride;
+   m_iLastStart    = 0;
+   m_iLastEnd      = 0;
+-
+-  m_channels.clear();
+-  m_groups.clear();
+-  m_epg.clear();
+-  m_genres.clear();
++  m_iStartNumber  = 1;
++  LoadSettings();
+ 
+   if (LoadPlayList())
+     XBMC->QueueNotification(QUEUE_INFO, "%d channels loaded.", m_channels.size());
+@@ -97,32 +90,216 @@ void *PVRIptvData::Process(void)
+ 
+ PVRIptvData::~PVRIptvData(void)
+ {
++  m_sources.clear();
+   m_channels.clear();
+   m_groups.clear();
+   m_epg.clear();
+   m_genres.clear();
+ }
+ 
+-bool PVRIptvData::LoadEPG(time_t iStart, time_t iEnd) 
++void PVRIptvData::LoadSettings() {
++  const char   *fmt = "%s_%i";
++  float         fShift;
++  char          nameBuffer[128];
++  char          valueBuffer[1024];
++  int           iPathType = 0;
++  int           iSourceCount = 1;
++
++  // Get number of configured sources
++  if (!XBMC->GetSetting("sourceCount", &iSourceCount))
++  {
++    XBMC->Log(LOG_NOTICE, "No sources configured");
++  }
++  if (iSourceCount <= 0)
++  {
++    iSourceCount = 1;
++  }
++  else
++  {
++    iSourceCount ++;
++  }
++
++  // Get start number
++  if (!XBMC->GetSetting("startNum", &m_iStartNumber))
++  {
++    m_iStartNumber = 1;
++  }
++
++  for (int i = 0; i <= iSourceCount; i++)
++  {
++    PVRIptvSource source;
++    source.iId = i;
++
++    // Get M3U settings
++    if (i != 0) // Source 0 has only default settings for EPG and logos.
++    {
++      sprintf(nameBuffer, fmt, "m3uPathType", i);
++      if (!XBMC->GetSetting(nameBuffer, &iPathType))
++      {
++        iPathType = 1;
++      }
++      if (iPathType)
++      {
++        sprintf(nameBuffer, fmt, "m3uUrl", i);
++        if (XBMC->GetSetting(nameBuffer, &valueBuffer))
++        {
++          source.strM3UPath = valueBuffer;
++        }
++        sprintf(nameBuffer, fmt, "m3uCache", i);
++        if (!XBMC->GetSetting(nameBuffer, &(source.bCacheM3U)))
++        {
++          source.bCacheM3U = true;
++        }
++      }
++      else
++      {
++        sprintf(nameBuffer, fmt, "m3uPath", i);
++        if (XBMC->GetSetting(nameBuffer, &valueBuffer))
++        {
++          source.strM3UPath = valueBuffer;
++        }
++        source.bCacheM3U = false;
++      }
++    }
++
++    // Get name formats
++    sprintf(nameBuffer, fmt, "groupNameFormat", i);
++    if (XBMC->GetSetting(nameBuffer, &valueBuffer))
++    {
++      source.strGroupNameFormat = valueBuffer;
++    }
++    else
++    {
++      source.strGroupNameFormat = "%s";
++    }
++    sprintf(nameBuffer, fmt, "channelNameFormat", i);
++    if (XBMC->GetSetting(nameBuffer, &valueBuffer))
++    {
++      source.strChannelNameFormat = valueBuffer;
++    }
++    else
++    {
++      source.strChannelNameFormat = "%s";
++    }
++    sprintf(nameBuffer, fmt, "logoFileNameFormat", i);
++    if (XBMC->GetSetting(nameBuffer, &valueBuffer))
++    {
++      source.strLogoFileNameFormat = valueBuffer;
++    }
++    else
++    {
++      source.strLogoFileNameFormat = "%s";
++    }
++
++    // Get EPG settings
++    sprintf(nameBuffer, fmt, "epgPathType", i);
++    if (!XBMC->GetSetting(nameBuffer, &iPathType))
++    {
++      iPathType = 1;
++    }
++    if (iPathType)
++    {
++      sprintf(nameBuffer, fmt, "epgUrl", i);
++      if (XBMC->GetSetting(nameBuffer, &valueBuffer))
++      {
++        source.strTvgPath = valueBuffer;
++      }
++      sprintf(nameBuffer, fmt, "epgCache", i);
++      if (!XBMC->GetSetting(nameBuffer, &(source.bCacheEPG)))
++      {
++        source.bCacheEPG = true;
++      }
++    }
++    else
++    {
++      sprintf(nameBuffer, fmt, "epgPath", i);
++      if (XBMC->GetSetting(nameBuffer, &valueBuffer))
++      {
++        source.strTvgPath = valueBuffer;
++      }
++      source.bCacheEPG = false;
++    }
++    sprintf(nameBuffer, fmt, "epgTimeShift", i);
++    if (XBMC->GetSetting(nameBuffer, &fShift))
++    {
++      source.iEPGTimeShift = (int)(fShift * 3600.0); // hours to seconds
++    }
++    else
++    {
++      source.iEPGTimeShift = 0;
++    }
++    sprintf(nameBuffer, fmt, "epgTSOverride", i);
++    if (!XBMC->GetSetting(nameBuffer, &(source.bTSOverride)))
++    {
++      source.bTSOverride = false;
++    }
++
++    // Get logos settings
++    sprintf(nameBuffer, fmt, "logoPathType", i);
++    if (!XBMC->GetSetting(nameBuffer, &iPathType))
++    {
++      iPathType = 1;
++    }
++    if (iPathType)
++    {
++      sprintf(nameBuffer, fmt, "logoBaseUrl", i);
++    }
++    else
++    {
++      sprintf(nameBuffer, fmt, "logoPath", i);
++    }
++    if (XBMC->GetSetting(nameBuffer, &valueBuffer))
++    {
++      source.strLogoPath = valueBuffer;
++    }
++
++    m_sources.push_back(source);
++  }
++}
++
++bool PVRIptvData::LoadEPG(time_t iStart, time_t iEnd)
+ {
+-  if (m_strXMLTVUrl.empty())
++  bool loaded      = false;
++  int iBroadCastId = 0;
++
++  // clear previously loaded epg
++  if (m_epg.size() > 0)
++  {
++    m_epg.clear();
++  }
++
++  for (int i = 0; i < m_sources.size(); i++)
++  {
++    if (LoadEPG(iStart, iEnd, m_sources.at(i), iBroadCastId))
++    {
++      loaded = true;
++    }
++  }
++
++  return loaded;
++}
++
++bool PVRIptvData::LoadEPG(time_t iStart, time_t iEnd, PVRIptvSource &source, int &iBroadCastId)
++{
++  if (source.strTvgPath.empty())
+   {
+-    XBMC->Log(LOG_NOTICE, "EPG file path is not configured. EPG not loaded.");
+     return false;
+   }
+ 
++  int iReaded = 0;
+   std::string data;
+   std::string decompressed;
+-  int iReaded = 0;
++  std::string strCachedName = StringUtils::Format(TVG_FILE_NAME_FORMAT, source.iId);;
++  XBMC->Log(LOG_NOTICE, "Loading EPG: %s", source.strTvgPath.c_str());
+ 
+   int iCount = 0;
+   while(iCount < 3) // max 3 tries
+   {
+-    if ((iReaded = GetCachedFileContents(TVG_FILE_NAME, m_strXMLTVUrl, data, g_bCacheEPG)) != 0) 
++    if ((iReaded = GetCachedFileContents(strCachedName, source.strTvgPath, data, source.bCacheEPG)) != 0)
+     {
+       break;
+     }
+-    XBMC->Log(LOG_ERROR, "Unable to load EPG file '%s':  file is missing or empty. :%dth try.", m_strXMLTVUrl.c_str(), ++iCount);
++    XBMC->Log(LOG_ERROR, "Unable to load EPG file '%s':  file is missing or empty. :%dth try.", source.strTvgPath.c_str(), ++iCount);
+     if (iCount < 3)
+     {
+       usleep(2 * 1000 * 1000); // sleep 2 sec before next try.
+@@ -131,7 +308,7 @@ bool PVRIptvData::LoadEPG(time_t iStart, time_t iEnd)
+   
+   if (iReaded == 0)
+   {
+-    XBMC->Log(LOG_ERROR, "Unable to load EPG file '%s':  file is missing or empty. After %d tries.", m_strXMLTVUrl.c_str(), iCount);
++    XBMC->Log(LOG_ERROR, "Unable to load EPG file '%s':  file is missing or empty. After %d tries.", source.strTvgPath.c_str(), iCount);
+     return false;
+   }
+ 
+@@ -142,7 +319,7 @@ bool PVRIptvData::LoadEPG(time_t iStart, time_t iEnd)
+   {
+     if (!GzipInflate(data, decompressed))
+     {
+-      XBMC->Log(LOG_ERROR, "Invalid EPG file '%s': unable to decompress file.", m_strXMLTVUrl.c_str());
++      XBMC->Log(LOG_ERROR, "Invalid EPG file '%s': unable to decompress file.", source.strTvgPath.c_str());
+       return false;
+     }
+     buffer = &(decompressed[0]);
+@@ -162,7 +339,7 @@ bool PVRIptvData::LoadEPG(time_t iStart, time_t iEnd)
+         buffer += 0x200; // RECORDSIZE = 512
+       else
+       {
+-        XBMC->Log(LOG_ERROR, "Invalid EPG file '%s': unable to parse file.", m_strXMLTVUrl.c_str());
++        XBMC->Log(LOG_ERROR, "Invalid EPG file '%s': unable to parse file.", source.strTvgPath.c_str());
+         return false;
+       }
+     }
+@@ -173,9 +350,11 @@ bool PVRIptvData::LoadEPG(time_t iStart, time_t iEnd)
+   {
+     xmlDoc.parse<0>(buffer);
+   } 
+-  catch(parse_error p) 
++  catch(parse_error &p)
+   {
+     XBMC->Log(LOG_ERROR, "Unable parse EPG XML: %s", p.what());
++    // Probably the cached file is corrupted - deleting it
++    XBMC->DeleteFile(GetUserFilePath(strCachedName).c_str());
+     return false;
+   }
+ 
+@@ -186,11 +365,6 @@ bool PVRIptvData::LoadEPG(time_t iStart, time_t iEnd)
+     return false;
+   }
+ 
+-  // clear previously loaded epg
+-  if (m_epg.size() > 0) 
+-    m_epg.clear();
+-
+-  int iBroadCastId = 0;
+   xml_node<> *pChannelNode = NULL;
+   for(pChannelNode = pRootElement->first_node("channel"); pChannelNode; pChannelNode = pChannelNode->next_sibling("channel"))
+   {
+@@ -204,6 +378,7 @@ bool PVRIptvData::LoadEPG(time_t iStart, time_t iEnd)
+       continue;
+ 
+     PVRIptvEpgChannel epgChannel;
++    epgChannel.iSourceId = source.iId;
+     epgChannel.strId = strId;
+     epgChannel.strName = strName;
+ 
+@@ -221,9 +396,10 @@ bool PVRIptvData::LoadEPG(time_t iStart, time_t iEnd)
+     return false;
+   }
+   
+-  int iMinShiftTime = m_iEPGTimeShift;
+-  int iMaxShiftTime = m_iEPGTimeShift;
+-  if (!m_bTSOverride)
++  int iMinShiftTime = source.iEPGTimeShift;
++  int iMaxShiftTime = source.iEPGTimeShift;
++
++  if (!source.bTSOverride)
+   {
+     iMinShiftTime = SECONDS_IN_DAY;
+     iMaxShiftTime = -SECONDS_IN_DAY;
+@@ -231,10 +407,10 @@ bool PVRIptvData::LoadEPG(time_t iStart, time_t iEnd)
+     std::vector<PVRIptvChannel>::iterator it;
+     for (it = m_channels.begin(); it < m_channels.end(); ++it)
+     {
+-      if (it->iTvgShift + m_iEPGTimeShift < iMinShiftTime)
+-        iMinShiftTime = it->iTvgShift + m_iEPGTimeShift;
+-      if (it->iTvgShift + m_iEPGTimeShift > iMaxShiftTime)
+-        iMaxShiftTime = it->iTvgShift + m_iEPGTimeShift;
++      if (it->iTvgShift + source.iEPGTimeShift < iMinShiftTime)
++        iMinShiftTime = it->iTvgShift + source.iEPGTimeShift;
++      if (it->iTvgShift + source.iEPGTimeShift > iMaxShiftTime)
++        iMaxShiftTime = it->iTvgShift + source.iEPGTimeShift;
+     }
+   }
+ 
+@@ -247,7 +423,7 @@ bool PVRIptvData::LoadEPG(time_t iStart, time_t iEnd)
+ 
+     if (NULL == epg || StringUtils::CompareNoCase(epg->strId, strId) != 0)
+     {
+-      if ((epg = FindEpg(strId)) == NULL)
++      if ((epg = FindEpg(strId, source.iId)) == NULL)
+         continue;
+     }
+ 
+@@ -285,26 +461,50 @@ bool PVRIptvData::LoadEPG(time_t iStart, time_t iEnd)
+   xmlDoc.clear();
+   LoadGenres();
+ 
+-  XBMC->Log(LOG_NOTICE, "EPG Loaded.");
++  XBMC->Log(LOG_NOTICE, "EPG Loaded: %s", source.strTvgPath.c_str());
+ 
+-  if (g_iEPGLogos > 0)
+-    ApplyChannelsLogosFromEPG();
++  if (source.iEPGLogos > 0)
++    ApplyChannelsLogosFromEPG(source);
+ 
+   return true;
+ }
+ 
+-bool PVRIptvData::LoadPlayList(void) 
++bool PVRIptvData::LoadPlayList(void)
+ {
+-  if (m_strM3uUrl.empty())
++  bool loaded        = false;
++  int iChannelIndex  = 0;
++  int iChannelNum    = m_iStartNumber;
++  int iUniqueGroupId = 0;
++
++  for (int i = 1; i < m_sources.size(); i++)
+   {
+-    XBMC->Log(LOG_NOTICE, "Playlist file path is not configured. Channels not loaded.");
++    if (LoadPlayList(m_sources.at(i), iChannelIndex, iChannelNum, iUniqueGroupId))
++    {
++      loaded = true;
++    }
++  }
++
++  XBMC->Log(LOG_NOTICE, "Loaded %d channels and %d groups.", m_channels.size(), m_groups.size());
++  ApplyChannelsLogos();
++  return loaded;
++}
++bool PVRIptvData::LoadPlayList(PVRIptvSource &source, int &iChannelIndex, int &iChannelNum, int &iUniqueGroupId)
++{
++  if (source.strM3UPath.empty())
++  {
++    XBMC->Log(LOG_NOTICE, "Playlist file path for source %i is not configured. Channels not loaded.", source.iId);
+     return false;
+   }
++  else
++  {
++    XBMC->Log(LOG_NOTICE, "Loading playlist: %s", source.strM3UPath.c_str());
++  }
+ 
+   std::string strPlaylistContent;
+-  if (!GetCachedFileContents(M3U_FILE_NAME, m_strM3uUrl, strPlaylistContent, g_bCacheM3U))
++
++  if (!GetCachedFileContents(StringUtils::Format(M3U_FILE_NAME_FORMAT, source.iId), source.strM3UPath, strPlaylistContent, source.bCacheM3U))
+   {
+-    XBMC->Log(LOG_ERROR, "Unable to load playlist file '%s':  file is missing or empty.", m_strM3uUrl.c_str());
++    XBMC->Log(LOG_ERROR, "Unable to load playlist file '%s':  file is missing or empty.", source.strM3UPath.c_str());
+     return false;
+   }
+ 
+@@ -312,11 +512,7 @@ bool PVRIptvData::LoadPlayList(void)
+ 
+   /* load channels */
+   bool bFirst = true;
+-
+-  int iChannelIndex     = 0;
+-  int iUniqueGroupId    = 0;
+   int iCurrentGroupId   = 0;
+-  int iChannelNum       = g_iStartNumber;
+   int iEPGTimeShift     = 0;
+ 
+   PVRIptvChannel tmpChannel;
+@@ -348,8 +544,15 @@ bool PVRIptvData::LoadPlayList(void)
+       }
+       if (StringUtils::Left(strLine, (int)strlen(M3U_START_MARKER)) == M3U_START_MARKER)
+       {
++        std::string strTvgUrl = ReadMarkerValue(strLine, TVG_INFO_URL_MARKER);
+         double fTvgShift = atof(ReadMarkerValue(strLine, TVG_INFO_SHIFT_MARKER).c_str());
+         iEPGTimeShift = (int) (fTvgShift * 3600.0);
++
++        if (source.strTvgPath.empty() && !strTvgUrl.empty()) {
++          source.bCacheEPG = true;
++          source.strTvgPath = strTvgUrl;
++        }
++
+         continue;
+       }
+       else
+@@ -386,9 +589,11 @@ bool PVRIptvData::LoadPlayList(void)
+         strTvgId      = ReadMarkerValue(strInfoLine, TVG_INFO_ID_MARKER);
+         strTvgName    = ReadMarkerValue(strInfoLine, TVG_INFO_NAME_MARKER);
+         strTvgLogo    = ReadMarkerValue(strInfoLine, TVG_INFO_LOGO_MARKER);
+-        strGroupName  = ReadMarkerValue(strInfoLine, GROUP_NAME_MARKER);
+         strRadio      = ReadMarkerValue(strInfoLine, RADIO_MARKER);
+         fTvgShift     = atof(ReadMarkerValue(strInfoLine, TVG_INFO_SHIFT_MARKER).c_str());
++        strGroupName  = ReadMarkerValue(strInfoLine, GROUP_NAME_MARKER);
++        strGroupName = StringUtils::Format(source.strGroupNameFormat.c_str(), XBMC->UnknownToUTF8(strGroupName.c_str()));
++        strGroupName = StringUtils::Format(m_sources.at(0).strGroupNameFormat.c_str(), strGroupName.c_str());
+ 
+         if (strTvgId.empty())
+         {
+@@ -415,8 +620,6 @@ bool PVRIptvData::LoadPlayList(void)
+ 
+         if (!strGroupName.empty())
+         {
+-          strGroupName = XBMC->UnknownToUTF8(strGroupName.c_str());
+-
+           PVRIptvChannelGroup * pGroup;
+           if ((pGroup = FindGroup(strGroupName)) == NULL)
+           {
+@@ -439,6 +642,7 @@ bool PVRIptvData::LoadPlayList(void)
+     {
+       PVRIptvChannel channel;
+       channel.iUniqueId         = GetChannelId(tmpChannel.strChannelName.c_str(), strLine.c_str());
++      channel.iSourceId         = source.iId;
+       channel.iChannelNumber    = iChannelNum++;
+       channel.strTvgId          = tmpChannel.strTvgId;
+       channel.strChannelName    = tmpChannel.strChannelName;
+@@ -449,6 +653,9 @@ bool PVRIptvData::LoadPlayList(void)
+       channel.strStreamURL      = strLine;
+       channel.iEncryptionSystem = 0;
+ 
++      tmpChannel.strChannelName = StringUtils::Format(source.strChannelNameFormat.c_str(), tmpChannel.strChannelName.c_str());
++      channel.strChannelDisplayName = StringUtils::Format(m_sources.at(0).strChannelNameFormat.c_str(), tmpChannel.strChannelName.c_str());
++
+       if (iCurrentGroupId > 0) 
+       {
+         channel.bRadio = m_groups.at(iCurrentGroupId - 1).bRadio;
+@@ -471,13 +678,10 @@ bool PVRIptvData::LoadPlayList(void)
+ 
+   if (m_channels.size() == 0)
+   {
+-    XBMC->Log(LOG_ERROR, "Unable to load channels from file '%s':  file is corrupted.", m_strM3uUrl.c_str());
++    XBMC->Log(LOG_ERROR, "Unable to load channels from file '%s':  file is corrupted.", source.strM3UPath.c_str());
+     return false;
+   }
+ 
+-  ApplyChannelsLogos();
+-
+-  XBMC->Log(LOG_NOTICE, "Loaded %d channels.", m_channels.size());
+   return true;
+ }
+ 
+@@ -508,7 +712,7 @@ bool PVRIptvData::LoadGenres(void)
+   {
+     xmlDoc.parse<0>(buffer);
+   }
+-  catch (parse_error p)
++  catch (parse_error &p)
+   {
+     return false;
+   }
+@@ -560,7 +764,7 @@ PVR_ERROR PVRIptvData::GetChannels(ADDON_HANDLE handle, bool bRadio)
+       xbmcChannel.iUniqueId         = channel.iUniqueId;
+       xbmcChannel.bIsRadio          = channel.bRadio;
+       xbmcChannel.iChannelNumber    = channel.iChannelNumber;
+-      strncpy(xbmcChannel.strChannelName, channel.strChannelName.c_str(), sizeof(xbmcChannel.strChannelName) - 1);
++      strncpy(xbmcChannel.strChannelName, channel.strChannelDisplayName.c_str(), sizeof(xbmcChannel.strChannelName) - 1);
+       strncpy(xbmcChannel.strStreamURL, channel.strStreamURL.c_str(), sizeof(xbmcChannel.strStreamURL) - 1);
+       xbmcChannel.iEncryptionSystem = channel.iEncryptionSystem;
+       strncpy(xbmcChannel.strIconPath, channel.strLogoPath.c_str(), sizeof(xbmcChannel.strIconPath) - 1);
+@@ -580,13 +784,14 @@ bool PVRIptvData::GetChannel(const PVR_CHANNEL &channel, PVRIptvChannel &myChann
+     PVRIptvChannel &thisChannel = m_channels.at(iChannelPtr);
+     if (thisChannel.iUniqueId == (int) channel.iUniqueId)
+     {
+-      myChannel.iUniqueId         = thisChannel.iUniqueId;
+-      myChannel.bRadio            = thisChannel.bRadio;
+-      myChannel.iChannelNumber    = thisChannel.iChannelNumber;
+-      myChannel.iEncryptionSystem = thisChannel.iEncryptionSystem;
+-      myChannel.strChannelName    = thisChannel.strChannelName;
+-      myChannel.strLogoPath       = thisChannel.strLogoPath;
+-      myChannel.strStreamURL      = thisChannel.strStreamURL;
++      myChannel.iUniqueId             = thisChannel.iUniqueId;
++      myChannel.bRadio                = thisChannel.bRadio;
++      myChannel.iChannelNumber        = thisChannel.iChannelNumber;
++      myChannel.iEncryptionSystem     = thisChannel.iEncryptionSystem;
++      myChannel.strChannelName        = thisChannel.strChannelName;
++      myChannel.strChannelDisplayName = thisChannel.strChannelDisplayName;
++      myChannel.strLogoPath           = thisChannel.strLogoPath;
++      myChannel.strStreamURL          = thisChannel.strStreamURL;
+ 
+       return true;
+     }
+@@ -670,7 +875,8 @@ PVR_ERROR PVRIptvData::GetEPGForChannel(ADDON_HANDLE handle, const PVR_CHANNEL &
+     if ((epg = FindEpgForChannel(*myChannel)) == NULL || epg->epg.size() == 0)
+       return PVR_ERROR_NO_ERROR;
+ 
+-    int iShift = m_bTSOverride ? m_iEPGTimeShift : myChannel->iTvgShift + m_iEPGTimeShift;
++    PVRIptvSource &source = m_sources.at(myChannel->iSourceId);
++    int iShift = source.bTSOverride ? source.iEPGTimeShift : myChannel->iTvgShift + source.iEPGTimeShift;
+ 
+     std::vector<PVRIptvEpgEntry>::iterator myTag;
+     for (myTag = epg->epg.begin(); myTag < epg->epg.end(); ++myTag)
+@@ -798,12 +1004,12 @@ PVRIptvChannelGroup * PVRIptvData::FindGroup(const std::string &strName)
+   return NULL;
+ }
+ 
+-PVRIptvEpgChannel * PVRIptvData::FindEpg(const std::string &strId)
++PVRIptvEpgChannel * PVRIptvData::FindEpg(const std::string &strId, int iSourceId)
+ {
+   std::vector<PVRIptvEpgChannel>::iterator it;
+   for(it = m_epg.begin(); it < m_epg.end(); ++it)
+   {
+-    if (StringUtils::CompareNoCase(it->strId, strId) == 0)
++    if ((it->iSourceId == iSourceId) && (StringUtils::CompareNoCase(it->strId, strId) == 0))
+       return &*it;
+   }
+ 
+@@ -812,23 +1018,52 @@ PVRIptvEpgChannel * PVRIptvData::FindEpg(const std::string &strId)
+ 
+ PVRIptvEpgChannel * PVRIptvData::FindEpgForChannel(PVRIptvChannel &channel)
+ {
++  PVRIptvEpgChannel * epg = NULL;
+   std::vector<PVRIptvEpgChannel>::iterator it;
+   for(it = m_epg.begin(); it < m_epg.end(); ++it)
+   {
+     if (it->strId == channel.strTvgId)
+-      return &*it;
++    {
++      if (it->iSourceId == channel.iSourceId)
++      {
++        return &*it;
++      }
++      else if (it->iSourceId == 0)
++      {
++        epg = &*it;
++      }
++    }
+ 
+     std::string strName = it->strName;
+     StringUtils::Replace(strName, ' ', '_');
++    
+     if (strName == channel.strTvgName
+       || it->strName == channel.strTvgName)
+-      return &*it;
++    {
++      if (it->iSourceId == channel.iSourceId)
++      {
++        return &*it;
++      }
++      else if (it->iSourceId == 0)
++      {
++        epg = &*it;
++      }
++    }
+ 
+     if (it->strName == channel.strChannelName)
+-      return &*it;
++    {
++      if (it->iSourceId == channel.iSourceId)
++      {
++        return &*it;
++      }
++      else if (it->iSourceId == 0)
++      {
++        epg = &*it;
++      }
++    }
+   }
+ 
+-  return NULL;
++  return epg;
+ }
+ 
+ bool PVRIptvData::FindEpgGenre(const std::string& strGenre, int& iType, int& iSubType)
+@@ -968,38 +1203,58 @@ int PVRIptvData::GetCachedFileContents(const std::string &strCachedName, const s
+ 
+ void PVRIptvData::ApplyChannelsLogos()
+ {
++  std::string fileName;
++  PVRIptvSource defaultSource = m_sources.at(0);
+   std::vector<PVRIptvChannel>::iterator channel;
++
+   for(channel = m_channels.begin(); channel < m_channels.end(); ++channel)
+   {
+-    if (!channel->strTvgLogo.empty())
++    PVRIptvSource &source = m_sources.at(channel->iSourceId);
++
++    if (channel->strTvgLogo.empty()) {
++      channel->strLogoPath = "";
++    }
++    else if (channel->strTvgLogo.find("://") != std::string::npos)
+     {
+-      if (!m_strLogoPath.empty() 
+-        // special proto
+-        && channel->strTvgLogo.find("://") == std::string::npos)
+-        channel->strLogoPath = PathCombine(m_strLogoPath, channel->strTvgLogo);
+-      else
+-        channel->strLogoPath = channel->strTvgLogo;
++      channel->strLogoPath = channel->strTvgLogo.c_str();
++    }
++    else if (!source.strLogoPath.empty())
++    {
++      fileName = StringUtils::Format(source.strLogoFileNameFormat.c_str(), channel->strTvgLogo.c_str());
++      channel->strLogoPath = PathCombine(source.strLogoPath, fileName.c_str());
++    }
++    else if (!defaultSource.strLogoPath.empty())
++    {
++      fileName = StringUtils::Format(defaultSource.strLogoFileNameFormat.c_str(), channel->strTvgLogo.c_str());
++      channel->strLogoPath = PathCombine(defaultSource.strLogoPath, fileName.c_str());
++    }
++    else
++    {
++      channel->strLogoPath = channel->strTvgLogo.c_str();
+     }
+   }
+ }
+ 
+-void PVRIptvData::ApplyChannelsLogosFromEPG()
++void PVRIptvData::ApplyChannelsLogosFromEPG(PVRIptvSource &source)
+ {
+   bool bUpdated = false;
+ 
+   std::vector<PVRIptvChannel>::iterator channel;
+   for (channel = m_channels.begin(); channel < m_channels.end(); ++channel)
+   {
++    if (channel->iSourceId != source.iId)
++      continue;
++
+     PVRIptvEpgChannel *epg;
+     if ((epg = FindEpgForChannel(*channel)) == NULL || epg->strIcon.empty())
+       continue;
+ 
+     // 1 - prefer logo from playlist
+-    if (!channel->strLogoPath.empty() && g_iEPGLogos == 1)
++    if (!channel->strLogoPath.empty() && source.iEPGLogos == 1)
+       continue;
+ 
+     // 2 - prefer logo from epg
+-    if (!epg->strIcon.empty() && g_iEPGLogos == 2)
++    if (!epg->strIcon.empty() && source.iEPGLogos == 2)
+     {
+       channel->strLogoPath = epg->strIcon;
+       bUpdated = true;
+@@ -1010,51 +1265,6 @@ void PVRIptvData::ApplyChannelsLogosFromEPG()
+     PVR->TriggerChannelUpdate();
+ }
+ 
+-void PVRIptvData::ReaplyChannelsLogos(const char * strNewPath)
+-{
+-  if (strlen(strNewPath) > 0)
+-  {
+-    m_strLogoPath = strNewPath;
+-    ApplyChannelsLogos();
+-
+-    PVR->TriggerChannelUpdate();
+-    PVR->TriggerChannelGroupsUpdate();
+-  }
+-}
+-
+-void PVRIptvData::ReloadEPG(const char * strNewPath)
+-{
+-  if (strNewPath != m_strXMLTVUrl)
+-  {
+-    m_strXMLTVUrl = strNewPath;
+-    // TODO clear epg for all channels
+-
+-    if (LoadEPG(m_iLastStart, m_iLastEnd))
+-    {
+-      for(unsigned int iChannelPtr = 0, max = m_channels.size(); iChannelPtr < max; iChannelPtr++)
+-      {
+-        PVRIptvChannel &myChannel = m_channels.at(iChannelPtr);
+-        PVR->TriggerEpgUpdate(myChannel.iUniqueId);
+-      }
+-    }
+-  }
+-}
+-
+-void PVRIptvData::ReloadPlayList(const char * strNewPath)
+-{
+-  if (strNewPath != m_strM3uUrl)
+-  {
+-    m_strM3uUrl = strNewPath;
+-    m_channels.clear();
+-
+-    if (LoadPlayList())
+-    {
+-      PVR->TriggerChannelUpdate();
+-      PVR->TriggerChannelGroupsUpdate();
+-    }
+-  }
+-}
+-
+ std::string PVRIptvData::ReadMarkerValue(std::string &strLine, const char* strMarkerName)
+ {
+   int iMarkerStart = (int) strLine.find(strMarkerName);
+diff --git a/src/PVRIptvData.h b/src/PVRIptvData.h
+index 2149297..50a0799 100644
+--- a/src/PVRIptvData.h
++++ b/src/PVRIptvData.h
+@@ -28,6 +28,22 @@
+ #include "client.h"
+ #include "platform/threads/threads.h"
+ 
++struct PVRIptvSource
++{
++  int         iId;
++  int         iEPGTimeShift;
++  int         iEPGLogos;
++  bool        bCacheM3U;
++  bool        bCacheEPG;
++  bool        bTSOverride;
++  std::string  strM3UPath;
++  std::string  strTvgPath;
++  std::string  strLogoPath;
++  std::string  strGroupNameFormat;
++  std::string  strChannelNameFormat;
++  std::string  strLogoFileNameFormat;
++};
++
+ struct PVRIptvEpgEntry
+ {
+   int         iBroadcastId;
+@@ -45,6 +61,7 @@ struct PVRIptvEpgEntry
+ 
+ struct PVRIptvEpgChannel
+ {
++  int                          iSourceId;
+   std::string                  strId;
+   std::string                  strName;
+   std::string                  strIcon;
+@@ -55,10 +72,12 @@ struct PVRIptvChannel
+ {
+   bool        bRadio;
+   int         iUniqueId;
++  int         iSourceId;
+   int         iChannelNumber;
+   int         iEncryptionSystem;
+   int         iTvgShift;
+   std::string strChannelName;
++  std::string strChannelDisplayName;
+   std::string strLogoPath;
+   std::string strStreamURL;
+   std::string strTvgId;
+@@ -94,9 +113,6 @@ class PVRIptvData : public PLATFORM::CThread
+   virtual PVR_ERROR GetChannelGroups(ADDON_HANDLE handle, bool bRadio);
+   virtual PVR_ERROR GetChannelGroupMembers(ADDON_HANDLE handle, const PVR_CHANNEL_GROUP &group);
+   virtual PVR_ERROR GetEPGForChannel(ADDON_HANDLE handle, const PVR_CHANNEL &channel, time_t iStart, time_t iEnd);
+-  virtual void      ReaplyChannelsLogos(const char * strNewPath);
+-  virtual void      ReloadPlayList(const char * strNewPath);
+-  virtual void      ReloadEPG(const char * strNewPath);
+ 
+ protected:
+   virtual bool                 LoadPlayList(void);
+@@ -105,7 +121,7 @@ class PVRIptvData : public PLATFORM::CThread
+   virtual int                  GetFileContents(std::string& url, std::string &strContent);
+   virtual PVRIptvChannel*      FindChannel(const std::string &strId, const std::string &strName);
+   virtual PVRIptvChannelGroup* FindGroup(const std::string &strName);
+-  virtual PVRIptvEpgChannel*   FindEpg(const std::string &strId);
++  virtual PVRIptvEpgChannel*   FindEpg(const std::string &strId, int iSourceId);
+   virtual PVRIptvEpgChannel*   FindEpgForChannel(PVRIptvChannel &channel);
+   virtual bool                 FindEpgGenre(const std::string& strGenre, int& iType, int& iSubType);
+   virtual int                  ParseDateTime(std::string& strDate, bool iDateFormat = true);
+@@ -113,7 +129,7 @@ class PVRIptvData : public PLATFORM::CThread
+   virtual int                  GetCachedFileContents(const std::string &strCachedName, const std::string &strFilePath, 
+                                                      std::string &strContent, const bool bUseCache = false);
+   virtual void                 ApplyChannelsLogos();
+-  virtual void                 ApplyChannelsLogosFromEPG();
++  virtual void                 ApplyChannelsLogosFromEPG(PVRIptvSource &source);
+   virtual std::string          ReadMarkerValue(std::string &strLine, const char * strMarkerName);
+   virtual int                  GetChannelId(const char * strChannelName, const char * strStreamUrl);
+ 
+@@ -121,15 +137,16 @@ class PVRIptvData : public PLATFORM::CThread
+   virtual void *Process(void);
+ 
+ private:
+-  bool                              m_bTSOverride;
+-  int                               m_iEPGTimeShift;
+   int                               m_iLastStart;
+   int                               m_iLastEnd;
+-  std::string                       m_strXMLTVUrl;
+-  std::string                       m_strM3uUrl;
+-  std::string                       m_strLogoPath;
++  int                               m_iStartNumber;
++  std::vector<PVRIptvSource>        m_sources;
+   std::vector<PVRIptvChannelGroup>  m_groups;
+   std::vector<PVRIptvChannel>       m_channels;
+   std::vector<PVRIptvEpgChannel>    m_epg;
+   std::vector<PVRIptvEpgGenre>      m_genres;
++  
++  void LoadSettings();
++  bool LoadPlayList(PVRIptvSource &source, int &iChannelIndex, int &iChannelNum, int &iUniqueGroupId);
++  bool LoadEPG(time_t iStart, time_t iEnd, PVRIptvSource &source, int &iBroadCastId);
+ };
+diff --git a/src/client.cpp b/src/client.cpp
+index 84c2aa1..14330f9 100644
+--- a/src/client.cpp
++++ b/src/client.cpp
+@@ -50,16 +50,6 @@ std::string g_strClientPath = "";
+ CHelper_libXBMC_addon *XBMC = NULL;
+ CHelper_libXBMC_pvr   *PVR  = NULL;
+ 
+-std::string g_strTvgPath    = "";
+-std::string g_strM3UPath    = "";
+-std::string g_strLogoPath   = "";
+-int         g_iEPGTimeShift = 0;
+-int         g_iStartNumber  = 1;
+-bool        g_bTSOverride   = true;
+-bool        g_bCacheM3U     = false;
+-bool        g_bCacheEPG     = false;
+-int         g_iEPGLogos     = 0;
+-
+ extern std::string PathCombine(const std::string &strPath, const std::string &strFileName)
+ {
+   std::string strResult = strPath;
+@@ -91,79 +81,6 @@ extern "C" {
+ 
+ void ADDON_ReadSettings(void)
+ {
+-  char buffer[1024];
+-  int iPathType = 0;
+-  if (!XBMC->GetSetting("m3uPathType", &iPathType)) 
+-  {
+-    iPathType = 1;
+-  }
+-  if (iPathType)
+-  {
+-    if (XBMC->GetSetting("m3uUrl", &buffer)) 
+-    {
+-      g_strM3UPath = buffer;
+-    }
+-    if (!XBMC->GetSetting("m3uCache", &g_bCacheM3U))
+-    {
+-      g_bCacheM3U = true;
+-    }
+-  }
+-  else
+-  {
+-    if (XBMC->GetSetting("m3uPath", &buffer)) 
+-    {
+-      g_strM3UPath = buffer;
+-    }
+-    g_bCacheM3U = false;
+-  }
+-  if (!XBMC->GetSetting("startNum", &g_iStartNumber)) 
+-  {
+-    g_iStartNumber = 1;
+-  }
+-  if (!XBMC->GetSetting("epgPathType", &iPathType)) 
+-  {
+-    iPathType = 1;
+-  }
+-  if (iPathType)
+-  {
+-    if (XBMC->GetSetting("epgUrl", &buffer)) 
+-    {
+-      g_strTvgPath = buffer;
+-    }
+-    if (!XBMC->GetSetting("epgCache", &g_bCacheEPG))
+-    {
+-      g_bCacheEPG = true;
+-    }
+-  }
+-  else
+-  {
+-    if (XBMC->GetSetting("epgPath", &buffer)) 
+-    {
+-      g_strTvgPath = buffer;
+-    }
+-    g_bCacheEPG = false;
+-  }
+-  float fShift;
+-  if (XBMC->GetSetting("epgTimeShift", &fShift))
+-  {
+-    g_iEPGTimeShift = (int)(fShift * 3600.0); // hours to seconds
+-  }
+-  if (!XBMC->GetSetting("epgTSOverride", &g_bTSOverride))
+-  {
+-    g_bTSOverride = true;
+-  }
+-  if (!XBMC->GetSetting("logoPathType", &iPathType)) 
+-  {
+-    iPathType = 1;
+-  }
+-  if (XBMC->GetSetting(iPathType ? "logoBaseUrl" : "logoPath", &buffer)) 
+-  {
+-    g_strLogoPath = buffer;
+-  }
+-
+-  // Logos from EPG
+-  if (!XBMC->GetSetting("logoFromEpg", &g_iEPGLogos))
+-    g_iEPGLogos = 0;
+ }
+ 
+ ADDON_STATUS ADDON_Create(void* hdl, void* props)
+@@ -238,26 +155,45 @@ unsigned int ADDON_GetSettings(ADDON_StructSetting ***sSet)
+ 
+ ADDON_STATUS ADDON_SetSetting(const char *settingName, const void *settingValue)
+ {
+-  // reset cache and restart addon 
++  // reset cache and restart addon
++  char nameBuffer[128];
+ 
+-  std::string strFile = GetUserFilePath(M3U_FILE_NAME);
+-  if (XBMC->FileExists(strFile.c_str(), false))
++  for (int i = 0;; i++)
+   {
++    sprintf(nameBuffer, M3U_FILE_NAME_FORMAT, i);
++    std::string strFile = GetUserFilePath(nameBuffer);
++
++    if (XBMC->FileExists(strFile.c_str(), false))
++    {
+ #ifdef TARGET_WINDOWS
+-    DeleteFile(strFile.c_str());
++      DeleteFile(strFile.c_str());
+ #else
+-    XBMC->DeleteFile(strFile.c_str());
++      XBMC->DeleteFile(strFile.c_str());
+ #endif
++    }
++    else
++    {
++      break;
++    }
+   }
+ 
+-  strFile = GetUserFilePath(TVG_FILE_NAME);
+-  if (XBMC->FileExists(strFile.c_str(), false))
++  for (int i = 0;; i++)
+   {
++    sprintf(nameBuffer, TVG_FILE_NAME_FORMAT, i);
++    std::string strFile = GetUserFilePath(nameBuffer);
++
++    if (XBMC->FileExists(strFile.c_str(), false))
++    {
+ #ifdef TARGET_WINDOWS
+-    DeleteFile(strFile.c_str());
++      DeleteFile(strFile.c_str());
+ #else
+-    XBMC->DeleteFile(strFile.c_str());
++      XBMC->DeleteFile(strFile.c_str());
+ #endif
++    }
++    else
++    {
++      break;
++    }
+   }
+ 
+   return ADDON_STATUS_NEED_RESTART;
+@@ -320,7 +256,7 @@ const char *GetBackendName(void)
+ 
+ const char *GetBackendVersion(void)
+ {
+-  static std::string strBackendVersion = XBMC_PVR_API_VERSION;
++  static std::string strBackendVersion = PVR_CLIENT_VERSION;
+   return strBackendVersion.c_str();
+ }
+ 
+@@ -436,9 +372,12 @@ PVR_ERROR SignalStatus(PVR_SIGNAL_STATUS &signalStatus)
+   return PVR_ERROR_NO_ERROR;
+ }
+ 
++bool CanPauseStream(void) {
++  return true;
++}
++
+ /** UNUSED API FUNCTIONS */
+ const char * GetLiveStreamURL(const PVR_CHANNEL &channel)  { return ""; }
+-bool CanPauseStream(void) { return false; }
+ int GetRecordingsAmount(bool deleted) { return -1; }
+ PVR_ERROR GetRecordings(ADDON_HANDLE handle, bool deleted) { return PVR_ERROR_NOT_IMPLEMENTED; }
+ PVR_ERROR OpenDialogChannelScan(void) { return PVR_ERROR_NOT_IMPLEMENTED; }
+diff --git a/src/client.h b/src/client.h
+index 07e5899..bdefeab 100644
+--- a/src/client.h
++++ b/src/client.h
+@@ -26,8 +26,9 @@
+ #include "kodi/libXBMC_addon.h"
+ #include "kodi/libXBMC_pvr.h"
+ 
+-#define M3U_FILE_NAME          "iptv.m3u.cache"
+-#define TVG_FILE_NAME          "xmltv.xml.cache"
++#define PVR_CLIENT_VERSION     "2.0.0"
++#define M3U_FILE_NAME_FORMAT   "iptv_%i.m3u.cache"
++#define TVG_FILE_NAME_FORMAT   "xmltv_%i.xml.cache"
+ 
+ /*!
+  * @brief PVR macros for string exchange
+@@ -41,16 +42,6 @@ extern std::string                   g_strClientPath;
+ extern ADDON::CHelper_libXBMC_addon *XBMC;
+ extern CHelper_libXBMC_pvr          *PVR;
+ 
+-extern std::string g_strM3UPath;
+-extern std::string g_strTvgPath;
+-extern std::string g_strLogoPath;
+-extern int         g_iEPGTimeShift;
+-extern int         g_iStartNumber;
+-extern bool        g_bTSOverride;
+-extern bool        g_bCacheM3U;
+-extern bool        g_bCacheEPG;
+-extern int         g_iEPGLogos;
+-
+ extern std::string PathCombine(const std::string &strPath, const std::string &strFileName);
+ extern std::string GetClientFilePath(const std::string &strFileName);
+ extern std::string GetUserFilePath(const std::string &strFileName);

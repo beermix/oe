@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="pvr.iptvsimple.multi"
-PKG_VERSION="cdaf6f9"
-PKG_GIT_URL="https://github.com/vdrtuxnet/pvr.iptvsimple.multi"
+PKG_VERSION="10471f9"
+PKG_GIT_URL="https://github.com/AlexELEC/pvr.iptvsimple.multi"
 PKG_DEPENDS_TARGET="toolchain kodi-platform zlib"
 PKG_SECTION=""
 PKG_SHORTDESC="pvr.iptvsimple"
