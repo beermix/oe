@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="systemd"
-PKG_VERSION="v232-859-g179e679ed"
+PKG_VERSION="v233"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/systemd"
 PKG_GIT_URL="https://github.com/systemd/systemd"
 PKG_DEPENDS_TARGET="toolchain libcap util-linux entropy xz zlib lz4 lzo bzip2 lrzip"
@@ -46,8 +46,8 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-apparmor \
                            --disable-adm-group \
                            --disable-wheel-group \
-                           --enable-xz \
-                           --enable-zlib \
+                           --disable-xz \
+                           --disable-zlib \
                            --disable-bzip2 \
                            --disable-lz4 \
                            --disable-pam \
@@ -67,6 +67,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-vconsole \
                            --disable-quotacheck \
                            --enable-tmpfiles \
+                           --disable-environment-d \
                            --disable-sysusers \
                            --disable-firstboot \
                            --disable-randomseed \
