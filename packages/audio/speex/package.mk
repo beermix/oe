@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="speex"
-PKG_VERSION="cae5026"
+PKG_VERSION="Speex-1.2.0"
 PKG_SITE="http://downloads.us.xiph.org/releases/speex"
 PKG_GIT_URL="https://github.com/xiph/speex"
 PKG_DEPENDS_TARGET="toolchain"
