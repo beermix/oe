@@ -316,6 +316,11 @@ post_makeinstall_target() {
     $SED "s|@OS_VERSION@|$OS_VERSION|g" -i $INSTALL/usr/share/kodi/addons/os.openelec.tv/addon.xml
     cp -R $PKG_DIR/config/repository.openelec.tv $INSTALL/usr/share/kodi/addons
     $SED "s|@ADDON_URL@|$ADDON_URL|g" -i $INSTALL/usr/share/kodi/addons/repository.openelec.tv/addon.xml
+   cp -R $PKG_DIR/config/os.libreelec.tv $INSTALL/usr/share/kodi/addons
+    $SED "s|@OS_VERSION@|$OS_VERSION|g" -i $INSTALL/usr/share/kodi/addons/os.libreelec.tv/addon.xml
+    cp -R $PKG_DIR/config/repository.libreelec.tv $INSTALL/usr/share/kodi/addons
+    $SED "s|@ADDON_URL@|$ADDON_URL|g" -i $INSTALL/usr/share/kodi/addons/repository.libreelec.tv/addon.xml
+    cp -R $PKG_DIR/config/repository.kodi.game $INSTALL/usr/share/kodi/addons
 
   mkdir -p $INSTALL/usr/lib/python"$PKG_PYTHON_VERSION"/site-packages/kodi
     cp -R $ROOT/$PKG_BUILD/tools/EventClients/lib/python/*.py $INSTALL/usr/lib/python"$PKG_PYTHON_VERSION"/site-packages/kodi
@@ -347,6 +352,20 @@ post_makeinstall_target() {
       cp $PKG_DIR/config/appliance.xml $INSTALL/usr/share/kodi/system/settings
     fi
 
+  # update addon manifest
+  ADDON_MANIFEST=$INSTALL/usr/share/kodi/system/addon-manifest.xml
+  xmlstarlet ed -L -d "/addons/addon[text()='service.xbmc.versioncheck']" $ADDON_MANIFEST
+  xmlstarlet ed -L -d "/addons/addon[text()='skin.estouchy']" $ADDON_MANIFEST
+  xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "repository.kodi.game" $ADDON_MANIFEST
+  xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "os.libreelec.tv" $ADDON_MANIFEST
+  xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "os.openelec.tv" $ADDON_MANIFEST
+  xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "repository.libreelec.tv" $ADDON_MANIFEST
+  xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "service.libreelec.settings" $ADDON_MANIFEST
+
+  # more binaddons cross compile badness meh
+  sed -e "s:INCLUDE_DIR /usr/include/kodi:INCLUDE_DIR $SYSROOT_PREFIX/usr/include/kodi:g" \
+      -e "s:CMAKE_MODULE_PATH /usr/lib/kodi /usr/share/kodi/cmake:CMAKE_MODULE_PATH $SYSROOT_PREFIX/usr/share/kodi/cmake:g" \
+      -i $SYSROOT_PREFIX/usr/share/kodi/cmake/KodiConfig.cmake
   if [ "$KODI_EXTRA_FONTS" = yes ]; then
     mkdir -p $INSTALL/usr/share/kodi/media/Fonts
       cp $PKG_DIR/fonts/*.ttf $INSTALL/usr/share/kodi/media/Fonts
