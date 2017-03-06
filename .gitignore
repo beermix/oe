@@ -29,6 +29,7 @@ mkpkg-temp
 # crap
 .DS_Store
 
+.git
 ltmain.sh
 /tmp/
 cpack
