@@ -17,6 +17,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_vfork_works=no \
 			      --with-included-libtasn1 \
 			      --enable-local-libopts \
 			      --disable-doc \
+			      --disable-shared \
 			      --disable-tests \
 			      --disable-guile \
 			      --disable-valgrind-tests \
