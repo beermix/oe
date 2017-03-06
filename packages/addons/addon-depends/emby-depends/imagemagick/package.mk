@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="ImageMagick"
-PKG_VERSION="7.0.4-9"
+PKG_VERSION="7.0.5-1"
 PKG_SITE="http://www.imagemagick.org/"
-PKG_URL="https://fossies.org/linux/misc/ImageMagick-7.0.4-9.tar.xz"
+PKG_URL="https://fossies.org/linux/misc/ImageMagick-$PKG_VERSION.tar.xz"
 PKG_SOURCE_DIR="ImageMagick-$PKG_VERSION"
 PKG_DEPENDS_TARGET="toolchain libX11"
 PKG_SECTION="graphics"
