@@ -247,7 +247,11 @@ makeinstall_host() {
 }
 
 pre_configure_target() {
-  export LIBS="$LIBS -ltermcap"
+# kodi should never be built with lto
+  strip_lto
+  strip_gold
+
+  export LIBS="$LIBS -lz -lterminfo"
 }
 
 pre_make_target() {
