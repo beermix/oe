@@ -31,7 +31,7 @@ PKG_AUTORECONF="no"
 PKG_CMAKE_OPTS_TARGET="-DSYSTEM_PORTAUDIO_EXITCODE=0 -DENABLE_LTO=on -DUSE_SHARED_ENET=on"
 pre_make_target() {
   find . -name flags.make -exec sed -i "s:isystem :I:g" \{} \;
-  export VERBOSE=1
+  #export VERBOSE=1
 }
 
 post_makeinstall_target() {
