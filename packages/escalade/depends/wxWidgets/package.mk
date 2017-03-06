@@ -16,7 +16,7 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 PKG_NAME="wxWidgets"
-PKG_VERSION="3.0.2"
+PKG_VERSION="cbb799b"
 PKG_SITE="http://www.wxwidgets.org/"
 PKG_GIT_URL="https://github.com/wxWidgets/wxWidgets"
 PKG_DEPENDS_TARGET="toolchain gtk+ libSM"

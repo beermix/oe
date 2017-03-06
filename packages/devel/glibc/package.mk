@@ -117,6 +117,7 @@ EOF
 
   echo "sbindir=/usr/bin" >> configparms
   echo "rootsbindir=/usr/bin" >> configparms
+  echo "build-programs=no" >> configparms
 }
 
 post_makeinstall_target() {

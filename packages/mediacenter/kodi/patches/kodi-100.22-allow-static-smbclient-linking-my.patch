@@ -18,7 +18,7 @@ index 6455cce3a1..f778efb6ae
  
  if(SMBCLIENT_FOUND)
 -  set(SMBCLIENT_LIBRARIES ${SMBCLIENT_LIBRARY})
-+# check if smbclient libs are statically linked
++  # check if smbclient libs are statically linked
 +  set(SMBCLIENT_LIB_TYPE SHARED)
 +  if(PC_SMBCLIENT_STATIC_LDFLAGS)
 +    set(SMBCLIENT_LDFLAGS ${PC_SMBCLIENT_STATIC_LDFLAGS} CACHE STRING "smbclient linker flags" FORCE)

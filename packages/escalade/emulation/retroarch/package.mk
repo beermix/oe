@@ -27,13 +27,6 @@ PKG_LONGDESC="RetroArch is the reference frontend for the libretro API. Popular 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-unpack() {
-  git clone --recursive https://github.com/libretro/RetroArch $PKG_BUILD
-  cd $PKG_BUILD
-  git reset --hard $PKG_VERSION
-  rm -rf .git
-  cd $ROOT
-}
 
 if [ "$OPENGLES_SUPPORT" = yes ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET $OPENGLES"
