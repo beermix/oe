@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,9 +18,13 @@
 
 PKG_NAME="elfutils"
 PKG_VERSION="0.168"
-PKG_SITE="https://fedorahosted.org/elfutils/"
-PKG_URL="https://fedorahosted.org/releases/e/l/elfutils/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
+PKG_SITE="https://sourceware.org/elfutils/"
+PKG_URL="https://sourceware.org/elfutils/ftp/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain zlib"
+PKG_PRIORITY="optional"
 PKG_SECTION="devel"
 PKG_SHORTDESC="elfutils: collection of utilities to handle ELF objects"
 PKG_LONGDESC="Elfutils is a collection of utilities, including eu-ld (a linker), eu-nm (for listing symbols from object files), eu-size (for listing the section sizes of an object or archive file), eu-strip (for discarding symbols), eu-readelf (to see the raw ELF file structures), and eu-elflint (to check for well-formed ELF files)."
