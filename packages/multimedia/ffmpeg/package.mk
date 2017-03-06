@@ -105,7 +105,6 @@ configure_target() {
               --sysroot=$SYSROOT_PREFIX \
               --sysinclude="$SYSROOT_PREFIX/usr/include" \
               --target-os="linux" \
-              --extra-version="$PKG_VERSION" \
               --nm="$NM" \
               --ar="$AR" \
               --as="$CC" \
@@ -118,8 +117,6 @@ configure_target() {
               --extra-cflags="$CFLAGS" \
               --extra-ldflags="$LDFLAGS -fPIC" \
               --extra-libs="$FFMPEG_LIBS" \
-              --extra-version="" \
-              --build-suffix="" \
               --disable-static \
               --enable-shared \
               --enable-gpl \
@@ -145,7 +142,6 @@ configure_target() {
               --disable-devices \
               --enable-pthreads \
               --disable-w32threads \
-              --disable-x11grab \
               --enable-network \
               --disable-gnutls --enable-openssl \
               --disable-gray \
@@ -190,6 +186,7 @@ configure_target() {
               --disable-libopencore-amrwb \
               --disable-libopencv \
               --disable-libdc1394 \
+              --disable-libfaac \
               --disable-libfreetype \
               --disable-libgsm \
               --disable-libmp3lame \
@@ -211,7 +208,8 @@ configure_target() {
               $FFMPEG_FPU \
               --enable-yasm \
               --disable-symver \
-              --disable-lto
+              --disable-lto \
+		--enable-indev=x11grab_xcb
 }
 
 post_makeinstall_target() {
