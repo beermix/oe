@@ -107,7 +107,7 @@
   KODI_AIRTUNES_SUPPORT="no"
 
 # build with libnfs support (mounting nfs shares with KODI) (yes / no)
-  KODI_NFS_SUPPORT="no"
+  KODI_NFS_SUPPORT="yes"
 
 # build with Samba Client support (mounting SAMBA shares with KODI) (yes / no)
   KODI_SAMBA_SUPPORT="yes"
@@ -116,7 +116,7 @@
   KODI_LANGUAGE_ADDONS="no"
 
 # build with NFS support (mounting nfs shares via the OS) (yes / no)
-  NFS_SUPPORT="no"
+  NFS_SUPPORT="yes"
 
 # build with Samba Client support (mounting samba shares via the OS) (yes / no)
   SAMBA_SUPPORT="yes"
@@ -160,7 +160,7 @@
   LCD_DRIVER+="irtrans,"
 
 # build and install CEC adapter support (yes / no)
-  CEC_SUPPORT="no"
+  CEC_SUPPORT="yes"
 
 # LCD driver to Use - Possible drivers are ( Comma seperated:
 # bayrad,CFontz,CFontz633,CFontzPacket,curses,CwLnx,dm140,
