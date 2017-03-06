@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="ncurses"
-PKG_VERSION="6.0-20170225"
+PKG_VERSION="6.0-20170304"
 PKG_SITE="http://www.gnu.org/software/ncurses/"
 PKG_URL="ftp://invisible-island.net/ncurses/current/ncurses-$PKG_VERSION.tgz"
 PKG_DEPENDS_TARGET="toolchain zlib"

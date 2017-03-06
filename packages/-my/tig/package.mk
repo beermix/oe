@@ -1,12 +1,12 @@
 PKG_NAME="tig"
-PKG_VERSION="cef17fc"
+PKG_VERSION="d5d1029"
 PKG_GIT_URL="https://github.com/jonas/tig"
 PKG_DEPENDS_TARGET="toolchain ncurses"
 PKG_SECTION="tools"
 PKG_AUTORECONF="yes"
 
 pre_configure_target() {
-   export LIBS="-lreadline"
+  cd $ROOT/$PKG_BUILD
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-option-checking \

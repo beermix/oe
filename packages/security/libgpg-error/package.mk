@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libgpg-error"
-PKG_VERSION="1.26"
+PKG_VERSION="1.27"
 PKG_SITE="https://www.gnupg.org"
 PKG_URL="https://www.gnupg.org/ftp/gcrypt/libgpg-error/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain"
