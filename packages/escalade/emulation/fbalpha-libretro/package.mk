@@ -21,7 +21,7 @@
 PKG_NAME="fbalpha-libretro"
 PKG_VERSION="eabd66a"
 PKG_SITE="https://github.com/libretro/fbalpha"
-PKG_URL="https://github.com/libretro/fbalpha/archive/$PKG_VERSION.tar.gz"
+PKG_GIT_URL="https://github.com/libretro/fbalpha"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="emulation"
 PKG_SHORTDESC="Port of Final Burn Alpha to Libretro."

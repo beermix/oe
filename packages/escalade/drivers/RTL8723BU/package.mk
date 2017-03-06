@@ -19,7 +19,7 @@
 PKG_NAME="RTL8723BU"
 PKG_VERSION="4051c16"
 PKG_SITE="https://github.com/lwfinger/rtl8723bu"
-PKG_URL="https://github.com/lwfinger/rtl8723bu/archive/$PKG_VERSION.tar.gz"
+PKG_GIT_URL="https://github.com/lwfinger/rtl8723bu"
 PKG_SOURCE_DIR="rtl8723bu-$PKG_VERSION*"
 PKG_DEPENDS_TARGET="toolchain linux"
 PKG_NEED_UNPACK="$LINUX_DEPENDS"

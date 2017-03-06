@@ -19,7 +19,7 @@
 PKG_NAME="uae4arm-libretro"
 PKG_VERSION="d7f97a7"
 PKG_SITE="https://github.com/repojohnray/libretro-uae4arm"
-PKG_URL="https://github.com/repojohnray/libretro-uae4arm/archive/$PKG_VERSION.tar.gz"
+PKG_GIT_URL="https://github.com/repojohnray/libretro-uae4arm"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="emulation"
 PKG_SHORTDESC="libretro uae4arm"

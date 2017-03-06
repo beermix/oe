@@ -19,7 +19,7 @@
 PKG_NAME="emby-system"
 PKG_VERSION="3.0.5986"
 PKG_SITE="http://emby.media"
-PKG_URL="https://github.com/MediaBrowser/Emby/releases/download/$PKG_VERSION/Emby.Mono.zip"
+PKG_GIT_URL="https://github.com/MediaBrowser/Emby/releases/download/$PKG_VERSION/Emby.Mono.zip"
 PKG_DEPENDS_TARGET="toolchain mono-system imagemagick"
 PKG_SECTION="service"
 PKG_SHORTDESC="Emby: a personal media server"

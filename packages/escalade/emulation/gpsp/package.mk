@@ -19,7 +19,7 @@
 PKG_NAME="gpsp"
 PKG_VERSION="4d860ae"
 PKG_SITE="https://github.com/libretro/gpsp"
-PKG_URL="https://github.com/libretro/gpsp/archive/$PKG_VERSION.tar.gz"
+PKG_GIT_URL="https://github.com/libretro/gpsp"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="libretro"
 PKG_SHORTDESC="gpSP for libretro."

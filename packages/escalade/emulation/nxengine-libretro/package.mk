@@ -21,7 +21,7 @@
 PKG_NAME="nxengine-libretro"
 PKG_VERSION="f51fa45"
 PKG_SITE="https://github.com/libretro/nxengine-libretro"
-PKG_URL="https://github.com/libretro/nxengine-libretro/archive/$PKG_VERSION.tar.gz"
+PKG_GIT_URL="https://github.com/libretro/nxengine-libretro"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="libretro"
 PKG_SHORTDESC="Libretro port of NXEngine (Cave Story engine)"

@@ -19,7 +19,7 @@
 PKG_NAME="yabause-libretro"
 PKG_VERSION="dac3c5a"
 PKG_SITE="https://github.com/libretro/yabause"
-PKG_URL="https://github.com/libretro/yabause/archive/$PKG_VERSION.tar.gz"
+PKG_GIT_URL="https://github.com/libretro/yabause"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="libretro"
 PKG_SHORTDESC="Port of Yabause to libretro."

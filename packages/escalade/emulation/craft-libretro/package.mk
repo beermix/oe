@@ -19,7 +19,7 @@
 PKG_NAME="craft-libretro"
 PKG_VERSION="ccf83df"
 PKG_SITE="https://github.com/libretro/Craft"
-PKG_URL="https://github.com/libretro/Craft/archive/$PKG_VERSION.tar.gz"
+PKG_GIT_URL="https://github.com/libretro/Craft"
 PKG_DEPENDS_TARGET="toolchain retroarch"
 PKG_SECTION="emulation"
 PKG_SHORTDESC="libretro Craft core"

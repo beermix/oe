@@ -19,7 +19,7 @@
 PKG_NAME="mupen64plus-libretro"
 PKG_VERSION="938277a"
 PKG_SITE="https://github.com/libretro/mupen64plus-libretro"
-PKG_URL="https://github.com/libretro/mupen64plus-libretro/archive/$PKG_VERSION.tar.gz"
+PKG_GIT_URL="https://github.com/libretro/mupen64plus-libretro"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="emulation"
 PKG_SHORTDESC="mupen64plus + RSP-HLE + GLideN64 + libretro"

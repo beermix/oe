@@ -21,7 +21,7 @@
 PKG_NAME="beetle-bsnes-libretro"
 PKG_VERSION="75210dd"
 PKG_SITE="https://github.com/libretro/beetle-bsnes-libretro"
-PKG_URL="https://github.com/libretro/beetle-bsnes-libretro/archive/$PKG_VERSION.tar.gz"
+PKG_GIT_URL="https://github.com/libretro/beetle-bsnes-libretro"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="emulation"
 PKG_SHORTDESC="Optimized port/rewrite of bsnes 0.59 to Libretro."

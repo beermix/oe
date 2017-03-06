@@ -19,7 +19,7 @@
 PKG_NAME="ppsspp-libretro"
 PKG_VERSION="e1bb9da"
 PKG_SITE="https://github.com/libretro/libretro-ppsspp"
-PKG_URL="https://github.com/libretro/libretro-ppsspp/archive/$PKG_VERSION.tar.gz"
+PKG_GIT_URL="https://github.com/libretro/libretro-ppsspp"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="libretro"
 PKG_SHORTDESC="Non-shallow fork of PPSSPP for libretro exclusively."

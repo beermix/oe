@@ -21,7 +21,7 @@
 PKG_NAME="par2cmdline"
 PKG_VERSION="b0fab49"
 PKG_SITE="https://github.com/Parchive/par2cmdline"
-PKG_URL="https://github.com/Parchive/par2cmdline/archive/$PKG_VERSION.tar.gz"
+PKG_GIT_URL="https://github.com/Parchive/par2cmdline"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="system"
 PKG_SHORTDESC="par2cmdline: a utility to create and repair data files using Reed Solomon coding."

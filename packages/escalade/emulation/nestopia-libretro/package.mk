@@ -21,7 +21,7 @@
 PKG_NAME="nestopia-libretro"
 PKG_VERSION="4ac5d2a"
 PKG_SITE="https://github.com/libretro/nestopia"
-PKG_URL="https://github.com/libretro/nestopia/archive/$PKG_VERSION.tar.gz"
+PKG_GIT_URL="https://github.com/libretro/nestopia"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="emulation"
 PKG_SHORTDESC="Libretro implementation of NEStopia. (Nintendo Entertainment System)"

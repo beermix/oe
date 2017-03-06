@@ -19,7 +19,7 @@
 PKG_NAME="mgba-libretro"
 PKG_VERSION="ad3d35d"
 PKG_SITE="https://github.com/libretro/mgba"
-PKG_URL="https://github.com/libretro/mgba/archive/$PKG_VERSION.tar.gz"
+PKG_GIT_URL="https://github.com/libretro/mgba"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="emulation"
 PKG_SHORTDESC="mGBA Game Boy Advance Emulator"

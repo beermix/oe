@@ -19,7 +19,7 @@
 PKG_NAME="tigervnc-system"
 PKG_VERSION="1.7.0"
 PKG_SITE="http://www.tigervnc.org"
-PKG_URL="https://github.com/TigerVNC/tigervnc/archive/v$PKG_VERSION.tar.gz"
+PKG_GIT_URL="https://github.com/TigerVNC/tigervnc/archive/v$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain cmake:host libX11 libXext libXtst zlib libjpeg-turbo"
 PKG_SECTION="service"
 PKG_SHORTDESC="TigerVNC server"

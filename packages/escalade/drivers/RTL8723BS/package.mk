@@ -19,7 +19,7 @@
 PKG_NAME="RTL8723BS"
 PKG_VERSION="7708383"
 PKG_SITE="https://github.com/hadess/rtl8723bs"
-PKG_URL="https://github.com/anthonywong/rtl8723bs/archive/$PKG_VERSION.tar.gz"
+PKG_GIT_URL="https://github.com/anthonywong/rtl8723bs"
 PKG_SOURCE_DIR="rtl8723bs-$PKG_VERSION*"
 PKG_DEPENDS_TARGET="toolchain linux"
 PKG_NEED_UNPACK="$LINUX_DEPENDS"

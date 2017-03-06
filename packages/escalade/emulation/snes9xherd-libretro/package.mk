@@ -19,7 +19,7 @@
 PKG_NAME="snes9xherd-libretro"
 PKG_VERSION="0d34187"
 PKG_SITE="https://github.com/libretro/snes9xherd"
-PKG_URL="https://github.com/libretro/snes9xherd/archive/$PKG_VERSION.tar.gz"
+PKG_GIT_URL="https://github.com/libretro/snes9xherd"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="emulation"
 PKG_SHORTDESC="Optimized port/rewrite of SNES9x 1.52+ to Libretro"

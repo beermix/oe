@@ -19,7 +19,7 @@
 PKG_NAME="sdl-jstest"
 PKG_VERSION="c749562"
 PKG_SITE="http://fs-uae.net"
-PKG_URL="https://github.com/Grumbel/sdl-jstest/archive/$PKG_VERSION.tar.gz"
+PKG_GIT_URL="https://github.com/Grumbel/sdl-jstest"
 PKG_DEPENDS_TARGET="toolchain cmake:host SDL2 netbsd-curses"
 PKG_SECTION="tools"
 PKG_SHORTDESC="jstest"

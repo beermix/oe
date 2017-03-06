@@ -21,7 +21,7 @@
 PKG_NAME="mame2003-libretro"
 PKG_VERSION="1847fbd"
 PKG_SITE="https://github.com/libretro/mame2003-libretro.git"
-PKG_URL="https://github.com/libretro/mame2003-libretro/archive/$PKG_VERSION.tar.gz"
+PKG_GIT_URL="https://github.com/libretro/mame2003-libretro"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="emulation"
 PKG_SHORTDESC="MAME - Multiple Arcade Machine Emulator"

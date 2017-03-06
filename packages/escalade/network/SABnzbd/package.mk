@@ -19,7 +19,7 @@
 PKG_NAME="SABnzbd"
 PKG_VERSION="1.2.1"
 PKG_SITE="http://sabnzbd.org/"
-PKG_URL="https://github.com/sabnzbd/sabnzbd/releases/download/$PKG_VERSION/$PKG_NAME-$PKG_VERSION-src.tar.gz"
+PKG_GIT_URL="https://github.com/sabnzbd/sabnzbd/releases/download/$PKG_VERSION/$PKG_NAME-$PKG_VERSION-src.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python Cheetah yenc six par2cmdline unrar cryptography p7zip"
 PKG_SECTION="service/downloadmanager"
 PKG_SHORTDESC="SABnzbd makes Usenet as simple and streamlined as possible by automating everything we can."
