@@ -39,9 +39,7 @@ PKG_CONFIGURE_OPTS_HOST="--disable-shared --enable-static \
                          --disable-nls"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-shared --disable-static \
-			      --enable-assembler=x86_64 \
 			      --enable-threads=posix \
 			      --enable-liblzma2-compat \
 			      --enable-unaligned-access \
-			      --disable-doc \
-			      --disable-nls"
+			      --disable-doc"

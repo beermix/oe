@@ -20,7 +20,7 @@ PKG_NAME="bluez"
 PKG_VERSION="5.44"
 PKG_SITE="http://www.bluez.org/"
 PKG_URL="http://www.kernel.org/pub/linux/bluetooth/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain dbus glib readline netbsd-curses systemd"
+PKG_DEPENDS_TARGET="toolchain dbus glib readline netbsd-curses"
 PKG_SECTION="network"
 PKG_SHORTDESC="bluez: Bluetooth Tools and System Daemons for Linux."
 PKG_LONGDESC="Bluetooth Tools and System Daemons for Linux."
@@ -35,16 +35,19 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-dependency-tracking \
                            --disable-cups \
                            --disable-obex \
                            --enable-client \
-                           --enable-systemd \
+                           --disable-systemd \
                            --enable-tools \
                            --enable-datafiles \
                            --disable-experimental \
+                           --enable-deprecated \
                            --enable-sixaxis \
                            --with-gnu-ld \
-                           --enable-monitor \
-                           --enable-test \
-                           $BLUEZ_CONFIG \
                            storagedir=/storage/.cache/bluetooth"
+if [ "$DEBUG" = "yes" ]; then
+  PKG_CONFIGURE_OPTS_TARGET+=" --enable-debug"
+else
+  PKG_CONFIGURE_OPTS_TARGET+=" --disable-debug"
+fi
 
 if [ "$DEVTOOLS" = "yes" ]; then
   PKG_CONFIGURE_OPTS_TARGET+=" --enable-monitor --enable-test"
@@ -61,11 +64,13 @@ pre_configure_target() {
 }
 
 post_makeinstall_target() {
-  rm -rf $INSTALL/usr/lib/systemd
   rm -rf $INSTALL/usr/bin/bccmd
   rm -rf $INSTALL/usr/bin/bluemoon
   rm -rf $INSTALL/usr/bin/ciptool
   rm -rf $INSTALL/usr/share/dbus-1
+  mkdir -p $INSTALL/usr/bin
+    cp tools/btinfo $INSTALL/usr/bin
+    cp tools/btmgmt $INSTALL/usr/bin
 
   mkdir -p $INSTALL/etc/bluetooth
     echo "[Policy]" > $INSTALL/etc/bluetooth/main.conf

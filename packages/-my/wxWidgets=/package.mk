@@ -9,16 +9,17 @@ PKG_AUTORECONF="yes"
 
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
-			   --enable-static \
-			   --disable-debug_flag \
-			   --enable-unicode \
-			   --enable-graphics_ctx \
-			   --disable-mediactrl \
-			   --disable-monolithic \
-			   --disable-mslu \
-			   --enable-silent-rules \
-			   --disable-precomp-headers \
-			   --with-opengl"
+			      --enable-static \
+			      --disable-debug_flag \
+			      --enable-unicode \
+			      --enable-graphics_ctx \
+			      --disable-mediactrl \
+			      --disable-monolithic \
+			      --disable-mslu \
+			      --enable-silent-rules \
+			      --disable-precomp-headers \
+			      --with-opengl \
+			      --enable-cxx11"
 
 
 pre_configure_target() {

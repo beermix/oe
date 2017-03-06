@@ -16,20 +16,39 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 PKG_NAME="wxWidgets"
-PKG_VERSION="cbb799b"
-PKG_SITE="http://www.wxwidgets.org/"
-PKG_GIT_URL="https://github.com/wxWidgets/wxWidgets"
+PKG_VERSION="3.1.0"
+PKG_SITE="https://github.com/wxWidgets/wxWidgets"
+PKG_URL="https://github.com/wxWidgets/wxWidgets/releases/download/v$PKG_VERSION/wxWidgets-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain gtk+ libSM"
 PKG_SECTION="depends"
 PKG_SHORTDESC="A cross-platform GUI and tools library for GTK, MS Windows, and MacOS."
 PKG_LONGDESC="A cross-platform GUI and tools library for GTK, MS Windows, and MacOS."
-PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-precomp-headers"
+PKG_IS_ADDON="no"
+PKG_AUTORECONF="no"
+
+
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
+			      --enable-static \
+			      --disable-debug_flag \
+			      --enable-unicode \
+			      --enable-graphics_ctx \
+			      --disable-mediactrl \
+			      --disable-monolithic \
+			      --disable-mslu \
+			      --enable-silent-rules \
+			      --disable-precomp-headers \
+			      --with-opengl \
+			      --enable-cxx11"
+
+
+pre_configure_target() {
+  export CFLAGS="$CFLAGS -fPIC"
+  export CXXFLAGS="$CXXFLAGS -fPIC"
+  export LDFLAGS="$LDFLAGS -fPIC"
+}
+
 
 post_makeinstall_target() {
-  ln -sfv $SYSROOT_PREFIX/usr/lib/wx/config/x86_64-openelec-linux-gnu-gtk2-unicode-3.0 $SYSROOT_PREFIX/usr/bin/wx-config
-  $SED "s:^prefix=.*:prefix=$SYSROOT_PREFIX/usr:g" $SYSROOT_PREFIX/usr/bin/wx-config
-  rm -rf $INSTALL/usr/bin
+  rm -rf $INSTALL
 }
