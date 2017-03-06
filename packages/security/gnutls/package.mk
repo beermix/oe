@@ -6,10 +6,6 @@ PKG_SECTION="security"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-#pre_configure_target() {
-#  sed -ie "s/HAVE_LIBNETTLE/HAVE_LIBNETTLE_NOPE/" ../config.h.in
-#}
-
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_vfork_works=no \
 			      ac_cv_func_fork=no \
@@ -28,7 +24,8 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_vfork_works=no \
 			      --disable-nls \
 			      --disable-tools \
 			      --disable-crywrap \
-			      --without-idn"
+			      --without-idn \
+			      --disable-shared"
 
 #post_makeinstall_target() {
 #  rm -rf $INSTALL/usr/bin

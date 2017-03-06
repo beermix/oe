@@ -54,7 +54,7 @@ elif [ "$DISPLAYSERVER" = "weston" ]; then
 fi
 
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CAIRO_CONFIG \
-                           --disable-silent-rules \
+                           --enable-silent-rules \
                            --enable-shared \
                            --disable-static \
                            --disable-gtk-doc \
@@ -62,9 +62,6 @@ PKG_CONFIGURE_OPTS_TARGET="$PKG_CAIRO_CONFIG \
                            --enable-atomic \
                            --disable-gcov \
                            --disable-valgrind \
-                           --disable-xcb \
-                           --disable-xlib-xcb \
-                           --disable-xcb-shm \
                            --disable-qt \
                            --disable-quartz \
                            --disable-quartz-font \
@@ -80,20 +77,13 @@ PKG_CONFIGURE_OPTS_TARGET="$PKG_CAIRO_CONFIG \
                            --disable-gallium \
                            --disable-xcb-drm \
                            --enable-png \
-                           --disable-directfb \
-                           --disable-vg \
-                           --disable-wgl \
-                           --disable-script \
                            --enable-ft \
                            --enable-fc \
                            --enable-ps \
                            --enable-pdf \
                            --enable-svg \
                            --disable-test-surfaces \
-                           --disable-tee \
-                           --disable-xml \
                            --enable-pthread \
-                           --disable-gobject \
                            --disable-full-testing \
                            --disable-trace \
                            --enable-interpreter \

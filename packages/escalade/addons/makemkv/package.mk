@@ -44,7 +44,6 @@ post_unpack() {
   tar zxf ${PKG_NAME}-bin-${PKG_VERSION}.tar.gz
   mv ${PKG_NAME}-bin-${PKG_VERSION} bin
   rm -rf ${PKG_NAME}-bin-${PKG_VERSION}
-  cd $ROOT
 }
 
 pre_configure_target() {
