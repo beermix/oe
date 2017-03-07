@@ -21,7 +21,7 @@ PKG_VERSION="1.26.2"
 PKG_SITE="http://www.busybox.net"
 PKG_URL="http://busybox.net/downloads/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain busybox:host hdparm dosfstools e2fsprogs zip unzip pcre expat zlib bzip2 xz lz4 libaio icu openssl mbedtls tar pciutils usbutils parted procps-ng coreutils time bash findutils libuv libev"
+PKG_DEPENDS_TARGET="toolchain busybox:host hdparm dosfstools e2fsprogs zip unzip pcre expat zlib bzip2 xz lz4 libaio icu openssl tar pciutils usbutils parted procps-ng coreutils time bash findutils libuv libev"
 PKG_DEPENDS_INIT="toolchain"
 PKG_SECTION="system"
 PKG_SHORTDESC="BusyBox: The Swiss Army Knife of Embedded Linux"
@@ -145,9 +145,23 @@ configure_init() {
     make oldconfig
 }
 
+pre_make_host() {
+  # dont build parallel
+  MAKEFLAGS=-j1
+}
+
+pre_make_target() {
+  # dont build parallel
+  MAKEFLAGS=-j1
+}
+
+pre_make_init() {
+  # dont build parallel
+  MAKEFLAGS=-j1
+}
 makeinstall_host() {
-  mkdir -p $ROOT/$TOOLCHAIN/bin
-    cp -R $ROOT/$PKG_BUILD/.install_host/bin/* $ROOT/$TOOLCHAIN/bin
+  mkdir -p $ROOT/$TOOLCHAIN/
+    cp -PR $ROOT/$PKG_BUILD/.install_host/* $ROOT/$TOOLCHAIN/
 }
 
 makeinstall_target() {
