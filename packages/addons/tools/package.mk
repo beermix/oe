@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="mono"
-PKG_VERSION="4.8.0.495"
-PKG_REV="102"
+PKG_VERSION="4.2.1.102"
+PKG_REV="999"
 PKG_ARCH="any"
 PKG_LICENSE="MIT"
 PKG_SITE="http://www.mono-project.com"
@@ -81,12 +81,12 @@ addon() {
   mv "$ADDON_BUILD/$PKG_ADDON_ID/bin/mono-sgen" \
      "$ADDON_BUILD/$PKG_ADDON_ID/bin/mono"
 
-  cp -L "$(get_pkg_build cairo)/.install_pkg/usr/lib/libcairo.so.2" \
-        "$(get_pkg_build libX11)/.install_pkg/usr/lib/libX11.so.6" \
-        "$(get_pkg_build libXext)/.install_pkg/usr/lib/libXext.so.6" \
-        "$(get_pkg_build libexif)/.install_pkg/usr/lib/libexif.so.12" \
-        "$(get_pkg_build libgdiplus)/.install_pkg/usr/lib/libgdiplus.so" \
-        "$(get_pkg_build mono_sqlite)/.install_pkg/usr/lib/libsqlite3.so.0" \
-        "$(get_pkg_build pixman)/.install_pkg/usr/lib/libpixman-1.so.0" \
+  cp -L "$(get_build_dir cairo)/.install_pkg/usr/lib/libcairo.so.2" \
+        "$(get_build_dir libX11)/.install_pkg/usr/lib/libX11.so.6" \
+        "$(get_build_dir libXext)/.install_pkg/usr/lib/libXext.so.6" \
+        "$(get_build_dir libexif)/.install_pkg/usr/lib/libexif.so.12" \
+        "$(get_build_dir libgdiplus)/.install_pkg/usr/lib/libgdiplus.so" \
+        "$(get_build_dir mono_sqlite)/.install_pkg/usr/lib/libsqlite3.so.0" \
+        "$(get_build_dir pixman)/.install_pkg/usr/lib/libpixman-1.so.0" \
         "$ADDON_BUILD/$PKG_ADDON_ID/lib"
 }
