@@ -18,6 +18,9 @@
 
 PKG_NAME="rsyslog"
 PKG_VERSION="8.21.0"
+PKG_REV="102"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/rsyslog"
 PKG_URL="http://www.rsyslog.com/files/download/rsyslog/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain util-linux libestr libfastjson liblognorm librelp zlib libgcrypt liblogging"

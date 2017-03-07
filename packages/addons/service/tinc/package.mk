@@ -18,6 +18,9 @@
 
 PKG_NAME="tinc"
 PKG_VERSION="1.1pre14"
+PKG_REV="101"
+PKG_ARCH="any"
+PKG_LICENSE="GPLv2"
 PKG_SITE="http://www.tinc-vpn.org/"
 PKG_URL="${PKG_SITE}/packages/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libressl lzo zlib"
@@ -37,7 +40,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-curses   \
 
 pre_configure_target() {
   # tinc fails to build in subdirs
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
   rm -rf .$TARGET_NAME
 }
 

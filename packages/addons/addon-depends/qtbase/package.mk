@@ -17,10 +17,10 @@
 ################################################################################
 
 PKG_NAME="qtbase"
-PKG_VERSION="5.7.0"
+PKG_VERSION="5.6.2"
 PKG_SITE="http://qt-project.org"
-PKG_URL="http://download.qt.io/official_releases/qt/5.7/$PKG_VERSION/submodules/$PKG_NAME-opensource-src-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="pcre zlib icu glib"
+PKG_URL="http://download.qt.io/official_releases/qt/5.6/$PKG_VERSION/submodules/$PKG_NAME-opensource-src-$PKG_VERSION.tar.xz"
+PKG_DEPENDS_TARGET="pcre zlib"
 PKG_SOURCE_DIR="$PKG_NAME-opensource-src-$PKG_VERSION"
 PKG_SHORTDESC="A cross-platform application and UI framework"
 PKG_LONGDESC="A cross-platform application and UI framework"
@@ -28,7 +28,6 @@ PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="-prefix /usr
                            -sysroot $SYSROOT_PREFIX
-                           -device-option CROSS_COMPILE="linux-openelec"
                            -hostprefix $TOOLCHAIN
                            -device linux-openelec-g++
                            -opensource -confirm-license
@@ -50,6 +49,8 @@ PKG_CONFIGURE_OPTS_TARGET="-prefix /usr
                            -no-libproxy
                            -system-pcre
                            -no-glib
+                           -no-pulseaudio
+                           -no-alsa
                            -silent
                            -no-cups
                            -no-iconv
@@ -62,17 +63,11 @@ PKG_CONFIGURE_OPTS_TARGET="-prefix /usr
                            -no-opengl
                            -no-libudev
                            -no-libinput
-                           -no-eglfs 
-                           -no-pch
-                           -nomake tests
-                           -nomake examples"
+                           -no-gstreamer
+                           -no-eglfs"
 
 configure_target() {
-  #strip_hard
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed||"`
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--as-needed||"`
-  
-  QMAKE_CONF_DIR="mkspecs/devices/linux-openelec-g++"
+  QMAKE_CONF_DIR="mkspecs/devices/linux-libreelec-g++"
   QMAKE_CONF="${QMAKE_CONF_DIR}/qmake.conf"
 
   cd ..

@@ -18,6 +18,8 @@
 
 PKG_NAME="bitstream"
 PKG_VERSION="1.1"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://www.videolan.org"
 PKG_URL="http://download.videolan.org/pub/videolan/${PKG_NAME}/${PKG_VERSION}/${PKG_NAME}-${PKG_VERSION}.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain"

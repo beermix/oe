@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="moonlight-embedded"
-PKG_VERSION="2.2.2"
+PKG_VERSION="9301898"
 PKG_SITE="https://github.com/irtimmer/moonlight-embedded"
 PKG_URL="https://github.com/irtimmer/moonlight-embedded/archive/v$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain curl libcec pulseaudio ffmpeg systemd alsa-lib moonlight-common-c libevdev enet opus"

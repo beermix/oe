@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2016 Team LibreELEC
+#      Copyright (C) 2016-2017 Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,9 +17,13 @@
 ################################################################################
 
 PKG_NAME="lcdd"
-PKG_VERSION="c05a7de"
+PKG_VERSION="0.5.8"
+PKG_REV="103"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://lcdproc.org/"
-PKG_GIT_URL="https://github.com/lcdproc/lcdproc"
+PKG_URL="https://github.com/lcdproc/lcdproc/archive/lcdproc-$PKG_VERSION.tar.gz"
+PKG_SOURCE_DIR="lcdproc-lcdproc-$PKG_VERSION*"
 PKG_DEPENDS_TARGET="toolchain freetype libftdi1 libhid libugpio libusb netbsd-curses serdisplib"
 PKG_SECTION="service"
 PKG_SHORTDESC="LCDproc: Software to display system information from your Linux/*BSD box on a LCD"
@@ -45,7 +49,7 @@ pre_make_target() {
 }
 
 addon() {
-  drivers="none|$(cat $ROOT/$PKG_BUILD/.$TARGET_NAME/config.log | sed -n "s|^DRIVERS=' \(.*\)'|\1|p" | sed "s|.so||g" | tr ' ' '|')"
+  drivers="none|$(cat $PKG_BUILD/.$TARGET_NAME/config.log | sed -n "s|^DRIVERS=' \(.*\)'|\1|p" | sed "s|.so||g" | tr ' ' '|')"
 
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/config
 

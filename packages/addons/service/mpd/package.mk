@@ -20,6 +20,9 @@
 
 PKG_NAME="mpd"
 PKG_VERSION="0.20.3"
+PKG_REV="102"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="https://www.musicpd.org"
 PKG_URL="http://www.musicpd.org/download/${PKG_NAME}/${PKG_VERSION%.*}/${PKG_NAME}-${PKG_VERSION}.tar.xz"
 PKG_DEPENDS_TARGET="toolchain boost glib ffmpeg libmad libogg flac faad2 curl alsa-lib yajl libid3tag lame"

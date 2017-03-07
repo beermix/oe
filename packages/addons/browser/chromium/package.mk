@@ -44,8 +44,6 @@ pre_make_target() {
 make_target() {
   export LDFLAGS="$LDFLAGS -ludev"
   export LD=$CXX
-  
-  #export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
 
   # Use Python 2
   find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$ROOT/$TOOLCHAIN/bin/python|g" {} +
@@ -97,7 +95,6 @@ make_target() {
     libpng
     libxslt
     yasm
-    ffmpeg
   )
 
   # Remove bundled libraries for which we will use the system copies; this

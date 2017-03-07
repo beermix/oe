@@ -18,6 +18,8 @@
 
 PKG_NAME="w_scan"
 PKG_VERSION="20141122"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://wirbel.htpc-forum.de/w_scan/index2.html"
 PKG_URL="http://wirbel.htpc-forum.de/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain"
@@ -29,7 +31,7 @@ PKG_AUTORECONF="yes"
 # aml 3.14 is meh
 pre_configure_target() {
 if [ "$TARGET_ARCH" = "aarch64" ]; then
-  sed -i 's/DVB_HEADER=0/DVB_HEADER=1/g' $ROOT/$PKG_BUILD/configure*
-  sed -i 's/HAS_DVB_API5=0/HAS_DVB_API5=1/g' $ROOT/$PKG_BUILD/configure*
+  sed -i 's/DVB_HEADER=0/DVB_HEADER=1/g' $PKG_BUILD/configure*
+  sed -i 's/HAS_DVB_API5=0/HAS_DVB_API5=1/g' $PKG_BUILD/configure*
 fi
 }
