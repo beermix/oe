@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="ffmpeg"
-PKG_VERSION="3.2.4"
+PKG_VERSION="2.8.11"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="LGPLv2.1+"
@@ -83,6 +83,9 @@ esac
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
+  
+  sed -i 's@/bin/sh@/bin/bash@' $ROOT/$PKG_BUILD/configure
+  sed -i 's@openssl_init;@openssl_init;\n#undef OPENSSL_VERSION_NUMBER\n#define OPENSSL_VERSION_NUMBER 1\n@' $ROOT/$PKG_BUILD/libavformat/tls_openssl.c
 
 # ffmpeg fails building with LTO support
   strip_lto
@@ -92,7 +95,7 @@ pre_configure_target() {
 
   if [ "$KODIPLAYER_DRIVER" = "bcm2835-firmware" ]; then
     export CFLAGS="-I$SYSROOT_PREFIX/usr/include/interface/vcos/pthreads -I$SYSROOT_PREFIX/usr/include/interface/vmcs_host/linux -DRPI=1 $CFLAGS"
-    export FFMPEG_LIBS="-lbcm_host -lvcos -lvchiq_arm -lmmal -lmmal_core -lmmal_util -lvcsm -lvchostif"
+    export FFMPEG_LIBS="-lbcm_host -lvcos -lvchiq_arm -lmmal -lmmal_core -lmmal_util -lvcsm"
   fi
 }
 
@@ -105,18 +108,21 @@ configure_target() {
               --sysroot=$SYSROOT_PREFIX \
               --sysinclude="$SYSROOT_PREFIX/usr/include" \
               --target-os="linux" \
+              --extra-version="$PKG_VERSION" \
               --nm="$NM" \
               --ar="$AR" \
               --as="$CC" \
               --cc="$CC" \
               --ld="$CC" \
               --host-cc="$HOST_CC" \
-              --host-cflags="$HOST_CFLAGS" \
+              --host-cflags="$HOST_CFLAGS -D_BSD_SOURCE" \
               --host-ldflags="$HOST_LDFLAGS" \
               --host-libs="-lm" \
               --extra-cflags="$CFLAGS" \
               --extra-ldflags="$LDFLAGS -fPIC" \
               --extra-libs="$FFMPEG_LIBS" \
+              --extra-version="" \
+              --build-suffix="" \
               --disable-static \
               --enable-shared \
               --enable-gpl \
@@ -142,6 +148,7 @@ configure_target() {
               --disable-devices \
               --enable-pthreads \
               --disable-w32threads \
+              --disable-x11grab \
               --enable-network \
               --disable-gnutls --enable-openssl \
               --disable-gray \
@@ -155,7 +162,6 @@ configure_target() {
               $FFMPEG_VAAPI \
               $FFMPEG_VDPAU \
               --disable-dxva2 \
-              --enable-runtime-cpudetect \
               $FFMPEG_TABLES \
               --disable-memalign-hack \
               --enable-encoders \
@@ -186,6 +192,8 @@ configure_target() {
               --disable-libopencore-amrwb \
               --disable-libopencv \
               --disable-libdc1394 \
+              --enable-libdcadec \
+              --disable-libfaac \
               --disable-libfreetype \
               --disable-libgsm \
               --disable-libmp3lame \
@@ -195,6 +203,7 @@ configure_target() {
               --disable-libschroedinger \
               --enable-libspeex \
               --disable-libtheora \
+              --disable-libvo-aacenc \
               --disable-libvo-amrwbenc \
               --disable-libvorbis \
               --disable-libvpx \
@@ -208,7 +217,7 @@ configure_target() {
               --enable-yasm \
               --disable-symver \
               --disable-lto \
-		--enable-indev=x11grab_xcb
+              --enable-runtime-cpudetect
 }
 
 post_makeinstall_target() {
