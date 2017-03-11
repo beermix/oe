@@ -4,8 +4,12 @@
 ################################################################################
 
 PKG_NAME="vlc"
-PKG_VERSION="3.0.0-git"
-PKG_URL="https://nightlies.videolan.org/build/source/vlc-3.0.0-20170304-0240-git.tar.xz"
+PKG_VERSION="2.2.4"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
+PKG_SITE="http://www.videolan.org"
+PKG_URL="http://download.videolan.org/$PKG_NAME/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain dbus libdvbpsi ffmpeg zlib lua libvorbis libogg flac gnutls gstreamer x265 x264 libmpeg2 libsamplerate"
 PKG_PRIORITY="optional"
 PKG_SECTION="xmedia/tools"
@@ -17,7 +21,6 @@ PKG_AUTORECONF="yes"
 pre_configure_target() {
 # vlc fails to build with LTO optimization
   strip_lto
-  strip_gold
   
   export LUA_LIBS="-L$SYSROOT_PREFIX/usr/lib -llua -lm"
   export LIBS="-lterminfo"
