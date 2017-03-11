@@ -4,7 +4,7 @@ PKG_URL="ftp://ftp.gnutls.org/gcrypt/gnutls/v3.5/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain nettle gmp"
 PKG_SECTION="security"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_vfork_works=no \
@@ -27,6 +27,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_vfork_works=no \
 			      --without-idn \
 			      --disable-shared"
 
-#post_makeinstall_target() {
-#  rm -rf $INSTALL/usr/bin
-#}
+post_makeinstall_target() {
+  rm -rf $INSTALL/usr/bin
+}
