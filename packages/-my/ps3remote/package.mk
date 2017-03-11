@@ -7,7 +7,6 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 
-
 make_target() {
   make CC="$CC" AR="$AR" LD="$LD" XCFLAGS="$CFLAGS" RANLIB="$RANLIB" XLDFLAGS="$LDFLAGS" CFLAGS="-O2 -pipe -fstack-protector-strong -DDEBUG=0" -j1
 }
