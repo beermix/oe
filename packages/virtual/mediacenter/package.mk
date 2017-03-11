@@ -29,18 +29,13 @@ PKG_LONGDESC=""
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-_add_binary_addon() {
-  [ -f $ROOT/$PACKAGES/mediacenter/kodi-binary-addons/$1/package.mk ] && PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET $1" || true
-}
-
 if [ "$MEDIACENTER" = "kodi" ]; then
 # some python stuff needed for various addons
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET Pillow"
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET simplejson"
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pycrypto"
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET xmlstarlet"
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET peripheral.joystick"
-  #PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET visualization.shadertoy pvr.iptvsimple.multi inputstream.adaptive inputstream.mpd inputstream.rtmp inputstream.smoothstream"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pvr.iptvsimple.multi kodi-theme-Confluence"
   #PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET peripheral.joystick pvr.iptvsimple.multi inputstream.adaptive inputstream.mpd inputstream.rtmp inputstream.smoothstream visualization.waveform visualization.wavforhue screensaver.stars screensaver.asteroids visualization.fishbmc visualization.goom visualization.projectm visualization.spectrum  visualization.waveform visualization.wavforhue adsp.basic audiodecoder.modplug audiodecoder.sidplay audioencoder.wav audioencoder.flac audioencoder.lame audioencoder.vorbis"
 
 # other packages
