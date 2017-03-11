@@ -10,6 +10,5 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-static 
 			      --disable-silent-rules \
 			      --enable-asm \
-			      --enable-largefile \
-			      --enable-static-bin"
+			      --enable-largefile"
 
