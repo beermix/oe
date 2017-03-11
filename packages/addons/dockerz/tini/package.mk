@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="tini"
-PKG_VERSION="949e6fa"
+PKG_VERSION="v0.14.0"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="MIT"
 PKG_SITE="https://github.com/krallin/tini"
-PKG_URL="https://dl.dropboxusercontent.com/s/9iqct1faepe2d8z/tini-949e6fa.tar.xz"
+PKG_GIT_URL="https://github.com/krallin/tini"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="system"
 PKG_SHORTDESC="Tini is the simplest init you could think of"
@@ -31,7 +31,7 @@ PKG_LONGDESC="Tini is the simplest init you could think of"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CMAKE_TARGET_OPTS="-DMINIMAL=ON"
+PKG_CMAKE_TARGET_OPTS="-DMINIMAL=OFF"
 
 PKG_MAKE_TARGET_OPTS="tini-static"
 
