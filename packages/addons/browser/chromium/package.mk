@@ -25,7 +25,7 @@ PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_SITE="http://www.chromium.org/Home"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain pciutils dbus libXcomposite libXcursor libXtst alsa-lib bzip2 yasm libXScrnSaver libexif libpng harfbuzz atk gtk+ unclutter xdotool ffmpeg ninja:host nss"
+PKG_DEPENDS_TARGET="toolchain pciutils dbus libXcomposite libXcursor libXtst alsa-lib bzip2 yasm libXScrnSaver libexif libpng harfbuzz atk gtk+ unclutter xdotool libvpx ffmpeg ninja:host nss"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -115,7 +115,7 @@ make_target() {
   ./tools/gn/bootstrap/bootstrap.py --gn-gen-args "${_flags[*]}"
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$ROOT/$TOOLCHAIN/bin/python
 
-  ninja -j3 -C out/Release chrome chrome_sandbox widevinecdmadapter
+  ninja -j5 -C out/Release chrome chrome_sandbox widevinecdmadapter
 }
 makeinstall_target() {
   :
