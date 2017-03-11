@@ -1,5 +1,29 @@
---- trunk/gcc/config/arm/cortex-a8-neon.md	2016/08/26 10:22:08	239771
-+++ trunk/gcc/config/arm/cortex-a8-neon.md	2016/08/26 10:23:20	239772
+From 07453188b18a2cbe815917dbb893b4ebfdd793b6 Mon Sep 17 00:00:00 2001
+From: ktkachov <ktkachov@138bc75d-0d04-0410-961f-82ee72b054a4>
+Date: Fri, 26 Aug 2016 10:23:20 +0000
+Subject: [PATCH] [ARM] PR target/70473: Reduce size of Cortex-A8 automaton
+
+	PR target/70473
+	* config/arm/cortex-a8-neon.md (cortex_a8_vfp_muld): Reduce
+	reservation duration to 15 cycles.
+	(cortex_a8_vfp_macs): Likewise.
+	(cortex_a8_vfp_macd): Likewise.
+	(cortex_a8_vfp_divs): Likewise.
+	(cortex_a8_vfp_divd): Likewise.
+
+git-svn-id: svn+ssh://gcc.gnu.org/svn/gcc/trunk@239772
+138bc75d-0d04-0410-961f-82ee72b054a4
+
+[Backport from gcc upstream commit 79f5d5e3cd5a668d5ecb2b6b0cce80ef5706ac53.]
+Signed-off-by: Thomas Petazzoni <thomas.petazzoni@free-electrons.com>
+---
+ gcc/config/arm/cortex-a8-neon.md | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
+
+diff --git a/gcc/config/arm/cortex-a8-neon.md b/gcc/config/arm/cortex-a8-neon.md
+index 45f861f..b16c299 100644
+--- a/gcc/config/arm/cortex-a8-neon.md
++++ b/gcc/config/arm/cortex-a8-neon.md
 @@ -357,30 +357,34 @@
         (eq_attr "type" "fmuls"))
    "cortex_a8_vfp,cortex_a8_vfplite*11")
@@ -40,3 +64,6 @@
  
  ;; Comparisons can actually take 7 cycles sometimes instead of four,
  ;; but given all the other instructions lumped into type=ffarith that
+-- 
+2.7.4
+
