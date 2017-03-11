@@ -21,7 +21,6 @@ PKG_AUTORECONF="yes"
 pre_configure_target() {
 # vlc fails to build with LTO optimization
   strip_lto
-  
   export LUA_LIBS="-L$SYSROOT_PREFIX/usr/lib -llua -lm"
   export LIBS="-lterminfo"
 }
@@ -90,7 +89,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-theora \
 			      --disable-schroedinger \
 			      --disable-png \
-			      --enable-x264 \
+			      --disable-x264 \
 			      --disable-fluidsynth \
 			      --disable-zvbi \
 			      --disable-telx \
@@ -143,9 +142,6 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-crystalhd \
 			      --disable-dxva2 \
 			      --enable-vlc \
-			      --disable-qt \
-			      --enable-mmx \
-			      --enable-sse \
 			      LUAC=$SYSROOT_PREFIX/usr/bin/luac"
 
 post_makeinstall_target() {
