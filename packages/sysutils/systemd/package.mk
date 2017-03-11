@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="systemd"
-#PKG_VERSION="v232"
-PKG_VERSION="fa8b449"
+PKG_VERSION="v232"
+#PKG_VERSION="fa8b449"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/systemd"
 PKG_GIT_URL="https://github.com/systemd/systemd"
 PKG_DEPENDS_TARGET="toolchain libcap util-linux entropy xz zlib lz4 lzo bzip2 lrzip"
@@ -38,7 +38,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-dbus \
                            --disable-utmp \
                            --disable-coverage \
-                           --enable-kmod \
+                           --disable-kmod \
                            --disable-xkbcommon \
                            --enable-blkid \
                            --disable-seccomp \
