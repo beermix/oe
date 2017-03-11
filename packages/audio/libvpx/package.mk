@@ -26,3 +26,6 @@ configure_target() {
   		--disable-shared
 }
 
+post_makeinstall_target() {
+  rm -rf $INSTALL
+}
