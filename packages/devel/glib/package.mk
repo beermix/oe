@@ -18,9 +18,9 @@
 ################################################################################
 
 PKG_NAME="glib"
-PKG_VERSION="2.51.4"
+PKG_VERSION="2.50.3"
 PKG_SITE="http://www.gtk.org/"
-PKG_URL="http://ftp.gnome.org/pub/gnome/sources/glib/2.51/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="http://ftp.gnome.org/pub/gnome/sources/glib/2.50/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain zlib libffi attr util-linux expat pcre Python:host"
 PKG_DEPENDS_HOST="libffi:host"
 PKG_SECTION="devel"
@@ -34,9 +34,12 @@ pre_configure_target() {
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed|-Wl,--no-as-needed|"`
 }
                            
-PKG_CONFIGURE_OPTS_TARGET="glib_cv_stack_grows=no \
-                           glib_cv_uscore=no \
-                           glib_cv_va_val_copy=no \
+PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_mmap_fixed_mapped=yes \
+                           ac_cv_func_posix_getpwuid_r=yes \
+                           ac_cv_func_posix_getgrgid_r=yes \
+                           ac_cv_func_printf_unix98=yes \
+                           ac_cv_func_snprintf_c99=yes \
+                           ac_cv_func_vsnprintf_c99=yes \
                            --disable-selinux \
                            --disable-fam \
                            --enable-xattr \
