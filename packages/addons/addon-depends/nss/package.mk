@@ -19,9 +19,9 @@
 ################################################################################
 
 PKG_NAME="nss"
-PKG_VERSION="3.29.2"
+PKG_VERSION="3.29.3"
 PKG_SITE="http://ftp.mozilla.org/"
-PKG_URL="https://ftp.mozilla.org/pub/security/nss/releases/NSS_3_29_2_RTM/src/nss-3.29.2-with-nspr-4.13.1.tar.gz"
+PKG_URL="https://ftp.mozilla.org/pub/security/nss/releases/NSS_3_29_3_RTM/src/nss-3.29.3-with-nspr-4.13.1.tar.gz"
 PKG_DEPENDS_TARGET="toolchain nss:host nspr zlib"
 PKG_SECTION="security"
 PKG_SHORTDESC="The Network Security Services (NSS) package is a set of libraries designed to support cross-platform development of security-enabled client and server applications"
