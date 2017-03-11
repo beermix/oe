@@ -21,7 +21,7 @@ PKG_AUTORECONF="no"
 _MAJORVER=${PKG_VERSION%.*}
 
 make_target() {
-  make CC="$CC" CFLAGS="$CFLAGS -fPIC" MYCFLAGS="-DLUA_COMPAT_5_2 -DLUA_COMPAT_5_1" linux
+  make CC="$CC" CFLAGS="$CFLAGS -fPIC" MYCFLAGS="-DLUA_COMPAT_5_2 -DLUA_COMPAT_5_1" linux -j1
 }
 
 makeinstall_target() {
