@@ -13,24 +13,22 @@
 #  GNU General Public License for more details.
 #
 #  You should have received a copy of the GNU General Public License
-#  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>. http://download.qt.io/official_releases/qt/5.8/5.8.0/single/qt-everywhere-opensource-src-5.8.0.tar.xz
+#  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
 PKG_NAME="qtbase"
-PKG_VERSION="5.8.0"
+PKG_VERSION="5.6.2"
 PKG_SITE="http://qt-project.org"
-PKG_URL="http://download.qt.io/official_releases/qt/5.8/$PKG_VERSION/submodules/$PKG_NAME-opensource-src-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="pcre zlib libinput udevil"
+PKG_URL="http://download.qt.io/official_releases/qt/5.6/$PKG_VERSION/submodules/$PKG_NAME-opensource-src-$PKG_VERSION.tar.xz"
+PKG_DEPENDS_TARGET="pcre zlib"
 PKG_SOURCE_DIR="$PKG_NAME-opensource-src-$PKG_VERSION"
 PKG_SHORTDESC="A cross-platform application and UI framework"
 PKG_LONGDESC="A cross-platform application and UI framework"
 PKG_AUTORECONF="no"
 
-strip_lto
-
 PKG_CONFIGURE_OPTS_TARGET="-prefix /usr
                            -sysroot $SYSROOT_PREFIX
-                           -hostprefix $ROOT/$TOOLCHAIN
+                           -hostprefix $TOOLCHAIN
                            -device linux-openelec-g++
                            -opensource -confirm-license
                            -release
@@ -43,26 +41,33 @@ PKG_CONFIGURE_OPTS_TARGET="-prefix /usr
                            -no-qml-debug
                            -system-zlib
                            -no-mtdev
+                           -no-gif
                            -no-libpng
                            -no-libjpeg
+                           -no-harfbuzz
+                           -no-openssl
                            -no-libproxy
                            -system-pcre
                            -no-glib
+                           -no-pulseaudio
+                           -no-alsa
+                           -silent
                            -no-cups
                            -no-iconv
                            -no-evdev
                            -no-tslib
-                           -icu
+                           -no-icu
                            -no-strip
-                           -fontconfig
-                           -dbus
-                           -opengl
+                           -no-fontconfig
+                           -no-dbus
+                           -no-opengl
                            -no-libudev
                            -no-libinput
+                           -no-gstreamer
                            -no-eglfs"
 
 configure_target() {
-  QMAKE_CONF_DIR="mkspecs/devices/linux-openelec-g++"
+  QMAKE_CONF_DIR="mkspecs/devices/linux-libreelec-g++"
   QMAKE_CONF="${QMAKE_CONF_DIR}/qmake.conf"
 
   cd ..
@@ -87,7 +92,13 @@ configure_target() {
   echo "QMAKE_LFLAGS = $LDFLAGS" >> $QMAKE_CONF
   echo "load(qt_config)" >> $QMAKE_CONF
   echo '#include "../../linux-g++/qplatformdefs.h"' >> $QMAKE_CONF_DIR/qplatformdefs.h
-
+  
+ 
   unset CC CXX LD RANLIB AR AS CPPFLAGS CFLAGS LDFLAGS CXXFLAGS
   ./configure $PKG_CONFIGURE_OPTS_TARGET
+}
+
+pre_configure_target() {
+   mkdir -p $INSTALL_DEV/usr/bin/
+   mkdir -p $INSTALL_DEV/usr/lib/
 }

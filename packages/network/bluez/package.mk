@@ -30,7 +30,7 @@ PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-dependency-tracking \
                            --disable-silent-rules \
-                           --enable-library \
+                           --disable-library \
                            --enable-udev \
                            --disable-cups \
                            --disable-obex \
@@ -59,7 +59,7 @@ fi
 pre_configure_target() {
 # bluez fails to build in subdirs
   cd $ROOT/$PKG_BUILD
-    rm -rf .$TARGET_NAME
+  #rm -rf .$TARGET_NAME
   export LIBS="-lncurses -lterminfo"
 }
 
