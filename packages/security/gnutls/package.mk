@@ -1,5 +1,5 @@
 PKG_NAME="gnutls"
-PKG_VERSION="3.5.9"
+PKG_VERSION="3.5.10"
 PKG_URL="ftp://ftp.gnutls.org/gcrypt/gnutls/v3.5/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain nettle gmp"
 PKG_SECTION="security"
