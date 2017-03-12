@@ -41,7 +41,6 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --disable-profile \
                            --disable-sanity-checks \
                            --enable-add-ons \
-                           --enable-stack-protector=strong \
                            --enable-bind-now \
                            --with-elf \
                            --with-tls \
@@ -56,7 +55,8 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --disable-timezone-tools \
                            --disable-debug \
                            --enable-stackguard-randomization \
-                           --disable-werror"
+                           --disable-werror \
+                           --enable-stack-protector=strong"
 
 
 NSS_CONF_DIR="$PKG_BUILD/nss"
