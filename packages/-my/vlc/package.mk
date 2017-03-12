@@ -21,7 +21,7 @@ pre_configure_target() {
 # vlc fails to build with LTO optimization
   strip_lto
   export LUA_LIBS="-L$SYSROOT_PREFIX/usr/lib -llua -lm"
-  export LIBS="-lterminfo"
+  #export LIBS="-lterminfo"
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
