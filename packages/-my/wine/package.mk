@@ -83,3 +83,6 @@ PKG_CONFIGURE_OPTS_HOST="--enable-win64 \
 			    --without-zlib \
 			    --without-udev"
 
+makeinstall_host() {
+  : # nop
+}
