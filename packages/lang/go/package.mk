@@ -41,15 +41,12 @@ configure_host() {
   export GOROOT_FINAL=$ROOT/$TOOLCHAIN/lib/golang
   #export GOROOT_BOOTSTRAP=/usr/lib/golang
   export GOARCH=amd64
-  export CGO_ENABLED=0
-  export PKG_CONFIG="$ROOT/$TOOLCHAIN/bin/pkg-config"
-  export CC_FOR_TARGET="$CC"
-  export CXX_FOR_TARGET="$CXX"
+  export CGO_ENABLED=1
 }
 
 make_host() {
   cd $ROOT/$PKG_BUILD/src
-  bash make.bash --no-banner
+  ./make.bash --no-banner
 }
 
 makeinstall_host() {

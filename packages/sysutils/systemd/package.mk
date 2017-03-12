@@ -45,8 +45,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-ima \
                            --disable-selinux \
                            --disable-apparmor \
-                           --disable-adm-group \
-                           --disable-wheel-group \
                            --disable-xz \
                            --disable-zlib \
                            --disable-bzip2 \
@@ -68,7 +66,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-vconsole \
                            --disable-quotacheck \
                            --enable-tmpfiles \
-                           --disable-environment-d \
                            --disable-sysusers \
                            --disable-firstboot \
                            --disable-randomseed \
@@ -87,13 +84,14 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-networkd \
                            --disable-efi \
                            --disable-gnuefi \
+                           --disable-kdbus \
                            --disable-myhostname \
                            --enable-hwdb \
                            --disable-manpages \
                            --disable-hibernate \
                            --disable-ldconfig \
                            --disable-tpm --with-tpm-pcrindex=8 \
-                           --enable-split-usr \
+                           --disable-split-usr \
                            --disable-tests \
                            --without-python \
                            --with-sysvinit-path= \

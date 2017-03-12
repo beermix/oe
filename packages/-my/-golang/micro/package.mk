@@ -1,5 +1,5 @@
 PKG_NAME="micro"
-PKG_VERSION="master"
+PKG_VERSION="53a19af"
 PKG_GIT_URL="https://github.com/zyedidia/micro"
 PKG_DEPENDS_TARGET="toolchain go:host"
 PKG_GIT_BRANCH="master"
@@ -22,7 +22,7 @@ pre_make_target() {
  
 make_target() {
   mkdir -p bin
-  go get -u -v "github.com/zyedidia/micro/cmd/micro"
+  go get -u -v github.com/zyedidia/micro/...
   $GOLANG build -v -o bin/$PKG_NAME -a -ldflags "$LDFLAGS" ./
   $STRIP bin/$PKG_NAME
 }
