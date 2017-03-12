@@ -17,11 +17,11 @@
 ################################################################################
 
 PKG_NAME="glibc"
-#PKG_VERSION="2.24"
-#PKG_URL="http://ftp.gnu.org/pub/gnu/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_VERSION="2.25"
+PKG_URL="http://ftp.gnu.org/pub/gnu/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
 #PKG_VERSION="21d58b2"
-PKG_VERSION="6af0e51"
-PKG_GIT_URL="git://sourceware.org/git/glibc.git"
+#PKG_VERSION="6af0e51"
+#PKG_GIT_URL="git://sourceware.org/git/glibc.git"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap localedef-eglibc:host"
 PKG_DEPENDS_INIT="glibc"
 PKG_PRIORITY="optional"
@@ -48,17 +48,15 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-__thread \
                            --with-binutils=$ROOT/$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
-                           --enable-kernel=3.0.0 \
-                           --without-cvs \
-                           --without-gd \
+                           --enable-kernel=2.6.32 \
                            --enable-obsolete-rpc \
                            --disable-build-nscd \
                            --disable-nscd \
                            --enable-lock-elision \
                            --disable-timezone-tools \
                            --disable-debug \
-                           --enable-static \
-                           --enable-shared"
+                           --enable-stackguard-randomization \
+                           --disable-werror"
 
 
 NSS_CONF_DIR="$PKG_BUILD/nss"
@@ -110,17 +108,15 @@ pre_configure_target() {
   export OBJDUMP_FOR_HOST=objdump
 
 cat >config.cache <<EOF
-libc_cv_forced_unwind=yes
 libc_cv_c_cleanup=yes
-libc_cv_ssp=no
-libc_cv_ssp_strong=no
+
 EOF
 
   echo "sbindir=/usr/bin" >> configparms
   echo "rootsbindir=/usr/bin" >> configparms
-#  echo "build-programs=no" >> configparms
 }
 
+ 
 post_makeinstall_target() {
   ln -sf ld-$PKG_VERSION.so $INSTALL/lib/ld.so
   if [ "$TARGET_ARCH" = "arm" -a "$TARGET_FLOAT" = "hard" ]; then
