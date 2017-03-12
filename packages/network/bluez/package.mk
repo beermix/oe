@@ -28,8 +28,7 @@ PKG_LONGDESC="Bluetooth Tools and System Daemons for Linux."
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="ac_cv_prog_cc_pie=no \
-                           --disable-dependency-tracking \
+PKG_CONFIGURE_OPTS_TARGET="--disable-dependency-tracking \
                            --disable-silent-rules \
                            --disable-library \
                            --enable-udev \
@@ -44,7 +43,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_prog_cc_pie=no \
                            --enable-sixaxis \
                            --with-gnu-ld \
                            storagedir=/storage/.cache/bluetooth"
-                           
 
 if [ "$DEBUG" = "yes" ]; then
   PKG_CONFIGURE_OPTS_TARGET+=" --enable-debug"
@@ -62,7 +60,7 @@ fi
 pre_configure_target() {
 # bluez fails to build in subdirs
   cd $ROOT/$PKG_BUILD
-  #rm -rf .$TARGET_NAME
+    rm -rf .$TARGET_NAME
   export LIBS="-lncurses -lterminfo"
 }
 

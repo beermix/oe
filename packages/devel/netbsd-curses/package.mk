@@ -29,6 +29,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 
+  
 make_target() {
   make HOSTCC="$HOST_CC" CFLAGS="$CFLAGS -D_DEFAULT_SOURCE" PREFIX=/usr all-static -j1
 }
