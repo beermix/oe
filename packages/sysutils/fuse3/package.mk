@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="fuse3"
-PKG_VERSION="3.0.0"
+PKG_VERSION="fuse-3.0.0"
 PKG_SITE="https://github.com/libfuse/libfuse/"
-PKG_URL="https://dl.dropboxusercontent.com/s/dlczx4xgchaw15u/fuse3-3.0.0.tar.xz"
+PKG_GIT_URL="https://github.com/libfuse/libfuse/"
 PKG_SOURCE_DIR="fuse-3.0.0"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="system"
