@@ -9,7 +9,7 @@ PKG_URL="https://nightlies.videolan.org/build/source/vlc-2.2.5-20170311-0221.1.t
 #PKG_VERSION="2.2.4"
 #PKG_SITE="http://www.videolan.org"
 #PKG_URL="http://download.videolan.org/$PKG_NAME/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain dbus libdvbpsi ffmpeg zlib lua libvorbis libogg flac gnutls gstreamer libmpeg2"
+PKG_DEPENDS_TARGET="toolchain dbus libdvbpsi ffmpeg zlib lua libvorbis libogg flac gnutls libmpeg2"
 PKG_PRIORITY="optional"
 PKG_SECTION="xmedia/tools"
 PKG_SHORTDESC="VideoLAN multimedia player and streamer"
@@ -30,7 +30,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --without-contrib \
 			      --disable-nls \
 			      --disable-rpath \
-			      --disable-dbus \
+			      --enable-dbus \
 			      --disable-gprof \
 			      --disable-cprof \
 			      --disable-debug \
@@ -60,7 +60,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --enable-ogg \
 			      --enable-mux_ogg \
 			      --disable-shout\
-			      --enable-mkv \
+			      --disable-mkv \
 			      --disable-mod \
 			      --enable-mpc \
 			      --disable-gme \
@@ -124,7 +124,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-macosx-vlc-app \
 			      --disable-macosx-qtkit \
 			      --disable-macosx-quartztext \
-			      --enable-ncurses \
+			      --disable-ncurses \
 			      --disable-goom \
 			      --disable-projectm \
 			      --disable-atmo \
