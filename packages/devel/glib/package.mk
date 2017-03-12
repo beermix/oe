@@ -32,6 +32,7 @@ PKG_AUTORECONF="yes"
 
 pre_configure_target() {
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed|-Wl,--no-as-needed|"`
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--as-needed|-Wl,--no-as-needed|"`
 }
                            
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_mmap_fixed_mapped=yes \
