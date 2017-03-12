@@ -1,23 +1,16 @@
 PKG_NAME="jpeg"
 PKG_VERSION="9b"
-PKG_URL="http://www.ijg.org/files/jpegsrc.v9b.tar.gz"
-#PKG_SOURCE_DIR="aufs2-util"
+PKG_URL="http://www.ijg.org/files/jpegsrc.v$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
-
-PKG_SECTION="my"
+PKG_SECTION="graphics"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC -DPIC"
+  strip_lto
 }
 
-
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
-			   --enable-static \
-			   --with-sysroot=$SYSROOT_PREFIX \
-			   --with-gnu-ld"
-	
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared --with-pic"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin

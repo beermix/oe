@@ -99,6 +99,7 @@ make_target() {
     flac
     icu
     re2c
+    ffmpeg
   )
 
   # Remove bundled libraries for which we will use the system copies; this
