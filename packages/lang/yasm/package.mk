@@ -44,6 +44,8 @@ PKG_CONFIGURE_OPTS_HOST="--disable-debug \
                          --without-libiconv-prefix \
                          --without-libintl-prefix"
                          
+PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
+                         
 PKG_CMAKE_OPTS_HOST="-DBUILD_SHARED_LIBS=OFF -DENABLE_NLS=OFF -DYASM_BUILD_TESTS=OFF"
 
 PKG_CMAKE_OPTS_TARGET="$PKG_CMAKE_OPTS_HOST"
