@@ -21,5 +21,4 @@ PKG_CONFIGURE_OPTS_HOST="ac_cv_sys_long_file_names=yes \
 			    --enable-xattr \
 			    --enable-attr \
 			    --enable-static \
-			    --prefix=/usr \
 			    --disable-nls"
