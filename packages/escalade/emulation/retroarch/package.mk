@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="retroarch"
-PKG_VERSION="e587264"
+PKG_VERSION="v1.5.0"
 PKG_GIT_URL="https://github.com/libretro/RetroArch.git"
 PKG_DEPENDS_TARGET="toolchain alsa-lib freetype zlib retroarch-assets core-info retroarch-joypad-autoconfig common-shaders libretro-database ffmpeg"
 PKG_SECTION="emulation"
@@ -82,8 +82,8 @@ pre_configure_target() {
 
 make_target() {
   make V=1
-  make -C gfx/video_filters compiler=$CC extra_flags="$CFLAGS"
-  make -C audio/audio_filters compiler=$CC extra_flags="$CFLAGS"
+  make -C $ROOT/$PKG_BUILD/gfx/video_filters compiler=$CC extra_flags="$CFLAGS"
+  #make -C $ROOT/$PKG_BUILD/audio/audio_filters compiler=$CC extra_flags="$CFLAGS"
 }
 
 makeinstall_target() {
@@ -94,9 +94,9 @@ makeinstall_target() {
   mkdir -p $INSTALL/usr/share/retroarch/video_filters
     cp $ROOT/$PKG_BUILD/gfx/video_filters/*.so $INSTALL/usr/share/retroarch/video_filters
     cp $ROOT/$PKG_BUILD/gfx/video_filters/*.filt $INSTALL/usr/share/retroarch/video_filters
-  mkdir -p $INSTALL/usr/share/retroarch/audio_filters
-    cp $ROOT/$PKG_BUILD/audio/audio_filters/*.so $INSTALL/usr/share/retroarch/audio_filters
-    cp $ROOT/$PKG_BUILD/audio/audio_filters/*.dsp $INSTALL/usr/share/retroarch/audio_filters
+  #mkdir -p $INSTALL/usr/share/retroarch/audio_filters
+    #cp $ROOT/$PKG_BUILD/audio/audio_filters/*.so $INSTALL/usr/share/retroarch/audio_filters
+    #cp $ROOT/$PKG_BUILD/audio/audio_filters/*.dsp $INSTALL/usr/share/retroarch/audio_filters
     cp $PKG_DIR/scripts/* $INSTALL/usr/bin
   
   # General configuration
@@ -129,7 +129,7 @@ makeinstall_target() {
 
   # Audio
   sed -i -e "s/# audio_driver =/audio_driver = \"alsathread\"/" $INSTALL/etc/retroarch.cfg
-  sed -i -e "s/# audio_filter_dir =/audio_filter_dir =\/usr\/share\/retroarch\/audio_filters/" $INSTALL/etc/retroarch.cfg
+  #sed -i -e "s/# audio_filter_dir =/audio_filter_dir =\/usr\/share\/retroarch\/audio_filters/" $INSTALL/etc/retroarch.cfg
   if [ "$PROJECT" == "OdroidXU3" ]; then # workaround the 55fps bug
     sed -i -e "s/# audio_out_rate = 48000/audio_out_rate = 44100/" $INSTALL/etc/retroarch.cfg
   fi

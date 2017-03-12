@@ -28,7 +28,8 @@ PKG_LONGDESC="Bluetooth Tools and System Daemons for Linux."
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-dependency-tracking \
+PKG_CONFIGURE_OPTS_TARGET="ac_cv_prog_cc_pie=no \
+                           --disable-dependency-tracking \
                            --disable-silent-rules \
                            --disable-library \
                            --enable-udev \
@@ -43,6 +44,8 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-dependency-tracking \
                            --enable-sixaxis \
                            --with-gnu-ld \
                            storagedir=/storage/.cache/bluetooth"
+                           
+
 if [ "$DEBUG" = "yes" ]; then
   PKG_CONFIGURE_OPTS_TARGET+=" --enable-debug"
 else

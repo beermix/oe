@@ -63,12 +63,12 @@ makeinstall_target() {
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
-  cp $PKG_BUILD/bin/bin/amd64/makemkvcon $ADDON_BUILD/$PKG_ADDON_ID/bin/makemkvcon.bin
+  cp $ROOT/$PKG_BUILD/bin/bin/amd64/makemkvcon $ADDON_BUILD/$PKG_ADDON_ID/bin/makemkvcon.bin
   chmod 755 $ADDON_BUILD/$PKG_ADDON_ID/bin/makemkvcon.bin
 
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/lib
-  cp $PKG_BUILD/out/libmakemkv.so.[0-9] $ADDON_BUILD/$PKG_ADDON_ID/lib
-  cp $PKG_BUILD/out/libdriveio.so.[0-9] $ADDON_BUILD/$PKG_ADDON_ID/lib
-  cp $PKG_BUILD/out/libmmbd.so.[0-9] $ADDON_BUILD/$PKG_ADDON_ID/lib
-  cp -PL $(get_build_dir libressl)/.install_pkg/usr/lib/libcrypto.so.?? $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp $ROOT/$PKG_BUILD/out/libmakemkv.so.[0-9] $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp $ROOT/$PKG_BUILD/out/libdriveio.so.[0-9] $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp $ROOT/$PKG_BUILD/out/libmmbd.so.[0-9] $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_pkg_build openssl)/.install_pkg/usr/lib/libcrypto.so.?? $ADDON_BUILD/$PKG_ADDON_ID/lib
 }

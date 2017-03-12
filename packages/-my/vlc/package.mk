@@ -20,7 +20,7 @@ PKG_AUTORECONF="yes"
 pre_configure_target() {
 # vlc fails to build with LTO optimization
   strip_lto
-  strip_gold
+  
   export LUA_LIBS="-L$SYSROOT_PREFIX/usr/lib -llua -lm"
   #export LIBS="-lterminfo"
 }
@@ -96,7 +96,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-libass \
 			      --disable-kate \
 			      --disable-tiger \
-			      --enable-libva \
+			      --disable-libva \
 			      --disable-vdpau \
 			      --without-x \
 			      --disable-xcb \

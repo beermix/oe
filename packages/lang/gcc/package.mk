@@ -56,9 +56,12 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libssp \
                            --disable-libitm \
                            --disable-libquadmath \
+                           --disable-libquadmath-support
                            --disable-libgomp \
+                           --disable-libcilkrts 
                            --enable-poison-system-directories \
-                           --with-tune=generic"
+                           --with-arch=ivybridge \
+                           --disable-biarch"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \

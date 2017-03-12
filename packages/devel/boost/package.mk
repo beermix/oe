@@ -48,6 +48,7 @@ pre_configure_target() {
   export CFLAGS="$CFLAGS -fPIC"
   export CXXFLAGS="$CXXFLAGS -fPIC"
   export LDFLAGS="$LDFLAGS -fPIC"
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
 }
 
 configure_target() {
@@ -64,7 +65,7 @@ make_target() {
 }
 
 makeinstall_target() {
-  $ROOT/$TOOLCHAIN/bin/bjam -d2 --toolset=gcc link=static \
+  $ROOT/$TOOLCHAIN/bin/bjam -d2 --toolset=gcc link=static variant=release threading=multi debug-symbols=off \
                                 --prefix=$SYSROOT_PREFIX/usr \
                                 --ignore-site-config \
                                 --layout=system \
