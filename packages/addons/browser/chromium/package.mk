@@ -75,7 +75,7 @@ make_target() {
     'use_gnome_keyring=false'
     'use_gold=false'
     'use_gtk3=false'
-    'use_kerberos=true'
+    'use_kerberos=false'
     'use_pulseaudio=false'
     'use_sysroot=true'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
@@ -100,6 +100,7 @@ make_target() {
     icu
     re2c
     ffmpeg
+    libxslt
   )
 
   # Remove bundled libraries for which we will use the system copies; this
