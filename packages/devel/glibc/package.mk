@@ -54,7 +54,6 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --enable-lock-elision \
                            --disable-timezone-tools \
                            --disable-debug \
-                           --enable-stackguard-randomization \
                            --disable-werror \
                            --enable-stack-protector=strong"
 
@@ -110,13 +109,15 @@ pre_configure_target() {
 cat >config.cache <<EOF
 libc_cv_forced_unwind=yes
 libc_cv_c_cleanup=yes
+libc_cv_ssp=no
+libc_cv_ssp_strong=no
 EOF
 
   echo "sbindir=/usr/bin" >> configparms
   echo "rootsbindir=/usr/bin" >> configparms
 }
 
- post_makeinstall_target() {
+post_makeinstall_target() {
   ln -sf ld-$PKG_VERSION.so $INSTALL/lib/ld.so
   if [ "$TARGET_ARCH" = "arm" -a "$TARGET_FLOAT" = "hard" ]; then
     ln -sf ld-$PKG_VERSION.so $INSTALL/lib/ld-linux.so.3
