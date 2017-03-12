@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="systemd"
-PKG_VERSION="v232"
-#PKG_VERSION="fa8b449"
+#PKG_VERSION="v232"
+PKG_VERSION="f08e928"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/systemd"
 PKG_GIT_URL="https://github.com/systemd/systemd"
 PKG_DEPENDS_TARGET="toolchain libcap util-linux entropy xz zlib lz4 lzo bzip2 lrzip"
@@ -45,6 +45,8 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-ima \
                            --disable-selinux \
                            --disable-apparmor \
+                           --disable-adm-group \
+                           --disable-wheel-group \
                            --disable-xz \
                            --disable-zlib \
                            --disable-bzip2 \
@@ -66,12 +68,13 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-vconsole \
                            --disable-quotacheck \
                            --enable-tmpfiles \
+                           --disable-environment-d \
                            --disable-sysusers \
                            --disable-firstboot \
                            --disable-randomseed \
                            --disable-backlight \
                            --disable-rfkill \
-                           --enable-logind \
+                           --enable-logind --without-kill-user-processes \
                            --disable-machined \
                            --disable-importd \
                            --disable-hostnamed \
@@ -80,17 +83,17 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-localed \
                            --disable-coredump \
                            --disable-polkit \
-                           --disable-resolved \
+                           --disable-resolved --with-default-dnssec=allow-downgrade \
                            --disable-networkd \
                            --disable-efi \
                            --disable-gnuefi \
-                           --disable-kdbus \
                            --disable-myhostname \
                            --enable-hwdb \
                            --disable-manpages \
                            --disable-hibernate \
                            --disable-ldconfig \
-                           --disable-split-usr \
+                           --disable-tpm --with-tpm-pcrindex=8 \
+                           --enable-split-usr \
                            --disable-tests \
                            --without-python \
                            --with-sysvinit-path= \
