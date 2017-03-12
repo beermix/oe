@@ -1,6 +1,5 @@
 PKG_NAME="patch"
-PKG_VERSION=""
-PKG_URL=""
+PKG_VERSION="git"
 PKG_DEPENDS_TARGET="toolchain attr"
 PKG_SECTION="devel"
 PKG_AUTORECONF="no"
