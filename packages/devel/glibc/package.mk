@@ -61,7 +61,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
 
 NSS_CONF_DIR="$PKG_BUILD/nss"
 
-GLIBC_EXCLUDE_BIN="catchsegv gencat getconf iconv iconvconfig ldconfig"
+GLIBC_EXCLUDE_BIN="catchsegv gencat getconf ldconfig"
 GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN makedb mtrace pcprofiledump"
 GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN pldd rpcgen sln sotruss sprof xtrace"
 
@@ -108,16 +108,15 @@ pre_configure_target() {
   export OBJDUMP_FOR_HOST=objdump
 
 cat >config.cache <<EOF
+libc_cv_forced_unwind=yes
 libc_cv_c_cleanup=yes
-
 EOF
 
   echo "sbindir=/usr/bin" >> configparms
   echo "rootsbindir=/usr/bin" >> configparms
 }
 
- 
-post_makeinstall_target() {
+ post_makeinstall_target() {
   ln -sf ld-$PKG_VERSION.so $INSTALL/lib/ld.so
   if [ "$TARGET_ARCH" = "arm" -a "$TARGET_FLOAT" = "hard" ]; then
     ln -sf ld-$PKG_VERSION.so $INSTALL/lib/ld-linux.so.3
