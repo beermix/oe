@@ -22,6 +22,7 @@ PKG_CONFIGURE_OPTS_TARGET="fu_cv_sys_stat_statfs2_bsize=yes \
                            --datarootdir=/storage/.config \
                            --infodir=/storage/.config \     
                            --localedir=/storage/.config \
+                           --mandir=/dev/null \
                            --disable-doxygen-doc \
                            --disable-doxygen-rtf \
                            --disable-doxygen-xml \
