@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="mono"
-PKG_VERSION="4.8.0.495"
-PKG_REV="102"
+PKG_VERSION="4.6.2.7"
+PKG_REV="999"
 PKG_ARCH="any"
 PKG_LICENSE="MIT"
 PKG_SITE="http://www.mono-project.com"
@@ -59,6 +59,9 @@ makeinstall_host() {
 configure_target() {
   cp -PR ../* .
   strip_lto
+  strip_gold
+  export LDFLAGS="-ldl -lpthread"
+  export CFLAGS="$CFLAGS -D_DEFAULT_SOURCE"
   ./configure $options --host=$TARGET_NAME \
                        --disable-mcs-build
 }

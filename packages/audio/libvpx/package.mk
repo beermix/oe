@@ -8,17 +8,24 @@ PKG_AUTORECONF="no"
 
 configure_target() {
   cd $ROOT/$PKG_BUILD
-  ./configure --cpu="$TARGET_CPU" \
-  		--target=generic-gnu \
+  ./configure --prefix=/usr \
+  		--cpu="ivybridge" \
+  		--target=x86_64-linux-gcc \
   		--extra-cflags="$CFLAGS" \
   		--extra-cxxflags="$CXXFLAGS" \
+  		--as=yasm \
+  		--enable-multithread \
+  		--disable-debug-libs \
   		--enable-libs \
+  		--enable-thumb \
+  		--enable-pic \
+  		--disable-decode-perf-tests \
+  		--disable-encode-perf-tests \
   		--disable-examples \
   		--disable-tools \
   		--disable-docs \
   		--enable-vp8 \
   		--enable-vp9 \
-  		--enable-internal-stats \
   		--enable-postproc \
   		--enable-vp9-postproc \
   		--enable-runtime-cpu-detect \

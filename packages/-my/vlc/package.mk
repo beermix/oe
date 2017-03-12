@@ -20,6 +20,7 @@ PKG_AUTORECONF="yes"
 pre_configure_target() {
 # vlc fails to build with LTO optimization
   strip_lto
+  strip_gold
   export LUA_LIBS="-L$SYSROOT_PREFIX/usr/lib -llua -lm"
   #export LIBS="-lterminfo"
 }
