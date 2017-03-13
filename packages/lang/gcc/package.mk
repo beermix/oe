@@ -42,7 +42,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-gnu-ld \
                            --enable-plugin \
                            --enable-lto \
-                           --enable-gold \
                            --enable-ld=default \
                            --disable-multilib \
                            --disable-nls \
@@ -59,7 +58,10 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libquadmath-support \
                            --disable-libgomp \
                            --disable-libcilkrts \
+                           --enable-install-libiberty \
+                           --disable-libunwind-exceptions \
                            --enable-poison-system-directories \
+                           --disable-werror \
                            --with-arch=ivybridge"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
