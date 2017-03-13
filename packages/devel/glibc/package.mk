@@ -17,11 +17,10 @@
 ################################################################################
 
 PKG_NAME="glibc"
-PKG_VERSION="2.25"
-PKG_URL="http://ftp.gnu.org/pub/gnu/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
-#PKG_VERSION="21d58b2"
-#PKG_VERSION="6af0e51"
-#PKG_GIT_URL="git://sourceware.org/git/glibc.git"
+#PKG_VERSION="2.25"
+#PKG_URL="http://ftp.gnu.org/pub/gnu/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_VERSION="d40dbe7"
+PKG_GIT_URL="git://sourceware.org/git/glibc.git"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap localedef-eglibc:host"
 PKG_DEPENDS_INIT="glibc"
 PKG_PRIORITY="optional"
@@ -130,6 +129,15 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/lib/*.map
   rm -rf $INSTALL/var
 
+# remove unneeded libs
+  rm -rf $INSTALL/usr/lib/libBrokenLocale*
+  rm -rf $INSTALL/usr/lib/libSegFault.so
+  rm -rf $INSTALL/usr/lib/libmemusage.so
+  rm -rf $INSTALL/usr/lib/libpcprofile.so
+
+# remove ldscripts
+#  rm -rf $INSTALL/usr/lib/libc.so
+#  rm -rf $INSTALL/usr/lib/libpthread.so
 # remove locales and charmaps
   rm -rf $INSTALL/usr/share/i18n/charmaps
   if [ -n "$GLIBC_LOCALES" ]; then
