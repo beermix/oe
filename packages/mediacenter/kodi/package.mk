@@ -314,7 +314,6 @@ pre_configure_target() {
 
   export CFLAGS="$CFLAGS $KODI_CFLAGS"
   export CXXFLAGS="$CXXFLAGS $KODI_CXXFLAGS"
-  export CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
   export LIBS="$LIBS -lz"
 
   export JSON_BUILDER=$ROOT/$TOOLCHAIN/bin/JsonSchemaBuilder

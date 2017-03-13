@@ -166,7 +166,7 @@ make_target() {
   unset LDFLAGS
 
   make modules
-  make INSTALL_MOD_PATH=$INSTALL/usr DEPMOD="$ROOT/$TOOLCHAIN/bin/depmod" INSTALL_MOD_STRIP=1 modules_install
+  make INSTALL_MOD_PATH=$INSTALL/usr INSTALL_MOD_STRIP=1 modules_install
   rm -f $INSTALL/usr/lib/modules/*/build
   rm -f $INSTALL/usr/lib/modules/*/source
 

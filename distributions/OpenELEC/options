@@ -71,7 +71,6 @@
 # Space separated list is supported, joystick
   KERNEL_EXTRA_CONFIG+=" filesystem audio"
   KERNEL_EXTRA_CONFIG+=" lan-usb lan-phy"
-  KERNEL_EXTRA_CONFIG+=""
   KERNEL_EXTRA_CONFIG+=" bluetooth sata samba"
 
 # additional drivers to install:
@@ -189,7 +188,7 @@
   SWAPFILESIZE="256"
 
 # build with installer (yes / no)
-  INSTALLER_SUPPORT="yes"
+  INSTALLER_SUPPORT="no"
 
 # Testpackages for development (yes / no)
   TESTING="no"
