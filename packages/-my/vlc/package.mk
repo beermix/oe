@@ -4,11 +4,11 @@
 ################################################################################
 
 PKG_NAME="vlc"
-PKG_VERSION="2.2.5"
-PKG_URL="https://nightlies.videolan.org/build/source/vlc-2.2.5-20170311-0221.1.tar.xz"
-#PKG_VERSION="2.2.4"
-#PKG_SITE="http://www.videolan.org"
-#PKG_URL="http://download.videolan.org/$PKG_NAME/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
+#PKG_VERSION="2.2.5"
+#PKG_URL="https://nightlies.videolan.org/build/source/vlc-2.2.5-20170311-0221.1.tar.xz"
+PKG_VERSION="2.2.4"
+PKG_SITE="http://www.videolan.org"
+PKG_URL="http://download.videolan.org/$PKG_NAME/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain dbus libdvbpsi ffmpeg zlib lua libvorbis libogg flac gnutls libmpeg2"
 PKG_PRIORITY="optional"
 PKG_SECTION="xmedia/tools"
@@ -26,7 +26,6 @@ pre_configure_target() {
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
-			      --disable-dependency-tracking \
 			      --without-contrib \
 			      --disable-nls \
 			      --disable-rpath \
