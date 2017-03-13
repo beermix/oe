@@ -49,7 +49,6 @@ pre_configure_target() {
   export CXXFLAGS="$CXXFLAGS -fPIC"
   export LDFLAGS="$LDFLAGS -fPIC"
   export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
-  export CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
 }
 
 configure_target() {
