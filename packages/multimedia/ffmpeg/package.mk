@@ -92,6 +92,8 @@ pre_configure_target() {
 
 # ffmpeg fails running with GOLD support
   strip_gold
+  
+  export CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
 
   if [ "$KODIPLAYER_DRIVER" = "bcm2835-firmware" ]; then
     export CFLAGS="-I$SYSROOT_PREFIX/usr/include/interface/vcos/pthreads -I$SYSROOT_PREFIX/usr/include/interface/vmcs_host/linux -DRPI=1 $CFLAGS"
@@ -148,7 +150,7 @@ configure_target() {
               --disable-devices \
               --enable-pthreads \
               --disable-w32threads \
-              --disable-x11grab \
+              --enable-x11grab \
               --enable-network \
               --disable-gnutls --enable-openssl \
               --disable-gray \
@@ -189,7 +191,6 @@ configure_target() {
               --enable-bzlib \
               --disable-frei0r \
               --disable-libopencore-amrnb \
-              --disable-libopencore-amrwb \
               --disable-libopencv \
               --disable-libdc1394 \
               --enable-libdcadec \
@@ -217,7 +218,8 @@ configure_target() {
               --enable-yasm \
               --disable-symver \
               --disable-lto \
-              --enable-runtime-cpudetect
+              --enable-runtime-cpudetect \
+              --enable-indev=x11grab_xcb
 }
 
 post_makeinstall_target() {

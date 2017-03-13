@@ -6,7 +6,7 @@ PKG_DEPENDS_TARGET="toolchain go:host openssl swig:host boost libtorrent-rasterb
 PKG_SECTION="tools"
 PKG_AUTORECONF="no"
 
-#strip_lto
+strip_lto
 
 configure_target() {
   export GOOS=linux
