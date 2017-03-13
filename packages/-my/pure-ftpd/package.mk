@@ -6,7 +6,7 @@ PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-ssp --with-altlog --with-puredb --with-nonroot --with-rfc2640 --disable-ssp --with-ftpwho --sysconfdir=/storage/.config --datadir=/storage/.config --libdir=/storage/.config --libexecdir=/storage/.config --sharedstatedir=/storage/.config --localstatedir=/storage/.config --includedir=/storage/.config --oldincludedir=/storage/.config --datarootdir=/storage/.config --infodir=/storage/.config --localedir=/storage/.config --enable-largefile"
+PKG_CONFIGURE_OPTS_TARGET="--disable-ssp --with-altlog --with-nonroot --with-rfc2640 --disable-ssp --with-ftpwho --sysconfdir=/storage/.config --datadir=/storage/.config --libdir=/storage/.config --libexecdir=/storage/.config --sharedstatedir=/storage/.config --localstatedir=/storage/.config --includedir=/storage/.config --oldincludedir=/storage/.config --datarootdir=/storage/.config --infodir=/storage/.config --localedir=/storage/.config --enable-largefile"
                            
  
 post_makeinstall_target() {
@@ -14,5 +14,5 @@ post_makeinstall_target() {
 }
 
 post_install () {
-  enable_service pure-ftpd.service
+  enable_service ftpd.service
 }
