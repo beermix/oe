@@ -14,7 +14,6 @@ configure_target() {
   		--extra-cflags="$CFLAGS" \
   		--extra-cxxflags="$CXXFLAGS" \
   		--as=yasm \
-  		--enable-multithread \
   		--disable-debug-libs \
   		--enable-pic \
   		--disable-decode-perf-tests \
