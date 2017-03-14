@@ -16,13 +16,13 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="kodi-theme-Confluence"
-PKG_VERSION="16.1-c327c53"
-PKG_SITE="http://www.kodi.tv"
-PKG_URL="http://sources.libreelec.tv/7.0.3/kodi-theme-Confluence-16.1-c327c53.tar.xz"
+PKG_NAME="kodi-theme-Xonfluence"
+PKG_VERSION="8384f46"
+PKG_GIT_URL="https://github.com/Helly1206/skin.xonfluence"
+PKG_GIT_BRANCH="jarvis"
 PKG_DEPENDS_TARGET="toolchain kodi:host"
 PKG_SECTION="mediacenter"
-PKG_SHORTDESC="kodi-theme-Confluence: Kodi Mediacenter default theme"
+PKG_SHORTDESC="kodi-theme-xonfluence: Kodi Mediacenter default theme"
 PKG_LONGDESC="Kodi Media Center (which was formerly named Xbox Media Center and XBMC) is a free and open source cross-platform media player and home entertainment system software with a 10-foot user interface designed for the living-room TV. Its graphical user interface allows the user to easily manage video, photos, podcasts, and music from a computer, optical disk, local network, and the internet using a remote control."
 
 PKG_IS_ADDON="no"
@@ -36,16 +36,16 @@ make_target() {
 }
 
 makeinstall_target() {
-  mkdir -p $INSTALL/usr/share/kodi/addons/skin.confluence
-    cp -R */ $INSTALL/usr/share/kodi/addons/skin.confluence
-    cp *.txt $INSTALL/usr/share/kodi/addons/skin.confluence
-    cp *.xml $INSTALL/usr/share/kodi/addons/skin.confluence
-    cp *.png $INSTALL/usr/share/kodi/addons/skin.confluence
-      rm -rf $INSTALL/usr/share/kodi/addons/skin.confluence/media
+  mkdir -p $INSTALL/usr/share/kodi/addons/skin.xonfluence
+    cp -R */ $INSTALL/usr/share/kodi/addons/skin.xonfluence
+    cp *.txt $INSTALL/usr/share/kodi/addons/skin.xonfluence
+    cp *.xml $INSTALL/usr/share/kodi/addons/skin.xonfluence
+    cp *.png $INSTALL/usr/share/kodi/addons/skin.xonfluence
+      rm -rf $INSTALL/usr/share/kodi/addons/skin.xonfluence/media
 
-  mkdir -p $INSTALL/usr/share/kodi/addons/skin.confluence/media
-    cp Textures.xbt $INSTALL/usr/share/kodi/addons/skin.confluence/media
+  mkdir -p $INSTALL/usr/share/kodi/addons/skin.xonfluence/media
+    cp Textures.xbt $INSTALL/usr/share/kodi/addons/skin.xonfluence/media
 
 # Rebrand
-  #sed -e "s,@DISTRONAME@,$DISTRONAME,g" -i $INSTALL/usr/share/kodi/addons/skin.confluence/720p/IncludesHomeMenuItems.xml
+  #sed -e "s,@DISTRONAME@,OpenELEC,g" -i $INSTALL/usr/share/kodi/addons/skin.xonfluence/720p/IncludesHomeMenuItems.xml
 }
