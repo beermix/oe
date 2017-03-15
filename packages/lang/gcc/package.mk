@@ -44,8 +44,13 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-lto \
                            --enable-gold \
                            --enable-ld=default \
+                           --enable-default-pie \
+                           --disable-browser-plugin \
+                           --disable-vtable-verify \
                            --disable-multilib \
-                           --disable-nls \
+                           --without-included-gettext \
+                           --enable-linker-build-id \
+                           --enable-nls \
                            --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
                            --without-ppl \
@@ -74,6 +79,7 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --with-newlib \
                               --disable-libatomic \
                               --disable-decimal-float \
+                              --with-system-zlib \
                               $GCC_OPTS"
 
 PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
@@ -90,6 +96,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time \
                          --enable-clocale=gnu \
+                         --with-target-system-zlib \
                          $GCC_OPTS"
 
 pre_configure_host() {
