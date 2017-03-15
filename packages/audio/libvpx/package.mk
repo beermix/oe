@@ -13,7 +13,6 @@ configure_target() {
   		--target=generic-gnu \
   		--extra-cflags="$CFLAGS" \
   		--extra-cxxflags="$CXXFLAGS" \
-  		--as=yasm \
   		--disable-debug-libs \
   		--enable-pic \
   		--disable-decode-perf-tests \
@@ -28,4 +27,5 @@ configure_target() {
 
 post_makeinstall_target() {
   rm -rf $INSTALL
+  # make test V=s
 }

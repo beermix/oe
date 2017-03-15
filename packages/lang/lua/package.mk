@@ -4,7 +4,7 @@
 ################################################################################
 
 PKG_NAME="lua"
-PKG_VERSION="5.3.4"
+PKG_VERSION="5.3.3"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="MIT"
@@ -21,7 +21,7 @@ PKG_AUTORECONF="no"
 _MAJORVER=${PKG_VERSION%.*}
 
 make_target() {
-  make CC="$CC" CFLAGS="$CFLAGS -fPIC" MYCFLAGS="-DLUA_COMPAT_5_2 -DLUA_COMPAT_5_1" linux
+  make CC="$CC" CFLAGS="$CFLAGS -fPIC" LDFLAGS="$LDFLAGS -fPIC" MYCFLAGS="-DLUA_COMPAT_5_2 -DLUA_COMPAT_5_1" linux
 }
 
 makeinstall_target() {

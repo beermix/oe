@@ -1,5 +1,5 @@
 [Unit]
-Description=Database directory
+Description=Database directory RetroArch
 After=storage.mount
 After=systemd-tmpfiles-setup.service
 

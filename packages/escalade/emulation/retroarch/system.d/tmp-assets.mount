@@ -1,5 +1,5 @@
 [Unit]
-Description=Assets directory
+Description=Assets directory RetroArch
 After=storage.mount
 After=systemd-tmpfiles-setup.service
 
