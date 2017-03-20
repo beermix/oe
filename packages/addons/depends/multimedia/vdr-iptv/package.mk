@@ -22,7 +22,6 @@ PKG_SITE="http://www.saunalahti.fi/~rahrenbe/vdr/iptv/"
 PKG_URL="http://www.saunalahti.fi/~rahrenbe/vdr/iptv/files/$PKG_NAME-$PKG_VERSION.tgz"
 PKG_SOURCE_DIR="iptv-${PKG_VERSION}"
 PKG_DEPENDS_TARGET="toolchain vdr curl"
-
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="vdr-iptv: an IPTV plugin for the Video Disk Recorder (VDR)"
 PKG_LONGDESC="vdr-iptv is an IPTV plugin for the Video Disk Recorder (VDR)"
