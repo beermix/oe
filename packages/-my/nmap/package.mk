@@ -21,5 +21,3 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_c_bigendian=yes \
                            --without-ncat \
                            --without-ndiff \
                            --without-zenmap"
-
-
