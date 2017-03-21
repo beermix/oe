@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="eventlircd"
-PKG_VERSION="7faaf9d"
+PKG_VERSION="fb51489"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -33,7 +33,8 @@ PKG_LONGDESC="The eventlircd daemon provides four functions for LIRC devices"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--with-udev-dir=/usr/lib/udev"
+PKG_CONFIGURE_OPTS_TARGET="--with-udev-dir=/usr/lib/udev \
+                           --with-lircd-socket=/run/lirc/lircd"
 
 post_makeinstall_target() {
 # install our own evmap files and udev rules

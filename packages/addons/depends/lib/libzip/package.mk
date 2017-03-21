@@ -21,7 +21,6 @@ PKG_VERSION="0.11.2"
 PKG_SITE="http://www.nih.at/libzip/"
 PKG_URL="http://www.nih.at/libzip/${PKG_NAME}-${PKG_VERSION}.tar.xz"
 PKG_DEPENDS_TARGET="toolchain"
-
 PKG_SHORTDESC="libzip"
 PKG_LONGDESC="libzip"
 

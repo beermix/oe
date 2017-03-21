@@ -58,8 +58,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_mmap_fixed_mapped=yes \
                            --with-pcre=system \
                            --enable-static"
 
-                 
-	   
 post_makeinstall_target() {
   mkdir -p $SYSROOT_PREFIX/usr/lib/pkgconfig
     cp g*-2.0.pc $SYSROOT_PREFIX/usr/lib/pkgconfig

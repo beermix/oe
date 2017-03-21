@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2014 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,4 +16,18 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-d    /run/lirc     0755 root root - -
+PKG_NAME="evtest"
+PKG_VERSION="1.33"
+PKG_REV="0"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
+PKG_SITE="http://cgit.freedesktop.org/evtest/"
+PKG_URL="http://cgit.freedesktop.org/evtest/snapshot/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_DEPENDS_TARGET="toolchain libxml2"
+PKG_PRIORITY="optional"
+PKG_SECTION="debug/tools"
+PKG_SHORTDESC="evtest: Simple tool for input event debugging."
+PKG_LONGDESC="evtest is a simple tool for input event debugging."
+
+PKG_IS_ADDON="no"
+PKG_AUTORECONF="yes"

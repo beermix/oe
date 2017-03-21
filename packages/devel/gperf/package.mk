@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,35 +16,20 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="eventlircd"
-PKG_VERSION="7faaf9d"
+# libcap,systemd,eudev depends on gperf and must be patched for gperf >= 3.1
+
+PKG_NAME="gperf"
+PKG_VERSION="3.0.4"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="http://code.google.com/p/eventlircd"
-PKG_GIT_URL="https://github.com/OpenELEC/eventlircd.git"
-PKG_GIT_BRANCH="master"
-PKG_DEPENDS_TARGET="toolchain systemd lirc"
+PKG_SITE="https://www.gnu.org/software/gperf/"
+PKG_URL="https://ftp.gnu.org/pub/gnu/gperf/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_DEPENDS_HOST="ccache:host"
 PKG_PRIORITY="optional"
-PKG_SECTION="system/remote"
-PKG_SHORTDESC="eventlircd:The eventlircd daemon provides various functions for LIRC devices"
-PKG_LONGDESC="The eventlircd daemon provides four functions for LIRC devices"
+PKG_SECTION="devel"
+PKG_SHORTDESC="gperf: a perfect hash function generator"
+PKG_LONGDESC="GNU gperf is a perfect hash function generator. For a given list of strings, it produces a hash function and hash table, in form of C or C++ code, for looking up a value depending on the input string. The hash function is perfect, which means that the hash table has no collisions, and the hash table lookup needs a single string comparison only."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
-
-PKG_CONFIGURE_OPTS_TARGET="--with-udev-dir=/usr/lib/udev"
-
-post_makeinstall_target() {
-# install our own evmap files and udev rules
-  rm -rf $INSTALL/etc/eventlircd.d
-  rm -rf $INSTALL/usr/lib/udev/rules.d
-  rm -rf $INSTALL/usr/lib/udev/lircd_helper
-
-  mkdir -p $INSTALL/etc/eventlircd.d
-    cp $PKG_DIR/evmap/*.evmap $INSTALL/etc/eventlircd.d
-}
-
-post_install() {
-  enable_service eventlircd.service
-}
+PKG_AUTORECONF="no"
