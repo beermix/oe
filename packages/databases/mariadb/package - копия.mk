@@ -122,7 +122,7 @@ configure_host() {
         -DWITH_SYSTEMD=OFF \
         -DWITH_LIBWRAP=OFF \
         -DWITH_WSREP=OFF \
-        -DSECURITY_HARDENED=ON \
+        -DSECURITY_HARDENED=OFF \
         ..
 }
 
@@ -135,6 +135,7 @@ configure_target() {
         -DDISABLE_SHARED=ON \
         -DCMAKE_C_FLAGS="${TARGET_CFLAGS} -fPIC -DPIC -fno-strict-aliasing -DBIG_JOINS=1 -fomit-frame-pointer -fno-delete-null-pointer-checks" \
         -DCMAKE_CXX_FLAGS="${TARGET_CXXFLAGS} -fPIC -DPIC -fno-strict-aliasing -DBIG_JOINS=1 -felide-constructors -fno-delete-null-pointer-checks" \
+        -DWITH_MYSQLD_LDFLAGS="-pie ${TARGET_LDFLAGS},-z,now" \
         -DCMAKE_BUILD_TYPE=MinSizeRel \
         $MARIADB_IMPORT_EXECUTABLES \
         -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
@@ -162,7 +163,7 @@ configure_target() {
         -DWITH_SYSTEMD=OFF \
         -DWITH_LIBWRAP=OFF \
         -DWITH_SSL=$SYSROOT_PREFIX/usr \
-        -DSECURITY_HARDENED=ON \
+        -DSECURITY_HARDENED=OFF \
         $MARIADB_OPTS \
         ..
 }
