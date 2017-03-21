@@ -1,0 +1,12 @@
+diff -Naurp lua-5.3.3/src/luaconf.h lua-5.3.3-patch/src/luaconf.h
+--- lua-5.3.3/src/luaconf.h	2017-01-30 12:10:43.000000000 +0200
++++ lua-5.3.3-patch/src/luaconf.h	2017-01-30 12:12:53.000000000 +0200
+@@ -33,7 +33,7 @@
+ ** ensure that all software connected to Lua will be compiled with the
+ ** same configuration.
+ */
+-/* #define LUA_32BITS */
++#define LUA_32BITS
+ 
+ 
+ /*

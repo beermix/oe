@@ -17,11 +17,10 @@
 ################################################################################
 
 PKG_NAME="cairo"
-PKG_VERSION="1.14.8"
-PKG_ARCH="any"
-PKG_LICENSE="LGPL"
-PKG_SITE="http://cairographics.org/"
-PKG_URL="http://cairographics.org/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_VERSION="1.15.4"
+PKG_URL="https://www.cairographics.org/snapshots/cairo-1.15.4.tar.xz"
+#PKG_VERSION="1.14.8"
+#PKG_URL="http://cairographics.org/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain zlib freetype fontconfig libpng pixman"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="cairo: Multi-platform 2D graphics library"
@@ -29,6 +28,12 @@ PKG_LONGDESC="Cairo is a vector graphics library with cross-device output suppor
 PKG_IS_ADDON="no"
 
 PKG_AUTORECONF="no" # ToDo
+
+pre_configure_target() {
+  export CFLAGS="$CFLAGS -D_DEFAULT_SOURCE"
+  export CPPLAGS="$CPPLAGS -DCAIRO_NO_MUTEX=1"
+  export LIBS="$LIBS -latomic"
+}
 
 if [ "$DISPLAYSERVER" = "x11" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libXrender libX11 mesa glu"
@@ -54,7 +59,7 @@ elif [ "$DISPLAYSERVER" = "weston" ]; then
 fi
 
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CAIRO_CONFIG \
-                           --disable-silent-rules \
+                           --enable-silent-rules \
                            --enable-shared \
                            --disable-static \
                            --disable-gtk-doc \
@@ -62,9 +67,6 @@ PKG_CONFIGURE_OPTS_TARGET="$PKG_CAIRO_CONFIG \
                            --enable-atomic \
                            --disable-gcov \
                            --disable-valgrind \
-                           --disable-xcb \
-                           --disable-xlib-xcb \
-                           --disable-xcb-shm \
                            --disable-qt \
                            --disable-quartz \
                            --disable-quartz-font \
@@ -80,20 +82,13 @@ PKG_CONFIGURE_OPTS_TARGET="$PKG_CAIRO_CONFIG \
                            --disable-gallium \
                            --disable-xcb-drm \
                            --enable-png \
-                           --disable-directfb \
-                           --disable-vg \
-                           --disable-wgl \
-                           --disable-script \
                            --enable-ft \
                            --enable-fc \
                            --enable-ps \
                            --enable-pdf \
                            --enable-svg \
                            --disable-test-surfaces \
-                           --disable-tee \
-                           --disable-xml \
                            --enable-pthread \
-                           --disable-gobject \
                            --disable-full-testing \
                            --disable-trace \
                            --enable-interpreter \
