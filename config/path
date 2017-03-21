@@ -19,16 +19,9 @@ set -e
 HOST_NAME=$(gcc -dumpmachine)
 TARGET_NAME=$TARGET_GCC_ARCH-openelec-linux-gnu${TARGET_ABI}
 
-if [ -n "$DEVICE" ]; then
-  BUILD=$ROOT/$BUILD_BASE.$DISTRONAME-$DEVICE.$TARGET_ARCH-$OPENELEC_VERSION
-  if [ "$OPENELEC_VERSION" = "devel" ] ; then
-    BUILD=$ROOT/$BUILD_BASE.$DISTRONAME-$DEVICE.$TARGET_ARCH-$OS_VERSION-$OPENELEC_VERSION
-  fi
-else
-  BUILD=$ROOT/$BUILD_BASE.$DISTRONAME-$PROJECT.$TARGET_ARCH-$OPENELEC_VERSION
-  if [ "$OPENELEC_VERSION" = "devel" ] ; then
-    BUILD=$ROOT/$BUILD_BASE.$DISTRONAME-$PROJECT.$TARGET_ARCH-$OS_VERSION-$OPENELEC_VERSION
-  fi
+BUILD=$ROOT/$BUILD_BASE.$DISTRONAME-$PROJECT.$TARGET_ARCH-$OPENELEC_VERSION
+if [ "$OPENELEC_VERSION" = "devel" ] ; then
+  BUILD=$ROOT/$BUILD_BASE.$DISTRONAME-$PROJECT.$TARGET_ARCH-$OS_VERSION-$OPENELEC_VERSION
 fi
 
 if [ -n "$BUILD_SUFFIX" ]; then
@@ -157,6 +150,12 @@ SED="sed -i"
           fi
         fi
       done
+    fi
+    # _FOUND multiple packages? fail
+    if [ $_FOUND -gt 1 ]; then
+      echo "Error - multiple package folders:"
+      echo -e "$_ALL_DIRS"
+      exit 1
     fi
   fi
 
