@@ -50,10 +50,8 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            no-ssl3 \
                            no-store \
                            no-unit-test \
-                           no-weak-ssl-ciphers \
                            no-zlib \
-                           no-zlib-dynamic \
-                           no-static-engine"
+                           no-zlib-dynamic"
 
 pre_configure_host() {
   mkdir -p $PKG_BUILD/.$HOST_NAME
