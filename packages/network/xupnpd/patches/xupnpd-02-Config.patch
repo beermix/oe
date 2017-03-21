@@ -1,0 +1,132 @@
+diff -Naurp xupnpd-5c08c05/src/xupnpd.lua xupnpd-5c08c05-patch/src/xupnpd.lua
+--- xupnpd-5c08c05/src/xupnpd.lua	2016-07-06 11:31:11.000000000 +0300
++++ xupnpd-5c08c05-patch/src/xupnpd.lua	2017-02-26 18:00:30.000000000 +0200
+@@ -1,10 +1,12 @@
+ cfg={}
+ 
+ -- multicast interface for SSDP exchange, 'eth0', 'br0', 'br-lan' for example
+-cfg.ssdp_interface='lo'
++-- Название сетевого интерфейса для анонса медиа-сервера в локальную сеть, например:'eth0', 'br0', 'br-lan' (зависит от оборудования)
++cfg.ssdp_interface='eth0'
+ 
+ -- 'cfg.ssdp_loop' enables multicast loop (if player and server in one host)
+-cfg.ssdp_loop=1
++-- Заставляет хост получать собственные мультикаст анонсы в случае когда и сервер и плеер находятся на одной машине
++cfg.ssdp_loop=0
+ 
+ -- SSDP announcement interval
+ cfg.ssdp_notify_interval=15
+@@ -13,51 +15,63 @@ cfg.ssdp_notify_interval=15
+ cfg.ssdp_max_age=1800
+ 
+ -- HTTP port for incoming connections
+-cfg.http_port=4044
++-- HTTP для входящих соединений (в т.ч. для Web-интерфейса)
++cfg.http_port=8687
+ 
+ -- syslog facility (syslog,local0-local7)
+-cfg.log_facility='local0'
++-- Определяет куда писать логи (syslog,local0-local7)
++cfg.log_facility='syslog'
+ 
+ -- 'cfg.daemon' detach server from terminal
+ cfg.daemon=false
+ 
+ -- silent mode - no logs, no pid file
+-cfg.embedded=false
++-- Не писать логи и не создавать pid-файл
++cfg.embedded=true
+ 
+ -- 'cfg.debug' enables SSDP debug output to stdout (if cfg.daemon=false)
+ -- 0-off, 1-basic, 2-messages
++-- Включает трассировку SSDP анонсов (работает только когда cfg.daemon=false)
++-- 0-выключить, 1-основная информация, 2-сообщения целиком
+ cfg.debug=1
+ 
+ -- external 'udpxy' url for multicast playlists (udp://@...)
++-- URL для использования внешнего прокси мультикаст потоков (адреса вида: udp://@...). Для включения встроенного прокси закомментировать!
+ --cfg.udpxy_url='http://192.168.1.1:4022'
+ 
+ -- downstream interface for builtin multicast proxy (comment 'cfg.udpxy_url' for processing 'udp://@...' playlists)
+-cfg.mcast_interface='eth1'
++-- Имя сетевого интерфейса (обычно WAN) для получения мультикаст потоков от провайдера через встроенный прокси
++cfg.mcast_interface='eth0'
+ 
+ -- 'cfg.proxy' enables proxy for injection DLNA headers to stream
+ -- 0-off, 1-radio, 2-radio/TV
++-- Способ проксирования юникаст HTTP потоков
++-- 0-не проксировать (анонсировать URL как есть), 1-проксировать только радио, 2-проксировать (пропускать через себя) ВСЕ
+ cfg.proxy=2
+ 
+ -- User-Agent for proxy
+ cfg.user_agent='Mozilla/5.0'
+ 
+ -- I/O timeout
+-cfg.http_timeout=30
++-- Сетевой таймаут
++cfg.http_timeout=15
+ 
+ -- enables UPnP/DLNA notify when reload playlist
++-- Включить UPnP/DLNA уведомления об изменениях в плейлистах
+ cfg.dlna_notify=true
+ 
+ -- UPnP/DLNA subscribe ttl
+ cfg.dlna_subscribe_ttl=1800
+ 
+ -- group by 'group-title'
++-- Группировать контент по 'group-title'
+ cfg.group=true
+ 
+ -- sort files
+ cfg.sort_files=false
+ 
+ -- Device name
+-cfg.name='UPnP-IPTV'
++cfg.name='XUPnP-AlexELEC'
+ 
+ -- static device UUID, '60bd2fb3-dabe-cb14-c766-0e319b54c29a' for example or nil
+ cfg.uuid='60bd2fb3-dabe-cb14-c766-0e319b54c29a'
+@@ -69,15 +83,19 @@ cfg.cache_size=8
+ cfg.cache_ttl=900
+ 
+ -- default mime type (mpeg, mpeg_ts, mpeg1, mpeg2, ts, ...)
++-- Тип IPTV потока по умолчанию (mpeg, mpeg1, mpeg2, ts)
+ cfg.default_mime_type='mpeg'
+ 
+ -- feeds update interval (seconds, 0 - disabled)
++-- Частота обновления фидов в секундах (0 - не обновлять)
+ cfg.feeds_update_interval=0
+ cfg.playlists_update_interval=0
+ 
+ -- playlist (m3u file path or path with alias
+ playlist=
+ {
++    { './playlists/torrent-tv/TTV-Live.m3u', 'Live TTV' },
++    { './playlists/torrent-tv/TTV-Local.m3u', 'Local TTV' },
+ --    { './playlists/mozhay.m3u', 'Mozhay.tv' },
+ --    { './localmedia', 'Local Media Files' }
+ --    { './private', 'Private Media Files', '127.0.0.1;192.168.1.1' }  -- only for 127.0.0.1 and 192.168.1.1
+@@ -86,10 +104,10 @@ playlist=
+ -- feeds list (plugin, feed name, feed type)
+ feeds=
+ {
+-    { 'vimeo',          'channel/hd',           'Vimeo HD Channel' },
+-    { 'vimeo',          'channel/hdxs',         'Vimeo Xtreme sports' },
+-    { 'vimeo',          'channel/mtb',          'Vimeo MTB Channel' },
+-    { 'youtube',        'channel/top_rated',    'YouTube Top Rated' },
++--    { 'vimeo',          'channel/hd',           'Vimeo HD Channel' },
++--    { 'vimeo',          'channel/hdxs',         'Vimeo Xtreme sports' },
++--    { 'vimeo',          'channel/mtb',          'Vimeo MTB Channel' },
++--    { 'youtube',        'channel/top_rated',    'YouTube Top Rated' },
+ --    { 'youtube',        'Drift0r',              'Drift0r' },
+ --    { 'youtube',        'XboxAhoy',             'XboxAhoy' },
+ --    { 'ag',             'videos',               'AG - New' },
+@@ -102,7 +120,7 @@ feeds=
+ -- log ident, pid file end www root
+ cfg.version='1.034'
+ cfg.log_ident=arg[1] or 'xupnpd'
+-cfg.pid_file='/var/run/'..cfg.log_ident..'.pid'
++cfg.pid_file='/var/run/xupnpd.pid'
+ cfg.www_root='./www/'
+ cfg.tmp_path='/tmp/'
+ cfg.plugin_path='./plugins/'

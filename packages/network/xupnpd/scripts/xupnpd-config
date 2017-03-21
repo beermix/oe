@@ -1,0 +1,53 @@
+#!/bin/sh
+################################################################################
+#      This file is part of Alex@ELEC - http://www.alexelec.in.ua
+#      Copyright (C) 2011-2017 Alexandr Zuyev (alex@alexelec.in.ua)
+################################################################################
+
+SERVICE_DIR="/storage/.cache/services"
+
+[ -f $SERVICE_DIR/xupnpd.conf ] && . $SERVICE_DIR/xupnpd.conf
+
+[ -z $XUPNP_PORT ] && XUPNP_PORT="8687"
+[ -z $XUPNP_DEBUG ] && XUPNP_DEBUG="0"
+
+XUPNP_DIR="/storage/.config/xupnpd"
+XUPNP_CONFIG="$XUPNP_DIR/xupnpd.lua"
+
+# port
+sed -i -e "s/cfg\.http_port=.*/cfg\.http_port=$XUPNP_PORT/" $XUPNP_CONFIG
+
+# debug
+if [ "$XUPNP_DEBUG" == "0" ]; then
+  sed -i -e "s/cfg\.embedded=.*/cfg\.embedded=true/" $XUPNP_CONFIG
+else
+  sed -i -e "s/cfg\.debug=.*/cfg\.debug=1/" $XUPNP_CONFIG
+  sed -i -e "s/cfg\.embedded=.*/cfg\.embedded=false/" $XUPNP_CONFIG
+fi
+
+# TTV playlists
+RUN_ACEPROXY=`systemctl is-active aceproxy.service`
+RUN_ACESTREAM=`systemctl is-active acestream.service`
+TTV_LIVE_IN="/storage/ttv-m3u/AceLive-TTV.m3u"
+TTV_LIVE_OUT="$XUPNP_DIR/playlists/torrent-tv/TTV-Live.m3u"
+
+if [ "$RUN_ACEPROXY" == "active" -a "$RUN_ACESTREAM" == "active" ]; then
+  URL_IP=`ifconfig eth0 | awk '/inet addr:/ {print $2}' | sed 's/addr://'`
+  if [ -z $URL_IP ]; then
+    URL_IP=`ifconfig wlan0 | awk '/inet addr:/ {print $2}' | sed 's/addr://'`
+    [ -z $URL_IP ] && URL_IP="127.0.0.1"
+  fi
+  URL="http://$URL_IP:8000/channels/?type=m3u"
+  rm -f $XUPNP_DIR/playlists/torrent-tv/TTV-Local.m3u
+  wget --quiet --output-document="$XUPNP_DIR/playlists/torrent-tv/TTV-Local.m3u" $URL > /dev/null 2>&1
+  sed -i -e "s/^.*Local TTV.*/    { \'\.\/playlists\/torrent-tv\/TTV-Local\.m3u\', \'Local TTV\' },/" $XUPNP_CONFIG
+else
+  sed -i -e "s/^.*Local TTV.*/--    { \'\.\/playlists\/torrent-tv\/TTV-Local\.m3u\', \'Local TTV\' },/" $XUPNP_CONFIG
+fi
+
+if [ -f "$TTV_LIVE_IN" -a "$RUN_ACESTREAM" == "active" ]; then
+  cp -u $TTV_LIVE_IN $TTV_LIVE_OUT
+  sed -i -e "s/^.*Live TTV.*/    { \'\.\/playlists\/torrent-tv\/TTV-Live\.m3u\', \'Live TTV\' },/" $XUPNP_CONFIG
+else
+  sed -i -e "s/^.*Live TTV.*/--    { \'\.\/playlists\/torrent-tv\/TTV-Live\.m3u\', \'Live TTV\' },/" $XUPNP_CONFIG
+fi

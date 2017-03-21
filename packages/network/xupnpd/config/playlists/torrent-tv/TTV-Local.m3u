@@ -1,0 +1,1153 @@
+#EXTM3U url-tvg="http://api.torrent-tv.ru/ttv.xmltv.xml.gz" tvg-shift=0
+#EXTINF:-1 group-title="Развлекательные" tvg-name="0x0_Fireplace_HD" tvg-id="ttv15260" tvg-logo="http://1ttv.org/uploads/H1VboxDJC7sE7x3nKXoYT0X5r4LIqD.png",0x0 Fireplace HD
+http://192.168.1.56:8000/channels/play?id=15260
+#EXTINF:-1 group-title="Музыка" tvg-name="0x0_Music_HD" tvg-id="ttv15245" tvg-logo="http://1ttv.org/uploads/hFj4tnC5uqAgpod3doHnJGZxgZXaiP.png",0x0 Music HD
+http://192.168.1.56:8000/channels/play?id=15245
+#EXTINF:-1 group-title="Музыка" tvg-name="1_HD" tvg-id="ttv8619" tvg-logo="http://1ttv.org/uploads/FtLnmUwjG18XJFEKYvLKjwUq1gwHVZ.png",1 HD
+http://192.168.1.56:8000/channels/play?id=8619
+#EXTINF:-1 group-title="Региональные" tvg-name="10_канал_(Израиль)" tvg-id="ttv16275" tvg-logo="http://1ttv.org/uploads/bkVtuqhnGlL4Ykxlha255ief1YRIDJ.png",10 канал (Израиль)
+http://192.168.1.56:8000/channels/play?id=16275
+#EXTINF:-1 group-title="Новостные" tvg-name="100%_News" tvg-id="ttv2090" tvg-logo="http://1ttv.org/uploads/9yEWvPmTcFS8lyQ5NjJ7vbYOa3bx1W.png",100% News
+http://192.168.1.56:8000/channels/play?id=2090
+#EXTINF:-1 group-title="Новостные" tvg-name="112_Украина" tvg-id="ttv6460" tvg-logo="http://1ttv.org/uploads/0AUjU7DOzZcpizC4UR19vDZqqthSe0.png",112 Украина
+http://192.168.1.56:8000/channels/play?id=6460
+#EXTINF:-1 group-title="Новостные" tvg-name="112_Украина_HD" tvg-id="ttv10459" tvg-logo="http://1ttv.org/uploads/0AUjU7DOzZcpizC4UR19vDZqqthSe0.png",112 Украина HD
+http://192.168.1.56:8000/channels/play?id=10459
+#EXTINF:-1 group-title="Региональные" tvg-name="22_канал_(Израиль)" tvg-id="ttv16274" tvg-logo="http://1ttv.org/uploads/6VuqNvDh7nyHsxPolqLr7YpfYLkTNW.png",22 канал (Израиль)
+http://192.168.1.56:8000/channels/play?id=16274
+#EXTINF:-1 group-title="Познавательные" tvg-name="24_Док" tvg-id="ttv1532" tvg-logo="http://1ttv.org/uploads/H1UXBai10DjYfScfv1sNAILV9EPDer.png",24 Док
+http://192.168.1.56:8000/channels/play?id=1532
+#EXTINF:-1 group-title="Новостные" tvg-name="24_Украина" tvg-id="ttv1400" tvg-logo="http://1ttv.org/uploads/XfKEdfsy4S1zbE8n2tB1tNNe9IkrRP.png",24 Украина
+http://192.168.1.56:8000/channels/play?id=1400
+#EXTINF:-1 group-title="Развлекательные" tvg-name="2x2" tvg-id="ttv390" tvg-logo="http://1ttv.org/uploads/hTpJUV15GSTxZ5kJQGLcn42kCzKyEH.png",2x2
+http://192.168.1.56:8000/channels/play?id=390
+#EXTINF:-1 group-title="Развлекательные" tvg-name="2x2_(+2)" tvg-id="ttv14155" tvg-logo="http://1ttv.org/uploads/ZPOhZle6vrDaulo2KMmyrCkkkLn7Ci.png",2x2 (+2)
+http://192.168.1.56:8000/channels/play?id=14155
+#EXTINF:-1 group-title="Новостные" tvg-name="360_градусов" tvg-id="ttv2079" tvg-logo="http://1ttv.org/uploads/K4tiqb5ajIgmxqh8X5moJuDjN7q5hx.png",360 градусов
+http://192.168.1.56:8000/channels/play?id=2079
+#EXTINF:-1 group-title="Новостные" tvg-name="360_градусов_HD" tvg-id="ttv9308" tvg-logo="http://1ttv.org/uploads/K4tiqb5ajIgmxqh8X5moJuDjN7q5hx.png",360 градусов HD
+http://192.168.1.56:8000/channels/play?id=9308
+#EXTINF:-1 group-title="Познавательные" tvg-name="365_Дней" tvg-id="ttv1081" tvg-logo="http://1ttv.org/uploads/0IZrVwoxtmjtgnWu5Dj4Hb8FRc8NIX.png",365 Дней
+http://192.168.1.56:8000/channels/play?id=1081
+#EXTINF:-1 group-title="Общие" tvg-name="3S_TV" tvg-id="ttv13744" tvg-logo="http://1ttv.org/uploads/AL7uQOgsyYqE7V1BagxC2jqQVOvucp.png",3S TV
+http://192.168.1.56:8000/channels/play?id=13744
+#EXTINF:-1 group-title="Региональные" tvg-name="43_Канал_HD" tvg-id="ttv11017" tvg-logo="http://1ttv.org/uploads/1mNoU1QXmcmK48eVTlnADtsEBmA2sN.png",43 Канал HD
+http://192.168.1.56:8000/channels/play?id=11017
+#EXTINF:-1 group-title="Региональные" tvg-name="47_канал" tvg-id="ttv15906" tvg-logo="http://1ttv.org/uploads/ejWH5qVf8XAWkc3HLQYTmEpYchtaIS.png",47 канал
+http://192.168.1.56:8000/channels/play?id=15906
+#EXTINF:-1 group-title="Региональные" tvg-name="49_канал_(Новосибирск)" tvg-id="ttv15522" tvg-logo="http://1ttv.org/uploads/WK3XEVPHqpV3VkKEBHi8QSXoPKPj6T.png",49 канал (Новосибирск)
+http://192.168.1.56:8000/channels/play?id=15522
+#EXTINF:-1 group-title="Новостные" tvg-name="5_канал_(Украина)" tvg-id="ttv1406" tvg-logo="http://1ttv.org/uploads/9La0uS6S8rMKr0BOh6vSCQLNiCqN7N.png",5 канал (Украина)
+http://192.168.1.56:8000/channels/play?id=1406
+#EXTINF:-1 group-title="Региональные" tvg-name="7_канал_(Одесса)" tvg-id="ttv16247" tvg-logo="http://1ttv.org/uploads/JLHYPP0BpdnqOQXRYUHlBYbtoM1fXq.png",7 канал (Одесса)
+http://192.168.1.56:8000/channels/play?id=16247
+#EXTINF:-1 group-title="Общие" tvg-name="8_канал" tvg-id="ttv1871" tvg-logo="http://1ttv.org/uploads/wKPUJjcpZIfI5zBSZwNayOlv63zRNV.png",8 канал
+http://192.168.1.56:8000/channels/play?id=1871
+#EXTINF:-1 group-title="Региональные" tvg-name="8_телеканал_(Красноярск)" tvg-id="ttv15472" tvg-logo="http://1ttv.org/uploads/MmesR31Atj0JdU6q1MaqXXdm533h00.png",8 телеканал (Красноярск)
+http://192.168.1.56:8000/channels/play?id=15472
+#EXTINF:-1 group-title="Музыка" tvg-name="9_волна" tvg-id="ttv10436" tvg-logo="http://1ttv.org/uploads/8zDeTSBhsmJDbXo9dxHA1c9mDOP9sP.png",9 волна
+http://192.168.1.56:8000/channels/play?id=10436
+#EXTINF:-1 group-title="Региональные" tvg-name="9_канал_(Израиль)" tvg-id="ttv16276" tvg-logo="http://1ttv.org/uploads/DLEdAyl9qChDL6eDpI5HhVaArJZQHd.png",9 канал (Израиль)
+http://192.168.1.56:8000/channels/play?id=16276
+#EXTINF:-1 group-title="Музыка" tvg-name="A-One_UA" tvg-id="ttv617" tvg-logo="http://1ttv.org/uploads/8rEKNCXhKeWnUvGhWCsrb2RN5FMqJi.png",A-One UA
+http://192.168.1.56:8000/channels/play?id=617
+#EXTINF:-1 group-title="Новостные" tvg-name="Al_Jazeera_English" tvg-id="ttv8887" tvg-logo="http://1ttv.org/uploads/B1AC3jl0CY8u4qxO0aIEHVMFQFvBUu.png",Al Jazeera English
+http://192.168.1.56:8000/channels/play?id=8887
+#EXTINF:-1 group-title="Фильмы" tvg-name="AMC" tvg-id="ttv6078" tvg-logo="http://1ttv.org/uploads/rozrC8ZPYA1YGajyow35doeVcaQzpa.png",AMC
+http://192.168.1.56:8000/channels/play?id=6078
+#EXTINF:-1 group-title="Фильмы" tvg-name="Amedia_1" tvg-id="ttv5385" tvg-logo="http://1ttv.org/uploads/jT3vAEOG5jTd2t8GcC797Bw5W0kSl9.png",Amedia 1
+http://192.168.1.56:8000/channels/play?id=5385
+#EXTINF:-1 group-title="Фильмы" tvg-name="Amedia_2" tvg-id="ttv6512" tvg-logo="http://1ttv.org/uploads/fAvxTQbWu0DAcMkqej0m73KohAcQJw.png",Amedia 2
+http://192.168.1.56:8000/channels/play?id=6512
+#EXTINF:-1 group-title="Фильмы" tvg-name="Amedia_Hit" tvg-id="ttv14054" tvg-logo="http://1ttv.org/uploads/3lKypp7zXsJ3FDusXzKw9hHnVLythX.png",Amedia Hit
+http://192.168.1.56:8000/channels/play?id=14054
+#EXTINF:-1 group-title="Фильмы" tvg-name="Amedia_Premium" tvg-id="ttv12860" tvg-logo="http://1ttv.org/uploads/ornzQpk6WCW6xk0lyBhlwqH8u2QyU7.png",Amedia Premium
+http://192.168.1.56:8000/channels/play?id=12860
+#EXTINF:-1 group-title="Фильмы" tvg-name="Amedia_Premium_HD" tvg-id="ttv6513" tvg-logo="http://1ttv.org/uploads/ornzQpk6WCW6xk0lyBhlwqH8u2QyU7.png",Amedia Premium HD
+http://192.168.1.56:8000/channels/play?id=6513
+#EXTINF:-1 group-title="Детские" tvg-name="Ani" tvg-id="ttv13242" tvg-logo="http://1ttv.org/uploads/vui1cRrE05CZv1N9Qb20jJ6mTFOJue.png",Ani
+http://192.168.1.56:8000/channels/play?id=13242
+#EXTINF:-1 group-title="Общие" tvg-name="Arirang_TV" tvg-id="ttv15884" tvg-logo="http://1ttv.org/uploads/ejWH5qVf8XAWkc3HLQYTmEpYchtaIS.png",Arirang TV
+http://192.168.1.56:8000/channels/play?id=15884
+#EXTINF:-1 group-title="Региональные" tvg-name="Armenia_TV_Satellite" tvg-id="ttv8779" tvg-logo="http://1ttv.org/uploads/M4UAMT6cEyL3zuim9fzy38vZRkIfKq.png",Armenia TV Satellite
+http://192.168.1.56:8000/channels/play?id=8779
+#EXTINF:-1 group-title="Новостные" tvg-name="Armenia-TV_HD" tvg-id="ttv16271" tvg-logo="http://1ttv.org/uploads/Nd3zPemenPQSu6x9F5ABO1Y9mwNhIS.png",Armenia-TV HD
+http://192.168.1.56:8000/channels/play?id=16271
+#EXTINF:-1 group-title="Региональные" tvg-name="ATR" tvg-id="ttv12820" tvg-logo="http://1ttv.org/uploads/uggqxQxxDTuz1P1mY4PZdlRcAKow3F.png",ATR
+http://192.168.1.56:8000/channels/play?id=12820
+#EXTINF:-1 group-title="Региональные" tvg-name="Az_TV" tvg-id="ttv1670" tvg-logo="http://1ttv.org/uploads/FB2qxgNm8xTU6YiR2fY1jH4PIRR2SF.png",Az TV
+http://192.168.1.56:8000/channels/play?id=1670
+#EXTINF:-1 group-title="Новостные" tvg-name="BBC_World_News" tvg-id="ttv2245" tvg-logo="http://1ttv.org/uploads/8cSYWwvq6BAzcGDjJODvCGQYGJ2c4S.png",BBC World News
+http://192.168.1.56:8000/channels/play?id=2245
+#EXTINF:-1 group-title="Новостные" tvg-name="Bloomberg" tvg-id="ttv8458" tvg-logo="http://1ttv.org/uploads/OTsoNZRT8xjXz5nnTICPCQRvNLjBal.png",Bloomberg
+http://192.168.1.56:8000/channels/play?id=8458
+#EXTINF:-1 group-title="Фильмы" tvg-name="Bollywood_HD" tvg-id="ttv12894" tvg-logo="http://1ttv.org/uploads/HXzWxtMxmXkrpgr88Kh8Z1A8F6o5dK.png",Bollywood HD
+http://192.168.1.56:8000/channels/play?id=12894
+#EXTINF:-1 group-title="Развлекательные" tvg-name="Boutique_TV" tvg-id="ttv7387" tvg-logo="http://1ttv.org/uploads/bDSWVUfAEYN9VS25roxW52xO1pj6qp.png",Boutique TV
+http://192.168.1.56:8000/channels/play?id=7387
+#EXTINF:-1 group-title="Для взрослых" tvg-name="Brazzers_TV" tvg-id="ttv15565" tvg-logo="http://1ttv.org/uploads/VPCmFsMfpnB0pg9VBzvUG5TkRcHTsR.png",Brazzers TV
+http://192.168.1.56:8000/channels/play?id=15565
+#EXTINF:-1 group-title="Для взрослых" tvg-name="Brazzers_TV_Europe" tvg-id="ttv481" tvg-logo="http://1ttv.org/uploads/OmVBp3Kz4Lx722dq2e1OxE26QSxrDA.png",Brazzers TV Europe
+http://192.168.1.56:8000/channels/play?id=481
+#EXTINF:-1 group-title="Музыка" tvg-name="Bridge_HD" tvg-id="ttv16079" tvg-logo="http://1ttv.org/uploads/mdrPlCxp5fwHmCcwMcUzPN3IVRzlca.png",Bridge HD
+http://192.168.1.56:8000/channels/play?id=16079
+#EXTINF:-1 group-title="Музыка" tvg-name="Bridge_TV" tvg-id="ttv403" tvg-logo="http://1ttv.org/uploads/dPhBiaViIznwjeWU3pTbIXFmS3iJkU.png",Bridge TV
+http://192.168.1.56:8000/channels/play?id=403
+#EXTINF:-1 group-title="Музыка" tvg-name="Bridge_TV_Classic" tvg-id="ttv9794" tvg-logo="http://1ttv.org/uploads/DsJRpcbI6rgjONbQftC5nHt1XMAXYQ.png",Bridge TV Classic
+http://192.168.1.56:8000/channels/play?id=9794
+#EXTINF:-1 group-title="Музыка" tvg-name="Bridge_TV_Dance" tvg-id="ttv9164" tvg-logo="http://1ttv.org/uploads/ofmgiZlRmwOZtTaYtUtfErZS3ODDDM.png",Bridge TV Dance
+http://192.168.1.56:8000/channels/play?id=9164
+#EXTINF:-1 group-title="Познавательные" tvg-name="Brodilo_TV_HD" tvg-id="ttv879" tvg-logo="http://1ttv.org/uploads/0pLPWiGqZjDe2O4vbPd8QL0qGsA9lq.png",Brodilo TV HD
+http://192.168.1.56:8000/channels/play?id=879
+#EXTINF:-1 group-title="Новостные" tvg-name="Business" tvg-id="ttv2129" tvg-logo="http://1ttv.org/uploads/wvwXc2x8Bjev90GD6LO6t7TL2aKW1h.png",Business
+http://192.168.1.56:8000/channels/play?id=2129
+#EXTINF:-1 group-title="Региональные" tvg-name="Canal_3" tvg-id="ttv15791" tvg-logo="http://1ttv.org/uploads/rb39jMz38xLuXKGCuWD2GcHHMEzfX1.png",Canal 3
+http://192.168.1.56:8000/channels/play?id=15791
+#EXTINF:-1 group-title="Региональные" tvg-name="Canal_3_HD" tvg-id="ttv16211" tvg-logo="http://1ttv.org/uploads/HviI7kvg2n6O0EHTXCGAlo7oStvXy1.png",Canal 3 HD
+http://192.168.1.56:8000/channels/play?id=16211
+#EXTINF:-1 group-title="Региональные" tvg-name="CBC" tvg-id="ttv15688" tvg-logo="http://1ttv.org/uploads/GuGWslWHNQ2fb88q6JYKSAV1n9A6hF.png",CBC
+http://192.168.1.56:8000/channels/play?id=15688
+#EXTINF:-1 group-title="Фильмы" tvg-name="CBS_Drama" tvg-id="ttv1863" tvg-logo="http://1ttv.org/uploads/1Mcq9jbl7qPeXpT0bbPTnf8aM3f7dq.png",CBS Drama
+http://192.168.1.56:8000/channels/play?id=1863
+#EXTINF:-1 group-title="Мужские" tvg-name="CBS_Reality" tvg-id="ttv1128" tvg-logo="http://1ttv.org/uploads/QbWaD2vNgLRLY0Hsccg3nf9azAXRld.png",CBS Reality
+http://192.168.1.56:8000/channels/play?id=1128
+#EXTINF:-1 group-title="Новостные" tvg-name="CCTV_News" tvg-id="ttv7370" tvg-logo="http://1ttv.org/uploads/TyWVFvKwV3lOYYXWVJSj8HMu5AodJr.png",CCTV News
+http://192.168.1.56:8000/channels/play?id=7370
+#EXTINF:-1 group-title="Региональные" tvg-name="CCTV_Русский" tvg-id="ttv10386" tvg-logo="http://1ttv.org/uploads/DcaE92lKRSDFBPlYUnsNRauFLbotKu.png",CCTV Русский
+http://192.168.1.56:8000/channels/play?id=10386
+#EXTINF:-1 group-title="Для взрослых" tvg-name="CentoXCento_TV" tvg-id="ttv11042" tvg-logo="http://1ttv.org/uploads/dPuPlqJtkLMRy7NmOhyHDfL0PJqYj4.png",CentoXCento TV
+http://192.168.1.56:8000/channels/play?id=11042
+#EXTINF:-1 group-title="Региональные" tvg-name="CGTN_Documentary" tvg-id="ttv1873" tvg-logo="http://1ttv.org/uploads/dqoArqO8dd09vzsSSQPqLUj5wM9O9M.png",CGTN Documentary
+http://192.168.1.56:8000/channels/play?id=1873
+#EXTINF:-1 group-title="Религиозные" tvg-name="CNL" tvg-id="ttv7375" tvg-logo="http://1ttv.org/uploads/wwQ6u4lFXyaUDJLu2JOh6mtbkIz0Nf.png",CNL
+http://192.168.1.56:8000/channels/play?id=7375
+#EXTINF:-1 group-title="Новостные" tvg-name="CNN_International" tvg-id="ttv3089" tvg-logo="http://1ttv.org/uploads/lIwbRbM3ve4ixhFXp75Oap9nzcO71G.png",CNN International
+http://192.168.1.56:8000/channels/play?id=3089
+#EXTINF:-1 group-title="Развлекательные" tvg-name="CTC_Love" tvg-id="ttv16225" tvg-logo="http://1ttv.org/uploads/gTRQBixhRbFhcDTfTG8FpUJHQfWev6.png",CTC Love
+http://192.168.1.56:8000/channels/play?id=16225
+#EXTINF:-1 group-title="Познавательные" tvg-name="Da_Vinci_Learning" tvg-id="ttv6425" tvg-logo="http://1ttv.org/uploads/Yl6p1IDDkZxxiUa3p2JxI66mIlOPns.png",Da Vinci Learning
+http://192.168.1.56:8000/channels/play?id=6425
+#EXTINF:-1 group-title="Музыка" tvg-name="Deluxe_Music" tvg-id="ttv12595" tvg-logo="http://1ttv.org/uploads/3VnQoAyJh3RZM88USPszL1TZIE5t0u.png",Deluxe Music
+http://192.168.1.56:8000/channels/play?id=12595
+#EXTINF:-1 group-title="Новостные" tvg-name="Deutsche_Welle" tvg-id="ttv8780" tvg-logo="http://1ttv.org/uploads/RnqBDfde1HP4OkZhXWlKB1xkHi6Io9.png",Deutsche Welle
+http://192.168.1.56:8000/channels/play?id=8780
+#EXTINF:-1 group-title="Спорт" tvg-name="Diema_Sport_2" tvg-id="ttv15672" tvg-logo="http://1ttv.org/uploads/VCo45WDSNBNsO21GBbu1YLGK5TpQlF.png",Diema Sport 2
+http://192.168.1.56:8000/channels/play?id=15672
+#EXTINF:-1 group-title="Детские" tvg-name="Disney_Channel" tvg-id="ttv1428" tvg-logo="http://1ttv.org/uploads/JxEjTeXwExjnxutQGKJBmMI85tpNqK.png",Disney Channel
+http://192.168.1.56:8000/channels/play?id=1428
+#EXTINF:-1 group-title="Детские" tvg-name="Disney_Channel_(+2)" tvg-id="ttv15529" tvg-logo="http://1ttv.org/uploads/awk1MeZ3IP1HOAtPt4jfvdR2P6YqIc.png",Disney Channel (+2)
+http://192.168.1.56:8000/channels/play?id=15529
+#EXTINF:-1 group-title="Развлекательные" tvg-name="Dog_TV" tvg-id="ttv15564" tvg-logo="http://1ttv.org/uploads/NblfllG2mrqX3Zrb36rv7hLUe2sG1R.png",Dog TV
+http://192.168.1.56:8000/channels/play?id=15564
+#EXTINF:-1 group-title="Музыка" tvg-name="Dream_TV" tvg-id="ttv13827" tvg-logo="http://1ttv.org/uploads/3k3m3ElnUQ0UhX54qa7hOGbmNjKZSc.png",Dream TV
+http://192.168.1.56:8000/channels/play?id=13827
+#EXTINF:-1 group-title="Познавательные" tvg-name="English_Club_TV" tvg-id="ttv1410" tvg-logo="http://1ttv.org/uploads/Hf5RUQ91cEGtHoaK3GK6VIZlJ8Leql.png",English Club TV
+http://192.168.1.56:8000/channels/play?id=1410
+#EXTINF:-1 group-title="Фильмы" tvg-name="Enter_Film" tvg-id="ttv1398" tvg-logo="http://1ttv.org/uploads/8FPA5SCEIj35fBO8yrULnefW4NzIzk.png",Enter Film
+http://192.168.1.56:8000/channels/play?id=1398
+#EXTINF:-1 group-title="Музыка" tvg-name="Eska_Best_Music_TV_HD" tvg-id="ttv11328" tvg-logo="http://1ttv.org/uploads/wI3e672FQZpD8yr8aIV8Q2fL15zENv.png",Eska Best Music TV HD
+http://192.168.1.56:8000/channels/play?id=11328
+#EXTINF:-1 group-title="Музыка" tvg-name="Eska_OldsCool_TV_HD" tvg-id="ttv11329" tvg-logo="http://1ttv.org/uploads/7LW3s6C3D3yeciqTY0CKXpEmL3Tb3w.png",Eska OldsCool TV HD
+http://192.168.1.56:8000/channels/play?id=11329
+#EXTINF:-1 group-title="Музыка" tvg-name="Eska_Party_TV_HD" tvg-id="ttv11327" tvg-logo="http://1ttv.org/uploads/MaX9is65hlDpRDwgOikGE2RqMRxn8G.png",Eska Party TV HD
+http://192.168.1.56:8000/channels/play?id=11327
+#EXTINF:-1 group-title="Музыка" tvg-name="Eska_Rock_TV_HD" tvg-id="ttv11326" tvg-logo="http://1ttv.org/uploads/VU2POxFhYCM4XhFAtOp8Y4sdlbu32M.png",Eska Rock TV HD
+http://192.168.1.56:8000/channels/play?id=11326
+#EXTINF:-1 group-title="Музыка" tvg-name="Eska_TV" tvg-id="ttv11325" tvg-logo="http://1ttv.org/uploads/1KX19DgurgoaSKNTTpjXCeSQr1epwv.png",Eska TV
+http://192.168.1.56:8000/channels/play?id=11325
+#EXTINF:-1 group-title="Музыка" tvg-name="Eska_Wawa_TV_HD" tvg-id="ttv11331" tvg-logo="http://1ttv.org/uploads/r9d697qox4MFgypnVqeILYWKcfbwNc.png",Eska Wawa TV HD
+http://192.168.1.56:8000/channels/play?id=11331
+#EXTINF:-1 group-title="Новостные" tvg-name="Espreso_TV" tvg-id="ttv15894" tvg-logo="http://1ttv.org/uploads/ejWH5qVf8XAWkc3HLQYTmEpYchtaIS.png",Espreso TV
+http://192.168.1.56:8000/channels/play?id=15894
+#EXTINF:-1 group-title="Региональные" tvg-name="ETV_pluss" tvg-id="ttv14608" tvg-logo="http://1ttv.org/uploads/cZBJJjYDyuuJHMQk3ZOogcDZYcu2SK.png",ETV pluss
+http://192.168.1.56:8000/channels/play?id=14608
+#EXTINF:-1 group-title="Познавательные" tvg-name="Eureka_HD" tvg-id="ttv16083" tvg-logo="http://1ttv.org/uploads/GpjUEYU0Ffj51lirmb0nNdHT3Waw6B.png",Eureka HD
+http://192.168.1.56:8000/channels/play?id=16083
+#EXTINF:-1 group-title="Новостные" tvg-name="EuroNews" tvg-id="ttv1402" tvg-logo="http://1ttv.org/uploads/Vb3fP5gUK0q40WuzYeUhMT7RQmDg27.png",EuroNews
+http://192.168.1.56:8000/channels/play?id=1402
+#EXTINF:-1 group-title="Музыка" tvg-name="Europa_Plus_TV" tvg-id="ttv409" tvg-logo="http://1ttv.org/uploads/PkatgpdmA4ArsgSG5shu0ZCQQ5RgMx.png",Europa Plus TV
+http://192.168.1.56:8000/channels/play?id=409
+#EXTINF:-1 group-title="Спорт" tvg-name="Eurosport_1" tvg-id="ttv380" tvg-logo="http://1ttv.org/uploads/QA9jgUaQRrE4vMno04eM3aUrklXOce.png",Eurosport 1
+http://192.168.1.56:8000/channels/play?id=380
+#EXTINF:-1 group-title="Спорт" tvg-name="Eurosport_1_HD" tvg-id="ttv1530" tvg-logo="http://1ttv.org/uploads/DpFTzUEA3y67Z6ObTPF4xH0XLNRAZm.png",Eurosport 1 HD
+http://192.168.1.56:8000/channels/play?id=1530
+#EXTINF:-1 group-title="Спорт" tvg-name="Eurosport_2" tvg-id="ttv12204" tvg-logo="http://1ttv.org/uploads/qYbdkVFDkhGqTAjXlRtIj2Fg45bmrm.png",Eurosport 2
+http://192.168.1.56:8000/channels/play?id=12204
+#EXTINF:-1 group-title="Спорт" tvg-name="Eurosport_2_HD" tvg-id="ttv15845" tvg-logo="http://1ttv.org/uploads/0mo5WOW3xn7FmcIRM9PMZxb2Zgad86.png",Eurosport 2 HD
+http://192.168.1.56:8000/channels/play?id=15845
+#EXTINF:-1 group-title="Спорт" tvg-name="Eurosport_News_(резерв)" tvg-id="ttv16198" tvg-logo="http://1ttv.org/uploads/VBpC2vvvOSWFffT7KsIphpMiepUyma.png",Eurosport News (резерв)
+http://192.168.1.56:8000/channels/play?id=16198
+#EXTINF:-1 group-title="Религиозные" tvg-name="EWTN_UK_and_Ireland" tvg-id="ttv15715" tvg-logo="http://1ttv.org/uploads/maP6bdwOGv77xHPvRnKBHww9cmG2oV.png",EWTN UK and Ireland
+http://192.168.1.56:8000/channels/play?id=15715
+#EXTINF:-1 group-title="Для взрослых" tvg-name="Exotica_TV" tvg-id="ttv9280" tvg-logo="http://1ttv.org/uploads/K5hm3mURkkDaSc7RI5RDti5edynMGl.png",Exotica TV
+http://192.168.1.56:8000/channels/play?id=9280
+#EXTINF:-1 group-title="Спорт" tvg-name="Extreme_Sports" tvg-id="ttv1814" tvg-logo="http://1ttv.org/uploads/21FhIqWK82JDPNuLTEIC9hSO2EHfks.png",Extreme Sports
+http://192.168.1.56:8000/channels/play?id=1814
+#EXTINF:-1 group-title="Для взрослых" tvg-name="FAP_TV_2" tvg-id="ttv15347" tvg-logo="http://1ttv.org/uploads/YVmUBY8cBPO8IoL4djlyeKCDbs6f0p.png",FAP TV 2
+http://192.168.1.56:8000/channels/play?id=15347
+#EXTINF:-1 group-title="Для взрослых" tvg-name="FAP_TV_2_HD" tvg-id="ttv16237" tvg-logo="http://1ttv.org/uploads/KqVXT8GPTPuPEM87hZSqDwajqcBBgY.png",FAP TV 2 HD
+http://192.168.1.56:8000/channels/play?id=16237
+#EXTINF:-1 group-title="Для взрослых" tvg-name="FAP_TV_3" tvg-id="ttv15408" tvg-logo="http://1ttv.org/uploads/S5gXPPcF53lFHQ3kgJofKMQudRQKPt.png",FAP TV 3
+http://192.168.1.56:8000/channels/play?id=15408
+#EXTINF:-1 group-title="Для взрослых" tvg-name="FAP_TV_4" tvg-id="ttv15450" tvg-logo="http://1ttv.org/uploads/xv1QyBV2OkaDbZ1ebRB2FWwfw40BR5.png",FAP TV 4
+http://192.168.1.56:8000/channels/play?id=15450
+#EXTINF:-1 group-title="Для взрослых" tvg-name="FAP_TV_Amateur" tvg-id="ttv15487" tvg-logo="http://1ttv.org/uploads/LGfemDTp3Z3mvhn1aKSGVvtlNu5zMF.png",FAP TV Amateur
+http://192.168.1.56:8000/channels/play?id=15487
+#EXTINF:-1 group-title="Для взрослых" tvg-name="FAP_TV_Anal" tvg-id="ttv15355" tvg-logo="http://1ttv.org/uploads/1PVgf85c4DjIsiWEikpEHDV1j1m6ph.png",FAP TV Anal
+http://192.168.1.56:8000/channels/play?id=15355
+#EXTINF:-1 group-title="Для взрослых" tvg-name="FAP_TV_BBW" tvg-id="ttv15511" tvg-logo="http://1ttv.org/uploads/PHnwbskpP4oixpMjlJKgGvTAajXFSg.png",FAP TV BBW
+http://192.168.1.56:8000/channels/play?id=15511
+#EXTINF:-1 group-title="Для взрослых" tvg-name="FAP_TV_Compilation" tvg-id="ttv15549" tvg-logo="http://1ttv.org/uploads/FXT4PI3HHWIGlk49jRpHyGQBTTVbmt.png",FAP TV Compilation
+http://192.168.1.56:8000/channels/play?id=15549
+#EXTINF:-1 group-title="Для взрослых" tvg-name="FAP_TV_Gay" tvg-id="ttv15427" tvg-logo="http://1ttv.org/uploads/vJB3tfzXuDX8R7eLXV63tCFgxnOgP1.png",FAP TV Gay
+http://192.168.1.56:8000/channels/play?id=15427
+#EXTINF:-1 group-title="Для взрослых" tvg-name="FAP_TV_Legal_Porno" tvg-id="ttv15381" tvg-logo="http://1ttv.org/uploads/QMv8xcYgTaW9108ymib6XyWXRMI7dn.png",FAP TV Legal Porno
+http://192.168.1.56:8000/channels/play?id=15381
+#EXTINF:-1 group-title="Для взрослых" tvg-name="FAP_TV_Lesbian" tvg-id="ttv15540" tvg-logo="http://1ttv.org/uploads/M3LLmt76GGyLBhpAEnRtn368pAeGH3.png",FAP TV Lesbian
+http://192.168.1.56:8000/channels/play?id=15540
+#EXTINF:-1 group-title="Для взрослых" tvg-name="FAP_TV_Older" tvg-id="ttv15384" tvg-logo="http://1ttv.org/uploads/G1L5Qh2QVnSu6zEVua6KOI4hxtUfcn.png",FAP TV Older
+http://192.168.1.56:8000/channels/play?id=15384
+#EXTINF:-1 group-title="Для взрослых" tvg-name="FAP_TV_Parody" tvg-id="ttv15541" tvg-logo="http://1ttv.org/uploads/mu4NIjgq7Xu5nt32zTSxGvBOfk90xt.png",FAP TV Parody
+http://192.168.1.56:8000/channels/play?id=15541
+#EXTINF:-1 group-title="Для взрослых" tvg-name="FAP_TV_Pissing" tvg-id="ttv15510" tvg-logo="http://1ttv.org/uploads/3QJ9sSAI90ALizvl1B2sbt8WxIVLSu.png",FAP TV Pissing
+http://192.168.1.56:8000/channels/play?id=15510
+#EXTINF:-1 group-title="Для взрослых" tvg-name="FAP_TV_Shemale" tvg-id="ttv15346" tvg-logo="http://1ttv.org/uploads/d5ulbooZicKw3aMLwn2Ho0yD9c46T2.png",FAP TV Shemale
+http://192.168.1.56:8000/channels/play?id=15346
+#EXTINF:-1 group-title="Для взрослых" tvg-name="FAP_TV_Teaching" tvg-id="ttv15398" tvg-logo="http://1ttv.org/uploads/3MzvfwDLSX8zUmmuO7TpS8O2iD03Tj.png",FAP TV Teaching
+http://192.168.1.56:8000/channels/play?id=15398
+#EXTINF:-1 group-title="Для взрослых" tvg-name="FAP_TV_Teens" tvg-id="ttv15512" tvg-logo="http://1ttv.org/uploads/7Z9gyzosm1oUC82aFfA3mBG9YAjOrS.png",FAP TV Teens
+http://192.168.1.56:8000/channels/play?id=15512
+#EXTINF:-1 group-title="Для взрослых" tvg-name="FAP_TV_Trans" tvg-id="ttv15407" tvg-logo="http://1ttv.org/uploads/05P2Z8lWWIgaEmvWcTRO1R9F0lMPZL.png",FAP TV Trans
+http://192.168.1.56:8000/channels/play?id=15407
+#EXTINF:-1 group-title="Развлекательные" tvg-name="Fashion_One_HD" tvg-id="ttv9214" tvg-logo="http://1ttv.org/uploads/iPs2ptiBXm8h0KSnRmyqu45texHNig.png",Fashion One HD
+http://192.168.1.56:8000/channels/play?id=9214
+#EXTINF:-1 group-title="Развлекательные" tvg-name="Fashion_TV" tvg-id="ttv1815" tvg-logo="http://1ttv.org/uploads/PSjqabjhYIBqcS8hUA8WNrZEjV4zZY.png",Fashion TV
+http://192.168.1.56:8000/channels/play?id=1815
+#EXTINF:-1 group-title="Познавательные" tvg-name="Fine_Living" tvg-id="ttv9303" tvg-logo="http://1ttv.org/uploads/22I1fK1aMCUgeYUCV0K3vwmlJKELZD.png",Fine Living
+http://192.168.1.56:8000/channels/play?id=9303
+#EXTINF:-1 group-title="Познавательные" tvg-name="Food_Network" tvg-id="ttv12958" tvg-logo="http://1ttv.org/uploads/W68LEGlOOMPtN0qoGXvdkWhHBjKet6.png",Food Network
+http://192.168.1.56:8000/channels/play?id=12958
+#EXTINF:-1 group-title="Новостные" tvg-name="France_24" tvg-id="ttv6463" tvg-logo="http://1ttv.org/uploads/pViXgcMjLnB5WyOoQJ7sBxhHo5fTSB.png",France 24
+http://192.168.1.56:8000/channels/play?id=6463
+#EXTINF:-1 group-title="Познавательные" tvg-name="Galaxy_TV" tvg-id="ttv6986" tvg-logo="http://1ttv.org/uploads/pU2NsRP9CVtEgQuDTi9jcTYV8iAD4a.png",Galaxy TV
+http://192.168.1.56:8000/channels/play?id=6986
+#EXTINF:-1 group-title="Развлекательные" tvg-name="Gamanoid_HD" tvg-id="ttv15731" tvg-logo="http://1ttv.org/uploads/DxEQkipHmJjSY0wHGKHDV6eAZKiwoG.png",Gamanoid HD
+http://192.168.1.56:8000/channels/play?id=15731
+#EXTINF:-1 group-title="Детские" tvg-name="Ginger_HD" tvg-id="ttv12717" tvg-logo="http://1ttv.org/uploads/eW7CqWW2bppbpKzhNctyElyv5Nzs30.png",Ginger HD
+http://192.168.1.56:8000/channels/play?id=12717
+#EXTINF:-1 group-title="Мужские" tvg-name="GlobalStar_TV" tvg-id="ttv8781" tvg-logo="http://1ttv.org/uploads/Y4kNxgbAnPGCt753P73NzCIbcNz5lD.png",GlobalStar TV
+http://192.168.1.56:8000/channels/play?id=8781
+#EXTINF:-1 group-title="Детские" tvg-name="Gulli" tvg-id="ttv5484" tvg-logo="http://1ttv.org/uploads/2IynBdmw3mmdXt01r8DXKxeor7STnw.png",Gulli
+http://192.168.1.56:8000/channels/play?id=5484
+#EXTINF:-1 group-title="Познавательные" tvg-name="HD_Life" tvg-id="ttv1534" tvg-logo="http://1ttv.org/uploads/jUteUS0xRGdvLyBVqNjowEUDkOjT0t.png",HD Life
+http://192.168.1.56:8000/channels/play?id=1534
+#EXTINF:-1 group-title="Развлекательные" tvg-name="HD_Media" tvg-id="ttv11163" tvg-logo="http://1ttv.org/uploads/woAI3zcytfbyiX0LBRToKzErJNy1qF.png",HD Media
+http://192.168.1.56:8000/channels/play?id=11163
+#EXTINF:-1 group-title="Развлекательные" tvg-name="HD_Media_3D" tvg-id="ttv12866" tvg-logo="http://1ttv.org/uploads/takNty6pirY7TeCRPX5VyUW1mZHHxI.png",HD Media 3D
+http://192.168.1.56:8000/channels/play?id=12866
+#EXTINF:-1 group-title="Познавательные" tvg-name="History_Channel" tvg-id="ttv5433" tvg-logo="http://1ttv.org/uploads/9cVifexiWW0qWDhhpnLNVydoZkeRqZ.png",History Channel
+http://192.168.1.56:8000/channels/play?id=5433
+#EXTINF:-1 group-title="Познавательные" tvg-name="History_Channel_HD" tvg-id="ttv8711" tvg-logo="http://1ttv.org/uploads/VFgU260pmiIyPxCzD3f8R7Yc6DXClH.png",History Channel HD
+http://192.168.1.56:8000/channels/play?id=8711
+#EXTINF:-1 group-title="Музыка" tvg-name="HiT_Music_Channel" tvg-id="ttv16008" tvg-logo="http://1ttv.org/uploads/n7tghbIGAAh8cyWe7Li0E2iNEJSqkl.png",HiT Music Channel
+http://192.168.1.56:8000/channels/play?id=16008
+#EXTINF:-1 group-title="Музыка" tvg-name="Hit_TV" tvg-id="ttv12267" tvg-logo="http://1ttv.org/uploads/FnCnW1vmvm8gjAwMGXe2Q8qtN1C3zy.png",Hit TV
+http://192.168.1.56:8000/channels/play?id=12267
+#EXTINF:-1 group-title="Для взрослых" tvg-name="Hustler_HD" tvg-id="ttv789" tvg-logo="http://1ttv.org/uploads/LBz8ia8AASewVuLjMs5v4MDiVYfsJO.png",Hustler HD
+http://192.168.1.56:8000/channels/play?id=789
+#EXTINF:-1 group-title="Региональные" tvg-name="Ictimai_TV" tvg-id="ttv15914" tvg-logo="http://1ttv.org/uploads/ejWH5qVf8XAWkc3HLQYTmEpYchtaIS.png",Ictimai TV
+http://192.168.1.56:8000/channels/play?id=15914
+#EXTINF:-1 group-title="Общие" tvg-name="ICTV" tvg-id="ttv5463" tvg-logo="http://1ttv.org/uploads/YuNtYxhj9vqgTU9kVuz9imhqviY4PZ.png",ICTV
+http://192.168.1.56:8000/channels/play?id=5463
+#EXTINF:-1 group-title="Спорт" tvg-name="Idman_TV" tvg-id="ttv14475" tvg-logo="http://1ttv.org/uploads/UhhUZdtM7FjDFbmoleWalj7tp6nj5o.png",Idman TV
+http://192.168.1.56:8000/channels/play?id=14475
+#EXTINF:-1 group-title="Региональные" tvg-name="Iland" tvg-id="ttv15539" tvg-logo="http://1ttv.org/uploads/S2eR34Z8l9ne1lteBOLvknOq64jMJN.png",Iland
+http://192.168.1.56:8000/channels/play?id=15539
+#EXTINF:-1 group-title="Региональные" tvg-name="ILand_(Израиль)" tvg-id="ttv16277" tvg-logo="http://1ttv.org/uploads/LouplTFbQf9wqKqU1eaPD8rLubK8sN.png",ILand (Израиль)
+http://192.168.1.56:8000/channels/play?id=16277
+#EXTINF:-1 group-title="Региональные" tvg-name="InterAz" tvg-id="ttv1874" tvg-logo="http://1ttv.org/uploads/rdntbmpYEYtyRbW3nGa1FUNZPXF53O.png",InterAz
+http://192.168.1.56:8000/channels/play?id=1874
+#EXTINF:-1 group-title="Религиозные" tvg-name="Islam_Channel" tvg-id="ttv15741" tvg-logo="http://1ttv.org/uploads/XqP875iZVDQXcyNB4AnAEZ4n3PX9xs.png",Islam Channel
+http://192.168.1.56:8000/channels/play?id=15741
+#EXTINF:-1 group-title="Региональные" tvg-name="Jahonnamo" tvg-id="ttv8885" tvg-logo="http://1ttv.org/uploads/OqNuJdvRTdBh5NeydnpmCfMnTJs9XZ.png",Jahonnamo
+http://192.168.1.56:8000/channels/play?id=8885
+#EXTINF:-1 group-title="Для взрослых" tvg-name="Jasmin_TV" tvg-id="ttv15231" tvg-logo="http://1ttv.org/uploads/MBRUFcRx5wtHLZmgahvcGdXB2ERdst.png",Jasmin TV
+http://192.168.1.56:8000/channels/play?id=15231
+#EXTINF:-1 group-title="Детские" tvg-name="JimJam" tvg-id="ttv1427" tvg-logo="http://1ttv.org/uploads/BPDFCK5SQF3mXu5MsDNSdtvz4Gjawo.png",JimJam
+http://192.168.1.56:8000/channels/play?id=1427
+#EXTINF:-1 group-title="Региональные" tvg-name="Kanal_11" tvg-id="ttv16268" tvg-logo="http://1ttv.org/uploads/iMUlvJ0LKbzGr07wNqOS4PfFOubGLI.png",Kanal 11
+http://192.168.1.56:8000/channels/play?id=16268
+#EXTINF:-1 group-title="Региональные" tvg-name="Kanal_6" tvg-id="ttv16267" tvg-logo="http://1ttv.org/uploads/Bu87ZQO1hADvqXtai0BiZuoDCRqeVy.png",Kanal 6
+http://192.168.1.56:8000/channels/play?id=16267
+#EXTINF:-1 group-title="Спорт" tvg-name="Kazsport" tvg-id="ttv16059" tvg-logo="http://1ttv.org/uploads/62Zm6D5IpAJey7ceNfJLTgssap5232.png",Kazsport
+http://192.168.1.56:8000/channels/play?id=16059
+#EXTINF:-1 group-title="Музыка" tvg-name="KroneHIT_TV_HD" tvg-id="ttv15202" tvg-logo="http://1ttv.org/uploads/dq6m0UE9ffgAbXNt49qDlIAr7T8lud.png",KroneHIT TV HD
+http://192.168.1.56:8000/channels/play?id=15202
+#EXTINF:-1 group-title="Фильмы" tvg-name="La_1" tvg-id="ttv15773" tvg-logo="http://1ttv.org/uploads/GiBWzDNAqQ57Wvni3iiSdbs0C9Q78W.png",La 1
+http://192.168.1.56:8000/channels/play?id=15773
+#EXTINF:-1 group-title="Детские" tvg-name="Lale" tvg-id="ttv6450" tvg-logo="http://1ttv.org/uploads/99AZ5VwFy9yZrgsdZ6kIxcoYqwSyUH.png",Lale
+http://192.168.1.56:8000/channels/play?id=6450
+#EXTINF:-1 group-title="Новостные" tvg-name="Life78" tvg-id="ttv1618" tvg-logo="http://1ttv.org/uploads/ZloJoTx0yurBDfEtB6V91vRuF8mxB4.png",Life78
+http://192.168.1.56:8000/channels/play?id=1618
+#EXTINF:-1 group-title="Новостные" tvg-name="Life78_HD" tvg-id="ttv14485" tvg-logo="http://1ttv.org/uploads/ZloJoTx0yurBDfEtB6V91vRuF8mxB4.png",Life78 HD
+http://192.168.1.56:8000/channels/play?id=14485
+#EXTINF:-1 group-title="Новостные" tvg-name="LifeNews" tvg-id="ttv5497" tvg-logo="http://1ttv.org/uploads/K8dBCUNz1BSwbgUYYU04i2qJpQKLMc.png",LifeNews
+http://192.168.1.56:8000/channels/play?id=5497
+#EXTINF:-1 group-title="Новостные" tvg-name="LifeNews_HD" tvg-id="ttv8802" tvg-logo="http://1ttv.org/uploads/Mvurp6cp7Sq2fV3tnFBwPtJy7Ifm1i.png",LifeNews HD
+http://192.168.1.56:8000/channels/play?id=8802
+#EXTINF:-1 group-title="Региональные" tvg-name="LTV_World" tvg-id="ttv15910" tvg-logo="http://1ttv.org/uploads/ejWH5qVf8XAWkc3HLQYTmEpYchtaIS.png",LTV World
+http://192.168.1.56:8000/channels/play?id=15910
+#EXTINF:-1 group-title="Развлекательные" tvg-name="Luxe_TV_HD" tvg-id="ttv16076" tvg-logo="http://1ttv.org/uploads/gggiBSZ0905Dkcxtdj8Mh8ie14kpPa.png",Luxe TV HD
+http://192.168.1.56:8000/channels/play?id=16076
+#EXTINF:-1 group-title="Познавательные" tvg-name="Luxury_World" tvg-id="ttv14087" tvg-logo="http://1ttv.org/uploads/QvaV83TwgWHnaGmw4C822MCNYi9zio.png",Luxury World
+http://192.168.1.56:8000/channels/play?id=14087
+#EXTINF:-1 group-title="Региональные" tvg-name="Lviv_TV" tvg-id="ttv8883" tvg-logo="http://1ttv.org/uploads/VMl4S9yd5IYFAVFaR8XG6KEm5pgVu4.png",Lviv TV
+http://192.168.1.56:8000/channels/play?id=8883
+#EXTINF:-1 group-title="Развлекательные" tvg-name="Maxxi-TV" tvg-id="ttv1800" tvg-logo="http://1ttv.org/uploads/uqyYr07PPk2OuEdnNrbkMHVlGZCJp5.png",Maxxi-TV
+http://192.168.1.56:8000/channels/play?id=1800
+#EXTINF:-1 group-title="Музыка" tvg-name="MCM_Top" tvg-id="ttv8790" tvg-logo="http://1ttv.org/uploads/b4SLIxXFbKUErZxBXfGoo6eQN5Mu38.png",MCM Top
+http://192.168.1.56:8000/channels/play?id=8790
+#EXTINF:-1 group-title="Музыка" tvg-name="Mezzo" tvg-id="ttv1379" tvg-logo="http://1ttv.org/uploads/GUzJ4cyK50ZahOSIx6tTbwGLJiUnSA.png",Mezzo
+http://192.168.1.56:8000/channels/play?id=1379
+#EXTINF:-1 group-title="Музыка" tvg-name="Mezzo_Live_HD" tvg-id="ttv8345" tvg-logo="http://1ttv.org/uploads/lGOtRiUoGyJUMCtAtUwevBerpQORD4.png",Mezzo Live HD
+http://192.168.1.56:8000/channels/play?id=8345
+#EXTINF:-1 group-title="Фильмы" tvg-name="MGM_HD" tvg-id="ttv4307" tvg-logo="http://1ttv.org/uploads/o4K0lgc2D1GkuFwMC3Cdg1uK6fMrG4.png",MGM HD
+http://192.168.1.56:8000/channels/play?id=4307
+#EXTINF:-1 group-title="Развлекательные" tvg-name="Mi_Lady" tvg-id="ttv1401" tvg-logo="http://1ttv.org/uploads/Fd556PD2ffD6zdVUiX0dvVfBJavBNd.png",Mi Lady
+http://192.168.1.56:8000/channels/play?id=1401
+#EXTINF:-1 group-title="Музыка" tvg-name="Mola_TV" tvg-id="ttv16283" tvg-logo="http://1ttv.org/uploads/1Ss4s2BICC5ZdG5uLGmkGjg0QW4tPl.png",Mola TV
+http://192.168.1.56:8000/channels/play?id=16283
+#EXTINF:-1 group-title="Спорт" tvg-name="Motorsport" tvg-id="ttv12712" tvg-logo="http://1ttv.org/uploads/7fAmhbXY4MwyRxACHpWPIaNqNiW6Y8.png",Motorsport
+http://192.168.1.56:8000/channels/play?id=12712
+#EXTINF:-1 group-title="Музыка" tvg-name="MTV_AM_HD" tvg-id="ttv14256" tvg-logo="http://1ttv.org/uploads/4jFcW4ycRkxdcHqHaVM8J2oIxV7re8.png",MTV AM HD
+http://192.168.1.56:8000/channels/play?id=14256
+#EXTINF:-1 group-title="Музыка" tvg-name="MTV_Dance" tvg-id="ttv1140" tvg-logo="http://1ttv.org/uploads/ZXKNRw6Ai8u4lY0wxeycQwj2dIkm66.png",MTV Dance
+http://192.168.1.56:8000/channels/play?id=1140
+#EXTINF:-1 group-title="Музыка" tvg-name="MTV_Hits" tvg-id="ttv1147" tvg-logo="http://1ttv.org/uploads/iLJhuLh9kFLQkG4ERvLGSjSgMfNiM4.png",MTV Hits
+http://192.168.1.56:8000/channels/play?id=1147
+#EXTINF:-1 group-title="Музыка" tvg-name="MTV_Live_HD" tvg-id="ttv6312" tvg-logo="http://1ttv.org/uploads/WjyYXtYHhG5COxGab7luHb1bmvAioA.png",MTV Live HD
+http://192.168.1.56:8000/channels/play?id=6312
+#EXTINF:-1 group-title="Музыка" tvg-name="MTV_Rocks" tvg-id="ttv1795" tvg-logo="http://1ttv.org/uploads/SEwn7rL2FxPcf5Ol9KRKedIwXlpsAP.png",MTV Rocks
+http://192.168.1.56:8000/channels/play?id=1795
+#EXTINF:-1 group-title="Музыка" tvg-name="MTV_Россия" tvg-id="ttv8715" tvg-logo="http://1ttv.org/uploads/P5ijp2sRQsKVZkOJwjdqIVgYdJzhpZ.png",MTV Россия
+http://192.168.1.56:8000/channels/play?id=8715
+#EXTINF:-1 group-title="Музыка" tvg-name="MTV_Россия_HD" tvg-id="ttv16062" tvg-logo="http://1ttv.org/uploads/FJrUSKNniTfeCV6pY3eDLkOuVywd1q.png",MTV Россия HD
+http://192.168.1.56:8000/channels/play?id=16062
+#EXTINF:-1 group-title="Музыка" tvg-name="Music_Box_RU" tvg-id="ttv9065" tvg-logo="http://1ttv.org/uploads/zaHCW7nPCyGRnqHDkenCIXo7d6vR7v.png",Music Box RU
+http://192.168.1.56:8000/channels/play?id=9065
+#EXTINF:-1 group-title="Музыка" tvg-name="Music_Box_TV" tvg-id="ttv9311" tvg-logo="http://1ttv.org/uploads/fvt4pris0lwnVhSyUrh8QlyzWBhbgz.png",Music Box TV
+http://192.168.1.56:8000/channels/play?id=9311
+#EXTINF:-1 group-title="Музыка" tvg-name="Music_Box_UA" tvg-id="ttv1790" tvg-logo="http://1ttv.org/uploads/8T7Rnct8q2VHhRm0BcGFxCjxuYEArc.png",Music Box UA
+http://192.168.1.56:8000/channels/play?id=1790
+#EXTINF:-1 group-title="Познавательные" tvg-name="My_Zen_TV_HD" tvg-id="ttv16073" tvg-logo="http://1ttv.org/uploads/GkgzM41JkGOhbS33KepRPoAckZv2Xz.png",My Zen TV HD
+http://192.168.1.56:8000/channels/play?id=16073
+#EXTINF:-1 group-title="Региональные" tvg-name="N4_TV" tvg-id="ttv15828" tvg-logo="http://1ttv.org/uploads/R1NDSrUKnB1RoT8iv1okSe2xY39W4J.png",N4 TV
+http://192.168.1.56:8000/channels/play?id=15828
+#EXTINF:-1 group-title="Новостные" tvg-name="News_One" tvg-id="ttv1794" tvg-logo="http://1ttv.org/uploads/SnaQqBa1YMS2b8b8EGdZSMCConLbDS.png",News One
+http://192.168.1.56:8000/channels/play?id=1794
+#EXTINF:-1 group-title="Новостные" tvg-name="NHK_World_TV" tvg-id="ttv8794" tvg-logo="http://1ttv.org/uploads/JJ8Sh9c7zA3PaXlK1ZaNjy3GgWQFh2.png",NHK World TV
+http://192.168.1.56:8000/channels/play?id=8794
+#EXTINF:-1 group-title="Детские" tvg-name="Nick_Jr." tvg-id="ttv1387" tvg-logo="http://1ttv.org/uploads/D87kJ3fIWIm5wKi5qxm24nbuPQv0U8.png",Nick Jr.
+http://192.168.1.56:8000/channels/play?id=1387
+#EXTINF:-1 group-title="Детские" tvg-name="Nickelodeon" tvg-id="ttv557" tvg-logo="http://1ttv.org/uploads/j66xpaZbfiYIgQxv76QAPckPVjmLNs.png",Nickelodeon
+http://192.168.1.56:8000/channels/play?id=557
+#EXTINF:-1 group-title="Детские" tvg-name="Nickelodeon_HD" tvg-id="ttv1465" tvg-logo="http://1ttv.org/uploads/CFYx7Bd1aDSgkqjMLLQjFE6xe3u1E0.png",Nickelodeon HD
+http://192.168.1.56:8000/channels/play?id=1465
+#EXTINF:-1 group-title="Музыка" tvg-name="NRJ_Hits_HD" tvg-id="ttv15975" tvg-logo="http://1ttv.org/uploads/lSwvcnY5XfGEwyrKSvygH73fcYDZKI.png",NRJ Hits HD
+http://192.168.1.56:8000/channels/play?id=15975
+#EXTINF:-1 group-title="Для взрослых" tvg-name="Nuart_TV" tvg-id="ttv5617" tvg-logo="http://1ttv.org/uploads/aqMIuUixqLQYmJITPnOGtFkRPuTqKa.png",Nuart TV
+http://192.168.1.56:8000/channels/play?id=5617
+#EXTINF:-1 group-title="Для взрослых" tvg-name="O-la-la" tvg-id="ttv10300" tvg-logo="http://1ttv.org/uploads/7ddvb8Tivq7yuEgffrKildHi2BQcCE.png",O-la-la
+http://192.168.1.56:8000/channels/play?id=10300
+#EXTINF:-1 group-title="Музыка" tvg-name="O-TV" tvg-id="ttv1799" tvg-logo="http://1ttv.org/uploads/UlIt4rE3FZs7IQmPN3tsGS6fqY5F1D.png",O-TV
+http://192.168.1.56:8000/channels/play?id=1799
+#EXTINF:-1 group-title="Познавательные" tvg-name="Ocean-TV" tvg-id="ttv1803" tvg-logo="http://1ttv.org/uploads/cvBAngU16nJU1bEzxAEcMPiPvf7fVT.png",Ocean-TV
+http://192.168.1.56:8000/channels/play?id=1803
+#EXTINF:-1 group-title="Спорт" tvg-name="Olympic_Channel_HD" tvg-id="ttv16148" tvg-logo="http://1ttv.org/uploads/3rHDtuBvfq5GWQbPhW7hDEcYeabTwO.png",Olympic Channel HD
+http://192.168.1.56:8000/channels/play?id=16148
+#EXTINF:-1 group-title="Мужские" tvg-name="Outdoor_Channel" tvg-id="ttv5615" tvg-logo="http://1ttv.org/uploads/SuxFoocUmay5G8jtfJaHL1yIbAT5Hr.png",Outdoor Channel
+http://192.168.1.56:8000/channels/play?id=5615
+#EXTINF:-1 group-title="Мужские" tvg-name="Outdoor_Channel_HD" tvg-id="ttv3042" tvg-logo="http://1ttv.org/uploads/SuxFoocUmay5G8jtfJaHL1yIbAT5Hr.png",Outdoor Channel HD
+http://192.168.1.56:8000/channels/play?id=3042
+#EXTINF:-1 group-title="Региональные" tvg-name="PanArmenian_TV" tvg-id="ttv16231" tvg-logo="http://1ttv.org/uploads/tPxLstRFhFYfGzT8Elg0a1QGGf7wf4.png",PanArmenian TV
+http://192.168.1.56:8000/channels/play?id=16231
+#EXTINF:-1 group-title="Фильмы" tvg-name="Paramount_Channel" tvg-id="ttv8796" tvg-logo="http://1ttv.org/uploads/Iyzjhb5BBRKfvEZdBwNJ785jzroODU.png",Paramount Channel
+http://192.168.1.56:8000/channels/play?id=8796
+#EXTINF:-1 group-title="Развлекательные" tvg-name="Paramount_Comedy" tvg-id="ttv3364" tvg-logo="http://1ttv.org/uploads/5EtvAWXB7VK1Yw82yvO28sY28dU4ZC.png",Paramount Comedy
+http://192.168.1.56:8000/channels/play?id=3364
+#EXTINF:-1 group-title="Развлекательные" tvg-name="Paramount_Comedy_HD" tvg-id="ttv16063" tvg-logo="http://1ttv.org/uploads/m8YTKk5S5vVQ1rdmi1lsgTCOQH6lY7.png",Paramount Comedy HD
+http://192.168.1.56:8000/channels/play?id=16063
+#EXTINF:-1 group-title="Региональные" tvg-name="Phoenix_CNE" tvg-id="ttv15718" tvg-logo="http://1ttv.org/uploads/4A3PI1xIjIeECNSMDDvOfwXd5n2sso.png",Phoenix CNE
+http://192.168.1.56:8000/channels/play?id=15718
+#EXTINF:-1 group-title="Для взрослых" tvg-name="Phoenix_Marie_TV" tvg-id="ttv15380" tvg-logo="http://1ttv.org/uploads/mC9hfoTbTEXlNXEVFrJvXaj78QGUhA.png",Phoenix Marie TV
+http://192.168.1.56:8000/channels/play?id=15380
+#EXTINF:-1 group-title="Для взрослых" tvg-name="Pink_O_TV" tvg-id="ttv10289" tvg-logo="http://1ttv.org/uploads/aI99kH6bHY5Qt2ph4W1Nh0wxdzd1p8.png",Pink O TV
+http://192.168.1.56:8000/channels/play?id=10289
+#EXTINF:-1 group-title="Для взрослых" tvg-name="Playboy_TV" tvg-id="ttv416" tvg-logo="http://1ttv.org/uploads/lIWBxmt5GDl9tg4KsQNtA0CuZWdOHH.png",Playboy TV
+http://192.168.1.56:8000/channels/play?id=416
+#EXTINF:-1 group-title="Региональные" tvg-name="Polonia_1" tvg-id="ttv2246" tvg-logo="http://1ttv.org/uploads/3fzUyCBgUoJ6zqc92KSXh9g9utJEuO.png",Polonia 1
+http://192.168.1.56:8000/channels/play?id=2246
+#EXTINF:-1 group-title="Развлекательные" tvg-name="Pro_Все" tvg-id="ttv11431" tvg-logo="http://1ttv.org/uploads/OavKhOpBMn27qPDKJXXm5rgATgovgn.png",Pro Все
+http://192.168.1.56:8000/channels/play?id=11431
+#EXTINF:-1 group-title="Развлекательные" tvg-name="QTV" tvg-id="ttv1424" tvg-logo="http://1ttv.org/uploads/zmh1xStjBZGJ6U5g3xLoemD2oT3w3h.png",QTV
+http://192.168.1.56:8000/channels/play?id=1424
+#EXTINF:-1 group-title="Новостные" tvg-name="Rai_News_24" tvg-id="ttv15900" tvg-logo="http://1ttv.org/uploads/ejWH5qVf8XAWkc3HLQYTmEpYchtaIS.png",Rai News 24
+http://192.168.1.56:8000/channels/play?id=15900
+#EXTINF:-1 group-title="Спорт" tvg-name="Real_Madrid_TV" tvg-id="ttv14131" tvg-logo="http://1ttv.org/uploads/KfoLG7goywcRhMMCc3sO8IVwhuATLp.png",Real Madrid TV
+http://192.168.1.56:8000/channels/play?id=14131
+#EXTINF:-1 group-title="Для взрослых" tvg-name="Redlight_HD" tvg-id="ttv3560" tvg-logo="http://1ttv.org/uploads/5tFZcJtKAZRbXtKGDuLe8FZ3lK9LI5.png",Redlight HD
+http://192.168.1.56:8000/channels/play?id=3560
+#EXTINF:-1 group-title="Развлекательные" tvg-name="Renome_(Одесса)" tvg-id="ttv14762" tvg-logo="http://1ttv.org/uploads/uXenrBCtSwAsv31RtOAXdn3hXm3i5N.png",Renome (Одесса)
+http://192.168.1.56:8000/channels/play?id=14762
+#EXTINF:-1 group-title="Музыка" tvg-name="Retro_Music_TV" tvg-id="ttv11001" tvg-logo="http://1ttv.org/uploads/zVS9G1oine56udlAK30gNut16iJ9Ft.png",Retro Music TV
+http://192.168.1.56:8000/channels/play?id=11001
+#EXTINF:-1 group-title="Музыка" tvg-name="RMC_TV" tvg-id="ttv11441" tvg-logo="http://1ttv.org/uploads/3CiAgachWg7ohgoU1Gilcm73hXhT41.png",RMC TV
+http://192.168.1.56:8000/channels/play?id=11441
+#EXTINF:-1 group-title="Познавательные" tvg-name="RTG_HD" tvg-id="ttv8617" tvg-logo="http://1ttv.org/uploads/g4MDyw0yqXWkIar8eH0cgCz4xhiKON.png",RTG HD
+http://192.168.1.56:8000/channels/play?id=8617
+#EXTINF:-1 group-title="Познавательные" tvg-name="RTG_TV" tvg-id="ttv1594" tvg-logo="http://1ttv.org/uploads/IeaOjwR6Q9eJjGZr0LYk2tpchM3ITZ.png",RTG TV
+http://192.168.1.56:8000/channels/play?id=1594
+#EXTINF:-1 group-title="Общие" tvg-name="RTVi" tvg-id="ttv1375" tvg-logo="http://1ttv.org/uploads/QBnba0xrWtpPWLL4yKDRixaCRQAmaP.png",RTVi
+http://192.168.1.56:8000/channels/play?id=1375
+#EXTINF:-1 group-title="Музыка" tvg-name="RU_TV" tvg-id="ttv404" tvg-logo="http://1ttv.org/uploads/161.png",RU TV
+http://192.168.1.56:8000/channels/play?id=404
+#EXTINF:-1 group-title="Музыка" tvg-name="Rusong_TV" tvg-id="ttv1817" tvg-logo="http://1ttv.org/uploads/186WxZMn3PGQyMlWsItM9JkSS4Tt29.png",Rusong TV
+http://192.168.1.56:8000/channels/play?id=1817
+#EXTINF:-1 group-title="Новостные" tvg-name="Russia_Today" tvg-id="ttv8427" tvg-logo="http://1ttv.org/uploads/rL14fwCe8q10mKTchOwLkfwQVki9XK.png",Russia Today
+http://192.168.1.56:8000/channels/play?id=8427
+#EXTINF:-1 group-title="Новостные" tvg-name="Russia_Today_Arabic" tvg-id="ttv13529" tvg-logo="http://1ttv.org/uploads/OPbYfpQc4ShP8JmgPeiavUroY98H8L.png",Russia Today Arabic
+http://192.168.1.56:8000/channels/play?id=13529
+#EXTINF:-1 group-title="Познавательные" tvg-name="Russia_Today_Doc" tvg-id="ttv8346" tvg-logo="http://1ttv.org/uploads/VOYx5PIhDPrWiZIcCYpm1xrDSQZnsN.png",Russia Today Doc
+http://192.168.1.56:8000/channels/play?id=8346
+#EXTINF:-1 group-title="Познавательные" tvg-name="Russia_Today_Doc_HD" tvg-id="ttv5614" tvg-logo="http://1ttv.org/uploads/b8QePfFi6zsCDS7hfTeFWES5UN4SAk.png",Russia Today Doc HD
+http://192.168.1.56:8000/channels/play?id=5614
+#EXTINF:-1 group-title="Новостные" tvg-name="Russia_Today_Espanol" tvg-id="ttv13530" tvg-logo="http://1ttv.org/uploads/zkPwjfFbktNO8EYDaHlYhwAeT88dmY.png",Russia Today Espanol
+http://192.168.1.56:8000/channels/play?id=13530
+#EXTINF:-1 group-title="Новостные" tvg-name="Russia_Today_HD" tvg-id="ttv8622" tvg-logo="http://1ttv.org/uploads/rL14fwCe8q10mKTchOwLkfwQVki9XK.png",Russia Today HD
+http://192.168.1.56:8000/channels/play?id=8622
+#EXTINF:-1 group-title="Музыка" tvg-name="Russian_Music_Box_HD" tvg-id="ttv16164" tvg-logo="http://1ttv.org/uploads/CbPggS9SpKMrgFW5myDvhLEFvm0hwp.png",Russian Music Box HD
+http://192.168.1.56:8000/channels/play?id=16164
+#EXTINF:-1 group-title="Для взрослых" tvg-name="Satisfaction_HD" tvg-id="ttv9286" tvg-logo="http://1ttv.org/uploads/isdNgbfGENuaDPSMzsz8WMjBzc1rah.png",Satisfaction HD
+http://192.168.1.56:8000/channels/play?id=9286
+#EXTINF:-1 group-title="Для взрослых" tvg-name="SCT" tvg-id="ttv6798" tvg-logo="http://1ttv.org/uploads/bDRN0guXHaNHruxtyFkpKYz8J09Xj3.png",SCT
+http://192.168.1.56:8000/channels/play?id=6798
+#EXTINF:-1 group-title="Фильмы" tvg-name="SET_HD" tvg-id="ttv3730" tvg-logo="http://1ttv.org/uploads/sX1unYoKj8JR7m8lbtkmPCClRrjAZ9.png",SET HD
+http://192.168.1.56:8000/channels/play?id=3730
+#EXTINF:-1 group-title="Спорт" tvg-name="Setanta_Sports_+_HD" tvg-id="ttv12247" tvg-logo="http://1ttv.org/uploads/jW7pJhmebW2fZsXUTvDuRQLahgiLlU.png",Setanta Sports + HD
+http://192.168.1.56:8000/channels/play?id=12247
+#EXTINF:-1 group-title="Спорт" tvg-name="Setanta_Sports_+_HD_(Беларусь)" tvg-id="ttv16037" tvg-logo="http://1ttv.org/uploads/dY1QXbyfO3IhsyFh1TN3Jndbza9a0v.png",Setanta Sports + HD (Беларусь)
+http://192.168.1.56:8000/channels/play?id=16037
+#EXTINF:-1 group-title="Спорт" tvg-name="Setanta_Sports_HD_(Беларусь)" tvg-id="ttv16195" tvg-logo="http://1ttv.org/uploads/vAQYwF8y70YVSRhg5I0NysSzkzJIxz.png",Setanta Sports HD (Беларусь)
+http://192.168.1.56:8000/channels/play?id=16195
+#EXTINF:-1 group-title="Для взрослых" tvg-name="Sextosenso" tvg-id="ttv4967" tvg-logo="http://1ttv.org/uploads/HXMvFMLO9weHUcolVmmMKpz98T0K4K.png",Sextosenso
+http://192.168.1.56:8000/channels/play?id=4967
+#EXTINF:-1 group-title="Региональные" tvg-name="Shant_TV" tvg-id="ttv7376" tvg-logo="http://1ttv.org/uploads/IgJpH1JzyjI55Ki2G2Ybz6jzOkwG0T.png",Shant TV
+http://192.168.1.56:8000/channels/play?id=7376
+#EXTINF:-1 group-title="Развлекательные" tvg-name="Shop_24" tvg-id="ttv8837" tvg-logo="http://1ttv.org/uploads/bCuxLyvoTk8l5cBRSyKFXjWjYucvlu.png",Shop 24
+http://192.168.1.56:8000/channels/play?id=8837
+#EXTINF:-1 group-title="Развлекательные" tvg-name="Shopping_Live" tvg-id="ttv8798" tvg-logo="http://1ttv.org/uploads/HVwxC489SYFr8Ttqs1he9RZjEmJjPn.png",Shopping Live
+http://192.168.1.56:8000/channels/play?id=8798
+#EXTINF:-1 group-title="Развлекательные" tvg-name="SHOPping-TV_(Ukraine)" tvg-id="ttv2133" tvg-logo="http://1ttv.org/uploads/Yhipu86vXMGf0hxCTXLezpGpcUbibW.png",SHOPping-TV (Ukraine)
+http://192.168.1.56:8000/channels/play?id=2133
+#EXTINF:-1 group-title="Спорт" tvg-name="Sky_Sports_1" tvg-id="ttv16234" tvg-logo="http://1ttv.org/uploads/0PfbtH9dhcBjdljPRajYg1YVGZZkpi.png",Sky Sports 1
+http://192.168.1.56:8000/channels/play?id=16234
+#EXTINF:-1 group-title="Фильмы" tvg-name="Sony_Sci-Fi" tvg-id="ttv400" tvg-logo="http://1ttv.org/uploads/zLWEgf9BbxBr1TR2Qj2NxVQBuPecEP.png",Sony Sci-Fi
+http://192.168.1.56:8000/channels/play?id=400
+#EXTINF:-1 group-title="Фильмы" tvg-name="Sony_Turbo" tvg-id="ttv9264" tvg-logo="http://1ttv.org/uploads/CaPjVaQrpyN138TarQ7CYBqBOz0ZF7.png",Sony Turbo
+http://192.168.1.56:8000/channels/play?id=9264
+#EXTINF:-1 group-title="Спорт" tvg-name="Sport_1_Cz" tvg-id="ttv10729" tvg-logo="http://1ttv.org/uploads/kCLlfkFz3Ba3BL9Jc9ZPgUKXh2piyv.png",Sport 1 Cz
+http://192.168.1.56:8000/channels/play?id=10729
+#EXTINF:-1 group-title="Спорт" tvg-name="Sport_2_Cz" tvg-id="ttv10873" tvg-logo="http://1ttv.org/uploads/YLmEjnczWQGJcZC0SxRcH4ifPcwYlx.png",Sport 2 Cz
+http://192.168.1.56:8000/channels/play?id=10873
+#EXTINF:-1 group-title="Развлекательные" tvg-name="STV" tvg-id="ttv1422" tvg-logo="http://1ttv.org/uploads/DbKEKL5gUOFHiruYRjY2H9gTLOV5mu.png",STV
+http://192.168.1.56:8000/channels/play?id=1422
+#EXTINF:-1 group-title="Развлекательные" tvg-name="Super_TV" tvg-id="ttv15829" tvg-logo="http://1ttv.org/uploads/iRrgl4xiCvibdxWfiQcVUWuYCYCI9K.png",Super TV
+http://192.168.1.56:8000/channels/play?id=15829
+#EXTINF:-1 group-title="Религиозные" tvg-name="TBN_Europe" tvg-id="ttv15717" tvg-logo="http://1ttv.org/uploads/bZT2NYEtReHVOSFTcW8xuDTVDvcoUn.png",TBN Europe
+http://192.168.1.56:8000/channels/play?id=15717
+#EXTINF:-1 group-title="Региональные" tvg-name="Tele_Vsesvit" tvg-id="ttv15912" tvg-logo="http://1ttv.org/uploads/ejWH5qVf8XAWkc3HLQYTmEpYchtaIS.png",Tele Vsesvit
+http://192.168.1.56:8000/channels/play?id=15912
+#EXTINF:-1 group-title="Региональные" tvg-name="Telesur" tvg-id="ttv15896" tvg-logo="http://1ttv.org/uploads/ejWH5qVf8XAWkc3HLQYTmEpYchtaIS.png",Telesur
+http://192.168.1.56:8000/channels/play?id=15896
+#EXTINF:-1 group-title="Познавательные" tvg-name="Teletravel_HD" tvg-id="ttv10874" tvg-logo="http://1ttv.org/uploads/4ZlASq3oDpOjXfhwluOzY74sy9elaE.png",Teletravel HD
+http://192.168.1.56:8000/channels/play?id=10874
+#EXTINF:-1 group-title="Для взрослых" tvg-name="TGirls_TV" tvg-id="ttv9287" tvg-logo="http://1ttv.org/uploads/FufZ2heFswzvAbRkTQZs8UJBYGsxuG.png",TGirls TV
+http://192.168.1.56:8000/channels/play?id=9287
+#EXTINF:-1 group-title="Детские" tvg-name="TiJi" tvg-id="ttv1820" tvg-logo="http://1ttv.org/uploads/mD3GW0E7rdPwc4stjk7xrLI2gZn4Hq.png",TiJi
+http://192.168.1.56:8000/channels/play?id=1820
+#EXTINF:-1 group-title="Общие" tvg-name="Tonis" tvg-id="ttv10515" tvg-logo="http://1ttv.org/uploads/f4NBZiozbHDSxPGRpphIXhvlBjytkG.png",Tonis
+http://192.168.1.56:8000/channels/play?id=10515
+#EXTINF:-1 group-title="Общие" tvg-name="Tonis_HD" tvg-id="ttv6467" tvg-logo="http://1ttv.org/uploads/38BRA5jO6LAsQ6rv1NC3FMJ6KALp8z.png",Tonis HD
+http://192.168.1.56:8000/channels/play?id=6467
+#EXTINF:-1 group-title="Развлекательные" tvg-name="Top_Shop" tvg-id="ttv9305" tvg-logo="http://1ttv.org/uploads/uD257Lhw7Ko2YD1reC0nRqW7lpy93D.png",Top Shop
+http://192.168.1.56:8000/channels/play?id=9305
+#EXTINF:-1 group-title="Познавательные" tvg-name="Travel_+_adventure_HD" tvg-id="ttv8618" tvg-logo="http://1ttv.org/uploads/b1HifWKMyefmDDvaDAJTwNNTaD8LF4.png",Travel + adventure HD
+http://192.168.1.56:8000/channels/play?id=8618
+#EXTINF:-1 group-title="Познавательные" tvg-name="Travel_Channel" tvg-id="ttv1439" tvg-logo="http://1ttv.org/uploads/fhmrYjlpC0YMxFd2RqOolbjlXMr0tI.png",Travel Channel
+http://192.168.1.56:8000/channels/play?id=1439
+#EXTINF:-1 group-title="Познавательные" tvg-name="Travel_Channel_HD" tvg-id="ttv1535" tvg-logo="http://1ttv.org/uploads/zfnAGLCvIu1fx9hfrITAZMoo9HYww4.png",Travel Channel HD
+http://192.168.1.56:8000/channels/play?id=1535
+#EXTINF:-1 group-title="Региональные" tvg-name="TRT_Turk" tvg-id="ttv15885" tvg-logo="http://1ttv.org/uploads/ejWH5qVf8XAWkc3HLQYTmEpYchtaIS.png",TRT Turk
+http://192.168.1.56:8000/channels/play?id=15885
+#EXTINF:-1 group-title="Спорт" tvg-name="TSN_1" tvg-id="ttv13091" tvg-logo="http://1ttv.org/uploads/GJsJeixsOKvFaXz8XKqvX4Uh6sUicu.png",TSN 1
+http://192.168.1.56:8000/channels/play?id=13091
+#EXTINF:-1 group-title="Региональные" tvg-name="TV_Bakhoristan" tvg-id="ttv8880" tvg-logo="http://1ttv.org/uploads/LoXaN929SQC5r5aQ3JETDXwG6VlPMk.png",TV Bakhoristan
+http://192.168.1.56:8000/channels/play?id=8880
+#EXTINF:-1 group-title="Развлекательные" tvg-name="TV_Mall" tvg-id="ttv8815" tvg-logo="http://1ttv.org/uploads/hao8n2RWJzxwNaiVHUawwkNVG6X4Zp.png",TV Mall
+http://192.168.1.56:8000/channels/play?id=8815
+#EXTINF:-1 group-title="Региональные" tvg-name="TV_Safina" tvg-id="ttv8879" tvg-logo="http://1ttv.org/uploads/mJUmNhJbQqcr2NPppAryEJqDPBJGV0.png",TV Safina
+http://192.168.1.56:8000/channels/play?id=8879
+#EXTINF:-1 group-title="Развлекательные" tvg-name="TV_Sale" tvg-id="ttv6471" tvg-logo="http://1ttv.org/uploads/hs0YdiUTlpRtb3wTiP4cXboX0H9oTN.png",TV Sale
+http://192.168.1.56:8000/channels/play?id=6471
+#EXTINF:-1 group-title="Фильмы" tvg-name="TV_XXI_(TV21)" tvg-id="ttv1434" tvg-logo="http://1ttv.org/uploads/TKchoTWZFRMmGDBok08zoEFJ8mJJCe.png",TV XXI (TV21)
+http://192.168.1.56:8000/channels/play?id=1434
+#EXTINF:-1 group-title="Региональные" tvg-name="TV-5" tvg-id="ttv16141" tvg-logo="http://1ttv.org/uploads/iPHeoajUJttv5qZl2yfcOYB1qFx6nv.png",TV-5
+http://192.168.1.56:8000/channels/play?id=16141
+#EXTINF:-1 group-title="Региональные" tvg-name="TV3_Catalunya" tvg-id="ttv15868" tvg-logo="http://1ttv.org/uploads/JdogLgSiKoXxC7ZlxVLogeOLMQUQyN.png",TV3 Catalunya
+http://192.168.1.56:8000/channels/play?id=15868
+#EXTINF:-1 group-title="Развлекательные" tvg-name="TV5_Monde_Europe" tvg-id="ttv8816" tvg-logo="http://1ttv.org/uploads/ko7rbRBnyK1iINkLOA2adRvgVOEgUK.png",TV5 Monde Europe
+http://192.168.1.56:8000/channels/play?id=8816
+#EXTINF:-1 group-title="Региональные" tvg-name="TVC_21" tvg-id="ttv15792" tvg-logo="http://1ttv.org/uploads/t6oWXfHEIMAjJ9GSEChuI2JHQg7KzL.png",TVC 21
+http://192.168.1.56:8000/channels/play?id=15792
+#EXTINF:-1 group-title="Музыка" tvg-name="TVM3" tvg-id="ttv16281" tvg-logo="http://1ttv.org/uploads/V7XfAk816izeRoTkJ3KjAV9ViLHs44.png",TVM3
+http://192.168.1.56:8000/channels/play?id=16281
+#EXTINF:-1 group-title="Региональные" tvg-name="TVT_1" tvg-id="ttv8878" tvg-logo="http://1ttv.org/uploads/CKKdhDfmno9O52tMfWptiAQT0IBWV8.png",TVT 1
+http://192.168.1.56:8000/channels/play?id=8878
+#EXTINF:-1 group-title="Общие" tvg-name="UA:Перший_(Украина)" tvg-id="ttv1405" tvg-logo="http://1ttv.org/uploads/iN5vheceBnPmO18uXHGgKwq7q2PHtF.png",UA:Перший (Украина)
+http://192.168.1.56:8000/channels/play?id=1405
+#EXTINF:-1 group-title="Общие" tvg-name="UATV" tvg-id="ttv2008" tvg-logo="http://1ttv.org/uploads/83AcB7NfDhEh4tEcJx7d5Lm1l6dzpB.png",UATV
+http://192.168.1.56:8000/channels/play?id=2008
+#EXTINF:-1 group-title="Региональные" tvg-name="USArmenia_TV" tvg-id="ttv15844" tvg-logo="http://1ttv.org/uploads/llpqN7S6EpCPdoYIHjle6gc4cXlk17.png",USArmenia TV
+http://192.168.1.56:8000/channels/play?id=15844
+#EXTINF:-1 group-title="Музыка" tvg-name="VH1" tvg-id="ttv393" tvg-logo="http://1ttv.org/uploads/58.png",VH1
+http://192.168.1.56:8000/channels/play?id=393
+#EXTINF:-1 group-title="Музыка" tvg-name="VH1_Classic" tvg-id="ttv1129" tvg-logo="http://1ttv.org/uploads/FhxUFQ2Bsfom4vb8Ce41gFObAbh1Vh.png",VH1 Classic
+http://192.168.1.56:8000/channels/play?id=1129
+#EXTINF:-1 group-title="Спорт" tvg-name="Viasat_Golf" tvg-id="ttv10372" tvg-logo="http://1ttv.org/uploads/IGpQl5iTxaDEPyKffdDEpU0EU0SPiO.png",Viasat Golf
+http://192.168.1.56:8000/channels/play?id=10372
+#EXTINF:-1 group-title="Музыка" tvg-name="Vintage_TV_UK" tvg-id="ttv15556" tvg-logo="http://1ttv.org/uploads/mhFKSRmQIsgPnIUCWFzWbMAXK5dn3i.png",Vintage TV UK
+http://192.168.1.56:8000/channels/play?id=15556
+#EXTINF:-1 group-title="Музыка" tvg-name="Vinyl_TV" tvg-id="ttv16115" tvg-logo="http://1ttv.org/uploads/qJpayWFPo9N5mYUIHK1phkAi1fd0Y9.png",Vinyl TV
+http://192.168.1.56:8000/channels/play?id=16115
+#EXTINF:-1 group-title="Музыка" tvg-name="Virgin_Radio_TV" tvg-id="ttv15207" tvg-logo="http://1ttv.org/uploads/6DgkEMl3HtkpKQbzVovPdSYhy9f3ne.png",Virgin Radio TV
+http://192.168.1.56:8000/channels/play?id=15207
+#EXTINF:-1 group-title="Региональные" tvg-name="Vision_Norden" tvg-id="ttv15911" tvg-logo="http://1ttv.org/uploads/ejWH5qVf8XAWkc3HLQYTmEpYchtaIS.png",Vision Norden
+http://192.168.1.56:8000/channels/play?id=15911
+#EXTINF:-1 group-title="Познавательные" tvg-name="WBC_HD" tvg-id="ttv12577" tvg-logo="http://1ttv.org/uploads/fMdJvc8moH4HGH5OYqsZwskCowQYuE.png",WBC HD
+http://192.168.1.56:8000/channels/play?id=12577
+#EXTINF:-1 group-title="Развлекательные" tvg-name="World_Fashion" tvg-id="ttv1425" tvg-logo="http://1ttv.org/uploads/2YI4sT9YkGezrw9vZPn0uIRhZ7E2BV.png",World Fashion
+http://192.168.1.56:8000/channels/play?id=1425
+#EXTINF:-1 group-title="Познавательные" tvg-name="World_Fashion_Россия_HD" tvg-id="ttv16257" tvg-logo="http://1ttv.org/uploads/eJzVBXLO7r1xvqPUOaPcJXvan77QXN.png",World Fashion Россия HD
+http://192.168.1.56:8000/channels/play?id=16257
+#EXTINF:-1 group-title="Региональные" tvg-name="Yerkir_Media_TV" tvg-id="ttv16167" tvg-logo="http://1ttv.org/uploads/kfPtjwBHGAU33CFQ0iGcl9yRBr2dUm.png",Yerkir Media TV
+http://192.168.1.56:8000/channels/play?id=16167
+#EXTINF:-1 group-title="Региональные" tvg-name="ZDF" tvg-id="ttv11224" tvg-logo="http://1ttv.org/uploads/5SH5FeZiITw27CPxscjksZp272u7He.png",ZDF
+http://192.168.1.56:8000/channels/play?id=11224
+#EXTINF:-1 group-title="Развлекательные" tvg-name="Zoom" tvg-id="ttv1792" tvg-logo="http://1ttv.org/uploads/SyisYhg411o7z9kXci4vfpLq4KBZZ4.png",Zoom
+http://192.168.1.56:8000/channels/play?id=1792
+#EXTINF:-1 group-title="Мужские" tvg-name="Авто_24" tvg-id="ttv8733" tvg-logo="http://1ttv.org/uploads/GZwKgvkC0vfYquFAn1dKhppNxdDit9.png",Авто 24
+http://192.168.1.56:8000/channels/play?id=8733
+#EXTINF:-1 group-title="Мужские" tvg-name="Авто_плюс" tvg-id="ttv1127" tvg-logo="http://1ttv.org/uploads/WkRxjy6fJEBJ5NZiaGn2j05eqfFfQq.png",Авто плюс
+http://192.168.1.56:8000/channels/play?id=1127
+#EXTINF:-1 group-title="Региональные" tvg-name="Архыз24" tvg-id="ttv15723" tvg-logo="http://1ttv.org/uploads/tuMbRlnkeMiYQ6u9oeiAVfHF0F20RB.png",Архыз24
+http://192.168.1.56:8000/channels/play?id=15723
+#EXTINF:-1 group-title="Новостные" tvg-name="Бел_Бизнес_Канал" tvg-id="ttv16190" tvg-logo="http://1ttv.org/uploads/N7PHPPB5M830dp2MwB7x8mqGSnkeTu.png",Бел Бизнес Канал
+http://192.168.1.56:8000/channels/play?id=16190
+#EXTINF:-1 group-title="Общие" tvg-name="Беларусь_24" tvg-id="ttv1407" tvg-logo="http://1ttv.org/uploads/GxA1KJP5YwpWc38BoPEmLwQH6uDeEz.png",Беларусь 24
+http://192.168.1.56:8000/channels/play?id=1407
+#EXTINF:-1 group-title="Спорт" tvg-name="Беларусь_5" tvg-id="ttv15288" tvg-logo="http://1ttv.org/uploads/2bzJLE9Sbk9BqUBlsVrtqpsz8h0rB6.png",Беларусь 5
+http://192.168.1.56:8000/channels/play?id=15288
+#EXTINF:-1 group-title="Региональные" tvg-name="Белсат_ТВ" tvg-id="ttv13792" tvg-logo="http://1ttv.org/uploads/9VYuUQxx1ss7ieu2upENtlibyamBP0.png",Белсат ТВ
+http://192.168.1.56:8000/channels/play?id=13792
+#EXTINF:-1 group-title="Развлекательные" tvg-name="Бигуди" tvg-id="ttv8818" tvg-logo="http://1ttv.org/uploads/JvcMdB5e6KVBpbXT12ulzmDqenheRx.png",Бигуди
+http://192.168.1.56:8000/channels/play?id=8818
+#EXTINF:-1 group-title="Познавательные" tvg-name="Бобер" tvg-id="ttv12170" tvg-logo="http://1ttv.org/uploads/2Edln8vEbg7UUSVUo7lIJPR780OWAR.png",Бобер
+http://192.168.1.56:8000/channels/play?id=12170
+#EXTINF:-1 group-title="Мужские" tvg-name="Бокс_ТВ_HD" tvg-id="ttv16078" tvg-logo="http://1ttv.org/uploads/LDKFJA3d48gRtoaO3CkZoQhXDAltml.png",Бокс ТВ HD
+http://192.168.1.56:8000/channels/play?id=16078
+#EXTINF:-1 group-title="Региональные" tvg-name="Брянская_губерния" tvg-id="ttv15712" tvg-logo="http://1ttv.org/uploads/V5M08NU3jRbd2wKvtVLIRbg9J6ObAZ.png",Брянская губерния
+http://192.168.1.56:8000/channels/play?id=15712
+#EXTINF:-1 group-title="Общие" tvg-name="Винтаж_ТВ" tvg-id="ttv14640" tvg-logo="http://1ttv.org/uploads/6yngbEKfgy6XtMw28INQCoOdulf2tC.png",Винтаж ТВ
+http://192.168.1.56:8000/channels/play?id=14640
+#EXTINF:-1 group-title="Общие" tvg-name="Вместе_РФ" tvg-id="ttv8877" tvg-logo="http://1ttv.org/uploads/qa50GYekwBWym7KtoJdzrWHWqN8TeU.png",Вместе РФ
+http://192.168.1.56:8000/channels/play?id=8877
+#EXTINF:-1 group-title="Религиозные" tvg-name="Возрождение_ТВ" tvg-id="ttv15729" tvg-logo="http://1ttv.org/uploads/CKWaxJsLQYiJmnkLhtysIn8hb0NK8b.png",Возрождение ТВ
+http://192.168.1.56:8000/channels/play?id=15729
+#EXTINF:-1 group-title="Развлекательные" tvg-name="Вопросы_и_ответы" tvg-id="ttv1412" tvg-logo="http://1ttv.org/uploads/xbV8M35FkvpieQ3TUEL8fhwU8MzjmQ.png",Вопросы и ответы
+http://192.168.1.56:8000/channels/play?id=1412
+#EXTINF:-1 group-title="Общие" tvg-name="Время" tvg-id="ttv2095" tvg-logo="http://1ttv.org/uploads/F44yKDJQLsX0llpZ2wupg8V5vHx5fF.png",Время
+http://192.168.1.56:8000/channels/play?id=2095
+#EXTINF:-1 group-title="Развлекательные" tvg-name="ВТВ" tvg-id="ttv2252" tvg-logo="http://1ttv.org/uploads/svsUD6TinXyv3B1q5sZf3fI9ebmpaF.png",ВТВ
+http://192.168.1.56:8000/channels/play?id=2252
+#EXTINF:-1 group-title="Региональные" tvg-name="ВТВ-Плюс" tvg-id="ttv16142" tvg-logo="http://1ttv.org/uploads/tPmijfGtbGhjmM4y3IT0PzuWbs6dz3.png",ВТВ-Плюс
+http://192.168.1.56:8000/channels/play?id=16142
+#EXTINF:-1 group-title="Религиозные" tvg-name="Глас" tvg-id="ttv2015" tvg-logo="http://1ttv.org/uploads/6m1xUI7vFyadFMFxXeIZjlATt7rlWw.png",Глас
+http://192.168.1.56:8000/channels/play?id=2015
+#EXTINF:-1 group-title="Региональные" tvg-name="Горизонт" tvg-id="ttv14638" tvg-logo="http://1ttv.org/uploads/f6wqkzO4WZW7D5Z9xIB4VkMRGmgXUU.png",Горизонт
+http://192.168.1.56:8000/channels/play?id=14638
+#EXTINF:-1 group-title="Познавательные" tvg-name="Горизонт_ТВ" tvg-id="ttv14106" tvg-logo="http://1ttv.org/uploads/o7wnxC58C4KfCnX0hh0il0LTRlPfSg.png",Горизонт ТВ
+http://192.168.1.56:8000/channels/play?id=14106
+#EXTINF:-1 group-title="Развлекательные" tvg-name="Горящий_камин_HD" tvg-id="ttv16072" tvg-logo="http://1ttv.org/uploads/ujkL8d4MnAfrWSOBme8UxGFq6AJodT.png",Горящий камин HD
+http://192.168.1.56:8000/channels/play?id=16072
+#EXTINF:-1 group-title="Новостные" tvg-name="Громадське_ТБ_HD" tvg-id="ttv13578" tvg-logo="http://1ttv.org/uploads/Ovkd9TiVv3nLcKPwQS2wkJ85KyYCMQ.png",Громадське ТБ HD
+http://192.168.1.56:8000/channels/play?id=13578
+#EXTINF:-1 group-title="Детские" tvg-name="Дед_Мороз_ТВ" tvg-id="ttv16056" tvg-logo="http://1ttv.org/uploads/pKNi8t2RE1R83MEGfsiWCVdamY0bmz.png",Дед Мороз ТВ
+http://192.168.1.56:8000/channels/play?id=16056
+#EXTINF:-1 group-title="Детские" tvg-name="Детский_мир" tvg-id="ttv554" tvg-logo="http://1ttv.org/uploads/00Vf3rPABNnbNQ6Rv0dnfcg3JsJelA.png",Детский мир
+http://192.168.1.56:8000/channels/play?id=554
+#EXTINF:-1 group-title="Региональные" tvg-name="Днепропетровский_Государственный" tvg-id="ttv16145" tvg-logo="http://1ttv.org/uploads/DdzgOgvldXBS0n7Vhd78R464TeepUK.png",Днепропетровский Государственный
+http://192.168.1.56:8000/channels/play?id=16145
+#EXTINF:-1 group-title="Новостные" tvg-name="Дождь" tvg-id="ttv418" tvg-logo="http://1ttv.org/uploads/381.png",Дождь
+http://192.168.1.56:8000/channels/play?id=418
+#EXTINF:-1 group-title="Новостные" tvg-name="Дождь_HD" tvg-id="ttv16085" tvg-logo="http://1ttv.org/uploads/AmQc9vLd4PdapKm9HjRzIyp4EcdjBa.png",Дождь HD
+http://192.168.1.56:8000/channels/play?id=16085
+#EXTINF:-1 group-title="Фильмы" tvg-name="Дом_кино" tvg-id="ttv982" tvg-logo="http://1ttv.org/uploads/jlC78Fy13KWjQUN6l3FtbsRLZDvc0x.png",Дом кино
+http://192.168.1.56:8000/channels/play?id=982
+#EXTINF:-1 group-title="Фильмы" tvg-name="Дом_кино_Премиум_HD" tvg-id="ttv13677" tvg-logo="http://1ttv.org/uploads/uPO7sY6QsL94BV6QZGtLaxmPd75DJB.png",Дом кино Премиум HD
+http://192.168.1.56:8000/channels/play?id=13677
+#EXTINF:-1 group-title="Развлекательные" tvg-name="Домашний_магазин" tvg-id="ttv6470" tvg-logo="http://1ttv.org/uploads/yhzajV7vdLogQzMKat0rLJWaDkPpTP.png",Домашний магазин
+http://192.168.1.56:8000/channels/play?id=6470
+#EXTINF:-1 group-title="Региональные" tvg-name="Донбас" tvg-id="ttv14297" tvg-logo="http://1ttv.org/uploads/vsj1IA3Z8QVL3AzzuN4EshgT4LUmRr.png",Донбас
+http://192.168.1.56:8000/channels/play?id=14297
+#EXTINF:-1 group-title="Мужские" tvg-name="Драйв_ТВ" tvg-id="ttv2514" tvg-logo="http://1ttv.org/uploads/pmmgMKcRbxeYkjVUVr4IAWM0UuZHO4.png",Драйв ТВ
+http://192.168.1.56:8000/channels/play?id=2514
+#EXTINF:-1 group-title="Новостные" tvg-name="Евроновости" tvg-id="ttv15819" tvg-logo="http://1ttv.org/uploads/2lbWxLvwTPLxkwMdCbEkZREEOTNZhU.png",Евроновости
+http://192.168.1.56:8000/channels/play?id=15819
+#EXTINF:-1 group-title="Познавательные" tvg-name="Еда_HD" tvg-id="ttv8620" tvg-logo="http://1ttv.org/uploads/ojUD1jhpv7HBOLmubpEBOsANkpYNtk.png",Еда HD
+http://192.168.1.56:8000/channels/play?id=8620
+#EXTINF:-1 group-title="Региональные" tvg-name="Енисей" tvg-id="ttv15933" tvg-logo="http://1ttv.org/uploads/BwSuUNSjziZ2cfyyOu6DGwTkT8AkAX.png",Енисей
+http://192.168.1.56:8000/channels/play?id=15933
+#EXTINF:-1 group-title="Региональные" tvg-name="Ескулап" tvg-id="ttv15786" tvg-logo="http://1ttv.org/uploads/hoYCfMaGSqnRLkC0T8hVCsWHvc5LLz.png",Ескулап
+http://192.168.1.56:8000/channels/play?id=15786
+#EXTINF:-1 group-title="Новостные" tvg-name="Еспресо_ТВ" tvg-id="ttv7746" tvg-logo="http://1ttv.org/uploads/lOwm890F5URuR5Ej7IacerzECPIDt4.png",Еспресо ТВ
+http://192.168.1.56:8000/channels/play?id=7746
+#EXTINF:-1 group-title="Познавательные" tvg-name="Живая_Планета" tvg-id="ttv11626" tvg-logo="http://1ttv.org/uploads/xgKSMwqBdEyXnbVgb8LtNXSMiaPcOx.png",Живая Планета
+http://192.168.1.56:8000/channels/play?id=11626
+#EXTINF:-1 group-title="Развлекательные" tvg-name="Живая_природа_HD" tvg-id="ttv16082" tvg-logo="http://1ttv.org/uploads/46oHfJ9u06gzTJbf1ix1kEtjRQm2sI.png",Живая природа HD
+http://192.168.1.56:8000/channels/play?id=16082
+#EXTINF:-1 group-title="Развлекательные" tvg-name="Живи" tvg-id="ttv2022" tvg-logo="http://1ttv.org/uploads/cOluSjslxxs3JZtSVO8c15xh7h8SDU.png",Живи
+http://192.168.1.56:8000/channels/play?id=2022
+#EXTINF:-1 group-title="Познавательные" tvg-name="Загородная_жизнь" tvg-id="ttv5393" tvg-logo="http://1ttv.org/uploads/cGGo8HRkVhy66UXKXZ4tH5HyUaaxJA.png",Загородная жизнь
+http://192.168.1.56:8000/channels/play?id=5393
+#EXTINF:-1 group-title="Познавательные" tvg-name="Загородный" tvg-id="ttv7493" tvg-logo="http://1ttv.org/uploads/RX345W0BBqJbR3XdROHMi4dnbwqwlt.png",Загородный
+http://192.168.1.56:8000/channels/play?id=7493
+#EXTINF:-1 group-title="Общие" tvg-name="Звезда" tvg-id="ttv391" tvg-logo="http://1ttv.org/uploads/0HLRrFHt2QIkbJpLc1fy0RVe7hqCEC.png",Звезда
+http://192.168.1.56:8000/channels/play?id=391
+#EXTINF:-1 group-title="Общие" tvg-name="Звезда_(+2)" tvg-id="ttv15804" tvg-logo="http://1ttv.org/uploads/wa6skHc8W2MRz9Mm3qoKS4LpctSvYs.png",Звезда (+2)
+http://192.168.1.56:8000/channels/play?id=15804
+#EXTINF:-1 group-title="Общие" tvg-name="Звезда_(16:9)" tvg-id="ttv15997" tvg-logo="http://1ttv.org/uploads/0D5Hnl3tA2j36VpCtqPd6tFhhepz7k.png",Звезда (16:9)
+http://192.168.1.56:8000/channels/play?id=15997
+#EXTINF:-1 group-title="Познавательные" tvg-name="Здоровое_ТВ" tvg-id="ttv15619" tvg-logo="http://1ttv.org/uploads/6x1zbASjWqScFk0bghS2RX3H2k5XZf.png",Здоровое ТВ
+http://192.168.1.56:8000/channels/play?id=15619
+#EXTINF:-1 group-title="Познавательные" tvg-name="Зоо_ТВ" tvg-id="ttv5486" tvg-logo="http://1ttv.org/uploads/RtAhntWPlKQs6CIYAb72piNF9EsN3E.png",Зоо ТВ
+http://192.168.1.56:8000/channels/play?id=5486
+#EXTINF:-1 group-title="Общие" tvg-name="Индиго" tvg-id="ttv14268" tvg-logo="http://1ttv.org/uploads/dFIp5shmC5DbfWIDVaFh7coAofmLON.png",Индиго
+http://192.168.1.56:8000/channels/play?id=14268
+#EXTINF:-1 group-title="Фильмы" tvg-name="Индийское_кино" tvg-id="ttv1435" tvg-logo="http://1ttv.org/uploads/y8wvb5nc77vn5c4x8kinv85c7mv6n875c84.png",Индийское кино
+http://192.168.1.56:8000/channels/play?id=1435
+#EXTINF:-1 group-title="Общие" tvg-name="Интер" tvg-id="ttv467" tvg-logo="http://1ttv.org/uploads/3SP67FapzyZqMVZTPiJIcN09KRkTeu.png",Интер
+http://192.168.1.56:8000/channels/play?id=467
+#EXTINF:-1 group-title="Общие" tvg-name="Интер+" tvg-id="ttv1793" tvg-logo="http://1ttv.org/uploads/QEdaDBbqr13CCfwKQAP77UZYPQIPn0.png",Интер+
+http://192.168.1.56:8000/channels/play?id=1793
+#EXTINF:-1 group-title="Познавательные" tvg-name="История" tvg-id="ttv4004" tvg-logo="http://1ttv.org/uploads/PNRaeOUFzOPFtrclFBBRTckj6Lvo0u.png",История
+http://192.168.1.56:8000/channels/play?id=4004
+#EXTINF:-1 group-title="Развлекательные" tvg-name="К1" tvg-id="ttv1788" tvg-logo="http://1ttv.org/uploads/mk2mYb28HFIxkFIiMNQWmKUdn1Y8hD.png",К1
+http://192.168.1.56:8000/channels/play?id=1788
+#EXTINF:-1 group-title="Развлекательные" tvg-name="К2" tvg-id="ttv1789" tvg-logo="http://1ttv.org/uploads/IjG76jf8k8HTNLooNpUiEXtkPfA2rG.png",К2
+http://192.168.1.56:8000/channels/play?id=1789
+#EXTINF:-1 group-title="Познавательные" tvg-name="Калейдоскоп_ТВ" tvg-id="ttv14055" tvg-logo="http://1ttv.org/uploads/YJMqmzlZ87QeXYm9XpjH0XzpjljNcU.png",Калейдоскоп ТВ
+http://192.168.1.56:8000/channels/play?id=14055
+#EXTINF:-1 group-title="Детские" tvg-name="Карусель" tvg-id="ttv410" tvg-logo="http://1ttv.org/uploads/S233D4b6eq7KOXfdyi4dY2GokKeltg.png",Карусель
+http://192.168.1.56:8000/channels/play?id=410
+#EXTINF:-1 group-title="Детские" tvg-name="Карусель_(+3)" tvg-id="ttv11237" tvg-logo="http://1ttv.org/uploads/cYXQq7FnkEBAyYxfoPPsL2y3fwMDKU.png",Карусель (+3)
+http://192.168.1.56:8000/channels/play?id=11237
+#EXTINF:-1 group-title="Детские" tvg-name="Карусель_International" tvg-id="ttv11270" tvg-logo="http://1ttv.org/uploads/S233D4b6eq7KOXfdyi4dY2GokKeltg.png",Карусель International
+http://192.168.1.56:8000/channels/play?id=11270
+#EXTINF:-1 group-title="Общие" tvg-name="Киевская_Русь" tvg-id="ttv2014" tvg-logo="http://1ttv.org/uploads/C1AZimW2NnNA17H1uJLxxePUMTPQZ7.png",Киевская Русь
+http://192.168.1.56:8000/channels/play?id=2014
+#EXTINF:-1 group-title="Фильмы" tvg-name="Кино_ТВ_HD" tvg-id="ttv16100" tvg-logo="http://1ttv.org/uploads/s832okCNv0FEhvEwZAl4W2W4bs5vgP.png",Кино ТВ HD
+http://192.168.1.56:8000/channels/play?id=16100
+#EXTINF:-1 group-title="Фильмы" tvg-name="Кинокомедия" tvg-id="ttv1436" tvg-logo="http://1ttv.org/uploads/y087hci8ityixcnyxinxoafhiu.png",Кинокомедия
+http://192.168.1.56:8000/channels/play?id=1436
+#EXTINF:-1 group-title="Фильмы" tvg-name="Киномикс" tvg-id="ttv1392" tvg-logo="http://1ttv.org/uploads/y6b876ih8g7R876hfug3897wrhj.png",Киномикс
+http://192.168.1.56:8000/channels/play?id=1392
+#EXTINF:-1 group-title="Фильмы" tvg-name="Кинопоказ" tvg-id="ttv10023" tvg-logo="http://1ttv.org/uploads/v0JEbxExcFI8dVEzCkpZUoktgiS9t7.png",Кинопоказ
+http://192.168.1.56:8000/channels/play?id=10023
+#EXTINF:-1 group-title="Фильмы" tvg-name="Кинопоказ_1_HD" tvg-id="ttv11568" tvg-logo="http://1ttv.org/uploads/pNA1vR3sPoovYNKzO4TU6NQcSXNqjk.png",Кинопоказ 1 HD
+http://192.168.1.56:8000/channels/play?id=11568
+#EXTINF:-1 group-title="Фильмы" tvg-name="Кинопоказ_2_HD" tvg-id="ttv11569" tvg-logo="http://1ttv.org/uploads/Yf2XKrtorOF2wSZ23Q9NHhL2MfOcqi.png",Кинопоказ 2 HD
+http://192.168.1.56:8000/channels/play?id=11569
+#EXTINF:-1 group-title="Фильмы" tvg-name="КиноПремиум_HD" tvg-id="ttv11171" tvg-logo="http://1ttv.org/uploads/p580CRZ8bBS6dw3plMWhhxXSzQ59uS.png",КиноПремиум HD
+http://192.168.1.56:8000/channels/play?id=11171
+#EXTINF:-1 group-title="Фильмы" tvg-name="Кинопремьера_HD" tvg-id="ttv8709" tvg-logo="http://1ttv.org/uploads/y4Ihg8o7ikgJHF768iJHFH76iu.png",Кинопремьера HD
+http://192.168.1.56:8000/channels/play?id=8709
+#EXTINF:-1 group-title="Фильмы" tvg-name="Киносвидание" tvg-id="ttv2851" tvg-logo="http://1ttv.org/uploads/y1876iuyf7645urjg56utfy.png",Киносвидание
+http://192.168.1.56:8000/channels/play?id=2851
+#EXTINF:-1 group-title="Фильмы" tvg-name="Киносемья" tvg-id="ttv2849" tvg-logo="http://1ttv.org/uploads/y2oerfuhdj2108nbs4ev875esk47dn.png",Киносемья
+http://192.168.1.56:8000/channels/play?id=2849
+#EXTINF:-1 group-title="Фильмы" tvg-name="Киносерия" tvg-id="ttv1394" tvg-logo="http://1ttv.org/uploads/4TMYdVpZYXafyIumuB5d7PrjFnslyT.png",Киносерия
+http://192.168.1.56:8000/channels/play?id=1394
+#EXTINF:-1 group-title="Фильмы" tvg-name="Кинохит" tvg-id="ttv2850" tvg-logo="http://1ttv.org/uploads/y3igbjZ&LGyqDWGIASUY78AWID.png",Кинохит
+http://192.168.1.56:8000/channels/play?id=2850
+#EXTINF:-1 group-title="Спорт" tvg-name="Конный_мир" tvg-id="ttv15263" tvg-logo="http://1ttv.org/uploads/d8gVne1Em14rIfM6pSsiuufXZeYQqi.png",Конный мир
+http://192.168.1.56:8000/channels/play?id=15263
+#EXTINF:-1 group-title="Спорт" tvg-name="Конный_мир_HD" tvg-id="ttv15993" tvg-logo="http://1ttv.org/uploads/q87VlmfaBeBhq8SOhAu0SVPEGjiqWM.png",Конный мир HD
+http://192.168.1.56:8000/channels/play?id=15993
+#EXTINF:-1 group-title="Развлекательные" tvg-name="Кот_ТВ" tvg-id="ttv15358" tvg-logo="http://1ttv.org/uploads/Rtdtc632nbBQ2TsymgXhkOt7nhytjW.png",Кот ТВ
+http://192.168.1.56:8000/channels/play?id=15358
+#EXTINF:-1 group-title="Общие" tvg-name="Красная_линия" tvg-id="ttv12830" tvg-logo="http://1ttv.org/uploads/I43S6jd5noclar0LlPJnyY8adonmUV.png",Красная линия
+http://192.168.1.56:8000/channels/play?id=12830
+#EXTINF:-1 group-title="Новостные" tvg-name="Крик-ТВ" tvg-id="ttv13082" tvg-logo="http://1ttv.org/uploads/z4Iv85kqJXWHQJ5475DNxOxlo9Ty5v.png",Крик-ТВ
+http://192.168.1.56:8000/channels/play?id=13082
+#EXTINF:-1 group-title="Региональные" tvg-name="Круг" tvg-id="ttv2088" tvg-logo="http://1ttv.org/uploads/fbzJYZiRscBiEvaWEFmzvYzEHdaNN7.png",Круг
+http://192.168.1.56:8000/channels/play?id=2088
+#EXTINF:-1 group-title="Региональные" tvg-name="КТК" tvg-id="ttv14916" tvg-logo="http://1ttv.org/uploads/BhI4KURCZ3fAgCQcwQWn7vRCJQblH3.png",КТК
+http://192.168.1.56:8000/channels/play?id=14916
+#EXTINF:-1 group-title="Познавательные" tvg-name="Кто_есть_кто" tvg-id="ttv10384" tvg-logo="http://1ttv.org/uploads/MwNkO3fXd6KefRdiGlOdOQ5q0Zu7kS.png",Кто есть кто
+http://192.168.1.56:8000/channels/play?id=10384
+#EXTINF:-1 group-title="Региональные" tvg-name="Кубань_24" tvg-id="ttv6056" tvg-logo="http://1ttv.org/uploads/CAAqiN96tQzFDdtz3vjrrgeIjAKqNq.png",Кубань 24
+http://192.168.1.56:8000/channels/play?id=6056
+#EXTINF:-1 group-title="Региональные" tvg-name="Кубань_24_Орбита" tvg-id="ttv5618" tvg-logo="http://1ttv.org/uploads/FauvJxsKmI5a1fR62uSH9hJfHs5TCr.png",Кубань 24 Орбита
+http://192.168.1.56:8000/channels/play?id=5618
+#EXTINF:-1 group-title="Познавательные" tvg-name="Культура_Украина" tvg-id="ttv1432" tvg-logo="http://1ttv.org/uploads/pyKdve4YhoChQFGSha8J0FBWBf302a.png",Культура Украина
+http://192.168.1.56:8000/channels/play?id=1432
+#EXTINF:-1 group-title="Развлекательные" tvg-name="Купи_Дом_ТВ_HD" tvg-id="ttv15215" tvg-logo="http://1ttv.org/uploads/7CyfedwVltdaMcZXD3Xx7wa50mZJom.png",Купи Дом ТВ HD
+http://192.168.1.56:8000/channels/play?id=15215
+#EXTINF:-1 group-title="Региональные" tvg-name="Курай_ТВ" tvg-id="ttv15724" tvg-logo="http://1ttv.org/uploads/A0onEnFhSzqGxckeyyXsf0ZQ4R3Vc6.png",Курай ТВ
+http://192.168.1.56:8000/channels/play?id=15724
+#EXTINF:-1 group-title="Познавательные" tvg-name="Кухня_ТВ" tvg-id="ttv1429" tvg-logo="http://1ttv.org/uploads/G0WbVMphlP9oJ6KvHRfx0xDfhrF9Re.png",Кухня ТВ
+http://192.168.1.56:8000/channels/play?id=1429
+#EXTINF:-1 group-title="Спорт" tvg-name="КХЛ_HD" tvg-id="ttv5479" tvg-logo="http://1ttv.org/uploads/kRN7BwVtcdaXrU4Mdg24qhFAxjx9oZ.png",КХЛ HD
+http://192.168.1.56:8000/channels/play?id=5479
+#EXTINF:-1 group-title="Спорт" tvg-name="КХЛ_ТВ" tvg-id="ttv405" tvg-logo="http://1ttv.org/uploads/216.png",КХЛ ТВ
+http://192.168.1.56:8000/channels/play?id=405
+#EXTINF:-1 group-title="Новостные" tvg-name="ЛДПР_ТВ" tvg-id="ttv14348" tvg-logo="http://1ttv.org/uploads/1keO0CoTmw0B3VZRe4TZnzfGdKDqSj.png",ЛДПР ТВ
+http://192.168.1.56:8000/channels/play?id=14348
+#EXTINF:-1 group-title="Детские" tvg-name="Любимое_ТВ" tvg-id="ttv11335" tvg-logo="http://1ttv.org/uploads/qVREQyj0rN87jDZ1ylYW0sDvzfNp8p.png",Любимое ТВ
+http://192.168.1.56:8000/channels/play?id=11335
+#EXTINF:-1 group-title="Музыка" tvg-name="Ля-минор" tvg-id="ttv1822" tvg-logo="http://1ttv.org/uploads/8FJA3xMMHcrZuGifHViyVQLjVIem5u.png",Ля-минор
+http://192.168.1.56:8000/channels/play?id=1822
+#EXTINF:-1 group-title="Музыка" tvg-name="М1" tvg-id="ttv1786" tvg-logo="http://1ttv.org/uploads/ezvu2ugYMGnZ968LlnjPw7VjqWIPeM.png",М1
+http://192.168.1.56:8000/channels/play?id=1786
+#EXTINF:-1 group-title="Музыка" tvg-name="М2" tvg-id="ttv1944" tvg-logo="http://1ttv.org/uploads/U4s78hznNz7mFYZQICkxN7J0HTtlCP.png",М2
+http://192.168.1.56:8000/channels/play?id=1944
+#EXTINF:-1 group-title="Детские" tvg-name="Малыш" tvg-id="ttv16173" tvg-logo="http://1ttv.org/uploads/Oj2OMJUkFpUGvI2by0hJXredjpZkfL.png",Малыш
+http://192.168.1.56:8000/channels/play?id=16173
+#EXTINF:-1 group-title="Детские" tvg-name="Малятко_ТВ" tvg-id="ttv1390" tvg-logo="http://1ttv.org/uploads/kjYF9vS2IDTMehpzC7WWfjnZ4NVpuk.png",Малятко ТВ
+http://192.168.1.56:8000/channels/play?id=1390
+#EXTINF:-1 group-title="Детские" tvg-name="Мама" tvg-id="ttv6451" tvg-logo="http://1ttv.org/uploads/nw9fROQIjjKSDp8Wjkjl1Wt0n0xHxd.png",Мама
+http://192.168.1.56:8000/channels/play?id=6451
+#EXTINF:-1 group-title="Спорт" tvg-name="Матч!_Арена" tvg-id="ttv383" tvg-logo="http://1ttv.org/uploads/DDjh1dM2D09Wcl3L6YmEd1si3P17n0.png",Матч! Арена
+http://192.168.1.56:8000/channels/play?id=383
+#EXTINF:-1 group-title="Спорт" tvg-name="Матч!_Арена_HD" tvg-id="ttv420" tvg-logo="http://1ttv.org/uploads/DDjh1dM2D09Wcl3L6YmEd1si3P17n0.png",Матч! Арена HD
+http://192.168.1.56:8000/channels/play?id=420
+#EXTINF:-1 group-title="Мужские" tvg-name="Матч!_Боец" tvg-id="ttv553" tvg-logo="http://1ttv.org/uploads/xj1tPp6g9LmQH5KAN0gFpWYoa9RdbL.png",Матч! Боец
+http://192.168.1.56:8000/channels/play?id=553
+#EXTINF:-1 group-title="Спорт" tvg-name="Матч!_Игра" tvg-id="ttv1373" tvg-logo="http://1ttv.org/uploads/urIB7TbFWo36EmXW9eG3w4qre7MdX9.png",Матч! Игра
+http://192.168.1.56:8000/channels/play?id=1373
+#EXTINF:-1 group-title="Спорт" tvg-name="Матч!_Игра_HD" tvg-id="ttv1461" tvg-logo="http://1ttv.org/uploads/urIB7TbFWo36EmXW9eG3w4qre7MdX9.png",Матч! Игра HD
+http://192.168.1.56:8000/channels/play?id=1461
+#EXTINF:-1 group-title="Спорт" tvg-name="Матч!_Наш_Спорт" tvg-id="ttv406" tvg-logo="http://1ttv.org/uploads/l0x8GopxrHL6jLiDGVHi8tIEc7RBt2.png",Матч! Наш Спорт
+http://192.168.1.56:8000/channels/play?id=406
+#EXTINF:-1 group-title="Спорт" tvg-name="Матч!_Планета" tvg-id="ttv4527" tvg-logo="http://1ttv.org/uploads/mWQ92sSmszzmjme9GTueLPCxagJGtl.png",Матч! Планета
+http://192.168.1.56:8000/channels/play?id=4527
+#EXTINF:-1 group-title="Спорт" tvg-name="Матч!_Футбол_1" tvg-id="ttv6308" tvg-logo="http://1ttv.org/uploads/9PM8M6cN21wQ3M5isVZgjNepzUI4Ry.png",Матч! Футбол 1
+http://192.168.1.56:8000/channels/play?id=6308
+#EXTINF:-1 group-title="Спорт" tvg-name="Матч!_Футбол_1_HD" tvg-id="ttv3256" tvg-logo="http://1ttv.org/uploads/9PM8M6cN21wQ3M5isVZgjNepzUI4Ry.png",Матч! Футбол 1 HD
+http://192.168.1.56:8000/channels/play?id=3256
+#EXTINF:-1 group-title="Спорт" tvg-name="Матч!_Футбол_1_HD_Резерв_1" tvg-id="ttv15840" tvg-logo="http://1ttv.org/uploads/HWZYoNrs7kQimfhyzT8V2d0WvBRbEr.png",Матч! Футбол 1 HD Резерв 1
+http://192.168.1.56:8000/channels/play?id=15840
+#EXTINF:-1 group-title="Спорт" tvg-name="Матч!_Футбол_1_HD_Резерв_2" tvg-id="ttv15841" tvg-logo="http://1ttv.org/uploads/jJsAF2rxef4RpccQrmfPkIbJc9kS7Q.png",Матч! Футбол 1 HD Резерв 2
+http://192.168.1.56:8000/channels/play?id=15841
+#EXTINF:-1 group-title="Спорт" tvg-name="Матч!_Футбол_1_HD_Резерв_3" tvg-id="ttv15842" tvg-logo="http://1ttv.org/uploads/Tpv0BbEi315Omo6MKh3ZiX5zTzc8OT.png",Матч! Футбол 1 HD Резерв 3
+http://192.168.1.56:8000/channels/play?id=15842
+#EXTINF:-1 group-title="Спорт" tvg-name="Матч!_Футбол_1_Резерв_1" tvg-id="ttv15832" tvg-logo="http://1ttv.org/uploads/CWit8nYXCcCsmB6KbIedlKwFWWTyZT.png",Матч! Футбол 1 Резерв 1
+http://192.168.1.56:8000/channels/play?id=15832
+#EXTINF:-1 group-title="Спорт" tvg-name="Матч!_Футбол_1_Резерв_2" tvg-id="ttv15833" tvg-logo="http://1ttv.org/uploads/n6kF2auPAk8bMH2zray20zP12QKL1Z.png",Матч! Футбол 1 Резерв 2
+http://192.168.1.56:8000/channels/play?id=15833
+#EXTINF:-1 group-title="Спорт" tvg-name="Матч!_Футбол_1_Резерв_3" tvg-id="ttv15834" tvg-logo="http://1ttv.org/uploads/ipK5bpcm9mR9COdolCiHV6csIndprl.png",Матч! Футбол 1 Резерв 3
+http://192.168.1.56:8000/channels/play?id=15834
+#EXTINF:-1 group-title="Спорт" tvg-name="Матч!_Футбол_2" tvg-id="ttv1258" tvg-logo="http://1ttv.org/uploads/8MA3WloO6RsWX8N7Ck5ugek2Kirf4B.png",Матч! Футбол 2
+http://192.168.1.56:8000/channels/play?id=1258
+#EXTINF:-1 group-title="Спорт" tvg-name="Матч!_Футбол_2_HD" tvg-id="ttv2977" tvg-logo="http://1ttv.org/uploads/8MA3WloO6RsWX8N7Ck5ugek2Kirf4B.png",Матч! Футбол 2 HD
+http://192.168.1.56:8000/channels/play?id=2977
+#EXTINF:-1 group-title="Спорт" tvg-name="Матч!_Футбол_3" tvg-id="ttv7017" tvg-logo="http://1ttv.org/uploads/OLHdmyfUev4mMX0OGniJrlUwHnMKOg.png",Матч! Футбол 3
+http://192.168.1.56:8000/channels/play?id=7017
+#EXTINF:-1 group-title="Спорт" tvg-name="Матч!_Футбол_3_HD" tvg-id="ttv6313" tvg-logo="http://1ttv.org/uploads/OLHdmyfUev4mMX0OGniJrlUwHnMKOg.png",Матч! Футбол 3 HD
+http://192.168.1.56:8000/channels/play?id=6313
+#EXTINF:-1 group-title="Познавательные" tvg-name="Мега" tvg-id="ttv1543" tvg-logo="http://1ttv.org/uploads/IXY7dRFoq0qCqn4UbY47iP36vVZ6ck.png",Мега
+http://192.168.1.56:8000/channels/play?id=1543
+#EXTINF:-1 group-title="Региональные" tvg-name="Миллет" tvg-id="ttv15929" tvg-logo="http://1ttv.org/uploads/zDsxAdZp80tZ43Rd2IWAgFOFFYDkwh.png",Миллет
+http://192.168.1.56:8000/channels/play?id=15929
+#EXTINF:-1 group-title="Общие" tvg-name="Мир" tvg-id="ttv398" tvg-logo="http://1ttv.org/uploads/Oq6h2IicTagHENQu1mFkjLk5rChMnr.png",Мир
+http://192.168.1.56:8000/channels/play?id=398
+#EXTINF:-1 group-title="Общие" tvg-name="Мир_(+3)" tvg-id="ttv12442" tvg-logo="http://1ttv.org/uploads/QxOYkz6f80IdhmC4RSHI1cMd32CqYZ.png",Мир (+3)
+http://192.168.1.56:8000/channels/play?id=12442
+#EXTINF:-1 group-title="Новостные" tvg-name="Мир_24" tvg-id="ttv7865" tvg-logo="http://1ttv.org/uploads/auv6717gJOWi0A2VoeDQaCsx9G1NOj.png",Мир 24
+http://192.168.1.56:8000/channels/play?id=7865
+#EXTINF:-1 group-title="Общие" tvg-name="Мир_HD" tvg-id="ttv8876" tvg-logo="http://1ttv.org/uploads/Oq6h2IicTagHENQu1mFkjLk5rChMnr.png",Мир HD
+http://192.168.1.56:8000/channels/play?id=8876
+#EXTINF:-1 group-title="Региональные" tvg-name="Мир_белогорья" tvg-id="ttv15720" tvg-logo="http://1ttv.org/uploads/JRU6TyiBAX5Fk84DebhKeSxg7ZkrEf.png",Мир белогорья
+http://192.168.1.56:8000/channels/play?id=15720
+#EXTINF:-1 group-title="Фильмы" tvg-name="Мир_сериала" tvg-id="ttv15849" tvg-logo="http://1ttv.org/uploads/XWDsU7aoUyPPoKfcX7WMYQheuzHJL0.png",Мир сериала
+http://192.168.1.56:8000/channels/play?id=15849
+#EXTINF:-1 group-title="Познавательные" tvg-name="Мир_Увлечений" tvg-id="ttv15752" tvg-logo="http://1ttv.org/uploads/KtELENmDesBwzAAryLgJPqwlr9m17z.png",Мир Увлечений
+http://192.168.1.56:8000/channels/play?id=15752
+#EXTINF:-1 group-title="Мужские" tvg-name="Морской" tvg-id="ttv2027" tvg-logo="http://1ttv.org/uploads/uzlb3awoyNqvIcf6i35hTVqf7gvuqz.png",Морской
+http://192.168.1.56:8000/channels/play?id=2027
+#EXTINF:-1 group-title="Региональные" tvg-name="Москва_24" tvg-id="ttv6449" tvg-logo="http://1ttv.org/uploads/dZcmoqRoZLhCBh8BE4RnbQivuDY6hH.png",Москва 24
+http://192.168.1.56:8000/channels/play?id=6449
+#EXTINF:-1 group-title="Региональные" tvg-name="Москва_Доверие" tvg-id="ttv6448" tvg-logo="http://1ttv.org/uploads/9oPazhJQrGZcSN64ZOS3WjLwGmQIZy.png",Москва Доверие
+http://192.168.1.56:8000/channels/play?id=6448
+#EXTINF:-1 group-title="Познавательные" tvg-name="Моя_планета" tvg-id="ttv1634" tvg-logo="http://1ttv.org/uploads/Qa41eifERrD77xQsmpRGbeTq95Ldlv.png",Моя планета
+http://192.168.1.56:8000/channels/play?id=1634
+#EXTINF:-1 group-title="Фильмы" tvg-name="Мужское_кино" tvg-id="ttv1415" tvg-logo="http://1ttv.org/uploads/y997iu65e65h4w5d3s4dy.png",Мужское кино
+http://192.168.1.56:8000/channels/play?id=1415
+#EXTINF:-1 group-title="Мужские" tvg-name="Мужской" tvg-id="ttv5394" tvg-logo="http://1ttv.org/uploads/6YbhuWNqPKQWWsUGbBnSbAbm7IGssX.png",Мужской
+http://192.168.1.56:8000/channels/play?id=5394
+#EXTINF:-1 group-title="Музыка" tvg-name="Муз_ТВ" tvg-id="ttv1086" tvg-logo="http://1ttv.org/uploads/gttVvZmkAklbl2i0Mqy1MCzSCn7WiY.png",Муз ТВ
+http://192.168.1.56:8000/channels/play?id=1086
+#EXTINF:-1 group-title="Музыка" tvg-name="МузСоюз" tvg-id="ttv16042" tvg-logo="http://1ttv.org/uploads/E4a3fEpdSy2c8AnYEdR8ZIFgFe2LAP.png",МузСоюз
+http://192.168.1.56:8000/channels/play?id=16042
+#EXTINF:-1 group-title="Музыка" tvg-name="Музыка_Первого" tvg-id="ttv1824" tvg-logo="http://1ttv.org/uploads/fD2Hnsq5BPMGvobLDMPZP049yNhBYt.png",Музыка Первого
+http://192.168.1.56:8000/channels/play?id=1824
+#EXTINF:-1 group-title="Детские" tvg-name="Мульт" tvg-id="ttv8843" tvg-logo="http://1ttv.org/uploads/ZVzHvGF8mZ6RTsSh6aWsPbF1FBLjyp.png",Мульт
+http://192.168.1.56:8000/channels/play?id=8843
+#EXTINF:-1 group-title="Религиозные" tvg-name="Надежда" tvg-id="ttv14541" tvg-logo="http://1ttv.org/uploads/fvCkzRJPsTx4HONWPv3vPMjQNloPBT.png",Надежда
+http://192.168.1.56:8000/channels/play?id=14541
+#EXTINF:-1 group-title="Познавательные" tvg-name="Нано_ТВ" tvg-id="ttv1125" tvg-logo="http://1ttv.org/uploads/QuURIfJUmXegxsHMYqMivVwxizbfKd.png",Нано ТВ
+http://192.168.1.56:8000/channels/play?id=1125
+#EXTINF:-1 group-title="Познавательные" tvg-name="Наука_2.0" tvg-id="ttv924" tvg-logo="http://1ttv.org/uploads/ypWbqYqKApM8cnDK1FibvQgpmgEay9.png",Наука 2.0
+http://192.168.1.56:8000/channels/play?id=924
+#EXTINF:-1 group-title="Фильмы" tvg-name="Наш_детектив_HD" tvg-id="ttv10675" tvg-logo="http://1ttv.org/uploads/ORgdUno4IvNQYiShiEY4srF16JguLs.png",Наш детектив HD
+http://192.168.1.56:8000/channels/play?id=10675
+#EXTINF:-1 group-title="Фильмы" tvg-name="Наш_кинороман_HD" tvg-id="ttv14349" tvg-logo="http://1ttv.org/uploads/NyV9o2C4xIMFxxYUQsS1qsdAtkqz0k.png",Наш кинороман HD
+http://192.168.1.56:8000/channels/play?id=14349
+#EXTINF:-1 group-title="Фильмы" tvg-name="Наше_любимое_кино" tvg-id="ttv2256" tvg-logo="http://1ttv.org/uploads/LSR5M6VxB0YDwv6803zrGFkq7vGQ3J.png",Наше любимое кино
+http://192.168.1.56:8000/channels/play?id=2256
+#EXTINF:-1 group-title="Фильмы" tvg-name="Наше_новое_кино" tvg-id="ttv1396" tvg-logo="http://1ttv.org/uploads/y5jtghJCHG65ukyfjv 45stjxc76.png",Наше новое кино
+http://192.168.1.56:8000/channels/play?id=1396
+#EXTINF:-1 group-title="Музыка" tvg-name="Наше_ТВ" tvg-id="ttv14048" tvg-logo="http://1ttv.org/uploads/gTfxpSWtOGWBq7UHAHcz3XF10bzg78.png",Наше ТВ
+http://192.168.1.56:8000/channels/play?id=14048
+#EXTINF:-1 group-title="Региональные" tvg-name="Ника_ТВ" tvg-id="ttv8795" tvg-logo="http://1ttv.org/uploads/pb3d3rBN4qW7ggzsosbAZXflfIv0Ty.png",Ника ТВ
+http://192.168.1.56:8000/channels/play?id=8795
+#EXTINF:-1 group-title="Развлекательные" tvg-name="НЛО_ТВ" tvg-id="ttv8830" tvg-logo="http://1ttv.org/uploads/2VGhYruaQo19G1NLGoOiTrwmPxef7d.png",НЛО ТВ
+http://192.168.1.56:8000/channels/play?id=8830
+#EXTINF:-1 group-title="Развлекательные" tvg-name="Новый_канал" tvg-id="ttv5465" tvg-logo="http://1ttv.org/uploads/k7YdHhVpFZPIkBMXS2P2O2TkZSPf0y.png",Новый канал
+http://192.168.1.56:8000/channels/play?id=5465
+#EXTINF:-1 group-title="Религиозные" tvg-name="Новый_Христианский" tvg-id="ttv14636" tvg-logo="http://1ttv.org/uploads/gf6hTOcGXasvr47vTFRYZGV11xkDr5.png",Новый Христианский
+http://192.168.1.56:8000/channels/play?id=14636
+#EXTINF:-1 group-title="Общие" tvg-name="Ностальгия" tvg-id="ttv7201" tvg-logo="http://1ttv.org/uploads/tIfiXoDaXoZevuGu9pZJSvX8unv1xl.png",Ностальгия
+http://192.168.1.56:8000/channels/play?id=7201
+#EXTINF:-1 group-title="Для взрослых" tvg-name="Ночной_клуб" tvg-id="ttv1826" tvg-logo="http://1ttv.org/uploads/nXifSdkxHJVKI4SKtgtBQmCSHXtgOt.png",Ночной клуб
+http://192.168.1.56:8000/channels/play?id=1826
+#EXTINF:-1 group-title="Фильмы" tvg-name="НСТ" tvg-id="ttv1399" tvg-logo="http://1ttv.org/uploads/fKYzdlWRz68qd9mRZnWuxMY73EyaSz.png",НСТ
+http://192.168.1.56:8000/channels/play?id=1399
+#EXTINF:-1 group-title="Общие" tvg-name="НТВ" tvg-id="ttv10562" tvg-logo="http://1ttv.org/uploads/B5GA1cfgmn8EsxrdwfNUIrEbdqarXf.png",НТВ
+http://192.168.1.56:8000/channels/play?id=10562
+#EXTINF:-1 group-title="Общие" tvg-name="НТВ_(+2)" tvg-id="ttv13799" tvg-logo="http://1ttv.org/uploads/B5GA1cfgmn8EsxrdwfNUIrEbdqarXf.png",НТВ (+2)
+http://192.168.1.56:8000/channels/play?id=13799
+#EXTINF:-1 group-title="Общие" tvg-name="НТВ_(+4)" tvg-id="ttv15794" tvg-logo="http://1ttv.org/uploads/FeYewxBbj2Cz8NOJDl98PTxYXI8cPg.png",НТВ (+4)
+http://192.168.1.56:8000/channels/play?id=15794
+#EXTINF:-1 group-title="Общие" tvg-name="НТВ_(резерв)" tvg-id="ttv15898" tvg-logo="http://1ttv.org/uploads/ejWH5qVf8XAWkc3HLQYTmEpYchtaIS.png",НТВ (резерв)
+http://192.168.1.56:8000/channels/play?id=15898
+#EXTINF:-1 group-title="Общие" tvg-name="НТВ_HD" tvg-id="ttv12772" tvg-logo="http://1ttv.org/uploads/zdJ3ye6d3UWl5a56zm6LjqYH6ziSOs.png",НТВ HD
+http://192.168.1.56:8000/channels/play?id=12772
+#EXTINF:-1 group-title="Общие" tvg-name="НТВ_Мир_Балтия" tvg-id="ttv1404" tvg-logo="http://1ttv.org/uploads/ykpU49Gl1akVkgiVSsCm5B4TjXvQ64.png",НТВ Мир Балтия
+http://192.168.1.56:8000/channels/play?id=1404
+#EXTINF:-1 group-title="Развлекательные" tvg-name="НТВ+_Инфоканал" tvg-id="ttv15883" tvg-logo="http://1ttv.org/uploads/ejWH5qVf8XAWkc3HLQYTmEpYchtaIS.png",НТВ+ Инфоканал
+http://192.168.1.56:8000/channels/play?id=15883
+#EXTINF:-1 group-title="Общие" tvg-name="НТН_(Украина)" tvg-id="ttv12474" tvg-logo="http://1ttv.org/uploads/LpQE1Odb1EoH5dJ90gWjItVyEYBXsw.png",НТН (Украина)
+http://192.168.1.56:8000/channels/play?id=12474
+#EXTINF:-1 group-title="Региональные" tvg-name="ОНТ_(Одесса)" tvg-id="ttv14763" tvg-logo="http://1ttv.org/uploads/P3tnfUDZ7f025rw6X7rFNT4aYmwMlJ.png",ОНТ (Одесса)
+http://192.168.1.56:8000/channels/play?id=14763
+#EXTINF:-1 group-title="Региональные" tvg-name="ОНТ_Беларусь" tvg-id="ttv10269" tvg-logo="http://1ttv.org/uploads/a84If8XdqSFa6nHpegdujt52vAGNJW.png",ОНТ Беларусь
+http://192.168.1.56:8000/channels/play?id=10269
+#EXTINF:-1 group-title="Мужские" tvg-name="Оружие" tvg-id="ttv1252" tvg-logo="http://1ttv.org/uploads/CyDUCmYXK8WS2kXCX5kiAOFejnlwoP.png",Оружие
+http://192.168.1.56:8000/channels/play?id=1252
+#EXTINF:-1 group-title="Фильмы" tvg-name="Остросюжетное_HD" tvg-id="ttv10779" tvg-logo="http://1ttv.org/uploads/mxF7CZsqsDRMMK4pN8ekdccEgvEsZC.png",Остросюжетное HD
+http://192.168.1.56:8000/channels/play?id=10779
+#EXTINF:-1 group-title="Региональные" tvg-name="ОТВ_прим" tvg-id="ttv15915" tvg-logo="http://1ttv.org/uploads/W3FNGLfo7R7JpYI98Am5sGamz0bfaN.png",ОТВ прим
+http://192.168.1.56:8000/channels/play?id=15915
+#EXTINF:-1 group-title="Музыка" tvg-name="Открытый_HD" tvg-id="ttv15978" tvg-logo="http://1ttv.org/uploads/CdIvMNsa7gAihJnpAKX8QnMdpvhAXc.png",Открытый HD
+http://192.168.1.56:8000/channels/play?id=15978
+#EXTINF:-1 group-title="Познавательные" tvg-name="Открытый_мир" tvg-id="ttv15941" tvg-logo="http://1ttv.org/uploads/aFQKX1SstzK7Pgs5D1nWqau7SwVEd9.png",Открытый мир
+http://192.168.1.56:8000/channels/play?id=15941
+#EXTINF:-1 group-title="Общие" tvg-name="ОТР" tvg-id="ttv5395" tvg-logo="http://1ttv.org/uploads/CqxKorK72v3ULbWkB3ZOhdte0duYZa.png",ОТР
+http://192.168.1.56:8000/channels/play?id=5395
+#EXTINF:-1 group-title="Развлекательные" tvg-name="Парк_развлечений" tvg-id="ttv1376" tvg-logo="http://1ttv.org/uploads/beyfqyeacrFG0PrOeKUQhzQ4bV6Q5d.png",Парк развлечений
+http://192.168.1.56:8000/channels/play?id=1376
+#EXTINF:-1 group-title="Региональные" tvg-name="Первый_городской_Одесса" tvg-id="ttv13379" tvg-logo="http://1ttv.org/uploads/vBOI3YTA4FDLD0c7BHHjq476p9GMCZ.png",Первый городской Одесса
+http://192.168.1.56:8000/channels/play?id=13379
+#EXTINF:-1 group-title="Новостные" tvg-name="Первый_деловой" tvg-id="ttv1827" tvg-logo="http://1ttv.org/uploads/a1Qf3MpxC9FPD68Tj8vtUTNK8P25xr.png",Первый деловой
+http://192.168.1.56:8000/channels/play?id=1827
+#EXTINF:-1 group-title="Общие" tvg-name="Первый_канал_(+2)" tvg-id="ttv14030" tvg-logo="http://1ttv.org/uploads/Lo2zy8h0msIieULsbHOjV1oSInHogr.png",Первый канал (+2)
+http://192.168.1.56:8000/channels/play?id=14030
+#EXTINF:-1 group-title="Общие" tvg-name="Первый_канал_(+4)" tvg-id="ttv8874" tvg-logo="http://1ttv.org/uploads/WimZD6efLd6QotrPP9uiJeF7t50nFv.png",Первый канал (+4)
+http://192.168.1.56:8000/channels/play?id=8874
+#EXTINF:-1 group-title="Общие" tvg-name="Первый_канал_(+4)_(4:3)" tvg-id="ttv12437" tvg-logo="http://1ttv.org/uploads/nHJycH0CkOhPeZ9DmB47iSMWP5HyWz.png",Первый канал (+4) (4:3)
+http://192.168.1.56:8000/channels/play?id=12437
+#EXTINF:-1 group-title="Общие" tvg-name="Первый_канал_(+4)_HD" tvg-id="ttv16077" tvg-logo="http://1ttv.org/uploads/r24ZdWAit6IlZ9SLkZ2w90P4n4K5FN.png",Первый канал (+4) HD
+http://192.168.1.56:8000/channels/play?id=16077
+#EXTINF:-1 group-title="Общие" tvg-name="Первый_канал_(+4)_HD_(резерв)" tvg-id="ttv16027" tvg-logo="http://1ttv.org/uploads/W6Ahszu44Nyi7sW759rSud1ecHMf68.png",Первый канал (+4) HD (резерв)
+http://192.168.1.56:8000/channels/play?id=16027
+#EXTINF:-1 group-title="Общие" tvg-name="Первый_канал_(+6)" tvg-id="ttv15568" tvg-logo="http://1ttv.org/uploads/45vL1pa1DYHjYyMs1dtGC9RsACLmz3.png",Первый канал (+6)
+http://192.168.1.56:8000/channels/play?id=15568
+#EXTINF:-1 group-title="Общие" tvg-name="Первый_канал_(+8)_[LQ]" tvg-id="ttv15604" tvg-logo="http://1ttv.org/uploads/lRjN5HOOX0txLz8nigpKqpVw5CBKJZ.png",Первый канал (+8) [LQ]
+http://192.168.1.56:8000/channels/play?id=15604
+#EXTINF:-1 group-title="Общие" tvg-name="Первый_канал_(4:3)" tvg-id="ttv15897" tvg-logo="http://1ttv.org/uploads/ejWH5qVf8XAWkc3HLQYTmEpYchtaIS.png",Первый канал (4:3)
+http://192.168.1.56:8000/channels/play?id=15897
+#EXTINF:-1 group-title="Общие" tvg-name="Первый_канал_(Евразия)" tvg-id="ttv14465" tvg-logo="http://1ttv.org/uploads/oPB8TcSFAuJtk4hBWgAqC9yNjMpfsi.png",Первый канал (Евразия)
+http://192.168.1.56:8000/channels/play?id=14465
+#EXTINF:-1 group-title="Общие" tvg-name="Первый_канал_(Европа)" tvg-id="ttv2025" tvg-logo="http://1ttv.org/uploads/WimZD6efLd6QotrPP9uiJeF7t50nFv.png",Первый канал (Европа)
+http://192.168.1.56:8000/channels/play?id=2025
+#EXTINF:-1 group-title="Общие" tvg-name="Первый_канал_(Молдова)" tvg-id="ttv15835" tvg-logo="http://1ttv.org/uploads/UsbyyrSaJmdjntY4muATwDytnseYYB.png",Первый канал (Молдова)
+http://192.168.1.56:8000/channels/play?id=15835
+#EXTINF:-1 group-title="Общие" tvg-name="Первый_канал_(СНГ)" tvg-id="ttv2024" tvg-logo="http://1ttv.org/uploads/WimZD6efLd6QotrPP9uiJeF7t50nFv.png",Первый канал (СНГ)
+http://192.168.1.56:8000/channels/play?id=2024
+#EXTINF:-1 group-title="Общие" tvg-name="Первый_канал_HD" tvg-id="ttv7663" tvg-logo="http://1ttv.org/uploads/VxAFWzh1y88c8Aqa17TsxD2IO5pqoi.png",Первый канал HD
+http://192.168.1.56:8000/channels/play?id=7663
+#EXTINF:-1 group-title="Общие" tvg-name="Первый_канал_HD_(резерв)" tvg-id="ttv16088" tvg-logo="http://1ttv.org/uploads/wT8vUxakbehUwgX5lI9qoRAFBa74tx.png",Первый канал HD (резерв)
+http://192.168.1.56:8000/channels/play?id=16088
+#EXTINF:-1 group-title="Новостные" tvg-name="Первый_Метео" tvg-id="ttv8799" tvg-logo="http://1ttv.org/uploads/vdA7FKd1SCYhX4ovvzjQEHFdW3uA5X.png",Первый Метео
+http://192.168.1.56:8000/channels/play?id=8799
+#EXTINF:-1 group-title="Музыка" tvg-name="Первый_музыкальный_HD" tvg-id="ttv11641" tvg-logo="http://1ttv.org/uploads/YxKl6Jqi6fmlUJjYGPnBhWhntKzI65.png",Первый музыкальный HD
+http://192.168.1.56:8000/channels/play?id=11641
+#EXTINF:-1 group-title="Музыка" tvg-name="Первый_музыкальный_UHD" tvg-id="ttv13027" tvg-logo="http://1ttv.org/uploads/YxKl6Jqi6fmlUJjYGPnBhWhntKzI65.png",Первый музыкальный UHD
+http://192.168.1.56:8000/channels/play?id=13027
+#EXTINF:-1 group-title="Музыка" tvg-name="Первый_музыкальный_канал" tvg-id="ttv2030" tvg-logo="http://1ttv.org/uploads/gYpYhzD3akuKSFpRmkh2p36pXnqHoW.png",Первый музыкальный канал
+http://192.168.1.56:8000/channels/play?id=2030
+#EXTINF:-1 group-title="Музыка" tvg-name="Первый_музыкальный_Россия" tvg-id="ttv12696" tvg-logo="http://1ttv.org/uploads/MkX2WG1zhZ2KcYFdL0xWH1T4xkO7UW.png",Первый музыкальный Россия
+http://192.168.1.56:8000/channels/play?id=12696
+#EXTINF:-1 group-title="Музыка" tvg-name="Первый_музыкальный_Россия_HD" tvg-id="ttv12746" tvg-logo="http://1ttv.org/uploads/h7EDhdGypKmtfEP98O052SLlXUCcXt.png",Первый музыкальный Россия HD
+http://192.168.1.56:8000/channels/play?id=12746
+#EXTINF:-1 group-title="Познавательные" tvg-name="Первый_образовательный" tvg-id="ttv8833" tvg-logo="http://1ttv.org/uploads/1kXxtStMuodaPU09H3rla3ry3QA2Wr.png",Первый образовательный
+http://192.168.1.56:8000/channels/play?id=8833
+#EXTINF:-1 group-title="Региональные" tvg-name="Первый_Ярославский" tvg-id="ttv11276" tvg-logo="http://1ttv.org/uploads/6FZ4QqwM18DLS3WE6XKeF0rJzpSAIH.png",Первый Ярославский
+http://192.168.1.56:8000/channels/play?id=11276
+#EXTINF:-1 group-title="Музыка" tvg-name="ПИК" tvg-id="ttv5396" tvg-logo="http://1ttv.org/uploads/P0YqVS65dvcrXyt5BDd0bx02EtK9HC.png",ПИК
+http://192.168.1.56:8000/channels/play?id=5396
+#EXTINF:-1 group-title="Музыка" tvg-name="ПИК_HD" tvg-id="ttv15905" tvg-logo="http://1ttv.org/uploads/ejWH5qVf8XAWkc3HLQYTmEpYchtaIS.png",ПИК HD
+http://192.168.1.56:8000/channels/play?id=15905
+#EXTINF:-1 group-title="Музыка" tvg-name="ПИК_HD_(резерв)" tvg-id="ttv11324" tvg-logo="http://1ttv.org/uploads/P0YqVS65dvcrXyt5BDd0bx02EtK9HC.png",ПИК HD (резерв)
+http://192.168.1.56:8000/channels/play?id=11324
+#EXTINF:-1 group-title="Детские" tvg-name="Пиксель_ТВ" tvg-id="ttv1388" tvg-logo="http://1ttv.org/uploads/BdCXB7wPZMNvlWzB5xEFzmsYUXcfXW.png",Пиксель ТВ
+http://192.168.1.56:8000/channels/play?id=1388
+#EXTINF:-1 group-title="Познавательные" tvg-name="Планета_HD" tvg-id="ttv10366" tvg-logo="http://1ttv.org/uploads/1QjirpCLi3q9qPu1CTvEvCB0BfINeo.png",Планета HD
+http://192.168.1.56:8000/channels/play?id=10366
+#EXTINF:-1 group-title="Детские" tvg-name="ПлюсПлюс" tvg-id="ttv1437" tvg-logo="http://1ttv.org/uploads/6gVIy7RMokFO61iVawgwbthe5mhgqm.png",ПлюсПлюс
+http://192.168.1.56:8000/channels/play?id=1437
+#EXTINF:-1 group-title="Региональные" tvg-name="Правда_тут" tvg-id="ttv15413" tvg-logo="http://1ttv.org/uploads/6JMI68m3c7uK5DtCvF9HcmCl0R6tJy.png",Правда тут
+http://192.168.1.56:8000/channels/play?id=15413
+#EXTINF:-1 group-title="Развлекательные" tvg-name="Про_все" tvg-id="ttv2020" tvg-logo="http://1ttv.org/uploads/S2i01pmEOFJxwJtJCVF7PYc6Ij4jBX.png",Про все
+http://192.168.1.56:8000/channels/play?id=2020
+#EXTINF:-1 group-title="Познавательные" tvg-name="Просвещение" tvg-id="ttv6154" tvg-logo="http://1ttv.org/uploads/Fpx3Vqqk2VNcXl4YjsfO53XscWadvF.png",Просвещение
+http://192.168.1.56:8000/channels/play?id=6154
+#EXTINF:-1 group-title="Познавательные" tvg-name="Психология_21" tvg-id="ttv1419" tvg-logo="http://1ttv.org/uploads/AyLAdiqcKu5X8ykdLf2bO9HsxMlJdO.png",Психология 21
+http://192.168.1.56:8000/channels/play?id=1419
+#EXTINF:-1 group-title="Региональные" tvg-name="Пушкин_-_Царское_село" tvg-id="ttv16005" tvg-logo="http://1ttv.org/uploads/Oq0JHpGCMDNzpjf85X7Az3PPPkmDs5.png",Пушкин - Царское село
+http://192.168.1.56:8000/channels/play?id=16005
+#EXTINF:-1 group-title="Развлекательные" tvg-name="Пятница" tvg-id="ttv388" tvg-logo="http://1ttv.org/uploads/0fafj6PSIWdqtBdgwYTl9M06SDU2wA.png",Пятница
+http://192.168.1.56:8000/channels/play?id=388
+#EXTINF:-1 group-title="Развлекательные" tvg-name="Пятница_(+2)" tvg-id="ttv8873" tvg-logo="http://1ttv.org/uploads/0fafj6PSIWdqtBdgwYTl9M06SDU2wA.png",Пятница (+2)
+http://192.168.1.56:8000/channels/play?id=8873
+#EXTINF:-1 group-title="Общие" tvg-name="Пятый_канал" tvg-id="ttv399" tvg-logo="http://1ttv.org/uploads/nIUDYY41OO4Xo0ntGpGv2rfpOR5ngt.png",Пятый канал
+http://192.168.1.56:8000/channels/play?id=399
+#EXTINF:-1 group-title="Общие" tvg-name="Пятый_канал_(+2)" tvg-id="ttv15800" tvg-logo="http://1ttv.org/uploads/rsEtkBk2ta1Wj1Y8uvxvSm4Vmbycir.png",Пятый канал (+2)
+http://192.168.1.56:8000/channels/play?id=15800
+#EXTINF:-1 group-title="Новостные" tvg-name="Рада_(Украина)" tvg-id="ttv1798" tvg-logo="http://1ttv.org/uploads/hBFJBYNiqZUom0ooVtNEJKliZwfioO.png",Рада (Украина)
+http://192.168.1.56:8000/channels/play?id=1798
+#EXTINF:-1 group-title="Детские" tvg-name="Радость_моя" tvg-id="ttv8835" tvg-logo="http://1ttv.org/uploads/VRylZFYgFq7AL0FWcbf5JVOX3desn3.png",Радость моя
+http://192.168.1.56:8000/channels/play?id=8835
+#EXTINF:-1 group-title="Развлекательные" tvg-name="Раз_ТВ" tvg-id="ttv13660" tvg-logo="http://1ttv.org/uploads/CWaPSXdAL4Ejo1wNOqSWNPNVwbbhC7.png",Раз ТВ
+http://192.168.1.56:8000/channels/play?id=13660
+#EXTINF:-1 group-title="Новостные" tvg-name="РБК" tvg-id="ttv397" tvg-logo="http://1ttv.org/uploads/JUMDXZxxB3UiVpMpU8t0aCpbVzxTmP.png",РБК
+http://192.168.1.56:8000/channels/play?id=397
+#EXTINF:-1 group-title="Общие" tvg-name="Ретро-ТВ" tvg-id="ttv15921" tvg-logo="http://1ttv.org/uploads/Of6VAxft82OXf1hk4UonRCHTw3MzqD.png",Ретро-ТВ
+http://192.168.1.56:8000/channels/play?id=15921
+#EXTINF:-1 group-title="Познавательные" tvg-name="РЖД_ТВ" tvg-id="ttv1878" tvg-logo="http://1ttv.org/uploads/qa6177IUBWR0hYt1HKXxlMrF5MStOb.png",РЖД ТВ
+http://192.168.1.56:8000/channels/play?id=1878
+#EXTINF:-1 group-title="Новостные" tvg-name="РИА_Новости" tvg-id="ttv9189" tvg-logo="http://1ttv.org/uploads/DixgG6tVZzcVHO2LPQEx3QrtfoVah3.png",РИА Новости
+http://192.168.1.56:8000/channels/play?id=9189
+#EXTINF:-1 group-title="Фильмы" tvg-name="Родное_кино" tvg-id="ttv1395" tvg-logo="http://1ttv.org/uploads/y7saqicb538iqo64ho46hh46.png",Родное кино
+http://192.168.1.56:8000/channels/play?id=1395
+#EXTINF:-1 group-title="Общие" tvg-name="Россия_1" tvg-id="ttv7664" tvg-logo="http://1ttv.org/uploads/UUrfoqi6NQcc9gRLnCc8ODZJ2T3ShE.png",Россия 1
+http://192.168.1.56:8000/channels/play?id=7664
+#EXTINF:-1 group-title="Общие" tvg-name="Россия_1_(+2)" tvg-id="ttv15632" tvg-logo="http://1ttv.org/uploads/IVnok4EXJmqeIq8Kppprl456zRybNO.png",Россия 1 (+2)
+http://192.168.1.56:8000/channels/play?id=15632
+#EXTINF:-1 group-title="Общие" tvg-name="Россия_1_(+4)" tvg-id="ttv15467" tvg-logo="http://1ttv.org/uploads/jy8HZ6Xf6hroTuXmjqSUgawX7O0g9t.png",Россия 1 (+4)
+http://192.168.1.56:8000/channels/play?id=15467
+#EXTINF:-1 group-title="Общие" tvg-name="Россия_1_(+6)" tvg-id="ttv15577" tvg-logo="http://1ttv.org/uploads/vWy8vur5mokNIzuCKPZpOnj59w8TP8.png",Россия 1 (+6)
+http://192.168.1.56:8000/channels/play?id=15577
+#EXTINF:-1 group-title="Общие" tvg-name="Россия_1_(+8)_[LQ]" tvg-id="ttv15608" tvg-logo="http://1ttv.org/uploads/WY9uVth2S8kKBB5Jk7OVoXi9Omf02r.png",Россия 1 (+8) [LQ]
+http://192.168.1.56:8000/channels/play?id=15608
+#EXTINF:-1 group-title="Новостные" tvg-name="Россия_24" tvg-id="ttv407" tvg-logo="http://1ttv.org/uploads/LWfGV6eICPYL7psaBfw2dOgGrOtHFS.png",Россия 24
+http://192.168.1.56:8000/channels/play?id=407
+#EXTINF:-1 group-title="Общие" tvg-name="Россия_HD" tvg-id="ttv7665" tvg-logo="http://1ttv.org/uploads/ghvqmVpPWqn9x6POAm9UJBvXFzTrqN.png",Россия HD
+http://192.168.1.56:8000/channels/play?id=7665
+#EXTINF:-1 group-title="Познавательные" tvg-name="Россия_К" tvg-id="ttv379" tvg-logo="http://1ttv.org/uploads/W9pWrec1BOJTmj8okrFeyM44wcpyd4.png",Россия К
+http://192.168.1.56:8000/channels/play?id=379
+#EXTINF:-1 group-title="Познавательные" tvg-name="Россия_К_(+2)" tvg-id="ttv12975" tvg-logo="http://1ttv.org/uploads/rVrDeCUhT4RPKIa2h9qRtnDon3Pd9X.png",Россия К (+2)
+http://192.168.1.56:8000/channels/play?id=12975
+#EXTINF:-1 group-title="Общие" tvg-name="РТР_Планета" tvg-id="ttv15676" tvg-logo="http://1ttv.org/uploads/wJMTJDEEwIhJWhNL0c6kfs5HVVJOVx.png",РТР Планета
+http://192.168.1.56:8000/channels/play?id=15676
+#EXTINF:-1 group-title="Фильмы" tvg-name="Русская_комедия" tvg-id="ttv12173" tvg-logo="http://1ttv.org/uploads/4Q3vGcJh5o0cgJB18scb90ogvL6OYV.png",Русская комедия
+http://192.168.1.56:8000/channels/play?id=12173
+#EXTINF:-1 group-title="Для взрослых" tvg-name="Русская_ночь" tvg-id="ttv1209" tvg-logo="http://1ttv.org/uploads/9Sh9bJuj6js5AJsypAd6UvwnsIB25R.png",Русская ночь
+http://192.168.1.56:8000/channels/play?id=1209
+#EXTINF:-1 group-title="Фильмы" tvg-name="Русский_бестселлер" tvg-id="ttv9309" tvg-logo="http://1ttv.org/uploads/b5JXaosgmcanh9EVJg52yBefvdLQF7.png",Русский бестселлер
+http://192.168.1.56:8000/channels/play?id=9309
+#EXTINF:-1 group-title="Фильмы" tvg-name="Русский_детектив" tvg-id="ttv8844" tvg-logo="http://1ttv.org/uploads/7I7VjbsFMIkZdoSbHFXiKEVZKNUbOM.png",Русский детектив
+http://192.168.1.56:8000/channels/play?id=8844
+#EXTINF:-1 group-title="Фильмы" tvg-name="Русский_роман" tvg-id="ttv9008" tvg-logo="http://1ttv.org/uploads/2smriIFxtj7Ojh4jyZq0K1XrT98XjS.png",Русский роман
+http://192.168.1.56:8000/channels/play?id=9008
+#EXTINF:-1 group-title="Мужские" tvg-name="Русский_экстрим" tvg-id="ttv1471" tvg-logo="http://1ttv.org/uploads/upndVpIdjY3vb5vrituof5UcKISNcQ.png",Русский экстрим
+http://192.168.1.56:8000/channels/play?id=1471
+#EXTINF:-1 group-title="Мужские" tvg-name="Русский_экстрим_HD" tvg-id="ttv14623" tvg-logo="http://1ttv.org/uploads/upndVpIdjY3vb5vrituof5UcKISNcQ.png",Русский экстрим HD
+http://192.168.1.56:8000/channels/play?id=14623
+#EXTINF:-1 group-title="Детские" tvg-name="Рыжий" tvg-id="ttv10284" tvg-logo="http://1ttv.org/uploads/wfBSy60qHaPSKPpTfrNv9Q167iHIPu.png",Рыжий
+http://192.168.1.56:8000/channels/play?id=10284
+#EXTINF:-1 group-title="Региональные" tvg-name="Самара_ГИС" tvg-id="ttv16032" tvg-logo="http://1ttv.org/uploads/F0vMjPoFdXa0Vh5t17AOwJVJziMBPG.png",Самара ГИС
+http://192.168.1.56:8000/channels/play?id=16032
+#EXTINF:-1 group-title="Региональные" tvg-name="Санкт-Петербург" tvg-id="ttv6461" tvg-logo="http://1ttv.org/uploads/sb81YtPOvlHidztMnC5tZPSKkb1uMI.png",Санкт-Петербург
+http://192.168.1.56:8000/channels/play?id=6461
+#EXTINF:-1 group-title="Развлекательные" tvg-name="Сарафан_ТВ" tvg-id="ttv1732" tvg-logo="http://1ttv.org/uploads/LsYzwEOUspoxkY2hrTSy9zKqvpWlY8.png",Сарафан ТВ
+http://192.168.1.56:8000/channels/play?id=1732
+#EXTINF:-1 group-title="Развлекательные" tvg-name="Смайл-ТВ" tvg-id="ttv15567" tvg-logo="http://1ttv.org/uploads/AFH2ud3ZiC5BXXPoq9OVbhCQTS0yOF.png",Смайл-ТВ
+http://192.168.1.56:8000/channels/play?id=15567
+#EXTINF:-1 group-title="Познавательные" tvg-name="Совершенно_секретно" tvg-id="ttv1420" tvg-logo="http://1ttv.org/uploads/BZJQEpa6Y4KL9tQjPHAIxbodw0KAyN.png",Совершенно секретно
+http://192.168.1.56:8000/channels/play?id=1420
+#EXTINF:-1 group-title="Развлекательные" tvg-name="Сонце" tvg-id="ttv6466" tvg-logo="http://1ttv.org/uploads/TJXJVeoBFRMFrUgzpPW4dunJL6XSzn.png",Сонце
+http://192.168.1.56:8000/channels/play?id=6466
+#EXTINF:-1 group-title="Религиозные" tvg-name="Союз" tvg-id="ttv1476" tvg-logo="http://1ttv.org/uploads/YpsuBorUwulPHW3nI8O6nKETnEVB83.png",Союз
+http://192.168.1.56:8000/channels/play?id=1476
+#EXTINF:-1 group-title="Религиозные" tvg-name="Спас_ТВ" tvg-id="ttv1478" tvg-logo="http://1ttv.org/uploads/pAFeyS1iCV4BybnpnnwjoKm0y0zvaA.png",Спас ТВ
+http://192.168.1.56:8000/channels/play?id=1478
+#EXTINF:-1 group-title="Спорт" tvg-name="Спорт_1_(Украина)" tvg-id="ttv1380" tvg-logo="http://1ttv.org/uploads/XqwvMS8Hn0mOpbh79esrIqELTsvo5b.png",Спорт 1 (Украина)
+http://192.168.1.56:8000/channels/play?id=1380
+#EXTINF:-1 group-title="Спорт" tvg-name="Спорт_2_(Украина)" tvg-id="ttv1381" tvg-logo="http://1ttv.org/uploads/q0PokCXx6jtCHEPMvE42I0pD3ZNY0o.png",Спорт 2 (Украина)
+http://192.168.1.56:8000/channels/play?id=1381
+#EXTINF:-1 group-title="Общие" tvg-name="СТБ" tvg-id="ttv5466" tvg-logo="http://1ttv.org/uploads/saZlIDrdaXWoiQa8sfZp2bEAeH0kXk.png",СТБ
+http://192.168.1.56:8000/channels/play?id=5466
+#EXTINF:-1 group-title="Общие" tvg-name="Страна" tvg-id="ttv2268" tvg-logo="http://1ttv.org/uploads/5G27bahViND43dD1VlkaKlQRsYOqwL.png",Страна
+http://192.168.1.56:8000/channels/play?id=2268
+#EXTINF:-1 group-title="Развлекательные" tvg-name="СТРК_HD" tvg-id="ttv11016" tvg-logo="http://1ttv.org/uploads/xOmVS1kQFIHeAwqtJbBfrbE75Quj2a.png",СТРК HD
+http://192.168.1.56:8000/channels/play?id=11016
+#EXTINF:-1 group-title="Развлекательные" tvg-name="СТРК_HD_Сочи" tvg-id="ttv16101" tvg-logo="http://1ttv.org/uploads/2PphESGueDUS1T6wSOr12iTgTbIVJm.png",СТРК HD Сочи
+http://192.168.1.56:8000/channels/play?id=16101
+#EXTINF:-1 group-title="Развлекательные" tvg-name="СТС_(+1)" tvg-id="ttv15633" tvg-logo="http://1ttv.org/uploads/tPa64bmSSwAqcmgolRpPiJr3MA3XIc.png",СТС (+1)
+http://192.168.1.56:8000/channels/play?id=15633
+#EXTINF:-1 group-title="Развлекательные" tvg-name="СТС_(+7)" tvg-id="ttv15570" tvg-logo="http://1ttv.org/uploads/SurVaNRnBAqbg5w3dqEcCtPD0OjK7l.png",СТС (+7)
+http://192.168.1.56:8000/channels/play?id=15570
+#EXTINF:-1 group-title="Развлекательные" tvg-name="СТС_(резерв)" tvg-id="ttv15780" tvg-logo="http://1ttv.org/uploads/x2SKtaoIFrGOOwIWKMzuPAY9SeTBGv.png",СТС (резерв)
+http://192.168.1.56:8000/channels/play?id=15780
+#EXTINF:-1 group-title="Региональные" tvg-name="Тагил_ТВ" tvg-id="ttv15606" tvg-logo="http://1ttv.org/uploads/ubegTi3hkdx7xtZCdOz8K0gBQLlght.png",Тагил ТВ
+http://192.168.1.56:8000/channels/play?id=15606
+#EXTINF:-1 group-title="Религиозные" tvg-name="ТБН" tvg-id="ttv8838" tvg-logo="http://1ttv.org/uploads/r9O7HmwQbFR4oKMH9yKAogE8xBzwz4.png",ТБН
+http://192.168.1.56:8000/channels/play?id=8838
+#EXTINF:-1 group-title="Фильмы" tvg-name="ТВ_3" tvg-id="ttv411" tvg-logo="http://1ttv.org/uploads/427.png",ТВ 3
+http://192.168.1.56:8000/channels/play?id=411
+#EXTINF:-1 group-title="Фильмы" tvg-name="ТВ_3_(+2)" tvg-id="ttv6475" tvg-logo="http://1ttv.org/uploads/427.png",ТВ 3 (+2)
+http://192.168.1.56:8000/channels/play?id=6475
+#EXTINF:-1 group-title="Фильмы" tvg-name="ТВ_3_(+3)" tvg-id="ttv10815" tvg-logo="http://1ttv.org/uploads/427.png",ТВ 3 (+3)
+http://192.168.1.56:8000/channels/play?id=10815
+#EXTINF:-1 group-title="Фильмы" tvg-name="ТВ_3_(+4)" tvg-id="ttv15846" tvg-logo="http://1ttv.org/uploads/xrEX6m2VC0DSQ00yspww51BWuswTqb.png",ТВ 3 (+4)
+http://192.168.1.56:8000/channels/play?id=15846
+#EXTINF:-1 group-title="Фильмы" tvg-name="ТВ_3_(+7)" tvg-id="ttv16127" tvg-logo="http://1ttv.org/uploads/HfEo6PctsuTnlPQIa0xVKgEDqFwI48.png",ТВ 3 (+7)
+http://192.168.1.56:8000/channels/play?id=16127
+#EXTINF:-1 group-title="Региональные" tvg-name="ТВ6" tvg-id="ttv16224" tvg-logo="http://1ttv.org/uploads/mSkkS7Nd1qtxXDEEGvLXf3bbqMjJ4f.png",ТВ6
+http://192.168.1.56:8000/channels/play?id=16224
+#EXTINF:-1 group-title="Общие" tvg-name="ТВЦ" tvg-id="ttv384" tvg-logo="http://1ttv.org/uploads/QEpQTskZ9hcfI0rgD8osHVYSv58pde.png",ТВЦ
+http://192.168.1.56:8000/channels/play?id=384
+#EXTINF:-1 group-title="Развлекательные" tvg-name="ТДК" tvg-id="ttv10385" tvg-logo="http://1ttv.org/uploads/eSrHE6Gws4U6JxhFXA3mQ4iDVc0SwS.png",ТДК
+http://192.168.1.56:8000/channels/play?id=10385
+#EXTINF:-1 group-title="Развлекательные" tvg-name="Театр" tvg-id="ttv10096" tvg-logo="http://1ttv.org/uploads/8qawrcOtzHZTAa3kI0rcDfVFEZoI5u.png",Театр
+http://192.168.1.56:8000/channels/play?id=10096
+#EXTINF:-1 group-title="Познавательные" tvg-name="Теледом_HD" tvg-id="ttv8621" tvg-logo="http://1ttv.org/uploads/XviuCfRo0T4WFTOhFaC978AwZ1a3Ge.png",Теледом HD
+http://192.168.1.56:8000/channels/play?id=8621
+#EXTINF:-1 group-title="Познавательные" tvg-name="Телекафе" tvg-id="ttv1137" tvg-logo="http://1ttv.org/uploads/fYRFV5oY197jXcyModfWVs0AlrCOIs.png",Телекафе
+http://192.168.1.56:8000/channels/play?id=1137
+#EXTINF:-1 group-title="Познавательные" tvg-name="Телепутешествия" tvg-id="ttv3128" tvg-logo="http://1ttv.org/uploads/fz4bqwLySJAQkUN7l2EPKNqyvilfRD.png",Телепутешествия
+http://192.168.1.56:8000/channels/play?id=3128
+#EXTINF:-1 group-title="Мужские" tvg-name="Техно_24" tvg-id="ttv552" tvg-logo="http://1ttv.org/uploads/JbUGHLuuZa3WQbjtbzUo0cDZkGnLRK.png",Техно 24
+http://192.168.1.56:8000/channels/play?id=552
+#EXTINF:-1 group-title="Региональные" tvg-name="Тиса-1" tvg-id="ttv14634" tvg-logo="http://1ttv.org/uploads/pPRRy0SjPl3JKXdcZrQrdXQz3NTKOH.png",Тиса-1
+http://192.168.1.56:8000/channels/play?id=14634
+#EXTINF:-1 group-title="Детские" tvg-name="Тлум_HD" tvg-id="ttv15814" tvg-logo="http://1ttv.org/uploads/FhxsethirEr5lhrE54VGA4acHu7MJn.png",Тлум HD
+http://192.168.1.56:8000/channels/play?id=15814
+#EXTINF:-1 group-title="Региональные" tvg-name="ТНВ-Планета" tvg-id="ttv8849" tvg-logo="http://1ttv.org/uploads/vBMv8AtIpDhBGQLjPoxkko3baWMFac.png",ТНВ-Планета
+http://192.168.1.56:8000/channels/play?id=8849
+#EXTINF:-1 group-title="Развлекательные" tvg-name="ТНТ" tvg-id="ttv1153" tvg-logo="http://1ttv.org/uploads/Vtt1KKIpLY4LTQGnV03sdBYyX3hyWR.png",ТНТ
+http://192.168.1.56:8000/channels/play?id=1153
+#EXTINF:-1 group-title="Развлекательные" tvg-name="ТНТ_(+2)" tvg-id="ttv10124" tvg-logo="http://1ttv.org/uploads/Vtt1KKIpLY4LTQGnV03sdBYyX3hyWR.png",ТНТ (+2)
+http://192.168.1.56:8000/channels/play?id=10124
+#EXTINF:-1 group-title="Развлекательные" tvg-name="ТНТ_(+4)" tvg-id="ttv10350" tvg-logo="http://1ttv.org/uploads/Vtt1KKIpLY4LTQGnV03sdBYyX3hyWR.png",ТНТ (+4)
+http://192.168.1.56:8000/channels/play?id=10350
+#EXTINF:-1 group-title="Развлекательные" tvg-name="ТНТ_(+7)" tvg-id="ttv15692" tvg-logo="http://1ttv.org/uploads/3nipGCZNvlMHrtgLyraU5YEA6sj0ek.png",ТНТ (+7)
+http://192.168.1.56:8000/channels/play?id=15692
+#EXTINF:-1 group-title="Музыка" tvg-name="ТНТ-Music" tvg-id="ttv396" tvg-logo="http://1ttv.org/uploads/6Go23tY9hpakfrvTEUH7Z7o5Y9hpOG.png",ТНТ-Music
+http://192.168.1.56:8000/channels/play?id=396
+#EXTINF:-1 group-title="Развлекательные" tvg-name="ТНТ4" tvg-id="ttv462" tvg-logo="http://1ttv.org/uploads/yTclqOAW0EWwhw9vt0spVSUcS70ZR0.png",ТНТ4
+http://192.168.1.56:8000/channels/play?id=462
+#EXTINF:-1 group-title="Развлекательные" tvg-name="ТНТ4_(+2)" tvg-id="ttv8778" tvg-logo="http://1ttv.org/uploads/yTclqOAW0EWwhw9vt0spVSUcS70ZR0.png",ТНТ4 (+2)
+http://192.168.1.56:8000/channels/play?id=8778
+#EXTINF:-1 group-title="Региональные" tvg-name="Томское_время" tvg-id="ttv16004" tvg-logo="http://1ttv.org/uploads/1Z7yLtfyuITQhXchO59gwyQ3mES7qS.png",Томское время
+http://192.168.1.56:8000/channels/play?id=16004
+#EXTINF:-1 group-title="Развлекательные" tvg-name="Тонус_ТВ" tvg-id="ttv11739" tvg-logo="http://1ttv.org/uploads/bE8WfReOerYTIbqPOo6VD2ajrFdOBT.png",Тонус ТВ
+http://192.168.1.56:8000/channels/play?id=11739
+#EXTINF:-1 group-title="Фильмы" tvg-name="Точка_ТВ" tvg-id="ttv9458" tvg-logo="http://1ttv.org/uploads/JWwPbPnkWooIpKd5WYsdpfO3Mh14oA.png",Точка ТВ
+http://192.168.1.56:8000/channels/play?id=9458
+#EXTINF:-1 group-title="Региональные" tvg-name="Третий_Цифровой_Одесса" tvg-id="ttv16238" tvg-logo="http://1ttv.org/uploads/MXcua7OlJ9CplpD15hD84Xn2QjoCdt.png",Третий Цифровой Одесса
+http://192.168.1.56:8000/channels/play?id=16238
+#EXTINF:-1 group-title="Региональные" tvg-name="ТРК_555" tvg-id="ttv16147" tvg-logo="http://1ttv.org/uploads/z3GvW4WdjwSmsQrfhAIZewEsdH0rsi.png",ТРК 555
+http://192.168.1.56:8000/channels/play?id=16147
+#EXTINF:-1 group-title="Региональные" tvg-name="ТРК_Киев" tvg-id="ttv11400" tvg-logo="http://1ttv.org/uploads/qW0p5z3De7COmSxTmvJ4ZA2wOuSJjg.png",ТРК Киев
+http://192.168.1.56:8000/channels/play?id=11400
+#EXTINF:-1 group-title="Общие" tvg-name="ТРК_Украина_HD" tvg-id="ttv15186" tvg-logo="http://1ttv.org/uploads/0co3dwhFDhoCVeTbfMV8ASYFYxSrWM.png",ТРК Украина HD
+http://192.168.1.56:8000/channels/play?id=15186
+#EXTINF:-1 group-title="Региональные" tvg-name="ТРО_Союза" tvg-id="ttv1880" tvg-logo="http://1ttv.org/uploads/xAXy9iMyJ4wa2wmugJvbZuDIzc9pVz.png",ТРО Союза
+http://192.168.1.56:8000/channels/play?id=1880
+#EXTINF:-1 group-title="Мужские" tvg-name="Трофей" tvg-id="ttv8254" tvg-logo="http://1ttv.org/uploads/tQTWwjNBC8aLLWiWZfCj43BhWNH51I.png",Трофей
+http://192.168.1.56:8000/channels/play?id=8254
+#EXTINF:-1 group-title="Мужские" tvg-name="Трофей_HD" tvg-id="ttv10345" tvg-logo="http://1ttv.org/uploads/cPi9B0icZpuvSRQiH0Kk6rNY8r1X65.png",Трофей HD
+http://192.168.1.56:8000/channels/play?id=10345
+#EXTINF:-1 group-title="Развлекательные" tvg-name="ТТС" tvg-id="ttv14478" tvg-logo="http://1ttv.org/uploads/crsSIipA6N288sjn4EvUyOyTd0ed9A.png",ТТС
+http://192.168.1.56:8000/channels/play?id=14478
+#EXTINF:-1 group-title="Общие" tvg-name="Унiан" tvg-id="ttv2128" tvg-logo="http://1ttv.org/uploads/fhpFrTDoI9xx7UlK65KAjAbdTGehLL.png",Унiан
+http://192.168.1.56:8000/channels/play?id=2128
+#EXTINF:-1 group-title="Познавательные" tvg-name="Усадьба" tvg-id="ttv1421" tvg-logo="http://1ttv.org/uploads/5yIxLQzQyZnH5EJcwpSGb28QuRTSFH.png",Усадьба
+http://192.168.1.56:8000/channels/play?id=1421
+#EXTINF:-1 group-title="Фильмы" tvg-name="Феникс+_Кино" tvg-id="ttv1829" tvg-logo="http://1ttv.org/uploads/idiNkkBsxLwxWCF2VZrc9LQEevKh0d.png",Феникс+ Кино
+http://192.168.1.56:8000/channels/play?id=1829
+#EXTINF:-1 group-title="Региональные" tvg-name="Хабар_(Казахстан)" tvg-id="ttv16213" tvg-logo="http://1ttv.org/uploads/hicauMf7BqwJPdm8rlzCz7UPRU4H29.png",Хабар (Казахстан)
+http://192.168.1.56:8000/channels/play?id=16213
+#EXTINF:-1 group-title="Новостные" tvg-name="Хабар_24" tvg-id="ttv15750" tvg-logo="http://1ttv.org/uploads/5ucUtr617J0k3od3cVRn1mMy0Ezi1x.png",Хабар 24
+http://192.168.1.56:8000/channels/play?id=15750
+#EXTINF:-1 group-title="Развлекательные" tvg-name="Хамелеон_ТВ_HD" tvg-id="ttv16012" tvg-logo="http://1ttv.org/uploads/8RJedIETH8CeM3OqSHHDUfmfeA5tOk.png",Хамелеон ТВ HD
+http://192.168.1.56:8000/channels/play?id=16012
+#EXTINF:-1 group-title="Новостные" tvg-name="Царьград_ТВ" tvg-id="ttv15730" tvg-logo="http://1ttv.org/uploads/9DJiua5LxhwBe2Is3l4LDJIH8zf5EE.png",Царьград ТВ
+http://192.168.1.56:8000/channels/play?id=15730
+#EXTINF:-1 group-title="Региональные" tvg-name="Центральный_канал" tvg-id="ttv8884" tvg-logo="http://1ttv.org/uploads/vzfLS14qVT0rSphoNeEuO2WDvXFoub.png",Центральный канал
+http://192.168.1.56:8000/channels/play?id=8884
+#EXTINF:-1 group-title="Региональные" tvg-name="ЧГТРК_Грозный" tvg-id="ttv10117" tvg-logo="http://1ttv.org/uploads/LqDNdQj6nf4MraZztT6ZnACn7yOJpV.png",ЧГТРК Грозный
+http://192.168.1.56:8000/channels/play?id=10117
+#EXTINF:-1 group-title="Региональные" tvg-name="Черновицкий_Проминь_HD" tvg-id="ttv16160" tvg-logo="http://1ttv.org/uploads/Us5Sr5jEx6SA6eBdZA9xchHzj1hJ4t.png",Черновицкий Проминь HD
+http://192.168.1.56:8000/channels/play?id=16160
+#EXTINF:-1 group-title="Региональные" tvg-name="Черноморская_телекомпания" tvg-id="ttv7358" tvg-logo="http://1ttv.org/uploads/LJVoPVcJAE0s4DNmXCga0UPZkRkLTq.png",Черноморская телекомпания
+http://192.168.1.56:8000/channels/play?id=7358
+#EXTINF:-1 group-title="Новостные" tvg-name="ЧП-Инфо" tvg-id="ttv1801" tvg-logo="http://1ttv.org/uploads/Xy7mLl3exaBKuLlDGdrRls6hyR7mSw.png",ЧП-Инфо
+http://192.168.1.56:8000/channels/play?id=1801
+#EXTINF:-1 group-title="Музыка" tvg-name="Шансон_ТВ" tvg-id="ttv1020" tvg-logo="http://1ttv.org/uploads/VY0TyCCkKOj5b8BhBJjT020sQoxL9F.png",Шансон ТВ
+http://192.168.1.56:8000/channels/play?id=1020
+#EXTINF:-1 group-title="Для взрослых" tvg-name="Эгоист_ТВ" tvg-id="ttv7323" tvg-logo="http://1ttv.org/uploads/moG8uExVh4nw3MN7dmGFdysJHBWLk6.png",Эгоист ТВ
+http://192.168.1.56:8000/channels/play?id=7323
+#EXTINF:-1 group-title="Познавательные" tvg-name="Эко-ТВ" tvg-id="ttv2131" tvg-logo="http://1ttv.org/uploads/EmsE2NuqzHi5NXh6OIMMXQpfmD0VIl.png",Эко-ТВ
+http://192.168.1.56:8000/channels/play?id=2131
+#EXTINF:-1 group-title="Развлекательные" tvg-name="Ю" tvg-id="ttv754" tvg-logo="http://1ttv.org/uploads/YvnG7hXCwMmHnakp2KkCbqeCigHcuK.png",Ю
+http://192.168.1.56:8000/channels/play?id=754
+#EXTINF:-1 group-title="Развлекательные" tvg-name="Ю_(+2)" tvg-id="ttv12742" tvg-logo="http://1ttv.org/uploads/YvnG7hXCwMmHnakp2KkCbqeCigHcuK.png",Ю (+2)
+http://192.168.1.56:8000/channels/play?id=12742
+#EXTINF:-1 group-title="Развлекательные" tvg-name="Ювелирочка" tvg-id="ttv14652" tvg-logo="http://1ttv.org/uploads/pvKHFUCv25R51hJoUpAJfvjGnWyqoZ.png",Ювелирочка
+http://192.168.1.56:8000/channels/play?id=14652
+#EXTINF:-1 group-title="Развлекательные" tvg-name="Юмор_ТВ" tvg-id="ttv9059" tvg-logo="http://1ttv.org/uploads/6VFA1SVxeFHUsGaKPbNxWZREDkGeZw.png",Юмор ТВ
+http://192.168.1.56:8000/channels/play?id=9059
