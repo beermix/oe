@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of Alex@ELEC - http://www.alexelec.in.ua
-#      Copyright (C) 2011-2016 Alexandr Zuyev (alex@alexelec.in.ua)
+#      Copyright (C) 2011-2017 Alexandr Zuyev (alex@alexelec.in.ua)
 ################################################################################
 
 PKG_NAME="lua"
@@ -10,9 +10,8 @@ PKG_ARCH="any"
 PKG_LICENSE="MIT"
 PKG_SITE="http://www.lua.org/"
 PKG_URL="http://www.lua.org/ftp/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain readline"
-PKG_PRIORITY="optional"
-PKG_SECTION="xmedia/depends"
+PKG_DEPENDS_TARGET="toolchain readline lua:host"
+PKG_SECTION="xmedia/tools"
 PKG_SHORTDESC="lua: A lightweight, extensible programming language"
 PKG_LONGDESC="Lua is a powerful light-weight programming language designed for extending applications. Lua is also frequently used as a general-purpose, stand-alone language."
 PKG_IS_ADDON="no"
@@ -20,9 +19,39 @@ PKG_AUTORECONF="no"
 
 _MAJORVER=${PKG_VERSION%.*}
 
-make_target() {
-  make CC="$CC" CFLAGS="$CFLAGS -fPIC" LDFLAGS="$LDFLAGS -fPIC" MYCFLAGS="-DLUA_COMPAT_5_2 -DLUA_COMPAT_5_1" linux
+pre_build_target() {
+  mkdir -p $ROOT/$PKG_BUILD/.$TARGET_NAME
+  cp -RP $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$TARGET_NAME
 }
+
+pre_build_host() {
+  mkdir -p $ROOT/$PKG_BUILD/.$HOST_NAME
+  cp -RP $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$HOST_NAME
+}
+
+pre_make_target() {
+  cd .$TARGET_NAME
+}
+
+pre_make_host() {
+  cd .$HOST_NAME
+}
+
+make_host() {
+  make CC="$CC" CFLAGS="$CFLAGS -fPIC -DLUA_COMPAT_5_2 -DLUA_COMPAT_5_1" linux all
+}
+
+makeinstall_host() {
+  make \
+  INSTALL_TOP=$ROOT/$TOOLCHAIN \
+  install
+}
+
+make_target() {
+  CFLAGS=`echo $CFLAGS | sed -e "s|-mcpu=cortex-a53||"`
+  make CC="$CC" CFLAGS="$CFLAGS -fPIC -DLUA_COMPAT_5_2 -DLUA_COMPAT_5_1" linux all
+}
+
 
 makeinstall_target() {
   make \
@@ -36,18 +65,17 @@ makeinstall_target() {
   ln -sf $SYSROOT_PREFIX/usr/bin/luac $SYSROOT_PREFIX/usr/bin/luac$_MAJORVER
 
   mkdir -p $SYSROOT_PREFIX/usr/lib/pkgconfig
-    cp -P $PKG_DIR/config/lua.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/lua5.3.pc
-  ln -sf $SYSROOT_PREFIX/usr/lib/pkgconfig/lua5.3.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/lua.pc
+    cp -P $ROOT/$PKG_BUILD/config/lua.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/lua53.pc
+  ln -sf $SYSROOT_PREFIX/usr/lib/pkgconfig/lua53.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/lua.pc
+
+  make \
+  TO_LIB="liblua.a liblua.so liblua.so.$_MAJORVER liblua.so.$PKG_VERSION" \
+  INSTALL_DATA='cp -d' \
+  INSTALL_TOP=$INSTALL/usr \
+  INSTALL_MAN=$INSTALL/usr/share/man/man1 \
+  install
+
+  ln -sf $INSTALL/usr/bin/lua $INSTALL/usr/bin/lua$_MAJORVER
+  ln -sf $INSTALL/usr/bin/luac $INSTALL/usr/bin/luac$_MAJORVER
 }
 
-post_make_target() {
-  mkdir -p $INSTALL/usr/bin
-    cp -P $ROOT/$PKG_BUILD/src/lua $INSTALL/usr/bin
-    cp -P $ROOT/$PKG_BUILD/src/luac $INSTALL/usr/bin
-  ln -sf /usr/bin/lua $INSTALL/usr/bin/lua$_MAJORVER
-  ln -sf /usr/bin/luac $INSTALL/usr/bin/luac$_MAJORVER
-
-  mkdir -p $INSTALL/usr/lib
-    cp -P $ROOT/$PKG_BUILD/src/liblua.so $INSTALL/usr/lib
-    cp -P $ROOT/$PKG_BUILD/src/liblua.so.* $INSTALL/usr/lib
-}
