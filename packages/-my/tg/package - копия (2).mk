@@ -1,17 +1,19 @@
 PKG_NAME="tg"
-PKG_VERSION="master"
-PKG_URL=""
+PKG_VERSION="002"
+PKG_URL="https://dl.dropboxusercontent.com/s/2ipj1e9srji0ekm/tg-002.tar.xz"
 PKG_DEPENDS_TARGET="toolchain readline libevent jansson zlib libconfig openssl lua"
 PKG_SECTION="debug/tools"
 PKG_AUTORECONF="yes"
 
-unpack() {
-  git clone --recursive -v --depth 1 git://github.com/vysheng/tg $PKG_BUILD
-  cd $PKG_BUILD
-  git reset --hard $PKG_VERSION
-  rm -rf .git
-  cd $ROOT
+pre_configure_target() {
+  cd $ROOT/$PKG_BUILD
+  export LIBS="-lreadline -lterminfo"
+  #export LUA_LIBS="-L$SYSROOT_PREFIX/usr/lib -llua -lm"
+  #export LDFLAGS="$LDFLAGS -llua -lm" 
+  #strip_lto
+  #autoreconf --verbose --install --force -I m4
 }
+
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
 			      ac_cv_func_realloc_0_nonnull=yes \
@@ -21,9 +23,8 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
 			      --enable-static \
 			      --enable-libevent \
 			      --enable-libconfig \
-			      --enable-libgcrypt=no \
 			      --enable-extf \
-			      --enable-python \
+			      --disable-python \
 			      --disable-valgrind \
 			      --enable-liblua"
 		

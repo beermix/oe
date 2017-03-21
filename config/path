@@ -19,9 +19,16 @@ set -e
 HOST_NAME=$(gcc -dumpmachine)
 TARGET_NAME=$TARGET_GCC_ARCH-openelec-linux-gnu${TARGET_ABI}
 
-BUILD=$BUILD_BASE.$DISTRONAME-$PROJECT.$TARGET_ARCH-$OPENELEC_VERSION
-if [ "$OPENELEC_VERSION" = "devel" ] ; then
-  BUILD=$BUILD_BASE.$DISTRONAME-$PROJECT.$TARGET_ARCH-$OS_VERSION-$OPENELEC_VERSION
+if [ -n "$DEVICE" ]; then
+  BUILD=$ROOT/$BUILD_BASE.$DISTRONAME-$DEVICE.$TARGET_ARCH-$OPENELEC_VERSION
+  if [ "$OPENELEC_VERSION" = "devel" ] ; then
+    BUILD=$ROOT/$BUILD_BASE.$DISTRONAME-$DEVICE.$TARGET_ARCH-$OS_VERSION-$OPENELEC_VERSION
+  fi
+else
+  BUILD=$ROOT/$BUILD_BASE.$DISTRONAME-$PROJECT.$TARGET_ARCH-$OPENELEC_VERSION
+  if [ "$OPENELEC_VERSION" = "devel" ] ; then
+    BUILD=$ROOT/$BUILD_BASE.$DISTRONAME-$PROJECT.$TARGET_ARCH-$OS_VERSION-$OPENELEC_VERSION
+  fi
 fi
 
 if [ -n "$BUILD_SUFFIX" ]; then
@@ -36,12 +43,12 @@ STAMPS=$BUILD/.stamps
 STAMPS_INSTALL=$BUILD/image/.stamps
 DOCS=DOCS
 TOOLCHAIN=$BUILD/toolchain
-SYSROOT_PREFIX=$ROOT/$TOOLCHAIN/$TARGET_NAME/sysroot
+SYSROOT_PREFIX=$TOOLCHAIN/$TARGET_NAME/sysroot
 LIB_PREFIX=$SYSROOT_PREFIX/usr
-TARGET_PREFIX=$ROOT/$TOOLCHAIN/bin/$TARGET_NAME-
+TARGET_PREFIX=$TOOLCHAIN/bin/$TARGET_NAME-
 
-FAKEROOT_SCRIPT_SYSTEM=$ROOT/$BUILD/image/.fakeroot-system
-FAKEROOT_SCRIPT_INIT=$ROOT/$BUILD/image/.fakeroot-init
+FAKEROOT_SCRIPT_SYSTEM=$BUILD/image/.fakeroot-system
+FAKEROOT_SCRIPT_INIT=$BUILD/image/.fakeroot-init
 
 if [ -z "$INSTALL" ]; then
   INSTALL=$BUILD/image/system
@@ -50,8 +57,8 @@ INSTALL_INIT=$BUILD/image/initramfs/root-image
 
 . config/sources
 
-MAKE="$ROOT/$TOOLCHAIN/bin/make"
-MAKEINSTALL="$ROOT/$TOOLCHAIN/bin/make -j1 DESTDIR=$SYSROOT_PREFIX install"
+MAKE="$TOOLCHAIN/bin/make"
+MAKEINSTALL="$TOOLCHAIN/bin/make -j1 DESTDIR=$SYSROOT_PREFIX install"
 SED="sed -i"
 
 # set package metadata
@@ -76,9 +83,10 @@ SED="sed -i"
   PKG_PATCH_DIRS=""
 
   if [ -n "$1" ]; then
-    _PKG_ROOT_NAME=$(echo $1 | cut -d: -f1)
+    _PKG_ROOT_NAME=${1%:*}
     _ALL_DIRS=""
     _FOUND=0
+    _ANCHOR="@?+?@"
     PKG_DIR=""
 
     # check project folder for a package in home dir
@@ -152,7 +160,7 @@ SED="sed -i"
     fi
   fi
 
-  if [ -r $PKG_DIR/package.mk ]; then
+  if [ -n "$PKG_DIR" -a -r $PKG_DIR/package.mk ]; then
     . $PKG_DIR/package.mk
   fi
 
@@ -203,13 +211,17 @@ XORG_PATH_DRIVERS=/usr/lib/xorg/modules/drivers
 . config/optimize
 
 if [ -z "$CCACHE_DIR" ]; then
-    export CCACHE_DIR=$HOME/.ccache-oe
+  export CCACHE_DIR=/root/.ccache-oe
 fi
 export MAKEFLAGS=-j$CONCURRENCY_MAKE_LEVEL
-export PKG_CONFIG=$ROOT/$TOOLCHAIN/bin/pkg-config
+export PKG_CONFIG=$TOOLCHAIN/bin/pkg-config
 
-if [ -z "$PATH" -o "$PATH" = "${PATH#$ROOT/$TOOLCHAIN/bin:}" ]; then
-  export PATH="$ROOT/$TOOLCHAIN/lib/ccache:$ROOT/$TOOLCHAIN/bin:$ROOT/$TOOLCHAIN/sbin:$PATH"
+if [ -z "$PATH" -o "$PATH" = "${PATH#$TOOLCHAIN/bin:}" ]; then
+  export PATH="$TOOLCHAIN/bin:$TOOLCHAIN/sbin:$PATH"
+fi
+
+if [ -z "$LD_LIBRARY_PATH" -o "$LD_LIBRARY_PATH" = "${LD_LIBRARY_PATH#$TOOLCHAIN/lib:}" ]; then
+  export LD_LIBRARY_PATH="$TOOLCHAIN/lib:$LD_LIBRARY_PATH"
 fi
 
 VERSION_SUFFIX=$TARGET_ARCH

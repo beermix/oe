@@ -105,7 +105,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-freetype \
 			      --disable-fribidi \
 			      --disable-fontconfig \
-			      --enable-libxml2 \
+			      --disable-libxml2 \
 			      --disable-svg \
 			      --disable-directx \
 			      --disable-directfb \
