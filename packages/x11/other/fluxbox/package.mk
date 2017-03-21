@@ -54,7 +54,7 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin/fluxbox-remote
   rm -rf $INSTALL/usr/bin/startfluxbox
 
-  #rm -rf $INSTALL/usr/share/fluxbox/styles
+  rm -rf $INSTALL/usr/share/fluxbox/styles
 
   cp $PKG_DIR/config/apps $INSTALL/usr/share/fluxbox/
   cp $PKG_DIR/config/init $INSTALL/usr/share/fluxbox/
