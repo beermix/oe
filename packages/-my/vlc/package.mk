@@ -88,9 +88,9 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-libass \
 			      --disable-kate \
 			      --disable-tiger \
-			      --disable-libva \
+			      --enable-libva \
 			      --disable-vdpau \
-			      --without-x \
+			      --with-x \
 			      --disable-xcb \
 			      --disable-xvideo \
 			      --disable-sdl \
@@ -116,7 +116,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-macosx-vlc-app \
 			      --disable-macosx-qtkit \
 			      --disable-macosx-quartztext \
-			      --disable-ncurses \
+			      --enable-ncurses \
 			      --disable-goom \
 			      --disable-projectm \
 			      --disable-atmo \
