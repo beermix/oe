@@ -4,9 +4,9 @@
 ################################################################################
 
 PKG_NAME="ImageMagick"
-PKG_VERSION="7.0.5-1"
+PKG_VERSION="7.0.5-3"
 PKG_SITE="http://www.imagemagick.org"
-PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain libX11 libtool:target"
 PKG_SECTION="xmedia/libs"
 PKG_SHORTDESC="image manipulation library"
