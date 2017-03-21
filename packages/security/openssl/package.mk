@@ -51,20 +51,41 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            no-unit-test \
                            no-zlib \
                            no-zlib-dynamic"
+                           
+PKG_CONFIGURE_OPTS_STATIC="--openssldir=/etc/ssl \
+                           --libdir=lib \
+                           no-shared \
+                           threads \
+                           no-ec2m \
+                           no-gmp \
+                           no-jpake \
+                           no-krb5 \
+                           no-libunbound \
+                           no-md2 \
+                           no-rc5 \
+                           no-rfc3779
+                           no-sctp \
+                           no-ssl-trace \
+                           no-ssl2 \
+                           no-ssl3 \
+                           no-store \
+                           no-unit-test \
+                           no-weak-ssl-ciphers \
+                           no-zlib \
+                           no-zlib-dynamic"
 
 pre_configure_host() {
   mkdir -p $ROOT/$PKG_BUILD/.$HOST_NAME
-  mkdir -p $ROOT/$TOOLCHAIN/etc/ssl/include/openssl/
   cp -a $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$HOST_NAME/
 }
 
 configure_host() {
   cd $ROOT/$PKG_BUILD/.$HOST_NAME
-  ./Configure --prefix= $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $CFLAGS $LDFLAGS
+  ./Configure --prefix=/ $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $CFLAGS $LDFLAGS
 }
 
 makeinstall_host() {
-  make INSTALL_PREFIX=$TOOLCHAIN install_sw
+  make INSTALL_PREFIX=$ROOT/$TOOLCHAIN install_sw
 }
 
 pre_configure_target() {

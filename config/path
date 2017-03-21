@@ -19,9 +19,9 @@ set -e
 HOST_NAME=$(gcc -dumpmachine)
 TARGET_NAME=$TARGET_GCC_ARCH-openelec-linux-gnu${TARGET_ABI}
 
-BUILD=$ROOT/$BUILD_BASE.$DISTRONAME-$PROJECT.$TARGET_ARCH-$OPENELEC_VERSION
+BUILD=$BUILD_BASE.$DISTRONAME-$PROJECT.$TARGET_ARCH-$OPENELEC_VERSION
 if [ "$OPENELEC_VERSION" = "devel" ] ; then
-  BUILD=$ROOT/$BUILD_BASE.$DISTRONAME-$PROJECT.$TARGET_ARCH-$OS_VERSION-$OPENELEC_VERSION
+  BUILD=$BUILD_BASE.$DISTRONAME-$PROJECT.$TARGET_ARCH-$OS_VERSION-$OPENELEC_VERSION
 fi
 
 if [ -n "$BUILD_SUFFIX" ]; then
@@ -36,12 +36,12 @@ STAMPS=$BUILD/.stamps
 STAMPS_INSTALL=$BUILD/image/.stamps
 DOCS=DOCS
 TOOLCHAIN=$BUILD/toolchain
-SYSROOT_PREFIX=$TOOLCHAIN/$TARGET_NAME/sysroot
+SYSROOT_PREFIX=$ROOT/$TOOLCHAIN/$TARGET_NAME/sysroot
 LIB_PREFIX=$SYSROOT_PREFIX/usr
-TARGET_PREFIX=$TOOLCHAIN/bin/$TARGET_NAME-
+TARGET_PREFIX=$ROOT/$TOOLCHAIN/bin/$TARGET_NAME-
 
-FAKEROOT_SCRIPT_SYSTEM=$BUILD/image/.fakeroot-system
-FAKEROOT_SCRIPT_INIT=$BUILD/image/.fakeroot-init
+FAKEROOT_SCRIPT_SYSTEM=$ROOT/$BUILD/image/.fakeroot-system
+FAKEROOT_SCRIPT_INIT=$ROOT/$BUILD/image/.fakeroot-init
 
 if [ -z "$INSTALL" ]; then
   INSTALL=$BUILD/image/system
@@ -50,8 +50,8 @@ INSTALL_INIT=$BUILD/image/initramfs/root-image
 
 . config/sources
 
-MAKE="$TOOLCHAIN/bin/make"
-MAKEINSTALL="$TOOLCHAIN/bin/make -j1 DESTDIR=$SYSROOT_PREFIX install"
+MAKE="$ROOT/$TOOLCHAIN/bin/make"
+MAKEINSTALL="$ROOT/$TOOLCHAIN/bin/make -j1 DESTDIR=$SYSROOT_PREFIX install"
 SED="sed -i"
 
 # set package metadata
@@ -160,8 +160,45 @@ SED="sed -i"
     [ -z $PKG_SECTION ] && PKG_ADDON_ID="$PKG_NAME" || PKG_ADDON_ID="`echo $PKG_SECTION | sed 's,/,.,g'`.$PKG_NAME"
   fi
 
+  # Automatically set PKG_SOURCE_NAME unless it is already defined.
+  # PKG_SOURCE_NAME will be automatically set to a name based on
+  # the $PKG_NAME-$PKG_VERSION convention.
+  #
+  # Any $PKG_URL that references more than a single url will abort
+  # the build as these are no longer supported - use mkpkg instead.
+  if [ -n "$PKG_URL" -a -z "$PKG_SOURCE_NAME" ]; then
+    if [[ $PKG_URL =~ .*\ .* ]]; then
+      echo "Error - packages with multiple urls are no longer supported, use mkpkg:"
+      echo "$PKG_URL"
+      exit 1
+    fi
+    PKG_SOURCE_NAME="$(basename "$PKG_URL")"
+    case $PKG_SOURCE_NAME in
+      ${PKG_NAME}-${PKG_VERSION}.*)
+        PKG_SOURCE_NAME=$PKG_SOURCE_NAME
+        ;;
+      *.tar | *.tbz | *.tgz | *.txz | *.7z | *.zip)
+        PKG_SOURCE_NAME=${PKG_NAME}-${PKG_VERSION}.${PKG_SOURCE_NAME##*\.}
+        ;;
+      *.tar.bz2 | *.tar.gz | *.tar.xz)
+        PKG_SOURCE_NAME=${PKG_NAME}-${PKG_VERSION}.tar.${PKG_SOURCE_NAME##*\.}
+        ;;
+       *.diff | *.patch | *.diff.bz2 | *.patch.bz2 | patch-*.bz2 | *.diff.gz | *.patch.gz | patch-*.gz)
+        PKG_SOURCE_NAME=$PKG_SOURCE_NAME
+        ;;
+      *)
+        PKG_SOURCE_NAME=${PKG_NAME}-${PKG_VERSION}.${PKG_SOURCE_NAME##*\.}
+        ;;
+    esac
+  fi
   PKG_BUILD="$BUILD/${PKG_NAME}-${PKG_VERSION}"
 
+XORG_PATH_DRI=/usr/lib/dri
+XORG_PATH_XKB=/usr/share/X11/xkb
+XORG_PATH_XKB_OUTPUT=/var/lib/xkb
+XORG_PATH_RGB=/usr/lib/X11/rgb
+XORG_PATH_MODULES=/usr/lib/xorg/modules
+XORG_PATH_DRIVERS=/usr/lib/xorg/modules/drivers
 . config/optimize
 
 if [ -z "$CCACHE_DIR" ]; then
@@ -170,12 +207,8 @@ fi
 export MAKEFLAGS=-j$CONCURRENCY_MAKE_LEVEL
 export PKG_CONFIG=$ROOT/$TOOLCHAIN/bin/pkg-config
 
-if [ -z "$PATH" -o "$PATH" = "${PATH#$TOOLCHAIN/bin:}" ]; then
-  export PATH="$TOOLCHAIN/bin:$TOOLCHAIN/sbin:$PATH"
-fi
-
-if [ -z "$LD_LIBRARY_PATH" -o "$LD_LIBRARY_PATH" = "${LD_LIBRARY_PATH#$TOOLCHAIN/lib:}" ]; then
-  export LD_LIBRARY_PATH="$TOOLCHAIN/lib:$LD_LIBRARY_PATH"
+if [ -z "$PATH" -o "$PATH" = "${PATH#$ROOT/$TOOLCHAIN/bin:}" ]; then
+  export PATH="$ROOT/$TOOLCHAIN/lib/ccache:$ROOT/$TOOLCHAIN/bin:$ROOT/$TOOLCHAIN/sbin:$PATH"
 fi
 
 VERSION_SUFFIX=$TARGET_ARCH
