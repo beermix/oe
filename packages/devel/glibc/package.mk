@@ -19,8 +19,6 @@
 PKG_NAME="glibc"
 PKG_VERSION="2.25"
 PKG_URL="http://ftp.gnu.org/pub/gnu/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
-#PKG_VERSION="6af0e51"
-#PKG_GIT_URL="git://sourceware.org/git/glibc.git"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap localedef-eglibc:host"
 PKG_DEPENDS_INIT="glibc"
 PKG_PRIORITY="optional"
@@ -46,7 +44,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-__thread \
                            --with-binutils=$ROOT/$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
-                           --enable-kernel="2.6.32" \
+                           --enable-kernel=2.6.32 \
                            --enable-obsolete-rpc \
                            --disable-build-nscd \
                            --disable-nscd \
