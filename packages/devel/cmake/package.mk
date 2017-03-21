@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="cmake"
-PKG_VERSION="3.8.0-rc2"
+PKG_VERSION="3.7.2"
 PKG_SITE="http://www.cmake.org/"
-PKG_URL="http://www.cmake.org/files/v3.8/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_URL="http://www.cmake.org/files/v3.7/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="ccache:host openssl:host"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="cmake: A cross-platform, open-source make system"
@@ -29,7 +29,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 configure_host() {
-  ../configure --prefix=$TOOLCHAIN \
+  ../configure --prefix=$ROOT/$TOOLCHAIN \
                --no-qt-gui --no-system-libs \
                -- \
                -DCMAKE_C_FLAGS="-O2 -Wall -pipe -Wno-format-security" \
