@@ -22,6 +22,7 @@ _MAJORVER=${PKG_VERSION%.*}
 pre_build_target() {
   mkdir -p $ROOT/$PKG_BUILD/.$TARGET_NAME
   cp -RP $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$TARGET_NAME
+  strip_hard
 }
 
 pre_build_host() {
