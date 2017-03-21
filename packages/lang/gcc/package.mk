@@ -43,6 +43,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-plugin \
                            --enable-lto \
                            --enable-gold \
+                           --disable-nls \
                            --enable-ld=default \
                            --enable-default-pie \
                            --disable-browser-plugin \
@@ -96,7 +97,6 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time \
                          --enable-clocale=gnu \
-                         --with-target-system-zlib \
                          $GCC_OPTS"
 
 pre_configure_host() {

@@ -42,7 +42,6 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            no-krb5 \
                            no-libunbound \
                            no-md2 \
-                           no-rc5 \
                            no-rfc3779
                            no-sctp \
                            no-ssl-trace \
@@ -54,13 +53,14 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            no-zlib-dynamic"
 
 pre_configure_host() {
-  mkdir -p $PKG_BUILD/.$HOST_NAME
-  cp -a $PKG_BUILD/* $PKG_BUILD/.$HOST_NAME/
+  mkdir -p $ROOT/$PKG_BUILD/.$HOST_NAME
+  mkdir -p $ROOT/$TOOLCHAIN/etc/ssl/include/openssl/
+  cp -a $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$HOST_NAME/
 }
 
 configure_host() {
-  cd $PKG_BUILD/.$HOST_NAME
-  ./Configure --prefix=/ $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $CFLAGS $LDFLAGS
+  cd $ROOT/$PKG_BUILD/.$HOST_NAME
+  ./Configure --prefix= $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $CFLAGS $LDFLAGS
 }
 
 makeinstall_host() {
@@ -68,8 +68,8 @@ makeinstall_host() {
 }
 
 pre_configure_target() {
-  mkdir -p $PKG_BUILD/.$TARGET_NAME
-  cp -a $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME/
+  mkdir -p $ROOT/$PKG_BUILD/.$TARGET_NAME
+  cp -a $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$TARGET_NAME/
 
   case $TARGET_ARCH in
     x86_64)
@@ -86,7 +86,7 @@ pre_configure_target() {
 }
 
 configure_target() {
-  cd $PKG_BUILD/.$TARGET_NAME
+  cd $ROOT/$PKG_BUILD/.$TARGET_NAME
   ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED $PLATFORM_FLAGS $OPENSSL_TARGET $CFLAGS $LDFLAGS
 }
 
@@ -101,17 +101,16 @@ post_makeinstall_target() {
   rm -rf $INSTALL/etc/ssl/misc
   rm -rf $INSTALL/usr/bin/c_rehash
 
-  debug_strip $INSTALL/usr/bin/openssl
-
   # cert from https://curl.haxx.se/docs/caextract.html
   mkdir -p $INSTALL/etc/ssl
-    cp $PKG_DIR/cert/cacert.pem $INSTALL/etc/ssl/cert.pem
+  perl $PKG_DIR/cert/mk-ca-bundle.pl
+  cp $ROOT/$PKG_BUILD/.$TARGET_NAME/ca-bundle.crt $INSTALL/etc/ssl/cert.pem
 
   # backwards comatibility
   mkdir -p $INSTALL/etc/pki/tls
-    ln -sf /etc/ssl/cert.pem $INSTALL/etc/pki/tls/cacert.pem
+    ln -sf $ROOT/$PKG_BUILD/.$TARGET_NAME/ca-bundle.crt $INSTALL/etc/pki/tls/cacert.pem
   mkdir -p $INSTALL/etc/pki/tls/certs
-    ln -sf /etc/ssl/cert.pem $INSTALL/etc/pki/tls/certs/ca-bundle.crt
+    ln -sf $ROOT/$PKG_BUILD/.$TARGET_NAME/ca-bundle.crt $INSTALL/etc/pki/tls/certs/ca-bundle.crt
   mkdir -p $INSTALL/usr/lib/ssl
-    ln -sf /etc/ssl/cert.pem $INSTALL/usr/lib/ssl/cert.pem
+    ln -sf $ROOT/$PKG_BUILD/.$TARGET_NAME/ca-bundle.crt $INSTALL/usr/lib/ssl/cert.pem
 }

@@ -48,6 +48,7 @@ pre_configure_target() {
   export CFLAGS="$CFLAGS -fPIC"
   export CXXFLAGS="$CXXFLAGS -fPIC"
   export LDFLAGS="$LDFLAGS -fPIC"
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
 }
 
 configure_target() {
@@ -74,6 +75,9 @@ makeinstall_target() {
                                 --with-system \
                                 --with-serialization \
                                 --with-filesystem \
+                                --with-program_options \
+                                --with-date_time \
+                                --with-chrono \
                                 --with-regex -sICU_PATH="$SYSROOT_PREFIX/usr" \
                                 install
 }
