@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="configtools"
-PKG_VERSION="00666e7"
+PKG_VERSION="4d34a6a"
 PKG_SITE="http://git.savannah.gnu.org/cgit/config.git"
 PKG_GIT_URL="http://git.savannah.gnu.org/r/config.git"
 PKG_GIT_BRANCH="master"
