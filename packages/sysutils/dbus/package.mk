@@ -52,7 +52,6 @@ PKG_CONFIGURE_OPTS_TARGET="export ac_cv_have_abstract_sockets=yes \
                            --without-x \
                            --enable-shared \
                            --enable-static \
-                           --disable-console-owner-file \
                            --with-dbus-user=dbus"
 post_makeinstall_target() {
   rm -rf $INSTALL/etc/rc.d

@@ -55,6 +55,8 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --enable-lock-elision \
                            --disable-timezone-tools \
                            --disable-debug \
+                           --disable-werror \
+                           --enable-static \
                            --enable-stack-protector=strong"
 
 

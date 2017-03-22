@@ -28,10 +28,6 @@ PKG_LONGDESC="systemd is a system and session manager for Linux, compatible with
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-#unpack() {
-#  tar xf $ROOT/$SOURCES/systemd/v$PKG_VERSION.tar.gz -C $ROOT/$BUILD
-#}
-
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            ac_cv_have_decl_IFLA_BOND_AD_INFO=no \
                            ac_cv_have_decl_IFLA_BRPORT_UNICAST_FLOOD=no \

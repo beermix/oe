@@ -14,7 +14,6 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
-			      --disable-dependency-tracking \
 			      --without-contrib \
 			      --disable-nls \
 			      --disable-rpath \
@@ -24,10 +23,11 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-debug \
 			      --enable-run-as-root \
 			      --disable-coverage \
-			      --disable-sout \
+			      --enable-sout \
 			      --enable-lua \
-			      --disable-httpd \
-			      --disable-vlm \
+			      --enable-httpd \
+			      --enable-vlm \
+			      --disable-growl \
 			      --disable-notify \
 			      --disable-taglib \
 			      --disable-live555 \
@@ -38,12 +38,16 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-decklink \
 			      --disable-sftp \
 			      --enable-v4l2 \
+			      --disable-gnomevfs \
+			      --disable-vcdx \
 			      --disable-vcd \
 			      --disable-libcddb \
 			      --enable-dvbpsi \
 			      --disable-screen \
 			      --enable-ogg \
+			      --enable-mux_ogg \
 			      --disable-shout\
+			      --disable-mkv \
 			      --disable-mod \
 			      --enable-mpc \
 			      --disable-gme \
@@ -54,12 +58,13 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-merge-ffmpeg \
 			      --enable-avcodec \
 			      --enable-avformat \
-			      --disable-swscale \
+			      --enable-swscale \
 			      --enable-postproc \
 			      --disable-faad \
 			      --enable-flac \
 			      --enable-aa \
 			      --disable-twolame \
+			      --disable-quicktime \
 			      --disable-realrtsp \
 			      --disable-libtar \
 			      --disable-a52 \
@@ -101,9 +106,16 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-skins2 \
 			      --disable-kai \
 			      --disable-macosx \
+			      --disable-macosx-dialog-provider \
+			      --disable-macosx-eyetv \
 			      --disable-macosx-vlc-app \
 			      --disable-macosx-qtkit \
-			      --enable-ncurses \
+			      --disable-macosx-quartztext \
+			      --disable-ncurses \
+			      --disable-goom \
+			      --disable-projectm \
+			      --disable-atmo \
+			      --disable-bonjour \
 			      --enable-udev \
 			      --disable-mtp \
 			      --disable-lirc \

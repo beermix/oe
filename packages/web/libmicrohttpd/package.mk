@@ -36,7 +36,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
                            --disable-https \
                            --disable-doc \
                            --disable-examples \
-                           --enable-spdy \
+                           --disable-spdy \
                            --with-libgcrypt-prefix=$SYSROOT_PREFIX/usr"
 
 post_makeinstall_target() {
