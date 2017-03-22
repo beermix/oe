@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="flex"
-PKG_VERSION="2.6.1"
+PKG_VERSION="2.6.3"
 PKG_SITE="https://github.com/westes/flex/releases"
 PKG_URL="https://github.com/westes/flex/releases/download/v$PKG_VERSION/flex-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="ccache:host"

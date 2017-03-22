@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="binutils"
-PKG_VERSION="b5d3ac2"
+PKG_VERSION="a7587e7"
 PKG_GIT_URL="git://sourceware.org/git/binutils-gdb.git"
 PKG_DEPENDS_HOST="ccache:host bison:host flex:host linux:host"
 PKG_SECTION="toolchain/devel"
