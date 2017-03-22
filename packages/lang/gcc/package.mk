@@ -19,7 +19,7 @@
 PKG_NAME="gcc"
 #PKG_VERSION="4fc40788"
 #PKG_GIT_URL="git://gcc.gnu.org/git/gcc.git"
-PKG_VERSION="6-20170316"
+PKG_VERSION="7-20170319"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host"
 PKG_DEPENDS_TARGET="gcc:host"
@@ -43,21 +43,21 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-plugin \
                            --enable-lto \
                            --enable-gold \
-                           --disable-nls \
                            --enable-ld=default \
-                           --disable-browser-plugin \
                            --disable-multilib \
-                           --enable-nls \
+                           --disable-nls \
+                           --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
-                           --disable-libssp \
+                           --disable-libmudflap \
+                           --disable-libitm \
                            --disable-libquadmath \
                            --disable-libquadmath-support \
                            --disable-libgomp \
                            --disable-libmpx \
-                           --disable-libcilkrts \
+                           --disable-libssp \
                            --enable-poison-system-directories \
                            --disable-werror \
                            --with-tune=corei7-avx"
@@ -73,7 +73,6 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --with-newlib \
                               --disable-libatomic \
                               --disable-decimal-float \
-                              --with-system-zlib \
                               $GCC_OPTS"
 
 PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \

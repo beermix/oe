@@ -72,11 +72,20 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/lib/glib-2.0
   rm -rf $INSTALL/usr/share
 
-  ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/gdbus-codegen $ROOT/$BUILD/toolchain/bin/
-  ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/glib-genmarshal $ROOT/$BUILD/toolchain/bin/
-  ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/glib-gettextize $ROOT/$BUILD/toolchain/bin/    
-  ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/glib-mkenums $ROOT/$BUILD/toolchain/bin/
-  ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/gobject-query $ROOT/$BUILD/toolchain/bin/  
-  ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/gtester $ROOT/$BUILD/toolchain/bin/
-  ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/gtester-report $ROOT/$BUILD/toolchain/bin/
+  
+  ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/gapplication $ROOT/$BUILD/toolchain/bin/
+ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/gdbus $ROOT/$BUILD/toolchain/bin/
+ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/gdbus-codegen $ROOT/$BUILD/toolchain/bin/
+ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/gio $ROOT/$BUILD/toolchain/bin/
+ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/gio-querymodules $ROOT/$BUILD/toolchain/bin/
+ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/glib-compile-resources $ROOT/$BUILD/toolchain/bin/
+ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/glib-compile-schemas $ROOT/$BUILD/toolchain/bin/
+ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/glib-genmarshal $ROOT/$BUILD/toolchain/bin/
+ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/glib-gettextize $ROOT/$BUILD/toolchain/bin/
+ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/glib-mkenums $ROOT/$BUILD/toolchain/bin/
+ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/gobject-query $ROOT/$BUILD/toolchain/bin/
+ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/gresource $ROOT/$BUILD/toolchain/bin/
+ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/gsettings $ROOT/$BUILD/toolchain/bin/
+ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/gtester $ROOT/$BUILD/toolchain/bin/
+ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/gtester-report $ROOT/$BUILD/toolchain/bin/
 }

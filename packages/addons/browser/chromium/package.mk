@@ -93,7 +93,7 @@ make_target() {
 
   # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
   local _system_libs=(
-    harfbuzz-icu
+    harfbuzz-ng
     libjpeg
     libpng
     libxslt

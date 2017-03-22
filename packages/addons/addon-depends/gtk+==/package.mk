@@ -19,17 +19,36 @@
 ################################################################################
 
 PKG_NAME="gtk+"
-PKG_VERSION="3.89.4"
+PKG_VERSION="2.24.31"
+#PKG_VERSION="3.22.7"
 PKG_SITE="http://www.gtk.org/"
-PKG_URL="http://ftp.acc.umu.se/pub/gnome/sources/gtk+/3.89/gtk+-3.89.4.tar.xz"
-PKG_DEPENDS_TARGET="toolchain atk libX11 libXrandr libXi glib pango cairo gdk-pixbuf graphene"
+PKG_URL="http://ftp.gnome.org/pub/gnome/sources/gtk+/2.24/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_DEPENDS_TARGET="toolchain atk libX11 libXrandr libXi glib pango cairo gdk-pixbuf"
 PKG_SECTION="x11/toolkits"
 PKG_SHORTDESC="gtk+: The Gimp ToolKit (GTK)"
 PKG_LONGDESC="This is GTK+. GTK+, which stands for the Gimp ToolKit, is a library for creating graphical user interfaces for the X Window System. It is designed to be small, efficient, and flexible. GTK+ is written in C with a very object-oriented approach."
 PKG_IS_ADDON="no"
 
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
+PKG_CONFIGURE_OPTS_TARGET="ac_cv_path_GLIB_GENMARSHAL=$ROOT/$TOOLCHAIN/bin/glib-genmarshal \
+                           --disable-glibtest \
+                           --enable-modules \
+                           --enable-explicit-deps=no \
+                           --disable-debug \
+                           --enable-shm \
+                           --disable-cups \
+                           --disable-papi \
+                           --enable-xkb \
+                           --disable-xinerama \
+                           --disable-gtk-doc-html \
+                           --with-xinput"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-cups --with-included-immodules"
+make_target() {
+  make SRC_SUBDIRS="gdk gtk modules"
+  $MAKEINSTALL SRC_SUBDIRS="gdk gtk modules"
+}
 
+makeinstall_target() {
+  make install DESTDIR=$INSTALL SRC_SUBDIRS="gdk gtk modules"
+}

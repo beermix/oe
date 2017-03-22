@@ -49,14 +49,15 @@ post_makeinstall_host() {
 
 make_target() {
   cd $ROOT/$PKG_BUILD/nss
+  strip_lto
 
   [ "$TARGET_ARCH" = "x86_64" ] && TARGET_USE_64="USE_64=1"
 
   make BUILD_OPT=1 $TARGET_USE_64 \
      NSPR_INCLUDE_DIR=$SYSROOT_PREFIX/usr/include/nspr \
      USE_SYSTEM_ZLIB=1 ZLIB_LIBS=-lz \
-     NSS_USE_SYSTEM_SQLITE=1 \
-     SQLITE_LIB_DIR=$SYSROOT_PREFIX}/lib \
+     #NSS_USE_SYSTEM_SQLITE=0 \
+     #SQLITE_LIB_DIR=$SYSROOT_PREFIX}/lib \
      XCFLAGS="$CFLAGS"
      OS_TEST=$TARGET_ARCH \
      NSS_TESTS="dummy" \
