@@ -19,7 +19,7 @@
 ################################################################################
 
 PKG_NAME="chromium"
-PKG_VERSION="57.0.2987.110"
+PKG_VERSION="55.0.2883.87"
 PKG_REV="1"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
@@ -29,7 +29,7 @@ PKG_DEPENDS_TARGET="toolchain pciutils dbus libXcomposite libXcursor libXtst als
 PKG_PRIORITY="optional"
 PKG_SECTION="xmedia/browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
-PKG_LONGDESC="Chromium Browser: the open-source web browser from Google"
+PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
 PKG_AUTORECONF="no"
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Chromium"
@@ -88,9 +88,6 @@ make_target() {
     "google_default_client_id=\"${_google_default_client_id}\""
     "google_default_client_secret=\"${_google_default_client_secret}\""
   )
-  
-  
-
   # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
   local _system_libs=(
     harfbuzz-ng
@@ -121,8 +118,6 @@ make_target() {
       \! -regex '.*\.\(gn\|gni\|isolate\|py\)' \
       -delete
   done
-
-  
 
   ./build/linux/unbundle/replace_gn_files.py --system-libraries "${_system_libs}"
   ./third_party/libaddressinput/chromium/tools/update-strings.py
