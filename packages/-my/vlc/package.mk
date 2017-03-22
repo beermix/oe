@@ -8,7 +8,7 @@ PKG_VERSION="2.2.5.1"
 PKG_URL="https://nightlies.videolan.org/build/source/vlc-2.2.5-20170321-0224.1.tar.xz"
 #PKG_VERSION="2.2.4"
 #PKG_URL="http://download.videolan.org/$PKG_NAME/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain dbus libdvbpsi gnutls ffmpeg libmpeg2 libvorbis gstreamer zlib lua:host lua"
+PKG_DEPENDS_TARGET="toolchain dbus libdvbpsi gnutls ffmpeg alsa-lib libmpeg2 libvorbis gstreamer zlib lua:host lua"
 PKG_SECTION="xmedia/tools"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
@@ -140,8 +140,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 
 pre_configure_target() {
   export LDFLAGS="$LDFLAGS -lresolv"
-  export LIBS="-latomic"
-  #export CFLAGS="$CFLAGS -std=gnu99"
+  #export LIBS="-latomic"
   strip_lto
   #strip_gold
   #strip_hard

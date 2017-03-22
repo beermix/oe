@@ -213,7 +213,7 @@ else
 fi
 
 if [ "$VAAPI_SUPPORT" = yes ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libva-intel-driver"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET intel-vaapi-driver"
   KODI_VAAPI="--enable-vaapi"
 else
   KODI_VAAPI="--disable-vaapi"
