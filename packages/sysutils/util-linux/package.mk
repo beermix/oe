@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="util-linux"
-PKG_VERSION="2.28.2"
-PKG_URL="http://www.kernel.org/pub/linux/utils/util-linux/v2.28/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_VERSION="2.29"
+PKG_URL="http://www.kernel.org/pub/linux/utils/util-linux/v2.29/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain readline"
 PKG_DEPENDS_INIT="toolchain gcc:init readline"
 PKG_PRIORITY="optional"
@@ -34,7 +34,7 @@ pre_configure_init() {
 }
 
 pre_configure_target() {
-  export LDFLAGS="-static -lcurses -lterminfo"
+  export LDFLAGS="-lcurses -lterminfo"
 }
 
 UTILLINUX_CONFIG_DEFAULT="--disable-gtk-doc \
