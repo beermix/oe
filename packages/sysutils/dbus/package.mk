@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="dbus"
-PKG_VERSION="1.10.16"
+PKG_VERSION="1.11.10"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://dbus.freedesktop.org"
-PKG_URL="https://dbus.freedesktop.org/releases/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_URL="https://fossies.org/linux/misc/dbus-1.11.10.tar.xz"
 PKG_DEPENDS_TARGET="toolchain expat systemd"
 PKG_PRIORITY="required"
 PKG_SECTION="system"
@@ -30,16 +30,16 @@ PKG_SHORTDESC="dbus: simple interprocess messaging system"
 PKG_LONGDESC="D-Bus is a message bus, used for sending messages between applications. This package contains the D-Bus daemon and related utilities and the dbus shared library."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="export ac_cv_have_abstract_sockets=yes ac_cv_lib_expat_XML_ParserCreate_MM=yes \
+PKG_CONFIGURE_OPTS_TARGET="export ac_cv_have_abstract_sockets=yes \
                            --with-sysroot=$SYSROOT_PREFIX \
                            --libexecdir=/usr/lib/dbus \
                            --disable-verbose-mode \
                            --disable-asserts \
                            --enable-checks \
                            --disable-tests \
-                           --enable-ansi \
+                           --disable-ansi \
                            --disable-xml-docs \
                            --disable-doxygen-docs \
                            --enable-abstract-sockets \

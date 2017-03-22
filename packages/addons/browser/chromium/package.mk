@@ -19,7 +19,7 @@
 ################################################################################
 
 PKG_NAME="chromium"
-PKG_VERSION="55.0.2883.87"
+PKG_VERSION="57.0.2987.110"
 PKG_REV="1"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
@@ -88,27 +88,41 @@ make_target() {
     "google_default_client_id=\"${_google_default_client_id}\""
     "google_default_client_secret=\"${_google_default_client_secret}\""
   )
+  
+  
 
   # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
   local _system_libs=(
-    harfbuzz-ng
+    harfbuzz-icu
     libjpeg
     libpng
     libxslt
     yasm
+    libvpx
+    icu
+    minizip
   )
+  
+  # Work around bug in blink in which GCC 6 optimizes away null pointer checks
+  # https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=833524
+  # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=68853#c2
+  sed -i '/config("compiler")/ a cflags_cc = [ "-fno-delete-null-pointer-checks" ]' \
+  $ROOT/$PKG_BUILD/build/config/linux/BUILD.gn
 
   # Remove bundled libraries for which we will use the system copies; this
   # *should* do what the remove_bundled_libraries.py script does, with the
   # added benefit of not having to list all the remaining libraries
   local _lib
-  for _lib in ${_system_libs}; do
+  for _lib in ${!_system_libs[@]} ${_system_libs[libjpeg]+libjpeg_turbo}; do
     find -type f -path "*third_party/$_lib/*" \
       \! -path "*third_party/$_lib/chromium/*" \
       \! -path "*third_party/$_lib/google/*" \
+      \! -path "*base/third_party/icu/*" \
       \! -regex '.*\.\(gn\|gni\|isolate\|py\)' \
       -delete
   done
+
+  
 
   ./build/linux/unbundle/replace_gn_files.py --system-libraries "${_system_libs}"
   ./third_party/libaddressinput/chromium/tools/update-strings.py
