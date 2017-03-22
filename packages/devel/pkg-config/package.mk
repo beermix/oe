@@ -30,9 +30,10 @@ PKG_LONGDESC="pkg-config is a system for managing library compile/link flags tha
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_HOST="--disable-silent-rules \
-                         --with-internal-glib --disable-dtrace \
-                         --with-gnu-ld"
+PKG_CONFIGURE_OPTS_HOST="cross_compiling=yes \
+			    enable_static=yes \
+			    enable_shared=no \
+			    --with-internal-glib"
 
 post_makeinstall_host() {
   mkdir -p $SYSROOT_PREFIX/usr/share/aclocal
