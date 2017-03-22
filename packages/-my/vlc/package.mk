@@ -112,7 +112,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-update-check \
 			      --disable-kva \
 			      --disable-bluray \
-			      --enable-samplerate \
+			      --disable-samplerate \
 			      --disable-sid \
 			      --disable-crystalhd \
 			      --disable-dxva2 \
@@ -136,17 +136,16 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --enable-sse \
 			      --enable-mmx \
 			      --enable-optimizations \
-			      --disable-directfb \
-			      --with-pic"
+			      --disable-directfb"
 
-#pre_configure_target() {
-  #export LDFLAGS="$LDFLAGS -lresolv"
-  #export LIBS="-latomic"
+pre_configure_target() {
+  export LDFLAGS="$LDFLAGS -lresolv"
+  export LIBS="-latomic"
   #export CFLAGS="$CFLAGS -std=gnu99"
-  #strip_lto
+  strip_lto
   #strip_gold
   #strip_hard
-#}
+}
 
 post_makeinstall_target() {
   rm -fr $INSTALL/usr/share/applications
