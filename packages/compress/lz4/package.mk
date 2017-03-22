@@ -1,5 +1,5 @@
 PKG_NAME="lz4"
-PKG_VERSION="e1b2b37"
+PKG_VERSION="eff6166"
 #PKG_VERSION="v1.7.5"
 PKG_GIT_URL="https://github.com/Cyan4973/lz4"
 PKG_DEPENDS_TARGET="toolchain"
