@@ -17,10 +17,9 @@
 ################################################################################
 
 PKG_NAME="systemd"
-#PKG_VERSION="3b07d03"
-PKG_VERSION="233"
+PKG_VERSION="3b07d03"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/systemd"
-PKG_URL="https://fossies.org/linux/misc/systemd-233.tar.xz"
+PKG_GIT_URL="https://github.com/systemd/systemd"
 PKG_DEPENDS_TARGET="toolchain gperf:host  libcap util-linux entropy openssl xz zlib lz4 lzo bzip2 lrzip"
 PKG_SECTION="system"
 PKG_SHORTDESC="systemd: a system and session manager"
@@ -29,9 +28,9 @@ PKG_LONGDESC="systemd is a system and session manager for Linux, compatible with
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-unpack() {
-  tar xf $ROOT/$SOURCES/systemd/v$PKG_VERSION.tar.gz -C $ROOT/$BUILD
-}
+#unpack() {
+#  tar xf $ROOT/$SOURCES/systemd/v$PKG_VERSION.tar.gz -C $ROOT/$BUILD
+#}
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            ac_cv_have_decl_IFLA_BOND_AD_INFO=no \
@@ -44,7 +43,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-coverage \
                            --disable-kmod \
                            --disable-xkbcommon \
-                           --disable-blkid \
+                           --enable-blkid \
                            --disable-seccomp \
                            --disable-ima \
                            --disable-selinux \

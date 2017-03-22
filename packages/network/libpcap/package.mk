@@ -48,7 +48,8 @@ pre_configure_target() {
 # When cross-compiling, configure can't set linux version
 # forcing it
   sed -i -e 's/ac_cv_linux_vers=unknown/ac_cv_linux_vers=2/' ../configure
-  export CFLAGS="$CFLAGS -D_DEFAULT_SOURCE -ffunction-sections -fdata-sections"
+  export CFLAGS="$CFLAGS -ffunction-sections -fdata-sections"
+  export CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
 }
 
 post_makeinstall_target() {

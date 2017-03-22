@@ -30,16 +30,16 @@ PKG_SHORTDESC="dbus: simple interprocess messaging system"
 PKG_LONGDESC="D-Bus is a message bus, used for sending messages between applications. This package contains the D-Bus daemon and related utilities and the dbus shared library."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="export ac_cv_have_abstract_sockets=yes \
+PKG_CONFIGURE_OPTS_TARGET="export ac_cv_have_abstract_sockets=yes ac_cv_lib_expat_XML_ParserCreate_MM=yes \
                            --with-sysroot=$SYSROOT_PREFIX \
                            --libexecdir=/usr/lib/dbus \
                            --disable-verbose-mode \
                            --disable-asserts \
                            --enable-checks \
                            --disable-tests \
-                           --disable-ansi \
+                           --enable-ansi \
                            --disable-xml-docs \
                            --disable-doxygen-docs \
                            --enable-abstract-sockets \
@@ -50,8 +50,10 @@ PKG_CONFIGURE_OPTS_TARGET="export ac_cv_have_abstract_sockets=yes \
                            --enable-inotify \
                            --without-valgrind \
                            --without-x \
+                           --enable-shared \
+                           --enable-static \
+                           --disable-console-owner-file \
                            --with-dbus-user=dbus"
-
 post_makeinstall_target() {
   rm -rf $INSTALL/etc/rc.d
   rm -rf $INSTALL/usr/lib/dbus-1.0/include
