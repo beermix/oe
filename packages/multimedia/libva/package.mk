@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="libva"
-PKG_VERSION="1.7.3"
+PKG_VERSION="1.8.0.pre2"
 PKG_REV="1"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPL"
 PKG_SITE="http://freedesktop.org/wiki/Software/vaapi"
-PKG_URL="http://www.freedesktop.org/software/vaapi/releases/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_URL="https://github.com/01org/libva/releases/download/$PKG_VERSION/libva-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain libX11 libXext libXfixes libdrm mesa glu"
 PKG_PRIORITY="optional"
 PKG_SECTION="multimedia"
@@ -42,10 +42,10 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-silent-rules \
                            --disable-dummy-driver \
                            --with-drivers-path=/usr/lib/va"
 
-post_makeinstall_target() {
-  rm -rf $INSTALL/usr/bin
-  if [ "$DEVTOOLS" = yes ]; then
-    mkdir -p $INSTALL/usr/bin
-      cp test/vainfo/.libs/vainfo $INSTALL/usr/bin
-  fi
-}
+#post_makeinstall_target() {
+#  rm -rf $INSTALL/usr/bin
+#  if [ "$DEVTOOLS" = yes ]; then
+#    mkdir -p $INSTALL/usr/bin
+#      cp test/vainfo/.libs/vainfo $INSTALL/usr/bin
+#  fi
+#}

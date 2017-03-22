@@ -5,14 +5,13 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="tools"
 PKG_AUTORECONF="no"
 
-
 configure_target() {
   cd $ROOT/$PKG_BUILD
   ./configure --prefix=/usr \
-  		--cpu="$TARGET_CPU" \
-  		--target=generic-gnu \
-  		--extra-cflags="$CFLAGS" \
-  		--extra-cxxflags="$CXXFLAGS" \
+  		--target=x86_64-linux-gcc \
+  		--libc=$(get_pkg_build glibc) \
+  		--cpu=ivybridge \
+  		--as=yasm \
   		--disable-debug-libs \
   		--enable-pic \
   		--enable-vp8 \
@@ -20,8 +19,6 @@ configure_target() {
   		--enable-postproc \
   		--enable-spatial-svc \
   		--enable-vp9-highbitdepth \
-  		--enable-experimental \
-  		--enable-spatial-svc \
   		--disable-decode-perf-tests \
   		--disable-encode-perf-tests \
   		--disable-examples \
@@ -34,5 +31,5 @@ configure_target() {
 
 post_makeinstall_target() {
   rm -rf $INSTALL
-  make test V=s
+  #make test V=s
 }
