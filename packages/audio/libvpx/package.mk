@@ -15,6 +15,13 @@ configure_target() {
   		--extra-cxxflags="$CXXFLAGS" \
   		--disable-debug-libs \
   		--enable-pic \
+  		--enable-vp8 \
+  		--enable-vp9 \
+  		--enable-postproc \
+  		--enable-spatial-svc \
+  		--enable-vp9-highbitdepth \
+  		--enable-experimental \
+  		--enable-spatial-svc \
   		--disable-decode-perf-tests \
   		--disable-encode-perf-tests \
   		--disable-examples \
@@ -27,5 +34,5 @@ configure_target() {
 
 post_makeinstall_target() {
   rm -rf $INSTALL
-  # make test V=s
+  make test V=s
 }

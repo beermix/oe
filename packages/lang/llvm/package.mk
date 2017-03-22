@@ -25,14 +25,12 @@ PKG_SITE="http://llvm.org/"
 PKG_URL="http://llvm.org/releases/$PKG_VERSION/${PKG_NAME}-${PKG_VERSION}.src.tar.xz"
 PKG_SOURCE_DIR="${PKG_NAME}-${PKG_VERSION}.src"
 PKG_DEPENDS_HOST="toolchain"
-PKG_DEPENDS_TARGET="toolchain llvm:host zlib libedit libffi"
+PKG_DEPENDS_TARGET="toolchain llvm:host zlib libedit libffi libxml2 Python:host swig:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="lang"
 PKG_SHORTDESC="llvm: Low Level Virtual Machine"
 PKG_LONGDESC="Low-Level Virtual Machine (LLVM) is a compiler infrastructure designed for compile-time, link-time, run-time, and idle-time optimization of programs from arbitrary programming languages. It currently supports compilation of C, Objective-C, and C++ programs, using front-ends derived from GCC 4.0, GCC 4.2, and a custom new front-end, "clang". It supports x86, x86-64, ia64, PowerPC, and SPARC, with support for Alpha and ARM under development."
 
-PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
 
 PKG_CMAKE_OPTS_HOST="-DCMAKE_BUILD_TYPE=Release \
 			$LLVM_OPTS \
@@ -47,38 +45,35 @@ PKG_CMAKE_OPTS_HOST="-DCMAKE_BUILD_TYPE=Release \
 			-DLLVM_ENABLE_ZLIB=OFF \
 			-DLLVM_ENABLE_TERMINFO=OFF \
 			-DLLVM_OPTIMIZED_TABLEGEN=ON \
-			-DLLVM_TARGETS_TO_BUILD=X86"
+			-DLLVM_TARGETS_TO_BUILD=X86 \
+			-DLLVM_CCACHE_BUILD=OFF \
+			-DLLVM_PARALLEL_COMPILE_JOBS=7"
 
 
 PKG_CMAKE_OPTS_TARGET="-DCMAKE_INSTALL_PREFIX=/usr \
-			  -DCMAKE_BUILD_TYPE=MinSizeRel \
 			  -DCMAKE_SYSTEM_NAME=Linux \
-			  -DLIBCXX_INSTALL_LIBRARY=OFF \
-			  -DLLVM_NATIVE_ARCH=X86 \
-			  -DLLVM_DEFAULT_TARGET_TRIPLE=$TARGET_NAME \
-			  -DLLVM_HOST_TRIPLE=$HOST_NAME \
-			  -DLLVM_BUILD_EXAMPLES=OFF \
-			  -DLLVM_INCLUDE_EXAMPLES=OFF \
-			  -DLLVM_BUILD_TESTS=OFF \
-			  -DLLVM_INCLUDE_TESTS=OFF \
-			  -DLLVM_BUILD_DOCS=OFF \
-			  -DLLVM_INCLUDE_DOCS=OFF \
-			  -DLLVM_ENABLE_DOXYGEN=OFF \
-			  -DLLVM_ENABLE_ZLIB=ON \
-			  -DLLVM_ENABLE_TERMINFO=OFF \
+			  -DCMAKE_BUILD_TYPE=Release \
+			  -DLLVM_ENABLE_ASSERTIONS=OFF \
+			  -DLLVM_ENABLE_THREADS=4 \
+			  -DPYTHON_EXECUTABLE=$ROOT/$$TOOLCHAIN/python \
+			  -DLLVM_ENABLE_FFI=ON \
+			  -DLLVM_ENABLE_SPHINX=ON \
+			  -DLLVM_BUILD_LLVM_DYLIB=ON \
+			  -DLLVM_LINK_LLVM_DYLIB=ON \
+			  -DCMAKE_CXX_FLAGS="-D_GNU_SOURCE" \
+			  -DLIBCLANG_BUILD_STATIC=ON \
+			  -DLIBCXX_ENABLE_SHARED=OFF \
+			  -DLIBCXXABI_ENABLE_SHARED=OFF \
+			  -DLIBUNWIND_ENABLE_SHARED=OFF \
+			  -DLIBCXX_ENABLE_EXPERIMENTAL_LIBRARY=OFF
 			  -DLLVM_TABLEGEN=$ROOT/$TOOLCHAIN/bin/llvm-tblgen \
 			  -DLLVM_ENABLE_BACKTRACES=OFF \
 			  -DLLVM_OPTIMIZED_TABLEGEN=ON \
 			  -DLLVM_TARGETS_TO_BUILD="X86" \
-			  -DLLVM_BUILD_LLVM_DYLIB=ON \
-			  -DLLVM_LINK_LLVM_DYLIB=ON \
-			  -DLLVM_ENABLE_RTTI=ON \
+			  -DLLVM_PARALLEL_COMPILE_JOBS=7 \
 			  -DLLDB_DISABLE_LIBEDIT=1 \
 			  -DLLVM_BINUTILS_INCDIR=$ROOT/$TOOLCHAIN/include"
 
-make_host() {
-  make llvm-config llvm-tblgen
-}
 
 makeinstall_host() {
   cp -PR bin/llvm-config $SYSROOT_PREFIX/usr/bin/llvm-config-host

@@ -52,7 +52,7 @@ PKG_CONFIGURE_OPTS_TARGET="--without-ada \
                            --enable-getcap-cache \
                            --disable-symlinks \
                            --enable-ext-funcs \
-                           --disable-pc-files \
+                           --enable-pc-files \
                            --enable-widec \
                            --enable-sigwinch \
                            --disable-nls \
