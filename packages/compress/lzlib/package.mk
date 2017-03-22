@@ -1,15 +1,13 @@
 PKG_NAME="lzlib"
-PKG_VERSION="1.8-rc3"
-PKG_URL="http://download.savannah.gnu.org/releases/lzip/lzlib/${PKG_NAME}-${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_TARGET="toolchain lzo tar"
-
+PKG_VERSION="1.9-rc1"
+PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_DEPENDS_TARGET="toolchain lzo xz"
 PKG_SECTION="network"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
+PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared"
 
 make_target() {
-make 
-make check
-make install
+  make CC="$CC" AR="$AR" LD="$LD" XCFLAGS="$CFLAGS" RANLIB="$RANLIB" XLDFLAGS="$LDFLAGS" CFLAGS="$CFLAGS" -j1
 }
