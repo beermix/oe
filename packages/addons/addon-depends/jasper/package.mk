@@ -17,7 +17,6 @@
 ################################################################################
 
 PKG_NAME="jasper"
-#PKG_VERSION="version-2.0.12"
 PKG_VERSION="version-1.900.31"
 PKG_SITE="http://www.ece.uvic.ca/~mdadams/jasper/"
 PKG_GIT_URL="https://github.com/mdadams/jasper"
