@@ -1,10 +1,10 @@
 PKG_NAME="unbound"
-PKG_VERSION="6e870c3"
+PKG_VERSION="5bb3bfa"
 PKG_GIT_URL="https://github.com/jedisct1/unbound"
 PKG_DEPENDS_TARGET="toolchain expat libevent openssl"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 #export LIBS="-lexpat"
 #export LDFLAGS="-s -lexpat"
