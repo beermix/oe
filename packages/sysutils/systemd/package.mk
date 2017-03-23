@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="systemd"
-PKG_VERSION="3b07d03"
+PKG_VERSION="v233"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/systemd"
 PKG_GIT_URL="https://github.com/systemd/systemd"
 PKG_DEPENDS_TARGET="toolchain gperf:host  libcap util-linux entropy openssl xz zlib lz4 lzo bzip2 lrzip"
@@ -31,8 +31,8 @@ PKG_AUTORECONF="yes"
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            ac_cv_have_decl_IFLA_BOND_AD_INFO=no \
                            ac_cv_have_decl_IFLA_BRPORT_UNICAST_FLOOD=no \
-                           ac_cv_path_MOUNT_PATH=/bin/mount \
-                           ac_cv_path_UMOUNT_PATH=/bin/umount \
+                           ac_cv_path_MOUNT_PATH="/usr/bin/mount"
+                           ac_cv_path_UMOUNT_PATH="/usr/bin/umount"
                            --disable-nls \
                            --disable-dbus \
                            --disable-utmp \
@@ -44,8 +44,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-ima \
                            --disable-selinux \
                            --disable-apparmor \
-                           --disable-adm-group \
-                           --disable-wheel-group \
                            --disable-xz \
                            --disable-zlib \
                            --disable-bzip2 \
@@ -73,7 +71,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-randomseed \
                            --disable-backlight \
                            --disable-rfkill \
-                           --enable-logind --without-kill-user-processes \
+                           --enable-logind \
                            --disable-machined \
                            --disable-importd \
                            --disable-hostnamed \
@@ -82,17 +80,17 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-localed \
                            --disable-coredump \
                            --disable-polkit \
-                           --disable-resolved --with-default-dnssec=allow-downgrade \
+                           --disable-resolved \
                            --disable-networkd \
                            --disable-efi \
                            --disable-gnuefi \
+                           --disable-kdbus \
                            --disable-myhostname \
                            --enable-hwdb \
                            --disable-manpages \
                            --disable-hibernate \
                            --disable-ldconfig \
-                           --disable-tpm --with-tpm-pcrindex=8 \
-                           --enable-split-usr \
+                           --disable-split-usr \
                            --disable-tests \
                            --without-python \
                            --with-sysvinit-path= \
@@ -101,8 +99,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --with-dbuspolicydir=/etc/dbus-1/system.d \
                            --with-dbussessionservicedir=/usr/share/dbus-1/services \
                            --with-dbussystemservicedir=/usr/share/dbus-1/system-services \
-                           --with-rootprefix=/usr \
-                           --with-rootlibdir=/usr/lib"
+                           --with-default-hierarchy=hybrid"
 
 pre_build_target() {
 # broken autoreconf

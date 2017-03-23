@@ -1,0 +1,25 @@
+From a88314530c32048bc9705f4fd738f2f8dbab7943 Mon Sep 17 00:00:00 2001
+From: Matthias Reichl <hias@horus.com>
+Date: Sun, 12 Mar 2017 17:52:08 +0100
+Subject: [PATCH] v4l-utils: fix invalid keynames in hp mce remote table
+
+Signed-off-by: Matthias Reichl <hias@horus.com>
+---
+ .../v4l-utils/patches/v4l-utils-21-add-newer-hp-mce-remote.patch    | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/packages/sysutils/v4l-utils/patches/v4l-utils-21-add-newer-hp-mce-remote.patch b/packages/sysutils/v4l-utils/patches/v4l-utils-21-add-newer-hp-mce-remote.patch
+index c9050e1..08cc28d 100644
+--- a/packages/sysutils/v4l-utils/patches/v4l-utils-21-add-newer-hp-mce-remote.patch
++++ b/packages/sysutils/v4l-utils/patches/v4l-utils-21-add-newer-hp-mce-remote.patch
+@@ -65,7 +65,7 @@ index 0000000..266dc8a
+ +0x7011126e KEY_PLAYPAUSE
+ +0x8011120b KEY_MEDIA
+ +0x70111280 KEY_BRIGHTNESSDOWN
+-+0x80111254 KEY_SETTINGS
+-+0x8011129f KEY_LASTSOURCE
+-+0x8011128b KEY_SOURCE
+++0x80111254 KEY_MENU
+++0x8011129f KEY_LAST
+++0x8011128b KEY_SETUP
+ +0x801112a3 KEY_SCREEN

@@ -259,4 +259,8 @@ post_install() {
   # bluez looks in /etc/firmware/
     ln -sf /usr/lib/firmware/ $INSTALL/etc/firmware
   enable_service module-load.service
+  
+  # install extra dts files
+  cp -v projects/$PROJECT/devices/$DEVICE/config/*-overlay.dts $ROOT/$PKG_BUILD/arch/$TARGET_KERNEL_ARCH/boot/dts/overlays/ || :
+  cp -v projects/$PROJECT/devices/$DEVICE/config/dt-blob.dts $ROOT/$PKG_BUILD/arch/$TARGET_KERNEL_ARCH/boot/dts/ || :
 }
