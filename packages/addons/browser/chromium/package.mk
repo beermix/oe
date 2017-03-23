@@ -19,13 +19,13 @@
 ################################################################################
 
 PKG_NAME="chromium"
-PKG_VERSION="58.0.3024.0-r453103-win64"
-PKG_REV="1"
+PKG_VERSION="55.0.2883.75"
+PKG_REV="906"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_SITE="http://www.chromium.org/Home"
-PKG_URL="https://github.com/henrypp/chromium/archive/v58.0.3024.0-r453103-win64.tar.gz"
-PKG_DEPENDS_TARGET="toolchain pciutils dbus libXcomposite libXcursor libXtst alsa-lib bzip2 yasm libXScrnSaver libexif libpng harfbuzz atk gtk+ xdotool unclutter ninja:host nss"
+PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_DEPENDS_TARGET="toolchain pciutils dbus libXcomposite libXcursor libXtst alsa-lib bzip2 yasm libXScrnSaver libexif libpng harfbuzz atk gtk+ xdotool unclutterlibvpx  ninja:host nss"
 PKG_PRIORITY="optional"
 PKG_SECTION="xmedia/browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
@@ -110,7 +110,7 @@ make_target() {
   # *should* do what the remove_bundled_libraries.py script does, with the
   # added benefit of not having to list all the remaining libraries
   local _lib
-  for _lib in ${!_system_libs[@]} ${_system_libs[libjpeg]+libjpeg_turbo}; do
+  for _lib in ${_system_libs}; do
     find -type f -path "*third_party/$_lib/*" \
       \! -path "*third_party/$_lib/chromium/*" \
       \! -path "*third_party/$_lib/google/*" \
