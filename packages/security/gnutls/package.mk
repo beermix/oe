@@ -7,27 +7,29 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static \
-			     --disable-shared \
-			     --enable-hardware-acceleration \
-			     --disable-openssl-compatibility \
-			     --disable-cxx \
-			     --without-p11-kit \
-			     --enable-local-libopts \
-			     --with-included-libtasn1 \
-			     --with-sysroot=$SYSROOT_PREFIX/usr \
-			     --with-libz-prefix=$SYSROOT_PREFIX/usr \
-			     --with-librt-prefix=$SYSROOT_PREFIX/usr \
-			     --with-libpthread-prefix=$SYSROOT_PREFIX/usr \
-			     --without-libiconv-prefix \
-			     --without-libintl-prefix \
-			     --disable-libdane \
-			     --disable-doc \
-			     --disable-nls \
-			     --disable-guile \
-			     --disable-valgrind-tests \
-			     --without-lzo \
-			     --with-gnu-ld"
+PKG_CONFIGURE_OPTS_TARGET="--enable-ld-version-script \
+			      --enable-static \
+			      --without-tpm \
+			      --disable-heartbeat-support \
+			      --disable-shared \
+			      --enable-hardware-acceleration \
+			      --enable-openssl-compatibility \
+			      --enable-cxx \
+			      --without-p11-kit \
+			      --enable-local-libopts \
+			      --with-included-libtasn1 \
+			      --with-included-unistring \
+			      --disable-libdane \
+			      --disable-doc \
+			      --disable-guile \
+			      --enable-tools \
+			      --disable-openpgp-authentication \
+			      --disable-rpath \
+			      --without-nettle-mini \
+			      --with-gnu-ld \
+			      --disable-valgrind-tests \
+			      --without-lzo \
+			      --enable-silent-rules"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
