@@ -22,7 +22,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/mono/libgdiplus"
 PKG_GIT_URL="https://github.com/mono/libgdiplus"
-PKG_DEPENDS_TARGET="toolchain giflib libjpeg-turbo tiff libXext libexif glib cairo xz"
+PKG_DEPENDS_TARGET="toolchain giflib libjpeg-turbo tiff libXext libexif glib cairo"
 PKG_SECTION="tools"
 PKG_SHORTDESC="libgiplus"
 PKG_LONGDESC="An Open Source implementation of the GDI+ API"
@@ -30,14 +30,10 @@ PKG_LONGDESC="An Open Source implementation of the GDI+ API"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-pre_configure_target() {
-  export LDFLAGS="-pthread -ldl -llzma"
-}
-
-PKG_CONFIGURE_OPTS_TARGET="--with-libgif=$SYSROOT_PREFIX/usr \
-			      --with-libjpeg=$SYSROOT_PREFIX/usr \
-                           --with-libtiff=$SYSROOT_PREFIX/usr \
-                           --enable-shared"
+PKG_CONFIGURE_OPTS_TARGET="--enable-shared \
+                           --with-libgif   \
+                           --with-libjpeg  \
+                           --with-libtiff"
 
 makeinstall_target() {
   make install DESTDIR=$INSTALL

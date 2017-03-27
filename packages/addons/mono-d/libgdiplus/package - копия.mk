@@ -16,22 +16,29 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="w_scan"
-PKG_VERSION="20141122"
+PKG_NAME="libgdiplus"
+PKG_VERSION="4.2"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="http://wirbel.htpc-forum.de/w_scan/index2.html"
-PKG_URL="http://wirbel.htpc-forum.de/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain"
+PKG_SITE="https://github.com/mono/libgdiplus"
+PKG_GIT_URL="https://github.com/mono/libgdiplus"
+PKG_DEPENDS_TARGET="toolchain giflib libjpeg-turbo tiff libXext libexif glib cairo xz"
 PKG_SECTION="tools"
-PKG_SHORTDESC="DVBlast is a small channel scan tool to create an channel.conf for VDR"
-PKG_LONGDESC="DVBlast is a small channel scan tool to create an channel.conf for VDR"
+PKG_SHORTDESC="libgiplus"
+PKG_LONGDESC="An Open Source implementation of the GDI+ API"
+
+PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-# aml 3.14 is meh
 pre_configure_target() {
-if [ "$TARGET_ARCH" = "aarch64" ]; then
-  sed -i 's/DVB_HEADER=0/DVB_HEADER=1/g' $PKG_BUILD/configure*
-  sed -i 's/HAS_DVB_API5=0/HAS_DVB_API5=1/g' $PKG_BUILD/configure*
-fi
+  export LDFLAGS="-pthread -ldl -llzma"
+}
+
+PKG_CONFIGURE_OPTS_TARGET="--with-libgif=$SYSROOT_PREFIX/usr \
+			      --with-libjpeg=$SYSROOT_PREFIX/usr \
+                           --with-libtiff=$SYSROOT_PREFIX/usr \
+                           --enable-shared"
+
+makeinstall_target() {
+  make install DESTDIR=$INSTALL
 }

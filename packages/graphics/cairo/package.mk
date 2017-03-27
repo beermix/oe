@@ -28,7 +28,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no" # ToDo
 
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -D_DEFAULT_SOURCE"
+  export CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
   export CPPLAGS="$CPPLAGS -DCAIRO_NO_MUTEX=1"
   #export LIBS="$LIBS -latomic"
 }
@@ -37,6 +37,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-silent-rules \
                            --enable-shared \
                            --disable-static \
                            --disable-gtk-doc"
+                           
 if [ "$DISPLAYSERVER" = "x11" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libXrender libX11 mesa glu"
   PKG_CONFIGURE_OPTS_TARGET+=" --x-includes="$SYSROOT_PREFIX/usr/include" \
