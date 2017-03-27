@@ -44,23 +44,28 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-lto \
                            --enable-gold \
                            --enable-ld=default \
+                           --disable-browser-plugin \
+                           --disable-vtable-verify \
                            --disable-multilib \
-                           --disable-nls \
+                           --without-included-gettext \
+                           --enable-linker-build-id \
+                           --enable-nls \
                            --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
                            --disable-libmudflap \
+                           --disable-libmpx \
+                           --disable-libssp \
                            --disable-libitm \
                            --disable-libquadmath \
                            --disable-libquadmath-support \
                            --disable-libgomp \
-                           --disable-libmpx \
-                           --disable-libssp \
+                           --disable-libcilkrts \
                            --enable-poison-system-directories \
                            --disable-werror \
-                           --with-tune=corei7-avx"
+                           --with-arch=ivybridge"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \

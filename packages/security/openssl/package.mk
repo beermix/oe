@@ -42,6 +42,7 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            no-krb5 \
                            no-libunbound \
                            no-md2 \
+                           no-rc5 \
                            no-rfc3779
                            no-sctp \
                            no-ssl-trace \
@@ -49,6 +50,7 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            no-ssl3 \
                            no-store \
                            no-unit-test \
+                           no-weak-ssl-ciphers \
                            no-zlib \
                            no-zlib-dynamic"
                            
