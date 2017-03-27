@@ -17,12 +17,15 @@
 ################################################################################
 
 PKG_NAME="linux"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://www.kernel.org"
 PKG_DEPENDS_HOST="ccache:host"
 PKG_DEPENDS_TARGET="toolchain cpio:host xz:host pciutils kmod wireless-regdb keyutils irqbalance"
 PKG_DEPENDS_INIT="toolchain cpu-firmware:init"
 PKG_NEED_UNPACK="$LINUX_DEPENDS"
-
+PKG_PRIORITY="optional"
 PKG_SECTION="linux"
 PKG_SHORTDESC="linux26: The Linux kernel 2.6 precompiled kernel binary image and modules"
 PKG_LONGDESC="This package contains a precompiled kernel image and the modules."
@@ -30,7 +33,7 @@ case "$LINUX" in
   amlogic-3.10)
     PKG_VERSION="de626d8"
 #    PKG_GIT_URL="https://github.com/codesnake/linux-amlogic.git"
-    PKG_GIT_URL="https://github.com/codesnake/linux.git"
+    PKG_GIT_URL="https://github.com/LibreELEC/linux-amlogic.git"
     PKG_GIT_BRANCH="amlogic-3.10.y"
     PKG_PATCH_DIRS="linux-3.10 amlogic-3.10"
     KERNEL_EXTRA_CONFIG+=" kernel-3.x"
@@ -51,9 +54,9 @@ case "$LINUX" in
     PKG_PATCH_DIRS="linux-4.8 imx6-4.8"
     ;;
   rpi)
-    PKG_VERSION="883de20"
-    PKG_GIT_URL="https://github.com/OpenELEC/linux.git"
-    PKG_GIT_BRANCH="raspberry-rpi-4.9.y"
+    PKG_VERSION="b76c8d5"
+    PKG_GIT_URL="https://github.com/raspberrypi/linux.git"
+    PKG_GIT_BRANCH="rpi-4.9.y"
     PKG_PATCH_DIRS="linux-4.9 rpi-4.9"
     ;;
   linux-4.8)
@@ -61,15 +64,10 @@ case "$LINUX" in
     PKG_URL="http://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
     PKG_PATCH_DIRS="linux-4.8"
     ;;
-    linux-4.11)
-    PKG_VERSION="4.11-rc2"
-    PKG_URL="https://fossies.org/linux/kernel/v4.11/testing/linux-$PKG_VERSION.tar.xz"
-    PKG_PATCH_DIRS="linux-4.11"
-    ;;
-    *)
-    PKG_VERSION="4.11-rc4"
-    PKG_URL="https://cdn.kernel.org/pub/linux/kernel/v4.x/testing/linux-4.11-rc4.tar.xz"
-    PKG_PATCH_DIRS="linux-4.11"
+  *)
+    PKG_VERSION="4.9.18"
+    PKG_URL="http://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
+    PKG_PATCH_DIRS="linux-4.9"
     ;;
 esac
 
@@ -256,11 +254,5 @@ post_install() {
   mkdir -p $INSTALL/usr/lib/firmware/
     ln -sf /storage/.config/firmware/ $INSTALL/usr/lib/firmware/updates
 
-  # bluez looks in /etc/firmware/
-    ln -sf /usr/lib/firmware/ $INSTALL/etc/firmware
   enable_service module-load.service
-  
-  # install extra dts files
-  cp -v projects/$PROJECT/devices/$DEVICE/config/*-overlay.dts $ROOT/$PKG_BUILD/arch/$TARGET_KERNEL_ARCH/boot/dts/overlays/ || :
-  cp -v projects/$PROJECT/devices/$DEVICE/config/dt-blob.dts $ROOT/$PKG_BUILD/arch/$TARGET_KERNEL_ARCH/boot/dts/ || :
 }
