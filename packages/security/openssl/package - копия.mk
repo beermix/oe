@@ -48,7 +48,6 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            no-ssl3 \
                            no-store \
                            no-unit-test \
-                           no-weak-ssl-ciphers \
                            no-zlib \
                            no-zlib-dynamic"
 
@@ -102,13 +101,14 @@ post_makeinstall_target() {
 
   # cert from https://curl.haxx.se/docs/caextract.html
   mkdir -p $INSTALL/etc/ssl
-    cp $PKG_DIR/cert/cacert.pem $INSTALL/etc/ssl/cert.pem
+  perl $PKG_DIR/cert/mk-ca-bundle.pl
+  cp $ROOT/$PKG_BUILD/.$TARGET_NAME/ca-bundle.crt $INSTALL/etc/ssl/cert.pem
 
   # backwards comatibility
   mkdir -p $INSTALL/etc/pki/tls
-    ln -sf /etc/ssl/cert.pem $INSTALL/etc/pki/tls/cacert.pem
+    ln -sf $ROOT/$PKG_BUILD/.$TARGET_NAME/ca-bundle.crt $INSTALL/etc/pki/tls/cacert.pem
   mkdir -p $INSTALL/etc/pki/tls/certs
-    ln -sf /etc/ssl/cert.pem $INSTALL/etc/pki/tls/certs/ca-bundle.crt
+    ln -sf $ROOT/$PKG_BUILD/.$TARGET_NAME/ca-bundle.crt $INSTALL/etc/pki/tls/certs/ca-bundle.crt
   mkdir -p $INSTALL/usr/lib/ssl
-    ln -sf /etc/ssl/cert.pem $INSTALL/usr/lib/ssl/cert.pem
+    ln -sf $ROOT/$PKG_BUILD/.$TARGET_NAME/ca-bundle.crt $INSTALL/usr/lib/ssl/cert.pem
 }
