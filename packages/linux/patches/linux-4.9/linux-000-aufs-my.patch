@@ -1,9 +1,9 @@
-diff -Naur linux-4.9.8-orig/fs/aufs/aufs.h linux-4.9.8/fs/aufs/aufs.h
---- linux-4.9.8-orig/fs/aufs/aufs.h	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/aufs.h	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/aufs.h linux-4.9.18/fs/aufs/aufs.h
+--- linux-4.9.18-orig/fs/aufs/aufs.h	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/aufs.h	2017-02-20 22:01:47.907903600 +0300
 @@ -0,0 +1,59 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -61,12 +61,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/aufs.h linux-4.9.8/fs/aufs/aufs.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_H__ */
-diff -Naur linux-4.9.8-orig/fs/aufs/branch.c linux-4.9.8/fs/aufs/branch.c
---- linux-4.9.8-orig/fs/aufs/branch.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/branch.c	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/branch.c linux-4.9.18/fs/aufs/branch.c
+--- linux-4.9.18-orig/fs/aufs/branch.c	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/branch.c	2017-02-20 22:01:47.915903500 +0300
 @@ -0,0 +1,1412 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -1477,12 +1477,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/branch.c linux-4.9.8/fs/aufs/branch.c
 +
 +	return err;
 +}
-diff -Naur linux-4.9.8-orig/fs/aufs/branch.h linux-4.9.8/fs/aufs/branch.h
---- linux-4.9.8-orig/fs/aufs/branch.h	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/branch.h	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/branch.h linux-4.9.18/fs/aufs/branch.h
+--- linux-4.9.18-orig/fs/aufs/branch.h	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/branch.h	2017-02-20 22:01:47.915903500 +0300
 @@ -0,0 +1,309 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -1790,9 +1790,9 @@ diff -Naur linux-4.9.8-orig/fs/aufs/branch.h linux-4.9.8/fs/aufs/branch.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_BRANCH_H__ */
-diff -Naur linux-4.9.8-orig/fs/aufs/conf.mk linux-4.9.8/fs/aufs/conf.mk
---- linux-4.9.8-orig/fs/aufs/conf.mk	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/conf.mk	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/conf.mk linux-4.9.18/fs/aufs/conf.mk
+--- linux-4.9.18-orig/fs/aufs/conf.mk	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/conf.mk	2017-02-13 17:30:35.752612200 +0300
 @@ -0,0 +1,38 @@
 +
 +AuConfStr = CONFIG_AUFS_FS=${CONFIG_AUFS_FS}
@@ -1832,12 +1832,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/conf.mk linux-4.9.8/fs/aufs/conf.mk
 +${obj}/sysfs.o: ${AuConfName}
 +
 +-include ${srctree}/${src}/conf_priv.mk
-diff -Naur linux-4.9.8-orig/fs/aufs/cpup.c linux-4.9.8/fs/aufs/cpup.c
---- linux-4.9.8-orig/fs/aufs/cpup.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/cpup.c	2017-02-01 15:51:06.000000000 +0000
-@@ -0,0 +1,1394 @@
+diff -Naur linux-4.9.18-orig/fs/aufs/cpup.c linux-4.9.18/fs/aufs/cpup.c
+--- linux-4.9.18-orig/fs/aufs/cpup.c	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/cpup.c	2017-03-27 13:08:01.476675700 +0300
+@@ -0,0 +1,1413 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -2231,7 +2231,7 @@ diff -Naur linux-4.9.8-orig/fs/aufs/cpup.c linux-4.9.8/fs/aufs/cpup.c
 +			.label = &&out_src
 +		}
 +	};
-+	struct super_block *sb;
++	struct super_block *sb, *h_src_sb;
 +	struct inode *h_src_inode;
 +	struct task_struct *tsk = current;
 +
@@ -2249,9 +2249,28 @@ diff -Naur linux-4.9.8-orig/fs/aufs/cpup.c linux-4.9.8/fs/aufs/cpup.c
 +
 +	/* try stopping to update while we copyup */
 +	h_src_inode = d_inode(file[SRC].dentry);
-+	if (!au_test_nfs(h_src_inode->i_sb))
++	h_src_sb = h_src_inode->i_sb;
++	if (!au_test_nfs(h_src_sb))
 +		IMustLock(h_src_inode);
-+	err = au_copy_file(file[DST].file, file[SRC].file, cpg->len);
++
++	if (h_src_sb != file_inode(file[DST].file)->i_sb
++	    || !file[DST].file->f_op->clone_file_range)
++		err = au_copy_file(file[DST].file, file[SRC].file, cpg->len);
++	else {
++		if (!au_test_nfs(h_src_sb)) {
++			inode_unlock(h_src_inode);
++			err = vfsub_clone_file_range(file[SRC].file,
++						     file[DST].file, cpg->len);
++			inode_lock(h_src_inode);
++		} else
++			err = vfsub_clone_file_range(file[SRC].file,
++						     file[DST].file, cpg->len);
++		if (unlikely(err == -EOPNOTSUPP && au_test_nfs(h_src_sb)))
++			/* the backend fs on NFS may not support cloning */
++			err = au_copy_file(file[DST].file, file[SRC].file,
++					   cpg->len);
++		AuTraceErr(err);
++	}
 +
 +	/* i wonder if we had O_NO_DELAY_FPUT flag */
 +	if (tsk->flags & PF_KTHREAD)
@@ -3230,12 +3249,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/cpup.c linux-4.9.8/fs/aufs/cpup.c
 +	dput(parent);
 +	return err;
 +}
-diff -Naur linux-4.9.8-orig/fs/aufs/cpup.h linux-4.9.8/fs/aufs/cpup.h
---- linux-4.9.8-orig/fs/aufs/cpup.h	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/cpup.h	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/cpup.h linux-4.9.18/fs/aufs/cpup.h
+--- linux-4.9.18-orig/fs/aufs/cpup.h	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/cpup.h	2017-02-20 22:01:47.915903500 +0300
 @@ -0,0 +1,94 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -3328,12 +3347,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/cpup.h linux-4.9.8/fs/aufs/cpup.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_CPUP_H__ */
-diff -Naur linux-4.9.8-orig/fs/aufs/dbgaufs.c linux-4.9.8/fs/aufs/dbgaufs.c
---- linux-4.9.8-orig/fs/aufs/dbgaufs.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/dbgaufs.c	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/dbgaufs.c linux-4.9.18/fs/aufs/dbgaufs.c
+--- linux-4.9.18-orig/fs/aufs/dbgaufs.c	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/dbgaufs.c	2017-02-20 22:01:47.915903500 +0300
 @@ -0,0 +1,438 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -3770,12 +3789,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/dbgaufs.c linux-4.9.8/fs/aufs/dbgaufs.c
 +		err = 0;
 +	return err;
 +}
-diff -Naur linux-4.9.8-orig/fs/aufs/dbgaufs.h linux-4.9.8/fs/aufs/dbgaufs.h
---- linux-4.9.8-orig/fs/aufs/dbgaufs.h	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/dbgaufs.h	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/dbgaufs.h linux-4.9.18/fs/aufs/dbgaufs.h
+--- linux-4.9.18-orig/fs/aufs/dbgaufs.h	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/dbgaufs.h	2017-02-20 22:01:47.915903500 +0300
 @@ -0,0 +1,48 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -3822,12 +3841,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/dbgaufs.h linux-4.9.8/fs/aufs/dbgaufs.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __DBGAUFS_H__ */
-diff -Naur linux-4.9.8-orig/fs/aufs/dcsub.c linux-4.9.8/fs/aufs/dcsub.c
---- linux-4.9.8-orig/fs/aufs/dcsub.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/dcsub.c	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/dcsub.c linux-4.9.18/fs/aufs/dcsub.c
+--- linux-4.9.18-orig/fs/aufs/dcsub.c	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/dcsub.c	2017-02-20 22:01:47.915903500 +0300
 @@ -0,0 +1,225 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -4051,12 +4070,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/dcsub.c linux-4.9.8/fs/aufs/dcsub.c
 +
 +	return path_is_under(path + 0, path + 1);
 +}
-diff -Naur linux-4.9.8-orig/fs/aufs/dcsub.h linux-4.9.8/fs/aufs/dcsub.h
---- linux-4.9.8-orig/fs/aufs/dcsub.h	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/dcsub.h	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/dcsub.h linux-4.9.18/fs/aufs/dcsub.h
+--- linux-4.9.18-orig/fs/aufs/dcsub.h	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/dcsub.h	2017-02-20 22:01:47.915903500 +0300
 @@ -0,0 +1,136 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -4191,12 +4210,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/dcsub.h linux-4.9.8/fs/aufs/dcsub.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DCSUB_H__ */
-diff -Naur linux-4.9.8-orig/fs/aufs/debug.c linux-4.9.8/fs/aufs/debug.c
---- linux-4.9.8-orig/fs/aufs/debug.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/debug.c	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/debug.c linux-4.9.18/fs/aufs/debug.c
+--- linux-4.9.18-orig/fs/aufs/debug.c	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/debug.c	2017-02-20 22:01:47.915903500 +0300
 @@ -0,0 +1,440 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -4635,12 +4654,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/debug.c linux-4.9.8/fs/aufs/debug.c
 +
 +	return 0;
 +}
-diff -Naur linux-4.9.8-orig/fs/aufs/debug.h linux-4.9.8/fs/aufs/debug.h
---- linux-4.9.8-orig/fs/aufs/debug.h	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/debug.h	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/debug.h linux-4.9.18/fs/aufs/debug.h
+--- linux-4.9.18-orig/fs/aufs/debug.h	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/debug.h	2017-02-20 22:01:47.915903500 +0300
 @@ -0,0 +1,225 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -4864,12 +4883,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/debug.h linux-4.9.8/fs/aufs/debug.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DEBUG_H__ */
-diff -Naur linux-4.9.8-orig/fs/aufs/dentry.c linux-4.9.8/fs/aufs/dentry.c
---- linux-4.9.8-orig/fs/aufs/dentry.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/dentry.c	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/dentry.c linux-4.9.18/fs/aufs/dentry.c
+--- linux-4.9.18-orig/fs/aufs/dentry.c	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/dentry.c	2017-02-20 22:01:47.919903500 +0300
 @@ -0,0 +1,1130 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -5998,12 +6017,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/dentry.c linux-4.9.8/fs/aufs/dentry.c
 +const struct dentry_operations aufs_dop_noreval = {
 +	.d_release		= aufs_d_release
 +};
-diff -Naur linux-4.9.8-orig/fs/aufs/dentry.h linux-4.9.8/fs/aufs/dentry.h
---- linux-4.9.8-orig/fs/aufs/dentry.h	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/dentry.h	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/dentry.h linux-4.9.18/fs/aufs/dentry.h
+--- linux-4.9.18-orig/fs/aufs/dentry.h	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/dentry.h	2017-02-20 22:01:47.919903500 +0300
 @@ -0,0 +1,255 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -6257,12 +6276,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/dentry.h linux-4.9.8/fs/aufs/dentry.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DENTRY_H__ */
-diff -Naur linux-4.9.8-orig/fs/aufs/dinfo.c linux-4.9.8/fs/aufs/dinfo.c
---- linux-4.9.8-orig/fs/aufs/dinfo.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/dinfo.c	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/dinfo.c linux-4.9.18/fs/aufs/dinfo.c
+--- linux-4.9.18-orig/fs/aufs/dinfo.c	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/dinfo.c	2017-03-27 13:08:01.476675700 +0300
 @@ -0,0 +1,553 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -6539,11 +6558,11 @@ diff -Naur linux-4.9.8-orig/fs/aufs/dinfo.c linux-4.9.8/fs/aufs/dinfo.c
 +		  || d_inode(d1) == d_inode(d2)
 +		  || d1->d_sb != d2->d_sb);
 +
-+	if (isdir && au_test_subdir(d1, d2)) {
++	if ((isdir && au_test_subdir(d1, d2))
++	    || d1 < d2) {
 +		di_write_lock_child(d1);
 +		di_write_lock_child2(d2);
 +	} else {
-+		/* there should be no races */
 +		di_write_lock_child(d2);
 +		di_write_lock_child2(d1);
 +	}
@@ -6555,11 +6574,11 @@ diff -Naur linux-4.9.8-orig/fs/aufs/dinfo.c linux-4.9.8/fs/aufs/dinfo.c
 +		  || d_inode(d1) == d_inode(d2)
 +		  || d1->d_sb != d2->d_sb);
 +
-+	if (isdir && au_test_subdir(d1, d2)) {
++	if ((isdir && au_test_subdir(d1, d2))
++	    || d1 < d2) {
 +		di_write_lock_parent(d1);
 +		di_write_lock_parent2(d2);
 +	} else {
-+		/* there should be no races */
 +		di_write_lock_parent(d2);
 +		di_write_lock_parent2(d1);
 +	}
@@ -6814,12 +6833,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/dinfo.c linux-4.9.8/fs/aufs/dinfo.c
 +			return bindex;
 +	return -1;
 +}
-diff -Naur linux-4.9.8-orig/fs/aufs/dir.c linux-4.9.8/fs/aufs/dir.c
---- linux-4.9.8-orig/fs/aufs/dir.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/dir.c	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/dir.c linux-4.9.18/fs/aufs/dir.c
+--- linux-4.9.18-orig/fs/aufs/dir.c	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/dir.c	2017-03-27 13:08:01.476675700 +0300
 @@ -0,0 +1,762 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -7238,7 +7257,7 @@ diff -Naur linux-4.9.8-orig/fs/aufs/dir.c linux-4.9.8/fs/aufs/dir.c
 +	struct super_block *sb;
 +	struct inode *inode;
 +
-+	err = au_reval_and_lock_fdi(file, reopen_dir, /*wlock*/1);
++	err = au_reval_and_lock_fdi(file, reopen_dir, /*wlock*/1, /*fi_lsc*/0);
 +	if (unlikely(err))
 +		goto out;
 +
@@ -7307,7 +7326,7 @@ diff -Naur linux-4.9.8-orig/fs/aufs/dir.c linux-4.9.8/fs/aufs/dir.c
 +
 +	sb = dentry->d_sb;
 +	si_read_lock(sb, AuLock_FLUSH);
-+	err = au_reval_and_lock_fdi(file, reopen_dir, /*wlock*/1);
++	err = au_reval_and_lock_fdi(file, reopen_dir, /*wlock*/1, /*fi_lsc*/0);
 +	if (unlikely(err))
 +		goto out;
 +	err = au_alive_dir(dentry);
@@ -7580,12 +7599,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/dir.c linux-4.9.8/fs/aufs/dir.c
 +	.flush		= aufs_flush_dir,
 +	.fsync		= aufs_fsync_dir
 +};
-diff -Naur linux-4.9.8-orig/fs/aufs/dir.h linux-4.9.8/fs/aufs/dir.h
---- linux-4.9.8-orig/fs/aufs/dir.h	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/dir.h	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/dir.h linux-4.9.18/fs/aufs/dir.h
+--- linux-4.9.18-orig/fs/aufs/dir.h	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/dir.h	2017-02-20 22:01:47.919903500 +0300
 @@ -0,0 +1,137 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -7721,12 +7740,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/dir.h linux-4.9.8/fs/aufs/dir.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DIR_H__ */
-diff -Naur linux-4.9.8-orig/fs/aufs/dynop.c linux-4.9.8/fs/aufs/dynop.c
---- linux-4.9.8-orig/fs/aufs/dynop.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/dynop.c	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/dynop.c linux-4.9.18/fs/aufs/dynop.c
+--- linux-4.9.18-orig/fs/aufs/dynop.c	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/dynop.c	2017-02-20 22:01:47.919903500 +0300
 @@ -0,0 +1,371 @@
 +/*
-+ * Copyright (C) 2010-2016 Junjiro R. Okajima
++ * Copyright (C) 2010-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -8096,12 +8115,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/dynop.c linux-4.9.8/fs/aufs/dynop.c
 +	for (i = 0; i < AuDyLast; i++)
 +		WARN_ON(!hlist_empty(&dynop[i].head));
 +}
-diff -Naur linux-4.9.8-orig/fs/aufs/dynop.h linux-4.9.8/fs/aufs/dynop.h
---- linux-4.9.8-orig/fs/aufs/dynop.h	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/dynop.h	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/dynop.h linux-4.9.18/fs/aufs/dynop.h
+--- linux-4.9.18-orig/fs/aufs/dynop.h	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/dynop.h	2017-02-20 22:01:47.919903500 +0300
 @@ -0,0 +1,74 @@
 +/*
-+ * Copyright (C) 2010-2016 Junjiro R. Okajima
++ * Copyright (C) 2010-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -8174,12 +8193,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/dynop.h linux-4.9.8/fs/aufs/dynop.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_DYNOP_H__ */
-diff -Naur linux-4.9.8-orig/fs/aufs/export.c linux-4.9.8/fs/aufs/export.c
---- linux-4.9.8-orig/fs/aufs/export.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/export.c	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/export.c linux-4.9.18/fs/aufs/export.c
+--- linux-4.9.18-orig/fs/aufs/export.c	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/export.c	2017-02-20 22:01:47.919903500 +0300
 @@ -0,0 +1,836 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -9014,12 +9033,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/export.c linux-4.9.8/fs/aufs/export.c
 +	BUILD_BUG_ON(sizeof(u) != sizeof(int));
 +	atomic_set(&sbinfo->si_xigen_next, u);
 +}
-diff -Naur linux-4.9.8-orig/fs/aufs/fhsm.c linux-4.9.8/fs/aufs/fhsm.c
---- linux-4.9.8-orig/fs/aufs/fhsm.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/fhsm.c	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/fhsm.c linux-4.9.18/fs/aufs/fhsm.c
+--- linux-4.9.18-orig/fs/aufs/fhsm.c	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/fhsm.c	2017-02-20 22:01:47.919903500 +0300
 @@ -0,0 +1,426 @@
 +/*
-+ * Copyright (C) 2011-2016 Junjiro R. Okajima
++ * Copyright (C) 2011-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -9444,12 +9463,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/fhsm.c linux-4.9.8/fs/aufs/fhsm.c
 +	if (u != AUFS_FHSM_CACHE_DEF_SEC)
 +		seq_printf(seq, ",fhsm_sec=%u", u);
 +}
-diff -Naur linux-4.9.8-orig/fs/aufs/file.c linux-4.9.8/fs/aufs/file.c
---- linux-4.9.8-orig/fs/aufs/file.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/file.c	2017-02-01 15:51:06.000000000 +0000
-@@ -0,0 +1,857 @@
+diff -Naur linux-4.9.18-orig/fs/aufs/file.c linux-4.9.18/fs/aufs/file.c
+--- linux-4.9.18-orig/fs/aufs/file.c	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/file.c	2017-03-27 13:08:01.480675600 +0300
+@@ -0,0 +1,860 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -10170,7 +10189,7 @@ diff -Naur linux-4.9.8-orig/fs/aufs/file.c linux-4.9.8/fs/aufs/file.c
 +
 +/* common function to regular file and dir */
 +int au_reval_and_lock_fdi(struct file *file, int (*reopen)(struct file *file),
-+			  int wlock)
++			  int wlock, unsigned int fi_lsc)
 +{
 +	int err;
 +	unsigned int sigen, figen;
@@ -10183,9 +10202,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/file.c linux-4.9.8/fs/aufs/file.c
 +	dentry = file->f_path.dentry;
 +	inode = d_inode(dentry);
 +	sigen = au_sigen(dentry->d_sb);
-+	fi_write_lock(file);
++	fi_write_lock_nested(file, fi_lsc);
 +	figen = au_figen(file);
-+	di_write_lock_child(dentry);
++	if (!fi_lsc)
++		di_write_lock_child(dentry);
++	else
++		di_write_lock_child2(dentry);
 +	btop = au_dbtop(dentry);
 +	pseudo_link = (btop != au_ibtop(inode));
 +	if (sigen == figen && !pseudo_link && au_fbtop(file) == btop) {
@@ -10305,12 +10327,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/file.c linux-4.9.8/fs/aufs/file.c
 +	.swap_deactivate	= aufs_swap_deactivate
 +#endif /* CONFIG_AUFS_DEBUG */
 +};
-diff -Naur linux-4.9.8-orig/fs/aufs/file.h linux-4.9.8/fs/aufs/file.h
---- linux-4.9.8-orig/fs/aufs/file.h	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/file.h	2017-02-01 15:51:06.000000000 +0000
-@@ -0,0 +1,294 @@
+diff -Naur linux-4.9.18-orig/fs/aufs/file.h linux-4.9.18/fs/aufs/file.h
+--- linux-4.9.18-orig/fs/aufs/file.h	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/file.h	2017-03-27 13:08:01.480675600 +0300
+@@ -0,0 +1,333 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -10399,7 +10421,7 @@ diff -Naur linux-4.9.8-orig/fs/aufs/file.h linux-4.9.8/fs/aufs/file.h
 +struct au_pin;
 +int au_ready_to_write(struct file *file, loff_t len, struct au_pin *pin);
 +int au_reval_and_lock_fdi(struct file *file, int (*reopen)(struct file *file),
-+			  int wlock);
++			  int wlock, unsigned int fi_lsc);
 +int au_do_flush(struct file *file, fl_owner_t id,
 +		int (*flush)(struct file *file, fl_owner_t id));
 +
@@ -10425,7 +10447,7 @@ diff -Naur linux-4.9.8-orig/fs/aufs/file.h linux-4.9.8/fs/aufs/file.h
 +extern const struct file_operations aufs_file_fop;
 +int au_do_open_nondir(struct file *file, int flags, struct file *h_file);
 +int aufs_release_nondir(struct inode *inode __maybe_unused, struct file *file);
-+struct file *au_read_pre(struct file *file, int keep_fi);
++struct file *au_read_pre(struct file *file, int keep_fi, unsigned int lsc);
 +
 +/* finfo.c */
 +void au_hfput(struct au_hfile *hf, int execed);
@@ -10463,6 +10485,45 @@ diff -Naur linux-4.9.8-orig/fs/aufs/file.h linux-4.9.8/fs/aufs/file.h
 + * fi_read_unlock, fi_write_unlock, fi_downgrade_lock
 + */
 +AuSimpleRwsemFuncs(fi, struct file *f, &au_fi(f)->fi_rwsem);
++
++/* lock subclass for finfo */
++enum {
++	AuLsc_FI_1,
++	AuLsc_FI_2
++};
++
++static inline void fi_read_lock_nested(struct file *f, unsigned int lsc)
++{
++	au_rw_read_lock_nested(&au_fi(f)->fi_rwsem, lsc);
++}
++
++static inline void fi_write_lock_nested(struct file *f, unsigned int lsc)
++{
++	au_rw_write_lock_nested(&au_fi(f)->fi_rwsem, lsc);
++}
++
++/*
++ * fi_read_lock_1, fi_write_lock_1,
++ * fi_read_lock_2, fi_write_lock_2
++ */
++#define AuReadLockFunc(name) \
++static inline void fi_read_lock_##name(struct file *f) \
++{ fi_read_lock_nested(f, AuLsc_FI_##name); }
++
++#define AuWriteLockFunc(name) \
++static inline void fi_write_lock_##name(struct file *f) \
++{ fi_write_lock_nested(f, AuLsc_FI_##name); }
++
++#define AuRWLockFuncs(name) \
++	AuReadLockFunc(name) \
++	AuWriteLockFunc(name)
++
++AuRWLockFuncs(1);
++AuRWLockFuncs(2);
++
++#undef AuReadLockFunc
++#undef AuWriteLockFunc
++#undef AuRWLockFuncs
 +
 +#define FiMustNoWaiters(f)	AuRwMustNoWaiters(&au_fi(f)->fi_rwsem)
 +#define FiMustAnyLock(f)	AuRwMustAnyLock(&au_fi(f)->fi_rwsem)
@@ -10603,12 +10664,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/file.h linux-4.9.8/fs/aufs/file.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_FILE_H__ */
-diff -Naur linux-4.9.8-orig/fs/aufs/finfo.c linux-4.9.8/fs/aufs/finfo.c
---- linux-4.9.8-orig/fs/aufs/finfo.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/finfo.c	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/finfo.c linux-4.9.18/fs/aufs/finfo.c
+--- linux-4.9.18-orig/fs/aufs/finfo.c	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/finfo.c	2017-02-20 22:01:47.919903500 +0300
 @@ -0,0 +1,151 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -10758,12 +10819,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/finfo.c linux-4.9.8/fs/aufs/finfo.c
 +out:
 +	return err;
 +}
-diff -Naur linux-4.9.8-orig/fs/aufs/f_op.c linux-4.9.8/fs/aufs/f_op.c
---- linux-4.9.8-orig/fs/aufs/f_op.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/f_op.c	2017-02-01 15:51:06.000000000 +0000
-@@ -0,0 +1,723 @@
+diff -Naur linux-4.9.18-orig/fs/aufs/f_op.c linux-4.9.18/fs/aufs/f_op.c
+--- linux-4.9.18-orig/fs/aufs/f_op.c	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/f_op.c	2017-03-27 13:08:01.476675700 +0300
+@@ -0,0 +1,819 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -10906,12 +10967,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/f_op.c linux-4.9.8/fs/aufs/f_op.c
 + */
 +
 +/* Callers should call au_read_post() or fput() in the end */
-+struct file *au_read_pre(struct file *file, int keep_fi)
++struct file *au_read_pre(struct file *file, int keep_fi, unsigned int lsc)
 +{
 +	struct file *h_file;
 +	int err;
 +
-+	err = au_reval_and_lock_fdi(file, au_reopen_nondir, /*wlock*/0);
++	err = au_reval_and_lock_fdi(file, au_reopen_nondir, /*wlock*/0, lsc);
 +	if (!err) {
 +		di_read_unlock(file->f_path.dentry, AuLock_IR);
 +		h_file = au_hf_top(file);
@@ -10932,6 +10993,10 @@ diff -Naur linux-4.9.8-orig/fs/aufs/f_op.c linux-4.9.8/fs/aufs/f_op.c
 +}
 +
 +struct au_write_pre {
++	/* input */
++	unsigned int lsc;
++
++	/* output */
 +	blkcnt_t blks;
 +	aufs_bindex_t btop;
 +};
@@ -10947,9 +11012,13 @@ diff -Naur linux-4.9.8-orig/fs/aufs/f_op.c linux-4.9.8/fs/aufs/f_op.c
 +	struct file *h_file;
 +	struct dentry *dentry;
 +	int err;
++	unsigned int lsc;
 +	struct au_pin pin;
 +
-+	err = au_reval_and_lock_fdi(file, au_reopen_nondir, /*wlock*/1);
++	lsc = 0;
++	if (wpre)
++		lsc = wpre->lsc;
++	err = au_reval_and_lock_fdi(file, au_reopen_nondir, /*wlock*/1, lsc);
 +	h_file = ERR_PTR(err);
 +	if (unlikely(err))
 +		goto out;
@@ -11011,7 +11080,7 @@ diff -Naur linux-4.9.8-orig/fs/aufs/f_op.c linux-4.9.8/fs/aufs/f_op.c
 +	sb = inode->i_sb;
 +	si_read_lock(sb, AuLock_FLUSH | AuLock_NOPLMW);
 +
-+	h_file = au_read_pre(file, /*keep_fi*/0);
++	h_file = au_read_pre(file, /*keep_fi*/0, /*lsc*/0);
 +	err = PTR_ERR(h_file);
 +	if (IS_ERR(h_file))
 +		goto out;
@@ -11061,6 +11130,7 @@ diff -Naur linux-4.9.8-orig/fs/aufs/f_op.c linux-4.9.8/fs/aufs/f_op.c
 +	inode = file_inode(file);
 +	au_mtx_and_read_lock(inode);
 +
++	wpre.lsc = 0;
 +	h_file = au_write_pre(file, /*do_ready*/1, &wpre);
 +	err = PTR_ERR(h_file);
 +	if (IS_ERR(h_file))
@@ -11120,7 +11190,7 @@ diff -Naur linux-4.9.8-orig/fs/aufs/f_op.c linux-4.9.8/fs/aufs/f_op.c
 +	sb = inode->i_sb;
 +	si_read_lock(sb, AuLock_FLUSH | AuLock_NOPLMW);
 +
-+	h_file = au_read_pre(file, /*keep_fi*/1);
++	h_file = au_read_pre(file, /*keep_fi*/1, /*lsc*/0);
 +	err = PTR_ERR(h_file);
 +	if (IS_ERR(h_file))
 +		goto out;
@@ -11155,6 +11225,7 @@ diff -Naur linux-4.9.8-orig/fs/aufs/f_op.c linux-4.9.8/fs/aufs/f_op.c
 +	inode = file_inode(file);
 +	au_mtx_and_read_lock(inode);
 +
++	wpre.lsc = 0;
 +	h_file = au_write_pre(file, /*do_ready*/1, &wpre);
 +	err = PTR_ERR(h_file);
 +	if (IS_ERR(h_file))
@@ -11182,7 +11253,7 @@ diff -Naur linux-4.9.8-orig/fs/aufs/f_op.c linux-4.9.8/fs/aufs/f_op.c
 +	sb = inode->i_sb;
 +	si_read_lock(sb, AuLock_FLUSH | AuLock_NOPLMW);
 +
-+	h_file = au_read_pre(file, /*keep_fi*/0);
++	h_file = au_read_pre(file, /*keep_fi*/0, /*lsc*/0);
 +	err = PTR_ERR(h_file);
 +	if (IS_ERR(h_file))
 +		goto out;
@@ -11209,6 +11280,7 @@ diff -Naur linux-4.9.8-orig/fs/aufs/f_op.c linux-4.9.8/fs/aufs/f_op.c
 +	inode = file_inode(file);
 +	au_mtx_and_read_lock(inode);
 +
++	wpre.lsc = 0;
 +	h_file = au_write_pre(file, /*do_ready*/1, &wpre);
 +	err = PTR_ERR(h_file);
 +	if (IS_ERR(h_file))
@@ -11234,6 +11306,7 @@ diff -Naur linux-4.9.8-orig/fs/aufs/f_op.c linux-4.9.8/fs/aufs/f_op.c
 +	inode = file_inode(file);
 +	au_mtx_and_read_lock(inode);
 +
++	wpre.lsc = 0;
 +	h_file = au_write_pre(file, /*do_ready*/1, &wpre);
 +	err = PTR_ERR(h_file);
 +	if (IS_ERR(h_file))
@@ -11248,6 +11321,88 @@ diff -Naur linux-4.9.8-orig/fs/aufs/f_op.c linux-4.9.8/fs/aufs/f_op.c
 +	si_read_unlock(inode->i_sb);
 +	inode_unlock(inode);
 +	return err;
++}
++
++static ssize_t aufs_copy_file_range(struct file *src, loff_t src_pos,
++				    struct file *dst, loff_t dst_pos,
++				    size_t len, unsigned int flags)
++{
++	ssize_t err;
++	struct au_write_pre wpre;
++	enum { SRC, DST };
++	struct {
++		struct inode *inode;
++		struct file *h_file;
++		struct super_block *h_sb;
++	} a[2];
++#define a_src	a[SRC]
++#define a_dst	a[DST]
++
++	err = -EINVAL;
++	a_src.inode = file_inode(src);
++	if (unlikely(!S_ISREG(a_src.inode->i_mode)))
++		goto out;
++	a_dst.inode = file_inode(dst);
++	if (unlikely(!S_ISREG(a_dst.inode->i_mode)))
++		goto out;
++
++	au_mtx_and_read_lock(a_dst.inode);
++	/*
++	 * in order to match the order in di_write_lock2_{child,parent}(),
++	 * use f_path.dentry for this comparision.
++	 */
++	if (src->f_path.dentry < dst->f_path.dentry) {
++		a_src.h_file = au_read_pre(src, /*keep_fi*/1, AuLsc_FI_1);
++		err = PTR_ERR(a_src.h_file);
++		if (IS_ERR(a_src.h_file))
++			goto out_si;
++
++		wpre.lsc = AuLsc_FI_2;
++		a_dst.h_file = au_write_pre(dst, /*do_ready*/1, &wpre);
++		err = PTR_ERR(a_dst.h_file);
++		if (IS_ERR(a_dst.h_file)) {
++			au_read_post(a_src.inode, a_src.h_file);
++			goto out_si;
++		}
++	} else {
++		wpre.lsc = AuLsc_FI_1;
++		a_dst.h_file = au_write_pre(dst, /*do_ready*/1, &wpre);
++		err = PTR_ERR(a_dst.h_file);
++		if (IS_ERR(a_dst.h_file))
++			goto out_si;
++
++		a_src.h_file = au_read_pre(src, /*keep_fi*/1, AuLsc_FI_2);
++		err = PTR_ERR(a_src.h_file);
++		if (IS_ERR(a_src.h_file)) {
++			au_write_post(a_dst.inode, a_dst.h_file, &wpre,
++				      /*written*/0);
++			goto out_si;
++		}
++	}
++
++	err = -EXDEV;
++	a_src.h_sb = file_inode(a_src.h_file)->i_sb;
++	a_dst.h_sb = file_inode(a_dst.h_file)->i_sb;
++	if (unlikely(a_src.h_sb != a_dst.h_sb)) {
++		AuDbgFile(src);
++		AuDbgFile(dst);
++		goto out_file;
++	}
++
++	err = vfsub_copy_file_range(a_src.h_file, src_pos, a_dst.h_file,
++				    dst_pos, len, flags);
++
++out_file:
++	au_write_post(a_dst.inode, a_dst.h_file, &wpre, err);
++	fi_read_unlock(src);
++	au_read_post(a_src.inode, a_src.h_file);
++out_si:
++	si_read_unlock(a_dst.inode->i_sb);
++	inode_unlock(a_dst.inode);
++out:
++	return err;
++#undef a_src
++#undef a_dst
 +}
 +
 +/* ---------------------------------------------------------------------- */
@@ -11379,6 +11534,7 @@ diff -Naur linux-4.9.8-orig/fs/aufs/f_op.c linux-4.9.8/fs/aufs/f_op.c
 +	inode = file_inode(file);
 +	au_mtx_and_read_lock(inode);
 +
++	wpre.lsc = 0;
 +	h_file = au_write_pre(file, /*do_ready*/1, &wpre);
 +	err = PTR_ERR(h_file);
 +	if (IS_ERR(h_file))
@@ -11403,7 +11559,7 @@ diff -Naur linux-4.9.8-orig/fs/aufs/f_op.c linux-4.9.8/fs/aufs/f_op.c
 +	sb = file->f_path.dentry->d_sb;
 +	si_read_lock(sb, AuLock_FLUSH | AuLock_NOPLMW);
 +
-+	h_file = au_read_pre(file, /*keep_fi*/0);
++	h_file = au_read_pre(file, /*keep_fi*/0, /*lsc*/0);
 +	err = PTR_ERR(h_file);
 +	if (IS_ERR(h_file))
 +		goto out;
@@ -11426,7 +11582,7 @@ diff -Naur linux-4.9.8-orig/fs/aufs/f_op.c linux-4.9.8/fs/aufs/f_op.c
 +	sb = file->f_path.dentry->d_sb;
 +	si_read_lock(sb, AuLock_FLUSH | AuLock_NOPLMW);
 +
-+	h_file = au_read_pre(file, /*keep_fi*/0);
++	h_file = au_read_pre(file, /*keep_fi*/0, /*lsc*/0);
 +	err = PTR_ERR(h_file);
 +	if (IS_ERR(h_file))
 +		goto out;
@@ -11483,14 +11639,15 @@ diff -Naur linux-4.9.8-orig/fs/aufs/f_op.c linux-4.9.8/fs/aufs/f_op.c
 +	.aio_splice_write = aufs_aio_splice_write,
 +	.aio_splice_read  = aufs_aio_splice_read,
 +#endif
-+	.fallocate	= aufs_fallocate
++	.fallocate	= aufs_fallocate,
++	.copy_file_range = aufs_copy_file_range
 +};
-diff -Naur linux-4.9.8-orig/fs/aufs/fstype.h linux-4.9.8/fs/aufs/fstype.h
---- linux-4.9.8-orig/fs/aufs/fstype.h	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/fstype.h	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/fstype.h linux-4.9.18/fs/aufs/fstype.h
+--- linux-4.9.18-orig/fs/aufs/fstype.h	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/fstype.h	2017-02-20 22:01:47.919903500 +0300
 @@ -0,0 +1,400 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -11889,12 +12046,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/fstype.h linux-4.9.8/fs/aufs/fstype.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_FSTYPE_H__ */
-diff -Naur linux-4.9.8-orig/fs/aufs/hfsnotify.c linux-4.9.8/fs/aufs/hfsnotify.c
---- linux-4.9.8-orig/fs/aufs/hfsnotify.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/hfsnotify.c	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/hfsnotify.c linux-4.9.18/fs/aufs/hfsnotify.c
+--- linux-4.9.18-orig/fs/aufs/hfsnotify.c	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/hfsnotify.c	2017-03-27 13:07:57.724795300 +0300
 @@ -0,0 +1,287 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -12180,12 +12337,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/hfsnotify.c linux-4.9.8/fs/aufs/hfsnotify.c
 +	.fin_br		= au_hfsn_fin_br,
 +	.init_br	= au_hfsn_init_br
 +};
-diff -Naur linux-4.9.8-orig/fs/aufs/hfsplus.c linux-4.9.8/fs/aufs/hfsplus.c
---- linux-4.9.8-orig/fs/aufs/hfsplus.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/hfsplus.c	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/hfsplus.c linux-4.9.18/fs/aufs/hfsplus.c
+--- linux-4.9.18-orig/fs/aufs/hfsplus.c	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/hfsplus.c	2017-02-20 22:01:47.919903500 +0300
 @@ -0,0 +1,56 @@
 +/*
-+ * Copyright (C) 2010-2016 Junjiro R. Okajima
++ * Copyright (C) 2010-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -12240,12 +12397,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/hfsplus.c linux-4.9.8/fs/aufs/hfsplus.c
 +		au_sbr_put(dentry->d_sb, bindex);
 +	}
 +}
-diff -Naur linux-4.9.8-orig/fs/aufs/hnotify.c linux-4.9.8/fs/aufs/hnotify.c
---- linux-4.9.8-orig/fs/aufs/hnotify.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/hnotify.c	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/hnotify.c linux-4.9.18/fs/aufs/hnotify.c
+--- linux-4.9.18-orig/fs/aufs/hnotify.c	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/hnotify.c	2017-02-20 22:01:47.919903500 +0300
 @@ -0,0 +1,723 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -12967,12 +13124,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/hnotify.c linux-4.9.8/fs/aufs/hnotify.c
 +	if (cp->cache)
 +		au_hn_destroy_cache();
 +}
-diff -Naur linux-4.9.8-orig/fs/aufs/iinfo.c linux-4.9.8/fs/aufs/iinfo.c
---- linux-4.9.8-orig/fs/aufs/iinfo.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/iinfo.c	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/iinfo.c linux-4.9.18/fs/aufs/iinfo.c
+--- linux-4.9.18-orig/fs/aufs/iinfo.c	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/iinfo.c	2017-02-20 22:01:47.919903500 +0300
 @@ -0,0 +1,285 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -13256,12 +13413,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/iinfo.c linux-4.9.8/fs/aufs/iinfo.c
 +	au_delayed_kfree(iinfo->ii_hinode);
 +	AuRwDestroy(&iinfo->ii_rwsem);
 +}
-diff -Naur linux-4.9.8-orig/fs/aufs/inode.c linux-4.9.8/fs/aufs/inode.c
---- linux-4.9.8-orig/fs/aufs/inode.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/inode.c	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/inode.c linux-4.9.18/fs/aufs/inode.c
+--- linux-4.9.18-orig/fs/aufs/inode.c	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/inode.c	2017-02-20 22:01:47.919903500 +0300
 @@ -0,0 +1,519 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -13779,12 +13936,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/inode.c linux-4.9.8/fs/aufs/inode.c
 +		mask |= MAY_READ; /* force permission check */
 +	return au_test_h_perm(h_inode, mask);
 +}
-diff -Naur linux-4.9.8-orig/fs/aufs/inode.h linux-4.9.8/fs/aufs/inode.h
---- linux-4.9.8-orig/fs/aufs/inode.h	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/inode.h	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/inode.h linux-4.9.18/fs/aufs/inode.h
+--- linux-4.9.18-orig/fs/aufs/inode.h	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/inode.h	2017-02-20 22:01:47.919903500 +0300
 @@ -0,0 +1,692 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -14475,12 +14632,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/inode.h linux-4.9.8/fs/aufs/inode.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_INODE_H__ */
-diff -Naur linux-4.9.8-orig/fs/aufs/ioctl.c linux-4.9.8/fs/aufs/ioctl.c
---- linux-4.9.8-orig/fs/aufs/ioctl.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/ioctl.c	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/ioctl.c linux-4.9.18/fs/aufs/ioctl.c
+--- linux-4.9.18-orig/fs/aufs/ioctl.c	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/ioctl.c	2017-02-20 22:01:47.919903500 +0300
 @@ -0,0 +1,219 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -14698,12 +14855,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/ioctl.c linux-4.9.8/fs/aufs/ioctl.c
 +	return aufs_ioctl_nondir(file, cmd, (unsigned long)compat_ptr(arg));
 +}
 +#endif
-diff -Naur linux-4.9.8-orig/fs/aufs/i_op_add.c linux-4.9.8/fs/aufs/i_op_add.c
---- linux-4.9.8-orig/fs/aufs/i_op_add.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/i_op_add.c	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/i_op_add.c linux-4.9.18/fs/aufs/i_op_add.c
+--- linux-4.9.18-orig/fs/aufs/i_op_add.c	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/i_op_add.c	2017-02-20 22:01:47.919903500 +0300
 @@ -0,0 +1,928 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -15630,12 +15787,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/i_op_add.c linux-4.9.8/fs/aufs/i_op_add.c
 +out:
 +	return err;
 +}
-diff -Naur linux-4.9.8-orig/fs/aufs/i_op.c linux-4.9.8/fs/aufs/i_op.c
---- linux-4.9.8-orig/fs/aufs/i_op.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/i_op.c	2017-02-01 15:51:06.000000000 +0000
-@@ -0,0 +1,1449 @@
+diff -Naur linux-4.9.18-orig/fs/aufs/i_op.c linux-4.9.18/fs/aufs/i_op.c
+--- linux-4.9.18-orig/fs/aufs/i_op.c	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/i_op.c	2017-03-27 13:08:01.480675600 +0300
+@@ -0,0 +1,1450 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -16546,7 +16703,8 @@ diff -Naur linux-4.9.8-orig/fs/aufs/i_op.c linux-4.9.8/fs/aufs/i_op.c
 +		/* currently ftruncate(2) only */
 +		AuDebugOn(!d_is_reg(dentry));
 +		file = ia->ia_file;
-+		err = au_reval_and_lock_fdi(file, au_reopen_nondir, /*wlock*/1);
++		err = au_reval_and_lock_fdi(file, au_reopen_nondir, /*wlock*/1,
++					    /*fi_lsc*/0);
 +		if (unlikely(err))
 +			goto out_si;
 +		ia->ia_file = au_hf_top(file);
@@ -17083,12 +17241,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/i_op.c linux-4.9.8/fs/aufs/i_op.c
 +		.update_time	= aufs_update_time
 +	}
 +};
-diff -Naur linux-4.9.8-orig/fs/aufs/i_op_del.c linux-4.9.8/fs/aufs/i_op_del.c
---- linux-4.9.8-orig/fs/aufs/i_op_del.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/i_op_del.c	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/i_op_del.c linux-4.9.18/fs/aufs/i_op_del.c
+--- linux-4.9.18-orig/fs/aufs/i_op_del.c	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/i_op_del.c	2017-02-20 22:01:47.919903500 +0300
 @@ -0,0 +1,511 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -17598,12 +17756,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/i_op_del.c linux-4.9.8/fs/aufs/i_op_del.c
 +	AuTraceErr(err);
 +	return err;
 +}
-diff -Naur linux-4.9.8-orig/fs/aufs/i_op_ren.c linux-4.9.8/fs/aufs/i_op_ren.c
---- linux-4.9.8-orig/fs/aufs/i_op_ren.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/i_op_ren.c	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/i_op_ren.c linux-4.9.18/fs/aufs/i_op_ren.c
+--- linux-4.9.18-orig/fs/aufs/i_op_ren.c	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/i_op_ren.c	2017-02-20 22:01:47.919903500 +0300
 @@ -0,0 +1,1165 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -18767,9 +18925,9 @@ diff -Naur linux-4.9.8-orig/fs/aufs/i_op_ren.c linux-4.9.8/fs/aufs/i_op_ren.c
 +	AuTraceErr(err);
 +	return err;
 +}
-diff -Naur linux-4.9.8-orig/fs/aufs/Kconfig linux-4.9.8/fs/aufs/Kconfig
---- linux-4.9.8-orig/fs/aufs/Kconfig	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/Kconfig	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/Kconfig linux-4.9.18/fs/aufs/Kconfig
+--- linux-4.9.18-orig/fs/aufs/Kconfig	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/Kconfig	2017-02-13 17:30:35.752612200 +0300
 @@ -0,0 +1,185 @@
 +config AUFS_FS
 +	tristate "Aufs (Advanced multi layered unification filesystem) support"
@@ -18956,12 +19114,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/Kconfig linux-4.9.8/fs/aufs/Kconfig
 +	Automatic configuration for internal use.
 +	When aufs supports Magic SysRq, enabled automatically.
 +endif
-diff -Naur linux-4.9.8-orig/fs/aufs/loop.c linux-4.9.8/fs/aufs/loop.c
---- linux-4.9.8-orig/fs/aufs/loop.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/loop.c	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/loop.c linux-4.9.18/fs/aufs/loop.c
+--- linux-4.9.18-orig/fs/aufs/loop.c	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/loop.c	2017-02-20 22:01:47.919903500 +0300
 @@ -0,0 +1,147 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -19107,12 +19265,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/loop.c linux-4.9.8/fs/aufs/loop.c
 +		symbol_put(loop_backing_file);
 +	au_delayed_kfree(au_warn_loopback_array);
 +}
-diff -Naur linux-4.9.8-orig/fs/aufs/loop.h linux-4.9.8/fs/aufs/loop.h
---- linux-4.9.8-orig/fs/aufs/loop.h	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/loop.h	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/loop.h linux-4.9.18/fs/aufs/loop.h
+--- linux-4.9.18-orig/fs/aufs/loop.h	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/loop.h	2017-02-20 22:01:47.919903500 +0300
 @@ -0,0 +1,52 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -19163,9 +19321,9 @@ diff -Naur linux-4.9.8-orig/fs/aufs/loop.h linux-4.9.8/fs/aufs/loop.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_LOOP_H__ */
-diff -Naur linux-4.9.8-orig/fs/aufs/magic.mk linux-4.9.8/fs/aufs/magic.mk
---- linux-4.9.8-orig/fs/aufs/magic.mk	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/magic.mk	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/magic.mk linux-4.9.18/fs/aufs/magic.mk
+--- linux-4.9.18-orig/fs/aufs/magic.mk	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/magic.mk	2017-02-13 17:30:35.756612100 +0300
 @@ -0,0 +1,30 @@
 +
 +# defined in ${srctree}/fs/fuse/inode.c
@@ -19197,9 +19355,9 @@ diff -Naur linux-4.9.8-orig/fs/aufs/magic.mk linux-4.9.8/fs/aufs/magic.mk
 +ifdef CONFIG_HFSPLUS_FS
 +ccflags-y += -DHFSPLUS_SUPER_MAGIC=0x482b
 +endif
-diff -Naur linux-4.9.8-orig/fs/aufs/Makefile linux-4.9.8/fs/aufs/Makefile
---- linux-4.9.8-orig/fs/aufs/Makefile	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/Makefile	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/Makefile linux-4.9.18/fs/aufs/Makefile
+--- linux-4.9.18-orig/fs/aufs/Makefile	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/Makefile	2017-02-13 17:30:35.752612200 +0300
 @@ -0,0 +1,44 @@
 +
 +include ${src}/magic.mk
@@ -19245,12 +19403,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/Makefile linux-4.9.8/fs/aufs/Makefile
 +aufs-$(CONFIG_AUFS_BR_HFSPLUS) += hfsplus.o
 +aufs-$(CONFIG_AUFS_DEBUG) += debug.o
 +aufs-$(CONFIG_AUFS_MAGIC_SYSRQ) += sysrq.o
-diff -Naur linux-4.9.8-orig/fs/aufs/module.c linux-4.9.8/fs/aufs/module.c
---- linux-4.9.8-orig/fs/aufs/module.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/module.c	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/module.c linux-4.9.18/fs/aufs/module.c
+--- linux-4.9.18-orig/fs/aufs/module.c	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/module.c	2017-02-20 22:01:47.919903500 +0300
 @@ -0,0 +1,333 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -19582,12 +19740,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/module.c linux-4.9.8/fs/aufs/module.c
 +
 +module_init(aufs_init);
 +module_exit(aufs_exit);
-diff -Naur linux-4.9.8-orig/fs/aufs/module.h linux-4.9.8/fs/aufs/module.h
---- linux-4.9.8-orig/fs/aufs/module.h	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/module.h	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/module.h linux-4.9.18/fs/aufs/module.h
+--- linux-4.9.18-orig/fs/aufs/module.h	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/module.h	2017-02-20 22:01:47.919903500 +0300
 @@ -0,0 +1,156 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -19742,12 +19900,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/module.h linux-4.9.8/fs/aufs/module.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_MODULE_H__ */
-diff -Naur linux-4.9.8-orig/fs/aufs/mvdown.c linux-4.9.8/fs/aufs/mvdown.c
---- linux-4.9.8-orig/fs/aufs/mvdown.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/mvdown.c	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/mvdown.c linux-4.9.18/fs/aufs/mvdown.c
+--- linux-4.9.18-orig/fs/aufs/mvdown.c	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/mvdown.c	2017-02-20 22:01:47.919903500 +0300
 @@ -0,0 +1,704 @@
 +/*
-+ * Copyright (C) 2011-2016 Junjiro R. Okajima
++ * Copyright (C) 2011-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -20450,12 +20608,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/mvdown.c linux-4.9.8/fs/aufs/mvdown.c
 +	AuTraceErr(err);
 +	return err;
 +}
-diff -Naur linux-4.9.8-orig/fs/aufs/opts.c linux-4.9.8/fs/aufs/opts.c
---- linux-4.9.8-orig/fs/aufs/opts.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/opts.c	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/opts.c linux-4.9.18/fs/aufs/opts.c
+--- linux-4.9.18-orig/fs/aufs/opts.c	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/opts.c	2017-03-27 13:07:57.728795200 +0300
 @@ -0,0 +1,1870 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -22324,12 +22482,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/opts.c linux-4.9.8/fs/aufs/opts.c
 +{
 +	return au_mntflags(sb) & AuOptMask_UDBA;
 +}
-diff -Naur linux-4.9.8-orig/fs/aufs/opts.h linux-4.9.8/fs/aufs/opts.h
---- linux-4.9.8-orig/fs/aufs/opts.h	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/opts.h	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/opts.h linux-4.9.18/fs/aufs/opts.h
+--- linux-4.9.18-orig/fs/aufs/opts.h	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/opts.h	2017-02-20 22:01:47.919903500 +0300
 @@ -0,0 +1,213 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -22541,12 +22699,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/opts.h linux-4.9.8/fs/aufs/opts.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_OPTS_H__ */
-diff -Naur linux-4.9.8-orig/fs/aufs/plink.c linux-4.9.8/fs/aufs/plink.c
---- linux-4.9.8-orig/fs/aufs/plink.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/plink.c	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/plink.c linux-4.9.18/fs/aufs/plink.c
+--- linux-4.9.18-orig/fs/aufs/plink.c	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/plink.c	2017-02-20 22:01:47.919903500 +0300
 @@ -0,0 +1,514 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -23059,12 +23217,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/plink.c linux-4.9.8/fs/aufs/plink.c
 +		}
 +	}
 +}
-diff -Naur linux-4.9.8-orig/fs/aufs/poll.c linux-4.9.8/fs/aufs/poll.c
---- linux-4.9.8-orig/fs/aufs/poll.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/poll.c	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/poll.c linux-4.9.18/fs/aufs/poll.c
+--- linux-4.9.18-orig/fs/aufs/poll.c	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/poll.c	2017-03-27 13:08:01.480675600 +0300
 @@ -0,0 +1,52 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -23099,7 +23257,7 @@ diff -Naur linux-4.9.8-orig/fs/aufs/poll.c linux-4.9.8/fs/aufs/poll.c
 +	sb = file->f_path.dentry->d_sb;
 +	si_read_lock(sb, AuLock_FLUSH | AuLock_NOPLMW);
 +
-+	h_file = au_read_pre(file, /*keep_fi*/0);
++	h_file = au_read_pre(file, /*keep_fi*/0, /*lsc*/0);
 +	err = PTR_ERR(h_file);
 +	if (IS_ERR(h_file))
 +		goto out;
@@ -23115,12 +23273,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/poll.c linux-4.9.8/fs/aufs/poll.c
 +	AuTraceErr((int)mask);
 +	return mask;
 +}
-diff -Naur linux-4.9.8-orig/fs/aufs/posix_acl.c linux-4.9.8/fs/aufs/posix_acl.c
---- linux-4.9.8-orig/fs/aufs/posix_acl.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/posix_acl.c	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/posix_acl.c linux-4.9.18/fs/aufs/posix_acl.c
+--- linux-4.9.18-orig/fs/aufs/posix_acl.c	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/posix_acl.c	2017-02-20 22:01:47.919903500 +0300
 @@ -0,0 +1,102 @@
 +/*
-+ * Copyright (C) 2014-2016 Junjiro R. Okajima
++ * Copyright (C) 2014-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -23221,12 +23379,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/posix_acl.c linux-4.9.8/fs/aufs/posix_acl.c
 +out:
 +	return err;
 +}
-diff -Naur linux-4.9.8-orig/fs/aufs/procfs.c linux-4.9.8/fs/aufs/procfs.c
---- linux-4.9.8-orig/fs/aufs/procfs.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/procfs.c	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/procfs.c linux-4.9.18/fs/aufs/procfs.c
+--- linux-4.9.18-orig/fs/aufs/procfs.c	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/procfs.c	2017-02-20 22:01:47.919903500 +0300
 @@ -0,0 +1,169 @@
 +/*
-+ * Copyright (C) 2010-2016 Junjiro R. Okajima
++ * Copyright (C) 2010-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -23394,12 +23552,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/procfs.c linux-4.9.8/fs/aufs/procfs.c
 +out:
 +	return err;
 +}
-diff -Naur linux-4.9.8-orig/fs/aufs/rdu.c linux-4.9.8/fs/aufs/rdu.c
---- linux-4.9.8-orig/fs/aufs/rdu.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/rdu.c	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/rdu.c linux-4.9.18/fs/aufs/rdu.c
+--- linux-4.9.18-orig/fs/aufs/rdu.c	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/rdu.c	2017-02-20 22:01:47.919903500 +0300
 @@ -0,0 +1,381 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -23779,12 +23937,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/rdu.c linux-4.9.8/fs/aufs/rdu.c
 +	return err;
 +}
 +#endif
-diff -Naur linux-4.9.8-orig/fs/aufs/rwsem.h linux-4.9.8/fs/aufs/rwsem.h
---- linux-4.9.8-orig/fs/aufs/rwsem.h	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/rwsem.h	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/rwsem.h linux-4.9.18/fs/aufs/rwsem.h
+--- linux-4.9.18-orig/fs/aufs/rwsem.h	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/rwsem.h	2017-02-20 22:01:47.919903500 +0300
 @@ -0,0 +1,198 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -23981,12 +24139,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/rwsem.h linux-4.9.8/fs/aufs/rwsem.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_RWSEM_H__ */
-diff -Naur linux-4.9.8-orig/fs/aufs/sbinfo.c linux-4.9.8/fs/aufs/sbinfo.c
---- linux-4.9.8-orig/fs/aufs/sbinfo.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/sbinfo.c	2017-02-01 15:51:06.000000000 +0000
-@@ -0,0 +1,355 @@
+diff -Naur linux-4.9.18-orig/fs/aufs/sbinfo.c linux-4.9.18/fs/aufs/sbinfo.c
+--- linux-4.9.18-orig/fs/aufs/sbinfo.c	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/sbinfo.c	2017-02-20 22:01:47.919903500 +0300
+@@ -0,0 +1,304 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -24032,10 +24190,6 @@ diff -Naur linux-4.9.8-orig/fs/aufs/sbinfo.c linux-4.9.8/fs/aufs/sbinfo.c
 +	au_rw_write_unlock(&sbinfo->si_rwsem);
 +
 +	au_delayed_kfree(sbinfo->si_branch);
-+	for (i = 0; i < AU_NPIDMAP; i++)
-+		if (sbinfo->au_si_pid.pid_bitmap[i])
-+			au_delayed_kfree(sbinfo->au_si_pid.pid_bitmap[i]);
-+	mutex_destroy(&sbinfo->au_si_pid.pid_mtx);
 +	mutex_destroy(&sbinfo->si_xib_mtx);
 +	AuRwDestroy(&sbinfo->si_rwsem);
 +
@@ -24063,7 +24217,6 @@ diff -Naur linux-4.9.8-orig/fs/aufs/sbinfo.c linux-4.9.8/fs/aufs/sbinfo.c
 +
 +	au_nwt_init(&sbinfo->si_nowait);
 +	au_rw_init_wlock(&sbinfo->si_rwsem);
-+	mutex_init(&sbinfo->au_si_pid.pid_mtx);
 +
 +	percpu_counter_init(&sbinfo->si_ninodes, 0, GFP_NOFS);
 +	percpu_counter_init(&sbinfo->si_nfiles, 0, GFP_NOFS);
@@ -24294,58 +24447,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/sbinfo.c linux-4.9.8/fs/aufs/sbinfo.c
 +	di_write_unlock2(d1, d2);
 +	si_read_unlock(d1->d_sb);
 +}
-+
-+/* ---------------------------------------------------------------------- */
-+
-+static void si_pid_alloc(struct au_si_pid *au_si_pid, int idx)
-+{
-+	unsigned long *p;
-+
-+	BUILD_BUG_ON(sizeof(unsigned long) !=
-+		     sizeof(*au_si_pid->pid_bitmap));
-+
-+	mutex_lock(&au_si_pid->pid_mtx);
-+	p = au_si_pid->pid_bitmap[idx];
-+	while (!p) {
-+		/*
-+		 * bad approach.
-+		 * but keeping 'si_pid_set()' void is more important.
-+		 */
-+		p = kcalloc(BITS_TO_LONGS(AU_PIDSTEP),
-+			    sizeof(*au_si_pid->pid_bitmap),
-+			    GFP_NOFS);
-+		if (p)
-+			break;
-+		cond_resched();
-+	}
-+	au_si_pid->pid_bitmap[idx] = p;
-+	mutex_unlock(&au_si_pid->pid_mtx);
-+}
-+
-+void si_pid_set(struct super_block *sb)
-+{
-+	pid_t bit;
-+	int idx;
-+	unsigned long *bitmap;
-+	struct au_si_pid *au_si_pid;
-+
-+	si_pid_idx_bit(&idx, &bit);
-+	au_si_pid = &au_sbi(sb)->au_si_pid;
-+	bitmap = au_si_pid->pid_bitmap[idx];
-+	if (!bitmap) {
-+		si_pid_alloc(au_si_pid, idx);
-+		bitmap = au_si_pid->pid_bitmap[idx];
-+	}
-+	AuDebugOn(test_bit(bit, bitmap));
-+	set_bit(bit, bitmap);
-+	/* smp_mb(); */
-+}
-diff -Naur linux-4.9.8-orig/fs/aufs/spl.h linux-4.9.8/fs/aufs/spl.h
---- linux-4.9.8-orig/fs/aufs/spl.h	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/spl.h	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/spl.h linux-4.9.18/fs/aufs/spl.h
+--- linux-4.9.18-orig/fs/aufs/spl.h	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/spl.h	2017-02-20 22:01:47.919903500 +0300
 @@ -0,0 +1,113 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -24457,12 +24564,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/spl.h linux-4.9.8/fs/aufs/spl.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_SPL_H__ */
-diff -Naur linux-4.9.8-orig/fs/aufs/super.c linux-4.9.8/fs/aufs/super.c
---- linux-4.9.8-orig/fs/aufs/super.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/super.c	2017-02-06 02:53:34.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/super.c linux-4.9.18/fs/aufs/super.c
+--- linux-4.9.18-orig/fs/aufs/super.c	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/super.c	2017-02-20 22:01:47.919903500 +0300
 @@ -0,0 +1,1044 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -25505,12 +25612,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/super.c linux-4.9.8/fs/aufs/super.c
 +	/* no need to __module_get() and module_put(). */
 +	.owner		= THIS_MODULE,
 +};
-diff -Naur linux-4.9.8-orig/fs/aufs/super.h linux-4.9.8/fs/aufs/super.h
---- linux-4.9.8-orig/fs/aufs/super.h	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/super.h	2017-02-01 15:51:06.000000000 +0000
-@@ -0,0 +1,639 @@
+diff -Naur linux-4.9.18-orig/fs/aufs/super.h linux-4.9.18/fs/aufs/super.h
+--- linux-4.9.18-orig/fs/aufs/super.h	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/super.h	2017-02-20 22:01:47.919903500 +0300
+@@ -0,0 +1,617 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -25590,13 +25697,6 @@ diff -Naur linux-4.9.8-orig/fs/aufs/super.h linux-4.9.8/fs/aufs/super.h
 +#endif
 +};
 +
-+#define AU_PIDSTEP	(int)(BITS_TO_LONGS(PID_MAX_DEFAULT) * BITS_PER_LONG)
-+#define AU_NPIDMAP	(int)DIV_ROUND_UP(PID_MAX_LIMIT, AU_PIDSTEP)
-+struct au_si_pid {
-+	unsigned long	*pid_bitmap[AU_NPIDMAP];
-+	struct mutex	pid_mtx;
-+};
-+
 +struct au_branch;
 +struct au_sbinfo {
 +	/* nowait tasks in the system-wide workqueue */
@@ -25607,9 +25707,6 @@ diff -Naur linux-4.9.8-orig/fs/aufs/super.h linux-4.9.8/fs/aufs/super.h
 +	 * rwsem for au_sbinfo is necessary.
 +	 */
 +	struct au_rwsem		si_rwsem;
-+
-+	/* prevent recursive locking in deleting inode */
-+	struct au_si_pid	au_si_pid;
 +
 +	/*
 +	 * dirty approach to protect sb->sb_inodes and ->s_files (gone) from
@@ -25952,42 +26049,30 @@ diff -Naur linux-4.9.8-orig/fs/aufs/super.h linux-4.9.8/fs/aufs/super.h
 +
 +/* ---------------------------------------------------------------------- */
 +
-+static inline void si_pid_idx_bit(int *idx, pid_t *bit)
-+{
-+	/* the origin of pid is 1, but the bitmap's is 0 */
-+	*bit = current->pid - 1;
-+	*idx = *bit / AU_PIDSTEP;
-+	*bit %= AU_PIDSTEP;
-+}
++/* current->atomic_flags */
++/* this value should never corrupt the ones defined in linux/sched.h */
++#define PFA_AUFS	7
++
++TASK_PFA_TEST(AUFS, test_aufs)	/* task_test_aufs */
++TASK_PFA_SET(AUFS, aufs)	/* task_set_aufs */
++TASK_PFA_CLEAR(AUFS, aufs)	/* task_clear_aufs */
 +
 +static inline int si_pid_test(struct super_block *sb)
 +{
-+	pid_t bit;
-+	int idx;
-+	unsigned long *bitmap;
-+
-+	si_pid_idx_bit(&idx, &bit);
-+	bitmap = au_sbi(sb)->au_si_pid.pid_bitmap[idx];
-+	if (bitmap)
-+		return test_bit(bit, bitmap);
-+	return 0;
++	return !!task_test_aufs(current);
 +}
 +
 +static inline void si_pid_clr(struct super_block *sb)
 +{
-+	pid_t bit;
-+	int idx;
-+	unsigned long *bitmap;
-+
-+	si_pid_idx_bit(&idx, &bit);
-+	bitmap = au_sbi(sb)->au_si_pid.pid_bitmap[idx];
-+	BUG_ON(!bitmap);
-+	AuDebugOn(!test_bit(bit, bitmap));
-+	clear_bit(bit, bitmap);
-+	/* smp_mb(); */
++	AuDebugOn(!task_test_aufs(current));
++	task_clear_aufs(current);
 +}
 +
-+void si_pid_set(struct super_block *sb);
++static inline void si_pid_set(struct super_block *sb)
++{
++	AuDebugOn(task_test_aufs(current));
++	task_set_aufs(current);
++}
 +
 +/* ---------------------------------------------------------------------- */
 +
@@ -26148,12 +26233,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/super.h linux-4.9.8/fs/aufs/super.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_SUPER_H__ */
-diff -Naur linux-4.9.8-orig/fs/aufs/sysaufs.c linux-4.9.8/fs/aufs/sysaufs.c
---- linux-4.9.8-orig/fs/aufs/sysaufs.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/sysaufs.c	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/sysaufs.c linux-4.9.18/fs/aufs/sysaufs.c
+--- linux-4.9.18-orig/fs/aufs/sysaufs.c	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/sysaufs.c	2017-02-20 22:01:47.919903500 +0300
 @@ -0,0 +1,104 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -26256,12 +26341,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/sysaufs.c linux-4.9.8/fs/aufs/sysaufs.c
 +out:
 +	return err;
 +}
-diff -Naur linux-4.9.8-orig/fs/aufs/sysaufs.h linux-4.9.8/fs/aufs/sysaufs.h
---- linux-4.9.8-orig/fs/aufs/sysaufs.h	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/sysaufs.h	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/sysaufs.h linux-4.9.18/fs/aufs/sysaufs.h
+--- linux-4.9.18-orig/fs/aufs/sysaufs.h	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/sysaufs.h	2017-02-20 22:01:47.919903500 +0300
 @@ -0,0 +1,101 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -26361,12 +26446,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/sysaufs.h linux-4.9.8/fs/aufs/sysaufs.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __SYSAUFS_H__ */
-diff -Naur linux-4.9.8-orig/fs/aufs/sysfs.c linux-4.9.8/fs/aufs/sysfs.c
---- linux-4.9.8-orig/fs/aufs/sysfs.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/sysfs.c	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/sysfs.c linux-4.9.18/fs/aufs/sysfs.c
+--- linux-4.9.18-orig/fs/aufs/sysfs.c	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/sysfs.c	2017-02-20 22:01:47.919903500 +0300
 @@ -0,0 +1,376 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -26741,12 +26826,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/sysfs.c linux-4.9.8/fs/aufs/sysfs.c
 +		}
 +	}
 +}
-diff -Naur linux-4.9.8-orig/fs/aufs/sysrq.c linux-4.9.8/fs/aufs/sysrq.c
---- linux-4.9.8-orig/fs/aufs/sysrq.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/sysrq.c	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/sysrq.c linux-4.9.18/fs/aufs/sysrq.c
+--- linux-4.9.18-orig/fs/aufs/sysrq.c	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/sysrq.c	2017-02-20 22:01:47.919903500 +0300
 @@ -0,0 +1,157 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -26902,12 +26987,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/sysrq.c linux-4.9.8/fs/aufs/sysrq.c
 +	if (unlikely(err))
 +		pr_err("err %d (ignored)\n", err);
 +}
-diff -Naur linux-4.9.8-orig/fs/aufs/vdir.c linux-4.9.8/fs/aufs/vdir.c
---- linux-4.9.8-orig/fs/aufs/vdir.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/vdir.c	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/vdir.c linux-4.9.18/fs/aufs/vdir.c
+--- linux-4.9.18-orig/fs/aufs/vdir.c	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/vdir.c	2017-02-20 22:01:47.923903400 +0300
 @@ -0,0 +1,900 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -27806,12 +27891,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/vdir.c linux-4.9.8/fs/aufs/vdir.c
 +	/* smp_mb(); */
 +	return 0;
 +}
-diff -Naur linux-4.9.8-orig/fs/aufs/vfsub.c linux-4.9.8/fs/aufs/vfsub.c
---- linux-4.9.8-orig/fs/aufs/vfsub.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/vfsub.c	2017-02-06 02:53:34.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/vfsub.c linux-4.9.18/fs/aufs/vfsub.c
+--- linux-4.9.18-orig/fs/aufs/vfsub.c	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/vfsub.c	2017-02-20 22:01:47.923903400 +0300
 @@ -0,0 +1,899 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -28709,12 +28794,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/vfsub.c linux-4.9.8/fs/aufs/vfsub.c
 +
 +	return err;
 +}
-diff -Naur linux-4.9.8-orig/fs/aufs/vfsub.h linux-4.9.8/fs/aufs/vfsub.h
---- linux-4.9.8-orig/fs/aufs/vfsub.h	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/vfsub.h	2017-02-06 02:53:34.000000000 +0000
-@@ -0,0 +1,318 @@
+diff -Naur linux-4.9.18-orig/fs/aufs/vfsub.h linux-4.9.18/fs/aufs/vfsub.h
+--- linux-4.9.18-orig/fs/aufs/vfsub.h	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/vfsub.h	2017-03-27 13:08:01.480675600 +0300
+@@ -0,0 +1,348 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -28981,6 +29066,36 @@ diff -Naur linux-4.9.8-orig/fs/aufs/vfsub.h linux-4.9.8/fs/aufs/vfsub.h
 +		struct file *h_file);
 +int vfsub_fsync(struct file *file, struct path *path, int datasync);
 +
++/*
++ * re-use branch fs's ioctl(FICLONE) while aufs itself doesn't support such
++ * ioctl.
++ */
++static inline int vfsub_clone_file_range(struct file *src, struct file *dst,
++					 u64 len)
++{
++	int err;
++
++	lockdep_off();
++	err = vfs_clone_file_range(src, 0, dst, 0, len);
++	lockdep_on();
++
++	return err;
++}
++
++/* copy_file_range(2) is a systemcall */
++static inline ssize_t vfsub_copy_file_range(struct file *src, loff_t src_pos,
++					    struct file *dst, loff_t dst_pos,
++					    size_t len, unsigned int flags)
++{
++	ssize_t ssz;
++
++	lockdep_off();
++	ssz = vfs_copy_file_range(src, src_pos, dst, dst_pos, len, flags);
++	lockdep_on();
++
++	return ssz;
++}
++
 +/* ---------------------------------------------------------------------- */
 +
 +static inline loff_t vfsub_llseek(struct file *file, loff_t offset, int origin)
@@ -29031,12 +29146,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/vfsub.h linux-4.9.8/fs/aufs/vfsub.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_VFSUB_H__ */
-diff -Naur linux-4.9.8-orig/fs/aufs/wbr_policy.c linux-4.9.8/fs/aufs/wbr_policy.c
---- linux-4.9.8-orig/fs/aufs/wbr_policy.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/wbr_policy.c	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/wbr_policy.c linux-4.9.18/fs/aufs/wbr_policy.c
+--- linux-4.9.18-orig/fs/aufs/wbr_policy.c	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/wbr_policy.c	2017-02-20 22:01:47.923903400 +0300
 @@ -0,0 +1,830 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -29865,12 +29980,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/wbr_policy.c linux-4.9.8/fs/aufs/wbr_policy.
 +		.fin	= au_wbr_create_fin_mfs
 +	}
 +};
-diff -Naur linux-4.9.8-orig/fs/aufs/whout.c linux-4.9.8/fs/aufs/whout.c
---- linux-4.9.8-orig/fs/aufs/whout.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/whout.c	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/whout.c linux-4.9.18/fs/aufs/whout.c
+--- linux-4.9.18-orig/fs/aufs/whout.c	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/whout.c	2017-02-20 22:01:47.923903400 +0300
 @@ -0,0 +1,1061 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -30930,12 +31045,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/whout.c linux-4.9.8/fs/aufs/whout.c
 +		au_whtmp_rmdir_free(args);
 +	}
 +}
-diff -Naur linux-4.9.8-orig/fs/aufs/whout.h linux-4.9.8/fs/aufs/whout.h
---- linux-4.9.8-orig/fs/aufs/whout.h	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/whout.h	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/whout.h linux-4.9.18/fs/aufs/whout.h
+--- linux-4.9.18-orig/fs/aufs/whout.h	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/whout.h	2017-02-20 22:01:47.923903400 +0300
 @@ -0,0 +1,85 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -31019,12 +31134,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/whout.h linux-4.9.8/fs/aufs/whout.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_WHOUT_H__ */
-diff -Naur linux-4.9.8-orig/fs/aufs/wkq.c linux-4.9.8/fs/aufs/wkq.c
---- linux-4.9.8-orig/fs/aufs/wkq.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/wkq.c	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/wkq.c linux-4.9.18/fs/aufs/wkq.c
+--- linux-4.9.18-orig/fs/aufs/wkq.c	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/wkq.c	2017-02-20 22:01:47.923903400 +0300
 @@ -0,0 +1,213 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -31236,12 +31351,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/wkq.c linux-4.9.8/fs/aufs/wkq.c
 +
 +	return err;
 +}
-diff -Naur linux-4.9.8-orig/fs/aufs/wkq.h linux-4.9.8/fs/aufs/wkq.h
---- linux-4.9.8-orig/fs/aufs/wkq.h	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/wkq.h	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/wkq.h linux-4.9.18/fs/aufs/wkq.h
+--- linux-4.9.18-orig/fs/aufs/wkq.h	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/wkq.h	2017-02-20 22:01:47.923903400 +0300
 @@ -0,0 +1,93 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -31333,12 +31448,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/wkq.h linux-4.9.8/fs/aufs/wkq.h
 +
 +#endif /* __KERNEL__ */
 +#endif /* __AUFS_WKQ_H__ */
-diff -Naur linux-4.9.8-orig/fs/aufs/xattr.c linux-4.9.8/fs/aufs/xattr.c
---- linux-4.9.8-orig/fs/aufs/xattr.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/xattr.c	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/xattr.c linux-4.9.18/fs/aufs/xattr.c
+--- linux-4.9.18-orig/fs/aufs/xattr.c	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/xattr.c	2017-02-20 22:01:47.923903400 +0300
 @@ -0,0 +1,357 @@
 +/*
-+ * Copyright (C) 2014-2016 Junjiro R. Okajima
++ * Copyright (C) 2014-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -31694,12 +31809,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/xattr.c linux-4.9.8/fs/aufs/xattr.c
 +{
 +	sb->s_xattr = au_xattr_handlers;
 +}
-diff -Naur linux-4.9.8-orig/fs/aufs/xino.c linux-4.9.8/fs/aufs/xino.c
---- linux-4.9.8-orig/fs/aufs/xino.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/fs/aufs/xino.c	2017-02-01 15:51:06.000000000 +0000
+diff -Naur linux-4.9.18-orig/fs/aufs/xino.c linux-4.9.18/fs/aufs/xino.c
+--- linux-4.9.18-orig/fs/aufs/xino.c	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/fs/aufs/xino.c	2017-02-20 22:01:47.923903400 +0300
 @@ -0,0 +1,1318 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -33016,12 +33131,12 @@ diff -Naur linux-4.9.8-orig/fs/aufs/xino.c linux-4.9.8/fs/aufs/xino.c
 +out:
 +	return err;
 +}
-diff -Naur linux-4.9.8-orig/include/uapi/linux/aufs_type.h linux-4.9.8/include/uapi/linux/aufs_type.h
---- linux-4.9.8-orig/include/uapi/linux/aufs_type.h	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.9.8/include/uapi/linux/aufs_type.h	2017-02-06 02:53:34.000000000 +0000
+diff -Naur linux-4.9.18-orig/include/uapi/linux/aufs_type.h linux-4.9.18/include/uapi/linux/aufs_type.h
+--- linux-4.9.18-orig/include/uapi/linux/aufs_type.h	1970-01-01 03:00:00.000000000 +0300
++++ linux-4.9.18/include/uapi/linux/aufs_type.h	2017-03-27 13:08:01.480675600 +0300
 @@ -0,0 +1,419 @@
 +/*
-+ * Copyright (C) 2005-2016 Junjiro R. Okajima
++ * Copyright (C) 2005-2017 Junjiro R. Okajima
 + *
 + * This program, aufs is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License as published by
@@ -33061,7 +33176,7 @@ diff -Naur linux-4.9.8-orig/include/uapi/linux/aufs_type.h linux-4.9.8/include/u
 +
 +#include <linux/limits.h>
 +
-+#define AUFS_VERSION	"4.9-20170206"
++#define AUFS_VERSION	"4.9-20170327"
 +
 +/* todo? move this to linux-2.6.19/include/magic.h */
 +#define AUFS_SUPER_MAGIC	('a' << 24 | 'u' << 16 | 'f' << 8 | 's')
