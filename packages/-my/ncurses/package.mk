@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="ncurses"
-PKG_VERSION="6.0-20170325"
+PKG_VERSION="6.0-20170318"
 PKG_SITE="http://www.gnu.org/software/ncurses/"
 PKG_URL="ftp://invisible-island.net/ncurses/current/ncurses-$PKG_VERSION.tgz"
 PKG_DEPENDS_TARGET="toolchain zlib"
@@ -63,7 +63,7 @@ pre_configure_target() {
   # causes some segmentation fault's (dialog) when compiled with gcc's link time optimization.
   strip_lto
   export CFLAGS="$CFLAGS -fPIC"
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
+  #export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
 }
 
 post_makeinstall_target() {

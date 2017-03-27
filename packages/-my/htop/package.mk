@@ -5,7 +5,10 @@ PKG_DEPENDS_TARGET="toolchain hwloc ncurses"
 PKG_SECTION="debug/tools"
 PKG_AUTORECONF="yes"
 
-MAKEFLAGS=-j1
+pre_configure_target() {
+  #export LIBS="-lterminfo"
+  export MAKEFLAGS=-j1
+}
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-cgroup \
 			      --enable-vserver \
