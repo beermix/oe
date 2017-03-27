@@ -28,4 +28,4 @@ PKG_LONGDESC="SWIG is a software development tool that connects programs written
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
+PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared --with-gnu-ld"

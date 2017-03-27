@@ -254,5 +254,7 @@ post_install() {
   mkdir -p $INSTALL/usr/lib/firmware/
     ln -sf /storage/.config/firmware/ $INSTALL/usr/lib/firmware/updates
 
+  # bluez looks in /etc/firmware/
+    ln -sf /usr/lib/firmware/ $INSTALL/etc/firmware
   enable_service module-load.service
 }

@@ -29,11 +29,11 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-shared \
-			      --enable-static \
-			      --disable-log \
-			      --disable-debug-log \
-			      --enable-udev \
-			      --disable-examples-build"
+            --enable-static \
+            --disable-log \
+            --disable-debug-log \
+            --enable-udev \
+            --disable-examples-build"
 
 pre_configure_target () {
   #libusb sometimes fails to build if building paralell

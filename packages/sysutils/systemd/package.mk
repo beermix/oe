@@ -17,10 +17,10 @@
 ################################################################################
 
 PKG_NAME="systemd"
-PKG_VERSION="v233"
+PKG_VERSION="3b07d03"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/systemd"
 PKG_GIT_URL="https://github.com/systemd/systemd"
-PKG_DEPENDS_TARGET="toolchain gperf:host  libcap util-linux entropy openssl xz zlib lz4 lzo bzip2 lrzip"
+PKG_DEPENDS_TARGET="toolchain libcap gperf:host util-linux entropy xz zlib lz4 lzo bzip2 lrzip"
 PKG_SECTION="system"
 PKG_SHORTDESC="systemd: a system and session manager"
 PKG_LONGDESC="systemd is a system and session manager for Linux, compatible with SysV and LSB init scripts. systemd provides aggressive parallelization capabilities, uses socket and D-Bus activation for starting services, offers on-demand starting of daemons, keeps track of processes using Linux cgroups, supports snapshotting and restoring of the system state, maintains mount and automount points and implements an elaborate transactional dependency-based service control logic. It can work as a drop-in replacement for sysvinit."
@@ -31,8 +31,8 @@ PKG_AUTORECONF="yes"
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            ac_cv_have_decl_IFLA_BOND_AD_INFO=no \
                            ac_cv_have_decl_IFLA_BRPORT_UNICAST_FLOOD=no \
-                           ac_cv_path_MOUNT_PATH="/usr/bin/mount"
-                           ac_cv_path_UMOUNT_PATH="/usr/bin/umount"
+                           ac_cv_path_MOUNT_PATH=/bin/mount \
+                           ac_cv_path_UMOUNT_PATH=/bin/umount \
                            --disable-nls \
                            --disable-dbus \
                            --disable-utmp \
@@ -71,7 +71,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-randomseed \
                            --disable-backlight \
                            --disable-rfkill \
-                           --enable-logind \
+                           --enable-logind --without-kill-user-processes \
                            --disable-machined \
                            --disable-importd \
                            --disable-hostnamed \
@@ -80,7 +80,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-localed \
                            --disable-coredump \
                            --disable-polkit \
-                           --disable-resolved \
+                           --disable-resolved --with-default-dnssec=allow-downgrade \
                            --disable-networkd \
                            --disable-efi \
                            --disable-gnuefi \
@@ -90,7 +90,8 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-manpages \
                            --disable-hibernate \
                            --disable-ldconfig \
-                           --disable-split-usr \
+                           --disable-tpm --with-tpm-pcrindex=8 \
+                           --enable-split-usr \
                            --disable-tests \
                            --without-python \
                            --with-sysvinit-path= \
@@ -99,7 +100,9 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --with-dbuspolicydir=/etc/dbus-1/system.d \
                            --with-dbussessionservicedir=/usr/share/dbus-1/services \
                            --with-dbussystemservicedir=/usr/share/dbus-1/system-services \
-                           --with-default-hierarchy=hybrid"
+                           --with-default-hierarchy=hybrid \
+                           --with-rootprefix=/usr \
+                           --with-rootlibdir=/usr/lib"
 
 pre_build_target() {
 # broken autoreconf
@@ -191,6 +194,7 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin/systemd-machine-id-setup
   mkdir -p $INSTALL/usr/bin
   cp $PKG_DIR/scripts/systemd-machine-id-setup $INSTALL/usr/bin
+  cp $PKG_DIR/scripts/userconfig-setup $INSTALL/usr/bin
 
   # provide 'halt', 'shutdown', 'reboot' & co.
   mkdir -p $INSTALL/usr/sbin

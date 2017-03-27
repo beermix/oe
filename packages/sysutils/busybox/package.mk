@@ -21,7 +21,7 @@ PKG_VERSION="1.26.2"
 PKG_SITE="http://www.busybox.net"
 PKG_URL="http://busybox.net/downloads/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain busybox:host hdparm dosfstools e2fsprogs zip unzip pcre expat zlib bzip2 xz lz4 libaio icu openssl tar pciutils usbutils parted procps-ng coreutils time bash findutils less libuv libev"
+PKG_DEPENDS_TARGET="toolchain busybox:host hdparm dosfstools e2fsprogs zip unzip pcre expat zlib bzip2 xz lz4 libaio icu openssl tar pciutils usbutils parted procps-ng coreutils time bash findutils less libuv libev libarchive"
 PKG_DEPENDS_INIT="toolchain"
 PKG_SECTION="system"
 PKG_SHORTDESC="BusyBox: The Swiss Army Knife of Embedded Linux"
@@ -179,7 +179,6 @@ makeinstall_target() {
     #rm $INSTALL/bin/hostname
     #rm $INSTALL/sbin/ip
 
-    
   mkdir -p $INSTALL/usr/lib/openelec
     cp $PKG_DIR/scripts/fs-resize $INSTALL/usr/lib/openelec
       sed -e "s/@DISTRONAME@/$DISTRONAME/g" -i $INSTALL/usr/lib/openelec/fs-resize

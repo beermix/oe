@@ -18,9 +18,9 @@
 ################################################################################
 
 PKG_NAME="glib"
-PKG_VERSION="2.52.0"
+PKG_VERSION="2.50.3"
 PKG_SITE="http://www.gtk.org/"
-PKG_URL="http://ftp.gnome.org/pub/gnome/sources/glib/2.52/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="http://ftp.gnome.org/pub/gnome/sources/glib/2.50/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain zlib libffi attr util-linux expat pcre Python:host"
 PKG_DEPENDS_HOST="libffi:host"
 PKG_SECTION="devel"
@@ -31,8 +31,8 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 pre_configure_target() {
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed|-Wl,--no-as-needed|"`
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--as-needed|-Wl,--no-as-needed|"`
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--as-needed|-Wl,--no-as-needed|g"`
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed|-Wl,--no-as-needed|g"`
 }
                            
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_mmap_fixed_mapped=yes \
@@ -72,20 +72,19 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/lib/glib-2.0
   rm -rf $INSTALL/usr/share
 
-  
   ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/gapplication $ROOT/$BUILD/toolchain/bin/
-ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/gdbus $ROOT/$BUILD/toolchain/bin/
-ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/gdbus-codegen $ROOT/$BUILD/toolchain/bin/
-ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/gio $ROOT/$BUILD/toolchain/bin/
-ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/gio-querymodules $ROOT/$BUILD/toolchain/bin/
-ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/glib-compile-resources $ROOT/$BUILD/toolchain/bin/
-ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/glib-compile-schemas $ROOT/$BUILD/toolchain/bin/
-ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/glib-genmarshal $ROOT/$BUILD/toolchain/bin/
-ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/glib-gettextize $ROOT/$BUILD/toolchain/bin/
-ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/glib-mkenums $ROOT/$BUILD/toolchain/bin/
-ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/gobject-query $ROOT/$BUILD/toolchain/bin/
-ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/gresource $ROOT/$BUILD/toolchain/bin/
-ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/gsettings $ROOT/$BUILD/toolchain/bin/
-ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/gtester $ROOT/$BUILD/toolchain/bin/
-ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/gtester-report $ROOT/$BUILD/toolchain/bin/
+  ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/gdbus $ROOT/$BUILD/toolchain/bin/
+  ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/gdbus-codegen $ROOT/$BUILD/toolchain/bin/
+  ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/gio $ROOT/$BUILD/toolchain/bin/
+  ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/gio-querymodules $ROOT/$BUILD/toolchain/bin/
+  ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/glib-compile-resources $ROOT/$BUILD/toolchain/bin/
+  ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/glib-compile-schemas $ROOT/$BUILD/toolchain/bin/
+  ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/glib-genmarshal $ROOT/$BUILD/toolchain/bin/
+  ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/glib-gettextize $ROOT/$BUILD/toolchain/bin/
+  ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/glib-mkenums $ROOT/$BUILD/toolchain/bin/
+  ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/gobject-query $ROOT/$BUILD/toolchain/bin/
+  ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/gresource $ROOT/$BUILD/toolchain/bin/
+  ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/gsettings $ROOT/$BUILD/toolchain/bin/
+  ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/gtester $ROOT/$BUILD/toolchain/bin/
+  ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/gtester-report $ROOT/$BUILD/toolchain/bin/
 }
