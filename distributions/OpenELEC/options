@@ -130,7 +130,7 @@
   PPTP_SUPPORT="no"
 
 # build and install OpenVPN support (yes / no)
-  OPENVPN_SUPPORT="no"
+  OPENVPN_SUPPORT="yes"
 
 # build and install diskmounter support (udevil)
 # this service provide auto mounting support for external drives in the
