@@ -24,5 +24,5 @@ PKG_CONFIGURE_OPTS_TARGET="--bindir=/bin \
 			      --with-term-lib='ncursesw' \
 			      --disable-dynamic-nss \
 			      --disable-zsh-debug \
-			      --enable-cap \
+			      --disable-cap \
 			      --enable-unicode9"

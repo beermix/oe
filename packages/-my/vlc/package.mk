@@ -153,7 +153,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 pre_configure_target() {
   export LDFLAGS="$LDFLAGS -lresolv"
   #export LIBS="-latomic"
-  strip_lto
+  #strip_lto
   #strip_gold
   #strip_hard
 }
