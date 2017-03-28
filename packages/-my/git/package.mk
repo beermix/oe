@@ -7,18 +7,20 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 pre_configure_target() {
-  cd $ROOT/$PKG_BUILD
-  #export NO_EXPAT="YesPlease"
-  export NO_MKSTEMPS="YesPlease"
-  export NO_GETTEXT="YesPlease"
-  export NO_UNIX_SOCKETS="YesPlease"
-  export NO_NSEC="YesPlease"
-  export NO_PERL="YesPlease"
-  export NO_PYTHON="YesPlease" 
-  export NO_TCLTK="YesPlease"
-  export NO_SVN_TESTS="YesPlease"
-  export USE_LIBPCRE="1"
-  export XDL_FAST_HASH="YesPlease"
+  CC="$CC" \
+  CFLAGS="$CFLAGS" \
+  CPPFLAGS="$CPPFLAGS" \
+  LDFLAGS="$LDFLAGS" \
+  NO_EXPAT="YesPlease" \
+  NO_MKSTEMPS="YesPlease" \
+  NO_GETTEXT="YesPlease" \
+  NO_UNIX_SOCKETS="YesPlease" \
+  NO_ICONV="YesPlease" \
+  NO_NSEC="YesPlease" \
+  NO_PERL="YesPlease" \
+  NO_PYTHON="YesPlease" \
+  NO_TCLTK="YesPlease" \
+  NO_INSTALL_HARDLINKS="yes" \
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
