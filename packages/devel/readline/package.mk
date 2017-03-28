@@ -38,6 +38,6 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/share/readline
 }
 
-pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC -DPIC"
-}
+#pre_configure_target() {
+#  export CFLAGS="$CFLAGS -fPIC -DPIC"
+#}
