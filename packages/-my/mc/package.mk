@@ -3,7 +3,7 @@ PKG_VERSION="4.8.19"
 PKG_URL="http://ftp.midnight-commander.org/${PKG_NAME}-${PKG_VERSION}.tar.xz"
 PKG_DEPENDS_TARGET="toolchain libtool:host gettext:host e2fsprogs util-linux glib pcre fuse libssh2 libevent expat ncurses"
 PKG_SECTION="tools"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 pre_configure_target() {
   export LIBS="$LIBS -lssh2 -lmbedcrypto"
@@ -48,4 +48,5 @@ PKG_CONFIGURE_OPTS_TARGET="fu_cv_sys_stat_statfs2_bsize=yes \
                            --with-pcre=$SYSROOT_PREFIX/usr \
                            --without-debug \
                            --without-gnome \
-                           --without-samba"
+                           --without-samba \
+                           --with-sysroot=$SYSROOT_PREFIX"
