@@ -372,13 +372,8 @@ show_config() {
   echo -e "$show_message"
 }
 # strip
-debug_strip() {
-  if [ ! "$DEBUG" = yes ]; then
+ debug_strip() {
+   if [ ! "$DEBUG" = yes ]; then
     find $* -type f -executable | xargs $STRIP 2>/dev/null || :
-  fi
-}
-
-# Use distribution functions if any
-if [ -f "distributions/$DISTRO/config/functions" ]; then
-  . distributions/$DISTRO/config/functions
-fi
+   fi
+ }
