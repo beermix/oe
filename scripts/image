@@ -112,9 +112,9 @@ fi
 
 # create /etc/issue
   echo "$DISTRONAME ($([ "$OFFICIAL" = "yes" ] && echo "official" ||  echo "community")) Version: $OPENELEC_VERSION" >> $INSTALL/etc/issue
-  #if [ -n "$GIT_HASH" ]; then
-  #  echo "$DISTRONAME git: $GIT_HASH" >> $INSTALL/etc/issue
-  #fi
+  if [ -n "$GIT_HASH" ]; then
+    echo "$DISTRONAME git: $GIT_HASH" >> $INSTALL/etc/issue
+  fi
 
   ln -sf /etc/issue $INSTALL/etc/motd
 
@@ -211,13 +211,7 @@ fi
     rm -rf $TARGET_IMG/$IMAGE_NAME.kernel
 
 # copy kernel to target dir
-  if [ "$BOOTLOADER" = "bcm2835-firmware" ]; then
-    echo "injecting DeviceTreeBlobs to kernel..."
-    perl $BUILD/linux-$(get_pkg_version linux)/scripts/mkknlimg $BUILD/linux-$(get_pkg_version linux)/arch/$TARGET_KERNEL_ARCH/boot/$KERNEL_TARGET $TARGET_IMG/$IMAGE_NAME.kernel
-    echo "...done"
-  else
-    cp -PR $BUILD/linux-$(get_pkg_version linux)/arch/$TARGET_KERNEL_ARCH/boot/$KERNEL_TARGET $TARGET_IMG/$IMAGE_NAME.kernel
-  fi
+  cp -PR $BUILD/linux-$(get_pkg_version linux)/arch/$TARGET_KERNEL_ARCH/boot/$KERNEL_TARGET $TARGET_IMG/$IMAGE_NAME.kernel
   chmod 0644 $TARGET_IMG/$IMAGE_NAME.kernel
 
 # create squashfs file
