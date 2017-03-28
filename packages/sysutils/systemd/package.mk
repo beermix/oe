@@ -20,7 +20,7 @@ PKG_NAME="systemd"
 PKG_VERSION="v233"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/systemd"
 PKG_GIT_URL="https://github.com/systemd/systemd"
-PKG_DEPENDS_TARGET="toolchain gperf:host libcap util-linux entropy xz zlib lz4 lzo bzip2 lrzip"
+PKG_DEPENDS_TARGET="toolchain gperf:host libcap kmod util-linux entropy xz zlib lz4 lzo bzip2 lrzip"
 PKG_SECTION="system"
 PKG_SHORTDESC="systemd: a system and session manager"
 PKG_LONGDESC="systemd is a system and session manager for Linux, compatible with SysV and LSB init scripts. systemd provides aggressive parallelization capabilities, uses socket and D-Bus activation for starting services, offers on-demand starting of daemons, keeps track of processes using Linux cgroups, supports snapshotting and restoring of the system state, maintains mount and automount points and implements an elaborate transactional dependency-based service control logic. It can work as a drop-in replacement for sysvinit."
@@ -33,11 +33,12 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            ac_cv_have_decl_IFLA_BRPORT_UNICAST_FLOOD=no \
                            ac_cv_path_MOUNT_PATH=/bin/mount \
                            ac_cv_path_UMOUNT_PATH=/bin/umount \
+                           KMOD=/usr/bin/kmod \
                            --disable-nls \
                            --disable-dbus \
                            --disable-utmp \
                            --disable-coverage \
-                           --disable-kmod \
+                           --enable-kmod \
                            --disable-xkbcommon \
                            --enable-blkid \
                            --disable-seccomp \
