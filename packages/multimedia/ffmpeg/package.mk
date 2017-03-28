@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="LGPLv2.1+"
 PKG_SITE="https://ffmpeg.org"
 PKG_URL="https://ffmpeg.org/releases/${PKG_NAME}-${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl dcadec speex flac"
+PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl dcadec speex flac x265"
 PKG_PRIORITY="optional"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
@@ -208,7 +208,7 @@ configure_target() {
               --disable-libvo-amrwbenc \
               --disable-libvorbis \
               --disable-libvpx \
-              --disable-libx264 \
+              --enable-libx265 \
               --disable-libxavs \
               --disable-libxvid \
               --enable-zlib \

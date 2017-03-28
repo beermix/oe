@@ -25,9 +25,47 @@ HOST_CONFIGURE_OPTS="--prefix=$ROOT/$TOOLCHAIN \
 			--disable-system \
 			--disable-user \
 			--disable-docs"
+			
+pre_configure_target() {
+  cd $ROOT/$PKG_BUILD
+  rm -rf .$TARGET_NAME
+
+  #strip_lto
+
+  	strip_gold
+  
+  export pkg_config_exe="$ROOT/$TOOLCHAIN/bin/pkg-config"
+}
 
 configure_target() {
-  #strip_gold
-  cd $ROOT/$PKG_BUILD
-  ./configure --prefix=/usr --cc=$CC --cxx=$CXX --host-cc=gcc --disable-user --disable-docs --disable-debug-info --static --enable-opengl --enable-curl
+  ./configure --prefix=/usr \
+              --cpu="x86_64" \
+              --cross-prefix=${TARGET_NAME}- \
+              --source-path=$(get_pkg_build qemu) \
+              --cc="$CC" \
+              --cxx="$CXX" \
+              --host-cc="$HOST_CC" \
+              --extra-cflags="$CFLAGS" \
+              --extra-ldflags="$LDFLAGS -fPIC" \
+              --datadir="/storage/.config/qemu" \
+              --sysconfdir="/storage/.config/qemu" \
+              --smbd="/usr/bin/smbd" \
+              --static \
+              --enable-tcg-interpreter \
+              --disable-user \
+              --enable-system \
+              --disable-libnfs \
+              --enable-libssh2 \
+              --enable-bzip2 \
+              --enable-lzo \
+              --enable-libusb \
+              --enable-attr \
+              --enable-sdl \
+              --enable-linux-aio \
+              --disable-curl \
+              --enable-vnc \
+              --enable-curses \
+              --enable-gnutls \
+              --enable-guest-agent \
+              --disable-docs
 }

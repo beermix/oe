@@ -92,7 +92,8 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            --with-ssl \
                            --without-gnutls \
                            --with-mbedtls \
-                           --without-polarssl"
+                           --without-polarssl \
+                           --enable-static"
 
 pre_configure_target() {
 # link against librt because of undefined reference to 'clock_gettime'
