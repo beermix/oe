@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://www.jedsoft.org/slang/"
 PKG_URL="ftp://ftp.fu-berlin.de/pub/unix/misc/slang/v2.2/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain"
+PKG_DEPENDS_TARGET="toolchain pcre libpng"
 PKG_PRIORITY="optional"
 PKG_SECTION="devel"
 PKG_SHORTDESC="slang: library for the S-Lang extension language"
@@ -36,12 +36,12 @@ PKG_AUTORECONF="no"
 MAKEFLAGS="-j1"
 PKG_CONFIGURE_OPTS_TARGET="--without-iconv \
                            --without-onig \
-                           --without-pcre \
-                           --without-png \
+                           --with-pcre \
+                           --with-png \
                            --without-z \
                            --without-x"
 
-PKG_MAKE_OPTS_TARGET="-C src static"
+PKG_MAKE_OPTS_TARGET="-C src static "
 
 pre_configure_target() {
  # slang fails to build in subdirs
@@ -51,4 +51,5 @@ pre_configure_target() {
 
 makeinstall_target() {
   make DESTDIR="$SYSROOT_PREFIX" -C src install-static
+  make DESTDIR="$SYSROOT_PREFIX" install-pkgconfig
 }

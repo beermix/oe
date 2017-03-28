@@ -42,6 +42,7 @@ PKG_CONFIGURE_OPTS_TARGET="utrace_cv_cc_biarch=false \
 
 pre_configure_target() {
   export CFLAGS="$CFLAGS -fPIC -DPIC"
+  mkdir -p $ROOT/$PKG_BUILD/.install_dev/
 }
 
 make_target() {
@@ -54,6 +55,7 @@ make_target() {
 makeinstall_target() {
   make DESTDIR="$SYSROOT_PREFIX" -C libelf install-includeHEADERS install-pkgincludeHEADERS
   make DESTDIR="$SYSROOT_PREFIX" -C libdw install-includeHEADERS install-pkgincludeHEADERS
+  make DESTDIR="$ROOT/$PKG_BUILD/.install_dev" -C libdw install-includeHEADERS install-pkgincludeHEADERS
 
   mkdir -p $SYSROOT_PREFIX/usr/lib
     cp libelf/libelf.a $SYSROOT_PREFIX/usr/lib
