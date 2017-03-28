@@ -57,6 +57,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            --disable-tftp \
                            --disable-pop3 \
                            --disable-imap \
+                           --disable-ntlm-wb \
                            --disable-smb \
                            --disable-smtp \
                            --disable-gopher \

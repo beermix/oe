@@ -72,7 +72,7 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --disable-osmesa \
                            --disable-gallium-osmesa \
                            --enable-egl --with-egl-platforms=x11,drm \
-                           --disable-xa \
+                           --enable-xa \
                            --enable-gbm \
                            --disable-nine \
                            --disable-xvmc \
