@@ -41,11 +41,8 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-plugins \
                          --enable-gold \
                          --enable-ld=default \
-                         --enable-threads \
-                         --enable-shared \
-                         --enable-deterministic-archives \
-                         --with-pic \
                          --enable-lto \
+                         --disable-shared \
                          --disable-gdb \
                          --enable-poison-system-directories"
 
