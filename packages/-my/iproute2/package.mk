@@ -11,12 +11,6 @@ pre_configure_target() {
 }
 
 make_target() {
-  make \
-       CC="$CC" \
-       LD="$LD" \
-       AR="$AR" \
-       XCFLAGS="$CFLAGS" \
-       XLDFLAGS="$LDFLAGS" \
-       all -j1
+  make CC="$CC" LD="$LD" AR="$AR" XCFLAGS="$CFLAGS" XLDFLAGS="$LDFLAGS" all -j1
 }
 

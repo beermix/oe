@@ -18,11 +18,11 @@
 ################################################################################
 
 PKG_NAME="open-vm-tools"
-PKG_VERSION="stable-10.1.0"
+PKG_VERSION="stable-10.1.5"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPL"
 PKG_SITE="http://open-vm-tools.sourceforge.net"
-PKG_URL="https://github.com/vmware/open-vm-tools/archive/${PKG_VERSION}.tar.gz"
+PKG_GIT_URL="https://github.com/vmware/open-vm-tools"
 PKG_DEPENDS_TARGET="toolchain glib:host glib libdnet fuse"
 PKG_SECTION="virtualization"
 PKG_SHORTDESC="open-vm-tools: open source implementation of VMware Tools"
@@ -40,21 +40,22 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-docs \
                            --without-ssl \
                            --without-x \
                            --without-xerces \
-                           --without-icu \
-                           --without-procps \
-                           --without-kernel-modules \
+                           --with-icu \
+                           --with-procps \
+                           --with-kernel-modules=$(get_pkg_build linux) \
                            --with-udev-rules-dir=/usr/lib/udev/rules.d/ \
                            --with-sysroot=$SYSROOT_PREFIX"
 
 post_unpack() {
   mv $PKG_BUILD/$PKG_NAME/* $PKG_BUILD/
 
-  sed -i -e 's|.*common-agent/etc/config/Makefile.*||' $ROOT/$PKG_BUILD/configure.ac
-  mkdir -p $ROOT/$PKG_BUILD/common-agent/etc/config
+  sed -i -e 's|.*common-agent/etc/config/Makefile.*||' $PKG_BUILD/configure.ac
+  mkdir -p $PKG_BUILD/common-agent/etc/config
 }
 
 pre_configure_target() {
   export LIBS="-ldnet"
+  strip_gold
 }
 
 post_makeinstall_target() {

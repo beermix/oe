@@ -13,6 +13,7 @@ PKG_SECTION="xmedia/tools"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
+
 PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --without-contrib \
 			      --disable-nls \
@@ -152,10 +153,9 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 
 pre_configure_target() {
   export LDFLAGS="$LDFLAGS -lresolv"
-  #export LIBS="-latomic"
+  export LIBS="-latomic"
+  strip_gold
   #strip_lto
-  #strip_gold
-  #strip_hard
 }
 
 post_makeinstall_target() {

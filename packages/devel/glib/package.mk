@@ -34,6 +34,8 @@ pre_configure_target() {
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--as-needed|-Wl,--no-as-needed|g"`
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed|-Wl,--no-as-needed|g"`
 }
+     
+PKG_CONFIGURE_OPTS_HOST="--disable-gtk-doc --disable-man --enable-libmount=no --disable-shared"
                            
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_mmap_fixed_mapped=yes \
                            ac_cv_func_posix_getpwuid_r=yes \
