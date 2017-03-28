@@ -155,7 +155,7 @@ pre_configure_target() {
   export LDFLAGS="$LDFLAGS -lresolv"
   export LIBS="-latomic"
   strip_gold
-  #strip_lto
+  strip_lto
 }
 
 post_makeinstall_target() {
