@@ -1,7 +1,7 @@
 PKG_NAME="netdata"
 PKG_VERSION="1.6.0"
 PKG_URL="https://github.com/firehol/netdata/releases/download/v$PKG_VERSION/netdata-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain util-linux netbsd-curses sysstat libmnl zlib libnetfilter_acct lm_sensors"
+PKG_DEPENDS_TARGET="toolchain util-linux netbsd-curses sysstat libmnl zlib libnetfilter_acct lm_sensors mysqlclient fping"
 PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
 PKG_AUTORECONF="yes"
