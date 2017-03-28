@@ -29,4 +29,4 @@ PKG_AUTORECONF="yes"
 
 MAKEFLAGS=-j1
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --disable-cli"
+PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --enable-cli"

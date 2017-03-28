@@ -40,18 +40,18 @@
 
   # Kernel to use. values can be:
   # default:  default mainline kernel
-    LINUX=""
+    LINUX="default"
 
 
 ################################################################################
-#  --param l1-cache-size=32 --param l1-cache-line-size=64 --param l2-cache-size=6144 -mpclmul -mpopcnt  -mrdrnd -mf16c -mfsgsbase -mfxsr -mxsave -mxsaveopt  -mcx16 -msahf 
+# setup build defaults
 ################################################################################
 
   # Build optimizations (size/normal)
     OPTIMIZATIONS="size"
 
   # Project CFLAGS
-   PROJECT_CFLAGS="-mmmx -msse -msse2 -msse3 -mssse3 -maes -mavx -msse4.2 -msse4.1 -mfpmath=sse"
+    PROJECT_CFLAGS="-mmmx -msse -msse2 -msse3 -mssse3 -maes -mavx -msse4.2 -msse4.1 -mfpmath=sse"
 
   # LTO (Link Time Optimization) support
     LTO_SUPPORT="yes"
@@ -60,7 +60,7 @@
     GOLD_SUPPORT="yes"
 
   # SquashFS compression method (gzip / lzo / xz / lz4)
-    SQUASHFS_COMPRESSION="lz4"
+    SQUASHFS_COMPRESSION="gzip"
 
 
 ################################################################################
@@ -95,12 +95,12 @@
   # for a list of additinoal drivers see packages/linux-drivers
   # Space separated list is supported,
   # e.g. ADDITIONAL_DRIVERS="DRIVER1 DRIVER2"
-   # ADDITIONAL_DRIVERS="$ADDITIONAL_DRIVERS bcm_sta"
+    ADDITIONAL_DRIVERS="$ADDITIONAL_DRIVERS bcm_sta"
 
   # install extra kernel drivers, see configfiles in packages/linux/config/*.config
   # or projects/*/linux/*.config or distributions/*/linux/*.config
   # please add all configfiles which should be included without the suffix and prefix
   # except the default-*.config and the ones included in packages/linux/package.mk
   # Space separated list is supported,
-    KERNEL_EXTRA_CONFIG+=""
-    KERNEL_EXTRA_CONFIG+="sata lan-pci sound-pci sensors remote"
+    KERNEL_EXTRA_CONFIG+=" keyboard-at mouse-ps2"
+    KERNEL_EXTRA_CONFIG+=" sata lan-pci wlan-pci sound-pci sound-soc-x86"

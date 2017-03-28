@@ -28,7 +28,7 @@ PKG_USE_CMAKE="no"
 PKG_AUTORECONF="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_HOST="--disable-hardening"
+#PKG_CONFIGURE_OPTS_HOST="--disable-hardening"
 
 configure_target() {
   :
