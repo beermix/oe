@@ -54,7 +54,7 @@ case "$LINUX" in
     PKG_PATCH_DIRS="linux-4.8 imx6-4.8"
     ;;
   rpi)
-    PKG_VERSION="b76c8d5"
+    PKG_VERSION="883de20"
     PKG_GIT_URL="https://github.com/raspberrypi/linux.git"
     PKG_GIT_BRANCH="rpi-4.9.y"
     PKG_PATCH_DIRS="linux-4.9 rpi-4.9"
@@ -254,5 +254,7 @@ post_install() {
   mkdir -p $INSTALL/usr/lib/firmware/
     ln -sf /storage/.config/firmware/ $INSTALL/usr/lib/firmware/updates
 
+  # bluez looks in /etc/firmware/
+    ln -sf /usr/lib/firmware/ $INSTALL/etc/firmware
   enable_service module-load.service
 }

@@ -51,7 +51,7 @@
     OPTIMIZATIONS="size"
 
   # Project CFLAGS
-   PROJECT_CFLAGS="-mmmx -msse -msse2 -msse3 -mssse3 -maes -mavx -msse4.2 -msse4.1 -mtune=ivybridge -mfpmath=sse"
+   PROJECT_CFLAGS="-mmmx -msse -msse2 -msse3 -mssse3 -maes -mavx -msse4.2 -msse4.1 -mfpmath=sse"
 
   # LTO (Link Time Optimization) support
     LTO_SUPPORT="yes"
