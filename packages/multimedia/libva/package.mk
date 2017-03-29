@@ -42,7 +42,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-silent-rules \
                            --disable-dummy-driver \
                            --with-drivers-path=/usr/lib/va"
 
-post_makeinstall_target() {
-  mkdir -p $INSTALL/usr/bin
-  cp test/vainfo/.libs/vainfo $INSTALL/usr/bin
-}
+#post_makeinstall_target() {
+#  mkdir -p $INSTALL/usr/bin
+#  cp test/vainfo/.libs/vainfo $INSTALL/usr/bin
+#}
