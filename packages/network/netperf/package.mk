@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,25 +16,18 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="autoconf-archive"
-PKG_VERSION="2016.09.16"
-#PKG_VERSION="2017.03.21"
-PKG_SITE="http://ftp.gnu.org/gnu/autoconf-archive"
-PKG_URL="http://ftp.gnu.org/gnu/autoconf-archive/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_HOST="ccache:host"
-PKG_SECTION="toolchain/devel"
-PKG_SHORTDESC="autoconf-archive: macros for autoconf"
-PKG_LONGDESC="autoconf-archive is an package of m4 macros"
+PKG_NAME="netperf"
+PKG_VERSION="2.7.0"
+PKG_URL="ftp://ftp.netperf.org/netperf/netperf-$PKG_VERSION.tar.gz"
+PKG_DEPENDS_TARGET="toolchain"
+PKG_SECTION="network"
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME --prefix=$ROOT/$TOOLCHAIN"
-
-makeinstall_host() {
-# make install
-  make prefix=$SYSROOT_PREFIX/usr install
-
-# remove problematic m4 file
-  rm -rf $SYSROOT_PREFIX/usr/share/aclocal/ax_prog_cc_for_build.m4
+pre_configure_target() {
+  export CFLAGS="$CFLAGS -std=gnu89"
 }
+
+
+PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_setpgrp_void=yes --enable-demo"
