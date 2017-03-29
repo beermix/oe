@@ -34,11 +34,11 @@ PKG_MAKE_OPTS_HOST="ARCH=$TARGET_ARCH CROSS_COMPILE= KBUILD_VERBOSE=1 install"
 
 PKG_MAKE_OPTS_TARGET="ARCH=$TARGET_ARCH \
                       CROSS_COMPILE=${TARGET_NAME}- \
-                      KBUILD_VERBOSE=1 \
+                      KBUILD_VERBOSE=0 \
                       install"
 PKG_MAKE_OPTS_INIT="ARCH=$TARGET_ARCH \
                     CROSS_COMPILE=${TARGET_NAME}- \
-                    KBUILD_VERBOSE=1 \
+                    KBUILD_VERBOSE=0 \
                     install"
 
 # nfs support
@@ -115,8 +115,8 @@ configure_target() {
     fi
 
     # optimize for size
-    CFLAGS=`echo $CFLAGS | sed -e "s|-Ofast|-O2|"`
-    CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O2|"`
+    CFLAGS=`echo $CFLAGS | sed -e "s|-Ofast|-O2|g"`
+    CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O2|g"`
 
     # busybox fails to build with GOLD support enabled with binutils-2.25
     strip_gold
@@ -134,8 +134,8 @@ configure_init() {
     sed -i -e "s|^CONFIG_PREFIX=.*$|CONFIG_PREFIX=\"$INSTALL\"|" .config
 
     # optimize for size
-    CFLAGS=`echo $CFLAGS | sed -e "s|-Ofast|-O2|"`
-    CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O2|"`
+    CFLAGS=`echo $CFLAGS | sed -e "s|-Ofast|-O2|g"`
+    CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O2|g"`
 
     # busybox fails to build with GOLD support enabled with binutils-2.25
     strip_gold
@@ -147,17 +147,17 @@ configure_init() {
 
 pre_make_host() {
   # dont build parallel
-  MAKEFLAGS=-j1
+  MAKEFLAGS
 }
 
 pre_make_target() {
   # dont build parallel
-  MAKEFLAGS=-j1
+  MAKEFLAGS
 }
 
 pre_make_init() {
   # dont build parallel
-  MAKEFLAGS=-j1
+  MAKEFLAGS
 }
 makeinstall_host() {
   mkdir -p $ROOT/$TOOLCHAIN/

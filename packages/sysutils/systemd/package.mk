@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="systemd"
-PKG_VERSION="v233"
+PKG_VERSION="3b07d03"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/systemd"
 PKG_GIT_URL="https://github.com/systemd/systemd"
 PKG_DEPENDS_TARGET="toolchain gperf:host libcap util-linux entropy xz zlib lz4 lzo bzip2 lrzip"
@@ -90,7 +90,8 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-manpages \
                            --disable-hibernate \
                            --disable-ldconfig \
-                           --disable-split-usr \
+                           --disable-tpm --with-tpm-pcrindex=8 \
+                           --enable-split-usr \
                            --disable-tests \
                            --without-python \
                            --with-sysvinit-path= \
