@@ -18,9 +18,9 @@
 ################################################################################
 
 PKG_NAME="glib"
-PKG_VERSION="2.50.3"
+PKG_VERSION="2.52.0"
 PKG_SITE="http://www.gtk.org/"
-PKG_URL="http://ftp.gnome.org/pub/gnome/sources/glib/2.50/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="http://ftp.gnome.org/pub/gnome/sources/glib/2.52/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain zlib libffi attr util-linux expat pcre Python:host"
 PKG_DEPENDS_HOST="libffi:host pcre:host"
 PKG_SECTION="devel"
