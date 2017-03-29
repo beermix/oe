@@ -17,11 +17,11 @@
 ################################################################################
 
 PKG_NAME="qtbase"
-PKG_VERSION="5.8.0"
+PKG_VERSION="5.6.2"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://qt-project.org"
-PKG_URL="http://download.qt.io/official_releases/qt/5.8/$PKG_VERSION/submodules/$PKG_NAME-opensource-src-$PKG_VERSION.tar.xz"
+PKG_URL="http://download.qt.io/official_releases/qt/5.6/$PKG_VERSION/submodules/$PKG_NAME-opensource-src-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="pcre zlib"
 PKG_SOURCE_DIR="$PKG_NAME-opensource-src-$PKG_VERSION"
 PKG_SHORTDESC="A cross-platform application and UI framework"
@@ -30,19 +30,9 @@ PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="-prefix /usr
                            -sysroot $SYSROOT_PREFIX
-                           -device-option CROSS_COMPILE=${TARGET_NAME}-
-                           -no-gcc-sysroot
                            -hostprefix $TOOLCHAIN
                            -device linux-openelec-g++
                            -opensource -confirm-license
-                           -no-pch
-                           -no-cups
-                           -no-iconv
-                           -no-rpath
-                           -no-dbus
-                           -system-zlib
-                           -nomake tests
-                           -nomake examples
                            -release
                            -static
                            -make libs
@@ -61,6 +51,8 @@ PKG_CONFIGURE_OPTS_TARGET="-prefix /usr
                            -no-libproxy
                            -system-pcre
                            -no-glib
+                           -no-pulseaudio
+                           -no-alsa
                            -silent
                            -no-cups
                            -no-iconv
@@ -73,6 +65,7 @@ PKG_CONFIGURE_OPTS_TARGET="-prefix /usr
                            -no-opengl
                            -no-libudev
                            -no-libinput
+                           -no-gstreamer
                            -no-eglfs"
 
 configure_target() {

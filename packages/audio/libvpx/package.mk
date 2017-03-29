@@ -5,14 +5,18 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="tools"
 PKG_AUTORECONF="no"
 
-configure_target() {
+pre_configure_target() {
   cd $ROOT/$PKG_BUILD
-  
+  rm -rf .$TARGET_NAME
+}
+
+configure_target() {
   ./configure --prefix=/usr \
   		--target="x86_64-linux-gcc" \
   		--libc="$(get_pkg_build glibc)" \
   		--cpu=corei7 \
   		--as=yasm \
+  		--enable-pic \
   		--enable-vp8 \
   		--enable-vp9 \
   		--enable-postproc \
@@ -29,6 +33,7 @@ configure_target() {
   		--disable-runtime-cpu-detect \
   		--disable-shared
 }
+
 
 #post_makeinstall_target() {
  # rm -rf $INSTALL
