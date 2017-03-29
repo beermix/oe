@@ -76,9 +76,9 @@ PKG_AUTORECONF="no"
 
 PKG_MAKE_OPTS_HOST="headers_check"
 
-[ "$BUILD_ANDROID_BOOTIMG" = "yes" ] && PKG_DEPENDS_TARGET+=" mkbootimg:host"
-[ "$SWAP_SUPPORT" = yes ]            && KERNEL_EXTRA_CONFIG+=" swap"
-[ "$NFS_SUPPORT" = yes ]             && KERNEL_EXTRA_CONFIG+=" nfs"
+[ "$BUILD_ANDROID_BOOTIMG" = "no" ] && PKG_DEPENDS_TARGET+=" mkbootimg:host"
+[ "$SWAP_SUPPORT" = no ]            && KERNEL_EXTRA_CONFIG+=" swap"
+[ "$NFS_SUPPORT" = no ]             && KERNEL_EXTRA_CONFIG+=" nfs"
 [ "$SAMBA_SUPPORT" = yes ]           && KERNEL_EXTRA_CONFIG+=" samba"
 [ "$BLUETOOTH_SUPPORT" = yes ]       && KERNEL_EXTRA_CONFIG+=" bluetooth"
 [ "$UVESAFB_SUPPORT" = yes ]         && KERNEL_EXTRA_CONFIG+=" uvesafb"
@@ -150,6 +150,8 @@ post_patch() {
 
 makeinstall_host() {
   make INSTALL_HDR_PATH=dest headers_install
+  #make gcc-plugins
+  
   mkdir -p $SYSROOT_PREFIX/usr/include
     cp -R dest/include/* $SYSROOT_PREFIX/usr/include
 }
@@ -168,6 +170,7 @@ pre_make_target() {
 make_target() {
   unset LDFLAGS
 
+  make gcc-plugins
   make modules
   make INSTALL_MOD_PATH=$INSTALL/usr INSTALL_MOD_STRIP=1 modules_install
   rm -f $INSTALL/usr/lib/modules/*/build

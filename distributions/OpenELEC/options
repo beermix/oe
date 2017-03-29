@@ -69,9 +69,9 @@
 # please add all configfiles which should be included without the suffix and prefix
 # except the default-*.config and the ones included in packages/linux/package.mk wlan-other remote
 # Space separated list is supported, joystick
-  KERNEL_EXTRA_CONFIG+=" filesystem audio hid-drivers joystick"
+  KERNEL_EXTRA_CONFIG+=" filesystem audio"
   KERNEL_EXTRA_CONFIG+=" lan-usb lan-phy"
-  KERNEL_EXTRA_CONFIG+=" bluetooth sata samba wlan-usb wlan-othe usb-serial usb-gadget led"
+  KERNEL_EXTRA_CONFIG+=" bluetooth sata samba"
 
 # additional drivers to install:
 # for a list of additinoal drivers see packages/linux-drivers
@@ -106,7 +106,7 @@
   KODI_AIRTUNES_SUPPORT="no"
 
 # build with libnfs support (mounting nfs shares with KODI) (yes / no)
-  KODI_NFS_SUPPORT="yes"
+  KODI_NFS_SUPPORT="no"
 
 # build with Samba Client support (mounting SAMBA shares with KODI) (yes / no)
   KODI_SAMBA_SUPPORT="yes"
@@ -115,7 +115,7 @@
   KODI_LANGUAGE_ADDONS="no"
 
 # build with NFS support (mounting nfs shares via the OS) (yes / no)
-  NFS_SUPPORT="yes"
+  NFS_SUPPORT="no"
 
 # build with Samba Client support (mounting samba shares via the OS) (yes / no)
   SAMBA_SUPPORT="yes"
@@ -130,7 +130,7 @@
   PPTP_SUPPORT="no"
 
 # build and install OpenVPN support (yes / no)
-  OPENVPN_SUPPORT="yes"
+  OPENVPN_SUPPORT="no"
 
 # build and install diskmounter support (udevil)
 # this service provide auto mounting support for external drives in the
