@@ -10,22 +10,27 @@ configure_target() {
   
   ./configure --prefix=/usr \
   		--target="x86_64-linux-gcc" \
-  		--libc=$(get_pkg_build glibc) \
-  		--cpu="corei7" \
+  		--libc="$(get_pkg_build glibc)" \
+  		--cpu=corei7 \
   		--as=yasm \
-  		--disable-debug-libs \
   		--enable-vp8 \
   		--enable-vp9 \
   		--enable-postproc \
-  		--enable-spatial-svc \
+  		--enable-vp9-postproc \
+  		--enable-vp9-temporal-denoising \
+  		--enable-libyuv \
   		--enable-vp9-highbitdepth \
+  		--disable-encode-perf-tests \
+  		--disable-decode-perf-tests \
+  		--disable-unit-tests \
   		--disable-examples \
+  		--disable-debug-libs \
   		--disable-docs \
-  		--enable-runtime-cpu-detect \
+  		--disable-runtime-cpu-detect \
   		--disable-shared
 }
 
-post_makeinstall_target() {
+#post_makeinstall_target() {
  # rm -rf $INSTALL
-  make check V=s
-}
+ # make check V=s
+#}
