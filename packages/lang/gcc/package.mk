@@ -51,10 +51,8 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-shared \
                            --enable-linker-build-id \
                            --without-included-gettext \
-                           --enable-threads=posix \
                            --enable-nls \
                            --enable-clocale=gnu \
-                           --enable-libstdcxx-time=yes \
                            --enable-gnu-unique-object \
                            --disable-vtable-verify \
                            --enable-default-pie \
@@ -84,8 +82,10 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --disable-static \
                          --enable-c99 \
                          --enable-long-long \
-                         --enable-libatomic \
+                         --enable-threads=posix \
                          --disable-libstdcxx-pch \
+                         --enable-libstdcxx-time=yes \
+                         --enable-clocale=gnu \
                          $GCC_OPTS"
 
 pre_configure_host() {
