@@ -1,7 +1,7 @@
 PKG_NAME="coreutils"
 PKG_VERSION="8.27"
 PKG_URL="http://ftpmirror.gnu.org/coreutils/coreutils-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain acl attr libcap pcre readline gmp openssl"
+PKG_DEPENDS_TARGET="toolchain acl attr libcap pcre readline openssl"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
@@ -9,13 +9,11 @@ PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="PERL=missing \
 			      MAKEINFO=missing \
-			      --disable-nls \
-			      --enable-staic \
 			      --disable-shared \
-			      --with-gmp \
-			      --enable-no-install-program=hostname,su,kill,uptime,md5sum \
+			      --without-gmp \
 			      --without-selinux \
 			      --with-openssl \
 			      --disable-rpath \
 			      --enable-threads=posix \
+			      --enable-no-install-program=hostname,su,kill,uptime,md5sum \
 			      --enable-install-program=cat,chgrp,chmod,chown,cp,date,dd"

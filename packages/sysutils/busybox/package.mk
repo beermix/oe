@@ -145,20 +145,6 @@ configure_init() {
     make oldconfig
 }
 
-pre_make_host() {
-  # dont build parallel
-  MAKEFLAGS
-}
-
-pre_make_target() {
-  # dont build parallel
-  MAKEFLAGS
-}
-
-pre_make_init() {
-  # dont build parallel
-  MAKEFLAGS
-}
 makeinstall_host() {
   mkdir -p $ROOT/$TOOLCHAIN/
     cp -PR $ROOT/$PKG_BUILD/.install_host/* $ROOT/$TOOLCHAIN/
