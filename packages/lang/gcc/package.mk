@@ -17,10 +17,10 @@
 ################################################################################
 
 PKG_NAME="gcc"
+PKG_VERSION="7-20170326"
+PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 #PKG_VERSION="4fc40788"
 #PKG_GIT_URL="git://gcc.gnu.org/git/gcc.git"
-PKG_VERSION="6-20170323"
-PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host"
 PKG_DEPENDS_TARGET="gcc:host"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
@@ -43,28 +43,16 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-plugin \
                            --enable-lto \
                            --enable-gold \
-                           --enable-ld=default \
-                           --disable-browser-plugin \
-                           --disable-vtable-verify \
+                           --enable-target-optspace \
+                           --disable-libgomp \
+                           --disable-libmudflap \
                            --disable-multilib \
-                           --without-included-gettext \
-                           --enable-linker-build-id \
+                           --disable-libmpx \
                            --disable-nls \
-                           --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
                            --without-ppl \
                            --without-cloog \
-                           --disable-libada \
-                           --disable-libmudflap \
-                           --disable-libmpx \
-                           --disable-libssp \
-                           --disable-libitm \
-                           --disable-libquadmath \
-                           --disable-libquadmath-support \
-                           --disable-libgomp \
-                           --disable-libcilkrts \
                            --enable-poison-system-directories \
-                           --disable-werror \
                            --with-arch=ivybridge"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
@@ -76,7 +64,6 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-threads \
                               --without-headers \
                               --with-newlib \
-                              --disable-libatomic \
                               --disable-decimal-float \
                               $GCC_OPTS"
 
@@ -97,7 +84,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          $GCC_OPTS"
 
 pre_configure_host() {
-  export CXXFLAGS="$CXXFLAGS -std=gnu++98"
+  #export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
   sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $ROOT/$PKG_BUILD/gcc/configure
   sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $ROOT/$PKG_BUILD/libiberty/configure
