@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="7-20170326"
+PKG_VERSION="6-20170323"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 #PKG_VERSION="4fc40788"
 #PKG_GIT_URL="git://gcc.gnu.org/git/gcc.git"

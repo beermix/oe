@@ -54,7 +54,7 @@ case "$LINUX" in
     PKG_PATCH_DIRS="linux-4.8 imx6-4.8"
     ;;
   rpi)
-    PKG_VERSION="b76c8d5"
+    PKG_VERSION="cd6413a"
     PKG_GIT_URL="https://github.com/raspberrypi/linux.git"
     PKG_GIT_BRANCH="rpi-4.9.y"
     PKG_PATCH_DIRS="linux-4.9 rpi-4.9"
@@ -150,8 +150,6 @@ post_patch() {
 
 makeinstall_host() {
   make INSTALL_HDR_PATH=dest headers_install
-  #make gcc-plugins
-  
   mkdir -p $SYSROOT_PREFIX/usr/include
     cp -R dest/include/* $SYSROOT_PREFIX/usr/include
 }
@@ -170,7 +168,6 @@ pre_make_target() {
 make_target() {
   unset LDFLAGS
 
-  make gcc-plugins
   make modules
   make INSTALL_MOD_PATH=$INSTALL/usr INSTALL_MOD_STRIP=1 modules_install
   rm -f $INSTALL/usr/lib/modules/*/build
@@ -257,7 +254,5 @@ post_install() {
   mkdir -p $INSTALL/usr/lib/firmware/
     ln -sf /storage/.config/firmware/ $INSTALL/usr/lib/firmware/updates
 
-# bluez looks in /etc/firmware/
-#    ln -sf /usr/lib/firmware/ $INSTALL/etc/firmware
   enable_service module-load.service
 }

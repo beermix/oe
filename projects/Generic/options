@@ -40,7 +40,7 @@
 
   # Kernel to use. values can be:
   # default:  default mainline kernel
-    LINUX="default"
+    LINUX=""
 
 
 ################################################################################
@@ -60,7 +60,7 @@
     GOLD_SUPPORT="yes"
 
   # SquashFS compression method (gzip / lzo / xz / lz4)
-    SQUASHFS_COMPRESSION="lz4"
+    SQUASHFS_COMPRESSION="gzip"
 
 
 ################################################################################
@@ -88,19 +88,19 @@
   # additional Firmware to use (dvb-firmware, misc-firmware, wlan-firmware)
   # Space separated list is supported,
   # e.g. FIRMWARE="dvb-firmware misc-firmware wlan-firmware"
-   # FIRMWARE="misc-firmware wlan-firmware dvb-firmware iwlwifi-firmware"
-   #FIRMWARE="wlan-firmware"
+  #   FIRMWARE="misc-firmware wlan-firmware dvb-firmware iwlwifi-firmware"
+  #   FIRMWARE="wlan-firmware"
 
   # additional drivers to install:
   # for a list of additinoal drivers see packages/linux-drivers
   # Space separated list is supported,
   # e.g. ADDITIONAL_DRIVERS="DRIVER1 DRIVER2"
- #   ADDITIONAL_DRIVERS="$ADDITIONAL_DRIVERS bcm_sta"
+  #   ADDITIONAL_DRIVERS="$ADDITIONAL_DRIVERS bcm_sta"
 
   # install extra kernel drivers, see configfiles in packages/linux/config/*.config
   # or projects/*/linux/*.config or distributions/*/linux/*.config
   # please add all configfiles which should be included without the suffix and prefix
   # except the default-*.config and the ones included in packages/linux/package.mk
   # Space separated list is supported,
-    KERNEL_EXTRA_CONFIG+=" keyboard-at mouse-ps2"
-    KERNEL_EXTRA_CONFIG+=" sata lan-pci wlan-pci sound-pci sound-soc-x86"
+  #   KERNEL_EXTRA_CONFIG+=" keyboard-at mouse-ps2"
+  #   KERNEL_EXTRA_CONFIG+=" sata lan-pci wlan-pci sound-pci sound-soc-x86"
