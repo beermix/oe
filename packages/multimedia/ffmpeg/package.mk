@@ -118,9 +118,9 @@ configure_target() {
               --ld="$CC" \
               --host-cc="$HOST_CC" \
               --host-cflags="$HOST_CFLAGS" \
-              --host-ldflags="$HOST_LDFLAGS -fPIC" \
+              --host-ldflags="$HOST_LDFLAGS" \
               --host-libs="-lm" \
-              --extra-cflags="$CFLAGS -fPIC" \
+              --extra-cflags="$CFLAGS" \
               --extra-ldflags="$LDFLAGS -fPIC" \
               --extra-libs="$FFMPEG_LIBS" \
               --extra-version="" \
@@ -217,7 +217,7 @@ configure_target() {
               $FFMPEG_FPU \
               --enable-yasm \
               --disable-symver \
-              --enable-lto \
+              --disable-lto \
               --enable-runtime-cpudetect \
               --enable-indev=x11grab_xcb
 }

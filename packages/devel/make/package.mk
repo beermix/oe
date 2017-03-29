@@ -33,26 +33,21 @@ post_makeinstall_host() {
 
 PKG_CONFIGURE_OPTS_HOST="--disable-load --without-guile"
 
-configure_host() {
-  :
-}
-
-pre_configure_host() {
-  :
-}
-
-post_makeinstall_host() {
-  :
-}
-
-make_host() {
-  :
-}
-
-post_make_host() {
-  :
-}
-
-makeinstall_host() {
-  :
-}
+#configure_host() {
+#  :
+#}
+#pre_configure_host() {
+#  :
+#}
+#post_makeinstall_host() {
+#  :
+#}
+#make_host() {
+#  :
+#}
+#post_make_host() {
+#  :
+#}
+#makeinstall_host() {
+#  :
+#}
