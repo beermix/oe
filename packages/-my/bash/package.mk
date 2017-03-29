@@ -9,19 +9,17 @@ pre_configure_target() {
   export LIBS="-ltermcap -lcurses"
 }
 
-PKG_CONFIGURE_OPTS_TARGET="bash_cv_getenv_redef=no \
-			      bash_cv_job_control_missing=yes \
-			      --with-sysroot=$SYSROOT_PREFIX \
-                           --bindir=/bin \
+PKG_CONFIGURE_OPTS_TARGET="--bindir=/bin \
                            --with-curses \
                            --enable-readline \
                            --without-bash-malloc \
                            --with-installed-readline \
-                           --disable-static-link \
-                           --cache-file=/dev/null \
+                           --disable-net-redirections \
+                           --enable-command-timing \
+                           --enable-job-control \
                            --enable-history \
-                           --enable-alias \
-                           --enable-job-control"
+                           --disable-nls \
+                           --disable-rpath"
 			   
 post_makeinstall_target() {
   mkdir -p $INSTALL/bin

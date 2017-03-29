@@ -21,7 +21,7 @@ PKG_VERSION="1.26.2"
 PKG_SITE="http://www.busybox.net"
 PKG_URL="http://busybox.net/downloads/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain busybox:host hdparm dosfstools e2fsprogs zip unzip pcre expat zlib bzip2 xz lz4 libaio icu openssl tar pciutils usbutils parted procps-ng coreutils time bash findutils less libev libarchive"
+PKG_DEPENDS_TARGET="toolchain busybox:host hdparm dosfstools e2fsprogs zip unzip pcre expat zlib bzip2 xz lz4 libaio icu openssl tar pciutils usbutils parted procps-ng coreutils time bash findutils less"
 PKG_DEPENDS_INIT="toolchain"
 PKG_SECTION="system"
 PKG_SHORTDESC="BusyBox: The Swiss Army Knife of Embedded Linux"
@@ -96,7 +96,7 @@ configure_target() {
     # set install dir
     sed -i -e "s|^CONFIG_PREFIX=.*$|CONFIG_PREFIX=\"$INSTALL\"|" .config
 
-    if [ ! "$DEVTOOLS" = yes ]; then
+    if [ ! "$DEVTOOLS" = no ]; then
       sed -i -e "s|^CONFIG_DEVMEM=.*$|# CONFIG_DEVMEM is not set|" .config
     fi
 
@@ -106,7 +106,7 @@ configure_target() {
       sed -i -e "s|^CONFIG_CRONTAB=.*$|# CONFIG_CRONTAB is not set|" .config
     fi
 
-    if [ ! "$NFS_SUPPORT" = yes ]; then
+    if [ ! "$NFS_SUPPORT" = no ]; then
       sed -i -e "s|^CONFIG_FEATURE_MOUNT_NFS=.*$|# CONFIG_FEATURE_MOUNT_NFS is not set|" .config
     fi
 
