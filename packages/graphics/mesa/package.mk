@@ -20,7 +20,7 @@ PKG_NAME="mesa"
 PKG_VERSION="17.0.2"
 PKG_SITE="http://www.mesa3d.org/"
 PKG_URL="https://fossies.org/linux/misc/mesa-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain Python:host expat glproto dri2proto presentproto libdrm libXext libXdamage libXfixes libXxf86vm libxcb libX11 dri3proto libxshmfence zlib"
+PKG_DEPENDS_TARGET="toolchain Python:host expat glproto dri2proto presentproto libdrm libXext libXdamage libXfixes libXxf86vm libxcb libX11 systemd dri3proto libxshmfence openssl"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="mesa: 3-D graphics library with OpenGL API"
 PKG_LONGDESC="Mesa is a 3-D graphics library with an API which is very similar to that of OpenGL*. To the extent that Mesa utilizes the OpenGL command syntax or state machine, it is being used with authorization from Silicon Graphics, Inc. However, the author makes no claim that Mesa is in any way a compatible replacement for OpenGL or associated with Silicon Graphics, Inc. Those who want a licensed implementation of OpenGL should contact a licensed vendor. While Mesa is not a licensed OpenGL implementation, it is currently being tested with the OpenGL conformance tests. For the current conformance status see the CONFORM file included in the Mesa distribution."
@@ -46,6 +46,17 @@ else
   MESA_VDPAU="--disable-vdpau"
 fi
 
+XA_CONFIG="--disable-xa"
+for drv in $GRAPHIC_DRIVERS; do
+  [ "$drv" = "vmware" ] && XA_CONFIG="--enable-xa"
+done
+
+if [ "$OPENGLES_SUPPORT" = "yes" ]; then
+  MESA_GLES="--enable-gles2"
+else
+  MESA_GLES="--disable-gles2"
+fi
+ 
 PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            CXX_FOR_BUILD=$HOST_CXX \
                            CFLAGS_FOR_BUILD= \
@@ -55,46 +66,41 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            DRI_DRIVER_INSTALL_DIR=/usr/lib/dri \
                            DRI_DRIVER_SEARCH_DIR=/usr/lib/dri \
                            --disable-debug \
-                           --disable-profile \
-                           --disable-libglvnd \
                            --disable-mangling \
                            --enable-texture-float \
                            --enable-asm \
                            --disable-selinux \
                            --enable-opengl \
                            --disable-gles1 \
-                           --enable-gles2 \
+                           $MESA_GLES \
                            --enable-dri \
-                           --disable-gallium-extra-hud \
-                           --disable-lmsensors \
                            --enable-dri3 \
                            --enable-glx \
                            --disable-osmesa \
                            --disable-gallium-osmesa \
                            --enable-egl --with-egl-platforms=x11,drm \
-                           --enable-xa \
+                           $XA_CONFIG \
                            --enable-gbm \
                            --disable-nine \
                            --disable-xvmc \
                            $MESA_VDPAU \
                            --disable-omx \
                            --disable-va \
-                           --disable-opencl --disable-opencl-icd \
+                           --disable-opencl \
+                           --enable-opencl-icd \
                            --disable-gallium-tests \
                            --enable-shared-glapi \
+                           --enable-shader-cache \
                            --enable-driglx-direct \
                            --enable-glx-tls \
-                           --disable-glx-read-only-text \
                            $MESA_GALLIUM_LLVM \
-                           --disable-valgrind \
-                           --with-sysroot=$SYSROOT_PREFIX \
+                           --enable-silent-rules \
                            --with-gl-lib-name=GL \
                            --with-osmesa-lib-name=OSMesa \
                            --with-gallium-drivers=$GALLIUM_DRIVERS \
-                           --with-dri-driverdir=/usr/lib/dri \
-                           --with-dri-searchpath=/usr/lib/dri \
                            --with-dri-drivers=$DRI_DRIVERS \
-                           --without-vulkan-drivers"
+                           --with-vulkan-drivers=no \
+                           --with-sysroot=$SYSROOT_PREFIX"
 
 pre_configure_target() {
   export LIBS="-lxcb-dri3 -lxcb-present -lxcb-sync -lxshmfence -lz"
