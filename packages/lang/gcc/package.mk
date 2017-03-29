@@ -37,29 +37,20 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-lto \
                            --enable-gold \
                            --enable-ld=default \
-                           --enable-target-optspace \
-                           --disable-libgomp \
-                           --disable-libmudflap \
                            --disable-multilib \
-                           --disable-libmpx \
-                           --disable-libssp \
+                           --disable-nls \
                            --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
                            --without-ppl \
                            --without-cloog \
-                           --enable-poison-system-directories \
-                           --enable-shared \
-                           --enable-linker-build-id \
-                           --without-included-gettext \
-                           --enable-nls \
-                           --enable-clocale=gnu \
-                           --enable-gnu-unique-object \
-                           --disable-vtable-verify \
-                           --enable-default-pie \
-                           --with-system-zlib \
-                           --disable-browser-plugin \
-                           --with-target-system-zlib \
-                           --with-tune=generic"
+                           --disable-libada \
+                           --disable-libmudflap \
+                           --disable-libatomic \
+                           --disable-libitm \
+                           --disable-libquadmath \
+                           --disable-libgomp \
+                           --disable-libmpx \
+                           --disable-libssp"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
