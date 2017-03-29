@@ -5,17 +5,18 @@ PKG_DEPENDS_TARGET="toolchain openssl zlib libevent libcap"
 PKG_SECTION="security"
 PKG_AUTORECONF="yes"
 
+pre_configure_target() {
+  strip_lto
+  strip_gold
+}
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-gcc-hardening \
-			      --disable-linker-hardening \
-			      --enable-systemd \
+PKG_CONFIGURE_OPTS_TARGET="--enable-systemd \
 			      --disable-asciidoc \
 			      --disable-unittests \
 			      --disable-seccomp \
 			      --disable-libscrypt \
 			      --disable-dependency-tracking \
 			      --with-openssl-dir=$SYSROOT_PREFIX \
-			      --enable-static-openssl \
 			      --sysconfdir=/storage/.config \
 			      --datarootdir=/storage/.cache/tor \
 			      --datadir=/storage/.cache/tor \

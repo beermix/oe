@@ -7,12 +7,11 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 pre_configure_target() {
-   export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
-   strip_lto
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|g"`
 }
-   
+
 make_target() {
-make CC="$CC" AR="$AR" LD="$LD" XCFLAGS="$CFLAGS" RANLIB="$RANLIB" XLDFLAGS="$LDFLAGS" MAKEDEPPROG="$CC" CFLAGS="$CFLAGS" LDFLAGS="$LDFLAGS -pthread" -j1
+  make CC="$CC" AR="$AR" LD="$LD" XCFLAGS="$CFLAGS" RANLIB="$RANLIB" XLDFLAGS="$LDFLAGS" MAKEDEPPROG="$CC" CFLAGS="$CFLAGS" LDFLAGS="$LDFLAGS -lpthread"
 }
 
 install_target(){

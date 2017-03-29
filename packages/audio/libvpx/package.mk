@@ -7,29 +7,25 @@ PKG_AUTORECONF="no"
 
 configure_target() {
   cd $ROOT/$PKG_BUILD
+  
   ./configure --prefix=/usr \
-  		--target=x86_64-linux-gcc \
+  		--target="x86_64-linux-gcc" \
   		--libc=$(get_pkg_build glibc) \
-  		--cpu=ivybridge \
+  		--cpu="corei7" \
   		--as=yasm \
   		--disable-debug-libs \
-  		--enable-pic \
   		--enable-vp8 \
   		--enable-vp9 \
   		--enable-postproc \
   		--enable-spatial-svc \
   		--enable-vp9-highbitdepth \
-  		--disable-decode-perf-tests \
-  		--disable-encode-perf-tests \
   		--disable-examples \
-  		--disable-tools \
   		--disable-docs \
   		--enable-runtime-cpu-detect \
-  		--enable-static \
   		--disable-shared
 }
 
 post_makeinstall_target() {
-  rm -rf $INSTALL
-  #make test V=s
+ # rm -rf $INSTALL
+  make check V=s
 }

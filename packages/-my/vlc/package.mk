@@ -4,12 +4,11 @@
 ################################################################################
 
 PKG_NAME="vlc"
-#PKG_VERSION="2.2.5"
-#PKG_URL="https://nightlies.videolan.org/build/source/vlc-2.2.5-20170311-0221.1.tar.xz"
-PKG_VERSION="2.2.4"
-PKG_SITE="http://www.videolan.org"
-PKG_URL="http://download.videolan.org/$PKG_NAME/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain dbus libdvbpsi ffmpeg zlib lua libvorbis libogg flac gnutls libmpeg2 ImageMagick gstreamer"
+PKG_VERSION="2.2.5.1"
+PKG_URL="https://nightlies.videolan.org/build/source/vlc-2.2.5-20170328-0221.1.tar.xz"
+#PKG_VERSION="2.2.4"
+#PKG_URL="http://download.videolan.org/$PKG_NAME/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_DEPENDS_TARGET="toolchain dbus libdvbpsi ffmpeg zlib lua libvorbis libogg flac gnutls libmpeg2 gstreamer libshout"
 PKG_PRIORITY="optional"
 PKG_SECTION="xmedia/tools"
 PKG_SHORTDESC="VideoLAN multimedia player and streamer"
@@ -23,6 +22,7 @@ pre_configure_target() {
   
   export LUA_LIBS="-L$SYSROOT_PREFIX/usr/lib -llua -lm"
   export LIBS="-lterminfo"
+  export CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
@@ -58,8 +58,8 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-screen \
 			      --enable-ogg \
 			      --enable-mux_ogg \
-			      --disable-shout\
-			      --disable-mkv \
+			      --enable-shout\
+			      --enable-mkv \
 			      --disable-mod \
 			      --enable-mpc \
 			      --disable-gme \
@@ -84,28 +84,28 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --enable-libmpeg2 \
 			      --enable-vorbis \
 			      --disable-tremor \
-			      --disable-speex \
+			      --enable-speex \
 			      --disable-theora \
 			      --disable-schroedinger \
-			      --disable-png \
+			      --enable-png \
 			      --disable-x264 \
 			      --disable-fluidsynth \
 			      --disable-zvbi \
 			      --disable-telx \
-			      --disable-libass \
+			      --enable-libass \
 			      --disable-kate \
 			      --disable-tiger \
-			      --disable-libva \
+			      --enable-libva \
 			      --disable-vdpau \
 			      --without-x \
-			      --disable-xcb \
+			      --enable-xcb \
 			      --disable-xvideo \
 			      --disable-sdl \
 			      --disable-sdl-image \
-			      --disable-freetype \
-			      --disable-fribidi \
-			      --disable-fontconfig \
-			      --disable-libxml2 \
+			      --enable-freetype \
+			      --enable-fribidi \
+			      --enable-fontconfig \
+			      --enable-libxml2 \
 			      --disable-svg \
 			      --disable-directx \
 			      --disable-directfb \
@@ -127,7 +127,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-goom \
 			      --disable-projectm \
 			      --disable-atmo \
-			      --disable-bonjour \
+			      --enable-bonjour \
 			      --enable-udev \
 			      --disable-mtp \
 			      --disable-lirc \
