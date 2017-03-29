@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="LGPLv2.1+"
 PKG_SITE="https://ffmpeg.org"
 PKG_URL="https://ffmpeg.org/releases/${PKG_NAME}-${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl dcadec speex flac x265 libvpx"
+PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl dcadec speex flac"
 PKG_PRIORITY="optional"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
@@ -117,15 +117,15 @@ configure_target() {
               --cc="$CC" \
               --ld="$CC" \
               --host-cc="$HOST_CC" \
-              --host-cflags="$HOST_CFLAGS -D_BSD_SOURCE" \
-              --host-ldflags="$HOST_LDFLAGS" \
+              --host-cflags="$HOST_CFLAGS" \
+              --host-ldflags="$HOST_LDFLAGS -fPIC" \
               --host-libs="-lm" \
-              --extra-cflags="$CFLAGS" \
+              --extra-cflags="$CFLAGS -fPIC" \
               --extra-ldflags="$LDFLAGS -fPIC" \
               --extra-libs="$FFMPEG_LIBS" \
               --extra-version="" \
               --build-suffix="" \
-              --disable-static \
+              --enable-static \
               --enable-shared \
               --enable-gpl \
               --disable-version3 \
@@ -184,7 +184,7 @@ configure_target() {
               --enable-parsers \
               --enable-bsfs \
               --enable-protocol=http \
-              --disable-indevs \
+              --enable-indevs \
               --disable-outdevs \
               --enable-filters \
               --disable-avisynth \
@@ -207,8 +207,8 @@ configure_target() {
               --disable-libvo-aacenc \
               --disable-libvo-amrwbenc \
               --disable-libvorbis \
-              --enable-libvpx \
-              --enable-libx265 \
+              --disable-libvpx \
+              --disable-libx265 \
               --disable-libxavs \
               --disable-libxvid \
               --enable-zlib \
@@ -217,7 +217,7 @@ configure_target() {
               $FFMPEG_FPU \
               --enable-yasm \
               --disable-symver \
-              --disable-lto \
+              --enable-lto \
               --enable-runtime-cpudetect \
               --enable-indev=x11grab_xcb
 }
