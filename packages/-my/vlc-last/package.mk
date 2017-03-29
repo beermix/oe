@@ -1,35 +1,24 @@
 ################################################################################
 #      This file is part of Alex@ELEC - http://www.alexelec.in.ua
-#      Copyright (C) 2011-2016 Alexandr Zuyev (alex@alexelec.in.ua)
+#      Copyright (C) 2011-2017 Alexandr Zuyev (alex@alexelec.in.ua)
 ################################################################################
 
 PKG_NAME="vlc"
-#PKG_VERSION="2.2.5"
-#PKG_URL="https://nightlies.videolan.org/build/source/vlc-2.2.5-20170311-0221.1.tar.xz"
-PKG_VERSION="2.2.4"
-PKG_SITE="http://www.videolan.org"
-PKG_URL="http://download.videolan.org/$PKG_NAME/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain dbus libdvbpsi ffmpeg zlib lua libvorbis libogg flac gnutls libmpeg2 ImageMagick gstreamer"
-PKG_PRIORITY="optional"
+PKG_VERSION="2.2.5.1"
+PKG_URL="https://nightlies.videolan.org/build/source/vlc-2.2.5-20170321-0224.1.tar.xz"
+#PKG_VERSION="2.2.4"
+#PKG_URL="http://download.videolan.org/$PKG_NAME/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_DEPENDS_TARGET="toolchain dbus libdvbpsi gnutls ffmpeg alsa-lib libmpeg2 libvorbis gstreamer zlib lua:host lua"
 PKG_SECTION="xmedia/tools"
-PKG_SHORTDESC="VideoLAN multimedia player and streamer"
-PKG_LONGDESC="VLC is the VideoLAN project's media player. It plays MPEG, MPEG2, MPEG4, DivX, MOV, WMV, QuickTime, mp3, Ogg/Vorbis files, DVDs, VCDs, and multimedia streams from various network sources."
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-pre_configure_target() {
-# vlc fails to build with LTO optimization
-  strip_lto
-  
-  export LUA_LIBS="-L$SYSROOT_PREFIX/usr/lib -llua -lm"
-  #export LIBS="-lterminfo"
-}
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --without-contrib \
 			      --disable-nls \
 			      --disable-rpath \
-			      --enable-dbus \
+			      --disable-dbus \
 			      --disable-gprof \
 			      --disable-cprof \
 			      --disable-debug \
@@ -105,7 +94,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-freetype \
 			      --disable-fribidi \
 			      --disable-fontconfig \
-			      --disable-libxml2 \
+			      --enable-libxml2 \
 			      --disable-svg \
 			      --disable-directx \
 			      --disable-directfb \
@@ -141,7 +130,33 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-crystalhd \
 			      --disable-dxva2 \
 			      --enable-vlc \
-			      LUAC=$SYSROOT_PREFIX/usr/bin/luac"
+			      --disable-atmo \
+			      --disable-vsxu \
+			      --disable-projectm \
+			      --disable-goom \
+			      --disable-mfx \
+			      --disable-vda \
+			      --disable-vcd \
+			      --disable-mmal-codec \
+			      --disable-mmal-vout \
+			      --disable-jpeg \
+			      --disable-x262 \
+			      --disable-x265 \
+			      --disable-addonmanagermodules \
+			      --disable-chromaprint \
+			      --disable-decklink \
+			      --enable-optimize-memory \
+			      --enable-sse \
+			      --enable-mmx \
+			      --enable-optimizations \
+			      --disable-directfb"
+
+pre_configure_target() {
+  export LDFLAGS="$LDFLAGS -lresolv"
+  export LIBS="-latomic"
+  strip_gold
+  strip_lto
+}
 
 post_makeinstall_target() {
   rm -fr $INSTALL/usr/share/applications
