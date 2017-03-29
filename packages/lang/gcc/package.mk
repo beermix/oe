@@ -11,9 +11,6 @@
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-#
-#  You should have received a copy of the GNU General Public License
-#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
 PKG_NAME="gcc"
@@ -24,11 +21,7 @@ PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host"
 PKG_DEPENDS_TARGET="gcc:host"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
-PKG_PRIORITY="optional"
 PKG_SECTION="lang"
-PKG_SHORTDESC="gcc: The GNU Compiler Collection Version 4 (aka GNU C Compiler)"
-PKG_LONGDESC="This package contains the GNU Compiler Collection. It includes compilers for the languages C, C++, Objective C, Fortran 95, Java and others ... This GCC contains the Stack-Smashing Protector Patch which can be enabled with the -fstack-protector command-line option. More information about it ca be found at http://www.research.ibm.com/trl/projects/security/ssp/."
-
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
@@ -50,13 +43,25 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-multilib \
                            --disable-libmpx \
                            --disable-libssp \
-                           --disable-nls \
                            --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
                            --without-ppl \
                            --without-cloog \
                            --enable-poison-system-directories \
-                           --with-arch=ivybridge"
+                           --enable-shared \
+                           --enable-linker-build-id \
+                           --without-included-gettext \
+                           --enable-threads=posix \
+                           --enable-nls \
+                           --enable-clocale=gnu \
+                           --enable-libstdcxx-time=yes \
+                           --enable-gnu-unique-object \
+                           --disable-vtable-verify \
+                           --enable-default-pie \
+                           --with-system-zlib \
+                           --disable-browser-plugin \
+                           --with-target-system-zlib \
+                           --with-tune=generic"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
@@ -80,10 +85,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-c99 \
                          --enable-long-long \
                          --enable-libatomic \
-                         --enable-threads=posix \
                          --disable-libstdcxx-pch \
-                         --enable-libstdcxx-time \
-                         --enable-clocale=gnu \
                          $GCC_OPTS"
 
 pre_configure_host() {
