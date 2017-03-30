@@ -63,8 +63,9 @@ case "$LINUX" in
     PKG_PATCH_DIRS="linux-4.9"
     ;;
   zen-4.9)
-    PKG_VERSION="4081025"
-    PKG_GIT_URL="git://github.com/zen-kernel/zen-kernel.git"
+    PKG_VERSION="4081025c"
+    PKG_URL="https://github.com/zen-kernel/zen-kernel/archive/$PKG_VERSION.zip"
+    PKG_SOURCE_DIR="zen-kernel-${PKG_VERSION}"
     PKG_PATCH_DIRS="linux-4.9"
     ;;
   *)

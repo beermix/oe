@@ -106,12 +106,12 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --with-rootlibdir=/usr/lib \
                            --with-default-hierarchy=hybrid"
 
-pre_build_target() {
+#pre_build_target() {
 # broken autoreconf
-  ( cd $PKG_BUILD
-    intltoolize --force
-  )
-}
+#  ( cd $PKG_BUILD
+#    intltoolize --force
+#  )
+#}
 
 pre_configure_target() {
   export CFLAGS="$CFLAGS -fno-schedule-insns -fno-schedule-insns2"
