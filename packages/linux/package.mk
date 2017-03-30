@@ -57,13 +57,13 @@ case "$LINUX" in
     PKG_GIT_BRANCH="rpi-4.9.y"
     PKG_PATCH_DIRS="linux-4.9 rpi-4.9"
     ;;
-  linux-4.8)
-    PKG_VERSION="4.8.6"
+  linux-4.9)
+    PKG_VERSION="4.9.18"
     PKG_URL="http://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
     PKG_PATCH_DIRS="linux-4.8"
     ;;
   *)
-    PKG_VERSION="4.10.6"
+    PKG_VERSION="4.9"
     PKG_URL="https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.10.6.tar.xz"
     PKG_PATCH_DIRS="linux-4.10"
     ;;
