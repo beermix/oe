@@ -1,0 +1,235 @@
+00000000-00000fff : reserved
+00001000-0009ebff : System RAM
+0009ec00-0009ffff : reserved
+000a0000-000bffff : PCI Bus 0000:00
+000c0000-000c7fff : Video ROM
+000ca000-000cafff : Adapter ROM
+000cc000-000cffff : PCI Bus 0000:00
+000d0000-000d3fff : PCI Bus 0000:00
+000d4000-000d7fff : PCI Bus 0000:00
+000d8000-000dbfff : PCI Bus 0000:00
+000dc000-000fffff : reserved
+  000f0000-000fffff : System ROM
+00100000-a26dffff : System RAM
+  2c800000-2ce00cf1 : Kernel code
+  2ce00cf2-2d51babf : Kernel data
+  2d680000-2d74afff : Kernel bss
+a26e0000-a26fefff : ACPI Tables
+a26ff000-a26fffff : ACPI Non-volatile Storage
+a2700000-a27fffff : System RAM
+a2800000-febfffff : PCI Bus 0000:00
+  a2808000-a280bfff : 0000:00:10.0
+  e5b00000-e5bfffff : PCI Bus 0000:22
+  e5c00000-e5cfffff : PCI Bus 0000:1a
+  e5d00000-e5dfffff : PCI Bus 0000:12
+  e5e00000-e5efffff : PCI Bus 0000:0a
+  e5f00000-e5ffffff : PCI Bus 0000:21
+  e6000000-e60fffff : PCI Bus 0000:19
+  e6100000-e61fffff : PCI Bus 0000:11
+  e6200000-e62fffff : PCI Bus 0000:09
+  e6300000-e63fffff : PCI Bus 0000:20
+  e6400000-e64fffff : PCI Bus 0000:18
+  e6500000-e65fffff : PCI Bus 0000:10
+  e6600000-e66fffff : PCI Bus 0000:08
+  e6700000-e67fffff : PCI Bus 0000:1f
+  e6800000-e68fffff : PCI Bus 0000:17
+  e6900000-e69fffff : PCI Bus 0000:0f
+  e6a00000-e6afffff : PCI Bus 0000:07
+  e6b00000-e6bfffff : PCI Bus 0000:1e
+  e6c00000-e6cfffff : PCI Bus 0000:16
+  e6d00000-e6dfffff : PCI Bus 0000:0e
+  e6e00000-e6efffff : PCI Bus 0000:06
+  e6f00000-e6ffffff : PCI Bus 0000:1d
+  e7000000-e70fffff : PCI Bus 0000:15
+  e7100000-e71fffff : PCI Bus 0000:0d
+  e7200000-e72fffff : PCI Bus 0000:05
+  e7300000-e73fffff : PCI Bus 0000:1c
+  e7400000-e74fffff : PCI Bus 0000:14
+  e7500000-e75fffff : PCI Bus 0000:0c
+  e7600000-e76fffff : PCI Bus 0000:04
+  e7700000-e77fffff : PCI Bus 0000:1b
+  e7800000-e78fffff : PCI Bus 0000:13
+  e7900000-e79fffff : PCI Bus 0000:0b
+  e7a00000-e7afffff : PCI Bus 0000:03
+  e7b00000-e7ffffff : PCI Bus 0000:02
+  e8000000-efffffff : 0000:00:0f.0
+    e8000000-efffffff : vmwgfx probe
+  f0000000-f7ffffff : PCI MMCONFIG 0000 [bus 00-7f]
+    f0000000-f7ffffff : reserved
+      f0000000-f7ffffff : pnp 00:05
+  fb500000-fb5fffff : PCI Bus 0000:22
+  fb600000-fb6fffff : PCI Bus 0000:1a
+  fb700000-fb7fffff : PCI Bus 0000:12
+  fb800000-fb8fffff : PCI Bus 0000:0a
+  fb900000-fb9fffff : PCI Bus 0000:21
+  fba00000-fbafffff : PCI Bus 0000:19
+  fbb00000-fbbfffff : PCI Bus 0000:11
+  fbc00000-fbcfffff : PCI Bus 0000:09
+  fbd00000-fbdfffff : PCI Bus 0000:20
+  fbe00000-fbefffff : PCI Bus 0000:18
+  fbf00000-fbffffff : PCI Bus 0000:10
+  fc000000-fc0fffff : PCI Bus 0000:08
+  fc100000-fc1fffff : PCI Bus 0000:1f
+  fc200000-fc2fffff : PCI Bus 0000:17
+  fc300000-fc3fffff : PCI Bus 0000:0f
+  fc400000-fc4fffff : PCI Bus 0000:07
+  fc500000-fc5fffff : PCI Bus 0000:1e
+  fc600000-fc6fffff : PCI Bus 0000:16
+  fc700000-fc7fffff : PCI Bus 0000:0e
+  fc800000-fc8fffff : PCI Bus 0000:06
+  fc900000-fc9fffff : PCI Bus 0000:1d
+  fca00000-fcafffff : PCI Bus 0000:15
+  fcb00000-fcbfffff : PCI Bus 0000:0d
+  fcc00000-fccfffff : PCI Bus 0000:05
+  fcd00000-fcdfffff : PCI Bus 0000:1c
+  fce00000-fcefffff : PCI Bus 0000:14
+  fcf00000-fcffffff : PCI Bus 0000:0c
+  fd000000-fd0fffff : PCI Bus 0000:04
+  fd100000-fd1fffff : PCI Bus 0000:1b
+  fd200000-fd2fffff : PCI Bus 0000:13
+  fd300000-fd3fffff : PCI Bus 0000:0b
+  fd400000-fd4fffff : PCI Bus 0000:03
+  fd500000-fdffffff : PCI Bus 0000:02
+    fd500000-fd50ffff : 0000:02:01.0
+    fd5c0000-fd5dffff : 0000:02:01.0
+      fd5c0000-fd5dffff : e1000
+    fdff0000-fdffffff : 0000:02:01.0
+      fdff0000-fdffffff : e1000
+  fe000000-fe7fffff : 0000:00:0f.0
+    fe000000-fe7fffff : vmwgfx probe
+  fe800000-fe9fffff : pnp 00:05
+  feba0000-febbffff : 0000:00:10.0
+    feba0000-febbffff : mpt
+  febc0000-febdffff : 0000:00:10.0
+    febc0000-febdffff : mpt
+  febfe000-febfffff : 0000:00:07.7
+fec00000-fec0ffff : reserved
+  fec00000-fec003ff : IOAPIC 0
+fed00000-fed003ff : HPET 0
+  fed00000-fed003ff : pnp 00:04
+fee00000-fee00fff : Local APIC
+  fee00000-fee00fff : reserved
+fffe0000-ffffffff : reserved
+0000-0cf7 : PCI Bus 0000:00
+  0000-001f : dma1
+  0020-0021 : PNP0001:00
+    0020-0021 : pic1
+  0040-0043 : timer0
+  0050-0053 : timer1
+  0060-0060 : keyboard
+  0061-0061 : PNP0800:00
+  0064-0064 : keyboard
+  0070-0071 : rtc0
+  0080-008f : dma page reg
+  00a0-00a1 : PNP0001:00
+    00a0-00a1 : pic2
+  00c0-00df : dma2
+  00f0-00ff : fpu
+  0170-0177 : 0000:00:07.1
+    0170-0177 : ata_piix
+  01f0-01f7 : 0000:00:07.1
+    01f0-01f7 : ata_piix
+  0376-0376 : 0000:00:07.1
+    0376-0376 : ata_piix
+  03c0-03df : vga+
+  03f6-03f6 : 0000:00:07.1
+    03f6-03f6 : ata_piix
+  04d0-04d1 : PNP0001:00
+  0cf0-0cf1 : pnp 00:00
+0cf8-0cff : PCI conf1
+0d00-feff : PCI Bus 0000:00
+  1000-103f : 0000:00:07.3
+    1000-103f : pnp 00:00
+      1000-1003 : ACPI PM1a_EVT_BLK
+      1004-1005 : ACPI PM1a_CNT_BLK
+      1008-100b : ACPI PM_TMR
+      100c-100f : ACPI GPE0_BLK
+      1010-1015 : ACPI CPU throttle
+  1040-104f : 0000:00:07.3
+    1040-104f : pnp 00:00
+  1060-106f : 0000:00:07.1
+    1060-106f : ata_piix
+  1070-107f : 0000:00:0f.0
+    1070-107f : vmwgfx probe
+  1080-10bf : 0000:00:07.7
+    1080-10bf : vmw_vmci
+  1400-14ff : 0000:00:10.0
+  2000-3fff : PCI Bus 0000:02
+    2000-203f : 0000:02:01.0
+      2000-203f : e1000
+  4000-4fff : PCI Bus 0000:03
+  5000-5fff : PCI Bus 0000:0b
+  6000-6fff : PCI Bus 0000:13
+  7000-7fff : PCI Bus 0000:1b
+  8000-8fff : PCI Bus 0000:04
+  9000-9fff : PCI Bus 0000:0c
+  a000-afff : PCI Bus 0000:14
+  b000-bfff : PCI Bus 0000:1c
+  c000-cfff : PCI Bus 0000:05
+  d000-dfff : PCI Bus 0000:0d
+  e000-efff : PCI Bus 0000:15
+  fce0-fcff : pnp 00:05
+ 4: cascade
+            CPU0       CPU1       CPU2       CPU3       CPU4       CPU5       CPU6       CPU7       
+   0:          3          0          0          0          0          0          0          0   IO-APIC    2-edge      timer
+   1:         10          0          0          0          0          0          0          0   IO-APIC    1-edge      i8042
+   8:          1          0          0          0          0          0          0          0   IO-APIC    8-edge      rtc0
+   9:          0          0          0          0          0          0          0          0   IO-APIC    9-fasteoi   acpi
+  12:         16          0          0          0          0          0          0          0   IO-APIC   12-edge      i8042
+  14:          0          0          0          0          0          0          0          0   IO-APIC   14-edge      ata_piix
+  15:          0          0          0          0          0          0          0          0   IO-APIC   15-edge      ata_piix
+  16:          1          0          0          0          0          0          0          0   IO-APIC   16-fasteoi   vmwgfx
+  17:    1337882          0          0          0          0          0          0          0   IO-APIC   17-fasteoi   ioc0
+  19:    1002358          0          0          0          0          0          0          0   IO-APIC   19-fasteoi   ens33
+  24:          0          0          0          0          0          0          0          0   PCI-MSI 344064-edge      PCIe PME, pciehp
+  25:          0          0          0          0          0          0          0          0   PCI-MSI 346112-edge      PCIe PME, pciehp
+  26:          0          0          0          0          0          0          0          0   PCI-MSI 348160-edge      PCIe PME, pciehp
+  27:          0          0          0          0          0          0          0          0   PCI-MSI 350208-edge      PCIe PME, pciehp
+  28:          0          0          0          0          0          0          0          0   PCI-MSI 352256-edge      PCIe PME, pciehp
+  29:          0          0          0          0          0          0          0          0   PCI-MSI 354304-edge      PCIe PME, pciehp
+  30:          0          0          0          0          0          0          0          0   PCI-MSI 356352-edge      PCIe PME, pciehp
+  31:          0          0          0          0          0          0          0          0   PCI-MSI 358400-edge      PCIe PME, pciehp
+  32:          0          0          0          0          0          0          0          0   PCI-MSI 360448-edge      PCIe PME, pciehp
+  33:          0          0          0          0          0          0          0          0   PCI-MSI 362496-edge      PCIe PME, pciehp
+  34:          0          0          0          0          0          0          0          0   PCI-MSI 364544-edge      PCIe PME, pciehp
+  35:          0          0          0          0          0          0          0          0   PCI-MSI 366592-edge      PCIe PME, pciehp
+  36:          0          0          0          0          0          0          0          0   PCI-MSI 368640-edge      PCIe PME, pciehp
+  37:          0          0          0          0          0          0          0          0   PCI-MSI 370688-edge      PCIe PME, pciehp
+  38:          0          0          0          0          0          0          0          0   PCI-MSI 372736-edge      PCIe PME, pciehp
+  39:          0          0          0          0          0          0          0          0   PCI-MSI 374784-edge      PCIe PME, pciehp
+  40:          0          0          0          0          0          0          0          0   PCI-MSI 376832-edge      PCIe PME, pciehp
+  41:          0          0          0          0          0          0          0          0   PCI-MSI 378880-edge      PCIe PME, pciehp
+  42:          0          0          0          0          0          0          0          0   PCI-MSI 380928-edge      PCIe PME, pciehp
+  43:          0          0          0          0          0          0          0          0   PCI-MSI 382976-edge      PCIe PME, pciehp
+  44:          0          0          0          0          0          0          0          0   PCI-MSI 385024-edge      PCIe PME, pciehp
+  45:          0          0          0          0          0          0          0          0   PCI-MSI 387072-edge      PCIe PME, pciehp
+  46:          0          0          0          0          0          0          0          0   PCI-MSI 389120-edge      PCIe PME, pciehp
+  47:          0          0          0          0          0          0          0          0   PCI-MSI 391168-edge      PCIe PME, pciehp
+  48:          0          0          0          0          0          0          0          0   PCI-MSI 393216-edge      PCIe PME, pciehp
+  49:          0          0          0          0          0          0          0          0   PCI-MSI 395264-edge      PCIe PME, pciehp
+  50:          0          0          0          0          0          0          0          0   PCI-MSI 397312-edge      PCIe PME, pciehp
+  51:          0          0          0          0          0          0          0          0   PCI-MSI 399360-edge      PCIe PME, pciehp
+  52:          0          0          0          0          0          0          0          0   PCI-MSI 401408-edge      PCIe PME, pciehp
+  53:          0          0          0          0          0          0          0          0   PCI-MSI 403456-edge      PCIe PME, pciehp
+  54:          0          0          0          0          0          0          0          0   PCI-MSI 405504-edge      PCIe PME, pciehp
+  55:          0          0          0          0          0          0          0          0   PCI-MSI 407552-edge      PCIe PME, pciehp
+  56:          0          0          0          0          0          0          0          0   PCI-MSI 129024-edge      vmw_vmci
+  57:          0          0          0          0          0          0          0          0   PCI-MSI 129025-edge      vmw_vmci
+ NMI:          0          0          0          0          0          0          0          0   Non-maskable interrupts
+ LOC:    2007404    1626877    1649196    1598782    1651327    1627347    1631776    1630483   Local timer interrupts
+ SPU:          0          0          0          0          0          0          0          0   Spurious interrupts
+ PMI:          0          0          0          0          0          0          0          0   Performance monitoring interrupts
+ IWI:          0          0          0          0          0          0          0          0   IRQ work interrupts
+ RTR:          0          0          0          0          0          0          0          0   APIC ICR read retries
+ RES:    1705395    1709680    1960543    1731024    1699630    1725380    1553840    1505615   Rescheduling interrupts
+ CAL:     191675     249924     236029     258070     234052     243055     239110     226643   Function call interrupts
+ TLB:     190014     248177     234385     256217     232223     241492     237248     224873   TLB shootdowns
+ TRM:          0          0          0          0          0          0          0          0   Thermal event interrupts
+ THR:          0          0          0          0          0          0          0          0   Threshold APIC interrupts
+ DFR:          0          0          0          0          0          0          0          0   Deferred Error APIC interrupts
+ MCE:          0          0          0          0          0          0          0          0   Machine check exceptions
+ MCP:         45         45         45         45         45         45         45         45   Machine check polls
+ ERR:          0
+ MIS:          0
+ PIN:          0          0          0          0          0          0          0          0   Posted-interrupt notification event
+ PIW:          0          0          0          0          0          0          0          0   Posted-interrupt wakeup event
