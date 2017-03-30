@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="glibc"
-PKG_VERSION="2.26"
+PKG_VERSION="2.25"
 PKG_URL="http://ftp.gnu.org/pub/gnu/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
 #PKG_VERSION="29d92a8"
 #PKG_GIT_URL="git://sourceware.org/git/glibc.git"
@@ -31,7 +31,7 @@ PKG_LONGDESC="The Glibc package contains the main C library. This library provid
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
+PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/bash \
                            libc_cv_slibdir=/lib \
                            ac_cv_path_PERL= \
                            ac_cv_prog_MAKEINFO= \
@@ -40,6 +40,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --disable-profile \
                            --disable-sanity-checks \
                            --enable-add-ons \
+                           --enable-stack-protector=strong \
                            --enable-bind-now \
                            --with-elf \
                            --with-tls \
@@ -54,15 +55,14 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --disable-nscd \
                            --enable-lock-elision \
                            --disable-timezone-tools \
-                           --disable-debug \
-                           --enable-stack-protector=strong"
+                           --disable-debug"
 
 
 NSS_CONF_DIR="$PKG_BUILD/nss"
 
-GLIBC_EXCLUDE_BIN="catchsegv gencat getconf iconv iconvconfig ldconfig"
-GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN localedef makedb mtrace pcprofiledump"
-GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN pldd rpcgen sln sotruss sprof xtrace"
+#GLIBC_EXCLUDE_BIN="catchsegv gencat getconf iconv iconvconfig ldconfig"
+#GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN localedef makedb mtrace pcprofiledump"
+#GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN pldd rpcgen sln sotruss sprof xtrace"
 
 pre_build_target() {
   cd $PKG_BUILD
@@ -101,7 +101,7 @@ pre_configure_target() {
   unset LD_LIBRARY_PATH
 
 # set some CFLAGS we need
-  export CFLAGS="$CFLAGS -g"
+  export CFLAGS="-O2 -pipe -g0 -Wall"
   export OBJDUMP_FOR_HOST=objdump
 
 cat >config.cache <<EOF
@@ -113,6 +113,7 @@ EOF
 
   echo "sbindir=/usr/bin" >> configparms
   echo "rootsbindir=/usr/bin" >> configparms
+  echo "build-programs=no" >> configparms
 }
 
 post_makeinstall_target() {
