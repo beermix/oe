@@ -65,7 +65,6 @@ case "$LINUX" in
   zen-4.9)
     PKG_VERSION="4081025"
     PKG_GIT_URL="git://github.com/zen-kernel/zen-kernel.git"
-    PKG_GIT_BRANCH=4\.9/master
     PKG_PATCH_DIRS="linux-4.9"
     ;;
   *)
