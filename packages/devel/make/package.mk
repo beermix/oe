@@ -17,9 +17,13 @@
 ################################################################################
 
 PKG_NAME="make"
-PKG_VERSION="4.2.1"
+PKG_VERSION="4.1"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="GPLv3"
+PKG_SITE="https://www.gnu.org/software/make/"
 PKG_URL="https://ftp.gnu.org/gnu/make/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_PRIORITY="optional"
+PKG_DEPENDS_HOST=""
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="make: GNU make utility to maintain groups of programs"
 PKG_LONGDESC="The 'make' utility automatically determines which pieces of a large program need to be recompiled, and issues commands to recompile them. This is GNU 'make', which was implemented by Richard Stallman and Roland McGrath. GNU 'make' conforms to section 6.2 of EEE Standard 1003.2-1992' (POSIX.2)."
@@ -27,27 +31,12 @@ PKG_LONGDESC="The 'make' utility automatically determines which pieces of a larg
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-post_makeinstall_host() {
-  ln -sf make $ROOT/$TOOLCHAIN/bin/gmake
-}
+CFLAGS="-march=native -O2 -pipe -fstack-protector-strong -D_FORTIFY_SOURCE=2" 
+LDFLAGS="-Wl,-O1,--sort-common,--as-needed,-z,relro"
+MAKEFLAGS=-j1
 
 PKG_CONFIGURE_OPTS_HOST="--disable-load --without-guile"
 
-#configure_host() {
-#  :
-#}
-#pre_configure_host() {
-#  :
-#}
-#post_makeinstall_host() {
-#  :
-#}
-#make_host() {
-#  :
-#}
-#post_make_host() {
-#  :
-#}
-#makeinstall_host() {
-#  :
-#}
+post_makeinstall_host() {
+  ln -sf make $ROOT/$TOOLCHAIN/bin/gmake
+}
