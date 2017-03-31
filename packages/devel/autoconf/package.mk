@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,8 +18,10 @@
 
 PKG_NAME="autoconf"
 PKG_VERSION="2.69"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://sources.redhat.com/autoconf/"
-PKG_URL="http://ftp.gnu.org/gnu/autoconf/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="http://ftpmirror.gnu.org/autoconf/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="ccache:host m4:host gettext:host"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="autoconf: A GNU tool for automatically configuring source code"
@@ -29,7 +31,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_HOST="EMACS=no \
-                         ac_cv_path_M4=$ROOT/$TOOLCHAIN/bin/m4 \
+                         ac_cv_path_M4=$TOOLCHAIN/bin/m4 \
                          ac_cv_prog_gnu_m4_gnu=no \
                          --target=$TARGET_NAME"
 
