@@ -17,9 +17,11 @@
 ################################################################################
 
 PKG_NAME="openssl"
-PKG_VERSION="d75c56f"
-PKG_GIT_URL="https://github.com/openssl/openssl"
-PKG_GIT_BRANCH="OpenSSL_1_0_2-stable"
+PKG_VERSION="1.0.2k"
+PKG_URL="https://www.openssl.org/source/$PKG_NAME-$PKG_VERSION.tar.gz"
+#PKG_VERSION="d75c56f"
+#PKG_GIT_URL="git://github.com/openssl/openssl"
+#PKG_GIT_BRANCH="OpenSSL_1_0_2-stable"
 PKG_DEPENDS_HOST="ccache:host"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="security"
