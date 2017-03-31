@@ -1,7 +1,7 @@
 PKG_NAME="mpv"
-PKG_VERSION="0.17.0"
+PKG_VERSION="v0.24.0"
 PKG_SITE="http://qt-project.org"
-PKG_URL="https://github.com/mpv-player/mpv/archive/v0.17.0.tar.gz"
+PKG_GIT_URL="https://github.com/mpv-player/mpv"
 PKG_DEPENDS="bcm2835-driver bzip2 Python zlib:host zlib libpng tiff dbus glib fontconfigeglibc liberation-fonts-ttf font-util font-xfree86-type1 font-misc-misc gstreamer gst-plugins-base gst-plugins-good gst-omx gst-plugins-bad alsa"
 PKG_BUILD_DEPENDS_TARGET="bcm2835-driver bzip2 Python zlib:host zlib libpng tiff dbus glib fontconfig mysql openssl linux-headers eglibc gstreamer gst-plugins-base gst-plugins-good gst-omx gst-plugins-bad alsa"
 PKG_SECTION="lib"
@@ -22,14 +22,6 @@ PKG_CONFIGURE_OPTS="\
 	--enable-cross-compile
 "
 
-
-
-
-#pre_configure_target() {
-#	pushd $ROOT/$BUILD/${PKG_NAME}-${PKG_VERSION}
-#	sed -i -e "/read tmp/d" configure
-#	popd
-#}
 
 configure_target() {
 	CPPFLAGS_SAVE=${CPPFLAGS}
