@@ -18,12 +18,7 @@
 
 PKG_NAME="make"
 PKG_VERSION="4.2.1"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPLv3"
-PKG_SITE="https://www.gnu.org/software/make/"
 PKG_URL="https://ftp.gnu.org/gnu/make/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_HOST=""
 PKG_PRIORITY="optional"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="make: GNU make utility to maintain groups of programs"

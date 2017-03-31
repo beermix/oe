@@ -118,6 +118,7 @@ if [ ! -f $STAMP ]; then
         touch $PKG_BUILD/NEWS $PKG_BUILD/AUTHORS $PKG_BUILD/ChangeLog
         mkdir -p $PKG_BUILD/m4
         mkdir -p $PKG_BUILD/build-aux
+
         printf "%${BUILD_INDENT}c ${boldmagenta}AUTORECONF${endcolor}   $1\n" ' '>&$SILENT_OUT
         export BUILD_INDENT=$((${BUILD_INDENT:-1}+$BUILD_INDENT_SIZE))
 
@@ -336,7 +337,7 @@ if [ ! -f $STAMP ]; then
 
             # strip kernel modules
             for MOD in `find $INSTALL -type f -name *.ko`; do
-              $STRIP $MOD
+              $STRIP --strip-all $MOD
             done
           fi
         fi
@@ -344,10 +345,6 @@ if [ ! -f $STAMP ]; then
 
       cd $ROOT
     fi  # ! "$PKG_SECTION" = "virtual"
-
-    for i in `find $SYSROOT_PREFIX/usr/lib/ -name "*.la" 2>/dev/null`; do \
-      $SED "s:\(['= ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" $i; \
-    done
 
     PKG_DEEPMD5=$(find $STAMP_DEPENDS -exec md5sum {} \; 2>/dev/null | sort | md5sum | cut -d" " -f1)
     for i in PKG_NAME PKG_DEEPMD5; do
