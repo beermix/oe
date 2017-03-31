@@ -18,6 +18,9 @@
 
 PKG_NAME="gcc"
 PKG_VERSION="6.3.0"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://gcc.gnu.org/"
 PKG_URL="https://fossies.org/linux/misc/gcc-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host"
@@ -48,7 +51,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-nls \
                            --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
-                           --enable-libstdcxx-time=yes	
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
@@ -57,7 +59,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-target-system-zlib \
                            --disable-vtable-verify \
                            --without-included-gettext \
-                           --enable-libssp \
                            --enable-poison-system-directories \
                            --with-tune=generic"
 
@@ -124,7 +125,9 @@ post_make_host() {
 }
 
 post_makeinstall_host() {
-  cp -PR $TARGET_NAME/libstdc++-v3/src/.libs/libstdc++.so* $SYSROOT_PREFIX/usr/lib
+  mkdir -p $SYSROOT_PREFIX/usr/lib
+    cp -PR $TARGET_NAME/libstdc++-v3/src/.libs/libstdc++.so* $SYSROOT_PREFIX/usr/lib
+    cp -PR $TARGET_NAME/libssp/.libs/libssp.so* $SYSROOT_PREFIX/usr/lib
 
   mkdir -p $ROOT/$TOOLCHAIN/lib/ccache
     ln -sf $ROOT/$TOOLCHAIN/bin/ccache $ROOT/$TOOLCHAIN/lib/ccache/${TARGET_NAME}-gcc
@@ -142,9 +145,8 @@ make_target() {
 makeinstall_target() {
   mkdir -p $INSTALL/lib
     cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libgcc/libgcc_s.so* $INSTALL/lib
+    cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libssp/.libs/libssp.so* $INSTALL/lib
     cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libatomic/.libs/libatomic.so* $INSTALL/lib
-    cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libitm/.libs/libitm.so* $INSTALL/lib
-    cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libquadmath/.libs/libquadmath.so* $INSTALL/lib
   mkdir -p $INSTALL/usr/lib
     cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libstdc++-v3/src/.libs/libstdc++.so* $INSTALL/usr/lib
 }
@@ -160,7 +162,6 @@ make_init() {
 makeinstall_init() {
   mkdir -p $INSTALL/lib
     cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libgcc/libgcc_s.so* $INSTALL/lib
+    cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libssp/.libs/libssp.so* $INSTALL/lib
     cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libatomic/.libs/libatomic.so* $INSTALL/lib
-    cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libitm/.libs/libitm.so* $INSTALL/lib
-    cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libquadmath/.libs/libquadmath.so* $INSTALL/lib
 }
