@@ -29,7 +29,7 @@ PKG_SHORTDESC="gcc: The GNU Compiler Collection Version 4 (aka GNU C Compiler)"
 PKG_LONGDESC="This package contains the GNU Compiler Collection. It includes compilers for the languages C, C++, Objective C, Fortran 95, Java and others ... This GCC contains the Stack-Smashing Protector Patch which can be enabled with the -fstack-protector command-line option. More information about it ca be found at http://www.research.ibm.com/trl/projects/security/ssp/."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 
 GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
@@ -54,11 +54,10 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libada \
                            --disable-libmudflap \
                            --disable-libmpx \
-                           --disable-libssp \
                            --with-target-system-zlib \
                            --disable-vtable-verify \
-                           --enable-default-pie \
                            --without-included-gettext \
+                           --enable-libssp \
                            --enable-poison-system-directories \
                            --with-tune=generic"
 
@@ -76,6 +75,7 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-libquadmath \
                               --disable-libgomp \
                               --disable-decimal-float \
+                              --disable-libssp \
                               $GCC_OPTS"
 
 PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
@@ -100,10 +100,11 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-linker-build-id \
                          --with-linker-hash-style=gnu \
                          --enable-gnu-indirect-function \
+                         --enable-libssp \
                          $GCC_OPTS"
 
 pre_configure_host() {
-  export CXXFLAGS="$CXXFLAGS -std=gnu++98"
+  #export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
   
   sed -iv 's@\./fixinc\.sh@-c true@' $ROOT/$PKG_BUILD/gcc/Makefile.in
