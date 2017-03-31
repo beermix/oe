@@ -257,17 +257,6 @@ fi # bootloader
   echo "image: merging part2 back to image..."
   dd if="$OE_TMP/part2.ext4" of="$DISK" bs=512 seek="$STORAGE_PART_START" conv=fsync,notrunc >"$SAVE_ERROR" 2>&1 || show_error
 
-# create virtual images
-  if [ "$PROJECT" = "Generic" ]; then
-    echo "image: creating open virtual appliance..."
-    qemu-img convert -O vmdk -o subformat=streamOptimized "$DISK" "$DISK.vmdk"
-    sed -e "s,@DISTRO@,$DISTRO,g" -e "s,@DISK@,$(basename $DISK),g" -e "s,@DISK_SIZE@,$(ls -l $DISK.vmdk | awk '{print $5}'),g" $PROJECT_DIR/$PROJECT/config/ovf.template > $DISK.ovf
-    tar -C $TARGET_IMG -cf $DISK.ova $(basename $DISK).ovf $(basename $DISK).vmdk
-    echo "image: cleaning up..."
-    rm $DISK.vmdk $DISK.ovf
-    [ -n "$SUDO_USER" ] && chown $SUDO_USER: $DISK.ova
-  fi
-
 # gzip
   echo "image: compressing..."
   gzip $DISK
