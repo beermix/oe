@@ -31,10 +31,6 @@ PKG_LONGDESC="The 'make' utility automatically determines which pieces of a larg
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-CFLAGS="-march=native -O2 -pipe -fstack-protector-strong -D_FORTIFY_SOURCE=2" 
-LDFLAGS="-Wl,-O1,--sort-common,--as-needed,-z,relro"
-MAKEFLAGS=-j1
-
 PKG_CONFIGURE_OPTS_HOST="--disable-load --without-guile"
 
 post_makeinstall_host() {
