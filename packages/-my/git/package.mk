@@ -3,11 +3,14 @@ PKG_VERSION="2.12.2"
 PKG_URL="https://www.kernel.org/pub/software/scm/git/git-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain curl pcre zlib openssl"
 PKG_SECTION="devel"
+
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
+
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
+  rm -rf .$TARGET_NAME
   
   export CC="$CC"
   export CFLAGS="$CFLAGS"

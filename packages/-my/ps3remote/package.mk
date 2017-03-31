@@ -1,14 +1,15 @@
 PKG_NAME="ps3remote"
-PKG_VERSION="7d20fa3"
+PKG_VERSION="7d20fa3ea87cfa90b191fa9b5106aed65387128c"
 PKG_GIT_URL="https://github.com/rootlis/ps3remote"
-PKG_URL="https://github.com/rootlis/ps3remote/archive/7d20fa3.tar.gz"
+PKG_URL="https://github.com/rootlis/ps3remote/archive/$PKG_VERSION.tar.gz"
+PKG_SOURCE_DIR="$PKG_VERSION"
 PKG_DEPENDS_TARGET="toolchain systemd"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 make_target() {
-  make CC="$CC" AR="$AR XCFLAGS="$CFLAGS" RANLIB="$RANLIB CFLAGS="-O2 -pipe -fstack-protector-strong -DDEBUG=0" -j1
+  make CC="$CC" AR="$AR" CFLAGS="-O2 -pipe -fstack-protector-strong -DDEBUG=0" CPPFLAGS="$CPPFLAGS" -j1
 }
 
 post_make_target() {

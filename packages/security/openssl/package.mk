@@ -29,8 +29,6 @@ PKG_LONGDESC="The Open Source toolkit for Secure Sockets Layer and Transport Lay
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-MAKEFLAGS=-j1
-
 PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            --libdir=lib \
                            shared \
@@ -62,7 +60,7 @@ configure_host() {
 }
 
 makeinstall_host() {
-  make INSTALL_PREFIX=$ROOT/$TOOLCHAIN install_sw
+  make -j1 INSTALL_PREFIX=$ROOT/$TOOLCHAIN install_sw
 }
 
 pre_configure_target() {
@@ -76,8 +74,8 @@ configure_target() {
 }
 
 makeinstall_target() {
-  make INSTALL_PREFIX=$INSTALL install_sw
-  make INSTALL_PREFIX=$SYSROOT_PREFIX install_sw
+  make -j1 INSTALL_PREFIX=$INSTALL install_sw
+  make -j1 INSTALL_PREFIX=$SYSROOT_PREFIX install_sw
   chmod 755 $INSTALL/usr/lib/*.so*
   chmod 755 $INSTALL/usr/lib/engines/*.so
 }

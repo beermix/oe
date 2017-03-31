@@ -20,10 +20,54 @@
 
 . config/options $1
 
+ADDON_REPO_BASE="packages/addons"
+
 if [ -z "$1" ]; then
-  echo "usage: $0 package_name"
+  echo "usage: $0 [<package_name>|<repo_name>]"
   exit 1
 fi
+
+for repo_base in $( ls -d $ADDON_REPO_BASE/*); do
+  REPO=$(basename $repo_base)
+  if [ "$1" = $REPO ]; then
+    for addon in $(find packages/addons/$1 -iname package.mk) ; do
+      PKG_NAME=`grep ^PKG_NAME= $addon | sed -e "s,\",,g" -e "s,PKG_NAME=,,"`
+      PKG_IS_ADDON=`grep ^PKG_IS_ADDON= $addon | sed -e "s,\",,g" -e "s,PKG_IS_ADDON=,,"`
+      if [ "$PKG_IS_ADDON" = "yes" ] ; then
+        REPO=$REPO PROJECT=$PROJECT ARCH=$ARCH ./scripts/create_addon $PKG_NAME
+      fi
+      unset PKG_NAME
+      unset PKG_IS_ADDON
+    done
+
+    ADDONS_XML_DIR="$TARGET/repository/$REPO/$ADDON_VERSION/$PROJECT/$TARGET_ARCH"
+
+    echo "updating $ADDONS_XML_DIR/addons.xml..."
+    echo '<?xml version="1.0" encoding="UTF-8"?>
+<addons>
+' > $ADDONS_XML_DIR/addons.xml.tmp
+
+    for zip in $ADDONS_XML_DIR/*/*.zip ; do
+      mkdir -p $BUILD/.addons/$ADDONS_XML_DIR
+      unzip -o $zip "*/addon.xml" -d $BUILD/.addons/$ADDONS_XML_DIR &>/dev/null
+    done
+
+    find $BUILD/.addons/$ADDONS_XML_DIR -iname addon.xml | grep -v resources/ | while read xml ; do
+      cat $xml | grep -v "<?" >> $ADDONS_XML_DIR/addons.xml.tmp
+    done
+
+    echo '
+</addons>' >> $ADDONS_XML_DIR/addons.xml.tmp
+
+    mv $ADDONS_XML_DIR/addons.xml.tmp $ADDONS_XML_DIR/addons.xml
+
+    cd $ADDONS_XML_DIR
+      md5sum addons.xml > addons.xml.md5
+    cd $ROOT
+
+    rm -rf $BUILD/.addons
+  fi
+done
 
 if [ -n "$PKG_ARCH" -a ! "$PKG_ARCH" = "any" ]; then
   echo "$PKG_ARCH" | grep -q "$TARGET_ARCH" || exit 0
@@ -40,6 +84,11 @@ if [ -n "$PKG_ADDON_PROJECTS" -a ! "$PKG_ADDON_PROJECTS" = "any" ]; then
     echo "*** ERROR: $PKG_ADDON_ID: '$PROJECT' not supported ***"
     exit 0
   fi
+fi
+
+if [ -n "$PKG_ADDON_REPOVERSION" -a ! "$PKG_ADDON_REPOVERSION" = "$ADDON_VERSION" ]; then
+  echo "*** ERROR: $PKG_ADDON_ID: ADDON_VERSION '$ADDON_VERSION' not supported ***"
+  exit 0
 fi
 
 
@@ -63,44 +112,26 @@ pack_addon() {
       echo "*** ERROR: $ADDON has addon.xml shipped, you need 'xmlstarlet' ***"
       exit 255
     fi
-    ADDONVER="$(xmlstarlet sel -t -v "/addon/@version" $ADDON_BUILD/$PKG_ADDON_ID/addon.xml).$PKG_REV"
-    xmlstarlet ed --inplace -u "/addon[@version]/@version" -v "$ADDONVER" $ADDON_BUILD/$PKG_ADDON_ID/addon.xml
+    ADDONVER=$(xmlstarlet sel -t -v "/addon/@version" $ADDON_BUILD/$PKG_ADDON_ID/addon.xml)
   fi
 
-  if [ -d $PKG_DIR/source ]; then
+  if [ -f $PKG_DIR/source/default.py ]; then
     cp -R $PKG_DIR/source/* $ADDON_BUILD/$PKG_ADDON_ID
   fi
 
   if [ -f $PKG_DIR/icon/icon.png ]; then
-    mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/resources
-    cp $PKG_DIR/icon/icon.png $ADDON_BUILD/$PKG_ADDON_ID/resources
+    cp $PKG_DIR/icon/icon.png $ADDON_BUILD/$PKG_ADDON_ID
   fi
-
-  if [ -f $DISTRO_DIR/$DISTRO/addons/fanart.png ]; then
-   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/resources
-   cp $DISTRO_DIR/$DISTRO/addons/fanart.png $ADDON_BUILD/$PKG_ADDON_ID/resources
-  fi
-
-  for f in $PKG_DIR/source/resources/screenshot-*.{jpg,png}; do
-    if [ -f "$f" ]; then
-      PKG_ADDON_SCREENSHOT+="<screenshot>resources/$(basename $f)</screenshot>\n"
-    fi
-  done
 
   if [ -f $PKG_DIR/changelog.txt ]; then
-    sed -e "/@PKG_ADDON_NEWS@/ \
-           {
-             r $PKG_DIR/changelog.txt
-             d
-           }" -i $ADDON_BUILD/$PKG_ADDON_ID/addon.xml
-  else
-    sed -e "s|@PKG_ADDON_NEWS@||g" -i $ADDON_BUILD/$PKG_ADDON_ID/addon.xml
+    cp $PKG_DIR/changelog.txt $ADDON_BUILD/$PKG_ADDON_ID
   fi
 
-  PROVIDER_NAME="libreelec.tv"
+  PROVIDER_NAME="openelec.tv"
   if [ ! -z "$PKG_MAINTAINER" ] ; then
     PROVIDER_NAME="$PKG_MAINTAINER"
   fi
+
   ADDON_NAME="$PKG_NAME"
   if [ ! -z "$PKG_ADDON_NAME" ] ; then
     ADDON_NAME="$PKG_ADDON_NAME"
@@ -115,69 +146,62 @@ pack_addon() {
        -e "s|@PKG_DISCLAIMER@|$PKG_DISCLAIMER|g" \
        -e "s|@PROVIDER_NAME@|$PROVIDER_NAME|g" \
        -e "s|@PKG_ADDON_PROVIDES@|$PKG_ADDON_PROVIDES|g" \
-       -e "s|@PKG_ADDON_SCREENSHOT@|$PKG_ADDON_SCREENSHOT|g" \
        -i $ADDON_BUILD/$PKG_ADDON_ID/addon.xml
 
   if [ "$2" != "-test" ] ; then
-    if [ -n "${DEVICE}" ]; then
-      ADDON_INSTALL_DIR="$TARGET/$ADDONS/$ADDON_VERSION/$DEVICE/$TARGET_ARCH/$PKG_ADDON_ID"
-    else
+      if [ -n "$REPO_DIR" ]; then
+        ADDONS=repository/$REPO_DIR
+      fi
+
       ADDON_INSTALL_DIR="$TARGET/$ADDONS/$ADDON_VERSION/$PROJECT/$TARGET_ARCH/$PKG_ADDON_ID"
-    fi
+
     if [ -f $ADDON_INSTALL_DIR/$PKG_ADDON_ID-$ADDONVER.zip ] ; then
       echo "*** WARNING: $PKG_ADDON_ID-$ADDONVER.zip already exists. not overwriting it ***"
       return 0
     fi
+
     cd $ADDON_BUILD
-    echo "*** compressing Addon $PKG_ADDON_ID ... ***"
-    zip -rq $PKG_ADDON_ID-$ADDONVER.zip $PKG_ADDON_ID;
+      echo "*** compressing Addon $PKG_ADDON_ID ... ***"
+      zip -rq $PKG_ADDON_ID-$ADDONVER.zip $PKG_ADDON_ID;
     cd - &>/dev/null
 
     mkdir -p $ADDON_INSTALL_DIR
-    cp $ADDON_BUILD/$PKG_ADDON_ID-$ADDONVER.zip $ADDON_INSTALL_DIR
-    if [ -f $ADDON_BUILD/$PKG_ADDON_ID/changelog.txt ]; then
-      cp $ADDON_BUILD/$PKG_ADDON_ID/changelog.txt $ADDON_INSTALL_DIR/changelog-$ADDONVER.txt
-    fi
-    if [ -f $ADDON_BUILD/$PKG_ADDON_ID/resources/icon.png ]; then
-      mkdir -p $ADDON_INSTALL_DIR/resources
-      cp $ADDON_BUILD/$PKG_ADDON_ID/resources/icon.png $ADDON_INSTALL_DIR/resources/icon.png
-    fi
+      cp $ADDON_BUILD/$PKG_ADDON_ID-$ADDONVER.zip $ADDON_INSTALL_DIR
 
-    # workaround for kodi pvr addons
-    if [ -f $ADDON_BUILD/$PKG_ADDON_ID/icon.png ]; then
-      cp $ADDON_BUILD/$PKG_ADDON_ID/icon.png $ADDON_INSTALL_DIR/icon.png
-    fi
-
-    if [ -f $ADDON_BUILD/$PKG_ADDON_ID/resources/fanart.png ]; then
-      mkdir -p $ADDON_INSTALL_DIR/resources
-      cp $ADDON_BUILD/$PKG_ADDON_ID/resources/fanart.png $ADDON_INSTALL_DIR/resources/fanart.png
-    fi
-    for f in $ADDON_BUILD/$PKG_ADDON_ID/resources/screenshot-*.{jpg,png}; do
-      if [ -f "$f" ]; then
-        mkdir -p $ADDON_INSTALL_DIR/resources
-        cp $f $ADDON_INSTALL_DIR/resources
+      if [ -f $ADDON_BUILD/$PKG_ADDON_ID/changelog.txt ]; then
+        cp $ADDON_BUILD/$PKG_ADDON_ID/changelog.txt $ADDON_INSTALL_DIR/changelog-$ADDONVER.txt
       fi
-    done
+
+      if [ -f $ADDON_BUILD/$PKG_ADDON_ID/icon.png ]; then
+        cp $ADDON_BUILD/$PKG_ADDON_ID/icon.png $ADDON_INSTALL_DIR/icon.png
+      fi
   fi
 }
 
 if [ "$PKG_IS_ADDON" = "yes" ] ; then
-  setup_toolchain $TARGET
-
   $SCRIPTS/build $@
 
-  if [ -n "${DEVICE}" ]; then
-    printf  "%${BUILD_INDENT}c CREATE ADDON  ($DEVICE/$TARGET_ARCH) $1\n" ' '>&$SILENT_OUT
-  else
-    printf  "%${BUILD_INDENT}c CREATE ADDON  ($PROJECT/$TARGET_ARCH) $1\n" ' '>&$SILENT_OUT
-  fi
+  printf  "%${BUILD_INDENT}c CREATE ADDON  ($PROJECT/$TARGET_ARCH) $1\n" ' '>&$SILENT_OUT
   export BUILD_INDENT=$((${BUILD_INDENT:-1}+$BUILD_INDENT_SIZE))
 
   rm -rf $ADDON_BUILD
 
-  if [ "$(type -t addon)" = "function" ]; then
+  if [ -d $PKG_BUILD/.install_pkg/usr/share/kodi/addons/$PKG_NAME ]; then
+    mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/
+      cp -PR $PKG_BUILD/.install_pkg/usr/share/kodi/addons/$PKG_NAME/* $ADDON_BUILD/$PKG_ADDON_ID/
+      if [ -d $PKG_BUILD/.install_pkg/usr/lib/kodi/addons/$PKG_NAME ]; then
+        if [  -f $ADDON_BUILD/$PKG_ADDON_ID/addon.xml ]; then
+          ADDONSO=$(xmlstarlet sel -t -v "/addon/extension/@library_linux" $ADDON_BUILD/$PKG_ADDON_ID/addon.xml)
+          cp -PL $PKG_BUILD/.install_pkg/usr/lib/$MEDIACENTER/addons/$PKG_NAME/$ADDONSO $ADDON_BUILD/$PKG_ADDON_ID/
+        else
+          cp -PL $PKG_BUILD/.install_pkg/usr/lib/$MEDIACENTER/addons/$PKG_NAME/*.so* $ADDON_BUILD/$PKG_ADDON_ID/
+        fi
+      fi
+    if [ "$(type -t addon)" = "function" ]; then
+      addon
+    fi
+  elif [ "$(type -t addon)" = "function" ]; then
     addon
-    debug_strip $ADDON_BUILD/$PKG_ADDON_ID
   else
     echo "*** unsupported package format. please convert your package ***"
     exit 1
