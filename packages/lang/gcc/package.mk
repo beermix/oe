@@ -46,7 +46,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libgomp \
                            --disable-libmpx \
                            --disable-libssp \
-                           --without-included-gettext \
                            --disable-nls \
                            --enable-gnu-unique-object \
                            --disable-browser-plugin \
