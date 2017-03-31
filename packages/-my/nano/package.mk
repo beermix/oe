@@ -1,5 +1,5 @@
 PKG_NAME="nano"
-PKG_VERSION="2.7.5"
+PKG_VERSION="2.8.0"
 PKG_SITE="http://www.nano-editor.org/"
 PKG_URL="https://www.nano-editor.org/dist/v2.7/nano-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain readline file"
