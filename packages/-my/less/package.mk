@@ -8,5 +8,5 @@ PKG_AUTORECONF="yes"
 
 pre_configure_target() {
   export LIBS="-lterminfo"
-  export CFLAGS="$CFLAGS -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64"
+  export CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
 }
