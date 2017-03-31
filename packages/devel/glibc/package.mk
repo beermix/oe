@@ -113,8 +113,7 @@ EOF
 
   echo "sbindir=/usr/bin" >> configparms
   echo "rootsbindir=/usr/bin" >> configparms
-  #echo "build-programs=no" >> configparms
-}
+  }
 
 post_makeinstall_target() {
   ln -sf ld-$PKG_VERSION.so $INSTALL/lib/ld.so
