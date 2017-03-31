@@ -30,11 +30,13 @@ PKG_AUTORECONF="no"
 
 # never build shared or k0p happens when building
 # on fedora due to host selinux/liblzma
-PKG_CONFIGURE_OPTS_HOST="--disable-lzmadec \
-                         --disable-lzmainfo \
-                         --enable-lzma-links \
-                         --disable-scripts \
-                         --enable-liblzma2-compat \
-                         --disable-nls"
+PKG_CONFIGURE_OPTS_HOST="--disable-shared \
+			    --enable-static \
+			    --enable-liblzma2-compat \
+			    --enable-unaligned-access \
+			    --enable-threads=posix \
+			    --enable-assembler=x86_64 \
+			    --with-gnu-ld \
+			    --disable-doc"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-doc"
