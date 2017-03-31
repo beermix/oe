@@ -1,29 +1,13 @@
 PKG_NAME="squid"
-PKG_VERSION="3.5.24"
-PKG_URL="http://www.squid-cache.org/Versions/v3/3.5/squid-$PKG_VERSION.tar.xz"
+PKG_VERSION="4.0.18"
+PKG_URL="http://www.squid-cache.org/Versions/v4/squid-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain fuse netbsd-curses openssl glib libcap libnetfilter_conntrack"
 PKG_SECTION="tools"
 PKG_AUTORECONF="yes"
 
 CONCURRENCY_MAKE_LEVEL=7
 
-PKG_CONFIGURE_OPTS_TARGET="squid_cv_gnu_atomics=yes \ 
-			      ac_cv_epoll_works=yes \
-			      ac_cv_func_setresuid=yes \
-			      ac_cv_func_va_copy=yes \
-			      ac_cv_func___va_copy=yes \
-			      ac_cv_func_strnstr=no \
-			      ac_cv_have_squid=yes \
-                           --with-pidfile=/var/run/squid.pid \
-                           --enable-auth \
-                           --enable-auth-basic \
-                           --enable-auth-ntlm \
-                           --enable-auth-digest \
-                           --enable-auth-negotiate \
-                           --enable-removal-policies="lru,heap" \
-                           --enable-storeio="aufs,ufs,diskd" \
-                           --enable-delay-pools \
-                           --enable-arp-acl \
+PKG_CONFIGURE_OPTS_TARGET="--with-pidfile=/var/run/squid.pid \
                            --with-openssl=$SYSROOT_PREFIX/usr \
                            --enable-linux-netfilter \
                            --enable-ident-lookups \

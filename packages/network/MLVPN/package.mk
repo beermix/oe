@@ -16,23 +16,16 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="netbsd-curses"
-PKG_VERSION="ea1965a"
-PKG_SITE="https://github.com/sabotage-linux/neytbsd-curses"
-PKG_GIT_URL="git://github.com/sabotage-linux/netbsd-curses"
-PKG_DEPENDS_TARGET="toolchain zlib"
-PKG_SECTION="devel"
-PKG_SHORTDESC="netbsd-curses: netbsd-libcurses portable edition"
-PKG_LONGDESC="netbsd-curses: netbsd-libcurses portable edition"
+PKG_NAME="MLVPN"
+PKG_VERSION="4.8"
+PKG_SITE="http://www.kernel.org/pub/software/network/ethtool/"
+PKG_GIT_URL="https://github.com/zehome/MLVPN"
+PKG_DEPENDS_TARGET="toolchain"
+PKG_SECTION="network"
+PKG_SHORTDESC="ethtool: Display or change ethernet card settings"
+PKG_LONGDESC="Ethtool is used for querying settings of an ethernet device and changing them."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
-
-make_target() {
-  make HOSTCC="$HOST_CC" CFLAGS="$CFLAGS" PREFIX=/usr all-static -j1
-}
-
-makeinstall_target() {
-  make HOSTCC="$HOST_CC" PREFIX=$SYSROOT_PREFIX/usr install-static -j1
-}
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared"

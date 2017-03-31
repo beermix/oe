@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="ntfs-3g_ntfsprogs"
-PKG_VERSION="2016.2.22"
+PKG_VERSION="2017.3.23"
 PKG_SITE="http://www.ntfs-3g.org/"
 PKG_URL="http://tuxera.com/opensource/$PKG_NAME-$PKG_VERSION.tgz"
 PKG_DEPENDS_TARGET="toolchain fuse"

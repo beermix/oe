@@ -56,6 +56,7 @@ makeinstall_host() {
   : # nop
 }
 
+
 configure_target() {
   cp -PR ../* .
   strip_lto

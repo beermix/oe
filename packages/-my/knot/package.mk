@@ -1,19 +1,13 @@
 PKG_NAME="knot"
-PKG_VERSION="2.2.1"
-PKG_URL="https://secure.nic.cz/files/knot-dns/knot-2.2.1.tar.xz"
-PKG_DEPENDS_TARGET="toolchain openssl jansson gnutls"
-
+PKG_VERSION="2.4.2"
+PKG_URL="https://secure.nic.cz/files/knot-dns/knot-$PKG_VERSION.tar.xz"
+PKG_DEPENDS_TARGET="toolchain openssl jansson gnutls libidn"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-
-PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
-			   --enable-recvmmsg=no \
-			   --disable-fastparser \
-			   --without-libidn \
-			   --with-rundir=/var/run/knot \
-			   --with-storage=/var/lib/knot \
-			   --with-configdir=/etc/knot \
-			   --with-timer-mapsize=50 \
-			   --with-conf-mapsize=50"
+PKG_CONFIGURE_OPTS_TARGET="--enable-recvmmsg=no 
+			      --enable-fastparser \
+			      --enable-recvmmsg=yes \
+			      --enable-dnstap \
+			      --disable-silent-rules"
