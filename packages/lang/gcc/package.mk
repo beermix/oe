@@ -61,6 +61,10 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-__cxa_atexit \
                               --disable-libsanitizer \
                               --enable-cloog-backend=isl \
+                              --disable-libmudflap \
+                              --disable-libitm \
+                              --disable-libquadmath \
+                              --disable-libatomic \
                               --disable-shared \
                               --disable-threads \
                               --without-headers \
