@@ -56,7 +56,8 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libitm \
                            --disable-libquadmath \
                            --disable-libgomp \
-                           --disable-libmpx"
+                           --disable-libmpx \
+                           --disable-libssp"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
@@ -84,7 +85,6 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time \
                          --enable-clocale=gnu \
-                         --disable-libssp \
                          --enable-poison-system-directories \
                          $GCC_OPTS"
 
