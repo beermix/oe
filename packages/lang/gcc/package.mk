@@ -49,19 +49,15 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-target-optspace \
                            --enable-linker-build-id \
                            --without-included-gettext \
-                           --enable-nls \
+                           --disable-nls \
                            --enable-gnu-unique-object \
-                           --disable-vtable-verify \
-                           --enable-default-pie \
-                           --with-system-zlib \
                            --disable-browser-plugin \
-                           --with-target-system-zlib \
+                           --disable-libsanitizer \
                            --with-tune=generic"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
-                              --disable-libsanitizer \
                               --enable-cloog-backend=isl \
                               --disable-shared \
                               --disable-threads \
