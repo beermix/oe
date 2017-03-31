@@ -32,8 +32,7 @@ PKG_SHORTDESC="gcc: The GNU Compiler Collection Version 4 (aka GNU C Compiler)"
 PKG_LONGDESC="This package contains the GNU Compiler Collection. It includes compilers for the languages C, C++, Objective C, Fortran 95, Java and others ... This GCC contains the Stack-Smashing Protector Patch which can be enabled with the -fstack-protector command-line option. More information about it ca be found at http://www.research.ibm.com/trl/projects/security/ssp/."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
-
+PKG_AUTORECONF="no"
 
 GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-sysroot=$SYSROOT_PREFIX \
@@ -55,53 +54,40 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --without-cloog \
                            --disable-libada \
                            --disable-libmudflap \
-                           --disable-libmpx \
-                           --with-target-system-zlib \
-                           --disable-vtable-verify \
-                           --without-included-gettext \
-                           --enable-poison-system-directories \
-                           --with-tune=generic"
+                           --disable-libatomic \
+                           --disable-libitm \
+                           --disable-libquadmath \
+                           --disable-libgomp \
+                           --disable-libmpx"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
                               --disable-libsanitizer \
+                              --disable-libssp \
                               --enable-cloog-backend=isl \
                               --disable-shared \
                               --disable-threads \
                               --without-headers \
                               --with-newlib \
-                              --disable-libatomic \
-                              --disable-libitm \
-                              --disable-libquadmath \
-                              --disable-libgomp \
                               --disable-decimal-float \
-                              --disable-libssp \
                               $GCC_OPTS"
 
 PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-languages=c,c++ \
                          --enable-__cxa_atexit \
                          --enable-decimal-float \
+                         --enable-libssp \
+                         --enable-libatomic \
                          --enable-tls \
                          --enable-shared \
                          --disable-static \
                          --enable-c99 \
                          --enable-long-long \
-                         --enable-libatomic \
-                         --enable-libitm \
-                         --enable-libquadmath \
-                         --enable-libmpx \
-                         --disable-libgomp \
                          --enable-threads=posix \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time \
                          --enable-clocale=gnu \
-                         --enable-gnu-unique-object \
-                         --enable-linker-build-id \
-                         --with-linker-hash-style=gnu \
-                         --enable-gnu-indirect-function \
-                         --disable-libssp \
                          $GCC_OPTS"
 
 pre_configure_host() {
@@ -145,7 +131,7 @@ make_target() {
 makeinstall_target() {
   mkdir -p $INSTALL/lib
     cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libgcc/libgcc_s.so* $INSTALL/lib
-    #cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libssp/.libs/libssp.so* $INSTALL/lib
+    cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libssp/.libs/libssp.so* $INSTALL/lib
     cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libatomic/.libs/libatomic.so* $INSTALL/lib
   mkdir -p $INSTALL/usr/lib
     cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libstdc++-v3/src/.libs/libstdc++.so* $INSTALL/usr/lib
@@ -162,6 +148,6 @@ make_init() {
 makeinstall_init() {
   mkdir -p $INSTALL/lib
     cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libgcc/libgcc_s.so* $INSTALL/lib
-    #cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libssp/.libs/libssp.so* $INSTALL/lib
+    cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libssp/.libs/libssp.so* $INSTALL/lib
     cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libatomic/.libs/libatomic.so* $INSTALL/lib
 }
