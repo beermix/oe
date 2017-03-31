@@ -11,19 +11,26 @@
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="6-20170330"
-PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
-#PKG_VERSION="4fc40788"
-#PKG_GIT_URL="git://gcc.gnu.org/git/gcc.git"
+PKG_VERSION="6.3.0"
+PKG_SITE="http://gcc.gnu.org/"
+PKG_URL="https://fossies.org/linux/misc/gcc-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host"
 PKG_DEPENDS_TARGET="gcc:host"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
+PKG_PRIORITY="optional"
 PKG_SECTION="lang"
+PKG_SHORTDESC="gcc: The GNU Compiler Collection Version 4 (aka GNU C Compiler)"
+PKG_LONGDESC="This package contains the GNU Compiler Collection. It includes compilers for the languages C, C++, Objective C, Fortran 95, Java and others ... This GCC contains the Stack-Smashing Protector Patch which can be enabled with the -fstack-protector command-line option. More information about it ca be found at http://www.research.ibm.com/trl/projects/security/ssp/."
+
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
+
 
 GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-sysroot=$SYSROOT_PREFIX \
@@ -38,36 +45,37 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-gold \
                            --enable-ld=default \
                            --disable-multilib \
+                           --disable-nls \
                            --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
+                           --enable-libstdcxx-time=yes	
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
-                           --disable-libgomp \
+                           --disable-libmudflap \
                            --disable-libmpx \
                            --disable-libssp \
-                           --enable-target-optspace \
-                           --enable-linker-build-id \
+                           --with-target-system-zlib \
+                           --disable-vtable-verify \
+                           --enable-default-pie \
                            --without-included-gettext \
-                           --disable-nls \
-                           --enable-gnu-unique-object \
-                           --disable-browser-plugin \
-                           --disable-libsanitizer \
+                           --enable-poison-system-directories \
                            --with-tune=generic"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
+                              --disable-libsanitizer \
                               --enable-cloog-backend=isl \
                               --disable-shared \
                               --disable-threads \
                               --without-headers \
                               --with-newlib \
-                              --disable-decimal-float \
-                              --disable-libmudflap \
                               --disable-libatomic \
                               --disable-libitm \
                               --disable-libquadmath \
+                              --disable-libgomp \
+                              --disable-decimal-float \
                               $GCC_OPTS"
 
 PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
@@ -79,18 +87,28 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --disable-static \
                          --enable-c99 \
                          --enable-long-long \
+                         --enable-libatomic \
+                         --enable-libitm \
+                         --enable-libquadmath \
+                         --enable-libmpx \
+                         --disable-libgomp \
                          --enable-threads=posix \
                          --disable-libstdcxx-pch \
-                         --enable-libstdcxx-time=yes \
+                         --enable-libstdcxx-time \
                          --enable-clocale=gnu \
-                         --enable-libatomic \
+                         --enable-gnu-unique-object \
+                         --enable-linker-build-id \
+                         --with-linker-hash-style=gnu \
+                         --enable-gnu-indirect-function \
                          $GCC_OPTS"
 
 pre_configure_host() {
   export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
-  #sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $ROOT/$PKG_BUILD/gcc/configure
-  #sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $ROOT/$PKG_BUILD/libiberty/configure
+  
+  sed -iv 's@\./fixinc\.sh@-c true@' $ROOT/$PKG_BUILD/gcc/Makefile.in
+  sed -iv '/m64=/s/lib64/lib/' $ROOT/$PKG_BUILD/gcc/config/i386/t-linux64
+  sed -iv "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $ROOT/$PKG_BUILD/{libiberty,gcc}/configure
 }
 
 post_make_host() {
@@ -105,9 +123,7 @@ post_make_host() {
 }
 
 post_makeinstall_host() {
-  mkdir -p $SYSROOT_PREFIX/usr/lib
-    cp -PR $TARGET_NAME/libstdc++-v3/src/.libs/libstdc++.so* $SYSROOT_PREFIX/usr/lib
-    cp -PR $TARGET_NAME/libatomic/.libs/libatomic.so* $SYSROOT_PREFIX/usr/lib
+  cp -PR $TARGET_NAME/libstdc++-v3/src/.libs/libstdc++.so* $SYSROOT_PREFIX/usr/lib
 
   mkdir -p $ROOT/$TOOLCHAIN/lib/ccache
     ln -sf $ROOT/$TOOLCHAIN/bin/ccache $ROOT/$TOOLCHAIN/lib/ccache/${TARGET_NAME}-gcc
@@ -126,6 +142,8 @@ makeinstall_target() {
   mkdir -p $INSTALL/lib
     cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libgcc/libgcc_s.so* $INSTALL/lib
     cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libatomic/.libs/libatomic.so* $INSTALL/lib
+    cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libitm/.libs/libitm.so* $INSTALL/lib
+    cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libquadmath/.libs/libquadmath.so* $INSTALL/lib
   mkdir -p $INSTALL/usr/lib
     cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libstdc++-v3/src/.libs/libstdc++.so* $INSTALL/usr/lib
 }
@@ -142,4 +160,6 @@ makeinstall_init() {
   mkdir -p $INSTALL/lib
     cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libgcc/libgcc_s.so* $INSTALL/lib
     cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libatomic/.libs/libatomic.so* $INSTALL/lib
+    cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libitm/.libs/libitm.so* $INSTALL/lib
+    cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libquadmath/.libs/libquadmath.so* $INSTALL/lib
 }
