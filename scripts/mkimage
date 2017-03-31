@@ -137,6 +137,9 @@ LABEL installer
 LABEL live
   KERNEL /$KERNEL_NAME
   APPEND boot=UUID=$UUID_SYSTEM live quiet tty vga=current
+LABEL run
+  KERNEL /$KERNEL_NAME
+  APPEND boot=UUID=$UUID_SYSTEM disk=UUID=$UUID_STORAGE portable quiet
 EOF
 
     mcopy "$OE_TMP/syslinux.cfg" ::
@@ -149,6 +152,8 @@ EOF
     echo "image: copying files to part1..."
     mcopy $TARGET_IMG/$IMAGE_NAME.kernel "::/$KERNEL_NAME"
     mcopy $TARGET_IMG/$IMAGE_NAME.system ::/SYSTEM
+    mcopy $RELEASE_DIR/target/KERNEL.md5 "::/$KERNEL_NAME.md5"
+    mcopy $RELEASE_DIR/target/SYSTEM.md5 ::/SYSTEM.md5
     mmd EFI EFI/BOOT
     mcopy $ROOT/$TOOLCHAIN/share/syslinux/bootx64.efi ::/EFI/BOOT
     mcopy $ROOT/$TOOLCHAIN/share/syslinux/ldlinux.e64 ::/EFI/BOOT
@@ -166,10 +171,17 @@ EOF
     echo "image: copying files to part1..."
     mcopy $TARGET_IMG/$IMAGE_NAME.kernel "::/$KERNEL_NAME"
     mcopy $TARGET_IMG/$IMAGE_NAME.system ::/SYSTEM
+    mcopy $RELEASE_DIR/target/KERNEL.md5 "::/$KERNEL_NAME.md5"
+    mcopy $RELEASE_DIR/target/SYSTEM.md5 ::/SYSTEM.md5
     mcopy $RELEASE_DIR/3rdparty/bootloader/bootcode.bin ::
     mcopy $RELEASE_DIR/3rdparty/bootloader/fixup.dat ::
     mcopy $RELEASE_DIR/3rdparty/bootloader/start.elf ::
     mcopy $RELEASE_DIR/3rdparty/bootloader/config.txt ::
+    mcopy $RELEASE_DIR/3rdparty/bootloader/distroconfig.txt ::
+ 
+    if [ -f $RELEASE_DIR/3rdparty/bootloader/dt-blob.bin ]; then
+      mcopy $RELEASE_DIR/3rdparty/bootloader/dt-blob.bin ::
+    fi
 
     for dtb in $RELEASE_DIR/3rdparty/bootloader/*.dtb ; do
       if [ -f $dtb ] ; then
@@ -206,11 +218,16 @@ elif [ "$BOOTLOADER" = "u-boot" ]; then
     elif [ -f "$RELEASE_DIR/3rdparty/bootloader/u-boot-fuse" ]; then
      # allow custom dd script for vendor specific fusing
       . $RELEASE_DIR/3rdparty/bootloader/u-boot-fuse
+    elif [ -f "$RELEASE_DIR/3rdparty/bootloader/u-boot" ]; then
+      dd if="$RELEASE_DIR/3rdparty/bootloader/u-boot" of="$DISK" conv=fsync,notrunc bs=1 count=112 >"$SAVE_ERROR" 2>&1 || show_error
+      dd if="$RELEASE_DIR/3rdparty/bootloader/u-boot" of="$DISK" conv=fsync,notrunc bs=512 skip=1 seek=1 >"$SAVE_ERROR" 2>&1 || show_error
     fi
 
     echo "image: copying files to part1..."
     mcopy $TARGET_IMG/$IMAGE_NAME.kernel "::/$KERNEL_NAME"
     mcopy $TARGET_IMG/$IMAGE_NAME.system ::/SYSTEM
+    mcopy $RELEASE_DIR/target/KERNEL.md5 "::/$KERNEL_NAME.md5"
+    mcopy $RELEASE_DIR/target/SYSTEM.md5 ::/SYSTEM.md5
 
     if [ -n "$UBOOT_SYSTEM" -a -f "$RELEASE_DIR/3rdparty/bootloader/u-boot-$UBOOT_SYSTEM.img" ]; then
       mcopy "$RELEASE_DIR/3rdparty/bootloader/u-boot-$UBOOT_SYSTEM.img" ::/u-boot.img
@@ -218,6 +235,9 @@ elif [ "$BOOTLOADER" = "u-boot" ]; then
       mcopy $RELEASE_DIR/3rdparty/bootloader/u-boot.img ::
     fi
 
+    if [ -f $RELEASE_DIR/3rdparty/bootloader/boot-logo.bmp.gz ]; then
+      mcopy $RELEASE_DIR/3rdparty/bootloader/boot-logo.bmp.gz ::
+    fi
     for dtb in $RELEASE_DIR/3rdparty/bootloader/*.dtb ; do
       if [ -f $dtb ] ; then
         mcopy "$dtb" ::/$(basename "$dtb")
@@ -256,6 +276,26 @@ fi # bootloader
 # merge part2 back to disk image
   echo "image: merging part2 back to image..."
   dd if="$OE_TMP/part2.ext4" of="$DISK" bs=512 seek="$STORAGE_PART_START" conv=fsync,notrunc >"$SAVE_ERROR" 2>&1 || show_error
+
+
+# extract part1 from image to run fsck
+  echo "image: extracting part1 from image..."
+  SYSTEM_PART_COUNT=$(( $SYSTEM_PART_END - $SYSTEM_PART_START + 1 ))
+  sync
+  dd if="$DISK" of="$LE_TMP/part1.fat" bs=512 skip="$SYSTEM_PART_START" count="$SYSTEM_PART_COUNT" conv=fsync >"$SAVE_ERROR" 2>&1 || show_error
+  echo "image: checking filesystem on part1..."
+  fsck -n $LE_TMP/part1.fat >"$SAVE_ERROR" 2>&1 || show_error
+
+# create virtual images
+  if [ "$PROJECT" = "Generic" ]; then
+    echo "image: creating open virtual appliance..."
+    qemu-img convert -O vmdk -o subformat=streamOptimized "$DISK" "$DISK.vmdk"
+    sed -e "s,@DISTRO@,$DISTRO,g" -e "s,@DISK@,$(basename $DISK),g" -e "s,@DISK_SIZE@,$(ls -l $DISK.vmdk | awk '{print $5}'),g" $PROJECT_DIR/$PROJECT/config/ovf.template > $DISK.ovf
+    tar -C $TARGET_IMG -cf $DISK.ova $(basename $DISK).ovf $(basename $DISK).vmdk
+    echo "image: cleaning up..."
+    rm $DISK.vmdk $DISK.ovf
+    [ -n "$SUDO_USER" ] && chown $SUDO_USER: $DISK.ova
+  fi
 
 # gzip
   echo "image: compressing..."
