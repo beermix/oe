@@ -68,8 +68,8 @@ case "$LINUX" in
     PKG_PATCH_DIRS="linux-4.10"
     ;;
   *)
-    PKG_VERSION="4.10.zen-64e2ccf"
-    PKG_URL="http://192.168.1.2:8887/linux-4.10.zen-64e2ccf.tar.xz"
+    PKG_VERSION="4.10.8"
+    PKG_URL="http://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
     PKG_PATCH_DIRS="linux-4.10"
     ;;
 esac
