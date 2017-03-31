@@ -9,6 +9,7 @@ PKG_AUTORECONF="yes"
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-static 
 			      --disable-silent-rules \
-			      --enable-asm \
-			      --enable-largefile"
+			      --enable-largefile \
+			      --disable-doc \
+			      --with-pic"
 
