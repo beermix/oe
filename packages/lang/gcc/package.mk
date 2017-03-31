@@ -101,7 +101,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-linker-build-id \
                          --with-linker-hash-style=gnu \
                          --enable-gnu-indirect-function \
-                         --enable-libssp \
+                         --disable-libssp \
                          $GCC_OPTS"
 
 pre_configure_host() {
