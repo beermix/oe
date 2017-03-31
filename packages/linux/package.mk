@@ -62,16 +62,15 @@ case "$LINUX" in
     PKG_URL="http://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
     PKG_PATCH_DIRS="linux-4.9"
     ;;
-  zen-4.9)
-    PKG_VERSION="4081025c"
-    PKG_URL="https://github.com/rootlis/ps3remote/archive/$PKG_VERSION.zip"
-    PKG_SOURCE_DIR="zen-kernel-${PKG_VERSION}"
-    PKG_PATCH_DIRS="linux-4.9"
+  zen-4.10)
+    PKG_VERSION="4.10.zen-64e2ccf"
+    PKG_URL="http://192.168.1.2:8887/linux-4.10.zen-64e2ccf.tar.xz"
+    PKG_PATCH_DIRS="linux-4.10"
     ;;
   *)
-    PKG_VERSION="4.9"
-    PKG_URL="https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.10.6.tar.xz"
-    PKG_PATCH_DIRS="7d20fa3"
+    PKG_VERSION="4.10.zen-64e2ccf"
+    PKG_URL="http://192.168.1.2:8887/linux-4.10.zen-64e2ccf.tar.xz"
+    PKG_PATCH_DIRS="linux-4.10"
     ;;
 esac
 

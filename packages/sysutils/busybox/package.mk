@@ -115,8 +115,8 @@ configure_target() {
     fi
 
     # optimize for size
-    CFLAGS=`echo $CFLAGS | sed -e "s|-Ofast|-O2|g"`
-    CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O2|g"`
+    CFLAGS=`echo $CFLAGS | sed -e "s|-Ofast|-Os|"`
+    CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
 
     # busybox fails to build with GOLD support enabled with binutils-2.25
     strip_gold
@@ -134,8 +134,8 @@ configure_init() {
     sed -i -e "s|^CONFIG_PREFIX=.*$|CONFIG_PREFIX=\"$INSTALL\"|" .config
 
     # optimize for size
-    CFLAGS=`echo $CFLAGS | sed -e "s|-Ofast|-O2|g"`
-    CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O2|g"`
+    CFLAGS=`echo $CFLAGS | sed -e "s|-Ofast|-Os|"`
+    CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
 
     # busybox fails to build with GOLD support enabled with binutils-2.25
     strip_gold
@@ -143,6 +143,21 @@ configure_init() {
     LDFLAGS="$LDFLAGS -fwhole-program"
 
     make oldconfig
+}
+
+pre_make_host() {
+  # dont build parallel
+  MAKEFLAGS=-j1
+}
+
+pre_make_target() {
+  # dont build parallel
+  MAKEFLAGS=-j1
+}
+
+pre_make_init() {
+  # dont build parallel
+  MAKEFLAGS=-j1
 }
 
 makeinstall_host() {
