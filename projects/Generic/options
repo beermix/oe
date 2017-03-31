@@ -10,7 +10,7 @@
         #               athlon-fx amdfam10 barcelona
         # (Intel CPUs)  atom core2 nocona
         #
-        TARGET_CPU="ivybridge"
+        TARGET_CPU="x86-64"
         ;;
     esac
 
@@ -48,7 +48,7 @@
 ################################################################################
 
   # Build optimizations (size/normal)
-    OPTIMIZATIONS="normal"
+    OPTIMIZATIONS="size"
 
   # Project CFLAGS
     PROJECT_CFLAGS="-mmmx -msse -msse2 -msse3 -mssse3 -maes -mavx -msse4.2 -msse4.1 -mfpmath=sse"
