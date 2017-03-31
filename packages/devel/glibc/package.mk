@@ -99,7 +99,7 @@ pre_configure_target() {
   unset LD_LIBRARY_PATH
 
 # set some CFLAGS we need
-  export CFLAGS="-O2 -g"
+  export CFLAGS="$CFLAGS -g"
   export OBJDUMP_FOR_HOST=objdump
 
 cat >config.cache <<EOF
@@ -111,6 +111,7 @@ EOF
 
   echo "sbindir=/usr/bin" >> configparms
   echo "rootsbindir=/usr/bin" >> configparms
+  echo "build-programs=no" >> configparms
 }
 
 post_makeinstall_target() {
@@ -136,7 +137,6 @@ post_makeinstall_target() {
 
 # remove locales and charmaps
   rm -rf $INSTALL/usr/share/i18n/charmaps
-
   if [ -n "$GLIBC_LOCALES" ]; then
     mkdir -p $INSTALL/usr/lib/locale
     for locale in $GLIBC_LOCALES; do

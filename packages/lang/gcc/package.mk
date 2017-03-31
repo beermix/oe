@@ -52,9 +52,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
-                           --disable-libmudflap \
-                           --disable-libitm \
-                           --disable-libquadmath \
                            --disable-libgomp \
                            --disable-libmpx \
                            --disable-libssp"
