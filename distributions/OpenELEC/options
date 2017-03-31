@@ -78,6 +78,7 @@
 # Space separated list is supported,
 # e.g. ADDITIONAL_DRIVERS="DRIVER1 DRIVER2"
  # ADDITIONAL_DRIVERS="RTL8192DU RTL8192EU RTL8812AU mt7610u" # todo: dvbhdhomerun
+
 # build and install bluetooth support (yes / no)
   BLUETOOTH_SUPPORT="yes"
 
