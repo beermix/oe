@@ -9,5 +9,18 @@ configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
   
-  ./configure build
+  ./waf-light configure
+  
+  ./waf-light build	
+   
+  #point waf binary to waflib dir and strip payload
+        sed -e "/INSTALL=/s:=.*:='$ROOT/$TOOLCHAIN/bin':" \
+                -e "/REVISION=/s:=.*:='1.9.9':" \
+                -e "s:/lib/:/$(get_libdir)/:" \
+                -e "/^#\(==>\|BZ\|<==\)/d" \
+                -i waf || die
+        dobin waf
+
+        insinto /usr/$(get_libdir)/${PN}3-${PV}-${PR}
+        doins -r waflib
 }
