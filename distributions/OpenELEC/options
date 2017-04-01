@@ -69,9 +69,9 @@
 # please add all configfiles which should be included without the suffix and prefix
 # except the default-*.config and the ones included in packages/linux/package.mk
 # Space separated list is supported,
-  KERNEL_EXTRA_CONFIG+=" filesystem mmc hid-drivers remote touchscreen joystick audio"
-  KERNEL_EXTRA_CONFIG+=" dvb-usb dvb-other lan-usb lan-phy"
-  KERNEL_EXTRA_CONFIG+=" wlan-usb wlan-other sound-usb usb-serial usb-gadget"
+#  KERNEL_EXTRA_CONFIG+=" filesystem mmc hid-drivers remote touchscreen joystick audio"
+#  KERNEL_EXTRA_CONFIG+=" dvb-usb dvb-other lan-usb lan-phy"
+#  KERNEL_EXTRA_CONFIG+=" wlan-usb wlan-other sound-usb usb-serial usb-gadget"
 
 # additional drivers to install:
 # for a list of additinoal drivers see packages/linux-drivers
@@ -101,10 +101,10 @@
   KODI_OPTICAL_SUPPORT="no"
 
 # build with AirPlay support (stream videos from iDevices to KODI) (yes / no)
-  KODI_AIRPLAY_SUPPORT="yes"
+  KODI_AIRPLAY_SUPPORT="no"
 
 # build with AirTunes support (stream music from iDevices to KODI) (yes / no)
-  KODI_AIRTUNES_SUPPORT="yes"
+  KODI_AIRTUNES_SUPPORT="no"
 
 # build with libnfs support (mounting nfs shares with KODI) (yes / no)
   KODI_NFS_SUPPORT="no"
@@ -116,7 +116,7 @@
   KODI_LANGUAGE_ADDONS="no"
 
 # build with NFS support (mounting nfs shares via the OS) (yes / no)
-  NFS_SUPPORT="yes"
+  NFS_SUPPORT="no"
 
 # build with Samba Client support (mounting samba shares via the OS) (yes / no)
   SAMBA_SUPPORT="yes"
@@ -131,7 +131,7 @@
   PPTP_SUPPORT="no"
 
 # build and install OpenVPN support (yes / no)
-  OPENVPN_SUPPORT="no"
+  OPENVPN_SUPPORT="yes"
 
 # build and install diskmounter support (udevil)
 # this service provide auto mounting support for external drives in the
