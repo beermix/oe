@@ -32,6 +32,7 @@ PKG_LONGDESC="This package contains a precompiled kernel image and the modules."
 case "$LINUX" in
   amlogic-3.10)
     PKG_VERSION="de626d8"
+#    PKG_GIT_URL="https://github.com/codesnake/linux-amlogic.git"
     PKG_GIT_URL="https://github.com/LibreELEC/linux-amlogic.git"
     PKG_GIT_BRANCH="amlogic-3.10.y"
     PKG_PATCH_DIRS="linux-3.10 amlogic-3.10"
@@ -39,6 +40,7 @@ case "$LINUX" in
     ;;
   amlogic-3.14)
     PKG_VERSION="eb7e852"
+#    PKG_GIT_URL="https://github.com/codesnake/linux-amlogic.git"
     PKG_GIT_URL="https://github.com/LibreELEC/linux-amlogic.git"
     PKG_GIT_BRANCH="amlogic-3.14.y"
     PKG_PATCH_DIRS="linux-3.14 amlogic-3.14"
@@ -61,11 +63,6 @@ case "$LINUX" in
     PKG_VERSION="4.9.18"
     PKG_URL="http://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
     PKG_PATCH_DIRS="linux-4.9"
-    ;;
-  zen-4.10)
-    PKG_VERSION="4.10.zen-64e2ccf"
-    PKG_URL="http://192.168.1.2:8887/linux-4.10.zen-64e2ccf.tar.xz"
-    PKG_PATCH_DIRS="linux-4.10"
     ;;
   *)
     PKG_VERSION="4.10.8"
