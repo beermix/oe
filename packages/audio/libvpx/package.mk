@@ -8,8 +8,6 @@ PKG_AUTORECONF="no"
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
-  ./bootstrap
-
 }
 
 configure_target() {
