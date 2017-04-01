@@ -1,12 +1,12 @@
 PKG_NAME="tor"
-PKG_VERSION="tor-0.3.0.4-rc"
+PKG_VERSION="tor-0.2.9.10"
 PKG_GIT_URL="https://github.com/torproject/tor"
 PKG_DEPENDS_TARGET="toolchain openssl zlib libevent libcap"
 PKG_SECTION="security"
 PKG_AUTORECONF="yes"
 
 pre_configure_target() {
-  strip_lto
+  #strip_lto
   strip_gold
 }
 

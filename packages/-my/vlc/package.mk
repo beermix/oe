@@ -4,10 +4,10 @@
 ################################################################################
 
 PKG_NAME="vlc"
-PKG_VERSION="2.2.5.1"
-PKG_URL="https://nightlies.videolan.org/build/source/vlc-2.2.5-20170328-0221.1.tar.xz"
-#PKG_VERSION="2.2.4"
-#PKG_URL="http://download.videolan.org/$PKG_NAME/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
+#PKG_VERSION="2.2.5.1"
+#PKG_URL="https://nightlies.videolan.org/build/source/vlc-2.2.5-20170328-0221.1.tar.xz"
+PKG_VERSION="2.2.4"
+PKG_URL="http://download.videolan.org/$PKG_NAME/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain dbus libdvbpsi ffmpeg zlib lua libvorbis libogg flac gnutls libmpeg2 gstreamer libshout"
 PKG_PRIORITY="optional"
 PKG_SECTION="xmedia/tools"
