@@ -8,6 +8,7 @@ PKG_AUTORECONF="yes"
 
 pre_configure_target() {
   strip_gold
+  strip_lto
 }
 
 

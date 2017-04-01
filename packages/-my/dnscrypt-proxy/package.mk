@@ -1,5 +1,5 @@
 PKG_NAME="dnscrypt-proxy"
-PKG_VERSION="976e697"
+PKG_VERSION="287ce26"
 PKG_GIT_URL="https://github.com/jedisct1/dnscrypt-proxy"
 PKG_DEPENDS_TARGET="toolchain systemd libsodium"
 PKG_SECTION="my"
