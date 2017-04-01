@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libva"
-PKG_VERSION="1.8.0.pre3"
+PKG_VERSION="1.8.0"
 PKG_REV="1"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPL"
@@ -41,8 +41,3 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-silent-rules \
                            --disable-wayland \
                            --disable-dummy-driver \
                            --with-drivers-path=/usr/lib/va"
-
-#post_makeinstall_target() {
-#  mkdir -p $INSTALL/usr/bin
-#  cp test/vainfo/.libs/vainfo $INSTALL/usr/bin
-#}

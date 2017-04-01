@@ -21,7 +21,7 @@ PKG_NAME="fluxbox"
 PKG_VERSION="1.3.7"
 PKG_SITE="http://fluxbox.org/"
 PKG_URL="http://sourceforge.net/projects/fluxbox/files/fluxbox/${PKG_VERSION}/$PKG_NAME-${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_TARGET="toolchain libX11 libXrandr libXext libXrender fribidi"
+PKG_DEPENDS_TARGET="toolchain libX11 libXrandr libXext libXrender fribidi cairo atk"
 PKG_SECTION="x11/other"
 PKG_SHORTDESC="Fluxbox is a windowmanager for X that was based on the Blackbox 0.61.1 code"
 PKG_LONGDESC="Fluxbox is a windowmanager for X that was based on the Blackbox 0.61.1 code. It is very light on resources and easy to handle but yet full of features to make an easy, and extremely fast, desktop experience. It is built using C++ and licensed under the MIT-License."
@@ -32,8 +32,8 @@ PKG_AUTORECONF="yes"
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_realloc_0_nonnull=yes \
                            ac_cv_func_malloc_0_nonnull=yes \
                            --disable-toolbar \
-                           --disable-slit \
-                           --disable-systray \
+                           --enable-slit \
+                           --enable-systray \
                            --enable-ewmh \
                            --disable-xpm \
                            --disable-xft \
