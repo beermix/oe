@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_URL="http://www.kernel.org/pub/linux/utils/util-linux/v2.29/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain readline slang"
-PKG_DEPENDS_INIT="toolchain gcc:init readline slangbbb slang"
+PKG_DEPENDS_INIT="toolchain gcc:init readline slang"
 PKG_PRIORITY="optional"
 PKG_SECTION="system"
 PKG_SHORTDESC="util-linux: Miscellaneous system utilities for Linux"
@@ -65,6 +65,7 @@ UTILLINUX_CONFIG_DEFAULT="--disable-gtk-doc \
                           --disable-more \
                           --disable-pg \
                           --disable-wall \
+                          --without-libz \
                           --disable-use-tty-group \
                           --without-systemdsystemunitdir"
 
