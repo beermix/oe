@@ -161,6 +161,7 @@ configure_target() {
         -DWITH_ZLIB=bundled \
         -DWITH_SYSTEMD=OFF \
         -DWITH_LIBWRAP=OFF \
+        -DWITH_UNIT_TESTS=OFF \
         -DWITH_SSL=$SYSROOT_PREFIX/usr \
         -DSECURITY_HARDENED=OFF \
         $MARIADB_OPTS \
