@@ -1,0 +1,31 @@
+diff --git a/Makefile b/Makefile
+old mode 100644
+new mode 100755
+index 3edd94b..0d72e68
+--- a/Makefile
++++ b/Makefile
+@@ -2,20 +2,20 @@ PROG =		oggfwd
+ SRC =		oggfwd.c
+ MAN =		oggfwd.1
+ 
+-PREFIX ?=	/usr/local
++PREFIX ?=	/usr
+ BINDIR ?=	${PREFIX}/bin
+ MAN1DIR ?=	${PREFIX}/man/man1
+ 
+-CC ?=		gcc
++CC ?=		x86_64-openelec-linux-gnu-gcc
+ CFLAGS ?=	-O2 -pipe
+ CFLAGS +=	-Wall -ffast-math -fsigned-char
+ 
+ INSTALL =	install
+ 
+-PTHREADFLAGS ?=	-pthread
++PTHREADFLAGS ?=	-lpthread
+ INCLUDEFLAGS ?=	-I${PREFIX}/include
+ LINKFLAGS ?=	-L${PREFIX}/lib
+-LINKFLAGS +=    -lshout
++LINKFLAGS +=    -lshout -ltheora -logg -lvorbis
+ 
+ all: ${PROG}
+ 
