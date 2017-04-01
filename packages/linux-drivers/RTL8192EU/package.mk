@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,16 +17,14 @@
 ################################################################################
 
 PKG_NAME="RTL8192EU"
-PKG_VERSION="54a6b17"
-PKG_REV="1"
+PKG_VERSION="0c80da7"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/Mange/rtl8192eu-linux-driver"
-PKG_GIT_URL="https://github.com/Mange/rtl8192eu-linux-driver.git"
-PKG_GIT_BRANCH="master"
+PKG_URL="https://github.com/Mange/rtl8192eu-linux-driver/archive/$PKG_VERSION.tar.gz"
+PKG_SOURCE_DIR="rtl8192eu-linux-driver-$PKG_VERSION*"
 PKG_DEPENDS_TARGET="toolchain linux"
 PKG_NEED_UNPACK="$LINUX_DEPENDS"
-PKG_PRIORITY="optional"
 PKG_SECTION="driver"
 PKG_SHORTDESC="Realtek RTL8192EU Linux 3.x driver"
 PKG_LONGDESC="Realtek RTL8192EU Linux 3.x driver"
@@ -41,8 +39,8 @@ pre_make_target() {
 make_target() {
   make V=1 \
        ARCH=$TARGET_KERNEL_ARCH \
-       KSRC=$(get_pkg_build linux) \
-       CROSS_COMPILE=${TARGET_NAME}- \
+       KSRC=$(kernel_path) \
+       CROSS_COMPILE=$TARGET_PREFIX \
        CONFIG_POWER_SAVING=n \
        USER_EXTRA_CFLAGS="-Wno-error=date-time"
 }

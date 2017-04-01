@@ -18,11 +18,12 @@
 
 PKG_NAME="RTL8192CU"
 PKG_VERSION="v4.0.2_9000.20130911"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://www.realtek.com.tw/downloads/downloadsView.aspx?Langid=1&PFid=48&Level=5&Conn=4&ProdID=274&DownTypeID=3&GetDown=false&Downloads=true"
 PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain linux"
 PKG_NEED_UNPACK="$LINUX_DEPENDS"
-
 PKG_SECTION="driver"
 PKG_SHORTDESC="Realtek RTL81xxCU Linux 3.x driver"
 PKG_LONGDESC="Realtek RTL81xxCU Linux 3.x driver"
@@ -37,8 +38,8 @@ pre_make_target() {
 make_target() {
   make V=1 \
        ARCH=$TARGET_KERNEL_ARCH \
-       KSRC=$(get_pkg_build linux) \
-       CROSS_COMPILE=${TARGET_NAME}- \
+       KSRC=$(kernel_path) \
+       CROSS_COMPILE=$TARGET_PREFIX \
        CONFIG_POWER_SAVING=n
 }
 
