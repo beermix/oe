@@ -17,14 +17,16 @@
 ################################################################################
 
 PKG_NAME="RTL8192DU"
-PKG_VERSION="9e7eb15"
+PKG_VERSION="69552b2"
+PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/lwfinger/rtl8192du"
-PKG_URL="https://github.com/lwfinger/rtl8192du/archive/$PKG_VERSION.tar.gz"
-PKG_SOURCE_DIR="rtl8192du-$PKG_VERSION*"
+PKG_GIT_URL="https://github.com/lwfinger/rtl8192du.git"
+PKG_GIT_BRANCH="master"
 PKG_DEPENDS_TARGET="toolchain linux"
 PKG_NEED_UNPACK="$LINUX_DEPENDS"
+PKG_PRIORITY="optional"
 PKG_SECTION="driver"
 PKG_SHORTDESC="Realtek RTL8192DU Linux 3.x driver"
 PKG_LONGDESC="Realtek RTL8192DU Linux 3.x driver"
@@ -39,8 +41,8 @@ pre_make_target() {
 make_target() {
   make V=1 \
        ARCH=$TARGET_KERNEL_ARCH \
-       KSRC=$(kernel_path) \
-       CROSS_COMPILE=$TARGET_PREFIX \
+       KSRC=$(get_pkg_build linux) \
+       CROSS_COMPILE=${TARGET_NAME}- \
        CONFIG_POWER_SAVING=n
 }
 

@@ -17,157 +17,146 @@
 ################################################################################
 
 PKG_NAME="linux"
+PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kernel.org"
 PKG_DEPENDS_HOST="ccache:host"
-PKG_DEPENDS_TARGET="toolchain cpio:host kmod:host pciutils xz:host wireless-regdb keyutils"
-PKG_DEPENDS_INIT="toolchain"
+PKG_DEPENDS_TARGET="toolchain cpio:host kmod:host pciutils xz:host wireless-regdb keyutils irqbalance"
+PKG_DEPENDS_INIT="toolchain cpu-firmware:init"
 PKG_NEED_UNPACK="$LINUX_DEPENDS"
+PKG_PRIORITY="optional"
 PKG_SECTION="linux"
 PKG_SHORTDESC="linux26: The Linux kernel 2.6 precompiled kernel binary image and modules"
 PKG_LONGDESC="This package contains a precompiled kernel image and the modules."
 case "$LINUX" in
   amlogic-3.10)
-    PKG_VERSION="de626d8"
-    PKG_URL="https://github.com/LibreELEC/linux-amlogic/archive/$PKG_VERSION.tar.gz"
-    PKG_SOURCE_DIR="$PKG_NAME-amlogic-$PKG_VERSION*"
-    PKG_PATCH_DIRS="amlogic-3.10"
+    PKG_VERSION="1261cae"
+#    PKG_GIT_URL="https://github.com/codesnake/linux-amlogic.git"
+    PKG_GIT_URL="https://github.com/LibreELEC/linux-amlogic.git"
+    PKG_GIT_BRANCH="amlogic-3.10.y"
+    PKG_PATCH_DIRS="linux-3.10 amlogic-3.10"
+    KERNEL_EXTRA_CONFIG+=" kernel-3.x"
     ;;
   amlogic-3.14)
     PKG_VERSION="83803a1"
-    PKG_URL="https://github.com/LibreELEC/linux-amlogic/archive/$PKG_VERSION.tar.gz"
-    PKG_SOURCE_DIR="$PKG_NAME-amlogic-$PKG_VERSION*"
-    PKG_PATCH_DIRS="amlogic-3.14"
+#    PKG_GIT_URL="https://github.com/codesnake/linux-amlogic.git"
+    PKG_GIT_URL="https://github.com/LibreELEC/linux-amlogic.git"
+    PKG_GIT_BRANCH="amlogic-3.14.y"
+    PKG_PATCH_DIRS="linux-3.14 amlogic-3.14"
+    KERNEL_EXTRA_CONFIG+=" kernel-3.x"
     ;;
-  imx6-3.14-sr)
-    PKG_VERSION="3.14-sr"
-    PKG_COMMIT="2fb11e2"
-    PKG_SITE="http://solid-run.com/wiki/doku.php?id=products:imx6:software:development:kernel"
-    PKG_URL="https://github.com/SolidRun/linux-fslc/archive/$PKG_COMMIT.tar.gz"
-    PKG_SOURCE_NAME="$PKG_NAME-$LINUX-$PKG_COMMIT.tar.gz"
-    PKG_SOURCE_DIR="$PKG_NAME-fslc-${PKG_COMMIT}*"
-    PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET imx6-status-led imx6-soc-fan"
+  imx6)
+    PKG_VERSION="47b3547"
+    PKG_GIT_URL="https://github.com/xbianonpi/xbian-sources-kernel.git"
+    PKG_GIT_BRANCH="imx6-4.8.y"
+    PKG_DEPENDS_TARGET+=" imx6-status-led imx6-soc-fan"
+    PKG_PATCH_DIRS="linux-4.8 imx6-4.8"
     ;;
-  imx6-4.4-xbian)
-    PKG_VERSION="4.4-xbian"
-    PKG_COMMIT="3bde863"
-    PKG_SITE="https://github.com/xbianonpi/xbian-sources-kernel/tree/imx6-4.4.y"
-    PKG_URL="https://github.com/xbianonpi/xbian-sources-kernel/archive/$PKG_COMMIT.tar.gz"
-    PKG_SOURCE_NAME="$PKG_NAME-$LINUX-$PKG_COMMIT.tar.gz"
-    PKG_SOURCE_DIR="xbian-sources-kernel-${PKG_COMMIT}*"   
-    PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET imx6-status-led imx6-soc-fan irqbalanced"
+  rpi)
+    PKG_VERSION="6398163"
+    PKG_GIT_URL="https://github.com/OpenELEC/linux.git"
+    PKG_GIT_BRANCH="raspberry-rpi-4.9.y"
+    PKG_PATCH_DIRS="linux-4.9"
+    ;;
+  linux-4.8)
+    PKG_VERSION="4.8.6"
+    PKG_URL="http://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
+    PKG_PATCH_DIRS="linux-4.8"
     ;;
   *)
-    PKG_VERSION="4.10.8"
-    PKG_URL="http://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
-    PKG_PATCH_DIRS="default"
+    PKG_VERSION="4.11-rc4"
+    PKG_URL="http://www.kernel.org/pub/linux/kernel/v4.x/testing/$PKG_NAME-$PKG_VERSION.tar.xz"
+    PKG_PATCH_DIRS="linux-4.11"
     ;;
 esac
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_MAKE_OPTS_HOST="ARCH=$TARGET_KERNEL_ARCH headers_check"
+PKG_MAKE_OPTS_HOST="headers_check"
 
-if [ "$TARGET_ARCH" = "x86_64" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET intel-ucode x86-firmware"
-fi
-
-if [ "$BUILD_ANDROID_BOOTIMG" = "yes" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET mkbootimg:host"
-fi
+[ "$BUILD_ANDROID_BOOTIMG" = "yes" ] && PKG_DEPENDS_TARGET+=" mkbootimg:host"
+[ "$SWAP_SUPPORT" = yes ]            && KERNEL_EXTRA_CONFIG+=" swap"
+[ "$NFS_SUPPORT" = yes ]             && KERNEL_EXTRA_CONFIG+=" nfs"
+[ "$SAMBA_SUPPORT" = yes ]           && KERNEL_EXTRA_CONFIG+=" samba"
+[ "$BLUETOOTH_SUPPORT" = yes ]       && KERNEL_EXTRA_CONFIG+=" bluetooth"
+[ "$UVESAFB_SUPPORT" = yes ]         && KERNEL_EXTRA_CONFIG+=" uvesafb"
 
 post_patch() {
-  if [ -n "$DEVICE" -a -f $PROJECT_DIR/$PROJECT/devices/$DEVICE/$PKG_NAME/$PKG_VERSION/$PKG_NAME.$TARGET_ARCH.conf ]; then
-    KERNEL_CFG_FILE=$PROJECT_DIR/$PROJECT/devices/$DEVICE/$PKG_NAME/$PKG_VERSION/$PKG_NAME.$TARGET_ARCH.conf
-  elif [ -n "$DEVICE" -a -f $PROJECT_DIR/$PROJECT/devices/$DEVICE/$PKG_NAME/$PKG_NAME.$TARGET_ARCH.conf ]; then
-    KERNEL_CFG_FILE=$PROJECT_DIR/$PROJECT/devices/$DEVICE/$PKG_NAME/$PKG_NAME.$TARGET_ARCH.conf
-  elif [ -f $PROJECT_DIR/$PROJECT/$PKG_NAME/$PKG_VERSION/$PKG_NAME.$TARGET_ARCH.conf ]; then
-    KERNEL_CFG_FILE=$PROJECT_DIR/$PROJECT/$PKG_NAME/$PKG_VERSION/$PKG_NAME.$TARGET_ARCH.conf
-  elif [ -f $PROJECT_DIR/$PROJECT/$PKG_NAME/$PKG_NAME.$TARGET_ARCH.conf ]; then
+  if [ -f $PROJECT_DIR/$PROJECT/$PKG_NAME/$PKG_NAME.$TARGET_ARCH.conf ]; then
     KERNEL_CFG_FILE=$PROJECT_DIR/$PROJECT/$PKG_NAME/$PKG_NAME.$TARGET_ARCH.conf
-  elif [ -f $PKG_DIR/config/$PKG_VERSION/$PKG_NAME.$TARGET_ARCH.conf ]; then
-    KERNEL_CFG_FILE=$PKG_DIR/config/$PKG_VERSION/$PKG_NAME.$TARGET_ARCH.conf
   else
     KERNEL_CFG_FILE=$PKG_DIR/config/$PKG_NAME.$TARGET_ARCH.conf
   fi
 
-  sed -i -e "s|^HOSTCC[[:space:]]*=.*$|HOSTCC = $TOOLCHAIN/bin/host-gcc|" \
-         -e "s|^HOSTCXX[[:space:]]*=.*$|HOSTCXX = $TOOLCHAIN/bin/host-g++|" \
-         -e "s|^ARCH[[:space:]]*?=.*$|ARCH = $TARGET_KERNEL_ARCH|" \
-         -e "s|^CROSS_COMPILE[[:space:]]*?=.*$|CROSS_COMPILE = $TARGET_PREFIX|" \
+  cp $KERNEL_CFG_FILE $PKG_BUILD/.config
+
+  sed -i -e "s|^ARCH[[:space:]]*?=.*$|ARCH = $TARGET_KERNEL_ARCH|" \
+         -e "s|^CROSS_COMPILE[[:space:]]*?=.*$|CROSS_COMPILE = ${TARGET_NAME}-|" \
          $PKG_BUILD/Makefile
 
-  cp $KERNEL_CFG_FILE $PKG_BUILD/.config
   if [ ! "$BUILD_ANDROID_BOOTIMG" = "yes" ]; then
-    sed -i -e "s|^CONFIG_INITRAMFS_SOURCE=.*$|CONFIG_INITRAMFS_SOURCE=\"$BUILD/image/initramfs.cpio\"|" $PKG_BUILD/.config
+    sed -i -e "s|^CONFIG_INITRAMFS_SOURCE=.*$|CONFIG_INITRAMFS_SOURCE=\"$ROOT/$BUILD/image/initramfs.cpio\"|" $PKG_BUILD/.config
   fi
 
   # set default hostname based on $DISTRONAME
     sed -i -e "s|@DISTRONAME@|$DISTRONAME|g" $PKG_BUILD/.config
 
-  # disable swap support if not enabled
-  if [ ! "$SWAP_SUPPORT" = yes ]; then
-    sed -i -e "s|^CONFIG_SWAP=.*$|# CONFIG_SWAP is not set|" $PKG_BUILD/.config
-  fi
+  # copy some extra firmware to linux tree
+    cp -R $PKG_DIR/firmware/* $PKG_BUILD/firmware
 
-  # disable nfs support if not enabled
-  if [ ! "$NFS_SUPPORT" = yes ]; then
-    sed -i -e "s|^CONFIG_NFS_FS=.*$|# CONFIG_NFS_FS is not set|" $PKG_BUILD/.config
-  fi
+  # ask for new config options after kernel update
+    make -C $PKG_BUILD oldconfig
 
-  # disable cifs support if not enabled
-  if [ ! "$SAMBA_SUPPORT" = yes ]; then
-    sed -i -e "s|^CONFIG_CIFS=.*$|# CONFIG_CIFS is not set|" $PKG_BUILD/.config
-  fi
+  # set default config
+    for config in $(find $PKG_DIR/config -type f -name default-*.config 2>&1); do
+      if [ -f $config ]; then
+        echo ">>> include $config ..."
+        cat $config >> $PKG_BUILD/.config
+      fi
+    done
+    for config in $(find $PROJECT_DIR/$PROJECT/$PKG_NAME -type f -name default-*.config 2>&1); do
+      if [ -f $config ]; then
+        echo ">>> include $config ..."
+        cat $config >> $PKG_BUILD/.config
+      fi
+    done
+    for config in $(find $DISTRO_DIR/$DISTRO/$PKG_NAME -type f -name default-*.config 2>&1); do
+      if [ -f $config ]; then
+        echo ">>> include $config ..."
+        cat $config >> $PKG_BUILD/.config
+      fi
+    done
 
-  # disable iscsi support if not enabled
-  if [ ! "$ISCSI_SUPPORT" = yes ]; then
-    sed -i -e "s|^CONFIG_SCSI_ISCSI_ATTRS=.*$|# CONFIG_SCSI_ISCSI_ATTRS is not set|" $PKG_BUILD/.config
-    sed -i -e "s|^CONFIG_ISCSI_TCP=.*$|# CONFIG_ISCSI_TCP is not set|" $PKG_BUILD/.config
-    sed -i -e "s|^CONFIG_ISCSI_BOOT_SYSFS=.*$|# CONFIG_ISCSI_BOOT_SYSFS is not set|" $PKG_BUILD/.config
-    sed -i -e "s|^CONFIG_ISCSI_IBFT_FIND=.*$|# CONFIG_ISCSI_IBFT_FIND is not set|" $PKG_BUILD/.config
-    sed -i -e "s|^CONFIG_ISCSI_IBFT=.*$|# CONFIG_ISCSI_IBFT is not set|" $PKG_BUILD/.config
-  fi
+  # set extra config
+    for config in $KERNEL_EXTRA_CONFIG; do
+      if [ -f $PKG_DIR/config/extra-${config}.config ]; then
+        echo ">>> include $PKG_DIR/config/extra-${config}.config ..."
+        cat $PKG_DIR/config/extra-${config}.config >> $PKG_BUILD/.config
+      fi
+      if [ -f $PROJECT_DIR/$PROJECT/$PKG_NAME/extra-${config}.config ]; then
+        echo ">>> include $PROJECT_DIR/$PROJECT/$PKG_NAME/extra-${config}.config ..."
+        cat $PROJECT_DIR/$PROJECT/$PKG_NAME/extra-${config}.config >> $PKG_BUILD/.config
+      fi
+      if [ -f $DISTRO_DIR/$DISTRO/$PKG_NAME/extra-${config}.config ]; then
+        echo ">>> include $DISTRO_DIR/$DISTRO/$PKG_NAME/extra-${config}.config ..."
+        cat $DISTRO_DIR/$DISTRO/$PKG_NAME/extra-${config}.config >> $PKG_BUILD/.config
+      fi
+    done
 
-  # enable different libcec version for imx6 project with kernel 4.4
-  # using customized kernel driver
-  if [ "$PROJECT" = "imx6" ]; then
-    if [ "$LIBCEC_TYPE" = "xbian" -a "$LINUX" = "imx6-4.4-xbian" ]; then
-      sed -i -e "s|# CONFIG_MXC_HDMI_CEC is not set|CONFIG_MXC_HDMI_CEC=y|" $PKG_BUILD/.config
-      sed -i -e "s|CONFIG_MXC_HDMI_CEC_SR=y||" $PKG_BUILD/.config
-    fi
-  fi
-
-  # install extra dts files
- # cp -v projects/$PROJECT/devices/$DEVICE/config/*-overlay.dts $PKG_BUILD/arch/$TARGET_KERNEL_ARCH/boot/dts/overlays/ || :
-  #cp -v projects/$PROJECT/devices/$DEVICE/config/dt-blob.dts $PKG_BUILD/arch/$TARGET_KERNEL_ARCH/boot/dts/ || :
+    make -C $PKG_BUILD olddefconfig
 }
 
 makeinstall_host() {
-  make ARCH=$TARGET_KERNEL_ARCH INSTALL_HDR_PATH=dest headers_install
+  make INSTALL_HDR_PATH=dest headers_install
   mkdir -p $SYSROOT_PREFIX/usr/include
     cp -R dest/include/* $SYSROOT_PREFIX/usr/include
 }
 
 pre_make_target() {
-  if [ "$TARGET_ARCH" = "x86_64" ]; then
-    # copy some extra firmware to linux tree
-    mkdir -p $PKG_BUILD/external-firmware
-      cp -a $(get_build_dir x86-firmware)/{amdgpu,amd-ucode,i915,radeon,rtl_nic} $PKG_BUILD/external-firmware
-
-    mkdir -p $PKG_BUILD/external-firmware/intel-ucode
-      cp -a $(get_build_dir intel-ucode)/microcode.bin $PKG_BUILD/external-firmware/intel-ucode
-
-    FW_LIST="$(find $PKG_BUILD/external-firmware \( -type f -o -type l \) \( -iname '*.bin' -o -iname '*.fw' \) | sed 's|.*external-firmware/||' | sort | xargs)"
-    sed -i "s|CONFIG_EXTRA_FIRMWARE=.*|CONFIG_EXTRA_FIRMWARE=\"${FW_LIST}\"|" $PKG_BUILD/.config
-  fi
-
-  make oldconfig
-
   # regdb
-  cp $(get_build_dir wireless-regdb)/db.txt $PKG_BUILD/net/wireless/db.txt
+  cp $(get_pkg_build wireless-regdb)/db.txt $ROOT/$PKG_BUILD/net/wireless/db.txt
 
   if [ "$BOOTLOADER" = "u-boot" ]; then
     ( cd $ROOT
@@ -177,47 +166,53 @@ pre_make_target() {
 }
 
 make_target() {
-  LDFLAGS="" make modules
-  LDFLAGS="" make INSTALL_MOD_PATH=$INSTALL/usr DEPMOD="$TOOLCHAIN/bin/depmod" modules_install
+  unset LDFLAGS
+
+  make modules
+  make INSTALL_MOD_PATH=$INSTALL/usr DEPMOD="$ROOT/$TOOLCHAIN/bin/depmod" INSTALL_MOD_STRIP=1 modules_install
   rm -f $INSTALL/usr/lib/modules/*/build
   rm -f $INSTALL/usr/lib/modules/*/source
 
   ( cd $ROOT
-    rm -rf $BUILD/initramfs
+    rm -rf $ROOT/$BUILD/initramfs
     $SCRIPTS/install initramfs
   )
 
-  if [ "$BOOTLOADER" = "u-boot" -a -n "$KERNEL_UBOOT_EXTRA_TARGET" ]; then
-    for extra_target in "$KERNEL_UBOOT_EXTRA_TARGET"; do
-      LDFLAGS="" make $extra_target
-    done
+  if [ "$BOOTLOADER" = "u-boot" ]; then
+    if [ -n "$KERNEL_UBOOT_EXTRA_TARGET" -o -n "$KERNEL_UBOOT_DT_IMAGE" ]; then
+      for extra_target in "$KERNEL_UBOOT_EXTRA_TARGET" $(basename "$KERNEL_UBOOT_DT_IMAGE") ; do
+        make $extra_target
+      done
+    fi
   fi
 
-  LDFLAGS="" make $KERNEL_TARGET $KERNEL_MAKE_EXTRACMD
+  make $KERNEL_TARGET $KERNEL_MAKE_EXTRACMD
 
   if [ "$BUILD_ANDROID_BOOTIMG" = "yes" ]; then
-    LDFLAGS="" mkbootimg --kernel arch/$TARGET_KERNEL_ARCH/boot/$KERNEL_TARGET --ramdisk $BUILD/image/initramfs.cpio \
+    mkbootimg --kernel arch/$TARGET_KERNEL_ARCH/boot/$KERNEL_TARGET --ramdisk $ROOT/$BUILD/image/initramfs.cpio \
       $ANDROID_BOOTIMG_OPTIONS --output arch/$TARGET_KERNEL_ARCH/boot/boot.img
     mv -f arch/$TARGET_KERNEL_ARCH/boot/boot.img arch/$TARGET_KERNEL_ARCH/boot/$KERNEL_TARGET
   fi
 }
 
 makeinstall_target() {
-  if [ "$BOOTLOADER" = "u-boot" ]; then
+  if [ "$BOOTLOADER" = "u-boot" -o "$BOOTLOADER" = "bcm2835-firmware" ]; then
     mkdir -p $INSTALL/usr/share/bootloader
     for dtb in arch/$TARGET_KERNEL_ARCH/boot/dts/*.dtb; do
-      cp $dtb $INSTALL/usr/share/bootloader 2>/dev/null || :
+      [ -f $dtb ] && cp -p $dtb $INSTALL/usr/share/bootloader
     done
-    if [ -d arch/$TARGET_KERNEL_ARCH/boot/dts/amlogic -a -f "arch/$TARGET_KERNEL_ARCH/boot/dts/amlogic/$KERNEL_UBOOT_EXTRA_TARGET" ]; then
-      cp "arch/$TARGET_KERNEL_ARCH/boot/dts/amlogic/$KERNEL_UBOOT_EXTRA_TARGET" $INSTALL/usr/share/bootloader/dtb.img 2>/dev/null || :
+
+    if [ "$BOOTLOADER" = "u-boot" ]; then
+      if [ -f arch/$TARGET_KERNEL_ARCH/boot/dts/$KERNEL_UBOOT_DT_IMAGE ]; then
+        cp -p arch/$TARGET_KERNEL_ARCH/boot/dts/$KERNEL_UBOOT_DT_IMAGE $INSTALL/usr/share/bootloader/dtb.img
+      fi
+    elif [ "$BOOTLOADER" = "bcm2835-firmware" ]; then
+      mkdir -p $INSTALL/usr/share/bootloader/overlays
+      for dtbo in arch/$TARGET_KERNEL_ARCH/boot/dts/overlays/*.dtbo; do
+        [ -f $dtbo ] && cp -p $dtbo $INSTALL/usr/share/bootloader/overlays
+      done
+      cp -p arch/$TARGET_KERNEL_ARCH/boot/dts/overlays/README $INSTALL/usr/share/bootloader/overlays
     fi
-  elif [ "$BOOTLOADER" = "bcm2835-bootloader" ]; then
-    mkdir -p $INSTALL/usr/share/bootloader/overlays
-    cp -p arch/$TARGET_KERNEL_ARCH/boot/dts/*.dtb $INSTALL/usr/share/bootloader
-    for dtb in arch/$TARGET_KERNEL_ARCH/boot/dts/overlays/*.dtbo; do
-      cp $dtb $INSTALL/usr/share/bootloader/overlays 2>/dev/null || :
-    done
-    cp -p arch/$TARGET_KERNEL_ARCH/boot/dts/overlays/README $INSTALL/usr/share/bootloader/overlays
   fi
 }
 
@@ -228,25 +223,34 @@ make_init() {
 makeinstall_init() {
   if [ -n "$INITRAMFS_MODULES" ]; then
     mkdir -p $INSTALL/etc
-    mkdir -p $INSTALL/usr/lib/modules
+    mkdir -p $INSTALL/lib/modules
 
     for i in $INITRAMFS_MODULES; do
       module=`find .install_pkg/usr/lib/modules/$(get_module_dir)/kernel -name $i.ko`
       if [ -n "$module" ]; then
         echo $i >> $INSTALL/etc/modules
-        cp $module $INSTALL/usr/lib/modules/`basename $module`
+        cp $module $INSTALL/lib/modules/$(basename $module)
       fi
     done
   fi
 
   if [ "$UVESAFB_SUPPORT" = yes ]; then
-    mkdir -p $INSTALL/usr/lib/modules
+    mkdir -p $INSTALL/lib/modules
       uvesafb=`find .install_pkg/usr/lib/modules/$(get_module_dir)/kernel -name uvesafb.ko`
-      cp $uvesafb $INSTALL/usr/lib/modules/`basename $uvesafb`
+      cp $uvesafb $INSTALL/lib/modules/$(basename $uvesafb)
   fi
+
+  echo "mkdir -p dev" >> $FAKEROOT_SCRIPT_INIT
+  echo "mknod -m 600 dev/console c 5 1" >> $FAKEROOT_SCRIPT_INIT
 }
 
 post_install() {
+  mkdir -p $INSTALL/lib
+    ln -sf /usr/lib/modules/ $INSTALL/lib/modules
+
+  mkdir -p $INSTALL/lib
+    ln -sf /usr/lib/firmware/ $INSTALL/lib/firmware
+
   mkdir -p $INSTALL/usr/lib/firmware/
     ln -sf /storage/.config/firmware/ $INSTALL/usr/lib/firmware/updates
 
