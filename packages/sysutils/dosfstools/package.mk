@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,16 +18,22 @@
 
 PKG_NAME="dosfstools"
 PKG_VERSION="3.0.28"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/dosfstools/dosfstools"
 PKG_URL="https://github.com/dosfstools/dosfstools/releases/download/v$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_DEPENDS_INIT="toolchain dosfstools gcc:init"
+PKG_PRIORITY="optional"
 PKG_SECTION="tools"
 PKG_SHORTDESC="dosfstools: utilities for making and checking MS-DOS FAT filesystems."
 PKG_LONGDESC="dosfstools contains utilities for making and checking MS-DOS FAT filesystems."
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
+
+MAKEFLAGS=-j1
 
 PKG_MAKE_OPTS_TARGET="PREFIX=/usr"
 PKG_MAKEINSTALL_OPTS_TARGET="PREFIX=/usr"

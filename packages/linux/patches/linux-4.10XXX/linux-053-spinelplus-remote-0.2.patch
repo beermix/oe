@@ -29,7 +29,7 @@ diff -Naur linux-3.19/drivers/hid/hid-ids.h linux-3.19.patch/drivers/hid/hid-ids
 diff -Naur linux-3.19/drivers/hid/hid-spinelplus.c linux-3.19.patch/drivers/hid/hid-spinelplus.c
 --- linux-3.19/drivers/hid/hid-spinelplus.c	1970-01-01 01:00:00.000000000 +0100
 +++ linux-3.19.patch/drivers/hid/hid-spinelplus.c	2015-02-11 00:04:45.886977059 +0100
-@@ -0,0 +1,105 @@
+@@ -0,0 +1,104 @@
 +/*
 + *  HID driver for "PHILIPS MCE USB IR Receiver- Spinel plus" remotes
 + *

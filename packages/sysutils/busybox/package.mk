@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,11 +18,15 @@
 
 PKG_NAME="busybox"
 PKG_VERSION="1.26.2"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://www.busybox.net"
 PKG_URL="http://busybox.net/downloads/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain busybox:host hdparm dosfstools e2fsprogs zip unzip pcre expat zlib bzip2 xz lz4 libaio icu openssl tar pciutils usbutils parted procps-ng coreutils time bash findutils less"
+PKG_DEPENDS_TARGET="toolchain busybox:host hdparm dosfstools e2fsprogs zip unzip pcre expat zlib bzip2 xz lz4 libaio icu openssl tar pciutils usbutils parted procps-ng coreutils time bash findutils less gptfdisk"
 PKG_DEPENDS_INIT="toolchain"
+PKG_PRIORITY="required"
 PKG_SECTION="system"
 PKG_SHORTDESC="BusyBox: The Swiss Army Knife of Embedded Linux"
 PKG_LONGDESC="BusyBox combines tiny versions of many common UNIX utilities into a single small executable. It provides replacements for most of the utilities you usually find in GNU fileutils, shellutils, etc. The utilities in BusyBox generally have fewer options than their full-featured GNU cousins; however, the options that are included provide the expected functionality and behave very much like their GNU counterparts. BusyBox provides a fairly complete environment for any small or embedded system."
@@ -31,14 +35,13 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 PKG_MAKE_OPTS_HOST="ARCH=$TARGET_ARCH CROSS_COMPILE= KBUILD_VERBOSE=1 install"
-
 PKG_MAKE_OPTS_TARGET="ARCH=$TARGET_ARCH \
                       CROSS_COMPILE=${TARGET_NAME}- \
-                      KBUILD_VERBOSE=0 \
+                      KBUILD_VERBOSE=1 \
                       install"
 PKG_MAKE_OPTS_INIT="ARCH=$TARGET_ARCH \
                     CROSS_COMPILE=${TARGET_NAME}- \
-                    KBUILD_VERBOSE=0 \
+                    KBUILD_VERBOSE=1 \
                     install"
 
 # nfs support
@@ -96,7 +99,7 @@ configure_target() {
     # set install dir
     sed -i -e "s|^CONFIG_PREFIX=.*$|CONFIG_PREFIX=\"$INSTALL\"|" .config
 
-    if [ ! "$DEVTOOLS" = no ]; then
+    if [ ! "$DEVTOOLS" = yes ]; then
       sed -i -e "s|^CONFIG_DEVMEM=.*$|# CONFIG_DEVMEM is not set|" .config
     fi
 
@@ -106,7 +109,7 @@ configure_target() {
       sed -i -e "s|^CONFIG_CRONTAB=.*$|# CONFIG_CRONTAB is not set|" .config
     fi
 
-    if [ ! "$NFS_SUPPORT" = no ]; then
+    if [ ! "$NFS_SUPPORT" = yes ]; then
       sed -i -e "s|^CONFIG_FEATURE_MOUNT_NFS=.*$|# CONFIG_FEATURE_MOUNT_NFS is not set|" .config
     fi
 
