@@ -40,8 +40,6 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            no-libunbound \
                            no-sctp \
                            no-ssl-trace \
-                           no-ssl2 \
-                           no-ssl3 \
                            no-store \
                            no-unit-test \
                            no-zlib \
