@@ -22,7 +22,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kernel.org"
 PKG_DEPENDS_HOST="ccache:host"
-PKG_DEPENDS_TARGET="toolchain cpio:host kmod:host pciutils xz:host wireless-regdb keyutils irqbalance"
+PKG_DEPENDS_TARGET="toolchain cpio:host xz:host pciutils kmod wireless-regdb keyutils irqbalance"
 PKG_DEPENDS_INIT="toolchain cpu-firmware:init"
 PKG_NEED_UNPACK="$LINUX_DEPENDS"
 PKG_PRIORITY="optional"
@@ -31,7 +31,7 @@ PKG_SHORTDESC="linux26: The Linux kernel 2.6 precompiled kernel binary image and
 PKG_LONGDESC="This package contains a precompiled kernel image and the modules."
 case "$LINUX" in
   amlogic-3.10)
-    PKG_VERSION="1261cae"
+    PKG_VERSION="de626d8"
 #    PKG_GIT_URL="https://github.com/codesnake/linux-amlogic.git"
     PKG_GIT_URL="https://github.com/LibreELEC/linux-amlogic.git"
     PKG_GIT_BRANCH="amlogic-3.10.y"
@@ -39,7 +39,7 @@ case "$LINUX" in
     KERNEL_EXTRA_CONFIG+=" kernel-3.x"
     ;;
   amlogic-3.14)
-    PKG_VERSION="83803a1"
+    PKG_VERSION="eb7e852"
 #    PKG_GIT_URL="https://github.com/codesnake/linux-amlogic.git"
     PKG_GIT_URL="https://github.com/LibreELEC/linux-amlogic.git"
     PKG_GIT_BRANCH="amlogic-3.14.y"
@@ -54,10 +54,10 @@ case "$LINUX" in
     PKG_PATCH_DIRS="linux-4.8 imx6-4.8"
     ;;
   rpi)
-    PKG_VERSION="6398163"
-    PKG_GIT_URL="https://github.com/OpenELEC/linux.git"
-    PKG_GIT_BRANCH="raspberry-rpi-4.9.y"
-    PKG_PATCH_DIRS="linux-4.9"
+    PKG_VERSION="a22fc2f"
+    PKG_GIT_URL="https://github.com/raspberrypi/linux.git"
+    PKG_GIT_BRANCH="rpi-4.9.y"
+    PKG_PATCH_DIRS="linux-4.9 rpi-4.9"
     ;;
   linux-4.8)
     PKG_VERSION="4.8.6"
@@ -65,9 +65,9 @@ case "$LINUX" in
     PKG_PATCH_DIRS="linux-4.8"
     ;;
   *)
-    PKG_VERSION="4.11-rc4"
-    PKG_URL="http://www.kernel.org/pub/linux/kernel/v4.x/testing/$PKG_NAME-$PKG_VERSION.tar.xz"
-    PKG_PATCH_DIRS="linux-4.11"
+    PKG_VERSION="4.9.20"
+    PKG_URL="http://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
+    PKG_PATCH_DIRS="linux-4.9"
     ;;
 esac
 
@@ -169,7 +169,7 @@ make_target() {
   unset LDFLAGS
 
   make modules
-  make INSTALL_MOD_PATH=$INSTALL/usr DEPMOD="$ROOT/$TOOLCHAIN/bin/depmod" INSTALL_MOD_STRIP=1 modules_install
+  make INSTALL_MOD_PATH=$INSTALL/usr INSTALL_MOD_STRIP=1 modules_install
   rm -f $INSTALL/usr/lib/modules/*/build
   rm -f $INSTALL/usr/lib/modules/*/source
 
@@ -254,6 +254,5 @@ post_install() {
   mkdir -p $INSTALL/usr/lib/firmware/
     ln -sf /storage/.config/firmware/ $INSTALL/usr/lib/firmware/updates
 
-  # bluez looks in /etc/firmware/
-    ln -sf /usr/lib/firmware/ $INSTALL/etc/firmware
+  enable_service module-load.service
 }

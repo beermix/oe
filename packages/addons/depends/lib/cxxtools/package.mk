@@ -34,9 +34,9 @@ PKG_CONFIGURE_OPTS_HOST="--disable-demos --with-atomictype=pthread --disable-uni
 PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --disable-demos --with-atomictype=pthread --disable-unittest"
 
 pre_configure_target() {
-  CFLAGS="$CFLAGS -fPIC"
-  CXXFLAGS="$CXXFLAGS -fPIC"
-  LDFLAGS="$LDFLAGS -fPIC"
+  CFLAGS+=" -fPIC"
+  CXXFLAGS+=" -fPIC"
+  LDFLAGS+=" -fPIC"
 }
 
 

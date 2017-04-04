@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="mesa"
-PKG_VERSION="17.0.2"
+PKG_VERSION="17.0.3"
 PKG_SITE="http://www.mesa3d.org/"
 PKG_URL="https://fossies.org/linux/misc/mesa-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain Python:host expat glproto dri2proto presentproto libdrm libXext libXdamage libXfixes libXxf86vm libxcb libX11 systemd dri3proto libxshmfence openssl"
@@ -46,17 +46,6 @@ else
   MESA_VDPAU="--disable-vdpau"
 fi
 
-XA_CONFIG="--disable-xa"
-for drv in $GRAPHIC_DRIVERS; do
-  [ "$drv" = "vmware" ] && XA_CONFIG="--enable-xa"
-done
-
-if [ "$OPENGLES_SUPPORT" = "yes" ]; then
-  MESA_GLES="--enable-gles2"
-else
-  MESA_GLES="--disable-gles2"
-fi
- 
 PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            CXX_FOR_BUILD=$HOST_CXX \
                            CFLAGS_FOR_BUILD= \

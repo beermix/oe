@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,12 +17,15 @@
 ################################################################################
 
 PKG_NAME="repository.kodi.game"
-PKG_VERSION="7480ae2"
+PKG_VERSION="f5f7085"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/kodi-game/repository.kodi.game"
 PKG_GIT_URL="https://github.com/kodi-game/repository.kodi.game.git"
 PKG_GIT_BRANCH="master"
 PKG_DEPENDS_TARGET="toolchain"
-
+PKG_PRIORITY="optional"
 PKG_SECTION=""
 PKG_SHORTDESC="repository.kodi.game: Kodi addon repository"
 PKG_LONGDESC="repository.kodi.game: Kodi addon repository"

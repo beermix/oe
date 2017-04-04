@@ -32,5 +32,5 @@ PKG_AUTORECONF="yes"
 PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --with-gnu-ld --without-xmlto"
 
 pre_configure_target() {
-  CFLAGS="$CFLAGS -fPIC -DPIC"
+  CFLAGS+=" -fPIC -DPIC"
 }

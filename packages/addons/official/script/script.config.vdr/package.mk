@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,10 +18,13 @@
 
 PKG_NAME="script.config.vdr"
 PKG_VERSION="1.0.8"
+PKG_REV="0"
+PKG_ARCH="any"
+PKG_LICENSE="OSS"
 PKG_SITE="http://www.openelec.tv"
 PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET=""
-
+PKG_PRIORITY="optional"
 PKG_SECTION=""
 PKG_SHORTDESC="script.config.vdr"
 PKG_LONGDESC="script.config.vdr"
@@ -43,5 +46,5 @@ makeinstall_target() {
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID
-  cp -PR $PKG_BUILD/* $ADDON_BUILD/$PKG_ADDON_ID
+    cp -PR $PKG_BUILD/* $ADDON_BUILD/$PKG_ADDON_ID
 }

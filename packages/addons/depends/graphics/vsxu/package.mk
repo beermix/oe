@@ -46,10 +46,10 @@ PKG_CMAKE_OPTS_TARGET="-DCMAKE_INSTALL_LIBDIR=/usr/lib \
 
 post_makeinstall_target() {
   mkdir -p $SYSROOT_PREFIX/usr/lib/vsxu
-  cp -PR $INSTALL/usr/lib/* $SYSROOT_PREFIX/usr/lib
+    cp -PR $INSTALL/usr/lib/* $SYSROOT_PREFIX/usr/lib
 
   mkdir -p $SYSROOT_PREFIX/usr/include/
-  cp -RP $INSTALL/usr/include/* $SYSROOT_PREFIX/usr/include
+    cp -RP $INSTALL/usr/include/* $SYSROOT_PREFIX/usr/include
 
   mkdir -p $SYSROOT_PREFIX/usr/share/
     cp -RP $INSTALL/usr/share/vsxu $SYSROOT_PREFIX/usr/share

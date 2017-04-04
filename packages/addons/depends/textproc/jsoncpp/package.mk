@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="jsoncpp"
-PKG_VERSION="f700fe4"
+PKG_VERSION="264c3ed"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -34,7 +34,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC"
+  export CFLAGSi+=" -fPIC"
 }
 
 pre_build_target() {

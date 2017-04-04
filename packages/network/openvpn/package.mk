@@ -58,7 +58,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_have_decl_TUNSETPERSIST=no \
                            --enable-def-auth \
                            --enable-pf \
                            --disable-selinux \
-                           --enable-systemd \
+                           --disable-systemd \
                            --enable-def-auth \
                            --enable-multihome \
                            --enable-fragment"

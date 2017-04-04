@@ -19,7 +19,7 @@
 PKG_NAME="binutils"
 #PKG_VERSION="2.28"
 #PKG_URL="https://fossies.org/linux/misc/binutils-$PKG_VERSION.tar.xz"
-PKG_VERSION="97661ed"
+PKG_VERSION="e7294f7"
 PKG_GIT_URL="git://sourceware.org/git/binutils-gdb.git"
 PKG_DEPENDS_HOST="ccache:host bison:host flex:host linux:host"
 PKG_PRIORITY="optional"
@@ -47,6 +47,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --disable-install-libbfd \
                          --disable-sim \
                          --disable-gdb \
+                         --disable-nls \
                          --enable-poison-system-directories"
 
 makeinstall_host() {

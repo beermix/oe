@@ -34,12 +34,7 @@ configure_host() {
                -- \
                -DCMAKE_C_FLAGS="-O2 -Wall -pipe -Wno-format-security" \
                -DCMAKE_CXX_FLAGS="-O2 -Wall -pipe -Wno-format-security" \
-               -DCMAKE_EXE_LINKER_FLAGS="-Wl,-O1,--sort-common,--as-needed -s" \
+               -DCMAKE_EXE_LINKER_FLAGS="$HOST_LDFLAGS -lrt" \
                -DCMAKE_USE_OPENSSL=ON \
-               -DCMAKE_USE_SYSTEM_LIBRARIES=0 \
-               -DCMAKE_USE_SYSTEM_LIBRARY_JSONCPP=0 \
-               -DCMAKE_USE_SYSTEM_LIBRARY_LIBUV=0 \
-               -DKWSYS_CHAR_IS_SIGNED=1 \
-               -DBUILD_CursesDialog=0 \
-               -DKWSYS_LFS_WORKS=1
+               -DBUILD_CursesDialog=0
 }

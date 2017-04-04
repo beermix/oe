@@ -49,7 +49,7 @@ PKG_CONFIGURE_OPTS_TARGET="bash_cv_have_mbstate_t=set \
                            --without-x \
                            --disable-tui \
                            --disable-libada \
-                           --with-lzma \
+                           --without-lzma \
                            --disable-libquadmath \
                            --disable-libquadmath-support \
                            --enable-libada \

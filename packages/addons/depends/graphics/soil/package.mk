@@ -30,8 +30,8 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 make_target() {
-  mkdir projects/makefile/obj
-  make CXX="$CXX" CC="$CC" LD="$CC" AR="$AR" CFLAGS="-fPIC -O2" CXXFLAGS="-fPIC -O2" -C projects/makefile
+  mkdir -p projects/makefile/obj
+    make CXX="$CXX" CC="$CC" LD="$CC" AR="$AR" CFLAGS="-fPIC -O2" CXXFLAGS="-fPIC -O2" -C projects/makefile
 }
 
 makeinstall_target() {

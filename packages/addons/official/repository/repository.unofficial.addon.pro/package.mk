@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,11 +17,14 @@
 ################################################################################
 
 PKG_NAME="repository.unofficial.addon.pro"
-PKG_VERSION="8.0"
+PKG_VERSION="8.1"
+PKG_REV="0"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://unofficial.addon.pro"
 PKG_URL=""
 PKG_DEPENDS_TARGET=""
-
+PKG_PRIORITY="optional"
 PKG_SECTION=""
 PKG_SHORTDESC="Unfficial OpenELEC.tv Add-on Repository"
 PKG_LONGDESC="Unfficial OpenELEC.tv Add-on Repository"
@@ -49,5 +52,5 @@ makeinstall_target() {
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID
-  cp -R $PKG_BUILD/* $ADDON_BUILD/$PKG_ADDON_ID
+    cp -R $PKG_BUILD/* $ADDON_BUILD/$PKG_ADDON_ID
 }

@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="tinyxml2"
-PKG_VERSION="5b733ff"
+PKG_VERSION="fc05f63"
 PKG_SITE="http://www.grinninglizard.com/tinyxml2/index.html"
 PKG_GIT_URL="https://github.com/leethomason/tinyxml2.git"
 PKG_GIT_BRANCH="master"
@@ -33,7 +33,7 @@ PKG_AUTORECONF="no"
 PKG_CMAKE_OPTS_TARGET="-DBUILD_SHARED_LIBS=off -DBUILD_STATIC_LIBS=on"
 
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC"
+  export CFLAGS+=" -fPIC"
 }
 
 post_makeinstall_target() {
