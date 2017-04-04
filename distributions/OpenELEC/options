@@ -69,15 +69,15 @@
 # please add all configfiles which should be included without the suffix and prefix
 # except the default-*.config and the ones included in packages/linux/package.mk
 # Space separated list is supported,
-  KERNEL_EXTRA_CONFIG+=" filesystem audio"
-  KERNEL_EXTRA_CONFIG+=" lan-usb lan-phy"
-  KERNEL_EXTRA_CONFIG+=" bluetooth sata samba"
+  KERNEL_EXTRA_CONFIG+=" filesystem mmc hid-drivers remote touchscreen joystick audio"
+  KERNEL_EXTRA_CONFIG+=" dvb-usb dvb-other lan-usb lan-phy"
+  KERNEL_EXTRA_CONFIG+=" wlan-usb wlan-other sound-usb usb-serial usb-gadget led"
 
 # additional drivers to install:
 # for a list of additinoal drivers see packages/linux-drivers
 # Space separated list is supported,
 # e.g. ADDITIONAL_DRIVERS="DRIVER1 DRIVER2"
- # ADDITIONAL_DRIVERS="RTL8192DU RTL8192EU RTL8812AU mt7610u" # todo: dvbhdhomerun
+  ADDITIONAL_DRIVERS="RTL8192DU RTL8192EU RTL8812AU mt7610u" # todo: dvbhdhomerun
 
 # build and install bluetooth support (yes / no)
   BLUETOOTH_SUPPORT="yes"
