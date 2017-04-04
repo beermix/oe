@@ -11,7 +11,7 @@ PKG_MAKEINSTALL_OPTS_TARGET="BUILD_STATIC_LIB=1 BINDIR=/usr/bin SBINDIR=/usr/bin
 
 pre_make_target() {
   export CFLAGS="$CFLAGS"
-  export CPPFLAGS="$CPPFLAGS"
+  export CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
 }
 
 post_makeinstall_target() {
