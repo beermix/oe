@@ -103,4 +103,4 @@
   # Space separated list is supported,
     KERNEL_EXTRA_CONFIG+=" keyboard-at mouse-ps2"
     KERNEL_EXTRA_CONFIG+=" scsi sata dvb-pci lan-pci wlan-pci sound-pci sound-soc-x86"
-    #KERNEL_EXTRA_CONFIG+=" lan-pci lan-phy lan-pci audio bluetooth filesystem"
+    KERNEL_EXTRA_CONFIG+=" lan-pci lan-phy lan-pci audio bluetooth filesystem"
