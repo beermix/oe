@@ -29,7 +29,6 @@ PKG_LONGDESC="Grossly oversimplified, FLAC is similar to MP3, but lossless, mean
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-# package specific configure options
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --disable-shared \
                            --disable-rpath \
@@ -40,12 +39,18 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --disable-xmms-plugin \
                            --disable-oggtest \
                            --with-ogg=$SYSROOT_PREFIX/usr \
-                           --with-gnu-ld \
-                           --enable-sse"
+                           --with-gnu-ld"
+
+if [ $TARGET_ARCH = "x86_64" ]; then
+  PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET --enable-sse"
+else
+  PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET --disable-sse"
+fi
 
 pre_configure_target() {
-  # flac-1.3.1 dont build with LTO support
-  strip_lto
+  export CFLAGS+=" -fPIC -DPIC"
+}
 
-  export CFLAGS="$CFLAGS -fPIC -DPIC"
+post_makeinstall_target() {
+  rm -rf $INSTALL/usr/bin
 }
