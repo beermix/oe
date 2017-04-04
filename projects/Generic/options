@@ -51,7 +51,7 @@
     OPTIMIZATIONS="size"
 
   # Project CFLAGS
-    PROJECT_CFLAGS="-mmmx -msse -msse2 -msse3 -mssse3 -maes -mavx -msse4.2 -msse4.1 -mfpmath=sse"
+    PROJECT_CFLAGS="-mmmx -msse -msse2 -msse3 -mssse3 -maes -mavx -msse4.2 -msse4.1 -mtune=ivybridge -mfpmath=sse"
 
   # LTO (Link Time Optimization) support
     LTO_SUPPORT="yes"
@@ -88,20 +88,19 @@
   # additional Firmware to use (dvb-firmware, misc-firmware, wlan-firmware)
   # Space separated list is supported,
   # e.g. FIRMWARE="dvb-firmware misc-firmware wlan-firmware"
-  #   FIRMWARE="misc-firmware wlan-firmware dvb-firmware iwlwifi-firmware"
-  #   FIRMWARE="wlan-firmware"
+  # FIRMWARE="misc-firmware wlan-firmware dvb-firmware iwlwifi-firmware"
 
   # additional drivers to install:
   # for a list of additinoal drivers see packages/linux-drivers
   # Space separated list is supported,
   # e.g. ADDITIONAL_DRIVERS="DRIVER1 DRIVER2"
-  #   ADDITIONAL_DRIVERS="$ADDITIONAL_DRIVERS bcm_sta"
+  # ADDITIONAL_DRIVERS="$ADDITIONAL_DRIVERS bcm_sta"
 
   # install extra kernel drivers, see configfiles in packages/linux/config/*.config
   # or projects/*/linux/*.config or distributions/*/linux/*.config
   # please add all configfiles which should be included without the suffix and prefix
   # except the default-*.config and the ones included in packages/linux/package.mk
   # Space separated list is supported,
-   # KERNEL_EXTRA_CONFIG+=" keyboard-at mouse-ps2"
-   # KERNEL_EXTRA_CONFIG+=" scsi sata dvb-pci lan-pci wlan-pci sound-pci sound-soc-x86 sata samba"
-   # KERNEL_EXTRA_CONFIG+=" lan-pci lan-phy lan-pci audio bluetooth filesystem"
+    KERNEL_EXTRA_CONFIG+=" keyboard-at mouse-ps2"
+    KERNEL_EXTRA_CONFIG+=" scsi sata dvb-pci lan-pci wlan-pci sound-pci sound-soc-x86 sata samba"
+    KERNEL_EXTRA_CONFIG+=" lan-pci lan-phy lan-pci audio bluetooth filesystem"

@@ -1,25 +1,27 @@
 #!/bin/sh
 
 ################################################################################
-#      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2016 Team LibreELEC
+#      This file is part of OpenELEC - http://www.openelec.tv
+#      Copyright (C) 2009-2016 OpenELEC.tv
+#      Copyright (C) 2014-2016 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2016 Alex Deryskyba (alex@codesnake.com)
 #
-#  LibreELEC is free software: you can redistribute it and/or modify
+#  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
 #  the Free Software Foundation, either version 2 of the License, or
 #  (at your option) any later version.
 #
-#  LibreELEC is distributed in the hope that it will be useful,
+#  OpenELEC is distributed in the hope that it will be useful,
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
 #
 #  You should have received a copy of the GNU General Public License
-#  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
+#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-[ -z "$SYSTEM_ROOT" ] && SYSTEM_ROOT=""
 [ -z "$BOOT_ROOT" ] && BOOT_ROOT="/flash"
+[ -z "$SYSTEM_ROOT" ] && SYSTEM_ROOT=""
 
 IMAGE_KERNEL="/flash/kernel.img"
 
@@ -31,7 +33,6 @@ for arg in $(cat /proc/cmdline); do
     ;;
   esac
 done
-
 
 # mount $BOOT_ROOT r/w
   mount -o remount,rw $BOOT_ROOT

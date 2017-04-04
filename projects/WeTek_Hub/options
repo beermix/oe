@@ -23,7 +23,7 @@
         ;;
     esac
 
-  # Bootloader to use (syslinux / u-boot / atv-bootloader / bcm2835-bootloader)
+  # Bootloader to use (syslinux / u-boot / atv-bootloader / bcm2835-firmware)
     BOOTLOADER="u-boot"
 
   # u-boot version to use (default)
@@ -38,8 +38,11 @@
   # Kernel target
     KERNEL_TARGET="Image.lzo"
 
+  # Kernel devicetree image
+    KERNEL_UBOOT_DT_IMAGE="amlogic/gxbb_p200_1G_wetek_hub.dtb"
+
   # Kernel extra targets to build
-    KERNEL_UBOOT_EXTRA_TARGET="gxbb_p200_1G_wetek_hub.dtb"
+    KERNEL_UBOOT_EXTRA_TARGET=""
 
   # Build Android kernel image using mkbootimg
     BUILD_ANDROID_BOOTIMG="yes"
@@ -59,8 +62,17 @@
 # setup build defaults
 ################################################################################
 
+  # Build optimizations (size/normal)
+    OPTIMIZATIONS="size"
+
   # Project CFLAGS
     PROJECT_CFLAGS=""
+
+  # LTO (Link Time Optimization) support
+    LTO_SUPPORT="yes"
+
+  # GOLD (Google Linker) support
+    GOLD_SUPPORT="yes"
 
   # SquashFS compression method (gzip / lzo / xz)
     SQUASHFS_COMPRESSION="lzo"
@@ -72,14 +84,8 @@
   # build and install ALSA Audio support (yes / no)
     ALSA_SUPPORT="yes"
 
-  # OpenGL(X) implementation to use (no / Mesa)
-    OPENGL="no"
-
-  # OpenGL-ES implementation to use (no / bcm2835-driver / gpu-viv-bin-mx6q / opengl-meson6)
-    OPENGLES="opengl-meson"
-
-  # Amlogic Meson SOC family (8 / 6 / gxbb)
-    MESON_FAMILY="gxbb"
+  # OpenGL (X/ES) implementation to use (mesa / bcm2835-firmware / meson6 / meson8 / meson-gxbb / gpu-imx-gpu-viv)
+    OPENGL="meson-gxbb"
 
   # include uvesafb support (yes / no)
     UVESAFB_SUPPORT="no"
@@ -90,12 +96,12 @@
   # Windowmanager to use (ratpoison / fluxbox / none)
     WINDOWMANAGER="none"
 
-  # Xorg Graphic drivers to use (all / i915,i965,r200,r300,r600,nvidia,nouveau)
+  # Xorg Graphic drivers to use (all / i915,i965,r200,r300,r600,nvidia)
   # Space separated list is supported,
-  # e.g. GRAPHIC_DRIVERS="i915 i965 r300 r600 radeonsi nvidia nouveau"
+  # e.g. GRAPHIC_DRIVERS="i915 i965 r300 r600 radeonsi nvidia"
     GRAPHIC_DRIVERS=""
 
-  # KODI Player implementation to use (default / bcm2835-driver / libfslvpuwrap / libamcodec)
+  # KODI Player implementation to use (default / bcm2835-firmware / libfslvpuwrap / libamcodec)
     KODIPLAYER_DRIVER="libamcodec"
 
   # Modules to install in initramfs for early boot
@@ -105,18 +111,28 @@
   # for a list of additinoal drivers see packages/linux-drivers
   # Space separated list is supported,
   # e.g. ADDITIONAL_DRIVERS="DRIVER1 DRIVER2"
-    ADDITIONAL_DRIVERS="gpu-aml brcmap6xxx-aml"
+    ADDITIONAL_DRIVERS="RTL8192DU RTL8192EU RTL8812AU gpu-aml brcmap6xxx-aml" # todo: dvbhdhomerun
+
+  # install extra kernel drivers, see configfiles in packages/linux/config/*.config
+  # or projects/*/linux/*.config or distributions/*/linux/*.config
+  # please add all configfiles which should be included without the suffix and prefix
+  # except the default-*.config and the ones included in packages/linux/package.mk
+  # Space separated list is supported,
+    KERNEL_EXTRA_CONFIG+=" fix-config sound-soc-meson8"
 
   # additional Firmware to use (dvb-firmware, misc-firmware, wlan-firmware)
   # Space separated list is supported,
   # e.g. FIRMWARE="dvb-firmware misc-firmware wlan-firmware"
-    FIRMWARE="misc-firmware wlan-firmware dvb-firmware brcmfmac_sdio-firmware-aml"
+    FIRMWARE="misc-firmware wlan-firmware dvb-firmware"
 
   # build and install ATV IR remote support (yes / no)
     ATVCLIENT_SUPPORT="no"
 
+  # build and install IRServer IR/LCD support (yes / no)
+    IRSERVER_SUPPORT="no"
+
   # Amlogic IR remote support (yes / no)
-    AMREMOTE_SUPPORT="no"
+    AMREMOTE_SUPPORT="yes"
 
   # build with swap support (yes / no)
     SWAP_SUPPORT="no"
@@ -136,3 +152,7 @@
 
   # kernel image name
     KERNEL_NAME="kernel.img"
+
+  # set the addon dirs
+    ADDON_PATH="$ADDON_VERSION/WeTek_Hub/$TARGET_ARCH"
+    ADDON_URL="$ADDON_SERVER_URL/$ADDON_PATH"
