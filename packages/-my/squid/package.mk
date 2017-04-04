@@ -6,6 +6,17 @@ PKG_SECTION="tools"
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--with-pidfile=/var/run/squid.pid \
+                           --sysconfdir=/storage/.config/squid/ \
+                           --datadir=/storage/.config/squid \
+                           --libdir=/storage/.config/squid \
+                           --libexecdir=/storage/.config/squid \
+                           --sharedstatedir=/storage/.config/squid \
+                           --localstatedir=/storage/.config/squid \
+                           --includedir=/storage/.config/squid \
+                           --oldincludedir=/storage/.config/squid \
+                           --datarootdir=/storage/.config/squid \
+                           --infodir=/storage/.config/squid \     
+                           --localedir=/storage/.config/squid \
                            --with-openssl=$SYSROOT_PREFIX/usr \
                            --enable-linux-netfilter \
                            --enable-ident-lookups \
@@ -23,19 +34,8 @@ PKG_CONFIGURE_OPTS_TARGET="--with-pidfile=/var/run/squid.pid \
                            --enable-ssl-crtd \
                            --disable-arch-native \
                            --disable-strict-error-checking \
-                           --enable-wccpv2 \
-                           --sysconfdir=/storage/.config/squid/ \
-                           --datadir=/storage/.config/squid \
-                           --libdir=/storage/.config/squid \
-                           --libexecdir=/storage/.config/squid \
-                           --sharedstatedir=/storage/.config/squid \
-                           --localstatedir=/storage/.config/squid \
-                           --includedir=/storage/.config/squid \
-                           --oldincludedir=/storage/.config/squid \
-                           --datarootdir=/storage/.config/squid \
-                           --infodir=/storage/.config/squid \     
-                           --localedir=/storage/.config/squid"
+                           --enable-wccpv2"
                            
-post_makeinstall_target() {
-  rm -rf $INSTALL/storage
-}
+#post_makeinstall_target() {
+#  rm -rf $INSTALL/storage
+#}

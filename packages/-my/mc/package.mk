@@ -5,7 +5,6 @@ PKG_DEPENDS_TARGET="toolchain libtool:host gettext:host e2fsprogs util-linux gli
 PKG_SECTION="tools"
 PKG_AUTORECONF="yes"
 
-
 PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config \
                            --datadir=/storage/.config \
                            --libdir=/storage/.config \
@@ -40,5 +39,4 @@ PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config \
                            --disable-vfs-smb \
                            --with-gnu-ld \
                            --with-mmap \
-                           --with-pcre=$SYSROOT_PREFIX/usr \
-                           --with-glib-static"
+                           --with-pcre=$SYSROOT_PREFIX/usr"
