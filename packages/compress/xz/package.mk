@@ -38,4 +38,4 @@ PKG_CONFIGURE_OPTS_HOST="--disable-shared --enable-static \
                          --enable-liblzma2-compat \
                          --disable-nls"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-nls --disable-doc"
+PKG_CONFIGURE_OPTS_TARGET="--enable-liblzma2-compat --enable-static --disable-nls --disable-doc"
