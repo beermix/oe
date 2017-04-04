@@ -20,7 +20,7 @@ PKG_NAME="kodi"
 PKG_VERSION="beac347"
 PKG_GIT_URL="https://github.com/xbmc/xbmc.git"
 PKG_GIT_BRANCH="Jarvis"
-PKG_DEPENDS_TARGET="toolchain kodi:host xmlstarlet:host libsquish boost Python zlib bzip2 pciutils lzo pcre swig:host libass curl rtmpdump fontconfig fribidi tinyxml libjpeg-turbo libpng tiff freetype jasper libcdio libmpeg2 taglib libxml2 libxslt yajl sqlite ffmpeg crossguid giflib libplist gnutls"
+PKG_DEPENDS_TARGET="toolchain kodi:host xmlstarlet:host libsquish boost Python zlib bzip2 pciutils lzo pcre swig:host libass curl rtmpdump fontconfig fribidi tinyxml libjpeg-turbo libpng tiff freetype jasper libcdio libmpeg2 taglib libxml2 libxslt yajl sqlite ffmpeg crossguid giflib"
 PKG_DEPENDS_HOST="lzo:host libpng:host libjpeg-turbo:host giflib:host"
 PKG_SECTION="mediacenter"
 PKG_SHORTDESC="kodi: Kodi Mediacenter"
@@ -178,7 +178,7 @@ else
 fi
 
 if [ "$KODI_SSHLIB_SUPPORT" = yes ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libssh"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libssh gnutls"
   KODI_SSH="--enable-ssh"
 else
   KODI_SSH="--disable-ssh"
