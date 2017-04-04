@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -22,8 +22,8 @@ PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_URL="http://www.kernel.org/pub/linux/utils/util-linux/v2.29/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain"
-PKG_DEPENDS_INIT="toolchain gcc:init"
+PKG_DEPENDS_TARGET="toolchain readline slang"
+PKG_DEPENDS_INIT="toolchain gcc:init readline slang"
 PKG_PRIORITY="optional"
 PKG_SECTION="system"
 PKG_SHORTDESC="util-linux: Miscellaneous system utilities for Linux"
@@ -32,15 +32,12 @@ PKG_LONGDESC="The util-linux package contains a large variety of low-level syste
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
+
 UTILLINUX_CONFIG_DEFAULT="--disable-gtk-doc \
                           --disable-nls \
                           --disable-rpath \
                           --enable-tls \
-                          --disable-all-programs \
                           --enable-chsh-only-listed \
-                          --enable-libmount-force-mountinfo \
-                          --disable-bash-completion \
-                          --disable-colors-default \
                           --disable-pylibmount \
                           --disable-pg-bell \
                           --disable-use-tty-group \
@@ -50,18 +47,24 @@ UTILLINUX_CONFIG_DEFAULT="--disable-gtk-doc \
                           --without-selinux \
                           --without-audit \
                           --without-udev \
-                          --without-ncurses \
-                          --without-readline \
-                          --without-slang \
-                          --without-termcap \
-                          --without-tinfo \
                           --without-utempter \
-                          --without-util \
-                          --without-libz \
                           --without-user \
                           --without-systemd \
+                          --without-ncursesw \
                           --without-smack \
                           --without-python \
+                          --disable-shared \
+                          --disable-fdformat \
+                          --disable-hwclock \
+                          --disable-switch_root \
+                          --disable-kill \
+                          --disable-login \
+                          --disable-sulogin \
+                          --disable-su \
+                          --disable-more \
+                          --disable-pg \
+                          --disable-wall \
+                          --disable-use-tty-group \
                           --without-systemdsystemunitdir"
 
 PKG_CONFIGURE_OPTS_TARGET="--sbindir=/sbin \
@@ -94,6 +97,7 @@ PKG_CONFIGURE_OPTS_INIT="--prefix=/ \
                          $UTILLINUX_CONFIG_DEFAULT \
                          --enable-libblkid \
                          --enable-libmount \
+                         --enable-libuuid \
                          --enable-fsck"
 
 if [ "$INITRAMFS_PARTED_SUPPORT" = "yes" ]; then

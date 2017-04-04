@@ -94,7 +94,7 @@
   # for a list of additinoal drivers see packages/linux-drivers
   # Space separated list is supported,
   # e.g. ADDITIONAL_DRIVERS="DRIVER1 DRIVER2"
-    ADDITIONAL_DRIVERS="$ADDITIONAL_DRIVERS bcm_sta"
+  # ADDITIONAL_DRIVERS="$ADDITIONAL_DRIVERS bcm_sta"
 
   # install extra kernel drivers, see configfiles in packages/linux/config/*.config
   # or projects/*/linux/*.config or distributions/*/linux/*.config
@@ -102,5 +102,5 @@
   # except the default-*.config and the ones included in packages/linux/package.mk
   # Space separated list is supported,
     KERNEL_EXTRA_CONFIG+=" keyboard-at mouse-ps2"
-    KERNEL_EXTRA_CONFIG+=" scsi sata dvb-pci lan-pci wlan-pci sound-pci sound-soc-x86"
-    KERNEL_EXTRA_CONFIG+=" lan-pci lan-phy lan-pci audio bluetooth filesystem"
+    KERNEL_EXTRA_CONFIG+=" scsi sata dvb-pci lan-pci sound-pci sound-soc-x86"
+    KERNEL_EXTRA_CONFIG+=" audio bluetooth filesystem"
