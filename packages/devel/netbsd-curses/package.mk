@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="netbsd-curses"
-PKG_VERSION="ea1965a"
+PKG_VERSION="194ddef"
 PKG_SITE="https://github.com/sabotage-linux/neytbsd-curses"
 PKG_GIT_URL="git://github.com/sabotage-linux/netbsd-curses"
 PKG_DEPENDS_TARGET="toolchain zlib"
