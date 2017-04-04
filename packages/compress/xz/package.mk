@@ -35,6 +35,7 @@ PKG_CONFIGURE_OPTS_HOST="--disable-shared --enable-static \
                          --disable-lzmainfo \
                          --enable-lzma-links \
                          --disable-scripts \
+                         --enable-liblzma2-compat \
                          --disable-nls"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-nls --disable-doc"
