@@ -30,7 +30,7 @@ configure_target() {
   		--disable-examples \
   		--disable-debug-libs \
   		--disable-docs \
-  		--disable-runtime-cpu-detect \
+  		--enable-runtime-cpu-detect \
   		--disable-shared
 }
 
