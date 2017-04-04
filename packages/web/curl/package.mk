@@ -47,7 +47,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            --enable-largefile \
                            --enable-http \
                            --enable-ftp \
-                           --enable-file \
+                           --disable-file \
                            --disable-ldap \
                            --disable-ldaps \
                            --enable-rtsp \
@@ -57,7 +57,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            --disable-tftp \
                            --disable-pop3 \
                            --disable-imap \
-                           --disable-ntlm-wb \
                            --disable-smb \
                            --disable-smtp \
                            --disable-gopher \
@@ -81,6 +80,9 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            --without-egd-socket \
                            --enable-thread \
                            --with-random=/dev/urandom \
+                           --without-gnutls \
+                           --with-ssl \
+                           --without-polarssl \
                            --without-nss \
                            --with-ca-bundle=/etc/ssl/cert.pem \
                            --without-ca-path \
@@ -88,13 +90,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            --without-libmetalink \
                            --without-libssh2 \
                            --with-librtmp=$SYSROOT_PREFIX/usr \
-                           --without-libidn \
-                           --without-nghttp2 \
-                           --with-ssl \
-                           --without-gnutls \
-                           --without-mbedtls \
-                           --without-polarssl \
-                           --enable-static"
+                           --without-libidn"
 
 pre_configure_target() {
 # link against librt because of undefined reference to 'clock_gettime'

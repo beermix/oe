@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,17 +16,19 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="xkbcomp"
-PKG_VERSION="1.3.1"
-PKG_SITE="http://www.X.org"
-PKG_URL="http://xorg.freedesktop.org/archive/individual/app/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain util-macros libX11"
-PKG_SECTION="x11/app"
-PKG_SHORTDESC="xkbcomp: Compiles XKB keyboard description"
-PKG_LONGDESC="The xkbcomp keymap compiler converts a description of an XKB keymap into one of several output formats."
+PKG_NAME="rapidjson"
+PKG_VERSION="v1.1.0"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="BSD"
+PKG_SITE="http://rapidjson.org/"
+PKG_GIT_URL="https://github.com/miloyip/rapidjson.git"
+PKG_GIT_BRANCH="master"
+PKG_DEPENDS_TARGET="toolchain"
+PKG_PRIORITY="optional"
+PKG_SECTION="textproc"
+PKG_SHORTDESC="rapidjson: A fast JSON parser/generator for C++ with both SAX/DOM style API"
+PKG_LONGDESC="rapidjson is a fast JSON parser/generator for C++ with both SAX/DOM style API"
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
-
-PKG_CONFIGURE_OPTS_TARGET="--with-xkb-config-root=/usr/share/X11/xkb"
-
+PKG_AUTORECONF="no"

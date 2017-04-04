@@ -18,7 +18,6 @@
 
 PKG_NAME="x11"
 PKG_VERSION=""
-PKG_SITE="http://www.X.org"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.X.org"
 PKG_URL=""

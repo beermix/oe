@@ -18,7 +18,6 @@
 
 PKG_NAME="libc"
 PKG_VERSION=""
-PKG_SITE="http://www.openelec.tv"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.openelec.tv"
 PKG_URL=""
