@@ -8,14 +8,15 @@ PKG_AUTORECONF="yes"
 
 pre_configure_target() {
   export LIBS="-lterminfo"
-  sed "s#\s*Completion/$_fpath/\*/\*##g" -i $ROOT/$PKG_BUILD/Src/Zle/complete.mdd
+  export CPPFLAGS="$CPPFLAGS -O2"
+  #sed "s#\s*Completion/$_fpath/\*/\*##g" -i $ROOT/$PKG_BUILD/Src/Zle/complete.mdd
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--bindir=/bin \
 			      --enable-multibyte \
 			      --enable-pcre \
 			      --disable-ansi2knr \
-			      --enable-dynamic \
+			      --disable-dynamic \
 			      --sysconfdir=/storage/.config \
 			      --enable-function-subdirs \
 			      --with-tcsetpgrp \
@@ -24,5 +25,5 @@ PKG_CONFIGURE_OPTS_TARGET="--bindir=/bin \
 			      --with-term-lib='ncursesw' \
 			      --disable-dynamic-nss \
 			      --disable-zsh-debug \
-			      --disable-cap \
+			      --enable-cap \
 			      --enable-unicode9"

@@ -17,13 +17,10 @@
 ################################################################################
 
 PKG_NAME="libva-utils"
-PKG_VERSION="cb3a33e"
-PKG_REV="1"
-PKG_ARCH="x86_64"
-PKG_LICENSE="GPL"
+PKG_VERSION="1.8.0"
 PKG_SITE="https://github.com/01org/libva"
 PKG_GIT_URL="https://github.com/01org/libva-utils"
-PKG_DEPENDS_TARGET="toolchain libX11 libXext libXfixes libdrm mesa glu"
+PKG_DEPENDS_TARGET="toolchain readline intel-vaapi-driver"
 PKG_PRIORITY="optional"
 PKG_SECTION="multimedia"
 
