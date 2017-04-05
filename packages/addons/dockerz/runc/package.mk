@@ -17,11 +17,11 @@
 ################################################################################
 
 PKG_NAME="runc"
-PKG_VERSION="a01dafd"
+PKG_VERSION="54296cf"
 PKG_ARCH="any"
 PKG_LICENSE="APL"
 PKG_SITE="https://github.com/opencontainers/runc"
-PKG_URL="https://dl.dropboxusercontent.com/s/1ub8umc6a75ej1k/runc-a01dafd.tar.xz"
+PKG_URL="https://dl.dropboxusercontent.com/s/tr6te8hyqvoa4st/runc-54296cf.tar.xz"
 PKG_DEPENDS_TARGET="toolchain go:host"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
