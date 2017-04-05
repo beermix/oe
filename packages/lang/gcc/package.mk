@@ -64,6 +64,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-linker-hash-style=gnu \
                            --enable-gnu-indirect-function \
                            --enable-poison-system-directories \
+                           --disable-libsanitizer \
                            --with-arch=ivybridge \
                            --with-ppl=no \
                            --with-cloog=no \
@@ -75,7 +76,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
-                              --disable-libsanitizer \
                               --disable-libssp \
                               --disable-shared \
                               --disable-threads \
