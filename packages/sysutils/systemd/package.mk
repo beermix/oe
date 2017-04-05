@@ -17,8 +17,7 @@
 ################################################################################
 
 PKG_NAME="systemd"
-PKG_VERSION="91dacd4"
-#PKG_VERSION="3b07d03"
+PKG_VERSION="6cb484c"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/systemd"
 PKG_GIT_URL="https://github.com/systemd/systemd"
 PKG_DEPENDS_TARGET="toolchain gperf:host libcap util-linux entropy"
@@ -45,8 +44,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-ima \
                            --disable-selinux \
                            --disable-apparmor \
-                           --disable-adm-group \
-                           --disable-wheel-group \
                            --disable-xz \
                            --disable-zlib \
                            --disable-bzip2 \

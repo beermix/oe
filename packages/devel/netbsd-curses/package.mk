@@ -18,8 +18,7 @@
 
 PKG_NAME="netbsd-curses"
 PKG_VERSION="194ddef"
-PKG_SITE="https://github.com/sabotage-linux/neytbsd-curses"
-PKG_GIT_URL="git://github.com/sabotage-linux/netbsd-curses"
+PKG_GIT_URL="https://github.com/sabotage-linux/netbsd-curses"
 PKG_DEPENDS_TARGET="toolchain zlib"
 PKG_SECTION="devel"
 PKG_SHORTDESC="netbsd-curses: netbsd-libcurses portable edition"
@@ -30,7 +29,7 @@ PKG_AUTORECONF="no"
 
 
 make_target() {
-  make HOSTCC="$HOST_CC" CFLAGS="$CFLAGS" PREFIX=/usr all-static -j1
+  make HOSTCC="$HOST_CC" CFLAGS="$CFLAGS -D_DEFAULT_SOURCE" PREFIX=/usr all-static -j1
 }
 
 makeinstall_target() {

@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="cmake"
-PKG_VERSION="3.7.2"
+PKG_VERSION="3.8.0-rc4"
 PKG_SITE="http://www.cmake.org/"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="ccache:host openssl:host"
@@ -32,8 +32,8 @@ configure_host() {
   ../configure --prefix=$ROOT/$TOOLCHAIN \
                --no-qt-gui --no-system-libs \
                -- \
-               -DCMAKE_C_FLAGS="-O2 -Wall -pipe -Wno-format-security" \
-               -DCMAKE_CXX_FLAGS="-O2 -Wall -pipe -Wno-format-security" \
+               -DCMAKE_C_FLAGS="-march=native -O2 -Wall -pipe -Wno-format-security" \
+               -DCMAKE_CXX_FLAGS="-march=native -O2 -Wall -pipe -Wno-format-security" \
                -DCMAKE_EXE_LINKER_FLAGS="$HOST_LDFLAGS -lrt" \
                -DCMAKE_USE_OPENSSL=ON \
                -DBUILD_CursesDialog=0

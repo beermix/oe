@@ -56,8 +56,8 @@ PKG_MARIADB_SERVER="no"
 
 # Set MariaDB server storage engines
   MARIADB_OPTS+=" -DWITH_INNOBASE_STORAGE_ENGINE=ON"
-  MARIADB_OPTS+=" -WITH_PARTITION_STORAGE_ENGINE=OFF"
-  MARIADB_OPTS+=" -WITH_PERFSCHEMA_STORAGE_ENGINE=OFF"
+  MARIADB_OPTS+=" -WITH_PARTITION_STORAGE_ENGINE=ON"
+  MARIADB_OPTS+=" -WITH_PERFSCHEMA_STORAGE_ENGINE=ON"
 
 # According to MariaDB galera cluster documentation these options must be passed
 # to CMake, set to '0' if galera cluster support is not wanted:
@@ -122,6 +122,7 @@ configure_host() {
         -DWITH_SYSTEMD=OFF \
         -DWITH_LIBWRAP=OFF \
         -DWITH_WSREP=OFF \
+        -DSECURITY_HARDENED=OFF \
         ..
 }
 
@@ -129,11 +130,13 @@ makeinstall_host() {
  : # nothing todo
 }
 
+
 configure_target() {
   cmake -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
         -DDISABLE_SHARED=ON \
         -DCMAKE_C_FLAGS="${TARGET_CFLAGS} -fPIC -DPIC -fno-strict-aliasing -DBIG_JOINS=1 -fomit-frame-pointer -fno-delete-null-pointer-checks" \
         -DCMAKE_CXX_FLAGS="${TARGET_CXXFLAGS} -fPIC -DPIC -fno-strict-aliasing -DBIG_JOINS=1 -felide-constructors -fno-delete-null-pointer-checks" \
+        -DWITH_MYSQLD_LDFLAGS="-pie ${TARGET_LDFLAGS},-z,now" \
         -DCMAKE_BUILD_TYPE=Release \
         $MARIADB_IMPORT_EXECUTABLES \
         -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \

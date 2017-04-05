@@ -19,9 +19,9 @@
 ################################################################################
 
 PKG_NAME="nss"
-PKG_VERSION="3.29.3"
+PKG_VERSION="3.30"
 PKG_SITE="http://ftp.mozilla.org/"
-PKG_URL="https://ftp.mozilla.org/pub/security/nss/releases/NSS_3_29_3_RTM/src/nss-3.29.3-with-nspr-4.13.1.tar.gz"
+PKG_URL="https://ftp.mozilla.org/pub/security/nss/releases/NSS_3_30_RTM/src/nss-3.30-with-nspr-4.13.1.tar.gz"
 PKG_DEPENDS_TARGET="toolchain nss:host nspr zlib"
 PKG_SECTION="security"
 PKG_SHORTDESC="The Network Security Services (NSS) package is a set of libraries designed to support cross-platform development of security-enabled client and server applications"
@@ -49,15 +49,17 @@ post_makeinstall_host() {
 
 make_target() {
   cd $ROOT/$PKG_BUILD/nss
-  export LDFLAGS="-ldl -lpthread -lsqlite3"
+  
+  #export LDFLAGS="-ldl -lpthread -lsqlite3"
+  #sed -e 's/\$(MKSHLIB) -o/\$(MKSHLIB) \$(LDFLAGS) -o/' -i $ROOT/$PKG_BUILD/nss/coreconf/rules.mk
   #strip_lto
+  #strip_gold
 
   [ "$TARGET_ARCH" = "x86_64" ] && TARGET_USE_64="USE_64=1"
 
   make BUILD_OPT=1 $TARGET_USE_64 \
      NSPR_INCLUDE_DIR=$SYSROOT_PREFIX/usr/include/nspr \
-     NATIVE_CC="$HOST_CC" NATIVE_FLAGS="$HOST_CFLAGS" \
-     NSS_ENABLE_WERROR=0 NSS_DISABLE_DBM=1 \
+     NSS_USE_STATIC_LIBS=1 \
      USE_SYSTEM_ZLIB=1 ZLIB_LIBS=-lz \
      S_USE_SYSTEM_SQLITE=1 \
      XCFLAGS="$CFLAGS" \
@@ -66,7 +68,7 @@ make_target() {
      NSINSTALL=$ROOT/$TOOLCHAIN/bin/nsinstall \
      CPU_ARCH_TAG=$TARGET_ARCH \
      CC=$CC LDFLAGS="$LDFLAGS -L$SYSROOT_PREFIX/usr/lib" \
-     V=1
+     V=4
 }
 
 makeinstall_target() {
