@@ -41,7 +41,7 @@ UTILLINUX_CONFIG_DEFAULT="--disable-gtk-doc \
                           --enable-chsh-only-listed \
                           --enable-libmount-force-mountinfo \
                           --disable-bash-completion \
-                          --disable-colors-default \
+                          --enable-colors-default \
                           --disable-pylibmount \
                           --disable-pg-bell \
                           --disable-use-tty-group \
@@ -55,7 +55,7 @@ UTILLINUX_CONFIG_DEFAULT="--disable-gtk-doc \
                           --without-readline \
                           --without-slang \
                           --without-termcap \
-                          --without-tinfo \
+                          --with-tinfo \
                           --without-utempter \
                           --without-util \
                           --without-libz \

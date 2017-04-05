@@ -337,7 +337,7 @@ if [ ! -f $STAMP ]; then
 
             # strip kernel modules
             for MOD in `find $INSTALL -type f -name *.ko`; do
-              $STRIP --strip-all $MOD
+              $STRIP --strip-debug $MOD
             done
           fi
         fi
