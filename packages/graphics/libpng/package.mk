@@ -45,10 +45,5 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/lib
 }
 
-pre_configure_host() {
-  CFLAGS="$CFLAGS -fPIC"
-  CXXFLAGS="$CXXFLAGS -fPIC"
-  LDFLAGS="$LDFLAGS -fPIC"
-}
 
 

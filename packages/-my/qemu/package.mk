@@ -1,8 +1,9 @@
 PKG_NAME="qemu"
-PKG_VERSION="2.9.0-rc1"
+PKG_VERSION="2.8.1"
 PKG_SITE="http://wiki.qemu.org"
-PKG_URL="http://wiki.qemu-project.org/download/qemu-$PKG_VERSION.tar.bz2"
+PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain Python:host libffi:host zlib:host glib:host"
+PKG_DEPENDS_TARGET="toolchain SDL"
 PKG_SECTION="tools"
 PKG_SHORTDESC="QEMU is a generic and open source machine emulator and virtualizer."
 PKG_LONGDESC="QEMU is a generic and open source machine emulator and virtualizer."
@@ -29,43 +30,42 @@ HOST_CONFIGURE_OPTS="--prefix=$ROOT/$TOOLCHAIN \
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
+  
+  export NM="$NM"
+  export AR="$AR"
+  export AS="$CC"
+  export as="$CC"
+  export LD="$CC"
+  export cc1="$CC"
 
   #strip_lto
-
-  	strip_gold
+  #strip_gold
   
-  export pkg_config_exe="$ROOT/$TOOLCHAIN/bin/pkg-config"
+  #export pkg_config_exe="$ROOT/$TOOLCHAIN/bin/pkg-config"
 }
-
+ \
 configure_target() {
   ./configure --prefix=/usr \
-              --cpu="x86_64" \
               --cross-prefix=${TARGET_NAME}- \
               --source-path=$(get_pkg_build qemu) \
-              --cc="$CC" \
-              --cxx="$CXX" \
-              --host-cc="$HOST_CC" \
-              --extra-cflags="$CFLAGS" \
-              --extra-ldflags="$LDFLAGS -fPIC" \
-              --datadir="/storage/.config/qemu" \
-              --sysconfdir="/storage/.config/qemu" \
-              --smbd="/usr/bin/smbd" \
+              --cc=$CC \
+              --cxx=$CXX \
+              --extra-cflags=-I$SYSROOT_PREFIX/usr/include \
+              --extra-ldflags=-L$SYSROOT_PREFIX/usr/lib \
+              --host-cc=$HOST_CC \
+              --datadir=/storage/.config/qemu \
+              --sysconfdir=/storage/.config/qemu \
+              --smbd=/usr/bin/smbd \
               --static \
-              --enable-tcg-interpreter \
               --disable-user \
               --enable-system \
               --disable-libnfs \
-              --enable-libssh2 \
-              --enable-bzip2 \
-              --enable-lzo \
-              --enable-libusb \
-              --enable-attr \
-              --enable-sdl \
-              --enable-linux-aio \
-              --disable-curl \
-              --enable-vnc \
-              --enable-curses \
-              --enable-gnutls \
               --enable-guest-agent \
+              --disable-libusb \
+              --disable-pixman \
               --disable-docs
+}
+
+make_target() {
+  make NM="$NM" AR="$AR" AS="$CC" as="$CC" LD="$CC" cc1="$CC"
 }
