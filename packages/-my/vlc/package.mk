@@ -1,27 +1,21 @@
 ################################################################################
 #      This file is part of Alex@ELEC - http://www.alexelec.in.ua
-#      Copyright (C) 2011-2016 Alexandr Zuyev (alex@alexelec.in.ua)
+#      Copyright (C) 2011-2017 Alexandr Zuyev (alex@alexelec.in.ua)
 ################################################################################
 
 PKG_NAME="vlc"
-#PKG_VERSION="2.2.5.1"
-#PKG_URL="https://nightlies.videolan.org/build/source/vlc-2.2.5-20170328-0221.1.tar.xz"
-PKG_VERSION="2.2.4"
-PKG_URL="http://download.videolan.org/$PKG_NAME/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain dbus libdvbpsi ffmpeg zlib lua libvorbis libogg flac gnutls libmpeg2 libshout"
-PKG_PRIORITY="optional"
+PKG_VERSION="2.2.5.1"
+PKG_REV="20170405-0224.1"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
+PKG_SITE="http://www.videolan.org"
+PKG_URL="https://nightlies.videolan.org/build/source/vlc-2.2.5-20170405-0224.1.tar.xz"
+PKG_DEPENDS_TARGET="toolchain dbus libdvbpsi gnutls ffmpeg libmpeg2 zlib lua:host lua"
 PKG_SECTION="xmedia/tools"
 PKG_SHORTDESC="VideoLAN multimedia player and streamer"
 PKG_LONGDESC="VLC is the VideoLAN project's media player. It plays MPEG, MPEG2, MPEG4, DivX, MOV, WMV, QuickTime, mp3, Ogg/Vorbis files, DVDs, VCDs, and multimedia streams from various network sources."
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
-
-pre_configure_target() {
-# vlc fails to build with LTO optimization
-  strip_lto
-
-  export LUA_LIBS="-L$SYSROOT_PREFIX/usr/lib -llua -lm"
-}
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
             --disable-dependency-tracking \
@@ -38,7 +32,6 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
             --enable-lua \
             --enable-httpd \
             --enable-vlm \
-            --disable-growl \
             --disable-notify \
             --disable-taglib \
             --disable-live555 \
@@ -49,16 +42,12 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
             --disable-decklink \
             --disable-sftp \
             --enable-v4l2 \
-            --disable-gnomevfs \
-            --disable-vcdx \
             --disable-vcd \
             --disable-libcddb \
             --enable-dvbpsi \
             --disable-screen \
             --enable-ogg \
-            --enable-mux_ogg \
             --disable-shout\
-            --disable-mkv \
             --disable-mod \
             --enable-mpc \
             --disable-gme \
@@ -75,7 +64,6 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
             --enable-flac \
             --enable-aa \
             --disable-twolame \
-            --disable-quicktime \
             --disable-realrtsp \
             --disable-libtar \
             --disable-a52 \
@@ -117,16 +105,11 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
             --disable-skins2 \
             --disable-kai \
             --disable-macosx \
-            --disable-macosx-dialog-provider \
-            --disable-macosx-eyetv \
             --disable-macosx-vlc-app \
             --disable-macosx-qtkit \
-            --disable-macosx-quartztext \
             --disable-ncurses \
             --disable-goom \
             --disable-projectm \
-            --disable-atmo \
-            --disable-bonjour \
             --enable-udev \
             --disable-mtp \
             --disable-lirc \
@@ -139,8 +122,14 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
             --disable-sid \
             --disable-crystalhd \
             --disable-dxva2 \
-            --enable-vlc \
-            LUAC=$SYSROOT_PREFIX/usr/bin/luac"
+            --disable-atmo \
+            --disable-vpx \
+            --enable-vlc"
+
+pre_configure_target() {
+  export LDFLAGS="$LDFLAGS -lresolv"
+  strip_lto
+}
 
 post_makeinstall_target() {
   rm -fr $INSTALL/usr/share/applications
