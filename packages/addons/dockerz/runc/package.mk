@@ -17,14 +17,18 @@
 ################################################################################
 
 PKG_NAME="runc"
-PKG_VERSION="54296cf"
+PKG_VERSION="54296cf40ad8143b62dbcaa1d90e520a2136ddfe"
 PKG_ARCH="any"
 PKG_LICENSE="APL"
 PKG_SITE="https://github.com/opencontainers/runc"
-PKG_URL="https://dl.dropboxusercontent.com/s/tr6te8hyqvoa4st/runc-54296cf.tar.xz"
+PKG_URL="https://github.com/opencontainers/runc/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain go:host"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
+
+unpack() {
+  tar xf $ROOT/$SOURCES/$PKG_NAME/$PKG_VERSION.tar.gz -C $ROOT/$BUILD
+}
 
 pre_make_target() {
   export GOOS=linux
