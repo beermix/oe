@@ -35,8 +35,7 @@ PY_DISABLED_MODULES="_tkinter nis gdbm bsddb ossaudiodev"
 PKG_CONFIGURE_OPTS_HOST="--cache-file=config.cache \
                          --without-cxx-main \
                          --with-threads \
-                         --enable-unicode=ucs4 \
-                         --enable-shared"
+                         --enable-unicode=ucs4"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            ac_cv_file_dev_ptmx=yes \
@@ -61,8 +60,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            --with-wctype-functions \
                            --without-cxx-main \
                            --with-system-ffi \
-                           --with-system-expat \
-                           --enable-shared"
+                           --with-system-expat"
 post_patch() {
   # This is needed to make sure the Python build process doesn't try to
   # regenerate those files with the pgen program. Otherwise, it builds
@@ -118,17 +116,18 @@ post_makeinstall_target() {
     rm -rf $INSTALL/usr/lib/python*/$dir
   done
 
-# set file permissions
-  chmod 755 $INSTALL/usr/lib/libpython*.so*
-
-  ( cd $INSTALL/usr/lib/python2.7
-    python -Wi -t -B $ROOT/$PKG_BUILD/Lib/compileall.py -d /usr/lib/python2.7 -f .
-    find $INSTALL/usr/lib/python2.7 -name "*.py" -exec rm -f {} \; &>/dev/null
-  )
   rm -rf $INSTALL/usr/lib/python*/config
   rm -rf $INSTALL/usr/bin/2to3
   rm -rf $INSTALL/usr/bin/idle
   rm -rf $INSTALL/usr/bin/pydoc
   rm -rf $INSTALL/usr/bin/smtpd.py
   rm -rf $INSTALL/usr/bin/python*-config
+
+  cd $INSTALL/usr/lib/python2.7
+  python -Wi -t -B $PKG_BUILD/Lib/compileall.py -d /usr/lib/python2.7 -f .
+  find $INSTALL/usr/lib/python2.7 -name "*.py" -exec rm -f {} \; &>/dev/null
+
+  # strip
+  chmod u+w $INSTALL/usr/lib/libpython*.so.*
+  $STRIP $INSTALL/usr
 }
