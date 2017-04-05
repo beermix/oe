@@ -18,6 +18,8 @@
 
 PKG_NAME="icu"
 PKG_VERSION="58.2"
+PKG_ARCH="any"
+PKG_LICENSE="Custom"
 PKG_SITE="http://www.icu-project.org"
 PKG_URL="http://download.icu-project.org/files/${PKG_NAME}4c/${PKG_VERSION}/${PKG_NAME}4c-${PKG_VERSION//./_}-src.tgz"
 PKG_SOURCE_DIR="icu"
@@ -27,11 +29,7 @@ PKG_SHORTDESC="International Components for Unicode library"
 PKG_LONGDESC="International Components for Unicode library"
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
-
-post_unpack() {
-  cp -r $PKG_BUILD/source/* $PKG_BUILD/
-}
+PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
 

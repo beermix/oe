@@ -28,6 +28,14 @@ PKG_LONGDESC="The ncurses (new curses) library is a free software emulation of c
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
+PKG_CONFIGURE_OPTS_HOST="--with-shared \
+			    --without-gpm \
+			    --without-manpages \
+			    --without-cxx \
+			    --without-cxx-binding \
+			    --without-ada \
+			    --without-normal"
+
 PKG_CONFIGURE_OPTS_TARGET="--without-ada \
                            --with-cxx \
                            --without-cxx-binding \
