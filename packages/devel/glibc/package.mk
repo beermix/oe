@@ -57,7 +57,8 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/bash \
                            --disable-nscd \
                            --enable-lock-elision \
                            --disable-timezone-tools \
-                           --disable-debug"
+                           --disable-debug 
+                           --enable-static"
 
 
 NSS_CONF_DIR="$PKG_BUILD/nss"
@@ -131,8 +132,8 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/lib/libpcprofile.so
 
 # remove ldscripts
-  rm -rf $INSTALL/usr/lib/libc.so
-  rm -rf $INSTALL/usr/lib/libpthread.so
+ # rm -rf $INSTALL/usr/lib/libc.so
+ # rm -rf $INSTALL/usr/lib/libpthread.so
 
 # remove locales and charmaps
   rm -rf $INSTALL/usr/share/i18n/charmaps
@@ -177,6 +178,7 @@ makeinstall_init() {
     cp -PR $ROOT/$PKG_BUILD/.$TARGET_NAME/math/libm.so* $INSTALL/lib
     cp -PR $ROOT/$PKG_BUILD/.$TARGET_NAME/nptl/libpthread.so* $INSTALL/lib
     cp -PR $ROOT/$PKG_BUILD/.$TARGET_NAME/rt/librt.so* $INSTALL/lib
+    #cp $ROOT/$PKG_BUILD/.$TARGET_NAME/nptl/libpthread_nonshared.a $INSTALL/usr/lib/
 
     if [ "$TARGET_ARCH" = "arm" -a "$TARGET_FLOAT" = "hard" ]; then
       ln -sf ld.so $INSTALL/lib/ld-linux.so.3
