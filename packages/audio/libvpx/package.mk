@@ -20,6 +20,7 @@ configure_target() {
   		--extra-cflags="$CFLAGS" \
   		--extra-cxxflags="$CXXFLAGS" \
   		--as=yasm \
+  		--enable-pic \
   		--enable-vp8 \
   		--enable-vp9 \
   		--enable-postproc \
