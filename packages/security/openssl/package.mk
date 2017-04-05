@@ -17,12 +17,10 @@
 ################################################################################
 
 PKG_NAME="openssl"
-#PKG_VERSION="1.0.2k"
-#PKG_URL="https://www.openssl.org/source/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_VERSION="3f524f7"
+PKG_VERSION="a91bfe2"
 PKG_GIT_URL="https://github.com/openssl/openssl"
 PKG_GIT_BRANCH="OpenSSL_1_0_2-stable"
-PKG_DEPENDS_HOST="ccache:host"
+PKG_DEPENDS_HOST="ccache:host yasm:host"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="security"
 PKG_SHORTDESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"
@@ -44,6 +42,10 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            no-unit-test \
                            no-zlib \
                            no-zlib-dynamic \
+                           no-rc5 \
+                           no-err \
+                           no-ssl3-method \
+                           no-heartbeats \
                            enable-ec_nistp_64_gcc_128"
 
 pre_configure_host() {
