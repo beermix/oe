@@ -134,7 +134,7 @@ fi
   [ ! "$DISPLAYSERVER" = "no" ] && $SCRIPTS/install $DISPLAYSERVER
 
 # Multimedia support
-  [ ! "$MEDIACENTER" = "no" ] && $SCRIPTS/install mediacenter
+  [ ! "$MEDIACENTER" = "no" ] && $SCRIPTS/install ffmpeg
 
 # Sound support
   [ "$ALSA_SUPPORT" = "yes" ] && $SCRIPTS/install alsa

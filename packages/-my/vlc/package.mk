@@ -10,7 +10,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.videolan.org"
 PKG_URL="https://nightlies.videolan.org/build/source/vlc-2.2.5-20170405-0224.1.tar.xz"
-PKG_DEPENDS_TARGET="toolchain dbus libdvbpsi gnutls ffmpeg libmpeg2 zlib lua:host lua"
+PKG_DEPENDS_TARGET="toolchain dbus libdvbpsi gnutls ffmpeg libmpeg2 libvorbis zlib lua:host lua"
 PKG_SECTION="xmedia/tools"
 PKG_SHORTDESC="VideoLAN multimedia player and streamer"
 PKG_LONGDESC="VLC is the VideoLAN project's media player. It plays MPEG, MPEG2, MPEG4, DivX, MOV, WMV, QuickTime, mp3, Ogg/Vorbis files, DVDs, VCDs, and multimedia streams from various network sources."
@@ -82,16 +82,16 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
             --disable-libass \
             --disable-kate \
             --disable-tiger \
-            --disable-libva \
+            --enable-libva \
             --disable-vdpau \
             --without-x \
-            --disable-xcb \
+            --enable-xcb \
             --disable-xvideo \
             --disable-sdl \
             --disable-sdl-image \
-            --disable-freetype \
-            --disable-fribidi \
-            --disable-fontconfig \
+            --enable-freetype \
+            --enable-fribidi \
+            --enable-fontconfig \
             --enable-libxml2 \
             --disable-svg \
             --disable-directx \
@@ -107,7 +107,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
             --disable-macosx \
             --disable-macosx-vlc-app \
             --disable-macosx-qtkit \
-            --disable-ncurses \
+            --enable-ncurses \
             --disable-goom \
             --disable-projectm \
             --enable-udev \
@@ -123,11 +123,20 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
             --disable-crystalhd \
             --disable-dxva2 \
             --disable-atmo \
-            --disable-vpx \
-            --enable-vlc"
+            --enable-vpx \
+            --enable-vlc \
+            --disable-gles1 \
+            --disable-vsxu \
+            --disable-chromaprint \
+            --disable-mfx \
+            --disable-jpeg \
+            --disable-mmal-codec \
+            --disable-mmal-vout \
+            --disable-addonmanagermodules"
+
 
 pre_configure_target() {
-  export LDFLAGS="$LDFLAGS -lresolv"
+  export LDFLAGS="$LDFLAGS -lresolv -lterminfo"
   strip_lto
 }
 
