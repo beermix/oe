@@ -34,12 +34,11 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            ac_cv_have_decl_IFLA_BRPORT_UNICAST_FLOOD=no \
                            ac_cv_path_MOUNT_PATH=/bin/mount \
                            ac_cv_path_UMOUNT_PATH=/bin/umount \
-                           KMOD=/usr/bin/kmod \
                            --disable-nls \
                            --disable-dbus \
                            --disable-utmp \
                            --disable-coverage \
-                           --enable-kmod \
+                           --disable-kmod \
                            --disable-xkbcommon \
                            --enable-blkid \
                            --disable-seccomp \
