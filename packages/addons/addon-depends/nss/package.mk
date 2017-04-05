@@ -52,7 +52,7 @@ make_target() {
   
   #export LDFLAGS="-ldl -lpthread -lsqlite3"
   #sed -e 's/\$(MKSHLIB) -o/\$(MKSHLIB) \$(LDFLAGS) -o/' -i $ROOT/$PKG_BUILD/nss/coreconf/rules.mk
-  #strip_lto
+  strip_lto
   #strip_gold
 
   [ "$TARGET_ARCH" = "x86_64" ] && TARGET_USE_64="USE_64=1"

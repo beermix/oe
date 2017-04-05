@@ -14,7 +14,7 @@ diff -Naurp nss-3.28-orig/nss/Makefile nss-3.28/nss/Makefile
  #######################################################################
  
 -nss_build_all: build_nspr all latest
-+nss_build_all: all latest
++nss_build_all: all
  
  nss_clean_all: clobber_nspr clobber
  
@@ -243,4 +243,4 @@ diff -Naurp nss-3.28-orig/nss/manifest.mn nss-3.28/nss/manifest.mn
  RELEASE = nss
  
 -DIRS = coreconf lib cmd gtests
-+DIRS = coreconf lib cmd gtests config
++DIRS = coreconf lib cmd config
