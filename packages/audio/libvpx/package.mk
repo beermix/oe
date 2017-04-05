@@ -8,21 +8,22 @@ PKG_AUTORECONF="no"
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
+  
+  #export CFLAGS=`echo $CFLAGS | sed -e "s|-m64||g"`
 }
 
 configure_target() {
-  ./configure --prefix=/usr \
+  ./configure --prefix="/usr" \
   		--target="x86_64-linux-gcc" \
   		--libc="$(get_pkg_build glibc)" \
-  		--cpu=corei7 \
+  		--cpu="corei7" \
+  		--extra-cflags="$CFLAGS" \
+  		--extra-cxxflags="$CXXFLAGS" \
   		--as=yasm \
-  		--enable-pic \
   		--enable-vp8 \
   		--enable-vp9 \
   		--enable-postproc \
   		--enable-vp9-postproc \
-  		--enable-vp9-temporal-denoising \
-  		--enable-libyuv \
   		--enable-vp9-highbitdepth \
   		--disable-encode-perf-tests \
   		--disable-decode-perf-tests \
@@ -30,12 +31,9 @@ configure_target() {
   		--disable-examples \
   		--disable-debug-libs \
   		--disable-docs \
+  		--disable-install-docs \
   		--enable-runtime-cpu-detect \
-  		--disable-shared
+  		--disable-shared \
+  		--enable-decode-perf-tests \
+  		--enable-encode-perf-tests
 }
-
-
-#post_makeinstall_target() {
- # rm -rf $INSTALL
- # make check V=s
-#}
