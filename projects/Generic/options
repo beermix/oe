@@ -48,7 +48,7 @@
 ################################################################################
 
   # Build optimizations (size/normal)
-    OPTIMIZATIONS="normal"
+    OPTIMIZATIONS="size"
 
   # Project CFLAGS
     PROJECT_CFLAGS="-mmmx -msse -msse2 -msse3 -mssse3 -maes -mavx -msse4.2 -msse4.1 -mtune=ivybridge -mfpmath=sse"
@@ -104,4 +104,4 @@
   # Space separated list is supported,
     KERNEL_EXTRA_CONFIG+=" keyboard-at mouse-ps2"
     KERNEL_EXTRA_CONFIG+=" sata lan-pci sound-pci"
-    KERNEL_EXTRA_CONFIG+=" audio bluetooth filesystem wlan-other"
+    KERNEL_EXTRA_CONFIG+=" bluetooth filesystem wlan-other"
