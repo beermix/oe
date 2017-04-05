@@ -96,6 +96,7 @@ make_target() {
     yasm
     icu
     minizip
+    libvpx
   )
   
   # Work around bug in blink in which GCC 6 optimizes away null pointer checks
@@ -123,7 +124,7 @@ make_target() {
   ./tools/gn/bootstrap/bootstrap.py --gn-gen-args "${_flags[*]}"
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$ROOT/$TOOLCHAIN/bin/python
 
-  ninja -j4 -C out/Release chrome chrome_sandbox widevinecdmadapter
+  ninja -j5 -C out/Release chrome chrome_sandbox
 }
 
 makeinstall_target() {
@@ -134,7 +135,7 @@ addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -P  $ROOT/$PKG_BUILD/out/Release/chrome $ADDON_BUILD/$PKG_ADDON_ID/bin/chromium.bin
   cp -P  $ROOT/$PKG_BUILD/out/Release/chrome_sandbox $ADDON_BUILD/$PKG_ADDON_ID/bin/chrome-sandbox
-  cp -P  $ROOT/$PKG_BUILD/out/Release/{*.pak,*.dat,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
+  #cp -P  $ROOT/$PKG_BUILD/out/Release/{*.pak,*.dat,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -PR $ROOT/$PKG_BUILD/out/Release/locales $ADDON_BUILD/$PKG_ADDON_ID/bin/
   cp -PR $ROOT/$PKG_BUILD/out/Release/gen/content/content_resources.pak $ADDON_BUILD/$PKG_ADDON_ID/bin/
 
@@ -170,10 +171,10 @@ addon() {
   cp -PL $(get_pkg_build gdk-pixbuf)/.install_pkg/usr/lib/gdk-pixbuf-2.0/2.10.0/loaders/* $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules
 
   # nss
-  cp -PL $(get_pkg_build nss)/dist/Linux*OPT.OBJ/lib/*.so $ADDON_BUILD/$PKG_ADDON_ID/lib
+  #cp -PL $(get_pkg_build nss)/dist/Linux*OPT.OBJ/lib/*.so $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # nspr
-  cp -PL $(get_pkg_build nspr)/.install_pkg/usr/lib/*.so $ADDON_BUILD/$PKG_ADDON_ID/lib
+  #cp -PL $(get_pkg_build nspr)/.install_pkg/usr/lib/*.so $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # libexif
   cp -PL $(get_pkg_build libexif)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
