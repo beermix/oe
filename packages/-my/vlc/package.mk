@@ -87,7 +87,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --enable-speex \
 			      --disable-theora \
 			      --disable-schroedinger \
-			      --enable-png \
+			      --disable-png \
 			      --disable-x264 \
 			      --disable-fluidsynth \
 			      --disable-zvbi \
@@ -95,15 +95,15 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --enable-libass \
 			      --disable-kate \
 			      --disable-tiger \
-			      --enable-libva \
+			      --disable-libva \
 			      --disable-vdpau \
 			      --without-x \
 			      --enable-xcb \
 			      --disable-xvideo \
 			      --disable-sdl \
 			      --disable-sdl-image \
-			      --enable-freetype \
-			      --enable-fribidi \
+			      --disable-freetype \
+			      --disable-fribidi \
 			      --enable-fontconfig \
 			      --enable-libxml2 \
 			      --disable-svg \
