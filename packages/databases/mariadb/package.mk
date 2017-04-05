@@ -42,7 +42,7 @@ PKG_MARIADB_SERVER="no"
 # - large :  embedded + archive + federated + blackhole + innodb
 # - xlarge:  embedded + archive + federated + blackhole + innodb + partition
 # - community:  all  features (currently == xlarge)
-  MARIADB_OPTS+=" -DFEATURE_SET=community"
+  MARIADB_OPTS+=" -DFEATURE_SET=xlarge"
 
 # Build MariaDB Server support
   if [ "$PKG_MARIADB_SERVER" = "no" ]; then
@@ -56,8 +56,8 @@ PKG_MARIADB_SERVER="no"
 
 # Set MariaDB server storage engines
   MARIADB_OPTS+=" -DWITH_INNOBASE_STORAGE_ENGINE=ON"
-  MARIADB_OPTS+=" -WITH_PARTITION_STORAGE_ENGINE=ON"
-  MARIADB_OPTS+=" -WITH_PERFSCHEMA_STORAGE_ENGINE=ON"
+  MARIADB_OPTS+=" -WITH_PARTITION_STORAGE_ENGINE=OFF"
+  MARIADB_OPTS+=" -WITH_PERFSCHEMA_STORAGE_ENGINE=OFF"
 
 # According to MariaDB galera cluster documentation these options must be passed
 # to CMake, set to '0' if galera cluster support is not wanted:

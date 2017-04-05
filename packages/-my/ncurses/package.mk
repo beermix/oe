@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="ncurses"
-PKG_VERSION="6.0-20170325"
+PKG_VERSION="6.0-20170401"
 PKG_SITE="http://www.gnu.org/software/ncurses/"
 PKG_URL="ftp://invisible-island.net/ncurses/current/ncurses-$PKG_VERSION.tgz"
 PKG_DEPENDS_TARGET="toolchain zlib"
@@ -60,12 +60,17 @@ PKG_CONFIGURE_OPTS_TARGET="--without-ada \
                            --enable-getcap-cache \
                            --disable-symlinks \
                            --enable-ext-funcs \
-                           --enable-pc-files \
+                           --disable-pc-files \
                            --enable-widec \
                            --enable-sigwinch \
                            --disable-nls \
                            --without-dlsym \
                            --with-x"
+                           
+makeinstall_host() {
+  : # nop
+}
+
 
 pre_configure_target() {
   # causes some segmentation fault's (dialog) when compiled with gcc's link time optimization.
