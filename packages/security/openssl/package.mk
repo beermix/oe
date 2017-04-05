@@ -38,15 +38,39 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            no-libunbound \
                            no-sctp \
                            no-ssl-trace \
-                           no-store \
-                           no-unit-test \
                            no-zlib \
                            no-zlib-dynamic \
                            no-rc5 \
                            no-err \
                            no-ssl3-method \
+                           no-store \
+                           no-unit-test \
+                           no-weak-ssl-ciphers \
                            no-heartbeats \
                            enable-ec_nistp_64_gcc_128"
+
+PKG_CONFIGURE_OPTS_SHARED_HOST="--openssldir=/etc/ssl \
+                           --libdir=lib \
+                           shared \
+                           threads \
+                           no-ec2m \
+                           no-gmp \
+                           no-jpake \
+                           no-krb5 \
+                           no-libunbound \
+                           no-md2 \
+                           no-rc5 \
+                           no-rfc3779
+                           no-sctp \
+                           no-ssl-trace \
+                           no-ssl2 \
+                           no-ssl3 \
+                           no-store \
+                           no-unit-test \
+                           no-weak-ssl-ciphers \
+                           no-zlib \
+                           no-zlib-dynamic \
+                           no-static-engine"
 
 pre_configure_host() {
   mkdir -p $ROOT/$PKG_BUILD/.$HOST_NAME
@@ -55,7 +79,7 @@ pre_configure_host() {
 
 configure_host() {
   cd $ROOT/$PKG_BUILD/.$HOST_NAME
-  ./Configure --prefix=/ $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $CFLAGS $LDFLAGS
+  ./Configure --prefix=/ $PKG_CONFIGURE_OPTS_SHARED_HOST linux-x86_64 $CFLAGS $LDFLAGS
 }
 
 makeinstall_host() {
