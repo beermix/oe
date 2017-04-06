@@ -8,8 +8,8 @@ PKG_USE_CMAKE="no"
 PKG_AUTORECONF="yes"
 
 pre_configure_target() {
-   export LIBS="$LIBS -lz"
-   export CFLAGS="-D_GNU_SOURCE -D_BSD_SOURCE"
+   #export LIBS="$LIBS -lz"
+   export CPPFLAGS="-D_FORTIFY_SOURCE=2"
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
