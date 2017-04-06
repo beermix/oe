@@ -17,13 +17,10 @@
 ################################################################################
 
 PKG_NAME="openssl"
-PKG_VERSION="1.1.0e"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="BSD"
-PKG_SITE="https://www.openssl.org"
-PKG_URL="https://www.openssl.org/source/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_HOST="ccache:host"
+PKG_VERSION="a91bfe2"
+PKG_GIT_URL="https://github.com/openssl/openssl"
+PKG_GIT_BRANCH="OpenSSL_1_0_2-stable"
+PKG_DEPENDS_HOST="ccache:host yasm:host"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="security"
 PKG_SHORTDESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"
@@ -32,21 +29,52 @@ PKG_LONGDESC="The Open Source toolkit for Secure Sockets Layer and Transport Lay
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
+CCACHE_DISABLE=1
+
 PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            --libdir=lib \
                            shared \
                            threads \
                            no-ec2m \
-                           no-md2 \
+                           no-gmp \
+                           no-libunbound \
+                           no-sctp \
+                           no-ssl-trace \
+                           no-zlib \
+                           no-zlib-dynamic \
+                           no-rc5 \
+                           no-err \
+                           no-ssl3-method \
+                           no-store \
+                           no-unit-test \
+                           no-weak-ssl-ciphers \
+                           no-heartbeats \
+                           enable-ec_nistp_64_gcc_128"
+
+PKG_CONFIGURE_OPTS_SHARED_HOST="--openssldir=/etc/ssl \
+                           --libdir=lib \
+                           shared \
+                           threads \
+                           no-ec2m \
+                           no-gmp \
+                           no-jpake \
+                           no-krb5 \
+                           no-libunbound \
                            no-rc5 \
                            no-rfc3779
                            no-sctp \
                            no-ssl-trace \
+                           no-ssl2 \
                            no-ssl3 \
+                           no-store \
                            no-unit-test \
                            no-weak-ssl-ciphers \
+                           enable-montasm \
+                           enable-md2 \
                            no-zlib \
-                           no-zlib-dynamic"
+                           no-zlib-dynamic \
+                           no-static-engine \
+                           enable-ec_nistp_64_gcc_128"
 
 pre_configure_host() {
   mkdir -p $ROOT/$PKG_BUILD/.$HOST_NAME
@@ -55,39 +83,27 @@ pre_configure_host() {
 
 configure_host() {
   cd $ROOT/$PKG_BUILD/.$HOST_NAME
-  ./Configure --prefix=/ $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $CFLAGS $LDFLAGS
+  ./Configure --prefix=/ $PKG_CONFIGURE_OPTS_SHARED_HOST linux-x86_64 $CFLAGS $LDFLAGS -Wa,--noexecstack
 }
 
 makeinstall_host() {
-  make INSTALL_PREFIX=$TOOLCHAIN install_sw
+  make -j1 INSTALL_PREFIX=$ROOT/$TOOLCHAIN install_sw
 }
+
 
 pre_configure_target() {
   mkdir -p $ROOT/$PKG_BUILD/.$TARGET_NAME
   cp -a $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$TARGET_NAME/
-
-  case $TARGET_ARCH in
-    x86_64)
-      OPENSSL_TARGET=linux-x86_64
-      PLATFORM_FLAGS=enable-ec_nistp_64_gcc_128
-      ;;
-    arm)
-      OPENSSL_TARGET=linux-armv4
-      ;;
-    aarch64)
-      OPENSSL_TARGET=linux-aarch64
-      ;;
-  esac
 }
 
 configure_target() {
   cd $ROOT/$PKG_BUILD/.$TARGET_NAME
-  ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED $PLATFORM_FLAGS debian $CFLAGS $LDFLAGS
+  ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $CFLAGS $LDFLAGS -Wa,--noexecstack
 }
 
 makeinstall_target() {
-  make INSTALL_PREFIX=$INSTALL install_sw
-  make INSTALL_PREFIX=$SYSROOT_PREFIX install_sw
+  make -j1 INSTALL_PREFIX=$INSTALL install_sw
+  make -j1 INSTALL_PREFIX=$SYSROOT_PREFIX install_sw
   chmod 755 $INSTALL/usr/lib/*.so*
   chmod 755 $INSTALL/usr/lib/engines/*.so
 }
@@ -95,7 +111,6 @@ makeinstall_target() {
 post_makeinstall_target() {
   rm -rf $INSTALL/etc/ssl/misc
   rm -rf $INSTALL/usr/bin/c_rehash
-
 
   # cert from https://curl.haxx.se/docs/caextract.html
   mkdir -p $INSTALL/etc/ssl
