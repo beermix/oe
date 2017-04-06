@@ -42,12 +42,10 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            no-ssl-trace \
                            no-zlib \
                            no-zlib-dynamic \
-                           no-rc5 \
                            no-err \
                            no-ssl3-method \
                            no-store \
                            no-unit-test \
-                           no-weak-ssl-ciphers \
                            no-heartbeats \
                            enable-ec_nistp_64_gcc_128"
 
