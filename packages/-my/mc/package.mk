@@ -5,6 +5,13 @@ PKG_DEPENDS_TARGET="toolchain libtool:host gettext:host e2fsprogs util-linux gli
 PKG_SECTION="tools"
 PKG_AUTORECONF="yes"
 
+pre_configure_target() {
+  export LIBS="$LIBS -lssh2 -lcrypto"
+  #export MAKEFLAGS="-j1"
+  #export CFLAGS="$CFLAGS -I$SYSROOT_PREFIX/usr/include/ncurses"
+  export LDFLAGS="$(echo $LDFLAGS | sed -e "s|-Wl,--as-needed||")"
+}
+
 PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config \
                            --datadir=/storage/.config \
                            --libdir=/storage/.config \
@@ -42,4 +49,4 @@ PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config \
                            --enable-vfs-tar \
                            --enable-vfs-extfs \
                            --enable-vfs-cpio \
-                           --enable-vfs-smb"
+                           --without-vfs-smb"

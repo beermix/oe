@@ -1,7 +1,6 @@
 PKG_NAME="testdisk"
-pkgver=7.0
-PKG_URL="http://www.cgsecurity.org/$PKG_NAME-$pkgver.tar.bz2"
-#PKG_GIT_URL="https://git.cgsecurity.org/testdisk.git"
+pkgver="462f8db"
+PKG_GIT_URL="https://git.cgsecurity.org/testdisk.git"
 PKG_DEPENDS_TARGET="toolchain readline"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
