@@ -10,18 +10,16 @@ pre_configure_target() {
    cd $ROOT/$PKG_BUILD
    export LDFLAGS="-lpthread -lrt"
    export LIBS="$LIBS -lssh2 -lmbedcrypto"
+   export CPPFLAGS="-I$(get_pkg_build linux)"
 }
 
-PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
-			      --bindir=/usr/bin \
-			      --sbindir=/usr/sbin \
-			      --datadir=/storage/.config \
+PKG_CONFIGURE_OPTS_TARGET="--datadir=/storage/.config \
 			      --sysconfdir=/storage/.config/zabbix \
 			      --enable-server \
 			      --enable-proxy \
 			      --enable-agent \
 			      --with-mysql \
-			      --without-net-snmp \
+			      --with-net-snmp=$SYSROOT_PREFIX/usr \
 			      --with-ssh2=$SYSROOT_PREFIX/usr \
 			      --with-openssl=$SYSROOT_PREFIX/usr"
 

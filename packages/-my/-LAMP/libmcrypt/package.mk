@@ -22,7 +22,6 @@ PKG_VERSION="8c26221"
 PKG_SITE="http://sourceforge.net/projects/mcrypt/"
 PKG_GIT_URL="https://github.com/winlibs/libmcrypt"
 PKG_DEPENDS_TARGET="toolchain"
-
 PKG_SECTION="security"
 PKG_SHORTDESC="crypt library"
 PKG_LONGDESC="mcrypt, and the accompanying libmcrypt, are intended to be replacements for the old Unix crypt, except that they are under the GPL and support an ever-wider range of algorithms and modes."
