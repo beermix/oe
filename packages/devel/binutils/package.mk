@@ -30,6 +30,10 @@ PKG_LONGDESC="The GNU binutils are utilities of use when dealing with object fil
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
+static_ldflags=-Wl,-static
+static_ccflags=-static
+config_lto_flags=
+
 PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --with-sysroot=$SYSROOT_PREFIX \
                          --with-lib-path=$SYSROOT_PREFIX/lib:$SYSROOT_PREFIX/usr/lib \

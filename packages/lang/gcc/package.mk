@@ -45,7 +45,8 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-lto \
                            --enable-gold \
                            --enable-ld=default \
-                           --disable-multilib \
+                           --disable-mudflap \
+                           --disable-libmudflap \
                            --disable-nls \
                            --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
@@ -88,7 +89,7 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               $GCC_OPTS"
 
 PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
-                         --enable-languages=c,c++ \
+                         --enable-languages=c,c++,lto \
                          --enable-__cxa_atexit \
                          --enable-libssp \
                          --enable-libitm \
@@ -101,7 +102,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-decimal-float=yes \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time \
-                         --enable-clocale=gnu \
+                         --enable-clocale=generic \
                          $GCC_OPTS"
 
 pre_configure_host() {

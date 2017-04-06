@@ -29,7 +29,8 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-smallbuild \
 			      --disable-replication \
 			      --disable-cryptography \
 			      --disable-queue \
-			      --disable-debug"
+			      --disable-debug \
+			      --disable-shared"
 			   
 post_makeinstall_target() {
   rm -rf $INSTALL

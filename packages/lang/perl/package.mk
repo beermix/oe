@@ -7,23 +7,15 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 configure_target() {
-  export LD="${CCLD}"
+  export LD="$LD"
   ./Configure \
-		-Dcc="${CC}" \
-		-Dcflags="${CFLAGS}" \
-		-Dldflags="${LDFLAGS}" \
+		-Dcc="$CC" \
+		-Dcflags="$CFLAGS" \
+		-Dldflags="$LDFLAGS" \
 		-Dcf_by="OE" \
-		-Dprefix=${prefix} \
-		-Dvendorprefix=${prefix} \
-		-Dsiteprefix=${prefix} \
-		\
-		-Dbin=${STAGING_BINDIR}/${PN} \
-		-Dprivlib=${STAGING_LIBDIR}/perl/${PV} \
-		-Darchlib=${STAGING_LIBDIR}/perl/${PV} \
-		-Dvendorlib=${STAGING_LIBDIR}/perl/vendor_perl/${PV} \
-		-Dvendorarch=${STAGING_LIBDIR}/perl/vendor_perl/${PV} \
-		-Dsitelib=${STAGING_LIBDIR}/perl/site_perl/${PV} \
-		-Dsitearch=${STAGING_LIBDIR}/perl/site_perl/${PV} \
+		-Dprefix=/usr \
+		-Dvendorprefix=/usr \
+		-Dsiteprefix=/usr \
 		\
 		-Duseshrplib \
 		-Dusethreads \
