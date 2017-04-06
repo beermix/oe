@@ -1,5 +1,5 @@
 PKG_NAME="gnutls"
-PKG_VERSION="3.5.9"
+PKG_VERSION="3.5.10"
 PKG_URL="ftp://ftp.gnutls.org/gcrypt/gnutls/v3.5/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain libidn nettle gmp openssl"
 PKG_SECTION="security"
@@ -11,9 +11,8 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-ld-version-script \
 			      --enable-static \
 			      --without-tpm \
 			      --disable-heartbeat-support \
-			      --disable-shared \
 			      --enable-hardware-acceleration \
-			      --enable-openssl-compatibility \
+			      --disable-openssl-compatibility \
 			      --enable-cxx \
 			      --without-p11-kit \
 			      --enable-local-libopts \
