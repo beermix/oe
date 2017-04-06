@@ -1,7 +1,7 @@
 PKG_NAME="zabbix"
-PKG_VERSION="3.2.3"
+PKG_VERSION="3.2.4"
 PKG_URL="https://fossies.org/linux/misc/zabbix-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain curl libxml2 mariadb netbsd-curses openssl libssh2 net-snmp"
+PKG_DEPENDS_TARGET="toolchain curl libxml2 mariadb netbsd-curses openssl libssh2"
 PKG_SECTION="devel"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
@@ -27,7 +27,7 @@ PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
 
 
 post_install() {
-  add_user zabbix x 990 990 "zabbix server" "/storage" "/bin/bash"
+  add_user zabbix x 990 990 "zabbix server" "/storage" "/bin/sh"
   add_group zabbix 990
 }
 
