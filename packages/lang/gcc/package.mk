@@ -54,10 +54,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libmudflap \
                            --disable-libmpx \
                            --disable-libatomic \
-                           --disable-libquadmath \
-                           --disable-libquadmath-support \
                            --disable-libgomp \
-                           --disable-libcilkrts \
                            --with-linker-hash-style=gnu \
                            --enable-gnu-indirect-function \
                            --disable-libsanitizer \
@@ -72,12 +69,15 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
                               --disable-libssp \
+                              --disable-libitm \
+                              --disable-libcilkrts \
+                              --disable-libvtv \
+                              --disable-libquadmath \
                               --disable-shared \
                               --disable-threads \
                               --without-headers \
                               --with-newlib \
                               --disable-lto \
-                              --disable-libitm \
                               --disable-plugin \
                               --enable-decimal-float=no \
                               $GCC_OPTS"
@@ -86,6 +86,10 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-languages=c,c++ \
                          --enable-__cxa_atexit \
                          --enable-libssp \
+                         --enable-libitm \
+                         --enable-libcilkrts \
+                         --enable-libvtv \
+                         --enable-libquadmath \
                          --enable-tls \
                          --enable-shared \
                          --disable-static \
