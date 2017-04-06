@@ -83,6 +83,7 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --without-headers \
                               --with-newlib \
                               --disable-lto \
+                              --disable-libitm \
                               --disable-plugin \
                               --enable-decimal-float=no \
                               $GCC_OPTS"

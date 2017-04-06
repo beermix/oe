@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="docker"
-PKG_VERSION="17.03.1-ce"
+PKG_VERSION="17.04.0-ce"
 PKG_URL="https://fossies.org/linux/misc/docker-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain sqlite go:host containerd runc libnetwork tini curl"
 PKG_SECTION="service/system"
