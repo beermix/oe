@@ -40,29 +40,29 @@
   KODI_EXTRA_FONTS="yes"
 
 # build and install PulseAudio support (yes / no)
-  PULSEAUDIO_SUPPORT="no"
+  PULSEAUDIO_SUPPORT="yes"
 
 # build and install espeak support (yes / no)
   ESPEAK_SUPPORT="no"
 
 # build and install with non-free support
 # (RAR compression support in KODI) (yes / no)
-  KODI_NONFREE_SUPPORT="no"
+  KODI_NONFREE_SUPPORT="yes"
 
 # build and install with BluRay support (yes / no)
   KODI_BLURAY_SUPPORT="no"
 
 # build and install with BD+ support
 # (BD+ decryption support in KODI) (yes / no)
-  BLURAY_BDPLUS_SUPPORT="no"
+  BLURAY_BDPLUS_SUPPORT="yes"
 
 # build and install with AACS support
 # (BD decryption support in KODI) (yes / no)
-  BLURAY_AACS_SUPPORT="no"
+  BLURAY_AACS_SUPPORT="yes"
 
 # build and install with DVDCSS support
 # (DVD decryption support in KODI) (yes / no)
-  KODI_DVDCSS_SUPPORT="no"
+  KODI_DVDCSS_SUPPORT="yes"
 
 # install extra kernel drivers, see configfiles in packages/linux/config/*.config
 # or projects/*/linux/*.config or distributions/*/linux/*.config
@@ -157,7 +157,7 @@
 
 # build and install IRServer IR/LCD support (yes / no)
   IRSERVER_SUPPORT="no"
-  LCD_DRIVER+="no"
+  #LCD_DRIVER+="no"
 
 # build and install CEC adapter support (yes / no)
   CEC_SUPPORT="no"
