@@ -60,7 +60,6 @@ PKG_CONFIGURE_OPTS_SHARED_HOST="--openssldir=/etc/ssl \
                            no-jpake \
                            no-krb5 \
                            no-libunbound \
-                           no-md2 \
                            no-rc5 \
                            no-rfc3779
                            no-sctp \
@@ -70,6 +69,8 @@ PKG_CONFIGURE_OPTS_SHARED_HOST="--openssldir=/etc/ssl \
                            no-store \
                            no-unit-test \
                            no-weak-ssl-ciphers \
+                           enable-montasm \
+                           enable-md2 \
                            no-zlib \
                            no-zlib-dynamic \
                            no-static-engine"
@@ -81,7 +82,7 @@ pre_configure_host() {
 
 configure_host() {
   cd $ROOT/$PKG_BUILD/.$HOST_NAME
-  ./Configure --prefix=/ $PKG_CONFIGURE_OPTS_SHARED_HOST linux-x86_64 $CFLAGS $LDFLAGS
+  ./Configure --prefix=/ $PKG_CONFIGURE_OPTS_SHARED_HOST linux-x86_64 $CFLAGS $LDFLAGS -Wa,--noexecstack
 }
 
 makeinstall_host() {
@@ -95,7 +96,7 @@ pre_configure_target() {
 
 configure_target() {
   cd $ROOT/$PKG_BUILD/.$TARGET_NAME
-  ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $CFLAGS $LDFLAGS
+  ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $CFLAGS $LDFLAGS -Wa,--noexecstack
 }
 
 makeinstall_target() {

@@ -52,23 +52,34 @@ make_target() {
   
   #export LDFLAGS="-ldl -lpthread -lsqlite3"
   #sed -e 's/\$(MKSHLIB) -o/\$(MKSHLIB) \$(LDFLAGS) -o/' -i $ROOT/$PKG_BUILD/nss/coreconf/rules.mk
-  strip_lto
+ # strip_lto
   #strip_gold
+  
+  unset CFLAGS
+  unset CXXFLAGS
+  export BUILD_OPT=1
+  export PKG_CONFIG_ALLOW_SYSTEM_LIBS=1
+  export PKG_CONFIG_ALLOW_SYSTEM_CFLAGS=1
+  export FREEBL_NO_DEPEND=0
+  export NSS_USE_SYSTEM_SQLITE=1
+  export NSS_ENABLE_WERROR=0
+  export NSPR_INCLUDE_DIR=`pkg-config --cflags-only-I nspr | sed 's/-I//'`
+  export NSPR_LIB_DIR=`pkg-config --libs-only-L nspr | sed 's/-L.//'`
 
   [ "$TARGET_ARCH" = "x86_64" ] && TARGET_USE_64="USE_64=1"
 
   make BUILD_OPT=1 $TARGET_USE_64 \
-     NSPR_INCLUDE_DIR=$SYSROOT_PREFIX/usr/include/nspr \
-     NSS_USE_STATIC_LIBS=1 \
-     USE_SYSTEM_ZLIB=1 ZLIB_LIBS=-lz \
-     S_USE_SYSTEM_SQLITE=1 \
-     XCFLAGS="$CFLAGS" \
-     OS_TEST=$TARGET_ARCH \
-     NSS_TESTS="dummy" \
-     NSINSTALL=$ROOT/$TOOLCHAIN/bin/nsinstall \
-     CPU_ARCH_TAG=$TARGET_ARCH \
-     CC=$CC LDFLAGS="$LDFLAGS -L$SYSROOT_PREFIX/usr/lib" \
-     V=4
+  	NSPR_INCLUDE_DIR=$SYSROOT_PREFIX/usr/include/nspr \
+  	NSS_USE_STATIC_LIBS=1 \
+  	USE_SYSTEM_ZLIB=1 ZLIB_LIBS=-lz \
+  	S_USE_SYSTEM_SQLITE=1 \
+  	XCFLAGS="$CFLAGS" \
+  	OS_TEST=$TARGET_ARCH \
+  	NSS_TESTS="dummy" \
+  	NSINSTALL=$ROOT/$TOOLCHAIN/bin/nsinstall \
+  	CPU_ARCH_TAG=$TARGET_ARCH \
+  	CC=$CC LDFLAGS="$LDFLAGS -L$SYSROOT_PREFIX/usr/lib" \
+  	V=1
 }
 
 makeinstall_target() {
