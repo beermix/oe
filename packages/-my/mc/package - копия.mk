@@ -25,21 +25,18 @@ PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config \
                            --disable-doxygen-html \
                            --without-internal-edit \
                            --disable-silent-rules \
+                           --disable-nls \
                            --enable-background \
                            --enable-charset \
-                           --enable-largefile \
-                           --enable-vfs-sftp \
-                           --with-internal-edit \
-                           --with-mmap \
-                           --with-subshell \
-                           --without-gpm-mouse \
-                           --without-included-gettext \
-                           --without-x
                            --without-gpm-mouse \
                            --with-screen=slang \
                            --without-x \
+                           --with-subshell \
                            --enable-vfs-sftp \
                            --enable-vfs-tar \
                            --enable-vfs-extfs \
                            --enable-vfs-cpio \
-                           --enable-vfs-smb"
+                           --disable-vfs-smb \
+                           --with-gnu-ld \
+                           --with-mmap \
+                           --with-pcre=$SYSROOT_PREFIX/usr"

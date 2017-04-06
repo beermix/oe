@@ -1,42 +1,47 @@
 PKG_NAME="perl"
 PKG_VERSION="5.24.1"
 PKG_URL="http://www.cpan.org/src/5.0/perl-${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_TARGET="toolchain openssl db gdbm"
+PKG_DEPENDS_TARGET="toolchain openssl gdbm"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 configure_target() {
-  export LD="$LD"
-  ./Configure \
-		-Dcc="$CC" \
-		-Dcflags="$CFLAGS" \
-		-Dldflags="$LDFLAGS" \
-		-Dcf_by="OE" \
+  ./Configure -des \
+		-Dcccdlflags='-fPIC' \
+		-Dcccdlflags='-fPIC' \
+		-Dccdlflags='-rdynamic' \
 		-Dprefix=/usr \
+		-Dprivlib=$_privlib \
+		-Darchlib=$_archlib \
+		-A ccflags="$CFLAGS -fPIC -DPIC" \
+		-Dcc="$CC" \
+		-Dldflags="$LDFLAGS -fPIC" \
+		-Dlibs="-lm -lcrypt -pthread" \
+		-Doptimize="$CFLAGS -ffunction-sections -fdata-sections -finline-limit=8 -ffast-math" \
 		-Dvendorprefix=/usr \
-		-Dsiteprefix=/usr \
-		\
-		-Duseshrplib \
-		-Dusethreads \
-		-Duseithreads \
+		-Dvendorlib=/usr/share/perl5/vendor_perl \
+		-Dvendorarch=/usr/lib/perl5/vendor_perl \
+		-Dsiteprefix=/usr/local \
+		-Dsitelib=/usr/local/share/perl5/site_perl \
+		-Dsitearch=/usr/local/lib/perl5/site_perl \
+		-Dlocincpth=' ' \
+		-Doptimize="$CFLAGS" \
 		-Duselargefiles \
-		-Dnoextensions=ODBM_File \
-		-Ud_dosuid \
-		-Ui_db \
-		-Ui_ndbm \
-		-Ui_gdbm \
-		-Ui_gdbm_ndbm \
-		-Ui_gdbmndbm \
-		-Di_shadow \
-		-Di_syslog \
-		-Duseperlio \
-		-Dman3ext=3pm \
-		-Dsed=/bin/sed \
-		-Uafs \
+		-Dusethreads \
+		-Duseshrplib \
+		-Dd_semctl_semun \
+		-Dman1dir=/usr/share/man/man1 \
+		-Dman3dir=/usr/share/man/man3 \
+		-Dinstallman1dir=/usr/share/man/man1 \
+		-Dinstallman3dir=/usr/share/man/man3 \
+		-Dman1ext='1' \
+		-Dman3ext='3pm' \
+		-Dcf_by='OE' \
 		-Ud_csh \
-		-Uusesfio \
-		-Uusenm -des
+		-Dusenm \
+		|| return 1
+	make libperl.so && make; make
 }
 
                
