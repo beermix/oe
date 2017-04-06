@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="mariadb"
-PKG_VERSION="10.1.21"
+PKG_VERSION="10.2.5"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
@@ -33,7 +33,7 @@ PKG_LONGDESC="MariaDB is a community-developed fork and a drop-in replacement fo
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_MARIADB_SERVER="no"
+PKG_MARIADB_SERVER="yes"
 
 # MariaDB Feature set. Selection of features. Options are
 # - xsmall : 
@@ -42,7 +42,7 @@ PKG_MARIADB_SERVER="no"
 # - large :  embedded + archive + federated + blackhole + innodb
 # - xlarge:  embedded + archive + federated + blackhole + innodb + partition
 # - community:  all  features (currently == xlarge)
-  MARIADB_OPTS+=" -DFEATURE_SET=xlarge"
+  MARIADB_OPTS="$MARIADB_OPTS -DFEATURE_SET=community"
 
 # Build MariaDB Server support
   if [ "$PKG_MARIADB_SERVER" = "no" ]; then
@@ -55,8 +55,8 @@ PKG_MARIADB_SERVER="no"
   MARIADB_OPTS+=" -DWITH_EMBEDDED_SERVER=OFF"
 
 # Set MariaDB server storage engines
-  MARIADB_OPTS+=" -DWITH_INNOBASE_STORAGE_ENGINE=1"
-  MARIADB_OPTS+=" -WITH_PARTITION_STORAGE_ENGINE=1"
+  MARIADB_OPTS+=" -DWITH_INNOBASE_STORAGE_ENGINE=ON"
+  MARIADB_OPTS+=" -WITH_PARTITION_STORAGE_ENGINE=OFF"
   MARIADB_OPTS+=" -WITH_PERFSCHEMA_STORAGE_ENGINE=OFF"
 
 # According to MariaDB galera cluster documentation these options must be passed
@@ -136,7 +136,6 @@ configure_target() {
         -DDISABLE_SHARED=ON \
         -DCMAKE_C_FLAGS="${TARGET_CFLAGS} -fPIC -DPIC -fno-strict-aliasing -DBIG_JOINS=1 -fomit-frame-pointer -fno-delete-null-pointer-checks" \
         -DCMAKE_CXX_FLAGS="${TARGET_CXXFLAGS} -fPIC -DPIC -fno-strict-aliasing -DBIG_JOINS=1 -felide-constructors -fno-delete-null-pointer-checks" \
-        -DWITH_MYSQLD_LDFLAGS="-pie ${TARGET_LDFLAGS},-z,now" \
         -DCMAKE_BUILD_TYPE=Release \
         $MARIADB_IMPORT_EXECUTABLES \
         -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
@@ -163,16 +162,8 @@ configure_target() {
         -DWITH_ZLIB=bundled \
         -DWITH_SYSTEMD=OFF \
         -DWITH_LIBWRAP=OFF \
-        -DWITH_UNIT_TESTS=OFF \
         -DWITH_SSL=$SYSROOT_PREFIX/usr \
         -DSECURITY_HARDENED=OFF \
-        -DWITH_ARCHIVE_STORAGE_ENGINE=1 \
-        -DWITH_BLACKHOLE_STORAGE_ENGINE=1 \
-        -DWITH_PARTITION_STORAGE_ENGINE=1 \
-        -DPLUGIN_TOKUDB=NO \
-        -DWITHOUT_EXAMPLE_STORAGE_ENGINE=1 \
-        -DWITHOUT_FEDERATED_STORAGE_ENGINE=1 \
-        -DWITHOUT_PBXT_STORAGE_ENGINE=1 \
         $MARIADB_OPTS \
         ..
 }

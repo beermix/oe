@@ -4,7 +4,7 @@
 ################################################################################
 
 PKG_NAME="php"
-PKG_VERSION="5.6.27"
+PKG_VERSION="5.6.30"
 PKG_REV="0"
 PKG_ARCH="any"
 PKG_LICENSE="OpenSource"
@@ -34,7 +34,7 @@ configure_target() {
   rm -rf .$TARGET_NAME
 
   # Dynamic Library support
-  export LDFLAGS="$LDFLAGS -ldl -lpthread"
+  export LDFLAGS="$LDFLAGS -ldl -lpthread -lstdc++"
 
   # libiconv
   export CFLAGS="$CFLAGS -I$SYSROOT_PREFIX/usr/include/iconv"
@@ -43,29 +43,53 @@ configure_target() {
   export CXXFLAGS="$CFLAGS"
   export CPPFLAGS="$CFLAGS"
 
-  PKG_CONFIGURE_OPTS_TARGET="--disable-all \
-                             --enable-cli \
+  PKG_CONFIGURE_OPTS_TARGET="--enable-cli \
                              --enable-cgi \
+                             --with-config-file-path=/storage/.config/php \
+                             --enable-opcache=no \
                              --without-pear \
                              --localstatedir=/var \
                              --enable-sockets \
                              --enable-session \
                              --enable-posix \
                              --enable-mbstring \
+                             --enable-dom \
+                             --enable-ctype \
+                             --enable-zip \
+                             --enable-ftp \
                              --enable-json \
                              --with-openssl-dir=$SYSROOT_PREFIX/usr \
+                             --enable-libxml \
+                             --enable-xml \
+                             --enable-xmlreader \
+                             --enable-xmlwriter \
+                             --enable-simplexml \
+                             --enable-fileinfo \
+                             --with-libxml-dir=$SYSROOT_PREFIX/usr \
                              --with-curl=$SYSROOT_PREFIX/usr \
                              --with-openssl=$SYSROOT_PREFIX/usr \
                              --with-zlib=$SYSROOT_PREFIX/usr \
                              --with-bz2=$SYSROOT_PREFIX/usr \
                              --with-iconv \
-                             --without-gettext \
+                             --with-gettext \
                              --without-gmp \
                              --enable-pcntl \
                              --disable-sysvmsg \
                              --disable-sysvsem \
                              --disable-sysvshm \
-                             --with-pcre-regex"
+                             --enable-filter \
+                             --enable-calendar \
+                             --with-pcre-regex \
+                             --with-sqlite3=$SYSROOT_PREFIX/usr \
+                             --with-mysql=$SYSROOT_PREFIX/usr \
+                             --with-mysql-sock=/tmp/mysql.sock \
+                             --with-gd \
+                             --enable-gd-native-ttf \
+                             --enable-gd-jis-conv \
+                             --enable-exif \
+                             --with-jpeg-dir=$SYSROOT_PREFIX/usr \
+                             --with-freetype-dir=$SYSROOT_PREFIX/usr \
+                             --with-png-dir=$SYSROOT_PREFIX/usr"
 
   ac_cv_func_strcasestr=yes \
   $PKG_CONFIGURE_SCRIPT $TARGET_CONFIGURE_OPTS $PKG_CONFIGURE_OPTS_TARGET
@@ -77,4 +101,6 @@ makeinstall_target() {
   rm -f $INSTALL/usr/bin/phpize
   rm -fr $INSTALL/usr/lib
   rm -fr $INSTALL/usr/php
+  mkdir -p $INSTALL/usr/config/php
+    cp php.ini-production $INSTALL/usr/config/php/php.ini
 }
