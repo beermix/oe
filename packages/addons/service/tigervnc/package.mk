@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="tigervnc"
-PKG_VERSION="1.7.1"
+PKG_VERSION="v1.7.1"
 PKG_REV="101"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPLv2"
 PKG_SITE="http://www.tigervnc.org"
-PKG_URL="https://github.com/TigerVNC/tigervnc/archive/v$PKG_VERSION.tar.gz"
+PKG_GIT_URL="https://github.com/TigerVNC/tigervnc"
 PKG_DEPENDS_TARGET="toolchain cmake:host libX11 libXext libXtst zlib libjpeg-turbo"
 PKG_SECTION="service"
 PKG_SHORTDESC="$PKG_ADDON_NAME server"
