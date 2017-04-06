@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="6-20170330"
+PKG_VERSION="7-20170402"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -60,14 +60,13 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libcilkrts \
                            --with-linker-hash-style=gnu \
                            --enable-gnu-indirect-function \
-                           --enable-poison-system-directories \
                            --disable-libsanitizer \
-                           --with-arch=ivybridge \
                            --with-ppl=no \
                            --with-cloog=no \
                            --enable-checking=release \
                            --enable-cheaders=c_global \
-                           --with-system-zlib"
+                           --with-system-zlib \
+                           --with-tune=generic"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
