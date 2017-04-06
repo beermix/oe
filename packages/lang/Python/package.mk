@@ -24,7 +24,7 @@ PKG_LICENSE="OSS"
 PKG_SITE="http://www.python.org/"
 PKG_URL="http://www.python.org/ftp/python/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="zlib:host bzip2:host gdbm:host libffi:host"
-PKG_DEPENDS_TARGET="toolchain sqlite expat zlib bzip2 pcre openssl libffi readline gdbm"
+PKG_DEPENDS_TARGET="toolchain Python:host sqlite expat zlib bzip2 pcre openssl libffi readline gdbm"
 PKG_PRIORITY="optional"
 PKG_SECTION="lang"
 PKG_SHORTDESC="python: The Python programming language"
@@ -33,7 +33,6 @@ PKG_LONGDESC="Python is an interpreted object-oriented programming language, and
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PY_DISABLED_MODULES=""
 
 PKG_CONFIGURE_OPTS_HOST="--cache-file=config.cache \
                          --without-cxx-main \
@@ -55,19 +54,17 @@ post_patch() {
 }
 
 make_host() {
-  make PYTHON_MODULES_INCLUDE="$HOST_INCDIR" \
-       PYTHON_MODULES_LIB="$HOST_LIBDIR" \
-       PYTHON_DISABLE_MODULES="$PY_DISABLED_MODULES" -j1
+  make -j1 PYTHON_MODULES_INCLUDE="$HOST_INCDIR" \
+       PYTHON_MODULES_LIB="$HOST_LIBDIR"
 
   # python distutils per default adds -L$LIBDIR when linking binary extensions
     sed -e "s|^ 'LIBDIR':.*| 'LIBDIR': '/usr/lib',|g" -i $(cat pybuilddir.txt)/_sysconfigdata.py
 }
 
 makeinstall_host() {
-  make PYTHON_MODULES_INCLUDE="$HOST_INCDIR" \
+  make -j1 PYTHON_MODULES_INCLUDE="$HOST_INCDIR" \
        PYTHON_MODULES_LIB="$HOST_LIBDIR" \
-       PYTHON_DISABLE_MODULES="$PY_DISABLED_MODULES" \
-       install -j1
+       install
 }
 
 pre_configure_target() {
@@ -78,24 +75,21 @@ pre_configure_target() {
 }
 
 make_target() {
-  make  CC="$CC" LDFLAGS="$TARGET_LDFLAGS -L." \
-        PYTHON_DISABLE_MODULES="$PY_DISABLED_MODULES" \
+  make -j1  CC="$CC" LDFLAGS="$TARGET_LDFLAGS -L." \
         PYTHON_MODULES_INCLUDE="$TARGET_INCDIR" \
-        PYTHON_MODULES_LIB="$TARGET_LIBDIR" -j1
+        PYTHON_MODULES_LIB="$TARGET_LIBDIR"
 }
 
 makeinstall_target() {
-  make  CC="$CC" DESTDIR=$SYSROOT_PREFIX \
-        PYTHON_DISABLE_MODULES="$PY_DISABLED_MODULES" \
+  make -j1  CC="$CC" DESTDIR=$SYSROOT_PREFIX \
         PYTHON_MODULES_INCLUDE="$TARGET_INCDIR" \
         PYTHON_MODULES_LIB="$TARGET_LIBDIR" \
-        install -j1
+        install
 
-  make  CC="$CC" DESTDIR=$INSTALL \
-        PYTHON_DISABLE_MODULES="$PY_DISABLED_MODULES" \
+  make -j1  CC="$CC" DESTDIR=$INSTALL \
         PYTHON_MODULES_INCLUDE="$TARGET_INCDIR" \
         PYTHON_MODULES_LIB="$TARGET_LIBDIR" \
-        install -j1
+        install
 }
 
 post_makeinstall_target() {
