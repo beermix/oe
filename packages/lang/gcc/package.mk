@@ -49,10 +49,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-mudflap \
                            --disable-libmudflap \
                            --disable-nls \
-                           --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
-                           --without-ppl \
-                           --without-cloog \
                            --disable-libada \
                            --disable-libmudflap \
                            --disable-libmpx \
@@ -61,8 +58,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libquadmath-support \
                            --disable-libgomp \
                            --disable-libcilkrts \
-                           --enable-gnu-unique-object \
-                           --enable-linker-build-id \
                            --with-linker-hash-style=gnu \
                            --enable-gnu-indirect-function \
                            --enable-poison-system-directories \
@@ -72,8 +67,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-cloog=no \
                            --enable-checking=release \
                            --enable-cheaders=c_global \
-                           --with-system-zlib \
-                           --disable-biarch"
+                           --with-system-zlib"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
@@ -106,7 +100,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          $GCC_OPTS"
 
 pre_configure_host() {
-  #export CXXFLAGS="$CXXFLAGS -std=gnu++98"
+  export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
 }
 
