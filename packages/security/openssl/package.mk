@@ -21,7 +21,7 @@ PKG_VERSION="a91bfe2"
 PKG_GIT_URL="https://github.com/openssl/openssl"
 PKG_GIT_BRANCH="OpenSSL_1_0_2-stable"
 PKG_DEPENDS_HOST="ccache:host yasm:host"
-PKG_DEPENDS_TARGET="toolchain"
+PKG_DEPENDS_TARGET="toolchain gmp"
 PKG_SECTION="security"
 PKG_SHORTDESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"
 PKG_LONGDESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"
@@ -36,7 +36,7 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            shared \
                            threads \
                            no-ec2m \
-                           no-gmp \
+                           gmp \
                            no-libunbound \
                            no-sctp \
                            no-ssl-trace \
@@ -54,7 +54,7 @@ PKG_CONFIGURE_OPTS_SHARED_HOST="--openssldir=/etc/ssl \
                            shared \
                            threads \
                            no-ec2m \
-                           no-gmp \
+                           gmp \
                            no-jpake \
                            no-krb5 \
                            no-libunbound \
