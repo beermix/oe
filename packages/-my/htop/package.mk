@@ -1,5 +1,5 @@
 PKG_NAME="htop"
-PKG_VERSION="fa30938"
+PKG_VERSION="5570748"
 PKG_GIT_URL="https://github.com/hishamhm/htop"
 PKG_DEPENDS_TARGET="toolchain hwloc ncurses"
 PKG_SECTION="debug/tools"
