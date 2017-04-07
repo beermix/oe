@@ -49,6 +49,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-lto \
                          --disable-shared \
                          --disable-nls \
+                         --disable-gdb \
                          --with-system-zlib \
                          --enable-poison-system-directories"
 
