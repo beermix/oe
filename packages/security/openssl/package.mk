@@ -22,7 +22,7 @@ PKG_SITE="https://github.com/openssl/openssl/tree/OpenSSL_1_0_2-stable"
 PKG_GIT_URL="https://github.com/openssl/openssl"
 PKG_GIT_BRANCH="OpenSSL_1_0_2-stable"
 PKG_DEPENDS_HOST="ccache:host yasm:host"
-PKG_DEPENDS_TARGET="toolchain gmp"
+PKG_DEPENDS_TARGET="toolchain zlib pcre gmp"
 PKG_SECTION="security"
 PKG_SHORTDESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"
 PKG_LONGDESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"
@@ -36,12 +36,8 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            --libdir=lib \
                            shared \
                            threads \
-                           no-ec2m \
-                           no-libunbound \
-                           no-sctp \
-                           no-ssl-trace \
                            no-zlib \
-                           no-zlib-dynamic \
+                           zlib-dynamic \
                            no-unit-test \
                            enable-camellia \
                            enable-seed \
@@ -54,12 +50,12 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            enable-ecdsa \
                            no-rc5 \
                            no-ssl3-method \
+                           no-heartbeats \
                            enable-ec_nistp_64_gcc_128"
 
 pre_configure_host() {
   mkdir -p $ROOT/$PKG_BUILD/.$HOST_NAME
   cp -a $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$HOST_NAME/
-  export CCACHE_DISABLE=1
 }
 
 configure_host() {
@@ -75,7 +71,6 @@ makeinstall_host() {
 pre_configure_target() {
   mkdir -p $ROOT/$PKG_BUILD/.$TARGET_NAME
   cp -a $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$TARGET_NAME/
-  export CCACHE_DISABLE=1
 }
 
 configure_target() {
