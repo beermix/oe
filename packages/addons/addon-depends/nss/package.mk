@@ -64,8 +64,6 @@ make_target() {
   	USE_SYSTEM_ZLIB=1 ZLIB_LIBS=-lz \
   	NSS_USE_SYSTEM_SQLITE=1 \
   	NSS_ENABLE_WERROR=0 \
-  	FREEBL_NO_DEPEND=0 \
-  	
   	XCFLAGS="$CFLAGS" \
   	OS_TEST=$TARGET_ARCH \
   	NSS_TESTS="dummy" \
