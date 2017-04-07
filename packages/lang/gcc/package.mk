@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="7-20170402"
+PKG_VERSION="6-20170406"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -39,29 +39,25 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-gmp=$ROOT/$TOOLCHAIN \
                            --with-mpfr=$ROOT/$TOOLCHAIN \
                            --with-mpc=$ROOT/$TOOLCHAIN \
-                           --disable-multilib \
                            --with-gnu-as \
                            --with-gnu-ld \
                            --enable-plugin \
                            --enable-lto \
                            --enable-gold \
                            --enable-ld=default \
-                           --disable-mudflap \
-                           --disable-libmudflap \
+                           --disable-multilib \
                            --disable-nls \
+                           --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
+                           --without-ppl \
+                           --without-cloog \
                            --disable-libada \
                            --disable-libmudflap \
                            --disable-libmpx \
                            --disable-libatomic \
                            --disable-libgomp \
                            --with-linker-hash-style=gnu \
-                           --enable-gnu-indirect-function \
                            --disable-libsanitizer \
-                           --with-ppl=no \
-                           --with-cloog=no \
-                           --enable-checking=release \
-                           --enable-cheaders=c_global \
                            --with-system-zlib \
                            --with-tune=generic"
 
@@ -74,17 +70,17 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-libvtv \
                               --disable-libquadmath \
                               --disable-shared \
+                              --enable-cloog-backend=isl \
                               --disable-threads \
                               --without-headers \
                               --with-newlib \
-                              --disable-lto \
-                              --disable-plugin \
-                              --enable-decimal-float=no \
+                              --disable-decimal-float \
                               $GCC_OPTS"
 
 PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-languages=c,c++ \
                          --enable-__cxa_atexit \
+                         --enable-decimal-float \
                          --enable-libssp \
                          --enable-libitm \
                          --enable-libcilkrts \
@@ -96,10 +92,9 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-c99 \
                          --enable-long-long \
                          --enable-threads=posix \
-                         --enable-decimal-float=yes \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time \
-                         --enable-clocale=generic \
+                         --enable-clocale=gnu \
                          $GCC_OPTS"
 
 pre_configure_host() {
