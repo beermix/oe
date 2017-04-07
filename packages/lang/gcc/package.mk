@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://gcc.gnu.org/"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host"
+PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host"
 PKG_DEPENDS_TARGET="gcc:host"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
 PKG_PRIORITY="optional"
@@ -39,6 +39,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-gmp=$ROOT/$TOOLCHAIN \
                            --with-mpfr=$ROOT/$TOOLCHAIN \
                            --with-mpc=$ROOT/$TOOLCHAIN \
+                           --with-isl=$ROOT/$TOOLCHAIN \
                            --with-gnu-as \
                            --with-gnu-ld \
                            --enable-plugin \
@@ -55,26 +56,27 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libmudflap \
                            --disable-libmpx \
                            --disable-libatomic \
+                           --disable-libitm \
+                           --disable-libquadmath \
+                           --disable-libquadmath-support \
                            --disable-libgomp \
+                           --disable-libcilkrts \
+                           --enable-gnu-unique-object \
+                           --enable-linker-build-id \
                            --with-linker-hash-style=gnu \
                            --disable-libsanitizer \
                            --with-system-zlib \
-                           --with-tune=generic \
-                           --enable-libitm \
-                           --enable-libcilkrts \
-                           --enable-libvtv \
-                           --enable-libquadmath"
+                           --enable-gnu-indirect-function \
+                           --enable-poison-system-directories \
+                           --with-arch=ivybridge \
+                           --disable-biarch"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
                               --disable-libssp \
-                              --disable-libitm \
-                              --disable-libcilkrts \
-                              --disable-libvtv \
-                              --disable-libquadmath \
-                              --disable-shared \
                               --enable-cloog-backend=isl \
+                              --disable-shared \
                               --disable-threads \
                               --without-headers \
                               --with-newlib \
@@ -95,10 +97,6 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time \
                          --enable-clocale=gnu \
-                         --enable-gnu-unique-object \
-                         --enable-linker-build-id \
-                         --with-linker-hash-style=gnu \
-                         --enable-gnu-indirect-function \
                          $GCC_OPTS"
 
 pre_configure_host() {
