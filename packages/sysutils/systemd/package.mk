@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="systemd"
-PKG_VERSION="232D"
+PKG_VERSION="3b07d03"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/systemd"
-PKG_URL="https://dl.dropboxusercontent.com/s/d9xs3v6stay3sc4/systemd-232D.tar.xz"
+PKG_GIT_URL="https://github.com/systemd/systemd"
 PKG_DEPENDS_TARGET="toolchain gperf:host libcap util-linux entropy"
 PKG_SECTION="system"
 PKG_SHORTDESC="systemd: a system and session manager"
