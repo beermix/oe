@@ -69,7 +69,7 @@
 # please add all configfiles which should be included without the suffix and prefix
 # except the default-*.config and the ones included in packages/linux/package.mk
 # Space separated list is supported,
-  KERNEL_EXTRA_CONFIG+=" filesystem"
+  KERNEL_EXTRA_CONFIG+=" filesystem mmc hid-drivers remote touchscreen joystick audio"
 # KERNEL_EXTRA_CONFIG+=" lan-phy"
 # KERNEL_EXTRA_CONFIG+=" sound-usb usb-serial usb-gadget"
 
