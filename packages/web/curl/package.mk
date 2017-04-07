@@ -47,7 +47,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            --enable-largefile \
                            --enable-http \
                            --enable-ftp \
-                           --disable-file \
                            --disable-ldap \
                            --disable-ldaps \
                            --enable-rtsp \

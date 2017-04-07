@@ -18,6 +18,7 @@
 
 PKG_NAME="openssl"
 PKG_VERSION="a91bfe2"
+PKG_SITE="https://github.com/openssl/openssl/tree/OpenSSL_1_0_2-stable"
 PKG_GIT_URL="https://github.com/openssl/openssl"
 PKG_GIT_BRANCH="OpenSSL_1_0_2-stable"
 PKG_DEPENDS_HOST="ccache:host yasm:host"
@@ -36,16 +37,12 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            shared \
                            threads \
                            no-ec2m \
-                           no-gmp \
                            no-libunbound \
                            no-sctp \
                            no-ssl-trace \
                            no-zlib \
                            no-zlib-dynamic \
-                           no-err \
-                           no-store \
                            no-unit-test \
-                           no-heartbeats \
                            enable-camellia \
                            enable-seed \
                            enable-rfc3779 \
@@ -56,7 +53,7 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            enable-ecdh \
                            enable-ecdsa \
                            no-rc5 \
-                           no-ssl3-method
+                           no-ssl3-method \
                            enable-ec_nistp_64_gcc_128"
 
 pre_configure_host() {
