@@ -29,14 +29,14 @@ PKG_LONGDESC="The Open Source toolkit for Secure Sockets Layer and Transport Lay
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-CCACHE_DISABLE=1
+
 
 PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            --libdir=lib \
                            shared \
                            threads \
                            no-ec2m \
-                           gmp \
+                           no-gmp \
                            no-libunbound \
                            no-sctp \
                            no-ssl-trace \
@@ -49,34 +49,10 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            no-heartbeats \
                            enable-ec_nistp_64_gcc_128"
 
-PKG_CONFIGURE_OPTS_SHARED_HOST="--openssldir=/etc/ssl \
-                           --libdir=lib \
-                           shared \
-                           threads \
-                           no-ec2m \
-                           gmp \
-                           no-jpake \
-                           no-krb5 \
-                           no-libunbound \
-                           no-rc5 \
-                           no-rfc3779
-                           no-sctp \
-                           no-ssl-trace \
-                           no-ssl2 \
-                           no-ssl3 \
-                           no-store \
-                           no-unit-test \
-                           no-weak-ssl-ciphers \
-                           enable-montasm \
-                           enable-md2 \
-                           no-zlib \
-                           no-zlib-dynamic \
-                           no-static-engine \
-                           enable-ec_nistp_64_gcc_128"
-
 pre_configure_host() {
   mkdir -p $ROOT/$PKG_BUILD/.$HOST_NAME
   cp -a $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$HOST_NAME/
+  export CCACHE_DISABLE=1
 }
 
 configure_host() {
@@ -92,6 +68,7 @@ makeinstall_host() {
 pre_configure_target() {
   mkdir -p $ROOT/$PKG_BUILD/.$TARGET_NAME
   cp -a $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$TARGET_NAME/
+  export CCACHE_DISABLE=1
 }
 
 configure_target() {
