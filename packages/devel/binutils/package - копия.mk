@@ -40,6 +40,10 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-gold \
                          --enable-ld=default \
                          --enable-lto \
+                         --with-pic \
+                         --disable-nls \
+                         --disable-sim \
+                         --enable-static \
                          --disable-gdb \
                          --enable-poison-system-directories"
 

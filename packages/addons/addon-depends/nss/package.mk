@@ -19,10 +19,9 @@
 ################################################################################
 
 PKG_NAME="nss"
-PKG_VERSION="3.30"
+PKG_VERSION="3.30.1"
 PKG_SITE="http://ftp.mozilla.org/"
-PKG_URL="https://ftp.mozilla.org/pub/security/nss/releases/NSS_3_30_RTM/src/nss-3.30-with-nspr-4.13.1.tar.gz"
-#PKG_URL="https://ftp.mozilla.org/pub/security/nss/releases/NSS_3_30_1_RTM/src/nss-3.30.1-with-nspr-4.14.tar.gz"
+PKG_URL="https://ftp.mozilla.org/pub/security/nss/releases/NSS_3_30_1_RTM/src/nss-3.30.1-with-nspr-4.14.tar.gz"
 PKG_DEPENDS_TARGET="toolchain nss:host nspr zlib"
 PKG_SECTION="security"
 PKG_SHORTDESC="The Network Security Services (NSS) package is a set of libraries designed to support cross-platform development of security-enabled client and server applications"
@@ -56,16 +55,6 @@ make_target() {
  # strip_lto
   #strip_gold
   
-  unset CFLAGS
-  unset CXXFLAGS
-  export BUILD_OPT=1
-  export PKG_CONFIG_ALLOW_SYSTEM_LIBS=1
-  export PKG_CONFIG_ALLOW_SYSTEM_CFLAGS=1
-  export FREEBL_NO_DEPEND=0
-  export NSS_USE_SYSTEM_SQLITE=1
-  export NSS_ENABLE_WERROR=0
-  export NSPR_INCLUDE_DIR=`pkg-config --cflags-only-I nspr | sed 's/-I//'`
-  export NSPR_LIB_DIR=`pkg-config --libs-only-L nspr | sed 's/-L.//'`
 
   [ "$TARGET_ARCH" = "x86_64" ] && TARGET_USE_64="USE_64=1"
 
@@ -73,7 +62,10 @@ make_target() {
   	NSPR_INCLUDE_DIR=$SYSROOT_PREFIX/usr/include/nspr \
   	NSS_USE_STATIC_LIBS=1 \
   	USE_SYSTEM_ZLIB=1 ZLIB_LIBS=-lz \
-  	S_USE_SYSTEM_SQLITE=1 \
+  	NSS_USE_SYSTEM_SQLITE=1 \
+  	NSS_ENABLE_WERROR=0 \
+  	FREEBL_NO_DEPEND=0 \
+  	
   	XCFLAGS="$CFLAGS" \
   	OS_TEST=$TARGET_ARCH \
   	NSS_TESTS="dummy" \

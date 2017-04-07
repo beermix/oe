@@ -4,7 +4,7 @@
 ################################################################################
 
 PKG_NAME="nettle"
-PKG_VERSION="3.3"
+PKG_VERSION="3.1.1"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -17,12 +17,7 @@ PKG_LONGDESC="Nettle is a cryptographic library that is designed to fit easily i
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static \
-			      --disable-shared \
-			      --disable-openssl \
-			      --disable-documentation \
-			      --disable-mini-gmp \
-			      --disable-assembler"
+PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --disable-openssl --disable-documentation --enable-mini-gmp"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
