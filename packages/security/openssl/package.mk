@@ -43,7 +43,6 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            no-zlib \
                            no-zlib-dynamic \
                            no-err \
-                           no-ssl3-method \
                            no-store \
                            no-unit-test \
                            no-heartbeats \
@@ -69,6 +68,7 @@ pre_configure_target() {
   mkdir -p $ROOT/$PKG_BUILD/.$TARGET_NAME
   cp -a $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$TARGET_NAME/
   export CCACHE_DISABLE=1
+  strip_lto
 }
 
 configure_target() {

@@ -33,8 +33,6 @@ PKG_LONGDESC="The eventlircd daemon provides four functions for LIRC devices"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-MAKEFLAGS=-j1
-
 PKG_CONFIGURE_OPTS_TARGET="--with-udev-dir=/usr/lib/udev \
                            --with-lircd-socket=/run/lirc/lircd"
 
