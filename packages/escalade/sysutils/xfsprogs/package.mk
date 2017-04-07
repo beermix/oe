@@ -17,22 +17,29 @@
 ################################################################################
 
 PKG_NAME="xfsprogs"
-PKG_VERSION="v4.10.0"
+PKG_VERSION="4.10.0"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://www.xfs.org"
 PKG_GIT_URL="git://git.kernel.org/pub/scm/fs/xfs/xfsprogs-dev.git"
+PKG_SOURCE_DIR="xfsprogs-dev-$PKG_VERSION"
 PKG_DEPENDS_TARGET="toolchain util-linux readline"
-PKG_DEPENDS_INIT="readline xfsprogs"
+PKG_DEPENDS_INIT="xfsprogs"
 PKG_SECTION="tools"
 PKG_SHORTDESC="xfsprogs: Utilities for use with the xfs filesystem"
 PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-lib64=no \
-			      --enable-gettext=no \
-			      --enable-static \
-			      --disable-shared \
-			      --enable-readline=yes \
-			      --disable-option-checking"
+PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
+			   --exec-prefix=/ \
+			   --enable-shared=no \
+			   --with-gnu-ld \
+			   --enable-readline=yes"
+
+pre_configure_target() {
+  make configure
+}
 
 configure_init() {
   : # reuse target
@@ -43,8 +50,8 @@ make_init() {
 }
 
 makeinstall_init() {
-  mkdir -p $INSTALL/sbin
-  cp ../.install_pkg/sbin/xfs_repair $INSTALL/sbin
-  cp ../.install_pkg/sbin/fsck.xfs $INSTALL/sbin
-  cp ../.install_pkg/sbin/mkfs.xfs $INSTALL/sbin
+  mkdir -p $INSTALL/usr/sbin
+  cp ../.install_pkg/usr/sbin/xfs_repair $INSTALL/usr/sbin
+  cp ../.install_pkg/usr/sbin/fsck.xfs $INSTALL/usr/sbin
+  cp ../.install_pkg/usr/sbin/mkfs.xfs $INSTALL/usr/sbin
 }
