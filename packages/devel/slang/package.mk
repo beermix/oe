@@ -17,13 +17,14 @@
 ################################################################################
 
 PKG_NAME="slang"
-PKG_VERSION="2.2.4"
+PKG_VERSION="2.3.1"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://www.jedsoft.org/slang/"
-PKG_URL="ftp://ftp.fu-berlin.de/pub/unix/misc/slang/v2.2/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain pcre libpng"
+#PKG_URL="ftp://ftp.fu-berlin.de/pub/unix/misc/slang/v2.2/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_URL="https://dl.dropboxusercontent.com/s/s2kmfzscggknuyk/slang-2.3.1.tar.xz"
+PKG_DEPENDS_TARGET="toolchain pcre"
 PKG_PRIORITY="optional"
 PKG_SECTION="devel"
 PKG_SHORTDESC="slang: library for the S-Lang extension language"
@@ -37,7 +38,7 @@ MAKEFLAGS="-j1"
 PKG_CONFIGURE_OPTS_TARGET="--without-iconv \
                            --without-onig \
                            --with-pcre \
-                           --with-png \
+                           --without-png \
                            --without-z \
                            --without-x"
 

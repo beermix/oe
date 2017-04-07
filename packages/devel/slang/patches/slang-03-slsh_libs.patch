@@ -1,0 +1,13 @@
+Index: slang2-2.3.1/slsh/Makefile.in
+===================================================================
+--- slang2-2.3.1.orig/slsh/Makefile.in
++++ slang2-2.3.1/slsh/Makefile.in
+@@ -21,7 +21,7 @@ SLANG_SRCINC	= -I@SRCDIR@
+ SLANG_ELFLIB	= -L@ELFDIR@#  for dynamically linked
+ SLANG_OBJLIB	= -L@OBJDIR@#  for statically linked
+ #---------------------------------------------------------------------------
+-DYNAMIC_LIBS	= @TERMCAP@ @DYNAMIC_LINK_LIB@ @LIBS@ @M_LIB@
++DYNAMIC_LIBS	= @TERMCAP@  @LIBS@ 
+ STATIC_LIBS	= @TERMCAP@ @LIBS@ @M_LIB@
+ RPATH		= @RPATH@
+ #----------------------------------------------------------------------------
