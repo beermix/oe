@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="xfsprogs"
-PKG_VERSION="4.10.0"
+PKG_VERSION="4.10.0M"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.xfs.org"
-PKG_GIT_URL="git://git.kernel.org/pub/scm/fs/xfs/xfsprogs-dev.git"
-PKG_SOURCE_DIR="xfsprogs-dev-$PKG_VERSION"
+PKG_URL="https://dl.dropboxusercontent.com/s/0wba9gelp2jseji/xfsprogs-4.10.0M.tar.xz"
+#PKG_SOURCE_DIR="xfsprogs-dev-$PKG_VERSION"
 PKG_DEPENDS_TARGET="toolchain util-linux readline"
 PKG_DEPENDS_INIT="xfsprogs"
 PKG_SECTION="tools"
@@ -35,7 +35,7 @@ PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
 			   --exec-prefix=/ \
 			   --enable-shared=no \
 			   --with-gnu-ld \
-			   --enable-readline=yes"
+			   --enable-readline=no"
 
 pre_configure_target() {
   make configure
