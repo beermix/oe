@@ -1,0 +1,15 @@
+diff --git a/Makefile.am b/Makefile.am
+old mode 100644
+new mode 100755
+index 98cb2f1..3cce638
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -11,7 +11,7 @@ if TESTS
+ TESTS_SUBDIR = tests
+ endif
+ 
+-SUBDIRS = src examples $(DOCS_SUBDIR) $(TESTS_SUBDIR)
++SUBDIRS = src
+ 
+ test:
+ if TEST_SCRIPTS
