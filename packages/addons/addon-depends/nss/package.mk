@@ -49,12 +49,6 @@ post_makeinstall_host() {
 
 make_target() {
   cd $ROOT/$PKG_BUILD/nss
-  
-  #export LDFLAGS="-ldl -lpthread -lsqlite3"
-  #sed -e 's/\$(MKSHLIB) -o/\$(MKSHLIB) \$(LDFLAGS) -o/' -i $ROOT/$PKG_BUILD/nss/coreconf/rules.mk
- # strip_lto
-  #strip_gold
-  
 
   [ "$TARGET_ARCH" = "x86_64" ] && TARGET_USE_64="USE_64=1"
 
@@ -64,6 +58,7 @@ make_target() {
   	USE_SYSTEM_ZLIB=1 ZLIB_LIBS=-lz \
   	NSS_USE_SYSTEM_SQLITE=1 \
   	NSS_ENABLE_WERROR=0 \
+  	FREEBL_NO_DEPEND=0 \
   	XCFLAGS="$CFLAGS" \
   	OS_TEST=$TARGET_ARCH \
   	NSS_TESTS="dummy" \
@@ -76,7 +71,7 @@ make_target() {
 makeinstall_target() {
   cd $ROOT/$PKG_BUILD
   $STRIP dist/Linux*/lib/*.so
-  cp -L dist/Linux*/lib/*.so $SYSROOT_PREFIX/usr/lib
+  cp -L dist/Linux*/lib/*.a $SYSROOT_PREFIX/usr/lib
   cp -L dist/Linux*/lib/libcrmf.a $SYSROOT_PREFIX/usr/lib
   mkdir -p $SYSROOT_PREFIX/usr/include/nss
   cp -RL dist/{public,private}/nss/* $SYSROOT_PREFIX/usr/include/nss

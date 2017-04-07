@@ -10,16 +10,14 @@ ExecStartPre=/storage/.kodi/addons/service.system.docker/bin/docker-config
 EnvironmentFile=-/storage/.kodi/userdata/addon_data/service.system.docker/config/docker.conf
 
 
-ExecStart=/usr/bin/dockerd --storage-driver=overlay2 --storage-opt overlay2.override_kernel_check=1 \            3 ↵
-                                                            --graph=/var/media/50G/.docker-fs \
-                                                            --group=root \
-                                                            --exec-opt native.cgroupdriver=systemd \
-                                                            --log-driver=journald \
-                                                            --host=tcp://0.0.0.0:2375 \
-                                                            --host=tcp:///var/run/docker.sock
-                                                            
-                                                            
-                                                            
+ExecStart=/usr/bin/dockerd --storage-driver=overlay2 \
+			      --storage-opt overlay2.override_kernel_check=1 \
+			      --graph=/var/media/50G/.docker-fs \
+			      --group=root \
+			      --exec-opt native.cgroupdriver=systemd \
+			      --log-driver=journald \
+			      --host=tcp://0.0.0.0:2375 \
+			      --host=tcp:///var/run/docker.sock
 
 ExecReload=/bin/kill -s HUP $MAINPID
 TasksMax=8192
