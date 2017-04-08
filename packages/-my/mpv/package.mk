@@ -6,7 +6,6 @@ PKG_DEPENDS_TARGET="toolchain ffmpeg libass lua"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
@@ -24,7 +23,7 @@ configure_target() {
   		    --enable-rsound \
   		    --enable-xrandr \
   		    --enable-xss \
-  		    --enable-zsh-comp \
+  		    --disable-zsh-comp
   		    
 ./waf -v build
   make check
