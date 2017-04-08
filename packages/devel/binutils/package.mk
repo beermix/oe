@@ -34,17 +34,15 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --disable-werror \
                          --disable-multilib \
                          --disable-libada \
-                         --disable-libssp \
+                         --enable-libssp \
                          --enable-version-specific-runtime-libs \
                          --enable-plugins \
                          --enable-gold \
                          --enable-ld=default \
                          --enable-lto \
                          --with-pic \
-                         --disable-nls \
-                         --disable-sim \
                          --enable-static \
-                         --disable-gdb \
+                         --disable-shared \
                          --enable-poison-system-directories"
 
 makeinstall_host() {

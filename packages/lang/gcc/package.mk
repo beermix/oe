@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://gcc.gnu.org/"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host"
+PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host"
 PKG_DEPENDS_TARGET="gcc:host"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
 PKG_PRIORITY="optional"
@@ -39,7 +39,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-gmp=$ROOT/$TOOLCHAIN \
                            --with-mpfr=$ROOT/$TOOLCHAIN \
                            --with-mpc=$ROOT/$TOOLCHAIN \
-                           --with-isl=$ROOT/$TOOLCHAIN \
                            --with-gnu-as \
                            --with-gnu-ld \
                            --enable-plugin \
@@ -68,8 +67,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-system-zlib \
                            --enable-gnu-indirect-function \
                            --enable-poison-system-directories \
-                           --with-arch=ivybridge \
-                           --disable-biarch"
+                           --with-tune=generic"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
@@ -98,9 +96,6 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-libstdcxx-time \
                          --enable-clocale=gnu \
                          --enable-gnu-unique-object \
-                         --enable-linker-build-id \
-                         --with-linker-hash-style=gnu \
-                         --enable-gnu-indirect-function \
                          $GCC_OPTS"
 
 pre_configure_host() {
