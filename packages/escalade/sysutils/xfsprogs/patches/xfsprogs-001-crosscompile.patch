@@ -13,7 +13,7 @@
  crc32table.h: gen_crc32table.c
  	@echo "    [CC]     gen_crc32table"
 -	$(Q) $(BUILD_CC) $(BUILD_CFLAGS) -o gen_crc32table $<
-+	$(Q) $(HOST_CC) -o gen_crc32table $<
++	$(Q) $(HOST_CC) $(HOST_CFLAGS) -o gen_crc32table $<
  	@echo "    [GENERATE] $@"
  	$(Q) ./gen_crc32table > crc32table.h
  

@@ -37,7 +37,7 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            shared \
                            threads \
                            no-zlib \
-                           zlib-dynamic \
+                           no-zlib-dynamic \
                            no-unit-test \
                            enable-camellia \
                            enable-seed \
