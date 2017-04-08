@@ -29,7 +29,7 @@ PKG_AUTORECONF="no"
 
 
 make_target() {
-  make -j1 HOSTCC="$HOST_CC" CFLAGS="$CFLAGS" PREFIX=/usr all-static
+  make -j1 HOSTCC="$HOST_CC" CFLAGS="$CFLAGS -D_DEFAULT_SOURCE" PREFIX=/usr all-static
 }
 
 makeinstall_target() {
