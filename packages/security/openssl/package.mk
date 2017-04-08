@@ -39,18 +39,8 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            no-zlib \
                            no-zlib-dynamic \
                            no-unit-test \
-                           enable-camellia \
-                           enable-seed \
-                           enable-rfc3779 \
-                           enable-cms \
-                           enable-mdc2 \
-                           enable-md2 \
-                           enable-ec \
-                           enable-ecdh \
-                           enable-ecdsa \
                            no-rc5 \
                            no-ssl3-method \
-                           no-heartbeats \
                            enable-ec_nistp_64_gcc_128"
 
 pre_configure_host() {
