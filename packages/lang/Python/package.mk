@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.python.org/"
 PKG_URL="http://www.python.org/ftp/python/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_HOST="zlib:host"
+PKG_DEPENDS_HOST="zlib:host bzip2:hostt"
 PKG_DEPENDS_TARGET="toolchain sqlite expat zlib bzip2 openssl libffi Python:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="lang"
@@ -33,7 +33,7 @@ PKG_LONGDESC="Python is an interpreted object-oriented programming language, and
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PY_DISABLED_MODULES="readline _curses _curses_panel _tkinter nis gdbm bsddb ossaudiodev"
+PY_DISABLED_MODULES="_tkinter nis gdbm bsddb ossaudiodev"
 
 PKG_CONFIGURE_OPTS_HOST="--cache-file=config.cache \
                          --without-cxx-main \
@@ -75,16 +75,16 @@ post_patch() {
 make_host() {
   make PYTHON_MODULES_INCLUDE="$HOST_INCDIR" \
        PYTHON_MODULES_LIB="$HOST_LIBDIR" \
-       PYTHON_DISABLE_MODULES="$PY_DISABLED_MODULES"
+       PYTHON_DISABLE_MODULES="readline _curses _curses_panel $PY_DISABLED_MODULES"
 
   # python distutils per default adds -L$LIBDIR when linking binary extensions
     sed -e "s|^ 'LIBDIR':.*| 'LIBDIR': '/usr/lib',|g" -i $(cat pybuilddir.txt)/_sysconfigdata.py
 }
 
 makeinstall_host() {
-  make PYTHON_MODULES_INCLUDE="$HOST_INCDIR" \
+  make -j1 PYTHON_MODULES_INCLUDE="$HOST_INCDIR" \
        PYTHON_MODULES_LIB="$HOST_LIBDIR" \
-       PYTHON_DISABLE_MODULES="$PY_DISABLED_MODULES" \
+       PYTHON_DISABLE_MODULES="readline _curses _curses_panel $PY_DISABLED_MODULES" \
        install
 }
 
@@ -114,7 +114,7 @@ makeinstall_target() {
 }
 
 post_makeinstall_target() {
-  EXCLUDE_DIRS="bsddb curses idlelib lib-tk lib2to3 msilib pydoc_data test unittest"
+  EXCLUDE_DIRS="bsddb idlelib lib-tk lib2to3 msilib pydoc_data test unittest"
   for dir in $EXCLUDE_DIRS; do
     rm -rf $INSTALL/usr/lib/python*/$dir
   done
