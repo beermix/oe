@@ -70,7 +70,7 @@
 # except the default-*.config and the ones included in packages/linux/package.mk
 # Space separated list is supported,
   KERNEL_EXTRA_CONFIG+=" filesystem hid-drivers remote sjoystick audio"
-# KERNEL_EXTRA_CONFIG+=" lan-phy sound-usb "
+# KERNEL_EXTRA_CONFIG+=" lan-phy sound-usb"
   KERNEL_EXTRA_CONFIG+=" usb-serial usb-gadget"
 
 # additional drivers to install:
