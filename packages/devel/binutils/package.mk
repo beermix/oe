@@ -17,9 +17,8 @@
 ################################################################################
 
 PKG_NAME="binutils"
-PKG_VERSION="0edae62"
-PKG_GIT_URL="git://sourceware.org/git/binutils-gdb.git"
-PKG_GIT_BRANCH="binutils-2_28-branch"
+PKG_VERSION="2.28"
+PKG_URL="https://fossies.org/linux/misc/binutils-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="ccache:host bison:host flex:host linux:host"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="binutils: A GNU collection of binary utilities"
@@ -43,14 +42,13 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-lto \
                          --with-pic \
                          --disable-nls \
-                         --disable-sim \
                          --enable-static \
                          --disable-shared \
                          --enable-poison-system-directories"
 
 makeinstall_host() {
   cp -v ../include/libiberty.h $SYSROOT_PREFIX/usr/include
-  make install
+  make -j1 install
 }
 
 pre_configure_host() {
