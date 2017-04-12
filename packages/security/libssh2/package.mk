@@ -1,8 +1,8 @@
 PKG_NAME="libssh2"
-PKG_VERSION="1.8.0"
-PKG_URL="https://www.libssh2.org/download/libssh2-$PKG_VERSION.tar.gz"
-#PKG_VERSION="323aa08"
-#PKG_GIT_URL="https://github.com/libssh2/libssh2"
+#PKG_VERSION="1.8.0"
+#PKG_URL="https://www.libssh2.org/download/libssh2-$PKG_VERSION.tar.gz"
+PKG_VERSION="323aa08"
+PKG_GIT_URL="https://github.com/libssh2/libssh2"
 PKG_DEPENDS_TARGET="toolchain zlib openssl"
 
 #PKG_IS_ADDON="no"
@@ -26,7 +26,7 @@ PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-static \
-			      --without-libz \
+			      --with-libz \
 			      --disable-silent-rules \
 			      --disable-examples-build \
 			      --disable-debug"
