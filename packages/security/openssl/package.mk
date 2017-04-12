@@ -36,6 +36,7 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            --libdir=lib \
                            shared \
                            threads \
+                           no-ec2m \
                            no-jpake \
                            no-krb5 \
                            no-libunbound \
