@@ -43,10 +43,16 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            no-libunbound \
                            no-md2 \
                            no-rc5 \
+                           no-rfc3779
+                           no-sctp \
+                           no-ssl-trace \
                            no-ssl2 \
                            no-ssl3 \
+                           no-store \
+                           no-unit-test \
                            no-weak-ssl-ciphers \
-                           enable-ec_nistp_64_gcc_128"
+                           no-zlib \
+                           no-zlib-dynamic"
 
 pre_configure_host() {
   mkdir -p $ROOT/$PKG_BUILD/.$HOST_NAME
