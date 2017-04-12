@@ -17,14 +17,12 @@
 ################################################################################
 
 PKG_NAME="openssl"
-PKG_VERSION="1.0.2k"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="BSD"
-PKG_SITE="https://www.openssl.org"
-PKG_URL="https://www.openssl.org/source/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_HOST="ccache:host"
-PKG_DEPENDS_TARGET="toolchain gmp"
+PKG_VERSION="71d66c4"
+PKG_SITE="https://github.com/openssl/openssl/tree/OpenSSL_1_0_2-stable"
+PKG_GIT_URL="https://github.com/openssl/openssl"
+PKG_GIT_BRANCH="OpenSSL_1_0_2-stable"
+PKG_DEPENDS_HOST="ccache:host yasm:host"
+PKG_DEPENDS_TARGET="toolchain zlib pcre gmp"
 PKG_SECTION="security"
 PKG_SHORTDESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"
 PKG_LONGDESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"
@@ -48,7 +46,6 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            no-sctp \
                            no-ssl2 \
                            no-ssl3 \
-                           no-store \
                            no-unit-test \
                            no-weak-ssl-ciphers \
                            no-zlib \
