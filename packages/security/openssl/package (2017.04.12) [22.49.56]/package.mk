@@ -36,18 +36,12 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            --libdir=lib \
                            shared \
                            threads \
-                           no-jpake \
-                           no-krb5 \
-                           no-libunbound \
-                           no-rc5 \
-                           no-rfc3779 \
-                           no-sctp \
-                           no-ssl2 \
-                           no-ssl3 \
-                           no-unit-test \
-                           no-weak-ssl-ciphers \
                            no-zlib \
                            no-zlib-dynamic \
+                           no-unit-test \
+                           no-rc5 \
+                           no-ssl3-method \
+                           no-weak-ssl-ciphers \
                            enable-ec_nistp_64_gcc_128"
 
 pre_configure_host() {
