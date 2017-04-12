@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libressl"
-PKG_VERSION="2.5.2"
+PKG_VERSION="2.5.3"
 PKG_URL="http://ftp.openbsd.org/pub/OpenBSD/LibreSSL/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="ccache:host"
 PKG_DEPENDS_TARGET=""
