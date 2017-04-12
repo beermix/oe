@@ -43,7 +43,7 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            no-libunbound \
                            no-md2 \
                            no-rc5 \
-                           no-rfc3779
+                           no-rfc3779 \
                            no-sctp \
                            no-ssl-trace \
                            no-ssl2 \
