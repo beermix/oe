@@ -1,28 +1,23 @@
 PKG_NAME="tor"
-PKG_VERSION="tor-0.2.9.10"
-PKG_GIT_URL="https://github.com/torproject/tor"
+PKG_VERSION="0.3.0.5-rc"
+PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain openssl zlib libevent libcap"
 PKG_SECTION="security"
 PKG_AUTORECONF="yes"
 
-pre_configure_target() {
-  #strip_lto
-  strip_gold
-}
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-systemd \
 			      --disable-asciidoc \
 			      --disable-unittests \
 			      --disable-seccomp \
 			      --disable-libscrypt \
-			      --disable-dependency-tracking \
 			      --with-openssl-dir=$SYSROOT_PREFIX \
 			      --sysconfdir=/storage/.config \
 			      --datarootdir=/storage/.cache/tor \
 			      --datadir=/storage/.cache/tor \
-			      --with-zlib-dir=$ROOT/$TOOLCHAIN \
-			      --with-libevent-dir=$SYSROOT_PREFIX/usr \
-			      --with-openssl-dir=$SYSROOT_PREFIX/usr \
+			      --with-zlib-dir=$SYSROOT_PREFIX \
+			      --with-libevent-dir=$SYSROOT_PREFIX \
+			      --with-openssl-dir=$SYSROOT_PREFIX \
 			      --with-tor-user=tor \
 			      --with-tor-group=tor"
 

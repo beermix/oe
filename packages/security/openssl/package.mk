@@ -1,10 +1,10 @@
 PKG_NAME="openssl"
-#PKG_VERSION="71d66c4"
-#PKG_SITE="https://github.com/openssl/openssl/tree/OpenSSL_1_0_2-stable"
-#PKG_GIT_URL="https://github.com/openssl/openssl"
-#PKG_GIT_BRANCH="OpenSSL_1_0_2-stable"
-PKG_VERSION="1.0.2k"
-PKG_URL="https://www.openssl.org/source/openssl-$PKG_VERSION.tar.gz"
+PKG_VERSION="71d66c4"
+PKG_SITE="https://github.com/openssl/openssl/tree/OpenSSL_1_0_2-stable"
+PKG_GIT_URL="https://github.com/openssl/openssl"
+PKG_GIT_BRANCH="OpenSSL_1_0_2-stable"
+#PKG_VERSION="1.0.2k"
+#PKG_URL="https://www.openssl.org/source/openssl-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="ccache:host"
 PKG_DEPENDS_TARGET="toolchain pcre gmp"
 PKG_SECTION="security"
@@ -14,7 +14,6 @@ PKG_LONGDESC="The Open Source toolkit for Secure Sockets Layer and Transport Lay
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-MAKEFLAGS="-j1"
 
 PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            --libdir=lib \
@@ -45,13 +44,13 @@ makeinstall_host() {
 }
 
 
-pre_configure_target() {
-  mkdir -p $ROOT/$PKG_BUILD/.$TARGET_NAME
-  cp -a $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$TARGET_NAME/
-}
+#pre_configure_target() {
+#  mkdir -p $ROOT/$PKG_BUILD/.$TARGET_NAME
+#  cp -a $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$TARGET_NAME/
+#}
 
 configure_target() {
-  cd $ROOT/$PKG_BUILD/.$TARGET_NAME
+  #cd $ROOT/$PKG_BUILD/.$TARGET_NAME
   ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $CFLAGS $LDFLAGS
 }
 
