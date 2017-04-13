@@ -24,7 +24,7 @@ PKG_LICENSE="GPLv2"
 PKG_SITE="http://www.mariadb.org"
 PKG_URL="https://downloads.mariadb.org/interstitial/$PKG_NAME-$PKG_VERSION/source/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain pcre readline openssl xz zlib lz4 libxml2 curl libaio boost mariadb:host"
+PKG_DEPENDS_TARGET="toolchain pcre readline openssl xz zlib lz4 libxml2 curl libaio mariadb:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="database"
 PKG_SHORTDESC="mariadb: A community developed branch of MySQL"
@@ -56,8 +56,8 @@ PKG_MARIADB_SERVER="no"
 
 # Set MariaDB server storage engines
   MARIADB_OPTS+=" -DWITH_INNOBASE_STORAGE_ENGINE=ON"
-  MARIADB_OPTS+=" -WITH_PARTITION_STORAGE_ENGINE=OFF"
-  MARIADB_OPTS+=" -WITH_PERFSCHEMA_STORAGE_ENGINE=OFF"
+  MARIADB_OPTS+=" -WITH_PARTITION_STORAGE_ENGINE=ON"
+  MARIADB_OPTS+=" -WITH_PERFSCHEMA_STORAGE_ENGINE=ON"
 
 # According to MariaDB galera cluster documentation these options must be passed
 # to CMake, set to '0' if galera cluster support is not wanted:
