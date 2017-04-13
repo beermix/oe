@@ -4,9 +4,11 @@ PKG_URL="https://matt.ucc.asn.au/dropbear/dropbear-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_AUTORECONF="yes"
 
-pre_cofigure_target() {
+pre_configure_target() {
   cd $ROOT/$PKG_BUILD
+  rm -rf .$TARGET_NAME
 }
+
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-pam \
 			      --enable-openpty \
@@ -21,3 +23,8 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-pam \
 			      --disable-pututxline \
 			      --disable-zlib \
 			      --enable-bundled-libtom"
+
+
+post_install() {
+  enable_service dropbear.service
+}

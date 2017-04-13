@@ -5,10 +5,10 @@ PKG_DEPENDS_HOST="gmp:host libtool:host intltool:host"
 PKG_DEPENDS_TARGET="gmp"
 PKG_SECTION="devel"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_HOST="--enable-static \
-			    --disable-shared \
+PKG_CONFIGURE_OPTS_HOST="--disable-shared \
+			    --disable-silent-rules \
 			    --with-gmp=$ROOT/$TOOLCHAIN \
 			    --without-clang"
 			 
