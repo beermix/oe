@@ -9,13 +9,20 @@ PKG_REV="20170405-0224.1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.videolan.org"
-PKG_URL="https://nightlies.videolan.org/build/source/vlc-2.2.5-20170405-0224.1.tar.xz"
+PKG_URL="https://nightlies.videolan.org/build/source/vlc-2.2.5-20170413-0222.1.tar.xz"
 PKG_DEPENDS_TARGET="toolchain dbus libdvbpsi gnutls ffmpeg gstreamer libmpeg2 libvorbis zlib lua:host lua"
 PKG_SECTION="xmedia/tools"
 PKG_SHORTDESC="VideoLAN multimedia player and streamer"
 PKG_LONGDESC="VLC is the VideoLAN project's media player. It plays MPEG, MPEG2, MPEG4, DivX, MOV, WMV, QuickTime, mp3, Ogg/Vorbis files, DVDs, VCDs, and multimedia streams from various network sources."
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
+
+pre_configure_target() {
+# vlc fails to build with LTO optimization
+  strip_lto
+
+  export LUA_LIBS="-L$SYSROOT_PREFIX/usr/lib -llua -lm"
+}
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
             --disable-dependency-tracking \
@@ -32,6 +39,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
             --enable-lua \
             --enable-httpd \
             --enable-vlm \
+            --disable-growl \
             --disable-notify \
             --disable-taglib \
             --disable-live555 \
@@ -42,12 +50,16 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
             --disable-decklink \
             --disable-sftp \
             --enable-v4l2 \
+            --disable-gnomevfs \
+            --disable-vcdx \
             --disable-vcd \
             --disable-libcddb \
             --enable-dvbpsi \
             --disable-screen \
             --enable-ogg \
+            --enable-mux_ogg \
             --disable-shout\
+            --disable-mkv \
             --disable-mod \
             --enable-mpc \
             --disable-gme \
@@ -64,6 +76,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
             --enable-flac \
             --enable-aa \
             --disable-twolame \
+            --disable-quicktime \
             --disable-realrtsp \
             --disable-libtar \
             --disable-a52 \
@@ -82,16 +95,16 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
             --disable-libass \
             --disable-kate \
             --disable-tiger \
-            --enable-libva \
+            --disable-libva \
             --disable-vdpau \
             --without-x \
-            --enable-xcb \
+            --disable-xcb \
             --disable-xvideo \
             --disable-sdl \
             --disable-sdl-image \
-            --enable-freetype \
-            --enable-fribidi \
-            --enable-fontconfig \
+            --disable-freetype \
+            --disable-fribidi \
+            --disable-fontconfig \
             --enable-libxml2 \
             --disable-svg \
             --disable-directx \
@@ -105,11 +118,16 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
             --disable-skins2 \
             --disable-kai \
             --disable-macosx \
+            --disable-macosx-dialog-provider \
+            --disable-macosx-eyetv \
             --disable-macosx-vlc-app \
             --disable-macosx-qtkit \
-            --enable-ncurses \
+            --disable-macosx-quartztext \
+            --disable-ncurses \
             --disable-goom \
             --disable-projectm \
+            --disable-atmo \
+            --disable-bonjour \
             --enable-udev \
             --disable-mtp \
             --disable-lirc \
@@ -122,23 +140,9 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
             --disable-sid \
             --disable-crystalhd \
             --disable-dxva2 \
-            --disable-atmo \
-            --enable-vpx \
             --enable-vlc \
-            --disable-gles1 \
-            --disable-vsxu \
-            --disable-chromaprint \
-            --disable-mfx \
-            --disable-jpeg \
-            --disable-mmal-codec \
-            --disable-mmal-vout \
-            --disable-addonmanagermodules"
-
-
-pre_configure_target() {
-  export LDFLAGS="$LDFLAGS -lresolv -lterminfo"
-  strip_lto
-}
+            --disable-atmo \
+            LUAC=$SYSROOT_PREFIX/usr/bin/luac"
 
 post_makeinstall_target() {
   rm -fr $INSTALL/usr/share/applications

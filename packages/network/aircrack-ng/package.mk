@@ -6,8 +6,8 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 pre_configure_target() {
-  #strip_lto
-  #export LDFLAGS="-ldl -lpthread -lsqlite3"
+  strip_lto
+  export LDFLAGS="-ldl -lpthread -lsqlite3"
   export MAKEFLAGS="-j1"
 }
 

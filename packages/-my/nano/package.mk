@@ -17,7 +17,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-utf8 \
 			      --enable-silent-rules \
 			      --enable-color \
 			      --disable-wrapping-as-root \
-			      --withot-slang \
+			      --without-slang \
 			      --sysconfdir=/storage/.config/nano \
 			      --infodir=/storage/.config"
 
