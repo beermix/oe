@@ -29,3 +29,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_HOST="--enable-cxx --enable-static --disable-shared --with-pic"
+
+pre_configure_host() {
+  export CPPFLAGS="$CPPFLAGS -fexceptions"
+}
