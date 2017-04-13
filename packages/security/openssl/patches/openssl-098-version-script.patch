@@ -1,7 +1,7 @@
-Index: openssl-1.0.2h/Configure
+Index: openssl-1.0.2g/Configure
 ===================================================================
---- openssl-1.0.2h.orig/Configure	2016-03-01 14:18:23.371003357 -0500
-+++ openssl-1.0.2h/Configure	2016-03-01 14:18:23.367003306 -0500
+--- openssl-1.0.2g.orig/Configure	2016-03-01 14:18:23.371003357 -0500
++++ openssl-1.0.2g/Configure	2016-03-01 14:18:23.367003306 -0500
 @@ -1729,6 +1729,8 @@
  		}
  	}
@@ -11,10 +11,10 @@ Index: openssl-1.0.2h/Configure
  open(IN,'<Makefile.org') || die "unable to read Makefile.org:$!\n";
  unlink("$Makefile.new") || die "unable to remove old $Makefile.new:$!\n" if -e "$Makefile.new";
  open(OUT,">$Makefile.new") || die "unable to create $Makefile.new:$!\n";
-Index: openssl-1.0.2h/openssl.ld
+Index: openssl-1.0.2g/openssl.ld
 ===================================================================
 --- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ openssl-1.0.2h/openssl.ld	2016-03-01 14:20:48.852852501 -0500
++++ openssl-1.0.2g/openssl.ld	2016-03-01 14:20:48.852852501 -0500
 @@ -0,0 +1,4621 @@
 +OPENSSL_1.0.0 {
 +	global:
@@ -4631,16 +4631,16 @@ Index: openssl-1.0.2h/openssl.ld
 +		SSL_test_functions;
 +} OPENSSL_1.0.1d;
 +
-+OPENSSL_1.0.2h {
++OPENSSL_1.0.2g {
 +       global:
 +               SRP_VBASE_get1_by_user;
 +               SRP_user_pwd_free;
 +} OPENSSL_1.0.2;
 +
-Index: openssl-1.0.2h/engines/openssl.ld
+Index: openssl-1.0.2g/engines/openssl.ld
 ===================================================================
 --- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ openssl-1.0.2h/engines/openssl.ld	2016-03-01 14:18:23.371003357 -0500
++++ openssl-1.0.2g/engines/openssl.ld	2016-03-01 14:18:23.371003357 -0500
 @@ -0,0 +1,10 @@
 +OPENSSL_1.0.0 {
 +	global:
@@ -4652,10 +4652,10 @@ Index: openssl-1.0.2h/engines/openssl.ld
 +		*;
 +};
 +
-Index: openssl-1.0.2h/engines/ccgost/openssl.ld
+Index: openssl-1.0.2g/engines/ccgost/openssl.ld
 ===================================================================
 --- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ openssl-1.0.2h/engines/ccgost/openssl.ld	2016-03-01 14:18:23.371003357 -0500
++++ openssl-1.0.2g/engines/ccgost/openssl.ld	2016-03-01 14:18:23.371003357 -0500
 @@ -0,0 +1,10 @@
 +OPENSSL_1.0.0 {
 +	global:
