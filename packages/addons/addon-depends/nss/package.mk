@@ -53,25 +53,20 @@ make_target() {
   [ "$TARGET_ARCH" = "x86_64" ] && TARGET_USE_64="USE_64=1"
 
   make BUILD_OPT=1 $TARGET_USE_64 \
-  	NSPR_INCLUDE_DIR=$SYSROOT_PREFIX/usr/include/nspr \
-  	NSS_USE_STATIC_LIBS=0 \
-  	USE_SYSTEM_ZLIB=1 ZLIB_LIBS=-lz \
-  	NSS_USE_SYSTEM_SQLITE=1 \
-  	NSS_ENABLE_WERROR=0 \
-  	FREEBL_NO_DEPEND=0 \
-  	XCFLAGS="$CFLAGS" \
-  	OS_TEST=$TARGET_ARCH \
-  	NSS_TESTS="dummy" \
-  	NSINSTALL=$ROOT/$TOOLCHAIN/bin/nsinstall \
-  	CPU_ARCH_TAG=$TARGET_ARCH \
-  	CC=$CC LDFLAGS="$LDFLAGS -L$SYSROOT_PREFIX/usr/lib" \
-  	V=1
+     NSPR_INCLUDE_DIR=$SYSROOT_PREFIX/usr/include/nspr \
+     USE_SYSTEM_ZLIB=1 ZLIB_LIBS=-lz \
+     OS_TEST=$TARGET_ARCH \
+     NSS_TESTS="dummy" \
+     NSINSTALL=$ROOT/$TOOLCHAIN/bin/nsinstall \
+     CPU_ARCH_TAG=$TARGET_ARCH \
+     CC=$CC LDFLAGS="$LDFLAGS -L$SYSROOT_PREFIX/usr/lib" \
+     V=1
 }
 
 makeinstall_target() {
   cd $ROOT/$PKG_BUILD
   $STRIP dist/Linux*/lib/*.so
-  cp -L dist/Linux*/lib/*.a $SYSROOT_PREFIX/usr/lib
+  cp -L dist/Linux*/lib/*.so $SYSROOT_PREFIX/usr/lib
   cp -L dist/Linux*/lib/libcrmf.a $SYSROOT_PREFIX/usr/lib
   mkdir -p $SYSROOT_PREFIX/usr/include/nss
   cp -RL dist/{public,private}/nss/* $SYSROOT_PREFIX/usr/include/nss
