@@ -25,8 +25,6 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            no-ssl3 \
                            enable-unit-test \
                            enable-tlsext \
-                           no-idea \
-                           no-mdc2 \
                            no-zlib \
                            no-zlib-dynamic \
                            no-weak-ssl-ciphers \
