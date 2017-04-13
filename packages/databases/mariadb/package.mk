@@ -24,7 +24,7 @@ PKG_LICENSE="GPLv2"
 PKG_SITE="http://www.mariadb.org"
 PKG_URL="https://downloads.mariadb.org/interstitial/$PKG_NAME-$PKG_VERSION/source/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain pcre readline openssl xz zlib lz4 libxml2 curl libaio mariadb:host"
+PKG_DEPENDS_TARGET="toolchain pcre readline openssl xz zlib lz4 libxml2 curl libaio boost mariadb:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="database"
 PKG_SHORTDESC="mariadb: A community developed branch of MySQL"
@@ -33,7 +33,7 @@ PKG_LONGDESC="MariaDB is a community-developed fork and a drop-in replacement fo
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_MARIADB_SERVER="no"
+PKG_MARIADB_SERVER="yes"
 
 # MariaDB Feature set. Selection of features. Options are
 # - xsmall : 
@@ -42,7 +42,7 @@ PKG_MARIADB_SERVER="no"
 # - large :  embedded + archive + federated + blackhole + innodb
 # - xlarge:  embedded + archive + federated + blackhole + innodb + partition
 # - community:  all  features (currently == xlarge)
-  MARIADB_OPTS+=" -DFEATURE_SET=xlarge"
+  MARIADB_OPTS+=" -DFEATURE_SET=community"
 
 # Build MariaDB Server support
   if [ "$PKG_MARIADB_SERVER" = "no" ]; then
