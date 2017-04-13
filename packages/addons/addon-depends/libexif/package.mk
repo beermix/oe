@@ -28,4 +28,4 @@ PKG_SHORTDESC="A library to parse an EXIF file and read the data from those tags
 PKG_LONGDESC="A library to parse an EXIF file and read the data from those tags"
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"

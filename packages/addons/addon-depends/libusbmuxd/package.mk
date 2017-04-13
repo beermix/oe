@@ -24,7 +24,7 @@ PKG_DEPENDS_TARGET="toolchain libplist"
 PKG_SECTION="libs"
 PKG_SHORTDESC="USB Multiplex Daemon"
 PKG_LONGDESC="USB Multiplex Daemon"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            ac_cv_func_realloc_0_nonnull=yes \
