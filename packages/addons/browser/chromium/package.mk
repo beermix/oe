@@ -19,11 +19,11 @@
 ################################################################################
 
 PKG_NAME="chromium"
-PKG_VERSION="55.0.2883.87"
-PKG_REV="906"
+PKG_VERSION="55.0.2883.105"
+PKG_REV="9999"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
-PKG_SITE="http://www.chromium.org/Home"
+PKG_SITE="https://chromereleases.googleblog.com/search/label/Stable%20updates"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain pciutils dbus libXcomposite libXcursor libXtst alsa-lib bzip2 yasm libXScrnSaver libexif libpng harfbuzz atk gtk+ unclutter xdotool ninja:host nss"
 PKG_PRIORITY="optional"
@@ -37,7 +37,7 @@ PKG_ADDON_PROVIDES="executable"
 
 pre_make_target() {
   strip_lto
-
+  strip_gold
   sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' third_party/widevine/cdm/stub/widevine_cdm_version.h
 }
 
@@ -87,6 +87,7 @@ make_target() {
     "google_default_client_id=\"${_google_default_client_id}\""
     "google_default_client_secret=\"${_google_default_client_secret}\""
   )
+
   # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
   local _system_libs=(
     harfbuzz-ng
@@ -103,7 +104,7 @@ make_target() {
   # https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=833524
   # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=68853#c2
   sed -i '/config("compiler")/ a cflags_cc = [ "-fno-delete-null-pointer-checks" ]' \
-  $ROOT/$PKG_BUILD/build/config/linux/BUILD.gn
+    $ROOT/$PKG_BUILD/build/config/linux/BUILD.gn
 
   # Remove bundled libraries for which we will use the system copies; this
   # *should* do what the remove_bundled_libraries.py script does, with the
@@ -124,7 +125,7 @@ make_target() {
   ./tools/gn/bootstrap/bootstrap.py --gn-gen-args "${_flags[*]}"
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$ROOT/$TOOLCHAIN/bin/python
 
-  ninja -j4 -C out/Release chrome chrome_sandbox widevinecdmadapter
+  ninja -l5 -C out/Release chrome chrome_sandbox widevinecdmadapter
 }
 
 makeinstall_target() {

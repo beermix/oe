@@ -30,6 +30,8 @@ post_install() {
   
   add_user squid x 990 990 "squid" "/storage" "/bin/sh"
   add_group squid 990
+  
+  enable_service tor.service
 }
 
 post_makeinstall_target() {

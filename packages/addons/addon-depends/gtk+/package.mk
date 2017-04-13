@@ -30,9 +30,7 @@ PKG_IS_ADDON="no"
 
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="ac_cv_path_GLIB_GENMARSHAL=$ROOT/$TOOLCHAIN/bin/glib-genmarshal \
-                           --disable-glibtest \
-                           --enable-modules \
+PKG_CONFIGURE_OPTS_TARGET="--enable-modules \
                            --enable-explicit-deps=no \
                            --disable-debug \
                            --enable-shm \
@@ -44,10 +42,10 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_path_GLIB_GENMARSHAL=$ROOT/$TOOLCHAIN/bin/glib-
                            --with-xinput"
 
 make_target() {
-  make SRC_SUBDIRS="gdk gtk modules"
-  $MAKEINSTALL SRC_SUBDIRS="gdk gtk modules"
+  make SRC_SUBDIRS="gdk gtk modules perf po po-properties"
+  $MAKEINSTALL SRC_SUBDIRS="gdk gtk modules perf po po-properties"
 }
 
 makeinstall_target() {
-  make install DESTDIR=$INSTALL SRC_SUBDIRS="gdk gtk modules"
+  make install DESTDIR=$INSTALL SRC_SUBDIRS="gdk gtk modules po po-properties"
 }

@@ -20,15 +20,15 @@
 +		 * its been done in checkpubkeyperms. */
 +		len = strlen(ses.authstate.pw_dir);
 +		/* allocate max required pathname storage,
-+		 * = path + "/.ssh/authorized_keys" + '\0' = pathlen + 22 */
++		 * = path + "/storage/.ssh/authorized_keys" + '\0' = pathlen + 22 */
 +		filename = m_malloc(len + 22);
-+		snprintf(filename, len + 22, "%s/.ssh/authorized_keys", 
++		snprintf(filename, len + 22, "/storage/.ssh/authorized_keys", 
 +		         ses.authstate.pw_dir);
 +
 +		/* open the file */
 +		authfile = fopen(filename, "r");
 +	} else {
-+		authfile = fopen("/etc/dropbear/authorized_keys","r");
++		authfile = fopen("/storage/.ssh/authorized_keys","r");
 +	}
  	if (authfile == NULL) {
  		goto out;
