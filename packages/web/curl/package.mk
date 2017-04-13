@@ -78,7 +78,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            --without-krb4 \
                            --without-spnego \
                            --without-gssapi \
-                           --without-zlib \
+                           --with-zlib \
                            --without-egd-socket \
                            --enable-thread \
                            --with-random=/dev/urandom \

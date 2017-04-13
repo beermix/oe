@@ -44,13 +44,13 @@ makeinstall_host() {
 }
 
 
-#pre_configure_target() {
-#  mkdir -p $ROOT/$PKG_BUILD/.$TARGET_NAME
-#  cp -a $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$TARGET_NAME/
-#}
+pre_configure_target() {
+  mkdir -p $ROOT/$PKG_BUILD/.$TARGET_NAME
+  cp -a $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$TARGET_NAME/
+}
 
 configure_target() {
-  #cd $ROOT/$PKG_BUILD/.$TARGET_NAME
+  cd $ROOT/$PKG_BUILD/.$TARGET_NAME
   ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $CFLAGS $LDFLAGS
 }
 
