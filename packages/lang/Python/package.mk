@@ -38,7 +38,8 @@ PY_DISABLED_MODULES="_tkinter nis gdbm bsddb ossaudiodev"
 PKG_CONFIGURE_OPTS_HOST="--cache-file=config.cache \
                          --without-cxx-main \
                          --with-threads \
-                         --enable-unicode=ucs4"
+                         --enable-unicode=ucs4 \
+                         --enable-ipv6"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            ac_cv_file_dev_ptmx=yes \
@@ -53,7 +54,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            ac_cv_have_long_long_format=yes \
                            --with-threads \
                            --enable-unicode=ucs4 \
-                           --disable-ipv6 \
+                           --enable-ipv6 \
                            --disable-profiling \
                            --without-pydebug \
                            --without-doc-strings \
@@ -63,7 +64,8 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            --with-wctype-functions \
                            --without-cxx-main \
                            --with-system-ffi \
-                           --with-system-expat"
+                           --with-system-expat \
+                           --disable-toolbox-glue"
 post_patch() {
   # This is needed to make sure the Python build process doesn't try to
   # regenerate those files with the pgen program. Otherwise, it builds

@@ -92,7 +92,8 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            --without-libmetalink \
                            --without-libssh2 \
                            --with-librtmp=$SYSROOT_PREFIX/usr \
-                           --without-libidn"
+                           --without-libidn \
+                           --disable-ntlm-wb"
 
 pre_configure_target() {
 # link against librt because of undefined reference to 'clock_gettime'
