@@ -5,4 +5,4 @@ PKG_DEPENDS_TARGET="toolchain pcre acl attr"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--with-xattrs --without-selinux"
+PKG_CONFIGURE_OPTS_TARGET="--bindir=/bin --with-xattrs --without-selinux"

@@ -1,7 +1,7 @@
 PKG_NAME="libav"
 PKG_VERSION="03fb0f7"
 PKG_GIT_URL="https://github.com/libav/libav"
-PKG_BUILD_DEPENDS_TARGET="toolchain openssl libsodium libevent"
+PKG_DEPENDS_TARGET="toolchain libvpx"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
@@ -30,8 +30,8 @@ configure_target() {
               --cc="$CC" \
               --ld="$CC" \
               --host-cc="$HOST_CC" \
-              --host-cflags="$HOST_CFLAGS" \
-              --host-ldflags="$HOST_LDFLAGS" \
+              --host-cflags="$HOST_CFLAGS -fPIC" \
+              --host-ldflags="$HOST_LDFLAGS -fPIC" \
               --host-libs="-lm" \
               --extra-ldflags="$LDFLAGS -fPIC" \
               --extra-ldflags="$LDFLAGS" \

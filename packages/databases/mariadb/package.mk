@@ -17,14 +17,14 @@
 ################################################################################
 
 PKG_NAME="mariadb"
-PKG_VERSION="10.1.22"
+PKG_VERSION="10.1.21"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/MariaDB/server/releases"
 PKG_URL="https://downloads.mariadb.org/interstitial/$PKG_NAME-$PKG_VERSION/source/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain pcre readline openssl libevent xz zlib lz4 lzo curl libaio libxml2 inetutils mariadb:host"
+PKG_DEPENDS_TARGET="toolchain pcre readline openssl libaio libevent zlib lz4 xz lzo libxml2 boost mariadb:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="database"
 PKG_SHORTDESC="mariadb: A community developed branch of MySQL"
@@ -33,7 +33,7 @@ PKG_LONGDESC="MariaDB is a community-developed fork and a drop-in replacement fo
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_MARIADB_SERVER="yes"
+PKG_MARIADB_SERVER="no"
 
 # MariaDB Feature set. Selection of features. Options are
 # - xsmall : 
@@ -42,7 +42,7 @@ PKG_MARIADB_SERVER="yes"
 # - large :  embedded + archive + federated + blackhole + innodb
 # - xlarge:  embedded + archive + federated + blackhole + innodb + partition
 # - community:  all  features (currently == xlarge)
-  MARIADB_OPTS+=" -DFEATURE_SET=large"
+  MARIADB_OPTS+=" -DFEATURE_SET=community"
 
 # Build MariaDB Server support
   if [ "$PKG_MARIADB_SERVER" = "no" ]; then
@@ -56,8 +56,8 @@ PKG_MARIADB_SERVER="yes"
 
 # Set MariaDB server storage engines
   MARIADB_OPTS+=" -DWITH_INNOBASE_STORAGE_ENGINE=ON"
-  MARIADB_OPTS+=" -WITH_PARTITION_STORAGE_ENGINE=OFF"
-  MARIADB_OPTS+=" -WITH_PERFSCHEMA_STORAGE_ENGINE=OFF"
+  MARIADB_OPTS+=" -WITH_PARTITION_STORAGE_ENGINE=ON"
+  MARIADB_OPTS+=" -WITH_PERFSCHEMA_STORAGE_ENGINE=ON"
 
 # According to MariaDB galera cluster documentation these options must be passed
 # to CMake, set to '0' if galera cluster support is not wanted:
@@ -68,7 +68,7 @@ PKG_MARIADB_SERVER="yes"
   MARIADB_OPTS+=" -DWITH_UNIT_TESTS=0"
 
 # msgpack causes trouble when cross-compiling:
-  MARIADB_OPTS+=" -DGRN_WITH_MESSAGE_PACK=no"
+  MARIADB_OPTS+=" -DGRN_WITH_MESSAGE_PACK=yes"
 
 # Mroonga needs libstemmer. Some work still needs to be done before it can be
 # included in buildroot. Disable it for now.
@@ -133,9 +133,9 @@ makeinstall_host() {
 configure_target() {
   cmake -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
         -DDISABLE_SHARED=ON \
-        -DCMAKE_C_FLAGS="$CFLAGS -fPIC -DPIC -fno-strict-aliasing -DBIG_JOINS=1 -fomit-frame-pointer -fno-delete-null-pointer-checks" \
-        -DCMAKE_CXX_FLAGS="$CXXFLAGS -fPIC -DPIC -fno-strict-aliasing -DBIG_JOINS=1 -felide-constructors -fno-delete-null-pointer-checks" \
-        -DWITH_MYSQLD_LDFLAGS="-pie $LDFLAGS" \
+        -DCMAKE_C_FLAGS="${TARGET_CFLAGS} -fPIC -DPIC -fno-strict-aliasing -DBIG_JOINS=1 -fomit-frame-pointer -fno-delete-null-pointer-checks" \
+        -DCMAKE_CXX_FLAGS="${TARGET_CXXFLAGS} -fPIC -DPIC -fno-strict-aliasing -DBIG_JOINS=1 -felide-constructors -fno-delete-null-pointer-checks" \
+        -DWITH_MYSQLD_LDFLAGS="-pie -Wl,-O1,--sort-common,--as-needed,-z,now" \
         -DCMAKE_BUILD_TYPE=Release \
         $MARIADB_IMPORT_EXECUTABLES \
         -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
@@ -175,6 +175,7 @@ configure_target() {
         -DSECURITY_HARDENED=OFF \
         $MARIADB_OPTS \
         ..
+        
 }
 
 post_makeinstall_target() {

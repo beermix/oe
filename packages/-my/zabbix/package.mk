@@ -9,8 +9,8 @@ PKG_AUTORECONF="no"
 pre_configure_target() {
    cd $ROOT/$PKG_BUILD
    export LDFLAGS="-lpthread -lrt"
-   export LIBS="$LIBS -lssh2 -lmbedcrypto"
-   export CPPFLAGS="-I$(get_pkg_build linux)"
+   #export LIBS="$LIBS -lssh2 -lmbedcrypto"
+   #export CPPFLAGS="-I$(get_pkg_build linux)"
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--datadir=/storage/.config \

@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,13 +17,13 @@
 ################################################################################
 
 PKG_NAME="ffmpeg"
-PKG_VERSION="3.3"
+PKG_VERSION="2.8.11"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="LGPLv2.1+"
 PKG_SITE="https://ffmpeg.org"
 PKG_URL="https://ffmpeg.org/releases/${PKG_NAME}-${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl speex libvpx"
+PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl dcadec speex libvpx"
 PKG_PRIORITY="optional"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
@@ -36,7 +36,7 @@ PKG_AUTORECONF="no"
   get_graphicdrivers
 
 if [ "$VAAPI_SUPPORT" = yes ]; then
-  PKG_DEPENDS_TARGET+="intel-vaapi-driver"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET intel-vaapi-driver"
   FFMPEG_VAAPI="--enable-vaapi"
 else
   FFMPEG_VAAPI="--disable-vaapi"
@@ -83,16 +83,21 @@ esac
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
+  
+  sed -i 's@/bin/sh@/bin/bash@' $ROOT/$PKG_BUILD/configure
+  sed -i 's@openssl_init;@openssl_init;\n#undef OPENSSL_VERSION_NUMBER\n#define OPENSSL_VERSION_NUMBER 1\n@' $ROOT/$PKG_BUILD/libavformat/tls_openssl.c
 
 # ffmpeg fails building with LTO support
   strip_lto
 
 # ffmpeg fails running with GOLD support
   strip_gold
+  
+  export CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
 
   if [ "$KODIPLAYER_DRIVER" = "bcm2835-firmware" ]; then
     export CFLAGS="-I$SYSROOT_PREFIX/usr/include/interface/vcos/pthreads -I$SYSROOT_PREFIX/usr/include/interface/vmcs_host/linux -DRPI=1 $CFLAGS"
-    export FFMPEG_LIBS="-lbcm_host -lvcos -lvchiq_arm -lmmal -lmmal_core -lmmal_util -lvcsm -lvchostif"
+    export FFMPEG_LIBS="-lbcm_host -lvcos -lvchiq_arm -lmmal -lmmal_core -lmmal_util -lvcsm"
   fi
 }
 
@@ -123,7 +128,6 @@ configure_target() {
               --disable-static \
               --enable-shared \
               --enable-gpl \
-              --disable-version3 \
               --enable-nonfree \
               --enable-logging \
               --disable-doc \
@@ -131,10 +135,6 @@ configure_target() {
               --enable-pic \
               --pkg-config="$ROOT/$TOOLCHAIN/bin/pkg-config" \
               --enable-optimizations \
-              --disable-extra-warnings \
-              --disable-ffprobe \
-              --disable-ffplay \
-              --disable-ffserver \
               --enable-ffmpeg \
               --enable-avdevice \
               --enable-avcodec \
@@ -142,11 +142,11 @@ configure_target() {
               --enable-swscale \
               --enable-postproc \
               --enable-avfilter \
-              --disable-devices \
               --enable-pthreads \
               --disable-w32threads \
+              --enable-x11grab \
               --enable-network \
-              --enable-gnutls --enable-openssl \
+              --disable-gnutls --enable-openssl \
               --disable-gray \
               --enable-swscale-alpha \
               --disable-small \
@@ -158,8 +158,8 @@ configure_target() {
               $FFMPEG_VAAPI \
               $FFMPEG_VDPAU \
               --disable-dxva2 \
-              --enable-runtime-cpudetect \
               $FFMPEG_TABLES \
+              --disable-memalign-hack \
               --enable-encoders \
               --enable-encoder=ac3 \
               --enable-encoder=aac \
@@ -178,37 +178,20 @@ configure_target() {
               --enable-parsers \
               --enable-bsfs \
               --enable-protocol=http \
-              --disable-indevs \
-              --disable-outdevs \
+              --enable-indevs \
               --enable-filters \
-              --disable-avisynth \
               --enable-bzlib \
-              --disable-frei0r \
-              --disable-libopencore-amrnb \
-              --disable-libopencore-amrwb \
-              --disable-libopencv \
-              --disable-libdc1394 \
-              --disable-libfreetype \
-              --disable-libgsm \
-              --disable-libmp3lame \
-              --disable-libnut \
-              --disable-libopenjpeg \
-              --disable-librtmp \
-              --disable-libschroedinger \
-              --enable-libspeex \
-              --disable-libtheora \
-              --disable-libvo-amrwbenc \
-              --disable-libvorbis \
+              --enable-libdcadec \
               --enable-libvpx \
-              --disable-libx264 \
-              --disable-libxavs \
-              --disable-libxvid \
               --enable-zlib \
               --enable-asm \
               --disable-altivec \
               $FFMPEG_FPU \
               --enable-yasm \
-              --disable-symver
+              --disable-symver \
+              --disable-lto \
+              --enable-runtime-cpudetect \
+              --enable-indev=x11grab_xcb
 }
 
 post_makeinstall_target() {

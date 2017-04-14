@@ -26,7 +26,7 @@ PKG_SECTION="security"
 
 PKG_USE_CMAKE="no"
 PKG_AUTORECONF="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 #PKG_CONFIGURE_OPTS_HOST="--disable-hardening"
 
