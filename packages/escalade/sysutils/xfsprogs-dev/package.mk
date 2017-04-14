@@ -17,11 +17,11 @@
 ################################################################################
 
 PKG_NAME="xfsprogs-dev"
-PKG_VERSION="53cefc4"
+PKG_VERSION="v4.10.0"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.xfs.org"
-PKG_URL="https://git.kernel.org/cgit/fs/xfs/xfsprogs-dev.git/snapshot/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_GIT_URL="https://git.kernel.org/pub/scm/fs/xfs/xfsprogs-dev.git"
 PKG_DEPENDS_TARGET="toolchain util-linux"
 PKG_DEPENDS_INIT="xfsprogs-dev"
 PKG_SECTION="tools"
