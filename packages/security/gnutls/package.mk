@@ -15,7 +15,7 @@ PKG_SECTION="xmedia/tools"
 PKG_SHORTDESC="gnutls: Development Library for TLS applications"
 PKG_LONGDESC="GnuTLS is a project that aims to develop a library which provides a secure layer, over a reliable transport layer. Currently the GnuTLS library implements the proposed standards by the IETF's TLS working group. Quoting from RFC2246 - the TLS 1.0 protocol specification: The TLS protocol provides communications privacy over the Internet. The protocol allows client/server applications to communicate in a way that is designed to prevent eavesdropping, tampering, or message forgery."
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-hardware-acceleration \
 			      --disable-openssl-compatibility \
@@ -35,4 +35,4 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-hardware-acceleration \
 			      --disable-guile \
 			      --disable-valgrind-tests \
 			      --without-lzo \
-			      --with-gnu-ld"s
+			      --with-gnu-ld"
