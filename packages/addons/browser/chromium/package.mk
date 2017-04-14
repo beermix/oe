@@ -96,7 +96,6 @@ make_target() {
     libxslt
     yasm
     icu
-    minizip
     libvpx
   )
   
@@ -125,7 +124,7 @@ make_target() {
   ./tools/gn/bootstrap/bootstrap.py --gn-gen-args "${_flags[*]}"
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$ROOT/$TOOLCHAIN/bin/python
 
-  ninja -l5 -C out/Release chrome chrome_sandbox widevinecdmadapter
+  ninja -v -j4 -C out/Release chrome chrome_sandbox widevinecdmadapter
 }
 
 makeinstall_target() {

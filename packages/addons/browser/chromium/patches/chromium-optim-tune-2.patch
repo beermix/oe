@@ -6,7 +6,7 @@ diff -Naur chromium-55.0.2883.87-orig/build/config/compiler/BUILD.gn chromium-55
          cflags += [ "-fstack-protector-strong" ]
        } else {
 -        cflags += [ "-fstack-protector" ]
-+        cflags += [ "-mtune=ivybridge" ]
++        cflags += [ "-fstack-protector-strong" ]
        }
      } else if (is_posix && !is_chromeos && !is_nacl) {
        # TODO(phajdan.jr): Use -fstack-protector-strong when our gcc supports it.
@@ -15,7 +15,7 @@ diff -Naur chromium-55.0.2883.87-orig/build/config/compiler/BUILD.gn chromium-55
          cflags += [ "-fno-stack-protector" ]
        } else {
 -        cflags += [ "-fstack-protector" ]
-+        cflags += [ "-mtune=ivybridge" ]
++        cflags += [ "-fstack-protector-strong" ]
        }
      }
  
@@ -24,7 +24,7 @@ diff -Naur chromium-55.0.2883.87-orig/build/config/compiler/BUILD.gn chromium-55
        cflags += [
          "-m64",
 -        "-march=x86-64",
-+        "-march=ivybridge",
++        "-mtune=ivybridge",
        ]
        ldflags += [ "-m64" ]
      } else if (current_cpu == "x86") {
