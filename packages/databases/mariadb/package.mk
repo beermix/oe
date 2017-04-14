@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="mariadb"
-PKG_VERSION="10.1.21"
+PKG_VERSION="10.1.22"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
@@ -33,7 +33,7 @@ PKG_LONGDESC="MariaDB is a community-developed fork and a drop-in replacement fo
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_MARIADB_SERVER="no"
+PKG_MARIADB_SERVER="yes"
 
 # MariaDB Feature set. Selection of features. Options are
 # - xsmall : 
@@ -160,7 +160,7 @@ configure_target() {
         -DWITH_READLINE=ON \
         -DWITH_PCRE=$SYSROOT_PREFIX/usr \
         -DWITH_ZLIB=bundled \
-        -DWITH_SYSTEMD=OFF \
+        -DWITH_SYSTEMD=ON \
         -DWITH_LIBWRAP=OFF \
         -DWITH_SSL=$SYSROOT_PREFIX/usr \
         -DWITHOUT_DYNAMIC_PLUGINS=ON \

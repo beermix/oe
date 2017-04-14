@@ -6,6 +6,10 @@ PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
+pre_configure_target() {
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|g"`
+}
+
 configure_target() {
   ./Configure -des \
 		-Dcccdlflags='-fPIC' \
@@ -41,7 +45,7 @@ configure_target() {
 		-Ud_csh \
 		-Dusenm \
 		|| return 1
-	make libperl.so && make; make
+		make; make
 }
 
                
