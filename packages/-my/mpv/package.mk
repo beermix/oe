@@ -1,7 +1,7 @@
 PKG_NAME="mpv"
 PKG_VERSION="v0.24.0"
 PKG_GIT_URL="https://github.com/mpv-player/mpv"
-PKG_DEPENDS_TARGET="toolchain ffmpeg libxkbcommon libass lua libav"
+PKG_DEPENDS_TARGET="toolchain ffmpeg libxkbcommon libass lua"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
