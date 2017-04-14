@@ -15,5 +15,4 @@ PKG_CONFIGURE_OPTS_TARGET="PERL=missing \
 			      --with-openssl \
 			      --disable-rpath \
 			      --enable-threads=posix \
-			      --enable-no-install-program=hostname,su,kill,uptime,md5sum,chroot \
-			      --enable-install-program=cat,chgrp,chmod,chown,cp,date,dd"
+			      --enable-no-install-program=hostname,su,kill,uptime,md5sum"

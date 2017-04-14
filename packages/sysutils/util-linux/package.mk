@@ -22,8 +22,8 @@ PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_URL="http://www.kernel.org/pub/linux/utils/util-linux/v2.29/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain"
-PKG_DEPENDS_INIT="toolchain gcc:init"
+PKG_DEPENDS_TARGET="toolchain zlib slang"
+PKG_DEPENDS_INIT="toolchain gcc:init zlib slang"
 PKG_PRIORITY="optional"
 PKG_SECTION="system"
 PKG_SHORTDESC="util-linux: Miscellaneous system utilities for Linux"
@@ -37,7 +37,6 @@ UTILLINUX_CONFIG_DEFAULT="--disable-gtk-doc \
                           --disable-nls \
                           --disable-rpath \
                           --enable-tls \
-                          --disable-all-programs \
                           --enable-chsh-only-listed \
                           --enable-libmount-force-mountinfo \
                           --disable-bash-completion \
@@ -50,20 +49,28 @@ UTILLINUX_CONFIG_DEFAULT="--disable-gtk-doc \
                           --with-gnu-ld \
                           --without-selinux \
                           --without-audit \
-                          --without-udev \
+                          --with-slang \
                           --without-ncurses \
                           --without-readline \
-                          --without-slang \
                           --without-termcap \
-                          --with-tinfo \
+                          --without-tinfo \
                           --without-utempter \
-                          --without-util \
-                          --without-libz \
                           --without-user \
-                          --without-systemd \
                           --without-smack \
                           --without-python \
-                          --without-systemdsystemunitdir"
+                          --without-systemdsystemunitdir \
+                          --disable-nologin \
+                          --disable-sulogin \
+                          --disable-su \
+                          --disable-runuser \
+                          --with-sysroot=$SYSROOT_PREFIX \
+                          --disable-fsck.cramfs \
+                          --disable-cramfs \
+                          --disable-mkfs.bfs \
+                          --disable-blockdev \
+                          --disable-swaplabel \
+                          --disable-bfs \
+                          --disable-swapon"
 
 PKG_CONFIGURE_OPTS_TARGET="--sbindir=/sbin \
                            --libexecdir=/lib \
@@ -84,7 +91,9 @@ PKG_CONFIGURE_OPTS_HOST="--enable-static \
                          --disable-shared \
                          $UTILLINUX_CONFIG_DEFAULT \
                          --enable-uuidgen \
-                         --enable-libuuid"
+                         --enable-libuuid \
+                         --disable-static \
+                         --enable-shared"
 
 PKG_CONFIGURE_OPTS_INIT="--prefix=/ \
                          --bindir=/bin \
@@ -96,7 +105,9 @@ PKG_CONFIGURE_OPTS_INIT="--prefix=/ \
                          --enable-libblkid \
                          --enable-libmount \
                          --enable-libuuid \
-                         --enable-fsck"
+                         --enable-fsck \
+                         --disable-static \
+                         --enable-shared"
 
 if [ "$INITRAMFS_PARTED_SUPPORT" = "yes" ]; then
   PKG_CONFIGURE_OPTS_INIT+=" --enable-mkfs --enable-libuuid"

@@ -1,0 +1,35 @@
+Metadata-Version: 1.1
+Name: DisplayCAL
+Version: 3.2.4.0
+Summary: A graphical front-end for display calibration and profiling using Argyll CMS
+Home-page: https://displaycal.net/
+Author: Florian Hoech
+Author-email: florian@displaycal.net
+License: GPL v3
+Download-URL: https://displaycal.net/download/DisplayCAL-3.2.4.0.tar.gz
+Description: Calibrates and characterizes display devices using a hardware sensor,
+        driven by the open source color management system Argyll CMS.
+        Supports multi-display setups and a variety of available settings like 
+        customizable whitepoint, luminance, black level, tone response curve 
+        as well as the creation of matrix and look-up-table ICC profiles with 
+        optional gamut mapping. Calibrations and profiles can be verified 
+        through measurements, and profiles can be installed to make them 
+        available to color management aware applications.
+        Profile installation can utilize Argyll CMS, Oyranos and/or GNOME 
+        Color Manager if available, for flexible integration.
+Platform: Python >= 2.6 <= 2.7
+Platform: Linux/Unix with X11
+Platform: Mac OS X >= 10.4
+Platform: Windows 2000 and newer
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Environment :: MacOS X
+Classifier: Environment :: Win32 (MS Windows)
+Classifier: Environment :: X11 Applications
+Classifier: Intended Audience :: End Users/Desktop
+Classifier: License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 2.6
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Topic :: Multimedia :: Graphics
+Requires: wxPython (>= 2.8.8)
+Provides: DisplayCAL
