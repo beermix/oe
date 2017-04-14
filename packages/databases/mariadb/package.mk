@@ -133,9 +133,9 @@ makeinstall_host() {
 configure_target() {
   cmake -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
         -DDISABLE_SHARED=ON \
-        -DCMAKE_C_FLAGS="${TARGET_CFLAGS} -fPIC -DPIC -fno-strict-aliasing -DBIG_JOINS=1 -fomit-frame-pointer -fno-delete-null-pointer-checks" \
-        -DCMAKE_CXX_FLAGS="${TARGET_CXXFLAGS} -fPIC -DPIC -fno-strict-aliasing -DBIG_JOINS=1 -felide-constructors -fno-delete-null-pointer-checks" \
-        -DWITH_MYSQLD_LDFLAGS="-pie -Wl,-O1,--sort-common,--as-needed,-z,now" \
+        -DCMAKE_C_FLAGS="$TARGET_CFLAGS -fPIC -DPIC -fno-strict-aliasing -DBIG_JOINS=1 -fomit-frame-pointer -fno-delete-null-pointer-checks" \
+        -DCMAKE_CXX_FLAGS="$TARGET_CXXFLAGS -fPIC -DPIC -fno-strict-aliasing -DBIG_JOINS=1 -felide-constructors -fno-delete-null-pointer-checks" \
+        -DWITH_MYSQLD_LDFLAGS="-pie $TARGET_LDFLAGS,-z,now" \
         -DCMAKE_BUILD_TYPE=Release \
         $MARIADB_IMPORT_EXECUTABLES \
         -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \

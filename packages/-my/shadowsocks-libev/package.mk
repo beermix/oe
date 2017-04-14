@@ -7,7 +7,7 @@ PKG_USE_CMAKE="no"
 PKG_AUTORECONF="yes"
 
 unpack() {
-  git clone --recursive -v --depth 1 https://github.com/shadowsocks/shadowsocks-libev $PKG_BUILD
+  git clone --recursive -v --depth 1 http://github.com/shadowsocks/shadowsocks-libev $PKG_BUILD
   cd $PKG_BUILD
 }
 
