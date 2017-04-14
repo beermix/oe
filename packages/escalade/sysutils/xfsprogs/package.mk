@@ -21,7 +21,7 @@ PKG_VERSION="v4.10.0"
 PKG_SITE="https://git.kernel.org/pub/scm/fs/xfs/xfsprogs-dev.git"
 PKG_GIT_URL="git://git.kernel.org/pub/scm/fs/xfs/xfsprogs-dev.git"
 PKG_DEPENDS_TARGET="toolchain util-linux"
-PKG_DEPENDS_INIT="readline xfsprogs"
+PKG_DEPENDS_INIT="libedit xfsprogs"
 PKG_SECTION="tools"
 PKG_SHORTDESC="xfsprogs: Utilities for use with the xfs filesystem"
 PKG_IS_ADDON="no"
@@ -30,7 +30,9 @@ PKG_AUTORECONF="no"
 PKG_CONFIGURE_OPTS_TARGET="--exec-prefix=/ \
 			      --enable-shared=no \
 			      --with-gnu-ld \
-			      --enable-readline=no"
+			      --enable-readline=no \
+			      --enable-editline=yes \
+			      --enable-lib64=no"
 
 pre_configure_target() {
   make configure
@@ -45,8 +47,8 @@ make_init() {
 }
 
 makeinstall_init() {
-  mkdir -p $INSTALL/usr/sbin
-  cp ../.install_pkg/usr/sbin/xfs_repair $INSTALL/usr/sbin
-  cp ../.install_pkg/usr/sbin/fsck.xfs $INSTALL/usr/sbin
-  cp ../.install_pkg/usr/sbin/mkfs.xfs $INSTALL/usr/sbin
+  mkdir -p $INSTALL/usr/bin
+  cp ../.install_pkg/usr/sbin/xfs_repair $INSTALL/usr/bin
+  cp ../.install_pkg/usr/sbin/fsck.xfs $INSTALL/usr/bin
+  cp ../.install_pkg/usr/sbin/mkfs.xfs $INSTALL/usr/bin
 }
