@@ -12,15 +12,13 @@ pre_configure_target() {
 
 configure_target() {
   ./bootstrap.py
+  ./waf dist
   ./waf configure --prefix=/usr \
-  		    --enable-static-build \
-  		    --enable-libmpv-static \
-  		    --disable-wayland \
-  		    --disable-zsh-comp
+  		    --disable-wayland
 }
 
 make_target() {
-  ./waf -v build
+  ./waf build -j7
 }
 
 make_install_target() {
