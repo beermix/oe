@@ -1,6 +1,0 @@
-#! /usr/bin/python2.7
-# -*- coding: utf-8 -*-
-
-from DisplayCAL.main import main
-
-main("profile-info")

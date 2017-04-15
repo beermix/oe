@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,9 +17,14 @@
 ################################################################################
 
 PKG_NAME="netbsd-curses"
-PKG_VERSION="194ddef"
-PKG_GIT_URL="https://github.com/sabotage-linux/netbsd-curses"
+PKG_VERSION="0.2.1"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
+PKG_SITE="https://github.com/sabotage-linux/netbsd-curses"
+PKG_URL="http://ftp.barfooze.de/pub/sabotage/tarballs/${PKG_NAME}-${PKG_VERSION}.tar.xz"
 PKG_DEPENDS_TARGET="toolchain zlib"
+PKG_PRIORITY="optional"
 PKG_SECTION="devel"
 PKG_SHORTDESC="netbsd-curses: netbsd-libcurses portable edition"
 PKG_LONGDESC="netbsd-curses: netbsd-libcurses portable edition"
@@ -27,10 +32,13 @@ PKG_LONGDESC="netbsd-curses: netbsd-libcurses portable edition"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
+pre_configure_target() {
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|g"`
+  export CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
+}
 
 make_target() {
-  #make -j1 HOSTCC="$HOST_CC" CFLAGS="$CFLAGS" PREFIX=/usr all-static
-  make -j1 HOSTCC="$HOST_CC" CFLAGS="$CFLAGS -D_DEFAULT_SOURCE" PREFIX=/usr all-static
+  make -j1 HOSTCC="$HOST_CC" CFLAGS="$CFLAGS" PREFIX=/usr all-static
 }
 
 makeinstall_target() {

@@ -1,5 +1,5 @@
 PKG_NAME="aria2"
-PKG_VERSION="release-1.31.0"
+PKG_VERSION="e441cf0"
 PKG_GIT_URL="https://github.com/aria2/aria2"
 PKG_DEPENDS_TARGET="toolchain expat gmp pcre curl libuv libev openssl xmlstarlet libxml2 libssh2"
 PKG_SECTION="tools"

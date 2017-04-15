@@ -49,9 +49,10 @@ UTILLINUX_CONFIG_DEFAULT="--disable-gtk-doc \
                           --with-gnu-ld \
                           --without-selinux \
                           --without-audit \
-                          --with-slang \
+                          --without-udev \
                           --without-ncurses \
                           --without-readline \
+                          --with-slang \
                           --without-termcap \
                           --without-tinfo \
                           --without-utempter \
