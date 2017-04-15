@@ -52,6 +52,9 @@ for i in $FILE; do
       *.tar.bz2 | *.tbz)
         tar xjf $f -C $3
         ;;
+      *.tar.lrz)
+        lztar -dvf -O $3/$1 $f
+        ;;
       *.tar.gz | *.tgz)
         tar xzf $f -C $3
         ;;
