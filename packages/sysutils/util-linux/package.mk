@@ -67,7 +67,6 @@ UTILLINUX_CONFIG_DEFAULT="--disable-gtk-doc \
                           --disable-sulogin \
                           --disable-su \
                           --disable-runuser \
-                          --with-sysroot=$SYSROOT_PREFIX \
                           --disable-swapon"
 
 PKG_CONFIGURE_OPTS_TARGET="--sbindir=/sbin \
@@ -79,7 +78,8 @@ PKG_CONFIGURE_OPTS_TARGET="--sbindir=/sbin \
                            --enable-libsmartcols \
                            --enable-losetup \
                            --enable-fsck \
-                           --enable-blkid"
+                           --enable-blkid \
+                           --with-sysroot=$SYSROOT_PREFIX"
 
 if [ "$SWAP_SUPPORT" = "yes" ]; then
   PKG_CONFIGURE_OPTS_TARGET+=" --enable-swapon"
@@ -89,7 +89,31 @@ PKG_CONFIGURE_OPTS_HOST="--enable-static \
                          --disable-shared \
                          $UTILLINUX_CONFIG_DEFAULT \
                          --enable-uuidgen \
-                         --enable-libuuid"
+                         --enable-libuuid \
+                         --disable-all-programs \
+                         --disable-bash-completion \
+                         --disable-colors-default \
+                         --disable-pylibmount \
+                         --disable-pg-bell \
+                         --disable-use-tty-group \
+                         --disable-makeinstall-chown \
+                         --disable-makeinstall-setuid \
+                         --without-selinux \
+                         --without-audit \
+                         --without-udev \
+                         --without-ncurses \
+                         --without-readline \
+                         --without-slang \
+                         --without-termcap \
+                         --without-tinfo \
+                         --without-utempter \
+                         --without-util \
+                         --without-libz \
+                         --without-user \
+                         --without-systemd \
+                         --without-smack \
+                         --without-python \
+                         --without-systemdsystemunitdir"
 
 PKG_CONFIGURE_OPTS_INIT="--prefix=/ \
                          --bindir=/bin \
