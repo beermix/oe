@@ -53,7 +53,7 @@ for i in $FILE; do
         tar xjf $f -C $3
         ;;
       *.tar.lrz)
-        lztar -dvf -O $3/$1 $f
+        tar xf $f -C $3 
         ;;
       *.tar.gz | *.tgz)
         tar xzf $f -C $3

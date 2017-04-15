@@ -9,16 +9,14 @@ PKG_AUTORECONF="no"
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
-  echo "HAVE_BERKELEY_DB:=n" >> $ROOT/$PKG_BUILD/Config
-  #export CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
-    
+  
+  echo "HAVE_BERKELEY_DB:=n" >> Config
 }
 
 make_target() {
-  make CC="$CC" \
+  make -j1 CC="$CC" \
   LDFLAGS="$TARGET_LDFLAGS" \
   DBM_INCLUDE="$SYSROOT_PREFIX/usr/include" \
-  CCOPTS="$TARGET_CFLAGS -D_GNU_SOURCE" \
-  SHARED_LIBS=n -j1
+  CCOPTS="$TARGET_CFLAGS -D_GNU_SOURCE" SHARED_LIBS=n
 }
 
