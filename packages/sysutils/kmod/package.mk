@@ -43,7 +43,8 @@ PKG_CONFIGURE_OPTS_HOST="--enable-tools \
                          --disable-manpages \
                          --with-gnu-ld \
                          --without-xz \
-                         --without-zlib"
+                         --without-zlib \
+                         --disable-static"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-tools \
                            --enable-logging \
@@ -55,6 +56,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-tools \
                            --with-gnu-ld \
                            --without-xz \
                            --without-zlib \
+                           --disable-static \
                            --with-rootlibdir=/lib"
 
 post_makeinstall_host() {

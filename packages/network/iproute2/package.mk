@@ -6,16 +6,19 @@ PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-pre_configure_target() {
+configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
   ./configure
-  export CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
-  
+  #export CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
+    
+}
+
+make_target() {
   make CC="$CC" \
   LDFLAGS="$TARGET_LDFLAGS" \
   DBM_INCLUDE="$SYSROOT_PREFIX/usr/include" \
-  CCOPTS="$(TARGET_CFLAGS) -D_GNU_SOURCE" \
-  SHARED_LIBS=n
-    
+  CCOPTS="$TARGET_CFLAGS -D_GNU_SOURCE" \
+  SHARED_LIBS=n -j1
 }
+
