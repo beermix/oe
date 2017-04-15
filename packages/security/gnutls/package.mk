@@ -5,10 +5,10 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnutls.org"
 PKG_URL="ftp://ftp.gnutls.org/gcrypt/gnutls/v3.5/gnutls-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain zlib libgpg-error nettle"
+PKG_DEPENDS_TARGET="toolchain zlib nettle"
 PKG_SECTION="xmedia/tools"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-hardware-acceleration \
 			      --enable-openssl-compatibility \

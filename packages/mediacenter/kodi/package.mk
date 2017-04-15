@@ -236,7 +236,7 @@ export GIT_REV="$PKG_VERSION"
 PKG_CONFIGURE_OPTS_TARGET="gl_cv_func_gettimeofday_clobber=no \
                            ac_cv_lib_bluetooth_hci_devid=no \
                            --disable-debug \
-                           --disable-optimizations \
+                           --enable-optimizations \
                            $KODI_OPENGL \
                            $KODI_OPENGLES \
                            $KODI_OPENMAX \
@@ -311,6 +311,7 @@ pre_configure_target() {
 
 # kodi should never be built with lto
   strip_lto
+  strip_gold
 
   export CFLAGS="$CFLAGS $KODI_CFLAGS"
   export CXXFLAGS="$CXXFLAGS $KODI_CXXFLAGS"
