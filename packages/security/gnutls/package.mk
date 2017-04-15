@@ -10,8 +10,7 @@ PKG_SECTION="xmedia/tools"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-hardware-acceleration \
-			      --enable-openssl-compatibility \
+PKG_CONFIGURE_OPTS_TARGET="--disable-openssl-compatibility \
 			      --enable-static \
 			      --enable-libdane --without-tpm --disable-guile \
 			      --disable-heartbeat-support \
@@ -26,7 +25,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-hardware-acceleration \
 			      --with-libiconv=$SYSROOT_PREFIX/usr \
 			      --without-libintl-prefix \
 			      --with-included-unistring \
-			      --with-default-trust-store-file=/etc/pki/tls/certs/ca-bundle.crt \
+			      --with-ca-bundle=/etc/ssl/cert.pem \
 			      --disable-doc \
 			      --disable-valgrind-tests \
 			      --disable-full-test-suite \

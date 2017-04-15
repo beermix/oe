@@ -1,22 +1,22 @@
 PKG_NAME="redsocks2"
-PKG_VERSION="bc2706a"
+PKG_VERSION="b12b102"
 PKG_GIT_URL="https://github.com/semigodking/redsocks"
 PKG_DEPENDS_TARGET="toolchain openssl libevent"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-#PKG_MAKE_OPTS_TARGET="CC=$CC ENABLE_STATIC=FALSE"
+#PKG_MAKE_OPTS_TARGET="CC=$CC ENABLE_STATIC=TRUE"
 #PKG_MAKEINSTALL_OPTS_TARGET="$PKG_MAKE_OPTS_TARGET"
 
 make_target() {
-  make \
+  make -j1 \
        CC="$CC" \
        LD="$LD" \
        AR="$AR" \
        XCFLAGS="$CFLAGS" \
        XLDFLAGS="$LDFLAGS" \
-       all -j1
+       ENABLE_STATIC=true
 }
 
 post_make_target() {

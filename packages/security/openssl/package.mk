@@ -19,13 +19,12 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            --libdir=lib \
                            shared \
                            threads \
-                           enable-gmp \
                            no-rfc3779 \
                            no-ssl2 \
                            no-ssl3 \
                            enable-unit-test \
                            enable-tlsext \
-                           no-zlib \
+                           zlib \
                            no-zlib-dynamic \
                            no-weak-ssl-ciphers \
                            enable-ec_nistp_64_gcc_128"

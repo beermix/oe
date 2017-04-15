@@ -47,16 +47,16 @@ for i in $FILE; do
     fi
     case $i in
       *.tar)
-        tar xfv $f -C $3
+        tar xf $f -C $3
         ;;
       *.tar.bz2 | *.tbz)
-        tar xjfv $f -C $3
+        tar xjf $f -C $3
         ;;
       *.tar.gz | *.tgz)
-        tar xzfv $f -C $3
+        tar xzf $f -C $3
         ;;
       *.tar.xz | *.txz)
-        tar xJfv $f -C $3
+        tar xJf $f -C $3
         ;;
       *.7z)
         mkdir -p $3/$1
