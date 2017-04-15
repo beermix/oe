@@ -89,7 +89,8 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --with-gallium-drivers=$GALLIUM_DRIVERS \
                            --with-dri-drivers=$DRI_DRIVERS \
                            --with-vulkan-drivers=no \
-                           --with-sysroot=$SYSROOT_PREFIX"
+                           --with-sysroot=$SYSROOT_PREFIX \
+                           --disable-static"
 
 pre_configure_target() {
   export LIBS="-lxcb-dri3 -lxcb-present -lxcb-sync -lxshmfence -lz"

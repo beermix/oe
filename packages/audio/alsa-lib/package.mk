@@ -39,7 +39,8 @@ PKG_CONFIGURE_OPTS_TARGET="--with-plugindir=/usr/lib/alsa \
                            --enable-symbolic-functions \
                            --disable-python \
                            $ALSA_DEBUG \
-                           --disable-dependency-tracking"
+                           --disable-dependency-tracking \
+                           --disable-static"
 
 pre_configure_target() {
   CFLAGS="$CFLAGS -fPIC -DPIC"

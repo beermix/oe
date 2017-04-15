@@ -1,5 +1,5 @@
 PKG_NAME="bash"
-PKG_VERSION="1a5fa30"
+PKG_VERSION="bc00779"
 PKG_GIT_URL="https://github.com/bminor/bash"
 PKG_DEPENDS_TARGET="toolchain netbsd-curses readline"
 PKG_IS_ADDON="no"
@@ -7,6 +7,7 @@ PKG_AUTORECONF="no"
 
 pre_configure_target() {
   export LIBS="-ltermcap -lcurses"
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|g"`
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--bindir=/bin \

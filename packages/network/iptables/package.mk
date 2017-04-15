@@ -32,9 +32,17 @@ PKG_LONGDESC="Iptables is used to set up, maintain, and inspect the tables of IP
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--with-kernel=$(get_pkg_build linux)"
+PKG_CONFIGURE_OPTS_TARGET="--enable-shared \
+			      --disable-static \
+			      --enable-devel \
+			      --disable-connlabel \
+			      --disable-nftables \
+			      --disable-ipv6 \
+			      --with-xtlibdir=/usr/lib/iptables \
+			      --with-kernel=$(get_pkg_build linux)"
 
 
 pre_configure_target() {
   export CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
+  export LDFLAGS="$LDFLAGS -Wl,--gc-sections"
 }
