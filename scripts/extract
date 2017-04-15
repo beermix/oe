@@ -52,14 +52,11 @@ for i in $FILE; do
       *.tar.bz2 | *.tbz)
         tar xjfv $f -C $3
         ;;
-      *.tar.lrzv | *.lrz)
-        lrzuntar $f
-        ;;
       *.tar.gz | *.tgz)
         tar xzfv $f -C $3
         ;;
-      *.tar.xvz | *.txz)
-        tar xJf $f -C $3
+      *.tar.xz | *.txz)
+        tar xJfv $f -C $3
         ;;
       *.7z)
         mkdir -p $3/$1
