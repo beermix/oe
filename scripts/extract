@@ -47,18 +47,18 @@ for i in $FILE; do
     fi
     case $i in
       *.tar)
-        tar xf $f -C $3
+        tar xfv $f -C $3
         ;;
       *.tar.bz2 | *.tbz)
-        tar xjf $f -C $3
+        tar xjfv $f -C $3
         ;;
-      *.tar.lrz)
-        tar xf $f -C $3 
+      *.tar.lrzv | *.lrz)
+        lrzuntar $f
         ;;
       *.tar.gz | *.tgz)
-        tar xzf $f -C $3
+        tar xzfv $f -C $3
         ;;
-      *.tar.xz | *.txz)
+      *.tar.xvz | *.txz)
         tar xJf $f -C $3
         ;;
       *.7z)
