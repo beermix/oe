@@ -150,7 +150,7 @@ configure_target() {
               --enable-pthreads \
               --disable-w32threads \
               --enable-network \
-              --enable-gnutls --enable-openssl \
+              --disable-gnutls --enable-openssl \
               --disable-gray \
               --enable-swscale-alpha \
               --disable-small \

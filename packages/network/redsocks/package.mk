@@ -6,10 +6,17 @@ PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_MAKE_OPTS_TARGET="CC=$CC ENABLE_STATIC=true"
-#PKG_MAKEINSTALL_OPTS_TARGET="$PKG_MAKE_OPTS_TARGET"
+make_target() {
+  make -j1 \
+       CC="$CC" \
+       LD="$LD" \
+       AR="$AR" \
+       XCFLAGS="$CFLAGS" \
+       XLDFLAGS="$LDFLAGS" \
+       ENABLE_STATIC=false
+}
 
 post_make_target() {
   mkdir -p $INSTALL/usr/bin
-  cp -v redsocks $INSTALL/usr/bin/
+  cp -v redsocks2 $INSTALL/usr/bin/
 }
