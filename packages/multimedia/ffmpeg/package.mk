@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="LGPLv2.1+"
 PKG_SITE="https://ffmpeg.org"
 PKG_URL="https://ffmpeg.org/releases/${PKG_NAME}-${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 gnutls openssl flac speex libvpx libtheora libvorbis xz libssh x265"
+PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 gnutls openssl libmpeg2 flac speex libvpx libtheora libvorbis xz libssh x265"
 PKG_PRIORITY="optional"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
@@ -136,9 +136,6 @@ configure_target() {
               --pkg-config="$ROOT/$TOOLCHAIN/bin/pkg-config" \
               --enable-optimizations \
               --disable-extra-warnings \
-              --disable-ffprobe \
-              --disable-ffplay \
-              --disable-ffserver \
               --enable-ffmpeg \
               --enable-avdevice \
               --enable-avcodec \
@@ -150,7 +147,7 @@ configure_target() {
               --enable-pthreads \
               --disable-w32threads \
               --enable-network \
-              --disable-gnutls --enable-openssl \
+              --enable-gnutls --enable-openssl \
               --disable-gray \
               --enable-swscale-alpha \
               --disable-small \
@@ -172,7 +169,7 @@ configure_target() {
               --enable-encoder=png \
               --disable-decoder=mpeg_xvmc \
               --enable-hwaccels \
-              --disable-muxers \
+              --enable-muxers \
               --enable-muxer=spdif \
               --enable-muxer=adts \
               --enable-muxer=asf \
@@ -203,8 +200,8 @@ configure_target() {
               --enable-libtheora \
               --disable-libvo-amrwbenc \
               --enable-libvorbis \
-              --disable-libvpx \
-              --disable-libx264 \
+              --enable-libvpx \
+              --enable-libx265 \
               --disable-libxavs \
               --disable-libxvid \
               --enable-zlib \
