@@ -13,7 +13,7 @@ PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr\
 			      --enable-aligned \
 			      --disable-shared \
 			      --disable-debug \
-			      --with-zlib \
+			      --with-zlib=$SYSROOT_PREFIX/usr \
 			      --with-kqueue \
 			      --with-posix-fallocate"
 

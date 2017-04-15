@@ -16,7 +16,3 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static \
 			      --disable-docs \
 			      --disable-option-checking \
 			      --sysconfdir=/storage/.config/megatools"
-
-make_target() {
-  make CC="$CC" AR="$AR" LD="$LD" XCFLAGS="$CFLAGS" RANLIB="$RANLIB" XLDFLAGS="$LDFLAGS" CFLAGS="$CFLAGS" -j1
-}
