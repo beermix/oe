@@ -52,7 +52,6 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
                            --disable-xres \
                            --enable-record \
                            --enable-xv \
-                           --disable-xvmc \
                            --enable-dga \
                            --disable-screensaver \
                            --disable-xdmcp \
@@ -115,7 +114,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
                            --with-gnu-ld \
                            --with-sha1=libcrypto \
                            --without-systemd-daemon \
-                           --with-os-vendor=OpenELEC.tv \
+                           --with-os-vendor=OE \
                            --with-module-dir=/usr/lib/xorg/modules \
                            --with-xkb-path=/usr/share/X11/xkb \
                            --with-xkb-output=/var/cache/xkb \

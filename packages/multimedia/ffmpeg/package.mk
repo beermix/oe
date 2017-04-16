@@ -206,13 +206,7 @@ configure_target() {
               --disable-altivec \
               $FFMPEG_FPU \
               --enable-yasm \
-              --disable-symver \
-              --enable-sse42 \
-              --disable-sse4 \
-              --disable-ssse3 \
-              --disable-sse3 \
-              --disable-sse2 \
-              --disable-sse
+              --disable-symver
 }
 
 post_makeinstall_target() {
