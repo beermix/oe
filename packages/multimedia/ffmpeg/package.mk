@@ -93,6 +93,7 @@ pre_configure_target() {
   if [ "$KODIPLAYER_DRIVER" = "bcm2835-firmware" ]; then
     export CFLAGS="-I$SYSROOT_PREFIX/usr/include/interface/vcos/pthreads -I$SYSROOT_PREFIX/usr/include/interface/vmcs_host/linux -DRPI=1 $CFLAGS"
     export FFMPEG_LIBS="-lbcm_host -lvcos -lvchiq_arm -lmmal -lmmal_core -lmmal_util -lvcsm -lvchostif"
+    export CPPFLAGS="$CPPFLAGS -D_POSIX_SOURCE -D_GNU_SOURCE"
   fi
 }
 
@@ -211,7 +212,13 @@ configure_target() {
               --disable-altivec \
               $FFMPEG_FPU \
               --enable-yasm \
-              --disable-symver
+              --disable-symver \
+              --enable-sse42 \
+              --disable-sse4 \
+              --disable-ssse3 \
+              --disable-sse3 \
+              --disable-sse2 \
+              --disable-sse
 }
 
 post_makeinstall_target() {

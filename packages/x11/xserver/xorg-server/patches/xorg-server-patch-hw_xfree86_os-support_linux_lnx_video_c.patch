@@ -1,0 +1,23 @@
+--- xorg-server-1.18.0.orig/hw/xfree86/os-support/linux/lnx_video.c	2015-08-03 16:44:08.000000000 +0200
++++ xorg-server-1.18.0/hw/xfree86/os-support/linux/lnx_video.c	2016-01-08 01:41:49.618324040 +0100
+@@ -79,7 +79,7 @@ xf86OSInitVidMem(VidMemInfoPtr pVidMem)
+ /* I/O Permissions section                                                 */
+ /***************************************************************************/
+ 
+-#if defined(__powerpc__)
++#if defined(__powerpc__) || defined(__mips__)
+ volatile unsigned char *ioBase = NULL;
+ 
+ #ifndef __NR_pciconfig_iobase
+@@ -90,7 +90,11 @@ static Bool
+ hwEnableIO(void)
+ {
+     int fd;
++#ifdef __powerpc__
+     unsigned int ioBase_phys = syscall(__NR_pciconfig_iobase, 2, 0, 0);
++#else
++    unsigned int ioBase_phys = 0x1fd00000;
++#endif
+ 
+     fd = open("/dev/mem", O_RDWR);
+     if (ioBase == NULL) {
