@@ -16,17 +16,25 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="libnl"
-PKG_VERSION="3.2.29"
-PKG_SITE="http://people.suug.ch/~tgr/libnl/"
-PKG_URL="https://github.com/thom311/libnl/releases/download/libnl3_2_29/libnl-3.2.29.tar.gz"
+PKG_NAME="iana-etc"
+PKG_VERSION="2.30"
+PKG_SITE="http://www.linuxfromscratch.org/lfs/view/development/chapter06/iana-etc.html"
+PKG_URL="http://anduin.linuxfromscratch.org/sources/LFS/lfs-packages/conglomeration/iana-etc/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain"
+
 PKG_SECTION="network"
-PKG_SHORTDESC="libnl: libnl - netlink library"
-PKG_LONGDESC="libnl is a library for applications dealing with netlink socket. It provides an easy to use interface for raw netlink message but also netlink family specific APIs."
+PKG_SHORTDESC="iana-etc: The Iana-Etc package provides data for network services and protocols."
+PKG_LONGDESC="The Iana-Etc package provides data for network services and protocols."
+
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --disable-cli"
+post_make_target() {
+  sed -e 's,^sunrpc,rpcbind,' -i services
+}
 
-MAKEFLAGS=-j1
+makeinstall_target() {
+  mkdir -p $INSTALL/etc
+    cp protocols $INSTALL/etc
+    cp services $INSTALL/etc
+}
