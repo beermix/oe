@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libpciaccess"
-PKG_VERSION="0.13.4"
+PKG_VERSION="0.13.5"
 PKG_SITE="http://freedesktop.org"
 PKG_URL="http://xorg.freedesktop.org/archive/individual/lib/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain util-macros zlib"

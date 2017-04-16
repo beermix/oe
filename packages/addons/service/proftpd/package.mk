@@ -46,7 +46,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --enable-facl \
                            --enable-autoshadow \
                            --enable-ctrls \
-                           --enable-ipv6 \
+                           --disable-ipv6 \
                            --enable-nls \
                            --enable-pcre \
                            --enable-largefile"
