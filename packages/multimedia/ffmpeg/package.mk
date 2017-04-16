@@ -36,7 +36,7 @@ PKG_AUTORECONF="no"
   get_graphicdrivers
 
 if [ "$VAAPI_SUPPORT" = yes ]; then
-  PKG_DEPENDS_TARGET+=" intel-vaapi-driver"
+  PKG_DEPENDS_TARGET+=" intel-vaapi-driver libvdpau-va-gl"
   FFMPEG_VAAPI="--enable-vaapi"
 else
   FFMPEG_VAAPI="--disable-vaapi"
@@ -144,7 +144,6 @@ configure_target() {
               --enable-swscale \
               --enable-postproc \
               --enable-avfilter \
-              --disable-devices \
               --enable-pthreads \
               --disable-w32threads \
               --enable-network \
@@ -181,15 +180,10 @@ configure_target() {
               --enable-parsers \
               --enable-bsfs \
               --enable-protocol=http \
-              --disable-indevs \
-              --disable-outdevs \
               --enable-filters \
-              --disable-avisynth \
               --enable-bzlib \
-              --disable-frei0r \
               --disable-libopencore-amrnb \
               --disable-libopencore-amrwb \
-              --disable-libopencv \
               --disable-libdc1394 \
               --enable-libfreetype \
               --disable-libgsm \

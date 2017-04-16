@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,20 +16,18 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="intel-vaapi-driver"
-PKG_VERSION="dbe582c"
-PKG_REV="1"
-PKG_ARCH="x86_64"
-PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/01org/intel-vaapi-driver"
-PKG_GIT_URL="https://github.com/01org/intel-vaapi-driver"
-PKG_DEPENDS_TARGET="toolchain libva libdrm"
-PKG_PRIORITY="optional"
+PKG_NAME="v4l-utils"
+PKG_VERSION="1.12.3"
+PKG_SITE="https://wiki.freedesktop.org/www/Software/VDPAU/"
+PKG_URL="https://secure.freedesktop.org/~aplattner/vdpau/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_DEPENDS_TARGET="toolchain libX11 dri2proto libXext"
 PKG_SECTION="multimedia"
-PKG_SHORTDESC="libva-driver-intel: Intel G45+ driver for VAAPI"
-PKG_LONGDESC="libva-driver-intel: Intel G45+ driver for VAAPI"
+PKG_SHORTDESC="libvdpau: a Video Decode and Presentation API for UNIX."
+PKG_LONGDESC="VDPAU is the Video Decode and Presentation API for UNIX. It provides an interface to video decode acceleration and presentation hardware present in modern GPUs."
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-silent-rules --with-drivers-path=/usr/lib/va"
+PKG_CONFIGURE_OPTS_TARGET="--enable-dri2 \
+                           --disable-documentation \
+                           --with-module-dir=/usr/lib/vdpau"
