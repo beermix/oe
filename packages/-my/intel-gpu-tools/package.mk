@@ -9,9 +9,9 @@ PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-static \
-			      --with-gnu-ld \
 			      --enable-silent-rules \
 			      --disable-debug \
+			      --disable-tests \
 			      --without-libunwind \
 			      --disable-gtk-doc \
 			      --disable-gtk-doc-html \
