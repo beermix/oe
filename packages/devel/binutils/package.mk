@@ -1,27 +1,12 @@
 ################################################################################
-#      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
-#
-#  OpenELEC is free software: you can redistribute it and/or modify
-#  it under the terms of the GNU General Public License as published by
-#  the Free Software Foundation, either version 2 of the License, or
-#  (at your option) any later version.
-#
-#  OpenELEC is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU General Public License for more details.
-#
-#  You should have received a copy of the GNU General Public License
-#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
+#PKG_VERSION="19c4de7"
+#PKG_VERSION="b5d3ac2"
+#PKG_GIT_URL="git://sourceware.org/git/binutils-gdb.git"
 ################################################################################
 
 PKG_NAME="binutils"
-PKG_VERSION="19c4de7"
-#PKG_VERSION="b5d3ac2"
-PKG_GIT_URL="git://sourceware.org/git/binutils-gdb.git"
-#PKG_VERSION="2.28"
-#PKG_URL="https://fossies.org/linux/misc/binutils-$PKG_VERSION.tar.xz"
+PKG_VERSION="2.28"
+PKG_URL="https://fossies.org/linux/misc/binutils-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="ccache:host bison:host flex:host linux:host"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="binutils: A GNU collection of binary utilities"
@@ -43,6 +28,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-gold \
                          --enable-ld=default \
                          --enable-lto \
+                         --with-pic \
                          --disable-gdb \
                          --disable-nls \
                          --disable-shared \

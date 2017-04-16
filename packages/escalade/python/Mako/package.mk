@@ -17,19 +17,21 @@
 ################################################################################
 
 PKG_NAME="Mako"
-PKG_VERSION="1.0.4"
+PKG_VERSION="1.0.6"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.makotemplates.org"
-PKG_URL="http://pypi.python.org/packages/source/M/Mako/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain Python:host distutilscross:host"
-PKG_DEPENDS_HOST="$PKG_DEPENDS_TARGET"
+PKG_URL="https://pypi.python.org/packages/56/4b/cb75836863a6382199aefb3d3809937e21fa4cb0db15a4f4ba0ecc2e7e8e/Mako-1.0.6.tar.gz"
+PKG_DEPENDS_TARGET="toolchain Python:host distutilscross:host Mako:host"
+PKG_DEPENDS_HOST="distutilscross:host"
 PKG_SECTION="python/devel"
 PKG_SHORTDESC="Hyperfast and lightweight templating for the Python platform."
 PKG_IS_ADDON="no"
 
 PKG_AUTORECONF="no"
+
+MAKEFLAGS=-j1
 
 pre_build_host() {
   mkdir -p $PKG_BUILD/.$HOST_NAME

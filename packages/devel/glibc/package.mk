@@ -1,26 +1,11 @@
 ################################################################################
-#      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
-#
-#  OpenELEC is free software: you can redistribute it and/or modify
-#  it under the terms of the GNU General Public License as published by
-#  the Free Software Foundation, either version 2 of the License, or
-#  (at your option) any later version.
-#
-#  OpenELEC is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU General Public License for more details.
-#
-#  You should have received a copy of the GNU General Public License
-#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
+#PKG_VERSION="2.25"
+#PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 ################################################################################
 
 PKG_NAME="glibc"
-PKG_VERSION="2.25"
-PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
-#PKG_VERSION="36fe25f"
-#PKG_GIT_URL="git://sourceware.org/git/glibc.git"
+PKG_VERSION="a12ae89"
+PKG_GIT_URL="git://sourceware.org/git/glibc.git"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap localedef-eglibc:host"
 PKG_DEPENDS_INIT="glibc"
 PKG_PRIORITY="optional"
@@ -121,13 +106,11 @@ post_makeinstall_target() {
     ln -sf ld-$PKG_VERSION.so $INSTALL/lib/ld-linux.so.3
   fi
 
-# cleanup
-  for i in $GLIBC_EXCLUDE_BIN; do
-    rm -rf $INSTALL/usr/bin/$i
-  done
   rm -rf $INSTALL/usr/lib/audit
   rm -rf $INSTALL/usr/lib/glibc
+  rm -rf $INSTALL/usr/lib/libc_pic
   rm -rf $INSTALL/usr/lib/*.o
+  rm -rf $INSTALL/usr/lib/*.map
   rm -rf $INSTALL/var
 
 # remove unneeded libs

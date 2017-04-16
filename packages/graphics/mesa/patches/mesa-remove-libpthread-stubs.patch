@@ -1,13 +1,15 @@
 diff --git a/configure.ac b/configure.ac
-index 54416b4..8a708d3 100644
+old mode 100644
+new mode 100755
+index ef19733423..935d153de5
 --- a/configure.ac
 +++ b/configure.ac
-@@ -824,7 +824,7 @@ test -z "$PTHREAD_LIBS" && PTHREAD_LIBS="-lpthread"
- 
- dnl pthread-stubs is mandatory on targets where it exists
- case "$host_os" in
+@@ -690,7 +690,7 @@ darwin* )
+     LIB_EXT='dylib'
+     IMP_LIB_EXT=$LIB_EXT
+     ;;
 -cygwin* )
 +cygwin* | linux* )
-     pthread_stubs_possible="no"
+     LIB_EXT='dll'
+     IMP_LIB_EXT='dll.a'
      ;;
- * )
