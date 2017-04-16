@@ -14,9 +14,13 @@ pre_configure_target() {
 }
 
 make_target() {
-  make -j1 CC="$CC" \
-  LDFLAGS="$TARGET_LDFLAGS" \
-  DBM_INCLUDE="$SYSROOT_PREFIX/usr/include" \
-  CCOPTS="$TARGET_CFLAGS -D_GNU_SOURCE" SHARED_LIBS=n
+  make -j1 \
+  CC="${CC}" \
+  LDFLAGS="${LDFLAGS}" \
+  DBM_INCLUDE="${SYSROOT_PREFIX}/usr/include" \
+  CCOPTS="${CFLAGS} -D_GNU_SOURCE" \
+  IPTC="${CFLAGS}" \
+  IPTL="${LDFLAGS}" \
+  SHARED_LIBS=n
 }
 
