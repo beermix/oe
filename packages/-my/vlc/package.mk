@@ -83,7 +83,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --enable-libass \
 			      --disable-kate \
 			      --disable-tiger \
-			      --enable-libva \
+			      --disable-libva \
 			      --disable-vdpau \
 			      --with-x \
 			      --enable-xcb \
@@ -92,7 +92,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-sdl-image \
 			      --enable-freetype \
 			      --disable-fribidi \
-			      --disable-fontconfig \
+			      --enable-fontconfig \
 			      --enable-libxml2 \
 			      --disable-svg \
 			      --disable-directx \
@@ -108,7 +108,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-macosx \
 			      --disable-macosx-vlc-app \
 			      --disable-macosx-qtkit \
-			      --disable-ncurses \
+			      --enable-ncurses \
 			      --disable-goom \
 			      --disable-projectm \
 			      --enable-udev \
@@ -127,14 +127,15 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --enable-vpx \
 			      --enable-vlc \
 			      --disable-optimizations \
+			      ac_cv_c_bigendian=no \
 			      ac_cv_func_sched_getaffinity=no"
 
 pre_configure_target() {
-  export LDFLAGS="$LDFLAGS -lresolv"
+  export LDFLAGS="$LDFLAGS -lresolv -fPIC"
   export CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
-  export LDFLAGS="$LDFLAGS -fPIC"
-  #export CXXFLAGS="$CXXFLAGS -std=gnu++98"
-  #strip_lto
+  #export CXXFLAGS="$CXXFLAGS -std=gnu++14"
+  export LIBS="-lterminfo"
+  strip_lto
 }
 
 post_makeinstall_target() {

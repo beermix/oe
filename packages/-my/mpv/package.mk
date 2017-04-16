@@ -14,25 +14,11 @@ configure_target() {
   ./bootstrap.py
   ./waf dist
   ./waf configure --prefix=/usr \
-  		    --disable-wayland \
-  		    --disable-android \
-  		    --disable-caca \
-  		    --disable-cdda \
-  		    --disable-cocoa \
-  		    --disable-coreaudio \
-  		    --disable-libv4l2 \
-  		    --disable-opensles \
-  		    --disable-rpi \
-  		    --disable-rsound \
-  		    --disable-rubberband \
-  		    --disable-uchardet \
-  		    --disable-vapoursynth \
-  		    --disable-vapoursynth-lazy \
-  		    --disable-vdpau
+  		    --disable-wayland
 }
 
 make_target() {
-  ./waf build -j4
+  ./waf build -v
 }
 
 make_install_target() {
