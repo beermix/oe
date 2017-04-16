@@ -48,7 +48,7 @@
 ################################################################################
 
   # Build optimizations (size/normal)
-    OPTIMIZATIONS="size"
+    OPTIMIZATIONS="normal"
 
   # Project CFLAGS
     PROJECT_CFLAGS="-mmmx -msse -msse2 -msse3 -mssse3 -maes -mavx -msse4.2 -msse4.1 --param=l1-cache-size=32 --param=l1-cache-line-size=64 --param=l2-cache-size=6144 -mtune=ivybridge -mfpmath=sse"
@@ -101,6 +101,6 @@
   # please add all configfiles which should be included without the suffix and prefix
   # except the default-*.config and the ones included in packages/linux/package.mk
   # Space separated list is supported,
-    ERNEL_EXTRA_CONFIG+=" keyboard-at mouse-ps2"
+    ERNEL_EXTRA_CONFIG+=" keyboard-at"
     KERNEL_EXTRA_CONFIG+=" sata lan-pci sound-pci"
     KERNEL_EXTRA_CONFIG+=" bluetooth filesystem wlan-other wlan-usb"
