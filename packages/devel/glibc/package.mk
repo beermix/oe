@@ -1,11 +1,11 @@
 ################################################################################
-#PKG_VERSION="2.25"
-#PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
+#PKG_VERSION="a12ae89"
+#PKG_GIT_URL="git://sourceware.org/git/glibc.git"
 ################################################################################
 
 PKG_NAME="glibc"
-PKG_VERSION="a12ae89"
-PKG_GIT_URL="git://sourceware.org/git/glibc.git"
+PKG_VERSION="2.25"
+PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap localedef-eglibc:host"
 PKG_DEPENDS_INIT="glibc"
 PKG_PRIORITY="optional"
