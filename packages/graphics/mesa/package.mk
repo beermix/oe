@@ -41,14 +41,17 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            X11_INCLUDES= \
                            DRI_DRIVER_INSTALL_DIR=/usr/lib/dri \
                            DRI_DRIVER_SEARCH_DIR=/usr/lib/dri \
+                           --disable-silent-rules \
                            --disable-debug \
+                           --disable-profile \
+                           --disable-libglvnd \
                            --disable-mangling \
                            --enable-texture-float \
                            --enable-asm \
                            --disable-selinux \
                            --enable-opengl \
                            --disable-gles1 \
-                           $MESA_GLES \
+                           --enable-gles2 \
                            --enable-dri \
                            --disable-gallium-extra-hud \
                            --disable-lmsensors \
@@ -57,20 +60,20 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --disable-osmesa \
                            --disable-gallium-osmesa \
                            --enable-egl --with-egl-platforms=x11,drm \
-                           $XA_CONFIG \
+                           --disable-xa \
                            --enable-gbm \
                            --disable-nine \
                            --disable-xvmc \
                            $MESA_VDPAU \
                            --disable-omx \
                            --disable-va \
-                           --disable-opencl \
-                           --enable-opencl-icd \
+                           --disable-opencl --disable-opencl-icd \
                            --disable-gallium-tests \
                            --enable-shared-glapi \
                            --enable-shader-cache \
                            --enable-driglx-direct \
                            --enable-glx-tls \
+                           --disable-glx-read-only-text \
                            $MESA_GALLIUM_LLVM \
                            --disable-valgrind \
                            --with-sysroot=$SYSROOT_PREFIX \

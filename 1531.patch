@@ -1,0 +1,133 @@
+From a8c3265ad4e1aed1862f6ba69f097039ab2b2b97 Mon Sep 17 00:00:00 2001
+From: thoradia <thoradia.quack@gmail.com>
+Date: Sat, 15 Apr 2017 16:36:25 +0200
+Subject: [PATCH] locale: initial add-on
+
+---
+ packages/addons/tools/locale/changelog.txt      |  2 ++
+ packages/addons/tools/locale/package.mk         | 36 +++++++++++++++++++++++++
+ packages/addons/tools/locale/source/bin/locpath | 33 +++++++++++++++++++++++
+ packages/addons/tools/locale/source/default.py  | 22 +++++++++++++++
+ 4 files changed, 93 insertions(+)
+ create mode 100644 packages/addons/tools/locale/changelog.txt
+ create mode 100644 packages/addons/tools/locale/package.mk
+ create mode 100644 packages/addons/tools/locale/source/bin/locpath
+ create mode 100644 packages/addons/tools/locale/source/default.py
+
+diff --git a/packages/addons/tools/locale/changelog.txt b/packages/addons/tools/locale/changelog.txt
+new file mode 100644
+index 0000000..537a90c
+--- /dev/null
++++ b/packages/addons/tools/locale/changelog.txt
+@@ -0,0 +1,2 @@
++100:
++- Initial add-on
+diff --git a/packages/addons/tools/locale/package.mk b/packages/addons/tools/locale/package.mk
+new file mode 100644
+index 0000000..79030e8
+--- /dev/null
++++ b/packages/addons/tools/locale/package.mk
+@@ -0,0 +1,36 @@
++################################################################################
++#      This file is part of LibreELEC - https://libreelec.tv
++#      Copyright (C) 2017 Team LibreELEC
++#
++#  LibreELEC is free software: you can redistribute it and/or modify
++#  it under the terms of the GNU General Public License as published by
++#  the Free Software Foundation, either version 2 of the License, or
++#  (at your option) any later version.
++#
++#  LibreELEC is distributed in the hope that it will be useful,
++#  but WITHOUT ANY WARRANTY; without even the implied warranty of
++#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++#  GNU General Public License for more details.
++#
++#  You should have received a copy of the GNU General Public License
++#  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
++################################################################################
++
++PKG_NAME="locale"
++PKG_REV="100"
++PKG_ARCH="any"
++PKG_DEPENDS_TARGET="toolchain glibc"
++PKG_SECTION="virtual"
++PKG_SHORTDESC="Locales: compile and set a custom locale definition"
++PKG_LONGDESC="Locales ($PKG_REV) provides a script compile and set a custom locale definition"
++
++PKG_IS_ADDON="yes"
++PKG_ADDON_NAME="Locale"
++PKG_ADDON_TYPE="xbmc.python.script"
++
++addon() {
++  mkdir -p "$ADDON_BUILD/$PKG_ADDON_ID/i18n"
++  cp -PR "$(get_build_dir glibc)/localedata/charmaps" \
++         "$(get_build_dir glibc)/localedata/locales" \
++         "$ADDON_BUILD/$PKG_ADDON_ID/i18n"
++}
+diff --git a/packages/addons/tools/locale/source/bin/locpath b/packages/addons/tools/locale/source/bin/locpath
+new file mode 100644
+index 0000000..f093a9c
+--- /dev/null
++++ b/packages/addons/tools/locale/source/bin/locpath
+@@ -0,0 +1,33 @@
++#!/bin/sh
++################################################################################
++#      This file is part of LibreELEC - http://www.libreelec.tv
++#      Copyright (C) 2017 Team LibreELEC
++#
++#  LibreELEC is free software: you can redistribute it and/or modify
++#  it under the terms of the GNU General Public License as published by
++#  the Free Software Foundation, either version 2 of the License, or
++#  (at your option) any later version.
++#
++#  LibreELEC is distributed in the hope that it will be useful,
++#  but WITHOUT ANY WARRANTY; without even the implied warranty of
++#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++#  GNU General Public License for more details.
++#
++#  You should have received a copy of the GNU General Public License
++#  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
++################################################################################
++
++. /etc/profile
++oe_setup_addon virtual.locale
++
++[ -z "$LANG" ] && exit
++
++CHARMAP="${LANG##*.}"
++LOCALE="${LANG%%.*}"
++
++if [ ! -d "$ADDON_HOME/$LANG" ]; then
++  I18NPATH="$ADDON_DIR/i18n" localedef -f "$CHARMAP" -i "$LOCALE" "$ADDON_HOME/$LANG"
++  [ "$?" != "0" ] && exit
++fi
++
++echo "$ADDON_HOME"
+diff --git a/packages/addons/tools/locale/source/default.py b/packages/addons/tools/locale/source/default.py
+new file mode 100644
+index 0000000..d091317
+--- /dev/null
++++ b/packages/addons/tools/locale/source/default.py
+@@ -0,0 +1,22 @@
++################################################################################
++#      This file is part of LibreELEC - http://www.libreelec.tv
++#      Copyright (C) 2017 Team LibreELEC
++#
++#  LibreELEC is free software: you can redistribute it and/or modify
++#  it under the terms of the GNU General Public License as published by
++#  the Free Software Foundation, either version 2 of the License, or
++#  (at your option) any later version.
++#
++#  LibreELEC is distributed in the hope that it will be useful,
++#  but WITHOUT ANY WARRANTY; without even the implied warranty of
++#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++#  GNU General Public License for more details.
++#
++#  You should have received a copy of the GNU General Public License
++#  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
++################################################################################
++
++import xbmcgui
++
++dialog = xbmcgui.Dialog()
++dialog.ok('', 'This is a console-only addon')
