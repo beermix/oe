@@ -10,7 +10,7 @@ pre_configure_target() {
   rm -rf .$TARGET_NAME
   
   strip_lto
-  #strip_gold
+  strip_gold
 }
 
 configure_target() {
