@@ -11,13 +11,14 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="gl_cv_socket_ipv6=no \
-			      ac_cv_header_wchar_h=yes \
-			      gt_cv_c_wchar_t=yes \
-			      gt_cv_c_wint_t=yes \
+			      ac_cv_header_wchar_h=no \
+			      gt_cv_c_wchar_t=no \
+			      gt_cv_c_wint_t=no \
 			      gl_cv_func_gettimeofday_clobber=no \
-			      libopts_cv_with_libregex=yes \
+			      libopts_cv_with_libregex=no \
 			      --with-regex-header=pcreposix.h \
 			      --enable-openssl-compatibility \
+			      --disable-nls \
 			      --enable-static \
 			      --disable-crywrap \
 			      --disable-tools \

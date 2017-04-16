@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libssh"
-PKG_VERSION="0.7.4"
+PKG_VERSION="0.7.5"
 PKG_SITE="http://www.libssh.org/"
 PKG_URL="https://git.libssh.org/projects/libssh.git/snapshot/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain zlib openssl"

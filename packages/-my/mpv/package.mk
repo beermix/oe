@@ -8,17 +8,26 @@ PKG_AUTORECONF="no"
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
+  
+  strip_lto
+  #strip_gold
 }
 
 configure_target() {
   ./bootstrap.py
   ./waf dist
   ./waf configure --prefix=/usr \
-  		    --disable-wayland
+  		    --disable-wayland \
+  		    --disable-libmpv-static \
+  		    --disable-static-build \
+  		    --disable-debug-build \
+  		    --disable-manpage-build \
+  		    --disable-apple-remote \
+  		    --disable-macos-touchbar
 }
 
 make_target() {
-  ./waf build -v
+  ./waf build -j4
 }
 
 make_install_target() {
