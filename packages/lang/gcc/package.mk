@@ -63,6 +63,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-linker-build-id \
                            --with-linker-hash-style=gnu \
                            --disable-libsanitizer \
+                           --disable-libatomic \
                            --with-system-zlib \
                            --enable-gnu-indirect-function \
                            --enable-poison-system-directories \
@@ -73,7 +74,6 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
                               --disable-libitm \
-                              --disable-libatomic \
                               --enable-cloog-backend=isl \
                               --disable-shared \
                               --disable-threads \
