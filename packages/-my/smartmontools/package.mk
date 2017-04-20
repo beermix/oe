@@ -1,5 +1,5 @@
 PKG_NAME="smartmontools"
-PKG_VERSION="19dda3e"
+PKG_VERSION="fe9fb96"
 PKG_GIT_URL="https://github.com/mirror/smartmontools"
 PKG_DEPENDS_TARGET="toolchain netbsd-curses"
 PKG_SECTION="my"
