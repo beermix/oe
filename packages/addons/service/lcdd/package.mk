@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="lcdd"
-PKG_VERSION="0.5.8"
+PKG_VERSION="466edd3"
 PKG_REV="103"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://lcdproc.org/"
-PKG_URL="https://github.com/lcdproc/lcdproc/archive/lcdproc-$PKG_VERSION.tar.gz"
+PKG_GIT_URL="https://github.com/lcdproc/lcdproc"
 PKG_SOURCE_DIR="lcdproc-lcdproc-$PKG_VERSION*"
 PKG_DEPENDS_TARGET="toolchain freetype libftdi1 libhid libugpio libusb netbsd-curses serdisplib"
 PKG_SECTION="service"

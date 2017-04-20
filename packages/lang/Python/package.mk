@@ -38,8 +38,7 @@ PY_DISABLED_MODULES="_tkinter nis gdbm bsddb ossaudiodev"
 PKG_CONFIGURE_OPTS_HOST="--cache-file=config.cache \
                          --without-cxx-main \
                          --with-threads \
-                         --enable-unicode=ucs4 \
-                         --disable-ipv6"
+                         --enable-unicode=ucs4"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            ac_cv_file_dev_ptmx=yes \
@@ -54,7 +53,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            ac_cv_have_long_long_format=yes \
                            --with-threads \
                            --enable-unicode=ucs4 \
-                           --disable-ipv6 \
+                           --enable-ipv6 \
                            --disable-profiling \
                            --without-pydebug \
                            --without-doc-strings \
@@ -64,8 +63,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            --with-wctype-functions \
                            --without-cxx-main \
                            --with-system-ffi \
-                           --with-system-expat \
-                           --disable-toolbox-glue"
+                           --with-system-expat"
 post_patch() {
   # This is needed to make sure the Python build process doesn't try to
   # regenerate those files with the pgen program. Otherwise, it builds
@@ -116,7 +114,7 @@ makeinstall_target() {
 }
 
 post_makeinstall_target() {
-  EXCLUDE_DIRS="bsddb idlelib lib-tk lib2to3 msilib pydoc_data test"
+  EXCLUDE_DIRS="bsddb idlelib lib-tk lib2to3 msilib pydoc_data test unittest"
   for dir in $EXCLUDE_DIRS; do
     rm -rf $INSTALL/usr/lib/python*/$dir
   done

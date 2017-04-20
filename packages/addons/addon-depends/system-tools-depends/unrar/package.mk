@@ -33,5 +33,5 @@ make_target() {
      RANLIB="$RANLIB" \
      AR="$AR" \
      STRIP="$STRIP" \
-     -f makefile -j1
+     -f makefile
 }

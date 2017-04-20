@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libugpio"
-PKG_VERSION="c08f282"
+PKG_VERSION="v0.0.6"
 PKG_GIT_URL="https://github.com/mhei/libugpio"
 PKG_DEPENDS_TARGET="toolchain linux"
 PKG_LONGDESC="A free software library to ease the use of linux kernel's sysfs gpio interface from C programs and/or other libraries"
