@@ -7,10 +7,11 @@
 ################################################################################
 
 PKG_NAME="mesa"
-#PKG_VERSION="17.1.0-rc1"
-#PKG_URL="https://fossies.org/linux/misc/mesa-$PKG_VERSION.tar.xz"
-PKG_VERSION="2beff74"
-PKG_GIT_URL="git://anongit.freedesktop.org/mesa/mesa"
+#PKG_VERSION="4516bfb"
+#PKG_KEEP_CHECKOUT="yes"
+#PKG_GIT_URL="git://anongit.freedesktop.org/mesa/mesa"
+PKG_VERSION="17.0.4"
+PKG_URL="https://fossies.org/linux/misc/mesa-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain Python:host expat glproto dri2proto presentproto libdrm libXext libXdamage libXfixes libXxf86vm libxcb libX11 dri3proto libxshmfence zlib Mako:host libxml2"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="mesa: 3-D graphics library with OpenGL API"
@@ -54,7 +55,7 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --enable-asm \
                            --disable-selinux \
                            --enable-opengl \
-                           --disable-gles1 \
+                           --enable-gles1 \
                            --enable-gles2 \
                            --enable-dri \
                            --disable-gallium-extra-hud \
@@ -75,7 +76,6 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --disable-gallium-tests \
                            --enable-shared-glapi \
                            --enable-driglx-direct \
-                           --enable-shader-cache\
                            --enable-glx-tls \
                            --disable-glx-read-only-text \
                            $MESA_GALLIUM_LLVM \
