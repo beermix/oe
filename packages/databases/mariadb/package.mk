@@ -153,7 +153,7 @@ configure_target() {
         -DINSTALL_SUPPORTFILESDIR=share/mysql/support-files \
         -DMYSQL_DATADIR=/storage/mysql \
         -DMYSQL_UNIX_ADDR=/var/tmp/mysql.socket \
-        -DWITH_EXTRA_CHARSETS=complex \
+        -DWITH_EXTRA_CHARSETS=all \
         -DTOKUDB_OK=0 \
         -DDISABLE_LIBMYSQLCLIENT_SYMBOL_VERSIONING=TRUE \
         -DENABLE_DTRACE=OFF \
