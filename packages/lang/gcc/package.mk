@@ -47,10 +47,10 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-gold \
                            --enable-ld=default \
                            --disable-multilib \
+                           --disable-nls \
                            --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
                            --without-ppl \
-                           --disable-nls \
                            --without-cloog \
                            --disable-libada \
                            --disable-libmudflap \
@@ -58,15 +58,11 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libgomp \
                            --disable-libquadmath \
                            --disable-libquadmath-support \
-                           --disable-libcilkrts \
-                           --enable-gnu-unique-object \
-                           --enable-linker-build-id \
                            --with-linker-hash-style=gnu \
                            --disable-libsanitizer \
                            --disable-libatomic \
                            --with-system-zlib \
-                           --enable-gnu-indirect-function \
-                           --enable-poison-system-directories \
+s                           --enable-poison-system-directories \
                            --disable-libssp \
                            --with-tune=generic"
 
@@ -89,17 +85,16 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-tls \
                          --enable-shared \
                          --disable-static \
-                         --enable-long-long \
                          --enable-c99 \
+                         --enable-long-long \
                          --enable-threads=posix \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time \
                          --enable-clocale=gnu \
-                         --enable-gnu-unique-object \
                          $GCC_OPTS"
 
 pre_configure_host() {
-  #export CXXFLAGS="$CXXFLAGS -std=gnu++98"
+  export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
 }
 
