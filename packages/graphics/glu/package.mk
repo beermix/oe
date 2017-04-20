@@ -32,6 +32,10 @@ PKG_LONGDESC="libglu is the The OpenGL utility library"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
+pre_configure_target() {
+  unset CPPFLAGS
+}
+
 PKG_CONFIGURE_OPTS_TARGET="--disable-silent-rules \
             --disable-debug \
             --disable-osmesa \
