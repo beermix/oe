@@ -6,12 +6,9 @@
 PKG_NAME="vlc"
 PKG_VERSION="3.0.0-git"
 PKG_REV="20170405-0224.1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.videolan.org"
-PKG_URL="https://nightlies.videolan.org/build/source/vlc-3.0.0-20170414-0239-git.tar.xz"
-#PKG_DEPENDS_TARGET="toolchain dbus libdvbpsi gnutls libmpeg2 libvorbis zlib lua:host lua"
-PKG_DEPENDS_TARGET="toolchain dbus ffmpeg libdvbpsi gnutls alsa-lib gstreamer flac gstreamerzlibmpeg2 zlib lua:host lua"
+PKG_URL="https://nightlies.videolan.org/build/source/vlc-3.0.0-20170420-0240-git.tar.xz"
+PKG_DEPENDS_TARGET="toolchain dbus ffmpeg libdvbpsi gnutls alsa-lib libvorbis flac libsamplerate libmpeg2 zlib gstreamer lua:host lua"
 PKG_SECTION="xmedia/tools"
 PKG_SHORTDESC="VideoLAN multimedia player and streamer"
 PKG_LONGDESC="VLC is the VideoLAN project's media player. It plays MPEG, MPEG2, MPEG4, DivX, MOV, WMV, QuickTime, mp3, Ogg/Vorbis files, DVDs, VCDs, and multimedia streams from various network sources."
@@ -124,18 +121,14 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-crystalhd \
 			      --disable-dxva2 \
 			      --disable-x265 \
-			      --enable-vpx \
-			      --enable-vlc \
-			      --disable-optimizations \
-			      ac_cv_c_bigendian=no \
-			      ac_cv_func_sched_getaffinity=no"
+			      --disable-vpx \
+			      --enable-vlc"
 
 pre_configure_target() {
   export LDFLAGS="$LDFLAGS -lresolv -fPIC"
-  export CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
+  #export CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fomit-frame-pointer||g"`
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-fomit-frame-pointer||g"`
-  export LIBS="-lterminfo"
+  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-fomit-frame-pointer||g"`
   strip_lto
 }
 

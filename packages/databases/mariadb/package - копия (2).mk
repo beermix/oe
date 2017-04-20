@@ -160,9 +160,18 @@ configure_target() {
         -DWITH_READLINE=ON \
         -DWITH_PCRE=$SYSROOT_PREFIX/usr \
         -DWITH_ZLIB=bundled \
-        -DWITH_SYSTEMD=OFF \
+        -DWITH_SYSTEMD=ON \
         -DWITH_LIBWRAP=OFF \
         -DWITH_SSL=$SYSROOT_PREFIX/usr \
+        -DWITHOUT_DYNAMIC_PLUGINS=ON \
+        -DCMAKE_CROSSCOMPILING=ON \
+        -DENABLED_LOCAL_INFILE=ON \
+        -DDEFAULT_CHARSET=utf8 \
+        -DDEFAULT_COLLATION=utf8_general_ci \
+        -DWITHOUT_EXAMPLE_STORAGE_ENGINE=1 \
+        -DWITHOUT_FEDERATED_STORAGE_ENGINE=1 \
+        -DWITHOUT_PBXT_STORAGE_ENGINE=1 \
+        -DPLUGIN_TOKUDB=NO \
         -DSECURITY_HARDENED=OFF \
         $MARIADB_OPTS \
         ..
