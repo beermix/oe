@@ -21,13 +21,11 @@ configure_target() {
   		    --disable-libmpv-static \
   		    --disable-static-build \
   		    --disable-debug-build \
-  		    --disable-manpage-build \
-  		    --disable-apple-remote \
-  		    --disable-macos-touchbar
+  		    --disable-manpage-build
 }
 
 make_target() {
-  ./waf build -j1
+  ./waf build -j5
 }
 
 make_install_target() {
