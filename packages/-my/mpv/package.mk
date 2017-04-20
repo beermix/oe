@@ -1,5 +1,5 @@
 PKG_NAME="mpv"
-PKG_VERSION="51518dd"
+PKG_VERSION="v0.24.0"
 PKG_GIT_URL="https://github.com/mpv-player/mpv"
 PKG_DEPENDS_TARGET="toolchain ffmpeg libxkbcommon libass lua"
 PKG_IS_ADDON="no"
@@ -9,8 +9,8 @@ pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
   
-  #strip_lto
-  #strip_gold
+  strip_lto
+  strip_gold
 }
 
 configure_target() {
