@@ -2,11 +2,13 @@
 #PKG_VERSION="17.0.3"
 #PKG_URL="ftp://freedesktop.org/pub/mesa/$PKG_NAME-$PKG_VERSION.tar.xz"
 # libXvMC
+#PKG_VERSION="566f2ed"
+#PKG_GIT_URL="git://anongit.freedesktop.org/mesa/mesa"
 ################################################################################
 
 PKG_NAME="mesa"
-PKG_VERSION="566f2ed"
-PKG_GIT_URL="git://anongit.freedesktop.org/mesa/mesa"
+PKG_VERSION="17.1.0-rc1"
+PKG_URL="https://fossies.org/linux/misc/mesa-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain Python:host expat glproto dri2proto presentproto libdrm libXext libxml2 libXdamage libXfixes libXxf86vm libxcb libX11 dri3proto libxshmfence openssl Mako libpthread-stubs"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="mesa: 3-D graphics library with OpenGL API"

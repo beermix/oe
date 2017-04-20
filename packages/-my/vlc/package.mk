@@ -133,7 +133,8 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 pre_configure_target() {
   export LDFLAGS="$LDFLAGS -lresolv -fPIC"
   export CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
-  #export CXXFLAGS="$CXXFLAGS -std=gnu++14"
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-fomit-frame-pointer||g"`
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-fomit-frame-pointer||g"`
   export LIBS="-lterminfo"
   strip_lto
 }
