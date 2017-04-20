@@ -1,5 +1,5 @@
 PKG_NAME="libvpx"
-PKG_VERSION="v1.6.1"
+PKG_VERSION="8975436"
 PKG_GIT_URL="https://github.com/webmproject/libvpx/"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="tools"
@@ -8,8 +8,6 @@ PKG_AUTORECONF="no"
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
-  
-  #export CFLAGS=`echo $CFLAGS | sed -e "s|-m64||g"`
 }
 
 configure_target() {
