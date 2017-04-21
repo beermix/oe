@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="unrar"
-PKG_VERSION="5.4.5"
+PKG_VERSION="5.5.2"
 PKG_SITE="http://www.rarlab.com"
 PKG_URL="http://www.rarlab.com/rar/unrarsrc-$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="${PKG_NAME}"
@@ -28,10 +28,12 @@ PKG_LONGDESC="Unrar is a package to handle files compressed in the RAR format. D
 PKG_AUTORECONF="no"
 
 make_target() {
-  make CXX="$CXX" \
-     CXXFLAGS="$TARGET_CXXFLAGS" \
-     RANLIB="$RANLIB" \
-     AR="$AR" \
-     STRIP="$STRIP" \
-     -f makefile
+  make \
+  	CXX="$CXX" \
+  	CXXFLAGS="$TARGET_CXXFLAGS" \
+  	CPPFLAGS="$CPPFLAGS" \
+  	RANLIB="$RANLIB" \
+  	AR="$AR" \
+  	STRIP="$STRIP" \
+  	-f makefile
 }
