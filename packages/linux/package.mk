@@ -60,8 +60,8 @@ case "$LINUX" in
     PKG_PATCH_DIRS="linux-4.9 rpi-4.9"
     ;;
   linux-zen)
-    PKG_VERSION="4.10-zen-git"
-    PKG_URL="ftp://root:openelec@192.168.1.4:2121/www/linux-4.10-zen-git.tar.xz"
+    PKG_VERSION="zen-kernel-4.10-master"
+    PKG_URL="ftp://root:openelec@192.168.1.4:2121/www/linux-zen-kernel-4.10-master.tar.xz"
     PKG_PATCH_DIRS="linux-4.10"
     ;;
   *)
