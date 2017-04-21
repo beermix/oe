@@ -34,6 +34,9 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
                            --enable-static \
                            --disable-curl \
                            --disable-https \
+                           --disable-doc \
+                           --disable-examples \
+                           --disable-spdy \
                            --with-libgcrypt-prefix=$SYSROOT_PREFIX/usr"
 
 post_makeinstall_target() {
