@@ -40,7 +40,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
                            --enable-malloc \
                            --enable-charsets \
                            --with-gnu-ld \
-                           --with-glib"
+                           --without-glib"
 
 pre_configure_target() {
   export CFLAGS="$CFLAGS -DFRIBIDI_CHUNK_SIZE=4080"
