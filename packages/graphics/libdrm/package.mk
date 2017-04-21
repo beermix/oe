@@ -48,12 +48,9 @@ done
 PKG_CONFIGURE_OPTS_TARGET="--disable-udev \
                            --enable-largefile \
                            --with-kernel-source=$(get_pkg_build linux) \
-                           --disable-libkms \
-                           --disable-nouveau \
-                           --disable-vmwgfx \
-                           --disable-freedreno \
-                           --disable-vc4 \
-                           $DRM_CONFIG \
+                           --enable-intel \
+                           --disable-radeon \
+                           --disable-amdgpu \
                            --disable-install-test-programs \
                            --disable-cairo-tests \
                            --disable-manpages \
