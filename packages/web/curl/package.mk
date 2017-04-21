@@ -25,7 +25,7 @@
 #   there: http://forum.xbmc.org/showthread.php?tid=177557
 
 PKG_NAME="curl"
-PKG_VERSION="7.53.1"
+PKG_VERSION="7.54.0"
 PKG_SITE="http://curl.haxx.se"
 PKG_URL="http://curl.haxx.se/download/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain zlib openssl rtmpdump"
@@ -92,8 +92,10 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            --without-libmetalink \
                            --without-libssh2 \
                            --with-librtmp=$SYSROOT_PREFIX/usr \
-                           --without-libidn \
-                           --disable-ntlm-wb"
+                           --with-libidn2 \
+                           --disable-ntlm-wb \
+                           --enable-static \
+                           --disable-nls"
 
 pre_configure_target() {
 # link against librt because of undefined reference to 'clock_gettime'
