@@ -57,18 +57,18 @@ resolve_hash() {
 rm -rf $KODI_DIR
 git clone --depth=1 https://github.com/xbmc/xbmc.git -b $1 $KODI_DIR
 
-# p8-platform
-REPO=$(cat $KODI_DIR/project/cmake/addons/depends/common/p8-platform/p8-platform.txt | awk '{print $2}')
-GIT_HASH=$(cat $KODI_DIR/project/cmake/addons/depends/common/p8-platform/p8-platform.txt | awk '{print $3}')
+# platform
+REPO=$(cat $KODI_DIR/project/cmake/addons/depends/common/platform/platform.txt | awk '{print $2}')
+GIT_HASH=$(cat $KODI_DIR/project/cmake/addons/depends/common/platform/platform.txt | awk '{print $3}')
 PKG_NAME="platform"
 
 git_clone $REPO master $PKG_NAME.git $GIT_HASH
-if [ -f ../../packages/mediacenter/p8-platform/package.mk ] ; then
+if [ -f ../../packages/mediacenter/platform/package.mk ] ; then
   # update package.mk
   RESOLVED_HASH=$(resolve_hash $PKG_NAME.git $GIT_HASH)
   sed -e "s|PKG_VERSION=.*|PKG_VERSION=\"$RESOLVED_HASH\"|g" \
       -e "s|PKG_GIT_URL=.*|PKG_GIT_URL=\"$REPO\"|g" \
-      -i ../../packages/mediacenter/p8-platform/package.mk
+      -i ../../packages/mediacenter/platform/package.mk
 fi
 rm -rf $PKG_NAME.git
 

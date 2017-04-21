@@ -25,7 +25,7 @@
 # Mediacenter to use (kodi / no)
   MEDIACENTER="kodi"
 
-# Skins to install (Estuary)
+# Skins to install (Confluence)
 # Space separated list is supported,
 # e.g. SKINS="Estuary"
   SKINS=""
@@ -69,7 +69,7 @@
 # please add all configfiles which should be included without the suffix and prefix
 # except the default-*.config and the ones included in packages/linux/package.mk
 # Space separated list is supported,
-  KERNEL_EXTRA_CONFIG+=" filesystem hid-drivers remote sjoystick audio"
+  KERNEL_EXTRA_CONFIG+=" filesystem hid-drivers remote audio"
 # KERNEL_EXTRA_CONFIG+=" lan-phy sound-usb"
   KERNEL_EXTRA_CONFIG+=" usb-serial usb-gadget"
 

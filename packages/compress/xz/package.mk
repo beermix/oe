@@ -35,4 +35,5 @@ PKG_CONFIGURE_OPTS_HOST="--disable-threads --disable-shared --enable-liblzma2-co
 			    --disable-xzdec --disable-lzmadec \
 			    --enable-xz --disable-lzma-links --disable-doc"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-threads --disable-static --disable-xzdec --disable-lzmadec --disable-doc"
+#PKG_CONFIGURE_OPTS_TARGET="--enable-threads --disable-static --disable-xzdec --disable-lzmadec --disable-doc"
+PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
