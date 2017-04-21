@@ -22,4 +22,4 @@ StartLimitInterval=0
 LimitNOFILE=16384
 
 [Install]
-WantedBy=default.target
+WantedBy=kodi.target

@@ -236,7 +236,7 @@ export GIT_REV="$PKG_VERSION"
 PKG_CONFIGURE_OPTS_TARGET="gl_cv_func_gettimeofday_clobber=no \
                            ac_cv_lib_bluetooth_hci_devid=no \
                            --disable-debug \
-                           --enable-optimizations \
+                           --disable-optimizations \
                            $KODI_OPENGL \
                            $KODI_OPENGLES \
                            $KODI_OPENMAX \
@@ -314,7 +314,6 @@ pre_configure_target() {
 
   export CFLAGS="$CFLAGS $KODI_CFLAGS"
   export CXXFLAGS="$CXXFLAGS $KODI_CXXFLAGS"
-  #export CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
   export LIBS="$LIBS -lz"
 
   export JSON_BUILDER=$ROOT/$TOOLCHAIN/bin/JsonSchemaBuilder
@@ -374,6 +373,15 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/share/kodi/addons/service.xbmc.versioncheck
   rm -rf $INSTALL/usr/share/kodi/addons/visualization.vortex
   rm -rf $INSTALL/usr/share/xsessions
+
+  if [ ! "$SKIN_REMOVE_SHIPPED" = "yes" ]; then
+    # Rebrand
+      sed -e "s,@DISTRONAME@,$DISTRONAME,g" -i $INSTALL/usr/share/kodi/addons/skin.confluence/720p/IncludesHomeMenuItems.xml
+
+    rm -rf $INSTALL/usr/share/kodi/addons/skin.confluence/media
+    mkdir -p $INSTALL/usr/share/kodi/addons/skin.confluence/media
+    cp Textures.xbt $INSTALL/usr/share/kodi/addons/skin.confluence/media
+  fi
 
   mkdir -p $INSTALL/usr/share/kodi/addons
     cp -R $PKG_DIR/config/os.openelec.tv $INSTALL/usr/share/kodi/addons
