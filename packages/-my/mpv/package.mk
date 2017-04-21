@@ -1,7 +1,7 @@
 PKG_NAME="mpv"
 PKG_VERSION="e7e6aa3"
 PKG_GIT_URL="https://github.com/mpv-player/mpv"
-PKG_DEPENDS_TARGET="toolchain ffmpeg libxkbcommon libass lua"
+#PKG_DEPENDS_TARGET="toolchain ffmpeg libxkbcommon libass lua"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
@@ -23,7 +23,7 @@ configure_target() {
 }
 
 make_target() {
-  ./waf build -v -j1
+  ./waf build -j5
 }
 
 make_install_target() {
