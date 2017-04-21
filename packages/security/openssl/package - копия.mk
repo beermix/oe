@@ -1,4 +1,8 @@
 PKG_NAME="openssl"
+#PKG_VERSION="e8f2e2f"
+#PKG_SITE="https://github.com/openssl/openssl/tree/OpenSSL_1_0_2-stable"
+#PKG_GIT_URL="https://github.com/openssl/openssl"
+#PKG_GIT_BRANCH="OpenSSL_1_0_2-stable"
 PKG_VERSION="1.0.2k"
 PKG_URL="https://www.openssl.org/source/openssl-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="ccache:host"
@@ -15,6 +19,7 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            --libdir=lib \
                            shared \
                            threads \
+                           no-rfc3779 \
                            no-ssl2 \
                            no-ssl3 \
                            enable-unit-test \

@@ -311,7 +311,6 @@ pre_configure_target() {
 
 # kodi should never be built with lto
   strip_lto
-  strip_gold
 
   export CFLAGS="$CFLAGS $KODI_CFLAGS"
   export CXXFLAGS="$CXXFLAGS $KODI_CXXFLAGS"
