@@ -1,7 +1,7 @@
 PKG_NAME="git"
 PKG_VERSION="2.12.2"
 PKG_URL="https://www.kernel.org/pub/software/scm/git/git-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain curl pcre expat zlib openssl perl gnutls"
+PKG_DEPENDS_TARGET="toolchain curl pcre expat zlib openssl perl"
 PKG_SECTION="devel"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
