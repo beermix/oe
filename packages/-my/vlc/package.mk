@@ -8,7 +8,7 @@ PKG_VERSION="3.0.0-git"
 PKG_REV="20170405-0224.1"
 PKG_SITE="http://www.videolan.org"
 PKG_URL="https://nightlies.videolan.org/build/source/vlc-3.0.0-20170420-0240-git.tar.xz"
-PKG_DEPENDS_TARGET="toolchain dbus ffmpeg libdvbpsi gnutls alsa-lib libvorbis flac libsamplerate libmpeg2 zlib gstreamer lua:host lua"
+PKG_DEPENDS_TARGET="toolchain dbus ffmpeg libdvbpsi gnutls alsa-lib libvorbis flac libmpeg2 zlib gstreamer lua:host lua"
 PKG_SECTION="xmedia/tools"
 PKG_SHORTDESC="VideoLAN multimedia player and streamer"
 PKG_LONGDESC="VLC is the VideoLAN project's media player. It plays MPEG, MPEG2, MPEG4, DivX, MOV, WMV, QuickTime, mp3, Ogg/Vorbis files, DVDs, VCDs, and multimedia streams from various network sources."
@@ -116,7 +116,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-update-check \
 			      --disable-kva \
 			      --disable-bluray \
-			      --enable-samplerate \
+			      --disable-samplerate \
 			      --disable-sid \
 			      --disable-crystalhd \
 			      --disable-dxva2 \
