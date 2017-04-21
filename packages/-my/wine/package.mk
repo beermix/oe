@@ -1,6 +1,6 @@
 PKG_NAME="wine"
-PKG_VERSION="2.1"
-PKG_URL="https://dl.winehq.org/wine/source/2.x/wine-$PKG_VERSION.tar.xz"
+PKG_VERSION="2.0.1"
+PKG_URL="https://fossies.org/linux/misc/wine-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain glib gmp x11 mesa xorg-server pcre libXcursor freetype fontconfig libjpeg-turbo libpng tiff libdrm glu libexif expat harfbuzz libxcb libXcursor libXrender libX11 x11 pulseaudio libXext libXtst wine:host"
 PKG_SECTION="tools"
 PKG_IS_ADDON="no"
