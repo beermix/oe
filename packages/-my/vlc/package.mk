@@ -20,7 +20,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --without-contrib \
 			      --disable-nls \
 			      --disable-rpath \
-			      --disable-dbus \
+			      --enable-dbus \
 			      --enable-gprof \
 			      --disable-cprof \
 			      --disable-debug \
@@ -53,7 +53,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-shine \
 			      --disable-omxil \
 			      --disable-mad \
-			      --disable-merge-ffmpeg \
+			      --enable-merge-ffmpeg \
 			      --enable-avcodec \
 			      --enable-avformat \
 			      --enable-swscale \
@@ -105,7 +105,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-macosx \
 			      --disable-macosx-vlc-app \
 			      --disable-macosx-qtkit \
-			      --enable-ncurses \
+			      --disable-ncurses \
 			      --disable-goom \
 			      --disable-projectm \
 			      --enable-udev \
@@ -125,8 +125,8 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --enable-vlc"
 
 pre_configure_target() {
-  export LDFLAGS="$LDFLAGS -lresolv -fPIC"
-  #export CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
+  export LDFLAGS="$LDFLAGS -lresolv"
+  export CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fomit-frame-pointer||g"`
   export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-fomit-frame-pointer||g"`
   strip_lto

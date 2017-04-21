@@ -24,7 +24,7 @@ PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://linuxtv.org/"
-PKG_URL="https://dl.dropboxusercontent.com/s/2os58p72gf89tld/v4l-utils-1.12.3.tar.xz"
+PKG_URL="https://linuxtv.org/downloads/v4l-utils/v4l-utils-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_PRIORITY="optional"
 PKG_SECTION="system"
@@ -34,12 +34,18 @@ PKG_LONGDESC="Linux V4L2 and DVB API utilities and v4l libraries (libv4l)."
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--without-jpeg"
-PKG_MAKEINSTALL_OPTS_TARGET="PREFIX=/usr -C utils/keytable"
-
-make_target() {
-    make -C utils/keytable CFLAGS="$TARGET_CFLAGS"
+pre_configure_target() {
+  cd $ROOT/$PKG_BUILD
+  rm -rf .$TARGET_NAME
 }
+
+PKG_CONFIGURE_OPTS_TARGET="--without-jpeg \
+			      --with-libudev \
+			      --disable-qv4l2 \
+			      --with-pic \
+			      --disable-silent-rules \
+			      --with-libv4lconvertsubdir=libv4lconvert0 \
+			      --disable-shared"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/etc/rc_keymaps

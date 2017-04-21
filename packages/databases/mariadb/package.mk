@@ -42,7 +42,7 @@ PKG_MARIADB_SERVER="no"
 # - large :  embedded + archive + federated + blackhole + innodb
 # - xlarge:  embedded + archive + federated + blackhole + innodb + partition
 # - community:  all  features (currently == xlarge)
-  MARIADB_OPTS+=" -DFEATURE_SET=community"
+  MARIADB_OPTS+=" -DFEATURE_SET=xlarge"
 
 # Build MariaDB Server support
   if [ "$PKG_MARIADB_SERVER" = "no" ]; then
@@ -68,7 +68,7 @@ PKG_MARIADB_SERVER="no"
   MARIADB_OPTS+=" -DWITH_UNIT_TESTS=0"
 
 # msgpack causes trouble when cross-compiling:
-  MARIADB_OPTS+=" -DGRN_WITH_MESSAGE_PACK=yes"
+  MARIADB_OPTS+=" -DGRN_WITH_MESSAGE_PACK=no"
 
 # Mroonga needs libstemmer. Some work still needs to be done before it can be
 # included in buildroot. Disable it for now.
@@ -133,9 +133,8 @@ makeinstall_host() {
 configure_target() {
   cmake -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
         -DDISABLE_SHARED=ON \
-        -DCMAKE_C_FLAGS="$TARGET_CFLAGS -fPIC -DPIC -fno-strict-aliasing -DBIG_JOINS=1 -fomit-frame-pointer -fno-delete-null-pointer-checks" \
-        -DCMAKE_CXX_FLAGS="$TARGET_CXXFLAGS -fPIC -DPIC -fno-strict-aliasing -DBIG_JOINS=1 -felide-constructors -fno-delete-null-pointer-checks" \
-        -DWITH_MYSQLD_LDFLAGS="-pie $TARGET_LDFLAGS,-z,now" \
+        -DCMAKE_C_FLAGS="${TARGET_CFLAGS} -fPIC -DPIC -fno-strict-aliasing -DBIG_JOINS=1 -fomit-frame-pointer -fno-delete-null-pointer-checks" \
+        -DCMAKE_CXX_FLAGS="${TARGET_CXXFLAGS} -fPIC -DPIC -fno-strict-aliasing -DBIG_JOINS=1 -felide-constructors -fno-delete-null-pointer-checks" \
         -DCMAKE_BUILD_TYPE=Release \
         $MARIADB_IMPORT_EXECUTABLES \
         -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
@@ -157,8 +156,8 @@ configure_target() {
         -DTOKUDB_OK=0 \
         -DDISABLE_LIBMYSQLCLIENT_SYMBOL_VERSIONING=TRUE \
         -DENABLE_DTRACE=OFF \
-        -DWITH_READLINE=ON \
-        -DWITH_PCRE=$SYSROOT_PREFIX/usr \
+        -DWITH_READLINE=OFF \
+        -DWITH_PCRE=bundled \
         -DWITH_ZLIB=bundled \
         -DWITH_SYSTEMD=OFF \
         -DWITH_LIBWRAP=OFF \
@@ -166,7 +165,6 @@ configure_target() {
         -DSECURITY_HARDENED=OFF \
         $MARIADB_OPTS \
         ..
-        
 }
 
 post_makeinstall_target() {
