@@ -1,6 +1,6 @@
 PKG_NAME="libtheora"
-PKG_VERSION="1.2.0alpha1"
-PKG_URL="http://downloads.xiph.org/releases/theora/libtheora-1.2.0alpha1.tar.xz"
+PKG_VERSION="1.1.1"
+PKG_URL="http://downloads.xiph.org/releases/theora/libtheora-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="tools"
 PKG_AUTORECONF="no"
