@@ -1,5 +1,5 @@
 PKG_NAME="dnscrypt-proxy"
-PKG_VERSION="287ce26"
+PKG_VERSION="a0adf5a"
 PKG_GIT_URL="https://github.com/jedisct1/dnscrypt-proxy"
 PKG_DEPENDS_TARGET="toolchain systemd libsodium"
 PKG_SECTION="my"
@@ -15,9 +15,8 @@ PKG_CONFIGURE_OPTS_TARGET="--datarootdir=/storage/.config/dnscrypt-proxy \
 			      --enable-static \
 			      --disable-shared \
 			      --disable-ssp \
-			      --with-gnu-ld \
 			      --with-systemd \
-			      --disable-plugins"
+			      --enable-plugins"
 			   
 #post_makeinstall_target() {
 #  rm -rf $INSTALL/storage/
