@@ -1,5 +1,5 @@
 PKG_NAME="qemu"
-PKG_VERSION="2.8.1"
+PKG_VERSION="2.9.0"
 PKG_SITE="http://wiki.qemu.org"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain Python:host libffi:host zlib:host glib:host"

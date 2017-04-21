@@ -17,11 +17,11 @@
 ################################################################################
 
 PKG_NAME="dri2proto"
-PKG_VERSION="2.8"
+PKG_VERSION="master"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.X.org"
-PKG_URL="http://xorg.freedesktop.org/archive/individual/proto/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_GIT_URL="git://anongit.freedesktop.org/xorg/proto/dri2proto"
 PKG_DEPENDS_TARGET="toolchain util-macros"
 PKG_SECTION="x11/proto"
 PKG_SHORTDESC="dri2proto: X.Org DRI2 protocol headers"
