@@ -62,6 +62,9 @@ make_target() {
   make -f Makefile-libbz2_so CC=$CC CFLAGS="$CFLAGS -fPIC -DPIC" AR="$AR" -j1
 }
 
+post_make_target() {
+  ln -snf libbz2.so.1.0 libbz2.so
+}
 
 makeinstall_target() {
   mkdir -p $SYSROOT_PREFIX/usr/lib
