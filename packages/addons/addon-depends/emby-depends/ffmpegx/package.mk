@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="ffmpegx"
-PKG_VERSION="libreelec"
+PKG_VERSION=""
 PKG_REV="7"
 PKG_ARCH="any"
 PKG_LICENSE="LGPLv2.1+"
@@ -30,10 +30,11 @@ PKG_LONGDESC="FFmpeg built static with additional features"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
+
 pre_configure_target() {
-  cd "$PKG_BUILD"
-  rm -rf ".$TARGET_NAME"
-  cp -PR $(get_build_dir ffmpeg)/* .
+  cd $ROOT/$PKG_BUILD
+  rm -rf .$TARGET_NAME
+  cp -PR $(get_pkg_build ffmpeg)/* .
   make clean
 
 # ffmpeg builds better with these options
@@ -96,6 +97,7 @@ configure_target() {
     --extra-libs="$FFMPEG_LIBS" \
     --extra-version="x" \
     --enable-pic \
+    --enable-nonfree \
     \
     `#Advanced options` \
     $FFMPEG_ARM_AO \

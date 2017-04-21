@@ -18,8 +18,10 @@
 
 PKG_NAME="x264"
 PKG_VERSION="snapshot-20170327-2245-stable"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://www.videolan.org/developers/x264.html"
-PKG_URL="ftp://ftp.videolan.org/pub/videolan/x264/snapshots/x264-snapshot-20170304-2245-stable.tar.bz2"
+PKG_URL="ftp://ftp.videolan.org/pub/videolan/x264/snapshots/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="x264"
@@ -32,6 +34,7 @@ pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
 }
+
 
 configure_target() {
   ./configure \

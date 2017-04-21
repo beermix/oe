@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://emby.media"
 PKG_URL="https://github.com/MediaBrowser/Emby/releases/download/$PKG_VERSION/Emby.Mono.zip"
-PKG_DEPENDS_TARGET="toolchain ffmpegx imagemagick"
+PKG_DEPENDS_TARGET="toolchain ffmpegx ImageMagick"
 PKG_SECTION="service"
 PKG_SHORTDESC="Emby: a personal media server"
 PKG_LONGDESC="Emby ($PKG_VERSION) brings your home videos, music, and photos together, automatically converting and streaming your media on-the-fly to any device"
@@ -58,12 +58,12 @@ addon() {
       $ADDON_BUILD/$PKG_ADDON_ID/Emby.Mono/SQLitePCLRaw.provider.sqlite3.dll.config
 
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
-  cp -L $(get_build_dir ffmpegx)/.install_pkg/usr/local/bin/ffmpegx  \
-        $(get_build_dir ffmpegx)/.install_pkg/usr/local/bin/ffprobex \
+  cp -L $(get_pkg_build ffmpegx)/.install_pkg/usr/local/bin/ffmpegx  \
+        $(get_pkg_build ffmpegx)/.install_pkg/usr/local/bin/ffprobex \
         $ADDON_BUILD/$PKG_ADDON_ID/bin/
 
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/lib
-  cp -L $(get_build_dir imagemagick)/.install_pkg/usr/lib/libMagickCore-7.Q8.so.2 \
-        $(get_build_dir imagemagick)/.install_pkg/usr/lib/libMagickWand-7.Q8.so   \
+  cp -L $(get_pkg_build imagemagick)/.install_pkg/usr/lib/libMagickCore-7.Q8.so.2 \
+        $(get_pkg_build imagemagick)/.install_pkg/usr/lib/libMagickWand-7.Q8.so   \
         $ADDON_BUILD/$PKG_ADDON_ID/lib/
 }
