@@ -74,13 +74,6 @@ makeinstall_target() {
                                 --with-system \
                                 --with-serialization \
                                 --with-filesystem \
-                                --with-program_options \
-                                --with-signals \
-                                --with-atomic \
-                                --with-exception \
-                                --with-date_time \
-                                --with-chrono \
-                                --with-random \
-                                --with-regex -sICU_PATH="$SYSROOT_PREFIX/usr" -j2 \
+                                --with-regex -sICU_PATH="$SYSROOT_PREFIX/usr" \
                                 install
 }
