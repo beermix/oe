@@ -31,11 +31,8 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 pre_configure_target() {
-  cd $PKG_BUILD
+  cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
-
-  export PYTHONXCPREFIX="$SYSROOT_PREFIX/usr"
-  export LDSHARED="$CC -shared"
 }
 
 make_target() {

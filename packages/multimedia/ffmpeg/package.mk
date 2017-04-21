@@ -121,7 +121,7 @@ configure_target() {
               --extra-libs="$FFMPEG_LIBS" \
               --extra-version="" \
               --build-suffix="" \
-              --enable-static \
+              --disable-static \
               --enable-shared \
               --enable-gpl \
               --disable-version3 \
