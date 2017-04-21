@@ -1,0 +1,40 @@
+From ea1ae35bd5e87178ea7565ad953811efdcda7d4c Mon Sep 17 00:00:00 2001
+From: MilhouseVH <milhouseVH.github@nmacleod.com>
+Date: Fri, 21 Apr 2017 02:47:53 +0100
+Subject: [PATCH] connman: fix ip forwarding bug
+
+---
+ .../patches/connman-07-fix-ip-forwarding.patch     | 24 ++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
+ create mode 100644 packages/network/connman/patches/connman-07-fix-ip-forwarding.patch
+
+diff --git a/packages/network/connman/patches/connman-07-fix-ip-forwarding.patch b/packages/network/connman/patches/connman-07-fix-ip-forwarding.patch
+new file mode 100644
+index 0000000..d124ee1
+--- /dev/null
++++ b/packages/network/connman/patches/connman-07-fix-ip-forwarding.patch
+@@ -0,0 +1,24 @@
++From 098007488ce96abc00f2272edc5fdf8f7f794a8b Mon Sep 17 00:00:00 2001
++From: MilhouseVH <milhouseVH.github@nmacleod.com>
++Date: Fri, 21 Apr 2017 02:32:36 +0100
++Subject: [PATCH] ip_forward: writes are ignored unless file pos is reset
++
++---
++ src/nat.c | 1 +
++ 1 file changed, 1 insertion(+)
++
++diff --git a/src/nat.c b/src/nat.c
++index 33ae6df..b9fef39 100644
++--- a/src/nat.c
+++++ b/src/nat.c
++@@ -54,6 +54,7 @@ static int enable_ip_forward(bool enable)
++ 	if (!value) {
++ 		if (read(f, &value, sizeof(value)) < 0)
++ 			value = 0;
+++		lseek(f, 0, 0); // reset file pos for subsequent write
++ 	}
++ 
++ 	if (enable) {
++-- 
++2.7.4
++

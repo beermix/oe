@@ -22,7 +22,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://qt-project.org"
 PKG_URL="http://download.qt.io/official_releases/qt/5.8/$PKG_VERSION/submodules/$PKG_NAME-opensource-src-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="pcre zlib libpng freetype"
+PKG_DEPENDS_TARGET="pcre zlib libpng freetype libinput"
 PKG_SOURCE_DIR="$PKG_NAME-opensource-src-$PKG_VERSION"
 PKG_SHORTDESC="A cross-platform application and UI framework"
 PKG_LONGDESC="A cross-platform application and UI framework"
@@ -30,16 +30,12 @@ PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="-prefix /usr
                            -sysroot $SYSROOT_PREFIX
-                           -device-option CROSS_COMPILE=${TARGET_NAME}-
-                           -no-gcc-sysroot
                            -hostprefix $TOOLCHAIN
                            -device linux-openelec-g++
                            -opensource -confirm-license
                            -no-pch
                            -no-cups
-                           -no-iconv
                            -no-rpath
-                           -no-dbus
                            -system-zlib
                            -nomake tests
                            -nomake examples
@@ -60,19 +56,11 @@ PKG_CONFIGURE_OPTS_TARGET="-prefix /usr
                            -no-openssl
                            -no-libproxy
                            -system-pcre
-                           -no-glib
                            -silent
                            -no-cups
-                           -no-iconv
                            -no-evdev
                            -no-tslib
-                           -no-icu
                            -no-strip
-                           -no-fontconfig
-                           -no-dbus
-                           -no-opengl
-                           -no-libudev
-                           -no-libinput
                            -no-eglfs"
 
 configure_target() {

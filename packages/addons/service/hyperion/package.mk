@@ -22,7 +22,7 @@ PKG_REV="105"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/hyperion-project/hyperion"
 PKG_GIT_URL="https://github.com/hyperion-project/hyperion"
-PKG_DEPENDS_TARGET="toolchain Python libusb qtbase protobuf rpi_ws281x"
+PKG_DEPENDS_TARGET="toolchain Python libusb protobuf rpi_ws281x"
 PKG_SECTION="service"
 PKG_SHORTDESC="Hyperion: an AmbiLight controller"
 PKG_LONGDESC="Hyperion($PKG_VERSION) is an modern opensource AmbiLight implementation."
@@ -49,7 +49,7 @@ elif [ "$DISPLAYSERVER" = "x11" ]; then
 fi
 
 pre_build_target() {
-  cp -a $(get_build_dir rpi_ws281x)/* $PKG_BUILD/dependencies/external/rpi_ws281x
+  cp -a $(get_pkg_build rpi_ws281x)/* $ROOT/$PKG_BUILD/dependencies/external/rpi_ws281x
 }
 
 pre_configure_target() {
@@ -79,10 +79,10 @@ makeinstall_target() {
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
-    cp $PKG_BUILD/.$TARGET_NAME/bin/* $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp $ROOT/$PKG_BUILD/.$TARGET_NAME/bin/* $ADDON_BUILD/$PKG_ADDON_ID/bin
 
-  cp -PR $PKG_BUILD/assets/webconfig $ADDON_BUILD/$PKG_ADDON_ID
-  cp -PR $PKG_BUILD/effects $ADDON_BUILD/$PKG_ADDON_ID
+  cp -PR $ROOT/$PKG_BUILD/assets/webconfig $ADDON_BUILD/$PKG_ADDON_ID
+  cp -PR $ROOT/$PKG_BUILD/effects $ADDON_BUILD/$PKG_ADDON_ID
 
   debug_strip $ADDON_BUILD/$PKG_ADDON_ID/bin
 }
