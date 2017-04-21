@@ -62,7 +62,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libsanitizer \
                            --disable-libatomic \
                            --with-system-zlib \
-s                           --enable-poison-system-directories \
+                           --enable-poison-system-directories \
                            --disable-libssp \
                            --with-tune=generic"
 
