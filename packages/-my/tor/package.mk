@@ -1,6 +1,6 @@
 PKG_NAME="tor"
-PKG_VERSION="release-0.2.9"
-PKG_URL="https://dl.dropboxusercontent.com/s/2blsjkv8nywrf5a/tor-release-0.2.9.tar.lrz"
+PKG_VERSION="0.3.0.6"
+PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain openssl zlib libevent libcap"
 PKG_SECTION="security"
 PKG_AUTORECONF="yes"
