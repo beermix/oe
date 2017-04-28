@@ -20,8 +20,8 @@ PKG_NAME="netbase"
 PKG_VERSION="5.4"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="http://releases.ubuntu.com"
-PKG_URL="http://archive.ubuntu.com/ubuntu/pool/main/n/netbase/netbase_$PKG_VERSION.tar.xz"
+PKG_SITE="https://anonscm.debian.org/cgit/users/md/netbase.git/"
+PKG_URL="http://ftp.debian.org/debian/pool/main/n/netbase/netbase_$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="network"
 PKG_SHORTDESC="The netbase package provides data for network services and protocols from the iana db."
@@ -31,7 +31,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 make_target() {
-  sed -e 's,^sunrpc,rpcbind,' -i $ROOT/$PKG_BUILD/etc-services
+  :
 }
 
 makeinstall_target() {
