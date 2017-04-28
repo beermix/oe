@@ -17,12 +17,11 @@
 ################################################################################
 
 PKG_NAME="libfmt"
-PKG_VERSION="3.0.1"
+PKG_VERSION="d49f206"
 PKG_ARCH="any"
 PKG_LICENSE="BSD"
 PKG_SITE="https://github.com/fmtlib/fmt"
 PKG_GIT_URL="https://github.com/fmtlib/fmt"
-PKG_SOURCE_DIR="fmt-$PKG_VERSION"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="devel"
 PKG_SHORTDESC="fmt is an open-source formatting library for C++. It can be used as a safe alternative to printf or as a fast alternative to IOStreams."
