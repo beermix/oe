@@ -36,6 +36,28 @@ if [ "$MEDIACENTER" = "kodi" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pycrypto"
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET xmlstarlet"
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET peripheral.joystick"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pvr.iptvsimple"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pvr.iptvsimple.multi"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pvr.vdr.vnsi"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pvr.hts"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pvr.dvblink"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pvr.vuplus"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pvr.stalker"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pvr.mediaportal.tvserver"
+
+# kodi-binary-addons inputstream
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET inputstream.rtmp"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET inputstream.adaptive"
+
+# kodi-binary-addons visualization
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET visualization.spectrum"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET visualization.waveform"
+
+# audioencoder
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET audioencoder.flac"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET audioencoder.lame"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET audioencoder.vorbis"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET audioencoder.wav"
 
 # other packages
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET OpenELEC-settings"
