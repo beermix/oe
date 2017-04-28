@@ -25,7 +25,7 @@
 # Mediacenter to use (kodi / no)
   MEDIACENTER="kodi"
 
-# Skins to install (Confluence)
+# Skins to install (Estuary)
 # Space separated list is supported,
 # e.g. SKINS="Estuary"
   SKINS=""
@@ -34,7 +34,7 @@
   SKIN_REMOVE_SHIPPED="no"
 
 # Default Skin (Confluence, or any from above)
-  SKIN_DEFAULT="Confluence"
+  SKIN_DEFAULT="Estuary"
 
 # install extra subtitle Fonts for KODI (yes / no)
   KODI_EXTRA_FONTS="yes"
@@ -43,7 +43,7 @@
   PULSEAUDIO_SUPPORT="yes"
 
 # build and install espeak support (yes / no)
-  ESPEAK_SUPPORT="no"
+  ESPEAK_SUPPORT="yes"
 
 # build and install with non-free support
 # (RAR compression support in KODI) (yes / no)
@@ -131,7 +131,7 @@
   PPTP_SUPPORT="no"
 
 # build and install OpenVPN support (yes / no)
-  OPENVPN_SUPPORT="no"
+  OPENVPN_SUPPORT="yes"
 
 # build and install diskmounter support (udevil)
 # this service provide auto mounting support for external drives in the
@@ -160,7 +160,7 @@
   #LCD_DRIVER+="no"
 
 # build and install CEC adapter support (yes / no)
-  CEC_SUPPORT="no"
+  CEC_SUPPORT="yes"
 
 # LCD driver to Use - Possible drivers are ( Comma seperated:
 # bayrad,CFontz,CFontz633,CFontzPacket,curses,CwLnx,dm140,
@@ -189,7 +189,7 @@
   SWAPFILESIZE="256"
 
 # build with installer (yes / no)
-  INSTALLER_SUPPORT="no"
+  INSTALLER_SUPPORT="yes"
 
 # Testpackages for development (yes / no)
   TESTING="no"
