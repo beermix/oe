@@ -10,8 +10,7 @@ PKG_SECTION="xmedia/tools"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-openssl-compatibility \
-			      --disable-shared \
+PKG_CONFIGURE_OPTS_TARGET="--enable-openssl-compatibility \
 			      --disable-crywrap \
 			      --disable-tools \
 			      --enable-libdane \
