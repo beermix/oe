@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="setuptools"
-PKG_VERSION="v35.0.1"
+PKG_VERSION="v35.0.2"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="https://github.com/pypa/setuptools/releases"
@@ -36,5 +36,5 @@ make_host() {
 }
 
 makeinstall_host() {
-  python setup.py install --prefix=$ROOT/$TOOLCHAIN
+  python setup.py install --prefix=$ROOT/$TOOLCHAIN --optimize=1
 }

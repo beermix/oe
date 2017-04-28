@@ -33,7 +33,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 pre_configure_target() {
-  unset CPPFLAGS
+  strip_hard
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-silent-rules \

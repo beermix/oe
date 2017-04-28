@@ -179,10 +179,14 @@ configure_target() {
               --enable-parsers \
               --enable-bsfs \
               --enable-protocol=http \
+              --disable-indevs \
+              --disable-outdevs \
               --enable-filters \
+              --disable-avisynth \
               --enable-bzlib \
               --disable-libopencore-amrnb \
               --disable-libopencore-amrwb \
+              --disable-libopencv \
               --disable-libdc1394 \
               --enable-libfreetype \
               --disable-libgsm \

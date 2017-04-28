@@ -52,6 +52,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
                            --disable-xres \
                            --enable-record \
                            --enable-xv \
+                           --disable-xvmc \
                            --enable-dga \
                            --disable-screensaver \
                            --disable-xdmcp \

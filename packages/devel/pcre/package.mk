@@ -28,31 +28,29 @@ PKG_LONGDESC="The PCRE library is a set of functions that implement regular expr
 
 PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$ROOT/$TOOLCHAIN \
 			    --disable-shared \
 			    --enable-utf8 \
 			    --enable-pcre8 \
 			    --enable-pcre16 \
-			    --enable-pcre32 \
 			    --enable-unicode-properties \
 			    --with-pic \
-			    --enable-cpp \
 			    --with-gnu-ld"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
-			      --enable-utf8 \
-			      --disable-stack-for-recursion \
-			      --enable-pcre8 \
-			      --enable-pcre16 \
-			      --enable-pcre32 \
-			      --enable-jit \
-			      --enable-newline-is-anycrlf \
-			      --enable-unicode-properties \
-			      --with-pic \
-			      --enable-cpp \
-			      --with-gnu-ld"
+             --enable-static \
+             --enable-utf8 \
+             --enable-pcre16 \
+             --enable-unicode-properties \
+             --with-gnu-ld"
+
+pre_configure_target() {
+  CFLAGS="$CFLAGS -fPIC"
+  CXXFLAGS="$CXXFLAGS -fPIC"
+  LDFLAGS="$LDFLAGS -fPIC"
+}
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin

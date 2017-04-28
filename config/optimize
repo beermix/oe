@@ -80,7 +80,3 @@ HOST_CXXFLAGS="$HOST_CXXFLAGS -Wno-format-security"
   # default dirs
     HOST_LIBDIR="$HOST_LIBDIR /lib /usr/lib"
     HOST_INCDIR="$ROOT/$TOOLCHAIN/include /usr/include"
-    
-make_target() {
-  CFLAGS=-Wno-error make -j1
-}

@@ -39,7 +39,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-device-mapper \
 PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
 
 pre_configure_target() {
-  export CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
+  strip_hard
 }
 
 configure_init() {

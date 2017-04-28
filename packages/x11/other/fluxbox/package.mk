@@ -34,8 +34,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_realloc_0_nonnull=yes \
                            ac_cv_func_malloc_0_nonnull=yes \
                            --disable-toolbar \
                            --disable-slit \
-                           --disable-rpath \
-                           --disable-nls \
                            --disable-systray \
                            --enable-ewmh \
                            --disable-xpm \
@@ -43,6 +41,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_realloc_0_nonnull=yes \
                            --enable-fribidi \
                            --disable-debug \
                            --disable-test \
+                           --disable-nls \
                            --disable-imlib2"
 
 post_install() {

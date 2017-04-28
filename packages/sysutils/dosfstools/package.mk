@@ -33,8 +33,6 @@ PKG_LONGDESC="dosfstools contains utilities for making and checking MS-DOS FAT f
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-MAKEFLAGS=-j1
-
 PKG_MAKE_OPTS_TARGET="PREFIX=/usr"
 PKG_MAKEINSTALL_OPTS_TARGET="PREFIX=/usr"
 

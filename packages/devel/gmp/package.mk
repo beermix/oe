@@ -31,7 +31,3 @@ PKG_AUTORECONF="yes"
 PKG_CONFIGURE_OPTS_HOST="--enable-cxx --enable-static --disable-shared --with-pic"
 
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
-
-#pre_configure_host() {
-#  export CPPFLAGS="$CPPFLAGS -fexceptions"
-#}
