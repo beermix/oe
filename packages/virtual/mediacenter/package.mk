@@ -33,6 +33,7 @@ if [ "$MEDIACENTER" = "kodi" ]; then
 # some python stuff needed for various addons
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET Pillow"
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET simplejson"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pycryptodome"
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pycrypto"
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET xmlstarlet"
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET peripheral.joystick"

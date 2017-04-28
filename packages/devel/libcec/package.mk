@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libcec"
-PKG_VERSION="libcec-4.0.2"
+PKG_VERSION="5250931"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
