@@ -96,8 +96,8 @@ libc_cv_ssp=no
 libc_cv_ssp_strong=no
 EOF
 
-  echo "sbindir=/usr/bin" >> configparms
-  echo "rootsbindir=/usr/bin" >> configparms
+echo "sbindir=/usr/bin" >> configparms
+echo "rootsbindir=/usr/bin" >> configparms
 }
 
 post_makeinstall_target() {
@@ -106,6 +106,10 @@ post_makeinstall_target() {
     ln -sf ld-$PKG_VERSION.so $INSTALL/lib/ld-linux.so.3
   fi
 
+# cleanup
+  for i in $GLIBC_EXCLUDE_BIN; do
+    rm -rf $INSTALL/usr/bin/$i
+  done
   rm -rf $INSTALL/usr/lib/audit
   rm -rf $INSTALL/usr/lib/glibc
   rm -rf $INSTALL/usr/lib/libc_pic

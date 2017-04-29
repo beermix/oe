@@ -10,11 +10,12 @@ PKG_SECTION="xmedia/tools"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-openssl-compatibility \
+PKG_CONFIGURE_OPTS_TARGET="--disable-openssl-compatibility \
 			      --disable-crywrap \
 			      --disable-tools \
 			      --enable-libdane \
 			      --enable-static \
+			      --disable-shared \
 			      --without-tpm \
 			      --disable-guile \
 			      --disable-heartbeat-support \

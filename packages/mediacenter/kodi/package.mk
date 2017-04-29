@@ -37,7 +37,7 @@ case "$KODIPLAYER_DRIVER" in
     PKG_KEEP_CHECKOUT="no"
     ;;
   *)
-    PKG_VERSION="661dd08"
+    PKG_VERSION="17.1-Krypton"
     PKG_GIT_URL="https://github.com/xbmc/xbmc.git"
     PKG_GIT_BRANCH="Krypton"
     PKG_KEEP_CHECKOUT="no"
@@ -259,6 +259,10 @@ makeinstall_host() {
 }
 
 pre_configure_target() {
+# kodi should never be built with lto
+  strip_lto
+  strip_gold
+
   export LIBS="$LIBS -lssp -lz -ltermcap"
 }
 

@@ -55,10 +55,7 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --disable-selinux \
                            --enable-opengl \
                            --disable-gles1 \
-                           --enable-gles2 \
                            --enable-dri \
-                           --disable-gallium-extra-hud \
-                           --disable-lmsensors \
                            --enable-dri3 \
                            --enable-glx \
                            --disable-osmesa \
@@ -80,7 +77,6 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --enable-glx-tls \
                            --disable-glx-read-only-text \
                            $MESA_GALLIUM_LLVM \
-                           --disable-valgrind \
                            --with-gl-lib-name=GL \
                            --with-osmesa-lib-name=OSMesa \
                            --with-gallium-drivers=$GALLIUM_DRIVERS \
