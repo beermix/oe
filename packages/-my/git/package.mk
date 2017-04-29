@@ -6,7 +6,6 @@ PKG_SECTION="devel"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
@@ -16,7 +15,7 @@ pre_configure_target() {
   export CPPFLAGS="$CPPFLAGS"
   export LDFLAGS="$LDFLAGS"
   #export NO_EXPAT="YesPlease"
-  #export NO_MKSTEMPS="YesPlease"
+  export NO_MKSTEMPS="YesPlease"
   export NO_GETTEXT="YesPlease"
   #export NO_UNIX_SOCKETS="YesPlease"
   #export NO_ICONV="YesPlease"
@@ -27,9 +26,9 @@ pre_configure_target() {
   export NO_INSTALL_HARDLINKS="yes"
 }
 
-PKG_CONFIGURE_OPTS_TARGET="--with-curl \
-			      --with-libpcre \
-			      --with-zlib \
+PKG_CONFIGURE_OPTS_TARGET="--with-curl=$SYSROOT_PREFIX/usr \
+			      --with-libpcre=$SYSROOT_PREFIX/usr \
+			      --with-zlib=$SYSROOT_PREFIX/usr \
 			      --disable-option-checking"
 
 
