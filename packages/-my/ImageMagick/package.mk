@@ -4,7 +4,7 @@
 ################################################################################
 
 PKG_NAME="ImageMagick"
-PKG_VERSION="7.0.5-3"
+PKG_VERSION="7.0.5-5"
 PKG_SITE="http://www.imagemagick.org"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain libX11 libtool:target"
