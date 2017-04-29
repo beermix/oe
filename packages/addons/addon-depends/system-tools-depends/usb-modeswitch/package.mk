@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="usb-modeswitch"
-PKG_VERSION="2.3.0"
+PKG_VERSION="2.5.0"
 PKG_SITE="http://www.draisberghof.de/usb_modeswitch/"
 PKG_URL="http://www.draisberghof.de/usb_modeswitch/${PKG_NAME}-${PKG_VERSION}.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain libusb"
