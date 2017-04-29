@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="libprojectM"
-PKG_VERSION="2.0.0"
+PKG_VERSION="0ebd580"
 PKG_SITE="http://projectm.sourceforge.net/"
-PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_GIT_URL="https://git.code.sf.net/p/projectm/code"
 PKG_DEPENDS_TARGET="toolchain ftgl freetype opengl"
 PKG_PRIORITY="optional"
 PKG_SECTION="multimedia"
