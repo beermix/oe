@@ -11,7 +11,7 @@ PKG_AUTORECONF="no"
 
 pre_configure_target() {
    strip_lto
-   export CXXFLAGS="-Wall -Wextra -Ofast -pipe -fomit-frame-pointer -fexpensive-optimizations"
+   export CXXFLAGS="-Wall -Wextra -O3 -pipe -fomit-frame-pointer -fexpensive-optimizations"
    #export CFLAGS="$CXXFLAGS"
    #export CPPFLAGS="-D_FORTIFY_SOURCE=2"
 }
