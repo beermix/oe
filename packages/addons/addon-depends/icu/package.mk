@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="icu"
-PKG_VERSION="58.2"
+PKG_VERSION="59.1"
 PKG_ARCH="any"
 PKG_LICENSE="Custom"
 PKG_SITE="http://www.icu-project.org"
@@ -30,6 +30,10 @@ PKG_LONGDESC="International Components for Unicode library"
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
+
+pre_configure_host() {
+ sh $ROOT/$PKG_BUILD/source/runConfigureICU Linux/gcc
+}
 
 PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
 
