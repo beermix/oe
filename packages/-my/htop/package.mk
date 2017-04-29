@@ -1,14 +1,9 @@
 PKG_NAME="htop"
-PKG_VERSION="5570748"
+PKG_VERSION="b1028e0"
 PKG_GIT_URL="https://github.com/hishamhm/htop"
-PKG_DEPENDS_TARGET="toolchain hwloc ncurses"
+PKG_DEPENDS_TARGET="toolchain hwloc"
 PKG_SECTION="debug/tools"
 PKG_AUTORECONF="yes"
-
-pre_configure_target() {
-  #export LIBS="-lterminfo"
-  export MAKEFLAGS=-j1
-}
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-cgroup \
 			      --enable-vserver \

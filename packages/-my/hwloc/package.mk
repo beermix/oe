@@ -1,13 +1,17 @@
 PKG_NAME="hwloc"
-PKG_VERSION="1.11.7"
-PKG_URL="https://fossies.org/linux/misc/hwloc-$PKG_VERSION.tar.xz"
+PKG_VERSION="d761c7b"
+PKG_GIT_URL="https://github.com/open-mpi/hwloc"
 PKG_DEPENDS_TARGET="toolchain zlib libevent libpciaccess"
 PKG_SECTION="security"
 PKG_AUTORECONF="yes"
 
+pre_configure_target() {
+  strip_gold
+}
+
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-static \
-			      --with-x \
+			      --without-x \
 			      --disable-cuda \
 			      --disable-nvml \
 			      --enable-pci \
