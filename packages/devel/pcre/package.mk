@@ -40,17 +40,19 @@ PKG_CONFIGURE_OPTS_HOST="--prefix=$ROOT/$TOOLCHAIN \
 			    --with-gnu-ld"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
-             --enable-static \
-             --enable-utf8 \
-             --enable-pcre16 \
-             --enable-unicode-properties \
-             --with-gnu-ld"
-
-pre_configure_target() {
-  CFLAGS="$CFLAGS -fPIC"
-  CXXFLAGS="$CXXFLAGS -fPIC"
-  LDFLAGS="$LDFLAGS -fPIC"
-}
+			      --enable-static \
+			      --enable-utf8 \
+			      --enable-pcre16 \
+			      --enable-unicode-properties \
+			      --with-gnu-ld \
+			      --disable-stack-for-recursion \
+			      --enable-pcre8 \
+			      --disable-pcre32 \
+			      --enable-jit \
+			      --with-pic \
+			      --enable-utf \
+			      --enable-unicode-properties \
+			      --enable-newline-is-anycrlf"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
