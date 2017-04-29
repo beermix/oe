@@ -61,7 +61,7 @@ case "$LINUX" in
     ;;
   linux-zen)
     PKG_VERSION="zen-kernel-4.10-master3"
-    PKG_URL="ftp://root:openelec@192.168.1.4:2121/www/linux-$PKG_VERSION.tar.bz2"
+    PKG_URL="ftp://root:openelec@192.168.1.4:2121/www/linux-$PKG_VERSION.tar.xz"
     PKG_PATCH_DIRS="linux-4.10"
     ;;
   *)
