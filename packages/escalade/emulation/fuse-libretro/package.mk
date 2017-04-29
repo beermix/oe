@@ -19,7 +19,7 @@
 ################################################################################
 
 PKG_NAME="fuse-libretro"
-PKG_VERSION="35d28b1"
+PKG_VERSION="f834c9b"
 PKG_GIT_URL="https://github.com/libretro/fuse-libretro"
 PKG_SITE="https://github.com/libretro/fuse-libretro"
 PKG_DEPENDS_TARGET="toolchain"

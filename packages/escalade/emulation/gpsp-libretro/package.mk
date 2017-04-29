@@ -16,16 +16,34 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="portaudio"
-PKG_VERSION="190600_20161012"
+PKG_NAME="gpsp-libretro"
+PKG_VERSION="c31b3e8"
 PKG_ARCH="any"
-PKG_LICENSE="GPL"
-PKG_SITE="http://www.portaudio.com"
-PKG_URL="http://www.portaudio.com/archives/pa_rc_v190600_20161012.tgz"
-PKG_SOURCE_DIR="portaudio"
+PKG_LICENSE="GPLv2"
+PKG_SITE="https://github.com/libretro/gpsp"
+PKG_URL="https://github.com/libretro/gpsp/archive/$PKG_VERSION.tar.gz"
+PKG_SOURCE_DIR="gpsp-$PKG_VERSION*"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_SECTION="depends"
-PKG_SHORTDESC="Portable cross-platform audio I/O"
-PKG_IS_ADDON="no"
+PKG_SECTION="libretro"
+PKG_SHORTDESC="gpSP for libretro."
+PKG_LONGDESC="gameplaySP is a Gameboy Advance emulator for Playstation Portable"
 
+PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
+
+pre_build_target() {
+  export GIT_VERSION=$PKG_VERSION
+}
+
+make_target() {
+  if [ "$ARCH" == "arm" ]; then
+    make CC=$CC platform=armv
+  else
+    make CC=$CC
+  fi  
+}
+
+makeinstall_target() {
+  mkdir -p $INSTALL/usr/lib/libretro
+  cp gpsp_libretro.so $INSTALL/usr/lib/libretro/
+}

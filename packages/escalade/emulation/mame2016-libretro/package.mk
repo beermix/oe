@@ -16,32 +16,43 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="mgba-libretro"
-PKG_VERSION="1e95e89"
-PKG_SITE="https://github.com/libretro/mgba"
-PKG_GIT_URL="https://github.com/libretro/mgba"
+PKG_NAME="mame2016-libretro"
+PKG_VERSION="68b234d"
+PKG_ARCH="any"
+PKG_LICENSE="GPLv2"
+PKG_SITE="https://github.com/libretro/mame2016-libretro"
+PKG_URL="https://github.com/libretro/mame2016-libretro/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_SECTION="emulation"
-PKG_SHORTDESC="mGBA Game Boy Advance Emulator"
-PKG_LONGDESC="mGBA is a new emulator for running Game Boy Advance games. It aims to be faster and more accurate than many existing Game Boy Advance emulators, as well as adding features that other emulators lack."
+PKG_SECTION="libretro"
+PKG_SHORTDESC="MAME (0.174-ish) for libretro"
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
-PKG_USE_CMAKE="no"
 
-post_unpack() {
-  mv $BUILD/mgba-* $BUILD/$PKG_NAME-$PKG_VERSION
-}
-
-pre_configure_target() {
-  cd ..
-  rm -rf .$TARGET_NAME
+pre_make_target() {
+  export OVERRIDE_CC=$CC
+  export OVERRIDE_CXX=$CXX
+  export OVERRIDE_LD=$LD
+  strip_lto
+  strip_gold
 }
 
 make_target() {
   case $PROJECT in
-    RPi*)
-      make -f Makefile.libretro platform=unix-armv HAVE_NEON=1
+    RPi)
+      make -f Makefile.libretro platform=armv6-hardfloat-arm1176jzf-s
+      ;;
+    RPi2)
+      make -f Makefile.libretro platform=armv7-neon-hardfloat-cortex-a7
+      ;;
+    imx6)
+      make -f Makefile.libretro platform=armv7-neon-hardfloat-cortex-a9
+      ;;
+    WeTek_Play)
+      make -f Makefile.libretro platform=armv7-neon-hardfloat-cortex-a9
+      ;;
+    Odroid_C2|WeTek_Hub|WeTek_Play_2)
+      make -f Makefile.libretro platform=aarch64
       ;;
     Generic)
       make -f Makefile.libretro
@@ -51,5 +62,5 @@ make_target() {
 
 makeinstall_target() {
   mkdir -p $INSTALL/usr/lib/libretro
-  cp mgba_libretro.so $INSTALL/usr/lib/libretro/
+  cp *.so $INSTALL/usr/lib/libretro/
 }

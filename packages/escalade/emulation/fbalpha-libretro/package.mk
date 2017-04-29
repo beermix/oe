@@ -19,7 +19,7 @@
 ################################################################################
 
 PKG_NAME="fbalpha-libretro"
-PKG_VERSION="eabd66a"
+PKG_VERSION="1eb106e"
 PKG_SITE="https://github.com/libretro/fbalpha"
 PKG_GIT_URL="https://github.com/libretro/fbalpha"
 PKG_DEPENDS_TARGET="toolchain"

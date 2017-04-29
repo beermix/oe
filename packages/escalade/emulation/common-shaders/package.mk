@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of LibreELEC - http://www.libreelec.tv
-#      Copyright (C) 2016 Team LibreELEC
+#      Copyright (C) 2009-2016 Lukas Rusak (lrusak@libreelec.tv)
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,16 +16,36 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="portaudio"
-PKG_VERSION="190600_20161012"
+PKG_NAME="common-shaders"
+PKG_VERSION="latest"
 PKG_ARCH="any"
-PKG_LICENSE="GPL"
-PKG_SITE="http://www.portaudio.com"
-PKG_URL="http://www.portaudio.com/archives/pa_rc_v190600_20161012.tgz"
-PKG_SOURCE_DIR="portaudio"
+PKG_LICENSE="MIT"
+PKG_SITE="https://github.com/libretro/common-shaders"
+PKG_URL="custom"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_SECTION="depends"
-PKG_SHORTDESC="Portable cross-platform audio I/O"
-PKG_IS_ADDON="no"
+PKG_SECTION="emulation"
+PKG_SHORTDESC="Collection of commonly used shaders"
 
 PKG_AUTORECONF="no"
+PKG_IS_ADDON="no"
+
+unpack() {
+  mkdir -p $PKG_BUILD && cd $PKG_BUILD
+  wget http://buildbot.libretro.com/assets/frontend/shaders_glsl.zip
+  unzip -o -d common shaders_glsl.zip
+  git clone --depth 1 https://github.com/RetroPie/common-shaders.git retropie
+  git clone --depth 1 https://github.com/libretro/slang-shaders.git slang
+  find . -type f -exec chmod 644 {} \;
+  cd $ROOT
+}
+
+make_target() {
+  :
+}
+
+makeinstall_target() {
+  mkdir -p $INSTALL/usr/share/retroarch/shaders
+  cp -R common/* $INSTALL/usr/share/retroarch/shaders
+  cp -R retropie/retropie $INSTALL/usr/share/retroarch/shaders
+  cp -R slang/* $INSTALL/usr/share/retroarch/shaders
+}

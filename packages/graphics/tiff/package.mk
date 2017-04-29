@@ -34,3 +34,7 @@ PKG_USE_CMAKE="yes"
 PKG_AUTORECONF="no"
 
 PKG_CMAKE_OPTS_TARGET="-DBUILD_SHARED_LIBS=OFF"
+
+post_makeinstall_target() {
+  rm -rf $INSTALL/usr/bin
+}
