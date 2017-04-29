@@ -20,7 +20,7 @@ PKG_NAME="pcre"
 PKG_VERSION="8.40"
 PKG_SITE="http://www.pcre.org/"
 PKG_URL="http://ftp.csx.cam.ac.uk/pub/software/programming/pcre/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_HOST="autoconf:host pcre2:host"
+PKG_DEPENDS_HOST="pcre2:host"
 PKG_DEPENDS_TARGET="toolchain pcre2"
 PKG_SECTION="devel"
 PKG_SHORTDESC="pcre: Perl Compatible Regulat Expressions"
@@ -28,7 +28,7 @@ PKG_LONGDESC="The PCRE library is a set of functions that implement regular expr
 
 PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-static \
