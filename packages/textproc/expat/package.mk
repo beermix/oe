@@ -23,17 +23,18 @@ PKG_LICENSE="OSS"
 PKG_SITE="http://expat.sourceforge.net/"
 PKG_URL="$SOURCEFORGE_SRC/$PKG_NAME/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_DEPENDS_HOST="cmake:host"
+PKG_DEPENDS_HOST="autotools:host"
 PKG_SECTION="textproc"
 PKG_SHORTDESC="expat: XML parser library"
 PKG_LONGDESC="Expat is an XML parser library written in C. It is a stream-oriented parser in which an application registers handlers for things the parser might find in the XML document (like start tags). An introductory article on using Expat is available on xml.com."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_USE_CMAKE="no"
+PKG_AUTORECONF="yes"
 
 PKG_CMAKE_OPTS_TARGET="-DBUILD_tools=OFF -DBUILD_examples=OFF -DBUILD_tests=OFF -DBUILD_shared=ON"
 
-PKG_CMAKE_OPTS_HOST="-DBUILD_tools=OFF -DBUILD_examples=OFF -DBUILD_tests=OFF -DBUILD_shared=OFF"
+PKG_CMAKE_OPTS_HOST="-DBUILD_tools=OFF -DBUILD_examples=OFF -DBUILD_tests=OFF -DBUILD_shared=ON"
 
 pre_make_target() {
   # fix builderror when building in subdirs
