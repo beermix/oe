@@ -22,8 +22,8 @@ PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_URL="http://www.kernel.org/pub/linux/utils/util-linux/v2.29/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain slang"
-PKG_DEPENDS_INIT="toolchain gcc:init slang"
+PKG_DEPENDS_TARGET="toolchain zlib slang"
+PKG_DEPENDS_INIT="toolchain gcc:init zlib slang"
 PKG_PRIORITY="optional"
 PKG_SECTION="system"
 PKG_SHORTDESC="util-linux: Miscellaneous system utilities for Linux"
@@ -56,8 +56,6 @@ UTILLINUX_CONFIG_DEFAULT="--disable-gtk-doc \
                           --without-termcap \
                           --without-tinfo \
                           --without-utempter \
-                          --without-util \
-                          --without-libz \
                           --without-user \
                           --without-systemd \
                           --without-smack \
