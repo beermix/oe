@@ -31,8 +31,6 @@ PKG_LONGDESC="bzip2 is a freely available, patent free (see below), high-quality
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-MAKEFLAGS=-j1
-
 pre_build_host() {
   mkdir -p $ROOT/$PKG_BUILD/.$HOST_NAME
   cp -r $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$HOST_NAME
@@ -40,7 +38,7 @@ pre_build_host() {
 
 make_host() {
   cd $ROOT/$PKG_BUILD/.$HOST_NAME
-  make CC=$HOST_CC CFLAGS="$CFLAGS -O3" LDFLAGS="-s -Wl,-z,relro"
+  make CC=$HOST_CC CFLAGS="$CFLAGS -fPIC -DPIC" LDFLAGS="-s -Wl,-z,relro"
 }
 
 makeinstall_host() {
@@ -54,7 +52,7 @@ pre_build_target() {
 
 make_target() {
   cd $ROOT/$PKG_BUILD/.$TARGET_NAME
-  make -f Makefile libbz2.a bzip2 bzip2recover CC=$CC CFLAGS="$CFLAGS -fPIC -DPIC" AR="$AR" -j1
+    make -f Makefile libbz2.a bzip2 bzip2recover CC=$CC CFLAGS="$CFLAGS -fPIC -DPIC" 
 }
 
 makeinstall_target() {

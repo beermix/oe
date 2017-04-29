@@ -1,14 +1,25 @@
 PKG_NAME="unbound"
-PKG_VERSION="1.6.2"
-PKG_URL="https://fossies.org/linux/misc/dns/unbound-1.6.2.tar.xz"
+PKG_VERSION="4752668"
+PKG_GIT_URL="https://github.com/jedisct1/unbound"
 PKG_DEPENDS_TARGET="toolchain expat openssl libevent libsodium"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
+#pre_configure_target() {
+#  strip_gold
+#  strip_lto
+#}
+
+
 PKG_CONFIGURE_OPTS_TARGET="--with-pthreads \
 			      --disable-dsa \
 			      --disable-gost \
+			      --enable-allsymbols \
+			      --enable-cachedb \
+			      --enable-dnscrypt \
+			      --disable-shared \
+			      --sysconfdir=/storage/.config \
 			      --with-libevent=$SYSROOT_PREFIX/usr \
 			      --with-libsodium=$SYSROOT_PREFIX/usr \
 			      --with-libexpat=$SYSROOT_PREFIX/usr \

@@ -32,16 +32,14 @@ PKG_LONGDESC="netbsd-curses: netbsd-libcurses portable edition"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-pre_configure_target() {
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|g"`
-  export CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
-  strip_hard
-}
+CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|g"`
+CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
+strip_hard
 
 make_target() {
-  make -j1 HOSTCC="$HOST_CC" CFLAGS="$CFLAGS" PREFIX=/usr all-static
+  make HOSTCC="$HOST_CC" CFLAGS="$CFLAGS" PREFIX=/usr all-static
 }
 
 makeinstall_target() {
-  make -j1 HOSTCC="$HOST_CC" PREFIX=$SYSROOT_PREFIX/usr install-static
+  make HOSTCC="$HOST_CC" PREFIX=$SYSROOT_PREFIX/usr install-static
 }

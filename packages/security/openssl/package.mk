@@ -62,7 +62,6 @@ pre_configure_target() {
   
   export CCACHE_DISABLE=1
   strip_lto
-  strip_gold
 }
 
 configure_target() {

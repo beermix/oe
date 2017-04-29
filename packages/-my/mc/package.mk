@@ -1,12 +1,12 @@
 PKG_NAME="mc"
-PKG_VERSION="4.8.19"
-PKG_URL="http://ftp.midnight-commander.org/${PKG_NAME}-${PKG_VERSION}.tar.xz"
+PKG_VERSION="83127bd"
+PKG_GIT_URL="git://github.com/MidnightCommander/mc.git"
 PKG_DEPENDS_TARGET="toolchain libtool:host gettext:host e2fsprogs util-linux glib pcre fuse libssh2 libevent expat slang"
 PKG_SECTION="tools"
 PKG_AUTORECONF="yes"
 
 pre_configure_target() {
-  export LIBS="$LIBS -lssh2 -lcrypto"
+  #export LIBS="$LIBS -lssh2 -lcrypto"
   #export MAKEFLAGS="-j1"
   #export CFLAGS="$CFLAGS -I$SYSROOT_PREFIX/usr/include/ncurses"
   export LDFLAGS="$(echo $LDFLAGS | sed -e "s|-Wl,--as-needed||")"
@@ -44,7 +44,7 @@ PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config \
                            --without-x
                            --without-gpm-mouse \
                            --with-screen=slang \
-                           --without-x \
+                           --with-x \
                            --enable-vfs-sftp \
                            --enable-vfs-tar \
                            --enable-vfs-extfs \

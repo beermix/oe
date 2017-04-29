@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.samba.org"
 PKG_URL="https://samba.org/samba/ftp/stable/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain zlib connman aio"
+PKG_DEPENDS_TARGET="toolchain zlib connman libaio"
 PKG_PRIORITY="optional"
 PKG_SECTION="network"
 PKG_SHORTDESC="samba: The free SMB / CIFS fileserver and client"
@@ -62,7 +62,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file__proc_sys_kernel_core_pattern=yes \
                            --with-logfilebase=/var/log \
                            --with-nmbdsocketdir=/var/nmbd \
                            --with-piddir=/var/run \
-                           --disable-shared-libs \
+                           --enable-shared-libs \
                            --disable-debug \
                            --with-libiconv="$SYSROOT_PREFIX/usr" \
                            --disable-krb5developer \
