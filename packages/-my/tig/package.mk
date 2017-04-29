@@ -1,5 +1,5 @@
 PKG_NAME="tig"
-PKG_VERSION="d5d1029"
+PKG_VERSION="4d85bb0"
 PKG_GIT_URL="https://github.com/jonas/tig"
 PKG_DEPENDS_TARGET="toolchain ncurses"
 PKG_SECTION="tools"
@@ -9,8 +9,7 @@ pre_configure_target() {
   cd $ROOT/$PKG_BUILD
 }
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-option-checking \
-			      --sysconfdir=/storage/.config \
+PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config \
 			      --datadir=/storage/.config \
 			      --libdir=/storage/.config \
 			      --libexecdir=/storage/.config \

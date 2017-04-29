@@ -1,21 +1,15 @@
 PKG_NAME="lnav"
-PKG_VERSION="0b157ff"
+PKG_VERSION="d18b344"
 PKG_GIT_URL="https://github.com/tstack/lnav"
 PKG_DEPENDS_HOST="toolchain sqlite"
 PKG_SECTION="tools"
 PKG_USE_CMAKE="no"
 PKG_AUTORECONF="no"
 
-pre_configure_target() {
-  export LIBS="-lterminfo"
-  export CURSES_LIB="-lterminfo"
-  export CC_FOR_BUILD="$HOST_CC"
-  export CPPFLAGS_FOR_BUILD="$HOST_CPPFLAGS"
-  export CFLAGS_FOR_BUILD="$HOST_CFLAGS"
-  export LDFLAGS_FOR_BUILD="$HOST_LDFLAGS"
-  unset PKG_CONFIG_ALLOW_SYSTEM_CFLAGS
+pre_configure_host() {
   cd $ROOT/$PKG_BUILD
   autoreconf --verbose --install --force -I m4
+  export CXXFLAGS="$CXXFLAGS -D_DEFAULT_SOURCE"
 }
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-dependency-tracking --enable-silent-rules --with-pcre"
+PKG_CONFIGURE_OPTS_TARGET="--disable-dependency-tracking --enable-silent-rules --with-pcre --disable-shared --enable-static"
