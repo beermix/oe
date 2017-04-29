@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,9 +17,12 @@
 ################################################################################
 
 PKG_NAME="libprojectM"
-PKG_VERSION="0ebd580"
+PKG_VERSION="2.0.0"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://projectm.sourceforge.net/"
-PKG_GIT_URL="https://git.code.sf.net/p/projectm/code"
+PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain ftgl freetype opengl"
 PKG_PRIORITY="optional"
 PKG_SECTION="multimedia"
