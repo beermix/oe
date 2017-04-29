@@ -7,7 +7,7 @@ PKG_AUTORECONF="no"
 
 pre_configure_target() {
   export LIBS="-ltermcap -lcurses"
-  #export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|g"`
+  strip_lto
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--bindir=/bin \
