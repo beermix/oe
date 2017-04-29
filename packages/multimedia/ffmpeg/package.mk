@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="LGPLv2.1+"
 PKG_SITE="https://ffmpeg.org"
 PKG_GIT_URL="https://github.com/xbmc/FFmpeg"
-PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl dcadec libmpeg2 flac speex libvpx libtheora libvorbis libmodplug xz libssh x265"
+PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl dcadec libmpeg2 flac speex libtheora libvorbis libmodplug xz libssh"
 PKG_PRIORITY="optional"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
@@ -93,7 +93,6 @@ pre_configure_target() {
   if [ "$KODIPLAYER_DRIVER" = "bcm2835-firmware" ]; then
     export CFLAGS="-I$SYSROOT_PREFIX/usr/include/interface/vcos/pthreads -I$SYSROOT_PREFIX/usr/include/interface/vmcs_host/linux -DRPI=1 $CFLAGS"
     export FFMPEG_LIBS="-lbcm_host -lvcos -lvchiq_arm -lmmal -lmmal_core -lmmal_util -lvcsm -lvchostif"
-    #export CPPFLAGS="$CPPFLAGS -D_POSIX_SOURCE -D_GNU_SOURCE"
   fi
 }
 

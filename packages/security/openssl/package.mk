@@ -43,6 +43,7 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
 pre_configure_host() {
   mkdir -p $ROOT/$PKG_BUILD/.$HOST_NAME
   cp -a $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$HOST_NAME/
+  export CCACHE_DISABLE=1
 }
 
 configure_host() {
@@ -59,6 +60,7 @@ pre_configure_target() {
   mkdir -p $ROOT/$PKG_BUILD/.$TARGET_NAME
   cp -a $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$TARGET_NAME/
   strip_lto
+  strip_gold
 }
 
 configure_target() {

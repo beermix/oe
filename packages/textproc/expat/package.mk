@@ -33,7 +33,7 @@ PKG_AUTORECONF="no"
 
 PKG_CMAKE_OPTS_TARGET="-DBUILD_tools=OFF -DBUILD_examples=OFF -DBUILD_tests=OFF -DBUILD_shared=ON"
 
-PKG_CMAKE_OPTS_HOST="$PKG_CMAKE_OPTS_TARGET"
+PKG_CMAKE_OPTS_HOST="-DBUILD_tools=OFF -DBUILD_examples=OFF -DBUILD_tests=OFF -DBUILD_shared=OFF"
 
 pre_make_target() {
   # fix builderror when building in subdirs
