@@ -59,6 +59,8 @@ makeinstall_host() {
 pre_configure_target() {
   mkdir -p $ROOT/$PKG_BUILD/.$TARGET_NAME
   cp -a $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$TARGET_NAME/
+  
+  export CCACHE_DISABLE=1
   strip_lto
   strip_gold
 }
@@ -83,7 +85,7 @@ post_makeinstall_target() {
   mkdir -p $INSTALL/etc/ssl
   
   perl $PKG_DIR/cert/mk-ca-bundle.pl
-  cp $ROOT/$PKG_BUILD/ca-bundle.crt $INSTALL/etc/ssl/cert.pem
+  cp ca-bundle.crt $INSTALL/etc/ssl/cert.pem
 
   # backwards comatibility
   mkdir -p $INSTALL/etc/pki/tls
