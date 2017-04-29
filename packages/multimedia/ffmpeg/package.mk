@@ -17,12 +17,13 @@
 ################################################################################
 
 PKG_NAME="ffmpeg"
-PKG_VERSION="3.3"
+PKG_VERSION="eb0819c"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="LGPLv2.1+"
 PKG_SITE="https://ffmpeg.org"
-PKG_URL="https://ffmpeg.org/releases/${PKG_NAME}-${PKG_VERSION}.tar.gz"
+PKG_GIT_URL="https://github.com/xbmc/FFmpeg"
+PKG_GIT_BRANCH="release/3.3-kodi"
 PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl dcadec libmpeg2 flac speex libvpx libtheora libvorbis libmodplug xz libssh x265"
 PKG_PRIORITY="optional"
 PKG_SECTION="multimedia"

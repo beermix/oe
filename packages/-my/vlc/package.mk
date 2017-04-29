@@ -122,6 +122,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-dxva2 \
 			      --disable-x265 \
 			      --disable-vpx \
+			      --disable-vsxu \
 			      --enable-vlc"
 
 pre_configure_target() {

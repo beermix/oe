@@ -13,6 +13,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --libexecdir=/storage/.config \
                            --with-ca-bundle=/etc/ssl/cert.pem \
                            --with-openssl \
+                           --without-gnutls \
                            --disable-ipv6 \
                            --with-libgmp \
                            --with-libssh2 \
