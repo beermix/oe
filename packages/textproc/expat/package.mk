@@ -17,11 +17,11 @@
 ################################################################################
 
 PKG_NAME="expat"
-PKG_VERSION="2.2.0"
+PKG_VERSION="5ceb385"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://expat.sourceforge.net/"
-PKG_URL="$SOURCEFORGE_SRC/$PKG_NAME/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_GIT_URL="https://github.com/libexpat/libexpat"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_DEPENDS_HOST="autotools:host"
 PKG_SECTION="textproc"
@@ -29,7 +29,17 @@ PKG_SHORTDESC="expat: XML parser library"
 PKG_LONGDESC="Expat is an XML parser library written in C. It is a stream-oriented parser in which an application registers handlers for things the parser might find in the XML document (like start tags). An introductory article on using Expat is available on xml.com."
 
 PKG_IS_ADDON="no"
-PKG_USE_CMAKE="no"
-PKG_AUTORECONF="yes"
+PKG_USE_CMAKE="yes"
+PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared"
+post_unpack() {
+  cp -r $PKG_BUILD/expat/* $PKG_BUILD/
+}
+
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared --with-pic"
+
+PKG_CMAKE_OPTS_TARGET="-DBUILD_tools=OFF -DBUILD_examples=OFF -DBUILD_tests=OFF -DBUILD_shared=OFF"
+
+pre_make_target() {
+  cp -r ../doc .
+}

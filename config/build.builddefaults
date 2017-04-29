@@ -32,7 +32,8 @@
                          --localstatedir=/var \
                          --disable-static \
                          --enable-shared \
-                         --enable-silent-rules"
+                         --enable-silent-rules \
+                         --disable-option-checking"
 
   TARGET_CMAKE_OPTS="-DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
                      -DCMAKE_INSTALL_PREFIX=/usr \
@@ -48,7 +49,9 @@
                        --libexecdir=$ROOT/$TOOLCHAIN/lib \
                        --localstatedir=$ROOT/$TOOLCHAIN/var \
                        --disable-static \
-                       --enable-shared"
+                       --enable-shared \
+                       --enable-silent-rules \
+                       --disable-option-checking"
 
   HOST_CMAKE_OPTS="-DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
                    -DCMAKE_INSTALL_PREFIX=$ROOT/$TOOLCHAIN \
