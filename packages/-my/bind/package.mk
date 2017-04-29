@@ -1,5 +1,5 @@
 PKG_NAME="bind"
-PKG_VERSION="9.10.5b1"
+PKG_VERSION="9.10.4-P5"
 PKG_URL="http://www.mirrorservice.org/sites/ftp.isc.org/isc/bind9/$PKG_VERSION/bind-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain sqlite libcap openssl readline"
 PKG_SECTION="my"
