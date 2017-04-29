@@ -22,7 +22,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.bzip.org"
 PKG_URL="http://www.bzip.org/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_HOST="toolchain"
+PKG_DEPENDS_HOST=""
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="compress"
 PKG_SHORTDESC="bzip2 data compressor"
@@ -31,6 +31,8 @@ PKG_LONGDESC="bzip2 is a freely available, patent free (see below), high-quality
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
+MAKEFLAGS=-j1
+
 pre_build_host() {
   mkdir -p $ROOT/$PKG_BUILD/.$HOST_NAME
   cp -r $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$HOST_NAME
@@ -38,11 +40,11 @@ pre_build_host() {
 
 make_host() {
   cd $ROOT/$PKG_BUILD/.$HOST_NAME
-  make -f Makefile-libbz2_so CC=$HOST_CC CFLAGS="$HOST_CFLAGS -fPIC -DPIC" AR="$HOST_AR"-j1
+  make CC=$HOST_CC CFLAGS="$CFLAGS -O3" LDFLAGS="-s -Wl,-z,relro"
 }
 
 makeinstall_host() {
-  make install PREFIX=$ROOT/$TOOLCHAIN -j1
+  make install PREFIX=$ROOT/$TOOLCHAIN
 }
 
 pre_build_target() {
@@ -50,33 +52,12 @@ pre_build_target() {
   cp -r $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$TARGET_NAME
 }
 
-pre_make_target() {
-  cd $ROOT/$PKG_BUILD/.$TARGET_NAME
-  sed -e 's/^CFLAGS=\(.*\)$/CFLAGS=\1 \$(BIGFILES)/' -i ./Makefile-libbz2_so
-  sed -i "s|-O2|${CFLAGS}|g" Makefile
-  sed -i "s|-O2|${CFLAGS}|g" Makefile-libbz2_so
-}
-
 make_target() {
+  cd $ROOT/$PKG_BUILD/.$TARGET_NAME
   make -f Makefile libbz2.a bzip2 bzip2recover CC=$CC CFLAGS="$CFLAGS -fPIC -DPIC" AR="$AR" -j1
-  make -f Makefile-libbz2_so CC=$CC CFLAGS="$CFLAGS -fPIC -DPIC" AR="$AR" -j1
-}
-
-post_make_target() {
-  ln -snf libbz2.so.1.0 libbz2.so
 }
 
 makeinstall_target() {
-  mkdir -p $SYSROOT_PREFIX/usr/lib
-  mkdir -p $INSTALL/usr/bin
-  mkdir -p $INSTALL/usr/lib
-  
-  cp libbz2.a $SYSROOT_PREFIX/usr/lib
-  
-  cp -P libbz2.so* $SYSROOT_PREFIX/usr/lib
-  cp bzlib.h $SYSROOT_PREFIX/usr/include
-  cp -P libbz2.so* $INSTALL/usr/lib
-  
-  cp bzip2 $INSTALL/usr/bin
-  cp bzip2recover $INSTALL/usr/bin
+  make install PREFIX=$SYSROOT_PREFIX/usr
+  make install PREFIX=$INSTALL/usr
 }

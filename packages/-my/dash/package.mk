@@ -10,10 +10,9 @@ pre_configure_target() {
   export MAKEFLAGS=-j1
 }
 
-
 PKG_CONFIGURE_OPTS_TARGET="--bindir=/bin"
 
 post_makeinstall_target() {
   mkdir -p $INSTALL/bin
-  ln -sfv dash $INSTALL/bin/sh
+  #ln -sfv dash $INSTALL/bin/sh
 }
