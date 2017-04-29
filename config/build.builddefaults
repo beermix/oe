@@ -35,7 +35,8 @@
                          --enable-silent-rules"
 
   TARGET_CMAKE_OPTS="-DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
-                     -DCMAKE_INSTALL_PREFIX=/usr"
+                     -DCMAKE_INSTALL_PREFIX=/usr \
+                     -DCMAKE_BUILD_TYPE=Release"
 
 # configure HOST build defaults
   HOST_CONFIGURE_OPTS="--host=$HOST_NAME \
@@ -50,7 +51,8 @@
                        --enable-shared"
 
   HOST_CMAKE_OPTS="-DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
-                   -DCMAKE_INSTALL_PREFIX=$ROOT/$TOOLCHAIN"
+                   -DCMAKE_INSTALL_PREFIX=$ROOT/$TOOLCHAIN \
+                   -DCMAKE_BUILD_TYPE=Release"
 
 # configure INIT build defaults
   INIT_CONFIGURE_OPTS="$TARGET_CONFIGURE_OPTS"
