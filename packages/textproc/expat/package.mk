@@ -32,16 +32,4 @@ PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
 PKG_AUTORECONF="yes"
 
-PKG_CMAKE_OPTS_TARGET="-DBUILD_tools=OFF -DBUILD_examples=OFF -DBUILD_tests=OFF -DBUILD_shared=ON"
-
-PKG_CMAKE_OPTS_HOST="-DBUILD_tools=OFF -DBUILD_examples=OFF -DBUILD_tests=OFF -DBUILD_shared=ON"
-
-pre_make_target() {
-  # fix builderror when building in subdirs
-  cp -r ../doc .
-}
-
-pre_make_host() {
-  # fix builderror when building in subdirs
-  cp -r ../doc .
-}
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared"
