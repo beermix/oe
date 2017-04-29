@@ -17,19 +17,17 @@
 ################################################################################
 
 PKG_NAME="fluxbox"
-# dont bump or go back to ratpoison then f*** all 3rdparty stuff.
-PKG_VERSION="bdfaaa0"
+PKG_VERSION="e99d940"
 PKG_GIT_URL="https://github.com/fluxbox/fluxbox"
 #PKG_VERSION="1.3.7"
 #PKG_URL="http://sourceforge.net/projects/fluxbox/files/fluxbox/${PKG_VERSION}/$PKG_NAME-${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_TARGET="toolchain libX11 libXrandr libXext libXrender fribidi"
+PKG_DEPENDS_TARGET="toolchain libX11 libXrandr libXext libXrender"
 PKG_SECTION="x11/other"
 PKG_SHORTDESC="Fluxbox is a windowmanager for X that was based on the Blackbox 0.61.1 code"
 PKG_LONGDESC="Fluxbox is a windowmanager for X that was based on the Blackbox 0.61.1 code. It is very light on resources and easy to handle but yet full of features to make an easy, and extremely fast, desktop experience. It is built using C++ and licensed under the MIT-License."
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
-
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_realloc_0_nonnull=yes \
                            ac_cv_func_malloc_0_nonnull=yes \
                            --disable-toolbar \
@@ -38,7 +36,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_realloc_0_nonnull=yes \
                            --enable-ewmh \
                            --disable-xpm \
                            --disable-xft \
-                           --enable-fribidi \
+                           --disable-fribidi \
                            --disable-debug \
                            --disable-test \
                            --disable-nls \
@@ -51,11 +49,11 @@ post_install() {
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin/fbrun
   rm -rf $INSTALL/usr/bin/fbsetbg
-  rm -rf $INSTALL/usr/bin/fluxbox-generate_menu
-  rm -rf $INSTALL/usr/bin/fluxbox-remote
+ # rm -rf $INSTALL/usr/bin/fluxbox-generate_menu
+  #rm -rf $INSTALL/usr/bin/fluxbox-remote
   rm -rf $INSTALL/usr/bin/startfluxbox
 
-  rm -rf $INSTALL/usr/share/fluxbox/styles
+  #rm -rf $INSTALL/usr/share/fluxbox/styles
 
   cp $PKG_DIR/config/apps $INSTALL/usr/share/fluxbox/
   cp $PKG_DIR/config/init $INSTALL/usr/share/fluxbox/
