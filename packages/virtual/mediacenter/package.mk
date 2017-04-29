@@ -61,6 +61,9 @@ if [ "$MEDIACENTER" = "kodi" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET audioencoder.wav"
 
 # other packages
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET visualization.vsxu"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET visualization.shadertoy"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET visualization.projectm"
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET OpenELEC-settings"
 
   if [ -n "$SKINS" ]; then

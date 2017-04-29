@@ -1,18 +1,13 @@
 PKG_NAME="perl"
 PKG_VERSION="5.24.1"
-PKG_URL="http://www.cpan.org/src/5.0/perl-${PKG_VERSION}.tar.gz"
+PKG_URL="http://www.cpan.org/src/5.0/perl-${PKG_VERSION}.tar.xz"
 PKG_DEPENDS_TARGET="toolchain openssl db gdbm"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-pre_configure_target() {
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|g"`
-}
-
 configure_target() {
   ./Configure -des \
-		-Dcccdlflags='-fPIC' \
 		-Dcccdlflags='-fPIC' \
 		-Dccdlflags='-rdynamic' \
 		-Dprefix=/usr \
@@ -30,7 +25,6 @@ configure_target() {
 		-Dsitelib=/usr/local/share/perl5/site_perl \
 		-Dsitearch=/usr/local/lib/perl5/site_perl \
 		-Dlocincpth=' ' \
-		-Doptimize="$CFLAGS" \
 		-Duselargefiles \
 		-Dusethreads \
 		-Duseshrplib \
