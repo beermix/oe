@@ -147,7 +147,7 @@ configure_target() {
               --enable-pthreads \
               --disable-w32threads \
               --enable-network \
-              --enable-openssl \
+              --disable-gnutls --enable-openssl \
               --disable-gray \
               --enable-swscale-alpha \
               --disable-small \
@@ -188,7 +188,8 @@ configure_target() {
               --disable-libopencore-amrwb \
               --disable-libopencv \
               --disable-libdc1394 \
-              --enable-libfreetype \
+              --disable-libfaac \
+              --disable-libfreetype \
               --disable-libgsm \
               --disable-libmp3lame \
               --disable-libnut \
@@ -196,11 +197,11 @@ configure_target() {
               --disable-librtmp \
               --disable-libschroedinger \
               --enable-libspeex \
-              --enable-libtheora \
+              --disable-libtheora \
               --disable-libvo-amrwbenc \
-              --enable-libvorbis \
-              --enable-libvpx \
-              --enable-libx265 \
+              --disable-libvorbis \
+              --disable-libvpx \
+              --disable-libx264 \
               --disable-libxavs \
               --disable-libxvid \
               --enable-zlib \
