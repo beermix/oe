@@ -30,15 +30,6 @@ PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_HOST="--prefix=$ROOT/$TOOLCHAIN \
-			    --disable-shared \
-			    --enable-utf8 \
-			    --enable-pcre8 \
-			    --enable-pcre16 \
-			    --enable-unicode-properties \
-			    --with-pic \
-			    --with-gnu-ld"
-
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-static \
 			      --enable-utf8 \
@@ -52,6 +43,8 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --with-pic \
 			      --enable-unicode-properties \
 			      --enable-newline-is-anycrlf"
+			      
+PKG_CONFIGURE_OPTS_HOST="--prefix=$ROOT/$TOOLCHAIN $PKG_CONFIGURE_OPTS_TARGET"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
