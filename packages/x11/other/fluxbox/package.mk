@@ -18,7 +18,7 @@
 
 PKG_NAME="fluxbox"
 # dont bump or go back to ratpoison then f*** all 3rdparty stuff.
-PKG_VERSION="Release-1_3_7"
+PKG_VERSION="bdfaaa0"
 PKG_GIT_URL="https://github.com/fluxbox/fluxbox"
 #PKG_VERSION="1.3.7"
 #PKG_URL="http://sourceforge.net/projects/fluxbox/files/fluxbox/${PKG_VERSION}/$PKG_NAME-${PKG_VERSION}.tar.gz"
