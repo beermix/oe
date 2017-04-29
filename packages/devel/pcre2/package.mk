@@ -20,6 +20,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --disable-pcre2-32 \
 			      --enable-jit \
 			      --with-pic \
+			      --enable-cpp \
 			      --enable-unicode-properties \
 			      --enable-newline-is-anycrlf"
 			      
