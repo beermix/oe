@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="dstat"
-PKG_VERSION="4c47a34"
+PKG_VERSION="77e9347"
 PKG_SITE="http://dag.wiee.rs/home-made/dstat"
 PKG_GIT_URL="https://github.com/dagwieers/dstat"
 PKG_DEPENDS_TARGET="toolchain Python"
