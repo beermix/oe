@@ -14,6 +14,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-openssl-compatibility \
 			      --disable-crywrap \
 			      --disable-tools \
 			      --enable-libdane \
+			      --enable-static \
 			      --without-tpm \
 			      --disable-guile \
 			      --disable-heartbeat-support \
