@@ -42,6 +42,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --disable-timezone-tools \
                            --disable-debug"
 
+MAKEFLAGS=-j4
 
 NSS_CONF_DIR="$PKG_BUILD/nss"
 
@@ -112,10 +113,11 @@ post_makeinstall_target() {
   done
   rm -rf $INSTALL/usr/lib/audit
   rm -rf $INSTALL/usr/lib/glibc
-  rm -rf $INSTALL/usr/lib/libc_pic
   rm -rf $INSTALL/usr/lib/*.o
-  rm -rf $INSTALL/usr/lib/*.map
   rm -rf $INSTALL/var
+
+#  rm -rf $INSTALL/usr/lib/libc_pic
+#  rm -rf $INSTALL/usr/lib/*.map
 
 # remove unneeded libs
   rm -rf $INSTALL/usr/lib/libBrokenLocale*
@@ -165,9 +167,9 @@ make_init() {
 makeinstall_init() {
   mkdir -p $INSTALL/lib
     cp -PR $ROOT/$PKG_BUILD/.$TARGET_NAME/elf/ld*.so* $INSTALL/lib
-    cp -PR $ROOT/$PKG_BUILD/.$TARGET_NAME/libc.so* $INSTALL/lib
+    cp $ROOT/$PKG_BUILD/.$TARGET_NAME/libc.so.6 $INSTALL/lib
     cp -PR $ROOT/$PKG_BUILD/.$TARGET_NAME/math/libm.so* $INSTALL/lib
-    cp -PR $ROOT/$PKG_BUILD/.$TARGET_NAME/nptl/libpthread.so* $INSTALL/lib
+    cp $ROOT/$PKG_BUILD/.$TARGET_NAME/nptl/libpthread.so.0 $INSTALL/lib
     cp -PR $ROOT/$PKG_BUILD/.$TARGET_NAME/rt/librt.so* $INSTALL/lib
 
     if [ "$TARGET_ARCH" = "arm" -a "$TARGET_FLOAT" = "hard" ]; then

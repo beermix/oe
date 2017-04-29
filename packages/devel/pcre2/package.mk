@@ -7,7 +7,7 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="devel"
 PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-static \
@@ -16,7 +16,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-unicode-properties \
 			      --with-gnu-ld \
 			      --disable-stack-for-recursion \
-			      --enable-pcre8 \
+			      --enable-pcre2-8 \
 			      --disable-pcre2-32 \
 			      --enable-jit \
 			      --with-pic \
