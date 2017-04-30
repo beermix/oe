@@ -4,11 +4,12 @@
 ################################################################################
 
 PKG_NAME="aceproxy"
-PKG_VERSION="841fbe8"
+PKG_VERSION="10d0051"
 PKG_REV="2"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_URL="http://src.alexelec.in.ua/aceproxy-841fbe8.tar.xz"
+PKG_SITE="https://github.com/AndreyPavlenko/aceproxy"
+PKG_GIT_URL="https://github.com/AndreyPavlenko/aceproxy"
 PKG_DEPENDS_TARGET="toolchain gevent psutil M2Crypto"
 PKG_SECTION="xmedia/torrent"
 PKG_SHORTDESC="AceProxy: Ace Stream HTTP Proxy"

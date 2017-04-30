@@ -55,7 +55,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_mmap_fixed_mapped=yes \
                            --disable-dtrace \
                            --disable-systemtap \
                            --enable-libmount=no \
-                           --with-libiconv=$SYSROOT_PREFIX/usr \
                            --enable-Bsymbolic \
                            --with-gnu-ld \
                            --with-threads=posix \
