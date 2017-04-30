@@ -1,6 +1,7 @@
 PKG_NAME="bwm-ng"
-PKG_VERSION="9b8a082"
-PKG_GIT_URL="https://github.com/nesro/bwm-ng"
+PKG_VERSION="f54b3fa"
+#PKG_GIT_URL="https://github.com/nesro/bwm-ng"
+PKG_GIT_URL="https://github.com/vgropp/bwm-ng"
 PKG_DEPENDS_TARGET="toolchain libstatgrab"
 PKG_AUTORECONF="yes"
 

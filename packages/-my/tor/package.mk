@@ -5,12 +5,17 @@ PKG_DEPENDS_TARGET="toolchain openssl zlib libevent libcap"
 PKG_SECTION="security"
 PKG_AUTORECONF="yes"
 
-
 PKG_CONFIGURE_OPTS_TARGET="--enable-systemd \
 			      --disable-asciidoc \
 			      --disable-unittests \
 			      --disable-seccomp \
 			      --disable-libscrypt \
+			      --enable-largefile \
+			      --disable-gcc-hardening \
+			      --enable-libfuzzer=no \
+			      --disable-unittests \
+			      --enable-openbsd-malloc \
+			      --disable-linker-hardening \
 			      --with-openssl-dir=$SYSROOT_PREFIX \
 			      --sysconfdir=/storage/.config \
 			      --datarootdir=/storage/.cache/tor \
