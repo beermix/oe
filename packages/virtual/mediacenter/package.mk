@@ -39,23 +39,23 @@ if [ "$MEDIACENTER" = "kodi" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET peripheral.joystick"
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pvr.iptvsimple"
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pvr.iptvsimple.multi"
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pvr.vdr.vnsi"
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pvr.hts"
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pvr.dvblink"
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pvr.vuplus"
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pvr.stalker"
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pvr.mediaportal.tvserver"
+  #PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pvr.vdr.vnsi"
+  #PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pvr.hts"
+  #PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pvr.dvblink"
+  #PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pvr.vuplus"
+  #PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pvr.stalker"
+  #PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pvr.mediaportal.tvserver"
 
 # kodi-binary-addons inputstream
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET inputstream.rtmp"
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET inputstream.adaptive"
 
 # kodi-binary-addons visualization
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET visualization.spectrum"
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET visualization.waveform"
-  #PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET visualization.vsxu"
+  #PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET visualization.spectrum"
+  #PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET visualization.waveform"
+  ##PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET visualization.vsxu"
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET visualization.shadertoy"
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET visualization.projectm"
+  #PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET visualization.projectm"
 
 # audioencoder
   #PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET audioencoder.flac"

@@ -29,9 +29,12 @@ PKG_AUTORECONF="yes" # ToDo
 
 CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
 CPPLAGS="$CPPLAGS -DCAIRO_NO_MUTEX=1"
+LIBS="$LIBS -latomic"
+
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_lzo2_lzo2a_decompress=no \
                            ac_cv_lib_bfd_bfd_openr=no \
+                           --enable-silent-rules \
                            --x-includes="$SYSROOT_PREFIX/usr/include" \
                            --x-libraries="$SYSROOT_PREFIX/usr/lib" \
                            --enable-xlib \
@@ -40,7 +43,4 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_lzo2_lzo2a_decompress=no \
                            --enable-xcb \
                            --enable-tee \
                            --enable-glx \
-                           --with-x \
-                           --enable-silent-rules \
-                           --disable-shared \
-                           --with-pic"
+                           --with-x"
