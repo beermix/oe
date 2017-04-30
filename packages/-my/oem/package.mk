@@ -16,7 +16,7 @@ if [ "$PROJECT" = "Generic" ]; then
  
 PKG_DEPENDS_TARGET="usb-modeswitch gperftools dstat intel-gpu-tools unrar psmisc psutil wget libva-utils xupnpd scan-m3u pvr.iptvsimple.multi xcalib ps3remote bash gawk xz grep findutils inetutils file nano zsh git polipo PySocks gevent PyAMF Mako M2Crypto pyxattr time coreutils less iperf f2fs-tools daemonize ncdu sshfs xfsprogs strace macchanger davfs2 lm_sensors bwm-ng tor netdata vlc"
 
-#PKG_DEPENDS_TARGET="  zsh gawk grep lm_sensors aircrack-ng ps3remote xz nano pure-ftpd less iperf ncdu file nano git polipo PySocks gevent PyAMF M2Crypto pyxattr time coreutils less vlc"
+#PKG_DEPENDS_TARGET="zsh gawk grep lm_sensors aircrack-ng ps3remote xz nano pure-ftpd less iperf ncdu file nano git polipo PySocks gevent PyAMF M2Crypto pyxattr time coreutils less vlc"
 
 #PKG_DEPENDS_TARGET="zsh tor x11vnc squid rsyslog intel-gpu-tools"
 #pciutils dbus libXcomposite libXcursor libXtst alsa-lib bzip2 yasm nss libXScrnSaver libexif harfbuzz atk gtk+ libevent

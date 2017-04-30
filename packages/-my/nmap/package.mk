@@ -9,18 +9,15 @@ PKG_AUTORECONF="no"
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
-  
-  export CPPFLAGS="$CPPFLAGS -DNOLUA"
+  export CPPFLAGS="$CPPFLAGS -Iliblua"
   export LDFLAGS="$LDFLAGS -lpthread"
-  export XAKE_FLAGS="GCC_HONOUR_COPTS=s"
 }
 
-PKG_CONFIGURE_OPTS_TARGET="ac_cv_dnet_bsd_bpf=no \
-                           --without-openssl \
-                           --without-zenmap \
-                           --without-ndiff \
-                           --without-liblua \
-                           --with-pcap=$SYSROOT_PREFIX/usr \
+PKG_CONFIGURE_OPTS_TARGET="--enable-static \
+                           --with-pcap=linux \
+                           --with-liblua=included \
                            --with-liblinear=included \
                            --with-libpcre=$SYSROOT_PREFIX/usr \
-                           --enable-static"
+                           --without-ncat \
+                           --without-ndiff \
+                           --without-zenmap"
