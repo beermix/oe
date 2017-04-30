@@ -16,7 +16,7 @@ PKG_SHORTDESC="binutils: A GNU collection of binary utilities"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-#CONCURRENCY_MAKE_LEVEL=1
+CONCURRENCY_MAKE_LEVEL=1
 
 PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --with-sysroot=$SYSROOT_PREFIX \
@@ -31,6 +31,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-plugins \
                          --enable-gold \
                          --enable-ld=default \
+                         --with-system-zlib \
                          --enable-lto \
                          --disable-shared \
                          --enable-poison-system-directories"

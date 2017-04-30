@@ -22,9 +22,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-systemd \
 			      --datadir=/storage/.cache/tor \
 			      --with-zlib-dir=$SYSROOT_PREFIX \
 			      --with-libevent-dir=$SYSROOT_PREFIX \
-			      --with-openssl-dir=$SYSROOT_PREFIX \
-			      --with-tor-user=tor \
-			      --with-tor-group=tor"
+			      --with-openssl-dir=$SYSROOT_PREFIX"
 
 post_install() {
   add_user tor x 990 990 "Tor Server" "/storage" "/bin/sh"

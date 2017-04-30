@@ -15,7 +15,8 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-atomicsupport \
 			      --enable-stl \
 			      --disable-java \
 			      --disable-tcl \
-			      --disable-debug"
+			      --disable-debug \
+			      --enable-compat185"
 
 PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
 			   

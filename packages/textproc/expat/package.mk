@@ -15,13 +15,13 @@ CONCURRENCY_MAKE_LEVEL=1
 
 post_unpack() {
  rm $ROOT/$PKG_BUILD/m4/libtool.m4
- strip_lto
+ #strip_lto
 }
 
 #CFLAGS="$CFLAGS -Wall -Wextra -pedantic -Wno-overlength-strings"
 #CFLAGS="$CFLAGS -DXML_UNICODE"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static --with-gnu-ld --with-pic"
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static --with-gnu-ld"
 			      
 PKG_CONFIGURE_OPTS_HOST="--prefix=$ROOT/$TOOLCHAIN $PKG_CONFIGURE_OPTS_TARGET"
 
