@@ -62,7 +62,7 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$ROOT/$TOOLCHAIN \
                        -DCMAKE_BUILD_TYPE=none \
                        -DPYTHON_INCLUDE_DIRS=$SYSROOT_PREFIX/usr/include/python2.7 \
                        -DGIT_VERSION=$PKG_VERSION \
-                       -DENABLE_LDGOLD=ON \
+                       -DENABLE_LDGOLD=OFF \
                        -DKODI_DEPENDSBUILD=ON \
                        -DWITH_TEXTUREPACKER=$ROOT/$TOOLCHAIN/bin/TexturePacker \
                        -DENABLE_INTERNAL_FFMPEG=OFF \
@@ -77,7 +77,18 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$ROOT/$TOOLCHAIN \
                        -DENABLE_LIBUSB=OFF \
                        -DENABLE_UDEV=ON \
                        -DENABLE_XSLT=OFF \
-                       -DENABLE_DBUS=ON"
+                       -DENABLE_DBUS=ON \
+                       -DENABLE_AVX=ON \
+                       -DENABLE_AVX2=OFF \
+                       -DENABLE_SSE=ON \
+                       -DENABLE_SSE2=ON \
+                       -DENABLE_SSE4_1=ON \
+                       -DENABLE_SSE4_2=ON \
+                       -DENABLE_SSSE3=ON \
+                       -DHAVE_SSE=TRUE \
+                       -DHAVE_SSE2=TRUE \
+                       -DHAVE_SSE4_1=TRUE \
+                       -DHAVE_SSSE3=TRUE"
 
 if [ "$TARGET_ARCH" = "x86_64" ]; then
   PKG_CMAKE_OPTS_TARGET+=" -DWITH_CPU=$TARGET_ARCH"
@@ -263,7 +274,7 @@ pre_configure_target() {
   strip_lto
   strip_gold
 
-  export LIBS="$LIBS -lz -ltermcap -lexpat"
+  export LIBS="$LIBS -lz -ltermcap -lexpat -lstdc++ -lm -lrt -ldl"
 }
 
 pre_make_target() {

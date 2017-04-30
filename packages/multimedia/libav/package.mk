@@ -29,7 +29,7 @@ configure_target() {
               --cc="$CC" \
               --ld="$CC" \
               --host-cc="$HOST_CC" \
-              --host-cflags="$HOST_CFLAGS -fPIC" \
+              --host-cflags="$HOST_CFLAGS -D_DEFAULT_SOURCE" \
               --host-cppflags="$HOST_CPPFLAGS -D_DEFAULT_SOURCE" \
               --host-ldflags="$HOST_LDFLAGS -fPIC" \
               --host-libs="-lm" \
