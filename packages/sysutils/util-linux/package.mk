@@ -76,8 +76,7 @@ PKG_CONFIGURE_OPTS_TARGET="--sbindir=/sbin \
                            --enable-libsmartcols \
                            --enable-losetup \
                            --enable-fsck \
-                           --enable-blkid \
-                           --with-sysroot=$SYSROOT_PREFIX"
+                           --enable-blkid"
 
 if [ "$SWAP_SUPPORT" = "yes" ]; then
   PKG_CONFIGURE_OPTS_TARGET+=" --enable-swapon"
