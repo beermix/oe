@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libmicrohttpd"
-PKG_VERSION="0.9.51"
+PKG_VERSION="0.9.50"
 PKG_ARCH="any"
 PKG_LICENSE="LGPLv2.1"
 PKG_SITE="https://www.gnu.org/software/libmicrohttpd/"
@@ -29,6 +29,7 @@ PKG_LONGDESC="GNU libmicrohttpd is a small C library that is supposed to make it
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
+
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
                            --enable-static \
