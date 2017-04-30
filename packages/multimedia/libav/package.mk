@@ -29,8 +29,8 @@ configure_target() {
               --cc="$CC" \
               --ld="$CC" \
               --host-cc="$HOST_CC" \
-              --host-cflags="$HOST_CFLAGS -D_DEFAULT_SOURCE" \
-              --host-cppflags="$HOST_CPPFLAGS -D_DEFAULT_SOURCE" \
+              --host-cflags="$HOST_CFLAGS -D_DEFAULT_SOURCE -fPIC" \
+              --host-cppflags="$HOST_CPPFLAGS -D_DEFAULT_SOURCE -fPIC" \
               --host-ldflags="$HOST_LDFLAGS -fPIC" \
               --host-libs="-lm" \
               --extra-ldflags="$LDFLAGS -fPIC" \
