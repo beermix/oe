@@ -107,15 +107,15 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
                            --disable-ipv6 \
                            --disable-local-transport \
                            --disable-secure-rpc \
-                           --enable-xtrans-send-fds \
                            --enable-input-thread \
+                           --enable-xtrans-send-fds \
                            --disable-docs \
                            --disable-devel-docs \
                            --with-int10=x86emu \
                            --with-gnu-ld \
                            --with-sha1=libcrypto \
                            --without-systemd-daemon \
-                           --with-os-vendor=OE \
+                           --with-os-vendor=OpenELEC.tv \
                            --with-module-dir=/usr/lib/xorg/modules \
                            --with-xkb-path=/usr/share/X11/xkb \
                            --with-xkb-output=/var/cache/xkb \

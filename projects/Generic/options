@@ -74,7 +74,7 @@
     OPENGL="mesa"
 
   # include uvesafb support (yes / no)
-    UVESAFB_SUPPORT="yes"
+    UVESAFB_SUPPORT="no"
 
   # Displayserver to use (x11 / no)
     DISPLAYSERVER="x11"
