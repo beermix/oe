@@ -37,7 +37,7 @@ case "$KODIPLAYER_DRIVER" in
     PKG_KEEP_CHECKOUT="no"
     ;;
   *)
-    PKG_VERSION="17.1-Krypton"
+    PKG_VERSION="661dd08"
     PKG_GIT_URL="https://github.com/xbmc/xbmc.git"
     PKG_GIT_BRANCH="Krypton"
     PKG_KEEP_CHECKOUT="no"
@@ -62,7 +62,7 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$ROOT/$TOOLCHAIN \
                        -DCMAKE_BUILD_TYPE=none \
                        -DPYTHON_INCLUDE_DIRS=$SYSROOT_PREFIX/usr/include/python2.7 \
                        -DGIT_VERSION=$PKG_VERSION \
-                       -DENABLE_LDGOLD=OFF \
+                       -DENABLE_LDGOLD=ON \
                        -DKODI_DEPENDSBUILD=ON \
                        -DWITH_TEXTUREPACKER=$ROOT/$TOOLCHAIN/bin/TexturePacker \
                        -DENABLE_INTERNAL_FFMPEG=OFF \
@@ -263,7 +263,7 @@ pre_configure_target() {
   strip_lto
   strip_gold
 
-  export LIBS="$LIBS -lssp -lz -ltermcap -lexpat"
+  export LIBS="$LIBS -lz -ltermcap -lexpat"
 }
 
 pre_make_target() {

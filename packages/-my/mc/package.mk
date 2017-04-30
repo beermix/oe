@@ -6,10 +6,7 @@ PKG_SECTION="tools"
 PKG_AUTORECONF="yes"
 
 pre_configure_target() {
-  #export LIBS="$LIBS -lssh2 -lcrypto"
-  #export MAKEFLAGS="-j1"
-  #export CFLAGS="$CFLAGS -I$SYSROOT_PREFIX/usr/include/ncurses"
-  export LDFLAGS="$(echo $LDFLAGS | sed -e "s|-Wl,--as-needed||")"
+  sh autogen.sh
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config \
@@ -32,21 +29,24 @@ PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config \
                            --disable-doxygen-html \
                            --without-internal-edit \
                            --disable-silent-rules \
-                           --enable-background \
                            --enable-charset \
                            --enable-largefile \
                            --enable-vfs-sftp \
                            --with-internal-edit \
-                           --with-mmap \
-                           --with-subshell \
-                           --without-gpm-mouse \
-                           --without-included-gettext \
-                           --without-x
                            --without-gpm-mouse \
                            --with-screen=slang \
-                           --with-x \
-                           --enable-vfs-sftp \
                            --enable-vfs-tar \
                            --enable-vfs-extfs \
                            --enable-vfs-cpio \
-                           --without-vfs-smb"
+                           --with-gnu-ld \
+                           --with-pcre=$SYSROOT_PREFIX\
+                           --with-sysroot=$SYSROOT_PREFIX \
+                           --enable-static \
+                           --disable-shared \
+                           --with-pic \
+                           --disable-rpath \
+                           --enable-tests=no \
+                           --enable-threads=posix \
+                           --enable-maintainer-mode=no \
+                           --enable-mclib=no \
+                           --enable-assert=no"

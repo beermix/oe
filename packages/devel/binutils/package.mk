@@ -26,23 +26,16 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --disable-werror \
                          --disable-multilib \
                          --disable-libada \
-                         --enable-libssp \
+                         --disable-libssp \
                          --enable-version-specific-runtime-libs \
                          --enable-plugins \
                          --enable-gold \
                          --enable-ld=default \
                          --enable-lto \
-                         --with-pic \
-                         --disable-nls \
-                         --with-system-zlib \
                          --disable-shared \
                          --enable-poison-system-directories"
 
 makeinstall_host() {
   cp -v ../include/libiberty.h $SYSROOT_PREFIX/usr/include
   make -j1 install
-}
-
-pre_configure_host() {
-  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $ROOT/$PKG_BUILD/libiberty/configure
 }
