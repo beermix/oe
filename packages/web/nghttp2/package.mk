@@ -5,5 +5,4 @@ PKG_DEPENDS_TARGET="toolchain zlib openssl libevent c-ares"
 PKG_USE_CMAKE="yes"
 PKG_AUTORECONF="no"
 
-
 PKG_CMAKE_OPTS_TARGET="-DENABLE_LIB_ONLY=OFF"
