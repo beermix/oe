@@ -21,7 +21,6 @@ PKG_VERSION="0"
 PKG_SITE=""
 PKG_URL=""
 PKG_DEPENDS_TARGET="systemd"
-
 PKG_SECTION="system"
 PKG_SHORTDESC="This addon provides extra systemd utilities"
 PKG_LONGDESC="This addon provides extra systemd utilities"
