@@ -39,11 +39,13 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-coverage \
                            --disable-kmod \
                            --disable-xkbcommon \
-                           --enable-blkid \
+                           --disable-blkid \
                            --disable-seccomp \
                            --disable-ima \
                            --disable-selinux \
                            --disable-apparmor \
+                           --disable-adm-group \
+                           --disable-wheel-group \
                            --disable-xz \
                            --disable-zlib \
                            --disable-bzip2 \
@@ -84,7 +86,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-networkd \
                            --disable-efi \
                            --disable-gnuefi \
-                           --disable-kdbus \
                            --disable-myhostname \
                            --enable-hwdb \
                            --disable-manpages \
@@ -162,6 +163,9 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/lib/systemd/system/systemd-udev-hwdb-update.service
   rm -rf $INSTALL/usr/lib/systemd/system/*.target.wants/systemd-udev-hwdb-update.service
 
+  # remove fuse mount rules, we ship this byself
+  rm -rf $INSTALL/usr/lib/systemd/system/sys-fs-fuse-connections.mount
+
   # remove nspawn
   rm -rf $INSTALL/usr/bin/systemd-nspawn
   rm -rf $INSTALL/usr/lib/systemd/system/systemd-nspawn@.service
@@ -194,7 +198,6 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin/systemd-machine-id-setup
   mkdir -p $INSTALL/usr/bin
   cp $PKG_DIR/scripts/systemd-machine-id-setup $INSTALL/usr/bin
-  cp $PKG_DIR/scripts/userconfig-setup $INSTALL/usr/bin
 
   # provide 'halt', 'shutdown', 'reboot' & co.
   mkdir -p $INSTALL/usr/sbin
@@ -209,7 +212,6 @@ post_makeinstall_target() {
   cp -PR $PKG_DIR/config/* $INSTALL/usr/config
 
   rm -rf $INSTALL/etc/modules-load.d
-  ln -sf /storage/.config/modules-load.d $INSTALL/etc/modules-load.d
   rm -rf $INSTALL/etc/sysctl.d
   ln -sf /storage/.config/sysctl.d $INSTALL/etc/sysctl.d
   rm -rf $INSTALL/etc/tmpfiles.d

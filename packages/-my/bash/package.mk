@@ -7,13 +7,18 @@ PKG_AUTORECONF="no"
 
 pre_configure_target() {
   export LIBS="-ltermcap -lcurses"
-  strip_lto
 }
 
-PKG_CONFIGURE_OPTS_TARGET="--bindir=/bin \
+PKG_CONFIGURE_OPTS_TARGET="bash_cv_getcwd_malloc=yes \
+			      bash_cv_job_control_missing=present \
+			      bash_cv_sys_named_pipes=present \
+			      bash_cv_func_sigsetjmp=present \
+			      bash_cv_getenv_redef=no \
+                           --bindir=/bin \
                            --with-curses \
                            --enable-readline \
                            --without-bash-malloc \
+                           --disable-static-link \
                            --with-installed-readline \
                            --disable-net-redirections \
                            --enable-command-timing \

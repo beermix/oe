@@ -60,12 +60,7 @@ UTILLINUX_CONFIG_DEFAULT="--disable-gtk-doc \
                           --without-systemd \
                           --without-smack \
                           --without-python \
-                          --without-systemdsystemunitdir \
-                          --disable-nologin \
-                          --disable-sulogin \
-                          --disable-su \
-                          --disable-runuser \
-                          --disable-swapon"
+                          --without-systemdsystemunitdir"
 
 PKG_CONFIGURE_OPTS_TARGET="--sbindir=/sbin \
                            --libexecdir=/lib \
