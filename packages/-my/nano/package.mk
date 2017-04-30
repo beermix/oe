@@ -29,8 +29,7 @@ PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config/nano \
 			      --enable-nanorc \
 			      --disable-nls \
 			      --disable-wrapping \
-			      --infodir=/storage/.config \
-			      --with-slang \
+			      --with-slang=no \
 			      --enable-color"
 
 post_makeinstall_target() {
