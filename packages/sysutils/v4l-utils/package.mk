@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -20,13 +20,11 @@
 
 PKG_NAME="v4l-utils"
 PKG_VERSION="1.12.3"
-PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://linuxtv.org/"
-PKG_URL="https://linuxtv.org/downloads/v4l-utils/v4l-utils-$PKG_VERSION.tar.bz2"
+PKG_URL="http://linuxtv.org/downloads/v4l-utils/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
 PKG_SECTION="system"
 PKG_SHORTDESC="v4l-utils: Linux V4L2 and DVB API utilities and v4l libraries (libv4l)."
 PKG_LONGDESC="Linux V4L2 and DVB API utilities and v4l libraries (libv4l)."
@@ -38,7 +36,7 @@ PKG_CONFIGURE_OPTS_TARGET="--without-jpeg"
 PKG_MAKEINSTALL_OPTS_TARGET="PREFIX=/usr -C utils/keytable"
 
 make_target() {
-    make CFLAGS="$TARGET_CFLAGS -fPIC"
+    make -C utils/keytable CFLAGS="$TARGET_CFLAGS"
 }
 
 post_makeinstall_target() {
@@ -47,4 +45,12 @@ post_makeinstall_target() {
 
   mkdir -p $INSTALL/usr/config
     cp -PR $PKG_DIR/config/* $INSTALL/usr/config
+
+  (
+    echo "# table libreelec_multi, type: RC6 NEC"
+    for f in rc6_mce xbox_360 zotac_ad10 hp_mce xbox_one cubox_i ; do
+      echo "# $f"
+      grep -v "^#" $INSTALL/usr/lib/udev/rc_keymaps/$f
+    done
+  ) > $INSTALL/usr/lib/udev/rc_keymaps/libreelec_multi
 }
