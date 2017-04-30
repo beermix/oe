@@ -22,8 +22,8 @@ PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_URL="http://www.kernel.org/pub/linux/utils/util-linux/v2.29/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain zlib slang"
-PKG_DEPENDS_INIT="toolchain gcc:init zlib slang"
+PKG_DEPENDS_TARGET="toolchain slang"
+PKG_DEPENDS_INIT="toolchain gcc:init slang"
 PKG_PRIORITY="optional"
 PKG_SECTION="system"
 PKG_SHORTDESC="util-linux: Miscellaneous system utilities for Linux"
@@ -32,15 +32,13 @@ PKG_LONGDESC="The util-linux package contains a large variety of low-level syste
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-
 UTILLINUX_CONFIG_DEFAULT="--disable-gtk-doc \
                           --disable-nls \
                           --disable-rpath \
                           --enable-tls \
                           --enable-chsh-only-listed \
-                          --enable-libmount-force-mountinfo \
                           --disable-bash-completion \
-                          --enable-colors-default \
+                          --disable-colors-default \
                           --disable-pylibmount \
                           --disable-pg-bell \
                           --disable-use-tty-group \
@@ -52,13 +50,24 @@ UTILLINUX_CONFIG_DEFAULT="--disable-gtk-doc \
                           --without-udev \
                           --without-ncurses \
                           --without-readline \
-                          --with-slang \
                           --without-termcap \
                           --without-tinfo \
                           --without-utempter \
                           --without-user \
                           --without-systemd \
                           --without-smack \
+                          --disable-more \
+                          --disable-wdctl \
+                          --disable-libsmartcols \
+                          --disable-losetup \
+                          --disable-zramctl \
+                          --disable-partx \
+                          --disable-bfs \
+                          --disable-cramfs \
+                          --disable-swapon \
+                          --without-python \
+                          --disable-pg-bell \
+                          --disable-lslogins \
                           --without-python \
                           --without-systemdsystemunitdir"
 
@@ -81,31 +90,7 @@ PKG_CONFIGURE_OPTS_HOST="--enable-static \
                          --disable-shared \
                          $UTILLINUX_CONFIG_DEFAULT \
                          --enable-uuidgen \
-                         --enable-libuuid \
-                         --disable-all-programs \
-                         --disable-bash-completion \
-                         --disable-colors-default \
-                         --disable-pylibmount \
-                         --disable-pg-bell \
-                         --disable-use-tty-group \
-                         --disable-makeinstall-chown \
-                         --disable-makeinstall-setuid \
-                         --without-selinux \
-                         --without-audit \
-                         --without-udev \
-                         --without-ncurses \
-                         --without-readline \
-                         --without-slang \
-                         --without-termcap \
-                         --without-tinfo \
-                         --without-utempter \
-                         --without-util \
-                         --without-libz \
-                         --without-user \
-                         --without-systemd \
-                         --without-smack \
-                         --without-python \
-                         --without-systemdsystemunitdir"
+                         --enable-libuuid"
 
 PKG_CONFIGURE_OPTS_INIT="--prefix=/ \
                          --bindir=/bin \
