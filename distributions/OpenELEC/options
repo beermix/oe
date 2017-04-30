@@ -31,19 +31,19 @@
   SKINS=""
 
 # remove default skin included in Kodi (yes/no)
-  SKIN_REMOVE_SHIPPED="no"
+  SKIN_REMOVE_SHIPPED="yes"
 
 # Default Skin (Confluence, or any from above)
-  SKIN_DEFAULT="Estuary"
+  SKIN_DEFAULT="Confluence"
 
 # install extra subtitle Fonts for KODI (yes / no)
   KODI_EXTRA_FONTS="yes"
 
 # build and install PulseAudio support (yes / no)
-  PULSEAUDIO_SUPPORT="no"
+  PULSEAUDIO_SUPPORT="yes"
 
 # build and install espeak support (yes / no)
-  ESPEAK_SUPPORT="no"
+  ESPEAK_SUPPORT="yes"
 
 # build and install with non-free support
 # (RAR compression support in KODI) (yes / no)
@@ -177,7 +177,7 @@
 
 # Support for partitioning and formating disks in initramfs (yes / no)
 # This adds support for parted and mkfs.ext3/4 to initramfs for OEM usage
-  INITRAMFS_PARTED_SUPPORT="no"
+  INITRAMFS_PARTED_SUPPORT="yes"
 
 # build with swap support (yes / no)
   SWAP_SUPPORT="no"
