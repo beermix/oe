@@ -17,11 +17,9 @@
 ################################################################################
 
 PKG_NAME="fribidi"
+#PKG_VERSION="0ca97b7"
+#PKG_GIT_URL="https://github.com/behdad/fribidi"
 PKG_VERSION="0.19.7"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="LGPL"
-PKG_SITE="http://fribidi.freedesktop.org/"
 PKG_URL="http://fribidi.freedesktop.org/download/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_PRIORITY="optional"
@@ -33,14 +31,12 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
-                           --enable-static \
                            --disable-debug \
                            --disable-deprecated \
-                           --disable-silent-rules \
                            --enable-malloc \
                            --enable-charsets \
                            --with-gnu-ld \
-                           --without-glib"
+                           --with-glib=no"
 
 pre_configure_target() {
   export CFLAGS="$CFLAGS -DFRIBIDI_CHUNK_SIZE=4080"

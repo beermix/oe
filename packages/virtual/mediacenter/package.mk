@@ -53,15 +53,15 @@ if [ "$MEDIACENTER" = "kodi" ]; then
 # kodi-binary-addons visualization
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET visualization.spectrum"
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET visualization.waveform"
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET visualization.vsxu"
+  #PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET visualization.vsxu"
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET visualization.shadertoy"
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET visualization.projectm"
 
 # audioencoder
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET audioencoder.flac"
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET audioencoder.lame"
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET audioencoder.vorbis"
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET audioencoder.wav"
+  #PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET audioencoder.flac"
+  #PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET audioencoder.lame"
+  #PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET audioencoder.vorbis"
+  #PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET audioencoder.wav"
 
 # other packages
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET kodi-theme-AeonNox"
