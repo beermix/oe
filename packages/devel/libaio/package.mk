@@ -32,14 +32,6 @@ PKG_LONGDESC="AIO enables even a single application thread to overlap I/O operat
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-make_target() {
-  make -C src
-}
-
-makeinstall_target() {
-  mkdir -p $SYSROOT_PREFIX/usr/lib
-    cp -PR src/libaio.a $SYSROOT_PREFIX/usr/lib
-
-  mkdir -p $SYSROOT_PREFIX/usr/include
-    cp -PR src/libaio.h $SYSROOT_PREFIX/usr/include
-}
+#pre_build_target() {
+#  strip_lto
+#}

@@ -8,7 +8,7 @@ Type=forking
 PIDFile=/var/run/smbd-smb.conf.pid
 LimitNOFILE=16384
 ExecStartPre=/usr/lib/samba/samba-config
-ExecStart=/usr/bin/smbd --configfile=/run/samba/smb.conf
+ExecStart=/usr/sbin/smbd --configfile=/run/samba/smb.conf
 ExecReload=/bin/kill -HUP $MAINPID
 TimeoutStopSec=1s
 Restart=always
