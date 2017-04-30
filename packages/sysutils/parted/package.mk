@@ -38,9 +38,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-device-mapper \
 
 PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
 
-pre_configure_target() {
-  strip_hard
-}
+strip_hard
 
 configure_init() {
   : # reuse configure_target()

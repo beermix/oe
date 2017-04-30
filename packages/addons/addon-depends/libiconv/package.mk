@@ -22,7 +22,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://savannah.gnu.org/projects/libiconv/"
 PKG_URL="http://ftp.gnu.org/pub/gnu/libiconv/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain libiconv:host"
+PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="devel"
 PKG_SHORTDESC="Libiconv converts from one character encoding to another through Unicode conversion."
 PKG_LONGDESC="Libiconv converts from one character encoding to another through Unicode conversion."
@@ -38,6 +38,8 @@ PKG_CONFIGURE_OPTS_TARGET="--host=$TARGET_NAME \
 			      --sysconfdir=/etc \
 			      --disable-shared \
 			      --disable-nls \
+			      --enable-static \
+			      --with-gnu-ld \
 			      --enable-extra-encodings"
-			      
+
 PKG_CONFIGURE_OPTS_HOST="--disable-shared --enable-extra-encodings"
