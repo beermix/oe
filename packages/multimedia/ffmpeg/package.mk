@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="LGPLv2.1+"
 PKG_SITE="https://ffmpeg.org"
 PKG_GIT_URL="https://github.com/xbmc/FFmpeg"
-PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl dcadec libmpeg2 flac speex libtheora libvorbis libmodplug xz libssh"
+PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl dcadec libmpeg2 flac speex libtheora libvorbis libmodplug xz libssh faac openjpeg"
 PKG_PRIORITY="optional"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
@@ -93,6 +93,7 @@ pre_configure_target() {
   if [ "$KODIPLAYER_DRIVER" = "bcm2835-firmware" ]; then
     export CFLAGS="-I$SYSROOT_PREFIX/usr/include/interface/vcos/pthreads -I$SYSROOT_PREFIX/usr/include/interface/vmcs_host/linux -DRPI=1 $CFLAGS"
     export FFMPEG_LIBS="-lbcm_host -lvcos -lvchiq_arm -lmmal -lmmal_core -lmmal_util -lvcsm -lvchostif"
+    export LIBS="$LIBS -lx265"
   fi
 }
 
@@ -114,7 +115,7 @@ configure_target() {
               --host-cc="$HOST_CC" \
               --host-cflags="$HOST_CFLAGS" \
               --host-ldflags="$HOST_LDFLAGS" \
-              --host-libs="-lm" \
+              --host-libs="-lstdc++ -lm -lrt -ldl" \
               --extra-cflags="$CFLAGS" \
               --extra-ldflags="$LDFLAGS -fPIC" \
               --extra-libs="$FFMPEG_LIBS" \
@@ -187,12 +188,12 @@ configure_target() {
               --disable-libopencore-amrwb \
               --disable-libopencv \
               --disable-libdc1394 \
-              --disable-libfaac \
-              --disable-libfreetype \
+              --enable-libfaac \
+              --enable-libfreetype \
               --disable-libgsm \
               --disable-libmp3lame \
               --disable-libnut \
-              --disable-libopenjpeg \
+              --enable-libopenjpeg \
               --disable-librtmp \
               --disable-libschroedinger \
               --enable-libspeex \
@@ -201,6 +202,7 @@ configure_target() {
               --disable-libvorbis \
               --disable-libvpx \
               --disable-libx264 \
+              --disable-libx265 \
               --disable-libxavs \
               --disable-libxvid \
               --enable-zlib \

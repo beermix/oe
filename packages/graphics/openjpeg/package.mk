@@ -1,21 +1,12 @@
 PKG_NAME="openjpeg"
-PKG_VERSION="53f2520"
-PKG_URL="https://github.com/uclouvain/openjpeg/archive/$PKG_VERSION.tar.gz"
+PKG_VERSION="v2.1.2"
+PKG_GIT_URL="https://github.com/uclouvain/openjpeg"
 PKG_DEPENDS_TARGET="toolchain zlib libpng"
-
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-configure_target() {
-  cmake -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
-        -DBUILD_CODEC=ON \
-        -DCMAKE_INSTALL_PREFIX=/usr \
-        -DBUILD_SHARED_LIBS=OFF \
-        -DBUILD_THIRDPARTY=ON \
-        ..
-}
 
-post_make_target() {
-  rm -rf $INSTALL/
-}
+PKG_CMAKE_OPTS_TARGET="-DBUILD_CODEC=ON -DBUILD_SHARED_LIBS=OFF -DBUILD_THIRDPARTY=ON"
+
+PKG_CMAKE_OPTS_HOST="$PKG_CMAKE_OPTS_TARGET"

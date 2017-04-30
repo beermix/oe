@@ -1,7 +1,7 @@
 PKG_NAME="libav"
-PKG_VERSION="03fb0f7"
+PKG_VERSION="v12"
 PKG_GIT_URL="https://github.com/libav/libav"
-PKG_DEPENDS_TARGET="toolchain libvpx"
+PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
@@ -9,7 +9,6 @@ PKG_AUTORECONF="no"
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
-  
   strip_lto
   strip_gold
 }
@@ -31,6 +30,7 @@ configure_target() {
               --ld="$CC" \
               --host-cc="$HOST_CC" \
               --host-cflags="$HOST_CFLAGS -fPIC" \
+              --host-cppflags="$HOST_CPPFLAGS -D_DEFAULT_SOURCE" \
               --host-ldflags="$HOST_LDFLAGS -fPIC" \
               --host-libs="-lm" \
               --extra-ldflags="$LDFLAGS -fPIC" \
@@ -39,12 +39,11 @@ configure_target() {
               --enable-thumb \
               --disable-vdpau \
               --disable-doc \
-              --disable-static \
-              --enable-shared \
+              --enable-static \
+              --disable-shared \
               --enable-pic \
               --disable-lto \
               --disable-debug \
               --enable-nonfree \
-              --enable-libvpx \
               --enable-openssl
 }

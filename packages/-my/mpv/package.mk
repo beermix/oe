@@ -1,7 +1,7 @@
 PKG_NAME="mpv"
 PKG_VERSION="3f0dcbf"
 PKG_GIT_URL="https://github.com/mpv-player/mpv"
-PKG_DEPENDS_TARGET="toolchain ffmpeg libxkbcommon libass lua"
+PKG_DEPENDS_TARGET="toolchain ffmpeg libass lua"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
@@ -18,8 +18,6 @@ configure_target() {
   ./waf dist
   ./waf configure --prefix=/usr \
   		    --disable-wayland \
-  		    --disable-libmpv-static \
-  		    --disable-static-build \
   		    --disable-debug-build \
   		    --disable-manpage-build
 }

@@ -17,10 +17,10 @@
 ################################################################################
 
 PKG_NAME="xf86-video-intel"
-PKG_VERSION="cb6ba2d"
+PKG_VERSION="c72bb27a3a68ecc616ce2dc8e9a1d20354504562"
 PKG_ARCH="x86_64"
 PKG_SITE="http://intellinuxgraphics.org/"
-PKG_GIT_URL="git://anongit.freedesktop.org/xorg/driver/xf86-video-intel"
+PKG_GIT_URL="https://anongit.freedesktop.org/git/xorg/driver/xf86-video-intel"
 PKG_DEPENDS_TARGET="toolchain libXcomposite util-macros fontsproto systemd xorg-server"
 PKG_SECTION="x11/driver"
 PKG_SHORTDESC="xf86-video-intel: The Xorg driver for Intel video chips"
@@ -28,31 +28,12 @@ PKG_LONGDESC="The Xorg driver for Intel i810, i815, 830M, 845G, 852GM, 855GM, 86
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-backlight \
-                           --disable-backlight-helper \
-                           --disable-gen4asm \
-                           --enable-udev \
-                           --disable-tools \
-                           --enable-dri \
-                           --disable-dri1 \
-                           --enable-dri2 \
-                           --enable-dri3 \
-                           --enable-kms --enable-kms-only \
-                           --disable-ums --disable-ums-only \
-                           --enable-sna \
-                           --enable-uxa \
-                           --disable-xvmc \
-                           --disable-xaa \
-                           --disable-dga \
-                           --disable-tear-free \
-                           --disable-create2 \
-                           --disable-async-swap \
-                           --with-default-dri=2 \
-                           --with-xorg-module-dir=$XORG_PATH_MODULES"
+PKG_CONFIGURE_OPTS_TARGET="--with-default-dri=3 --with-xorg-module-dir=$XORG_PATH_MODULES"
 
 pre_configure_target() {
 # xf86-video-intel is broken enough. dont link with LTO
   strip_lto
+  strip_gold
 }
 
 post_makeinstall_target() {
