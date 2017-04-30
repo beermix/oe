@@ -34,18 +34,12 @@ PKG_LONGDESC="Linux V4L2 and DVB API utilities and v4l libraries (libv4l)."
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-pre_configure_target() {
-  cd $ROOT/$PKG_BUILD
-  rm -rf .$TARGET_NAME
-}
+PKG_CONFIGURE_OPTS_TARGET="--without-jpeg"
+PKG_MAKEINSTALL_OPTS_TARGET="PREFIX=/usr -C utils/keytable"
 
-PKG_CONFIGURE_OPTS_TARGET="--without-jpeg \
-			      --with-libudev \
-			      --disable-qv4l2 \
-			      --with-pic \
-			      --disable-silent-rules \
-			      --with-libv4lconvertsubdir=libv4lconvert0 \
-			      --disable-shared"
+make_target() {
+    make  CFLAGS="$TARGET_CFLAGS"
+}
 
 post_makeinstall_target() {
   rm -rf $INSTALL/etc/rc_keymaps
