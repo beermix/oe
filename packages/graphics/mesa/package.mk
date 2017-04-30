@@ -11,7 +11,7 @@ PKG_NAME="mesa"
 #PKG_GIT_URL="git://anongit.freedesktop.org/mesa/mesa"
 PKG_VERSION="17.1.0-rc2"
 PKG_URL="https://fossies.org/linux/misc/mesa-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain Python:host expat glproto dri2proto presentproto libdrm libXext libXdamage libXfixes libXxf86vm libxcb libX11 dri3proto libxshmfence zlib libxml2 Mako:host"
+PKG_DEPENDS_TARGET="toolchain Python:host glproto dri2proto presentproto libdrm libXext libXdamage libXfixes libXxf86vm libxcb libX11 dri3proto libxshmfence zlib Mako:host"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="mesa: 3-D graphics library with OpenGL API"
 PKG_LONGDESC="Mesa is a 3-D graphics library with an API which is very similar to that of OpenGL*. To the extent that Mesa utilizes the OpenGL command syntax or state machine, it is being used with authorization from Silicon Graphics, Inc. However, the author makes no claim that Mesa is in any way a compatible replacement for OpenGL or associated with Silicon Graphics, Inc. Those who want a licensed implementation of OpenGL should contact a licensed vendor. While Mesa is not a licensed OpenGL implementation, it is currently being tested with the OpenGL conformance tests. For the current conformance status see the CONFORM file included in the Mesa distribution."
@@ -47,8 +47,6 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            DRI_DRIVER_SEARCH_DIR=/usr/lib/dri \
                            --enable-silent-rules \
                            --disable-debug \
-                           --disable-profile \
-                           --disable-libglvnd \
                            --disable-mangling \
                            --enable-texture-float \
                            --enable-asm \
@@ -60,22 +58,21 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --enable-glx \
                            --disable-osmesa \
                            --disable-gallium-osmesa \
+                           --enable-egl --with-egl-platforms=x11,drm \
                            --enable-gbm \
                            --disable-nine \
                            --disable-xvmc \
                            $MESA_VDPAU \
                            --enable-shared-glapi \
-                           --enable-egl \
-                           --enable-texture-float \
                            --enable-xa \
                            --disable-omx \
                            --disable-va \
-                           --disable-opencl --disable-opencl-icd \
+                           --disable-opencl \
+                           --enable-opencl-icd \
                            --disable-gallium-tests \
                            --enable-shared-glapi \
                            --enable-driglx-direct \
                            --enable-glx-tls \
-                           --disable-glx-read-only-text \
                            $MESA_GALLIUM_LLVM \
                            --with-gl-lib-name=GL \
                            --with-osmesa-lib-name=OSMesa \
@@ -87,7 +84,7 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --with-sysroot=$SYSROOT_PREFIX"
 
 pre_configure_target() {
-  export LIBS="-lxcb-dri3 -lxcb-dri2 -lxcb-xfixes -lxcb-present -lxcb-sync -lxshmfence -lz"
+  export LIBS="-lxcb-dri3 -lxcb-dri2 -lxcb-xfixes -lxcb-present -lxcb-sync -lxshmfence -lz -lexpat"
 }
 
 post_makeinstall_target() {

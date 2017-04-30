@@ -1,27 +1,8 @@
-################################################################################
-#      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
-#
-#  OpenELEC is free software: you can redistribute it and/or modify
-#  it under the terms of the GNU General Public License as published by
-#  the Free Software Foundation, either version 2 of the License, or
-#  (at your option) any later version.
-#
-#  OpenELEC is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU General Public License for more details.
-#
-#  You should have received a copy of the GNU General Public License
-#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
-
 PKG_NAME="expat"
 PKG_VERSION="2.2.0"
-PKG_ARCH="any"
-PKG_LICENSE="OSS"
-PKG_SITE="http://expat.sourceforge.net/"
 PKG_URL="$SOURCEFORGE_SRC/$PKG_NAME/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
+#PKG_VERSION="5ceb385"
+#PKG_GIT_URL="https://github.com/libexpat/libexpat"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="textproc"
 PKG_SHORTDESC="expat: XML parser library"
@@ -29,19 +10,30 @@ PKG_LONGDESC="Expat is an XML parser library written in C. It is a stream-orient
 
 PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
+CONCURRENCY_MAKE_LEVEL=1
 
 post_unpack() {
  rm $ROOT/$PKG_BUILD/m4/libtool.m4
+ strip_lto
 }
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared"
+#CFLAGS="$CFLAGS -Wall -Wextra -pedantic -Wno-overlength-strings"
+#CFLAGS="$CFLAGS -DXML_UNICODE"
+
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static --with-gnu-ld --with-pic"
 			      
 PKG_CONFIGURE_OPTS_HOST="--prefix=$ROOT/$TOOLCHAIN $PKG_CONFIGURE_OPTS_TARGET"
 
-PKG_CMAKE_OPTS_TARGET="-DBUILD_tools=OFF -DBUILD_examples=OFF -DBUILD_tests=OFF -DBUILD_shared=ON"
 
-pre_make_target() {
-  # fix builderror when building in subdirs
-  cp -r ../doc .
-}
+PKG_CMAKE_OPTS_TARGET="-DBUILD_tools=OFF -DBUILD_examples=OFF -DBUILD_tests=OFF -DBUILD_shared=OFF"
+
+PKG_CMAKE_SCRIPT_TARGET="expat/CMakeLists.txt"
+
+#post_unpack() {
+#  cp -r $PKG_BUILD/expat/* $PKG_BUILD/
+#}
+
+#pre_make_target() { 
+#  cp -r ../doc .
+#}

@@ -263,7 +263,7 @@ pre_configure_target() {
   strip_lto
   strip_gold
 
-  export LIBS="$LIBS -lssp -lz -ltermcap"
+  export LIBS="$LIBS -lssp -lz -ltermcap -lexpat"
 }
 
 pre_make_target() {
