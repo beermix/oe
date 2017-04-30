@@ -30,6 +30,7 @@ PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-test \
                            --enable-fontconfig \
+                           --disable-enca \
                            --disable-harfbuzz \
                            --disable-silent-rules \
                            --with-gnu-ld"

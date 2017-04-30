@@ -62,7 +62,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file__proc_sys_kernel_core_pattern=yes \
                            --with-logfilebase=/var/log \
                            --with-nmbdsocketdir=/var/nmbd \
                            --with-piddir=/var/run \
-                           --enable-shared-libs \
+                           --disable-shared-libs \
                            --disable-debug \
                            --with-libiconv="$SYSROOT_PREFIX/usr" \
                            --disable-krb5developer \
@@ -150,11 +150,11 @@ post_make_target() {
 
 makeinstall_target() {
   if [ "$SAMBA_SERVER" = "yes" ]; then
-    mkdir -p $INSTALL/usr/bin
-      cp bin/samba_multicall $INSTALL/usr/bin
-      ln -sf samba_multicall $INSTALL/usr/bin/smbd
-      ln -sf samba_multicall $INSTALL/usr/bin/nmbd
-      ln -sf samba_multicall $INSTALL/usr/bin/smbpasswd
+    mkdir -p $INSTALL/usr/sbin
+      cp bin/samba_multicall $INSTALL/usr/sbin
+      ln -sf samba_multicall $INSTALL/usr/sbin/smbd
+      ln -sf samba_multicall $INSTALL/usr/sbin/nmbd
+      ln -sf samba_multicall $INSTALL/usr/sbin/smbpasswd
 
     mkdir -p $INSTALL/etc/samba
       cp ../codepages/lowcase.dat $INSTALL/etc/samba

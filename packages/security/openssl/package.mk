@@ -36,7 +36,8 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            no-ssl3 \
                            enable-unit-test \
                            enable-tlsext \
-                           no-zlib \
+                           no-krb5 \
+                           zlib \
                            no-zlib-dynamic \
                            enable-ec_nistp_64_gcc_128"
 

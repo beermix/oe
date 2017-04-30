@@ -48,6 +48,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-cxx \
                            --without-iso-read \
                            --without-versioned-libs \
                            --without-libiconv-prefix \
+                           --with-cd-paranoia=no \
                            --with-gnu-ld"
 
 pre_configure_target() {

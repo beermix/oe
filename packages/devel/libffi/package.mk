@@ -28,14 +28,15 @@ PKG_LONGDESC="The libffi library provides a portable, high level programming int
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
+CCASFLAGS=-no-integrated-as
+
 PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
-                           --enable-static --disable-shared \
+                           --enable-static --disable-shared --disable-builddir \
                            --with-pic \
                            --enable-structs \
                            --enable-raw-api \
                            --disable-purify-safety \
                            --with-gnu-ld"
-
 
 PKG_CONFIGURE_OPTS_HOST="--disable-debug \
 			    --with-pic \

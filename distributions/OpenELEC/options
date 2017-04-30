@@ -40,10 +40,10 @@
   KODI_EXTRA_FONTS="yes"
 
 # build and install PulseAudio support (yes / no)
-  PULSEAUDIO_SUPPORT="yes"
+  PULSEAUDIO_SUPPORT="no"
 
 # build and install espeak support (yes / no)
-  ESPEAK_SUPPORT="yes"
+  ESPEAK_SUPPORT="no"
 
 # build and install with non-free support
 # (RAR compression support in KODI) (yes / no)
@@ -131,7 +131,7 @@
   PPTP_SUPPORT="no"
 
 # build and install OpenVPN support (yes / no)
-  OPENVPN_SUPPORT="yes"
+  OPENVPN_SUPPORT="no"
 
 # build and install diskmounter support (udevil)
 # this service provide auto mounting support for external drives in the
@@ -203,8 +203,8 @@
 # cron support (yes / no)
   CRON_SUPPORT="yes"
 
-# Locales to install. format: "locale.charmap" (eg. de_DE.UTF-8)
-  GLIBC_LOCALES="en_US.UTF-8 ru_RU.UTF-8 ru_RU.KOI8-R"
+# Locales to install. format: "locale.charmap" (eg. ru_RU.KOI8-R)
+  GLIBC_LOCALES="en_US.UTF-8 ru_RU.UTF-8"
 
 # Distribution Specific source location
   DISTRO_MIRROR="http://sources.openelec.tv/mirror"
