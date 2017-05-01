@@ -17,18 +17,20 @@
 ################################################################################
 
 PKG_NAME="gtkmm"
-PKG_VERSION="3.22.0"
+PKG_VERSION="2.24.4"
 PKG_ARCH="x86_64"
-PKG_URL="https://download.gnome.org/sources/gtkmm/3.22/gtkmm-$PKG_VERSION.tar.xz"
+PKG_URL="http://ftp.gnome.org/pub/GNOME/sources/gtkmm/2.24/gtkmm-2.24.4.tar.xz"
 PKG_DEPENDS_TARGET="toolchain libxml2 sqlite"
 PKG_SECTION="tools"
 PKG_SHORTDESC="aria2: lightweight multi-protocol & multi-source command-line download utility"
 PKG_LONGDESC="aria2 is a lightweight multi-protocol & multi-source command-line download utility. It supports HTTP/HTTPS, FTP, BitTorrent and Metalink. aria2 can be manipulated via built-in JSON-RPC and XML-RPC interfaces"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
-  
 }
-PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr --disable-documentation"
+
+PKG_CONFIGURE_OPTS_TARGET="--disable-documentation \
+			      --disable-shared \
+			      --with-sysroot=$SYSROOT_PREFIX"
