@@ -37,7 +37,7 @@ case "$KODIPLAYER_DRIVER" in
     PKG_KEEP_CHECKOUT="no"
     ;;
   *)
-    PKG_VERSION="661dd08"
+    PKG_VERSION="72cef60"
     PKG_GIT_URL="https://github.com/xbmc/xbmc.git"
     PKG_GIT_BRANCH="Krypton"
     PKG_KEEP_CHECKOUT="no"
@@ -275,7 +275,7 @@ pre_configure_target() {
   strip_gold
 
   #export LIBS="$LIBS -lz -ltermcap -lexpat -lstdc++ -lm -lrt -ldl"
-  export LIBS="$LIBS -lz -ltermcap"
+  export LIBS="$LIBS -lssp -lz -ltermcap"
 }
 
 pre_make_target() {
