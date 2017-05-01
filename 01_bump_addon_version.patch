@@ -1,0 +1,21 @@
+diff --git a/scripts/build b/scripts/build
+index 78579c4..51235a6 100755
+--- a/scripts/build
++++ b/scripts/build
+@@ -302,6 +302,16 @@ if [ ! -f $STAMP ]; then
+         post_make_$TARGET
+       fi
+ 
++      # Bump addon version to prevent online updates
++      if [ "$TARGET" = "target" -a "$PKG_IS_ADDON" = "yes" ]; then
++        mhaddonxml="$ROOT/$PKG_BUILD/$PKG_NAME/addon.xml"
++        [ -f ${mhaddonxml} ] || mhaddonxml="$ROOT/$PKG_BUILD/addon.xml"
++        if [ -f ${mhaddonxml} ]; then
++          mhaddonver="$(xmlstarlet sel -t -m "/addon" -m "@version" -v . -n ${mhaddonxml})"
++          [ -n "${mhaddonver}" ] && xmlstarlet edit --inplace --update "/addon/@version" --value "999.${mhaddonver}" ${mhaddonxml}
++        fi
++      fi
++
+       # make install
+       if [ "$(type -t pre_makeinstall_$TARGET)" = "function" ]; then
+         pre_makeinstall_$TARGET
