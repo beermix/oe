@@ -30,7 +30,7 @@ if [ ! -f $PKG_DIR/package.mk ]; then
   exit 1
 fi
 
-PACKAGE_NAME=$(echo $1 | awk -F : '{print $1}')
+	PACKAGE_NAME=$(echo $1 | awk -F : '{print $1}')
 TARGET=$(echo $1 | awk -F : '{print $2}')
 if [ -z "$TARGET" ]; then
   TARGET="target"
@@ -263,6 +263,16 @@ if [ ! -f $STAMP ]; then
       fi
       if [ "$(type -t post_make_$TARGET)" = "function" ]; then
         post_make_$TARGET
+      fi
+
+      # Bump addon version to prevent online updates
+      if [ "$TARGET" = "target" -a "$PKG_IS_ADDON" = "yes" ]; then
+        mhaddonxml="$ROOT/$PKG_BUILD/$PKG_NAME/addon.xml"
+        [ -f ${mhaddonxml} ] || mhaddonxml="$ROOT/$PKG_BUILD/addon.xml"
+        if [ -f ${mhaddonxml} ]; then
+          mhaddonver="$(xmlstarlet sel -t -m "/addon" -m "@version" -v . -n ${mhaddonxml})"
+          [ -n "${mhaddonver}" ] && xmlstarlet edit --inplace --update "/addon/@version" --value "999.${mhaddonver}" ${mhaddonxml}
+        fi
       fi
 
       # make install
