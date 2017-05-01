@@ -45,7 +45,6 @@ if [ "$MEDIACENTER" = "kodi" ]; then
   #PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pvr.vuplus"
   #PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pvr.stalker"
   #PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pvr.mediaportal.tvserver"
-  #PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET v4l-utils"
 
 # kodi-binary-addons inputstream
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET inputstream.rtmp"
