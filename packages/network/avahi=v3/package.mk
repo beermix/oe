@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,9 +18,6 @@
 
 PKG_NAME="avahi"
 PKG_VERSION="0.6.32"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://avahi.org/"
 PKG_URL="http://sources.openelec.tv/mirror/avahi/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain expat libdaemon dbus connman"
@@ -106,6 +103,7 @@ post_makeinstall_target() {
 
   mkdir -p $INSTALL/usr/share/services
     cp -P $PKG_DIR/default.d/*.conf $INSTALL/usr/share/services
+
 }
 
 post_install() {

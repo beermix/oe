@@ -18,11 +18,13 @@
 
 PKG_NAME="samba"
 PKG_VERSION="3.6.25"
+PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="https://www.samba.org"
+PKG_SITE="http://www.samba.org"
 PKG_URL="https://samba.org/samba/ftp/stable/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain zlib connman"
+PKG_DEPENDS_TARGET="toolchain zlib connman libaio"
+PKG_PRIORITY="optional"
 PKG_SECTION="network"
 PKG_SHORTDESC="samba: The free SMB / CIFS fileserver and client"
 PKG_LONGDESC="Samba is a SMB server that runs on Unix and other operating systems. It allows these operating systems (currently Unix, Netware, OS/2 and AmigaDOS) to act as a file and print server for SMB and CIFS clients. There are many Lan-Manager compatible clients such as LanManager for DOS, Windows for Workgroups, Windows NT, Windows 95, Linux smbfs, OS/2, Pathworks and more."
@@ -104,7 +106,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file__proc_sys_kernel_core_pattern=yes \
                            --without-utmp \
                            --without-cluster-support \
                            --without-acl-support \
-                           --without-aio-support \
+                           --with-aio-support \
                            --with-sendfile-support \
                            --without-libtevent \
                            --without-wbclient \
@@ -148,11 +150,11 @@ post_make_target() {
 
 makeinstall_target() {
   if [ "$SAMBA_SERVER" = "yes" ]; then
-    mkdir -p $INSTALL/usr/bin
-      cp bin/samba_multicall $INSTALL/usr/bin
-      ln -sf samba_multicall $INSTALL/usr/bin/smbd
-      ln -sf samba_multicall $INSTALL/usr/bin/nmbd
-      ln -sf samba_multicall $INSTALL/usr/bin/smbpasswd
+    mkdir -p $INSTALL/usr/sbin
+      cp bin/samba_multicall $INSTALL/usr/sbin
+      ln -sf samba_multicall $INSTALL/usr/sbin/smbd
+      ln -sf samba_multicall $INSTALL/usr/sbin/nmbd
+      ln -sf samba_multicall $INSTALL/usr/sbin/smbpasswd
 
     mkdir -p $INSTALL/etc/samba
       cp ../codepages/lowcase.dat $INSTALL/etc/samba
