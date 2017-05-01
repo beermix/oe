@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -25,14 +25,10 @@
 #   there: http://forum.xbmc.org/showthread.php?tid=177557
 
 PKG_NAME="curl"
-PKG_VERSION="7.54.0"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="MIT"
+PKG_VERSION="7.52.1"
 PKG_SITE="http://curl.haxx.se"
 PKG_URL="http://curl.haxx.se/download/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain zlib libressl rtmpdump"
-PKG_PRIORITY="optional"
+PKG_DEPENDS_TARGET="toolchain zlib openssl rtmpdump nghttp2"
 PKG_SECTION="web"
 PKG_SHORTDESC="curl: Client and library for (HTTP, HTTPS, FTP, ...) transfers"
 PKG_LONGDESC="Curl is a client to get documents/files from or send documents to a server, using any of the supported protocols (HTTP, HTTPS, FTP, FTPS, GOPHER, DICT, TELNET, LDAP or FILE). The command is designed to work without user interaction or any kind of interactivity."
@@ -45,6 +41,9 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            ac_cv_header_librtmp_rtmp_h=yes \
                            --disable-debug \
                            --enable-optimize \
+                           --disable-debug \
+                           --enable-shared \
+                           --enable-static \
                            --enable-warnings \
                            --disable-curldebug \
                            --disable-ares \
@@ -66,7 +65,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            --disable-gopher \
                            --disable-manual \
                            --enable-libgcc \
-                           --enable-ipv6 \
+                           --disable-ipv6 \
                            --enable-versioned-symbols \
                            --enable-nonblocking \
                            --enable-threaded-resolver \
@@ -74,7 +73,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            --disable-sspi \
                            --enable-crypto-auth \
                            --enable-cookies \
-                           --enable-symbol-hiding \
+                           --disable-symbol-hiding \
                            --disable-soname-bump \
                            --with-gnu-ld \
                            --without-krb4 \
@@ -88,17 +87,20 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            --with-ssl \
                            --without-polarssl \
                            --without-nss \
-                           --with-ca-bundle=/usr/etc/ssl/cert.pem \
+                           --with-ca-bundle=/etc/ssl/cert.pem \
                            --without-ca-path \
                            --without-libpsl \
                            --without-libmetalink \
                            --without-libssh2 \
                            --with-librtmp=$SYSROOT_PREFIX/usr \
-                           --without-libidn"
+                           --without-libidn2 \
+                           --with-lber-lib=lber \
+                           --with-nghttp2 \
+                           --disable-ntlm-wb"
 
 pre_configure_target() {
 # link against librt because of undefined reference to 'clock_gettime'
-  export LIBS="-lrt -lm -lrtmp"
+  export LIBS="-lstdc++ -lm -lrt -ldl -lrtmp"
 }
 
 post_makeinstall_target() {
