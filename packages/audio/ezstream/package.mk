@@ -5,9 +5,12 @@ PKG_DEPENDS_TARGET="toolchain libshout libxml2 taglib libvorbis libtheora opus t
 PKG_SECTION="tools"
 PKG_AUTORECONF="yes"
 
-pre_configure_target() {
-  export LIBS="$LIBS -lvorbis -lvorbisenc -logg -lFLAC -lshout -lspeex -ltheora -lopus -ltag -lshout -pthread"
-  strip_lto
-}
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-rpath --disable-debug"
+
+pre_configure_target() {
+  CFLAGS="$CFLAGS -fPIC -DPIC"
+
+  # alsa-lib fails building with LTO support
+    strip_lto
+}
