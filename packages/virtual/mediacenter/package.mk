@@ -41,7 +41,7 @@ if [ "$MEDIACENTER" = "kodi" ]; then
 
 # kodi-binary-addons inputstream
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET inputstream.rtmp"
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET inputstream.adaptive"
+  #PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET inputstream.adaptive"
 
 # audioencoder
   #PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET audioencoder.flac"
@@ -50,7 +50,7 @@ if [ "$MEDIACENTER" = "kodi" ]; then
   #PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET audioencoder.wav"
 
 # other packages
-  #PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET kodi-theme-AeonNox"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET kodi-theme-AeonNox"
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET OpenELEC-settings"
 
   if [ -n "$SKINS" ]; then

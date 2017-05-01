@@ -21,7 +21,6 @@ PKG_VERSION="1.48.04-source"
 PKG_SITE="http://espeak.sourceforge.net/"
 PKG_URL="http://sourceforge.net/projects/espeak/files/espeak/espeak-1.48/$PKG_NAME-$PKG_VERSION.zip"
 PKG_DEPENDS_TARGET="toolchain"
-
 PKG_SECTION="audio"
 PKG_SHORTDESC="Text to Speech engine for English, with support for other languages"
 PKG_LONGDESC="Text to Speech engine for English, with support for other languages"

@@ -1,8 +1,13 @@
 PKG_NAME="ezstream"
-PKG_VERSION="8e0d5d6"
-PKG_GIT_URL="https://github.com/xiph/ezstream"
-PKG_DEPENDS_TARGET="toolchain libshout libxml2 taglib libvorbis"
+PKG_VERSION="0.6.0"
+PKG_URL="http://downloads.xiph.org/releases/ezstream/ezstream-$PKG_VERSION.tar.gz"
+PKG_DEPENDS_TARGET="toolchain libshout libxml2 taglib libvorbis libtheora opus taglib"
 PKG_SECTION="tools"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static"
+pre_configure_target() {
+  export LIBS="$LIBS -lvorbis -lvorbisenc -logg -lFLAC -lshout -lspeex -ltheora -lopus -ltag -lshout -pthread"
+  strip_lto
+}
+
+PKG_CONFIGURE_OPTS_TARGET="--disable-rpath --disable-debug"
