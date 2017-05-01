@@ -4,10 +4,10 @@
 ################################################################################
 
 PKG_NAME="inputstream.adaptive"
-PKG_VERSION="f23ba39"
+PKG_VERSION="c69f134"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/liberty-developer/inputstream.adaptive"
-PKG_GIT_URL="https://github.com/liberty-developer/inputstream.adaptive"
+PKG_GIT_URL="https://github.com/peak3d/inputstream.adaptive"
 PKG_DEPENDS_TARGET="toolchain kodi-platform"
 PKG_SECTION=""
 PKG_SHORTDESC="inputstream.adaptive"
