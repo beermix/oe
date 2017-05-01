@@ -17,10 +17,10 @@
 ################################################################################
 
 PKG_NAME="fribidi"
-#PKG_VERSION="0ca97b7"
-#PKG_GIT_URL="https://github.com/behdad/fribidi"
-PKG_VERSION="0.19.7"
-PKG_URL="http://fribidi.freedesktop.org/download/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_VERSION="0ca97b7"
+PKG_GIT_URL="https://github.com/behdad/fribidi"
+#PKG_VERSION="0.19.7"
+#PKG_URL="http://fribidi.freedesktop.org/download/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_PRIORITY="optional"
 PKG_SECTION="devel"

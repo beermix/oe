@@ -30,13 +30,11 @@ PKG_SHORTDESC="v4l-utils: Linux V4L2 and DVB API utilities and v4l libraries (li
 PKG_LONGDESC="Linux V4L2 and DVB API utilities and v4l libraries (libv4l)."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--without-jpeg"
-PKG_MAKEINSTALL_OPTS_TARGET="PREFIX=/usr -C utils/keytable"
 
 make_target() {
-    make -C utils/keytable CFLAGS="$TARGET_CFLAGS"
+ make CFLAGS="$TARGET_CFLAGS -fPIC"
 }
 
 post_makeinstall_target() {
@@ -48,9 +46,5 @@ post_makeinstall_target() {
 
   (
     echo "# table libreelec_multi, type: RC6 NEC"
-    for f in rc6_mce xbox_360 zotac_ad10 hp_mce xbox_one cubox_i ; do
-      echo "# $f"
-      grep -v "^#" $INSTALL/usr/lib/udev/rc_keymaps/$f
-    done
   ) > $INSTALL/usr/lib/udev/rc_keymaps/libreelec_multi
 }

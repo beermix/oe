@@ -36,7 +36,7 @@ if [ "$MEDIACENTER" = "kodi" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pycryptodome"
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pycrypto"
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET xmlstarlet"
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET peripheral.joystick"
+  #PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET peripheral.joystick"
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pvr.iptvsimple"
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pvr.iptvsimple.multi"
   #PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pvr.vdr.vnsi"
@@ -45,6 +45,7 @@ if [ "$MEDIACENTER" = "kodi" ]; then
   #PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pvr.vuplus"
   #PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pvr.stalker"
   #PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pvr.mediaportal.tvserver"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET v4l-utils"
 
 # kodi-binary-addons inputstream
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET inputstream.rtmp"
@@ -64,7 +65,7 @@ if [ "$MEDIACENTER" = "kodi" ]; then
   #PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET audioencoder.wav"
 
 # other packages
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET kodi-theme-AeonNox"
+  #PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET kodi-theme-AeonNox"
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET OpenELEC-settings"
 
   if [ -n "$SKINS" ]; then
