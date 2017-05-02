@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="nasm"
-PKG_VERSION="2.13"
+PKG_VERSION="2.13.01"
 PKG_SITE="http://nasm.sourceforge.net/"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST=""

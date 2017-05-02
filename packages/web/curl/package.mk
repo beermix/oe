@@ -51,7 +51,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            --enable-largefile \
                            --enable-http \
                            --enable-ftp \
-                           --disable-file \
+                           --enable-file \
                            --disable-ldap \
                            --disable-ldaps \
                            --enable-rtsp \
@@ -88,7 +88,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            --with-ssl \
                            --without-polarssl \
                            --without-nss \
-                           --with-ca-bundle=/usr/etc/ssl/cert.pem \
+                           --with-ca-bundle=/etc/ssl/cert.pem \
                            --without-ca-path \
                            --without-libpsl \
                            --without-libmetalink \
