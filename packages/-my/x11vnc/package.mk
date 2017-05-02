@@ -6,14 +6,14 @@ PKG_SECTION="x11"
 PKG_AUTORECONF="yes"
 
 pre_build_target() {
-  #export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
   #export MAKEFLAGS="-j1"
-  export LIBS="-lxcb -lXau -ljpeg -lz -lsystemd"
-  export LDFLAGS="-ldl -lpthread -lstdc++ -lrt"
-  #strip_lto
+  export LIBS="-lxcb -lXau -ljpeg -lsystemd -lpng16"
+  export LDFLAGS="-lpthread -lstdc++ -lz -lm"
 }
 
-PKG_CONFIGURE_OPTS_TARGET="--with-x11vnc \
+PKG_CONFIGURE_OPTS_TARGET="--enable-static \
+			      --with-x11vnc \
 			      --with-x \
 			      --without-xkeyboard \
 			      --without-xinerama \
@@ -31,7 +31,12 @@ PKG_CONFIGURE_OPTS_TARGET="--with-x11vnc \
 			      --without-crypt \
 			      --without-crypto \
 			      --without-ssl \
+			      --without-avahi \
+			      --with-jpeg \
+			      --without-libz \
+			      --with-cairo=no \
+			      --without-zlib \
 			      --without-gnutls \
 			      --without-client-tls \
 			      --enable-silent-rules \
-			      --with-sysroot=$SYSROOT_PREFIX"
+			      --with-pic"

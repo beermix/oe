@@ -41,4 +41,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_lzo2_lzo2a_decompress=no \
                            --enable-glx \
                            --with-x \
                            --enable-silent-rules \
-                           --enable-statoc"
+                           --enable-statoc \
+                           --enable-shared \
+                           --enable-static"

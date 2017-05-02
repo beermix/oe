@@ -123,6 +123,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-x265 \
 			      --disable-vpx \
 			      --disable-vsxu \
+			      --disable-vnc \
 			      --enable-vlc"
 
 pre_configure_target() {
@@ -130,7 +131,7 @@ pre_configure_target() {
   export CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fomit-frame-pointer||g"`
   export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-fomit-frame-pointer||g"`
-  strip_lto
+  #strip_lto
 }
 
 post_makeinstall_target() {
