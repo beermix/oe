@@ -34,7 +34,9 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-gio-sniffing=yes \
                            --disable-gtk-doc-html \
                            --disable-gtk-doc-pdf \
                            --disable-man \
+                           --enable-relocations \
+                           --enable-introspection \
                            --with-libpng \
                            --with-libjpeg \
                            --with-libtiff \
-                           --with-libjasper"
+                           --with-included-loaders=png,gdip-bmp,gdip-emf,gdip-gif,gdip-ico,gdip-jpeg,gdip-tiff,gdip-wmf"
