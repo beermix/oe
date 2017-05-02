@@ -15,9 +15,8 @@
 #  You should have received a copy of the GNU General Public License
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
+
 PKG_NAME="cairo"
-#PKG_VERSION="1.15.4"
-#PKG_URL="https://www.cairographics.org/snapshots/cairo-1.15.4.tar.xz"
 PKG_VERSION="1.14.8"
 PKG_URL="http://cairographics.org/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain zlib freetype fontconfig libpng pixman libXrender libSM libX11 mesa glu"
@@ -25,7 +24,7 @@ PKG_SECTION="graphics"
 PKG_SHORTDESC="cairo: Multi-platform 2D graphics library"
 PKG_LONGDESC="Cairo is a vector graphics library with cross-device output support. Currently supported output targets include the X Window System and in-memory image buffers. PostScript and PDF file output is planned. Cairo is designed to produce identical output on all output media while taking advantage of display hardware acceleration when available."
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes" # ToDo
+PKG_AUTORECONF="yes"
 
 CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
 CPPLAGS="$CPPLAGS -DCAIRO_NO_MUTEX=1"
@@ -42,5 +41,4 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_lzo2_lzo2a_decompress=no \
                            --enable-glx \
                            --with-x \
                            --enable-silent-rules \
-                           --disable-shared \
-                           --with-pic"
+                           --enable-statoc"

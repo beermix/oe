@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="hdparm"
-PKG_VERSION="9.51"
+PKG_VERSION="9.52"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="BSD"
@@ -33,3 +33,5 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 PKG_MAKE_OPTS_TARGET="binprefix=/usr sbindir=/usr/bin"
+
+CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
