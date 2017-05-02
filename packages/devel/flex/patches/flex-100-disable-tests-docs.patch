@@ -1,12 +1,16 @@
+diff --git a/Makefile.am b/Makefile.am
+old mode 100644
+new mode 100755
+index 807a109..8b8930c
 --- a/Makefile.am
 +++ b/Makefile.am
-@@ -45,10 +45,7 @@
+@@ -44,10 +44,6 @@ EXTRA_DIST = \
  SUBDIRS = \
  	lib \
  	src \
 -	doc \
 -	examples \
- 	po \
+-	po \
 -	tests \
  	tools
  

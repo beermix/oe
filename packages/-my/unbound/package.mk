@@ -6,7 +6,15 @@ PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--with-libevent=$SYSROOT_PREFIX/usr \
+PKG_CONFIGURE_OPTS_TARGET="--disable-dsa \
+			      --disable-gost \
+			      --enable-allsymbols \
+			      --disable-rpath \
+			      --enable-pie \
+			      --enable-relro-now \
+			      --disable-shared \
+			      --with-pidfile=/var/run/unbound.pid \
+			      --with-libevent=$SYSROOT_PREFIX/usr \
 			      --with-libsodium=$SYSROOT_PREFIX/usr \
 			      --with-libexpat=$SYSROOT_PREFIX/usr \
 			      --with-ssl=$SYSROOT_PREFIX/usr"
