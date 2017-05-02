@@ -1,7 +1,7 @@
 PKG_NAME="transmission"
 PKG_VERSION="master"
 PKG_URL=""
-PKG_DEPENDS_TARGET="toolchain zlib openssl libpcap pcre libevent curl libdaemon"
+PKG_DEPENDS_TARGET="toolchain zlib openssl"
 PKG_IS_ADDON="yes"
 PKG_ADDON_TYPE="xbmc.service"
 PKG_AUTORECONF="no"
@@ -14,12 +14,7 @@ unpack() {
   cd $ROOT
 }
 
-PKG_CMAKE_OPTS_TARGET="-DWITH_CRYPTO=openssl \
-			  -DWITH_SYSTEMD=ON \
-			  -DINSTALL_DOC=OFF \
-			  -DENABLE_TESTS=OFF \
-			  -DENABLE_DAEMON=ON \
-			  -DENABLE_LIGHTWEIGHT=OFF"
+PKG_CMAKE_OPTS_TARGET="-DINSTALL_DOC=OFF -DENABLE_TESTS=OFF"
 
 post_makeinstall_target() {
   mkdir -p $INSTALL/usr/config/transmission-daemon
