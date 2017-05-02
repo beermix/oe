@@ -1,30 +1,18 @@
 PKG_NAME="libvncserver"
-PKG_VERSION="3df54ce"
+PKG_VERSION="c80879e"
 PKG_GIT_URL="https://github.com/LibVNC/libvncserver"
-#PKG_SOURCE_DIR="libvncserver-LibVNCServer-$PKG_VERSION"
 PKG_DEPENDS_TARGET="toolchain libjpeg-turbo libpng"
 PKG_SECTION="libs"
-
 PKG_IS_ADDON="no"
-PKG_USE_CMAKE="no"
-PKG_AUTORECONF="yes"
+PKG_USE_CMAKE="yes"
+PKG_AUTORECONF="no"
 
-pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC"
-}
-
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared \
-			   --with-jpeg \
-			   --with-png \
-			   --without-ipv6 \
-			   --without-sdl \
-			   --without-gcrypt \
-			   --with-zlib \
-			   --with-gnu-ld \
-                           --without-ssl \
-                           --without-crypto \
-                           --without-crypt \
-                           --with-gnu-ld \
-                           --without-client-gcrypt \
-                           --without-gnutls \
-                           --disable-option-checking"
+PKG_CMAKE_OPTS_TARGET="-DBUILD_SHARED_LIBS=0 \
+			  -DWITH_IPv6=0 \
+			  -DWITH_GNUTLS=0 \
+			  -DWITH_OPENSSL=0 \
+			  -DWITH_GCRYPT=0 \
+			  -DWITH_24BPP=1 \
+			  -DWITH_FFMPEG=0 \
+			  -DWITH_WEBSOCKETS=0 \
+			  -DWITH_TIGHTVNC_FILETRANSFER=0"

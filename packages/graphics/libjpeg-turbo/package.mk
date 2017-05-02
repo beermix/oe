@@ -33,20 +33,17 @@ PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
 PKG_AUTORECONF="yes"
 
+pre_build_target() {
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
+}
+
 PKG_CONFIGURE_OPTS_HOST="--enable-static \
                          --disable-shared \
                          --with-jpeg8 \
-                         --without-simd"
+                         --without-simd \
+                         --with-pic"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --with-jpeg8"
-
-pre_configure_host() {
-  export CFLAGS="$CFLAGS -fPIC -DPIC"
-}
-
-pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC -DPIC"
-}
+PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --with-jpeg8 --with-pic"
 
 if [ "$SIMD_SUPPORT" = "no" ]; then
   PKG_CONFIGURE_OPTS_TARGET+=" --without-simd"

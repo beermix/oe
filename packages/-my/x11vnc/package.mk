@@ -1,21 +1,19 @@
 PKG_NAME="x11vnc"
-PKG_VERSION="0.9.14"
-PKG_SITE="http://www.karlrunge.com/x11vnc/#downloading"
-PKG_URL="http://x11vnc.sourceforge.net/dev/x11vnc-0.9.14-dev.tar.gz"
-PKG_DEPENDS_TARGET="toolchain libX11 libXext libXtst libjpeg-turbo"
-PKG_SECTION="service/system"
+PKG_VERSION="8172d3e"
+PKG_GIT_URL="https://github.com/LibVNC/x11vnc"
+PKG_DEPENDS_TARGET="toolchain libX11 libXext libXtst libjpeg-turbo libvncserver"
+PKG_SECTION="x11"
 PKG_AUTORECONF="yes"
 
 pre_build_target() {
-	mkdir -p $PKG_BUILD/.$TARGET_NAME
-	cp -RP $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME
-	#export CFLAGS="$CFLAGS -fPIC -DPIC"
-	export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
-	export MAKEFLAGS="-j1"
+  #export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
+  #export MAKEFLAGS="-j1"
+  export LIBS="-lxcb -lXau -ljpeg -lz -lsystemd"
+  export LDFLAGS="-ldl -lpthread -lstdc++ -lrt"
+  #strip_lto
 }
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static \
-			      --with-x11vnc \
+PKG_CONFIGURE_OPTS_TARGET="--with-x11vnc \
 			      --with-x \
 			      --without-xkeyboard \
 			      --without-xinerama \
@@ -33,11 +31,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static \
 			      --without-crypt \
 			      --without-crypto \
 			      --without-ssl \
-			      --without-avahi \
-			      --with-jpeg \
-			      --without-libz \
-			      --without-zlib \
 			      --without-gnutls \
 			      --without-client-tls \
-			      --disable-silent-rules \
-			      --with-pic"
+			      --enable-silent-rules \
+			      --with-sysroot=$SYSROOT_PREFIX"
