@@ -1,13 +1,11 @@
 PKG_NAME="mc"
-PKG_VERSION="83127bd"
-PKG_GIT_URL="git://github.com/MidnightCommander/mc.git"
+PKG_VERSION="4.8.19"
+PKG_URL="http://ftp.midnight-commander.org/${PKG_NAME}-${PKG_VERSION}.tar.xz"
+#PKG_VERSION="83127bd"
+#PKG_GIT_URL="git://github.com/MidnightCommander/mc.git"
 PKG_DEPENDS_TARGET="toolchain libtool:host gettext:host e2fsprogs util-linux glib pcre fuse libssh2 libevent expat slang"
 PKG_SECTION="tools"
 PKG_AUTORECONF="yes"
-
-pre_configure_target() {
-  sh autogen.sh
-}
 
 PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config \
                            --datadir=/storage/.config \
