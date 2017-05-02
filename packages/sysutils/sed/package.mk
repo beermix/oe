@@ -32,6 +32,6 @@ PKG_LONGDESC="The sed (Stream EDitor) editor is a stream or batch (non-interacti
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_HOST="--disable-nls --disable-acl --without-selinux"
+PKG_CONFIGURE_OPTS_HOST="--disable-acl --without-selinux --disable-option-checking"
 
-PKG_CONFIGURE_OPTS_TARGET="--with-gnu-ld"
+PKG_CONFIGURE_OPTS_TARGET="-C $PKG_CONFIGURE_OPTS_HOST"
