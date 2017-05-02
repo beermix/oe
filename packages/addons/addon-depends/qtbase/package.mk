@@ -50,11 +50,22 @@ PKG_CONFIGURE_OPTS_TARGET="-prefix /usr
                            -no-openssl
                            -no-libproxy
                            -system-pcre
+                           -no-glib
+                           -no-pulseaudio
+                           -no-alsa
                            -silent
                            -no-cups
+                           -no-iconv
                            -no-evdev
                            -no-tslib
+                           -no-icu
                            -no-strip
+                           -no-fontconfig
+                           -no-dbus
+                           -no-opengl
+                           -no-libudev
+                           -no-libinput
+                           -no-gstreamer
                            -no-eglfs"
 
 configure_target() {

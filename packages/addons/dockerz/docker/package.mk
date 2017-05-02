@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="docker"
-PKG_VERSION="17.04.0-ce"
-PKG_URL="https://fossies.org/linux/misc/docker-$PKG_VERSION.tar.xz"
+PKG_VERSION="90d35ab"
+PKG_GIT_URL="https://github.com/moby/moby"
 PKG_DEPENDS_TARGET="toolchain sqlite go:host containerd runc libnetwork tini curl"
 PKG_SECTION="service/system"
 PKG_SHORTDESC="Docker is an open-source engine that automates the deployment of any application as a lightweight, portable, self-sufficient container that will run virtually anywhere."
@@ -39,28 +39,8 @@ configure_target() {
                            exclude_graphdriver_btrfs \
                            journald"
 
-  case $TARGET_ARCH in
-    x86_64)
-      export GOARCH=amd64
-      ;;
-    arm)
-      export GOARCH=arm
-
-      case $TARGET_CPU in
-        arm1176jzf-s)
-          export GOARM=6
-          ;;
-        cortex-a7|cortex-a9)
-         export GOARM=7
-         ;;
-      esac
-      ;;
-    aarch64)
-      export GOARCH=arm64
-      ;;
-  esac
-
   export GOOS=linux
+  export GOARCH=amd64
   export CGO_ENABLED=1
   export CGO_NO_EMULATION=1
   export CGO_CFLAGS=$CFLAGS
@@ -99,15 +79,15 @@ addon() {
     cp -P $ROOT/$PKG_BUILD/bin/dockerd $ADDON_BUILD/$PKG_ADDON_ID/bin
 
     # containerd
-    cp -P $(get_build_dir containerd)/bin/containerd $ADDON_BUILD/$PKG_ADDON_ID/bin/docker-containerd
-    cp -P $(get_build_dir containerd)/bin/containerd-shim $ADDON_BUILD/$PKG_ADDON_ID/bin/docker-containerd-shim
+    cp -P $(get_pkg_build containerd)/bin/containerd $ADDON_BUILD/$PKG_ADDON_ID/bin/docker-containerd
+    cp -P $(get_pkg_build containerd)/bin/containerd-shim $ADDON_BUILD/$PKG_ADDON_ID/bin/docker-containerd-shim
 
     # libnetwork
-    cp -P $(get_build_dir libnetwork)/bin/docker-proxy $ADDON_BUILD/$PKG_ADDON_ID/bin/docker-proxy
+    cp -P $(get_pkg_build libnetwork)/bin/docker-proxy $ADDON_BUILD/$PKG_ADDON_ID/bin/docker-proxy
 
     # runc
-    cp -P $(get_build_dir runc)/bin/runc $ADDON_BUILD/$PKG_ADDON_ID/bin/docker-runc
+    cp -P $(get_pkg_build runc)/bin/runc $ADDON_BUILD/$PKG_ADDON_ID/bin/docker-runc
 
     # tini
-    cp -P $(get_build_dir tini)/.$TARGET_NAME/tini-static $ADDON_BUILD/$PKG_ADDON_ID/bin/docker-init
+    cp -P $(get_pkg_build tini)/.$TARGET_NAME/tini-static $ADDON_BUILD/$PKG_ADDON_ID/bin/docker-init
 }
