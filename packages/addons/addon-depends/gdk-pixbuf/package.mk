@@ -19,9 +19,11 @@
 ################################################################################
 
 PKG_NAME="gdk-pixbuf"
-PKG_VERSION="2.36.6"
+PKG_VERSION="2.34.0"
+PKG_ARCH="any"
+PKG_LICENSE="OSS"
 PKG_SITE="http://www.gtk.org/"
-PKG_URL="http://ftp.acc.umu.se/pub/gnome/sources/gdk-pixbuf/2.36/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="http://ftp.acc.umu.se/pub/gnome/sources/gdk-pixbuf/2.34/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain glib libjpeg-turbo libpng jasper tiff"
 PKG_SECTION="x11/toolkits"
 PKG_SHORTDESC="gdk-pixbuf: a GNOME library for image loading and manipulation."
@@ -29,14 +31,12 @@ PKG_LONGDESC="gdk-pixbuf (GdkPixbuf) is a GNOME library for image loading and ma
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-gio-sniffing=yes \
+PKG_CONFIGURE_OPTS_TARGET="gio_can_sniff=yes \
                            --disable-gtk-doc \
                            --disable-gtk-doc-html \
                            --disable-gtk-doc-pdf \
                            --disable-man \
-                           --enable-relocations \
-                           --enable-introspection \
                            --with-libpng \
                            --with-libjpeg \
                            --with-libtiff \
-                           --with-included-loaders=png,gdip-bmp,gdip-emf,gdip-gif,gdip-ico,gdip-jpeg,gdip-tiff,gdip-wmf"
+                           --with-libjasper"
