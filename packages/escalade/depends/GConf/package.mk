@@ -16,19 +16,19 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="gconf"
+PKG_NAME="GConf"
 PKG_VERSION="3.2.6"
 PKG_SITE="http://eigen.tuxfamily.org/index.php?title=Main_Page"
-PKG_URL="https://download.gnome.org/sources/GConf/3.2/GConf-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain zlib glib"
+PKG_URL="ftp://ftp.gnome.org/pub/GNOME/sources/GConf/3.2/GConf-$PKG_VERSION.tar.xz"
+PKG_DEPENDS_TARGET="toolchain zlib glib dbus-glib"
 PKG_SECTION="depends"
 PKG_SHORTDESC="gconf"
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-post_unpack() {
-  mv $BUILD/GConf-$PKG_VERSION $BUILD/$PKG_NAME-$PKG_VERSION
-}
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-orbit --disable-static"
+PKG_CONFIGURE_OPTS_TARGET="--with-gtk=2.0 \
+			      --disable-orbit \
+			      --disable-documentation \
+			      --disable-shared"
