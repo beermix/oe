@@ -5,7 +5,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnutls.org"
 PKG_URL="ftp://ftp.gnutls.org/gcrypt/gnutls/v3.5/gnutls-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain zlib openssl gmp lzo nettle libunistring libgcrypt"
+PKG_DEPENDS_TARGET="toolchain zlib openssl gmp libgpg-error nettle libunistring libgcrypt"
 PKG_SECTION="xmedia/tools"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
@@ -16,9 +16,10 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-crywrap \
 			      --enable-static \
 			      --disable-shared \
 			      --without-tpm \
+			      --disable-tools \
+			      --without-p11-kit \
 			      --disable-guile \
 			      --with-included-libtasn1 \
-			      --without-p11-kit \
 			      --enable-local-libopts \
 			      --with-libz-prefix=$SYSROOT_PREFIX/usr \
 			      --with-librt-prefix=$SYSROOT_PREFIX \

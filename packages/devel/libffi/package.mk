@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="libffi"
-PKG_VERSION="3.2.1"
+PKG_VERSION="b841ae7"
 PKG_SITE="http://sourceware.org/$PKG_NAME/"
-PKG_URL="ftp://sourceware.org/pub/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_GIT_URL="https://github.com/libffi/libffi"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="devel"
 PKG_SHORTDESC="Foreign Function Interface Library"
@@ -28,10 +28,11 @@ PKG_LONGDESC="The libffi library provides a portable, high level programming int
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-CCASFLAGS=-no-integrated-as
+CCASFLAGS="-no-integrated-as"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
-                           --enable-static --disable-shared --disable-builddir \
+                           --enable-static \
+                           --disable-shared \
                            --with-pic \
                            --enable-structs \
                            --enable-raw-api \
