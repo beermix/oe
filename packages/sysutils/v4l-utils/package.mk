@@ -32,13 +32,14 @@ PKG_SHORTDESC="v4l-utils: Linux V4L2 and DVB API utilities and v4l libraries (li
 PKG_LONGDESC="Linux V4L2 and DVB API utilities and v4l libraries (libv4l)."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--without-jpeg"
-PKG_MAKEINSTALL_OPTS_TARGET="PREFIX=/usr -C utils/keytable"
+PKG_CONFIGURE_OPTS_TARGET="--disable-doxygen-doc --disable-libdvbv5 --disable-qv4l2 --without-jpeg"
+#PKG_MAKEINSTALL_OPTS_TARGET="PREFIX=/usr -C utils/keytable"
 
 make_target() {
-    make -C utils/keytable CFLAGS="$TARGET_CFLAGS"
+  #make -C utils/keytable CFLAGS="$TARGET_CFLAGS"
+  make CFLAGS="$TARGET_CFLAGS"
 }
 
 post_makeinstall_target() {

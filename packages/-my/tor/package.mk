@@ -10,17 +10,16 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-systemd \
 			      --disable-unittests \
 			      --disable-seccomp \
 			      --disable-libscrypt \
-			      --enable-largefile \
 			      --disable-gcc-hardening \
-			      --enable-libfuzzer=no \
+			      --disable-libfuzzer \
 			      --disable-unittests \
 			      --enable-openbsd-malloc \
 			      --disable-linker-hardening \
-			      --with-openssl-dir=$SYSROOT_PREFIX \
 			      --sysconfdir=/storage/.config \
 			      --datarootdir=/storage/.cache/tor \
 			      --datadir=/storage/.cache/tor \
 			      --with-zlib-dir=$SYSROOT_PREFIX \
+			      --with-openssl-dir=$SYSROOT_PREFIX \
 			      --with-libevent-dir=$SYSROOT_PREFIX \
 			      --with-openssl-dir=$SYSROOT_PREFIX"
 
