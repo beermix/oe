@@ -101,6 +101,6 @@
   # please add all configfiles which should be included without the suffix and prefix
   # except the default-*.config and the ones included in packages/linux/package.mk
   # Space separated list is supported,
-    ERNEL_EXTRA_CONFIG+=" keyboard-at"
+    KERNEL_EXTRA_CONFIG+=" keyboard-at"
     KERNEL_EXTRA_CONFIG+=" sata lan-pci sound-pci"
-    KERNEL_EXTRA_CONFIG+=" bluetooth filesystem wlan-other wlan-usb"
+    KERNEL_EXTRA_CONFIG+=" bluetooth filesystem wlan-other wlan-usb sound-soc-x86"

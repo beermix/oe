@@ -4,7 +4,7 @@
 ################################################################################
 
 PKG_NAME="inputstream.rtmp"
-PKG_VERSION="6c1af46"
+PKG_VERSION="v1.0.4"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/notspiff/inputstream.rtmp"
 PKG_GIT_URL="https://github.com/notspiff/inputstream.rtmp"
