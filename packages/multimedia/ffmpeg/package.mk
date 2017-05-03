@@ -207,8 +207,9 @@ configure_target() {
               $FFMPEG_FPU \
               --enable-yasm \
               --disable-symver \
-              --enable-lto \
-              --enable-indev=x11grab_xcb
+              --disable-lto \
+              --enable-indev=x11grab_xcb \
+              --enable-xv --enable-xrandr
 }
 
 post_makeinstall_target() {

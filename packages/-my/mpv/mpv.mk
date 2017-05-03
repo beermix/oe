@@ -219,7 +219,7 @@ MPV_CONF_OPTS += --disable-xinerama
 endif
 # xrandr
 ifeq ($(BR2_PACKAGE_XLIB_LIBXRANDR),y)
-MPV_CONF_OPTS += --enable-xrandr
+MPV_CONF_OPTS += --enable-xrandr 
 MPV_DEPENDENCIES += xlib_libXrandr
 else
 MPV_CONF_OPTS += --disable-xrandr
