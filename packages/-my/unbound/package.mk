@@ -14,6 +14,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-dsa \
 			      --enable-pie \
 			      --enable-relro-now \
 			      --disable-shared \
+			      --enable-systemd \
 			      --with-pidfile=/var/run/unbound.pid \
 			      --with-libevent=$SYSROOT_PREFIX/usr \
 			      --with-libsodium=$SYSROOT_PREFIX/usr \
