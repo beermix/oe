@@ -17,7 +17,8 @@
 ################################################################################
 
 PKG_NAME="ffmpeg"
-PKG_VERSION="33c167d"
+PKG_VERSION="3.3-Leia-Alpha"
+#PKG_VERSION="3.1.6-Krypton"
 PKG_ARCH="any"
 PKG_LICENSE="LGPLv2.1+"
 PKG_SITE="https://ffmpeg.org"
