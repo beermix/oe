@@ -6,9 +6,7 @@
 
 PKG_NAME="binutils"
 PKG_VERSION="2.28"
-#PKG_VERSION="d81c51a"
 PKG_URL="https://fossies.org/linux/misc/binutils-$PKG_VERSION.tar.xz"
-#PKG_GIT_URL="git://sourceware.org/git/binutils-gdb.git"
 PKG_DEPENDS_HOST="ccache:host bison:host flex:host linux:host"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="binutils: A GNU collection of binary utilities"
@@ -31,7 +29,6 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-plugins \
                          --enable-gold \
                          --enable-ld=default \
-                         --with-system-zlib \
                          --enable-lto \
                          --disable-shared \
                          --enable-poison-system-directories"
