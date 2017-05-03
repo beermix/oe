@@ -44,7 +44,7 @@ if [ -n "$PKG_URL" -o -n "$PKG_GIT_URL" ]; then
       PACKAGE="$SOURCES/$1/$SOURCE_NAME"
       PACKAGE_MIRROR="$DISTRO_MIRROR/$PKG_NAME/$SOURCE_NAME"
       [ "$VERBOSE" != "yes" ] && WGET_OPT=-q
-      WGET_CMD="wget --timeout=30 --passive-ftp -c $WGET_OPT -P $SOURCES/$1"
+      WGET_CMD="wget --no-config -vvv --no-cache --no-cookies --max-redirect=0 --timeout=10 --no-check-certificate --timeout=30 --passive-ftp -c $WGET_OPT -P $SOURCES/$1"
 
       NBWGET="1"
 
@@ -123,8 +123,8 @@ if [ -n "$PKG_URL" -o -n "$PKG_GIT_URL" ]; then
     fi
 
     pushd $ROOT/$SOURCES/${1}/${1}-${PKG_GIT_BRANCH}.git > /dev/null
-    git config tar.tar.xz.command "xz -c -vvv"
-    git archive --format=tar.xz --prefix=${PKG_NAME}-${PKG_VERSION}/ ${PKG_VERSION} -o $ROOT/$SOURCES/$1/${PKG_NAME}-${PKG_VERSION}.tar.xz
+      git archive --format=tar --prefix=${PKG_NAME}-${PKG_VERSION}/ ${PKG_VERSION} | \
+        /usr/bin/xz -5 -v  > $ROOT/$SOURCES/$1/${PKG_NAME}-${PKG_VERSION}.tar.xz
     popd > /dev/null
 
     echo "$PKG_GIT_URL $PKG_GIT_BRANCH $PKG_VERSION"> $STAMP
