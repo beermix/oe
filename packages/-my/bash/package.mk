@@ -16,7 +16,7 @@ PKG_CONFIGURE_OPTS_TARGET="bash_cv_job_control_missing=present \
                            --with-curses \
                            --enable-readline \
                            --without-bash-malloc \
-                           --enable-static-link \
+                           --disable-static-link \
                            --with-installed-readline \
                            --disable-net-redirections \
                            --enable-command-timing \

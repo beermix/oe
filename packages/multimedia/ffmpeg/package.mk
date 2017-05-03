@@ -158,7 +158,6 @@ configure_target() {
               --disable-dxva2 \
               --enable-runtime-cpudetect \
               $FFMPEG_TABLES \
-              --disable-memalign-hack \
               --enable-encoders \
               --enable-encoder=ac3 \
               --enable-encoder=aac \
@@ -187,7 +186,6 @@ configure_target() {
               --disable-libopencore-amrwb \
               --disable-libopencv \
               --disable-libdc1394 \
-              --disable-libfaac \
               --disable-libfreetype \
               --disable-libgsm \
               --disable-libmp3lame \
@@ -209,6 +207,7 @@ configure_target() {
               $FFMPEG_FPU \
               --enable-yasm \
               --disable-symver \
+              --enable-lto \
               --enable-indev=x11grab_xcb
 }
 
