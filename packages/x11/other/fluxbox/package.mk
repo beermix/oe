@@ -42,7 +42,19 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_realloc_0_nonnull=yes \
                            --disable-debug \
                            --disable-test \
                            --disable-nls \
-                           --disable-imlib2"
+                           --disable-imlib2 \
+                           --with-keys=/storage/.config/fluxbox/keys \
+                           --sysconfdir=/storage/.config/fluxbox \
+                           --datadir=/storage/.config/fluxbox \
+                           --libdir=/storage/.config/fluxbox \
+                           --libexecdir=/storage/.config/fluxbox \
+                           --sharedstatedir=/storage/.config/fluxbox \
+                           --localstatedir=/storage/.config/fluxbox \
+                           --includedir=/storage/.config/fluxbox \
+                           --oldincludedir=/storage/.config/fluxbox \
+                           --datarootdir=/storage/.config/fluxbox \
+                           --infodir=/storage/.config/fluxbox \     
+                           --localedir=/storage/.config/fluxbox"
 
 post_install() {
   enable_service windowmanager.service
@@ -56,6 +68,7 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin/startfluxbox
 
   rm -rf $INSTALL/usr/share/fluxbox/styles
+  rm -rf $INSTALL/storage
 
   cp $PKG_DIR/config/apps $INSTALL/usr/share/fluxbox/
   cp $PKG_DIR/config/init $INSTALL/usr/share/fluxbox/
