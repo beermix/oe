@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="rapidjson"
-PKG_VERSION="v1.1.0"
+PKG_VERSION="1.1.0"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="BSD"
 PKG_SITE="http://rapidjson.org/"
-PKG_GIT_URL="https://github.com/miloyip/rapidjson.git"
+PKG_URL="https://dl.dropboxusercontent.com/s/elne194yw5qc0w3/rapidjson-1.1.0.tar.xz"
 PKG_GIT_BRANCH="master"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_PRIORITY="optional"
@@ -32,3 +32,11 @@ PKG_LONGDESC="rapidjson is a fast JSON parser/generator for C++ with both SAX/DO
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
+
+PKG_CONFIGURE_OPTS_TARGET="-DBUILD_SHARED_LIBS=0 \
+			      -DCMAKE_BUILD_TYPE=None \
+			      -DRAPIDJSON_BUILD_CXX11=1 \
+			      -DBUILD_TESTING=0 \
+			      -DRAPIDJSON_BUILD_DOC=0 \
+			      -DRAPIDJSON_BUILD_EXAMPLES=0 \
+			      -DRAPIDJSON_BUILD_TESTS=0"
