@@ -17,13 +17,11 @@
 ################################################################################
 
 PKG_NAME="MLVPN"
-PKG_VERSION="4.8"
+PKG_VERSION="ffb9cea"
 PKG_SITE="http://www.kernel.org/pub/software/network/ethtool/"
 PKG_GIT_URL="https://github.com/zehome/MLVPN"
-PKG_DEPENDS_TARGET="toolchain"
+PKG_DEPENDS_TARGET="toolchain libpcap libsodium libev"
 PKG_SECTION="network"
-PKG_SHORTDESC="ethtool: Display or change ethernet card settings"
-PKG_LONGDESC="Ethtool is used for querying settings of an ethernet device and changing them."
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
