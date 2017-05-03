@@ -56,18 +56,6 @@ UTILLINUX_CONFIG_DEFAULT="--disable-gtk-doc \
                           --without-user \
                           --without-systemd \
                           --without-smack \
-                          --disable-more \
-                          --disable-wdctl \
-                          --disable-libsmartcols \
-                          --disable-losetup \
-                          --disable-zramctl \
-                          --disable-partx \
-                          --disable-bfs \
-                          --disable-cramfs \
-                          --disable-swapon \
-                          --without-python \
-                          --disable-pg-bell \
-                          --disable-lslogins \
                           --without-python \
                           --without-systemdsystemunitdir"
 
