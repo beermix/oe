@@ -208,8 +208,7 @@ configure_target() {
               --enable-yasm \
               --disable-symver \
               --disable-lto \
-              --enable-indev=x11grab_xcb \
-              --enable-xv --enable-xrandr
+              --enable-indev=x11grab_xcb
 }
 
 post_makeinstall_target() {

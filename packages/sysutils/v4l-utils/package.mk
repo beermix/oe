@@ -35,17 +35,12 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-doxygen-doc \
-			      --disable-libdvbv5 \
-			      --disable-v4l2-compliance-libv4l \
-			      --disable-v4l2-ctl-libv4l \
 			      --disable-v4l-utils \
-			      --disable-v4l2-ctl-libv4l \
 			      --disable-shared \
 			      --without-jpeg"
 
-
 post_makeinstall_target() {
-  rm -rf $INSTALL/etc/rc_keymaps
+  mkdir -p $INSTALL/etc/rc_keymaps
     ln -sf /storage/.config/rc_keymaps $INSTALL/etc/rc_keymaps
 
   mkdir -p $INSTALL/usr/config
