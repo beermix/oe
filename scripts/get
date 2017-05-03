@@ -84,9 +84,9 @@ if [ -n "$PKG_URL" -o -n "$PKG_GIT_URL" ]; then
     [ -z "$PKG_GIT_BRANCH" ] && PKG_GIT_BRANCH=master
 
     if [ "$PKG_KEEP_CHECKOUT" = "yes" -a -d $SOURCES/${1}/${1}-${PKG_GIT_BRANCH}.git ]; then
-      GIT_CLONE_CMD="git fetch -4  origin $PKG_GIT_BRANCH:$PKG_GIT_BRANCH"
+      GIT_CLONE_CMD="git fetch -v origin $PKG_GIT_BRANCH:$PKG_GIT_BRANCH"
     else
-      GIT_CLONE_CMD="git clone --progress --recursive -4 "$PKG_GIT_URL" -b "$PKG_GIT_BRANCH" $SOURCES/${1}/${1}-${PKG_GIT_BRANCH}.git"
+      GIT_CLONE_CMD="git clone --progress --recursive --bare  "$PKG_GIT_URL" -b "$PKG_GIT_BRANCH" $SOURCES/${1}/${1}-${PKG_GIT_BRANCH}.git"
     fi
 
     NBGIT="1"
