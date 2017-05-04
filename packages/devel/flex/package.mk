@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="flex"
-PKG_VERSION="9131b84"
+PKG_VERSION="a1634aa"
 PKG_SITE="https://github.com/westes/flex/releases"
 PKG_GIT_URL="https://github.com/westes/flex"
 PKG_DEPENDS_HOST="ccache:host autotools:host"
@@ -30,8 +30,7 @@ PKG_AUTORECONF="yes"
 
 CONCURRENCY_MAKE_LEVEL=1
 
-#PKG_CONFIGURE_OPTS_HOST="ac_cv_lib_util_getloadavg=no --enable-static --disable-shared --disable-rpath --with-gnu-ld"
-PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared --disable-rpath --with-gnu-ld"
+PKG_CONFIGURE_OPTS_HOST="ac_cv_lib_util_getloadavg=no --disable-shared"
 
 post_makeinstall_host() {
   cat > $ROOT/$TOOLCHAIN/bin/lex << "EOF"
