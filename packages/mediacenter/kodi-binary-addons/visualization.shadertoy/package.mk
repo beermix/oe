@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -23,7 +23,9 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/notspiff/visualization.shadertoy"
 PKG_GIT_URL="https://github.com/notspiff/visualization.shadertoy"
-PKG_DEPENDS_TARGET="toolchain kodi-platform"
+PKG_GIT_BRANCH="master"
+PKG_DEPENDS_TARGET="toolchain kodi-platform opengl"
+PKG_PRIORITY="optional"
 PKG_SECTION=""
 PKG_SHORTDESC="visualization.shadertoy"
 PKG_LONGDESC="visualization.shadertoy"
@@ -32,17 +34,11 @@ PKG_AUTORECONF="no"
 PKG_IS_ADDON="yes"
 PKG_ADDON_TYPE="xbmc.player.musicviz"
 
-if [ ! "$OPENGL" = "no" ]; then
-# for OpenGL (GLX) support
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET $OPENGL glew"
+if [ "$OPENGL" = "mesa" ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET glew"
 fi
 
-if [ "$OPENGLES_SUPPORT" = yes ]; then
-# for OpenGL-ES support
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET $OPENGLES"
-fi
-
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
+PKG_CMAKE_OPTS_TARGET="-DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/share/kodi \
                        -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr"
 
 pre_configure_target() {
@@ -55,12 +51,4 @@ pre_configure_target() {
     export CFLAGS="$CFLAGS -DLINUX -DEGL_API_FB"
     export CXXFLAGS="$CXXFLAGS -DLINUX -DEGL_API_FB"
   fi
-}
-
-addon() {
-  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/
-  cp -R $PKG_BUILD/.install_pkg/usr/share/kodi/addons/$PKG_NAME/* $ADDON_BUILD/$PKG_ADDON_ID/
-
-  ADDONSO=$(xmlstarlet sel -t -v "/addon/extension/@library_linux" $ADDON_BUILD/$PKG_ADDON_ID/addon.xml)
-  cp -L $PKG_BUILD/.install_pkg/usr/lib/kodi/addons/$PKG_NAME/$ADDONSO $ADDON_BUILD/$PKG_ADDON_ID/
 }
