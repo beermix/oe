@@ -39,7 +39,6 @@ if [ "$MEDIACENTER" = "kodi" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pvr.iptvsimple"
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pvr.iptvsimple.multi"
 
-# kodi-binary-addons inputstream
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET inputstream.rtmp"
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET inputstream.adaptive"
 
