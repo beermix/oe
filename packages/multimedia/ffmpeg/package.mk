@@ -17,14 +17,13 @@
 ################################################################################
 
 PKG_NAME="ffmpeg"
-PKG_VERSION="3.3-Leia-Alpha"
-#PKG_VERSION="3.1.6-Krypton"
+PKG_VERSION="582c3d5"
 PKG_ARCH="any"
-PKG_LICENSE="LGPLv2.1+"
-PKG_SITE="https://ffmpeg.org"
-PKG_GIT_URL="https://github.com/xbmc/FFmpeg"
-PKG_PRIORITY="optional"
+PKG_GIT_URL="https://github.com/FFmpeg/FFmpeg.git"
+PKG_GIT_BRANCH="release/3.2"
 PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl speex"
+PKG_PRIORITY="optional"
+PKG_SECTION="multimedia"
 PKG_SHORTDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
 PKG_LONGDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
 
@@ -84,16 +83,15 @@ pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
 
-# ffmpeg fails building for x86_64 with LTO support
+# ffmpeg fails building with LTO support
   strip_lto
 
 # ffmpeg fails running with GOLD support
   strip_gold
 
-
-  if [ "$KODIPLAYER_DRIVER" = "bcm2835-driver" ]; then
-    CFLAGS="-I$SYSROOT_PREFIX/usr/include/interface/vcos/pthreads -I$SYSROOT_PREFIX/usr/include/interface/vmcs_host/linux -DRPI=1 $CFLAGS"
-    FFMPEG_LIBS="-lbcm_host -lvcos -lvchiq_arm -lmmal -lmmal_core -lmmal_util -lvcsm"
+  if [ "$KODIPLAYER_DRIVER" = "bcm2835-firmware" ]; then
+    export CFLAGS="-I$SYSROOT_PREFIX/usr/include/interface/vcos/pthreads -I$SYSROOT_PREFIX/usr/include/interface/vmcs_host/linux -DRPI=1 $CFLAGS"
+    export FFMPEG_LIBS="-lbcm_host -lvcos -lvchiq_arm -lmmal -lmmal_core -lmmal_util -lvcsm -lvchostif"
   fi
 }
 
@@ -106,6 +104,7 @@ configure_target() {
               --sysroot=$SYSROOT_PREFIX \
               --sysinclude="$SYSROOT_PREFIX/usr/include" \
               --target-os="linux" \
+              --extra-version="$PKG_VERSION" \
               --nm="$NM" \
               --ar="$AR" \
               --as="$CC" \
@@ -118,6 +117,8 @@ configure_target() {
               --extra-cflags="$CFLAGS" \
               --extra-ldflags="$LDFLAGS -fPIC" \
               --extra-libs="$FFMPEG_LIBS" \
+              --extra-version="" \
+              --build-suffix="" \
               --disable-static \
               --enable-shared \
               --enable-gpl \

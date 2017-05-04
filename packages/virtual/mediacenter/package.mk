@@ -33,7 +33,7 @@ if [ "$MEDIACENTER" = "kodi" ]; then
 # some python stuff needed for various addons
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET Pillow"
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET simplejson"
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pycryptodome"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pycrypto"
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET xmlstarlet"
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET peripheral.joystick"
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pvr.iptvsimple"
@@ -41,16 +41,9 @@ if [ "$MEDIACENTER" = "kodi" ]; then
 
 # kodi-binary-addons inputstream
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET inputstream.rtmp"
-  #PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET inputstream.adaptive"
-
-# audioencoder
-  #PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET audioencoder.flac"
-  #PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET audioencoder.lame"
-  #PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET audioencoder.vorbis"
-  #PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET audioencoder.wav"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET inputstream.adaptive"
 
 # other packages
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET kodi-theme-AeonNox"
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET OpenELEC-settings"
 
   if [ -n "$SKINS" ]; then

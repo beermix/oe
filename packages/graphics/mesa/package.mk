@@ -1,15 +1,25 @@
 ################################################################################
-#PKG_VERSION="17.0.3"
-#PKG_URL="ftp://freedesktop.org/pub/mesa/$PKG_NAME-$PKG_VERSION.tar.xz"
-# libXvMC
-#PKG_VERSION="566f2ed"
-#PKG_GIT_URL="git://anongit.freedesktop.org/mesa/mesa"
+#      This file is part of OpenELEC - http://www.openelec.tv
+#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
+#
+#  OpenELEC is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  OpenELEC is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
 PKG_NAME="mesa"
 PKG_VERSION="17.1.0-rc3"
 PKG_URL="https://fossies.org/linux/misc/mesa-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain Python:host glproto dri2proto presentproto libdrm libXext libXdamage libXfixes libXxf86vm libxcb libX11 dri3proto libxshmfence zlib libxml2"
+PKG_DEPENDS_TARGET="toolchain Python:host expat glproto dri2proto presentproto libdrm libXext libXdamage libXfixes libXxf86vm libxcb libX11 dri3proto libxshmfence zlib"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="mesa: 3-D graphics library with OpenGL API"
 PKG_LONGDESC="Mesa is a 3-D graphics library with an API which is very similar to that of OpenGL*. To the extent that Mesa utilizes the OpenGL command syntax or state machine, it is being used with authorization from Silicon Graphics, Inc. However, the author makes no claim that Mesa is in any way a compatible replacement for OpenGL or associated with Silicon Graphics, Inc. Those who want a licensed implementation of OpenGL should contact a licensed vendor. While Mesa is not a licensed OpenGL implementation, it is currently being tested with the OpenGL conformance tests. For the current conformance status see the CONFORM file included in the Mesa distribution."
@@ -51,6 +61,7 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --disable-selinux \
                            --enable-opengl \
                            --disable-gles1 \
+                           --enable-gles2 \
                            --enable-dri \
                            --enable-dri3 \
                            --enable-glx \
@@ -72,6 +83,8 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --enable-driglx-direct \
                            --enable-glx-tls \
                            $MESA_GALLIUM_LLVM \
+                           --disable-valgrind \
+                           --with-sysroot=$SYSROOT_PREFIX \
                            --with-gl-lib-name=GL \
                            --with-osmesa-lib-name=OSMesa \
                            --with-gallium-drivers=$GALLIUM_DRIVERS \

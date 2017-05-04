@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://openvpn.net"
 PKG_URL="http://swupdate.openvpn.org/community/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain lzo lz4 openssl"
+PKG_DEPENDS_TARGET="toolchain lzo libressl"
 PKG_PRIORITY="optional"
 PKG_SECTION="network"
 PKG_SHORTDESC="openvpn: a full featured SSL VPN software solution that integrates OpenVPN server capabilities."
@@ -32,13 +32,7 @@ PKG_LONGDESC="OpenVPN Access Server is a full featured SSL VPN software solution
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-pre_configure_target() {
-   export CFLAGS="$CFLAGS -ffunction-sections -fdata-sections"
-   export LDFLAGS="$LDFLAGS -Wl,--gc-sections"
-}
-
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_have_decl_TUNSETPERSIST=no \
-                           --with-crypto-library=openssl \
                            --enable-lzo \
                            --disable-lz4 \
                            --enable-crypto \

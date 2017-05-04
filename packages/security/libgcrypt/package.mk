@@ -34,8 +34,7 @@ PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            ac_cv_sys_symbol_underscore=no \
-                           --disable-asm \
-                           --disable-avx2-support \
+                           --enable-asm \
                            --with-gnu-ld \
                            --with-libgpg-error-prefix=$SYSROOT_PREFIX/usr \
                            --disable-doc"
