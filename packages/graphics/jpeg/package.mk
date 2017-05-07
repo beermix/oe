@@ -6,10 +6,6 @@ PKG_SECTION="graphics"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-#pre_configure_target() {
-#  strip_lto
-#}
-
 PKG_CONFIGURE_OPTS_HOST="--disable-shared --enable-static"
 
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
