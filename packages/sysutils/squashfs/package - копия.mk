@@ -17,12 +17,11 @@
 ################################################################################
 
 PKG_NAME="squashfs"
-PKG_VERSION="4.3"
+PKG_VERSION="94f5575"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://squashfs.sourceforge.net/"
-PKG_URL="$SOURCEFORGE_SRC/squashfs/squashfs/${PKG_NAME}${PKG_VERSION}/${PKG_NAME}${PKG_VERSION}.tar.gz"
-PKG_SOURCE_DIR="${PKG_NAME}${PKG_VERSION}"
+PKG_URL="https://github.com/plougher/squashfs-tools"
 PKG_DEPENDS_HOST="ccache:host zlib:host lzo:host xz:host lz4:host"
 PKG_SECTION="sysutils"
 PKG_SHORTDESC="squashfs-tools: A compressed read-only filesystem for Linux"
