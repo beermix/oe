@@ -165,8 +165,8 @@ makeinstall_target() {
     ln -sf pastebinit $INSTALL/usr/bin/paste
     
     #rm $INSTALL/bin/sh
-    #rm $INSTALL/bin/hostname
-    #rm $INSTALL/sbin/ip
+    rm $INSTALL/bin/hostname
+    rm $INSTALL/sbin/ip
     rm $INSTALL/bin/bash
 
   mkdir -p $INSTALL/usr/lib/openelec

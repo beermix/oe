@@ -32,8 +32,6 @@ PKG_LONGDESC="kmod offers the needed flexibility and fine grained control over i
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-MAKEFLAGS=-j1
-
 PKG_CONFIGURE_OPTS_HOST="--enable-tools \
                          --disable-logging \
                          --disable-debug \
