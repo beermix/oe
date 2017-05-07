@@ -14,7 +14,7 @@
 ################################################################################
 
 PKG_NAME="protobuf"
-PKG_VERSION="3.1.0"
+PKG_VERSION="3.3.0"
 PKG_SITE="https://developers.google.com/protocol-buffers/"
 PKG_URL="https://github.com/google/$PKG_NAME/releases/download/v$PKG_VERSION/$PKG_NAME-cpp-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="toolchain zlib:host Python:host"
