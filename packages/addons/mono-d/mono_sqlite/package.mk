@@ -28,7 +28,7 @@ PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET --disable-static --enable-
 
 unpack() {
   mkdir -p $PKG_BUILD
-  cp -r $(get_build_dir sqlite)/* $PKG_BUILD/
+  cp -r $(get_pkg_build sqlite)/* $PKG_BUILD/
 }
 
 makeinstall_target() {
