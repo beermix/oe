@@ -1,5 +1,5 @@
 PKG_NAME="zabbix"
-PKG_VERSION="3.2.5"
+PKG_VERSION="3.2.6"
 PKG_URL="https://fossies.org/linux/misc/zabbix-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain curl libxml2 mariadb netbsd-curses openssl libssh2"
 PKG_SECTION="devel"
@@ -19,8 +19,8 @@ PKG_CONFIGURE_OPTS_TARGET="--datadir=/storage/.config \
 			      --enable-proxy \
 			      --enable-agent \
 			      --with-mysql \
-			      --with-net-snmp=$SYSROOT_PREFIX/usr \
-			      --with-ssh2=$SYSROOT_PREFIX/usr \
+			      --with-net-snmp=no \
+			      --with-ssh2=no \
 			      --with-openssl=$SYSROOT_PREFIX/usr"
 
 
