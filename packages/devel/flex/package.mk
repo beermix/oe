@@ -29,8 +29,6 @@ PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared --disable-rpath --with-gnu-ld"
 
-PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
-
 post_makeinstall_host() {
   cat > $ROOT/$TOOLCHAIN/bin/lex << "EOF"
 #!/bin/sh
