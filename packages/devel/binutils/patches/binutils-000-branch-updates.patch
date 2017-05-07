@@ -1,0 +1,1782 @@
+# DP: updates from the binutils-2.28 branch
+
+# git diff d1b878ec9a4e6a92e2863a8929e9794dd12b13b9 f3fea2d4abd99f18acc4df1ed8d07b763a0240bf
+
+diff --git a/bfd/ChangeLog b/bfd/ChangeLog
+index 9809bcf..b3f89d7 100644
+--- a/bfd/ChangeLog
++++ b/bfd/ChangeLog
+@@ -1,3 +1,35 @@
++2017-04-13  Alan Modra  <amodra@gmail.com>
++
++	* elf32-arm.c (arm_type_of_stub): Supply missing args to "long
++	branch veneers" error.  Fix double space and format message.
++	* elf32-avr.c (avr_add_stub): Do not pass NULL as %B arg.
++	* elf64-ppc.c (tocsave_find): Supply missing %B arg.
++
++2017-04-10  H.J. Lu  <hongjiu.lu@intel.com>
++
++	PR ld/19579
++	PR ld/21306
++	* elf32-s390.c (elf_s390_finish_dynamic_symbol): Check
++	ELF_COMMON_DEF_P for common symbols.
++	* elf64-s390.c (elf_s390_finish_dynamic_symbol): Likewise.
++	* elf64-x86-64.c (elf_x86_64_relocate_section): Likewise.
++	* elflink.c (_bfd_elf_merge_symbol): Revert commits
++	202ac193bbbecc96a4978d1ac3d17148253f9b01 and
++	07492f668d2173da7a2bda3707ff0985e0f460b6.
++
++2017-03-07  Alan Modra  <amodra@gmail.com>
++
++	PR 21224
++	PR 20519
++	* elf64-ppc.c (ppc64_elf_relocate_section): Add missing
++	dyn_relocs check.
++
++2017-03-07  Alan Modra  <amodra@gmail.com>
++
++	Apply from master
++	2017-03-02  Alan Modra  <amodra@gmail.com>
++	* elf32-ppc.c (ppc_elf_vle_split16): Correct insn mask typo.
++
+ 2017-03-02  Tristan Gingold  <gingold@adacore.com>
+ 
+ 	* version.m4: Bump version to 2.28.0
+diff --git a/bfd/elf32-arm.c b/bfd/elf32-arm.c
+index 0a78595..e04caef 100644
+--- a/bfd/elf32-arm.c
++++ b/bfd/elf32-arm.c
+@@ -4024,10 +4024,12 @@ arm_type_of_stub (struct bfd_link_info *info,
+ 	      if (!thumb_only)
+ 		{
+ 		  if (input_sec->flags & SEC_ELF_PURECODE)
+-		    _bfd_error_handler (_("\
+-%B(%A): warning: long branch  veneers used in section with SHF_ARM_PURECODE section \
+-attribute is only supported for M-profile targets that implement the movw instruction."),
+-					input_sec);
++		    _bfd_error_handler
++		      (_("%B(%A): warning: long branch veneers used in"
++			 " section with SHF_ARM_PURECODE section"
++			 " attribute is only supported for M-profile"
++			 " targets that implement the movw instruction."),
++		       input_bfd, input_sec);
+ 
+ 		  stub_type = (bfd_link_pic (info) | globals->pic_veneer)
+ 		    /* PIC stubs.  */
+@@ -4056,10 +4058,12 @@ attribute is only supported for M-profile targets that implement the movw instru
+ 		  else
+ 		    {
+ 		      if (input_sec->flags & SEC_ELF_PURECODE)
+-			_bfd_error_handler (_("\
+-%B(%A): warning: long branch  veneers used in section with SHF_ARM_PURECODE section \
+-attribute is only supported for M-profile targets that implement the movw instruction."),
+-					    input_sec);
++			_bfd_error_handler
++			  (_("%B(%A): warning: long branch veneers used in"
++			     " section with SHF_ARM_PURECODE section"
++			     " attribute is only supported for M-profile"
++			     " targets that implement the movw instruction."),
++			   input_bfd, input_sec);
+ 
+ 		      stub_type = (bfd_link_pic (info) | globals->pic_veneer)
+ 			/* PIC stub.  */
+@@ -4073,13 +4077,12 @@ attribute is only supported for M-profile targets that implement the movw instru
+ 	  else
+ 	    {
+ 	      if (input_sec->flags & SEC_ELF_PURECODE)
+-		_bfd_error_handler (_("%B(%s): warning: long branch "
+-				      " veneers used in section with "
+-				      "SHF_ARM_PURECODE section "
+-				      "attribute is only supported"
+-				      " for M-profile targets that "
+-				      "implement the movw "
+-				      "instruction."));
++		_bfd_error_handler
++		  (_("%B(%A): warning: long branch veneers used in"
++		     " section with SHF_ARM_PURECODE section"
++		     " attribute is only supported" " for M-profile"
++		     " targets that implement the movw instruction."),
++		   input_bfd, input_sec);
+ 
+ 	      /* Thumb to arm.  */
+ 	      if (sym_sec != NULL
+@@ -4126,13 +4129,12 @@ attribute is only supported for M-profile targets that implement the movw instru
+ 	   || r_type == R_ARM_TLS_CALL)
+     {
+       if (input_sec->flags & SEC_ELF_PURECODE)
+-	_bfd_error_handler (_("%B(%s): warning: long branch "
+-			      " veneers used in section with "
+-			      "SHF_ARM_PURECODE section "
+-			      "attribute is only supported"
+-			      " for M-profile targets that "
+-			      "implement the movw "
+-			      "instruction."));
++	_bfd_error_handler
++	  (_("%B(%A): warning: long branch veneers used in"
++	     " section with SHF_ARM_PURECODE section"
++	     " attribute is only supported for M-profile"
++	     " targets that implement the movw instruction."),
++	   input_bfd, input_sec);
+       if (branch_type == ST_BRANCH_TO_THUMB)
+ 	{
+ 	  /* Arm to thumb.  */
+diff --git a/bfd/elf32-avr.c b/bfd/elf32-avr.c
+index 56b143d..0f6c188 100644
+--- a/bfd/elf32-avr.c
++++ b/bfd/elf32-avr.c
+@@ -3284,8 +3284,7 @@ avr_add_stub (const char *stub_name,
+   if (hsh == NULL)
+     {
+       /* xgettext:c-format */
+-      _bfd_error_handler (_("%B: cannot create stub entry %s"),
+-			  NULL, stub_name);
++      _bfd_error_handler (_("cannot create stub entry %s"), stub_name);
+       return NULL;
+     }
+ 
+diff --git a/bfd/elf32-ppc.c b/bfd/elf32-ppc.c
+index 0f3eb68..10caa8a 100644
+--- a/bfd/elf32-ppc.c
++++ b/bfd/elf32-ppc.c
+@@ -4921,7 +4921,7 @@ ppc_elf_vle_split16 (bfd *input_bfd,
+   unsigned int insn, opcode, top5;
+ 
+   insn = bfd_get_32 (input_bfd, loc);
+-  opcode = insn & 0xf300f800;
++  opcode = insn & 0xfc00f800;
+   if (opcode == E_OR2I_INSN
+       || opcode == E_AND2I_DOT_INSN
+       || opcode == E_OR2IS_INSN
+diff --git a/bfd/elf32-s390.c b/bfd/elf32-s390.c
+index fd1bc13..ddb6f5b 100644
+--- a/bfd/elf32-s390.c
++++ b/bfd/elf32-s390.c
+@@ -3785,7 +3785,7 @@ elf_s390_finish_dynamic_symbol (bfd *output_bfd,
+ 	     RELATIVE reloc.  The entry in the global offset table
+ 	     will already have been initialized in the
+ 	     relocate_section function.  */
+-	  if (!h->def_regular)
++	  if (!(h->def_regular || ELF_COMMON_DEF_P (h)))
+ 	    return FALSE;
+ 	  BFD_ASSERT((h->got.offset & 1) != 0);
+ 	  rela.r_info = ELF32_R_INFO (0, R_390_RELATIVE);
+diff --git a/bfd/elf64-ppc.c b/bfd/elf64-ppc.c
+index e7d4792..765bc6b 100644
+--- a/bfd/elf64-ppc.c
++++ b/bfd/elf64-ppc.c
+@@ -7627,7 +7627,7 @@ tocsave_find (struct ppc_link_hash_table *htab,
+   if (ent.sec == NULL || ent.sec->output_section == NULL)
+     {
+       _bfd_error_handler
+-	(_("%B: undefined symbol on R_PPC64_TOCSAVE relocation"));
++	(_("%B: undefined symbol on R_PPC64_TOCSAVE relocation"), ibfd);
+       return NULL;
+     }
+ 
+@@ -14798,8 +14798,10 @@ ppc64_elf_relocate_section (bfd *output_bfd,
+ 	    break;
+ 
+ 	  if (bfd_link_pic (info)
+-	      ? ((h != NULL && pc_dynrelocs (h))
+-		 || must_be_dyn_reloc (info, r_type))
++	      ? ((h == NULL
++		  || h->dyn_relocs != NULL)
++		 && ((h != NULL && pc_dynrelocs (h))
++		     || must_be_dyn_reloc (info, r_type)))
+ 	      : (h != NULL
+ 		 ? h->dyn_relocs != NULL
+ 		 : ELF_ST_TYPE (sym->st_info) == STT_GNU_IFUNC))
+diff --git a/bfd/elf64-s390.c b/bfd/elf64-s390.c
+index b5fd05f..fbbf8d6 100644
+--- a/bfd/elf64-s390.c
++++ b/bfd/elf64-s390.c
+@@ -3582,7 +3582,7 @@ elf_s390_finish_dynamic_symbol (bfd *output_bfd,
+ 	     RELATIVE reloc.  The entry in the global offset table
+ 	     will already have been initialized in the
+ 	     relocate_section function.  */
+-	  if (!h->def_regular)
++	  if (!(h->def_regular || ELF_COMMON_DEF_P (h)))
+ 	    return FALSE;
+ 	  BFD_ASSERT((h->got.offset & 1) != 0);
+ 	  rela.r_info = ELF64_R_INFO (0, R_390_RELATIVE);
+diff --git a/bfd/elf64-x86-64.c b/bfd/elf64-x86-64.c
+index e0e6c16..e363eaf 100644
+--- a/bfd/elf64-x86-64.c
++++ b/bfd/elf64-x86-64.c
+@@ -4926,7 +4926,8 @@ do_ifunc_pointer:
+ 		{
+ 		  /* Symbol is referenced locally.  Make sure it is
+ 		     defined locally or for a branch.  */
+-		  fail = !h->def_regular && !branch;
++		  fail = (!(h->def_regular || ELF_COMMON_DEF_P (h))
++			  && !branch);
+ 		}
+ 	      else if (!(bfd_link_pie (info)
+ 			 && (h->needs_copy || eh->needs_copy)))
+diff --git a/bfd/elflink.c b/bfd/elflink.c
+index 69b66f2..46d57e5 100644
+--- a/bfd/elflink.c
++++ b/bfd/elflink.c
+@@ -1543,16 +1543,13 @@ _bfd_elf_merge_symbol (bfd *abfd,
+      represent variables; this can cause confusion in principle, but
+      any such confusion would seem to indicate an erroneous program or
+      shared library.  We also permit a common symbol in a regular
+-     object to override a weak symbol in a shared object.  A common
+-     symbol in executable also overrides a symbol in a shared object.  */
++     object to override a weak symbol in a shared object.  */
+ 
+   if (newdyn
+       && newdef
+       && (olddef
+ 	  || (h->root.type == bfd_link_hash_common
+-	      && (newweak
+-		  || newfunc
+-		  || (!olddyn && bfd_link_executable (info))))))
++	      && (newweak || newfunc))))
+     {
+       *override = TRUE;
+       newdef = FALSE;
+diff --git a/bfd/version.h b/bfd/version.h
+index eda06e4..075bcd7 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20170302
++#define BFD_VERSION_DATE 20170418
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+diff --git a/gas/ChangeLog b/gas/ChangeLog
+index fa9ecbe..d6ab8a1 100644
+--- a/gas/ChangeLog
++++ b/gas/ChangeLog
+@@ -1,3 +1,68 @@
++2017-04-03  Palmer Dabbelt  <palmer@dabbelt.com>
++
++	* config/tc-riscv.c (riscv_clear_subsets): Cast argument to free to
++	avoid const warnings.
++
++2017-03-30  Palmer Dabbelt  <palmer@dabbelt.com>
++
++	* config/tc-riscv.c (riscv_clear_subsets): New function.
++	(riscv_add_subset): Call riscv_clear_subsets and riscv_set_rvc to
++	clear RVC when it's been previously set.
++
++2017-03-21  Palmer Dabbbelt  <palmer@dabbelt.com>
++
++	* config/tc-riscv.c (md_show_usage): Remove defuct -m32, -m64,
++	-msoft-float, -mhard-float, -mno-rvc, and -mrvc options; and don't
++	print an invalid default ISA string.
++	* doc/c-riscv.texi (OPTIONS): Add -fpic and -fno-pic options.
++
++2017-03-14  Kito Cheng  <kito.cheng@gmail.com>
++
++	* config/tc-riscv.c (validate_riscv_insn): Add 'o' RVC immediate
++	encoding format, which can accept 0-valued immediates.
++	(riscv_ip): Likewise.
++
++2017-03-02  Kuan-Lin Chen  <rufus@andestech.com>
++
++	* config/tc-riscv.h (HWARD2_USE_FIXED_ADVANCE_PC): New define.
++
++2017-03-02  Kuan-Lin Chen  <rufus@andestech.com>
++
++	* config/tc-riscv.c (md_apply_fix): Set fx_frag and
++	fx_next->fx_frag for CFA_advance_loc relocations.
++
++2017-03-02  Kuan-Lin Chen  <rufus@andestech.com>
++
++	* config/tc-riscv.c (md_apply_fix): Compute the correct offsets
++	for CFA relocations.
++
++2017-03-27  Alan Modra  <amodra@gmail.com>
++
++	PR 21303
++	* testsuite/gas/ppc/pr21303.d,
++	* testsuite/gas/ppc/pr21303.s: New test
++	* testsuite/gas/ppc/ppc.exp: Run it.
++
++2017-03-21  Andreas Krebbel  <krebbel@linux.vnet.ibm.com>
++
++	Backport from mainline
++	2017-03-21  Andreas Krebbel  <krebbel@linux.vnet.ibm.com>
++
++	* config/tc-s390.c (s390_parse_cpu): Remove S390_INSTR_FLAG_VX2
++	from cpu_table.  Remove vx2, and novx2 from cpu_flags.
++
++2017-03-08  Peter Bergner <bergner@vnet.ibm.com>
++
++	* testsuite/gas/ppc/altivec2.d (as): Use the -mpower8 option.
++	(objdump): Use the -Mpower8 option.
++
++2017-03-08  Peter Bergner  <bergner@vnet.ibm.com>
++
++	Apply from master.
++	2017-03-08  Peter Bergner  <bergner@vnet.ibm.com>
++	* testsuite/gas/ppc/power9.d <lnia> New test.
++	* testsuite/gas/ppc/power9.s: Likewise.
++
+ 2017-03-02  Tristan Gingold  <gingold@adacore.com>
+ 
+ 	* configure: Regenerate.
+diff --git a/gas/config/tc-riscv.c b/gas/config/tc-riscv.c
+index ec5b0bb..88457c6 100644
+--- a/gas/config/tc-riscv.c
++++ b/gas/config/tc-riscv.c
+@@ -121,6 +121,18 @@ riscv_subset_supports (const char *feature)
+ }
+ 
+ static void
++riscv_clear_subsets (void)
++{
++  while (riscv_subsets != NULL)
++    {
++      struct riscv_subset *next = riscv_subsets->next;
++      free ((void *) riscv_subsets->name);
++      free (riscv_subsets);
++      riscv_subsets = next;
++    }
++}
++
++static void
+ riscv_add_subset (const char *subset)
+ {
+   struct riscv_subset *s = xmalloc (sizeof *s);
+@@ -139,6 +151,8 @@ riscv_set_arch (const char *s)
+   const char *extension = NULL;
+   const char *p = s;
+ 
++  riscv_clear_subsets();
++
+   if (strncmp (p, "rv32", 4) == 0)
+     {
+       xlen = 32;
+@@ -500,6 +514,7 @@ validate_riscv_insn (const struct riscv_opcode *opc)
+ 	  case 'c': break; /* RS1, constrained to equal sp */
+ 	  case 'i': used_bits |= ENCODE_RVC_SIMM3(-1U); break;
+ 	  case 'j': used_bits |= ENCODE_RVC_IMM (-1U); break;
++	  case 'o': used_bits |= ENCODE_RVC_IMM (-1U); break;
+ 	  case 'k': used_bits |= ENCODE_RVC_LW_IMM (-1U); break;
+ 	  case 'l': used_bits |= ENCODE_RVC_LD_IMM (-1U); break;
+ 	  case 'm': used_bits |= ENCODE_RVC_LWSP_IMM (-1U); break;
+@@ -1321,6 +1336,13 @@ rvc_imm_done:
+ 		  ip->insn_opcode |=
+ 		    ENCODE_RVC_LDSP_IMM (imm_expr->X_add_number);
+ 		  goto rvc_imm_done;
++		case 'o':
++		  if (my_getSmallExpression (imm_expr, imm_reloc, s, p)
++		      || imm_expr->X_op != O_constant
++		      || !VALID_RVC_IMM (imm_expr->X_add_number))
++		    break;
++		  ip->insn_opcode |= ENCODE_RVC_IMM (imm_expr->X_add_number);
++		  goto rvc_imm_done;
+ 		case 'K':
+ 		  if (my_getSmallExpression (imm_expr, imm_reloc, s, p)
+ 		      || imm_expr->X_op != O_constant
+@@ -1794,6 +1816,7 @@ riscv_after_parse_args (void)
+     riscv_set_arch (xlen == 64 ? "rv64g" : "rv32g");
+ 
+   /* Add the RVC extension, regardless of -march, to support .option rvc.  */
++  riscv_set_rvc (FALSE);
+   if (riscv_subset_supports ("c"))
+     riscv_set_rvc (TRUE);
+   else
+@@ -1837,6 +1860,7 @@ md_apply_fix (fixS *fixP, valueT *valP, segT seg ATTRIBUTE_UNUSED)
+   unsigned int subtype;
+   bfd_byte *buf = (bfd_byte *) (fixP->fx_frag->fr_literal + fixP->fx_where);
+   bfd_boolean relaxable = FALSE;
++  offsetT loc;
+ 
+   /* Remember value for tc_gen_reloc.  */
+   fixP->fx_addnumber = *valP;
+@@ -1922,30 +1946,31 @@ md_apply_fix (fixS *fixP, valueT *valP, segT seg ATTRIBUTE_UNUSED)
+ 
+ 	    case BFD_RELOC_RISCV_CFA:
+ 	      /* Load the byte to get the subtype.  */
+-	      subtype = bfd_get_8 (NULL, &fixP->fx_frag->fr_literal[fixP->fx_where]);
++	      subtype = bfd_get_8 (NULL, &((fragS *) (fixP->fx_frag->fr_opcode))->fr_literal[fixP->fx_where]);
++	      loc = fixP->fx_frag->fr_fix - (subtype & 7);
+ 	      switch (subtype)
+ 		{
+ 		case DW_CFA_advance_loc1:
+-		  fixP->fx_where++;
+-		  fixP->fx_next->fx_where++;
++		  fixP->fx_where = loc + 1;
++		  fixP->fx_next->fx_where = loc + 1;
+ 		  fixP->fx_r_type = BFD_RELOC_RISCV_SET8;
+ 		  fixP->fx_next->fx_r_type = BFD_RELOC_RISCV_SUB8;
+ 		  break;
+ 
+ 		case DW_CFA_advance_loc2:
+ 		  fixP->fx_size = 2;
+-		  fixP->fx_where++;
+ 		  fixP->fx_next->fx_size = 2;
+-		  fixP->fx_next->fx_where++;
++		  fixP->fx_where = loc + 1;
++		  fixP->fx_next->fx_where = loc + 1;
+ 		  fixP->fx_r_type = BFD_RELOC_RISCV_SET16;
+ 		  fixP->fx_next->fx_r_type = BFD_RELOC_RISCV_SUB16;
+ 		  break;
+ 
+ 		case DW_CFA_advance_loc4:
+ 		  fixP->fx_size = 4;
+-		  fixP->fx_where++;
+ 		  fixP->fx_next->fx_size = 4;
+-		  fixP->fx_next->fx_where++;
++		  fixP->fx_where = loc;
++		  fixP->fx_next->fx_where = loc;
+ 		  fixP->fx_r_type = BFD_RELOC_RISCV_SET32;
+ 		  fixP->fx_next->fx_r_type = BFD_RELOC_RISCV_SUB32;
+ 		  break;
+@@ -1954,6 +1979,8 @@ md_apply_fix (fixS *fixP, valueT *valP, segT seg ATTRIBUTE_UNUSED)
+ 		  if (subtype < 0x80 && (subtype & 0x40))
+ 		    {
+ 		      /* DW_CFA_advance_loc */
++		      fixP->fx_frag = (fragS *) fixP->fx_frag->fr_opcode;
++		      fixP->fx_next->fx_frag = fixP->fx_frag;
+ 		      fixP->fx_r_type = BFD_RELOC_RISCV_SET6;
+ 		      fixP->fx_next->fx_r_type = BFD_RELOC_RISCV_SUB6;
+ 		    }
+@@ -2069,7 +2096,6 @@ riscv_pre_output_hook (void)
+ 	  {
+ 	    if (frag->fr_type == rs_cfa)
+ 	      {
+-		fragS *loc4_frag;
+ 		expressionS exp;
+ 
+ 		symbolS *add_symbol = frag->fr_symbol->sy_value.X_add_symbol;
+@@ -2080,8 +2106,7 @@ riscv_pre_output_hook (void)
+ 		exp.X_add_number = 0;
+ 		exp.X_op_symbol = op_symbol;
+ 
+-		loc4_frag = (fragS *) frag->fr_opcode;
+-		fix_new_exp (loc4_frag, (int) frag->fr_offset, 1, &exp, 0,
++		fix_new_exp (frag, (int) frag->fr_offset, 1, &exp, 0,
+ 			     BFD_RELOC_RISCV_CFA);
+ 	      }
+ 	  }
+@@ -2455,15 +2480,10 @@ md_show_usage (FILE *stream)
+ {
+   fprintf (stream, _("\
+ RISC-V options:\n\
+-  -m32           assemble RV32 code\n\
+-  -m64           assemble RV64 code (default)\n\
+   -fpic          generate position-independent code\n\
+   -fno-pic       don't generate position-independent code (default)\n\
+-  -msoft-float   don't use F registers for floating-point values\n\
+-  -mhard-float   use F registers for floating-point values (default)\n\
+-  -mno-rvc       disable the C extension for compressed instructions (default)\n\
+-  -mrvc          enable the C extension for compressed instructions\n\
+-  -march=ISA     set the RISC-V architecture, RV64IMAFD by default\n\
++  -march=ISA     set the RISC-V architecture\n\
++  -mabi=ABI      set the RISC-V ABI\n\
+ "));
+ }
+ 
+diff --git a/gas/config/tc-riscv.h b/gas/config/tc-riscv.h
+index ae8d60e..e92b387 100644
+--- a/gas/config/tc-riscv.h
++++ b/gas/config/tc-riscv.h
+@@ -112,4 +112,7 @@ extern int tc_riscv_regname_to_dw2regnum (char *);
+ #define elf_tc_final_processing riscv_elf_final_processing
+ extern void riscv_elf_final_processing (void);
+ 
++/* Adjust debug_line after relaxation.  */
++#define DWARF2_USE_FIXED_ADVANCE_PC 1
++
+ #endif /* TC_RISCV */
+diff --git a/gas/config/tc-s390.c b/gas/config/tc-s390.c
+index 7c8087e..dccbe2c 100644
+--- a/gas/config/tc-s390.c
++++ b/gas/config/tc-s390.c
+@@ -291,7 +291,7 @@ s390_parse_cpu (const char *         arg,
+     { STRING_COMMA_LEN ("z13"), STRING_COMMA_LEN ("arch11"),
+       S390_INSTR_FLAG_HTM | S390_INSTR_FLAG_VX },
+     { STRING_COMMA_LEN ("arch12"), STRING_COMMA_LEN (""),
+-      S390_INSTR_FLAG_HTM | S390_INSTR_FLAG_VX | S390_INSTR_FLAG_VX2 }
++      S390_INSTR_FLAG_HTM | S390_INSTR_FLAG_VX }
+   };
+   static struct
+   {
+@@ -303,9 +303,7 @@ s390_parse_cpu (const char *         arg,
+     { "htm",   S390_INSTR_FLAG_HTM, TRUE },
+     { "nohtm", S390_INSTR_FLAG_HTM, FALSE },
+     { "vx",    S390_INSTR_FLAG_VX, TRUE },
+-    { "novx",  S390_INSTR_FLAG_VX, FALSE },
+-    { "vx2",    S390_INSTR_FLAG_VX2, TRUE },
+-    { "novx2",  S390_INSTR_FLAG_VX2, FALSE }
++    { "novx",  S390_INSTR_FLAG_VX, FALSE }
+   };
+   unsigned int icpu;
+   char *ilp_bak;
+diff --git a/gas/doc/c-riscv.texi b/gas/doc/c-riscv.texi
+index 0fa1b58..2efba4b 100644
+--- a/gas/doc/c-riscv.texi
++++ b/gas/doc/c-riscv.texi
+@@ -26,6 +26,14 @@ The following table lists all availiable RISC-V specific options
+ @c man begin OPTIONS
+ @table @gcctabopt
+ 
++@cindex @samp{-fpic} option, RISC-V
++@item -fpic
++Generate position-independent code
++
++@cindex @samp{-fno-pic} option, RISC-V
++@item -fno-pic
++Don't generate position-independent code (default)
++
+ @cindex @samp{-march=ISA} option, RISC-V
+ @item -march=ISA
+ Select the base isa, as specified by ISA.  For example -march=rv32ima.
+diff --git a/gas/testsuite/gas/ppc/altivec2.d b/gas/testsuite/gas/ppc/altivec2.d
+index fc10fb5..26f9afa 100644
+--- a/gas/testsuite/gas/ppc/altivec2.d
++++ b/gas/testsuite/gas/ppc/altivec2.d
+@@ -1,5 +1,5 @@
+-#as: -maltivec
+-#objdump: -dr -Maltivec
++#as: -mpower8
++#objdump: -dr -Mpower8
+ #name: Altivec ISA 2.07 instructions
+ 
+ .*
+diff --git a/gas/testsuite/gas/ppc/power9.d b/gas/testsuite/gas/ppc/power9.d
+index 9ba53d0..a67898f 100644
+--- a/gas/testsuite/gas/ppc/power9.d
++++ b/gas/testsuite/gas/ppc/power9.d
+@@ -312,8 +312,9 @@ Disassembly of section \.text:
+ .*:	(f1 31 9d 6f|6f 9d 31 f1) 	xscvdphp vs41,vs51
+ .*:	(f1 58 a7 6f|6f a7 58 f1) 	xvcvhpsp vs42,vs52
+ .*:	(f1 79 af 6f|6f af 79 f1) 	xvcvsphp vs43,vs53
+-.*:	(4c 60 00 04|04 00 60 4c) 	addpcis r3,0
+-.*:	(4c 60 00 04|04 00 60 4c) 	addpcis r3,0
++.*:	(4c 60 00 04|04 00 60 4c) 	lnia    r3
++.*:	(4c 60 00 04|04 00 60 4c) 	lnia    r3
++.*:	(4c 60 00 04|04 00 60 4c) 	lnia    r3
+ .*:	(4c 80 00 05|05 00 80 4c) 	addpcis r4,1
+ .*:	(4c 80 00 05|05 00 80 4c) 	addpcis r4,1
+ .*:	(4c bf ff c4|c4 ff bf 4c) 	addpcis r5,-2
+diff --git a/gas/testsuite/gas/ppc/power9.s b/gas/testsuite/gas/ppc/power9.s
+index 27f1122..4e3530f 100644
+--- a/gas/testsuite/gas/ppc/power9.s
++++ b/gas/testsuite/gas/ppc/power9.s
+@@ -303,6 +303,7 @@ power9:
+ 	xscvdphp    41,51
+ 	xvcvhpsp    42,52
+ 	xvcvsphp    43,53
++	lnia        3
+ 	addpcis     3,0
+ 	subpcis     3,0
+ 	addpcis     4,1
+diff --git a/gas/testsuite/gas/ppc/ppc.exp b/gas/testsuite/gas/ppc/ppc.exp
+index 86db455..55367ad 100644
+--- a/gas/testsuite/gas/ppc/ppc.exp
++++ b/gas/testsuite/gas/ppc/ppc.exp
+@@ -50,6 +50,7 @@ if { [istarget powerpc*-*-*] } then {
+ 	run_dump_test "common"
+ 	run_dump_test "476"
+ 	run_dump_test "a2"
++	run_dump_test "pr21303"
+ 	if { ![istarget powerpc*le-*-*] } then {
+ 	    run_dump_test "vle"
+ 	    run_dump_test "vle-reloc"
+diff --git a/gas/testsuite/gas/ppc/pr21303.d b/gas/testsuite/gas/ppc/pr21303.d
+new file mode 100644
+index 0000000..64761a4
+--- /dev/null
++++ b/gas/testsuite/gas/ppc/pr21303.d
+@@ -0,0 +1,12 @@
++#objdump: -d -Me200z4
++#as: -a32 -mbig -me200z4
++
++.*
++
++Disassembly of section \.text:
++
++0+ <\.text>:
++   0:	70 00 00 00 	e_li    r0,0
++   4:	7c 01 14 04 	lbdcbx  r0,r1,r2
++   8:	7c 01 14 44 	lhdcbx  r0,r1,r2
++   c:	7c 01 14 84 	lwdcbx  r0,r1,r2
+diff --git a/gas/testsuite/gas/ppc/pr21303.s b/gas/testsuite/gas/ppc/pr21303.s
+new file mode 100644
+index 0000000..890ba94
+--- /dev/null
++++ b/gas/testsuite/gas/ppc/pr21303.s
+@@ -0,0 +1,5 @@
++ .text
++ e_li 0, 0
++ lbdcbx 0, 1, 2
++ lhdcbx 0, 1, 2
++ lwdcbx 0, 1, 2
+diff --git a/include/ChangeLog b/include/ChangeLog
+index af39f33..5995c3b 100644
+--- a/include/ChangeLog
++++ b/include/ChangeLog
+@@ -1,3 +1,54 @@
++2017-03-27  Andrew Waterman  <andrew@sifive.com>
++
++	* opcode/riscv-opc.h (CSR_PMPCFG0): New define.
++	(CSR_PMPCFG1): Likewise.
++	(CSR_PMPCFG2): Likewise.
++	(CSR_PMPCFG3): Likewise.
++	(CSR_PMPADDR0): Likewise.
++	(CSR_PMPADDR1): Likewise.
++	(CSR_PMPADDR2): Likewise.
++	(CSR_PMPADDR3): Likewise.
++	(CSR_PMPADDR4): Likewise.
++	(CSR_PMPADDR5): Likewise.
++	(CSR_PMPADDR6): Likewise.
++	(CSR_PMPADDR7): Likewise.
++	(CSR_PMPADDR8): Likewise.
++	(CSR_PMPADDR9): Likewise.
++	(CSR_PMPADDR10): Likewise.
++	(CSR_PMPADDR11): Likewise.
++	(CSR_PMPADDR12): Likewise.
++	(CSR_PMPADDR13): Likewise.
++	(CSR_PMPADDR14): Likewise.
++	(CSR_PMPADDR15): Likewise.
++	(pmpcfg0): Declare register.
++	(pmpcfg1): Likewise.
++	(pmpcfg2): Likewise.
++	(pmpcfg3): Likewise.
++	(pmpaddr0): Likewise.
++	(pmpaddr1): Likewise.
++	(pmpaddr2): Likewise.
++	(pmpaddr3): Likewise.
++	(pmpaddr4): Likewise.
++	(pmpaddr5): Likewise.
++	(pmpaddr6): Likewise.
++	(pmpaddr7): Likewise.
++	(pmpaddr8): Likewise.
++	(pmpaddr9): Likewise.
++	(pmpaddr10): Likewise.
++	(pmpaddr11): Likewise.
++	(pmpaddr12): Likewise.
++	(pmpaddr13): Likewise.
++	(pmpaddr14): Likewise.
++	(pmpaddr15): Likewise.
++
++2017-03-21  Andreas Krebbel  <krebbel@linux.vnet.ibm.com>
++
++	Backport from mainline
++	2017-03-21  Andreas Krebbel  <krebbel@linux.vnet.ibm.com>
++
++	* opcode/s390.h (S390_INSTR_FLAG_VX2): Remove.
++	(S390_INSTR_FLAG_FACILITY_MASK): Adjust value.
++
+ 2017-02-28  Alan Modra  <amodra@gmail.com>
+ 
+ 	* elf/ppc64.h (R_PPC64_16DX_HA): New.  Expand fake reloc comment.
+diff --git a/include/opcode/riscv-opc.h b/include/opcode/riscv-opc.h
+index 9269c6b..f80037b 100644
+--- a/include/opcode/riscv-opc.h
++++ b/include/opcode/riscv-opc.h
+@@ -556,6 +556,26 @@
+ #define CSR_MCAUSE 0x342
+ #define CSR_MBADADDR 0x343
+ #define CSR_MIP 0x344
++#define CSR_PMPCFG0 0x3a0
++#define CSR_PMPCFG1 0x3a1
++#define CSR_PMPCFG2 0x3a2
++#define CSR_PMPCFG3 0x3a3
++#define CSR_PMPADDR0 0x3b0
++#define CSR_PMPADDR1 0x3b1
++#define CSR_PMPADDR2 0x3b2
++#define CSR_PMPADDR3 0x3b3
++#define CSR_PMPADDR4 0x3b4
++#define CSR_PMPADDR5 0x3b5
++#define CSR_PMPADDR6 0x3b6
++#define CSR_PMPADDR7 0x3b7
++#define CSR_PMPADDR8 0x3b8
++#define CSR_PMPADDR9 0x3b9
++#define CSR_PMPADDR10 0x3ba
++#define CSR_PMPADDR11 0x3bb
++#define CSR_PMPADDR12 0x3bc
++#define CSR_PMPADDR13 0x3bd
++#define CSR_PMPADDR14 0x3be
++#define CSR_PMPADDR15 0x3bf
+ #define CSR_TSELECT 0x7a0
+ #define CSR_TDATA1 0x7a1
+ #define CSR_TDATA2 0x7a2
+@@ -1014,6 +1034,26 @@ DECLARE_CSR(mepc, CSR_MEPC)
+ DECLARE_CSR(mcause, CSR_MCAUSE)
+ DECLARE_CSR(mbadaddr, CSR_MBADADDR)
+ DECLARE_CSR(mip, CSR_MIP)
++DECLARE_CSR(pmpcfg0, CSR_PMPCFG0)
++DECLARE_CSR(pmpcfg1, CSR_PMPCFG1)
++DECLARE_CSR(pmpcfg2, CSR_PMPCFG2)
++DECLARE_CSR(pmpcfg3, CSR_PMPCFG3)
++DECLARE_CSR(pmpaddr0, CSR_PMPADDR0)
++DECLARE_CSR(pmpaddr1, CSR_PMPADDR1)
++DECLARE_CSR(pmpaddr2, CSR_PMPADDR2)
++DECLARE_CSR(pmpaddr3, CSR_PMPADDR3)
++DECLARE_CSR(pmpaddr4, CSR_PMPADDR4)
++DECLARE_CSR(pmpaddr5, CSR_PMPADDR5)
++DECLARE_CSR(pmpaddr6, CSR_PMPADDR6)
++DECLARE_CSR(pmpaddr7, CSR_PMPADDR7)
++DECLARE_CSR(pmpaddr8, CSR_PMPADDR8)
++DECLARE_CSR(pmpaddr9, CSR_PMPADDR9)
++DECLARE_CSR(pmpaddr10, CSR_PMPADDR10)
++DECLARE_CSR(pmpaddr11, CSR_PMPADDR11)
++DECLARE_CSR(pmpaddr12, CSR_PMPADDR12)
++DECLARE_CSR(pmpaddr13, CSR_PMPADDR13)
++DECLARE_CSR(pmpaddr14, CSR_PMPADDR14)
++DECLARE_CSR(pmpaddr15, CSR_PMPADDR15)
+ DECLARE_CSR(tselect, CSR_TSELECT)
+ DECLARE_CSR(tdata1, CSR_TDATA1)
+ DECLARE_CSR(tdata2, CSR_TDATA2)
+diff --git a/include/opcode/s390.h b/include/opcode/s390.h
+index 7ce5616..2e07664 100644
+--- a/include/opcode/s390.h
++++ b/include/opcode/s390.h
+@@ -51,8 +51,7 @@ enum s390_opcode_cpu_val
+ 
+ #define S390_INSTR_FLAG_HTM 0x2
+ #define S390_INSTR_FLAG_VX 0x4
+-#define S390_INSTR_FLAG_VX2 0x8
+-#define S390_INSTR_FLAG_FACILITY_MASK 0xe
++#define S390_INSTR_FLAG_FACILITY_MASK 0x6
+ 
+ /* The opcode table is an array of struct s390_opcode.  */
+ 
+diff --git a/ld/ChangeLog b/ld/ChangeLog
+index fd3e232..5b93acf 100644
+--- a/ld/ChangeLog
++++ b/ld/ChangeLog
+@@ -1,3 +1,19 @@
++2017-04-10  H.J. Lu  <hongjiu.lu@intel.com>
++
++	PR ld/19579
++	PR ld/21306
++	* testsuite/ld-elf/pr19579a.c (main): Updated.
++
++2017-04-05  Maciej W. Rozycki  <macro@imgtec.com>
++
++	PR ld/21233
++	* ldlang.c (insert_undefined): Set `mark' for ELF symbols.
++
++2017-03-07  Alan Modra  <amodra@gmail.com>
++
++	* ldlang.c (open_input_bfds): Check that lang_assignment_statement
++	is not an assert before referencing defsym.
++
+ 2017-03-02  Tristan Gingold  <gingold@adacore.com>
+ 
+ 	* configure: Regenerate.
+diff --git a/ld/ldlang.c b/ld/ldlang.c
+index dafc348..a8ff0a4 100644
+--- a/ld/ldlang.c
++++ b/ld/ldlang.c
+@@ -3377,7 +3377,8 @@ open_input_bfds (lang_statement_union_type *s, enum open_bfd_mode mode)
+ #endif
+ 	  break;
+ 	case lang_assignment_statement_enum:
+-	  if (s->assignment_statement.exp->assign.defsym)
++	  if (s->assignment_statement.exp->type.node_class != etree_assert
++	      && s->assignment_statement.exp->assign.defsym)
+ 	    /* This is from a --defsym on the command line.  */
+ 	    exp_fold_tree_no_dot (s->assignment_statement.exp);
+ 	  break;
+@@ -3431,6 +3432,8 @@ insert_undefined (const char *name)
+     {
+       h->type = bfd_link_hash_undefined;
+       h->u.undef.abfd = NULL;
++      if (is_elf_hash_table (link_info.hash))
++	((struct elf_link_hash_entry *) h)->mark = 1;
+       bfd_link_add_undef (link_info.hash, h);
+     }
+ }
+diff --git a/ld/testsuite/ld-elf/pr19579a.c b/ld/testsuite/ld-elf/pr19579a.c
+index e4a6eb1..69d0f35 100644
+--- a/ld/testsuite/ld-elf/pr19579a.c
++++ b/ld/testsuite/ld-elf/pr19579a.c
+@@ -9,7 +9,7 @@ extern int *bar_p (void);
+ int
+ main ()
+ {
+-  if (foo[0] == 0 && foo == foo_p () && bar[0] == 0 && bar == bar_p ())
++  if (foo[0] == 0 && foo == foo_p () && bar[0] == -1 && bar == bar_p ())
+     printf ("PASS\n");
+   return 0;
+ }
+diff --git a/opcodes/ChangeLog b/opcodes/ChangeLog
+index 1ea126a..0517fd9 100644
+--- a/opcodes/ChangeLog
++++ b/opcodes/ChangeLog
+@@ -1,3 +1,57 @@
++2017-03-14  Kito Cheng  <kito.cheng@gmail.com>
++
++	* riscv-opc.c (riscv_opcodes> <c.li>: Use the 'o' immediate encoding.
++	<c.andi>: Likewise.
++	<c.addiw> Likewise.
++
++2017-03-14  Kito Cheng  <kito.cheng@gmail.com>
++
++	* riscv-opc.c (riscv_opcodes) <c.addi>: Use match_opcode.
++
++2017-03-13  Andrew Waterman  <andrew@sifive.com>
++
++	* riscv-opc.c (riscv_opcodes) <srli/C>: Use match_opcode.
++	<srl> Likewise.
++	<srai> Likewise.
++	<sra> Likewise.
++
++2017-03-27  Alan Modra  <amodra@gmail.com>
++
++	PR 21303
++	* ppc-dis.c (struct ppc_mopt): Comment.
++	(ppc_opts <e200z4>): Move PPC_OPCODE_VLE from .sticky to .cpu.
++
++2017-03-21  Andreas Krebbel  <krebbel@linux.vnet.ibm.com>
++
++	Backport from mainline
++	2017-03-21  Andreas Krebbel  <krebbel@linux.vnet.ibm.com>
++
++	* s390-mkopc.c (main): Remove vx2 check.
++	* s390-opc.txt: Remove vx2 instruction flags.
++
++2017-03-08  Peter Bergner  <bergner@vnet.ibm.com>
++
++	* ppc-dis.c (ppc_opts) <altivec>: Do not use PPC_OPCODE_ALTIVEC2;
++	<vsx>: Do not use PPC_OPCODE_VSX3;
++
++2017-03-08  Peter Bergner  <bergner@vnet.ibm.com>
++
++	Apply from master.
++	2017-03-08  Peter Bergner  <bergner@vnet.ibm.com>
++	* ppc-opc.c (powerpc_opcodes) <lnia>: New extended mnemonic.
++
++2017-03-07  Alan Modra  <amodra@gmail.com>
++
++	Apply from master
++	2017-03-06  Alan Modra  <amodra@gmail.com>
++	PR 21124
++	* ppc-opc.c (extract_esync, extract_ls, extract_ral, extract_ram)
++	(extract_raq, extract_ras, extract_rbx): New functions.
++	(powerpc_operands): Use opposite corresponding insert function.
++	(Q_MASK): Define.
++	(powerpc_opcodes): Apply Q_MASK to all quad insns with even
++	register restriction.
++
+ 2017-03-02  Tristan Gingold  <gingold@adacore.com>
+ 
+ 	* configure: Regenerate.
+diff --git a/opcodes/ppc-dis.c b/opcodes/ppc-dis.c
+index e0eff7a..baa7388 100644
+--- a/opcodes/ppc-dis.c
++++ b/opcodes/ppc-dis.c
+@@ -45,8 +45,19 @@ struct dis_private
+   (((struct dis_private *) ((INFO)->private_data))->dialect)
+ 
+ struct ppc_mopt {
++  /* Option string, without -m or -M prefix.  */
+   const char *opt;
++  /* CPU option flags.  */
+   ppc_cpu_t cpu;
++  /* Flags that should stay on, even when combined with another cpu
++     option.  This should only be used for generic options like
++     "-many" or "-maltivec" where it is reasonable to add some
++     capability to another cpu selection.  The added flags are sticky
++     so that, for example, "-many -me500" and "-me500 -many" result in
++     the same assembler or disassembler behaviour.  Do not use
++     "sticky" for specific cpus, as this will prevent that cpu's flags
++     from overriding the defaults set in powerpc_init_dialect or a
++     prior -m option.  */
+   ppc_cpu_t sticky;
+ };
+ 
+@@ -93,7 +104,7 @@ struct ppc_mopt ppc_opts[] = {
+ 		| PPC_OPCODE_A2),
+     0 },
+   { "altivec", PPC_OPCODE_PPC,
+-    PPC_OPCODE_ALTIVEC | PPC_OPCODE_ALTIVEC2 },
++    PPC_OPCODE_ALTIVEC },
+   { "any",     0,
+     PPC_OPCODE_ANY },
+   { "booke",   PPC_OPCODE_PPC | PPC_OPCODE_BOOKE,
+@@ -108,8 +119,8 @@ struct ppc_mopt ppc_opts[] = {
+   { "e200z4",  (PPC_OPCODE_PPC | PPC_OPCODE_BOOKE| PPC_OPCODE_SPE
+ 		| PPC_OPCODE_ISEL | PPC_OPCODE_EFS | PPC_OPCODE_BRLOCK
+ 		| PPC_OPCODE_PMR | PPC_OPCODE_CACHELCK | PPC_OPCODE_RFMCI
+-		| PPC_OPCODE_E500 | PPC_OPCODE_E200Z4),
+-    PPC_OPCODE_VLE },
++		| PPC_OPCODE_E500 | PPC_OPCODE_VLE | PPC_OPCODE_E200Z4),
++    0 },
+   { "e300",    PPC_OPCODE_PPC | PPC_OPCODE_E300,
+     0 },
+   { "e500",    (PPC_OPCODE_PPC | PPC_OPCODE_BOOKE | PPC_OPCODE_SPE
+@@ -221,7 +232,7 @@ struct ppc_mopt ppc_opts[] = {
+ 		| PPC_OPCODE_E500),
+     PPC_OPCODE_VLE },
+   { "vsx",     PPC_OPCODE_PPC,
+-    PPC_OPCODE_VSX | PPC_OPCODE_VSX3 },
++    PPC_OPCODE_VSX },
+   { "htm",     PPC_OPCODE_PPC,
+     PPC_OPCODE_HTM },
+ };
+diff --git a/opcodes/ppc-opc.c b/opcodes/ppc-opc.c
+index 9ac779c..f7d1dcd 100644
+--- a/opcodes/ppc-opc.c
++++ b/opcodes/ppc-opc.c
+@@ -54,6 +54,7 @@ static long extract_bo (unsigned long, ppc_cpu_t, int *);
+ static unsigned long insert_boe (unsigned long, long, ppc_cpu_t, const char **);
+ static long extract_boe (unsigned long, ppc_cpu_t, int *);
+ static unsigned long insert_esync (unsigned long, long, ppc_cpu_t, const char **);
++static long extract_esync (unsigned long, ppc_cpu_t, int *);
+ static unsigned long insert_dcmxs (unsigned long, long, ppc_cpu_t, const char **);
+ static long extract_dcmxs (unsigned long, ppc_cpu_t, int *);
+ static unsigned long insert_dxd (unsigned long, long, ppc_cpu_t, const char **);
+@@ -65,6 +66,7 @@ static long extract_fxm (unsigned long, ppc_cpu_t, int *);
+ static unsigned long insert_li20 (unsigned long, long, ppc_cpu_t, const char **);
+ static long extract_li20 (unsigned long, ppc_cpu_t, int *);
+ static unsigned long insert_ls (unsigned long, long, ppc_cpu_t, const char **);
++static long extract_ls (unsigned long, ppc_cpu_t, int *);
+ static unsigned long insert_mbe (unsigned long, long, ppc_cpu_t, const char **);
+ static long extract_mbe (unsigned long, ppc_cpu_t, int *);
+ static unsigned long insert_mb6 (unsigned long, long, ppc_cpu_t, const char **);
+@@ -76,12 +78,17 @@ static long extract_nsi (unsigned long, ppc_cpu_t, int *);
+ static unsigned long insert_oimm (unsigned long, long, ppc_cpu_t, const char **);
+ static long extract_oimm (unsigned long, ppc_cpu_t, int *);
+ static unsigned long insert_ral (unsigned long, long, ppc_cpu_t, const char **);
++static long extract_ral (unsigned long, ppc_cpu_t, int *);
+ static unsigned long insert_ram (unsigned long, long, ppc_cpu_t, const char **);
++static long extract_ram (unsigned long, ppc_cpu_t, int *);
+ static unsigned long insert_raq (unsigned long, long, ppc_cpu_t, const char **);
++static long extract_raq (unsigned long, ppc_cpu_t, int *);
+ static unsigned long insert_ras (unsigned long, long, ppc_cpu_t, const char **);
++static long extract_ras (unsigned long, ppc_cpu_t, int *);
+ static unsigned long insert_rbs (unsigned long, long, ppc_cpu_t, const char **);
+ static long extract_rbs (unsigned long, ppc_cpu_t, int *);
+ static unsigned long insert_rbx (unsigned long, long, ppc_cpu_t, const char **);
++static long extract_rbx (unsigned long, ppc_cpu_t, int *);
+ static unsigned long insert_rx (unsigned long, long, ppc_cpu_t, const char **);
+ static long extract_rx (unsigned long, ppc_cpu_t, int *);
+ static unsigned long insert_ry (unsigned long, long, ppc_cpu_t, const char **);
+@@ -462,7 +469,7 @@ const struct powerpc_operand powerpc_operands[] =
+   /* The LS or WC field in an X (sync or wait) form instruction.  */
+ #define LS LIA + 1
+ #define WC LS
+-  { 0x3, 21, insert_ls, NULL, PPC_OPERAND_OPTIONAL },
++  { 0x3, 21, insert_ls, extract_ls, PPC_OPERAND_OPTIONAL },
+ 
+   /* The ME field in an M form instruction.  */
+ #define ME LS + 1
+@@ -519,24 +526,24 @@ const struct powerpc_operand powerpc_operands[] =
+      value restrictions.  */
+ #define RAQ RA0 + 1
+ #define RAX RAQ
+-  { 0x1f, 16, insert_raq, NULL, PPC_OPERAND_GPR_0 },
++  { 0x1f, 16, insert_raq, extract_raq, PPC_OPERAND_GPR_0 },
+ 
+   /* The RA field in a D or X form instruction which is an updating
+      load, which means that the RA field may not be zero and may not
+      equal the RT field.  */
+ #define RAL RAQ + 1
+-  { 0x1f, 16, insert_ral, NULL, PPC_OPERAND_GPR_0 },
++  { 0x1f, 16, insert_ral, extract_ral, PPC_OPERAND_GPR_0 },
+ 
+   /* The RA field in an lmw instruction, which has special value
+      restrictions.  */
+ #define RAM RAL + 1
+-  { 0x1f, 16, insert_ram, NULL, PPC_OPERAND_GPR_0 },
++  { 0x1f, 16, insert_ram, extract_ram, PPC_OPERAND_GPR_0 },
+ 
+   /* The RA field in a D or X form instruction which is an updating
+      store or an updating floating point load, which means that the RA
+      field may not be zero.  */
+ #define RAS RAM + 1
+-  { 0x1f, 16, insert_ras, NULL, PPC_OPERAND_GPR_0 },
++  { 0x1f, 16, insert_ras, extract_ras, PPC_OPERAND_GPR_0 },
+ 
+   /* The RA field of the tlbwe, dccci and iccci instructions,
+      which are optional.  */
+@@ -557,7 +564,7 @@ const struct powerpc_operand powerpc_operands[] =
+   /* The RB field in an lswx instruction, which has special value
+      restrictions.  */
+ #define RBX RBS + 1
+-  { 0x1f, 11, insert_rbx, NULL, PPC_OPERAND_GPR },
++  { 0x1f, 11, insert_rbx, extract_rbx, PPC_OPERAND_GPR },
+ 
+   /* The RB field of the dccci and iccci instructions, which are optional.  */
+ #define RBOPT RBX + 1
+@@ -580,6 +587,7 @@ const struct powerpc_operand powerpc_operands[] =
+      which have special value restrictions.  */
+ #define RSQ RS + 1
+ #define RTQ RSQ
++#define Q_MASK (1 << 21)
+   { 0x1e, 21, NULL, NULL, PPC_OPERAND_GPR },
+ 
+   /* The RS field of the tlbwe instruction, which is optional.  */
+@@ -694,7 +702,7 @@ const struct powerpc_operand powerpc_operands[] =
+ 
+   /* The ESYNC field in an X (sync) form instruction.  */
+ #define ESYNC STRM + 1
+-  { 0xf, 16, insert_esync, NULL, PPC_OPERAND_OPTIONAL },
++  { 0xf, 16, insert_esync, extract_esync, PPC_OPERAND_OPTIONAL },
+ 
+   /* The SV field in a POWER SC form instruction.  */
+ #define SV ESYNC + 1
+@@ -1533,6 +1541,22 @@ insert_ls (unsigned long insn,
+   return insn | ((value & 0x3) << 21);
+ }
+ 
++static long
++extract_ls (unsigned long insn,
++	    ppc_cpu_t dialect,
++	    int *invalid)
++{
++  unsigned long lvalue = (insn >> 21) & 3;
++
++  if (((insn >> 1) & 0x3ff) == 598)
++    {
++      unsigned long max_lvalue = (dialect & PPC_OPCODE_POWER4) ? 2 : 1;
++      if (lvalue > max_lvalue)
++	*invalid = 1;
++    }
++  return lvalue;
++}
++
+ /* The 4-bit E field in a sync instruction that accepts 2 operands.
+    If ESYNC is non-zero, then the L field must be either 0 or 1 and
+    the complement of ESYNC-bit2.  */
+@@ -1560,6 +1584,27 @@ insert_esync (unsigned long insn,
+   return insn | ((value & 0xf) << 16);
+ }
+ 
++static long
++extract_esync (unsigned long insn,
++	       ppc_cpu_t dialect,
++	       int *invalid)
++{
++  unsigned long ls = (insn >> 21) & 0x3;
++  unsigned long lvalue = (insn >> 16) & 0xf;
++
++  if (lvalue == 0)
++    {
++      if (((dialect & PPC_OPCODE_E6500) != 0 && ls > 1)
++	  || ((dialect & PPC_OPCODE_POWER9) != 0 && ls > 2))
++	*invalid = 1;
++    }
++  else if ((ls & ~0x1)
++	   || (((lvalue >> 1) & 0x1) ^ ls) == 0)
++    *invalid = 1;
++
++  return lvalue;
++}
++
+ /* The MB and ME fields in an M form instruction expressed as a single
+    operand which is itself a bitmask.  The extraction function always
+    marks it as invalid, since we never want to recognize an
+@@ -1743,6 +1788,19 @@ insert_ral (unsigned long insn,
+   return insn | ((value & 0x1f) << 16);
+ }
+ 
++static long
++extract_ral (unsigned long insn,
++	     ppc_cpu_t dialect ATTRIBUTE_UNUSED,
++	     int *invalid)
++{
++  long rtvalue = (insn >> 21) & 0x1f;
++  long ravalue = (insn >> 16) & 0x1f;
++
++  if (rtvalue == ravalue || ravalue == 0)
++    *invalid = 1;
++  return ravalue;
++}
++
+ /* The RA field in an lmw instruction, which has special value
+    restrictions.  */
+ 
+@@ -1757,6 +1815,19 @@ insert_ram (unsigned long insn,
+   return insn | ((value & 0x1f) << 16);
+ }
+ 
++static long
++extract_ram (unsigned long insn,
++	     ppc_cpu_t dialect ATTRIBUTE_UNUSED,
++	     int *invalid)
++{
++  unsigned long rtvalue = (insn >> 21) & 0x1f;
++  unsigned long ravalue = (insn >> 16) & 0x1f;
++
++  if (ravalue >= rtvalue)
++    *invalid = 1;
++  return ravalue;
++}
++
+ /* The RA field in the DQ form lq or an lswx instruction, which have special
+    value restrictions.  */
+ 
+@@ -1773,6 +1844,19 @@ insert_raq (unsigned long insn,
+   return insn | ((value & 0x1f) << 16);
+ }
+ 
++static long
++extract_raq (unsigned long insn,
++	     ppc_cpu_t dialect ATTRIBUTE_UNUSED,
++	     int *invalid)
++{
++  unsigned long rtvalue = (insn >> 21) & 0x1f;
++  unsigned long ravalue = (insn >> 16) & 0x1f;
++
++  if (ravalue == rtvalue)
++    *invalid = 1;
++  return ravalue;
++}
++
+ /* The RA field in a D or X form instruction which is an updating
+    store or an updating floating point load, which means that the RA
+    field may not be zero.  */
+@@ -1788,6 +1872,18 @@ insert_ras (unsigned long insn,
+   return insn | ((value & 0x1f) << 16);
+ }
+ 
++static long
++extract_ras (unsigned long insn,
++	     ppc_cpu_t dialect ATTRIBUTE_UNUSED,
++	     int *invalid)
++{
++  unsigned long ravalue = (insn >> 16) & 0x1f;
++
++  if (ravalue == 0)
++    *invalid = 1;
++  return ravalue;
++}
++
+ /* The RB field in an X form instruction when it must be the same as
+    the RS field in the instruction.  This is used for extended
+    mnemonics like mr.  This operand is marked FAKE.  The insertion
+@@ -1829,6 +1925,19 @@ insert_rbx (unsigned long insn,
+   return insn | ((value & 0x1f) << 11);
+ }
+ 
++static long
++extract_rbx (unsigned long insn,
++	     ppc_cpu_t dialect ATTRIBUTE_UNUSED,
++	     int *invalid)
++{
++  unsigned long rtvalue = (insn >> 21) & 0x1f;
++  unsigned long rbvalue = (insn >> 11) & 0x1f;
++
++  if (rbvalue == rtvalue)
++    *invalid = 1;
++  return rbvalue;
++}
++
+ /* The SCI8 field is made up of SCL and {U,N}I8 fields.  */
+ static unsigned long
+ insert_sci8 (unsigned long insn,
+@@ -2443,6 +2552,8 @@ extract_vleil (unsigned long insn,
+ /* An DX form instruction.  */
+ #define DX(op, xop) (OP (op) | ((((unsigned long)(xop)) & 0x1f) << 1))
+ #define DX_MASK DX (0x3f, 0x1f)
++/* An DX form instruction with the D bits specified.  */
++#define NODX_MASK (DX_MASK | 0x1fffc1)
+ 
+ /* An EVSEL form instruction.  */
+ #define EVSEL(op, xop) (OP (op) | (((unsigned long)(xop)) & 0xff) << 3)
+@@ -4155,6 +4266,7 @@ const struct powerpc_opcode powerpc_opcodes[] = {
+ 
+ {"mcrf",     XL(19,0), XLBB_MASK|(3<<21)|(3<<16), COM,	PPCVLE,		{BF, BFA}},
+ 
++{"lnia",     DX(19,2),		NODX_MASK,   POWER9,	PPCVLE,		{RT}},
+ {"addpcis",  DX(19,2),		DX_MASK,     POWER9,	PPCVLE,		{RT, DXD}},
+ {"subpcis",  DX(19,2),		DX_MASK,     POWER9,	PPCVLE,		{RT, NDXD}},
+ 
+@@ -4974,7 +5086,7 @@ const struct powerpc_opcode powerpc_opcodes[] = {
+ 
+ {"stdux",	X(31,181),	X_MASK,	     PPC64,	0,		{RS, RAS, RB}},
+ 
+-{"stqcx.",	XRC(31,182,1),	X_MASK,	     POWER8,	0,		{RSQ, RA0, RB}},
++{"stqcx.",	XRC(31,182,1), X_MASK|Q_MASK, POWER8,	0,		{RSQ, RA0, RB}},
+ {"wchkall",	X(31,182),	X_MASK,	     PPCA2,	0,		{OBF}},
+ 
+ {"stwux",	X(31,183),	X_MASK,	     PPCCOM,	0,		{RS, RAS, RB}},
+@@ -5105,7 +5217,7 @@ const struct powerpc_opcode powerpc_opcodes[] = {
+ 
+ {"mfapidi",	X(31,275),	X_MASK,	     BOOKE,	E500|TITAN,	{RT, RA}},
+ 
+-{"lqarx",	X(31,276),	XEH_MASK,    POWER8,	0,		{RTQ, RAX, RBX, EH}},
++{"lqarx",	X(31,276),  XEH_MASK|Q_MASK, POWER8,	0,		{RTQ, RAX, RBX, EH}},
+ 
+ {"lscbx",	XRC(31,277,0),	X_MASK,	     M601,	0,		{RT, RA, RB}},
+ {"lscbx.",	XRC(31,277,1),	X_MASK,	     M601,	0,		{RT, RA, RB}},
+@@ -6052,7 +6164,7 @@ const struct powerpc_opcode powerpc_opcodes[] = {
+ 
+ {"lhbrx",	X(31,790),	X_MASK,	     COM,	0,		{RT, RA0, RB}},
+ 
+-{"lfdpx",	X(31,791),	X_MASK,	     POWER6,	POWER7,		{FRTp, RA0, RB}},
++{"lfdpx",	X(31,791),    X_MASK|Q_MASK, POWER6,	POWER7,		{FRTp, RA0, RB}},
+ {"lfqx",	X(31,791),	X_MASK,	     POWER2,	0,		{FRT, RA, RB}},
+ 
+ {"sraw",	XRC(31,792,0),	X_MASK,	     PPCCOM,	0,		{RA, RS, RB}},
+@@ -6167,7 +6279,7 @@ const struct powerpc_opcode powerpc_opcodes[] = {
+ 
+ {"sthbrx",	X(31,918),	X_MASK,	     COM,	0,		{RS, RA0, RB}},
+ 
+-{"stfdpx",	X(31,919),	X_MASK,	     POWER6,	POWER7,		{FRSp, RA0, RB}},
++{"stfdpx",	X(31,919),    X_MASK|Q_MASK, POWER6,	POWER7,		{FRSp, RA0, RB}},
+ {"stfqx",	X(31,919),	X_MASK,	     POWER2,	0,		{FRS, RA0, RB}},
+ 
+ {"sraq",	XRC(31,920,0),	X_MASK,	     M601,	0,		{RA, RS, RB}},
+@@ -6345,13 +6457,13 @@ const struct powerpc_opcode powerpc_opcodes[] = {
+ 
+ {"stfdu",	OP(55),		OP_MASK,     COM,	PPCEFS|PPCVLE,	{FRS, D, RAS}},
+ 
+-{"lq",		OP(56),		OP_MASK,     POWER4,	PPC476|PPCVLE,	{RTQ, DQ, RAQ}},
++{"lq",		OP(56),	     OP_MASK|Q_MASK, POWER4,	PPC476|PPCVLE,	{RTQ, DQ, RAQ}},
+ {"psq_l",	OP(56),		OP_MASK,     PPCPS,	PPCVLE,		{FRT,PSD,RA,PSW,PSQ}},
+ {"lfq",		OP(56),		OP_MASK,     POWER2,	PPCVLE,		{FRT, D, RA0}},
+ 
+ {"lxsd",	DSO(57,2),	DS_MASK,     PPCVSX3,	PPCVLE,		{VD, DS, RA0}},
+ {"lxssp",	DSO(57,3),	DS_MASK,     PPCVSX3,	PPCVLE,		{VD, DS, RA0}},
+-{"lfdp",	OP(57),		OP_MASK,     POWER6,	POWER7|PPCVLE,	{FRTp, DS, RA0}},
++{"lfdp",	OP(57),	     OP_MASK|Q_MASK, POWER6,	POWER7|PPCVLE,	{FRTp, DS, RA0}},
+ {"psq_lu",	OP(57),		OP_MASK,     PPCPS,	PPCVLE,		{FRT,PSD,RA,PSW,PSQ}},
+ {"lfqu",	OP(57),		OP_MASK,     POWER2,	PPCVLE,		{FRT, D, RA0}},
+ 
+@@ -6676,21 +6788,21 @@ const struct powerpc_opcode powerpc_opcodes[] = {
+ {"stxv",	DQX(61,5),	DQX_MASK,    PPCVSX3,	PPCVLE,		{XSQ6, DQ, RA0}},
+ {"stxsd",	DSO(61,2),	DS_MASK,     PPCVSX3,	PPCVLE,		{VS, DS, RA0}},
+ {"stxssp",	DSO(61,3),	DS_MASK,     PPCVSX3,	PPCVLE,		{VS, DS, RA0}},
+-{"stfdp",	OP(61),		OP_MASK,     POWER6,	POWER7|PPCVLE,	{FRSp, DS, RA0}},
++{"stfdp",	OP(61),	     OP_MASK|Q_MASK, POWER6,	POWER7|PPCVLE,	{FRSp, DS, RA0}},
+ {"psq_stu",	OP(61),		OP_MASK,     PPCPS,	PPCVLE,		{FRS,PSD,RA,PSW,PSQ}},
+ {"stfqu",	OP(61),		OP_MASK,     POWER2,	PPCVLE,		{FRS, D, RA}},
+ 
+ {"std",		DSO(62,0),	DS_MASK,     PPC64,	PPCVLE,		{RS, DS, RA0}},
+ {"stdu",	DSO(62,1),	DS_MASK,     PPC64,	PPCVLE,		{RS, DS, RAS}},
+-{"stq",		DSO(62,2),	DS_MASK,     POWER4,	PPC476|PPCVLE,	{RSQ, DS, RA0}},
++{"stq",		DSO(62,2),   DS_MASK|Q_MASK, POWER4,	PPC476|PPCVLE,	{RSQ, DS, RA0}},
+ 
+ {"fcmpu",	X(63,0),	XBF_MASK,    COM,	PPCEFS|PPCVLE,	{BF, FRA, FRB}},
+ 
+-{"daddq",	XRC(63,2,0),	X_MASK,	     POWER6,	PPCVLE,		{FRTp, FRAp, FRBp}},
+-{"daddq.",	XRC(63,2,1),	X_MASK,	     POWER6,	PPCVLE,		{FRTp, FRAp, FRBp}},
++{"daddq",	XRC(63,2,0),  X_MASK|Q_MASK, POWER6,	PPCVLE,		{FRTp, FRAp, FRBp}},
++{"daddq.",	XRC(63,2,1),  X_MASK|Q_MASK, POWER6,	PPCVLE,		{FRTp, FRAp, FRBp}},
+ 
+-{"dquaq",	ZRC(63,3,0),	Z2_MASK,     POWER6,	PPCVLE,		{FRTp, FRAp, FRBp, RMC}},
+-{"dquaq.",	ZRC(63,3,1),	Z2_MASK,     POWER6,	PPCVLE,		{FRTp, FRAp, FRBp, RMC}},
++{"dquaq",	ZRC(63,3,0), Z2_MASK|Q_MASK, POWER6,	PPCVLE,		{FRTp, FRAp, FRBp, RMC}},
++{"dquaq.",	ZRC(63,3,1), Z2_MASK|Q_MASK, POWER6,	PPCVLE,		{FRTp, FRAp, FRBp, RMC}},
+ 
+ {"xsaddqp",	XRC(63,4,0),	X_MASK,	     PPCVSX3,	PPCVLE,		{VD, VA, VB}},
+ {"xsaddqpo",	XRC(63,4,1),	X_MASK,	     PPCVSX3,	PPCVLE,		{VD, VA, VB}},
+@@ -6772,11 +6884,11 @@ const struct powerpc_opcode powerpc_opcodes[] = {
+ 
+ {"fcmpo",	X(63,32),	XBF_MASK,    COM,	PPCEFS|PPCVLE,	{BF, FRA, FRB}},
+ 
+-{"dmulq",	XRC(63,34,0),	X_MASK,	     POWER6,	PPCVLE,		{FRTp, FRAp, FRBp}},
+-{"dmulq.",	XRC(63,34,1),	X_MASK,	     POWER6,	PPCVLE,		{FRTp, FRAp, FRBp}},
++{"dmulq",	XRC(63,34,0), X_MASK|Q_MASK, POWER6,	PPCVLE,		{FRTp, FRAp, FRBp}},
++{"dmulq.",	XRC(63,34,1), X_MASK|Q_MASK, POWER6,	PPCVLE,		{FRTp, FRAp, FRBp}},
+ 
+-{"drrndq",	ZRC(63,35,0),	Z2_MASK,     POWER6,	PPCVLE,		{FRTp, FRA, FRBp, RMC}},
+-{"drrndq.",	ZRC(63,35,1),	Z2_MASK,     POWER6,	PPCVLE,		{FRTp, FRA, FRBp, RMC}},
++{"drrndq",	ZRC(63,35,0), Z2_MASK|Q_MASK, POWER6,	PPCVLE,		{FRTp, FRA, FRBp, RMC}},
++{"drrndq.",	ZRC(63,35,1), Z2_MASK|Q_MASK, POWER6,	PPCVLE,		{FRTp, FRA, FRBp, RMC}},
+ 
+ {"xsmulqp",	XRC(63,36,0),	X_MASK,	     PPCVSX3,	PPCVLE,		{VD, VA, VB}},
+ {"xsmulqpo",	XRC(63,36,1),	X_MASK,	     PPCVSX3,	PPCVLE,		{VD, VA, VB}},
+@@ -6791,11 +6903,11 @@ const struct powerpc_opcode powerpc_opcodes[] = {
+ 
+ {"mcrfs",      X(63,64), XRB_MASK|(3<<21)|(3<<16), COM,	PPCVLE,		{BF, BFA}},
+ 
+-{"dscliq",	ZRC(63,66,0),	Z_MASK,	     POWER6,	PPCVLE,		{FRTp, FRAp, SH16}},
+-{"dscliq.",	ZRC(63,66,1),	Z_MASK,	     POWER6,	PPCVLE,		{FRTp, FRAp, SH16}},
++{"dscliq",	ZRC(63,66,0), Z_MASK|Q_MASK, POWER6,	PPCVLE,		{FRTp, FRAp, SH16}},
++{"dscliq.",	ZRC(63,66,1), Z_MASK|Q_MASK, POWER6,	PPCVLE,		{FRTp, FRAp, SH16}},
+ 
+-{"dquaiq",	ZRC(63,67,0),	Z2_MASK,     POWER6,	PPCVLE,		{TE, FRTp, FRBp, RMC}},
+-{"dquaiq.",	ZRC(63,67,1),	Z2_MASK,     POWER6,	PPCVLE,		{TE, FRTp, FRBp, RMC}},
++{"dquaiq",	ZRC(63,67,0), Z2_MASK|Q_MASK, POWER6,	PPCVLE,		{TE, FRTp, FRBp, RMC}},
++{"dquaiq.",	ZRC(63,67,1), Z2_MASK|Q_MASK, POWER6,	PPCVLE,		{TE, FRTp, FRBp, RMC}},
+ 
+ {"mtfsb0",	XRC(63,70,0),	XRARB_MASK,  COM,	PPCVLE,		{BT}},
+ {"mtfsb0.",	XRC(63,70,1),	XRARB_MASK,  COM,	PPCVLE,		{BT}},
+@@ -6803,11 +6915,11 @@ const struct powerpc_opcode powerpc_opcodes[] = {
+ {"fmr",		XRC(63,72,0),	XRA_MASK,    COM,	PPCEFS|PPCVLE,	{FRT, FRB}},
+ {"fmr.",	XRC(63,72,1),	XRA_MASK,    COM,	PPCEFS|PPCVLE,	{FRT, FRB}},
+ 
+-{"dscriq",	ZRC(63,98,0),	Z_MASK,	     POWER6,	PPCVLE,		{FRTp, FRAp, SH16}},
+-{"dscriq.",	ZRC(63,98,1),	Z_MASK,	     POWER6,	PPCVLE,		{FRTp, FRAp, SH16}},
++{"dscriq",	ZRC(63,98,0), Z_MASK|Q_MASK, POWER6,	PPCVLE,		{FRTp, FRAp, SH16}},
++{"dscriq.",	ZRC(63,98,1), Z_MASK|Q_MASK, POWER6,	PPCVLE,		{FRTp, FRAp, SH16}},
+ 
+-{"drintxq",	ZRC(63,99,0),	Z2_MASK,     POWER6,	PPCVLE,		{R, FRTp, FRBp, RMC}},
+-{"drintxq.",	ZRC(63,99,1),	Z2_MASK,     POWER6,	PPCVLE,		{R, FRTp, FRBp, RMC}},
++{"drintxq",	ZRC(63,99,0), Z2_MASK|Q_MASK, POWER6,	PPCVLE,		{R, FRTp, FRBp, RMC}},
++{"drintxq.",	ZRC(63,99,1), Z2_MASK|Q_MASK, POWER6,	PPCVLE,		{R, FRTp, FRBp, RMC}},
+ 
+ {"xscpsgnqp",	X(63,100),	X_MASK,	     PPCVSX3,	PPCVLE,		{VD, VA, VB}},
+ 
+@@ -6839,11 +6951,11 @@ const struct powerpc_opcode powerpc_opcodes[] = {
+ {"dtstdcq",	Z(63,194),	Z_MASK,	     POWER6,	PPCVLE,		{BF, FRAp, DCM}},
+ {"dtstdgq",	Z(63,226),	Z_MASK,	     POWER6,	PPCVLE,		{BF, FRAp, DGM}},
+ 
+-{"drintnq",	ZRC(63,227,0),	Z2_MASK,     POWER6,	PPCVLE,		{R, FRTp, FRBp, RMC}},
+-{"drintnq.",	ZRC(63,227,1),	Z2_MASK,     POWER6,	PPCVLE,		{R, FRTp, FRBp, RMC}},
++{"drintnq",	ZRC(63,227,0), Z2_MASK|Q_MASK, POWER6,	PPCVLE,		{R, FRTp, FRBp, RMC}},
++{"drintnq.",	ZRC(63,227,1), Z2_MASK|Q_MASK, POWER6,	PPCVLE,		{R, FRTp, FRBp, RMC}},
+ 
+-{"dctqpq",	XRC(63,258,0),	X_MASK,	     POWER6,	PPCVLE,		{FRTp, FRB}},
+-{"dctqpq.",	XRC(63,258,1),	X_MASK,	     POWER6,	PPCVLE,		{FRTp, FRB}},
++{"dctqpq",	XRC(63,258,0), X_MASK|Q_MASK, POWER6,	PPCVLE,		{FRTp, FRB}},
++{"dctqpq.",	XRC(63,258,1), X_MASK|Q_MASK, POWER6,	PPCVLE,		{FRTp, FRB}},
+ 
+ {"fabs",	XRC(63,264,0),	XRA_MASK,    COM,	PPCEFS|PPCVLE,	{FRT, FRB}},
+ {"fabs.",	XRC(63,264,1),	XRA_MASK,    COM,	PPCEFS|PPCVLE,	{FRT, FRB}},
+@@ -6851,8 +6963,8 @@ const struct powerpc_opcode powerpc_opcodes[] = {
+ {"dctfixq",	XRC(63,290,0),	X_MASK,	     POWER6,	PPCVLE,		{FRT, FRBp}},
+ {"dctfixq.",	XRC(63,290,1),	X_MASK,	     POWER6,	PPCVLE,		{FRT, FRBp}},
+ 
+-{"ddedpdq",	XRC(63,322,0),	X_MASK,	     POWER6,	PPCVLE,		{SP, FRTp, FRBp}},
+-{"ddedpdq.",	XRC(63,322,1),	X_MASK,	     POWER6,	PPCVLE,		{SP, FRTp, FRBp}},
++{"ddedpdq",	XRC(63,322,0), X_MASK|Q_MASK, POWER6,	PPCVLE,		{SP, FRTp, FRBp}},
++{"ddedpdq.",	XRC(63,322,1), X_MASK|Q_MASK, POWER6,	PPCVLE,		{SP, FRTp, FRBp}},
+ 
+ {"dxexq",	XRC(63,354,0),	X_MASK,	     POWER6,	PPCVLE,		{FRT, FRBp}},
+ {"dxexq.",	XRC(63,354,1),	X_MASK,	     POWER6,	PPCVLE,		{FRT, FRBp}},
+@@ -6881,14 +6993,14 @@ const struct powerpc_opcode powerpc_opcodes[] = {
+ {"frim",	XRC(63,488,0),	XRA_MASK,    POWER5,	PPCVLE,		{FRT, FRB}},
+ {"frim.",	XRC(63,488,1),	XRA_MASK,    POWER5,	PPCVLE,		{FRT, FRB}},
+ 
+-{"dsubq",	XRC(63,514,0),	X_MASK,	     POWER6,	PPCVLE,		{FRTp, FRAp, FRBp}},
+-{"dsubq.",	XRC(63,514,1),	X_MASK,	     POWER6,	PPCVLE,		{FRTp, FRAp, FRBp}},
++{"dsubq",	XRC(63,514,0), X_MASK|Q_MASK, POWER6,	PPCVLE,		{FRTp, FRAp, FRBp}},
++{"dsubq.",	XRC(63,514,1), X_MASK|Q_MASK, POWER6,	PPCVLE,		{FRTp, FRAp, FRBp}},
+ 
+ {"xssubqp",	XRC(63,516,0),	X_MASK,	     PPCVSX3,	PPCVLE,		{VD, VA, VB}},
+ {"xssubqpo",	XRC(63,516,1),	X_MASK,	     PPCVSX3,	PPCVLE,		{VD, VA, VB}},
+ 
+-{"ddivq",	XRC(63,546,0),	X_MASK,	     POWER6,	PPCVLE,		{FRTp, FRAp, FRBp}},
+-{"ddivq.",	XRC(63,546,1),	X_MASK,	     POWER6,	PPCVLE,		{FRTp, FRAp, FRBp}},
++{"ddivq",	XRC(63,546,0), X_MASK|Q_MASK, POWER6,	PPCVLE,		{FRTp, FRAp, FRBp}},
++{"ddivq.",	XRC(63,546,1), X_MASK|Q_MASK, POWER6,	PPCVLE,		{FRTp, FRAp, FRBp}},
+ 
+ {"xsdivqp",	XRC(63,548,0),	X_MASK,	     PPCVSX3,	PPCVLE,		{VD, VA, VB}},
+ {"xsdivqpo",	XRC(63,548,1),	X_MASK,	     PPCVSX3,	PPCVLE,		{VD, VA, VB}},
+@@ -6917,11 +7029,11 @@ const struct powerpc_opcode powerpc_opcodes[] = {
+ {"mtfsf.",	XFL(63,711,1),	XFL_MASK, POWER6|PPCA2|PPC476, PPCVLE,	{FLM, FRB, XFL_L, W}},
+ {"mtfsf.",	XFL(63,711,1),	XFL_MASK,    COM, POWER6|PPCA2|PPC476|PPCEFS|PPCVLE, {FLM, FRB}},
+ 
+-{"drdpq",	XRC(63,770,0),	X_MASK,	     POWER6,	PPCVLE,		{FRTp, FRBp}},
+-{"drdpq.",	XRC(63,770,1),	X_MASK,	     POWER6,	PPCVLE,		{FRTp, FRBp}},
++{"drdpq",	XRC(63,770,0), X_MASK|Q_MASK, POWER6,	PPCVLE,		{FRTp, FRBp}},
++{"drdpq.",	XRC(63,770,1), X_MASK|Q_MASK, POWER6,	PPCVLE,		{FRTp, FRBp}},
+ 
+-{"dcffixq",	XRC(63,802,0),	X_MASK,	     POWER6,	PPCVLE,		{FRTp, FRB}},
+-{"dcffixq.",	XRC(63,802,1),	X_MASK,	     POWER6,	PPCVLE,		{FRTp, FRB}},
++{"dcffixq",	XRC(63,802,0), X_MASK|Q_MASK, POWER6,	PPCVLE,		{FRTp, FRB}},
++{"dcffixq.",	XRC(63,802,1), X_MASK|Q_MASK, POWER6,	PPCVLE,		{FRTp, FRB}},
+ 
+ {"xsabsqp",	XVA(63,804,0),	XVA_MASK,    PPCVSX3,	PPCVLE,		{VD, VB}},
+ {"xsxexpqp",	XVA(63,804,2),	XVA_MASK,    PPCVSX3,	PPCVLE,		{VD, VB}},
+@@ -6941,8 +7053,8 @@ const struct powerpc_opcode powerpc_opcodes[] = {
+ {"fctidz.",	XRC(63,815,1),	XRA_MASK,    PPC64,	PPCVLE,		{FRT, FRB}},
+ {"fctidz.",	XRC(63,815,1),	XRA_MASK,    PPC476,	PPCVLE,		{FRT, FRB}},
+ 
+-{"denbcdq",	XRC(63,834,0),	X_MASK,	     POWER6,	PPCVLE,		{S, FRTp, FRBp}},
+-{"denbcdq.",	XRC(63,834,1),	X_MASK,	     POWER6,	PPCVLE,		{S, FRTp, FRBp}},
++{"denbcdq",	XRC(63,834,0), X_MASK|Q_MASK, POWER6,	PPCVLE,		{S, FRTp, FRBp}},
++{"denbcdq.",	XRC(63,834,1), X_MASK|Q_MASK, POWER6,	PPCVLE,		{S, FRTp, FRBp}},
+ 
+ {"xscvqpuwz",	XVA(63,836,1),	XVA_MASK,    PPCVSX3,	PPCVLE,		{VD, VB}},
+ {"xscvudqp",	XVA(63,836,2),	XVA_MASK,    PPCVSX3,	PPCVLE,		{VD, VB}},
+@@ -6961,8 +7073,8 @@ const struct powerpc_opcode powerpc_opcodes[] = {
+ {"fcfid.",	XRC(63,846,1),	XRA_MASK,    PPC64,	PPCVLE,		{FRT, FRB}},
+ {"fcfid.",	XRC(63,846,1),	XRA_MASK,    PPC476,	PPCVLE,		{FRT, FRB}},
+ 
+-{"diexq",	XRC(63,866,0),	X_MASK,	     POWER6,	PPCVLE,		{FRTp, FRA, FRBp}},
+-{"diexq.",	XRC(63,866,1),	X_MASK,	     POWER6,	PPCVLE,		{FRTp, FRA, FRBp}},
++{"diexq",	XRC(63,866,0), X_MASK|Q_MASK, POWER6,	PPCVLE,		{FRTp, FRA, FRBp}},
++{"diexq.",	XRC(63,866,1), X_MASK|Q_MASK, POWER6,	PPCVLE,		{FRTp, FRA, FRBp}},
+ 
+ {"xsiexpqp",	X(63,868),	X_MASK,	     PPCVSX3,	PPCVLE,		{VD, VA, VB}},
+ 
+diff --git a/opcodes/riscv-opc.c b/opcodes/riscv-opc.c
+index 867a026..2b18a1e 100644
+--- a/opcodes/riscv-opc.c
++++ b/opcodes/riscv-opc.c
+@@ -210,14 +210,14 @@ const struct riscv_opcode riscv_opcodes[] =
+ {"sll",       "C",   "d,CU,C>",  MATCH_C_SLLI, MASK_C_SLLI, match_rd_nonzero, INSN_ALIAS },
+ {"sll",       "I",   "d,s,t",   MATCH_SLL, MASK_SLL, match_opcode, 0 },
+ {"sll",       "I",   "d,s,>",   MATCH_SLLI, MASK_SLLI, match_opcode, INSN_ALIAS },
+-{"srli",      "C",   "Cs,Cw,C>",  MATCH_C_SRLI, MASK_C_SRLI, match_rd_nonzero, INSN_ALIAS },
++{"srli",      "C",   "Cs,Cw,C>",  MATCH_C_SRLI, MASK_C_SRLI, match_opcode, INSN_ALIAS },
+ {"srli",      "I",   "d,s,>",   MATCH_SRLI, MASK_SRLI, match_opcode, 0 },
+-{"srl",       "C",   "Cs,Cw,C>",  MATCH_C_SRLI, MASK_C_SRLI, match_rd_nonzero, INSN_ALIAS },
++{"srl",       "C",   "Cs,Cw,C>",  MATCH_C_SRLI, MASK_C_SRLI, match_opcode, INSN_ALIAS },
+ {"srl",       "I",   "d,s,t",   MATCH_SRL, MASK_SRL, match_opcode, 0 },
+ {"srl",       "I",   "d,s,>",   MATCH_SRLI, MASK_SRLI, match_opcode, INSN_ALIAS },
+-{"srai",      "C",   "Cs,Cw,C>",  MATCH_C_SRAI, MASK_C_SRAI, match_rd_nonzero, INSN_ALIAS },
++{"srai",      "C",   "Cs,Cw,C>",  MATCH_C_SRAI, MASK_C_SRAI, match_opcode, INSN_ALIAS },
+ {"srai",      "I",   "d,s,>",   MATCH_SRAI, MASK_SRAI, match_opcode, 0 },
+-{"sra",       "C",   "Cs,Cw,C>",  MATCH_C_SRAI, MASK_C_SRAI, match_rd_nonzero, INSN_ALIAS },
++{"sra",       "C",   "Cs,Cw,C>",  MATCH_C_SRAI, MASK_C_SRAI, match_opcode, INSN_ALIAS },
+ {"sra",       "I",   "d,s,t",   MATCH_SRA, MASK_SRA, match_opcode, 0 },
+ {"sra",       "I",   "d,s,>",   MATCH_SRAI, MASK_SRAI, match_opcode, INSN_ALIAS },
+ {"sub",       "C",   "Cs,Cw,Ct",  MATCH_C_SUB, MASK_C_SUB, match_opcode, INSN_ALIAS },
+@@ -562,10 +562,10 @@ const struct riscv_opcode riscv_opcodes[] =
+ {"c.nop",     "C",   "",  MATCH_C_ADDI, 0xffff, match_opcode, 0 },
+ {"c.mv",      "C",   "d,CV",  MATCH_C_MV, MASK_C_MV, match_c_add, 0 },
+ {"c.lui",     "C",   "d,Cu",  MATCH_C_LUI, MASK_C_LUI, match_c_lui, 0 },
+-{"c.li",      "C",   "d,Cj",  MATCH_C_LI, MASK_C_LI, match_rd_nonzero, 0 },
++{"c.li",      "C",   "d,Co",  MATCH_C_LI, MASK_C_LI, match_rd_nonzero, 0 },
+ {"c.addi4spn","C",   "Ct,Cc,CK", MATCH_C_ADDI4SPN, MASK_C_ADDI4SPN, match_opcode, 0 },
+ {"c.addi16sp","C",   "Cc,CL", MATCH_C_ADDI16SP, MASK_C_ADDI16SP, match_opcode, 0 },
+-{"c.addi",    "C",   "d,Cj",  MATCH_C_ADDI, MASK_C_ADDI, match_rd_nonzero, 0 },
++{"c.addi",    "C",   "d,Cj",  MATCH_C_ADDI, MASK_C_ADDI, match_opcode, 0 },
+ {"c.add",     "C",   "d,CV",  MATCH_C_ADD, MASK_C_ADD, match_c_add, 0 },
+ {"c.sub",     "C",   "Cs,Ct",  MATCH_C_SUB, MASK_C_SUB, match_opcode, 0 },
+ {"c.and",     "C",   "Cs,Ct",  MATCH_C_AND, MASK_C_AND, match_opcode, 0 },
+@@ -574,8 +574,8 @@ const struct riscv_opcode riscv_opcodes[] =
+ {"c.slli",    "C",   "d,C>",  MATCH_C_SLLI, MASK_C_SLLI, match_rd_nonzero, 0 },
+ {"c.srli",    "C",   "Cs,C>",  MATCH_C_SRLI, MASK_C_SRLI, match_opcode, 0 },
+ {"c.srai",    "C",   "Cs,C>",  MATCH_C_SRAI, MASK_C_SRAI, match_opcode, 0 },
+-{"c.andi",    "C",   "Cs,Cj",  MATCH_C_ANDI, MASK_C_ANDI, match_opcode, 0 },
+-{"c.addiw",   "64C", "d,Cj",  MATCH_C_ADDIW, MASK_C_ADDIW, match_rd_nonzero, 0 },
++{"c.andi",    "C",   "Cs,Co",  MATCH_C_ANDI, MASK_C_ANDI, match_opcode, 0 },
++{"c.addiw",   "64C", "d,Co",  MATCH_C_ADDIW, MASK_C_ADDIW, match_rd_nonzero, 0 },
+ {"c.addw",    "64C", "Cs,Ct",  MATCH_C_ADDW, MASK_C_ADDW, match_opcode, 0 },
+ {"c.subw",    "64C", "Cs,Ct",  MATCH_C_SUBW, MASK_C_SUBW, match_opcode, 0 },
+ {"c.ldsp",    "64C", "d,Cn(Cc)",  MATCH_C_LDSP, MASK_C_LDSP, match_rd_nonzero, 0 },
+diff --git a/opcodes/s390-mkopc.c b/opcodes/s390-mkopc.c
+index 8e0b332..68c55a9 100644
+--- a/opcodes/s390-mkopc.c
++++ b/opcodes/s390-mkopc.c
+@@ -419,10 +419,6 @@ main (void)
+ 		&& (str[2] == 0 || str[2] == ',')) {
+ 	      flag_bits |= S390_INSTR_FLAG_VX;
+ 	      str += 2;
+-	    } else if (strncmp (str, "vx2", 3) == 0
+-		&& (str[3] == 0 || str[3] == ',')) {
+-	      flag_bits |= S390_INSTR_FLAG_VX2;
+-	      str += 3;
+ 	    } else {
+ 	      fprintf (stderr, "Couldn't parse flags string %s\n",
+ 		       flags_string);
+diff --git a/opcodes/s390-opc.txt b/opcodes/s390-opc.txt
+index b381587..51a17f3 100644
+--- a/opcodes/s390-opc.txt
++++ b/opcodes/s390-opc.txt
+@@ -1685,146 +1685,146 @@ b93c ppno RRE_RR "perform pseudorandom number operation" z13 zarch
+ # Vector Enhancements Facility 1
+ 
+ e70000000085 vbperm VRR_VVV "vector bit permute" arch12 zarch
+-e70000006004 vllezlf VRX_VRRD "vector load logical word element and zero - left aligned" arch12 zarch vx2
+-e700000000b8 vmsl VRR_VVVUU0V "vector multiply sum logical" arch12 zarch vx2
+-e700030000b8 vmslg VRR_VVVU0VB "vector multiply sum logical double word" arch12 zarch vx2
+-e7000000006c vnx VRR_VVV "vector not exclusive or" arch12 zarch vx2
++e70000006004 vllezlf VRX_VRRD "vector load logical word element and zero - left aligned" arch12 zarch
++e700000000b8 vmsl VRR_VVVUU0V "vector multiply sum logical" arch12 zarch
++e700030000b8 vmslg VRR_VVVU0VB "vector multiply sum logical double word" arch12 zarch
++e7000000006c vnx VRR_VVV "vector not exclusive or" arch12 zarch
+ e7000000006e vnn VRR_VVV "vector nand" arch12 zarch
+-e7000000006f voc VRR_VVV "vector or with complement" arch12 zarch vx2
+-e70000000050 vpopctb VRR_VV "vector population count byte" arch12 zarch vx2
+-e70000001050 vpopcth VRR_VV "vector population count halfword" arch12 zarch vx2
+-e70000002050 vpopctf VRR_VV "vector population count word" arch12 zarch vx2
+-e70000003050 vpopctg VRR_VV "vector population count double word" arch12 zarch vx2
+-e700000020e3 vfasb VRR_VVV "vector fp add short" arch12 zarch vx2
+-e700000820e3 wfasb VRR_VVV "scalar vector fp add scalar short" arch12 zarch vx2
+-e700000840e3 wfaxb VRR_VVV "scalar vector fp add scalar extended" arch12 zarch vx2
+-e700000020cb wfcsb VRR_VV "scalar vector fp compare scalar short" arch12 zarch vx2
+-e700000040cb wfcxb VRR_VV "scalar vector fp compare scalar extended" arch12 zarch vx2
+-e700000020ca wfksb VRR_VV "scalar vector fp compare and signal scalar short" arch12 zarch vx2
+-e700000040ca wfkxb VRR_VV "scalar vector fp compare and signal scalar extended" arch12 zarch vx2
++e7000000006f voc VRR_VVV "vector or with complement" arch12 zarch
++e70000000050 vpopctb VRR_VV "vector population count byte" arch12 zarch
++e70000001050 vpopcth VRR_VV "vector population count halfword" arch12 zarch
++e70000002050 vpopctf VRR_VV "vector population count word" arch12 zarch
++e70000003050 vpopctg VRR_VV "vector population count double word" arch12 zarch
++e700000020e3 vfasb VRR_VVV "vector fp add short" arch12 zarch
++e700000820e3 wfasb VRR_VVV "scalar vector fp add scalar short" arch12 zarch
++e700000840e3 wfaxb VRR_VVV "scalar vector fp add scalar extended" arch12 zarch
++e700000020cb wfcsb VRR_VV "scalar vector fp compare scalar short" arch12 zarch
++e700000040cb wfcxb VRR_VV "scalar vector fp compare scalar extended" arch12 zarch
++e700000020ca wfksb VRR_VV "scalar vector fp compare and signal scalar short" arch12 zarch
++e700000040ca wfkxb VRR_VV "scalar vector fp compare and signal scalar extended" arch12 zarch
+ 
+-e700000020e8 vfcesb VRR_VVV "vector fp compare equal short" arch12 zarch vx2
+-e700001020e8 vfcesbs VRR_VVV "vector fp compare equal short" arch12 zarch vx2
+-e700000820e8 wfcesb VRR_VVV "scalar vector fp compare equal scalar short" arch12 zarch vx2
+-e700001820e8 wfcesbs VRR_VVV "scalar fp compare equal scalar short" arch12 zarch vx2
+-e700000840e8 wfcexb VRR_VVV "scalar vector fp compare equal scalar extended" arch12 zarch vx2
+-e700001840e8 wfcexbs VRR_VVV "scalar vector fp compare equal scalar extended" arch12 zarch vx2
++e700000020e8 vfcesb VRR_VVV "vector fp compare equal short" arch12 zarch
++e700001020e8 vfcesbs VRR_VVV "vector fp compare equal short" arch12 zarch
++e700000820e8 wfcesb VRR_VVV "scalar vector fp compare equal scalar short" arch12 zarch
++e700001820e8 wfcesbs VRR_VVV "scalar fp compare equal scalar short" arch12 zarch
++e700000840e8 wfcexb VRR_VVV "scalar vector fp compare equal scalar extended" arch12 zarch
++e700001840e8 wfcexbs VRR_VVV "scalar vector fp compare equal scalar extended" arch12 zarch
+ 
+-e700000420e8 vfkesb VRR_VVV "vector fp compare and signal equal short" arch12 zarch vx2
+-e700001420e8 vfkesbs VRR_VVV "vector fp compare and signal equal short" arch12 zarch vx2
+-e700000c20e8 wfkesb VRR_VVV "scalar vector fp compare and signal equal scalar short" arch12 zarch vx2
+-e700001c20e8 wfkesbs VRR_VVV "scalar fp compare and signal equal scalar short" arch12 zarch vx2
++e700000420e8 vfkesb VRR_VVV "vector fp compare and signal equal short" arch12 zarch
++e700001420e8 vfkesbs VRR_VVV "vector fp compare and signal equal short" arch12 zarch
++e700000c20e8 wfkesb VRR_VVV "scalar vector fp compare and signal equal scalar short" arch12 zarch
++e700001c20e8 wfkesbs VRR_VVV "scalar fp compare and signal equal scalar short" arch12 zarch
+ e700000430e8 vfkedb VRR_VVV "vector fp compare and signal equal long" arch12 zarch vx
+ e700001430e8 vfkedbs VRR_VVV "vector fp compare and signal equal long" arch12 zarch vx
+ e700000c30e8 wfkedb VRR_VVV "vector fp compare and signal equal long" arch12 zarch vx
+ e700001c30e8 wfkedbs VRR_VVV "vector fp compare and signal equal long" arch12 zarch vx
+-e700000c40e8 wfkexb VRR_VVV "scalar vector fp compare and signal equal scalar extended" arch12 zarch vx2
+-e700001c40e8 wfkexbs VRR_VVV "scalar vector fp compare and signal equal scalar extended" arch12 zarch vx2
++e700000c40e8 wfkexb VRR_VVV "scalar vector fp compare and signal equal scalar extended" arch12 zarch
++e700001c40e8 wfkexbs VRR_VVV "scalar vector fp compare and signal equal scalar extended" arch12 zarch
+ 
+-e700000020eb vfchsb VRR_VVV "vector fp compare high short" arch12 zarch vx2
+-e700001020eb vfchsbs VRR_VVV "vector fp compare high short" arch12 zarch vx2
+-e700000820eb wfchsb VRR_VVV "scalar vector fp compare high scalar short" arch12 zarch vx2
+-e700001820eb wfchsbs VRR_VVV "scalar vector fp compare high scalar short" arch12 zarch vx2
+-e700000840eb wfchxb VRR_VVV "scalar vector fp compare high scalar extended" arch12 zarch vx2
+-e700001840eb wfchxbs VRR_VVV "scalar vector fp compare high scalar extended" arch12 zarch vx2
++e700000020eb vfchsb VRR_VVV "vector fp compare high short" arch12 zarch
++e700001020eb vfchsbs VRR_VVV "vector fp compare high short" arch12 zarch
++e700000820eb wfchsb VRR_VVV "scalar vector fp compare high scalar short" arch12 zarch
++e700001820eb wfchsbs VRR_VVV "scalar vector fp compare high scalar short" arch12 zarch
++e700000840eb wfchxb VRR_VVV "scalar vector fp compare high scalar extended" arch12 zarch
++e700001840eb wfchxbs VRR_VVV "scalar vector fp compare high scalar extended" arch12 zarch
+ 
+-e700000420eb vfkhsb VRR_VVV "vector fp compare and signal high short" arch12 zarch vx2
+-e700001420eb vfkhsbs VRR_VVV "vector fp compare and signal high short" arch12 zarch vx2
+-e700000c20eb wfkhsb VRR_VVV "scalar vector fp compare and signal high scalar short" arch12 zarch vx2
+-e700001c20eb wfkhsbs VRR_VVV "scalar vector fp compare and signal high scalar short" arch12 zarch vx2
++e700000420eb vfkhsb VRR_VVV "vector fp compare and signal high short" arch12 zarch
++e700001420eb vfkhsbs VRR_VVV "vector fp compare and signal high short" arch12 zarch
++e700000c20eb wfkhsb VRR_VVV "scalar vector fp compare and signal high scalar short" arch12 zarch
++e700001c20eb wfkhsbs VRR_VVV "scalar vector fp compare and signal high scalar short" arch12 zarch
+ e700000430eb vfkhdb VRR_VVV "vector fp compare and signal high long" arch12 zarch vx
+ e700001430eb vfkhdbs VRR_VVV "vector fp compare and signal high long" arch12 zarch vx
+ e700000c30eb wfkhdb VRR_VVV "vector fp compare and signal high long" arch12 zarch vx
+ e700001c30eb wfkhdbs VRR_VVV "vector fp compare and signal high long" arch12 zarch vx
+-e700000c40eb wfkhxb VRR_VVV "scalar vector fp compare and signal high scalar extended" arch12 zarch vx2
+-e700001c40eb wfkhxbs VRR_VVV "scalar vector fp compare and signal high scalar extended" arch12 zarch vx2
++e700000c40eb wfkhxb VRR_VVV "scalar vector fp compare and signal high scalar extended" arch12 zarch
++e700001c40eb wfkhxbs VRR_VVV "scalar vector fp compare and signal high scalar extended" arch12 zarch
+ 
+-e700000020ea vfchesb VRR_VVV "vector fp compare high or equal short" arch12 zarch vx2
+-e700001020ea vfchesbs VRR_VVV "vector fp compare high or equal short" arch12 zarch vx2
+-e700000820ea wfchesb VRR_VVV "scalar vector fp compare high or equal scalar short" arch12 zarch vx2
+-e700001820ea wfchesbs VRR_VVV "scalar vector fp compare high or equal scalar short" arch12 zarch vx2
+-e700000840ea wfchexb VRR_VVV "scalar vector fp compare high or equal scalar extended" arch12 zarch vx2
+-e700001840ea wfchexbs VRR_VVV "scalar vector fp compare high or equal scalar extended" arch12 zarch vx2
++e700000020ea vfchesb VRR_VVV "vector fp compare high or equal short" arch12 zarch
++e700001020ea vfchesbs VRR_VVV "vector fp compare high or equal short" arch12 zarch
++e700000820ea wfchesb VRR_VVV "scalar vector fp compare high or equal scalar short" arch12 zarch
++e700001820ea wfchesbs VRR_VVV "scalar vector fp compare high or equal scalar short" arch12 zarch
++e700000840ea wfchexb VRR_VVV "scalar vector fp compare high or equal scalar extended" arch12 zarch
++e700001840ea wfchexbs VRR_VVV "scalar vector fp compare high or equal scalar extended" arch12 zarch
+ 
+-e700000420ea vfkhesb VRR_VVV "vector fp compare and signal high or equal short" arch12 zarch vx2
+-e700001420ea vfkhesbs VRR_VVV "vector fp compare and signal high or equal short" arch12 zarch vx2
+-e700000c20ea wfkhesb VRR_VVV "scalar vector fp compare and signal high or equal scalar short" arch12 zarch vx2
+-e700001c20ea wfkhesbs VRR_VVV "scalar vector fp compare and signal high or equal scalar short" arch12 zarch vx2
++e700000420ea vfkhesb VRR_VVV "vector fp compare and signal high or equal short" arch12 zarch
++e700001420ea vfkhesbs VRR_VVV "vector fp compare and signal high or equal short" arch12 zarch
++e700000c20ea wfkhesb VRR_VVV "scalar vector fp compare and signal high or equal scalar short" arch12 zarch
++e700001c20ea wfkhesbs VRR_VVV "scalar vector fp compare and signal high or equal scalar short" arch12 zarch
+ e700000430ea vfkhedb VRR_VVV "vector fp compare and signal high or equal long" arch12 zarch vx
+ e700001430ea vfkhedbs VRR_VVV "vector fp compare and signal high or equal long" arch12 zarch vx
+ e700000c30ea wfkhedb VRR_VVV "vector fp compare and signal high or equal long" arch12 zarch vx
+ e700001c30ea wfkhedbs VRR_VVV "vector fp compare and signal high or equal long" arch12 zarch vx
+-e700000c40ea wfkhexb VRR_VVV "scalar vector fp compare and signal high or equal scalar extended" arch12 zarch vx2
+-e700001c40ea wfkhexbs VRR_VVV "scalar vector fp compare and signal high or equal scalar extended" arch12 zarch vx2
++e700000c40ea wfkhexb VRR_VVV "scalar vector fp compare and signal high or equal scalar extended" arch12 zarch
++e700001c40ea wfkhexbs VRR_VVV "scalar vector fp compare and signal high or equal scalar extended" arch12 zarch
+ 
+-e700000020e5 vfdsb VRR_VVV "vector fp divide short" arch12 zarch vx2
+-e700000820e5 wfdsb VRR_VVV "scalar vector fp divide scalar short" arch12 zarch vx2
+-e700000840e5 wfdxb VRR_VVV "scalar vector fp divide scalar extended" arch12 zarch vx2
+-e700000020c7 vfisb VRR_VV0UU "vector load fp integer short" arch12 zarch vx2
+-e700000820c7 wfisb VRR_VV0UU8 "scalar vector load fp integer scalar short" arch12 zarch vx2
+-e700000840c7 wfixb VRR_VV0UU8 "scalar vector load fp integer scalar extended" arch12 zarch vx2
+-e700000000c4 vfll VRR_VV0UU2 "vector fp load lengthened" arch12 zarch vx2
+-e700000020c4 vflls VRR_VV "vector fp load lengthened" arch12 zarch vx2
+-e700000820c4 wflls VRR_VV "scalar vector fp load lengthened short" arch12 zarch vx2
+-e700000830c4 wflld VRR_VV "scalar vector fp load lengthened long" arch12 zarch vx2
+-e700000000c5 vflr VRR_VV0UUU "vector fp load rounded" arch12 zarch vx2
+-e700000030c5 vflrd VRR_VV0UU "vector fp load rounded long" arch12 zarch vx2
+-e700000830c5 wflrd VRR_VV0UU8 "scalar vector fp load rounded long" arch12 zarch vx2
+-e700000840c5 wflrx VRR_VV0UU8 "scalar vector fp load rounded extended" arch12 zarch vx2
+-e700000000ef vfmax VRR_VVV0UUU "vector fp maximum" arch12 zarch vx2
+-e700000020ef vfmaxsb VRR_VVV0U0 "vector fp maximum short" arch12 zarch vx2
+-e700000030ef vfmaxdb VRR_VVV0U0 "vector fp maximum long" arch12 zarch vx2
+-e700000820ef wfmaxsb VRR_VVV0U0 "scalar fp maximum scalar short" arch12 zarch vx2
+-e700000830ef wfmaxdb VRR_VVV0U0 "scalar fp maximum scalar long" arch12 zarch vx2
+-e700000840ef wfmaxxb VRR_VVV0U0 "scalar fp maximum scalar extended" arch12 zarch vx2
+-e700000000ee vfmin VRR_VVV0UUU "vector fp minimum" arch12 zarch vx2
+-e700000020ee vfminsb VRR_VVV0U0 "vector fp minimum short" arch12 zarch vx2
+-e700000030ee vfmindb VRR_VVV0U0 "vector fp minimum long" arch12 zarch vx2
+-e700000820ee wfminsb VRR_VVV0U0 "scalar fp minimum scalar short" arch12 zarch vx2
+-e700000830ee wfmindb VRR_VVV0U0 "scalar fp minimum scalar long" arch12 zarch vx2
+-e700000840ee wfminxb VRR_VVV0U0 "scalar fp minimum scalar extended" arch12 zarch vx2
+-e700000020e7 vfmsb VRR_VVV "vector fp multiply short" arch12 zarch vx2
+-e700000820e7 wfmsb VRR_VVV "scalar vector fp multiply scalar short" arch12 zarch vx2
+-e700000840e7 wfmxb VRR_VVV "scalar vector fp multiply scalar extended" arch12 zarch vx2
+-e7000200008f vfmasb VRR_VVVV "vector fp multiply and add short" arch12 zarch vx2
+-e7000208008f wfmasb VRR_VVVV "scalar vector fp multiply and add scalar short" arch12 zarch vx2
+-e7000408008f wfmaxb VRR_VVVV "scalar vector fp multiply and add scalar extended" arch12 zarch vx2
+-e7000200008e vfmssb VRR_VVVV "vector fp multiply and subtract short" arch12 zarch vx2
+-e7000208008e wfmssb VRR_VVVV "scalar vector fp multiply and subtract scalar short" arch12 zarch vx2
+-e7000408008e wfmsxb VRR_VVVV "scalar vector fp multiply and subtract scalar extended" arch12 zarch vx2
+-e7000000009f vfnma VRR_VVVU0UV "vector fp negative multiply and add" arch12 zarch vx2
+-e7000200009f vfnmasb VRR_VVVV "vector fp negative multiply and add short" arch12 zarch vx2
+-e7000208009f wfnmasb VRR_VVVV "scalar vector fp negative multiply and add scalar short" arch12 zarch vx2
+-e7000300009f vfnmadb VRR_VVVV "vector fp negative multiply and add long" arch12 zarch vx2
+-e7000308009f wfnmadb VRR_VVVV "scalar vector fp negative multiply and add scalar long" arch12 zarch vx2
+-e7000408009f wfnmaxb VRR_VVVV "scalar vector fp negative multiply and add scalar extended" arch12 zarch vx2
+-e7000000009e vfnms VRR_VVVU0UV "vector fp negative multiply and subtract" arch12 zarch vx2
+-e7000200009e vfnmssb VRR_VVVV "vector fp negative multiply and subtract short" arch12 zarch vx2
+-e7000208009e wfnmssb VRR_VVVV "scalar vector fp negative multiply and subtract scalar short" arch12 zarch vx2
+-e7000300009e vfnmsdb VRR_VVVV "vector fp negative multiply and subtract long" arch12 zarch vx2
+-e7000308009e wfnmsdb VRR_VVVV "scalar vector fp negative multiply and subtract scalar long" arch12 zarch vx2
+-e7000408009e wfnmsxb VRR_VVVV "scalar vector fp negative multiply and subtract scalar extended" arch12 zarch vx2
+-e700000020cc vfpsosb VRR_VV0U2 "vector fp perform sign operation short" arch12 zarch vx2
+-e700000820cc wfpsosb VRR_VV0U2 "scalar vector fp perform sign operation scalar short" arch12 zarch vx2
+-e700000020cc vflcsb VRR_VV "vector fp perform sign operation short" arch12 zarch vx2
+-e700000820cc wflcsb VRR_VV "scalar vector fp perform sign operation scalar short" arch12 zarch vx2
+-e700001020cc vflnsb VRR_VV "vector fp perform sign operation short" arch12 zarch vx2
+-e700001820cc wflnsb VRR_VV "scalar vector fp perform sign operation scalar short" arch12 zarch vx2
+-e700002020cc vflpsb VRR_VV "vector fp perform sign operation short" arch12 zarch vx2
+-e700002820cc wflpsb VRR_VV "scalar vector fp perform sign operation scalar short" arch12 zarch vx2
+-e700000840cc wfpsoxb VRR_VV0U2 "scalar vector fp perform sign operation scalar extended" arch12 zarch vx2
+-e700000840cc wflcxb VRR_VV "scalar vector fp perform sign operation scalar extended" arch12 zarch vx2
+-e700001840cc wflnxb VRR_VV "scalar vector fp perform sign operation scalar extended" arch12 zarch vx2
+-e700002840cc wflpxb VRR_VV "scalar vector fp perform sign operation scalar extended" arch12 zarch vx2
+-e700000020ce vfsqsb VRR_VV "vector fp square root short" arch12 zarch vx2
+-e700000820ce wfsqsb VRR_VV "scalar vector fp square root scalar short" arch12 zarch vx2
+-e700000840ce wfsqxb VRR_VV "scalar vector fp square root scalar extended" arch12 zarch vx2
+-e700000020e2 vfssb VRR_VVV "vector fp subtract short" arch12 zarch vx2
+-e700000820e2 wfssb VRR_VVV "scalar vector fp subtract scalar short" arch12 zarch vx2
+-e700000840e2 wfsxb VRR_VVV "scalar vector fp subtract scalar extended" arch12 zarch vx2
+-e7000000204a vftcisb VRI_VVU2 "vector fp test data class immediate short" arch12 zarch vx2
+-e7000008204a wftcisb VRI_VVU2 "scalar vector fp test data class immediate scalar short" arch12 zarch vx2
+-e7000008404a wftcixb VRI_VVU2 "scalar vector fp test data class immediate scalar extended" arch12 zarch vx2
++e700000020e5 vfdsb VRR_VVV "vector fp divide short" arch12 zarch
++e700000820e5 wfdsb VRR_VVV "scalar vector fp divide scalar short" arch12 zarch
++e700000840e5 wfdxb VRR_VVV "scalar vector fp divide scalar extended" arch12 zarch
++e700000020c7 vfisb VRR_VV0UU "vector load fp integer short" arch12 zarch
++e700000820c7 wfisb VRR_VV0UU8 "scalar vector load fp integer scalar short" arch12 zarch
++e700000840c7 wfixb VRR_VV0UU8 "scalar vector load fp integer scalar extended" arch12 zarch
++e700000000c4 vfll VRR_VV0UU2 "vector fp load lengthened" arch12 zarch
++e700000020c4 vflls VRR_VV "vector fp load lengthened" arch12 zarch
++e700000820c4 wflls VRR_VV "scalar vector fp load lengthened short" arch12 zarch
++e700000830c4 wflld VRR_VV "scalar vector fp load lengthened long" arch12 zarch
++e700000000c5 vflr VRR_VV0UUU "vector fp load rounded" arch12 zarch
++e700000030c5 vflrd VRR_VV0UU "vector fp load rounded long" arch12 zarch
++e700000830c5 wflrd VRR_VV0UU8 "scalar vector fp load rounded long" arch12 zarch
++e700000840c5 wflrx VRR_VV0UU8 "scalar vector fp load rounded extended" arch12 zarch
++e700000000ef vfmax VRR_VVV0UUU "vector fp maximum" arch12 zarch
++e700000020ef vfmaxsb VRR_VVV0U0 "vector fp maximum short" arch12 zarch
++e700000030ef vfmaxdb VRR_VVV0U0 "vector fp maximum long" arch12 zarch
++e700000820ef wfmaxsb VRR_VVV0U0 "scalar fp maximum scalar short" arch12 zarch
++e700000830ef wfmaxdb VRR_VVV0U0 "scalar fp maximum scalar long" arch12 zarch
++e700000840ef wfmaxxb VRR_VVV0U0 "scalar fp maximum scalar extended" arch12 zarch
++e700000000ee vfmin VRR_VVV0UUU "vector fp minimum" arch12 zarch
++e700000020ee vfminsb VRR_VVV0U0 "vector fp minimum short" arch12 zarch
++e700000030ee vfmindb VRR_VVV0U0 "vector fp minimum long" arch12 zarch
++e700000820ee wfminsb VRR_VVV0U0 "scalar fp minimum scalar short" arch12 zarch
++e700000830ee wfmindb VRR_VVV0U0 "scalar fp minimum scalar long" arch12 zarch
++e700000840ee wfminxb VRR_VVV0U0 "scalar fp minimum scalar extended" arch12 zarch
++e700000020e7 vfmsb VRR_VVV "vector fp multiply short" arch12 zarch
++e700000820e7 wfmsb VRR_VVV "scalar vector fp multiply scalar short" arch12 zarch
++e700000840e7 wfmxb VRR_VVV "scalar vector fp multiply scalar extended" arch12 zarch
++e7000200008f vfmasb VRR_VVVV "vector fp multiply and add short" arch12 zarch
++e7000208008f wfmasb VRR_VVVV "scalar vector fp multiply and add scalar short" arch12 zarch
++e7000408008f wfmaxb VRR_VVVV "scalar vector fp multiply and add scalar extended" arch12 zarch
++e7000200008e vfmssb VRR_VVVV "vector fp multiply and subtract short" arch12 zarch
++e7000208008e wfmssb VRR_VVVV "scalar vector fp multiply and subtract scalar short" arch12 zarch
++e7000408008e wfmsxb VRR_VVVV "scalar vector fp multiply and subtract scalar extended" arch12 zarch
++e7000000009f vfnma VRR_VVVU0UV "vector fp negative multiply and add" arch12 zarch
++e7000200009f vfnmasb VRR_VVVV "vector fp negative multiply and add short" arch12 zarch
++e7000208009f wfnmasb VRR_VVVV "scalar vector fp negative multiply and add scalar short" arch12 zarch
++e7000300009f vfnmadb VRR_VVVV "vector fp negative multiply and add long" arch12 zarch
++e7000308009f wfnmadb VRR_VVVV "scalar vector fp negative multiply and add scalar long" arch12 zarch
++e7000408009f wfnmaxb VRR_VVVV "scalar vector fp negative multiply and add scalar extended" arch12 zarch
++e7000000009e vfnms VRR_VVVU0UV "vector fp negative multiply and subtract" arch12 zarch
++e7000200009e vfnmssb VRR_VVVV "vector fp negative multiply and subtract short" arch12 zarch
++e7000208009e wfnmssb VRR_VVVV "scalar vector fp negative multiply and subtract scalar short" arch12 zarch
++e7000300009e vfnmsdb VRR_VVVV "vector fp negative multiply and subtract long" arch12 zarch
++e7000308009e wfnmsdb VRR_VVVV "scalar vector fp negative multiply and subtract scalar long" arch12 zarch
++e7000408009e wfnmsxb VRR_VVVV "scalar vector fp negative multiply and subtract scalar extended" arch12 zarch
++e700000020cc vfpsosb VRR_VV0U2 "vector fp perform sign operation short" arch12 zarch
++e700000820cc wfpsosb VRR_VV0U2 "scalar vector fp perform sign operation scalar short" arch12 zarch
++e700000020cc vflcsb VRR_VV "vector fp perform sign operation short" arch12 zarch
++e700000820cc wflcsb VRR_VV "scalar vector fp perform sign operation scalar short" arch12 zarch
++e700001020cc vflnsb VRR_VV "vector fp perform sign operation short" arch12 zarch
++e700001820cc wflnsb VRR_VV "scalar vector fp perform sign operation scalar short" arch12 zarch
++e700002020cc vflpsb VRR_VV "vector fp perform sign operation short" arch12 zarch
++e700002820cc wflpsb VRR_VV "scalar vector fp perform sign operation scalar short" arch12 zarch
++e700000840cc wfpsoxb VRR_VV0U2 "scalar vector fp perform sign operation scalar extended" arch12 zarch
++e700000840cc wflcxb VRR_VV "scalar vector fp perform sign operation scalar extended" arch12 zarch
++e700001840cc wflnxb VRR_VV "scalar vector fp perform sign operation scalar extended" arch12 zarch
++e700002840cc wflpxb VRR_VV "scalar vector fp perform sign operation scalar extended" arch12 zarch
++e700000020ce vfsqsb VRR_VV "vector fp square root short" arch12 zarch
++e700000820ce wfsqsb VRR_VV "scalar vector fp square root scalar short" arch12 zarch
++e700000840ce wfsqxb VRR_VV "scalar vector fp square root scalar extended" arch12 zarch
++e700000020e2 vfssb VRR_VVV "vector fp subtract short" arch12 zarch
++e700000820e2 wfssb VRR_VVV "scalar vector fp subtract scalar short" arch12 zarch
++e700000840e2 wfsxb VRR_VVV "scalar vector fp subtract scalar extended" arch12 zarch
++e7000000204a vftcisb VRI_VVU2 "vector fp test data class immediate short" arch12 zarch
++e7000008204a wftcisb VRI_VVU2 "scalar vector fp test data class immediate scalar short" arch12 zarch
++e7000008404a wftcixb VRI_VVU2 "scalar vector fp test data class immediate scalar extended" arch12 zarch
+ 
+ # Miscellaneous Instruction Extensions Facility 2
+ 
+@@ -1843,28 +1843,28 @@ e30000000039 sgh RXY_RRRD "subtract halfword from 64 bit value" arch12 zarch
+ 
+ # Vector packed decimal facility
+ 
+-e60000000037 vlrlr VRS_RRDV "vector load rightmost with length" arch12 zarch vx2
+-e60000000035 vlrl VSI_URDV "vector load rightmost with immediate length" arch12 zarch vx2
+-e6000000003f vstrlr VRS_RRDV "vector store rightmost with length" arch12 zarch vx2
+-e6000000003d vstrl VSI_URDV "vector store rightmost with immediate length" arch12 zarch vx2
+-e60000000071 vap VRI_VVV0UU2 "vector add decimal" arch12 zarch vx2
+-e60000000077 vcp VRR_0VV0U "vector compare decimal" arch12 zarch vx2
+-e60000000050 vcvb VRR_RV0U "vector convert to binary 32 bit" arch12 zarch vx2
+-e60000000052 vcvbg VRR_RV0U "vector convert to binary 64 bit" arch12 zarch vx2
+-e60000000058 vcvd VRI_VR0UU "vector convert to decimal 32 bit" arch12 zarch vx2
+-e6000000005a vcvdg VRI_VR0UU "vector convert to decimal 64 bit" arch12 zarch vx2
+-e6000000007a vdp VRI_VVV0UU2 "vector divide decimal" arch12 zarch vx2
+-e60000000049 vlip VRI_V0UU2 "vector load immediate decimal" arch12 zarch vx2
+-e60000000078 vmp VRI_VVV0UU2 "vector multiply decimal" arch12 zarch vx2
+-e60000000079 vmsp VRI_VVV0UU2 "vector multiply and shift decimal" arch12 zarch vx2
+-e60000000034 vpkz VSI_URDV "vector pack zoned" arch12 zarch vx2
+-e6000000005b vpsop VRI_VVUUU2 "vector perform sign operation decimal" arch12 zarch vx2
+-e6000000007b vrp VRI_VVV0UU2 "vector remainder decimal" arch12 zarch vx2
+-e6000000007e vsdp VRI_VVV0UU2 "vector shift and divide decimal" arch12 zarch vx2
+-e60000000059 vsrp VRI_VVUUU2 "vector shift and round decimal" arch12 zarch vx2
+-e60000000073 vsp VRI_VVV0UU2 "vector subtract decimal" arch12 zarch vx2
+-e6000000005f vtp VRR_0V "vector test decimal" arch12 zarch vx2
+-e6000000003c vupkz VSI_URDV "vector unpack zoned" arch12 zarch vx2
++e60000000037 vlrlr VRS_RRDV "vector load rightmost with length" arch12 zarch
++e60000000035 vlrl VSI_URDV "vector load rightmost with immediate length" arch12 zarch
++e6000000003f vstrlr VRS_RRDV "vector store rightmost with length" arch12 zarch
++e6000000003d vstrl VSI_URDV "vector store rightmost with immediate length" arch12 zarch
++e60000000071 vap VRI_VVV0UU2 "vector add decimal" arch12 zarch
++e60000000077 vcp VRR_0VV0U "vector compare decimal" arch12 zarch
++e60000000050 vcvb VRR_RV0U "vector convert to binary 32 bit" arch12 zarch
++e60000000052 vcvbg VRR_RV0U "vector convert to binary 64 bit" arch12 zarch
++e60000000058 vcvd VRI_VR0UU "vector convert to decimal 32 bit" arch12 zarch
++e6000000005a vcvdg VRI_VR0UU "vector convert to decimal 64 bit" arch12 zarch
++e6000000007a vdp VRI_VVV0UU2 "vector divide decimal" arch12 zarch
++e60000000049 vlip VRI_V0UU2 "vector load immediate decimal" arch12 zarch
++e60000000078 vmp VRI_VVV0UU2 "vector multiply decimal" arch12 zarch
++e60000000079 vmsp VRI_VVV0UU2 "vector multiply and shift decimal" arch12 zarch
++e60000000034 vpkz VSI_URDV "vector pack zoned" arch12 zarch
++e6000000005b vpsop VRI_VVUUU2 "vector perform sign operation decimal" arch12 zarch
++e6000000007b vrp VRI_VVV0UU2 "vector remainder decimal" arch12 zarch
++e6000000007e vsdp VRI_VVV0UU2 "vector shift and divide decimal" arch12 zarch
++e60000000059 vsrp VRI_VVUUU2 "vector shift and round decimal" arch12 zarch
++e60000000073 vsp VRI_VVV0UU2 "vector subtract decimal" arch12 zarch
++e6000000005f vtp VRR_0V "vector test decimal" arch12 zarch
++e6000000003c vupkz VSI_URDV "vector unpack zoned" arch12 zarch
+ 
+ # Guarded storage facility
+ 

@@ -1,0 +1,67 @@
+# DP: Revert commit causing PR 21074.
+
+Index: b/gold/output.cc
+===================================================================
+--- a/gold/output.cc
++++ b/gold/output.cc
+@@ -4801,7 +4801,7 @@ Output_segment::first_section() const
+ 	    return (*p)->output_section();
+ 	}
+     }
+-  return NULL;
++  gold_unreachable();
+ }
+ 
+ // Return the number of Output_sections in an Output_segment.
+Index: b/gold/output.h
+===================================================================
+--- a/gold/output.h
++++ b/gold/output.h
+@@ -4741,7 +4741,6 @@ class Output_segment
+   first_section_load_address() const
+   {
+     const Output_section* os = this->first_section();
+-    gold_assert(os != NULL);
+     return os->has_load_address() ? os->load_address() : os->address();
+   }
+ 
+Index: b/gold/symtab.cc
+===================================================================
+--- a/gold/symtab.cc
++++ b/gold/symtab.cc
+@@ -3159,14 +3159,7 @@ Symbol_table::sized_write_globals(const
+ 	  break;
+ 
+ 	case Symbol::IN_OUTPUT_SEGMENT:
+-	  {
+-	    Output_segment* oseg = sym->output_segment();
+-	    Output_section* osect = oseg->first_section();
+-	    if (osect == NULL)
+-	      shndx = elfcpp::SHN_ABS;
+-	    else
+-	      shndx = osect->out_shndx();
+-	  }
++	  shndx = elfcpp::SHN_ABS;
+ 	  break;
+ 
+ 	case Symbol::IS_CONSTANT:
+Index: b/gold/ChangeLog-2016
+===================================================================
+--- a/gold/ChangeLog-2016
++++ b/gold/ChangeLog-2016
+@@ -87,15 +87,6 @@
+ 	* testsuite/Makefile.in: Regenerate.
+ 	* ver_test_8.sh: New test script.
+ 
+-2016-12-21  Cary Coutant  <ccoutant@gmail.com>
+-
+-	* output.cc (Output_segment::first_section): Return NULL if there are
+-	no sections in the segment.
+-	* output.h (Output_segment::first_section_load_address): Assert that
+-	first section is not NULL.
+-	* symtab.cc (Symbol_table::sized_write_globals): Attach linker-created
+-	segment-relative symbols to first section of the segment.
+-
+ 2016-12-21  Alan Modra  <amodra@gmail.com>
+ 
+ 	* arm.cc: Fix comment chars with high bit set.

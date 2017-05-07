@@ -1,0 +1,156 @@
+# DP: Fix PR binutils/21156, illegal memory accesses in readelf.
+
+From b814a36d3440de95f2ac6eaa4fc7935c322ea456 Mon Sep 17 00:00:00 2001
+From: Nick Clifton <nickc@redhat.com>
+Date: Fri, 17 Feb 2017 15:59:45 +0000
+Subject: [PATCH] Fix illegal memory accesses in readelf when parsing a corrupt
+ binary.
+
+	PR binutils/21156
+	* readelf.c (find_section_in_set): Test for invalid section
+	indicies.
+---
+ binutils/ChangeLog |  6 ++++++
+ binutils/readelf.c | 10 ++++++++--
+ 2 files changed, 14 insertions(+), 2 deletions(-)
+
+2017-02-17  Nick Clifton  <nickc@redhat.com>
+
+	PR binutils/21156
+	* readelf.c (find_section_in_set): Test for invalid section
+	indicies.
+
+diff --git a/binutils/readelf.c b/binutils/readelf.c
+index ea9da7a..20df6f8 100644
+--- a/binutils/readelf.c
++++ b/binutils/readelf.c
+@@ -676,8 +676,14 @@ find_section_in_set (const char * name, unsigned int * set)
+   if (set != NULL)
+     {
+       while ((i = *set++) > 0)
+-	if (streq (SECTION_NAME (section_headers + i), name))
+-	  return section_headers + i;
++	{
++	  /* See PR 21156 for a reproducer.  */
++	  if (i >= elf_header.e_shnum)
++	    continue; /* FIXME: Should we issue an error message ?  */
++
++	  if (streq (SECTION_NAME (section_headers + i), name))
++	    return section_headers + i;
++	}
+     }
+ 
+   return find_section (name);
+-- 
+2.9.3
+
+From 43a444f9c5bfd44b4304eafd78338e21d54bea14 Mon Sep 17 00:00:00 2001
+From: Nick Clifton <nickc@redhat.com>
+Date: Mon, 20 Feb 2017 14:40:39 +0000
+Subject: [PATCH] Fix another memory access error in readelf when parsing a
+ corrupt binary.
+
+	PR binutils/21156
+	* dwarf.c (cu_tu_indexes_read): Move into...
+	(load_cu_tu_indexes): ... here.  Change the variable into
+	tri-state.  Change the function into boolean, returning
+	false if the indicies could not be loaded.
+	(find_cu_tu_set): Return NULL if the indicies could not be
+	loaded.
+---
+ binutils/ChangeLog | 10 ++++++++++
+ binutils/dwarf.c   | 34 ++++++++++++++++++++--------------
+ 2 files changed, 30 insertions(+), 14 deletions(-)
+
+2017-02-20  Nick Clifton  <nickc@redhat.com>
+
+	PR binutils/21156
+	* dwarf.c (cu_tu_indexes_read): Move into...
+	(load_cu_tu_indexes): ... here.  Change the variable into
+	tri-state.  Change the function into boolean, returning
+	false if the indicies could not be loaded.
+	(find_cu_tu_set): Return NULL if the indicies could not be
+	loaded.
+
+ 
+diff --git a/binutils/dwarf.c b/binutils/dwarf.c
+index 0184a7a..6d879c9 100644
+--- a/binutils/dwarf.c
++++ b/binutils/dwarf.c
+@@ -76,7 +76,6 @@ int dwarf_check = 0;
+    as a zero-terminated list of section indexes comprising one set of debug
+    sections from a .dwo file.  */
+ 
+-static int cu_tu_indexes_read = 0;
+ static unsigned int *shndx_pool = NULL;
+ static unsigned int shndx_pool_size = 0;
+ static unsigned int shndx_pool_used = 0;
+@@ -99,7 +98,7 @@ static int tu_count = 0;
+ static struct cu_tu_set *cu_sets = NULL;
+ static struct cu_tu_set *tu_sets = NULL;
+ 
+-static void load_cu_tu_indexes (void *file);
++static bfd_boolean load_cu_tu_indexes (void *);
+ 
+ /* Values for do_debug_lines.  */
+ #define FLAG_DEBUG_LINES_RAW	 1
+@@ -2715,7 +2714,7 @@ load_debug_info (void * file)
+     return num_debug_info_entries;
+ 
+   /* If this is a DWARF package file, load the CU and TU indexes.  */
+-  load_cu_tu_indexes (file);
++  (void) load_cu_tu_indexes (file);
+ 
+   if (load_debug_section (info, file)
+       && process_debug_info (&debug_displays [info].section, file, abbrev, 1, 0))
+@@ -7378,21 +7377,27 @@ process_cu_tu_index (struct dwarf_section *section, int do_display)
+    section sets that we can use to associate a .debug_info.dwo section
+    with its associated .debug_abbrev.dwo section in a .dwp file.  */
+ 
+-static void
++static bfd_boolean
+ load_cu_tu_indexes (void *file)
+ {
++  static int cu_tu_indexes_read = -1; /* Tri-state variable.  */
++
+   /* If we have already loaded (or tried to load) the CU and TU indexes
+      then do not bother to repeat the task.  */
+-  if (cu_tu_indexes_read)
+-    return;
+-
+-  if (load_debug_section (dwp_cu_index, file))
+-    process_cu_tu_index (&debug_displays [dwp_cu_index].section, 0);
+-
+-  if (load_debug_section (dwp_tu_index, file))
+-    process_cu_tu_index (&debug_displays [dwp_tu_index].section, 0);
++  if (cu_tu_indexes_read == -1)
++    {
++      cu_tu_indexes_read = TRUE;
++  
++      if (load_debug_section (dwp_cu_index, file))
++	if (! process_cu_tu_index (&debug_displays [dwp_cu_index].section, 0))
++	  cu_tu_indexes_read = FALSE;
++
++      if (load_debug_section (dwp_tu_index, file))
++	if (! process_cu_tu_index (&debug_displays [dwp_tu_index].section, 0))
++	  cu_tu_indexes_read = FALSE;
++    }
+ 
+-  cu_tu_indexes_read = 1;
++  return (bfd_boolean) cu_tu_indexes_read;
+ }
+ 
+ /* Find the set of sections that includes section SHNDX.  */
+@@ -7402,7 +7407,8 @@ find_cu_tu_set (void *file, unsigned int shndx)
+ {
+   unsigned int i;
+ 
+-  load_cu_tu_indexes (file);
++  if (! load_cu_tu_indexes (file))
++    return NULL;
+ 
+   /* Find SHNDX in the shndx pool.  */
+   for (i = 0; i < shndx_pool_used; i++)
+-- 
+2.9.3
+

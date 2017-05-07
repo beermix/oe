@@ -1,0 +1,49 @@
+# DP: ld: enable new dtags by default for linux/gnu targets
+
+From 9e3072ad67f8b6d092e9e4dbfc6f8c9141aabe0c Mon Sep 17 00:00:00 2001
+From: Mike Frysinger <vapier@gentoo.org>
+Date: Mon, 21 Jan 2013 08:21:45 +0000
+Subject: [PATCH] ld: enable new dtags by default for linux/gnu targets
+
+The "new" dtags options have been around for 14+ years now, so for Linux
+and GNU targets, enable them by default.
+
+2012-01-21  Mike Frysinger  <vapier@gentoo.org>
+
+	* emultempl/elf32.em (gld${EMULATION_NAME}_before_parse): Set
+	link_info.new_dtags to TRUE for linux/gnu targets.
+	* NEWS: Mention new dtags default.
+
+From 8d0bade12dbc53bfe61a63add17e7780618f1ac1 Mon Sep 17 00:00:00 2001
+From: Roland McGrath <roland@gnu.org>
+Date: Tue, 22 Jan 2013 22:07:34 +0000
+Subject: [PATCH] ld/ 	* emultempl/elf32.em
+ (gld${EMULATION_NAME}_before_parse): Set 	new_dtags to TRUE for
+ *-*-nacl* targets.
+
+2013-01-22  Roland McGrath  <mcgrathr@google.com>
+
+	* emultempl/elf32.em (gld${EMULATION_NAME}_before_parse): Set
+	new_dtags to TRUE for *-*-nacl* targets.
+
+Index: b/ld/emultempl/elf32.em
+===================================================================
+--- a/ld/emultempl/elf32.em
++++ b/ld/emultempl/elf32.em
+@@ -106,6 +106,16 @@ gld${EMULATION_NAME}_before_parse (void)
+   `if test -n "$CALL_NOP_BYTE" ; then echo link_info.call_nop_byte = $CALL_NOP_BYTE; fi`;
+   link_info.check_relocs_after_open_input = `if test "x${CHECK_RELOCS_AFTER_OPEN_INPUT}" = xyes ; then echo TRUE ; else echo FALSE ; fi`;
+   link_info.relro = DEFAULT_LD_Z_RELRO;
++EOF
++
++case ${target} in
++  *-*-linux-* | *-*-k*bsd*-* | *-*-gnu* | *-*-nacl*)
++    fragment <<EOF
++  link_info.new_dtags = TRUE;
++EOF
++    ;;
++esac
++fragment <<EOF
+ }
+ 
+ EOF

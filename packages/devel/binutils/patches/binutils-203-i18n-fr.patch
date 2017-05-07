@@ -1,0 +1,13 @@
+Index: b/bfd/po/fr.po
+===================================================================
+--- a/bfd/po/fr.po
++++ b/bfd/po/fr.po
+@@ -2890,7 +2890,7 @@ msgstr "%B: réadressage R_X86_64_GOTOFF
+ 
+ #: elf64-x86-64.c:3523
+ msgid "; recompile with -fPIC"
+-msgstr "; recompilé avec -fPIC"
++msgstr "; recompilez avec -fPIC"
+ 
+ #: elf64-x86-64.c:3528
+ msgid "%B: relocation %s against %s `%s' can not be used when making a shared object%s"

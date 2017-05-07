@@ -5,7 +5,7 @@ Index: b/bfd/opncls.c
 ===================================================================
 --- a/bfd/opncls.c
 +++ b/bfd/opncls.c
-@@ -195,6 +195,13 @@ bfd_fopen (const char *filename, const c
+@@ -196,6 +196,13 @@ bfd_fopen (const char *filename, const c
  {
    bfd *nbfd;
    const bfd_target *target_vec;
