@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="glibc"
-PKG_VERSION="2.24"
+PKG_VERSION="2.25"
 PKG_PRIORITY="optional"
 PKG_URL="http://ftp.gnu.org/pub/gnu/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap"
@@ -30,6 +30,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
+                           libc_cv_slibdir=/lib \
                            ac_cv_path_PERL= \
                            ac_cv_prog_MAKEINFO= \
                            --libexecdir=/usr/lib/glibc \
@@ -37,6 +38,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --disable-profile \
                            --disable-sanity-checks \
                            --enable-add-ons \
+                           --enable-stack-protector=strong \
                            --enable-bind-now \
                            --with-elf \
                            --with-tls \
@@ -53,7 +55,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --disable-timezone-tools \
                            --disable-debug"
 
-MAKEFLAGS=-j4
+MAKEFLAGS=-j3
 
 NSS_CONF_DIR="$PKG_BUILD/nss"
 
@@ -99,7 +101,6 @@ pre_configure_target() {
 
 # set some CFLAGS we need
   export CFLAGS="$CFLAGS -g"
-  export BUILD_CC=$HOST_CC
   export OBJDUMP_FOR_HOST=objdump
 
 cat >config.cache <<EOF
@@ -107,18 +108,17 @@ libc_cv_forced_unwind=yes
 libc_cv_c_cleanup=yes
 libc_cv_ssp=no
 libc_cv_ssp_strong=no
-libc_cv_slibdir=/lib
 EOF
 
-echo "libdir=/usr/lib" >> configparms
-echo "slibdir=/lib" >> configparms
-echo "sbindir=/usr/bin" >> configparms
-echo "rootsbindir=/usr/bin" >> configparms
+  echo "sbindir=/usr/bin" >> configparms
+  echo "rootsbindir=/usr/bin" >> configparms
 }
 
 post_makeinstall_target() {
-# we are linking against ld.so, so symlink
-  ln -sf $(basename $INSTALL/lib/ld-*.so) $INSTALL/lib/ld.so
+  ln -sf ld-$PKG_VERSION.so $INSTALL/lib/ld.so
+  if [ "$TARGET_ARCH" = "arm" -a "$TARGET_FLOAT" = "hard" ]; then
+    ln -sf ld-$PKG_VERSION.so $INSTALL/lib/ld-linux.so.3
+  fi
 
 # cleanup
   for i in $GLIBC_EXCLUDE_BIN; do
@@ -126,9 +126,7 @@ post_makeinstall_target() {
   done
   rm -rf $INSTALL/usr/lib/audit
   rm -rf $INSTALL/usr/lib/glibc
-  rm -rf $INSTALL/usr/lib/libc_pic
   rm -rf $INSTALL/usr/lib/*.o
-  rm -rf $INSTALL/usr/lib/*.map
   rm -rf $INSTALL/var
 
 # remove locales and charmaps
@@ -154,11 +152,8 @@ post_makeinstall_target() {
 # create default configs
   mkdir -p $INSTALL/etc
     cp $PKG_DIR/config/nsswitch.conf $INSTALL/etc
-    cp $PKG_DIR/config/host.conf $INSTALL/etc
     cp $PKG_DIR/config/gai.conf $INSTALL/etc
-  if [ "$TARGET_ARCH" = "arm" -a "$TARGET_FLOAT" = "hard" ]; then
-    ln -sf ld.so $INSTALL/lib/ld-linux.so.3
-  fi
+    echo "multi on" > $INSTALL/etc/host.conf
 }
 
 configure_init() {

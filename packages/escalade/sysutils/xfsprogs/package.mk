@@ -17,11 +17,11 @@
 ################################################################################
 
 PKG_NAME="xfsprogs"
-PKG_VERSION="v4.11.0-rc2"
+PKG_VERSION="v4.11.0"
 PKG_SITE="https://git.kernel.org/pub/scm/fs/xfs/xfsprogs-dev.git"
 PKG_GIT_URL="git://git.kernel.org/pub/scm/fs/xfs/xfsprogs-dev.git"
-PKG_DEPENDS_TARGET="toolchain util-linux"
-PKG_DEPENDS_INIT="libedit xfsprogs"
+PKG_DEPENDS_TARGET="toolchain util-linux libedit"
+PKG_DEPENDS_INIT="xfsprogs"
 PKG_SECTION="tools"
 PKG_SHORTDESC="xfsprogs: Utilities for use with the xfs filesystem"
 PKG_IS_ADDON="no"
