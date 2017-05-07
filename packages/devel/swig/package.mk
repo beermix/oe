@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="swig"
-PKG_VERSION="3.0.10"
+PKG_VERSION="3.0.12"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.swig.org"
-PKG_URL="ftp://root:openelec@192.168.1.4:2121/www/swig-3.0.10.tar.gz"
+PKG_URL="$SOURCEFORGE_SRC/swig/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="ccache:host pcre:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="devel"
