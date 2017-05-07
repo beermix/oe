@@ -1,9 +1,3 @@
-
-# libepoxy (actually) needs to be built shared, to avoid
-# (EE) Failed to load /usr/lib/xorg/modules/libglamoregl.so: 
-# /usr/lib/xorg/modules/libglamoregl.so: undefined symbol: epoxy_eglCreateImageKHR
-# in Xorg.log
-
 PKG_NAME="at-spi2-atk"
 PKG_VERSION="2.14.0"
 PKG_LICENSE="GPL"
