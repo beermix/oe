@@ -8,4 +8,4 @@ PKG_AUTORECONF="no"
 
 LIBS="$LIBS -lcurses -lterminfo"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-ipv6"
+PKG_CONFIGURE_OPTS_TARGET="--disable-ipv6 --disable-shared"

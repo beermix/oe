@@ -11,9 +11,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-systemd \
 			      --disable-seccomp \
 			      --disable-libscrypt \
 			      --disable-gcc-hardening \
-			      --disable-libfuzzer \
 			      --disable-unittests \
-			      --enable-openbsd-malloc \
 			      --disable-linker-hardening \
 			      --sysconfdir=/storage/.config \
 			      --datarootdir=/storage/.cache/tor \

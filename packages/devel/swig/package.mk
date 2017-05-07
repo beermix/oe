@@ -33,10 +33,10 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_HOST="--with-boost=no \
-                         --without-pcre \
+                         --with-pcre \
                          --without-x \
                          --without-tcl \
-                         --without-python \
+                         --with-python \
                          --without-python3 \
                          --without-perl5 \
                          --without-octave \
@@ -51,9 +51,9 @@ PKG_CONFIGURE_OPTS_HOST="--with-boost=no \
                          --without-pike \
                          --without-chicken \
                          --without-csharp \
-                         --without-lua \
+                         --with-lua \
                          --without-allegrocl \
                          --without-clisp \
                          --without-r \
-                         --without-go \
+                         --with-go \
                          --without-d"
