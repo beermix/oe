@@ -17,6 +17,11 @@
 ################################################################################
 
 PKG_NAME="kodi"
+PKG_VERSION="274fed4"
+PKG_GIT_URL="https://github.com/xbmc/xbmc.git"
+PKG_GIT_BRANCH="Krypton"
+PKG_KEEP_CHECKOUT="no"
+PKG_PATCH_DIRS="$LINUX non-rpi"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -28,22 +33,6 @@ PKG_PRIORITY="optional"
 PKG_SECTION="mediacenter"
 PKG_SHORTDESC="kodi: Kodi Mediacenter"
 PKG_LONGDESC="Kodi Media Center (which was formerly named Xbox Media Center or XBMC) is a free and open source cross-platform media player and home entertainment system software with a 10-foot user interface designed for the living-room TV. Its graphical user interface allows the user to easily manage video, photos, podcasts, and music from a computer, optical disk, local network, and the internet using a remote control."
-
-case "$KODIPLAYER_DRIVER" in
-  bcm2835-firmware)
-    PKG_VERSION="39e9963"
-    PKG_GIT_URL="https://github.com/OpenELEC/xbmc.git"
-    PKG_GIT_BRANCH="krypton_rbp_backports"
-    PKG_KEEP_CHECKOUT="no"
-    ;;
-  *)
-    PKG_VERSION="274fed4"
-    PKG_GIT_URL="https://github.com/xbmc/xbmc.git"
-    PKG_GIT_BRANCH="Krypton"
-    PKG_KEEP_CHECKOUT="no"
-    PKG_PATCH_DIRS="$LINUX non-rpi"
-    ;;
-esac
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
