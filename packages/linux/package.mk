@@ -54,7 +54,7 @@ case "$LINUX" in
     PKG_PATCH_DIRS="linux-4.8 imx6-4.8"
     ;;
   rpi)
-    PKG_VERSION="a22fc2f"
+    PKG_VERSION="53460a0"
     PKG_GIT_URL="https://github.com/raspberrypi/linux.git"
     PKG_GIT_BRANCH="rpi-4.9.y"
     PKG_PATCH_DIRS="linux-4.9 rpi-4.9"
@@ -65,9 +65,8 @@ case "$LINUX" in
     PKG_PATCH_DIRS="linux-4.10"
     ;;
   *)
-    PKG_VERSION="zen-kernel-4.11-01"
-    #PKG_URL="http://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
-    PKG_URL="ftp://root:openelec@192.168.1.4:2121/www/linux-$PKG_VERSION.tar.xz"
+    PKG_VERSION="4.11"
+    PKG_URL="http://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
     PKG_PATCH_DIRS="linux-4.11"
     ;;
 esac
