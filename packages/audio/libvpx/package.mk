@@ -8,13 +8,14 @@ PKG_AUTORECONF="no"
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
+  strip_lto
 }
 
 configure_target() {
   ./configure --prefix="/usr" \
   		--target="x86_64-linux-gcc" \
   		--libc="$(get_pkg_build glibc)" \
-  		--cpu="corei7" \
+  		--cpu="ivybridge" \
   		--extra-cflags="$CFLAGS" \
   		--extra-cxxflags="$CXXFLAGS" \
   		--as=yasm \

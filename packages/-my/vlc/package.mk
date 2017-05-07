@@ -20,7 +20,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --without-contrib \
 			      --disable-nls \
 			      --disable-rpath \
-			      --disable-dbus \
+			      --enable-dbus \
 			      --enable-gprof \
 			      --disable-cprof \
 			      --disable-debug \
@@ -131,7 +131,7 @@ pre_configure_target() {
   export CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fomit-frame-pointer||g"`
   export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-fomit-frame-pointer||g"`
-  #strip_lto
+  strip_lto
 }
 
 post_makeinstall_target() {
