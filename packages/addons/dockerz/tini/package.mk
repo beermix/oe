@@ -31,7 +31,7 @@ PKG_LONGDESC="Tini is the simplest init you could think of"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CMAKE_TARGET_OPTS="-DMINIMAL=ON"
+PKG_CMAKE_TARGET_OPTS="-DMINIMAL=0"
 
 PKG_MAKE_TARGET_OPTS="tini-static"
 
