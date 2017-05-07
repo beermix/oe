@@ -34,15 +34,11 @@ PKG_LONGDESC="Linux V4L2 and DVB API utilities and v4l libraries (libv4l)."
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--without-jpeg"
-PKG_MAKEINSTALL_OPTS_TARGET="PREFIX=/usr -C utils/keytable"
-
-make_target() {
-    make -C utils/keytable CFLAGS="$TARGET_CFLAGS"
-}
+PKG_CONFIGURE_OPTS_TARGET="--without-jpeg --disable-shared --disable-nls --disable-doxygen-html --disable-doxygen-ps --disable-doxygen-pdf --disable-rpath --with-pic --disable-v4l-utils"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/etc/rc_keymaps
+  mkdir -p $INSTALL/etc/rc_keymaps
     ln -sf /storage/.config/rc_keymaps $INSTALL/etc/rc_keymaps
 
   mkdir -p $INSTALL/usr/config
