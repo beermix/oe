@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="gstreamer-vaapi"
-PKG_VERSION="1.11.2"
+PKG_VERSION="1.12.0"
 PKG_SITE="http://gstreamer.freedesktop.org/gstreamer"
 PKG_URL="https://gstreamer.freedesktop.org/src/gstreamer-vaapi/gstreamer-vaapi-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain gstreamer libva-intel-driver gst-plugins-base"
