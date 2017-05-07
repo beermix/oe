@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="mariadb"
-PKG_VERSION="10.1.23"
+PKG_VERSION="10.2.5"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
@@ -33,7 +33,7 @@ PKG_LONGDESC="MariaDB is a community-developed fork and a drop-in replacement fo
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_MARIADB_SERVER="no"
+PKG_MARIADB_SERVER="yes"
 
 # MariaDB Feature set. Selection of features. Options are
 # - xsmall : 
@@ -119,10 +119,10 @@ configure_host() {
         -DWITH_READLINE=OFF \
         -DWITH_PCRE=bundled \
         -DWITH_ZLIB=bundled \
-        -DWITH_SYSTEMD=OFF \
-        -DWITH_LIBWRAP=OFF \
-        -DWITH_WSREP=OFF \
-        -DSECURITY_HARDENED=OFF \
+        -DWITH_SYSTEMD=0 \
+        -DWITH_LIBWRAP=0 \
+        -DWITH_WSREP=0 \
+        -DSECURITY_HARDENED=0 \
         ..
 }
 
@@ -155,14 +155,14 @@ configure_target() {
         -DWITH_EXTRA_CHARSETS=all \
         -DTOKUDB_OK=0 \
         -DDISABLE_LIBMYSQLCLIENT_SYMBOL_VERSIONING=TRUE \
-        -DENABLE_DTRACE=OFF \
-        -DWITH_READLINE=OFF \
+        -DENABLE_DTRACE=0 \
+        -DWITH_READLINE=0 \
         -DWITH_PCRE=bundled \
         -DWITH_ZLIB=bundled \
-        -DWITH_SYSTEMD=OFF \
-        -DWITH_LIBWRAP=OFF \
+        -DWITH_SYSTEMD=1 \
+        -DWITH_LIBWRAP=0 \
         -DWITH_SSL=$SYSROOT_PREFIX/usr \
-        -DSECURITY_HARDENED=OFF \
+        -DSECURITY_HARDENED=0 \
         $MARIADB_OPTS \
         ..
 }

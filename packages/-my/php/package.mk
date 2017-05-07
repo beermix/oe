@@ -10,7 +10,7 @@ PKG_ARCH="any"
 PKG_LICENSE="OpenSource"
 PKG_SITE="http://www.php.net"
 PKG_URL="http://www.php.net/distributions/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain zlib pcre curl libxml2 libressl libxslt libiconv"
+PKG_DEPENDS_TARGET="toolchain zlib pcre curl libxml2 openssl libxslt libiconv"
 PKG_SECTION="xmedia/tools"
 PKG_SHORTDESC="php: Scripting language especially suited for Web development"
 PKG_LONGDESC="PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML."
@@ -18,7 +18,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 post_unpack() {
-  PHP_BUILD_DIR=$(get_build_dir php)
+  PHP_BUILD_DIR=$(get_pkg_build php)
   echo "downloading pear..."
   if [ ! -f "$PHP_BUILD_DIR/../go-pear.phar" ]; then
     wget -O $PHP_BUILD_DIR/../go-pear.phar http://pear.php.net/go-pear.phar

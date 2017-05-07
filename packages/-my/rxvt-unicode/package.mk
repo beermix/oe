@@ -1,4 +1,3 @@
-
 PKG_NAME="rxvt-unicode"
 PKG_VERSION="9.21"
 PKG_SITE="http://software.schmorp.de/pkg/rxvt-unicode.html"
