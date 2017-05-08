@@ -77,7 +77,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-languages=c,c++ \
                          --enable-__cxa_atexit \
                          --enable-decimal-float \
-                         --disable-libssp \
+                         --enable-libssp \
                          --enable-tls \
                          --enable-shared \
                          --disable-static \
