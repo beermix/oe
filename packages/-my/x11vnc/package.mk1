@@ -1,22 +1,15 @@
 PKG_NAME="x11vnc"
 PKG_VERSION="0.9.14"
-PKG_SITE="http://www.karlrunge.com/x11vnc/#downloading"
-PKG_URL="http://x11vnc.sourceforge.net/dev/x11vnc-0.9.14-dev.tar.gz"
-PKG_DEPENDS_TARGET="toolchain libX11 libXext libXtst libjpeg-turbo"
-PKG_SECTION="service/system"
+PKG_URL="https://dl.dropboxusercontent.com/s/op6flmf34zabkvf/x11vnc-0.9.14-dev.tar.gz"
+PKG_DEPENDS_TARGET="toolchain libX11 libXext libXtst libjpeg-turbo libxcb libXau libvncserver"
+
 PKG_AUTORECONF="yes"
 
-pre_build_target() {
-	mkdir -p $PKG_BUILD/.$TARGET_NAME
-	cp -RP $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME
-	#export CFLAGS="$CFLAGS -fPIC -DPIC"
-	export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
-	export MAKEFLAGS="-j1"
-}
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \
 			      --with-x11vnc \
 			      --with-x \
+			      --with-jpeg \
 			      --without-xkeyboard \
 			      --without-xinerama \
 			      --without-xrandr \
@@ -33,11 +26,24 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static \
 			      --without-crypt \
 			      --without-crypto \
 			      --without-ssl \
-			      --without-avahi \
-			      --with-jpeg \
 			      --without-libz \
-			      --without-zlib \
+			      --without-avahi \
 			      --without-gnutls \
 			      --without-client-tls \
-			      --disable-silent-rules \
-			      --with-pic"
+			      ac_cv_c_bigendian=yes \
+			      LDFLAGS=-lpthread"
+
+pre_configure_target() {
+  export LIBS="-lxcb -lXau -ldl -pthread -ljpeg -lz"
+}
+
+pre_build_target() {
+  mkdir -p $PKG_BUILD/.$TARGET_NAME
+  cp -RP $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME
+}
+
+
+addon() {
+  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp $PKG_BUILD/.$TARGET_NAME/src/x11vnc $ADDON_BUILD/$PKG_ADDON_ID/bin
+}
