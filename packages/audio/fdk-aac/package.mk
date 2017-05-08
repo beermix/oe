@@ -1,5 +1,5 @@
 PKG_NAME="fdk-aac"
-PKG_VERSION="74c1a2a"
+PKG_VERSION="5eb6f0d"
 PKG_GIT_URL="https://github.com/mstorsjo/fdk-aac"
 PKG_DEPENDS_TARGET="toolchain libxml2 sqlite"
 PKG_SECTION="tools"
