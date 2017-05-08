@@ -11,8 +11,8 @@ pre_configure_target() {
   
   export LDFLAGS="$LDFLAGS -lresolv"
   
-  strip_lto
-  strip_gold
+  #strip_lto
+  #strip_gold
 }
 
 configure_target() {
