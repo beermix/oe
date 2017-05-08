@@ -59,8 +59,6 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            DRI_DRIVER_SEARCH_DIR=/usr/lib/dri \
                            --enable-silent-rules \
                            --disable-debug \
-                           --disable-profile \
-                           --disable-libglvnd \
                            --disable-mangling \
                            --enable-texture-float \
                            --enable-asm \
