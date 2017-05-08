@@ -60,8 +60,9 @@ pre_configure_target() {
   mkdir -p $ROOT/$PKG_BUILD/.$TARGET_NAME
   cp -a $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$TARGET_NAME/
   
-  #export CCACHE_DISABLE=1
+  export CCACHE_DISABLE=1
   strip_lto
+  strip_gold
 }
 
 configure_target() {
@@ -87,7 +88,6 @@ post_makeinstall_target() {
   #cp ca-bundle.crt $INSTALL/etc/ssl/cert.pem
   
   mkdir -p $INSTALL/etc/ssl
-  mkdir -p $INSTALL/lib
   cp $PKG_DIR/cert/cacert.pem $INSTALL/etc/ssl/cert.pem
 
   # backwards comatibility
