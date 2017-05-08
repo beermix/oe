@@ -98,8 +98,7 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --without-vulkan-drivers"
 
 pre_configure_target() {
-  #export LIBS="-lxcb-dri3 -lxcb-dri2 -lxcb-xfixes -lxcb-present -lxcb-sync -lxshmfence -lz -lexpat"
-    export LIBS="-lxcb-dri3 -lxcb-present -lxcb-sync -lxshmfence -lz -lexpat"
+  export LIBS="-lxcb-dri3 -lxcb-dri2 -lxcb-xfixes -lxcb-present -lxcb-sync -lxshmfence -lz -lexpat"
 }
 
 post_makeinstall_target() {

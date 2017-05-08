@@ -13,8 +13,6 @@ PKG_AUTORECONF="yes"
 PKG_CONFIGURE_OPTS_TARGET="--disable-crywrap \
 			      --enable-libdane \
 			      --disable-nls \
-			      --enable-static \
-			      --disable-shared \
 			      --without-tpm \
 			      --disable-tools \
 			      --without-p11-kit \
