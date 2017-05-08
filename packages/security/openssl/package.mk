@@ -62,7 +62,7 @@ pre_configure_target() {
   cp -a $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$TARGET_NAME/
   
   export CCACHE_DISABLE=1
-  strip_lto
+  #strip_lto
 }
 
 configure_target() {
