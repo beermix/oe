@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="inputstream.adaptive"
-PKG_VERSION="f23ba39"
+PKG_VERSION="7bde41f"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"

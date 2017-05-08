@@ -17,8 +17,12 @@
 ################################################################################
 
 PKG_NAME="mesa"
-PKG_VERSION="17.1.0-rc3"
-PKG_URL="https://fossies.org/linux/misc/mesa-$PKG_VERSION.tar.xz"
+PKG_VERSION="17.0.5"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="OSS"
+PKG_SITE="http://www.mesa3d.org/"
+PKG_URL="ftp://freedesktop.org/pub/mesa/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain Python:host expat glproto dri2proto presentproto libdrm libXext libXdamage libXfixes libXxf86vm libxcb libX11 dri3proto libxshmfence zlib"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="mesa: 3-D graphics library with OpenGL API"
@@ -55,6 +59,8 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            DRI_DRIVER_SEARCH_DIR=/usr/lib/dri \
                            --enable-silent-rules \
                            --disable-debug \
+                           --disable-profile \
+                           --disable-libglvnd \
                            --disable-mangling \
                            --enable-texture-float \
                            --enable-asm \
@@ -63,25 +69,25 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --disable-gles1 \
                            --enable-gles2 \
                            --enable-dri \
+                           --disable-gallium-extra-hud \
                            --enable-dri3 \
                            --enable-glx \
                            --disable-osmesa \
                            --disable-gallium-osmesa \
                            --enable-egl --with-egl-platforms=x11,drm \
+                           --disable-xa \
                            --enable-gbm \
                            --disable-nine \
                            --disable-xvmc \
                            $MESA_VDPAU \
-                           --enable-shared-glapi \
-                           --enable-xa \
                            --disable-omx \
                            --disable-va \
-                           --disable-opencl \
-                           --enable-opencl-icd \
+                           --disable-opencl --disable-opencl-icd \
                            --disable-gallium-tests \
                            --enable-shared-glapi \
                            --enable-driglx-direct \
                            --enable-glx-tls \
+                           --disable-glx-read-only-text \
                            $MESA_GALLIUM_LLVM \
                            --disable-valgrind \
                            --with-sysroot=$SYSROOT_PREFIX \
@@ -91,11 +97,11 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --with-dri-driverdir=/usr/lib/dri \
                            --with-dri-searchpath=/usr/lib/dri \
                            --with-dri-drivers=$DRI_DRIVERS \
-                           --with-vulkan-drivers=no \
-                           --with-sysroot=$SYSROOT_PREFIX"
+                           --without-vulkan-drivers"
 
 pre_configure_target() {
-  export LIBS="-lxcb-dri3 -lxcb-dri2 -lxcb-xfixes -lxcb-present -lxcb-sync -lxshmfence -lz -lexpat"
+  #export LIBS="-lxcb-dri3 -lxcb-dri2 -lxcb-xfixes -lxcb-present -lxcb-sync -lxshmfence -lz -lexpat"
+    export LIBS="-lxcb-dri3 -lxcb-present -lxcb-sync -lxshmfence -lz -lexpat"
 }
 
 post_makeinstall_target() {
