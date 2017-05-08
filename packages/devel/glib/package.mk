@@ -59,7 +59,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_mmap_fixed_mapped=yes \
                            --with-gnu-ld \
                            --with-threads=posix \
                            --with-pcre=system \
-                           --enable-static"
+                           --disable-static"
 
 post_makeinstall_target() {
   mkdir -p $SYSROOT_PREFIX/usr/lib/pkgconfig
