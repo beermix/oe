@@ -16,10 +16,11 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 PKG_NAME="openssl"
-PKG_VERSION="1.0.2k"
-PKG_URL="https://www.openssl.org/source/openssl-$PKG_VERSION.tar.gz"
+PKG_VERSION="1.0.2g"
+#PKG_URL="https://www.openssl.org/source/openssl-$PKG_VERSION.tar.gz"
+PKG_URL="ftp://root:openelec@192.168.1.4:2121/www/openssl-1.0.2g.tar.xz"
 PKG_DEPENDS_HOST="ccache:host"
-PKG_DEPENDS_TARGET="toolchain pcre gmp"
+PKG_DEPENDS_TARGET="toolchain pcre gmp zlib"
 PKG_SECTION="security"
 PKG_SHORTDESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"
 PKG_LONGDESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"

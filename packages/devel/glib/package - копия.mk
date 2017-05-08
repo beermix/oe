@@ -22,7 +22,7 @@ PKG_VERSION="2.53.1"
 PKG_SITE="http://www.gtk.org/"
 PKG_URL="http://ftp.gnome.org/pub/gnome/sources/glib/2.53/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain zlib libffi util-linux attr expat pcre Python:host"
-PKG_DEPENDS_HOST="pcre:host"
+PKG_DEPENDS_HOST="libffi:host pcre:host"
 PKG_SECTION="devel"
 PKG_SHORTDESC="glib: C support library"
 PKG_LONGDESC="GLib is a library which includes support routines for C such as lists, trees, hashes, memory allocation, and many other things."
@@ -54,10 +54,12 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_mmap_fixed_mapped=yes \
                            --disable-man \
                            --disable-dtrace \
                            --disable-systemtap \
+                           --enable-libmount=no \
                            --enable-Bsymbolic \
                            --with-gnu-ld \
                            --with-threads=posix \
-                           --with-pcre=internal"
+                           --with-pcre=system \
+                           --enable-static"
 
 post_makeinstall_target() {
   mkdir -p $SYSROOT_PREFIX/usr/lib/pkgconfig
