@@ -35,7 +35,7 @@ PKG_AUTORECONF="no"
 
 if [ "$VAAPI_SUPPORT" = yes ]; then
   PKG_DEPENDS_TARGET+=" intel-vaapi-driver"
-  PKG_DEPENDS_TARGET+=" libvdpau-va-gl	"
+  PKG_DEPENDS_TARGET+=" libvdpau-va-gl"
   FFMPEG_VAAPI="--enable-vaapi"
 else
   FFMPEG_VAAPI="--disable-vaapi"
@@ -159,6 +159,7 @@ configure_target() {
               --disable-dxva2 \
               --enable-runtime-cpudetect \
               $FFMPEG_TABLES \
+              --disable-memalign-hack \
               --enable-encoders \
               --enable-encoder=ac3 \
               --enable-encoder=aac \
