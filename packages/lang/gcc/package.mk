@@ -57,8 +57,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libitm \
                            --disable-libquadmath \
                            --disable-libgomp \
-                           --disable-libmpx \
-                           --with-system-zlib"
+                           --disable-libmpx"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
