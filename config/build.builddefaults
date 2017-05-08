@@ -45,11 +45,11 @@
                        --sysconfdir=$ROOT/$TOOLCHAIN/etc \
                        --libexecdir=$ROOT/$TOOLCHAIN/lib \
                        --localstatedir=$ROOT/$TOOLCHAIN/var \
-                       --enable-shared \
-                       -DCMAKE_BUILD_TYPE=Release"
+                       --enable-shared"
 
   HOST_CMAKE_OPTS="-DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
-                   -DCMAKE_INSTALL_PREFIX=$ROOT/$TOOLCHAIN"
+                   -DCMAKE_INSTALL_PREFIX=$ROOT/$TOOLCHAIN \
+                   -DCMAKE_BUILD_TYPE=Release"
 
 # configure INIT build defaults
   INIT_CONFIGURE_OPTS="$TARGET_CONFIGURE_OPTS"
