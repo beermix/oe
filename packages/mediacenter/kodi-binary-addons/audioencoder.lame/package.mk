@@ -29,7 +29,7 @@ PKG_PRIORITY="optional"
 PKG_SECTION=""
 PKG_SHORTDESC="audioencoder.lame: A audioencoder addon for Kodi"
 PKG_LONGDESC="audioencoder.lame is a audioencoder addon for Kodi"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_TYPE="xbmc.audioencoder"

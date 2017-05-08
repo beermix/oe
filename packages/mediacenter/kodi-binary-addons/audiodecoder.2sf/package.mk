@@ -29,7 +29,7 @@ PKG_PRIORITY="optional"
 PKG_SECTION=""
 PKG_SHORTDESC="audiodecoder.2sf"
 PKG_LONGDESC="audiodecoder.2sf"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_TYPE="kodi.audiodecoder"
