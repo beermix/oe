@@ -29,7 +29,7 @@ PKG_PRIORITY="optional"
 PKG_SECTION=""
 PKG_SHORTDESC="inputstream.adaptive an adaptive file addon for kodi's new InputStream Interface"
 PKG_LONGDESC="inputstream.adaptive: This is an adaptive file addon for kodi's new InputStream Interface."
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_TYPE="kodi.inputstream"
