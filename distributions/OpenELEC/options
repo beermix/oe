@@ -43,7 +43,7 @@
   PULSEAUDIO_SUPPORT="yes"
 
 # build and install espeak support (yes / no)
-  ESPEAK_SUPPORT="yes"
+  ESPEAK_SUPPORT="no"
 
 # build and install with non-free support
 # (RAR compression support in KODI) (yes / no)
@@ -177,7 +177,7 @@
 
 # Support for partitioning and formating disks in initramfs (yes / no)
 # This adds support for parted and mkfs.ext3/4 to initramfs for OEM usage
-  INITRAMFS_PARTED_SUPPORT="yes"
+  INITRAMFS_PARTED_SUPPORT="no"
 
 # build with swap support (yes / no)
   SWAP_SUPPORT="no"
@@ -189,7 +189,7 @@
   SWAPFILESIZE="256"
 
 # build with installer (yes / no)
-  INSTALLER_SUPPORT="yes"
+  INSTALLER_SUPPORT="no"
 
 # Testpackages for development (yes / no)
   TESTING="no"
