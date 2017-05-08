@@ -17,11 +17,11 @@
 ################################################################################
 
 PKG_NAME="pycryptodome"
-PKG_VERSION="3.4.5"
+PKG_VERSION="b4aed7d"
 PKG_ARCH="any"
 PKG_LICENSE="BSD"
 PKG_SITE="https://pypi.python.org/pypi/pycryptodome"
-PKG_URL="https://files.pythonhosted.org/packages/source/p/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_GIT_URL="https://github.com/Legrandin/pycryptodome"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"
 PKG_SECTION="python/security"
 PKG_SHORTDESC="Cryptographic library for Python"

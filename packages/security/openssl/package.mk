@@ -17,8 +17,7 @@
 ################################################################################
 PKG_NAME="openssl"
 PKG_VERSION="1.0.2g"
-#PKG_URL="https://www.openssl.org/source/openssl-$PKG_VERSION.tar.gz"
-PKG_URL="ftp://root:openelec@192.168.1.4:2121/www/openssl-1.0.2g.tar.xz"
+PKG_URL="https://www.openssl.org/source/openssl-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="ccache:host"
 PKG_DEPENDS_TARGET="toolchain pcre gmp zlib"
 PKG_SECTION="security"
@@ -49,7 +48,7 @@ pre_configure_host() {
 
 configure_host() {
   cd $ROOT/$PKG_BUILD/.$HOST_NAME
-  ./Configure --prefix=/ $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $CFLAGS $LDFLAGS
+  ./Configure --prefix=/ $PKG_CONFIGURE_OPTS_SHARED debian-amd64 $CFLAGS $LDFLAGS
 }
 
 makeinstall_host() {
@@ -75,7 +74,7 @@ makeinstall_target() {
   make -j1 INSTALL_PREFIX=$INSTALL install_sw
   make -j1 INSTALL_PREFIX=$SYSROOT_PREFIX install_sw
   chmod 755 $INSTALL/usr/lib/*.so*
-  chmod 755 $INSTALL/usr/lib/openssl-1.0.0/engines/*.so
+  chmod 755 $INSTALL/usr/lib/engines/*.so
 }
 
 post_makeinstall_target() {
