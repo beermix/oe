@@ -14,4 +14,6 @@ post_makeinstall_target() {
 
 post_install () {
   enable_service ftpd.service
+  enable_service acestream.service
+  enable_service iperf3.service
 }
