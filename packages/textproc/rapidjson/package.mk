@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="rapidjson"
-PKG_VERSION="v1.1.0"
+PKG_VERSION="fe2b360"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="BSD"
@@ -34,7 +34,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="-DBUILD_SHARED_LIBS=0 \
-			      -DCMAKE_BUILD_TYPE=None \
+			      -DCMAKE_BUILD_TYPE=Release \
 			      -DRAPIDJSON_BUILD_CXX11=1 \
 			      -DBUILD_TESTING=0 \
 			      -DRAPIDJSON_BUILD_DOC=0 \
