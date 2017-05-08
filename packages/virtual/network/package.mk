@@ -14,7 +14,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+################################################################################ iproute2
 
 PKG_NAME="network"
 PKG_VERSION=""
@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="various"
 PKG_SITE="http://www.openelec.tv"
 PKG_URL=""
-PKG_DEPENDS_TARGET="toolchain connman netbase ethtool openssh pure-ftpd"
+PKG_DEPENDS_TARGET="toolchain connman netbase ethtool openssh bluez pure-ftpd"
 PKG_PRIORITY="optional"
 PKG_SECTION="virtual"
 PKG_SHORTDESC="network: Metapackage for packages to install network support"
@@ -33,6 +33,6 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 if [ "$BLUETOOTH_SUPPORT" = "yes" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET bluez iproute2"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET"
 fi
 

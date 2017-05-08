@@ -196,7 +196,7 @@ else
 fi
 
 if [ "$KODI_SSHLIB_SUPPORT" = yes ]; then
-  PKG_DEPENDS_TARGET+=" libssh"
+  PKG_DEPENDS_TARGET+=" libssh gnutls"
   PKG_CMAKE_OPTS_TARGET+=" -DENABLE_SSH=ON"
 else
   PKG_CMAKE_OPTS_TARGET+=" -DENABLE_SSH=OFF"
@@ -252,7 +252,7 @@ pre_configure_target() {
   strip_lto
   strip_gold
 
-  export LIBS="$LIBS -lz -ltermcap"
+  export LIBS="$LIBS -lssp -ltermcap"
 }
 
 pre_make_target() {
