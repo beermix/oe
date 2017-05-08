@@ -16,7 +16,7 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 PKG_NAME="openssl"
-PKG_VERSION="1.0.2g"
+PKG_VERSION="1.0.2k"
 PKG_URL="https://www.openssl.org/source/openssl-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="ccache:host"
 PKG_DEPENDS_TARGET="toolchain pcre gmp zlib"
@@ -38,6 +38,7 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            enable-tlsext \
                            no-zlib \
                            no-zlib-dynamic \
+                           no-weak-ssl-ciphers \
                            enable-ec_nistp_64_gcc_128"
 
 pre_configure_host() {
@@ -48,7 +49,7 @@ pre_configure_host() {
 
 configure_host() {
   cd $ROOT/$PKG_BUILD/.$HOST_NAME
-  ./Configure --prefix=/ $PKG_CONFIGURE_OPTS_SHARED debian-amd64 $CFLAGS $LDFLAGS
+  ./Configure --prefix=/ $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $CFLAGS $LDFLAGS
 }
 
 makeinstall_host() {
@@ -62,7 +63,7 @@ pre_configure_target() {
   
   export CCACHE_DISABLE=1
   strip_lto
-  strip_gold
+  #strip_gold
 }
 
 configure_target() {
