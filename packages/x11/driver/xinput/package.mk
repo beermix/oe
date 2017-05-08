@@ -26,5 +26,5 @@ PKG_SHORTDESC="This is an X driver based on libinput."
 PKG_LONGDESC="This is an X driver based on libinput."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 

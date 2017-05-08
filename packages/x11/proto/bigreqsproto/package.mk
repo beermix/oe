@@ -28,7 +28,7 @@ PKG_SHORTDESC="bigreqsproto: BigReqs extension headers"
 PKG_LONGDESC="BigReqs extension headers"
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 # package specific configure options
 PKG_CONFIGURE_OPTS_TARGET="--without-xmlto"

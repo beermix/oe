@@ -27,7 +27,7 @@ PKG_SHORTDESC="xf86-video-vmware: The Xorg driver for vmware video"
 PKG_LONGDESC="xf86-video-vmware: The Xorg driver for vmware video"
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-vmwarectrl-client \
                            --with-xorg-module-dir=$XORG_PATH_MODULES"

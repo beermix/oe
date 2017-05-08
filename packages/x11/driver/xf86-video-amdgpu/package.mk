@@ -27,7 +27,7 @@ PKG_SHORTDESC="xf86-video-amdgpu - AMD Radeon video driver for the Xorg X server
 PKG_LONGDESC="AMD Xorg video driver"
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-udev \
                            --enable-glamor \
