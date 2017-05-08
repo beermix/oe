@@ -62,7 +62,6 @@ configure_target() {
               --disable-libnfs \
               --enable-guest-agent \
               --disable-libusb \
-              --disable-pixman \
               --disable-docs
 }
 
