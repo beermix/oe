@@ -48,7 +48,7 @@ PKG_CMAKE_OPTS_BOOTSTRAP="-DCORE_SOURCE_DIR=$ROOT/$PKG_BUILD"
 PKG_CMAKE_OPTS_HOST="-DCORE_SOURCE_DIR=$ROOT/$PKG_BUILD"
 PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$ROOT/$TOOLCHAIN \
                        -DDEPENDS_PATH=$ROOT/$PKG_BUILD/depends \
-                       -DCMAKE_BUILD_TYPE=None \
+                       -DCMAKE_BUILD_TYPE=none \
                        -DPYTHON_INCLUDE_DIRS=$SYSROOT_PREFIX/usr/include/python2.7 \
                        -DGIT_VERSION=$PKG_VERSION \
                        -DENABLE_LDGOLD=OFF \
@@ -60,12 +60,12 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$ROOT/$TOOLCHAIN \
                        -DENABLE_OPENSSL=ON \
                        -DENABLE_SDL=OFF \
                        -DENABLE_LCMS2=ON \
-                       -DENABLE_CCACHE=ON \
+                       -DENABLE_CCACHE=OFF \
                        -DENABLE_LIRC=ON \
-                       -DENABLE_EVENTCLIENTS=ON \
+                       -DENABLE_EVENTCLIENTS=OFF \
                        -DENABLE_LIBUSB=OFF \
                        -DENABLE_UDEV=ON \
-                       -DENABLE_XSLT=ON \
+                       -DENABLE_XSLT=OFF \
                        -DENABLE_DBUS=ON"
 
 if [ "$TARGET_ARCH" = "x86_64" ]; then
@@ -249,8 +249,7 @@ makeinstall_host() {
 
 pre_configure_target() {
 # kodi should never be built with lto
-  strip_lto
-  strip_gold
+  #strip_lto
 
   export LIBS="$LIBS -lz -ltermcap"
 }
