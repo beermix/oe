@@ -45,7 +45,7 @@
                        --sysconfdir=$ROOT/$TOOLCHAIN/etc \
                        --libexecdir=$ROOT/$TOOLCHAIN/lib \
                        --localstatedir=$ROOT/$TOOLCHAIN/var \
-                       --enable-shared \"
+                       --enable-shared"
 
   HOST_CMAKE_OPTS="-DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
                    -DCMAKE_INSTALL_PREFIX=$ROOT/$TOOLCHAIN \
