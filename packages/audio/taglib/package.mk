@@ -29,7 +29,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release \
-                       -DBUILD_SHARED_LIBS=1 \
+                       -DBUILD_SHARED_LIBS=0 \
                        -DWITH_MP4=1 \
                        -DWITH_ASF=1"
 
