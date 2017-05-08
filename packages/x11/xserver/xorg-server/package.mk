@@ -17,10 +17,8 @@
 ################################################################################
 
 PKG_NAME="xorg-server"
-PKG_VERSION="a06bb73"
-PKG_GIT_URL="git://anongit.freedesktop.org/xorg/xserver"
-#PKG_VERSION="1.19.3"
-#PKG_URL="http://xorg.freedesktop.org/archive/individual/xserver/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_VERSION="1.19.3"
+PKG_URL="http://xorg.freedesktop.org/archive/individual/xserver/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain util-macros font-util fontsproto randrproto recordproto renderproto dri2proto dri3proto fixesproto damageproto videoproto inputproto xf86dgaproto xf86vidmodeproto xf86driproto xf86miscproto presentproto libpciaccess libX11 libXfont2 libXinerama libxshmfence libxkbfile libdrm openssl freetype pixman fontsproto systemd xorg-launch-helper libXcomposite glproto opengl libepoxy glu"
 PKG_SECTION="x11/xserver"
 PKG_SHORTDESC="xorg-server: The Xorg X server"
