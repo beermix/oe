@@ -21,7 +21,7 @@ PKG_VERSION="582c3d5"
 PKG_ARCH="any"
 PKG_GIT_URL="https://github.com/FFmpeg/FFmpeg.git"
 PKG_GIT_BRANCH="release/3.2"
-PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl speex libvpx"
+PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl speex"
 PKG_PRIORITY="optional"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
@@ -198,7 +198,7 @@ configure_target() {
               --disable-libtheora \
               --disable-libvo-amrwbenc \
               --disable-libvorbis \
-              --enable-libvpx \
+              --disable-libvpx \
               --disable-libx264 \
               --disable-libxavs \
               --disable-libxvid \
