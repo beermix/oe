@@ -1,15 +1,20 @@
 PKG_NAME="x11vnc"
-PKG_VERSION="0.9.14"
-PKG_URL="https://dl.dropboxusercontent.com/s/op6flmf34zabkvf/x11vnc-0.9.14-dev.tar.gz"
-PKG_DEPENDS_TARGET="toolchain libX11 libXext libXtst libjpeg-turbo libxcb libXau libvncserver"
-
+PKG_VERSION="8172d3e"
+PKG_GIT_URL="https://github.com/LibVNC/x11vnc"
+PKG_DEPENDS_TARGET="toolchain libX11 libXext libXtst libjpeg-turbo libvncserver"
+PKG_SECTION="x11"
 PKG_AUTORECONF="yes"
 
+pre_build_target() {
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
+  #export MAKEFLAGS="-j1"
+  export LIBS="-lxcb -lXau -ljpeg -lsystemd -lpng16"
+  export LDFLAGS="-lpthread -lstdc++ -lz -lm"
+}
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \
 			      --with-x11vnc \
 			      --with-x \
-			      --with-jpeg \
 			      --without-xkeyboard \
 			      --without-xinerama \
 			      --without-xrandr \
@@ -26,24 +31,12 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static \
 			      --without-crypt \
 			      --without-crypto \
 			      --without-ssl \
-			      --without-libz \
 			      --without-avahi \
+			      --with-jpeg \
+			      --without-libz \
+			      --with-cairo=no \
+			      --without-zlib \
 			      --without-gnutls \
 			      --without-client-tls \
-			      ac_cv_c_bigendian=yes \
-			      LDFLAGS=-lpthread"
-
-pre_configure_target() {
-  export LIBS="-lxcb -lXau -ldl -pthread -ljpeg -lz"
-}
-
-pre_build_target() {
-  mkdir -p $PKG_BUILD/.$TARGET_NAME
-  cp -RP $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME
-}
-
-
-addon() {
-  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
-    cp $PKG_BUILD/.$TARGET_NAME/src/x11vnc $ADDON_BUILD/$PKG_ADDON_ID/bin
-}
+			      --enable-silent-rules \
+			      --with-pic"
