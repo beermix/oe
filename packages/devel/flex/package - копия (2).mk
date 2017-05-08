@@ -28,12 +28,7 @@ PKG_LONGDESC="flex is a tool for generating programs that perform pattern-matchi
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_HOST="ac_cv_func_malloc_0_nonnull=yes \
-			    ac_cv_func_realloc_0_nonnull=yes \
-			    --enable-static \
-			    --disable-shared \
-			    --disable-rpath \
-			    --with-gnu-ld"
+PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared --disable-rpath --with-gnu-ld"
 
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
 

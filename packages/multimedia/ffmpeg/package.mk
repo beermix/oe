@@ -17,10 +17,10 @@
 ################################################################################
 
 PKG_NAME="ffmpeg"
-PKG_VERSION="508e410"
+PKG_VERSION="582c3d5"
 PKG_ARCH="any"
 PKG_GIT_URL="https://github.com/FFmpeg/FFmpeg.git"
-PKG_GIT_BRANCH="release/3.3"
+PKG_GIT_BRANCH="release/3.2"
 PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl speex"
 PKG_PRIORITY="optional"
 PKG_SECTION="multimedia"
