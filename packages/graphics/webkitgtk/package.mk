@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="webkitgtk"
-PKG_VERSION="2.12.5"
+PKG_VERSION="2.17.1"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"

@@ -32,7 +32,6 @@ post_makeinstall_target() {
   mkdir -p wv && cd wv
     cmake -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
         -DCMAKE_INSTALL_PREFIX=/usr \
-        -DDECRYPTERPATH=special://home/cdm \
         $ROOT/$PKG_BUILD/wvdecrypter
     make
 
