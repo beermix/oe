@@ -23,9 +23,9 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://gcc.gnu.org/"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host"
+PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host"
 PKG_DEPENDS_TARGET="gcc:host"
-PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
+PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host glibc"
 PKG_PRIORITY="optional"
 PKG_SECTION="lang"
 PKG_SHORTDESC="gcc: The GNU Compiler Collection Version 4 (aka GNU C Compiler)"
@@ -39,6 +39,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-gmp=$ROOT/$TOOLCHAIN \
                            --with-mpfr=$ROOT/$TOOLCHAIN \
                            --with-mpc=$ROOT/$TOOLCHAIN \
+                           --with-isl=$ROOT/$TOOLCHAIN \
                            --with-gnu-as \
                            --with-gnu-ld \
                            --enable-plugin \
