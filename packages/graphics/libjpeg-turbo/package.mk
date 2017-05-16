@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libjpeg-turbo"
-PKG_VERSION="2a4f189"
+PKG_VERSION="70f236d"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
