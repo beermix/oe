@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="alsa-utils"
-PKG_VERSION="1.1.3"
+PKG_VERSION="1.1.4"
 PKG_SITE="http://www.alsa-project.org/"
 PKG_URL="ftp://ftp.alsa-project.org/pub/utils/$PKG_NAME-$PKG_VERSION.tar.bz2"
 #PKG_DEPENDS_TARGET="toolchain alsa-lib netbsd-curses fftw libsamplerate"
