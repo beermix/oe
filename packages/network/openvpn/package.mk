@@ -17,13 +17,13 @@
 ################################################################################
 
 PKG_NAME="openvpn"
-PKG_VERSION="2.4.1"
+PKG_VERSION="2.4.2"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://openvpn.net"
 PKG_URL="http://swupdate.openvpn.org/community/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain lzo libressl"
+PKG_DEPENDS_TARGET="toolchain lzo openssl"
 PKG_PRIORITY="optional"
 PKG_SECTION="network"
 PKG_SHORTDESC="openvpn: a full featured SSL VPN software solution that integrates OpenVPN server capabilities."
