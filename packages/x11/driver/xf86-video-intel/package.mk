@@ -52,8 +52,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-backlight \
 
 pre_configure_target() {
 # xf86-video-intel is broken enough. dont link with LTO
-  #strip_lto
-  strip_gold
+  strip_lto
 }
 
 post_makeinstall_target() {
