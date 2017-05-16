@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="inputstream.adaptive"
-PKG_VERSION="beb61fe"
+PKG_VERSION="7bde41f"
 PKG_GIT_URL="https://github.com/liberty-developer/inputstream.adaptive"
 PKG_GIT_BRANCH="master"
 PKG_DEPENDS_TARGET="toolchain kodi-platform expat"
@@ -37,8 +37,6 @@ post_makeinstall_target() {
   mkdir -p wv && cd wv
     cmake -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
         -DCMAKE_INSTALL_PREFIX=/usr \
-        -DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
-        -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
         -DDECRYPTERPATH=special://home/cdm \
         $ROOT/$PKG_BUILD/wvdecrypter
     make
