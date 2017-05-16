@@ -3,8 +3,8 @@ PKG_VERSION="git"
 PKG_DEPENDS_TARGET="toolchain zlib openssl"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
-PKG_USE_CMAKE="no"
-PKG_AUTORECONF="yes"
+PKG_USE_CMAKE="yes"
+PKG_AUTORECONF="no"
 
 unpack() {
   git clone --recursive -v --depth 1 https://github.com/transmission/transmission $PKG_BUILD
