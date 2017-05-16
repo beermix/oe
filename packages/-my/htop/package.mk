@@ -1,5 +1,5 @@
 PKG_NAME="htop"
-PKG_VERSION="b1028e0"
+PKG_VERSION="2.0.2"
 PKG_GIT_URL="https://github.com/hishamhm/htop"
 PKG_DEPENDS_TARGET="toolchain hwloc"
 PKG_SECTION="debug/tools"

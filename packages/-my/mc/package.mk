@@ -17,7 +17,7 @@ PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config \
                            --oldincludedir=/storage/.config \
                            --datarootdir=/storage/.config \
                            --infodir=/storage/.config \     
-                           --localedir=/storage/.config \
+                           --localedir=/storage/.config/mc/locale \
                            --disable-doxygen-doc \
                            --disable-doxygen-rtf \
                            --disable-doxygen-xml \
