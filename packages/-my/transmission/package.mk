@@ -1,17 +1,14 @@
 PKG_NAME="transmission"
-PKG_VERSION="master"
-PKG_URL=""
+PKG_VERSION="git"
 PKG_DEPENDS_TARGET="toolchain zlib openssl"
-PKG_IS_ADDON="yes"
-PKG_ADDON_TYPE="xbmc.service"
-PKG_AUTORECONF="no"
+PKG_SECTION="my"
+PKG_IS_ADDON="no"
+PKG_USE_CMAKE="no"
+PKG_AUTORECONF="yes"
 
 unpack() {
   git clone --recursive -v --depth 1 https://github.com/transmission/transmission $PKG_BUILD
   cd $PKG_BUILD
-  git reset --hard $PKG_VERSION
-  rm -rf .git
-  cd $ROOT
 }
 
 PKG_CMAKE_OPTS_TARGET="-DINSTALL_DOC=OFF -DENABLE_TESTS=OFF"
