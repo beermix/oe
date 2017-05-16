@@ -37,7 +37,7 @@ PKG_ADDON_PROVIDES="executable"
 
 pre_make_target() {
   strip_lto
-  strip_gold
+  #strip_gold
   sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' third_party/widevine/cdm/stub/widevine_cdm_version.h
 }
 
@@ -124,7 +124,7 @@ make_target() {
   ./tools/gn/bootstrap/bootstrap.py --gn-gen-args "${_flags[*]}"
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$ROOT/$TOOLCHAIN/bin/python
 
-  ionice -c3 nice -n20 ninja -j2 -C out/Release chrome chrome_sandbox widevinecdmadapter
+  ionice -c3 nice -n20 ninja -j3 -C out/Release chrome chrome_sandbox widevinecdmadapter
 }
 
 makeinstall_target() {
