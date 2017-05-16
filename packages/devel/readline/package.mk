@@ -35,8 +35,7 @@ pre_configure_target() {
 PKG_CONFIGURE_OPTS_TARGET="bash_cv_wcwidth_broken=no \
                            --disable-shared \
                            --enable-static \
-                           --with-curses \
-                           --without-purify"
+                           --with-curses"
                            
 PKG_CONFIGURE_OPTS_HOST="bash_cv_wcwidth_broken=no --enable-static --disable-shared"
 
