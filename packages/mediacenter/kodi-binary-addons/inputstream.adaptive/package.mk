@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="inputstream.adaptive"
-PKG_VERSION="f23ba39"
+PKG_VERSION="beb61fe"
 PKG_GIT_URL="https://github.com/liberty-developer/inputstream.adaptive"
 PKG_GIT_BRANCH="master"
 PKG_DEPENDS_TARGET="toolchain kodi-platform expat"
