@@ -20,8 +20,11 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
 			      --with-procnetdev \
 			      --with-partitions \ 
 			      --enable-64bit \
+			      --enable-netstatbyte \
+			      --enable-netstatlink \
 			      --with-ncurses \
 			      --with-getopt_long \
+			      --with-netstatlinux \
 			      --without-strip \
 			      --enable-configfile \
 			      --enable-html \
