@@ -40,7 +40,7 @@ configure_target() {
 }
 
 make_target() {
-  cd $PKG_BUILD
+  cd $ROOT/$PKG_BUILD
   case $PROJECT in
     RPi)
       make -f Makefile.libretro platform=armv6-hardfloat-arm1176jzf-s

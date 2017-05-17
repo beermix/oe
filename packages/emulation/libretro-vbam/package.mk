@@ -38,7 +38,7 @@ PKG_LIBVAR="VBAM_LIB"
 
 pre_configure_target() {
   # fails to build in subdirs
-  cd $PKG_BUILD
+  cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
 }
 
