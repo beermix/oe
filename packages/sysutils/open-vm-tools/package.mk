@@ -55,7 +55,6 @@ post_unpack() {
 
 pre_configure_target() {
   export LIBS="-ldnet"
-  strip_gold
 }
 
 post_makeinstall_target() {
