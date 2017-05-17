@@ -55,7 +55,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libada \
                            --disable-libmudflap \
                            --disable-libquadmath \
-                           --disable-libgomp \
                            --disable-libmpx"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
@@ -64,6 +63,7 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-libsanitizer \
                               --disable-libssp \
                               --disable-libatomic \
+                              --disable-libgomp \
                               --disable-libitm \
                               --enable-cloog-backend=isl \
                               --disable-shared \
@@ -111,6 +111,8 @@ post_makeinstall_host() {
   mkdir -p $SYSROOT_PREFIX/usr/lib
     cp -PR $TARGET_NAME/libstdc++-v3/src/.libs/libstdc++.so* $SYSROOT_PREFIX/usr/lib
     cp -PR $TARGET_NAME/libssp/.libs/libssp.so* $SYSROOT_PREFIX/usr/lib
+    cp -PR $TARGET_NAME/libatomic/.libs/libatomic.so* $SYSROOT_PREFIX/usr/lib
+    cp -PR $TARGET_NAME/libgomp/.libs/libgomp.so* $SYSROOT_PREFIX/usr/lib
 
   mkdir -p $ROOT/$TOOLCHAIN/lib/ccache
     ln -sf $ROOT/$TOOLCHAIN/bin/ccache $ROOT/$TOOLCHAIN/lib/ccache/${TARGET_NAME}-gcc
@@ -129,6 +131,8 @@ makeinstall_target() {
   mkdir -p $INSTALL/lib
     cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libgcc/libgcc_s.so* $INSTALL/lib
     cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libssp/.libs/libssp.so* $INSTALL/lib
+    cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libatomic/.libs/libatomic.so* $INSTALL/lib
+    cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libgomp/.libs/libgomp.so* $INSTALL/lib
   mkdir -p $INSTALL/usr/lib
     cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libstdc++-v3/src/.libs/libstdc++.so* $INSTALL/usr/lib
 }
@@ -145,4 +149,6 @@ makeinstall_init() {
   mkdir -p $INSTALL/lib
     cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libgcc/libgcc_s.so* $INSTALL/lib
     cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libssp/.libs/libssp.so* $INSTALL/lib
+    cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libatomic/.libs/libatomic.so* $INSTALL/lib
+    cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libgomp/.libs/libgomp.so* $INSTALL/lib
 }
