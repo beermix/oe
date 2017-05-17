@@ -57,27 +57,16 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$ROOT/$TOOLCHAIN \
                        -DENABLE_INTERNAL_FFMPEG=OFF \
                        -DFFMPEG_INCLUDE_DIRS=$SYSROOT_PREFIX/usr \
                        -DENABLE_INTERNAL_CROSSGUID=OFF \
-                       -DENABLE_OPENSSL=ON \
-                       -DENABLE_SDL=ON \
-                       -DENABLE_LCMS2=ON \
-                       -DENABLE_CCACHE=OFF \
-                       -DENABLE_LIRC=ON \
-                       -DENABLE_EVENTCLIENTS=OFF \
-                       -DENABLE_LIBUSB=OFF \
-                       -DENABLE_UDEV=ON \
-                       -DENABLE_XSLT=OFF \
-                       -DENABLE_DBUS=ON \
-                       -DENABLE_AVX=ON \
-                       -DENABLE_AVX2=OFF \
-                       -DENABLE_SSE=ON \
-                       -DENABLE_SSE2=ON \
-                       -DENABLE_SSE4_1=ON \
-                       -DENABLE_SSE4_2=ON \
-                       -DENABLE_SSSE3=ON \
-                       -DHAVE_SSE=TRUE \
-                       -DHAVE_SSE2=TRUE \
-                       -DHAVE_SSE4_1=TRUE \
-                       -DHAVE_SSSE3=TRUE"
+                       -DENABLE_OPENSSL=1 \
+                       -DENABLE_SDL=1 \
+                       -DENABLE_LCMS2=1 \
+                       -DENABLE_CCACHE=1 \
+                       -DENABLE_LIRC=0 \
+                       -DENABLE_EVENTCLIENTS=0 \
+                       -DENABLE_LIBUSB=0 \
+                       -DENABLE_UDEV=1 \
+                       -DENABLE_XSLT=1 \
+                       -DENABLE_DBUS=1"
 
 if [ "$TARGET_ARCH" = "x86_64" ]; then
   PKG_CMAKE_OPTS_TARGET+=" -DWITH_CPU=$TARGET_ARCH"
@@ -263,7 +252,7 @@ pre_configure_target() {
   #strip_lto
   #strip_gold
 
-  export LIBS="$LIBS -lssp -ltermcap"
+  export LIBS="$LIBS -ltermcap"
 }
 
 pre_make_target() {
