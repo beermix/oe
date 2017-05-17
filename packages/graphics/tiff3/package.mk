@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="tiff"
-PKG_VERSION="4.0.7"
+PKG_VERSION="3.9.7"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
@@ -30,11 +30,23 @@ PKG_SHORTDESC="libtiff: A library for reading and writing TIFF files"
 PKG_LONGDESC="libtiff is a library for reading and writing data files encoded with the Tag Image File format, Revision 6.0 (or revision 5.0 or revision 4.0). This file format is suit- able for archiving multi-color and monochromatic image data."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
-PKG_CMAKE_OPTS_HOST="-DBUILD_SHARED_LIBS=OFF"
+CONCURRENCY_MAKE_LEVEL=6
 
-PKG_CMAKE_OPTS_TARGET="-DBUILD_SHARED_LIBS=OFF"
+PKG_CONFIGURE_OPTS_TARGET="--enable-static \
+                           --disable-shared \
+                           --disable-mdi \
+                           --enable-cxx \
+                           --with-gl=no \
+                           --with-jpeg-lib-dir=$SYSROOT_PREFIX/usr/lib \
+                           --with-jpeg-include-dir=$SYSROOT_PREFIX/usr/include \
+                           --without-x"
+
+pre_configure_target() {
+  export CFLAGS="$CFLAGS -fPIC -DPIC"
+  export CXXFLAGS="$CXXFLAGS -fPIC -DPIC"
+}
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
