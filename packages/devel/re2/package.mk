@@ -11,6 +11,15 @@ PKG_CMAKE_OPTS_TARGET="-DBUILD_SHARED_LIBS=0 -DBUILD_TESTING=0"
 
 PKG_CMAKE_OPTS_HOST="-DBUILD_SHARED_LIBS=0 -DBUILD_TESTING=0"
 
-make_target() 
-  make CC="$CC" CXX="$CXX" AR="$AR" CFLAGS="$CFLAGS" CPPFLAGS="$CPPFLAGS"
+pre_configure_target() {
+  cd $ROOT/$PKG_BUILD
+  rm -rf .$TARGET_NAME
+  export CC="$CC"
+  export CXX="$CXX"
+  export AR="$AR"
+  export NM="$NM"
+  export LDFLAGS="$LDFLAGS -lpcre -lpthread -lstdc++"
+  export CFLAGS="$CFLAGS"
+  export CPPFLAGS="$CPPFLAGS"
+  export CXXFLAGS="$CXXFLAGS"
 }
