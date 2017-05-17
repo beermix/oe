@@ -1,8 +1,6 @@
 PKG_NAME="libtorrent-go"
-PKG_VERSION="a55fd4e"
-PKG_GIT_URL="https://github.com/afedchin/torrent2http
-#PKG_VERSION="b06aef9"
-#PKG_GIT_URL="https://github.com/beermix/libtorrent-go.git"
+PKG_VERSION="b06aef9"
+PKG_GIT_URL="https://github.com/beermix/libtorrent-go.git"
 PKG_DEPENDS_TARGET="toolchain go:host boost"
 PKG_SECTION="system"
 PKG_AUTORECONF="no"
@@ -23,7 +21,7 @@ configure_target() {
 make_target() {
   mkdir -p bin
   go get -u -t -v "github.com/anteo/libtorrent-go"
-  go build -v -o bin/speedtest -a -ldflags "$LDFLAGS"
+  $GOLANG build -v -o bin/speedtest -a -tags "$DOCKER_BUILDTAGS" -ldflags "$LDFLAGS"
 }
 
 makeinstall_target() {
