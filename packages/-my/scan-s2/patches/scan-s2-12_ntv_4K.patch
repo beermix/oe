@@ -1,0 +1,19 @@
+diff -Naurp scan-s2-46/scan.c scan-s2-46-patch/scan.c
+--- scan-s2-46/scan.c	2017-04-30 14:35:46.000000000 +0300
++++ scan-s2-46-patch/scan.c	2017-04-30 15:59:09.000000000 +0300
+@@ -1162,6 +1162,7 @@ static void parse_pmt (struct section_bu
+ 		case 0x01:
+ 		case 0x02:
+ 		case 0x1b:
++		case 0x24:
+ 			if (!noinfo) info("  VIDEO     : PID 0x%04X\n", elementary_pid);
+ 			if (s->video_pid == 0)
+ 				s->video_pid = elementary_pid;
+@@ -1170,6 +1171,7 @@ static void parse_pmt (struct section_bu
+ 		case 0x03:
+ 		case 0x81: /* Audio per ATSC A/53B [2] Annex B */
+ 		case 0x04:
++		case 0x0f:
+ 			if (!noinfo) info("  AUDIO     : PID 0x%04X\n", elementary_pid);
+ 			if (s->audio_num < AUDIO_CHAN_MAX) {
+ 				s->audio_pid[s->audio_num] = elementary_pid;

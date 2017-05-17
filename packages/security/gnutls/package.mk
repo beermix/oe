@@ -5,20 +5,20 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnutls.org"
 PKG_URL="ftp://ftp.gnutls.org/gcrypt/gnutls/v3.5/gnutls-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain zlib openssl gmp libgpg-error nettle libunistring libgcrypt"
+PKG_DEPENDS_TARGET="toolchain zlib openssl gmp libgpg-error nettle libgcrypt"
 PKG_SECTION="xmedia/tools"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-crywrap \
-			      --enable-libdane \
-			      --disable-nls \
-			      --without-tpm \
-			      --disable-tools \
-			      --without-p11-kit \
-			      --disable-guile \
+PKG_CONFIGURE_OPTS_TARGET="--enable-static \
 			      --disable-shared \
-			      --enable-openssl-compatibility \
+			      --enable-hardware-acceleration \
+			      --disable-openssl-compatibility \
+			      --disable-cxx \
+			      --without-p11-kit \
+			      --enable-local-libopts \
+			      --with-included-libtasn1 \
+			      --disable-openssl-compatibility \
 			      --enable-hardware-acceleration \
 			      --enable-cxx \
 			      --with-included-libtasn1 \
@@ -28,10 +28,13 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-crywrap \
 			      --with-libpthread-prefix=$SYSROOT_PREFIX/usr \
 			      --with-libnettle-prefix=$SYSROOT_PREFIX/usr \
 			      --with-sysroot=$SYSROOT_PREFIX \
+			      --without-libiconv-prefix \
 			      --without-libintl-prefix \
-			      --with-ca-bundle=/etc/ssl/cert.pem \
+			      --disable-libdane \
+			      --disable-tools \
 			      --disable-doc \
+			      --disable-nls \
+			      --disable-guile \
 			      --disable-valgrind-tests \
-			      --disable-full-test-suite \
 			      --without-lzo \
-			      --disable-rpath"
+			      --with-gnu-ld"

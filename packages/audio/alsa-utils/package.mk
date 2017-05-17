@@ -41,7 +41,7 @@ post_makeinstall_target() {
 
 # install sample asound.conf
   mkdir -p $INSTALL/usr/config
-  cp $ROOT/$PKG_DIR/config/* $INSTALL/usr/config/
+  cp $PKG_DIR/config/* $INSTALL/usr/config/
 
 # remove default udev rule to restore mixer configs, we install our own.
 # so we avoid resetting our soundconfig

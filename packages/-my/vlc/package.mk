@@ -8,7 +8,7 @@ PKG_VERSION="3.0.0-git"
 PKG_REV="20170516-0239"
 PKG_SITE="https://nightlies.videolan.org/build/source/"
 PKG_URL="https://nightlies.videolan.org/build/source/vlc-3.0.0-$PKG_REV-git.tar.xz"
-PKG_DEPENDS_TARGET="toolchain dbus ffmpeg libdvbpsi gnutls alsa-lib libvorbis flac libmpeg2 libsamplerate zlib lua:host lua"
+PKG_DEPENDS_TARGET="toolchain dbus ffmpeg libdvbpsi gnutls gprof libmpeg2 zlib lua:host lua"
 PKG_SECTION="xmedia/tools"
 PKG_SHORTDESC="VideoLAN multimedia player and streamer"
 PKG_LONGDESC="VLC is the VideoLAN project's media player. It plays MPEG, MPEG2, MPEG4, DivX, MOV, WMV, QuickTime, mp3, Ogg/Vorbis files, DVDs, VCDs, and multimedia streams from various network sources."
@@ -20,7 +20,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --without-contrib \
 			      --disable-nls \
 			      --disable-rpath \
-			      --enable-dbus \
+			      --disable-dbus \
 			      --enable-gprof \
 			      --disable-cprof \
 			      --disable-debug \
@@ -53,7 +53,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-shine \
 			      --disable-omxil \
 			      --disable-mad \
-			      --enable-merge-ffmpeg \
+			      --disable-merge-ffmpeg \
 			      --enable-avcodec \
 			      --enable-avformat \
 			      --enable-swscale \
@@ -69,27 +69,27 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --enable-libmpeg2 \
 			      --enable-vorbis \
 			      --disable-tremor \
-			      --enable-speex \
+			      --disable-speex \
 			      --disable-theora \
 			      --disable-schroedinger \
-			      --enable-png \
+			      --disable-png \
 			      --disable-x264 \
 			      --disable-fluidsynth \
 			      --disable-zvbi \
 			      --disable-telx \
-			      --enable-libass \
+			      --disable-libass \
 			      --disable-kate \
 			      --disable-tiger \
 			      --disable-libva \
 			      --disable-vdpau \
-			      --with-x \
-			      --enable-xcb \
+			      --without-x \
+			      --disable-xcb \
 			      --disable-xvideo \
 			      --disable-sdl \
 			      --disable-sdl-image \
-			      --enable-freetype \
+			      --disable-freetype \
 			      --disable-fribidi \
-			      --enable-fontconfig \
+			      --disable-fontconfig \
 			      --enable-libxml2 \
 			      --disable-svg \
 			      --disable-directx \
@@ -105,7 +105,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-macosx \
 			      --disable-macosx-vlc-app \
 			      --disable-macosx-qtkit \
-			      --enable-ncurses \
+			      --disable-ncurses \
 			      --disable-goom \
 			      --disable-projectm \
 			      --enable-udev \
@@ -116,7 +116,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-update-check \
 			      --disable-kva \
 			      --disable-bluray \
-			      --enable-samplerate \
+			      --disable-samplerate \
 			      --disable-sid \
 			      --disable-crystalhd \
 			      --disable-dxva2 \
