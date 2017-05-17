@@ -53,8 +53,6 @@ UTILLINUX_CONFIG_DEFAULT="--disable-gtk-doc \
                           --without-termcap \
                           --without-tinfo \
                           --without-utempter \
-                          --without-util \
-                          --without-libz \
                           --without-user \
                           --without-systemd \
                           --without-smack \

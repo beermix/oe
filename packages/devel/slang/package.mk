@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://www.jedsoft.org/slang/"
 PKG_GIT_URL="git://git.jedsoft.org/git/slang.git"
-PKG_DEPENDS_TARGET="toolchain pcre"
+PKG_DEPENDS_TARGET="toolchain pcre libiconv libpng"
 PKG_PRIORITY="optional"
 PKG_SECTION="devel"
 PKG_SHORTDESC="slang: library for the S-Lang extension language"
@@ -35,10 +35,10 @@ PKG_AUTORECONF="no"
 
 MAKEFLAGS="-j1"
 
-PKG_CONFIGURE_OPTS_TARGET="--without-iconv \
+PKG_CONFIGURE_OPTS_TARGET="--with-iconv \
                            --without-onig \
                            --with-pcre \
-                           --without-png \
+                           --with-png \
                            --without-z \
                            --without-x"
 
