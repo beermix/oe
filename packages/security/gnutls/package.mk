@@ -17,12 +17,14 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-crywrap \
 			      --disable-tools \
 			      --without-p11-kit \
 			      --disable-guile \
+			      --disable-shared \
 			      --with-included-libtasn1 \
 			      --enable-local-libopts \
 			      --with-libz-prefix=$SYSROOT_PREFIX/usr \
 			      --with-librt-prefix=$SYSROOT_PREFIX \
 			      --with-libpthread-prefix=$SYSROOT_PREFIX/usr \
 			      --with-libnettle-prefix=$SYSROOT_PREFIX/usr \
+			      --with-sysroot=$SYSROOT_PREFIX \
 			      --without-libintl-prefix \
 			      --with-ca-bundle=/etc/ssl/cert.pem \
 			      --disable-doc \
