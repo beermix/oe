@@ -43,7 +43,7 @@ configure_target() {
               --enable-static \
               --disable-shared \
               --enable-pic \
-              --disable-lto \
+              --enable-lto \
               --disable-debug \
               --enable-nonfree \
               --enable-openssl

@@ -1,7 +1,7 @@
 PKG_NAME="mpv"
 PKG_VERSION="v0.25.0"
 PKG_GIT_URL="https://github.com/mpv-player/mpv"
-PKG_DEPENDS_TARGET="toolchain ffmpeg libass libsamplerate"
+PKG_DEPENDS_TARGET="toolchain libass libsamplerate"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
@@ -9,10 +9,10 @@ pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
   
-  export LDFLAGS="$LDFLAGS -lresolv"
+  export LDFLAGS="$LDFLAGS -lresolv -lavresample -lm -lavformat -lX11 -lasound -lavutil -lavcodec"
   
-  strip_lto
-  strip_gold
+  #strip_lto
+  #strip_gold
 }
 
 configure_target() {
