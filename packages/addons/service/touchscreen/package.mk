@@ -50,6 +50,6 @@ addon() {
   $SED -e "s|@ADDON_VERSION@|$ADDON_VERSION.$PKG_REV|g" \
        -i $ADDON_BUILD/$PKG_ADDON_ID/addon.xml
 
-  cp $(get_build_dir tslib)/.install_pkg/usr/bin/* $ADDON_BUILD/$PKG_ADDON_ID/bin
-  cp $(get_build_dir evtest)/.$TARGET_NAME/evtest  $ADDON_BUILD/$PKG_ADDON_ID/bin
+  cp $(get_pkg_build tslib)/.install_pkg/usr/bin/* $ADDON_BUILD/$PKG_ADDON_ID/bin
+  cp $(get_pkg_build evtest)/.$TARGET_NAME/evtest  $ADDON_BUILD/$PKG_ADDON_ID/bin
 }
