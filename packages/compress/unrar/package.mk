@@ -28,12 +28,13 @@ PKG_LONGDESC="Unrar is a package to handle files compressed in the RAR format. D
 PKG_AUTORECONF="no"
 
 make_target() {
+  cd $ROOT/$PKG_BUILD
+  rm -rf .$TARGET_NAME
   make \
   	CXX="$CXX" \
   	CXXFLAGS="$TARGET_CXXFLAGS" \
   	CPPFLAGS="$CPPFLAGS" \
   	RANLIB="$RANLIB" \
   	AR="$AR" \
-  	STRIP="$STRIP" \
-  	-f makefile
+  	STRIP="$STRIP"
 }
