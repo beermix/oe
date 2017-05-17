@@ -1,10 +1,10 @@
 PKG_NAME="lnav"
-PKG_VERSION="d18b344"
+PKG_VERSION="7240aaa"
 PKG_GIT_URL="https://github.com/tstack/lnav"
 PKG_DEPENDS_HOST="toolchain sqlite"
 PKG_SECTION="tools"
 PKG_USE_CMAKE="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 pre_configure_host() {
   cd $ROOT/$PKG_BUILD
