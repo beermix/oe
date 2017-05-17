@@ -268,6 +268,7 @@ strip_hard() {
   LDFLAGS=`echo $LDFLAGS | sed -e "s|-O.|-O2|g"`
   LDFLAGS=`echo $LDFLAGS | sed -e "s|,-z,relro||g"`
   CFLAGS=`echo $CFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
+  LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--sort-common,--as-needed,-z,relro|-Wl,--as-needed|g"`
 }
 
 fix_module_depends() {

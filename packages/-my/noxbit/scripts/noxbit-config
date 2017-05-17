@@ -1,0 +1,35 @@
+#!/bin/sh
+################################################################################
+#      This file is part of Alex@ELEC - http://www.alexelec.in.ua
+#      Copyright (C) 2011-2017 Alexandr Zuyev (alex@alexelec.in.ua)
+################################################################################
+
+SERVICE_DIR="/storage/.cache/services"
+CONFIG_DIR="/storage/.config/noxbit"
+
+[ -f $SERVICE_DIR/noxbit.conf ] && . $SERVICE_DIR/noxbit.conf
+
+[ -z $NOX_DEL ] && NOX_DEL="1"
+[ -z $NOX_UID ] && NOX_UID="none"
+[ -z $NOX_PAS ] && NOX_PAS="none"
+[ -z $NOX_DIR ] && NOX_DIR="/tmp/noxbit"
+
+mkdir -p $NOX_DIR
+
+# clean cache dir
+if [ "$NOX_DEL" == "1" ]; then
+  rm -rf $NOX_DIR/*
+fi
+
+# path to cache directory
+DIR=$(echo $NOX_DIR | sed 's/\//\\\//g')
+sed -i -e "s/^.*\-dir=.*/\-dir=$DIR/" $CONFIG_DIR/noxbit.cfg
+
+# UID and Password
+if [ "$NOX_UID" != "none" -a "$NOX_PAS" != "none" ]; then
+  sed -i -e "s/^.*-uid=.*/-uid=$NOX_UID         ! default UID/" $CONFIG_DIR/noxbit.cfg
+  sed -i -e "s/^.*-pass.*/-pass=$NOX_PAS        ! default Password/" $CONFIG_DIR/noxbit.cfg
+else
+  sed -i -e "s/^.*-uid=.*/!-uid=999             ! default UID/" $CONFIG_DIR/noxbit.cfg
+  sed -i -e "s/^.*-pass.*/!-pass=KuC1w0n        ! default Password/" $CONFIG_DIR/noxbit.cfg
+fi

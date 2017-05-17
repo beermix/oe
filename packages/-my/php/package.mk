@@ -18,7 +18,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 post_unpack() {
-  PHP_BUILD_DIR=$(get_build_dir php)
+  PHP_BUILD_DIR=$(get_pkg_build php)
   echo "downloading pear..."
   if [ ! -f "$PHP_BUILD_DIR/../go-pear.phar" ]; then
     wget -O $PHP_BUILD_DIR/../go-pear.phar http://pear.php.net/go-pear.phar
@@ -26,7 +26,7 @@ post_unpack() {
   cp $PHP_BUILD_DIR/../go-pear.phar $PHP_BUILD_DIR/pear/go-pear.phar
 
   # libtool fix
-  rm $ROOT/$PKG_BUILD/aclocal.m4
+rm $ROOT/$PKG_BUILD/aclocal.m4
 }
 
 configure_target() {
@@ -34,15 +34,14 @@ configure_target() {
   rm -rf .$TARGET_NAME
 
   # Dynamic Library support
-  #export LDFLAGS="$LDFLAGS -ldl -lpthread -lstdc++"
-  export LIBS="$LIBS -ldl -lpthread -lsqlite3 -lz -lterminfo -lssl -lcrypto -lgcc -lrt -lm -lrtmp"
+  export LDFLAGS="$LDFLAGS -ldl -lpthread -lstdc++"
 
   # libiconv
   export CFLAGS="$CFLAGS -I$SYSROOT_PREFIX/usr/include/iconv"
   export LDFLAGS="$LDFLAGS -L$SYSROOT_PREFIX/usr/lib/iconv -liconv"
 
-  export CXXFLAGS="$CFLAGS"
-  export CPPFLAGS="$CFLAGS"
+  export CXXFLAGS="$CXXFLAGS"
+  export CPPFLAGS="$CPPFLAGS"
 
   PKG_CONFIGURE_OPTS_TARGET="--enable-cli \
                              --enable-cgi \
@@ -81,7 +80,7 @@ configure_target() {
                              --enable-filter \
                              --enable-calendar \
                              --with-pcre-regex \
-                             --with-sqlite3=$SYSROOT_PREFIX/usr \
+                             --with-sqlite3 \
                              --with-mysql=$SYSROOT_PREFIX/usr \
                              --with-mysql-sock=/tmp/mysql.sock \
                              --with-gd \
