@@ -22,7 +22,7 @@ configure_target() {
   		    --disable-debug-build \
   		    --disable-manpage-build \
   		    --enable-libmpv-static \
-  		    --disable-static-build
+  		    --enable-static-build
 }
 
 make_target() {

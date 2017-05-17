@@ -7,6 +7,8 @@ PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
+ get_graphicdrivers
+
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
@@ -30,21 +32,95 @@ configure_target() {
               --cc="$CC" \
               --ld="$CC" \
               --host-cc="$HOST_CC" \
-              --host-cflags="$HOST_CFLAGS -D_DEFAULT_SOURCE -fPIC" \
-              --host-cppflags="$HOST_CPPFLAGS -D_DEFAULT_SOURCE -fPIC" \
-              --host-ldflags="$HOST_LDFLAGS -fPIC" \
+              --host-cflags="$HOST_CFLAGS" \
+              --host-ldflags="$HOST_LDFLAGS" \
               --host-libs="-lm" \
+              --extra-cflags="$CFLAGS" \
               --extra-ldflags="$LDFLAGS -fPIC" \
-              --extra-ldflags="$LDFLAGS" \
-              --pkg-config="$ROOT/$TOOLCHAIN/bin/pkg-config" \
-              --enable-thumb \
-              --disable-vdpau \
-              --disable-doc \
+              --extra-libs="$FFMPEG_LIBS" \
+              --extra-version="" \
+              --build-suffix="" \
               --enable-static \
               --disable-shared \
-              --enable-pic \
-              --enable-lto \
-              --disable-debug \
+              --enable-gpl \
+              --disable-version3 \
               --enable-nonfree \
-              --enable-openssl
+              --enable-logging \
+              --disable-doc \
+              $FFMPEG_DEBUG \
+              --enable-pic \
+              --pkg-config="$ROOT/$TOOLCHAIN/bin/pkg-config" \
+              --enable-optimizations \
+              --disable-extra-warnings \
+              --enable-avdevice \
+              --enable-avcodec \
+              --enable-avformat \
+              --enable-swscale \
+              --enable-avfilter \
+              --disable-devices \
+              --enable-pthreads \
+              --disable-w32threads \
+              --enable-network \
+              --disable-gnutls --enable-openssl \
+              --disable-gray \
+              --enable-swscale-alpha \
+              --disable-small \
+              --enable-dct \
+              --enable-fft \
+              --enable-mdct \
+              --enable-rdft \
+              --disable-dxva2 \
+              --enable-runtime-cpudetect \
+              --disable-memalign-hack \
+              --enable-encoders \
+              --enable-encoder=ac3 \
+              --enable-encoder=aac \
+              --enable-encoder=wmav2 \
+              --enable-encoder=mjpeg \
+              --enable-encoder=png \
+              --disable-decoder=mpeg_xvmc \
+              --enable-hwaccels \
+              --enable-muxers \
+              --enable-muxer=spdif \
+              --enable-muxer=adts \
+              --enable-muxer=asf \
+              --enable-muxer=ipod \
+              --enable-muxer=mpegts \
+              --enable-demuxers \
+              --enable-parsers \
+              --enable-bsfs \
+              --enable-protocol=http \
+              --disable-indevs \
+              --disable-outdevs \
+              --enable-filters \
+              --disable-avisynth \
+              --enable-bzlib \
+              --disable-frei0r \
+              --disable-libopencore-amrnb \
+              --disable-libopencore-amrwb \
+              --disable-libopencv \
+              --disable-libdc1394 \
+              --disable-libfreetype \
+              --disable-libgsm \
+              --disable-libmp3lame \
+              --disable-libopenjpeg \
+              --disable-librtmp \
+              --disable-libschroedinger \
+              --enable-libspeex \
+              --disable-libtheora \
+              --disable-libvo-amrwbenc \
+              --disable-libvorbis \
+              --disable-libvpx \
+              --disable-libx265 \
+              --disable-libx264 \
+              --disable-libxavs \
+              --disable-libxvid \
+              --enable-zlib \
+              --enable-asm \
+              --disable-altivec \
+              --enable-yasm \
+              --disable-symver \
+              --disable-lto \
+              --disable-libfdk-aac \
+              --enable-indev=x11grab_xcb
 }
