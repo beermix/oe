@@ -17,6 +17,10 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-crywrap \
 			      --disable-tools \
 			      --without-p11-kit \
 			      --disable-guile \
+			      --disable-shared \
+			      --enable-openssl-compatibility \
+			      --enable-hardware-acceleration \
+			      --enable-cxx \
 			      --with-included-libtasn1 \
 			      --enable-local-libopts \
 			      --with-libz-prefix=$SYSROOT_PREFIX/usr \
