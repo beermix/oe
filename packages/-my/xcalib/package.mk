@@ -8,9 +8,9 @@ PKG_USE_CMAKE="yes"
 
 pre_configure_target() {
   export LDFLAGS="-lX11 -lXext -lm"
-  export CPPFLAGS="-lrt -lpthread" 
+  #export CPPFLAGS="-lrt -lpthread" 
   export MAKEFLAGS="-j1"
   #unset CPPFLAGS
 }
 
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_INSTALL_PREFIX=/usr"
+PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr"
