@@ -29,7 +29,7 @@ PKG_LONGDESC="libdvdread is a library which provides a simple foundation for rea
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --with-libdvdcss --with-pic"
+PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --with-libdvdcss"
 
 pre_configure_target() {
   export CFLAGS="$CFLAGS -D_XBMC -DHAVE_DVDCSS_DVDCSS_H"
