@@ -1,12 +1,13 @@
 PKG_NAME="patch"
-PKG_VERSION="git"
+PKG_VERSION="x2"
+PKG_URL="https://dl.dropboxusercontent.com/s/rx8fpga49gji565/patch-x2.tar.xz"
 PKG_DEPENDS_TARGET="toolchain attr"
 PKG_SECTION="devel"
 PKG_AUTORECONF="no"
 
-unpack() {
-  git clone --recursive -v --depth 1 https://github.com/mirror/patch $PKG_BUILD
-}
+#unpack() {
+#  git clone --recursive -v --depth 1 https://github.com/mirror/patch $PKG_BUILD
+#}
 
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
