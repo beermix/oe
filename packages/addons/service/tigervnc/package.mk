@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="tigervnc"
-PKG_VERSION="v1.8.0"
+PKG_VERSION="v1.7.1"
 PKG_REV="101"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPLv2"
@@ -32,14 +32,19 @@ PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="TigerVNC"
 PKG_ADDON_TYPE="xbmc.service"
 
-PKG_CMAKE_OPTS_TARGET="-DBUILD_VIEWER=ON \
-			  -DENABLE_GNUTLS=OFF \
-			  -DENABLE_NLS=OFF \
-			  -DENABLE_PAM=OFF \
-			  -DBUILD_STATIC=OFF \
-			  -DBUILD_STATIC_GCC=OFF \
+pre_configure_taret() {
+  export CFLAGS="$CFLAGS -Wno-dev"
+}
+
+PKG_CMAKE_OPTS_TARGET="-DBUILD_VIEWER=0 \
+			  -DENABLE_GNUTLS=0 \
 			  -DCMAKE_BUILD_TYPE=Release \
-			  -DCMAKE_VERBOSE_MAKEFILE=OFF"
+			  -DCMAKE_VERBOSE_MAKEFILE=1 \
+			  -DENABLE_ASAN=1 \
+			  -DENABLE_NLS=0 \
+			  -DGETTEXT_INCLUDE_DIR=$ROOT/$TOOLCHAIN/include \
+			  -DGETTEXT_MSGFMT_EXECUTABLE=$ROOT/$TOOLCHAIN/bin/msgfmt \
+			  -DGETTEXT_MSGMERGE_EXECUTABLE=$ROOT/$TOOLCHAIN/bin/msgmerge"
 
 makeinstall_target() {
   : # nothing to do

@@ -18,11 +18,11 @@
 ################################################################################
 
 PKG_NAME="gperftools"
-PKG_VERSION="86ce69d"
+PKG_VERSION="2.5.91"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/gperftools/gperftools"
-PKG_GIT_URL="https://github.com/gperftools/gperftools"
+PKG_URL="https://github.com/gperftools/gperftools/releases/download/gperftools-$PKG_VERSION/gperftools-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION=""
 PKG_SHORTDESC="Google Performance Tools"

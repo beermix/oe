@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libgdiplus"
-PKG_VERSION="4.2"
+PKG_VERSION="9917a55"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/mono/libgdiplus"
@@ -30,10 +30,11 @@ PKG_LONGDESC="An Open Source implementation of the GDI+ API"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-shared \
-                           --with-libgif   \
-                           --with-libjpeg  \
-                           --with-libtiff"
+PKG_CONFIGURE_OPTS_TARGET="--with-libgif=$SYSROOT_PREFIX/usr \
+			      --with-libjpeg=$SYSROOT_PREFIX/usr \
+			      --with-libtiff=$SYSROOT_PREFIX/usr \
+			      --with-pango=$SYSROOT_PREFIX/usr \
+			      --enable-shared"
 
 makeinstall_target() {
   make install DESTDIR=$INSTALL
