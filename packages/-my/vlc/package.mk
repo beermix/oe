@@ -8,7 +8,7 @@ PKG_VERSION="3.0.0-git"
 PKG_REV="20170516-0239"
 PKG_SITE="https://nightlies.videolan.org/build/source/"
 PKG_URL="https://nightlies.videolan.org/build/source/vlc-3.0.0-$PKG_REV-git.tar.xz"
-PKG_DEPENDS_TARGET="toolchain dbus ffmpeg libdvbpsi gnutls gprof libmpeg2 zlib lua:host lua"
+PKG_DEPENDS_TARGET="toolchain dbus ffmpeg libdvbpsi gnutls libmpeg2 zlib lua:host lua"
 PKG_SECTION="xmedia/tools"
 PKG_SHORTDESC="VideoLAN multimedia player and streamer"
 PKG_LONGDESC="VLC is the VideoLAN project's media player. It plays MPEG, MPEG2, MPEG4, DivX, MOV, WMV, QuickTime, mp3, Ogg/Vorbis files, DVDs, VCDs, and multimedia streams from various network sources."
@@ -21,7 +21,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-nls \
 			      --disable-rpath \
 			      --disable-dbus \
-			      --enable-gprof \
+			      --disable-gprof \
 			      --disable-cprof \
 			      --disable-debug \
 			      --enable-run-as-root \
@@ -128,6 +128,8 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 
 pre_configure_target() {
   export LDFLAGS="$LDFLAGS -lresolv"
+  #export CFLAGS="$CFLAGS -latomic -fopenmp"
+  export LIBS="$LIBS -latomic -fopenmp"
   export CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fomit-frame-pointer||g"`
   export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-fomit-frame-pointer||g"`

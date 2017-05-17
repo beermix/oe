@@ -17,8 +17,10 @@
 ################################################################################
 
 PKG_NAME="cairo"
-PKG_VERSION="1.14.8"
-PKG_URL="http://cairographics.org/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_VERSION="1.15.4"
+PKG_URL="https://www.cairographics.org/snapshots/cairo-$PKG_VERSION.tar.xz"
+#PKG_VERSION="1.14.8"
+#PKG_URL="http://cairographics.org/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain zlib freetype fontconfig libpng pixman libXrender libSM libX11 mesa glu"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="cairo: Multi-platform 2D graphics library"
@@ -28,6 +30,7 @@ PKG_AUTORECONF="yes"
 
 CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
 CPPLAGS="$CPPLAGS -DCAIRO_NO_MUTEX=1"
+LIBS="$LIBS -latomic"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_lzo2_lzo2a_decompress=no \
                            ac_cv_lib_bfd_bfd_openr=no \

@@ -22,6 +22,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static \
 			      --enable-hardware-acceleration \
 			      --enable-cxx \
 			      --with-included-libtasn1 \
+			      --with-included-unistring \
 			      --enable-local-libopts \
 			      --with-libz-prefix=$SYSROOT_PREFIX/usr \
 			      --with-librt-prefix=$SYSROOT_PREFIX \
