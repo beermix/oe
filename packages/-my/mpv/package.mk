@@ -1,5 +1,5 @@
 PKG_NAME="mpv"
-PKG_VERSION="v0.22.0"
+PKG_VERSION="v0.25.0"
 PKG_GIT_URL="https://github.com/mpv-player/mpv"
 PKG_DEPENDS_TARGET="toolchain ffmpeg libass libsamplerate"
 PKG_IS_ADDON="no"
@@ -20,7 +20,9 @@ configure_target() {
   ./waf dist
   ./waf configure --prefix=/usr \
   		    --disable-debug-build \
-  		    --disable-manpage-build
+  		    --disable-manpage-build \
+  		    --enable-libmpv-static \
+  		    --disable-static-build
 }
 
 make_target() {
