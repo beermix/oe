@@ -6,5 +6,14 @@ PKG_SECTION="service/system"
 PKG_USE_CMAKE="no"
 PKG_AUTORECONF="yes"
 
+pre_configure_target() {
+  export CFLAGS="$CFLAGS -O3 -fomit-frame-pointer -malign-double -fstrict-aliasing -ffast-math -fopenmp"
+}
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static --with-gnu-ld"
+PKG_CONFIGURE_OPTS_TARGET="--enable-shared \
+			      --enable-threads \
+			      --enable-openmp \
+			      --disable-fortran \
+			      --enable-float \
+			      --enable-sse2 \
+			      --enable-avx"
