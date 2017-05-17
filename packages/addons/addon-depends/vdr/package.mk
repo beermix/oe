@@ -32,7 +32,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 post_unpack() {
-  rm -rf $PKG_BUILD/PLUGINS/src/skincurses
+  rm -rf $ROOTT/$PKG_BUILD/PLUGINS/src/skincurses
 }
 
 pre_configure_target() {
