@@ -1,5 +1,5 @@
 PKG_NAME="mpv"
-PKG_VERSION="v0.23.0"
+PKG_VERSION="v0.22.0"
 PKG_GIT_URL="https://github.com/mpv-player/mpv"
 PKG_DEPENDS_TARGET="toolchain libass"
 PKG_IS_ADDON="no"
@@ -11,8 +11,8 @@ pre_configure_target() {
   
   export LDFLAGS="$LDFLAGS -lresolv -lavresample -lm -lavformat -lX11 -lasound -lavutil -lavcodec"
   
-  #strip_lto
-  #strip_gold
+  strip_lto
+  strip_gold
 }
 
 configure_target() {
@@ -21,11 +21,16 @@ configure_target() {
   ./waf configure --prefix=/usr \
   		    --disable-debug-build \
   		    --disable-manpage-build \
+  		    --disable-dvdnav \
+  		    --disable-dvdread \
+  		    --enable-vaapi \
+  		    --enable-vaapi-hwaccel \
+  		    --disable-apple-remote \
   		    --disable-static-build
 }
 
 make_target() {
-  ./waf build -j3
+  ./waf build -v -j6
 }
 
 make_install_target() {
