@@ -28,7 +28,7 @@ PKG_SHORTDESC="serdisplib: a lcd control library"
 PKG_LONGDESC="Library to drive serial/parallel/usb displays with built-in controllers"
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--prefix=$SYSROOT_PREFIX/usr \
                            --bindir=$SYSROOT_PREFIX/usr/bin \
@@ -38,7 +38,7 @@ PKG_CONFIGURE_OPTS_TARGET="--prefix=$SYSROOT_PREFIX/usr \
 
 pre_configure_target() {
   # serdisplib fails to build in subdirs
-  cd $PKG_BUILD
+  cd $ROOT/$PKG_BUILD
     rmdir .$TARGET_NAME
 
   # use libusb-config from sysroot
