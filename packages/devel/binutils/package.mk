@@ -24,7 +24,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --disable-werror \
                          --disable-multilib \
                          --disable-libada \
-                         --enable-libssp \
+                         --disable-libssp \
                          --enable-version-specific-runtime-libs \
                          --enable-plugins \
                          --enable-gold \
@@ -32,8 +32,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-ld=default \
                          --enable-lto \
                          --with-pic \
-                         --disable-shared \
-                         --enable-static \	
+                         --enable-shared \
                          --enable-poison-system-directories"
 
 makeinstall_host() {
