@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="atvclient"
-PKG_VERSION="b8a000a"
+PKG_VERSION="0263b0a"
 PKG_SITE="http://github.com/Evinyatar/atvclient/wiki"
 PKG_GIT_URL="https://github.com/mantheman/atvclient.git"
 PKG_GIT_BRANCH="master"
