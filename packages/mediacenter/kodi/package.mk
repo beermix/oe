@@ -60,7 +60,7 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$ROOT/$TOOLCHAIN \
                        -DENABLE_OPENSSL=1 \
                        -DENABLE_SDL=1 \
                        -DENABLE_LCMS2=1 \
-                       -DENABLE_CCACHE=1 \
+                       -DENABLE_CCACHE=0 \
                        -DENABLE_LIRC=0 \
                        -DENABLE_EVENTCLIENTS=0 \
                        -DENABLE_LIBUSB=0 \
@@ -252,7 +252,7 @@ pre_configure_target() {
   #strip_lto
   #strip_gold
 
-  export LIBS="$LIBS -ltermcap"
+  export LIBS="$LIBS -lz -ltermcap"
 }
 
 pre_make_target() {
