@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="ffmpeg"
-PKG_VERSION="b014fa2"
+PKG_VERSION="9b9a620"
 PKG_ARCH="any"
 PKG_GIT_URL="https://github.com/FFmpeg/FFmpeg.git"
 PKG_GIT_BRANCH="release/3.1"
@@ -211,9 +211,9 @@ configure_target() {
               --enable-yasm \
               --disable-symver \
               --enable-lto \
-              --enable-libfdk-aac \
-              --enable-opengl \
-              --enable-indev=x11grab_xcb
+              --disable-libfdk-aac \
+              --disable-opengl \
+              --disable-indev=x11grab_xcb
 }
 
 post_makeinstall_target() {

@@ -8,12 +8,12 @@ PKG_USE_CMAKE="yes"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-
 pre_configure_target() {
    strip_lto
-   export CXXFLAGS="-Wall -Wextra -O3 -pipe -fomit-frame-pointer -fexpensive-optimizations"
-   #export CFLAGS="$CXXFLAGS"
-   #export CPPFLAGS="-D_FORTIFY_SOURCE=2"
+   strip_gold
+   export CXXFLAGS="-O3 -pipe -ffast-math -fomit-frame-pointer -fexpensive-optimizations"
+   export CFLAGS="$CXXFLAGS"
+   export CPPFLAGS="-D_FORTIFY_SOURCE=2"
 }
 
 
