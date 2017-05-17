@@ -67,7 +67,6 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --disable-gles1 \
                            --enable-gles2 \
                            --enable-dri \
-                           --disable-gallium-extra-hud \
                            --enable-dri3 \
                            --enable-glx \
                            --disable-osmesa \
@@ -80,25 +79,25 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            $MESA_VDPAU \
                            --disable-omx \
                            --disable-va \
-                           --disable-opencl --disable-opencl-icd \
+                           --disable-opencl \
+                           --enable-opencl-icd \
                            --disable-gallium-tests \
                            --enable-shared-glapi \
+                           --enable-shader-cache \
                            --enable-driglx-direct \
                            --enable-glx-tls \
-                           --disable-glx-read-only-text \
                            $MESA_GALLIUM_LLVM \
-                           --disable-valgrind \
-                           --with-sysroot=$SYSROOT_PREFIX \
                            --with-gl-lib-name=GL \
                            --with-osmesa-lib-name=OSMesa \
                            --with-gallium-drivers=$GALLIUM_DRIVERS \
                            --with-dri-driverdir=/usr/lib/dri \
                            --with-dri-searchpath=/usr/lib/dri \
                            --with-dri-drivers=$DRI_DRIVERS \
-                           --without-vulkan-drivers"
+                           --with-vulkan-drivers=no \
+                           --with-sysroot=$SYSROOT_PREFIX"
 
 pre_configure_target() {
-  export LIBS="-lxcb-dri3 -lxcb-dri2 -lxcb-xfixes -lxcb-present -lxcb-sync -lxshmfence -lz"
+  export LIBS="-lxcb-dri3 -lxcb-present -lxcb-sync -lxcb-dri2 -lxcb-xfixes -lxshmfence -lz"
 }
 
 post_makeinstall_target() {
