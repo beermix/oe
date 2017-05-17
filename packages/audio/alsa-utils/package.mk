@@ -30,7 +30,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 # package specific configure options
-PKG_CONFIGURE_OPTS_TARGET="--disable-dependency-tracking --disable-rst2man"
+PKG_CONFIGURE_OPTS_TARGET="--disable-rst2man"
 
 
 post_makeinstall_target() {
@@ -38,6 +38,10 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/share/alsa/speaker-test
   rm -rf $INSTALL/usr/share/sounds
   rm -rf $INSTALL/usr/lib/systemd/system
+
+# install sample asound.conf
+  mkdir -p $INSTALL/usr/config
+  cp $ROOT/$PKG_DIR/config/* $INSTALL/usr/config/
 
 # remove default udev rule to restore mixer configs, we install our own.
 # so we avoid resetting our soundconfig

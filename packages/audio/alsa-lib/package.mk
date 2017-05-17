@@ -42,15 +42,14 @@ PKG_CONFIGURE_OPTS_TARGET="--with-plugindir=/usr/lib/alsa \
                            --with-pthread \
                            --with-libdl \
                            --with-gnu-ld \
+                           --disable-python \
                            --with-sysroot=$SYSROOT_PREFIX \
                            --with-pic \
-                           --enable-shared \
-                           --disable-static"
+                           --enable-shared"
 
 pre_configure_target() {
   #CFLAGS="$CFLAGS -fPIC -DPIC"
   strip_lto
-  strip_gold
   CONCURRENCY_MAKE_LEVEL=1
 }
 
