@@ -32,6 +32,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-ld=default \
                          --enable-lto \
                          --disable-shared \
+                         --enable-install-libiberty \
                          --enable-poison-system-directories"
 
 makeinstall_host() {
