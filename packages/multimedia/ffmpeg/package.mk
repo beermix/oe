@@ -209,7 +209,7 @@ configure_target() {
               $FFMPEG_FPU \
               --enable-yasm \
               --disable-symver \
-              --disable-lto \
+              --enable-lto \
               --enable-libfdk-aac \
               --enable-opengl \
               --enable-indev=x11grab_xcb
