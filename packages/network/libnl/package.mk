@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="libnl"
-PKG_VERSION="3.2.29"
+PKG_VERSION="3.3.0"
 PKG_SITE="http://people.suug.ch/~tgr/libnl/"
-PKG_URL="https://github.com/thom311/libnl/releases/download/libnl3_2_29/libnl-3.2.29.tar.gz"
+PKG_URL="https://github.com/thom311/$PKG_NAME/releases/download/${PKG_NAME}${PKG_VERSION//./_}/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="network"
 PKG_SHORTDESC="libnl: libnl - netlink library"
@@ -28,5 +28,3 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --disable-cli"
-
-#MAKEFLAGS=-j1

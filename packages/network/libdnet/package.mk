@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libdnet"
-PKG_VERSION="libdnet-1.12"
+PKG_VERSION="54a0c14"
 PKG_SITE="http://code.google.com/p/libdnet/"
 PKG_GIT_URL="https://github.com/dugsong/libdnet"
 PKG_DEPENDS_TARGET="toolchain"
