@@ -92,7 +92,7 @@ pre_configure_target() {
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-ffast-math||g"`
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Ofast|-O2|g"`
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-O.|-O2|g"`
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|,-z,relro||g"`
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--sort-common,--as-needed,-z,relro||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
 
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed||g"`
@@ -169,9 +169,9 @@ make_init() {
 makeinstall_init() {
   mkdir -p $INSTALL/lib
     cp -PR $ROOT/$PKG_BUILD/.$TARGET_NAME/elf/ld*.so* $INSTALL/lib
-    cp $ROOT/$PKG_BUILD/.$TARGET_NAME/libc.so.6 $INSTALL/lib
+    cp $ROOT/$PKG_BUILD/.$TARGET_NAME/libc.so* $INSTALL/lib
     cp $ROOT/$PKG_BUILD/.$TARGET_NAME/math/libm.so* $INSTALL/lib
-    cp $ROOT/$PKG_BUILD/.$TARGET_NAME/nptl/libpthread.so.0 $INSTALL/lib
+    cp $ROOT/$PKG_BUILD/.$TARGET_NAME/nptl/libpthread.so* $INSTALL/lib
     cp -PR $ROOT/$PKG_BUILD/.$TARGET_NAME/rt/librt.so* $INSTALL/lib
 
     if [ "$TARGET_ARCH" = "arm" -a "$TARGET_FLOAT" = "hard" ]; then
