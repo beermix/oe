@@ -35,7 +35,7 @@ PKG_AUTORECONF="no"
 
 if [ "$VAAPI_SUPPORT" = yes ]; then
   PKG_DEPENDS_TARGET+=" intel-vaapi-driver"
-  PKG_DEPENDS_TARGET+=" libvdpau-va-gl"
+  PKG_DEPENDS_TARGET+=" libvdpau-va-gl libvdpau"
   FFMPEG_VAAPI="--enable-vaapi"
 else
   FFMPEG_VAAPI="--disable-vaapi"
