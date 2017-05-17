@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="netbsd-curses"
-PKG_VERSION="4c156be"
+PKG_VERSION="0.2.1"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_GIT_URL="https://github.com/sabotage-linux/netbsd-curses"
-#PKG_URL="http://ftp.barfooze.de/pub/sabotage/tarballs/netbsd-curses-$PKG_VERSION.tar.xz"
+#PKG_GIT_URL="https://github.com/sabotage-linux/netbsd-curses"
+PKG_URL="http://ftp.barfooze.de/pub/sabotage/tarballs/netbsd-curses-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain zlib"
 PKG_PRIORITY="optional"
 PKG_SECTION="devel"
@@ -32,7 +32,7 @@ PKG_LONGDESC="netbsd-curses: netbsd-libcurses portable edition"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|g"`
+#CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|g"`
 CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
 strip_hard
 
