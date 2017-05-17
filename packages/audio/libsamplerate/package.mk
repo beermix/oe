@@ -17,10 +17,7 @@
 ################################################################################
 
 PKG_NAME="libsamplerate"
-PKG_VERSION="0.1.8"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
-PKG_SITE="http://www.mega-nerd.com/SRC/"
+PKG_VERSION="0.1.9"
 PKG_URL="http://www.mega-nerd.com/SRC/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libsndfile libvorbis libogg flac fftw"
 PKG_SECTION="audio"
@@ -34,8 +31,8 @@ PKG_AUTORECONF="yes"
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
                            --enable-static \
                            --datadir=/usr/share \
-                           --enable-fftw \
-                           --enable-sndfile"
+                           --enable-sndfile \
+                           --enable-fftw"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
