@@ -42,12 +42,12 @@ PKG_CMAKE_OPTS_TARGET="-DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/share/kodi \
                        -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr"
 
 addon() {
-  for _ADDON in $PKG_BUILD/.install_pkg/usr/share/kodi/addons/* ; do
+  for _ADDON in $ROOT/$PKG_BUILD/.install_pkg/usr/share/kodi/addons/* ; do
     _ADDON_ID=$(basename $_ADDON)
 
     mkdir -p $ADDON_BUILD/$_ADDON_ID/
-    cp -PR $PKG_BUILD/.install_pkg/usr/share/kodi/addons/$_ADDON_ID/* $ADDON_BUILD/$_ADDON_ID/
-    cp -PL $PKG_BUILD/.install_pkg/usr/lib/kodi/addons/$_ADDON_ID/*.so $ADDON_BUILD/$_ADDON_ID/
+    cp -PR $ROOT/$PKG_BUILD/.install_pkg/usr/share/kodi/addons/$_ADDON_ID/* $ADDON_BUILD/$_ADDON_ID/
+    cp -PL $ROOT/$PKG_BUILD/.install_pkg/usr/lib/kodi/addons/$_ADDON_ID/*.so $ADDON_BUILD/$_ADDON_ID/
 
     MULTI_ADDONS="$MULTI_ADDONS $_ADDON_ID"
   done

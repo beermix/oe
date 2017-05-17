@@ -52,5 +52,5 @@ post_makeinstall_target() {
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/lib
-    cp -P $PKG_BUILD/wvdecrypter/libssd_wv.so $ADDON_BUILD/$PKG_ADDON_ID/lib
+    cp -P $ROOT/$PKG_BUILD/wvdecrypter/libssd_wv.so $ADDON_BUILD/$PKG_ADDON_ID/lib
 }
