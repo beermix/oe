@@ -74,7 +74,7 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               $GCC_OPTS"
 
 PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
-                         --enable-languages=c,c++,fortran,objc,obj-c++ \
+                         --enable-languages=c,lto,c++,objc,obj-c++ \
                          --enable-__cxa_atexit \
                          --enable-decimal-float \
                          --enable-libssp \
@@ -87,6 +87,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time \
                          --enable-clocale=gnu \
+                         --enable-install-libiberty \
                          --enable-poison-system-directories \
                          $GCC_OPTS"
 
