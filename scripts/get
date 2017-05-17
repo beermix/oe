@@ -20,6 +20,15 @@
 
 . config/options $1
 
+_get_file_already_downloaded() {
+  if [ -f $PACKAGE ]; then
+    if [ "$(cat $STAMP_URL 2>/dev/null)" == "${PKG_URL}" ]; then
+      [ -z "${PKG_SHA256}" -o "$(cat $STAMP_SHA 2>/dev/null)" == "${PKG_SHA256}" ] && return 0
+    fi
+  fi
+  return 1
+}
+
 if [ -z "$1" ]; then
   for i in `find packages/ -type f -name package.mk`; do
     GET_PKG=`grep ^PKG_NAME= $i | sed -e "s,\",,g" -e "s,PKG_NAME=,,"`
@@ -138,4 +147,14 @@ if [ -n "$PKG_URL" -o -n "$PKG_GIT_URL" ]; then
     rm -f $BUILD_BASE*/$STAMPS_NOARCH/$1/build
 
   fi
+  NBWGET=$((NBWGET - 1))
+done
+
+if [ $NBWGET -eq 0 ]; then
+  echo -e "\nCant't get $1 sources : $PKG_URL\n Try later !!"
+  exit 1
+else
+  printf "${boldgreen}INFO${endcolor} Calculated checksum is: ${CALC_SHA256}\n\n"
+  echo "${PKG_URL}" > $STAMP_URL
+  echo "${CALC_SHA256}" > $STAMP_SHA
 fi

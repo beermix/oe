@@ -128,6 +128,14 @@ get_pkg_dir() {
   fi
 }
 
+# get package's build dir
+get_build_dir() {
+  local _PKG_NAME="$(get_pkg_variable "$1" PKG_NAME)" _PKG_VERSION="$(get_pkg_version "$1")"
+  if [ -n "$_PKG_NAME" -a -n "$_PKG_VERSION" ]; then
+    echo $BUILD/${_PKG_NAME}-${_PKG_VERSION}
+  fi
+}
+
 get_pkg_version() {
   if [ ! -z $1 ] ; then
     local _PKG_DIR=$(get_pkg_dir $1)
@@ -238,9 +246,12 @@ strip_lto() {
   if [ -n "$GCC_OPTIM_LTO" ] ; then
     CFLAGS=`echo $CFLAGS | sed -e "s|$GCC_OPTIM_LTO||g"`
     CXXFLAGS=`echo $CXXFLAGS | sed -e "s|$GCC_OPTIM_LTO||g"`
+    TARGET_CFLAGS=`echo $TARGET_CFLAGS | sed -e "s|$GCC_OPTIM_LTO||g"`
+    TARGET_CXXFLAGS=`echo $TARGET_CXXFLAGS | sed -e "s|$GCC_OPTIM_LTO||g"`
   fi
   if [ -n "$LD_OPTIM_LTO" ] ; then
     LDFLAGS=`echo $LDFLAGS | sed -e "s|$LD_OPTIM_LTO||g"`
+    TARGET_LDFLAGS=`echo $TARGET_LDFLAGS | sed -e "s|$LD_OPTIM_LTO||g"`
   fi
 }
 

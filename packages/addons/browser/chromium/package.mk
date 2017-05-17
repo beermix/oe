@@ -124,7 +124,7 @@ make_target() {
   ./tools/gn/bootstrap/bootstrap.py --gn-gen-args "${_flags[*]}"
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$ROOT/$TOOLCHAIN/bin/python
 
-  ionice -c3 nice -n20 ninja -j2 -C out/Release chrome chrome_sandbox widevinecdmadapter
+  ionice -c3 nice -n20 ninja -j4 -C out/Release chrome chrome_sandbox widevinecdmadapter
 }
 
 makeinstall_target() {
