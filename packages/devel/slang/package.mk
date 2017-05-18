@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://www.jedsoft.org/slang/"
 PKG_GIT_URL="git://git.jedsoft.org/git/slang.git"
-PKG_DEPENDS_TARGET="toolchain pcre libiconv libpng"
+PKG_DEPENDS_TARGET="toolchain pcre"
 PKG_PRIORITY="optional"
 PKG_SECTION="devel"
 PKG_SHORTDESC="slang: library for the S-Lang extension language"
@@ -35,10 +35,10 @@ PKG_AUTORECONF="no"
 
 MAKEFLAGS="-j1"
 
-PKG_CONFIGURE_OPTS_TARGET="--with-iconv \
+PKG_CONFIGURE_OPTS_TARGET="--without-iconv \
                            --without-onig \
                            --with-pcre \
-                           --with-png \
+                           --without-png \
                            --without-z \
                            --without-x"
 
@@ -47,12 +47,12 @@ PKG_MAKE_OPTS_TARGET="-C src static "
 pre_configure_target() {
  # slang fails to build in subdirs
  cd $ROOT/$PKG_BUILD
-   rm -rf .$TARGET_NAME
-   
-   #export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|g"`
+ rm -rf .$TARGET_NAME
+ 
+ export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|g"`
 }
 
 makeinstall_target() {
-  make DESTDIR="$SYSROOT_PREFIX" -C src install-static
-  make DESTDIR="$SYSROOT_PREFIX" install-pkgconfig
+  make DESTDIR="$SYSROOT_PREFIX" -C src install-static -j1
+  make DESTDIR="$SYSROOT_PREFIX" install-pkgconfig -j1
 }
