@@ -34,7 +34,7 @@ PKG_AUTORECONF="no"
 
 PKG_CMAKE_OPTS_HOST="-DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=0 -Dlzma=0"
 
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=0 -Dlzma=0"
+PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=0 -Dlzma=0 -Dlogluv=0 -Dold-jpeg=0 -Dpixarlog=0"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
