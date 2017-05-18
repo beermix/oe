@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="expat"
-PKG_VERSION="00c905d"
+PKG_VERSION="2.2.0"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://expat.sourceforge.net/"
-PKG_GIT_URL="https://github.com/libexpat/libexpat"
+PKG_URL="$SOURCEFORGE_SRC/$PKG_NAME/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_PRIORITY="optional"
 PKG_SECTION="textproc"
@@ -32,11 +32,9 @@ PKG_LONGDESC="Expat is an XML parser library written in C. It is a stream-orient
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CMAKE_SCRIPT_TARGET="expat/CMakeLists.txt"
+PKG_CMAKE_OPTS_TARGET="-DBUILD_tools=OFF -DBUILD_examples=OFF -DBUILD_tests=OFF -DBUILD_shared=ON"
 
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release \
-			  -DBUILD_doc=OFF \
-			  -DBUILD_tools=OFF \
-			  -DBUILD_examples=OFF \
-			  -DBUILD_tests=OFF \
-			  -DBUILD_shared=ON"
+pre_make_target() {
+  # fix builderror when building in subdirs
+  cp -r ../doc .
+}
