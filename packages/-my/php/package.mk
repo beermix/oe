@@ -37,7 +37,7 @@ configure_target() {
   export LDFLAGS="$LDFLAGS -ldl -lpthread -lstdc++"
 
   # libiconv
-  export CFLAGS="$CFLAGS -I$SYSROOT_PREFIX/usr/include/iconv -fno-strict-aliasing"
+  export CFLAGS="$CFLAGS -I$SYSROOT_PREFIX/usr/include/iconv"
   export LDFLAGS="$LDFLAGS -L$SYSROOT_PREFIX/usr/lib/iconv -liconv"
 
   #export CXXFLAGS="$CXXFLAGS"
