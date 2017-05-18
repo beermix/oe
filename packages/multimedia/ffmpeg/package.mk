@@ -34,7 +34,7 @@ PKG_AUTORECONF="no"
   get_graphicdrivers
 
 if [ "$VAAPI_SUPPORT" = yes ]; then
-  PKG_DEPENDS_TARGET+=" intel-vaapi-driver"
+  PKG_DEPENDS_TARGET+=" intel-vaapi-driver libva-utils"
   PKG_DEPENDS_TARGET+=" libvdpau-va-gl libvdpau"
   FFMPEG_VAAPI="--enable-vaapi"
 else
@@ -211,7 +211,7 @@ configure_target() {
               $FFMPEG_FPU \
               --enable-yasm \
               --disable-symver \
-              --enable-lto \
+              --disable-lto \
               --disable-libfdk-aac \
               --enable-indev=x11grab_xcb
 }
