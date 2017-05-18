@@ -17,10 +17,10 @@
 ################################################################################
 
 PKG_NAME="ffmpeg"
-PKG_VERSION="19fea7d"
+PKG_VERSION="9b9a620"
 PKG_ARCH="any"
 PKG_GIT_URL="https://github.com/FFmpeg/FFmpeg.git"
-PKG_GIT_BRANCH="release/3.3"
+PKG_GIT_BRANCH="release/3.1"
 PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl fftw speex"
 PKG_PRIORITY="optional"
 PKG_SECTION="multimedia"
@@ -159,6 +159,7 @@ configure_target() {
               --disable-dxva2 \
               --enable-runtime-cpudetect \
               $FFMPEG_TABLES \
+              --disable-memalign-hack \
               --disable-encoders \
               --enable-encoder=ac3 \
               --enable-encoder=aac \
@@ -187,6 +188,7 @@ configure_target() {
               --disable-libopencore-amrwb \
               --disable-libopencv \
               --disable-libdc1394 \
+              --disable-libfaac \
               --disable-libfreetype \
               --disable-libgsm \
               --disable-libmp3lame \
