@@ -33,7 +33,6 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 UTILLINUX_CONFIG_DEFAULT="--disable-gtk-doc \
-                          --disable-nls \
                           --disable-rpath \
                           --enable-tls \
                           --enable-chsh-only-listed \
@@ -44,20 +43,15 @@ UTILLINUX_CONFIG_DEFAULT="--disable-gtk-doc \
                           --disable-use-tty-group \
                           --disable-makeinstall-chown \
                           --disable-makeinstall-setuid \
-                          --with-gnu-ld \
                           --without-selinux \
                           --without-audit \
                           --without-udev \
                           --without-ncurses \
                           --without-readline \
-                          --without-termcap \
-                          --without-tinfo \
-                          --without-utempter \
-                          --without-user \
-                          --without-systemd \
-                          --without-smack \
                           --without-python \
-                          --without-systemdsystemunitdir"
+                          --without-systemdsystemunitdir \
+                          --disable-sulogin \
+                          --disable-more"
 
 PKG_CONFIGURE_OPTS_TARGET="--sbindir=/sbin \
                            --libexecdir=/lib \

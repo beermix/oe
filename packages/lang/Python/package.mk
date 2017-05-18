@@ -91,6 +91,7 @@ makeinstall_host() {
 
 pre_configure_target() {
   export PYTHON_FOR_BUILD=$ROOT/$TOOLCHAIN/bin/python
+  export CFLAGS="$CFLAGS -fno-strict-aliasing"
 }
 
 make_target() {

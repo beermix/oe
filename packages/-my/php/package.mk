@@ -10,7 +10,7 @@ PKG_ARCH="any"
 PKG_LICENSE="OpenSource"
 PKG_SITE="http://www.php.net"
 PKG_URL="http://www.php.net/distributions/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain zlib pcre curl libxml2 libressl libxslt libiconv"
+PKG_DEPENDS_TARGET="toolchain zlib pcre curl libxml2 libressl libxslt libiconv libxml2 openssl libjpeg-turbo bzip2 libpng freetype sqlite mariadb rapidjson"
 PKG_SECTION="xmedia/tools"
 PKG_SHORTDESC="php: Scripting language especially suited for Web development"
 PKG_LONGDESC="PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML."
@@ -37,11 +37,11 @@ configure_target() {
   export LDFLAGS="$LDFLAGS -ldl -lpthread -lstdc++"
 
   # libiconv
-  export CFLAGS="$CFLAGS -I$SYSROOT_PREFIX/usr/include/iconv"
+  export CFLAGS="$CFLAGS -I$SYSROOT_PREFIX/usr/include/iconv -fno-strict-aliasing"
   export LDFLAGS="$LDFLAGS -L$SYSROOT_PREFIX/usr/lib/iconv -liconv"
 
-  export CXXFLAGS="$CXXFLAGS"
-  export CPPFLAGS="$CPPFLAGS"
+  #export CXXFLAGS="$CXXFLAGS"
+  #export CPPFLAGS="$CPPFLAGS"
 
   PKG_CONFIGURE_OPTS_TARGET="--enable-cli \
                              --enable-cgi \
@@ -80,7 +80,7 @@ configure_target() {
                              --enable-filter \
                              --enable-calendar \
                              --with-pcre-regex \
-                             --with-sqlite3 \
+                             --with-sqlite3=$SYSROOT_PREFIX/usr \
                              --with-mysql=$SYSROOT_PREFIX/usr \
                              --with-mysql-sock=/tmp/mysql.sock \
                              --with-gd \
