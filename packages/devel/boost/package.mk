@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="boost"
-PKG_VERSION="1_64_0"
+PKG_VERSION="1.62ub"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.boost.org/"
-PKG_URL="https://fossies.org/linux/misc/boost_$PKG_VERSION.tar.xz"
+PKG_URL="https://dl.dropboxusercontent.com/s/50c7u441wg5f4by/boost-1.62ub.tar.xz"
 PKG_SOURCE_DIR="${PKG_NAME}_${PKG_VERSION}"
 PKG_DEPENDS_HOST=""
 PKG_DEPENDS_TARGET="toolchain boost:host Python:host zlib bzip2"
