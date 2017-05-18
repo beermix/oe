@@ -30,11 +30,13 @@ PKG_SECTION="compress"
 PKG_SHORTDESC="LZO data compressor"
 PKG_LONGDESC="LZO is a data compression library which is suitable for data de-/compression in real-time. This means it favours speed over compression ratio."
 
+PKG_USE_CMAKE="no"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
-PKG_CMAKE_OPTS_HOST="-DENABLE_SHARED=OFF -DENABLE_STATIC=ON"
-PKG_CMAKE_OPTS_TARGET="-DENABLE_SHARED=OFF -DENABLE_STATIC=ON"
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared"
+PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
+
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/libexec
