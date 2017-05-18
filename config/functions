@@ -3,6 +3,7 @@ setup_toolchain() {
     target|init)
       export DESTIMAGE="target"
       export CC="${TARGET_NAME}-gcc"
+      export FC="${TARGET_NAME}-gfortran"
       export CXX="${TARGET_NAME}-g++"
       export CPP="${TARGET_NAME}-cpp"
       export LD="${TARGET_NAME}-ld"
@@ -15,6 +16,7 @@ setup_toolchain() {
       export STRIP="${TARGET_NAME}-strip"
       export CPPFLAGS="$TARGET_CPPFLAGS"
       export CFLAGS="$TARGET_CFLAGS"
+      export FFLAGS ="$TARGET_FFLAGS"
       export CXXFLAGS="$TARGET_CXXFLAGS"
       export LDFLAGS="$TARGET_LDFLAGS"
       export LDSHARED="$CC -shared"
@@ -35,6 +37,7 @@ setup_toolchain() {
         echo "SET(CMAKE_C_COMPILER   $CC)"  >> $CMAKE_CONF
         echo "SET(CMAKE_CXX_COMPILER $CXX)" >> $CMAKE_CONF
         echo "SET(CMAKE_CPP_COMPILER $CPP)" >> $CMAKE_CONF
+        echo "SET(CMAKE_Fortran_COMPILER $FC)" >> $CMAKE_CONF
         echo "SET(CMAKE_FIND_ROOT_PATH  $SYSROOT_PREFIX)"   >> $CMAKE_CONF
         echo "SET(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)" >> $CMAKE_CONF
         echo "SET(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)"  >> $CMAKE_CONF
@@ -42,6 +45,7 @@ setup_toolchain() {
         echo "SET(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)"  >> $CMAKE_CONF
       fi
       export HOST_CC="gcc"
+      export HOST_FC="gfortran"
       export HOST_CXX="g++"
       export HOSTCC="$HOST_CC"
       export HOSTCXX="$HOST_CXX"
@@ -60,6 +64,7 @@ setup_toolchain() {
       export CXX="g++"
       export CPP="cpp"
       export LD="ld"
+      export FC="fc"
       export AS="as"
       export AR="ar"
       export NM="nm"
@@ -96,6 +101,7 @@ setup_toolchain() {
       fi
       export PYTHONXCPREFIX="$ROOT/$TOOLCHAIN"
       export HOST_CC="$CC"
+      export HOST_FC="$FC"
       export HOST_CXX="$CXX"
       export HOSTCC="$CC"
       export HOSTCXX="$CXX"
