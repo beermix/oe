@@ -52,7 +52,8 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --without-cloog \
                            --disable-libada \
                            --disable-libquadmath \
-                           --disable-libmpx"
+                           --disable-libmpx \
+                           --with-tune=generic"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
