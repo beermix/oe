@@ -44,7 +44,7 @@ PKG_CMAKE_OPTS_HOST="-DLLVM_INCLUDE_TOOLS=ON \
                      -DLLVM_INCLUDE_DOCS=OFF \
                      -DLLVM_ENABLE_DOXYGEN=OFF \
                      -DLLVM_ENABLE_SPHINX=OFF \
-                     -DLLVM_TARGETS_TO_BUILD="AMDGPU" \
+                     -DLLVM_TARGETS_TO_BUILD="X86" \
                      -DLLVM_ENABLE_TERMINFO=OFF \
                      -DLLVM_ENABLE_ASSERTIONS=OFF \
                      -DLLVM_ENABLE_WERROR=OFF \
@@ -76,7 +76,7 @@ PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=MinSizeRel \
                        -DLLVM_INCLUDE_DOCS=OFF \
                        -DLLVM_ENABLE_DOXYGEN=OFF \
                        -DLLVM_ENABLE_SPHINX=OFF \
-                       -DLLVM_TARGETS_TO_BUILD="AMDGPU" \
+                       -DLLVM_TARGETS_TO_BUILD="X86" \
                        -DLLVM_ENABLE_TERMINFO=OFF \
                        -DLLVM_ENABLE_ASSERTIONS=OFF \
                        -DLLVM_ENABLE_WERROR=OFF \
