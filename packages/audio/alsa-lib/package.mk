@@ -37,20 +37,15 @@ fi
 # package specific configure options
 PKG_CONFIGURE_OPTS_TARGET="--with-plugindir=/usr/lib/alsa \
                            --enable-symbolic-functions \
-                           --without-debug \
-                           --with-librt \
-                           --with-pthread \
-                           --with-libdl \
-                           --with-gnu-ld \
                            --disable-python \
-                           --with-sysroot=$SYSROOT_PREFIX \
-                           --with-pic \
-                           --enable-shared"
+                           $ALSA_DEBUG \
+                           --disable-dependency-tracking"
 
 pre_configure_target() {
-  #CFLAGS="$CFLAGS -fPIC -DPIC"
-  strip_lto
-  CONCURRENCY_MAKE_LEVEL=1
+  CFLAGS="$CFLAGS -fPIC -DPIC"
+
+  # alsa-lib fails building with LTO support
+    strip_lto
 }
 
 post_configure_target() {
