@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="zlib"
-PKG_VERSION="1.2.8.dfsg"
+PKG_VERSION="1.2.11"
 PKG_SITE="http://www.zlib.net"
-PKG_URL="https://dl.dropboxusercontent.com/s/rzcyaiu0mwvrpc8/zlib-1.2.8.dfsg.tar.xz"
+PKG_URL="http://zlib.net/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_DEPENDS_HOST=""
 PKG_SECTION="compress"
@@ -28,9 +28,6 @@ PKG_LONGDESC="zlib is a general purpose data compression library. All the code i
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
-
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release"
-PKG_CMAKE_OPTS_HOST="-DCMAKE_BUILD_TYPE=Release"
 
 post_configure_target() {
  ## configure minizip
