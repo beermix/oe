@@ -57,7 +57,8 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --disable-nscd \
                            --enable-lock-elision \
                            --disable-timezone-tools \
-                           --disable-debug"
+                           --disable-debug \
+                           --disable-werror"
 
 NSS_CONF_DIR="$PKG_BUILD/nss"
 
