@@ -1,25 +1,21 @@
 PKG_NAME="i2pd"
-PKG_VERSION="009a720"
+PKG_VERSION="e4cd1a4"
 PKG_GIT_URL="https://github.com/PurpleI2P/i2pd"
-PKG_DEPENDS_TARGET="toolchain boost zlib openssl miniupnpc"
+PKG_DEPENDS_TARGET="toolchain boost zlib openssl miniupnpc boost"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
+PKG_USE_CMAKE="no"
 
 pre_configure_target() {
    strip_lto
+   strip_gold
+   
+   CC="$CC"
+   CXX="$CXX"
+   AR="$AR"
+   CFLAGS="$CFLAGS"
+   CPPFLAGS="$CPPFLAGS"
+   LDFLAGS="$LDFLAGS"
 }
 
-
-
-PKG_CMAKE_SCRIPT_TARGET="build/CMakeLists.txt"
-
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release -DWITH_UPNP=ON \
-		       -DTHREADS_PTHREAD_ARG=4 \
-		       -DWITH_HARDENING=OFF \
-		       -DWITH_AESNI=ON"
-
-post_makeinstall_target() {
- rm -rf $INSTALL/usr/src/
- rm  $INSTALL/usr/LICENSE
-}

@@ -17,13 +17,11 @@
 ################################################################################
 
 PKG_NAME="boost"
-PKG_VERSION="1.62ub"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="OSS"
-PKG_SITE="http://www.boost.org/"
-PKG_URL="https://dl.dropboxusercontent.com/s/50c7u441wg5f4by/boost-1.62ub.tar.xz"
+PKG_VERSION="1_64_0"
+PKG_URL="$SOURCEFORGE_SRC/boost/boost/1.64.0/${PKG_NAME}_${PKG_VERSION}.tar.bz2"
 PKG_SOURCE_DIR="${PKG_NAME}_${PKG_VERSION}"
+#PKG_VERSION="1.62ub"
+#PKG_URL="https://dl.dropboxusercontent.com/s/50c7u441wg5f4by/boost-1.62ub.tar.xz"
 PKG_DEPENDS_HOST=""
 PKG_DEPENDS_TARGET="toolchain boost:host Python:host zlib bzip2"
 PKG_PRIORITY="optional"

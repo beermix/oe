@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="ninja"
-#PKG_VERSION="586bb6d"
+#PKG_VERSION="2fc5b9e"
 PKG_VERSION="v1.7.2"
 PKG_GIT_URL="https://github.com/ninja-build/ninja"
 PKG_DEPENDS_HOST="re2c:host"
