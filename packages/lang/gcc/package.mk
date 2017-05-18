@@ -49,6 +49,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --without-ppl \
                            --without-cloog \
                            --disable-libmpx \
+                           --disable-werror \
                            --with-tune=generic"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
@@ -62,7 +63,6 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-libada \
                               --disable-libgomp \
                               --disable-libitm \
-                              --enable-cloog-backend=isl \
                               --disable-shared \
                               --disable-threads \
                               --without-headers \
@@ -88,7 +88,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          $GCC_OPTS"
 
 pre_configure_host() {
-  #export CXXFLAGS="$CXXFLAGS -std=gnu++14"
+  export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
 }
 
@@ -96,16 +96,10 @@ post_make_host() {
   # fix wrong link
   rm -rf $TARGET_NAME/libgcc/libgcc_s.so
   ln -sf libgcc_s.so.1 $TARGET_NAME/libgcc/libgcc_s.so
-
-  if [ ! "$DEBUG" = yes ]; then
-    ${TARGET_NAME}-strip $TARGET_NAME/libgcc/libgcc_s.so*
-    ${TARGET_NAME}-strip $TARGET_NAME/libstdc++-v3/src/.libs/libstdc++.so*
-  fi
 }
 
 post_makeinstall_host() {
   mkdir -p $SYSROOT_PREFIX/usr/lib
-    cp -PR $TARGET_NAME/libstdc++-v3/src/.libs/	 $SYSROOT_PREFIX/usr/lib
     cp -PR $TARGET_NAME/libstdc++-v3/src/.libs/libstdc++.so* $SYSROOT_PREFIX/usr/lib
     cp -PR $TARGET_NAME/libssp/.libs/libssp.so* $SYSROOT_PREFIX/usr/lib
     cp -PR $TARGET_NAME/libatomic/.libs/libatomic.so* $SYSROOT_PREFIX/usr/lib
