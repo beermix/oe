@@ -1,5 +1,5 @@
 PKG_NAME="miniupnpc"
-PKG_VERSION="2.0.20161216"
+PKG_VERSION="2.0.20170509"
 PKG_SITE="http://miniupnp.free.fr"
 PKG_URL="http://miniupnp.free.fr/files/miniupnpc-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
