@@ -13,7 +13,8 @@ pre_configure_target() {
 PKG_CONFIGURE_OPTS_TARGET="--enable-shared \
 			      --enable-threads \
 			      --enable-openmp \
-			      --disable-fortran \
+			      --enable-fortran \
 			      --enable-float \
 			      --enable-sse2 \
+			      --enable-sse \
 			      --enable-avx"
