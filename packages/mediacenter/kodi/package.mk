@@ -52,7 +52,7 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$ROOT/$TOOLCHAIN \
                        -DPYTHON_INCLUDE_DIRS=$SYSROOT_PREFIX/usr/include/python2.7 \
                        -DGIT_VERSION=$PKG_VERSION \
                        -DKODI_DEPENDSBUILD=ON \
-                       -DWITH_CPU=ivybridge \
+                       -DWITH_CPU=x86_64 \
                        -DWITH_TEXTUREPACKER=$ROOT/$TOOLCHAIN/bin/TexturePacker \
                        -DENABLE_INTERNAL_FFMPEG=OFF \
                        -DFFMPEG_INCLUDE_DIRS=$SYSROOT_PREFIX/usr \
@@ -68,6 +68,7 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$ROOT/$TOOLCHAIN \
                        -DENABLE_UDEV=ON \
                        -DENABLE_XSLT=ON \
                        -DENABLE_DBUS=ON \
+                       -DCMAKE_VERBOSE_MAKEFILE=0 \
                        -DENABLE_AVX=ON \
                        -DENABLE_AVX2=OFF \
                        -DENABLE_SSE=ON \

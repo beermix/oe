@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="tiff"
-PKG_VERSION="4.0.7"
+PKG_VERSION="47f4f57"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.remotesensing.org/libtiff/"
-PKG_URL="http://download.osgeo.org/libtiff/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_GIT_URL="https://github.com/vadz/libtiff"
 PKG_DEPENDS_TARGET="toolchain libjpeg-turbo zlib"
 PKG_PRIORITY="optional"
 PKG_SECTION="graphics"
@@ -32,9 +32,9 @@ PKG_LONGDESC="libtiff is a library for reading and writing data files encoded wi
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CMAKE_OPTS_HOST="-DBUILD_SHARED_LIBS=0"
+PKG_CMAKE_OPTS_HOST="-DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=0 -Dlzma=0"
 
-PKG_CMAKE_OPTS_TARGET="-DBUILD_SHARED_LIBS=0 -Dlzma=0"
+PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=0 -Dlzma=0"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
