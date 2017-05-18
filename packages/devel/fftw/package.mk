@@ -10,7 +10,7 @@ pre_configure_target() {
   export CFLAGS="$CFLAGS -O3 -fomit-frame-pointer -malign-double -fstrict-aliasing -ffast-math -fopenmp"
 }
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-shared \
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-threads \
 			      --enable-openmp \
 			      --enable-fortran \
