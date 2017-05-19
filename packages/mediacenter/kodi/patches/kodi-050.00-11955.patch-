@@ -1,0 +1,2085 @@
+From 527b138e5422d08d88cdf1feff6979806cb4ab88 Mon Sep 17 00:00:00 2001
+From: Lukas Rusak <lorusak@gmail.com>
+Date: Tue, 11 Apr 2017 18:35:17 -0700
+Subject: [PATCH 1/6] [linux] initial drm/kms implementation
+
+---
+ xbmc/windowing/gbm/CMakeLists.txt              |  14 +
+ xbmc/windowing/gbm/GBMUtils.cpp                | 547 +++++++++++++++++++++++++
+ xbmc/windowing/gbm/GBMUtils.h                  |  95 +++++
+ xbmc/windowing/gbm/GLContextEGL.cpp            | 206 ++++++++++
+ xbmc/windowing/gbm/GLContextEGL.h              |  47 +++
+ xbmc/windowing/gbm/WinSystemGbm.cpp            | 149 +++++++
+ xbmc/windowing/gbm/WinSystemGbm.h              |  59 +++
+ xbmc/windowing/gbm/WinSystemGbmGLESContext.cpp | 120 ++++++
+ xbmc/windowing/gbm/WinSystemGbmGLESContext.h   |  55 +++
+ 9 files changed, 1292 insertions(+)
+ create mode 100644 xbmc/windowing/gbm/CMakeLists.txt
+ create mode 100644 xbmc/windowing/gbm/GBMUtils.cpp
+ create mode 100644 xbmc/windowing/gbm/GBMUtils.h
+ create mode 100644 xbmc/windowing/gbm/GLContextEGL.cpp
+ create mode 100644 xbmc/windowing/gbm/GLContextEGL.h
+ create mode 100644 xbmc/windowing/gbm/WinSystemGbm.cpp
+ create mode 100644 xbmc/windowing/gbm/WinSystemGbm.h
+ create mode 100644 xbmc/windowing/gbm/WinSystemGbmGLESContext.cpp
+ create mode 100644 xbmc/windowing/gbm/WinSystemGbmGLESContext.h
+
+diff --git a/xbmc/windowing/gbm/CMakeLists.txt b/xbmc/windowing/gbm/CMakeLists.txt
+new file mode 100644
+index 000000000000..103e9d41b224
+--- /dev/null
++++ b/xbmc/windowing/gbm/CMakeLists.txt
+@@ -0,0 +1,14 @@
++set(SOURCES GLContextEGL.cpp
++            WinSystemGbm.cpp
++            GBMUtils.cpp)
++
++set(HEADERS GLContextEGL.h
++            WinSystemGbm.h
++            GBMUtils.h)
++
++if(OPENGLES_FOUND)
++  list(APPEND SOURCES WinSystemGbmGLESContext.cpp)
++  list(APPEND HEADERS WinSystemGbmGLESContext.h)
++endif()
++
++core_add_library(windowing_Gbm)
+diff --git a/xbmc/windowing/gbm/GBMUtils.cpp b/xbmc/windowing/gbm/GBMUtils.cpp
+new file mode 100644
+index 000000000000..64cea1ec7550
+--- /dev/null
++++ b/xbmc/windowing/gbm/GBMUtils.cpp
+@@ -0,0 +1,547 @@
++/*
++ *      Copyright (C) 2005-2013 Team XBMC
++ *      http://xbmc.org
++ *
++ *  This Program is free software; you can redistribute it and/or modify
++ *  it under the terms of the GNU General Public License as published by
++ *  the Free Software Foundation; either version 2, or (at your option)
++ *  any later version.
++ *
++ *  This Program is distributed in the hope that it will be useful,
++ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
++ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
++ *  GNU General Public License for more details.
++ *
++ *  You should have received a copy of the GNU General Public License
++ *  along with XBMC; see the file COPYING.  If not, see
++ *  <http://www.gnu.org/licenses/>.
++ *
++ */
++
++#include <errno.h>
++#include <fcntl.h>
++#include <poll.h>
++#include <stdio.h>
++#include <stdlib.h>
++#include <string.h>
++#include <drm/drm_mode.h>
++#include <EGL/egl.h>
++#include <unistd.h>
++
++#include "WinSystemGbmGLESContext.h"
++#include "guilib/gui3d.h"
++#include "utils/log.h"
++#include "settings/Settings.h"
++
++#include "GBMUtils.h"
++
++static struct drm *m_drm = new drm;
++static struct drm_fb *m_drm_fb = new drm_fb;
++
++static struct gbm_bo *m_bo = nullptr;
++static struct gbm_bo *m_next_bo = nullptr;
++
++static drmModeResPtr m_drm_resources = nullptr;
++static drmModeConnectorPtr m_drm_connector = nullptr;
++static drmModeEncoderPtr m_drm_encoder = nullptr;
++static drmModeCrtcPtr m_orig_crtc = nullptr;
++
++static struct pollfd m_drm_fds;
++static drmEventContext m_drm_evctx;
++static int flip_happening = 0;
++
++bool CGBMUtils::InitGbm(RESOLUTION_INFO res)
++{
++  GetMode(res);
++
++  m_drm->gbm->width = m_drm->mode->hdisplay;
++  m_drm->gbm->height = m_drm->mode->vdisplay;
++
++  m_drm->gbm->surface = gbm_surface_create(m_drm->gbm->dev,
++                                           m_drm->gbm->width,
++                                           m_drm->gbm->height,
++                                           GBM_FORMAT_ARGB8888,
++                                           GBM_BO_USE_SCANOUT | GBM_BO_USE_RENDERING);
++
++  if(!m_drm->gbm->surface)
++  {
++    CLog::Log(LOGERROR, "CGBMUtils::%s - failed to create surface", __FUNCTION__);
++    return false;
++  }
++
++  CLog::Log(LOGDEBUG, "CGBMUtils::%s - created surface with size %dx%d", __FUNCTION__,
++                                                                         m_drm->gbm->width,
++                                                                         m_drm->gbm->height);
++
++  return true;
++}
++
++void CGBMUtils::DestroyGbm()
++{
++  if(m_drm->gbm->surface)
++  {
++    gbm_surface_destroy(m_drm->gbm->surface);
++  }
++
++  m_drm->gbm->surface = nullptr;
++}
++
++bool CGBMUtils::SetVideoMode(RESOLUTION_INFO res)
++{
++  GetMode(res);
++
++  gbm_surface_release_buffer(m_drm->gbm->surface, m_bo);
++
++  m_bo = gbm_surface_lock_front_buffer(m_drm->gbm->surface);
++  m_drm_fb = DrmFbGetFromBo(m_bo);
++
++  auto ret = drmModeSetCrtc(m_drm->fd,
++                            m_drm->crtc_id,
++                            m_drm_fb->fb_id,
++                            0,
++                            0,
++                            &m_drm->connector_id,
++                            1,
++                            m_drm->mode);
++
++  if(ret == -1)
++  {
++    CLog::Log(LOGERROR,
++              "CGBMUtils::%s - failed to set crtc mode: %dx%d%s @ %d Hz",
++              __FUNCTION__,
++              m_drm->mode->hdisplay,
++              m_drm->mode->vdisplay,
++              m_drm->mode->flags & DRM_MODE_FLAG_INTERLACE ? "i" : "",
++              m_drm->mode->vrefresh);
++
++    return false;
++  }
++
++  CLog::Log(LOGDEBUG, "CGBMUtils::%s - set crtc mode: %dx%d%s @ %d Hz",
++            __FUNCTION__,
++            m_drm->mode->hdisplay,
++            m_drm->mode->vdisplay,
++            m_drm->mode->flags & DRM_MODE_FLAG_INTERLACE ? "i" : "",
++            m_drm->mode->vrefresh);
++
++  return true;
++}
++
++bool CGBMUtils::GetMode(RESOLUTION_INFO res)
++{
++  m_drm->mode = &m_drm_connector->modes[atoi(res.strId.c_str())];
++
++  CLog::Log(LOGDEBUG, "CGBMUtils::%s - found crtc mode: %dx%d%s @ %d Hz",
++            __FUNCTION__,
++            m_drm->mode->hdisplay,
++            m_drm->mode->vdisplay,
++            m_drm->mode->flags & DRM_MODE_FLAG_INTERLACE ? "i" : "",
++            m_drm->mode->vrefresh);
++
++  return true;
++}
++
++void CGBMUtils::DrmFbDestroyCallback(struct gbm_bo *bo, void *data)
++{
++  struct drm_fb *fb = static_cast<drm_fb *>(data);
++
++  if(fb->fb_id)
++  {
++    drmModeRmFB(m_drm->fd, fb->fb_id);
++  }
++
++  delete (fb);
++}
++
++drm_fb * CGBMUtils::DrmFbGetFromBo(struct gbm_bo *bo)
++{
++  {
++    struct drm_fb *fb = static_cast<drm_fb *>(gbm_bo_get_user_data(bo));
++    if(fb)
++    {
++      return fb;
++    }
++  }
++
++  struct drm_fb *fb = new drm_fb;
++  fb->bo = bo;
++
++  uint32_t width = gbm_bo_get_width(bo);
++  uint32_t height = gbm_bo_get_height(bo);
++  uint32_t stride = gbm_bo_get_stride(bo);
++  uint32_t handle = gbm_bo_get_handle(bo).u32;
++
++  auto ret = drmModeAddFB(m_drm->fd,
++                          width,
++                          height,
++                          24,
++                          32,
++                          stride,
++                          handle,
++                          &fb->fb_id);
++
++  if(ret)
++  {
++    delete (fb);
++    CLog::Log(LOGDEBUG, "CGBMUtils::%s - failed to add framebuffer", __FUNCTION__);
++    return nullptr;
++  }
++
++  gbm_bo_set_user_data(bo, fb, DrmFbDestroyCallback);
++
++  return fb;
++}
++
++void CGBMUtils::PageFlipHandler(int fd, unsigned int frame, unsigned int sec,
++                                unsigned int usec, void *data)
++{
++  (void) fd, (void) frame, (void) sec, (void) usec;
++
++  int *flip_happening = static_cast<int *>(data);
++  *flip_happening = 0;
++}
++
++bool CGBMUtils::WaitingForFlip()
++{
++  if(!flip_happening)
++  {
++    return false;
++  }
++
++  m_drm_fds.revents = 0;
++
++  while(flip_happening)
++  {
++    auto ret = poll(&m_drm_fds, 1, -1);
++
++    if(ret < 0)
++    {
++      return true;
++    }
++
++    if(m_drm_fds.revents & (POLLHUP | POLLERR))
++    {
++      return true;
++    }
++
++    if(m_drm_fds.revents & POLLIN)
++    {
++      drmHandleEvent(m_drm->fd, &m_drm_evctx);
++    }
++  }
++
++  gbm_surface_release_buffer(m_drm->gbm->surface, m_bo);
++  m_bo = m_next_bo;
++
++  return false;
++}
++
++bool CGBMUtils::QueueFlip()
++{
++  m_next_bo = gbm_surface_lock_front_buffer(m_drm->gbm->surface);
++  m_drm_fb = DrmFbGetFromBo(m_next_bo);
++
++  auto ret = drmModePageFlip(m_drm->fd,
++                             m_drm->crtc_id,
++                             m_drm_fb->fb_id,
++                             DRM_MODE_PAGE_FLIP_EVENT,
++                             &flip_happening);
++
++  if(ret)
++  {
++    CLog::Log(LOGDEBUG, "CGBMUtils::%s - failed to queue DRM page flip", __FUNCTION__);
++    return false;
++  }
++
++  return true;
++}
++
++void CGBMUtils::FlipPage()
++{
++  if(WaitingForFlip())
++  {
++    return;
++  }
++
++  flip_happening = QueueFlip();
++
++  if(g_Windowing.NoOfBuffers() >= 3 && gbm_surface_has_free_buffers(m_drm->gbm->surface))
++  {
++    return;
++  }
++
++  WaitingForFlip();
++}
++
++bool CGBMUtils::GetResources()
++{
++  m_drm_resources = drmModeGetResources(m_drm->fd);
++  if(!m_drm_resources)
++  {
++    return false;
++  }
++
++  return true;
++}
++
++bool CGBMUtils::GetConnector()
++{
++  for(auto i = 0; i < m_drm_resources->count_connectors; i++)
++  {
++    m_drm_connector = drmModeGetConnector(m_drm->fd,
++                                          m_drm_resources->connectors[i]);
++    if(m_drm_connector->connection == DRM_MODE_CONNECTED)
++    {
++      CLog::Log(LOGDEBUG, "CGBMUtils::%s - found connector: %d", __FUNCTION__,
++                                                                 m_drm_connector->connector_type);
++      break;
++    }
++    drmModeFreeConnector(m_drm_connector);
++    m_drm_connector = nullptr;
++  }
++
++  if(!m_drm_connector)
++  {
++    return false;
++  }
++
++  return true;
++}
++
++bool CGBMUtils::GetEncoder()
++{
++  for(auto i = 0; i < m_drm_resources->count_encoders; i++)
++  {
++    m_drm_encoder = drmModeGetEncoder(m_drm->fd, m_drm_resources->encoders[i]);
++    if(m_drm_encoder->encoder_id == m_drm_connector->encoder_id)
++    {
++      CLog::Log(LOGDEBUG, "CGBMUtils::%s - found encoder: %d", __FUNCTION__,
++                                                               m_drm_encoder->encoder_type);
++      break;
++    }
++    drmModeFreeEncoder(m_drm_encoder);
++    m_drm_encoder = nullptr;
++  }
++
++  if(!m_drm_encoder)
++  {
++    return false;
++  }
++
++  return true;
++}
++
++bool CGBMUtils::GetPreferredMode()
++{
++  for(auto i = 0; i < m_drm_connector->count_modes; i++)
++  {
++    drmModeModeInfo *current_mode = &m_drm_connector->modes[i];
++
++    if(current_mode->type & DRM_MODE_TYPE_PREFERRED)
++    {
++      m_drm->mode = current_mode;
++      CLog::Log(LOGDEBUG,
++                "CGBMUtils::%s - found preferred mode: %dx%d%s @ %d Hz",
++                __FUNCTION__,
++                m_drm->mode->hdisplay,
++                m_drm->mode->vdisplay,
++                m_drm->mode->flags & DRM_MODE_FLAG_INTERLACE ? "i" : "",
++                m_drm->mode->vrefresh);
++    }
++  }
++
++  if(!m_drm->mode)
++  {
++    CLog::Log(LOGDEBUG, "CGBMUtils::%s - failed to find preferred mode", __FUNCTION__);
++    return false;
++  }
++
++  return true;
++}
++
++drm * CGBMUtils::InitDrm()
++{
++  const char *device = "/dev/dri/card0";
++
++  m_drm->fd = open(device, O_RDWR);
++
++  if(m_drm->fd < 0)
++  {
++    return nullptr;
++  }
++
++  if(!GetResources())
++  {
++    return nullptr;
++  }
++
++  if(!GetConnector())
++  {
++    return nullptr;
++  }
++
++  if(!GetEncoder())
++  {
++    return nullptr;
++  }
++  else
++  {
++    m_drm->crtc_id = m_drm_encoder->crtc_id;
++  }
++
++  if(!GetPreferredMode())
++  {
++    return nullptr;
++  }
++
++  for(auto i = 0; i < m_drm_resources->count_crtcs; i++)
++  {
++    if(m_drm_resources->crtcs[i] == m_drm->crtc_id)
++    {
++      m_drm->crtc_index = i;
++      break;
++    }
++  }
++
++  drmModeFreeResources(m_drm_resources);
++
++  drmSetMaster(m_drm->fd);
++
++  m_drm->gbm = new gbm;
++  m_drm->gbm->dev = gbm_create_device(m_drm->fd);
++  m_drm->gbm->surface = nullptr;
++
++  m_drm_fds.fd = m_drm->fd;
++  m_drm_fds.events = POLLIN;
++
++  m_drm_evctx.version = DRM_EVENT_CONTEXT_VERSION;
++  m_drm_evctx.page_flip_handler = PageFlipHandler;
++
++  m_drm->connector_id = m_drm_connector->connector_id;
++  m_orig_crtc = drmModeGetCrtc(m_drm->fd, m_drm->crtc_id);
++
++  return m_drm;
++}
++
++bool CGBMUtils::RestoreOriginalMode()
++{
++  if(!m_orig_crtc)
++  {
++    return false;
++  }
++
++  auto ret = drmModeSetCrtc(m_drm->fd,
++                            m_orig_crtc->crtc_id,
++                            m_orig_crtc->buffer_id,
++                            m_orig_crtc->x,
++                            m_orig_crtc->y,
++                            &m_drm->connector_id,
++                            1,
++                            &m_orig_crtc->mode);
++
++  if(ret)
++  {
++    CLog::Log(LOGERROR, "CGBMUtils::%s - failed to set original crtc mode", __FUNCTION__);
++    return false;
++  }
++
++  CLog::Log(LOGDEBUG, "CGBMUtils::%s - set original crtc mode", __FUNCTION__);
++
++  drmModeFreeCrtc(m_orig_crtc);
++  m_orig_crtc = nullptr;
++
++  return true;
++}
++
++void CGBMUtils::DestroyDrm()
++{
++  RestoreOriginalMode();
++
++  if(m_drm->gbm->surface)
++  {
++    gbm_surface_destroy(m_drm->gbm->surface);
++  }
++
++  if(m_drm->gbm->dev)
++  {
++    gbm_device_destroy(m_drm->gbm->dev);
++  }
++
++  if(m_drm_encoder)
++  {
++    drmModeFreeEncoder(m_drm_encoder);
++  }
++
++  if(m_drm_connector)
++  {
++    drmModeFreeConnector(m_drm_connector);
++  }
++
++  if(m_drm_resources)
++  {
++    drmModeFreeResources(m_drm_resources);
++  }
++
++  drmDropMaster(m_drm->fd);
++  close(m_drm->fd);
++
++  m_drm_encoder = nullptr;
++  m_drm_connector = nullptr;
++  m_drm_resources = nullptr;
++
++  m_drm->connector = nullptr;
++  m_drm->connector_id = 0;
++  m_drm->crtc = nullptr;
++  m_drm->crtc_id = 0;
++  m_drm->crtc_index = 0;
++  m_drm->fd = -1;
++  m_drm->gbm = nullptr;
++  m_drm->mode = nullptr;
++
++  m_bo = nullptr;
++  m_next_bo = nullptr;
++}
++
++bool CGBMUtils::GetModes(std::vector<RESOLUTION_INFO> &resolutions)
++{
++  for(auto i = 0; i < m_drm_connector->count_modes; i++)
++  {
++    RESOLUTION_INFO res;
++    res.iScreen = 0;
++    res.iWidth = m_drm_connector->modes[i].hdisplay;
++    res.iHeight = m_drm_connector->modes[i].vdisplay;
++    res.iScreenWidth = m_drm_connector->modes[i].hdisplay;
++    res.iScreenHeight = m_drm_connector->modes[i].vdisplay;
++    res.fRefreshRate = m_drm_connector->modes[i].vrefresh;
++    res.iSubtitles = static_cast<int>(0.965 * res.iHeight);
++    res.fPixelRatio = 1.0f;
++    res.bFullScreen = true;
++    res.strMode = m_drm_connector->modes[i].name;
++    res.strId = std::to_string(i);
++
++    if(m_drm_connector->modes[i].flags & DRM_MODE_FLAG_3D_MASK)
++    {
++      if(m_drm_connector->modes[i].flags & DRM_MODE_FLAG_3D_TOP_AND_BOTTOM)
++      {
++        res.dwFlags = D3DPRESENTFLAG_MODE3DTB;
++      }
++      else if(m_drm_connector->modes[i].flags
++          & DRM_MODE_FLAG_3D_SIDE_BY_SIDE_HALF)
++      {
++        res.dwFlags = D3DPRESENTFLAG_MODE3DSBS;
++      }
++    }
++    else if(m_drm_connector->modes[i].flags & DRM_MODE_FLAG_INTERLACE)
++    {
++      res.dwFlags = D3DPRESENTFLAG_INTERLACED;
++    }
++    else
++    {
++      res.dwFlags = D3DPRESENTFLAG_PROGRESSIVE;
++    }
++
++    resolutions.push_back(res);
++  }
++
++  return resolutions.size() > 0;
++}
+diff --git a/xbmc/windowing/gbm/GBMUtils.h b/xbmc/windowing/gbm/GBMUtils.h
+new file mode 100644
+index 000000000000..aaf70746236a
+--- /dev/null
++++ b/xbmc/windowing/gbm/GBMUtils.h
+@@ -0,0 +1,95 @@
++/*
++ *      Copyright (C) 2005-2013 Team XBMC
++ *      http://xbmc.org
++ *
++ *  This Program is free software; you can redistribute it and/or modify
++ *  it under the terms of the GNU General Public License as published by
++ *  the Free Software Foundation; either version 2, or (at your option)
++ *  any later version.
++ *
++ *  This Program is distributed in the hope that it will be useful,
++ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
++ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
++ *  GNU General Public License for more details.
++ *
++ *  You should have received a copy of the GNU General Public License
++ *  along with XBMC; see the file COPYING.  If not, see
++ *  <http://www.gnu.org/licenses/>.
++ *
++ */
++
++#pragma once
++
++#include <xf86drm.h>
++#include <xf86drmMode.h>
++#include <gbm.h>
++#include <vector>
++
++#include "guilib/Resolution.h"
++
++struct gbm
++{
++  struct gbm_device *dev;
++  struct gbm_surface *surface;
++  int width, height;
++};
++
++struct crtc
++{
++  drmModeCrtc *crtc;
++  drmModeObjectProperties *props;
++  drmModePropertyRes **props_info;
++};
++
++struct connector
++{
++  drmModeConnector *connector;
++  drmModeObjectProperties *props;
++  drmModePropertyRes **props_info;
++};
++
++struct drm
++{
++  int fd;
++
++  struct gbm *gbm;
++
++  struct crtc *crtc;
++  struct connector *connector;
++  int crtc_index;
++
++  drmModeModeInfo *mode;
++  uint32_t crtc_id;
++  uint32_t connector_id;
++};
++
++struct drm_fb
++{
++  struct gbm_bo *bo;
++  uint32_t fb_id;
++};
++
++class CGBMUtils
++{
++public:
++  static drm * InitDrm();
++  static bool InitGbm(RESOLUTION_INFO res);
++  static void DestroyGbm();
++  static bool SetVideoMode(RESOLUTION_INFO res);
++  static void FlipPage();
++  static void DestroyDrm();
++  static bool GetModes(std::vector<RESOLUTION_INFO> &resolutions);
++private:
++  static bool GetMode(RESOLUTION_INFO res);
++  static bool GetResources();
++  static bool GetConnector();
++  static bool GetEncoder();
++  static bool GetPreferredMode();
++  static bool RestoreOriginalMode();
++  static bool WaitingForFlip();
++  static bool QueueFlip();
++  static void PageFlipHandler(int fd, unsigned int frame, unsigned int sec,
++                              unsigned int usec, void *data);
++  static void DrmFbDestroyCallback(struct gbm_bo *bo, void *data);
++  static drm_fb * DrmFbGetFromBo(struct gbm_bo *bo);
++};
+diff --git a/xbmc/windowing/gbm/GLContextEGL.cpp b/xbmc/windowing/gbm/GLContextEGL.cpp
+new file mode 100644
+index 000000000000..052e97a27765
+--- /dev/null
++++ b/xbmc/windowing/gbm/GLContextEGL.cpp
+@@ -0,0 +1,206 @@
++/*
++ *      Copyright (C) 2005-2013 Team XBMC
++ *      http://xbmc.org
++ *
++ *  This Program is free software; you can redistribute it and/or modify
++ *  it under the terms of the GNU General Public License as published by
++ *  the Free Software Foundation; either version 2, or (at your option)
++ *  any later version.
++ *
++ *  This Program is distributed in the hope that it will be useful,
++ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
++ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
++ *  GNU General Public License for more details.
++ *
++ *  You should have received a copy of the GNU General Public License
++ *  along with XBMC; see the file COPYING.  If not, see
++ *  <http://www.gnu.org/licenses/>.
++ *
++ */
++
++#include "GLContextEGL.h"
++
++#include <EGL/eglext.h>
++#include "guilib/IDirtyRegionSolver.h"
++#include "settings/AdvancedSettings.h"
++#include "utils/log.h"
++
++CGLContextEGL::CGLContextEGL() :
++  m_eglDisplay(EGL_NO_DISPLAY),
++  m_eglSurface(EGL_NO_SURFACE),
++  m_eglContext(EGL_NO_CONTEXT),
++  m_eglConfig(0)
++{
++}
++
++CGLContextEGL::~CGLContextEGL()
++{
++  Destroy();
++}
++
++bool CGLContextEGL::CreateDisplay(gbm_device* display,
++                                  EGLint renderable_type,
++                                  EGLint rendering_api)
++{
++  EGLint neglconfigs = 0;
++  int major, minor;
++
++  EGLint attribs[] =
++  {
++    EGL_RED_SIZE,        8,
++    EGL_GREEN_SIZE,      8,
++    EGL_BLUE_SIZE,       8,
++    EGL_ALPHA_SIZE,      8,
++    EGL_DEPTH_SIZE,     16,
++    EGL_STENCIL_SIZE,    0,
++    EGL_SAMPLE_BUFFERS,  0,
++    EGL_SAMPLES,         0,
++    EGL_SURFACE_TYPE,    EGL_WINDOW_BIT,
++    EGL_RENDERABLE_TYPE, renderable_type,
++    EGL_NONE
++  };
++
++#ifdef EGL_EXT_platform_base
++  if (m_eglDisplay == EGL_NO_DISPLAY)
++  {
++    PFNEGLGETPLATFORMDISPLAYEXTPROC getPlatformDisplayEXT = (PFNEGLGETPLATFORMDISPLAYEXTPROC)eglGetProcAddress("eglGetPlatformDisplayEXT");
++    if (getPlatformDisplayEXT)
++    {
++      m_eglDisplay = getPlatformDisplayEXT(EGL_PLATFORM_GBM_KHR, (EGLNativeDisplayType)display, NULL);
++    }
++  }
++#endif
++
++  if (m_eglDisplay == EGL_NO_DISPLAY)
++  {
++    m_eglDisplay = eglGetDisplay((EGLNativeDisplayType)display);
++  }
++
++  if (m_eglDisplay == EGL_NO_DISPLAY)
++  {
++    CLog::Log(LOGERROR, "failed to get EGL display");
++    return false;
++  }
++
++  if (!eglInitialize(m_eglDisplay, &major, &minor))
++  {
++    CLog::Log(LOGERROR, "failed to initialize EGL display");
++    return false;
++  }
++
++  eglBindAPI(rendering_api);
++
++  if (!eglChooseConfig(m_eglDisplay, attribs,
++                       &m_eglConfig, 1, &neglconfigs))
++  {
++    CLog::Log(LOGERROR, "Failed to query number of EGL configs");
++    return false;
++  }
++
++  if (neglconfigs <= 0)
++  {
++    CLog::Log(LOGERROR, "No suitable EGL configs found");
++    return false;
++  }
++
++  return true;
++}
++
++bool CGLContextEGL::CreateContext()
++{
++  int client_version = 2;
++
++  const EGLint context_attribs[] = {
++    EGL_CONTEXT_CLIENT_VERSION, client_version, EGL_NONE
++  };
++
++  if (m_eglContext == EGL_NO_CONTEXT)
++  {
++  m_eglContext = eglCreateContext(m_eglDisplay, m_eglConfig,
++                                  EGL_NO_CONTEXT, context_attribs);
++  }
++
++  if (m_eglContext == EGL_NO_CONTEXT)
++  {
++    CLog::Log(LOGERROR, "failed to create EGL context");
++    return false;
++  }
++
++  return true;
++}
++
++bool CGLContextEGL::BindContext()
++{
++  if (!eglMakeCurrent(m_eglDisplay, m_eglSurface,
++                      m_eglSurface, m_eglContext))
++  {
++    CLog::Log(LOGERROR, "Failed to make context current %p %p %p",
++                         m_eglDisplay, m_eglSurface, m_eglContext);
++    return false;
++  }
++
++  return true;
++}
++
++bool CGLContextEGL::CreateSurface(gbm_surface* surface)
++{
++  EGLNativeWindowType egl_nwin = (EGLNativeWindowType)surface;
++
++  m_eglSurface = eglCreateWindowSurface(m_eglDisplay,
++                                        m_eglConfig,
++                                        egl_nwin, nullptr);
++
++  if (m_eglSurface == EGL_NO_SURFACE)
++  {
++    CLog::Log(LOGERROR, "failed to create EGL window surface %d", eglGetError());
++    return false;
++  }
++
++  return true;
++}
++
++void CGLContextEGL::Destroy()
++{
++  if (m_eglContext != EGL_NO_CONTEXT)
++  {
++    eglDestroyContext(m_eglDisplay, m_eglContext);
++    eglMakeCurrent(m_eglDisplay, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
++    m_eglContext = EGL_NO_CONTEXT;
++  }
++
++  if (m_eglSurface != EGL_NO_SURFACE)
++  {
++    eglDestroySurface(m_eglDisplay, m_eglSurface);
++    m_eglSurface = EGL_NO_SURFACE;
++  }
++
++  if (m_eglDisplay != EGL_NO_DISPLAY)
++  {
++    eglTerminate(m_eglDisplay);
++    m_eglDisplay = EGL_NO_DISPLAY;
++  }
++}
++
++void CGLContextEGL::Detach()
++{
++  if (m_eglContext != EGL_NO_CONTEXT)
++  {
++    eglMakeCurrent(m_eglDisplay, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
++  }
++
++  if (m_eglSurface != EGL_NO_SURFACE)
++  {
++    eglDestroySurface(m_eglDisplay, m_eglSurface);
++    m_eglSurface = EGL_NO_SURFACE;
++  }
++}
++
++void CGLContextEGL::SwapBuffers()
++{
++  if (m_eglDisplay == EGL_NO_DISPLAY || m_eglSurface == EGL_NO_SURFACE)
++  {
++    return;
++  }
++
++  eglSwapBuffers(m_eglDisplay, m_eglSurface);
++}
+diff --git a/xbmc/windowing/gbm/GLContextEGL.h b/xbmc/windowing/gbm/GLContextEGL.h
+new file mode 100644
+index 000000000000..86a5e9f71fc6
+--- /dev/null
++++ b/xbmc/windowing/gbm/GLContextEGL.h
+@@ -0,0 +1,47 @@
++/*
++ *      Copyright (C) 2005-2013 Team XBMC
++ *      http://xbmc.org
++ *
++ *  This Program is free software; you can redistribute it and/or modify
++ *  it under the terms of the GNU General Public License as published by
++ *  the Free Software Foundation; either version 2, or (at your option)
++ *  any later version.
++ *
++ *  This Program is distributed in the hope that it will be useful,
++ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
++ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
++ *  GNU General Public License for more details.
++ *
++ *  You should have received a copy of the GNU General Public License
++ *  along with XBMC; see the file COPYING.  If not, see
++ *  <http://www.gnu.org/licenses/>.
++ *
++ */
++
++#pragma once
++
++#include "EGL/egl.h"
++#include "gbm.h"
++
++class CGLContextEGL
++{
++public:
++  CGLContextEGL();
++  virtual ~CGLContextEGL();
++
++  bool CreateDisplay(gbm_device* connection,
++                     EGLint renderable_type,
++                     EGLint rendering_api);
++
++  bool CreateSurface(gbm_surface* surface);
++  bool CreateContext();
++  bool BindContext();
++  void Destroy();
++  void Detach();
++  void SwapBuffers();
++
++  EGLDisplay m_eglDisplay;
++  EGLSurface m_eglSurface;
++  EGLContext m_eglContext;
++  EGLConfig m_eglConfig;
++};
+diff --git a/xbmc/windowing/gbm/WinSystemGbm.cpp b/xbmc/windowing/gbm/WinSystemGbm.cpp
+new file mode 100644
+index 000000000000..028e8920b7cf
+--- /dev/null
++++ b/xbmc/windowing/gbm/WinSystemGbm.cpp
+@@ -0,0 +1,149 @@
++/*
++ *      Copyright (C) 2005-2013 Team XBMC
++ *      http://xbmc.org
++ *
++ *  This Program is free software; you can redistribute it and/or modify
++ *  it under the terms of the GNU General Public License as published by
++ *  the Free Software Foundation; either version 2, or (at your option)
++ *  any later version.
++ *
++ *  This Program is distributed in the hope that it will be useful,
++ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
++ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
++ *  GNU General Public License for more details.
++ *
++ *  You should have received a copy of the GNU General Public License
++ *  along with XBMC; see the file COPYING.  If not, see
++ *  <http://www.gnu.org/licenses/>.
++ *
++ */
++
++#include "WinSystemGbm.h"
++
++#include <string.h>
++
++#include "guilib/GraphicContext.h"
++#include "settings/DisplaySettings.h"
++#include "utils/log.h"
++
++CWinSystemGbm::CWinSystemGbm() :
++  m_drm(nullptr)
++{
++  m_eWindowSystem = WINDOW_SYSTEM_GBM;
++}
++
++bool CWinSystemGbm::InitWindowSystem()
++{
++  m_drm = CGBMUtils::InitDrm();
++
++  if (!m_drm)
++  {
++    CLog::Log(LOGERROR, "CWinSystemGbm::%s - failed to initialize DRM", __FUNCTION__);
++    return false;
++  }
++
++  CLog::Log(LOGDEBUG, "CWinSystemGbm::%s - initialized DRM", __FUNCTION__);
++  return CWinSystemBase::InitWindowSystem();
++}
++
++bool CWinSystemGbm::DestroyWindowSystem()
++{
++  CGBMUtils::DestroyDrm();
++  m_drm = nullptr;
++
++  CLog::Log(LOGDEBUG, "CWinSystemGbm::%s - deinitialized DRM", __FUNCTION__);
++  return true;
++}
++
++bool CWinSystemGbm::CreateNewWindow(const std::string& name,
++                                    bool fullScreen,
++                                    RESOLUTION_INFO& res,
++                                    PHANDLE_EVENT_FUNC userFunction)
++{
++  if (!CGBMUtils::InitGbm(res))
++  {
++    CLog::Log(LOGERROR, "CWinSystemGbm::%s - failed to initialize GBM", __FUNCTION__);
++    return false;
++  }
++
++  CLog::Log(LOGDEBUG, "CWinSystemGbm::%s - initialized GBM", __FUNCTION__);
++  return true;
++}
++
++bool CWinSystemGbm::DestroyWindow()
++{
++  CGBMUtils::DestroyGbm();
++
++  CLog::Log(LOGDEBUG, "CWinSystemGbm::%s - deinitialized GBM", __FUNCTION__);
++  return true;
++}
++
++void CWinSystemGbm::UpdateResolutions()
++{
++  CWinSystemBase::UpdateResolutions();
++
++  UpdateDesktopResolution(CDisplaySettings::GetInstance().GetResolutionInfo(RES_DESKTOP),
++                          0,
++                          m_drm->mode->hdisplay,
++                          m_drm->mode->vdisplay,
++                          m_drm->mode->vrefresh);
++
++  std::vector<RESOLUTION_INFO> resolutions;
++
++  if (!CGBMUtils::GetModes(resolutions) || resolutions.empty())
++  {
++    CLog::Log(LOGWARNING, "CWinSystemGbm::%s - Failed to get resolutions", __FUNCTION__);
++  }
++  else
++  {
++    for (auto i = 0; i < resolutions.size(); i++)
++    {
++      g_graphicsContext.ResetOverscan(resolutions[i]);
++      CDisplaySettings::GetInstance().AddResolutionInfo(resolutions[i]);
++
++      CLog::Log(LOGNOTICE, "Found resolution for display %d with %dx%d%s @ %f Hz",
++                resolutions[i].iScreen,
++                resolutions[i].iScreenWidth,
++                resolutions[i].iScreenHeight,
++                resolutions[i].dwFlags & D3DPRESENTFLAG_INTERLACED ? "i" : "",
++                resolutions[i].fRefreshRate);
++    }
++  }
++
++  CDisplaySettings::GetInstance().ApplyCalibrations();
++}
++
++bool CWinSystemGbm::ResizeWindow(int newWidth, int newHeight, int newLeft, int newTop)
++{
++  return true;
++}
++
++bool CWinSystemGbm::SetFullScreen(bool fullScreen, RESOLUTION_INFO& res, bool blankOtherDisplays)
++{
++  auto ret = CGBMUtils::SetVideoMode(res);
++
++  if (!ret)
++  {
++    return false;
++  }
++
++  return true;
++}
++
++bool CWinSystemGbm::Hide()
++{
++  return false;
++}
++
++bool CWinSystemGbm::Show(bool raise)
++{
++  return true;
++}
++
++void CWinSystemGbm::Register(IDispResource * /*resource*/)
++{
++}
++
++void CWinSystemGbm::Unregister(IDispResource * /*resource*/)
++{
++}
+diff --git a/xbmc/windowing/gbm/WinSystemGbm.h b/xbmc/windowing/gbm/WinSystemGbm.h
+new file mode 100644
+index 000000000000..469f6d5fd09f
+--- /dev/null
++++ b/xbmc/windowing/gbm/WinSystemGbm.h
+@@ -0,0 +1,59 @@
++/*
++ *      Copyright (C) 2005-2013 Team XBMC
++ *      http://xbmc.org
++ *
++ *  This Program is free software; you can redistribute it and/or modify
++ *  it under the terms of the GNU General Public License as published by
++ *  the Free Software Foundation; either version 2, or (at your option)
++ *  any later version.
++ *
++ *  This Program is distributed in the hope that it will be useful,
++ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
++ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
++ *  GNU General Public License for more details.
++ *
++ *  You should have received a copy of the GNU General Public License
++ *  along with XBMC; see the file COPYING.  If not, see
++ *  <http://www.gnu.org/licenses/>.
++ *
++ */
++
++#pragma once
++
++#include <gbm.h>
++
++#include "threads/CriticalSection.h"
++#include "windowing/WinSystem.h"
++#include "GBMUtils.h"
++
++class IDispResource;
++
++class CWinSystemGbm : public CWinSystemBase
++{
++public:
++  CWinSystemGbm();
++  virtual ~CWinSystemGbm() = default;
++
++  bool InitWindowSystem() override;
++  bool DestroyWindowSystem() override;
++
++  bool CreateNewWindow(const std::string& name,
++                       bool fullScreen,
++                       RESOLUTION_INFO& res,
++                       PHANDLE_EVENT_FUNC userFunction) override;
++
++  bool DestroyWindow() override;
++
++  bool ResizeWindow(int newWidth, int newHeight, int newLeft, int newTop) override;
++  bool SetFullScreen(bool fullScreen, RESOLUTION_INFO& res, bool blankOtherDisplays) override;
++
++  void UpdateResolutions() override;
++
++  bool Hide() override;
++  bool Show(bool raise = true) override;
++  virtual void Register(IDispResource *resource);
++  virtual void Unregister(IDispResource *resource);
++
++protected:
++  drm* m_drm;
++};
+diff --git a/xbmc/windowing/gbm/WinSystemGbmGLESContext.cpp b/xbmc/windowing/gbm/WinSystemGbmGLESContext.cpp
+new file mode 100644
+index 000000000000..89ede12c92ef
+--- /dev/null
++++ b/xbmc/windowing/gbm/WinSystemGbmGLESContext.cpp
+@@ -0,0 +1,120 @@
++/*
++ *      Copyright (C) 2005-2013 Team XBMC
++ *      http://xbmc.org
++ *
++ *  This Program is free software; you can redistribute it and/or modify
++ *  it under the terms of the GNU General Public License as published by
++ *  the Free Software Foundation; either version 2, or (at your option)
++ *  any later version.
++ *
++ *  This Program is distributed in the hope that it will be useful,
++ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
++ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
++ *  GNU General Public License for more details.
++ *
++ *  You should have received a copy of the GNU General Public License
++ *  along with XBMC; see the file COPYING.  If not, see
++ *  <http://www.gnu.org/licenses/>.
++ *
++ */
++
++#include "WinSystemGbmGLESContext.h"
++#include "utils/log.h"
++
++bool CWinSystemGbmGLESContext::InitWindowSystem()
++{
++  if (!CWinSystemGbm::InitWindowSystem())
++  {
++    return false;
++  }
++
++  if (!m_pGLContext.CreateDisplay(m_drm->gbm->dev,
++                                  EGL_OPENGL_ES2_BIT,
++                                  EGL_OPENGL_ES_API))
++  {
++    return false;
++  }
++
++  return true;
++}
++
++bool CWinSystemGbmGLESContext::CreateNewWindow(const std::string& name,
++                                               bool fullScreen,
++                                               RESOLUTION_INFO& res,
++                                               PHANDLE_EVENT_FUNC userFunction)
++{
++  m_pGLContext.Detach();
++
++  if (!CWinSystemGbm::DestroyWindow())
++  {
++    return false;
++  }
++
++  if (!CWinSystemGbm::CreateNewWindow(name, fullScreen, res, userFunction))
++  {
++    return false;
++  }
++
++  if (!m_pGLContext.CreateSurface(m_drm->gbm->surface))
++  {
++    return false;
++  }
++
++  if (!m_pGLContext.CreateContext())
++  {
++    return false;
++  }
++
++  if (!m_pGLContext.BindContext())
++  {
++    return false;
++  }
++
++  return true;
++}
++
++bool CWinSystemGbmGLESContext::SetFullScreen(bool fullScreen, RESOLUTION_INFO& res, bool blankOtherDisplays)
++{
++  if (res.iWidth != m_drm->mode->hdisplay ||
++      res.iHeight != m_drm->mode->vdisplay)
++  {
++    CLog::Log(LOGDEBUG, "CWinSystemGbmGLESContext::%s - resolution changed, creating a new window", __FUNCTION__);
++    CreateNewWindow("", fullScreen, res, nullptr);
++  }
++
++  m_pGLContext.SwapBuffers();
++
++  CWinSystemGbm::SetFullScreen(fullScreen, res, blankOtherDisplays);
++  CRenderSystemGLES::ResetRenderSystem(res.iWidth, res.iHeight, fullScreen, res.fRefreshRate);
++
++  return true;
++}
++
++void CWinSystemGbmGLESContext::PresentRenderImpl(bool rendered)
++{
++  if (rendered)
++  {
++    m_pGLContext.SwapBuffers();
++    CGBMUtils::FlipPage();
++  }
++}
++
++EGLDisplay CWinSystemGbmGLESContext::GetEGLDisplay() const
++{
++  return m_pGLContext.m_eglDisplay;
++}
++
++EGLSurface CWinSystemGbmGLESContext::GetEGLSurface() const
++{
++  return m_pGLContext.m_eglSurface;
++}
++
++EGLContext CWinSystemGbmGLESContext::GetEGLContext() const
++{
++  return m_pGLContext.m_eglContext;
++}
++
++EGLConfig  CWinSystemGbmGLESContext::GetEGLConfig() const
++{
++  return m_pGLContext.m_eglConfig;
++}
+diff --git a/xbmc/windowing/gbm/WinSystemGbmGLESContext.h b/xbmc/windowing/gbm/WinSystemGbmGLESContext.h
+new file mode 100644
+index 000000000000..55d3145f2fce
+--- /dev/null
++++ b/xbmc/windowing/gbm/WinSystemGbmGLESContext.h
+@@ -0,0 +1,55 @@
++/*
++ *      Copyright (C) 2005-2013 Team XBMC
++ *      http://xbmc.org
++ *
++ *  This Program is free software; you can redistribute it and/or modify
++ *  it under the terms of the GNU General Public License as published by
++ *  the Free Software Foundation; either version 2, or (at your option)
++ *  any later version.
++ *
++ *  This Program is distributed in the hope that it will be useful,
++ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
++ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
++ *  GNU General Public License for more details.
++ *
++ *  You should have received a copy of the GNU General Public License
++ *  along with XBMC; see the file COPYING.  If not, see
++ *  <http://www.gnu.org/licenses/>.
++ *
++ */
++
++#pragma once
++
++#include "GLContextEGL.h"
++#include "rendering/gles/RenderSystemGLES.h"
++#include "utils/GlobalsHandling.h"
++#include "WinSystemGbm.h"
++
++class CWinSystemGbmGLESContext : public CWinSystemGbm, public CRenderSystemGLES
++{
++public:
++  CWinSystemGbmGLESContext() = default;
++  virtual ~CWinSystemGbmGLESContext() = default;
++
++  bool InitWindowSystem() override;
++  bool CreateNewWindow(const std::string& name,
++                       bool fullScreen,
++                       RESOLUTION_INFO& res,
++                       PHANDLE_EVENT_FUNC userFunction) override;
++
++  bool SetFullScreen(bool fullScreen, RESOLUTION_INFO& res, bool blankOtherDisplays) override;
++  EGLDisplay GetEGLDisplay() const;
++  EGLSurface GetEGLSurface() const;
++  EGLContext GetEGLContext() const;
++  EGLConfig  GetEGLConfig() const;
++protected:
++  void SetVSyncImpl(bool enable) override { return; };
++  void PresentRenderImpl(bool rendered) override;
++
++private:
++  CGLContextEGL m_pGLContext;
++
++};
++
++XBMC_GLOBAL_REF(CWinSystemGbmGLESContext, g_Windowing);
++#define g_Windowing XBMC_GLOBAL_USE(CWinSystemGbmGLESContext)
+
+From c1716fe65ab55765e7087e5dcb95b74009dcb03c Mon Sep 17 00:00:00 2001
+From: Lukas Rusak <lorusak@gmail.com>
+Date: Tue, 11 Apr 2017 18:37:17 -0700
+Subject: [PATCH 2/6] [windowing][linux] allow using gbm windowing
+ implementation
+
+---
+ xbmc/windowing/WinSystem.h        | 1 +
+ xbmc/windowing/WindowingFactory.h | 3 +++
+ xbmc/windowing/egl/CMakeLists.txt | 2 +-
+ 3 files changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/xbmc/windowing/WinSystem.h b/xbmc/windowing/WinSystem.h
+index adce1c0fe1f0..eabc38a30e40 100644
+--- a/xbmc/windowing/WinSystem.h
++++ b/xbmc/windowing/WinSystem.h
+@@ -34,6 +34,7 @@ typedef enum _WindowSystemType
+   WINDOW_SYSTEM_IOS,
+   WINDOW_SYSTEM_X11,
+   WINDOW_SYSTEM_MIR,
++  WINDOW_SYSTEM_GBM,
+   WINDOW_SYSTEM_SDL,
+   WINDOW_SYSTEM_EGL,
+   WINDOW_SYSTEM_RPI,
+diff --git a/xbmc/windowing/WindowingFactory.h b/xbmc/windowing/WindowingFactory.h
+index 712a84785603..36572efdcac8 100644
+--- a/xbmc/windowing/WindowingFactory.h
++++ b/xbmc/windowing/WindowingFactory.h
+@@ -38,6 +38,9 @@
+ #elif defined(TARGET_ANDROID) && defined(HAS_GLES)
+ #include "android/WinSystemAndroidGLESContext.h"
+ 
++#elif defined(TARGET_LINUX) && defined(HAVE_GBM) && defined(HAS_GLES)
++#include "gbm/WinSystemGbmGLESContext.h"
++
+ #elif defined(TARGET_LINUX) && defined(HAVE_MIR) && defined(HAS_GL)
+ #include "mir/WinSystemMirGLContext.h"
+ 
+diff --git a/xbmc/windowing/egl/CMakeLists.txt b/xbmc/windowing/egl/CMakeLists.txt
+index 1e714edfe2ef..d65a79c27400 100644
+--- a/xbmc/windowing/egl/CMakeLists.txt
++++ b/xbmc/windowing/egl/CMakeLists.txt
+@@ -1,4 +1,4 @@
+-if (NOT MIR_FOUND AND NOT X_FOUND AND NOT MMAL_FOUND AND NOT AML_FOUND)
++if (NOT MIR_FOUND AND NOT X_FOUND AND NOT MMAL_FOUND AND NOT AML_FOUND AND NOT GBM_FOUND)
+   if(OPENGLES_FOUND OR AML_FOUND OR IMX_FOUND)
+     set(SOURCES EGLWrapper.cpp)
+ 
+
+From fbe42ae48f6802282f1b626efc4b6f56dd979a49 Mon Sep 17 00:00:00 2001
+From: Lukas Rusak <lorusak@gmail.com>
+Date: Tue, 11 Apr 2017 18:38:30 -0700
+Subject: [PATCH 3/6] [cmake] allow building with ENABLE_GBM
+
+---
+ CMakeLists.txt                         |  4 ++++
+ cmake/modules/FindGBM.cmake            | 44 ++++++++++++++++++++++++++++++++++
+ cmake/treedata/optional/common/gbm.txt |  1 +
+ 3 files changed, 49 insertions(+)
+ create mode 100644 cmake/modules/FindGBM.cmake
+ create mode 100644 cmake/treedata/optional/common/gbm.txt
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 8dc19c20832c..05bb6f3c0c18 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -51,6 +51,7 @@ if(UNIX)
+   option(ENABLE_INTERNAL_CROSSGUID "Enable internal crossguid?" ON)
+   option(ENABLE_OPENSSL     "Enable OpenSSL?" ON)
+   option(ENABLE_MIR         "Enable MIR?" OFF)
++  option(ENABLE_GBM         "Enable GBM?" OFF)
+   if(CORE_SYSTEM_NAME STREQUAL linux OR CORE_SYSTEM_NAME STREQUAL freebsd)
+     option(ENABLE_X11         "Enable X11 support?" ON)
+     option(ENABLE_AML         "Enable AML?" OFF)
+@@ -230,6 +231,9 @@ if(NOT WIN32)
+       if(ENABLE_MIR)
+         core_require_dep(Mir ENABLE_MIR)
+         core_optional_dep(LibDRM ENABLE_MIR)
++      elseif(ENABLE_GBM)
++        core_require_dep(GBM ENABLE_GBM)
++        core_require_dep(LibDRM ENABLE_GBM)
+       else()
+         core_optional_dep(X ENABLE_X11)
+         core_optional_dep(XRandR ENABLE_X11)
+diff --git a/cmake/modules/FindGBM.cmake b/cmake/modules/FindGBM.cmake
+new file mode 100644
+index 000000000000..ac952411597c
+--- /dev/null
++++ b/cmake/modules/FindGBM.cmake
+@@ -0,0 +1,44 @@
++# FindGBM
++# ----------
++# Finds the GBM library
++#
++# This will will define the following variables::
++#
++# GBM_FOUND - system has GBM
++# GBM_INCLUDE_DIRS - the GBM include directory
++# GBM_LIBRARIES - the GBM libraries
++# GBM_DEFINITIONS  - the GBM definitions
++#
++# and the following imported targets::
++#
++#   GBM::GBM   - The GBM library
++
++if(PKG_CONFIG_FOUND)
++  pkg_check_modules(PC_GBM gbm QUIET)
++endif()
++
++find_path(GBM_INCLUDE_DIR NAMES gbm.h
++                          PATHS ${PC_GBM_INCLUDEDIR})
++find_library(GBM_LIBRARY NAMES gbm
++                         PATHS ${PC_GBM_LIBDIR})
++
++set(GBM_VERSION ${PC_GBM_VERSION})
++
++include(FindPackageHandleStandardArgs)
++find_package_handle_standard_args(GBM
++                                  REQUIRED_VARS GBM_LIBRARY GBM_INCLUDE_DIR
++                                  VERSION_VAR GBM_VERSION)
++
++if(GBM_FOUND)
++  set(GBM_LIBRARIES ${GBM_LIBRARY})
++  set(GBM_INCLUDE_DIRS ${GBM_INCLUDE_DIR})
++  set(GBM_DEFINITIONS -DHAVE_GBM=1)
++    if(NOT TARGET GBM::GBM)
++    add_library(GBM::GBM UNKNOWN IMPORTED)
++    set_target_properties(GBM::GBM PROPERTIES
++                                   IMPORTED_LOCATION "${GBM_LIBRARY}"
++                                   INTERFACE_INCLUDE_DIRECTORIES "${GBM_INCLUDE_DIR}")
++  endif()
++endif()
++
++mark_as_advanced(GBM_INCLUDE_DIR GBM_LIBRARY)
+diff --git a/cmake/treedata/optional/common/gbm.txt b/cmake/treedata/optional/common/gbm.txt
+new file mode 100644
+index 000000000000..1adde939d624
+--- /dev/null
++++ b/cmake/treedata/optional/common/gbm.txt
+@@ -0,0 +1 @@
++xbmc/windowing/gbm windowing/gbm # GBM
+
+From 632c103d06d3e85d77b274fca3938b15357f1f42 Mon Sep 17 00:00:00 2001
+From: Lukas Rusak <lorusak@gmail.com>
+Date: Thu, 13 Apr 2017 15:05:44 -0700
+Subject: [PATCH 4/6] ArchSetup.cmake: disable VAAPI with GBM
+
+---
+ cmake/scripts/linux/ArchSetup.cmake | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/cmake/scripts/linux/ArchSetup.cmake b/cmake/scripts/linux/ArchSetup.cmake
+index eeed920aff57..b0888a8e9667 100644
+--- a/cmake/scripts/linux/ArchSetup.cmake
++++ b/cmake/scripts/linux/ArchSetup.cmake
+@@ -44,3 +44,8 @@ endif()
+ if(ENABLE_MIR)
+   set(ENABLE_VDPAU OFF CACHE BOOL "Disabling VDPAU since no Mir support" FORCE)
+ endif()
++
++if(ENABLE_GBM)
++  set(ENABLE_VDPAU OFF CACHE BOOL "Disabling VDPAU" FORCE)
++  set(ENABLE_VAAPI OFF CACHE BOOL "Disabling VAAPI" FORCE)
++endif()
+
+From 2cef6874eeddf65ae0946fc0bbcf5e8c4228858d Mon Sep 17 00:00:00 2001
+From: Jonas Karlman <jonas@kwiboo.se>
+Date: Tue, 18 Apr 2017 11:49:04 -0700
+Subject: [PATCH 5/6] windowing/gbm: use largest display mode when no preferred
+
+---
+ xbmc/windowing/gbm/GBMUtils.cpp | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
+
+diff --git a/xbmc/windowing/gbm/GBMUtils.cpp b/xbmc/windowing/gbm/GBMUtils.cpp
+index 64cea1ec7550..7455374c1415 100644
+--- a/xbmc/windowing/gbm/GBMUtils.cpp
++++ b/xbmc/windowing/gbm/GBMUtils.cpp
+@@ -333,7 +333,7 @@ bool CGBMUtils::GetEncoder()
+ 
+ bool CGBMUtils::GetPreferredMode()
+ {
+-  for(auto i = 0; i < m_drm_connector->count_modes; i++)
++  for(auto i = 0, area = 0; i < m_drm_connector->count_modes; i++)
+   {
+     drmModeModeInfo *current_mode = &m_drm_connector->modes[i];
+ 
+@@ -347,6 +347,14 @@ bool CGBMUtils::GetPreferredMode()
+                 m_drm->mode->vdisplay,
+                 m_drm->mode->flags & DRM_MODE_FLAG_INTERLACE ? "i" : "",
+                 m_drm->mode->vrefresh);
++      break;
++    }
++
++    auto current_area = current_mode->hdisplay * current_mode->vdisplay;
++    if (current_area > area)
++    {
++      m_drm->mode = current_mode;
++      area = current_area;
+     }
+   }
+ 
+
+From efe5af0dc2decb81e84feeea91c31527d133e032 Mon Sep 17 00:00:00 2001
+From: Lukas Rusak <lorusak@gmail.com>
+Date: Tue, 16 May 2017 12:39:38 -0700
+Subject: [PATCH 6/6] fixup! [linux] initial drm/kms implementation
+
+---
+ xbmc/windowing/gbm/GBMUtils.cpp                | 78 +++++++++++++++-----------
+ xbmc/windowing/gbm/GBMUtils.h                  |  6 +-
+ xbmc/windowing/gbm/GLContextEGL.cpp            | 48 ++++++++++++++--
+ xbmc/windowing/gbm/GLContextEGL.h              |  7 ++-
+ xbmc/windowing/gbm/WinSystemGbm.cpp            | 27 ++++++++-
+ xbmc/windowing/gbm/WinSystemGbm.h              |  5 ++
+ xbmc/windowing/gbm/WinSystemGbmGLESContext.cpp |  9 ++-
+ 7 files changed, 130 insertions(+), 50 deletions(-)
+
+diff --git a/xbmc/windowing/gbm/GBMUtils.cpp b/xbmc/windowing/gbm/GBMUtils.cpp
+index 7455374c1415..523994e66e99 100644
+--- a/xbmc/windowing/gbm/GBMUtils.cpp
++++ b/xbmc/windowing/gbm/GBMUtils.cpp
+@@ -38,6 +38,8 @@
+ static struct drm *m_drm = new drm;
+ static struct drm_fb *m_drm_fb = new drm_fb;
+ 
++static struct gbm *m_gbm = new gbm;
++
+ static struct gbm_bo *m_bo = nullptr;
+ static struct gbm_bo *m_next_bo = nullptr;
+ 
+@@ -50,49 +52,59 @@ static struct pollfd m_drm_fds;
+ static drmEventContext m_drm_evctx;
+ static int flip_happening = 0;
+ 
++drm * CGBMUtils::GetDrm()
++{
++  return m_drm;
++}
++
++gbm * CGBMUtils::GetGbm()
++{
++  return m_gbm;
++}
++
+ bool CGBMUtils::InitGbm(RESOLUTION_INFO res)
+ {
+   GetMode(res);
+ 
+-  m_drm->gbm->width = m_drm->mode->hdisplay;
+-  m_drm->gbm->height = m_drm->mode->vdisplay;
++  m_gbm->width = m_drm->mode->hdisplay;
++  m_gbm->height = m_drm->mode->vdisplay;
+ 
+-  m_drm->gbm->surface = gbm_surface_create(m_drm->gbm->dev,
+-                                           m_drm->gbm->width,
+-                                           m_drm->gbm->height,
+-                                           GBM_FORMAT_ARGB8888,
+-                                           GBM_BO_USE_SCANOUT | GBM_BO_USE_RENDERING);
++  m_gbm->surface = gbm_surface_create(m_gbm->dev,
++                                      m_gbm->width,
++                                      m_gbm->height,
++                                      GBM_FORMAT_ARGB8888,
++                                      GBM_BO_USE_SCANOUT | GBM_BO_USE_RENDERING);
+ 
+-  if(!m_drm->gbm->surface)
++  if(!m_gbm->surface)
+   {
+     CLog::Log(LOGERROR, "CGBMUtils::%s - failed to create surface", __FUNCTION__);
+     return false;
+   }
+ 
+   CLog::Log(LOGDEBUG, "CGBMUtils::%s - created surface with size %dx%d", __FUNCTION__,
+-                                                                         m_drm->gbm->width,
+-                                                                         m_drm->gbm->height);
++                                                                         m_gbm->width,
++                                                                         m_gbm->height);
+ 
+   return true;
+ }
+ 
+ void CGBMUtils::DestroyGbm()
+ {
+-  if(m_drm->gbm->surface)
++  if(m_gbm->surface)
+   {
+-    gbm_surface_destroy(m_drm->gbm->surface);
++    gbm_surface_destroy(m_gbm->surface);
+   }
+ 
+-  m_drm->gbm->surface = nullptr;
++  m_gbm->surface = nullptr;
+ }
+ 
+ bool CGBMUtils::SetVideoMode(RESOLUTION_INFO res)
+ {
+   GetMode(res);
+ 
+-  gbm_surface_release_buffer(m_drm->gbm->surface, m_bo);
++  gbm_surface_release_buffer(m_gbm->surface, m_bo);
+ 
+-  m_bo = gbm_surface_lock_front_buffer(m_drm->gbm->surface);
++  m_bo = gbm_surface_lock_front_buffer(m_gbm->surface);
+   m_drm_fb = DrmFbGetFromBo(m_bo);
+ 
+   auto ret = drmModeSetCrtc(m_drm->fd,
+@@ -230,7 +242,7 @@ bool CGBMUtils::WaitingForFlip()
+     }
+   }
+ 
+-  gbm_surface_release_buffer(m_drm->gbm->surface, m_bo);
++  gbm_surface_release_buffer(m_gbm->surface, m_bo);
+   m_bo = m_next_bo;
+ 
+   return false;
+@@ -238,7 +250,7 @@ bool CGBMUtils::WaitingForFlip()
+ 
+ bool CGBMUtils::QueueFlip()
+ {
+-  m_next_bo = gbm_surface_lock_front_buffer(m_drm->gbm->surface);
++  m_next_bo = gbm_surface_lock_front_buffer(m_gbm->surface);
+   m_drm_fb = DrmFbGetFromBo(m_next_bo);
+ 
+   auto ret = drmModePageFlip(m_drm->fd,
+@@ -265,7 +277,7 @@ void CGBMUtils::FlipPage()
+ 
+   flip_happening = QueueFlip();
+ 
+-  if(g_Windowing.NoOfBuffers() >= 3 && gbm_surface_has_free_buffers(m_drm->gbm->surface))
++  if(g_Windowing.NoOfBuffers() >= 3 && gbm_surface_has_free_buffers(m_gbm->surface))
+   {
+     return;
+   }
+@@ -367,7 +379,7 @@ bool CGBMUtils::GetPreferredMode()
+   return true;
+ }
+ 
+-drm * CGBMUtils::InitDrm()
++bool CGBMUtils::InitDrm()
+ {
+   const char *device = "/dev/dri/card0";
+ 
+@@ -375,22 +387,22 @@ drm * CGBMUtils::InitDrm()
+ 
+   if(m_drm->fd < 0)
+   {
+-    return nullptr;
++    return false;
+   }
+ 
+   if(!GetResources())
+   {
+-    return nullptr;
++    return false;
+   }
+ 
+   if(!GetConnector())
+   {
+-    return nullptr;
++    return false;
+   }
+ 
+   if(!GetEncoder())
+   {
+-    return nullptr;
++    return false;
+   }
+   else
+   {
+@@ -399,7 +411,7 @@ drm * CGBMUtils::InitDrm()
+ 
+   if(!GetPreferredMode())
+   {
+-    return nullptr;
++    return false;
+   }
+ 
+   for(auto i = 0; i < m_drm_resources->count_crtcs; i++)
+@@ -415,9 +427,8 @@ drm * CGBMUtils::InitDrm()
+ 
+   drmSetMaster(m_drm->fd);
+ 
+-  m_drm->gbm = new gbm;
+-  m_drm->gbm->dev = gbm_create_device(m_drm->fd);
+-  m_drm->gbm->surface = nullptr;
++  m_gbm->dev = gbm_create_device(m_drm->fd);
++  m_gbm->surface = nullptr;
+ 
+   m_drm_fds.fd = m_drm->fd;
+   m_drm_fds.events = POLLIN;
+@@ -428,7 +439,7 @@ drm * CGBMUtils::InitDrm()
+   m_drm->connector_id = m_drm_connector->connector_id;
+   m_orig_crtc = drmModeGetCrtc(m_drm->fd, m_drm->crtc_id);
+ 
+-  return m_drm;
++  return true;
+ }
+ 
+ bool CGBMUtils::RestoreOriginalMode()
+@@ -465,14 +476,14 @@ void CGBMUtils::DestroyDrm()
+ {
+   RestoreOriginalMode();
+ 
+-  if(m_drm->gbm->surface)
++  if(m_gbm->surface)
+   {
+-    gbm_surface_destroy(m_drm->gbm->surface);
++    gbm_surface_destroy(m_gbm->surface);
+   }
+ 
+-  if(m_drm->gbm->dev)
++  if(m_gbm->dev)
+   {
+-    gbm_device_destroy(m_drm->gbm->dev);
++    gbm_device_destroy(m_gbm->dev);
+   }
+ 
+   if(m_drm_encoder)
+@@ -503,9 +514,10 @@ void CGBMUtils::DestroyDrm()
+   m_drm->crtc_id = 0;
+   m_drm->crtc_index = 0;
+   m_drm->fd = -1;
+-  m_drm->gbm = nullptr;
+   m_drm->mode = nullptr;
+ 
++  m_gbm = nullptr;
++
+   m_bo = nullptr;
+   m_next_bo = nullptr;
+ }
+diff --git a/xbmc/windowing/gbm/GBMUtils.h b/xbmc/windowing/gbm/GBMUtils.h
+index aaf70746236a..874c10045c93 100644
+--- a/xbmc/windowing/gbm/GBMUtils.h
++++ b/xbmc/windowing/gbm/GBMUtils.h
+@@ -52,8 +52,6 @@ struct drm
+ {
+   int fd;
+ 
+-  struct gbm *gbm;
+-
+   struct crtc *crtc;
+   struct connector *connector;
+   int crtc_index;
+@@ -72,7 +70,9 @@ struct drm_fb
+ class CGBMUtils
+ {
+ public:
+-  static drm * InitDrm();
++  static gbm * GetGbm();
++  static drm * GetDrm();
++  static bool InitDrm();
+   static bool InitGbm(RESOLUTION_INFO res);
+   static void DestroyGbm();
+   static bool SetVideoMode(RESOLUTION_INFO res);
+diff --git a/xbmc/windowing/gbm/GLContextEGL.cpp b/xbmc/windowing/gbm/GLContextEGL.cpp
+index 052e97a27765..05406ce1025e 100644
+--- a/xbmc/windowing/gbm/GLContextEGL.cpp
++++ b/xbmc/windowing/gbm/GLContextEGL.cpp
+@@ -20,11 +20,12 @@
+ 
+ #include "GLContextEGL.h"
+ 
+-#include <EGL/eglext.h>
+ #include "guilib/IDirtyRegionSolver.h"
+ #include "settings/AdvancedSettings.h"
+ #include "utils/log.h"
+ 
++#include <EGL/eglext.h>
++
+ CGLContextEGL::CGLContextEGL() :
+   m_eglDisplay(EGL_NO_DISPLAY),
+   m_eglSurface(EGL_NO_SURFACE),
+@@ -38,13 +39,19 @@ CGLContextEGL::~CGLContextEGL()
+   Destroy();
+ }
+ 
+-bool CGLContextEGL::CreateDisplay(gbm_device* display,
++bool CGLContextEGL::CreateDisplay(EGLDisplay display,
+                                   EGLint renderable_type,
+                                   EGLint rendering_api)
+ {
+   EGLint neglconfigs = 0;
+   int major, minor;
+ 
++  EGLint surface_type = EGL_WINDOW_BIT;
++  // for the non-trivial dirty region modes, we need the EGL buffer to be preserved across updates
++  if (g_advancedSettings.m_guiAlgorithmDirtyRegions == DIRTYREGION_SOLVER_COST_REDUCTION ||
++      g_advancedSettings.m_guiAlgorithmDirtyRegions == DIRTYREGION_SOLVER_UNION)
++    surface_type |= EGL_SWAP_BEHAVIOR_PRESERVED_BIT;
++
+   EGLint attribs[] =
+   {
+     EGL_RED_SIZE,        8,
+@@ -55,7 +62,7 @@ bool CGLContextEGL::CreateDisplay(gbm_device* display,
+     EGL_STENCIL_SIZE,    0,
+     EGL_SAMPLE_BUFFERS,  0,
+     EGL_SAMPLES,         0,
+-    EGL_SURFACE_TYPE,    EGL_WINDOW_BIT,
++    EGL_SURFACE_TYPE,    surface_type,
+     EGL_RENDERABLE_TYPE, renderable_type,
+     EGL_NONE
+   };
+@@ -142,13 +149,32 @@ bool CGLContextEGL::BindContext()
+   return true;
+ }
+ 
+-bool CGLContextEGL::CreateSurface(gbm_surface* surface)
++bool CGLContextEGL::SurfaceAttrib()
+ {
+-  EGLNativeWindowType egl_nwin = (EGLNativeWindowType)surface;
++  // for the non-trivial dirty region modes, we need the EGL buffer to be preserved across updates
++  if (g_advancedSettings.m_guiAlgorithmDirtyRegions == DIRTYREGION_SOLVER_COST_REDUCTION ||
++      g_advancedSettings.m_guiAlgorithmDirtyRegions == DIRTYREGION_SOLVER_UNION)
++  {
++    if ((m_eglDisplay == EGL_NO_DISPLAY) || (m_eglSurface == EGL_NO_SURFACE))
++    {
++      return false;
++    }
++
++    if (!eglSurfaceAttrib(m_eglDisplay, m_eglSurface, EGL_SWAP_BEHAVIOR, EGL_BUFFER_PRESERVED))
++    {
++      CLog::Log(LOGDEBUG, "%s: Could not set EGL_SWAP_BEHAVIOR",__FUNCTION__);
++    }
++  }
+ 
++  return true;
++}
++
++bool CGLContextEGL::CreateSurface(EGLNativeWindowType surface)
++{
+   m_eglSurface = eglCreateWindowSurface(m_eglDisplay,
+                                         m_eglConfig,
+-                                        egl_nwin, nullptr);
++                                        surface,
++                                        nullptr);
+ 
+   if (m_eglSurface == EGL_NO_SURFACE)
+   {
+@@ -195,6 +221,16 @@ void CGLContextEGL::Detach()
+   }
+ }
+ 
++bool CGLContextEGL::SetVSync(bool enable)
++{
++  if (!eglSwapInterval(m_eglDisplay, enable))
++  {
++    return false;
++  }
++
++  return true;
++}
++
+ void CGLContextEGL::SwapBuffers()
+ {
+   if (m_eglDisplay == EGL_NO_DISPLAY || m_eglSurface == EGL_NO_SURFACE)
+diff --git a/xbmc/windowing/gbm/GLContextEGL.h b/xbmc/windowing/gbm/GLContextEGL.h
+index 86a5e9f71fc6..afea42950e87 100644
+--- a/xbmc/windowing/gbm/GLContextEGL.h
++++ b/xbmc/windowing/gbm/GLContextEGL.h
+@@ -21,7 +21,6 @@
+ #pragma once
+ 
+ #include "EGL/egl.h"
+-#include "gbm.h"
+ 
+ class CGLContextEGL
+ {
+@@ -29,15 +28,17 @@ class CGLContextEGL
+   CGLContextEGL();
+   virtual ~CGLContextEGL();
+ 
+-  bool CreateDisplay(gbm_device* connection,
++  bool CreateDisplay(EGLDisplay display,
+                      EGLint renderable_type,
+                      EGLint rendering_api);
+ 
+-  bool CreateSurface(gbm_surface* surface);
++  bool CreateSurface(EGLNativeWindowType surface);
+   bool CreateContext();
+   bool BindContext();
++  bool SurfaceAttrib();
+   void Destroy();
+   void Detach();
++  bool SetVSync(bool enable);
+   void SwapBuffers();
+ 
+   EGLDisplay m_eglDisplay;
+diff --git a/xbmc/windowing/gbm/WinSystemGbm.cpp b/xbmc/windowing/gbm/WinSystemGbm.cpp
+index 028e8920b7cf..e851a100e8b2 100644
+--- a/xbmc/windowing/gbm/WinSystemGbm.cpp
++++ b/xbmc/windowing/gbm/WinSystemGbm.cpp
+@@ -27,18 +27,34 @@
+ #include "utils/log.h"
+ 
+ CWinSystemGbm::CWinSystemGbm() :
+-  m_drm(nullptr)
++  m_gbm(nullptr),
++  m_drm(nullptr),
++  m_nativeDisplay(nullptr),
++  m_nativeWindow(nullptr)
+ {
+   m_eWindowSystem = WINDOW_SYSTEM_GBM;
+ }
+ 
+ bool CWinSystemGbm::InitWindowSystem()
+ {
+-  m_drm = CGBMUtils::InitDrm();
++  if (!CGBMUtils::InitDrm())
++  {
++    CLog::Log(LOGERROR, "CWinSystemGbm::%s - failed to initialize DRM", __FUNCTION__);
++    return false;
++  }
++
++  m_drm = CGBMUtils::GetDrm();
++  m_gbm = CGBMUtils::GetGbm();
++
++  m_nativeDisplay = m_gbm->dev;
+ 
+   if (!m_drm)
+   {
+-    CLog::Log(LOGERROR, "CWinSystemGbm::%s - failed to initialize DRM", __FUNCTION__);
++    return false;
++  }
++
++  if (!m_gbm)
++  {
+     return false;
+   }
+ 
+@@ -49,7 +65,9 @@ bool CWinSystemGbm::InitWindowSystem()
+ bool CWinSystemGbm::DestroyWindowSystem()
+ {
+   CGBMUtils::DestroyDrm();
++  m_nativeDisplay = nullptr;
+   m_drm = nullptr;
++  m_gbm = nullptr;
+ 
+   CLog::Log(LOGDEBUG, "CWinSystemGbm::%s - deinitialized DRM", __FUNCTION__);
+   return true;
+@@ -66,6 +84,8 @@ bool CWinSystemGbm::CreateNewWindow(const std::string& name,
+     return false;
+   }
+ 
++  m_nativeWindow = m_gbm->surface;
++
+   CLog::Log(LOGDEBUG, "CWinSystemGbm::%s - initialized GBM", __FUNCTION__);
+   return true;
+ }
+@@ -73,6 +93,7 @@ bool CWinSystemGbm::CreateNewWindow(const std::string& name,
+ bool CWinSystemGbm::DestroyWindow()
+ {
+   CGBMUtils::DestroyGbm();
++  m_nativeWindow = nullptr;
+ 
+   CLog::Log(LOGDEBUG, "CWinSystemGbm::%s - deinitialized GBM", __FUNCTION__);
+   return true;
+diff --git a/xbmc/windowing/gbm/WinSystemGbm.h b/xbmc/windowing/gbm/WinSystemGbm.h
+index 469f6d5fd09f..08a2eecb3894 100644
+--- a/xbmc/windowing/gbm/WinSystemGbm.h
++++ b/xbmc/windowing/gbm/WinSystemGbm.h
+@@ -21,6 +21,7 @@
+ #pragma once
+ 
+ #include <gbm.h>
++#include <EGL/egl.h>
+ 
+ #include "threads/CriticalSection.h"
+ #include "windowing/WinSystem.h"
+@@ -55,5 +56,9 @@ class CWinSystemGbm : public CWinSystemBase
+   virtual void Unregister(IDispResource *resource);
+ 
+ protected:
++  gbm* m_gbm;
+   drm* m_drm;
++
++  EGLDisplay m_nativeDisplay;
++  EGLNativeWindowType m_nativeWindow;
+ };
+diff --git a/xbmc/windowing/gbm/WinSystemGbmGLESContext.cpp b/xbmc/windowing/gbm/WinSystemGbmGLESContext.cpp
+index 89ede12c92ef..34ac539de46a 100644
+--- a/xbmc/windowing/gbm/WinSystemGbmGLESContext.cpp
++++ b/xbmc/windowing/gbm/WinSystemGbmGLESContext.cpp
+@@ -28,7 +28,7 @@ bool CWinSystemGbmGLESContext::InitWindowSystem()
+     return false;
+   }
+ 
+-  if (!m_pGLContext.CreateDisplay(m_drm->gbm->dev,
++  if (!m_pGLContext.CreateDisplay(m_nativeDisplay,
+                                   EGL_OPENGL_ES2_BIT,
+                                   EGL_OPENGL_ES_API))
+   {
+@@ -55,7 +55,7 @@ bool CWinSystemGbmGLESContext::CreateNewWindow(const std::string& name,
+     return false;
+   }
+ 
+-  if (!m_pGLContext.CreateSurface(m_drm->gbm->surface))
++  if (!m_pGLContext.CreateSurface(m_nativeWindow))
+   {
+     return false;
+   }
+@@ -70,6 +70,11 @@ bool CWinSystemGbmGLESContext::CreateNewWindow(const std::string& name,
+     return false;
+   }
+ 
++  if (!m_pGLContext.SurfaceAttrib())
++  {
++    return false;
++  }
++
+   return true;
+ }
+ 
