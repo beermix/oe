@@ -16,7 +16,7 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 PKG_NAME="wxWidgets"
-PKG_VERSION="3.1.0"
+PKG_VERSION="3.0.3.1"
 PKG_SITE="https://github.com/wxWidgets/wxWidgets"
 PKG_URL="https://github.com/wxWidgets/wxWidgets/releases/download/v$PKG_VERSION/wxWidgets-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain gtk+ libSM"
@@ -27,27 +27,21 @@ PKG_LONGDESC="A cross-platform GUI and tools library for GTK, MS Windows, and Ma
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-#PKG_CONFIGURE_OPTS_TARGET="--disable-precomp-headers"
-
-PKG_CONFIGURE_OPTS_TARGET="--enable-static \
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --disable-debug_flag \
 			      --enable-unicode \
 			      --enable-graphics_ctx \
-			      --disable-mediactrl \
-			      --disable-monolithic \
-			      --disable-mslu \
 			      --enable-silent-rules \
-			      --disable-precomp-headers \
 			      --with-opengl"
 
-post_makeinstall_target() {
-  ln -sf $SYSROOT_PREFIX/usr/lib/wx/config/x86_64-openelec-linux-gnu-gtk2-unicode-3.1 $SYSROOT_PREFIX/usr/bin/wx-config
-  sed "s:^prefix=.*:prefix=$SYSROOT_PREFIX/usr:g" $SYSROOT_PREFIX/usr/bin/wx-config
-  rm -rf $INSTALL/usr/bin
-}
+#post_makeinstall_target() {
+#  ln -sf $SYSROOT_PREFIX/usr/lib/wx/config/x86_64-openelec-linux-gnu-gtk2-unicode-3.1 $SYSROOT_PREFIX/usr/bin/wx-config
+#  sed "s:^prefix=.*:prefix=$SYSROOT_PREFIX/usr:g" $SYSROOT_PREFIX/usr/bin/wx-config
+#  rm -rf $INSTALL/usr/bin
+#}
 
-pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC"
-  export CXXFLAGS="$CXXFLAGS -fPIC"
-  export LDFLAGS="$LDFLAGS -fPIC"
-}
+#pre_configure_target() {
+#  export CFLAGS="$CFLAGS -fPIC"
+#  export CXXFLAGS="$CXXFLAGS -fPIC"
+#  export LDFLAGS="$LDFLAGS -fPIC"
+#}

@@ -59,15 +59,15 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$ROOT/$TOOLCHAIN \
                        -DFFMPEG_INCLUDE_DIRS=$SYSROOT_PREFIX/usr \
                        -DENABLE_INTERNAL_CROSSGUID=OFF \
                        -DENABLE_OPENSSL=ON \
-                       -DENABLE_LDGOLD=ON \
+                       -DENABLE_LDGOLD=OFF \
                        -DENABLE_SDL=OFF \
                        -DENABLE_LCMS2=ON \
                        -DENABLE_CCACHE=OFF \
                        -DENABLE_LIRC=ON \
-                       -DENABLE_EVENTCLIENTS=OFF \
+                       -DENABLE_EVENTCLIENTS=ON \
                        -DENABLE_LIBUSB=OFF \
                        -DENABLE_UDEV=ON \
-                       -DENABLE_XSLT=OFF \
+                       -DENABLE_XSLT=ON \
                        -DENABLE_DBUS=ON \
                        -DCMAKE_VERBOSE_MAKEFILE=OFF \
                        -DENABLE_AVX=ON \
@@ -80,7 +80,7 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$ROOT/$TOOLCHAIN \
                        -DHAVE_SSE=TRUE \
                        -DHAVE_SSE2=TRUE \
                        -DHAVE_SSE4_1=TRUE \
-                       -DHAVE_SSSE3=TRUE -Wno-dev"
+                       -DHAVE_SSSE3=TRUE"
 
 if [ "$DISPLAYSERVER" = "x11" ]; then
   PKG_DEPENDS_TARGET+=" libX11 libXext libdrm libXrandr"

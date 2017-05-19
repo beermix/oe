@@ -37,7 +37,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-modules \
                            --disable-cups \
                            --disable-papi \
                            --enable-xkb \
-                           --disable-xinerama \
+                           --enable-silent-rules \
                            --disable-gtk-doc-html \
                            --with-xinput"
 
