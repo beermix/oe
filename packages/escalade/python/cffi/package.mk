@@ -37,13 +37,13 @@ post_unpack() {
 }
 
 pre_build_host() {
-  mkdir -p $PKG_BUILD/.$HOST_NAME
-  cp -RP $PKG_BUILD/* $PKG_BUILD/.$HOST_NAME
+  mkdir -p $ROOT/$PKG_BUILD/.$HOST_NAME
+  cp -RP $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$HOST_NAME
 }
 
 pre_build_target() {
-  mkdir -p $PKG_BUILD/.$TARGET_NAME
-  cp -RP $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME
+  mkdir -p $ROOT/$PKG_BUILD/.$TARGET_NAME
+  cp -RP $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$TARGET_NAME
 }
 
 pre_make_host() {

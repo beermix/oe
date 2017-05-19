@@ -33,12 +33,6 @@ PKG_AUTORECONF="no"
 
 PKG_MAINTAINER="unofficial.addon.pro"
 
-pre_make_target() {
-  export PYTHONXCPREFIX="$SYSROOT_PREFIX/usr"
-  export LDFLAGS="$LDFLAGS -L$SYSROOT_PREFIX/usr/lib -L$SYSROOT_PREFIX/lib"
-  export LDSHARED="$CC -shared"
-}
-
 make_target() {
   python setup.py build --cross-compile
 }

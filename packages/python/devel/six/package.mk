@@ -39,3 +39,15 @@ make_host() {
 makeinstall_host() {
   python setup.py install --prefix=$ROOT/$TOOLCHAIN
 }
+
+make_target() {
+  : # nop
+}
+
+makeinstall_target() {
+  python setup.py build --cross-compile
+  python setup.py install --root=$INSTALL --prefix=/usr
+
+  rm -rf $INSTALL/usr/bin
+  find $INSTALL/usr/lib/python*/site-packages/  -name "*.py" -exec rm -rf {} ";"
+}

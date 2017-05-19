@@ -16,16 +16,16 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="idna"
-PKG_VERSION="v2.5"
-PKG_REV="1"
+PKG_NAME="six"
+PKG_VERSION="1.10.0"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
-PKG_SITE="https://github.com/kjd/idna"
-PKG_GIT_URL="https://github.com/kjd/idna"
+PKG_SITE="http://pypi.python.org/pypi/six"
+PKG_URL="http://pypi.python.org/packages/source/s/six/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"
 PKG_SECTION="python/devel"
-PKG_SHORTDESC="A library to support the Internationalised Domain Names in IDNA protocol"
+PKG_SHORTDESC="Python 2 and 3 compatibility utilities"
+PKG_LONGDESC="Six is a Python 2 and 3 compatibility library. It provides utility functions for smoothing over the differences between the Python versions with the goal of writing Python code that is compatible on both Python versions. See the documentation for more information on what is provided."
 PKG_IS_ADDON="no"
 
 PKG_AUTORECONF="no"
@@ -33,13 +33,17 @@ PKG_AUTORECONF="no"
 PKG_MAINTAINER="unofficial.addon.pro"
 
 make_target() {
-  python setup.py build --cross-compile
+  : # nop
 }
 
 makeinstall_target() {
-  python setup.py install --root=$INSTALL --prefix=/usr
-}
+  export PYTHONXCPREFIX="$SYSROOT_PREFIX/usr"
+  export LDFLAGS="$LDFLAGS -L$SYSROOT_PREFIX/usr/lib -L$SYSROOT_PREFIX/lib"
 
-post_makeinstall_target() {
+  python setup.py build --cross-compile
+  python setup.py install --root=$INSTALL --prefix=/usr
+
+  rm -rf $INSTALL/usr/bin
   find $INSTALL/usr/lib/python*/site-packages/  -name "*.py" -exec rm -rf {} ";"
 }
+

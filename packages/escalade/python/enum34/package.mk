@@ -16,21 +16,20 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="idna"
-PKG_VERSION="v2.5"
+PKG_NAME="enum34"
+PKG_VERSION="1.1.6"
 PKG_REV="1"
 PKG_ARCH="any"
-PKG_LICENSE="OSS"
-PKG_SITE="https://github.com/kjd/idna"
-PKG_GIT_URL="https://github.com/kjd/idna"
+PKG_LICENSE="BSD"
+PKG_SITE="https://bitbucket.org/stoneleaf/enum34"
+PKG_URL="https://pypi.python.org/packages/bf/3e/31d502c25302814a7c2f1d3959d2a3b3f78e509002ba91aea64993936876/enum34-1.1.6.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"
-PKG_SECTION="python/devel"
-PKG_SHORTDESC="A library to support the Internationalised Domain Names in IDNA protocol"
+PKG_SECTION="python"
+PKG_SHORTDESC="Python 3.4 Enum backported to 3.3, 3.2, 3.1, 2.7, 2.6, 2.5, and 2.4"
+PKG_LONGDESC="Python 3.4 Enum backported to 3.3, 3.2, 3.1, 2.7, 2.6, 2.5, and 2.4"
+
 PKG_IS_ADDON="no"
-
 PKG_AUTORECONF="no"
-
-PKG_MAINTAINER="unofficial.addon.pro"
 
 make_target() {
   python setup.py build --cross-compile

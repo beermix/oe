@@ -1,5 +1,5 @@
 ################################################################################
-#      This file is part of LibreELEC - https://LibreELEC.tv
+#      This file is part of LibreELEC - http://www.libreelec.tv
 #      Copyright (C) 2016 Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
@@ -16,30 +16,29 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="idna"
-PKG_VERSION="v2.5"
-PKG_REV="1"
+PKG_NAME="vice-libretro"
+PKG_VERSION="0738c11"
 PKG_ARCH="any"
-PKG_LICENSE="OSS"
-PKG_SITE="https://github.com/kjd/idna"
-PKG_GIT_URL="https://github.com/kjd/idna"
-PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"
-PKG_SECTION="python/devel"
-PKG_SHORTDESC="A library to support the Internationalised Domain Names in IDNA protocol"
-PKG_IS_ADDON="no"
+PKG_LICENSE="GPLv2"
+PKG_SITE="http://vice-emu.sf.net"
+PKG_GIT_URL="https://github.com/libretro/vice-libretro"
+PKG_DEPENDS_TARGET="toolchain"
+PKG_SECTION="emulation"
+PKG_SHORTDESC="VICE C64 libretro"
 
+PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_MAINTAINER="unofficial.addon.pro"
+pre_build_target() {
+  export GIT_VERSION=$PKG_VERSION
+}
 
 make_target() {
-  python setup.py build --cross-compile
+  strip_lto
+  make -f Makefile.libretro CC=$CC
 }
 
 makeinstall_target() {
-  python setup.py install --root=$INSTALL --prefix=/usr
-}
-
-post_makeinstall_target() {
-  find $INSTALL/usr/lib/python*/site-packages/  -name "*.py" -exec rm -rf {} ";"
+  mkdir -p $INSTALL/usr/lib/libretro
+  cp *.so $INSTALL/usr/lib/libretro/
 }

@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="vice"
-PKG_VERSION="3.0"
+PKG_VERSION="3.1"
 PKG_SITE="http://vice-emu.sourceforge.net/"
-PKG_URL="https://sourceforge.net/projects/vice-emu/files/development-releases/vice-$PKG_VERSION.tar.gz"
+PKG_URL="https://sourceforge.net/projects/vice-emu/files/releases/vice-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain alsa-lib SDL2 libpng giflib zlib libvorbis libogg lame"
 PKG_SECTION="emulation"
 PKG_SHORTDESC="VICE C64 emulator"
