@@ -1,5 +1,5 @@
 [Unit]
-Description=Cores directory RetroArch
+Description=Cores directory
 After=storage.mount
 After=systemd-tmpfiles-setup.service
 

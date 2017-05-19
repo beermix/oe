@@ -19,13 +19,12 @@
 ################################################################################
 
 PKG_NAME="par2cmdline"
-PKG_VERSION="b0fab49"
+PKG_VERSION="41b4b63"
 PKG_SITE="https://github.com/Parchive/par2cmdline"
 PKG_GIT_URL="https://github.com/Parchive/par2cmdline"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="system"
-PKG_SHORTDESC="par2cmdline: a utility to create and repair data files using Reed Solomon coding."
-PKG_LONGDESC="This is BlackIkeEagle's fork of par2cmdline"
+PKG_SHORTDESC="A utility to create and repair data files using Reed Solomon coding (multi threaded OpenMP version)."
 PKG_IS_ADDON="no"
 
 PKG_AUTORECONF="yes"

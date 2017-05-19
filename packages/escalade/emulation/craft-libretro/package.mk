@@ -27,6 +27,9 @@ PKG_SHORTDESC="libretro Craft core"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 PKG_USE_CMAKE="no"
+pre_build_target() {
+  export GIT_VERSION=$PKG_VERSION
+}
 
 post_unpack() {
   mv $BUILD/Craft* $BUILD/$PKG_NAME-$PKG_VERSION

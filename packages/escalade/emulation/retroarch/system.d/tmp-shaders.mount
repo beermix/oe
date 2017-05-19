@@ -1,5 +1,5 @@
 [Unit]
-Description=Shaders directory RetroArch
+Description=Shaders directory
 After=storage.mount
 After=systemd-tmpfiles-setup.service
 

@@ -19,7 +19,7 @@
 ################################################################################
 
 PKG_NAME="genesis-plus-gx-libretro"
-PKG_VERSION="3bcc5f0"
+PKG_VERSION="365a28c"
 PKG_SITE="https://github.com/libretro/Genesis-Plus-GX"
 PKG_GIT_URL="https://github.com/libretro/Genesis-Plus-GX"
 PKG_DEPENDS_TARGET="toolchain"
@@ -29,6 +29,9 @@ PKG_LONGDESC="Genesis Plus GX is an open-source & portable Sega Mega Drive / Gen
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
+pre_build_target() {
+  export GIT_VERSION=$PKG_VERSION
+}
 
 post_unpack() {
   mv $BUILD/Genesis-Plus-GX-$PKG_VERSION* $BUILD/$PKG_NAME-$PKG_VERSION

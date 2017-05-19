@@ -28,7 +28,4 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 
-PKG_CONFIGURE_OPTS_TARGET="--with-gtk=2.0 \
-			      --disable-orbit \
-			      --disable-documentation \
-			      --disable-shared"
+PKG_CONFIGURE_OPTS_TARGET="--with-gtk=2.0 disable-orbit disable-documentation disable-shared"

@@ -29,6 +29,9 @@ PKG_LONGDESC="libretro implementation of Mednafen wswan"
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
+pre_build_target() {
+  export GIT_VERSION=$PKG_VERSION
+}
 
 makeinstall_target() {
   mkdir -p $INSTALL/usr/lib/libretro

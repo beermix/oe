@@ -30,8 +30,8 @@ PKG_LONGDESC="Currently, FB Alpha supports games on Capcom CPS-1 and CPS-2 hardw
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-post_unpack() {
-  mv $BUILD/fbalpha-$PKG_VERSION* $BUILD/$PKG_NAME-$PKG_VERSION
+pre_build_target() {
+  export GIT_VERSION=$PKG_VERSION
 }
 
 make_target() {

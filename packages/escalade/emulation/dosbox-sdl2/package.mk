@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="dosbox-sdl2"
-PKG_VERSION="50114b6"
+PKG_VERSION="1427002"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv3"
