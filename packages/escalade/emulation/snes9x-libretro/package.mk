@@ -16,26 +16,29 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="dolphin"
-PKG_VERSION="e9ad0ec"
-PKG_ARCH="x86_64"
-PKG_SITE="https://github.com/dolphin-emu/dolphin"
-PKG_GIT_URL="https://github.com/dolphin-emu/dolphin"
-PKG_DEPENDS_TARGET="toolchain cmake:host openal-soft libevdev gtk+ ffmpeg zlib bluez portaudio pulseaudio alsa-lib libogg libvorbis libSM enet wxWidgets"
+PKG_NAME="snes9x-libretro"
+PKG_VERSION="0240276"
+PKG_ARCH="any"
+PKG_LICENSE="Non-commercial"
+PKG_SITE="https://github.com/libretro/snes9x"
+PKG_GIT_URL="https://github.com/libretro/snes9x"
+PKG_SOURCE_DIR="snes9x-$PKG_VERSION*"
+PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="emulation"
-PKG_SHORTDESC="Dolphin GameCube/Wii emulator"
+PKG_SHORTDESC="Snes9x - Portable Super Nintendo Entertainment System (TM) emulator"
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CMAKE_OPTS_TARGET="-DSYSTEM_PORTAUDIO_EXITCODE=0 -DENABLE_LTO=ON -DUSE_SHARED_ENET=ON"
-pre_make_target() {
-  find . -name flags.make -exec sed -i "s:isystem :I:g" \{} \;
-  #export VERBOSE=1
+pre_build_target() {
+  export GIT_VERSION=$PKG_VERSION
 }
 
-post_makeinstall_target() {
-  cp $PKG_DIR/scripts/* $INSTALL/usr/bin/
-  mkdir -p $INSTALL/usr/config/dolphin-emu
-  cp -PR $PKG_DIR/config/* $INSTALL/usr/config/dolphin-emu/
+make_target() {
+  make -C libretro
+}
+
+makeinstall_target() {
+  mkdir -p $INSTALL/usr/lib/libretro
+  cp libretro/*.so $INSTALL/usr/lib/libretro/
 }

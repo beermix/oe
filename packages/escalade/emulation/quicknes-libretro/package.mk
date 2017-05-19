@@ -19,7 +19,7 @@
 ################################################################################
 
 PKG_NAME="quicknes-libretro"
-PKG_VERSION="55379b9"
+PKG_VERSION="8613b48"
 PKG_SITE="https://github.com/libretro/QuickNES_Core"
 PKG_GIT_URL="https://github.com/libretro/QuickNES_Core"
 PKG_DEPENDS_TARGET="toolchain"
@@ -30,9 +30,8 @@ PKG_LONGDESC="The QuickNES core library, originally by Shay Green, heavily modif
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-unpack() {
-  tar -zxf $SOURCES/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.gz -C $BUILD
-  mv $BUILD/QuickNES* $BUILD/$PKG_NAME-$PKG_VERSION
+pre_build_target() {
+  export GIT_VERSION=$PKG_VERSION
 }
 
 makeinstall_target() {

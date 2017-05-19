@@ -37,6 +37,6 @@ make_target() {
 }
 
 makeinstall_target() {
-  mkdir -p $INSTALL/usr/share/retroarch/joypad-autoconfig
-    cp -r * $INSTALL/usr/share/retroarch/joypad-autoconfig
+  mkdir -p $INSTALL/usr/share/retroarch/autoconfig
+  cp -r * $INSTALL/usr/share/retroarch/autoconfig
 }
