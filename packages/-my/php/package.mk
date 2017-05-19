@@ -4,13 +4,13 @@
 ################################################################################
 
 PKG_NAME="php"
-PKG_VERSION="5.6.30"
+PKG_VERSION="7.1.5"
 PKG_REV="0"
 PKG_ARCH="any"
 PKG_LICENSE="OpenSource"
 PKG_SITE="http://www.php.net"
 PKG_URL="http://www.php.net/distributions/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain zlib pcre curl libxml2 libressl libxslt libiconv libxml2 openssl libjpeg-turbo bzip2 libpng freetype sqlite mariadb rapidjson"
+PKG_DEPENDS_TARGET="toolchain zlib pcre curl libxml2 openssl libxslt libiconv libxml2 openssl libjpeg-turbo bzip2 libpng freetype sqlite mariadb rapidjson"
 PKG_SECTION="xmedia/tools"
 PKG_SHORTDESC="php: Scripting language especially suited for Web development"
 PKG_LONGDESC="PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML."
@@ -32,8 +32,8 @@ configure_target() {
   export CFLAGS="$CFLAGS -I$SYSROOT_PREFIX/usr/include/iconv"
   export LDFLAGS="$LDFLAGS -L$SYSROOT_PREFIX/usr/lib/iconv -liconv"
 
-  #export CXXFLAGS="$CXXFLAGS"
-  #export CPPFLAGS="$CPPFLAGS"
+  export CXXFLAGS="$CXXFLAGS"
+  export CPPFLAGS="$CPPFLAGS"
 
   PKG_CONFIGURE_OPTS_TARGET="--enable-cli \
                              --enable-cgi \
