@@ -21,12 +21,12 @@ PKG_VERSION="ce4d3ba"
 PKG_GIT_URL="https://github.com/xbmc/xbmc.git"
 PKG_GIT_BRANCH="Krypton"
 PKG_KEEP_CHECKOUT="no"
-PKG_PATCH_DIRS="$LINUX non-rpi"
+#PKG_PATCH_DIRS="$LINUX non-rpi"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
-PKG_DEPENDS_TARGET="toolchain kodi:host kodi:bootstrap xmlstarlet:host Python zlib systemd pciutils dbus lzo pcre swig:host libass curl fontconfig fribidi tinyxml libjpeg-turbo freetype libcdio libdvdnav taglib libxml2 libxslt rapidjson sqlite ffmpeg crossguid giflib opengl lcms2 libfmt libplist"
+PKG_DEPENDS_TARGET="toolchain kodi:host kodi:bootstrap xmlstarlet:host Python zlib systemd pciutils dbus lzo pcre swig:host libass curl fontconfig fribidi tinyxml libjpeg-turbo freetype libcdio libdvdnav taglib libxml2 libxslt rapidjson sqlite ffmpeg crossguid giflib opengl lcms2 libfmt libplist libpng"
 PKG_DEPENDS_HOST="toolchain"
 PKG_DEPENDS_BOOTSTRAP="toolchain lzo:host libpng:host libjpeg-turbo:host giflib:host"
 PKG_PRIORITY="optional"
@@ -53,6 +53,7 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$ROOT/$TOOLCHAIN \
                        -DGIT_VERSION=$PKG_VERSION \
                        -DKODI_DEPENDSBUILD=ON \
                        -DWITH_CPU=x86_64 \
+                       -DGIT_VERSION=$PKG_VERSION \
                        -DWITH_TEXTUREPACKER=$ROOT/$TOOLCHAIN/bin/TexturePacker \
                        -DENABLE_INTERNAL_FFMPEG=OFF \
                        -DFFMPEG_INCLUDE_DIRS=$SYSROOT_PREFIX/usr \
@@ -63,10 +64,10 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$ROOT/$TOOLCHAIN \
                        -DENABLE_LCMS2=ON \
                        -DENABLE_CCACHE=OFF \
                        -DENABLE_LIRC=ON \
-                       -DENABLE_EVENTCLIENTS=ON \
+                       -DENABLE_EVENTCLIENTS=OFF \
                        -DENABLE_LIBUSB=OFF \
                        -DENABLE_UDEV=ON \
-                       -DENABLE_XSLT=ON \
+                       -DENABLE_XSLT=OFF \
                        -DENABLE_DBUS=ON \
                        -DCMAKE_VERBOSE_MAKEFILE=OFF \
                        -DENABLE_AVX=ON \
@@ -79,7 +80,7 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$ROOT/$TOOLCHAIN \
                        -DHAVE_SSE=TRUE \
                        -DHAVE_SSE2=TRUE \
                        -DHAVE_SSE4_1=TRUE \
-                       -DHAVE_SSSE3=TRUE"
+                       -DHAVE_SSSE3=TRUE -Wno-dev"
 
 if [ "$DISPLAYSERVER" = "x11" ]; then
   PKG_DEPENDS_TARGET+=" libX11 libXext libdrm libXrandr"
@@ -257,7 +258,7 @@ makeinstall_host() {
 pre_configure_target() {
 # kodi should never be built with lto
 
-  export LIBS="$LIBS -ltermcap"
+  export LIBS="$LIBS -lssp -lz -ltermcap"
 }
 
 pre_make_target() {
