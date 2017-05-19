@@ -28,9 +28,8 @@ PKG_LONGDESC="Cairo is a vector graphics library with cross-device output suppor
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
-CPPLAGS="$CPPLAGS -DCAIRO_NO_MUTEX=1"
-LIBS="$LIBS -latomic"
+CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE -DCAIRO_NO_MUTEX=1"
+#LIBS="$LIBS -latomic"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_lzo2_lzo2a_decompress=no \
                            ac_cv_lib_bfd_bfd_openr=no \
@@ -46,4 +45,5 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_lzo2_lzo2a_decompress=no \
                            --enable-silent-rules \
                            --enable-statoc \
                            --enable-shared \
-                           --enable-static"
+                           --enable-static \
+                           --enable-xml"

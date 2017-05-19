@@ -1,0 +1,38 @@
+See also: https://github.com/vasi/pixz/issues
+
+CLEANUP
+	* massive cleanup
+		* error handling
+		* signal handling
+		* globals
+	* optimized settings
+		* memory limit
+		* cpu number
+		* block size, for max threads on small files
+
+BUGS
+	* performance lags under IO?
+	* slow input -> CPUs idle while waiting for input
+	* safe extraction
+	* sanity checks, from spec:
+		- CRCs are already tested, i think?
+		- backward size should match file
+		- reserved flags must be zero
+		- header vs footer flags
+		- uncompressed size field vs actual uncompressed size
+		- index vs actual blocks
+
+EFFICIENCY
+	* more efficient indexing: ranges? sorted? mtree?
+	* circular buffer > linked list?
+
+DOCUMENTATION
+	* man pages
+	* command help
+
+FEATURES
+	* support multiple streams
+		* tarball append without decompression
+	* other archive formats: cpio?
+	* lzma-like API
+	* recovery tool (already is, kinda)

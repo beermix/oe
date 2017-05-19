@@ -11,6 +11,8 @@ configure_target() {
 		-Dcccdlflags='-fPIC' \
 		-Dccdlflags='-rdynamic' \
 		-Dprefix=/usr \
+		-Uusedl \
+		-Duserelocatableinc \
 		-Dprivlib=$_privlib \
 		-Darchlib=$_archlib \
 		-A ccflags="$CFLAGS -fPIC -DPIC" \

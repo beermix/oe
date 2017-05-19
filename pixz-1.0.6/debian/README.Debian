@@ -1,0 +1,26 @@
+
+PIXZ FILE INDEX
+       In  the (common) special case that pixz is used to compress a tar
+       file, some extra information called the Pixz File Index (PFI)  to
+       the  end of the output file. The resulting archives are given the
+       suffix .tpxz.
+
+       The PFI contains an index of which XZ block contains a given  tar
+       archive member (file) this allows extraction of an archive member
+       without uncompressing the complete archive,  and  extremely  fast
+       listing compared to a pipeline of xz and tar.
+
+       Pixz  uses  a  heuristic to detect a tar file and enable the PFI;
+       you can disable this with the -t flag.
+
+   CAVEATS
+       The PFI takes up a small amount of extra space.
+
+       Although most tar implementations  will  ignore  the  extra  data
+       after  the  end-of-archive marker (for example if extracting with
+       plain xz), there could be some that if causes problems for.
+
+       If either of these are a problem, the user can disable the adding
+       of PFI with the -t flag.
+
+ -- David Bremner <bremner@debian.org>, Thu, 27 Dec 2012 13:16:40 -0400
