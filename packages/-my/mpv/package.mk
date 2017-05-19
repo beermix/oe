@@ -1,5 +1,5 @@
 PKG_NAME="mpv"
-PKG_VERSION="v0.22.0"
+PKG_VERSION="v0.25.0"
 PKG_GIT_URL="https://github.com/mpv-player/mpv"
 PKG_DEPENDS_TARGET="toolchain libass"
 PKG_IS_ADDON="no"
@@ -26,11 +26,11 @@ configure_target() {
   		    --enable-vaapi \
   		    --enable-vaapi-hwaccel \
   		    --disable-apple-remote \
-  		    --disable-static-build
+  		    --enable-static-build
 }
 
 make_target() {
-  ./waf build -v -j6
+  ./waf build -j6 -v
 }
 
 make_install_target() {

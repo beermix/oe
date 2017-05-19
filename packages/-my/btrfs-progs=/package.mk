@@ -4,7 +4,6 @@ PKG_URL="https://github.com/kdave/btrfs-progs/archive/$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="btrfs-progs-4.7.1"
 PKG_DEPENDS_TARGET="toolchain util-linux zlib lzo e2fsprogs e2fsprogs"
 PKG_DEPENDS_INIT="toolchain util-linux zlib lzo e2fsprogs"
-
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
