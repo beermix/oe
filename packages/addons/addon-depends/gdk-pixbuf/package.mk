@@ -19,9 +19,7 @@
 ################################################################################
 
 PKG_NAME="gdk-pixbuf"
-PKG_VERSION="2.36.6"
-PKG_ARCH="any"
-PKG_LICENSE="OSS"
+PKG_VERSION="2.36.4"
 PKG_SITE="http://www.gtk.org/"
 PKG_URL="http://ftp.acc.umu.se/pub/gnome/sources/gdk-pixbuf/2.36/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain glib libjpeg-turbo libpng jasper tiff"
@@ -31,8 +29,12 @@ PKG_LONGDESC="gdk-pixbuf (GdkPixbuf) is a GNOME library for image loading and ma
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="gio_can_sniff=yes \
+PKG_CONFIGURE_OPTS_TARGET="--enable-gio-sniffing=yes \
                            --disable-gtk-doc \
                            --disable-gtk-doc-html \
                            --disable-gtk-doc-pdf \
-                           --disable-man"
+                           --disable-man \
+                           --with-libpng \
+                           --with-libjpeg \
+                           --with-libtiff \
+                           --with-libjasper"
