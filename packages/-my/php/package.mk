@@ -17,13 +17,13 @@ PKG_LONGDESC="PHP is a widely-used general-purpose scripting language that is es
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-pre_configure_target() {
-    rm $ROOT/$PKG_BUILD/aclocal.m4
-}
+#pre_configure_target() {
+#    rm $ROOT/$PKG_BUILD/aclocal.m4
+#}
 
 configure_target() {
-  cd $ROOT/$PKG_BUILD
-  rm -rf .$TARGET_NAME
+  #cd $ROOT/$PKG_BUILD
+  #rm -rf .$TARGET_NAME
 
   # Dynamic Library support
   export LDFLAGS="$LDFLAGS -ldl -lpthread -lstdc++"

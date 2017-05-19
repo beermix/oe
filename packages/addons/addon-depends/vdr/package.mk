@@ -37,6 +37,7 @@ post_unpack() {
 
 pre_configure_target() {
   export LDFLAGS="$(echo $LDFLAGS | sed -e "s|-Wl,--as-needed||") -L$SYSROOT_PREFIX/usr/lib/iconv"
+  export LIBS="-lz -lm"
 }
 
 pre_make_target() {
@@ -46,7 +47,7 @@ pre_make_target() {
   VIDEODIR = /storage/videos
   CONFDIR = /storage/.config/vdr
   LOCDIR = /usr/share/locale
-  LIBS += -liconv
+  LIBS += -liconv 
   NO_KBD=yes
   VDR_USER=root
 EOF

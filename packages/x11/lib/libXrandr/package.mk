@@ -28,4 +28,4 @@ PKG_LONGDESC="Xrandr is a simple library designed to interface the X Resize and 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-malloc0returnsnull"
+PKG_CONFIGURE_OPTS_TARGET="--enable-malloc0returnsnull --disable-shared"

@@ -32,9 +32,6 @@ PKG_LONGDESC="The purpose of a debugger such as GDB is to allow you to see what 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-CC_FOR_BUILD="$HOST_CC"
-CFLAGS_FOR_BUILD="$HOST_CFLAGS"
-
 pre_configure_target() {
   # gdb could fail on runtime if build with LTO support
     strip_lto
@@ -45,16 +42,7 @@ PKG_CONFIGURE_OPTS_TARGET="bash_cv_have_mbstate_t=set \
                            --enable-static \
                            --with-auto-load-safe-path=/ \
                            --disable-nls \
-                           --disable-sim \
-                           --without-x \
-                           --disable-tui \
-                           --disable-libada \
-                           --without-lzma \
-                           --disable-libquadmath \
-                           --disable-libquadmath-support \
-                           --enable-libada \
-                           --enable-libssp \
-                           --disable-werror"
+                           --disable-simr"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/share/gdb/python

@@ -21,7 +21,6 @@ PKG_VERSION="1.1.2"
 PKG_SITE="http://www.X.org"
 PKG_URL="http://xorg.freedesktop.org/archive/individual/lib/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain util-macros xextproto libXext libX11 libXt"
-
 PKG_SECTION="x11/lib"
 PKG_SHORTDESC="libxmu: X11 miscellaneous utility library"
 PKG_LONGDESC="LibXmu provides a set of miscellaneous utility convenience functions for X libraries to use."
