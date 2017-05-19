@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="boost"
-PKG_VERSION="1_64_0"
-PKG_URL="$SOURCEFORGE_SRC/boost/boost/1.64.0/${PKG_NAME}_${PKG_VERSION}.tar.bz2"
+PKG_VERSION="1_63_0"
+PKG_URL="$SOURCEFORGE_SRC/boost/boost/1.63.0/${PKG_NAME}_${PKG_VERSION}.tar.bz2"
 PKG_SOURCE_DIR="${PKG_NAME}_${PKG_VERSION}"
 #PKG_VERSION="1.62ub"
 #PKG_URL="https://dl.dropboxusercontent.com/s/50c7u441wg5f4by/boost-1.62ub.tar.xz"
@@ -79,6 +79,6 @@ makeinstall_target() {
                                 --with-date_time \
                                 --with-chrono \
                                 --with-random \
-                                --with-regex -sICU_PATH="$SYSROOT_PREFIX/usr" -j2 \
+                                --with-regex -sICU_PATH="$SYSROOT_PREFIX/usr" \
                                 install
 }

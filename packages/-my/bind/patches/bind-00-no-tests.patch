@@ -1,0 +1,12 @@
+diff -Naur bind-9.11.1-orig/lib/Makefile.in bind-9.11.1/lib/Makefile.in
+--- bind-9.11.1-orig/lib/Makefile.in	2017-05-20 00:50:43.794168303 +0300
++++ bind-9.11.1/lib/Makefile.in	2017-05-20 00:52:30.261710686 +0300
+@@ -14,7 +14,7 @@
+ # Attempt to disable parallel processing.
+ .NOTPARALLEL:
+ .NO_PARALLEL:
+-SUBDIRS =	isc isccc dns isccfg bind9 lwres irs tests samples
++SUBDIRS =	isc isccc dns isccfg bind9 lwres irs samples
+ TARGETS =
+ 
+ @BIND9_MAKE_RULES@
