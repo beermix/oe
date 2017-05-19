@@ -21,12 +21,12 @@ PKG_CONFIGURE_OPTS_TARGET="BUILD_CC="$HOST_CC" \
                            --with-linidn2=$SYSROOT_PREFIX/usr \
                            --with-libiconv=$SYSROOT_PREFIX/usr \
                            --with-openssl=$SYSROOT_PREFIX/usr \
-                           --with-zlib=$SYSROOT_PREFIX/usr \
+                           --with-zlib=no \
                            --sysconfdir=/storage/.config \
                            --with-randomdev=/dev/urandom \
                            --with-ecdsa=yes \
                            --with-libxml2=$SYSROOT_PREFIX/usr \
-                           --with-readline=$SYSROOT_PREFIX/usr \
+                           --with-readline=no \
                            --with-sysroot=$SYSROOT_PREFIX \
                            --with-gssapi=no \
                            --with-gost=no \
