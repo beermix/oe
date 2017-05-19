@@ -19,11 +19,8 @@
 PKG_NAME="ffmpeg"
 # Current branch is: release/3.3-kodi
 PKG_VERSION="eb0819c"
-PKG_ARCH="any"
-PKG_LICENSE="LGPLv2.1+"
-PKG_SITE="https://ffmpeg.org"
 PKG_GIT_URL="https://github.com/xbmc/FFmpeg"
-PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl dcadec libmpeg2 flac speex libtheora libvorbis libmodplug xz libssh openjpeg"
+PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl dcadec speex"
 PKG_PRIORITY="optional"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
@@ -36,7 +33,7 @@ PKG_AUTORECONF="no"
   get_graphicdrivers
 
 if [ "$VAAPI_SUPPORT" = yes ]; then
-  PKG_DEPENDS_TARGET+=" intel-vaapi-driver libvdpau-va-gl"
+  PKG_DEPENDS_TARGET+=" intel-vaapi-driver libva-utils libvdpau"
   FFMPEG_VAAPI="--enable-vaapi"
 else
   FFMPEG_VAAPI="--disable-vaapi"
@@ -92,8 +89,7 @@ pre_configure_target() {
 
   if [ "$KODIPLAYER_DRIVER" = "bcm2835-firmware" ]; then
     export CFLAGS="-I$SYSROOT_PREFIX/usr/include/interface/vcos/pthreads -I$SYSROOT_PREFIX/usr/include/interface/vmcs_host/linux -DRPI=1 $CFLAGS"
-    export FFMPEG_LIBS="-lbcm_host -lvcos -lvchiq_arm -lmmal -lmmal_core -lmmal_util -lvcsm -lvchostif"
-    export LIBS="$LIBS -lx265"
+    export FFMPEG_LIBS="-lbcm_host -lvcos -lvchiq_arm -lmmal -lmmal_core -lmmal_util -lvcsm"
   fi
 }
 
@@ -106,7 +102,6 @@ configure_target() {
               --sysroot=$SYSROOT_PREFIX \
               --sysinclude="$SYSROOT_PREFIX/usr/include" \
               --target-os="linux" \
-              --extra-version="$PKG_VERSION" \
               --nm="$NM" \
               --ar="$AR" \
               --as="$CC" \
@@ -115,12 +110,10 @@ configure_target() {
               --host-cc="$HOST_CC" \
               --host-cflags="$HOST_CFLAGS" \
               --host-ldflags="$HOST_LDFLAGS" \
-              --host-libs="-lstdc++ -lm -lrt -ldl" \
+              --host-libs="-lm" \
               --extra-cflags="$CFLAGS" \
               --extra-ldflags="$LDFLAGS -fPIC" \
               --extra-libs="$FFMPEG_LIBS" \
-              --extra-version="" \
-              --build-suffix="" \
               --disable-static \
               --enable-shared \
               --enable-gpl \
@@ -128,15 +121,14 @@ configure_target() {
               --enable-nonfree \
               --enable-logging \
               --disable-doc \
-              --disable-htmlpages \
-              --disable-manpages \
-              --disable-podpages \
-              --disable-txtpages \
               $FFMPEG_DEBUG \
               --enable-pic \
               --pkg-config="$ROOT/$TOOLCHAIN/bin/pkg-config" \
               --enable-optimizations \
               --disable-extra-warnings \
+              --disable-ffprobe \
+              --disable-ffplay \
+              --disable-ffserver \
               --enable-ffmpeg \
               --enable-avdevice \
               --enable-avcodec \
@@ -144,6 +136,7 @@ configure_target() {
               --enable-swscale \
               --enable-postproc \
               --enable-avfilter \
+              --disable-devices \
               --enable-pthreads \
               --disable-w32threads \
               --enable-network \
@@ -161,7 +154,7 @@ configure_target() {
               --disable-dxva2 \
               --enable-runtime-cpudetect \
               $FFMPEG_TABLES \
-              --enable-encoders \
+              --disable-encoders \
               --enable-encoder=ac3 \
               --enable-encoder=aac \
               --enable-encoder=wmav2 \
@@ -184,15 +177,16 @@ configure_target() {
               --enable-filters \
               --disable-avisynth \
               --enable-bzlib \
+              --disable-frei0r \
               --disable-libopencore-amrnb \
               --disable-libopencore-amrwb \
               --disable-libopencv \
               --disable-libdc1394 \
-              --enable-libfreetype \
+              --disable-libfreetype \
               --disable-libgsm \
               --disable-libmp3lame \
               --disable-libnut \
-              --enable-libopenjpeg \
+              --disable-libopenjpeg \
               --disable-librtmp \
               --disable-libschroedinger \
               --enable-libspeex \
