@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="kodi"
-PKG_VERSION="a5f9821"
+PKG_VERSION="ce4d3ba"
 PKG_GIT_URL="https://github.com/xbmc/xbmc.git"
 PKG_GIT_BRANCH="Krypton"
 PKG_KEEP_CHECKOUT="no"
@@ -58,7 +58,7 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$ROOT/$TOOLCHAIN \
                        -DFFMPEG_INCLUDE_DIRS=$SYSROOT_PREFIX/usr \
                        -DENABLE_INTERNAL_CROSSGUID=OFF \
                        -DENABLE_OPENSSL=ON \
-                       -DENABLE_LDGOLD=OFF \
+                       -DENABLE_LDGOLD=ON \
                        -DENABLE_SDL=OFF \
                        -DENABLE_LCMS2=ON \
                        -DENABLE_CCACHE=OFF \
@@ -68,7 +68,7 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$ROOT/$TOOLCHAIN \
                        -DENABLE_UDEV=ON \
                        -DENABLE_XSLT=ON \
                        -DENABLE_DBUS=ON \
-                       -DCMAKE_VERBOSE_MAKEFILE=0 \
+                       -DCMAKE_VERBOSE_MAKEFILE=OFF \
                        -DENABLE_AVX=ON \
                        -DENABLE_AVX2=OFF \
                        -DENABLE_SSE=ON \
