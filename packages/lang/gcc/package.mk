@@ -41,7 +41,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-plugin \
                            --enable-lto \
                            --enable-gold \
-                           --enable-ld=default \
                            --disable-multilib \
                            --disable-nls \
                            --enable-checking=release \
@@ -88,7 +87,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          $GCC_OPTS"
 
 pre_configure_host() {
-  export CXXFLAGS="$CXXFLAGS -std=gnu++98"
+  #export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
 }
 

@@ -29,10 +29,10 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-plugins \
                          --enable-gold \
                          --disable-nls \
-                         --enable-ld=default \
+                         --disable-sim \
+                         --disable-gdb \
                          --enable-lto \
                          --with-pic \
-                         --enable-shared \
                          --enable-poison-system-directories"
 
 makeinstall_host() {
