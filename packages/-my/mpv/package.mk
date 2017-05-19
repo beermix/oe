@@ -8,11 +8,9 @@ PKG_AUTORECONF="no"
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
-  
-  export LDFLAGS="$LDFLAGS -lresolv -lavresample -lm -lavformat -lX11 -lasound -lavutil -lavcodec"
-  
   strip_lto
   strip_gold
+  #export LIBS="$LIBS -lavcodec -lXv -lXext -lasound -lavfilter -lXext -lvdpau-lva-x11 -lX11 -lva -lva-drm -lva -lswresample -lm -lswscale"
 }
 
 configure_target() {
@@ -23,14 +21,13 @@ configure_target() {
   		    --disable-manpage-build \
   		    --disable-dvdnav \
   		    --disable-dvdread \
-  		    --enable-vaapi \
-  		    --enable-vaapi-hwaccel \
   		    --disable-apple-remote \
-  		    --enable-static-build
+  		    --disable-static-build \
+  		    LDFLAGS=-lresolv
 }
 
 make_target() {
-  ./waf build -j6 -v
+  ./waf build -j 4 
 }
 
 make_install_target() {
