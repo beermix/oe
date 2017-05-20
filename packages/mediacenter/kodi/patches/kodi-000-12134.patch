@@ -1,0 +1,532 @@
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -37,6 +37,17 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
+ set(CMAKE_CXX_EXTENSIONS OFF)
+ set(CMAKE_ASM_FLAGS "${CMAKE_C_FLAGS} -x assembler-with-cpp")
+ 
++# Platform
++if(CORE_SYSTEM_NAME STREQUAL linux)
++  set(_DEFAULT_PLATFORM X11)
++else()
++  string(TOLOWER ${CORE_SYSTEM_NAME} _DEFAULT_PLATFORM)
++endif()
++set(CORE_PLATFORM_NAME ${_DEFAULT_PLATFORM} CACHE STRING "Platform port to build")
++unset(_DEFAULT_PLATFORM)
++message(STATUS "Platform: ${CORE_PLATFORM_NAME}")
++include(${CMAKE_SOURCE_DIR}/cmake/scripts/${CORE_SYSTEM_NAME}/platform/${CORE_PLATFORM_NAME}.cmake)
++
+ # general
+ option(VERBOSE            "Enable verbose output?" OFF)
+ option(ENABLE_DVDCSS      "Enable libdvdcss support?" ON)
+@@ -50,12 +61,6 @@ if(UNIX)
+   option(FFMPEG_PATH        "Path to external ffmpeg?" "")
+   option(ENABLE_INTERNAL_CROSSGUID "Enable internal crossguid?" ON)
+   option(ENABLE_OPENSSL     "Enable OpenSSL?" ON)
+-  option(ENABLE_MIR         "Enable MIR?" OFF)
+-  if(CORE_SYSTEM_NAME STREQUAL linux OR CORE_SYSTEM_NAME STREQUAL freebsd)
+-    option(ENABLE_X11         "Enable X11 support?" ON)
+-    option(ENABLE_AML         "Enable AML?" OFF)
+-    option(ENABLE_IMX         "Enable IMX?" OFF)
+-  endif()
+ endif()
+ # System options
+ if(NOT WIN32)
+@@ -139,8 +144,6 @@ set(optional_deps Alsa
+                   SmbClient
+                   SSH
+                   UDEV
+-                  VAAPI
+-                  VDPAU
+                   XSLT)
+ 
+ # Required, dyloaded deps. Keep in alphabetical order please
+@@ -209,46 +212,6 @@ if(ENABLE_AIRTUNES)
+   endif()
+ endif()
+ 
+-if(CORE_SYSTEM_NAME STREQUAL osx)
+-  core_require_dep(Sdl)
+-endif()
+-
+-if(NOT WIN32)
+-  core_optional_dep(OpenGl)
+-  if(OPENGL_FOUND AND NOT APPLE)
+-    if(ENABLE_MIR)
+-      core_require_dep(Mir ENABLE_MIR)
+-      core_optional_dep(LibDRM ENABLE_MIR)
+-    else()
+-      core_optional_dep(X ENABLE_X11)
+-      core_optional_dep(XRandR ENABLE_X11)
+-      core_optional_dep(LibDRM ENABLE_X11)
+-    endif()
+-  else()
+-    core_optional_dep(OpenGLES)
+-    if(OPENGLES_FOUND)
+-      if(ENABLE_MIR)
+-        core_require_dep(Mir ENABLE_MIR)
+-        core_optional_dep(LibDRM ENABLE_MIR)
+-      else()
+-        core_optional_dep(X ENABLE_X11)
+-        core_optional_dep(XRandR ENABLE_X11)
+-        core_optional_dep(LibDRM ENABLE_X11)
+-      endif()
+-    endif()
+-  endif()
+-  if(NOT APPLE)
+-    core_require_dep(EGL)
+-  endif()
+-endif()
+-
+-if(CORE_SYSTEM_NAME STREQUAL android OR CORE_SYSTEM_NAME STREQUAL linux)
+-  core_optional_dep(AML)
+-  core_optional_dep(IMX)
+-elseif(CORE_SYSTEM_NAME STREQUAL rbpi)
+-  core_require_dep(MMAL)
+-endif()
+-
+ # find all folders containing addon.xml.in
+ # used to define ADDON_XML_OUTPUTS, ADDON_XML_DEPENDS and ADDON_INSTALL_DATA
+ # Function defined in ./cmake/scripts/common/Macros.cmake
+diff --git a/cmake/scripts/common/Macros.cmake b/cmake/scripts/common/Macros.cmake
+index c2308a4e0bbb..c4fc3f0e46d4 100644
+--- a/cmake/scripts/common/Macros.cmake
++++ b/cmake/scripts/common/Macros.cmake
+@@ -499,7 +499,7 @@ macro(core_add_optional_subdirs_from_filelist pattern)
+       list(GET line 1 subdir_dest)
+       list(GET line 3 opts)
+       foreach(opt ${opts})
+-        if(ENABLE_${opt})
++        if(ENABLE_${opt} OR ${opt}_FOUND)
+           if(VERBOSE)
+             message(STATUS "  core_add_optional_subdirs_from_filelist - adding subdir: ${CMAKE_SOURCE_DIR}/${subdir_src} -> ${CORE_BUILD_DIR}/${subdir_dest}")
+           endif()
+diff --git a/cmake/scripts/linux/platform/AML.cmake b/cmake/scripts/linux/platform/AML.cmake
+new file mode 100644
+index 000000000000..758264310ffe
+--- /dev/null
++++ b/cmake/scripts/linux/platform/AML.cmake
+@@ -0,0 +1,2 @@
++core_require_dep(OpenGLES)
++core_require_dep(AML)
+diff --git a/cmake/scripts/linux/platform/Mir.cmake b/cmake/scripts/linux/platform/Mir.cmake
+new file mode 100644
+index 000000000000..609d66f86acd
+--- /dev/null
++++ b/cmake/scripts/linux/platform/Mir.cmake
+@@ -0,0 +1,3 @@
++core_require_dep(OpenGl)
++core_require_dep(Mir)
++core_optional_dep(VAAPI)
+diff --git a/cmake/scripts/linux/platform/X11.cmake b/cmake/scripts/linux/platform/X11.cmake
+new file mode 100644
+index 000000000000..afc046845472
+--- /dev/null
++++ b/cmake/scripts/linux/platform/X11.cmake
+@@ -0,0 +1,7 @@
++core_require_dep(OpenGl)
++core_require_dep(EGL)
++core_require_dep(X)
++core_require_dep(XRandR)
++core_require_dep(LibDRM)
++core_optional_dep(VAAPI)
++core_optional_dep(VDPAU)
+diff --git a/cmake/treedata/optional/common/X.txt b/cmake/treedata/optional/common/X.txt
+new file mode 100644
+index 000000000000..617ff40b89dc
+--- /dev/null
++++ b/cmake/treedata/optional/common/X.txt
+@@ -0,0 +1 @@
++xbmc/windowing/X11 windowing/X11 # X
+diff --git a/xbmc/windowing/CMakeLists.txt b/xbmc/windowing/CMakeLists.txt
+index e66d41a3aa3f..00caf9df8083 100644
+--- a/xbmc/windowing/CMakeLists.txt
++++ b/xbmc/windowing/CMakeLists.txt
+@@ -7,25 +7,9 @@ set(HEADERS WindowingFactory.h
+             XBMC_events.h
+             VideoSync.h)
+ 
+-if (NOT MIR_FOUND)
+-  if(SDL_FOUND AND NOT X_FOUND)
+-    list(APPEND SOURCES WinEventsSDL.cpp)
+-    list(APPEND HEADERS WinEventsSDL.h)
+-  endif()
+-
+-  if(X_FOUND)
+-    list(APPEND SOURCES WinEventsX11.cpp)
+-    list(APPEND HEADERS WinEventsX11.h)
+-  endif()
+-
+-  if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
+-    list(APPEND SOURCES WinEventsLinux.cpp)
+-    list(APPEND HEADERS WinEventsLinux.h)
+-  endif()
+-
+-  if(AML_FOUND)
+-    add_subdirectory(amlogic)
+-  endif()
++if(CORE_SYSTEM_NAME STREQUAL linux AND NOT MIR_FOUND)
++  list(APPEND SOURCES WinEventsLinux.cpp)
++  list(APPEND HEADERS WinEventsLinux.h)
+ endif()
+ 
+ core_add_library(windowing)
+diff --git a/xbmc/windowing/WinEvents.cpp b/xbmc/windowing/WinEvents.cpp
+index d7fa9a261fd7..a5b5e07c619c 100644
+--- a/xbmc/windowing/WinEvents.cpp
++++ b/xbmc/windowing/WinEvents.cpp
+@@ -44,11 +44,11 @@
+ #define WinEventsType CWinEventsMir
+ 
+ #elif (defined(TARGET_FREEBSD) || defined(TARGET_LINUX)) && defined(HAS_SDL_WIN_EVENTS)
+-#include "WinEventsSDL.h"
++#include "osx/WinEventsSDL.h"
+ #define WinEventsType CWinEventsSDL
+ 
+ #elif (defined(TARGET_FREEBSD) || defined(TARGET_LINUX)) && defined(HAS_X11_WIN_EVENTS)
+-#include "WinEventsX11.h"
++#include "X11/WinEventsX11.h"
+ #define WinEventsType CWinEventsX11
+ 
+ #elif defined(TARGET_LINUX) && defined(HAS_LINUX_EVENTS)
+diff --git a/xbmc/windowing/X11/CMakeLists.txt b/xbmc/windowing/X11/CMakeLists.txt
+index 902dea50a4cd..8fe7aba65dc7 100644
+--- a/xbmc/windowing/X11/CMakeLists.txt
++++ b/xbmc/windowing/X11/CMakeLists.txt
+@@ -1,25 +1,23 @@
+-if (X_FOUND)
++set(SOURCES GLContextEGL.cpp
++            GLContextGLX.cpp
++            GLContext.cpp
++            WinEventsX11.cpp
++            WinSystemX11.cpp
++            WinSystemX11GLContext.cpp
++            WinSystemX11GLESContext.cpp
++            XRandR.cpp
++            VideoSyncGLX.cpp
++            VideoSyncDRM.cpp)
+ 
+-  set(SOURCES GLContextEGL.cpp
+-              GLContextGLX.cpp
+-              GLContext.cpp
+-              WinSystemX11GLContext.cpp
+-              WinSystemX11GLESContext.cpp
+-              XRandR.cpp
+-              VideoSyncGLX.cpp
+-              VideoSyncDRM.cpp
+-              WinSystemX11.cpp)
++set(HEADERS GLContext.h
++            GLContextEGL.h
++            GLContextGLX.h
++            WinEventsX11.h
++            WinSystemX11.h
++            WinSystemX11GLContext.h
++            WinSystemX11GLESContext.h
++            XRandR.h
++            VideoSyncGLX.h
++            VideoSyncDRM.h)
+ 
+-  set(HEADERS GLContext.h
+-              GLContextEGL.h
+-              GLContextGLX.h
+-              WinSystemX11GLContext.h
+-              WinSystemX11GLESContext.h
+-              XRandR.h
+-              VideoSyncGLX.h
+-              VideoSyncDRM.h
+-              WinSystemX11.h)
+-
+-  core_add_library(windowing_X11)
+-
+-endif()
++core_add_library(windowing_X11)
+diff --git a/xbmc/windowing/WinEventsX11.cpp b/xbmc/windowing/X11/WinEventsX11.cpp
+similarity index 99%
+rename from xbmc/windowing/WinEventsX11.cpp
+rename to xbmc/windowing/X11/WinEventsX11.cpp
+index e63851148aba..ba894420ce5e 100644
+--- a/xbmc/windowing/WinEventsX11.cpp
++++ b/xbmc/windowing/X11/WinEventsX11.cpp
+@@ -23,13 +23,13 @@
+ 
+ #ifdef HAS_X11_WIN_EVENTS
+ 
+-#include "WinEvents.h"
++#include "xbmc/windowing/WinEvents.h"
+ #include "WinEventsX11.h"
+ #include "Application.h"
+ #include "messaging/ApplicationMessenger.h"
+ #include <X11/Xlib.h>
+ #include <X11/extensions/Xrandr.h>
+-#include "WindowingFactory.h"
++#include "xbmc/windowing/WindowingFactory.h"
+ #include "X11/keysymdef.h"
+ #include "X11/XF86keysym.h"
+ #include "utils/log.h"
+diff --git a/xbmc/windowing/WinEventsX11.h b/xbmc/windowing/X11/WinEventsX11.h
+similarity index 97%
+rename from xbmc/windowing/WinEventsX11.h
+rename to xbmc/windowing/X11/WinEventsX11.h
+index 4334d21e1501..144ba511006c 100644
+--- a/xbmc/windowing/WinEventsX11.h
++++ b/xbmc/windowing/X11/WinEventsX11.h
+@@ -20,7 +20,7 @@
+ */
+ #pragma once
+ 
+-#include "WinEvents.h"
++#include "xbmc/windowing/WinEvents.h"
+ #include <X11/Xlib.h>
+ #include "threads/SystemClock.h"
+ #include <map>
+diff --git a/xbmc/windowing/X11/WinSystemX11.cpp b/xbmc/windowing/X11/WinSystemX11.cpp
+index ff7abe675d3c..c783125dfc74 100644
+--- a/xbmc/windowing/X11/WinSystemX11.cpp
++++ b/xbmc/windowing/X11/WinSystemX11.cpp
+@@ -42,7 +42,7 @@
+ #include <X11/Xatom.h>
+ #include <X11/extensions/Xrandr.h>
+ 
+-#include "../WinEventsX11.h"
++#include "WinEventsX11.h"
+ #include "input/InputManager.h"
+ 
+ using namespace KODI::MESSAGING;
+diff --git a/xbmc/windowing/osx/CMakeLists.txt b/xbmc/windowing/osx/CMakeLists.txt
+index 0191ddefb587..da4f5e3c510d 100644
+--- a/xbmc/windowing/osx/CMakeLists.txt
++++ b/xbmc/windowing/osx/CMakeLists.txt
+@@ -1,9 +1,11 @@
+ if(CORE_SYSTEM_NAME STREQUAL osx)
+   set(SOURCES WinEventsOSX.mm
++              WinEventsSDL.cpp
+               WinSystemOSX.mm
+               WinSystemOSXGL.mm
+               VideoSyncOsx.cpp)
+   set(HEADERS WinEventsOSX.h
++              WinEventsSDL.h
+               WinSystemOSX.h
+               WinSystemOSXGL.h
+               VideoSyncOsx.h)
+
+From 02cee59b79662ee4610eb697c6d5dd46df06ba9a Mon Sep 17 00:00:00 2001
+From: Lukas Rusak <lorusak@gmail.com>
+Date: Fri, 19 May 2017 10:23:37 -0700
+Subject: [PATCH 2/8] fixup! wip: [cmake] Add better support for Platform/Ports
+
+---
+ CMakeLists.txt                         | 4 ++++
+ cmake/scripts/linux/platform/AML.cmake | 1 +
+ cmake/scripts/linux/platform/IMX.cmake | 3 +++
+ cmake/scripts/linux/platform/Mir.cmake | 3 +++
+ cmake/scripts/linux/platform/X11.cmake | 1 +
+ 5 files changed, 12 insertions(+)
+ create mode 100644 cmake/scripts/linux/platform/IMX.cmake
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 8a55722e5824..95ca09b62c3c 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -212,6 +212,10 @@ if(ENABLE_AIRTUNES)
+   endif()
+ endif()
+ 
++if(CORE_SYSTEM_NAME STREQUAL osx)
++  core_require_dep(Sdl)
++endif()
++
+ # find all folders containing addon.xml.in
+ # used to define ADDON_XML_OUTPUTS, ADDON_XML_DEPENDS and ADDON_INSTALL_DATA
+ # Function defined in ./cmake/scripts/common/Macros.cmake
+diff --git a/cmake/scripts/linux/platform/AML.cmake b/cmake/scripts/linux/platform/AML.cmake
+index 758264310ffe..6a53156421b6 100644
+--- a/cmake/scripts/linux/platform/AML.cmake
++++ b/cmake/scripts/linux/platform/AML.cmake
+@@ -1,2 +1,3 @@
+ core_require_dep(OpenGLES)
+ core_require_dep(AML)
++core_require_dep(EGL)
+diff --git a/cmake/scripts/linux/platform/IMX.cmake b/cmake/scripts/linux/platform/IMX.cmake
+new file mode 100644
+index 000000000000..2dce4482ae22
+--- /dev/null
++++ b/cmake/scripts/linux/platform/IMX.cmake
+@@ -0,0 +1,3 @@
++core_require_dep(OpenGLES)
++core_require_dep(IMX)
++core_require_dep(EGL)
+diff --git a/cmake/scripts/linux/platform/Mir.cmake b/cmake/scripts/linux/platform/Mir.cmake
+index 609d66f86acd..8714ab352faa 100644
+--- a/cmake/scripts/linux/platform/Mir.cmake
++++ b/cmake/scripts/linux/platform/Mir.cmake
+@@ -1,3 +1,6 @@
+ core_require_dep(OpenGl)
++core_require_dep(EGL)
+ core_require_dep(Mir)
++core_require_dep(LibDRM)
+ core_optional_dep(VAAPI)
++core_optional_dep(OpenGLES)
+diff --git a/cmake/scripts/linux/platform/X11.cmake b/cmake/scripts/linux/platform/X11.cmake
+index afc046845472..4d154ec71ad7 100644
+--- a/cmake/scripts/linux/platform/X11.cmake
++++ b/cmake/scripts/linux/platform/X11.cmake
+@@ -5,3 +5,4 @@ core_require_dep(XRandR)
+ core_require_dep(LibDRM)
+ core_optional_dep(VAAPI)
+ core_optional_dep(VDPAU)
++core_optional_dep(OpenGLES)
+
+From bb4819a6562fb88def5dba27366f432e9a6b7809 Mon Sep 17 00:00:00 2001
+From: Lukas Rusak <lorusak@gmail.com>
+Date: Fri, 19 May 2017 10:34:38 -0700
+Subject: [PATCH 3/8] [temp] add GBM
+
+---
+ cmake/scripts/linux/platform/GBM.cmake | 5 +++++
+ 1 file changed, 5 insertions(+)
+ create mode 100644 cmake/scripts/linux/platform/GBM.cmake
+
+diff --git a/cmake/scripts/linux/platform/GBM.cmake b/cmake/scripts/linux/platform/GBM.cmake
+new file mode 100644
+index 000000000000..464191d02f51
+--- /dev/null
++++ b/cmake/scripts/linux/platform/GBM.cmake
+@@ -0,0 +1,5 @@
++core_require_dep(OpenGLES)
++core_require_dep(EGL)
++core_require_dep(GBM)
++core_require_dep(LibDRM)
++core_optional_dep(VAAPI)
+
+From ff27bdf84d305e9d0bb473ec1a4bbdceb481f461 Mon Sep 17 00:00:00 2001
+From: Lukas Rusak <lorusak@gmail.com>
+Date: Fri, 19 May 2017 10:35:34 -0700
+Subject: [PATCH 4/8] [temp] add RPI
+
+---
+ cmake/scripts/linux/platform/RPI.cmake | 3 +++
+ 1 file changed, 3 insertions(+)
+ create mode 100644 cmake/scripts/linux/platform/RPI.cmake
+
+diff --git a/cmake/scripts/linux/platform/RPI.cmake b/cmake/scripts/linux/platform/RPI.cmake
+new file mode 100644
+index 000000000000..ae33b0bc9462
+--- /dev/null
++++ b/cmake/scripts/linux/platform/RPI.cmake
+@@ -0,0 +1,3 @@
++core_require_dep(OpenGLES)
++core_require_dep(MMAL)
++core_require_dep(EGL)
+
+From e902254177e6b151699bf955a13dccc090b01db3 Mon Sep 17 00:00:00 2001
+From: Lukas Rusak <lorusak@gmail.com>
+Date: Fri, 19 May 2017 10:52:36 -0700
+Subject: [PATCH 5/8] fixup! wip: [cmake] Add better support for Platform/Ports
+
+---
+ cmake/treedata/linux/subdirs.txt | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/cmake/treedata/linux/subdirs.txt b/cmake/treedata/linux/subdirs.txt
+index b8e84311d618..2dc80450d0e0 100644
+--- a/cmake/treedata/linux/subdirs.txt
++++ b/cmake/treedata/linux/subdirs.txt
+@@ -10,5 +10,4 @@ xbmc/storage/linux         storage/linux
+ xbmc/filesystem/posix      filesystem/posix
+ xbmc/utils/posix           utils_posix
+ xbmc/windowing/egl         windowing/egl
+-xbmc/windowing/X11         windowing/X11
+ xbmc/platform/posix        posix
+
+From 32d89ca427808b947c5a0302730c0c4c434ff8db Mon Sep 17 00:00:00 2001
+From: Lukas Rusak <lorusak@gmail.com>
+Date: Fri, 19 May 2017 11:07:47 -0700
+Subject: [PATCH 6/8] fixup! wip: [cmake] Add better support for Platform/Ports
+
+---
+ cmake/treedata/optional/common/aml.txt | 2 ++
+ 1 file changed, 2 insertions(+)
+ create mode 100644 cmake/treedata/optional/common/aml.txt
+
+diff --git a/cmake/treedata/optional/common/aml.txt b/cmake/treedata/optional/common/aml.txt
+new file mode 100644
+index 000000000000..db1efd143514
+--- /dev/null
++++ b/cmake/treedata/optional/common/aml.txt
+@@ -0,0 +1,2 @@
++xbmc/windowing/amlogic windowing/amlogic # AML
++
+
+From 3841b4b05240667f8c381b9c590afc8e91da1f60 Mon Sep 17 00:00:00 2001
+From: Lukas Rusak <lorusak@gmail.com>
+Date: Fri, 19 May 2017 14:06:07 -0700
+Subject: [PATCH 7/8] fixup! wip: [cmake] Add better support for Platform/Ports
+
+---
+ CMakeLists.txt | 20 +++++++++-----------
+ 1 file changed, 9 insertions(+), 11 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 95ca09b62c3c..3dbc1811d9cd 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -37,17 +37,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
+ set(CMAKE_CXX_EXTENSIONS OFF)
+ set(CMAKE_ASM_FLAGS "${CMAKE_C_FLAGS} -x assembler-with-cpp")
+ 
+-# Platform
+-if(CORE_SYSTEM_NAME STREQUAL linux)
+-  set(_DEFAULT_PLATFORM X11)
+-else()
+-  string(TOLOWER ${CORE_SYSTEM_NAME} _DEFAULT_PLATFORM)
+-endif()
+-set(CORE_PLATFORM_NAME ${_DEFAULT_PLATFORM} CACHE STRING "Platform port to build")
+-unset(_DEFAULT_PLATFORM)
+-message(STATUS "Platform: ${CORE_PLATFORM_NAME}")
+-include(${CMAKE_SOURCE_DIR}/cmake/scripts/${CORE_SYSTEM_NAME}/platform/${CORE_PLATFORM_NAME}.cmake)
+-
+ # general
+ option(VERBOSE            "Enable verbose output?" OFF)
+ option(ENABLE_DVDCSS      "Enable libdvdcss support?" ON)
+@@ -104,6 +93,15 @@ endif()
+ find_package(Threads REQUIRED QUIET)
+ list(APPEND DEPLIBS ${CMAKE_THREAD_LIBS_INIT})
+ 
++# Platform
++if(CORE_SYSTEM_NAME STREQUAL linux)
++  set(_DEFAULT_PLATFORM X11)
++  set(CORE_PLATFORM_NAME ${_DEFAULT_PLATFORM} CACHE STRING "Platform port to build")
++  unset(_DEFAULT_PLATFORM)
++  message(STATUS "Platform: ${CORE_PLATFORM_NAME}")
++  include(${CMAKE_SOURCE_DIR}/cmake/scripts/${CORE_SYSTEM_NAME}/platform/${CORE_PLATFORM_NAME}.cmake)
++endif()
++
+ # Required dependencies. Keep in alphabetical order please
+ set(required_deps Cdio
+                   Cpluff
+
+From d65af4148464cfac3e5d2402f30a216a8ffd0d8d Mon Sep 17 00:00:00 2001
+From: Lukas Rusak <lorusak@gmail.com>
+Date: Fri, 19 May 2017 14:13:34 -0700
+Subject: [PATCH 8/8] fixup! wip: [cmake] Add better support for Platform/Ports
+
+---
+ CMakeLists.txt | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 3dbc1811d9cd..03a1ec6b90a7 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -95,9 +95,9 @@ list(APPEND DEPLIBS ${CMAKE_THREAD_LIBS_INIT})
+ 
+ # Platform
+ if(CORE_SYSTEM_NAME STREQUAL linux)
+-  set(_DEFAULT_PLATFORM X11)
+-  set(CORE_PLATFORM_NAME ${_DEFAULT_PLATFORM} CACHE STRING "Platform port to build")
+-  unset(_DEFAULT_PLATFORM)
++  # Set default CORE_PLATFORM_NAME to X11
++  # This is overridden by user setting -DCORE_PLATFORM_NAME=<platform>
++  set(CORE_PLATFORM_NAME X11 CACHE STRING "Platform port to build")
+   message(STATUS "Platform: ${CORE_PLATFORM_NAME}")
+   include(${CMAKE_SOURCE_DIR}/cmake/scripts/${CORE_SYSTEM_NAME}/platform/${CORE_PLATFORM_NAME}.cmake)
+ endif()
