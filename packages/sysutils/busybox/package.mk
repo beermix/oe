@@ -14,7 +14,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################  icu libarchive
+################################################################################
 
 PKG_NAME="busybox"
 PKG_VERSION="1.26.2"

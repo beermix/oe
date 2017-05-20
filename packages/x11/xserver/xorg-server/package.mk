@@ -30,7 +30,7 @@ PKG_AUTORECONF="yes"
 get_graphicdrivers
 
 if [ "$OPENGL" = "mesa" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET "
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET glproto opengl libepoxy glu"
   XORG_MESA="--enable-glx --enable-dri --enable-glamor"
 else
   XORG_MESA="--disable-glx --disable-dri --disable-glamor"
@@ -105,9 +105,8 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
                            --disable-tcp-transport \
                            --disable-ipv6 \
                            --disable-local-transport \
-                           --disable-secure-rpc \
-                           --enable-input-thread \
                            --enable-xtrans-send-fds \
+                           --enable-input-thread \
                            --disable-docs \
                            --disable-devel-docs \
                            --with-int10=x86emu \
@@ -122,6 +121,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
                            --with-fontrootdir=/usr/share/fonts \
                            --with-default-font-path=/usr/share/fonts/misc,built-ins \
                            --with-serverconfig-path=/usr/lib/xserver \
+                           --without-doxygen \
                            --without-xmlto \
                            --without-fop"
 
