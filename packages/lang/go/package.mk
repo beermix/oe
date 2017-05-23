@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="go"
-PKG_VERSION="go1.7.6"
+PKG_VERSION="go1.8.2"
 PKG_GIT_URL="https://github.com/golang/go"
 PKG_DEPENDS_HOST="toolchain"
 PKG_SECTION="system"
@@ -42,6 +42,8 @@ configure_host() {
   #export GOROOT_BOOTSTRAP=/usr/lib/golang
   export GOARCH=amd64
   export CGO_ENABLED=1
+  export CC_FOR_TARGET=x86_64-openelec-linux-gnu-gcc
+  export CXX_FOR_TARGET=x86_64-openelec-linux-gnu-c++
 }
 
 make_host() {
