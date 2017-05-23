@@ -122,7 +122,7 @@ configure_host() {
         -DWITH_SYSTEMD=0 \
         -DWITH_LIBWRAP=0 \
         -DWITH_WSREP=0 \
-        -DSECURITY_HARDENED=0 \
+        -DSECURITY_HARDENED=1 \
         ..
 }
 
@@ -162,7 +162,7 @@ configure_target() {
         -DWITH_SYSTEMD=0 \
         -DWITH_LIBWRAP=0 \
         -DWITH_SSL=$SYSROOT_PREFIX/usr \
-        -DSECURITY_HARDENED=0 \
+        -DSECURITY_HARDENED=1 \
         $MARIADB_OPTS \
         ..
 }
