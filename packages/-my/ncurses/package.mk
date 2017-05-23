@@ -53,10 +53,10 @@ PKG_CONFIGURE_OPTS_TARGET="--without-ada \
                            --without-shared \
                            --with-normal \
                            --without-debug \
-                           --disable-rpath \
                            --with-fallbacks=linux,screen,xterm,xterm-256color \
                            --with-ticlib \
                            --enable-getcap \
+                           --disable-rpath-hack \
                            --enable-getcap-cache \
                            --disable-symlinks \
                            --enable-ext-funcs \
