@@ -21,7 +21,6 @@ PKG_VERSION="1.3"
 PKG_SITE="http://www.intra2net.com/en/developer/libftdi/"
 PKG_URL="http://www.intra2net.com/en/developer/libftdi/download/${PKG_NAME}-${PKG_VERSION}.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain libusb"
-
 PKG_SECTION="devel"
 PKG_SHORTDESC="libFTDI is an open source library to talk to FTDI chips"
 PKG_LONGDESC="libFTDI is an open source library to talk to FTDI chips"
@@ -33,7 +32,8 @@ PKG_CMAKE_OPTS_TARGET="-DSTATICLIBS=ON \
                        -DDOCUMENTATION=FALSE \
                        -DEXAMPLES=FALSE \
                        -DFTDIPP=FALSE \
-                       -DPYTHON_BINDINGS=FALSE"
+                       -DPYTHON_BINDINGS=FALSE \
+                       -DCMAKE_BUILD_TYPE=Release"
 
 pre_configure_target() {
   CFLAGS="$CFLAGS -fPIC -DPIC"

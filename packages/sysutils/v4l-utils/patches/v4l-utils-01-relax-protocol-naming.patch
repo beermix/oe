@@ -1,6 +1,7 @@
-From: Sean Young <sean@mess.org>
-Subject: [PATCH] [PATCH v4l-utils] ir-keytable: be more permissive on protocol
- name
+From 52a487063684299c20a27ba8b1028aeaaa08ddc6 Mon Sep 17 00:00:00 2001
+From: Matthias Reichl <hias@horus.com>
+Date: Sun, 12 Mar 2017 12:53:50 +0100
+Subject: [PATCH] ir-keytable: be more permissive on protocol name
 
 Allowed the protocol to be specified with or without underscores or
 dashes. This also solves the problem of not being able to load
@@ -11,12 +12,13 @@ Protocol RC5_SZ invalid
 
 Reported-by: Matthias Reichl <hias@horus.com>
 Signed-off-by: Sean Young <sean@mess.org>
+Signed-off-by: Matthias Reichl <hias@horus.com>
 ---
- utils/keytable/keytable.c | 20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
+ utils/keytable/keytable.c | 24 ++++++++++++++++++++----
+ 1 file changed, 20 insertions(+), 4 deletions(-)
 
 diff --git a/utils/keytable/keytable.c b/utils/keytable/keytable.c
-index a6ecc9e..a35db5b 100644
+index a6ecc9e..f61a1d5 100644
 --- a/utils/keytable/keytable.c
 +++ b/utils/keytable/keytable.c
 @@ -120,9 +120,7 @@ const struct protocol_map_entry protocol_map[] = {
@@ -37,17 +39,21 @@ index a6ecc9e..a35db5b 100644
  	{ "rc-6-0",	NULL,		SYSFS_INVALID	},
  	{ "rc-6-6a-20",	NULL,		SYSFS_INVALID	},
  	{ "rc-6-6a-24",	NULL,		SYSFS_INVALID	},
-@@ -145,6 +142,21 @@ const struct protocol_map_entry protocol_map[] = {
+@@ -145,6 +142,25 @@ const struct protocol_map_entry protocol_map[] = {
  	{ NULL,		NULL,		SYSFS_INVALID	},
  };
  
 +static bool str_like(const char *a, const char *b)
 +{
 +	while (*a && *b) {
-+		if (*a == '-' || *a == '_')
++		if (*a == '-' || *a == '_') {
 +			a++;
-+		if (*b == '-' || *b == '_')
++			continue;
++		}
++		if (*b == '-' || *b == '_') {
 +			b++;
++			continue;
++		}
 +		if (tolower(*a) != tolower(*b))
 +			return false;
 +		a++; b++;
@@ -59,7 +65,7 @@ index a6ecc9e..a35db5b 100644
  static enum sysfs_protocols parse_sysfs_protocol(const char *name, bool all_allowed)
  {
  	const struct protocol_map_entry *pme;
-@@ -156,7 +168,7 @@ static enum sysfs_protocols parse_sysfs_protocol(const char *name, bool all_allo
+@@ -156,7 +172,7 @@ static enum sysfs_protocols parse_sysfs_protocol(const char *name, bool all_allo
  		return ~0;
  
  	for (pme = protocol_map; pme->name; pme++) {
@@ -69,5 +75,5 @@ index a6ecc9e..a35db5b 100644
  	}
  
 -- 
-2.9.3
+2.1.4
 
