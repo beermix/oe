@@ -45,11 +45,16 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-multilib \
                            --enable-nls \
                            --enable-checking=release \
-                           --with-default-libstdcxx-abi=gcc4-compatible \
+                           --disable-libstdcxx-pch \
+                           --enable-libstdcxx-time \
+                           --with-default-libstdcxx-abi=new \
                            --without-ppl \
                            --without-cloog \
                            --disable-libmpx \
                            --disable-werror \
+                           --disable-browser-plugin \
+                           --disable-vtable-verify \
+                           --enable-gnu-unique-object \
                            --with-tune=generic"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
@@ -82,13 +87,8 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-c99 \
                          --enable-long-long \
                          --enable-threads=posix \
-                         --disable-libstdcxx-pch \
-                         --enable-libstdcxx-time \
                          --enable-clocale=gnu \
-                         --disable-browser-plugin \
                          --enable-default-pie \
-                         --disable-vtable-verify \
-                         --enable-gnu-unique-object \
                          --enable-poison-system-directories \
                          $GCC_OPTS"
 
