@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="ffmpeg"
-PKG_VERSION="9b9a620"
+PKG_VERSION="8c02116"
 PKG_ARCH="any"
 PKG_GIT_URL="https://github.com/FFmpeg/FFmpeg.git"
 PKG_GIT_BRANCH="release/3.1"
