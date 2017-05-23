@@ -56,6 +56,7 @@ PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
                            --enable-hdhomerun_static \
                            --enable-epoll \
                            --enable-inotify \
+                           --enable-pngquant \
                            --disable-nvenc \
                            --disable-uriparser \
                            $TVH_TRANSCODING \
@@ -67,6 +68,7 @@ PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
 
 post_unpack() {
   sed -e 's/VER="0.0.0~unknown"/VER="'$PKG_VERSION_NUMBER' ~ LibreELEC Tvh-addon v'$ADDON_VERSION'.'$PKG_REV'"/g' -i $PKG_BUILD/support/version
+  sed -e 's|'/usr/bin/pngquant'|'$TOOLCHAIN/bin/pngquant'|g' -i $PKG_BUILD/support/mkbundle
 }
 
 pre_configure_target() {

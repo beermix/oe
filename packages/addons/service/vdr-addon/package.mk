@@ -18,7 +18,7 @@
 ################################################################################
 
 PKG_NAME="vdr-addon"
-PKG_VERSION="8.0"
+PKG_VERSION="2.2"
 PKG_SITE="http://www.openelec.tv"
 PKG_URL=""
 PKG_DEPENDS_TARGET="toolchain vdr vdr-plugin-dummydevice vdr-plugin-dvbapi vdr-plugin-eepg vdr-plugin-epgfixer vdr-plugin-epgsearch vdr-plugin-iptv vdr-plugin-live vdr-plugin-restfulapi vdr-plugin-satip vdr-plugin-streamdev vdr-plugin-vnsiserver vdr-plugin-wirbelscan vdr-plugin-wirbelscancontrol vdr-plugin-xmltv2vdr"
