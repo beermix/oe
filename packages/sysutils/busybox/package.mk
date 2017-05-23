@@ -168,6 +168,7 @@ makeinstall_target() {
     #rm $INSTALL/bin/hostname
     #rm $INSTALL/sbin/ip
     rm $INSTALL/bin/bash
+    rm $INSTALL/sbin/chroot
 
   mkdir -p $INSTALL/usr/lib/openelec
     cp $PKG_DIR/scripts/fs-resize $INSTALL/usr/lib/openelec
