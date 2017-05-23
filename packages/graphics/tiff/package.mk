@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="tiff"
-PKG_VERSION="Release-v4-0-8"
+PKG_VERSION="4.0.8"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.remotesensing.org/libtiff/"
-PKG_GIT_URL="https://github.com/vadz/libtiff"
+PKG_URL="http://download.osgeo.org/libtiff/tiff-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libjpeg-turbo zlib"
 PKG_PRIORITY="optional"
 PKG_SECTION="graphics"
