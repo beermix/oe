@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="tiff"
-PKG_VERSION="47f4f57"
+PKG_VERSION="Release-v4-0-8"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
