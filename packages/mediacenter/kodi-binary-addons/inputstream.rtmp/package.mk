@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="inputstream.rtmp"
-PKG_VERSION="v1.0.4"
+PKG_VERSION="d93d32d"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -35,7 +35,8 @@ PKG_IS_ADDON="yes"
 PKG_ADDON_TYPE="kodi.inputstream"
 
 PKG_CMAKE_OPTS_TARGET="-DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
-                       -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr"
+                       -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
+                       -DCMAKE_BUILD_TYPE=Release"
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/

@@ -20,7 +20,8 @@ PKG_IS_ADDON="yes"
 PKG_ADDON_TYPE="xbmc.pvrclient"
 
 PKG_CMAKE_OPTS_TARGET="-DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
-                       -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr"
+                       -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
+                       -DCMAKE_BUILD_TYPE=Release"
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/
