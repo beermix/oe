@@ -82,7 +82,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-tiger \
 			      --disable-libva \
 			      --disable-vdpau \
-			      --with-x \
+			      --without-x \
 			      --disable-xcb \
 			      --disable-xvideo \
 			      --disable-sdl \
@@ -128,11 +128,11 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 
 pre_configure_target() {
   export LDFLAGS="$LDFLAGS -lresolv"
-  export LIBS="$LIBS -latomic -fopenmp"
-  export CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
+  export LIBS="$LIBS -fopenmp"
+  #export CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fomit-frame-pointer||g"`
   export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-fomit-frame-pointer||g"`
-  strip_lto
+  strip_hard
 }
 
 post_makeinstall_target() {
