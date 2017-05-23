@@ -32,10 +32,6 @@ PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="TigerVNC"
 PKG_ADDON_TYPE="xbmc.service"
 
-pre_configure_taret() {
-  export CFLAGS="$CFLAGS -Wno-dev"
-}
-
 PKG_CMAKE_OPTS_TARGET="-DBUILD_VIEWER=0 \
 			  -DENABLE_GNUTLS=0 \
 			  -DCMAKE_BUILD_TYPE=Release \
@@ -44,7 +40,8 @@ PKG_CMAKE_OPTS_TARGET="-DBUILD_VIEWER=0 \
 			  -DENABLE_NLS=0 \
 			  -DGETTEXT_INCLUDE_DIR=$ROOT/$TOOLCHAIN/include \
 			  -DGETTEXT_MSGFMT_EXECUTABLE=$ROOT/$TOOLCHAIN/bin/msgfmt \
-			  -DGETTEXT_MSGMERGE_EXECUTABLE=$ROOT/$TOOLCHAIN/bin/msgmerge"
+			  -DGETTEXT_MSGMERGE_EXECUTABLE=$ROOT/$TOOLCHAIN/bin/msgmerge \
+			  -DCMAKE_BUILD_TYPE=Release"
 
 makeinstall_target() {
   : # nothing to do
