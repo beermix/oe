@@ -35,7 +35,6 @@ PKG_ADDON_TYPE="xbmc.service"
 PKG_CMAKE_OPTS_TARGET="-DBUILD_VIEWER=0 \
 			  -DENABLE_GNUTLS=0 \
 			  -DENABLE_ASAN=0 \
-			  -DENABLE_NLS=0 \
 			  -DCMAKE_BUILD_TYPE=Release"
 
 makeinstall_target() {
