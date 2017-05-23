@@ -5,7 +5,7 @@
 
 PKG_NAME="vlc"
 PKG_VERSION="3.0.0-git"
-PKG_REV="20170516-0239"
+PKG_REV="20170523-0239"
 PKG_SITE="https://nightlies.videolan.org/build/source/"
 PKG_URL="https://nightlies.videolan.org/build/source/vlc-3.0.0-$PKG_REV-git.tar.xz"
 PKG_DEPENDS_TARGET="toolchain dbus ffmpeg libdvbpsi libmpeg2 zlib lua:host lua"
@@ -82,7 +82,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-tiger \
 			      --disable-libva \
 			      --disable-vdpau \
-			      --without-x \
+			      --with-x \
 			      --disable-xcb \
 			      --disable-xvideo \
 			      --disable-sdl \
@@ -132,6 +132,7 @@ pre_configure_target() {
   export CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fomit-frame-pointer||g"`
   export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-fomit-frame-pointer||g"`
+  strip_lto
 }
 
 post_makeinstall_target() {

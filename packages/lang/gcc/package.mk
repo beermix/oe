@@ -43,7 +43,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-gold \
                            --enable-ld=default \
                            --disable-multilib \
-                           --disable-nls \
+                           --enable-nls \
                            --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
                            --without-ppl \
@@ -85,6 +85,10 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time \
                          --enable-clocale=gnu \
+                         --disable-browser-plugin \
+                         --enable-default-pie \
+                         --disable-vtable-verify \
+                         --enable-gnu-unique-object \
                          --enable-poison-system-directories \
                          $GCC_OPTS"
 

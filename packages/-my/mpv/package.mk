@@ -1,5 +1,5 @@
 PKG_NAME="mpv"
-PKG_VERSION="v0.25.0"
+PKG_VERSION="v0.22.0"
 PKG_GIT_URL="https://github.com/mpv-player/mpv"
 PKG_DEPENDS_TARGET="toolchain libass"
 PKG_IS_ADDON="no"
@@ -27,7 +27,7 @@ configure_target() {
 }
 
 make_target() {
-  ./waf build -j 4 
+  ./waf build 
 }
 
 make_install_target() {
