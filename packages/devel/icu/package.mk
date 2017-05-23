@@ -8,11 +8,15 @@ PKG_SOURCE_DIR="icu"
 PKG_DEPENDS_TARGET="toolchain icu:host"
 PKG_SECTION="textproc"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
-#pre_configure_host() {
-# sh $ROOT/$PKG_BUILD/source/runConfigureICU Linux/gcc
-#}
+pre_configure_host() {
+ sh $ROOT/$PKG_BUILD/source/runConfigureICU Linux/gcc
+}
+
+pre_configure_target() {
+ sh $ROOT/$PKG_BUILD/source/runConfigureICU Linux/gcc
+}
 
 post_unpack() {
   cp -r $PKG_BUILD/source/* $PKG_BUILD/
