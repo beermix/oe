@@ -25,7 +25,7 @@ PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
-PKG_DEPENDS_TARGET="toolchain kodi:host kodi:bootstrap xmlstarlet:host Python zlib systemd pciutils dbus lzo pcre swig:host libass curl fontconfig fribidi tinyxml libjpeg-turbo freetype libcdio libdvdnav taglib libxml2 libxslt rapidjson sqlite ffmpeg crossguid giflib opengl lcms2 libfmt libplist libpng"
+PKG_DEPENDS_TARGET="toolchain kodi:host kodi:bootstrap xmlstarlet:host Python zlib systemd pciutils dbus lzo pcre swig:host libass curl fontconfig fribidi tinyxml libjpeg-turbo freetype libcdio libdvdnav taglib libxml2 libxslt rapidjson sqlite ffmpeg crossguid giflib opengl lcms2 libfmt libplist libpng SDL"
 PKG_DEPENDS_HOST="toolchain"
 PKG_DEPENDS_BOOTSTRAP="toolchain lzo:host libpng:host libjpeg-turbo:host giflib:host"
 PKG_PRIORITY="optional"
@@ -59,14 +59,14 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$ROOT/$TOOLCHAIN \
                        -DENABLE_INTERNAL_CROSSGUID=OFF \
                        -DENABLE_OPENSSL=ON \
                        -DENABLE_LDGOLD=OFF \
-                       -DENABLE_SDL=OFF \
+                       -DENABLE_SDL=ON \
                        -DENABLE_LCMS2=ON \
                        -DENABLE_CCACHE=OFF \
                        -DENABLE_LIRC=ON \
-                       -DENABLE_EVENTCLIENTS=OFF \
+                       -DENABLE_EVENTCLIENTS=ON \
                        -DENABLE_LIBUSB=OFF \
                        -DENABLE_UDEV=ON \
-                       -DENABLE_XSLT=OFF \
+                       -DENABLE_XSLT=ON \
                        -DENABLE_DBUS=ON \
                        -DCMAKE_VERBOSE_MAKEFILE=OFF \
                        -DENABLE_AVX=ON \
@@ -257,7 +257,7 @@ makeinstall_host() {
 pre_configure_target() {
 # kodi should never be built with lto
 
-  export LIBS="$LIBS -lssp -lz -ltermcap"
+  export LIBS="$LIBS -ltermcap"
 }
 
 pre_make_target() {

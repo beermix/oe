@@ -8,7 +8,7 @@ PKG_VERSION="3.0.0-git"
 PKG_REV="20170523-0239"
 PKG_SITE="https://nightlies.videolan.org/build/source/"
 PKG_URL="https://nightlies.videolan.org/build/source/vlc-3.0.0-$PKG_REV-git.tar.xz"
-PKG_DEPENDS_TARGET="toolchain dbus ffmpeg libdvbpsi libmpeg2 zlib lua:host lua gnutls"
+PKG_DEPENDS_TARGET="toolchain dbus ffmpeg libdvbpsi libmpeg2 libshout zlib lua:host lua gnutls"
 PKG_SECTION="xmedia/tools"
 PKG_SHORTDESC="VideoLAN multimedia player and streamer"
 PKG_LONGDESC="VLC is the VideoLAN project's media player. It plays MPEG, MPEG2, MPEG4, DivX, MOV, WMV, QuickTime, mp3, Ogg/Vorbis files, DVDs, VCDs, and multimedia streams from various network sources."
@@ -45,7 +45,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --enable-dvbpsi \
 			      --disable-screen \
 			      --enable-ogg \
-			      --disable-shout\
+			      --enable-shout \
 			      --disable-mod \
 			      --enable-mpc \
 			      --disable-gme \
@@ -69,7 +69,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --enable-libmpeg2 \
 			      --enable-vorbis \
 			      --disable-tremor \
-			      --disable-speex \
+			      --enable-speex \
 			      --disable-theora \
 			      --disable-schroedinger \
 			      --disable-png \
@@ -80,7 +80,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-libass \
 			      --disable-kate \
 			      --disable-tiger \
-			      --disable-libva \
+			      --enable-libva \
 			      --disable-vdpau \
 			      --without-x \
 			      --disable-xcb \
@@ -129,10 +129,8 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 pre_configure_target() {
   export LDFLAGS="$LDFLAGS -lresolv"
   export LIBS="$LIBS -fopenmp"
-  #export CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fomit-frame-pointer||g"`
   export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-fomit-frame-pointer||g"`
-  #strip_hard
 }
 
 post_makeinstall_target() {
