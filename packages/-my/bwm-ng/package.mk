@@ -15,7 +15,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
 			      --disable-shared \
 			      --with-time \
 			      --with-getifaddrs \
-			      --with-sysctl \
+			      --without-sysctl \
 			      --with-sysctldisk \
 			      --with-procnetdev \
 			      --with-partitions \ 
