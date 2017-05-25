@@ -16,7 +16,7 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 PKG_NAME="openssl"
-PKG_VERSION="1.0.2k"
+PKG_VERSION="1.0.2l"
 PKG_URL="https://www.openssl.org/source/openssl-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="ccache:host yasm:host"
 PKG_DEPENDS_TARGET="toolchain pcre gmp zlib"

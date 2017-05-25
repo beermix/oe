@@ -67,8 +67,7 @@ case "$LINUX" in
   *)
     PKG_VERSION="4.11.2"
     PKG_URL="http://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
-    #PKG_URL="https://fossies.org/linux/kernel/v4.12/testing/linux-$PKG_VERSION.tar.gz"
-    PKG_PATCH_DIRS="linux-4.11"
+    PKG_PATCH_DIRS="default"
     ;;
 esac
 
@@ -97,6 +96,7 @@ post_patch() {
          -e "s|^CROSS_COMPILE[[:space:]]*?=.*$|CROSS_COMPILE = ${TARGET_NAME}-|" \
          $PKG_BUILD/Makefile
 
+  cp $KERNEL_CFG_FILE $PKG_BUILD/.config
   if [ ! "$BUILD_ANDROID_BOOTIMG" = "yes" ]; then
     sed -i -e "s|^CONFIG_INITRAMFS_SOURCE=.*$|CONFIG_INITRAMFS_SOURCE=\"$ROOT/$BUILD/image/initramfs.cpio\"|" $PKG_BUILD/.config
   fi
@@ -156,6 +156,19 @@ makeinstall_host() {
 }
 
 pre_make_target() {
+  if [ "$TARGET_ARCH" = "x86_64" ]; then
+    # copy some extra firmware to linux tree
+    mkdir -p $PKG_BUILD/external-firmware
+      cp -a $(get_build_dir kernel-firmware)/{amdgpu,amd-ucode,i915,radeon,rtl_nic} $PKG_BUILD/external-firmware
+
+    mkdir -p $PKG_BUILD/external-firmware/intel-ucode
+      cp -a $(get_build_dir intel-ucode)/microcode.bin $PKG_BUILD/external-firmware/intel-ucode
+
+    FW_LIST="$(find $PKG_BUILD/external-firmware \( -type f -o -type l \) \( -iname '*.bin' -o -iname '*.fw' \) | sed 's|.*external-firmware/||' | sort | xargs)"
+    sed -i "s|CONFIG_EXTRA_FIRMWARE=.*|CONFIG_EXTRA_FIRMWARE=\"${FW_LIST}\"|" $PKG_BUILD/.config
+  fi
+
+  make oldconfig
   # regdb
   cp $(get_pkg_build wireless-regdb)/db.txt $ROOT/$PKG_BUILD/net/wireless/db.txt
 
