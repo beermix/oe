@@ -47,6 +47,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-checking=release \
                            --enable-libstdcxx-time \
                            --with-default-libstdcxx-abi=new \
+                           --without-ppl \
                            --without-cloog \
                            --disable-libmpx \
                            --disable-werror \
