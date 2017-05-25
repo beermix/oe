@@ -8,14 +8,15 @@ PKG_SOURCE_DIR="icu"
 PKG_DEPENDS_TARGET="toolchain icu:host"
 PKG_SECTION="textproc"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
-pre_configure_host() {
- sh $ROOT/$PKG_BUILD/source/runConfigureICU Linux/gcc
-}
+#pre_configure_host() {
+# sh $ROOT/$PKG_BUILD/source/runConfigureICU Linux/gcc
+#}
 
 pre_configure_target() {
- sh $ROOT/$PKG_BUILD/source/runConfigureICU Linux/gcc
+ #sh $ROOT/$PKG_BUILD/source/runConfigureICU Linux/gcc
+ export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
 }
 
 post_unpack() {
