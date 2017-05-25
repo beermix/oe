@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="go"
-PKG_VERSION="go1.8.2"
+PKG_VERSION="go1.8.3"
 PKG_GIT_URL="https://github.com/golang/go"
 PKG_DEPENDS_HOST="toolchain"
 PKG_SECTION="system"
