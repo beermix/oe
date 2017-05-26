@@ -17,11 +17,11 @@
 ################################################################################
 
 PKG_NAME="util-linux"
-PKG_VERSION="2.30-rc2"
+PKG_VERSION="2.29.2"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_URL="http://www.kernel.org/pub/linux/utils/util-linux/v2.30/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="http://www.kernel.org/pub/linux/utils/util-linux/v2.29/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain pcre pcre2 zlib xz slang"
 PKG_DEPENDS_INIT="toolchain gcc:init"
 PKG_PRIORITY="optional"
@@ -55,7 +55,6 @@ UTILLINUX_CONFIG_DEFAULT="--disable-gtk-doc \
                           --without-tinfo \
                           --without-utempter \
                           --without-util \
-                          --without-libz \
                           --without-user \
                           --without-systemd \
                           --without-smack \
