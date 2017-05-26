@@ -19,11 +19,11 @@
 ################################################################################
 
 PKG_NAME="atk"
-PKG_VERSION="2.24.0"
+PKG_VERSION="2.25.2"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://library.gnome.org/devel/atk/"
-PKG_URL="http://ftp.gnome.org/pub/gnome/sources/$PKG_NAME/2.24/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain glib"
 PKG_SECTION="accessibility"
 PKG_SHORTDESC="ATK - Accessibility Toolkit"

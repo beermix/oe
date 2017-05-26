@@ -20,3 +20,7 @@ post_make_target() {
 makeinstall_target() {
   :
 }
+
+post_install () {
+  enable_service ps3remote.service
+}
