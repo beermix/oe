@@ -1,6 +1,6 @@
 [Unit]
 Description=Userspace PS3 Remote Driver
-Wants=bluetooth.target
+After=network.target
 
 [Service]
 ExecStart=/usr/bin/ps3remote
