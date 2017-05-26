@@ -40,4 +40,5 @@ PKG_CMAKE_OPTS_TARGET="-DRAPIDJSON_BUILD_DOC=OFF \
                        -DRAPIDJSON_BUILD_ASAN=OFF \
                        -DRAPIDJSON_BUILD_UBSAN=OFF \
                        -DRAPIDJSON_HAS_STDSTRING=ON \
-                       -DBUILD_SHARED_LIBS=OFF"
+                       -DBUILD_SHARED_LIBS=OFF \
+                       -DCMAKE_BUILD_TYPE=Release"
