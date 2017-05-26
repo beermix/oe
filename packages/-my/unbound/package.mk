@@ -1,5 +1,5 @@
 PKG_NAME="unbound"
-PKG_VERSION="bffe250"
+PKG_VERSION="7bdf6bd"
 #PKG_URL="https://fossies.org/linux/misc/dns/unbound-1.6.2.tar.xz"
 PKG_GIT_URL="https://github.com/jedisct1/unbound"
 PKG_DEPENDS_TARGET="toolchain expat openssl libevent libsodium"
