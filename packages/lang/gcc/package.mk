@@ -56,12 +56,12 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-browser-plugin \
                            --disable-vtable-verify \
                            --enable-gnu-unique-object \
+                           --disable-libsanitizer \
                            --with-tune=generic"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
-                              --disable-libsanitizer \
                               --disable-libssp \
                               --disable-libatomic \
                               --disable-libquadmath \
@@ -76,7 +76,7 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               $GCC_OPTS"
 
 PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
-                         --enable-languages=c,c++,go,d,fortran,objc,obj-c++ \
+                         --enable-languages=c,c++,fortran,objc,obj-c++ \
                          --enable-__cxa_atexit \
                          --enable-decimal-float \
                          --disable-libssp \

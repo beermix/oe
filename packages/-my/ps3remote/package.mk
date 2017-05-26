@@ -7,7 +7,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 make_target() {
-  make CC="$CC" -j1
+  make CC="$CC" CFLAGS="$CFLAGS -DDEBUG=0" CPPFLAGS="$CPPFLAGS" LDFLAGS="-Wl,-z,relro -s" -j1
 }
 
 post_make_target() {
