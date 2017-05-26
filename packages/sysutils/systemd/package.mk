@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="systemd"
-PKG_VERSION="233"
+PKG_VERSION="4e3f070"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/systemd"
-PKG_URL="https://github.com/systemd/systemd/archive/v$PKG_VERSION.tar.gz"
+PKG_GIT_URL="https://github.com/systemd/systemd"
 PKG_DEPENDS_TARGET="toolchain gperf:host libcap util-linux entropy"
 PKG_SECTION="system"
 PKG_SHORTDESC="systemd: a system and session manager"
@@ -84,6 +84,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-networkd \
                            --disable-efi \
                            --disable-gnuefi \
+                           --disable-kdbus \
                            --disable-myhostname \
                            --enable-hwdb \
                            --disable-manpages \
@@ -100,10 +101,8 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --with-dbussessionservicedir=/usr/share/dbus-1/services \
                            --with-dbussystemservicedir=/usr/share/dbus-1/system-services \
                            --with-rootprefix=/usr \
-                           --with-rootlibdir=/usr/lib"
-unpack() {
-  tar xf $ROOT/$SOURCES/systemd/v$PKG_VERSION.tar.gz -C $ROOT/$BUILD
-}
+                           --with-rootlibdir=/usr/lib \
+                           --with-default-hierarchy=hybrid"
 
 pre_build_target() {
 # broken autoreconf
