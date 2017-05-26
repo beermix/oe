@@ -17,11 +17,11 @@
 ################################################################################
 
 PKG_NAME="util-linux"
-PKG_VERSION="2.29.2"
+PKG_VERSION="2.30-rc2"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_URL="http://www.kernel.org/pub/linux/utils/util-linux/v2.29/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="http://www.kernel.org/pub/linux/utils/util-linux/v2.30/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain pcre pcre2 zlib xz slang"
 PKG_DEPENDS_INIT="toolchain gcc:init"
 PKG_PRIORITY="optional"
@@ -84,7 +84,29 @@ PKG_CONFIGURE_OPTS_HOST="--enable-static \
                          --enable-uuidgen \
                          --enable-libuuid \
                          --disable-all-programs \
-                         --without-slang"
+                         --disable-bash-completion \
+                         --disable-colors-default \
+                         --disable-pylibmount \
+                         --disable-pg-bell \
+                         --disable-use-tty-group \
+                         --disable-makeinstall-chown \
+                         --disable-makeinstall-setuid \
+                         --without-selinux \
+                         --without-audit \
+                         --without-udev \
+                         --without-ncurses \
+                         --without-readline \
+                         --without-slang \
+                         --without-termcap \
+                         --without-tinfo \
+                         --without-utempter \
+                         --without-util \
+                         --without-libz \
+                         --without-user \
+                         --without-systemd \
+                         --without-smack \
+                         --without-python \
+                         --without-systemdsystemunitdir"
 
 PKG_CONFIGURE_OPTS_INIT="--prefix=/ \
                          --bindir=/bin \
