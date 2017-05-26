@@ -4,7 +4,7 @@
 ################################################################################
 
 PKG_NAME="freshplayerplugin"
-PKG_VERSION="963f43e"
+PKG_VERSION="da0120a"
 PKG_REV="1"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPL"
@@ -19,7 +19,7 @@ PKG_USE_CMAKE="yes"
 PKG_AUTORECONF="no"
 
 
-#PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release"
+PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release"
 
 pre_configure_target() {
   export LIBS="-lv4lconvert -lrt -lm"

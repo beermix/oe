@@ -12,3 +12,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-sse2 \
 			      --enable-sse \
 			      --enable-avx"
+
+post_makeinstall_target() {
+  rm -rf $INSTALL
+}
