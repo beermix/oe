@@ -17,13 +17,21 @@ PKG_LONGDESC="PHP is a widely-used general-purpose scripting language that is es
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-#pre_configure_target() {
-#    rm $ROOT/$PKG_BUILD/aclocal.m4
-#}
+post_unpack() {
+  PHP_BUILD_DIR=$(get_build_dir php)
+  echo "downloading pear..."
+  if [ ! -f "$PHP_BUILD_DIR/../go-pear.phar" ]; then
+    wget -O $PHP_BUILD_DIR/../go-pear.phar http://pear.php.net/go-pear.phar
+  fi
+  cp $PHP_BUILD_DIR/../go-pear.phar $PHP_BUILD_DIR/pear/go-pear.phar
+
+  # libtool fix
+  rm $ROOT/$PKG_BUILD/aclocal.m4
+}
 
 configure_target() {
-  #cd $ROOT/$PKG_BUILD
-  #rm -rf .$TARGET_NAME
+  cd $ROOT/$PKG_BUILD
+  rm -rf .$TARGET_NAME
 
   # Dynamic Library support
   export LDFLAGS="$LDFLAGS -ldl -lpthread -lstdc++"
@@ -32,8 +40,8 @@ configure_target() {
   export CFLAGS="$CFLAGS -I$SYSROOT_PREFIX/usr/include/iconv"
   export LDFLAGS="$LDFLAGS -L$SYSROOT_PREFIX/usr/lib/iconv -liconv"
 
-  export CXXFLAGS="$CXXFLAGS"
-  export CPPFLAGS="$CPPFLAGS"
+  export CXXFLAGS="$CFLAGS"
+  export CPPFLAGS="$CFLAGS"
 
   PKG_CONFIGURE_OPTS_TARGET="--enable-cli \
                              --enable-cgi \
