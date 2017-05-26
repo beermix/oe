@@ -41,7 +41,6 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-gold \
                          --enable-ld=default \
                          --enable-lto \
-                         --with-pic \
                          --enable-nls \
                          --enable-poison-system-directories"
 
