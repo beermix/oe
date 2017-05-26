@@ -22,7 +22,7 @@ PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_URL="http://www.kernel.org/pub/linux/utils/util-linux/v2.29/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain pcre pcre2 zlib xz slang"
+PKG_DEPENDS_TARGET="toolchain pcre"
 PKG_DEPENDS_INIT="toolchain gcc:init"
 PKG_PRIORITY="optional"
 PKG_SECTION="system"
@@ -36,9 +36,11 @@ UTILLINUX_CONFIG_DEFAULT="--disable-gtk-doc \
                           --disable-nls \
                           --disable-rpath \
                           --enable-tls \
+                          --disable-all-programs \
                           --enable-chsh-only-listed \
                           --enable-libmount-force-mountinfo \
                           --disable-bash-completion \
+                          --disable-colors-default \
                           --disable-pylibmount \
                           --disable-pg-bell \
                           --disable-use-tty-group \
@@ -50,16 +52,16 @@ UTILLINUX_CONFIG_DEFAULT="--disable-gtk-doc \
                           --without-udev \
                           --without-ncurses \
                           --without-readline \
-                          --with-slang \
+                          --without-slang \
                           --without-termcap \
                           --without-tinfo \
                           --without-utempter \
                           --without-util \
+                          --without-libz \
                           --without-user \
                           --without-systemd \
                           --without-smack \
                           --without-python \
-                          --disable-sulogin \
                           --without-systemdsystemunitdir"
 
 PKG_CONFIGURE_OPTS_TARGET="--sbindir=/sbin \
@@ -81,31 +83,7 @@ PKG_CONFIGURE_OPTS_HOST="--enable-static \
                          --disable-shared \
                          $UTILLINUX_CONFIG_DEFAULT \
                          --enable-uuidgen \
-                         --enable-libuuid \
-                         --disable-all-programs \
-                         --disable-bash-completion \
-                         --disable-colors-default \
-                         --disable-pylibmount \
-                         --disable-pg-bell \
-                         --disable-use-tty-group \
-                         --disable-makeinstall-chown \
-                         --disable-makeinstall-setuid \
-                         --without-selinux \
-                         --without-audit \
-                         --without-udev \
-                         --without-ncurses \
-                         --without-readline \
-                         --without-slang \
-                         --without-termcap \
-                         --without-tinfo \
-                         --without-utempter \
-                         --without-util \
-                         --without-libz \
-                         --without-user \
-                         --without-systemd \
-                         --without-smack \
-                         --without-python \
-                         --without-systemdsystemunitdir"
+                         --enable-libuuid"
 
 PKG_CONFIGURE_OPTS_INIT="--prefix=/ \
                          --bindir=/bin \
