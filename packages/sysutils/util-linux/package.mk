@@ -82,7 +82,9 @@ PKG_CONFIGURE_OPTS_HOST="--enable-static \
                          --disable-shared \
                          $UTILLINUX_CONFIG_DEFAULT \
                          --enable-uuidgen \
-                         --enable-libuuid"
+                         --enable-libuuid \
+                         --disable-all-programs \
+                         --without-slang"
 
 PKG_CONFIGURE_OPTS_INIT="--prefix=/ \
                          --bindir=/bin \
