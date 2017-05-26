@@ -32,7 +32,7 @@ PKG_LONGDESC="CMake is used to control the software compilation process using si
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-CONCURRENCY_MAKE_LEVEL=7
+#CONCURRENCY_MAKE_LEVEL=7
 
 configure_host() {
   ../configure --prefix=$ROOT/$TOOLCHAIN \
