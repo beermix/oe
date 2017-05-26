@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_URL="http://www.kernel.org/pub/linux/utils/util-linux/v2.29/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_DEPENDS_INIT="toolchain gcc:init"
+PKG_DEPENDS_INIT="toolchain gcc:init pcre slang"
 PKG_PRIORITY="optional"
 PKG_SECTION="system"
 PKG_SHORTDESC="util-linux: Miscellaneous system utilities for Linux"
@@ -36,11 +36,9 @@ UTILLINUX_CONFIG_DEFAULT="--disable-gtk-doc \
                           --disable-nls \
                           --disable-rpath \
                           --enable-tls \
-                          --disable-all-programs \
                           --enable-chsh-only-listed \
                           --enable-libmount-force-mountinfo \
                           --disable-bash-completion \
-                          --disable-colors-default \
                           --disable-pylibmount \
                           --disable-pg-bell \
                           --disable-use-tty-group \
@@ -52,7 +50,7 @@ UTILLINUX_CONFIG_DEFAULT="--disable-gtk-doc \
                           --without-udev \
                           --without-ncurses \
                           --without-readline \
-                          --without-slang \
+                          --with-slang \
                           --without-termcap \
                           --without-tinfo \
                           --without-utempter \
