@@ -7,7 +7,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC -DPIC"
+  #export CFLAGS="$CFLAGS -fPIC -DPIC"
   export LIBS="-ltermcap"
 }
 
