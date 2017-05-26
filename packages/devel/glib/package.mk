@@ -57,9 +57,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_mmap_fixed_mapped=yes \
                            --enable-Bsymbolic \
                            --with-gnu-ld \
                            --with-threads=posix \
-                           --enable-libmount=no \
-                           --enable-debug=no \
-                           --with-pcre=internal"
+                           --with-pcre=system"
 
 post_makeinstall_target() {
   mkdir -p $SYSROOT_PREFIX/usr/lib/pkgconfig
