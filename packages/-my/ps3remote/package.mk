@@ -11,9 +11,9 @@ make_target() {
 }
 
 post_make_target() {
-  mkdir -p $INSTALL/usr/sbin/
-  mkdir -p $INSTALL_DEV/usr/sbin/
-  cp $ROOT/$PKG_BUILD/ps3remote $INSTALL/usr/sbin/
+  mkdir -p $INSTALL/usr/bin/
+  mkdir -p $INSTALL_DEV/usr/bin/
+  cp $ROOT/$PKG_BUILD/ps3remote $INSTALL/usr/bin/
 }
 
 
