@@ -49,7 +49,7 @@ pre_configure_target() {
  cd $ROOT/$PKG_BUILD
  rm -rf .$TARGET_NAME
  
- #export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|g"`
+ export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|g"`
 }
 
 makeinstall_target() {
