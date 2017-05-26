@@ -33,8 +33,11 @@ PKG_LONGDESC="rapidjson is a fast JSON parser/generator for C++ with both SAX/DO
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="-DBUILD_SHARED_LIBS=0 \
-			      -DBUILD_TESTING=0 \
-			      -DRAPIDJSON_BUILD_DOC=0 \
-			      -DRAPIDJSON_BUILD_EXAMPLES=0 \
-			      -DRAPIDJSON_BUILD_TESTS=0"
+PKG_CMAKE_OPTS_TARGET="-DRAPIDJSON_BUILD_DOC=OFF \
+                       -DRAPIDJSON_BUILD_EXAMPLES=OFF
+                       -DRAPIDJSON_BUILD_TESTS=OFF \
+                       -DRAPIDJSON_BUILD_THIRDPARTY_GTEST=OFF \
+                       -DRAPIDJSON_BUILD_ASAN=OFF \
+                       -DRAPIDJSON_BUILD_UBSAN=OFF \
+                       -DRAPIDJSON_HAS_STDSTRING=ON \
+                       -DBUILD_SHARED_LIBS=OFF"
