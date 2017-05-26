@@ -45,8 +45,8 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-ima \
                            --disable-selinux \
                            --disable-apparmor \
-                           --disable-xz \
-                           --disable-zlib \
+                           --enable-xz \
+                           --enable-zlib \
                            --disable-bzip2 \
                            --disable-lz4 \
                            --disable-pam \
