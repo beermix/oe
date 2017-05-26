@@ -4,6 +4,7 @@ Wants=bluetooth.target
 
 [Service]
 ExecStart=/usr/bin/ps3remote
+Restart=always
 
 [Install]
 WantedBy=multi-user.target
