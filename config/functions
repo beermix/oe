@@ -3,7 +3,6 @@ setup_toolchain() {
     target|init)
       export DESTIMAGE="target"
       export CC="${TARGET_NAME}-gcc"
-      export FC="${TARGET_NAME}-gfortran"
       export CXX="${TARGET_NAME}-g++"
       export CPP="${TARGET_NAME}-cpp"
       export LD="${TARGET_NAME}-ld"
@@ -37,7 +36,6 @@ setup_toolchain() {
         echo "SET(CMAKE_C_COMPILER   $CC)"  >> $CMAKE_CONF
         echo "SET(CMAKE_CXX_COMPILER $CXX)" >> $CMAKE_CONF
         echo "SET(CMAKE_CPP_COMPILER $CPP)" >> $CMAKE_CONF
-        echo "SET(CMAKE_Fortran_COMPILER $FC)" >> $CMAKE_CONF
         echo "SET(CMAKE_FIND_ROOT_PATH  $SYSROOT_PREFIX)"   >> $CMAKE_CONF
         echo "SET(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)" >> $CMAKE_CONF
         echo "SET(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)"  >> $CMAKE_CONF
@@ -45,7 +43,6 @@ setup_toolchain() {
         echo "SET(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)"  >> $CMAKE_CONF
       fi
       export HOST_CC="gcc"
-      export HOST_FC="gfortran"
       export HOST_CXX="g++"
       export HOSTCC="$HOST_CC"
       export HOSTFC="$HOST_FC"

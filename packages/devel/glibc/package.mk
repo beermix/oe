@@ -81,7 +81,7 @@ pre_configure_target() {
   strip_gold
 
 # Filter out some problematic *FLAGS
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-ffast-math||g"`
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong -D_FORTIFY_SOURCE=2||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-Ofast|-O2|g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O2|g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong||g"`
