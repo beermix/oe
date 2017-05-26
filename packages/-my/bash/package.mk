@@ -6,7 +6,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 pre_configure_target() {
-  export LIBS="-ltermcap -lcurses"
+  export LIBS="$LIBS -ltermcap -lcurses"
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--bindir=/bin \
@@ -15,9 +15,7 @@ PKG_CONFIGURE_OPTS_TARGET="--bindir=/bin \
                            --without-bash-malloc \
                            --disable-static-link \
                            --with-installed-readline \
-                           --disable-net-redirections \
                            --enable-command-timing \
-                           --enable-job-control \
                            --enable-history \
                            --disable-rpath"
 			   

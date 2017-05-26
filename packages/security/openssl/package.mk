@@ -28,6 +28,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 CONCURRENCY_MAKE_LEVEL=1
+CCACHE_DISABLE=1
 
 PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            --libdir=lib \
@@ -84,13 +85,12 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin/c_rehash
 
   # cert from https://curl.haxx.se/docs/caextract.html
-  
-  #mkdir -p $INSTALL/etc/ssl
-  #perl $PKG_DIR/cert/mk-ca-bundle.pl
-  #cp ca-bundle.crt $INSTALL/etc/ssl/cert.pem
-  
   mkdir -p $INSTALL/etc/ssl
-  cp $PKG_DIR/cert/cacert.pem $INSTALL/etc/ssl/cert.pem
+  
+  perl $PKG_DIR/cert/mk-ca-bundle.pl
+  cp ca-bundle.crt $INSTALL/etc/ssl/cert.pem
+
+  #cp $PKG_DIR/cert/cacert.pem $INSTALL/etc/ssl/cert.pem
 
   # backwards comatibility
   mkdir -p $INSTALL/etc/pki/tls

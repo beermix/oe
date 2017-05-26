@@ -17,11 +17,10 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --with-gnu-ld \
 			      --disable-stack-for-recursion \
 			      --enable-pcre2-8 \
-			      --disable-pcre2-32 \
+			      --enable-pcre2-32 \
 			      --enable-jit \
 			      --with-pic \
 			      --enable-cpp \
-			      --enable-unicode-properties \
 			      --enable-newline-is-anycrlf"
 			      
 PKG_CONFIGURE_OPTS_HOST="--prefix=$ROOT/$TOOLCHAIN $PKG_CONFIGURE_OPTS_TARGET"

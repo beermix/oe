@@ -57,6 +57,8 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_mmap_fixed_mapped=yes \
                            --enable-Bsymbolic \
                            --with-gnu-ld \
                            --with-threads=posix \
+                           --enable-libmount=no \
+                           --enable-debug=no \
                            --with-pcre=internal"
 
 post_makeinstall_target() {
