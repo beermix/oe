@@ -79,7 +79,6 @@ SED="sed -i"
     _PKG_ROOT_NAME=$(echo $1 | cut -d: -f1)
     _ALL_DIRS=""
     _FOUND=0
-    _ANCHOR="@?+?@"
     PKG_DIR=""
 
     # check project folder for a package in home dir

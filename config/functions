@@ -62,7 +62,6 @@ setup_toolchain() {
       export CXX="g++"
       export CPP="cpp"
       export LD="ld"
-      export FC="fc"
       export AS="as"
       export AR="ar"
       export NM="nm"
@@ -99,7 +98,6 @@ setup_toolchain() {
       fi
       export PYTHONXCPREFIX="$ROOT/$TOOLCHAIN"
       export HOST_CC="$CC"
-      export HOST_FC="$FC"
       export HOST_CXX="$CXX"
       export HOSTCC="$CC"
       export HOSTCXX="$CXX"
