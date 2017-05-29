@@ -70,7 +70,6 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-libada \
                               --disable-libgomp \
                               --disable-libitm \
-                              --enable-cloog-backend=isl \
                               --disable-shared \
                               --disable-threads \
                               --without-headers \
