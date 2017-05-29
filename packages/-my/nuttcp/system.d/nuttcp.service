@@ -1,0 +1,10 @@
+[Unit]
+Description=nuttcp
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/nuttcp -S
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
