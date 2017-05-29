@@ -38,7 +38,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --with-gnu-ld \
 			      --disable-stack-for-recursion \
 			      --enable-pcre8 \
-			      --enable-pcre32 \
+			      --disable-pcre32 \
 			      --enable-jit \
 			      --with-pic \
 			      --enable-cpp \
