@@ -69,6 +69,7 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-libada \
                               --disable-libgomp \
                               --disable-libitm \
+                              --enable-cloog-backend=isl \
                               --disable-shared \
                               --disable-threads \
                               --without-headers \
@@ -99,6 +100,11 @@ post_make_host() {
   # fix wrong link
   rm -rf $TARGET_NAME/libgcc/libgcc_s.so
   ln -sf libgcc_s.so.1 $TARGET_NAME/libgcc/libgcc_s.so
+
+  if [ ! "$DEBUG" = yes ]; then
+    ${TARGET_NAME}-strip $TARGET_NAME/libgcc/libgcc_s.so*
+    ${TARGET_NAME}-strip $TARGET_NAME/libstdc++-v3/src/.libs/libstdc++.so*
+  fi
 }
 
 post_makeinstall_host() {
@@ -129,7 +135,7 @@ makeinstall_target() {
     cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libgomp/.libs/libgomp.so* $INSTALL/lib
     cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libitm/.libs/libitm.so* $INSTALL/lib
     cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libssp/.libs/libssp.so* $INSTALL/lib
-      mkdir -p $INSTALL/usr/lib
+  mkdir -p $INSTALL/usr/lib
     cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libstdc++-v3/src/.libs/libstdc++.so* $INSTALL/usr/lib
 }
 

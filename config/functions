@@ -15,7 +15,6 @@ setup_toolchain() {
       export STRIP="${TARGET_NAME}-strip"
       export CPPFLAGS="$TARGET_CPPFLAGS"
       export CFLAGS="$TARGET_CFLAGS"
-      export FFLAGS="$TARGET_FFLAGS"
       export CXXFLAGS="$TARGET_CXXFLAGS"
       export LDFLAGS="$TARGET_LDFLAGS"
       export LDSHARED="$CC -shared"
@@ -45,7 +44,6 @@ setup_toolchain() {
       export HOST_CC="gcc"
       export HOST_CXX="g++"
       export HOSTCC="$HOST_CC"
-      export HOSTFC="$HOST_FC"
       export HOSTCXX="$HOST_CXX"
       export CC_FOR_BUILD="$HOST_CC"
       export CXX_FOR_BUILD="$HOST_CXX"
@@ -270,7 +268,6 @@ strip_hard() {
   LDFLAGS=`echo $LDFLAGS | sed -e "s|-O.|-O2|g"`
   LDFLAGS=`echo $LDFLAGS | sed -e "s|,-z,relro||g"`
   CFLAGS=`echo $CFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
-  LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--sort-common,--as-needed,-z,relro|-Wl,--as-needed|g"`
 }
 
 fix_module_depends() {
