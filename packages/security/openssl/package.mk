@@ -87,10 +87,10 @@ post_makeinstall_target() {
   # cert from https://curl.haxx.se/docs/caextract.html
   mkdir -p $INSTALL/etc/ssl
   
-  #perl $PKG_DIR/cert/mk-ca-bundle.pl
-  #cp ca-bundle.crt $INSTALL/etc/ssl/cert.pem
+  perl $PKG_DIR/cert/mk-ca-bundle.pl
+  cp ca-bundle.crt $INSTALL/etc/ssl/cert.pem
 
-  cp $PKG_DIR/cert/cacert.pem $INSTALL/etc/ssl/cert.pem
+  #cp $PKG_DIR/cert/cacert.pem $INSTALL/etc/ssl/cert.pem
 
   # backwards comatibility
   mkdir -p $INSTALL/etc/pki/tls
