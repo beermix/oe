@@ -17,9 +17,10 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="754d7e5"
-PKG_GIT_URL="git://gcc.gnu.org/git/gcc.git"
-#PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_VERSION="6.3.0"
+#PKG_VERSION="754d7e5"
+#PKG_GIT_URL="git://gcc.gnu.org/git/gcc.git"
+PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host"
 PKG_DEPENDS_TARGET="gcc:host"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host glibc"
