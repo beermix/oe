@@ -36,3 +36,5 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-doc-cross-references \
                            --disable-man \
                            --enable-debug=no \
                            --with-xft"
+                           
+PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
