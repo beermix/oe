@@ -8,9 +8,11 @@ PKG_AUTORECONF="no"
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
+  
   strip_lto
-  strip_gold
-  #export LIBS="$LIBS -lavcodec -lXv -lXext -lasound -lavfilter -lXext -lvdpau-lva-x11 -lX11 -lva -lva-drm -lva -lswresample -lm -lswscale"
+  #strip_gold
+  
+  export LDFLAGS="$LDFLAGS -lresolv"
 }
 
 configure_target() {
@@ -22,12 +24,12 @@ configure_target() {
   		    --disable-dvdnav \
   		    --disable-dvdread \
   		    --disable-apple-remote \
-  		    --disable-static-build \
-  		    LDFLAGS=-lresolv
+  		    --disable-static-build 
 }
 
 make_target() {
-  ./waf build 
+  ./waf build -j1
+  
 }
 
 make_install_target() {
