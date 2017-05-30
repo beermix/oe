@@ -115,7 +115,6 @@ EOF
 
   echo "sbindir=/usr/bin" >> configparms
   echo "rootsbindir=/usr/bin" >> configparms
-  #echo "build-programs=no" >> configparms
 }
 
 post_makeinstall_target() {
@@ -128,12 +127,23 @@ post_makeinstall_target() {
   for i in $GLIBC_EXCLUDE_BIN; do
     rm -rf $INSTALL/usr/bin/$i
   done
+
   rm -rf $INSTALL/usr/lib/audit
   rm -rf $INSTALL/usr/lib/glibc
   rm -rf $INSTALL/usr/lib/libc_pic
   rm -rf $INSTALL/usr/lib/*.o
   rm -rf $INSTALL/usr/lib/*.map
   rm -rf $INSTALL/var
+
+# remove unneeded libs
+  rm -rf $INSTALL/usr/lib/libBrokenLocale*
+  rm -rf $INSTALL/usr/lib/libSegFault.so
+  rm -rf $INSTALL/usr/lib/libmemusage.so
+  rm -rf $INSTALL/usr/lib/libpcprofile.so
+
+# remove ldscripts
+  rm -rf $INSTALL/usr/lib/libc.so
+  rm -rf $INSTALL/usr/lib/libpthread.so
 
 # remove locales and charmaps
   rm -rf $INSTALL/usr/share/i18n/charmaps

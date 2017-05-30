@@ -45,7 +45,7 @@ pre_configure_target() {
 }
  \
 configure_target() {
-  ./configure --prefix=/usr \
+  CPP="$HOST_CC -E" ./configure --prefix=/usr \
               --cross-prefix=${TARGET_NAME}- \
               --source-path=$(get_pkg_build qemu) \
               --cc=$CC \
@@ -62,7 +62,8 @@ configure_target() {
               --disable-libnfs \
               --enable-guest-agent \
               --disable-libusb \
-              --disable-docs
+              --disable-docs \
+              --cpu=x86_64
 }
 
 make_target() {
