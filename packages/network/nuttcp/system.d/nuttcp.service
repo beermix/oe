@@ -3,8 +3,8 @@ Description=nuttcp bandwidth test controller
 After=network.target
 
 [Service]
-ExecStart=/usr/bin/nuttcp -S
-TimeoutStopSec=1
+ExecStart=/usr/bin/nuttcp -S --nofork
+TimeoutStopSec=1 
 Restart=always
 RestartSec=2
 StartLimitInterval=4
