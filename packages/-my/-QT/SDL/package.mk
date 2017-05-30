@@ -31,8 +31,8 @@ PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_HOST="--enable-rpath \
                          --enable-libc \
-                         --disable-audio \
-                         --disable-events \
+                         --enable-audio \
+                         --enable-events \
                          --disable-joystick \
                          --disable-cdrom \
                          --enable-threads \
@@ -42,8 +42,8 @@ PKG_CONFIGURE_OPTS_HOST="--enable-rpath \
                          --enable-cpuinfo \
                          --enable-assembly \
                          --disable-oss \
-                         --disable-alsa \
-                         --disable-alsatest \
+                         --enable-alsa \
+                         --enable-alsatest \
                          --disable-alsa-shared \
                          --disable-esd \
                          --disable-esdtest \
