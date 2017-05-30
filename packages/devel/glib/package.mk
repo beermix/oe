@@ -21,7 +21,7 @@ PKG_NAME="glib"
 PKG_VERSION="2.53.2"
 PKG_SITE="http://www.gtk.org/"
 PKG_URL="http://ftp.gnome.org/pub/gnome/sources/glib/2.53/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain zlib libiconv libffi util-linux attr expat pcre Python:host"
+PKG_DEPENDS_TARGET="toolchain zlib libiconv libffi util-linux attr expat Python:host"
 PKG_DEPENDS_HOST="pcre:host"
 PKG_SECTION="devel"
 PKG_SHORTDESC="glib: C support library"
@@ -32,10 +32,11 @@ PKG_AUTORECONF="yes"
 
 pre_configure_target() {
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--as-needed|-Wl,--no-as-needed|g"`
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--sort-common,--as-needed,-z,relro|-Wl,--no-as-needed|g"`
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed|-Wl,--no-as-needed|g"`
 }
      
-PKG_CONFIGURE_OPTS_HOST="--disable-gtk-doc --disable-man --enable-libmount=no --disable-shared --with-pcre=system"
+PKG_CONFIGURE_OPTS_HOST="--disable-gtk-doc --disable-man --enable-libmount=no --disable-shared --with-pcre=internal"
                            
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_mmap_fixed_mapped=yes \
                            ac_cv_func_posix_getpwuid_r=yes \
@@ -57,7 +58,8 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_mmap_fixed_mapped=yes \
                            --enable-Bsymbolic \
                            --with-gnu-ld \
                            --with-threads=posix \
-                           --with-pcre=internal"
+                           --with-pcre=internal \
+                           --disable-silent-rules"
 
 post_makeinstall_target() {
   mkdir -p $SYSROOT_PREFIX/usr/lib/pkgconfig
