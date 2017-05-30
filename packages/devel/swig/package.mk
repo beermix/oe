@@ -34,7 +34,7 @@ PKG_AUTORECONF="no"
 #  ./autogen.sh
 #}
 
-PKG_CONFIGURE_OPTS_HOST="--with-pcre-prefix=$TOOLCHAIN \
+PKG_CONFIGURE_OPTS_HOST="--with-pcre-prefix=$ROOT/$TOOLCHAIN \
                          --with-boost=no \
                          --without-pcre \
                          --without-x \
