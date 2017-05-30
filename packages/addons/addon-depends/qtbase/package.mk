@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="qtbase"
-PKG_VERSION="5.8.0"
+PKG_VERSION="5.6.2"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://qt-project.org"
-PKG_URL="http://download.qt.io/official_releases/qt/5.8/$PKG_VERSION/submodules/$PKG_NAME-opensource-src-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="pcre zlib libpng freetype"
+PKG_URL="http://download.qt.io/official_releases/qt/5.6/$PKG_VERSION/submodules/$PKG_NAME-opensource-src-$PKG_VERSION.tar.xz"
+PKG_DEPENDS_TARGET="pcre zlib"
 PKG_SOURCE_DIR="$PKG_NAME-opensource-src-$PKG_VERSION"
 PKG_SHORTDESC="A cross-platform application and UI framework"
 PKG_LONGDESC="A cross-platform application and UI framework"
@@ -30,7 +30,7 @@ PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="-prefix /usr
                            -sysroot $SYSROOT_PREFIX
-                           -hostprefix $TOOLCHAIN
+                           -hostprefix $ROOT/$TOOLCHAIN
                            -device linux-openelec-g++
                            -opensource -confirm-license
                            -release
@@ -51,6 +51,8 @@ PKG_CONFIGURE_OPTS_TARGET="-prefix /usr
                            -no-libproxy
                            -system-pcre
                            -no-glib
+                           -no-pulseaudio
+                           -no-alsa
                            -silent
                            -no-cups
                            -no-iconv
@@ -63,6 +65,7 @@ PKG_CONFIGURE_OPTS_TARGET="-prefix /usr
                            -no-opengl
                            -no-libudev
                            -no-libinput
+                           -no-gstreamer
                            -no-eglfs"
 
 configure_target() {
