@@ -31,3 +31,6 @@ PKG_LONGDESC="Ethtool is used for querying settings of an ethernet device and ch
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
+
+
+PKG_CONFIGURE_OPTS_TARGET="--enable-pretty-dump"
