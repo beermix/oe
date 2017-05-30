@@ -33,7 +33,6 @@ PKG_AUTORECONF="yes"
 PKG_CONFIGURE_OPTS_TARGET="--with-libgif=$SYSROOT_PREFIX/usr \
 			      --with-libjpeg=$SYSROOT_PREFIX/usr \
 			      --with-libtiff=$SYSROOT_PREFIX/usr \
-			      --with-pango=no \
 			      --enable-shared"
 
 makeinstall_target() {
