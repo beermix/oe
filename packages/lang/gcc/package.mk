@@ -49,14 +49,11 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libstdcxx-pch \
                            --enable-libstdcxx-time \
                            --with-default-libstdcxx-abi=new \
-                           --without-ppl \
                            --without-cloog \
-                           --disable-libmpx \
                            --disable-werror \
                            --disable-browser-plugin \
                            --disable-vtable-verify \
                            --enable-gnu-unique-object \
-                           --disable-libsanitizer \
                            --with-tune=generic"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
@@ -67,6 +64,8 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-libquadmath \
                               --disable-libmudflap \
                               --disable-libada \
+                              --disable-libsanitizer \
+                              --disable-libmpx \
                               --disable-libgomp \
                               --disable-libitm \
                               --disable-shared \
