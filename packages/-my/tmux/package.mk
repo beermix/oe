@@ -10,7 +10,7 @@ pre_configure_target() {
   export MAKEFLAGS=-j1
 }
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared"
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared"
 			  
 			  
 PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"

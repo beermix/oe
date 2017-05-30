@@ -34,7 +34,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-rst2man"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/lib $INSTALL/var
-  rm -rf $INSTALL/usr/share/alsa/speaker-test
+  #rm -rf $INSTALL/usr/share/alsa/speaker-test
   rm -rf $INSTALL/usr/share/sounds
   rm -rf $INSTALL/usr/lib/systemd/system
 

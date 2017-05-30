@@ -28,7 +28,3 @@ PKG_LONGDESC="Mesa 3D demos - installed are the well known glxinfo and glxgears.
 PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--without-glut"
-
-makeinstall_target() {
-  : # nop
-}
