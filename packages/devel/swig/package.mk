@@ -18,11 +18,9 @@
 
 PKG_NAME="swig"
 PKG_VERSION="a4d01cd"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
-PKG_SITE="http://www.swig.org"
 PKG_GIT_URL="https://github.com/swig/swig"
+PKG_VERSION="3.0.12"
+PKG_URL="$SOURCEFORGE_SRC/swig/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="ccache:host pcre:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="devel"
