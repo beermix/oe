@@ -30,7 +30,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-orbit --disable-shared --disable-documentation"
+PKG_CONFIGURE_OPTS_TARGET="--disable-orbit --disable-static --disable-documentation"
 
 
 #PKG_CONFIGURE_OPTS_TARGET="--disable-orbit --disable-static --disable-documentation"
