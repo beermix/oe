@@ -33,8 +33,6 @@ PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
 PKG_AUTORECONF="yes"
 
-CONCURRENCY_MAKE_LEVEL=1
-
-PKG_CONFIGURE_OPTS_TARGET="--enable-shared --enable-static --with-gnu-ld"
+PKG_CONFIGURE_OPTS_TARGET="--enable-shared --enable-static"
 			      
 PKG_CONFIGURE_OPTS_HOST="--prefix=$ROOT/$TOOLCHAIN $PKG_CONFIGURE_OPTS_TARGET"

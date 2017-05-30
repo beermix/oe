@@ -21,7 +21,7 @@ PKG_NAME="glib"
 PKG_VERSION="2.52.2"
 PKG_SITE="http://www.gtk.org/"
 PKG_URL="http://ftp.gnome.org/pub/gnome/sources/glib/2.52/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain zlib libiconv libffi util-linux pcre attr expat Python:host"
+PKG_DEPENDS_TARGET="toolchain zlib libiconv libffi util-linux attr expat Python:host"
 PKG_DEPENDS_HOST="pcre:host"
 PKG_SECTION="devel"
 PKG_SHORTDESC="glib: C support library"
@@ -32,13 +32,7 @@ PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_HOST="--disable-gtk-doc --disable-man --enable-libmount=no --disable-shared --with-pcre=internal"
                            
-PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_mmap_fixed_mapped=yes \
-                           ac_cv_func_posix_getpwuid_r=yes \
-                           ac_cv_func_posix_getgrgid_r=yes \
-                           ac_cv_func_printf_unix98=yes \
-                           ac_cv_func_snprintf_c99=yes \
-                           ac_cv_func_vsnprintf_c99=yes \
-                           glib_cv_stack_grows=no \
+PKG_CONFIGURE_OPTS_TARGET="glib_cv_stack_grows=no \
                            glib_cv_uscore=no \
                            glib_cv_va_val_copy=no \
                            --disable-selinux \
