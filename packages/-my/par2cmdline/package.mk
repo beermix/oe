@@ -20,8 +20,10 @@
 
 PKG_NAME="par2cmdline"
 PKG_VERSION="41b4b63"
-PKG_SITE="https://github.com/Parchive/par2cmdline"
-PKG_GIT_URL="https://github.com/Parchive/par2cmdline"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
+PKG_SITE="https://github.com/jkansanen/par2cmdline-mt"
+PKG_GIT_URL="https://github.com/jkansanen/par2cmdline-mt"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="system"
 PKG_SHORTDESC="A utility to create and repair data files using Reed Solomon coding (multi threaded OpenMP version)."
