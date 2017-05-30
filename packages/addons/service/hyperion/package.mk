@@ -71,6 +71,7 @@ PKG_CMAKE_OPTS_TARGET="-DCMAKE_NO_SYSTEM_FROM_IMPORTED=ON \
                        $X11_SUPPORT \
                        -DENABLE_QT5=1 \
                        -DENABLE_TESTS=0 \
+                       -DCMAKE_BUILD_TYPE=Release \
                        -Wno-dev"
 
 makeinstall_target() {

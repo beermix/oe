@@ -1,5 +1,5 @@
 PKG_NAME="i2pd"
-PKG_VERSION="e4cd1a4"
+PKG_VERSION="36c4719"
 PKG_GIT_URL="https://github.com/PurpleI2P/i2pd"
 PKG_DEPENDS_TARGET="toolchain boost zlib openssl miniupnpc boost"
 PKG_SECTION="my"
