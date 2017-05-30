@@ -43,8 +43,8 @@ configure_host() {
   #export GOROOT_BOOTSTRAP=/usr/lib/golang
   export GOARCH=amd64
   export CGO_ENABLED=1
-  export CC_FOR_TARGET=${TARGET_NAME}-gcc
-  export CXX_FOR_TARGET=${TARGET_NAME}-c++
+  export CC_FOR_TARGET="$CC"
+  export CXX_FOR_TARGET="$CXX"
 }
 
 make_host() {
