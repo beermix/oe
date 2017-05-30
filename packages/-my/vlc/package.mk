@@ -82,8 +82,8 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-tiger \
 			      --enable-libva \
 			      --disable-vdpau \
-			      --without-x \
-			      --disable-xcb \
+			      --with-x \
+			      --enable-xcb \
 			      --disable-xvideo \
 			      --disable-sdl \
 			      --disable-sdl-image \
@@ -116,7 +116,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-update-check \
 			      --disable-kva \
 			      --disable-bluray \
-			      --disable-samplerate \
+			      --enable-samplerate \
 			      --disable-sid \
 			      --disable-crystalhd \
 			      --disable-dxva2 \

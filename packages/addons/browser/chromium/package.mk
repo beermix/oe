@@ -187,4 +187,7 @@ addon() {
 
   # xdotool
   cp -P $(get_pkg_build xdotool)/xdotool $ADDON_BUILD/$PKG_ADDON_ID/bin
+  
+  # re2
+  cp -PL $(get_pkg_build re2)/.install_pkg/usr/lib/*.so $ADDON_BUILD/$PKG_ADDON_ID/lib
 }
