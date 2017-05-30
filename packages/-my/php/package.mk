@@ -80,7 +80,7 @@ configure_target() {
                              --enable-filter \
                              --enable-calendar \
                              --with-pcre-regex \
-                             --with-sqlite3=$SYSROOT_PREFIX/usr \
+                             --with-sqlite3=no \
                              --with-mysql=$SYSROOT_PREFIX/usr \
                              --with-mysql-sock=/tmp/mysql.sock \
                              --with-gd \

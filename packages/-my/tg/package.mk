@@ -5,7 +5,16 @@ PKG_DEPENDS_TARGET="toolchain readline libevent jansson zlib libconfig openssl l
 PKG_SECTION="debug/tools"
 PKG_AUTORECONF="yes"
 
-CONCURRENCY_MAKE_LEVEL=1
+pre_configure_target() {
+ cd $ROOT/$PKG_BUILD
+ rm -rf .$TARGET_NAME
+ 
+ strip_lto
+ strip_gold
+ 
+ MAKEFLAGS=-j1
+}
+
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
 			      ac_cv_func_realloc_0_nonnull=yes \
@@ -13,8 +22,8 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
 			      --enable-openssl=$SYSROOT_PREFIX/usr \
 			      --enable-json \
 			      --enable-static \
-			      --enable-libevent \
-			      --enable-libconfig \
+			      --enable-libevent=$SYSROOT_PREFIX/usr \
+			      --enable-libconfig=$SYSROOT_PREFIX/usr \
 			      --enable-libgcrypt=no \
 			      --enable-extf \
 			      --enable-python \
