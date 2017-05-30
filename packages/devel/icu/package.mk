@@ -14,13 +14,6 @@ post_unpack() {
   cp -r $PKG_BUILD/source/* $PKG_BUILD/
 }
 
-
-pre_configure_target() {
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
-  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3|"`
-}
-
-
 PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared --enable-release"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \
