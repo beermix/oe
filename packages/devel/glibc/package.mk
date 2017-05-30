@@ -131,9 +131,7 @@ post_makeinstall_target() {
 
   rm -rf $INSTALL/usr/lib/audit
   rm -rf $INSTALL/usr/lib/glibc
-  rm -rf $INSTALL/usr/lib/libc_pic
   rm -rf $INSTALL/usr/lib/*.o
-  rm -rf $INSTALL/usr/lib/*.map
   rm -rf $INSTALL/var
 
 # remove unneeded libs
@@ -143,8 +141,8 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/lib/libpcprofile.so
 
 # remove ldscripts
-#  rm -rf $INSTALL/usr/lib/libc.so
-#  rm -rf $INSTALL/usr/lib/libpthread.so
+  rm -rf $INSTALL/usr/lib/libc.so
+  rm -rf $INSTALL/usr/lib/libpthread.so
 
 # remove locales and charmaps
   rm -rf $INSTALL/usr/share/i18n/charmaps
