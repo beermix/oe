@@ -8,7 +8,6 @@ PKG_LONGDESC="GNU nano (Nano's ANOther editor, or Not ANOther editor) is an enha
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-strip_hard
 
 PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config/nano \
                            --datadir=/storage/.config/nano \
@@ -24,6 +23,7 @@ PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config/nano \
                            --enable-threads=posix \
                            --enable-utf8 \
 			      --enable-nanorc \
+			      --disable-libmagic \
 			      --without-slang \
 			      --enable-color"
 
