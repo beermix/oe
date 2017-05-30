@@ -24,7 +24,7 @@ PKG_SITE="http://llvm.org/"
 PKG_URL="http://llvm.org/releases/$PKG_VERSION/${PKG_NAME}-${PKG_VERSION}.src.tar.xz"
 PKG_SOURCE_DIR="${PKG_NAME}-${PKG_VERSION}.src"
 PKG_DEPENDS_HOST="toolchain"
-PKG_DEPENDS_TARGET="toolchain llvm:host zlib"
+PKG_DEPENDS_TARGET="toolchain elfutils llvm:host zlib"
 PKG_SECTION="lang"
 PKG_SHORTDESC="llvm: Low Level Virtual Machine"
 PKG_LONGDESC="Low-Level Virtual Machine (LLVM) is a compiler infrastructure designed for compile-time, link-time, run-time, and idle-time optimization of programs from arbitrary programming languages. It currently supports compilation of C, Objective-C, and C++ programs, using front-ends derived from GCC 4.0, GCC 4.2, and a custom new front-end, "clang". It supports x86, x86-64, ia64, PowerPC, and SPARC, with support for Alpha and ARM under development."
@@ -32,7 +32,9 @@ PKG_LONGDESC="Low-Level Virtual Machine (LLVM) is a compiler infrastructure desi
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CMAKE_OPTS_HOST="-GNinja -DCMAKE_BUILD_TYPE=Release -DLLVM_INCLUDE_TOOLS=ON \
+PKG_CMAKE_OPTS_HOST="-DLLVM_INCLUDE_TOOLS=ON \
+                     -DLLVM_BUILD_TOOLS=OFF \
+                     -DLLVM_BUILD_UTILS=OFF \
                      -DLLVM_BUILD_EXAMPLES=OFF \
                      -DLLVM_INCLUDE_EXAMPLES=OFF \
                      -DLLVM_BUILD_TESTS=OFF \
@@ -47,15 +49,10 @@ PKG_CMAKE_OPTS_HOST="-GNinja -DCMAKE_BUILD_TYPE=Release -DLLVM_INCLUDE_TOOLS=ON 
                      -DLLVM_ENABLE_ASSERTIONS=OFF \
                      -DLLVM_ENABLE_WERROR=OFF \
                      -DLLVM_ENABLE_ZLIB=OFF \
-                     -DLLVM_OPTIMIZED_TABLEGEN=ON \
-                     -DCMAKE_INSTALL_RPATH=$ROOT/$TOOLCHAIN/lib"
+                     -DLLVM_OPTIMIZED_TABLEGEN=ON"
 
 make_host() {
-  ninja -j5
-}
-
-make_target() {
-  ninja -j5
+  make llvm-config llvm-tblgen -j7
 }
 
 makeinstall_host() {
@@ -63,10 +60,11 @@ makeinstall_host() {
   cp -a bin/llvm-tblgen $ROOT/$TOOLCHAIN/bin
 }
 
-PKG_CMAKE_OPTS_TARGET="-GNinja -DCMAKE_BUILD_TYPE=Release \
+PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release \
                        -DCMAKE_C_FLAGS="$CFLAGS" \
                        -DCMAKE_CXX_FLAGS="$CXXFLAGS" \
                        -DLLVM_INCLUDE_TOOLS=ON \
+                       -DLLVM_BUILD_TOOLS=OFF \
                        -DLLVM_BUILD_UTILS=ON \
                        -DLLVM_BUILD_EXAMPLES=OFF \
                        -DLLVM_INCLUDE_EXAMPLES=OFF \
