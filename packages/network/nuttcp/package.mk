@@ -5,6 +5,12 @@ PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
+pre_configure_target() {
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3 -Wall|"`
+  strip_lto
+  strip_gold
+}
+
 make_target() {
   $CC $CFLAGS -o nuttcp $PKG_DIR/nuttcp-8.1.4.c
 }
@@ -13,7 +19,7 @@ post_make_target() {
   mkdir -p $INSTALL/usr/bin/
   mkdir -p $INSTALL_DEV/usr/bin/
   $STRIP $ROOT/$PKG_BUILD/nuttcp
-  cp $ROOT/$PKG_BUILD/nuttcp $INSTALL/usr/bin/
+  cp $ROOT/$PKG_BUILD/nuttcp $INSTALL/usr/bin/nuttcp
 }
 
 
