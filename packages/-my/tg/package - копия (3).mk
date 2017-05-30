@@ -1,10 +1,17 @@
 PKG_NAME="tg"
-PKG_VERSION="x3"
-PKG_URL="https://dl.dropboxusercontent.com/s/8b44s8uhpti6xt4/tg-x3.tar.xz"
+PKG_VERSION="master"
+PKG_URL=""
 PKG_DEPENDS_TARGET="toolchain readline libevent jansson zlib libconfig openssl lua"
 PKG_SECTION="debug/tools"
 PKG_AUTORECONF="yes"
 
+unpack() {
+  git clone --recursive -v --depth 1 git://github.com/vysheng/tg $PKG_BUILD
+  cd $PKG_BUILD
+  git reset --hard $PKG_VERSION
+  rm -rf .git
+  cd $ROOT
+}
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
 			      ac_cv_func_realloc_0_nonnull=yes \
