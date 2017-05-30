@@ -17,8 +17,9 @@
 ################################################################################
 
 PKG_NAME="go"
-PKG_VERSION="go1.8.3"
-PKG_GIT_URL="https://github.com/golang/go"
+PKG_VERSION="1.8.3"
+PKG_URL="https://github.com/golang/go/archive/${PKG_NAME}${PKG_VERSION}.tar.gz"
+PKG_SOURCE_DIR="${PKG_NAME}-${PKG_NAME}${PKG_VERSION}"
 PKG_DEPENDS_HOST="toolchain"
 PKG_SECTION="system"
 PKG_SHORTDESC="Go is an open source programming language that makes it easy to build simple, reliable, and efficient software."
@@ -42,8 +43,8 @@ configure_host() {
   #export GOROOT_BOOTSTRAP=/usr/lib/golang
   export GOARCH=amd64
   export CGO_ENABLED=1
-  export CC_FOR_TARGET=x86_64-openelec-linux-gnu-gcc
-  export CXX_FOR_TARGET=x86_64-openelec-linux-gnu-c++
+  export CC_FOR_TARGET=${TARGET_NAME}-gcc
+  export CXX_FOR_TARGET=${TARGET_NAME}-c++
 }
 
 make_host() {
