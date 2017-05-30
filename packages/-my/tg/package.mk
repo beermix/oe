@@ -5,6 +5,7 @@ PKG_DEPENDS_TARGET="toolchain readline libevent jansson zlib libconfig openssl l
 PKG_SECTION="debug/tools"
 PKG_AUTORECONF="yes"
 
+CONCURRENCY_MAKE_LEVEL=1
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
 			      ac_cv_func_realloc_0_nonnull=yes \
@@ -18,7 +19,8 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
 			      --enable-extf \
 			      --enable-python \
 			      --disable-valgrind \
-			      --enable-liblua"
+			      --enable-liblua \
+			      --disable-option-checking"
 		
 		
 post_make_target() {
