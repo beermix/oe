@@ -105,7 +105,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-macosx \
 			      --disable-macosx-vlc-app \
 			      --disable-macosx-qtkit \
-			      --disable-ncurses \
+			      --enable-ncurses \
 			      --disable-goom \
 			      --disable-projectm \
 			      --enable-udev \
@@ -123,7 +123,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --enable-vlc"
 
 pre_configure_target() {
-  export LDFLAGS="$LDFLAGS -lresolv"
+  export LDFLAGS="$LDFLAGS -lresolv -lterminfo"
   export LIBS="$LIBS -fopenmp"
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fomit-frame-pointer||g"`
   export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-fomit-frame-pointer||g"`
