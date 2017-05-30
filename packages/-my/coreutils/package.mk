@@ -1,7 +1,7 @@
 PKG_NAME="coreutils"
 PKG_VERSION="8.27"
 PKG_URL="http://ftpmirror.gnu.org/coreutils/coreutils-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain acl attr libcap pcre gmp readline openssl"
+PKG_DEPENDS_TARGET="toolchain attr libcap pcre gmp readline openssl"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
