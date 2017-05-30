@@ -14,19 +14,20 @@ PKG_AUTORECONF="yes"
 # sh $ROOT/$PKG_BUILD/source/runConfigureICU Linux/gcc
 #}
 
-#pre_configure_target() {
-# #sh $ROOT/$PKG_BUILD/source/runConfigureICU Linux/gcc
-# export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
-#}
+pre_configure_target() {
+ export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
+ export CXXLAGS=`echo $CXXLAGS | sed -e "s|-O.|-O3|"`
+}
 
 post_unpack() {
   cp -r $PKG_BUILD/source/* $PKG_BUILD/
 }
 
-PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
+PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared --enable-release"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --disable-shared \
+                           --enable-release \
                            --with-cross-build=$ROOT/$PKG_BUILD/.$HOST_NAME"
 
 PKG_CONFIGURE_SCRIPT="source/configure"
