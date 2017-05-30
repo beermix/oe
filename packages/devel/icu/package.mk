@@ -10,18 +10,16 @@ PKG_SECTION="textproc"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-#pre_configure_host() {
-# sh $ROOT/$PKG_BUILD/source/runConfigureICU Linux/gcc
-#}
-
-pre_configure_target() {
- export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
- export CXXLAGS=`echo $CXXLAGS | sed -e "s|-O.|-O3|"`
-}
-
 post_unpack() {
   cp -r $PKG_BUILD/source/* $PKG_BUILD/
 }
+
+
+pre_configure_target() {
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
+  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3|"`
+}
+
 
 PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared --enable-release"
 
