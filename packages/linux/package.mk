@@ -65,8 +65,9 @@ case "$LINUX" in
     PKG_PATCH_DIRS="linux-4.10"
     ;;
   *)
-    PKG_VERSION="zen-kernel-4.11.3"
-    PKG_URL="ftp://root:openelec@192.168.1.4/www/linux-zen-kernel-4.11.3.tar.xz"
+    PKG_VERSION="4.11.3"
+    #PKG_URL="ftp://root:openelec@192.168.1.4/www/linux-zen-kernel-4.11.3.tar.xz"
+    PKG_URL="http://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
     PKG_PATCH_DIRS="linux-4.11"
     ;;
 esac
@@ -169,8 +170,8 @@ pre_make_target() {
 make_target() {
   unset LDFLAGS
 
-  make modules V=99
-  make INSTALL_MOD_PATH=$INSTALL/usr INSTALL_MOD_STRIP=1 modules_install V=99
+  make modules
+  make INSTALL_MOD_PATH=$INSTALL/usr INSTALL_MOD_STRIP=1 modules_install
   rm -f $INSTALL/usr/lib/modules/*/build
   rm -f $INSTALL/usr/lib/modules/*/source
 
@@ -182,12 +183,12 @@ make_target() {
   if [ "$BOOTLOADER" = "u-boot" ]; then
     if [ -n "$KERNEL_UBOOT_EXTRA_TARGET" -o -n "$KERNEL_UBOOT_DT_IMAGE" ]; then
       for extra_target in "$KERNEL_UBOOT_EXTRA_TARGET" $(basename "$KERNEL_UBOOT_DT_IMAGE") ; do
-        make $extra_target V=99
+        make $extra_target
       done
     fi
   fi
 
-  make $KERNEL_TARGET $KERNEL_MAKE_EXTRACMD V=99
+  make $KERNEL_TARGET $KERNEL_MAKE_EXTRACMD
 
   if [ "$BUILD_ANDROID_BOOTIMG" = "yes" ]; then
     mkbootimg --kernel arch/$TARGET_KERNEL_ARCH/boot/$KERNEL_TARGET --ramdisk $ROOT/$BUILD/image/initramfs.cpio \
