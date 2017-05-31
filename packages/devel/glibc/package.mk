@@ -59,6 +59,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/bash \
                            --disable-timezone-tools \
                            --disable-debug \
                            --disable-werror \
+                           --enable-clocale=gnu \
                            --enable-static"
 
 NSS_CONF_DIR="$PKG_BUILD/nss"

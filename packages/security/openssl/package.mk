@@ -16,8 +16,8 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 PKG_NAME="openssl"
-PKG_VERSION="1.0.2l"
-PKG_URL="https://www.openssl.org/source/openssl-$PKG_VERSION.tar.gz"
+PKG_VERSION="fde111b"
+PKG_GIT_URL="https://github.com/openssl/openssl"
 PKG_DEPENDS_HOST="ccache:host yasm:host"
 PKG_DEPENDS_TARGET="toolchain pcre gmp zlib"
 PKG_SECTION="security"
@@ -27,8 +27,8 @@ PKG_LONGDESC="The Open Source toolkit for Secure Sockets Layer and Transport Lay
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-CONCURRENCY_MAKE_LEVEL=1
-CCACHE_DISABLE=1
+#CONCURRENCY_MAKE_LEVEL=1
+#CCACHE_DISABLE=1
 
 PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            --libdir=lib \
@@ -38,9 +38,8 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            no-ssl3 \
                            enable-unit-test \
                            enable-tlsext \
-                           no-weak-ssl-ciphers \
                            no-zlib \
-                           no-zlib-dynamic \
+                           zlib-dynamic \
                            enable-ec_nistp_64_gcc_128"
 
 pre_configure_host() {
@@ -50,7 +49,7 @@ pre_configure_host() {
 
 configure_host() {
   cd $ROOT/$PKG_BUILD/.$HOST_NAME
-  ./Configure --prefix=/ $PKG_CONFIGURE_OPTS_SHARED debian-amd64
+  ./Configure --prefix=/ $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $CFLAGS $LDFLAGS
 }
 
 makeinstall_host() {
@@ -63,11 +62,12 @@ pre_configure_target() {
   cp -a $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$TARGET_NAME/
 
   strip_lto
+  strip_gold
 }
 
 configure_target() {
   cd $ROOT/$PKG_BUILD/.$TARGET_NAME
-  ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED debian-amd64
+  ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $CFLAGS $CPPFLAGS $LDFLAGS
 }
 
 makeinstall_target() {
@@ -95,4 +95,7 @@ post_makeinstall_target() {
     ln -sf /etc/ssl/cert.pem $INSTALL/etc/pki/tls/certs/ca-bundle.crt
   mkdir -p $INSTALL/usr/lib/ssl
     ln -sf /etc/ssl/cert.pem $INSTALL/usr/lib/ssl/cert.pem
+    
+  #  make test V=99 -j1
+   # make check V=99 -j1
 }

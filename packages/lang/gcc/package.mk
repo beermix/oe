@@ -52,24 +52,27 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-browser-plugin \
                            --disable-vtable-verify \
                            --enable-gnu-unique-object \
+                           --enable-clocale=gnu \
+                           --disable-libsanitizer \
                            --disable-libmpx \
                            --with-tune=generic"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
+                              --enable-cloog-backend=isl \
                               --disable-libssp \
                               --disable-libatomic \
                               --disable-libquadmath \
                               --disable-libmudflap \
                               --disable-libada \
-                              --disable-libsanitizer \
                               --disable-libgomp \
                               --disable-libitm \
                               --disable-shared \
                               --disable-threads \
                               --without-headers \
                               --with-newlib \
+                              --disable-decimal-float \
                               $GCC_OPTS"
 
 PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
@@ -85,12 +88,11 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-threads=posix \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time \
-                         --enable-clocale=gnu \
                          --enable-poison-system-directories \
                          $GCC_OPTS"
 
 pre_configure_host() {
-  export CXXFLAGS="$CXXFLAGS -std=gnu++11"
+  #export CXXFLAGS="$CXXFLAGS -std=gnu++11"
   unset CPP
 }
 

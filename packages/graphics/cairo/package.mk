@@ -37,7 +37,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_lzo2_lzo2a_decompress=no \
                            --x-includes="$SYSROOT_PREFIX/usr/include" \
                            --x-libraries="$SYSROOT_PREFIX/usr/lib" \
                            --with-x=yes \
-                           -enable-xlib \
+                           --enable-xlib \
                            --enable-xlib-xrender \
                            --enable-gl \
                            --enable-xcb \

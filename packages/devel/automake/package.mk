@@ -30,7 +30,7 @@ PKG_LONGDESC="This is Automake, a Makefile generator. It was inspired by the 4.4
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME --disable-silent-rules PERL=/usr/bin/perl"
+PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME --disable-silent-rules"
 
 post_makeinstall_host() {
   make prefix=$SYSROOT_PREFIX/usr install
