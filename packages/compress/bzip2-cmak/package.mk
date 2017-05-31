@@ -16,27 +16,23 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="speex"
-PKG_VERSION="1.2.0"
+PKG_NAME="bzip2"
+PKG_VERSION="0496eaa"
 PKG_REV="1"
 PKG_ARCH="any"
-PKG_LICENSE="BSD"
-PKG_SITE="http://downloads.us.xiph.org/releases/speex"
-PKG_URL="$PKG_SITE/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain"
+PKG_LICENSE="GPL"
+PKG_SITE="http://www.oberhumer.com/opensource/lzo"
+PKG_GIT_URL="https://github.com/osrf/bzip2_cmake"
+PKG_DEPENDS_HOST="cmake:host"
+PKG_DEPENDS_TARGET="toolchain bzip2:host"
 PKG_PRIORITY="optional"
-PKG_SECTION="audio"
-PKG_SHORTDESC="Speex / OPUS audio codec"
-PKG_LONGDESC="Speex / OPUS audio codec"
+PKG_SECTION="compress"
 
+PKG_USE_CMAKE="yes"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
-			      --without-ogg \
-			      --disable-oggtest \
-			      --enable-fixed-point"
 
-pre_configure_target() {
-  CFLAGS="$CFLAGS -fPIC"
+post_makeinstall_target() {
+  rm -rf $INSTALL
 }

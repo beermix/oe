@@ -49,6 +49,7 @@ PKG_CONFIGURE_OPTS_TARGET="export ac_cv_have_abstract_sockets=yes \
                            --without-valgrind \
                            --without-x \
                            --with-dbus-user=dbus"
+
 post_makeinstall_target() {
   rm -rf $INSTALL/etc/rc.d
   rm -rf $INSTALL/usr/lib/dbus-1.0/include
