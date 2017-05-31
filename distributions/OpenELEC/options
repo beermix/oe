@@ -71,7 +71,7 @@
 # Space separated list is supported,
   KERNEL_EXTRA_CONFIG+=" filesystem hid-drivers audio"
 # KERNEL_EXTRA_CONFIG+=" lan-phy"
-#  KERNEL_EXTRA_CONFIG+=" usb-gadget"
+  KERNEL_EXTRA_CONFIG+=" led"
 
 # additional drivers to install:
 # for a list of additinoal drivers see packages/linux-drivers
