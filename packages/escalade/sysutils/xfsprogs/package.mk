@@ -27,10 +27,11 @@ PKG_SHORTDESC="xfsprogs: Utilities for use with the xfs filesystem"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-shared=no \
+PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
+			      --exec-prefix=/ \
+			      --enable-shared=no \
 			      --with-gnu-ld \
-			      --enable-editline=yes \
-			      --enable-gettext=no"
+			      --enable-editline=yes"
 
 pre_configure_target() {
   make configure
