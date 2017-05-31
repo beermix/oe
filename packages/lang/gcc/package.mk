@@ -46,14 +46,13 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-multilib \
                            --enable-nls \
                            --enable-checking=release \
-                           --disable-libstdcxx-pch \
-                           --enable-libstdcxx-time \
                            --with-default-libstdcxx-abi=new \
                            --without-cloog \
                            --disable-werror \
                            --disable-browser-plugin \
                            --disable-vtable-verify \
                            --enable-gnu-unique-object \
+                           --disable-libmpx \
                            --with-tune=generic"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
@@ -65,7 +64,6 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-libmudflap \
                               --disable-libada \
                               --disable-libsanitizer \
-                              --disable-libmpx \
                               --disable-libgomp \
                               --disable-libitm \
                               --disable-shared \
@@ -85,12 +83,14 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-c99 \
                          --enable-long-long \
                          --enable-threads=posix \
+                         --disable-libstdcxx-pch \
+                         --enable-libstdcxx-time \
                          --enable-clocale=gnu \
                          --enable-poison-system-directories \
                          $GCC_OPTS"
 
 pre_configure_host() {
-  #export CXXFLAGS="$CXXFLAGS -std=gnu++11"
+  export CXXFLAGS="$CXXFLAGS -std=gnu++11"
   unset CPP
 }
 
