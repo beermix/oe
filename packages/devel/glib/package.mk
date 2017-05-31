@@ -18,7 +18,7 @@
 ################################################################################
 
 PKG_NAME="glib"
-PKG_VERSION="2.52.2"
+PKG_VERSION="2.25.2"
 PKG_SITE="http://www.gtk.org/"
 PKG_URL="http://ftp.gnome.org/pub/gnome/sources/glib/2.52/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain zlib libiconv libffi util-linux attr expat Python:host"
@@ -46,7 +46,6 @@ PKG_CONFIGURE_OPTS_TARGET="glib_cv_stack_grows=no \
                            --enable-Bsymbolic \
                            --with-gnu-ld \
                            --with-threads=posix \
-                           --enable-libmount=no \
                            --with-pcre=internal"
 
 post_makeinstall_target() {

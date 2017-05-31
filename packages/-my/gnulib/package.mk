@@ -1,11 +1,8 @@
 PKG_NAME="gnulib"
-PKG_VERSION="e0e362e"
-PKG_GIT_URL="https://github.com/coreutils/gnulib"
-PKG_DEPENDS_TARGET="toolchain acl attr libcap readline openssl"
+PKG_VERSION="20140202"
+PKG_URL="https://dl.dropboxusercontent.com/s/5qps6867zurhpuy/gnulib-20140202.tar.xz"
+PKG_DEPENDS_HOST="ccache:host autoconf:host m4:host help2man:host"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
-makeinstall_target() {
- :
-}		      
