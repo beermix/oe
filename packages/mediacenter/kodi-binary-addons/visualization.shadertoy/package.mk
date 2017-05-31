@@ -34,14 +34,14 @@ PKG_AUTORECONF="no"
 PKG_IS_ADDON="yes"
 PKG_ADDON_TYPE="xbmc.player.musicviz"
 
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release"
 
 if [ "$OPENGL" = "mesa" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET glew"
 fi
 
 PKG_CMAKE_OPTS_TARGET="-DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/share/kodi \
-                       -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr"
+                       -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
+                       -DCMAKE_BUILD_TYPE=Release"
 
 pre_configure_target() {
   if [ "$KODIPLAYER_DRIVER" = bcm2835-firmware ]; then

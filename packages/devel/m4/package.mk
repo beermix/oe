@@ -28,15 +28,7 @@ PKG_LONGDESC="GNU 'M4' is an implementation of the traditional Unix macro proces
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-pre_configure_host() {
-  export LDFLAGS="$HOST_LDFLAGS -lrt"
-}
-
-PKG_CONFIGURE_OPTS_HOST="gl_cv_func_gettimeofday_clobber=no \
-			    ac_cv_func_posix_spawn=yes \
-			    ac_cv_func_posix_spawn_works=yes \
-			    --target=$TARGET_NAME \
-			    --without-libsigsegv-prefix"
+PKG_CONFIGURE_OPTS_HOST="gl_cv_func_gettimeofday_clobber=no --target=$TARGET_NAME"
 
 post_makeinstall_host() {
   make prefix=$SYSROOT_PREFIX/usr install
