@@ -88,9 +88,9 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --enable-asm \
                            --disable-selinux \
                            --enable-opengl \
-                           $MESA_GLES \
-                           $MESA_DRI \
-                           $MESA_GLX \
+                           --enable-glx \
+                           --enable-driglx-direct \
+                           --enable-glx-tls \
                            --disable-osmesa \
                            --disable-gallium-osmesa \
                            --enable-egl --with-egl-platforms=x11,drm \
@@ -98,14 +98,12 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --enable-gbm \
                            --disable-nine \
                            --disable-xvmc \
-                           $MESA_VDPAU \
                            --disable-omx \
                            --disable-va \
                            --disable-opencl \
                            --enable-opencl-icd \
                            --disable-gallium-tests \
                            --enable-shared-glapi \
-                           $MESA_GALLIUM_LLVM \
                            --with-gl-lib-name=GL \
                            --with-osmesa-lib-name=OSMesa \
                            --with-gallium-drivers=$GALLIUM_DRIVERS \

@@ -29,18 +29,20 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE -DCAIRO_NO_MUTEX=1"
+export ac_cv_lib_bfd_bfd_openr="no"
+export ac_cv_lib_lzo2_lzo2a_decompress="no"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_lzo2_lzo2a_decompress=no \
                            ac_cv_lib_bfd_bfd_openr=no \
                            --x-includes="$SYSROOT_PREFIX/usr/include" \
                            --x-libraries="$SYSROOT_PREFIX/usr/lib" \
-                           --enable-xlib \
+                           --with-x=yes \
+                           -enable-xlib \
                            --enable-xlib-xrender \
                            --enable-gl \
                            --enable-xcb \
                            --enable-tee \
                            --enable-glx \
-                           --with-x \
                            --enable-silent-rules \
                            --enable-statoc \
                            --enable-shared \

@@ -51,6 +51,23 @@ make_target() {
   cd $ROOT/$PKG_BUILD/nss
 
   [ "$TARGET_ARCH" = "x86_64" ] && TARGET_USE_64="USE_64=1"
+  
+    export CROSS_COMPILE=1
+    export NATIVE_CC="$HOST_CC"
+    export NATIVE_FLAGS="$HOST_CFLAGS"
+    export BUILD_OPT=1
+
+    export FREEBL_NO_DEPEND=1
+    export FREEBL_LOWHASH=1
+
+    export MOZILLA_CLIENT=1
+    export NS_USE_GCC=1
+    export NSS_USE_SYSTEM_SQLITE=1
+    export NSS_ENABLE_ECC=1
+
+    export OS_RELEASE=3.4
+    export OS_TARGET=Linux
+    export OS_ARCH=Linux
 
   make BUILD_OPT=1 $TARGET_USE_64 \
      NSPR_INCLUDE_DIR=$SYSROOT_PREFIX/usr/include/nspr \
@@ -59,8 +76,9 @@ make_target() {
      NSS_TESTS="dummy" \
      NSINSTALL=$ROOT/$TOOLCHAIN/bin/nsinstall \
      CPU_ARCH_TAG=$TARGET_ARCH \
-     CC=$CC LDFLAGS="$LDFLAGS -L$SYSROOT_PREFIX/usr/lib" \
      V=1
+     
+
 }
 
 makeinstall_target() {
