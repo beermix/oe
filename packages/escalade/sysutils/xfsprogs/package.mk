@@ -30,8 +30,7 @@ PKG_AUTORECONF="no"
 PKG_CONFIGURE_OPTS_TARGET="--enable-shared=no \
 			      --with-gnu-ld \
 			      --enable-editline=yes \
-			      --enable-gettext=no \
-			      --enable-blkid=no"
+			      --enable-gettext=no"
 
 pre_configure_target() {
   make configure
