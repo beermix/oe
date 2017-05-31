@@ -123,6 +123,7 @@ configure_host() {
         -DWITH_LIBWRAP=0 \
         -DWITH_WSREP=0 \
         -DSECURITY_HARDENED=0 \
+        -DWITHOUT_DYNAMIC_PLUGINS=ON \
         ..
 }
 
@@ -163,6 +164,7 @@ configure_target() {
         -DWITH_LIBWRAP=0 \
         -DWITH_SSL=$SYSROOT_PREFIX/usr \
         -DSECURITY_HARDENED=0 \
+        -DWITHOUT_DYNAMIC_PLUGINS=ON \
         $MARIADB_OPTS \
         ..
 }
