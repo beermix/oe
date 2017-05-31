@@ -18,10 +18,10 @@
 
 PKG_NAME="ffmpeg"
 # Current branch is: release/3.1-xbmc
-PKG_VERSION="33c167d"
+PKG_VERSION="8c02116"
 PKG_ARCH="any"
 #PKG_URL="https://ffmpeg.org/releases/${PKG_NAME}-${PKG_VERSION}.tar.gz"
-PKG_GIT_URL="https://github.com/xbmc/FFmpeg"
+PKG_GIT_URL="https://github.com/FFmpeg/FFmpeg"
 PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl fftw speex"
 PKG_PRIORITY="optional"
 PKG_SECTION="multimedia"
