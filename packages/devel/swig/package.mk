@@ -19,7 +19,7 @@
 PKG_NAME="swig"
 #PKG_VERSION="a4d01cd"
 #PKG_GIT_URL="https://github.com/swig/swig"
-PKG_VERSION="3.0.12"
+PKG_VERSION="3.0.10"
 PKG_URL="$SOURCEFORGE_SRC/swig/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="ccache:host pcre:host"
 PKG_PRIORITY="optional"
@@ -37,6 +37,8 @@ PKG_AUTORECONF="no"
 PKG_CONFIGURE_OPTS_HOST="--with-pcre-prefix=$ROOT/$TOOLCHAIN \
                          --with-boost=no \
                          --without-pcre \
+                         --without-mzscheme \
+                         --without-php \
                          --without-x \
                          --without-tcl \
                          --without-python \
@@ -58,5 +60,4 @@ PKG_CONFIGURE_OPTS_HOST="--with-pcre-prefix=$ROOT/$TOOLCHAIN \
                          --without-allegrocl \
                          --without-clisp \
                          --without-r \
-                         --without-go \
                          --without-d"

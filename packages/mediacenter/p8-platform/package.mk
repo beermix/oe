@@ -38,7 +38,8 @@ PKG_CMAKE_OPTS_TARGET="-DCMAKE_INSTALL_PREFIX=/usr \
                        -DCMAKE_INSTALL_LIBDIR_NOARCH:STRING=lib \
                        -DCMAKE_INSTALL_PREFIX_TOOLCHAIN=$SYSROOT_PREFIX/usr \
                        -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
-                       -DBUILD_SHARED_LIBS=0"
+                       -DBUILD_SHARED_LIBS=0 \
+                       -DCMAKE_BUILD_TYPE=Release"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr
