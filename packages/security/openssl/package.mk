@@ -50,7 +50,7 @@ pre_configure_host() {
 
 configure_host() {
   cd $ROOT/$PKG_BUILD/.$HOST_NAME
-  ./Configure --prefix=/ $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $CFLAGS $LDFLAGS
+  ./Configure --prefix=/ $PKG_CONFIGURE_OPTS_SHARED debian-amd64
 }
 
 makeinstall_host() {
@@ -67,7 +67,7 @@ pre_configure_target() {
 
 configure_target() {
   cd $ROOT/$PKG_BUILD/.$TARGET_NAME
-  ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $CFLAGS $LDFLAGS
+  ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED debian-amd64
 }
 
 makeinstall_target() {
