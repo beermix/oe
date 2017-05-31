@@ -27,8 +27,8 @@ PKG_LONGDESC="The Open Source toolkit for Secure Sockets Layer and Transport Lay
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-#CONCURRENCY_MAKE_LEVEL=1
-#CCACHE_DISABLE=1
+CONCURRENCY_MAKE_LEVEL=1
+CCACHE_DISABLE=1
 
 PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            --libdir=lib \
@@ -78,8 +78,8 @@ makeinstall_target() {
 }
 
 post_makeinstall_target() {
-  rm -rf $INSTALL/etc/ssl/misc
-  rm -rf $INSTALL/usr/bin/c_rehash
+  #rm -rf $INSTALL/etc/ssl/misc
+  #rm -rf $INSTALL/usr/bin/c_rehash
 
   #perl $PKG_DIR/cert/mk-ca-bundle.pl
   #cp ca-bundle.crt $INSTALL/etc/ssl/cert.pem
@@ -95,7 +95,4 @@ post_makeinstall_target() {
     ln -sf /etc/ssl/cert.pem $INSTALL/etc/pki/tls/certs/ca-bundle.crt
   mkdir -p $INSTALL/usr/lib/ssl
     ln -sf /etc/ssl/cert.pem $INSTALL/usr/lib/ssl/cert.pem
-    
-  #  make test V=99 -j1
-   # make check V=99 -j1
 }
