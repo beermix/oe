@@ -40,7 +40,6 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-plugins \
                          --enable-gold \
                          --enable-ld=default \
-                         --enable-threads \
                          --enable-lto \
                          --enable-nls \
                          --enable-poison-system-directories"
