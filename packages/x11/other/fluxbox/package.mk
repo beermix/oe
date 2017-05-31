@@ -17,10 +17,10 @@
 ################################################################################
 
 PKG_NAME="fluxbox"
-#PKG_VERSION="master"
-#PKG_GIT_URL="https://github.com/fluxbox/fluxbox"
-PKG_VERSION="1.3.7"
-PKG_URL="http://sourceforge.net/projects/fluxbox/files/fluxbox/${PKG_VERSION}/$PKG_NAME-${PKG_VERSION}.tar.gz"
+PKG_VERSION="e99d940"
+PKG_GIT_URL="https://github.com/fluxbox/fluxbox"
+#PKG_VERSION="1.3.7"
+#PKG_URL="http://sourceforge.net/projects/fluxbox/files/fluxbox/${PKG_VERSION}/$PKG_NAME-${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libX11 libXrandr libXext libXrender"
 #PKG_DEPENDS_TARGET="toolchain libX11 libXrandr libXext libXrender libXcursor libXext xkeyboard-config libXv inputproto xkbcomp"
 PKG_SECTION="x11/other"
@@ -29,8 +29,6 @@ PKG_LONGDESC="Fluxbox is a windowmanager for X that was based on the Blackbox 0.
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
-
-strip_lto
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_realloc_0_nonnull=yes \
                            ac_cv_func_malloc_0_nonnull=yes \
