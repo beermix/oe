@@ -32,7 +32,7 @@ PKG_LONGDESC="Speex / OPUS audio codec"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static"
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static --without-ogg --disable-oggtest --enable-fixed-point"
 
 pre_configure_target() {
   CFLAGS="$CFLAGS -fPIC"
