@@ -16,8 +16,8 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 PKG_NAME="openssl"
-PKG_VERSION="fde111b"
-PKG_GIT_URL="https://github.com/openssl/openssl"
+PKG_VERSION="1.0.2l"
+PKG_URL="https://www.openssl.org/source/openssl-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="ccache:host yasm:host"
 PKG_DEPENDS_TARGET="toolchain pcre gmp zlib"
 PKG_SECTION="security"
@@ -32,14 +32,14 @@ CCACHE_DISABLE=1
 
 PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            --libdir=lib \
-                           shared \
+                           no-shared \
                            threads \
                            no-ssl2 \
                            no-ssl3 \
                            enable-unit-test \
                            enable-tlsext \
                            no-zlib \
-                           zlib-dynamic \
+                           no-zlib-dynamic \
                            enable-ec_nistp_64_gcc_128"
 
 pre_configure_host() {
@@ -62,7 +62,6 @@ pre_configure_target() {
   cp -a $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$TARGET_NAME/
 
   strip_lto
-  strip_gold
 }
 
 configure_target() {
@@ -73,8 +72,8 @@ configure_target() {
 makeinstall_target() {
   make -j1 INSTALL_PREFIX=$INSTALL install_sw
   make -j1 INSTALL_PREFIX=$SYSROOT_PREFIX install_sw
-  chmod 755 $INSTALL/usr/lib/*.so*
-  chmod 755 $INSTALL/usr/lib/engines/*.so
+  #chmod 755 $INSTALL/usr/lib/*.so*
+  #chmod 755 $INSTALL/usr/lib/engines/*.so
 }
 
 post_makeinstall_target() {

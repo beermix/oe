@@ -16,20 +16,40 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="libressl-portable"
-PKG_VERSION="9d75e5e"
-PKG_SITE="http://www.openssl.org/"
-PKG_GIT_URL="https://github.com/libressl-portable/portable"
+PKG_NAME="libressl"
+PKG_VERSION="2.5.3"
+PKG_URL="http://ftp.openbsd.org/pub/OpenBSD/LibreSSL/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="ccache:host"
-PKG_DEPENDS_TARGET="toolchain"
+PKG_DEPENDS_TARGET=""
+PKG_PRIORITY="optional"
 PKG_SECTION="security"
-PKG_SHORTDESC="openssl: a FREE version of the SSL/TLS protocol forked from openssl"
-PKG_LONGDESC="openssl is a FREE version of the SSL/TLS protocol forked from openssl"
-PKG_IS_ADDON="no"
+
 PKG_USE_CMAKE="no"
 PKG_AUTORECONF="no"
+PKG_AUTORECONF="no"
 
-pre_configure_host() {
-  cd $ROOT/$PKG_BUILD
-  sh autogen.sh
+#PKG_CONFIGURE_OPTS_HOST="--disable-hardening"
+
+configure_target() {
+  :
+}
+
+pre_configure_target() {
+  :
+}
+
+post_makeinstall_target() {
+  :
+}
+
+make_target() {
+  :
+}
+
+post_make_target() {
+  :
+}
+
+makeinstall_target() {
+  :
 }
