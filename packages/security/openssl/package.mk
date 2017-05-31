@@ -40,13 +40,12 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            enable-tlsext \
                            no-weak-ssl-ciphers \
                            no-zlib \
-                           no-zlib-dynamic
+                           no-zlib-dynamic \
                            enable-ec_nistp_64_gcc_128"
 
 pre_configure_host() {
   mkdir -p $ROOT/$PKG_BUILD/.$HOST_NAME
   cp -a $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$HOST_NAME/
-  export CCACHE_DISABLE=1
 }
 
 configure_host() {
@@ -62,10 +61,8 @@ makeinstall_host() {
 pre_configure_target() {
   mkdir -p $ROOT/$PKG_BUILD/.$TARGET_NAME
   cp -a $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$TARGET_NAME/
-  
-  export CCACHE_DISABLE=1
+
   strip_lto
-  strip_gold
 }
 
 configure_target() {
@@ -84,12 +81,11 @@ post_makeinstall_target() {
   rm -rf $INSTALL/etc/ssl/misc
   rm -rf $INSTALL/usr/bin/c_rehash
 
-  # cert from https://curl.haxx.se/docs/caextract.html
-  mkdir -p $INSTALL/etc/ssl
-  
   #perl $PKG_DIR/cert/mk-ca-bundle.pl
   #cp ca-bundle.crt $INSTALL/etc/ssl/cert.pem
 
+  # cert from https://curl.haxx.se/docs/caextract.html
+  mkdir -p $INSTALL/etc/ssl
   cp $PKG_DIR/cert/cacert.pem $INSTALL/etc/ssl/cert.pem
 
   # backwards comatibility
