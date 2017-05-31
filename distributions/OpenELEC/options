@@ -71,7 +71,7 @@
 # Space separated list is supported,
   KERNEL_EXTRA_CONFIG+=" filesystem hid-drivers audio"
 # KERNEL_EXTRA_CONFIG+=" lan-phy"
-#  KERNEL_EXTRA_CONFIG+=" led"
+  KERNEL_EXTRA_CONFIG+=" led"
 
 # additional drivers to install:
 # for a list of additinoal drivers see packages/linux-drivers
@@ -177,7 +177,7 @@
 
 # Support for partitioning and formating disks in initramfs (yes / no)
 # This adds support for parted and mkfs.ext3/4 to initramfs for OEM usage
-  INITRAMFS_PARTED_SUPPORT="no"
+  INITRAMFS_PARTED_SUPPORT="yes"
 
 # build with swap support (yes / no)
   SWAP_SUPPORT="no"
