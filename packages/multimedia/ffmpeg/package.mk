@@ -18,10 +18,10 @@
 
 PKG_NAME="ffmpeg"
 # Current branch is: release/3.1-xbmc
-PKG_VERSION="8c02116"
+PKG_VERSION="3.1.6-Krypton"
 PKG_ARCH="any"
 #PKG_URL="https://ffmpeg.org/releases/${PKG_NAME}-${PKG_VERSION}.tar.gz"
-PKG_GIT_URL="https://github.com/FFmpeg/FFmpeg"
+PKG_GIT_URL="https://github.com/xbmc/FFmpeg"
 PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl fftw speex"
 PKG_PRIORITY="optional"
 PKG_SECTION="multimedia"
@@ -93,7 +93,6 @@ pre_configure_target() {
   if [ "$KODIPLAYER_DRIVER" = "bcm2835-firmware" ]; then
     export CFLAGS="-I$SYSROOT_PREFIX/usr/include/interface/vcos/pthreads -I$SYSROOT_PREFIX/usr/include/interface/vmcs_host/linux -DRPI=1 $CFLAGS"
     export FFMPEG_LIBS="-lbcm_host -lvcos -lvchiq_arm -lmmal -lmmal_core -lmmal_util -lvcsm -lvchostif"
-    export CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
   fi
 }
 
