@@ -59,7 +59,7 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$ROOT/$TOOLCHAIN \
                        -DENABLE_INTERNAL_CROSSGUID=OFF \
                        -DENABLE_OPENSSL=ON \
                        -DENABLE_LDGOLD=OFF \
-                       -DENABLE_SDL=ON \
+                       -DENABLE_SDL=OFF \
                        -DENABLE_LCMS2=ON \
                        -DENABLE_CCACHE=OFF \
                        -DENABLE_LIRC=OFF \
@@ -203,7 +203,7 @@ else
 fi
 
 if [ "$KODI_SSHLIB_SUPPORT" = yes ]; then
-  PKG_DEPENDS_TARGET+=" libssh SDL"
+  PKG_DEPENDS_TARGET+=" libssh"
   PKG_CMAKE_OPTS_TARGET+=" -DENABLE_SSH=ON"
 else
   PKG_CMAKE_OPTS_TARGET+=" -DENABLE_SSH=OFF"

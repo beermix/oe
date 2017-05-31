@@ -31,7 +31,7 @@
   SKINS=""
 
 # remove default skin included in Kodi (yes/no)
-  SKIN_REMOVE_SHIPPED="no"
+  SKIN_REMOVE_SHIPPED="yes"
 
 # Default Skin (Confluence, or any from above)
   SKIN_DEFAULT="Estuary"
@@ -69,7 +69,7 @@
 # please add all configfiles which should be included without the suffix and prefix
 # except the default-*.config and the ones included in packages/linux/package.mk
 # Space separated list is supported,
-  KERNEL_EXTRA_CONFIG+=" filesystem hid-drivers audio"
+  KERNEL_EXTRA_CONFIG+=" filesystem hid-drivers remote joystick audio"
 # KERNEL_EXTRA_CONFIG+=" lan-phy"
   KERNEL_EXTRA_CONFIG+=" led"
 
@@ -95,7 +95,7 @@
   KODI_MYSQL_SUPPORT="yes"
 
 # build xbmc with sshlib support (yes / no)
-  KODI_SSHLIB_SUPPORT="yes"
+  KODI_SSHLIB_SUPPORT="no"
 
 # build xbmc with optical drive support (yes / no)
   KODI_OPTICAL_SUPPORT="no"
@@ -153,7 +153,7 @@
   GRAPHIC_DRIVERS="i965"
 
 # build and install remote support (yes / no)
-  REMOTE_SUPPORT="no"
+  REMOTE_SUPPORT="yes"
 
 # build and install IRServer IR/LCD support (yes / no)
   IRSERVER_SUPPORT="no"
