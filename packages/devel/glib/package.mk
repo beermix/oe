@@ -46,6 +46,7 @@ PKG_CONFIGURE_OPTS_TARGET="glib_cv_stack_grows=no \
                            --enable-Bsymbolic \
                            --with-gnu-ld \
                            --with-threads=posix \
+                           --enable-libmount=no \
                            --with-pcre=internal"
 
 post_makeinstall_target() {

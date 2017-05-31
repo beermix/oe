@@ -4,13 +4,13 @@
 ################################################################################
 
 PKG_NAME="freshplayerplugin"
-PKG_VERSION="da0120a"
+PKG_VERSION="84f0a53"
 PKG_REV="1"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/01org/libva"
 PKG_GIT_URL="https://github.com/i-rinat/freshplayerplugin"
-PKG_DEPENDS_TARGET="toolchain intel-vaapi-driver libva libevent libvdpau libvdpau-va-gl libXcursor pango gtk+"
+PKG_DEPENDS_TARGET="toolchain alsa glib xrandr libXrender libXcursor libdrm libevent cairo pango freetype openssl icu"
 PKG_PRIORITY="optional"
 PKG_SECTION="multimedia"
 
@@ -18,9 +18,9 @@ PKG_IS_ADDON="no"
 PKG_USE_CMAKE="yes"
 PKG_AUTORECONF="no"
 
-
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release"
-
-pre_configure_target() {
-  export LIBS="-lv4lconvert -lrt -lm"
-}
+PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release \
+			  -DWITH_LIBV4L2=0 \
+			  -DWITH_JACK=0 \
+			  -DWITH_PEPPERFLASH=1 \
+			  -DWITH_PULSEAUDIO=0 \
+			  -DWITH_GLES2=0"

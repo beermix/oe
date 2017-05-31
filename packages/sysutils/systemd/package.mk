@@ -71,7 +71,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-firstboot \
                            --disable-randomseed \
                            --disable-backlight \
-                           --disable-rfkill \
+                           --enable-rfkill \
                            --enable-logind --without-kill-user-processes \
                            --disable-machined \
                            --disable-importd \
