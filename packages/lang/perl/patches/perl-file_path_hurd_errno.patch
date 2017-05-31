@@ -1,0 +1,31 @@
+From 25757e5d5fffbec10990c7f1dac5f0cb6f32581a Mon Sep 17 00:00:00 2001
+From: Pino Toscano <pino@debian.org>
+Date: Thu, 8 Sep 2016 10:26:59 +0100
+Subject: File-Path: Fix test failure in Hurd due to hard-coded ENOENT
+
+Patch-Name: fixes/file_path_hurd_errno.diff
+---
+ cpan/File-Path/t/Path.t | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/cpan/File-Path/t/Path.t b/cpan/File-Path/t/Path.t
+index 5644f57..ff52fd6 100644
+--- a/cpan/File-Path/t/Path.t
++++ b/cpan/File-Path/t/Path.t
+@@ -8,6 +8,7 @@ use Config;
+ use Fcntl ':mode';
+ use lib 't/';
+ use FilePathTest;
++use Errno qw(:POSIX);
+ 
+ BEGIN {
+     use_ok('Cwd');
+@@ -656,7 +657,7 @@ is(
+ {
+     my ($x, $message, $object, $expect, $rv, $arg, $error);
+     my ($k, $v, $second_error, $third_error);
+-    local $! = 2;
++    local $! = ENOENT;
+     $x = $!;
+ 
+     $message = 'message in a bottle';
