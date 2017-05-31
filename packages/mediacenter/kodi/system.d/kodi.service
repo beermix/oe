@@ -31,4 +31,4 @@ LimitNOFILE=16384
 #  Environment=__GL_YIELD=USLEEP
 
 [Install]
-WantedBy=default.target
+WantedBy=kodi.target
