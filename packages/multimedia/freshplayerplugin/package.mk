@@ -10,7 +10,7 @@ PKG_ARCH="x86_64"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/01org/libva"
 PKG_GIT_URL="https://github.com/i-rinat/freshplayerplugin"
-PKG_DEPENDS_TARGET="toolchain alsa glib xrandr libXrender libXcursor libdrm libevent cairo pango freetype openssl icu"
+PKG_DEPENDS_TARGET="toolchain alsa glib xrandr libXrender libXcursor libdrm libevent cairo pango freetype openssl icu libva"
 PKG_PRIORITY="optional"
 PKG_SECTION="multimedia"
 

@@ -16,7 +16,7 @@ configure_target() {
 		-A ccflags="$CFLAGS -fPIC -DPIC" \
 		-Dcc="$CC" \
 		-Dldflags="$LDFLAGS -fPIC" \
-		-Dlibs="-lm -lcrypt -pthread" \
+		-Dlibs="$LIBS -lrt -lz -lm -lcrypt -pthread" \
 		-Doptimize="$CFLAGS -ffunction-sections -fdata-sections -finline-limit=8 -ffast-math" \
 		-Dvendorprefix=/usr \
 		-Dvendorlib=/usr/share/perl5/vendor_perl \
