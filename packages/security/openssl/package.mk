@@ -32,10 +32,8 @@ CCACHE_DISABLE=1
 
 PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            --libdir=lib \
-                           no-shared \
+                           shared \
                            threads \
-                           no-ssl2 \
-                           no-ssl3 \
                            enable-unit-test \
                            enable-tlsext \
                            no-zlib \
