@@ -28,15 +28,15 @@ PKG_LONGDESC="XMLStarlet is a command line XML toolkit which can be used to tran
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_HOST="  ac_cv_func_malloc_0_nonnull=yes \
-                           ac_cv_func_realloc_0_nonnull=yes \
-                           --enable-static-libs \
-                           LIBXML_CONFIG=$ROOT/$TOOLCHAIN/bin/xml2-config \
-                           LIBXSLT_CONFIG=$ROOT/$TOOLCHAIN/bin/xslt-config \
-                           --with-libxml-include-prefix=$ROOT/$TOOLCHAIN/include/libxml2 \
-                           --with-libxml-libs-prefix=$ROOT/$TOOLCHAIN/lib \
-                           --with-libxslt-include-prefix=$ROOT/$TOOLCHAIN/include \
-                           --with-libxslt-libs-prefix=$ROOT/$TOOLCHAIN/lib"
+PKG_CONFIGURE_OPTS_HOST="ac_cv_func_malloc_0_nonnull=yes \
+			    ac_cv_func_realloc_0_nonnull=yes \
+			    --enable-static-libs \
+			    LIBXML_CONFIG=$ROOT/$TOOLCHAIN/bin/xml2-config \
+			    LIBXSLT_CONFIG=$ROOT/$TOOLCHAIN/bin/xslt-config \
+			    --with-libxml-include-prefix=$ROOT/$TOOLCHAIN/include/libxml2 \
+			    --with-libxml-libs-prefix=$ROOT/$TOOLCHAIN/lib \
+			    --with-libxslt-include-prefix=$ROOT/$TOOLCHAIN/include \
+			    --with-libxslt-libs-prefix=$ROOT/$TOOLCHAIN/lib"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            ac_cv_func_realloc_0_nonnull=yes \
