@@ -35,7 +35,8 @@ PKG_AUTORECONF="no"
 PKG_CONFIGURE_OPTS_HOST="EMACS=no \
                          ac_cv_path_M4=$ROOT/$TOOLCHAIN/bin/m4 \
                          ac_cv_prog_gnu_m4_gnu=no \
-                         --target=$TARGET_NAME"
+                         --target=$TARGET_NAME \
+                         PERL=/usr/bin/perl"
 
 post_makeinstall_host() {
   make prefix=$SYSROOT_PREFIX/usr install

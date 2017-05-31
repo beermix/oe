@@ -16,28 +16,20 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="m4"
-PKG_VERSION="1.4.18"
-PKG_SITE="ftp://ftp.gnu.org/pub/gnu/m4/"
-PKG_URL="http://ftp.gnu.org/gnu/m4/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_HOST="ccache:host"
+PKG_NAME="libtool"
+PKG_VERSION="2.4.6"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
+PKG_SITE="http://www.gnu.org/software/libtool/"
+PKG_URL="http://ftpmirror.gnu.org/libtool/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_DEPENDS_HOST="ccache:host autoconf:host m4:host help2man:host"
+PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="devel"
-PKG_SHORTDESC="m4: The m4 macro processor"
-PKG_LONGDESC="GNU 'M4' is an implementation of the traditional Unix macro processor. It is mostly SVR4 compatible, although it has some extensions (for example, handling more than 9 positional parameters to macros). 'M4' also has built-in functions for including files, running shell commands, doing arithmetic, etc. Autoconf needs GNU 'M4' for generating 'configure' scripts, but not for running them."
-
+PKG_SHORTDESC="libtool: Generic library support script"
+PKG_LONGDESC="This is GNU Libtool, a generic library support script. Libtool hides the complexity of using shared libraries behind a consistent, portable interface."
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-pre_configure_host() {
-  export LDFLAGS="$HOST_LDFLAGS -lrt"
-}
+PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
 
-PKG_CONFIGURE_OPTS_HOST="gl_cv_func_gettimeofday_clobber=no \
-			    ac_cv_func_posix_spawn=yes \
-			    ac_cv_func_posix_spawn_works=yes \
-			    --target=$TARGET_NAME \
-			    --without-libsigsegv-prefix"
-
-post_makeinstall_host() {
-  make prefix=$SYSROOT_PREFIX/usr install
-}
+PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
