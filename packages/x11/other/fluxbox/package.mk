@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="fluxbox"
-PKG_VERSION="e99d940"
+PKG_VERSION="facb42f"
 PKG_GIT_URL="https://github.com/fluxbox/fluxbox"
 #PKG_VERSION="1.3.7"
 #PKG_URL="http://sourceforge.net/projects/fluxbox/files/fluxbox/${PKG_VERSION}/$PKG_NAME-${PKG_VERSION}.tar.gz"

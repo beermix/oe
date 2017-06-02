@@ -12,7 +12,7 @@ PKG_AUTORECONF="no"
 #}
 
 make_target() {
-  make CC="$CC" CFLAGS="$CFLAGS -DDEBUG=0" CPPFLAGS="$CPPFLAGS" -j1
+  make CC="$CC" CFLAGS="$CFLAGS -DDEBUG=0" CPPFLAGS="$CPPFLAGS" LDFLAGS="$LDFLAGS" -j1
 }
 
 post_make_target() {

@@ -80,6 +80,7 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            $MESA_VDPAU \
                            --disable-omx \
                            --disable-va \
+                           --enable-shader-cache \
                            --disable-opencl --disable-opencl-icd \
                            --disable-gallium-tests \
                            --enable-shared-glapi \
