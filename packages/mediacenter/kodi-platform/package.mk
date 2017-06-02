@@ -36,8 +36,7 @@ PKG_AUTORECONF="no"
 PKG_CMAKE_OPTS_TARGET="-DCMAKE_INSTALL_LIBDIR:STRING=lib \
                        -DCMAKE_INSTALL_LIBDIR_NOARCH:STRING=lib \
                        -DCMAKE_INSTALL_PREFIX_TOOLCHAIN=$SYSROOT_PREFIX/usr \
-                       -DBUILD_SHARED_LIBS=0 \
-                       -DCMAKE_BUILD_TYPE=Release"
+                       -DBUILD_SHARED_LIBS=0"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/lib/kodiplatform
