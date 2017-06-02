@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2016 Team LibreELEC
+#      Copyright (C) 2017-present Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -65,7 +65,7 @@ class Monitor(xbmc.Monitor):
 
       current = os.environ.get('LANG', '')
       if lang != current:
-         if xbmcgui.Dialog().yesno('Locale', strings(30003).format(current, lang)
+         if xbmcgui.Dialog().yesno('Locale', strings(30003).format(lang)
                                   ) == True:
             xbmc.restart()
 
