@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="6-20170524"
+PKG_VERSION="6-20170531"
 #PKG_VERSION="754d7e5"
 #PKG_GIT_URL="git://gcc.gnu.org/git/gcc.git"
 PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/LATEST-6/gcc-$PKG_VERSION.tar.xz"
@@ -53,7 +53,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-vtable-verify \
                            --enable-gnu-unique-object \
                            --enable-clocale=gnu \
-                           --disable-libsanitizer \
                            --disable-libmpx \
                            --with-tune=generic"
 
@@ -62,6 +61,7 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-__cxa_atexit \
                               --enable-cloog-backend=isl \
                               --disable-libssp \
+                              --disable-libsanitizer \
                               --disable-libatomic \
                               --disable-libquadmath \
                               --disable-libmudflap \
