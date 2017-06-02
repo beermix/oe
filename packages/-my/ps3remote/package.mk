@@ -6,10 +6,10 @@ PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-pre_configure_target() {
-  strip_lto
-  strip_gold
-}
+#pre_configure_target() {
+#  strip_lto
+#  strip_gold
+#}
 
 make_target() {
   make CC="$CC" CFLAGS="$CFLAGS -DDEBUG=0" CPPFLAGS="$CPPFLAGS" -j1
@@ -18,7 +18,7 @@ make_target() {
 post_make_target() {
   mkdir -p $INSTALL/usr/bin/
   mkdir -p $INSTALL_DEV/usr/bin/
-  $STRIP $ROOT/$PKG_BUILD/ps3remote
+  #$STRIP $ROOT/$PKG_BUILD/ps3remote
   cp $ROOT/$PKG_BUILD/ps3remote $INSTALL/usr/bin/
 }
 
