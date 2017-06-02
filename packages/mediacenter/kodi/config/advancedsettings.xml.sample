@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <advancedsettings>
+  <!-- <loglevel hide="false">2</loglevel> -->
   <splash>false</splash>
-  <remotedelay>1</remotedelay>
   <samba>
     <clienttimeout>30</clienttimeout>
   </samba>

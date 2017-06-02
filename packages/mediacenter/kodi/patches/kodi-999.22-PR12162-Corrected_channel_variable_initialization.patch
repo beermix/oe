@@ -1,0 +1,27 @@
+From 7f15bf5d7a793ac6f9e4f0f14f098d81c11bc065 Mon Sep 17 00:00:00 2001
+From: Hugh <hugegreenbug@gmail.com>
+Date: Fri, 26 May 2017 20:06:15 -0600
+Subject: [PATCH 3/3] Corrected channel variable initialization and if
+ statement
+
+---
+ xbmc/cores/VideoPlayer/VideoPlayer.cpp | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/xbmc/cores/VideoPlayer/VideoPlayer.cpp b/xbmc/cores/VideoPlayer/VideoPlayer.cpp
+index 4ebedb64ee95..5794e4e462d6 100644
+--- a/xbmc/cores/VideoPlayer/VideoPlayer.cpp
++++ b/xbmc/cores/VideoPlayer/VideoPlayer.cpp
+@@ -4440,7 +4440,11 @@ bool CVideoPlayer::OnAction(const CAction &action)
+     }
+   }
+
+-  if (dynamic_cast<CDVDInputStreamPVRManager*>(m_pInputStream))
++  //If the current channel is a nullptr, and this is a PVRStream, then this is a saved recording
++  CDVDInputStreamPVRManager* pvrStream = dynamic_cast<CDVDInputStreamPVRManager*>(m_pInputStream);
++  CPVRChannelPtr channel(g_PVRManager.GetCurrentChannel());
++  // If the pvrStream is not a saved recording, then handle the actions below
++  if (pvrStream && channel)
+   {
+     switch (action.GetID())
+     {
