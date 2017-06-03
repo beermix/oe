@@ -51,7 +51,7 @@ configure_host() {
 }
 
 makeinstall_host() {
-  make -j1 INSTALL_PREFIX=$ROOT/$TOOLCHAIN install_sw
+  make INSTALL_PREFIX=$ROOT/$TOOLCHAIN install_sw
 }
 
 
@@ -60,6 +60,7 @@ pre_configure_target() {
   cp -a $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$TARGET_NAME/
 
   strip_lto
+  strip_gold
 }
 
 configure_target() {
@@ -68,15 +69,15 @@ configure_target() {
 }
 
 makeinstall_target() {
-  make -j1 INSTALL_PREFIX=$INSTALL install_sw
-  make -j1 INSTALL_PREFIX=$SYSROOT_PREFIX install_sw
-  #chmod 755 $INSTALL/usr/lib/*.so*
-  #chmod 755 $INSTALL/usr/lib/engines/*.so
+  make INSTALL_PREFIX=$INSTALL install_sw
+  make INSTALL_PREFIX=$SYSROOT_PREFIX install_sw
+  chmod 755 $INSTALL/usr/lib/*.so*
+  chmod 755 $INSTALL/usr/lib/engines/*.so
 }
 
 post_makeinstall_target() {
-  #rm -rf $INSTALL/etc/ssl/misc
-  #rm -rf $INSTALL/usr/bin/c_rehash
+  rm -rf $INSTALL/etc/ssl/misc
+  rm -rf $INSTALL/usr/bin/c_rehash
 
   #perl $PKG_DIR/cert/mk-ca-bundle.pl
   #cp ca-bundle.crt $INSTALL/etc/ssl/cert.pem
