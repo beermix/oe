@@ -3,7 +3,7 @@ PKG_VERSION="2b56981"
 PKG_SITE="http://www.openssl.org/"
 PKG_GIT_URL="https://boringssl.googlesource.com/boringssl"
 PKG_DEPENDS_HOST="ccache:host"
-PKG_DEPENDS_TARGET="toolchain go:host"
+PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="security"
 PKG_SHORTDESC="openssl: a FREE version of the SSL/TLS protocol forked from openssl"
 PKG_LONGDESC="openssl is a FREE version of the SSL/TLS protocol forked from openssl"
@@ -15,10 +15,7 @@ pre_configure_target() {
   strip_lto
 }
 
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release \
-			  -DGO_EXECUTABLE=$ROOT/$TOOLCHAIN/lib/golang/bin/go \
-			  -DCMAKE_MAKE_PROGRAM=$ROOT/$TOOLCHAIN/bin/make \
-			  -DFOUND_LIBRT=$SYSROOT_PREFIX/usr/lib/librt.so"
+PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release -DFOUND_LIBRT=$SYSROOT_PREFIX/usr/lib/librt.so"
 
 makeinstall_target() {
   cp $ROOT/$PKG_BUILD/.x86_64-openelec-linux-gnu/crypto/libcrypto.a $SYSROOT_PREFIX/usr/lib

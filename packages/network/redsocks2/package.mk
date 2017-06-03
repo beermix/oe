@@ -12,7 +12,7 @@ make_target() {
        LD="$LD" \
        AR="$AR" \
        XCFLAGS="$CFLAGS" \
-       XLDFLAGS="$LDFLAGS" \
+       XLDFLAGS="$LDFLAGS -pthread" \
        ENABLE_STATIC=true
 }
 

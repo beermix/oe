@@ -30,27 +30,37 @@ PKG_AUTORECONF="no"
 CONCURRENCY_MAKE_LEVEL=1
 CCACHE_DISABLE=1
 
+
 PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            --libdir=lib \
                            shared \
                            threads \
-                           no-rfc3779 \
+                           no-ec2m \
+                           no-md2 \
+                           no-rc5 \
+                           no-rfc3779
+                           no-sctp \
+                           no-ssl-trace \
                            no-ssl2 \
                            no-ssl3 \
                            enable-unit-test \
                            enable-tlsext \
+                           no-weak-ssl-ciphers \
                            no-zlib \
                            zlib-dynamic \
                            enable-ec_nistp_64_gcc_128"
 
+
 pre_configure_host() {
   mkdir -p $ROOT/$PKG_BUILD/.$HOST_NAME
   cp -a $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$HOST_NAME/
+  
+  sed -i -e '/^"linux-x86_64"/ s/-m64 -DL_ENDIAN -O3 -Wall//' $ROOT/$PKG_BUILD/.$HOST_NAME/Configure
 }
 
 configure_host() {
   cd $ROOT/$PKG_BUILD/.$HOST_NAME
-  ./Configure --prefix=/ $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $CFLAGS $LDFLAGS
+  ./Configure --prefix=/ $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 -DL_ENDIAN -Wall $CFLAGS -D_FORTIFY_SOURCE=2 -Wa,--noexecstack
 }
 
 makeinstall_host() {
@@ -61,14 +71,15 @@ makeinstall_host() {
 pre_configure_target() {
   mkdir -p $ROOT/$PKG_BUILD/.$TARGET_NAME
   cp -a $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$TARGET_NAME/
-
+  
+  sed -i -e '/^"linux-x86_64"/ s/-m64 -DL_ENDIAN -O3 -Wall//' $ROOT/$PKG_BUILD/.$TARGET_NAME/Configure
   strip_lto
   strip_gold
 }
 
 configure_target() {
   cd $ROOT/$PKG_BUILD/.$TARGET_NAME
-  ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $CFLAGS $LDFLAGS
+  ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 -DL_ENDIAN -Wall $CFLAGS $CPPFLAGS  -Wa,--noexecstack
 }
 
 makeinstall_target() {
