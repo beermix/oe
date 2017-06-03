@@ -35,14 +35,10 @@ PKG_AUTORECONF="no"
 
 PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release -DBUILD_tools=OFF -DBUILD_examples=OFF -DBUILD_tests=OFF -DBUILD_shared=ON"
 			  
-PKG_CMAKE_OPTS_HOST="$PKG_CMAKE_OPTS_TARGET"
-			  
-pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC -DPIC"
-}
+PKG_CMAKE_OPTS_HOST="-DCMAKE_BUILD_TYPE=Release -DBUILD_tools=OFF -DBUILD_examples=OFF -DBUILD_tests=OFF -DBUILD_shared=OFF"
 
 pre_configure_host() {
-  export CFLAGS="$CFLAGS -fPIC -DPIC"
+  CFLAGS="$CFLAGS -fPIC"
 }
 
 pre_make_target() {

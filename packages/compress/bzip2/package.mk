@@ -36,11 +36,11 @@ PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release"
 PKG_CMAKE_OPTS_HOST="$PKG_CMAKE_OPTS_TARGET"
 
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC -DPIC"
+  export CFLAGS="$CFLAGS -fPIC"
 }
 
 pre_configure_host() {
-  export CFLAGS="$CFLAGS -fPIC -DPIC"
+  export CFLAGS="$CFLAGS -fPIC"
 }
 
 post_makeinstall_target() {
