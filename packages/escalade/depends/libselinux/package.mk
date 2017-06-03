@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libselinux"
-PKG_VERSION="b4cca24"
+PKG_VERSION="2.5"
 PKG_SITE="https://github.com/SELinuxProject/selinux"
 PKG_GIT_URL="https://github.com/SELinuxProject/selinux"
 PKG_SOURCE_DIR="selinux-libselinux-$PKG_VERSION"

@@ -32,7 +32,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-unicode \
 			      --enable-graphics_ctx \
 			      --enable-silent-rules \
-			      --with-opengl"
+			      --with-openg --disable-precomp-headersl"
 
 #post_makeinstall_target() {
 #  ln -sf $SYSROOT_PREFIX/usr/lib/wx/config/x86_64-openelec-linux-gnu-gtk2-unicode-3.1 $SYSROOT_PREFIX/usr/bin/wx-config

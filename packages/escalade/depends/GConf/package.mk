@@ -27,5 +27,8 @@ PKG_SHORTDESC="gconf"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
+post_unpack() {
+  mv $BUILD/GConf-$PKG_VERSION $BUILD/$PKG_NAME-$PKG_VERSION
+}
 
-PKG_CONFIGURE_OPTS_TARGET="--with-gtk=2.0 disable-orbit disable-documentation disable-shared"
+PKG_CONFIGURE_OPTS_TARGET="--disable-orbit --disable-static"
