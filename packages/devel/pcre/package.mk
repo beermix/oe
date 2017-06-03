@@ -39,7 +39,6 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-pcre8 \
 			      --enable-jit \
 			      --with-pic \
-			      --enable-cpp \
 			      --enable-newline-is-anycrlf"
 			      
 PKG_CONFIGURE_OPTS_HOST="--prefix=$ROOT/$TOOLCHAIN $PKG_CONFIGURE_OPTS_TARGET"
