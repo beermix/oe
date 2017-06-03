@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="BSD"
 PKG_SITE="http://www.cmake.org/"
 PKG_URL="http://www.cmake.org/files/v3.8/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_HOST="ccache:host openssl:host"
+PKG_DEPENDS_HOST="ccache:host openssl:host libuv:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="cmake: A cross-platform, open-source make system"
@@ -34,7 +34,7 @@ PKG_AUTORECONF="no"
 
 configure_host() {
   ../configure --prefix=$ROOT/$TOOLCHAIN \
-               --no-qt-gui --no-system-libs \
+               --no-qt-gui --no-system-libs --no-system-jsoncpp \
                -- \
                -DCMAKE_C_FLAGS="-O2 -Wall -pipe -Wno-format-security" \
                -DCMAKE_CXX_FLAGS="-O2 -Wall -pipe -Wno-format-security" \

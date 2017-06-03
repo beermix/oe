@@ -79,7 +79,7 @@ trap cleanup SIGINT
 
 # create part1
   echo "image: creating part1..."
-  SYSTEM_PART_END=$(( ($SYSTEM_SIZE * 1024 * 1024 / 512) + $SYSTEM_PART_START ))
+  SYSTEM_PART_END=$(( $SYSTEM_PART_START + ($SYSTEM_SIZE * 1024 * 1024 / 512) - 1 ))
   parted -s "$DISK" -a min unit s mkpart primary fat32 $SYSTEM_PART_START $SYSTEM_PART_END
   if [ "$BOOTLOADER" = "syslinux" ]; then
     parted -s "$DISK" set 1 legacy_boot on
@@ -89,8 +89,8 @@ trap cleanup SIGINT
   sync
 # create part2
   echo "image: creating part2..."
-  STORAGE_PART_START=$(( $SYSTEM_PART_END + 2048 ))
-  STORAGE_PART_END=$(( $STORAGE_PART_START + (( $STORAGE_SIZE * 1024 * 1024 / 512 )) ))
+  STORAGE_PART_START=$(( $SYSTEM_PART_END + 1 ))
+  STORAGE_PART_END=$(( $STORAGE_PART_START + ($STORAGE_SIZE * 1024 * 1024 / 512) - 1 ))
   parted -s "$DISK" -a min unit s mkpart primary ext4 $STORAGE_PART_START $STORAGE_PART_END
   sync
 
@@ -138,6 +138,10 @@ LABEL installer
 LABEL live
   KERNEL /$KERNEL_NAME
   APPEND boot=UUID=$UUID_SYSTEM live quiet tty vga=current
+
+LABEL run
+  KERNEL /$KERNEL_NAME
+  APPEND boot=UUID=$UUID_SYSTEM disk=UUID=$UUID_STORAGE portable quiet tty
 EOF
 
     mcopy "$OE_TMP/syslinux.cfg" ::
