@@ -33,7 +33,9 @@ PKG_IS_ADDON="no"
 
 PKG_AUTORECONF="yes"
 
-LDFLAGS="-Wl,--gc-sections"
+CFLAGS="$CFLAGS -ffunction-sections -fdata-sections -fno-stack-protector"
+LDFLAGS="$LDFLAGS -Wl,--gc-sections"
+
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$ROOT/$TOOLCHAIN/ \
                          --bindir=$ROOT/$TOOLCHAIN/bin \
