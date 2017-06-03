@@ -1,5 +1,5 @@
 PKG_NAME="bash"
-PKG_VERSION="bc00779"
+PKG_VERSION="1110e30"
 PKG_GIT_URL="https://github.com/bminor/bash"
 PKG_DEPENDS_TARGET="toolchain netbsd-curses readline"
 PKG_IS_ADDON="no"
@@ -13,7 +13,6 @@ PKG_CONFIGURE_OPTS_TARGET="--bindir=/bin \
                            --with-curses \
                            --enable-readline \
                            --without-bash-malloc \
-                           --disable-static-link \
                            --with-installed-readline \
                            --enable-command-timing \
                            --enable-history \
