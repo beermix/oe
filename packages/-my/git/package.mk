@@ -14,7 +14,7 @@ pre_configure_target() {
   export CFLAGS="$CFLAGS"
   export CPPFLAGS="$CPPFLAGS"
   export LDFLAGS="$LDFLAGS"
-  #export NO_EXPAT="YesPlease"
+  export NO_EXPAT="YesPlease"
   export NO_MKSTEMPS="YesPlease"
   export NO_GETTEXT="YesPlease"
   export NO_UNIX_SOCKETS="YesPlease"
