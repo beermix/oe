@@ -1,0 +1,31 @@
+From 2f48e82d793202903f52b65cc0e345b4efa36588 Mon Sep 17 00:00:00 2001
+From: Gilles Filippini <pini@debian.org>
+Date: Tue, 7 Feb 2017 22:21:58 +0100
+Subject: update tests for Pygments 2.2
+
+---
+ test/test_exceptions.py | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/test/test_exceptions.py b/test/test_exceptions.py
+index 8321b25..bcaae3b 100644
+--- a/test/test_exceptions.py
++++ b/test/test_exceptions.py
+@@ -91,7 +91,7 @@ ${u'привет'}
+                 assert "".encode(sys.getdefaultencoding(),
+                                         'htmlentityreplace') in html_error
+             else:
+-                assert 'u&#39;'\
++                assert '&#39;'\
+                         '&#x43F;&#x440;&#x438;&#x432;&#x435;&#x442;'\
+                         '&#39;</span><span class="cp">}</span>'.encode(
+                                 sys.getdefaultencoding(),
+@@ -220,7 +220,7 @@ ${foobar}
+             assert '&#39;привет&#39;</span>' in \
+                 l.get_template("foo.html").render().decode('utf-8')
+         else:
+-            assert 'u&#39;&#x43F;&#x440;&#x438;&#x432;'\
++            assert '&#39;&#x43F;&#x440;&#x438;&#x432;'\
+                     '&#x435;&#x442;&#39;</span>' in \
+                 l.get_template("foo.html").render().decode('utf-8')
+ 
