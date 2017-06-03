@@ -1,7 +1,7 @@
 PKG_NAME="tig"
-PKG_VERSION="d829cb4"
+PKG_VERSION="1d3a918"
 PKG_GIT_URL="https://github.com/jonas/tig"
-PKG_DEPENDS_TARGET="toolchain ncurses"
+PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="tools"
 PKG_AUTORECONF="yes"
 

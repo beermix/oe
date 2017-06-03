@@ -14,5 +14,5 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
                            --disable-ipv6 \
                            --enable-largefile \
                            --disable-rpath \
-                           --withs-openssl=$SYSROOT_PREFIX/usr \
+                           --with-openssl=$SYSROOT_PREFIX/usr \
                            --without-sqlite3"
