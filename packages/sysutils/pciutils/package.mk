@@ -32,6 +32,7 @@ PKG_AUTORECONF="no"
 PKG_MAKE_OPTS="PREFIX=/usr SHARED=no STRIP= IDSDIR=/usr/share"
 
 make_target() {
+  strip_lto
   make OPT="$CFLAGS" \
        CROSS_COMPILE=${TARGET_NAME}- \
        HOST=$TARGET_ARCH-linux \

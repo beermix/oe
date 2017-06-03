@@ -33,17 +33,6 @@ PKG_IS_ADDON="no"
 
 PKG_AUTORECONF="yes"
 
-pre_configure_target() {
-  export CFLAGS="$CFLAGS -ffunction-sections -fdata-sections -fno-stack-protector"
-  export LDFLAGS="$LDFLAGS -Wl,--gc-sections"
-}
-
-pre_configure_init() {
-  export CFLAGS="$CFLAGS -ffunction-sections -fdata-sections -fno-stack-protector"
-  export LDFLAGS="$LDFLAGS -Wl,--gc-sections"
-}
-
-
 PKG_CONFIGURE_OPTS_HOST="--prefix=$ROOT/$TOOLCHAIN/ \
                          --bindir=$ROOT/$TOOLCHAIN/bin \
                          --sbindir=$ROOT/$TOOLCHAIN/sbin"
@@ -63,8 +52,8 @@ PKG_CONFIGURE_OPTS_TARGET="BUILD_CC=$HOST_CC \
                            --disable-jbd-debug \
                            --disable-blkid-debug \
                            --disable-testio-debug \
-                           --enable-libuuid \
-                           --enable-libblkid \
+                           --disable-libuuid \
+                           --disable-libblkid \
                            --disable-debugfs \
                            --disable-imager \
                            --enable-resizer \
@@ -121,6 +110,7 @@ make_host() {
 }
 
 makeinstall_host() {
+  rm -f $ROOT/$TOOLCHAIN/lib/libcom_err.a $ROOT/$TOOLCHAIN/lib/libext2fs.a
   make -C lib/et install
   make -C lib/ext2fs install
 }
