@@ -49,7 +49,6 @@ STAMP=$STAMPS/$PACKAGE_NAME/build_$TARGET
 $SCRIPTS/unpack $PACKAGE_NAME
 
 STAMP_DEPENDS="$PKG_DIR $PKG_NEED_UNPACK $PROJECT_DIR/$PROJECT/patches/$PKG_NAME"
-[ -n "$DEVICE" ] && STAMP_DEPENDS="$STAMP_DEPENDS $PROJECT_DIR/$PROJECT/devices/$DEVICE/patches/$PKG_NAME"
 
 if [ -f $STAMP ] ; then
   . $STAMP
@@ -206,33 +205,35 @@ if [ ! -f $STAMP ]; then
       if [ "$(type -t configure_$TARGET)" = "function" ]; then
         configure_$TARGET
       elif [ -f "$PKG_CMAKE_SCRIPT" -a ! "$PKG_USE_CMAKE" = "no" ]; then
-        if [ "$TARGET" = "target" ]; then
-          echo "Executing (target): cmake $TARGET_CMAKE_OPTS $PKG_CMAKE_OPTS_TARGET $(dirname $PKG_CMAKE_SCRIPT)" | tr -s " "
-          cmake $TARGET_CMAKE_OPTS $PKG_CMAKE_OPTS_TARGET $(dirname $PKG_CMAKE_SCRIPT)
-        elif [ "$TARGET" = "host" ]; then
-          echo "Executing (host): cmake $HOST_CMAKE_OPTS $PKG_CMAKE_OPTS_HOST $(dirname $PKG_CMAKE_SCRIPT)" | tr -s " "
-          cmake $HOST_CMAKE_OPTS $PKG_CMAKE_OPTS_HOST $(dirname $PKG_CMAKE_SCRIPT)
-        elif [ "$TARGET" = "init" ]; then
-          echo "Executing (init): cmake $INIT_CMAKE_OPTS $PKG_CMAKE_OPTS_INIT $(dirname $PKG_CMAKE_SCRIPT)" | tr -s " "
-          cmake $INIT_CMAKE_OPTS $PKG_CMAKE_OPTS_INIT $(dirname $PKG_CMAKE_SCRIPT)
-        elif [ "$TARGET" = "bootstrap" ]; then
-          echo "Executing (bootstrap): cmake $BOOTSTRAP_CMAKE_OPTS $PKG_CMAKE_OPTS_BOOTSTRAP $(dirname $PKG_CMAKE_SCRIPT)" | tr -s " "
-          cmake $BOOTSTRAP_CMAKE_OPTS $PKG_CMAKE_OPTS_BOOTSTRAP $(dirname $PKG_CMAKE_SCRIPT)
-        fi
+        case "$TARGET" in
+          target)
+            cmake $TARGET_CMAKE_OPTS $PKG_CMAKE_OPTS_TARGET $(dirname $PKG_CMAKE_SCRIPT)
+            ;;
+          host)
+            cmake $HOST_CMAKE_OPTS $PKG_CMAKE_OPTS_HOST $(dirname $PKG_CMAKE_SCRIPT)
+            ;;
+          init)
+            cmake $INIT_CMAKE_OPTS $PKG_CMAKE_OPTS_INIT $(dirname $PKG_CMAKE_SCRIPT)
+            ;;
+          bootstrap)
+            cmake $BOOTSTRAP_CMAKE_OPTS $PKG_CMAKE_OPTS_BOOTSTRAP $(dirname $PKG_CMAKE_SCRIPT)
+            ;;
+        esac
       elif [ -f "$PKG_CONFIGURE_SCRIPT" ]; then
-        if [ "$TARGET" = "target" ]; then
-          echo "Executing (target): $PKG_CONFIGURE_SCRIPT $TARGET_CONFIGURE_OPTS $PKG_CONFIGURE_OPTS_TARGET" | tr -s " "
-          $PKG_CONFIGURE_SCRIPT $TARGET_CONFIGURE_OPTS $PKG_CONFIGURE_OPTS_TARGET
-        elif [ "$TARGET" = "host" ]; then
-          echo "Executing (host): $PKG_CONFIGURE_SCRIPT $HOST_CONFIGURE_OPTS $PKG_CONFIGURE_OPTS_HOST" | tr -s " "
-          $PKG_CONFIGURE_SCRIPT $HOST_CONFIGURE_OPTS $PKG_CONFIGURE_OPTS_HOST
-        elif [ "$TARGET" = "init" ]; then
-          echo "Executing (init): $PKG_CONFIGURE_SCRIPT $INIT_CONFIGURE_OPTS $PKG_CONFIGURE_OPTS_INIT" | tr -s " "
-          $PKG_CONFIGURE_SCRIPT $INIT_CONFIGURE_OPTS $PKG_CONFIGURE_OPTS_INIT
-        elif [ "$TARGET" = "bootstrap" ]; then
-          echo "Executing (bootstrap): $PKG_CONFIGURE_SCRIPT $BOOTSTRAP_CONFIGURE_OPTS $PKG_CONFIGURE_OPTS_BOOTSTRAP" | tr -s " "
-          $PKG_CONFIGURE_SCRIPT $BOOTSTRAP_CONFIGURE_OPTS $PKG_CONFIGURE_OPTS_BOOTSTRAP
-        fi
+        case "$TARGET" in
+          target)
+            $PKG_CONFIGURE_SCRIPT $TARGET_CONFIGURE_OPTS $PKG_CONFIGURE_OPTS_TARGET
+            ;;
+          host)
+            $PKG_CONFIGURE_SCRIPT $HOST_CONFIGURE_OPTS $PKG_CONFIGURE_OPTS_HOST
+            ;;
+          init)
+            $PKG_CONFIGURE_SCRIPT $INIT_CONFIGURE_OPTS $PKG_CONFIGURE_OPTS_INIT
+            ;;
+          bootstrap)
+            $PKG_CONFIGURE_SCRIPT $BOOTSTRAP_CONFIGURE_OPTS $PKG_CONFIGURE_OPTS_BOOTSTRAP
+            ;;
+        esac
       fi
       if [ "$(type -t post_configure_$TARGET)" = "function" ]; then
         post_configure_$TARGET
@@ -245,19 +246,20 @@ if [ ! -f $STAMP ]; then
       if [ "$(type -t make_$TARGET)" = "function" ]; then
         make_$TARGET
       else
-        if [ "$TARGET" = "target" ]; then
-          echo "Executing (target): ionice -c3 nice -n20 make $PKG_MAKE_OPTS_TARGET" | tr -s " "
-          ionice -c3 nice -n20 make $PKG_MAKE_OPTS_TARGET
-        elif [ "$TARGET" = "host" ]; then
-          echo "Executing (host): ionice -c3 nice -n20 make $PKG_MAKE_OPTS_HOST" | tr -s " "
-          ionice -c3 nice -n20 make $PKG_MAKE_OPTS_HOST
-        elif [ "$TARGET" = "init" ]; then
-          echo "Executing (init): ionice -c3 nice -n20 make $PKG_MAKE_OPTS_INIT" | tr -s " "
-          ionice -c3 nice -n20 make $PKG_MAKE_OPTS_INIT
-        elif [ "$TARGET" = "bootstrap" ]; then
-          echo "Executing (bootstrap): ionice -c3 nice -n20 make $PKG_MAKE_OPTS_BOOTSTRAP" | tr -s " "
-          ionice -c3 nice -n20 make $PKG_MAKE_OPTS_BOOTSTRAP
-        fi
+        case "$TARGET" in
+          target)
+            make $PKG_MAKE_OPTS_TARGET
+            ;;
+          host)
+            make $PKG_MAKE_OPTS_HOST
+            ;;
+          init)
+            make $PKG_MAKE_OPTS_INIT
+            ;;
+          bootstrap)
+            make $PKG_MAKE_OPTS_BOOTSTRAP
+            ;;
+        esac
       fi
       if [ "$(type -t post_make_$TARGET)" = "function" ]; then
         post_make_$TARGET
@@ -276,7 +278,7 @@ if [ ! -f $STAMP ]; then
       else
         case "$TARGET" in
           target)
-            ionice -c3 nice -n20 make -j1 install DESTDIR=$INSTALL_DEV $PKG_MAKEINSTALL_OPTS_TARGET
+            make install DESTDIR=$INSTALL_DEV $PKG_MAKEINSTALL_OPTS_TARGET
             for i in `find $INSTALL_DEV/lib/ -name "*.la" 2>/dev/null`; do \
               $SED "s:\(['= ]\)/lib:\\1$SYSROOT_PREFIX/lib:g" $i; \
             done
@@ -289,13 +291,13 @@ if [ ! -f $STAMP ]; then
               cp -PRvf $INSTALL_DEV/* $INSTALL
             ;;
           host)
-            ionice -c3 nice -n20 make -j1 install $PKG_MAKEINSTALL_OPTS_HOST
+            make install $PKG_MAKEINSTALL_OPTS_HOST
             ;;
           init)
-            ionice -c3 nice -n20 make -j1 install DESTDIR=$INSTALL $PKG_MAKEINSTALL_OPTS_INIT
+            make install DESTDIR=$INSTALL $PKG_MAKEINSTALL_OPTS_INIT
             ;;
           bootstrap)
-            ionice -c3 nice -n20 make -j1 install $PKG_MAKEINSTALL_OPTS_BOOTSTRAP
+            make install $PKG_MAKEINSTALL_OPTS_BOOTSTRAP
             ;;
         esac
       fi
@@ -350,6 +352,7 @@ if [ ! -f $STAMP ]; then
 
     PKG_DEEPMD5=$(find $STAMP_DEPENDS -exec md5sum {} \; 2>/dev/null | sort | md5sum | cut -d" " -f1)
     for i in PKG_NAME PKG_DEEPMD5; do
-      echo "STAMP_$i=\"${!i}\"" >> $STAMP
+      eval val=\$$i
+      echo "STAMP_$i=\"$val\"" >> $STAMP
     done
 fi

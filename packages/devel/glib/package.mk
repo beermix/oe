@@ -22,7 +22,7 @@ PKG_VERSION="2.52.2"
 PKG_SITE="http://www.gtk.org/"
 PKG_URL="http://ftp.gnome.org/pub/gnome/sources/glib/2.52/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain zlib libffi util-linux attr expat Python:host"
-PKG_DEPENDS_HOST="pcre:host"
+PKG_DEPENDS_HOST="libffi:host"
 PKG_SECTION="devel"
 PKG_SHORTDESC="glib: C support library"
 PKG_LONGDESC="GLib is a library which includes support routines for C such as lists, trees, hashes, memory allocation, and many other things."
@@ -30,8 +30,7 @@ PKG_LONGDESC="GLib is a library which includes support routines for C such as li
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_HOST="--disable-gtk-doc --disable-man --enable-libmount=no --disable-shared --with-pcre=internal"
-                           
+PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared --with-pcre=internal"
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_mmap_fixed_mapped=yes \
                            ac_cv_func_posix_getpwuid_r=yes \
                            ac_cv_func_posix_getgrgid_r=yes \
