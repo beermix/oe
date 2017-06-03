@@ -33,13 +33,13 @@ PKG_AUTORECONF="no"
 
 #CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|g"`
 CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
-CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
+#CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
 
 
 make_target() {
-  make -j1 HOSTCC="$HOST_CC" CFLAGS="$CFLAGS" PREFIX=/usr all-static
+  make HOSTCC="$HOST_CC" CFLAGS="$CFLAGS" PREFIX=/usr all-static
 }
 
 makeinstall_target() {
-  make -j1 HOSTCC="$HOST_CC" PREFIX=$SYSROOT_PREFIX/usr install-static
+  make HOSTCC="$HOST_CC" PREFIX=$SYSROOT_PREFIX/usr install-static
 }
