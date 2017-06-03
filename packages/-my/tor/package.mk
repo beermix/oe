@@ -5,14 +5,13 @@ PKG_DEPENDS_TARGET="toolchain openssl zlib libevent libcap"
 PKG_SECTION="security"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-systemd \
+PKG_CONFIGURE_OPTS_TARGET="CROSS_COMPILE=yes \
+			      --enable-systemd \
 			      --disable-asciidoc \
 			      --disable-unittests \
 			      --disable-seccomp \
 			      --disable-libscrypt \
-			      --disable-gcc-hardening \
 			      --disable-unittests \
-			      --disable-linker-hardening \
 			      --sysconfdir=/storage/.config \
 			      --datarootdir=/storage/.cache/tor \
 			      --datadir=/storage/.cache/tor \
