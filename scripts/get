@@ -20,15 +20,6 @@
 
 . config/options $1
 
-_get_file_already_downloaded() {
-  if [ -f $PACKAGE ]; then
-    if [ "$(cat $STAMP_URL 2>/dev/null)" == "${PKG_URL}" ]; then
-      [ -z "${PKG_SHA256}" -o "$(cat $STAMP_SHA 2>/dev/null)" == "${PKG_SHA256}" ] && return 0
-    fi
-  fi
-  return 1
-}
-
 if [ -z "$1" ]; then
   for i in `find packages/ -type f -name package.mk`; do
     GET_PKG=`grep ^PKG_NAME= $i | sed -e "s,\",,g" -e "s,PKG_NAME=,,"`
@@ -53,7 +44,7 @@ if [ -n "$PKG_URL" -o -n "$PKG_GIT_URL" ]; then
       PACKAGE="$SOURCES/$1/$SOURCE_NAME"
       PACKAGE_MIRROR="$DISTRO_MIRROR/$PKG_NAME/$SOURCE_NAME"
       [ "$VERBOSE" != "yes" ] && WGET_OPT=-q
-      WGET_CMD="wget -vv --max-redirect=100 --no-check-certificate --timeout=30 --passive-ftp -c $WGET_OPT -P $SOURCES/$1"
+      WGET_CMD="wget --timeout=30 --passive-ftp -c $WGET_OPT -P $SOURCES/$1"
 
       NBWGET="1"
 
