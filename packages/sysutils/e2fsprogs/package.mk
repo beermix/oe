@@ -33,8 +33,15 @@ PKG_IS_ADDON="no"
 
 PKG_AUTORECONF="yes"
 
-CFLAGS="$CFLAGS -ffunction-sections -fdata-sections -fno-stack-protector"
-LDFLAGS="$LDFLAGS -Wl,--gc-sections"
+pre_configure_target() {
+  export CFLAGS="$CFLAGS -ffunction-sections -fdata-sections -fno-stack-protector"
+  export LDFLAGS="$LDFLAGS -Wl,--gc-sections"
+}
+
+pre_configure_init() {
+  export CFLAGS="$CFLAGS -ffunction-sections -fdata-sections -fno-stack-protector"
+  export LDFLAGS="$LDFLAGS -Wl,--gc-sections"
+}
 
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$ROOT/$TOOLCHAIN/ \
