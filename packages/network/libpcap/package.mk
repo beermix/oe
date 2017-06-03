@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="libpcap"
-#PKG_VERSION="1.8.1"
-PKG_VERSION="89180a8"
+PKG_VERSION="1.8.1"
+#PKG_VERSION="89180a8"
 #PKG_URL="http://www.tcpdump.org/release/libpcap-$PKG_VERSION.tar.gz"
 PKG_GIT_URL="https://github.com/the-tcpdump-group/libpcap"
 PKG_DEPENDS_TARGET="toolchain libusb dbus"
@@ -32,7 +32,7 @@ MAKEFLAGS=-j1
 
 PKG_CONFIGURE_OPTS_TARGET="LIBS=-lpthread \
                            ac_cv_header_libusb_1_0_libusb_h=no \
-                           ac_cv_netfilter_can_compile=no \
+                           ac_cv_netfilter_can_compile=yes \
                            ac_cv_linux_vers=2 \
                            --disable-shared \
                            --with-pcap=linux \
@@ -51,6 +51,6 @@ pre_configure_target() {
   export CFLAGS="$CFLAGS -D_DEFAULT_SOURCE -ffunction-sections -fdata-sections"
 }
 
-post_makeinstall_target() {
-  rm -rf $INSTALL/usr/bin
-}
+#post_makeinstall_target() {
+#  rm -rf $INSTALL/usr/bin
+#}
