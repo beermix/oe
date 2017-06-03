@@ -16,7 +16,7 @@ configure_target() {
 		-A ccflags="$CFLAGS -fPIC -DPIC" \
 		-Dcc="$CC" \
 		-Dldflags="$LDFLAGS -fPIC" \
-		-Dlibs="-lm -lssl -lcrypto -pthread" \
+		-Dlibs="-lm -lcrypto -pthread" \
 		-Doptimize="$CFLAGS -ffunction-sections -fdata-sections -finline-limit=8 -ffast-math" \
 		-Dvendorprefix=/usr \
 		-Dvendorlib=/usr/share/perl5/vendor_perl \
@@ -38,8 +38,7 @@ configure_target() {
 		-Dcf_by='OE' \
 		-Ud_csh \
 		-Dusenm \
-		|| return 1
-		make ; make
+		..
 }
 
                
