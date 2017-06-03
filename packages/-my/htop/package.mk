@@ -5,9 +5,9 @@ PKG_DEPENDS_TARGET="toolchain hwloc"
 PKG_SECTION="debug/tools"
 PKG_AUTORECONF="yes"
 
-pre_configure_target() {
-  export LIBS="$LIBS -ludev -lhwloc -lxml2 -lpciaccess"
-}
+#pre_configure_target() {
+#  export LIBS="$LIBS -ludev -lhwloc -lxml2 -lpciaccess"
+#}
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-cgroup \
 			      --enable-vserver \
@@ -15,7 +15,6 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-cgroup \
 			      --datarootdir=/storage/.config/htop \
 			      --disable-silent-rules \
 			      --enable-unicode \
-			      --enable-native-affinity \
 			      --enable-hwloc \
 			      --enable-proc"
 

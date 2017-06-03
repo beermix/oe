@@ -12,6 +12,11 @@ PKG_CONFIGURE_OPTS_TARGET="CROSS_COMPILE=yes \
 			      --disable-seccomp \
 			      --disable-libscrypt \
 			      --disable-unittests \
+			      --disable-libfuzzer \
+			      --disable-oss-fuzz \
+			      --disable-linker-hardening \
+			      --disable-gcc-hardening \
+			      --disable-libscrypt \
 			      --sysconfdir=/storage/.config \
 			      --datarootdir=/storage/.cache/tor \
 			      --datadir=/storage/.cache/tor \
