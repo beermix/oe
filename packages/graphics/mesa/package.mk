@@ -103,6 +103,7 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --disable-opencl \
                            --enable-opencl-icd \
                            --disable-gallium-tests \
+                           --enable-shader-cache \
                            --enable-shared-glapi \
                            --with-gl-lib-name=GL \
                            --with-osmesa-lib-name=OSMesa \
@@ -115,7 +116,6 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
 
 pre_configure_target() {
   export LIBS="-lxcb-dri3 -lxcb-present -lxcb-sync -lxcb-dri2 -lxcb-xfixes -lxshmfence -lz"
-  #export LDFLAGS="$LDFLAGS -pthread"
 }
 
 post_makeinstall_target() {
