@@ -15,8 +15,10 @@ configure_target() {
 		-Darchlib=$_archlib \
 		-A ccflags="$CFLAGS -fPIC -DPIC" \
 		-Dcc="$CC" \
+		-Duse64bitint \
+		-Dusethreads \
 		-Dldflags="$LDFLAGS -fPIC" \
-		-Dlibs="-lm -lcrypt -pthread" \
+		-Dlibs="-lm -lssl -lcrypto" \
 		-Doptimize="$CFLAGS -ffunction-sections -fdata-sections -finline-limit=8 -ffast-math" \
 		-Dvendorprefix=/usr \
 		-Dvendorlib=/usr/share/perl5/vendor_perl \
@@ -39,7 +41,7 @@ configure_target() {
 		-Ud_csh \
 		-Dusenm \
 		|| return 1
-		make; make
+		make SHELL='bash -x'; make SHELL='bash -x'
 }
 
                
