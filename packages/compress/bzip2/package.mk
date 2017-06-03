@@ -38,11 +38,11 @@ pre_build_host() {
 
 make_host() {
   cd $ROOT/$PKG_BUILD/.$HOST_NAME
-  make CC="$HOST_CC" CFLAGS="$CFLAGS -fPIC -DPIC"
+  make SHELL='bash -x' CC="$HOST_CC" CFLAGS="$CFLAGS -fPIC -DPIC"
 }
 
 makeinstall_host() {
-  make install PREFIX=$ROOT/$TOOLCHAIN
+  make SHELL='bash -x' install PREFIX=$ROOT/$TOOLCHAIN
 }
 
 pre_build_target() {
@@ -52,10 +52,10 @@ pre_build_target() {
 
 make_target() {
   cd $ROOT/$PKG_BUILD/.$TARGET_NAME
-    make -f Makefile libbz2.a bzip2 bzip2recover CC="$CC" CFLAGS="$CFLAGS -fPIC -DPIC" 
+    make SHELL='bash -x' -f Makefile libbz2.a bzip2 bzip2recover CC="$CC" CFLAGS="$CFLAGS -fPIC -DPIC" 
 }
 
 makeinstall_target() {
-  make install PREFIX=$SYSROOT_PREFIX/usr
-  make install PREFIX=$INSTALL/usr
+  make SHELL='bash -x' install PREFIX=$SYSROOT_PREFIX/usr
+  make SHELL='bash -x' install PREFIX=$INSTALL/usr
 }
