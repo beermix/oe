@@ -36,6 +36,6 @@ PKG_AUTORECONF="no"
 #			    --disable-xzdec --disable-lzmadec \
 #			    --enable-xz --disable-lzma-links --disable-doc"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules --enable-threads --enable-static --disable-xzdec --disable-lzmadec --disable-doc"
+PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules --enable-threads --disable-xzdec --disable-lzmadec --disable-doc"
 
-PKG_CONFIGURE_OPTS_HOST="--enable-threads --disable-shared --enable-liblzma2-compat --disable-lzmainfo --disable-scripts --disable-doc"
+PKG_CONFIGURE_OPTS_HOST="--disable-nls --disable-shared --enable-liblzma2-compat --disable-lzmainfo --disable-scripts --disable-doc"
