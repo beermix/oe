@@ -351,8 +351,9 @@ if [ ! -f $STAMP ]; then
               ! -name "libpthread-*.so" \
               ! -name "libthread_db-*so" \
               2>/dev/null` 2>/dev/null || :
+
             # strip kernel modules
-            for MOD in `find $INSTALL/lib $INSTALL/usr/lib -type f -name *.ko`; do
+            for MOD in `find $INSTALL -type f -name *.ko`; do
               $STRIP --strip-debug $MOD
             done
           fi
