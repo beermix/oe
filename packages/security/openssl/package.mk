@@ -72,6 +72,7 @@ pre_configure_target() {
   cp -a $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$TARGET_NAME/
   
   sed -i -e '/^"linux-x86_64"/ s/-m64 -DL_ENDIAN -O3 -Wall//' $ROOT/$PKG_BUILD/.$TARGET_NAME/Configure
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
   strip_lto
   strip_gold
 }

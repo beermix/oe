@@ -43,9 +43,14 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-lto \
                          --enable-nls \
                          --with-pic \
+                         --disable-gdb \
                          --enable-poison-system-directories"
 
 makeinstall_host() {
   cp -v ../include/libiberty.h $SYSROOT_PREFIX/usr/include
   make -j1 install
+}
+
+pre_configure_host() {
+  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $ROOT/$PKG_BUILD/libiberty/configure
 }

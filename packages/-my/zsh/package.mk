@@ -23,4 +23,5 @@ PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
 			      --disable-etcdir \
 			      --enable-function-subdirs \
 			      --with-tcsetpgrp \
-			      --enable-gdbm"
+			      --enable-gdbm \
+			      --enable-zsh-secure-free"
