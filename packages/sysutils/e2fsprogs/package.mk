@@ -114,4 +114,3 @@ makeinstall_host() {
   make -C lib/et install
   make -C lib/ext2fs install
 }
-
