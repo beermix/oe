@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="inputstream.adaptive"
-PKG_VERSION="c69f134"
+PKG_VERSION="f23ba39"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
 PKG_GIT_URL="https://github.com/liberty-developer/inputstream.adaptive"
@@ -28,16 +28,11 @@ PKG_LONGDESC="inputstream.adaptive"
 
 PKG_IS_ADDON="yes"
 
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/share/kodi \
-                       -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
-                       -DCMAKE_BUILD_TYPE=Release"
-
 post_makeinstall_target() {
   mkdir -p wv && cd wv
     cmake -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
         -DCMAKE_INSTALL_PREFIX=/usr \
         -DDECRYPTERPATH=special://home/cdm \
-        -DCMAKE_BUILD_TYPE=Release \
         $ROOT/$PKG_BUILD/wvdecrypter
     make
 

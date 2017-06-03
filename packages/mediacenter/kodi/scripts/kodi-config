@@ -57,3 +57,7 @@ mkdir -p /storage/screenshots
 mkdir -p /run/kodi
 
 echo "KODI_ARGS=\"$KODI_ARGS\"" > /run/openelec/kodi.conf
+
+if [ "$(uname -m)" = "x86_64" -o "$(uname -m)" = "aarch64" ]; then
+  echo "MALLOC_MMAP_THRESHOLD_=524288" >> /run/libreelec/kodi.conf
+fi
