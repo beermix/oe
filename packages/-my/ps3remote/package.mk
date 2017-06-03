@@ -6,10 +6,10 @@ PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-#pre_configure_target() {
-#  strip_lto
+pre_configure_target() {
+  strip_lto
 #  strip_gold
-#}
+}
 
 make_target() {
   make SHELL='sh -x' CC="$CC" CFLAGS="$CFLAGS -DDEBUG=0" CPPFLAGS="$CPPFLAGS" LDFLAGS="$LDFLAGS" -j1
