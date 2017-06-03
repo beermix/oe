@@ -10,7 +10,8 @@ pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
   export CPPFLAGS="$CPPFLAGS -Iliblua"
-  export LDFLAGS="$LDFLAGS -lpthread"
+  export LDFLAGS="$LDFLAGS -lz -lpthread -lm -ldl"
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \

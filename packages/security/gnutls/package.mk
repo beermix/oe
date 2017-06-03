@@ -7,8 +7,8 @@ PKG_SITE="http://www.gnutls.org"
 PKG_URL="ftp://ftp.gnutls.org/gcrypt/gnutls/v3.5/gnutls-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain zlib openssl gmp libgpg-error nettle libgcrypt"
 PKG_SECTION="xmedia/tools"
-PKG_IS_ADDON="c"
-PKG_AUTORECONF="-DCMAKE_BUILD_TYPE=Release"
+PKG_IS_ADDON="no"
+PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \
 			      --disable-shared \
