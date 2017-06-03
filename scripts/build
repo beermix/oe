@@ -246,17 +246,17 @@ if [ ! -f $STAMP ]; then
         make_$TARGET
       else
         if [ "$TARGET" = "target" ]; then
-          echo "Executing (target): make $PKG_MAKE_OPTS_TARGET" | tr -s " "
-          make $PKG_MAKE_OPTS_TARGET
+          echo "Executing (target): ionice -c3 nice -n20 make $PKG_MAKE_OPTS_TARGET" | tr -s " "
+          ionice -c3 nice -n20 make $PKG_MAKE_OPTS_TARGET
         elif [ "$TARGET" = "host" ]; then
-          echo "Executing (host): make $PKG_MAKE_OPTS_HOST" | tr -s " "
-          make $PKG_MAKE_OPTS_HOST
+          echo "Executing (host): ionice -c3 nice -n20 make $PKG_MAKE_OPTS_HOST" | tr -s " "
+          ionice -c3 nice -n20 make $PKG_MAKE_OPTS_HOST
         elif [ "$TARGET" = "init" ]; then
-          echo "Executing (init): make $PKG_MAKE_OPTS_INIT" | tr -s " "
-          make $PKG_MAKE_OPTS_INIT
+          echo "Executing (init): ionice -c3 nice -n20 make $PKG_MAKE_OPTS_INIT" | tr -s " "
+          ionice -c3 nice -n20 make $PKG_MAKE_OPTS_INIT
         elif [ "$TARGET" = "bootstrap" ]; then
-          echo "Executing (bootstrap): make $PKG_MAKE_OPTS_BOOTSTRAP" | tr -s " "
-          make $PKG_MAKE_OPTS_BOOTSTRAP
+          echo "Executing (bootstrap): ionice -c3 nice -n20 make $PKG_MAKE_OPTS_BOOTSTRAP" | tr -s " "
+          ionice -c3 nice -n20 make $PKG_MAKE_OPTS_BOOTSTRAP
         fi
       fi
       if [ "$(type -t post_make_$TARGET)" = "function" ]; then
@@ -276,7 +276,7 @@ if [ ! -f $STAMP ]; then
       else
         case "$TARGET" in
           target)
-            make install DESTDIR=$INSTALL_DEV $PKG_MAKEINSTALL_OPTS_TARGET
+            ionice -c3 nice -n20 make -j1 install DESTDIR=$INSTALL_DEV $PKG_MAKEINSTALL_OPTS_TARGET
             for i in `find $INSTALL_DEV/lib/ -name "*.la" 2>/dev/null`; do \
               $SED "s:\(['= ]\)/lib:\\1$SYSROOT_PREFIX/lib:g" $i; \
             done
@@ -289,13 +289,13 @@ if [ ! -f $STAMP ]; then
               cp -PRvf $INSTALL_DEV/* $INSTALL
             ;;
           host)
-            make install $PKG_MAKEINSTALL_OPTS_HOST
+            ionice -c3 nice -n20 make -j1 install $PKG_MAKEINSTALL_OPTS_HOST
             ;;
           init)
-            make install DESTDIR=$INSTALL $PKG_MAKEINSTALL_OPTS_INIT
+            ionice -c3 nice -n20 make -j1 install DESTDIR=$INSTALL $PKG_MAKEINSTALL_OPTS_INIT
             ;;
           bootstrap)
-            make install $PKG_MAKEINSTALL_OPTS_BOOTSTRAP
+            ionice -c3 nice -n20 make -j1 install $PKG_MAKEINSTALL_OPTS_BOOTSTRAP
             ;;
         esac
       fi
