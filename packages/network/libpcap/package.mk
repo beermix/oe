@@ -28,11 +28,11 @@ PKG_LONGDESC="libpcap (Packet CAPture) provides a portable framework for low-lev
 PKG_USE_CMAKE="no"
 PKG_AUTORECONF="no"
 
-MAKEFLAGS=-j1
+CONCURRENCY_MAKE_LEVEL=1
 
 PKG_CONFIGURE_OPTS_TARGET="LIBS=-lpthread \
                            ac_cv_header_libusb_1_0_libusb_h=no \
-                           ac_cv_netfilter_can_compile=yes \
+                           ac_cv_netfilter_can_compile=no \
                            ac_cv_linux_vers=2 \
                            --disable-shared \
                            --with-pcap=linux \
