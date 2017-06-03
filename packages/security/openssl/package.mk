@@ -34,6 +34,9 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            --libdir=lib \
                            shared \
                            threads \
+                           no-rfc3779 \
+                           no-ssl2 \
+                           no-ssl3 \
                            enable-unit-test \
                            enable-tlsext \
                            no-zlib \
@@ -93,6 +96,6 @@ post_makeinstall_target() {
     ln -sf /etc/ssl/cert.pem $INSTALL/etc/pki/tls/certs/ca-bundle.crt
   mkdir -p $INSTALL/usr/lib/ssl
     ln -sf /etc/ssl/cert.pem $INSTALL/usr/lib/ssl/cert.pem
-  #mkdir -p $INSTALL/etc/ssl/certs
-  #  ln -sf /etc/ssl/cert.pem $INSTALL/etc/ssl/certs/ca-certificates.crt
+  mkdir -p $INSTALL/etc/ssl/certs
+    ln -sf /etc/ssl/cert.pem $INSTALL/etc/ssl/certs/cert.pem
 }
