@@ -34,7 +34,6 @@ PKG_AUTORECONF="no"
 #CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|g"`
 CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
 CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
-strip_hard
 
 
 make_target() {
