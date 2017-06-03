@@ -15,7 +15,7 @@ PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
 			      --bindir=/bin \
 			      --enable-multibyte \
 			      --enable-max-jobtable-size=256 \
-			      --disable-cap \
+			      --enable-cap \
 			      --enable-pcre \
 			      --disable-ansi2knr \
 			      --enable-dynamic \
