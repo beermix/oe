@@ -37,6 +37,6 @@ PKG_CONFIGURE_OPTS_HOST="ac_cv_path_GREP=grep --enable-static --disable-shared"
 
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
 
-post_unpack() {
-  rm -f $BUILD/build-aux/ltmain.sh*
-}
+#post_unpack() {
+#  rm -f $BUILD/build-aux/ltmain.sh*
+#}
