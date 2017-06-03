@@ -34,7 +34,11 @@ PKG_AUTORECONF="no"
 
 PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release"
 
-PKG_CMAKE_OPTS_HOST="$PKG_CMAKE_OPTS_TARGET"
+configure_host() {
+  cmake -DCMAKE_PREFIX_PATH=$ROOT/$TOOLCHAIN/ \
+        -DCMAKE_BUILD_TYPE=Release \
+        ..
+}
 
 post_makeinstall_target() {
   rm -rf $INSTALL
