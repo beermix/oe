@@ -17,10 +17,10 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="6-20170531"
-#PKG_VERSION="754d7e5"
-#PKG_GIT_URL="git://gcc.gnu.org/git/gcc.git"
-PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/LATEST-6/gcc-$PKG_VERSION.tar.xz"
+#PKG_VERSION="6-20170531"
+PKG_VERSION="754d7e5"
+PKG_GIT_URL="git://gcc.gnu.org/git/gcc.git"
+#PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/LATEST-6/gcc-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host"
 PKG_DEPENDS_TARGET="gcc:host"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
@@ -88,7 +88,6 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-threads=posix \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time \
-                         --enable-poison-system-directories \
                          $GCC_OPTS"
 
 pre_configure_host() {
