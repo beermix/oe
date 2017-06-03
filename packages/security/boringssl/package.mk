@@ -11,7 +11,9 @@ PKG_IS_ADDON="no"
 PKG_USE_CMAKE="yes"
 PKG_AUTORECONF="no"
 
-strip_lto
+pre_configure_target() {
+  strip_lto
+}
 
 PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release \
 			  -DGO_EXECUTABLE=$ROOT/$TOOLCHAIN/lib/golang/bin/go \

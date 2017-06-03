@@ -6,6 +6,8 @@ PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
+CCACHE_DISABLE=1
+
 configure_target() {
   ./Configure -des \
 		-Dcccdlflags='-fPIC' \
@@ -15,8 +17,9 @@ configure_target() {
 		-Darchlib=$_archlib \
 		-A ccflags="$CFLAGS -fPIC -DPIC" \
 		-Dcc="$CC" \
+		-Duse64bitint \
 		-Dldflags="$LDFLAGS -fPIC" \
-		-Dlibs="-lm -lcrypto -pthread" \
+		-Dlibs="-lm -lssl -lcrypto -pthread" \
 		-Doptimize="$CFLAGS -ffunction-sections -fdata-sections -finline-limit=8 -ffast-math" \
 		-Dvendorprefix=/usr \
 		-Dvendorlib=/usr/share/perl5/vendor_perl \
@@ -38,7 +41,8 @@ configure_target() {
 		-Dcf_by='OE' \
 		-Ud_csh \
 		-Dusenm \
-		..
+		|| return 1
+		make; make
 }
 
                
