@@ -36,8 +36,8 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            threads \
                            enable-unit-test \
                            enable-tlsext \
-                           no-zlib \
-                           zlib-dynamic \
+                           zlib \
+                           no-zlib-dynamic \
                            enable-ec_nistp_64_gcc_128"
 
 pre_configure_host() {

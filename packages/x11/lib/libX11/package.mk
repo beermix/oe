@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="libX11"
-PKG_VERSION="7d2010f"
+PKG_VERSION="1.6.5"
 PKG_SITE="http://www.x.org/"
-PKG_GIT_URL="https://github.com/mirror/libX11"
+PKG_URL="http://xorg.freedesktop.org/archive/individual/lib/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain xproto:host xproto util-macros xextproto xcmiscproto bigreqsproto kbproto inputproto xtrans libXau libxcb util-macros"
 PKG_SECTION="x11/lib"
 PKG_SHORTDESC="libx11: The X11 library"
