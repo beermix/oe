@@ -17,26 +17,35 @@
 ################################################################################
 
 PKG_NAME="expat"
-PKG_VERSION="2.2.0"
+PKG_VERSION="afd0805"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://expat.sourceforge.net/"
-PKG_URL="$SOURCEFORGE_SRC/$PKG_NAME/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_GIT_URL="https://github.com/libexpat/libexpat"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_PRIORITY="optional"
 PKG_SECTION="textproc"
-PKG_SHORTDESC="expat: XML parser library"
-PKG_LONGDESC="Expat is an XML parser library written in C. It is a stream-oriented parser in which an application registers handlers for things the parser might find in the XML document (like start tags). An introductory article on using Expat is available on xml.com."
-
 PKG_IS_ADDON="no"
-PKG_USE_CMAKE="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
+PKG_CMAKE_SCRIPT_TARGET="expat/CMakeLists.txt"
+
+PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release \
+			  -DBUILD_doc=OFF \
+			  -DBUILD_tools=OFF \
+			  -DBUILD_examples=OFF \
+			  -DBUILD_tests=OFF \
+			  -DBUILD_shared=ON"
+			  
+PKG_CMAKE_SCRIPT_HOST="expat/CMakeLists.txt"
+
+PKG_CMAKE_OPTS_HOST="$PKG_CMAKE_OPTS_TARGET"
+			  
 pre_configure_target() {
-  CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
+  export CFLAGS="$CFLAGS -fPIC -DPIC"
 }
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-shared --enable-static --disable-silent-rules"
-			      
-PKG_CONFIGURE_OPTS_HOST="--prefix=$ROOT/$TOOLCHAIN $PKG_CONFIGURE_OPTS_TARGET"
+pre_configure_host() {
+  export CFLAGS="$CFLAGS -fPIC -DPIC"
+}

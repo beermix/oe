@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="expat"
-PKG_VERSION="00c905d"
+PKG_VERSION="afd0805"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
@@ -40,3 +40,20 @@ PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release \
 			  -DBUILD_examples=OFF \
 			  -DBUILD_tests=OFF \
 			  -DBUILD_shared=ON"
+			  
+PKG_CMAKE_SCRIPT_HOST="expat/CMakeLists.txt"
+
+PKG_CMAKE_OPTS_HOST="-DCMAKE_BUILD_TYPE=Release \
+			  -DBUILD_doc=OFF \
+			  -DBUILD_tools=OFF \
+			  -DBUILD_examples=OFF \
+			  -DBUILD_tests=OFF \
+			  -DBUILD_shared=ON"
+			  
+pre_configure_target() {
+  export CFLAGS="$CFLAGS -fPIC -DPIC"
+}
+
+pre_configure_host() {
+  export CFLAGS="$CFLAGS -fPIC -DPIC"
+}

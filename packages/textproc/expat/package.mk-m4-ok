@@ -16,30 +16,27 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="bzip2"
-PKG_VERSION="0496eaa"
+PKG_NAME="expat"
+PKG_VERSION="2.2.0"
 PKG_REV="1"
 PKG_ARCH="any"
-PKG_LICENSE="GPL"
-PKG_SITE="http://www.oberhumer.com/opensource/lzo"
-PKG_GIT_URL="https://github.com/osrf/bzip2_cmake"
-PKG_DEPENDS_HOST="cmake:host"
-PKG_DEPENDS_TARGET="toolchain bzip2:host"
+PKG_LICENSE="OSS"
+PKG_SITE="http://expat.sourceforge.net/"
+PKG_URL="$SOURCEFORGE_SRC/$PKG_NAME/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_DEPENDS_TARGET="toolchain"
 PKG_PRIORITY="optional"
-PKG_SECTION="compress"
+PKG_SECTION="textproc"
+PKG_SHORTDESC="expat: XML parser library"
+PKG_LONGDESC="Expat is an XML parser library written in C. It is a stream-oriented parser in which an application registers handlers for things the parser might find in the XML document (like start tags). An introductory article on using Expat is available on xml.com."
 
-PKG_USE_CMAKE="yes"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_USE_CMAKE="no"
+PKG_AUTORECONF="yes"
 
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release"
-
-configure_host() {
-  cmake -DCMAKE_PREFIX_PATH=$ROOT/$TOOLCHAIN/ \
-        -DCMAKE_BUILD_TYPE=Release \
-        ..
+pre_configure_target() {
+  CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
 }
 
-post_makeinstall_target() {
-  rm -rf $INSTALL
-}
+PKG_CONFIGURE_OPTS_TARGET="--enable-shared --enable-static --disable-silent-rules"
+			      
+PKG_CONFIGURE_OPTS_HOST="--prefix=$ROOT/$TOOLCHAIN $PKG_CONFIGURE_OPTS_TARGET"
