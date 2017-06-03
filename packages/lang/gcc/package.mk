@@ -54,6 +54,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-gnu-unique-object \
                            --enable-clocale=gnu \
                            --disable-libmpx \
+                           --disable-libsanitizer \
                            --enable-poison-system-directories \
                            --with-tune=generic"
 
@@ -62,7 +63,6 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-__cxa_atexit \
                               --enable-cloog-backend=isl \
                               --disable-libssp \
-                              --disable-libsanitizer \
                               --disable-libatomic \
                               --disable-libquadmath \
                               --disable-libmudflap \
