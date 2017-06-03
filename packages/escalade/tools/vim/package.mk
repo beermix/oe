@@ -17,16 +17,16 @@
 ################################################################################
 
 PKG_NAME="vim"
-PKG_VERSION="8.0.0022"
+PKG_VERSION="v8.0.0022"
 PKG_SITE="http://www.vim.org/"
-PKG_GIT_URL="https://github.com/vim/vim/archive/v$PKG_VERSION.tar.gz"
+PKG_GIT_URL="https://github.com/vim/vim"
 PKG_DEPENDS_TARGET="toolchain netbsd-curses"
 PKG_SECTION="tools"
 PKG_SHORTDESC="vim: VI IMproved"
 PKG_LONGDESC="Vim is a highly configurable text editor built to enable efficient text editing. It is an improved version of the vi editor distributed with most UNIX systems."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="ye"
 
 PKG_CONFIGURE_OPTS_TARGET="vim_cv_toupper_broken=no \
                            vim_cv_terminfo=yes \
