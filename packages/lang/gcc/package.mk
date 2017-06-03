@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="6.3.0"
+PKG_VERSION="6-20170517"
 #PKG_VERSION="754d7e5"
 #PKG_GIT_URL="git://gcc.gnu.org/git/gcc.git"
 #PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/LATEST-6/gcc-$PKG_VERSION.tar.xz"
