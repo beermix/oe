@@ -18,7 +18,7 @@ configure_target() {
 		-Duse64bitint \
 		-Dusethreads \
 		-Dldflags="$LDFLAGS -fPIC" \
-		-Dlibs="-lm -lssl -lcrypto" \
+		-Dlibs="-lm -lssl -lcrypto -pthread" \
 		-Doptimize="$CFLAGS -ffunction-sections -fdata-sections -finline-limit=8 -ffast-math" \
 		-Dvendorprefix=/usr \
 		-Dvendorlib=/usr/share/perl5/vendor_perl \
@@ -41,7 +41,7 @@ configure_target() {
 		-Ud_csh \
 		-Dusenm \
 		|| return 1
-		make SHELL='bash -x'; make SHELL='bash -x'
+		make SHELL='sh -x'; make SHELL='sh -x'
 }
 
                
