@@ -1,3 +1,4 @@
+
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
 #      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
@@ -17,7 +18,8 @@
 ################################################################################
 
 PKG_NAME="readline"
-PKG_VERSION="6c32f81"
+#PKG_VERSION="6c32f81"
+PKG_VERSION="2b2ef89"
 PKG_SITE="http://www.gnu.org/software/readline/"
 PKG_GIT_URL="git://git.savannah.gnu.org/readline.git"
 PKG_DEPENDS_TARGET="toolchain netbsd-curses libedit"
@@ -36,11 +38,8 @@ PKG_CONFIGURE_OPTS_TARGET="bash_cv_wcwidth_broken=no \
                            --disable-shared \
                            --enable-static \
                            --with-curses \
+                           --with-pic \
                            --without-purify"
-
-pre_configure_target() {
-  CFLAGS="$CFLAGS -fPIC"
-}
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/share/readline
