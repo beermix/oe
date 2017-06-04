@@ -1,7 +1,7 @@
 PKG_NAME="mpv"
 PKG_VERSION="v0.22.0"
 PKG_GIT_URL="https://github.com/mpv-player/mpv"
-PKG_DEPENDS_TARGET="toolchain libass"
+PKG_DEPENDS_TARGET="toolchain libass lua"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
@@ -9,7 +9,7 @@ pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
   
-  strip_lto
+  #strip_lto
   #strip_gold
   
   export LDFLAGS="$LDFLAGS -lresolv"
@@ -19,8 +19,9 @@ configure_target() {
   ./bootstrap.py
   ./waf dist
   ./waf configure --prefix=/usr \
-  		    --disable-debug-build \
+  		    --confdir=/storage/.config/mpv \
   		    --disable-manpage-build \
+  		    --check-c-compiler=gcc \
   		    --disable-dvdnav \
   		    --disable-dvdread \
   		    --disable-apple-remote \
@@ -28,10 +29,6 @@ configure_target() {
 }
 
 make_target() {
-  ./waf build -j1
-  
-}
-
-make_install_target() {
+  ./waf build -j7
   ./waf install --destdir=$INSTALL
 }
