@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="libass"
-PKG_VERSION="0.13.6"
+PKG_VERSION="9fb3840"
 PKG_SITE="https://github.com/libass/libass"
-PKG_URL="https://github.com/libass/libass/releases/download/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_GIT_URL="https://github.com/libass/libass"
 PKG_DEPENDS_TARGET="toolchain freetype fontconfig fribidi"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="libass: a portable subtitle renderer for the ASS/SSA (Advanced Substation Alpha/Substation Alpha) subtitle format."
