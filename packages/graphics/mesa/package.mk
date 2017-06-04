@@ -17,13 +17,13 @@
 ################################################################################
 
 PKG_NAME="mesa"
-PKG_VERSION="17.0.7"
+PKG_VERSION="17.1.1"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.mesa3d.org/"
 PKG_URL="ftp://freedesktop.org/pub/mesa/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain Python:host expat glproto dri2proto presentproto libdrm libXext libXdamage libXfixes libXxf86vm libxcb libX11 dri3proto libxshmfence zlib"
+PKG_DEPENDS_TARGET="toolchain Python:host expat glproto dri2proto presentproto libdrm libXext libXdamage libXfixes libXxf86vm libxcb libX11 dri3proto libxshmfence zlib libunwind libelf lm_sensors"
 PKG_PRIORITY="optional"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="mesa: 3-D graphics library with OpenGL API"
@@ -58,7 +58,7 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            X11_INCLUDES= \
                            DRI_DRIVER_INSTALL_DIR=/usr/lib/dri \
                            DRI_DRIVER_SEARCH_DIR=/usr/lib/dri \
-                           --disable-silent-rules \
+                           --enable-silent-rules \
                            --disable-debug \
                            --disable-profile \
                            --disable-libglvnd \
@@ -71,7 +71,7 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --enable-gles2 \
                            --enable-dri \
                            --disable-gallium-extra-hud \
-                           --disable-lmsensors \
+                           --enable-lmsensors \
                            --enable-dri3 \
                            --enable-glx \
                            --disable-osmesa \
@@ -102,7 +102,7 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --without-vulkan-drivers"
 
 pre_configure_target() {
-  export LIBS="-lxcb-dri3 -lxcb-present -lxcb-sync -lxshmfence -lz"
+  export LIBS="-lxcb-dri3 -lxcb-dri2 -lxcb-xfixes -lxcb-present -lxcb-sync -lxshmfence -lz"
 }
 
 post_makeinstall_target() {

@@ -1,8 +1,8 @@
 PKG_NAME="libvncserver"
-PKG_VERSION="c80879e"
+PKG_VERSION="master"
 PKG_GIT_URL="https://github.com/LibVNC/libvncserver"
-PKG_DEPENDS_TARGET="toolchain openjpeg libpng"
-PKG_SECTION="libs"
+PKG_DEPENDS_TARGET="toolchain jpeg libpng"
+PKG_SECTION="x11"
 PKG_IS_ADDON="no"
 PKG_USE_CMAKE="yes"
 PKG_AUTORECONF="no"
@@ -15,5 +15,5 @@ PKG_CMAKE_OPTS_TARGET="-DBUILD_SHARED_LIBS=0 \
 			  -DWITH_24BPP=0 \
 			  -DWITH_FFMPEG=0 \
 			  -DWITH_WEBSOCKETS=0 \
-			  -DWITH_ZLIB=0 \
-			  -DWITH_TIGHTVNC_FILETRANSFER=0"
+			  -DWITH_TIGHTVNC_FILETRANSFER=0 \
+			  -DCMAKE_BUILD_TYPE=Release"

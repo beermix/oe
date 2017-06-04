@@ -2,7 +2,7 @@ PKG_NAME="x11vnc"
 PKG_VERSION="0.9.14"
 PKG_SITE="http://www.karlrunge.com/x11vnc/#downloading"
 PKG_URL="http://x11vnc.sourceforge.net/dev/x11vnc-0.9.14-dev.tar.gz"
-PKG_DEPENDS_TARGET="toolchain libX11 libXext libXtst openjpeg"
+PKG_DEPENDS_TARGET="toolchain libX11 libXext libXtst libjpeg-turbo"
 PKG_SECTION="service/system"
 PKG_AUTORECONF="yes"
 
@@ -10,8 +10,9 @@ pre_build_target() {
 	mkdir -p $ROOT/$PKG_BUILD/.$TARGET_NAME
 	cp -RP $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$TARGET_NAME
 	#export CFLAGS="$CFLAGS -fPIC -DPIC"
-	export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
-	export MAKEFLAGS="-j1"
+	#export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
+	export LIBS="$LIBS -pthread -lz -lpthread -lm -ldl"
+	#export MAKEFLAGS="-j1"
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \

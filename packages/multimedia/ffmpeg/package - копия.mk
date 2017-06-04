@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="LGPLv2.1+"
 PKG_SITE="https://ffmpeg.org"
 PKG_GIT_URL="https://github.com/xbmc/FFmpeg"
-PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl dcadec libmpeg2 flac speex libtheora libvorbis libmodplug xz libssh openjpeg"
+PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl dcadec libmpeg2 flac speex libtheora libvorbis libmodplug xz libssh libjpeg-turbo"
 PKG_PRIORITY="optional"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
@@ -192,7 +192,7 @@ configure_target() {
               --disable-libgsm \
               --disable-libmp3lame \
               --disable-libnut \
-              --enable-libopenjpeg \
+              --enable-liblibjpeg-turbo \
               --disable-librtmp \
               --disable-libschroedinger \
               --enable-libspeex \
