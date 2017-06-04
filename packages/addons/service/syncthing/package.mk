@@ -35,7 +35,17 @@ PKG_ADDON_TYPE="xbmc.service"
 PKG_MAINTAINER="Anton Voyl (awiouy)"
 
 configure_target() {
-  go run build.go assets
+  export GOOS=linux
+  export CGO_ENABLED=1
+  export CGO_NO_EMULATION=1
+  export CGO_CFLAGS=$CFLAGS
+  export LDFLAGS="-w -linkmode external -extldflags -Wl,--unresolved-symbols=ignore-in-shared-libs -extld $CC -X main.Version=v$PKG_VERSION"
+  export GOLANG=$TOOLCHAIN/lib/golang/bin/go
+  export GOPATH=$PKG_BUILD/src/github.com/syncthing/syncthing:$PKG_BUILD/vendor:$PKG_BUILD/Godeps/_workspace
+  export GOROOT=$TOOLCHAIN/lib/golang
+  export PATH=$PATH:$GOROOT/bin
+
+  $TOOLCHAIN/lib/golang/bin/go run build.go assets
 
   mkdir -p $ROOT/$PKG_BUILD $ROOT/$PKG_BUILD/src/github.com/syncthing
   ln -fs $ROOT/$PKG_BUILD $ROOT/$PKG_BUILD/src/github.com/syncthing/syncthing

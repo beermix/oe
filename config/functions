@@ -164,6 +164,14 @@ get_module_dir() {
   basename $(ls -d $(get_pkg_build linux)/.install_pkg/usr/lib/modules/*)
 }
 
+get_pkg_version() {
+  if [ ! -z $1 ] ; then
+    cd $ROOT
+    . config/options $1
+    echo "$PKG_VERSION"
+  fi
+}
+
 tolower(){
   echo "$@" | tr ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz
 }
