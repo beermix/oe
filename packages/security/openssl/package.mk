@@ -30,10 +30,12 @@ PKG_AUTORECONF="no"
 CONCURRENCY_MAKE_LEVEL=1
 CCACHE_DISABLE=1
 
+
 PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            --libdir=lib \
                            shared \
                            threads \
+                           no-md2 \
                            no-sctp \
                            no-ssl2 \
                            no-ssl3 \
