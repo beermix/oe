@@ -1,0 +1,10 @@
+--- e2fsprogs-1.43.2.orig/debugfs/set_fields.c	2016-06-08 23:39:43.000000000 +0200
++++ e2fsprogs-1.43.2/debugfs/set_fields.c	2016-09-19 13:19:14.000000000 +0200
+@@ -35,7 +35,6 @@
+ #include <strings.h>
+ #endif
+ #include <fcntl.h>
+-#include <utime.h>
+ 
+ #include "debugfs.h"
+ #include "uuid/uuid.h"

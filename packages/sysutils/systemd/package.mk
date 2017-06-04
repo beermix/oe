@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="systemd"
-PKG_VERSION="v233"
+PKG_VERSION="3e7d14d"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/systemd"
 PKG_GIT_URL="https://github.com/systemd/systemd"
 #PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
@@ -85,7 +85,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-networkd \
                            --disable-efi \
                            --disable-gnuefi \
-                           --disable-kdbus \
                            --disable-myhostname \
                            --enable-hwdb \
                            --disable-manpages \

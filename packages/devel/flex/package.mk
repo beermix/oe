@@ -31,6 +31,9 @@ PKG_CONFIGURE_OPTS_HOST="ac_cv_lib_util_getloadavg=no --disable-shared"
 #PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared --disable-rpath --with-gnu-ld"
 
 post_makeinstall_host() {
+
+  make -k check || true
+  
   cat > $ROOT/$TOOLCHAIN/bin/lex << "EOF"
 #!/bin/sh
 exec flex "$@"

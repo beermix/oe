@@ -1,0 +1,30 @@
+--- e2fsprogs-1.42.12.orig/debugfs/dump.c	2014-08-05 00:58:23.000000000 +0200
++++ e2fsprogs-1.42.12/debugfs/dump.c	2015-02-24 13:49:24.673532944 +0100
+@@ -22,7 +22,6 @@
+ #include <sys/types.h>
+ #include <sys/stat.h>
+ #include <fcntl.h>
+-#include <utime.h>
+ #ifdef HAVE_GETOPT_H
+ #include <getopt.h>
+ #else
+@@ -70,7 +69,6 @@ static mode_t mode_xlate(__u16 lmode)
+ static void fix_perms(const char *cmd, const struct ext2_inode *inode,
+ 		      int fd, const char *name)
+ {
+-	struct utimbuf ut;
+ 	int i;
+ 
+ 	if (fd != -1)
+@@ -90,11 +88,6 @@ static void fix_perms(const char *cmd, c
+ #endif
+ 	if (i == -1)
+ 		com_err(cmd, errno, "while changing ownership of %s", name);
+-
+-	ut.actime = inode->i_atime;
+-	ut.modtime = inode->i_mtime;
+-	if (utime(name, &ut) == -1)
+-		com_err(cmd, errno, "while setting times of %s", name);
+ }
+ 
+ static void dump_file(const char *cmdname, ext2_ino_t ino, int fd,
