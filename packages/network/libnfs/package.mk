@@ -32,5 +32,5 @@ PKG_AUTORECONF="yes"
 PKG_CONFIGURE_OPTS_TARGET="--disable-examples --disable-tirpc"
 
 pre_configure_target() {
-  export CFLAGS+=" -D_FILE_OFFSET_BITS=64"
+  export CFLAGS="$CFLAGS -D_FILE_OFFSET_BITS=64"
 }

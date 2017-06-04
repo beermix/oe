@@ -60,12 +60,12 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$ROOT/$TOOLCHAIN \
                        -DENABLE_LDGOLD=ON \
                        -DENABLE_SDL=OFF \
                        -DENABLE_LCMS2=ON \
-                       -DENABLE_CCACHE=OFF \
+                       -DENABLE_CCACHE=ON \
                        -DENABLE_LIRC=OFF \
-                       -DENABLE_EVENTCLIENTS=OFF \
+                       -DENABLE_EVENTCLIENTS=ON \
                        -DENABLE_LIBUSB=OFF \
                        -DENABLE_UDEV=ON \
-                       -DENABLE_XSLT=OFF \
+                       -DENABLE_XSLT=ON \
                        -DENABLE_DBUS=ON \
                        -DCMAKE_VERBOSE_MAKEFILE=OFF \
                        -DENABLE_AVX=ON \

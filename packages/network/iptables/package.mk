@@ -34,8 +34,3 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--with-kernel=$(get_pkg_build linux)"
-
-pre_configure_target() {
-  export CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
-  #export LDFLAGS="$LDFLAGS -Wl,--gc-sections"
-}

@@ -22,7 +22,7 @@ PKG_REV="1"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/01org/intel-vaapi-driver"
-PKG_GIT_URL="https://github.com/01org/intel-vaapi-driver"
+PKG_URL="https://github.com/01org/intel-vaapi-driver/releases/download/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain libva libdrm"
 PKG_PRIORITY="optional"
 PKG_SECTION="multimedia"
@@ -32,4 +32,13 @@ PKG_LONGDESC="intel-vaapi-driver: Intel G45+ driver for VAAPI"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-silent-rules --with-drivers-path=/usr/lib/va"
+if [ "$DISPLAYSERVER" = "x11" ]; then
+  DISPLAYSERVER_LIBVA="--enable-x11"
+else
+  DISPLAYSERVER_LIBVA="--disable-x11"
+fi
+
+PKG_CONFIGURE_OPTS_TARGET="--disable-silent-rules \
+                           --enable-drm \
+                           --disable-wayland \
+                           $DISPLAYSERVER_LIBVA"
