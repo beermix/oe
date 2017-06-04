@@ -40,7 +40,6 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-openmp \
                            --disable-vmx \
                            --disable-arm-simd \
                            --disable-arm-neon \
-                           --disable-shared \
                            --with-gnu-ld"
 
 

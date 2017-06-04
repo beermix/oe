@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="xf86-video-intel"
-PKG_VERSION="c72bb27"
+PKG_VERSION="028c946"
 PKG_ARCH="x86_64"
 PKG_SITE="http://intellinuxgraphics.org/"
 PKG_GIT_URL="https://anongit.freedesktop.org/git/xorg/driver/xf86-video-intel"
