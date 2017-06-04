@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="kodi"
-PKG_VERSION="f2b361c"
+PKG_VERSION="17.3-Krypton"
 PKG_GIT_URL="https://github.com/xbmc/xbmc.git"
 PKG_GIT_BRANCH="Krypton"
 PKG_KEEP_CHECKOUT="no"
@@ -57,17 +57,17 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$ROOT/$TOOLCHAIN \
                        -DFFMPEG_INCLUDE_DIRS=$SYSROOT_PREFIX/usr \
                        -DENABLE_INTERNAL_CROSSGUID=OFF \
                        -DENABLE_OPENSSL=ON \
-                       -DENABLE_LDGOLD=ON \
+                       -DENABLE_LDGOLD=OFF \
                        -DENABLE_SDL=OFF \
                        -DENABLE_LCMS2=ON \
-                       -DENABLE_CCACHE=ON \
+                       -DENABLE_CCACHE=OFF \
                        -DENABLE_LIRC=OFF \
-                       -DENABLE_EVENTCLIENTS=ON \
+                       -DENABLE_EVENTCLIENTS=OFF \
                        -DENABLE_LIBUSB=OFF \
                        -DENABLE_UDEV=ON \
-                       -DENABLE_XSLT=ON \
+                       -DENABLE_XSLT=OFF \
                        -DENABLE_DBUS=ON \
-                       -DCMAKE_VERBOSE_MAKEFILE=OFF \
+                       -DCMAKE_VERBOSE_MAKEFILE=ON \
                        -DENABLE_AVX=ON \
                        -DENABLE_AVX2=OFF \
                        -DENABLE_SSE=ON \
@@ -79,23 +79,6 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$ROOT/$TOOLCHAIN \
                        -DHAVE_SSE2=TRUE \
                        -DHAVE_SSE4_1=TRUE \
                        -DHAVE_SSSE3=TRUE"
-
-if [ ! "$KODIPLAYER_DRIVER" = default ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET $KODIPLAYER_DRIVER"
-  if [ "$KODIPLAYER_DRIVER" = bcm2835-driver ]; then
-    KODI_PLAYER="-DCORE_SYSTEM_NAME=rbpi"
-  elif [ "$KODIPLAYER_DRIVER" = mesa ]; then
-    KODI_PLAYER="-DCORE_PLATFORM_NAME=gbm"
-    CFLAGS="$CFLAGS -DMESA_EGL_NO_X11_HEADERS"
-    CXXFLAGS="$CXXFLAGS -DMESA_EGL_NO_X11_HEADERS"
-  elif [ "$KODIPLAYER_DRIVER" = libfslvpuwrap ]; then
-    KODI_PLAYER="-DCORE_PLATFORM_NAME=imx"
-    CFLAGS="$CFLAGS -DHAS_IMXVPU -DLINUX -DEGL_API_FB"
-    CXXFLAGS="$CXXFLAGS -DHAS_IMXVPU -DLINUX -DEGL_API_FB"
-  elif [ "$KODIPLAYER_DRIVER" = libamcodec ]; then
-    KODI_PLAYER="-DCORE_PLATFORM_NAME=aml"
-  fi
-fi
 
 if [ "$TARGET_ARCH" = "x86_64" ]; then
   PKG_CMAKE_OPTS_TARGET+=" -DWITH_CPU=$TARGET_ARCH"
@@ -278,9 +261,12 @@ makeinstall_host() {
 
 pre_configure_target() {
 # kodi should never be built with lto
- strip_lto
+ #strip_lto
+ 
+ #export CFLAGS="$CFLAGS -DMESA_EGL_NO_X11_HEADERS"
+ #export CXXFLAGS="$CXXFLAGS -DMESA_EGL_NO_X11_HEADERS"
 
-  export LIBS="$LIBS -lz -lterminfo"
+ export LIBS="$LIBS -lz -lterminfo"
 }
 
 pre_make_target() {
