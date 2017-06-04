@@ -25,7 +25,7 @@ PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
-PKG_DEPENDS_TARGET="toolchain kodi:host kodi:bootstrap xmlstarlet:host Python zlib systemd pciutils dbus lzo pcre swig:host libass curl fontconfig fribidi tinyxml libjpeg-turbo freetype libcdio libdvdnav taglib libxml2 libxslt sqlite ffmpeg crossguid giflib opengl lcms2 libfmt libpng yajl rapidjson libXmu"
+PKG_DEPENDS_TARGET="toolchain kodi:host kodi:bootstrap xmlstarlet:host Python zlib systemd pciutils dbus lzo pcre swig:host libass curl fontconfig fribidi tinyxml libjpeg-turbo freetype libcdio libdvdnav taglib libxml2 libxslt sqlite ffmpeg crossguid giflib opengl lcms2 libfmt libpng yajl rapidjson libdvdnav libhdhomerun libXmu"
 PKG_DEPENDS_HOST="toolchain"
 PKG_DEPENDS_BOOTSTRAP="toolchain lzo:host libpng:host libjpeg-turbo:host giflib:host"
 PKG_PRIORITY="optional"
@@ -79,6 +79,23 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$ROOT/$TOOLCHAIN \
                        -DHAVE_SSE2=TRUE \
                        -DHAVE_SSE4_1=TRUE \
                        -DHAVE_SSSE3=TRUE"
+
+if [ ! "$KODIPLAYER_DRIVER" = default ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET $KODIPLAYER_DRIVER"
+  if [ "$KODIPLAYER_DRIVER" = bcm2835-driver ]; then
+    KODI_PLAYER="-DCORE_SYSTEM_NAME=rbpi"
+  elif [ "$KODIPLAYER_DRIVER" = mesa ]; then
+    KODI_PLAYER="-DCORE_PLATFORM_NAME=gbm"
+    CFLAGS="$CFLAGS -DMESA_EGL_NO_X11_HEADERS"
+    CXXFLAGS="$CXXFLAGS -DMESA_EGL_NO_X11_HEADERS"
+  elif [ "$KODIPLAYER_DRIVER" = libfslvpuwrap ]; then
+    KODI_PLAYER="-DCORE_PLATFORM_NAME=imx"
+    CFLAGS="$CFLAGS -DHAS_IMXVPU -DLINUX -DEGL_API_FB"
+    CXXFLAGS="$CXXFLAGS -DHAS_IMXVPU -DLINUX -DEGL_API_FB"
+  elif [ "$KODIPLAYER_DRIVER" = libamcodec ]; then
+    KODI_PLAYER="-DCORE_PLATFORM_NAME=aml"
+  fi
+fi
 
 if [ "$TARGET_ARCH" = "x86_64" ]; then
   PKG_CMAKE_OPTS_TARGET+=" -DWITH_CPU=$TARGET_ARCH"
