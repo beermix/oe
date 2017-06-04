@@ -115,7 +115,6 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --disable-glx-read-only-text \
                            $MESA_GALLIUM_LLVM \
                            --disable-valgrind \
-                           --with-sysroot=$SYSROOT_PREFIX \
                            --with-gl-lib-name=GL \
                            --with-osmesa-lib-name=OSMesa \
                            --with-gallium-drivers=$GALLIUM_DRIVERS \
