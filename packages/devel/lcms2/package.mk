@@ -31,9 +31,12 @@ PKG_LONGDESC="lcms2 is a Small-footprint color management engine."
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared \
-                           --with-zlib --with-threads \
-                           --without-jpeg --without-tiff"
+PKG_CONFIGURE_OPTS_TARGET="--enable-static \
+			      --disable-shared \
+			      --with-zlib \
+			      --with-threads \
+                           --with-jpeg \
+                           --with-tiff"
 
 pre_configure_target() {
   CFLAGS="$CFLAGS -fPIC"
