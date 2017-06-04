@@ -17,11 +17,12 @@
 ################################################################################
 
 PKG_NAME="ffmpeg"
-# Current branch is: release/3.1-xbmc
-PKG_VERSION="33c167d"
+PKG_VERSION="3.2.5"
+PKG_REV="1"
 PKG_ARCH="any"
-#PKG_URL="https://ffmpeg.org/releases/${PKG_NAME}-${PKG_VERSION}.tar.gz"
-PKG_GIT_URL="https://github.com/xbmc/FFmpeg"
+PKG_LICENSE="LGPLv2.1+"
+PKG_SITE="https://ffmpeg.org"
+PKG_URL="https://ffmpeg.org/releases/${PKG_NAME}-${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl speex"
 PKG_PRIORITY="optional"
 PKG_SECTION="multimedia"
@@ -35,8 +36,7 @@ PKG_AUTORECONF="no"
   get_graphicdrivers
 
 if [ "$VAAPI_SUPPORT" = yes ]; then
-  PKG_DEPENDS_TARGET+=" intel-vaapi-driver libva-utils"
-  PKG_DEPENDS_TARGET+=" libvdpau-va-gl libvdpau"
+  PKG_DEPENDS_TARGET+=" intel-vaapi-driver  libva-utils"
   FFMPEG_VAAPI="--enable-vaapi"
 else
   FFMPEG_VAAPI="--disable-vaapi"
@@ -83,6 +83,7 @@ esac
 if [ "$DISPLAYSERVER" = "x11" ]; then
   FFMPEG_X11GRAB="--enable-indev=x11grab_xcb"
 fi
+
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
@@ -192,7 +193,6 @@ configure_target() {
               --disable-libopencore-amrwb \
               --disable-libopencv \
               --disable-libdc1394 \
-              --disable-libfaac \
               --disable-libfreetype \
               --disable-libgsm \
               --disable-libmp3lame \
@@ -205,7 +205,6 @@ configure_target() {
               --disable-libvo-amrwbenc \
               --disable-libvorbis \
               --disable-libvpx \
-              --disable-libx265 \
               --disable-libx264 \
               --disable-libxavs \
               --disable-libxvid \

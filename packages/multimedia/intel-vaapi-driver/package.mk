@@ -32,13 +32,5 @@ PKG_LONGDESC="intel-vaapi-driver: Intel G45+ driver for VAAPI"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-if [ "$DISPLAYSERVER" = "x11" ]; then
-  DISPLAYSERVER_LIBVA="--enable-x11"
-else
-  DISPLAYSERVER_LIBVA="--disable-x11"
-fi
-
-PKG_CONFIGURE_OPTS_TARGET="--disable-silent-rules \
-                           --enable-drm \
-                           --disable-wayland \
-                           $DISPLAYSERVER_LIBVA"
+PKG_CONFIGURE_OPTS_TARGET="--enable-drm \
+                           --disable-wayland  --disable-silent-rules --enable-x11 --with-drivers-path=/usr/lib/va"
