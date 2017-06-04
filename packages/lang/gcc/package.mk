@@ -52,12 +52,9 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --without-cloog \
                            --disable-werror \
                            --disable-browser-plugin \
-                           --disable-vtable-verify \
                            --enable-gnu-unique-object \
                            --enable-clocale=gnu \
-                           --disable-libmpx \
                            --disable-libsanitizer \
-                           --enable-poison-system-directories \
                            --with-tune=generic"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
@@ -69,6 +66,7 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-libquadmath \
                               --disable-libmudflap \
                               --disable-libada \
+                              --disable-libmpx \
                               --disable-libgomp \
                               --disable-libitm \
                               --disable-shared \
