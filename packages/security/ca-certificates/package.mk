@@ -11,3 +11,7 @@ pre_configure_target() {
   mkdir -p $INSTALL/usr/sbin
   mkdir -p $INSTALL_DEV/sbin/
 }
+
+post_makeinstall_target() {
+  $PKG_DIR/extra/update-ca-certificates INSTALL/usr/sbin/ 
+}
