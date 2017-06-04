@@ -344,13 +344,6 @@ if [ ! -f $STAMP ]; then
           if [ ! "$DEBUG" = yes ]; then
             $STRIP `find $INSTALL -name "*.so" 2>/dev/null` 2>/dev/null || :
             $STRIP `find $INSTALL -name "*.so.[0-9]*" 2>/dev/null` 2>/dev/null || :
-            $$STRIP `find $INSTALL \
-              -type f -name "*.so*" \
-              ! -name "ld-*.so" \
-              ! -name "libc-*.so" \
-              ! -name "libpthread-*.so" \
-              ! -name "libthread_db-*so" \
-              2>/dev/null` 2>/dev/null || :
 
             # strip kernel modules
             for MOD in `find $INSTALL -type f -name *.ko`; do
@@ -363,9 +356,9 @@ if [ ! -f $STAMP ]; then
       cd $ROOT
     fi  # ! "$PKG_SECTION" = "virtual"
 
-    for i in `find $SYSROOT_PREFIX/usr/lib/ -name "*.la" 2>/dev/null`; do \
-      $SED "s:\(['= ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" $i; \
-    done
+#    for i in `find $SYSROOT_PREFIX/usr/lib/ -name "*.la" 2>/dev/null`; do \
+#      $SED "s:\(['= ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" $i; \
+#    done
 
     PKG_DEEPMD5=$(find $STAMP_DEPENDS -exec md5sum {} \; 2>/dev/null | sort | md5sum | cut -d" " -f1)
     for i in PKG_NAME PKG_DEEPMD5; do

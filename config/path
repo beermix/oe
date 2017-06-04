@@ -54,7 +54,7 @@ MAKE="$ROOT/$TOOLCHAIN/bin/make"
 MAKEINSTALL="$ROOT/$TOOLCHAIN/bin/make -j1 DESTDIR=$SYSROOT_PREFIX install"
 SED="sed -i"
 
-unset LD_LIBRARY_PATH
+#unset LD_LIBRARY_PATH
 
 # set package metadata
   PKG_NAME="$1"
@@ -179,7 +179,7 @@ fi
 export MAKEFLAGS=-j$CONCURRENCY_MAKE_LEVEL
 export PKG_CONFIG=$ROOT/$TOOLCHAIN/bin/pkg-config
 
-if [[ -z "$PATH" || ( "$PATH" != "$ROOT/$TOOLCHAIN/bin:$ROOT/$TOOLCHAIN/sbin" && "$PATH" = "${PATH#$ROOT/$TOOLCHAIN/bin:$ROOT/$TOOLCHAIN/sbin:}" ) ]]; then
+if [ -z "$PATH" -o "$PATH" = "${PATH#$ROOT/$TOOLCHAIN/bin:}" ]; then
   export PATH="$ROOT/$TOOLCHAIN/lib/ccache:$ROOT/$TOOLCHAIN/bin:$ROOT/$TOOLCHAIN/sbin:$PATH"
 fi
 

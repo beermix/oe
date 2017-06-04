@@ -112,8 +112,7 @@ pack_addon() {
       echo "*** ERROR: $ADDON has addon.xml shipped, you need 'xmlstarlet' ***"
       exit 255
     fi
-    ADDONVER="$(xmlstarlet sel -t -v "/addon/@version" $ADDON_BUILD/$PKG_ADDON_ID/addon.xml).$PKG_REV"
-    xmlstarlet ed --inplace -u "/addon[@version]/@version" -v "$ADDONVER" $ADDON_BUILD/$PKG_ADDON_ID/addon.xml
+    ADDONVER=$(xmlstarlet sel -t -v "/addon/@version" $ADDON_BUILD/$PKG_ADDON_ID/addon.xml)
   fi
 
   if [ -f $PKG_DIR/source/default.py ]; then
@@ -121,29 +120,11 @@ pack_addon() {
   fi
 
   if [ -f $PKG_DIR/icon/icon.png ]; then
-    mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/resources
-    cp $PKG_DIR/icon/icon.png $ADDON_BUILD/$PKG_ADDON_ID/resources
+    cp $PKG_DIR/icon/icon.png $ADDON_BUILD/$PKG_ADDON_ID
   fi
-
-  if [ -f $DISTRO_DIR/$DISTRO/addons/fanart.png ]; then
-   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/resources
-   cp $DISTRO_DIR/$DISTRO/addons/fanart.png $ADDON_BUILD/$PKG_ADDON_ID/resources
-  fi
-
-  for f in $PKG_DIR/source/resources/screenshot-*.{jpg,png}; do
-    if [ -f "$f" ]; then
-      PKG_ADDON_SCREENSHOT+="<screenshot>resources/$(basename $f)</screenshot>\n"
-    fi
-  done
 
   if [ -f $PKG_DIR/changelog.txt ]; then
-    sed -e "/@PKG_ADDON_NEWS@/ \
-           {
-             r $PKG_DIR/changelog.txt
-             d
-           }" -i $ADDON_BUILD/$PKG_ADDON_ID/addon.xml
-  else
-    sed -e "s|@PKG_ADDON_NEWS@||g" -i $ADDON_BUILD/$PKG_ADDON_ID/addon.xml
+    cp $PKG_DIR/changelog.txt $ADDON_BUILD/$PKG_ADDON_ID
   fi
 
   PROVIDER_NAME="openelec.tv"
