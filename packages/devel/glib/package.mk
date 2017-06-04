@@ -1,7 +1,6 @@
-
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,11 +17,14 @@
 ################################################################################
 
 PKG_NAME="glib"
-PKG_VERSION="2.53.2"
+PKG_VERSION="2.50.3"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="LGPL"
 PKG_SITE="http://www.gtk.org/"
-PKG_URL="http://ftp.gnome.org/pub/gnome/sources/glib/2.53/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain zlib libffi util-linux pcre attr expat Python:host"
-PKG_DEPENDS_HOST="libffi:host"
+PKG_URL="http://ftp.gnome.org/pub/gnome/sources/glib/2.50/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_DEPENDS_TARGET="toolchain zlib libffi util-linux Python:host"
+PKG_PRIORITY="optional"
 PKG_SECTION="devel"
 PKG_SHORTDESC="glib: C support library"
 PKG_LONGDESC="GLib is a library which includes support routines for C such as lists, trees, hashes, memory allocation, and many other things."
@@ -30,8 +32,13 @@ PKG_LONGDESC="GLib is a library which includes support routines for C such as li
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared --with-pcre=internal"
-PKG_CONFIGURE_OPTS_TARGET="glib_cv_stack_grows=no \
+PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_mmap_fixed_mapped=yes \
+                           ac_cv_func_posix_getpwuid_r=yes \
+                           ac_cv_func_posix_getgrgid_r=yes \
+                           ac_cv_func_printf_unix98=yes \
+                           ac_cv_func_snprintf_c99=yes \
+                           ac_cv_func_vsnprintf_c99=yes \
+                           glib_cv_stack_grows=no \
                            glib_cv_uscore=no \
                            glib_cv_va_val_copy=no \
                            --disable-selinux \
@@ -60,20 +67,4 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/lib/gdbus-2.0
   rm -rf $INSTALL/usr/lib/glib-2.0
   rm -rf $INSTALL/usr/share
-
-  ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/gapplication $ROOT/$BUILD/toolchain/bin/
-  ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/gdbus $ROOT/$BUILD/toolchain/bin/
-  ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/gdbus-codegen $ROOT/$BUILD/toolchain/bin/
-  ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/gio $ROOT/$BUILD/toolchain/bin/
-  ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/gio-querymodules $ROOT/$BUILD/toolchain/bin/
-  ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/glib-compile-resources $ROOT/$BUILD/toolchain/bin/
-  ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/glib-compile-schemas $ROOT/$BUILD/toolchain/bin/
-  ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/glib-genmarshal $ROOT/$BUILD/toolchain/bin/
-  ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/glib-gettextize $ROOT/$BUILD/toolchain/bin/
-  ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/glib-mkenums $ROOT/$BUILD/toolchain/bin/
-  ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/gobject-query $ROOT/$BUILD/toolchain/bin/
-  ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/gresource $ROOT/$BUILD/toolchain/bin/
-  ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/gsettings $ROOT/$BUILD/toolchain/bin/
-  ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/gtester $ROOT/$BUILD/toolchain/bin/
-  ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/gtester-report $ROOT/$BUILD/toolchain/bin/
 }

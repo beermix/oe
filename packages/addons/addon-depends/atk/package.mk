@@ -19,7 +19,7 @@
 ################################################################################
 
 PKG_NAME="atk"
-PKG_VERSION="2.25.2"
+PKG_VERSION="2.24.0"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://library.gnome.org/devel/atk/"

@@ -16,25 +16,23 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="flex"
-PKG_VERSION="2.6.4"
-PKG_SITE="http://flex.sourceforge.net/"
-PKG_URL="https://github.com/westes/flex/releases/download/v${PKG_VERSION}/${PKG_NAME}-${PKG_VERSION}.tar.gz"
+PKG_NAME="m4"
+PKG_VERSION="1.4.18"
+PKG_SITE="ftp://ftp.gnu.org/pub/gnu/m4/"
+PKG_URL="http://ftp.gnu.org/gnu/m4/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST="ccache:host"
-PKG_SECTION="toolchain/devel"
-PKG_SHORTDESC="flex: Fast lexical analyzer generator"
-PKG_LONGDESC="flex is a tool for generating programs that perform pattern-matching on text."
+PKG_SECTION="devel"
+PKG_SHORTDESC="m4: The m4 macro processor"
+PKG_LONGDESC="GNU 'M4' is an implementation of the traditional Unix macro processor. It is mostly SVR4 compatible, although it has some extensions (for example, handling more than 9 positional parameters to macros). 'M4' also has built-in functions for including files, running shell commands, doing arithmetic, etc. Autoconf needs GNU 'M4' for generating 'configure' scripts, but not for running them."
+
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_HOST="ac_cv_lib_util_getloadavg=no --disable-shared"
-#PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared --disable-rpath --with-gnu-ld"
+PKG_CONFIGURE_OPTS_HOST="gl_cv_func_gettimeofday_clobber=no \
+			    ac_cv_func_posix_spawn=yes \
+			    ac_cv_func_posix_spawn_works=yes \
+			    --target=$TARGET_NAME"
 
 post_makeinstall_host() {
-  cat > $ROOT/$TOOLCHAIN/bin/lex << "EOF"
-#!/bin/sh
-exec flex "$@"
-EOF
-
-  chmod -v 755 $ROOT/$TOOLCHAIN/bin/lex
+  make prefix=$SYSROOT_PREFIX/usr install
 }

@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="fluxbox"
-PKG_VERSION="facb42f"
-PKG_GIT_URL="https://github.com/fluxbox/fluxbox"
-#PKG_VERSION="1.3.7"
-#PKG_URL="http://sourceforge.net/projects/fluxbox/files/fluxbox/${PKG_VERSION}/$PKG_NAME-${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_TARGET="toolchain libX11 libXrandr libXext libXrender libXmu"
-#PKG_DEPENDS_TARGET="toolchain libX11 libXrandr libXext libXrender libXcursor libXext xkeyboard-config libXv inputproto xkbcomp"
+#PKG_VERSION="facb42f"
+#PKG_GIT_URL="https://github.com/fluxbox/fluxbox"
+PKG_VERSION="1.3.7"
+PKG_URL="http://sourceforge.net/projects/fluxbox/files/fluxbox/${PKG_VERSION}/$PKG_NAME-${PKG_VERSION}.tar.gz"
+PKG_DEPENDS_TARGET="toolchain libX11 libXrandr libXext libXrender"
+#PKG_DEPENDS_TARGET="toolchain libX11 libXrandr libXext libXrender libXcursor libXext xkeyboard-config libXv inputproto xkbcomp libXmu"
 PKG_SECTION="x11/other"
 PKG_SHORTDESC="Fluxbox is a windowmanager for X that was based on the Blackbox 0.61.1 code"
 PKG_LONGDESC="Fluxbox is a windowmanager for X that was based on the Blackbox 0.61.1 code. It is very light on resources and easy to handle but yet full of features to make an easy, and extremely fast, desktop experience. It is built using C++ and licensed under the MIT-License."

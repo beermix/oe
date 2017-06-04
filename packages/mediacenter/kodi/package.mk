@@ -21,6 +21,7 @@ PKG_VERSION="17.3-Krypton"
 PKG_GIT_URL="https://github.com/xbmc/xbmc.git"
 PKG_GIT_BRANCH="Krypton"
 PKG_KEEP_CHECKOUT="no"
+PKG_PATCH_DIRS="$LINUX non-rpi"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -62,12 +63,12 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$ROOT/$TOOLCHAIN \
                        -DENABLE_LCMS2=ON \
                        -DENABLE_CCACHE=OFF \
                        -DENABLE_LIRC=OFF \
-                       -DENABLE_EVENTCLIENTS=OFF \
+                       -DENABLE_EVENTCLIENTS=ON \
                        -DENABLE_LIBUSB=OFF \
                        -DENABLE_UDEV=ON \
-                       -DENABLE_XSLT=OFF \
+                       -DENABLE_XSLT=ON \
                        -DENABLE_DBUS=ON \
-                       -DCMAKE_VERBOSE_MAKEFILE=ON \
+                       -DCMAKE_VERBOSE_MAKEFILE=OFF \
                        -DENABLE_AVX=ON \
                        -DENABLE_AVX2=OFF \
                        -DENABLE_SSE=ON \
@@ -261,12 +262,13 @@ makeinstall_host() {
 
 pre_configure_target() {
 # kodi should never be built with lto
- #strip_lto
- 
- #export CFLAGS="$CFLAGS -DMESA_EGL_NO_X11_HEADERS"
- #export CXXFLAGS="$CXXFLAGS -DMESA_EGL_NO_X11_HEADERS"
+  #strip_lto
+  #strip_gold
+  
+  #export CFLAGS="$CFLAGS -DMESA_EGL_NO_X11_HEADERS"
+  #export CXXFLAGS="$CXXFLAGS -DMESA_EGL_NO_X11_HEADERS"
 
- export LIBS="$LIBS -lz -lterminfo"
+  export LIBS="$LIBS -lz -ltermcap"
 }
 
 pre_make_target() {
@@ -346,16 +348,6 @@ post_makeinstall_target() {
     $SED "s|@OS_VERSION@|$OS_VERSION|g" -i $INSTALL/usr/share/kodi/addons/os.openelec.tv/addon.xml
     cp -R $PKG_DIR/config/repository.openelec.tv $INSTALL/usr/share/kodi/addons
     $SED "s|@ADDON_URL@|$ADDON_URL|g" -i $INSTALL/usr/share/kodi/addons/repository.openelec.tv/addon.xml
-
-    #cp -R $PKG_DIR/config/os.libreelec.tv $INSTALL/usr/share/kodi/addons
-    #$SED "s|@OS_VERSION@|$OS_VERSION|g" -i $INSTALL/usr/share/kodi/addons/os.libreelec.tv/addon.xml
-    #cp -R $PKG_DIR/config/repository.libreelec.tv $INSTALL/usr/share/kodi/addons
-    #$SED "s|@ADDON_URL@|$ADDON_URL|g" -i $INSTALL/usr/share/kodi/addons/repository.libreelec.tv/addon.xml
-    #cp -R $PKG_DIR/config/repository.kodi.game $INSTALL/usr/share/kodi/addons
-
-    #$SED "s|@OS_VERSION@|$OS_VERSION|g" -i $INSTALL/usr/share/kodi/addons/os.alexelec/addon.xml
-    #cp -R $PKG_DIR/config/repository.alexelec $INSTALL/usr/share/kodi/addons
-    #$SED "s|@ADDON_URL@|$ADDON_URL|g" -i $INSTALL/usr/share/kodi/addons/repository.alexelec/addon.xml
 
   mkdir -p $INSTALL/usr/lib/python"$PKG_PYTHON_VERSION"/site-packages/kodi
     cp -R $ROOT/$PKG_BUILD/tools/EventClients/lib/python/*.py $INSTALL/usr/lib/python"$PKG_PYTHON_VERSION"/site-packages/kodi
