@@ -29,7 +29,14 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 # package specific configure options
-PKG_CONFIGURE_OPTS_TARGET="--disable-rst2man"
+PKG_CONFIGURE_OPTS_TARGET="--disable-dependency-tracking \
+                           --disable-xmlto \
+                           --disable-alsaconf \
+                           --disable-alsaloop \
+                           --enable-alsatest \
+                           --disable-bat \
+                           --disable-nls \
+                           --disable-rst2man"
 
 
 post_makeinstall_target() {
