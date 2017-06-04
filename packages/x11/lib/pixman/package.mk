@@ -27,7 +27,7 @@ PKG_LONGDESC="Pixman is a generic library for manipulating pixel regions, contai
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-openmp \
+PKG_CONFIGURE_OPTS_TARGET="--disable-openmp \
                            --disable-loongson-mmi \
                            --disable-mips-dspr2 \
                            --enable-gcc-inline-asm \
@@ -44,7 +44,7 @@ if [ "$TARGET_ARCH" = arm ]; then
   fi
   PKG_CONFIGURE_OPTS_TARGET+=" --disable-mmx --disable-sse2 --disable-vmx --enable-arm-simd --disable-arm-iwmmxt"
 elif [ "$TARGET_ARCH" = x86_64  ]; then
-  PKG_CONFIGURE_OPTS_TARGET+=" --enable-mmx --enable-sse2 --enable-ssse3 --disable-vmx --disable-arm-simd --disable-arm-neon"
+  PKG_CONFIGURE_OPTS_TARGET+=" --enable-mmx --enable-sse2 --disable-ssse3 --disable-vmx --disable-arm-simd --disable-arm-neon"
 fi
 
 
