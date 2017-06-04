@@ -1,5 +1,5 @@
 PKG_NAME="tcl"
-PKG_VERSION="19d4625"
+PKG_VERSION="bg_tip_282"
 PKG_GIT_URL="https://github.com/tcltk/tcl"
 PKG_DEPENDS_HOST="ccache:host gettext:host"
 PKG_SECTION="toolchain/devel"
