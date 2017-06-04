@@ -29,14 +29,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 make_target() {
-  case $ARCH in
-    arm)
-      $CC -o nmon lmon16f.c -g -O3 -Wall -D JFS -D GETUSER -D LARGEMEM -lncurses -lm -D arm
-      ;;
-    x86_64)
-      $CC -o nmon lmon16f.c -g -O3 -Wall -D JFS -D GETUSER -D LARGEMEM -lncurses -lm -D x86
-      ;;
-  esac
+      $CC -o nmon lmon16f.c -g -O3 -Wall -D JFS -D GETUSER -D LARGEMEM -lncurses -lterminfo -lm -D x86
 }
 
 makeinstall_target() {
