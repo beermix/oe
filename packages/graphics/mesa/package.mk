@@ -17,13 +17,15 @@
 ################################################################################
 
 PKG_NAME="mesa"
-PKG_VERSION="17.1.1"
+#PKG_VERSION="17.1.1"
+PKG_VERSION="4415a46"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.mesa3d.org/"
-PKG_URL="ftp://freedesktop.org/pub/mesa/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain Python:host expat glproto dri2proto presentproto libdrm libXext libXdamage libXfixes libXxf86vm libxcb libX11 systemd dri3proto libxshmfence openssl lm_sensors"
+#PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_GIT_URL="git://anongit.freedesktop.org/mesa/mesa"
+PKG_DEPENDS_TARGET="toolchain Python:host expat glproto dri2proto presentproto libdrm libXext libXdamage libXfixes libXxf86vm libxcb libX11 dri3proto libxshmfence zlib libpthread-stubs Mako:host"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="mesa: 3-D graphics library with OpenGL API"
 PKG_LONGDESC="Mesa is a 3-D graphics library with an API which is very similar to that of OpenGL*. To the extent that Mesa utilizes the OpenGL command syntax or state machine, it is being used with authorization from Silicon Graphics, Inc. However, the author makes no claim that Mesa is in any way a compatible replacement for OpenGL or associated with Silicon Graphics, Inc. Those who want a licensed implementation of OpenGL should contact a licensed vendor. While Mesa is not a licensed OpenGL implementation, it is currently being tested with the OpenGL conformance tests. For the current conformance status see the CONFORM file included in the Mesa distribution."
@@ -79,6 +81,7 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            CFLAGS_FOR_BUILD= \
                            CXXFLAGS_FOR_BUILD= \
                            LDFLAGS_FOR_BUILD= \
+                           X11_INCLUDES= \
                            DRI_DRIVER_INSTALL_DIR=/usr/lib/dri \
                            DRI_DRIVER_SEARCH_DIR=/usr/lib/dri \
                            --enable-silent-rules \
@@ -88,9 +91,12 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --enable-asm \
                            --disable-selinux \
                            --enable-opengl \
+                           --disable-gles1 \
+                           --enable-gles2 \
+                           --enable-dri \
+                           --disable-gallium-extra-hud \
+                           --enable-dri3 \
                            --enable-glx \
-                           --enable-driglx-direct \
-                           --enable-glx-tls \
                            --disable-osmesa \
                            --disable-gallium-osmesa \
                            --enable-egl --with-egl-platforms=x11,drm \
@@ -100,21 +106,26 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --disable-xvmc \
                            --disable-omx \
                            --disable-va \
-                           --disable-opencl \
-                           --enable-opencl-icd \
+                           --enable-shader-cache \
+                           --disable-opencl --disable-opencl-icd \
                            --disable-gallium-tests \
                            --enable-shared-glapi \
+                           --enable-driglx-direct \
+                           --enable-glx-tls \
+                           --disable-glx-read-only-text \
+                           $MESA_GALLIUM_LLVM \
+                           --disable-valgrind \
+                           --with-sysroot=$SYSROOT_PREFIX \
                            --with-gl-lib-name=GL \
                            --with-osmesa-lib-name=OSMesa \
                            --with-gallium-drivers=$GALLIUM_DRIVERS \
                            --with-dri-driverdir=/usr/lib/dri \
                            --with-dri-searchpath=/usr/lib/dri \
                            --with-dri-drivers=$DRI_DRIVERS \
-                           --with-vulkan-drivers=no \
-                           --with-sysroot=$SYSROOT_PREFIX"
+                           --without-vulkan-drivers"
 
 pre_configure_target() {
-  export LIBS="-lxcb-dri3 -lxcb-present -lxcb-sync -lxcb-dri2 -lxcb-xfixes -lxshmfence -lz"
+  export LIBS="-lxcb-dri3 -lxcb-dri2 -lxcb-xfixes -lxcb-present -lxcb-sync -lxshmfence -lz"
 }
 
 post_makeinstall_target() {
