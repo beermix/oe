@@ -1,7 +1,7 @@
 PKG_NAME="x11vnc"
 PKG_VERSION="36a46c7"
 PKG_GIT_URL="https://github.com/LibVNC/x11vnc"
-PKG_DEPENDS_TARGET="toolchain libX11 libXext libXtst libjpeg-turbo libxcb libXau libvncserver"
+PKG_DEPENDS_TARGET="toolchain libX11 libXext libXtst openjpeg libxcb libXau libvncserver"
 
 PKG_AUTORECONF="yes"
 

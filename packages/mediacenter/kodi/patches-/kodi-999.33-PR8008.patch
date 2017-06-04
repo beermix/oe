@@ -118,7 +118,7 @@ diff -Naur kodi-17.1-Krypton/tools/depends/target/Makefile kodi-17.1-Krypton.pat
 @@ -9,7 +9,7 @@
  	libgcrypt bzip2 liblzo2 libzip freetype2 fontconfig \
  	openssl gmp nettle gnutls curl \
- 	libjpeg-turbo libpng fribidi libass \
+ 	openjpeg libpng fribidi libass \
 -	libxml2 yajl libmicrohttpd mysql libffi \
 +	libxml2 rapidjson libmicrohttpd mysql libffi \
  	python27 libshairplay \

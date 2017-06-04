@@ -86,7 +86,7 @@
   KODI_WEBSERVER_SUPPORT="yes"
 
 # build and install Avahi (Zeroconf) daemon (yes / no)
-  AVAHI_DAEMON="no"
+  AVAHI_DAEMON="yes"
 
 # build with UPnP support (yes / no)
   KODI_UPNP_SUPPORT="yes"
@@ -95,7 +95,7 @@
   KODI_MYSQL_SUPPORT="yes"
 
 # build xbmc with sshlib support (yes / no)
-  KODI_SSHLIB_SUPPORT="no"
+  KODI_SSHLIB_SUPPORT="yes"
 
 # build xbmc with optical drive support (yes / no)
   KODI_OPTICAL_SUPPORT="no"
@@ -139,7 +139,7 @@
   UDEVIL="yes"
 
 # build and install exFAT fuse support (yes / no)
-  EXFAT="no"
+  EXFAT="yes"
 
 # build and install NTFS-3G fuse support (yes / no)
   NTFS3G="yes"
@@ -177,7 +177,7 @@
 
 # Support for partitioning and formating disks in initramfs (yes / no)
 # This adds support for parted and mkfs.ext3/4 to initramfs for OEM usage
-  INITRAMFS_PARTED_SUPPORT="yes"
+  INITRAMFS_PARTED_SUPPORT="no"
 
 # build with swap support (yes / no)
   SWAP_SUPPORT="no"

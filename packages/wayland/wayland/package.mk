@@ -16,21 +16,19 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="jasper"
-PKG_VERSION="version-1.900.31"
-PKG_SITE="http://www.ece.uvic.ca/~mdadams/jasper/"
-PKG_GIT_URL="https://github.com/mdadams/jasper"
-PKG_DEPENDS_TARGET="toolchain openjpeg"
-PKG_SECTION="graphics"
-PKG_SHORTDESC="jasper: JPEG-2000 Part-1 standard (i.e., ISO/IEC 15444-1) implementation"
-PKG_LONGDESC="This distribution contains the public release of the an open-source implementation of the ISO/IEC 15444-1 also known as JPEG-2000 standard for image compression."
+PKG_NAME="wayland"
+PKG_VERSION="1.13.0"
+PKG_SITE="http://bitmath.org"
+PKG_URL="https://wayland.freedesktop.org/releases/${PKG_NAME}-${PKG_VERSION}.tar.xz"
+PKG_DEPENDS_TARGET="toolchain libxml2 glib"
+PKG_SECTION="wayland"
+PKG_SHORTDESC="The mtdev is a stand-alone library which transforms all variants of kernel MT events to the slotted type B protocol."
+PKG_LONGDESC="The mtdev is a stand-alone library which transforms all variants of kernel MT events to the slotted type B protocol. The events put into mtdev may be from any MT device, specifically type A without contact tracking, type A with contact tracking, or type B with contact tracking. See the kernel documentation for further details."
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
-PKG_USE_CMAKE="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static --with-pic"
-
-post_makeinstall_target() {
-  rm -rf $INSTALL/usr/bin
+pre_configure_target() {
+  strip_lto
 }
+PKG_CONFIGURE_OPTS_TARGET="--disable-documentation --disable-shared"

@@ -2,7 +2,7 @@ PKG_NAME="libvncserver"
 PKG_VERSION="master"
 PKG_URL="https://github.com/LibVNC/libvncserver/archive/$PKG_VERSION.tar.gz"
 #PKG_SOURCE_DIR="libvncserver-LibVNCServer-$PKG_VERSION"
-PKG_DEPENDS_TARGET="toolchain libjpeg-turbo libpng"
+PKG_DEPENDS_TARGET="toolchain openjpeg libpng"
 PKG_SECTION="libs"
 
 PKG_IS_ADDON="no"
