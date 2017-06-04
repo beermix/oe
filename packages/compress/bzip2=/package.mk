@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,26 +16,33 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="flex"
-PKG_VERSION="2.6.1"
-PKG_SITE="http://flex.sourceforge.net/"
-PKG_URL="https://github.com/westes/flex/releases/download/v${PKG_VERSION}/${PKG_NAME}-${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_HOST="ccache:host"
-PKG_SECTION="toolchain/devel"
-PKG_SHORTDESC="flex: Fast lexical analyzer generator"
-PKG_LONGDESC="flex is a tool for generating programs that perform pattern-matching on text."
+PKG_NAME="bzip2"
+PKG_VERSION="0496eaa"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
+PKG_SITE="http://www.oberhumer.com/opensource/lzo"
+PKG_GIT_URL="https://github.com/osrf/bzip2_cmake"
+PKG_DEPENDS_HOST="cmake:host"
+PKG_DEPENDS_TARGET="toolchain bzip2:host"
+PKG_PRIORITY="optional"
+PKG_SECTION="compress"
+
+PKG_USE_CMAKE="yes"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-#PKG_CONFIGURE_OPTS_HOST="ac_cv_lib_util_getloadavg=no ac_cv_func_malloc_0_nonnull=yes ac_cv_func_realloc_0_nonnull=yes"
-			    
-PKG_CONFIGURE_OPTS_HOST="ac_cv_lib_util_getloadavg=no --disable-shared --disable-rpath --with-gnu-ld"
+PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release"
+PKG_CMAKE_OPTS_HOST="$PKG_CMAKE_OPTS_TARGET"
 
-post_makeinstall_host() {
-   cat > $ROOT/$TOOLCHAIN/bin/lex << "EOF"
-#!/bin/sh
-exec flex "$@"
-EOF
+pre_configure_target() {
+  export CFLAGS="$CFLAGS -fPIC"
+}
 
-  chmod -v 755 $ROOT/$TOOLCHAIN/bin/lex
+pre_configure_host() {
+  export CFLAGS="$CFLAGS -fPIC"
+}
+
+post_makeinstall_target() {
+  rm -rf $INSTALL
 }

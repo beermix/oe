@@ -64,6 +64,7 @@ unset LD_LIBRARY_PATH
   PKG_LICENSE="unknown"
   PKG_SITE=""
   PKG_URL=""
+  PKG_SOURCE_NAME=""
   PKG_GIT_URL=""
   PKG_GIT_BRANCH=""
   PKG_DEPENDS_TARGET=""
@@ -124,7 +125,7 @@ unset LD_LIBRARY_PATH
         # found first, set $PKG_DIR
         PKG_DIR="$DIR"
         # keep track of dirs with package.mk for detecting multiple folders
-        _ALL_DIRS="${_ALL_DIRS}${DIR}\\n"
+        _ALL_DIRS+="${DIR}\n"
         _FOUND=$((_FOUND+1))
         if [ $_FOUND -gt 1 ]; then
           # _FOUND more ? fail
@@ -153,9 +154,16 @@ unset LD_LIBRARY_PATH
         fi
       done
     fi
+
+    # _FOUND multiple packages? fail
+    if [ $_FOUND -gt 1 ]; then
+      echo "Error - multiple package folders:"
+      echo -e "$_ALL_DIRS"
+      exit 1
+    fi
   fi
 
-  if [ -r $PKG_DIR/package.mk ]; then
+  if [ -n "$PKG_DIR" -a -r $PKG_DIR/package.mk ]; then
     . $PKG_DIR/package.mk
   fi
 
