@@ -42,7 +42,11 @@ if [ ! -f $HOME/.kodi/userdata/guisettings.xml ] ; then
   fi
 fi
 
-KODI_ARGS="--lircdev /run/lirc/lircd"
+if [ -e /run/lirc/lircd.irtrans ]; then
+  KODI_ARGS="--lircdev /run/lirc/lircd.irtrans"
+else
+  KODI_ARGS="--lircdev /run/lirc/lircd"
+fi
 
 mkdir -p /storage/music
 mkdir -p /storage/pictures
