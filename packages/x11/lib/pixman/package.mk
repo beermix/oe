@@ -27,7 +27,7 @@ PKG_LONGDESC="Pixman is a generic library for manipulating pixel regions, contai
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-openmp \
+PKG_CONFIGURE_OPTS_TARGET="--enable-openmp \
                            --disable-loongson-mmi \
                            --disable-mips-dspr2 \
                            --enable-gcc-inline-asm \
