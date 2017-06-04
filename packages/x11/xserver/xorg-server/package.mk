@@ -107,7 +107,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
                            --with-gnu-ld \
                            --with-sha1=libcrypto \
                            --without-systemd-daemon \
-                           --with-os-vendor=OE \
+                           --with-os-vendor=OpenELEC.tv \
                            --with-module-dir=/usr/lib/xorg/modules \
                            --with-xkb-path=/usr/share/X11/xkb \
                            --with-xkb-output=/var/cache/xkb \
@@ -115,6 +115,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
                            --with-fontrootdir=/usr/share/fonts \
                            --with-default-font-path=/usr/share/fonts/misc,built-ins \
                            --with-serverconfig-path=/usr/lib/xserver \
+                           --without-doxygen \
                            --without-xmlto \
                            --without-fop"
 
