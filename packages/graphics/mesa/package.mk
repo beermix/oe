@@ -103,7 +103,6 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --disable-opencl \
                            --enable-opencl-icd \
                            --disable-gallium-tests \
-                           --enable-shader-cache \
                            --enable-shared-glapi \
                            --with-gl-lib-name=GL \
                            --with-osmesa-lib-name=OSMesa \
