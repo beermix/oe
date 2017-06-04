@@ -52,8 +52,8 @@ PKG_CONFIGURE_OPTS_TARGET="BUILD_CC=$HOST_CC \
                            --disable-jbd-debug \
                            --disable-blkid-debug \
                            --disable-testio-debug \
-                           --disable-libuuid \
-                           --disable-libblkid \
+                           --enable-libuuid \
+                           --enable-libblkid \
                            --disable-debugfs \
                            --disable-imager \
                            --enable-resizer \
@@ -110,7 +110,6 @@ make_host() {
 }
 
 makeinstall_host() {
-  rm -f $ROOT/$TOOLCHAIN/lib/libcom_err.a $ROOT/$TOOLCHAIN/lib/libext2fs.a
   make -C lib/et install
   make -C lib/ext2fs install
 }

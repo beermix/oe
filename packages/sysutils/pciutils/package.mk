@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="pciutils"
-PKG_VERSION="3.5.3"
+PKG_VERSION="3.5.4"
 PKG_ARCH="x86_64"
 PKG_SITE="http://mj.ucw.cz/pciutils.shtml"
 PKG_URL="http://www.kernel.org/pub/software/utils/pciutils/$PKG_NAME-$PKG_VERSION.tar.xz"
@@ -32,7 +32,6 @@ PKG_AUTORECONF="no"
 PKG_MAKE_OPTS="PREFIX=/usr SHARED=no STRIP= IDSDIR=/usr/share"
 
 make_target() {
-  strip_lto
   make OPT="$CFLAGS" \
        CROSS_COMPILE=${TARGET_NAME}- \
        HOST=$TARGET_ARCH-linux \
