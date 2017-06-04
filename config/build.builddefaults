@@ -30,6 +30,7 @@
                          --sysconfdir=/etc \
                          --libexecdir=/usr/lib \
                          --localstatedir=/var \
+                         --enable-silent-rules \
                          --disable-static \
                          --enable-shared"
 
