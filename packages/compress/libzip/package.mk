@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libzip"
-PKG_VERSION="0.11.2"
+PKG_VERSION="1.2.0"
 PKG_SITE="http://www.nih.at/libzip/"
 PKG_URL="http://www.nih.at/libzip/${PKG_NAME}-${PKG_VERSION}.tar.xz"
 PKG_DEPENDS_TARGET="toolchain"
@@ -29,7 +29,6 @@ PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static"
 
-post_makeinstall_target() {
-  rm -rf $INSTALL/usr/bin
-  rm -rf $INSTALL/usr/lib
-}
+PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release"
+
+
