@@ -54,6 +54,7 @@ MAKE="$ROOT/$TOOLCHAIN/bin/make"
 MAKEINSTALL="$ROOT/$TOOLCHAIN/bin/make -j1 DESTDIR=$SYSROOT_PREFIX install"
 SED="sed -i"
 
+unset LD_LIBRARY_PATH
 # set package metadata
   PKG_NAME="$1"
   PKG_VERSION="0.0invalid"
@@ -76,9 +77,10 @@ SED="sed -i"
   PKG_PATCH_DIRS=""
 
   if [ -n "$1" ]; then
-    _PKG_ROOT_NAME=$(echo $1 | cut -d: -f1)
+    _PKG_ROOT_NAME=${1%:*}
     _ALL_DIRS=""
     _FOUND=0
+    _ANCHOR="@?+?@"
     PKG_DIR=""
 
     # check project folder for a package in home dir
@@ -171,8 +173,8 @@ fi
 export MAKEFLAGS=-j$CONCURRENCY_MAKE_LEVEL
 export PKG_CONFIG=$ROOT/$TOOLCHAIN/bin/pkg-config
 
-if [ -z "$PATH" -o "$PATH" = "${PATH#$ROOT/$TOOLCHAIN/bin:}" ]; then
-  export PATH="$ROOT/$TOOLCHAIN/lib/ccache:$ROOT/$TOOLCHAIN/bin:$ROOT/$TOOLCHAIN/sbin:$PATH"
+if [[ -z "$PATH" || ( "$PATH" != "$ROOT/$TOOLCHAIN/bin:$ROOT/$TOOLCHAIN/sbin" && "$PATH" = "${PATH#$ROOT/$TOOLCHAIN/bin:$ROOT/$TOOLCHAIN/sbin:}" ) ]]; then
+  export PATH="$ROOT/$TOOLCHAIN/bin:$ROOT/$TOOLCHAIN/sbin${PATH:+":$PATH"}"
 fi
 
 VERSION_SUFFIX=$TARGET_ARCH
