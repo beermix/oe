@@ -29,8 +29,8 @@ PKG_LONGDESC="zlib is a general purpose data compression library. All the code i
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release -DCMAKE_MAKE_PROGRAM=$ROOT/$TOOLCHAIN/bin/make -DAMD64=O1N -DASM686=0"
-PKG_CMAKE_OPTS_HOST="$PKG_CMAKE_OPTS_TARGET"
+PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release"
+#PKG_CMAKE_OPTS_HOST="$PKG_CMAKE_OPTS_TARGET"
 
 post_configure_target() {
  ## configure minizip
@@ -46,10 +46,10 @@ post_configure_target() {
 
 post_make_target() {
  # make minizip
- make -C $ROOT/$PKG_BUILD/contrib/minizip
+ make -j1 -C $ROOT/$PKG_BUILD/contrib/minizip
 }
 
 post_makeinstall_target() {
  # Install minizip
- make -C $ROOT/$PKG_BUILD/contrib/minizip DESTDIR=$SYSROOT_PREFIX install
+ make -j1 -C $ROOT/$PKG_BUILD/contrib/minizip DESTDIR=$SYSROOT_PREFIX install
 }

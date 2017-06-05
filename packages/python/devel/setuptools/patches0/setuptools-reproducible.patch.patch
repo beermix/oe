@@ -1,0 +1,13 @@
+Index: b/setuptools/command/easy_install.py
+===================================================================
+--- a/setuptools/command/easy_install.py
++++ b/setuptools/command/easy_install.py
+@@ -435,7 +435,7 @@ consider to install to another location,
+             for spec in self.args:
+                 self.easy_install(spec, not self.no_deps)
+             if self.record:
+-                outputs = self.outputs
++                outputs = list(sorted(self.outputs))
+                 if self.root:  # strip any package prefix
+                     root_len = len(self.root)
+                     for counter in range(len(outputs)):
