@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="binutils"
-PKG_VERSION="4a4a4a2"
+PKG_VERSION="1735f7e"
 PKG_GIT_URL="https://github.com/bminor/binutils-gdb"
 PKG_DEPENDS_HOST="ccache:host bison:host flex:host linux:host zlib:host"
 PKG_SECTION="toolchain/devel"

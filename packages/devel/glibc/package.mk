@@ -22,7 +22,7 @@ PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/libc/"
-PKG_URL="https://dl.dropboxusercontent.com/s/sjrkpdmhamap03d/glibc-2.24.tar.xz"
+PKG_URL="http://ftp.gnu.org/pub/gnu/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap localedef-eglibc:host"
 PKG_DEPENDS_INIT="glibc"
 PKG_PRIORITY="optional"
@@ -46,7 +46,6 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
 			      --enable-kernel=4.0.0 \
 			      --enable-obsolete-rpc \
 			      --enable-profile \
-			      --enable-stack-protector=strong \
 			      --enable-stackguard-randomization \
 			      --enable-tunables \
 			      --with-binutils=$ROOT/$BUILD/toolchain/bin \
