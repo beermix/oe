@@ -28,6 +28,10 @@ PKG_LONGDESC="XZ Utils is free general-purpose data compression software with hi
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_HOST="--enable-threads --disable-static --disable-xzdec --disable-lzmadec --disable-doc"
+PKG_CONFIGURE_OPTS_HOST="--enable-static \
+			    --enable-threads \
+			    --disable-xzdec \
+			    --disable-lzmadec \
+			    --disable-doc"
 
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
