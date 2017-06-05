@@ -173,8 +173,8 @@ fi
 export MAKEFLAGS=-j$CONCURRENCY_MAKE_LEVEL
 export PKG_CONFIG=$ROOT/$TOOLCHAIN/bin/pkg-config
 
-if [[ -z "$PATH" || ( "$PATH" != "$ROOT/$TOOLCHAIN/bin:$ROOT/$TOOLCHAIN/sbin" && "$PATH" = "${PATH#$ROOT/$TOOLCHAIN/bin:$ROOT/$TOOLCHAIN/sbin:}" ) ]]; then
-  export PATH="$ROOT/$TOOLCHAIN/bin:$ROOT/$TOOLCHAIN/sbin${PATH:+":$PATH"}"
+if [ -z "$PATH" -o "$PATH" = "${PATH#$ROOT/$TOOLCHAIN/bin:}" ]; then
+  export PATH="$ROOT/$TOOLCHAIN/lib/ccache:$ROOT/$TOOLCHAIN/bin:$ROOT/$TOOLCHAIN/sbin:$PATH"
 fi
 
 VERSION_SUFFIX=$TARGET_ARCH
