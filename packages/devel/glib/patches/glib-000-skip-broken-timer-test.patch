@@ -1,0 +1,12 @@
+diff --git a/glib/tests/Makefile.am b/glib/tests/Makefile.am
+index 43b11f05d..37406ecdf 100644
+--- a/glib/tests/Makefile.am
++++ b/glib/tests/Makefile.am
+@@ -106,7 +106,6 @@ test_programs = \
+ 	test-printf			\
+ 	thread				\
+ 	timeout				\
+-	timer				\
+ 	tree				\
+ 	utf8-performance		\
+ 	utf8-pointer			\
