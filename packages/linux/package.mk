@@ -59,15 +59,15 @@ case "$LINUX" in
     PKG_GIT_BRANCH="rpi-4.9.y"
     PKG_PATCH_DIRS="linux-4.9 rpi-4.9"
     ;;
-  linux-zen)
-    PKG_VERSION="zen-kernel-4.10-master3"
+  linux-4.8)
+    PKG_VERSION="4.8.6"
     PKG_URL="ftp://root:openelec@192.168.1.4:2121/www/linux-$PKG_VERSION.tar.xz"
-    PKG_PATCH_DIRS="linux-4.10"
+    PKG_PATCH_DIRS="linux-4.8"
     ;;
   *)
-    PKG_VERSION="4.11-zengit"
+    PKG_VERSION="4.9.30"
     PKG_URL="ftp://root:openelec@192.168.1.4/www/linux-4.11-zengit.tar.xz"
-    PKG_PATCH_DIRS="linux-4.11"
+    PKG_PATCH_DIRS="linux-4.9"
     ;;
 esac
 
