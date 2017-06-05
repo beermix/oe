@@ -36,7 +36,7 @@ PKG_AUTORECONF="no"
   get_graphicdrivers
 
 if [ "$VAAPI_SUPPORT" = yes ]; then
-  PKG_DEPENDS_TARGET+=" intel-vaapi-driver  libva-utils"
+  PKG_DEPENDS_TARGET+=" intel-vaapi-driver libva-utils"
   FFMPEG_VAAPI="--enable-vaapi"
 else
   FFMPEG_VAAPI="--disable-vaapi"
@@ -165,7 +165,7 @@ configure_target() {
               --enable-runtime-cpudetect \
               $FFMPEG_TABLES \
               --disable-memalign-hack \
-              --disable-encoders \
+              --enable-encoders \
               --enable-encoder=ac3 \
               --enable-encoder=aac \
               --enable-encoder=wmav2 \
@@ -173,7 +173,7 @@ configure_target() {
               --enable-encoder=png \
               --disable-decoder=mpeg_xvmc \
               --enable-hwaccels \
-              --disable-muxers \
+              --enable-muxers \
               --enable-muxer=spdif \
               --enable-muxer=adts \
               --enable-muxer=asf \
@@ -197,6 +197,7 @@ configure_target() {
               --disable-libgsm \
               --disable-libmp3lame \
               --disable-libnut \
+              --disable-libopenjpeg \
               --disable-librtmp \
               --disable-libschroedinger \
               --enable-libspeex \
@@ -213,7 +214,10 @@ configure_target() {
               $FFMPEG_FPU \
               --enable-yasm \
               --disable-symver \
-              $FFMPEG_X11GRAB
+              --disable-lto \
+              --enable-libfdk-aac \
+              --enable-opengl \
+              --enable-indev=x11grab_xcb
 }
 
 post_makeinstall_target() {

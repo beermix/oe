@@ -48,13 +48,10 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-multilib \
                            --enable-nls \
                            --enable-checking=release \
-                           --with-default-libstdcxx-abi=gcc4-compatible \
-                           --without-ppl \
+                           --with-default-libstdcxx-abi=new \
                            --without-cloog \
                            --disable-werror \
                            --disable-browser-plugin \
-                           --enable-objc-gc=auto \
-                           --enable-default-pie \
                            --enable-gnu-unique-object \
                            --disable-libsanitizer \
                            --with-tune=generic"
@@ -94,6 +91,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-clocale=gnu \
                          --enable-__cxa_atexit \
                          --disable-libunwind-exceptions \
+                         --enable-linker-build-id \
                          --enable-install-libiberty \
                          --with-linker-hash-style=gnu 
                          --enable-gnu-indirect-function \
