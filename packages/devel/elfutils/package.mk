@@ -38,7 +38,8 @@ PKG_CONFIGURE_OPTS_TARGET="utrace_cv_cc_biarch=false \
                            --disable-nls \
                            --with-zlib \
                            --without-bzlib \
-                           --without-lzma"
+                           --without-lzma \
+                           --enable-deterministic-archives"
 
 pre_configure_target() {
   export CFLAGS="$CFLAGS -fPIC -DPIC"
