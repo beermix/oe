@@ -65,9 +65,9 @@ case "$LINUX" in
     PKG_PATCH_DIRS="linux-4.10"
     ;;
   *)
-    PKG_VERSION="4.12-rc3"
-    PKG_URL="https://git.kernel.org/torvalds/t/$PKG_NAME-$PKG_VERSION.tar.gz"
-    PKG_PATCH_DIRS="linux-4.12"
+    PKG_VERSION="4.11-zengit"
+    PKG_URL="ftp://root:openelec@192.168.1.4/www/linux-4.11-zengit.tar.xz"
+    PKG_PATCH_DIRS="linux-4.11"
     ;;
 esac
 

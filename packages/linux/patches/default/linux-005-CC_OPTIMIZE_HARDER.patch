@@ -1,0 +1,174 @@
+diff --git a/Makefile b/Makefile
+index 9dc2aec1c2e540d1..209d30ec83632db5 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1,8 +1,8 @@
+ VERSION = 4
+ PATCHLEVEL = 11
+ SUBLEVEL = 1
+-EXTRAVERSION =
+-NAME = Fearless Coyote
++EXTRAVERSION = -zen
++NAME = Perry Trotter and the Kernel of Truth
+ 
+ # *DOCUMENTATION*
+ # To see a list of typical targets execute "make help"
+@@ -622,30 +622,40 @@ endif
+ # Defaults to vmlinux, but the arch makefile usually adds further targets
+ all: vmlinux
+ 
++# force no-pie for distro compilers that enable pie by default
++KBUILD_CFLAGS += $(call cc-option, -fno-pie)
++KBUILD_CFLAGS += $(call cc-option, -no-pie)
++KBUILD_AFLAGS += $(call cc-option, -fno-pie)
++KBUILD_CPPFLAGS += $(call cc-option, -fno-pie)
++
+ # The arch Makefile can set ARCH_{CPP,A,C}FLAGS to override the default
+ # values of the respective KBUILD_* variables
+ ARCH_CPPFLAGS :=
+ ARCH_AFLAGS :=
+ ARCH_CFLAGS :=
+ include arch/$(SRCARCH)/Makefile
+ 
+ KBUILD_CFLAGS	+= $(call cc-option,-fno-delete-null-pointer-checks,)
+ KBUILD_CFLAGS	+= $(call cc-disable-warning,frame-address,)
+ 
+ ifdef CONFIG_LD_DEAD_CODE_DATA_ELIMINATION
+ KBUILD_CFLAGS	+= $(call cc-option,-ffunction-sections,)
+ KBUILD_CFLAGS	+= $(call cc-option,-fdata-sections,)
+ endif
+ 
+ ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
+ KBUILD_CFLAGS	+= -Os $(call cc-disable-warning,maybe-uninitialized,)
+ else
++ifdef CONFIG_CC_OPTIMIZE_HARDER
++KBUILD_CFLAGS	+= -O3 $(call cc-disable-warning,maybe-uninitialized,)
++else
+ ifdef CONFIG_PROFILE_ALL_BRANCHES
+ KBUILD_CFLAGS	+= -O2 $(call cc-disable-warning,maybe-uninitialized,)
+ else
+ KBUILD_CFLAGS   += -O2
+ endif
+ endif
++endif
+ 
+ KBUILD_CFLAGS += $(call cc-ifversion, -lt, 0409, \
+ 			$(call cc-disable-warning,maybe-uninitialized,))
+diff --git a/init/Kconfig b/init/Kconfig
+index a92f27da4a272ec8..72c526256796f2a5 100644
+--- a/init/Kconfig
++++ b/init/Kconfig
+@@ -38,6 +38,50 @@ config THREAD_INFO_IN_TASK
+ 
+ menu "General setup"
+ 
++config SCHED_MUQSS
++	bool "MuQSS cpu scheduler"
++	select HIGH_RES_TIMERS
++	default n
++	---help---
++	  The Multiple Queue Skiplist Scheduler for excellent interactivity and
++	  responsiveness on the desktop and highly scalable deterministic
++	  low latency on any hardware.
++
++config ZEN_INTERACTIVE
++	bool "Tune kernel for interactivity"
++	default y
++	help
++	  Tunes the kernel for responsiveness at the cost of throughput and power usage.
++
++	  --- Virtual Memory Subsystem ---------------------------
++
++	    Mem dirty before bg writeback..:  10 %  ->  20 %
++	    Mem dirty before sync writeback:  20 %  ->  50 %
++
++	  --- Block Layer ----------------------------------------
++
++	    Block Layer Queue Depth........: 128    -> 512
++
++	  --- CPU Scheduler (CFS) --------------------------------
++
++	    Scheduling latency.............:   6    ->   3    ms
++	    Minimal granularity............:   0.75 ->   0.3  ms
++	    Wakeup granularity.............:   1    ->   0.5  ms
++	    CPU migration cost.............:   0.5  ->   0.25 ms
++	    Bandwidth slice size...........:   5    ->   3    ms
++	    Ondemand fine upscaling limit..:  95 %  ->  85 %
++	    Ondemand min upscaling limit...:   1 %  ->   6 %
++	    Ondemand downscaling factor....:   1    ->  10
++
++	  --- CPU Scheduler (MuQSS) ------------------------------
++
++	    Scheduling interval............:   6    ->   3    ms
++	    ISO task max realtime use......:  70 %  ->  25 %
++	    Ondemand coarse upscaling limit:  80 %  ->  45 %
++	    Ondemand fine upscaling limit..:  95 %  ->  45 %
++	    Ondemand min upscaling limit...:   1 %  ->   6 %
++	    Ondemand downscaling factor....:   1    ->  10
++
+ config BROKEN
+ 	bool
+ 
+@@ -549,7 +593,7 @@ config CONTEXT_TRACKING
+ config CONTEXT_TRACKING_FORCE
+ 	bool "Force context tracking"
+ 	depends on CONTEXT_TRACKING
+-	default y if !NO_HZ_FULL
++	default y if !NO_HZ_FULL && !SCHED_MUQSS
+ 	help
+ 	  The major pre-requirement for full dynticks to work is to
+ 	  support the context tracking subsystem. But there are also
+@@ -928,6 +972,7 @@ config NUMA_BALANCING
+ 	depends on ARCH_SUPPORTS_NUMA_BALANCING
+ 	depends on !ARCH_WANT_NUMA_VARIABLE_LOCALITY
+ 	depends on SMP && NUMA && MIGRATION
++	depends on !SCHED_MUQSS
+ 	help
+ 	  This option adds support for automatic NUMA aware memory/task placement.
+ 	  The mechanism is quite primitive and is based on migrating memory when
+@@ -1030,9 +1075,13 @@ menuconfig CGROUP_SCHED
+ 	help
+ 	  This feature lets CPU scheduler recognize task groups and control CPU
+ 	  bandwidth allocation to such task groups. It uses cgroups to group
+-	  tasks.
++	  tasks. In combination with MuQSS this is purely a STUB to create the
++	  files associated with the CPU controller cgroup but most of the
++	  controls do nothing. This is useful for working in environments and
++	  with applications that will only work if this control group is
++	  present.
+ 
+-if CGROUP_SCHED
++if CGROUP_SCHED && !SCHED_MUQSS
+ config FAIR_GROUP_SCHED
+ 	bool "Group scheduling for SCHED_OTHER"
+ 	depends on CGROUP_SCHED
+@@ -1138,6 +1187,7 @@ config CGROUP_DEVICE
+ 
+ config CGROUP_CPUACCT
+ 	bool "Simple CPU accounting controller"
++	depends on !SCHED_MUQSS
+ 	help
+ 	  Provides a simple controller for monitoring the
+ 	  total CPU consumed by the tasks in a cgroup.
+@@ -1253,6 +1303,7 @@ endif # NAMESPACES
+ 
+ config SCHED_AUTOGROUP
+ 	bool "Automatic process group scheduling"
++	depends on !SCHED_MUQSS
+ 	select CGROUPS
+ 	select CGROUP_SCHED
+ 	select FAIR_GROUP_SCHED
+@@ -1346,6 +1397,13 @@ config CC_OPTIMIZE_FOR_PERFORMANCE
+ 	  with the "-O2" compiler flag for best performance and most
+ 	  helpful compile-time warnings.
+ 
++config CC_OPTIMIZE_HARDER
++	bool "Optimize harder"
++	help
++	  This option will pass "-O3" to your compiler resulting in a
++	  larger and faster kernel. The more complex optimizations also
++	  increase compilation time and may affect stability.
++
+ config CC_OPTIMIZE_FOR_SIZE
+ 	bool "Optimize for size"
+ 	help
