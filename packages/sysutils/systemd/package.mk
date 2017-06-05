@@ -17,10 +17,9 @@
 ################################################################################
 
 PKG_NAME="systemd"
-PKG_VERSION="3e7d14d"
+PKG_VERSION="233"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/systemd"
-PKG_GIT_URL="https://github.com/systemd/systemd"
-#PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain gperf:host libcap util-linux entropy"
 PKG_SECTION="system"
 PKG_SHORTDESC="systemd: a system and session manager"
@@ -72,7 +71,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-randomseed \
                            --disable-backlight \
                            --disable-rfkill \
-                           --enable-logind --without-kill-user-processes \
+                           --enable-logind \
                            --disable-machined \
                            --disable-importd \
                            --disable-hostnamed \
@@ -81,17 +80,17 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-localed \
                            --disable-coredump \
                            --disable-polkit \
-                           --disable-resolved --with-default-dnssec=allow-downgrade \
+                           --disable-resolved \
                            --disable-networkd \
                            --disable-efi \
                            --disable-gnuefi \
+                           --disable-kdbus \
                            --disable-myhostname \
                            --enable-hwdb \
                            --disable-manpages \
                            --disable-hibernate \
                            --disable-ldconfig \
-                           --disable-tpm --with-tpm-pcrindex=8 \
-                           --enable-split-usr \
+                           --disable-split-usr \
                            --disable-tests \
                            --without-python \
                            --with-sysvinit-path= \
@@ -101,7 +100,8 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --with-dbussessionservicedir=/usr/share/dbus-1/services \
                            --with-dbussystemservicedir=/usr/share/dbus-1/system-services \
                            --with-rootprefix=/usr \
-                           --with-rootlibdir=/usr/lib"
+                           --with-rootlibdir=/usr/lib \
+                           --with-default-hierarchy=legacy"
 
 pre_build_target() {
 # broken autoreconf
