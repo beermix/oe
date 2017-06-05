@@ -15,16 +15,24 @@ post_unpack() {
 }
 
 pre_configure_target() {
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
-  export CXXFLAGS="$CXXFLAGS -std=c++11"
+  #export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
+  #export CXXFLAGS="$CXXFLAGS -std=c++11"
+  export LIBS="-latomic"
 }
 
-PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared --enable-release --disable-silent-rules"
+PKG_CONFIGURE_OPTS_HOST="--disable-samples \
+			    --disable-tests \
+			    --disable-extras \
+			    --disable-icuio \
+			    --disable-layout \
+			    --disable-renaming \
+			    --enable-static \
+			    --disable-shared"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --disable-shared \
-                           --enable-release \
-                           --disable-silent-rules \
+                           --disable-samples \
+                           --disable-tests \
                            --with-cross-build=$ROOT/$PKG_BUILD/.$HOST_NAME"
 
 post_makeinstall_target() {

@@ -38,7 +38,7 @@ PKG_CMAKE_OPTS_TARGET="-DPNG_SHARED=OFF -DPNG_STATIC=ON -DPNG_TESTS=OFF -DCMAKE_
 
 pre_configure_target() {
   if [ "$TARGET_ARCH" = "x86_64" ]; then
-    CFLAGS+=" -DPNG_INTEL_SSE"
+    CPPFLAGS+=" -DPNG_INTEL_SSE"
   fi
 }
 
