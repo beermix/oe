@@ -6,14 +6,18 @@ PKG_SECTION="service/system"
 PKG_USE_CMAKE="no"
 PKG_AUTORECONF="yes"
 
+pre_configure_target() {
+  export CFLAGS="$CFLAGS -fopenmp"
+}
+
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-threads \
 			      --enable-openmp \
-			      --enable-long-double \
 			      --enable-float \
 			      --enable-sse2 \
 			      --enable-sse \
-			      --enable-avx"
+			      --enable-avx \
+			      --enable-silent-rules"
 
 post_makeinstall_target() {
   rm -rf $INSTALL
