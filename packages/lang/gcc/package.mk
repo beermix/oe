@@ -17,10 +17,10 @@
 ################################################################################
 
 PKG_NAME="gcc"
-#PKG_VERSION="6-20170531"
-PKG_VERSION="754d7e5"
-PKG_GIT_URL="git://gcc.gnu.org/git/gcc.git"
-#PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/LATEST-6/gcc-$PKG_VERSION.tar.xz"
+PKG_VERSION="6-20170531"
+#PKG_VERSION="754d7e5"
+#PKG_GIT_URL="git://gcc.gnu.org/git/gcc.git"
+PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/LATEST-6/gcc-$PKG_VERSION.tar.xz"
 #PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host"
 PKG_DEPENDS_TARGET="gcc:host"
@@ -53,6 +53,8 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --without-cloog \
                            --disable-werror \
                            --disable-browser-plugin \
+                           --enable-objc-gc=auto \
+                           --enable-default-pie \
                            --enable-gnu-unique-object \
                            --disable-libsanitizer \
                            --with-tune=generic"
@@ -97,6 +99,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-install-libiberty \
                          --with-linker-hash-style=gnu 
                          --enable-gnu-indirect-function \
+                         --enable-poison-system-directories \
                          $GCC_OPTS"
 
 pre_configure_host() {

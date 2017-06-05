@@ -23,11 +23,10 @@ PKG_CONFIGURE_OPTS_TARGET="--bindir=/bin \
                            --enable-progcomp \
                            --enable-history \
                            --enable-alias \
-                           --disable-nls \
                            --disable-rpath"
 			   
 post_makeinstall_target() {
   mkdir -p $INSTALL/bin
   ln -sfv bash $INSTALL/bin/rbash
-  #ln -sfv bash $INSTALL/bin/sh
+  ln -sfv bash $INSTALL/bin/sh
 }
