@@ -1,5 +1,5 @@
 PKG_NAME="bash"
-PKG_VERSION="bc00779"
+PKG_VERSION="1110e30"
 PKG_GIT_URL="https://github.com/bminor/bash"
 PKG_DEPENDS_TARGET="toolchain netbsd-curses readline"
 PKG_IS_ADDON="no"
@@ -14,10 +14,16 @@ PKG_CONFIGURE_OPTS_TARGET="--bindir=/bin \
                            --enable-readline \
                            --without-bash-malloc \
                            --with-installed-readline \
+                           --enable-static-link \
                            --enable-command-timing \
-                           --with-sysroot=$SYSROOT_PREFIX \
-                           --with-gnu-ld \
+                           --enable-bang-history \
+                           --enable-coprocesses \
+                           --enable-direxpand-default \
+                           --enable-multibyte \
+                           --enable-progcomp \
                            --enable-history \
+                           --enable-alias \
+                           --disable-nls \
                            --disable-rpath"
 			   
 post_makeinstall_target() {
