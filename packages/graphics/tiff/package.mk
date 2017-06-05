@@ -12,7 +12,7 @@
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
 #
-#  You should have received a copy of the GNU General Public License
+#  You should have received a copy of the GNU General Public License  -Dlzma=0
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
@@ -32,7 +32,7 @@ PKG_LONGDESC="libtiff is a library for reading and writing data files encoded wi
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CMAKE_OPTS_HOST="-DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=0 -Dlzma=0"
+PKG_CMAKE_OPTS_HOST="-DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=0"
 
 PKG_CMAKE_OPTS_TARGET="$PKG_CMAKE_OPTS_HOST"
 
