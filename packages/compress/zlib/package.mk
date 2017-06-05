@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="zlib"
-PKG_VERSION="3c46f5d"
+PKG_VERSION="v1.2.11"
 PKG_SITE="http://www.zlib.net"
 PKG_GIT_URL="https://github.com/madler/zlib"
 PKG_DEPENDS_TARGET="toolchain"
