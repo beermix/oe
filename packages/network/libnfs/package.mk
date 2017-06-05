@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libnfs"
-PKG_VERSION="libnfs-1.11.0"
+PKG_VERSION="14adfbf"
 PKG_SITE="https://github.com/sahlberg/libnfs"
 PKG_GIT_URL="https://github.com/sahlberg/libnfs.git"
 PKG_GIT_BRANCH="master"
@@ -32,5 +32,5 @@ PKG_AUTORECONF="yes"
 PKG_CONFIGURE_OPTS_TARGET="--disable-examples --disable-tirpc"
 
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -D_FILE_OFFSET_BITS=64"
+  export CFLAGS+=" -D_FILE_OFFSET_BITS=64"
 }

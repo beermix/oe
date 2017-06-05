@@ -32,5 +32,4 @@ PKG_LONGDESC="intel-vaapi-driver: Intel G45+ driver for VAAPI"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-drm \
-                           --disable-wayland  --disable-silent-rules --enable-x11 --with-drivers-path=/usr/lib/va"
+PKG_CONFIGURE_OPTS_TARGET="--disable-silent-rules --with-drivers-path=/usr/lib/va"

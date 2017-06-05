@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="libdrm"
-PKG_VERSION="48aac8c"
+PKG_VERSION="2.4.81"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://dri.freedesktop.org"
-PKG_GIT_URL="git://anongit.freedesktop.org/mesa/drm "
+PKG_URL="http://dri.freedesktop.org/libdrm/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain libpciaccess"
 PKG_PRIORITY="optional"
 PKG_SECTION="graphics"
@@ -35,7 +35,6 @@ PKG_AUTORECONF="yes"
 get_graphicdrivers
 
 DRM_CONFIG="--disable-intel --disable-radeon --disable-amdgpu"
-DRM_CONFIG="$DRM_CONFIG --disable-nouveau --disable-vmwgfx --disable-vc4"
 
 for drv in $GRAPHIC_DRIVERS; do
   [ "$drv" = "i915" -o "$drv" = "i965" ] && \
@@ -44,21 +43,17 @@ for drv in $GRAPHIC_DRIVERS; do
   [ "$drv" = "r200" -o "$drv" = "r300" -o "$drv" = "r600" -o "$drv" = "radeonsi" ] && \
     DRM_CONFIG=`echo $DRM_CONFIG | sed -e 's/disable-radeon/enable-radeon/'` && \
     DRM_CONFIG=`echo $DRM_CONFIG | sed -e 's/disable-amdgpu/enable-amdgpu/'`
-
-  [ "$drv" = "vmware" ] && \
-    DRM_CONFIG=`echo $DRM_CONFIG | sed -e 's/disable-vmwgfx/enable-vmwgfx/'`
-
-  [ "$drv" = "vc4" ] && \
-    DRM_CONFIG=`echo $DRM_CONFIG | sed -e 's/disable-vc4/enable-vc4/'`
 done
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-udev \
                            --enable-largefile \
                            --with-kernel-source=$(get_pkg_build linux) \
                            --disable-libkms \
-                           $DRM_CONFIG \
                            --disable-nouveau \
+                           --disable-vmwgfx \
                            --disable-freedreno \
+                           --disable-vc4 \
+                           $DRM_CONFIG \
                            --disable-install-test-programs \
                            --disable-cairo-tests \
                            --disable-manpages \

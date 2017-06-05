@@ -53,7 +53,7 @@ PKG_CMAKE_OPTS_HOST="-DLLVM_INCLUDE_TOOLS=ON \
                      -DCMAKE_INSTALL_RPATH=$TOOLCHAIN/lib"
 
 make_host() {
-  make llvm-config llvm-tblgen
+  make llvm-tblgen llvm-config
 }
 
 makeinstall_host() {

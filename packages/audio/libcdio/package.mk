@@ -36,6 +36,9 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-cxx \
                            --disable-cpp-progs \
                            --disable-shared \
                            --enable-static \
+                           --disable-cxx \
+                           --disable-cpp-progs \
+                           --disable-example-progs \
                            --enable-joliet \
                            --disable-rpath \
                            --enable-rock \
@@ -47,6 +50,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-cxx \
                            --without-cd-read \
                            --without-iso-info \
                            --without-iso-read \
+                           --without-versioned-libs \
                            --without-libiconv-prefix \
                            --with-gnu-ld"
 

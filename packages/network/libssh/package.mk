@@ -28,7 +28,7 @@ PKG_LONGDESC="The ssh library was designed to be used by programmers needing a w
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=MinSizeRel -DWITH_STATIC_LIB=1 -DWITH_SERVER=0 -DWITH_GCRYPT=0 -DWITH_EXAMPLES=0"
+PKG_CMAKE_OPTS_TARGET="-DWITH_STATIC_LIB=1 -DWITH_SERVER=OFF -DWITH_GCRYPT=OFF"
 
 makeinstall_target() {
 # install static library only

@@ -29,7 +29,14 @@ PKG_AUTORECONF="yes"
 
 get_graphicdrivers
 
+if [ "$OPENGL" = "mesa" ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET glproto opengl libepoxy glu"
+  XORG_MESA="--enable-glx --enable-dri --enable-glamor"
+else
+  XORG_MESA="--disable-glx --disable-dri --disable-glamor"
+fi
 PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
+
                            --enable-silent-rules \
                            --disable-strict-compilation \
                            --enable-largefile \
@@ -47,9 +54,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
                            --disable-screensaver \
                            --disable-xdmcp \
                            --disable-xdm-auth-1 \
-                           --enable-glx \
-                           --enable-dri \
-                           --enable-glamor \
+                           $XORG_MESA \
                            --enable-dri2 \
                            --enable-dri3 \
                            --enable-present \
@@ -132,7 +137,6 @@ pre_configure_target() {
 # hack to prevent a build error
   CFLAGS=`echo $CFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|"`
   LDFLAGS=`echo $LDFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|"`
-  strip_gold
 }
 
 post_makeinstall_target() {

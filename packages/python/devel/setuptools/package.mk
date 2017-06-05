@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="setuptools"
-PKG_VERSION="v33.1.1"
+PKG_VERSION="v34.3.0"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="https://github.com/pypa/setuptools/releases"
@@ -32,7 +32,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 make_host() {
-  python bootstrap.py
+  : # nothing todo
 }
 
 makeinstall_host() {

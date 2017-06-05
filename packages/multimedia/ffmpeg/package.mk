@@ -165,7 +165,7 @@ configure_target() {
               --enable-runtime-cpudetect \
               $FFMPEG_TABLES \
               --disable-memalign-hack \
-              --enable-encoders \
+              --disable-encoders \
               --enable-encoder=ac3 \
               --enable-encoder=aac \
               --enable-encoder=wmav2 \
@@ -173,7 +173,7 @@ configure_target() {
               --enable-encoder=png \
               --disable-decoder=mpeg_xvmc \
               --enable-hwaccels \
-              --enable-muxers \
+              --disable-muxers \
               --enable-muxer=spdif \
               --enable-muxer=adts \
               --enable-muxer=asf \
@@ -213,11 +213,7 @@ configure_target() {
               --disable-altivec \
               $FFMPEG_FPU \
               --enable-yasm \
-              --disable-symver \
-              --disable-lto \
-              --disable-libfdk-aac \
-              --disable-opengl \
-              --enable-indev=x11grab_xcb
+              --disable-symver
 }
 
 post_makeinstall_target() {

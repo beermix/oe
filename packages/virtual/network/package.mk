@@ -14,7 +14,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################ iproute2
+################################################################################
 
 PKG_NAME="network"
 PKG_VERSION=""
