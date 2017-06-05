@@ -28,14 +28,6 @@ PKG_LONGDESC="XZ Utils is free general-purpose data compression software with hi
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
+PKG_CONFIGURE_OPTS_HOST="--enable-threads --disable-static --disable-xzdec --disable-lzmadec --disable-doc"
 
-# never build shared or k0p happens when building
-# on fedora due to host selinux/liblzma
-#PKG_CONFIGURE_OPTS_HOST="--disable-threads --disable-shared --enable-liblzma2-compat \
-#			    --disable-lzmainfo --disable-scripts \
-#			    --disable-xzdec --disable-lzmadec \
-#			    --enable-xz --disable-lzma-links --disable-doc"
-
-PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules --enable-threads --disable-doc"
-
-PKG_CONFIGURE_OPTS_HOST="--disable-nls --disable-shared --enable-liblzma2-compat --disable-lzmainfo --disable-scripts --disable-doc"
+PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"

@@ -73,6 +73,7 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-threads \
                               --without-headers \
                               --with-newlib \
+                              --with-target-system-zlib \
                               --disable-decimal-float \
                               $GCC_OPTS"
 
