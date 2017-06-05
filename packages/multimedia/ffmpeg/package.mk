@@ -215,8 +215,8 @@ configure_target() {
               --enable-yasm \
               --disable-symver \
               --disable-lto \
-              --enable-libfdk-aac \
-              --enable-opengl \
+              --disable-libfdk-aac \
+              --disable-opengl \
               --enable-indev=x11grab_xcb
 }
 

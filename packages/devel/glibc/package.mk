@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="glibc"
-PKG_VERSION="2.24"
+PKG_VERSION="2.25"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -50,6 +50,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/bash \
 			      --enable-tunables \
 			      --with-binutils=$ROOT/$BUILD/toolchain/bin \
 			      --with-headers=$SYSROOT_PREFIX/usr/include \
+			      --enable-stack-protector=strong \
 			      --with-tls \
 			      --disable-debug"
 
