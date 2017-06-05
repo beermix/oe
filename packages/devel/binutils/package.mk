@@ -44,9 +44,6 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-nls \
                          --disable-gdb \
                          --disable-sim \
-                         --disable-shared \
-                         --enable-static \
-                         --with-target-system-zlib \
                          --enable-poison-system-directories"
 
 makeinstall_host() {
