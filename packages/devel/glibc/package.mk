@@ -121,9 +121,6 @@ post_makeinstall_target() {
   for i in $GLIBC_EXCLUDE_BIN; do
     rm -rf $INSTALL/usr/bin/$i
   done
-  
-  env LANGUAGE=C LC_ALL=C \
-  make -j1 -C builddir tests
 
   rm -rf $INSTALL/usr/lib/audit
   rm -rf $INSTALL/usr/lib/glibc
