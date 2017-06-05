@@ -65,10 +65,9 @@ case "$LINUX" in
     PKG_PATCH_DIRS="linux-4.10"
     ;;
   *)
-    PKG_VERSION="4.11.3"
-    #PKG_URL="ftp://root:openelec@192.168.1.4/www/linux-zen-kernel-4.11.3.tar.xz"
-    PKG_URL="http://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
-    PKG_PATCH_DIRS="linux-4.11"
+    PKG_VERSION="4.12-rc3"
+    PKG_URL="https://git.kernel.org/torvalds/t/$PKG_NAME-$PKG_VERSION.tar.gz"
+    PKG_PATCH_DIRS="linux-4.12"
     ;;
 esac
 

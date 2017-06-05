@@ -15,7 +15,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
-
+http://www.portaudio.com/archives/pa_stable_v190600_20161030.tgz
 PKG_NAME="glibc"
 PKG_VERSION="2.25"
 PKG_REV="1"
@@ -34,31 +34,25 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
-                           libc_cv_slibdir=/lib \
-                           ac_cv_path_PERL= \
-                           ac_cv_prog_MAKEINFO= \
-                           --libexecdir=/usr/lib/glibc \
-                           --cache-file=config.cache \
-                           --disable-profile \
-                           --disable-sanity-checks \
-                           --enable-add-ons \
-                           --enable-stack-protector=strong \
-                           --enable-bind-now \
-                           --with-elf \
-                           --with-tls \
-                           --with-__thread \
-                           --with-binutils=$ROOT/$BUILD/toolchain/bin \
-                           --with-headers=$SYSROOT_PREFIX/usr/include \
-                           --enable-kernel=3.0.0 \
-                           --without-cvs \
-                           --without-gd \
-                           --enable-obsolete-rpc \
-                           --disable-build-nscd \
-                           --disable-nscd \
-                           --enable-lock-elision \
-                           --disable-timezone-tools \
-                           --disable-debug \
-                           --disable-werror"
+			      libc_cv_slibdir=/lib \
+			      ac_cv_path_PERL= \
+			      ac_cv_prog_MAKEINFO= \
+			      --libexecdir=/usr/lib/glibc \
+			      --cache-file=config.cache \
+			      --enable-add-ons=libidn \
+			      --enable-bind-now \
+			      --enable-experimental-malloc \
+			      --enable-hidden-plt \
+			      --enable-kernel=4.0.0 \
+			      --enable-obsolete-rpc \
+			      --enable-profile \
+			      --enable-stack-protector=strong \
+			      --enable-stackguard-randomization \
+			      --enable-tunables \
+			      --with-binutils=$ROOT/$BUILD/toolchain/bin \
+			      --with-headers=$SYSROOT_PREFIX/usr/include \
+			      --with-tls \
+			      --disable-debug"
 
 NSS_CONF_DIR="$PKG_BUILD/nss"
 
@@ -127,6 +121,9 @@ post_makeinstall_target() {
   for i in $GLIBC_EXCLUDE_BIN; do
     rm -rf $INSTALL/usr/bin/$i
   done
+  
+  env LANGUAGE=C LC_ALL=C \
+  make -j1 -C builddir tests
 
   rm -rf $INSTALL/usr/lib/audit
   rm -rf $INSTALL/usr/lib/glibc
