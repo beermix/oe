@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="libdrm"
-PKG_VERSION="48aac8c"
+PKG_VERSION="2.4.81"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://dri.freedesktop.org"
-PKG_GIT_URL="git://anongit.freedesktop.org/mesa/drm "
+PKG_URL="http://dri.freedesktop.org/libdrm/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain libpciaccess"
 PKG_PRIORITY="optional"
 PKG_SECTION="graphics"
