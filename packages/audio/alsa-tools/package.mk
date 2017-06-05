@@ -19,14 +19,27 @@
 PKG_NAME="alsa-tools"
 PKG_VERSION="1.1.3"
 PKG_SITE="http://www.alsa-project.org/"
-PKG_URL="ftp://ftp.alsa-project.org/pub/utils/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_URL="ftp://ftp.alsa-project.org/pub/tools/alsa-tools-1.1.3.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain alsa-lib netbsd-curses"
 PKG_SECTION="audio"
 PKG_SHORTDESC="alsa-utils: Advanced Linux Sound Architecture utilities"
 PKG_LONGDESC="This package includes the utilities for ALSA, like alsamixer, aplay, arecord, alsactl, iecset and speaker-test."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
+
+
+make_target() {
+  cd $ROOT/$PKG_BUILD
+  rm -rf .$TARGET_NAME
+  make \
+  	CXX="$CXX" \
+  	CC="$CC" \
+  	CXXFLAGS="$TARGET_CXXFLAGS" \
+  	CPPFLAGS="$CPPFLAGS" \
+  	RANLIB="$RANLIB" \
+  	AR="$AR" 
+}
 
 
 
