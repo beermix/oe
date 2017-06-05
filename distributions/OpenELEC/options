@@ -16,9 +16,7 @@
 
 # Root password to integrate in the target system
   ROOT_PASSWORD="openelec"
-  
-  LLVM_SUPPORT="no"
-  
+
 # Install glibc locales to the build (yes / no)
   GLIBC_LOCALES="yes"
 
@@ -70,23 +68,22 @@
 # except the default-*.config and the ones included in packages/linux/package.mk
 # Space separated list is supported,
   KERNEL_EXTRA_CONFIG+=" filesystem hid-drivers remote joystick audio"
-# KERNEL_EXTRA_CONFIG+=" lan-phy"
   KERNEL_EXTRA_CONFIG+=" usb-serial usb-gadget led"
 
 # additional drivers to install:
 # for a list of additinoal drivers see packages/linux-drivers
 # Space separated list is supported,
 # e.g. ADDITIONAL_DRIVERS="DRIVER1 DRIVER2"
-# ADDITIONAL_DRIVERS="RTL8192DU RTL8192EU RTL8812AU mt7610u" # todo: dvbhdhomerun
+  ADDITIONAL_DRIVERS=""
 
 # build and install bluetooth support (yes / no)
   BLUETOOTH_SUPPORT="yes"
 
 # build and install with KODI webfrontend (yes / no)
-  KODI_WEBSERVER_SUPPORT="yes"
+  KODI_WEBSERVER_SUPPORT="no"
 
 # build and install Avahi (Zeroconf) daemon (yes / no)
-  AVAHI_DAEMON="yes"
+  AVAHI_DAEMON="no"
 
 # build with UPnP support (yes / no)
   KODI_UPNP_SUPPORT="yes"
@@ -147,17 +144,12 @@
 # Windowmanager to use (ratpoison / fluxbox / none)
   WINDOWMANAGER="fluxbox"
 
-# Xorg Graphic drivers to use (all / i915,i965,r200,r300,r600,nvidia)
-# Space separated list is supported,
-# e.g. GRAPHIC_DRIVERS="i915 i965 r300 r600 radeonsi nvidia"
-  GRAPHIC_DRIVERS="i965"
-
 # build and install remote support (yes / no)
   REMOTE_SUPPORT="no"
 
 # build and install IRServer IR/LCD support (yes / no)
   IRSERVER_SUPPORT="no"
-  #LCD_DRIVER+="no"
+  LCD_DRIVER+="irtrans,"
 
 # build and install CEC adapter support (yes / no)
   CEC_SUPPORT="no"

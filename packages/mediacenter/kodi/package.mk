@@ -26,7 +26,7 @@ PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
-PKG_DEPENDS_TARGET="toolchain kodi:host kodi:bootstrap xmlstarlet:host Python zlib systemd pciutils dbus lzo pcre swig:host libass curl fontconfig fribidi tinyxml libjpeg-turbo freetype libcdio libdvdnav taglib libxml2 libxslt sqlite ffmpeg crossguid giflib opengl lcms2 libfmt libpng yajl rapidjson libdvdnav libhdhomerun"
+PKG_DEPENDS_TARGET="toolchain kodi:host kodi:bootstrap xmlstarlet:host Python zlib systemd pciutils dbus lzo pcre swig:host libass curl fontconfig fribidi tinyxml libjpeg-turbo freetype libcdio libdvdnav taglib libxml2 libxslt rapidjson sqlite ffmpeg crossguid giflib opengl lcms2 libfmt"
 PKG_DEPENDS_HOST="toolchain"
 PKG_DEPENDS_BOOTSTRAP="toolchain lzo:host libpng:host libjpeg-turbo:host giflib:host"
 PKG_PRIORITY="optional"
@@ -58,7 +58,6 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$ROOT/$TOOLCHAIN \
                        -DFFMPEG_INCLUDE_DIRS=$SYSROOT_PREFIX/usr \
                        -DENABLE_INTERNAL_CROSSGUID=OFF \
                        -DENABLE_OPENSSL=ON \
-                       -DENABLE_LDGOLD=OFF \
                        -DENABLE_SDL=OFF \
                        -DENABLE_LCMS2=ON \
                        -DENABLE_CCACHE=OFF \
@@ -261,13 +260,6 @@ makeinstall_host() {
 }
 
 pre_configure_target() {
-# kodi should never be built with lto
-  #strip_lto
-  #strip_gold
-  
-  #export CFLAGS="$CFLAGS -DMESA_EGL_NO_X11_HEADERS"
-  #export CXXFLAGS="$CXXFLAGS -DMESA_EGL_NO_X11_HEADERS"
-
   export LIBS="$LIBS -lz -ltermcap"
 }
 
@@ -388,11 +380,9 @@ post_makeinstall_target() {
 post_install() {
 # enable default services
   enable_service kodi-autostart.service
-  enable_service kodi-cleanlogs.service
   enable_service kodi-halt.service
   enable_service kodi-poweroff.service
   enable_service kodi-reboot.service
-  enable_service kodi-waitonnetwork.service
   enable_service kodi.service
   enable_service kodi-lirc-suspend.service
 }

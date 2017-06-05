@@ -61,7 +61,6 @@ trap cleanup SIGINT
   UUID_2=$(date '+%M%S')
   FAT_VOL_ID="${UUID_1}${UUID_2}"
   UUID_SYSTEM="${UUID_1}-${UUID_2}"
-  FAT_VOLUME_LABEL="OE"
 
 # create an image
   echo
@@ -139,9 +138,6 @@ LABEL live
   KERNEL /$KERNEL_NAME
   APPEND boot=UUID=$UUID_SYSTEM live quiet tty vga=current
 
-LABEL run
-  KERNEL /$KERNEL_NAME
-  APPEND boot=UUID=$UUID_SYSTEM disk=UUID=$UUID_STORAGE portable quiet tty
 EOF
 
     mcopy "$OE_TMP/syslinux.cfg" ::
