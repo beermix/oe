@@ -48,7 +48,7 @@
 ################################################################################
 
   # Build optimizations (size/normal)
-    OPTIMIZATIONS="size"
+    OPTIMIZATIONS="normal"
 
   # Project CFLAGS
     PROJECT_CFLAGS="-mmmx -msse -msse2 -msse3 -mssse3 -maes -mavx -msse4.2 -msse4.1 --param=l1-cache-size=32 --param=l1-cache-line-size=64 --param=l2-cache-size=6144 -mtune=ivybridge -mfpmath=sse"
