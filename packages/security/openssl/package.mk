@@ -30,7 +30,6 @@ PKG_AUTORECONF="no"
 CONCURRENCY_MAKE_LEVEL=1
 CCACHE_DISABLE=1
 
-
 PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            --libdir=lib \
                            shared \
@@ -42,8 +41,8 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            enable-unit-test \
                            enable-tlsext \
                            no-weak-ssl-ciphers \
-                           no-zlib \
-                           zlib-dynamic \
+                           zlib \
+                           no-zlib-dynamic \
                            enable-ec_nistp_64_gcc_128"
 
 
