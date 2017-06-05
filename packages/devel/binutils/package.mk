@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="binutils"
-PKG_VERSION="2.28"
-PKG_URL="https://fossies.org/linux/misc/binutils-$PKG_VERSION.tar.xz"
+PKG_VERSION="4a4a4a2"
+PKG_GIT_URL="https://github.com/bminor/binutils-gdb"
 PKG_DEPENDS_HOST="ccache:host bison:host flex:host linux:host"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="binutils: A GNU collection of binary utilities"
@@ -42,8 +42,11 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-ld=default \
                          --enable-lto \
                          --enable-nls \
-                         --with-pic \
                          --disable-gdb \
+                         --disable-sim \
+                         --disable-shared \
+                         --enable-static \
+                         --with-target-system-zlib \
                          --enable-poison-system-directories"
 
 makeinstall_host() {
