@@ -48,6 +48,7 @@ PKG_CONFIGURE_OPTS_TARGET="export ac_cv_have_abstract_sockets=yes \
                            --enable-inotify \
                            --without-valgrind \
                            --without-x \
+                           --enable-user-session \
                            --with-dbus-user=dbus"
 
 post_makeinstall_target() {

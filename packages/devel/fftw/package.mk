@@ -8,7 +8,8 @@ PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-threads \
-			      --with-gnu-ld \
+			      --enable-openmp \
+			      --enable-long-double \
 			      --enable-float \
 			      --enable-sse2 \
 			      --enable-sse \
