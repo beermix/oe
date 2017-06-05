@@ -17,12 +17,11 @@
 ################################################################################
 
 PKG_NAME="glib"
-PKG_VERSION="3245eba"
-PKG_REV="1"
+PKG_VERSION="2.52.2"
 PKG_ARCH="any"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://www.gtk.org/"
-PKG_GIT_URL="https://git.gnome.org/browse/glib"
+PKG_URL="http://ftp.gnome.org/pub/gnome/sources/glib/2.52/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain zlib libffi util-linux Python:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="devel"
@@ -61,10 +60,6 @@ post_makeinstall_target() {
 
   mkdir -p $SYSROOT_PREFIX/usr/share/aclocal
     cp ../m4macros/glib-gettext.m4 $SYSROOT_PREFIX/usr/share/aclocal
-    
-  mkdir -p $INSTALL/usr/share/libalpm/hooks/
-  cp $PKG_DIR/hooks/gio-querymodules.hook $INSTALL/usr/share/libalpm/hooks/
-  cp $PKG_DIR/hooks/glib-compile-schemas.hook $INSTALL/usr/share/libalpm/hooks/
 }
 
 post_makeinstall_target() {
@@ -72,4 +67,8 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/lib/gdbus-2.0
   rm -rf $INSTALL/usr/lib/glib-2.0
   rm -rf $INSTALL/usr/share
+  
+  mkdir -p $INSTALL/usr/share/libalpm/hooks/
+  cp $PKG_DIR/hooks/gio-querymodules.hook $INSTALL/usr/share/libalpm/hooks/
+  cp $PKG_DIR/hooks/glib-compile-schemas.hook $INSTALL/usr/share/libalpm/hooks/
 }
