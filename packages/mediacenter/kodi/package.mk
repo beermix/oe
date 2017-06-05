@@ -260,7 +260,7 @@ makeinstall_host() {
 }
 
 pre_configure_target() {
-  export LIBS="$LIBS -lz -ltermcap"
+  export LIBS="$LIBS -laio -lz -ltermcap"
 }
 
 pre_make_target() {
