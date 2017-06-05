@@ -20,13 +20,17 @@ PKG_NAME="libressl"
 PKG_VERSION="2.5.4"
 PKG_URL="http://ftp.openbsd.org/pub/OpenBSD/LibreSSL/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="ccache:host"
-PKG_DEPENDS_TARGET=""
 PKG_PRIORITY="optional"
 PKG_SECTION="security"
-
 PKG_USE_CMAKE="no"
 PKG_AUTORECONF="no"
 PKG_AUTORECONF="yes"
+
+pre_configure_host() {
+  export CFLAGS="$CFLAGS -fPIC"
+  export CXXFLAGS="$CXXFLAGS -fPIC"
+  export LDFLAGS="$LDFLAGS -fPIC"
+}
 
 PKG_CONFIGURE_OPTS_HOST="--disable-shared"
 
