@@ -48,12 +48,12 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-multilib \
                            --enable-nls \
                            --enable-checking=release \
-                           --with-default-libstdcxx-abi=new \
+                           --with-default-libstdcxx-abi=gcc4-compatible \
+                           --without-ppl \
                            --without-cloog \
                            --disable-werror \
                            --disable-browser-plugin \
                            --enable-gnu-unique-object \
-                           --enable-clocale=gnu \
                            --disable-libsanitizer \
                            --with-tune=generic"
 
@@ -89,6 +89,13 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-threads=posix \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time \
+                         --enable-clocale=gnu \
+                         --enable-__cxa_atexit \
+                         --disable-libunwind-exceptions \
+                         --enable-linker-build-id \
+                         --enable-install-libiberty \
+                         --with-linker-hash-style=gnu 
+                         --enable-gnu-indirect-function \
                          $GCC_OPTS"
 
 pre_configure_host() {

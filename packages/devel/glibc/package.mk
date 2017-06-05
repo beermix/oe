@@ -15,7 +15,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
-http://www.portaudio.com/archives/pa_stable_v190600_20161030.tgz
+
 PKG_NAME="glibc"
 PKG_VERSION="2.25"
 PKG_REV="1"
