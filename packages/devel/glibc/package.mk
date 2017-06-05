@@ -131,7 +131,6 @@ post_makeinstall_target() {
 
 # remove locales and charmaps
   rm -rf $INSTALL/usr/share/i18n/charmaps
-
   if [ -n "$GLIBC_LOCALES" ]; then
     mkdir -p $INSTALL/usr/lib/locale
     for locale in $GLIBC_LOCALES; do
@@ -153,8 +152,12 @@ post_makeinstall_target() {
 # create default configs
   mkdir -p $INSTALL/etc
     cp $PKG_DIR/config/nsswitch.conf $INSTALL/etc
+    cp $PKG_DIR/config/host.conf $INSTALL/etc
     cp $PKG_DIR/config/gai.conf $INSTALL/etc
-    echo "multi on" > $INSTALL/etc/host.conf
+
+  if [ "$TARGET_ARCH" = "arm" -a "$TARGET_FLOAT" = "hard" ]; then
+    ln -sf ld.so $INSTALL/usr/lib/ld-linux.so.3
+  fi
 }
 
 configure_init() {
