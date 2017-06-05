@@ -128,17 +128,6 @@ get_pkg_dir() {
   fi
 }
 
-# get package's build dir
-get_build_dir() {
-  if [ ! -z $1 ] ; then
-    local _PKG_DIR=$(get_pkg_dir $1)
-    if [ -d "$_PKG_DIR" -a -f $_PKG_DIR/package.mk ] ; then
-      . $_PKG_DIR/package.mk
-    fi
-    echo $ROOT/$BUILD/${PKG_NAME}-${PKG_VERSION}
-  fi
-}
-
 get_pkg_version() {
   if [ ! -z $1 ] ; then
     local _PKG_DIR=$(get_pkg_dir $1)
@@ -163,15 +152,6 @@ get_pkg_build() {
 get_module_dir() {
   basename $(ls -d $(get_pkg_build linux)/.install_pkg/usr/lib/modules/*)
 }
-
-get_pkg_version() {
-  if [ ! -z $1 ] ; then
-    cd $ROOT
-    . config/options $1
-    echo "$PKG_VERSION"
-  fi
-}
-
 tolower(){
   echo "$@" | tr ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz
 }
@@ -371,9 +351,3 @@ show_config() {
   
   echo -e "$show_message"
 }
-# strip
- debug_strip() {
-   if [ ! "$DEBUG" = yes ]; then
-    find $* -type f -executable | xargs $STRIP 2>/dev/null || :
-   fi
- }
