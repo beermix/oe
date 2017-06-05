@@ -18,14 +18,12 @@
 
 PKG_NAME="glibc"
 PKG_VERSION="2.25"
-PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/libc/"
 PKG_URL="http://ftp.gnu.org/pub/gnu/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap localedef-eglibc:host"
 PKG_DEPENDS_INIT="glibc"
-PKG_PRIORITY="optional"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="glibc: The GNU C library"
 PKG_LONGDESC="The Glibc package contains the main C library. This library provides the basic routines for allocating memory, searching directories, opening and closing files, reading and writing files, string handling, pattern matching, arithmetic, and so on."
@@ -33,7 +31,7 @@ PKG_LONGDESC="The Glibc package contains the main C library. This library provid
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/bash \
+PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
 			      libc_cv_slibdir=/lib \
 			      ac_cv_path_PERL= \
 			      ac_cv_prog_MAKEINFO= \
@@ -46,11 +44,9 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/bash \
 			      --enable-kernel=4.0.0 \
 			      --enable-obsolete-rpc \
 			      --enable-profile \
-			      --enable-stackguard-randomization \
 			      --enable-tunables \
 			      --with-binutils=$ROOT/$BUILD/toolchain/bin \
 			      --with-headers=$SYSROOT_PREFIX/usr/include \
-			      --enable-stack-protector=strong \
 			      --with-tls \
 			      --disable-debug"
 
@@ -97,7 +93,7 @@ pre_configure_target() {
   unset LD_LIBRARY_PATH
 
 # set some CFLAGS we need
-  export CFLAGS="$CFLAGS -g"
+  export CFLAGS="$CFLAGS -g0"
   export OBJDUMP_FOR_HOST=objdump
 
 cat >config.cache <<EOF
@@ -131,6 +127,7 @@ post_makeinstall_target() {
 
 # remove locales and charmaps
   rm -rf $INSTALL/usr/share/i18n/charmaps
+
   if [ -n "$GLIBC_LOCALES" ]; then
     mkdir -p $INSTALL/usr/lib/locale
     for locale in $GLIBC_LOCALES; do
