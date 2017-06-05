@@ -57,7 +57,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-linker-build-id \
                            --enable-objc-gc=auto \
                            --enable-default-pie \
-                           --with-tune=ivybridge"
+                           --with-tune=generic"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
