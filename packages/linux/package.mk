@@ -66,7 +66,7 @@ case "$LINUX" in
     ;;
   *)
     PKG_VERSION="4.9.30"
-    PKG_URL="ftp://root:openelec@192.168.1.4/www/linux-4.11-zengit.tar.xz"
+    PKG_URL="http://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
     PKG_PATCH_DIRS="linux-4.9"
     ;;
 esac
