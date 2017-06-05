@@ -52,14 +52,12 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --without-cloog \
                            --disable-werror \
                            --disable-browser-plugin \
-                           --enable-gnu-unique-object \
                            --disable-libsanitizer \
                            --with-tune=generic"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
-                              --enable-cloog-backend=isl \
                               --disable-libssp \
                               --disable-libatomic \
                               --disable-libquadmath \
@@ -91,7 +89,6 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-clocale=gnu \
                          --enable-__cxa_atexit \
                          --disable-libunwind-exceptions \
-                         --enable-linker-build-id \
                          --enable-install-libiberty \
                          --with-linker-hash-style=gnu 
                          --enable-gnu-indirect-function \
