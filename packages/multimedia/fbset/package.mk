@@ -9,10 +9,19 @@ PKG_LONGDESC="DTS Coherent Acoustics decoder with support for HD extensions"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_MAKE_OPTS_TARGET="PREFIX=/usr BINDIR=/usr/bin LIBDIR=/usr/lib"
-PKG_MAKEINSTALL_OPTS_TARGET="$PKG_MAKE_OPTS_TARGET"
+make_target() {
+  make SHELL='sh -x' CC="$CC" CFLAGS="$CFLAGS" CPPFLAGS="$CPPFLAGS" LDFLAGS="$LDFLAGS"
+}
 
-pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC -DPIC"
-  export LDFLAGS="$LDFLAGS -fPIC -DPIC"
+post_make_target() {
+  mkdir -p $INSTALL/bin/
+  #mkdir -p $INSTALL_DEV/usr/bin/
+  cp $ROOT/$PKG_BUILD/fbset $INSTALL/bin/
+  cp $ROOT/$PKG_BUILD/con2fbmap $INSTALL/bin/
+  cp $ROOT/$PKG_BUILD/modeline2fb $INSTALL/bin/
+}
+
+
+makeinstall_target() {
+  :
 }
