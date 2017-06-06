@@ -30,7 +30,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 if [ "$DISPLAYSERVER" = "x11" ]; then
-  PKG_DEPENDS_TARGET="toolchain Python:host expat glproto dri2proto presentproto libdrm libXext libXdamage libXfixes libXxf86vm libxcb libX11 systemd dri3proto libxshmfence openssl"
+  PKG_DEPENDS_TARGET="toolchain Python:host expat glproto dri2proto presentproto libdrm libXext libXdamage libXfixes libXxf86vm libxcb libX11 systemd dri3proto libxshmfence openssl Mako:host"
 
   export DRI_DRIVER_INSTALL_DIR=$XORG_PATH_DRI
   export DRI_DRIVER_SEARCH_DIR=$XORG_PATH_DRI
