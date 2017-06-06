@@ -17,7 +17,6 @@
 ################################################################################
 
 PKG_NAME="connman"
-# DO NOT UPGRADE!!
 PKG_VERSION="1.34"
 PKG_SITE="http://www.connman.net"
 PKG_URL="https://www.kernel.org/pub/linux/network/connman/$PKG_NAME-$PKG_VERSION.tar.xz"

@@ -71,7 +71,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-randomseed \
                            --disable-backlight \
                            --disable-rfkill \
-                           --enable-logind \
+                           --enable-logind --without-kill-user-processes \
                            --disable-machined \
                            --disable-importd \
                            --disable-hostnamed \
@@ -80,7 +80,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-localed \
                            --disable-coredump \
                            --disable-polkit \
-                           --disable-resolved \
+                           --disable-resolved --with-default-dnssec=allow-downgrade \
                            --disable-networkd \
                            --disable-efi \
                            --disable-gnuefi \
@@ -90,7 +90,8 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-manpages \
                            --disable-hibernate \
                            --disable-ldconfig \
-                           --disable-split-usr \
+                           --disable-tpm --with-tpm-pcrindex=8 \
+                           --enable-split-usr \
                            --disable-tests \
                            --without-python \
                            --with-sysvinit-path= \
@@ -100,8 +101,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --with-dbussessionservicedir=/usr/share/dbus-1/services \
                            --with-dbussystemservicedir=/usr/share/dbus-1/system-services \
                            --with-rootprefix=/usr \
-                           --with-rootlibdir=/usr/lib \
-                           --with-default-hierarchy=legacy"
+                           --with-rootlibdir=/usr/lib"
 
 pre_build_target() {
 # broken autoreconf

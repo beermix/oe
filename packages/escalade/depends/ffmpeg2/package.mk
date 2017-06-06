@@ -195,7 +195,7 @@ configure_target() {
               --disable-libgsm \
               --disable-libmp3lame \
               --disable-libnut \
-              --disable-liblibjpeg-turbo \
+              --disable-libopenjpeg \
               --disable-librtmp \
               --disable-libschroedinger \
               --enable-libspeex \

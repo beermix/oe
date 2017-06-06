@@ -163,6 +163,13 @@ SED="sed -i"
 
   PKG_BUILD="$BUILD/${PKG_NAME}-${PKG_VERSION}"
 
+XORG_PATH_DRI=/usr/lib/dri
+XORG_PATH_XKB=/usr/share/X11/xkb
+XORG_PATH_XKB_OUTPUT=/var/lib/xkb
+XORG_PATH_RGB=/usr/lib/X11/rgb
+XORG_PATH_MODULES=/usr/lib/xorg/modules
+XORG_PATH_DRIVERS=/usr/lib/xorg/modules/drivers
+
 . config/optimize
 
 if [ -z "$CCACHE_DIR" ]; then

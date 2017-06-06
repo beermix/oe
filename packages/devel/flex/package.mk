@@ -27,12 +27,10 @@ PKG_LONGDESC="flex is a tool for generating programs that perform pattern-matchi
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-#PKG_CONFIGURE_OPTS_HOST="ac_cv_lib_util_getloadavg=no ac_cv_func_malloc_0_nonnull=yes ac_cv_func_realloc_0_nonnull=yes"
-			    
-PKG_CONFIGURE_OPTS_HOST="ac_cv_lib_util_getloadavg=no --disable-shared --disable-rpath --with-gnu-ld"
+PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared --disable-rpath --with-gnu-ld"
 
 post_makeinstall_host() {
-   cat > $ROOT/$TOOLCHAIN/bin/lex << "EOF"
+  cat > $ROOT/$TOOLCHAIN/bin/lex << "EOF"
 #!/bin/sh
 exec flex "$@"
 EOF

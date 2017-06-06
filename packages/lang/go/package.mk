@@ -49,7 +49,7 @@ configure_host() {
 
 make_host() {
   cd $ROOT/$PKG_BUILD/src
-  ./make.bash  --no-clear
+  ./make.bash --no-clear
 }
 
 makeinstall_host() {

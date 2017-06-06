@@ -17,6 +17,9 @@
 # Root password to integrate in the target system
   ROOT_PASSWORD="openelec"
 
+  
+  LLVM_SUPPORT="no"
+  
 # Install glibc locales to the build (yes / no)
   GLIBC_LOCALES="yes"
 
@@ -74,7 +77,7 @@
 # for a list of additinoal drivers see packages/linux-drivers
 # Space separated list is supported,
 # e.g. ADDITIONAL_DRIVERS="DRIVER1 DRIVER2"
-  ADDITIONAL_DRIVERS=""
+#  ADDITIONAL_DRIVERS=""
 
 # build and install bluetooth support (yes / no)
   BLUETOOTH_SUPPORT="yes"
@@ -144,12 +147,17 @@
 # Windowmanager to use (ratpoison / fluxbox / none)
   WINDOWMANAGER="fluxbox"
 
+# Xorg Graphic drivers to use (all / i915,i965,r200,r300,r600,nvidia)
+# Space separated list is supported,
+# e.g. GRAPHIC_DRIVERS="i915 i965 r300 r600 radeonsi nvidia"
+  GRAPHIC_DRIVERS="i965"
+
 # build and install remote support (yes / no)
   REMOTE_SUPPORT="no"
 
 # build and install IRServer IR/LCD support (yes / no)
   IRSERVER_SUPPORT="no"
-  LCD_DRIVER+="irtrans,"
+  #LCD_DRIVER+="no"
 
 # build and install CEC adapter support (yes / no)
   CEC_SUPPORT="no"

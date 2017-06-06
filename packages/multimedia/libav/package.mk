@@ -103,7 +103,7 @@ configure_target() {
               --disable-libfreetype \
               --disable-libgsm \
               --disable-libmp3lame \
-              --disable-liblibjpeg-turbo \
+              --disable-libopenjpeg \
               --disable-librtmp \
               --disable-libschroedinger \
               --enable-libspeex \
