@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="glibc"
-PKG_VERSION="2.24"
+PKG_VERSION="2.25"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -56,8 +56,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --disable-nscd \
                            --enable-lock-elision \
                            --disable-timezone-tools \
-                           --disable-debug \
-                           --disable-werror"
+                           --disable-debug"
 
 NSS_CONF_DIR="$PKG_BUILD/nss"
 
@@ -158,8 +157,12 @@ post_makeinstall_target() {
 # create default configs
   mkdir -p $INSTALL/etc
     cp $PKG_DIR/config/nsswitch.conf $INSTALL/etc
+    cp $PKG_DIR/config/host.conf $INSTALL/etc
     cp $PKG_DIR/config/gai.conf $INSTALL/etc
-    echo "multi on" > $INSTALL/etc/host.conf
+
+  if [ "$TARGET_ARCH" = "arm" -a "$TARGET_FLOAT" = "hard" ]; then
+    ln -sf ld.so $INSTALL/lib/ld-linux.so.3
+  fi
 }
 
 configure_init() {
