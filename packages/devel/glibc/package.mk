@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="glibc"
-PKG_VERSION="2.25"
+PKG_VERSION="2.24"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -48,16 +48,16 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-__thread \
                            --with-binutils=$ROOT/$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
-                           --enable-kernel=3.0.0 \
+                           --enable-kernel=4.0.0 \
                            --without-cvs \
                            --without-gd \
                            --enable-obsolete-rpc \
                            --disable-build-nscd \
-                           --enable-stack-protector=strong \
                            --disable-nscd \
                            --enable-lock-elision \
                            --disable-timezone-tools \
-                           --disable-debug"
+                           --disable-debug \
+                           --disable-werror"
 
 NSS_CONF_DIR="$PKG_BUILD/nss"
 
@@ -114,7 +114,6 @@ EOF
 
   echo "sbindir=/usr/bin" >> configparms
   echo "rootsbindir=/usr/bin" >> configparms
-  echo "build-programs=no" >> configparms
 }
 
 post_makeinstall_target() {
@@ -135,18 +134,9 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/lib/*.map
   rm -rf $INSTALL/var
 
-# remove unneeded libs
-  rm -rf $INSTALL/usr/lib/libBrokenLocale*
-  rm -rf $INSTALL/usr/lib/libSegFault.so
-  rm -rf $INSTALL/usr/lib/libmemusage.so
-  rm -rf $INSTALL/usr/lib/libpcprofile.so
-
-# remove ldscripts
-  rm -rf $INSTALL/usr/lib/libc.so
-  rm -rf $INSTALL/usr/lib/libpthread.so
-
 # remove locales and charmaps
   rm -rf $INSTALL/usr/share/i18n/charmaps
+
   if [ -n "$GLIBC_LOCALES" ]; then
     mkdir -p $INSTALL/usr/lib/locale
     for locale in $GLIBC_LOCALES; do
