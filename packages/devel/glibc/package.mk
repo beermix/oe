@@ -53,6 +53,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --without-gd \
                            --enable-obsolete-rpc \
                            --disable-build-nscd \
+                           --enable-stack-protector=strong \
                            --disable-nscd \
                            --enable-lock-elision \
                            --disable-timezone-tools \
@@ -113,6 +114,7 @@ EOF
 
   echo "sbindir=/usr/bin" >> configparms
   echo "rootsbindir=/usr/bin" >> configparms
+  echo "build-programs=no" >> configparms
 }
 
 post_makeinstall_target() {
