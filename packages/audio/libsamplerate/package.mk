@@ -32,7 +32,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
                            --enable-static \
                            --datadir=/usr/share \
                            --enable-sndfile \
-                           --datadir-fftw"
+                           --disable-fftw"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
