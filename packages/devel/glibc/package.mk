@@ -41,6 +41,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --disable-sanity-checks \
                            --enable-add-ons \
                            --enable-bind-now \
+                           --with-elf \
                            --with-tls \
                            --with-__thread \
                            --with-binutils=$ROOT/$BUILD/toolchain/bin \

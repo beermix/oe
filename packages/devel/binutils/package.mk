@@ -40,12 +40,14 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-gold \
                          --enable-ld=default \
                          --enable-lto \
-                         --with-pic \
+                         --enable-nls \
+                         --disable-gdb \
+                         --disable-sim \
                          --enable-poison-system-directories"
 
 makeinstall_host() {
   cp -v ../include/libiberty.h $SYSROOT_PREFIX/usr/include
-  make install
+  make -j1 install
 }
 
 pre_configure_host() {
