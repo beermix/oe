@@ -37,7 +37,7 @@ configure_host() {
                -- \
                -DCMAKE_C_FLAGS="-O2 -Wall -pipe -Wno-format-security" \
                -DCMAKE_CXX_FLAGS="-O2 -Wall -pipe -Wno-format-security" \
-               -DCMAKE_EXE_LINKER_FLAGS="$HOST_LDFLAGS" \
+               -DCMAKE_EXE_LINKER_FLAGS="$HOST_LDFLAGS -lrt" \
                -DCMAKE_USE_OPENSSL=ON \
                -DBUILD_CursesDialog=0 \
                -DCMAKE_USE_SYSTEM_LIBRARY_JSONCPP=0 \
