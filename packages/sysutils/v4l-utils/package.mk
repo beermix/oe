@@ -19,7 +19,7 @@
 # with 1.0.0 repeat delay is broken. test on upgrade
 
 PKG_NAME="v4l-utils"
-PKG_VERSION="1.12.5"
+PKG_VERSION="1.12.3"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -34,6 +34,17 @@ PKG_LONGDESC="Linux V4L2 and DVB API utilities and v4l libraries (libv4l)."
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-CPPFLAGS="$CPPFLAGS -DLINUX_I2C_DEV_H"
+PKG_CONFIGURE_OPTS_TARGET="--without-jpeg"
+PKG_MAKEINSTALL_OPTS_TARGET="PREFIX=/usr -C utils/keytable"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared --disable-v4l-utils"
+make_target() {
+    make -C utils/keytable CFLAGS="$TARGET_CFLAGS"
+}
+
+post_makeinstall_target() {
+  rm -rf $INSTALL/etc/rc_keymaps
+    ln -sf /storage/.config/rc_keymaps $INSTALL/etc/rc_keymaps
+
+  mkdir -p $INSTALL/usr/config
+    cp -PR $PKG_DIR/config/* $INSTALL/usr/config
+}

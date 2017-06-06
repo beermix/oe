@@ -12,7 +12,7 @@
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
 #
-#  You should have received a copy of the GNU General Public License 
+#  You should have received a copy of the GNU General Public License
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
@@ -45,11 +45,12 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-gold \
                            --enable-ld=default \
                            --disable-multilib \
-                           --enable-nls \
+                           --disable-nls \
                            --enable-checking=release \
-                           --with-default-libstdcxx-abi=new \
+                           --with-default-libstdcxx-abi=gcc4-compatible \
+                           --without-ppl \
                            --without-cloog \
-                           --disable-werror \
+w                           --disable-werror \
                            --disable-browser-plugin \
                            --disable-vtable-verify \
                            --enable-gnu-unique-object \

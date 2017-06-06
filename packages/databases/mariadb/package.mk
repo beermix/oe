@@ -24,7 +24,7 @@ PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/MariaDB/server/releases"
 PKG_URL="https://downloads.mariadb.org/interstitial/$PKG_NAME-$PKG_VERSION/source/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain pcre readline openssl libaio libevent zlib lz4 xz lzo libxml2 mariadb:host"
+PKG_DEPENDS_TARGET="toolchain netbsd-curses libaio openssl mariadb:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="database"
 PKG_SHORTDESC="mariadb: A community developed branch of MySQL"
@@ -119,11 +119,9 @@ configure_host() {
         -DWITH_READLINE=OFF \
         -DWITH_PCRE=bundled \
         -DWITH_ZLIB=bundled \
-        -DWITH_SYSTEMD=0 \
-        -DWITH_LIBWRAP=0 \
-        -DWITH_WSREP=0 \
-        -DSECURITY_HARDENED=0 \
-        -DWITHOUT_DYNAMIC_PLUGINS=ON \
+        -DWITH_SYSTEMD=OFF \
+        -DWITH_LIBWRAP=OFF \
+        -DWITH_WSREP=OFF \
         ..
 }
 
@@ -134,7 +132,7 @@ makeinstall_host() {
 configure_target() {
   cmake -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
         -DDISABLE_SHARED=ON \
-        -DCMAKE_C_FLAGS="${TARGET_CFLAGS} -fPIC -DPIC -fno-strict-aliasing -DBIG_JOINS=1 -fomit-frame-pointer -fno-delete-null-pointer-checks -Wno-type-mismatch" \
+        -DCMAKE_C_FLAGS="${TARGET_CFLAGS} -fPIC -DPIC -fno-strict-aliasing -DBIG_JOINS=1 -fomit-frame-pointer -fno-delete-null-pointer-checks" \
         -DCMAKE_CXX_FLAGS="${TARGET_CXXFLAGS} -fPIC -DPIC -fno-strict-aliasing -DBIG_JOINS=1 -felide-constructors -fno-delete-null-pointer-checks" \
         -DCMAKE_BUILD_TYPE=Release \
         $MARIADB_IMPORT_EXECUTABLES \
@@ -156,15 +154,13 @@ configure_target() {
         -DWITH_EXTRA_CHARSETS=all \
         -DTOKUDB_OK=0 \
         -DDISABLE_LIBMYSQLCLIENT_SYMBOL_VERSIONING=TRUE \
-        -DENABLE_DTRACE=0 \
-        -DWITH_READLINE=0 \
+        -DENABLE_DTRACE=OFF \
+        -DWITH_READLINE=OFF \
         -DWITH_PCRE=bundled \
         -DWITH_ZLIB=bundled \
-        -DWITH_SYSTEMD=0 \
-        -DWITH_LIBWRAP=0 \
+        -DWITH_SYSTEMD=OFF \
+        -DWITH_LIBWRAP=OFF \
         -DWITH_SSL=$SYSROOT_PREFIX/usr \
-        -DSECURITY_HARDENED=0 \
-        -DWITHOUT_DYNAMIC_PLUGINS=ON \
         $MARIADB_OPTS \
         ..
 }

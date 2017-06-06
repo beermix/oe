@@ -36,10 +36,8 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-pcre16 \
 			      --enable-unicode-properties \
 			      --with-gnu-ld \
-			      --enable-pcre8 \
 			      --enable-jit \
-			      --with-pic \
-			      --enable-newline-is-anycrlf"
+			      --with-pic"
 			      
 PKG_CONFIGURE_OPTS_HOST="--prefix=$ROOT/$TOOLCHAIN $PKG_CONFIGURE_OPTS_TARGET"
 

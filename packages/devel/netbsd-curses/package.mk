@@ -31,13 +31,16 @@ PKG_LONGDESC="netbsd-curses: netbsd-libcurses portable edition"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-#CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|g"`
-CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
-#CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
+# remove some problematic *FLAGS
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
 
+pre_configure_target() {
+  CFLAGS="$CFLAGS -fPIC"
+}
 
 make_target() {
-  make HOSTCC="$HOST_CC" CFLAGS="$CFLAGS" PREFIX=/usr all-static
+  make HOSTCC="$HOST_CC" CFLAGS="$CFLAGS -D_GNU_SOURCE" PREFIX=/usr all-static
 }
 
 makeinstall_target() {

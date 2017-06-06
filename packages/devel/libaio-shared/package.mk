@@ -16,31 +16,23 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-# with 1.0.0 repeat delay is broken. test on upgrade
-
-PKG_NAME="v4l-utils"
-PKG_VERSION="1.12.4"
+PKG_NAME="libaio"
+PKG_VERSION="0.3.110"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="http://linuxtv.org/"
-PKG_URL="http://linuxtv.org/downloads/v4l-utils/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_SITE="http://lse.sourceforge.net/io/aio.html"
+PKG_URL="http://http.debian.net/debian/pool/main/liba/libaio/${PKG_NAME}_${PKG_VERSION}.orig.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_PRIORITY="optional"
-PKG_SECTION="system"
-PKG_SHORTDESC="v4l-utils: Linux V4L2 and DVB API utilities and v4l libraries (libv4l)."
-PKG_LONGDESC="Linux V4L2 and DVB API utilities and v4l libraries (libv4l)."
+PKG_SECTION="devel"
+PKG_SHORTDESC="libaio: Kernel Asynchronous I/O (AIO) Support for Linux"
+PKG_LONGDESC="AIO enables even a single application thread to overlap I/O operations with other processing, by providing an interface for submitting one or more I/O requests in one system call (io_submit()) without waiting for completion, and a separate interface (io_getevents()) to reap completed I/O operations associated with a given completion group."
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--without-jpeg --disable-shared --disable-nls --disable-doxygen-html --disable-doxygen-ps --disable-doxygen-pdf --disable-rpath --with-pic --disable-v4l-utils"
-
-post_makeinstall_target() {
-  rm -rf $INSTALL/etc/rc_keymaps
-  mkdir -p $INSTALL/etc/rc_keymaps
-    ln -sf /storage/.config/rc_keymaps $INSTALL/etc/rc_keymaps
-
-  mkdir -p $INSTALL/usr/config
-    cp -PR $PKG_DIR/config/* $INSTALL/usr/config
+pre_build_target() {
+  strip_lto
+  strip_gold
 }

@@ -32,8 +32,7 @@ PKG_CMAKE_OPTS_TARGET="-DSTATICLIBS=ON \
                        -DDOCUMENTATION=FALSE \
                        -DEXAMPLES=FALSE \
                        -DFTDIPP=FALSE \
-                       -DPYTHON_BINDINGS=FALSE \
-                       -DCMAKE_BUILD_TYPE=Release"
+                       -DPYTHON_BINDINGS=FALSE"
 
 pre_configure_target() {
   CFLAGS="$CFLAGS -fPIC -DPIC"

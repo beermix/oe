@@ -17,11 +17,15 @@
 ################################################################################
 
 PKG_NAME="zlib"
-PKG_VERSION="v1.2.11"
+PKG_VERSION="1.2.11"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="OSS"
 PKG_SITE="http://www.zlib.net"
-PKG_GIT_URL="https://github.com/madler/zlib"
+PKG_URL="http://zlib.net/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_DEPENDS_HOST=""
+PKG_PRIORITY="optional"
 PKG_SECTION="compress"
 PKG_SHORTDESC="zlib: A general purpose (ZIP) data compression library"
 PKG_LONGDESC="zlib is a general purpose data compression library. All the code is thread safe. The data format used by the zlib library is described by RFCs (Request for Comments) 1950 to 1952 in the files ftp://ds.internic.net/rfc/rfc1950.txt (zlib format), rfc1951.txt (deflate format) and rfc1952.txt (gzip format)."
@@ -30,7 +34,17 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release"
-#PKG_CMAKE_OPTS_HOST="$PKG_CMAKE_OPTS_TARGET"
+PKG_CMAKE_OPTS_HOST="$PKG_CMAKE_OPTS_TARGET"
+
+pre_build_target() {
+  mkdir -p $PKG_BUILD/.$TARGET_NAME
+  cp -RP $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME
+}
+
+pre_build_host() {
+  mkdir -p $PKG_BUILD/.$HOST_NAME
+  cp -RP $PKG_BUILD/* $PKG_BUILD/.$HOST_NAME
+}
 
 post_configure_target() {
  ## configure minizip
