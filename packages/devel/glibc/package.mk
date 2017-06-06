@@ -32,23 +32,28 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
-			      libc_cv_slibdir=/lib \
-			      ac_cv_path_PERL= \
-			      ac_cv_prog_MAKEINFO= \
-			      --libexecdir=/usr/lib/glibc \
-			      --cache-file=config.cache \
-			      --enable-add-ons=libidn \
-			      --enable-bind-now \
-			      --enable-experimental-malloc \
-			      --enable-hidden-plt \
-			      --enable-kernel=4.0.0 \
-			      --enable-obsolete-rpc \
-			      --enable-profile \
-			      --enable-tunables \
-			      --with-binutils=$ROOT/$BUILD/toolchain/bin \
-			      --with-headers=$SYSROOT_PREFIX/usr/include \
-			      --with-tls \
-			      --disable-debug"
+                           libc_cv_slibdir=/lib \
+                           ac_cv_path_PERL= \
+                           ac_cv_prog_MAKEINFO= \
+                           --libexecdir=/usr/lib/glibc \
+                           --cache-file=config.cache \
+                           --disable-profile \
+                           --disable-sanity-checks \
+                           --enable-add-ons \
+                           --enable-bind-now \
+                           --with-elf \
+                           --with-tls \
+                           --with-__thread \
+                           --with-binutils=$ROOT/$BUILD/toolchain/bin \
+                           --with-headers=$SYSROOT_PREFIX/usr/include \
+                           --enable-kernel=3.0.0 \
+                           --without-cvs \
+                           --without-gd \
+                           --enable-obsolete-rpc \
+                           --disable-build-nscd \
+                           --disable-nscd \
+                           --enable-lock-elision \
+                           --disable-timezone-tools"
 
 NSS_CONF_DIR="$PKG_BUILD/nss"
 
@@ -92,8 +97,7 @@ pre_configure_target() {
 
   unset LD_LIBRARY_PATH
 
-# set some CFLAGS we need
-  export CFLAGS="$CFLAGS -g0"
+  export CFLAGS="$CFLAGS -g -fno-stack-protector"
   export OBJDUMP_FOR_HOST=objdump
 
 cat >config.cache <<EOF
