@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://sourceware.org/elfutils/"
 PKG_URL="https://sourceware.org/elfutils/ftp/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain zlib"
+PKG_DEPENDS_TARGET="toolchain zlib bzip2"
 PKG_PRIORITY="optional"
 PKG_SECTION="devel"
 PKG_SHORTDESC="elfutils: collection of utilities to handle ELF objects"
@@ -32,12 +32,14 @@ PKG_LONGDESC="Elfutils is a collection of utilities, including eu-ld (a linker),
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
+CFLAGS="$CFLAGS -D_GNU_SOURCE -Wno-unused-result"
+
 PKG_CONFIGURE_OPTS_TARGET="utrace_cv_cc_biarch=false \
                            --disable-werror \
                            --disable-progs \
                            --disable-nls \
                            --with-zlib \
-                           --without-bzlib \
+                           --with-bzlib \
                            --without-lzma"
 
 pre_configure_target() {
