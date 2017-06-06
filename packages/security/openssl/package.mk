@@ -34,7 +34,6 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            --libdir=lib \
                            shared \
                            threads \
-                           no-ec2m \
                            no-ssl2 \
                            no-ssl3 \
                            no-jpake \
@@ -79,7 +78,7 @@ pre_configure_target() {
 
 configure_target() {
   cd $ROOT/$PKG_BUILD/.$TARGET_NAME
-  ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 -DL_ENDIAN -Wall $CFLAGS $CPPFLAGS  -Wa,--noexecstack
+  ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 -DL_ENDIAN -Wall $CFLAGS $CPPFLAGS -Wa,--noexecstack
 }
 
 makeinstall_target() {

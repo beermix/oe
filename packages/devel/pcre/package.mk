@@ -34,10 +34,13 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-static \
 			      --enable-utf8 \
 			      --enable-pcre16 \
+			      --enable-pcre8 \
 			      --enable-unicode-properties \
 			      --with-gnu-ld \
 			      --enable-jit \
-			      --with-pic"
+			      --with-pic \
+			      --disable-stack-for-recursion \
+			      --enable-newline-is-anycrlf"
 			      
 PKG_CONFIGURE_OPTS_HOST="--prefix=$ROOT/$TOOLCHAIN $PKG_CONFIGURE_OPTS_TARGET"
 

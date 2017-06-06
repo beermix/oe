@@ -82,7 +82,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-languages=c,c++ \
                          --enable-__cxa_atexit \
                          --enable-decimal-float \
-                         --enable-libssp \
+                         --disable-libssp \
                          --enable-tls \
                          --enable-shared \
                          --disable-static \
@@ -94,7 +94,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          $GCC_OPTS"
 
 pre_configure_host() {
-  export CXXFLAGS="$CXXFLAGS -std=gnu++98"
+  #export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
 }
 
