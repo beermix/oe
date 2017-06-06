@@ -17,7 +17,8 @@
 ################################################################################
 
 PKG_NAME="jsoncpp"
-PKG_VERSION="src-0.5.0"
+#PKG_VERSION="src-0.5.0"
+PKG_VERSION="1.8.0"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -37,6 +38,6 @@ pre_configure_target() {
   export CFLAGSi+=" -fPIC"
 }
 
-pre_build_target() {
-  cp $PKG_DIR/config/CMakeLists.txt $ROOT/$PKG_BUILD
-}
+#pre_build_target() {
+#  cp $PKG_DIR/config/CMakeLists.txt $ROOT/$PKG_BUILD
+#}

@@ -30,7 +30,6 @@
                          --sysconfdir=/etc \
                          --libexecdir=/usr/lib \
                          --localstatedir=/var \
-                         --disable-static \
                          --enable-shared"
 
   TARGET_CMAKE_OPTS="-DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \

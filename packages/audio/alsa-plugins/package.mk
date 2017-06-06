@@ -20,7 +20,7 @@ PKG_NAME="alsa-plugins"
 PKG_VERSION="1.1.4"
 PKG_SITE="http://www.alsa-project.org/"
 PKG_URL="ftp://ftp.alsa-project.org/pub/plugins/alsa-plugins-1.1.4.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain alsa-lib netbsd-curses"
+PKG_DEPENDS_TARGET="toolchain alsa-lib netbsd-curses libsamplerate"
 PKG_SECTION="audio"
 PKG_SHORTDESC="alsa-utils: Advanced Linux Sound Architecture utilities"
 PKG_LONGDESC="This package includes the utilities for ALSA, like alsamixer, aplay, arecord, alsactl, iecset and speaker-test."
@@ -28,5 +28,7 @@ PKG_LONGDESC="This package includes the utilities for ALSA, like alsamixer, apla
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --enable-shared --with-plugindir=/usr/lib/alsa"
+PKG_CONFIGURE_OPTS_TARGET="--with-speex=$SYSROOT_PREFIX/usr \
+			      --with-plugindir=/usr/lib/alsa \
+			      --disable-jack \
+			      --enable-static"
