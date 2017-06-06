@@ -34,17 +34,13 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            --libdir=lib \
                            shared \
                            threads \
-                           no-md2 \
-                           no-sctp \
                            no-ssl2 \
                            no-ssl3 \
                            enable-unit-test \
                            enable-tlsext \
-                           no-weak-ssl-ciphers \
                            zlib \
                            no-zlib-dynamic \
                            enable-ec_nistp_64_gcc_128"
-
 
 pre_configure_host() {
   mkdir -p $ROOT/$PKG_BUILD/.$HOST_NAME
