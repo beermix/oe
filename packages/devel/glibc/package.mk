@@ -53,7 +53,8 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --disable-build-nscd \
                            --disable-nscd \
                            --enable-lock-elision \
-                           --disable-timezone-tools"
+                           --disable-timezone-tools \
+                           --disable-debug"
 
 NSS_CONF_DIR="$PKG_BUILD/nss"
 
@@ -156,9 +157,6 @@ post_makeinstall_target() {
     cp $PKG_DIR/config/host.conf $INSTALL/etc
     cp $PKG_DIR/config/gai.conf $INSTALL/etc
 
-  if [ "$TARGET_ARCH" = "arm" -a "$TARGET_FLOAT" = "hard" ]; then
-    ln -sf ld.so $INSTALL/usr/lib/ld-linux.so.3
-  fi
 }
 
 configure_init() {
