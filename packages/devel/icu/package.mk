@@ -8,7 +8,7 @@ PKG_SOURCE_DIR="icu"
 PKG_DEPENDS_TARGET="toolchain icu:host"
 PKG_SECTION="textproc"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 post_unpack() {
   cp -r $ROOT/$PKG_BUILD/source/* $ROOT/$PKG_BUILD/
@@ -26,11 +26,9 @@ PKG_CONFIGURE_OPTS_HOST="--disable-samples \
 			    --disable-icuio \
 			    --disable-layout \
 			    --disable-renaming \
-			    --enable-static \
 			    --disable-shared"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static \
-                           --disable-shared \
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
                            --disable-samples \
                            --disable-tests \
                            --with-cross-build=$ROOT/$PKG_BUILD/.$HOST_NAME"
