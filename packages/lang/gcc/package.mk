@@ -52,13 +52,12 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-werror \
                            --disable-browser-plugin \
                            --disable-libsanitizer \
-                           --enable-gnu-unique-object \
-                           --enable-default-pie \
                            --with-tune=generic"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
+                              --enable-cloog-backend=isl \
                               --disable-libssp \
                               --disable-libatomic \
                               --disable-libquadmath \
