@@ -18,11 +18,11 @@
 
 PKG_NAME="x11"
 PKG_VERSION=""
+PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.X.org"
 PKG_URL=""
 PKG_DEPENDS_TARGET="toolchain xorg-server"
-PKG_PRIORITY="optional"
 PKG_SECTION="virtual"
 PKG_SHORTDESC="x11: the Windowing system"
 PKG_LONGDESC="X11 is the Windowing system"
@@ -46,12 +46,9 @@ fi
 
 get_graphicdrivers
 
+
 # Drivers 
-if [ -n "$LIBINPUT" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET xf86-input-libinput"
-else
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET xf86-input-evdev"
-fi
 
 for drv in $XORG_DRIVERS; do
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET xf86-video-$drv"
