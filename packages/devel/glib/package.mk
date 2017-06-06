@@ -68,9 +68,9 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/lib/glib-2.0
   rm -rf $INSTALL/usr/share
 
-  mkdir -p $INSTALL/usr/share/libalpm/hooks/
-  cp $PKG_DIR/hooks/gio-querymodules.hook $INSTALL/usr/share/libalpm/hooks/
-  cp $PKG_DIR/hooks/glib-compile-schemas.hook $INSTALL/usr/share/libalpm/hooks/
+  #mkdir -p $INSTALL/usr/share/libalpm/hooks/
+  #cp $PKG_DIR/hooks/gio-querymodules.hook $INSTALL/usr/share/libalpm/hooks/
+  #cp $PKG_DIR/hooks/glib-compile-schemas.hook $INSTALL/usr/share/libalpm/hooks/
 
   ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/gapplication $ROOT/$BUILD/toolchain/bin/
   ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/gdbus $ROOT/$BUILD/toolchain/bin/
