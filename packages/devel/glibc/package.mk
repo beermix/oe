@@ -17,13 +17,15 @@
 ################################################################################
 
 PKG_NAME="glibc"
-PKG_VERSION="2.24"
+PKG_VERSION="2.25"
+PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/libc/"
-PKG_URL="http://ftp.gnu.org/pub/gnu/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="http://ftpmirror.gnu.org/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap localedef-eglibc:host"
 PKG_DEPENDS_INIT="glibc"
+PKG_PRIORITY="optional"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="glibc: The GNU C library"
 PKG_LONGDESC="The Glibc package contains the main C library. This library provides the basic routines for allocating memory, searching directories, opening and closing files, reading and writing files, string handling, pattern matching, arithmetic, and so on."
@@ -32,29 +34,25 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
-                           libc_cv_slibdir=/lib \
-                           ac_cv_path_PERL= \
-                           ac_cv_prog_MAKEINFO= \
-                           --libexecdir=/usr/lib/glibc \
-                           --cache-file=config.cache \
-                           --disable-profile \
-                           --disable-sanity-checks \
-                           --enable-add-ons \
-                           --enable-bind-now \
-                           --with-elf \
-                           --with-tls \
-                           --with-__thread \
-                           --with-binutils=$ROOT/$BUILD/toolchain/bin \
-                           --with-headers=$SYSROOT_PREFIX/usr/include \
-                           --enable-kernel=3.0.0 \
-                           --without-cvs \
-                           --without-gd \
-                           --enable-obsolete-rpc \
-                           --disable-build-nscd \
-                           --disable-nscd \
-                           --enable-lock-elision \
-                           --disable-timezone-tools \
-                           --disable-debug"
+			      libc_cv_slibdir=/lib \
+			      ac_cv_path_PERL= \
+			      ac_cv_prog_MAKEINFO= \
+			      --libexecdir=/usr/lib/glibc \
+			      --cache-file=config.cache \
+			      --enable-add-ons=libidn \
+			      --enable-bind-now \
+			      --enable-experimental-malloc \
+			      --enable-hidden-plt \
+			      --enable-kernel=4.0.0 \
+			      --enable-obsolete-rpc \
+			      --enable-profile \
+			      --enable-stack-protector=strong \
+			      --enable-stackguard-randomization \
+			      --enable-tunables \
+			      --with-binutils=$ROOT/$BUILD/toolchain/bin \
+			      --with-headers=$SYSROOT_PREFIX/usr/include \
+			      --with-tls \
+			      --disable-debug"
 
 NSS_CONF_DIR="$PKG_BUILD/nss"
 
@@ -98,7 +96,8 @@ pre_configure_target() {
 
   unset LD_LIBRARY_PATH
 
-  export CFLAGS="$CFLAGS -g -fno-stack-protector"
+# set some CFLAGS we need
+  export CFLAGS="$CFLAGS -g"
   export OBJDUMP_FOR_HOST=objdump
 
 cat >config.cache <<EOF
@@ -154,9 +153,8 @@ post_makeinstall_target() {
 # create default configs
   mkdir -p $INSTALL/etc
     cp $PKG_DIR/config/nsswitch.conf $INSTALL/etc
-    cp $PKG_DIR/config/host.conf $INSTALL/etc
     cp $PKG_DIR/config/gai.conf $INSTALL/etc
-
+    echo "multi on" > $INSTALL/etc/host.conf
 }
 
 configure_init() {
