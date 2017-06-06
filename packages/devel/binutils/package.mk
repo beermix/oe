@@ -19,7 +19,7 @@
 PKG_NAME="binutils"
 PKG_VERSION="2.28"
 PKG_URL="https://fossies.org/linux/misc/binutils-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_HOST="ccache:host bison:host flex:host linux:host"
+PKG_DEPENDS_HOST="ccache:host bison:host flex:host texinfo:host linux:host"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="binutils: A GNU collection of binary utilities"
 
