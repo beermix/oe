@@ -55,6 +55,12 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --enable-lock-elision \
                            --disable-timezone-tools"
 
+if [ "$DEBUG" = yes ]; then
+  PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET --enable-debug"
+else
+  PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET --disable-debug"
+fi
+
 NSS_CONF_DIR="$PKG_BUILD/nss"
 
 GLIBC_EXCLUDE_BIN="catchsegv gencat getconf iconv iconvconfig ldconfig"
@@ -97,7 +103,7 @@ pre_configure_target() {
 
   unset LD_LIBRARY_PATH
 
-  export CFLAGS="$CFLAGS -g -fno-stack-protector"
+  export CFLAGS="$CFLAGS -g"
   export OBJDUMP_FOR_HOST=objdump
 
 cat >config.cache <<EOF
@@ -112,10 +118,8 @@ EOF
 }
 
 post_makeinstall_target() {
-  ln -sf ld-$PKG_VERSION.so $INSTALL/lib/ld.so
-  if [ "$TARGET_ARCH" = "arm" -a "$TARGET_FLOAT" = "hard" ]; then
-    ln -sf ld-$PKG_VERSION.so $INSTALL/lib/ld-linux.so.3
-  fi
+# we are linking against ld.so, so symlink
+  ln -sf $(basename $INSTALL/usr/lib/ld-*.so) $INSTALL/usr/lib/ld.so
 
 # cleanup
   for i in $GLIBC_EXCLUDE_BIN; do
@@ -124,18 +128,10 @@ post_makeinstall_target() {
 
   rm -rf $INSTALL/usr/lib/audit
   rm -rf $INSTALL/usr/lib/glibc
+  rm -rf $INSTALL/usr/lib/libc_pic
   rm -rf $INSTALL/usr/lib/*.o
+  rm -rf $INSTALL/usr/lib/*.map
   rm -rf $INSTALL/var
-
-# remove unneeded libs
-  rm -rf $INSTALL/usr/lib/libBrokenLocale*
-  rm -rf $INSTALL/usr/lib/libSegFault.so
-  rm -rf $INSTALL/usr/lib/libmemusage.so
-  rm -rf $INSTALL/usr/lib/libpcprofile.so
-
-# remove ldscripts
-#  rm -rf $INSTALL/usr/lib/libc.so
-#  rm -rf $INSTALL/usr/lib/libpthread.so
 
 # remove locales and charmaps
   rm -rf $INSTALL/usr/share/i18n/charmaps
@@ -164,7 +160,9 @@ post_makeinstall_target() {
     cp $PKG_DIR/config/host.conf $INSTALL/etc
     cp $PKG_DIR/config/gai.conf $INSTALL/etc
 
-    echo "multi on" > $INSTALL/etc/host.conf
+  if [ "$TARGET_ARCH" = "arm" -a "$TARGET_FLOAT" = "hard" ]; then
+    ln -sf ld.so $INSTALL/usr/lib/ld-linux.so.3
+  fi
 }
 
 configure_init() {
