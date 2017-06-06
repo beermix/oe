@@ -53,8 +53,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-browser-plugin \
                            --disable-libsanitizer \
                            --enable-gnu-unique-object \
-                           --enable-linker-build-id \
-                           --enable-objc-gc=auto \
                            --enable-default-pie \
                            --with-tune=generic"
 
