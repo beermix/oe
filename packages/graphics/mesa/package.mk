@@ -64,14 +64,14 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --disable-libglvnd \
                            --disable-mangling \
                            --enable-texture-float \
-                           --enable-asm \
+                           --disable-asm \
                            --disable-selinux \
                            --enable-opengl \
                            --disable-gles1 \
                            --enable-gles2 \
                            --enable-dri \
                            --disable-gallium-extra-hud \
-                           --enable-lmsensors \
+                           --disable-lmsensors \
                            --enable-dri3 \
                            --enable-glx \
                            --disable-osmesa \

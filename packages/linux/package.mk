@@ -65,9 +65,9 @@ case "$LINUX" in
     PKG_PATCH_DIRS="linux-4.8"
     ;;
   *)
-    PKG_VERSION="4.12-rc4"
-    PKG_URL="https://git.kernel.org/torvalds/t/linux-$PKG_VERSION.tar.gz"
-    PKG_PATCH_DIRS="linux-4.12"
+    PKG_VERSION="4.9.30"
+    PKG_URL="https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-$PKG_VERSION.tar.xz"
+    PKG_PATCH_DIRS="linux-4.9"
     ;;
 esac
 

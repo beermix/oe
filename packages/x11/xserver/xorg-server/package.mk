@@ -122,16 +122,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
                            --with-serverconfig-path=/usr/lib/xserver \
                            --without-doxygen \
                            --without-xmlto \
-                           --without-fop \
-                           --with-sha1=libgcrypt 
-                           --disable-static \
-                           --enable-xvfb \
-                           --disable-install-setuid \
-                           --without-dtrace \
-                           --disable-xfbdev \
-                           --disable-xfake \
-                           --disable-linux-acpi \
-                           --disable-linux-apm"
+                           --without-fop"
 
 pre_configure_target() {
 # hack to prevent a build error
