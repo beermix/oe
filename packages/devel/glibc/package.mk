@@ -55,12 +55,6 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --enable-lock-elision \
                            --disable-timezone-tools"
 
-if [ "$DEBUG" = yes ]; then
-  PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET --enable-debug"
-else
-  PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET --disable-debug"
-fi
-
 NSS_CONF_DIR="$PKG_BUILD/nss"
 
 GLIBC_EXCLUDE_BIN="catchsegv gencat getconf iconv iconvconfig ldconfig"
@@ -103,7 +97,7 @@ pre_configure_target() {
 
   unset LD_LIBRARY_PATH
 
-  export CFLAGS="$CFLAGS -g"
+  export CFLAGS="$CFLAGS -g -fno-stack-protector"
   export OBJDUMP_FOR_HOST=objdump
 
 cat >config.cache <<EOF
@@ -118,8 +112,10 @@ EOF
 }
 
 post_makeinstall_target() {
-# we are linking against ld.so, so symlink
-  ln -sf $(basename $INSTALL/usr/lib/ld-*.so) $INSTALL/usr/lib/ld.so
+  ln -sf ld-$PKG_VERSION.so $INSTALL/lib/ld.so
+  if [ "$TARGET_ARCH" = "arm" -a "$TARGET_FLOAT" = "hard" ]; then
+    ln -sf ld-$PKG_VERSION.so $INSTALL/lib/ld-linux.so.3
+  fi
 
 # cleanup
   for i in $GLIBC_EXCLUDE_BIN; do
