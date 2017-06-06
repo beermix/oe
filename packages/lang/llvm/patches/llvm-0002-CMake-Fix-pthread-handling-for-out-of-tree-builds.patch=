@@ -1,0 +1,14 @@
+diff --git a/include-fixer/plugin/CMakeLists.txt b/include-fixer/plugin/CMakeLists.txt
+index 2799fd4a..df792ea1 100644
+--- a/include-fixer/plugin/CMakeLists.txt
++++ b/include-fixer/plugin/CMakeLists.txt
+@@ -9,5 +9,5 @@ add_clang_library(clangIncludeFixerPlugin
+   clangParse
+   clangSema
+   clangTooling
+-  ${PTHREAD_LIB}
++  ${LLVM_PTHREAD_LIB}
+   )
+-- 
+2.12.2
+
