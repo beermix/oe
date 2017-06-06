@@ -26,7 +26,7 @@ PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
-PKG_DEPENDS_TARGET="toolchain kodi:host kodi:bootstrap xmlstarlet:host Python zlib systemd pciutils dbus lzo pcre swig:host libass curl fontconfig fribidi tinyxml libjpeg-turbo freetype libcdio libdvdnav taglib libxml2 libxslt rapidjson sqlite ffmpeg crossguid giflib opengl lcms2 libfmt"
+PKG_DEPENDS_TARGET="toolchain kodi:host kodi:bootstrap xmlstarlet:host Python zlib systemd pciutils dbus lzo pcre swig:host libass curl fontconfig fribidi tinyxml libjpeg-turbo freetype libcdio libdvdnav taglib libxml2 libxslt rapidjson sqlite ffmpeg crossguid giflib opengl lcms2"
 PKG_DEPENDS_HOST="toolchain"
 PKG_DEPENDS_BOOTSTRAP="toolchain lzo:host libpng:host libjpeg-turbo:host giflib:host"
 PKG_PRIORITY="optional"
@@ -62,10 +62,10 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$ROOT/$TOOLCHAIN \
                        -DENABLE_LCMS2=ON \
                        -DENABLE_CCACHE=OFF \
                        -DENABLE_LIRC=OFF \
-                       -DENABLE_EVENTCLIENTS=ON \
+                       -DENABLE_EVENTCLIENTS=OFF \
                        -DENABLE_LIBUSB=OFF \
                        -DENABLE_UDEV=ON \
-                       -DENABLE_XSLT=ON \
+                       -DENABLE_XSLT=OFF \
                        -DENABLE_DBUS=ON \
                        -DCMAKE_VERBOSE_MAKEFILE=OFF \
                        -DENABLE_AVX=ON \
@@ -260,7 +260,7 @@ makeinstall_host() {
 }
 
 pre_configure_target() {
-  export LIBS="$LIBS -laio -lz -ltermcap"
+  export LIBS="$LIBS -ltermcap"
 }
 
 pre_make_target() {
@@ -380,11 +380,9 @@ post_makeinstall_target() {
 post_install() {
 # enable default services
   enable_service kodi-autostart.service
-  enable_service kodi-cleanlogs.service
   enable_service kodi-halt.service
   enable_service kodi-poweroff.service
   enable_service kodi-reboot.service
-  enable_service kodi-waitonnetwork.service
   enable_service kodi.service
   enable_service kodi-lirc-suspend.service
 }
