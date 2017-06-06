@@ -13,7 +13,7 @@ PKG_AUTORECONF="no"
 pre_configure_target() {
   #export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
   export CXXFLAGS="$CXXFLAGS -std=c++11"
-  export LIBS="-latomic"
+  #export LIBS="-latomic"
 }
 
 PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
