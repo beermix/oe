@@ -47,40 +47,6 @@ index 6f023a9..ad53c9d 100644
  
  
  version 3.0:
-diff --git b/RELEASE_NOTES a/RELEASE_NOTES
-new file mode 100644
-index 0000000..c3ec010
---- /dev/null
-+++ a/RELEASE_NOTES
-@@ -0,0 +1,15 @@
-+
-+              ┌────────────────────────────────────────┐
-+              │ RELEASE NOTES for FFmpeg 3.2 "Hypatia" │
-+              └────────────────────────────────────────┘
-+
-+   The FFmpeg Project proudly presents FFmpeg 3.2 "Hypatia", about 4
-+   months after the release of FFmpeg 3.1.
-+
-+   A complete Changelog is available at the root of the project, and the
-+   complete Git history on http://source.ffmpeg.org.
-+
-+   We hope you will like this release as much as we enjoyed working on it, and
-+   as usual, if you have any questions about it, or any FFmpeg related topic,
-+   feel free to join us on the #ffmpeg IRC channel (on irc.freenode.net) or ask
-+   on the mailing-lists.
-diff --git b/doc/Doxyfile a/doc/Doxyfile
-index 0891899..8f855f8 100644
---- b/doc/Doxyfile
-+++ a/doc/Doxyfile
-@@ -38,7 +38,7 @@ PROJECT_NAME           = FFmpeg
- # could be handy for archiving the generated documentation or if some version
- # control system is used.
- 
--PROJECT_NUMBER         =
-+PROJECT_NUMBER         = 3.2
- 
- # Using the PROJECT_BRIEF tag one can provide an optional one line description
- # for a project that appears at the top of each page and should give viewer a
 diff --git b/ffmpeg.c a/ffmpeg.c
 index 11faf0d..494c23d 100644
 --- b/ffmpeg.c
@@ -6795,27 +6761,6 @@ index ef21595..b36e840 100644
      if(ctb_row) {
          ret = init_get_bits8(&lc->gb, s->data + s->sh.offset[ctb_row - 1], s->sh.size[ctb_row - 1]);
  
-@@ -2771,6 +4517,20 @@ static int decode_nal_unit(HEVCContext *s, const H2645NAL *nal)
-         if (ret < 0)
-             return ret;
- 
-+        // The definition of _N unit types is "non-reference for other frames
-+        // with the same temporal_id" so they may/will be ref frames for pics
-+        // with a higher temporal_id.
-+        s->used_for_ref = s->ps.sps->max_sub_layers > s->temporal_id + 1 ||
-+            !(s->nal_unit_type == HEVC_NAL_TRAIL_N ||
-+                        s->nal_unit_type == HEVC_NAL_TSA_N   ||
-+                        s->nal_unit_type == HEVC_NAL_STSA_N  ||
-+                        s->nal_unit_type == HEVC_NAL_RADL_N  ||
-+                        s->nal_unit_type == HEVC_NAL_RASL_N);
-+
-+        if (!s->used_for_ref && s->avctx->skip_frame >= AVDISCARD_NONREF) {
-+            s->is_decoded = 0;
-+            break;
-+        }
-         if (s->max_ra == INT_MAX) {
-             if (s->nal_unit_type == HEVC_NAL_CRA_NUT || IS_BLA(s)) {
-                 s->max_ra = s->poc;
 @@ -2894,10 +4654,18 @@ static int decode_nal_units(HEVCContext *s, const uint8_t *buf, int length)
          }
      }
@@ -7612,21 +7557,7 @@ index 791a07b..502c21f 100644
      if (CONFIG_MPEG4_DECODER && ctx->xvid_build >= 0 &&
          s->codec_id == AV_CODEC_ID_MPEG4 &&
          avctx->idct_algo == FF_IDCT_AUTO) {
-diff --git b/libavcodec/mpegvideo_enc.c a/libavcodec/mpegvideo_enc.c
-index 882cf09..71a858f 100644
---- b/libavcodec/mpegvideo_enc.c
-+++ a/libavcodec/mpegvideo_enc.c
-@@ -399,9 +399,6 @@ FF_ENABLE_DEPRECATION_WARNINGS
-         return AVERROR(EINVAL);
-     }
- 
--    if (s->huffman && avctx->codec_id == AV_CODEC_ID_AMV)
--        s->huffman = 0;
--
-     if (s->intra_dc_precision > (avctx->codec_id == AV_CODEC_ID_MPEG2VIDEO ? 3 : 0)) {
-         av_log(avctx, AV_LOG_ERROR, "intra dc precision too large\n");
-         return AVERROR(EINVAL);
-diff --git b/libavcodec/rpi_hevc_transform.h a/libavcodec/rpi_hevc_transform.h
+fdiff --git b/libavcodec/rpi_hevc_transform.h a/libavcodec/rpi_hevc_transform.h
 new file mode 100644
 index 0000000..4309f1c
 --- /dev/null

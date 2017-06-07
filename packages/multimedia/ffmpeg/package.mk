@@ -17,8 +17,7 @@
 ################################################################################
 
 PKG_NAME="ffmpeg"
-#PKG_VERSION="3.1.8"
-PKG_VERSION="eb0819c"
+PKG_VERSION="3.3.1-Leia-Alpha"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="LGPLv2.1+"
