@@ -4,8 +4,8 @@
 ################################################################################
 
 PKG_NAME="kodi-theme-Estuary"
-GIT_VERSION="661dd08"
-PKG_VERSION="17.2-rc1-$GIT_VERSION"
+GIT_VERSION="147cec4"
+PKG_VERSION="17.3-$GIT_VERSION"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -44,4 +44,13 @@ makeinstall_target() {
     for theme in themes/*; do
       cp $(basename $theme).xbt $INSTALL/usr/share/kodi/addons/skin.estuary/media
     done
+
+  mkdir -p $INSTALL/usr/config/kodi.skins/skin.estuary/xml
+    mv -f $INSTALL/usr/share/kodi/addons/skin.estuary/xml/DialogButtonMenu.xml \
+        $INSTALL/usr/config/kodi.skins/skin.estuary/xml/DialogButtonMenu.xml
+    ln -sf /storage/.config/kodi.skins/skin.estuary/xml/DialogButtonMenu.xml \
+        $INSTALL/usr/share/kodi/addons/skin.estuary/xml/DialogButtonMenu.xml
+
+  mkdir -p $INSTALL/usr/share/kodi/config
+    cp $PKG_DIR/config/Estuary-DialogButtonMenu.xml $INSTALL/usr/share/kodi/config
 }

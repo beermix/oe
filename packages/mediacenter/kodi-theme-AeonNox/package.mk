@@ -4,7 +4,7 @@
 ################################################################################
 
 PKG_NAME="kodi-theme-AeonNox"
-PKG_VERSION="e22aef1"
+PKG_VERSION="216cc97"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -46,4 +46,7 @@ makeinstall_target() {
 
   mkdir -p $INSTALL/usr/share/kodi/addons
   ln -sf /storage/.config/kodi.skins/skin.aeon.nox.5ae $INSTALL/usr/share/kodi/addons/skin.aeon.nox.5ae
+
+  mkdir -p $INSTALL/usr/share/kodi/config
+    cp $PKG_DIR/config/Nox-DialogButtonMenu.xml $INSTALL/usr/share/kodi/config
 }
