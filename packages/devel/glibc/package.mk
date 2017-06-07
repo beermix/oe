@@ -42,6 +42,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --disable-profile \
                            --disable-sanity-checks \
                            --enable-add-ons \
+                           --enable-stack-protector=strong \
                            --enable-bind-now \
                            --with-elf \
                            --with-tls \
@@ -65,9 +66,9 @@ else
   PKG_CONFIGURE_OPTS_TARGET+=" --disable-debug"
 fi
 
-#GLIBC_EXCLUDE_BIN="catchsegv gencat getconf iconv iconvconfig ldconfig"
-#GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN makedb mtrace pcprofiledump"
-#GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN pldd rpcgen sln sotruss sprof xtrace"
+GLIBC_EXCLUDE_BIN="catchsegv gencat getconf iconv iconvconfig ldconfig"
+GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN makedb mtrace pcprofiledump"
+GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN pldd rpcgen sln sotruss sprof xtrace"
 
 pre_build_target() {
   cd $PKG_BUILD
@@ -130,10 +131,10 @@ post_makeinstall_target() {
     ln -sf ld-$PKG_VERSION.so $INSTALL/lib/ld-linux.so.3
   fi
 
-# cleanup
-#  for i in $GLIBC_EXCLUDE_BIN; do
-#    rm -rf $INSTALL/usr/bin/$i
-#  done
+cleanup
+  for i in $GLIBC_EXCLUDE_BIN; do
+    rm -rf $INSTALL/usr/bin/$i
+done
 
   rm -rf $INSTALL/usr/lib/audit
   rm -rf $INSTALL/usr/lib/glibc
