@@ -12,7 +12,7 @@ pre_configure_target() {
 }
 
 make_target() {
-  make SHELL='sh -x' CC="$CC" CFLAGS="$CFLAGS -DDEBUG=0" CPPFLAGS="$CPPFLAGS" LDFLAGS="$LDFLAGS" -j1
+  make SHELL='sh -x' CC="$CC" CFLAGS="$CFLAGS -DDEBUG=0" CPPFLAGS="$CPPFLAGS" LDFLAGS="$LDFLAGS -s" -j1
 }
 
 post_make_target() {

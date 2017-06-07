@@ -10,7 +10,7 @@ PKG_AUTORECONF="no"
 pre_configure_host() {
   cd $ROOT/$PKG_BUILD
 
-  export CFLAGS="$CFLAGS -DUSE_GETTEXT -DNDEBUG -D_FORTIFY_SOURCE=2 -Wall -fomit-frame-pointer"
+  export CFLAGS="$CFLAGS -DUSE_GETTEXT -D_FORTIFY_SOURCE=2 -Wall"
   export HOST_CC="gcc"
   export HOST_CXX="g++"
   export HOSTCC="$HOST_CC"
@@ -24,5 +24,5 @@ pre_configure_host() {
 
 make_host() {
   make
-  make -C librhash install-headers install-lib-shared install-lib-static
+  make -C librhash install-headers install-lib-static
 }
