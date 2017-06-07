@@ -1,0 +1,18 @@
+diff -Naurp xupnpd-5c08c05/src/Makefile xupnpd-5c08c05-patch/src/Makefile
+--- xupnpd-5c08c05/src/Makefile	2016-07-06 11:31:11.000000000 +0300
++++ xupnpd-5c08c05-patch/src/Makefile	2017-01-29 13:21:58.000000000 +0200
+@@ -83,6 +83,14 @@ samsung_c:
+ dreambox:
+ 	$(MAKE) embedded TARGET=mipsel_dreambox SDK=/opt/mipsel-unknown-linux-gnu/bin
+ 
++# Amlogic
++amlogic:
++	$(MAKE) embedded_aml
++
++embedded_aml:
++	PATH=$(PATH):$(UTILS) $(MAKE) -C $(LUA) CC=$(CC) a MYCFLAGS='$(LUAMYCFLAGS)'
++	$(CC) -O2 -c -o md5.o md5c.c
++	$(CC) $(CFLAGS) -B$(UTILS) -DWITH_URANDOM -o xupnpd $(SRC) md5.o -llua -lm -ldl
+ 
+ embedded:
+ 	PATH=$(PATH):$(UTILS) $(MAKE) -C $(LUA) CC=$(SDK)/$(CC) a MYCFLAGS='$(LUAMYCFLAGS)'
