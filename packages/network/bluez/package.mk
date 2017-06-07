@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="bluez"
-PKG_VERSION="5.45"
+PKG_VERSION="5.44"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -40,9 +40,10 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-dependency-tracking \
                            --disable-obex \
                            --enable-client \
                            --disable-systemd \
-                           --enable-tools --enable-deprecated \
+                           --enable-tools \
                            --enable-datafiles \
                            --disable-experimental \
+                           --disable-deprecated \
                            --enable-sixaxis \
                            --with-gnu-ld \
                            storagedir=/storage/.cache/bluetooth"
@@ -64,7 +65,7 @@ pre_configure_target() {
   cd $ROOT/$PKG_BUILD
     rm -rf .$TARGET_NAME
 
-  export LIBS="-ltermcap"
+  export LIBS="-lncurses -lterminfo"
 }
 
 post_makeinstall_target() {
