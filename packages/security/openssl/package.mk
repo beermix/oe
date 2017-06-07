@@ -18,8 +18,8 @@
 PKG_NAME="openssl"
 PKG_VERSION="1.0.2l"
 PKG_URL="https://www.openssl.org/source/openssl-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_HOST="ccache:host yasm:host"
-PKG_DEPENDS_TARGET="toolchain pcre gmp zlib"
+PKG_DEPENDS_HOST="ccache:host"
+PKG_DEPENDS_TARGET="toolchain yasm:host pcre gmp zlib"
 PKG_SECTION="security"
 PKG_SHORTDESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"
 PKG_LONGDESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"
@@ -36,8 +36,6 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            threads \
                            no-ssl2 \
                            no-ssl3 \
-                           no-jpake \
-                           no-krb5 \
                            no-sctp \
                            no-ssl-trace \
                            no-libunbound \
