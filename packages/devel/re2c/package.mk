@@ -1,14 +1,10 @@
 PKG_NAME="re2c"
 PKG_VERSION="0.16"
-PKG_GIT_URL="https://github.com/skvadrik/re2c"
+PKG_URL="https://github.com/skvadrik/re2c/releases/download/$PKG_VERSION/re2c-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="bison:host"
 PKG_SECTION="devel"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
-
-post_unpack() {
-  cp -r $PKG_BUILD/re2c/* $PKG_BUILD/
-}
+PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_HOST="--disable-docs"
 
