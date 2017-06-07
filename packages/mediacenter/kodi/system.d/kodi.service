@@ -27,8 +27,5 @@ LimitNOFILE=16384
 # https://github.com/xbmc/xbmc/pull/11620
   Environment=MALLOC_MMAP_THRESHOLD_=131072
 
-# Workaround for high CPU load with nvidia GFX
-  Environment=__GL_YIELD=USLEEP
-
 [Install]
 WantedBy=default.target

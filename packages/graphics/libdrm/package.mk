@@ -18,7 +18,7 @@
 ################################################################################
 
 PKG_NAME="libdrm"
-PKG_VERSION="2.4.79"
+PKG_VERSION="2.4.81"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://dri.freedesktop.org"
@@ -55,7 +55,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-udev \
                            --enable-largefile \
                            --with-kernel-source=$(get_pkg_build linux) \
                            $DRM_CONFIG \
-                           --disable-install-test-programs \
+                           --enable-install-test-programs \
                            --disable-cairo-tests \
                            --disable-manpages \
                            --disable-valgrind"
