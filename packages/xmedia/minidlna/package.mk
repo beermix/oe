@@ -4,12 +4,12 @@
 ################################################################################
 
 PKG_NAME="minidlna"
-PKG_VERSION="d1cd7c7"
+PKG_VERSION="1.2.0"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://minidlna.sourceforge.net/"
-PKG_URL="$ALEXELEC_SRC/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="https://downloads.sourceforge.net/project/minidlna/minidlna/1.2.0/minidlna-1.2.0.tar.gz"
 PKG_DEPENDS_TARGET="toolchain sqlite libexif libid3tag flac libvorbis"
 PKG_SECTION="xmedia/tools"
 PKG_SHORTDESC="MiniDLNA is server software with the aim of being fully compliant with DLNA/UPnP-AV clients"
@@ -25,12 +25,9 @@ pre_configure_target() {
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
-			               --sbindir=/usr/bin \
-                           --with-os-name="AlexELEC" \
-			               --with-os-version="$ALEXELEC_VERSION" \
-			               --with-os-url="www.alexelec.in.ua" \
-			               --with-log-path=/var/log \
-			               --with-db-path=/storage/.cache/minidlna"
+			     --sbindir=/usr/bin \
+			     --with-log-path=/var/log \
+			     --with-db-path=/storage/.cache/minidlna"
 
 post_makeinstall_target() {
   mkdir -p $INSTALL/usr/config/minidlna
