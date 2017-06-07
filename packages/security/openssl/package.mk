@@ -36,14 +36,8 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            threads \
                            no-ssl2 \
                            no-ssl3 \
-                           no-sctp \
-                           no-ssl-trace \
-                           no-libunbound \
-                           no-md2 \
-                           no-store \
                            enable-unit-test \
                            enable-tlsext \
-                           no-weak-ssl-ciphers \
                            no-zlib \
                            no-zlib-dynamic \
                            enable-ec_nistp_64_gcc_128"
@@ -94,7 +88,7 @@ post_makeinstall_target() {
 
   # create new cert: ./mkcerts.sh
   mkdir -p $INSTALL/etc/ssl
-    cp $PKG_DIR/cert/ca-bundle.crt $INSTALL/etc/ssl/cert.pem
+  cp $PKG_DIR/cert/cacert.pem $INSTALL/etc/ssl/cert.pem
 
   # backwards comatibility
   mkdir -p $INSTALL/etc/pki/tls
