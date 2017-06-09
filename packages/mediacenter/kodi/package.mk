@@ -62,10 +62,10 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$ROOT/$TOOLCHAIN \
                        -DENABLE_LCMS2=ON \
                        -DENABLE_CCACHE=OFF \
                        -DENABLE_LIRC=ON \
-                       -DENABLE_EVENTCLIENTS=OFF \
+                       -DENABLE_EVENTCLIENTS=ON \
                        -DENABLE_LIBUSB=OFF \
                        -DENABLE_UDEV=ON \
-                       -DENABLE_XSLT=OFF \
+                       -DENABLE_XSLT=ON \
                        -DENABLE_DBUS=ON"
 
 if [ "$TARGET_ARCH" = "x86_64" ]; then
