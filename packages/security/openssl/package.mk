@@ -88,7 +88,7 @@ post_makeinstall_target() {
 
   # create new cert: ./mkcerts.sh
   mkdir -p $INSTALL/etc/ssl
-  cp $PKG_DIR/cert/cacert.pem $INSTALL/etc/ssl/cert.pem
+  cp $PKG_DIR/cert/ca-bundle.crt $INSTALL/etc/ssl/cert.pem
 
   # backwards comatibility
   mkdir -p $INSTALL/etc/pki/tls
