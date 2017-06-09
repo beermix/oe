@@ -22,7 +22,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kernel.org"
 PKG_DEPENDS_HOST="ccache:host"
-PKG_DEPENDS_TARGET="toolchain cpio:host xz:host pciutils kmod wireless-regdb keyutils"
+PKG_DEPENDS_TARGET="toolchain cpio:host xz:host pciutils kmod wireless-regdb keyutils irqbalance"
 PKG_DEPENDS_INIT="toolchain cpu-firmware:init"
 PKG_NEED_UNPACK="$LINUX_DEPENDS"
 PKG_PRIORITY="optional"
@@ -65,7 +65,7 @@ case "$LINUX" in
     PKG_PATCH_DIRS="linux-4.8"
     ;;
   *)
-    PKG_VERSION="4.11.3"
+    PKG_VERSION="4.11.1"
     PKG_URL="https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-$PKG_VERSION.tar.xz"
     PKG_PATCH_DIRS="linux-4.11"
     ;;
