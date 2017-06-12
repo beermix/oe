@@ -1,7 +1,6 @@
 PKG_NAME="psmisc"
 PKG_VERSION="23.0"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
-#PKG_SOURCE_DIR="psmisc-master-c1415251578b380ecdfcabaaadd16a86814a4695"
 PKG_DEPENDS_TARGET="toolchain netbsd-curses"
 PKG_PRIORITY="optional"
 PKG_SECTION="tools"
