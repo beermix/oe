@@ -356,6 +356,12 @@ check_config() {
   fi
 }
 
+debug_strip() {
+  if [ ! "$DEBUG" = yes ]; then
+    find $* -type f -executable | xargs $STRIP 2>/dev/null || :
+  fi
+}
+
 show_config() {
   show_message=""
 
