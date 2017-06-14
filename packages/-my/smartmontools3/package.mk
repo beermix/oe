@@ -20,18 +20,16 @@
 ################################################################################
 
 PKG_NAME="smartmontools"
-PKG_VERSION="6.2"
+PKG_VERSION="6.5"
 PKG_SITE="http://smartmontools.sourceforge.net"
 PKG_URL="http://download.sourceforge.net/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
-
 PKG_SECTION="plugin/program"
 PKG_SHORTDESC="S.M.A.R.T. disk monitoring tool with XBMC gui."
 PKG_LONGDESC="S.M.A.R.T. disk monitoring tool with XBMC gui. This version is based on smartmontools v 6.2."
 PKG_IS_ADDON="yes"
 PKG_ADDON_TYPE="xbmc.python.script"
 PKG_ADDON_PROVIDES=""
-PKG_ADDON_REPOVERSION="7.0"
 PKG_AUTORECONF="yes"
 PKG_MAINTAINER="Peter Smorada (smoradap@gmail.com)"
 

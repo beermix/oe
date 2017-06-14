@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="SDL2"
-PKG_VERSION="f50bb2f"
+PKG_VERSION="7f3b12d"
 PKG_SITE="https://www.libsdl.org/"
 PKG_GIT_URL="https://github.com/spurious/SDL-mirror"
 PKG_DEPENDS_TARGET="toolchain yasm:host alsa-lib systemd dbus"
