@@ -7,7 +7,7 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-CXXFLAGS="$CXXFLAGS -fno-dwarf2-cfi-asm"
+#CXXFLAGS="$CXXFLAGS -fno-dwarf2-cfi-asm"
 
 PKG_CONFIGURE_SCRIPT="dist/configure"
 

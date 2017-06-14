@@ -8,7 +8,6 @@ PKG_AUTORECONF="yes"
 
 pre_configure_target() {
   export LIBS="-lterminfo"
-  strip_hard
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
@@ -22,5 +21,4 @@ PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
 			      --disable-etcdir \
 			      --enable-function-subdirs \
 			      --with-tcsetpgrp \
-			      --disable-gdbm \
-			      --enable-zsh-secure-free"
+			      --enable-gdbm"
