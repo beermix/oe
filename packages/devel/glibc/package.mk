@@ -111,8 +111,6 @@ libc_cv_ssp=no
 libc_cv_ssp_strong=no
 EOF
 
-echo "libdir=/usr/lib" >> configparms
-echo "slibdir=/usr/lib" >> configparms
 echo "sbindir=/usr/bin" >> configparms
 echo "rootsbindir=/usr/bin" >> configparms
 echo "build-programs=yes" >> configparms
@@ -120,10 +118,11 @@ echo "build-programs=yes" >> configparms
 GLIBC_INCLUDE_BIN="getent ldd locale"
 }
 
-
 post_makeinstall_target() {
-# we are linking against ld.so, so symlink
-  ln -sf $(basename $INSTALL/lib/ld-*.so) $INSTALL/lib/ld.so
+  ln -sf ld-$PKG_VERSION.so $INSTALL/lib/ld.so
+  if [ "$TARGET_ARCH" = "arm" -a "$TARGET_FLOAT" = "hard" ]; then
+    ln -sf ld-$PKG_VERSION.so $INSTALL/lib/ld-linux.so.3
+  fi
 
 # cleanup
 # remove any programs we don't want/need, keeping only those we want
