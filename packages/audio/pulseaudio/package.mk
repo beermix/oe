@@ -67,7 +67,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
                            --disable-esound \
                            --disable-solaris \
                            --disable-waveout \
-                           --disable-glib2 \
+                           --enable-glib2 \
                            --disable-gtk3 \
                            --disable-gconf \
                            $PULSEAUDIO_AVAHI \
