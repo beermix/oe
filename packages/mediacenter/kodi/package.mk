@@ -26,7 +26,7 @@ PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
-PKG_DEPENDS_TARGET="toolchain kodi:host kodi:bootstrap xmlstarlet:host Python zlib systemd pciutils dbus lzo pcre swig:host libass curl fontconfig fribidi tinyxml libjpeg-turbo freetype libcdio libdvdnav taglib libxml2 libxslt yajl sqlite ffmpeg crossguid giflib opengl lcms2 libplist libhdhomerun libfmt"
+PKG_DEPENDS_TARGET="toolchain kodi:host kodi:bootstrap xmlstarlet:host Python zlib systemd pciutils dbus lzo pcre swig:host libass curl fontconfig fribidi tinyxml libjpeg-turbo freetype libcdio libdvdnav taglib libxml2 libxslt rapidjson sqlite ffmpeg crossguid giflib opengl lcms2 libplist libfmt"
 PKG_DEPENDS_HOST="toolchain"
 PKG_DEPENDS_BOOTSTRAP="toolchain lzo:host libpng:host libjpeg-turbo:host giflib:host"
 PKG_PRIORITY="optional"
@@ -48,6 +48,7 @@ PKG_CMAKE_OPTS_BOOTSTRAP="-DCORE_SOURCE_DIR=$ROOT/$PKG_BUILD"
 PKG_CMAKE_OPTS_HOST="-DCORE_SOURCE_DIR=$ROOT/$PKG_BUILD"
 PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$ROOT/$TOOLCHAIN \
                        -DDEPENDS_PATH=$ROOT/$PKG_BUILD/depends \
+                       -DWITH_ARCH=$TARGET_ARCH \
                        -DCMAKE_BUILD_TYPE=none \
                        -DPYTHON_INCLUDE_DIRS=$SYSROOT_PREFIX/usr/include/python2.7 \
                        -DGIT_VERSION=$PKG_VERSION \
@@ -68,11 +69,6 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$ROOT/$TOOLCHAIN \
                        -DENABLE_XSLT=ON \
                        -DENABLE_DBUS=ON"
 
-if [ "$TARGET_ARCH" = "x86_64" ]; then
-  PKG_CMAKE_OPTS_TARGET+=" -DWITH_CPU=$TARGET_ARCH"
-else
-  PKG_CMAKE_OPTS_TARGET+=" -DWITH_ARCH=$TARGET_ARCH"
-fi
 
 if [ "$DISPLAYSERVER" = "x11" ]; then
   PKG_DEPENDS_TARGET+=" libX11 libXext libdrm libXrandr"
@@ -248,7 +244,10 @@ makeinstall_host() {
 }
 
 pre_configure_target() {
-  export LIBS="$LIBS -ltermcap"
+# kodi should never be built with lto
+  strip_lto
+
+  export LIBS="$LIBS -lz -lterminfo"
 }
 
 pre_make_target() {
