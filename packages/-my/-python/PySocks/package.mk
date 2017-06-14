@@ -1,5 +1,5 @@
 PKG_NAME="PySocks"
-PKG_VERSION="72ea225"
+PKG_VERSION="1f898ba"
 PKG_GIT_URL="https://github.com/Anorov/PySocks"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"
 PKG_SECTION="python/system"
