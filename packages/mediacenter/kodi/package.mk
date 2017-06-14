@@ -62,23 +62,14 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$ROOT/$TOOLCHAIN \
                        -DENABLE_SDL=OFF \
                        -DENABLE_LCMS2=ON \
                        -DENABLE_CCACHE=OFF \
-                       -DENABLE_LIRC=ON \
+                       -DENABLE_LIRC=OFF \
                        -DENABLE_EVENTCLIENTS=ON \
                        -DENABLE_LIBUSB=OFF \
                        -DENABLE_UDEV=ON \
                        -DENABLE_XSLT=ON \
                        -DENABLE_DBUS=ON \
                        -DCMAKE_VERBOSE_MAKEFILE=OFF \
-                       -DENABLE_AVX=ON \
-                       -DENABLE_AVX2=OFF \
-                       -DENABLE_SSE=ON \
-                       -DENABLE_SSE2=ON \
-                       -DENABLE_SSE4_1=ON \
-                       -DENABLE_SSE4_2=ON \
                        -DENABLE_SSSE3=ON \
-                       -DHAVE_SSE=TRUE \
-                       -DHAVE_SSE2=TRUE \
-                       -DHAVE_SSE4_1=TRUE \
                        -DHAVE_SSSE3=TRUE"
 
 if [ "$DISPLAYSERVER" = "x11" ]; then
