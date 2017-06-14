@@ -4,7 +4,7 @@
 ################################################################################
 
 PKG_NAME="pvr.iptvsimple"
-PKG_VERSION="d782816"
+PKG_VERSION="dbf6011"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
