@@ -36,8 +36,4 @@ PKG_CONFIGURE_OPTS_HOST="--disable-shared --enable-static \
                          --disable-nls \
                          --disable-doc"
                          
-PKG_CONFIGURE_OPTS_TARGET="--enable-static \
-			    --enable-threads \
-			    --disable-xzdec \
-			    --disable-lzmadec \
-			    --disable-doc"
+PKG_CONFIGURE_OPTS_TARGET="--enable-threads --disable-doc"
