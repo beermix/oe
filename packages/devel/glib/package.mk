@@ -17,11 +17,11 @@
 ################################################################################
 
 PKG_NAME="glib"
-PKG_VERSION="2.53.2"
+PKG_VERSION="3245eba"
 PKG_ARCH="any"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://www.gtk.org/"
-PKG_URL="http://ftp.gnome.org/pub/gnome/sources/glib/2.53/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_GIT_URL="git://git.gnome.org/glib"
 PKG_DEPENDS_TARGET="toolchain zlib libffi pcre libelf Python:host"
 PKG_DEPENDS_HOST="zlib:host libffi:host Python:host"
 PKG_PRIORITY="optional"
@@ -31,6 +31,13 @@ PKG_LONGDESC="GLib is a library which includes support routines for C such as li
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
+
+pre_configure_target() {
+    ( 
+    unset LIBTOOL
+    NOCONFIGURE=1 sh autogen.sh
+    )
+}
 
 PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared --enable-libmount=no --with-pic --with-pcre=internal"
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_mmap_fixed_mapped=yes \
