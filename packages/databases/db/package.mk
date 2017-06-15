@@ -14,14 +14,13 @@ PKG_CONFIGURE_SCRIPT="dist/configure"
 PKG_CONFIGURE_OPTS_TARGET="--enable-compat185 \
 			      --disable-shared \
 			      --enable-static \
-			      --enable-cxx \
 			      --disable-java \
 			      --disable-tcl \
 			      --disable-debug \
 			      --disable-java \
 			      --with-pic \
-			      --enable-o_direct \	
-			      --enable-mutexsupport"
+			      --enable-o_direct \
+			      --disable-atomicsupport"
 			   
 post_makeinstall_target() {
   rm -rf $INSTALL
