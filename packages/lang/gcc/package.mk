@@ -61,6 +61,8 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-gnu-unique-object \
                            --enable-clocale=gnu \
                            --disable-libmpx \
+                           --disable-libunwind-exceptions \
+                           --with-linker-hash-style=gnu \
                            --disable-libsanitizer \
                            --with-tune=generic"
 
@@ -80,7 +82,6 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --without-headers \
                               --with-newlib \
                               --disable-decimal-float \
-                              --with-linker-hash-style=gnu \
                               $GCC_OPTS"
 
 PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
@@ -96,7 +97,6 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-threads=posix \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time \
-                         --disable-libunwind-exceptions \
                          --enable-gnu-indirect-function \
                          $GCC_OPTS"
 
