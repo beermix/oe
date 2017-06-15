@@ -40,6 +40,7 @@ PKG_CONFIGURE_OPTS_TARGET="--x-includes="$SYSROOT_PREFIX/usr/include" \
                            --enable-xcb \
                            --enable-tee \
                            --enable-glx \
+                           --disable-gobject \
                            --enable-silent-rules \
                            --enable-statoc \
                            --enable-shared \
