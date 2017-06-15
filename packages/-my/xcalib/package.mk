@@ -7,7 +7,7 @@ PKG_AUTORECONF="no"
 PKG_USE_CMAKE="yes"
 
 pre_configure_target() {
-  export LDFLAGS="-lX11 -lXext -lm"
+  export LIBS="$LIBS -lX11 -lXext -lm"
 }
 
 PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr"
