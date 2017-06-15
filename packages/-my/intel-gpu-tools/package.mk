@@ -12,5 +12,4 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shader-debugger \
 			      --without-libunwind \
 			      --disable-gtk-doc \
 			      --disable-gtk-doc-html \
-			      --disable-gtk-doc-pdf \
-			      --with-sysroot=$SYSROOT_PREFIX"
+			      --disable-gtk-doc-pdf"
