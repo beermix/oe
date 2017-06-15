@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="fontconfig"
-PKG_VERSION="2.12.1"
+PKG_VERSION="2.12.3"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
@@ -35,7 +35,7 @@ PKG_AUTORECONF="no"
 PKG_CONFIGURE_OPTS_TARGET="--with-arch=$TARGET_ARCH \
                            --with-cache-dir=/storage/.cache/fontconfig \
                            --with-default-fonts=/usr/share/fonts \
-                           --without-add-fonts \
+                           --with-add-fonts \
                            --disable-dependency-tracking \
                            --disable-docs"
 
