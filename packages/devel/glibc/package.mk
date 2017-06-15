@@ -142,6 +142,16 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/lib/*.map
   rm -rf $INSTALL/var
 
+# remove unneeded libs
+  rm -rf $INSTALL/usr/lib/libBrokenLocale*
+  rm -rf $INSTALL/usr/lib/libSegFault.so
+  rm -rf $INSTALL/usr/lib/libmemusage.so
+  rm -rf $INSTALL/usr/lib/libpcprofile.so
+
+# remove ldscripts
+  rm -rf $INSTALL/usr/lib/libc.so
+  rm -rf $INSTALL/usr/lib/libpthread.so
+
 # remove locales and charmaps
   rm -rf $INSTALL/usr/share/i18n/charmaps
 
@@ -170,8 +180,9 @@ post_makeinstall_target() {
     cp $PKG_DIR/config/gai.conf $INSTALL/etc
 
   if [ "$TARGET_ARCH" = "arm" -a "$TARGET_FLOAT" = "hard" ]; then
-    ln -sf ld.so $INSTALL/usr/lib/ld-linux.so.3
+    ln -sf ld-$PKG_VERSION.so $INSTALL/lib/ld-linux.so.3
   fi
+
 }
 
 configure_init() {

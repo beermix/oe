@@ -40,6 +40,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-plugins \
                          --enable-gold \
                          --enable-ld=default \
+                         --enable-deterministic-archives \
                          --enable-lto \
                          --disable-nls \
                          --with-pic \

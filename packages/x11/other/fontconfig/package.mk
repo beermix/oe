@@ -37,7 +37,8 @@ PKG_CONFIGURE_OPTS_TARGET="--with-arch=$TARGET_ARCH \
                            --with-default-fonts=/usr/share/fonts \
                            --with-add-fonts \
                            --disable-dependency-tracking \
-                           --disable-docs"
+                           --disable-docs \
+                           --disable-static"
 
 pre_configure_target() {
 # ensure we dont use '-O3' optimization.
