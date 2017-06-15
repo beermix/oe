@@ -13,4 +13,4 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shader-debugger \
 			      --disable-gtk-doc \
 			      --disable-gtk-doc-html \
 			      --disable-gtk-doc-pdf \
-			      --with-sysroot=$SYSROOT_PREFIX"
+			      --with-gnu-ld"

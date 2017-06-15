@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="pycryptodome"
-PKG_VERSION="v3.4.5"
+PKG_VERSION="19de0f2"
 PKG_ARCH="any"
 PKG_LICENSE="BSD"
 PKG_SITE="https://pypi.python.org/pypi/pycryptodome"
