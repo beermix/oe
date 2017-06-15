@@ -119,10 +119,8 @@ GLIBC_INCLUDE_BIN="getent ldd locale"
 }
 
 post_makeinstall_target() {
-  ln -sf ld-$PKG_VERSION.so $INSTALL/lib/ld.so
-  if [ "$TARGET_ARCH" = "arm" -a "$TARGET_FLOAT" = "hard" ]; then
-    ln -sf ld-$PKG_VERSION.so $INSTALL/lib/ld-linux.so.3
-  fi
+# we are linking against ld.so, so symlink
+  ln -sf $(basename $INSTALL/usr/lib/ld-*.so) $INSTALL/usr/lib/ld.so
 
 # cleanup
 # remove any programs we don't want/need, keeping only those we want
@@ -178,9 +176,12 @@ post_makeinstall_target() {
 # create default configs
   mkdir -p $INSTALL/etc
     cp $PKG_DIR/config/nsswitch.conf $INSTALL/etc
+    cp $PKG_DIR/config/host.conf $INSTALL/etc
     cp $PKG_DIR/config/gai.conf $INSTALL/etc
 
-    echo "multi on" > $INSTALL/etc/host.conf
+  if [ "$TARGET_ARCH" = "arm" -a "$TARGET_FLOAT" = "hard" ]; then
+    ln -sf ld.so $INSTALL/usr/lib/ld-linux.so.3
+  fi
 }
 
 configure_init() {
