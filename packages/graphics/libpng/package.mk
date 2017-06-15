@@ -39,12 +39,12 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_z_zlibVersion=yes \
 PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
 
 pre_configure_host() {
-  export CFLAGS="$CFLAGS -fPIC -DPIC"
+  export CFLAGS="$CFLAGS -fPIC"
   export CPPFLAGS="$CPPFLAGS -I$ROOT/$TOOLCHAIN/include"
 }
 
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC -DPIC"
+  export CFLAGS="$CFLAGS -fPIC"
   export CPPFLAGS="$CPPFLAGS -I$SYSROOT_PREFIX/usr/include"
 }
 
