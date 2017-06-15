@@ -34,9 +34,10 @@ PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_z_zlibVersion=yes \
                            --enable-static \
-                           --disable-shared"
+                           --disable-shared \
+                           --with-pic"
 
-PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
+PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared --with-pic"
 
 pre_configure_host() {
   export CFLAGS="$CFLAGS -fPIC -DPIC"
