@@ -48,3 +48,21 @@ post_makeinstall_target() {
 
   rm -rf $INSTALL/usr/bin
 }
+
+pre_configure_target() {
+  CFLAGS="$CFLAGS -fPIC"
+  # unset LIBTOOL because freetype uses its own
+    ( cd ..
+      unset LIBTOOL
+      sh autogen.sh
+    )
+}
+
+pre_configure_host() {
+  CFLAGS="$CFLAGS -fPIC"
+  # unset LIBTOOL because freetype uses its own
+    ( cd ..
+      unset LIBTOOL
+      sh autogen.sh
+    )
+}

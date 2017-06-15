@@ -32,7 +32,7 @@ post_unpack() {
 configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
-
+  
   # Dynamic Library support
   export LDFLAGS="$LDFLAGS -ldl -lpthread -lstdc++"
 
@@ -72,7 +72,7 @@ configure_target() {
                              --with-bz2=$SYSROOT_PREFIX/usr \
                              --with-iconv \
                              --with-gettext \
-                             --with-gmp \
+                             --with-gmp=$SYSROOT_PREFIX/usr \
                              --enable-pcntl \
                              --disable-sysvmsg \
                              --disable-sysvsem \
@@ -80,7 +80,6 @@ configure_target() {
                              --enable-filter \
                              --enable-calendar \
                              --with-pcre-regex \
-                             --with-sqlite3=$SYSROOT_PREFIX/usr \
                              --with-mysql=$SYSROOT_PREFIX/usr \
                              --with-mysql-sock=/tmp/mysql.sock \
                              --with-gd \
