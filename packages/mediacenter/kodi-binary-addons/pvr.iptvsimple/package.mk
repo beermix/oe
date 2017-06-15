@@ -4,7 +4,7 @@
 ################################################################################
 
 PKG_NAME="pvr.iptvsimple"
-PKG_VERSION="2.4.11-Krypton"
+PKG_VERSION="2.4.8-Krypton"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
