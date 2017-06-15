@@ -30,7 +30,7 @@ pre_configure_host() {
   export CFLAGS="$CFLAGS -fPIC"
 }
 
-PKG_CONFIGURE_OPTS_HOST="--disable-shared --disable-hardening --with-gnu-ld"
+PKG_CONFIGURE_OPTS_HOST="--disable-shared"
 
 configure_target() {
   :
