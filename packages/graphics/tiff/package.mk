@@ -32,7 +32,7 @@ PKG_LONGDESC="libtiff is a library for reading and writing data files encoded wi
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CMAKE_OPTS_HOST="-DBUILD_SHARED_LIBS=0"
+PKG_CMAKE_OPTS_HOST="-DBUILD_SHARED_LIBS=0 -Dlzma=0"
 
 PKG_CMAKE_OPTS_TARGET="$PKG_CMAKE_OPTS_HOST -Dlzma=0"
 
