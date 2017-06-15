@@ -28,8 +28,6 @@ PKG_AUTORECONF="yes"
 
 pre_configure_host() {
   export CFLAGS="$CFLAGS -fPIC"
-  export CXXFLAGS="$CXXFLAGS -fPIC"
-  export LDFLAGS="$LDFLAGS -fPIC"
 }
 
 PKG_CONFIGURE_OPTS_HOST="--disable-shared"
