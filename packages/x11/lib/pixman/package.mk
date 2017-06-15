@@ -36,7 +36,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-openmp \
                            --disable-libpng \
                            --enable-mmx \
                            --enable-sse2 \
-                           --enable-ssse3 \
+                           --disable-ssse3 \
                            --disable-vmx \
                            --disable-arm-simd \
                            --disable-arm-neon \
