@@ -24,7 +24,7 @@ PKG_LICENSE="LGPLv2.1+"
 PKG_SITE="https://ffmpeg.org"
 #PKG_URL="http://ffmpeg.org/releases/${PKG_NAME}-${PKG_VERSION}.tar.xz"
 PKG_GIT_URL="https://github.com/xbmc/FFmpeg"
-PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl fftw speex libvpx libvdpau"
+PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl fftw speex libvpx"
 PKG_PRIORITY="optional"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
@@ -37,7 +37,7 @@ PKG_AUTORECONF="no"
   get_graphicdrivers
 
 if [ "$VAAPI_SUPPORT" = yes ]; then
-  PKG_DEPENDS_TARGET+=" intel-vaapi-driver libva-utils libvdpau-va-gl"
+  PKG_DEPENDS_TARGET+=" intel-vaapi-driver libva-utils libvdpau libvdpau-va-gl"
   FFMPEG_VAAPI="--enable-vaapi"
 else
   FFMPEG_VAAPI="--disable-vaapi"
@@ -153,6 +153,7 @@ configure_target() {
               --disable-dxva2 \
               --enable-runtime-cpudetect \
               $FFMPEG_TABLES \
+              --disable-memalign-hack \
               --disable-encoders \
               --enable-encoder=ac3 \
               --enable-encoder=aac \
