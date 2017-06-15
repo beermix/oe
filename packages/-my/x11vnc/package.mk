@@ -1,7 +1,7 @@
 PKG_NAME="x11vnc"
 PKG_VERSION="0.9.13"
 PKG_SITE="http://www.karlrunge.com/x11vnc/#downloading"
-PKG_URL="http://x11vnc.sourceforge.net/dev/x11vnc-0.9.13.tar.gz"
+PKG_URL="https://sourceforge.net/projects/libvncserver/files/x11vnc/0.9.13/x11vnc-0.9.13.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libX11 libXext libXtst libjpeg-turbo"
 PKG_SECTION="service/system"
 PKG_AUTORECONF="yes"
