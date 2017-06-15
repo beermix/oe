@@ -33,8 +33,8 @@ PKG_CMAKE_OPTS_TARGET="-DSDL_STATIC=ON \
 			  -DOSS=OFF \
 			  -DRPATH=OFF \
 			  -DVIDEO_DUMMY=OFF \
-			  -DDISKAUDIO=OFF"
-
+			  -DDISKAUDIO=OFF \
+			  -DCMAKE_BUILD_TYPE=Release"
 
 
 if [ "$DISPLAYSERVER" = "x11" ]; then

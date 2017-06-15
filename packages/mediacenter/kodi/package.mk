@@ -26,7 +26,7 @@ PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
-PKG_DEPENDS_TARGET="toolchain kodi:host kodi:bootstrap xmlstarlet:host Python zlib systemd pciutils dbus lzo pcre swig:host libass curl fontconfig fribidi tinyxml libjpeg-turbo freetype libcdio libdvdnav taglib libxml2 libxslt rapidjson sqlite ffmpeg crossguid giflib opengl lcms2 libfmt SDL"
+PKG_DEPENDS_TARGET="toolchain kodi:host kodi:bootstrap xmlstarlet:host Python zlib systemd pciutils dbus lzo pcre swig:host libass curl fontconfig fribidi tinyxml libjpeg-turbo freetype libcdio libdvdnav taglib libxml2 libxslt rapidjson sqlite ffmpeg crossguid giflib opengl lcms2 libfmt"
 PKG_DEPENDS_HOST="toolchain"
 PKG_DEPENDS_BOOTSTRAP="toolchain lzo:host libpng:host libjpeg-turbo:host giflib:host"
 PKG_PRIORITY="optional"
@@ -194,7 +194,7 @@ else
 fi
 
 if [ "$KODI_WEBSERVER_SUPPORT" = yes ]; then
-  PKG_DEPENDS_TARGET+=" libmicrohttpd"
+  PKG_DEPENDS_TARGET+=" libmicrohttpd SDL2"
   PKG_CMAKE_OPTS_TARGET+=" -DENABLE_MICROHTTPD=ON"
 else
   PKG_CMAKE_OPTS_TARGET+=" -DENABLE_MICROHTTPD=OFF"
