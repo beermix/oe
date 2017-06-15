@@ -19,7 +19,7 @@
 ################################################################################
 
 PKG_NAME="dvb-fe-tool"
-PKG_VERSION="fa2f7d9"
+PKG_VERSION="1388a04"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://linuxtv.org/"
@@ -42,10 +42,10 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-nls \
             --without-libintl-prefix"
 
 post_patch() {
-  mkdir -p $PKG_BUILD/build-aux/
-    touch $PKG_BUILD/build-aux/config.rpath
-    touch $PKG_BUILD/libdvbv5-po/Makefile.in.in
-    touch $PKG_BUILD/v4l-utils-po/Makefile.in.in
+  mkdir -p $ROOT/$PKG_BUILD/build-aux/
+    touch $ROOT/$PKG_BUILD/build-aux/config.rpath
+    touch $ROOT/$PKG_BUILD/libdvbv5-po/Makefile.in.in
+    touch $ROOT/$PKG_BUILD/v4l-utils-po/Makefile.in.in
 }
 
 make_target() {

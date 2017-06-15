@@ -16,18 +16,26 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="bitstream"
-PKG_VERSION="1.2"
-PKG_ARCH="any"
+PKG_NAME="lan951x-led-ctl"
+PKG_VERSION="0291b91"
+PKG_ARCH="arm"
 PKG_LICENSE="GPL"
-PKG_SITE="http://www.videolan.org"
-PKG_URL="http://download.videolan.org/pub/videolan/${PKG_NAME}/${PKG_VERSION}/${PKG_NAME}-${PKG_VERSION}.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain"
-PKG_SECTION="multimedia"
-PKG_SHORTDESC="biTStream is a set of C headers allowing a simpler access to binary structures such as specified by MPEG, DVB, IETF, etc."
-PKG_LONGDESC="biTStream is a set of C headers allowing a simpler access to binary structures such as specified by MPEG, DVB, IETF, etc."
-
-PKG_IS_ADDON="no"
+PKG_SITE="https://github.com/dradermacher/lan951x-led-ctl"
+PKG_URL="https://github.com/dradermacher/lan951x-led-ctl/archive/$PKG_VERSION.tar.gz"
+PKG_DEPENDS_TARGET="toolchain libusb"
+PKG_SECTION="rpi-tools"
+PKG_SHORTDESC="Control LEDs connected to LAN9512/LAN9514 ethernet USB controllers"
+PKG_LONGDESC="Control LEDs connected to LAN9512/LAN9514 ethernet USB controllers"
 PKG_AUTORECONF="no"
 
-PKG_MAKEINSTALL_OPTS_TARGET="PREFIX=/usr"
+make_target() {
+  $CC -std=c11 -I./include -Wall -Wstrict-prototypes -Wconversion \
+      -Wmissing-prototypes -Wshadow -Wextra -Wunused \
+      $CFLAGS -lusb-1.0 $LDFLAGS -o lan951x-led-ctl src/lan951x-led-ctl.c
+
+  $STRIP lan951x-led-ctl
+}
+
+makeinstall_target() {
+  : # nop
+}

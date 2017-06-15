@@ -16,18 +16,33 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="bitstream"
-PKG_VERSION="1.2"
+PKG_NAME="nmon"
+PKG_VERSION="411b08f"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="http://www.videolan.org"
-PKG_URL="http://download.videolan.org/pub/videolan/${PKG_NAME}/${PKG_VERSION}/${PKG_NAME}-${PKG_VERSION}.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain"
-PKG_SECTION="multimedia"
-PKG_SHORTDESC="biTStream is a set of C headers allowing a simpler access to binary structures such as specified by MPEG, DVB, IETF, etc."
-PKG_LONGDESC="biTStream is a set of C headers allowing a simpler access to binary structures such as specified by MPEG, DVB, IETF, etc."
-
+PKG_SITE="https://github.com/axibase/nmon"
+PKG_GIT_URL="https://github.com/axibase/nmon"
+PKG_DEPENDS_TARGET="toolchain netbsd-curses"
+PKG_SECTION="tools"
+PKG_SHORTDESC="Systems administrator, tuner, benchmark tool gives you a huge amount of important performance information in one go"
 PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
-PKG_MAKEINSTALL_OPTS_TARGET="PREFIX=/usr"
+make_target() {
+  case $ARCH in
+    x86_64)
+      arch="X86"
+      ;;
+    *)
+      arch="arm"
+      ;;
+  esac
+  CFLAGS="$CFLAGS -g -O3 -Wall -D JFS -D GETUSER -D LARGEMEM"
+  LDFLAGS="$LDFLAGS -lncurses -ltermcap -lm -g"
+  $CC -o nmon lmon*.c $CFLAGS $LDFLAGS -D $arch -D KERNEL_2_6_18
+}
+
+makeinstall_target() {
+  :
+}

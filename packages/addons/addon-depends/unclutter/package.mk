@@ -37,3 +37,7 @@ makeinstall_target() {
   mkdir -p .install_pkg/usr/bin
   install -m 755 unclutter .install_pkg/usr/bin/
 }
+
+post_install() {
+  enable_service unclutter.service
+}

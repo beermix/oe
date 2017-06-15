@@ -17,11 +17,11 @@
 ################################################################################
 
 PKG_NAME="glib"
-PKG_VERSION="2.53.2"
+PKG_VERSION="2.51.5"
 PKG_ARCH="any"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://www.gtk.org/"
-PKG_URL="http://ftp.gnome.org/pub/gnome/sources/glib/2.53/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="http://ftp.gnome.org/pub/gnome/sources/glib/2.51/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain zlib libffi util-linux expat pcre Python:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="devel"
@@ -50,9 +50,9 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_mmap_fixed_mapped=yes \
                            --disable-dtrace \
                            --disable-systemtap \
                            --enable-Bsymbolic \
+                           --with-gnu-ld \
                            --with-threads=posix \
-                           --with-pcre=system \
-                           --enable-static"
+                           --with-pcre=internal"
 
 post_makeinstall_target() {
   mkdir -p $SYSROOT_PREFIX/usr/lib/pkgconfig
@@ -68,9 +68,9 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/lib/glib-2.0
   rm -rf $INSTALL/usr/share
 
-  mkdir -p $INSTALL/usr/share/libalpm/hooks/
-  cp $PKG_DIR/hooks/gio-querymodules.hook $INSTALL/usr/share/libalpm/hooks/
-  cp $PKG_DIR/hooks/glib-compile-schemas.hook $INSTALL/usr/share/libalpm/hooks/
+  #mkdir -p $INSTALL/usr/share/libalpm/hooks/
+  #cp $PKG_DIR/hooks/gio-querymodules.hook $INSTALL/usr/share/libalpm/hooks/
+  #cp $PKG_DIR/hooks/glib-compile-schemas.hook $INSTALL/usr/share/libalpm/hooks/
 
   ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/gapplication $ROOT/$BUILD/toolchain/bin/
   ln -sfv $ROOT/$BUILD/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/bin/gdbus $ROOT/$BUILD/toolchain/bin/

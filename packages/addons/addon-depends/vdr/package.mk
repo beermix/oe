@@ -47,7 +47,7 @@ pre_make_target() {
   VIDEODIR = /storage/videos
   CONFDIR = /storage/.config/vdr
   LOCDIR = /usr/share/locale
-  LIBS += -liconv 
+  LIBS += -liconv
   NO_KBD=yes
   VDR_USER=root
 EOF

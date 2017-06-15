@@ -1,11 +1,11 @@
 # Made by github.com/escalade
 
 PKG_NAME="gtk3"
-PKG_VERSION="3.22.15"
+PKG_VERSION="3.91.0"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.gtk.org/"
-PKG_URL="http://ftp.gnome.org/pub/gnome/sources/gtk+/3.22/gtk+-$PKG_VERSION.tar.xz"
+PKG_URL="http://ftp.gnome.org/pub/gnome/sources/gtk+/3.91/gtk+-$PKG_VERSION.tar.xz"
 PKG_SOURCE_DIR="gtk+-$PKG_VERSION"
 PKG_DEPENDS_TARGET="toolchain atk libX11 libXrandr libXi glib pango cairo gdk-pixbuf at-spi2-atk"
 PKG_SECTION="x11/toolkits"

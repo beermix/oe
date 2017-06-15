@@ -1,3 +1,14 @@
+diff -Naur pango-1.38.1/Makefile.am pango-1.38.1.patch/Makefile.am
+--- pango-1.38.1/Makefile.am	2015-11-14 23:05:52.000000000 +0100
++++ pango-1.38.1.patch/Makefile.am	2015-11-14 23:19:07.548943525 +0100
+@@ -1,6 +1,6 @@
+ ## Process this file with automake to create Makefile.in.
+ 
+-SUBDIRS= pango pango-view examples tools tests build
++SUBDIRS= pango build
+ 
+ EXTRA_DIST = 			\
+ 	autogen.sh		\
 diff -Naur pango-1.38.1/pango/Makefile.am pango-1.38.1.patch/pango/Makefile.am
 --- pango-1.38.1/pango/Makefile.am	2015-09-01 00:47:11.000000000 +0200
 +++ pango-1.38.1.patch/pango/Makefile.am	2015-11-14 23:21:14.081145117 +0100
