@@ -30,7 +30,7 @@ PKG_SHORTDESC="ethtool: Display or change ethernet card settings"
 PKG_LONGDESC="Ethtool is used for querying settings of an ethernet device and changing them."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-pretty-dump"
