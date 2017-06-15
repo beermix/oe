@@ -262,7 +262,7 @@ pre_configure_target() {
 # kodi should never be built with lto
   strip_lto
 
-  export LIBS="$LIBS -ltermcap"
+  export LIBS="$LIBS -lz -ltermcap"
 }
 
 pre_make_target() {

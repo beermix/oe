@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="inputstream.rtmp"
-PKG_VERSION="df64b9b"
+PKG_VERSION="d93d32d"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/notspiff/inputstream.rtmp"
-PKG_GIT_URL="https://github.com/notspiff/inputstream.rtmp"
+PKG_GIT_URL="https://github.com/AlwinEsch/inputstream.rtmp"
 PKG_GIT_BRANCH="master"
 PKG_DEPENDS_TARGET="toolchain kodi-platform rtmpdump"
 PKG_PRIORITY="optional"
@@ -35,8 +35,7 @@ PKG_IS_ADDON="yes"
 PKG_ADDON_TYPE="kodi.inputstream"
 
 PKG_CMAKE_OPTS_TARGET="-DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
-                       -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
-                       -DCMAKE_BUILD_TYPE=Release"
+                       -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr"
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/

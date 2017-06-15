@@ -38,7 +38,7 @@ PKG_ADDON_PROVIDES="executable"
 pre_make_target() {
   strip_lto
   sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' third_party/widevine/cdm/stub/widevine_cdm_version.h
-  ln -sfv /usr/bin/node $ROOT/$TOOLCHAIN/bin/node
+  #ln -sfv /usr/bin/node $ROOT/$TOOLCHAIN/bin/node
 }
 
 make_target() {
