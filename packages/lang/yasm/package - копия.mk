@@ -22,6 +22,7 @@ PKG_VERSION="6caf151"
 PKG_GIT_URL="https://github.com/yasm/yasm"
 #PKG_URL="http://www.tortall.net/projects/yasm/releases/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_SECTION="toolchain/lang"
+PKG_DEPENDS_HOST="re2c:host"
 PKG_SHORTDESC="yasm: A complete rewrite of the NASM assembler"
 PKG_LONGDESC="Yasm is a complete rewrite of the NASM assembler under the new BSD License (some portions are under other licenses, see COPYING for details). It is designed from the ground up to allow for multiple assembler syntaxes to be supported (eg, NASM, TASM, GAS, etc.) in addition to multiple output object formats and even multiple instruction sets. Another primary module of the overall design is an optimizer module."
 
@@ -29,17 +30,23 @@ PKG_IS_ADDON="no"
 PKG_USE_CMAKE="yes"
 PKG_AUTORECONF="no"
 
-
+PKG_CONFIGURE_OPTS_HOST="--disable-debug \
+                         --disable-warnerror \
+                         --disable-profiling \
+                         --disable-gcov \
+                         --disable-python \
+                         --disable-python-bindings \
+                         --enable-nls \
+                         --disable-rpath \
+                         --without-dmalloc \
+                         --with-gnu-ld \
+                         --without-libiconv-prefix \
+                         --without-libintl-prefix"
+                         
+PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
+                         
 PKG_CMAKE_OPTS_HOST="-DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DENABLE_NLS=OFF -DYASM_BUILD_TESTS=OFF"
 
-post_make_host() {
-  cd $ROOT/$PKG_BUILD/tools
-  cmake -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
-  	 -DCMAKE_INSTALL_PREFIX=$ROOT/$TOOLCHAIN \
-  	 -DCMAKE_BUILD_TYPE=Release \
-  	 -DEXECUTABLE_OUTPUT_PATH=$ROOT/$TOOLCHAIN/bin ..
-  	 
-  cd $ROOT/$PKG_BUILD/tools; make ; make install
-}
+PKG_CMAKE_OPTS_TARGET="$PKG_CMAKE_OPTS_HOST -DBUILD_SHARED_LIBS=OFF"
 
-
+PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
