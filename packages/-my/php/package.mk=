@@ -4,7 +4,7 @@
 ################################################################################
 
 PKG_NAME="php"
-PKG_VERSION="5.6.30"
+PKG_VERSION="7.0.20"
 PKG_REV="0"
 PKG_ARCH="any"
 PKG_LICENSE="OpenSource"
@@ -15,10 +15,10 @@ PKG_SECTION="xmedia/tools"
 PKG_SHORTDESC="php: Scripting language especially suited for Web development"
 PKG_LONGDESC="PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML."
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 post_unpack() {
-  PHP_BUILD_DIR=$(get_build_dir php)
+  PHP_BUILD_DIR=$(get_pkg_build php)
   echo "downloading pear..."
   if [ ! -f "$PHP_BUILD_DIR/../go-pear.phar" ]; then
     wget -O $PHP_BUILD_DIR/../go-pear.phar http://pear.php.net/go-pear.phar
@@ -35,6 +35,7 @@ configure_target() {
 
   # Dynamic Library support
   export LDFLAGS="$LDFLAGS -ldl -lpthread -lstdc++"
+  export LDFLAGS="-ldl -lpthread -lsqlite3"ssss
 
   # libiconv
   export CFLAGS="$CFLAGS -I$SYSROOT_PREFIX/usr/include/iconv"
@@ -80,6 +81,7 @@ configure_target() {
                              --enable-filter \
                              --enable-calendar \
                              --with-pcre-regex \
+                             --with-sqlite3=$SYSROOT_PREFIX/usr \
                              --with-mysql=$SYSROOT_PREFIX/usr \
                              --with-mysql-sock=/tmp/mysql.sock \
                              --with-gd \
