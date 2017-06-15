@@ -120,7 +120,7 @@ GLIBC_INCLUDE_BIN="getent ldd locale"
 
 post_makeinstall_target() {
 # we are linking against ld.so, so symlink
-  ln -sf $(basename $INSTALL/usr/lib/ld-*.so) $INSTALL/usr/lib/ld.so
+  ln -sf $(basename $INSTALL/usr/lib/ld-*.so) $INSTALL/lib/ld.so
 
 # cleanup
 # remove any programs we don't want/need, keeping only those we want
