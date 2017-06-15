@@ -35,12 +35,15 @@ PKG_AUTORECONF="no"
 PKG_CONFIGURE_OPTS_TARGET="--disable-glibtest \
                            --enable-modules \
                            --enable-explicit-deps=no \
-                           --disable-debug \
+                           --enable-debug=no \
                            --disable-cups \
                            --disable-papi \
                            --enable-xkb \
                            --disable-xinerama \
-                           --disable-gtk-doc-html"
+                           --disable-gtk-doc-html \
+                           --disable-colord \
+                           --enable-silent-rules"
+
 
 post_makeinstall_target() {
   cp $PKG_DIR/files/settings.ini $INSTALL/etc/gtk-3.0/
