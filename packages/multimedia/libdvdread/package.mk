@@ -27,7 +27,7 @@ PKG_SHORTDESC="libdvdread: a library which provides a simple foundation for read
 PKG_LONGDESC="libdvdread is a library which provides a simple foundation for reading DVDs."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --with-libdvdcss --with-pic"
 

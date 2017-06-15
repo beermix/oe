@@ -19,7 +19,8 @@
 PKG_NAME="libass"
 PKG_VERSION="0.13.6"
 PKG_SITE="https://github.com/libass/libass"
-PKG_GIT_URL="https://github.com/libass/libass"
+PKG_URL="https://github.com/libass/libass/releases/download/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_DEPENDS_TARGET="toolchain freetype fontconfig fribidi"
 PKG_DEPENDS_TARGET="toolchain freetype fontconfig fribidi"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="libass: a portable subtitle renderer for the ASS/SSA (Advanced Substation Alpha/Substation Alpha) subtitle format."
@@ -36,5 +37,5 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-test \
 
 if [ $TARGET_ARCH = "x86_64" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET yasm:host"
-  PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET --enable-asm"
+  PKG_CONFIGURE_OPTS_TARGET+=" --enable-asm"
 fi
