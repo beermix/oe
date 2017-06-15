@@ -35,10 +35,9 @@ if [ ! "$OPENGL" = "mesa" ] ; then
 fi
 
 make_target() {
-  make lib/x11/Makefile.x11
-  make -C lib/x11 -f Makefile.x11 PREFIX=$SYSROOT_PREFIX/usr libglfw.a
+  make x11 PREFIX=$SYSROOT_PREFIX/usr
 }
 
 makeinstall_target() {
-  make -C lib/x11 -f Makefile.x11 PREFIX=$SYSROOT_PREFIX/usr install
+  make x11-install PREFIX=$SYSROOT_PREFIX/usr
 }

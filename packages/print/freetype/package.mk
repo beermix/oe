@@ -35,14 +35,14 @@ PKG_USE_CMAKE="no"
 # target specific configure options
 PKG_CONFIGURE_OPTS_TARGET="LIBPNG_CFLAGS=-I$SYSROOT_PREFIX/usr/include \
 			      LIBPNG_LDFLAGS=-L$SYSROOT_PREFIX/usr/lib \
-			      --with-zlib=yes \
+			      --with-zlib \
 			      --with-harfbuzz=no \
 			      --enable-static"
 
 # host specific configure options
 PKG_CONFIGURE_OPTS_HOST="LIBPNG_CFLAGS=-I$ROOT/$TOOLCHAIN/include \
 			    LIBPNG_LDFLAGS=-L$ROOT/$TOOLCHAIN/lib \
-			    --with-zlib=yes \
+			    --with-zlib \
 			    --with-harfbuzz=no \
 			    --enable-static"
 

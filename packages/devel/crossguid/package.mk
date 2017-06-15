@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="crossguid"
-PKG_VERSION="fef89a4"
+PKG_VERSION="8f399e8"
 PKG_SITE="https://github.com/graeme-hill/crossguid"
 PKG_GIT_URL="https://github.com/graeme-hill/crossguid.git"
 PKG_GIT_BRANCH="master"

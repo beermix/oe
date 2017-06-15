@@ -26,18 +26,16 @@ PKG_SHORTDESC="alsa-utils: Advanced Linux Sound Architecture utilities"
 PKG_LONGDESC="This package includes the utilities for ALSA, like alsamixer, aplay, arecord, alsactl, iecset and speaker-test."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 # package specific configure options
 PKG_CONFIGURE_OPTS_TARGET="--disable-dependency-tracking \
                            --disable-xmlto \
-                           --disable-alsamixer \
                            --disable-alsaconf \
                            --disable-alsaloop \
                            --enable-alsatest \
                            --disable-bat \
                            --disable-nls \
-                           --disable-xmlto \
                            --disable-rst2man"
 
 
@@ -50,10 +48,6 @@ post_makeinstall_target() {
 # remove default udev rule to restore mixer configs, we install our own.
 # so we avoid resetting our soundconfig
   rm -rf $INSTALL/usr/lib/udev/rules.d/90-alsa-restore.rules
-
-  for i in aconnect alsaucm amidi aplaymidi arecord arecordmidi aseqdump aseqnet iecset; do
-    rm -rf $INSTALL/usr/bin/$i
-  done
 
   mkdir -p $INSTALL/usr/lib/udev
     cp $PKG_DIR/scripts/soundconfig $INSTALL/usr/lib/udev

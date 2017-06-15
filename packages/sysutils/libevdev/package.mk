@@ -30,7 +30,7 @@ PKG_SHORTDESC="libevdev: a wrapper library for evdev devices."
 PKG_LONGDESC="libevdev is a wrapper library for evdev devices. it moves the common tasks when dealing with evdev devices into a library and provides a library interface to the callers, thus avoiding erroneous ioctls, etc."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_path_DOXYGEN=true --enable-shared --disable-static"
 

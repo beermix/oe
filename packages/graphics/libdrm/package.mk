@@ -55,7 +55,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-udev \
                            --enable-largefile \
                            --with-kernel-source=$(get_pkg_build linux) \
                            $DRM_CONFIG \
-                           --enable-install-test-programs \
+                           --disable-install-test-programs \
                            --disable-cairo-tests \
                            --disable-manpages \
                            --disable-valgrind"
