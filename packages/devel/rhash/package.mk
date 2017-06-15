@@ -1,7 +1,7 @@
 PKG_NAME="rhash"
 PKG_VERSION="002be1b"
 PKG_GIT_URL="https://github.com/rhash/RHash"
-PKG_DEPENDS_HOST="openssl:host"
+PKG_DEPENDS_HOST=""
 PKG_SECTION="devel"
 PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
