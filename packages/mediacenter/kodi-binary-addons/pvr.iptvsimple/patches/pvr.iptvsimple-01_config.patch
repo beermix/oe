@@ -42,18 +42,3 @@ diff -Naurp pvr.iptvsimple-adee8a7/pvr.iptvsimple/resources/settings.xml pvr.ipt
 +    <setting id="logoFromEpg" type="enum" label="30041" default="1" lvalues="30042|30043|30044"/>
    </category>
  </settings>
-diff -Naurp pvr.iptvsimple-adee8a7/src/client.cpp pvr.iptvsimple-adee8a7-patch/src/client.cpp
---- pvr.iptvsimple-adee8a7/src/client.cpp	2016-10-11 12:45:04.000000000 +0300
-+++ pvr.iptvsimple-adee8a7-patch/src/client.cpp	2016-11-03 09:37:50.000000000 +0200
-@@ -442,9 +442,10 @@ PVR_ERROR SignalStatus(PVR_SIGNAL_STATUS
-   return PVR_ERROR_NO_ERROR;
- }
- 
-+bool CanPauseStream(void) { return true; }
-+
- /** UNUSED API FUNCTIONS */
- const char * GetLiveStreamURL(const PVR_CHANNEL &channel)  { return ""; }
--bool CanPauseStream(void) { return false; }
- int GetRecordingsAmount(bool deleted) { return -1; }
- PVR_ERROR GetRecordings(ADDON_HANDLE handle, bool deleted) { return PVR_ERROR_NOT_IMPLEMENTED; }
- PVR_ERROR OpenDialogChannelScan(void) { return PVR_ERROR_NOT_IMPLEMENTED; }
