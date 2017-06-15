@@ -34,6 +34,9 @@ PKG_CONFIGURE_OPTS_HOST="--disable-shared --enable-static \
                          --enable-lzma-links \
                          --disable-scripts \
                          --disable-nls \
-                         --disable-doc --disable-rpath --enable-werror --enable-threads --enable-silent-rules"
+                         --disable-doc \
+                         --disable-rpath \
+                         --enable-threads \
+                         --enable-silent-rules"
                          
-PKG_CONFIGURE_OPTS_TARGET="--enable-threads --disable-rpath --enable-werror --disable-doc --enable-silent-rules"
+PKG_CONFIGURE_OPTS_TARGET="--enable-threads --disable-rpath --disable-doc --enable-silent-rules"
