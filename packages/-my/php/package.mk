@@ -72,7 +72,7 @@ configure_target() {
                              --with-bz2=$SYSROOT_PREFIX/usr \
                              --with-iconv \
                              --with-gettext \
-                             --without-gmp \
+                             --with-gmp \
                              --enable-pcntl \
                              --disable-sysvmsg \
                              --disable-sysvsem \
@@ -80,6 +80,7 @@ configure_target() {
                              --enable-filter \
                              --enable-calendar \
                              --with-pcre-regex \
+                             --with-sqlite3=$SYSROOT_PREFIX/usr \
                              --with-mysql=$SYSROOT_PREFIX/usr \
                              --with-mysql-sock=/tmp/mysql.sock \
                              --with-gd \

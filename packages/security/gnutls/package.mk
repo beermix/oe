@@ -12,18 +12,10 @@ PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \
 			      --disable-shared \
-			      --enable-hardware-acceleration \
-			      --disable-openssl-compatibility \
-			      --disable-cxx \
 			      --without-p11-kit \
 			      --enable-local-libopts \
 			      --with-included-libtasn1 \
-			      --disable-openssl-compatibility \
-			      --enable-hardware-acceleration \
-			      --enable-cxx \
-			      --with-included-libtasn1 \
 			      --with-included-unistring \
-			      --enable-local-libopts \
 			      --with-libz-prefix=$SYSROOT_PREFIX/usr \
 			      --with-librt-prefix=$SYSROOT_PREFIX \
 			      --with-libpthread-prefix=$SYSROOT_PREFIX/usr \

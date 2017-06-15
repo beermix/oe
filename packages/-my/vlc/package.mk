@@ -8,7 +8,7 @@ PKG_VERSION="3.0.0-git"
 PKG_REV="20170614-0240"
 PKG_SITE="https://nightlies.videolan.org/build/source/"
 PKG_URL="https://nightlies.videolan.org/build/source/vlc-3.0.0-$PKG_REV-git.tar.xz"
-PKG_DEPENDS_TARGET="toolchain dbus ffmpeg libdvbpsi libmpeg2 libogg libvorbis libshout libsamplerate libvpx faad2 SDL2 SDL2_image zlib lua:host lua gnutls"
+PKG_DEPENDS_TARGET="toolchain dbus ffmpeg libdvbpsi libmpeg2 libogg libvorbis libshout libsamplerate libvpx faad2 zlib lua:host lua gnutls"
 PKG_SECTION="xmedia/tools"
 PKG_SHORTDESC="VideoLAN multimedia player and streamer"
 PKG_LONGDESC="VLC is the VideoLAN project's media player. It plays MPEG, MPEG2, MPEG4, DivX, MOV, WMV, QuickTime, mp3, Ogg/Vorbis files, DVDs, VCDs, and multimedia streams from various network sources."
@@ -85,8 +85,8 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --with-x \
 			      --enable-xcb \
 			      --disable-xvideo \
-			      --enable-sdl \
-			      --enable-sdl-image \
+			      --disable-sdl \
+			      --disable-sdl-image \
 			      --enable-freetype \
 			      --enable-fribidi \
 			      --enable-fontconfig \
