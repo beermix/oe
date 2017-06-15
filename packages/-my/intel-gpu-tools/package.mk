@@ -4,7 +4,7 @@ PKG_URL="http://xorg.freedesktop.org/releases/individual/app/intel-gpu-tools-${P
 PKG_DEPENDS_TARGET="toolchain systemd mesa libdrm libpciaccess cairo dri2proto swig:host procps-ng"
 PKG_SECTION="tools"
 PKG_SHORTDESC="x11-utils"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shader-debugger \
 			      --disable-dumper \
