@@ -3,7 +3,7 @@ Description=Userspace PS3 Remote Driver
 After=network.target
 
 [Service]
-ExecStart=/usr/sbin/ps3remote
+ExecStart=/usr/bin/ps3remote
 Restart=always
 
 [Install]
