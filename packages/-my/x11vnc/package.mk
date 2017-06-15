@@ -11,7 +11,7 @@ pre_build_target() {
 	cp -RP $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$TARGET_NAME
 	#export CFLAGS="$CFLAGS -fPIC -DPIC"
 	#export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
-	export LIBS="$LIBS -pthread -lz -lpthread -lm -ldl"
+	#export LIBS="$LIBS -pthread -lz -lpthread -lm -ldl"
 	#export MAKEFLAGS="-j1"
 }
 

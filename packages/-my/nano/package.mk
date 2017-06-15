@@ -8,8 +8,7 @@ PKG_LONGDESC="GNU nano (Nano's ANOther editor, or Not ANOther editor) is an enha
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_magic_magic_open=no \
-                           --sysconfdir=/storage/.config/nano \
+PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config/nano \
                            --datadir=/storage/.config/nano \
                            --libdir=/storage/.config/nano \
                            --libexecdir=/storage/.config/nano \
@@ -20,9 +19,9 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_magic_magic_open=no \
                            --datarootdir=/storage/.config/nano \
                            --infodir=/storage/.config/nano \     
                            --localedir=/storage/.config/nano/locale \
-                           --enable-threads=posix \
-                           --enable-utf8 \
-                           --with-wordbounds \
+                           --without-wordbounds \
+                           --disable-help \
+                           --disable-speller \
 			      --enable-nanorc \
 			      --disable-libmagic \
 			      --without-slang \
