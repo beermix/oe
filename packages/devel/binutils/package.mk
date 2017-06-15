@@ -43,7 +43,9 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-deterministic-archives \
                          --enable-lto \
                          --disable-nls \
+                         --enable-threads \
                          --with-pic \
+                         --disable-gdb \
                          --enable-poison-system-directories"
 
 makeinstall_host() {
