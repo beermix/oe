@@ -39,8 +39,8 @@ PKG_CONFIGURE_OPTS_TARGET="LIBPNG_CFLAGS=-I$SYSROOT_PREFIX/usr/include \
 
 # host specific configure options
 PKG_CONFIGURE_OPTS_HOST="LIBPNG_CFLAGS=-I$ROOT/$TOOLCHAIN/include \
-                           LIBPNG_LDFLAGS=-L$ROOT/$TOOLCHAIN/lib \
-                           --with-zlib"
+			    LIBPNG_LDFLAGS=-L$ROOT/$TOOLCHAIN/lib \
+			    --with-zlib"
 
 post_makeinstall_target() {
   $SED "s:\(['=\" ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" $SYSROOT_PREFIX/usr/bin/freetype-config
@@ -48,15 +48,3 @@ post_makeinstall_target() {
 
   rm -rf $INSTALL/usr/bin
 }
-
-
-pre_configure_host() {
-  # unset LIBTOOL because freetype uses its own
-    ( cd ..
-      unset LIBTOOL
-      sh autogen.sh
-    )
-}
-
-
-PKG_CONFIGURE_OPTS_HOST="--with-zlib=yes --with-bzip2=no --with-png=no --with-harfbuzz=no"
