@@ -33,7 +33,8 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
 			      --enable-extf \
 			      --disable-python \
 			      --disable-valgrind \
-			      --enable-liblua"
+			      --enable-liblua \
+			      --disable-option-checking"
 		
 		
 post_make_target() {
