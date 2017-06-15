@@ -13,7 +13,7 @@ if grep -q i915 /run/libreelec/xorg-settings.conf && [ ! -f /storage/.config/ret
 fi
 
 # Launch RetroArch
-/usr/bin/retroarch -v "$@" > /tmp/retroarch.log 2>&1
+/usr/bin/retroarch -v "$@" > /var/log/retroarch.log 2>&1
 
 # Switch back to VT1
 [ "$KMS" = "1" ] && chvt 1

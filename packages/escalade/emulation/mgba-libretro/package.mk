@@ -29,8 +29,8 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 PKG_USE_CMAKE="no"
 
-post_unpack() {
-  mv $BUILD/mgba-* $BUILD/$PKG_NAME-$PKG_VERSION
+pre_build_target() {
+  export GIT_VERSION=$PKG_VERSION
 }
 
 pre_configure_target() {

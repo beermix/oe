@@ -29,15 +29,13 @@ PKG_LONGDESC="Genesis Plus GX is an open-source & portable Sega Mega Drive / Gen
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
+
 pre_build_target() {
   export GIT_VERSION=$PKG_VERSION
 }
 
-post_unpack() {
-  mv $BUILD/Genesis-Plus-GX-$PKG_VERSION* $BUILD/$PKG_NAME-$PKG_VERSION
-}
-
 make_target() {
+  strip_lto
   make -f Makefile.libretro
 }
 

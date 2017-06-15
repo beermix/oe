@@ -19,7 +19,7 @@
 ################################################################################
 
 PKG_NAME="core-info"
-PKG_VERSION="f967e48"
+PKG_VERSION="ccf69a7"
 PKG_SITE="https://github.com/libretro/libretro-super"
 PKG_GIT_URL="https://github.com/libretro/libretro-super"
 PKG_DEPENDS_TARGET="toolchain"

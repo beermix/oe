@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="ppsspp-libretro"
-PKG_VERSION="e1bb9da"
+PKG_VERSION="5f7bcf7"
 PKG_SITE="https://github.com/libretro/libretro-ppsspp"
 PKG_GIT_URL="https://github.com/libretro/libretro-ppsspp"
 PKG_DEPENDS_TARGET="toolchain"
@@ -28,11 +28,11 @@ PKG_LONGDESC="A fast and portable PSP emulator"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-post_unpack() {
-  mv $BUILD/libretro-ppsspp-$PKG_VERSION* $BUILD/$PKG_NAME-$PKG_VERSION
-  git clone --depth 1 https://github.com/libretro/ppsspp-ffmpeg.git $BUILD/$PKG_NAME-$PKG_VERSION/ffmpeg
-  git clone --depth 1 https://github.com/libretro/ppsspp-native.git $BUILD/$PKG_NAME-$PKG_VERSION/native
-  git clone --depth 1 https://github.com/Kingcom/armips.git $BUILD/$PKG_NAME-$PKG_VERSION/ext/armips
+unpack() {
+  git clone --recursive https://github.com/libretro/libretro-ppsspp $ROOT/$PKG_BUILD
+  cd $ROOT/$PKG_BUILD
+  git reset --hard $PKG_VERSION
+  cd $ROOT
 }
 
 pre_configure_target() {

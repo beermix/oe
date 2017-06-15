@@ -17,17 +17,17 @@
 ################################################################################
 
 PKG_NAME="tigervnc-system"
-PKG_VERSION="v1.7.1"
+PKG_VERSION="1.8.0"
 PKG_SITE="http://www.tigervnc.org"
 PKG_GIT_URL="https://github.com/TigerVNC/tigervnc"
-PKG_DEPENDS_TARGET="toolchain cmake:host libX11 libXext libXtst zlib libjpeg-turbo"
+PKG_DEPENDS_TARGET="toolchain cmake:host libX11 libXdamage libXext libXtst zlib libjpeg-turbo"
 PKG_SECTION="service"
 PKG_SHORTDESC="TigerVNC server"
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CMAKE_OPTS_TARGET="-DBUILD_VIEWER=off"
+PKG_CMAKE_OPTS_TARGET="-DBUILD_VIEWER=off -Wno-dev"
 
 
 

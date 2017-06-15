@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="fs-uae"
-PKG_VERSION="4bec4fa"
+PKG_VERSION="184db07"
 PKG_SITE="https://github.com/FrodeSolheim/fs-uae"
 PKG_GIT_URL="https://github.com/FrodeSolheim/fs-uae"
 PKG_DEPENDS_TARGET="toolchain SDL2 glew glu libmpeg2 libXi openal-soft"

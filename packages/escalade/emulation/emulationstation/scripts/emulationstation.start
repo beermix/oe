@@ -7,6 +7,6 @@ export SDL_AUDIODRIVER=alsa
 
 kodifreeze.sh freeze
 
-emulationstation $EMULATIONSTATION_OPTS "$@" > /tmp/emulationstation.log 2>&1
+emulationstation $EMULATIONSTATION_OPTS "$@" > /var/log/emulationstation.log 2>&1
 
 kodifreeze.sh unfreeze

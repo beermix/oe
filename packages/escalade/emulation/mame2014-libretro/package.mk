@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="mame2014-libretro"
-PKG_VERSION="790dca5"
+PKG_VERSION="87b2f8c"
 PKG_SITE="https://github.com/libretro/mame2014-libretro"
 PKG_GIT_URL="https://github.com/libretro/mame2014-libretro"
 PKG_DEPENDS_TARGET="toolchain"
@@ -31,6 +31,7 @@ pre_make_target() {
   export REALCC=$CC
   export CC=$CXX
   export LD=$CXX
+  export GIT_VERSION=$PKG_VERSION
   strip_lto
 }
 make_target() {

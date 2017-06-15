@@ -19,7 +19,7 @@
 ################################################################################
 
 PKG_NAME="libretro-database"
-PKG_VERSION="a9b42ef"
+PKG_VERSION="e1edb33"
 PKG_SITE="https://github.com/libretro/libretro-database"
 PKG_GIT_URL="https://github.com/libretro/libretro-database"
 PKG_DEPENDS_TARGET="toolchain"

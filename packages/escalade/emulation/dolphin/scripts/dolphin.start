@@ -4,6 +4,6 @@
 
 kodifreeze.sh freeze
 
-dolphin-emu "$@"> /tmp/dolphin.log 2>&1
+dolphin-emu "$@"> /var/log/dolphin.log 2>&1
 
 pidof emulationstation > /dev/null 2>&1 || kodifreeze.sh unfreeze

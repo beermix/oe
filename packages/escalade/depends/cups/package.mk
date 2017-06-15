@@ -27,35 +27,13 @@ PKG_LONGDESC="CUPS is the standards-based, open source printing system developed
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-TARGET_CONFIGURE_OPTS="--disable-webif \
-			  --disable-launchd \
-			  --disable-dnssd \
-			  --disable-avahi \
-			  --disable-ssl \
-			  --disable-gssapi \
-			  --disable-libusb \
-			  --host=$ARCH-unknown-linux-gnu"
-
-PKG_MAKE_OPTS_TARGET="libs"
-
-PKG_MAKEINSTALL_OPTS_TARGET="install-libs install-headers"
-
 pre_configure_target() {
-  local DIRS_=$(find $ROOT/$PKG_BUILD -type d | sed s%^$ROOT/$PKG_BUILD%%\;/^$/d\;s%^/%%\;/^[.]/d)
-  for d in $DIRS_ .; do
-    mkdir -p $d
-    for f in $ROOT/$PKG_BUILD/$d/*; do
-      if test -f $f; then
-        ln -s $f $d/`basename $f`
-      fi
-    done
-  done
+  cd ..
+  rm -rf .$TARGET_NAME
 }
 
+PKG_CONFIGURE_OPTS_TARGET="--libdir=/usr/lib --disable-gssapi"
+
 makeinstall_target() {
-  $ROOT/$TOOLCHAIN/bin/make -j1 DESTDIR=$SYSROOT_PREFIX install-libs install-headers
-  make DESTDIR=$INSTALL install-libs
-  if test -d $INSTALL/usr/lib64; then
-    mv $INSTALL/usr/lib64 $INSTALL/usr/lib
-  fi
+  make BUILDROOT=$INSTALL install-headers install-libs
 }

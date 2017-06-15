@@ -38,7 +38,7 @@ if [ `echo $1 | grep -i .zip | wc -l` -eq 1 ]; then
     fi
   done
   echo -e $ARGS >> "$TMP_DIR"/uaeconfig.uae
-  amiberry-sdl2 -f "$TMP_DIR"/uaeconfig.uae > /tmp/amiberry-sdl2.log 2>&1
+  amiberry-sdl2 -f "$TMP_DIR"/uaeconfig.uae > /var/log/amiberry-sdl2.log 2>&1
   rm -rf "$TMP_DIR"
 else
   # Check for AGA game
@@ -46,7 +46,7 @@ else
     ARGS="chipset=aga\ncachesize=0\nchipmem_size=4\nfinegrain_cpu_speed=1024\ncpu_type=68ec020\ncpu_model=68020\nkickstart_rom_file=/storage/.config/amiberry/kickstarts/kick31.rom"
   fi
   echo -e "$ARGS\nfloppy0=$1" >> "$TMP_DIR"/uaeconfig.uae
-  amiberry-sdl2 -f "$TMP_DIR"/uaeconfig.uae > /tmp/amiberry-sdl2.log 2>&1
+  amiberry-sdl2 -f "$TMP_DIR"/uaeconfig.uae > /var/log/amiberry-sdl2.log 2>&1
 fi
 
 # Change back refresh rate

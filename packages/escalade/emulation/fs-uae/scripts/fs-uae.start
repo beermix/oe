@@ -34,16 +34,16 @@ if [ `echo $1 | grep -i .zip | wc -l` -eq 1 ]; then
     fi
   done
   echo -e $ARGS >> $CONFIG
-  fs-uae $CONFIG > /tmp/fs-uae.log 2>&1
+  fs-uae $CONFIG > /var/log/fs-uae.log 2>&1
 #Check if we are loading a configuration file
 elif [ `echo $1 | grep -i .fs-uae | wc -l` -eq 1 ]; then
-  fs-uae "$1" > /tmp/fs-uae.log 2>&1
+  fs-uae "$1" > /var/log/fs-uae.log 2>&1
 else
   # Check for AGA game
   if [ `echo $1 | egrep 'AGA|CD32' | wc -l` -eq 1 -o `echo "$TMP_DIR"/* | egrep 'AGA|CD32' | wc -l` -eq 1 ]; then
     ARGS="--amiga-model=a1200 --kickstart_file=kick31.rom"
   fi
-  fs-uae --floppy-drive-0="$1" $ARGS > /tmp/fs-uae.log 2>&1
+  fs-uae --floppy-drive-0="$1" $ARGS > /var/log/fs-uae.log 2>&1
 fi
 
 # Remove temporary dir

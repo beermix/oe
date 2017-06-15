@@ -10,5 +10,5 @@ if [ ! -f /storage/.dosbox/dosbox-SDL2.conf ]; then
 fi
 
 kodifreeze.sh freeze
-dosbox "$@" > /tmp/dosbox.log 2>&1
+dosbox "$@" > /var/log/dosbox.log 2>&1
 pidof emulationstation > /dev/null 2>&1 || kodifreeze.sh unfreeze

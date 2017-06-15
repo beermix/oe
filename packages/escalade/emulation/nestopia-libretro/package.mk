@@ -19,7 +19,7 @@
 ################################################################################
 
 PKG_NAME="nestopia-libretro"
-PKG_VERSION="4ac5d2a"
+PKG_VERSION="5ae1871"
 PKG_SITE="https://github.com/libretro/nestopia"
 PKG_GIT_URL="https://github.com/libretro/nestopia"
 PKG_DEPENDS_TARGET="toolchain"
@@ -29,9 +29,11 @@ PKG_LONGDESC="This project is a fork of the original Nestopia source code, plus 
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
+PKG_USE_CMAKE="no"
 
-post_unpack() {
-  mv $BUILD/nestopia-$PKG_VERSION* $BUILD/$PKG_NAME-$PKG_VERSION
+pre_configure_target() {
+  cd ../
+  rm -rf $TARGET_NAME
 }
 
 make_target() {

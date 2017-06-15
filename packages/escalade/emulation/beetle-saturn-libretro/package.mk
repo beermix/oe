@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="beetle-saturn-libretro"
-PKG_VERSION="3f1661b"
+PKG_VERSION="8d70f01"
 PKG_ARCH="x86_64"
 PKG_SITE="https://github.com/libretro/beetle-saturn-libretro"
 PKG_GIT_URL="https://github.com/libretro/beetle-saturn-libretro"
