@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="glib"
-PKG_VERSION="2.52.2"
+PKG_VERSION="2.53.2"
 PKG_ARCH="any"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://www.gtk.org/"
-PKG_URL="http://ftp.gnome.org/pub/gnome/sources/glib/2.52/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain zlib libffi libelf Python:host glib:host"
+PKG_URL="http://ftp.gnome.org/pub/gnome/sources/glib/2.53/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_DEPENDS_TARGET="toolchain zlib libffi libelf Python:host"
 PKG_DEPENDS_HOST="zlib:host libffi:host Python:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="devel"
@@ -30,7 +30,7 @@ PKG_SHORTDESC="glib: C support library"
 PKG_LONGDESC="GLib is a library which includes support routines for C such as lists, trees, hashes, memory allocation, and many other things."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared --enable-libmount=no --with-pic --with-pcre=internal"
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_mmap_fixed_mapped=yes \
