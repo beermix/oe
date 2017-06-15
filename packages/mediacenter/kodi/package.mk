@@ -26,7 +26,7 @@ PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
-PKG_DEPENDS_TARGET="toolchain kodi:host kodi:bootstrap xmlstarlet:host Python zlib systemd pciutils dbus lzo pcre swig:host libass curl fontconfig fribidi tinyxml libjpeg-turbo freetype libcdio libdvdnav taglib libxml2 libxslt rapidjson sqlite ffmpeg crossguid giflib opengl lcms2 libplist libfmt"
+PKG_DEPENDS_TARGET="toolchain kodi:host kodi:bootstrap xmlstarlet:host Python zlib systemd pciutils dbus lzo pcre swig:host libass curl fontconfig fribidi tinyxml libjpeg-turbo freetype libcdio libdvdnav taglib libxml2 libxslt rapidjson sqlite ffmpeg crossguid giflib opengl lcms2 libfmt"
 PKG_DEPENDS_HOST="toolchain"
 PKG_DEPENDS_BOOTSTRAP="toolchain lzo:host libpng:host libjpeg-turbo:host giflib:host"
 PKG_PRIORITY="optional"
@@ -48,7 +48,6 @@ PKG_CMAKE_OPTS_BOOTSTRAP="-DCORE_SOURCE_DIR=$ROOT/$PKG_BUILD"
 PKG_CMAKE_OPTS_HOST="-DCORE_SOURCE_DIR=$ROOT/$PKG_BUILD"
 PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$ROOT/$TOOLCHAIN \
                        -DDEPENDS_PATH=$ROOT/$PKG_BUILD/depends \
-                       -DWITH_ARCH=$TARGET_ARCH \
                        -DCMAKE_BUILD_TYPE=none \
                        -DPYTHON_INCLUDE_DIRS=$SYSROOT_PREFIX/usr/include/python2.7 \
                        -DGIT_VERSION=$PKG_VERSION \
@@ -68,9 +67,14 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$ROOT/$TOOLCHAIN \
                        -DENABLE_UDEV=ON \
                        -DENABLE_XSLT=ON \
                        -DENABLE_DBUS=ON \
-                       -DCMAKE_VERBOSE_MAKEFILE=OFF \
                        -DENABLE_SSSE3=ON \
                        -DHAVE_SSSE3=TRUE"
+
+if [ "$TARGET_ARCH" = "x86_64" ]; then
+  PKG_CMAKE_OPTS_TARGET+=" -DWITH_CPU=$TARGET_ARCH"
+else
+  PKG_CMAKE_OPTS_TARGET+=" -DWITH_ARCH=$TARGET_ARCH"
+fi
 
 if [ "$DISPLAYSERVER" = "x11" ]; then
   PKG_DEPENDS_TARGET+=" libX11 libXext libdrm libXrandr"
@@ -249,7 +253,7 @@ pre_configure_target() {
 # kodi should never be built with lto
   strip_lto
 
-  export LIBS="$LIBS -lz -lterminfo"
+  export LIBS="$LIBS -ltermcap"
 }
 
 pre_make_target() {
