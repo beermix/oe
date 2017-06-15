@@ -1,5 +1,5 @@
 PKG_NAME="intel-gpu-tools"
-PKG_VERSION="1.19"
+PKG_VERSION="1.18"
 PKG_URL="http://xorg.freedesktop.org/releases/individual/app/intel-gpu-tools-${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain systemd mesa libdrm libpciaccess cairo dri2proto swig:host procps-ng"
 PKG_SECTION="tools"
@@ -13,4 +13,4 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shader-debugger \
 			      --disable-gtk-doc \
 			      --disable-gtk-doc-html \
 			      --disable-gtk-doc-pdf \
-			      --with-gnu-ld"
+			      --with-sysroot=$SYSROOT_PREFIX"
