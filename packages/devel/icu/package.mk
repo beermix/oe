@@ -10,10 +10,6 @@ PKG_SECTION="textproc"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-pre_configure_target() {
-  export CXXFLAGS="$CXXFLAGS -std=c++11"
-}
-
 PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \

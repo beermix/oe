@@ -34,16 +34,15 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_ALL="ac_cv_header_ansidecl_h=no \
-			   --enable-static \
-			   --enable-shared \
-			   --disable-silent-rules \
-			   --disable-ipv6 \
-			   --without-python \
-			   --with-zlib=$ROOT/$TOOLCHAIN \
-			   --without-lzma \
-			   --with-threads \
-			   --with-history \
-			   --with-icu"
+			  --enable-static \
+			  --enable-shared \
+			  --enable-silent-rules \
+			  --disable-ipv6 \
+			  --without-python \
+			  --with-zlib=$ROOT/$TOOLCHAIN \
+			  --without-lzma \
+			  --with-threads \
+			  --with-history"
 
 PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_ALL --with-zlib=$ROOT/$TOOLCHAIN"
 
