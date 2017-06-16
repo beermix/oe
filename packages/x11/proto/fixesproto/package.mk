@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="fixesproto"
-PKG_VERSION="5.0"
+PKG_VERSION="4292ec1c63180c5f4e7c0e606fa68c51913f172b"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.X.org"
-PKG_URL="http://xorg.freedesktop.org/archive/individual/proto/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_GIT_URL="https://anongit.freedesktop.org/git/xorg/proto/fixesproto"
 PKG_DEPENDS_TARGET="toolchain util-macros"
 PKG_PRIORITY="optional"
 PKG_SECTION="x11/proto"
@@ -32,5 +32,10 @@ PKG_LONGDESC="Fixes extension headers"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-# package specific configure options
-PKG_CONFIGURE_OPTS_TARGET="--without-xmlto"
+pre_configure_target() {
+  # unset LIBTOOL because freetype uses its own
+    ( cd ..
+      unset LIBTOOL
+      NOCONFIGURE=1 ./autogen.sh
+    )
+}

@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="libxslt"
-PKG_VERSION="1.1.29"
+PKG_VERSION="ac341cbd792ee572941cc9a66e73800219a1a386"
 PKG_SITE="http://xmlsoft.org/xslt/"
-PKG_URL="ftp://xmlsoft.org/libxml2/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_GIT_URL="git://git.gnome.org/libxslt"
 PKG_DEPENDS_HOST="toolchain libxml2:host"
 PKG_DEPENDS_TARGET="toolchain libxml2"
 PKG_SECTION="textproc"
@@ -27,7 +27,7 @@ PKG_SHORTDESC="libxslt"
 PKG_LONGDESC="libxslt"
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_HOST="  ac_cv_header_ansidecl_h=no \
                            --enable-static \
