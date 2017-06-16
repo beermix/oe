@@ -22,17 +22,35 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.freetype.org"
 PKG_URL="http://download.savannah.gnu.org/releases/freetype/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_TARGET="zlib bzip2 libpng"
+PKG_DEPENDS_TARGET="zlib bzip2 libpng freetype:host"
 PKG_DEPENDS_HOST="zlib:host bzip2:host libpng:host"
 PKG_SECTION="print"
 PKG_SHORTDESC="freetype: TrueType font rendering library"
 PKG_LONGDESC="The FreeType engine is a free and portable TrueType font rendering engine. It has been developed to provide TT support to a great variety of platforms and environments."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
-PKG_USE_CMAKE="yes"
+PKG_AUTORECONF="yes"
+PKG_USE_CMAKE="no"
 
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release -DWITH_ZLIB=ON -DWITH_PNG=ON -DWITH_BZip2=ON -DWITH_HarfBuzz=OFF"
+# target specific configure options
+PKG_CONFIGURE_OPTS_TARGET="LIBPNG_CFLAGS=-I$SYSROOT_PREFIX/usr/include \
+			      LIBPNG_LDFLAGS=-L$SYSROOT_PREFIX/usr/lib \
+			      --with-zlib \
+			      --with-harfbuzz=no \
+			      --enable-static"
 
-PKG_CMAKE_OPTS_HOST="$PKG_CMAKE_OPTS_TARGET"
+# host specific configure options
+PKG_CONFIGURE_OPTS_HOST="LIBPNG_CFLAGS=-I$ROOT/$TOOLCHAIN/include \
+			    LIBPNG_LDFLAGS=-L$ROOT/$TOOLCHAIN/lib \
+			    --with-zlib \
+			    --with-harfbuzz=no \
+			    --enable-static"
+
+post_makeinstall_target() {
+  $SED "s:\(['=\" ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" $SYSROOT_PREFIX/usr/bin/freetype-config
+  ln -v -sf $SYSROOT_PREFIX/usr/include/freetype2 $SYSROOT_PREFIX/usr/include/freetype
+
+  rm -rf $INSTALL/usr/bin
+}
+
 
