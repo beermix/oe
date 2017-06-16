@@ -20,9 +20,12 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_path_GLIB_GENMARSHAL=$SYSROOT_PREFIX/usr/bin/gl
                            --disable-cups \
                            --disable-papi \
                            --enable-xkb \
-                           --disable-xinerama \
                            --disable-gtk-doc-html \
-                           --enable-silent-rules"
+                           --enable-silent-rules \
+                           --disable-gtk-doc \
+                           --disable-gtk-doc-pdf \
+                           --disable-man \
+                           --disable-gtk-doc"
 
 post_makeinstall_target() {
   cp $PKG_DIR/files/settings.ini $INSTALL/etc/gtk-3.0/

@@ -128,7 +128,7 @@ make_target() {
   ./tools/gn/bootstrap/bootstrap.py --gn-gen-args "${_flags[*]}"
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$ROOT/$TOOLCHAIN/bin/python
 
-  ionice -c3 nice -n20 ninja -j3 -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
+  ninja -j2 -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
 }
 
 makeinstall_target() {
@@ -183,9 +183,6 @@ addon() {
   # libexif
   cp -PL $(get_pkg_build libexif)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
 
-  # libva-vdpau-driver
-  #cp -PL $(get_pkg_build libva-vdpau-driver)/.install_pkg/usr/lib/va/*.so $ADDON_BUILD/$PKG_ADDON_ID/lib
-
   # unclutter
   cp -P $(get_pkg_build unclutter)/.install_pkg/usr/bin/unclutter $ADDON_BUILD/$PKG_ADDON_ID/bin
 
@@ -194,4 +191,10 @@ addon() {
   
   # re2
   #cp -PL $(get_pkg_build re2)/.install_pkg/usr/lib/*.so $ADDON_BUILD/$PKG_ADDON_ID/lib
+  
+  # atk
+  cp -PL $(get_pkg_build atk)/.install_pkg/usr/lib/*.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  
+  # gtk3+
+  cp -PL $(get_pkg_build gtk3+)/.install_pkg/usr/lib/*.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
 }

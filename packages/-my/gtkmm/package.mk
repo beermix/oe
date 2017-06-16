@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="gtkmm"
-PKG_VERSION="2.24.4"
+PKG_VERSION="3.91.0"
 PKG_ARCH="x86_64"
-PKG_URL="http://ftp.gnome.org/pub/GNOME/sources/gtkmm/2.24/gtkmm-2.24.4.tar.xz"
+PKG_URL="http://ftp.gnome.org/pub/gnome/sources/gtkmm/3.91/gtkmm-3.91.0.tar.xz"
 PKG_DEPENDS_TARGET="toolchain libxml2 sqlite"
 PKG_SECTION="tools"
 PKG_SHORTDESC="aria2: lightweight multi-protocol & multi-source command-line download utility"

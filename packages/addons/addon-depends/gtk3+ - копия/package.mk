@@ -1,9 +1,9 @@
-PKG_NAME="gtk+"
-PKG_VERSION="3.89.5"
+PKG_NAME="gtk3+"
+PKG_VERSION="3.22.15"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.gtk.org/"
-PKG_URL="http://ftp.gnome.org/pub/gnome/sources/gtk+/3.89/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="https://dl.dropboxusercontent.com/s/cysplfjcg9oxjls/gtk3+-3.22.15.tar.xz"
 PKG_DEPENDS_TARGET="toolchain atk libX11 libXrandr libXi glib pango cairo gdk-pixbuf at-spi2-atk"
 PKG_SECTION="x11/toolkits"
 PKG_SHORTDESC="gtk+: The Gimp ToolKit (GTK)"
@@ -27,4 +27,3 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_path_GLIB_GENMARSHAL=$SYSROOT_PREFIX/usr/bin/gl
 post_makeinstall_target() {
   cp $PKG_DIR/files/settings.ini $INSTALL/etc/gtk-3.0/
 }
-
