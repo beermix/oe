@@ -31,23 +31,15 @@ pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
   
-  export NM="$NM"
-  export AR="$AR"
-  export AS="$CC"
-  export as="$CC"
-  export LD="$CC"
-  export cc1="$CC"
-
   #strip_lto
   #strip_gold
   
-  #export pkg_config_exe="$ROOT/$TOOLCHAIN/bin/pkg-config"
+  PKG_CONFIG_LIBDIR=/root/-3SDC/oe/build.OE-Generic.x86_64-8.0-devel/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/lib/pkgconfig
 }
- \
+
 configure_target() {
-  CPP="$HOST_CC -E" ./configure --prefix=/usr \
+  ./configure --prefix=/usr \
               --cross-prefix=${TARGET_NAME}- \
-              --source-path=$(get_pkg_build qemu) \
               --cc=$CC \
               --cxx=$CXX \
               --extra-cflags=-I$SYSROOT_PREFIX/usr/include \
@@ -63,7 +55,8 @@ configure_target() {
               --enable-guest-agent \
               --disable-libusb \
               --disable-docs \
-              --cpu=x86_64
+              --cpu=x86_64 \
+              
 }
 
 make_target() {

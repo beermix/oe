@@ -32,4 +32,5 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-unicode \
 			      --enable-graphics_ctx \
 			      --enable-silent-rules \
-			      --with-openg --disable-precomp-headersl"
+			      --with-openg \
+			      --disable-precomp-headersl"

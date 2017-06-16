@@ -1,19 +1,16 @@
 PKG_NAME="DisplayCAL"
-PKG_VERSION="3.2.1.0"
+PKG_VERSION="3.3.1.0"
 PKG_SITE="http://www.X.org"
-PKG_URL="https://sourceforge.net/projects/dispcalgui/files/release/$PKG_VERSION/DisplayCAL-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain libX11 libXext libXtst libjpeg-turbo"
+PKG_URL="https://dl.dropboxusercontent.com/s/i14sk2shsh9umy6/DisplayCAL-3.3.1.0.tar.xz"
+PKG_DEPENDS_TARGET="toolchain libX11 libXext libXtst libjpeg-turbo wxPython"
 PKG_SECTION="service/system"
 
 PKG_AUTORECONF="no"
 
-
-configure_target() {
-  :
+make_target() {
+  python setup.py build_ext
 }
 
-make_target() {
-  python setup.py build
-  python setup.py install
-  
+makeinstall_target() {
+  python setup.py install --root=$INSTALL --prefix=/usr
 }
