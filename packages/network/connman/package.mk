@@ -17,10 +17,10 @@
 ################################################################################
 
 PKG_NAME="connman"
-PKG_VERSION="1.34"
+PKG_VERSION="c789297"
 PKG_SITE="http://www.connman.net"
-PKG_URL="https://www.kernel.org/pub/linux/network/connman/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain glib readline netbsd-curses dbus iptables wpa_supplicant"
+PKG_GIT_URL="git://git.kernel.org/pub/scm/network/connman/connman.git"
+PKG_DEPENDS_TARGET="toolchain glib readline netbsd-curses dbus iptables iwd"
 PKG_SECTION="network"
 PKG_SHORTDESC="connman: Network manager daemon"
 PKG_LONGDESC="The ConnMan project provides a daemon for managing internet connections within embedded devices running the Linux operating system. The Connection Manager is designed to be slim and to use as few resources as possible, so it can be easily integrated. It is a fully modular system that can be extended, through plug-ins, to support all kinds of wired or wireless technologies. Also, configuration methods, like DHCP and domain name resolving, are implemented using plug-ins. The plug-in approach allows for easy adaption and modification for various use cases."
@@ -28,30 +28,15 @@ PKG_LONGDESC="The ConnMan project provides a daemon for managing internet connec
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-if [ "$PPTP_SUPPORT" = yes ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET ppp pptp"
-  CONNMAN_PPTP="--enable-pptp PPPD=/usr/sbin/pppd PPTP=/usr/sbin/pptp"
-else
-  CONNMAN_PPTP="--disable-pptp"
-fi
-
-if [ "$OPENVPN_SUPPORT" = yes ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET openvpn"
-  CONNMAN_OPENVPN="--enable-openvpn --with-openvpn=/usr/sbin/openvpn"
-else
-  CONNMAN_OPENVPN="--disable-openvpn"
-fi
-
-PKG_CONFIGURE_OPTS_TARGET="WPASUPPLICANT=/usr/bin/wpa_supplicant \
+PKG_CONFIGURE_OPTS_TARGET="--srcdir=.. \
                            --disable-gtk-doc \
-                           --srcdir=.. \
                            --disable-debug \
                            --disable-hh2serial-gps \
                            --disable-openconnect \
-                           $CONNMAN_OPENVPN \
+                           --disable-openvpn \
                            --disable-vpnc \
                            --disable-l2tp \
-                           $CONNMAN_PPTP \
+                           --disable-pptp \
                            --disable-iospm \
                            --disable-tist \
                            --disable-session-policy-local \
@@ -62,7 +47,8 @@ PKG_CONFIGURE_OPTS_TARGET="WPASUPPLICANT=/usr/bin/wpa_supplicant \
                            --enable-loopback \
                            --enable-ethernet \
                            --disable-gadget \
-                           --enable-wifi \
+                           --disable-wifi \
+                           --enable-iwd \
                            --disable-bluetooth \
                            --disable-ofono \
                            --disable-dundee \
@@ -78,7 +64,6 @@ PKG_CONFIGURE_OPTS_TARGET="WPASUPPLICANT=/usr/bin/wpa_supplicant \
 
 
 PKG_MAKE_OPTS_TARGET="storagedir=/storage/.cache/connman \
-                      vpn_storagedir=/storage/.config/vpn-config \
                       statedir=/run/connman"
 
 post_makeinstall_target() {
