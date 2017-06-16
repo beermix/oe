@@ -149,6 +149,7 @@ post_patch() {
 }
 
 makeinstall_host() {
+  export CPPFLAGS="-I$ROOT/$TOOLCHAIN/include"
   make INSTALL_HDR_PATH=dest headers_install
   mkdir -p $SYSROOT_PREFIX/usr/include
     cp -R dest/include/* $SYSROOT_PREFIX/usr/include

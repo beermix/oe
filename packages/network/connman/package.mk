@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="connman"
-PKG_VERSION="c789297"
+PKG_VERSION="b5f90df"
 PKG_SITE="http://www.connman.net"
 PKG_GIT_URL="git://git.kernel.org/pub/scm/network/connman/connman.git"
 PKG_DEPENDS_TARGET="toolchain glib readline netbsd-curses dbus iptables iwd"
@@ -60,7 +60,7 @@ PKG_CONFIGURE_OPTS_TARGET="--srcdir=.. \
                            --enable-datafiles \
                            --with-dbusconfdir=/etc \
                            --with-systemdunitdir=/usr/lib/systemd/system \
-                           --enable-silent-rules"
+                           --disable-silent-rules"
 
 
 PKG_MAKE_OPTS_TARGET="storagedir=/storage/.cache/connman \

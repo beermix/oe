@@ -66,13 +66,14 @@ post_makeinstall_target() {
   sed -e "s|^#PermitRootLogin.*|PermitRootLogin yes|g" \
       -e "s|^#StrictModes.*|StrictModes no|g" \
       -e "s|^#X11Forwarding.*|X11Forwarding yes|g" \
+      -e "s|^#UsePrivilegeSeparation.*|UsePrivilegeSeparation no|g" \
       -i $INSTALL/etc/ssh/sshd_config
   echo "PubkeyAcceptedKeyTypes +ssh-dss" >> $INSTALL/etc/ssh/sshd_config
+
+  debug_strip $INSTALL/usr
 }
 
-post_install() {
-  add_user sshd x 74 74 "Privilege-separated SSH" "/var/empty/sshd" "/bin/sh"
-  add_group sshd 74
 
+post_install() {
   enable_service sshd.service
 }
