@@ -22,7 +22,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kernel.org"
 PKG_DEPENDS_HOST="ccache:host"
-PKG_DEPENDS_TARGET="toolchain cpio:host xz:host pciutils kmod wireless-regdb keyutils irqbalance"
+PKG_DEPENDS_TARGET="toolchain cpio:host xz:host pciutils kmod wireless-regdb keyutils"
 PKG_DEPENDS_INIT="toolchain cpu-firmware:init"
 PKG_NEED_UNPACK="$LINUX_DEPENDS"
 PKG_PRIORITY="optional"
@@ -76,15 +76,14 @@ PKG_AUTORECONF="no"
 
 PKG_MAKE_OPTS_HOST="headers_check"
 
-[ "$BUILD_ANDROID_BOOTIMG" = "no" ] && PKG_DEPENDS_TARGET+=" mkbootimg:host"
-[ "$SWAP_SUPPORT" = no ]            && KERNEL_EXTRA_CONFIG+=" swap"
-[ "$NFS_SUPPORT" = no ]             && KERNEL_EXTRA_CONFIG+=" nfs"
+[ "$BUILD_ANDROID_BOOTIMG" = "yes" ] && PKG_DEPENDS_TARGET+=" mkbootimg:host"
+[ "$SWAP_SUPPORT" = yes ]            && KERNEL_EXTRA_CONFIG+=" swap"
+[ "$NFS_SUPPORT" = yes ]             && KERNEL_EXTRA_CONFIG+=" nfs"
 [ "$SAMBA_SUPPORT" = yes ]           && KERNEL_EXTRA_CONFIG+=" samba"
 [ "$BLUETOOTH_SUPPORT" = yes ]       && KERNEL_EXTRA_CONFIG+=" bluetooth"
 [ "$UVESAFB_SUPPORT" = yes ]         && KERNEL_EXTRA_CONFIG+=" uvesafb" && PKG_DEPENDS_INIT+=" v86d:init"
 
 post_patch() {
-  CPPFLAGS="-I$ROOT/$TOOLCHAIN/include/openssl"
   if [ -f $PROJECT_DIR/$PROJECT/$PKG_NAME/$PKG_NAME.$TARGET_ARCH.conf ]; then
     KERNEL_CFG_FILE=$PROJECT_DIR/$PROJECT/$PKG_NAME/$PKG_NAME.$TARGET_ARCH.conf
   else
@@ -150,7 +149,6 @@ post_patch() {
 }
 
 makeinstall_host() {
-  CPPFLAGS="-I$ROOT/$TOOLCHAIN/include/openssl" 
   make INSTALL_HDR_PATH=dest headers_install
   mkdir -p $SYSROOT_PREFIX/usr/include
     cp -R dest/include/* $SYSROOT_PREFIX/usr/include
@@ -158,7 +156,6 @@ makeinstall_host() {
 
 pre_make_target() {
   # regdb
-  CPPFLAGS="-I$ROOT/$TOOLCHAIN/include/openssl"
   cp $(get_pkg_build wireless-regdb)/db.txt $ROOT/$PKG_BUILD/net/wireless/db.txt
 
   if [ "$BOOTLOADER" = "u-boot" ]; then
@@ -170,7 +167,6 @@ pre_make_target() {
 
 make_target() {
   unset LDFLAGS
-  CPPFLAGS="-I$ROOT/$TOOLCHAIN/include/openssl"
 
   make modules
   make INSTALL_MOD_PATH=$INSTALL/usr INSTALL_MOD_STRIP=1 modules_install
