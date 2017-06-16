@@ -35,7 +35,7 @@ PKG_AUTORECONF="no"
 # target specific configure options
 PKG_CONFIGURE_OPTS_TARGET="LIBPNG_CFLAGS=-I$SYSROOT_PREFIX/usr/include \
                            LIBPNG_LDFLAGS=-L$SYSROOT_PREFIX/usr/lib \
-                           --with-zlib --disble-shared"
+                           --with-zlib"
 
 # host specific configure options
 PKG_CONFIGURE_OPTS_HOST="LIBPNG_CFLAGS=-I$ROOT/$TOOLCHAIN/include \
