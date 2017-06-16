@@ -93,7 +93,6 @@ case "$LIBREELEC_ARCH" in
 esac
 
 librespot $bitrate                     \
-          --cache "$ADDON_HOME/cache"  \
           $device                      \
           $discovery                   \
           --name "Librespot@$HOSTNAME"

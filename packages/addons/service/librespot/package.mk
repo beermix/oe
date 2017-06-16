@@ -18,8 +18,9 @@
 ################################################################################
 
 PKG_NAME="librespot"
-PKG_VERSION="82ebdbd"
+PKG_VERSION="446d7a9"
 PKG_REV="100"
+PKG_ARCH="any"
 PKG_LICENSE="prop."
 PKG_SITE="https://github.com/plietar/$PKG_NAME/"
 PKG_GIT_URL="https://github.com/awiouy/librespot-binaries"
@@ -32,9 +33,12 @@ PKG_AUTORECONF="no"
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Librespot"
 PKG_ADDON_TYPE="xbmc.service"
+PKG_MAINTAINER="Anton Voyl (awiouy)"
 
 make_target() {
-  :
+  if [ "PROJECT" = "RPi" ]; then
+    exit
+  fi
 }
 
 makeinstall_target() {

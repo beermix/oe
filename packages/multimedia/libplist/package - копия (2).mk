@@ -17,15 +17,15 @@
 ################################################################################
 
 PKG_NAME="libplist"
-PKG_VERSION="1.12+git+1+e37ca00"
+PKG_VERSION="1.6"
 PKG_SITE="http://matt.colyer.name/projects/iphone-linux/"
-PKG_URL="https://dl.dropboxusercontent.com/s/mcu7m0zlu00d3ws/libplist-1.12+git+1+e37ca00.tar.xz"
+PKG_URL="http://ftp.halifax.rwth-aachen.de/xbmc/build-deps/sources/libplist-1.6.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libxml2 glib"
 PKG_SECTION="devel"
 PKG_SHORTDESC="libplist: a library for manipulating Apple Binary and XML Property Lists"
 PKG_LONGDESC="libplist is a library for manipulating Apple Binary and XML Property Lists"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--without-cython --disable-shared"
 

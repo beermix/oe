@@ -24,7 +24,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://www.busybox.net"
 PKG_URL="http://busybox.net/downloads/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain busybox:host hdparm dosfstools e2fsprogs zip unzip unrar bzip2 zlib lz4 lzo xz lrzip expat icu pciutils usbutils parted procps-ng findutils grep gawk procps-ng coreutils time bash less psmisc fbset tar"
+PKG_DEPENDS_TARGET="toolchain busybox:host hdparm dosfstools e2fsprogs zip unzip unrar bzip2 zlib lz4 lzo xz lrzip expat icu pciutils usbutils parted procps-ng psmisc findutils grep gawk coreutils time bash less fbset tar openjpeg"
 PKG_DEPENDS_INIT="toolchain"
 PKG_PRIORITY="required"
 PKG_SECTION="system"
@@ -164,7 +164,7 @@ makeinstall_target() {
     cp $PKG_DIR/scripts/pastebinit $INSTALL/usr/bin/
     ln -sf pastebinit $INSTALL/usr/bin/paste
     
-    #rm $INSTALL/bin/sh
+    rm $INSTALL/bin/sh
     #rm $INSTALL/bin/hostname
     #rm $INSTALL/sbin/ip
     rm $INSTALL/bin/bash
