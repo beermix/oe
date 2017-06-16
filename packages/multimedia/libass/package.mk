@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libass"
-PKG_VERSION="0.13.6"
+PKG_VERSION="0.13.7"
 PKG_SITE="https://github.com/libass/libass"
 PKG_URL="https://github.com/libass/libass/releases/download/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain freetype fontconfig fribidi"
