@@ -17,13 +17,8 @@
 ################################################################################
 
 PKG_NAME="ffmpeg"
-PKG_VERSION="3.1.6-Krypton"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="LGPLv2.1+"
-PKG_SITE="https://ffmpeg.org"
-#PKG_URL="http://ffmpeg.org/releases/${PKG_NAME}-${PKG_VERSION}.tar.xz"
-PKG_GIT_URL="https://github.com/xbmc/FFmpeg"
+PKG_VERSION="3.1.8"
+PKG_URL="http://ffmpeg.org/releases/ffmpeg-3.1.8.tar.xz"
 PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl fftw speex libvpx libwebp"
 PKG_PRIORITY="optional"
 PKG_SECTION="multimedia"
