@@ -30,12 +30,4 @@ PKG_SHORTDESC="fixesproto: Fixes extension headers"
 PKG_LONGDESC="Fixes extension headers"
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
-
-pre_configure_target() {
-  # unset LIBTOOL because freetype uses its own
-    ( cd ..
-      unset LIBTOOL
-      NOCONFIGURE=1 ./autogen.sh
-    )
-}
+PKG_AUTORECONF="yes"
