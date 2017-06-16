@@ -137,10 +137,11 @@ post_makeinstall_target() {
 
   rm -rf $INSTALL/usr/lib/audit
   rm -rf $INSTALL/usr/lib/glibc
-  rm -rf $INSTALL/usr/lib/libc_pic
   rm -rf $INSTALL/usr/lib/*.o
-  rm -rf $INSTALL/usr/lib/*.map
   rm -rf $INSTALL/var
+  
+#  rm -rf $INSTALL/usr/lib/libc_pic
+#  rm -rf $INSTALL/usr/lib/*.map
 
 # remove unneeded libs
   rm -rf $INSTALL/usr/lib/libBrokenLocale*
