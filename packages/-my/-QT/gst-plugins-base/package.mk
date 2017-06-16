@@ -26,10 +26,12 @@ PKG_SHORTDESC="gst-plugins-base"
 PKG_LONGDESC="gst-plugins-base"
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-maintainer-mode \
 			      --disable-dependency-tracking \
 			      --enable-silent-rules \
 			      --disable-fatal-warnings \
+			      --disable-audiotestsrc \
+			      --disable-videotestsrc \
 			      --disable-shared"

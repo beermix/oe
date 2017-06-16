@@ -25,7 +25,7 @@ PKG_SECTION="lib"
 PKG_SHORTDESC="gst-plugins-good"
 PKG_LONGDESC="gst-plugins-good"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-maintainer-mode \
 			      --disable-dependency-tracking \
@@ -33,4 +33,5 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-maintainer-mode \
 			      --disable-fatal-warnings \
 			      --enable-static \
 			      --disable-shared \
+			      --disable-aalibtest \
 			      --disable-gst_v4l2"

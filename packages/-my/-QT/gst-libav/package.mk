@@ -16,18 +16,24 @@
 #  http://www.gnu.org/copyleft/gpl.html
 ################################################################################
 
-PKG_NAME="gstreamer-vaapi"
+PKG_NAME="gst-libav"
 PKG_VERSION="1.10.5"
 PKG_SITE="http://gstreamer.freedesktop.org/gstreamer"
-PKG_URL="https://gstreamer.freedesktop.org/src/gstreamer-vaapi/gstreamer-vaapi-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain gstreamer intel-vaapi-driver gst-plugins-bad"
+PKG_URL="https://gstreamer.freedesktop.org/src/gst-libav/gst-libav-$PKG_VERSION.tar.xz"
+PKG_DEPENDS_TARGET="toolchain gstreamer ffmpeg bzip2 xz zlib"
 PKG_SECTION="lib"
+
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-examples \
+			      --disable-tests \
+			      --disable-failing-tests \
+			      --disable-loadsave \
 			      --enable-static \
 			      --disable-shared \
-			      --enable-wayland \
-			      --disable-examples \
-			      --disable-debug"
+			      --disable-gtk-doc \
+			      --disable-gtk-doc-html \
+			      --disable-gtk-doc-pdf \
+			      --enable-static-plugins \
+			      --enable-vaapi"

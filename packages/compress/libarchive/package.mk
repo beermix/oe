@@ -1,6 +1,6 @@
 PKG_NAME="libarchive"
-PKG_VERSION="3.3.1"
-PKG_URL="http://www.libarchive.org/downloads/libarchive-$PKG_VERSION.tar.gz"
+PKG_VERSION="328453a"
+PKG_GIT_URL="https://github.com/libarchive/libarchive"
 PKG_DEPENDS_TARGET="toolchain openssl expat pcre zlib lz4 xz bzip2"
 PKG_DEPENDS_HOST="openssl:host zlib:host lzo:host xz:host bzip2:host lz4:host"
 PKG_SECTION="compress"

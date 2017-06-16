@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="gst-plugins-ugly"
-PKG_VERSION="1.12.0"
+PKG_VERSION="1.10.5"
 PKG_SITE="http://gstreamer.freedesktop.org/gstreamer"
 PKG_URL="http://gstreamer.freedesktop.org/src/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain libpng tiff dbus fontconfig eglibc zlib gstreamer"
@@ -26,15 +26,11 @@ PKG_SHORTDESC="gst-plugins-ugly"
 PKG_LONGDESC="gst-plugins-ugly"
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
-
-if [ "$XBMCPLAYER_DRIVER" = "bcm2835-driver" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET bcm2835-driver"
-fi
+PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-maintainer-mode \
 			      --disable-dependency-tracking \
-			      --disable-silent-rules \
+			      --enable-silent-rules \
 			      --disable-fatal-warnings \
 			      --enable-static \
 			      --disable-shared"

@@ -22,15 +22,15 @@ PKG_SITE="http://gstreamer.freedesktop.org/gstreamer"
 PKG_URL="https://gstreamer.freedesktop.org/src/gstreamer/gstreamer-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain libpng tiff dbus fontconfig eglibc zlib glib"
 PKG_SECTION="lib"
-
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
-
+PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="as_cv_unaligned_access=no \
-				--disable-examples \
-				--disable-tests \
-				--disable-failing-tests \
-				--disable-loadsave \
-				--enable-static \
-				--disable-shared"
+			      --disable-examples \
+			      --disable-tests \
+			      --disable-failing-tests \
+			      --disable-loadsave \
+			      --enable-static \
+			      --disable-benchmarks \
+			      --disable-tools \
+			      --disable-shared"
