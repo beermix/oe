@@ -59,7 +59,6 @@ make_target() {
   local _flags=(
     'is_clang=false'
     'clang_use_chrome_plugins=false'
-    'symbol_level=0'
     'is_debug=false'
     'fatal_linker_warnings=false'
     'treat_warnings_as_errors=false'
@@ -69,7 +68,7 @@ make_target() {
     'proprietary_codecs=true'
     'link_pulseaudio=true'
     'linux_use_bundled_binutils=false'
-    'use_allocator="none"'
+    'use_gtk3=true'
     'use_cups=false'
     'use_gconf=false'
     'use_gnome_keyring=false'
@@ -94,11 +93,20 @@ make_target() {
     libpng
     libxslt
     yasm
+    libpng
+    re2
+    minizip
   )
   
   mkdir -p third_party/node/linux/node-linux-x64/bin
   ln -sfv /usr/bin/node third_party/node/linux/node-linux-x64/bin/
   
+  sed -e 's|i386-linux-gnu/||g' \
+      -e 's|x86_64-linux-gnu/||g' \
+      -e 's|/usr/lib/va/drivers|/usr/lib/dri|g' \
+      -e 's|/usr/lib64/va/drivers|/usr/lib/dri|g' \
+      -i $ROOT/$PKG_BUILD/content/common/sandbox_linux/bpf_gpu_policy_linux.cc
+      
   # Remove bundled libraries for which we will use the system copies; this
   # *should* do what the remove_bundled_libraries.py script does, with the
   # added benefit of not having to list all the remaining libraries
