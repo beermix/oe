@@ -19,7 +19,7 @@
 ################################################################################
 
 PKG_NAME="chromium"
-PKG_VERSION="59.0.3071.86"
+PKG_VERSION="59.0.3071.104"
 PKG_REV="99"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
@@ -74,7 +74,7 @@ make_target() {
     'use_cups=false'
     'use_gconf=false'
     'use_gnome_keyring=false'
-    'use_gold=true'
+    'use_gold=false'
     'use_kerberos=false'
     'use_pulseaudio=false'
     'use_sysroot=true'
