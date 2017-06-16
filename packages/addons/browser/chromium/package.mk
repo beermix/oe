@@ -61,6 +61,7 @@ make_target() {
   local _flags=(
     'is_clang=false'
     'clang_use_chrome_plugins=false'
+    'symbol_level=0'
     'is_debug=false'
     'fatal_linker_warnings=false'
     'treat_warnings_as_errors=false'
@@ -70,11 +71,12 @@ make_target() {
     'proprietary_codecs=true'
     'link_pulseaudio=true'
     'linux_use_bundled_binutils=false'
-    'use_gtk3=true'
+    'use_allocator="none"'
     'use_cups=false'
     'use_gconf=false'
     'use_gnome_keyring=false'
     'use_gold=false'
+    'use_gtk3=false'
     'use_kerberos=false'
     'use_pulseaudio=false'
     'use_sysroot=true'
@@ -95,7 +97,6 @@ make_target() {
     libpng
     libxslt
     yasm
-    libpng
     re2
     minizip
   )
@@ -193,8 +194,8 @@ addon() {
   #cp -PL $(get_pkg_build re2)/.install_pkg/usr/lib/*.so $ADDON_BUILD/$PKG_ADDON_ID/lib
   
   # atk
-  cp -PL $(get_pkg_build atk)/.install_pkg/usr/lib/*.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  #cp -PL $(get_pkg_build atk)/.install_pkg/usr/lib/*.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
   
   # gtk3+
-  cp -PL $(get_pkg_build gtk3+)/.install_pkg/usr/lib/*.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  #cp -PL $(get_pkg_build gtk3+)/.install_pkg/usr/lib/*.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
 }
