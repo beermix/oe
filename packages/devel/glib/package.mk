@@ -17,12 +17,13 @@
 ################################################################################
 
 PKG_NAME="glib"
-PKG_VERSION="3245eba"
+PKG_VERSION="2.52.2"
 PKG_ARCH="any"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://www.gtk.org/"
-PKG_GIT_URL="git://git.gnome.org/glib"
-PKG_DEPENDS_TARGET="toolchain zlib libffi pcre libelf Python:host"
+#PKG_GIT_URL="git://git.gnome.org/glib"
+PKG_URL="http://ftp.gnome.org/pub/gnome/sources/glib/2.52/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_DEPENDS_TARGET="toolchain zlib libffi pcre libelf Python:host glib:host"
 PKG_DEPENDS_HOST="zlib:host libffi:host Python:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="devel"
@@ -30,14 +31,7 @@ PKG_SHORTDESC="glib: C support library"
 PKG_LONGDESC="GLib is a library which includes support routines for C such as lists, trees, hashes, memory allocation, and many other things."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
-
-pre_configure_target() {
-    ( 
-    unset LIBTOOL
-    NOCONFIGURE=1 sh autogen.sh
-    )
-}
+PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared --enable-libmount=no --with-pic --with-pcre=internal"
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_mmap_fixed_mapped=yes \
@@ -60,7 +54,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_mmap_fixed_mapped=yes \
                            --enable-Bsymbolic \
                            --with-gnu-ld \
                            --with-threads=posix \
-                           --with-pcre=system"
+                           --with-pcre=internal"
 
 post_makeinstall_target() {
   mkdir -p $SYSROOT_PREFIX/usr/lib/pkgconfig
