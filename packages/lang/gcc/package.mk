@@ -52,6 +52,8 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-multilib \
                            --disable-nls \
                            --enable-checking=release \
+                           --without-ppl \
+                           --without-cloog \
                            --disable-werror \
                            --disable-browser-plugin \
                            --disable-vtable-verify \
@@ -88,6 +90,8 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-tls \
                          --enable-shared \
                          --disable-static \
+                         --enable-c99 \
+                         --enable-long-long \
                          --enable-threads=posix \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time \

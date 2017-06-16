@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="connman"
-PKG_VERSION="b5f90df"
+PKG_VERSION="1.34"
 PKG_SITE="http://www.connman.net"
-PKG_GIT_URL="git://git.kernel.org/pub/scm/network/connman/connman.git"
+PKG_URL="https://www.kernel.org/pub/linux/network/connman/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain glib readline netbsd-curses dbus iptables wpa_supplicant"
 PKG_SECTION="network"
 PKG_SHORTDESC="connman: Network manager daemon"
@@ -28,16 +28,30 @@ PKG_LONGDESC="The ConnMan project provides a daemon for managing internet connec
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
+if [ "$PPTP_SUPPORT" = yes ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET ppp pptp"
+  CONNMAN_PPTP="--enable-pptp PPPD=/usr/sbin/pppd PPTP=/usr/sbin/pptp"
+else
+  CONNMAN_PPTP="--disable-pptp"
+fi
+
+if [ "$OPENVPN_SUPPORT" = yes ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET openvpn"
+  CONNMAN_OPENVPN="--enable-openvpn --with-openvpn=/usr/sbin/openvpn"
+else
+  CONNMAN_OPENVPN="--disable-openvpn"
+fi
+
 PKG_CONFIGURE_OPTS_TARGET="WPASUPPLICANT=/usr/bin/wpa_supplicant \
-                           --srcdir=.. \
                            --disable-gtk-doc \
+                           --srcdir=.. \
                            --disable-debug \
                            --disable-hh2serial-gps \
                            --disable-openconnect \
-                           --disable-openvpn \
+                           $CONNMAN_OPENVPN \
                            --disable-vpnc \
                            --disable-l2tp \
-                           --disable-pptp \
+                           $CONNMAN_PPTP \
                            --disable-iospm \
                            --disable-tist \
                            --disable-session-policy-local \
@@ -55,7 +69,7 @@ PKG_CONFIGURE_OPTS_TARGET="WPASUPPLICANT=/usr/bin/wpa_supplicant \
                            --disable-pacrunner \
                            --disable-neard \
                            --disable-wispr \
-                           --enable-tools \
+                           --disable-tools \
                            --enable-client \
                            --enable-datafiles \
                            --with-dbusconfdir=/etc \
@@ -64,6 +78,7 @@ PKG_CONFIGURE_OPTS_TARGET="WPASUPPLICANT=/usr/bin/wpa_supplicant \
 
 
 PKG_MAKE_OPTS_TARGET="storagedir=/storage/.cache/connman \
+                      vpn_storagedir=/storage/.config/vpn-config \
                       statedir=/run/connman"
 
 post_makeinstall_target() {
@@ -86,7 +101,7 @@ post_makeinstall_target() {
     cp ../src/main.conf $INSTALL/etc/connman
     sed -i $INSTALL/etc/connman/main.conf \
         -e "s|^# BackgroundScanning.*|BackgroundScanning = true|g" \
-        -e "s|^# FallbackNameservers.*|FallbackNameservers = 8.8.8.8,208.67.222.222|g" \
+        -e "s|^# FallbackNameservers.*|FallbackNameservers = 8.8.8.8,8.8.4.4|g" \
         -e "s|^# FallbackTimeservers.*|FallbackTimeservers = 0.pool.ntp.org,1.pool.ntp.org,2.pool.ntp.org,3.pool.ntp.org|g" \
         -e "s|^# PreferredTechnologies.*|PreferredTechnologies = ethernet,wifi,cellular|g" \
         -e "s|^# TetheringTechnologies.*|TetheringTechnologies = wifi|g" \

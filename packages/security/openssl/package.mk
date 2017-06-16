@@ -73,13 +73,13 @@ pre_configure_target() {
   cp -a $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$TARGET_NAME/
   
   sed -i -e '/^"linux-x86_64"/ s/-m64 -DL_ENDIAN -O3 -Wall//' $ROOT/$PKG_BUILD/.$TARGET_NAME/Configure
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O2|"`
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
   strip_lto
 }
 
 configure_target() {
   cd $ROOT/$PKG_BUILD/.$TARGET_NAME
-  ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 -Wall $CFLAGS $CPPFLAGS -Wa,--noexecstack
+  ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 -DL_ENDIAN -Wall $CFLAGS $CPPFLAGS -Wa,--noexecstack
 }
 
 makeinstall_target() {

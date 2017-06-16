@@ -31,8 +31,11 @@ PKG_AUTORECONF="yes"
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_have_abstract_sockets=yes \
                            ac_cv_func_posix_getpwnam_r=yes \
                            have_abstract_sockets=yes \
-                           --enable-static=no \
-                           --enable-bash-completion=no"
+                           --enable-static \
+                           --disable-shared \
+                           --disable-tests \
+                           --disable-bash-completion \
+                           --enable-asserts=no"
 
 pre_configure_target() {
   CFLAGS="$CFLAGS -fPIC -DPIC"
