@@ -17,10 +17,8 @@
 ################################################################################
 
 PKG_NAME="connman"
-PKG_VERSION="c789297"
-PKG_GIT_URL="git://git.kernel.org/pub/scm/network/connman/connman.git"
-#PKG_VERSION="1.34"
-#PKG_URL="https://www.kernel.org/pub/linux/network/connman/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_VERSION="1.34"
+PKG_URL="https://www.kernel.org/pub/linux/network/connman/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain glib readline netbsd-curses dbus iptables wpa_supplicant"
 PKG_SECTION="network"
 PKG_SHORTDESC="connman: Network manager daemon"

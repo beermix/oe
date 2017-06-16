@@ -137,7 +137,7 @@ declare -rgA _system_libs=(
   ./tools/gn/bootstrap/bootstrap.py --gn-gen-args "${_flags[*]}"
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$ROOT/$TOOLCHAIN/bin/python
 
-  ninja -j2 -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
+  ninja -j1 -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
 }
 
 makeinstall_target() {
