@@ -4,13 +4,13 @@
 ################################################################################
 
 PKG_NAME="php"
-PKG_VERSION="7.1.6"
+PKG_VERSION="5.6.30"
 PKG_REV="0"
 PKG_ARCH="any"
 PKG_LICENSE="OpenSource"
 PKG_SITE="http://www.php.net"
 PKG_URL="http://www.php.net/distributions/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain zlib pcre curl libxml2 openssl libxslt libiconv libmcrypt"
+PKG_DEPENDS_TARGET="toolchain zlib pcre curl libxml2 openssl libxslt libiconv"
 PKG_SECTION="xmedia/tools"
 PKG_SHORTDESC="php: Scripting language especially suited for Web development"
 PKG_LONGDESC="PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML."
@@ -26,7 +26,7 @@ post_unpack() {
   cp $PHP_BUILD_DIR/../go-pear.phar $PHP_BUILD_DIR/pear/go-pear.phar
 
   # libtool fix
-  #rm $ROOT/$PKG_BUILD/aclocal.m4
+  rm $ROOT/$PKG_BUILD/aclocal.m4
 }
 
 configure_target() {
@@ -72,7 +72,23 @@ configure_target() {
                              --with-bz2=$SYSROOT_PREFIX/usr \
                              --with-iconv \
                              --with-gettext \
-                             --with-gmp=$SYSROOT_PREFIX/usr"
+                             --with-gmp=$SYSROOT_PREFIX/usr \
+                             --enable-pcntl \
+                             --disable-sysvmsg \
+                             --disable-sysvsem \
+                             --disable-sysvshm \
+                             --enable-filter \
+                             --enable-calendar \
+                             --with-pcre-regex \
+                             --with-mysql=$SYSROOT_PREFIX/usr \
+                             --with-mysql-sock=/tmp/mysql.sock \
+                             --with-gd \
+                             --enable-gd-native-ttf \
+                             --enable-gd-jis-conv \
+                             --enable-exif \
+                             --with-jpeg-dir=$SYSROOT_PREFIX/usr \
+                             --with-freetype-dir=$SYSROOT_PREFIX/usr \
+                             --with-png-dir=$SYSROOT_PREFIX/usr"
 
   ac_cv_func_strcasestr=yes \
   $PKG_CONFIGURE_SCRIPT $TARGET_CONFIGURE_OPTS $PKG_CONFIGURE_OPTS_TARGET
