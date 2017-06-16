@@ -17,20 +17,20 @@
 ################################################################################
 
 PKG_NAME="freetype"
-PKG_VERSION="2.8"
+PKG_VERSION="4dc00cf"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.freetype.org"
-PKG_URL="http://download.savannah.gnu.org/releases/freetype/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_TARGET="zlib bzip2 libpng freetype:host"
-PKG_DEPENDS_HOST="zlib:host bzip2:host libpng:host"
+PKG_GIT_URL="git://git.sv.nongnu.org/freetype/freetype2.git"
+PKG_DEPENDS_TARGET="toolchain zlib libpng"
+PKG_DEPENDS_HOST="zlib:host libpng:host"
 PKG_SECTION="print"
 PKG_SHORTDESC="freetype: TrueType font rendering library"
 PKG_LONGDESC="The FreeType engine is a free and portable TrueType font rendering engine. It has been developed to provide TT support to a great variety of platforms and environments."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
 PKG_USE_CMAKE="no"
+PKG_AUTORECONF="no"
 
 # target specific configure options
 PKG_CONFIGURE_OPTS_TARGET="LIBPNG_CFLAGS=-I$SYSROOT_PREFIX/usr/include \
@@ -47,4 +47,22 @@ post_makeinstall_target() {
   ln -v -sf $SYSROOT_PREFIX/usr/include/freetype2 $SYSROOT_PREFIX/usr/include/freetype
 
   rm -rf $INSTALL/usr/bin
+}
+
+pre_configure_target() {
+  export CFLAGS="$CFLAGS -fPIC -DPIC"
+  # unset LIBTOOL because freetype uses its own
+    ( cd ..
+      unset LIBTOOL
+      sh autogen.sh
+    )
+}
+
+pre_configure_host() {
+  export CFLAGS="$CFLAGS -fPIC -DPIC"
+  # unset LIBTOOL because freetype uses its own
+    ( cd ..
+      unset LIBTOOL
+      sh autogen.sh
+    )
 }
