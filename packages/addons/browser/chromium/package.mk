@@ -25,7 +25,7 @@ PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_SITE="https://chromereleases.googleblog.com/search/label/Stable%20updates"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain pciutils dbus libXcomposite libXcursor libXtst alsa-lib bzip2 yasm libXScrnSaver libexif libpng harfbuzz atk gtk3+ unclutter xdotool re2 libvpx libvdpau nss ninja:host"
+PKG_DEPENDS_TARGET="toolchain pciutils dbus libXcomposite libXcursor libXtst alsa-lib bzip2 yasm libXScrnSaver libexif libpng harfbuzz atk gtk+ unclutter xdotool libwebp re2 libvpx libvdpau nss ninja:host"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -41,7 +41,7 @@ pre_make_target() {
 }
 
 make_target() {
-  export LDFLAGS="$LDFLAGS"
+  export LDFLAGS="$LDFLAGS -ludev"
   export LD=$CXX
 
   # Use Python 2
@@ -90,16 +90,24 @@ make_target() {
     "google_default_client_secret=\"${_google_default_client_secret}\""
   )
 
-  # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
-  local _system_libs=(
-    harfbuzz-ng
-    libjpeg
-    libpng
-    libxslt
-    yasm
-    re2
-    minizip
-  )
+# Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
+# Keys are the names in the above script; values are the dependencies in Arch
+declare -rgA _system_libs=(
+  #[ffmpeg]=ffmpeg     # https://crbug.com/731766
+  [flac]=flac
+  [harfbuzz-ng]=harfbuzz-icu
+  #[icu]=icu           # Enable again when upstream supports ICU 59
+  [libdrm]=
+  [libjpeg]=libjpeg
+  [libpng]=libpng
+  #[libvpx]=libvpx     # https://bugs.gentoo.org/show_bug.cgi?id=611394
+  [libwebp]=libwebp
+  [libxml]=libxml2
+  [libxslt]=libxslt
+  [re2]=re2
+  [yasm]=
+  [zlib]=minizip
+)
   
   mkdir -p third_party/node/linux/node-linux-x64/bin
   ln -sfv /usr/bin/node third_party/node/linux/node-linux-x64/bin/
