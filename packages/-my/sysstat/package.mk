@@ -12,7 +12,6 @@ pre_configure_target() {
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-documentation \
 			      --disable-documentation \
-			      --sysconfdir=/storage/.config/sysstat \
-			      --disable-option-checking"
+			      --sysconfdir=/storage/.config/sysstats"
 		
 

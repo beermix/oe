@@ -18,8 +18,8 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 pre_configure_target() {
- strip_lto
- strip_gold
+  # fails to build with gcc 4.9 + lto
+  strip_lto
 }
 
 makeinstall_target() {

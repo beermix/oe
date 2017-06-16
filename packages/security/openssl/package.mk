@@ -28,18 +28,27 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 CONCURRENCY_MAKE_LEVEL=1
-CCACHE_DISABLE=1
+#CCACHE_DISABLE=1
 
 PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            --libdir=lib \
                            shared \
                            threads \
+                           no-gmp \
+                           no-jpake \
+                           no-krb5 \
+                           no-libunbound \
+                           no-md2 \
+                           no-rc5 \
+                           no-rfc3779
+                           no-sctp \
+                           no-ssl-trace \
                            no-ssl2 \
                            no-ssl3 \
-                           enable-unit-test \
-                           enable-tlsext \
+                           no-store \
+                           no-weak-ssl-ciphers \
                            no-zlib \
-                           zlib-dynamic \
+                           no-zlib-dynamic \
                            enable-ec_nistp_64_gcc_128"
 
 pre_configure_host() {
@@ -64,13 +73,13 @@ pre_configure_target() {
   cp -a $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$TARGET_NAME/
   
   sed -i -e '/^"linux-x86_64"/ s/-m64 -DL_ENDIAN -O3 -Wall//' $ROOT/$PKG_BUILD/.$TARGET_NAME/Configure
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O2|"`
   strip_lto
 }
 
 configure_target() {
   cd $ROOT/$PKG_BUILD/.$TARGET_NAME
-  ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 -DL_ENDIAN -Wall $CFLAGS $CPPFLAGS -Wa,--noexecstack
+  ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 -Wall $CFLAGS $CPPFLAGS -Wa,--noexecstack
 }
 
 makeinstall_target() {
@@ -84,11 +93,12 @@ post_makeinstall_target() {
   rm -rf $INSTALL/etc/ssl/misc
   rm -rf $INSTALL/usr/bin/c_rehash
 
- # debug_strip $INSTALL/usr/bin/openssl
+  debug_strip $INSTALL/usr/bin/openssl
 
   # create new cert: ./mkcerts.sh
+  # cert from https://curl.haxx.se/docs/caextract.html
   mkdir -p $INSTALL/etc/ssl
-  cp $PKG_DIR/cert/cacert.pem $INSTALL/etc/ssl/cert.pem
+    cp $PKG_DIR/cert/cacert.pem $INSTALL/etc/ssl/cert.pem
 
   # backwards comatibility
   mkdir -p $INSTALL/etc/pki/tls
@@ -97,5 +107,9 @@ post_makeinstall_target() {
     ln -sf /etc/ssl/cert.pem $INSTALL/etc/pki/tls/certs/ca-bundle.crt
   mkdir -p $INSTALL/usr/lib/ssl
     ln -sf /etc/ssl/cert.pem $INSTALL/usr/lib/ssl/cert.pem
- # cp $PKG_DIR/config/openssl.cnf $INSTALL/etc/pki/tls/openssl.cnf
+
+  # for VDR-LIVE
+  mkdir -p $INSTALL/usr/config/ssl
+    cp $PKG_DIR/config/openssl.cnf $INSTALL/usr/config/ssl
+    ln -sf /storage/.config/ssl/openssl.cnf $INSTALL/etc/ssl/openssl.cnf
 }
