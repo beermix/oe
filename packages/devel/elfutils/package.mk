@@ -36,17 +36,30 @@ CFLAGS="$CFLAGS -D_GNU_SOURCE -Wno-unused-result"
 
 PKG_CONFIGURE_OPTS_TARGET="utrace_cv_cc_biarch=false \
                            --disable-werror \
-                           --disable-progs \
+                           --enable-progs \
                            --disable-nls \
                            --with-zlib \
                            --with-bzlib \
                            --without-lzma"
 
+PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"                         
+
 pre_configure_target() {
   export CFLAGS="$CFLAGS -fPIC -DPIC"
 }
 
+pre_configure_host() {
+  export CFLAGS="$CFLAGS -fPIC -DPIC"
+}
+
 make_target() {
+  make V=1 -C libelf libelf.a
+  make V=1 -C libebl libebl.a
+  make V=1 -C libdwfl libdwfl.a
+  make V=1 -C libdw libdw.a
+}
+
+make_host() {
   make V=1 -C libelf libelf.a
   make V=1 -C libebl libebl.a
   make V=1 -C libdwfl libdwfl.a
@@ -60,4 +73,13 @@ makeinstall_target() {
   mkdir -p $SYSROOT_PREFIX/usr/lib
     cp libelf/libelf.a $SYSROOT_PREFIX/usr/lib
     cp libdw/libdw.a $SYSROOT_PREFIX/usr/lib
+}
+
+makeinstall_host() {
+  make DESTDIR="$ROOT/$TOOLCHAIN" -C libelf install-includeHEADERS install-pkgincludeHEADERS
+  make DESTDIR="$ROOT/$TOOLCHAIN" -C libdw install-includeHEADERS install-pkgincludeHEADERS
+
+  mkdir -p $ROOT/$TOOLCHAIN/usr/lib
+    cp libelf/libelf.a $ROOT/$TOOLCHAIN/usr/lib
+    cp libdw/libdw.a $ROOT/$TOOLCHAIN/usr/lib
 }

@@ -1,0 +1,24 @@
+From 1a4f9d3344e468f014ea171819c852fc4b2264d4 Mon Sep 17 00:00:00 2001
+From: Rainer Hochecker <fernetmenta@online.de>
+Date: Fri, 16 Jun 2017 10:38:06 +0200
+Subject: [PATCH] fix toggle fullscreen
+
+---
+ xbmc/Application.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/xbmc/Application.cpp b/xbmc/Application.cpp
+index 947f0937d73c..e412eae6b724 100644
+--- a/xbmc/Application.cpp
++++ b/xbmc/Application.cpp
+@@ -331,9 +331,9 @@ bool CApplication::OnEvent(XBMC_Event& newEvent)
+     case XBMC_VIDEORESIZE:
+       if (g_windowManager.Initialized())
+       {
+-        g_Windowing.SetWindowResolution(newEvent.resize.w, newEvent.resize.h);
+         if (!g_advancedSettings.m_fullScreen)
+         {
++          g_Windowing.SetWindowResolution(newEvent.resize.w, newEvent.resize.h);
+           g_graphicsContext.SetVideoResolution(RES_WINDOW, true);
+           CSettings::GetInstance().SetInt(CSettings::SETTING_WINDOW_WIDTH, newEvent.resize.w);
+           CSettings::GetInstance().SetInt(CSettings::SETTING_WINDOW_HEIGHT, newEvent.resize.h);
