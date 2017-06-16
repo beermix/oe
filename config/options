@@ -76,7 +76,7 @@ done
 
 # install devtools on development builds
   if [ "$OPENELEC_VERSION" = "devel" ]; then
-    DEVTOOLS=no
+    DEVTOOLS=yes
   fi
 
 # read options from $HOME if available

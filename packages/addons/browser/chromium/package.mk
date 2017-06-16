@@ -25,7 +25,7 @@ PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_SITE="https://chromereleases.googleblog.com/search/label/Stable%20updates"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/$PKG_NAME-$PKG_VERSION.tar.xz"
- PKG_DEPENDS_TARGET="toolchain pciutils dbus libXcomposite libXcursor libXtst alsa-lib bzip2 yasm libXScrnSaver libexif libpng harfbuzz atk gtk3+ unclutter xdotool re2 libvpx libvdpau nss ninja:host"
+PKG_DEPENDS_TARGET="toolchain pciutils dbus libXcomposite libXcursor libXtst alsa-lib bzip2 yasm libXScrnSaver libexif libpng harfbuzz atk gtk3+ unclutter xdotool re2 libvpx libvdpau nss ninja:host"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -38,11 +38,10 @@ PKG_ADDON_PROVIDES="executable"
 pre_make_target() {
   strip_lto
   sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' third_party/widevine/cdm/stub/widevine_cdm_version.h
-  #ln -sfv /usr/bin/node $ROOT/$TOOLCHAIN/bin/node
 }
 
 make_target() {
-  export LDFLAGS="$LDFLAGS -ludev"
+  export LDFLAGS="$LDFLAGS"
   export LD=$CXX
 
   # Use Python 2
@@ -56,8 +55,8 @@ make_target() {
   _google_default_client_id=740889307901-4bkm4e0udppnp1lradko85qsbnmkfq3b.apps.googleusercontent.com
   _google_default_client_secret=9TJlhL661hvShQub4cWhANXa
 
-  export TMPDIR="/root/temp"
-  mkdir -p "$TMPDIR"
+  #export TMPDIR="/root/temp"
+  #mkdir -p "$TMPDIR"
   
   local _flags=(
     'is_clang=false'
@@ -75,7 +74,7 @@ make_target() {
     'use_cups=false'
     'use_gconf=false'
     'use_gnome_keyring=false'
-    'use_gold=false'
+    'use_gold=true'
     'use_kerberos=false'
     'use_pulseaudio=false'
     'use_sysroot=true'
@@ -129,7 +128,7 @@ make_target() {
   ./tools/gn/bootstrap/bootstrap.py --gn-gen-args "${_flags[*]}"
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$ROOT/$TOOLCHAIN/bin/python
 
-  ionice -c3 nice -n20 ninja -j6 -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
+  ionice -c3 nice -n20 ninja -j3 -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
 }
 
 makeinstall_target() {
