@@ -38,6 +38,9 @@ PKG_ADDON_PROVIDES="executable"
 pre_make_target() {
   strip_lto
   sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' third_party/widevine/cdm/stub/widevine_cdm_version.h
+  
+  mkdir -p third_party/node/linux/node-linux-x64/bin
+  ln -sfv /usr/bin/node third_party/node/linux/node-linux-x64/bin/node
 }
 
 make_target() {
@@ -90,27 +93,15 @@ make_target() {
     "google_default_client_secret=\"${_google_default_client_secret}\""
   )
 
-# Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
-# Keys are the names in the above script; values are the dependencies in Arch
-declare -rgA _system_libs=(
-  #[ffmpeg]=ffmpeg     # https://crbug.com/731766
-  [flac]=flac
-  [harfbuzz-ng]=harfbuzz-icu
-  #[icu]=icu           # Enable again when upstream supports ICU 59
-  [libdrm]=
-  [libjpeg]=libjpeg
-  [libpng]=libpng
-  #[libvpx]=libvpx     # https://bugs.gentoo.org/show_bug.cgi?id=611394
-  [libwebp]=libwebp
-  [libxml]=libxml2
-  [libxslt]=libxslt
-  [re2]=re2
-  [yasm]=
-  [zlib]=minizip
-)
-  
-  mkdir -p third_party/node/linux/node-linux-x64/bin
-  ln -sfv /usr/bin/node third_party/node/linux/node-linux-x64/bin/
+  # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
+  local _system_libs=(
+    harfbuzz-ng
+    libjpeg
+    libpng
+    libxslt
+    yasm
+    re2
+  )
   
   sed -e 's|i386-linux-gnu/||g' \
       -e 's|x86_64-linux-gnu/||g' \
