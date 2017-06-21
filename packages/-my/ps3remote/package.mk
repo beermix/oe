@@ -12,7 +12,7 @@ PKG_AUTORECONF="no"
 #}
 
 make_target() {
-  make CC="$CC" CFLAGS="-Wall -DDEBUG=0 -O3" -j1
+  make CC="$CC" CFLAGS="-Wall -DDEBUG=1 -O3 -pipe" -j1
 }
 
 post_make_target() {
