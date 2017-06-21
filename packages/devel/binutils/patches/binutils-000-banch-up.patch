@@ -1,8 +1,18 @@
 diff --git a/bfd/ChangeLog b/bfd/ChangeLog
-index 85c6a817e5..7d7416941f 100644
+index 85c6a817e5..cae30e6b20 100644
 --- a/bfd/ChangeLog
 +++ b/bfd/ChangeLog
-@@ -1,3 +1,126 @@
+@@ -1,3 +1,136 @@
++2017-06-20  Thomas Preud'homme  <thomas.preudhomme@arm.com>
++
++	Backport from mainline
++	2017-05-08  Thomas Preud'homme  <thomas.preudhomme@arm.com>
++
++	* elflink.c (elf_output_implib): Remove executable flag from import
++	library bfd.
++	* elf32-arm.c (elf32_arm_filter_implib_symbols): Assert that the import
++	library is a relocatable object file.
++
 +2017-06-13  Nick Clifton  <nickc@redhat.com>
 +
 +	Import this fix from the mainline sources:
@@ -257,7 +267,7 @@ index 5de9ab6ca6..dc4bd87f89 100644
  
  /* Information about reloc sections associated with a bfd_elf_section_data
 diff --git a/bfd/elf32-arm.c b/bfd/elf32-arm.c
-index 0a785951dc..cc8fd15cad 100644
+index 0a785951dc..90286a84fa 100644
 --- a/bfd/elf32-arm.c
 +++ b/bfd/elf32-arm.c
 @@ -4024,10 +4024,12 @@ arm_type_of_stub (struct bfd_link_info *info,
@@ -345,6 +355,17 @@ index 0a785951dc..cc8fd15cad 100644
  
  	if (value >= 0x1000)
  	  return bfd_reloc_overflow;
+@@ -17496,6 +17500,10 @@ elf32_arm_filter_implib_symbols (bfd *abfd ATTRIBUTE_UNUSED,
+ {
+   struct elf32_arm_link_hash_table *globals = elf32_arm_hash_table (info);
+ 
++  /* Requirement 8 of "ARM v8-M Security Extensions: Requirements on
++     Development Tools" (ARM-ECM-0359818) mandates Secure Gateway import
++     library to be a relocatable object file.  */
++  BFD_ASSERT (!(bfd_get_file_flags (info->out_implib_bfd) & EXEC_P));
+   if (globals->cmse_implib)
+     return elf32_arm_filter_cmse_symbols (abfd, info, syms, symcount);
+   else
 diff --git a/bfd/elf32-avr.c b/bfd/elf32-avr.c
 index 56b143d414..f140aa7ed4 100644
 --- a/bfd/elf32-avr.c
@@ -654,7 +675,7 @@ index e0e6c16fcd..e363eafc02 100644
  	      else if (!(bfd_link_pie (info)
  			 && (h->needs_copy || eh->needs_copy)))
 diff --git a/bfd/elflink.c b/bfd/elflink.c
-index 69b66f2831..cd03a13757 100644
+index 69b66f2831..f82bd8202b 100644
 --- a/bfd/elflink.c
 +++ b/bfd/elflink.c
 @@ -1543,16 +1543,13 @@ _bfd_elf_merge_symbol (bfd *abfd,
@@ -726,7 +747,20 @@ index 69b66f2831..cd03a13757 100644
        /* Work out the size of the symbol version section.  */
        s = bfd_get_linker_section (dynobj, ".gnu.version");
        BFD_ASSERT (s != NULL);
-@@ -12986,7 +12991,12 @@ elf_gc_sweep (bfd *abfd, struct bfd_link_info *info)
+@@ -11141,10 +11146,11 @@ elf_output_implib (bfd *abfd, struct bfd_link_info *info)
+   if (!bfd_set_format (implib_bfd, bfd_object))
+     return FALSE;
+ 
++  /* Use flag from executable but make it a relocatable object.  */
+   flags = bfd_get_file_flags (abfd);
+   flags &= ~HAS_RELOC;
+   if (!bfd_set_start_address (implib_bfd, 0)
+-      || !bfd_set_file_flags (implib_bfd, flags))
++      || !bfd_set_file_flags (implib_bfd, flags & ~EXEC_P))
+     return FALSE;
+ 
+   /* Copy architecture of output file to import library file.  */
+@@ -12986,7 +12992,12 @@ elf_gc_sweep (bfd *abfd, struct bfd_link_info *info)
    elf_link_hash_traverse (elf_hash_table (info), elf_gc_sweep_symbol,
  			  &sweep_info);
  
@@ -862,12 +896,12 @@ index 12c9fb0d87..c3ec4fefb6 100644
  	  /* If this symbol is marked as occurring now, rather
  	     than at the end, output it now.  This is used for
 diff --git a/bfd/version.h b/bfd/version.h
-index eda06e4ac6..fad9e9a112 100644
+index eda06e4ac6..a65567d957 100644
 --- a/bfd/version.h
 +++ b/bfd/version.h
 @@ -1,4 +1,4 @@
 -#define BFD_VERSION_DATE 20170302
-+#define BFD_VERSION_DATE 20170615
++#define BFD_VERSION_DATE 20170621
  #define BFD_VERSION @bfd_version@
  #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
  #define REPORT_BUGS_TO @report_bugs_to@
@@ -998,10 +1032,40 @@ index f5c5d2d8e0..d3fc4afe24 100644
  		  /* Must be g++ version 1.  */
  		  context = DEBUG_TYPE_NULL;
 diff --git a/gas/ChangeLog b/gas/ChangeLog
-index 8a586ad7a0..d6ab8a1e34 100644
+index 8a586ad7a0..93f7c63cf2 100644
 --- a/gas/ChangeLog
 +++ b/gas/ChangeLog
-@@ -1,3 +1,72 @@
+@@ -1,3 +1,102 @@
++2017-06-20  Thomas Preud'homme  <thomas.preudhomme@arm.com>
++
++	Backport from mainline
++	2017-04-24  Thomas Preud'homme  <thomas.preudhomme@arm.com>
++
++	* config/tc-arm.c (move_or_literal_pool): Remove code generating MOVS.
++	Forbid MOV.W and MOVW if destination is SP or PC.
++	* testsuite/gas/arm/thumb2_ldr_immediate_highregs_armv6t2.s: Explain
++	expectation of LDR not generating a MOVS for low registers and small
++	constants.  Add tests of MOVW generation.
++	* testsuite/gas/arm/thumb2_ldr_immediate_highregs_armv6t2.d: Update
++	expected disassembly.
++
++2017-06-20  Thomas Preud'homme  <thomas.preudhomme@arm.com>
++
++	Backport from mainline
++	2017-05-08  Thomas Preud'homme  <thomas.preudhomme@arm.com>
++
++	* testsuite/ld-arm/arm-elf.exp
++	(Secure gateway import library generation): Check e_type field
++	of import library and executable produced.
++	* testsuite/ld-arm/cmse-implib.type: Expectations for e_type field.
++
++2017-06-05  Alan Modra  <amodra@gmail.com>
++
++	Apply from master
++	2017-03-15  Nick Clifton  <nickc@redhat.com>
++	* config/tc-riscv.c (riscv_pre_output_hook): Fix compile time
++	warning about discarding a const qualifier.
++
 +2017-04-03  Palmer Dabbelt  <palmer@dabbelt.com>
 +
 +	* config/tc-riscv.c (riscv_clear_subsets): Cast argument to free to
@@ -1074,8 +1138,35 @@ index 8a586ad7a0..d6ab8a1e34 100644
  2017-03-02  Tristan Gingold  <gingold@adacore.com>
  
  	* configure: Regenerate.
+diff --git a/gas/config/tc-arm.c b/gas/config/tc-arm.c
+index 60bda51070..0820b96891 100644
+--- a/gas/config/tc-arm.c
++++ b/gas/config/tc-arm.c
+@@ -7955,17 +7955,13 @@ move_or_literal_pool (int i, enum lit_type t, bfd_boolean mode_3)
+ 	{
+ 	  if (thumb_p)
+ 	    {
+-	      /* This can be encoded only for a low register.  */
+-	      if ((v & ~0xFF) == 0 && (inst.operands[i].reg < 8))
+-		{
+-		  /* This can be done with a mov(1) instruction.  */
+-		  inst.instruction = T_OPCODE_MOV_I8 | (inst.operands[i].reg << 8);
+-		  inst.instruction |= v;
+-		  return TRUE;
+-		}
++	      /* LDR should not use lead in a flag-setting instruction being
++		 chosen so we do not check whether movs can be used.  */
+ 
+-	      if (ARM_CPU_HAS_FEATURE (cpu_variant, arm_ext_v6t2)
++	      if ((ARM_CPU_HAS_FEATURE (cpu_variant, arm_ext_v6t2)
+ 		  || ARM_CPU_HAS_FEATURE (cpu_variant, arm_ext_v6t2_v8m))
++		  && inst.operands[i].reg != 13
++		  && inst.operands[i].reg != 15)
+ 		{
+ 		  /* Check if on thumb2 it can be done with a mov.w, mvn or
+ 		     movw instruction.  */
 diff --git a/gas/config/tc-riscv.c b/gas/config/tc-riscv.c
-index ec5b0bb036..88457c6fd4 100644
+index ec5b0bb036..fb9a3ed53f 100644
 --- a/gas/config/tc-riscv.c
 +++ b/gas/config/tc-riscv.c
 @@ -121,6 +121,18 @@ riscv_subset_supports (const char *feature)
@@ -1192,7 +1283,14 @@ index ec5b0bb036..88457c6fd4 100644
  		      fixP->fx_r_type = BFD_RELOC_RISCV_SET6;
  		      fixP->fx_next->fx_r_type = BFD_RELOC_RISCV_SUB6;
  		    }
-@@ -2069,7 +2096,6 @@ riscv_pre_output_hook (void)
+@@ -2063,13 +2090,12 @@ riscv_pre_output_hook (void)
+   for (s = stdoutput->sections; s; s = s->next)
+     for (frch = seg_info (s)->frchainP; frch; frch = frch->frch_next)
+       {
+-	const fragS *frag;
++	fragS *frag;
+ 
+ 	for (frag = frch->frch_root; frag; frag = frag->fr_next)
  	  {
  	    if (frag->fr_type == rs_cfa)
  	      {
@@ -1369,6 +1467,82 @@ index 0fa1b58356..2efba4b5cb 100644
  @cindex @samp{-march=ISA} option, RISC-V
  @item -march=ISA
  Select the base isa, as specified by ISA.  For example -march=rv32ima.
+diff --git a/gas/testsuite/gas/arm/thumb2_ldr_immediate_highregs_armv6t2.d b/gas/testsuite/gas/arm/thumb2_ldr_immediate_highregs_armv6t2.d
+index 55b5f17887..7afc1350e5 100644
+--- a/gas/testsuite/gas/arm/thumb2_ldr_immediate_highregs_armv6t2.d
++++ b/gas/testsuite/gas/arm/thumb2_ldr_immediate_highregs_armv6t2.d
+@@ -6,19 +6,23 @@
+ .*: +file format .*arm.*
+ 
+ Disassembly of section \.text:
+-0[0-9a-f]+ <[^>]+> 2000[[:space:]]+movs[[:space:]]+r0, #0.*
+-0[0-9a-f]+ <[^>]+> 2108[[:space:]]+movs[[:space:]]+r1, #8.*
+-0[0-9a-f]+ <[^>]+> 2251[[:space:]]+movs[[:space:]]+r2, #81.*
+-0[0-9a-f]+ <[^>]+> 231f[[:space:]]+movs[[:space:]]+r3, #31.*
+-0[0-9a-f]+ <[^>]+> 242f[[:space:]]+movs[[:space:]]+r4, #47.*
+-0[0-9a-f]+ <[^>]+> 253f[[:space:]]+movs[[:space:]]+r5, #63.*
+-0[0-9a-f]+ <[^>]+> 2680[[:space:]]+movs[[:space:]]+r6, #128.*
+-0[0-9a-f]+ <[^>]+> 27ff[[:space:]]+movs[[:space:]]+r7, #255.*
++0[0-9a-f]+ <[^>]+> f04f 0000[[:space:]]+mov\.w[[:space:]]+r0, #0.*
++0[0-9a-f]+ <[^>]+> f04f 0108[[:space:]]+mov\.w[[:space:]]+r1, #8.*
++0[0-9a-f]+ <[^>]+> f04f 0251[[:space:]]+mov\.w[[:space:]]+r2, #81.*
++0[0-9a-f]+ <[^>]+> f04f 031f[[:space:]]+mov\.w[[:space:]]+r3, #31.*
++0[0-9a-f]+ <[^>]+> f04f 042f[[:space:]]+mov\.w[[:space:]]+r4, #47.*
++0[0-9a-f]+ <[^>]+> f04f 053f[[:space:]]+mov\.w[[:space:]]+r5, #63.*
++0[0-9a-f]+ <[^>]+> f04f 0680[[:space:]]+mov\.w[[:space:]]+r6, #128.*
++0[0-9a-f]+ <[^>]+> f04f 07ff[[:space:]]+mov\.w[[:space:]]+r7, #255.*
+ 0[0-9a-f]+ <[^>]+> f04f 0800[[:space:]]+mov\.w[[:space:]]+r8, #0.*
+ 0[0-9a-f]+ <[^>]+> f04f 0908[[:space:]]+mov\.w[[:space:]]+r9, #8.*
+ 0[0-9a-f]+ <[^>]+> f04f 0a51[[:space:]]+mov\.w[[:space:]]+sl, #81.*
+ 0[0-9a-f]+ <[^>]+> f04f 0b1f[[:space:]]+mov\.w[[:space:]]+fp, #31.*
+ 0[0-9a-f]+ <[^>]+> f04f 0c2f[[:space:]]+mov\.w[[:space:]]+ip, #47.*
+-0[0-9a-f]+ <[^>]+> f04f 0d3f[[:space:]]+mov\.w[[:space:]]+sp, #63.*
+ 0[0-9a-f]+ <[^>]+> f04f 0e80[[:space:]]+mov\.w[[:space:]]+lr, #128.*
+-0[0-9a-f]+ <[^>]+> f04f 0fff[[:space:]]+mov\.w[[:space:]]+pc, #255.*
++0[0-9a-f]+ <[^>]+> f64f 78ff[[:space:]]+movw[[:space:]]+r8, #65535.*
++0[0-9a-f]+ <[^>]+> f24f 09f0[[:space:]]+movw[[:space:]]+r9, #61680.*
++0[0-9a-f]+ <[^>]+> f8df d004[[:space:]]+ldr\.w[[:space:]]+sp, \[pc, #4\].*
++0[0-9a-f]+ <[^>]+> f8df f004[[:space:]]+ldr\.w[[:space:]]+pc, \[pc, #4\].*
++0[0-9a-f]+ <[^>]+> 0000003f[[:space:]]+.word[[:space:]]+0x0000003f.*
++0[0-9a-f]+ <[^>]+> 000000ff[[:space:]]+.word[[:space:]]+0x000000ff.*
+diff --git a/gas/testsuite/gas/arm/thumb2_ldr_immediate_highregs_armv6t2.s b/gas/testsuite/gas/arm/thumb2_ldr_immediate_highregs_armv6t2.s
+index d225410186..b473857223 100644
+--- a/gas/testsuite/gas/arm/thumb2_ldr_immediate_highregs_armv6t2.s
++++ b/gas/testsuite/gas/arm/thumb2_ldr_immediate_highregs_armv6t2.s
+@@ -2,8 +2,8 @@
+ 	.syntax unified
+ 	.thumb_func
+ thumb2_ldr:
+-	# These can be encoded into movs since constant is small
+-	# And register can be encoded in 3 bits
++	# These must be encoded into mov.w despite constant and register being
++	# small enough as ldr should not generate a flag-setting instruction.
+ 	ldr r0,=0x00
+ 	ldr r1,=0x08
+ 	ldr r2,=0x51
+@@ -12,13 +12,19 @@ thumb2_ldr:
+ 	ldr r5,=0x3F
+ 	ldr r6,=0x80
+ 	ldr r7,=0xFF
+-	# These shall be encoded into mov.w
+-	# Since register cannot be encoded in 3 bits
++	# These shall be encoded into mov.w since register cannot be encoded in
++	# 3 bits
+ 	ldr r8,=0x00
+ 	ldr r9,=0x08
+ 	ldr r10,=0x51
+ 	ldr r11,=0x1F
+ 	ldr r12,=0x2F
+-	ldr r13,=0x3F
+ 	ldr r14,=0x80
++	# These shall be encoded into movw since immediate cannot be encoded
++	# with mov.w
++	ldr r8,=0xFFFF
++	ldr r9,=0xF0F0
++	# These should be encoded as ldr since mov immediate is unpredictable
++	# for sp and pc
++	ldr r13,=0x3F
+ 	ldr r15,=0xFF
 diff --git a/gas/testsuite/gas/ppc/altivec2.d b/gas/testsuite/gas/ppc/altivec2.d
 index fc10fb5a2e..26f9afa9a8 100644
 --- a/gas/testsuite/gas/ppc/altivec2.d
@@ -1451,10 +1625,15 @@ index 0000000000..890ba94b08
 + lhdcbx 0, 1, 2
 + lwdcbx 0, 1, 2
 diff --git a/gold/ChangeLog b/gold/ChangeLog
-index d598386fd7..f6a0836e2e 100644
+index d598386fd7..98adcbb2e9 100644
 --- a/gold/ChangeLog
 +++ b/gold/ChangeLog
-@@ -1,3 +1,34 @@
+@@ -1,3 +1,39 @@
++2017-06-20  James Clarke  <jrtc27@jrtc27.com>
++
++	* powerpc.cc (Stub_table::define_stub_syms): Always include object's
++	uniq_ value.
++
 +2017-06-03  Alan Modra  <amodra@gmail.com>
 +
 +	Apply from master
@@ -1505,7 +1684,7 @@ index a8b1d46aa1..202d4b0e8d 100644
  		N_("Set program start address"), N_("ADDRESS"));
  
 diff --git a/gold/powerpc.cc b/gold/powerpc.cc
-index 1477a10d67..1f2bc9ede7 100644
+index 1477a10d67..a448efbc94 100644
 --- a/gold/powerpc.cc
 +++ b/gold/powerpc.cc
 @@ -81,6 +81,9 @@ struct Stub_table_owner
@@ -1807,7 +1986,7 @@ index 1477a10d67..1f2bc9ede7 100644
  	  this->branch_size_ = off + stub_size;
  	  if (size == 64 && stub_size != 4)
  	    this->targ_->add_branch_lookup_table(to);
-@@ -4555,6 +4626,73 @@ Output_data_glink<size, big_endian>::set_final_data_size()
+@@ -4555,6 +4626,79 @@ Output_data_glink<size, big_endian>::set_final_data_size()
    this->set_data_size(total);
  }
  
@@ -1841,19 +2020,25 @@ index 1477a10d67..1f2bc9ede7 100644
 +	  add[0] = 0;
 +	  if (cs->first.addend_ != 0)
 +	    sprintf(add, "+%x", static_cast<uint32_t>(cs->first.addend_));
-+	  char localname[18];
-+	  const char *symname;
-+	  if (cs->first.sym_ == NULL)
++	  char obj[10];
++	  obj[0] = 0;
++	  if (cs->first.object_)
 +	    {
 +	      const Powerpc_relobj<size, big_endian>* ppcobj = static_cast
 +		<const Powerpc_relobj<size, big_endian>*>(cs->first.object_);
-+	      sprintf(localname, "%x:%x", ppcobj->uniq(), cs->first.locsym_);
++	      sprintf(obj, "%x:", ppcobj->uniq());
++	    }
++	  char localname[9];
++	  const char *symname;
++	  if (cs->first.sym_ == NULL)
++	    {
++	      sprintf(localname, "%x", cs->first.locsym_);
 +	      symname = localname;
 +	    }
 +	  else
 +	    symname = cs->first.sym_->name();
-+	  char* name = new char[8 + 10 + strlen(symname) + strlen(add) + 1];
-+	  sprintf(name, "%08x.plt_call.%s%s", this->uniq_, symname, add);
++	  char* name = new char[8 + 10 + strlen(obj) + strlen(symname) + strlen(add) + 1];
++	  sprintf(name, "%08x.plt_call.%s%s%s", this->uniq_, obj, symname, add);
 +	  Address value = this->stub_address() - this->address() + cs->second;
 +	  unsigned int stub_size = this->plt_call_size(cs);
 +	  this->targ_->define_local(symtab, name, this, value, stub_size);
@@ -2401,6 +2586,35 @@ index dafc3489fd..a8ff0a413e 100644
        bfd_link_add_undef (link_info.hash, h);
      }
  }
+diff --git a/ld/testsuite/ld-arm/arm-elf.exp b/ld/testsuite/ld-arm/arm-elf.exp
+index 1a4d262e60..2e19332490 100644
+--- a/ld/testsuite/ld-arm/arm-elf.exp
++++ b/ld/testsuite/ld-arm/arm-elf.exp
+@@ -685,7 +685,8 @@ set armeabitests_nonacl {
+      "--section-start .gnu.sgstubs=0x20000 --out-implib=tmpdir/cmse-implib.lib --cmse-implib" ""
+      "-march=armv8-m.base -mthumb --defsym VER=1"
+      {cmse-implib.s}
+-     {{readelf {-s tmpdir/cmse-implib.lib} cmse-implib.rd}}
++     {{readelf {-s tmpdir/cmse-implib.lib} cmse-implib.rd}
++      {readelf {-h tmpdir/cmse-implib.lib} cmse-implib.type}}
+      "cmse-implib"}
+     {"Input secure gateway import library"
+      "--section-start .gnu.sgstubs=0x20000 --out-implib=tmpdir/cmse-new-implib.lib --in-implib=tmpdir/cmse-implib.lib --cmse-implib" ""
+diff --git a/ld/testsuite/ld-arm/cmse-implib.type b/ld/testsuite/ld-arm/cmse-implib.type
+new file mode 100644
+index 0000000000..7bb3bccc8e
+--- /dev/null
++++ b/ld/testsuite/ld-arm/cmse-implib.type
+@@ -0,0 +1,9 @@
++#...
++File: tmpdir/cmse-implib.lib
++#...
++[[:space:]]+Type:[[:space:]]+REL \(Relocatable file\)
++#...
++File: tmpdir/cmse-implib
++#...
++[[:space:]]+Type:[[:space:]]+EXEC \(Executable file\)
++#...
 diff --git a/ld/testsuite/ld-avr/pr21404-1.d b/ld/testsuite/ld-avr/pr21404-1.d
 new file mode 100644
 index 0000000000..fc7103fc9f
