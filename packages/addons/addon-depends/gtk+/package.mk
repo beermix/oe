@@ -44,8 +44,8 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-modules \
                            --disable-gtk-doc \
                            --disable-gtk-doc-pdf \
                            --disable-man \
-                           --disable-gtk-doc \
-                           --disable-shared"
+                           --disable-gtk-doc"
+
 
 post_makeinstall_target() {
   cp $PKG_DIR/files/settings.ini $INSTALL/etc/gtk-3.0/
