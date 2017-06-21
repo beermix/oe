@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="crossguid"
-PKG_VERSION="fef89a4"
+PKG_VERSION="71c709e"
 PKG_SITE="https://github.com/graeme-hill/crossguid"
 PKG_GIT_URL="https://github.com/graeme-hill/crossguid.git"
 PKG_GIT_BRANCH="master"
@@ -27,10 +27,7 @@ PKG_SHORTDESC="minimal, cross platform, C++ GUID library"
 PKG_LONGDESC="minimal, cross platform, C++ GUID library"
 
 PKG_IS_ADDON="no"
-PKG_USE_CMAKE="no"
 PKG_AUTORECONF="no"
-
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release -DXG_TESTS=OFF"
 
 make_target() {
   $CXX -c guid.cpp -o guid.o $CXXFLAGS -std=c++11 -DGUID_LIBUUID
