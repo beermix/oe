@@ -1,5 +1,5 @@
 PKG_NAME="perl"
-PKG_VERSION="5.26.0"
+PKG_VERSION="5.24.1"
 PKG_URL="http://www.cpan.org/src/5.0/perl-${PKG_VERSION}.tar.xz"
 PKG_DEPENDS_TARGET="toolchain openssl gdbm db"
 PKG_SECTION="my"
@@ -12,8 +12,8 @@ configure_target() {
   		-Duse64bitint \
   		-A ccflags="$CFLAGS -fPIC -DPIC" \
   		-Dcc="$CC" \
-  		-Dldflags="$LDFLAGS -fPIC" \
-  		-Dlibs="-lm -lcrypt -pthread" \
+  		-Dusedevel \
+  		-Dldflags="$LDFLAGS -fPIC -DPIC" \
 		-Dvendorprefix=/usr \
 		-Dlocincpth=' ' \
 		-Duselargefiles \
