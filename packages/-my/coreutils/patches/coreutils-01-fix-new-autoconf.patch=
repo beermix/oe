@@ -1,0 +1,16 @@
+diff -Naur coreutils-8.27-orig/aclocal.m4 coreutils-8.27/aclocal.m4
+--- coreutils-8.27-orig/aclocal.m4	2017-06-21 17:10:31.170035427 +0300
++++ coreutils-8.27/aclocal.m4	2017-06-21 17:10:59.634683444 +0300
+@@ -32,10 +32,10 @@
+ # generated from the m4 files accompanying Automake X.Y.
+ # (This private macro should not be called outside this file.)
+ AC_DEFUN([AM_AUTOMAKE_VERSION],
+-[am__api_version='1.15'
++[am__api_version='1.15.1'
+ dnl Some users find AM_AUTOMAKE_VERSION and mistake it for a way to
+ dnl require some minimum version.  Point them to the right macro.
+-m4_if([$1], [1.15], [],
++m4_if([$1], [1.15.1], [],
+       [AC_FATAL([Do not call $0, use AM_INIT_AUTOMAKE([$1]).])])dnl
+ ])
+ 
