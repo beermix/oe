@@ -17,4 +17,5 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shader-debugger \
 			      --disable-gtk-doc \
 			      --disable-gtk-doc-html \
 			      --disable-gtk-doc-pdf \
-			      --enable-static --disable-shared"
+			      --enable-static \
+			      --disable-shared"
