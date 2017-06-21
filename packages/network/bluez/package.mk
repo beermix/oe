@@ -42,9 +42,10 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-dependency-tracking \
                            --disable-systemd \
                            --enable-tools \
                            --enable-datafiles \
-                           --enable-experimental \
+                           --disable-experimental \
                            --enable-deprecated \
                            --enable-sixaxis \
+                           --with-gnu-ld \
                            storagedir=/storage/.cache/bluetooth"
 
 if [ "$DEBUG" = "yes" ]; then
@@ -78,10 +79,8 @@ post_makeinstall_target() {
     cp tools/btmgmt $INSTALL/usr/bin
 
   mkdir -p $INSTALL/etc/bluetooth
-    cp src/main.conf $INSTALL/etc/bluetooth
-    sed -i $INSTALL/etc/bluetooth/main.conf \
-        -e "s|^#\[Policy\]|\[Policy\]|g" \
-        -e "s|^#AutoEnable.*|AutoEnable=true|g"
+    echo "[Policy]" > $INSTALL/etc/bluetooth/main.conf
+    echo "AutoEnable=true" >> $INSTALL/etc/bluetooth/main.conf
 }
 
 post_install() {
