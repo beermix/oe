@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libxslt"
-PKG_VERSION="ac341cbd792ee572941cc9a66e73800219a1a386"
+PKG_VERSION="ac341cb"
 PKG_SITE="http://xmlsoft.org/xslt/"
 PKG_GIT_URL="git://git.gnome.org/libxslt"
 PKG_DEPENDS_HOST="toolchain libxml2:host"
