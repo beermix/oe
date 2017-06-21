@@ -8,7 +8,6 @@ PKG_AUTORECONF="no"
 pre_configure_target() {
   strip_lto
   strip_gold
-  #export LDFLAGS="-ldl -pthread"
   CONCURRENCY_MAKE_LEVEL=1
 }
 
