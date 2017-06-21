@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="fixesproto"
-PKG_VERSION="4292ec1c63180c5f4e7c0e606fa68c51913f172b"
+PKG_VERSION="4292ec1"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"

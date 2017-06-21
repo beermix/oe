@@ -17,14 +17,14 @@
 ################################################################################
 
 PKG_NAME="libxml2"
-PKG_VERSION="074180119fc90d5fd04ef9e8a5ee1910d6f9ad8e"
+PKG_VERSION="0741801"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="MIT"
 PKG_SITE="http://xmlsoft.org"
 PKG_GIT_URL="git://git.gnome.org/libxml2"
 PKG_DEPENDS_HOST="zlib:host"
-PKG_DEPENDS_TARGET="toolchain zlib icu libxml2:host"
+PKG_DEPENDS_TARGET="toolchain zlib readline libxml2:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="textproc"
 PKG_SHORTDESC="libxml: XML parser library for Gnome"
