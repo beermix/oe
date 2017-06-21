@@ -58,8 +58,8 @@ make_target() {
   _google_default_client_id=740889307901-4bkm4e0udppnp1lradko85qsbnmkfq3b.apps.googleusercontent.com
   _google_default_client_secret=9TJlhL661hvShQub4cWhANXa
 
-  #export TMPDIR="/root/temp"
-  #mkdir -p "$TMPDIR"
+  export TMPDIR="/root/-3SDC/temp"
+  mkdir -p "$TMPDIR"
   
   local _flags=(
     'is_clang=false'
