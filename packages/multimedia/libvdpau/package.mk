@@ -28,6 +28,6 @@ PKG_LONGDESC="VDPAU is the Video Decode and Presentation API for UNIX. It provid
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-dri3 \
+PKG_CONFIGURE_OPTS_TARGET="--enable-dri2 \
                            --disable-documentation \
                            --with-module-dir=/usr/lib/vdpau"

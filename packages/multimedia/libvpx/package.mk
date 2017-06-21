@@ -8,7 +8,6 @@ PKG_AUTORECONF="no"
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
-  #strip_lto
 }
 
 configure_target() {
@@ -16,14 +15,14 @@ configure_target() {
   		--target="x86_64-linux-gcc" \
   		--libc="$(get_pkg_build glibc)" \
   		--cpu="ivybridge" \
-  		--extra-cflags="$CFLAGS" \
-  		--extra-cxxflags="$CXXFLAGS" \
   		--as=yasm \
   		--enable-pic \
   		--enable-vp8 \
   		--enable-vp9 \
   		--enable-postproc \
   		--enable-vp9-postproc \
+  		--enable-vp9-temporal-denoising \
+  		--enable-libyuv \
   		--enable-vp9-highbitdepth \
   		--disable-encode-perf-tests \
   		--disable-decode-perf-tests \
