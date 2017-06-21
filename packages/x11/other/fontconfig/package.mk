@@ -30,15 +30,15 @@ PKG_SHORTDESC="fontconfig: A library for font customization and configuration"
 PKG_LONGDESC="Fontconfig is a library for font customization and configuration."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--with-arch=$TARGET_ARCH \
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static \
+                           --with-arch=$TARGET_ARCH \
                            --with-cache-dir=/storage/.cache/fontconfig \
                            --with-default-fonts=/usr/share/fonts \
-                           --with-add-fonts \
+                           --without-add-fonts \
                            --disable-dependency-tracking \
-                           --disable-docs \
-                           --disable-static"
+                           --disable-docs"
 
 pre_configure_target() {
 # ensure we dont use '-O3' optimization.
