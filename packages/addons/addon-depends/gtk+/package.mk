@@ -32,9 +32,7 @@ PKG_IS_ADDON="no"
 
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="ac_cv_path_GLIB_GENMARSHAL=$SYSROOT_PREFIX/usr/bin/glib-genmarshal \
-                           --disable-glibtest \
-                           --enable-modules \
+PKG_CONFIGURE_OPTS_TARGET="--enable-modules \
                            --enable-explicit-deps=no \
                            --enable-debug=no \
                            --enable-shm \
