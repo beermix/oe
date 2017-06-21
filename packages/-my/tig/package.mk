@@ -1,5 +1,5 @@
 PKG_NAME="tig"
-PKG_VERSION="416072f"
+PKG_VERSION="982420b"
 PKG_GIT_URL="https://github.com/jonas/tig"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="tools"
