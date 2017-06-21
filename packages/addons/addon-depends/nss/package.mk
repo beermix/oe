@@ -49,7 +49,7 @@ post_makeinstall_host() {
 
 make_target() {
   strip_lto
-  #strip_gold
+  strip_gold
   cd $ROOT/$PKG_BUILD/nss
 
   [ "$TARGET_ARCH" = "x86_64" ] && TARGET_USE_64="USE_64=1"
@@ -62,7 +62,8 @@ make_target() {
      NSINSTALL=$ROOT/$TOOLCHAIN/bin/nsinstall \
      CPU_ARCH_TAG=$TARGET_ARCH \
      NSS_ENABLE_WERROR=0 \
-     CC=$CC LDFLAGS="$LDFLAGS -L$SYSROOT_PREFIX/usr/lib"
+     CC=$CC LDFLAGS="$LDFLAGS -L$SYSROOT_PREFIX/usr/lib" \
+     V=1
 }
 
 makeinstall_target() {

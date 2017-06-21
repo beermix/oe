@@ -101,6 +101,7 @@ make_target() {
     libxslt
     yasm
     re2
+    minizip
   )
   
   sed -e 's|i386-linux-gnu/||g' \

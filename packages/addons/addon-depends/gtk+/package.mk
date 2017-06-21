@@ -32,18 +32,19 @@ PKG_IS_ADDON="no"
 
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="ac_cv_path_GLIB_GENMARSHAL=$TOOLCHAIN/bin/glib-genmarshal \
+PKG_CONFIGURE_OPTS_TARGET="ac_cv_path_GLIB_GENMARSHAL=$SYSROOT_PREFIX/usr/bin/glib-genmarshal \
                            --disable-glibtest \
                            --enable-modules \
                            --enable-explicit-deps=no \
-                           --disable-debug \
+                           --enable-debug=no \
                            --enable-shm \
                            --disable-cups \
                            --disable-papi \
                            --enable-xkb \
                            --disable-xinerama \
                            --disable-gtk-doc-html \
-                           --with-xinput"
+                           --with-xinput \
+                           --enable-silent-rules"
 
 make_target() {
   make SRC_SUBDIRS="gdk gtk modules"
@@ -52,4 +53,8 @@ make_target() {
 
 makeinstall_target() {
   make install DESTDIR=$INSTALL SRC_SUBDIRS="gdk gtk modules"
+}
+
+post_makeinstall_target() {
+  cp $PKG_DIR/files/settings.ini $INSTALL/etc/gtk-2.0/
 }

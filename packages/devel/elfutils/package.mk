@@ -36,7 +36,7 @@ CFLAGS="$CFLAGS -D_GNU_SOURCE -Wno-unused-result"
 
 PKG_CONFIGURE_OPTS_TARGET="utrace_cv_cc_biarch=false \
                            --disable-werror \
-                           --enable-progs \
+                           --disable-progs \
                            --disable-nls \
                            --with-zlib \
                            --with-bzlib \

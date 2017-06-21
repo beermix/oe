@@ -34,7 +34,7 @@
   SKIN_REMOVE_SHIPPED="yes"
 
 # Default Skin (Confluence, or any from above)
-  SKIN_DEFAULT=""
+  SKIN_DEFAULT="Estuary"
 
 # install extra subtitle Fonts for KODI (yes / no)
   KODI_EXTRA_FONTS="yes"
