@@ -20,7 +20,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --without-contrib \
 			      --disable-nls \
 			      --disable-rpath \
-			      --enable-dbus \
+			      --disable-dbus \
 			      --disable-gprof \
 			      --disable-cprof \
 			      --disable-debug \
