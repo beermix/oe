@@ -41,6 +41,9 @@ pre_make_target() {
   
   mkdir -p third_party/node/linux/node-linux-x64/bin
   ln -sfv /usr/bin/node third_party/node/linux/node-linux-x64/bin/node
+  
+  mkdir -p $ROOT/$PKG_BUILD/out
+  mount -t tmpfs -o size=20G,nr_inodes=40k,mode=1777 tmpfs $ROOT/$PKG_BUILD/out
 }
 
 make_target() {
@@ -73,6 +76,8 @@ make_target() {
     'proprietary_codecs=true'
     'link_pulseaudio=true'
     'linux_use_bundled_binutils=false'
+    'use_debug_fission=false'
+    'symbol_level=0'
     'use_cups=false'
     'use_gconf=false'
     'use_gnome_keyring=false'
@@ -128,8 +133,8 @@ make_target() {
 
   ./tools/gn/bootstrap/bootstrap.py --gn-gen-args "${_flags[*]}"
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$ROOT/$TOOLCHAIN/bin/python
-
-  ionice -c1 ninja -j4 -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
+  
+  ninja -j6 -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
 }
 
 makeinstall_target() {
