@@ -1,5 +1,3 @@
-# Made by github.com/escalade
-
 PKG_NAME="at-spi2-atk"
 PKG_VERSION="2.25.2"
 PKG_ARCH="any"
@@ -13,8 +11,8 @@ PKG_IS_ADDON="no"
 
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --disable-p2p --with-gnu-ld"
+#PKG_CONFIGURE_OPTS_TARGET="--disable-shared"
 
-pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC"
-}
+#pre_configure_target() {
+#  export CFLAGS="$CFLAGS -fPIC"
+#}
