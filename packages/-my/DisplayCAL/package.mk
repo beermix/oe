@@ -16,4 +16,6 @@ makeinstall_target() {
 
 post_makeinstall_target() {
   rm -rf $INSTALL/etc/udev
+  mkdir -pv $INSTALL/root/-3SDC/oe/build.OE-Generic.x86_64-8.0-devel/toolchain/bin
+  ln -sfv python $INSTALL/root/-3SDC/oe/build.OE-Generic.x86_64-8.0-devel/toolchain/bin/python
 }
