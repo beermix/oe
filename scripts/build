@@ -49,6 +49,7 @@ STAMP=$STAMPS/$PACKAGE_NAME/build_$TARGET
 $SCRIPTS/unpack $PACKAGE_NAME
 
 STAMP_DEPENDS="$PKG_DIR $PKG_NEED_UNPACK $PROJECT_DIR/$PROJECT/patches/$PKG_NAME"
+[ -n "$DEVICE" ] && STAMP_DEPENDS="$STAMP_DEPENDS $PROJECT_DIR/$PROJECT/devices/$DEVICE/patches/$PKG_NAME"
 
 if [ -f $STAMP ] ; then
   . $STAMP
@@ -168,7 +169,9 @@ if [ ! -f $STAMP ]; then
       fi
 
       # ensure $PKG_BUILD is there. (installer? PKG_URL="")
-      mkdir -p $PKG_BUILD
+      if [ ! -d $PKG_BUILD ] ; then
+        mkdir -p $PKG_BUILD
+      fi
 
       cd $PKG_BUILD
         case "$TARGET" in
@@ -326,20 +329,19 @@ if [ ! -f $STAMP ]; then
           rm -rf $INSTALL/{usr/,}share/doc
           rm -rf $INSTALL/{usr/,}share/gtk-doc
           rm -rf $INSTALL/{usr/,}share/info
-          rm -rf $INSTALL/{usr/,}share/locale
+          [ ! "$PKG_LOCALE_INSTALL" = yes ] && rm -rf $INSTALL/{usr/,}share/locale
           rm -rf $INSTALL/{usr/,}share/man
           rm -rf $INSTALL/{usr/,}share/pkgconfig
           rm -rf $INSTALL/{usr/,}var
-          find $INSTALL \( -name "*.orig" -o \
-                           -name "*.a" -o \
-                           -name "*.la" -o \
-                           -name "*.so*T" -o \
-                           -name "*.o" -o \
-                           -name "*.in" -o \
-                           -name "*.rej" -o \
-                           -name ".git*" \) \
-                           -exec rm -f "{}" ";" 2>/dev/null || true
-          find $INSTALL -type d -exec rmdir -p "{}" ";" 2>/dev/null || true
+          find $INSTALL \( -name "*.orig" \
+                        -o -name "*.rej" \
+                        -o -name "*.a" \
+                        -o -name "*.la" \
+                        -o -name "*.o" \
+                        -o -name "*.in" \
+                        -o -name ".git*" \) \
+            -exec rm -f {} \; 2>/dev/null || :
+          find $INSTALL -type d -exec rmdir -p {} \; 2>/dev/null || :
 
           if [ ! "$DEBUG" = yes ]; then
             $STRIP `find $INSTALL -name "*.so" 2>/dev/null` 2>/dev/null || :

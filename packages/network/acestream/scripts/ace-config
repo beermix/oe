@@ -1,0 +1,44 @@
+#!/bin/sh
+################################################################################
+#      This file is part of Alex@ELEC - http://www.alexelec.in.ua
+#      Copyright (C) 2011-2016 Alexandr Zuyev (alex@alexelec.in.ua)
+################################################################################
+
+BIN_DIR="/usr/bin"
+SERVICE_DIR="/storage/.cache/services"
+ACESTREAM_DIR="/storage/.ACEStream"
+
+[ -f $SERVICE_DIR/acestream.conf ] && . $SERVICE_DIR/acestream.conf
+
+[ -z $ACE_CACHE_CLEAR ] && ACE_CACHE_CLEAR="1"
+[ -z $ACE_CACHE_DIR ] && ACE_CACHE_DIR="$ACESTREAM_DIR/.acestream_cache"
+[ -z $ACE_CACHE_TYPE ] && ACE_CACHE_TYPE="memory"
+[ -z $ACE_CACHE_LIMIT ] && ACE_CACHE_LIMIT="5"
+[ -z $ACE_LIFE_BUFFER ] && ACE_LIFE_BUFFER="60"
+[ -z $ACE_LIFE_CACHE_SIZE ] && ACE_LIFE_CACHE_SIZE="20971520"
+[ -z $ACE_LOGIN ] && ACE_LOGIN="user"
+[ -z $ACE_PASSW ] && ACE_PASSW="pass"
+
+ACE_ARG="--live-cache-type $ACE_CACHE_TYPE \
+--live-buffer $ACE_LIFE_BUFFER \
+--cache-limit $ACE_CACHE_LIMIT \
+--live-cache-size $ACE_LIFE_CACHE_SIZE \
+--cache-dir $ACE_CACHE_DIR \
+--login $ACE_LOGIN \
+--password $ACE_PASSW"
+
+if [ -f /storage/.config/acestream-user.conf ]; then
+  . /storage/.config/acestream-user.conf
+  if [ -n "$ACE_USER_ARG" ]; then
+    ACE_ARG="$ACE_USER_ARG"
+  fi
+fi
+
+[ "$ACE_DEBUG" == "1" ] && ACE_ARG="$ACE_ARG --debug-profile --log-debug 1 --log-modules root:D"
+
+if [ "$ACE_CACHE_CLEAR" == "1" ]; then
+  rm -fr $ACE_CACHE_DIR/*
+  rm -fr $ACESTREAM_DIR/collected_torrent_files/*
+fi
+
+echo "ACE_ARGS=\"$ACE_ARG\"" > /run/alexelec/acestream.conf

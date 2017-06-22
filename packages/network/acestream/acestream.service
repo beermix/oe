@@ -1,0 +1,13 @@
+[Unit]
+Description=acestream
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/acestreamengine --client-console --live-cache-type memory --live-buffer 60 --live-cache-size 20971520 --cache-limit 10
+TimeoutStopSec=1
+Restart=always
+RestartSec=2
+StartLimitInterval=4
+
+[Install]
+WantedBy=multi-user.target

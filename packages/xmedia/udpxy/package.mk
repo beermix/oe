@@ -17,9 +17,8 @@ PKG_LONGDESC="udpxy is a UDP-to-HTTP multicast traffic relay daemon."
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-pre_configure_target() {
- strip_lto
- strip_gold
+make_target() {
+  make CC="$CC" CFLAGS="$CFLAGS" -j1
 }
 
 makeinstall_target() {
