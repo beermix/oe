@@ -60,8 +60,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-clocale=gnu \
                            --disable-libmpx \
                            --disable-libunwind-exceptions \
-                           --enable-linker-build-id \
-                           --enable-install-libiberty \
                            --disable-libsanitizer \
                            --enable-gnu-indirect-function \
                            --with-tune=generic"
