@@ -10,7 +10,7 @@ make_target() {
 }
 
 makeinstall_target() {
-  python setup.py install --root=$INSTALL --prefix=/usr build_ext --openssl=$LIB_PREFIX --optimize=1
+  python setup.py install --root=$INSTALL --prefix=/usr build_ext --openssl=$LIB_PREFIX
 }
 
 post_makeinstall_target() {
