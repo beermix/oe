@@ -40,4 +40,5 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-malloc0returnsnull \
                            --without-fop \
                            --without-xsltproc \
                            --without-asciidoc \
-                           --with-gnu-ld"
+                           --with-gnu-ld \
+                           --disable-shared"
