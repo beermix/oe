@@ -8,17 +8,9 @@ PKG_LONGDESC="GNU nano (Nano's ANOther editor, or Not ANOther editor) is an enha
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config/nano \
-                           --datadir=/storage/.config/nano \
-                           --libdir=/storage/.config/nano \
-                           --libexecdir=/storage/.config/nano \
-                           --sharedstatedir=/storage/.config/nano \
-                           --localstatedir=/storage/.config/nano \
-                           --includedir=/storage/.config/nano \
-                           --oldincludedir=/storage/.config/nano \
-                           --datarootdir=/storage/.config/nano \
-                           --infodir=/storage/.config/nano \     
-                           --localedir=/storage/.config/nano/locale \
+PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_ncursesw___set_escdelay=no \
+                           --enable-utf8 \
+                           --disable-nls \
 			      --enable-nanorc \
 			      --without-slang \
 			      --enable-color"
