@@ -30,7 +30,7 @@ PKG_IS_ADDON="yes"
 
 post_makeinstall_target() {
   mkdir -p wv && cd wv
-    cmake -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
+    cmake -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX=/usr \
         -DDECRYPTERPATH=special://home/cdm \
         $ROOT/$PKG_BUILD/wvdecrypter
