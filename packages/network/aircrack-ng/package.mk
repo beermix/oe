@@ -7,8 +7,6 @@ PKG_AUTORECONF="no"
 
 pre_configure_target() {
   strip_lto
-  strip_gold
-  CONCURRENCY_MAKE_LEVEL=1
 }
 
 #PKG_MAKE_OPTS_TARGET="prefix=/usr sqlite=true unstable=false ext_scripts=true pcre=true libnl=true"

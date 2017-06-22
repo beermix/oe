@@ -18,7 +18,7 @@
 
 PKG_NAME="netperf"
 PKG_VERSION="2.7.0"
-PKG_URL="ftp://ftp.netperf.org/netperf/netperf-$PKG_VERSION.tar.gz"
+PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="network"
 PKG_IS_ADDON="no"
