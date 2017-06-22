@@ -1,11 +1,5 @@
-################################################################################
-#      This file is part of Alex@ELEC - http://www.alexelec.in.ua
-#      Copyright (C) 2011-2016 Alexandr Zuyev (alex@alexelec.in.ua)
-################################################################################
-
 PKG_NAME="gevent"
 PKG_VERSION="1.1.2"
-#PKG_GIT_URL="https://github.com/gevent/gevent"
 PKG_URL="https://github.com/gevent/gevent/releases/download/v$PKG_VERSION/gevent-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host greenlet c-ares libev"
 PKG_SECTION="xmedia/depends"
@@ -19,7 +13,7 @@ make_target() {
 }
 
 makeinstall_target() {
-  python setup.py install --root=$INSTALL --prefix=/usr
+  python setup.py install --root=$INSTALL --prefix=/usr --optimize=1
 }
 
 post_makeinstall_target() {

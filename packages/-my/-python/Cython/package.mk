@@ -1,12 +1,7 @@
-################################################################################
-#      This file is part of Alex@ELEC - http://www.alexelec.in.ua
-#      Copyright (C) 2011-2016 Alexandr Zuyev (alex@alexelec.in.ua)
-################################################################################
-
-PKG_NAME="cython"
+PKG_NAME="Cython"
 PKG_VERSION="0.25.2"
-PKG_SITE="https://pypi.python.org/pypi/gevent"
-PKG_GIT_URL="https://github.com/cython/cython"
+PKG_SITE="https://pypi.python.org/pypi/Cython"
+PKG_URL="https://pypi.python.org/packages/b7/67/7e2a817f9e9c773ee3995c1e15204f5d01c8da71882016cac10342ef031b/Cython-0.25.2.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host greenlet"
 PKG_SECTION="xmedia/depends"
 PKG_SHORTDESC="gevent is a coroutine-based Python networking library"
@@ -20,7 +15,7 @@ make_target() {
 }
 
 makeinstall_target() {
-  python setup.py install --root=$INSTALL --prefix=/usr
+  python setup.py install --root=$INSTALL --prefix=/usr --optimize=1
 }
 
 post_makeinstall_target() {

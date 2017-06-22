@@ -11,7 +11,7 @@ make_target() {
 }
 
 makeinstall_target() {
-  python setup.py install --root=$INSTALL --prefix=/usr
+  python setup.py install --root=$INSTALL --prefix=/usr --optimize=1
 }
 
 post_makeinstall_target() {
