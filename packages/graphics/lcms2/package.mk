@@ -41,7 +41,3 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static \
 pre_configure_target() {
   CFLAGS="$CFLAGS -fPIC"
 }
-
-post_makeinstall_target() {
-  rm -rf $INSTALL/usr/bin
-}
