@@ -22,13 +22,15 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            no-libunbound \
                            no-md2 \
                            no-rc5 \
-                           no-rfc3779
+                           no-rfc3779 \
                            no-sctp \
                            no-ssl-trace \
                            no-ssl2 \
                            no-ssl3 \
                            no-store \
                            no-weak-ssl-ciphers \
+                           enable-tlsext \
+                           enable-unit-test \
                            no-zlib \
                            no-zlib-dynamic \
                            enable-ec_nistp_64_gcc_128"
@@ -48,7 +50,6 @@ configure_host() {
 makeinstall_host() {
   make INSTALL_PREFIX=$ROOT/$TOOLCHAIN install_sw
 }
-
 
 pre_configure_target() {
   mkdir -p $ROOT/$PKG_BUILD/.$TARGET_NAME
@@ -79,6 +80,7 @@ post_makeinstall_target() {
 
   # create new cert: ./mkcerts.sh
   # cert from https://curl.haxx.se/docs/caextract.html
+  
   mkdir -p $INSTALL/etc/ssl
     cp $PKG_DIR/cert/cacert.pem $INSTALL/etc/ssl/cert.pem
 
