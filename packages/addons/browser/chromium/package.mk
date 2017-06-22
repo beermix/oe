@@ -173,8 +173,8 @@ addon() {
   #cp -PL $(get_pkg_build gdk-pixbuf)/.install_pkg/usr/lib/libgdk_pixbuf-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # pixbuf loaders
-  #mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules
-  #cp -PL $(get_pkg_build gdk-pixbuf)/.install_pkg/usr/lib/gdk-pixbuf-2.0/2.10.0/loaders/* $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules
+  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules
+  cp -PL $(get_pkg_build gdk-pixbuf)/.install_pkg/usr/lib/gdk-pixbuf-2.0/2.10.0/loaders/* $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules
 
   # nss
   cp -PL $(get_pkg_build nss)/dist/Linux*OPT.OBJ/lib/*.so $ADDON_BUILD/$PKG_ADDON_ID/lib
@@ -190,13 +190,4 @@ addon() {
 
   # xdotool
   cp -P $(get_pkg_build xdotool)/xdotool $ADDON_BUILD/$PKG_ADDON_ID/bin
-  
-  # re2
-  #cp -PL $(get_pkg_build re2)/.install_pkg/usr/lib/*.so $ADDON_BUILD/$PKG_ADDON_ID/lib
-  
-  # atk
-  #cp -PL $(get_pkg_build atk)/.install_pkg/usr/lib/*.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
-  
-  # gtk3+
-  #cp -PL $(get_pkg_build gtk3+)/.install_pkg/usr/lib/*.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
 }
