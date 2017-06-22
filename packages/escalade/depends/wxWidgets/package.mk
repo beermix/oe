@@ -32,5 +32,9 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-unicode \
 			      --enable-graphics_ctx \
 			      --enable-silent-rules \
-			      --with-openg \
+			      --with-opengl \
 			      --disable-precomp-headersl"
+
+post_makeinstall_target() {
+  cp wx-config $ROOT/$BUILD/toolchain/bin/
+}

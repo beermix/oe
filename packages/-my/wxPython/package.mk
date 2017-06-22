@@ -1,12 +1,14 @@
 PKG_NAME="wxPython"
-PKG_VERSION="wxPy-3.0.2.0"
+PKG_VERSION="f244d9d"
 PKG_GIT_URL="https://github.com/wxWidgets/wxPython"
-PKG_DEPENDS_TARGET="toolchain libX11 setuptools:host libpng libjpeg-turbo gtk+ pango numpy"
+PKG_DEPENDS_TARGET="toolchain libX11 setuptools:host libpng libjpeg-turbo gtk+ pango numpy wxWidgets"
 PKG_SECTION="system"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-gui"
+make_target() {
+  python setup.py build --cross-compile
+}
 
-post_makeinstall_target() {
-  rm -rf $INSTALL/usr/lib/wx
+makeinstall_target() {
+  python setup.py install --root=$INSTALL --prefix=/usr
 }

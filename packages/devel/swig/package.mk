@@ -35,7 +35,7 @@ PKG_CONFIGURE_OPTS_HOST="--with-boost=no \
                          --without-php \
                          --without-x \
                          --without-tcl \
-                         --without-python \
+                         --with-python \
                          --without-python3 \
                          --without-perl5 \
                          --without-octave \
@@ -54,4 +54,5 @@ PKG_CONFIGURE_OPTS_HOST="--with-boost=no \
                          --without-allegrocl \
                          --without-clisp \
                          --without-r \
-                         --without-d"
+                         --without-d \
+                         --disable-shared"
