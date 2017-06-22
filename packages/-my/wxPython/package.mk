@@ -6,3 +6,7 @@ PKG_SECTION="system"
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-gui"
+
+post_makeinstall_target() {
+  rm -rf $INSTALL/usr/lib/wx
+}
