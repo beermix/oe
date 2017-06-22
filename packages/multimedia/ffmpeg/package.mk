@@ -19,7 +19,7 @@
 PKG_NAME="ffmpeg"
 PKG_VERSION="3.1.8"
 PKG_URL="http://ffmpeg.org/releases/ffmpeg-3.1.8.tar.xz"
-PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl fftw speex libwebp"
+PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl fftw speex"
 PKG_PRIORITY="optional"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
