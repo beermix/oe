@@ -8,10 +8,6 @@ PKG_AUTORECONF="no"
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
-  
-  #strip_lto
-  #strip_gold
-  
   export LDFLAGS="$LDFLAGS -lresolv"
 }
 
@@ -30,5 +26,5 @@ configure_target() {
 
 make_target() {
   ./waf build -j7
-  ./waf install --destdir=$INSTALL
+  ./waf install --prefix=$INSTALL
 }
