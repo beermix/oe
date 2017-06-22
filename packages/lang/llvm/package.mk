@@ -23,7 +23,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://llvm.org/"
 PKG_URL="http://llvm.org/releases/$PKG_VERSION/${PKG_NAME}-${PKG_VERSION}.src.tar.xz"
 PKG_SOURCE_DIR="${PKG_NAME}-${PKG_VERSION}.src"
-PKG_DEPENDS_TARGET="toolchain zlib elfutils ninja:host llvm:host"
+PKG_DEPENDS_TARGET="toolchain zlib elfutils llvm:host"
 PKG_SECTION="lang"
 PKG_SHORTDESC="llvm: Low Level Virtual Machine"
 PKG_LONGDESC="Low-Level Virtual Machine (LLVM) is a compiler infrastructure designed for compile-time, link-time, run-time, and idle-time optimization of programs from arbitrary programming languages. It currently supports compilation of C, Objective-C, and C++ programs, using front-ends derived from GCC 4.0, GCC 4.2, and a custom new front-end, "clang". It supports x86, x86-64, ia64, PowerPC, and SPARC, with support for Alpha and ARM under development."
@@ -49,10 +49,10 @@ PKG_CMAKE_OPTS_HOST="-DLLVM_INCLUDE_TOOLS=ON \
                      -DLLVM_ENABLE_WERROR=OFF \
                      -DLLVM_ENABLE_ZLIB=OFF \
                      -DLLVM_OPTIMIZED_TABLEGEN=ON \
-                     -DCMAKE_INSTALL_RPATH=$ROOT/$TOOLCHAIN/lib -GNinja"
+                     -DCMAKE_INSTALL_RPATH=$ROOT/$TOOLCHAIN/lib"
 
 make_host() {
-  ninja -j6 llvm-config llvm-tblgen
+  make llvm-config llvm-tblgen
 }
 
 makeinstall_host() {
@@ -84,11 +84,7 @@ PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=MinSizeRel \
                        -DLLVM_BUILD_LLVM_DYLIB=ON \
                        -DLLVM_LINK_LLVM_DYLIB=ON \
                        -DLLVM_OPTIMIZED_TABLEGEN=ON \
-                       -DLLVM_TABLEGEN=$ROOT/$TOOLCHAIN/bin/llvm-tblgen -GNinja"
-
-make_target() {
-  ninja -j5
-}
+                       -DLLVM_TABLEGEN=$ROOT/$TOOLCHAIN/bin/llvm-tblgen"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
