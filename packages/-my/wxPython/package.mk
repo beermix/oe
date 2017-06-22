@@ -5,14 +5,26 @@ PKG_DEPENDS_TARGET="toolchain wxWidgets"
 PKG_SECTION="system"
 PKG_AUTORECONF="no"
 
-#post_unpack() {
-#  cp -r $PKG_BUILD/wxPython/* $PKG_BUILD/
-#}
+PKG_CONFIGURE_OPTS_TARGET="--with-gtk=2 \
+			      --with-opengl \
+			      --enable-unicode \
+			      --enable-graphics_ctx \
+			      --enable-mediactrl \
+			      --enable-webview \
+			      --with-regex=builtin \
+			      --with-libpng \
+			      --with-libjpeg \
+			      --with-libtiff \
+			      --disable-precomp-headers"
 
 make_target() {
+  make
+  cd ../wxPython
   python setup.py WXPORT=gtk2 UNICODE=1 build --cross-compile
 }
 
 makeinstall_target() {
+  make install
+  cd ../wxPython
   python setup.py WXPORT=gtk2 UNICODE=1 install --root=$INSTALL --prefix=/usr
 }

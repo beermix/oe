@@ -42,8 +42,8 @@ pre_make_target() {
   mkdir -p third_party/node/linux/node-linux-x64/bin
   ln -sfv /usr/bin/node third_party/node/linux/node-linux-x64/bin/node
   
-  mkdir -p $ROOT/$PKG_BUILD/out
-  mount -t tmpfs -o size=20G,nr_inodes=40k,mode=1777 tmpfs $ROOT/$PKG_BUILD/out
+  #mkdir -p $ROOT/$PKG_BUILD/out
+  #mount -t tmpfs -o size=20G,nr_inodes=40k,mode=1777 tmpfs $ROOT/$PKG_BUILD/out
 }
 
 make_target() {
