@@ -17,15 +17,21 @@
 ################################################################################
 
 PKG_NAME="freeglut"
-PKG_VERSION="2.8.1"
+#PKG_VERSION="FG_3_0_0"
+PKG_VERSION="75cd7a2"
 PKG_ARCH="any"
 PKG_LICENSE="LGPL"
-PKG_SITE="http://www.libraw.org/"
-PKG_URL="https://dl.dropboxusercontent.com/s/sase40x27crqzmi/freeglut-2.8.1.tar.xz"
+PKG_SITE="http://freeglut.sourceforge.net"
+PKG_GIT_URL="https://github.com/dcnieho/FreeGLUT"
+PKG_GIT_BRANCH="git_master"
 PKG_DEPENDS_TARGET="toolchain mesa"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="A library for reading RAW files obtained from digital photo cameras (CRW/CR2, NEF, RAF, DNG, and others)"
 PKG_LONGDESC="A library for reading RAW files obtained from digital photo cameras (CRW/CR2, NEF, RAF, DNG, and others)"
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
+
+PKG_CMAKE_SCRIPT_TARGET="freeglut/freeglut/CMakeLists.txt"
+
+PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release -DFREEGLUT_BUILD_SHARED_LIBS=OFF -DFREEGLUT_BUILD_STATIC_LIBS=ON"
