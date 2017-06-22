@@ -26,9 +26,10 @@ PKG_SHORTDESC="The mtdev is a stand-alone library which transforms all variants 
 PKG_LONGDESC="The mtdev is a stand-alone library which transforms all variants of kernel MT events to the slotted type B protocol. The events put into mtdev may be from any MT device, specifically type A without contact tracking, type A with contact tracking, or type B with contact tracking. See the kernel documentation for further details."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
+
+PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --disable-documentation"
 
 pre_configure_target() {
-  strip_lto
+  CFLAGS="$CFLAGS -fPIC"
 }
-PKG_CONFIGURE_OPTS_TARGET="--disable-documentation --disable-shared"
