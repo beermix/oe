@@ -1,14 +1,18 @@
 PKG_NAME="wxPython"
-PKG_VERSION="f244d9d"
-PKG_GIT_URL="https://github.com/wxWidgets/wxPython"
-PKG_DEPENDS_TARGET="toolchain libX11 setuptools:host libpng libjpeg-turbo gtk+ pango numpy wxWidgets"
+PKG_VERSION="src-3.0.2.0"
+PKG_URL="https://sourceforge.net/projects/wxpython/files/wxPython/3.0.2.0/wxPython-src-3.0.2.0.tar.bz2"
+PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="system"
 PKG_AUTORECONF="no"
 
+post_unpack() {
+  cp -r $PKG_BUILD/wxPython/* $PKG_BUILD/
+}
+
 make_target() {
-  python setup.py build --cross-compile
+  python setup.py WXPORT=gtk2 UNICODE=1 build --cross-compile
 }
 
 makeinstall_target() {
-  python setup.py install --root=$INSTALL --prefix=/usr
+  python setup.py WXPORT=gtk2 UNICODE=1 install --root=$INSTALL --prefix=/usr
 }

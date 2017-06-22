@@ -19,7 +19,7 @@ PKG_NAME="wxWidgets"
 PKG_VERSION="3.1.0"
 PKG_SITE="https://github.com/wxWidgets/wxWidgets"
 PKG_URL="https://github.com/wxWidgets/wxWidgets/releases/download/v$PKG_VERSION/wxWidgets-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain gtk+ libSM"
+PKG_DEPENDS_TARGET="toolchain gtk+ libSM tiff libpng"
 PKG_SECTION="depends"
 PKG_SHORTDESC="A cross-platform GUI and tools library for GTK, MS Windows, and MacOS."
 PKG_LONGDESC="A cross-platform GUI and tools library for GTK, MS Windows, and MacOS."
@@ -27,13 +27,17 @@ PKG_LONGDESC="A cross-platform GUI and tools library for GTK, MS Windows, and Ma
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
-			      --disable-debug_flag \
+PKG_CONFIGURE_OPTS_TARGET="--with-gtk=2 \
+			      --with-opengl \
 			      --enable-unicode \
 			      --enable-graphics_ctx \
-			      --enable-silent-rules \
-			      --with-opengl \
-			      --disable-precomp-headersl"
+			      --enable-mediactrl \
+			      --enable-webview \
+			      --with-regex=builtin \
+			      --with-libpng \
+			      --with-libjpeg \
+			      --with-libtiff \
+			      --disable-precomp-headers"
 
 post_makeinstall_target() {
   cp wx-config $ROOT/$BUILD/toolchain/bin/
