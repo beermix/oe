@@ -266,8 +266,6 @@ strip_gold() {
 strip_hard() {
   CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong||g"`
   CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
-  LDFLAGS=`echo $LDFLAGS | sed -e "s|-O.|-O2|g"`
-  LDFLAGS=`echo $LDFLAGS | sed -e "s|,-z,relro||g"`
   CFLAGS=`echo $CFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
 }
 
