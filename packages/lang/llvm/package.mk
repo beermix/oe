@@ -52,7 +52,7 @@ PKG_CMAKE_OPTS_HOST="-DLLVM_INCLUDE_TOOLS=ON \
                      -DCMAKE_INSTALL_RPATH=$ROOT/$TOOLCHAIN/lib -GNinja"
 
 make_host() {
-  ninja -j7 llvm-config llvm-tblgen
+  ninja -j6 llvm-config llvm-tblgen
 }
 
 makeinstall_host() {
@@ -87,7 +87,7 @@ PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=MinSizeRel \
                        -DLLVM_TABLEGEN=$ROOT/$TOOLCHAIN/bin/llvm-tblgen -GNinja"
 
 make_target() {
-  ninja -j7
+  ninja -j5
 }
 
 post_makeinstall_target() {
