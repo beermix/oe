@@ -8,7 +8,7 @@ PKG_VERSION="3.0.0-git"
 PKG_REV="20170621-0239"
 PKG_SITE="https://nightlies.videolan.org/build/source/"
 PKG_URL="https://nightlies.videolan.org/build/source/vlc-3.0.0-$PKG_REV-git.tar.xz"
-PKG_DEPENDS_TARGET="toolchain dbus ffmpeg libdvbpsi libmpeg2 libogg libvorbis libshout libsamplerate faad2 zlib lua:host lua gnutls"
+PKG_DEPENDS_TARGET="toolchain dbus ffmpeg libdvbpsi libmpeg2 libogg libvorbis libsamplerate zlib lua:host lua gnutls"
 PKG_SECTION="xmedia/tools"
 PKG_SHORTDESC="VideoLAN multimedia player and streamer"
 PKG_LONGDESC="VLC is the VideoLAN project's media player. It plays MPEG, MPEG2, MPEG4, DivX, MOV, WMV, QuickTime, mp3, Ogg/Vorbis files, DVDs, VCDs, and multimedia streams from various network sources."
@@ -45,7 +45,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --enable-dvbpsi \
 			      --disable-screen \
 			      --enable-ogg \
-			      --enable-shout \
+			      --disable-shout \
 			      --disable-mod \
 			      --enable-mpc \
 			      --disable-gme \
@@ -58,7 +58,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --enable-avformat \
 			      --enable-swscale \
 			      --enable-postproc \
-			      --enable-faad \
+			      --disable-faad \
 			      --enable-flac \
 			      --enable-aa \
 			      --disable-twolame \
@@ -121,13 +121,14 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-crystalhd \
 			      --disable-dxva2 \
 			      --disable-qt \
-			      --enable-vlc"
+			      --enable-vlc \
+			      --disable-wayland"
 
 pre_configure_target() {
   export LDFLAGS="$LDFLAGS -lresolv"
   export LIBS="$LIBS -fopenmp"
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-fomit-frame-pointer||g"`
-  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-fomit-frame-pointer||g"`
+  #export CFLAGS=`echo $CFLAGS | sed -e "s|-fomit-frame-pointer||g"`
+  #export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-fomit-frame-pointer||g"`
 }
 
 post_makeinstall_target() {

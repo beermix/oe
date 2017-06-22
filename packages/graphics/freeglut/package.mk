@@ -17,7 +17,6 @@
 ################################################################################
 
 PKG_NAME="freeglut"
-#PKG_VERSION="FG_3_0_0"
 PKG_VERSION="75cd7a2"
 PKG_ARCH="any"
 PKG_LICENSE="LGPL"
