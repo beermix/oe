@@ -1,0 +1,50 @@
+diff -Naur linux-4.12-rc6-orig/Makefile linux-4.12-rc6/Makefile
+--- linux-4.12-rc6-orig/Makefile	2017-06-22 23:23:43.389349838 +0300
++++ linux-4.12-rc6/Makefile	2017-06-22 23:25:52.734501669 +0300
+@@ -622,6 +622,12 @@
+ # Defaults to vmlinux, but the arch makefile usually adds further targets
+ all: vmlinux
+ 
++# force no-pie for distro compilers that enable pie by default
++KBUILD_CFLAGS += $(call cc-option, -fno-pie)
++KBUILD_CFLAGS += $(call cc-option, -no-pie)
++KBUILD_AFLAGS += $(call cc-option, -fno-pie)
++KBUILD_CPPFLAGS += $(call cc-option, -fno-pie)
++
+ # The arch Makefile can set ARCH_{CPP,A,C}FLAGS to override the default
+ # values of the respective KBUILD_* variables
+ ARCH_CPPFLAGS :=
+@@ -636,12 +642,16 @@
+ KBUILD_CFLAGS	+= $(call cc-option,-Oz,-Os)
+ KBUILD_CFLAGS	+= $(call cc-disable-warning,maybe-uninitialized,)
+ else
++ifdef CONFIG_CC_OPTIMIZE_HARDER
++KBUILD_CFLAGS	+= -O3 $(call cc-disable-warning,maybe-uninitialized,)
++else
+ ifdef CONFIG_PROFILE_ALL_BRANCHES
+ KBUILD_CFLAGS	+= -O2 $(call cc-disable-warning,maybe-uninitialized,)
+ else
+ KBUILD_CFLAGS   += -O2
+ endif
+ endif
++endif
+ 
+ KBUILD_CFLAGS += $(call cc-ifversion, -lt, 0409, \
+ 			$(call cc-disable-warning,maybe-uninitialized,))
+diff -Naur linux-4.12-rc6-orig/init/Kconfig linux-4.12-rc6/init/Kconfig
+--- linux-4.12-rc6-orig/init/Kconfig	2017-06-22 23:33:39.315833535 +0300
++++ linux-4.12-rc6/init/Kconfig	2017-06-22 23:34:30.362102147 +0300
+@@ -1384,6 +1384,13 @@
+ 	  This is the default optimization level for the kernel, building
+ 	  with the "-O2" compiler flag for best performance and most
+ 	  helpful compile-time warnings.
++	  
++config CC_OPTIMIZE_HARDER
++	bool "Optimize harder"
++	help
++	  This option will pass "-O3" to your compiler resulting in a
++	  larger and faster kernel. The more complex optimizations also
++	  increase compilation time and may affect stability.
+ 
+ config CC_OPTIMIZE_FOR_SIZE
+ 	bool "Optimize for size"

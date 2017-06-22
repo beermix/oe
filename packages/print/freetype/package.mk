@@ -37,7 +37,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --disable-shared \
                            --with-zlib=yes \
                            --with-bzip2=no \
-                           --with-png=no \
+                           --with-png=yes \
                            --with-harfbuzz=no"
 
 pre_configure_target() {

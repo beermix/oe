@@ -1,0 +1,17 @@
+diff -Naur linux-4.12-rc6-orig/init/Kconfig linux-4.12-rc6/init/Kconfig
+--- linux-4.12-rc6-orig/init/Kconfig	2017-06-22 23:33:39.315833535 +0300
++++ linux-4.12-rc6/init/Kconfig	2017-06-22 23:34:30.362102147 +0300
+@@ -1384,6 +1384,13 @@
+ 	  This is the default optimization level for the kernel, building
+ 	  with the "-O2" compiler flag for best performance and most
+ 	  helpful compile-time warnings.
++	  
++config CC_OPTIMIZE_HARDER
++	bool "Optimize harder"
++	help
++	  This option will pass "-O3" to your compiler resulting in a
++	  larger and faster kernel. The more complex optimizations also
++	  increase compilation time and may affect stability.
+ 
+ config CC_OPTIMIZE_FOR_SIZE
+ 	bool "Optimize for size"
