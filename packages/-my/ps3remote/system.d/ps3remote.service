@@ -4,7 +4,9 @@ After=network.target
 
 [Service]
 ExecStart=/usr/bin/ps3remote
+ExecStop=/bin/kill -TERM $MAINPID
 Restart=always
+StartLimitInterval=0
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=kodi.target

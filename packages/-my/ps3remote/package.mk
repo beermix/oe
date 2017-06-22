@@ -6,13 +6,13 @@ PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-#pre_configure_target() {
-#  strip_lto
-#  strip_gold
-#}
+pre_configure_target() {
+  strip_lto
+  strip_gold
+}
 
 make_target() {
-  make CC="$CC" CFLAGS="-Wall -DDEBUG=1 -O3 -pipe" -j1
+  make CC="$CC" CFLAGS="-Wall -DDEBUG=0 -O2" -j1
 }
 
 post_make_target() {

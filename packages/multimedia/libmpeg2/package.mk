@@ -26,9 +26,9 @@ PKG_SHORTDESC="libmpeg2: The MPEG Library - version 2"
 PKG_LONGDESC="The MPEG Library is a collection of C routines to decode MPEG-1 and MPEG-2 movies and dither them in a variety of colour schemes."
 PKG_IS_ADDON="no"
 
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-sdl --without-x"
+PKG_CONFIGURE_OPTS_TARGET="--disable-sdl --without-x --disable-shared"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
