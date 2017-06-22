@@ -7,12 +7,9 @@ PKG_SECTION="service/system"
 PKG_AUTORECONF="yes"
 
 pre_build_target() {
-	mkdir -p $ROOT/$PKG_BUILD/.$TARGET_NAME
-	cp -RP $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$TARGET_NAME
-	#export CFLAGS="$CFLAGS -fPIC -DPIC"
-	#export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
-	#export LIBS="$LIBS -pthread -lz -lpthread -lm -ldl"
-	#export MAKEFLAGS="-j1"
+   mkdir -p $ROOT/$PKG_BUILD/.$TARGET_NAME
+   cp -RP $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$TARGET_NAME
+   export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \
