@@ -5,16 +5,14 @@ PKG_DEPENDS_TARGET="toolchain wxWidgets"
 PKG_SECTION="system"
 PKG_AUTORECONF="no"
 
-post_unpack() {
-  cp -r $PKG_BUILD/wxPython/* $PKG_BUILD/
-}
+#post_unpack() {
+#  cp -r $PKG_BUILD/wxPython/* $PKG_BUILD/
+#}
 
 make_target() {
-  cd $ROOT/$PKG_BUILD
   python setup.py WXPORT=gtk2 UNICODE=1 build --cross-compile
 }
 
 makeinstall_target() {
-  cd $ROOT/$PKG_BUILD
   python setup.py WXPORT=gtk2 UNICODE=1 install --root=$INSTALL --prefix=/usr
 }

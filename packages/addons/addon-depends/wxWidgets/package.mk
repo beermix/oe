@@ -41,5 +41,5 @@ PKG_CONFIGURE_OPTS_TARGET="--with-gtk=2 \
 
 post_makeinstall_target() {
   ln -sf wx-config $ROOT/$TOOLCHAIN/bin/wx-config
-  sed -e "s:\(['= ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" -i $SYSROOT_PREFIX/usr/bin/wx-config
+  #sed -e "s:\(['= ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" -i $SYSROOT_PREFIX/usr/bin/wx-config
 }
