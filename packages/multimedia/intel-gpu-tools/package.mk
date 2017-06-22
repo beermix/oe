@@ -6,9 +6,9 @@ PKG_SECTION="tools"
 PKG_SHORTDESC="x11-utils"
 PKG_AUTORECONF="yes"
 
-pre_configure_target() {
-  strip_lto
-}
+#pre_configure_target() {
+#  strip_lto
+#}
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shader-debugger \
 			      --disable-dumper \
