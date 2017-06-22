@@ -39,7 +39,7 @@ PKG_CONFIGURE_OPTS_TARGET="--with-zlib=yes \
                            --with-harfbuzz=no"
 
 pre_configure_target() {
-  CFLAGS="$CFLAGS -fPIC"
+  #CFLAGS="$CFLAGS -fPIC -DPIC"
   # unset LIBTOOL because freetype uses its own
     ( cd ..
       unset LIBTOOL

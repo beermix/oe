@@ -20,7 +20,7 @@ PKG_NAME="wayland"
 PKG_VERSION="1.13.0"
 PKG_SITE="http://bitmath.org"
 PKG_URL="https://wayland.freedesktop.org/releases/${PKG_NAME}-${PKG_VERSION}.tar.xz"
-PKG_DEPENDS_TARGET="toolchain libxml2 glib"
+PKG_DEPENDS_TARGET="toolchain expat libxml2 glib"
 PKG_SECTION="wayland"
 PKG_SHORTDESC="The mtdev is a stand-alone library which transforms all variants of kernel MT events to the slotted type B protocol."
 PKG_LONGDESC="The mtdev is a stand-alone library which transforms all variants of kernel MT events to the slotted type B protocol. The events put into mtdev may be from any MT device, specifically type A without contact tracking, type A with contact tracking, or type B with contact tracking. See the kernel documentation for further details."
@@ -28,8 +28,9 @@ PKG_LONGDESC="The mtdev is a stand-alone library which transforms all variants o
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --disable-documentation"
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared --disable-documentation"
 
 pre_configure_target() {
   CFLAGS="$CFLAGS -fPIC"
+  strip_lto
 }

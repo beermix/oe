@@ -58,7 +58,7 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$ROOT/$TOOLCHAIN \
                        -DFFMPEG_INCLUDE_DIRS=$SYSROOT_PREFIX/usr \
                        -DENABLE_INTERNAL_CROSSGUID=OFF \
                        -DENABLE_OPENSSL=ON \
-                       -DENABLE_SDL=ON \
+                       -DENABLE_SDL=OFF \
                        -DENABLE_LCMS2=ON \
                        -DENABLE_CCACHE=OFF \
                        -DENABLE_LIRC=ON \
@@ -197,7 +197,7 @@ else
 fi
 
 if [ "$KODI_WEBSERVER_SUPPORT" = yes ]; then
-  PKG_DEPENDS_TARGET+=" libmicrohttpd SDL"
+  PKG_DEPENDS_TARGET+=" libmicrohttpd"
   PKG_CMAKE_OPTS_TARGET+=" -DENABLE_MICROHTTPD=ON"
 else
   PKG_CMAKE_OPTS_TARGET+=" -DENABLE_MICROHTTPD=OFF"
@@ -263,7 +263,7 @@ makeinstall_host() {
 
 pre_configure_target() {
 # kodi should never be built with lto
-  strip_lto
+  #strip_lto
   #strip_gold
 
   export LIBS="$LIBS -lz -lterminfo"
