@@ -12,29 +12,29 @@
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
 #
-#  You should have received a copy of the GNU General Public License
+#  You should have received a copy of the GNU General Public License  -Dlzma=0
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="libsamplerate"
-PKG_VERSION="0.1.8"
-PKG_SITE="http://www.mega-nerd.com/SRC/"
-PKG_URL="http://www.mega-nerd.com/SRC/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain"
+PKG_NAME="tiff"
+PKG_VERSION="4.0.8"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="OSS"
+PKG_SITE="http://www.remotesensing.org/libtiff/"
+PKG_URL="http://download.osgeo.org/libtiff/tiff-$PKG_VERSION.tar.gz"
+PKG_DEPENDS_TARGET="toolchain libjpeg-turbo zlib"
 PKG_PRIORITY="optional"
-PKG_SECTION="audio"
-PKG_SHORTDESC="libsamplerate: A Sample Rate Converter library for audio"
-PKG_LONGDESC="Libsamplerate is a Sample Rate Converter for audio. One example of where such a thing would be useful is converting audio from the CD sample rate of 44.1kHz to the 48kHz sample rate used by DAT players."
+PKG_SECTION="graphics"
+PKG_SHORTDESC="libtiff: A library for reading and writing TIFF files"
+PKG_LONGDESC="libtiff is a library for reading and writing data files encoded with the Tag Image File format, Revision 6.0 (or revision 5.0 or revision 4.0). This file format is suit- able for archiving multi-color and monochromatic image data."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no" # ToDo
+PKG_AUTORECONF="no"
 
-# package specific configure options
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
-                           --enable-static \
-                           --datadir=/usr/share \
-                           --disable-fftw \
-                           --disable-sndfile"
+PKG_CMAKE_OPTS_HOST="-DBUILD_SHARED_LIBS=0 -Dlzma=0"
+
+PKG_CMAKE_OPTS_TARGET="$PKG_CMAKE_OPTS_HOST -Dlzma=0"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
