@@ -6,5 +6,5 @@ diff -Naur chromium-55.0.2883.75-orig/build/config/compiler/BUILD.gn chromium-55
        # TODO(phajdan.jr): Use -fstack-protector-strong when our gcc supports it.
        # See also https://crbug.com/533294
 -      cflags += [ "--param=ssp-buffer-size=4" ]
-+      cflags += [ " " ]
++      cflags += [ "-fno-stack-protector" ]
  
