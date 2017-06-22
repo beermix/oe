@@ -6,7 +6,7 @@ PKG_SECTION="shell/texteditor"
 PKG_SHORTDESC="nano: Pico editor clone with enhancements"
 PKG_LONGDESC="GNU nano (Nano's ANOther editor, or Not ANOther editor) is an enhanced clone of the Pico text editor."
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config/nano \
                            --datadir=/storage/.config/nano \
@@ -19,11 +19,7 @@ PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config/nano \
                            --datarootdir=/storage/.config/nano \
                            --infodir=/storage/.config/nano \     
                            --localedir=/storage/.config/nano/locale \
-                           --without-wordbounds \
-                           --disable-help \
-                           --disable-speller \
 			      --enable-nanorc \
-			      --disable-libmagic \
 			      --without-slang \
 			      --enable-color"
 
