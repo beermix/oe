@@ -19,7 +19,7 @@
 PKG_NAME="xinput"
 PKG_VERSION="1.6.2"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/libinput/"
-PKG_URL="https://xorg.freedesktop.org/archive/individual/app/xinput-1.6.2.tar.gz"
+PKG_URL="https://xorg.freedesktop.org/archive/individual/app/xinput-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libinput"
 PKG_SECTION="x11/driver"
 PKG_SHORTDESC="This is an X driver based on libinput."
