@@ -1,15 +1,3 @@
-diff --git a/.gitignore b/.gitignore
-index 524fb73..305632b 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -23,6 +23,7 @@
- .\#*
- /.config
- /.version
-+/build/
- /ffmpeg
- /ffplay
- /ffprobe
 diff --git a/ffmpeg.c b/ffmpeg.c
 index 9ffd833..e2474e5 100644
 --- a/ffmpeg.c

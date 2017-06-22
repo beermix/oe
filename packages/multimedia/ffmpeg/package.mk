@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="ffmpeg"
-PKG_VERSION="3.1.8"
-PKG_URL="http://ffmpeg.org/releases/ffmpeg-3.1.8.tar.xz"
+PKG_VERSION="3.1.9"
+PKG_URL="http://ffmpeg.org/releases/ffmpeg-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl fftw speex"
 PKG_PRIORITY="optional"
 PKG_SECTION="multimedia"
