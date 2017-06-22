@@ -20,8 +20,9 @@
 
 PKG_NAME="chromium"
 PKG_VERSION="59.0.3071.104"
-PKG_REV="10"
+PKG_REV="110"
 PKG_ARCH="x86_64"
+PKG_LICENSE="Mixed"
 PKG_SITE="https://chromereleases.googleblog.com/search/label/Stable%20updates"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain pciutils dbus ffmpeg tiff libXcomposite libXcursor libXtst alsa-lib bzip2 yasm libXScrnSaver libexif libpng harfbuzz atk gtk+ unclutter xdotool libwebp libvpx libvdpau re2 nss ninja:host"
@@ -36,7 +37,6 @@ PKG_ADDON_PROVIDES="executable"
 
 pre_make_target() {
   strip_lto
-  #strip_gold
   sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' third_party/widevine/cdm/stub/widevine_cdm_version.h
   
   mkdir -p third_party/node/linux/node-linux-x64/bin
@@ -67,6 +67,7 @@ make_target() {
   local _flags=(
     'is_clang=false'
     'clang_use_chrome_plugins=false'
+    'symbol_level=0'
     'is_debug=false'
     'fatal_linker_warnings=false'
     'treat_warnings_as_errors=false'
@@ -77,7 +78,6 @@ make_target() {
     'link_pulseaudio=true'
     'linux_use_bundled_binutils=false'
     'use_debug_fission=false'
-    'symbol_level=0'
     'use_cups=false'
     'use_gconf=false'
     'use_gnome_keyring=false'
@@ -90,6 +90,7 @@ make_target() {
     'enable_widevine=true'
     'enable_nacl=false'
     'enable_swiftshader=false'
+    'enable_nacl_nonsfi=false'
     "google_api_key=\"${_google_api_key}\""
     "google_default_client_id=\"${_google_default_client_id}\""
     "google_default_client_secret=\"${_google_default_client_secret}\""
@@ -134,7 +135,7 @@ make_target() {
   ./tools/gn/bootstrap/bootstrap.py --gn-gen-args "${_flags[*]}"
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$ROOT/$TOOLCHAIN/bin/python
   
-  ninja -j6 -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
+  ionice -c3 nice -n20 ninja -j4 -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
 }
 
 makeinstall_target() {

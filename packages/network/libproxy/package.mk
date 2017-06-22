@@ -1,5 +1,5 @@
 PKG_NAME="libproxy"
-PKG_VERSION="1a3644a"
+PKG_VERSION="0.4.15"
 PKG_GIT_URL="https://github.com/libproxy/libproxy"
 PKG_DEPENDS_TARGET="toolchain zlib openssl libgpg-error"
 PKG_SECTION="my"
