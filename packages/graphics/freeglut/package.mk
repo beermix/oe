@@ -16,26 +16,16 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="libraw"
-PKG_VERSION="0.18.2"
+PKG_NAME="freeglut"
+PKG_VERSION="2.8.1"
 PKG_ARCH="any"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://www.libraw.org/"
-PKG_GIT_URL="https://github.com/LibRaw/LibRaw"
-PKG_DEPENDS_TARGET="toolchain libjpeg-turbo lcms2"
+PKG_URL="https://dl.dropboxusercontent.com/s/sase40x27crqzmi/freeglut-2.8.1.tar.xz"
+PKG_DEPENDS_TARGET="toolchain mesa"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="A library for reading RAW files obtained from digital photo cameras (CRW/CR2, NEF, RAF, DNG, and others)"
 PKG_LONGDESC="A library for reading RAW files obtained from digital photo cameras (CRW/CR2, NEF, RAF, DNG, and others)"
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
-
-PKG_CONFIGURE_OPTS_TARGET="--enable-static \
-                           --disable-shared \
-                           --enable-openmp \
-                           --enable-jpeg \
-                           --disable-jasper \
-                           --enable-lcms \
-                           --disable-examples \
-                           --disable-demosaic-pack-gpl2 \
-                           --disable-demosaic-pack-gpl3"
