@@ -46,6 +46,8 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            ac_cv_func_chflags_works=no \
                            ac_cv_func_printf_zd=yes \
                            ac_cv_buggy_getaddrinfo=no \
+                           ac_cv_header_bluetooth_bluetooth_h=no \
+                           ac_cv_header_bluetooth_h=no \
                            ac_cv_file__dev_ptmx=no \
                            ac_cv_file__dev_ptc=no \
                            ac_cv_have_long_long_format=yes \
