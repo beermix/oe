@@ -1,3 +1,0 @@
-('RCS_MODE_GEN7', '0x0000229c', '')
-('VCS_MODE_GEN7', '0x0001229c', '')
-('BCS_MODE_GEN7', '0x0002229c', '')
