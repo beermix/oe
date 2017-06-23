@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libdvdnav"
-PKG_VERSION="43b5f81"
+PKG_VERSION="981488f"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
