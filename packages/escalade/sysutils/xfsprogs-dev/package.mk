@@ -30,7 +30,13 @@ PKG_IS_ADDON="no"
 
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-shared=no --with-gnu-ld --host=$TARGET_NAME --build=$HOST_NAME --enable-editline=yes"
+PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
+			      --exec-prefix=/ \
+			      --enable-shared=no \
+			      --with-gnu-ld \
+			      --enable-editline=yes \
+			      --enable-lib64=no \
+			      --enable-gettext=no"
 
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
