@@ -22,7 +22,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://qt-project.org"
 PKG_URL="http://download.qt.io/official_releases/qt/5.6/$PKG_VERSION/submodules/$PKG_NAME-opensource-src-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="pcre zlib gstreamer libproxy"
+PKG_DEPENDS_TARGET="pcre zlib"
 PKG_SOURCE_DIR="$PKG_NAME-opensource-src-$PKG_VERSION"
 PKG_SHORTDESC="A cross-platform application and UI framework"
 PKG_LONGDESC="A cross-platform application and UI framework"
@@ -30,7 +30,7 @@ PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="-prefix /usr
                            -sysroot $SYSROOT_PREFIX
-                           -hostprefix $ROOT/$TOOLCHAIN
+                           -hostprefix $TOOLCHAIN
                            -device linux-openelec-g++
                            -opensource -confirm-license
                            -release
@@ -43,29 +43,29 @@ PKG_CONFIGURE_OPTS_TARGET="-prefix /usr
                            -no-qml-debug
                            -system-zlib
                            -no-mtdev
-                           -gif
-                           -libpng
-                           -libjpeg
+                           -no-gif
+                           -no-libpng
+                           -no-libjpeg
                            -no-harfbuzz
-                           -openssl
-                           -libproxy
+                           -no-openssl
+                           -no-libproxy
                            -system-pcre
-                           -glib
+                           -no-glib
                            -no-pulseaudio
-                           -alsa
+                           -no-alsa
                            -silent
                            -no-cups
                            -no-iconv
                            -no-evdev
                            -no-tslib
-                           -icu
+                           -no-icu
                            -no-strip
-                           -fontconfig
-                           -dbus
-                           -opengl
+                           -no-fontconfig
+                           -no-dbus
+                           -no-opengl
                            -no-libudev
                            -no-libinput
-                           -gstreamer
+                           -no-gstreamer
                            -no-eglfs"
 
 configure_target() {
