@@ -1,5 +1,5 @@
 PKG_NAME="icu"
-PKG_VERSION="58.2"
+PKG_VERSION="59.1"
 PKG_ARCH="any"
 PKG_LICENSE="Custom"
 PKG_SITE="http://www.icu-project.org"
