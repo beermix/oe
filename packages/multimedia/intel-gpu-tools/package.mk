@@ -6,11 +6,4 @@ PKG_SECTION="tools"
 PKG_SHORTDESC="x11-utils"
 PKG_AUTORECONF="yes"
 
-
-PKG_CONFIGURE_OPTS_TARGET="--disable-tests \
-			      --without-libunwind \
-			      --disable-gtk-doc \
-			      --disable-gtk-doc-html \
-			      --disable-gtk-doc-pdf \
-			      --enable-static \
-			      --disable-shared"
+PKG_CONFIGURE_OPTS_TARGET="enable_gtk_doc=no --disable-tests --without-libunwind"

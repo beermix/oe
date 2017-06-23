@@ -1,0 +1,70 @@
+#!/usr/bin/make -f
+# debian/rules for the Debian xutils package.
+# Copyright © 2004 Scott James Remnant <scott@netsplit.com>
+# Copyright © 2005 Daniel Stone <daniel@fooishbar.org>
+# Copyright © 2005 David Nusinow <dnusinow@debian.org>
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+# set this to the name of the main shlib's binary package
+PACKAGE = xutils-dev
+
+# This package contains multiple modules as shipped by upstream. Each module is # contained in a subdirectory in the root dir of the package. You must list each
+# subdirectory explicitly so that the build system knows what to build
+SUBDIRS= gccmakedep imake lndir makedepend util-macros xorg-cf-files
+SUBDIRS_CHECK= makedepend
+
+ifneq (,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
+	NUMJOBS = $(patsubst parallel=%,%,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
+	MAKEFLAGS += -j$(NUMJOBS)
+endif
+
+%:
+	dh $@ --with quilt,autotools-dev --parallel
+
+override_dh_auto_configure: $(foreach dir, $(SUBDIRS), configure-$(dir)-stamp)
+
+configure-%-stamp:
+	dh_auto_configure -D$* -B$*-build -- \
+		--disable-silent-rules \
+		--disable-ccmakedep \
+		--libdir=\$${exec_prefix}/lib \
+		$(shell DEB_CFLAGS_MAINT_APPEND=-Wall dpkg-buildflags --export=configure)
+
+override_dh_auto_build: $(foreach dir, $(SUBDIRS), build-$(dir)-stamp)
+
+build-%-stamp:
+	dh_auto_build -D$* -B$*-build
+
+override_dh_auto_test: $(addprefix test-, $(SUBDIRS))
+
+.PHONY: test-%
+test-%:
+	dh_auto_test -D$* -B$*-build
+
+override_dh_auto_install:
+	set -e; for FILE in $(SUBDIRS); do \
+		$(MAKE) -C $${FILE}-build DESTDIR=$(CURDIR)/debian/tmp install; \
+	done
+
+override_dh_installdocs:
+	dh_installdocs debian/versions
+
+override_dh_install:
+	dh_install --fail-missing
+
+override_dh_auto_clean: $(addprefix clean-, $(SUBDIRS))
+
+.PHONY: clean-%
+clean-%:
+	dh_auto_clean -D$* -B$*-build
+
+.PHONY: get-tarballs
+get-tarballs: $(addprefix get-tarball-,$(SUBDIRS))
+
+.PHONY: get-tarball-%
+get-tarball-%:
+	uscan --no-conf --download --no-symlink --destdir . --package $* --upstream-version $(shell awk -F = '/^PACKAGE_VERSION=/ { print $$2 }' < $*/configure || echo 0) --watchfile debian/watch.$* || test $$? = 1
+
+# vim:set ai noet sw=8 ts=8 tw=80:

@@ -1,0 +1,6 @@
+03_xutils-dev-FHS.diff
+04_xutils-dev-debian.diff
+05_xaw_without_xp.diff
+06_font_path.diff
+07_gnu_manpath.diff
+08_xorg_with_xmlto.diff
