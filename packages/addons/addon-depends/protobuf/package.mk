@@ -17,8 +17,8 @@ PKG_NAME="protobuf"
 PKG_VERSION="3.1.0"
 PKG_SITE="https://developers.google.com/protocol-buffers/"
 PKG_URL="https://github.com/google/$PKG_NAME/releases/download/v$PKG_VERSION/$PKG_NAME-cpp-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_HOST="toolchain zlib:host Python:host"
-PKG_DEPENDS_TARGET="toolchain zlib expat libxml2 protobuf:host"
+PKG_DEPENDS_HOST="toolchain zlib:host"
+PKG_DEPENDS_TARGET="toolchain zlib protobuf:host"
 PKG_SECTION="devel"
 PKG_SHORTDESC="protobuf: Protocol Buffers - Google's data interchange format"
 PKG_LONGDESC="protobuf: Protocol Buffers - Google's data interchange format"
@@ -27,17 +27,15 @@ PKG_USE_CMAKE="yes"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CMAKE_SCRIPT_TARGET="cmake/CMakeLists.txt"
-PKG_CMAKE_SCRIPT_HOST="cmake/CMakeLists.txt"
+PKG_CMAKE_SCRIPT="$PKG_BUILD/cmake/CMakeLists.txt"
 
 PKG_CMAKE_OPTS_HOST="-DCMAKE_NO_SYSTEM_FROM_IMPORTED=1 \
                      -DBUILD_SHARED_LIBS=0 \
                      -Dprotobuf_BUILD_TESTS=0 \
                      -Dprotobuf_BUILD_EXAMPLES=0 \
-                     -Dprotobuf_WITH_ZLIB=1 \
-                     -DCMAKE_BUILD_TYPE=Release"
+                     -Dprotobuf_WITH_ZLIB=1"
 
-PKG_CMAKE_OPTS_TARGET="$PKG_CMAKE_OPTS_HOST -DCMAKE_BUILD_TYPE=Release"
+PKG_CMAKE_OPTS_TARGET="$PKG_CMAKE_OPTS_HOST"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin

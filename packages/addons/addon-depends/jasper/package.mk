@@ -18,7 +18,6 @@
 
 PKG_NAME="jasper"
 PKG_VERSION="version-1.900.31"
-#PKG_VERSION="version-2.0.13"
 PKG_SITE="http://www.ece.uvic.ca/~mdadams/jasper/"
 PKG_GIT_URL="https://github.com/mdadams/jasper"
 PKG_DEPENDS_TARGET="toolchain libjpeg-turbo"
@@ -30,7 +29,11 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 PKG_USE_CMAKE="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static --with-pic"
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static"
+
+pre_configure_target() {
+  export CFLAGS="$CFLAGS -fPIC -DPIC"
+}
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin

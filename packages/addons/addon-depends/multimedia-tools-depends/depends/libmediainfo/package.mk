@@ -21,7 +21,7 @@ PKG_VERSION="0.7.83"
 PKG_SITE="http://mediaarea.net/en/MediaInfo/Download/Source"
 PKG_URL="http://mediaarea.net/download/source/libmediainfo/$PKG_VERSION/libmediainfo_$PKG_VERSION.tar.bz2"
 PKG_SOURCE_DIR="MediaInfoLib"
-PKG_DEPENDS_TARGET="toolchain libzen zlib curl"
+PKG_DEPENDS_TARGET="toolchain libzen zlib"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="MediaInfo is a convenient unified display of the most relevant technical and tag data for video and audio files"
 PKG_LONGDESC="MediaInfo is a convenient unified display of the most relevant technical and tag data for video and audio files"
@@ -39,7 +39,7 @@ make_target() {
         --disable-shared \
         --prefix=/usr \
         --enable-visibility \
-        --enable-libcurl \
+        --disable-libcurl \
         --disable-libmms
   make
 }
