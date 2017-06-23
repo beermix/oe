@@ -28,7 +28,7 @@
 # Skins to install (Estuary)
 # Space separated list is supported,
 # e.g. SKINS="Estuary"
-  SKINS=""
+  SKINS="Estuary"
 
 # remove default skin included in Kodi (yes/no)
   SKIN_REMOVE_SHIPPED="yes"
