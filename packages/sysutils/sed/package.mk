@@ -34,4 +34,11 @@ PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_HOST="--disable-nls --disable-acl --without-selinux"
 
+pre_configure_target() {
+    ( cd ..
+      unset LIBTOOL
+      autoreconf --verbose --install --force -I m4
+    )
+}
+
 PKG_CONFIGURE_OPTS_TARGET="-C $PKG_CONFIGURE_OPTS_HOST"
