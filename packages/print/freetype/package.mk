@@ -17,11 +17,10 @@
 ################################################################################
 
 PKG_NAME="freetype"
-PKG_VERSION="390048f"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
-PKG_SITE="http://www.freetype.org"
-PKG_GIT_URL="git://git.sv.nongnu.org/freetype/freetype2.git"
+PKG_VERSION="2.8"
+PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
+#PKG_VERSION="390048f"
+#PKG_GIT_URL="git://git.sv.nongnu.org/freetype/freetype2.git"
 PKG_DEPENDS_TARGET="toolchain zlib libpng bzip2"
 PKG_DEPENDS_HOST="zlib:host libpng:host bzip2:host"
 PKG_SECTION="print"
@@ -32,15 +31,12 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 PKG_USE_CMAKE="no"
 
-# package specific configure options
 PKG_CONFIGURE_OPTS_TARGET="--with-zlib=yes \
                            --with-bzip2=yes \
                            --with-png=yes \
                            --with-harfbuzz=no"
 
 pre_configure_target() {
-  #CFLAGS="$CFLAGS -fPIC -DPIC"
-  # unset LIBTOOL because freetype uses its own
     ( cd ..
       unset LIBTOOL
       sh autogen.sh

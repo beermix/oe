@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="tinyxml2"
-PKG_VERSION="369f306"
+PKG_VERSION="4.0.1"
 PKG_ARCH="any"
 PKG_LICENSE="zlib"
 PKG_SITE="http://www.grinninglizard.com/tinyxml2/index.html"
@@ -31,7 +31,7 @@ PKG_LONGDESC="TinyXML2 is a simple, small, C++ XML parser that can be easily int
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=0 -DBUILD_STATIC_LIBS=1"
+PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTS=OFF"
 
 pre_configure_target() {
   export CFLAGS+=" -fPIC"
