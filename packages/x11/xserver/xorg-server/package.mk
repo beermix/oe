@@ -109,8 +109,8 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
                            --disable-ipv6 \
                            --disable-local-transport \
                            --disable-secure-rpc \
-                           --enable-xtrans-send-fds \
                            --enable-input-thread \
+                           --enable-xtrans-send-fds \
                            --disable-docs \
                            --disable-devel-docs \
                            --with-int10=x86emu \

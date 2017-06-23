@@ -25,7 +25,7 @@ PKG_SECTION="x11/lib"
 PKG_SHORTDESC="pixman: Pixel manipulation library"
 PKG_LONGDESC="Pixman is a generic library for manipulating pixel regions, contains low-level pixel manipulation routines and is used by both xorg and cairo."
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-openmp \
                            --disable-loongson-mmi \

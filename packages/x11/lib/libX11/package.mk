@@ -46,8 +46,8 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-secure-rpc \
                            --disable-lint-library \
                            --disable-ipv6 \
                            --without-launchd \
-                           --without-lint \
-                           --disable-static"
+                           --without-lint"
+
 pre_configure_target() {
   export CC_FOR_BUILD="$HOST_CC"
   export CPPFLAGS_FOR_BUILD="$HOST_CPPFLAGS"
