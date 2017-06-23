@@ -81,7 +81,8 @@ make_target() {
     'use_cups=false'
     'use_gconf=false'
     'use_gnome_keyring=false'
-    'use_gtk3=false'
+    'use_gold=false'
+    'use_gtk3=true'
     'use_kerberos=false'
     'use_pulseaudio=false'
     'use_sysroot=true'
@@ -107,7 +108,6 @@ make_target() {
     minizip
     libxml2
     libwebp
-    flac
 )
   
   sed -e 's|i386-linux-gnu/||g' \
@@ -135,7 +135,7 @@ make_target() {
   ./tools/gn/bootstrap/bootstrap.py --gn-gen-args "${_flags[*]}"
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$ROOT/$TOOLCHAIN/bin/python
   
-  ionice -c3 nice -n20 ninja -j4 -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
+  ionice -c3 nice -n20 ninja -j3 -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
 }
 
 makeinstall_target() {
