@@ -31,13 +31,12 @@ PKG_CONFIGURE_OPTS_TARGET="--with-gtk=2 \
 			      --with-opengl \
 			      --enable-unicode \
 			      --enable-graphics_ctx \
-			      --enable-mediactrl \
-			      --enable-webview \
 			      --with-regex=builtin \
-			      --with-libpng \
-			      --with-libjpeg \
-			      --with-libtiff \
-			      --disable-precomp-headers"
+			      --with-libpng=$SYSROOT_PREFIX/usr \
+			      --with-libjpeg=$SYSROOT_PREFIX/usr \
+			      --with-libtiff=$SYSROOT_PREFIX/usr \
+			      --disable-precomp-headers \
+			      --disable-shared"
 
 post_makeinstall_target() {
   ln -sf wx-config $ROOT/$TOOLCHAIN/bin/wx-config

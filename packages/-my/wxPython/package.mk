@@ -1,41 +1,14 @@
 PKG_NAME="wxPython"
-PKG_VERSION="src-3.0.2.0"
-PKG_URL="https://sourceforge.net/projects/wxpython/files/wxPython/3.0.2.0/wxPython-src-3.0.2.0.tar.bz2"
+PKG_VERSION="f244d9d"
+PKG_GIT_URL="https://github.com/wxWidgets/wxPython"
 PKG_DEPENDS_TARGET="toolchain gtk+"
 PKG_SECTION="system"
 PKG_AUTORECONF="no"
 
-pre_configure_target() {
-# makemkv fails to build in subdirs
-  cd $ROOT/$PKG_BUILD
-    rm -rf .$TARGET_NAME
-}
-
-configure_target() {
-  ./configure --host=$TARGET_NAME \
-  		--build=$HOST_NAME \
-  		--prefix=/usr \
-  		--libdir=/usr/lib \
-  		--with-gtk=2 \
-  		--with-opengl \
-  		--enable-unicode \
-  		--enable-graphics_ctx \
-  		--disable-precomp-headers \
-  		--with-libpng=sys -\
-  		--with-libjpeg=sys \
-  		--with-libtiff=sys \
-  		..
-  		
-  		make
-
 make_target() {
-  make
-  cd ../wxPython
-  python setup.py WXPORT=gtk2 UNICODE=1 build --cross-compile
+  python build-wxpython.py build --release
 }
 
 makeinstall_target() {
-  make install
-  cd ../wxPython
-  python setup.py WXPORT=gtk2 UNICODE=1 install --root=$INSTALL --prefix=/usr
+  python build-wxpython.py install --wxpy_installdir=$INSTALL --prefix=/usr
 }
