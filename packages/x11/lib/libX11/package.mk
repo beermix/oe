@@ -29,7 +29,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-secure-rpc \
-                           --enable-loadable-i18n \
+                           --disable-loadable-i18n \
                            --disable-loadable-xcursor \
                            --enable-xthreads \
                            --disable-xcms \

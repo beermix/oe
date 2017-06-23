@@ -66,7 +66,8 @@ PKG_CONFIGURE_OPTS_TARGET="-prefix /usr
                            -no-libudev
                            -no-libinput
                            -no-gstreamer
-                           -no-eglfs"
+                           -no-eglfs
+                           -qt-xcb"
 
 configure_target() {
   QMAKE_CONF_DIR="mkspecs/devices/linux-openelec-g++"
