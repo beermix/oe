@@ -17,11 +17,11 @@
 ################################################################################
 
 PKG_NAME="cmake"
-PKG_VERSION="3.9.0-rc4"
+PKG_VERSION="3.7.2"
 PKG_ARCH="any"
 PKG_LICENSE="BSD"
 PKG_SITE="http://www.cmake.org/"
-PKG_URL="http://www.cmake.org/files/v3.9/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_URL="http://www.cmake.org/files/v3.7/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="ccache:host libressl:host rhash:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="toolchain/devel"
