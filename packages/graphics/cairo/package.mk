@@ -28,7 +28,7 @@ PKG_SHORTDESC="cairo: Multi-platform 2D graphics library"
 PKG_LONGDESC="Cairo is a vector graphics library with cross-device output support. Currently supported output targets include the X Window System and in-memory image buffers. PostScript and PDF file output is planned. Cairo is designed to produce identical output on all output media while taking advantage of display hardware acceleration when available."
 PKG_IS_ADDON="no"
 
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
 
@@ -57,11 +57,34 @@ fi
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CAIRO_CONFIG \
                            --enable-silent-rules \
                            --enable-shared \
-                           --enable-static \
+                           --disable-static \
                            --disable-gtk-doc \
                            --enable-largefile \
                            --enable-atomic \
+                           --disable-gcov \
+                           --disable-valgrind \
+                           --disable-xcb \
+                           --disable-xlib-xcb \
+                           --disable-xcb-shm \
+                           --disable-qt \
+                           --disable-quartz \
+                           --disable-quartz-font \
+                           --disable-quartz-image \
+                           --disable-win32 \
+                           --disable-win32-font \
+                           --disable-skia \
+                           --disable-os2 \
+                           --disable-beos \
+                           --disable-cogl \
+                           --disable-drm \
+                           --disable-drm-xr \
+                           --disable-gallium \
+                           --disable-xcb-drm \
                            --enable-png \
+                           --disable-directfb \
+                           --disable-vg \
+                           --disable-wgl \
+                           --disable-script \
                            --enable-ft \
                            --enable-fc \
                            --enable-ps \
@@ -69,6 +92,7 @@ PKG_CONFIGURE_OPTS_TARGET="$PKG_CAIRO_CONFIG \
                            --enable-svg \
                            --disable-test-surfaces \
                            --disable-tee \
+                           --disable-xml \
                            --enable-pthread \
                            --disable-full-testing \
                            --disable-trace \

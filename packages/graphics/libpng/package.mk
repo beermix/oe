@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="libpng"
-PKG_VERSION="1.6.29"
+PKG_VERSION="1.6.30rc01"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.libpng.org/"
-PKG_URL="$SOURCEFORGE_SRC/libpng/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="https://sourceforge.net/projects/libpng/files/libpng16/$PKG_VERSION/libpng-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="zlib:host"
 PKG_DEPENDS_TARGET="toolchain zlib"
 PKG_PRIORITY="optional"
@@ -33,12 +33,12 @@ PKG_LONGDESC="PNG (Portable Network Graphics) is an extensible file format for t
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CMAKE_OPTS_HOST="-DPNG_SHARED=OFF -DPNG_STATIC=ON -DPNG_TESTS=OFF -DCMAKE_SYSTEM_PROCESSOR=$(uname -m)"
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release -DPNG_SHARED=OFF -DPNG_STATIC=ON -DPNG_TESTS=OFF -DCMAKE_SYSTEM_PROCESSOR=$TARGET_ARCH"
+PKG_CMAKE_OPTS_HOST="-DPNG_SHARED=OFF -DPNG_STATIC=ON -DPNG_TESTS=OFF -DCMAKE_SYSTEM_PROCESSOR=x86_64"
+PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release -DPNG_SHARED=OFF -DPNG_STATIC=ON -DPNG_TESTS=OFF -DCMAKE_SYSTEM_PROCESSOR=x86_64"
 
 #pre_configure_target() {
 #  if [ "$TARGET_ARCH" = "x86_64" ]; then
-#    CFLAGS+=" -DPNG_INTEL_SSE"
+#    CPPFLAGS="-DPNG_INTEL_SSE"
 #  fi
 #}
 
