@@ -4,13 +4,12 @@
 ################################################################################
 
 PKG_NAME="kodi-theme-Estuary"
-GIT_VERSION="147cec4"
-PKG_VERSION="17.3-$GIT_VERSION"
+PKG_VERSION="17.4-rc1-a234aa0"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
-PKG_URL="$ALEXELEC_SRC/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="https://dl.dropboxusercontent.com/s/qxn4bkk52c2nw5o/kodi-theme-Estuary-17.4-rc1-a234aa0.tar.xz"
 PKG_DEPENDS_TARGET="toolchain kodi"
 PKG_SECTION="mediacenter"
 PKG_SHORTDESC="kodi-theme-Estuary: Kodi Mediacenter default theme"

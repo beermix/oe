@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<advancedsettings>
+  <showexitbutton>false</showexitbutton>
+  <cputempcommand>cputemp</cputempcommand>
+  <gputempcommand>gputemp</gputempcommand>
+  <samba>
+    <clienttimeout>30</clienttimeout>
+  </samba>
+    <pvr>
+    <minvideocachelevel>5</minvideocachelevel>
+    <minaudiocachelevel>10</minaudiocachelevel>
+  </pvr>
+  <cache>
+    <memorysize>139460608</memorysize>  <!-- number of bytes used for buffering streams in memory
+                                        When set to 0 the cache will be written to disk instead of RAM:
+                                           <memorysize>52428800</memorysize>  using 50MB of RAM for cache (which requires 150MB  of free RAM)
+                                           <memorysize>104857600</memorysize> using 100MB of RAM for cache (which requires 300MB of free RAM)
+                                           <memorysize>139460608</memorysize> using 133MB of RAM for cache (which requires 400MB of free RAM) -->
+    <buffermode>1</buffermode>         <!-- Choose what to buffer:
+                                           0) Buffer all internet filesystems (like "2" but additionally also ftp, webdav, etc.) (default)
+                                           1) Buffer all filesystems (including local)
+                                           2) Only buffer true internet filesystems (streams) (http, etc.)
+                                           3) No buffer -->
+    <readfactor>50</readfactor>        <!-- this factor determines the max readrate in terms of readbufferfactor * avg bitrate of a video file. 
+                                        This can help on bad connections to keep the cache filled. It will also greatly speed up buffering. Default value 4.0. -->
+  </cache>
+</advancedsettings>
