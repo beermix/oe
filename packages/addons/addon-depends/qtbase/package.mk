@@ -1,19 +1,19 @@
 ################################################################################
-#      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2009-2016 Lukas Rusak (lrusak@libreelec.tv)
+#      This file is part of openelec - https://openelec.tv
+#      Copyright (C) 2009-2016 Lukas Rusak (lrusak@openelec.tv)
 #
-#  LibreELEC is free software: you can redistribute it and/or modify
+#  openelec is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
 #  the Free Software Foundation, either version 2 of the License, or
 #  (at your option) any later version.
 #
-#  LibreELEC is distributed in the hope that it will be useful,
+#  openelec is distributed in the hope that it will be useful,
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
 #
 #  You should have received a copy of the GNU General Public License
-#  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
+#  along with openelec.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
 PKG_NAME="qtbase"
@@ -66,8 +66,7 @@ PKG_CONFIGURE_OPTS_TARGET="-prefix /usr
                            -no-libudev
                            -no-libinput
                            -no-gstreamer
-                           -no-eglfs
-                           -qt-xcb"
+                           -no-eglfs"
 
 configure_target() {
   QMAKE_CONF_DIR="mkspecs/devices/linux-openelec-g++"
@@ -98,4 +97,7 @@ configure_target() {
 
   unset CC CXX LD RANLIB AR AS CPPFLAGS CFLAGS LDFLAGS CXXFLAGS
   ./configure $PKG_CONFIGURE_OPTS_TARGET
+  
+  mkdir -p $INSTALL/usr
+  mkdir -p $INSTALL_DEV/usr
 }
