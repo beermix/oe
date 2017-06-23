@@ -3,7 +3,6 @@ PKG_VERSION="2.99.8"
 PKG_SITE="http://libsigc.sourceforge.net"
 PKG_URL="http://ftp.gnome.org/pub/GNOME/sources/libsigc++/2.99/libsigc++-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain"
-
 PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
 PKG_AUTORECONF="no"

@@ -16,11 +16,11 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="atkmm"
-PKG_VERSION="2.25.3"
+PKG_NAME="glibmm"
+PKG_VERSION="2.51.7"
 PKG_SITE="http://www.X.org"
-PKG_URL="http://ftp.gnome.org/pub/GNOME/sources/atkmm/2.25/atkmm-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain util-macros"
+PKG_URL="http://ftp.gnome.org/pub/GNOME/sources/glibmm/2.51/glibmm-$PKG_VERSION.tar.xz"
+PKG_DEPENDS_TARGET="toolchain util-macros libsigc++"
 PKG_SECTION="x11/lib"
 PKG_SHORTDESC="xtrans: Abstract network code for X"
 PKG_LONGDESC="Abstract network code for X."
