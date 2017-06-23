@@ -40,11 +40,12 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --enable-add-ons \
                            --enable-bind-now \
                            --with-elf \
+                           --enable-stack-protector=strong \
                            --with-tls \
                            --with-__thread \
                            --with-binutils=$ROOT/$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
-                           --enable-kernel=4.0.0 \
+                           --enable-kernel=3.0.0 \
                            --without-cvs \
                            --without-gd \
                            --enable-obsolete-rpc \
