@@ -238,7 +238,7 @@ set speller "hunspell"
 ## them easier to remember and faster to type using nano's -Y option.
 ##
 ## To include all existing syntax definitions, you can do:
-# include "@PKGDATADIR@/*.nanorc"
+include "/storage/.config/nanorc/*.nanorc"
 
 
 ## Key bindings.
@@ -246,9 +246,9 @@ set speller "hunspell"
 ##
 ## The following five functions are not bound to any key by default.
 ## You may wish to choose different keys than the ones suggested here.
-# bind ^S savefile main
-# bind M-Q findprevious main
-# bind M-W findnext main
+bind ^S savefile main
+bind M-Q findprevious main
+bind M-W findnext main
 # bind M-B cutwordleft main
 # bind M-N cutwordright main
 
