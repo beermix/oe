@@ -6,11 +6,11 @@ PKG_SECTION="system"
 PKG_AUTORECONF="no"
 
 make_target() {
-  python setup.py build --cross-compile
+  python build-wxpython.py build
 }
 
 makeinstall_target() {
-  python setup.py install --root=$INSTALL --prefix=/usr --optimize=1
+  python build-wxpython.pyy install --root=$INSTALL --prefix=/usr --optimize=1
 }
 
 post_makeinstall_target() {
