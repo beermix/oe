@@ -1,5 +1,5 @@
 PKG_NAME="isl"
-PKG_VERSION="0.17.1"
+PKG_VERSION="0.18"
 PKG_ARCH="any"
 PKG_LICENSE="Custom"
 PKG_URL="http://isl.gforge.inria.fr/isl-$PKG_VERSION.tar.xz"
