@@ -28,7 +28,8 @@ PKG_LONGDESC="The ConnMan project provides a daemon for managing internet connec
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--srcdir=.. \
+PKG_CONFIGURE_OPTS_TARGET="WPASUPPLICANT=/usr/bin/wpa_supplicant \
+                           --srcdir=.. \
                            --disable-gtk-doc \
                            --disable-debug \
                            --disable-hh2serial-gps \
@@ -47,8 +48,7 @@ PKG_CONFIGURE_OPTS_TARGET="--srcdir=.. \
                            --enable-loopback \
                            --enable-ethernet \
                            --disable-gadget \
-                           --disable-wifi \
-                           --enable-iwd \
+                           --enable-wifi \
                            --disable-bluetooth \
                            --disable-ofono \
                            --disable-dundee \
