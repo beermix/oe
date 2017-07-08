@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="strace"
-PKG_VERSION="4.17"
+PKG_VERSION="4.18"
 PKG_SITE="http://sourceforge.net/projects/strace/"
-PKG_URL="$SOURCEFORGE_SRC/strace/strace/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="tools"
 PKG_SHORTDESC="strace: Trace system calls and signals"

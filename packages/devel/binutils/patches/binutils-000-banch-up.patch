@@ -904,12 +904,12 @@ index 12c9fb0d87..c3ec4fefb6 100644
  	  /* If this symbol is marked as occurring now, rather
  	     than at the end, output it now.  This is used for
 diff --git a/bfd/version.h b/bfd/version.h
-index eda06e4ac6..3d837a12a6 100644
+index eda06e4ac6..8e8f0bf679 100644
 --- a/bfd/version.h
 +++ b/bfd/version.h
 @@ -1,4 +1,4 @@
 -#define BFD_VERSION_DATE 20170302
-+#define BFD_VERSION_DATE 20170622
++#define BFD_VERSION_DATE 20170706
  #define BFD_VERSION @bfd_version@
  #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
  #define REPORT_BUGS_TO @report_bugs_to@
@@ -1040,10 +1040,22 @@ index f5c5d2d8e0..d3fc4afe24 100644
  		  /* Must be g++ version 1.  */
  		  context = DEBUG_TYPE_NULL;
 diff --git a/gas/ChangeLog b/gas/ChangeLog
-index 8a586ad7a0..93f7c63cf2 100644
+index 8a586ad7a0..a89a5f5d65 100644
 --- a/gas/ChangeLog
 +++ b/gas/ChangeLog
-@@ -1,3 +1,102 @@
+@@ -1,3 +1,104 @@
++2017-04-05  Ramana Radhakrishnan  <ramana.radhakrishnan@arm.com>
++
++	Backport from mainline
++	2017-04-04  Ramana Radhakrishnan  <ramana.radhakrishnan@arm.com>
++	* config/tc-arm.c (arm_regs): Add MVFR2.
++        (do_vmrs): Constraint for MVFR2 and armv8.
++        (do_vmsr): Likewise.
++        * testsuite/gas/arm/armv8-a+fp.d: Update.
++        * testsuite/gas/arm/armv8-a+fp.s: Likewise.
++        * testsuite/gas/arm/vfp-bad.s: Likewise.
++        * testsuite/gas/arm/vfp-bad.l: Likewise.
++
 +2017-06-20  Thomas Preud'homme  <thomas.preudhomme@arm.com>
 +
 +	Backport from mainline
@@ -1056,16 +1068,6 @@ index 8a586ad7a0..93f7c63cf2 100644
 +	constants.  Add tests of MOVW generation.
 +	* testsuite/gas/arm/thumb2_ldr_immediate_highregs_armv6t2.d: Update
 +	expected disassembly.
-+
-+2017-06-20  Thomas Preud'homme  <thomas.preudhomme@arm.com>
-+
-+	Backport from mainline
-+	2017-05-08  Thomas Preud'homme  <thomas.preudhomme@arm.com>
-+
-+	* testsuite/ld-arm/arm-elf.exp
-+	(Secure gateway import library generation): Check e_type field
-+	of import library and executable produced.
-+	* testsuite/ld-arm/cmse-implib.type: Expectations for e_type field.
 +
 +2017-06-05  Alan Modra  <amodra@gmail.com>
 +
@@ -1147,7 +1149,7 @@ index 8a586ad7a0..93f7c63cf2 100644
  
  	* configure: Regenerate.
 diff --git a/gas/config/tc-arm.c b/gas/config/tc-arm.c
-index 60bda51070..0820b96891 100644
+index 60bda51070..be85927319 100644
 --- a/gas/config/tc-arm.c
 +++ b/gas/config/tc-arm.c
 @@ -7955,17 +7955,13 @@ move_or_literal_pool (int i, enum lit_type t, bfd_boolean mode_3)
@@ -1173,6 +1175,38 @@ index 60bda51070..0820b96891 100644
  		{
  		  /* Check if on thumb2 it can be done with a mov.w, mvn or
  		     movw instruction.  */
+@@ -9112,6 +9108,11 @@ do_vmrs (void)
+       return;
+     }
+ 
++  /* MVFR2 is only valid at ARMv8-A.  */
++  if (inst.operands[1].reg == 5)
++    constraint (!ARM_CPU_HAS_FEATURE (cpu_variant, fpu_vfp_ext_armv8),
++		_(BAD_FPU));
++
+   /* APSR_ sets isvec. All other refs to PC are illegal.  */
+   if (!inst.operands[0].isvec && Rt == REG_PC)
+     {
+@@ -9138,6 +9139,11 @@ do_vmsr (void)
+       return;
+     }
+ 
++  /* MVFR2 is only valid for ARMv8-A.  */
++  if (inst.operands[0].reg == 5)
++    constraint (!ARM_CPU_HAS_FEATURE (cpu_variant, fpu_vfp_ext_armv8),
++		_(BAD_FPU));
++
+   /* If we get through parsing the register name, we just insert the number
+      generated into the instruction without further validation.  */
+   inst.instruction |= (inst.operands[0].reg << 16);
+@@ -18799,6 +18805,7 @@ static const struct reg_entry reg_names[] =
+   REGDEF(FPINST,9,VFC), REGDEF(FPINST2,10,VFC),
+   REGDEF(mvfr0,7,VFC), REGDEF(mvfr1,6,VFC),
+   REGDEF(MVFR0,7,VFC), REGDEF(MVFR1,6,VFC),
++  REGDEF(mvfr2,5,VFC), REGDEF(MVFR2,5,VFC),
+ 
+   /* Maverick DSP coprocessor registers.  */
+   REGSET(mvf,MVF),  REGSET(mvd,MVD),  REGSET(mvfx,MVFX),  REGSET(mvdx,MVDX),
 diff --git a/gas/config/tc-riscv.c b/gas/config/tc-riscv.c
 index ec5b0bb036..fb9a3ed53f 100644
 --- a/gas/config/tc-riscv.c
@@ -1475,6 +1509,32 @@ index 0fa1b58356..2efba4b5cb 100644
  @cindex @samp{-march=ISA} option, RISC-V
  @item -march=ISA
  Select the base isa, as specified by ISA.  For example -march=rv32ima.
+diff --git a/gas/testsuite/gas/arm/armv8-a+fp.d b/gas/testsuite/gas/arm/armv8-a+fp.d
+index f77e742adc..5a2c95ab3f 100644
+--- a/gas/testsuite/gas/arm/armv8-a+fp.d
++++ b/gas/testsuite/gas/arm/armv8-a+fp.d
+@@ -113,3 +113,7 @@ Disassembly of section .text:
+ 0[0-9a-f]+ <[^>]+> eef2 0b60 	vcvtb.f64.f16	d16, s1
+ 0[0-9a-f]+ <[^>]+> eeb2 fbcf 	vcvtt.f64.f16	d15, s30
+ 0[0-9a-f]+ <[^>]+> eef2 fb6f 	vcvtb.f64.f16	d31, s31
++0[0-9a-f]+ <[^>]+> eef5 9a10 	vmrs	r9, mvfr2
++0[0-9a-f]+ <[^>]+> eee5 7a10 	vmsr	mvfr2, r7
++0[0-9a-f]+ <[^>]+> eef5 4a10 	vmrs	r4, mvfr2
++0[0-9a-f]+ <[^>]+> eee5 5a10 	vmsr	mvfr2, r5
+\ No newline at end of file
+diff --git a/gas/testsuite/gas/arm/armv8-a+fp.s b/gas/testsuite/gas/arm/armv8-a+fp.s
+index f7a54736a1..b98aab7b9a 100644
+--- a/gas/testsuite/gas/arm/armv8-a+fp.s
++++ b/gas/testsuite/gas/arm/armv8-a+fp.s
+@@ -114,3 +114,8 @@
+ 	vcvtb.f64.f16	d16, s1
+ 	vcvtt.f64.f16	d15, s30
+ 	vcvtb.f64.f16	d31, s31
++	vmrs		r9, MVFR2
++	vmsr		MVFR2, r7
++	vmrs		r4, mvfr2
++	vmsr		mvfr2, r5
++
 diff --git a/gas/testsuite/gas/arm/thumb2_ldr_immediate_highregs_armv6t2.d b/gas/testsuite/gas/arm/thumb2_ldr_immediate_highregs_armv6t2.d
 index 55b5f17887..7afc1350e5 100644
 --- a/gas/testsuite/gas/arm/thumb2_ldr_immediate_highregs_armv6t2.d
@@ -1551,6 +1611,26 @@ index d225410186..b473857223 100644
 +	# for sp and pc
 +	ldr r13,=0x3F
  	ldr r15,=0xFF
+diff --git a/gas/testsuite/gas/arm/vfp-bad.l b/gas/testsuite/gas/arm/vfp-bad.l
+index 7726e63180..a1479f484f 100644
+--- a/gas/testsuite/gas/arm/vfp-bad.l
++++ b/gas/testsuite/gas/arm/vfp-bad.l
+@@ -7,3 +7,5 @@
+ [^:]*:9: Error: instruction does not support writeback -- `fldd d0,\[r0,#-8\]!'
+ [^:]*:10: Error: instruction does not support writeback -- `flds s0,\[r0\],#8'
+ [^:]*:11: Error: instruction does not support writeback -- `flds s0,\[r0,#-8\]!'
++[^:]*:12: Error: selected FPU does not support instruction -- `vmrs r0,MVFR2'
++[^:]*:13: Error: selected FPU does not support instruction -- `vmsr MVFR2,r2'
+diff --git a/gas/testsuite/gas/arm/vfp-bad.s b/gas/testsuite/gas/arm/vfp-bad.s
+index ac44371773..1a446fee93 100644
+--- a/gas/testsuite/gas/arm/vfp-bad.s
++++ b/gas/testsuite/gas/arm/vfp-bad.s
+@@ -9,3 +9,5 @@ entry:
+ 	fldd	d0, [r0, #-8]!
+ 	flds	s0, [r0], #8
+ 	flds	s0, [r0, #-8]!
++	vmrs	r0, MVFR2
++	vmsr	MVFR2, r2
 diff --git a/gas/testsuite/gas/ppc/altivec2.d b/gas/testsuite/gas/ppc/altivec2.d
 index fc10fb5a2e..26f9afa9a8 100644
 --- a/gas/testsuite/gas/ppc/altivec2.d
@@ -2482,10 +2562,20 @@ index 7ce5616841..2e07664425 100644
  /* The opcode table is an array of struct s390_opcode.  */
  
 diff --git a/ld/ChangeLog b/ld/ChangeLog
-index ba7d1d4ce1..5a9544ebb6 100644
+index ba7d1d4ce1..8458f135b6 100644
 --- a/ld/ChangeLog
 +++ b/ld/ChangeLog
-@@ -1,3 +1,72 @@
+@@ -1,3 +1,82 @@
++2017-06-20  Thomas Preud'homme  <thomas.preudhomme@arm.com>
++
++	Backport from mainline
++	2017-05-08  Thomas Preud'homme  <thomas.preudhomme@arm.com>
++
++	* testsuite/ld-arm/arm-elf.exp
++	(Secure gateway import library generation): Check e_type field
++	of import library and executable produced.
++	* testsuite/ld-arm/cmse-implib.type: Expectations for e_type field.
++
 +2017-06-02  H.J. Lu  <hongjiu.lu@intel.com>
 +
 +	* emulparams/call_nop.sh: Remove -z prefix-nop.
@@ -3206,10 +3296,16 @@ index 7fe8056e49..70933daa10 100644
 -#pass
 +#error: invalid number for -z call-nop=prefix-: nop
 diff --git a/opcodes/ChangeLog b/opcodes/ChangeLog
-index 7f01e54188..5dfe1661fa 100644
+index 7f01e54188..dc6c635360 100644
 --- a/opcodes/ChangeLog
 +++ b/opcodes/ChangeLog
-@@ -1,3 +1,71 @@
+@@ -1,3 +1,77 @@
++2017-07-05  Ramana Radhakrishnan  <ramana.radhakrishnan@arm.com>
++
++	Backport from mainline
++	2017-07-04  Ramana Radhakrishnan  <ramana.radhakrishnan@arm.com>
++	* arm-dis.c: Support MVFR2 in disassembly with vmrs and vmsr.
++
 +2017-05-01  Michael Clark  <michaeljclark@mac.com>
 +
 +	* riscv-opc.c (riscv_opcodes) <call>: Use RA not T1 as a temporary
@@ -3281,6 +3377,28 @@ index 7f01e54188..5dfe1661fa 100644
  2017-03-02  Tristan Gingold  <gingold@adacore.com>
  
  	* configure: Regenerate.
+diff --git a/opcodes/arm-dis.c b/opcodes/arm-dis.c
+index 167c6685c5..eeeea58cbd 100644
+--- a/opcodes/arm-dis.c
++++ b/opcodes/arm-dis.c
+@@ -506,6 +506,8 @@ static const struct opcode32 coprocessor_opcodes[] =
+     0x0ee60a10, 0x0fff0fff, "vmsr%c\tmvfr1, %12-15r"},
+   {ARM_FEATURE_COPROC (FPU_VFP_EXT_V1xD),
+     0x0ee70a10, 0x0fff0fff, "vmsr%c\tmvfr0, %12-15r"},
++  {ARM_FEATURE_COPROC (FPU_VFP_EXT_ARMV8),
++    0x0ee50a10, 0x0fff0fff, "vmsr%c\tmvfr2, %12-15r"},
+   {ARM_FEATURE_COPROC (FPU_VFP_EXT_V1xD),
+     0x0ee80a10, 0x0fff0fff, "vmsr%c\tfpexc, %12-15r"},
+   {ARM_FEATURE_COPROC (FPU_VFP_EXT_V1xD),
+@@ -518,6 +520,8 @@ static const struct opcode32 coprocessor_opcodes[] =
+     0x0ef1fa10, 0x0fffffff, "vmrs%c\tAPSR_nzcv, fpscr"},
+   {ARM_FEATURE_COPROC (FPU_VFP_EXT_V1xD),
+     0x0ef10a10, 0x0fff0fff, "vmrs%c\t%12-15r, fpscr"},
++  {ARM_FEATURE_COPROC (FPU_VFP_EXT_ARMV8),
++    0x0ef50a10, 0x0fff0fff, "vmrs%c\t%12-15r, mvfr2"},
+   {ARM_FEATURE_COPROC (FPU_VFP_EXT_V1xD),
+     0x0ef60a10, 0x0fff0fff, "vmrs%c\t%12-15r, mvfr1"},
+   {ARM_FEATURE_COPROC (FPU_VFP_EXT_V1xD),
 diff --git a/opcodes/configure b/opcodes/configure
 index be87eb22a5..0b352a454d 100755
 --- a/opcodes/configure
