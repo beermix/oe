@@ -66,7 +66,6 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$ROOT/$TOOLCHAIN \
                        -DENABLE_UDEV=ON \
                        -DENABLE_XSLT=ON \
                        -DENABLE_DBUS=ON \
-                       -DVERBOSE=OFF \
                        -DCMAKE_VERBOSE_MAKEFILE=OFF \
                        -DENABLE_OPTICAL=OFF \
                        -DCMAKE_EXPORT_COMPILE_COMMANDS=OFF \
