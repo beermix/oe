@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="6.4.0"
-PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_VERSION="7-20170706"
+PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/LATEST-7/gcc-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host"
 PKG_DEPENDS_TARGET="gcc:host"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host glibc"
