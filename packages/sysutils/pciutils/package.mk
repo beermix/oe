@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="pciutils"
-PKG_VERSION="3.5.4"
+PKG_VERSION="3.5.5"
 PKG_ARCH="x86_64"
 PKG_SITE="http://mj.ucw.cz/pciutils.shtml"
 PKG_URL="http://www.kernel.org/pub/software/utils/pciutils/$PKG_NAME-$PKG_VERSION.tar.xz"
