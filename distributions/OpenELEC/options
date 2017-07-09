@@ -17,7 +17,7 @@
 # Root password to integrate in the target system
   ROOT_PASSWORD="openelec"
 
-  LLVM_SUPPORT="yes"
+  LLVM_SUPPORT="no"
   
 # Install glibc locales to the build (yes / no)
   GLIBC_LOCALES="yes"
