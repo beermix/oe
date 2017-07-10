@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="pcre"
-PKG_VERSION="8.40"
+PKG_VERSION="8.41"
 PKG_SITE="http://www.pcre.org/"
 PKG_URL="http://ftp.csx.cam.ac.uk/pub/software/programming/pcre/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST=""
@@ -30,15 +30,11 @@ PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
-			      --enable-static \
-			      --enable-utf8 \
+PKG_CONFIGURE_OPTS_TARGET="--enable-utf8 \
 			      --enable-pcre16 \
 			      --enable-pcre8 \
 			      --enable-unicode-properties \
-			      --with-gnu-ld \
 			      --enable-jit \
-			      --with-pic \
 			      --disable-stack-for-recursion \
 			      --enable-newline-is-anycrlf"
 			      
