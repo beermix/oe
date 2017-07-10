@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libxml2"
-PKG_VERSION="0741801"
+PKG_VERSION="fb56f8"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="MIT"
