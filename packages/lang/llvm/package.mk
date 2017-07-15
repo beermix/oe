@@ -32,21 +32,28 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 PKG_CMAKE_OPTS_HOST="-DCMAKE_BUILD_TYPE=Release \
-			-DLLVM_BUILD_TOOLS=ON \
-			-DLLVM_INCLUDE_TOOLS=ON \
-			-DLLVM_BUILD_EXAMPLES=OFF \
-			-DLLVM_INCLUDE_EXAMPLES=OFF \
-			-DLLVM_BUILD_TESTS=OFF \
-			-DLLVM_INCLUDE_TESTS=OFF \
-			-DLLVM_BUILD_DOCS=OFF \
-			-DLLVM_ENABLE_DOXYGEN=OFF \
-			-DLLVM_ENABLE_ZLIB=OFF \
-			-DLLVM_ENABLE_TERMINFO=OFF \
-			-DLLVM_OPTIMIZED_TABLEGEN=ON \
-			-DLLVM_TARGETS_TO_BUILD=X86"
+                     -DLLVM_INCLUDE_TOOLS=ON \
+                     -DLLVM_BUILD_TOOLS=OFF \
+                     -DLLVM_BUILD_UTILS=OFF \
+                     -DLLVM_BUILD_EXAMPLES=OFF \
+                     -DLLVM_INCLUDE_EXAMPLES=OFF \
+                     -DLLVM_BUILD_TESTS=OFF \
+                     -DLLVM_INCLUDE_TESTS=OFF \
+                     -DLLVM_INCLUDE_GO_TESTS=OFF \
+                     -DLLVM_BUILD_DOCS=OFF \
+                     -DLLVM_INCLUDE_DOCS=OFF \
+                     -DLLVM_ENABLE_DOXYGEN=OFF \
+                     -DLLVM_ENABLE_SPHINX=OFF \
+                     -DLLVM_TARGETS_TO_BUILD="X86" \
+                     -DLLVM_ENABLE_TERMINFO=OFF \
+                     -DLLVM_ENABLE_ASSERTIONS=OFF \
+                     -DLLVM_ENABLE_WERROR=OFF \
+                     -DLLVM_ENABLE_ZLIB=OFF \
+                     -DLLVM_OPTIMIZED_TABLEGEN=ON \
+                     -DCMAKE_INSTALL_RPATH=$ROOT/$TOOLCHAIN/lib"
 
 make_host() {
-  make llvm-tblgen llvm-config
+  make llvm-config llvm-tblgen
 }
 
 makeinstall_host() {
@@ -55,30 +62,30 @@ makeinstall_host() {
 }
 
 PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release \
-			  -DCMAKE_SYSTEM_NAME=Linux \
-			  -DLIBCXX_INSTALL_LIBRARY=OFF \
-			  -DLLVM_NATIVE_ARCH=X86 \
-			  -DLLVM_DEFAULT_TARGET_TRIPLE=$TARGET_NAME \
-			  -DLLVM_HOST_TRIPLE=$HOST_NAME \
-			  -DLLVM_BUILD_TOOLS=OFF \
-			  -DLLVM_INCLUDE_TOOLS=ON \
-			  -DLLVM_BUILD_EXAMPLES=OFF \
-			  -DLLVM_INCLUDE_EXAMPLES=OFF \
-			  -DLLVM_BUILD_TESTS=OFF \
-			  -DLLVM_INCLUDE_TESTS=OFF \
-			  -DLLVM_BUILD_DOCS=OFF \
-			  -DLLVM_INCLUDE_DOCS=OFF \
-			  -DLLVM_INSTALL_UTILS=OFF \
-			  -DLLVM_INCLUDE_UTILS=OFF \
-			  -DLLVM_ENABLE_DOXYGEN=OFF \
-			  -DLLVM_ENABLE_ZLIB=ON \
-			  -DLLVM_ENABLE_TERMINFO=OFF \
-			  -DLLVM_TABLEGEN=$ROOT/$TOOLCHAIN/bin/llvm-tblgen \
-			  -DLLVM_ENABLE_BACKTRACES=OFF \
-			  -DLLVM_OPTIMIZED_TABLEGEN=ON \
-			  -DLLVM_TARGETS_TO_BUILD="X86" \
-			  -DLLVM_BUILD_LLVM_DYLIB=ON \
-			  -DLLVM_LINK_LLVM_DYLIB=ON"
+                       -DCMAKE_C_FLAGS="$CFLAGS" \
+                       -DCMAKE_CXX_FLAGS="$CXXFLAGS" \
+                       -DLLVM_INCLUDE_TOOLS=ON \
+                       -DLLVM_BUILD_TOOLS=OFF \
+                       -DLLVM_BUILD_UTILS=ON \
+                       -DLLVM_BUILD_EXAMPLES=OFF \
+                       -DLLVM_INCLUDE_EXAMPLES=OFF \
+                       -DLLVM_BUILD_TESTS=OFF \
+                       -DLLVM_INCLUDE_TESTS=OFF \
+                       -DLLVM_INCLUDE_GO_TESTS=OFF \
+                       -DLLVM_BUILD_DOCS=OFF \
+                       -DLLVM_INCLUDE_DOCS=OFF \
+                       -DLLVM_ENABLE_DOXYGEN=OFF \
+                       -DLLVM_ENABLE_SPHINX=OFF \
+                       -DLLVM_TARGETS_TO_BUILD="X86" \
+                       -DLLVM_ENABLE_TERMINFO=OFF \
+                       -DLLVM_ENABLE_ASSERTIONS=OFF \
+                       -DLLVM_ENABLE_WERROR=OFF \
+                       -DLLVM_TARGET_ARCH="$TARGET_ARCH" \
+                       -DLLVM_ENABLE_ZLIB=ON \
+                       -DLLVM_BUILD_LLVM_DYLIB=ON \
+                       -DLLVM_LINK_LLVM_DYLIB=ON \
+                       -DLLVM_OPTIMIZED_TABLEGEN=ON \
+                       -DLLVM_TABLEGEN=$ROOT/$TOOLCHAIN/bin/llvm-tblgen"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
