@@ -22,7 +22,7 @@ PKG_ARCH="any"
 PKG_LICENSE="BSD"
 PKG_SITE="http://www.cmake.org/"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_HOST="ccache:host libressl:host"
+PKG_DEPENDS_HOST="ccache:host libressl:host rhash:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="cmake: A cross-platform, open-source make system"
@@ -42,7 +42,7 @@ configure_host() {
                -DBUILD_CursesDialog=0 \
                -DCMAKE_USE_SYSTEM_LIBRARY_JSONCPP=0 \
                -DCMAKE_USE_SYSTEM_LIBRARY_LIBUV=0 \
-               -DCMAKE_USE_SYSTEM_LIBRARY_LIBRHASH=0 \
+               -DCMAKE_USE_SYSTEM_LIBRARY_LIBRHASH=1 \
                -DENABLE_ACL=0 \
                -DHAVE_ACL_LIBACL_H=0 \
                -DHAVE_SYS_ACL_H=0
