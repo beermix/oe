@@ -8,13 +8,14 @@ PKG_AUTORECONF="yes"
 
 pre_configure_target() {
   export LIBS="-lterminfo"
+  unset CPPFLAGS
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
 			      --bindir=/bin \
 			      --enable-multibyte \
 			      --enable-cap \
-			      --enable-pcre \
+			      --disable-pcre \
 			      --disable-ansi2knr \
 			      --enable-dynamic \
 			      --with-term-lib=ncursesw \
