@@ -1,7 +1,0 @@
-PKG_NAME="freshplayerplugin"
-PKG_VERSION="963f43e"
-PKG_GIT_URL="https://github.com/i-rinat/freshplayerplugin"
-PKG_DEPENDS_TARGET="toolchain expat libevent openssl"
-PKG_SECTION="my"
-PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
