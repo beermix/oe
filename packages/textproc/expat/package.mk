@@ -1,5 +1,5 @@
 PKG_NAME="expat"
-PKG_VERSION="R_2_2_1"
+PKG_VERSION="R_2_2_2"
 PKG_GIT_URL="https://github.com/libexpat/libexpat"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="textproc"
