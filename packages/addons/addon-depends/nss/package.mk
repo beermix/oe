@@ -63,7 +63,7 @@ make_target() {
 }
 
 makeinstall_target() {
-  cd $PKG_BUILD
+  cd $ROOT/$PKG_BUILD
 
   $STRIP dist/Linux*/lib/*.so
   cp -L dist/Linux*/lib/*.so $SYSROOT_PREFIX/usr/lib
