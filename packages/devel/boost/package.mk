@@ -61,7 +61,7 @@ make_target() {
 }
 
 makeinstall_target() {
-  $ROOT/$TOOLCHAIN/bin/bjam -d2 --toolset=gcc link=static runtime-link=static target-os=linux variant=release threading=multi debug-symbols=off \
+  $ROOT/$TOOLCHAIN/bin/bjam -d2 --toolset=gcc link=shared runtime-link=shared target-os=linux variant=release threading=multi debug-symbols=off \
                                 --prefix=$SYSROOT_PREFIX/usr \
                                 --ignore-site-config \
                                 --layout=system \
