@@ -77,6 +77,7 @@ make_target() {
     'proprietary_codecs=true'
     'link_pulseaudio=true'
     'linux_use_bundled_binutils=false'
+    'use_allocator="none"'
     'use_debug_fission=false'
     'use_cups=false'
     'use_gconf=false'
@@ -124,7 +125,6 @@ make_target() {
     find -type f -path "*third_party/$_lib/*" \
       \! -path "*third_party/$_lib/chromium/*" \
       \! -path "*third_party/$_lib/google/*" \
-      \! -path "*base/third_party/icu/*" \
       \! -regex '.*\.\(gn\|gni\|isolate\|py\)' \
       -delete
   done
@@ -167,8 +167,8 @@ addon() {
   # cairo
   cp -PL $(get_pkg_build cairo)/.install_pkg/usr/lib/libcairo.so.2 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
-  # gtk+
-  cp -PL $(get_pkg_build gtk+)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  # gtk
+  cp -PL $(get_pkg_build gtk+)/.install_pkg/usr/lib/libgdk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
   cp -PL $(get_pkg_build gtk+)/.install_pkg/usr/lib/libgtk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # harfbuzz
@@ -187,9 +187,6 @@ addon() {
 
   # nspr
   cp -PL $(get_pkg_build nspr)/.install_pkg/usr/lib/*.so $ADDON_BUILD/$PKG_ADDON_ID/lib
-  
-  # atk
-  #cp -PL $(get_pkg_build atk)/.install_pkg/usr/lib/libatk-1.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # libexif
   cp -PL $(get_pkg_build libexif)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
