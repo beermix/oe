@@ -1,33 +1,21 @@
+# Made by github.com/escalade
 PKG_NAME="gnutls"
 PKG_VERSION="3.5.14"
-PKG_REV="1"
 PKG_ARCH="any"
-PKG_LICENSE="GPL"
-PKG_SITE="http://www.gnutls.org"
-PKG_URL="ftp://ftp.gnutls.org/gcrypt/gnutls/v3.5/gnutls-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain zlib openssl gmp libgpg-error nettle libgcrypt"
-PKG_SECTION="xmedia/tools"
-PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_LICENSE="GPLv3"
+PKG_SITE="https://www.gnutls.org"
+PKG_URL="https://www.gnupg.org/ftp/gcrypt/gnutls/v3.5/gnutls-$PKG_VERSION.tar.xz"
+PKG_DEPENDS_TARGET="toolchain nettle libgcrypt"
+PKG_SECTION="escalade/depends"
+PKG_SHORTDESC="GnuTLS is a secure communications library implementing the SSL, TLS and DTLS protocols and technologies around them."
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static \
-			      --disable-shared \
-			      --without-p11-kit \
-			      --enable-local-libopts \
-			      --with-included-libtasn1 \
-			      --with-included-unistring \
-			      --with-libz-prefix=$SYSROOT_PREFIX/usr \
-			      --with-librt-prefix=$SYSROOT_PREFIX \
-			      --with-libpthread-prefix=$SYSROOT_PREFIX/usr \
-			      --with-libnettle-prefix=$SYSROOT_PREFIX/usr \
-			      --with-sysroot=$SYSROOT_PREFIX \
-			      --without-libiconv-prefix \
-			      --without-libintl-prefix \
-			      --disable-libdane \
-			      --disable-tools \
-			      --disable-doc \
-			      --disable-nls \
-			      --disable-guile \
-			      --disable-valgrind-tests \
-			      --without-lzo \
-			      --with-gnu-ld"
+PKG_IS_ADDON="no"
+PKG_AUTORECONF="no"
+
+PKG_CONFIGURE_OPTS_TARGET="--with-included-libtasn1 \
+			   --with-included-unistring \
+			   --enable-local-libopts \
+			   --without-p11-kit \
+			   --with-libgcrypt \
+			   --disable-tools \
+			   --disable-doc"
