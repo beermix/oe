@@ -24,7 +24,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://rtmpdump.mplayerhq.hu/"
 PKG_GIT_URL="git://git.ffmpeg.org/rtmpdump"
 PKG_GIT_BRANCH="master"
-PKG_DEPENDS_TARGET="toolchain zlib openssl"
+PKG_DEPENDS_TARGET="toolchain zlib gnutls"
 PKG_PRIORITY="optional"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="rtmpdump: a toolkit for RTMP streams."
@@ -35,10 +35,6 @@ PKG_AUTORECONF="no"
 
 MAKEFLAGS="-j1"
 
-pre_configure_target() {
-  CFLAGS="$CFLAGS -fPIC"
-}
-
 make_target() {
   make prefix=/usr \
        incdir=/usr/include/librtmp \
@@ -47,8 +43,8 @@ make_target() {
        CC="$CC" \
        LD="$LD" \
        AR="$AR" \
-       SHARED=no \
-       CRYPTO="OPENSSL" \
+       SHARED=yes \
+       CRYPTO="GNUTLS" \
        OPT="" \
        XCFLAGS="$CFLAGS" \
        XLDFLAGS="$LDFLAGS" \
@@ -64,8 +60,8 @@ makeinstall_target() {
        CC="$CC" \
        LD="$LD" \
        AR="$AR" \
-       SHARED=no \
-       CRYPTO="OPENSSL" \
+       SHARED=yes \
+       CRYPTO="GNUTLS" \
        OPT="" \
        XCFLAGS="$CFLAGS" \
        XLDFLAGS="$LDFLAGS" \
@@ -80,8 +76,8 @@ makeinstall_target() {
        CC="$CC" \
        LD="$LD" \
        AR="$AR" \
-       SHARED=no \
-       CRYPTO="OPENSSL" \
+       SHARED=yes \
+       CRYPTO="GNUTLS" \
        OPT="" \
        XCFLAGS="$CFLAGS" \
        XLDFLAGS="$LDFLAGS" \
