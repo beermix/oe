@@ -19,13 +19,13 @@
 ################################################################################
 
 PKG_NAME="chromium"
-PKG_VERSION="59.0.3071.115"
+PKG_VERSION="59.0.3071.104"
 PKG_REV="110"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_SITE="https://chromereleases.googleblog.com/search/label/Stable%20updates"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain pciutils dbus ffmpeg tiff libXcomposite libXcursor libXtst alsa-lib bzip2 yasm libXScrnSaver libexif libpng harfbuzz atk gtk+ unclutter xdotool libwebp libvpx libvdpau re2 nss ninja:host"
+PKG_DEPENDS_TARGET="toolchain pciutils dbus ffmpeg tiff libXcomposite libXcursor libXtst alsa-lib bzip2 yasm libXScrnSaver libexif libpng harfbuzz atk gtk+ unclutter xdotool libwebp libvpx libvdpau re2 ninja:host"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -183,10 +183,10 @@ addon() {
   cp -PL $(get_pkg_build gdk-pixbuf)/.install_pkg/usr/lib/gdk-pixbuf-2.0/2.10.0/loaders/* $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules
 
   # nss
-  cp -PL $(get_pkg_build nss)/dist/Linux*OPT.OBJ/lib/*.so $ADDON_BUILD/$PKG_ADDON_ID/lib
+  #cp -PL $(get_pkg_build nss)/dist/Linux*OPT.OBJ/lib/*.so $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # nspr
-  cp -PL $(get_pkg_build nspr)/.install_pkg/usr/lib/*.so $ADDON_BUILD/$PKG_ADDON_ID/lib
+  #cp -PL $(get_pkg_build nspr)/.install_pkg/usr/lib/*.so $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # libexif
   cp -PL $(get_pkg_build libexif)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
