@@ -33,6 +33,7 @@ PKG_AUTORECONF="yes"
 PKG_CONFIGURE_OPTS_TARGET="--disable-curl \
                            --disable-https \
                            --disable-spdy \
+                           --disable-shared \
                            --with-libgcrypt-prefix=$SYSROOT_PREFIX/usr"
 
 post_makeinstall_target() {
