@@ -19,7 +19,7 @@
 PKG_NAME="swig"
 PKG_VERSION="3.0.12"
 PKG_URL="$SOURCEFORGE_SRC/swig/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_HOST="ccache:host pcre:host"
+PKG_DEPENDS_HOST="ccache:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="devel"
 PKG_SHORTDESC="SWIG: a software development tool that connects programs written in C and C++ with a variety of high-level programming languages."
@@ -28,12 +28,14 @@ PKG_LONGDESC="SWIG is a software development tool that connects programs written
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_HOST="--with-boost=no \
+PKG_CONFIGURE_OPTS_HOST="--with-pcre-prefix=$ROOT/$TOOLCHAIN \
+                         --with-boost=no \
                          --without-pcre \
                          --without-mzscheme \
                          --without-php \
                          --without-x \
                          --without-tcl \
+                         --without-python \
                          --without-python3 \
                          --without-perl5 \
                          --without-octave \
