@@ -56,7 +56,7 @@ make_target() {
      USE_SYSTEM_ZLIB=1 ZLIB_LIBS=-lz \
      OS_TEST=$TARGET_ARCH \
      NSS_TESTS="dummy" \
-     NSINSTALL=$TOOLCHAIN/bin/nsinstall \
+     NSINSTALL=$ROOT/$TOOLCHAIN/bin/nsinstall \
      CPU_ARCH_TAG=$TARGET_ARCH \
      CC=$CC LDFLAGS="$LDFLAGS -L$SYSROOT_PREFIX/usr/lib" \
      V=1
