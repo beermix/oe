@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="connman"
-PKG_VERSION="c789297"
+PKG_VERSION="32c28e6"
 PKG_SITE="http://www.connman.net"
 PKG_GIT_URL="git://git.kernel.org/pub/scm/network/connman/connman.git"
 PKG_DEPENDS_TARGET="toolchain glib readline netbsd-curses dbus iptables wpa_supplicant"
