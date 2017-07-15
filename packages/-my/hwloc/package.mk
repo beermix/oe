@@ -12,3 +12,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --disable-nvml \
 			      --enable-pci \
 			      --enable-malloc0returnsnull"
+			      
+post_makeinstall_target() {
+  rm -rf $INSTALL
+}
