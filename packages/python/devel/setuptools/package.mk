@@ -32,9 +32,9 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 make_host() {
-  : # nothing todo
+  python bootstrap.py
 }
 
 makeinstall_host() {
-  python setup.py install --prefix=$ROOT/$TOOLCHAIN --optimize=1
+  python setup.py install --prefix=$ROOT/$TOOLCHAIN
 }
