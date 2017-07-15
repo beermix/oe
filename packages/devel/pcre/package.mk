@@ -34,9 +34,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-utf8 \
 			      --enable-pcre16 \
 			      --enable-pcre8 \
 			      --enable-unicode-properties \
-			      --enable-jit \
-			      --disable-stack-for-recursion \
-			      --enable-newline-is-anycrlf"
+			      --enable-jit"
 			      
 PKG_CONFIGURE_OPTS_HOST="--prefix=$ROOT/$TOOLCHAIN $PKG_CONFIGURE_OPTS_TARGET"
 
