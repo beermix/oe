@@ -17,11 +17,11 @@
 ################################################################################
 
 PKG_NAME="setuptools"
-PKG_VERSION="36.0.1"
+PKG_VERSION="v36.2.0"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
-PKG_SITE="git://github.com/pypa/setuptools/releases"
-PKG_URL="https://pypi.python.org/packages/a9/23/720c7558ba6ad3e0f5ad01e0d6ea2288b486da32f053c73e259f7c392042/setuptools-36.0.1.zip"
+PKG_SITE="http://github.com/pypa/setuptools/releases"
+PKG_GIT_URL="http://github.com/pypa/setuptools"
 PKG_DEPENDS_HOST="Python:host six:host packaging:host appdirs:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="python/devel"
