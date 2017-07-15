@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="kodi"
-PKG_VERSION="9260e0a"
+PKG_VERSION="cc1f21c"
 PKG_GIT_URL="https://github.com/xbmc/xbmc.git"
 PKG_GIT_BRANCH="Krypton"
 PKG_KEEP_CHECKOUT="no"
