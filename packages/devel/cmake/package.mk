@@ -42,7 +42,7 @@ configure_host() {
                -DBUILD_CursesDialog=0 \
                -DCMAKE_USE_SYSTEM_LIBRARY_JSONCPP=0 \
                -DCMAKE_USE_SYSTEM_LIBRARY_LIBUV=0 \
-               -DCMAKE_USE_SYSTEM_LIBRARY_LIBRHASH=1 \
+               -DCMAKE_USE_SYSTEM_LIBRARY_LIBRHASH=0 \
                -DENABLE_ACL=0 \
                -DHAVE_ACL_LIBACL_H=0 \
                -DHAVE_SYS_ACL_H=0
