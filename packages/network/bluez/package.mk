@@ -42,10 +42,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-dependency-tracking \
                            --disable-systemd \
                            --enable-tools \
                            --enable-datafiles \
-                           --disable-experimental \
-                           --enable-deprecated \
                            --enable-sixaxis \
-                           --with-gnu-ld \
                            storagedir=/storage/.cache/bluetooth"
 
 if [ "$DEBUG" = "yes" ]; then

@@ -1,4 +1,3 @@
-# Made by github.com/escalade
 PKG_NAME="nettle"
 PKG_VERSION="3.3"
 PKG_ARCH="any"

@@ -1,4 +1,3 @@
-# Made by github.com/escalade
 PKG_NAME="gnutls"
 PKG_VERSION="3.5.14"
 PKG_ARCH="any"
@@ -13,9 +12,9 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--with-included-libtasn1 \
-			   --with-included-unistring \
-			   --enable-local-libopts \
-			   --without-p11-kit \
-			   --with-libgcrypt \
-			   --disable-tools \
-			   --disable-doc"
+			      --with-included-unistring \
+			      --enable-local-libopts \
+			      --without-p11-kit \
+			      --with-libgcrypt \
+			      --disable-tools \
+			      --disable-doc"
