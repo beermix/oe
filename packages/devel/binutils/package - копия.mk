@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="binutils"
-PKG_VERSION="5d93f65"
+PKG_VERSION="e70c0b5"
 #PKG_VERSION="e70c0b5"
 PKG_GIT_URL="git://sourceware.org/git/binutils-gdb.git"
 PKG_DEPENDS_HOST="ccache:host bison:host flex:host linux:host"
@@ -45,7 +45,8 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-lto \
                          --disable-nls \
                          --with-pic \
-                         --disable-gdb"
+                         --disable-gdb \
+                         --enable-poison-system-directories"
 
 makeinstall_host() {
   cp -v ../include/libiberty.h $SYSROOT_PREFIX/usr/include
