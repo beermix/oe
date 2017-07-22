@@ -19,7 +19,7 @@
 PKG_NAME="gcc"
 #PKG_VERSION="6.4.0"
 #PKG_URL="ftp://gcc.gnu.org/pub/gcc/releases/gcc-$PKG_VERSION/gcc-$PKG_VERSION.tar.xz"
-PKG_VERSION="7-20170713"
+PKG_VERSION="7-20170720"
 PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/LATEST-7/gcc-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host"
 PKG_DEPENDS_TARGET="gcc:host"
