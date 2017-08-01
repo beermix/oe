@@ -21,7 +21,6 @@
 PKG_NAME="nss"
 PKG_VERSION="3.31"
 PKG_SITE="http://ftp.mozilla.org/"
-#PKG_URL="https://ftp.mozilla.org/pub/security/nss/releases/NSS_3_30_2_RTM/src/nss-3.30.2-with-nspr-4.14.tar.gz"
 PKG_URL="https://ftp.mozilla.org/pub/security/nss/releases/NSS_3_31_RTM/src/nss-3.31-with-nspr-4.15.tar.gz"
 PKG_DEPENDS_TARGET="toolchain nss:host nspr zlib"
 PKG_SECTION="security"
