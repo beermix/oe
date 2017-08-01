@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="pulseaudio"
-PKG_VERSION="10.0"
+PKG_VERSION="10.99.1"
 PKG_SITE="http://pulseaudio.org/"
 PKG_URL="http://www.freedesktop.org/software/pulseaudio/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain libtool alsa-lib libsndfile soxr dbus openssl libcap fftw"
