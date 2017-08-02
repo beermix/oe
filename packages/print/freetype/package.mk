@@ -19,7 +19,7 @@
 PKG_NAME="freetype"
 #PKG_VERSION="2.8"
 #PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_VERSION="933f4cb"
+PKG_VERSION="7e50824"
 PKG_GIT_URL="git://git.sv.nongnu.org/freetype/freetype2.git"
 PKG_DEPENDS_TARGET="toolchain zlib libpng bzip2"
 PKG_DEPENDS_HOST="zlib:host libpng:host bzip2:host"

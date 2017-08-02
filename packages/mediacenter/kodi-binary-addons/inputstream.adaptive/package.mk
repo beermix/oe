@@ -17,10 +17,11 @@
 ################################################################################
 
 PKG_NAME="inputstream.adaptive"
-PKG_VERSION="7b3ca31"
+PKG_VERSION="47038df"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
 PKG_GIT_URL="https://github.com/peak3d/inputstream.adaptive"
+PKG_GIT_BRANCH="1.0.8_k17"
 PKG_DEPENDS_TARGET="toolchain kodi-platform"
 PKG_SECTION=""
 PKG_SHORTDESC="inputstream.adaptive"
