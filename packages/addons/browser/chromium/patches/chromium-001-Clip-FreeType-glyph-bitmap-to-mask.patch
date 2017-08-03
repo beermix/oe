@@ -1,7 +1,7 @@
-diff --git a/src/ports/SkFontHost_FreeType_common.cpp b/src/ports/SkFontHost_FreeType_common.cpp
+diff --git a/third_party/skia/src/ports/SkFontHost_FreeType_common.cpp b/third_party/skia/src/ports/SkFontHost_FreeType_common.cpp
 index 9df7268bb4..a216fdb29c 100644
---- a/src/ports/SkFontHost_FreeType_common.cpp
-+++ b/src/ports/SkFontHost_FreeType_common.cpp
+--- a/third_party/skia/src/ports/SkFontHost_FreeType_common.cpp
++++ b/third_party/skia/src/ports/SkFontHost_FreeType_common.cpp
 @@ -395,8 +395,6 @@ void SkScalerContext_FreeType_Base::generateGlyphImage(
      switch ( face->glyph->format ) {
          case FT_GLYPH_FORMAT_OUTLINE: {
