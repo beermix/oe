@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="libtirpc"
-PKG_VERSION="1.0.1"
+PKG_VERSION="1.0.2"
 PKG_SITE="https://sourceforge.net/projects/libtirpc/"
-PKG_URL="https://downloads.sourceforge.net/project/libtirpc/libtirpc/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_URL="https://dl.dropboxusercontent.com/s/donxab5s4ly6xrh/libtirpc-1.0.2.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="network"
 PKG_SHORTDESC="libtirpc: Transport Independent RPC Library"
