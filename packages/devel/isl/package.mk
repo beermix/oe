@@ -7,8 +7,8 @@ PKG_DEPENDS_HOST="gmp:host libtool:host intltool:host"
 PKG_DEPENDS_TARGET="toolchain gmp"
 PKG_SECTION="devel"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_HOST="--disable-shared --without-clang --with-gmp=$ROOT/$TOOLCHAIN"
+PKG_CONFIGURE_OPTS_HOST="--disable-shared --with-gnu-ld --without-clang --with-gmp=$ROOT/$TOOLCHAIN"
 			 
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"

@@ -1,5 +1,5 @@
 PKG_NAME="libwebp"
-PKG_VERSION="7ca0df1"
+PKG_VERSION="dcefed9"
 PKG_GIT_URL="https://github.com/webmproject/libwebp"
 PKG_DEPENDS_TARGET="toolchain intel-vaapi-driver libva"
 PKG_PRIORITY="optional"

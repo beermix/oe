@@ -26,7 +26,7 @@ PKG_LICENSE="Mixed"
 PKG_SITE="https://chromereleases.googleblog.com/search/label/Stable%20updates"
 PKG_URL="ftp://root:openelec@192.168.1.4/www/chromium-60.0.3112.78.tar.xz"
 #PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain pciutils dbus ffmpeg tiff libXcomposite libXcursor libXtst alsa-lib bzip2 yasm libXScrnSaver libexif libpng harfbuzz atk gtk+ unclutter xdotool libwebp libvdpau ninja:host"
+PKG_DEPENDS_TARGET="toolchain pciutils dbus ffmpeg tiff libXcomposite libXcursor libXtst alsa-lib bzip2 yasm libXScrnSaver libexif libpng harfbuzz atk gtk+ unclutter xdotool libwebp re2 libvpx libvdpau ninja:host"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -79,6 +79,7 @@ make_target() {
     'link_pulseaudio=true'
     'linux_use_bundled_binutils=false'
     'use_allocator="none"'
+    'use_debug_fission=false'
     'use_cups=false'
     'use_gconf=false'
     'use_gnome_keyring=false'
@@ -92,7 +93,6 @@ make_target() {
     'enable_widevine=true'
     'enable_nacl=false'
     'enable_swiftshader=false'
-    'enable_nacl_nonsfi=false'
     "google_api_key=\"${_google_api_key}\""
     "google_default_client_id=\"${_google_default_client_id}\""
     "google_default_client_secret=\"${_google_default_client_secret}\""
@@ -105,6 +105,10 @@ make_target() {
     libpng
     libxslt
     yasm
+    re2
+    minizip
+    libxml2
+    libwebp
 )
   
   sed -e 's|i386-linux-gnu/||g' \
@@ -117,10 +121,11 @@ make_target() {
   # *should* do what the remove_bundled_libraries.py script does, with the
   # added benefit of not having to list all the remaining libraries
   local _lib
-  for _lib in ${_system_libs}; do
+  for _lib in ${!_system_libs[@]} ${_system_libs[libjpeg]+libjpeg_turbo}; do
     find -type f -path "*third_party/$_lib/*" \
       \! -path "*third_party/$_lib/chromium/*" \
       \! -path "*third_party/$_lib/google/*" \
+      \! -path "*base/third_party/icu/*" \
       \! -regex '.*\.\(gn\|gni\|isolate\|py\)' \
       -delete
   done
