@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libaacs"
-PKG_VERSION="9da2b68"
+PKG_VERSION="295df3f"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
