@@ -1,6 +1,6 @@
 PKG_NAME="expat"
-PKG_VERSION="R_2_2_2"
-PKG_GIT_URL="https://github.com/libexpat/libexpat"
+PKG_VERSION="2.2.2"
+PKG_URL="https://dl.dropboxusercontent.com/s/hqqh8wtm15ocd5q/expat-2.2.2.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="textproc"
 PKG_IS_ADDON="no"
@@ -11,6 +11,6 @@ pre_configure_target() {
   export CFLAGS="$CFLAGS -DXML_POOR_ENTROPY"
 }
 
-PKG_CMAKE_SCRIPT_TARGET="expat/CMakeLists.txt"
+#PKG_CMAKE_SCRIPT_TARGET="expat/CMakeLists.txt"
 
 PKG_CMAKE_OPTS_TARGET="-DBUILD_doc=OFF -DBUILD_tools=OFF -DBUILD_examples=OFF -DBUILD_tests=OFF -DBUILD_shared=ON"
