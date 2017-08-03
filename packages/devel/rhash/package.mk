@@ -1,5 +1,5 @@
 PKG_NAME="rhash"
-PKG_VERSION="3643cec"
+PKG_VERSION="v1.3.4"
 PKG_GIT_URL="https://github.com/rhash/RHash"
 PKG_DEPENDS_HOST=""
 PKG_SECTION="devel"
