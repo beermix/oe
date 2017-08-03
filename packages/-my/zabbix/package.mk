@@ -1,5 +1,5 @@
 PKG_NAME="zabbix"
-PKG_VERSION="3.2.6"
+PKG_VERSION="3.2.7"
 PKG_URL="https://fossies.org/linux/misc/zabbix-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain curl libxml2 mariadb netbsd-curses openssl libssh2"
 PKG_SECTION="devel"
