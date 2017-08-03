@@ -19,12 +19,12 @@
 ################################################################################
 
 PKG_NAME="chromium"
-PKG_VERSION="60.0.3112.78"
+PKG_VERSION="60.0.3112.90"
 PKG_REV="110"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_SITE="https://chromereleases.googleblog.com/search/label/Stable%20updates"
-PKG_URL="ftp://root:openelec@192.168.1.4/www/chromium-60.0.3112.78.tar.xz"
+PKG_URL="ftp://root:openelec@192.168.1.4/www/chromium-$PKG_VERSION.tar.xz"
 #PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain pciutils dbus ffmpeg tiff libXcomposite libXcursor libXtst alsa-lib bzip2 yasm libXScrnSaver libexif libpng harfbuzz atk gtk+ unclutter xdotool libwebp re2 libvpx libvdpau ninja:host"
 PKG_SECTION="browser"
