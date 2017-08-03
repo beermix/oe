@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="wayland"
-PKG_VERSION="1.13.0"
+PKG_VERSION="1.13.93"
 PKG_SITE="http://bitmath.org"
 PKG_URL="https://wayland.freedesktop.org/releases/${PKG_NAME}-${PKG_VERSION}.tar.xz"
 PKG_DEPENDS_TARGET="toolchain expat libxml2 glib"
