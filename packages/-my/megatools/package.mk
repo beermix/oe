@@ -1,5 +1,5 @@
 PKG_NAME="megatools"
-PKG_VERSION="3aa1de9"
+PKG_VERSION="4621580"
 PKG_GIT_URL="https://github.com/megous/megatools/"
 PKG_DEPENDS_TARGET="toolchain fuse neon"
 PKG_SECTION="my"
