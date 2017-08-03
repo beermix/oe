@@ -4,7 +4,7 @@
 ################################################################################
 
 PKG_NAME="audioencoder.flac"
-PKG_VERSION="1d540c6"
+PKG_VERSION="v1.1.0"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
