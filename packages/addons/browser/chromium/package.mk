@@ -16,7 +16,7 @@
 #  along with OpenELEC.tv; see the file COPYING.  If not, write to
 #  the Free Software Foundation, 51 Franklin Street, Suite 500, Boston, MA 02110, USA.
 #  http://www.gnu.org/copyleft/gpl.html
-################################################################################
+################################################################################ libvpx re2
 
 PKG_NAME="chromium"
 PKG_VERSION="60.0.3112.78"
@@ -26,7 +26,7 @@ PKG_LICENSE="Mixed"
 PKG_SITE="https://chromereleases.googleblog.com/search/label/Stable%20updates"
 PKG_URL="ftp://root:openelec@192.168.1.4/www/chromium-60.0.3112.78.tar.xz"
 #PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain pciutils dbus ffmpeg tiff libXcomposite libXcursor libXtst alsa-lib bzip2 yasm libXScrnSaver libexif libpng harfbuzz atk gtk+ unclutter xdotool libwebp libvpx libvdpau re2 ninja:host"
+PKG_DEPENDS_TARGET="toolchain pciutils dbus ffmpeg tiff libXcomposite libXcursor libXtst alsa-lib bzip2 yasm libXScrnSaver libexif libpng harfbuzz atk gtk+ unclutter xdotool libwebp libvdpau ninja:host"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"

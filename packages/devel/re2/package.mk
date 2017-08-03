@@ -1,5 +1,5 @@
 PKG_NAME="re2"
-PKG_VERSION="2017-07-01"
+PKG_VERSION="2017-08-01"
 PKG_GIT_URL="https://github.com/google/re2"
 PKG_DEPENDS_HOST=""
 PKG_SECTION="devel"
