@@ -47,3 +47,7 @@ make_host() {
 make_target() {
   make VERBOSE=1
 }
+
+post_makeinstall_target() {
+  rm -rf $INSTALL
+}
