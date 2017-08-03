@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="binutils"
-PKG_VERSION="2.28.1"
+PKG_VERSION="2.29"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/binutils/"
@@ -44,6 +44,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-gold \
                          --enable-ld=default \
                          --disable-deterministic-archives \
+                         --enable-poison-system-directories \
                          --enable-lto \
                          --disable-nls \
                          --with-pic \
