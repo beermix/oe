@@ -56,7 +56,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-gnu-unique-object \
                            --enable-clocale=gnu \
                            --disable-libmpx \
-                           --disable-libunwind-exceptions \
                            --disable-libsanitizer \
                            --enable-gnu-indirect-function \
                            --with-tune=generic"
