@@ -8,16 +8,18 @@ PKG_SOURCE_DIR="icu"
 PKG_DEPENDS_TARGET="toolchain icu:host"
 PKG_SECTION="textproc"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
-post_unpack() {
-  cp -r $PKG_BUILD/source/* $PKG_BUILD/
+pre_configure_target() {
+  export LIBS="$LIBS -latomic"
 }
 
 PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --disable-shared \
+                           --disable-samples \
+                           --disable-tests \
                            --with-cross-build=$ROOT/$PKG_BUILD/.$HOST_NAME"
 
 PKG_CONFIGURE_SCRIPT="source/configure"
