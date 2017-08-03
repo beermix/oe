@@ -10,6 +10,7 @@ PKG_USE_CMAKE="no"
 pre_configure_target() {
    strip_lto
    strip_gold
+   MAKEFLAGS=-j1
    
    CC="$CC"
    CXX="$CXX"
