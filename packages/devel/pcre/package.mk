@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="pcre"
-PKG_VERSION="8.39"
+PKG_VERSION="8.41"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
@@ -34,17 +34,9 @@ PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_HOST="--prefix=$ROOT/$TOOLCHAIN \
-             --enable-utf8 \
-             --enable-unicode-properties \
-             --with-gnu-ld"
+PKG_CONFIGURE_OPTS_HOST="--prefix=$ROOT/$TOOLCHAIN --enable-utf8--enable-unicode-properties --with-gnu-ld"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
-             --enable-static \
-             --enable-utf8 \
-             --enable-pcre16 \
-             --enable-unicode-properties \
-             --with-gnu-ld"
+PKG_CONFIGURE_OPTS_TARGET="--enable-utf8 --enable-pcre16 --enable-unicode-properties --with-gnu-ld"
 
 pre_configure_target() {
   CFLAGS="$CFLAGS -fPIC"
