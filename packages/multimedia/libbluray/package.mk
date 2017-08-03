@@ -42,7 +42,7 @@ fi
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-werror \
                            --disable-extra-warnings \
-                           --enable-optimizations \
+                           --disable-optimizations \
                            --disable-examples \
                            --disable-bdjava \
                            --enable-udf \
