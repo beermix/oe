@@ -16,7 +16,7 @@
 #  along with OpenELEC.tv; see the file COPYING.  If not, write to
 #  the Free Software Foundation, 51 Franklin Street, Suite 500, Boston, MA 02110, USA.
 #  http://www.gnu.org/copyleft/gpl.html
-################################################################################ libvpx re2
+################################################################################
 
 PKG_NAME="chromium"
 PKG_VERSION="60.0.3112.78"
@@ -110,7 +110,7 @@ make_target() {
     libxml2
     libwebp
 )
-  
+
   sed -e 's|i386-linux-gnu/||g' \
       -e 's|x86_64-linux-gnu/||g' \
       -e 's|/usr/lib/va/drivers|/usr/lib/dri|g' \
@@ -121,7 +121,7 @@ make_target() {
   # *should* do what the remove_bundled_libraries.py script does, with the
   # added benefit of not having to list all the remaining libraries
   local _lib
-  for _lib in ${!_system_libs[@]} ${_system_libs[libjpeg]+libjpeg_turbo}; do
+  for _lib in ${!_system_libs[@]}; do
     find -type f -path "*third_party/$_lib/*" \
       \! -path "*third_party/$_lib/chromium/*" \
       \! -path "*third_party/$_lib/google/*" \
