@@ -1,7 +1,0 @@
-/var/log/nscd {
-	sharedscripts
-
-	postrotate
-		/sbin/service nscd try-restart >/dev/null
-	endscript
-}
