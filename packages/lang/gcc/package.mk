@@ -50,14 +50,8 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-checking=release \
                            --without-ppl \
                            --without-cloog \
-                           --disable-werror \
-                           --disable-browser-plugin \
-                           --disable-vtable-verify \
-                           --enable-gnu-unique-object \
-                           --enable-clocale=gnu \
                            --disable-libmpx \
                            --disable-libsanitizer \
-                           --enable-gnu-indirect-function \
                            --with-tune=generic"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
@@ -90,6 +84,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-threads=posix \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time \
+                         --enable-clocale=gnu \
                          $GCC_OPTS"
 
 pre_configure_host() {
