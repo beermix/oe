@@ -40,13 +40,13 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static \
 
 PKG_CONFIGURE_SCRIPT="source/configure"
 
-make_host() {
-  make VERBOSE=1
-}
+#make_host() {
+#  make VERBOSE=1
+#}
 
-make_target() {
-  make VERBOSE=1
-}
+#make_target() {
+#  make VERBOSE=1
+#}
 
 post_makeinstall_target() {
   rm -rf $INSTALL
