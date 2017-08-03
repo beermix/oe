@@ -1,5 +1,5 @@
 PKG_NAME="boringssl"
-PKG_VERSION="2b56981"
+PKG_VERSION="bda7b9a"
 PKG_SITE="http://www.openssl.org/"
 PKG_GIT_URL="https://boringssl.googlesource.com/boringssl"
 PKG_DEPENDS_HOST="ccache:host"
