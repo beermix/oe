@@ -1,6 +1,10 @@
---- a/libxfs/Makefile	2017-03-27 10:18:31.669142148 +0200
-+++ b/libxfs/Makefile	2017-03-27 10:21:29.707416586 +0200
-@@ -118,26 +118,16 @@
+diff --git a/libxfs/Makefile b/libxfs/Makefile
+old mode 100644
+new mode 100755
+index d248c1fc..3c19845b
+--- a/libxfs/Makefile
++++ b/libxfs/Makefile
+@@ -118,26 +118,16 @@ LTLIBS = $(LIBPTHREAD) $(LIBRT)
  # don't try linking xfs_repair with a debug libxfs.
  DEBUG = -DNDEBUG
  
@@ -10,7 +14,7 @@
 -default: crc32selftest ltdepend $(LTLIBRARY)
 +default: ltdepend $(LTLIBRARY)
  
- crc32table.h: gen_crc32table.c
+ crc32table.h: gen_crc32table.c crc32defs.h
  	@echo "    [CC]     gen_crc32table"
 -	$(Q) $(BUILD_CC) $(BUILD_CFLAGS) -o gen_crc32table $<
 +	$(Q) $(HOST_CC) $(HOST_CFLAGS) -o gen_crc32table $<
@@ -22,7 +26,7 @@
 -# systems/architectures. Hence we make sure that xfsprogs will never use a
 -# busted CRC calculation at build time and hence avoid putting bad CRCs down on
 -# disk.
--crc32selftest: gen_crc32table.c crc32table.h crc32.c
+-crc32selftest: gen_crc32table.c crc32table.h crc32.c crc32defs.h
 -	@echo "    [TEST]    CRC32"
 -	$(Q) $(BUILD_CC) $(BUILD_CFLAGS) -D CRC32_SELFTEST=1 crc32.c -o $@
 -	$(Q) ./$@

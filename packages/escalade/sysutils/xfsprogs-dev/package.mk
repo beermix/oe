@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="xfsprogs-dev"
-PKG_VERSION="v4.11.0"
+PKG_VERSION="v4.12.0"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.xfs.org"
