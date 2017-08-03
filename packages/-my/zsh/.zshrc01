@@ -1,4 +1,4 @@
-# Path to your oh-my-zsh installation.
+	# Path to your oh-my-zsh installation.
 export ZSH=/storage/.cache/.oh-my-zsh
 
 # Set name of the theme to load.
@@ -20,19 +20,34 @@ DISABLE_UPDATE_PROMPT=true
 ZSH_THEME="flazz"
 
 DISABLE_UPDATE_PROMPT=true
+export LS_COLORS='*.swp=-1;44;37:*,v=5;34;93:*.vim=35:no=0:fi=0:di=32:ln=36:or=1;40:mi=1;40:pi=31:so=33:bd=44;37:cd=44;37:*.jpg=1;32:*.jpeg=1;32:*.JPG=1;32:*.gif=1;32:*.png=1;32:*.jpeg=1;32:*.ppm=1;32:*.pgm=1;32:*.pbm=1;32:*.c=1;32:*.C=1;33:*.h=1;33:*.cc=1;33:*.awk=1;33:*.pl=1;33:*.gz=0;33:*.tar=0;33:*.zip=0;33:*.lha=0;33:*.lzh=0;33:*.arj=0;33:*.bz2=0;33:*.tgz=0;33:*.taz=33:*.html=36:*.htm=1;34:*.doc=1;34:*.txt=1;34:*.o=1;36:*.a=1;36'
+export ZLS_COLORS='*.swp=00;44;37:*,v=5;34;93:*.vim=35:no=0:fi=0:di=32:ln=36:or=1;40:mi=1;40:pi=31:so=33:bd=44;37:cd=44;37:*.jpg=1;32:*.jpeg=1;32:*.JPG=1;32:*.gif=1;32:*.png=1;32:*.jpeg=1;32:*.ppm=1;32:*.pgm=1;32:*.pbm=1;32:*.c=1;32:*.C=1;33:*.h=1;33:*.cc=1;33:*.awk=1;33:*.pl=1;33:*.gz=0;33:*.tar=0;33:*.zip=0;33:*.lha=0;33:*.lzh=0;33:*.arj=0;33:*.bz2=0;33:*.tgz=0;33:*.taz=33:*.html=36:*.htm=1;34:*.doc=1;34:*.txt=1;34:*.o=1;36:*.a=1;36'
 export CLICOLOR=1       # some shells need this to enable colorized out
 export GREP_COLOR=32    # some greps have colorized ouput. enable...
 export GREPCOLOR=32     # dito here
 PROMPT=$'[%{\e[1;37m%}%n%{\e[0m%}]%# '
-RPROMPT=$'[%m : %~]'
+#RPROMPT=$'[%m : %~]'
 autoload -U colors && colors
 autoload -U zmv
 
+#setopt    GLOB
+setopt    EXTENDED_HISTORY
+setopt    INC_APPEND_HISTORY
+setopt    SHARE_HISTORY
+setopt    HIST_IGNORE_DUPS
+setopt    HIST_FIND_NO_DUPS
+setopt    HIST_IGNORE_SPACE
+setopt    HIST_VERIFY
+setopt    NO_HIST_BEEP
+setopt    NO_BEEP
+setopt    NO_HUP
+autoload -Uz bracketed-paste-magic
+autoload -U zutil
+autoload -U compinit
 
 
-
-#bindkey '\e[A' history-search-backward
-#bindkey '\e[B' history-search-forward
+bindkey '\e[A' history-search-backward
+bindkey '\e[B' history-search-forward
 bindkey '^K' kill-whole-line
 bindkey "\e[H" beginning-of-line        # Home (xorg)
 bindkey "\e[1~" beginning-of-line       # Home (console)
@@ -93,10 +108,10 @@ HIST_STAMPS="yyyy-mm-dd"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-#plugins=(git docker history)
-plugins=(git history zsh-syntax-highlighting-filetypes zsh-syntax-highlighting-filetypes zsh-history-substring-search zsh-256color)
+plugins=(git docker history rsync python)
+export PATH="$PATH:/opt/bin"
 # User configuration
-export PATH="/usr/bin:/usr/sbin:$PATH:$HOME/.bin"
+export PATH="$HOME/node_modules/.bin/:/usr/bin:/usr/sbin:$PATH:$HOME/.bin"
 # export MANPATH="/usr/local/man:$MANPATH" :/storage/50GS/miniconda/bin
 #export PATH="/storage/miniconda2/bin:$PATH"
 source $ZSH/oh-my-zsh.sh
@@ -112,11 +127,12 @@ alias clean='rm -rf /root/.ccache-openelec && PROJECT=Generic ARCH=x86_64 ./scri
 alias create='rm -rf /root/.ccache-openelec && PROJECT=Generic ARCH=x86_64  ./scripts/create_addon'
 alias ip2='cd /root/ip2 && linux32 ./make.sh shell'
 alias f='/usr/bin/find / -name'
+alias apt='aptitude install'
 alias pipu='pip uninstall'
 alias pipi='pip install'
 alias pipup="pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs pip install -U"
 alias cb='conda build'
-#alias reb='sudo shutdown -r 0'
+alias reb='sudo shutdown -r 0'
 #alias sr='spotify-ripper -l --mp4 -Q 320 spotify:track:4eysqhxOWoDiSbM8BU0GCH'
 alias unpack='PROJECT=Generic ARCH=x86_64 ./scripts/unpack'
 alias asc='apt-cache search'
@@ -126,7 +142,7 @@ alias cg='./configure --help | grep'
 alias e='exit'
 alias hisg='history | grep'
 alias his='history'
-alias a2='aria2c --file-allocation=none --max-connection-per-server=8 --force-sequential=true --continue=false'
+alias a2='aria2c --file-allocation=none --max-connection-per-server=8'
 alias ai='autoreconf -if'
 alias ai4='autoreconf -i -I m4'
 alias ds='docker info && docker search'
@@ -148,7 +164,7 @@ alias start='systemctl start kodi'
 alias trim='time sh -c "fstrim /storage"'
 alias smart='smartctl -a /dev/sdb'
 alias pipup='pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs pip install -U'
-#alias ip='curl ifconfig.co'
+alias ip='curl ifconfig.co'
 alias boot='systemd-analyze blame'
 alias uu='/storage/data/ubuntu/usr/sbin/chroot /storage/data/ubuntu/ /bin/bash'
 alias scr='kodi-send --action="TakeScreenshot"'
@@ -158,13 +174,13 @@ alias s3='iperf3 -c wat.is.my'
 alias iptest='while :; do nc -l -p 4242 > /dev/null;0:51 23.01.2016one'
 alias ports='netstat -nap'
 alias rmpyc='/usr/bin/find . -name "*.pyc" -exec rm -rf {} \;'
-alias rmpyo='/usr/bin/find . -name "*.pyo" -exec rm -rf {} \;'
+alias ll='lnav /var/log'
 alias ds='docker search'
 alias da='docker ps -a'
 alias sz='du -hs'
 alias n='nano'
 alias logup='cat ~/.kodi/temp/kodi.log | pastebinit'
-alias mowat='sshfs root@wat.is.my:/ /storage/50GS/wat.is.my -o password_stdin <~/passwd.txt'
+alias mowat='/storage/.kodi/addons/tools.sshfs-fuse/bin/sshfs root@wat.is.my:/ /storage/50GS/wat.is.my -o password_stdin <~/passwd.txt'
 alias dockerkillall='docker kill $(docker ps -q)'
 alias grgp='git reset --hard && git clean -dfx && git pull'
 alias glo='git log --oneline --all --graph --decorate'
@@ -188,7 +204,6 @@ alias legoren='lego --path=/root/.lego --email="andrey.vd@gmail.com" --domains="
 alias mm='make menuconfig'
 alias ms='make kernel_menuconfig CONFIG_TARGET=subtarget -j4'
 alias ddd='dnf download'
-alias dd='dd status=progress'
 alias dli='dnf list installed | grep'
 alias mowat='sshfs root@wat.is.my:/ /root/..wat.sshfs -o password_stdin <~/passwd.txt'
 alias time='time -c'
@@ -215,6 +230,13 @@ alias gl='git pull'
 alias gd='git diff'
 alias gget='go get -v -t -u'
 alias mw='make world'
+# Set personal aliases, overriding those provided by oh-my-zsh libs,
+# plugins, and themes. Aliases can be placed here, though oh-my-zsh
+# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# For a full list of active aliases, run `alias`.
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
 alias abd='apt-get build-dep'
 alias afind='ack -il'
 alias ai='autoreconf --verbose --install --force -I m4'
@@ -339,7 +361,9 @@ alias h='history'
 alias history='fc -il 1'
 alias hsi='hs -i'
 alias ht='htop'
+alias l='l -lah'
 alias la='ls -lAh'
+alias ll='lnav'
 alias llj='journalctl -xef'
 alias ls='ls -F --color=tty'
 alias lsa='ls -lah'
@@ -347,7 +371,7 @@ alias mac='openssl rand -hex 6 | sed '\''s/\(..\)/\1:/g; s/.$//'\'
 alias md='mkdir -p'
 alias mk='rm -rf /root/.ccache-openelec/ && PROJECT=Generic ARCH=x86_64 make'
 alias mkdir='mkdir -p'
-alias mowat='sshfs root@95.46.98.161:/ /storage/..Wat -o password_stdin <~/passwd.txt'
+alias mowat='sshfs root@185.86.78.154:/ /storage/..Wat -o password_stdin <~/passwd.txt'
 alias ms='make kernel_menuconfig -j4'
 alias n='nano'
 alias ng='netstat -nap | grep'
@@ -356,10 +380,10 @@ alias pipup='pip freeze --local | grep -v ^-e | cut -d = -f 1  | xargs pip insta
 alias pon='export http_proxy="http://192.168.1.4:777"'
 alias ports='netstat -antup'
 alias pu=pushd
-alias pw='ping 95.46.98.161'
+alias pw='ping 185.86.78.154'
 alias pyfind='find . -name "*.py"'
 alias pygrep='grep --include="*.py"'
-#alias reb='shutdown -r 0'
+alias reb='shutdown -r 0'
 alias rmc='rm -rf /root/.ccache*'
 alias rpyo='/usr/bin/find . -name "*.pyo" -exec rm -rf {} \;'
 alias rr='systemctl restart kodi'
@@ -391,11 +415,15 @@ alias ss='strip -s'
 alias debiana='sshfs root@192.168.1.215:/ /storage/50GS/-Debiana'
 alias iptest='while :; do nc -l -p 4242 > /dev/null; done'
 alias ll='lnav /storage/.kodi/temp/kodi.log'
-alias jj='journalctl -a | lnav'
 alias grr='git reset --hard && git clean -dfx && git pull'
-alias a2='aria2c --file-allocation=none --optimize-concurrent-downloads'
-alias reb='sync;reboot'
-alias mowat='sshfs -o reconnect,ServerAliveInterval=15 root@95.46.98.161:/ /storage/..Wat -o password_stdin <~/passwd.txt'
+alias a2='/usr/bin/aria2c --file-allocation=none --optimize-concurrent-downloads'
+alias reb='reboot'
+alias wa='sshfs root@192.168.1.215:/ /storage/50GS/-wat.is.my'
+alias ddd='dd of=/dev/sdd if='
+alias mowat='sshfs -o reconnect,ServerAliveInterval=15 root@185.86.78.154:/ /storage/..Wat -o password_stdin <~/passwd.txt'
+alias ch='proxychains4'
+alias e='exit;exit'
+alias pp='iperf3 -c te.s.co; iperf3 -c te.s.co -R'
 alias mofe='bash /storage/mofe'
 alias unfe='bash /storage/unfe'
 alias ff='/storage/data/fedora/usr/sbin/chroot /storage/data/fedora/ /bin/zsh'
@@ -411,7 +439,7 @@ alias ms='make kernel_menuconfig' ## CONFIG_TARGET=subtarget
 alias rmc='rm -rf /root/.ccache-openelec/'
 alias bu='/storage/data/ubuntu/usr/sbin/chroot /storage/data/ubuntu/ /bin/zsh'
 alias d='docker'
-alias ww='/storage/.cache/.git-webui/release/libexec/git-core/git-webui --port 80 --no-browser --host 192.168.1.4'
+alias ww='/storage/.bin/.git-webui/release/libexec/git-core/git-webui --port 80 --no-browser --host 192.168.1.4'
 alias ht='htop'
 #alias yt='/bin/bash /storage/.bin/yt'
 alias sreb='systemctl daemon-reload'
@@ -432,11 +460,7 @@ alias crashlog='paste $(ls -1art /storage/.kodi/temp/kodi_crashlog* | tail -1)'
 alias lg='journalctl -xe | lnav'
 alias gcl1='git clone --recursive --depth 1'
 alias dyt='daemonize /storage/.bin/yt'
-alias gg='git add -A .;git commit -m '\''autocommit on change'\'';git push -u origin master'
-alias db='docker build -t t2h -f Dockerfile .'
-alias mc='mc -u'
-alias m='make'
-alias cp='cp -r -i'
+
 
 ulimit -n 51200
 #export http_proxy="http://127.0.0.1:7777"
@@ -463,31 +487,16 @@ fi
 #export LC_ALL=en_US.UTF-8
 #export EDITOR=/usr/bin/nano
 export TERM=xterm-256color
-export COLORTERM=truecolor
-export CLICOLOR=1
-export GREP_COLOR=24
-export LC_CTYPE=en_US.UTF-8
+#export CLICOLOR=1
+#export GREP_COLOR=24
+#export LC_CTYPE=en_US.UTF-8
 
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export HISTSIZE=2000
 export HISTFILE="$HOME/.cache/.zsh-history"
 
-export REPORTTIME=1 # display commands with execution time >= 3 seconds
+export REPORTTIME=3 # display commands with execution time >= 3 seconds
 #setop xtrace
 
 export PATH="$PATH:/storage/.bin"
-
-
-#load colors
-autoload colors zsh/terminfo
-if [[ "$terminfo[colors]" -ge 8 ]]; then
-  colors
-fi
-for color in RED GREEN YELLOW BLUE MAGENTA CYAN WHITE; do
-  eval PR_$color='%{$terminfo[bold]$fg[${(L)color}]%}'
-  eval PR_LIGHT_$color='%{$fg[${(L)color}]%}'
-done
-PR_NO_COLOR="%{$terminfo[sgr0]%}"
-
-export VDPAU_DRIVER=va_gl

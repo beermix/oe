@@ -8,7 +8,6 @@ PKG_AUTORECONF="yes"
 
 pre_configure_target() {
   export LIBS="-lterminfo"
-  unset CPPFLAGS
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
