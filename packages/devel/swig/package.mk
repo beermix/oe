@@ -18,6 +18,7 @@
 
 PKG_NAME="swig"
 PKG_VERSION="3.0.12"
+PKG_SITE="https://github.com/swig/swig/releases"
 PKG_URL="$SOURCEFORGE_SRC/swig/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="ccache:host"
 PKG_PRIORITY="optional"

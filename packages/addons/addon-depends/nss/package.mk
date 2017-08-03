@@ -19,9 +19,9 @@
 ################################################################################
 
 PKG_NAME="nss"
-PKG_VERSION="3.31"
+PKG_VERSION="3.32"
 PKG_SITE="http://ftp.mozilla.org/"
-PKG_URL="https://ftp.mozilla.org/pub/security/nss/releases/NSS_3_31_RTM/src/nss-3.31-with-nspr-4.15.tar.gz"
+PKG_URL="https://ftp.mozilla.org/pub/security/nss/releases/NSS_3_32_RTM/src/nss-3.32-with-nspr-4.16.tar.gz"
 PKG_DEPENDS_TARGET="toolchain nss:host nspr zlib"
 PKG_SECTION="security"
 PKG_SHORTDESC="The Network Security Services (NSS) package is a set of libraries designed to support cross-platform development of security-enabled client and server applications"
@@ -32,8 +32,11 @@ PKG_AUTORECONF="no"
 MAKEFLAGS=-j1
 
 make_host() {
-  cd $ROOT/$PKG_BUILD/nss
-   make -C coreconf/nsinstall  
+  cd  $ROOT/$PKG_BUILD/nss
+
+  [ "$TARGET_ARCH" = "x86_64" ] && export USE_64=1
+
+  make -C coreconf/nsinstall  
 }
 
 makeinstall_host() {
@@ -50,13 +53,13 @@ make_target() {
   [ "$TARGET_ARCH" = "x86_64" ] && TARGET_USE_64="USE_64=1"
 
   make BUILD_OPT=1 $TARGET_USE_64 \
-     NSS_USE_SYSTEM_SQLITE=1 \
      NSPR_INCLUDE_DIR=$SYSROOT_PREFIX/usr/include/nspr \
-     USE_SYSTEM_ZLIB=1 ZLIB_LIBS=-lz \
+     USE_SYSTEM_ZLIB=1 ZLIB_LIBS=-lz NSS_USE_SYSTEM_SQLITE=1 \
      OS_TEST=$TARGET_ARCH \
      NSS_TESTS="dummy" \
      NSINSTALL=$ROOT/$TOOLCHAIN/bin/nsinstall \
      CPU_ARCH_TAG=$TARGET_ARCH \
+     NSS_ENABLE_WERROR=0 \
      CC=$CC LDFLAGS="$LDFLAGS -L$SYSROOT_PREFIX/usr/lib" \
      V=1
 }
@@ -67,10 +70,9 @@ makeinstall_target() {
   $STRIP dist/Linux*/lib/*.so
   cp -L dist/Linux*/lib/*.so $SYSROOT_PREFIX/usr/lib
   cp -L dist/Linux*/lib/libcrmf.a $SYSROOT_PREFIX/usr/lib
+  mkdir -p $INSTALL/usr/lib
+  cp -L dist/Linux*/lib/*.so $INSTALL/usr/lib
   mkdir -p $SYSROOT_PREFIX/usr/include/nss
   cp -RL dist/{public,private}/nss/* $SYSROOT_PREFIX/usr/include/nss
   cp -L dist/Linux*/lib/pkgconfig/nss.pc $SYSROOT_PREFIX/usr/lib/pkgconfig
-
-  mkdir -p .install_pkg/usr/lib
-    cp -PL dist/Linux*/lib/*.so .install_pkg/usr/lib
 }
