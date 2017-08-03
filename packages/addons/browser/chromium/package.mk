@@ -79,7 +79,6 @@ make_target() {
     'link_pulseaudio=true'
     'linux_use_bundled_binutils=false'
     'use_allocator="none"'
-    'use_debug_fission=false'
     'use_cups=false'
     'use_gconf=false'
     'use_gnome_keyring=false'
@@ -106,10 +105,6 @@ make_target() {
     libpng
     libxslt
     yasm
-    re2
-    minizip
-    libxml2
-    libwebp
 )
   
   sed -e 's|i386-linux-gnu/||g' \

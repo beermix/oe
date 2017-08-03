@@ -1,5 +1,5 @@
 PKG_NAME="mpv"
-PKG_VERSION="v0.26.0"
+PKG_VERSION="v0.22.0"
 PKG_GIT_URL="https://github.com/mpv-player/mpv"
 PKG_DEPENDS_TARGET="toolchain libass lua"
 PKG_IS_ADDON="no"
