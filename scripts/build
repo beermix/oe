@@ -288,7 +288,7 @@ if [ ! -f $STAMP ]; then
       else
         case "$TARGET" in
           target)
-            #unset LD_LIBRARY_PATH
+            unset LD_LIBRARY_PATH
             make install DESTDIR=$INSTALL_DEV $PKG_MAKEINSTALL_OPTS_TARGET
             for i in `find $INSTALL_DEV/lib/ -name "*.la" 2>/dev/null`; do \
               $SED "s:\(['= ]\)/lib:\\1$SYSROOT_PREFIX/lib:g" $i; \
