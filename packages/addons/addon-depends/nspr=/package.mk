@@ -19,7 +19,7 @@
 ################################################################################
 
 PKG_NAME="nspr"
-PKG_VERSION="4.15"
+PKG_VERSION="4.16"
 PKG_SITE="http://www.linuxfromscratch.org/blfs/view/svn/general/nspr.html"
 PKG_DEPENDS_TARGET="toolchain nss:host"
 PKG_SECTION="security"
