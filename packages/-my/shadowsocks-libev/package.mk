@@ -28,4 +28,5 @@ PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release \
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-static \
 			      --disable-ssp \
+			      --with-pcre=$SYSROOT_PREFIX/usr \
 			      --disable-documentation"
