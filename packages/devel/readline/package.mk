@@ -18,7 +18,6 @@
 ################################################################################
 
 PKG_NAME="readline"
-#PKG_VERSION="6c32f81"
 PKG_VERSION="7d5c553"
 PKG_SITE="http://www.gnu.org/software/readline/"
 PKG_GIT_URL="git://git.savannah.gnu.org/readline.git"
@@ -29,10 +28,6 @@ PKG_LONGDESC="The GNU Readline library provides a set of functions for use by ap
 PKG_IS_ADDON="no"
 
 PKG_AUTORECONF="no"
-
-pre_configure_target() {
-  strip_hard
-}
 
 PKG_CONFIGURE_OPTS_TARGET="bash_cv_wcwidth_broken=no \
                            --disable-shared \

@@ -18,7 +18,6 @@
 
 PKG_NAME="Python"
 PKG_VERSION="dd6e4aa"
-PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="https://github.com/python/cpython/tree/2.7"
