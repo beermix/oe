@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="ftp://ftp.gnu.org/pub/gnu/sed/"
 PKG_URL="http://ftp.gnu.org/gnu/sed/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_HOST="ccache:host xz:host"
+PKG_DEPENDS_HOST="ccache:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="sysutils"
 PKG_SHORTDESC="sed: This is the GNU implementation of the POSIX stream editor"
@@ -34,11 +34,4 @@ PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_HOST="--disable-nls --disable-acl --without-selinux"
 
-pre_configure_target() {
-    ( cd ..
-      unset LIBTOOL
-      autoreconf --verbose --install --force -I m4
-    )
-}
-
-PKG_CONFIGURE_OPTS_TARGET="-C $PKG_CONFIGURE_OPTS_HOST"
+PKG_MAKEINSTALL_OPTS_HOST="-C sed install"

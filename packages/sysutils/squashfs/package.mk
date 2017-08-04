@@ -17,12 +17,8 @@
 ################################################################################
 
 PKG_NAME="squashfs"
-PKG_VERSION="9c1db6d"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
-PKG_SITE="http://squashfs.sourceforge.net/"
-PKG_GIT_URL="git://github.com/plougher/squashfs-tools.git"
+PKG_VERSION="5be5d61"
+PKG_GIT_URL="https://github.com/plougher/squashfs-tools"
 PKG_DEPENDS_HOST="ccache:host zlib:host lzo:host xz:host lz4:host"
 PKG_SECTION="sysutils"
 PKG_SHORTDESC="squashfs-tools: A compressed read-only filesystem for Linux"
