@@ -19,8 +19,6 @@
 PKG_NAME="glibc"
 PKG_VERSION="2.26"
 PKG_URL="http://ftp.gnu.org/pub/gnu/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
-#PKG_VERSION="adc7e06"
-#PKG_GIT_URL="git://sourceware.org/git/glibc.git"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap localedef-eglibc:host"
 PKG_DEPENDS_INIT="glibc"
 PKG_PRIORITY="optional"
@@ -116,7 +114,7 @@ echo "sbindir=/usr/bin" >> configparms
 echo "rootsbindir=/usr/bin" >> configparms
 echo "build-programs=yes" >> configparms
 
-GLIBC_INCLUDE_BIN="getent ldd locale iconv iconvconfig"
+GLIBC_INCLUDE_BIN="getent ldd locale"
 }
 
 post_makeinstall_target() {
