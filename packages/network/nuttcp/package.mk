@@ -13,7 +13,7 @@ pre_configure_target() {
 }
 
 make_target() {
-  $CC $CFLAGS -o nuttcp $PKG_DIR/nuttcp-8.1.4.c
+  SHELL="sh -x" make $CC $CFLAGS $ROOT/$PKG_BUILD/nuttcp-8.1.4.c -o nuttcp 
 }
 
 post_make_target() {
