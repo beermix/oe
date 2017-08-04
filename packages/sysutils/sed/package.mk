@@ -34,4 +34,4 @@ PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_HOST="--disable-nls --disable-acl --without-selinux"
 
-PKG_MAKEINSTALL_OPTS_HOST="-C sed install"
+#PKG_MAKEINSTALL_OPTS_HOST="-C sed install"
