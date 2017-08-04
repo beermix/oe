@@ -20,7 +20,7 @@ PKG_NAME="netbsd-curses"
 PKG_VERSION="0.2.1"
 PKG_REV="1"
 PKG_ARCH="any"
-PKG_LICENSE="GPL"
+PKG_SITE="https://github.com/sabotage-linux/netbsd-curses"
 PKG_URL="http://ftp.barfooze.de/pub/sabotage/tarballs/${PKG_NAME}-${PKG_VERSION}.tar.xz"
 PKG_DEPENDS_TARGET="toolchain zlib"
 PKG_PRIORITY="optional"
@@ -32,8 +32,8 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 # remove some problematic *FLAGS
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
+  #export CFLAGS=`echo $CFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
+  #export LDFLAGS=`echo $LDFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
 
 pre_make_target() {
   CFLAGS="$CFLAGS -fPIC -I${PKG_BUILD}/libcurses"
