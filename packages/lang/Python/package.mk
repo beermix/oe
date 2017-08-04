@@ -37,7 +37,9 @@ PKG_CONFIGURE_OPTS_HOST="--cache-file=config.cache \
                          --without-cxx-main \
                          --with-threads \
                          --enable-unicode=ucs4 \
-                         --disable-ipv6"
+                         --disable-ipv6 \
+                         --disable-static \
+                         --enable-shared"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            ac_cv_file_dev_ptmx=yes \
@@ -60,7 +62,9 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            --with-wctype-functions \
                            --without-cxx-main \
                            --with-system-ffi \
-                           --with-system-expat"
+                           --with-system-expat \
+                           --disable-static \
+                           --enable-shared"
 
 post_patch() {
   # This is needed to make sure the Python build process doesn't try to

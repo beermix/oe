@@ -1,12 +1,14 @@
 if [ "$OPTIMIZATIONS" = normal ];then
-  GCC_OPTIM="-O2 -pipe"
-  LD_OPTIM="-Wl,--as-needed"
+  GCC_OPTIM="-O2 -pipe -fstack-protector-strong"
+  LD_OPTIM="-Wl,--as-needed -Wl,-z,relro"
+  CPP_OPTIM="-D_FORTIFY_SOURCE=2 -O2"
 fi
 
 if [ "$OPTIMIZATIONS" = size ];then
   GCC_OPTIM="-O2 -pipe -ffunction-sections -fdata-sections"
-  LD_OPTIM="-Wl,--as-needed"
-  CPP_OPTIM="-D_FORTIFY_SOURCE=2"
+  LD_OPTIM="-Wl,-O1,--sort-common,--as-needed,-z,relro"
+  LD_OPTIM="-Wl,-O1 -Wl,-z,relro -Wl,--gc-sections"
+  CPP_OPTIM="-D_FORTIFY_SOURCE=2 -O2"
 fi
 
 if [ "$LTO_SUPPORT" = yes ];then

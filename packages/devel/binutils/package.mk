@@ -43,10 +43,11 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-plugins \
                          --enable-gold \
                          --enable-ld=default \
-                         --enable-poison-system-directories \
                          --enable-lto \
                          --disable-nls \
-                         --disable-gdb"
+                         --disable-shared \
+                         --enable-relro \
+                         --enable-poison-system-directories"
 
 makeinstall_host() {
   cp -v ../include/libiberty.h $SYSROOT_PREFIX/usr/include

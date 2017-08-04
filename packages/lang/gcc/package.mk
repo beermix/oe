@@ -34,6 +34,7 @@ post_unpack() {
   sed -i 's@\./fixinc\.sh@-c true@' $ROOT/$PKG_BUILD/gcc/Makefile.in
   sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $ROOT/$PKG_BUILD/libiberty/configure
   sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $ROOT/$PKG_BUILD/gcc/configure
+  #sed -i '/m64=/s/lib64/lib/' $ROOT/$PKG_BUILD/gcc/config/i386/t-linux64
 }
 
 GCC_COMMON_CONFIGURE_OPTS="MAKEINFO=missing \
@@ -88,6 +89,14 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-threads=posix \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time \
+                         --disable-libunwind-exceptions \
+                         --enable-gnu-unique-object \
+                         --enable-linker-build-id \
+                         --enable-install-libiberty \
+                         --with-linker-hash-style=gnu \
+                         --enable-gnu-indirect-function \
+                         --enable-default-pie \
+                         --enable-default-ssp \
                          --enable-clocale=gnu \
                          $GCC_OPTS"
 
@@ -110,7 +119,7 @@ post_makeinstall_host() {
   mkdir -p $SYSROOT_PREFIX/usr/lib
     cp -PR $TARGET_NAME/libstdc++-v3/src/.libs/libstdc++.so* $SYSROOT_PREFIX/usr/lib
     cp -PR $TARGET_NAME/libgomp/.libs/libgomp.so* $SYSROOT_PREFIX/usr/lib
-    #cp -PR $TARGET_NAME/libssp/.libs/libssp.so* $SYSROOT_PREFIX/usr/lib
+    cp -PR $TARGET_NAME/libatomic/.libs/libatomic.so* $SYSROOT_PREFIX/usr/lib
 
   mkdir -p $ROOT/$TOOLCHAIN/lib/ccache
     ln -sf $ROOT/$TOOLCHAIN/bin/ccache $ROOT/$TOOLCHAIN/lib/ccache/${TARGET_NAME}-gcc
@@ -129,7 +138,7 @@ makeinstall_target() {
   mkdir -p $INSTALL/lib
     cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libgcc/libgcc_s.so* $INSTALL/lib
     cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libgomp/.libs/libgomp.so* $INSTALL/lib
-    #cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libssp/.libs/libssp.so* $INSTALL/lib
+    cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libatomic/.libs/libatomic.so* $INSTALL/lib
   mkdir -p $INSTALL/usr/lib
     cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libstdc++-v3/src/.libs/libstdc++.so* $INSTALL/usr/lib
 }
@@ -146,5 +155,5 @@ makeinstall_init() {
   mkdir -p $INSTALL/lib
     cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libgcc/libgcc_s.so* $INSTALL/lib
     cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libgomp/.libs/libgomp.so* $INSTALL/lib
-    #cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libssp/.libs/libssp.so* $INSTALL/lib
+    cp -P $ROOT/$PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libatomic/.libs/libatomic.so* $INSTALL/lib
 }
