@@ -1,5 +1,5 @@
 PKG_NAME="git"
-PKG_VERSION="2.13.4"
+PKG_VERSION="2.14.0"
 PKG_URL="https://www.kernel.org/pub/software/scm/git/git-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain curl pcre expat zlib openssl"
 PKG_SECTION="devel"
@@ -21,7 +21,7 @@ pre_configure_target() {
   export NO_ICONV="YesPlease"
   export NO_NSEC="YesPlease"
   export NO_PERL="YesPlease"
-  #export NO_PYTHON="YesPlease"
+  export NO_PYTHON="YesPlease"
   export NO_TCLTK="YesPlease"
   export NO_INSTALL_HARDLINKS="yes"
 }

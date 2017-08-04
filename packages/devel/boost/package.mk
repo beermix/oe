@@ -76,7 +76,7 @@ makeinstall_target() {
                                 --with-filesystem \
                                 --with-date_time \
                                 --with-locale \
-                                --with-regex -sICU_PATH="$SYSROOT_PREFIX/usr" -j3 \
+                                --with-regex -sICU_PATH="$SYSROOT_PREFIX/usr" -j2 \
                                 install
 
   $ROOT/$TOOLCHAIN/bin/bjam -d2 --toolset=gcc link=shared target-os=linux variant=release threading=multi debug-symbols=off \
