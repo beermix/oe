@@ -24,13 +24,13 @@ PKG_PRIORITY="optional"
 PKG_SECTION="security"
 PKG_USE_CMAKE="no"
 PKG_AUTORECONF="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 pre_configure_host() {
   export CFLAGS="$CFLAGS -fPIC"
 }
 
-PKG_CONFIGURE_OPTS_HOST="--disable-shared"
+PKG_CONFIGURE_OPTS_HOST="--disable-shared --without-hardening"
 
 configure_target() {
   :
