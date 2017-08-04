@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="cffi"
-PKG_VERSION="1.9.1"
+PKG_VERSION="1.10.0"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://cffi.readthedocs.org"
-PKG_URL="https://pypi.python.org/packages/a1/32/e3d6c3a8b5461b903651dd6ce958ed03c093d2e00128e3f33ea69f1d7965/cffi-1.9.1.tar.gz"
+PKG_URL="https://pypi.python.org/packages/5b/b9/790f8eafcdab455bcd3bd908161f802c9ce5adbf702a83aa7712fcc345b7/cffi-1.10.0.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host pycparser libffi"
 PKG_DEPENDS_HOST="toolchain Python:host libffi:host"
 PKG_SECTION="python/devel"
@@ -31,10 +31,6 @@ PKG_IS_ADDON="no"
 
 PKG_AUTORECONF="no"
 PKG_MAINTAINER="unofficial.addon.pro"
-
-post_unpack() {
-  mv $BUILD/cffi-* $BUILD/$PKG_NAME-$PKG_VERSION
-}
 
 pre_build_host() {
   mkdir -p $ROOT/$PKG_BUILD/.$HOST_NAME

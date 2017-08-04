@@ -21,12 +21,11 @@ PKG_VERSION="e0175e9"
 PKG_GIT_URL="https://github.com/xbmc/xbmc.git"
 PKG_GIT_BRANCH="Krypton"
 PKG_KEEP_CHECKOUT="yes"
-PKG_PATCH_DIRS="$LINUX non-rpi"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
-PKG_DEPENDS_TARGET="toolchain kodi:host kodi:bootstrap xmlstarlet:host Python zlib systemd pciutils dbus lzo pcre swig:host libass curl fontconfig fribidi tinyxml libjpeg-turbo freetype libcdio libdvdnav taglib libxml2 libxslt yajl sqlite ffmpeg crossguid giflib opengl lcms2 libfmt nss"
+PKG_DEPENDS_TARGET="toolchain kodi:host kodi:bootstrap xmlstarlet:host Python zlib systemd pciutils dbus lzo pcre swig:host libass curl fontconfig fribidi tinyxml libjpeg-turbo freetype libcdio libdvdnav taglib libxml2 libxslt rapidjson sqlite ffmpeg crossguid giflib opengl lcms2 libfmt nss"
 PKG_DEPENDS_HOST="toolchain"
 PKG_DEPENDS_BOOTSTRAP="toolchain lzo:host libpng:host libjpeg-turbo:host giflib:host"
 PKG_PRIORITY="optional"
@@ -59,13 +58,16 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$ROOT/$TOOLCHAIN \
                        -DENABLE_INTERNAL_CROSSGUID=OFF \
                        -DENABLE_OPENSSL=ON \
                        -DENABLE_SDL=OFF \
-                       -DENABLE_LCMS2=ON \
-                       -DENABLE_CCACHE=OFF \
-                       -DENABLE_LIRC=ON \
-                       -DENABLE_EVENTCLIENTS=ON \
+                       -DENABLE_LCMS2=OFF \
+                       -DENABLE_CCACHE=ON \
+                       -DENABLE_LIRC=OFF \
+                       -DENABLE_EVENTCLIENTS=OFF \
+                       -DENABLE_LIBUSB=OFF \
                        -DENABLE_UDEV=ON \
                        -DENABLE_XSLT=ON \
                        -DENABLE_DBUS=ON \
+                       -DENABLE_BLUETOOTH=ON \
+                       -DENABLE_CAP=OFF \
                        -DCMAKE_VERBOSE_MAKEFILE=OFF \
                        -DENABLE_OPTICAL=OFF \
                        -DCMAKE_EXPORT_COMPILE_COMMANDS=OFF \
@@ -261,10 +263,9 @@ makeinstall_host() {
 }
 
 pre_configure_target() {
-# kodi should never be built with lto
   strip_lto
 
-  export LIBS="$LIBS -lz -lterminfo"
+  export LIBS="$LIBS -lterminfo"
 }
 
 pre_make_target() {
@@ -281,11 +282,8 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin/kodi-standalone
   rm -rf $INSTALL/usr/share/applications
   rm -rf $INSTALL/usr/share/icons
-  rm -rf $INSTALL/usr/share/pixmaps
-  rm -rf $INSTALL/usr/share/kodi/addons/skin.estouchy
-  rm -rf $INSTALL/usr/share/kodi/addons/skin.estuary
-  rm -rf $INSTALL/usr/share/kodi/addons/service.xbmc.versioncheck
-  rm -rf $INSTALL/usr/share/kodi/addons/visualization.vortex
+  rm -rf $INSTALL/usr/share/kodi/cmake
+  rm -rf $INSTALL/usr/share/kodi/userdata/iOS
   rm -rf $INSTALL/usr/share/xsessions
 
   # update addon manifest

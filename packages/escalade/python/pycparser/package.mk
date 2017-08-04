@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="pycparser"
-PKG_VERSION="2.17"
+PKG_VERSION="release_v2.18"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="https://github.com/eliben/pycparser"
-PKG_GIT_URL="https://github.com/eliben/pycparser/archive/release_v$PKG_VERSION.tar.gz"
+PKG_GIT_URL="https://github.com/eliben/pycparser"
 PKG_SOURCE_DIR="pycparser-release_v$PKG_VERSION"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"
 PKG_SECTION="python/devel"

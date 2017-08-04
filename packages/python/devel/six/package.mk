@@ -39,3 +39,18 @@ make_host() {
 makeinstall_host() {
   python setup.py install --prefix=$ROOT/$TOOLCHAIN --optimize=1
 }
+
+make_target() {
+  : # nop
+}
+
+makeinstall_target() {
+  export PYTHONXCPREFIX="$SYSROOT_PREFIX/usr"
+  export LDFLAGS="$LDFLAGS -L$SYSROOT_PREFIX/usr/lib -L$SYSROOT_PREFIX/lib"
+
+  python setup.py build --cross-compile
+  python setup.py install --root=$INSTALL --prefix=/usr
+
+  rm -rf $INSTALL/usr/bin
+  find $INSTALL/usr/lib/python*/site-packages/  -name "*.py" -exec rm -rf {} ";"
+}
