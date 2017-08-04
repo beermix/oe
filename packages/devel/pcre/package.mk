@@ -38,12 +38,6 @@ PKG_CONFIGURE_OPTS_HOST="--prefix=$ROOT/$TOOLCHAIN --enable-utf8 --enable-unicod
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-utf8 --enable-pcre16 --enable-unicode-properties --with-gnu-ld"
 
-pre_configure_target() {
-  CFLAGS="$CFLAGS -fPIC -DPIC"
-  CXXFLAGS="$CXXFLAGS -fPIC -DPIC"
-  LDFLAGS="$LDFLAGS -fPIC -DPIC"
-}
-
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
   sed -e "s:\(['= ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" -i $SYSROOT_PREFIX/usr/bin/$PKG_NAME-config
