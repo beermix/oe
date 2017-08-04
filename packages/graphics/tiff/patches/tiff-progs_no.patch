@@ -42,7 +42,7 @@ diff -Naur tiff-4.0.8-orig/Makefile.in tiff-4.0.8/Makefile.in
  
  dist_doc_DATA = $(docfiles)
 -SUBDIRS = port libtiff tools build contrib test man html
-+SUBDIRS = port libtiff build contrib test
++SUBDIRS = port libtiff build contrib
  pkgconfigdir = $(libdir)/pkgconfig
  pkgconfig_DATA = libtiff-4.pc
  
