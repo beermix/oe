@@ -37,3 +37,7 @@ post_makeinstall_target() {
   find $INSTALL/usr/lib -name "*.py" -exec rm -rf "{}" ";"
   find $INSTALL/usr/lib -name "*.pyc" -exec rm -rf "{}" ";"
 }
+
+pre_configure_target() {
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed|-Wl,-O1,--as-needed|"`
+}

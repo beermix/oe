@@ -40,12 +40,22 @@ PKG_CONFIGURE_OPTS_ALL="ac_cv_header_ansidecl_h=no \
 			  --with-zlib=$ROOT/$TOOLCHAIN \
 			  --without-lzma \
 			  --with-threads \
-			  --with-history \
-			  --with-icu"
+			  --with-history"
 
-PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_ALL --with-zlib=$ROOT/$TOOLCHAIN"
+PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_ALL --with-zlib=$ROOT/$TOOLCHAIN --with-icu=$ROOT/$TOOLCHAIN"
 
-PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_ALL --with-zlib=$SYSROOT_PREFIX/usr --with-sysroot=$SYSROOT_PREFIX"
+PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_ALL \
+			     --with-zlib=$SYSROOT_PREFIX/usr \
+			     --with-sysroot=$SYSROOT_PREFIX \
+			     --with-icu=$SYSROOT_PREFIX/usr"
+			     
+pre_configure_host() {
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed|-Wl,-O1,--as-needed|"`
+}
+
+pre_configure_target() {
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed|-Wl,-O1,--as-needed|"`
+}
 
 post_makeinstall_target() {
   $SED "s:\(['= ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" $SYSROOT_PREFIX/usr/bin/xml2-config

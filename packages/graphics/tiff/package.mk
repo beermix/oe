@@ -43,6 +43,10 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --without-x \
                            --enable-silent-rules \
                            --with-pic"
+                           
+pre_configure_target() {
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed|-Wl,-O1,--as-needed|"`
+}
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin

@@ -38,3 +38,7 @@ PKG_CONFIGURE_OPTS_TARGET="gio_can_sniff=yes \
                            --with-libjpeg \
                            --with-libtiff \
                            --with-libjasper"
+                           
+pre_configure_target() {
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed|-Wl,-O1,--as-needed|"`
+}

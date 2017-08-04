@@ -39,4 +39,5 @@ PKG_CONFIGURE_OPTS_TARGET="--with-icu=yes"
 
 pre_configure_target() {
   export LIBS="-ldl"
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed|-Wl,-O1,--as-needed|"`
 }
