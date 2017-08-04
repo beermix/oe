@@ -33,6 +33,8 @@ PKG_LONGDESC="Iptables is used to set up, maintain, and inspect the tables of IP
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-#CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
+#CFLAGS="$CFLAGS -ffunction-sections -fdata-sections -DNO_LEGACY"
+CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
+LDFLAGS="$LDFLAGS -Wl,--gc-sections"
 
-PKG_CONFIGURE_OPTS_TARGET="--with-kernel=$(get_pkg_build linux)"
+PKG_CONFIGURE_OPTS_TARGET="--disable-ipv6 --with-kernel=$(get_pkg_build linux)"
