@@ -40,6 +40,12 @@ makeinstall_host() {
     cp bin.*/bjam $ROOT/$TOOLCHAIN/bin
 }
 
+pre_configure_target() {
+  export CFLAGS="$CFLAGS -fPIC"
+  export CXXFLAGS="$CXXFLAGS -fPIC"
+  export LDFLAGS="$LDFLAGS -fPIC"
+}
+
 configure_target() {
   sh bootstrap.sh --prefix=/usr \
                   --with-bjam=$ROOT/$TOOLCHAIN/bin/bjam \
@@ -55,7 +61,7 @@ make_target() {
 }
 
 makeinstall_target() {
-  $ROOT/$TOOLCHAIN/bin/bjam -d2 --toolset=gcc link=shared target-os=linux variant=release threading=multi debug-symbols=off cflags="$CPPFLAGS $CFLAGS -fPIC" cxxflags="$CPPFLAGS $CXXFLAGS -fPIC" \
+  $ROOT/$TOOLCHAIN/bin/bjam -d2 --toolset=gcc link=shared target-os=linux variant=release threading=multi debug-symbols=off  \
                                 --prefix=$SYSROOT_PREFIX/usr \
                                 --ignore-site-config \
                                 --layout=system \
@@ -74,7 +80,7 @@ makeinstall_target() {
                                 --with-regex -sICU_PATH="$SYSROOT_PREFIX/usr" \
                                 install
 
-  $ROOT/$TOOLCHAIN/bin/bjam -d2 --toolset=gcc link=shared target-os=linux variant=release threading=multi debug-symbols=off cflags="$CPPFLAGS $CFLAGS -fPIC" cxxflags="$CPPFLAGS $CXXFLAGS -fPIC" \
+  $ROOT/$TOOLCHAIN/bin/bjam -d2 --toolset=gcc link=shared target-os=linux variant=release threading=multi debug-symbols=off \
                                 --prefix=$INSTALL/usr \
                                 --ignore-site-config \
                                 --layout=system \
