@@ -42,7 +42,7 @@ if [ "$MEDIACENTER" = "kodi" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET inputstream.rtmp"
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET inputstream.adaptive"
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET visualization.shadertoy"
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET audioencoder.flac"
+  #PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET audioencoder.flac"
   #PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET kodi-theme-AeonNox"
 
 # other packages

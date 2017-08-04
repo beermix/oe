@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="docker"
-PKG_VERSION="v17.06.0-ce"
-PKG_GIT_URL="https://github.com/docker/docker-ce"
+PKG_VERSION="v17.03.2-ce"
+PKG_GIT_URL="https://github.com/moby/moby"
 PKG_DEPENDS_TARGET="toolchain sqlite go:host containerd runc libnetwork tini curl"
 PKG_SECTION="service/system"
 PKG_SHORTDESC="Docker is an open-source engine that automates the deployment of any application as a lightweight, portable, self-sufficient container that will run virtually anywhere."

@@ -16,12 +16,12 @@ PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
                            --disable-ipv6 \
                            --with-libgmp \
                            --without-gnutls \
-                           --without-libssh2 \
+                           --with-libssh2 \
                            --with-libexpat \
                            --with-zlib \
                            --without-libuv \
                            --without-libgcrypt \
-                           --without-sqlite3 \
+                           --with-sqlite3 \
                            --with-xmltest \
                            --with-libxml2 \
                            --with-libcares=$SYSROOT_PREFIX/usr \
