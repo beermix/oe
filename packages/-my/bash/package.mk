@@ -1,13 +1,12 @@
 PKG_NAME="bash"
 PKG_VERSION="bc00779"
-#PKG_GIT_BRANCH="devel"
 PKG_GIT_URL="https://github.com/bminor/bash"
 PKG_DEPENDS_TARGET="toolchain netbsd-curses readline"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 pre_configure_target() {
-  export LIBS="$LIBS -ltermcap"
+  export LIBS="$LIBS -ltermcap -lcurses"
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--bindir=/bin \
@@ -15,7 +14,10 @@ PKG_CONFIGURE_OPTS_TARGET="--bindir=/bin \
                            --enable-readline \
                            --without-bash-malloc \
                            --with-installed-readline \
-                           --disable-rpath"
+                           --with-gnu-ld \
+                           --enable-history \
+                           --enable-alias \
+                           --enable-job-control"
 			   
 post_makeinstall_target() {
   mkdir -p $INSTALL/bin
