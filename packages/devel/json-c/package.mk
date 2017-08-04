@@ -18,7 +18,7 @@
 ################################################################################
 
 PKG_NAME="json-c"
-PKG_VERSION="ea1499a"
+PKG_VERSION="537f8bc"
 PKG_SITE="https://github.com/json-c/json-c/wiki"
 PKG_GIT_URL="https://github.com/json-c/json-c.git"
 PKG_GIT_BRANCH="master"
@@ -30,8 +30,7 @@ PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared"
-
-if [ $TARGET_ARCH = "x86_64" ]; then
-  PKG_CONFIGURE_OPTS_TARGET+=" --enable-rdrand"
-fi
+PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_realloc_0_nonnull=yes \
+                           ac_cv_func_malloc_0_nonnull=yes \
+                           --enable-static --disable-shared \
+                           --disable-oldname-compat"

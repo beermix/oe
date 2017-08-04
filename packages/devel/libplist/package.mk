@@ -16,35 +16,22 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="ccache"
-PKG_VERSION="3.3.3"
-PKG_SITE="http://ccache.samba.org/"
-PKG_URL="http://samba.org/ftp/ccache/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_HOST="make:host"
-
+PKG_NAME="libplist"
+PKG_VERSION="1.12"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
+PKG_SITE="http://matt.colyer.name/projects/iphone-linux/"
+PKG_URL="http://www.libimobiledevice.org/downloads/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_DEPENDS_TARGET="toolchain libxml2 glib"
 PKG_SECTION="devel"
-PKG_SHORTDESC="ccache: A fast compiler cache"
-PKG_LONGDESC="Ccache is a compiler cache. It speeds up re-compilation of C/C++ code by caching previous compiles and detecting when the same compile is being done again."
+PKG_SHORTDESC="libplist: a library for manipulating Apple Binary and XML Property Lists"
+PKG_LONGDESC="libplist is a library for manipulating Apple Binary and XML Property Lists"
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
-post_makeinstall_host() {
-# setup ccache
-  $ROOT/$TOOLCHAIN/bin/ccache --max-size=$CCACHE_CACHE_SIZE
-  $ROOT/$TOOLCHAIN/bin/ccache --set-config=compiler_check=string:$(gcc -dumpversion)-$(get_pkg_version gcc)
+PKG_CONFIGURE_OPTS_TARGET="--without-cython"
 
-  cat > $ROOT/$TOOLCHAIN/bin/host-gcc <<EOF
-#!/bin/sh
-$ROOT/$TOOLCHAIN/bin/ccache $CC "\$@"
-EOF
-
-  chmod +x $ROOT/$TOOLCHAIN/bin/host-gcc
-
-  cat > $ROOT/$TOOLCHAIN/bin/host-g++ <<EOF
-#!/bin/sh
-$ROOT/$TOOLCHAIN/bin/ccache $CXX "\$@"
-EOF
-
-  chmod +x $ROOT/$TOOLCHAIN/bin/host-g++
+post_makeinstall_target() {
+  rm -rf $INSTALL/usr/bin
 }

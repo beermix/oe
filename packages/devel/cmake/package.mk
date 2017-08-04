@@ -20,9 +20,9 @@ PKG_NAME="cmake"
 PKG_VERSION="3.9.0"
 PKG_ARCH="any"
 PKG_LICENSE="BSD"
-PKG_SITE="http://www.cmake.org/"
+PKG_SITE="https://cmake.org/download/"
 PKG_URL="https://cmake.org/files/v3.9/cmake-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_HOST="ccache:host libressl:host rhash:host"
+PKG_DEPENDS_HOST="ccache:host libressl:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="cmake: A cross-platform, open-source make system"
@@ -39,11 +39,5 @@ configure_host() {
                -DCMAKE_CXX_FLAGS="-march=haswell -O2 -Wall -pipe -Wno-format-security" \
                -DCMAKE_EXE_LINKER_FLAGS="$HOST_LDFLAGS -lrt" \
                -DCMAKE_USE_OPENSSL=ON \
-               -DBUILD_CursesDialog=0 \
-               -DCMAKE_USE_SYSTEM_LIBRARY_JSONCPP=0 \
-               -DCMAKE_USE_SYSTEM_LIBRARY_LIBUV=0 \
-               -DCMAKE_USE_SYSTEM_LIBRARY_LIBRHASH=1 \
-               -DENABLE_ACL=0 \
-               -DHAVE_ACL_LIBACL_H=0 \
-               -DHAVE_SYS_ACL_H=0
+               -DBUILD_CursesDialog=0
 }

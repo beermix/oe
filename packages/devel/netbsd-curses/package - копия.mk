@@ -1,19 +1,19 @@
 ################################################################################
-#      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2016 Team LibreELEC
+#      This file is part of OpenELEC - http://www.openelec.tv
+#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
 #
-#  LibreELEC is free software: you can redistribute it and/or modify
+#  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
 #  the Free Software Foundation, either version 2 of the License, or
 #  (at your option) any later version.
 #
-#  LibreELEC is distributed in the hope that it will be useful,
+#  OpenELEC is distributed in the hope that it will be useful,
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
 #
 #  You should have received a copy of the GNU General Public License
-#  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
+#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
 PKG_NAME="netbsd-curses"
@@ -31,11 +31,20 @@ PKG_LONGDESC="netbsd-curses: netbsd-libcurses portable edition"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
+# remove some problematic *FLAGS
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
+
+pre_make_target() {
+  CFLAGS="$CFLAGS -fPIC -I${PKG_BUILD}/libcurses"
+  CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
+}
+
 make_target() {
-  make HOSTCC="$HOST_CC" CFLAGS="$CFLAGS" PREFIX=/usr all-dynamic
+  make HOSTCC="$HOST_CC" CFLAGS="$CFLAGS" PREFIX=/usr all-static
 }
 
 makeinstall_target() {
-  make PREFIX=$SYSROOT_PREFIX/usr install-dynamic
-  make PREFIX=$INSTALL/usr install-dynamic
+  make HOSTCC="$HOST_CC" PREFIX=$SYSROOT_PREFIX/usr install-static
 }

@@ -44,11 +44,9 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-relro \
                          --enable-gold \
                          --enable-ld=default \
-                         --disable-deterministic-archives \
                          --enable-poison-system-directories \
                          --enable-lto \
                          --disable-nls \
-                         --with-pic \
                          --disable-gdb"
 
 makeinstall_host() {
