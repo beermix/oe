@@ -288,7 +288,6 @@ if [ ! -f $STAMP ]; then
       else
         case "$TARGET" in
           target)
-            #unset LD_LIBRARY_PATH
             make install DESTDIR=$INSTALL_DEV $PKG_MAKEINSTALL_OPTS_TARGET
             for i in `find $INSTALL_DEV/lib/ -name "*.la" 2>/dev/null`; do \
               $SED "s:\(['= ]\)/lib:\\1$SYSROOT_PREFIX/lib:g" $i; \
@@ -331,15 +330,16 @@ if [ ! -f $STAMP ]; then
           rm -rf $INSTALL/{usr/,}share/man
           rm -rf $INSTALL/{usr/,}share/pkgconfig
           rm -rf $INSTALL/{usr/,}var
-          find $INSTALL \( -name "*.orig" \
-                        -o -name "*.rej" \
-                        -o -name "*.a" \
-                        -o -name "*.la" \
-                        -o -name "*.o" \
-                        -o -name "*.in" \
-                        -o -name ".git*" \) \
-            -exec rm -f {} \; 2>/dev/null || :
-          find $INSTALL -type d -exec rmdir -p {} \; 2>/dev/null || :
+          find $INSTALL \( -name "*.orig" -o \
+                           -name "*.a" -o \
+                           -name "*.la" -o \
+                           -name "*.so*T" -o \
+                           -name "*.o" -o \
+                           -name "*.in" -o \
+                           -name "*.rej" -o \
+                           -name ".git*" \) \
+                           -exec rm -f "{}" ";" 2>/dev/null || true
+          find $INSTALL -type d -exec rmdir -p "{}" ";" 2>/dev/null || true
 
           if [ ! "$DEBUG" = yes ]; then
             $STRIP `find $INSTALL -name "*.so" 2>/dev/null` 2>/dev/null || :
@@ -355,10 +355,6 @@ if [ ! -f $STAMP ]; then
 
       cd $ROOT
     fi  # ! "$PKG_SECTION" = "virtual"
-
-    for i in `find $SYSROOT_PREFIX/usr/lib/ -name "*.la" 2>/dev/null`; do \
-      $SED "s:\(['= ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" $i; \
-    done
 
     PKG_DEEPMD5=$(find $STAMP_DEPENDS -exec md5sum {} \; 2>/dev/null | sort | md5sum | cut -d" " -f1)
     for i in PKG_NAME PKG_DEEPMD5; do

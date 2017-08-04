@@ -88,13 +88,9 @@ else
   fi
 fi
 
-  if [ ! -d $BUILD/$PKG_NAME-$PKG_VERSION ]; then
-    if [ -n "$PKG_SOURCE_DIR" ]; then
-      mv $BUILD/$PKG_SOURCE_DIR $BUILD/$PKG_NAME-$PKG_VERSION
-    elif [ -d $BUILD/$PKG_NAME-$PKG_VERSION* ]; then
-      mv $BUILD/$PKG_NAME-$PKG_VERSION* $BUILD/$PKG_NAME-$PKG_VERSION
-    fi
-  fi
+if [ -n "$PKG_SOURCE_DIR" ]; then
+  mv $BUILD/$PKG_SOURCE_DIR $BUILD/$PKG_NAME-$PKG_VERSION
+fi
 
 if [ -d "$PKG_DIR/sources" ]; then
   [ ! -d "$BUILD/${PKG_NAME}-${PKG_VERSION}" ] && mkdir -p $BUILD/${PKG_NAME}-${PKG_VERSION}
@@ -119,14 +115,12 @@ else
   PATCH_ARCH="$TARGET_ARCH"
 fi
 
-  PATCH_DIRS_PKG=""
-  PATCH_DIRS_PRJ=""
-  if [ -n "$PKG_PATCH_DIRS" ]; then
-    for patch_dir in $PKG_PATCH_DIRS; do
-      [ -d $PKG_DIR/patches/$patch_dir ] && PATCH_DIRS_PKG="$PATCH_DIRS_PKG $PKG_DIR/patches/$patch_dir/*.patch"
-      [ -d $PROJECT_DIR/$PROJECT/patches/$PKG_NAME/$patch_dir ] && PATCH_DIRS_PRJ="$PATCH_DIRS_PRJ $PROJECT_DIR/$PROJECT/patches/$PKG_NAME/$patch_dir/*.patch"
-    done
-  fi
+PATCH_DIRS=""
+if [ -n "$PKG_PATCH_DIRS" ]; then
+  for patch_dir in $PKG_PATCH_DIRS; do
+    PATCH_DIRS="$PATCH_DIRS $PKG_DIR/patches/$patch_dir/$PKG_NAME-*.patch"
+  done
+fi
 
 for i in $PKG_DIR/patches/$PKG_NAME-*.patch \
          $PKG_DIR/patches/$PATCH_ARCH/$PKG_NAME-*.patch \

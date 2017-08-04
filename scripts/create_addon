@@ -185,21 +185,15 @@ pack_addon() {
     cd - &>/dev/null
 
     mkdir -p $ADDON_INSTALL_DIR
-    cp $ADDON_BUILD/$PKG_ADDON_ID-$ADDONVER.zip $ADDON_INSTALL_DIR
-    if [ -f $ADDON_BUILD/$PKG_ADDON_ID/changelog.txt ]; then
-      cp $ADDON_BUILD/$PKG_ADDON_ID/changelog.txt $ADDON_INSTALL_DIR/changelog-$ADDONVER.txt
-    fi
-    if [ -f $ADDON_BUILD/$PKG_ADDON_ID/resources/icon.png ]; then
-      mkdir -p $ADDON_INSTALL_DIR/resources
-      cp $ADDON_BUILD/$PKG_ADDON_ID/resources/icon.png $ADDON_INSTALL_DIR/resources/icon.png
-    fi
-    for f in $ADDON_BUILD/$PKG_ADDON_ID/resources/screenshot-*.{jpg,png}; do
-      if [ -f "$f" ]; then
-        mkdir -p $ADDON_INSTALL_DIR/resources
-        cp $f $ADDON_INSTALL_DIR/resources
+      cp $ADDON_BUILD/$PKG_ADDON_ID-$ADDONVER.zip $ADDON_INSTALL_DIR
+
+      if [ -f $ADDON_BUILD/$PKG_ADDON_ID/changelog.txt ]; then
+        cp $ADDON_BUILD/$PKG_ADDON_ID/changelog.txt $ADDON_INSTALL_DIR/changelog-$ADDONVER.txt
       fi
 
-    done
+      if [ -f $ADDON_BUILD/$PKG_ADDON_ID/icon.png ]; then
+        cp $ADDON_BUILD/$PKG_ADDON_ID/icon.png $ADDON_INSTALL_DIR/icon.png
+      fi
   fi
 }
 
