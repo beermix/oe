@@ -43,6 +43,9 @@ PKG_CONFIGURE_OPTS_TARGET="export ac_cv_have_abstract_sockets=yes \
                            --enable-abstract-sockets \
                            --disable-x11-autolaunch \
                            --disable-selinux \
+                           --disable-tests \
+                           --disable-dnotify \
+                           --with-xml=expat \
                            --disable-libaudit \
                            --enable-systemd \
                            --enable-inotify \
