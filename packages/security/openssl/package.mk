@@ -10,8 +10,8 @@ PKG_LONGDESC="The Open Source toolkit for Secure Sockets Layer and Transport Lay
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-CONCURRENCY_MAKE_LEVEL=4
-CCACHE_DISABLE=1
+#CONCURRENCY_MAKE_LEVEL=4
+
 
 PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            --libdir=lib \
@@ -48,7 +48,7 @@ configure_host() {
 }
 
 makeinstall_host() {
-  make INSTALL_PREFIX=$ROOT/$TOOLCHAIN install_sw
+  CCACHE_RECACHE=1 make INSTALL_PREFIX=$ROOT/$TOOLCHAIN install_sw
 }
 
 pre_configure_target() {
@@ -57,6 +57,7 @@ pre_configure_target() {
   
   sed -i -e '/^"linux-x86_64"/ s/-m64 -DL_ENDIAN -O3 -Wall//' $ROOT/$PKG_BUILD/.$TARGET_NAME/Configure
   export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
+  export CCACHE_RECACHE=1
   strip_lto
 }
 
@@ -66,8 +67,8 @@ configure_target() {
 }
 
 makeinstall_target() {
-  make INSTALL_PREFIX=$INSTALL install_sw
-  make INSTALL_PREFIX=$SYSROOT_PREFIX install_sw
+  make INSTALL_PREFIX=$INSTALL install_sw -j1
+  make INSTALL_PREFIX=$SYSROOT_PREFIX install_sw -j1
   chmod 755 $INSTALL/usr/lib/*.so*
   chmod 755 $INSTALL/usr/lib/engines/*.so
 }
