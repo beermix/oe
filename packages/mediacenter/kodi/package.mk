@@ -25,7 +25,7 @@ PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
-PKG_DEPENDS_TARGET="toolchain kodi:host kodi:bootstrap xmlstarlet:host Python zlib systemd pciutils dbus lzo pcre swig:host libass curl fontconfig fribidi tinyxml libjpeg-turbo freetype libcdio libdvdnav taglib libxml2 libxslt rapidjson sqlite ffmpeg crossguid giflib opengl lcms2 libfmt nss"
+PKG_DEPENDS_TARGET="toolchain kodi:host kodi:bootstrap xmlstarlet:host Python zlib systemd pciutils dbus lzo pcre swig:host libass curl fontconfig fribidi tinyxml libjpeg-turbo freetype libcdio libdvdnav taglib libxml2 libxslt rapidjson sqlite ffmpeg crossguid giflib opengl lcms2 "
 PKG_DEPENDS_HOST="toolchain"
 PKG_DEPENDS_BOOTSTRAP="toolchain lzo:host libpng:host libjpeg-turbo:host giflib:host"
 PKG_PRIORITY="optional"
@@ -50,7 +50,7 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$ROOT/$TOOLCHAIN \
                        -DCMAKE_BUILD_TYPE=none \
                        -DPYTHON_INCLUDE_DIRS=$SYSROOT_PREFIX/usr/include/python2.7 \
                        -DGIT_VERSION=$PKG_VERSION \
-                       -DENABLE_LDGOLD=ON \
+                       -DENABLE_LDGOLD=OFF \
                        -DKODI_DEPENDSBUILD=ON \
                        -DWITH_TEXTUREPACKER=$ROOT/$TOOLCHAIN/bin/TexturePacker \
                        -DENABLE_INTERNAL_FFMPEG=OFF \
@@ -58,30 +58,14 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$ROOT/$TOOLCHAIN \
                        -DENABLE_INTERNAL_CROSSGUID=OFF \
                        -DENABLE_OPENSSL=ON \
                        -DENABLE_SDL=OFF \
-                       -DENABLE_LCMS2=OFF \
-                       -DENABLE_CCACHE=ON \
-                       -DENABLE_LIRC=OFF \
+                       -DENABLE_LCMS2=ON \
+                       -DENABLE_CCACHE=OFF \
+                       -DENABLE_LIRC=ON \
                        -DENABLE_EVENTCLIENTS=OFF \
                        -DENABLE_LIBUSB=OFF \
                        -DENABLE_UDEV=ON \
-                       -DENABLE_XSLT=ON \
-                       -DENABLE_DBUS=ON \
-                       -DENABLE_BLUETOOTH=ON \
-                       -DENABLE_CAP=OFF \
-                       -DCMAKE_VERBOSE_MAKEFILE=OFF \
-                       -DENABLE_OPTICAL=OFF \
-                       -DCMAKE_EXPORT_COMPILE_COMMANDS=OFF \
-                       -DENABLE_AVX=ON \
-                       -DENABLE_AVX2=OFF \
-                       -DENABLE_SSE=ON \
-                       -DENABLE_SSE2=ON \
-                       -DENABLE_SSE4_1=ON \
-                       -DENABLE_SSE4_2=ON \
-                       -DENABLE_SSSE3=ON \
-                       -DHAVE_SSE=TRUE \
-                       -DHAVE_SSE2=TRUE \
-                       -DHAVE_SSE4_1=TRUE \
-                       -DHAVE_SSSE3=TRUE"
+                       -DENABLE_XSLT=OFF \
+                       -DENABLE_DBUS=ON"
 
 if [ "$TARGET_ARCH" = "x86_64" ]; then
   PKG_CMAKE_OPTS_TARGET+=" -DWITH_CPU=$TARGET_ARCH"
@@ -265,7 +249,7 @@ makeinstall_host() {
 pre_configure_target() {
   strip_lto
 
-  export LIBS="$LIBS -lterminfo"
+  export LIBS="$LIBS -lz -lterminfo"
 }
 
 pre_make_target() {

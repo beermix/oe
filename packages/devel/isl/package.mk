@@ -9,6 +9,6 @@ PKG_SECTION="devel"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_HOST="--disable-shared --with-gnu-ld --without-clang --with-gmp=$ROOT/$TOOLCHAIN"
+PKG_CONFIGURE_OPTS_HOST="--disable-shared --without-clang --with-gmp=$ROOT/$TOOLCHAIN"
 			 
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"

@@ -82,7 +82,6 @@ print_crash_report()
   OFILE="$FILE"
   FILE="$CRASHLOG_DIR/kodi_crashlog_$DATE.log"
   mv "$OFILE" "$FILE"
-  ln -sf "$FILE" "$CRASHLOG_DIR/kodi_crash.log"
   echo "Crash report available at $FILE"
 }
 
@@ -110,19 +109,5 @@ if [ $(( ($RET >= 131 && $RET <= 136) || $RET == 139 )) = "1" ] ; then
   # Cleanup. Keep only youngest 10 reports
   rm -f $(ls -1t $CRASHLOG_DIR/kodi_crashlog_*.log | tail -n +11)
 fi
-
-# clean up any stale cores. just in case
-rm -f /storage/.cache/cores/*
-
-# wait for AceStream
-ACE_CONF="/storage/.cache/services/acestream.conf"
-ACE_START="/tmp/ace_run.tmp"
-
-if [ ! -f "$ACE_START" -a -f "$ACE_CONF" ]; then
-  . $ACE_CONF
-  touch $ACE_START
-  [ -z "$ACE_WAIT" ] && ACE_WAIT="none"
-  if [ "$ACE_WAIT" != "none" ]; then
-      sleep $ACE_WAIT
 
 exit $RET
