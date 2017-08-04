@@ -8,7 +8,7 @@ PKG_LONGDESC="GNU nano (Nano's ANOther editor, or Not ANOther editor) is an enha
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config/nano --datarootdir=/storage/.config/nano --enable-color"
+PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config/nano --datarootdir=/storage/.config/nano --enable-color --disable-libmagic"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/storage
