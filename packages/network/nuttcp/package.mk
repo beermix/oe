@@ -8,8 +8,8 @@ PKG_AUTORECONF="no"
 pre_configure_target() {
   export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3 -Wall|"`
   CONCURRENCY_MAKE_LEVEL=1
-  #strip_lto
-  #strip_gold
+  strip_lto
+  strip_gold
 }
 
 make_target() {
