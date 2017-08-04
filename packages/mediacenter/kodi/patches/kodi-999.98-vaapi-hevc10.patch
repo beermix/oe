@@ -1,5 +1,5 @@
---- a/xbmc/cores/VideoPlayer/DVDCodecs/Video/VAAPI.cpp	2017-07-25 15:41:48.000000000 +0000
-+++ b/xbmc/cores/VideoPlayer/DVDCodecs/Video/VAAPI.cpp	2017-07-27 17:40:39.765475657 +0000
+--- a/xbmc/cores/VideoPlayer/DVDCodecs/Video/VAAPI.cpp	2017-08-02 20:39:40.000000000 +0200
++++ b/xbmc/cores/VideoPlayer/DVDCodecs/Video/VAAPI.cpp	2017-08-04 11:00:52.822065605 +0200
 @@ -500,8 +500,8 @@
    if (!CVAAPIContext::EnsureContext(&m_vaapiConfig.context, this))
      return false;
@@ -11,12 +11,16 @@
    {
      CLog::Log(LOGWARNING,"VAAPI::Open: no width/height available, can't init");
      return false;
-@@ -563,7 +563,12 @@
+@@ -558,12 +558,12 @@
+     }
+     case AV_CODEC_ID_HEVC:
+     {
+-      // for distributions using far newer ffmpeg
+-      // not available when Krypton was released
        if (avctx->profile == FF_PROFILE_HEVC_MAIN_10)
-         return false;
- 
+-        return false;
+-
 -      profile = VAProfileHEVCMain;
-+      if (avctx->profile == FF_PROFILE_HEVC_MAIN_10)
 +        profile = VAProfileHEVCMain10;
 +      else if (avctx->profile == FF_PROFILE_HEVC_MAIN)
 +        profile = VAProfileHEVCMain;
@@ -25,7 +29,7 @@
        if (!m_vaapiConfig.context->SupportsProfile(profile))
          return false;
        break;
-@@ -593,7 +598,7 @@
+@@ -593,7 +593,7 @@
  
    m_vaapiConfig.profile = profile;
    m_vaapiConfig.attrib = m_vaapiConfig.context->GetAttrib(profile);
@@ -34,7 +38,7 @@
    {
      CLog::Log(LOGERROR, "VAAPI - invalid yuv format %x", m_vaapiConfig.attrib.value);
      return false;
-@@ -1018,7 +1023,7 @@
+@@ -1018,7 +1018,7 @@
    m_vaapiConfig.dpy = m_vaapiConfig.context->GetDisplay();
    m_vaapiConfig.x11dsp = m_vaapiConfig.context->GetX11Display();
    m_vaapiConfig.attrib = m_vaapiConfig.context->GetAttrib(m_vaapiConfig.profile);
@@ -43,7 +47,7 @@
    {
      CLog::Log(LOGERROR, "VAAPI - invalid yuv format %x", m_vaapiConfig.attrib.value);
      return false;
-@@ -1031,9 +1036,12 @@
+@@ -1031,9 +1031,12 @@
  
    // create surfaces
    VASurfaceID surfaces[32];
@@ -57,7 +61,7 @@
                                       m_vaapiConfig.surfaceWidth,
                                       m_vaapiConfig.surfaceHeight,
                                       surfaces,
-@@ -1308,6 +1316,83 @@
+@@ -1308,6 +1311,83 @@
  
        break;
      }
@@ -141,7 +145,7 @@
      case VA_FOURCC('B','G','R','A'):
      {
        attrib = attribs;
-@@ -2553,9 +2638,12 @@
+@@ -2553,9 +2633,12 @@
  
    // create surfaces
    VASurfaceID surfaces[32];
