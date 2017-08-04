@@ -30,7 +30,7 @@ diff -Naur tiff-4.0.8-orig/Makefile.am tiff-4.0.8/Makefile.am
  	rm -rf $(distdir)/_inst/cmake
  
 -SUBDIRS = port libtiff tools build contrib test man html
-+SUBDIRS = port libtiff build contrib test
++SUBDIRS = port libtiff build contrib
  
  release:
  	(rm -f $(top_srcdir)/RELEASE-DATE && echo $(LIBTIFF_RELEASE_DATE) > $(top_srcdir)/RELEASE-DATE)
