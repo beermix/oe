@@ -43,15 +43,14 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_path_GLIB_GENMARSHAL=$TOOLCHAIN/bin/glib-genmar
                            --enable-xkb \
                            --disable-xinerama \
                            --disable-gtk-doc-html \
-                           --with-xinput \
-                           --enable-silent-rules"
+                           --with-xinput"
 
 make_target() {
   make SRC_SUBDIRS="gdk gtk modules"
-  $MAKEINSTALL SRC_SUBDIRS="gdk gtk modules"
 }
 
 makeinstall_target() {
+  $MAKEINSTALL SRC_SUBDIRS="gdk gtk modules"
   make install DESTDIR=$INSTALL SRC_SUBDIRS="gdk gtk modules"
 }
 
