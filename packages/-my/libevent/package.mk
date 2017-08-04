@@ -11,8 +11,6 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-static \
 			      --disable-samples \
 			      --enable-openssl \
-			      --enable-function-sections \
-			      --disable-clock-gettime \
 			      --disable-debug-mode \
 			      --with-gnu-ld \
 			      --with-pic"
