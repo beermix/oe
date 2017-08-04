@@ -37,6 +37,7 @@ PKG_CONFIGURE_OPTS_TARGET="bash_cv_wcwidth_broken=no \
 
 pre_configure_target() {
   CFLAGS="$CFLAGS -fPIC"
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
 }
 
 post_makeinstall_target() {

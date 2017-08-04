@@ -32,8 +32,9 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 # remove some problematic *FLAGS
-  #export CFLAGS=`echo $CFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
-  #export LDFLAGS=`echo $LDFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
 
 pre_make_target() {
   CFLAGS="$CFLAGS -fPIC -I${PKG_BUILD}/libcurses"
