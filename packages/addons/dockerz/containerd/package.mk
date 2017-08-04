@@ -1,5 +1,5 @@
 PKG_NAME="containerd"
-PKG_VERSION="9048e5e"
+PKG_VERSION="cfb82a8"
 PKG_SITE="https://containerd.tools/"
 PKG_GIT_URL="https://github.com/docker/containerd"
 PKG_DEPENDS_HOST="toolchain go"
