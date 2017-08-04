@@ -21,7 +21,7 @@ PKG_VERSION="1_63_0"
 PKG_URL="$SOURCEFORGE_SRC/boost/boost/1.63.0/${PKG_NAME}_${PKG_VERSION}.tar.bz2"
 PKG_SOURCE_DIR="${PKG_NAME}_${PKG_VERSION}"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain boost:host Python:host zlib bzip2"
+PKG_DEPENDS_TARGET="toolchain boost:host Python:host zlib bzip2 icu"
 PKG_PRIORITY="optional"
 PKG_SECTION="devel"
 PKG_SHORTDESC="boost: Peer-reviewed STL style libraries for C++"
@@ -40,16 +40,11 @@ makeinstall_host() {
     cp bin.*/bjam $ROOT/$TOOLCHAIN/bin
 }
 
-pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC -DPIC"
-  export CXXFLAGS="$CXXFLAGS -fPIC -DPIC"
-  export LDFLAGS="$LDFLAGS -fPIC -DPIC"
-}
-
 configure_target() {
   sh bootstrap.sh --prefix=/usr \
                   --with-bjam=$ROOT/$TOOLCHAIN/bin/bjam \
                   --with-python=$ROOT/$TOOLCHAIN/bin/python \
+                  --with-icu=$SYSROOT_PREFIX/usr \
 
   echo "using gcc : `$CC -v 2>&1  | tail -n 1 |awk '{print $3}'` : $CC  : <compileflags>\"$CFLAGS\" <linkflags>\"$LDFLAGS\" ;" \
     > tools/build/src/user-config.jam
@@ -60,7 +55,7 @@ make_target() {
 }
 
 makeinstall_target() {
-  $ROOT/$TOOLCHAIN/bin/bjam -d2 --toolset=gcc link=shared target-os=linux variant=release threading=multi debug-symbols=off \
+  $ROOT/$TOOLCHAIN/bin/bjam -d2 --toolset=gcc link=shared target-os=linux variant=release threading=multi debug-symbols=off cflags="$CPPFLAGS $CFLAGS -fPIC -O3" cxxflags="$CPPFLAGS $CXXFLAGS -std=c++14 -fPIC -O3" linkflags="$LDFLAGS" \
                                 --prefix=$SYSROOT_PREFIX/usr \
                                 --ignore-site-config \
                                 --layout=system \
@@ -79,7 +74,7 @@ makeinstall_target() {
                                 --with-regex -sICU_PATH="$SYSROOT_PREFIX/usr" \
                                 install
 
-  $ROOT/$TOOLCHAIN/bin/bjam -d2 --toolset=gcc link=shared target-os=linux variant=release threading=multi debug-symbols=off \
+  $ROOT/$TOOLCHAIN/bin/bjam -d2 --toolset=gcc link=shared target-os=linux variant=release threading=multi debug-symbols=off cflags="$CPPFLAGS $CFLAGS -fPIC -O3" cxxflags="$CPPFLAGS $CXXFLAGS -std=c++14 -fPIC -O3" linkflags="$LDFLAGS" \
                                 --prefix=$INSTALL/usr \
                                 --ignore-site-config \
                                 --layout=system \
