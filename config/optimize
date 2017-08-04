@@ -1,10 +1,10 @@
 if [ "$OPTIMIZATIONS" = normal ];then
-  GCC_OPTIM="-O2 -pipe -fstack-protector-strong -ffunction-sections -fdata-sections"
+  GCC_OPTIM="-O2 -pipe"
   LD_OPTIM="-Wl,--as-needed"
 fi
 
 if [ "$OPTIMIZATIONS" = size ];then
-  GCC_OPTIM="-O2 -pipe"
+  GCC_OPTIM="-O2 -pipe -ffunction-sections -fdata-sections"
   LD_OPTIM="-Wl,--as-needed"
   CPP_OPTIM="-D_FORTIFY_SOURCE=2"
 fi
