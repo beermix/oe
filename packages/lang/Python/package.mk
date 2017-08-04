@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="Python"
-PKG_VERSION="2.7.13"
+PKG_VERSION="3dd1ccb"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.python.org/"
-PKG_URL="http://www.python.org/ftp/python/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_GIT_URL="https://github.com/python/cpython"
 PKG_DEPENDS_HOST="zlib:host bzip2:host sqlite:host"
 PKG_DEPENDS_TARGET="toolchain sqlite expat zlib bzip2 pcre openssl libffi readline Python:host bluez"
 PKG_PRIORITY="optional"
@@ -46,8 +46,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            ac_cv_func_chflags_works=no \
                            ac_cv_func_printf_zd=yes \
                            ac_cv_buggy_getaddrinfo=no \
-                           ac_cv_header_bluetooth_bluetooth_h=no \
-                           ac_cv_header_bluetooth_h=no \
                            ac_cv_file__dev_ptmx=no \
                            ac_cv_file__dev_ptc=no \
                            ac_cv_have_long_long_format=yes \
@@ -63,7 +61,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            --with-wctype-functions \
                            --without-cxx-main \
                            --with-system-ffi \
-                           --with-expat=system"
+                           --with-system-expat"
 
 post_patch() {
   # This is needed to make sure the Python build process doesn't try to
@@ -120,17 +118,18 @@ post_makeinstall_target() {
     rm -rf $INSTALL/usr/lib/python*/$dir
   done
 
-# set file permissions
-  chmod 755 $INSTALL/usr/lib/libpython*.so*
-
-  ( cd $INSTALL/usr/lib/python2.7
-    python -Wi -t -B $ROOT/$PKG_BUILD/Lib/compileall.py -d /usr/lib/python2.7 -f .
-    find $INSTALL/usr/lib/python2.7 -name "*.py" -exec rm -f {} \; &>/dev/null
-  )
   rm -rf $INSTALL/usr/lib/python*/config
   rm -rf $INSTALL/usr/bin/2to3
   rm -rf $INSTALL/usr/bin/idle
   rm -rf $INSTALL/usr/bin/pydoc
   rm -rf $INSTALL/usr/bin/smtpd.py
   rm -rf $INSTALL/usr/bin/python*-config
+
+  cd $INSTALL/usr/lib/python2.7
+  python -Wi -t -B $PKG_BUILD/Lib/compileall.py -d /usr/lib/python2.7 -f .
+  find $INSTALL/usr/lib/python2.7 -name "*.py" -exec rm -f {} \; &>/dev/null
+
+  # strip
+  chmod u+w $INSTALL/usr/lib/libpython*.so.*
+  debug_strip $INSTALL/usr
 }
