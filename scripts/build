@@ -277,7 +277,6 @@ if [ ! -f $STAMP ]; then
 
       # make install
       if [ "$(type -t pre_makeinstall_$TARGET)" = "function" ]; then
-        #unset LD_LIBRARY_PATH
         pre_makeinstall_$TARGET
       fi
       if [ "$(type -t makeinstall_$TARGET)" = "function" ]; then

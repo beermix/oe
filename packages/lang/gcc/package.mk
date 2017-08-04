@@ -36,7 +36,8 @@ PKG_AUTORECONF="no"
 #  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $ROOT/$PKG_BUILD/gcc/configure
 #}
 
-GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
+GCC_COMMON_CONFIGURE_OPTS="MAKEINFO=missing \
+                           --target=$TARGET_NAME \
                            --with-sysroot=$SYSROOT_PREFIX \
                            --with-gmp=$ROOT/$TOOLCHAIN \
                            --with-mpfr=$ROOT/$TOOLCHAIN \
