@@ -60,10 +60,23 @@ post_configure_target() {
 
 post_make_target() {
  # make minizip
- make -j1 -C $ROOT/$PKG_BUILD/contrib/minizip
+ make -C $ROOT/$PKG_BUILD/contrib/minizip
 }
 
 post_makeinstall_target() {
  # Install minizip
- make -j1 -C $ROOT/$PKG_BUILD/contrib/minizip DESTDIR=$SYSROOT_PREFIX install
+ make -C $ROOT/$PKG_BUILD/contrib/minizip DESTDIR=$SYSROOT_PREFIX install
+}
+
+configure_init() {
+ : # reuse target
+}
+
+make_init() {
+ : # reuse target
+}
+
+makeinstall_init() {
+  mkdir -p $INSTALL/usr/lib
+  cp -a ../.install_pkg/usr/lib/* $INSTALL/usr/lib
 }

@@ -38,3 +38,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared \
                            --disable-oggtest \
                            --disable-docs \
                            --disable-examples"
+
+pre_configure_target() {
+  export CFLAGS="$CFLAGS -fPIC"
+}

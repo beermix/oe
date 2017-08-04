@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,9 +18,13 @@
 
 PKG_NAME="popt"
 PKG_VERSION="1.16"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://rpm5.org/"
 PKG_URL="http://rpm5.org/files/popt/${PKG_NAME}-${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
+PKG_PRIORITY="optional"
 PKG_SECTION="devel"
 PKG_SHORTDESC="popt: contains the popt libraries which are used by some programs to parse command-line options"
 PKG_LONGDESC="The popt package contains the popt libraries which are used by some programs to parse command-line options."
@@ -32,14 +36,4 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared"
 
 pre_configure_target() {
   CFLAGS="$CFLAGS -fPIC"
-}
-
-pre_configure_target() {
- cd $PKG_BUILD
- rm -rf .$TARGET_NAME
-}
-
-pre_configure_host() {
- cd $PKG_BUILD
- rm -rf .$HOST_NAME
 }

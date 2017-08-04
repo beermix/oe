@@ -19,7 +19,7 @@
 ################################################################################
 
 PKG_NAME="gdk-pixbuf"
-PKG_VERSION="2.36.4"
+PKG_VERSION="2.34.0"
 PKG_SITE="http://www.gtk.org/"
 PKG_URL="http://ftp.acc.umu.se/pub/gnome/sources/gdk-pixbuf/2.36/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain glib libjpeg-turbo libpng jasper tiff"
@@ -38,7 +38,7 @@ PKG_CONFIGURE_OPTS_TARGET="gio_can_sniff=yes \
                            --with-libjpeg \
                            --with-libtiff \
                            --with-libjasper"
-                           
-pre_configure_target() {
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed|-Wl,-O1,--as-needed|"`
+
+post_makeinstall_target() {
+  cp $PKG_DIR/config/gdk-pixbuf.loaders $INSTALL/usr/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache
 }

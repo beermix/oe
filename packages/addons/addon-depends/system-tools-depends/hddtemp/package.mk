@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="hddtemp"
-PKG_VERSION="0.3-beta15"
+PKG_VERSION="e16aed6"
 PKG_SITE="http://www.guzu.net/linux/hddtemp.php"
-PKG_URL="http://download.savannah.gnu.org/releases/hddtemp/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_GIT_URL="https://github.com/guzu/hddtemp"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="debug/tools"
 PKG_SHORTDESC="hddtemp: tool that reports hard drive temperature"

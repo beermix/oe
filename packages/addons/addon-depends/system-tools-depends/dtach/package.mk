@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="dtach"
-PKG_VERSION="0.8"
+PKG_VERSION="0.9"
 PKG_SITE="http://dtach.sourceforge.net"
 PKG_URL="http://download.sourceforge.net/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"

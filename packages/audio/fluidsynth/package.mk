@@ -33,6 +33,6 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 PKG_CMAKE_OPTS_TARGET="-DBUILD_SHARED_LIBS=0 \
-                       -Denable-readline=0 \
+                       -Denable-readline=1 \
                        -Denable-pulseaudio=0 \
                        -Denable-libsndfile=0"

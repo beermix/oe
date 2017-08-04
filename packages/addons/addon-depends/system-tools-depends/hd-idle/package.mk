@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="hd-idle"
-PKG_VERSION="1.04"
+PKG_VERSION="1.05"
 PKG_SITE="http://hd-idle.sourceforge.net/"
 PKG_URL="http://downloads.sourceforge.net/project/hd-idle/${PKG_NAME}-${PKG_VERSION}.tgz"
 PKG_SOURCE_DIR="$PKG_NAME"

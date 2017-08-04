@@ -1,6 +1,6 @@
 ################################################################################
-#      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2016-present Team LibreELEC
+#      This file is part of LibreELEC - http://www.libreelec.tv
+#      Copyright (C) 2016 Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,17 +16,29 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="fdupes"
-PKG_VERSION="1.6.1"
+PKG_NAME="mediainfo"
+PKG_VERSION="0.7.83"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="http://premium.caribe.net/~adrian2/fdupes.html"
-PKG_URL="https://github.com/adrianlopezroche/fdupes/archive/v${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_TARGET="toolchain"
+PKG_SITE="http://mediaarea.net/en/MediaInfo/Download/Source"
+PKG_URL="http://mediaarea.net/download/source/mediainfo/$PKG_VERSION/mediainfo_$PKG_VERSION.tar.bz2"
+PKG_SOURCE_DIR="MediaInfo"
+PKG_DEPENDS_TARGET="toolchain libmediainfo"
 PKG_SECTION="tools"
-PKG_SHORTDESC="FDUPES is a program for identifying or deleting duplicate files residing within specified directories"
-PKG_LONGDESC="FDUPES is a program for identifying or deleting duplicate files residing within specified directories"
+PKG_SHORTDESC="MediaInfo is a convenient unified display of the most relevant technical and tag data for video and audio files"
+PKG_LONGDESC="MediaInfo is a convenient unified display of the most relevant technical and tag data for video and audio files"
 PKG_AUTORECONF="no"
+
+make_target() {
+  cd Project/GNU/CLI
+  do_autoreconf
+  echo $PATH
+  ./configure \
+        --host=$TARGET_NAME \
+        --build=$HOST_NAME \
+        --prefix=/usr
+  make
+}
 
 makeinstall_target() {
   : # nop
