@@ -45,8 +45,7 @@ PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/etc/ssh \
                            --disable-pututxline \
                            --disable-etc-default-login \
                            --with-keydir=/storage/.cache/ssh \
-                           --without-pam \
-                           --disable-hardening"
+                           --without-pam"
 
 pre_configure_target() {
   export LD="$CC"
