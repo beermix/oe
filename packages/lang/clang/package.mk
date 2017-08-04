@@ -1,5 +1,3 @@
-# Made by github.com/escalade
-
 PKG_NAME="clang"
 PKG_VERSION="4.0.1"
 PKG_ARCH="x86_64"
@@ -19,5 +17,4 @@ pre_configure_target() {
   strip_gold
 }
 
-
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release"
+#PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release"
