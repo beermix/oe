@@ -29,12 +29,13 @@
 # Skins to install (Estuary)
 # Space separated list is supported,
 # e.g. SKINS="Estuary"
+  SKINS=""
 
 # remove default skin included in Kodi (yes/no)
-  SKIN_REMOVE_SHIPPED="yes"
+  SKIN_REMOVE_SHIPPED="no"
 
 # Default Skin (Confluence, or any from above)
- # SKIN_DEFAULT=""
+  SKIN_DEFAULT="Estuary"
 
 # install extra subtitle Fonts for KODI (yes / no)
   KODI_EXTRA_FONTS="yes"
@@ -43,7 +44,7 @@
   PULSEAUDIO_SUPPORT="yes"
 
 # build and install espeak support (yes / no)
-  ESPEAK_SUPPORT="no"
+  ESPEAK_SUPPORT="yes"
 
 # build and install with non-free support
 # (RAR compression support in KODI) (yes / no)
@@ -156,7 +157,6 @@
 
 # build and install IRServer IR/LCD support (yes / no)
   IRSERVER_SUPPORT="no"
-  #LCD_DRIVER+="no"
 
 # build and install CEC adapter support (yes / no)
   CEC_SUPPORT="no"
