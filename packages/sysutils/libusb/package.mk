@@ -17,18 +17,16 @@
 ################################################################################
 
 PKG_NAME="libusb"
-PKG_VERSION="1.0.21"
-PKG_ARCH="any"
-PKG_LICENSE="LGPLv2.1"
+PKG_VERSION="1fe3db7"
 PKG_SITE="http://libusb.info/"
-PKG_URL="$SOURCEFORGE_SRC/libusb/files/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_GIT_URL="https://github.com/libusb/libusb"
 PKG_DEPENDS_TARGET="toolchain systemd"
 PKG_SECTION="system"
 PKG_SHORTDESC="libusb: OS independent USB device access"
 PKG_LONGDESC="The libusb project's aim is to create a Library for use by user level applications to USB devices regardless of OS."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-shared \
             --enable-static \
@@ -36,8 +34,3 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-shared \
             --disable-debug-log \
             --enable-udev \
             --disable-examples-build"
-
-pre_configure_target () {
-  #libusb sometimes fails to build if building paralell
-  export MAKEFLAGS=-j1
-}
