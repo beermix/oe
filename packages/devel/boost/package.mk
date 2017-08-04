@@ -55,7 +55,7 @@ make_target() {
 }
 
 makeinstall_target() {
-  $ROOT/$TOOLCHAIN/bin/bjam -d2 --toolset=gcc link=shared target-os=linux variant=release threading=multi debug-symbols=off cflags="$CPPFLAGS $CFLAGS -fPIC -O3" cxxflags="$CPPFLAGS $CXXFLAGS -fPIC -O3" linkflags="-Wl,-O1,--as-needed" \
+  $ROOT/$TOOLCHAIN/bin/bjam -d2 --toolset=gcc link=shared target-os=linux variant=release threading=multi debug-symbols=off cflags="$CPPFLAGS $CFLAGS -fPIC" cxxflags="$CPPFLAGS $CXXFLAGS -fPIC" \
                                 --prefix=$SYSROOT_PREFIX/usr \
                                 --ignore-site-config \
                                 --layout=system \
@@ -74,7 +74,7 @@ makeinstall_target() {
                                 --with-regex -sICU_PATH="$SYSROOT_PREFIX/usr" \
                                 install
 
-  $ROOT/$TOOLCHAIN/bin/bjam -d2 --toolset=gcc link=shared target-os=linux variant=release threading=multi debug-symbols=off cflags="$CPPFLAGS $CFLAGS -fPIC -O3" cxxflags="$CPPFLAGS $CXXFLAGS -fPIC -O3" linkflags="-Wl,-O1,--as-needed" \
+  $ROOT/$TOOLCHAIN/bin/bjam -d2 --toolset=gcc link=shared target-os=linux variant=release threading=multi debug-symbols=off cflags="$CPPFLAGS $CFLAGS -fPIC" cxxflags="$CPPFLAGS $CXXFLAGS -fPIC" \
                                 --prefix=$INSTALL/usr \
                                 --ignore-site-config \
                                 --layout=system \
