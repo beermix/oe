@@ -47,6 +47,8 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            ac_cv_func_chflags_works=no \
                            ac_cv_func_printf_zd=yes \
                            ac_cv_buggy_getaddrinfo=no \
+                           ac_cv_header_bluetooth_bluetooth_h=no \
+                           ac_cv_header_bluetooth_h=no \
                            ac_cv_file__dev_ptmx=no \
                            ac_cv_file__dev_ptc=no \
                            ac_cv_have_long_long_format=yes \
@@ -119,18 +121,18 @@ post_makeinstall_target() {
     rm -rf $INSTALL/usr/lib/python*/$dir
   done
 
+# set file permissions
+  chmod 755 $INSTALL/usr/lib/libpython*.so*
+
+  ( cd $INSTALL/usr/lib/python2.7
+    python -Wi -t -B $ROOT/$PKG_BUILD/Lib/compileall.py -d /usr/lib/python2.7 -f .
+    find $INSTALL/usr/lib/python2.7 -name "*.py" -exec rm -f {} \; &>/dev/null
+  )
+
   rm -rf $INSTALL/usr/lib/python*/config
   rm -rf $INSTALL/usr/bin/2to3
   rm -rf $INSTALL/usr/bin/idle
   rm -rf $INSTALL/usr/bin/pydoc
   rm -rf $INSTALL/usr/bin/smtpd.py
   rm -rf $INSTALL/usr/bin/python*-config
-
-  cd $INSTALL/usr/lib/python2.7
-  python -Wi -t -B $ROOT/$PKG_BUILD/Lib/compileall.py -d /usr/lib/python2.7 -f .
-  find $INSTALL/usr/lib/python2.7 -name "*.py" -exec rm -f {} \; &>/dev/null
-
-  # strip
-  chmod u+w $INSTALL/usr/lib/libpython*.so.*
-  debug_strip $INSTALL/usr
 }
