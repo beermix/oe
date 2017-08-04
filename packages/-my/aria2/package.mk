@@ -14,7 +14,6 @@ PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
                            --without-libnettle \
                            --with-openssl \
                            --disable-ipv6 \
-                           --with-libgmp \
                            --without-gnutls \
                            --without-libssh2 \
                            --with-libexpat \
