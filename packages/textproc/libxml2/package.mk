@@ -40,12 +40,11 @@ PKG_CONFIGURE_OPTS_ALL="ac_cv_header_ansidecl_h=no \
 			  --with-zlib=$ROOT/$TOOLCHAIN \
 			  --without-lzma"
 
-PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_ALL --with-zlib=$ROOT/$TOOLCHAIN --with-icu=$ROOT/$TOOLCHAIN"
+PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_ALL --with-zlib=$ROOT/$TOOLCHAIN"
 
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_ALL \
 			     --with-zlib=$SYSROOT_PREFIX/usr \
-			     --with-sysroot=$SYSROOT_PREFIX \
-			     --with-icu=$SYSROOT_PREFIX/usr"
+			     --with-sysroot=$SYSROOT_PREFIX"
 			     
 pre_configure_host() {
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed|-Wl,-O1,--as-needed|"`
