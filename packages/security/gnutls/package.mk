@@ -17,4 +17,5 @@ PKG_CONFIGURE_OPTS_TARGET="--with-included-libtasn1 \
 			      --without-p11-kit \
 			      --with-libgcrypt \
 			      --disable-tools \
-			      --disable-doc"
+			      --disable-doc \
+			      --disable-shared"

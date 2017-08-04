@@ -38,7 +38,7 @@ pre_make_host() {
 }
 
 make_host() {
-  make CC="$CC" CFLAGS="$CFLAGS -fPIC -DLUA_COMPAT_5_2 -DLUA_COMPAT_5_1" linux all
+  make CC="$CC" CFLAGS="$CFLAGS -fPIC -lreadline -DLUA_COMPAT_5_2 -DLUA_COMPAT_5_1" linux all
 }
 
 makeinstall_host() {
@@ -48,10 +48,8 @@ makeinstall_host() {
 }
 
 make_target() {
-  CFLAGS=`echo $CFLAGS | sed -e "s|-mcpu=cortex-a53||"`
-  make CC="$CC" CFLAGS="$CFLAGS -fPIC -DLUA_COMPAT_5_2 -DLUA_COMPAT_5_1" linux all
+  make CC="$CC" CFLAGS="$CFLAGS -fPIC -DLUA_COMPAT_5_2 -DLUA_COMPAT_5_1" LDFLAGS="$LDFLAGS -lreadline" linux all
 }
-
 
 makeinstall_target() {
   make \

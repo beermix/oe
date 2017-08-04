@@ -31,7 +31,12 @@ PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="bash_cv_wcwidth_broken=no \
                            --with-curses \
-                           --without-purify"
+                           --without-purify \
+                           --enable-static \
+                           --with-gnu-ld \
+                           --with-pic"
+
+PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/share/readline
