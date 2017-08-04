@@ -37,9 +37,8 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static \
 			      --without-zlib \
 			      --without-gnutls \
 			      --without-client-tls \
-			      --with-gnu-ld \
 			      --disable-nls"
-
+			      
 post_install () {
   enable_service x11vnc.service
 }
