@@ -50,6 +50,8 @@ make_target() {
   cd $ROOT/$PKG_BUILD/nss
 
   [ "$TARGET_ARCH" = "x86_64" ] && TARGET_USE_64="USE_64=1"
+  
+  strip_lto
 
   make BUILD_OPT=1 $TARGET_USE_64 \
      NSS_USE_SYSTEM_SQLITE=1 \
