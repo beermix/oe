@@ -46,7 +46,7 @@ pre_configure_host() {
 
 pre_configure_target() {
   export CFLAGS="$CFLAGS -fPIC"
-  export LIBS="$LIBS -latomic"
+  #export LIBS="$LIBS -latomic"
 }
 
 post_makeinstall_target() {

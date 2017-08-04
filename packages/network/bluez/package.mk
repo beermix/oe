@@ -40,12 +40,8 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-dependency-tracking \
                            --disable-obex \
                            --enable-client \
                            --disable-systemd \
-                           --enable-tools \
-                           --enable-datafiles \
                            --disable-experimental \
-                           --enable-deprecated \
                            --enable-sixaxis \
-                           --with-gnu-ld \
                            storagedir=/storage/.cache/bluetooth"
 
 if [ "$DEBUG" = "yes" ]; then
@@ -65,8 +61,7 @@ pre_configure_target() {
   cd $ROOT/$PKG_BUILD
     rm -rf .$TARGET_NAME
 
-  export LIBS="-lncurses -lterminfo"
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
+  export LIBS="$LIBS -lncurses -lterminfo"
 }
 
 post_makeinstall_target() {

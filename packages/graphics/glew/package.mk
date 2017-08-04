@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="glew"
-PKG_VERSION="2.0.0"
+PKG_VERSION="2.1.0"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="BSD"
 PKG_SITE="http://glew.sourceforge.net/"
-PKG_URL="$SOURCEFORGE_SRC/glew/glew/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tgz"
+PKG_URL="https://github.com/nigels-com/glew/releases/download/glew-$PKG_VERSION/glew-$PKG_VERSION.tgz"
 PKG_DEPENDS_TARGET="toolchain libX11"
 PKG_PRIORITY="optional"
 PKG_SECTION="graphics"
