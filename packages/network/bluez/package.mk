@@ -77,8 +77,8 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/share/dbus-1
 
   mkdir -p $INSTALL/usr/bin
-    cp tools/btinfo $INSTALL/usr/bin
-    cp tools/btmgmt $INSTALL/usr/bin
+    #cp tools/btinfo $INSTALL/usr/bin
+    #cp tools/btmgmt $INSTALL/usr/bin
 
   mkdir -p $INSTALL/etc/bluetooth
     cp src/main.conf $INSTALL/etc/bluetooth
