@@ -20,7 +20,7 @@ PKG_NAME="libmicrohttpd"
 PKG_VERSION="0.9.55"
 PKG_ARCH="any"
 PKG_LICENSE="LGPLv2.1"
-PKG_SITE="https://www.gnu.org/software/libmicrohttpd/"
+PKG_SITE="https://ftp.gnu.org/gnu/libmicrohttpd/?C=M;O=D"
 PKG_URL="https://ftp.gnu.org/gnu/libmicrohttpd/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libgcrypt"
 PKG_SECTION="web"
@@ -28,7 +28,7 @@ PKG_SHORTDESC="libmicrohttpd: a small webserver C library"
 PKG_LONGDESC="GNU libmicrohttpd is a small C library that is supposed to make it easy to run an HTTP server as part of another application."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-curl \
                            --disable-https \
