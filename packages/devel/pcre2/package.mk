@@ -13,13 +13,14 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-static \
 			      --enable-utf8 \
 			      --enable-pcre2-16 \
-			      --enable-pcre2-8 \
 			      --enable-unicode-properties \
-			      --with-gnu-ld \
-			      --enable-jit \
-			      --with-pic \
-			      --disable-stack-for-recursion \
-			      --enable-newline-is-anycrlf"
+			      --with-gnu-ld"
+
+pre_configure_target() {
+  CFLAGS="$CFLAGS -fPIC"
+  CXXFLAGS="$CXXFLAGS -fPIC"
+  LDFLAGS="$LDFLAGS -fPIC"
+}      
 			      
 PKG_CONFIGURE_OPTS_HOST="--prefix=$ROOT/$TOOLCHAIN $PKG_CONFIGURE_OPTS_TARGET"
 
