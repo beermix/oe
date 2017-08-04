@@ -33,3 +33,13 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared"
 pre_configure_target() {
   CFLAGS="$CFLAGS -fPIC"
 }
+
+pre_configure_target() {
+ cd $PKG_BUILD
+ rm -rf .$TARGET_NAME
+}
+
+pre_configure_host() {
+ cd $PKG_BUILD
+ rm -rf .$HOST_NAME
+}

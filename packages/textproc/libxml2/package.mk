@@ -38,9 +38,7 @@ PKG_CONFIGURE_OPTS_ALL="ac_cv_header_ansidecl_h=no \
 			  --disable-ipv6 \
 			  --without-python \
 			  --with-zlib=$ROOT/$TOOLCHAIN \
-			  --without-lzma \
-			  --with-threads \
-			  --with-history"
+			  --without-lzma"
 
 PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_ALL --with-zlib=$ROOT/$TOOLCHAIN --with-icu=$ROOT/$TOOLCHAIN"
 
