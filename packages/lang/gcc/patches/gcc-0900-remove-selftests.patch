@@ -47,11 +47,11 @@ index 74d1912..652a554 100644
  	cd $(toplevel_builddir) && $(MAKE) all-target-libgcc
  
 -all.internal: start.encap rest.encap doc selftest
-+all.internal: start.encap rest.encap doc
++all.internal: start.encap rest.encap
  # This is what to compile if making a cross-compiler.
  all.cross: native gcc-cross$(exeext) cpp$(exeext) specs \
 -	libgcc-support lang.all.cross doc selftest @GENINSRC@ srcextra
-+	libgcc-support lang.all.cross doc @GENINSRC@ srcextra
++	libgcc-support lang.all.cross @GENINSRC@ srcextra
  # This is what must be made before installing GCC and converting libraries.
  start.encap: native xgcc$(exeext) cpp$(exeext) specs \
  	libgcc-support lang.start.encap @GENINSRC@ srcextra
