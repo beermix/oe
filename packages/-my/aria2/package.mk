@@ -1,18 +1,28 @@
 PKG_NAME="aria2"
-PKG_VERSION="1.32.0"
-PKG_URL="https://github.com/aria2/aria2/releases/download/release-$PKG_VERSION/aria2-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain expat gmp pcre libuv libev xmlstarlet libxml2 c-ares"
+PKG_VERSION="2cfe192"
+PKG_GIT_URL="https://github.com/aria2/aria2"
+PKG_DEPENDS_TARGET="toolchain libssh2 expat pcre curl libev xmlstarlet libxml2 c-ares"
 PKG_SECTION="tools"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
+PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
+                           --enable-static \
                            --sysconfdir=/storage/.config \
                            --datadir=/storage/.config \
                            --libdir=/storage/.config \
                            --libexecdir=/storage/.config \
-                           --with-ca-bundle=/etc/ssl/cert.pem \
+                           --without-libnettle \
+                           --with-openssl \
                            --disable-ipv6 \
-                           --enable-largefile \
-                           --disable-rpath \
-                           --with-openssl=$SYSROOT_PREFIX/usr \
-                           --without-sqlite3"
+                           --with-libgmp \
+                           --without-gnutls \
+                           --with-libssh2 \
+                           --with-libexpat \
+                           --with-zlib \
+                           --without-libuv \
+                           --without-libgcrypt \
+                           --with-sqlite3 \
+                           --with-xmltest \
+                           --with-libxml2 \
+                           --with-libcares=$SYSROOT_PREFIX/usr \
+                           --with-ca-bundle=/etc/ssl/cert.pem"
