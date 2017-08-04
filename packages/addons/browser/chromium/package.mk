@@ -26,7 +26,7 @@ PKG_LICENSE="Mixed"
 PKG_SITE="https://chromereleases.googleblog.com/search/label/Stable%20updates"
 PKG_URL="ftp://root:openelec@192.168.1.4/www/chromium-$PKG_VERSION.tar.xz"
 #PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain pciutils dbus ffmpeg tiff libXcomposite libXcursor libXtst alsa-lib bzip2 yasm libXScrnSaver libexif libpng harfbuzz atk gtk+ unclutter xdotool libwebp re2 libvpx libvdpau ninja:host"
+PKG_DEPENDS_TARGET="toolchain pciutils dbus ffmpeg tiff libXcomposite libXcursor libXtst alsa-lib bzip2 yasm libXScrnSaver libexif libpng harfbuzz atk gtk+ unclutter xdotool libwebp re2 libvdpau ninja:host"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -48,7 +48,7 @@ pre_make_target() {
 }
 
 make_target() {
-  export LDFLAGS="$LDFLAGS -ludev"
+  export LDFLAGS="$LDFLAGS"
   export LD=$CXX
 
   # Use Python 2
@@ -64,11 +64,10 @@ make_target() {
 
   export TMPDIR="/root/-3SDC/temp"
   mkdir -p "$TMPDIR"
-  
+
   local _flags=(
     'is_clang=false'
     'clang_use_chrome_plugins=false'
-    'symbol_level=0'
     'is_debug=false'
     'fatal_linker_warnings=false'
     'treat_warnings_as_errors=false'
@@ -78,8 +77,6 @@ make_target() {
     'proprietary_codecs=true'
     'link_pulseaudio=true'
     'linux_use_bundled_binutils=false'
-    'use_allocator="none"'
-    'use_debug_fission=false'
     'use_cups=false'
     'use_gconf=false'
     'use_gnome_keyring=false'
@@ -106,7 +103,6 @@ make_target() {
     libxslt
     yasm
     minizip
-    libxml2
     libwebp
 )
 
