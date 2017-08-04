@@ -37,10 +37,11 @@ PKG_AUTORECONF="no"
 
 pre_make_target() {
   CFLAGS="$CFLAGS -fPIC -I${PKG_BUILD}/libcurses"
+  CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
 }
 
 make_target() {
-  make HOSTCC="$HOST_CC" CFLAGS="$CFLAGS -D_DEFAULT_SOURCE" PREFIX=/usr all-static
+  make HOSTCC="$HOST_CC" CFLAGS="$CFLAGS" PREFIX=/usr all-static
 }
 
 makeinstall_target() {
