@@ -17,12 +17,13 @@
 ################################################################################
 
 PKG_NAME="Python"
-PKG_VERSION="3dd1ccb"
+PKG_VERSION="dd6e4aa"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
-PKG_SITE="http://www.python.org/"
+PKG_SITE="https://github.com/python/cpython/tree/2.7"
 PKG_GIT_URL="https://github.com/python/cpython"
+PKG_GIT_BRANCH="2.7"
 PKG_DEPENDS_HOST="zlib:host bzip2:host sqlite:host"
 PKG_DEPENDS_TARGET="toolchain sqlite expat zlib bzip2 openssl libffi readline Python:host bluez"
 PKG_PRIORITY="optional"
