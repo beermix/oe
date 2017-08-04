@@ -92,19 +92,6 @@ index 580c18dad69..c2c3409bcc1 100644
    } *frame;
  
    /* rt_sigreturn trampoline:
-diff --git a/libgcc/config/riscv/linux-unwind.h b/libgcc/config/riscv/linux-unwind.h
-index a051a2869d4..1c8aeff7ef0 100644
---- a/libgcc/config/riscv/linux-unwind.h
-+++ b/libgcc/config/riscv/linux-unwind.h
-@@ -42,7 +42,7 @@ riscv_fallback_frame_state (struct _Unwind_Context *context,
-   struct rt_sigframe
-   {
-     siginfo_t info;
--    struct ucontext uc;
-+    ucontext_t uc;
-   };
- 
-   struct rt_sigframe *rt_;
 diff --git a/libgcc/config/sh/linux-unwind.h b/libgcc/config/sh/linux-unwind.h
 index 1038caeb5c3..a8c98220282 100644
 --- a/libgcc/config/sh/linux-unwind.h

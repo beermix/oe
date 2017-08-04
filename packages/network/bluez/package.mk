@@ -67,7 +67,6 @@ pre_configure_target() {
 
   export LIBS="-lncurses -lterminfo"
   export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
-    strip_lto
 }
 
 post_makeinstall_target() {

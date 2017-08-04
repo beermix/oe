@@ -53,6 +53,11 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            --with-threads \
                            --enable-unicode=ucs4 \
                            --disable-ipv6 \
+                           --with-computed-gotos \
+                           --enable-optimizations \
+                           --with-lto \
+                           --enable-loadable-sqlite-extensions \
+                           --without-ensurepip \
                            --disable-profiling \
                            --without-pydebug \
                            --without-doc-strings \
