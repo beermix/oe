@@ -105,7 +105,6 @@ make_target() {
     libpng
     libxslt
     yasm
-    re2
     minizip
     libxml2
     libwebp
