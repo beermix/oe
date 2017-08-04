@@ -56,6 +56,7 @@ GCC_COMMON_CONFIGURE_OPTS="MAKEINFO=missing \
                            --without-cloog \
                            --disable-libmpx \
                            --disable-libsanitizer \
+                           --with-system-zlib \
                            --with-tune=generic"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
