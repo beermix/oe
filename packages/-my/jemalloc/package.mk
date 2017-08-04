@@ -1,6 +1,6 @@
 PKG_NAME="jemalloc"
-PKG_VERSION="4.5.0"
-PKG_URL="https://github.com/jemalloc/jemalloc/releases/download/4.5.0/jemalloc-4.5.0.tar.bz2"
+PKG_VERSION="5.0.1"
+PKG_URL="https://github.com/jemalloc/jemalloc/releases/download/$PKG_VERSION/jemalloc-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
