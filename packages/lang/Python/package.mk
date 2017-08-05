@@ -19,7 +19,8 @@
 ################################################################################
 
 PKG_NAME="Python"
-PKG_VERSION="5fbb8e3"
+PKG_VERSION="88ffff5"
+PKG_KEEP_CHECKOUT="yes"
 PKG_SITE="https://github.com/python/cpython/tree/2.7"
 PKG_GIT_URL="https://github.com/python/cpython"
 PKG_GIT_BRANCH="2.7"
@@ -64,7 +65,9 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            --with-system-ffi \
                            --with-system-expat \
                            --disable-static \
-                           --enable-shared"
+                           --enable-shared \
+                           --enable-optimizations \
+                           --with-lto"
 
 post_patch() {
   # This is needed to make sure the Python build process doesn't try to
@@ -92,6 +95,7 @@ makeinstall_host() {
 
 pre_configure_target() {
   export PYTHON_FOR_BUILD=$ROOT/$TOOLCHAIN/bin/python
+  strip_lto
 }
 
 make_target() {

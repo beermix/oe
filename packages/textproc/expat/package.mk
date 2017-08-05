@@ -4,7 +4,7 @@ PKG_URL="https://dl.dropboxusercontent.com/s/hqqh8wtm15ocd5q/expat-2.2.2.tar.bz2
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="textproc"
 PKG_IS_ADDON="no"
-PKG_USE_CMAKE="yes"
+PKG_USE_CMAKE="no"
 PKG_AUTORECONF="no"
 
 pre_configure_target() {
