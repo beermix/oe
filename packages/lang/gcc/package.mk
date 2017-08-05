@@ -17,8 +17,10 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="7.1.0"
-PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_VERSION="7-20170629"
+PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/7-20170629/gcc-7-20170629.tar.xz"
+#PKG_VERSION="d791474"
+#PKG_GIT_URL="git://gcc.gnu.org/git/gcc.git"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host"
 PKG_DEPENDS_TARGET="gcc:host"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host glibc"
@@ -32,7 +34,6 @@ post_unpack() {
   sed -i 's@\./fixinc\.sh@-c true@' $ROOT/$PKG_BUILD/gcc/Makefile.in
   sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $ROOT/$PKG_BUILD/libiberty/configure
   sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $ROOT/$PKG_BUILD/gcc/configure
-  #sed -i '/m64=/s/lib64/lib/' $ROOT/$PKG_BUILD/gcc/config/i386/t-linux64
   }
 
 GCC_COMMON_CONFIGURE_OPTS="MAKEINFO=missing \
@@ -52,21 +53,6 @@ GCC_COMMON_CONFIGURE_OPTS="MAKEINFO=missing \
                            --disable-nls \
                            --enable-checking=release \
                            --disable-libssp \
-                           --enable-tls \
-                           --enable-shared \
-                           --enable-c99 \
-                           --enable-long-long \
-                           --enable-threads=posix \
-                           --disable-libstdcxx-pch \
-                           --enable-libstdcxx-time \
-                           --disable-libunwind-exceptions \
-                           --enable-gnu-unique-object \
-                           --enable-linker-build-id \
-                           --enable-install-libiberty \
-                           --with-linker-hash-style=gnu \
-                           --enable-gnu-indirect-function \
-                           --enable-default-pie \
-                           --enable-default-ssp \
                            --without-ppl \
                            --without-cloog \
                            --disable-libmpx \
@@ -77,6 +63,9 @@ GCC_COMMON_CONFIGURE_OPTS="MAKEINFO=missing \
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
+                              --disable-libsanitizer \
+                              --disable-libssp \
+                              --enable-cloog-backend=isl \
                               --disable-largefile \
                               --disable-libatomic \
                               --disable-libquadmath \
@@ -93,13 +82,27 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
 
 PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-languages=c,c++ \
-                         --enable-static \
                          --enable-__cxa_atexit \
+                         --enable-gnu-unique-object \
+                         --enable-linker-build-id \
+                         --enable-install-libiberty \
+                         --with-linker-hash-style=gnu \
+                         --enable-gnu-indirect-function \
+                         --enable-shared \
+                         --enable-static \
+                         --enable-tls \
+                         --enable-c99 \
+                         --enable-long-long \
+                         --enable-threads=posix \
+                         --disable-libstdcxx-pch \
+                         --enable-libstdcxx-time \
+                         --disable-libunwind-exceptions \
+                         --enable-default-pie \
+                         --enable-default-ssp \
                          --enable-decimal-float \
                          --enable-clocale=gnu \
                          $GCC_OPTS"
 pre_configure_host() {
-  export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
 }
 
