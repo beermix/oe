@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="7-20170629"
-PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/7-20170629/gcc-7-20170629.tar.xz"
+PKG_VERSION="7.2-RC-20170802"
+PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/7.2-RC-20170802/gcc-7.2-RC-20170802.tar.xz"
 #PKG_VERSION="d791474"
 #PKG_GIT_URL="git://gcc.gnu.org/git/gcc.git"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host"
