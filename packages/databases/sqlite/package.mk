@@ -61,6 +61,7 @@ PKG_AUTORECONF="yes"
 # sqlite3_config(SQLITE_CONFIG_MMAP_SIZE) call, or at run-time using the
 # mmap_size pragma.
   CFLAGS="$CFLAGS -DSQLITE_TEMP_STORE=3 -DSQLITE_DEFAULT_MMAP_SIZE=268435456"
+  CFLAGS="$CFLAGS -fPIC"
 
 pre_make_target() {
   # dont build parallel
