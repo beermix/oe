@@ -61,6 +61,15 @@ make_target() {
   _google_api_key=AIzaSyAQ6L9vt9cnN4nM0weaa6Y38K4eyPvtKgI
   _google_default_client_id=740889307901-4bkm4e0udppnp1lradko85qsbnmkfq3b.apps.googleusercontent.com
   _google_default_client_secret=9TJlhL661hvShQub4cWhANXa
+  
+  # VA-API patch
+  patch -p1 -i "${srcdir}/vaapi_patch_r2.patch"
+  # Fix paths.
+  sed -e 's|i386-linux-gnu/||g' \
+      -e 's|x86_64-linux-gnu/||g' \
+      -e 's|/usr/lib/va/drivers|/usr/lib/dri|g' \
+      -e 's|/usr/lib64/va/drivers|/usr/lib/dri|g' \
+      -i content/common/sandbox_linux/bpf_gpu_policy_linux.cc
 
   export TMPDIR="/root/-3SDC/temp"
   mkdir -p "$TMPDIR"
