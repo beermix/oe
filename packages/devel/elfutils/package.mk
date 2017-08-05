@@ -45,11 +45,11 @@ PKG_CONFIGURE_OPTS_TARGET="utrace_cv_cc_biarch=false \
 PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"                         
 
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC -DPIC"
+  export CFLAGS="$CFLAGS -D_GNU_SOURCE -Wno-unused-result -Wno-format-nonliteral-fPIC -DPIC"
 }
 
 pre_configure_host() {
-  export CFLAGS="$CFLAGS -fPIC -DPIC"
+  export CFLAGS="$CFLAGS -D_GNU_SOURCE -Wno-unused-result -Wno-format-nonliteral-fPIC -DPIC"
 }
 
 make_target() {
