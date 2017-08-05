@@ -1,4 +1,3 @@
-# Made by github.com/escalade
 PKG_NAME="nettle"
 PKG_VERSION="3.3"
 PKG_ARCH="any"
@@ -10,14 +9,13 @@ PKG_SECTION="escalade/depends"
 PKG_SHORTDESC="Nettle is a cryptographic library that is designed to fit easily in more or less any context: In crypto toolkits for object-oriented languages (C++, Python, Pike, ...), in applications like LSH or GNUPG, or even in kernel space."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-documentation"
+PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --disable-openssl --disable-documentation --with-pic"
 
-if [ "$PROJECT" = "$RPi2" ]; then
-  PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET --enable-arm-neon"
-fi
-
+post_makeinstall_target() {
+  rm -rf $INSTALL/usr/bin
+}
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
 }

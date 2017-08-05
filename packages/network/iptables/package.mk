@@ -23,7 +23,6 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.netfilter.org/"
 PKG_URL="http://www.netfilter.org/projects/iptables/files/$PKG_NAME-$PKG_VERSION.tar.bz2"
-#PKG_DEPENDS_TARGET="toolchain linux libmnl libnftnl libnetfilter_acct libnetfilter_conntrack libnetfilter_queue"
 PKG_DEPENDS_TARGET="toolchain linux libmnl libnftnl"
 PKG_PRIORITY="optional"
 PKG_SECTION="network"
@@ -34,4 +33,4 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared --disable-ipv6 --with-kernel=$(get_pkg_build linux)"
+PKG_CONFIGURE_OPTS_TARGET="--disable-ipv6 --with-kernel=$(get_pkg_build linux)"
