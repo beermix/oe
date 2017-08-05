@@ -1,24 +1,19 @@
 PKG_NAME="transmission"
-PKG_VERSION="8ab1389"
+PKG_VERSION="ed754f9"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.transmissionbt.com/"
 PKG_DEPENDS_TARGET="toolchain zlib openssl curl libevent miniupnpc xfsprogs-dev"
-PKG_SECTION="service/downloadmanager"
-PKG_SHORTDESC="transmission: a fast, easy and free BitTorrent client"
-PKG_LONGDESC="transmission is a fast, easy and free BitTorrent client"
-
 PKG_IS_ADDON="yes"
 PKG_ADDON_TYPE="xbmc.service"
 PKG_ADDON_PROVIDES=""
 PKG_ADDON_REPOVERSION="8.0"
-
 PKG_AUTORECONF="no"
 
 PGK_CMAKE_OPTS_TARGET="-DENABLE_CLI=On -DENABLE_LIGHTWEIGHT=On"
 
 pre_build_target() {
-  git clone --recursive https://github.com/transmission/transmission $PKG_BUILD/$PKG_NAME-git
+  git clone --recursive --depth 1 https://github.com/transmission/transmission $PKG_BUILD/$PKG_NAME-git
   cd $PKG_BUILD/$PKG_NAME-git
   git reset --hard $PKG_VERSION
   rm -rf .git
