@@ -17,11 +17,13 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="7.1.0"
-PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host"
+#PKG_VERSION="d791474"
+#PKG_GIT_URL="git://gcc.gnu.org/git/gcc.git"
+PKG_VERSION="7-20170727"
+PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/7-20170727/gcc-7-20170727.tar.xz"
+PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host"
 PKG_DEPENDS_TARGET="gcc:host"
-PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host glibc"
+PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
 PKG_PRIORITY="optional"
 PKG_SECTION="lang"
 PKG_SHORTDESC="gcc: The GNU Compiler Collection Version 4 (aka GNU C Compiler)"
@@ -41,7 +43,6 @@ GCC_COMMON_CONFIGURE_OPTS="MAKEINFO=missing \
                            --with-gmp=$ROOT/$TOOLCHAIN \
                            --with-mpfr=$ROOT/$TOOLCHAIN \
                            --with-mpc=$ROOT/$TOOLCHAIN \
-                           --with-isl=$ROOT/$TOOLCHAIN \
                            --with-gnu-as \
                            --with-gnu-ld \
                            --enable-plugin \
@@ -51,22 +52,6 @@ GCC_COMMON_CONFIGURE_OPTS="MAKEINFO=missing \
                            --disable-multilib \
                            --disable-nls \
                            --enable-checking=release \
-                           --disable-libssp \
-                           --enable-tls \
-                           --enable-shared \
-                           --enable-c99 \
-                           --enable-long-long \
-                           --enable-threads=posix \
-                           --disable-libstdcxx-pch \
-                           --enable-libstdcxx-time \
-                           --disable-libunwind-exceptions \
-                           --enable-gnu-unique-object \
-                           --enable-linker-build-id \
-                           --enable-install-libiberty \
-                           --with-linker-hash-style=gnu \
-                           --enable-gnu-indirect-function \
-                           --enable-default-pie \
-                           --enable-default-ssp \
                            --without-ppl \
                            --without-cloog \
                            --disable-libmpx \
@@ -78,6 +63,7 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
                               --disable-largefile \
+                              --disable-libssp \
                               --disable-libatomic \
                               --disable-libquadmath \
                               --disable-libmudflap \
@@ -96,8 +82,27 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-static \
                          --enable-__cxa_atexit \
                          --enable-decimal-float \
+                         --disable-libssp \
+                         --enable-tls \
+                         --enable-shared \
+                         --enable-c99 \
+                         --enable-long-long \
+                         --enable-threads=posix \
+                         --disable-libstdcxx-pch \
+                         --enable-libstdcxx-time \
+                         --disable-libunwind-exceptions \
+                         --enable-gnu-unique-object \
+                         --enable-linker-build-id \
+                         --enable-install-libiberty \
+                         --with-linker-hash-style=gnu \
+                         --enable-gnu-indirect-function \
+                         --enable-default-pie \
+                         --enable-default-ssp \
                          --enable-clocale=gnu \
                          $GCC_OPTS"
+
+pre_configure_host() {
+  unset CPP
 }
 
 post_make_host() {
