@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="kodi"
-PKG_VERSION="e0175e9"
+PKG_VERSION="b6bf39c"
 PKG_GIT_URL="https://github.com/xbmc/xbmc.git"
 PKG_GIT_BRANCH="Krypton"
 PKG_KEEP_CHECKOUT="yes"
@@ -59,12 +59,16 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$ROOT/$TOOLCHAIN \
                        -DENABLE_OPENSSL=ON \
                        -DENABLE_SDL=OFF \
                        -DENABLE_LCMS2=ON \
-                       -DENABLE_CCACHE=OFF \
+                       -DENABLE_CCACHE=ON \
                        -DENABLE_LIRC=ON \
-                       -DENABLE_EVENTCLIENTS=OFF \
+                       -DENABLE_EVENTCLIENTS=ON \
+                       -DENABLE_BLUETOOTH=OFF \
+                       -DENABLE_CAP=OFF \
+                       -DCMAKE_VERBOSE_MAKEFILE=OFF \
+                       -DENABLE_OPTICAL=OFF \
                        -DENABLE_LIBUSB=OFF \
                        -DENABLE_UDEV=ON \
-                       -DENABLE_XSLT=OFF \
+                       -DENABLE_XSLT=ON \
                        -DENABLE_DBUS=ON"
 
 if [ "$TARGET_ARCH" = "x86_64" ]; then
