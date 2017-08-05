@@ -78,10 +78,15 @@ else
 fi
 
 if [ "$DISPLAYSERVER" = "x11" ]; then
-  PKG_DEPENDS_TARGET+=" libX11 libXext libdrm libXrandr"
-  PKG_CMAKE_OPTS_TARGET+=" -DENABLE_X11=ON"
-else
-  PKG_CMAKE_OPTS_TARGET+=" -DENABLE_X11=OFF"
+  PKG_DEPENDS_TARGET= libX11 libXext libdrm libXrandr"
+  KODI_XORG="-DCORE_PLATFORM_NAME=x11"
+elif [ "$DISPLAYSERVER" = "wayland" ]; then
+  PKG_VERSION="f1f3ab7"
+  PKG_GIT_URL="https://github.com/pkerling/xbmc/"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET wayland waylandpp"
+  CFLAGS="$CFLAGS -DMESA_EGL_NO_X11_HEADERS"
+  CXXFLAGS="$CXXFLAGS -DMESA_EGL_NO_X11_HEADERS"
+  KODI_XORG="-DCORE_PLATFORM_NAME=wayland"
 fi
 
 if [ "$OPENGL" = "mesa" ]; then
