@@ -59,10 +59,12 @@ case "$LINUX" in
     PKG_GIT_BRANCH="rpi-4.9.y"
     PKG_PATCH_DIRS="linux-4.9 rpi-4.9"
     ;;
-  linux-4.8)
-    PKG_VERSION="4.8.6"
-    PKG_URL="ftp://root:openelec@192.168.1.4:2121/www/linux-$PKG_VERSION.tar.xz"
-    PKG_PATCH_DIRS="linux-4.8"
+  zen-kernel)
+    PKG_VERSION="29bc26d"
+    PKG_GIT_BRANCH="4.12/master"
+    PKG_KEEP_CHECKOUT="yes"
+    PKG_GIT_URL="https://github.com/zen-kernel/zen-kernel"
+    PKG_PATCH_DIRS="linux-4.12"
     ;;
   *)
     PKG_VERSION="4.12.4"
