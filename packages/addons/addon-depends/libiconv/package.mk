@@ -41,3 +41,16 @@ PKG_CONFIGURE_OPTS_TARGET="--host=$TARGET_NAME \
 			      --disable-nls \
 			      --enable-extra-encodings \
 			      --with-gnu-ld"
+
+
+PKG_CONFIGURE_OPTS_TARGET="--host=$TARGET_NAME \
+            --build=$HOST_NAME \
+            --prefix=/usr \
+            --includedir=/usr/include/iconv \
+            --libdir=/usr/lib/iconv \
+            --sysconfdir=/etc \
+            --enable-static \
+            --disable-shared \
+            --disable-nls \
+            --disable-extra-encodings \
+	    --with-gnu-ld"

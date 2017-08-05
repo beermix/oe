@@ -12,24 +12,26 @@
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
 #
-#  You should have received a copy of the GNU General Public License
+#  You should have received a copy of the GNU General Public License  -Dlzma=0
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
 PKG_NAME="tiff"
-#PKG_VERSION="4.0.3"
-PKG_VERSION="3.9.7"
+PKG_VERSION="4.0.8"
+PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.remotesensing.org/libtiff/"
-PKG_URL="http://download.osgeo.org/libtiff/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_URL="http://download.osgeo.org/libtiff/tiff-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libjpeg-turbo zlib"
+PKG_PRIORITY="optional"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="libtiff: A library for reading and writing TIFF files"
 PKG_LONGDESC="libtiff is a library for reading and writing data files encoded with the Tag Image File format, Revision 6.0 (or revision 5.0 or revision 4.0). This file format is suit- able for archiving multi-color and monochromatic image data."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_USE_CMAKE="no"
+PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --disable-shared \
@@ -38,11 +40,12 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --with-gl=no \
                            --with-jpeg-lib-dir=$SYSROOT_PREFIX/usr/lib \
                            --with-jpeg-include-dir=$SYSROOT_PREFIX/usr/include \
-                           --without-x"
-
+                           --without-x \
+                           --enable-silent-rules \
+                           --with-pic"
+                           
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC -DPIC"
-  export CXXFLAGS="$CXXFLAGS -fPIC -DPIC"
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed|-Wl,-O1,--as-needed|"`
 }
 
 post_makeinstall_target() {

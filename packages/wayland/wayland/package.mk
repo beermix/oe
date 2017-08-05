@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2014 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,19 +18,42 @@
 
 PKG_NAME="wayland"
 PKG_VERSION="1.13.93"
-PKG_SITE="http://bitmath.org"
-PKG_URL="https://wayland.freedesktop.org/releases/${PKG_NAME}-${PKG_VERSION}.tar.xz"
-PKG_DEPENDS_TARGET="toolchain expat libxml2 glib"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="OSS"
+PKG_SITE="http://wayland.freedesktop.org/"
+PKG_URL="http://wayland.freedesktop.org/releases/${PKG_NAME}-${PKG_VERSION}.tar.xz"
+PKG_DEPENDS_TARGET="toolchain wayland:host libxml2"
+PKG_DEPENDS_HOST="libffi:host expat:host libxml2:host"
+PKG_PRIORITY="optional"
 PKG_SECTION="wayland"
-PKG_SHORTDESC="The mtdev is a stand-alone library which transforms all variants of kernel MT events to the slotted type B protocol."
-PKG_LONGDESC="The mtdev is a stand-alone library which transforms all variants of kernel MT events to the slotted type B protocol. The events put into mtdev may be from any MT device, specifically type A without contact tracking, type A with contact tracking, or type B with contact tracking. See the kernel documentation for further details."
+PKG_SHORTDESC=""
+PKG_LONGDESC=""
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared --disable-documentation"
+PKG_CONFIGURE_OPTS_HOST="--enable-shared \
+                         --disable-static \
+                         --disable-libraries \
+                         --disable-documentation \
+                         --with-gnu-ld"
+
+PKG_CONFIGURE_OPTS_TARGET="--with-sysroot=$SYSROOT_PREFIX \
+                           --with-host-scanner \
+                           --enable-shared \
+                           --disable-static \
+                           --enable-libraries \
+                           --disable-documentation \
+                           --with-gnu-ld"
 
 pre_configure_target() {
-  CFLAGS="$CFLAGS -fPIC"
   strip_lto
+}
+
+post_makeinstall_target() {
+  rm -rf $INSTALL/usr/bin
+  rm -rf $INSTALL/usr/share
+
+  cp $TOOLCHAIN/lib/pkgconfig/wayland-scanner.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/
 }
