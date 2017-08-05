@@ -31,6 +31,12 @@ PKG_SHORTDESC="gcc: The GNU Compiler Collection Version 4 (aka GNU C Compiler)"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
+post_unpack() {
+  sed -i 's@\./fixinc\.sh@-c true@' $ROOT/$PKG_BUILD/gcc/Makefile.in
+  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $ROOT/$PKG_BUILD/libiberty/configure
+  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $ROOT/$PKG_BUILD/gcc/configure
+  }
+
 GCC_COMMON_CONFIGURE_OPTS="MAKEINFO=missing \
                            --target=$TARGET_NAME \
                            --with-sysroot=$SYSROOT_PREFIX \
@@ -47,7 +53,7 @@ GCC_COMMON_CONFIGURE_OPTS="MAKEINFO=missing \
                            --disable-multilib \
                            --disable-nls \
                            --enable-checking=release \
-                           --with-default-libstdcxx-abi=gcc4-compatible \
+                           --disable-libssp \
                            --without-ppl \
                            --without-cloog \
                            --disable-libmpx \
@@ -78,15 +84,23 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
 PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-languages=c,c++ \
                          --enable-__cxa_atexit \
-                         --enable-decimal-float \
-                         --enable-tls \
+                         --enable-gnu-unique-object \
+                         --enable-linker-build-id \
+                         --enable-install-libiberty \
+                         --with-linker-hash-style=gnu \
+                         --enable-gnu-indirect-function \
                          --enable-shared \
-                         --disable-static \
+                         --enable-static \
+                         --enable-tls \
                          --enable-c99 \
                          --enable-long-long \
                          --enable-threads=posix \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time \
+                         --disable-libunwind-exceptions \
+                         --enable-default-pie \
+                         --enable-default-ssp \
+                         --enable-decimal-float \
                          --enable-clocale=gnu \
                          $GCC_OPTS"
 pre_configure_host() {
