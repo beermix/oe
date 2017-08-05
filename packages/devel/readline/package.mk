@@ -29,7 +29,10 @@ PKG_IS_ADDON="no"
 
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="bash_cv_wcwidth_broken=no --with-curses --without-purify"
+PKG_CONFIGURE_OPTS_TARGET="bash_cv_wcwidth_broken=no \
+			      bash_cv_func_sigsetjmp=yes \
+			      --with-curses \
+			      --enable-static"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/share/readline
