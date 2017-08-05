@@ -28,4 +28,4 @@ PKG_LONGDESC="The Netwide Assembler, NASM, is an 80x86 assembler designed for po
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_HOST="--enable-lto --enable-ccache=no"
+#PKG_CONFIGURE_OPTS_HOST="--enable-lto --enable-ccache=no"
