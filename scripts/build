@@ -248,7 +248,7 @@ if [ ! -f $STAMP ]; then
       else
         case "$TARGET" in
           target)
-            make --debug  $PKG_MAKE_OPTS_TARGET
+            make $PKG_MAKE_OPTS_TARGET
             ;;
           host)
             make $PKG_MAKE_OPTS_HOST

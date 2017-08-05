@@ -17,8 +17,9 @@
 ################################################################################
 
 PKG_NAME="nasm"
+PKG_VERSION="2.12.01"
+PKG_URL="https://dl.dropboxusercontent.com/s/69l05y4epirp3cr/nasm-2.12.01.tar.xz"
 PKG_VERSION="2.13.01"
-PKG_SITE="http://nasm.sourceforge.net/"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST=""
 PKG_SECTION="lang"
@@ -29,3 +30,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 #PKG_CONFIGURE_OPTS_HOST="--enable-lto --enable-ccache=no"
+
+#post_make_target() {
+#  mkdir -p $INSTALL_DEV/usr/bin/
+#}
