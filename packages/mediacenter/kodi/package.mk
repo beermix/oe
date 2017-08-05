@@ -59,7 +59,7 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$ROOT/$TOOLCHAIN \
                        -DENABLE_OPENSSL=ON \
                        -DENABLE_SDL=OFF \
                        -DENABLE_LCMS2=ON \
-                       -DENABLE_CCACHE=ON \
+                       -DENABLE_CCACHE=OFF \
                        -DENABLE_LIRC=ON \
                        -DENABLE_EVENTCLIENTS=ON \
                        -DENABLE_BLUETOOTH=OFF \
@@ -68,7 +68,7 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$ROOT/$TOOLCHAIN \
                        -DENABLE_OPTICAL=OFF \
                        -DENABLE_LIBUSB=OFF \
                        -DENABLE_UDEV=ON \
-                       -DENABLE_XSLT=ON \
+                       -DENABLE_XSLT=OFF \
                        -DENABLE_DBUS=ON"
 
 if [ "$TARGET_ARCH" = "x86_64" ]; then
@@ -78,15 +78,10 @@ else
 fi
 
 if [ "$DISPLAYSERVER" = "x11" ]; then
-  PKG_DEPENDS_TARGET= libX11 libXext libdrm libXrandr"
-  KODI_XORG="-DCORE_PLATFORM_NAME=x11"
-elif [ "$DISPLAYSERVER" = "wayland" ]; then
-  PKG_VERSION="f1f3ab7"
-  PKG_GIT_URL="https://github.com/pkerling/xbmc/"
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET wayland waylandpp"
-  CFLAGS="$CFLAGS -DMESA_EGL_NO_X11_HEADERS"
-  CXXFLAGS="$CXXFLAGS -DMESA_EGL_NO_X11_HEADERS"
-  KODI_XORG="-DCORE_PLATFORM_NAME=wayland"
+  PKG_DEPENDS_TARGET+=" libX11 libXext libdrm libXrandr"
+  PKG_CMAKE_OPTS_TARGET+=" -DENABLE_X11=ON"
+else
+  PKG_CMAKE_OPTS_TARGET+=" -DENABLE_X11=OFF"
 fi
 
 if [ "$OPENGL" = "mesa" ]; then
