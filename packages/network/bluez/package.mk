@@ -44,7 +44,7 @@ else
   BLUEZ_CONFIG="$BLUEZ_CONFIG --disable-monitor --disable-test"
 fi
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-cups --disable-obex storagedir=/storage/.cache/bluetooth"
+PKG_CONFIGURE_OPTS_TARGET="--disable-cups --disable-obex --disable-pie --disable-test storagedir=/storage/.cache/bluetooth"
 
 pre_configure_target() {
 # bluez fails to build in subdirs
@@ -52,6 +52,7 @@ pre_configure_target() {
     rm -rf .$TARGET_NAME
 
   export LIBS="-ltermcap"
+  export LDFLAGS="-Wl,-O1,--sort-common,--as-needed,-z,relro"
 }
 
 post_makeinstall_target() {
