@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="busybox"
-PKG_VERSION="1.27.1"
+PKG_VERSION="1.26.2"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -36,12 +36,10 @@ PKG_AUTORECONF="no"
 
 PKG_MAKE_OPTS_HOST="ARCH=$TARGET_ARCH CROSS_COMPILE= KBUILD_VERBOSE=1 install"
 PKG_MAKE_OPTS_TARGET="ARCH=$TARGET_ARCH \
-                      HOSTCC=$HOST_CC \
                       CROSS_COMPILE=${TARGET_NAME}- \
                       KBUILD_VERBOSE=0 \
                       install"
 PKG_MAKE_OPTS_INIT="ARCH=$TARGET_ARCH \
-                    HOSTCC=$HOST_CC \
                     CROSS_COMPILE=${TARGET_NAME}- \
                     KBUILD_VERBOSE=0 \
                     install"
@@ -157,7 +155,7 @@ makeinstall_host() {
 
 makeinstall_target() {
   mkdir -p $INSTALL/usr/bin
-    [ $TARGET_ARCH = x86_64 ] && cp $PKG_DIR/scripts/getedid $INSTALL/usr/bin
+   # [ $TARGET_ARCH = x86_64 ] && cp $PKG_DIR/scripts/getedid $INSTALL/usr/bin
     cp $PKG_DIR/scripts/createlog $INSTALL/usr/bin/
     cp $PKG_DIR/scripts/lsb_release $INSTALL/usr/bin/
     cp $PKG_DIR/scripts/apt-get $INSTALL/usr/bin/
