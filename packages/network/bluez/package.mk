@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="bluez"
-PKG_VERSION="5.45"
+PKG_VERSION="5.46"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -52,7 +52,6 @@ pre_configure_target() {
     rm -rf .$TARGET_NAME
 
   export LIBS="-ltermcap"
-  export LDFLAGS="-Wl,-O1,--sort-common,--as-needed,-z,relro"
 }
 
 post_makeinstall_target() {
