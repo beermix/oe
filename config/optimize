@@ -1,7 +1,6 @@
 if [ "$OPTIMIZATIONS" = normal ];then
   #GCC_OPTIM="-fstack-protector-strong"
   LD_OPTIM="-Wl,--as-needed"
-  #CPP_OPTIM="-D_FORTIFY_SOURCE=2 -O2"
 fi
 
 if [ "$OPTIMIZATIONS" = size ];then
@@ -37,7 +36,7 @@ TARGET_LDFLAGS="$TARGET_LDFLAGS $LD_OPTIM $LD_OPTIM_GOLD $LD_OPTIM_LTO"
 TARGET_LIBDIR="$SYSROOT_PREFIX/lib $SYSROOT_PREFIX/usr/lib"
 TARGET_INCDIR="$SYSROOT_PREFIX/include $SYSROOT_PREFIX/usr/include"
 
-HOST_CFLAGS="-march=haswell -O2 -I$ROOT/$TOOLCHAIN/include"
+HOST_CFLAGS="-march=haswell -O2 -pipe -I$ROOT/$TOOLCHAIN/include"
 HOST_CXXFLAGS="$HOST_CFLAGS"
 HOST_CPPFLAGS="-I$ROOT/$TOOLCHAIN/include"
 HOST_LDFLAGS="-Wl,-rpath,$ROOT/$TOOLCHAIN/lib -L$ROOT/$TOOLCHAIN/lib -s"
