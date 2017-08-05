@@ -32,8 +32,8 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-dependency-tracking \
-                           --disable-silent-rules \
-                           --disable-library \
+                           --enable-silent-rules \
+                           --enable-library \
                            --enable-udev \
                            --disable-cups \
                            --disable-obex \
@@ -42,8 +42,8 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-dependency-tracking \
                            --enable-tools \
                            --enable-datafiles \
                            --disable-experimental \
-                           --enable-deprecated \
-                           --enable-sixaxis \
+                           --disable-deprecated \
+                           --disable-sixaxis \
                            --with-gnu-ld \
                            storagedir=/storage/.cache/bluetooth"
 
