@@ -28,12 +28,22 @@ PKG_LONGDESC="The MPFR library is a C library for multiple-precision floating-po
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_HOST="--disable-shared --enable-elf64"
+PKG_CONFIGURE_OPTS_HOST="mr_cv_target_elf=yes \
+			    ac_cv_sizeof_long_long=8 \
+			    --enable-elf64=yes \
+			    --disable-sanity-checks \
+			    --disable-shared \
+			    -enable-elf64"
 			 
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
 
-post_make_target() {
-  mkdir -p $INSTALL_DEV/usr/bin/
+pre_configure_host() {
+  export CFLAGS="$CFLAGS -fPIC"
+  export CXXFLAGS="$CXXFLAGS -fPIC"
+  export LDFLAGS="$LDFLAGS -fPIC"
 }
 
+#post_make_target() {
+#  mkdir -p $INSTALL_DEV/usr/bin/
+#}
 
