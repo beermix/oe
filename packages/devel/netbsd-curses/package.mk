@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="netbsd-curses"
-PKG_VERSION="4c156be"
+PKG_VERSION="07a65f0"
 PKG_ARCH="any"
 PKG_SITE="https://github.com/sabotage-linux/netbsd-curses"
 PKG_GIT_URL="https://github.com/sabotage-linux/netbsd-curses"
@@ -25,10 +25,6 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="devel"
 PKG_SHORTDESC="netbsd-libcurses portable edition"
 PKG_LONGDESC="netbsd-libcurses portable edition"
-
-pre_make_target() {
-  CFLAGS="$CFLAGS -fPIC -D_DEFAULT_SOURCE -I${PKG_BUILD}/libcurses"
-} 
 
 make_target() {
   make HOSTCC="$HOST_CC" PREFIX=/usr all-dynamic
