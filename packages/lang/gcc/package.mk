@@ -33,7 +33,7 @@ post_unpack() {
   sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $ROOT/$PKG_BUILD/libiberty/configure
   sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $ROOT/$PKG_BUILD/gcc/configure
   #sed -i '/m64=/s/lib64/lib/' $ROOT/$PKG_BUILD/gcc/config/i386/t-linux64
-}
+  }
 
 GCC_COMMON_CONFIGURE_OPTS="MAKEINFO=missing \
                            --target=$TARGET_NAME \
@@ -98,6 +98,9 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-decimal-float \
                          --enable-clocale=gnu \
                          $GCC_OPTS"
+pre_configure_host() {
+  export CXXFLAGS="$CXXFLAGS -std=gnu++98"
+  unset CPP
 }
 
 post_make_host() {
