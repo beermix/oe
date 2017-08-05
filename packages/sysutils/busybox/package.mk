@@ -17,14 +17,14 @@
 ################################################################################
 
 PKG_NAME="busybox"
-PKG_VERSION="1.27.1"
+PKG_VERSION="1.26.2"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.busybox.net"
 PKG_URL="http://busybox.net/downloads/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain busybox:host libtool hdparm dosfstools e2fsprogs zip unzip unrar bzip2 zlib lz4 lzo xz lrzip tar expat pciutils usbutils parted procps-ng gptfdisk psmisc findutils grep gawk coreutils time bash less fbset"
+PKG_DEPENDS_TARGET="toolchain busybox:host hdparm dosfstools e2fsprogs zip unzip unrar bzip2 zlib lz4 lzo xz lrzip tar expat pciutils usbutils parted procps-ng gptfdisk psmisc findutils grep gawk coreutils time bash less fbset"
 PKG_DEPENDS_INIT="toolchain"
 PKG_PRIORITY="required"
 PKG_SECTION="system"
@@ -148,6 +148,21 @@ configure_init() {
     make oldconfig
 }
 
+pre_make_host() {
+  # dont build parallel
+  MAKEFLAGS=-j1
+}
+
+pre_make_target() {
+  # dont build parallel
+  MAKEFLAGS=-j1
+}
+
+pre_make_init() {
+  # dont build parallel
+  MAKEFLAGS=-j1
+}
+
 makeinstall_host() {
   mkdir -p $ROOT/$TOOLCHAIN/
     cp -PR $ROOT/$PKG_BUILD/.install_host/* $ROOT/$TOOLCHAIN/
@@ -155,7 +170,6 @@ makeinstall_host() {
 
 makeinstall_target() {
   mkdir -p $INSTALL/usr/bin
-   # [ $TARGET_ARCH = x86_64 ] && cp $PKG_DIR/scripts/getedid $INSTALL/usr/bin
     cp $PKG_DIR/scripts/createlog $INSTALL/usr/bin/
     cp $PKG_DIR/scripts/lsb_release $INSTALL/usr/bin/
     cp $PKG_DIR/scripts/apt-get $INSTALL/usr/bin/
