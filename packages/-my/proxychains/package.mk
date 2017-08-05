@@ -20,24 +20,11 @@
 ################################################################################
 
 PKG_NAME="proxychains"
-PKG_VERSION="9"
+PKG_VERSION="0f61bd0"
 PKG_SITE="http://shadowsocks.org"
-PKG_URL="https://copy.com/sRQVkgwemZrx/proxychains-9.tar.gz"
+PKG_GIT_URL="https://github.com/haad/proxychains"
 PKG_DEPENDS_TARGET="toolchain Python boost openssl Libevent"
-
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
-
-
-configure_target() {
-  cd $ROOT/$PKG_BUILD
-
-  export PYTHON_VERSION="2.7"
-  export PYTHON_CPPFLAGS="-I$SYSROOT_PREFIX/usr/include/python$PYTHON_VERSION"
-  export PYTHON_LDFLAGS="-L$SYSROOT_PREFIX/usr/lib/python$PYTHON_VERSION -lpython$PYTHON_VERSION"
-  export PYTHON_SITE_PKG="$SYSROOT_PREFIX/usr/lib/python$PYTHON_VERSION/site-packages"
-
-./configure --prefix=/usr
-}
 

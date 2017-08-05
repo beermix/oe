@@ -48,7 +48,7 @@ pre_make_target() {
 }
 
 make_target() {
-  export LDFLAGS="$LDFLAGS"
+  export LDFLAGS="$LDFLAGS -ludev"
   export LD=$CXX
 
   # Use Python 2
@@ -68,6 +68,7 @@ make_target() {
   local _flags=(
     'is_clang=false'
     'clang_use_chrome_plugins=false'
+    'symbol_level=0'
     'is_debug=false'
     'fatal_linker_warnings=false'
     'treat_warnings_as_errors=false'
@@ -77,6 +78,7 @@ make_target() {
     'proprietary_codecs=true'
     'link_pulseaudio=true'
     'linux_use_bundled_binutils=false'
+    'use_allocator="none"'
     'use_cups=false'
     'use_gconf=false'
     'use_gnome_keyring=false'
@@ -102,21 +104,13 @@ make_target() {
     libpng
     libxslt
     yasm
-    minizip
-    libwebp
-)
-
-  sed -e 's|i386-linux-gnu/||g' \
-      -e 's|x86_64-linux-gnu/||g' \
-      -e 's|/usr/lib/va/drivers|/usr/lib/dri|g' \
-      -e 's|/usr/lib64/va/drivers|/usr/lib/dri|g' \
-      -i $ROOT/$PKG_BUILD/content/common/sandbox_linux/bpf_gpu_policy_linux.cc
+  )
 
   # Remove bundled libraries for which we will use the system copies; this
   # *should* do what the remove_bundled_libraries.py script does, with the
   # added benefit of not having to list all the remaining libraries
   local _lib
-  for _lib in ${!_system_libs[@]}; do
+  for _lib in ${_system_libs}; do
     find -type f -path "*third_party/$_lib/*" \
       \! -path "*third_party/$_lib/chromium/*" \
       \! -path "*third_party/$_lib/google/*" \
@@ -179,13 +173,16 @@ addon() {
   cp -PL $(get_pkg_build gdk-pixbuf)/.install_pkg/usr/lib/gdk-pixbuf-2.0/2.10.0/loaders/* $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules
 
   # nss
-  #cp -PL $(get_pkg_build nss)/dist/Linux*OPT.OBJ/lib/*.so $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_pkg_build nss)/dist/Linux*OPT.OBJ/lib/*.so $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # nspr
-  #cp -PL $(get_pkg_build nspr)/.install_pkg/usr/lib/*.so $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_pkg_build nspr)/.install_pkg/usr/lib/*.so $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # libexif
   cp -PL $(get_pkg_build libexif)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
+
+  # libva-vdpau-driver
+  cp -PL $(get_pkg_build libva-vdpau-driver)/.install_pkg/usr/lib/va/*.so $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # unclutter
   cp -P $(get_pkg_build unclutter)/.install_pkg/usr/bin/unclutter $ADDON_BUILD/$PKG_ADDON_ID/bin

@@ -18,10 +18,10 @@
 ################################################################################
 
 PKG_NAME="xdotool"
-PKG_VERSION="v3.20160805.1"
+PKG_VERSION="a70547c"
 PKG_SITE="http://www.semicomplete.com/projects/xdotool/"
 PKG_GIT_URL="https://github.com/jordansissel/xdotool"
-PKG_DEPENDS_TARGET="toolchain libXinerama libXtst"
+PKG_DEPENDS_TARGET="toolchain libXinerama libXtst libxkbcommon"
 PKG_SECTION="x11/app"
 PKG_SHORTDESC="This tool lets you simulate keyboard input and mouse activity, move and resize windows, etc."
 PKG_LONGDESC="This tool lets you simulate keyboard input and mouse activity, move and resize windows, etc."
