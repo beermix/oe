@@ -10,8 +10,7 @@ PKG_LONGDESC="The Open Source toolkit for Secure Sockets Layer and Transport Lay
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-#CONCURRENCY_MAKE_LEVEL=4
-
+CONCURRENCY_MAKE_LEVEL=1
 
 PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            --libdir=lib \
@@ -57,7 +56,7 @@ pre_configure_target() {
   
   sed -i -e '/^"linux-x86_64"/ s/-m64 -DL_ENDIAN -O3 -Wall//' $ROOT/$PKG_BUILD/.$TARGET_NAME/Configure
   export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
-  export CCACHE_RECACHE=1
+  #export CCACHE_RECACHE=1
   strip_lto
 }
 
