@@ -18,6 +18,7 @@
 
 PKG_NAME="mariadb"
 PKG_VERSION="10.1.25"
+#PKG_VERSION="10.2.7"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
@@ -158,7 +159,7 @@ configure_target() {
         -DWITH_READLINE=OFF \
         -DWITH_PCRE=bundled \
         -DWITH_ZLIB=bundled \
-        -DWITH_SYSTEMD=OFF \
+        -DWITH_SYSTEMD=ON \
         -DWITH_LIBWRAP=OFF \
         -DWITH_SSL=$SYSROOT_PREFIX/usr \
         $MARIADB_OPTS \
@@ -173,6 +174,9 @@ post_makeinstall_target() {
  
   rm -rf $INSTALL/usr/share/mysql/support-files
   rm -rf $INSTALL/usr/share/mysql/test
+  rm -rf $INSTALL/usr/share/mysql/bench
+  rm -rf $INSTALL/usr/data
+  
 
   if [ "$PKG_MARIADB_SERVER" = "no" ]; then
     rm -rf $INSTALL/usr/bin
