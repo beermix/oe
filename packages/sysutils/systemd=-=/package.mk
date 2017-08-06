@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -34,6 +34,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            ac_cv_path_MOUNT_PATH=/bin/mount \
                            ac_cv_path_UMOUNT_PATH=/bin/umount \
                            --disable-nls \
+                           --disable-lto \
                            --disable-dbus \
                            --disable-utmp \
                            --disable-coverage \
@@ -44,8 +45,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-ima \
                            --disable-selinux \
                            --disable-apparmor \
-                           --disable-adm-group \
-                           --disable-wheel-group \
                            --disable-xz \
                            --disable-zlib \
                            --disable-bzip2 \
@@ -73,7 +72,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-randomseed \
                            --disable-backlight \
                            --disable-rfkill \
-                           --enable-logind --without-kill-user-processes \
+                           --enable-logind \
                            --disable-machined \
                            --disable-importd \
                            --disable-hostnamed \
@@ -82,17 +81,17 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-localed \
                            --disable-coredump \
                            --disable-polkit \
-                           --disable-resolved --with-default-dnssec=allow-downgrade \
+                           --disable-resolved \
                            --disable-networkd \
                            --disable-efi \
                            --disable-gnuefi \
+                           --disable-kdbus \
                            --disable-myhostname \
                            --enable-hwdb \
                            --disable-manpages \
                            --disable-hibernate \
                            --disable-ldconfig \
-                           --disable-tpm --with-tpm-pcrindex=8 \
-                           --enable-split-usr \
+                           --disable-split-usr \
                            --disable-tests \
                            --without-python \
                            --with-sysvinit-path= \
@@ -102,7 +101,8 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --with-dbussessionservicedir=/usr/share/dbus-1/services \
                            --with-dbussystemservicedir=/usr/share/dbus-1/system-services \
                            --with-rootprefix=/usr \
-                           --with-rootlibdir=/usr/lib"
+                           --with-rootlibdir=/usr/lib \
+                           --with-default-hierarchy=hybrid"
 
 pre_build_target() {
 # broken autoreconf
@@ -139,6 +139,11 @@ post_makeinstall_target() {
 
   # remove Network adaper renaming rule, this is confusing
   rm -rf $INSTALL/usr/lib/udev/rules.d/80-net-setup-link.rules
+
+  # remove the uaccess rules as we don't build systemd with ACL (see https://github.com/systemd/systemd/issues/4107)
+  rm -rf $INSTALL/usr/lib/udev/rules.d/70-uaccess.rules
+  rm -rf $INSTALL/usr/lib/udev/rules.d/71-seat.rules
+  rm -rf $INSTALL/usr/lib/udev/rules.d/73-seat-late.rules
 
   # remove debug-shell.service, we install our own
   rm -rf $INSTALL/usr/lib/systemd/system/debug-shell.service
@@ -197,6 +202,9 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin/systemd-machine-id-setup
   mkdir -p $INSTALL/usr/bin
   cp $PKG_DIR/scripts/systemd-machine-id-setup $INSTALL/usr/bin
+
+  # tune systemd-tmpfiles-setup-dev.service
+  sed -e "s,^After=.*$,After=systemd-sysusers.service systemd-journald.service,g" -i $INSTALL/usr/lib/systemd/system/systemd-tmpfiles-setup-dev.service
 
   # provide 'halt', 'shutdown', 'reboot' & co.
   mkdir -p $INSTALL/usr/sbin
