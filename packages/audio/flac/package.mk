@@ -29,9 +29,8 @@ PKG_LONGDESC="Grossly oversimplified, FLAC is similar to MP3, but lossless, mean
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static \
-                           --disable-shared \
-                           --disable-rpath \
+# package specific configure options
+PKG_CONFIGURE_OPTS_TARGET="--disable-rpath \
                            --disable-altivec \
                            --disable-doxygen-docs \
                            --disable-thorough-tests \

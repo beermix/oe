@@ -53,7 +53,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-cxx \
 
 pre_configure_target() {
   CFLAGS="$CFLAGS -fPIC -DPIC"
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed|-Wl,-O1,--as-needed|"`
+w  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed|-Wl,-O1,--as-needed|"`
 }
 
 post_makeinstall_target() {

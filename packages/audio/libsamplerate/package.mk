@@ -28,11 +28,12 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no" # ToDo
 
 
+# package specific configure options
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
                            --enable-static \
                            --datadir=/usr/share \
-                           --disable-sndfile \
-                           --disable-fftw"
+                           --disable-fftw \
+                           --disable-sndfile"
                            
 pre_configure_target() {
   export CFLAGS+=" -fPIC -DPIC"
