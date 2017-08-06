@@ -40,6 +40,6 @@ PKG_CONFIGURE_SCRIPT="source/configure"
 #  export LIBS="$LIBS -latomic"
 #}
 
-post_makeinstall_target() {
-  rm -rf $INSTALL
-}
+#post_makeinstall_target() {
+#  rm -rf $INSTALL
+#}
