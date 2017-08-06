@@ -31,13 +31,13 @@ PKG_LONGDESC="International Components for Unicode library"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared --disable-samples --disable-tests"
-PKG_CONFIGURE_OPTS_TARGET="--disable-samples --disable-tests --with-cross-build=$ROOT/$PKG_BUILD/.$HOST_NAME"
+PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
+PKG_CONFIGURE_OPTS_TARGET="--with-cross-build=$ROOT/$PKG_BUILD/.$HOST_NAME"
 
 PKG_CONFIGURE_SCRIPT="source/configure"
 
 #pre_configure_target() {
-#  export LIBS="$LIBS -latomic"
+#  export LIBS="$LIBS -latomic" --disable-samples --disable-tests 
 #}
 
 #post_makeinstall_target() {
