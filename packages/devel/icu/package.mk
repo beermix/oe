@@ -32,22 +32,13 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared --disable-samples --disable-tests"
-PKG_CONFIGURE_OPTS_TARGET="--enable-static \
-                           --disable-shared \
-                           --disable-samples \
-                           --disable-tests \
-                           --with-cross-build=$ROOT/$PKG_BUILD/.$HOST_NAME"
+PKG_CONFIGURE_OPTS_TARGET="--disable-samples --disable-tests --with-cross-build=$ROOT/$PKG_BUILD/.$HOST_NAME"
 
 PKG_CONFIGURE_SCRIPT="source/configure"
 
-pre_configure_host() {
-  export CFLAGS="$CFLAGS -fPIC"
-}
-
-pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC"
-  #export LIBS="$LIBS -latomic"
-}
+#pre_configure_target() {
+#  export LIBS="$LIBS -latomic"
+#}
 
 post_makeinstall_target() {
   rm -rf $INSTALL
