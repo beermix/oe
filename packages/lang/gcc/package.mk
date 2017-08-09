@@ -17,11 +17,11 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="7.2-RC-20170802"
+PKG_VERSION="7.2-RC-20170808"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://gcc.gnu.org/"
-PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/7.2-RC-20170802/gcc-7.2-RC-20170802.tar.xz"
+PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/7.2-RC-20170808/gcc-7.2-RC-20170808.tar.xz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host"
 PKG_DEPENDS_TARGET="gcc:host"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host glibc"
