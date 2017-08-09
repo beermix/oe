@@ -19,7 +19,7 @@
 ################################################################################
 
 PKG_NAME="Python"
-PKG_VERSION="245dafc"
+PKG_VERSION="425680b"
 PKG_GIT_BRANCH="2.7"
 PKG_KEEP_CHECKOUT="yes"
 PKG_SITE="https://github.com/python/cpython/tree/2.7"
