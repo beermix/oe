@@ -57,7 +57,6 @@ GCC_COMMON_CONFIGURE_OPTS="MAKEINFO=missing \
                            --without-ppl \
                            --without-cloog \
                            --disable-libmpx \
-                           --disable-libsanitizer \
                            --with-system-zlib \
                            --disable-libssp \
                            --with-tune=generic"
