@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="mariadb"
-PKG_VERSION="10.1.26"
+PKG_VERSION="10.1.25"
 #PKG_VERSION="10.2.7"
 PKG_REV="1"
 PKG_ARCH="any"
@@ -159,7 +159,7 @@ configure_target() {
         -DWITH_READLINE=OFF \
         -DWITH_PCRE=bundled \
         -DWITH_ZLIB=bundled \
-        -DWITH_SYSTEMD=ON \
+        -DWITH_SYSTEMD=OFF \
         -DWITH_LIBWRAP=OFF \
         -DWITH_SSL=$SYSROOT_PREFIX/usr \
         $MARIADB_OPTS \
