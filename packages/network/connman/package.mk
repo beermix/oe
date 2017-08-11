@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="connman"
-PKG_VERSION="1.34"
+PKG_VERSION="1.35"
 PKG_SITE="http://www.connman.net"
 PKG_GIT_URL="git://git.kernel.org/pub/scm/network/connman/connman.git"
 PKG_DEPENDS_TARGET="toolchain glib readline dbus iptables wpa_supplicant"
