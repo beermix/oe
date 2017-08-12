@@ -46,7 +46,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-lto \
                          --disable-nls \
                          --enable-poison-system-directories \
-                         --enable-deterministic-archives \
+                         --disable-deterministic-archives \
                          --with-system-zlib"
 
 makeinstall_host() {
@@ -54,6 +54,6 @@ makeinstall_host() {
   make install
 }
 
-#pre_configure_host() {
-#  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $ROOT/$PKG_BUILD/libiberty/configure
-#}
+pre_configure_host() {
+  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $ROOT/$PKG_BUILD/libiberty/configure
+}
