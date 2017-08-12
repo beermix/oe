@@ -12726,3 +12726,764 @@ index ca871c41d5..75cfbba3c9 100644
  #define BFD_VERSION @bfd_version@
  #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
  #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 60bf3b780c3fb56be61adf22b51f8cd86b798abb
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sat Aug 5 00:01:34 2017 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 75cfbba3c9..e245ba948d 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20170804
++#define BFD_VERSION_DATE 20170805
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 4f17d3b435ca86e96c63513354e32388f91d29e0
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sun Aug 6 00:01:39 2017 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index e245ba948d..7b1983f950 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20170805
++#define BFD_VERSION_DATE 20170806
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit d1c0b886c0ec286a72fd96bc9f178c252aa35a13
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Mon Aug 7 00:01:56 2017 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 7b1983f950..c235918b50 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20170806
++#define BFD_VERSION_DATE 20170807
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 94552d962896a39e3a5ec404fa3b076d570f589c
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Tue Aug 8 00:01:50 2017 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index c235918b50..e00d51134d 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20170807
++#define BFD_VERSION_DATE 20170808
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 51bd0f967a9a9dfddaa267b4b6fb2e653d252026
+Author: Alan Modra <amodra@gmail.com>
+Date:   Tue Aug 8 14:05:33 2017 +0930
+
+    PR21017, microblaze missing _GLOBAL_OFFSET_TABLE_ symbol
+    
+            PR 21017
+            * elf32-microblaze.c (microblaze_elf_check_relocs): Don't bump
+            got.refcount for GOTOFF relocs, just create .got section.
+
+diff --git a/bfd/ChangeLog b/bfd/ChangeLog
+index 048bf141c9..211e34016f 100644
+--- a/bfd/ChangeLog
++++ b/bfd/ChangeLog
+@@ -1,3 +1,9 @@
++2017-08-08  Alan Modra  <amodra@gmail.com>
++
++	PR 21017
++	* elf32-microblaze.c (microblaze_elf_check_relocs): Don't bump
++	got.refcount for GOTOFF relocs, just create .got section.
++
+ 2017-08-01  Andreas Krebbel  <krebbel@linux.vnet.ibm.com>
+ 
+ 	Backport from mainline
+diff --git a/bfd/elf32-microblaze.c b/bfd/elf32-microblaze.c
+index 265773675c..94ef09ed4a 100644
+--- a/bfd/elf32-microblaze.c
++++ b/bfd/elf32-microblaze.c
+@@ -2353,7 +2353,6 @@ microblaze_elf_check_relocs (bfd * abfd,
+         dogottls:
+           sec->has_tls_reloc = 1;
+ 	  /* Fall through.  */
+-        case R_MICROBLAZE_GOTOFF_64:
+         case R_MICROBLAZE_GOT_64:
+           if (htab->elf.sgot == NULL)
+             {
+@@ -2374,6 +2373,17 @@ microblaze_elf_check_relocs (bfd * abfd,
+ 	    }
+           break;
+ 
++	case R_MICROBLAZE_GOTOFF_64:
++	case R_MICROBLAZE_GOTOFF_32:
++	  if (htab->elf.sgot == NULL)
++	    {
++	      if (htab->elf.dynobj == NULL)
++		htab->elf.dynobj = abfd;
++	      if (!_bfd_elf_create_got_section (htab->elf.dynobj, info))
++		return FALSE;
++	    }
++	  break;
++
+         case R_MICROBLAZE_64:
+         case R_MICROBLAZE_64_PCREL:
+         case R_MICROBLAZE_32:
+
+commit dd241688aee3712803a917315df089f4c714b5ef
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Wed Aug 9 00:02:06 2017 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index e00d51134d..a03518dcb9 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20170808
++#define BFD_VERSION_DATE 20170809
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit cd8329599c793ca3be434c08227c2a651c143a36
+Author: Jiong Wang <jiong.wang@arm.com>
+Date:   Wed Aug 9 17:52:54 2017 +0100
+
+    [ARM] Don't warn on REG_SP when used in CRC32 instructions
+    
+    According to ARMv8-A architecture manual, REG_SP is allowed in CRC32
+    instructions in Thumb mode.  It is REG_PC that will cause unpredictable
+    behaviours on both ARM and Thumb.
+    
+    This patch removes the incorrect warning on Thumb mode.
+    
+    Meanwhile the disassembler is updated to use format "<bitfield>R" instead of
+    "<bitfield>S".  "<bitfield>S" is not used elsewhere. so I have deleted related
+    code from the disassembler.
+    
+    gas/
+            * config/tc-arm.c (do_crc32_1): Remove warning on REG_SP for thumb_mode.
+            * testsuite/gas/arm/crc32-armv8-a-bad.d: Update exepcted result.
+            * testsuite/gas/arm/crc32-armv8-r-bad.d: Likewise.
+            * testsuite/gas/arm/crc32-armv8-a.d: Likewise.
+            * testsuite/gas/arm/crc32-armv8-r.d: Likewise.
+            * testsuite/gas/arm/crc32-armv8-ar-bad.s: Update test case.
+            * testsuite/gas/arm/crc32-armv8-ar.s: Likewise.
+            * testsuite/gas/arm/crc32-bad.l: Update expected error message.
+    
+    opcode/
+            * arm-dis.c (thumb32_opcodes): Use format 'R' instead of 'S' for
+            register operands in CRC instructions.
+            (print_insn_thumb32): Remove "<bitfield>S" support.  Updated the
+            comments.
+
+diff --git a/gas/ChangeLog b/gas/ChangeLog
+index cfa67e9efc..e4756be8e3 100644
+--- a/gas/ChangeLog
++++ b/gas/ChangeLog
+@@ -1,3 +1,14 @@
++2017-08-09  Jiong Wang  <jiong.wang@arm.com>
++
++	* config/tc-arm.c (do_crc32_1): Remove warning on REG_SP for thumb_mode.
++	* testsuite/gas/arm/crc32-armv8-a-bad.d: Update exepcted result.
++	* testsuite/gas/arm/crc32-armv8-r-bad.d: Likewise.
++	* testsuite/gas/arm/crc32-armv8-a.d: Likewise.
++	* testsuite/gas/arm/crc32-armv8-r.d: Likewise.
++	* testsuite/gas/arm/crc32-armv8-ar-bad.s: Update test case.
++	* testsuite/gas/arm/crc32-armv8-ar.s: Likewise.
++	* testsuite/gas/arm/crc32-bad.l: Update expected error message.
++
+ 2017-08-02  John David Anglin  <danglin@gcc.gnu.org>
+ 
+ 	Backport from mainline
+diff --git a/gas/config/tc-arm.c b/gas/config/tc-arm.c
+index e22ffe676f..c3662da167 100644
+--- a/gas/config/tc-arm.c
++++ b/gas/config/tc-arm.c
+@@ -17598,8 +17598,6 @@ do_crc32_1 (unsigned int poly, unsigned int sz)
+ 
+   if (Rd == REG_PC || Rn == REG_PC || Rm == REG_PC)
+     as_warn (UNPRED_REG ("r15"));
+-  if (thumb_mode && (Rd == REG_SP || Rn == REG_SP || Rm == REG_SP))
+-    as_warn (UNPRED_REG ("r13"));
+ }
+ 
+ static void
+diff --git a/gas/testsuite/gas/arm/crc32-armv8-a-bad.d b/gas/testsuite/gas/arm/crc32-armv8-a-bad.d
+index 18d4844489..bc559e018e 100644
+--- a/gas/testsuite/gas/arm/crc32-armv8-a-bad.d
++++ b/gas/testsuite/gas/arm/crc32-armv8-a-bad.d
+@@ -15,9 +15,9 @@ Disassembly of section .text:
+ 0+c <[^>]*> e10f0242 	crc32cb	r0, pc, r2	; <UNPREDICTABLE>
+ 0+10 <[^>]*> e121f242 	crc32ch	pc, r1, r2	; <UNPREDICTABLE>
+ 0+14 <[^>]*> e14f0242 	crc32cw	r0, pc, r2	; <UNPREDICTABLE>
+-0+18 <[^>]*> fac1 fd82 	crc32b	sp, r1, r2	; <UNPREDICTABLE>
++0+18 <[^>]*> fac1 ff82 	crc32b	pc, r1, r2	; <UNPREDICTABLE>
+ 0+1c <[^>]*> facf f092 	crc32h	r0, pc, r2	; <UNPREDICTABLE>
+-0+20 <[^>]*> fac1 f0ad 	crc32w	r0, r1, sp	; <UNPREDICTABLE>
++0+20 <[^>]*> fac1 f0af 	crc32w	r0, r1, pc	; <UNPREDICTABLE>
+ 0+24 <[^>]*> fadf f082 	crc32cb	r0, pc, r2	; <UNPREDICTABLE>
+-0+28 <[^>]*> fad1 fd92 	crc32ch	sp, r1, r2	; <UNPREDICTABLE>
++0+28 <[^>]*> fad1 ff92 	crc32ch	pc, r1, r2	; <UNPREDICTABLE>
+ 0+2c <[^>]*> fadf f0a2 	crc32cw	r0, pc, r2	; <UNPREDICTABLE>
+diff --git a/gas/testsuite/gas/arm/crc32-armv8-a.d b/gas/testsuite/gas/arm/crc32-armv8-a.d
+index b09942ed34..1374553638 100644
+--- a/gas/testsuite/gas/arm/crc32-armv8-a.d
++++ b/gas/testsuite/gas/arm/crc32-armv8-a.d
+@@ -20,4 +20,15 @@ Disassembly of section .text:
+ 0+24 <[^>]*> fad1 f082 	crc32cb	r0, r1, r2
+ 0+28 <[^>]*> fad1 f092 	crc32ch	r0, r1, r2
+ 0+2c <[^>]*> fad1 f0a2 	crc32cw	r0, r1, r2
+-
++0+30 <[^>]*> e101d042 	crc32b	sp, r1, r2
++0+34 <[^>]*> e12db042 	crc32h	fp, sp, r2
++0+38 <[^>]*> e141004d 	crc32w	r0, r1, sp
++0+3c <[^>]*> e10d9242 	crc32cb	r9, sp, r2
++0+40 <[^>]*> e121d248 	crc32ch	sp, r1, r8
++0+44 <[^>]*> e141a24d 	crc32cw	sl, r1, sp
++0+48 <[^>]*> fac1 fc8d 	crc32b	ip, r1, sp
++0+4c <[^>]*> facd fa92 	crc32h	r5, sp, r2
++0+50 <[^>]*> fac1 fda7 	crc32w	sp, r1, r7
++0+54 <[^>]*> fadd f082 	crc32cb	r0, sp, r2
++0+58 <[^>]*> fad5 f09d 	crc32ch	r0, r5, sp
++0+5c <[^>]*> fad1 fda9 	crc32cw	sp, r1, r9
+diff --git a/gas/testsuite/gas/arm/crc32-armv8-ar-bad.s b/gas/testsuite/gas/arm/crc32-armv8-ar-bad.s
+index 4e497e3f3b..847156c215 100644
+--- a/gas/testsuite/gas/arm/crc32-armv8-ar-bad.s
++++ b/gas/testsuite/gas/arm/crc32-armv8-ar-bad.s
+@@ -9,9 +9,9 @@ crc32ch r15, r1, r2
+ crc32cw r0, r15, r2
+ 
+ .thumb
+-crc32b r13, r1, r2
++crc32b r15, r1, r2
+ crc32h r0, r15, r2
+-crc32w r0, r1, r13
++crc32w r0, r1, r15
+ crc32cb r0, r15, r2
+-crc32ch r13, r1, r2
++crc32ch r15, r1, r2
+ crc32cw r0, r15, r2
+diff --git a/gas/testsuite/gas/arm/crc32-armv8-ar.s b/gas/testsuite/gas/arm/crc32-armv8-ar.s
+index 63c1d68671..9a0edf7cd7 100644
+--- a/gas/testsuite/gas/arm/crc32-armv8-ar.s
++++ b/gas/testsuite/gas/arm/crc32-armv8-ar.s
+@@ -15,3 +15,19 @@ crc32w r0, r1, r2
+ crc32cb r0, r1, r2
+ crc32ch r0, r1, r2
+ crc32cw r0, r1, r2
++
++.arm
++crc32b sp, r1, r2
++crc32h r11, sp, r2
++crc32w r0, r1, sp
++crc32cb r9, sp, r2
++crc32ch sp, r1, r8
++crc32cw r10, r1, sp
++
++.thumb
++crc32b r12, r1, sp
++crc32h r10, sp, r2
++crc32w sp, r1, r7
++crc32cb r0, sp, r2
++crc32ch r0, r5, sp
++crc32cw sp, r1, r9
+diff --git a/gas/testsuite/gas/arm/crc32-armv8-r-bad.d b/gas/testsuite/gas/arm/crc32-armv8-r-bad.d
+index a1a4f61fe4..4e6fe3ff76 100644
+--- a/gas/testsuite/gas/arm/crc32-armv8-r-bad.d
++++ b/gas/testsuite/gas/arm/crc32-armv8-r-bad.d
+@@ -15,9 +15,9 @@ Disassembly of section .text:
+ 0+c <[^>]*> e10f0242 	crc32cb	r0, pc, r2	; <UNPREDICTABLE>
+ 0+10 <[^>]*> e121f242 	crc32ch	pc, r1, r2	; <UNPREDICTABLE>
+ 0+14 <[^>]*> e14f0242 	crc32cw	r0, pc, r2	; <UNPREDICTABLE>
+-0+18 <[^>]*> fac1 fd82 	crc32b	sp, r1, r2	; <UNPREDICTABLE>
++0+18 <[^>]*> fac1 ff82 	crc32b	pc, r1, r2	; <UNPREDICTABLE>
+ 0+1c <[^>]*> facf f092 	crc32h	r0, pc, r2	; <UNPREDICTABLE>
+-0+20 <[^>]*> fac1 f0ad 	crc32w	r0, r1, sp	; <UNPREDICTABLE>
++0+20 <[^>]*> fac1 f0af 	crc32w	r0, r1, pc	; <UNPREDICTABLE>
+ 0+24 <[^>]*> fadf f082 	crc32cb	r0, pc, r2	; <UNPREDICTABLE>
+-0+28 <[^>]*> fad1 fd92 	crc32ch	sp, r1, r2	; <UNPREDICTABLE>
++0+28 <[^>]*> fad1 ff92 	crc32ch	pc, r1, r2	; <UNPREDICTABLE>
+ 0+2c <[^>]*> fadf f0a2 	crc32cw	r0, pc, r2	; <UNPREDICTABLE>
+diff --git a/gas/testsuite/gas/arm/crc32-armv8-r.d b/gas/testsuite/gas/arm/crc32-armv8-r.d
+index b1798213c3..6918e071a8 100644
+--- a/gas/testsuite/gas/arm/crc32-armv8-r.d
++++ b/gas/testsuite/gas/arm/crc32-armv8-r.d
+@@ -20,4 +20,15 @@ Disassembly of section .text:
+ 0+24 <[^>]*> fad1 f082 	crc32cb	r0, r1, r2
+ 0+28 <[^>]*> fad1 f092 	crc32ch	r0, r1, r2
+ 0+2c <[^>]*> fad1 f0a2 	crc32cw	r0, r1, r2
+-
++0+30 <[^>]*> e101d042 	crc32b	sp, r1, r2
++0+34 <[^>]*> e12db042 	crc32h	fp, sp, r2
++0+38 <[^>]*> e141004d 	crc32w	r0, r1, sp
++0+3c <[^>]*> e10d9242 	crc32cb	r9, sp, r2
++0+40 <[^>]*> e121d248 	crc32ch	sp, r1, r8
++0+44 <[^>]*> e141a24d 	crc32cw	sl, r1, sp
++0+48 <[^>]*> fac1 fc8d 	crc32b	ip, r1, sp
++0+4c <[^>]*> facd fa92 	crc32h	r5, sp, r2
++0+50 <[^>]*> fac1 fda7 	crc32w	sp, r1, r7
++0+54 <[^>]*> fadd f082 	crc32cb	r0, sp, r2
++0+58 <[^>]*> fad5 f09d 	crc32ch	r0, r5, sp
++0+5c <[^>]*> fad1 fda9 	crc32cw	sp, r1, r9
+diff --git a/gas/testsuite/gas/arm/crc32-bad.l b/gas/testsuite/gas/arm/crc32-bad.l
+index ea520aa9f2..01e1d22861 100644
+--- a/gas/testsuite/gas/arm/crc32-bad.l
++++ b/gas/testsuite/gas/arm/crc32-bad.l
+@@ -5,9 +5,9 @@
+ [^:]*.s:7: Warning: using r15 results in unpredictable behaviour
+ [^:]*.s:8: Warning: using r15 results in unpredictable behaviour
+ [^:]*.s:9: Warning: using r15 results in unpredictable behaviour
+-[^:]*.s:12: Warning: using r13 results in unpredictable behaviour
++[^:]*.s:12: Warning: using r15 results in unpredictable behaviour
+ [^:]*.s:13: Warning: using r15 results in unpredictable behaviour
+-[^:]*.s:14: Warning: using r13 results in unpredictable behaviour
++[^:]*.s:14: Warning: using r15 results in unpredictable behaviour
+ [^:]*.s:15: Warning: using r15 results in unpredictable behaviour
+-[^:]*.s:16: Warning: using r13 results in unpredictable behaviour
++[^:]*.s:16: Warning: using r15 results in unpredictable behaviour
+ [^:]*.s:17: Warning: using r15 results in unpredictable behaviour
+diff --git a/opcodes/ChangeLog b/opcodes/ChangeLog
+index df549d749d..f13e503794 100644
+--- a/opcodes/ChangeLog
++++ b/opcodes/ChangeLog
+@@ -1,3 +1,10 @@
++2017-08-09  Jiong Wang  <jiong.wang@arm.com>
++
++	* arm-dis.c (thumb32_opcodes): Use format 'R' instead of 'S' for
++	register operands in CRC instructions.
++	(print_insn_thumb32): Remove "<bitfield>S" support.  Updated the
++	comments.
++
+ 2017-08-01  Andreas Krebbel  <krebbel@linux.vnet.ibm.com>
+ 
+ 	Backport from mainline
+diff --git a/opcodes/arm-dis.c b/opcodes/arm-dis.c
+index 25000046d9..59a5978984 100644
+--- a/opcodes/arm-dis.c
++++ b/opcodes/arm-dis.c
+@@ -2699,7 +2699,6 @@ static const struct opcode16 thumb_opcodes[] =
+        %<bitfield>W	print bitfield*4 in decimal
+        %<bitfield>r	print bitfield as an ARM register
+        %<bitfield>R	as %<>r but r15 is UNPREDICTABLE
+-       %<bitfield>S	as %<>R but r13 is UNPREDICTABLE
+        %<bitfield>c	print bitfield as a condition code
+ 
+        %<bitfield>'c	print specified char iff bitfield is all ones
+@@ -2767,17 +2766,17 @@ static const struct opcode32 thumb32_opcodes[] =
+ 
+   /* CRC32 instructions.  */
+   {ARM_FEATURE_COPROC (CRC_EXT_ARMV8),
+-    0xfac0f080, 0xfff0f0f0, "crc32b\t%8-11S, %16-19S, %0-3S"},
++    0xfac0f080, 0xfff0f0f0, "crc32b\t%8-11R, %16-19R, %0-3R"},
+   {ARM_FEATURE_COPROC (CRC_EXT_ARMV8),
+-    0xfac0f090, 0xfff0f0f0, "crc32h\t%9-11S, %16-19S, %0-3S"},
++    0xfac0f090, 0xfff0f0f0, "crc32h\t%9-11R, %16-19R, %0-3R"},
+   {ARM_FEATURE_COPROC (CRC_EXT_ARMV8),
+-    0xfac0f0a0, 0xfff0f0f0, "crc32w\t%8-11S, %16-19S, %0-3S"},
++    0xfac0f0a0, 0xfff0f0f0, "crc32w\t%8-11R, %16-19R, %0-3R"},
+   {ARM_FEATURE_COPROC (CRC_EXT_ARMV8),
+-    0xfad0f080, 0xfff0f0f0, "crc32cb\t%8-11S, %16-19S, %0-3S"},
++    0xfad0f080, 0xfff0f0f0, "crc32cb\t%8-11R, %16-19R, %0-3R"},
+   {ARM_FEATURE_COPROC (CRC_EXT_ARMV8),
+-    0xfad0f090, 0xfff0f0f0, "crc32ch\t%8-11S, %16-19S, %0-3S"},
++    0xfad0f090, 0xfff0f0f0, "crc32ch\t%8-11R, %16-19R, %0-3R"},
+   {ARM_FEATURE_COPROC (CRC_EXT_ARMV8),
+-    0xfad0f0a0, 0xfff0f0f0, "crc32cw\t%8-11S, %16-19S, %0-3S"},
++    0xfad0f0a0, 0xfff0f0f0, "crc32cw\t%8-11R, %16-19R, %0-3R"},
+ 
+   /* V7 instructions.  */
+   {ARM_FEATURE_CORE_LOW (ARM_EXT_V7), 0xf910f000, 0xff70f000, "pli%c\t%a"},
+@@ -5987,10 +5986,6 @@ print_insn_thumb32 (bfd_vma pc, struct disassemble_info *info, long given)
+ 		      value_in_comment = val * 4;
+ 		      break;
+ 
+-		    case 'S':
+-		      if (val == 13)
+-			is_unpredictable = TRUE;
+-		      /* Fall through.  */
+ 		    case 'R':
+ 		      if (val == 15)
+ 			is_unpredictable = TRUE;
+
+commit de44148c51501add2bcb030630b11b5e41316edd
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Thu Aug 10 00:02:38 2017 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index a03518dcb9..bed15b5a0e 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20170809
++#define BFD_VERSION_DATE 20170810
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 5d8b1671b694ae3a2fe45cf9e033e5f35a26fafd
+Author: Nick Clifton <nickc@redhat.com>
+Date:   Thu Aug 10 17:17:20 2017 +0100
+
+    Backport fix for a Darwin x86 assembler bug from the mainline.
+    
+            PR gas/21939
+            * config/obj-macho.c (obj_mach_o_set_indirect_symbols): Increase
+            size of indirect_syms array so that it is large enough to hold
+            every symbol if necessary.
+
+diff --git a/gas/ChangeLog b/gas/ChangeLog
+index e4756be8e3..6540ac2421 100644
+--- a/gas/ChangeLog
++++ b/gas/ChangeLog
+@@ -1,3 +1,13 @@
++2017-08-10  Nick Clifton  <nickc@redhat.com>
++
++	Backport from mainline:
++	2017-08-10  Nick Clifton  <nickc@redhat.com>
++
++	PR gas/21939
++	* config/obj-macho.c (obj_mach_o_set_indirect_symbols): Increase
++	size of indirect_syms array so that it is large enough to hold
++	every symbol if necessary.
++
+ 2017-08-09  Jiong Wang  <jiong.wang@arm.com>
+ 
+ 	* config/tc-arm.c (do_crc32_1): Remove warning on REG_SP for thumb_mode.
+diff --git a/gas/config/obj-macho.c b/gas/config/obj-macho.c
+index 28867bd3ee..8cc9581cbb 100644
+--- a/gas/config/obj-macho.c
++++ b/gas/config/obj-macho.c
+@@ -1808,15 +1808,21 @@ obj_mach_o_set_indirect_symbols (bfd *abfd, asection *sec,
+ 	    {
+ 	      unsigned n;
+ 	      bfd_mach_o_asymbol *sym;
++
++	      /* FIXME: It seems that there can be more indirect symbols
++		 than is computed by the loop above.  So be paranoid and
++		 allocate enough space for every symbol to be indirect.
++		 See PR 21939 for an example of where this is needed.  */
++	      if (nactual < bfd_get_symcount (abfd))
++		nactual = bfd_get_symcount (abfd);
++
+ 	      ms->indirect_syms =
+ 			bfd_zalloc (abfd,
+ 				    nactual * sizeof (bfd_mach_o_asymbol *));
+ 
+ 	      if (ms->indirect_syms == NULL)
+-		{
+-		  as_fatal (_("internal error: failed to allocate %d indirect"
+-			      "symbol pointers"), nactual);
+-		}
++		as_fatal (_("internal error: failed to allocate %d indirect"
++			    "symbol pointers"), nactual);
+ 
+ 	      for (isym = list, n = 0; isym != NULL; isym = isym->next, n++)
+ 		{
+@@ -1827,7 +1833,11 @@ obj_mach_o_set_indirect_symbols (bfd *abfd, asection *sec,
+ 
+ 		     Absolute symbols are handled specially.  */
+ 		  if (sym->symbol.section == bfd_abs_section_ptr)
+-		    ms->indirect_syms[n] = sym;
++		    {
++		      if (n >= nactual)
++			as_fatal (_("internal error: more indirect mach-o symbols than expected"));
++		      ms->indirect_syms[n] = sym;
++		    }
+ 		  else if (S_IS_LOCAL (isym->sym) && ! lazy)
+ 		    ;
+ 		  else
+@@ -1847,6 +1857,8 @@ obj_mach_o_set_indirect_symbols (bfd *abfd, asection *sec,
+ 			      && ! (sym->n_type & BFD_MACH_O_N_PEXT)
+ 			      && (sym->n_type & BFD_MACH_O_N_EXT))
+ 			    sym->n_desc |= lazy;
++			  if (n >= nactual)
++			    as_fatal (_("internal error: more indirect mach-o symbols than expected"));
+ 			  ms->indirect_syms[n] = sym;
+ 		        }
+ 		    }
+
+commit 916d667a1ca0084fb6cab8f09e580df7ea43c78b
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Fri Aug 11 00:02:21 2017 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index bed15b5a0e..4b549275c6 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20170810
++#define BFD_VERSION_DATE 20170811
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 4a1c35c0165f9cbcc63d3af93574b2f6c4544eb7
+Author: Nick Clifton <nickc@redhat.com>
+Date:   Mon Aug 7 10:09:51 2017 +0100
+
+    Do not choose a non-ELF format input file to hold the linker created GOT sections.
+    
+    bfd/
+    
+            PR 21884
+            * elf32-i386.c (elf_i386_link_setup_gnu_properties): If the dynobj
+            has not been set then use the bfd returned by
+            _bfd_elf_link_setup_gnu_properties.  If that is null then search
+            through all the input bfds selecting the first normal, ELF format
+            one.
+            * elf64-x86-64.c (elf_x86_64_link_setup_gnu_properties): Likewise.
+    
+    ld/
+    
+            PR ld/21884
+            * testsuite/ld-i386/i386.exp: Run pr21884.
+            * testsuite/ld-x86-64/x86-64.exp: Likewise.
+            * testsuite/ld-i386/pr21884.d: New file.
+            * testsuite/ld-i386/pr21884.t: Likewise.
+            * testsuite/ld-x86-64/pr21884.d: Likewise.
+            * testsuite/ld-x86-64/pr21884.t: Likewise.
+    
+    (cherry picked from commit b7a18930e3925c4092bd975e95bc3603aa1418d9 and
+     9593aade74f0da0c08a4ab55e4c59173b07b1f63)
+
+diff --git a/bfd/ChangeLog b/bfd/ChangeLog
+index 211e34016f..078dc43acd 100644
+--- a/bfd/ChangeLog
++++ b/bfd/ChangeLog
+@@ -1,3 +1,13 @@
++2017-08-11  Nick Clifton  <nickc@redhat.com>
++
++	PR 21884
++	* elf32-i386.c (elf_i386_link_setup_gnu_properties): If the dynobj
++	has not been set then use the bfd returned by
++	_bfd_elf_link_setup_gnu_properties.  If that is null then search
++	through all the input bfds selecting the first normal, ELF format
++	one.
++	* elf64-x86-64.c (elf_x86_64_link_setup_gnu_properties): Likewise.
++
+ 2017-08-08  Alan Modra  <amodra@gmail.com>
+ 
+ 	PR 21017
+diff --git a/bfd/elf32-i386.c b/bfd/elf32-i386.c
+index df16775d54..b46ed2dd13 100644
+--- a/bfd/elf32-i386.c
++++ b/bfd/elf32-i386.c
+@@ -6914,20 +6914,29 @@ elf_i386_link_setup_gnu_properties (struct bfd_link_info *info)
+      set it in check_relocs.  */
+   if (dynobj == NULL)
+     {
+-      bfd *abfd;
+-
+-      /* Find a normal input file to hold linker created
+-	 sections.  */
+-      for (abfd = info->input_bfds;
+-	   abfd != NULL;
+-	   abfd = abfd->link.next)
+-	if ((abfd->flags
+-	     & (DYNAMIC | BFD_LINKER_CREATED | BFD_PLUGIN)) == 0)
+-	  {
+-	    htab->elf.dynobj = abfd;
+-	    dynobj = abfd;
+-	    break;
+-	  }
++      if (pbfd != NULL)
++	{
++	  htab->elf.dynobj = pbfd;
++	  dynobj = pbfd;
++	}
++      else
++	{
++	  bfd *abfd;
++
++	  /* Find a normal input file to hold linker created
++	     sections.  */
++	  for (abfd = info->input_bfds;
++	       abfd != NULL;
++	       abfd = abfd->link.next)
++	    if (bfd_get_flavour (abfd) == bfd_target_elf_flavour
++		&& (abfd->flags
++		    & (DYNAMIC | BFD_LINKER_CREATED | BFD_PLUGIN)) == 0)
++	      {
++		htab->elf.dynobj = abfd;
++		dynobj = abfd;
++		break;
++	      }
++	}
+     }
+ 
+   /* Even when lazy binding is disabled by "-z now", the PLT0 entry may
+@@ -7019,7 +7028,7 @@ elf_i386_link_setup_gnu_properties (struct bfd_link_info *info)
+     return pbfd;
+ 
+   /* Since create_dynamic_sections isn't always called, but GOT
+-     relocations need GOT relocations, create them here so that we
++     relocations need GOT sections, create them here so that we
+      don't need to do it in check_relocs.  */
+   if (htab->elf.sgot == NULL
+       && !_bfd_elf_create_got_section (dynobj, info))
+diff --git a/bfd/elf64-x86-64.c b/bfd/elf64-x86-64.c
+index c80a9caaa6..821a7d9cbe 100644
+--- a/bfd/elf64-x86-64.c
++++ b/bfd/elf64-x86-64.c
+@@ -7466,8 +7466,9 @@ error_alignment:
+ 	  for (abfd = info->input_bfds;
+ 	       abfd != NULL;
+ 	       abfd = abfd->link.next)
+-	    if ((abfd->flags
+-		 & (DYNAMIC | BFD_LINKER_CREATED | BFD_PLUGIN)) == 0)
++	    if (bfd_get_flavour (abfd) == bfd_target_elf_flavour
++		&& (abfd->flags
++		    & (DYNAMIC | BFD_LINKER_CREATED | BFD_PLUGIN)) == 0)
+ 	      {
+ 		htab->elf.dynobj = abfd;
+ 		dynobj = abfd;
+diff --git a/ld/ChangeLog b/ld/ChangeLog
+index 8c374e3d84..96e7a6aed1 100644
+--- a/ld/ChangeLog
++++ b/ld/ChangeLog
+@@ -1,3 +1,13 @@
++2017-08-11  H.J. Lu  <hongjiu.lu@intel.com>
++
++	PR ld/21884
++	* testsuite/ld-i386/i386.exp: Run pr21884.
++	* testsuite/ld-x86-64/x86-64.exp: Likewise.
++	* testsuite/ld-i386/pr21884.d: New file.
++	* testsuite/ld-i386/pr21884.t: Likewise.
++	* testsuite/ld-x86-64/pr21884.d: Likewise.
++	* testsuite/ld-x86-64/pr21884.t: Likewise.
++
+ 2017-08-03  Alan Modra  <amodra@gmail.com>
+ 
+ 	PR ld/21884
+diff --git a/ld/testsuite/ld-i386/i386.exp b/ld/testsuite/ld-i386/i386.exp
+index 6c53046193..fe490a7486 100644
+--- a/ld/testsuite/ld-i386/i386.exp
++++ b/ld/testsuite/ld-i386/i386.exp
+@@ -434,6 +434,7 @@ run_dump_test "property-x86-shstk3a"
+ run_dump_test "property-x86-shstk3b"
+ run_dump_test "property-x86-shstk4"
+ run_dump_test "property-x86-shstk5"
++run_dump_test "pr21884"
+ 
+ if { !([istarget "i?86-*-linux*"]
+        || [istarget "i?86-*-gnu*"]
+diff --git a/ld/testsuite/ld-i386/pr21884.d b/ld/testsuite/ld-i386/pr21884.d
+new file mode 100644
+index 0000000000..dc212d3c68
+--- /dev/null
++++ b/ld/testsuite/ld-i386/pr21884.d
+@@ -0,0 +1,9 @@
++#source: dummy.s
++#as: --32
++#ld: -m elf_i386 -T pr21884.t -b binary
++#objdump: -b binary -s
++
++.*:     file format binary
++
++Contents of section .data:
++#pass
+diff --git a/ld/testsuite/ld-i386/pr21884.t b/ld/testsuite/ld-i386/pr21884.t
+new file mode 100644
+index 0000000000..9ec7dc8614
+--- /dev/null
++++ b/ld/testsuite/ld-i386/pr21884.t
+@@ -0,0 +1,11 @@
++OUTPUT_FORMAT("elf32-i386");
++OUTPUT_ARCH(i386);
++
++ENTRY(_start); 
++SECTIONS {
++        . = 0x10000;
++        _start = . ;
++        .data : {
++                *(.data)
++        }
++}
+diff --git a/ld/testsuite/ld-x86-64/pr21884.d b/ld/testsuite/ld-x86-64/pr21884.d
+new file mode 100644
+index 0000000000..a62d8bc4f7
+--- /dev/null
++++ b/ld/testsuite/ld-x86-64/pr21884.d
+@@ -0,0 +1,9 @@
++#source: dummy.s
++#as: --64
++#ld: -m elf_x86_64 -T pr21884.t -b binary
++#objdump: -b binary -s
++
++.*:     file format binary
++
++Contents of section .data:
++#pass
+diff --git a/ld/testsuite/ld-x86-64/pr21884.t b/ld/testsuite/ld-x86-64/pr21884.t
+new file mode 100644
+index 0000000000..f57cb3a601
+--- /dev/null
++++ b/ld/testsuite/ld-x86-64/pr21884.t
+@@ -0,0 +1,11 @@
++OUTPUT_FORMAT("elf64-x86-64");
++OUTPUT_ARCH(i386:x86-64);
++
++ENTRY(_start); 
++SECTIONS {
++        . = 0x10000;
++        _start = . ;
++        .data : {
++                *(.data)
++        }
++}
+diff --git a/ld/testsuite/ld-x86-64/x86-64.exp b/ld/testsuite/ld-x86-64/x86-64.exp
+index c582582297..38009a811b 100644
+--- a/ld/testsuite/ld-x86-64/x86-64.exp
++++ b/ld/testsuite/ld-x86-64/x86-64.exp
+@@ -365,6 +365,7 @@ run_dump_test "property-x86-shstk4"
+ run_dump_test "property-x86-shstk4-x32"
+ run_dump_test "property-x86-shstk5"
+ run_dump_test "property-x86-shstk5-x32"
++run_dump_test "pr21884"
+ 
+ if { ![istarget "x86_64-*-linux*"] && ![istarget "x86_64-*-nacl*"]} {
+     return
+
+commit 42a03021227916bc10a50613474a4b09be5f2a77
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sat Aug 12 00:01:50 2017 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 4b549275c6..9b0361e741 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20170811
++#define BFD_VERSION_DATE 20170812
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
