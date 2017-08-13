@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="inputstream.adaptive"
-PKG_VERSION="a02656d"
+PKG_VERSION="0b93432"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/peak3d/inputstream.adaptive/tree/Krypton"
 PKG_GIT_URL="https://github.com/peak3d/inputstream.adaptive"
