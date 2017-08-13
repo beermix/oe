@@ -67,8 +67,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            --with-system-ffi \
                            --with-system-expat \
                            --disable-static \
-                           --enable-optimizations \
-                           --with-lto \
                            --enable-shared"
 
 post_patch() {
@@ -97,7 +95,6 @@ makeinstall_host() {
 
 pre_configure_target() {
   export PYTHON_FOR_BUILD=$ROOT/$TOOLCHAIN/bin/python
-  strip_lto
 }
 
 make_target() {
