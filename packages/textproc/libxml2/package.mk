@@ -46,14 +46,6 @@ PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_ALL \
 			     --with-zlib=$SYSROOT_PREFIX/usr \
 			     --with-sysroot=$SYSROOT_PREFIX"
 			     
-pre_configure_host() {
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed|-Wl,-O1,--as-needed|"`
-}
-
-pre_configure_target() {
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed|-Wl,-O1,--as-needed|"`
-}
-
 post_makeinstall_target() {
   $SED "s:\(['= ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" $SYSROOT_PREFIX/usr/bin/xml2-config
 
