@@ -6,8 +6,4 @@ PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-pre_configure_target() {
-  export LIBS="-lterminfo"
-}
-
 PKG_CONFIGURE_OPTS_TARGET="--with-regex=pcre"
