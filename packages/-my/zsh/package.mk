@@ -13,7 +13,7 @@ PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
 			      --disable-pcre \
 			      --disable-ansi2knr \
 			      --enable-dynamic \
-			      --with-term-lib=ncursesw \
+			      --with-term-lib=ncurses \
 			      --disable-etcdir \
 			      --enable-function-subdirs \
 			      --with-tcsetpgrp \
