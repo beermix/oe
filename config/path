@@ -199,7 +199,6 @@ fi
 BUILD_INDENT_SIZE=4
 
 # define colors
-if [ "$DISABLE_COLORS" != "yes" ]; then
   black="\e[0;30m"
   boldblack="\e[1;30m"
   red="\e[0;31m"
@@ -217,7 +216,6 @@ if [ "$DISABLE_COLORS" != "yes" ]; then
   white="\e[0;37m"
   boldwhite="\e[1;37m"
   endcolor="\e[0m"
-fi
 
 # multilib? nah
 unset CONFIG_SITE
