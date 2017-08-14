@@ -34,7 +34,6 @@ PKG_AUTORECONF="no"
 PKG_CONFIGURE_OPTS_TARGET="--without-ada \
                            --without-cxx \
                            --without-cxx-binding \
-                           --disable-db-install \
                            --without-manpages \
                            --without-progs \
                            --without-tests \
@@ -47,9 +46,8 @@ PKG_CONFIGURE_OPTS_TARGET="--without-ada \
                            --without-dbmalloc \
                            --without-dmalloc \
                            --disable-rpath \
-                           --disable-database \
-                           --with-fallbacks=linux,screen,xterm,xterm-color \
-                           --disable-big-core \
+                           --with-fallbacks=linux,screen,xterm,xterm-256color \
+                           --enable-big-core \
                            --enable-termcap \
                            --enable-getcap \
                            --enable-getcap-cache \
@@ -72,7 +70,6 @@ PKG_CONFIGURE_OPTS_TARGET="--without-ada \
                            --disable-widec \
                            --disable-echo \
                            --disable-warnings \
-                           --disable-home-terminfo \
                            --disable-assertions"
 
 pre_configure_target() {
