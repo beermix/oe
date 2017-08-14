@@ -21,12 +21,12 @@ PKG_CMAKE_OPTS_TARGET="-DBUILD_tools=OFF -DBUILD_examples=OFF -DBUILD_tests=OFF 
 
 PKG_CMAKE_OPTS_HOST="-DBUILD_tools=OFF -DBUILD_examples=OFF -DBUILD_tests=OFF -DBUILD_shared=OFF"
 
-pre_make_host() {
+#pre_make_host() {
   # fix builderror when building in subdirs
-  cp -r ../doc .
-}
+#  cp -r ../doc .
+#}
 
-pre_make_target() {
+#pre_make_target() {
   # fix builderror when building in subdirs
-  cp -r ../doc .
-}
+#  cp -r ../doc .
+#}

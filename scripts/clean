@@ -33,7 +33,7 @@ if [ ! -z "$1" ]; then
     if [ -d $i -a -f "$i/.openelec-unpack" ] ; then
       . "$i/.openelec-unpack"
       if [ "$STAMP_PKG_NAME" = "$1" ]; then
-        printf "%${BUILD_INDENT}c $(print_color CLR_WARNING "*") $(print_color CLR_WARNING_DIM "Removing $i ...")\n" ' '>&$SILENT_OUT
+        printf "%${BUILD_INDENT}c ${boldred}*${endcolor} ${red}Removing $i ...${endcolor}\n" ' '>&$SILENT_OUT
         rm -rf $i
       fi
     else
