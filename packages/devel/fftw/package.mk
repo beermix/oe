@@ -4,7 +4,7 @@ PKG_URL="ftp://ftp.fftw.org/pub/fftw/fftw-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="service/system"
 PKG_USE_CMAKE="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 pre_configure_target() {
   export CFLAGS="$CFLAGS -O3 -malign-double -fstrict-aliasing -ffast-math -fopenmp -fPIC"
