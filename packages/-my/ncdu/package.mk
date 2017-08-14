@@ -5,6 +5,6 @@ PKG_URL="https://dev.yorhel.nl/download/ncdu-$PKG_VERSION.tar.gz"
 #PKG_GIT_URL="git://g.blicky.net/ncdu.git"
 PKG_DEPENDS_TARGET="toolchain netbsd-curses"
 PKG_SECTION="tools"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-largefile --disable-nls"
+PKG_CONFIGURE_OPTS_TARGET="--disable-nls"
