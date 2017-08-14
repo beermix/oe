@@ -8,22 +8,10 @@ PKG_SECTION="devel"
 PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
 PKG_AUTORECONF="yes"
-			      
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
-			      --enable-static \
-			      --enable-utf8 \
-			      --enable-pcre2-16 \
-			      --enable-unicode-properties \
-			      --enable-jit \
-			      --with-gnu-ld"
 
-pre_configure_target() {
-  CFLAGS="$CFLAGS -fPIC"
-  CXXFLAGS="$CXXFLAGS -fPIC"
-  LDFLAGS="$LDFLAGS -fPIC"
-}      
-			      
-PKG_CONFIGURE_OPTS_HOST="--prefix=$ROOT/$TOOLCHAIN $PKG_CONFIGURE_OPTS_TARGET"
+PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN --enable-utf8 --enable-unicode-properties --enable-jit --with-gnu-ld"
+
+PKG_CONFIGURE_OPTS_TARGET="--enable-utf8 --enable-pcre2-16 --enable-unicode-properties --enable-jit --with-gnu-ld"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
