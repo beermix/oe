@@ -16,6 +16,3 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-threads \
 			      --enable-sse2 \
 			      --enable-avx"
 
-post_makeinstall_target() {
-  rm -rf $INSTALL
-}
