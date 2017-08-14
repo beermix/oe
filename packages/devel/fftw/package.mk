@@ -10,8 +10,7 @@ pre_configure_target() {
   export CFLAGS="$CFLAGS -O3 -malign-double -fstrict-aliasing -ffast-math -fopenmp -fPIC"
 }
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
-			      --enable-threads \
+PKG_CONFIGURE_OPTS_TARGET="--enable-threads \
 			      --enable-openmp \
 			      --enable-silent-rules \
 			      --enable-sse2 \
