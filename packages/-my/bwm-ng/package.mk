@@ -4,10 +4,6 @@ PKG_GIT_URL="https://github.com/vgropp/bwm-ng"
 PKG_DEPENDS_TARGET="toolchain libstatgrab"
 PKG_AUTORECONF="yes"
 
-pre_configure_target() {
-  export LIBS="-lterminfo"
-}
-
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
 			      ac_cv_func_realloc_0_nonnull=yes \
 			      --with-libstatgrab \
@@ -22,9 +18,8 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
 			      --enable-64bit \
 			      --with-ncurses \
 			      --with-getopt_long \
-			      --without-strip \
 			      --enable-configfile \
 			      --enable-html \
 			      --enable-extendedstats \
 			      --with-getopt_long \
-			      --without-diskstats"
+			      --with-gnu-ld"
