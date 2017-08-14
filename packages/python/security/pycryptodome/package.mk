@@ -17,7 +17,8 @@
 ################################################################################
 
 PKG_NAME="pycryptodome"
-PKG_VERSION="v3.4.6"
+PKG_VERSION="c6092ae"
+#PKG_VERSION="v3.4.6"
 PKG_ARCH="any"
 PKG_LICENSE="BSD"
 PKG_SITE="https://github.com/Legrandin/pycryptodome/releases"
