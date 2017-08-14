@@ -33,5 +33,5 @@ pre_build_target() {
 
 pre_configure_target() {
   export CFLAGS="$CFLAGS -I$SYSROOT_PREFIX/usr/include/pcap"
-  export LIBS="-lpcap -lnl-3 -lnl-genl-3 -lncurses -ltermcap"
+  export LIBS="-lpcap -lnl-3 -lnl-genl-3"
 }
