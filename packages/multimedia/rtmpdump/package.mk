@@ -35,10 +35,6 @@ PKG_AUTORECONF="no"
 
 MAKEFLAGS="-j1"
 
-pre_configure_target() {
-  CFLAGS="$CFLAGS -fPIC"
-}
-
 make_target() {
   make prefix=/usr \
        incdir=/usr/include/librtmp \
@@ -50,7 +46,7 @@ make_target() {
        SHARED=no \
        CRYPTO="OPENSSL" \
        OPT="" \
-       XCFLAGS="$CFLAGS" \
+       XCFLAGS="$CFLAGS -fPIC" \
        XLDFLAGS="$LDFLAGS" \
        XLIBS="-lm"
 }
@@ -67,7 +63,7 @@ makeinstall_target() {
        SHARED=no \
        CRYPTO="OPENSSL" \
        OPT="" \
-       XCFLAGS="$CFLAGS" \
+       XCFLAGS="$CFLAGS -fPIC" \
        XLDFLAGS="$LDFLAGS" \
        XLIBS="-lm" \
        install
@@ -83,7 +79,7 @@ makeinstall_target() {
        SHARED=no \
        CRYPTO="OPENSSL" \
        OPT="" \
-       XCFLAGS="$CFLAGS" \
+       XCFLAGS="$CFLAGS -FPIC" \
        XLDFLAGS="$LDFLAGS" \
        XLIBS="-lm" \
        install

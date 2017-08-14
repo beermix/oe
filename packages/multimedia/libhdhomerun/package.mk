@@ -17,7 +17,8 @@
 ################################################################################
 
 PKG_NAME="libhdhomerun"
-PKG_VERSION="20161117"
+PKG_VERSION="20150826"
+PKG_SHA256="907dfbd1eb82aebd8b09e7c00c21a02433e6baaacf4a4f99aa2511b1d5244baf"
 PKG_SITE="http://www.silicondust.com/products/hdhomerun/dvbt/"
 PKG_URL="http://download.silicondust.com/hdhomerun/${PKG_NAME}_${PKG_VERSION}.tgz"
 PKG_SOURCE_DIR="$PKG_NAME"

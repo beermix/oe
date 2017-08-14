@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libbluray"
-PKG_VERSION="1.0.0"
+PKG_VERSION="1.0.1"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -44,8 +44,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-werror \
                            --disable-extra-warnings \
                            --disable-optimizations \
                            --disable-examples \
-                           --disable-bdjava \
-                           --enable-udf \
+                           --disable-bdjava-jar \
                            --disable-doxygen-doc \
                            --disable-doxygen-dot \
                            --disable-doxygen-man \

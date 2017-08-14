@@ -249,8 +249,6 @@ makeinstall_host() {
 
 pre_configure_target() {
   strip_lto
-
-  export LIBS="$LIBS -lz -lterminfo"
 }
 
 pre_make_target() {

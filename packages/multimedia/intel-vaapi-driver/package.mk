@@ -21,7 +21,7 @@ PKG_VERSION="f5e479f"
 PKG_REV="1"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/01org/intel-vaapi-driver/releases"
+PKG_SITE="https://github.com/01org/intel-vaapi-driver"
 #PKG_URL="https://github.com/01org/intel-vaapi-driver/releases/download/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_GIT_URL="https://github.com/01org/intel-vaapi-driver"
 PKG_DEPENDS_TARGET="toolchain libva libdrm"
@@ -43,4 +43,5 @@ fi
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-silent-rules \
                            --enable-drm \
+                           --disable-wayland \
                            $DISPLAYSERVER_LIBVA"
