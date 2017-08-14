@@ -35,6 +35,6 @@ pre_configure_target() {
   export CFLAGSi+=" -fPIC"
 }
 
-#pre_build_target() {
-#  cp $PKG_DIR/config/CMakeLists.txt $ROOT/$PKG_BUILD
-#}
+pre_build_target() {
+  cp $PKG_DIR/config/CMakeLists.txt $PKG_BUILD
+}
