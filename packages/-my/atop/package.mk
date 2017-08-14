@@ -6,7 +6,7 @@ PKG_SECTION="debug/tools"
 PKG_AUTORECONF="no"
 
 make_target() {
-  make CC="$CC" AR="$AR" CFLAGS="$CFLAGS" CPPFLAGS="$CPPFLAGS" LDFLAGS="-lcurses -lterminfo $LDFLAGS" -j1
+  make CC="$CC" AR="$AR" CFLAGS="$CFLAGS" CPPFLAGS="$CPPFLAGS" LDFLAGS="$LDFLAGS" -j1
 }
 
 post_make_target() {
