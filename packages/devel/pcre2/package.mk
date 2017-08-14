@@ -7,13 +7,14 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="devel"
 PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 			      
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-static \
 			      --enable-utf8 \
 			      --enable-pcre2-16 \
 			      --enable-unicode-properties \
+			      --enable-jit \
 			      --with-gnu-ld"
 
 pre_configure_target() {

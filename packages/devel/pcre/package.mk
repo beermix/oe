@@ -32,9 +32,9 @@ PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN --enable-utf8 --enable-unicode-properties --with-gnu-ld"
+PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN --enable-utf8 --enable-unicode-properties --enable-jit --with-gnu-ld"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-utf8 --enable-pcre16 --enable-unicode-properties --with-gnu-ld"
+PKG_CONFIGURE_OPTS_TARGET="--enable-utf8 --enable-pcre16 --enable-unicode-properties --enable-jit --with-gnu-ld"
 
 pre_configure_target() {
   CFLAGS="$CFLAGS -fPIC"
