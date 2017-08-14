@@ -59,13 +59,12 @@ GCC_COMMON_CONFIGURE_OPTS="MAKEINFO=missing \
                            --disable-libmpx \
                            --with-system-zlib \
                            --disable-libssp \
+                           --disable-libsanitizer \
                            --with-tune=generic"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
-                              --disable-libsanitizer \
-                              --enable-cloog-backend=isl \
                               --disable-largefile \
                               --disable-libatomic \
                               --disable-libquadmath \
