@@ -23,7 +23,6 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            no-rfc3779 \
                            no-ssl2 \
                            no-ssl3 \
-                           no-weak-ssl-ciphers \
                            enable-tlsext \
                            enable-unit-test \
                            enable-ec_nistp_64_gcc_128"
@@ -41,7 +40,8 @@ configure_host() {
 }
 
 makeinstall_host() {
-  CCACHE_RECACHE=1 make INSTALL_PREFIX=$ROOT/$TOOLCHAIN install_sw
+  export CCACHE_RECACHE=1
+  make INSTALL_PREFIX=$ROOT/$TOOLCHAIN install_sw
 }
 
 pre_configure_target() {
@@ -50,7 +50,7 @@ pre_configure_target() {
   
   sed -i -e '/^"linux-x86_64"/ s/-m64 -DL_ENDIAN -O3 -Wall//' $ROOT/$PKG_BUILD/.$TARGET_NAME/Configure
   export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
-  #export CCACHE_RECACHE=1
+  export CCACHE_RECACHE=1
   strip_lto
 }
 
@@ -70,7 +70,7 @@ post_makeinstall_target() {
   rm -rf $INSTALL/etc/ssl/misc
   rm -rf $INSTALL/usr/bin/c_rehash
 
-  $STRIP $INSTALL/usr/bin/openssl
+  #$STRIP $INSTALL/usr/bin/openssl
 
   # create new cert: ./mkcerts.sh
   # cert from https://curl.haxx.se/docs/caextract.html
