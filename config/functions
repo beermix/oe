@@ -362,14 +362,14 @@ show_config() {
   # load graphic configuration
     get_graphicdrivers
 
+
   . $ROOT/$CONFIG/show_config
   
   echo -e "$show_message"
-
-debug_strip() {
-  if [ ! "$DEBUG" = yes ]; then
+}
+# strip
+ debug_strip() {
+   if [ ! "$DEBUG" = yes ]; then
     find $* -type f -executable | xargs $STRIP 2>/dev/null || :
-  fi
-}
-
-}
+   fi
+ }

@@ -34,7 +34,9 @@ PKG_AUTORECONF="yes"
 PKG_CONFIGURE_OPTS_HOST="--enable-static \
                          --disable-shared \
                          --disable-libmount \
+                         --with-pic \
                          --with-pcre=internal"
+                         
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_snprintf_c99=yes \
                            ac_cv_func_vsnprintf_c99=yes \
                            glib_cv_stack_grows=no \

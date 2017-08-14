@@ -70,7 +70,7 @@ post_makeinstall_target() {
   rm -rf $INSTALL/etc/ssl/misc
   rm -rf $INSTALL/usr/bin/c_rehash
 
-  debug_strip $INSTALL/usr/bin/openssl
+  $STRIP $INSTALL/usr/bin/openssl
 
   # create new cert: ./mkcerts.sh
   # cert from https://curl.haxx.se/docs/caextract.html
