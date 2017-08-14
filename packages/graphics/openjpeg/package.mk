@@ -1,6 +1,6 @@
 PKG_NAME="openjpeg"
-PKG_VERSION="v2.1.2"
-PKG_GIT_URL="https://github.com/uclouvain/openjpeg"
+PKG_VERSION="2.2.0"
+PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain zlib libpng"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
