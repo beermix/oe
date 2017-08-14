@@ -7,7 +7,7 @@ PKG_AUTORECONF="yes"
 
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
-  export LIBS="-lreadline -lterminfo"
+  export LIBS="-lreadline"
   #export LUA_LIBS="-L$SYSROOT_PREFIX/usr/lib -llua -lm"
   #export LDFLAGS="$LDFLAGS -llua -lm" 
   #strip_lto
