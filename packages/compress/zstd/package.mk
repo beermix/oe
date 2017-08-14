@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="zstd"
-PKG_VERSION="dedd0d5"
+PKG_VERSION="v1.3.0"
 PKG_ARCH="any"
 PKG_LICENSE="BSD-3"
 PKG_SITE="http://www.zstd.net"
@@ -28,6 +28,9 @@ PKG_SHORTDESC="fast real-time compression algorithm"
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
+PKG_USE_CMAKE="yes"
 
-PKG_CMAKE_SCRIPT="$PKG_BUILD/build/cmake/CMakeLists.txt"
+PKG_CMAKE_SCRIPT_HOST="build/cmake/CMakeLists.txt"
+PKG_CMAKE_SCRIPT_TARGET="build/cmake/CMakeLists.txt"
+
 PKG_CMAKE_OPTS_HOST="-DTHREADS_PTHREAD_ARG=0"
