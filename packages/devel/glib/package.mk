@@ -21,10 +21,9 @@ PKG_VERSION="2.53.5"
 PKG_ARCH="any"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://www.gtk.org/"
-PKG_URL="http://ftp.gnome.org/pub/gnome/sources/glib/2.53/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_HOST="zlib:host libffi:host Python:host pcre:host"
-PKG_DEPENDS_TARGET="toolchain zlib attr libffi Python:host"
-PKG_PRIORITY="optional"
+PKG_URL="http://ftp.gnome.org/pub/gnome/sources/glib/${PKG_VERSION%.*}/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_DEPENDS_TARGET="toolchain zlib libffi Python:host"
+PKG_DEPENDS_HOST="libffi:host"
 PKG_SECTION="devel"
 PKG_SHORTDESC="glib: C support library"
 PKG_LONGDESC="GLib is a library which includes support routines for C such as lists, trees, hashes, memory allocation, and many other things."
@@ -32,12 +31,11 @@ PKG_LONGDESC="GLib is a library which includes support routines for C such as li
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared --enable-libmount=no --with-pic --with-pcre=internal"
-PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_mmap_fixed_mapped=yes \
-                           ac_cv_func_posix_getpwuid_r=yes \
-                           ac_cv_func_posix_getgrgid_r=yes \
-                           ac_cv_func_printf_unix98=yes \
-                           ac_cv_func_snprintf_c99=yes \
+PKG_CONFIGURE_OPTS_HOST="--enable-static \
+                         --disable-shared \
+                         --disable-libmount \
+                         --with-pcre=internal"
+PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_snprintf_c99=yes \
                            ac_cv_func_vsnprintf_c99=yes \
                            glib_cv_stack_grows=no \
                            glib_cv_uscore=no \
@@ -47,6 +45,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_mmap_fixed_mapped=yes \
                            --enable-xattr \
                            --disable-libelf \
                            --disable-gtk-doc \
+                           --disable-gtk-doc-html \
                            --disable-man \
                            --disable-dtrace \
                            --disable-systemtap \
@@ -67,7 +66,7 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
   rm -rf $INSTALL/usr/lib/gdbus-2.0
   rm -rf $INSTALL/usr/lib/glib-2.0
-  rm -rf $INSTALL/usr/share
+rm -rf $INSTALL/usr/share
   
   ln -sfv $SYSROOT_PREFIX/usr/bin/gapplication $ROOT/$BUILD/toolchain/bin/
   ln -sfv $SYSROOT_PREFIX/usr/bin/gdbus $ROOT/$BUILD/toolchain/bin/

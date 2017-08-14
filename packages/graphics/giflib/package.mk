@@ -34,7 +34,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_HOST="--disable-shared --enable-static"
-PKG_CONFIGURE_OPTS_TARGET="--with-sysroot=$SYSROOT_PREFIX --disable-shared --enable-static"
+PKG_CONFIGURE_OPTS_TARGET="--with-sysroot=$SYSROOT_PREFIX"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
