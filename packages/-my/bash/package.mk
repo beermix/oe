@@ -5,10 +5,6 @@ PKG_DEPENDS_TARGET="toolchain netbsd-curses readline"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-pre_configure_target() {
-  export LIBS="$LIBS -ltermcap -lcurses"
-}
-
 PKG_CONFIGURE_OPTS_TARGET="--bindir=/bin \
                            --with-curses \
                            --enable-readline \
