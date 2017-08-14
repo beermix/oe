@@ -1,17 +1,17 @@
 PKG_NAME="shadowsocks-libev"
 PKG_VERSION="3.0.8"
-PKG_URL="https://dl.dropboxusercontent.com/s/sx6vms5ihja38ma/shadowsocks-libev-3.0.8.tar.xz"
+#PKG_URL="https://dl.dropboxusercontent.com/s/sx6vms5ihja38ma/shadowsocks-libev-3.0.8.tar.xz"
 PKG_DEPENDS_TARGET="toolchain pcre libsodium libudns libev mbedtls"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
 PKG_AUTORECONF="yes"
 
-#unpack() {
-#  git clone --recursive -v --depth 1 http://github.com/shadowsocks/shadowsocks-libev $PKG_BUILD
-#  cd $ROOT/$PKG_BUILD
-#  rm -rf .$TARGET_NAME
-#}
+unpack() {
+  git clone --recursive -v --depth 1 http://github.com/shadowsocks/shadowsocks-libev $PKG_BUILD
+  cd $ROOT/$PKG_BUILD
+  rm -rf .$TARGET_NAME
+}
 
 #pre_configure_target() {
 #  export LIBS="$LIBS -pthread"
