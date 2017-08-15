@@ -11,7 +11,7 @@ PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN --enable-utf8 --enable-unicode-properties --enable-jit --with-gnu-ld"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-utf8 --enable-pcre2-16 --enable-unicode-properties --enable-jit --with-gnu-ld"
+PKG_CONFIGURE_OPTS_TARGET="--enable-utf8 --enable-pcre2-16 --enable-unicode-properties --enable-jit"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
