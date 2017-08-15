@@ -19,7 +19,7 @@
 PKG_NAME="connman"
 PKG_VERSION="1.35"
 PKG_SITE="http://www.connman.net"
-PKG_GIT_URL="git://git.kernel.org/pub/scm/network/connman/connman.git"
+PKG_URL="https://www.kernel.org/pub/linux/network/connman/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain glib readline dbus iptables wpa_supplicant"
 PKG_SECTION="network"
 PKG_SHORTDESC="connman: Network manager daemon"
@@ -60,7 +60,7 @@ PKG_CONFIGURE_OPTS_TARGET="WPASUPPLICANT=/usr/bin/wpa_supplicant \
                            --enable-datafiles \
                            --with-dbusconfdir=/etc \
                            --with-systemdunitdir=/usr/lib/systemd/system \
-                           --disable-silent-rules"
+                           --enable-silent-rules"
 
 
 PKG_MAKE_OPTS_TARGET="storagedir=/storage/.cache/connman \
