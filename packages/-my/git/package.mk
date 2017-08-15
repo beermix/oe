@@ -21,7 +21,7 @@ pre_configure_target() {
   export NO_ICONV="YesPlease"
   export NO_NSEC="YesPlease"
   export NO_PERL="YesPlease"
-  export NO_PYTHON="YesPlease"
+  #export NO_PYTHON="YesPlease"
   export NO_TCLTK="YesPlease"
   export NO_INSTALL_HARDLINKS="yes"
 }
