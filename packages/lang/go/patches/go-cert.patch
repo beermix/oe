@@ -1,11 +1,14 @@
-diff -Naur a/src/crypto/x509/root_unix.go b/src/crypto/x509/root_unix.go
---- a/src/crypto/x509/root_unix.go	2016-04-19 16:27:35.000000000 -0700
-+++ b/src/crypto/x509/root_unix.go	2016-04-22 01:21:02.884977461 -0700
-@@ -13,6 +13,7 @@
- var certDirectories = []string{
- 	"/etc/ssl/certs",               // SLES10/SLES11, https://golang.org/issue/12139
- 	"/system/etc/security/cacerts", // Android
+diff --git a/src/crypto/x509/root_unix.go b/src/crypto/x509/root_unix.go
+old mode 100644
+new mode 100755
+index 65b5a5fdbc..04ee09fce4
+--- a/src/crypto/x509/root_unix.go
++++ b/src/crypto/x509/root_unix.go
+@@ -19,6 +19,7 @@ var certDirectories = []string{
+ 	"/usr/local/share/certs",       // FreeBSD
+ 	"/etc/pki/tls/certs",           // Fedora/RHEL
+ 	"/etc/openssl/certs",           // NetBSD
 +	"/etc/ssl",                     // OE
  }
  
- func (c *Certificate) systemVerify(opts *VerifyOptions) (chains [][]*Certificate, err error) {
+ const (
