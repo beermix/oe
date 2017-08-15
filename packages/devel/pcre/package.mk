@@ -32,15 +32,9 @@ PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN --enable-utf8 --enable-unicode-properties --enable-jit --with-gnu-ld"
+PKG_CONFIGURE_OPTS_TARGET="--enable-utf8 --enable-pcre16 --enable-pcre32 --enable-unicode-properties --enable-jit"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-utf8 --enable-pcre16 --enable-unicode-properties --enable-jit"
-
-pre_configure_target() {
-  CFLAGS="$CFLAGS -fPIC"
-  CXXFLAGS="$CXXFLAGS -fPIC"
-  LDFLAGS="$LDFLAGS -fPIC"
-}
+PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN $PKG_CONFIGURE_OPTS_TARGET"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
