@@ -18,7 +18,6 @@ PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config \
 			      --infodir=/storage/.config \
 			      --localedir=/storage/.config \
 			      --with-language=russian \
-			      --with-minimal \
 			      --enable-largefile"
 
 post_makeinstall_target() {
