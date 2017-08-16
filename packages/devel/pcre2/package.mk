@@ -1,5 +1,5 @@
 PKG_NAME="pcre2"
-PKG_VERSION="10.23"
+PKG_VERSION="10.30"
 PKG_SITE="http://www.pcre.org/"
 PKG_URL="http://ftp.csx.cam.ac.uk/pub/software/programming/pcre/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST=""
