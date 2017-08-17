@@ -31,13 +31,6 @@ PKG_LONGDESC="HarfBuzz is an OpenType text shaping engine."
 
 PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
-PKG_AUTORECONF="no"
-
-PKG_MAINTAINER="none"
+PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--with-icu=yes"
-
-pre_configure_target() {
-  export LIBS="-ldl"
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed|-Wl,-O1,--as-needed|"`
-}
