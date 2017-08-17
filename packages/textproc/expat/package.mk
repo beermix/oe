@@ -12,7 +12,7 @@ pre_configure_target() {
 }
 
 pre_configure_host() {
-  export CFLAGS="$CFLAGS -DXML_POOR_ENTROPY -fPIC"
+  export CFLAGS="$CFLAGS -DXML_POOR_ENTROPY"
 }
 
 PKG_CMAKE_SCRIPT_TARGET="expat/CMakeLists.txt"
