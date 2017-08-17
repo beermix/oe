@@ -17,9 +17,11 @@
 ################################################################################
 
 PKG_NAME="wpa_supplicant"
-PKG_VERSION="2.6"
-PKG_SITE="http://hostap.epitest.fi/wpa_supplicant/"
-PKG_URL="http://hostap.epitest.fi/releases/$PKG_NAME-$PKG_VERSION.tar.gz"
+#PKG_VERSION="2.6"
+#PKG_SITE="http://hostap.epitest.fi/wpa_supplicant/"
+#PKG_URL="http://hostap.epitest.fi/releases/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_VERSION="b0fc2ef"
+PKG_GIT_URL="http://w1.fi/hostap.git"
 PKG_DEPENDS_TARGET="toolchain dbus libnl openssl"
 PKG_SECTION="network"
 PKG_SHORTDESC="wpa_supplicant: An IEEE 802.11i supplicant implementation"
