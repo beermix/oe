@@ -35,4 +35,4 @@ PKG_CONFIGURE_OPTS_HOST="--disable-shared --enable-static \
                          --disable-scripts \
                          --disable-nls"
                          
-PKG_CONFIGURE_OPTS_TARGET="--enable-threads --disable-rpath --disable-doc --enable-werror"
+PKG_CONFIGURE_OPTS_TARGET="--enable-threads --disable-rpath --disable-doc --enable-static"
