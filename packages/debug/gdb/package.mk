@@ -38,6 +38,7 @@ CFLAGS_FOR_BUILD="$HOST_CFLAGS"
 pre_configure_target() {
   # gdb could fail on runtime if build with LTO support
     strip_lto
+    strip_hard
 }
 
 PKG_CONFIGURE_OPTS_TARGET="bash_cv_have_mbstate_t=set \
