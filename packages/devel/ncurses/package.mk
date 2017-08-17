@@ -31,55 +31,35 @@ PKG_LONGDESC="The ncurses (new curses) library is a free software emulation of c
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--without-ada \
-                           --with-cxx \
-                           --without-cxx-binding \
+PKG_CONFIGURE_OPTS_TARGET="--enable-echo \
+                           --enable-const \
+                           --enable-overwrite \
+                           --enable-pc-files \
+                           --disable-rpath \
+                           --without-ada \
+                           --without-debug \
                            --without-manpages \
                            --without-profile \
-                           --enable-echo \
-                           --enable-const \
-                           --with-versioned-syms \
-                           --with-xterm-kbs=del \
-                           --with-ncursesw \
                            --with-progs \
                            --without-tests \
+                           --disable-big-core \
+                           --disable-home-terminfo \
+                           --with-normal \
                            --with-shared \
-                           --without-debug \
-                           --without-profile \
-                           --without-termlib \
-                           --without-ticlib \
-                           --without-gpm \
-                           --without-dbmalloc \
-                           --without-dmalloc \
-                           --disable-rpath \
+                           --enable-static --enable-shared \
                            --with-fallbacks=linux,screen,xterm,xterm-256color \
-                           --enable-termcap \
-                           --enable-getcap \
-                           --enable-getcap-cache \
-                           --enable-symlinks \
-                           --disable-bsdpad \
-                           --without-rcs-ids \
-                           --enable-ext-funcs \
-                           --disable-const \
-                           --enable-no-padding \
-                           --disable-sigwinch \
-                           --enable-pc-files \
                            --with-pkg-config-libdir=/usr/lib/pkgconfig \
-                           --disable-tcap-names \
-                           --without-develop \
                            --disable-widec"
 
-pre_configure_target() {
+#pre_configure_target() {
   # causes some segmentation fault's (dialog) when compiled with gcc's link time optimization.
-  strip_lto
-}
+#  strip_lto
+#}
 
 post_makeinstall_target() {
   cp misc/ncurses-config $ROOT/$TOOLCHAIN/bin
   chmod +x $ROOT/$TOOLCHAIN/bin/ncurses-config
   $SED "s:\(['=\" ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" $ROOT/$TOOLCHAIN/bin/ncurses-config
-  ln -sf ncurses-config $ROOT/$TOOLCHAIN/bin/ncurses5-config
-  #ln -sf ncurses5-config $ROOT/$TOOLCHAIN/bin/ncurses6-config
 
   rm -rf $INSTALL/usr/bin/ncurses*-config
 }
