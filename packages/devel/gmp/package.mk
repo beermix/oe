@@ -30,28 +30,4 @@ PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_HOST="--enable-cxx --enable-static --disable-shared --disable-assembly --with-pic"
 
-#PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
-
-configure_target() {
-  :
-}
-
-pre_configure_target() {
-  :
-}
-
-post_makeinstall_target() {
-  :
-}
-
-make_target() {
-  :
-}
-
-post_make_target() {
-  :
-}
-
-makeinstall_target() {
-  :
-}
+PKG_CONFIGURE_OPTS_TARGET="--enable-cxx --enable-fat"
