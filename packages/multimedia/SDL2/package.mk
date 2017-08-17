@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="SDL2"
-PKG_VERSION="59c39da"
+PKG_VERSION="435b6c8"
 PKG_SITE="https://www.libsdl.org/"
 PKG_GIT_URL="https://github.com/spurious/SDL-mirror"
 PKG_DEPENDS_TARGET="toolchain yasm:host alsa-lib systemd dbus"
@@ -33,9 +33,7 @@ PKG_CMAKE_OPTS_TARGET="-DSDL_STATIC=ON \
 			  -DOSS=OFF \
 			  -DRPATH=OFF \
 			  -DVIDEO_DUMMY=OFF \
-			  -DDISKAUDIO=OFF \
-			  -DCMAKE_BUILD_TYPE=Release"
-
+			  -DDISKAUDIO=OFF"
 
 if [ "$DISPLAYSERVER" = "x11" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libX11 libXrandr"
