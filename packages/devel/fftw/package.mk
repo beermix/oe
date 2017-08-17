@@ -7,7 +7,7 @@ PKG_USE_CMAKE="no"
 PKG_AUTORECONF="yes"
 
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -O3 -malign-double -fstrict-aliasing -ffast-math -fopenmp -fPIC"
+  export CFLAGS="$CFLAGS -O3 -malign-double -fstrict-aliasing -ffast-math -fopenmp -fPIC -DPIC"
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-threads \
