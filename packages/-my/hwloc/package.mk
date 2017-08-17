@@ -11,7 +11,8 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --disable-cuda \
 			      --disable-nvml \
 			      --enable-pci \
-			      --with-pic"
+			      --with-pic \
+			      --with-gnu-ld"
 			      
 post_makeinstall_target() {
   rm -rf $INSTALL
