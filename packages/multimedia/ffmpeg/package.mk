@@ -18,32 +18,52 @@ PKG_LONGDESC="FFmpeg is a complete, cross-platform solution to record, convert a
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-# Dependencies
-get_graphicdrivers
+# configure GPU drivers and dependencies:
+  get_graphicdrivers
 
-if [ "$DEBUG" = "yes" ]; then
+if [ "$VAAPI_SUPPORT" = yes ]; then
+  PKG_DEPENDS_TARGET+=" intel-vaapi-driver libva-utils libvdpau"
+  FFMPEG_VAAPI="--enable-vaapi"
+else
+  FFMPEG_VAAPI="--disable-vaapi"
+fi
+
+if [ "$VDPAU_SUPPORT" = "yes" -a "$DISPLAYSERVER" = "x11" ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libvdpau"
+  FFMPEG_VDPAU="--enable-vdpau"
+else
+  FFMPEG_VDPAU="--disable-vdpau"
+fi
+
+if [ "$DEBUG" = yes ]; then
   FFMPEG_DEBUG="--enable-debug --disable-stripping"
 else
   FFMPEG_DEBUG="--disable-debug --enable-stripping"
 fi
 
+if [ "$KODIPLAYER_DRIVER" = "bcm2835-firmware" ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET bcm2835-firmware"
+fi
+
 case "$TARGET_ARCH" in
   arm)
-    CFLAGS="$CFLAGS -mthumb"
-    FFMPEG_TABLES="--enable-hardcoded-tables"
-    ;;
+      FFMPEG_TABLES="--enable-hardcoded-tables"
+  ;;
   *)
-    FFMPEG_TABLES="--disable-hardcoded-tables"
-    ;;
+      FFMPEG_TABLES="--disable-hardcoded-tables"
+  ;;
 esac
 
 case "$TARGET_FPU" in
   neon*)
-    FFMPEG_FPU="--enable-neon"
-    ;;
+      FFMPEG_FPU="--enable-neon"
+  ;;
+  vfp*)
+      FFMPEG_FPU=""
+  ;;
   *)
-    FFMPEG_FPU="--disable-neon"
-    ;;
+      FFMPEG_FPU=""
+  ;;
 esac
 
 pre_configure_target() {
