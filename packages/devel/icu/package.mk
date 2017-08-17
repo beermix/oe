@@ -28,14 +28,14 @@ PKG_LONGDESC="International Components for Unicode library"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
-PKG_CONFIGURE_OPTS_TARGET="--with-cross-build=$ROOT/$PKG_BUILD/.$HOST_NAME"
+PKG_CONFIGURE_OPTS_HOST="--disable-samples --disable-tests --enable-static --disable-shared"
+PKG_CONFIGURE_OPTS_TARGET="--disable-samples --disable-tests --with-cross-build=$ROOT/$PKG_BUILD/.$HOST_NAME"
 
 PKG_CONFIGURE_SCRIPT="source/configure"
 
-#pre_configure_target() {
-#  export LIBS="$LIBS -latomic" --disable-samples --disable-tests 
-#}
+pre_configure_target() {
+  export LIBS="$LIBS -latomic" 
+}
 
 #post_makeinstall_target() {
 #  rm -rf $INSTALL
