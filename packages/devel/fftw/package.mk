@@ -10,9 +10,13 @@ pre_configure_target() {
   export CFLAGS="$CFLAGS -O3 -malign-double -fstrict-aliasing -ffast-math -fopenmp -fPIC -DPIC"
 }
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-threads \
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-threads \
 			      --enable-openmp \
 			      --enable-silent-rules \
 			      --enable-sse2 \
-			      --enable-avx"
+			      --enable-avx \
+			      --with-gnu-ld"
 
+post_makeinstall_target() {
+  rm -rf $INSTALL
+}

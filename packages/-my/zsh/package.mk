@@ -12,10 +12,17 @@ PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
 			      --bindir=/bin \
-			      --disable-cap \
-			      --enable-pcre \
 			      --enable-multibyte \
+			      --disable-silent-rules \
+			      --enable-cap \
+			      --enable-pcre \
 			      --disable-ansi2knr \
-			      --disable-shared \
-			      --enable-static \
-			      --disable-gdbm" 
+			      --disable-dynamic \
+			      --sysconfdir=/storage/.config \
+			      --with-term-lib=ncursesw \
+			      --disable-etcdir \
+			      --enable-function-subdirs \
+			      --with-tcsetpgrp \
+			      --enable-gdbm \
+			      --enable-zsh-secure-free \
+			      --enable-readnullcmd=pager"
