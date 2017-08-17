@@ -43,24 +43,31 @@ PKG_CONFIGURE_OPTS_TARGET="--without-ada \
                            --with-ncursesw \
                            --with-progs \
                            --without-tests \
-                           --with-curses-h \
                            --with-shared \
-                           --with-normal \
                            --without-debug \
+                           --without-profile \
+                           --without-termlib \
+                           --without-ticlib \
+                           --without-gpm \
+                           --without-dbmalloc \
+                           --without-dmalloc \
                            --disable-rpath \
                            --with-fallbacks=linux,screen,xterm,xterm-256color \
-                           --with-ticlib \
+                           --enable-termcap \
                            --enable-getcap \
                            --enable-getcap-cache \
                            --enable-symlinks \
+                           --disable-bsdpad \
+                           --without-rcs-ids \
                            --enable-ext-funcs \
+                           --disable-const \
+                           --enable-no-padding \
+                           --disable-sigwinch \
                            --enable-pc-files \
                            --with-pkg-config-libdir=/usr/lib/pkgconfig \
-                           --enable-widec \
-                           --enable-sigwinch \
-                           --disable-nls \
-                           --without-dlsym \
-                           --with-x"
+                           --disable-tcap-names \
+                           --without-develop \
+                           --disable-widec"
 
 pre_configure_target() {
   # causes some segmentation fault's (dialog) when compiled with gcc's link time optimization.
