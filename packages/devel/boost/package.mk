@@ -41,9 +41,9 @@ makeinstall_host() {
 }
 
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC"
-  export CXXFLAGS="$CXXFLAGS -fPIC"
-  export LDFLAGS="$LDFLAGS -fPIC"
+  export CFLAGS="$CFLAGS -fPIC -DPIC"
+  export CXXFLAGS="$CXXFLAGS -fPIC -DPIC"
+  export LDFLAGS="$LDFLAGS -fPIC -DPIC"
 }
 
 configure_target() {

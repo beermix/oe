@@ -30,4 +30,4 @@ PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_HOST="--enable-cxx --enable-static --disable-shared --disable-assembly --with-pic"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-cxx --enable-fat"
+PKG_CONFIGURE_OPTS_TARGET="--enable-cxx --enable-fat --enable-static"
