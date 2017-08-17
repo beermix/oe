@@ -13815,3 +13815,357 @@ index 26242a5d97..ee21d58f1f 100644
  #define BFD_VERSION @bfd_version@
  #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
  #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 9bb83328f22c47ce070474a9b407ac41acbd609d
+Author: Ramana Radhakrishnan <ramana.radhakrishnan@arm.com>
+Date:   Tue Aug 15 13:58:01 2017 +0100
+
+    [Patch AArch64] Turn lr, fp, ip0 and ip1 into proper aliases
+    
+    We got a report from the linux-arm-kernel folks about getting spurious
+    warnings when building the kernel with binutils 2.29. See
+    https://www.spinics.net/lists/arm-kernel/msg599929.html
+    
+    which boils down to this testcase.
+    
+    $> cat /tmp/tst.s
+        lr .req x30
+        /tmp/tst.s: Assembler messages:
+        /tmp/tst.s:1: Warning: ignoring attempt to redefine built-in register 'lr'
+    
+    Instead let's treat this as a proper alias at startup time thus
+    avoiding the problem and treating these as proper aliases
+    rather than new registers. This means that attempts to redefine
+    the alias with the same "name" will provoke no warning and attempts
+    to redefine the alias to something else will provoke the above mentioned
+    warning.
+    
+    Tested make check-gas and no regressions.
+    
+    Ok to apply to trunk (and backport to 2.29 branch)?
+    
+    Regards
+    Ramana
+
+diff --git a/gas/ChangeLog b/gas/ChangeLog
+index 6540ac2421..0de5dd84c1 100644
+--- a/gas/ChangeLog
++++ b/gas/ChangeLog
+@@ -1,3 +1,14 @@
++2017-08-15  Ramana Radhakrishnan  <ramana.radhakrishnan@arm.com>
++
++	Backport from mainline:
++	* config/tc-aarch64.c (REGDEF_ALIAS): Define
++	(reg_names): Update for ip0, ip1, fp, lr to use REGDEF_ALIAS
++	* doc/c-aarch64.texi: Update documentation on .req.
++	* testsuite/gas/diagnostic.s: Update
++	* testsuite/gas/diagnostic.l: Likewise
++	* testsuite/gas/register_aliases.s: New file.
++	* testsuite/gas/register_aliases.d: New file.
++
+ 2017-08-10  Nick Clifton  <nickc@redhat.com>
+ 
+ 	Backport from mainline:
+diff --git a/gas/config/tc-aarch64.c b/gas/config/tc-aarch64.c
+index f095ab9928..e80586396f 100644
+--- a/gas/config/tc-aarch64.c
++++ b/gas/config/tc-aarch64.c
+@@ -6772,6 +6772,7 @@ aarch64_canonicalize_symbol_name (char *name)
+    also have mixed-case names.	*/
+ 
+ #define REGDEF(s,n,t) { #s, n, REG_TYPE_##t, TRUE }
++#define REGDEF_ALIAS(s, n, t) { #s, n, REG_TYPE_##t, FALSE}
+ #define REGNUM(p,n,t) REGDEF(p##n, n, t)
+ #define REGSET16(p,t) \
+   REGNUM(p, 0,t), REGNUM(p, 1,t), REGNUM(p, 2,t), REGNUM(p, 3,t), \
+@@ -6793,17 +6794,16 @@ static const reg_entry reg_names[] = {
+   REGSET31 (x, R_64), REGSET31 (X, R_64),
+   REGSET31 (w, R_32), REGSET31 (W, R_32),
+ 
++  REGDEF_ALIAS (ip0, 16, R_64), REGDEF_ALIAS (IP0, 16, R_64),
++  REGDEF_ALIAS (ip1, 17, R_64), REGDEF_ALIAS (IP1, 16, R_64),
++  REGDEF_ALIAS (fp, 29, R_64), REGDEF_ALIAS (FP, 29, R_64),
++  REGDEF_ALIAS (lr, 30, R_64), REGDEF_ALIAS (LR, 30, R_64),
+   REGDEF (wsp, 31, SP_32), REGDEF (WSP, 31, SP_32),
+   REGDEF (sp, 31, SP_64), REGDEF (SP, 31, SP_64),
+ 
+   REGDEF (wzr, 31, Z_32), REGDEF (WZR, 31, Z_32),
+   REGDEF (xzr, 31, Z_64), REGDEF (XZR, 31, Z_64),
+ 
+-  REGDEF (ip0, 16, R_64), REGDEF (IP0, 16, R_64),
+-  REGDEF (ip1, 17, R_64), REGDEF (IP1, 17, R_64),
+-  REGDEF (fp, 29, R_64), REGDEF (FP, 29, R_64),
+-  REGDEF (lr, 30, R_64), REGDEF (LR, 30, R_64),
+-
+   /* Floating-point single precision registers.  */
+   REGSET (s, FP_S), REGSET (S, FP_S),
+ 
+@@ -6830,6 +6830,7 @@ static const reg_entry reg_names[] = {
+ };
+ 
+ #undef REGDEF
++#undef REGDEF_ALIAS
+ #undef REGNUM
+ #undef REGSET16
+ #undef REGSET31
+diff --git a/gas/doc/c-aarch64.texi b/gas/doc/c-aarch64.texi
+index 677420594e..e73d48cac2 100644
+--- a/gas/doc/c-aarch64.texi
++++ b/gas/doc/c-aarch64.texi
+@@ -363,6 +363,9 @@ example:
+         foo .req w0
+ @end smallexample
+ 
++ip0, ip1, lr and fp are automatically defined to
++alias to X16, X17, X30 and X29 respectively.
++
+ @c SSSSSSSSSSSSSSSSSSSSSSSSSS
+ 
+ @c TTTTTTTTTTTTTTTTTTTTTTTTTT
+diff --git a/gas/testsuite/gas/aarch64/diagnostic.l b/gas/testsuite/gas/aarch64/diagnostic.l
+index b749d2edfe..cd3ce9931c 100644
+--- a/gas/testsuite/gas/aarch64/diagnostic.l
++++ b/gas/testsuite/gas/aarch64/diagnostic.l
+@@ -172,3 +172,7 @@
+ [^:]*:295: Error: invalid use of 'MUL' at operand 4 -- `orr x0,x0,#0xff,mul#1'
+ [^:]*:296: Error: invalid use of 'MUL' at operand 4 -- `orr x0,x0,#0xfe,mul#255'
+ [^:]*:297: Error: invalid use of 'MUL' at operand 4 -- `orr x0,x0,#0xfc,mul#256'
++[^:]*:299: Warning: ignoring redefinition of register alias 'ip0'
++[^:]*:300: Warning: ignoring redefinition of register alias 'ip1'
++[^:]*:301: Warning: ignoring redefinition of register alias 'lr'
++[^:]*:302: Warning: ignoring redefinition of register alias 'fp'
+diff --git a/gas/testsuite/gas/aarch64/diagnostic.s b/gas/testsuite/gas/aarch64/diagnostic.s
+index 09126e623e..12e85040d3 100644
+--- a/gas/testsuite/gas/aarch64/diagnostic.s
++++ b/gas/testsuite/gas/aarch64/diagnostic.s
+@@ -295,3 +295,8 @@
+ 	orr	x0, x0, #0xff, mul #1
+ 	orr	x0, x0, #0xfe, mul #255
+ 	orr	x0, x0, #0xfc, mul #256
++
++	ip0 	.req 	x0
++	ip1	.req 	x1
++	lr	.req 	x2
++	fp	.req 	x3
+diff --git a/gas/testsuite/gas/aarch64/register_aliases.d b/gas/testsuite/gas/aarch64/register_aliases.d
+new file mode 100644
+index 0000000000..677d5f0752
+--- /dev/null
++++ b/gas/testsuite/gas/aarch64/register_aliases.d
+@@ -0,0 +1,10 @@
++#objdump: -dr
++
++.*:     file format .*
++
++Disassembly of section \.text:
++
++0+ <.*>:
++   0:	8b1e0210 	add	x16, x16, x30
++   4:	f90003b0 	str	x16, \[x29\]
++   8:	f94003b1 	ldr	x17, \[x29\]
+\ No newline at end of file
+diff --git a/gas/testsuite/gas/aarch64/register_aliases.s b/gas/testsuite/gas/aarch64/register_aliases.s
+new file mode 100644
+index 0000000000..5864283881
+--- /dev/null
++++ b/gas/testsuite/gas/aarch64/register_aliases.s
+@@ -0,0 +1,9 @@
++	# test register aliases.
++	lr	.req 	x30
++	fp 	.req 	x29
++	ip0	.req 	x16
++	ip1	.req 	x17
++	add	ip0, ip0, lr
++	str 	ip0, [fp]
++	ldr	ip1, [fp]
++
+
+commit 9c57787409e0af06a959ca2c841f83da4abc151d
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Wed Aug 16 00:18:01 2017 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index ee21d58f1f..28fedf8e0c 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20170814
++#define BFD_VERSION_DATE 20170816
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit fb355cc351b9275c4672cfd774f330f642438ec7
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Thu Aug 17 00:02:46 2017 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 28fedf8e0c..63c8f21433 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20170816
++#define BFD_VERSION_DATE 20170817
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 6f0f222468cd8cf23cbe2458be233c553842a568
+Author: Szabolcs Nagy <szabolcs.nagy@arm.com>
+Date:   Tue Jul 4 15:43:59 2017 +0100
+
+    [AArch64] Fix PR18841 ifunc relocation ordering
+    
+    In order to get the ifunc relocs properly sorted the correct class
+    needs to be returned.  The code mimics what has been done for x86.
+    
+    Fixes
+    FAIL: Run pr18841 with libpr18841c.so
+    
+    bfd/
+            PR ld/18841
+            * elfnn-aarch64.c (elfNN_aarch64_reloc_type_class): Return
+            reloc_class_ifunc for ifunc symbols.
+
+diff --git a/bfd/ChangeLog b/bfd/ChangeLog
+index 078dc43acd..497bcbc066 100644
+--- a/bfd/ChangeLog
++++ b/bfd/ChangeLog
+@@ -1,3 +1,9 @@
++2017-08-17  Szabolcs Nagy  <szabolcs.nagy@arm.com>
++
++	PR ld/18841
++	* elfnn-aarch64.c (elfNN_aarch64_reloc_type_class): Return
++	reloc_class_ifunc for ifunc symbols.
++
+ 2017-08-11  Nick Clifton  <nickc@redhat.com>
+ 
+ 	PR 21884
+diff --git a/bfd/elfnn-aarch64.c b/bfd/elfnn-aarch64.c
+index 86bae0eaa8..18db07f8a5 100644
+--- a/bfd/elfnn-aarch64.c
++++ b/bfd/elfnn-aarch64.c
+@@ -7634,8 +7634,39 @@ elfNN_aarch64_reloc_type_class (const struct bfd_link_info *info ATTRIBUTE_UNUSE
+ 				const asection *rel_sec ATTRIBUTE_UNUSED,
+ 				const Elf_Internal_Rela *rela)
+ {
++  struct elf_aarch64_link_hash_table *htab = elf_aarch64_hash_table (info);
++
++  if (htab->root.dynsym != NULL
++      && htab->root.dynsym->contents != NULL)
++    {
++      /* Check relocation against STT_GNU_IFUNC symbol if there are
++	 dynamic symbols.  */
++      bfd *abfd = info->output_bfd;
++      const struct elf_backend_data *bed = get_elf_backend_data (abfd);
++      unsigned long r_symndx = ELFNN_R_SYM (rela->r_info);
++      if (r_symndx != STN_UNDEF)
++	{
++	  Elf_Internal_Sym sym;
++	  if (!bed->s->swap_symbol_in (abfd,
++				       (htab->root.dynsym->contents
++					+ r_symndx * bed->s->sizeof_sym),
++				       0, &sym))
++	    {
++	      /* xgettext:c-format */
++	      _bfd_error_handler (_("%B symbol number %lu references"
++				    " nonexistent SHT_SYMTAB_SHNDX section"),
++				    abfd, r_symndx);
++	      /* Ideally an error class should be returned here.  */
++	    }
++	  else if (ELF_ST_TYPE (sym.st_info) == STT_GNU_IFUNC)
++	    return reloc_class_ifunc;
++	}
++    }
++
+   switch ((int) ELFNN_R_TYPE (rela->r_info))
+     {
++    case AARCH64_R (IRELATIVE):
++      return reloc_class_ifunc;
+     case AARCH64_R (RELATIVE):
+       return reloc_class_relative;
+     case AARCH64_R (JUMP_SLOT):
+
+commit ba07ff68716d6e764aceca140b9a0a50f9d8d667
+Author: Szabolcs Nagy <szabolcs.nagy@arm.com>
+Date:   Thu Aug 17 14:48:03 2017 +0100
+
+    [AArch64] Skip IFUNC relocations in debug sections
+    
+    Skip IFUNC relocations in debug sections ignored by ld.so.
+    Fixes the following ld test failures on aarch64:
+    
+    FAIL: Build libpr18808.so
+    FAIL: Build libpr18808.so_2
+    FAIL: Run pr18808
+    
+    aborting at bfd/elfnn-aarch64.c:4986 in elf64_aarch64_final_link_relocate.
+    
+    bfd/
+            PR ld/18808
+            * elfnn-aarch64.c (elfNN_aarch64_final_link_relocate): Skip IFUNC
+            relocations in debug sections, change abort to _bfd_error_handler.
+
+diff --git a/bfd/ChangeLog b/bfd/ChangeLog
+index 497bcbc066..bb40871af2 100644
+--- a/bfd/ChangeLog
++++ b/bfd/ChangeLog
+@@ -1,5 +1,11 @@
+ 2017-08-17  Szabolcs Nagy  <szabolcs.nagy@arm.com>
+ 
++	PR ld/18808
++	* elfnn-aarch64.c (elfNN_aarch64_final_link_relocate): Skip IFUNC
++	relocations in debug sections, change abort to _bfd_error_handler.
++
++2017-08-17  Szabolcs Nagy  <szabolcs.nagy@arm.com>
++
+ 	PR ld/18841
+ 	* elfnn-aarch64.c (elfNN_aarch64_reloc_type_class): Return
+ 	reloc_class_ifunc for ifunc symbols.
+diff --git a/bfd/elfnn-aarch64.c b/bfd/elfnn-aarch64.c
+index 18db07f8a5..74beaf4f95 100644
+--- a/bfd/elfnn-aarch64.c
++++ b/bfd/elfnn-aarch64.c
+@@ -4981,9 +4981,27 @@ elfNN_aarch64_final_link_relocate (reloc_howto_type *howto,
+       const char *name;
+       bfd_vma addend = 0;
+ 
+-      if ((input_section->flags & SEC_ALLOC) == 0
+-	  || h->plt.offset == (bfd_vma) -1)
+-	abort ();
++      if ((input_section->flags & SEC_ALLOC) == 0)
++	{
++	  /* Dynamic relocs are not propagated for SEC_DEBUGGING
++	     sections because such sections are not SEC_ALLOC and
++	     thus ld.so will not process them.  */
++	  if ((input_section->flags & SEC_DEBUGGING) != 0)
++	    return bfd_reloc_ok;
++
++	  if (h->root.root.string)
++	    name = h->root.root.string;
++	  else
++	    name = bfd_elf_sym_name (input_bfd, symtab_hdr, sym, NULL);
++	  _bfd_error_handler
++	    /* xgettext:c-format */
++	    (_("%B(%A+%#Lx): unresolvable %s relocation against symbol `%s'"),
++	     input_bfd, input_section, rel->r_offset, howto->name, name);
++	  bfd_set_error (bfd_error_bad_value);
++	  return FALSE;
++	}
++      else if (h->plt.offset == (bfd_vma) -1)
++	goto bad_ifunc_reloc;
+ 
+       /* STT_GNU_IFUNC symbol must go through PLT.  */
+       plt = globals->root.splt ? globals->root.splt : globals->root.iplt;
+@@ -4992,6 +5010,7 @@ elfNN_aarch64_final_link_relocate (reloc_howto_type *howto,
+       switch (bfd_r_type)
+ 	{
+ 	default:
++bad_ifunc_reloc:
+ 	  if (h->root.root.string)
+ 	    name = h->root.root.string;
+ 	  else
