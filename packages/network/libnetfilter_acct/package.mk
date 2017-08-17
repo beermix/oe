@@ -4,6 +4,6 @@ PKG_URL="ftp://ftp.netfilter.org/pub/${PKG_NAME}/${PKG_NAME}-${PKG_VERSION}.tar.
 PKG_DEPENDS_TARGET="toolchain libnfnetlink libnl" 
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static"
+#PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static"
