@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libzen"
-PKG_VERSION="0.4.33"
+PKG_VERSION="0.4.36"
 PKG_SITE="http://mediaarea.net/en/MediaInfo/"
 PKG_URL="http://mediaarea.net/download/source/libzen/$PKG_VERSION/libzen_$PKG_VERSION.tar.bz2"
 PKG_SOURCE_DIR="ZenLib"

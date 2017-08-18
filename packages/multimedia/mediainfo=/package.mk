@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="mediainfo"
-PKG_VERSION="0.7.83"
+PKG_VERSION="0.7.98"
 PKG_SITE="http://mediaarea.net/en/MediaInfo/Download/Source"
 PKG_URL="http://mediaarea.net/download/source/mediainfo/$PKG_VERSION/mediainfo_$PKG_VERSION.tar.bz2"
 PKG_SOURCE_DIR="MediaInfo"
