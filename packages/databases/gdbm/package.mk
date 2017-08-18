@@ -6,7 +6,8 @@ PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared --with-pic"
+PKG_CONFIGURE_OPTS_TARGET="--enable-libgdbm-compat"
+PKG_CONFIGURE_OPTS_HOST="--enable-libgdbm-compat"
 
 post_makeinstall_target() {
   rm -rf $INSTALL
