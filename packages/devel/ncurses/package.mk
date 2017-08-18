@@ -40,25 +40,31 @@ PKG_CONFIGURE_OPTS_HOST="--without-cxx \
 			    --without-profile \
 			    --without-curses-h"
 
-PKG_CONFIGURE_OPTS_TARGET="--with-shared \
-			      --with-normal \
-			      --without-debug \
-			      --without-ada \
-			      --enable-widec \
-			      --enable-static \
+PKG_CONFIGURE_OPTS_TARGET="--enable-echo \
+			      --enable-const \
+			      --enable-overwrite \
 			      --enable-pc-files \
+			      --disable-rpath \
+			      --without-ada \
+			      --without-debug \
 			      --without-manpages \
+			      --without-profile \
+			      --with-progs \
 			      --without-tests \
-			      --enable-termcap \
-                           --enable-getcap \
-                           --enable-getcap-cache \
-                           --enable-symlinks \
-                           --enable-tinfo \
+			      --disable-big-core \
+			      --disable-home-terminfo \
+			      --with-normal \
+			      --with-shared \
+			      --enable-static \
+			      --with-terminfo-dirs=/usr/share/terminfo \
+			      --with-default-terminfo-dir=/usr/share/terminfo \
+			      --enable-widec \
 			      --with-pkg-config-libdir=/usr/lib/pkgconfig"
 
 pre_configure_target() {
   # causes some segmentation fault's (dialog) when compiled with gcc's link time optimization.
   strip_lto
+  export CPPFLAGS="$CPPFLAGS -D_GNU_SOURCE"
 }
 
 post_makeinstall_target() {
