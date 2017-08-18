@@ -1,8 +1,6 @@
 PKG_NAME="mc"
-#PKG_VERSION="4.8.19"
-#PKG_URL="http://ftp.midnight-commander.org/${PKG_NAME}-${PKG_VERSION}.tar.xz"
-PKG_VERSION="5d14225"
-PKG_GIT_URL="git://github.com/MidnightCommander/mc.git"
+PKG_VERSION="4.8.19"
+PKG_URL="http://ftp.midnight-commander.org/${PKG_NAME}-${PKG_VERSION}.tar.xz"
 PKG_DEPENDS_TARGET="toolchain libtool:host gettext:host e2fsprogs util-linux glib pcre fuse libssh2 libevent expat slang"
 PKG_SECTION="tools"
 PKG_AUTORECONF="yes"
@@ -29,16 +27,18 @@ PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config \
                            --disable-silent-rules \
                            --enable-charset \
                            --enable-largefile \
+                           --without-gpm-mouse \
+                           --with-screen=slang \
                            --enable-vfs-tar \
                            --enable-vfs-extfs \
                            --enable-vfs-cpio \
-                           --disable-vfs-smb \
+                           --enable-vfs-smb \
                            --enable-vfs-ftp \
                            --enable-vfs-sftp \
-                           --without-gpm-mouse \
-                           --with-screen=slang \
+                           --enable-vfs-undelfs \
                            --with-gnu-ld \
-                           --with-pcre=$SYSROOT_PREFIX/usr \
+                           --with-pcre=$SYSROOT_PREFIX\
+                           --with-sysroot=$SYSROOT_PREFIX \
                            --enable-static \
                            --disable-shared \
                            --disable-rpath \

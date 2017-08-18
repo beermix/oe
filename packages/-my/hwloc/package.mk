@@ -10,11 +10,10 @@ pre_configure_target() {
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
-			      --enable-static \
 			      --without-x \
 			      --disable-cuda \
 			      --disable-nvml \
-			      --enable-plugins \
+			      --disable-plugins \
 			      --enable-pci \
 			      --with-gnu-ld"
 			      

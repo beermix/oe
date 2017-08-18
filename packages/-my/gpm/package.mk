@@ -7,11 +7,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 pre_configure_target() {
-   sh autogen.sh
+   NOCONFIGURE=1 ./autogen.sh
+   strip_hard
 }
 
-PKG_CONFIGURE_OPTS_TARGET="ac_cv_path_emacs=no \
-			      itz_cv_sys_elf=yes \
-			      --without-curses \
-			      --enable-static \
-			      --disable-shared"
