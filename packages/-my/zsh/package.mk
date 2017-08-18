@@ -19,7 +19,7 @@ PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
 			      --disable-ansi2knr \
 			      --disable-dynamic \
 			      --sysconfdir=/storage/.config \
-			      --with-term-lib=ncursesw \
+			      --with-term-lib=ncurses \
 			      --disable-etcdir \
 			      --enable-function-subdirs \
 			      --with-tcsetpgrp \

@@ -30,4 +30,4 @@ PKG_LONGDESC="A full-featured and high-performance event loop that is loosely mo
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static --with-pic"
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static --with-gnu-ld --with-pic"
