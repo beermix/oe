@@ -3,7 +3,7 @@ PKG_VERSION="54e7c39"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/NilsBrause/waylandpp"
-PKG_URL="https://github.com/pkerling/waylandpp/archive/$PKG_VERSION.tar.gz"
+PKG_GIT_URL="https://github.com/pkerling/waylandpp"
 PKG_DEPENDS_TARGET="toolchain scons:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="wayland"
@@ -14,9 +14,9 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 pre_make_host() {
-  mkdir -p $PKG_BUILD/.$HOST_NAME
-    cp -a $PKG_BUILD/* $PKG_BUILD/.$HOST_NAME/
-    cd $PKG_BUILD/.$HOST_NAME/
+  mkdir -p $ROOT/$PKG_BUILD/.$HOST_NAME
+    cp -a $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$HOST_NAME/
+    cd $ROOT/$PKG_BUILD/.$HOST_NAME/
 }
 
 make_host() {
@@ -29,9 +29,9 @@ makeinstall_host() {
 }
 
 pre_make_target() {
-  mkdir -p $PKG_BUILD/.$TARGET_NAME
-    cp -a $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME/
-    cd $PKG_BUILD/.$TARGET_NAME/
+  mkdir -p $ROOT/$PKG_BUILD/.$TARGET_NAME
+    cp -a $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$TARGET_NAME/
+    cd $ROOT/$PKG_BUILD/.$TARGET_NAME/
 }
 
 make_target() {

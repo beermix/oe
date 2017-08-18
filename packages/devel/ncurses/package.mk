@@ -31,24 +31,15 @@ PKG_LONGDESC="The ncurses (new curses) library is a free software emulation of c
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-echo \
-                           --enable-const \
-                           --enable-overwrite \
-                           --enable-pc-files \
-                           --disable-rpath \
-                           --without-ada \
-                           --without-debug \
-                           --without-manpages \
-                           --with-profile \
-                           --with-progs \
-                           --without-tests \
-                           --enable-big-core \
-                           --enable-home-terminfo \
+PKG_CONFIGURE_OPTS_TARGET="--with-shared \
                            --with-normal \
-                           --with-shared \
-                           --with-fallbacks=linux,screen,xterm,xterm-256color \
-                           --with-pkg-config-libdir=/usr/lib/pkgconfig \
-                           --disable-widec"
+                           --without-debug \
+                           --without-ada \
+                           --enable-widec \
+                           --enable-pc-files \
+                           --with-cxx-binding \
+                           --with-cxx-shared \
+                           --with-pkg-config-libdir=/usr/lib/pkgconfig"
 
 pre_configure_target() {
   # causes some segmentation fault's (dialog) when compiled with gcc's link time optimization.
@@ -62,6 +53,11 @@ post_makeinstall_target() {
   cp misc/ncurses-config $ROOT/$TOOLCHAIN/bin
   chmod +x $ROOT/$TOOLCHAIN/bin/ncurses-config
   $SED "s:\(['=\" ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" $ROOT/$TOOLCHAIN/bin/ncurses-config
+  
+  echo "INPUT(-l${lib}w)" > "$pkgdir"/usr/lib/lib${lib}.so
+  ln -s ${lib}w.pc "$pkgdir"/usr/lib/pkgconfig/${lib}.pc
+  echo "INPUT(-lncursesw)" > "$pkgdir"/usr/lib/libcursesw.so
+  ln -s libncurses.so "$pkgdir"/usr/lib/libcurses.so
 
   rm -rf $INSTALL/usr/bin/ncurses*-config
 }
