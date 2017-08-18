@@ -37,8 +37,8 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-rpath \
                            --disable-cpplibs \
                            --disable-xmms-plugin \
                            --disable-oggtest \
-                           --with-ogg=$SYSROOT_PREFIX/usr \
-                           --disable-shared --with-gnu-ld"
+                           --enable-static --enable-shared \
+                           --with-ogg=$SYSROOT_PREFIX/usr"
 
 if [ $TARGET_ARCH = "x86_64" ]; then
   PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET --enable-sse"

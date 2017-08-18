@@ -33,7 +33,8 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
                            --enable-static \
                            --datadir=/usr/share \
                            --enable-fftw \
-                           --disable-sndfile"
+                           --enable-sndfile \
+                           --with-gnu-ld"
                            
 pre_configure_target() {
   export CFLAGS+=" -fPIC -DPIC"
