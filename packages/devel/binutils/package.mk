@@ -54,7 +54,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
 
 makeinstall_host() {
   cp -v ../include/libiberty.h $SYSROOT_PREFIX/usr/include
-  make install
+  make install -j1
 }
 
 #pre_configure_host() {
