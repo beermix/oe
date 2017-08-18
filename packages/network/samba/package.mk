@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="samba"
-PKG_VERSION="4.7.0rc4"
+PKG_VERSION="4.6.7"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv3+"
 PKG_SITE="http://www.samba.org"
-PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="https://download.samba.org/pub/samba/stable/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain heimdal:host e2fsprogs Python zlib readline popt libaio connman"
 PKG_PRIORITY="optional"
 PKG_SECTION="network"
@@ -88,6 +88,7 @@ PKG_CONFIGURE_OPTS="--prefix=/usr \
                     --enable-auto-reconfigure \
                     --bundled-libraries='ALL,!asn1_compile,!compile_et,!zlib' \
                     --without-quotas \
+                    --without-dmapi \
                     --with-syslog  \
                     --nopyc --nopyo"
 
