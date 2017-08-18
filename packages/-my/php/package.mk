@@ -32,8 +32,6 @@ post_unpack() {
 configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
-  strip_lto
-  strip_gold
 
   # Dynamic Library support
   export LDFLAGS="$LDFLAGS -ldl -lpthread -lstdc++"
@@ -49,7 +47,7 @@ configure_target() {
                              --enable-cgi \
                              --with-config-file-path=/storage/.config/php \
                              --enable-opcache=no \
-                             --with-pear \
+                             --without-pear \
                              --localstatedir=/var \
                              --enable-sockets \
                              --enable-session \
@@ -82,6 +80,7 @@ configure_target() {
                              --enable-filter \
                              --enable-calendar \
                              --with-pcre-regex \
+                             --with-sqlite3=$SYSROOT_PREFIX/usr \
                              --with-mysql=$SYSROOT_PREFIX/usr \
                              --with-mysql-sock=/tmp/mysql.sock \
                              --with-gd \
