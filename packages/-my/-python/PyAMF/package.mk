@@ -4,12 +4,14 @@
 ################################################################################
 
 PKG_NAME="PyAMF"
-PKG_VERSION="0.7.2"
+PKG_VERSION="0.8.0"
+#PKG_VERSION="0.7.2"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://pypi.python.org/packages/source/P/PyAMF/"
-PKG_URL="http://pypi.python.org/packages/source/P/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.gz"
+#PKG_URL="http://pypi.python.org/packages/source/P/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_URL="https://pypi.python.org/packages/a0/06/43976c0e3951b9bf7ba0d7d614a8e3e024eb5a1c6acecc9073b81c94fb52/PyAMF-0.8.0.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="xmedia/torrent"
@@ -23,7 +25,7 @@ make_target() {
 }
 
 makeinstall_target() {
-  python setup.py install --root=$INSTALL --prefix=/usr --optimize=1
+  python setup.py install --root=$INSTALL --prefix=/usr
 }
 
 post_makeinstall_target() {

@@ -34,7 +34,7 @@ post_unpack() {
 
 PKG_CONFIGURE_OPTS_HOST="--disable-debug \
 			    --enable-release \
-			    --disable-shared \
+			    --enable-shared \
 			    --enable-static \
 			    --enable-draft \
 			    --enable-renaming \
@@ -44,7 +44,7 @@ PKG_CONFIGURE_OPTS_HOST="--disable-debug \
 			   
 PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
 			      --enable-release \
-			      --disable-shared \
+			      --enable-shared \
 			      --enable-static \
 			      --enable-draft \
 			      --enable-renaming \
@@ -56,12 +56,12 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
 			      --disable-samples \
 			      --with-cross-build=$ROOT/$PKG_BUILD/.$HOST_NAME"
 
-#post_makeinstall_target() {
-#  rm -rf $INSTALL/usr/lib/icu
-#  rm -rf $INSTALL/usr/bin
-#  rm -rf $INSTALL/usr/share
-#}
-
 post_makeinstall_target() {
-  rm -rf $INSTALL
+  rm -rf $INSTALL/usr/lib/icu
+  #rm -rf $INSTALL/usr/bin
+  rm -rf $INSTALL/usr/share
 }
+
+#post_makeinstall_target() {
+#  rm -rf $INSTALL
+#}
