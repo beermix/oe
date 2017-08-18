@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libconfuse"
-PKG_VERSION="v3.0"
+PKG_VERSION="v3.2"
 PKG_SITE="https://github.com/martinh/libconfuse"
 PKG_GIT_URL="https://github.com/martinh/libconfuse"
 PKG_DEPENDS_TARGET="toolchain"
