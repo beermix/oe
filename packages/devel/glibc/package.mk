@@ -59,7 +59,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
 NSS_CONF_DIR="$ROOT/$PKG_BUILD/nss"
 
 pre_build_target() {
-  cd $PKG_BUILD
+  cd $ROOT/$PKG_BUILD
     aclocal --force --verbose
     autoconf --force --verbose
   cd -
