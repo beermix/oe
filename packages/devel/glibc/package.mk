@@ -14,7 +14,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################ --enable-stack-protector=strong \
+################################################################################
 
 PKG_NAME="glibc"
 PKG_VERSION="2.26"
@@ -38,6 +38,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --disable-profile \
                            --disable-sanity-checks \
                            --enable-add-ons \
+                           --enable-stack-protector=strong \
                            --enable-bind-now \
                            --with-elf \
                            --with-tls \
@@ -55,7 +56,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --disable-timezone-tools \
                            --disable-debug"
 
-NSS_CONF_DIR="$PKG_BUILD/nss"
+NSS_CONF_DIR="$ROOT/$PKG_BUILD/nss"
 
 pre_build_target() {
   cd $PKG_BUILD
@@ -78,6 +79,7 @@ pre_configure_target() {
   export CFLAGS=`echo $CFLAGS | sed -e "s|-Ofast|-O2|g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O2|g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong||g"`
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong -fno-plt||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
   export CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
 
@@ -95,13 +97,12 @@ pre_configure_target() {
 
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--as-needed||g"`
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed||"`
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now||"`
 
   unset LD_LIBRARY_PATH
 
-  # set some CFLAGS we need
-  export CFLAGS="$CFLAGS -g -fno-stack-protector"
-
-  export BUILD_CC=$HOST_CC
+# set some CFLAGS we need
+  export CFLAGS="-march=x86-64 -mtune=generic -O2 -g"
   export OBJDUMP_FOR_HOST=objdump
 
 cat >config.cache <<EOF

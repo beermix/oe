@@ -49,7 +49,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --disable-gdb \
                          --disable-sim \
                          --enable-relro \
-                         --enable-deterministic-archives \
+                         --disable-deterministic-archives \
                          --enable-poison-system-directories"
 
 makeinstall_host() {
@@ -57,6 +57,6 @@ makeinstall_host() {
   make install -j1
 }
 
-#pre_configure_host() {
-#  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $ROOT/$PKG_BUILD/libiberty/configure
-#}
+pre_configure_host() {
+  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $ROOT/$PKG_BUILD/libiberty/configure
+}

@@ -18,11 +18,9 @@
 
 PKG_NAME="ncurses"
 PKG_VERSION="6.0-20170812"
-#PKG_VERSION="6.0"
 PKG_REV="1"
 PKG_SITE="http://invisible-mirror.net/archives/ncurses/current/?C=M;O=D"
 PKG_URL="http://invisible-mirror.net/archives/ncurses/current/ncurses-$PKG_VERSION.tgz"
-#PKG_URL="http://invisible-mirror.net/archives/ncurses/ncurses-6.0.tar.gz"
 PKG_DEPENDS_TARGET="toolchain zlib"
 PKG_SECTION="devel"
 PKG_SHORTDESC="ncurses: The ncurses (new curses) library"
