@@ -55,7 +55,7 @@ PKG_CONFIGURE_OPTS_TARGET="--with-progs --with-shared --enable-static \
 			      --enable-colorfgbg \
 			      --with-ticlib \
 			      --with-termlib \
-			      --without-curses-h \
+			      --with-curses-h \
 			      --enable-pc-files \
 			      --enable-widec \
 			      --with-pkg-config-libdir=/usr/lib/pkgconfig"

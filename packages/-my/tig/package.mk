@@ -7,9 +7,9 @@ PKG_AUTORECONF="yes"
 
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
-  CONCURRENCY_MAKE_LEVEL=1
-  CFLAGS="$CFLAGS -static"
-  CXXFLAGS="$CXXFLAGS -static"
+  #CONCURRENCY_MAKE_LEVEL=1
+  CFLAGS="$CFLAGS -fPIC -DPIC -static"
+  CXXFLAGS="$CXXFLAGS -fPIC -DPIC -static"
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config \
@@ -22,5 +22,4 @@ PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config \
 			      --oldincludedir=/storage/.config \
 			      --datarootdir=/storage/.config \
 			      --infodir=/storage/.config \     
-			      --localedir=/storage/.config \
-			      --with-ncursesw"
+			      --localedir=/storage/.config"
