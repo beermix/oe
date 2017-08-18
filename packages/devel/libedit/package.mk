@@ -5,17 +5,9 @@ PKG_DEPENDS_TARGET="toolchain ncurses"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC"
-  export LIBS="$LIBS -lncursesw -ltinfo"
-}
+#export LIBS="$LIBS -lncursesw -ltinfo"
 
-pre_configure_host() {
-  export CFLAGS="$CFLAGS -fPIC"
-  export LIBS="$LIBS -lncursesw -ltinfo"
-}
-
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared"
+PKG_CONFIGURE_OPTS_TARGET="--enable-widec --disable-shared --with-pic --with-gnu-ld"
 
 PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
 
