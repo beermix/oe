@@ -45,8 +45,8 @@ PKG_CONFIGURE_OPTS_TARGET="--with-shared \
 pre_configure_target() {
   # causes some segmentation fault's (dialog) when compiled with gcc's link time optimization.
   strip_lto
-  #export CFLAGS=`echo $CFLAGS | sed -e "s|-fomit-frame-pointer||g"`
-  #export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-fomit-frame-pointer||g"`
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-fomit-frame-pointer||g"`
+  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-fomit-frame-pointer||g"`
 }
 
 post_makeinstall_target() {
@@ -56,8 +56,8 @@ post_makeinstall_target() {
   
   ln -sfv ncursesw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/ncurses.pc
   
-  echo "INPUT(-l$ncursesw)" > $INSTALL/usr/lib/libncurses.so
-  echo "INPUT(-l$ncursesw)" > $SYSROOT_PREFIX/usr/lib/libncurses.so
+  echo "INPUT(-lncursesw)" > $INSTALL/usr/lib/libncurses.so
+  echo "INPUT(-lncursesw)" > $SYSROOT_PREFIX/usr/lib/libncurses.so
   
   echo "INPUT(-lncursesw)" > $INSTALL/usr/lib/libcursesw.so
   echo "INPUT(-lncursesw)" > $SYSROOT_PREFIX/usr/lib/libcursesw.so

@@ -56,7 +56,7 @@ pre_configure_target() {
 
 configure_target() {
   cd $ROOT/$PKG_BUILD/.$TARGET_NAME
-  ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 -DL_ENDIAN -Wall $CFLAGS -Wa,--noexecstack
+  ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 -DL_ENDIAN -Wall $CFLAGS $CPPLAGS -Wa,--noexecstack
 }
 
 makeinstall_target() {
