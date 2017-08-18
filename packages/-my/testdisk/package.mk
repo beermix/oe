@@ -6,13 +6,6 @@ PKG_DEPENDS_TARGET="toolchain readline netbsd-curses"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-CONCURRENCY_MAKE_LEVEL=1
-
-pre_configure_target() {
-  strip_lto
-  strip_gold
-}
-
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared" 
 
 
