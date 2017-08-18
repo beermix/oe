@@ -30,6 +30,6 @@ PKG_LONGDESC="The libffi library provides a portable, high level programming int
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared --disable-debug --with-pic --with-gnu-ld --enable-pax_emutramp"
+PKG_CONFIGURE_OPTS_TARGET="--disable-static --enable-pax_emutramp --disable-debug"
                            
 PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"

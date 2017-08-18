@@ -23,7 +23,6 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
 PKG_URL="http://sources.openelec.tv/mirror/jsoncpp/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="jsoncpp"
 PKG_LONGDESC="jsoncpp"
@@ -32,7 +31,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 pre_configure_target() {
-  export CFLAGSi+=" -fPIC"
+  export CFLAGS="$CFLAGS -fPIC"
 }
 
 pre_build_target() {

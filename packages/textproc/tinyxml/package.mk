@@ -21,7 +21,6 @@ PKG_VERSION="2.6.2_2"
 PKG_SITE="http://www.grinninglizard.com/tinyxml/"
 PKG_URL="http://mirrors.xbmc.org/build-deps/sources/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
 PKG_SECTION="textproc"
 PKG_SHORTDESC="tinyxml: XML parser library"
 PKG_LONGDESC="TinyXML is a simple, small, C++ XML parser that can be easily integrating into other programs."
@@ -30,6 +29,10 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --with-pic"
+
+pre_configure_target() {
+  export CFLAGS="$CFLAGS -fPIC"
+}
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr

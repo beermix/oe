@@ -20,14 +20,12 @@ PKG_NAME="libxslt"
 PKG_VERSION="ac341cb"
 PKG_SITE="http://xmlsoft.org/xslt/"
 PKG_GIT_URL="git://git.gnome.org/libxslt"
-PKG_DEPENDS_HOST="toolchain libxml2:host"
+PKG_DEPENDS_HOST="libxml2:host"
 PKG_DEPENDS_TARGET="toolchain libxml2"
 PKG_SECTION="textproc"
 PKG_SHORTDESC="libxslt"
 PKG_LONGDESC="libxslt"
-
-PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_HOST="  ac_cv_header_ansidecl_h=no \
                            --enable-static \

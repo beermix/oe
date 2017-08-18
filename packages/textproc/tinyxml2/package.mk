@@ -23,7 +23,6 @@ PKG_LICENSE="zlib"
 PKG_SITE="http://www.grinninglizard.com/tinyxml2/index.html"
 PKG_URL="http://sources.libreelec.tv/devel/tinyxml2-1.0.12.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
 PKG_SECTION="textproc"
 PKG_SHORTDESC="tinyxml2: XML parser library"
 PKG_LONGDESC="TinyXML2 is a simple, small, C++ XML parser that can be easily integrating into other programs."
@@ -34,7 +33,7 @@ PKG_AUTORECONF="no"
 PKG_CMAKE_OPTS_TARGET="-DBUILD_SHARED_LIBS=off -DBUILD_STATIC_LIBS=on"
 
 pre_configure_target() {
-  export CFLAGS+=" -fPIC"
+  export CFLAGS="$CFLAGS -fPIC"
 }
 
 post_makeinstall_target() {
