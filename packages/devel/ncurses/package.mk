@@ -31,25 +31,35 @@ PKG_LONGDESC="The ncurses (new curses) library is a free software emulation of c
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_HOST="--without-cxx \
+PKG_CONFIGURE_OPTS_HOST="--with-shared \
+			    --without-gpm \
+			    --without-manpages \
+			    --without-cxx \
 			    --without-cxx-binding \
 			    --without-ada \
-			    --without-debug \
-			    --without-manpages \
-			    --without-profile \
-			    --without-tests \
-			    --without-curses-h"
-
+			    --without-normal"
+	
 PKG_CONFIGURE_OPTS_TARGET="--with-progs \
 			      --with-shared \
-			      --enable-static \
-			      --without-manpages \
-			      --with-termlib=tinfo \
-			      --enable-widec \
-			      --enable-ext-colors \
 			      --with-normal \
+			      --without-manpages \
+			      --with-ticlib=tic \
+			      --with-termlib=tinfo \
+			      --with-versioned-syms \
+			      --with-xterm-kbs=del \
+			      --enable-widec \
 			      --without-debug \
+			      --without-cxx \
+			      --without-cxx-binding \
 			      --without-ada \
+			      --without-tests \
+			      --disable-big-core \
+			      --without-profile \
+			      --disable-rpath \
+			      --disable-rpath-hack \
+			      --enable-echo \
+			      --enable-const \
+			      --enable-overwrite \
 			      --enable-pc-files \
 			      --with-pkg-config-libdir=/usr/lib/pkgconfig"
 
