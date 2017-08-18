@@ -73,19 +73,31 @@ post_makeinstall_target() {
   $SED "s:\(['=\" ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" $ROOT/$TOOLCHAIN/bin/ncurses-config
   
   ln -sfv ncursesw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/ncurses.pc
-  ln -sfv panelw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/panel.pc
-  ln -sfv tinfow.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/tinfo.pc
-  ln -sfv formw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/form.pc
-  ln -sfv menu.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/menu.pc
+  #ln -sfv panelw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/panel.pc
+  #ln -sfv tinfow.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/tinfo.pc
+  #ln -sfv formw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/form.pc
+  #ln -sfv menu.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/menu.pc
   
-  echo "INPUT(-lncursesw)" > $INSTALL/usr/lib/libncurses.so
-  echo "INPUT(-lncursesw)" > $SYSROOT_PREFIX/usr/lib/libncurses.so
+  #echo "INPUT(-lncursesw)" > $INSTALL/usr/lib/libncurses.so
+  #echo "INPUT(-lncursesw)" > $SYSROOT_PREFIX/usr/lib/libncurses.so
 
-  echo "INPUT(-lncursesw)" > $INSTALL/usr/lib/libcursesw.so
-  echo "INPUT(-lncursesw)" > $SYSROOT_PREFIX/usr/lib/libcursesw.so
+  #echo "INPUT(-lncursesw)" > $INSTALL/usr/lib/libcursesw.so
+  #echo "INPUT(-lncursesw)" > $SYSROOT_PREFIX/usr/lib/libcursesw.so
 
-  ln -sfv libncurses.so $INSTALL/usr/lib/libcurses.so
-  ln -sfv libncurses.so $SYSROOT_PREFIX/usr/lib/libcurses.so
+  #ln -sfv libncurses.so $INSTALL/usr/lib/libcurses.so
+  #ln -sfv libncurses.so $SYSROOT_PREFIX/usr/lib/libcurses.so
+  
+  ln -sfv libcursesw.so $INSTALL/usr/lib/libcurses.so
+  ln -sfv libformw.so $INSTALL/usr/lib/libform.so
+  ln -sfv libmenuw.so $INSTALL/usr/lib/libmenu.so
+  ln -sfv libncursesw.so $INSTALL/usr/lib/libncurses.so
+  ln -sfv libpanelw.so $INSTALL/usr/lib/libpanel.so
+  
+  ln -sfv libcursesw.so $SYSROOT_PREFIX/usr/lib/libcurses.so
+  ln -sfv libformw.so $SYSROOT_PREFIX/usr/lib/libform.so
+  ln -sfv libmenuw.so $SYSROOT_PREFIX/usr/lib/libmenu.so
+  ln -sfv libncursesw.so $SYSROOT_PREFIX/usr/lib/libncurses.so
+  ln -sfv libpanelw.so $SYSROOT_PREFIX/usr/lib/libpanel.so
   
   rm -rf $INSTALL/usr/bin/ncurses*-config
 }
