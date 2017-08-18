@@ -45,9 +45,7 @@ PKG_CONFIGURE_OPTS_HOST="--without-shared \
                          --without-debug \
                          --without-profile"
 
-PKG_CONFIGURE_OPTS_TARGET="--with-progs \
-			      --enable-static \
-			      --with-shared \
+PKG_CONFIGURE_OPTS_TARGET="--with-progs --with-shared \
 			      --without-manpages \
 			      --without-debug \
 			      --without-ada \
@@ -56,9 +54,6 @@ PKG_CONFIGURE_OPTS_TARGET="--with-progs \
 			      --enable-xmc-glitch \
 			      --enable-colorfgbg \
 			      --with-ticlib \
-			      --with-versioned-syms \
-			      --with-xterm-kbs=del \
-			      --with-termlib=tinfo \
 			      --enable-pc-files \
 			      --enable-widec \
 			      --with-pkg-config-libdir=/usr/lib/pkgconfig"
