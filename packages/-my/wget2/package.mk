@@ -1,5 +1,5 @@
 PKG_NAME="wget2"
-PKG_VERSION="be4a6d3"
+PKG_VERSION="e6d949a"
 PKG_GIT_URL="https://github.com/rockdaboot/wget2"
 PKG_DEPENDS_TARGET="toolchain openssl"
 PKG_SECTION="tools"

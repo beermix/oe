@@ -77,6 +77,12 @@ fi
 PKG_CONFIGURE_OPTS_HOST="--enable-static \
                          --disable-shared \
                          $UTILLINUX_CONFIG_DEFAULT \
+                         --without-slang \
+                         --disable-all-programs \
+                         --without-termcap \
+                         --without-readline \
+                         --without-util \
+                         --without-libz \
                          --enable-uuidgen \
                          --enable-libuuid"
 
