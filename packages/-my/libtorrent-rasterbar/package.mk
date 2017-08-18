@@ -17,10 +17,12 @@ pre_configure_target() {
 
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \
-			      --disable-shared \
-			      --disable-deprecated-functions \
-			      --with-boost-libdir=$SYSROOT_PREFIX/usr/lib \
-			      --disable-geoip \
-			      --disable-silent-rules"
+			     --disable-shared \
+			     --disable-deprecated-functions \
+			     --disable-geoip \
+			     --enable-silent-rules \
+			     --disable-iconv \
+			     --with-gnu-ld 
+			     --with-boost-libdir=$SYSROOT_PREFIX/usr/lib"
 			      
 			      
