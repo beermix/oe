@@ -29,14 +29,12 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 # package specific configure options
-PKG_CONFIGURE_OPTS_TARGET="--disable-dependency-tracking \
-                           --disable-xmlto \
-                           --disable-alsaconf \
-                           --disable-alsaloop \
+PKG_CONFIGURE_OPTS_TARGET="--enable-xmlto \
+                           --enable-alsaconf \
+                           --enable-alsaloop \
                            --enable-alsatest \
                            --disable-bat \
-                           --with-curses=ncursesw \
-                           --disable-nls"
+                           --with-curses=ncursesw"
 
 
 post_makeinstall_target() {
