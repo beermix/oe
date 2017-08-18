@@ -22,20 +22,20 @@ PKG_ARCH="any"
 PKG_SITE="http://xmlsoft.org"
 PKG_GIT_URL="git://git.gnome.org/libxml2"
 PKG_DEPENDS_HOST="zlib:host"
-PKG_DEPENDS_TARGET="toolchain zlib"
+PKG_DEPENDS_TARGET="toolchain zlib libxml2:host"
 PKG_SECTION="textproc"
 PKG_SHORTDESC="libxml: XML parser library for Gnome"
 PKG_LONGDESC="The libxml package contains an XML library, which allows you to manipulate XML files. XML (eXtensible Markup Language) is a data format for structured document interchange via the Web."
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_ALL="ac_cv_header_ansidecl_h=no \
-			  --enable-static \
-			  --enable-shared \
-			  --disable-silent-rules \
-			  --disable-ipv6 \
-			  --without-python \
-			  --with-zlib=$ROOT/$TOOLCHAIN \
-			  --without-lzma"
+             --enable-static \
+             --enable-shared \
+             --enable-silent-rules \
+             --disable-ipv6 \
+             --without-python \
+             --with-zlib=$ROOT/$TOOLCHAIN \
+             --without-lzma"
 
 PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_ALL --with-zlib=$ROOT/$TOOLCHAIN"
 

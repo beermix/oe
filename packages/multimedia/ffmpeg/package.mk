@@ -22,17 +22,10 @@ PKG_AUTORECONF="no"
   get_graphicdrivers
 
 if [ "$VAAPI_SUPPORT" = yes ]; then
-  PKG_DEPENDS_TARGET+=" intel-vaapi-driver libva-utils libvdpau"
+  PKG_DEPENDS_TARGET+=" intel-vaapi-driver libva-utils"
   FFMPEG_VAAPI="--enable-vaapi"
 else
   FFMPEG_VAAPI="--disable-vaapi"
-fi
-
-if [ "$VDPAU_SUPPORT" = "yes" -a "$DISPLAYSERVER" = "x11" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libvdpau"
-  FFMPEG_VDPAU="--enable-vdpau"
-else
-  FFMPEG_VDPAU="--disable-vdpau"
 fi
 
 if [ "$DEBUG" = yes ]; then
@@ -133,8 +126,8 @@ configure_target() {
               --enable-mdct \
               --enable-rdft \
               --disable-crystalhd \
-              $FFMPEG_VAAPI \
-              $FFMPEG_VDPAU \
+              --enable-vaapi \
+              --disable-vdpau \
               --disable-dxva2 \
               --enable-runtime-cpudetect \
               $FFMPEG_TABLES \
