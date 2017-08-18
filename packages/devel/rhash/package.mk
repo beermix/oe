@@ -10,7 +10,7 @@ PKG_AUTORECONF="no"
 pre_configure_host() {
   cd $ROOT/$PKG_BUILD
 
-  export CFLAGS="$CFLAGS -DUSE_GETTEXT -Wall"
+  export CFLAGS="$CFLAGS -DUSE_GETTEXT -Wall -fPIC"
   export HOST_CC="gcc"
   export HOST_CXX="g++"
   export HOSTCC="$HOST_CC"
