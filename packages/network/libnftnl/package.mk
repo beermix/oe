@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="libnftnl"
-PKG_VERSION="1.0.7"
+PKG_VERSION="20170818"
 PKG_SITE="http://netfilter.org/projects/libnftnl"
-PKG_URL="http://netfilter.org/projects/libnftnl/files/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_URL="ftp://ftp.netfilter.org/pub/libnftnl/snapshot/libnftnl-20170818.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain libmnl"
 PKG_SECTION="network"
 PKG_SHORTDESC="libnftnl: a userspace library providing a low-level netlink programming interface (API) to the in-kernel nf_tables subsystem."
