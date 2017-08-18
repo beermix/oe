@@ -75,6 +75,7 @@ post_makeinstall_target() {
   ln -sfv formw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/form.pc
   ln -sfv menuw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/menu.pc
   ln -sfv ticw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/tic.pc
+  ln -sfv tinfow.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/tinfo.pc
   
   #echo "INPUT(-lncursesw)" > $INSTALL/usr/lib/libncurses.so
   #echo "INPUT(-lncursesw)" > $SYSROOT_PREFIX/usr/lib/libncurses.so
@@ -91,6 +92,8 @@ post_makeinstall_target() {
   ln -sfv libncursesw.so $INSTALL/usr/lib/libncurses.so
   ln -sfv libpanelw.so $INSTALL/usr/lib/libpanel.so
   ln -sfv ticw.so $INSTALL/usr/lib/tic.so
+  ln -sfv libtinfow.so $INSTALL/usr/lib/libtinfo.so
+  
   
   ln -sfv libcursesw.so $SYSROOT_PREFIX/usr/lib/libcurses.so
   ln -sfv libformw.so $SYSROOT_PREFIX/usr/lib/libform.so
@@ -98,6 +101,7 @@ post_makeinstall_target() {
   ln -sfv libncursesw.so $SYSROOT_PREFIX/usr/lib/libncurses.so
   ln -sfv libpanelw.so $SYSROOT_PREFIX/usr/lib/libpanel.so
   ln -sfv ticw.so $SYSROOT_PREFIX/usr/lib/tic.so
+  ln -sfv libtinfow.so $SYSROOT_PREFIX/usr/lib/libtinfo.so
   
   rm -rf $INSTALL/usr/bin/ncurses*-config
 }
