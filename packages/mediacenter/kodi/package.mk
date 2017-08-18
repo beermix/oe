@@ -66,7 +66,9 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$ROOT/$TOOLCHAIN \
                        -DENABLE_LIBUSB=OFF \
                        -DENABLE_UDEV=ON \
                        -DENABLE_XSLT=ON \
-                       -DENABLE_DBUS=ON"
+                       -DENABLE_DBUS=ON \
+                       -D_SSE3_OK=ON \
+                       -D_SSE3_TRUE=ON"
 
 if [ "$TARGET_ARCH" = "x86_64" ]; then
   PKG_CMAKE_OPTS_TARGET+=" -DWITH_CPU=$TARGET_ARCH"
