@@ -5,13 +5,17 @@ PKG_DEPENDS_TARGET="toolchain zlib libevent libpciaccess"
 PKG_SECTION="security"
 PKG_AUTORECONF="yes"
 
+pre_configure_target() {
+  export CFLAGS="$CFLAGS -fPIC"
+}
+
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-static \
 			      --without-x \
 			      --disable-cuda \
 			      --disable-nvml \
+			      --enable-plugins \
 			      --enable-pci \
-			      --with-pic \
 			      --with-gnu-ld"
 			      
 post_makeinstall_target() {

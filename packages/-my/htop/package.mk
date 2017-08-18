@@ -12,11 +12,11 @@ pre_configure_target() {
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-cgroup \
 			      --enable-vserver \
-			      --sysconfdir=/storage/.config/htop \
-			      --datarootdir=/storage/.config/htop \
 			      --disable-silent-rules \
 			      --enable-unicode \
+			      --enable-openvz \
 			      --enable-hwloc \
-			      --enable-proc"
-
-
+			      --enable-proc \
+			      --with-gnu-ld \
+			      --sysconfdir=/storage/.config/htop \
+			      --datarootdir=/storage/.config/htop"
