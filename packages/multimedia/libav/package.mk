@@ -14,7 +14,7 @@ pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
   strip_lto
-  #strip_gold
+  strip_gold
 }
 
 configure_target() {
@@ -75,6 +75,7 @@ configure_target() {
               --enable-vaapi \
               --disable-vdpau \
               --disable-dxva2 \
+              --enable-thumb \
               --enable-runtime-cpudetect \
               --disable-memalign-hack \
               --enable-encoders \
@@ -100,26 +101,7 @@ configure_target() {
               --enable-filters \
               --disable-avisynth \
               --enable-bzlib \
-              --disable-frei0r \
-              --disable-libopencore-amrnb \
-              --disable-libopencore-amrwb \
-              --disable-libopencv \
-              --disable-libdc1394 \
-              --disable-libfreetype \
-              --disable-libgsm \
-              --disable-libmp3lame \
-              --disable-libnut \
-              --disable-libopenjpeg \
-              --disable-librtmp \
-              --disable-libschroedinger \
               --enable-libspeex \
-              --disable-libtheora \
-              --disable-libvo-amrwbenc \
-              --disable-libvorbis \
-              --disable-libvpx \
-              --disable-libx264 \
-              --disable-libxavs \
-              --disable-libxvid \
               --enable-zlib \
               --enable-asm \
               --disable-altivec \
