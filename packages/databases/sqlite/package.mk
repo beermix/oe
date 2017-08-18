@@ -67,4 +67,5 @@ pre_make_target() {
 PKG_CONFIGURE_OPTS_TARGET="--enable-readline \
                            --enable-threadsafe \
                            --enable-dynamic-extensions \
+                           --disable-silent-rules \
                            --with-gnu-ld"

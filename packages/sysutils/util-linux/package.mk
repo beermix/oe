@@ -50,7 +50,6 @@ UTILLINUX_CONFIG_DEFAULT="--disable-gtk-doc \
                           --without-ncurses \
                           --without-readline \
                           --without-ncurses \
-                          --with-readline \
                           --without-tinfo \
                           --without-utempter \
                           --without-user \
