@@ -19,8 +19,12 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            no-rfc3779 \
                            no-ssl2 \
                            no-ssl3 \
+                           no-rc5 \
+                           enable-camellia \
+                           enable-mdc2 \
                            enable-tlsext \
                            enable-unit-test \
+                           zlib-dynamic \
                            enable-ec_nistp_64_gcc_128"
 
 pre_configure_host() {
@@ -48,6 +52,7 @@ pre_configure_target() {
   export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
   export CCACHE_RECACHE=1
   strip_lto
+  strip_gold
 }
 
 configure_target() {
