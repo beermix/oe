@@ -17,10 +17,10 @@
 ################################################################################
 
 PKG_NAME="ncurses"
-PKG_VERSION="6.0-20170812"
+PKG_VERSION="52681a6"
 PKG_REV="1"
 PKG_SITE="http://invisible-mirror.net/archives/ncurses/current/?C=M;O=D"
-PKG_URL="http://invisible-mirror.net/archives/ncurses/current/ncurses-$PKG_VERSION.tgz"
+PKG_GIT_URL="git://anonscm.debian.org/collab-maint/ncurses.git"
 PKG_DEPENDS_TARGET="toolchain zlib"
 PKG_SECTION="devel"
 PKG_SHORTDESC="ncurses: The ncurses (new curses) library"
@@ -45,7 +45,7 @@ PKG_CONFIGURE_OPTS_HOST="--without-shared \
                          --without-debug \
                          --without-profile"
 
-PKG_CONFIGURE_OPTS_TARGET="--with-progs --with-shared \
+PKG_CONFIGURE_OPTS_TARGET="--with-progs --with-shared --enable-static \
 			      --without-manpages \
 			      --without-debug \
 			      --without-ada \
@@ -54,6 +54,8 @@ PKG_CONFIGURE_OPTS_TARGET="--with-progs --with-shared \
 			      --enable-xmc-glitch \
 			      --enable-colorfgbg \
 			      --with-ticlib \
+			      --with-termlib \
+			      --without-curses-h \
 			      --enable-pc-files \
 			      --enable-widec \
 			      --with-pkg-config-libdir=/usr/lib/pkgconfig"
@@ -70,7 +72,6 @@ post_makeinstall_target() {
   
   ln -sfv ncursesw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/ncurses.pc
   ln -sfv panelw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/panel.pc
-  ln -sfv tinfow.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/tinfo.pc
   ln -sfv formw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/form.pc
   ln -sfv menuw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/menu.pc
   ln -sfv ticw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/tic.pc
@@ -89,14 +90,14 @@ post_makeinstall_target() {
   ln -sfv libmenuw.so $INSTALL/usr/lib/libmenu.so
   ln -sfv libncursesw.so $INSTALL/usr/lib/libncurses.so
   ln -sfv libpanelw.so $INSTALL/usr/lib/libpanel.so
-  ln -sfv libticw.so $INSTALL/usr/lib/libtic.so
+  ln -sfv ticw.so $INSTALL/usr/lib/tic.so
   
   ln -sfv libcursesw.so $SYSROOT_PREFIX/usr/lib/libcurses.so
   ln -sfv libformw.so $SYSROOT_PREFIX/usr/lib/libform.so
   ln -sfv libmenuw.so $SYSROOT_PREFIX/usr/lib/libmenu.so
   ln -sfv libncursesw.so $SYSROOT_PREFIX/usr/lib/libncurses.so
   ln -sfv libpanelw.so $SYSROOT_PREFIX/usr/lib/libpanel.so
-  ln -sfv libticw.so $SYSROOT_PREFIX/usr/lib/libtic.so
+  ln -sfv ticw.so $SYSROOT_PREFIX/usr/lib/tic.so
   
   rm -rf $INSTALL/usr/bin/ncurses*-config
 }
