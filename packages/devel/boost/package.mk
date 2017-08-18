@@ -40,11 +40,11 @@ makeinstall_host() {
     cp bin.*/bjam $ROOT/$TOOLCHAIN/bin
 }
 
-pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC -DPIC"
-  export CXXFLAGS="$CXXFLAGS -fPIC -DPIC"
-  export LDFLAGS="$LDFLAGS -fPIC -DPIC"
-}
+#pre_configure_target() {
+#  export CFLAGS="$CFLAGS -fPIC -DPIC"
+#  export CXXFLAGS="$CXXFLAGS -fPIC -DPIC"
+#  export LDFLAGS="$LDFLAGS -fPIC -DPIC"
+#}
 
 configure_target() {
   sh bootstrap.sh --prefix=/usr \
@@ -76,7 +76,7 @@ makeinstall_target() {
                                 --with-filesystem \
                                 --with-date_time \
                                 --with-locale \
-                                --with-regex -sICU_PATH="$SYSROOT_PREFIX/usr" \
+                                --with-regex -sICU_PATH="$SYSROOT_PREFIX/usr" -j2 \
                                 install
 
   $ROOT/$TOOLCHAIN/bin/bjam -d2 --toolset=gcc link=shared target-os=linux variant=release threading=multi debug-symbols=off python=2.7 \
