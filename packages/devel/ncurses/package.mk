@@ -24,7 +24,7 @@ PKG_LICENSE="MIT"
 PKG_SITE="http://invisible-mirror.net/archives/ncurses/current/?C=M;O=D"
 PKG_URL="http://invisible-mirror.net/archives/ncurses/current/ncurses-$PKG_VERSION.tgz"
 PKG_URL="http://invisible-mirror.net/archives/ncurses/ncurses-6.0.tar.gz"
-PKG_DEPENDS_TARGET="toolchain zlib"
+PKG_DEPENDS_TARGET="toolchain zlib ncurses:host"
 PKG_SECTION="devel"
 PKG_SHORTDESC="ncurses: The ncurses (new curses) library"
 PKG_LONGDESC="The ncurses (new curses) library is a free software emulation of curses in System V Release 4.0, and more. It uses terminfo format, supports pads and color and multiple highlights and forms characters and function-key mapping, and has all the other SYSV-curses enhancements over BSD curses."
@@ -38,6 +38,7 @@ PKG_CONFIGURE_OPTS_HOST="--without-cxx \
 			    --without-debug \
 			    --without-manpages \
 			    --without-profile \
+			    --without-tests \
 			    --without-curses-h"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-echo \
@@ -65,6 +66,8 @@ pre_configure_target() {
   # causes some segmentation fault's (dialog) when compiled with gcc's link time optimization.
   strip_lto
   export CPPFLAGS="$CPPFLAGS -D_GNU_SOURCE"
+  export CFFLAGS="$CFFLAGS -fPIC"
+  
 }
 
 post_makeinstall_target() {
