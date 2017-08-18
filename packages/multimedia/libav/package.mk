@@ -1,19 +1,20 @@
 PKG_NAME="libav"
-PKG_VERSION="12.1"
-PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
-#PKG_GIT_URL="https://github.com/libav/libav"
-PKG_DEPENDS_TARGET="toolchain"
+PKG_VERSION="67d5f10"
+#PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_GIT_URL="https://github.com/libav/libav"
+PKG_DEPENDS_TARGET="toolchain ffmpeg"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
- get_graphicdrivers
+# configure GPU drivers and dependencies:
+  get_graphicdrivers
 
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
   strip_lto
-  strip_gold
+  #strip_gold
 }
 
 configure_target() {
@@ -25,7 +26,6 @@ configure_target() {
               --sysroot=$SYSROOT_PREFIX \
               --sysinclude="$SYSROOT_PREFIX/usr/include" \
               --target-os="linux" \
-              --extra-version="$PKG_VERSION" \
               --nm="$NM" \
               --ar="$AR" \
               --as="$CC" \
@@ -35,11 +35,9 @@ configure_target() {
               --host-cflags="$HOST_CFLAGS" \
               --host-ldflags="$HOST_LDFLAGS" \
               --host-libs="-lm" \
-              --extra-cflags="$CFLAGS -D_DEFAULT_SOURCE" \
-              --extra-ldflags="$LDFLAGS -fPIC" \
+              --extra-cflags="$CFLAGS" \
+              --extra-ldflags="$LDFLAGS" \
               --extra-libs="$FFMPEG_LIBS" \
-              --extra-version="" \
-              --build-suffix="" \
               --enable-static \
               --disable-shared \
               --enable-gpl \
@@ -47,15 +45,19 @@ configure_target() {
               --enable-nonfree \
               --enable-logging \
               --disable-doc \
-              $FFMPEG_DEBUG \
               --enable-pic \
               --pkg-config="$ROOT/$TOOLCHAIN/bin/pkg-config" \
               --enable-optimizations \
               --disable-extra-warnings \
+              --enable-ffprobe \
+              --disable-ffplay \
+              --disable-ffserver \
+              --enable-ffmpeg \
               --enable-avdevice \
               --enable-avcodec \
               --enable-avformat \
               --enable-swscale \
+              --enable-postproc \
               --enable-avfilter \
               --disable-devices \
               --enable-pthreads \
@@ -69,6 +71,9 @@ configure_target() {
               --enable-fft \
               --enable-mdct \
               --enable-rdft \
+              --disable-crystalhd \
+              --enable-vaapi \
+              --disable-vdpau \
               --disable-dxva2 \
               --enable-runtime-cpudetect \
               --disable-memalign-hack \
@@ -103,6 +108,7 @@ configure_target() {
               --disable-libfreetype \
               --disable-libgsm \
               --disable-libmp3lame \
+              --disable-libnut \
               --disable-libopenjpeg \
               --disable-librtmp \
               --disable-libschroedinger \
@@ -111,7 +117,6 @@ configure_target() {
               --disable-libvo-amrwbenc \
               --disable-libvorbis \
               --disable-libvpx \
-              --disable-libx265 \
               --disable-libx264 \
               --disable-libxavs \
               --disable-libxvid \
@@ -120,7 +125,5 @@ configure_target() {
               --disable-altivec \
               --enable-yasm \
               --disable-symver \
-              --disable-lto \
-              --disable-libfdk-aac \
-              --enable-indev=x11grab_xcb
+              --disable-libfdk-aac
 }
