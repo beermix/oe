@@ -47,7 +47,6 @@ pre_configure_target() {
   strip_lto
   #export CFLAGS=`echo $CFLAGS | sed -e "s|-fomit-frame-pointer||g"`
   #export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-fomit-frame-pointer||g"`
-  
 }
 
 post_makeinstall_target() {
