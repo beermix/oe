@@ -17,9 +17,10 @@
 ################################################################################
 
 PKG_NAME="ncurses"
-PKG_VERSION="52681a6"
-PKG_REV="1"
-PKG_SITE="http://invisible-mirror.net/archives/ncurses/current/?C=M;O=D"
+PKG_VERSION="6.0-20170812"
+PKG_URL="http://invisible-mirror.net/archives/ncurses/current/ncurses-$PKG_VERSION.tgz"
+#PKG_VERSION="52681a6"
+#PKG_SITE="http://invisible-mirror.net/archives/ncurses/current/?C=M;O=D"
 PKG_GIT_URL="git://anonscm.debian.org/collab-maint/ncurses.git"
 PKG_DEPENDS_TARGET="toolchain zlib ncurses:host"
 PKG_DEPENDS_HOST="zlib:host"
@@ -43,15 +44,14 @@ PKG_CONFIGURE_OPTS_TARGET="--with-progs \
 			      --with-shared \
 			      --enable-static \
 			      --without-manpages \
+			      --with-termlib=tinfo \
+			      --enable-widec \
+			      --enable-ext-colors \
+			      --with-normal \
 			      --without-debug \
 			      --without-ada \
-			      --with-termlib=tinfo \
 			      --enable-pc-files \
-			      --with-pkg-config-libdir=/usr/lib/pkgconfig \
-			      --enable-widec \
-			      --with-cxx-binding \
-			      --with-cxx-shared \
-			      --with-normal"
+			      --with-pkg-config-libdir=/usr/lib/pkgconfig"
 
 pre_configure_target() {
   # causes some segmentation fault's (dialog) when compiled with gcc's link time optimization.
@@ -79,13 +79,13 @@ post_makeinstall_target() {
   #ln -sfv libncurses.so $INSTALL/usr/lib/libcurses.so
   #ln -sfv libncurses.so $SYSROOT_PREFIX/usr/lib/libcurses.so
   
- # ln -sfv libcursesw.so $INSTALL/usr/lib/libcurses.so
- # ln -sfv libformw.so $INSTALL/usr/lib/libform.so
- # ln -sfv libmenuw.so $INSTALL/usr/lib/libmenu.so
- # ln -sfv libncursesw.so $INSTALL/usr/lib/libncurses.so
- # ln -sfv libpanelw.so $INSTALL/usr/lib/libpanel.so
- # ln -sfv ticw.so $INSTALL/usr/lib/tic.so
- # ln -sfv libtinfow.so $INSTALL/usr/lib/libtinfo.so
+  ln -sfv libcursesw.so $INSTALL/usr/lib/libcurses.so
+  ln -sfv libformw.so $INSTALL/usr/lib/libform.so
+  ln -sfv libmenuw.so $INSTALL/usr/lib/libmenu.so
+  ln -sfv libncursesw.so $INSTALL/usr/lib/libncurses.so
+  ln -sfv libpanelw.so $INSTALL/usr/lib/libpanel.so
+  ln -sfv ticw.so $INSTALL/usr/lib/tic.so
+  ln -sfv libtinfow.so $INSTALL/usr/lib/libtinfo.so
   
   
   ln -sfv libcursesw.so $SYSROOT_PREFIX/usr/lib/libcurses.so
