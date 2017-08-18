@@ -1,5 +1,5 @@
 PKG_NAME="libvpx"
-PKG_VERSION="6843e7c"
+PKG_VERSION="e038d16"
 PKG_GIT_URL="https://github.com/webmproject/libvpx/"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="tools"

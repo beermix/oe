@@ -17,12 +17,10 @@
 ################################################################################
 
 PKG_NAME="inputstream.adaptive"
-PKG_VERSION="46be790"
-#PKG_VERSION="0b93432"
+PKG_VERSION="b405f99"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/peak3d/inputstream.adaptive/tree/Krypton"
 PKG_GIT_URL="https://github.com/peak3d/inputstream.adaptive"
-PKG_GIT_BRANCH="Krypton"
 PKG_DEPENDS_TARGET="toolchain kodi-platform"
 PKG_SECTION=""
 PKG_SHORTDESC="inputstream.adaptive"

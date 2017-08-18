@@ -107,8 +107,8 @@ pre_configure_target() {
   export LDFLAGS+=" -lreadline"
 
 # support 64-bit offsets and seeks on 32-bit platforms
-  if [ "$TARGET_ARCH" = "arm" -o "$TARGET_ARCH" = "i386" ]; then
-    export CFLAGS+=" -D_FILE_OFFSET_BITS=64 -D_OFF_T_DEFINED_ -Doff_t=off64_t -Dlseek=lseek64"
+  if [ "$TARGET_ARCH" = "arm" ]; then
+    export CFLAGS+="-D_FILE_OFFSET_BITS=64 -D_OFF_T_DEFINED_ -Doff_t=off64_t -Dlseek=lseek64"
   fi
 }
 
@@ -153,6 +153,7 @@ post_makeinstall_target() {
 
   if [ "$DEVTOOLS" = "yes" ]; then
     mkdir -p $INSTALL/usr/bin
+      cp -PR bin/default/source3/client/smbclient $INSTALL/usr/bin
       cp -PR bin/default/source3/utils/smbtree $INSTALL/usr/bin
       cp -PR bin/default/source3/utils/testparm $INSTALL/usr/bin
   fi
