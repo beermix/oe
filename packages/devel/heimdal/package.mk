@@ -18,7 +18,6 @@
 
 PKG_NAME="heimdal"
 PKG_VERSION="7.4.0"
-PKG_SHA256="b1d5c19989ad9f2cd8038c1d7c3e8f2bc227f79a1fa4eb0ade42cab4a40637ab"
 PKG_ARCH="any"
 PKG_LICENSE="BSD-3c"
 PKG_SITE="http://www.h5l.org/"
@@ -32,7 +31,7 @@ PKG_LONGDESC="Heimdal is an implementation of Kerberos 5 (and some more stuff) l
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-MAKEFLAGS="-j1"
+MAKEFLAGS="-j3"
 
 PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared \
                          --without-openldap \
