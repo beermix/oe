@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="slang"
-PKG_VERSION="89ab985"
+PKG_VERSION="cc43653"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="LGPL"
