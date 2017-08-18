@@ -71,6 +71,7 @@ chromium_flags=(
   "target_sysroot=\"${SYSROOT_PREFIX}\""
   'enable_hangout_services_extension=true'
   'enable_widevine=true'
+  'enable_swiftshader=false'
   'enable_nacl=false'
   'enable_nacl_nonsfi=false'
   "google_api_key=\"${google_api_key}\""
