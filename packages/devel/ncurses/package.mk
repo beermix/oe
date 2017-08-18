@@ -31,28 +31,37 @@ PKG_LONGDESC="The ncurses (new curses) library is a free software emulation of c
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_HOST="--with-shared \
-			    --without-gpm \
-			    --without-manpages \
-			    --without-cxx \
-			    --without-cxx-binding \
-			    --without-ada \
-			    --without-normal"
+PKG_CONFIGURE_OPTS_HOST="--without-shared \
+                         --with-build-cc="${HOST_CC}" \
+                         --with-progs \
+                         --with-ticlib \
+                         --disable-tic-depends \
+                         --enable-symlinks \
+                         --without-manpages \
+                         --without-tests \
+                         --without-cxx \
+                         --without-cxx-binding \
+                         --without-gpm \
+                         --without-ada \
+                         --disable-termcap \
+                         --without-debug \
+                         --without-profile"
 
-PKG_CONFIGURE_OPTS_TARGET="--with-shared \
-			      --with-normal \
+PKG_CONFIGURE_OPTS_TARGET="--with-progs \
+			      --enable-static \
+			      --with-shared \
 			      --without-debug \
 			      --without-ada \
-			      --enable-widec \
+			      --without-gpm \
+			      --enable-hard-tabs \
+			      --enable-xmc-glitch \
+			      --enable-colorfgbg \
+			      --disable-big-core \
+			      --with-ticlib \
+			      --with-termlib=tinfo \
+			      --enable-sigwinch \
 			      --enable-pc-files \
-			      --without-manpages \
-			      --enable-static \
-			      --with-progs \
-			      --without-tests \
-			      --enable-tinfo \
-			      --enable-ext-colors \
-			      --with-terminfo-dirs=/usr/share/terminfo \
-			      --with-default-terminfo-dir=/usr/share/terminfo \
+			      --disable-rpath-hack \
 			      --with-pkg-config-libdir=/usr/lib/pkgconfig"
 
 pre_configure_target() {
