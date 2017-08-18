@@ -4,7 +4,7 @@
 ################################################################################
 
 PKG_NAME="php"
-PKG_VERSION="5.6.30"
+PKG_VERSION="5.6.31"
 PKG_REV="0"
 PKG_ARCH="any"
 PKG_LICENSE="OpenSource"
