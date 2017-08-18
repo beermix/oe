@@ -27,7 +27,7 @@ PKG_NAME="Python"
 PKG_VERSION="2.7.13"
 PKG_URL="http://www.python.org/ftp/python/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="zlib:host bzip2:host expat:host gdbm:host db:host sqlite:host"
-PKG_DEPENDS_TARGET="toolchain sqlite expat zlib bzip2 openssl libffi readline gdbm db Python:host bluez"
+PKG_DEPENDS_TARGET="toolchain sqlite expat zlib bzip2 openssl libffi readline gdbm db Python:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="lang"
 
