@@ -20,13 +20,13 @@ PKG_NAME="sqlite"
 PKG_VERSION="autoconf-3200000"
 PKG_SITE="https://www.sqlite.org/"
 PKG_URL="https://www.sqlite.org/2017/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain"
+PKG_DEPENDS_TARGET="toolchain readline ncurses"
 PKG_SECTION="database"
 PKG_SHORTDESC="sqlite: An Embeddable SQL Database Engine"
 PKG_LONGDESC="SQLite is a C library that implements an embeddable SQL database engine. Programs that link with the SQLite library can have SQL database access without running a separate RDBMS process. The distribution comes with a standalone command-line access program (sqlite) that can be used to administer an SQLite database and which serves as an example of how to use the SQLite library. SQLite is not a client library used to connect to a big database server. SQLite is the server. The SQLite library reads and writes directly to and from the database files on disk."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 # sqlite fails to compile with fast-math link time optimization.
   CFLAGS=`echo $CFLAGS | sed -e "s|-Ofast|-O3|g"`
@@ -38,9 +38,6 @@ PKG_AUTORECONF="yes"
 # that data in the sqlite_stat3 table. The query planner will then use the histogram
 # data to help it make better index choices.
   CFLAGS="$CFLAGS -DSQLITE_ENABLE_STAT3"
-
-# relocation R_MIPS_HI16 against `a local symbol' can not be used when making a shared object; recompile with -fPIC
-  CFLAGS="$CFLAGS -fPIC"
 
 # When this C-preprocessor macro is defined, SQLite includes some additional APIs
 # that provide convenient access to meta-data about tables and queries. The APIs that
@@ -61,19 +58,13 @@ PKG_AUTORECONF="yes"
 # sqlite3_config(SQLITE_CONFIG_MMAP_SIZE) call, or at run-time using the
 # mmap_size pragma.
   CFLAGS="$CFLAGS -DSQLITE_TEMP_STORE=3 -DSQLITE_DEFAULT_MMAP_SIZE=268435456"
-  CFLAGS="$CFLAGS -fPIC"
 
 pre_make_target() {
   # dont build parallel
   MAKEFLAGS=-j1
 }
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static \
-                           --disable-shared \
-                           --disable-readline \
+PKG_CONFIGURE_OPTS_TARGET="--enable-readline \
                            --enable-threadsafe \
                            --enable-dynamic-extensions \
-                           --with-gnu-ld \
-                           --with-pic"
-
-PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
+                           --with-gnu-ld"
