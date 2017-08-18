@@ -43,6 +43,7 @@ PKG_CONFIGURE_OPTS_HOST="--cache-file=config.cache \
                          --enable-optimizations \
                          --without-ensurepip \
                          --with-dbmliborder=gdbm:ndbm \
+                         --without-doc-strings \
                          --disable-ipv6"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
