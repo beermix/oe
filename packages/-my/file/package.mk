@@ -6,5 +6,5 @@ PKG_DEPENDS_TARGET="toolchain zlib attr expat file:host"
 PKG_SECTION="tools"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_HOST="--enable-fsect-man5 --enable-static --disable-shared"
-PKG_CONFIGURE_OPTS_TARGET="--enable-fsect-man5 --enable-static --disable-shared"
+PKG_CONFIGURE_OPTS_HOST="--enable-fsect-man5 --enable-static --disable-shared --with-pic --with-gnu-ld"
+PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"

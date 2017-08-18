@@ -17,14 +17,13 @@
 ################################################################################
 
 PKG_NAME="ncurses"
-PKG_VERSION="6.0"
+PKG_VERSION="6.0-20170812"
+#PKG_VERSION="6.0"
 PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="MIT"
 PKG_SITE="http://invisible-mirror.net/archives/ncurses/current/?C=M;O=D"
 PKG_URL="http://invisible-mirror.net/archives/ncurses/current/ncurses-$PKG_VERSION.tgz"
-PKG_URL="http://invisible-mirror.net/archives/ncurses/ncurses-6.0.tar.gz"
-PKG_DEPENDS_TARGET="toolchain zlib ncurses:host"
+#PKG_URL="http://invisible-mirror.net/archives/ncurses/ncurses-6.0.tar.gz"
+PKG_DEPENDS_TARGET="toolchain zlib"
 PKG_SECTION="devel"
 PKG_SHORTDESC="ncurses: The ncurses (new curses) library"
 PKG_LONGDESC="The ncurses (new curses) library is a free software emulation of curses in System V Release 4.0, and more. It uses terminfo format, supports pads and color and multiple highlights and forms characters and function-key mapping, and has all the other SYSV-curses enhancements over BSD curses."
@@ -32,42 +31,29 @@ PKG_LONGDESC="The ncurses (new curses) library is a free software emulation of c
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_HOST="--without-cxx \
+PKG_CONFIGURE_OPTS_HOST="--with-shared \
+			    --without-gpm \
+			    --without-manpages \
+			    --without-cxx \
 			    --without-cxx-binding \
 			    --without-ada \
-			    --without-debug \
-			    --without-manpages \
-			    --without-profile \
-			    --without-tests \
-			    --without-curses-h"
+			    --without-normal"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-echo \
-			      --enable-const \
-			      --enable-overwrite \
-			      --enable-pc-files \
-			      --disable-rpath \
-			      --without-ada \
-			      --without-debug \
-			      --without-manpages \
-			      --without-profile \
-			      --with-progs \
-			      --without-tests \
-			      --disable-big-core \
-			      --disable-home-terminfo \
+PKG_CONFIGURE_OPTS_TARGET="--with-shared \
 			      --with-normal \
-			      --with-shared \
+			      --without-debug \
+			      --without-ada \
+			      --enable-widec \
+			      --enable-pc-files \
+			      --without-manpages \
 			      --enable-static \
 			      --with-terminfo-dirs=/usr/share/terminfo \
 			      --with-default-terminfo-dir=/usr/share/terminfo \
-			      --enable-widec \
 			      --with-pkg-config-libdir=/usr/lib/pkgconfig"
 
 pre_configure_target() {
   # causes some segmentation fault's (dialog) when compiled with gcc's link time optimization.
   strip_lto
-  export CPPFLAGS="$CPPFLAGS -D_GNU_SOURCE"
-  export CFFLAGS="$CFFLAGS -fPIC"
-  
 }
 
 post_makeinstall_target() {
@@ -75,17 +61,17 @@ post_makeinstall_target() {
   chmod +x $ROOT/$TOOLCHAIN/bin/ncurses-config
   $SED "s:\(['=\" ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" $ROOT/$TOOLCHAIN/bin/ncurses-config
   
-  ln -sfv ncursesw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/ncurses.pc
+  #ln -sfv ncursesw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/ncurses.pc
   #ln -sfv panelw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/panel.pc
   #ln -sfv tinfow.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/tinfo.pc
   #ln -sfv formw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/form.pc
   #ln -sfv menu.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/menu.pc
   
-  #echo "INPUT(-lncursesw)" > $INSTALL/usr/lib/libncurses.so
-  #echo "INPUT(-lncursesw)" > $SYSROOT_PREFIX/usr/lib/libncurses.so
+  echo "INPUT(-lncursesw)" > $INSTALL/usr/lib/libncurses.so
+  echo "INPUT(-lncursesw)" > $SYSROOT_PREFIX/usr/lib/libncurses.so
 
-  #echo "INPUT(-lncursesw)" > $INSTALL/usr/lib/libcursesw.so
-  #echo "INPUT(-lncursesw)" > $SYSROOT_PREFIX/usr/lib/libcursesw.so
+  echo "INPUT(-lncursesw)" > $INSTALL/usr/lib/libcursesw.so
+  echo "INPUT(-lncursesw)" > $SYSROOT_PREFIX/usr/lib/libcursesw.so
 
   #ln -sfv libncurses.so $INSTALL/usr/lib/libcurses.so
   #ln -sfv libncurses.so $SYSROOT_PREFIX/usr/lib/libcurses.so

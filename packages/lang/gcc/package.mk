@@ -55,13 +55,12 @@ GCC_COMMON_CONFIGURE_OPTS="MAKEINFO=missing \
                            --without-ppl \
                            --without-cloog \
                            --disable-libmpx \
-                           --with-system-zlib \
-                           --disable-libsanitizer \
                            --with-tune=generic"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
+                              --disable-libsanitizer \
                               --disable-libssp \
                               --disable-libatomic \
                               --disable-libquadmath \
@@ -79,7 +78,6 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
 PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-languages=c,c++ \
                          --enable-__cxa_atexit \
-                         --enable-decimal-float \
                          --enable-tls \
                          --enable-shared \
                          --disable-static \

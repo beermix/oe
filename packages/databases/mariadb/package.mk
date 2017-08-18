@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="mariadb"
-PKG_VERSION="10.1.25"
+PKG_VERSION="10.1.26"
 #PKG_VERSION="10.2.7"
 PKG_REV="1"
 PKG_ARCH="any"
@@ -120,9 +120,9 @@ configure_host() {
         -DWITH_READLINE=OFF \
         -DWITH_PCRE=bundled \
         -DWITH_ZLIB=bundled \
-        -DWITH_SYSTEMD=OFF \
         -DWITH_LIBWRAP=OFF \
         -DWITH_WSREP=OFF \
+        -DWITH_SYSTEMD=NO \
         -DSECURITY_HARDENED=0 \
         ..
 }
@@ -160,8 +160,9 @@ configure_target() {
         -DWITH_READLINE=OFF \
         -DWITH_PCRE=bundled \
         -DWITH_ZLIB=bundled \
-        -DWITH_SYSTEMD=OFF \
+        -DWITH_SYSTEMD=NO \
         -DWITH_LIBWRAP=OFF \
+        -DSECURITY_HARDENED=0 \
         -DWITH_SSL=$SYSROOT_PREFIX/usr \
         $MARIADB_OPTS \
         ..
@@ -177,7 +178,6 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/share/mysql/test
   rm -rf $INSTALL/usr/share/mysql/bench
   rm -rf $INSTALL/usr/data
-  
 
   if [ "$PKG_MARIADB_SERVER" = "no" ]; then
     rm -rf $INSTALL/usr/bin
