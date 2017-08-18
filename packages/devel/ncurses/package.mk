@@ -32,7 +32,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_HOST="--without-shared \
-                         --with-build-cc="${HOST_CC}" \
+                         --with-build-cc="$HOST_CC" \
                          --with-progs \
                          --with-ticlib \
                          --disable-tic-depends \
