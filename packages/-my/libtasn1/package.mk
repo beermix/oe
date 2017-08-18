@@ -6,10 +6,8 @@ PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --disable-gtk-doc-html --disable-gcc-warnings"
+PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --disable-gtk-doc-html --disable-gcc-warnings --with-gnu-ld"
 
 pre_configure_target() {
   CFLAGS="$CFLAGS -fPIC"
-  CXXFLAGS="$CXXFLAGS -fPIC"
-  LDFLAGS="$LDFLAGS -fPIC"
 }

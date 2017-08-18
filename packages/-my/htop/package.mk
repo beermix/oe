@@ -6,8 +6,7 @@ PKG_SECTION="debug/tools"
 PKG_AUTORECONF="yes"
 
 pre_configure_target() {
-  #export LIBS="$LIBS -ludev -lhwloc -lxml2 -lpciaccess"
-  export LIBS="$LIBS -ludev"
+  export LIBS="$LIBS -ludev -lhwloc -lxml2 -lpciaccess"
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-cgroup \

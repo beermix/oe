@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="MIT"
 PKG_SITE="http://www.littlecms.com"
 PKG_URL="http://downloads.sourceforge.net/sourceforge/lcms/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain zlib"
+PKG_DEPENDS_TARGET="toolchain zlib libjpeg-turbo tiff"
 PKG_SECTION="devel"
 PKG_SHORTDESC="lcms2: small-footprint color management engine"
 PKG_LONGDESC="lcms2 is a Small-footprint color management engine."
@@ -35,8 +35,8 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static \
 			      --disable-shared \
 			      --with-zlib \
 			      --with-threads \
-                           --without-jpeg \
-                           --without-tiff"
+                           --with-jpeg \
+                           --with-tiff"
 
 pre_configure_target() {
   CFLAGS="$CFLAGS -fPIC"
