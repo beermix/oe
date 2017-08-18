@@ -22,7 +22,7 @@ PKG_GIT_URL="https://github.com/xbmc/xbmc.git"
 PKG_GIT_BRANCH="Krypton"
 PKG_KEEP_CHECKOUT="yes"
 PKG_SITE="http://www.kodi.tv"
-PKG_DEPENDS_TARGET="toolchain kodi:host kodi:bootstrap xmlstarlet:host Python zlib systemd pciutils dbus lzo pcre swig:host libass curl fontconfig fribidi tinyxml libjpeg-turbo freetype libcdio libdvdnav taglib libxml2 libxslt rapidjson sqlite ffmpeg crossguid giflib opengl lcms2 nss icu"
+PKG_DEPENDS_TARGET="toolchain kodi:host kodi:bootstrap xmlstarlet:host Python zlib systemd pciutils dbus lzo pcre swig:host libass curl fontconfig fribidi tinyxml libjpeg-turbo freetype libcdio libdvdnav taglib libxml2 libxslt rapidjson sqlite ffmpeg crossguid giflib opengl lcms2 nss"
 PKG_DEPENDS_HOST="toolchain"
 PKG_DEPENDS_BOOTSTRAP="toolchain lzo:host libpng:host libjpeg-turbo:host giflib:host"
 PKG_PRIORITY="optional"
@@ -270,8 +270,10 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/share/kodi/cmake
   rm -rf $INSTALL/usr/share/applications
   rm -rf $INSTALL/usr/share/icons
-  rm -rf $INSTALL/usr/share/kodi/cmake
-  rm -rf $INSTALL/usr/share/kodi/userdata/iOS
+  rm -rf $INSTALL/usr/share/pixmaps
+  rm -rf $INSTALL/usr/share/kodi/addons/skin.estouchy
+  rm -rf $INSTALL/usr/share/kodi/addons/service.xbmc.versioncheck
+  rm -rf $INSTALL/usr/share/kodi/addons/visualization.vortex
   rm -rf $INSTALL/usr/share/xsessions
 
   # update addon manifest
@@ -356,6 +358,13 @@ post_makeinstall_target() {
     else
       cp $PKG_DIR/config/advancedsettings.xml $INSTALL/usr/share/kodi/system/
     fi
+    if [ -n "$DEVICE" -a -f $PROJECT_DIR/$PROJECT/devices/$DEVICE/kodi/advancedsettings.xml.sample ]; then
+      cp $PROJECT_DIR/$PROJECT/devices/$DEVICE/kodi/advancedsettings.xml.sample $INSTALL/usr/share/kodi/system/
+    elif [ -f $PROJECT_DIR/$PROJECT/kodi/advancedsettings.xml.sample ]; then
+      cp $PROJECT_DIR/$PROJECT/kodi/advancedsettings.xml.sample $INSTALL/usr/share/kodi/system/
+    else
+      cp $PKG_DIR/config/advancedsettings.xml.sample $INSTALL/usr/share/kodi/system/
+    fi
 
   mkdir -p $INSTALL/usr/share/kodi/system/settings
     if [ -f $PROJECT_DIR/$PROJECT/kodi/appliance.xml ]; then
@@ -371,7 +380,10 @@ post_makeinstall_target() {
 }
 
 post_install() {
-  enable_service kodi.target
+  # link default.target to kodi.target
+  ln -sf kodi.target $INSTALL/usr/lib/systemd/system/default.target
+
+  # enable default services
   enable_service kodi-autostart.service
   enable_service kodi-cleanlogs.service
   enable_service kodi-halt.service
