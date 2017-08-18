@@ -8,6 +8,8 @@ PKG_AUTORECONF="yes"
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   CONCURRENCY_MAKE_LEVEL=1
+  CFLAGS="$CFLAGS -static"
+  CXXFLAGS="$CXXFLAGS -static"
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config \
