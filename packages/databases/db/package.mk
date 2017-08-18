@@ -14,7 +14,11 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-compat185 \
 			      --enable-static \
 			      --enable-cxx \
 			      --enable-dbm \
-			      --enable-stl"
+			      --disable-stl \
+			      --disable-java \
+			      --disable-tcl \
+			      --disable-rpc \
+			      --disable-debug"
 			      
 PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
 			   
@@ -22,10 +26,10 @@ PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
 #  rm -rf $INSTALL
 #}
 
-make_target() {
-  make LIBSO_LIBS=-lpthread
-}
+#make_target() {
+#  make LIBSO_LIBS=-lpthread
+#}
 
-make_host() {
-  make LIBSO_LIBS=-lpthread
-}
+#make_host() {
+#  make LIBSO_LIBS=-lpthread
+#}

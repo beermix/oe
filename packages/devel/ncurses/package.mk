@@ -40,13 +40,12 @@ PKG_CONFIGURE_OPTS_TARGET="--with-shared \
                            --disable-rpath \
                            --without-manpages \
                            --enable-static \
+                           --with-cxx-shared \
                            --with-pkg-config-libdir=/usr/lib/pkgconfig"
 
 pre_configure_target() {
   # causes some segmentation fault's (dialog) when compiled with gcc's link time optimization.
   strip_lto
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-fomit-frame-pointer||g"`
-  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-fomit-frame-pointer||g"`
 }
 
 post_makeinstall_target() {
@@ -56,14 +55,5 @@ post_makeinstall_target() {
   
   ln -sfv ncursesw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/ncurses.pc
   
-  echo "INPUT(-lncursesw)" > $INSTALL/usr/lib/libncurses.so
-  echo "INPUT(-lncursesw)" > $SYSROOT_PREFIX/usr/lib/libncurses.so
-  
-  echo "INPUT(-lncursesw)" > $INSTALL/usr/lib/libcursesw.so
-  echo "INPUT(-lncursesw)" > $SYSROOT_PREFIX/usr/lib/libcursesw.so
-  
-  ln -sfv libncurses.so $INSTALL/usr/lib/libcurses.so
-  ln -sfv libncurses.so $SYSROOT_PREFIX/usr/lib/libcurses.so
-
   rm -rf $INSTALL/usr/bin/ncurses*-config
 }

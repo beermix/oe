@@ -7,13 +7,16 @@ PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
 PKG_AUTORECONF="yes"
 
+pre_configure_target() {
+  export CFLAGS="$CFLAGS -fPIC"
+}
+
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-static \
 			      --disable-samples \
 			      --enable-openssl \
 			      --disable-debug-mode \
-			      --with-gnu-ld \
-			      --with-pic"
+			      --with-gnu-ld"
 			   
 post_makeinstall_target() {
   rm -rf $INSTALL
