@@ -45,7 +45,6 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-ld=default \
                          --enable-lto \
                          --disable-nls \
-                         --disable-shared \
                          --with-pic \
                          --disable-gdb \
                          --disable-sim \
