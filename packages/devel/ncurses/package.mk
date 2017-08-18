@@ -47,6 +47,10 @@ PKG_CONFIGURE_OPTS_TARGET="--with-shared \
 			      --enable-pc-files \
 			      --without-manpages \
 			      --enable-static \
+			      --with-progs \
+			      --without-tests \
+			      --enable-tinfo \
+			      --enable-ext-colors \
 			      --with-terminfo-dirs=/usr/share/terminfo \
 			      --with-default-terminfo-dir=/usr/share/terminfo \
 			      --with-pkg-config-libdir=/usr/lib/pkgconfig"
@@ -67,11 +71,11 @@ post_makeinstall_target() {
   #ln -sfv formw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/form.pc
   #ln -sfv menu.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/menu.pc
   
-  echo "INPUT(-lncursesw)" > $INSTALL/usr/lib/libncurses.so
-  echo "INPUT(-lncursesw)" > $SYSROOT_PREFIX/usr/lib/libncurses.so
+  #echo "INPUT(-lncursesw)" > $INSTALL/usr/lib/libncurses.so
+  #echo "INPUT(-lncursesw)" > $SYSROOT_PREFIX/usr/lib/libncurses.so
 
-  echo "INPUT(-lncursesw)" > $INSTALL/usr/lib/libcursesw.so
-  echo "INPUT(-lncursesw)" > $SYSROOT_PREFIX/usr/lib/libcursesw.so
+  #echo "INPUT(-lncursesw)" > $INSTALL/usr/lib/libcursesw.so
+  #echo "INPUT(-lncursesw)" > $SYSROOT_PREFIX/usr/lib/libcursesw.so
 
   #ln -sfv libncurses.so $INSTALL/usr/lib/libcurses.so
   #ln -sfv libncurses.so $SYSROOT_PREFIX/usr/lib/libcurses.so

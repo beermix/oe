@@ -14,7 +14,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+################################################################################ --enable-stack-protector=strong \
 
 PKG_NAME="glibc"
 PKG_VERSION="2.26"
@@ -40,7 +40,6 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --enable-add-ons \
                            --enable-bind-now \
                            --with-elf \
-                           --enable-stack-protector=strong \
                            --with-tls \
                            --with-__thread \
                            --with-binutils=$ROOT/$BUILD/toolchain/bin \
@@ -99,8 +98,10 @@ pre_configure_target() {
 
   unset LD_LIBRARY_PATH
 
-# set some CFLAGS we need
-  export CFLAGS="$CFLAGS -g"
+  # set some CFLAGS we need
+  export CFLAGS="$CFLAGS -g -fno-stack-protector"
+
+  export BUILD_CC=$HOST_CC
   export OBJDUMP_FOR_HOST=objdump
 
 cat >config.cache <<EOF
@@ -144,6 +145,7 @@ post_makeinstall_target() {
 
 # remove locales and charmaps
   rm -rf $INSTALL/usr/share/i18n/charmaps
+  rm -rf $INSTALL/usr/share/i18n/locales
 
   if [ -n "$GLIBC_LOCALES" ]; then
     mkdir -p $INSTALL/usr/lib/locale
