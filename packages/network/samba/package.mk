@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="samba"
-PKG_VERSION="4.6.7"
+PKG_VERSION="4.5.11"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv3+"
