@@ -40,7 +40,8 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-openmp \
                            --disable-vmx \
                            --disable-arm-simd \
                            --disable-arm-neon \
-                           --with-gnu-ld"
+                           --with-gnu-ld \
+                           --disable-static"
 
 
 post_makeinstall_target() {

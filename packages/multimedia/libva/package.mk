@@ -33,20 +33,12 @@ PKG_LONGDESC="The main motivation for VAAPI (Video Acceleration API) is to enabl
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-if [ "$DISPLAYSERVER" = "x11" ]; then
-  PKG_DEPENDS_TARGET="toolchain libX11 libXext libXfixes libdrm mesa glu"
-  DISPLAYSERVER_LIBVA="--enable-x11 --enable-glx --disable-wayland"
-elif [ "$DISPLAYSERVER" = "wayland" ]; then
-  DISPLAYSERVER_LIBVA="--disable-x11 --disable-glx --enable-wayland"
-  PKG_DEPENDS_TARGET="toolchain libdrm mesa wayland"
-else
-  PKG_DEPENDS_TARGET="toolchain libdrm"
-  DISPLAYSERVER_LIBVA="--disable-x11 --disable-glx --disable-wayland"
-fi
-
 PKG_CONFIGURE_OPTS_TARGET="--disable-silent-rules \
                            --disable-docs \
                            --enable-drm \
+                           --enable-x11 \
+                           --enable-glx \
                            --enable-egl \
-                           $DISPLAYSERVER_LIBVA \
-                           --disable-dummy-driver"
+                           --disable-wayland \
+                           --disable-dummy-driver \
+                           --with-drivers-path=/usr/lib/va"

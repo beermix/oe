@@ -43,8 +43,11 @@ pre_configure_target() {
 # ensure we dont use '-O3' optimization.
   CFLAGS=`echo $CFLAGS | sed -e "s|-O3|-O2|"`
   CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O3|-O2|"`
-  CFLAGS="$CFLAGS -I$PKG_BUILD"
-  CXXFLAGS="$CXXFLAGS -I$PKG_BUILD"
+  CFLAGS="$CFLAGS -I$ROOT/$PKG_BUILD"
+  #CFLAGS="$CFLAGS -fPIC"
+  CXXFLAGS="$CXXFLAGS -I$ROOT/$PKG_BUILD"
+  #CXXFLAGS="$CXXFLAGS -fPIC"
+  LDFLAGS="$LDFLAGS -lz"
 }
 
 post_makeinstall_target() {
