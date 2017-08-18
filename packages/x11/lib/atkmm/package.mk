@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="atkmm"
-PKG_VERSION="2.25.3"
+PKG_VERSION="2.53.3"
 PKG_SITE="http://www.X.org"
 PKG_URL="http://ftp.gnome.org/pub/GNOME/sources/atkmm/2.25/atkmm-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain util-macros"
