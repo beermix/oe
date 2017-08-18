@@ -39,7 +39,7 @@ PKG_CONFIGURE_OPTS_HOST="--without-cxx \
 			    --without-profile \
 			    --without-curses-h"
 
-PKG_CONFIGURE_OPTS_TARGET="--with-shared --with-normal --without-debug --without-ada --enable-widec --enable-pc-files --without-manpages --with-pkg-config-libdir=/usr/lib/pkgconfig"
+PKG_CONFIGURE_OPTS_TARGET="--with-shared --with-normal --without-debug --without-ada --enable-widec --enable-static --enable-pc-files --without-manpages --with-pkg-config-libdir=/usr/lib/pkgconfig"
 
 pre_configure_target() {
   # causes some segmentation fault's (dialog) when compiled with gcc's link time optimization.
