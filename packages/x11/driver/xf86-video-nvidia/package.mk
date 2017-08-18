@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -20,15 +20,14 @@ PKG_NAME="xf86-video-nvidia"
 # Remember to run "python packages/x11/driver/xf86-video-nvidia/scripts/make_nvidia_udev.py" and commit changes to
 # "packages/x11/driver/xf86-video-nvidia/udev.d/96-nvidia.rules" whenever bumping version.
 # Host may require installation of python-lxml and python-requests packages.
-PKG_VERSION="375.39"
-PKG_REV="1"
+PKG_VERSION="384.59"
+PKG_SHA256="2d03e687b6b77d072de057349fceb0b7b19a4387d610ea22928ce99d2945d165"
 PKG_ARCH="x86_64"
 PKG_LICENSE="nonfree"
 PKG_SITE="http://www.nvidia.com/"
 PKG_URL="http://us.download.nvidia.com/XFree86/Linux-x86_64/$PKG_VERSION/NVIDIA-Linux-x86_64-$PKG_VERSION-no-compat32.run"
 PKG_DEPENDS_TARGET="toolchain util-macros linux xorg-server libvdpau"
 PKG_NEED_UNPACK="$LINUX_DEPENDS"
-PKG_PRIORITY="optional"
 PKG_SECTION="x11/driver"
 PKG_SHORTDESC="xf86-video-nvidia: The Xorg driver for NVIDIA video chips"
 PKG_LONGDESC="These binary drivers provide optimized hardware acceleration of OpenGL applications via a direct-rendering X Server. AGP, PCIe, SLI, TV-out and flat panel displays are also supported. This version only supports GeForce 8xxx and higher of the Geforce GPUs plus complimentary Quadros and nforce."
@@ -37,29 +36,28 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 unpack() {
-  NV_PKG="`echo $PKG_URL | sed 's%.*/\(.*\)$%\1%'`"
   [ -d $PKG_BUILD ] && rm -rf $PKG_BUILD
 
-  sh $SOURCES/$PKG_NAME/$NV_PKG --extract-only --target $BUILD/$PKG_NAME-$PKG_VERSION
+  sh $SOURCES/$PKG_NAME/$PKG_SOURCE_NAME --extract-only --target $PKG_BUILD
 }
 
 make_target() {
   unset LDFLAGS
 
   cd kernel
-    make module CC=$CC SYSSRC=$(get_pkg_build linux) SYSOUT=$(get_pkg_build linux)
+    make module CC=$CC SYSSRC=$(kernel_path) SYSOUT=$(kernel_path)
     $STRIP --strip-debug nvidia.ko
   cd ..
 }
 
 makeinstall_target() {
-  mkdir -p $INSTALL/usr/lib/xorg/modules/drivers
-    cp -P nvidia_drv.so $INSTALL/usr/lib/xorg/modules/drivers/nvidia-main_drv.so
-    ln -sf /var/lib/nvidia_drv.so $INSTALL/usr/lib/xorg/modules/drivers/nvidia_drv.so
+  mkdir -p $INSTALL/$XORG_PATH_MODULES/drivers
+    cp -P nvidia_drv.so $INSTALL/$XORG_PATH_MODULES/drivers/nvidia-main_drv.so
+    ln -sf /var/lib/nvidia_drv.so $INSTALL/$XORG_PATH_MODULES/drivers/nvidia_drv.so
 
-  mkdir -p $INSTALL/usr/lib/xorg/modules/extensions
+  mkdir -p $INSTALL/$XORG_PATH_MODULES/extensions
   # rename to not conflicting with Mesa libGL.so
-    cp -P libglx.so* $INSTALL/usr/lib/xorg/modules/extensions/libglx_nvidia.so
+    cp -P libglx.so* $INSTALL/$XORG_PATH_MODULES/extensions/libglx_nvidia.so
 
   mkdir -p $INSTALL/etc/X11
     cp $PKG_DIR/config/*.conf $INSTALL/etc/X11
@@ -70,12 +68,12 @@ makeinstall_target() {
       ln -sf /var/lib/libnvidia-ml.so.1 $INSTALL/usr/lib/libnvidia-ml.so.1
     cp -P tls/libnvidia-tls.so.$PKG_VERSION $INSTALL/usr/lib
   # rename to not conflicting with Mesa libGL.so
-    cp -P libGL.so.$PKG_VERSION* $INSTALL/usr/lib/libGL_nvidia.so.1
+    cp -P libGL.so.$PKG_VERSION $INSTALL/usr/lib/libGL_nvidia.so.1
 
   mkdir -p $INSTALL/usr/lib/modules/$(get_module_dir)/nvidia
+    ln -sf /var/lib/nvidia.ko $INSTALL/usr/lib/modules/$(get_module_dir)/nvidia/nvidia.ko
     cp -P kernel/nvidia-uvm.ko $INSTALL/usr/lib/modules/$(get_module_dir)/nvidia
     cp -P kernel/nvidia-modeset.ko $INSTALL/usr/lib/modules/$(get_module_dir)/nvidia
-    ln -sf /var/lib/nvidia.ko $INSTALL/usr/lib/modules/$(get_module_dir)/nvidia/nvidia.ko
 
   mkdir -p $INSTALL/usr/lib/nvidia
     cp -P kernel/nvidia.ko $INSTALL/usr/lib/nvidia
