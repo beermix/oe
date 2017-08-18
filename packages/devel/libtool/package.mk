@@ -35,4 +35,4 @@ PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_HOST="CONFIG_SHELL=/bin/bash --enable-static --disable-shared"
 
-#PKG_CONFIGURE_OPTS_TARGET="CONFIG_SHELL=/bin/bash --enable-static --enable-shared"
+PKG_CONFIGURE_OPTS_TARGET="-C CONFIG_SHELL=/bin/bash --enable-static --enable-shared"

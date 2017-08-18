@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="icu"
-PKG_VERSION="57.1"
+PKG_VERSION="59.1"
 PKG_SITE="http://download.icu-project.org/files/icu4c/?C=M;O=D"
 PKG_URL="http://download.icu-project.org/files/${PKG_NAME}4c/${PKG_VERSION}/${PKG_NAME}4c-${PKG_VERSION//./_}-src.tgz"
 PKG_SOURCE_DIR="icu"
@@ -32,18 +32,32 @@ post_unpack() {
   cp -r $ROOT/$PKG_BUILD/source/* $ROOT/$PKG_BUILD/
 }
 
-pre_configure_target() {
-  export LIBS="$LIBS -latomic" 
-  strip_hard
-}
-
-#PKG_CONFIGURE_SCRIPT="source/configure"
-
-PKG_CONFIGURE_OPTS_HOST="--disable-samples --disable-tests --disable-extras --disable-icuio --disable-layout --disable-renaming"
-PKG_CONFIGURE_OPTS_TARGET="--disable-samples --disable-tests --with-cross-build=$ROOT/$PKG_BUILD/.$HOST_NAME"
+PKG_CONFIGURE_OPTS_HOST="--disable-debug \
+			    --enable-release \
+			    --enable-shared \
+			    --enable-static \
+			    --enable-draft \
+			    --enable-renaming \
+			    --disable-tracing \
+			    --disable-extras \
+			    --enable-dyload"
+			   
+PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
+			      --enable-release \
+			      --enable-shared \
+			      --enable-static \
+			      --enable-draft \
+			      --enable-renaming \
+			      --disable-tracing \
+			      --disable-extras \
+			      --enable-dyload \
+			      --disable-tools \
+			      --disable-tests \
+			      --disable-samples \
+			      --with-cross-build=$ROOT/$PKG_BUILD/.$HOST_NAME"
 
 post_makeinstall_target() {
-  rm -rf $INSTALL/usr/share/icu
-  rm -rf $INSTALL/bin
-  rm -rf $INSTALL/sbin
+  rm -rf $INSTALL/usr/lib/icu
+  rm -rf $INSTALL/usr/bin
+  rm -rf $INSTALL/usr/share
 }
