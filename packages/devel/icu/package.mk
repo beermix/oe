@@ -58,7 +58,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/lib/icu
-  #rm -rf $INSTALL/usr/bin
+  rm -rf $INSTALL/usr/bin
   rm -rf $INSTALL/usr/share
 }
 

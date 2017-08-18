@@ -4,10 +4,10 @@ PKG_URL="ftp://ftp.fftw.org/pub/fftw/fftw-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="service/system"
 PKG_USE_CMAKE="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 pre_configure_target() {
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
+  #export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
   export CFLAGS="$CFLAGS -malign-double -fstrict-aliasing -ffast-math -fopenmp -fPIC"
 }
 

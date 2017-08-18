@@ -21,7 +21,7 @@ PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
                            --with-zlib \
                            --with-libuv \
                            --without-libgcrypt \
-                           --with-sqlite3 \
-                           --with-xmltest \
+                           --without-sqlite3 \
                            --with-libxml2 \
+                           --with-gnu-ld \
                            --with-ca-bundle=/etc/ssl/cert.pem"
