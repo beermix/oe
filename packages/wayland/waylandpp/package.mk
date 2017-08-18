@@ -1,5 +1,5 @@
 PKG_NAME="waylandpp"
-PKG_VERSION="54e7c39"
+PKG_VERSION="0ac2c88"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/NilsBrause/waylandpp"

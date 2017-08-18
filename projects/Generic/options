@@ -78,7 +78,7 @@
     UVESAFB_SUPPORT="no"
 
   # Displayserver to use (x11 / no)
-    DISPLAYSERVER="wayland"
+    DISPLAYSERVER="x11"
 
   # KODI Player implementation to use (default / bcm2835-firmware / libfslvpuwrap)
     KODIPLAYER_DRIVER="default"

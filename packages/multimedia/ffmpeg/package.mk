@@ -120,6 +120,7 @@ configure_target() {
               --enable-swscale \
               --enable-postproc \
               --enable-avfilter \
+              --disable-devices \
               --enable-pthreads \
               --disable-w32threads \
               --enable-network \
@@ -132,8 +133,8 @@ configure_target() {
               --enable-mdct \
               --enable-rdft \
               --disable-crystalhd \
-              --disable-vaapi \
-              --disable-vdpau \
+              $FFMPEG_VAAPI \
+              $FFMPEG_VDPAU \
               --disable-dxva2 \
               --enable-runtime-cpudetect \
               $FFMPEG_TABLES \
@@ -185,7 +186,8 @@ configure_target() {
               --disable-altivec \
               $FFMPEG_FPU \
               --enable-yasm \
-              --disable-symver
+              --disable-symver \
+              --enable-indev=x11grab_xcb
 }
 
 post_makeinstall_target() {

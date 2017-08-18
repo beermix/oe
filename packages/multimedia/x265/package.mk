@@ -1,5 +1,5 @@
 PKG_NAME="x265"
-PKG_VERSION="2.4"
+PKG_VERSION="2.5"
 PKG_URL="https://bitbucket.org/multicoreware/x265/downloads/x265_$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SOURCE_DIR="x265_$PKG_VERSION"
