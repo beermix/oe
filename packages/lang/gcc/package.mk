@@ -17,11 +17,10 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="1bd23ca"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
-PKG_SITE="http://gcc.gnu.org/"
-PKG_GIT_URL="git://gcc.gnu.org/git/gcc.git"
+#PKG_VERSION="1bd23ca"
+#PKG_GIT_URL="git://gcc.gnu.org/git/gcc.git"
+PKG_VERSION="7-20170817"
+PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/$PKG_VERSION/gcc-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host"
 PKG_DEPENDS_TARGET="gcc:host"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host glibc"
@@ -64,7 +63,6 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
                               --disable-libssp \
-                              --disable-largefile \
                               --disable-libatomic \
                               --disable-libquadmath \
                               --disable-libmudflap \
@@ -74,8 +72,8 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-shared \
                               --disable-threads \
                               --without-headers \
-                              --disable-decimal-float \
                               --with-newlib \
+                              --disable-decimal-float \
                               $GCC_OPTS"
 
 PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
@@ -90,14 +88,6 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-threads=posix \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time \
-                         --disable-libunwind-exceptions \
-                         --enable-gnu-unique-object \
-                         --enable-linker-build-id \
-                         --enable-install-libiberty \
-                         --with-linker-hash-style=gnu \
-                         --enable-gnu-indirect-function \
-                         --enable-default-pie \
-                         --enable-default-ssp \
                          --enable-clocale=gnu \
                          $GCC_OPTS"
 pre_configure_host() {

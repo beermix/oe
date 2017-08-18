@@ -1,5 +1,5 @@
 PKG_NAME="shadowsocks-libev"
-PKG_VERSION="3.0.8"
+PKG_VERSION="git"
 #PKG_URL="https://dl.dropboxusercontent.com/s/sx6vms5ihja38ma/shadowsocks-libev-3.0.8.tar.xz"
 PKG_DEPENDS_TARGET="toolchain pcre libsodium libudns libev mbedtls"
 PKG_SECTION="my"

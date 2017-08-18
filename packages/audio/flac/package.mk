@@ -20,7 +20,7 @@ PKG_NAME="flac"
 PKG_VERSION="1.3.2"
 PKG_SITE="https://xiph.org/flac/"
 PKG_URL="http://downloads.xiph.org/releases/flac/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain libogg nasm:host"
+PKG_DEPENDS_TARGET="toolchain libogg"
 PKG_PRIORITY="optional"
 PKG_SECTION="audio"
 PKG_SHORTDESC="flac: An Free Lossless Audio Codec"
@@ -38,7 +38,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-rpath \
                            --disable-xmms-plugin \
                            --disable-oggtest \
                            --with-ogg=$SYSROOT_PREFIX/usr \
-                           --with-gnu-ld"
+                           --disable-shared --with-gnu-ld"
 
 if [ $TARGET_ARCH = "x86_64" ]; then
   PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET --enable-sse"

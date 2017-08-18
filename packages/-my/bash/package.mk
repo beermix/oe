@@ -1,6 +1,5 @@
 PKG_NAME="bash"
-PKG_VERSION="cb8c37d"
-#PKG_VERSION="bc00779"
+PKG_VERSION="bc00779"
 PKG_GIT_URL="https://github.com/bminor/bash"
 PKG_DEPENDS_TARGET="toolchain netbsd-curses readline"
 PKG_IS_ADDON="no"

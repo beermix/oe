@@ -39,22 +39,24 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-echo \
                            --without-ada \
                            --without-debug \
                            --without-manpages \
-                           --without-profile \
+                           --with-profile \
                            --with-progs \
                            --without-tests \
-                           --disable-big-core \
-                           --disable-home-terminfo \
+                           --enable-big-core \
+                           --enable-home-terminfo \
                            --with-normal \
                            --with-shared \
-                           --enable-static --enable-shared \
                            --with-fallbacks=linux,screen,xterm,xterm-256color \
                            --with-pkg-config-libdir=/usr/lib/pkgconfig \
                            --disable-widec"
 
-#pre_configure_target() {
+pre_configure_target() {
   # causes some segmentation fault's (dialog) when compiled with gcc's link time optimization.
-#  strip_lto
-#}
+  strip_lto
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-fomit-frame-pointer||g"`
+  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-fomit-frame-pointer||g"`
+  
+}
 
 post_makeinstall_target() {
   cp misc/ncurses-config $ROOT/$TOOLCHAIN/bin

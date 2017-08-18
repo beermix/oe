@@ -14,7 +14,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-cgroup \
 			      --sysconfdir=/storage/.config/htop \
 			      --datarootdir=/storage/.config/htop \
 			      --disable-silent-rules \
-			      --disable-unicode \
+			      --enable-unicode \
 			      --enable-hwloc \
 			      --enable-proc"
 
