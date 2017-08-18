@@ -46,7 +46,7 @@ else
 fi
 
 if [ "$DISPLAYSERVER" = "wayland" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET wayland"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET wayland wayland-protocols"
   MESA_EGL_PLATFORMS="--with-egl-platforms=wayland,drm"
 fi
 
