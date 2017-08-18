@@ -56,6 +56,8 @@ PKG_CONFIGURE_OPTS_TARGET="--with-progs \
 			      --enable-xmc-glitch \
 			      --enable-colorfgbg \
 			      --with-ticlib \
+			      --with-versioned-syms \
+			      --with-xterm-kbs=del \
 			      --with-termlib=tinfo \
 			      --enable-pc-files \
 			      --enable-widec \
@@ -72,10 +74,10 @@ post_makeinstall_target() {
   $SED "s:\(['=\" ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" $ROOT/$TOOLCHAIN/bin/ncurses-config
   
   ln -sfv ncursesw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/ncurses.pc
-  #ln -sfv panelw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/panel.pc
-  #ln -sfv tinfow.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/tinfo.pc
-  #ln -sfv formw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/form.pc
-  #ln -sfv menu.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/menu.pc
+  ln -sfv panelw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/panel.pc
+  ln -sfv tinfow.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/tinfo.pc
+  ln -sfv formw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/form.pc
+  ln -sfv menu.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/menu.pc
   
   #echo "INPUT(-lncursesw)" > $INSTALL/usr/lib/libncurses.so
   #echo "INPUT(-lncursesw)" > $SYSROOT_PREFIX/usr/lib/libncurses.so
