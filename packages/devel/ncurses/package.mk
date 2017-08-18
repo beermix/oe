@@ -50,18 +50,17 @@ PKG_CONFIGURE_OPTS_HOST="--without-shared \
 PKG_CONFIGURE_OPTS_TARGET="--with-progs \
 			      --enable-static \
 			      --with-shared \
+			      --without-manpages \
 			      --without-debug \
 			      --without-ada \
 			      --without-gpm \
 			      --enable-hard-tabs \
 			      --enable-xmc-glitch \
 			      --enable-colorfgbg \
-			      --disable-big-core \
 			      --with-ticlib \
 			      --with-termlib=tinfo \
-			      --enable-sigwinch \
 			      --enable-pc-files \
-			      --disable-rpath-hack \
+			      --enable-widec \
 			      --with-pkg-config-libdir=/usr/lib/pkgconfig"
 
 pre_configure_target() {
@@ -74,7 +73,7 @@ post_makeinstall_target() {
   chmod +x $ROOT/$TOOLCHAIN/bin/ncurses-config
   $SED "s:\(['=\" ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" $ROOT/$TOOLCHAIN/bin/ncurses-config
   
-  #ln -sfv ncursesw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/ncurses.pc
+  ln -sfv ncursesw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/ncurses.pc
   #ln -sfv panelw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/panel.pc
   #ln -sfv tinfow.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/tinfo.pc
   #ln -sfv formw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/form.pc

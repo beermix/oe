@@ -122,7 +122,7 @@ configure_host() {
         -DWITH_ZLIB=bundled \
         -DWITH_LIBWRAP=OFF \
         -DWITH_WSREP=OFF \
-        -DWITH_SYSTEMD=NO \
+        -DWITH_SYSTEMD=no \
         -DSECURITY_HARDENED=0 \
         ..
 }
@@ -160,7 +160,7 @@ configure_target() {
         -DWITH_READLINE=OFF \
         -DWITH_PCRE=bundled \
         -DWITH_ZLIB=bundled \
-        -DWITH_SYSTEMD=NO \
+        -DWITH_SYSTEMD=no \
         -DWITH_LIBWRAP=OFF \
         -DSECURITY_HARDENED=0 \
         -DWITH_SSL=$SYSROOT_PREFIX/usr \
