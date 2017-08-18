@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.bluez.org/"
 PKG_URL="http://www.kernel.org/pub/linux/bluetooth/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain dbus glib readline netbsd-curses"
+PKG_DEPENDS_TARGET="toolchain dbus glib readline systemd"
 PKG_PRIORITY="optional"
 PKG_SECTION="network"
 PKG_SHORTDESC="bluez: Bluetooth Tools and System Daemons for Linux."
@@ -38,7 +38,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-dependency-tracking \
                            --disable-cups \
                            --disable-obex \
                            --enable-client \
-                           --disable-systemd \
+                           --enable-systemd \
                            --enable-tools \
                            --enable-datafiles \
                            --disable-experimental \
@@ -67,6 +67,7 @@ pre_configure_target() {
 }
 
 post_makeinstall_target() {
+  rm -rf $INSTALL/usr/lib/systemd
   rm -rf $INSTALL/usr/bin/bccmd
   rm -rf $INSTALL/usr/bin/bluemoon
   rm -rf $INSTALL/usr/bin/ciptool
