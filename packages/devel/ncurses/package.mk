@@ -21,7 +21,8 @@ PKG_VERSION="52681a6"
 PKG_REV="1"
 PKG_SITE="http://invisible-mirror.net/archives/ncurses/current/?C=M;O=D"
 PKG_GIT_URL="git://anonscm.debian.org/collab-maint/ncurses.git"
-PKG_DEPENDS_TARGET="toolchain zlib"
+PKG_DEPENDS_TARGET="toolchain zlib ncurses:host"
+PKG_DEPENDS_HOST="zlib:host"
 PKG_SECTION="devel"
 PKG_SHORTDESC="ncurses: The ncurses (new curses) library"
 PKG_LONGDESC="The ncurses (new curses) library is a free software emulation of curses in System V Release 4.0, and more. It uses terminfo format, supports pads and color and multiple highlights and forms characters and function-key mapping, and has all the other SYSV-curses enhancements over BSD curses."
@@ -29,36 +30,28 @@ PKG_LONGDESC="The ncurses (new curses) library is a free software emulation of c
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_HOST="--without-shared \
-                         --with-build-cc="$HOST_CC" \
-                         --with-progs \
-                         --with-ticlib \
-                         --disable-tic-depends \
-                         --enable-symlinks \
-                         --without-manpages \
-                         --without-tests \
-                         --without-cxx \
-                         --without-cxx-binding \
-                         --without-gpm \
-                         --without-ada \
-                         --disable-termcap \
-                         --without-debug \
-                         --without-profile"
+PKG_CONFIGURE_OPTS_HOST="--without-cxx \
+			    --without-cxx-binding \
+			    --without-ada \
+			    --without-debug \
+			    --without-manpages \
+			    --without-profile \
+			    --without-tests \
+			    --without-curses-h"
 
-PKG_CONFIGURE_OPTS_TARGET="--with-progs --with-shared --enable-static \
+PKG_CONFIGURE_OPTS_TARGET="--with-progs \
+			      --with-shared \
+			      --enable-static \
 			      --without-manpages \
 			      --without-debug \
 			      --without-ada \
-			      --without-gpm \
-			      --enable-hard-tabs \
-			      --enable-xmc-glitch \
-			      --enable-colorfgbg \
-			      --with-ticlib \
-			      --with-termlib \
-			      --with-curses-h \
+			      --with-termlib=tinfo \
 			      --enable-pc-files \
+			      --with-pkg-config-libdir=/usr/lib/pkgconfig \
 			      --enable-widec \
-			      --with-pkg-config-libdir=/usr/lib/pkgconfig"
+			      --with-cxx-binding \
+			      --with-cxx-shared \
+			      --with-normal"
 
 pre_configure_target() {
   # causes some segmentation fault's (dialog) when compiled with gcc's link time optimization.
@@ -71,11 +64,11 @@ post_makeinstall_target() {
   $SED "s:\(['=\" ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" $ROOT/$TOOLCHAIN/bin/ncurses-config
   
   ln -sfv ncursesw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/ncurses.pc
-  ln -sfv panelw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/panel.pc
-  ln -sfv formw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/form.pc
-  ln -sfv menuw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/menu.pc
-  ln -sfv ticw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/tic.pc
-  ln -sfv tinfow.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/tinfo.pc
+  #ln -sfv panelw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/panel.pc
+  #ln -sfv formw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/form.pc
+  #ln -sfv menuw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/menu.pc
+  #ln -sfv ticw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/tic.pc
+  #ln -sfv tinfow.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/tinfo.pc
   
   #echo "INPUT(-lncursesw)" > $INSTALL/usr/lib/libncurses.so
   #echo "INPUT(-lncursesw)" > $SYSROOT_PREFIX/usr/lib/libncurses.so
@@ -86,13 +79,13 @@ post_makeinstall_target() {
   #ln -sfv libncurses.so $INSTALL/usr/lib/libcurses.so
   #ln -sfv libncurses.so $SYSROOT_PREFIX/usr/lib/libcurses.so
   
-  ln -sfv libcursesw.so $INSTALL/usr/lib/libcurses.so
-  ln -sfv libformw.so $INSTALL/usr/lib/libform.so
-  ln -sfv libmenuw.so $INSTALL/usr/lib/libmenu.so
-  ln -sfv libncursesw.so $INSTALL/usr/lib/libncurses.so
-  ln -sfv libpanelw.so $INSTALL/usr/lib/libpanel.so
-  ln -sfv ticw.so $INSTALL/usr/lib/tic.so
-  ln -sfv libtinfow.so $INSTALL/usr/lib/libtinfo.so
+ # ln -sfv libcursesw.so $INSTALL/usr/lib/libcurses.so
+ # ln -sfv libformw.so $INSTALL/usr/lib/libform.so
+ # ln -sfv libmenuw.so $INSTALL/usr/lib/libmenu.so
+ # ln -sfv libncursesw.so $INSTALL/usr/lib/libncurses.so
+ # ln -sfv libpanelw.so $INSTALL/usr/lib/libpanel.so
+ # ln -sfv ticw.so $INSTALL/usr/lib/tic.so
+ # ln -sfv libtinfow.so $INSTALL/usr/lib/libtinfo.so
   
   
   ln -sfv libcursesw.so $SYSROOT_PREFIX/usr/lib/libcurses.so
