@@ -13,7 +13,7 @@
 #  GNU General Public License for more details.
 #
 #  You should have received a copy of the GNU General Public License
-#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
+#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>. --with-curses=ncursesw
 ################################################################################
 
 PKG_NAME="alsa-utils"
@@ -33,9 +33,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-xmlto \
                            --enable-alsaconf \
                            --enable-alsaloop \
                            --enable-alsatest \
-                           --disable-bat \
-                           --with-curses=ncursesw"
-
+                           --disable-bat"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/lib $INSTALL/var

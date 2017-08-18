@@ -18,8 +18,8 @@
 
 PKG_NAME="alsa-tools"
 PKG_VERSION="1.1.3"
-PKG_SITE="http://www.alsa-project.org/"
-PKG_URL="ftp://ftp.alsa-project.org/pub/tools/alsa-tools-1.1.3.tar.bz2"
+PKG_SITE="ftp://ftp.alsa-project.org/pub/tools/"
+PKG_URL="ftp://ftp.alsa-project.org/pub/tools/alsa-tools-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain alsa-lib netbsd-curses gtk+"
 PKG_SECTION="audio"
 PKG_SHORTDESC="alsa-utils: Advanced Linux Sound Architecture utilities"
@@ -27,7 +27,6 @@ PKG_LONGDESC="This package includes the utilities for ALSA, like alsamixer, apla
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
-
 
 make_target() {
   cd $ROOT/$PKG_BUILD
