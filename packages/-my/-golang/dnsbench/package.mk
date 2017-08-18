@@ -6,7 +6,6 @@ PKG_SECTION="golang"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-
 pre_make_target() {
   export GOOS=linux
   export GOARCH=amd64

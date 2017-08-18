@@ -22,8 +22,8 @@ configure_target() {
  
 make_target() {
   mkdir -p bin
-  go get -u -t -v "github.com/beermix/torrent2http"
-  go build -v -u -buildmode=exe -o bin/torrent2http -a -ldflags "-s -w"
+  go get -u -t -v "github.com/anteo/libtorrent-go"
+  go build -v -o bin/torrent2http -a -ldflags "$LDFLAGS"
 }
 
 makeinstall_target() {

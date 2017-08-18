@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="freeglut"
-PKG_VERSION="75cd7a2"
+PKG_VERSION="a5e7ca9"
 PKG_ARCH="any"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://freeglut.sourceforge.net"

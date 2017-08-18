@@ -13,11 +13,11 @@ pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   sh autotool.sh
   
-  #strip_lto
+  strip_lto
   
-  export CFLAGS="$CFLAGS -fPIC"
-  export CXXFLAGS="$CXXFLAGS -fPIC"
-  export LDFLAGS="$LDFLAGS -fPIC"
+  #export CFLAGS="$CFLAGS -fPIC"
+  #export CXXFLAGS="$CXXFLAGS -fPIC"
+  #export LDFLAGS="$LDFLAGS -fPIC"
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \

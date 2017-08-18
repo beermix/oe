@@ -60,7 +60,7 @@ make_target() {
 }
 
 makeinstall_target() {
-  $ROOT/$TOOLCHAIN/bin/bjam -d2 --toolset=gcc link=shared target-os=linux variant=release python=2.7 threading=multi debug-symbols=off cflags="${CPPFLAGS} ${CFLAGS} -fPIC -O3" cxxflags="${CPPFLAGS} ${CXXFLAGS} -std=c++14 -fPIC -O3" linkflags="${LDFLAGS}" \
+  $ROOT/$TOOLCHAIN/bin/bjam -d2 --toolset=gcc link=shared target-os=linux variant=release python=2.7 threading=multi debug-symbols=off cflags="${CPPFLAGS} ${CFLAGS} -fPIC -O3" cxxflags="${CPPFLAGS} ${CXXFLAGS} -fPIC -O3" linkflags="${LDFLAGS}" \
                                 --prefix=$SYSROOT_PREFIX/usr \
                                 --ignore-site-config \
                                 --layout=system \
