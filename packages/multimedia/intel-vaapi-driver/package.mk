@@ -43,5 +43,4 @@ fi
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-silent-rules \
                            --enable-drm \
-                           --disable-wayland \
                            $DISPLAYSERVER_LIBVA"

@@ -45,6 +45,11 @@ else
   MESA_EGL_PLATFORMS="--with-egl-platforms=drm"
 fi
 
+if [ "$DISPLAYSERVER" = "wayland" ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET wayland"
+  MESA_EGL_PLATFORMS="--with-egl-platforms=wayland,drm"
+fi
+
 # configure GPU drivers and dependencies:
   get_graphicdrivers
 
@@ -106,7 +111,6 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --enable-shader-cache \
                            $MESA_GALLIUM_LLVM \
                            --enable-silent-rules \
-                           --with-gl-lib-name=GL \
                            --with-osmesa-lib-name=OSMesa \
                            --with-gallium-drivers=$GALLIUM_DRIVERS \
                            --with-dri-drivers=$DRI_DRIVERS \

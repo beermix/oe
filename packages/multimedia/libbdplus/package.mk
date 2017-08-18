@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libbdplus"
-PKG_VERSION="a908260"
+PKG_VERSION="795a9e4"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
