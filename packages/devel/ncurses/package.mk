@@ -48,6 +48,11 @@ PKG_CONFIGURE_OPTS_TARGET="--with-shared \
 			      --enable-pc-files \
 			      --without-manpages \
 			      --without-tests \
+			      --enable-termcap \
+                           --enable-getcap \
+                           --enable-getcap-cache \
+                           --enable-symlinks \
+                           --enable-tinfo \
 			      --with-pkg-config-libdir=/usr/lib/pkgconfig"
 
 pre_configure_target() {

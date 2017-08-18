@@ -13,7 +13,7 @@ pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   sh autotool.sh
   
-  strip_lto
+  #strip_lto
   
   #export CFLAGS="$CFLAGS -fPIC"
   #export CXXFLAGS="$CXXFLAGS -fPIC"
