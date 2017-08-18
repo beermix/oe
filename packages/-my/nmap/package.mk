@@ -10,8 +10,7 @@ pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
   export CPPFLAGS="$CPPFLAGS -Iliblua"
-  export LDFLAGS="$LDFLAGS -lz -lpthread -lm -ldl"
-  #export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
+  #export LDFLAGS="$LDFLAGS -lz -lpthread -lm -ldl"
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \
@@ -21,4 +20,5 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --with-libpcre=$SYSROOT_PREFIX/usr \
                            --without-ncat \
                            --without-ndiff \
-                           --without-zenmap"
+                           --without-zenmap \
+                           --with-gnu-ld"

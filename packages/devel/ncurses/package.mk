@@ -53,10 +53,8 @@ PKG_CONFIGURE_OPTS_TARGET="--with-shared \
                            --enable-getcap-cache \
                            --enable-symlinks \
                            --enable-ext-funcs \
-                           --disable-const \
                            --enable-no-padding \
-                           --disable-bsdpad \
-                           --disable-const \
+                           --with-curses-h \
 			      --with-pkg-config-libdir=/usr/lib/pkgconfig"
 
 pre_configure_target() {
