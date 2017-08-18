@@ -51,7 +51,7 @@
     OPTIMIZATIONS="normal"
 
   # Project CFLAGS
-    # PROJECT_CFLAGS="-mtune=$TARGET_CPU -mmmx -msse -msse2 -msse3 -mssse3 -msse4.1 -msse4.2  -maes -mfpmath=sse"
+    # PROJECT_CFLAGS="-mtune=$TARGET_CPU -mmmx -msse -msse2 -msse3 -mssse3 -msse4.1 -msse4.2 -maes -mfpmath=sse"
     PROJECT_CFLAGS="-mmmx -msse -msse2 -msse3 -msse4 -msse4.1 -msse4.2 -mavx -mfpmath=sse"
 
   # LTO (Link Time Optimization) support
