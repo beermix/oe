@@ -1,0 +1,47 @@
+diff --git a/system/library/video/movies/genres.xml b/system/library/video/movies/genres.xml
+index f3fdf26..94fa1d3 100644
+--- a/system/library/video/movies/genres.xml
++++ b/system/library/video/movies/genres.xml
+@@ -1,5 +1,5 @@
+ <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+-<node order="1" type="filter">
++<node order="10" type="filter">
+   <label>135</label>
+   <icon>DefaultGenre.png</icon>
+   <content>movies</content>
+diff --git a/system/library/video/movies/recentlyaddedmovies.xml b/system/library/video/movies/recentlyaddedmovies.xml
+index 1363d4b..943dc8f 100644
+--- a/system/library/video/movies/recentlyaddedmovies.xml
++++ b/system/library/video/movies/recentlyaddedmovies.xml
+@@ -1,5 +1,5 @@
+ <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+-<node order="10" type="folder" visible="Library.HasContent(Movies)">
++<node order="1" type="folder" visible="Library.HasContent(Movies)">
+   <label>20386</label>
+   <icon>DefaultRecentlyAddedMovies.png</icon>
+   <path>videodb://recentlyaddedmovies/</path>
+diff --git a/system/library/video/tvshows/genres.xml b/system/library/video/tvshows/genres.xml
+index 69b4dcd..e4e586a 100644
+--- a/system/library/video/tvshows/genres.xml
++++ b/system/library/video/tvshows/genres.xml
+@@ -1,5 +1,5 @@
+ <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+-<node order="1" type="filter">
++<node order="11" type="filter">
+   <label>135</label>
+   <icon>DefaultGenre.png</icon>
+   <content>tvshows</content>
+diff --git a/system/library/video/tvshows/recentlyaddedepisodes.xml b/system/library/video/tvshows/recentlyaddedepisodes.xml
+index caf1357..e0e4dac 100644
+--- a/system/library/video/tvshows/recentlyaddedepisodes.xml
++++ b/system/library/video/tvshows/recentlyaddedepisodes.xml
+@@ -1,5 +1,5 @@
+ <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+-<node order="11" type="folder" visible="Library.HasContent(TVShows)">
++<node order="1" type="folder" visible="Library.HasContent(TVShows)">
+   <label>20387</label>
+   <icon>DefaultRecentlyAddedEpisodes.png</icon>
+   <path>videodb://recentlyaddedepisodes/</path>
+-- 
+2.0.1
+
