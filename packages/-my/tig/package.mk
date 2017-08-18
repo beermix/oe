@@ -20,4 +20,5 @@ PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config \
 			      --oldincludedir=/storage/.config \
 			      --datarootdir=/storage/.config \
 			      --infodir=/storage/.config \     
-			      --localedir=/storage/.config"
+			      --localedir=/storage/.config \
+			      --with-ncursesw"

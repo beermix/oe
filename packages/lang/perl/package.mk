@@ -1,7 +1,7 @@
 PKG_NAME="perl"
 PKG_VERSION="5.27.2"
 PKG_URL="http://www.cpan.org/src/5.0/perl-${PKG_VERSION}.tar.xz"
-PKG_DEPENDS_TARGET="toolchain openssl gdbm db"
+PKG_DEPENDS_TARGET="toolchain pcre openssl gdbm db expat"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"

@@ -34,3 +34,5 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
                            --enable-structs \
                            --enable-raw-api \
                            --disable-purify-safety"
+                           
+PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"

@@ -13,15 +13,12 @@ PKG_CONFIGURE_SCRIPT="dist/configure"
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-static \
 			      --disable-java \
-			      --with-mutex=POSIX/pthreads/library \
-			      --disable-tcl \
-			      --disable-rpc \
 			      --enable-compat185 \
 			      --disable-debug \
-			      --disable-cxx"
+			      --enable-cxx"
 
 PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
 			   
-post_makeinstall_target() {
-  rm -rf $INSTALL
-}
+#post_makeinstall_target() {
+#  rm -rf $INSTALL
+#}

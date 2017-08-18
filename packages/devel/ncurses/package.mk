@@ -54,6 +54,14 @@ post_makeinstall_target() {
   $SED "s:\(['=\" ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" $ROOT/$TOOLCHAIN/bin/ncurses-config
   
   ln -sfv ncursesw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/ncurses.pc
+  echo "INPUT(-lncursesw)" > $INSTALL/usr/lib/libncurses.so
+  echo "INPUT(-lncursesw)" > $SYSROOT_PREFIX/usr/lib/libncurses.so
+
+  echo "INPUT(-lncursesw)" > $INSTALL/usr/lib/libcursesw.so
+  echo "INPUT(-lncursesw)" > $SYSROOT_PREFIX/usr/lib/libcursesw.so
+
+  ln -sfv libncurses.so $INSTALL/usr/lib/libcurses.so
+  ln -sfv libncurses.so $SYSROOT_PREFIX/usr/lib/libcurses.so
   
   rm -rf $INSTALL/usr/bin/ncurses*-config
 }

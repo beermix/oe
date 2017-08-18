@@ -22,7 +22,7 @@ PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_URL="http://www.kernel.org/pub/linux/utils/util-linux/v2.30/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain"
+PKG_DEPENDS_TARGET="toolchain readline ncurses pcre"
 PKG_DEPENDS_INIT="toolchain gcc:init"
 PKG_PRIORITY="optional"
 PKG_SECTION="system"
@@ -36,10 +36,8 @@ UTILLINUX_CONFIG_DEFAULT="--disable-gtk-doc \
                           --disable-nls \
                           --disable-rpath \
                           --enable-tls \
-                          --disable-all-programs \
                           --enable-chsh-only-listed \
                           --disable-bash-completion \
-                          --disable-colors-default \
                           --disable-pylibmount \
                           --disable-pg-bell \
                           --disable-use-tty-group \
@@ -49,13 +47,8 @@ UTILLINUX_CONFIG_DEFAULT="--disable-gtk-doc \
                           --without-selinux \
                           --without-audit \
                           --without-udev \
-                          --without-ncurses \
-                          --without-readline \
                           --without-slang \
-                          --without-tinfo \
                           --without-utempter \
-                          --without-util \
-                          --without-libz \
                           --without-user \
                           --without-systemd \
                           --without-smack \
@@ -79,7 +72,35 @@ fi
 
 PKG_CONFIGURE_OPTS_HOST="--enable-static \
                          --disable-shared \
-                         $UTILLINUX_CONFIG_DEFAULT \
+                         --disable-gtk-doc \
+                         --disable-nls \
+                         --disable-rpath \
+                         --enable-tls \
+                         --disable-all-programs \
+                         --enable-chsh-only-listed \
+                         --disable-bash-completion \
+                         --disable-colors-default \
+                         --disable-pylibmount \
+                         --disable-pg-bell \
+                         --disable-use-tty-group \
+                         --disable-makeinstall-chown \
+                         --disable-makeinstall-setuid \
+                         --with-gnu-ld \
+                         --without-selinux \
+                         --without-audit \
+                         --without-udev \
+                         --without-ncurses \
+                         --without-readline \
+                         --without-slang \
+                         --without-tinfo \
+                         --without-utempter \
+                         --without-util \
+                         --without-libz \
+                         --without-user \
+                         --without-systemd \
+                         --without-smack \
+                         --without-python \
+                         --without-systemdsystemunitdir
                          --enable-uuidgen \
                          --enable-libuuid"
 
