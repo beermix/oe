@@ -26,4 +26,4 @@ PKG_SHORTDESC="libxfixes: X Fixes Library"
 PKG_LONGDESC="X Fixes Library"
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"

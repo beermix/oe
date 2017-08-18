@@ -28,6 +28,4 @@ PKG_LONGDESC="LibXdamage provides an X Window System client interface to the DAM
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC"
-}
+

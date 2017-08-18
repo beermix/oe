@@ -28,6 +28,4 @@ PKG_LONGDESC="X Composite Library"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC"
-}
+
