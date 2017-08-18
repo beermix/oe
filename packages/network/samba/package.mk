@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="samba"
-PKG_VERSION="4.5.6"
+PKG_VERSION="4.7.0rc4"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv3+"
 PKG_SITE="http://www.samba.org"
-PKG_URL="https://download.samba.org/pub/samba/stable/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain heimdal:host e2fsprogs Python zlib readline popt libaio connman"
 PKG_PRIORITY="optional"
 PKG_SECTION="network"
@@ -94,7 +94,7 @@ PKG_CONFIGURE_OPTS="--prefix=/usr \
 PKG_SAMBA_TARGET="smbclient"
 
 [ "$SAMBA_SERVER" = "yes" ] && PKG_SAMBA_TARGET+=",smbd/smbd,nmbd,smbpasswd"
-[ "$DEVTOOLS" = "yes" ] && PKG_SAMBA_TARGET+=",smbtree,testparm"
+[ "$DEVTOOLS" = "yes" ] && PKG_SAMBA_TARGET+=",client/smbclient,smbtree,testparm"
 
 pre_configure_target() {
 # samba uses its own build directory
@@ -107,8 +107,8 @@ pre_configure_target() {
   export LDFLAGS+=" -lreadline"
 
 # support 64-bit offsets and seeks on 32-bit platforms
-  if [ "$TARGET_ARCH" = "arm" ]; then
-    export CFLAGS+="-D_FILE_OFFSET_BITS=64 -D_OFF_T_DEFINED_ -Doff_t=off64_t -Dlseek=lseek64"
+  if [ "$TARGET_ARCH" = "arm" -o "$TARGET_ARCH" = "i386" ]; then
+    export CFLAGS+=" -D_FILE_OFFSET_BITS=64 -D_OFF_T_DEFINED_ -Doff_t=off64_t -Dlseek=lseek64"
   fi
 }
 
