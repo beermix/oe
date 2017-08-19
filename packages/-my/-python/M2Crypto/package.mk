@@ -4,12 +4,9 @@
 ################################################################################
 
 PKG_NAME="M2Crypto"
-PKG_VERSION="0.22.6rc4"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="OSS"
-PKG_SITE="https://pypi.python.org/pypi/M2Crypto"
-PKG_URL="http://pypi.python.org/packages/source/M/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.gz"
+#PKG_VERSION="0.25.1"
+PKG_VERSION="0.22.5"
+PKG_GIT_URL="https://gitlab.com/m2crypto/m2crypto"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="xmedia/torrent"

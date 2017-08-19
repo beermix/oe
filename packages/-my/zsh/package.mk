@@ -6,10 +6,6 @@ PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-pre_configure_target() {
-  strip_hard
-}
-
 PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
 			      --bindir=/bin \
 			      --enable-multibyte \
@@ -19,7 +15,6 @@ PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
 			      --disable-ansi2knr \
 			      --disable-dynamic \
 			      --sysconfdir=/storage/.config \
-			      --with-term-lib=ncursesw \
 			      --disable-etcdir \
 			      --enable-function-subdirs \
 			      --with-tcsetpgrp \
