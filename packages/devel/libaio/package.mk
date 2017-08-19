@@ -32,7 +32,5 @@ PKG_LONGDESC="AIO enables even a single application thread to overlap I/O operat
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-pre_build_target() {
-  strip_lto
-  strip_gold
-}
+strip_lto
+

@@ -1,0 +1,138 @@
+Description: Fix man page typos
+Author: Guillem Jover <guillem@debian.org>
+Origin: vendor
+Forwarded: no
+Last-Update: 2016-05-31
+
+---
+ man/io.3               |    2 +-
+ man/io_fsync.3         |    4 ++--
+ man/io_prep_fsync.3    |    2 +-
+ man/io_prep_pread.3    |    2 +-
+ man/io_prep_pwrite.3   |    2 +-
+ man/io_queue_release.3 |    2 +-
+ man/io_queue_run.3     |    2 +-
+ man/io_queue_wait.3    |    2 +-
+ man/io_set_callback.3  |    2 +-
+ man/io_submit.3        |    2 +-
+ 10 files changed, 11 insertions(+), 11 deletions(-)
+
+--- a/man/io.3
++++ b/man/io.3
+@@ -1,7 +1,7 @@
+ .TH io 3 2009-06-10 "Linux 2.4" "Linux AIO"
+ .SH NAME
+ io \- Asynchronous IO
+-.SH SYNOPSYS
++.SH SYNOPSIS
+ .nf
+ .B #include <errno.h>
+ .sp
+--- a/man/io_fsync.3
++++ b/man/io_fsync.3
+@@ -7,7 +7,7 @@
+ .TH io_fsync 3 2009-06-10 "Linux 2.4" Linux AIO"
+ .SH NAME
+ io_fsync \- Synchronize a file's complete in-core state with that on disk
+-.SH SYNOPSYS
++.SH SYNOPSIS
+ .nf
+ .B #include <errno.h>
+ .sp
+@@ -58,7 +58,7 @@ referenced data outside of the program's
+ .TP
+ .B EINVAL
+ .I ctx
+-refers to an unitialized aio context, the iocb pointed to by 
++refers to an uninitialized aio context, the iocb pointed to by
+ .I iocbs
+ contains an improperly initialized iocb, 
+ .TP
+--- a/man/io_prep_fsync.3
++++ b/man/io_prep_fsync.3
+@@ -8,7 +8,7 @@
+ .TH io_prep_fsync 3 2009-06-10 "Linux 2.4" Linux AIO"
+ .SH NAME
+ io_prep_fsync \- Synchronize a file's complete in-core state with that on disk
+-.SH SYNOPSYS
++.SH SYNOPSIS
+ .nf
+ .B #include <errno.h>
+ .br
+--- a/man/io_prep_pread.3
++++ b/man/io_prep_pread.3
+@@ -11,7 +11,7 @@
+ .TH io_prep_pread 3 2009-06-10 "Linux 2.4" Linux AIO"
+ .SH NAME
+ io_prep_pread \- Set up asynchronous read
+-.SH SYNOPSYS
++.SH SYNOPSIS
+ .nf
+ .B #include <errno.h>
+ .sp
+--- a/man/io_prep_pwrite.3
++++ b/man/io_prep_pwrite.3
+@@ -11,7 +11,7 @@
+ .TH io_prep_pwrite 3 2009-06-10 "Linux 2.4" Linux AIO"
+ .SH NAME
+ io_prep_pwrite \- Set up iocb for asynchronous writes
+-.SH SYNOPSYS
++.SH SYNOPSIS
+ .nf
+ .B #include <errno.h>
+ .br
+--- a/man/io_queue_release.3
++++ b/man/io_queue_release.3
+@@ -25,7 +25,7 @@ error is one of the Exxx values defined
+ .TP
+ .B EINVAL
+ .I ctx 
+-refers to an unitialized aio context, the \fIiocb\fP pointed to by
++refers to an uninitialized aio context, the \fIiocb\fP pointed to by
+ .I iocbs 
+ contains an improperly initialized \fIiocb\fP.
+ .TP
+--- a/man/io_queue_run.3
++++ b/man/io_queue_run.3
+@@ -28,7 +28,7 @@ referenced data outside of the program's
+ .TP
+ .B EINVAL
+ .I ctx_id
+-refers to an unitialized aio context, the \fIiocb\fP pointed to by
++refers to an uninitialized aio context, the \fIiocb\fP pointed to by
+ .I iocbs 
+ contains an improperly initialized iocb.
+ .TP
+--- a/man/io_queue_wait.3
++++ b/man/io_queue_wait.3
+@@ -34,7 +34,7 @@ referenced data outside of the program's
+ .TP
+ .B EINVAL
+ .I ctx_id
+-refers to an unitialized aio context, the \fIiocb\fP pointed to by
++refers to an uninitialized aio context, the \fIiocb\fP pointed to by
+ .I iocbs 
+ contains an improperly initialized iocb.
+ .TP
+--- a/man/io_set_callback.3
++++ b/man/io_set_callback.3
+@@ -2,7 +2,7 @@
+ .TH io_set_callback 3 2009-06-10 "Linux 2.4" Linux AIO"
+ .SH NAME
+ io_set_callback \- Set up io completion callback function
+-.SH SYNOPSYS
++.SH SYNOPSIS
+ .nf
+ .B #include <errno.h>
+ .br
+--- a/man/io_submit.3
++++ b/man/io_submit.3
+@@ -110,7 +110,7 @@ referenced data outside of the program's
+ .TP
+ .B EINVAL
+ .I ctx
+-refers to an unitialized aio context, the iocb pointed to by 
++refers to an uninitialized aio context, the iocb pointed to by
+ .I iocbs
+ contains an improperly initialized iocb, 
+ .TP
