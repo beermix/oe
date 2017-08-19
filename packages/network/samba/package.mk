@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="samba"
-PKG_VERSION="4.5.11"
+PKG_VERSION="4.6.7"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv3+"
 PKG_SITE="https://download.samba.org/pub/samba/stable/?C=M;O=D"
-PKG_URL="https://download.samba.org/pub/samba/stable/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_URL="https://samba.org/samba/ftp/stable/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain heimdal:host e2fsprogs Python zlib readline popt libaio connman"
 PKG_PRIORITY="optional"
 PKG_SECTION="network"
@@ -94,7 +94,7 @@ PKG_CONFIGURE_OPTS="--prefix=/usr \
 
 PKG_SAMBA_TARGET="smbclient"
 
-[ "$SAMBA_SERVER" = "yes" ] && PKG_SAMBA_TARGET+=",smbd/smbd,nmbd,smbpasswd"
+[ "$SAMBA_SERVER" = "yes" ] && PKG_SAMBA_TARGET+=",smbd/smbd,nmbd,smbpasswd,testparm"
 [ "$DEVTOOLS" = "yes" ] && PKG_SAMBA_TARGET+=",client/smbclient,smbtree,testparm"
 
 pre_configure_target() {
