@@ -17,7 +17,10 @@
 ################################################################################
 
 PKG_NAME="Adafruit_Python_PureIO"
-PKG_VERSION="a29d95a"
+PKG_VERSION="5e952c2"
+PKG_SHA256="53faa8629802fad6e8b7bdc434b6cef5f81cb84541564a193e26f334e5b4aa7d"
+PKG_ARCH="any"
+PKG_LICENSE="MIT"
 PKG_SITE="https://github.com/adafruit/${PKG_NAME}"
 PKG_URL="https://github.com/adafruit/${PKG_NAME}/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"

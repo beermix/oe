@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="hid_mapper"
-PKG_VERSION="0"
+PKG_VERSION="2.1.0"
 PKG_SITE=""
 PKG_URL="http://www.coldsource.net/hid_mapper.tar.gz"
 PKG_SOURCE_DIR="${PKG_NAME}_beta"

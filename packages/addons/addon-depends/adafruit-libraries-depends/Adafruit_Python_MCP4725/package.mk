@@ -17,7 +17,10 @@
 ################################################################################
 
 PKG_NAME="Adafruit_Python_MCP4725"
-PKG_VERSION="5b5fc87"
+PKG_VERSION="8a30e5e"
+PKG_SHA256="83b1e7ff1b2d7c1794b2aedf7d824bd9099bc4068b56ddb83531959ab73602d1"
+PKG_ARCH="any"
+PKG_LICENSE="MIT"
 PKG_SITE="https://github.com/adafruit/${PKG_NAME}"
 PKG_URL="https://github.com/adafruit/${PKG_NAME}/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"

@@ -34,3 +34,6 @@ PKG_USE_CMAKE="no"
 PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--with-icu=yes"
+pre_configure_target() {
+  export LIBS="-ldl"
+}

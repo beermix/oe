@@ -17,7 +17,10 @@
 ################################################################################
 
 PKG_NAME="Adafruit_Python_BMP"
-PKG_VERSION="ad6521d"
+PKG_VERSION="4e89e32"
+PKG_SHA256="3577cf738f7da2373efc86b638b5e6a6227f93c661dac72db95a54dfda2d7069"
+PKG_ARCH="any"
+PKG_LICENSE="MIT"
 PKG_SITE="https://github.com/adafruit/${PKG_NAME}"
 PKG_URL="https://github.com/adafruit/${PKG_NAME}/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"

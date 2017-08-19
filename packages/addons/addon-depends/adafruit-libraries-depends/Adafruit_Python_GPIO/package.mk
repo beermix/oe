@@ -17,7 +17,10 @@
 ################################################################################
 
 PKG_NAME="Adafruit_Python_GPIO"
-PKG_VERSION="fdf0fca"
+PKG_VERSION="060f6d6"
+PKG_SHA256="f3361a03571ba53e47791a884129f1699ea4a18b8ac104e4c520c795d54b452b"
+PKG_ARCH="any"
+PKG_LICENSE="MIT"
 PKG_SITE="https://github.com/adafruit/${PKG_NAME}"
 PKG_URL="https://github.com/adafruit/${PKG_NAME}/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"

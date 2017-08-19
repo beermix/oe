@@ -17,12 +17,13 @@
 ################################################################################
 
 PKG_NAME="syncthing"
-PKG_VERSION="v0.14.29"
-PKG_REV="103"
+PKG_VERSION="0.14.29"
+PKG_SHA256="99002701279abedace88283b1381ff7850b6c20df62ae119b271ffd89716fcfd"
+PKG_REV="105"
 PKG_ARCH="any"
 PKG_LICENSE="MPLv2"
 PKG_SITE="https://syncthing.net/"
-PKG_GIT_URL="https://github.com/syncthing/syncthing"
+PKG_URL="https://github.com/syncthing/syncthing/archive/v${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain go:host"
 PKG_SECTION="service/system"
 PKG_SHORTDESC="Syncthing: open source continuous file synchronization"
@@ -47,9 +48,9 @@ configure_target() {
 
   $TOOLCHAIN/lib/golang/bin/go run build.go assets
 
-  mkdir -p $ROOT/$PKG_BUILD $ROOT/$PKG_BUILD/src/github.com/syncthing
-  ln -fs $ROOT/$PKG_BUILD $ROOT/$PKG_BUILD/src/github.com/syncthing/syncthing
-  ln -fs $ROOT/$PKG_BUILD/vendor $ROOT/$PKG_BUILD/vendor/src
+  mkdir -p $PKG_BUILD $PKG_BUILD/src/github.com/syncthing
+  ln -fs $PKG_BUILD $PKG_BUILD/src/github.com/syncthing/syncthing
+  ln -fs $PKG_BUILD/vendor $PKG_BUILD/vendor/src
 
   case $TARGET_ARCH in
     x86_64)
@@ -70,20 +71,10 @@ configure_target() {
       esac
       ;;
   esac
-
-  export GOOS=linux
-  export CGO_ENABLED=1
-  export CGO_NO_EMULATION=1
-  export CGO_CFLAGS=$CFLAGS
-  export LDFLAGS="-w -linkmode external -extldflags -Wl,--unresolved-symbols=ignore-in-shared-libs -extld $CC -X main.Version=v$PKG_VERSION"
-  export GOLANG=$ROOT/$TOOLCHAIN/lib/golang/bin/go
-  export GOPATH=$ROOT/$PKG_BUILD/src/github.com/syncthing/syncthing:$ROOT/$PKG_BUILD/vendor:$ROOT/$PKG_BUILD/Godeps/_workspace
-  export GOROOT=$ROOT/$TOOLCHAIN/lib/golang
-  export PATH=$PATH:$GOROOT/bin
 }
 
 make_target() {
-  cd $ROOT/$PKG_BUILD/src/github.com/syncthing/syncthing
+  cd $PKG_BUILD/src/github.com/syncthing/syncthing
   mkdir -p bin
   $GOLANG build -v -o bin/syncthing -a -ldflags "$LDFLAGS" ./cmd/syncthing
 }
@@ -94,5 +85,5 @@ makeinstall_target() {
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
-  cp -P $ROOT/$PKG_BUILD/bin/syncthing $ADDON_BUILD/$PKG_ADDON_ID/bin
+  cp -P $PKG_BUILD/bin/syncthing $ADDON_BUILD/$PKG_ADDON_ID/bin
 }

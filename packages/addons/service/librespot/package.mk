@@ -18,27 +18,35 @@
 ################################################################################
 
 PKG_NAME="librespot"
-PKG_VERSION="446d7a9"
-PKG_REV="100"
+PKG_VERSION="910974e"
+PKG_SHA256="3f04bfb0ce5a7626653a16c31e1934736c2a39c0e58e27bc0e308c2eccd45756"
+PKG_REV="106"
 PKG_ARCH="any"
-PKG_LICENSE="prop."
+PKG_LICENSE="MIT"
 PKG_SITE="https://github.com/plietar/$PKG_NAME/"
-PKG_GIT_URL="https://github.com/awiouy/librespot-binaries"
-PKG_DEPENDS_TARGET="toolchain pyalsaaudio"
+PKG_URL="https://github.com/plietar/$PKG_NAME/archive/$PKG_VERSION.zip"
+PKG_DEPENDS_TARGET="toolchain avahi libvorbis pulseaudio pyalsaaudio rust"
 PKG_SECTION="service"
-PKG_SHORTDESC="Librespot: use Spotify Connect through LibreELEC"
-PKG_LONGDESC="Librespot ($PKG_VERSION) plays Spotify through LibreELEC using the opensource librespot library using a Spotify app as a remote."
+PKG_SHORTDESC="Librespot: play Spotify through LibreELEC using a Spotify app as a remote"
+PKG_LONGDESC="Librespot ($PKG_VERSION) plays Spotify through LibreELEC using the open source librespot library using a Spotify app as a remote."
 PKG_AUTORECONF="no"
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Librespot"
-PKG_ADDON_TYPE="xbmc.service"
+PKG_ADDON_TYPE="xbmc.service.library"
 PKG_MAINTAINER="Anton Voyl (awiouy)"
 
+configure_target() {
+  . "$TOOLCHAIN/.cargo/env"
+  export PKG_CONFIG_ALLOW_CROSS=0
+  strip_lto
+}
+
 make_target() {
-  if [ "PROJECT" = "RPi" ]; then
-    exit
-  fi
+  cd src
+  $CARGO_BUILD --no-default-features --features "alsa-backend pulseaudio-backend with-avahi"
+  cd "$PKG_BUILD/.$TARGET_NAME"/*/release
+  $STRIP librespot
 }
 
 makeinstall_target() {
@@ -47,10 +55,14 @@ makeinstall_target() {
 
 addon() {
   mkdir -p "$ADDON_BUILD/$PKG_ADDON_ID"
-  cp -R "$PKG_BUILD/$TARGET_ARCH"/* \
-        "$ADDON_BUILD/$PKG_ADDON_ID/"
-
-  mkdir -p "$ADDON_BUILD/$PKG_ADDON_ID/wizard"
   cp "$(get_build_dir pyalsaaudio)/.install_pkg/usr/lib/python2.7/site-packages/alsaaudio.so" \
-     "$ADDON_BUILD/$PKG_ADDON_ID/wizard/"
+     "$ADDON_BUILD/$PKG_ADDON_ID"
+
+  mkdir -p "$ADDON_BUILD/$PKG_ADDON_ID/bin"
+  cp "$PKG_BUILD/.$TARGET_NAME"/*/release/librespot  \
+     "$ADDON_BUILD/$PKG_ADDON_ID/bin"
+
+  mkdir -p "$ADDON_BUILD/$PKG_ADDON_ID/lib"
+  cp "$(get_build_dir avahi)/avahi-compat-libdns_sd/.libs/libdns_sd.so.1" \
+     "$ADDON_BUILD/$PKG_ADDON_ID/lib"
 }
