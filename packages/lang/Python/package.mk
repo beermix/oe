@@ -33,7 +33,6 @@ PKG_CONFIGURE_OPTS_HOST="--cache-file=config.cache \
                          --without-cxx-main \
                          --with-threads \
                          --enable-unicode=ucs4 \
-                         --enable-optimizations \
                          --without-ensurepip \
                          --without-doc-strings \
                          --disable-ipv6"
@@ -48,7 +47,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            ac_cv_file__dev_ptc=no \
                            ac_cv_have_long_long_format=yes \
                            --with-threads \
-                           --enable-optimizations \
                            --enable-unicode=ucs4 \
                            --disable-ipv6 \
                            --disable-profiling \
