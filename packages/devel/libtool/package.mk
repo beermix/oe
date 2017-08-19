@@ -36,8 +36,15 @@ PKG_AUTORECONF="no"
 pre_configure_host() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
-  
+  ./bootstrap
+}
+
+pre_configure_target() {
+  cd $ROOT/$PKG_BUILD
+  rm -rf .$TARGET_NAME
+  make clean
   ./bootstrap
 }
 
 PKG_CONFIGURE_OPTS_HOST="CONFIG_SHELL=/bin/bash --enable-static --disable-shared"
+PKG_CONFIGURE_OPTS_TARGET="CONFIG_SHELL=/bin/bash --disable-static --enable-shared"

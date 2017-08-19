@@ -20,7 +20,7 @@ PKG_NAME="pulseaudio"
 PKG_VERSION="10.99.1"
 PKG_SITE="http://pulseaudio.org/"
 PKG_URL="http://www.freedesktop.org/software/pulseaudio/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain libtool fftw alsa-lib libsndfile soxr dbus openssl libcap"
+PKG_DEPENDS_TARGET="toolchain libtool alsa-lib libsndfile soxr dbus openssl libcap"
 PKG_PRIORITY="optional"
 PKG_SECTION="audio"
 PKG_SHORTDESC="pulseaudio: Yet another sound server for Unix"
@@ -95,7 +95,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
                            --with-system-group=root \
                            --with-access-group=root \
                            --without-caps \
-                           --enable-fftw \
+                           --disable-fftw \
                            --without-speex \
                            --with-soxr \
                            --with-module-dir=/usr/lib/pulse"
