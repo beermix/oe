@@ -38,17 +38,18 @@ PKG_CONFIGURE_OPTS_TARGET="--without-ada \
                            --with-shared \
                            --without-debug \
                            --without-manpages \
-                           --with-termlib \
-                           --disable-rpath \
-                           --enable-termcap \
-                           --enable-getcap \
-                           --enable-getcap-cache \
+                           --without-hashed-db \
+                           --with-cxx-shared \
+                           --disable-termcap \
                            --enable-symlinks \
-                           --enable-ext-funcs \
-                           --with-termlib=tinfo \
+                           --with-rcs-ids \
+                           --enable-const \
+                           --enable-colorfgbg \
+                           --enable-hard-tabs \
+                           --enable-echo \
                            --enable-pc-files \
                            --with-pkg-config-libdir=/usr/lib/pkgconfig \
-                           --disable-widec \
+                           --enable-widec \
                            --disable-warnings"
 
 pre_configure_target() {
@@ -60,41 +61,28 @@ post_makeinstall_target() {
   cp misc/ncurses-config $ROOT/$TOOLCHAIN/bin
   chmod +x $ROOT/$TOOLCHAIN/bin/ncurses-config
 
-  #echo "INPUT(-lncursesw)" > $INSTALL/usr/lib/libncurses.so
-#  echo "INPUT(-lncursesw)" > $SYSROOT_PREFIX/usr/lib/libncurses.so
-#
-#  echo "INPUT(-lncursesw)" > $INSTALL/usr/lib/libcursesw.so
-#  echo "INPUT(-lncursesw)" > $SYSROOT_PREFIX/usr/lib/libcursesw.so
-#  
-#  echo "INPUT(-lnmenuw)" > $SYSROOT_PREFIX/usr/lib/libmenu.so
-#  echo "INPUT(-lnmenuw)" > $INSTALL/usr/lib/libmenu.so
-#    
-#  echo "INPUT(-lnpanelw)" > $SYSROOT_PREFIX/usr/lib/libpanel.so
-#  echo "INPUT(-lnpanelw)" > $INSTALL/usr/lib/libpanel.so
-#    
-#  echo "INPUT(-lnformw)" > $SYSROOT_PREFIX/usr/lib/libform.so
-#  echo "INPUT(-lnformw)" > $INSTALL/usr/lib/libform.so
-#  
-#
-#  ln -sfv libncurses.so $INSTALL/usr/lib/libcurses.so
-#  ln -sfv libncurses.so $SYSROOT_PREFIX/usr/lib/libcurses.so
-# 
-# 
-#  ln -sfv libformw.so $INSTALL/usr/lib/libform.so
-#  ln -sfv libmenuw.so $INSTALL/usr/lib/libmenu.so
-#  ln -sfv libncursesw.so $INSTALL/usr/lib/libncurses.so
-#  ln -sfv libpanelw.so $INSTALL/usr/lib/libpanel.so
-#  ln -sfv ticw.so $INSTALL/usr/lib/tic.so
-#  ln -sfv libtinfow.so $INSTALL/usr/lib/libtinfo.so
-#  
-#  ln -sfv libformw.so $SYSROOT_PREFIX/usr/lib/libform.so
-#  ln -sfv libmenuw.so $SYSROOT_PREFIX/usr/lib/libmenu.so
-#  ln -sfv libncursesw.so $SYSROOT_PREFIX/usr/lib/libncurses.so
-#  ln -sfv libpanelw.so $SYSROOT_PREFIX/usr/lib/libpanel.so
-#  ln -sfv ticw.so $SYSROOT_PREFIX/usr/lib/tic.so
-#  ln -sfv libtinfow.so $SYSROOT_PREFIX/usr/lib/libtinfo.so
-#  
-#  ln -sfv ncursesw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/ncurses.pc
+  ln -sfv ncursesw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/ncurses.pc
+  
+  echo "INPUT(-lncursesw)" > $INSTALL/usr/lib/libncurses.so
+  echo "INPUT(-lncursesw)" > $SYSROOT_PREFIX/usr/lib/libncurses.so
+
+  echo "INPUT(-lncursesw)" > $INSTALL/usr/lib/libcursesw.so
+  echo "INPUT(-lncursesw)" > $SYSROOT_PREFIX/usr/lib/libcursesw.so
+
+  ln -sfv libncurses.so $INSTALL/usr/lib/libcurses.so
+  ln -sfv libncurses.so $SYSROOT_PREFIX/usr/lib/libcurses.so
+  
+  ln -sfv libformw.so $INSTALL/usr/lib/libform.so
+  ln -sfv libmenuw.so $INSTALL/usr/lib/libmenu.so
+  ln -sfv libpanelw.so $INSTALL/usr/lib/libpanel.so
+  #ln -sfv ticw.so $INSTALL/usr/lib/tic.so
+  #ln -sfv libtinfow.so $INSTALL/usr/lib/libtinfo.so
+  
+  ln -sfv libformw.so $SYSROOT_PREFIX/usr/lib/libform.so
+  ln -sfv libmenuw.so $SYSROOT_PREFIX/usr/lib/libmenu.so
+  ln -sfv libpanelw.so $SYSROOT_PREFIX/usr/lib/libpanel.so
+  #ln -sfv ticw.so $SYSROOT_PREFIX/usr/lib/tic.so
+  #ln -sfv libtinfow.so $SYSROOT_PREFIX/usr/lib/libtinfo.so
   
   rm -rf $INSTALL/usr/bin/ncurses*-config
 }
