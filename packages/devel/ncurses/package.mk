@@ -18,10 +18,10 @@
 
 PKG_NAME="ncurses"
 PKG_VERSION="6.0-20170812"
+PKG_SITE="http://invisible-mirror.net/archives/ncurses/current/?C=M;O=D"
 PKG_URL="http://invisible-mirror.net/archives/ncurses/current/ncurses-$PKG_VERSION.tgz"
 #PKG_VERSION="52681a6"
-#PKG_SITE="http://invisible-mirror.net/archives/ncurses/current/?C=M;O=D"
-PKG_GIT_URL="git://anonscm.debian.org/collab-maint/ncurses.git"
+#PKG_GIT_URL="git://anonscm.debian.org/collab-maint/ncurses.git"
 PKG_DEPENDS_TARGET="toolchain zlib"
 PKG_DEPENDS_HOST="zlib:host"
 PKG_SECTION="devel"
