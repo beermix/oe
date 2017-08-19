@@ -6,11 +6,3 @@ PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="-Dld="$CC" \
-			      -Dccflags="$CFLAGS" \
-			      -Dldflags='$LDFLAGS -lm' \
-			      -Dmydomain="" \
-			      -Dmyhostname="noname" \
-			      -Dmyuname="OE" \
-			      -Dosname=linux \
-			      -Dperladmin=root"
