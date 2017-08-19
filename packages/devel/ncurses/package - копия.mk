@@ -34,22 +34,45 @@ PKG_AUTORECONF="no"
 PKG_CONFIGURE_OPTS_TARGET="--without-ada \
                            --without-cxx \
                            --without-cxx-binding \
+                           --disable-db-install \
+                           --without-manpages \
                            --with-progs \
+                           --without-tests \
                            --with-shared \
                            --without-debug \
-                           --without-manpages \
-                           --with-termlib \
+                           --without-profile \
+                           --without-termlib \
+                           --without-ticlib \
+                           --without-gpm \
+                           --without-dbmalloc \
+                           --without-dmalloc \
                            --disable-rpath \
+                           --disable-database \
+                           --with-fallbacks=linux,screen,xterm,xterm-256color \
+                           --disable-big-core \
                            --enable-termcap \
                            --enable-getcap \
                            --enable-getcap-cache \
                            --enable-symlinks \
+                           --disable-bsdpad \
+                           --without-rcs-ids \
                            --enable-ext-funcs \
-                           --with-termlib=tinfo \
+                           --disable-const \
+                           --enable-no-padding \
+                           --disable-sigwinch \
                            --enable-pc-files \
                            --with-pkg-config-libdir=/usr/lib/pkgconfig \
+                           --disable-tcap-names \
+                           --without-develop \
+                           --disable-hard-tabs \
+                           --disable-xmc-glitch \
+                           --disable-hashmap \
+                           --disable-safe-sprintf \
                            --disable-widec \
-                           --disable-warnings"
+                           --disable-echo \
+                           --disable-warnings \
+                           --disable-home-terminfo \
+                           --disable-assertions"
 
 pre_configure_target() {
   # causes some segmentation fault's (dialog) when compiled with gcc's link time optimization.
@@ -59,42 +82,10 @@ pre_configure_target() {
 post_makeinstall_target() {
   cp misc/ncurses-config $ROOT/$TOOLCHAIN/bin
   chmod +x $ROOT/$TOOLCHAIN/bin/ncurses-config
+  $SED "s:\(['=\" ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" $ROOT/$TOOLCHAIN/bin/ncurses-config
+  rm -rf $INSTALL/usr/bin
 
-  #echo "INPUT(-lncursesw)" > $INSTALL/usr/lib/libncurses.so
-#  echo "INPUT(-lncursesw)" > $SYSROOT_PREFIX/usr/lib/libncurses.so
-#
-#  echo "INPUT(-lncursesw)" > $INSTALL/usr/lib/libcursesw.so
-#  echo "INPUT(-lncursesw)" > $SYSROOT_PREFIX/usr/lib/libcursesw.so
-#  
-#  echo "INPUT(-lnmenuw)" > $SYSROOT_PREFIX/usr/lib/libmenu.so
-#  echo "INPUT(-lnmenuw)" > $INSTALL/usr/lib/libmenu.so
-#    
-#  echo "INPUT(-lnpanelw)" > $SYSROOT_PREFIX/usr/lib/libpanel.so
-#  echo "INPUT(-lnpanelw)" > $INSTALL/usr/lib/libpanel.so
-#    
-#  echo "INPUT(-lnformw)" > $SYSROOT_PREFIX/usr/lib/libform.so
-#  echo "INPUT(-lnformw)" > $INSTALL/usr/lib/libform.so
-#  
-#
-#  ln -sfv libncurses.so $INSTALL/usr/lib/libcurses.so
-#  ln -sfv libncurses.so $SYSROOT_PREFIX/usr/lib/libcurses.so
-# 
-# 
-#  ln -sfv libformw.so $INSTALL/usr/lib/libform.so
-#  ln -sfv libmenuw.so $INSTALL/usr/lib/libmenu.so
-#  ln -sfv libncursesw.so $INSTALL/usr/lib/libncurses.so
-#  ln -sfv libpanelw.so $INSTALL/usr/lib/libpanel.so
-#  ln -sfv ticw.so $INSTALL/usr/lib/tic.so
-#  ln -sfv libtinfow.so $INSTALL/usr/lib/libtinfo.so
-#  
-#  ln -sfv libformw.so $SYSROOT_PREFIX/usr/lib/libform.so
-#  ln -sfv libmenuw.so $SYSROOT_PREFIX/usr/lib/libmenu.so
-#  ln -sfv libncursesw.so $SYSROOT_PREFIX/usr/lib/libncurses.so
-#  ln -sfv libpanelw.so $SYSROOT_PREFIX/usr/lib/libpanel.so
-#  ln -sfv ticw.so $SYSROOT_PREFIX/usr/lib/tic.so
-#  ln -sfv libtinfow.so $SYSROOT_PREFIX/usr/lib/libtinfo.so
-#  
-#  ln -sfv ncursesw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/ncurses.pc
+
   
   rm -rf $INSTALL/usr/bin/ncurses*-config
 }
