@@ -26,7 +26,7 @@ PKG_SECTION="textproc"
 PKG_SHORTDESC="International Components for Unicode library"
 PKG_LONGDESC="International Components for Unicode library"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 post_unpack() {
   cp -r $ROOT/$PKG_BUILD/source/* $ROOT/$PKG_BUILD/
@@ -34,7 +34,7 @@ post_unpack() {
 
 PKG_CONFIGURE_OPTS_HOST="--disable-debug \
 			    --enable-release \
-			    --enable-shared \
+			    --disable-shared \
 			    --enable-static \
 			    --enable-draft \
 			    --enable-renaming \
@@ -44,7 +44,7 @@ PKG_CONFIGURE_OPTS_HOST="--disable-debug \
 			   
 PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
 			      --enable-release \
-			      --enable-shared \
+			      --disable-shared \
 			      --enable-static \
 			      --enable-draft \
 			      --enable-renaming \
@@ -60,8 +60,5 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/lib/icu
   rm -rf $INSTALL/usr/bin
   rm -rf $INSTALL/usr/share
+  rm -rf $INSTALL/
 }
-
-#post_makeinstall_target() {
-#  rm -rf $INSTALL
-#}
