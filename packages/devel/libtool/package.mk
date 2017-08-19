@@ -17,13 +17,13 @@
 ################################################################################
 
 PKG_NAME="libtool"
-PKG_VERSION="2.4.6"
+PKG_VERSION="6ca5e22"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/libtool/libtool.html"
-PKG_URL="http://ftp.gnu.org/gnu/libtool/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_HOST="ccache:host autoconf:host"
+PKG_URL="https://dl.dropboxusercontent.com/s/bnkfpojtqnjwm3y/libtool-6ca5e22.tar.xz"
+PKG_DEPENDS_HOST="ccache:host autoconf:host automake:host help2man:host"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_PRIORITY="optional"
 PKG_SECTION="devel"
@@ -32,5 +32,12 @@ PKG_LONGDESC="This is GNU Libtool, a generic library support script. Libtool hid
 PKG_IS_ADDON="no"
 
 PKG_AUTORECONF="no"
+
+pre_configure_host() {
+  cd $ROOT/$PKG_BUILD
+  rm -rf .$TARGET_NAME
+  
+  ./bootstrap
+}
 
 PKG_CONFIGURE_OPTS_HOST="CONFIG_SHELL=/bin/bash --enable-static --disable-shared"

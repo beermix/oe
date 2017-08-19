@@ -1,7 +1,7 @@
 diff --git a/build-aux/ltmain.sh b/build-aux/ltmain.sh
 index 23901ff..df26ab5 100644
---- a/build-aux/ltmain.sh
-+++ b/build-aux/ltmain.sh
+--- a/build-aux/ltmain.in
++++ b/build-aux/ltmain.in
 @@ -7250,7 +7250,7 @@ func_mode_link ()
        # -stdlib=*            select c++ std lib with clang
        -64|-mips[0-9]|-r[0-9][0-9]*|-xarch=*|-xtarget=*|+DA*|+DD*|-q*|-m*| \

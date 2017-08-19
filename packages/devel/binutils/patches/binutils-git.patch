@@ -14226,3 +14226,20 @@ index 1d605d5e37..cb4b624d40 100644
      dstp[i] = src[i];
    dstp[i] = 0;
    *srcp = src + i;
+
+commit 71c09dc378a98219bd621ab1175711cde1b6ecd6
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sat Aug 19 00:02:23 2017 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 819355a4dd..a79e1a7dae 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20170818
++#define BFD_VERSION_DATE 20170819
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
