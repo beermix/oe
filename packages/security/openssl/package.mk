@@ -1,7 +1,7 @@
 PKG_NAME="openssl"
 PKG_VERSION="1.0.2l"
 PKG_URL="https://www.openssl.org/source/openssl-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_HOST="ccache:host yasm:host zlib:host"
+PKG_DEPENDS_HOST="ccache:host"
 PKG_DEPENDS_TARGET="toolchain yasm:host gmp pcre zlib"
 PKG_SECTION="security"
 PKG_SHORTDESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"

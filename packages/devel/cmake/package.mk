@@ -13,7 +13,7 @@
 #  GNU General Public License for more details.
 #
 #  You should have received a copy of the GNU General Public License
-#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
+#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>. -lrt
 ################################################################################
 
 PKG_NAME="cmake"
@@ -22,7 +22,7 @@ PKG_ARCH="any"
 PKG_LICENSE="BSD"
 PKG_SITE="https://cmake.org/download/"
 PKG_URL="https://cmake.org/files/v3.9/cmake-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_HOST="ccache:host libressl:host rhash:host"
+PKG_DEPENDS_HOST="ccache:host openssl:host rhash:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="cmake: A cross-platform, open-source make system"
@@ -37,7 +37,7 @@ configure_host() {
                -- \
                -DCMAKE_C_FLAGS="-march=haswell -O2 -Wall -pipe -Wno-format-security" \
                -DCMAKE_CXX_FLAGS="-march=haswell -O2 -Wall -pipe -Wno-format-security" \
-               -DCMAKE_EXE_LINKER_FLAGS="$HOST_LDFLAGS -lrt" \
+               -DCMAKE_EXE_LINKER_FLAGS="$HOST_LDFLAGS" \
                -DCMAKE_USE_OPENSSL=ON \
                -DCMAKE_USE_SYSTEM_LIBRARY_LIBRHASH=1 \
                -DBUILD_CursesDialog=0
