@@ -24,8 +24,9 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            enable-mdc2 \
                            enable-tlsext \
                            enable-unit-test \
-                           zlib-dynamic \
+                           no-weak-ssl-ciphers \
                            no-zlib \
+                           zlib-dynamic \
                            enable-ec_nistp_64_gcc_128"
 
 pre_configure_host() {
@@ -33,11 +34,13 @@ pre_configure_host() {
   cp -a $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$HOST_NAME/
   
   sed -i -e '/^"linux-x86_64"/ s/-m64 -DL_ENDIAN -O3 -Wall//' $ROOT/$PKG_BUILD/.$HOST_NAME/Configure
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O2|"`
 }
 
 configure_host() {
   cd $ROOT/$PKG_BUILD/.$HOST_NAME
-  ./Configure --prefix=/ $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $CFLAGS -Wa,--noexecstack
+  export CCACHE_RECACHE=1
+  ./Configure --prefix=/ $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $CFLAGS $LDFLAGS
 }
 
 makeinstall_host() {
@@ -50,15 +53,13 @@ pre_configure_target() {
   cp -a $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$TARGET_NAME/
   
   sed -i -e '/^"linux-x86_64"/ s/-m64 -DL_ENDIAN -O3 -Wall//' $ROOT/$PKG_BUILD/.$TARGET_NAME/Configure
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O2|"`
   export CCACHE_RECACHE=1
-  strip_lto
-  strip_gold
 }
 
 configure_target() {
   cd $ROOT/$PKG_BUILD/.$TARGET_NAME
-  ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 -DL_ENDIAN -Wall $CFLAGS $CPPLAGS -Wa,--noexecstack
+  ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $HOST_CFLAGS $HOST_LDFLAGS
 }
 
 makeinstall_target() {
