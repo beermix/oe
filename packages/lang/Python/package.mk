@@ -19,22 +19,17 @@
 ################################################################################
 
 PKG_NAME="Python"
-#PKG_VERSION="fe8d9dc"
-#PKG_GIT_BRANCH="2.7"
-#PKG_KEEP_CHECKOUT="yes"
-#PKG_SITE="https://github.com/python/cpython/tree/2.7"
-#PKG_GIT_URL="https://github.com/python/cpython"
 PKG_VERSION="2.7.13"
 PKG_URL="http://www.python.org/ftp/python/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_HOST="zlib:host bzip2:host libffi:host gdbm:host db:host sqlite:host"
-PKG_DEPENDS_TARGET="toolchain sqlite expat zlib bzip2 openssl libffi readline gdbm db Python:host"
+PKG_DEPENDS_HOST="zlib:host bzip2:host libffi:host sqlite:host"
+PKG_DEPENDS_TARGET="toolchain sqlite expat zlib bzip2 openssl libffi readline Python:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="lang"
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PY_DISABLED_MODULES="_tkinter nis ossaudiodev"
+PY_DISABLED_MODULES="_tkinter nis gdbm bsddb ossaudiodev"
 
 PKG_CONFIGURE_OPTS_HOST="--cache-file=config.cache \
                          --without-cxx-main \
@@ -42,7 +37,6 @@ PKG_CONFIGURE_OPTS_HOST="--cache-file=config.cache \
                          --enable-unicode=ucs4 \
                          --enable-optimizations \
                          --without-ensurepip \
-                         --with-dbmliborder=gdbm:ndbm \
                          --without-doc-strings \
                          --disable-ipv6"
 
@@ -69,7 +63,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            --without-cxx-main \
                            --with-system-expat \
                            --with-system-ffi \
-                           --with-dbmliborder=gdbm:ndbm \
                            --without-ensurepip"
 
 post_patch() {
@@ -122,7 +115,7 @@ makeinstall_target() {
 }
 
 post_makeinstall_target() {
-  EXCLUDE_DIRS="idlelib lib-tk lib2to3 msilib pydoc_data test"
+  EXCLUDE_DIRS="bsddb idlelib lib-tk lib2to3 msilib pydoc_data test"
   for dir in $EXCLUDE_DIRS; do
     rm -rf $INSTALL/usr/lib/python*/$dir
   done

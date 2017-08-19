@@ -34,3 +34,8 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-shared \
             --disable-debug-log \
             --enable-udev \
             --disable-examples-build"
+
+pre_configure_target () {
+  #libusb sometimes fails to build if building paralell
+  export MAKEFLAGS=-j1
+}

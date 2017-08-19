@@ -40,7 +40,7 @@ pre_configure_host() {
 configure_host() {
   cd $ROOT/$PKG_BUILD/.$HOST_NAME
   export CCACHE_RECACHE=1
-  ./Configure --prefix=/ $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $CFLAGS $LDFLAGS
+  ./Configure --prefix=/ $PKG_CONFIGURE_OPTS_SHARED linux-x86_64
 }
 
 makeinstall_host() {
@@ -59,7 +59,7 @@ pre_configure_target() {
 
 configure_target() {
   cd $ROOT/$PKG_BUILD/.$TARGET_NAME
-  ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $HOST_CFLAGS $HOST_LDFLAGS
+  ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $CFLAGS $LDFLAGS
 }
 
 makeinstall_target() {

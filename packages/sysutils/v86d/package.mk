@@ -23,7 +23,7 @@ PKG_ARCH="x86_64"
 PKG_LICENSE="GPL"
 PKG_SITE="http://dev.gentoo.org/~spock/projects/uvesafb/"
 PKG_URL="http://dev.gentoo.org/~spock/projects/uvesafb/archive/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_INIT="toolchain"
+PKG_DEPENDS_INIT="toolchain gcc:init"
 PKG_PRIORITY="optional"
 PKG_SECTION="system"
 PKG_SHORTDESC="v86d: A userspace helper that runs x86 code in an emulated environment."
@@ -38,4 +38,8 @@ pre_configure_init() {
 # v86d fails to build in subdirs
   cd $ROOT/$PKG_BUILD
     rm -rf .$TARGET_NAME-init
+}
+
+makeinstall_init() {
+  DESTDIR=$INSTALL/usr make install
 }
