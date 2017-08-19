@@ -23,6 +23,7 @@ PKG_LICENSE="OSS"
 PKG_SITE="http://github.com/pypa/setuptools/releases"
 PKG_GIT_URL="http://github.com/pypa/setuptools"
 PKG_DEPENDS_HOST="Python:host six:host packaging:host appdirs:host"
+PKG_DEPENDS_TARGET="toolchain Python setuptools:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="python/devel"
 PKG_SHORTDESC="setuptools: A collection of enhancements to the Python distutils"
@@ -37,4 +38,19 @@ make_host() {
 
 makeinstall_host() {
   python setup.py install --prefix=$ROOT/$TOOLCHAIN
+}
+
+make_target() {
+  : # nothing todo
+}
+
+makeinstall_target() {
+  python setup.py install --root=$INSTALL --prefix=/usr
+}
+
+post_makeinstall_target() {
+  find $INSTALL/usr/lib -name "*.py" -exec rm -rf "{}" ";"
+  rm -rf $INSTALL/usr/bin
+  rm -rf $INSTALL/usr/lib/python*/site-packages/*/tests
+  rm -rf $INSTALL/usr/lib/python*/site-packages/*.egg-info
 }
