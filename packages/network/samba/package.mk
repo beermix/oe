@@ -88,7 +88,6 @@ PKG_CONFIGURE_OPTS="--prefix=/usr \
                     --enable-auto-reconfigure \
                     --bundled-libraries='ALL,!asn1_compile,!compile_et,!zlib' \
                     --without-quotas \
-                    --without-dmapi \
                     --with-syslog  \
                     --nopyc --nopyo"
 
