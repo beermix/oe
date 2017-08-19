@@ -14,8 +14,6 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
-#PKG_VERSION="2.7.13"
-#PKG_URL="http://www.python.org/ftp/python/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
 ################################################################################
 
 PKG_NAME="Python"
