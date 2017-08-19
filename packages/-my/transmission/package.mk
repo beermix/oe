@@ -1,36 +1,31 @@
 PKG_NAME="transmission"
-PKG_VERSION="master"
-PKG_ARCH="any"
-PKG_LICENSE="OSS"
-PKG_SITE="http://www.transmissionbt.com/"
-PKG_DEPENDS_TARGET="toolchain zlib openssl curl libevent miniupnpc xfsprogs-dev"
-PKG_IS_ADDON="yes"
-PKG_ADDON_TYPE="xbmc.service"
-PKG_ADDON_PROVIDES=""
+PKG_VERSION="2.92"
+PKG_SITE="https://github.com/transmission/transmission-releases"
+PKG_URL="https://github.com/transmission/transmission-releases/raw/master/transmission-$PKG_VERSION.tar.xz"
+PKG_DEPENDS_TARGET="toolchain openssl curl miniupnpc xfsprogs-dev"
+PKG_SECTION="my"
+PKG_IS_ADDON="no"
+
+PKG_USE_CMAKE="yes"
 PKG_AUTORECONF="no"
 
-PGK_CMAKE_OPTS_TARGET="-DENABLE_CLI=On -DENABLE_LIGHTWEIGHT=On"
+#unpack() {
+#  git clone --recursive -v --depth 1 https://github.com/transmission/transmission $PKG_BUILD
+#}
 
-pre_build_target() {
-  git clone --recursive --depth 1 https://github.com/transmission/transmission $PKG_BUILD/$PKG_NAME-git
-  cd $PKG_BUILD/$PKG_NAME-git
-  git reset --hard $PKG_VERSION
-  rm -rf .git
-  cd -
-  mv $PKG_BUILD/$PKG_NAME-git/* $PKG_BUILD/
-  rm -rf $PKG_BUILD/$PKG_NAME-git
-}
-
-addon() {
-  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
-  cp $PKG_BUILD/.$TARGET_NAME/daemon/transmission-daemon $ADDON_BUILD/$PKG_ADDON_ID/bin
-  cp $PKG_BUILD/.$TARGET_NAME/daemon/transmission-remote $ADDON_BUILD/$PKG_ADDON_ID/bin
-  cp $PKG_BUILD/.$TARGET_NAME/utils/transmission-create $ADDON_BUILD/$PKG_ADDON_ID/bin
-  cp $PKG_BUILD/.$TARGET_NAME/utils/transmission-edit $ADDON_BUILD/$PKG_ADDON_ID/bin
-  cp $PKG_BUILD/.$TARGET_NAME/utils/transmission-show $ADDON_BUILD/$PKG_ADDON_ID/bin
-
-  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/web
-  cp -R $PKG_BUILD/web/* $ADDON_BUILD/$PKG_ADDON_ID/web
-  find $ADDON_BUILD/$PKG_ADDON_ID/web -name "Makefile*" -exec rm -rf {} ";"
-  rm -rf $ADDON_BUILD/$PKG_ADDON_ID/web/LICENSE
-}
+PGK_CMAKE_OPTS_TARGET="-DENABLE_CLI=OFF \
+                       -DENABLE_DAEMON=ON \
+                       -DENABLE_GTK=OFF \
+                       -DENABLE_QT=ON \
+                       -DENABLE_TESTS=OFF \
+                       -DENABLE_UTILS=OFF \
+                       -DENABLE_LIGHTWEIGHT=OFF \
+                       -DINSTALL_DOC=OFF \
+                       -DINSTALL_LIB=OFF \
+                       -DUSE_SYSTEM_B64=OFF \
+                       -DUSE_SYSTEM_DHT=OFF \
+                       -DUSE_SYSTEM_EVENT2=OFF \
+                       -DUSE_SYSTEM_MINIUPNPC=OFF \
+                       -DUSE_SYSTEM_NATPMP=OFF \
+                       -DUSE_SYSTEM_UTP=OFF \
+                       -DWITH_SYSTEMD=ON"

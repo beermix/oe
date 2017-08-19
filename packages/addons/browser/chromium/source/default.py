@@ -25,7 +25,7 @@ import xbmcaddon
 import subprocess
 from xml.dom.minidom import parse
 
-sys.path.append('/usr/share/kodi/addons/service.libreelec.settings')
+sys.path.append('/usr/share/kodi/addons/service.openelec.settings')
 
 import oe
 
@@ -127,8 +127,8 @@ def startChromium(args):
       new_env['LIBGL_ALWAYS_SOFTWARE'] = '1'
 
     flash_plugin = ''
-    if os.path.exists(__path__ + 'PepperFlash/libpepflashplayer.so'):
-      flash_plugin = '--ppapi-flash-path=' + __path__ + 'PepperFlash/libpepflashplayer.so'
+    if os.path.exists(__path__ + '/storage/.kodi/PepperFlash/libpepflashplayer.so'):
+      flash_plugin = '--ppapi-flash-path=' + __path__ + '/storage/.kodi/PepperFlash/libpepflashplayer.so'
 
     if __addon__.getSetting('USE_CUST_AUDIODEVICE') == 'true':
       alsa_device = __addon__.getSetting('CUST_AUDIODEVICE_STR')
