@@ -6,4 +6,4 @@ PKG_SECTION="tools"
 PKG_SHORTDESC="x11-utils"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="enable_gtk_doc=no --disable-tests --with-gnu-ld --without-libunwind"
+PKG_CONFIGURE_OPTS_TARGET="enable_gtk_doc=no --disable-tests --without-libunwind"

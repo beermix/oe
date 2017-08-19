@@ -34,5 +34,3 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_HOST="CONFIG_SHELL=/bin/bash --enable-static --disable-shared"
-
-PKG_CONFIGURE_OPTS_TARGET="--with-gnu-ld"

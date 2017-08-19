@@ -34,12 +34,6 @@ PKG_AUTORECONF="yes"
 
 get_graphicdrivers
 
-if [ "$OPENGL" = "mesa" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET glproto opengl libepoxy glu"
-  XORG_MESA="--enable-glx --enable-dri --enable-glamor"
-else
-  XORG_MESA="--disable-glx --disable-dri --disable-glamor"
-fi
 PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
                            --enable-silent-rules \
                            --disable-strict-compilation \
@@ -58,7 +52,9 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
                            --disable-screensaver \
                            --disable-xdmcp \
                            --disable-xdm-auth-1 \
-                           $XORG_MESA \
+                           --enable-glx \
+                           --enable-dri \
+                           --enable-glamor \
                            --enable-dri2 \
                            --enable-dri3 \
                            --enable-present \

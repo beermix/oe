@@ -22,6 +22,7 @@ PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.mesa3d.org/"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_DEPENDS_TARGET="toolchain Python:host expat glproto dri2proto presentproto libdrm libXext libXdamage libXfixes libXxf86vm libxcb libX11 systemd dri3proto libxshmfence openssl Python:host expat libdrm"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="mesa: 3-D graphics library with OpenGL API"
 PKG_LONGDESC="Mesa is a 3-D graphics library with an API which is very similar to that of OpenGL*. To the extent that Mesa utilizes the OpenGL command syntax or state machine, it is being used with authorization from Silicon Graphics, Inc. However, the author makes no claim that Mesa is in any way a compatible replacement for OpenGL or associated with Silicon Graphics, Inc. Those who want a licensed implementation of OpenGL should contact a licensed vendor. While Mesa is not a licensed OpenGL implementation, it is currently being tested with the OpenGL conformance tests. For the current conformance status see the CONFORM file included in the Mesa distribution."
@@ -29,21 +30,6 @@ PKG_LONGDESC="Mesa is a 3-D graphics library with an API which is very similar t
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-if [ "$DISPLAYSERVER" = "x11" ]; then
-  PKG_DEPENDS_TARGET="toolchain Python:host expat glproto dri2proto presentproto libdrm libXext libXdamage libXfixes libXxf86vm libxcb libX11 systemd dri3proto libxshmfence openssl"
-
-  export DRI_DRIVER_INSTALL_DIR=$XORG_PATH_DRI
-  export DRI_DRIVER_SEARCH_DIR=$XORG_PATH_DRI
-  export X11_INCLUDES=
-  MESA_DRI="--enable-dri --enable-dri3"
-  MESA_GLX="--enable-glx --enable-driglx-direct --enable-glx-tls"
-  MESA_EGL_PLATFORMS="--with-egl-platforms=x11,drm"
-else
-  PKG_DEPENDS_TARGET="toolchain Python:host expat libdrm"
-  MESA_DRI="--enable-dri --disable-dri3"
-  MESA_GLX="--disable-glx --disable-driglx-direct --disable-glx-tls"
-  MESA_EGL_PLATFORMS="--with-egl-platforms=drm"
-fi
 # configure GPU drivers and dependencies:
   get_graphicdrivers
 
@@ -84,6 +70,7 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --enable-asm \
                            --disable-selinux \
                            --enable-opengl \
+                           --disable-gles1 \
                            $MESA_GLES \
                            $MESA_DRI \
                            $MESA_GLX \

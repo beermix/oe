@@ -24,7 +24,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://www.busybox.net"
 PKG_URL="http://busybox.net/downloads/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain busybox:host hdparm dosfstools e2fsprogs zip unzip pciutils usbutils parted procps-ng gptfdisk psmisc findutils grep gawk coreutils bash less"
+PKG_DEPENDS_TARGET="toolchain busybox:host hdparm dosfstools e2fsprogs zip unzip unrar bzip2 zlib lz4 lzo xz lrzip tar pciutils usbutils parted procps-ng gptfdisk psmisc findutils grep gawk coreutils time bash less fbset libev"
 PKG_DEPENDS_INIT="toolchain"
 PKG_PRIORITY="required"
 PKG_SECTION="system"
@@ -146,6 +146,21 @@ configure_init() {
     LDFLAGS="$LDFLAGS -fwhole-program"
 
     make oldconfig
+}
+
+pre_make_host() {
+  # dont build parallel
+  MAKEFLAGS=-j1
+}
+
+pre_make_target() {
+  # dont build parallel
+  MAKEFLAGS=-j1
+}
+
+pre_make_init() {
+  # dont build parallel
+  MAKEFLAGS=-j1
 }
 
 makeinstall_host() {

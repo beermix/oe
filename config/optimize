@@ -1,6 +1,6 @@
 if [ "$OPTIMIZATIONS" = normal ];then
-  GCC_OPTIM="-O2 -pipe -fstack-protector-strong -fno-plt"
-  LD_OPTIM="-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now"
+  GCC_OPTIM="-O2 -pipe"
+  LD_OPTIM="-Wl,--as-needed"
 fi
 
 if [ "$OPTIMIZATIONS" = size ];then
@@ -28,7 +28,7 @@ if [ "$DEBUG" = yes ]; then
 else
   TARGET_CFLAGS="$TARGET_CFLAGS -fomit-frame-pointer"
   TARGET_CXXFLAGS="$TARGET_CXXFLAGS -fomit-frame-pointer"
-  TARGET_LDFLAGS="$TARGET_LDFLAGS"
+  TARGET_LDFLAGS="$TARGET_LDFLAGS -s"
 fi
 
 TARGET_CFLAGS="$TARGET_CFLAGS $GCC_OPTIM $GCC_OPTIM_LTO $PROJECT_CFLAGS"
@@ -44,7 +44,7 @@ HOST_CPPFLAGS="-I$ROOT/$TOOLCHAIN/include"
 HOST_LDFLAGS="-Wl,-rpath,$ROOT/$TOOLCHAIN/lib -L$ROOT/$TOOLCHAIN/lib -s"
 HOST_LIBDIR="$ROOT/$TOOLCHAIN/lib"
 
-# work around Ubuntu default C*FLAGS 
+# work around Ubuntu default C*FLAGS   -ffunction-sections -fdata-sections
 # see https://wiki.ubuntu.com/ToolChain/CompilerFlags#A-Wformat_-Wformat-security
 HOST_CFLAGS="$HOST_CFLAGS -Wno-format-security"
 HOST_CXXFLAGS="$HOST_CXXFLAGS -Wno-format-security" 

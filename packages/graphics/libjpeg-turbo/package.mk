@@ -34,14 +34,14 @@ PKG_CONFIGURE_OPTS_HOST="--enable-static \
                          --with-jpeg8 \
                          --without-simd"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --enable-shared --with-jpeg8"
+PKG_CONFIGURE_OPTS_TARGET="--with-jpeg8"
 
 pre_configure_host() {
   export CFLAGS="$CFLAGS -fPIC -DPIC"
 }
 
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC -DPIC"
+  export CFLAGS="$CFLAGS -DPIC"
 }
 
 if [ "$SIMD_SUPPORT" = "no" ]; then

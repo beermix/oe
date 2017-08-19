@@ -11,7 +11,6 @@
 
 # setup ARCH specific *FLAGS
   TARGET_CFLAGS="-march=$TARGET_CPU -mtune=$TARGET_CPU -m64"
-  TARGET_CXXLAGS="-march=$TARGET_CPU -mtune=$TARGET_CPU -m64"
   TARGET_LDFLAGS="-march=$TARGET_CPU -mtune=$TARGET_CPU -m64"
 
 # build with SIMD support ( yes / no )
