@@ -18,7 +18,6 @@
 
 PKG_NAME="iptables"
 PKG_VERSION="1.6.1"
-PKG_SHA256="0fc2d7bd5d7be11311726466789d4c65fb4c8e096c9182b56ce97440864f0cf5"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.netfilter.org/"
@@ -31,5 +30,8 @@ PKG_LONGDESC="Iptables is used to set up, maintain, and inspect the tables of IP
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
+
+CFLAGS+=" -DNO_LEGACY"
+CPPFLAGS+=" -D_DEFAULT_SOURCE"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-ipv6 --with-kernel=$(get_pkg_build linux)"
