@@ -19,7 +19,7 @@
 ################################################################################
 
 PKG_NAME="pango"
-PKG_VERSION="1.40.11"
+PKG_VERSION="1.40.12"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.pango.org/"
