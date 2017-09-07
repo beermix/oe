@@ -40,6 +40,6 @@ pre_configure_target() {
   export CFLAGS="$CFLAGS -fPIC -DPIC"
 }
 
-spost_makeinstall_target() {
-  rm -rf $INSTALL/usr/bin
+post_makeinstall_target() {
+  rm -rf $INSTALL
 }
