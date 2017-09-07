@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="wpa_supplicant"
-PKG_VERSION="c2d4f2e"
+PKG_VERSION="cc8330b"
 PKG_GIT_URL="http://w1.fi/hostap.git"
 PKG_DEPENDS_TARGET="toolchain dbus libnl openssl"
 PKG_SECTION="network"
