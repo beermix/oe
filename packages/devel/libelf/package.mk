@@ -38,7 +38,13 @@ pre_configure_host() {
   export LDFLAGS="$LDFLAGS -fPIC"
 }
 
-#post_make_target() {
-#  mkdir -p $INSTALL_DEV/usr/bin/
-#}
+pre_configure_target() {
+  export CFLAGS="$CFLAGS -fPIC"
+  export CXXFLAGS="$CXXFLAGS -fPIC"
+  export LDFLAGS="$LDFLAGS -fPIC"
+}
+
+post_make_target() {
+  mkdir -p $INSTALL_DEV/usr/bin/
+}
 
