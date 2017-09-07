@@ -10,8 +10,8 @@ pre_configure_target() {
   #CONCURRENCY_MAKE_LEVEL=1
   #CFLAGS="$CFLAGS -fPIC -DPIC -static"
   #CXXFLAGS="$CXXFLAGS -fPIC -DPIC -static"
-  CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
-  CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3|"`
+  #CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
+  #CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3|"`
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config \

@@ -15,6 +15,7 @@ PKG_LONGDESC="VLC is the VideoLAN project's media player. It plays MPEG, MPEG2, 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
+
 PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-dependency-tracking \
 			      --without-contrib \
@@ -127,8 +128,6 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 pre_configure_target() {
   export LDFLAGS="$LDFLAGS -lresolv"
   export LIBS="$LIBS -fopenmp"
-  #export CFLAGS=`echo $CFLAGS | sed -e "s|-fomit-frame-pointer||g"`
-  #export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-fomit-frame-pointer||g"`
 }
 
 post_makeinstall_target() {

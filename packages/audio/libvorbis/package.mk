@@ -39,5 +39,5 @@ PKG_CONFIGURE_OPTS_TARGET="--with-ogg=$SYSROOT_PREFIX/usr \
                            --disable-examples"
 
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC"
+  export CFLAGS+=" -fPIC -DPIC"
 }
