@@ -9,7 +9,7 @@ PKG_AUTORECONF="yes"
 pre_build_target() {
    mkdir -p $ROOT/$PKG_BUILD/.$TARGET_NAME
    cp -RP $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$TARGET_NAME
-   export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
+   #export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \
