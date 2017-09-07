@@ -17,10 +17,10 @@
 ################################################################################
 
 PKG_NAME="libva-utils"
-PKG_VERSION="1.8.3"
+PKG_VERSION="d941b8b"
 PKG_SITE="https://github.com/01org/libva-utils"
-PKG_URL="https://github.com/01org/libva-utils/releases/download/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
-#PKG_GIT_URL="https://github.com/01org/libva-utils"
+#PKG_URL="https://github.com/01org/libva-utils/releases/download/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_GIT_URL="https://github.com/01org/libva-utils"
 PKG_DEPENDS_TARGET="toolchain readline intel-vaapi-driver libva"
 PKG_PRIORITY="optional"
 PKG_SECTION="multimedia"
