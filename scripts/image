@@ -130,6 +130,15 @@ fi
   $SCRIPTS/install corefonts
   $SCRIPTS/install network
 
+# Graphic support
+  [ ! "$DISPLAYSERVER" = "no" ] && $SCRIPTS/install $DISPLAYSERVER
+
+# Multimedia support
+  [ ! "$MEDIACENTER" = "no" ] && $SCRIPTS/install mediacenter
+
+# Sound support
+  [ "$ALSA_SUPPORT" = "yes" ] && $SCRIPTS/install alsa
+
 # Automounter support
   [ "$UDEVIL" = "yes" ] && $SCRIPTS/install udevil
 
