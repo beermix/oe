@@ -4,11 +4,8 @@
 ################################################################################
 
 PKG_NAME="skin.confluence"
-PKG_VERSION="c887431"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/BigNoid/Aeon-Nox"
+PKG_VERSION="5c4c80f"
+PKG_SITE="https://github.com/xbmc/skin.confluence"
 PKG_GIT_URL="https://github.com/xbmc/skin.confluence"
 PKG_DEPENDS_TARGET="toolchain kodi"
 PKG_SECTION="mediacenter"

@@ -4,10 +4,7 @@
 ################################################################################
 
 PKG_NAME="skin.xonfluence"
-PKG_VERSION="26fe189"
-PKG_REV="1"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
+PKG_VERSION="177119d"
 PKG_GIT_URL="https://github.com/Helly1206/skin.xonfluence"
 PKG_DEPENDS_TARGET="toolchain kodi"
 PKG_SECTION="mediacenter"
