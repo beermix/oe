@@ -6,5 +6,8 @@ PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-java"
+PKG_CONFIGURE_OPTS_TARGET="--disable-java --disable-shared"
 
+pre_configure_target() {
+  export CFLAGS+=" -fPIC -DPIC"
+}
