@@ -52,9 +52,14 @@ GCC_COMMON_CONFIGURE_OPTS="MAKEINFO=missing \
                            --with-default-libstdcxx-abi=gcc4-compatible \
                            --enable-checking=release \
                            --disable-libssp \
+                           --enable-gnu-unique-object \
+                           --enable-linker-build-id \
+                           --enable-gnu-indirect-function \
+                           --disable-werror \
                            --without-ppl \
                            --without-cloog \
                            --disable-libmpx \
+                           --disable-libsanitizer \
                            --with-tune=generic"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
@@ -72,7 +77,6 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --without-headers \
                               --with-newlib \
                               --disable-decimal-float \
-                              --disable-libsanitizer \
                               $GCC_OPTS"
 
 PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \

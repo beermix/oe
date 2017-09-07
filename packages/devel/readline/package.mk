@@ -30,11 +30,6 @@ PKG_IS_ADDON="no"
 
 PKG_AUTORECONF="no"
 
-pre_configure_target() {
-  CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
-  CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-Os|"`
-}
-
 PKG_CONFIGURE_OPTS_TARGET="bash_cv_wcwidth_broken=no \
                            --with-curses \
                            --without-purify"
