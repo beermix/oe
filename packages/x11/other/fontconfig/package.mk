@@ -41,8 +41,8 @@ PKG_CONFIGURE_OPTS_TARGET="--with-arch=$TARGET_ARCH \
 
 pre_configure_target() {
 # ensure we dont use '-O3' optimization.
-  CFLAGS=`echo $CFLAGS | sed -e "s|-O3|-O2|"`
-  CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O3|-O2|"`
+  CFLAGS=`echo $CFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|" -e "s|-fno-plt||"`
+  LDFLAGS=`echo $LDFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|" -e "s|-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now|-Wl,--as-needed|g"`
   CFLAGS="$CFLAGS -I$ROOT/$PKG_BUILD"
   #CFLAGS="$CFLAGS -fPIC"
   CXXFLAGS="$CXXFLAGS -I$ROOT/$PKG_BUILD"
