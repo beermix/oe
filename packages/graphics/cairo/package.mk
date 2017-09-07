@@ -63,8 +63,8 @@ fi
 
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CAIRO_CONFIG \
                            --enable-silent-rules \
-                           --enable-shared \
-                           --disable-static \
+                           --disable-shared \
+                           --enable-static \
                            --disable-gtk-doc \
                            --enable-largefile \
                            --enable-atomic \
