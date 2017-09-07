@@ -46,6 +46,8 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-gnu-ld \
                            --disable-multilib \
                            --disable-nls \
+                           --enable-plugin \
+                           --enable-default-pie \
                            --with-default-libstdcxx-abi=new \
                            --enable-checking=release \
                            --disable-libssp \
