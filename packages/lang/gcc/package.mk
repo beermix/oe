@@ -46,7 +46,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-gnu-ld \
                            --disable-multilib \
                            --disable-nls \
-                           --with-default-libstdcxx-abi=gcc4-compatible \
+                           --with-default-libstdcxx-abi=new \
                            --enable-checking=release \
                            --disable-libssp \
                            --without-ppl \
