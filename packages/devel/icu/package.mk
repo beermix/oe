@@ -32,6 +32,10 @@ post_unpack() {
   cp -r $ROOT/$PKG_BUILD/source/* $ROOT/$PKG_BUILD/
 }
 
+pre_configure_target() {
+  export CFLAGS+=" -fPIC -DPIC"
+}
+
 PKG_CONFIGURE_OPTS_HOST="--disable-debug \
 			    --enable-release \
 			    --disable-shared \
