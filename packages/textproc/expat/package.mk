@@ -18,7 +18,7 @@ pre_configure_host() {
 PKG_CMAKE_SCRIPT_TARGET="expat/CMakeLists.txt"
 PKG_CMAKE_SCRIPT_HOST="expat/CMakeLists.txt"
 
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release -DBUILD_tools=OFF -DBUILD_examples=OFF -DBUILD_tests=OFF -DBUILD_shared=ON"
+PKG_CMAKE_OPTS_TARGET="-DBUILD_tools=OFF -DBUILD_examples=OFF -DBUILD_tests=OFF -DBUILD_shared=ON"
 
 PKG_CMAKE_OPTS_HOST="-DBUILD_tools=OFF -DBUILD_examples=OFF -DBUILD_tests=OFF -DBUILD_shared=ON"
 
