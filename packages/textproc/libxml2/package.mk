@@ -17,10 +17,10 @@
 ################################################################################
 
 PKG_NAME="libxml2"
-PKG_VERSION="69936b1"
+PKG_VERSION="2.9.5"
 PKG_ARCH="any"
 PKG_SITE="http://xmlsoft.org"
-PKG_GIT_URL="git://git.gnome.org/libxml2"
+PKG_URL="ftp://xmlsoft.org/libxml2/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="zlib:host"
 PKG_DEPENDS_TARGET="toolchain zlib libxml2:host"
 PKG_SECTION="textproc"
