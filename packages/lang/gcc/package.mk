@@ -17,9 +17,7 @@
 ################################################################################
 
 PKG_NAME="gcc"
-#PKG_VERSION="1bd23ca"
-#PKG_GIT_URL="git://gcc.gnu.org/git/gcc.git"
-PKG_VERSION="7-20170817"
+PKG_VERSION="7-20170831"
 PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/$PKG_VERSION/gcc-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host"
 PKG_DEPENDS_TARGET="gcc:host"
@@ -51,17 +49,18 @@ GCC_COMMON_CONFIGURE_OPTS="MAKEINFO=missing \
                            --enable-ld=default \
                            --disable-multilib \
                            --disable-nls \
+                           --with-default-libstdcxx-abi=gcc4-compatible \
                            --enable-checking=release \
+                           --disable-libssp \
                            --without-ppl \
                            --without-cloog \
                            --disable-libmpx \
-                           --disable-libsanitizer \
                            --with-tune=generic"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
-                              --disable-libssp \
+                              --enable-cloog-backend=isl \
                               --disable-libatomic \
                               --disable-libquadmath \
                               --disable-libmudflap \
@@ -73,6 +72,7 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --without-headers \
                               --with-newlib \
                               --disable-decimal-float \
+                              --disable-libsanitizer \
                               $GCC_OPTS"
 
 PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
@@ -80,7 +80,6 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-__cxa_atexit \
                          --enable-decimal-float \
                          --enable-tls \
-                         --disable-libssp \
                          --enable-shared \
                          --disable-static \
                          --enable-c99 \
@@ -91,6 +90,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-clocale=gnu \
                          $GCC_OPTS"
 pre_configure_host() {
+  export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
 }
 

@@ -1,5 +1,5 @@
 PKG_NAME="lm_sensors"
-PKG_VERSION="dfa4518"
+PKG_VERSION="8d510a7"
 PKG_GIT_URL="https://github.com/groeck/lm-sensors"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="devel"

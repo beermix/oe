@@ -3,9 +3,11 @@ PKG_VERSION="4.8.19"
 PKG_URL="http://ftp.midnight-commander.org/${PKG_NAME}-${PKG_VERSION}.tar.xz"
 #PKG_VERSION="5d14225"
 #PKG_GIT_URL="git://github.com/MidnightCommander/mc.git"
-PKG_DEPENDS_TARGET="toolchain libtool:host gettext:host e2fsprogs util-linux glib pcre fuse libssh2 libevent expat slang"
+PKG_DEPENDS_TARGET="toolchain libtool:host gettext:host e2fsprogs util-linux glib pcre fuse libssh2 libevent expat"
 PKG_SECTION="tools"
 PKG_AUTORECONF="yes"
+
+LDFLAGS="$LDFLAGS -lssh2 -lncursesw -ltinfo"
 
 PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config \
                            --datadir=/storage/.config \
@@ -26,7 +28,7 @@ PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config \
                            --disable-doxygen-dot \
                            --disable-doxygen-html \
                            --without-internal-edit \
-                           --disable-silent-rules \
+                           --enable-silent-rules \
                            --enable-charset \
                            --enable-largefile \
                            --enable-vfs-tar \
@@ -36,7 +38,7 @@ PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config \
                            --enable-vfs-ftp \
                            --enable-vfs-sftp \
                            --without-gpm-mouse \
-                           --with-screen=slang \
+                           --with-screen=ncurses \
                            --with-gnu-ld \
                            --with-pcre=$SYSROOT_PREFIX/usr \
                            --enable-static \

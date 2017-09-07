@@ -8,5 +8,5 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 make_target() {
-  make HOSTCC="$HOSTCC" CC="$CC" CFLAGS="$CFLAGS" AR="$AR" LD="$LD" CPPFLAGS="$CPPFLAGS -I$(get_pkg_build linux)/include/uapi" -j1
+  make HOSTCC="$HOSTCC" CC="$CC" CFLAGS="$CFLAGS" AR="$AR" LD="$LD" CPPFLAGS="$CPPFLAGS -I$$SYSROOT_PREFIX/include/uapi" -j1
 }

@@ -18,7 +18,7 @@
 
 PKG_NAME="glibc"
 PKG_VERSION="2.26"
-PKG_URL="http://ftp.gnu.org/pub/gnu/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="https://ftp.gnu.org/gnu/glibc/glibc-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap localedef-eglibc:host"
 PKG_DEPENDS_INIT="glibc"
 PKG_PRIORITY="optional"
@@ -54,6 +54,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --disable-nscd \
                            --enable-lock-elision \
                            --disable-timezone-tools \
+                           --disable-werror \
                            --disable-debug"
 
 NSS_CONF_DIR="$ROOT/$PKG_BUILD/nss"

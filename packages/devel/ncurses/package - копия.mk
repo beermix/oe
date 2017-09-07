@@ -17,11 +17,8 @@
 ################################################################################
 
 PKG_NAME="ncurses"
-PKG_VERSION="6.0-20170812"
+PKG_VERSION="6.0-20170827"
 PKG_URL="http://invisible-mirror.net/archives/ncurses/current/ncurses-$PKG_VERSION.tgz"
-#PKG_VERSION="52681a6"
-#PKG_SITE="http://invisible-mirror.net/archives/ncurses/current/?C=M;O=D"
-PKG_GIT_URL="git://anonscm.debian.org/collab-maint/ncurses.git"
 PKG_DEPENDS_TARGET="toolchain zlib"
 PKG_DEPENDS_HOST="zlib:host"
 PKG_SECTION="devel"
@@ -31,61 +28,62 @@ PKG_LONGDESC="The ncurses (new curses) library is a free software emulation of c
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--without-ada \
-                           --without-cxx \
-                           --without-cxx-binding \
-                           --disable-db-install \
-                           --without-manpages \
-                           --with-progs \
-                           --without-tests \
-                           --with-shared \
-                           --without-debug \
-                           --without-profile \
-                           --without-termlib \
-                           --without-ticlib \
-                           --without-gpm \
-                           --without-dbmalloc \
-                           --without-dmalloc \
-                           --disable-rpath \
-                           --disable-database \
-                           --with-fallbacks=linux,screen,xterm,xterm-256color \
-                           --disable-big-core \
-                           --enable-termcap \
-                           --enable-getcap \
-                           --enable-getcap-cache \
-                           --enable-symlinks \
-                           --disable-bsdpad \
-                           --without-rcs-ids \
-                           --enable-ext-funcs \
-                           --disable-const \
-                           --enable-no-padding \
-                           --disable-sigwinch \
-                           --enable-pc-files \
-                           --with-pkg-config-libdir=/usr/lib/pkgconfig \
-                           --disable-tcap-names \
-                           --without-develop \
-                           --disable-hard-tabs \
-                           --disable-xmc-glitch \
-                           --disable-hashmap \
-                           --disable-safe-sprintf \
-                           --disable-widec \
-                           --disable-echo \
-                           --disable-warnings \
-                           --disable-home-terminfo \
-                           --disable-assertions"
+cf_cv_type_of_bool='unsigned char'
+
+PKG_CONFIGURE_OPTS_TARGET=" cf_cv_working_poll=yes \
+			      --without-gpm \
+			      --disable-rpath \
+			      --without-ada \
+			      --without-debug \
+			      --without-manpages \
+			      --enable-overwrite \
+			      --with-progs \
+			      --without-tests \
+			      --with-normal \
+			      --without-dlsym \
+			      --with-shared \
+			      --enable-static \
+			      --enable-pc-files \
+			      --enable-widec \
+			      --with-terminfo-dirs=/usr/share/terminfo \
+			      --with-default-terminfo-dir=/usr/share/terminfo \
+			      --with-pkg-config-libdir=/usr/lib/pkgconfig \
+			      --with-build-cppflags=-D_GNU_SOURCE"
 
 pre_configure_target() {
-  # causes some segmentation fault's (dialog) when compiled with gcc's link time optimization.
   strip_lto
 }
 
 post_makeinstall_target() {
   cp misc/ncurses-config $ROOT/$TOOLCHAIN/bin
   chmod +x $ROOT/$TOOLCHAIN/bin/ncurses-config
-  $SED "s:\(['=\" ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" $ROOT/$TOOLCHAIN/bin/ncurses-config
-  rm -rf $INSTALL/usr/bin
 
+  ln -sfv ncursesw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/ncurses.pc
+  ln -sfv formw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/form.pc
+  ln -sfv menuw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/menu.pc
+  ln -sfv panelw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/panel.pc
+  ln -sfv tinfow.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/tinfo.pc
+  
+  echo "INPUT(-lncursesw -ltinfow)" > $INSTALL/usr/lib/libncurses.so
+  echo "INPUT(-lncursesw -ltinfow)" > $SYSROOT_PREFIX/usr/lib/libncurses.so
 
+  echo "INPUT(-lncursesw -ltinfow)" > $INSTALL/usr/lib/libcursesw.so
+  echo "INPUT(-lncursesw -ltinfow)" > $SYSROOT_PREFIX/usr/lib/libcursesw.so
+  
+  ln -sfv libncurses.so $INSTALL/usr/lib/libcurses.so
+  ln -sfv libncurses.so $SYSROOT_PREFIX/usr/lib/libcurses.so
+  
+  ln -sfv libformw.so $INSTALL/usr/lib/libform.so
+  ln -sfv libmenuw.so $INSTALL/usr/lib/libmenu.so
+  ln -sfv libpanelw.so $INSTALL/usr/lib/libpanel.so
+  ln -sfv ticw.so $INSTALL/usr/lib/tic.so
+  ln -sfv libtinfow.so $INSTALL/usr/lib/libtinfo.so
+  
+  ln -sfv libformw.so $SYSROOT_PREFIX/usr/lib/libform.so
+  ln -sfv libmenuw.so $SYSROOT_PREFIX/usr/lib/libmenu.so
+  ln -sfv libpanelw.so $SYSROOT_PREFIX/usr/lib/libpanel.so
+  ln -sfv ticw.so $SYSROOT_PREFIX/usr/lib/tic.so
+  ln -sfv libtinfow.so $SYSROOT_PREFIX/usr/lib/libtinfo.so
   
   rm -rf $INSTALL/usr/bin/ncurses*-config
 }

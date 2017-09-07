@@ -1,7 +1,7 @@
 PKG_NAME="libav"
-PKG_VERSION="67d5f10"
-#PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_VERSION="v11.10"
 PKG_GIT_URL="https://github.com/libav/libav"
+PKG_GIT_BRANCH="release/12"
 PKG_DEPENDS_TARGET="toolchain ffmpeg"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
@@ -35,7 +35,7 @@ configure_target() {
               --host-cflags="$HOST_CFLAGS" \
               --host-ldflags="$HOST_LDFLAGS" \
               --host-libs="-lm" \
-              --extra-cflags="$CFLAGS" \
+              --extra-cflags="$CFLAGS -D_DEFAULT_SOURCE" \
               --extra-ldflags="$LDFLAGS" \
               --extra-libs="$FFMPEG_LIBS" \
               --enable-static \
@@ -54,7 +54,6 @@ configure_target() {
               --enable-avformat \
               --enable-swscale \
               --enable-avfilter \
-              --disable-devices \
               --enable-pthreads \
               --disable-w32threads \
               --enable-network \
@@ -78,7 +77,6 @@ configure_target() {
               --enable-encoder=wmav2 \
               --enable-encoder=mjpeg \
               --enable-encoder=png \
-              --disable-decoder=mpeg_xvmc \
               --enable-hwaccels \
               --enable-muxers \
               --enable-muxer=spdif \
@@ -90,16 +88,11 @@ configure_target() {
               --enable-parsers \
               --enable-bsfs \
               --enable-protocol=http \
-              --disable-indevs \
-              --disable-outdevs \
               --enable-filters \
-              --disable-avisynth \
               --enable-bzlib \
               --enable-libspeex \
               --enable-zlib \
               --enable-asm \
-              --disable-altivec \
-              --enable-yasm \
-              --disable-symver \
-              --disable-libfdk-aac
+              --enable-yasm
+
 }

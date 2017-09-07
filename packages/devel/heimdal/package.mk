@@ -20,7 +20,7 @@ PKG_NAME="heimdal"
 PKG_VERSION="7.4.0"
 PKG_ARCH="any"
 PKG_SITE="https://github.com/heimdal/heimdal/releases"
-PKG_URL="https://github.com/heimdal/heimdal/archive/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_URL="https://github.com/heimdal/heimdal/releases/download/heimdal-7.4.0/heimdal-7.4.0.tar.gz"
 PKG_SOURCE_DIR="$PKG_NAME-$PKG_NAME-$PKG_VERSION"
 PKG_DEPENDS_HOST="toolchain e2fsprogs:host"
 PKG_SECTION="devel"
@@ -30,7 +30,7 @@ PKG_LONGDESC="Heimdal is an implementation of Kerberos 5 (and some more stuff) l
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-MAKEFLAGS="-j4"
+MAKEFLAGS="-j1"
 
 PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared \
                          --without-openldap \

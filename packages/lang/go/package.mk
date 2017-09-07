@@ -17,10 +17,10 @@
 ################################################################################
 
 PKG_NAME="go"
-PKG_VERSION="1.8.3"
-PKG_SITE="https://github.com/golang/go/releases"
-PKG_URL="https://github.com/golang/go/archive/${PKG_NAME}${PKG_VERSION}.tar.gz"
-PKG_SOURCE_DIR="${PKG_NAME}-${PKG_NAME}${PKG_VERSION}"
+PKG_VERSION="7b4decc"
+PKG_SITE="https://github.com/golang/go/tree/release-branch.go1.9"
+PKG_GIT_URL="https://github.com/golang/go"
+PKG_GIT_BRANCH="release-branch.go1.9"
 PKG_DEPENDS_HOST="toolchain"
 PKG_SECTION="system"
 PKG_SHORTDESC="Go is an open source programming language that makes it easy to build simple, reliable, and efficient software."

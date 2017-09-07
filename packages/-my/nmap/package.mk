@@ -2,7 +2,7 @@ PKG_NAME="nmap"
 PKG_VERSION="7.60"
 PKG_SITE="http://nmap.org/"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain netbsd-curses libpcap libdnet pcre"
+PKG_DEPENDS_TARGET="toolchain ncurses libpcap libdnet pcre"
 PKG_SECTION="tools"
 PKG_AUTORECONF="no"
 

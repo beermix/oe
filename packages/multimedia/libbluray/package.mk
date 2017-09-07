@@ -55,7 +55,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-werror \
                            --disable-doxygen-html \
                            --disable-doxygen-ps \
                            --disable-doxygen-pdf \
-                           --with-freetype \
+                           --without-freetype \
                            --with-fontconfig \
                            --with-libxml2 \
                            --with-gnu-ld"

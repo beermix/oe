@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libselinux"
-PKG_VERSION="libselinux-2.5"
+PKG_VERSION="libselinux-2.7"
 PKG_SITE="https://github.com/SELinuxProject/selinux"
 PKG_GIT_URL="https://github.com/SELinuxProject/selinux"
 PKG_DEPENDS_TARGET="toolchain pcre"

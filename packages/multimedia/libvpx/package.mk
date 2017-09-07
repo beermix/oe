@@ -1,9 +1,11 @@
 PKG_NAME="libvpx"
-PKG_VERSION="e038d16"
+PKG_VERSION="ab5704f"
 PKG_GIT_URL="https://github.com/webmproject/libvpx/"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="tools"
 PKG_AUTORECONF="no"
+
+get_graphicdrivers
 
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD

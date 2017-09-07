@@ -2,13 +2,16 @@ PKG_NAME="netdata"
 PKG_VERSION="1.7.0"
 PKG_URL="https://github.com/firehol/netdata/releases/"
 PKG_URL="https://github.com/firehol/netdata/releases/download/v$PKG_VERSION/netdata-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain util-linux netbsd-curses sysstat libmnl zlib lm_sensors mysqlclient"
+PKG_DEPENDS_TARGET="toolchain util-linux ncurses sysstat libmnl zlib lm_sensors"
+# mysqlclient
 PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--with-zlib \
 			      --with-math \
+			      --enable-x86-sse \
+			      --disable-lto \
 			      --with-user=netdata \
 			      --with-webdir=/storage/.config/webdir \
 			      --sysconfdir=/storage/.config \

@@ -19,7 +19,7 @@
 PKG_NAME="netbsd-curses"
 PKG_VERSION="07a65f0"
 PKG_ARCH="any"
-PKG_SITE="https://github.com/sabotage-linux/netbsd-curses"
+PKG_SITE="https://github.com/sabotage-linux/ncurses"
 PKG_DEPENDS_TARGET="toolchain ncurses"
 PKG_SECTION="devel"
 PKG_SHORTDESC="netbsd-libcurses portable edition"

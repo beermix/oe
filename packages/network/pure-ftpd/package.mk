@@ -1,7 +1,7 @@
 PKG_NAME="pure-ftpd"
 PKG_VERSION="1.0.46"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain libcap libevent"
+PKG_DEPENDS_TARGET="toolchain libcap"
 #PKG_DEPENDS_TARGET="toolchain libcap libevent libsodium"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
@@ -20,6 +20,7 @@ PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config \
 			      --localedir=/storage/.config \
 			      --with-language=russian \
 			      --with-minimal \
+			      --with-gnu-ld \
 			      --enable-largefile"
 
 post_makeinstall_target() {

@@ -1,5 +1,5 @@
 PKG_NAME="expat"
-PKG_VERSION="R_2_2_3"
+PKG_VERSION="R_2_2_4"
 PKG_GIT_URL="https://github.com/libexpat/libexpat"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="textproc"
@@ -18,16 +18,16 @@ pre_configure_host() {
 PKG_CMAKE_SCRIPT_TARGET="expat/CMakeLists.txt"
 PKG_CMAKE_SCRIPT_HOST="expat/CMakeLists.txt"
 
-PKG_CMAKE_OPTS_TARGET="-DBUILD_tools=OFF -DBUILD_examples=OFF -DBUILD_tests=OFF -DBUILD_shared=ON"
+PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release -DBUILD_tools=OFF -DBUILD_examples=OFF -DBUILD_tests=OFF -DBUILD_shared=ON"
 
 PKG_CMAKE_OPTS_HOST="-DBUILD_tools=OFF -DBUILD_examples=OFF -DBUILD_tests=OFF -DBUILD_shared=ON"
 
-#pre_make_host() {
+pre_make_host() {
   # fix builderror when building in subdirs
-#  cp -r ../doc .
-#}
+  cp -r ../expat/doc .
+}
 
-#pre_make_target() {
+pre_make_target() {
   # fix builderror when building in subdirs
-#  cp -r ../doc .
-#}
+  cp -r ../expat/doc .
+}

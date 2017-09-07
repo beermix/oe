@@ -1,5 +1,5 @@
 PKG_NAME="grimd"
-PKG_VERSION="e11294b"
+PKG_VERSION="cde3f59"
 PKG_GIT_URL="https://github.com/looterz/grimd"
 PKG_DEPENDS_TARGET="toolchain go:host"
 PKG_KEEP_CHECKOUT="no"

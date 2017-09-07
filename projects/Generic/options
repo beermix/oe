@@ -40,7 +40,7 @@
 
   # Kernel to use. values can be:
   # default:  default mainline kernel
-  #  LINUX="zen-kernel"
+    #LINUX="zen"
 
 
 ################################################################################
@@ -60,8 +60,8 @@
   # GOLD (Google Linker) support
     GOLD_SUPPORT="yes"
 
-  # SquashFS compression method (gzip / lzo / xz / lz4)
-    SQUASHFS_COMPRESSION="lz4"
+  # SquashFS compression method ( gzip / lzo / xz / lz4 / zstd )
+    SQUASHFS_COMPRESSION="zstd"
 
 
 ################################################################################

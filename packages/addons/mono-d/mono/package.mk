@@ -13,7 +13,7 @@
 #  GNU General Public License for more details.
 #
 #  You should have received a copy of the GNU General Public License
-#  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
+#  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>. mono_sqlite
 ################################################################################
 
 PKG_NAME="mono"
@@ -24,7 +24,7 @@ PKG_LICENSE="MIT"
 PKG_SITE="http://www.mono-project.com"
 PKG_URL="http://download.mono-project.com/sources/mono/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_SOURCE_DIR="$PKG_NAME-${PKG_VERSION%.*}"
-PKG_DEPENDS_TARGET="toolchain mono:host libgdiplus sqlite mono_sqlite zlib"
+PKG_DEPENDS_TARGET="toolchain mono:host libgdiplus sqlite zlib"
 PKG_SECTION="tools"
 PKG_SHORTDESC="Mono: a cross platform, open source .NET framework"
 PKG_LONGDESC="Mono ($PKG_VERSION) is a software platform designed to allow developers to easily create cross platform applications part of the .NET Foundation"
@@ -33,7 +33,6 @@ PKG_AUTORECONF="yes"
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Mono"
 PKG_ADDON_TYPE="xbmc.python.script"
-PKG_MAINTAINER="Anton Voyl (awiouy)"
 
 prefix="/storage/.kodi/addons/$PKG_SECTION.$PKG_NAME"
 options="--build=$HOST_NAME \
@@ -87,7 +86,6 @@ addon() {
         "$(get_pkg_build libXext)/.install_pkg/usr/lib/libXext.so.6" \
         "$(get_pkg_build libexif)/.install_pkg/usr/lib/libexif.so.12" \
         "$(get_pkg_build libgdiplus)/.install_pkg/usr/lib/libgdiplus.so" \
-        "$(get_pkg_build mono_sqlite)/.install_pkg/usr/lib/libsqlite3.so.0" \
         "$(get_pkg_build pixman)/.install_pkg/usr/lib/libpixman-1.so.0" \
         "$ADDON_BUILD/$PKG_ADDON_ID/lib"
 }

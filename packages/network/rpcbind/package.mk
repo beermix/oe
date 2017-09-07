@@ -20,15 +20,15 @@ PKG_NAME="rpcbind"
 PKG_VERSION="0.2.4"
 PKG_SITE="http://rpcbind.sourceforge.net/"
 PKG_URL="$SOURCEFORGE_SRC/rpcbind/rpcbind/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain libtirpc systemd"
+PKG_DEPENDS_TARGET="toolchain libtirpc"
 PKG_SECTION="network"
 PKG_SHORTDESC="rpcbind: a server that converts RPC program numbers into universal addresses."
 PKG_LONGDESC="The rpcbind utility is a server that converts RPC program numbers into universal addresses."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-warmstarts \
+PKG_CONFIGURE_OPTS_TARGET="--enable-warmstarts \
                            --disable-libwrap \
                            --with-statedir=/run \
                            --with-rpcuser=root"

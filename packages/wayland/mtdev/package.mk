@@ -30,4 +30,4 @@ PKG_LONGDESC="The mtdev is a stand-alone library which transforms all variants o
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared"
+#PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared"

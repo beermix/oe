@@ -11,20 +11,20 @@
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-#
+#   
 #  You should have received a copy of the GNU General Public License
-#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
+#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.    fbset time lrzip tar
 ################################################################################
 
 PKG_NAME="busybox"
-PKG_VERSION="1.27.1"
+PKG_VERSION="1.27.2"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.busybox.net"
 PKG_URL="http://busybox.net/downloads/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain busybox:host hdparm dosfstools e2fsprogs zip unzip unrar bzip2 zlib lz4 lzo xz lrzip tar pciutils usbutils parted procps-ng gptfdisk psmisc findutils grep gawk coreutils time bash less fbset libev"
+PKG_DEPENDS_TARGET="toolchain busybox:host hdparm dosfstools e2fsprogs libtool zip unzip bzip2 zlib lzo unrar pciutils usbutils parted procps-ng gptfdisk psmisc findutils grep gawk coreutils bash less"
 PKG_DEPENDS_INIT="toolchain"
 PKG_PRIORITY="required"
 PKG_SECTION="system"
@@ -37,11 +37,11 @@ PKG_AUTORECONF="no"
 PKG_MAKE_OPTS_HOST="ARCH=$TARGET_ARCH CROSS_COMPILE= KBUILD_VERBOSE=1 install"
 PKG_MAKE_OPTS_TARGET="ARCH=$TARGET_ARCH \
                       CROSS_COMPILE=${TARGET_NAME}- \
-                      KBUILD_VERBOSE=1 \
+                      KBUILD_VERBOSE=0 \
                       install"
 PKG_MAKE_OPTS_INIT="ARCH=$TARGET_ARCH \
                     CROSS_COMPILE=${TARGET_NAME}- \
-                    KBUILD_VERBOSE=1 \
+                    KBUILD_VERBOSE=0 \
                     install"
 
 # nfs support
@@ -148,20 +148,6 @@ configure_init() {
     make oldconfig
 }
 
-pre_make_host() {
-  # dont build parallel
-  MAKEFLAGS=-j1
-}
-
-pre_make_target() {
-  # dont build parallel
-  MAKEFLAGS=-j1
-}
-
-pre_make_init() {
-  # dont build parallel
-  MAKEFLAGS=-j1
-}
 
 makeinstall_host() {
   mkdir -p $ROOT/$TOOLCHAIN/
@@ -178,6 +164,7 @@ makeinstall_target() {
     ln -sf /bin/busybox $INSTALL/usr/bin/env          #/usr/bin/env is needed for most python scripts
     cp $PKG_DIR/scripts/pastebinit $INSTALL/usr/bin/
     ln -sf pastebinit $INSTALL/usr/bin/paste
+
     
     #rm $INSTALL/bin/sh
     #rm $INSTALL/bin/hostname

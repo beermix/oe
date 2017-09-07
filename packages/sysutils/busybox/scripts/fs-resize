@@ -25,6 +25,7 @@ progress() {
     echo "### $1 ###"
   fi
 }
+
 if [ -e /storage/.please_resize_me ] ; then
   # this sh** was never intended to be used
   # on already installed and runing system

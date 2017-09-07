@@ -18,7 +18,7 @@
 
 PKG_NAME="fuse"
 PKG_VERSION="2.9.7"
-PKG_SITE="https://github.com/libfuse/libfuse/"
+PKG_SITE="https://github.com/libfuse/libfuse/releases"
 PKG_URL="https://github.com/libfuse/libfuse/releases/download/$PKG_NAME-$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="system"
@@ -28,17 +28,13 @@ PKG_LONGDESC="FUSE provides a simple interface for userspace programs to export 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="MOUNT_FUSE_PATH=/usr/sbin \
-                           --enable-lib \
+PKG_CONFIGURE_OPTS_TARGET="--enable-lib \
                            --enable-util \
                            --disable-example \
                            --enable-mtab \
                            --disable-rpath \
                            --with-gnu-ld"
-pre_configure_target() {
-# fuse fails to build with GOLD linker on gcc-4.9
-  strip_gold
-}
+
 
 post_makeinstall_target() {
   rm -rf $INSTALL/etc/init.d

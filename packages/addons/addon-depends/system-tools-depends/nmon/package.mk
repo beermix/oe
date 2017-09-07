@@ -22,7 +22,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/axibase/nmon"
 PKG_GIT_URL="https://github.com/axibase/nmon"
-PKG_DEPENDS_TARGET="toolchain netbsd-curses"
+PKG_DEPENDS_TARGET="toolchain ncurses"
 PKG_SECTION="tools"
 PKG_SHORTDESC="Systems administrator, tuner, benchmark tool gives you a huge amount of important performance information in one go"
 PKG_IS_ADDON="no"
@@ -39,7 +39,7 @@ make_target() {
       ;;
   esac
   CFLAGS="$CFLAGS -g -O3 -Wall -D JFS -D GETUSER -D LARGEMEM"
-  LDFLAGS="$LDFLAGS -lncurses -ltermcap -lm -g"
+  LDFLAGS="$LDFLAGS -lncursesw -ltinfo -lm -g"
   $CC -o nmon lmon*.c $CFLAGS $LDFLAGS -D $arch -D KERNEL_2_6_18
 }
 

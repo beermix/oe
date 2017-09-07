@@ -17,13 +17,13 @@
 ################################################################################
 
 PKG_NAME="glib"
-PKG_VERSION="2.53.5"
+PKG_VERSION="2.53.7"
 PKG_ARCH="any"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://www.gtk.org/"
 PKG_URL="http://ftp.gnome.org/pub/gnome/sources/glib/${PKG_VERSION%.*}/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain zlib libffi pcre Python:host"
-PKG_DEPENDS_HOST="libffi:host"
+PKG_DEPENDS_TARGET="toolchain zlib expat libffi pcre Python:host util-linux"
+PKG_DEPENDS_HOST="libffi:host pcre:host"
 PKG_SECTION="devel"
 PKG_SHORTDESC="glib: C support library"
 PKG_LONGDESC="GLib is a library which includes support routines for C such as lists, trees, hashes, memory allocation, and many other things."
@@ -34,10 +34,11 @@ PKG_AUTORECONF="yes"
 PKG_CONFIGURE_OPTS_HOST="--enable-static \
                          --disable-shared \
                          --disable-libmount \
-                         --with-pic \
                          --with-pcre=internal"
-                         
-PKG_CONFIGURE_OPTS_TARGET="glib_cv_stack_grows=no \
+
+PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_snprintf_c99=yes \
+                           ac_cv_func_vsnprintf_c99=yes \
+                           glib_cv_stack_grows=no \
                            glib_cv_uscore=no \
                            glib_cv_va_val_copy=no \
                            --disable-selinux \
@@ -52,7 +53,7 @@ PKG_CONFIGURE_OPTS_TARGET="glib_cv_stack_grows=no \
                            --enable-Bsymbolic \
                            --with-gnu-ld \
                            --with-threads=posix \
-                           --with-pcre=system"
+                           --with-pcre=internal"
 
 post_makeinstall_target() {
   mkdir -p $SYSROOT_PREFIX/usr/lib/pkgconfig
@@ -66,7 +67,7 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
   rm -rf $INSTALL/usr/lib/gdbus-2.0
   rm -rf $INSTALL/usr/lib/glib-2.0
-rm -rf $INSTALL/usr/share
+  rm -rf $INSTALL/usr/share
   
   ln -sfv $SYSROOT_PREFIX/usr/bin/gapplication $ROOT/$BUILD/toolchain/bin/
   ln -sfv $SYSROOT_PREFIX/usr/bin/gdbus $ROOT/$BUILD/toolchain/bin/

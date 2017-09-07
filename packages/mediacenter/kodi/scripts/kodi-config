@@ -21,13 +21,6 @@
 # done in kodi on addon install. but just in case..
 chmod +x /storage/.kodi/addons/*/bin/*
 
-mkdir -p /storage/.kodi/userdata
-# hack: update RSSnews.xml in userdata
-if [ -f /storage/.kodi/userdata/RssFeeds.xml ]; then
-  sed -e "s,http://openelec.tv/news?format=feed&type=rss,http://feeds.openelec.tv/news,g" \
-      -i /storage/.kodi/userdata/RssFeeds.xml
-fi
-
 # setup Kodi sources
 if [ ! -f $HOME/.kodi/userdata/sources.xml ]; then
   if [ -f /usr/share/kodi/config/sources.xml ]; then
@@ -42,9 +35,13 @@ if [ ! -f $HOME/.kodi/userdata/guisettings.xml ] ; then
   fi
 fi
 
-KODI_ARGS="--lircdev /run/lirc/lircd"
+if [ -e /run/lirc/lircd.irtrans ]; then
+  KODI_ARGS="--lircdev /run/lirc/lircd.irtrans"
+else
+  KODI_ARGS="--lircdev /run/lirc/lircd"
+fi
+
+
+mkdir -p /run/kodi
 
 echo "KODI_ARGS=\"$KODI_ARGS\"" > /run/openelec/kodi.conf
-if [ "$(uname -m)" = "x86_64" -o "$(uname -m)" = "aarch64" ]; then
-  echo "MALLOC_MMAP_THRESHOLD_=524288" >> /run/libreelec/kodi.conf
-fi

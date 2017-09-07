@@ -17,10 +17,7 @@
 ################################################################################
 
 PKG_NAME="wpa_supplicant"
-#PKG_VERSION="2.6"
-#PKG_SITE="http://hostap.epitest.fi/wpa_supplicant/"
-#PKG_URL="http://hostap.epitest.fi/releases/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_VERSION="b0fc2ef"
+PKG_VERSION="c2d4f2e"
 PKG_GIT_URL="http://w1.fi/hostap.git"
 PKG_DEPENDS_TARGET="toolchain dbus libnl openssl"
 PKG_SECTION="network"
@@ -34,7 +31,7 @@ PKG_MAKE_OPTS_TARGET="-C wpa_supplicant V=1 LIBDIR=/usr/lib BINDIR=/usr/bin"
 PKG_MAKEINSTALL_OPTS_TARGET="-C wpa_supplicant V=1 LIBDIR=/usr/lib BINDIR=/usr/bin"
 
 configure_target() {
-  LDFLAGS="$LDFLAGS -lpthread -lm"
+  export LIBS="$LIBS -lnl-3 -lm -lpthread"
 
   cp $PKG_DIR/config/makefile.config wpa_supplicant/.config
 # echo "CONFIG_TLS=gnutls" >> .config

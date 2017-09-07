@@ -1,7 +1,7 @@
 PKG_NAME="bash"
 PKG_VERSION="4.3.48"
 PKG_URL="https://dl.dropboxusercontent.com/s/afsixaktnwv42b7/bash-4.3.48.tar.gz"
-PKG_DEPENDS_TARGET="toolchain netbsd-curses readline"
+PKG_DEPENDS_TARGET="toolchain ncurses readline"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 

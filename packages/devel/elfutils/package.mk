@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="elfutils"
-PKG_VERSION="0.169"
+PKG_VERSION="0.170"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -32,8 +32,6 @@ PKG_LONGDESC="Elfutils is a collection of utilities, including eu-ld (a linker),
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-CFLAGS="$CFLAGS -D_GNU_SOURCE -Wno-unused-result"
-
 PKG_CONFIGURE_OPTS_TARGET="utrace_cv_cc_biarch=false \
                            --disable-werror \
                            --disable-progs \
@@ -45,11 +43,11 @@ PKG_CONFIGURE_OPTS_TARGET="utrace_cv_cc_biarch=false \
 PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"                         
 
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -D_GNU_SOURCE -Wno-unused-result -Wno-format-nonliteral-fPIC -DPIC"
+  export CFLAGS="$CFLAGS -fPIC -DPIC"
 }
 
 pre_configure_host() {
-  export CFLAGS="$CFLAGS -D_GNU_SOURCE -Wno-unused-result -Wno-format-nonliteral-fPIC -DPIC"
+  export CFLAGS="$CFLAGS -fPIC -DPIC"
 }
 
 make_target() {
@@ -57,6 +55,7 @@ make_target() {
   make V=1 -C libebl libebl.a
   make V=1 -C libdwfl libdwfl.a
   make V=1 -C libdw libdw.a
+  make V=1 -C libdwelf libdwelf.a
 }
 
 make_host() {
@@ -73,6 +72,17 @@ makeinstall_target() {
   mkdir -p $SYSROOT_PREFIX/usr/lib
     cp libelf/libelf.a $SYSROOT_PREFIX/usr/lib
     cp libdw/libdw.a $SYSROOT_PREFIX/usr/lib
+    
+    cp libebl/libebl.a $SYSROOT_PREFIX/usr/lib
+    
+    cp libdwfl/libdwfl.a $SYSROOT_PREFIX/usr/lib
+    cp $ROOT/$PKG_BUILD/libdwfl/libdwfl.h $SYSROOT_PREFIX/usr/include/elfutils
+    cp $ROOT/$PKG_BUILD/libdwfl/libdwflP.h $SYSROOT_PREFIX/usr/include/elfutils
+    
+    cp libdwfl/libdwfl.a $SYSROOT_PREFIX/usr/lib
+    cp $ROOT/$PKG_BUILD/libdwfl/libdwfl.h $SYSROOT_PREFIX/usr/include/elfutils
+    cp $ROOT/$PKG_BUILD/libdwfl/libdwflP.h $SYSROOT_PREFIX/usr/include/elfutils
+    
 }
 
 makeinstall_host() {

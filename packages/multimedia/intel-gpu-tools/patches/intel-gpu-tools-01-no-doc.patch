@@ -1,0 +1,52 @@
+diff --git a/Makefile.am b/Makefile.am
+old mode 100644
+new mode 100755
+index 60168628..18ff4ce7
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -39,8 +39,6 @@ endif
+ SUBDIRS += overlay demos benchmarks
+ endif
+ 
+-SUBDIRS += docs
+-
+ MAINTAINERCLEANFILES = ChangeLog INSTALL
+ 
+ .PHONY: ChangeLog INSTALL
+diff --git a/assembler/Makefile.am b/assembler/Makefile.am
+old mode 100644
+new mode 100755
+index bed6c07c..1e70944c
+--- a/assembler/Makefile.am
++++ b/assembler/Makefile.am
+@@ -1,4 +1,4 @@
+-SUBDIRS = doc test
++SUBDIRS = test
+ 
+ noinst_LTLIBRARIES = libbrw.la
+ 
+diff --git a/configure.ac b/configure.ac
+old mode 100644
+new mode 100755
+index 41ec4d26..027f3be1
+--- a/configure.ac
++++ b/configure.ac
+@@ -403,10 +403,6 @@ AC_CONFIG_FILES([
+ 		 Makefile
+ 		 benchmarks/Makefile
+ 		 demos/Makefile
+-		 docs/Makefile
+-		 docs/reference/Makefile
+-		 docs/reference/intel-gpu-tools/Makefile
+-		 docs/reference/intel-gpu-tools/version.xml
+ 		 lib/Makefile
+ 		 lib/tests/Makefile
+ 		 man/Makefile
+@@ -419,7 +415,6 @@ AC_CONFIG_FILES([
+ 		 debugger/Makefile
+ 		 debugger/system_routine/Makefile
+ 		 assembler/Makefile
+-		 assembler/doc/Makefile
+ 		 assembler/test/Makefile
+ 		 assembler/intel-gen4asm.pc
+ 		 overlay/Makefile

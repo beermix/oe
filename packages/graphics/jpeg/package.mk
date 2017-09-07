@@ -6,7 +6,15 @@ PKG_SECTION="graphics"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_HOST="--disable-shared --enable-static"
+pre_configure_target() {
+  export CFLAGS="$CFLAGS -fPIC"
+}
+
+pre_configure_host() {
+  export CFLAGS="$CFLAGS -fPIC"
+}
+
+PKG_CONFIGURE_OPTS_HOST="--disable-shared --enable-static --with-gnu-ld"
 
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
 

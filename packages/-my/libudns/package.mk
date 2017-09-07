@@ -6,4 +6,8 @@ PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static --with-gnu-ld"
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static"
+
+pre_configure_target() {
+  export CFLAGS="$CFLAGS -fPIC"
+}

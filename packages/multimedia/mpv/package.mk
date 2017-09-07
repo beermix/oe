@@ -6,6 +6,8 @@ PKG_DEPENDS_TARGET="toolchain libass lua"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
+get_graphicdrivers
+
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME

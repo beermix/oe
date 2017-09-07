@@ -18,11 +18,12 @@
 
 PKG_NAME="boost"
 PKG_VERSION="1_63_0"
-PKG_URL="$SOURCEFORGE_SRC/boost/boost/1.63.0/${PKG_NAME}_${PKG_VERSION}.tar.bz2"
+PKG_URL="https://dl.bintray.com/boostorg/release/1.63.0/source/boost_1_63_0.tar.gz"
+#PKG_VERSION="1_63_0"
+#PKG_URL="$SOURCEFORGE_SRC/boost/boost/1.63.0/${PKG_NAME}_${PKG_VERSION}.tar.bz2"
 PKG_SOURCE_DIR="${PKG_NAME}_${PKG_VERSION}"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain boost:host Python:host zlib bzip2"
-PKG_PRIORITY="optional"
+PKG_DEPENDS_TARGET="toolchain boost:host Python zlib bzip2"
 PKG_SECTION="devel"
 PKG_SHORTDESC="boost: Peer-reviewed STL style libraries for C++"
 PKG_LONGDESC="Boost provides free peer-reviewed portable C++ source libraries. The emphasis is on libraries which work well with the C++ Standard Library. One goal is to establish existing practice and provide reference implementations so that the Boost libraries are suitable for eventual standardization. Some of the libraries have already been proposed for inclusion in the C++ Standards Committee's upcoming C++ Standard Library Technical Report."
@@ -40,16 +41,19 @@ makeinstall_host() {
     cp bin.*/bjam $ROOT/$TOOLCHAIN/bin
 }
 
-#pre_configure_target() {
-#  export CFLAGS="$CFLAGS -fPIC -DPIC"
-#  export CXXFLAGS="$CXXFLAGS -fPIC -DPIC"
-#  export LDFLAGS="$LDFLAGS -fPIC -DPIC"
-#}
+pre_configure_target() {
+  export CFLAGS="$CFLAGS -fPIC"
+  export CXXFLAGS="$CXXFLAGS -fPIC"
+  export LDFLAGS="$LDFLAGS -fPIC"
+  #export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
+  #export CXXLAGS=`echo $CXXLAGS | sed -e "s|-O.|-O3|"`
+}
 
 configure_target() {
   sh bootstrap.sh --prefix=/usr \
                   --with-bjam=$ROOT/$TOOLCHAIN/bin/bjam \
                   --with-python=$ROOT/$TOOLCHAIN/bin/python \
+                  --with-python-root=$SYSROOT_PREFIX/usr \
 
   echo "using gcc : `$CC -v 2>&1  | tail -n 1 |awk '{print $3}'` : $CC  : <compileflags>\"$CFLAGS\" <linkflags>\"$LDFLAGS\" ;" \
     > tools/build/src/user-config.jam
@@ -60,41 +64,41 @@ make_target() {
 }
 
 makeinstall_target() {
-  $ROOT/$TOOLCHAIN/bin/bjam -d2 --toolset=gcc link=shared target-os=linux variant=release python=2.7 threading=multi debug-symbols=off cflags="${CPPFLAGS} ${CFLAGS} -fPIC -O3" cxxflags="${CPPFLAGS} ${CXXFLAGS} -fPIC -O3" linkflags="${LDFLAGS}" \
+  $ROOT/$TOOLCHAIN/bin/bjam -d2 --toolset=gcc link=shared target-os=linux variant=release threading=multi debug-symbols=off \
                                 --prefix=$SYSROOT_PREFIX/usr \
                                 --ignore-site-config \
                                 --layout=system \
                                 --with-thread \
-                                --with-program_options \
-                                --with-signals \
-                                --with-exception \
-                                --with-chrono \
-                                --with-random \
                                 --with-iostreams \
                                 --with-system \
                                 --with-serialization \
                                 --with-filesystem \
+                                --with-regex -sICU_PATH="$SYSROOT_PREFIX/usr" \
+                                --with-chrono \
                                 --with-date_time \
-                                --with-locale \
-                                --with-regex -sICU_PATH="$SYSROOT_PREFIX/usr" -j2 \
+                                --with-program_options \
+                                --with-random \
+                                --with-exception \
+                                --with-signals \
+                                --with-python -j3 \
                                 install
-
-  $ROOT/$TOOLCHAIN/bin/bjam -d2 --toolset=gcc link=shared target-os=linux variant=release threading=multi debug-symbols=off python=2.7 \
+                                
+  $ROOT/$TOOLCHAIN/bin/bjam -d2 --toolset=gcc link=shared target-os=linux variant=release threading=multi debug-symbols=off \
                                 --prefix=$INSTALL/usr \
                                 --ignore-site-config \
                                 --layout=system \
                                 --with-thread \
-                                --with-program_options \
-                                --with-signals \
-                                --with-exception \
-                                --with-chrono \
-                                --with-random \
                                 --with-iostreams \
                                 --with-system \
                                 --with-serialization \
                                 --with-filesystem \
-                                --with-date_time \
-                                --with-locale \
                                 --with-regex -sICU_PATH="$SYSROOT_PREFIX/usr" \
+                                --with-chrono \
+                                --with-date_time \
+                                --with-program_options \
+                                --with-random \
+                                --with-exception \
+                                --with-signals \
+                                --with-python  \
                                 install
 }

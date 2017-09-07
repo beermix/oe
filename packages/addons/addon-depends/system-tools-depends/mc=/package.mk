@@ -21,7 +21,7 @@ PKG_NAME="mc"
 PKG_VERSION="4.8.17"
 PKG_SITE="http://www.midnight-commander.org"
 PKG_URL="http://ftp.midnight-commander.org/${PKG_NAME}-${PKG_VERSION}.tar.xz"
-PKG_DEPENDS_TARGET="toolchain libtool:host gettext:host glib pcre netbsd-curses"
+PKG_DEPENDS_TARGET="toolchain libtool:host gettext:host glib pcre ncurses"
 
 PKG_SECTION="tools"
 PKG_SHORTDESC="mc: visual file manager"

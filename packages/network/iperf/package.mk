@@ -1,5 +1,5 @@
 PKG_NAME="iperf"
-PKG_VERSION="29f51a9"
+PKG_VERSION="3043c16"
 PKG_SITE="https://github.com/esnet/iperf/tree/3.2-STABLE"
 PKG_GIT_URL="https://github.com/esnet/iperf"
 PKG_GIT_BRANCH="3.2-STABLE"

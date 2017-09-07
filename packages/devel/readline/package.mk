@@ -18,7 +18,8 @@
 ################################################################################
 
 PKG_NAME="readline"
-PKG_VERSION="7d5c553"
+PKG_VERSION="6c32f81"
+#PKG_VERSION="7d5c553"
 PKG_SITE="http://www.gnu.org/software/readline/"
 PKG_GIT_URL="git://git.savannah.gnu.org/readline.git"
 PKG_DEPENDS_TARGET="toolchain ncurses"
@@ -29,10 +30,14 @@ PKG_IS_ADDON="no"
 
 PKG_AUTORECONF="no"
 
+pre_configure_target() {
+  CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
+  CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-Os|"`
+}
+
 PKG_CONFIGURE_OPTS_TARGET="bash_cv_wcwidth_broken=no \
-			      bash_cv_func_sigsetjmp=yes \
-			      --with-curses \
-			      --enable-static"
+                           --with-curses \
+                           --without-purify"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/share/readline

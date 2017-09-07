@@ -3,7 +3,7 @@ PKG_VERSION="1.20"
 PKG_URL="https://dev.yorhel.nl/download/ncdc-$PKG_VERSION.tar.gz"
 #PKG_VERSION="e4f211d"
 #PKG_GIT_URL="git://g.blicky.net/ncdu.git"
-PKG_DEPENDS_TARGET="toolchain netbsd-curses sqlite"
+PKG_DEPENDS_TARGET="toolchain ncurses sqlite"
 PKG_SECTION="tools"
 PKG_AUTORECONF="yes"
 

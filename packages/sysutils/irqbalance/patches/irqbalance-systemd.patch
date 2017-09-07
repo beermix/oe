@@ -1,7 +1,10 @@
-diff -Naur irqbalance-v1.2.0-orig/configure.ac irqbalance-v1.2.0/configure.ac
---- irqbalance-v1.2.0-orig/configure.ac	2017-01-18 21:09:00.072325139 +0000
-+++ irqbalance-v1.2.0/configure.ac	2017-01-18 21:09:20.972375105 +0000
-@@ -39,7 +39,7 @@
+diff --git a/configure.ac b/configure.ac
+old mode 100644
+new mode 100755
+index eaa76c9..ab2af2e
+--- a/configure.ac
++++ b/configure.ac
+@@ -54,7 +54,7 @@ AS_IF(
    [test "x$with_systemd" = xyes], [
      PKG_CHECK_MODULES([SYSTEMD], [libsystemd], [journal_lib=yes], [journal_lib=no])
      AS_IF([test "x$journal_lib" != "xyes"], [

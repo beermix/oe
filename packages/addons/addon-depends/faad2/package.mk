@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="faad2"
-PKG_VERSION="2.8.0"
+PKG_VERSION="2.7"
 PKG_SITE="http://www.audiocoding.com/"
-PKG_URL="https://dl.dropboxusercontent.com/s/m02ns2kpw2gm9fj/faad2-2.8.0.tar.xz"
+PKG_URL="https://dl.dropboxusercontent.com/s/hw5qu8pjwcefox5/faad2-2.7.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="audio"
 PKG_SHORTDESC="faad: An MPEG-4 AAC decoder"

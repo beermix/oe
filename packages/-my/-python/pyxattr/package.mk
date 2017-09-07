@@ -1,7 +1,7 @@
 PKG_NAME="pyxattr"
-PKG_VERSION="7a84956"
-PKG_GIT_URL="https://github.com/iustin/pyxattr"
-PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"
+PKG_VERSION="0.6.0"
+PKG_URL="http://pyxattr.k1024.org/downloads/pyxattr-$PKG_VERSION.tar.gz"
+PKG_DEPENDS_TARGET="toolchain Python distutilscross:host attr"
 PKG_SECTION="python/system"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
@@ -11,7 +11,7 @@ make_target() {
 }
 
 makeinstall_target() {
-  python setup.py install --root=$INSTALL --prefix=/usr --optimize=1
+  python setup.py install --root=$INSTALL --prefix=/usr
 }
 
 post_makeinstall_target() {

@@ -20,7 +20,7 @@ PKG_NAME="afpfs-ng"
 PKG_VERSION="0.8.1"
 PKG_SITE="http://sourceforge.net/projects/afpfs-ng/"
 PKG_URL="$SOURCEFORGE_SRC/$PKG_NAME/$PKG_NAME/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain libgpg-error libgcrypt netbsd-curses"
+PKG_DEPENDS_TARGET="toolchain libgpg-error libgcrypt ncurses"
 
 PKG_SECTION="network"
 PKG_SHORTDESC="afpfs-ng: an Apple Filing Protocol client"

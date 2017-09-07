@@ -8,11 +8,11 @@ PKG_AUTORECONF="no"
 
 pre_configure_target() {
   strip_lto
-  strip_gold
+  #strip_gold
 }
 
 make_target() {
-  make CC="$CC" CFLAGS="-Wall -DDEBUG=0 -O2" -j1
+  make CC="$CC" CFLAGS="$CFLAGS -Wall -DDEBUG=0" LDFLAGS="$LDFLAGS" -j1
 }
 
 post_make_target() {

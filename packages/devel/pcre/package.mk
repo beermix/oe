@@ -29,7 +29,15 @@ PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-utf8 --enable-pcre16 --enable-unicode-properties --enable-jit"
+PKG_CONFIGURE_OPTS_TARGET="--disable-stack-for-recursion \
+			      --enable-pcre8 \
+			      --enable-pcre16 \
+			      --disable-pcre32 \
+			      --enable-jit \
+			      --enable-utf8 \
+			      --enable-unicode-properties \
+			      --enable-newline-is-anycrlf \
+			      --enable-cpp"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$ROOT/$TOOLCHAIN $PKG_CONFIGURE_OPTS_TARGET"
 

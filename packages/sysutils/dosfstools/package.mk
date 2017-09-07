@@ -31,7 +31,7 @@ PKG_SHORTDESC="dosfstools: utilities for making and checking MS-DOS FAT filesyst
 PKG_LONGDESC="dosfstools contains utilities for making and checking MS-DOS FAT filesystems."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--without-udev"
 PKG_CONFIGURE_OPTS_INIT="--without-udev"

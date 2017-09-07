@@ -1,5 +1,5 @@
 PKG_NAME="libnetwork"
-PKG_VERSION="7b2b1fe"
+PKG_VERSION="0f53435"
 PKG_SITE="https://github.com/docker/libnetwork"
 PKG_GIT_URL="https://github.com/docker/libnetwork"
 PKG_DEPENDS_TARGET="toolchain go:host"

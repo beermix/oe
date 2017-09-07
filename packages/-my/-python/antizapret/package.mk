@@ -1,5 +1,5 @@
 PKG_NAME="antizapret"
-PKG_VERSION="16dd799"
+PKG_VERSION="c6f9bd8"
 PKG_GIT_URL="https://github.com/afedchin/antizapret"
 PKG_DEPENDS_TARGET="toolchain Python"
 PKG_IS_ADDON="no"

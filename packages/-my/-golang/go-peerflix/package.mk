@@ -7,6 +7,8 @@ PKG_AUTORECONF="no"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
+strip_lto
+
 pre_make_target() {
   export GOOS=linux
   export GOARCH=amd64

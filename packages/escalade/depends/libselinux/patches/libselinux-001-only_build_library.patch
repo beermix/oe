@@ -1,16 +1,14 @@
---- a/Makefile	2016-08-13 15:58:53.302616785 +0200
-+++ b/Makefile	2016-08-13 15:59:39.916444896 +0200
-@@ -1,4 +1,4 @@
--SUBDIRS=libsepol libselinux libsemanage sepolgen checkpolicy secilc policycoreutils # policy
-+SUBDIRS=libsepol libselinux
+diff --git a/Makefile b/Makefile
+old mode 100644
+new mode 100755
+index 7701e162..1eef1653
+--- a/Makefile
++++ b/Makefile
+@@ -1,5 +1,5 @@
+-OPT_SUBDIRS ?= dbus gui mcstrans python restorecond sandbox semodule-utils
+-SUBDIRS=libsepol libselinux libsemanage checkpolicy secilc policycoreutils $(OPT_SUBDIRS)
++fOPT_SUBDIRS ?= dbus gui mcstrans python restorecond sandbox semodule-utils
++SUBDIRS=libsepol libselinux $(OPT_SUBDIRS)
  PYSUBDIRS=libselinux libsemanage
- DISTCLEANSUBIDRS=libselinux libsemanage
+ DISTCLEANSUBDIRS=libselinux libsemanage
  
---- a/libselinux/Makefile	2016-08-13 14:35:10.029812196 +0000
-+++ b/libselinux/Makefile	2016-08-13 14:35:33.929812046 +0000
-@@ -1,4 +1,4 @@
--SUBDIRS = src include utils man
-+SUBDIRS = src include
- 
- DISABLE_AVC ?= n
- DISABLE_SETRANS ?= n

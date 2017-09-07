@@ -27,7 +27,7 @@ PKG_LONGDESC="This is a library that defines common error values for all GnuPG c
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC --enable-static --disable-shared --disable-nls --disable-rpath --with-gnu-ld --with-pic"
+PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC --enable-static --enable-shared --disable-nls --disable-rpath --with-gnu-ld"
 
 pre_configure_target() {
 # inspired by openembedded
@@ -60,4 +60,5 @@ post_makeinstall_target() {
 
   sed -e "s:\(['= ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" -i src/gpg-error-config
   cp src/gpg-error-config $SYSROOT_PREFIX/usr/bin
+  ln -s $SYSROOT_PREFIX/usr/bin/gpg-error-config $ROOT/$BUILD/toolchain/bin/
 }

@@ -16,17 +16,17 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="netbsd-curses"
+PKG_NAME="ncurses"
 PKG_VERSION="0.2.1"
 PKG_REV="1"
 PKG_ARCH="any"
-PKG_SITE="https://github.com/sabotage-linux/netbsd-curses"
+PKG_SITE="https://github.com/sabotage-linux/ncurses"
 PKG_URL="http://ftp.barfooze.de/pub/sabotage/tarballs/${PKG_NAME}-${PKG_VERSION}.tar.xz"
 PKG_DEPENDS_TARGET="toolchain zlib"
 PKG_PRIORITY="optional"
 PKG_SECTION="devel"
-PKG_SHORTDESC="netbsd-curses: netbsd-libcurses portable edition"
-PKG_LONGDESC="netbsd-curses: netbsd-libcurses portable edition"
+PKG_SHORTDESC="ncurses: netbsd-libcurses portable edition"
+PKG_LONGDESC="ncurses: netbsd-libcurses portable edition"
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"

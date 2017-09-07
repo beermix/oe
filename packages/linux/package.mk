@@ -46,30 +46,27 @@ case "$LINUX" in
     PKG_PATCH_DIRS="linux-3.14 amlogic-3.14"
     KERNEL_EXTRA_CONFIG+=" kernel-3.x"
     ;;
-  imx6)
-    PKG_VERSION="47b3547"
-    PKG_GIT_URL="https://github.com/xbianonpi/xbian-sources-kernel.git"
-    PKG_GIT_BRANCH="imx6-4.8.y"
-    PKG_DEPENDS_TARGET+=" imx6-status-led imx6-soc-fan"
-    PKG_PATCH_DIRS="linux-4.8 imx6-4.8"
+  rc)
+    PKG_VERSION="4.13-rc7"
+    PKG_URL="https://git.kernel.org/torvalds/t/linux-$PKG_VERSION.tar.gz"
+    PKG_PATCH_DIRS="linux-4.13"
     ;;
-  rpi)
-    PKG_VERSION="31e73f0"
-    PKG_GIT_URL="https://github.com/raspberrypi/linux.git"
-    PKG_GIT_BRANCH="rpi-4.9.y"
-    PKG_PATCH_DIRS="linux-4.9 rpi-4.9"
+  aufs)
+    PKG_VERSION="88f3e9a"
+    PKG_GIT_URL="http://github.com/sfjro/aufs4-linux"
+    PKG_PATCH_DIRS="linux-4.13"
     ;;
-  zen-kernel)
-    PKG_VERSION="29bc26d"
+  zen)
+    PKG_VERSION="edfb18b"
     PKG_GIT_BRANCH="4.12/master"
-    PKG_KEEP_CHECKOUT="yes"
-    PKG_GIT_URL="https://github.com/zen-kernel/zen-kernel"
+    PKG_KEEP_CHECKOUT="no"
+    PKG_GIT_URL="http://github.com/zen-kernel/zen-kernel"
     PKG_PATCH_DIRS="linux-4.12"
     ;;
   *)
-    PKG_VERSION="4.12.8"
+    PKG_VERSION="4.13"
     PKG_URL="https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-$PKG_VERSION.tar.xz"
-    PKG_PATCH_DIRS="linux-4.12"
+    PKG_PATCH_DIRS="linux-4.13"
     ;;
 esac
 

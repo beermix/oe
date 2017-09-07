@@ -18,14 +18,14 @@
 
 PKG_NAME="mariadb"
 PKG_VERSION="10.1.26"
-#PKG_VERSION="10.2.7"
+#PKG_VERSION="10.2.8"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/MariaDB/server/releases"
 PKG_URL="https://downloads.mariadb.org/interstitial/$PKG_NAME-$PKG_VERSION/source/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain readline libaio openssl mariadb:host"
+PKG_DEPENDS_TARGET="toolchain readline libaio openssl libxml2 mariadb:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="database"
 PKG_SHORTDESC="mariadb: A community developed branch of MySQL"
@@ -136,7 +136,7 @@ configure_target() {
         -DDISABLE_SHARED=ON \
         -DCMAKE_C_FLAGS="${TARGET_CFLAGS} -fPIC -DPIC -fno-strict-aliasing -DBIG_JOINS=1 -fomit-frame-pointer -fno-delete-null-pointer-checks" \
         -DCMAKE_CXX_FLAGS="${TARGET_CXXFLAGS} -fPIC -DPIC -fno-strict-aliasing -DBIG_JOINS=1 -felide-constructors -fno-delete-null-pointer-checks" \
-        -DCMAKE_BUILD_TYPE=Release \
+         -DCMAKE_BUILD_TYPE=Release \
         $MARIADB_IMPORT_EXECUTABLES \
         -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
         -DCMAKE_INSTALL_PREFIX=/usr \
@@ -147,7 +147,7 @@ configure_target() {
         -DINSTALL_MYSQLSHAREDIR=share/mysql \
         -DINSTALL_MYSQLTESTDIR=share/mysql/test \
         -DINSTALL_PLUGINDIR=lib/mysql/plugin \
-        -DINSTALL_SBINDIR=sbin \
+        -DINSTALL_SBINDIR=bin \
         -DINSTALL_SCRIPTDIR=share/mysql/scripts \
         -DINSTALL_SQLBENCHDIR=share/mysql/bench \
         -DINSTALL_SUPPORTFILESDIR=share/mysql/support-files \
@@ -162,9 +162,17 @@ configure_target() {
         -DWITH_ZLIB=bundled \
         -DWITH_SYSTEMD=no \
         -DWITH_LIBWRAP=OFF \
-        -DSECURITY_HARDENED=0 \
+        -DSECURITY_HARDENED=1 \
+        -$MARIADB_OPTS \
+        -DWITH_ARCHIVE_STORAGE_ENGINE=1 \
+        -DWITH_BLACKHOLE_STORAGE_ENGINE=1 \
+        -DWITH_INNOBASE_STORAGE_ENGINE=1 \
+        -DWITH_PARTITION_STORAGE_ENGINE=1 \
+        -DWITH_TOKUDB_STORAGE_ENGINE=1 \
+        -DWITHOUT_EXAMPLE_STORAGE_ENGINE=1 \
+        -DWITHOUT_FEDERATED_STORAGE_ENGINE=1 \
+        -DWITHOUT_PBXT_STORAGE_ENGINE=1 \
         -DWITH_SSL=$SYSROOT_PREFIX/usr \
-        $MARIADB_OPTS \
         ..
 }
 
@@ -184,4 +192,7 @@ post_makeinstall_target() {
     rm -rf $INSTALL/usr/lib
     rm -rf $INSTALL/usr/share/mysql/*.sql
   fi
+  
+ # rm -rf $SYSROOT_PREFIX/usr/lib/libmariadb.so.3
+ # rm -rf $SYSROOT_PREFIX/usr/lib/libmariadb.so
 }

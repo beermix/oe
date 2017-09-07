@@ -1,0 +1,60 @@
+diff -Naur coreutils-8.27-orig/Makefile.in coreutils-8.27/Makefile.in
+--- coreutils-8.27-orig/Makefile.in	2017-06-22 02:35:54.733181270 +0300
++++ coreutils-8.27/Makefile.in	2017-06-22 02:39:54.610635864 +0300
+@@ -2584,11 +2584,8 @@
+ 	$(top_srcdir)/build-aux/missing \
+ 	$(top_srcdir)/build-aux/test-driver \
+ 	$(top_srcdir)/build-aux/texinfo.tex \
+-	$(top_srcdir)/build-aux/ylwrap $(top_srcdir)/doc/local.mk \
+ 	$(top_srcdir)/lib/alloca.c $(top_srcdir)/lib/config.hin \
+-	$(top_srcdir)/lib/local.mk $(top_srcdir)/man/local.mk \
+ 	$(top_srcdir)/src/local.mk $(top_srcdir)/src/single-binary.mk \
+-	$(top_srcdir)/tests/local.mk ABOUT-NLS AUTHORS COPYING \
+ 	ChangeLog INSTALL NEWS README THANKS TODO build-aux/ar-lib \
+ 	build-aux/compile build-aux/config.guess \
+ 	build-aux/config.rpath build-aux/config.sub build-aux/depcomp \
+@@ -2687,7 +2684,7 @@
+ EOVERFLOW_VALUE = @EOVERFLOW_VALUE@
+ ERRNO_H = @ERRNO_H@
+ EXEEXT = @EXEEXT@
+-EXTRA_MANS = @EXTRA_MANS@
++EXTRA_MANS = 
+ FLOAT_H = @FLOAT_H@
+ FNMATCH_H = @FNMATCH_H@
+ GETADDRINFO_LIB = @GETADDRINFO_LIB@
+@@ -3932,7 +3929,7 @@
+ lispdir = @lispdir@
+ localedir = @localedir@
+ localstatedir = @localstatedir@
+-man1_MANS = @man1_MANS@
++man1_MANS = 
+ mandir = @mandir@
+ mkdir_p = @mkdir_p@
+ oldincludedir = @oldincludedir@
+@@ -5091,8 +5088,6 @@
+      }				\
+    END {$$m and (warn "$@: do not use upper case in \@var{...}\n"), exit 1}'
+ 
+-@HAVE_PERL_FALSE@run_help2man = $(SHELL) $(srcdir)/man/dummy-man
+-@HAVE_PERL_TRUE@run_help2man = $(PERL) -- $(srcdir)/man/help2man
+ ALL_MANS = $(man1_MANS) $(EXTRA_MANS)
+ 
+ # Dependencies common to all man pages.  Updated below.
+@@ -5925,7 +5920,7 @@
+ .SUFFIXES: .1 .c .dvi .log .o .obj .pl .pl$(EXEEXT) .ps .sed .sh .sh$(EXEEXT) .sin .trs .x .xpl .xpl$(EXEEXT) .y
+ am--refresh: Makefile
+ 	@:
+-$(srcdir)/Makefile.in:  $(srcdir)/Makefile.am $(top_srcdir)/lib/local.mk $(srcdir)/lib/gnulib.mk $(top_srcdir)/src/local.mk $(srcdir)/src/cu-progs.mk $(top_srcdir)/src/single-binary.mk $(top_srcdir)/doc/local.mk $(top_srcdir)/man/local.mk $(top_srcdir)/tests/local.mk $(am__configure_deps)
++$(srcdir)/Makefile.in:  $(srcdir)/Makefile.am $(top_srcdir)/lib/local.mk $(srcdir)/lib/gnulib.mk $(top_srcdir)/src/local.mk $(srcdir)/src/cu-progs.mk $(top_srcdir)/src/single-binary.mk $(am__configure_deps)
+ 	@for dep in $?; do \
+ 	  case '$(am__configure_deps)' in \
+ 	    *$$dep*) \
+@@ -5947,7 +5942,7 @@
+ 	    echo ' cd $(top_builddir) && $(SHELL) ./config.status $@ $(am__depfiles_maybe)'; \
+ 	    cd $(top_builddir) && $(SHELL) ./config.status $@ $(am__depfiles_maybe);; \
+ 	esac;
+-$(top_srcdir)/lib/local.mk $(srcdir)/lib/gnulib.mk $(top_srcdir)/src/local.mk $(srcdir)/src/cu-progs.mk $(top_srcdir)/src/single-binary.mk $(top_srcdir)/doc/local.mk $(top_srcdir)/man/local.mk $(top_srcdir)/tests/local.mk $(am__empty):
++$(top_srcdir)/lib/local.mk $(srcdir)/lib/gnulib.mk $(top_srcdir)/src/local.mk $(srcdir)/src/cu-progs.mk $(am__empty):
+ 
+ $(top_builddir)/config.status: $(top_srcdir)/configure $(CONFIG_STATUS_DEPENDENCIES)
+ 	$(SHELL) ./config.status --recheck

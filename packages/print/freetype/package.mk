@@ -19,10 +19,10 @@
 PKG_NAME="freetype"
 PKG_VERSION="2.8"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
-#PKG_VERSION="7e50824"
+#PKG_VERSION="587264c"
 #PKG_GIT_URL="git://git.sv.nongnu.org/freetype/freetype2.git"
-PKG_DEPENDS_TARGET="toolchain zlib libpng bzip2"
-PKG_DEPENDS_HOST="zlib:host libpng:host bzip2:host"
+PKG_DEPENDS_TARGET="toolchain zlib"
+PKG_DEPENDS_HOST="zlib:host"
 PKG_SECTION="print"
 PKG_SHORTDESC="freetype: TrueType font rendering library"
 PKG_LONGDESC="The FreeType engine is a free and portable TrueType font rendering engine. It has been developed to provide TT support to a great variety of platforms and environments."
@@ -32,11 +32,13 @@ PKG_AUTORECONF="no"
 PKG_USE_CMAKE="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--with-zlib=yes \
-                           --with-bzip2=yes \
-                           --with-png=yes \
+                           --with-bzip2=no \
+                           --with-png=no \
                            --with-harfbuzz=no"
 
 pre_configure_target() {
+  #CFLAGS="$CFLAGS -fPIC"
+  # unset LIBTOOL because freetype uses its own
     ( cd ..
       unset LIBTOOL
       sh autogen.sh

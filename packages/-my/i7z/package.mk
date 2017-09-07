@@ -8,3 +8,8 @@ PKG_AUTORECONF="no"
 make_target() {
   LIBS="$LIBS -lcurses -lterminfo" make CC="$CC" AR="$AR" LD="$LD" XCFLAGS="$CFLAGS" RANLIB="$RANLIB" XLDFLAGS="$LDFLAGS" MAKEDEPPROG="$CC" CFLAGS="$CFLAGS" -j1
 }
+
+pre_configure_target() {
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-fno-strict-aliasing||g"`
+  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-fno-strict-aliasing||g"`
+}

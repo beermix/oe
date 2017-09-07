@@ -26,7 +26,7 @@ if [ -z "$1" ]; then
 fi
 
 if [ ! -f $PKG_DIR/package.mk ]; then
-  printf "$(print_color CLR_ERROR "$1: no package.mk file found")\n"
+  printf "${boldred}$1: no package.mk file found${endcolor}\n"
   exit 1
 fi
 

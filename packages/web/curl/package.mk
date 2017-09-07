@@ -29,7 +29,7 @@ PKG_VERSION="7.55.1"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="MIT"
-PKG_SITE="http://curl.haxx.se"
+PKG_SITE="https://curl.haxx.se/download/?C=M;O=D"
 PKG_URL="http://curl.haxx.se/download/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain zlib openssl rtmpdump"
 PKG_PRIORITY="optional"
@@ -85,7 +85,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            --enable-thread \
                            --with-random=/dev/urandom \
                            --without-gnutls \
-                           --with-ssl \
+                           --with-ssl=$SYSROOT_PREFIX/usr \
                            --without-polarssl \
                            --without-nss \
                            --with-ca-bundle=/etc/ssl/cert.pem \
@@ -94,7 +94,8 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            --without-libmetalink \
                            --without-libssh2 \
                            --with-librtmp=$SYSROOT_PREFIX/usr \
-                           --without-libidn"
+                           --without-libidn2 \
+                           --without-nghttp2"
 
 pre_configure_target() {
 # link against librt because of undefined reference to 'clock_gettime'

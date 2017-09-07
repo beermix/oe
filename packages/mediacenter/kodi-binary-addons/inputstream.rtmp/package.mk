@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="inputstream.rtmp"
-PKG_VERSION="d93d32d"
+PKG_VERSION="6c1af46"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/notspiff/inputstream.rtmp"
-PKG_GIT_URL="https://github.com/AlwinEsch/inputstream.rtmp"
+PKG_GIT_URL="https://github.com/notspiff/inputstream.rtmp"
 PKG_GIT_BRANCH="master"
 PKG_DEPENDS_TARGET="toolchain kodi-platform rtmpdump"
 PKG_PRIORITY="optional"

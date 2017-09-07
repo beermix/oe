@@ -37,7 +37,7 @@ fi
 # package specific configure options
 PKG_CONFIGURE_OPTS_TARGET="--with-plugindir=/usr/lib/alsa \
                            --disable-python \
-                           $ALSA_DEBUG \
+                           --without-debug
                            --disable-dependency-tracking"
 
 pre_configure_target() {

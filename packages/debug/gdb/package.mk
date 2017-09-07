@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/gdb/"
 PKG_URL="http://ftp.gnu.org/gnu/gdb/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain zlib netbsd-curses expat"
+PKG_DEPENDS_TARGET="toolchain zlib ncurses expat xz"
 PKG_PRIORITY="optional"
 PKG_SECTION="debug"
 PKG_SHORTDESC="gdb: The GNU Debugger"
@@ -39,6 +39,7 @@ pre_configure_target() {
   # gdb could fail on runtime if build with LTO support
     strip_lto
     strip_hard
+    export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
 }
 
 PKG_CONFIGURE_OPTS_TARGET="bash_cv_have_mbstate_t=set \

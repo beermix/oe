@@ -1,8 +1,3 @@
-################################################################################
-#      This file is part of Alex@ELEC - http://www.alexelec.in.ua
-#      Copyright (C) 2011-2017 Alexandr Zuyev (alex@alexelec.in.ua)
-################################################################################
-
 PKG_NAME="libmcrypt"
 PKG_VERSION="2.5.8"
 PKG_REV="1"
@@ -19,8 +14,8 @@ PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_realloc_0_nonnull=yes \
                            ac_cv_func_malloc_0_nonnull=yes \
-                           --enable-static \
-                           --disable-shared"
+                           --disable-static \
+                           --disable-padlock-support"
 
 pre_configure_target() {
   # doesn't like to be build in target folder
