@@ -36,7 +36,7 @@ configure_target() {
   strip_gold
 
   # Dynamic Library support
-  export LDFLAGS="$LDFLAGS -ldl -lpthread -lstdc++"
+  export LDFLAGS="$LDFLAGS -ldl -lpthread -lstdc++ -lmysqlclient"
 
   # libiconv
   export CFLAGS="$CFLAGS -I$SYSROOT_PREFIX/usr/include/iconv"

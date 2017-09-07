@@ -54,10 +54,10 @@
     # PROJECT_CFLAGS="-mtune=$TARGET_CPU -mmmx -msse -msse2 -msse3 -mssse3 -msse4.1 -msse4.2 -maes -mfpmath=sse"
     PROJECT_CFLAGS="-mmmx -msse -msse2 -msse3 -msse4 -msse4.1 -msse4.2 -mavx -mfpmath=sse"
 
-  # LTO (Link Time Optimization) support
+  # LTO (Link Time Optimization) support ( yes / no )
     LTO_SUPPORT="no"
 
-  # GOLD (Google Linker) support
+  # GOLD (Google Linker) support ( yes / no )
     GOLD_SUPPORT="no"
 
   # SquashFS compression method ( gzip / lzo / xz / lz4 / zstd )
@@ -68,13 +68,13 @@
 # setup project defaults
 ################################################################################
 
-  # build and install ALSA Audio support (yes / no)
+  # build and install ALSA Audio support ( yes / no )
     ALSA_SUPPORT="yes"
 
   # OpenGL (X/ES) implementation to use (mesa / bcm2835-firmware / meson6 / meson8 / meson-gxbb / gpu-imx-gpu-viv)
     OPENGL="mesa"
 
-  # include uvesafb support (yes / no)
+  # include uvesafb support ( yes / no )
     UVESAFB_SUPPORT="no"
 
   # Displayserver to use (x11 / no)

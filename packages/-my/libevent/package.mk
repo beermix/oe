@@ -7,13 +7,13 @@ PKG_DEPENDS_TARGET="toolchain openssl zlib"
 PKG_SHORTDESC="libevent: a library for asynchronous event notification"
 PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC"
+  export CFLAGS+=" -fPIC -DPIC"
 }
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-libevent-regress --disable-samples --disable-shared --enable-static --enable-openssl"
+PKG_CONFIGURE_OPTS_TARGET="--disable-samples --disable-shared --enable-static --enable-openssl"
 
 post_makeinstall_target() {
   rm -fr $INSTALL

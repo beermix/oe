@@ -34,3 +34,7 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
 }
 
+
+pre_configure_target() {
+  export CFLAGS+=" -fPIC -DPIC"
+}

@@ -33,6 +33,10 @@ PKG_AUTORECONF="no"
 LTO_SUPPORT="no"
 GOLD_SUPPORT="no"
 
+pre_configure_target() {
+  export CFLAGS+=" -fPIC -DPIC"
+}
+
 CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
 
 if [ "$DISPLAYSERVER" = "x11" ]; then

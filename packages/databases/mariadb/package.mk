@@ -123,7 +123,6 @@ configure_host() {
         -DWITH_LIBWRAP=OFF \
         -DWITH_WSREP=OFF \
         -DWITH_SYSTEMD=no \
-        -DSECURITY_HARDENED=0 \
         ..
 }
 
@@ -162,8 +161,6 @@ configure_target() {
         -DWITH_ZLIB=bundled \
         -DWITH_SYSTEMD=no \
         -DWITH_LIBWRAP=OFF \
-        -DSECURITY_HARDENED=1 \
-        -$MARIADB_OPTS \
         -DWITH_ARCHIVE_STORAGE_ENGINE=1 \
         -DWITH_BLACKHOLE_STORAGE_ENGINE=1 \
         -DWITH_INNOBASE_STORAGE_ENGINE=1 \
@@ -173,6 +170,7 @@ configure_target() {
         -DWITHOUT_FEDERATED_STORAGE_ENGINE=1 \
         -DWITHOUT_PBXT_STORAGE_ENGINE=1 \
         -DWITH_SSL=$SYSROOT_PREFIX/usr \
+        -$MARIADB_OPTS \
         ..
 }
 
