@@ -105,7 +105,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-macosx \
 			      --disable-macosx-vlc-app \
 			      --disable-macosx-qtkit \
-			      --disable-ncurses \
+			      --enable-ncurses \
 			      --disable-goom \
 			      --disable-projectm \
 			      --enable-udev \
