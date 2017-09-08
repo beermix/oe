@@ -3,8 +3,8 @@
 #      Copyright (C) 2011-2017 Alexandr Zuyev (alex@alexelec.in.ua)
 ################################################################################
 
-PKG_NAME="kodi-theme-AeonNox"
-PKG_VERSION="216cc97"
+PKG_NAME="skin.AeonNox"
+PKG_VERSION="afc8831"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
