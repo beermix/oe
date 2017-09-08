@@ -38,11 +38,17 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --without-ppl \
                          --without-cloog \
                          --disable-werror \
-                         --enable-plugins \
                          --disable-multilib \
                          --disable-libada \
                          --enable-libssp \
                          --enable-version-specific-runtime-libs \
+                         --enable-plugins \
+                         --enable-gold \
+                         --enable-ld=default \
+                         --enable-lto \
+                         --enable-relro \
+                         --with-pic \
+                         --disable-shared \
                          --disable-nls \
                          --enable-poison-system-directories"
 
