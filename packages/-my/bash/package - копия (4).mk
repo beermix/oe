@@ -12,9 +12,15 @@ PKG_CONFIGURE_OPTS_TARGET="--bindir=/bin
 			      --enable-readline \
 			      --without-bash-malloc \
 			      --with-installed-readline \
-			      --disable-shared \
-			      --with-gnu-ld \
-			      --disable-static-link"
+			      --disable-static-link \
+			      --enable-multibyte \
+			      --enable-profiling \ \
+			      --enable-job-control \
+			      --enable-history \
+			      --enable-coprocesses \
+			      --enable-alias \
+			      --enable-net-redirections \
+			      --disable-minimal-config"
 			   
 post_makeinstall_target() {
   mkdir -p $INSTALL/bin
