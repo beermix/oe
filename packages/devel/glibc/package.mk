@@ -39,6 +39,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/bash \
                            --disable-sanity-checks \
                            --enable-add-ons \
                            --enable-stack-protector=strong \
+                           --enable-stackguard-randomization \
                            --enable-bind-now \
                            --with-elf \
                            --with-tls \
@@ -117,6 +118,10 @@ EOF
 echo "sbindir=/usr/bin" >> configparms
 echo "rootsbindir=/usr/bin" >> configparms
 echo "build-programs=yes" >> configparms
+
+sed -i "/build-programs=/s#no#yes#" configparms
+echo "CC += -D_FORTIFY_SOURCE=2" >> configparms
+echo "CXX += -D_FORTIFY_SOURCE=2" >> configparms
 
 GLIBC_INCLUDE_BIN="iconv getent ldd locale"
 }
