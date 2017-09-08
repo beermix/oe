@@ -36,6 +36,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_strlcat=no \
 
 pre_configure_target() {
   sed "s|@prefix@|$SYSROOT_PREFIX/usr|g" -i $ROOT/$PKG_BUILD/dnet-config.in
+  CFLAGS="$CFLAGS -fPIC"
 }
 
 post_makeinstall_target() {
