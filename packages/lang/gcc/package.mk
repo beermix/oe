@@ -80,14 +80,12 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-decimal-float \
                          --enable-tls \
                          --enable-shared \
-                         --enable-static \
+                         --disable-static \
                          --enable-c99 \
                          --enable-long-long \
                          --enable-threads=posix \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time=yes \
-                         --enable-objc-gc=auto \
-                         --disable-vtable-verify \
                          --enable-default-pie \
                          --enable-clocale=gnu \
                          --enable-offload-targets=nvptx-none \
