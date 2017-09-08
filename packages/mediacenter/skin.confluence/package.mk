@@ -19,12 +19,6 @@ make_target() {
                 -output Textures.xbt \
                 -dupecheck \
                 -use_none
-
-  for theme in themes/*; do
-    TexturePacker -input $theme \
-                -output $(basename $theme).xbt \
-                -dupecheck
-  done
 }
 
 makeinstall_target() {
@@ -37,9 +31,6 @@ makeinstall_target() {
 
   mkdir -p $INSTALL/usr/config/kodi.skins/skin.confluence/media
     cp Textures.xbt $INSTALL/usr/config/kodi.skins/skin.confluence/media
-    for theme in themes/*; do
-      cp $(basename $theme).xbt $INSTALL/usr/config/kodi.skins/skin.confluence/media
-    done
 
   mkdir -p $INSTALL/usr/share/kodi/addons
   ln -sf /storage/.config/kodi.skins/skin.confluence $INSTALL/usr/share/kodi/addons/skin.confluence
