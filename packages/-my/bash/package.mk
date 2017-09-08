@@ -5,17 +5,20 @@ PKG_DEPENDS_TARGET="toolchain ncurses readline"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-#CONCURRENCY_MAKE_LEVEL=1
+#CONCURRENCY_MAKE_LEVEL=1 --enable-static-link --enable-profiling
 
 PKG_CONFIGURE_OPTS_TARGET="--bindir=/bin
 			      --with-curses \
 			      --enable-readline \
 			      --without-bash-malloc \
 			      --with-installed-readline \
-			      --disable-shared \
-			      --with-gnu-ld \
-			      --disable-static-link"
-			   
+			      --enable-multibyte \
+			      --enable-job-control \
+			      --enable-history \
+			      --enable-coprocesses \
+			      --enable-alias \
+			      --enable-net-redirections"
+
 post_makeinstall_target() {
   mkdir -p $INSTALL/bin
   ln -sf bash $INSTALL/bin/sh

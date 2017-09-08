@@ -1,6 +1,6 @@
 PKG_NAME="dash"
 PKG_VERSION="0.5.9.1"
-PKG_URL="http://ftp.osuosl.org/pub/blfs/svn/d/dash-0.5.9.1.tar.gz"
+PKG_URL="http://ftp.osuosl.org/pub/blfs/svn/d/dash-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain ncurses readline"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
