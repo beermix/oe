@@ -34,10 +34,11 @@ PKG_AUTORECONF="no"
 
 PKG_CMAKE_OPTS_HOST="-DBUILD_SHARED_LIBS=0 -Dlzma=0"
 
-PKG_CMAKE_OPTS_TARGET="$PKG_CMAKE_OPTS_HOST -Dlzma=1"
+PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release $PKG_CMAKE_OPTS_HOST -Dlzma=1"
 
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC -DPIC"
+  CFLAGS="$CFLAGS -fPIC"
+  CXXLAGS="$CXXLAGS -fPIC"
 }
 
 post_makeinstall_target() {
