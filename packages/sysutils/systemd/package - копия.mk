@@ -34,7 +34,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            ac_cv_path_MOUNT_PATH=/bin/mount \
                            ac_cv_path_UMOUNT_PATH=/bin/umount \
                            --disable-nls \
-                           --disable-lto \
                            --disable-dbus \
                            --disable-utmp \
                            --disable-coverage \
@@ -177,9 +176,9 @@ post_makeinstall_target() {
   rm -rf $INSTALL/lib/systemd/system-generators/*
   rm -rf $INSTALL/usr/lib/systemd/catalog
 
-  # disable usage of presets, see: https://freedesktop.org/wiki/Software/systemd/Preset/
-  rm -rf $INSTALL/usr/lib/systemd/system-preset/*
-  echo "disable *" $INSTALL/usr/lib/systemd/system-preset/99-default.preset
+  # distro preset policy
+  rm -f $INSTALL/usr/lib/systemd/system-preset/*
+  echo "disable *" > $INSTALL/usr/lib/systemd/system-preset/99-default.preset
 
   # remove networkd
   rm -rf $INSTALL/usr/lib/systemd/network
@@ -201,7 +200,7 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin/systemd-machine-id-setup
   mkdir -p $INSTALL/usr/bin
   cp $PKG_DIR/scripts/systemd-machine-id-setup $INSTALL/usr/bin
-#  cp $PKG_DIR/scripts/userconfig-setup $INSTALL/usr/bin
+  cp $PKG_DIR/scripts/userconfig-setup $INSTALL/usr/bin
 
   # provide 'halt', 'shutdown', 'reboot' & co.
   mkdir -p $INSTALL/usr/sbin
@@ -216,7 +215,7 @@ post_makeinstall_target() {
   cp -PR $PKG_DIR/config/* $INSTALL/usr/config
 
   rm -rf $INSTALL/etc/modules-load.d
-#  ln -sf /storage/.config/modules-load.d $INSTALL/etc/modules-load.d
+  ln -sf /storage/.config/modules-load.d $INSTALL/etc/modules-load.d
   rm -rf $INSTALL/etc/sysctl.d
   ln -sf /storage/.config/sysctl.d $INSTALL/etc/sysctl.d
   rm -rf $INSTALL/etc/tmpfiles.d
