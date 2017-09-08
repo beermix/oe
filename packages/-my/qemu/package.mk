@@ -1,5 +1,5 @@
 PKG_NAME="qemu"
-PKG_VERSION="2.9.0"
+PKG_VERSION="2.9.1"
 PKG_SITE="http://wiki.qemu.org"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain Python:host libffi:host zlib:host glib:host"
@@ -42,16 +42,14 @@ configure_target() {
               --cross-prefix=${TARGET_NAME}- \
               --cc=$CC \
               --cxx=$CXX \
-              --extra-cflags=-I$SYSROOT_PREFIX/usr/include \
-              --extra-ldflags=-L$SYSROOT_PREFIX/usr/lib \
               --host-cc=$HOST_CC \
               --datadir=/storage/.config/qemu \
               --sysconfdir=/storage/.config/qemu \
               --smbd=/usr/bin/smbd \
-              --static \
               --disable-user \
-              --enable-system \
+              --disable-system \
               --disable-libnfs \
+              --disable-werror \
               --enable-guest-agent \
               --disable-libusb \
               --disable-docs \
@@ -59,6 +57,4 @@ configure_target() {
               
 }
 
-make_target() {
-  make NM="$NM" AR="$AR" AS="$CC" as="$CC" LD="$CC" cc1="$CC"
-}
+

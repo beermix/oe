@@ -15,7 +15,7 @@ pre_configure_target() {
   CXXFLAGS="$CXXFLAGS -fPIC"
 }
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-documentation --disable-shared --enable-static"
+PKG_CONFIGURE_OPTS_TARGET="--disable-documentation --disable-shared"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
