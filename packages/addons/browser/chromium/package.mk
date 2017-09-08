@@ -139,7 +139,7 @@ make_target() {
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$ROOT/$TOOLCHAIN/bin/python
 
   #ionice -c3 nice -n20 ninja -j6 -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
-  ionice -c2 -n0 -p 12345 ninja -j5 -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
+  ionice -c2 -n0 ninja -j5 -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
 }
 
 makeinstall_target() {
