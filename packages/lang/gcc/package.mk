@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="7-20170907"
+PKG_VERSION="6-20170906"
 PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/$PKG_VERSION/gcc-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host"
 PKG_DEPENDS_TARGET="gcc:host"
@@ -50,17 +50,8 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-multilib \
                            --disable-nls \
                            --without-included-gettext \
-                           --with-default-libstdcxx-abi=gcc4-compatible \
-                           --enable-linker-build-id
                            --enable-checking=release \
-                           --enable-threads=posix \
-                           --disable-libstdcxx-pch \
-                           --enable-libstdcxx-time=yes \
-                           --enable-objc-gc=auto
-                           --disable-vtable-verify \
-                           --enable-default-pie \
-                           --enable-clocale=gnu \
-                           --enable-offload-targets=nvptx-none \
+                           --with-default-libstdcxx-abi=gcc4-compatible \
                            --without-ppl \
                            --without-cloog \
                            --disable-libmpx \
@@ -70,21 +61,17 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-tune=generic"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
-                              --enable-languages=c \
-                              --disable-decimal-float \
                               --disable-libatomic \
-                              --disable-libgomp \
-                              --disable-libitm \
-                              --disable-libada \
-                              --disable-libquadmath \
-                              --disable-libmudflap \
-                              --disable-libhsail-rt \
-                              --disable-threads \
-                              --enable-linker-build-id
+                              --enable-languages=c \
                               --disable-__cxa_atexit \
+                              --disable-libsanitizer \
+                              --disable-libssp \
+                              --enable-cloog-backend=isl \
                               --disable-shared \
+                              --disable-threads \
                               --without-headers \
                               --with-newlib \
+                              --disable-decimal-float \
                               $GCC_OPTS"
 
 PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
@@ -96,10 +83,18 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-static \
                          --enable-c99 \
                          --enable-long-long \
+                         --enable-threads=posix \
+                         --disable-libstdcxx-pch \
+                         --enable-libstdcxx-time=yes \
+                         --enable-objc-gc=auto \
+                         --disable-vtable-verify \
+                         --enable-default-pie \
+                         --enable-clocale=gnu \
+                         --enable-offload-targets=nvptx-none \
                          $GCC_OPTS"
 
 pre_configure_host() {
-  #export CXXFLAGS="$CXXFLAGS -std=gnu++98"
+  export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
 }
 

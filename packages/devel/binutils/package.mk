@@ -51,7 +51,6 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --with-pic \
                          --disable-nls \
                          --enable-poison-system-directories \
-                         --disable-compressed-debug-sections \
                          --enable-new-dtags"
 
 makeinstall_host() {
