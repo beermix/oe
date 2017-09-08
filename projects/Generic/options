@@ -101,8 +101,8 @@
   # or projects/*/linux/*.config or distributions/*/linux/*.config
   # please add all configfiles which should be included without the suffix and prefix
   # except the default-*.config and the ones included in packages/linux/package.mk
-  # Space separated list is supported,
+  # Space separated list is supported, scsi sound-soc-x86
     KERNEL_EXTRA_CONFIG+=" keyboard-at"
-    KERNEL_EXTRA_CONFIG+=" sata lan-pci sound-pci sound-soc-x86"
-    KERNEL_EXTRA_CONFIG+=" scsi bluetooth filesystem wlan-usb"
+    KERNEL_EXTRA_CONFIG+=" sata lan-pci sound-pci"
+    KERNEL_EXTRA_CONFIG+=" bluetooth filesystem wlan-usb"
 
