@@ -33,7 +33,8 @@ PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--with-icu=yes"
+PKG_CONFIGURE_OPTS_TARGET="--with-cairo --with-freetype --with-glib --with-gobject --with-graphite2 --with-icu"
+
 pre_configure_target() {
   export LIBS="$LIBS -ldl"
 }

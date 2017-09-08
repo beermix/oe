@@ -17,11 +17,13 @@
 ################################################################################
 
 PKG_NAME="cairo"
-PKG_VERSION="1.14.10"
+#PKG_VERSION="1.14.10"
+PKG_VERSION="1.15.8"
 PKG_ARCH="any"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://cairographics.org/"
-PKG_URL="http://cairographics.org/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
+#PKG_URL="http://cairographics.org/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="https://cairographics.org/snapshots/cairo-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain zlib freetype fontconfig libpng pixman"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="cairo: Multi-platform 2D graphics library"
@@ -36,50 +38,16 @@ pre_configure_target() {
   CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
 }
 
-if [ "$DISPLAYSERVER" = "x11" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libXrender libX11 mesa glu"
-  PKG_CAIRO_CONFIG="--x-includes="$SYSROOT_PREFIX/usr/include" \
-                    --x-libraries="$SYSROOT_PREFIX/usr/lib" \
-                    --enable-xlib \
-                    --enable-xlib-xrender \
-                    --enable-gl \
-                    --enable-glx \
-                    --disable-glesv2 \
-                    --disable-egl \
-                    --with-x"
+pre_make_target() {
+  sed -iv -e 's/ -shared / -Wl,-O1,--as-needed\0/g' $ROOT/$PKG_BUILD/libtool
+}
 
-elif [ "$DISPLAYSERVER" = "weston" ]; then
-  PKG_CAIRO_CONFIG="--disable-xlib \
-                    --disable-xlib-xrender \
-                    --disable-gl \
-                    --disable-glx \
-                    --enable-glesv2 \
-                    --enable-egl \
-                    --without-x"
-fi
-
-PKG_CONFIGURE_OPTS_TARGET="$PKG_CAIRO_CONFIG \
-                           --enable-silent-rules \
-                           --enable-shared \
-                           --disable-static \
-                           --disable-gtk-doc \
-                           --enable-largefile \
-                           --enable-atomic \
-                           --disable-gcov \
-                           --disable-valgrind \
-                           --disable-qt \
-                           --enable-png \
-                           --enable-ft \
-                           --enable-fc \
+PKG_CONFIGURE_OPTS_TARGET="--disable-static \
+                           --disable-lto \
+                           --disable-gl \
+                           --enable-tee \
+                           --enable-svg \
                            --enable-ps \
                            --enable-pdf \
-                           --enable-svg \
-                           --disable-test-surfaces \
-                           --disable-tee \
-                           --enable-pthread \
-                           --disable-full-testing \
-                           --disable-trace \
-                           --enable-interpreter \
-                           --disable-symbol-lookup \
-                           --enable-some-floating-point \
-                           --with-gnu-ld"
+                           --enable-gobject \
+                           --disable-gtk-doc"
