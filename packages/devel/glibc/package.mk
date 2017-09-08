@@ -117,7 +117,7 @@ echo "sbindir=/usr/bin" >> configparms
 echo "rootsbindir=/usr/bin" >> configparms
 echo "build-programs=yes" >> configparms
 
-GLIBC_INCLUDE_BIN="getent ldd locale"
+GLIBC_INCLUDE_BIN="getent ldd locale iconv"
 }
 
 post_makeinstall_target() {
