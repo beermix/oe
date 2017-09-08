@@ -102,7 +102,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --with-dbussystemservicedir=/usr/share/dbus-1/system-services \
                            --with-rootprefix=/usr \
                            --with-rootlibdir=/usr/lib \
-                           --with-default-hierarchy=legacy"
+                           --with-default-hierarchy=hybrid"
 
 pre_build_target() {
 # broken autoreconf
@@ -140,6 +140,11 @@ post_makeinstall_target() {
   # remove Network adaper renaming rule, this is confusing
   rm -rf $INSTALL/usr/lib/udev/rules.d/80-net-setup-link.rules
 
+  # remove the uaccess rules as we don't build systemd with ACL (see https://github.com/systemd/systemd/issues/4107)
+  rm -rf $INSTALL/usr/lib/udev/rules.d/70-uaccess.rules
+  rm -rf $INSTALL/usr/lib/udev/rules.d/71-seat.rules
+  rm -rf $INSTALL/usr/lib/udev/rules.d/73-seat-late.rules
+
   # remove debug-shell.service, we install our own
   rm -rf $INSTALL/usr/lib/systemd/system/debug-shell.service
 
@@ -173,9 +178,9 @@ post_makeinstall_target() {
   rm -rf $INSTALL/lib/systemd/system-generators/*
   rm -rf $INSTALL/usr/lib/systemd/catalog
 
-  # disable usage of presets, see: https://freedesktop.org/wiki/Software/systemd/Preset/
-  rm -rf $INSTALL/usr/lib/systemd/system-preset/*
-  echo "disable *" $INSTALL/usr/lib/systemd/system-preset/99-default.preset
+  # distro preset policy
+  rm -f $INSTALL/usr/lib/systemd/system-preset/*
+  echo "disable *" > $INSTALL/usr/lib/systemd/system-preset/99-default.preset
 
   # remove networkd
   rm -rf $INSTALL/usr/lib/systemd/network
@@ -197,7 +202,7 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin/systemd-machine-id-setup
   mkdir -p $INSTALL/usr/bin
   cp $PKG_DIR/scripts/systemd-machine-id-setup $INSTALL/usr/bin
-  #cp $PKG_DIR/scripts/userconfig-setup $INSTALL/usr/bin
+  cp $PKG_DIR/scripts/userconfig-setup $INSTALL/usr/bin
 
   # provide 'halt', 'shutdown', 'reboot' & co.
   mkdir -p $INSTALL/usr/sbin
@@ -212,6 +217,7 @@ post_makeinstall_target() {
   cp -PR $PKG_DIR/config/* $INSTALL/usr/config
 
   rm -rf $INSTALL/etc/modules-load.d
+  ln -sf /storage/.config/modules-load.d $INSTALL/etc/modules-load.d
   rm -rf $INSTALL/etc/sysctl.d
   ln -sf /storage/.config/sysctl.d $INSTALL/etc/sysctl.d
   rm -rf $INSTALL/etc/tmpfiles.d
