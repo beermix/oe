@@ -102,8 +102,10 @@ pre_configure_target() {
 
   unset LD_LIBRARY_PATH
 
-# set some CFLAGS we need
+  # set some CFLAGS we need
   export CFLAGS="$CFLAGS -g0"
+
+  export BUILD_CC=$HOST_CC
   export OBJDUMP_FOR_HOST=objdump
 
 cat >config.cache <<EOF
@@ -151,6 +153,7 @@ post_makeinstall_target() {
 # remove ldscripts
   rm -rf $INSTALL/usr/lib/libc.so
   rm -rf $INSTALL/usr/lib/libpthread.so
+
 # remove locales and charmaps
   rm -rf $INSTALL/usr/share/i18n/charmaps
 
@@ -179,7 +182,7 @@ post_makeinstall_target() {
     cp $PKG_DIR/config/gai.conf $INSTALL/etc
 
   if [ "$TARGET_ARCH" = "arm" -a "$TARGET_FLOAT" = "hard" ]; then
-    ln -sf ld-$PKG_VERSION.so $INSTALL/lib/ld-linux.so.3
+    ln -sf ld.so $INSTALL/usr/lib/ld-linux.so.3
   fi
 
 }

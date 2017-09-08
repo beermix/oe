@@ -60,6 +60,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-vtable-verify \
                            --enable-default-pie \
                            --enable-clocale=gnu \
+                           --enable-offload-targets=nvptx-none \
                            --without-ppl \
                            --without-cloog \
                            --disable-libmpx \
@@ -84,7 +85,6 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-shared \
                               --without-headers \
                               --with-newlib \
-                              --enable-offload-targets=nvptx-none \
                               $GCC_OPTS"
 
 PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
@@ -99,7 +99,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          $GCC_OPTS"
 
 pre_configure_host() {
-  export CXXFLAGS="$CXXFLAGS -std=gnu++98"
+  #export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
 }
 
