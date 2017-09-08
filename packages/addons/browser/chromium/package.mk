@@ -122,13 +122,12 @@ make_target() {
 
   # Remove bundled libraries for which we will use the system copies; this
   # *should* do what the remove_bundled_libraries.py script does, with the
-  # added benefit of not having to list all the remaining libraries
+  # added benefit of not having to list all the remaining libraries       \! -path "*base/third_party/icu/*" \
   local _lib
   for _lib in ${_system_libs}; do
     find -type f -path "*third_party/$_lib/*" \
       \! -path "*third_party/$_lib/chromium/*" \
       \! -path "*third_party/$_lib/google/*" \
-      \! -path "*base/third_party/icu/*" \
       \! -regex '.*\.\(gn\|gni\|isolate\|py\)' \
       -delete
   done
