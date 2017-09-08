@@ -17,11 +17,11 @@
 ################################################################################
 
 PKG_NAME="intel-ucode"
-PKG_VERSION="20161104"
+PKG_VERSION="20170707"
 PKG_ARCH="x86_64"
 PKG_LICENSE="other"
 PKG_SITE="https://downloadcenter.intel.com/search?keyword=linux+microcode"
-PKG_URL="https://downloadmirror.intel.com/26400/eng/microcode-${PKG_VERSION}.tgz"
+PKG_URL="https://dl.dropboxusercontent.com/s/6zhoah0rytg2dcc/microcode-20170707.tgz"
 PKG_DEPENDS_TARGET="toolchain intel-ucode:host"
 PKG_SECTION="linux-firmware"
 PKG_SHORTDESC="intel-ucode: Intel CPU microcodes"
@@ -31,16 +31,17 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 unpack() {
-  mkdir -p $PKG_BUILD
-  tar xf $SOURCES/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tgz -C $PKG_BUILD
+  mkdir -p $ROOT/$PKG_BUILD
+  tar xf $SOURCES/$PKG_NAME/microcode-$PKG_VERSION.tgz -C $ROOT/$PKG_BUILD
 }
+
 
 make_host() {
   $CC $CFLAGS -o intel-microcode2ucode intel-microcode2ucode.c
 }
 
 makeinstall_host() {
-  cp intel-microcode2ucode $TOOLCHAIN/bin/
+  cp intel-microcode2ucode $ROOT/$TOOLCHAIN/bin/
 }
 
 make_target() {
