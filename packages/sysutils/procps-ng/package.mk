@@ -30,12 +30,8 @@ PKG_AUTORECONF="no"
 
 pre_configure_target() {
  sed 's:<ncursesw/:<:g' -i $ROOT/$PKG_BUILD/watch.c
-}
-
-pre_configure_target() {
-  CFLAGS="$CFLAGS -fPIC"
-  CXXFLAGS="$CXXFLAGS -fPIC"
-  LDFLAGS="$LDFLAGS -fPIC"
+ CFLAGS="$CFLAGS -fPIC"
+ CXXFLAGS="$CXXFLAGS -fPIC"
 }
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
