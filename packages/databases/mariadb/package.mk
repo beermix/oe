@@ -159,8 +159,8 @@ configure_target() {
         -DDISABLE_LIBMYSQLCLIENT_SYMBOL_VERSIONING=TRUE \
         -DENABLE_DTRACE=OFF \
         -DWITH_READLINE=0 \
-        -DWITH_PCRE=bundled \
-        -DWITH_PCRE=bundled \
+        -DWITH_PCRE=$SYSROOT_PREFIX/usr \
+        -DWITH_ZLIB=$SYSROOT_PREFIX/usr \
         -DWITH_SYSTEMD=no \
         -DWITH_LIBWRAP=OFF \
         -DWITH_ARCHIVE_STORAGE_ENGINE=1 \
