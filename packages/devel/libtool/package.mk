@@ -35,3 +35,5 @@ PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
 
+PKG_CONFIGURE_OPTS_TARGET="-C --enable-static --enable-shared"
+
