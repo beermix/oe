@@ -13,7 +13,7 @@
 #  GNU General Public License for more details.
 #
 #  You should have received a copy of the GNU General Public License
-#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
+#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.   netbase
 ################################################################################
 
 PKG_NAME="network"
@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="various"
 PKG_SITE="http://www.openelec.tv"
 PKG_URL=""
-PKG_DEPENDS_TARGET="toolchain connman netbase ethtool openssh bluez pure-ftpd iperf netperf nuttcp"
+PKG_DEPENDS_TARGET="toolchain connman iana-etc ethtool openssh bluez pure-ftpd iperf netperf nuttcp"
 PKG_PRIORITY="optional"
 PKG_SECTION="virtual"
 PKG_SHORTDESC="network: Metapackage for packages to install network support"

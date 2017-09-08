@@ -40,11 +40,25 @@ PKG_CONFIGURE_OPTS_TARGET="utrace_cv_cc_biarch=false \
                            --without-bzlib \
                            --without-lzma"
 
+PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"                         
+
 pre_configure_target() {
   export CFLAGS="$CFLAGS -fPIC -DPIC"
 }
 
+pre_configure_host() {
+  export CFLAGS="$CFLAGS -fPIC -DPIC"
+}
+
 make_target() {
+  make V=1 -C libelf libelf.a
+  make V=1 -C libebl libebl.a
+  make V=1 -C libdwfl libdwfl.a
+  make V=1 -C libdw libdw.a
+  make V=1 -C libdwelf libdwelf.a
+}
+
+make_host() {
   make V=1 -C libelf libelf.a
   make V=1 -C libebl libebl.a
   make V=1 -C libdwfl libdwfl.a
@@ -58,4 +72,24 @@ makeinstall_target() {
   mkdir -p $SYSROOT_PREFIX/usr/lib
     cp libelf/libelf.a $SYSROOT_PREFIX/usr/lib
     cp libdw/libdw.a $SYSROOT_PREFIX/usr/lib
+    
+    cp libebl/libebl.a $SYSROOT_PREFIX/usr/lib
+    
+    cp libdwfl/libdwfl.a $SYSROOT_PREFIX/usr/lib
+    cp $ROOT/$PKG_BUILD/libdwfl/libdwfl.h $SYSROOT_PREFIX/usr/include/elfutils
+    cp $ROOT/$PKG_BUILD/libdwfl/libdwflP.h $SYSROOT_PREFIX/usr/include/elfutils
+    
+    cp libdwfl/libdwfl.a $SYSROOT_PREFIX/usr/lib
+    cp $ROOT/$PKG_BUILD/libdwfl/libdwfl.h $SYSROOT_PREFIX/usr/include/elfutils
+    cp $ROOT/$PKG_BUILD/libdwfl/libdwflP.h $SYSROOT_PREFIX/usr/include/elfutils
+    
+}
+
+makeinstall_host() {
+  make DESTDIR="$ROOT/$TOOLCHAIN" -C libelf install-includeHEADERS install-pkgincludeHEADERS
+  make DESTDIR="$ROOT/$TOOLCHAIN" -C libdw install-includeHEADERS install-pkgincludeHEADERS
+
+  mkdir -p $ROOT/$TOOLCHAIN/usr/lib
+    cp libelf/libelf.a $ROOT/$TOOLCHAIN/usr/lib
+    cp libdw/libdw.a $ROOT/$TOOLCHAIN/usr/lib
 }
