@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="xf86-video-intel"
-PKG_VERSION="2100efa"
+PKG_VERSION="c899057"
 PKG_ARCH="x86_64"
 PKG_SITE="http://intellinuxgraphics.org/"
 PKG_GIT_URL="https://anongit.freedesktop.org/git/xorg/driver/xf86-video-intel"
@@ -47,7 +47,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-backlight \
                            --disable-tear-free \
                            --disable-create2 \
                            --disable-async-swap \
-                           --with-default-dri=2 \
+                           --with-default-dri=3 \
                            --with-xorg-module-dir=$XORG_PATH_MODULES"
 
 pre_configure_target() {
