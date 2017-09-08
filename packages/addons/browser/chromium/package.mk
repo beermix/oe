@@ -48,6 +48,8 @@ pre_make_target() {
 }
 
 make_target() {
+  CFLAGS=`echo $CFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|" -e "s|-fno-plt||" -e "s|-fno-caller-saves||"`
+  LDFLAGS=`echo $LDFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|" -e "s|-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now|-Wl,--as-needed|g"`
   export LDFLAGS="$LDFLAGS -ludev"
   export LD=$CXX
 
