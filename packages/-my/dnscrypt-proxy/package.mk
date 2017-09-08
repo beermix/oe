@@ -18,7 +18,7 @@ PKG_CONFIGURE_OPTS_TARGET="--datarootdir=/storage/.config/dnscrypt-proxy \
 			      --disable-ssp \
 			      --with-gnu-ld \
 			      --with-systemd \
-			      --disable-plugins"
+			      --enable-plugins"
 			   
 #post_makeinstall_target() {
 #  rm -rf $INSTALL/storage/

@@ -30,6 +30,15 @@ PKG_LONGDESC="A full-featured and high-performance event loop that is loosely mo
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static --with-gnu-ld --with-pic"
+LTO_SUPPORT="yes"
+GOLD_SUPPORT="yes"
+
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static --with-gnu-ld"
 
 PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
+
+pre_configure_target() {
+  CFLAGS="$CFLAGS -fPIC"
+  CXXFLAGS="$CXXFLAGS -fPIC"
+  LDFLAGS="$LDFLAGS -fPIC"
+}
