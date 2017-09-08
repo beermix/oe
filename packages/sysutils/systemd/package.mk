@@ -34,7 +34,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            ac_cv_path_MOUNT_PATH="/bin/mount"
                            ac_cv_path_UMOUNT_PATH="/bin/umount"
                            --disable-nls \
-                           --disable-lto \
                            --disable-dbus \
                            --disable-utmp \
                            --disable-coverage \
