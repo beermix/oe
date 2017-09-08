@@ -10,10 +10,6 @@ PKG_SHORTDESC="GnuTLS is a secure communications library implementing the SSL, T
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC"
-}
-
 PKG_CONFIGURE_OPTS_TARGET="--with-included-libtasn1 \
 			      --with-included-unistring \
 			      --enable-local-libopts \
@@ -21,4 +17,6 @@ PKG_CONFIGURE_OPTS_TARGET="--with-included-libtasn1 \
 			      --with-libgcrypt \
 			      --disable-tools \
 			      --disable-doc \
+			      --with-pic \
+			      --with-gnu-ld \
 			      --disable-shared"
