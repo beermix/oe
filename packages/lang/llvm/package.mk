@@ -49,7 +49,8 @@ PKG_CMAKE_OPTS_HOST="-DLLVM_INCLUDE_TOOLS=ON \
                      -DLLVM_ENABLE_WERROR=OFF \
                      -DLLVM_ENABLE_ZLIB=OFF \
                      -DLLVM_OPTIMIZED_TABLEGEN=ON \
-                     -DCMAKE_INSTALL_RPATH=$ROOT/$TOOLCHAIN/lib"
+                     -DCMAKE_INSTALL_RPATH=$ROOT/$TOOLCHAIN/lib \
+                     -DCMAKE_BUILD_TYPE=Release"
 
 make_host() {
   make llvm-config llvm-tblgen
@@ -60,7 +61,7 @@ makeinstall_host() {
   cp -a bin/llvm-tblgen $ROOT/$TOOLCHAIN/bin
 }
 
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=MinSizeRel \
+PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release \
                        -DCMAKE_C_FLAGS="$CFLAGS" \
                        -DCMAKE_CXX_FLAGS="$CXXFLAGS" \
                        -DLLVM_INCLUDE_TOOLS=ON \
