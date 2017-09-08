@@ -32,12 +32,7 @@ PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
 			      --enable-shared=no \
 			      --with-gnu-ld \
 			      --enable-editline=no \
-			      --enable-readline=yes \
-			      --enable-termcap=no \
-			      --enable-blkid=yes \
-			      --enable-librt=yes \
-			      --enable-lib64=no \
-			      --enable-gettext=no"
+			      --enable-readline=yes"
 
 pre_configure_target() {
   make configure
