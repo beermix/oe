@@ -31,7 +31,7 @@ PKG_SHORTDESC="e2fsprogs: Utilities for use with the ext2 filesystem"
 PKG_LONGDESC="The filesystem utilities for the EXT2 filesystem, including e2fsck, mke2fs, dumpe2fs, fsck, and others."
 PKG_IS_ADDON="no"
 
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$ROOT/$TOOLCHAIN/ \
                          --bindir=$ROOT/$TOOLCHAIN/bin \
@@ -63,6 +63,7 @@ PKG_CONFIGURE_OPTS_TARGET="BUILD_CC=$HOST_CC \
                            --disable-uuidd \
                            --disable-nls \
                            --disable-rpath \
+                           --disable-fuse2fs \
                            --with-gnu-ld"
 
 PKG_CONFIGURE_OPTS_INIT="$PKG_CONFIGURE_OPTS_TARGET"
@@ -73,7 +74,7 @@ pre_make_host() {
 }
 
 post_makeinstall_target() {
-  make -C lib/et DESTDIR=$SYSROOT_PREFIX install
+  make -C lib/et LIBMODE=644 DESTDIR=$SYSROOT_PREFIX install
 
   rm -rf $INSTALL/sbin/badblocks
   rm -rf $INSTALL/sbin/blkid
@@ -110,7 +111,7 @@ make_host() {
 }
 
 makeinstall_host() {
-  make -C lib/et install
-  make -C lib/ext2fs install
+  make -C lib/et LIBMODE=644 install
+  make -C lib/ext2fs LIBMODE=644 install
 }
 
