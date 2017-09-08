@@ -31,6 +31,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 MAKEINFO=true
+LDFLAGS="-Wl,-z,relro"
 
 PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --with-sysroot=$SYSROOT_PREFIX \
@@ -49,7 +50,9 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-threads \
                          --with-pic \
                          --disable-nls \
-                         --enable-poison-system-directories"
+                         --enable-poison-system-directories \
+                         --disable-compressed-debug-sections \
+                         --enable-new-dtags"
 
 makeinstall_host() {
   cp -v ../include/libiberty.h $SYSROOT_PREFIX/usr/include
