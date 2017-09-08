@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="pycryptodome"
-PKG_VERSION="175bdee"
-#PKG_VERSION="v3.4.6"
+#PKG_VERSION="175bdee"
+PKG_VERSION="v3.4.6"
 PKG_ARCH="any"
 PKG_LICENSE="BSD"
 PKG_SITE="https://github.com/Legrandin/pycryptodome/releases"
@@ -30,6 +30,8 @@ PKG_LONGDESC="PyCryptodome is a self-contained Python package of low-level crypt
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
+
+CONCURRENCY_MAKE_LEVEL=1
 
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
