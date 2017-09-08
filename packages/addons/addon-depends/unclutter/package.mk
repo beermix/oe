@@ -30,8 +30,12 @@ PKG_LONGDESC="Unclutter runs in the background of an X11 session and after a spe
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
+LTO_SUPPORT="yes"
+GOLD_SUPPORT="no"
+
 make_target() {
   rm -f Makefile
+  unset LDFLAGS
   LDFLAGS="$LDFLAGS -lX11" $MAKE unclutter
 }
 

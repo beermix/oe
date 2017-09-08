@@ -18,7 +18,7 @@
 ################################################################################
 
 PKG_NAME="xdotool"
-PKG_VERSION="1334329"
+PKG_VERSION="v3.20160805.1"
 PKG_SITE="http://www.semicomplete.com/projects/xdotool/"
 PKG_GIT_URL="https://github.com/jordansissel/xdotool"
 PKG_DEPENDS_TARGET="toolchain libXinerama libXtst libxkbcommon"
@@ -30,11 +30,12 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 pre_configure_target() {
+  unset CPPFLAGS
   LDFLAGS="$LDFLAGS -lXext"
 }
 
 make_target() {
-  make xdotool.static
+  make LDFLAGS="$LDFLAGS -lXext" xdotool.static
   mv xdotool.static xdotool
 }
 
