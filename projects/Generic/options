@@ -105,3 +105,4 @@
     KERNEL_EXTRA_CONFIG+=" keyboard-at"
     KERNEL_EXTRA_CONFIG+=" sata lan-pci sound-pci"
     KERNEL_EXTRA_CONFIG+=" bluetooth filesystem wlan-usb"
+
