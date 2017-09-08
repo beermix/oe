@@ -81,6 +81,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-localed \
                            --disable-coredump \
                            --disable-polkit \
+                           --disable-kdbus \
                            --disable-resolved \
                            --disable-networkd \
                            --disable-efi \
