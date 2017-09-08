@@ -18,7 +18,7 @@ pre_configure_target() {
   export CXX="$CXX"
   export AR="$AR"
   export NM="$NM"
-  export LDFLAGS="$LDFLAGS -lpcre -lpthread -lstdc++"
+  #export LDFLAGS="$LDFLAGS -lpcre -lpthread -lstdc++"
   export CFLAGS="$CFLAGS"
   export CPPFLAGS="$CPPFLAGS"
   export CXXFLAGS="$CXXFLAGS"

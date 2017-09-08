@@ -32,7 +32,7 @@ PKG_LONGDESC="Libogg contains necessary functionality to create, decode, and wor
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --enable-shared"
+PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared"
 
 pre_configure_target() {
   export CFLAGS+=" -fPIC"

@@ -30,4 +30,9 @@ PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_HOST="--enable-static=yes --enable-shared=no"
                          
-PKG_CONFIGURE_OPTS_TARGET="--enable-threads --disable-rpath --disable-doc --enable-static"
+PKG_CONFIGURE_OPTS_TARGET="--enable-threads --disable-rpath --disable-doc --enable-static --with-gnu-ld"
+
+pre_configure_target() {
+  export CFLAGS="$CFLAGS -fPIC -DPIC"
+  export CXXFLAGS="$CXXFLAGS -fPIC -DPIC"
+}

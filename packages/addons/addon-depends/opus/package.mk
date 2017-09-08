@@ -34,6 +34,9 @@ else
   FIXED_POINT="--disable-fixed-point"
 fi
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static \
-                           --disable-shared \
-                           $FIXED_POINT"
+PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared $FIXED_POINT"
+
+pre_configure_target() {
+  CFLAGS="$CFLAGS -fPIC"
+  CXXFLAGS="$CXXFLAGS -fPIC"
+}

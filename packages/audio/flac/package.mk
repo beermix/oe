@@ -37,17 +37,13 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-rpath \
                            --disable-cpplibs \
                            --disable-xmms-plugin \
                            --disable-oggtest \
-                           --enable-static --enable-shared \
+                           --enable-sse \
+                           --enable-static --disable-shared \
                            --with-ogg=$SYSROOT_PREFIX/usr"
 
-if [ $TARGET_ARCH = "x86_64" ]; then
-  PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET --enable-sse"
-else
-  PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET --disable-sse"
-fi
-
 pre_configure_target() {
-  export CFLAGS+=" -fPIC -DPIC"
+  CFLAGS="$CFLAGS -fPIC"
+  CXXFLAGS="$CXXFLAGS -fPIC"
 }
 
 post_makeinstall_target() {

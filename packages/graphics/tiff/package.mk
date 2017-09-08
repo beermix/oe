@@ -52,6 +52,6 @@ post_makeinstall_target() {
 }
 
 pre_configure_target() {
-  CFLAGS="$CFLAGS -fPIC"
-  CXXLAGS="$CXXLAGS -fPIC"
+  export CFLAGS="$CFLAGS -fPIC -DPIC"
+  export CXXFLAGS="$CXXFLAGS -fPIC -DPIC"
 }
