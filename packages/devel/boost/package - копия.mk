@@ -64,7 +64,7 @@ make_target() {
 }
 
 makeinstall_target() {
-  $ROOT/$TOOLCHAIN/bin/bjam -d2 --toolset=gcc link=static target-os=linux variant=release threading=multi debug-symbols=off \
+  $ROOT/$TOOLCHAIN/bin/bjam -d2 --toolset=gcc link=shared target-os=linux variant=release threading=multi debug-symbols=off \
                                 --prefix=$SYSROOT_PREFIX/usr \
                                 --ignore-site-config \
                                 --layout=system \
@@ -82,5 +82,23 @@ makeinstall_target() {
                                 --with-signals \
                                 --with-python -j3 \
                                 install
-
+                                
+  $ROOT/$TOOLCHAIN/bin/bjam -d2 --toolset=gcc link=shared target-os=linux variant=release threading=multi debug-symbols=off \
+                                --prefix=$INSTALL/usr \
+                                --ignore-site-config \
+                                --layout=system \
+                                --with-thread \
+                                --with-iostreams \
+                                --with-system \
+                                --with-serialization \
+                                --with-filesystem \
+                                --with-regex -sICU_PATH="$SYSROOT_PREFIX/usr" \
+                                --with-chrono \
+                                --with-date_time \
+                                --with-program_options \
+                                --with-random \
+                                --with-exception \
+                                --with-signals \
+                                --with-python  \
+                                install
 }
