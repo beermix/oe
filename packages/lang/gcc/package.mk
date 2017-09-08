@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="6-20170906"
+PKG_VERSION="7-20170907"
 PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/$PKG_VERSION/gcc-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host"
 PKG_DEPENDS_TARGET="gcc:host"
@@ -51,12 +51,21 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-nls \
                            --without-included-gettext \
                            --with-default-libstdcxx-abi=new \
+                           --enable-linker-build-id
                            --enable-checking=release \
+                           --enable-threads=posix \
+                           --disable-libstdcxx-pch \
+                           --enable-libstdcxx-time=yes \
+                           --enable-gnu-unique-object \
+                           --disable-vtable-verify \
+                           --enable-default-pie \
+                           --enable-clocale=gnu \
                            --without-ppl \
                            --without-cloog \
                            --disable-libmpx \
                            --disable-libssp \
                            --disable-libsanitizer \
+                           --disable-werror \
                            --with-tune=generic"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
@@ -74,6 +83,8 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --without-headers \
                               --with-newlib \
                               --disable-decimal-float \
+                              --with-target-system-zlib \
+                              --enable-offload-targets=nvptx-none \
                               $GCC_OPTS"
 
 PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
@@ -82,19 +93,13 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-decimal-float \
                          --enable-tls \
                          --enable-shared \
-                         --disable-static \
+                         --enable-static \
                          --enable-c99 \
                          --enable-long-long \
-                         --enable-threads=posix \
-                         --disable-libstdcxx-pch \
-                         --enable-libstdcxx-time=yes \
-                         --enable-gnu-unique-object \
-                         --disable-vtable-verify \
-                         --enable-default-pie \
-                         --enable-clocale=gnu \
                          $GCC_OPTS"
+
 pre_configure_host() {
-  #export CXXFLAGS="$CXXFLAGS -std=gnu++98"
+  export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
 }
 
