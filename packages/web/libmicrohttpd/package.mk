@@ -30,7 +30,7 @@ PKG_LONGDESC="GNU libmicrohttpd is a small C library that is supposed to make it
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared --disable-doc --disable-examples --disable-curl --disable-spdy"
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared --disable-doc --disable-examples --disable-curl --disable-spdy --with-libgcrypt-prefix=$SYSROOT_PREFIX/usr"
 
 pre_configure_target() {
   CFLAGS="$CFLAGS -fPIC"

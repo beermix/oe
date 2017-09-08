@@ -122,7 +122,7 @@ configure_host() {
         -DWITH_LIBWRAP=OFF \
         -DWITH_WSREP=OFF \
         -DWITH_SYSTEMD=no \
-        -DSECURITY_HARDENED=0 \
+        -DSECURITY_HARDENED=1 \
         ..
 }
 
