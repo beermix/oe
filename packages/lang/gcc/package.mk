@@ -50,13 +50,12 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-multilib \
                            --disable-nls \
                            --without-included-gettext \
-                           --with-default-libstdcxx-abi=new \
+                           --with-default-libstdcxx-abi=gcc4-compatible \
                            --enable-linker-build-id
                            --enable-checking=release \
                            --enable-threads=posix \
                            --disable-libstdcxx-pch \
                            --enable-libstdcxx-time=yes \
-                           --enable-gnu-unique-object \
                            --enable-objc-gc=auto
                            --disable-vtable-verify \
                            --enable-default-pie \
@@ -71,20 +70,20 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
-                              --disable-__cxa_atexit \
-                              --enable-cloog-backend=isl \
+                              --disable-decimal-float \
                               --disable-libatomic \
-                              --disable-libquadmath \
-                              --disable-libmudflap \
-                              --disable-libada \
                               --disable-libgomp \
                               --disable-libitm \
-                              --disable-shared \
+                              --disable-libada \
+                              --disable-libquadmath \
+                              --disable-libmudflap \
+                              --disable-libhsail-rt \
                               --disable-threads \
+                              --enable-linker-build-id
+                              --disable-__cxa_atexit \
+                              --disable-shared \
                               --without-headers \
                               --with-newlib \
-                              --disable-decimal-float \
-                              --with-target-system-zlib \
                               --enable-offload-targets=nvptx-none \
                               $GCC_OPTS"
 
