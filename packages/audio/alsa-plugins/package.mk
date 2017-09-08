@@ -28,6 +28,4 @@ PKG_LONGDESC="This package includes the utilities for ALSA, like alsamixer, apla
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--with-speex=$SYSROOT_PREFIX/usr \
-			      --with-plugindir=/usr/lib/alsa \
-			      --disable-jack"
+PKG_CONFIGURE_OPTS_TARGET="--with-speex=$SYSROOT_PREFIX/usr --with-plugindir=/usr/lib/alsa --disable-jack"
