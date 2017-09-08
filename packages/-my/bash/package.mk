@@ -11,15 +11,9 @@ PKG_CONFIGURE_OPTS_TARGET="--bindir=/bin
 			      --with-curses \
 			      --enable-readline \
 			      --without-bash-malloc \
-			      --with-installed-readline \
-			      --enable-multibyte \
-			      --enable-job-control \
-			      --enable-history \
-			      --enable-coprocesses \
-			      --enable-alias \
-			      --enable-net-redirections"
+			      --with-installed-readline"
 
 post_makeinstall_target() {
   mkdir -p $INSTALL/bin
-  ln -sf bash $INSTALL/bin/sh
+  #ln -sf bash $INSTALL/bin/sh
 }
