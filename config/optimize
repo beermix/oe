@@ -1,6 +1,6 @@
 if [ "$OPTIMIZATIONS" = normal ];then
   GCC_OPTIM="-O2 -pipe -fstack-protector-strong -fno-caller-saves -fno-plt"
-  CPP_OPTIM="-D_FORTIFY_SOURCE=1"
+  #CPP_OPTIM="-D_FORTIFY_SOURCE=1"
   LD_OPTIM="-Wl,-O1,--as-needed"
 fi
 
