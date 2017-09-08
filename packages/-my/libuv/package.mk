@@ -14,4 +14,4 @@ post_unpack() {
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared --with-pic"
 
-PKG_CONFIGURE_OPTS_HOST="--enable-shared --disable-static"
+PKG_CONFIGURE_OPTS_HOST="--enable-shared --disable-static --with-gnu-ld"
