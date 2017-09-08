@@ -57,6 +57,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libstdcxx-pch \
                            --enable-libstdcxx-time=yes \
                            --enable-gnu-unique-object \
+                           --enable-objc-gc=auto
                            --disable-vtable-verify \
                            --enable-default-pie \
                            --enable-clocale=gnu \
