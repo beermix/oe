@@ -5,7 +5,7 @@ PKG_SECTION="my"
 PKG_IS_ADDON="no"
 
 make_target() {
-  $CC -v $CFLAGS $CPPFLAGS $LDFLAGS $PKG_DIR/nuttcp-8.1.4.c -o nuttcp
+  $CC $CFLAGS $CPPFLAGS $LDFLAGS $PKG_DIR/nuttcp-8.1.4.c -o nuttcp
 }
 
 post_make_target() {
