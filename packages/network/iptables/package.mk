@@ -36,5 +36,5 @@ pre_configure_target() {
   CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
 }
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-ipv6 --enable-bpf-compiler --disable-devel --with-kernel=$(get_pkg_build linux)"
+PKG_CONFIGURE_OPTS_TARGET="--disable-ipv6 --enable-bpf-compiler --enable-devel --disable-shared --with-kernel=$(get_pkg_build linux)"
 
