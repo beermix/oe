@@ -84,12 +84,14 @@ make_target() {
     'proprietary_codecs=true'
     'link_pulseaudio=true'
     'linux_use_bundled_binutils=false'
+    'use_custom_libcxx=false'
     'use_allocator="none"'
     'use_cups=false'
     'use_gconf=false'
     'use_gnome_keyring=false'
-    'use_gold=true'
+    'use_gold=false'
     'use_gtk3=false'
+    'use_vaapi=true'
     'use_kerberos=false'
     'use_pulseaudio=false'
     'use_sysroot=true'
@@ -188,5 +190,5 @@ addon() {
   cp -P $(get_pkg_build unclutter)/.install_pkg/usr/bin/unclutter $ADDON_BUILD/$PKG_ADDON_ID/bin
 
   # xdotool
-  #cp -P $(get_pkg_build xdotool)/xdotool $ADDON_BUILD/$PKG_ADDON_ID/bin
+  cp -P $(get_pkg_build xdotool)/xdotool $ADDON_BUILD/$PKG_ADDON_ID/bin
 }
