@@ -18,7 +18,7 @@
 ################################################################################
 
 PKG_NAME="gperftools"
-PKG_VERSION="2.5.91"
+PKG_VERSION="2.6.1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/gperftools/gperftools"
@@ -31,3 +31,8 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared"
+
+pre_configure_target() {
+  export CFLAGS="$CFLAGS -fPIC -DPIC"
+  export CXXFLAGS="$CXXFLAGS -fPIC -DPIC"
+}
