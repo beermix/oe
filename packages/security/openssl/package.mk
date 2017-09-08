@@ -54,7 +54,7 @@ pre_configure_target() {
   CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3|"`
   export CCACHE_RECACHE=1
   strip_lto
-  strip_gold
+  #strip_gold
 }
 
 configure_target() {
