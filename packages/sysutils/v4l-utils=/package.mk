@@ -16,36 +16,35 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="eventlircd"
-PKG_VERSION="c6da4ba"
+# with 1.0.0 repeat delay is broken. test on upgrade
+
+PKG_NAME="v4l-utils"
+PKG_VERSION="1.12.5"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="http://code.google.com/p/eventlircd"
-PKG_GIT_URL="https://github.com/yavdr/eventlircd.git"
-PKG_GIT_BRANCH="master"
-PKG_DEPENDS_TARGET="toolchain systemd"
+PKG_SITE="http://linuxtv.org/"
+PKG_URL="http://linuxtv.org/downloads/v4l-utils/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_DEPENDS_TARGET="toolchain"
 PKG_PRIORITY="optional"
-PKG_SECTION="system/remote"
-PKG_SHORTDESC="eventlircd:The eventlircd daemon provides various functions for LIRC devices"
-PKG_LONGDESC="The eventlircd daemon provides four functions for LIRC devices"
+PKG_SECTION="system"
+PKG_SHORTDESC="v4l-utils: Linux V4L2 and DVB API utilities and v4l libraries (libv4l)."
+PKG_LONGDESC="Linux V4L2 and DVB API utilities and v4l libraries (libv4l)."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--with-udev-dir=/usr/lib/udev \
-                           --with-lircd-socket=/run/lirc/lircd"
+PKG_CONFIGURE_OPTS_TARGET="--without-jpeg"
+PKG_MAKEINSTALL_OPTS_TARGET="PREFIX=/usr -C utils/keytable"
 
-post_makeinstall_target() {
-# install our own evmap files and udev rules
-  rm -rf $INSTALL/etc/eventlircd.d
-  rm -rf $INSTALL/usr/lib/udev/rules.d
-  rm -rf $INSTALL/usr/lib/udev/lircd_helper
-
-  mkdir -p $INSTALL/etc/eventlircd.d
-    cp $PKG_DIR/evmap/*.evmap $INSTALL/etc/eventlircd.d
+make_target() {
+    make -C utils/keytable CFLAGS="$TARGET_CFLAGS"
 }
 
-post_install() {
-  enable_service eventlircd.service
+post_makeinstall_target() {
+  rm -rf $INSTALL/etc/rc_keymaps
+    ln -sf /storage/.config/rc_keymaps $INSTALL/etc/rc_keymaps
+
+  mkdir -p $INSTALL/usr/config
+    cp -PR $PKG_DIR/config/* $INSTALL/usr/config
 }
