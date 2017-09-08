@@ -36,8 +36,8 @@ PKG_AUTORECONF="no"
 
 PKG_MARIADB_SERVER="no"
 
-#LTO_SUPPORT="yes"
-#GOLD_SUPPORT="yes"
+LTO_SUPPORT="yes"
+GOLD_SUPPORT="no"
 
 # MariaDB Feature set. Selection of features. Options are
 # - xsmall : 
