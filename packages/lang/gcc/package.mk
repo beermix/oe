@@ -49,7 +49,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-ld=default \
                            --disable-multilib \
                            --disable-nls \
-                           --enable-default-pie \
                            --with-default-libstdcxx-abi=new \
                            --enable-checking=release \
                            --without-ppl \
@@ -87,7 +86,10 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-long-long \
                          --enable-threads=posix \
                          --disable-libstdcxx-pch \
-                         --enable-libstdcxx-time \
+                         --enable-libstdcxx-time=yes \
+                         --enable-gnu-unique-object \
+                         --disable-vtable-verify \
+                         --enable-default-pie \
                          --enable-clocale=gnu \
                          $GCC_OPTS"
 pre_configure_host() {
