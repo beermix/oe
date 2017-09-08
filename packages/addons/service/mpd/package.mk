@@ -19,7 +19,7 @@
 ################################################################################
 
 PKG_NAME="mpd"
-PKG_VERSION="0.20.6"
+PKG_VERSION="0.20.10"
 PKG_REV="102"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"

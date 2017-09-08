@@ -1,3 +1,0 @@
-100
-- Initial addon
-- net-snmp 5.7.3
