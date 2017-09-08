@@ -19,7 +19,7 @@
 ################################################################################ xdotool libva-vdpau-driver
 
 PKG_NAME="chromium"
-PKG_VERSION="59.0.3071.104"
+PKG_VERSION="61.0.3163.79"
 PKG_REV="110"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
