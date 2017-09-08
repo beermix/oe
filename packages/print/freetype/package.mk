@@ -19,9 +19,7 @@
 PKG_NAME="freetype"
 PKG_VERSION="2.8"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
-#PKG_VERSION="587264c"
-#PKG_GIT_URL="git://git.sv.nongnu.org/freetype/freetype2.git"
-PKG_DEPENDS_TARGET="toolchain zlib"
+PKG_DEPENDS_TARGET="toolchain zlib libpng"
 PKG_DEPENDS_HOST="zlib:host"
 PKG_SECTION="print"
 PKG_SHORTDESC="freetype: TrueType font rendering library"
@@ -33,7 +31,7 @@ PKG_USE_CMAKE="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--with-zlib=yes \
                            --with-bzip2=no \
-                           --with-png=no \
+                           --with-png=yes \
                            --with-harfbuzz=no"
 
 pre_configure_target() {

@@ -32,7 +32,8 @@ PKG_LONGDESC="Fontconfig is a library for font customization and configuration."
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--with-arch=$TARGET_ARCH \
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static \
+                           --with-arch=$TARGET_ARCH \
                            --with-cache-dir=/storage/.cache/fontconfig \
                            --with-default-fonts=/usr/share/fonts \
                            --without-add-fonts \
@@ -41,12 +42,12 @@ PKG_CONFIGURE_OPTS_TARGET="--with-arch=$TARGET_ARCH \
 
 pre_configure_target() {
 # ensure we dont use '-O3' optimization.
-  CFLAGS=`echo $CFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|" -e "s|-fno-plt||"`
-  LDFLAGS=`echo $LDFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|" -e "s|-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now|-Wl,--as-needed|g"`
+  CFLAGS=`echo $CFLAGS | sed -e "s|-O3|-O2|"`
+  CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O3|-O2|"`
   CFLAGS="$CFLAGS -I$ROOT/$PKG_BUILD"
-  #CFLAGS="$CFLAGS -fPIC"
+  CFLAGS="$CFLAGS -fPIC"
   CXXFLAGS="$CXXFLAGS -I$ROOT/$PKG_BUILD"
-  #CXXFLAGS="$CXXFLAGS -fPIC"
+  CXXFLAGS="$CXXFLAGS -fPIC"
   LDFLAGS="$LDFLAGS -lz"
 }
 
