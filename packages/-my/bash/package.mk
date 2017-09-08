@@ -5,7 +5,7 @@ PKG_DEPENDS_TARGET="toolchain ncurses readline"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-CONCURRENCY_MAKE_LEVEL=1
+#CONCURRENCY_MAKE_LEVEL=1
 
 PKG_CONFIGURE_OPTS_TARGET="--bindir=/bin
 			      --with-curses \
