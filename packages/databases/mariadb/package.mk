@@ -158,7 +158,7 @@ configure_target() {
         -DTOKUDB_OK=0 \
         -DDISABLE_LIBMYSQLCLIENT_SYMBOL_VERSIONING=TRUE \
         -DENABLE_DTRACE=OFF \
-        -DWITH_READLINE=OFF \
+        -DWITH_READLINE=1 \
         -DWITH_PCRE=$SYSROOT_PREFIX/usr \
         -DWITH_ZLIB=$SYSROOT_PREFIX/usr \
         -DWITH_SYSTEMD=no \
