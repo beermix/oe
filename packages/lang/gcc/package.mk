@@ -49,6 +49,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-ld=default \
                            --disable-multilib \
                            --disable-nls \
+                           --without-included-gettext \
                            --with-default-libstdcxx-abi=new \
                            --enable-checking=release \
                            --without-ppl \
