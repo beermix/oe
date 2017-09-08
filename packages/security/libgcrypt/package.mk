@@ -46,7 +46,7 @@ pre_configure_target() {
 
 post_makeinstall_target() {
   sed -e "s:\(['= ]\)\"/usr:\\1\"$SYSROOT_PREFIX/usr:g" -i src/$PKG_NAME-config
-  cp src/$PKG_NAME-config $SYSROOT_PREFIX/usr/bin
+  ln -sf $SYSROOT_PREFIX/usr/bin/$PKG_NAME-config $ROOT/$BUILD/toolchain/bin/
 
   rm -rf $INSTALL/usr/bin
 }

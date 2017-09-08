@@ -36,8 +36,8 @@ configure_target() {
   export LIBS="$LIBS -lnl-3 -lm -lpthread"
 
   cp $PKG_DIR/config/makefile.config wpa_supplicant/.config
- # echo "CONFIG_TLS=gnutls" >> .config
- # echo "CONFIG_GNUTLS_EXTRA=y" >> .config
+  echo "CONFIG_TLS=gnutls" >> .config
+  echo "CONFIG_GNUTLS_EXTRA=y" >> .config
 }
 
 post_makeinstall_target() {
