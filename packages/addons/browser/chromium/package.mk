@@ -135,13 +135,11 @@ make_target() {
   ./build/linux/unbundle/replace_gn_files.py --system-libraries "${_system_libs}"
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
-
-
   ./tools/gn/bootstrap/bootstrap.py --gn-gen-args "${_flags[*]}"
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$ROOT/$TOOLCHAIN/bin/python
 
   #ionice -c3 nice -n20 ninja -j6 -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
-  ninja -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
+  ionice -c2 -n0 -p 12345 ninja -j5 -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
 }
 
 makeinstall_target() {
