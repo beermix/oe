@@ -1,5 +1,5 @@
 PKG_NAME="libsodium"
-PKG_VERSION="cde2f40"
+PKG_VERSION="26c81e8"
 PKG_SITE="https://github.com/jedisct1/libsodium/tree/stable"
 PKG_GIT_URL="https://github.com/jedisct1/libsodium"
 PKG_GIT_BRANCH="stable"
