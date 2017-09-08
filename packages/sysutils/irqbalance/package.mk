@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="irqbalance"
-PKG_VERSION="aae4eb6"
+PKG_VERSION="v1.2.0"
 PKG_SITE="https://github.com/Irqbalance/irqbalance"
 PKG_GIT_URL="https://github.com/Irqbalance/irqbalance.git"
 PKG_GIT_BRANCH="master"
