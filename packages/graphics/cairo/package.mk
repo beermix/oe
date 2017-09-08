@@ -30,14 +30,11 @@ PKG_IS_ADDON="no"
 
 PKG_AUTORECONF="no"
 
-LTO_SUPPORT="no"
-GOLD_SUPPORT="no"
-
 pre_configure_target() {
-  export CFLAGS+=" -fPIC -DPIC"
+  CFLAGS="$CFLAGS -fPIC"
+  CXXFLAGS="$CXXFLAGS -fPIC"
+  CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
 }
-
-CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
 
 if [ "$DISPLAYSERVER" = "x11" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libXrender libX11 mesa glu"
@@ -63,16 +60,13 @@ fi
 
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CAIRO_CONFIG \
                            --enable-silent-rules \
-                           --enable-shared \
-                           --disable-static \
+                           --disable-shared \
+                           --enable-static \
                            --disable-gtk-doc \
                            --enable-largefile \
                            --enable-atomic \
                            --disable-gcov \
                            --disable-valgrind \
-                           --disable-xcb \
-                           --disable-xlib-xcb \
-                           --disable-xcb-shm \
                            --disable-qt \
                            --enable-png \
                            --enable-ft \
