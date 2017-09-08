@@ -1,2 +1,0 @@
-  # Additional kernel make parameters
-    KERNEL_MAKE_EXTRACMD+=" dt-blob.dtb overlays/slice.dtbo overlays/ws2812.dtbo"
