@@ -10,7 +10,7 @@ PKG_LONGDESC="The Open Source toolkit for Secure Sockets Layer and Transport Lay
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-CONCURRENCY_MAKE_LEVEL=1
+#CONCURRENCY_MAKE_LEVEL=1
 
 PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            --libdir=lib \
