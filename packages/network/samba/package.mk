@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.samba.org"
 PKG_URL="https://samba.org/samba/ftp/stable/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain zlib connman"
+PKG_DEPENDS_TARGET="toolchain zlib connman acl libaio"
 PKG_PRIORITY="optional"
 PKG_SECTION="network"
 PKG_SHORTDESC="samba: The free SMB / CIFS fileserver and client"
@@ -105,8 +105,8 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file__proc_sys_kernel_core_pattern=yes \
                            --without-sys-quotas \
                            --without-utmp \
                            --without-cluster-support \
-                           --without-acl-support \
-                           --without-aio-support \
+                           --with-acl-support \
+                           --with-aio-support \
                            --with-sendfile-support \
                            --without-libtevent \
                            --without-wbclient \
