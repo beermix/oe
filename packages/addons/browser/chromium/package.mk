@@ -36,6 +36,11 @@ PKG_ADDON_NAME="Chromium"
 PKG_ADDON_TYPE="xbmc.python.script"
 PKG_ADDON_PROVIDES="executable"
 
+post_unpack() {
+  mkdir -p $ROOT/$PKG_BUILD/out
+  mount -t tmpfs -o size=15G,nr_inodes=40k,mode=1777 tmpfs $ROOT/$PKG_BUILD/out
+}
+
 pre_make_target() {
   strip_lto
   sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' third_party/widevine/cdm/stub/widevine_cdm_version.h
@@ -43,8 +48,8 @@ pre_make_target() {
   mkdir -p third_party/node/linux/node-linux-x64/bin
   ln -sfv /usr/bin/node third_party/node/linux/node-linux-x64/bin/node
   
-  #mkdir -p $ROOT/$PKG_BUILD/out
-  #mount -t tmpfs -o size=20G,nr_inodes=40k,mode=1777 tmpfs $ROOT/$PKG_BUILD/out
+#  mkdir -p $ROOT/$PKG_BUILD/out
+#  mount -t tmpfs -o size=20G,nr_inodes=40k,mode=1777 tmpfs $ROOT/$PKG_BUILD/out
 }
 
 make_target() {
@@ -139,7 +144,7 @@ make_target() {
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$ROOT/$TOOLCHAIN/bin/python
 
   #ionice -c3 nice -n20 ninja -j6 -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
-  ionice -c2 -n0 ninja -j5 -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
+  ninja -j4 -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
 }
 
 makeinstall_target() {
