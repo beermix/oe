@@ -69,9 +69,9 @@
 # or projects/*/linux/*.config or distributions/*/linux/*.config
 # please add all configfiles which should be included without the suffix and prefix
 # except the default-*.config and the ones included in packages/linux/package.mk
-# Space separated list is supported, KERNEL_EXTRA_CONFIG+=" filesystem hid-drivers remote joystick audio"
-  KERNEL_EXTRA_CONFIG+=" filesystem hid-drivers remote audio"
-  KERNEL_EXTRA_CONFIG+=" usb-gadget led"
+# Space separated list is supported,
+  KERNEL_EXTRA_CONFIG+=" filesystem hid-drivers remote joystick audio"
+  KERNEL_EXTRA_CONFIG+=" usb-serial usb-gadget led"
 
 # additional drivers to install:
 # for a list of additinoal drivers see packages/linux-drivers

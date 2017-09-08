@@ -8,7 +8,6 @@ PKG_AUTORECONF="no"
 
 pre_configure_target() {
   strip_lto
-  strip_gold
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--without-selinux --disable-debug --disable-nls --enable-threads=posix"

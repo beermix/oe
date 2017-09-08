@@ -103,6 +103,6 @@
   # except the default-*.config and the ones included in packages/linux/package.mk
   # Space separated list is supported,
     KERNEL_EXTRA_CONFIG+=" keyboard-at"
-    KERNEL_EXTRA_CONFIG+=" sata lan-pci sound-pci"
-    KERNEL_EXTRA_CONFIG+=" bluetooth filesystem wlan-usb"
+    KERNEL_EXTRA_CONFIG+=" sata lan-pci sound-pci sound-soc-x86"
+    KERNEL_EXTRA_CONFIG+=" scsi bluetooth filesystem wlan-usb"
 
