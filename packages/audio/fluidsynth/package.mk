@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="fluidsynth"
-PKG_VERSION="1.1.6"
+PKG_VERSION="v1.1.7"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://fluidsynth.org/"
-PKG_URL="$SOURCEFORGE_SRC/project/fluidsynth/fluidsynth-$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_GIT_URL="https://github.com/FluidSynth/fluidsynth"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_PRIORITY="optional"
 PKG_SECTION="audio"
