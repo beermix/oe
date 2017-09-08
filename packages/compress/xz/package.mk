@@ -19,7 +19,7 @@
 PKG_NAME="xz"
 PKG_VERSION="5.2.3"
 PKG_SITE="http://tukaani.org/xz/"
-PKG_URL="http://tukaani.org/xz/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="ccache:host"
 PKG_DEPENDS_TARGET="yasm:host"
 PKG_SECTION="toolchain/archivers"
@@ -28,11 +28,16 @@ PKG_LONGDESC="XZ Utils is free general-purpose data compression software with hi
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_HOST="--enable-static=yes --enable-shared=no"
+PKG_CONFIGURE_OPTS_HOST="--enable-static=yes --enable-shared=no --disable-doc"
                          
-PKG_CONFIGURE_OPTS_TARGET="--enable-threads --disable-rpath --disable-doc --enable-static --with-gnu-ld"
+PKG_CONFIGURE_OPTS_TARGET="--enable-threads --disable-rpath --disable-doc --enable-static"
 
 pre_configure_target() {
   export CFLAGS="$CFLAGS -fPIC -DPIC"
   export CXXFLAGS="$CXXFLAGS -fPIC -DPIC"
+}
+
+pre_configure_host() {
+  export CFLAGS="$CFLAGS -fPIC"
+  export CXXFLAGS="$CXXFLAGS -fPIC"
 }
