@@ -36,10 +36,10 @@ post_unpack() {
 PKG_CONFIGURE_OPTS_TARGET="gio_can_sniff=yes \
                            --disable-glibtest \
                            --with-x11 \
-                           --with-libpng \
-                           --with-libjpeg \
-                           --with-libtiff \
-                           --with-libjasper"
+                           --with-libpng=$SYSROOT_PREFIX/usr \
+                           --with-libjpeg=$SYSROOT_PREFIX/usr \
+                           --with-libtiff=no \
+                           --with-libjasper=$SYSROOT_PREFIX/usr"
 
 post_makeinstall_target() {
   cp $PKG_DIR/config/gdk-pixbuf.loaders $INSTALL/usr/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache

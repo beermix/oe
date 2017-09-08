@@ -31,7 +31,7 @@ PKG_LONGDESC="libtiff is a library for reading and writing data files encoded wi
 
 PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 PKG_CMAKE_OPTS_HOST="-DBUILD_SHARED_LIBS=0 -Dlzma=0"
 
@@ -45,14 +45,13 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --with-jpeg-lib-dir=$SYSROOT_PREFIX/usr/lib \
                            --with-jpeg-include-dir=$SYSROOT_PREFIX/usr/include \
                            --without-x \
-                           --enable-silent-rules \
-                           --with-pic"
+                           --enable-silent-rules"
                            
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
 }
 
-#pre_configure_target() {
-#  CFLAGS="$CFLAGS -fPIC"
-#  CXXLAGS="$CXXLAGS -fPIC"
-#}
+pre_configure_target() {
+  CFLAGS="$CFLAGS -fPIC"
+  CXXLAGS="$CXXLAGS -fPIC"
+}
