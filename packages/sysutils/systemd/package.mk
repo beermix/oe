@@ -72,7 +72,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-randomseed \
                            --disable-backlight \
                            --disable-rfkill \
-                           --enable-logind --without-kill-user-processes \
+                           --enable-logind \
                            --disable-machined \
                            --disable-importd \
                            --disable-hostnamed \
@@ -81,7 +81,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-localed \
                            --disable-coredump \
                            --disable-polkit \
-                           --disable-resolved --with-default-dnssec=allow-downgrade \
+                           --disable-resolved \
                            --disable-networkd \
                            --disable-efi \
                            --disable-gnuefi \
