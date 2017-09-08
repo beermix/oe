@@ -109,7 +109,6 @@ make_target() {
   local _system_libs=(
     harfbuzz-ng
     libjpeg
-    libpng
     libxslt
     yasm
     libxml2
