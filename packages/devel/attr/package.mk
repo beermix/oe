@@ -34,7 +34,7 @@ PKG_AUTORECONF="no"
 PKG_CONFIGURE_OPTS_TARGET="OPTIMIZER= \
                            CONFIG_SHELL=/bin/bash \
                            INSTALL_USER=root INSTALL_GROUP=root \
-                           --disable-shared --enable-static"
+                           --enable-shared --enable-static"
 
 if [ "$DEBUG" = yes ]; then
   PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET DEBUG=-DDEBUG"
@@ -50,8 +50,15 @@ pre_configure_target() {
 
 makeinstall_target() {
   mkdir -p $SYSROOT_PREFIX/usr/lib/
-    cp libattr/.libs/libattr.a $SYSROOT_PREFIX/usr/lib/
-
+    cp -PR libattr/.libs/libattr.* $SYSROOT_PREFIX/usr/lib/
+    
+  mkdir -p $INSTALL/usr/bin
+  mkdir -p $INSTALL/usr/lib
+    cp -PR libattr/.libs/libattr.* $INSTALL/usr/lib
+    cp -PR getfattr/getfattr $INSTALL/usr/bin/
+    cp -PR setfattr/setfattr $INSTALL/usr/bin/
+    cp -PR attr/attr $INSTALL/usr/bin/
+  
   mkdir -p $SYSROOT_PREFIX/usr/include/attr
     cp include/*.h $SYSROOT_PREFIX/usr/include/attr
 }
