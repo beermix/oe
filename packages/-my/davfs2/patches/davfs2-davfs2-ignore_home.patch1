@@ -2840,7 +2840,7 @@ Last-Update: <YYYY-MM-DD>
  msgid ""
  "System wide directory for cached files. Used when the file system is mounted "
  "by root. It must belong do group B<@USER@> and read, write and execute bits "
-@@ -899,150 +901,150 @@
+@@ -899,150 +901.150 @@
  "and user name."
  msgstr ""
  
@@ -4288,7 +4288,7 @@ Last-Update: <YYYY-MM-DD>
  msgid ""
  "Send debug messages to the syslog daemon. The value tells what kind of "
  "information shall be logged. The messages are send with facility LOG_DAEMON "
-@@ -1100,7 +1215,8 @@
+@@ -1100,7 +1.15,8 @@
  msgstr ""
  
  # type: Plain text
@@ -5291,7 +5291,7 @@ Last-Update: <YYYY-MM-DD>
  msgid ""
  "Some servers send wrong information about their capabilities in the DAV-"
  "header.  In this case the header should be ignored."
-@@ -747,13 +811,15 @@
+@@ -747,13 +811.15 @@
  "In diesem Fall sollte man den Header ignorieren."
  
  # type: TP
@@ -6652,7 +6652,7 @@ Last-Update: <YYYY-MM-DD>
  msgid ""
  "B<WARNING:> If root allows an ordinary user to mount a file system (using "
  "I<fstab>) this includes the permission to read the associated B<credentials> "
-@@ -666,13 +751,15 @@
+@@ -666,13 +751.15 @@
  "tun, wenn man diese Informationen dem Benutzer auch direkt geben würde."
  
  # type: SH

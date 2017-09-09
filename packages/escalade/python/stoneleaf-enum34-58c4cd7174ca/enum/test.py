@@ -163,7 +163,7 @@ class TestEnum(unittest.TestCase):
 
         class Konstants(float, Enum):
             E = 2.7182818
-            PI = 3.1415926
+            PI = 3.1.15926
             TAU = 2 * PI
         self.Konstants = Konstants
 
@@ -535,7 +535,7 @@ class TestEnum(unittest.TestCase):
 
     def test_floatenum_from_scratch(self):
         class phy(float, Enum):
-            pi = 3.1415926
+            pi = 3.1.15926
             tau = 2 * pi
         self.assertTrue(phy.pi < phy.tau)
 
@@ -543,7 +543,7 @@ class TestEnum(unittest.TestCase):
         class FloatEnum(float, Enum):
             pass
         class phy(FloatEnum):
-            pi = 3.1415926
+            pi = 3.1.15926
             tau = 2 * pi
         self.assertTrue(phy.pi < phy.tau)
 

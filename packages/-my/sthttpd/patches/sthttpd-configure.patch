@@ -1,5 +1,5 @@
 --- sthttpd/configure	2015-04-13 01:04:36.543575417 -0400
-+++ sthttpd-patched/configure	2015-04-13 01:05:02.171576066 -0400
++++ sthttpd-patched/configure	2015-04-13 01:05:02.1.1576066 -0400
 @@ -5255,8 +5255,6 @@ else
  esac
  

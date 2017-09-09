@@ -234,7 +234,7 @@ index 3453c48..35a92fe 100644
      switch (c) {
        case 'd':
             deviceCountM = strtol(optarg, NULL, 0);
-@@ -126,10 +131,15 @@ bool cPluginSatip::ProcessArgs(int argc, char *argv[])
+@@ -126,10 +131.15 @@ bool cPluginSatip::ProcessArgs(int argc, char *argv[])
        case 'n':
             SatipConfig.SetDisableServerQuirks(true);
             break;

@@ -1457,7 +1457,7 @@ index d4bc27f..9418ae0 100644
 +	}
 +
 +	// FSInfo sect
-+	pFAT32FsInfo->dLeadSig = 0x41615252;
++	pFAT32FsInfo->dLeadSig = 0x41.15252;
 +	pFAT32FsInfo->dStrucSig = 0x61417272;
 +	pFAT32FsInfo->dFree_Count = (DWORD) -1;
 +	pFAT32FsInfo->dNxt_Free = (DWORD) -1;

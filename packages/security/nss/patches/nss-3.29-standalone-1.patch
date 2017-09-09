@@ -65,7 +65,7 @@ diff -Naurp nss-3.28-orig/nss/config/Makefile nss-3.28/nss/config/Makefile
 diff -Naurp nss-3.28-orig/nss/config/nss-config.in nss-3.28/nss/config/nss-config.in
 --- nss-3.28-orig/nss/config/nss-config.in	1969-12-31 18:00:00.000000000 -0600
 +++ nss-3.28/nss/config/nss-config.in	2016-12-26 22:20:40.008205774 -0600
-@@ -0,0 +1,153 @@
+@@ -0,0 +1.153 @@
 +#!/bin/sh
 +
 +prefix=@prefix@

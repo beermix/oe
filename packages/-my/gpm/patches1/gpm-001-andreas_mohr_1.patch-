@@ -308,7 +308,7 @@ diff -urN gpm-1.19.6/src/mice.c gpm-1.19.6.new/src/mice.c
    };
  
  #define IsA(m) ((WacomModell==(-1))? 0:!strcmp(#m,wcmodell[WacomModell].name))
-@@ -1687,7 +1715,8 @@
+@@ -1687,7 +1.15,8 @@
  
  /* intellimouse, ps2 version: Ben Pfaff and Colin Plumb */
  /* Autodetect: Steve Bennett */

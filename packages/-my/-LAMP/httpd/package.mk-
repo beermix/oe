@@ -1,7 +1,7 @@
 PKG_NAME="httpd"
 PKG_VERSION="301ac2b"
 PKG_URL="https://github.com/apache/httpd/archive/$PKG_VERSION.tar.gz"
-#PKG_SOURCE_DIR="libevent-c51b159cff9f5e86696f5b9a4c6f517276056258"
+#PKG_SOURCE_DIR="libevent-c51.159cff9f5e86696f5b9a4c6f517276056258"
 PKG_BUILD_DEPENDS_TARGET="toolchain libressl apr-util"
 
 PKG_SECTION="devel"

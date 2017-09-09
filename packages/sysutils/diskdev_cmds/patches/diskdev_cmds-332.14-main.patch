@@ -336,7 +336,7 @@ Files diskdev_cmds-332.14/fsck_hfs.tproj/dfalib/libdfa.a and diskdev_cmds-332.14
 diff -druN diskdev_cmds-332.14/fsck_hfs.tproj/dfalib/Makefile.lnx diskdev_cmds-332.14-patched/fsck_hfs.tproj/dfalib/Makefile.lnx
 --- diskdev_cmds-332.14/fsck_hfs.tproj/dfalib/Makefile.lnx	1970-01-01 01:00:00.000000000 +0100
 +++ diskdev_cmds-332.14-patched/fsck_hfs.tproj/dfalib/Makefile.lnx	2008-07-01 22:30:11.000000000 +0200
-@@ -0,0 +1,15 @@
+@@ -0,0 +1.15 @@
 +CFILES = hfs_endian.c BlockCache.c\
 +         BTree.c BTreeAllocate.c BTreeMiscOps.c \
 +         BTreeNodeOps.c BTreeScanner.c BTreeTreeOps.c\
@@ -882,7 +882,7 @@ Files diskdev_cmds-332.14/fsck_hfs.tproj/fsck_hfs.o and diskdev_cmds-332.14-patc
 diff -druN diskdev_cmds-332.14/fsck_hfs.tproj/Makefile.lnx diskdev_cmds-332.14-patched/fsck_hfs.tproj/Makefile.lnx
 --- diskdev_cmds-332.14/fsck_hfs.tproj/Makefile.lnx	1970-01-01 01:00:00.000000000 +0100
 +++ diskdev_cmds-332.14-patched/fsck_hfs.tproj/Makefile.lnx	2008-07-01 22:30:11.000000000 +0200
-@@ -0,0 +1,15 @@
+@@ -0,0 +1.15 @@
 +CFILES = fsck_hfs.c strings.c utilities.c cache.c
 +OFILES = $(CFILES:.c=.o)
 +
@@ -2235,7 +2235,7 @@ diff -druN diskdev_cmds-332.14/newfs_hfs.tproj/makehfs.c diskdev_cmds-332.14-pat
  	ckp->nodeName.length = SWAP_BE16 (ckp->nodeName.length);
  
  	unicodeBytes = sizeof(UniChar) * SWAP_BE16 (ckp->nodeName.length);
-@@ -1821,15 +1843,15 @@
+@@ -1821.15 +1843,15 @@
  	off_t sector;
  
  	if ((byteCount % driveInfo->sectorSize) != 0)

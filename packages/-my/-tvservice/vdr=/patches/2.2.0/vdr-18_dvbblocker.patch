@@ -1,6 +1,6 @@
 diff -ruN vdr-2.1.4_25/config.c vdr-2.1.4_27/config.c
 --- vdr-2.1.4_25/config.c	2014-01-26 14:50:14.494756289 +0100
-+++ vdr-2.1.4_27/config.c	2014-01-26 14:52:32.867721915 +0100
++++ vdr-2.1.4_27/config.c	2014-01-26 14:52:32.867721.15 +0100
 @@ -398,6 +398,7 @@
    PositionerLastLon = 0;
    SetSystemTime = 0;
@@ -27,7 +27,7 @@ diff -ruN vdr-2.1.4_25/config.c vdr-2.1.4_27/config.c
    Store("MarginStop",         MarginStop);
 diff -ruN vdr-2.1.4_25/config.h vdr-2.1.4_27/config.h
 --- vdr-2.1.4_25/config.h	2014-01-26 14:50:14.494756289 +0100
-+++ vdr-2.1.4_27/config.h	2014-01-26 14:52:32.867721915 +0100
++++ vdr-2.1.4_27/config.h	2014-01-26 14:52:32.867721.15 +0100
 @@ -283,6 +283,7 @@
    int SetSystemTime;
    int TimeSource;
@@ -38,7 +38,7 @@ diff -ruN vdr-2.1.4_25/config.h vdr-2.1.4_27/config.h
    int AudioLanguages[I18N_MAX_LANGUAGES + 1];
 diff -ruN vdr-2.1.4_25/dvbdevice.c vdr-2.1.4_27/dvbdevice.c
 --- vdr-2.1.4_25/dvbdevice.c	2014-01-20 12:46:26.000000000 +0100
-+++ vdr-2.1.4_27/dvbdevice.c	2014-01-26 14:52:32.867721915 +0100
++++ vdr-2.1.4_27/dvbdevice.c	2014-01-26 14:52:32.867721.15 +0100
 @@ -1522,6 +1522,10 @@
  
  bool cDvbDevice::ProvidesSource(int Source) const

@@ -1,6 +1,6 @@
 diff -Naur squid-4.0.18-orig/configure squid-4.0.18/configure
 --- squid-4.0.18-orig/configure	2017-03-31 14:56:59.109107987 +0300
-+++ squid-4.0.18/configure	2017-03-31 15:01:13.291741972 +0300
++++ squid-4.0.18/configure	2017-03-31.15:01:13.291741972 +0300
 @@ -29393,7 +29393,7 @@
      if test "$cross_compiling" = yes; then :
    { { $as_echo "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5

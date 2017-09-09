@@ -1498,7 +1498,7 @@ new file mode 100644
 index 0000000..3285adb
 --- /dev/null
 +++ b/kodi-addon/plugin.program.ts_calibrate/addon.py
-@@ -0,0 +1,158 @@
+@@ -0,0 +1.158 @@
 +################################################################################
 +#      This file is part of OpenELEC - http://www.openelec.tv
 +#      Copyright (C) 2009-2015 Stephan Raue (stephan@openelec.tv)

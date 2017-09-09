@@ -4,11 +4,11 @@
 ################################################################################
 
 PKG_NAME="ffmpeg"
-PKG_VERSION="f58e5b9"
+PKG_VERSION="d98d29a"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_SITE="https://github.com/FFmpeg/FFmpeg/tree/release/3.1"
-PKG_GIT_URL="https://github.com/xbmc/FFmpeg"
+PKG_GIT_URL="https://git.videolan.org/git/ffmpeg.git"
 #PKG_GIT_BRANCH="release/3.1"
 PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl speex libvorbis"
 PKG_SECTION="multimedia"

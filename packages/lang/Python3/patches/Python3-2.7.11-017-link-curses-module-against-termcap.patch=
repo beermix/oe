@@ -25,7 +25,7 @@ diff -Naur a/Modules/_cursesmodule.c b/Modules/_cursesmodule.c
      {"inch",            (PyCFunction)PyCursesWindow_InCh, METH_VARARGS},
      {"insch",           (PyCFunction)PyCursesWindow_InsCh, METH_VARARGS},
      {"insdelln",        (PyCFunction)PyCursesWindow_winsdelln, METH_VARARGS},
-@@ -1618,7 +1615,6 @@
+@@ -1618,7 +1.15,6 @@
      {"subpad",          (PyCFunction)PyCursesWindow_SubWin, METH_VARARGS},
      {"subwin",          (PyCFunction)PyCursesWindow_SubWin, METH_VARARGS},
      {"syncdown",        (PyCFunction)PyCursesWindow_wsyncdown, METH_NOARGS},

@@ -2,7 +2,7 @@
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git c/build/moz.configure/rust.configure i/build/moz.configure/rust.configure
-index cd86b24153debb1b..44911715e25d95e3 100644
+index cd86b24153debb1b..44911.15e25d95e3 100644
 --- c/build/moz.configure/rust.configure
 +++ i/build/moz.configure/rust.configure
 @@ -81,7 +81,7 @@ def rust_target(rust_compiler, rustc, target, cross_compiling):

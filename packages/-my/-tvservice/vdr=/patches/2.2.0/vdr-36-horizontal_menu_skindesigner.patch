@@ -1,7 +1,7 @@
 Common subdirectories: vdr-2.2.0/PLUGINS and /usr/local/src/vdr-2.2.0/PLUGINS
 Common subdirectories: vdr-2.2.0/libsi and /usr/local/src/vdr-2.2.0/libsi
 diff -upN '--exclude=Make.config' a/osdbase.c b/osdbase.c
---- a/osdbase.c	2015-01-15 11:11:11.000000000 +0100
+--- a/osdbase.c	2015-01.151:11:11.000000000 +0100
 +++ b/osdbase.c	2015-08-06 17:27:18.778646643 +0200
 @@ -87,6 +87,7 @@ cOsdMenu::cOsdMenu(const char *Title, in
    title = NULL;
@@ -38,8 +38,8 @@ diff -upN '--exclude=Make.config' a/osdbase.c b/osdbase.c
      case kOk:   if (marked >= 0) {
                     SetStatus(NULL);
 diff -upN '--exclude=Make.config' a/osdbase.h b/osdbase.h
---- a/osdbase.h	2015-01-15 11:09:18.000000000 +0100
-+++ b/osdbase.h	2015-07-31 15:23:29.232867174 +0200
+--- a/osdbase.h	2015-01.151:09:18.000000000 +0100
++++ b/osdbase.h	2015-07-31.15:23:29.232867174 +0200
 @@ -93,6 +93,7 @@ private:
    int first, current, marked;
    eMenuCategory menuCategory;
@@ -50,7 +50,7 @@ diff -upN '--exclude=Make.config' a/osdbase.h b/osdbase.h
    bool helpDisplayed;
 Common subdirectories: vdr-2.2.0/po and /usr/local/src/vdr-2.2.0/po
 diff -upN '--exclude=Make.config' a/skins.h b/skins.h
---- a/skins.h	2015-01-15 11:45:47.000000000 +0100
+--- a/skins.h	2015-01.151:45:47.000000000 +0100
 +++ b/skins.h	2015-08-06 17:33:41.500188153 +0200
 @@ -129,6 +129,12 @@ enum eMenuSortMode {
    msmProvider

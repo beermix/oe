@@ -1,7 +1,7 @@
 PKG_NAME="Cython"
 PKG_VERSION="0.25.2"
 PKG_SITE="https://pypi.python.org/pypi/Cython"
-PKG_URL="https://pypi.python.org/packages/b7/67/7e2a817f9e9c773ee3995c1e15204f5d01c8da71882016cac10342ef031b/Cython-0.25.2.tar.gz"
+PKG_URL="https://pypi.python.org/packages/b7/67/7e2a817f9e9c773ee3995c1.15204f5d01c8da71882016cac10342ef031b/Cython-0.25.2.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host greenlet"
 PKG_SECTION="xmedia/depends"
 PKG_SHORTDESC="gevent is a coroutine-based Python networking library"

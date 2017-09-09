@@ -3866,7 +3866,7 @@ index 22c4fc2..0000000
 -#define VA_FOURCC_UYVY          0x59565955
 -#define VA_FOURCC_YUY2          0x32595559
 -#define VA_FOURCC_AYUV          0x56555941
--#define VA_FOURCC_NV11          0x3131564e
+-#define VA_FOURCC_NV11          0x31.1564e
 -#define VA_FOURCC_YV12          0x32315659
 -#define VA_FOURCC_P208          0x38303250
 -#define VA_FOURCC_IYUV          0x56555949
@@ -5741,13 +5741,13 @@ index d61a283..0000000
 -    /** corresponds to HEVC spec variable of the same name. */
 -    int8_t                  ChromaOffsetL0[15][2];
 -    /** HEVC syntax element. */
--    int8_t                  delta_luma_weight_l1[15];
+-    int8_t                  delta_luma_weight_l1.15];
 -    /** HEVC syntax element. */
--    int8_t                  luma_offset_l1[15];
+-    int8_t                  luma_offset_l1.15];
 -    /** HEVC syntax element. */
--    int8_t                  delta_chroma_weight_l1[15][2];
+-    int8_t                  delta_chroma_weight_l1.15][2];
 -    /** corresponds to HEVC spec variable of the same name. */
--    int8_t                  ChromaOffsetL1[15][2];
+-    int8_t                  ChromaOffsetL1.15][2];
 -    /** HEVC syntax element. */
 -    uint8_t                 five_minus_max_num_merge_cand;
 -    /**@}*/
@@ -7681,10 +7681,10 @@ index 5cd614b..0000000
 -             *  the following parameters in slice control data structure
 -             *  shall be ignored:
 -             *  luma_log2_weight_denom, delta_chroma_log2_weight_denom,
--             *  luma_offset_l0[15], luma_offset_l1[15],
--             *  delta_luma_weight_l0[15], delta_luma_weight_l1[15],
--             *  chroma_offset_l0[15][2], chroma_offset_l1[15][2],
--             *  and delta_chroma_weight_l0[15][2], delta_chroma_weight_l1[15][2].
+-             *  luma_offset_l0[15], luma_offset_l1.15],
+-             *  delta_luma_weight_l0[15], delta_luma_weight_l1.15],
+-             *  chroma_offset_l0[15][2], chroma_offset_l1.15][2],
+-             *  and delta_chroma_weight_l0[15][2], delta_chroma_weight_l1.15][2].
 -             */
 -            uint32_t    enable_gpu_weighted_prediction                 : 1;
 -            /** \brief HEVC syntax element in slice segment header
@@ -7738,7 +7738,7 @@ index 5cd614b..0000000
 -    /** \brief Reference picture list 0 (for P slices). */
 -    VAPictureHEVC   ref_pic_list0[15];
 -    /** \brief Reference picture list 1 (for B slices). */
--    VAPictureHEVC   ref_pic_list1[15];
+-    VAPictureHEVC   ref_pic_list1.15];
 -    /**@}*/
 -
 -    /** @name pred_weight_table() */
@@ -7756,13 +7756,13 @@ index 5cd614b..0000000
 -    /** \brief Same as the HEVC spec variable ChromaOffsetL0[]. */
 -    int8_t          chroma_offset_l0[15][2];
 -    /** \brief Same as the HEVC bitstream syntax element. */
--    int8_t          delta_luma_weight_l1[15];
+-    int8_t          delta_luma_weight_l1.15];
 -    /** \brief Same as the HEVC bitstream syntax element. */
--    int8_t          luma_offset_l1[15];
+-    int8_t          luma_offset_l1.15];
 -    /** \brief Same as the HEVC bitstream syntax element. */
--    int8_t          delta_chroma_weight_l1[15][2];
+-    int8_t          delta_chroma_weight_l1.15][2];
 -    /** \brief Same as the HEVC spec variable ChromaOffsetL1[]. */
--    int8_t          chroma_offset_l1[15][2];
+-    int8_t          chroma_offset_l1.15][2];
 -    /**@}*/
 -
 -    /** \brief Corresponds to HEVC spec variable MaxNumMergeCand.
@@ -7887,7 +7887,7 @@ deleted file mode 100644
 index 3aba7ad..0000000
 --- a/third_party/libva/va/va_enc_jpeg.h
 +++ /dev/null
-@@ -1,156 +0,0 @@
+@@ -1.156 +0,0 @@
 -/*
 - * Copyright (c) 2007-2013 Intel Corporation. All Rights Reserved.
 - *
@@ -11093,7 +11093,7 @@ index 8f0e00e..0000000
 -  WL_DRM_FORMAT_BGRX4444 = 0x32315842,
 -  WL_DRM_FORMAT_ARGB4444 = 0x32315241,
 -  WL_DRM_FORMAT_ABGR4444 = 0x32314241,
--  WL_DRM_FORMAT_RGBA4444 = 0x32314152,
+-  WL_DRM_FORMAT_RGBA4444 = 0x3231.152,
 -  WL_DRM_FORMAT_BGRA4444 = 0x32314142,
 -  WL_DRM_FORMAT_XRGB1555 = 0x35315258,
 -  WL_DRM_FORMAT_XBGR1555 = 0x35314258,
@@ -11101,7 +11101,7 @@ index 8f0e00e..0000000
 -  WL_DRM_FORMAT_BGRX5551 = 0x35315842,
 -  WL_DRM_FORMAT_ARGB1555 = 0x35315241,
 -  WL_DRM_FORMAT_ABGR1555 = 0x35314241,
--  WL_DRM_FORMAT_RGBA5551 = 0x35314152,
+-  WL_DRM_FORMAT_RGBA5551 = 0x3531.152,
 -  WL_DRM_FORMAT_BGRA5551 = 0x35314142,
 -  WL_DRM_FORMAT_RGB565 = 0x36314752,
 -  WL_DRM_FORMAT_BGR565 = 0x36314742,
@@ -11134,8 +11134,8 @@ index 8f0e00e..0000000
 -  WL_DRM_FORMAT_NV61 = 0x3136564e,
 -  WL_DRM_FORMAT_YUV410 = 0x39565559,
 -  WL_DRM_FORMAT_YVU410 = 0x39555659,
--  WL_DRM_FORMAT_YUV411 = 0x31315559,
--  WL_DRM_FORMAT_YVU411 = 0x31315659,
+-  WL_DRM_FORMAT_YUV411 = 0x31.15559,
+-  WL_DRM_FORMAT_YVU411 = 0x31.15659,
 -  WL_DRM_FORMAT_YUV420 = 0x32315559,
 -  WL_DRM_FORMAT_YVU420 = 0x32315659,
 -  WL_DRM_FORMAT_YUV422 = 0x36315559,
@@ -11319,7 +11319,7 @@ index 165f3fe..0000000
 -#endif
 diff --git a/third_party/libva/va/x11/va_dri2str.h b/third_party/libva/va/x11/va_dri2str.h
 deleted file mode 100644
-index 1515eeb..0000000
+index 1.15eeb..0000000
 --- a/third_party/libva/va/x11/va_dri2str.h
 +++ /dev/null
 @@ -1,227 +0,0 @@

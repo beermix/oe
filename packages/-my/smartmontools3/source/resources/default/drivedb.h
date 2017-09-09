@@ -1396,7 +1396,7 @@ const drive_settings builtin_knowndrives[] = {
     "-v 9,minutes"
   },
   { "Maxtor DiamondMax 40 VL Ultra ATA 100",
-    "Maxtor 3(1024H1|1535H2|2049H2|3073H3|4098H4)( B)?",
+    "Maxtor 3(1024H1.1535H2|2049H2|3073H3|4098H4)( B)?",
     "",
     "",
     "-v 9,minutes"
@@ -1726,7 +1726,7 @@ const drive_settings builtin_knowndrives[] = {
     "", "", ""
   },
   { "IBM Deskstar 25GP and 22GXP",
-    "IBM-DJNA-3(5(101|152|203|250)|7(091|135|180|220))0",
+    "IBM-DJNA-3(5(101.152|203|250)|7(091|135|180|220))0",
     "", "", ""
   },
   { "IBM Deskstar 37GP and 34GXP",
@@ -1947,11 +1947,11 @@ const drive_settings builtin_knowndrives[] = {
     "", "", ""
   },
   { "Seagate Momentus 5400.3",
-    "ST9(4081[45]|6081[35]|8081[15]|100828|120822|160821)AS?",
+    "ST9(4081[45]|6081[35]|8081.15]|100828|120822|160821)AS?",
     "", "", ""
   },
   { "Seagate Momentus 5400.3 ED",
-    "ST9(4081[45]|6081[35]|8081[15]|100828|120822|160821)AB",
+    "ST9(4081[45]|6081[35]|8081.15]|100828|120822|160821)AB",
     "", "", ""
   },
   { "Seagate Momentus 5400.4",
@@ -3591,7 +3591,7 @@ const drive_settings builtin_knowndrives[] = {
     "-d usbjmicron"
   },
   { "USB: Hitachi Touro Desk 3.0; ", // 2TB
-    "0x4971:0x1015",
+    "0x4971:0x1.15",
     "", // 0x0000
     "",
     "-d sat" // ATA output registers missing

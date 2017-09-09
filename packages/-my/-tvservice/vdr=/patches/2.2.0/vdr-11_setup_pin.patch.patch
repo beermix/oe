@@ -48,7 +48,7 @@ diff -ruN vdr-2.1.4_19/Makefile vdr-2.1.4_20/Makefile
 diff -ruN vdr-2.1.4_19/menu.c vdr-2.1.4_20/menu.c
 --- vdr-2.1.4_19/menu.c	2014-01-26 14:33:52.092693968 +0100
 +++ vdr-2.1.4_20/menu.c	2014-01-26 14:36:33.084515068 +0100
-@@ -971,6 +971,15 @@
+@@ -971,6 +971.15 @@
       Add(new cMenuEditBitItem( tr("VPS"),          &data.flags, tfVps));
       Add(new cMenuEditIntItem( tr("Priority"),     &data.priority, 0, MAXPRIORITY));
       Add(new cMenuEditIntItem( tr("Lifetime"),     &data.lifetime, 0, MAXLIFETIME));
@@ -1461,7 +1461,7 @@ diff -ruN vdr-2.1.4_19/submenu.c vdr-2.1.4_20/submenu.c
 diff -ruN vdr-2.1.4_19/submenu.h vdr-2.1.4_20/submenu.h
 --- vdr-2.1.4_19/submenu.h	1970-01-01 01:00:00.000000000 +0100
 +++ vdr-2.1.4_20/submenu.h	2014-01-26 14:36:33.096514459 +0100
-@@ -0,0 +1,151 @@
+@@ -0,0 +1.151 @@
 +/****************************************************************************
 + * DESCRIPTION:
 + *             Submenu

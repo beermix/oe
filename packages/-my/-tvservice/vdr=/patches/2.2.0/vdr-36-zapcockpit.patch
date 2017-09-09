@@ -1047,7 +1047,7 @@ diff -Naur vdr-2.2.0/skins.c vdr-2.2.0_zapcockpit/skins.c
  
  cSkinDisplayMenu::cSkinDisplayMenu(void)
 diff -Naur vdr-2.2.0/skins.h vdr-2.2.0_zapcockpit/skins.h
---- vdr-2.2.0/skins.h	2015-01-15 11:45:47.000000000 +0100
+--- vdr-2.2.0/skins.h	2015-01.151:45:47.000000000 +0100
 +++ vdr-2.2.0_zapcockpit/skins.h	2016-05-29 10:22:34.773793696 +0200
 @@ -88,6 +88,34 @@
    */

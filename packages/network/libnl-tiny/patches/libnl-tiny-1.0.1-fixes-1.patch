@@ -352,7 +352,7 @@ Description:             Compilation fixes from the upstream git repository.
 -#endif
 --- libnl-tiny-1.0.1.orig/include/linux/netlink.h
 +++ /dev/null
-@@ -1,150 +0,0 @@
+@@ -1.150 +0,0 @@
 -#ifndef __LINUX_NETLINK_H
 -#define __LINUX_NETLINK_H
 -

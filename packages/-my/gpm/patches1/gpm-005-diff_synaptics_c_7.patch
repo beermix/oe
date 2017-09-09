@@ -1323,7 +1323,7 @@
  
    if (bytes [1] != PS2_SYN_STATUS_OK) {
      gpm_report (GPM_PR_ERR,"PS/2 device doesn't appear to be a synaptics touchpad\n");
-@@ -2251,15 +2381,15 @@
+@@ -2251.15 +2381.15 @@
      ext_cap_int = bytes[0] << 8 | bytes[2];
    }
  

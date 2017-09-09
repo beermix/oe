@@ -45,6 +45,7 @@
                        --sysconfdir=$ROOT/$TOOLCHAIN/etc \
                        --libexecdir=$ROOT/$TOOLCHAIN/lib \
                        --localstatedir=$ROOT/$TOOLCHAIN/var \
+                       --enable-silent-rules \
                        --disable-static \
                        --enable-shared"
 

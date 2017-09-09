@@ -34,7 +34,7 @@ new file mode 100644
 index 00000000..bd39268a
 --- /dev/null
 +++ b/config.h
-@@ -0,0 +1,157 @@
+@@ -0,0 +1.157 @@
 +/* config.h.  Generated from config.h.in by configure.  */
 +/* config.h.in.  Generated from configure.ac by autoheader.  */
 +

@@ -64,7 +64,7 @@
          audioEncoderFallback << "av_aac"
        when "AAC (FDK)"
          audioEncoderFallback << "fdk_aac"
-@@ -1615,7 +1615,7 @@
+@@ -1.15,7 +1.15,7 @@
            audioEncoders << "copy:dtshd"
          when /AAC Pass/
            audioEncoders << "copy:aac"

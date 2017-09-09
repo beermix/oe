@@ -139,7 +139,7 @@
 - update to vdr-iptv-2.0.1
 - update to vdr-plugin-dvbapi-4d9de95
 - update to vdr-plugin-streamdev-40704cd
-- update to vdr-plugin-vnsiserver-9021115
+- update to vdr-plugin-vnsiserver-9021.15
 - update to vdr-epgsearch-29c174a
 
 4.1.1

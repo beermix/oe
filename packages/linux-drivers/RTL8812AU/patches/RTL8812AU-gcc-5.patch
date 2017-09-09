@@ -1,6 +1,6 @@
 diff -Naur a/include/ieee80211.h b/include/ieee80211.h
 --- a/include/ieee80211.h	2016-10-20 12:20:19.000000000 -0700
-+++ b/include/ieee80211.h	2016-11-15 17:00:32.239848199 -0800
++++ b/include/ieee80211.h	2016-11.157:00:32.239848199 -0800
 @@ -1388,18 +1388,18 @@
  (((Addr[2]) & 0xff) == 0xff) && (((Addr[3]) & 0xff) == 0xff) && (((Addr[4]) & 0xff) == 0xff) && \
  (((Addr[5]) & 0xff) == 0xff))

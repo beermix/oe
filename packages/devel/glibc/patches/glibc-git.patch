@@ -1,0 +1,3807 @@
+commit dc258ce62ae0bbb456c6a855dbb6b384ecf7e988
+Author: Florian Weimer <fweimer@redhat.com>
+Date:   Thu Aug 3 13:59:17 2017 +0200
+
+    getaddrinfo: Release resolver context on error in gethosts [BZ #21885]
+    
+    (cherry picked from commit 964263bb8d650f1681665c55704fb01a8e725621)
+
+diff --git a/ChangeLog b/ChangeLog
+index 8dbfc7eaff..28ce9c8479 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,3 +1,9 @@
++2017-08-03  Florian Weimer  <fweimer@redhat.com>
++
++	[BZ #21885]
++	* sysdeps/posix/getaddrinfo.c (gethosts): Release resolver context
++	on memory allocation failure.
++
+ 2017-08-02  Siddhesh Poyarekar  <siddhesh@sourceware.org>
+ 
+ 	* version.h (RELEASE): Set to "stable"
+diff --git a/NEWS b/NEWS
+index 8295f20c0a..9a64579658 100644
+--- a/NEWS
++++ b/NEWS
+@@ -5,6 +5,12 @@ See the end for copying conditions.
+ Please send GNU C library bug reports via <http://sourceware.org/bugzilla/>
+ using `glibc' in the "product" field.
+ 
++Version 2.26.1
++
++The following bugs are resolved with this release:
++
++  [21885] getaddrinfo: Release resolver context on error in gethosts
++
+ Version 2.26
+ 
+ Major new features:
+diff --git a/sysdeps/posix/getaddrinfo.c b/sysdeps/posix/getaddrinfo.c
+index efa7118498..699411cc92 100644
+--- a/sysdeps/posix/getaddrinfo.c
++++ b/sysdeps/posix/getaddrinfo.c
+@@ -255,6 +255,8 @@ convert_hostent_to_gaih_addrtuple (const struct addrinfo *req,
+       break;								      \
+     if (!scratch_buffer_grow (tmpbuf))					      \
+       {									      \
++	__resolv_context_enable_inet6 (res_ctx, res_enable_inet6);	      \
++	__resolv_context_put (res_ctx);					      \
+ 	result = -EAI_MEMORY;						      \
+ 	goto free_and_return;						      \
+       }									      \
+
+commit 665ce88d68fd13c5c4cbaf2808434c618745137c
+Author: Aurelien Jarno <aurelien@aurel32.net>
+Date:   Thu Aug 3 22:33:19 2017 +0000
+
+    i686/multiarch: Regenerate ulps
+    
+    This comes from running “make regen-ulps” on an AMD Opteron 2378 CPU.
+    
+    Changelog:
+            * sysdeps/i386/i686/fpu/multiarch/libm-test-ulps: Regenerated.
+    (cherry picked from commit 144bdab050bdd78c327d98a79b15c5b164e1d56f)
+
+diff --git a/ChangeLog b/ChangeLog
+index 28ce9c8479..3478699b10 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,3 +1,7 @@
++2017-08-03  Aurelien Jarno  <aurelien@aurel32.net>
++
++	* sysdeps/i386/i686/fpu/multiarch/libm-test-ulps: Regenerated.
++
+ 2017-08-03  Florian Weimer  <fweimer@redhat.com>
+ 
+ 	[BZ #21885]
+diff --git a/sysdeps/i386/i686/fpu/multiarch/libm-test-ulps b/sysdeps/i386/i686/fpu/multiarch/libm-test-ulps
+index 81dd1a09ea..053f5ec972 100644
+--- a/sysdeps/i386/i686/fpu/multiarch/libm-test-ulps
++++ b/sysdeps/i386/i686/fpu/multiarch/libm-test-ulps
+@@ -58,7 +58,7 @@ double: 1
+ float128: 2
+ idouble: 1
+ ifloat128: 2
+-ildouble: 4
++ildouble: 5
+ ldouble: 3
+ 
+ Function: "asin":
+@@ -1154,8 +1154,8 @@ float128: 4
+ idouble: 3
+ ifloat: 3
+ ifloat128: 4
+-ildouble: 7
+-ldouble: 7
++ildouble: 8
++ldouble: 8
+ 
+ Function: Imaginary part of "clog10_upward":
+ double: 1
+@@ -2013,8 +2013,8 @@ double: 3
+ float: 4
+ idouble: 3
+ ifloat: 4
+-ildouble: 5
+-ldouble: 5
++ildouble: 6
++ldouble: 6
+ 
+ Function: "hypot":
+ double: 1
+@@ -2205,8 +2205,8 @@ float128: 8
+ idouble: 3
+ ifloat: 4
+ ifloat128: 8
+-ildouble: 5
+-ldouble: 5
++ildouble: 6
++ldouble: 6
+ 
+ Function: "log":
+ double: 1
+
+commit a4e5aa1a443cfad09bc98f9bb527995371a53a88
+Author: Aurelien Jarno <aurelien@aurel32.net>
+Date:   Thu Aug 3 22:35:48 2017 +0000
+
+    Fix the return type of the getentropy stub
+    
+    The return type of the getentropy stub is wrongly defined as ssize_t,
+    while both the <sys/random.h> header and the Linux implementation
+    define it as int. This patch fixes that.
+    
+    Changelog:
+            * stdlib/getentropy.c (getentropy): Change return type to int.
+    (cherry picked from commit 2b34e2716f1e84b2c3457ffc868c3dc775b55845)
+
+diff --git a/ChangeLog b/ChangeLog
+index 3478699b10..4357ad1eb8 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,5 +1,9 @@
+ 2017-08-03  Aurelien Jarno  <aurelien@aurel32.net>
+ 
++	* stdlib/getentropy.c (getentropy): Change return type to int.
++
++2017-08-03  Aurelien Jarno  <aurelien@aurel32.net>
++
+ 	* sysdeps/i386/i686/fpu/multiarch/libm-test-ulps: Regenerated.
+ 
+ 2017-08-03  Florian Weimer  <fweimer@redhat.com>
+diff --git a/stdlib/getentropy.c b/stdlib/getentropy.c
+index a71d4cd8f5..a88bbf8de3 100644
+--- a/stdlib/getentropy.c
++++ b/stdlib/getentropy.c
+@@ -21,7 +21,7 @@
+ 
+ /* Write LENGTH bytes of randomness starting at BUFFER.  Return 0 on
+    success and -1 on failure.  */
+-ssize_t
++int
+ getentropy (void *buffer, size_t length)
+ {
+   __set_errno (ENOSYS);
+
+commit 799859f6635d68487ea2472bd79d96a7639a1ab1
+Author: H.J. Lu <hjl.tools@gmail.com>
+Date:   Sun Aug 6 10:44:30 2017 -0700
+
+    x86-64: Use _dl_runtime_resolve_opt only with AVX512F [BZ #21871]
+    
+    On AVX machines with XGETBV (ECX == 1) like Skylake processors,
+    
+    (gdb) disass _dl_runtime_resolve_avx_opt
+    Dump of assembler code for function _dl_runtime_resolve_avx_opt:
+       0x0000000000015890 <+0>:     push   %rax
+       0x0000000000015891 <+1>:     push   %rcx
+       0x0000000000015892 <+2>:     push   %rdx
+       0x0000000000015893 <+3>:     mov    $0x1,%ecx
+       0x0000000000015898 <+8>:     xgetbv
+       0x000000000001589b <+11>:    mov    %eax,%r11d
+       0x000000000001589e <+14>:    pop    %rdx
+       0x000000000001589f <+15>:    pop    %rcx
+       0x00000000000158a0 <+16>:    pop    %rax
+       0x00000000000158a1 <+17>:    and    $0x4,%r11d
+       0x00000000000158a5 <+21>:    bnd je 0x16200 <_dl_runtime_resolve_sse_vex>
+    End of assembler dump.
+    
+    is slower than:
+    
+    (gdb) disass _dl_runtime_resolve_avx_slow
+    Dump of assembler code for function _dl_runtime_resolve_avx_slow:
+       0x0000000000015850 <+0>:     vorpd  %ymm0,%ymm1,%ymm8
+       0x0000000000015854 <+4>:     vorpd  %ymm2,%ymm3,%ymm9
+       0x0000000000015858 <+8>:     vorpd  %ymm4,%ymm5,%ymm10
+       0x000000000001585c <+12>:    vorpd  %ymm6,%ymm7,%ymm11
+       0x0000000000015860 <+16>:    vorpd  %ymm8,%ymm9,%ymm9
+       0x0000000000015865 <+21>:    vorpd  %ymm10,%ymm11,%ymm10
+       0x000000000001586a <+26>:    vpcmpeqd %xmm8,%xmm8,%xmm8
+       0x000000000001586f <+31>:    vorpd  %ymm9,%ymm10,%ymm10
+       0x0000000000015874 <+36>:    vptest %ymm10,%ymm8
+       0x0000000000015879 <+41>:    bnd jae 0x158b0 <_dl_runtime_resolve_avx>
+       0x000000000001587c <+44>:    vzeroupper
+       0x000000000001587f <+47>:    bnd jmpq 0x16200 <_dl_runtime_resolve_sse_vex>
+    End of assembler dump.
+    (gdb)
+    
+    since xgetbv takes much more cycles than single cycle operations like
+    vpord/vvpcmpeq/ptest.  _dl_runtime_resolve_opt should be used only with
+    AVX512 where AVX512 instructions lead to lower CPU frequency on Skylake
+    server.
+    
+            [BZ #21871]
+            * sysdeps/x86/cpu-features.c (init_cpu_features): Set
+            bit_arch_Use_dl_runtime_resolve_opt only with AVX512F.
+    
+    (cherry picked from commit d2cf37c0a2a375cf2fde69f1afbcc49e45368fc4)
+
+diff --git a/ChangeLog b/ChangeLog
+index 4357ad1eb8..764c827161 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,3 +1,9 @@
++2017-08-06  H.J. Lu  <hongjiu.lu@intel.com>
++
++	[BZ #21871]
++	* sysdeps/x86/cpu-features.c (init_cpu_features): Set
++	bit_arch_Use_dl_runtime_resolve_opt only with AVX512F.
++
+ 2017-08-03  Aurelien Jarno  <aurelien@aurel32.net>
+ 
+ 	* stdlib/getentropy.c (getentropy): Change return type to int.
+diff --git a/sysdeps/x86/cpu-features.c b/sysdeps/x86/cpu-features.c
+index 1d087ea732..6f900840d4 100644
+--- a/sysdeps/x86/cpu-features.c
++++ b/sysdeps/x86/cpu-features.c
+@@ -244,10 +244,13 @@ init_cpu_features (struct cpu_features *cpu_features)
+ 	  |= bit_arch_Prefer_No_AVX512;
+ 
+       /* To avoid SSE transition penalty, use _dl_runtime_resolve_slow.
+-         If XGETBV suports ECX == 1, use _dl_runtime_resolve_opt.  */
++         If XGETBV suports ECX == 1, use _dl_runtime_resolve_opt.
++	 Use _dl_runtime_resolve_opt only with AVX512F since it is
++	 slower than _dl_runtime_resolve_slow with AVX.  */
+       cpu_features->feature[index_arch_Use_dl_runtime_resolve_slow]
+ 	|= bit_arch_Use_dl_runtime_resolve_slow;
+-      if (cpu_features->max_cpuid >= 0xd)
++      if (CPU_FEATURES_ARCH_P (cpu_features, AVX512F_Usable)
++	  && cpu_features->max_cpuid >= 0xd)
+ 	{
+ 	  unsigned int eax;
+ 
+
+commit 82efa1ffd43bed1494d20a4b86f6b15ac6bb5545
+Author: Adhemerval Zanella <adhemerval.zanella@linaro.org>
+Date:   Mon Jul 17 10:59:59 2017 -0300
+
+    posix: Set p{read,write}v2 to return ENOTSUP (BZ#21780)
+    
+    Different than other architectures hppa-linux-gnu define different values
+    for ENOTSUP and EOPNOTSUPP, where the later is a Linux specific one.
+    This leads to tst-preadwritev{64}v2 tests failures:
+    
+    $ ./testrun.sh misc/tst-preadvwritev2
+    error: tst-preadvwritev2-common.c:35: preadv2 failure did not set errno to ENOTSUP (223)
+    error: 1 test failures
+    
+    The straightforward fix is to return the POSIX defined ENOTSUP on all
+    p{read,write}v{64}v2 implementations instead of Linux specific one.
+    
+    Checked on x86_64-linux-gnu and the tst-preadwritev{64}v2 on
+    hppa-linux-gnu (although due the installed kernel on my testing system
+    the pwritev{64}v2 with an invalid flag still fails due a known kernel
+    issue [1]).
+    
+            [BZ #21780]
+            * sysdeps/posix/preadv2.c (preadv2): Use ENOTSUP instead of
+            EOPNOTSUPP.
+            * sysdeps/posix/preadv64v2.c (preadv64v2): Likewise.
+            * sysdeps/posix/pwritev2.c (pwritev2): Likewise.
+            * sysdeps/posix/pwritev64v2.c (pwritev64v2): Likewise.
+            * sysdeps/unix/sysv/linux/preadv2.c (preadv2): Likewise.
+            * sysdeps/unix/sysv/linux/preadv64v2.c (preadv64v2): Likewise.
+            * sysdeps/unix/sysv/linux/pwritev2.c (pwritev2): Likewise.
+            * sysdeps/unix/sysv/linux/pwritev64v2.c (pwritev64v2): Likewise.
+    
+    [1] https://sourceware.org/ml/libc-alpha/2017-06/msg00726.html
+    
+    Cherry-pick of 852d63120783fae5bf85a067320dc4ba1ed59f11
+
+diff --git a/ChangeLog b/ChangeLog
+index 764c827161..459062cc20 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,3 +1,16 @@
++2017-08-09  Adhemerval Zanella  <adhemerval.zanella@linaro.org>
++
++	[BZ #21780]
++	* sysdeps/posix/preadv2.c (preadv2): Use ENOTSUP instead of
++	EOPNOTSUPP.
++	* sysdeps/posix/preadv64v2.c (preadv64v2): Likewise.
++	* sysdeps/posix/pwritev2.c (pwritev2): Likewise.
++	* sysdeps/posix/pwritev64v2.c (pwritev64v2): Likewise.
++	* sysdeps/unix/sysv/linux/preadv2.c (preadv2): Likewise.
++	* sysdeps/unix/sysv/linux/preadv64v2.c (preadv64v2): Likewise.
++	* sysdeps/unix/sysv/linux/pwritev2.c (pwritev2): Likewise.
++	* sysdeps/unix/sysv/linux/pwritev64v2.c (pwritev64v2): Likewise.
++
+ 2017-08-06  H.J. Lu  <hongjiu.lu@intel.com>
+ 
+ 	[BZ #21871]
+diff --git a/sysdeps/posix/preadv2.c b/sysdeps/posix/preadv2.c
+index 2a7cf11e27..d27f7028ed 100644
+--- a/sysdeps/posix/preadv2.c
++++ b/sysdeps/posix/preadv2.c
+@@ -28,7 +28,7 @@ preadv2 (int fd, const struct iovec *vector, int count, OFF_T offset,
+ {
+   if (flags != 0)
+     {
+-      __set_errno (EOPNOTSUPP);
++      __set_errno (ENOTSUP);
+       return -1;
+     }
+ 
+diff --git a/sysdeps/posix/preadv64v2.c b/sysdeps/posix/preadv64v2.c
+index e084f3f9e1..ce7cb40bf2 100644
+--- a/sysdeps/posix/preadv64v2.c
++++ b/sysdeps/posix/preadv64v2.c
+@@ -25,7 +25,7 @@ preadv64v2 (int fd, const struct iovec *vector, int count, OFF_T offset,
+ {
+   if (flags != 0)
+     {
+-      __set_errno (EOPNOTSUPP);
++      __set_errno (ENOTSUP);
+       return -1;
+     }
+ 
+diff --git a/sysdeps/posix/pwritev2.c b/sysdeps/posix/pwritev2.c
+index 5b7650c4fc..7ec8cbc407 100644
+--- a/sysdeps/posix/pwritev2.c
++++ b/sysdeps/posix/pwritev2.c
+@@ -28,7 +28,7 @@ pwritev2 (int fd, const struct iovec *vector, int count, OFF_T offset,
+ {
+   if (flags != 0)
+     {
+-      __set_errno (EOPNOTSUPP);
++      __set_errno (ENOTSUP);
+       return -1;
+     }
+ 
+diff --git a/sysdeps/posix/pwritev64v2.c b/sysdeps/posix/pwritev64v2.c
+index 0f2f9ef863..be98aeed9d 100644
+--- a/sysdeps/posix/pwritev64v2.c
++++ b/sysdeps/posix/pwritev64v2.c
+@@ -26,7 +26,7 @@ pwritev64v2 (int fd, const struct iovec *vector, int count, OFF_T offset,
+ {
+   if (flags != 0)
+     {
+-      __set_errno (EOPNOTSUPP);
++      __set_errno (ENOTSUP);
+       return -1;
+     }
+ 
+diff --git a/sysdeps/unix/sysv/linux/preadv2.c b/sysdeps/unix/sysv/linux/preadv2.c
+index 11fe85eaa8..137e2dd791 100644
+--- a/sysdeps/unix/sysv/linux/preadv2.c
++++ b/sysdeps/unix/sysv/linux/preadv2.c
+@@ -32,7 +32,7 @@ preadv2 (int fd, const struct iovec *vector, int count, off_t offset,
+ # ifdef __NR_preadv2
+   ssize_t result = SYSCALL_CANCEL (preadv2, fd, vector, count,
+ 				   LO_HI_LONG (offset), flags);
+-  if (result >= 0 || errno != ENOSYS)
++  if (result >= 0)
+     return result;
+ # endif
+   /* Trying to emulate the preadv2 syscall flags is troublesome:
+@@ -46,7 +46,7 @@ preadv2 (int fd, const struct iovec *vector, int count, off_t offset,
+ 
+   if (flags != 0)
+     {
+-      __set_errno (EOPNOTSUPP);
++      __set_errno (ENOTSUP);
+       return -1;
+     }
+   return preadv (fd, vector, count, offset);
+diff --git a/sysdeps/unix/sysv/linux/preadv64v2.c b/sysdeps/unix/sysv/linux/preadv64v2.c
+index 9d7f8c9893..8f413253f4 100644
+--- a/sysdeps/unix/sysv/linux/preadv64v2.c
++++ b/sysdeps/unix/sysv/linux/preadv64v2.c
+@@ -30,7 +30,7 @@ preadv64v2 (int fd, const struct iovec *vector, int count, off64_t offset,
+ #ifdef __NR_preadv64v2
+   ssize_t result = SYSCALL_CANCEL (preadv64v2, fd, vector, count,
+ 				   LO_HI_LONG (offset), flags);
+-  if (result >= 0 || errno != ENOSYS)
++  if (result >= 0)
+     return result;
+ #endif
+   /* Trying to emulate the preadv2 syscall flags is troublesome:
+@@ -44,7 +44,7 @@ preadv64v2 (int fd, const struct iovec *vector, int count, off64_t offset,
+ 
+   if (flags != 0)
+     {
+-      __set_errno (EOPNOTSUPP);
++      __set_errno (ENOTSUP);
+       return -1;
+     }
+   return preadv64 (fd, vector, count, offset);
+diff --git a/sysdeps/unix/sysv/linux/pwritev2.c b/sysdeps/unix/sysv/linux/pwritev2.c
+index 72f0471f96..8e5032fe2f 100644
+--- a/sysdeps/unix/sysv/linux/pwritev2.c
++++ b/sysdeps/unix/sysv/linux/pwritev2.c
+@@ -28,7 +28,7 @@ pwritev2 (int fd, const struct iovec *vector, int count, off_t offset,
+ # ifdef __NR_pwritev2
+   ssize_t result = SYSCALL_CANCEL (pwritev2, fd, vector, count,
+ 				   LO_HI_LONG (offset), flags);
+-  if (result >= 0 || errno != ENOSYS)
++  if (result >= 0)
+     return result;
+ # endif
+   /* Trying to emulate the pwritev2 syscall flags is troublesome:
+@@ -42,7 +42,7 @@ pwritev2 (int fd, const struct iovec *vector, int count, off_t offset,
+ 
+   if (flags != 0)
+     {
+-      __set_errno (EOPNOTSUPP);
++      __set_errno (ENOTSUP);
+       return -1;
+     }
+   return pwritev (fd, vector, count, offset);
+diff --git a/sysdeps/unix/sysv/linux/pwritev64v2.c b/sysdeps/unix/sysv/linux/pwritev64v2.c
+index def9a0bc57..d2800c6657 100644
+--- a/sysdeps/unix/sysv/linux/pwritev64v2.c
++++ b/sysdeps/unix/sysv/linux/pwritev64v2.c
+@@ -30,7 +30,7 @@ pwritev64v2 (int fd, const struct iovec *vector, int count, off64_t offset,
+ #ifdef __NR_pwritev64v2
+   ssize_t result = SYSCALL_CANCEL (pwritev64v2, fd, vector, count,
+ 				   LO_HI_LONG (offset), flags);
+-  if (result >= 0 || errno != ENOSYS)
++  if (result >= 0)
+     return result;
+ #endif
+   /* Trying to emulate the pwritev2 syscall flags is troublesome:
+@@ -44,7 +44,7 @@ pwritev64v2 (int fd, const struct iovec *vector, int count, off64_t offset,
+ 
+   if (flags != 0)
+     {
+-      __set_errno (EOPNOTSUPP);
++      __set_errno (ENOTSUP);
+       return -1;
+     }
+   return pwritev64 (fd, vector, count, offset);
+
+commit 302434688d925134065498b4a5574f6ee6bfb9fd
+Author: Florian Weimer <fweimer@redhat.com>
+Date:   Thu Aug 10 09:10:36 2017 +0200
+
+    nss: Call __resolv_context_put before early return in get*_r [BZ #21932]
+    
+    This corrects an oversight introduced in commit
+    352f4ff9a268b81ef5d4b2413f582565806e4790 (resolv: Introduce struct
+    resolv_context).
+    
+    (cherry picked from commit 3016149819268b14660f791b971910ccc2cc13e5)
+
+diff --git a/ChangeLog b/ChangeLog
+index 459062cc20..3127648626 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,3 +1,9 @@
++2017-08-09  Florian Weimer  <fweimer@redhat.com>
++
++	[BZ #21932]
++	* nss/getXXbyYY_r.c (REENTRANT_NAME): Call __resolv_context_put
++	before early return.
++
+ 2017-08-09  Adhemerval Zanella  <adhemerval.zanella@linaro.org>
+ 
+ 	[BZ #21780]
+diff --git a/NEWS b/NEWS
+index 9a64579658..ec6cf34122 100644
+--- a/NEWS
++++ b/NEWS
+@@ -10,6 +10,7 @@ Version 2.26.1
+ The following bugs are resolved with this release:
+ 
+   [21885] getaddrinfo: Release resolver context on error in gethosts
++  [21932] Unpaired __resolv_context_get in generic get*_r implementation
+ 
+ Version 2.26
+ 
+diff --git a/nss/getXXbyYY_r.c b/nss/getXXbyYY_r.c
+index 6c547ea1ca..bce80e05dd 100644
+--- a/nss/getXXbyYY_r.c
++++ b/nss/getXXbyYY_r.c
+@@ -234,6 +234,9 @@ INTERNAL (REENTRANT_NAME) (ADD_PARAMS, LOOKUP_TYPE *resbuf, char *buffer,
+ 				      H_ERRNO_VAR_P))
+     {
+     case -1:
++# ifdef NEED__RES
++      __resolv_context_put (res_ctx);
++# endif
+       return errno;
+     case 1:
+ #ifdef NEED_H_ERRNO
+@@ -253,7 +256,12 @@ INTERNAL (REENTRANT_NAME) (ADD_PARAMS, LOOKUP_TYPE *resbuf, char *buffer,
+       nscd_status = NSCD_NAME (ADD_VARIABLES, resbuf, buffer, buflen, result
+ 			       H_ERRNO_VAR);
+       if (nscd_status >= 0)
+-	return nscd_status;
++	{
++# ifdef NEED__RES
++	  __resolv_context_put (res_ctx);
++# endif
++	  return nscd_status;
++	}
+     }
+ #endif
+ 
+
+commit c55ad6452e2d63ebf6fcaabb00bfd27aae02ffb6
+Author: Florian Weimer <fweimer@redhat.com>
+Date:   Thu Aug 10 15:58:28 2017 +0200
+
+    malloc: Avoid optimizer warning with GCC 7 and -O3
+    
+    (cherry picked from commit eac43cbb8d808a40004aa0a4a286f5c5155beccb)
+
+diff --git a/ChangeLog b/ChangeLog
+index 3127648626..5ea9b8baa7 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,3 +1,8 @@
++2017-08-10  Florian Weimer  <fweimer@redhat.com>
++
++	* malloc/malloc.c (get_max_fast): Reimplement as an inline
++	function which calls __builtin_unreachable.
++
+ 2017-08-09  Florian Weimer  <fweimer@redhat.com>
+ 
+ 	[BZ #21932]
+diff --git a/malloc/malloc.c b/malloc/malloc.c
+index 54e406bcb6..e3ff778113 100644
+--- a/malloc/malloc.c
++++ b/malloc/malloc.c
+@@ -1658,6 +1658,9 @@ typedef struct malloc_chunk *mfastbinptr;
+ #define arena_is_corrupt(A)	(((A)->flags & ARENA_CORRUPTION_BIT))
+ #define set_arena_corrupt(A)	((A)->flags |= ARENA_CORRUPTION_BIT)
+ 
++/* Maximum size of memory handled in fastbins.  */
++static INTERNAL_SIZE_T global_max_fast;
++
+ /*
+    Set value of max_fast.
+    Use impossibly small value if 0.
+@@ -1668,8 +1671,20 @@ typedef struct malloc_chunk *mfastbinptr;
+ #define set_max_fast(s) \
+   global_max_fast = (((s) == 0)						      \
+                      ? SMALLBIN_WIDTH : ((s + SIZE_SZ) & ~MALLOC_ALIGN_MASK))
+-#define get_max_fast() global_max_fast
+ 
++static inline INTERNAL_SIZE_T
++get_max_fast (void)
++{
++  /* Tell the GCC optimizers that global_max_fast is never larger
++     than MAX_FAST_SIZE.  This avoids out-of-bounds array accesses in
++     _int_malloc after constant propagation of the size parameter.
++     (The code never executes because malloc preserves the
++     global_max_fast invariant, but the optimizers may not recognize
++     this.)  */
++  if (global_max_fast > MAX_FAST_SIZE)
++    __builtin_unreachable ();
++  return global_max_fast;
++}
+ 
+ /*
+    ----------- Internal state representation and initialization -----------
+@@ -1797,9 +1812,6 @@ static struct malloc_par mp_ =
+ #endif
+ };
+ 
+-/* Maximum size of memory handled in fastbins.  */
+-static INTERNAL_SIZE_T global_max_fast;
+-
+ /*
+    Initialize a malloc_state struct.
+ 
+
+commit 2aa1a7a8f8b9b7879bc6eb1c34d1580f992c406d
+Author: Florian Weimer <fweimer@redhat.com>
+Date:   Fri Aug 11 15:48:14 2017 +0200
+
+    assert: Suppress pedantic warning caused by statement expression [BZ #21242]
+    
+    (cherry picked from commit 8b2c63e4e2ad1fd161f80004ed30624f2a37b57b)
+
+diff --git a/ChangeLog b/ChangeLog
+index 5ea9b8baa7..0057c0902a 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,3 +1,10 @@
++2017-08-11  Florian Weimer  <fweimer@redhat.com>
++
++	[BZ #21242]
++	* assert/assert.h [__GNUC__ && !__STRICT_ANSI__] (assert):
++	Suppress pedantic warning resulting from statement expression.
++	(__ASSERT_FUNCTION): Add missing __extension__.
++
+ 2017-08-10  Florian Weimer  <fweimer@redhat.com>
+ 
+ 	* malloc/malloc.c (get_max_fast): Reimplement as an inline
+diff --git a/NEWS b/NEWS
+index ec6cf34122..d57c4052cf 100644
+--- a/NEWS
++++ b/NEWS
+@@ -9,6 +9,7 @@ Version 2.26.1
+ 
+ The following bugs are resolved with this release:
+ 
++  [21242] assert: Suppress pedantic warning caused by statement expression
+   [21885] getaddrinfo: Release resolver context on error in gethosts
+   [21932] Unpaired __resolv_context_get in generic get*_r implementation
+ 
+diff --git a/assert/assert.h b/assert/assert.h
+index 22f019537c..6801cfeb10 100644
+--- a/assert/assert.h
++++ b/assert/assert.h
+@@ -91,13 +91,19 @@ __END_DECLS
+      ? __ASSERT_VOID_CAST (0)						\
+      : __assert_fail (#expr, __FILE__, __LINE__, __ASSERT_FUNCTION))
+ # else
++/* The first occurrence of EXPR is not evaluated due to the sizeof,
++   but will trigger any pedantic warnings masked by the __extension__
++   for the second occurrence.  The explicit comparison against zero is
++   required to support function pointers and bit fields in this
++   context, and to suppress the evaluation of variable length
++   arrays.  */
+ #  define assert(expr)							\
+-    ({									\
++  ((void) sizeof ((expr) == 0), __extension__ ({			\
+       if (expr)								\
+         ; /* empty */							\
+       else								\
+         __assert_fail (#expr, __FILE__, __LINE__, __ASSERT_FUNCTION);	\
+-    })
++    }))
+ # endif
+ 
+ # ifdef	__USE_GNU
+@@ -113,7 +119,7 @@ __END_DECLS
+    C9x has a similar variable called __func__, but prefer the GCC one since
+    it demangles C++ function names.  */
+ # if defined __cplusplus ? __GNUC_PREREQ (2, 6) : __GNUC_PREREQ (2, 4)
+-#   define __ASSERT_FUNCTION	__PRETTY_FUNCTION__
++#   define __ASSERT_FUNCTION	__extension__ __PRETTY_FUNCTION__
+ # else
+ #  if defined __STDC_VERSION__ && __STDC_VERSION__ >= 199901L
+ #   define __ASSERT_FUNCTION	__func__
+
+commit 645b7635ba8fd58062245419e8bb668ab90cd3ec
+Author: Gabriel F. T. Gomes <gftg@linux.vnet.ibm.com>
+Date:   Mon Aug 7 09:14:14 2017 -0300
+
+    powerpc: Restrict xssqrtqp operands to Vector Registers (bug 21941)
+    
+    POWER ISA 3.0 introduces the xssqrtqp instructions, which expects
+    operands to be in Vector Registers (Altivec/VMX), even though this
+    instruction belongs to the Vector-Scalar Instruction Set.
+    
+    In GCC's Extended Assembly for POWER, the 'wq' register constraint is
+    provided for use with IEEE 754 128-bit floating-point values.  However,
+    this constraint does not limit the register allocation to Vector
+    Registers (Altivec/VMX) and could assign a Vector-Scalar Register (VSX)
+    to the operands of the instruction.
+    
+    This patch changes the register constraint used in sqrtf128 from 'wq' to
+    'v', in order to request a Vector Register (Altivec/VMX) for use with
+    the xssqrtqp instruction.
+    
+    Tested for powerpc64le and --with-cpu=power9.
+    
+            [BZ #21941]
+            * sysdeps/powerpc/fpu/math_private.h (__ieee754_sqrtf128): Since
+            xssqrtqp requires operands to be in Vector Registers
+            (Altivec/VMX), replace the register constraint 'wq' with 'v'.
+            * sysdeps/powerpc/powerpc64le/power9/fpu/e_sqrtf128.c
+            (__ieee754_sqrtf128): Likewise.
+    
+    (cherry picked from commit 4d98ace9de3183309cb394cd0110eda5ad2d2531)
+
+diff --git a/ChangeLog b/ChangeLog
+index 0057c0902a..6886cd9361 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,3 +1,12 @@
++2017-08-10  Gabriel F. T. Gomes  <gftg@linux.vnet.ibm.com>
++
++	[BZ #21941]
++	* sysdeps/powerpc/fpu/math_private.h (__ieee754_sqrtf128): Since
++	xssqrtqp requires operands to be in Vector Registers
++	(Altivec/VMX), replace the register constraint 'wq' with 'v'.
++	* sysdeps/powerpc/powerpc64le/power9/fpu/e_sqrtf128.c
++	(__ieee754_sqrtf128): Likewise.
++
+ 2017-08-11  Florian Weimer  <fweimer@redhat.com>
+ 
+ 	[BZ #21242]
+diff --git a/sysdeps/powerpc/fpu/math_private.h b/sysdeps/powerpc/fpu/math_private.h
+index d8fd4923ac..396fd0562e 100644
+--- a/sysdeps/powerpc/fpu/math_private.h
++++ b/sysdeps/powerpc/fpu/math_private.h
+@@ -30,7 +30,7 @@ extern __always_inline _Float128
+ __ieee754_sqrtf128 (_Float128 __x)
+ {
+   _Float128 __z;
+-  asm ("xssqrtqp %0,%1" : "=wq" (__z) : "wq" (__x));
++  asm ("xssqrtqp %0,%1" : "=v" (__z) : "v" (__x));
+   return __z;
+ }
+ #endif
+diff --git a/sysdeps/powerpc/powerpc64le/power9/fpu/e_sqrtf128.c b/sysdeps/powerpc/powerpc64le/power9/fpu/e_sqrtf128.c
+index 769d3f8922..59fd8269f5 100644
+--- a/sysdeps/powerpc/powerpc64le/power9/fpu/e_sqrtf128.c
++++ b/sysdeps/powerpc/powerpc64le/power9/fpu/e_sqrtf128.c
+@@ -30,7 +30,7 @@ __float128
+ __ieee754_sqrtf128 (__float128 a)
+ {
+   __float128 z;
+-  asm ("xssqrtqp %0,%1" : "=wq" (z) : "wq" (a));
++  asm ("xssqrtqp %0,%1" : "=v" (z) : "v" (a));
+   return z;
+ }
+ strong_alias (__ieee754_sqrtf128, __sqrtf128_finite)
+
+commit c2921b17a37e887b8a5ca9d84b875b9ba702b79c
+Author: Gabriel F. T. Gomes <gftg@linux.vnet.ibm.com>
+Date:   Mon Aug 21 14:23:27 2017 +0200
+
+    Do not use __builtin_types_compatible_p in C++ mode (bug 21930)
+    
+    The logic to define isinf for float128 depends on the availability of
+    __builtin_types_compatible_p, which is only available in C mode,
+    however, the conditionals do not check for C or C++ mode.  This lead to
+    an error in libstdc++ configure, as reported by bug 21930.
+    
+    This patch adds a conditional for C mode in the definition of isinf for
+    float128.  No definition is provided in C++ mode, since libstdc++
+    headers undefine isinf.
+    
+    Tested for powerpc64le (glibc test suite and libstdc++-v3 configure).
+    
+            [BZ #21930]
+            * math/math.h (isinf): Check if in C or C++ mode before using
+            __builtin_types_compatible_p, since this is a C mode feature.
+    
+    (cherry picked from commit 47a67213a9f51c5f8816d240500b10db605d8b77)
+
+diff --git a/ChangeLog b/ChangeLog
+index 6886cd9361..415fa3cc79 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,3 +1,9 @@
++2017-08-18  Gabriel F. T. Gomes  <gftg@linux.vnet.ibm.com>
++
++	[BZ #21930]
++	* math/math.h (isinf): Check if in C or C++ mode before using
++	__builtin_types_compatible_p, since this is a C mode feature.
++
+ 2017-08-10  Gabriel F. T. Gomes  <gftg@linux.vnet.ibm.com>
+ 
+ 	[BZ #21941]
+diff --git a/NEWS b/NEWS
+index d57c4052cf..75b82c899e 100644
+--- a/NEWS
++++ b/NEWS
+@@ -11,6 +11,7 @@ The following bugs are resolved with this release:
+ 
+   [21242] assert: Suppress pedantic warning caused by statement expression
+   [21885] getaddrinfo: Release resolver context on error in gethosts
++  [21930] Do not use __builtin_types_compatible_p in C++ mode
+   [21932] Unpaired __resolv_context_get in generic get*_r implementation
+ 
+ Version 2.26
+diff --git a/math/math.h b/math/math.h
+index e21708045a..dea8dbe1ae 100644
+--- a/math/math.h
++++ b/math/math.h
+@@ -442,8 +442,12 @@ enum
+ 
+ /* Return nonzero value if X is positive or negative infinity.  */
+ # if __HAVE_DISTINCT_FLOAT128 && !__GNUC_PREREQ (7,0) \
+-     && !defined __SUPPORT_SNAN__
+-   /* __builtin_isinf_sign is broken for float128 only before GCC 7.0.  */
++     && !defined __SUPPORT_SNAN__ && !defined __cplusplus
++   /* Since __builtin_isinf_sign is broken for float128 before GCC 7.0,
++      use the helper function, __isinff128, with older compilers.  This is
++      only provided for C mode, because in C++ mode, GCC has no support
++      for __builtin_types_compatible_p (and when in C++ mode, this macro is
++      not used anyway, because libstdc++ headers undefine it).  */
+ #  define isinf(x) \
+     (__builtin_types_compatible_p (__typeof (x), _Float128) \
+      ? __isinff128 (x) : __builtin_isinf_sign (x))
+
+commit 5e989c36934d0f0cf13b7a53ef2fa440bce39210
+Author: Gabriel F. T. Gomes <gftg@linux.vnet.ibm.com>
+Date:   Mon Aug 14 17:51:51 2017 -0300
+
+    Do not use generic selection in C++ mode
+    
+    The logic to protect the use of generic selection (_Generic) does not
+    check for C or C++ mode, however, generic selection is a C-only
+    feature.
+    
+    Tested for powerpc64le.
+    
+            * misc/sys/cdefs.h (__HAVE_GENERIC_SELECTION): Define to 0, if
+            in C++ mode.
+    
+    (cherry picked from commit 6913ad65e00bb32417ad39c41d292b976171e27e)
+
+diff --git a/ChangeLog b/ChangeLog
+index 415fa3cc79..23c00aed09 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,5 +1,10 @@
+ 2017-08-18  Gabriel F. T. Gomes  <gftg@linux.vnet.ibm.com>
+ 
++	* misc/sys/cdefs.h (__HAVE_GENERIC_SELECTION): Define to 0, if
++	in C++ mode.
++
++2017-08-18  Gabriel F. T. Gomes  <gftg@linux.vnet.ibm.com>
++
+ 	[BZ #21930]
+ 	* math/math.h (isinf): Check if in C or C++ mode before using
+ 	__builtin_types_compatible_p, since this is a C mode feature.
+diff --git a/misc/sys/cdefs.h b/misc/sys/cdefs.h
+index 06523bfe9c..0c808216a4 100644
+--- a/misc/sys/cdefs.h
++++ b/misc/sys/cdefs.h
+@@ -464,17 +464,18 @@
+ # define __glibc_macro_warning(msg)
+ #endif
+ 
+-/* Support for generic selection (ISO C11) is available in GCC since
+-   version 4.9.  Previous versions do not provide generic selection,
+-   even though they might set __STDC_VERSION__ to 201112L, when in
+-   -std=c11 mode.  Thus, we must check for !defined __GNUC__ when
+-   testing __STDC_VERSION__ for generic selection support.
++/* Generic selection (ISO C11) is a C-only feature, available in GCC
++   since version 4.9.  Previous versions do not provide generic
++   selection, even though they might set __STDC_VERSION__ to 201112L,
++   when in -std=c11 mode.  Thus, we must check for !defined __GNUC__
++   when testing __STDC_VERSION__ for generic selection support.
+    On the other hand, Clang also defines __GNUC__, so a clang-specific
+    check is required to enable the use of generic selection.  */
+-#if __GNUC_PREREQ (4, 9) \
+-    || __glibc_clang_has_extension (c_generic_selections) \
+-    || (!defined __GNUC__ && defined __STDC_VERSION__ \
+-	&& __STDC_VERSION__ >= 201112L)
++#if !defined __cplusplus \
++    && (__GNUC_PREREQ (4, 9) \
++	|| __glibc_clang_has_extension (c_generic_selections) \
++	|| (!defined __GNUC__ && defined __STDC_VERSION__ \
++	    && __STDC_VERSION__ >= 201112L))
+ # define __HAVE_GENERIC_SELECTION 1
+ #else
+ # define __HAVE_GENERIC_SELECTION 0
+
+commit fb9a781e9d62c5d7a1f4196915cdfb7c6db59a0c
+Author: Florian Weimer <fweimer@redhat.com>
+Date:   Mon Aug 21 16:13:49 2017 +0200
+
+    assert: Support types without operator== (int) [BZ #21972]
+    
+    (cherry picked from commit b5889d25e9bf944a89fdd7bcabf3b6c6f6bb6f7c)
+
+diff --git a/ChangeLog b/ChangeLog
+index 23c00aed09..8bc3ad9a46 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,3 +1,14 @@
++2017-08-21  Florian Weimer  <fweimer@redhat.com>
++
++	[BZ #21972]
++	* assert/assert.h (assert): Use static_cast (bool) for C++.
++	Use the ternary operator in the warning branch for GNU C.
++	* assert/Makefile (tests): Add tst-assert-c++, tst-assert-g++.
++	(CFLAGS-tst-assert-c++.o): Compile in C++11 mode.
++	(CFLAGS-tst-assert-g++.o): Compile in GnU C++11 mode.
++	(LDLIBS-tst-assert-c++, LDLIBS-tst-assert-g++): Link with libstdc++.
++	* assert/tst-assert-c++.cc, assert/tst-assert-g++.cc: New files.
++
+ 2017-08-18  Gabriel F. T. Gomes  <gftg@linux.vnet.ibm.com>
+ 
+ 	* misc/sys/cdefs.h (__HAVE_GENERIC_SELECTION): Define to 0, if
+diff --git a/NEWS b/NEWS
+index 75b82c899e..1996e5fbef 100644
+--- a/NEWS
++++ b/NEWS
+@@ -13,6 +13,7 @@ The following bugs are resolved with this release:
+   [21885] getaddrinfo: Release resolver context on error in gethosts
+   [21930] Do not use __builtin_types_compatible_p in C++ mode
+   [21932] Unpaired __resolv_context_get in generic get*_r implementation
++  [21972] assert macro requires operator== (int) for its argument type
+ 
+ Version 2.26
+ 
+diff --git a/assert/Makefile b/assert/Makefile
+index 1c3be9b01f..9ec1be81a9 100644
+--- a/assert/Makefile
++++ b/assert/Makefile
+@@ -25,6 +25,15 @@ include ../Makeconfig
+ headers	:= assert.h
+ 
+ routines := assert assert-perr __assert
+-tests := test-assert test-assert-perr
++tests := test-assert test-assert-perr tst-assert-c++ tst-assert-g++
+ 
+ include ../Rules
++
++ifeq ($(have-cxx-thread_local),yes)
++CFLAGS-tst-assert-c++.o = -std=c++11
++LDLIBS-tst-assert-c++ = -lstdc++
++CFLAGS-tst-assert-g++.o = -std=gnu++11
++LDLIBS-tst-assert-g++ = -lstdc++
++else
++tests-unsupported += tst-assert-c++ tst-assert-g++
++endif
+diff --git a/assert/assert.h b/assert/assert.h
+index 6801cfeb10..640c95c063 100644
+--- a/assert/assert.h
++++ b/assert/assert.h
+@@ -85,7 +85,12 @@ __END_DECLS
+ /* When possible, define assert so that it does not add extra
+    parentheses around EXPR.  Otherwise, those added parentheses would
+    suppress warnings we'd expect to be detected by gcc's -Wparentheses.  */
+-# if !defined __GNUC__ || defined __STRICT_ANSI__
++# if defined __cplusplus
++#  define assert(expr)							\
++     (static_cast <bool> (expr)						\
++      ? void (0)							\
++      : __assert_fail (#expr, __FILE__, __LINE__, __ASSERT_FUNCTION))
++# elif !defined __GNUC__ || defined __STRICT_ANSI__
+ #  define assert(expr)							\
+     ((expr)								\
+      ? __ASSERT_VOID_CAST (0)						\
+@@ -93,12 +98,11 @@ __END_DECLS
+ # else
+ /* The first occurrence of EXPR is not evaluated due to the sizeof,
+    but will trigger any pedantic warnings masked by the __extension__
+-   for the second occurrence.  The explicit comparison against zero is
+-   required to support function pointers and bit fields in this
+-   context, and to suppress the evaluation of variable length
+-   arrays.  */
++   for the second occurrence.  The ternary operator is required to
++   support function pointers and bit fields in this context, and to
++   suppress the evaluation of variable length arrays.  */
+ #  define assert(expr)							\
+-  ((void) sizeof ((expr) == 0), __extension__ ({			\
++  ((void) sizeof ((expr) ? 1 : 0), __extension__ ({			\
+       if (expr)								\
+         ; /* empty */							\
+       else								\
+diff --git a/assert/tst-assert-c++.cc b/assert/tst-assert-c++.cc
+new file mode 100644
+index 0000000000..12a5e690cb
+--- /dev/null
++++ b/assert/tst-assert-c++.cc
+@@ -0,0 +1,78 @@
++/* Tests for interactions between C++ and assert.
++   Copyright (C) 2017 Free Software Foundation, Inc.
++   This file is part of the GNU C Library.
++
++   The GNU C Library is free software; you can redistribute it and/or
++   modify it under the terms of the GNU Lesser General Public
++   License as published by the Free Software Foundation; either
++   version 2.1 of the License, or (at your option) any later version.
++
++   The GNU C Library is distributed in the hope that it will be useful,
++   but WITHOUT ANY WARRANTY; without even the implied warranty of
++   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++   Lesser General Public License for more details.
++
++   You should have received a copy of the GNU Lesser General Public
++   License along with the GNU C Library; if not, see
++   <http://www.gnu.org/licenses/>.  */
++
++#include <assert.h>
++
++/* The C++ standard requires that if the assert argument is a constant
++   subexpression, then the assert itself is one, too.  */
++constexpr int
++check_constexpr ()
++{
++  return (assert (true), 1);
++}
++
++/* Objects of this class can be contextually converted to bool, but
++   cannot be compared to int.  */
++struct no_int
++{
++  no_int () = default;
++  no_int (const no_int &) = delete;
++
++  explicit operator bool () const
++  {
++    return true;
++  }
++
++  bool operator! () const; /* No definition.  */
++  template <class T> bool operator== (T) const; /* No definition.  */
++  template <class T> bool operator!= (T) const; /* No definition.  */
++};
++
++/* This class tests that operator== is not used by assert.  */
++struct bool_and_int
++{
++  bool_and_int () = default;
++  bool_and_int (const no_int &) = delete;
++
++  explicit operator bool () const
++  {
++    return true;
++  }
++
++  bool operator! () const; /* No definition.  */
++  template <class T> bool operator== (T) const; /* No definition.  */
++  template <class T> bool operator!= (T) const; /* No definition.  */
++};
++
++static int
++do_test ()
++{
++  {
++    no_int value;
++    assert (value);
++  }
++
++  {
++    bool_and_int value;
++    assert (value);
++  }
++
++  return 0;
++}
++
++#include <support/test-driver.c>
+diff --git a/assert/tst-assert-g++.cc b/assert/tst-assert-g++.cc
+new file mode 100644
+index 0000000000..8c06402825
+--- /dev/null
++++ b/assert/tst-assert-g++.cc
+@@ -0,0 +1,19 @@
++/* Tests for interactions between C++ and assert.  GNU C++11 version.
++   Copyright (C) 2017 Free Software Foundation, Inc.
++   This file is part of the GNU C Library.
++
++   The GNU C Library is free software; you can redistribute it and/or
++   modify it under the terms of the GNU Lesser General Public
++   License as published by the Free Software Foundation; either
++   version 2.1 of the License, or (at your option) any later version.
++
++   The GNU C Library is distributed in the hope that it will be useful,
++   but WITHOUT ANY WARRANTY; without even the implied warranty of
++   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++   Lesser General Public License for more details.
++
++   You should have received a copy of the GNU Lesser General Public
++   License along with the GNU C Library; if not, see
++   <http://www.gnu.org/licenses/>.  */
++
++#include <tst-assert-c++.cc>
+
+commit 3aeab55ee17ca527e4597bc8397c0434c3f8b34e
+Author: Gabriel F. T. Gomes <gftg@linux.vnet.ibm.com>
+Date:   Mon Aug 21 15:45:57 2017 -0300
+
+    Add missing bug fixes to NEWS
+
+diff --git a/NEWS b/NEWS
+index 1996e5fbef..0534c5296e 100644
+--- a/NEWS
++++ b/NEWS
+@@ -10,9 +10,12 @@ Version 2.26.1
+ The following bugs are resolved with this release:
+ 
+   [21242] assert: Suppress pedantic warning caused by statement expression
++  [21780] posix: Set p{read,write}v2 to return ENOTSUP
++  [21871] x86-64: Use _dl_runtime_resolve_opt only with AVX512F
+   [21885] getaddrinfo: Release resolver context on error in gethosts
+   [21930] Do not use __builtin_types_compatible_p in C++ mode
+   [21932] Unpaired __resolv_context_get in generic get*_r implementation
++  [21941] powerpc: Restrict xssqrtqp operands to Vector Registers
+   [21972] assert macro requires operator== (int) for its argument type
+ 
+ Version 2.26
+
+commit 77db8772bd3f6f2bbad697dcf46861ce310f5b95
+Author: Florian Weimer <fweimer@redhat.com>
+Date:   Thu Aug 10 16:06:52 2017 +0200
+
+    __inet6_scopeid_pton: Remove attribute_hidden, internal_function
+    
+    The hidden attribute was overridden by libc_hidden_proto on GNU/Linux.
+    It is incorrect because the function is used from nscd.
+    
+    internal_function is not supposed to be used across DSO boundaries,
+    so this commit removes it (again, due to the use in nscd).
+    
+    (cherry picked from commit f87cc2bfba9b844da48a63441c6099342b1551c7)
+
+diff --git a/ChangeLog b/ChangeLog
+index 8bc3ad9a46..ad05da8ade 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,3 +1,10 @@
++2017-08-10  Florian Weimer  <fweimer@redhat.com>
++
++	* inet/net-internal.h (__inet6_scopeid_pton): Remove
++	attribute_hidden, internal_function.
++	* inet/inet6_scopeid_pton.c (__inet6_scopeid_pton): Remove
++	internal_function.
++
+ 2017-08-21  Florian Weimer  <fweimer@redhat.com>
+ 
+ 	[BZ #21972]
+diff --git a/inet/inet6_scopeid_pton.c b/inet/inet6_scopeid_pton.c
+index e09b1cb34d..cc8803fa10 100644
+--- a/inet/inet6_scopeid_pton.c
++++ b/inet/inet6_scopeid_pton.c
+@@ -28,7 +28,7 @@
+ 
+ /* Parse SOURCE as a scope ID for ADDRESS.  Return 0 on success and -1
+    on error.  */
+-internal_function int
++int
+ __inet6_scopeid_pton (const struct in6_addr *address, const char *scope,
+                       uint32_t *result)
+ {
+diff --git a/inet/net-internal.h b/inet/net-internal.h
+index 2b2632c7ba..b2135893e8 100644
+--- a/inet/net-internal.h
++++ b/inet/net-internal.h
+@@ -25,8 +25,7 @@
+ #include <sys/time.h>
+ 
+ int __inet6_scopeid_pton (const struct in6_addr *address,
+-                          const char *scope, uint32_t *result)
+-  internal_function attribute_hidden;
++                          const char *scope, uint32_t *result);
+ libc_hidden_proto (__inet6_scopeid_pton)
+ 
+ 
+
+commit 6043d77a47de297b62084c1c261cdada082bf09c
+Author: Andreas Schwab <schwab@suse.de>
+Date:   Mon Aug 28 19:49:18 2017 +0200
+
+    ldd: never run file directly
+    
+    (cherry picked from commit eedca9772e99c72ab4c3c34e43cc764250aa3e3c)
+
+diff --git a/ChangeLog b/ChangeLog
+index ad05da8ade..fa27c6f66f 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,3 +1,9 @@
++2017-08-16  Andreas Schwab  <schwab@suse.de>
++
++	[BZ #16750]
++	CVE-2009-5064
++	* elf/ldd.bash.in: Never run file directly.
++
+ 2017-08-10  Florian Weimer  <fweimer@redhat.com>
+ 
+ 	* inet/net-internal.h (__inet6_scopeid_pton): Remove
+diff --git a/NEWS b/NEWS
+index 0534c5296e..756e849643 100644
+--- a/NEWS
++++ b/NEWS
+@@ -7,8 +7,17 @@ using `glibc' in the "product" field.
+ 
+ Version 2.26.1
+ 
++Security related changes:
++
++  CVE-2009-5064: The ldd script would sometimes run the program under
++  examination directly, without preventing code execution through the
++  dynamic linker.  (The glibc project disputes that this is a security
++  vulnerability; only trusted binaries must be examined using the ldd
++  script.)
++
+ The following bugs are resolved with this release:
+ 
++  [16750] ldd: Never run file directly.
+   [21242] assert: Suppress pedantic warning caused by statement expression
+   [21780] posix: Set p{read,write}v2 to return ENOTSUP
+   [21871] x86-64: Use _dl_runtime_resolve_opt only with AVX512F
+diff --git a/elf/ldd.bash.in b/elf/ldd.bash.in
+index 7dd1fccf24..686785e235 100644
+--- a/elf/ldd.bash.in
++++ b/elf/ldd.bash.in
+@@ -164,18 +164,6 @@ warning: you do not have execution permission for" "\`$file'" >&2
+       fi
+     done
+     case $ret in
+-    0)
+-      # If the program exits with exit code 5, it means the process has been
+-      # invoked with __libc_enable_secure.  Fall back to running it through
+-      # the dynamic linker.
+-      try_trace "$file"
+-      rc=$?
+-      if [ $rc = 5 ]; then
+-	try_trace "$RTLD" "$file"
+-	rc=$?
+-      fi
+-      [ $rc = 0 ] || result=1
+-      ;;
+     1)
+       # This can be a non-ELF binary or no binary at all.
+       nonelf "$file" || {
+@@ -183,7 +171,7 @@ warning: you do not have execution permission for" "\`$file'" >&2
+ 	result=1
+       }
+       ;;
+-    2)
++    0|2)
+       try_trace "$RTLD" "$file" || result=1
+       ;;
+     *)
+
+commit ef8566d72af5e03c1b82cf02efb794268a347f8c
+Author: Gabriel F. T. Gomes <gftg@linux.vnet.ibm.com>
+Date:   Mon Aug 14 13:46:15 2017 -0300
+
+    Provide a C++ version of issignaling that does not use __MATH_TG
+    
+    The macro __MATH_TG contains the logic to select between long double and
+    _Float128, when these types are ABI-distinct.  This logic relies on
+    __builtin_types_compatible_p, which is not available in C++ mode.
+    
+    On the other hand, C++ function overloading provides the means to
+    distinguish between the floating-point types.  The overloading
+    resolution will match the correct parameter regardless of type
+    qualifiers, i.e.: const and volatile.
+    
+    Tested for powerpc64le, s390x, and x86_64.
+    
+            * math/math.h [defined __cplusplus] (issignaling): Provide a C++
+            definition for issignaling that does not rely on __MATH_TG,
+            since __MATH_TG uses __builtin_types_compatible_p, which is only
+            available in C mode.
+            (CFLAGS-test-math-issignaling.cc): New variable.
+            * math/Makefile [CXX] (tests): Add test-math-issignaling.
+            * math/test-math-issignaling.cc: New test for C++ implementation
+            of type-generic issignaling.
+            * sysdeps/powerpc/powerpc64le/Makefile [subdir == math]
+            (CXXFLAGS-test-math-issignaling.cc): Add -mfloat128 to the build
+            options of test-math-issignaling on powerpc64le.
+    
+    (cherry picked from commit a16e8bc08edca84d507715c66d6cddbbc7ed3b62)
+
+diff --git a/ChangeLog b/ChangeLog
+index fa27c6f66f..527026ba5d 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,3 +1,17 @@
++2017-08-22  Gabriel F. T. Gomes  <gftg@linux.vnet.ibm.com>
++
++	* math/math.h [defined __cplusplus] (issignaling): Provide a C++
++	definition for issignaling that does not rely on __MATH_TG,
++	since __MATH_TG uses __builtin_types_compatible_p, which is only
++	available in C mode.
++	(CFLAGS-test-math-issignaling.cc): New variable.
++	* math/Makefile [CXX] (tests): Add test-math-issignaling.
++	* math/test-math-issignaling.cc: New test for C++ implementation
++	of type-generic issignaling.
++	* sysdeps/powerpc/powerpc64le/Makefile [subdir == math]
++	(CXXFLAGS-test-math-issignaling.cc): Add -mfloat128 to the build
++	options of test-math-issignaling on powerpc64le.
++
+ 2017-08-16  Andreas Schwab  <schwab@suse.de>
+ 
+ 	[BZ #16750]
+diff --git a/math/Makefile b/math/Makefile
+index e09b0c0545..0130fcf38b 100644
+--- a/math/Makefile
++++ b/math/Makefile
+@@ -203,7 +203,7 @@ tests-static = test-fpucw-static test-fpucw-ieee-static \
+ 	       test-signgam-ullong-static test-signgam-ullong-init-static
+ 
+ ifneq (,$(CXX))
+-tests += test-math-isinff test-math-iszero
++tests += test-math-isinff test-math-iszero test-math-issignaling
+ endif
+ 
+ ifneq (no,$(PERL))
+@@ -350,6 +350,7 @@ CFLAGS-test-signgam-ullong-init-static.c = -std=c99
+ 
+ CFLAGS-test-math-isinff.cc = -std=gnu++11
+ CFLAGS-test-math-iszero.cc = -std=gnu++11
++CFLAGS-test-math-issignaling.cc = -std=gnu++11
+ 
+ CFLAGS-test-iszero-excess-precision.c = -fexcess-precision=standard
+ CFLAGS-test-iseqsig-excess-precision.c = -fexcess-precision=standard
+diff --git a/math/math.h b/math/math.h
+index dea8dbe1ae..add86af724 100644
+--- a/math/math.h
++++ b/math/math.h
+@@ -474,7 +474,24 @@ enum
+ # include <bits/iscanonical.h>
+ 
+ /* Return nonzero value if X is a signaling NaN.  */
+-# define issignaling(x) __MATH_TG ((x), __issignaling, (x))
++# ifndef __cplusplus
++#  define issignaling(x) __MATH_TG ((x), __issignaling, (x))
++# else
++   /* In C++ mode, __MATH_TG cannot be used, because it relies on
++      __builtin_types_compatible_p, which is a C-only builtin.  On the
++      other hand, overloading provides the means to distinguish between
++      the floating-point types.  The overloading resolution will match
++      the correct parameter (regardless of type qualifiers (i.e.: const
++      and volatile).  */
++extern "C++" {
++inline int issignaling (float __val) { return __issignalingf (__val); }
++inline int issignaling (double __val) { return __issignaling (__val); }
++inline int issignaling (long double __val) { return __issignalingl (__val); }
++#  if __HAVE_DISTINCT_FLOAT128
++inline int issignaling (_Float128 __val) { return __issignalingf128 (__val); }
++#  endif
++} /* extern C++ */
++# endif
+ 
+ /* Return nonzero value if X is subnormal.  */
+ # define issubnormal(x) (fpclassify (x) == FP_SUBNORMAL)
+diff --git a/math/test-math-issignaling.cc b/math/test-math-issignaling.cc
+new file mode 100644
+index 0000000000..22ae9e1bca
+--- /dev/null
++++ b/math/test-math-issignaling.cc
+@@ -0,0 +1,113 @@
++/* Test for the C++ implementation of issignaling.
++   Copyright (C) 2017 Free Software Foundation, Inc.
++   This file is part of the GNU C Library.
++
++   The GNU C Library is free software; you can redistribute it and/or
++   modify it under the terms of the GNU Lesser General Public
++   License as published by the Free Software Foundation; either
++   version 2.1 of the License, or (at your option) any later version.
++
++   The GNU C Library is distributed in the hope that it will be useful,
++   but WITHOUT ANY WARRANTY; without even the implied warranty of
++   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++   Lesser General Public License for more details.
++
++   You should have received a copy of the GNU Lesser General Public
++   License along with the GNU C Library; if not, see
++   <http://www.gnu.org/licenses/>.  */
++
++#define _GNU_SOURCE 1
++#include <math.h>
++#include <stdio.h>
++
++#include <limits>
++
++/* There is no signaling_NaN for _Float128 in std::numeric_limits.
++   Include ieee754_float128.h and use the bitfields in the union
++   ieee854_float128.ieee_nan to build a signaling NaN.  */
++#if __HAVE_DISTINCT_FLOAT128
++# include <ieee754_float128.h>
++#endif
++
++static bool errors;
++
++static void
++check (int actual, int expected, const char *actual_expr, int line)
++{
++  if (actual != expected)
++    {
++      errors = true;
++      printf ("%s:%d: error: %s\n", __FILE__, line, actual_expr);
++      printf ("%s:%d:   expected: %d\n", __FILE__, line, expected);
++      printf ("%s:%d:   actual: %d\n", __FILE__, line, actual);
++    }
++}
++
++#define CHECK(actual, expected) \
++  check ((actual), (expected), #actual, __LINE__)
++
++template <class T>
++static void
++check_type ()
++{
++  typedef std::numeric_limits<T> limits;
++  CHECK (issignaling (T{0}), 0);
++  if (limits::has_infinity)
++    {
++      CHECK (issignaling (limits::infinity ()), 0);
++      CHECK (issignaling (-limits::infinity ()), 0);
++    }
++  if (limits::has_quiet_NaN)
++    CHECK (issignaling (limits::quiet_NaN ()), 0);
++  if (limits::has_signaling_NaN)
++    CHECK (issignaling (limits::signaling_NaN ()), 1);
++}
++
++#if __HAVE_DISTINCT_FLOAT128
++static void
++check_float128 ()
++{
++  ieee854_float128 q;
++
++  q.d = 0;
++  CHECK (issignaling (q.d), 0);
++
++  /* Infinity.  */
++  q.ieee.negative = 0;
++  q.ieee.exponent = 0x7FFF;
++  q.ieee.mantissa0 = 0x0000;
++  q.ieee.mantissa1 = 0x00000000;
++  q.ieee.mantissa2 = 0x00000000;
++  q.ieee.mantissa3 = 0x00000000;
++  CHECK (issignaling (q.d), 0);
++
++  /* Quiet NaN.  */
++  q.ieee_nan.quiet_nan = 1;
++  q.ieee_nan.mantissa0 = 0x0000;
++  CHECK (issignaling (q.d), 0);
++
++  /* Still a quiet NaN.  */
++  q.ieee_nan.quiet_nan = 1;
++  q.ieee_nan.mantissa0 = 0x4000;
++  CHECK (issignaling (q.d), 0);
++
++  /* Signaling NaN.  */
++  q.ieee_nan.quiet_nan = 0;
++  q.ieee_nan.mantissa0 = 0x4000;
++  CHECK (issignaling (q.d), 1);
++}
++#endif
++
++static int
++do_test (void)
++{
++  check_type<float> ();
++  check_type<double> ();
++  check_type<long double> ();
++#if __HAVE_DISTINCT_FLOAT128
++  check_float128 ();
++#endif
++  return errors;
++}
++
++#include <support/test-driver.c>
+diff --git a/sysdeps/powerpc/powerpc64le/Makefile b/sysdeps/powerpc/powerpc64le/Makefile
+index 77617b670a..19adbfa1c1 100644
+--- a/sysdeps/powerpc/powerpc64le/Makefile
++++ b/sysdeps/powerpc/powerpc64le/Makefile
+@@ -16,6 +16,7 @@ $(foreach suf,$(all-object-suffixes),%f128_r$(suf)): CFLAGS += -mfloat128
+ $(foreach suf,$(all-object-suffixes),$(objpfx)test-float128%$(suf)): CFLAGS += -mfloat128
+ $(foreach suf,$(all-object-suffixes),$(objpfx)test-ifloat128%$(suf)): CFLAGS += -mfloat128
+ CFLAGS-libm-test-support-float128.c += -mfloat128
++CFLAGS-test-math-issignaling.cc += -mfloat128
+ $(objpfx)test-float128% $(objpfx)test-ifloat128%: \
+   gnulib-tests += $(f128-loader-link)
+ endif
+
+commit 35dded99a89db873b06270ca7f21245a0faf712a
+Author: Gabriel F. T. Gomes <gftg@linux.vnet.ibm.com>
+Date:   Wed Aug 23 10:16:54 2017 -0300
+
+    Fix the C++ version of issignaling when __NO_LONG_DOUBLE_MATH is defined
+    
+    When __NO_LONG_DOUBLE_MATH is defined, __issignalingl is not available,
+    thus issignaling with long double argument should call __issignaling,
+    instead.
+    
+    Tested for powerpc64le.
+    
+            * math/math.h [defined __cplusplus] (issignaling): In the long
+            double case, call __issignalingl only if __NO_LONG_DOUBLE_MATH
+            is not defined.  Call __issignaling, otherwise.
+    
+    (cherry picked from commit 3d7b66f66cb223e899a7ebc0f4c20f13e711c9e0)
+
+diff --git a/ChangeLog b/ChangeLog
+index 527026ba5d..04b56b555c 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,3 +1,9 @@
++2017-08-24  Gabriel F. T. Gomes  <gftg@linux.vnet.ibm.com>
++
++	* math/math.h [defined __cplusplus] (issignaling): In the long
++	double case, call __issignalingl only if __NO_LONG_DOUBLE_MATH
++	is not defined.  Call __issignaling, otherwise.
++
+ 2017-08-22  Gabriel F. T. Gomes  <gftg@linux.vnet.ibm.com>
+ 
+ 	* math/math.h [defined __cplusplus] (issignaling): Provide a C++
+diff --git a/math/math.h b/math/math.h
+index add86af724..60dfa31592 100644
+--- a/math/math.h
++++ b/math/math.h
+@@ -486,7 +486,15 @@ enum
+ extern "C++" {
+ inline int issignaling (float __val) { return __issignalingf (__val); }
+ inline int issignaling (double __val) { return __issignaling (__val); }
+-inline int issignaling (long double __val) { return __issignalingl (__val); }
++inline int
++issignaling (long double __val)
++{
++#  ifdef __NO_LONG_DOUBLE_MATH
++  return __issignaling (__val);
++#  else
++  return __issignalingl (__val);
++#  endif
++}
+ #  if __HAVE_DISTINCT_FLOAT128
+ inline int issignaling (_Float128 __val) { return __issignalingf128 (__val); }
+ #  endif
+
+commit 58270c0049404ef2f878fdd45df55f17f0b8c1f7
+Author: Gabriel F. T. Gomes <gftg@linux.vnet.ibm.com>
+Date:   Tue Aug 22 16:34:42 2017 -0300
+
+    Provide a C++ version of iszero that does not use __MATH_TG (bug 21930)
+    
+    When signaling nans are enabled (with -fsignaling-nans), the C++ version
+    of iszero uses the fpclassify macro, which is defined with __MATH_TG.
+    However, when support for float128 is available, __MATH_TG uses the
+    builtin __builtin_types_compatible_p, which is only available in C mode.
+    
+    This patch refactors the C++ version of iszero so that it uses function
+    overloading to select between the floating-point types, instead of
+    relying on fpclassify and __MATH_TG.
+    
+    Tested for powerpc64le, s390x, x86_64, and with build-many-glibcs.py.
+    
+            [BZ #21930]
+            * math/math.h [defined __cplusplus && defined __SUPPORT_SNAN__]
+            (iszero): New C++ implementation that does not use
+            fpclassify/__MATH_TG/__builtin_types_compatible_p, when
+            signaling nans are enabled, since __builtin_types_compatible_p
+            is a C-only feature.
+            * math/test-math-iszero.cc: When __HAVE_DISTINCT_FLOAT128 is
+            defined, include ieee754_float128.h for access to the union and
+            member ieee854_float128.ieee.
+            [__HAVE_DISTINCT_FLOAT128] (do_test): Call check_float128.
+            [__HAVE_DISTINCT_FLOAT128] (check_float128): New function.
+            * sysdeps/powerpc/powerpc64le/Makefile [subdir == math]
+            (CXXFLAGS-test-math-iszero.cc): Add -mfloat128 to the build
+            options of test-math-zero on powerpc64le.
+    
+    (cherry picked from commit 42496114ec0eb7d6d039d05d4262e109951c600c)
+
+diff --git a/ChangeLog b/ChangeLog
+index 04b56b555c..23ded7f03d 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,3 +1,20 @@
++2017-08-28  Gabriel F. T. Gomes  <gftg@linux.vnet.ibm.com>
++
++	[BZ #21930]
++	* math/math.h [defined __cplusplus && defined __SUPPORT_SNAN__]
++	(iszero): New C++ implementation that does not use
++	fpclassify/__MATH_TG/__builtin_types_compatible_p, when
++	signaling nans are enabled, since __builtin_types_compatible_p
++	is a C-only feature.
++	* math/test-math-iszero.cc: When __HAVE_DISTINCT_FLOAT128 is
++	defined, include ieee754_float128.h for access to the union and
++	member ieee854_float128.ieee.
++	[__HAVE_DISTINCT_FLOAT128] (do_test): Call check_float128.
++	[__HAVE_DISTINCT_FLOAT128] (check_float128): New function.
++	* sysdeps/powerpc/powerpc64le/Makefile [subdir == math]
++	(CXXFLAGS-test-math-iszero.cc): Add -mfloat128 to the build
++	options of test-math-zero on powerpc64le.
++
+ 2017-08-24  Gabriel F. T. Gomes  <gftg@linux.vnet.ibm.com>
+ 
+ 	* math/math.h [defined __cplusplus] (issignaling): In the long
+diff --git a/math/math.h b/math/math.h
+index 60dfa31592..7c0fc6dbb3 100644
+--- a/math/math.h
++++ b/math/math.h
+@@ -513,15 +513,40 @@ inline int issignaling (_Float128 __val) { return __issignalingf128 (__val); }
+ #  endif
+ # else	/* __cplusplus */
+ extern "C++" {
++#  ifdef __SUPPORT_SNAN__
++inline int
++iszero (float __val)
++{
++  return __fpclassifyf (__val) == FP_ZERO;
++}
++inline int
++iszero (double __val)
++{
++  return __fpclassify (__val) == FP_ZERO;
++}
++inline int
++iszero (long double __val)
++{
++#   ifdef __NO_LONG_DOUBLE_MATH
++  return __fpclassify (__val) == FP_ZERO;
++#   else
++  return __fpclassifyl (__val) == FP_ZERO;
++#   endif
++}
++#   if __HAVE_DISTINCT_FLOAT128
++inline int
++iszero (_Float128 __val)
++{
++  return __fpclassifyf128 (__val) == FP_ZERO;
++}
++#   endif
++#  else
+ template <class __T> inline bool
+ iszero (__T __val)
+ {
+-#  ifdef __SUPPORT_SNAN__
+-  return fpclassify (__val) == FP_ZERO;
+-#  else
+   return __val == 0;
+-#  endif
+ }
++#  endif
+ } /* extern C++ */
+ # endif	/* __cplusplus */
+ #endif /* Use IEC_60559_BFP_EXT.  */
+diff --git a/math/test-math-iszero.cc b/math/test-math-iszero.cc
+index 027e972654..5c07261626 100644
+--- a/math/test-math-iszero.cc
++++ b/math/test-math-iszero.cc
+@@ -22,6 +22,13 @@
+ 
+ #include <limits>
+ 
++/* Support for _Float128 in std::numeric_limits is limited.
++   Include ieee754_float128.h and use the bitfields in the union
++   ieee854_float128.ieee_nan to build corner-case inputs.  */
++#if __HAVE_DISTINCT_FLOAT128
++# include <ieee754_float128.h>
++#endif
++
+ static bool errors;
+ 
+ static void
+@@ -72,12 +79,84 @@ check_type ()
+          std::numeric_limits<T>::has_denorm == std::denorm_absent);
+ }
+ 
++#if __HAVE_DISTINCT_FLOAT128
++static void
++check_float128 ()
++{
++  ieee854_float128 q;
++
++  q.d = 0.0Q;
++  CHECK (iszero (q.d), 1);
++  q.d = -0.0Q;
++  CHECK (iszero (q.d), 1);
++  q.d = 1.0Q;
++  CHECK (iszero (q.d), 0);
++  q.d = -1.0Q;
++  CHECK (iszero (q.d), 0);
++
++  /* Normal min.  */
++  q.ieee.negative = 0;
++  q.ieee.exponent = 0x0001;
++  q.ieee.mantissa0 = 0x0000;
++  q.ieee.mantissa1 = 0x00000000;
++  q.ieee.mantissa2 = 0x00000000;
++  q.ieee.mantissa3 = 0x00000000;
++  CHECK (iszero (q.d), 0);
++  q.ieee.negative = 1;
++  CHECK (iszero (q.d), 0);
++
++  /* Normal max.  */
++  q.ieee.negative = 0;
++  q.ieee.exponent = 0x7FFE;
++  q.ieee.mantissa0 = 0xFFFF;
++  q.ieee.mantissa1 = 0xFFFFFFFF;
++  q.ieee.mantissa2 = 0xFFFFFFFF;
++  q.ieee.mantissa3 = 0xFFFFFFFF;
++  CHECK (iszero (q.d), 0);
++  q.ieee.negative = 1;
++  CHECK (iszero (q.d), 0);
++
++  /* Infinity.  */
++  q.ieee.negative = 0;
++  q.ieee.exponent = 0x7FFF;
++  q.ieee.mantissa0 = 0x0000;
++  q.ieee.mantissa1 = 0x00000000;
++  q.ieee.mantissa2 = 0x00000000;
++  q.ieee.mantissa3 = 0x00000000;
++  CHECK (iszero (q.d), 0);
++
++  /* Quiet NaN.  */
++  q.ieee_nan.quiet_nan = 1;
++  q.ieee_nan.mantissa0 = 0x0000;
++  CHECK (iszero (q.d), 0);
++
++  /* Signaling NaN.  */
++  q.ieee_nan.quiet_nan = 0;
++  q.ieee_nan.mantissa0 = 0x4000;
++  CHECK (iszero (q.d), 0);
++
++  /* Denormal min.  */
++  q.ieee.negative = 0;
++  q.ieee.exponent = 0x0000;
++  q.ieee.mantissa0 = 0x0000;
++  q.ieee.mantissa1 = 0x00000000;
++  q.ieee.mantissa2 = 0x00000000;
++  q.ieee.mantissa3 = 0x00000001;
++  CHECK (iszero (q.d), 0);
++  q.ieee.negative = 1;
++  CHECK (iszero (q.d), 0);
++}
++#endif
++
+ static int
+ do_test (void)
+ {
+   check_type<float> ();
+   check_type<double> ();
+   check_type<long double> ();
++#if __HAVE_DISTINCT_FLOAT128
++  check_float128 ();
++#endif
+   return errors;
+ }
+ 
+diff --git a/sysdeps/powerpc/powerpc64le/Makefile b/sysdeps/powerpc/powerpc64le/Makefile
+index 19adbfa1c1..dea2290736 100644
+--- a/sysdeps/powerpc/powerpc64le/Makefile
++++ b/sysdeps/powerpc/powerpc64le/Makefile
+@@ -17,7 +17,8 @@ $(foreach suf,$(all-object-suffixes),$(objpfx)test-float128%$(suf)): CFLAGS += -
+ $(foreach suf,$(all-object-suffixes),$(objpfx)test-ifloat128%$(suf)): CFLAGS += -mfloat128
+ CFLAGS-libm-test-support-float128.c += -mfloat128
+ CFLAGS-test-math-issignaling.cc += -mfloat128
+-$(objpfx)test-float128% $(objpfx)test-ifloat128%: \
++CFLAGS-test-math-iszero.cc += -mfloat128
++$(objpfx)test-float128% $(objpfx)test-ifloat128% $(objpfx)test-math-iszero: \
+   gnulib-tests += $(f128-loader-link)
+ endif
+ 
+
+commit 947e2e0a9410c18eb44144456c7fe8e7c0e2a999
+Author: Joseph Myers <joseph@codesourcery.com>
+Date:   Tue Aug 22 00:30:51 2017 +0000
+
+    Fix position of tests-unsupported definition in assert/Makefile.
+    
+    tests-unsupported has to be defined before the inclusion of Rules in a
+    subdirectory Makefile; otherwise it is ineffective.  This patch fixes
+    the ordering in assert/Makefile, where a recent test addition put
+    tests-unsupported too late (resulting in build failures when the C++
+    compiler was missing or broken, and thereby showing up the unrelated
+    bug 21987).
+    
+    Incidentally, I don't see why these tests depend on
+    $(have-cxx-thread_local) rather than just a working C++ compiler.
+    
+    Tested in such a configuration (broken compiler/libstdc++) with
+    build-many-glibcs.py.
+    
+            * assert/Makefile [$(have-cxx-thread_local)]: Move conditional
+            variable definitions above inclusion of ../Rules.
+    
+    (cherry picked from commit 75dfe623df945db7dd3c12a206d743c45c16b5ed)
+
+diff --git a/ChangeLog b/ChangeLog
+index 23ded7f03d..87fa54c57b 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,3 +1,8 @@
++2017-08-22  Joseph Myers  <joseph@codesourcery.com>
++
++	* assert/Makefile [$(have-cxx-thread_local)]: Move conditional
++	variable definitions above inclusion of ../Rules.
++
+ 2017-08-28  Gabriel F. T. Gomes  <gftg@linux.vnet.ibm.com>
+ 
+ 	[BZ #21930]
+diff --git a/assert/Makefile b/assert/Makefile
+index 9ec1be81a9..222ab516f0 100644
+--- a/assert/Makefile
++++ b/assert/Makefile
+@@ -27,8 +27,6 @@ headers	:= assert.h
+ routines := assert assert-perr __assert
+ tests := test-assert test-assert-perr tst-assert-c++ tst-assert-g++
+ 
+-include ../Rules
+-
+ ifeq ($(have-cxx-thread_local),yes)
+ CFLAGS-tst-assert-c++.o = -std=c++11
+ LDLIBS-tst-assert-c++ = -lstdc++
+@@ -37,3 +35,5 @@ LDLIBS-tst-assert-g++ = -lstdc++
+ else
+ tests-unsupported += tst-assert-c++ tst-assert-g++
+ endif
++
++include ../Rules
+
+commit 4fdd75e4463801b9d8f329769df1a26145560656
+Author: Florian Weimer <fweimer@redhat.com>
+Date:   Tue Aug 8 18:48:05 2017 +0200
+
+    getaddrinfo: Remove unreachable return statement from gaih_inet
+    
+    (cherry picked from commit 0df595b23a829c9169ec418a19eef9006b4ae801)
+
+diff --git a/ChangeLog b/ChangeLog
+index 87fa54c57b..591c753fcc 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,3 +1,8 @@
++2017-08-08  Florian Weimer  <fweimer@redhat.com>
++
++	* sysdeps/posix/getaddrinfo.c (gaih_inet): Remove unreachable
++	return statement.
++
+ 2017-08-22  Joseph Myers  <joseph@codesourcery.com>
+ 
+ 	* assert/Makefile [$(have-cxx-thread_local)]: Move conditional
+diff --git a/sysdeps/posix/getaddrinfo.c b/sysdeps/posix/getaddrinfo.c
+index 699411cc92..09f85fc472 100644
+--- a/sysdeps/posix/getaddrinfo.c
++++ b/sysdeps/posix/getaddrinfo.c
+@@ -420,13 +420,9 @@ gaih_inet (const char *name, const struct gaih_service *service,
+ 		    alloca_account (sizeof (struct gaih_servtuple),
+ 				    alloca_used);
+ 
+-		  if ((rc = gaih_inet_serv (service->name,
+-					    tp, req, newp, tmpbuf)))
+-		    {
+-		      if (rc)
+-			continue;
+-		      return rc;
+-		    }
++		  if (gaih_inet_serv (service->name,
++				      tp, req, newp, tmpbuf) != 0)
++		    continue;
+ 
+ 		  *pst = newp;
+ 		  pst = &(newp->next);
+
+commit 5253749232749adb535d9b2bf7d43173b191ebef
+Author: Florian Weimer <fweimer@redhat.com>
+Date:   Mon Sep 4 11:44:10 2017 +0200
+
+    Synchronize support/ infrastructure with master
+    
+    This commit updates the support/ subdirectory to
+    commit 65329bd233db9d1b8b94e90734a564705b619260
+    on the master branch.
+
+diff --git a/support/namespace.h b/support/namespace.h
+index 859c2fda3f..9eddb1a0e9 100644
+--- a/support/namespace.h
++++ b/support/namespace.h
+@@ -66,7 +66,9 @@ struct support_chroot_configuration
+ {
+   /* File contents.  The files are not created if the field is
+      NULL.  */
+-  const char *resolv_conf;
++  const char *resolv_conf;      /* /etc/resolv.conf.  */
++  const char *hosts;            /* /etc/hosts.  */
++  const char *host_conf;        /* /etc/host.conf.  */
+ };
+ 
+ /* The result of the creation of a chroot.  */
+@@ -78,8 +80,11 @@ struct support_chroot
+   /* Path to the chroot directory.  */
+   char *path_chroot;
+ 
+-  /* Path to the /etc/resolv.conf file.  */
+-  char *path_resolv_conf;
++  /* Paths to files in the chroot.  These are absolute and outside of
++     the chroot.  */
++  char *path_resolv_conf;       /* /etc/resolv.conf.  */
++  char *path_hosts;             /* /etc/hosts.  */
++  char *path_host_conf;         /* /etc/host.conf.  */
+ };
+ 
+ /* Create a chroot environment.  The returned data should be freed
+diff --git a/support/support_chroot.c b/support/support_chroot.c
+index c0807b313a..f3ef551b05 100644
+--- a/support/support_chroot.c
++++ b/support/support_chroot.c
+@@ -24,6 +24,23 @@
+ #include <support/test-driver.h>
+ #include <support/xunistd.h>
+ 
++/* If CONTENTS is not NULL, write it to the file at DIRECTORY/RELPATH,
++   and store the name in *ABSPATH.  If CONTENTS is NULL, store NULL in
++   *ABSPATH.  */
++static void
++write_file (const char *directory, const char *relpath, const char *contents,
++            char **abspath)
++{
++  if (contents != NULL)
++    {
++      *abspath = xasprintf ("%s/%s", directory, relpath);
++      add_temp_file (*abspath);
++      support_write_file_string (*abspath, contents);
++    }
++  else
++    *abspath = NULL;
++}
++
+ struct support_chroot *
+ support_chroot_create (struct support_chroot_configuration conf)
+ {
+@@ -39,15 +56,10 @@ support_chroot_create (struct support_chroot_configuration conf)
+   xmkdir (path_etc, 0777);
+   add_temp_file (path_etc);
+ 
+-  if (conf.resolv_conf != NULL)
+-    {
+-      /* Create an empty resolv.conf file.  */
+-      chroot->path_resolv_conf = xasprintf ("%s/resolv.conf", path_etc);
+-      add_temp_file (chroot->path_resolv_conf);
+-      support_write_file_string (chroot->path_resolv_conf, conf.resolv_conf);
+-    }
+-  else
+-    chroot->path_resolv_conf = NULL;
++  write_file (path_etc, "resolv.conf", conf.resolv_conf,
++              &chroot->path_resolv_conf);
++  write_file (path_etc, "hosts", conf.hosts, &chroot->path_hosts);
++  write_file (path_etc, "host.conf", conf.host_conf, &chroot->path_host_conf);
+ 
+   free (path_etc);
+ 
+@@ -67,5 +79,7 @@ support_chroot_free (struct support_chroot *chroot)
+ {
+   free (chroot->path_chroot);
+   free (chroot->path_resolv_conf);
++  free (chroot->path_hosts);
++  free (chroot->path_host_conf);
+   free (chroot);
+ }
+
+commit bdd8422cfb1fe04cb20617495156fb232b00d23c
+Author: Florian Weimer <fweimer@redhat.com>
+Date:   Fri Sep 1 08:56:46 2017 +0200
+
+    getaddrinfo: Use &errno has the errno pointer
+    
+    Similar code in nss/getXXbyYY_r.c is already using &errno as the
+    argument.
+    
+    (cherry picked from commit 924b121c5978689001ae28cf1c8497371dad4f71)
+
+diff --git a/ChangeLog b/ChangeLog
+index 591c753fcc..04304bb929 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,3 +1,9 @@
++2017-09-01  Florian Weimer  <fweimer@redhat.com>
++
++	* sysdeps/posix/getaddrinfo.c (gethosts): Use errno directly.
++	(getcanonname): Likewise.
++	(gaih_inet): Likewise.
++
+ 2017-08-08  Florian Weimer  <fweimer@redhat.com>
+ 
+ 	* sysdeps/posix/getaddrinfo.c (gaih_inet): Remove unreachable
+diff --git a/sysdeps/posix/getaddrinfo.c b/sysdeps/posix/getaddrinfo.c
+index 09f85fc472..1a16820b7e 100644
+--- a/sysdeps/posix/getaddrinfo.c
++++ b/sysdeps/posix/getaddrinfo.c
+@@ -247,11 +247,10 @@ convert_hostent_to_gaih_addrtuple (const struct addrinfo *req,
+   char *localcanon = NULL;						      \
+   no_data = 0;								      \
+   while (1) {								      \
+-    rc = 0;								      \
+     status = DL_CALL_FCT (fct, (name, _family, &th,			      \
+ 				tmpbuf->data, tmpbuf->length,		      \
+-				&rc, &herrno, NULL, &localcanon));	      \
+-    if (rc != ERANGE || herrno != NETDB_INTERNAL)			      \
++				&errno, &herrno, NULL, &localcanon));	      \
++    if (errno != ERANGE || herrno != NETDB_INTERNAL)			      \
+       break;								      \
+     if (!scratch_buffer_grow (tmpbuf))					      \
+       {									      \
+@@ -261,11 +260,11 @@ convert_hostent_to_gaih_addrtuple (const struct addrinfo *req,
+ 	goto free_and_return;						      \
+       }									      \
+   }									      \
+-  if (status == NSS_STATUS_SUCCESS && rc == 0)				      \
++  if (status == NSS_STATUS_SUCCESS && errno == 0)			      \
+     h = &th;								      \
+   else									      \
+     h = NULL;								      \
+-  if (rc != 0)								      \
++  if (errno != 0)							      \
+     {									      \
+       if (herrno == NETDB_INTERNAL)					      \
+ 	{								      \
+@@ -335,9 +334,8 @@ getcanonname (service_user *nip, struct gaih_addrtuple *at, const char *name)
+     {
+       char buf[256];
+       int herrno;
+-      int rc;
+       if (DL_CALL_FCT (cfct, (at->name ?: name, buf, sizeof (buf),
+-			      &s, &rc, &herrno)) != NSS_STATUS_SUCCESS)
++			      &s, &errno, &herrno)) != NSS_STATUS_SUCCESS)
+ 	/* If the canonical name cannot be determined, use the passed
+ 	   string.  */
+ 	s = (char *) name;
+@@ -353,7 +351,6 @@ gaih_inet (const char *name, const struct gaih_service *service,
+   const struct gaih_typeproto *tp = gaih_inet_typeproto;
+   struct gaih_servtuple *st = (struct gaih_servtuple *) &nullserv;
+   struct gaih_addrtuple *at = NULL;
+-  int rc;
+   bool got_ipv6 = false;
+   const char *canon = NULL;
+   const char *orig_name = name;
+@@ -395,7 +392,8 @@ gaih_inet (const char *name, const struct gaih_service *service,
+ 	      st = (struct gaih_servtuple *)
+ 		alloca_account (sizeof (struct gaih_servtuple), alloca_used);
+ 
+-	      if ((rc = gaih_inet_serv (service->name, tp, req, st, tmpbuf)))
++	      int rc = gaih_inet_serv (service->name, tp, req, st, tmpbuf);
++	      if (__glibc_unlikely (rc != 0))
+ 		return rc;
+ 	    }
+ 	  else
+@@ -495,7 +493,7 @@ gaih_inet (const char *name, const struct gaih_service *service,
+ 	    idn_flags |= IDNA_USE_STD3_ASCII_RULES;
+ 
+ 	  char *p = NULL;
+-	  rc = __idna_to_ascii_lz (name, &p, idn_flags);
++	  int rc = __idna_to_ascii_lz (name, &p, idn_flags);
+ 	  if (rc != IDNA_SUCCESS)
+ 	    {
+ 	      /* No need to jump to free_and_return here.  */
+@@ -793,15 +791,14 @@ gaih_inet (const char *name, const struct gaih_service *service,
+ 
+ 		  while (1)
+ 		    {
+-		      rc = 0;
+ 		      status = DL_CALL_FCT (fct4, (name, pat,
+ 						   tmpbuf->data, tmpbuf->length,
+-						   &rc, &herrno,
++						   &errno, &herrno,
+ 						   NULL));
+ 		      if (status == NSS_STATUS_SUCCESS)
+ 			break;
+ 		      if (status != NSS_STATUS_TRYAGAIN
+-			  || rc != ERANGE || herrno != NETDB_INTERNAL)
++			  || errno != ERANGE || herrno != NETDB_INTERNAL)
+ 			{
+ 			  if (herrno == TRY_AGAIN)
+ 			    no_data = EAI_AGAIN;
+
+commit 701f7873da013fb19d9120317322cd78333e63c2
+Author: Florian Weimer <fweimer@redhat.com>
+Date:   Fri Sep 1 08:57:07 2017 +0200
+
+    getaddrinfo: Use &h_errno has the h_errno pointer
+    
+    This simplifies the code because it is not necessary to propagate the
+    temporary h_errno value to the thread-local variable.  It also increases
+    compatibility with NSS modules which update only one of the two places.
+    
+    (cherry picked from commit 53250a21b81474ef4e78090a4a9a63d8471e1091)
+
+diff --git a/ChangeLog b/ChangeLog
+index 04304bb929..d53c8fe083 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,5 +1,11 @@
+ 2017-09-01  Florian Weimer  <fweimer@redhat.com>
+ 
++	* sysdeps/posix/getaddrinfo.c (gethosts): Use h_errno directly.
++	(getcanonname): Likewise.
++	(gaih_inet): Likewise.
++
++2017-09-01  Florian Weimer  <fweimer@redhat.com>
++
+ 	* sysdeps/posix/getaddrinfo.c (gethosts): Use errno directly.
+ 	(getcanonname): Likewise.
+ 	(gaih_inet): Likewise.
+diff --git a/sysdeps/posix/getaddrinfo.c b/sysdeps/posix/getaddrinfo.c
+index 1a16820b7e..076e1fa62b 100644
+--- a/sysdeps/posix/getaddrinfo.c
++++ b/sysdeps/posix/getaddrinfo.c
+@@ -241,7 +241,6 @@ convert_hostent_to_gaih_addrtuple (const struct addrinfo *req,
+ 
+ #define gethosts(_family, _type) \
+  {									      \
+-  int herrno;								      \
+   struct hostent th;							      \
+   struct hostent *h;							      \
+   char *localcanon = NULL;						      \
+@@ -249,8 +248,8 @@ convert_hostent_to_gaih_addrtuple (const struct addrinfo *req,
+   while (1) {								      \
+     status = DL_CALL_FCT (fct, (name, _family, &th,			      \
+ 				tmpbuf->data, tmpbuf->length,		      \
+-				&errno, &herrno, NULL, &localcanon));	      \
+-    if (errno != ERANGE || herrno != NETDB_INTERNAL)			      \
++				&errno, &h_errno, NULL, &localcanon));	      \
++    if (errno != ERANGE || h_errno != NETDB_INTERNAL)			      \
+       break;								      \
+     if (!scratch_buffer_grow (tmpbuf))					      \
+       {									      \
+@@ -266,18 +265,17 @@ convert_hostent_to_gaih_addrtuple (const struct addrinfo *req,
+     h = NULL;								      \
+   if (errno != 0)							      \
+     {									      \
+-      if (herrno == NETDB_INTERNAL)					      \
++      if (h_errno == NETDB_INTERNAL)					      \
+ 	{								      \
+-	  __set_h_errno (herrno);					      \
+ 	  __resolv_context_enable_inet6 (res_ctx, res_enable_inet6);	      \
+ 	  __resolv_context_put (res_ctx);				      \
+ 	  result = -EAI_SYSTEM;						      \
+ 	  goto free_and_return;						      \
+ 	}								      \
+-      if (herrno == TRY_AGAIN)						      \
++      if (h_errno == TRY_AGAIN)						      \
+ 	no_data = EAI_AGAIN;						      \
+       else								      \
+-	no_data = herrno == NO_DATA;					      \
++	no_data = h_errno == NO_DATA;					      \
+     }									      \
+   else if (h != NULL)							      \
+     {									      \
+@@ -333,9 +331,8 @@ getcanonname (service_user *nip, struct gaih_addrtuple *at, const char *name)
+   if (cfct != NULL)
+     {
+       char buf[256];
+-      int herrno;
+       if (DL_CALL_FCT (cfct, (at->name ?: name, buf, sizeof (buf),
+-			      &s, &errno, &herrno)) != NSS_STATUS_SUCCESS)
++			      &s, &errno, &h_errno)) != NSS_STATUS_SUCCESS)
+ 	/* If the canonical name cannot be determined, use the passed
+ 	   string.  */
+ 	s = (char *) name;
+@@ -594,14 +591,13 @@ gaih_inet (const char *name, const struct gaih_service *service,
+ 	      int rc;
+ 	      struct hostent th;
+ 	      struct hostent *h;
+-	      int herrno;
+ 
+ 	      while (1)
+ 		{
+ 		  rc = __gethostbyname2_r (name, AF_INET, &th,
+ 					   tmpbuf->data, tmpbuf->length,
+-					   &h, &herrno);
+-		  if (rc != ERANGE || herrno != NETDB_INTERNAL)
++					   &h, &h_errno);
++		  if (rc != ERANGE || h_errno != NETDB_INTERNAL)
+ 		    break;
+ 		  if (!scratch_buffer_grow (tmpbuf))
+ 		    {
+@@ -626,12 +622,9 @@ gaih_inet (const char *name, const struct gaih_service *service,
+ 		}
+ 	      else
+ 		{
+-		  if (herrno == NETDB_INTERNAL)
+-		    {
+-		      __set_h_errno (herrno);
+-		      result = -EAI_SYSTEM;
+-		    }
+-		  else if (herrno == TRY_AGAIN)
++		  if (h_errno == NETDB_INTERNAL)
++		    result = -EAI_SYSTEM;
++		  else if (h_errno == TRY_AGAIN)
+ 		    result = -EAI_AGAIN;
+ 		  else
+ 		    /* We made requests but they turned out no data.
+@@ -654,8 +647,7 @@ gaih_inet (const char *name, const struct gaih_service *service,
+ 	    {
+ 	      /* Try to use nscd.  */
+ 	      struct nscd_ai_result *air = NULL;
+-	      int herrno;
+-	      int err = __nscd_getai (name, &air, &herrno);
++	      int err = __nscd_getai (name, &air, &h_errno);
+ 	      if (air != NULL)
+ 		{
+ 		  /* Transform into gaih_addrtuple list.  */
+@@ -746,9 +738,9 @@ gaih_inet (const char *name, const struct gaih_service *service,
+ 		goto free_and_return;
+ 	      else if (__nss_not_use_nscd_hosts == 0)
+ 		{
+-		  if (herrno == NETDB_INTERNAL && errno == ENOMEM)
++		  if (h_errno == NETDB_INTERNAL && errno == ENOMEM)
+ 		    result = -EAI_MEMORY;
+-		  else if (herrno == TRY_AGAIN)
++		  else if (h_errno == TRY_AGAIN)
+ 		    result = -EAI_AGAIN;
+ 		  else
+ 		    result = -EAI_SYSTEM;
+@@ -787,23 +779,21 @@ gaih_inet (const char *name, const struct gaih_service *service,
+ 
+ 	      if (fct4 != NULL)
+ 		{
+-		  int herrno;
+-
+ 		  while (1)
+ 		    {
+ 		      status = DL_CALL_FCT (fct4, (name, pat,
+ 						   tmpbuf->data, tmpbuf->length,
+-						   &errno, &herrno,
++						   &errno, &h_errno,
+ 						   NULL));
+ 		      if (status == NSS_STATUS_SUCCESS)
+ 			break;
+ 		      if (status != NSS_STATUS_TRYAGAIN
+-			  || errno != ERANGE || herrno != NETDB_INTERNAL)
++			  || errno != ERANGE || h_errno != NETDB_INTERNAL)
+ 			{
+-			  if (herrno == TRY_AGAIN)
++			  if (h_errno == TRY_AGAIN)
+ 			    no_data = EAI_AGAIN;
+ 			  else
+-			    no_data = herrno == NO_DATA;
++			    no_data = h_errno == NO_DATA;
+ 			  break;
+ 			}
+ 
+
+commit 8f46c6052408a23a77ecf46aa378120c1a4afe37
+Author: Florian Weimer <fweimer@redhat.com>
+Date:   Fri Sep 1 08:57:28 2017 +0200
+
+    getaddrinfo: Properly set errno for NSS function lookup failure
+    
+    (cherry picked from commit ad816a5e00ce891a2cea8187638fa0e00f83aaf6)
+
+diff --git a/ChangeLog b/ChangeLog
+index d53c8fe083..2f959d4c36 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,5 +1,10 @@
+ 2017-09-01  Florian Weimer  <fweimer@redhat.com>
+ 
++	* sysdeps/posix/getaddrinfo.c (gaih_inet): Make reporting of NSS
++	function lookup failures more reliable.
++
++2017-09-01  Florian Weimer  <fweimer@redhat.com>
++
+ 	* sysdeps/posix/getaddrinfo.c (gethosts): Use h_errno directly.
+ 	(getcanonname): Likewise.
+ 	(gaih_inet): Likewise.
+diff --git a/sysdeps/posix/getaddrinfo.c b/sysdeps/posix/getaddrinfo.c
+index 076e1fa62b..eaf8bafcf4 100644
+--- a/sysdeps/posix/getaddrinfo.c
++++ b/sysdeps/posix/getaddrinfo.c
+@@ -923,13 +923,17 @@ gaih_inet (const char *name, const struct gaih_service *service,
+ 		    }
+ 		  else
+ 		    {
++		      /* Could not locate any of the lookup functions.
++			 The NSS lookup code does not consistently set
++			 errno, so we need to supply our own error
++			 code here.  The root cause could either be a
++			 resource allocation failure, or a missing
++			 service function in the DSO (so it should not
++			 be listed in /etc/nsswitch.conf).  Assume the
++			 former, and return EBUSY.  */
+ 		      status = NSS_STATUS_UNAVAIL;
+-		      /* Could not load any of the lookup functions.  Indicate
+-		         an internal error if the failure was due to a system
+-			 error other than the file not being found.  We use the
+-			 errno from the last failed callback.  */
+-		      if (errno != 0 && errno != ENOENT)
+-			__set_h_errno (NETDB_INTERNAL);
++		     __set_h_errno (NETDB_INTERNAL);
++		     __set_errno (EBUSY);
+ 		    }
+ 		}
+ 
+
+commit 7ab87bccb657b02cac5a3360b11c67aff901de2e
+Author: Florian Weimer <fweimer@redhat.com>
+Date:   Fri Sep 1 08:57:52 2017 +0200
+
+    getaddrinfo: In gaih_inet, use h_errno for certain status values only
+    
+    h_errno is not set for NSS_STATUS_SUCCESS, so its value might not be
+    accurate at this point.
+    
+    (cherry picked from commit a2881ef01450295782b065f2f850f340d5c12c14)
+
+diff --git a/ChangeLog b/ChangeLog
+index 2f959d4c36..c58cd5ccd0 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,5 +1,10 @@
+ 2017-09-01  Florian Weimer  <fweimer@redhat.com>
+ 
++	* sysdeps/posix/getaddrinfo.c (gaih_inet): Only use h_errno if
++	status indicates it is set.
++
++2017-09-01  Florian Weimer  <fweimer@redhat.com>
++
+ 	* sysdeps/posix/getaddrinfo.c (gaih_inet): Make reporting of NSS
+ 	function lookup failures more reliable.
+ 
+diff --git a/sysdeps/posix/getaddrinfo.c b/sysdeps/posix/getaddrinfo.c
+index eaf8bafcf4..9d9e7e2bf2 100644
+--- a/sysdeps/posix/getaddrinfo.c
++++ b/sysdeps/posix/getaddrinfo.c
+@@ -949,7 +949,10 @@ gaih_inet (const char *name, const struct gaih_service *service,
+ 	  __resolv_context_enable_inet6 (res_ctx, res_enable_inet6);
+ 	  __resolv_context_put (res_ctx);
+ 
+-	  if (h_errno == NETDB_INTERNAL)
++	  /* If we have a failure which sets errno, report it using
++	     EAI_SYSTEM.  */
++	  if ((status == NSS_STATUS_TRYAGAIN || status == NSS_STATUS_UNAVAIL)
++	      && h_errno == NETDB_INTERNAL)
+ 	    {
+ 	      result = -EAI_SYSTEM;
+ 	      goto free_and_return;
+
+commit 7966331555df43bb7e2a55ce5a17a330e57f487f
+Author: Florian Weimer <fweimer@redhat.com>
+Date:   Mon Sep 4 11:25:34 2017 +0200
+
+    getaddrinfo: Return EAI_NODATA if gethostbyname2_r reports NO_DATA [BZ #21922]
+    
+    (cherry picked from commit 5f8340f583fe3d4f5734bd2371c5a45ecff2db0d)
+
+diff --git a/ChangeLog b/ChangeLog
+index c58cd5ccd0..f46bbb7c0d 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,5 +1,11 @@
+ 2017-09-01  Florian Weimer  <fweimer@redhat.com>
+ 
++	[BZ #21922]
++	* sysdeps/posix/getaddrinfo.c (gaih_inet): Report EAI_NODATA error
++	coming from gethostbyname2_r.
++
++2017-09-01  Florian Weimer  <fweimer@redhat.com>
++
+ 	* sysdeps/posix/getaddrinfo.c (gaih_inet): Only use h_errno if
+ 	status indicates it is set.
+ 
+diff --git a/NEWS b/NEWS
+index 756e849643..97eb21e868 100644
+--- a/NEWS
++++ b/NEWS
+@@ -22,6 +22,7 @@ The following bugs are resolved with this release:
+   [21780] posix: Set p{read,write}v2 to return ENOTSUP
+   [21871] x86-64: Use _dl_runtime_resolve_opt only with AVX512F
+   [21885] getaddrinfo: Release resolver context on error in gethosts
++  [21922] getaddrinfo with AF_INET(6) returns EAI_NONAME, not EAI_NODATA
+   [21930] Do not use __builtin_types_compatible_p in C++ mode
+   [21932] Unpaired __resolv_context_get in generic get*_r implementation
+   [21941] powerpc: Restrict xssqrtqp operands to Vector Registers
+diff --git a/sysdeps/posix/getaddrinfo.c b/sysdeps/posix/getaddrinfo.c
+index 9d9e7e2bf2..0cf87c224d 100644
+--- a/sysdeps/posix/getaddrinfo.c
++++ b/sysdeps/posix/getaddrinfo.c
+@@ -619,6 +619,14 @@ gaih_inet (const char *name, const struct gaih_service *service,
+ 			}
+ 		      *pat = addrmem;
+ 		    }
++		  else
++		    {
++		      if (h_errno == NO_DATA)
++			result = -EAI_NODATA;
++		      else
++			result = -EAI_NONAME;
++		      goto free_and_return;
++		    }
+ 		}
+ 	      else
+ 		{
+
+commit a71a3374cd8cf53776c33994f69ec184c26f2129
+Author: Florian Weimer <fweimer@redhat.com>
+Date:   Mon Sep 4 11:27:24 2017 +0200
+
+    getaddrinfo: Fix error handling in gethosts [BZ #21915] [BZ #21922]
+    
+    The old code uses errno as the primary indicator for success or
+    failure.  This is wrong because errno is only set for specific
+    combinations of the status return value and the h_errno variable.
+    
+    (cherry picked from commit f4a6be2582b8dfe8adfa68da3dd8decf566b3983)
+
+diff --git a/ChangeLog b/ChangeLog
+index f46bbb7c0d..3e32d14dbf 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,5 +1,19 @@
+ 2017-09-01  Florian Weimer  <fweimer@redhat.com>
+ 
++	[BZ #21915]
++	[BZ #21922]
++	* sysdeps/posix/getaddrinfo.c (gethosts): Look at NSS function
++	result to determine success or failure, not the errno value.
++	* nss/Makefile (tests): Add tst-nss-files-hosts-erange.
++	(tst-nss-files-hosts-erange): Link with -ldl.
++	* nss/tst-nss-files-hosts-erange.c: New file.
++	* nss/tst-resolv-basic.c (response): Handle nodata.example.
++	(do_test): Add NO_DATA tests.
++	* resolv/tst-resolv-basic.c (test_nodata_nxdomain): New function.
++	(do_test): Call it.
++
++2017-09-01  Florian Weimer  <fweimer@redhat.com>
++
+ 	[BZ #21922]
+ 	* sysdeps/posix/getaddrinfo.c (gaih_inet): Report EAI_NODATA error
+ 	coming from gethostbyname2_r.
+diff --git a/NEWS b/NEWS
+index 97eb21e868..8fbf4241d1 100644
+--- a/NEWS
++++ b/NEWS
+@@ -22,6 +22,7 @@ The following bugs are resolved with this release:
+   [21780] posix: Set p{read,write}v2 to return ENOTSUP
+   [21871] x86-64: Use _dl_runtime_resolve_opt only with AVX512F
+   [21885] getaddrinfo: Release resolver context on error in gethosts
++  [21915] getaddrinfo: incorrect result handling for NSS service modules
+   [21922] getaddrinfo with AF_INET(6) returns EAI_NONAME, not EAI_NODATA
+   [21930] Do not use __builtin_types_compatible_p in C++ mode
+   [21932] Unpaired __resolv_context_get in generic get*_r implementation
+diff --git a/nss/Makefile b/nss/Makefile
+index d9f6d41181..91b1c21567 100644
+--- a/nss/Makefile
++++ b/nss/Makefile
+@@ -58,6 +58,11 @@ tests			= test-netdb test-digits-dots tst-nss-getpwent bug17079 \
+ 			  tst-nss-test5
+ xtests			= bug-erange
+ 
++# Tests which need libdl
++ifeq (yes,$(build-shared))
++tests += tst-nss-files-hosts-erange
++endif
++
+ # If we have a thread library then we can test cancellation against
+ # some routines like getpwuid_r.
+ ifeq (yes,$(have-thread-library))
+@@ -154,3 +159,5 @@ $(patsubst %,$(objpfx)%.out,$(tests)) : \
+ ifeq (yes,$(have-thread-library))
+ $(objpfx)tst-cancel-getpwuid_r: $(shared-thread-library)
+ endif
++
++$(objpfx)tst-nss-files-hosts-erange: $(libdl)
+diff --git a/nss/tst-nss-files-hosts-erange.c b/nss/tst-nss-files-hosts-erange.c
+new file mode 100644
+index 0000000000..beb7aa9fa0
+--- /dev/null
++++ b/nss/tst-nss-files-hosts-erange.c
+@@ -0,0 +1,109 @@
++/* Parse /etc/hosts in multi mode with a trailing long line (bug 21915).
++   Copyright (C) 2017 Free Software Foundation, Inc.
++   This file is part of the GNU C Library.
++
++   The GNU C Library is free software; you can redistribute it and/or
++   modify it under the terms of the GNU Lesser General Public
++   License as published by the Free Software Foundation; either
++   version 2.1 of the License, or (at your option) any later version.
++
++   The GNU C Library is distributed in the hope that it will be useful,
++   but WITHOUT ANY WARRANTY; without even the implied warranty of
++   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++   Lesser General Public License for more details.
++
++   You should have received a copy of the GNU Lesser General Public
++   License along with the GNU C Library; if not, see
++   <http://www.gnu.org/licenses/>.  */
++
++
++#include <dlfcn.h>
++#include <errno.h>
++#include <gnu/lib-names.h>
++#include <netdb.h>
++#include <nss.h>
++#include <support/check.h>
++#include <support/check_nss.h>
++#include <support/namespace.h>
++#include <support/test-driver.h>
++#include <support/xunistd.h>
++
++struct support_chroot *chroot_env;
++
++#define X10 "XXXXXXXXXX"
++#define X100 X10 X10 X10 X10 X10 X10 X10 X10 X10 X10
++#define X1000 X100 X100 X100 X100 X100 X100 X100 X100 X100 X100
++
++static void
++prepare (int argc, char **argv)
++{
++  chroot_env = support_chroot_create
++    ((struct support_chroot_configuration)
++     {
++       .resolv_conf = "",
++       .hosts =
++         "127.0.0.1   localhost localhost.localdomain\n"
++         "::1         localhost localhost.localdomain\n"
++         "192.0.2.1   example.com\n"
++         "#" X1000 X100 "\n",
++       .host_conf = "multi on\n",
++     });
++}
++
++static int
++do_test (void)
++{
++  support_become_root ();
++  if (!support_can_chroot ())
++    return EXIT_UNSUPPORTED;
++
++  __nss_configure_lookup ("hosts", "files");
++  if (dlopen (LIBNSS_FILES_SO, RTLD_LAZY) == NULL)
++    FAIL_EXIT1 ("could not load " LIBNSS_DNS_SO ": %s", dlerror ());
++
++  xchroot (chroot_env->path_chroot);
++
++  errno = ERANGE;
++  h_errno = NETDB_INTERNAL;
++  check_hostent ("gethostbyname example.com",
++                 gethostbyname ("example.com"),
++                 "name: example.com\n"
++                 "address: 192.0.2.1\n");
++  errno = ERANGE;
++  h_errno = NETDB_INTERNAL;
++  check_hostent ("gethostbyname2 AF_INET example.com",
++                 gethostbyname2 ("example.com", AF_INET),
++                 "name: example.com\n"
++                 "address: 192.0.2.1\n");
++  {
++    struct addrinfo hints =
++      {
++        .ai_family = AF_UNSPEC,
++        .ai_socktype = SOCK_STREAM,
++        .ai_protocol = IPPROTO_TCP,
++      };
++    errno = ERANGE;
++    h_errno = NETDB_INTERNAL;
++    struct addrinfo *ai;
++    int ret = getaddrinfo ("example.com", "80", &hints, &ai);
++    check_addrinfo ("example.com AF_UNSPEC", ai, ret,
++                    "address: STREAM/TCP 192.0.2.1 80\n");
++    if (ret == 0)
++      freeaddrinfo (ai);
++
++    hints.ai_family = AF_INET;
++    errno = ERANGE;
++    h_errno = NETDB_INTERNAL;
++    ret = getaddrinfo ("example.com", "80", &hints, &ai);
++    check_addrinfo ("example.com AF_INET", ai, ret,
++                    "address: STREAM/TCP 192.0.2.1 80\n");
++    if (ret == 0)
++      freeaddrinfo (ai);
++  }
++
++  support_chroot_free (chroot_env);
++  return 0;
++}
++
++#define PREPARE prepare
++#include <support/test-driver.c>
+diff --git a/resolv/tst-resolv-basic.c b/resolv/tst-resolv-basic.c
+index 64eedbbd81..66a0e8a165 100644
+--- a/resolv/tst-resolv-basic.c
++++ b/resolv/tst-resolv-basic.c
+@@ -50,7 +50,7 @@ response (const struct resolv_response_context *ctx,
+     qname_compare = qname + 2;
+   else
+     qname_compare = qname;
+-  enum {www, alias, nxdomain, long_name} requested_qname;
++  enum {www, alias, nxdomain, long_name, nodata} requested_qname;
+   if (strcmp (qname_compare, "www.example") == 0)
+     requested_qname = www;
+   else if (strcmp (qname_compare, "alias.example") == 0)
+@@ -59,6 +59,8 @@ response (const struct resolv_response_context *ctx,
+     requested_qname = nxdomain;
+   else if (strcmp (qname_compare, LONG_NAME) == 0)
+     requested_qname = long_name;
++  else if (strcmp (qname_compare, "nodata.example") == 0)
++    requested_qname = nodata;
+   else
+     {
+       support_record_failure ();
+@@ -87,6 +89,8 @@ response (const struct resolv_response_context *ctx,
+       resolv_response_close_record (b);
+       resolv_response_open_record (b, "www.example", qclass, qtype, 0);
+       break;
++    case nodata:
++      return;
+     case nxdomain:
+       FAIL_EXIT1 ("unreachable");
+     }
+@@ -267,6 +271,55 @@ test_bug_21295 (void)
+     }
+ }
+ 
++/* Run tests which do not expect any data.  */
++static void
++test_nodata_nxdomain (void)
++{
++  /* Iterate through different address families.  */
++  int families[] = { AF_UNSPEC, AF_INET, AF_INET6, -1 };
++  for (int i = 0; families[i] >= 0; ++i)
++    /* If do_tcp, prepend "t." to the name to trigger TCP
++       fallback.  */
++    for (int do_tcp = 0; do_tcp < 2; ++do_tcp)
++      /* If do_nxdomain, trigger an NXDOMAIN error (DNS failure),
++         otherwise use a NODATA response (empty but successful
++         answer).  */
++      for (int do_nxdomain = 0; do_nxdomain < 2; ++do_nxdomain)
++        {
++          int family = families[i];
++          char *name = xasprintf ("%s%s.example",
++                                  do_tcp ? "t." : "",
++                                  do_nxdomain ? "nxdomain" : "nodata");
++
++          if (family != AF_UNSPEC)
++            {
++              if (do_nxdomain)
++                check_h (name, family, "error: HOST_NOT_FOUND\n");
++              else
++                check_h (name, family, "error: NO_ADDRESS\n");
++            }
++
++          const char *expected;
++          if (do_nxdomain)
++            expected = "error: Name or service not known\n";
++          else
++            expected = "error: No address associated with hostname\n";
++
++          check_ai (name, "80", family, expected);
++
++          struct addrinfo hints =
++            {
++              .ai_family = family,
++              .ai_flags = AI_V4MAPPED | AI_ALL,
++            };
++          check_ai_hints (name, "80", hints, expected);
++          hints.ai_flags |= AI_CANONNAME;
++          check_ai_hints (name, "80", hints, expected);
++
++          free (name);
++        }
++}
++
+ static int
+ do_test (void)
+ {
+@@ -439,29 +492,8 @@ do_test (void)
+             "address: DGRAM/UDP 2001:db8::4 80\n"
+             "address: RAW/IP 2001:db8::4 80\n");
+ 
+-  check_h ("nxdomain.example", AF_INET,
+-           "error: HOST_NOT_FOUND\n");
+-  check_h ("nxdomain.example", AF_INET6,
+-           "error: HOST_NOT_FOUND\n");
+-  check_ai ("nxdomain.example", "80", AF_UNSPEC,
+-            "error: Name or service not known\n");
+-  check_ai ("nxdomain.example", "80", AF_INET,
+-            "error: Name or service not known\n");
+-  check_ai ("nxdomain.example", "80", AF_INET6,
+-            "error: Name or service not known\n");
+-
+-  check_h ("t.nxdomain.example", AF_INET,
+-           "error: HOST_NOT_FOUND\n");
+-  check_h ("t.nxdomain.example", AF_INET6,
+-           "error: HOST_NOT_FOUND\n");
+-  check_ai ("t.nxdomain.example", "80", AF_UNSPEC,
+-            "error: Name or service not known\n");
+-  check_ai ("t.nxdomain.example", "80", AF_INET,
+-            "error: Name or service not known\n");
+-  check_ai ("t.nxdomain.example", "80", AF_INET6,
+-            "error: Name or service not known\n");
+-
+   test_bug_21295 ();
++  test_nodata_nxdomain ();
+ 
+   resolv_test_end (aux);
+ 
+diff --git a/sysdeps/posix/getaddrinfo.c b/sysdeps/posix/getaddrinfo.c
+index 0cf87c224d..2c4b6d6793 100644
+--- a/sysdeps/posix/getaddrinfo.c
++++ b/sysdeps/posix/getaddrinfo.c
+@@ -242,28 +242,26 @@ convert_hostent_to_gaih_addrtuple (const struct addrinfo *req,
+ #define gethosts(_family, _type) \
+  {									      \
+   struct hostent th;							      \
+-  struct hostent *h;							      \
+   char *localcanon = NULL;						      \
+   no_data = 0;								      \
+-  while (1) {								      \
+-    status = DL_CALL_FCT (fct, (name, _family, &th,			      \
+-				tmpbuf->data, tmpbuf->length,		      \
+-				&errno, &h_errno, NULL, &localcanon));	      \
+-    if (errno != ERANGE || h_errno != NETDB_INTERNAL)			      \
+-      break;								      \
+-    if (!scratch_buffer_grow (tmpbuf))					      \
+-      {									      \
+-	__resolv_context_enable_inet6 (res_ctx, res_enable_inet6);	      \
+-	__resolv_context_put (res_ctx);					      \
+-	result = -EAI_MEMORY;						      \
+-	goto free_and_return;						      \
+-      }									      \
+-  }									      \
+-  if (status == NSS_STATUS_SUCCESS && errno == 0)			      \
+-    h = &th;								      \
+-  else									      \
+-    h = NULL;								      \
+-  if (errno != 0)							      \
++  while (1)								      \
++    {									      \
++      status = DL_CALL_FCT (fct, (name, _family, &th,			      \
++				  tmpbuf->data, tmpbuf->length,		      \
++				  &errno, &h_errno, NULL, &localcanon));      \
++      if (status != NSS_STATUS_TRYAGAIN || h_errno != NETDB_INTERNAL	      \
++	  || errno != ERANGE)						      \
++	break;								      \
++      if (!scratch_buffer_grow (tmpbuf))				      \
++	{								      \
++	  __resolv_context_enable_inet6 (res_ctx, res_enable_inet6);	      \
++	  __resolv_context_put (res_ctx);				      \
++	  result = -EAI_MEMORY;						      \
++	  goto free_and_return;						      \
++	}								      \
++    }									      \
++  if (status == NSS_STATUS_NOTFOUND					      \
++      || status == NSS_STATUS_TRYAGAIN || status == NSS_STATUS_UNAVAIL)	      \
+     {									      \
+       if (h_errno == NETDB_INTERNAL)					      \
+ 	{								      \
+@@ -277,9 +275,9 @@ convert_hostent_to_gaih_addrtuple (const struct addrinfo *req,
+       else								      \
+ 	no_data = h_errno == NO_DATA;					      \
+     }									      \
+-  else if (h != NULL)							      \
++  else if (status == NSS_STATUS_SUCCESS)				      \
+     {									      \
+-      if (!convert_hostent_to_gaih_addrtuple (req, _family,h, &addrmem))      \
++      if (!convert_hostent_to_gaih_addrtuple (req, _family, &th, &addrmem))   \
+ 	{								      \
+ 	  __resolv_context_enable_inet6 (res_ctx, res_enable_inet6);	      \
+ 	  __resolv_context_put (res_ctx);				      \
+
+commit 85cfe508568530eed2d9cfd34110c21721d1f99e
+Author: Florian Weimer <fweimer@redhat.com>
+Date:   Wed Sep 6 13:43:01 2017 +0200
+
+    tst-res_use_inet6: Enhance test to cover IPv4-to-IPv6 address mapping
+    
+    This requires more control over the response data, so it is now
+    determined by flags embedded in the query name.
+    
+    (cherry picked from commit 5e9c4d17feb9910f489ad2915d0b6e00597a0f11)
+
+diff --git a/ChangeLog b/ChangeLog
+index 3e32d14dbf..dd71f6c427 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,3 +1,15 @@
++2017-09-06  Florian Weimer  <fweimer@redhat.com>
++
++	Enhance tst-res_use_inet6 to test IPv4-to-IPv6 address mapping.
++	* resolv/tst-res_use_inet6.c (response): Process flags embedded in
++	the QNAME.
++	(test_gai): Adjust query names.  Add additional tests.
++	(test_get2_any, test_get2_no_inet6, test_get2_inet6): Split from
++	test_get2.  Adjust query names.  Add additional tests.
++	(test_no_inet6): New function, extracted from threadfunc.
++	(threadfunc): Call test_get2_any, test_get2_inet6, test_no_inet6.
++	Add additional tests.
++
+ 2017-09-01  Florian Weimer  <fweimer@redhat.com>
+ 
+ 	[BZ #21915]
+diff --git a/resolv/tst-res_use_inet6.c b/resolv/tst-res_use_inet6.c
+index 6f3db08892..1522d5c5f5 100644
+--- a/resolv/tst-res_use_inet6.c
++++ b/resolv/tst-res_use_inet6.c
+@@ -19,18 +19,44 @@
+ #include <netdb.h>
+ #include <resolv.h>
+ #include <string.h>
++#include <support/check.h>
+ #include <support/check_nss.h>
+ #include <support/resolv_test.h>
+ #include <support/xthread.h>
+ 
++/* Produce a response based on QNAME: Certain characters in the first
++   label of QNAME trigger the inclusion of resource records:
++
++   'a'   A record (IPv4 address)
++   'q'   AAAA record (quad A record, IPv6 address)
++   'm'   record type must match QTYPE (no additional records)
++
++   QTYPE is ignored for record type selection if 'm' is not
++   specified.  */
+ static void
+ response (const struct resolv_response_context *ctx,
+           struct resolv_response_builder *b,
+           const char *qname, uint16_t qclass, uint16_t qtype)
+ {
+-  bool include_both =  strcmp (qname, "both.example") == 0;
+-  bool include_a = qtype == T_A || include_both;
+-  bool include_aaaa = qtype == T_AAAA || include_both;
++  bool include_a = false;
++  bool include_aaaa = false;
++  bool include_match = false;
++  for (const char *p = qname; *p != '.' && *p != '\0'; ++p)
++    {
++      if (*p == 'a')
++        include_a = true;
++      else if (*p == 'q')
++        include_aaaa = true;
++      else if (*p == 'm')
++        include_match = true;
++    }
++  if (include_match)
++    {
++      if (qtype == T_A)
++        include_aaaa = false;
++      else if (qtype == T_AAAA)
++        include_a = false;
++    }
+ 
+   resolv_response_init (b, (struct resolv_response_flags) {});
+   resolv_response_add_question (b, qname, qclass, qtype);
+@@ -64,16 +90,21 @@ test_gai (void)
+         .ai_protocol = IPPROTO_TCP,
+       };
+     struct addrinfo *ai;
+-    int ret = getaddrinfo ("www1.example", "80", &hints, &ai);
+-    check_addrinfo ("getaddrinfo AF_UNSPEC www1.example", ai, ret,
++    int ret = getaddrinfo ("qam.example", "80", &hints, &ai);
++    check_addrinfo ("getaddrinfo AF_UNSPEC qam.example", ai, ret,
+                     "address: STREAM/TCP 192.0.2.17 80\n"
+                     "address: STREAM/TCP 2001:db8::1 80\n");
+     if (ret == 0)
+       freeaddrinfo (ai);
+-    ret = getaddrinfo ("both.example", "80", &hints, &ai);
++    ret = getaddrinfo ("am.example", "80", &hints, &ai);
++    check_addrinfo ("getaddrinfo AF_UNSPEC am.example", ai, ret,
++                    "address: STREAM/TCP 192.0.2.17 80\n");
++    if (ret == 0)
++      freeaddrinfo (ai);
++    ret = getaddrinfo ("qa.example", "80", &hints, &ai);
+     /* Combined A/AAAA responses currently result in address
+        duplication.  */
+-    check_addrinfo ("getaddrinfo AF_UNSPEC both.example", ai, ret,
++    check_addrinfo ("getaddrinfo AF_UNSPEC qa.example", ai, ret,
+                     "address: STREAM/TCP 192.0.2.17 80\n"
+                     "address: STREAM/TCP 192.0.2.17 80\n"
+                     "address: STREAM/TCP 2001:db8::1 80\n"
+@@ -89,13 +120,18 @@ test_gai (void)
+         .ai_protocol = IPPROTO_TCP,
+       };
+     struct addrinfo *ai;
+-    int ret = getaddrinfo ("www1.example", "80", &hints, &ai);
+-    check_addrinfo ("getaddrinfo AF_INET www1.example", ai, ret,
++    int ret = getaddrinfo ("qam.example", "80", &hints, &ai);
++    check_addrinfo ("getaddrinfo AF_INET qam.example", ai, ret,
++                    "address: STREAM/TCP 192.0.2.17 80\n");
++    if (ret == 0)
++      freeaddrinfo (ai);
++    ret = getaddrinfo ("am.example", "80", &hints, &ai);
++    check_addrinfo ("getaddrinfo AF_INET am.example", ai, ret,
+                     "address: STREAM/TCP 192.0.2.17 80\n");
+     if (ret == 0)
+       freeaddrinfo (ai);
+-    ret = getaddrinfo ("both.example", "80", &hints, &ai);
+-    check_addrinfo ("getaddrinfo AF_INET both.example", ai, ret,
++    ret = getaddrinfo ("qa.example", "80", &hints, &ai);
++    check_addrinfo ("getaddrinfo AF_INET qa.example", ai, ret,
+                     "address: STREAM/TCP 192.0.2.17 80\n");
+     if (ret == 0)
+       freeaddrinfo (ai);
+@@ -108,40 +144,131 @@ test_gai (void)
+         .ai_protocol = IPPROTO_TCP,
+       };
+     struct addrinfo *ai;
+-    int ret = getaddrinfo ("www1.example", "80", &hints, &ai);
++    int ret = getaddrinfo ("qa.example", "80", &hints, &ai);
+     check_addrinfo ("getaddrinfo (AF_INET6)", ai, ret,
+                     "address: STREAM/TCP 2001:db8::1 80\n");
+     if (ret == 0)
+       freeaddrinfo (ai);
+-    ret = getaddrinfo ("both.example", "80", &hints, &ai);
+-    check_addrinfo ("getaddrinfo AF_INET6 both.example", ai, ret,
++    ret = getaddrinfo ("am.example", "80", &hints, &ai);
++    check_addrinfo ("getaddrinfo AF_INET6 am.example", ai, ret,
++                    "error: No address associated with hostname\n");
++    if (ret == 0)
++      freeaddrinfo (ai);
++    ret = getaddrinfo ("qam.example", "80", &hints, &ai);
++    check_addrinfo ("getaddrinfo AF_INET6 qam.example", ai, ret,
+                     "address: STREAM/TCP 2001:db8::1 80\n");
+     if (ret == 0)
+       freeaddrinfo (ai);
+   }
+ }
+ 
+-/* Test that gethostbyname2 is not influenced by RES_USE_INET6.  */
++/* Test that gethostbyname2 is mostly not influenced by
++   RES_USE_INET6.  */
+ static void
+-test_get2 (void)
++test_get2_any (void)
+ {
+-  check_hostent ("gethostbyname2 AF_INET www1.example",
+-                 gethostbyname2 ("www1.example", AF_INET),
+-                 "name: www1.example\n"
++  check_hostent ("gethostbyname2 AF_INET am.example",
++                 gethostbyname2 ("am.example", AF_INET),
++                 "name: am.example\n"
+                  "address: 192.0.2.17\n");
+-  check_hostent ("gethostbyname2 AF_INET both.example",
+-                 gethostbyname2 ("both.example", AF_INET),
+-                 "name: both.example\n"
++  check_hostent ("gethostbyname2 AF_INET a.example",
++                 gethostbyname2 ("a.example", AF_INET),
++                 "name: a.example\n"
++                 "address: 192.0.2.17\n");
++  check_hostent ("gethostbyname2 AF_INET qm.example",
++                 gethostbyname2 ("qm.example", AF_INET),
++                 "error: NO_ADDRESS\n");
++  check_hostent ("gethostbyname2 AF_INET q.example",
++                 gethostbyname2 ("q.example", AF_INET),
++                 "error: NO_RECOVERY\n");
++  check_hostent ("gethostbyname2 AF_INET qam.example",
++                 gethostbyname2 ("qam.example", AF_INET),
++                 "name: qam.example\n"
++                 "address: 192.0.2.17\n");
++  check_hostent ("gethostbyname2 AF_INET qa.example",
++                 gethostbyname2 ("qa.example", AF_INET),
++                 "name: qa.example\n"
+                  "address: 192.0.2.17\n");
+ 
+-  check_hostent ("gethostbyname2 AF_INET6 www1.example",
+-                 gethostbyname2 ("www1.example", AF_INET6),
+-                 "name: www1.example\n"
++  check_hostent ("gethostbyname2 AF_INET6 qm.example",
++                 gethostbyname2 ("qm.example", AF_INET6),
++                 "name: qm.example\n"
++                 "address: 2001:db8::1\n");
++  check_hostent ("gethostbyname2 AF_INET6 q.example",
++                 gethostbyname2 ("q.example", AF_INET6),
++                 "name: q.example\n"
+                  "address: 2001:db8::1\n");
+-  check_hostent ("gethostbyname2 AF_INET6 both.example",
+-                 gethostbyname2 ("both.example", AF_INET6),
+-                 "name: both.example\n"
++  check_hostent ("gethostbyname2 AF_INET6 qam.example",
++                 gethostbyname2 ("qam.example", AF_INET6),
++                 "name: qam.example\n"
+                  "address: 2001:db8::1\n");
++  check_hostent ("gethostbyname2 AF_INET6 qa.example",
++                 gethostbyname2 ("qa.example", AF_INET6),
++                 "name: qa.example\n"
++                 "address: 2001:db8::1\n");
++  /* Additional AF_INET6 tests depend on RES_USE_INET6; see below.  */
++}
++
++/* gethostbyname2 tests with RES_USE_INET6 disabled.  */
++static void
++test_get2_no_inet6 (void)
++{
++  test_get2_any ();
++
++  check_hostent ("gethostbyname2 AF_INET6 am.example",
++                 gethostbyname2 ("am.example", AF_INET6),
++                 "error: NO_ADDRESS\n");
++  check_hostent ("gethostbyname2 AF_INET6 a.example",
++                 gethostbyname2 ("a.example", AF_INET6),
++                 "error: NO_RECOVERY\n");
++}
++
++/* gethostbyname2 tests with RES_USE_INET6 enabled.  */
++static void
++test_get2_inet6 (void)
++{
++  test_get2_any ();
++
++  check_hostent ("gethostbyname2 AF_INET6 am.example",
++                 gethostbyname2 ("am.example", AF_INET6),
++                 "name: am.example\n"
++                 "address: ::ffff:192.0.2.17\n");
++  check_hostent ("gethostbyname2 AF_INET6 a.example",
++                 gethostbyname2 ("a.example", AF_INET6),
++                 "error: NO_RECOVERY\n");
++}
++
++/* Collection of tests which assume no RES_USE_INET6 flag.  */
++static void
++test_no_inet6 (void)
++{
++  check_hostent ("gethostbyname (\"a.example\")",
++                 gethostbyname ("a.example"),
++                 "name: a.example\n"
++                 "address: 192.0.2.17\n");
++  check_hostent ("gethostbyname (\"qa.example\")",
++                 gethostbyname ("qa.example"),
++                 "name: qa.example\n"
++                 "address: 192.0.2.17\n");
++  check_hostent ("gethostbyname (\"am.example\")",
++                 gethostbyname ("am.example"),
++                 "name: am.example\n"
++                 "address: 192.0.2.17\n");
++  check_hostent ("gethostbyname (\"qam.example\")",
++                 gethostbyname ("qam.example"),
++                 "name: qam.example\n"
++                 "address: 192.0.2.17\n");
++  check_hostent ("gethostbyname (\"q.example\")",
++                 gethostbyname ("q.example"),
++                 "error: NO_RECOVERY\n");
++  check_hostent ("gethostbyname (\"qm.example\")",
++                 gethostbyname ("qm.example"),
++                 "error: NO_ADDRESS\n");
++  test_get2_no_inet6 ();
++  test_get2_no_inet6 ();
++  test_gai ();
++  test_get2_no_inet6 ();
++  test_get2_no_inet6 ();
+ }
+ 
+ static void *
+@@ -153,28 +280,42 @@ threadfunc (void *ignored)
+        .response_callback = response
+      });
+ 
+-  check_hostent ("gethostbyname (\"www1.example\")",
+-                 gethostbyname ("www1.example"),
+-                 "name: www1.example\n"
+-                 "address: 192.0.2.17\n");
+-  check_hostent ("gethostbyname (\"both.example\")",
+-                 gethostbyname ("both.example"),
+-                 "name: both.example\n"
+-                 "address: 192.0.2.17\n");
+-  test_get2 ();
+-  test_gai ();
++  TEST_VERIFY ((_res.options & RES_USE_INET6) == 0);
++  test_no_inet6 ();
+ 
+   _res.options |= RES_USE_INET6;
+-  check_hostent ("gethostbyname (\"www1.example\")",
+-                 gethostbyname ("www1.example"),
+-                 "name: www1.example\n"
++  check_hostent ("gethostbyname (\"a.inet6.example\")",
++                 gethostbyname ("a.inet6.example"),
++                 "error: NO_RECOVERY\n");
++  check_hostent ("gethostbyname (\"am.inet6.example\")",
++                 gethostbyname ("am.inet6.example"),
++                 "name: am.inet6.example\n"
++                 "address: ::ffff:192.0.2.17\n");
++  check_hostent ("gethostbyname (\"qa.inet6.example\")",
++                 gethostbyname ("qa.inet6.example"),
++                 "name: qa.inet6.example\n"
++                 "address: 2001:db8::1\n");
++  check_hostent ("gethostbyname (\"qam.inet6.example\")",
++                 gethostbyname ("qam.inet6.example"),
++                 "name: qam.inet6.example\n"
+                  "address: 2001:db8::1\n");
+-  check_hostent ("gethostbyname (\"both.example\")",
+-                 gethostbyname ("both.example"),
+-                 "name: both.example\n"
++  check_hostent ("gethostbyname (\"q.inet6.example\")",
++                 gethostbyname ("q.inet6.example"),
++                 "name: q.inet6.example\n"
+                  "address: 2001:db8::1\n");
+-  test_get2 ();
++  check_hostent ("gethostbyname (\"qm.inet6.example\")",
++                 gethostbyname ("qm.inet6.example"),
++                 "name: qm.inet6.example\n"
++                 "address: 2001:db8::1\n");
++  test_get2_inet6 ();
++  test_get2_inet6 ();
+   test_gai ();
++  test_get2_inet6 ();
++  test_get2_inet6 ();
++
++  TEST_VERIFY (_res.options & RES_USE_INET6);
++  _res.options &= ~RES_USE_INET6;
++  test_no_inet6 ();
+ 
+   resolv_test_end (obj);
+ 
+
+commit 3005466abe8fb80ad4ff51865f1e28dd81c43347
+Author: Florian Weimer <fweimer@redhat.com>
+Date:   Wed Sep 6 15:11:44 2017 +0200
+
+    nss_dns: Remove dead PTR IPv4-to-IPv6 mapping code
+    
+    (cherry picked from commit c77eb96925b719001237ca7c9e3cef40d795d66b)
+
+diff --git a/ChangeLog b/ChangeLog
+index dd71f6c427..fa215c2729 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,5 +1,17 @@
+ 2017-09-06  Florian Weimer  <fweimer@redhat.com>
+ 
++	Remove dead PTR IPv4-to-IPv6 mapping code from nss_dns.
++	* resolv/nss_dns/dns-host.c (getanswer_r): Remove dead code.
++	* resolv/tst-res_use_inet6.c (response_ptr_v4, response_ptr_v6):
++	New functions.
++	(response): Call them.  Add 'p', '6' flag processing.
++	(test_reverse): New function.
++	(test_get2_any): Call it.
++	(test_no_inet6): Add 'p' test.
++	(test_inet6): Likewise.
++
++2017-09-06  Florian Weimer  <fweimer@redhat.com>
++
+ 	Enhance tst-res_use_inet6 to test IPv4-to-IPv6 address mapping.
+ 	* resolv/tst-res_use_inet6.c (response): Process flags embedded in
+ 	the QNAME.
+diff --git a/resolv/nss_dns/dns-host.c b/resolv/nss_dns/dns-host.c
+index 7cd54ab504..1e85e4f08f 100644
+--- a/resolv/nss_dns/dns-host.c
++++ b/resolv/nss_dns/dns-host.c
+@@ -889,19 +889,6 @@ getanswer_r (struct resolv_context *ctx,
+ 	  /* bind would put multiple PTR records as aliases, but we don't do
+ 	     that.  */
+ 	  result->h_name = bp;
+-	  if (have_to_map)
+-	    {
+-	      n = strlen (bp) + 1;	/* for the \0 */
+-	      if (__glibc_unlikely (n >= MAXHOSTNAMELEN))
+-		{
+-		  ++had_error;
+-		  break;
+-		}
+-	      bp += n;
+-	      linebuflen -= n;
+-	      if (map_v4v6_hostent (result, &bp, &linebuflen))
+-		goto too_small;
+-	    }
+ 	  *h_errnop = NETDB_SUCCESS;
+ 	  return NSS_STATUS_SUCCESS;
+ 	case T_A:
+diff --git a/resolv/tst-res_use_inet6.c b/resolv/tst-res_use_inet6.c
+index 1522d5c5f5..d819f921d6 100644
+--- a/resolv/tst-res_use_inet6.c
++++ b/resolv/tst-res_use_inet6.c
+@@ -16,31 +16,101 @@
+    License along with the GNU C Library; if not, see
+    <http://www.gnu.org/licenses/>.  */
+ 
++#include <ctype.h>
+ #include <netdb.h>
+ #include <resolv.h>
++#include <stdio.h>
++#include <stdlib.h>
+ #include <string.h>
+ #include <support/check.h>
+ #include <support/check_nss.h>
+ #include <support/resolv_test.h>
++#include <support/support.h>
+ #include <support/xthread.h>
+ 
++/* Handle IPv4 reverse lookup responses.  Product a PTR record
++   A-B-C-D.v4.example.  */
++static void
++response_ptr_v4 (const struct resolv_response_context *ctx,
++                 struct resolv_response_builder *b,
++                 const char *qname, uint16_t qclass, uint16_t qtype)
++{
++  int bytes[4];
++  int offset = -1;
++  TEST_VERIFY (sscanf (qname, "%d.%d.%d.%d.in-addr.arpa%n",
++                       bytes + 0, bytes + 1, bytes + 2, bytes + 3,
++                       &offset) == 4);
++  TEST_VERIFY (offset == strlen (qname));
++  resolv_response_init (b, (struct resolv_response_flags) {});
++  resolv_response_add_question (b, qname, qclass, qtype);
++  resolv_response_section (b, ns_s_an);
++  resolv_response_open_record (b, qname, qclass, T_PTR, 0);
++  char *name = xasprintf ("%d-%d-%d-%d.v4.example",
++                          bytes[3], bytes[2], bytes[1], bytes[0]);
++  resolv_response_add_name (b, name);
++  free (name);
++  resolv_response_close_record (b);
++}
++
++/* Handle IPv6 reverse lookup responses.  Produce a PTR record
++   <32 hex digits>.v6.example. */
++static void
++response_ptr_v6 (const struct resolv_response_context *ctx,
++                 struct resolv_response_builder *b,
++                 const char *qname, uint16_t qclass, uint16_t qtype)
++{
++
++  TEST_VERIFY_EXIT (strlen (qname) > 64);
++
++  char bytes[33];
++  for (int i = 0; i < 64; ++i)
++    if ((i % 2) == 0)
++      {
++        TEST_VERIFY (isxdigit ((unsigned char) qname[i]));
++        bytes[31 - i / 2] = qname[i];
++      }
++    else
++      TEST_VERIFY_EXIT (qname[i] == '.');
++  bytes[32] = '\0';
++
++    resolv_response_init (b, (struct resolv_response_flags) {});
++  resolv_response_add_question (b, qname, qclass, qtype);
++  resolv_response_section (b, ns_s_an);
++  resolv_response_open_record (b, qname, qclass, T_PTR, 0);
++  char *name = xasprintf ("%s.v6.example", bytes);
++  resolv_response_add_name (b, name);
++  free (name);
++  resolv_response_close_record (b);
++}
++
+ /* Produce a response based on QNAME: Certain characters in the first
+    label of QNAME trigger the inclusion of resource records:
+ 
+    'a'   A record (IPv4 address)
+    'q'   AAAA record (quad A record, IPv6 address)
++   'p'   PTR record
+    'm'   record type must match QTYPE (no additional records)
++   '6'   stop flag processing if QTYPE == AAAA
++
++   For 'a' and 'q', QTYPE is ignored for record type selection if 'm'
++   is not specified.
+ 
+-   QTYPE is ignored for record type selection if 'm' is not
+-   specified.  */
++   in-addr.arpa and ip6.arpa queries are handled separately in
++   response_ptr_v4 and response_ptr_v6.  */
+ static void
+ response (const struct resolv_response_context *ctx,
+           struct resolv_response_builder *b,
+           const char *qname, uint16_t qclass, uint16_t qtype)
+ {
++  if (strstr (qname, ".in-addr.arpa") != NULL)
++    return response_ptr_v4 (ctx, b, qname, qclass, qtype);
++  else if (strstr (qname, ".ip6.arpa") != NULL)
++    return response_ptr_v6 (ctx, b, qname, qclass, qtype);
++
+   bool include_a = false;
+   bool include_aaaa = false;
+   bool include_match = false;
++  bool include_ptr = false;
+   for (const char *p = qname; *p != '.' && *p != '\0'; ++p)
+     {
+       if (*p == 'a')
+@@ -49,6 +119,10 @@ response (const struct resolv_response_context *ctx,
+         include_aaaa = true;
+       else if (*p == 'm')
+         include_match = true;
++      else if (*p == 'p')
++        include_ptr = true;
++      else if (*p == '6' && qtype == T_AAAA)
++        break;
+     }
+   if (include_match)
+     {
+@@ -70,11 +144,17 @@ response (const struct resolv_response_context *ctx,
+     }
+   if (include_aaaa)
+     {
+-        char ipv6[16]
+-          = {0x20, 0x01, 0xd, 0xb8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1};
+-        resolv_response_open_record (b, qname, qclass, T_AAAA, 0);
+-        resolv_response_add_data (b, &ipv6, sizeof (ipv6));
+-        resolv_response_close_record (b);
++      char ipv6[16]
++        = {0x20, 0x01, 0xd, 0xb8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1};
++      resolv_response_open_record (b, qname, qclass, T_AAAA, 0);
++      resolv_response_add_data (b, &ipv6, sizeof (ipv6));
++      resolv_response_close_record (b);
++    }
++  if (include_ptr)
++    {
++      resolv_response_open_record (b, qname, qclass, T_PTR, 0);
++      resolv_response_add_name (b, "ptr-target.example");
++      resolv_response_close_record (b);
+     }
+ }
+ 
+@@ -162,6 +242,65 @@ test_gai (void)
+   }
+ }
+ 
++/* Test gethostbyaddr and getnameinfo.  The results are independent of
++   RES_USE_INET6.  */
++static void
++test_reverse (void)
++{
++  {
++    char ipv4[4] = { 192, 0, 2, 17 };
++    check_hostent ("gethostbyaddr AF_INET",
++                   gethostbyaddr (ipv4, sizeof (ipv4), AF_INET),
++                   "name: 192-0-2-17.v4.example\n"
++                   "address: 192.0.2.17\n");
++  }
++  {
++    char ipv6[16]
++      = {0x20, 0x01, 0xd, 0xb8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1};
++    check_hostent ("gethostbyaddr AF_INET",
++                   gethostbyaddr (ipv6, sizeof (ipv6), AF_INET6),
++                   "name: 20010db8000000000000000000000001.v6.example\n"
++                   "address: 2001:db8::1\n");
++  }
++
++  {
++    struct sockaddr_in addr =
++      {
++        .sin_family = AF_INET,
++        .sin_addr = { .s_addr = htonl (0xc0000211) },
++        .sin_port = htons (80)
++      };
++    char host[NI_MAXHOST];
++    char service[NI_MAXSERV];
++    int ret = getnameinfo ((struct sockaddr *) &addr, sizeof (addr),
++                           host, sizeof (host), service, sizeof (service),
++                           NI_NUMERICSERV);
++    TEST_VERIFY (ret == 0);
++    TEST_VERIFY (strcmp (host, "192-0-2-17.v4.example") == 0);
++    TEST_VERIFY (strcmp (service, "80") == 0);
++  }
++  {
++    char ipv6[16]
++      = {0x20, 0x01, 0xd, 0xb8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1};
++    struct sockaddr_in6 addr =
++      {
++        .sin6_family = AF_INET6,
++        .sin6_port = htons (80),
++      };
++    TEST_VERIFY (sizeof (ipv6) == sizeof (addr.sin6_addr));
++    memcpy (&addr.sin6_addr, ipv6, sizeof (addr.sin6_addr));
++    char host[NI_MAXHOST];
++    char service[NI_MAXSERV];
++    int ret = getnameinfo ((struct sockaddr *) &addr, sizeof (addr),
++                           host, sizeof (host), service, sizeof (service),
++                           NI_NUMERICSERV);
++    TEST_VERIFY (ret == 0);
++    TEST_VERIFY
++      (strcmp (host, "20010db8000000000000000000000001.v6.example") == 0);
++    TEST_VERIFY (strcmp (service, "80") == 0);
++  }
++}
++
+ /* Test that gethostbyname2 is mostly not influenced by
+    RES_USE_INET6.  */
+ static void
+@@ -207,6 +346,8 @@ test_get2_any (void)
+                  "name: qa.example\n"
+                  "address: 2001:db8::1\n");
+   /* Additional AF_INET6 tests depend on RES_USE_INET6; see below.  */
++
++  test_reverse ();
+ }
+ 
+ /* gethostbyname2 tests with RES_USE_INET6 disabled.  */
+@@ -254,6 +395,10 @@ test_no_inet6 (void)
+                  gethostbyname ("am.example"),
+                  "name: am.example\n"
+                  "address: 192.0.2.17\n");
++  check_hostent ("gethostbyname (\"amp.example\")",
++                 gethostbyname ("amp.example"),
++                 "name: amp.example\n"
++                 "address: 192.0.2.17\n");
+   check_hostent ("gethostbyname (\"qam.example\")",
+                  gethostbyname ("qam.example"),
+                  "name: qam.example\n"
+@@ -307,6 +452,28 @@ threadfunc (void *ignored)
+                  gethostbyname ("qm.inet6.example"),
+                  "name: qm.inet6.example\n"
+                  "address: 2001:db8::1\n");
++  check_hostent ("gethostbyname (\"amp.inet6.example\")",
++                 gethostbyname ("amp.inet6.example"),
++                 "error: NO_RECOVERY\n");
++  check_hostent ("gethostbyname (\"qmp.inet6.example\")",
++                 gethostbyname ("qmp.inet6.example"),
++                 "name: qmp.inet6.example\n"
++                 "address: 2001:db8::1\n");
++  check_hostent ("gethostbyname (\"ap.inet6.example\")",
++                 gethostbyname ("ap.inet6.example"),
++                 "error: NO_RECOVERY\n");
++  check_hostent ("gethostbyname (\"6ap.inet6.example\")",
++                 gethostbyname ("6ap.inet6.example"),
++                 "name: 6ap.inet6.example\n"
++                 "address: ::ffff:192.0.2.17\n");
++  check_hostent ("gethostbyname (\"am6p.inet6.example\")",
++                 gethostbyname ("am6p.inet6.example"),
++                 "name: am6p.inet6.example\n"
++                 "address: ::ffff:192.0.2.17\n");
++  check_hostent ("gethostbyname (\"qp.inet6.example\")",
++                 gethostbyname ("qp.inet6.example"),
++                 "name: qp.inet6.example\n"
++                 "address: 2001:db8::1\n");
+   test_get2_inet6 ();
+   test_get2_inet6 ();
+   test_gai ();
+
+commit 905a6129147e7ee80e8918e23efe212433b8cce7
+Author: Florian Weimer <fweimer@redhat.com>
+Date:   Wed Sep 6 15:46:54 2017 +0200
+
+    resolv: Fix memory leak with OOM during resolv.conf parsing [BZ #22095]
+    
+    (cherry picked from commit 5670c4ab256114e869b1df4b05653aa5f909182c)
+
+diff --git a/ChangeLog b/ChangeLog
+index fa215c2729..ef2041b9e5 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,5 +1,11 @@
+ 2017-09-06  Florian Weimer  <fweimer@redhat.com>
+ 
++	[BZ #22095]
++	* resolv/res_init.c (res_vinit_1): Avoid memory leak in case of
++	dynarray allocation failure.
++
++2017-09-06  Florian Weimer  <fweimer@redhat.com>
++
+ 	Remove dead PTR IPv4-to-IPv6 mapping code from nss_dns.
+ 	* resolv/nss_dns/dns-host.c (getanswer_r): Remove dead code.
+ 	* resolv/tst-res_use_inet6.c (response_ptr_v4, response_ptr_v6):
+diff --git a/NEWS b/NEWS
+index 8fbf4241d1..62959274b3 100644
+--- a/NEWS
++++ b/NEWS
+@@ -28,6 +28,7 @@ The following bugs are resolved with this release:
+   [21932] Unpaired __resolv_context_get in generic get*_r implementation
+   [21941] powerpc: Restrict xssqrtqp operands to Vector Registers
+   [21972] assert macro requires operator== (int) for its argument type
++  [22095] resolv: Fix memory leak with OOM during resolv.conf parsing
+ 
+ Version 2.26
+ 
+diff --git a/resolv/res_init.c b/resolv/res_init.c
+index fa46ce7813..4e1f9fe8de 100644
+--- a/resolv/res_init.c
++++ b/resolv/res_init.c
+@@ -446,6 +446,11 @@ res_vinit_1 (FILE *fp, struct resolv_conf_parser *parser)
+                     (&parser->nameserver_list);
+                   if (p != NULL)
+                     *p = sa;
++                  else
++                    {
++                      free (sa);
++                      return false;
++                    }
+                 }
+               continue;
+             }
+
+commit 27233446a62ca35ce0b54566279a99a6774d4210
+Author: Florian Weimer <fweimer@redhat.com>
+Date:   Wed Sep 6 15:47:27 2017 +0200
+
+    resolv: __resolv_conf_attach must not free passed conf object [BZ #22096]
+    
+    (cherry picked from commit a83047308196e3e54716a39dd85c0a08b198d6bd)
+
+diff --git a/ChangeLog b/ChangeLog
+index ef2041b9e5..e98a4bbf3c 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,5 +1,11 @@
+ 2017-09-06  Florian Weimer  <fweimer@redhat.com>
+ 
++	[BZ #22096]
++	* resolv/resolv_conf.c (__resolv_conf_attach): Do not free conf in
++	case of failure to obtain the global conf object.
++
++2017-09-06  Florian Weimer  <fweimer@redhat.com>
++
+ 	[BZ #22095]
+ 	* resolv/res_init.c (res_vinit_1): Avoid memory leak in case of
+ 	dynarray allocation failure.
+diff --git a/NEWS b/NEWS
+index 62959274b3..9bcb176171 100644
+--- a/NEWS
++++ b/NEWS
+@@ -29,6 +29,7 @@ The following bugs are resolved with this release:
+   [21941] powerpc: Restrict xssqrtqp operands to Vector Registers
+   [21972] assert macro requires operator== (int) for its argument type
+   [22095] resolv: Fix memory leak with OOM during resolv.conf parsing
++  [22096] resolv: __resolv_conf_attach must not free passed conf object
+ 
+ Version 2.26
+ 
+diff --git a/resolv/resolv_conf.c b/resolv/resolv_conf.c
+index f391d30c27..e0f296d02e 100644
+--- a/resolv/resolv_conf.c
++++ b/resolv/resolv_conf.c
+@@ -600,10 +600,7 @@ __resolv_conf_attach (struct __res_state *resp, struct resolv_conf *conf)
+ 
+   struct resolv_conf_global *global_copy = get_locked_global ();
+   if (global_copy == NULL)
+-    {
+-      free (conf);
+-      return false;
+-    }
++    return false;
+ 
+   /* Try to find an unused index in the array.  */
+   size_t index;
+
+commit d265b6129184dd94da600187b67cef9125bc58c7
+Author: Florian Weimer <fweimer@redhat.com>
+Date:   Wed Sep 6 11:25:14 2017 +0200
+
+    __libc_dynarray_emplace_enlarge: Add missing else
+    
+    Before, arrays of small elements received a starting allocation size of
+    8, not 16.
+
+diff --git a/ChangeLog b/ChangeLog
+index e98a4bbf3c..f82fd1f97d 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,5 +1,10 @@
+ 2017-09-06  Florian Weimer  <fweimer@redhat.com>
+ 
++	* malloc/dynarray_emplace_enlarge.c
++	(__libc_dynarray_emplace_enlarge): Add missing else.
++
++2017-09-06  Florian Weimer  <fweimer@redhat.com>
++
+ 	[BZ #22096]
+ 	* resolv/resolv_conf.c (__resolv_conf_attach): Do not free conf in
+ 	case of failure to obtain the global conf object.
+diff --git a/malloc/dynarray_emplace_enlarge.c b/malloc/dynarray_emplace_enlarge.c
+index dfc70017ce..09cd09268b 100644
+--- a/malloc/dynarray_emplace_enlarge.c
++++ b/malloc/dynarray_emplace_enlarge.c
+@@ -32,7 +32,7 @@ __libc_dynarray_emplace_enlarge (struct dynarray_header *list,
+          size.  */
+       if (element_size < 4)
+         new_allocated = 16;
+-      if (element_size < 8)
++      else if (element_size < 8)
+         new_allocated = 8;
+       else
+         new_allocated = 4;
+
+commit 8a1adb593969e099604537804f594efe01e04f6f
+Author: Florian Weimer <fweimer@redhat.com>
+Date:   Wed Aug 30 20:10:56 2017 +0200
+
+    dynarray: Set errno on overflow-induced allocation failure
+    
+    This allows the caller to return directly on such an error, with an
+    appropriate errno value.
+    
+    (cherry picked from commit 5898f4548efdcd7c0fd437a74eeb80facc51a117)
+
+diff --git a/ChangeLog b/ChangeLog
+index f82fd1f97d..87cc2f4865 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,3 +1,11 @@
++2017-08-30  Florian Weimer  <fweimer@redhat.com>
++
++	* malloc/dynarray_emplace_enlarge.c
++	(__libc_dynarray_emplace_enlarge): Set errno on overflow.
++	* malloc/dynarray_resize.c (__libc_dynarray_resize): Likewise.
++	* malloc/tst-dynarray.c (test_long_overflow): New function.
++	(do_test): Call it.
++
+ 2017-09-06  Florian Weimer  <fweimer@redhat.com>
+ 
+ 	* malloc/dynarray_emplace_enlarge.c
+diff --git a/malloc/dynarray_emplace_enlarge.c b/malloc/dynarray_emplace_enlarge.c
+index 09cd09268b..a15245f4cb 100644
+--- a/malloc/dynarray_emplace_enlarge.c
++++ b/malloc/dynarray_emplace_enlarge.c
+@@ -17,6 +17,7 @@
+    <http://www.gnu.org/licenses/>.  */
+ 
+ #include <dynarray.h>
++#include <errno.h>
+ #include <malloc-internal.h>
+ #include <stdlib.h>
+ #include <string.h>
+@@ -43,8 +44,11 @@ __libc_dynarray_emplace_enlarge (struct dynarray_header *list,
+     {
+       new_allocated = list->allocated + list->allocated / 2 + 1;
+       if (new_allocated <= list->allocated)
+-        /* Overflow.  */
+-        return false;
++        {
++          /* Overflow.  */
++          __set_errno (ENOMEM);
++          return false;
++        }
+     }
+ 
+   size_t new_size;
+diff --git a/malloc/dynarray_resize.c b/malloc/dynarray_resize.c
+index e6dc9fbc68..63c981bf61 100644
+--- a/malloc/dynarray_resize.c
++++ b/malloc/dynarray_resize.c
+@@ -17,6 +17,7 @@
+    <http://www.gnu.org/licenses/>.  */
+ 
+ #include <dynarray.h>
++#include <errno.h>
+ #include <malloc-internal.h>
+ #include <stdlib.h>
+ #include <string.h>
+@@ -38,7 +39,11 @@ __libc_dynarray_resize (struct dynarray_header *list, size_t size,
+ 
+   size_t new_size_bytes;
+   if (check_mul_overflow_size_t (size, element_size, &new_size_bytes))
+-    return false;
++    {
++      /* Overflow.  */
++      __set_errno (ENOMEM);
++      return false;
++    }
+   void *new_array;
+   if (list->array == scratch)
+     {
+diff --git a/malloc/tst-dynarray.c b/malloc/tst-dynarray.c
+index 2206d75e31..d11f7bb8a3 100644
+--- a/malloc/tst-dynarray.c
++++ b/malloc/tst-dynarray.c
+@@ -18,6 +18,9 @@
+ 
+ #include "tst-dynarray-shared.h"
+ 
++#include <errno.h>
++#include <stdint.h>
++
+ #define DYNARRAY_STRUCT dynarray_long
+ #define DYNARRAY_ELEMENT long
+ #define DYNARRAY_PREFIX dynarray_long_
+@@ -463,6 +466,31 @@ test_long_init (void)
+   }
+ }
+ 
++/* Test overflow in resize.  */
++static void
++test_long_overflow (void)
++{
++  {
++    struct dynarray_long dyn;
++    dynarray_long_init (&dyn);
++    errno = EINVAL;
++    TEST_VERIFY (!dynarray_long_resize
++                 (&dyn, (SIZE_MAX / sizeof (long)) + 1));
++    TEST_VERIFY (errno == ENOMEM);
++    TEST_VERIFY (dynarray_long_has_failed (&dyn));
++  }
++
++  {
++    struct dynarray_long_noscratch dyn;
++    dynarray_long_noscratch_init (&dyn);
++    errno = EINVAL;
++    TEST_VERIFY (!dynarray_long_noscratch_resize
++                 (&dyn, (SIZE_MAX / sizeof (long)) + 1));
++    TEST_VERIFY (errno == ENOMEM);
++    TEST_VERIFY (dynarray_long_noscratch_has_failed (&dyn));
++  }
++}
++
+ /* Test NUL-terminated string construction with the add function and
+    the simple finalize function.  */
+ static void
+@@ -538,6 +566,7 @@ do_test (void)
+   test_int ();
+   test_str ();
+   test_long_init ();
++  test_long_overflow ();
+   test_zstr ();
+   return 0;
+ }
+
+commit dca8b177f6bb521638f4d8a845b4cb10348137c9
+Author: H.J. Lu <hjl.tools@gmail.com>
+Date:   Thu Aug 31 06:28:31 2017 -0700
+
+    Place $(elf-objpfx)sofini.os last [BZ #22051]
+    
+    Since sofini.os terminates .eh_frame section, it should be placed last.
+    
+            [BZ #22051]
+            * Makerules (build-module-helper-objlist): Filter out
+            $(elf-objpfx)sofini.os.
+            (build-shlib-objlist): Append $(elf-objpfx)sofini.os if it is
+            needed.
+    
+    (cherry picked from commit ecd0747df388f3925d4839740b0abcf43d0a9fb2)
+
+diff --git a/ChangeLog b/ChangeLog
+index 87cc2f4865..f9e423dbb3 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,3 +1,11 @@
++2017-08-31  H.J. Lu  <hongjiu.lu@intel.com>
++
++	[BZ #22051]
++	* Makerules (build-module-helper-objlist): Filter out
++	$(elf-objpfx)sofini.os.
++	(build-shlib-objlist): Append $(elf-objpfx)sofini.os if it is
++	needed.
++
+ 2017-08-30  Florian Weimer  <fweimer@redhat.com>
+ 
+ 	* malloc/dynarray_emplace_enlarge.c
+diff --git a/Makerules b/Makerules
+index 9bb707c168..828a445f24 100644
+--- a/Makerules
++++ b/Makerules
+@@ -686,14 +686,17 @@ $(build-module-helper) -o $@ $(shlib-lds-flags) \
+ $(call after-link,$@)
+ endef
+ 
++# sofini.os must be placed last since it terminates .eh_frame section.
+ build-module-helper-objlist = \
+ 	$(patsubst %_pic.a,$(whole-archive) %_pic.a $(no-whole-archive),\
+ 		   $(filter-out %.lds $(map-file) $(+preinit) $(+postinit) \
++				$(elf-objpfx)sofini.os \
+ 				$(link-libc-deps),$^))
+ 
+ build-module-objlist = $(build-module-helper-objlist) $(LDLIBS-$(@F:%.so=%).so)
+ build-shlib-objlist = $(build-module-helper-objlist) \
+-		      $(LDLIBS-$(@F:lib%.so=%).so)
++		      $(LDLIBS-$(@F:lib%.so=%).so) \
++		      $(filter $(elf-objpfx)sofini.os,$^)
+ 
+ # Don't try to use -lc when making libc.so itself.
+ # Also omits crti.o and crtn.o, which we do not want
+
+commit 86553be84d071aee8464b2c2fa03858d12118852
+Author: H.J. Lu <hjl.tools@gmail.com>
+Date:   Thu Sep 7 13:56:58 2017 -0700
+
+    Use "static const char domain[] ="
+    
+            * resolv/tst-resolv-qtypes.c (domain): Changed to
+            "const char domain[] =".
+    
+    (cherry picked from commit 78bfa877b36e8f33c99cbe9a16eb73f5a2adc0c8)
+
+diff --git a/ChangeLog b/ChangeLog
+index f9e423dbb3..96c461c441 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,3 +1,8 @@
++2017-09-07  H.J. Lu  <hongjiu.lu@intel.com>
++
++	* resolv/tst-resolv-qtypes.c (domain): Changed to
++	"const char domain[] =".
++
+ 2017-08-31  H.J. Lu  <hongjiu.lu@intel.com>
+ 
+ 	[BZ #22051]
+diff --git a/resolv/tst-resolv-qtypes.c b/resolv/tst-resolv-qtypes.c
+index 06ea3dbd14..da3325f80c 100644
+--- a/resolv/tst-resolv-qtypes.c
++++ b/resolv/tst-resolv-qtypes.c
+@@ -50,7 +50,7 @@ response (const struct resolv_response_context *ctx,
+   resolv_response_close_record (b);
+ }
+ 
+-static const char * const domain = "www.example.com";
++static const char domain[] = "www.example.com";
+ 
+ static int
+ wrap_res_query (int type, unsigned char *answer, int answer_length)
+
+commit 5f5532caf820f47f714d09766082f1e070c12cfb
+Author: Markus Trippelsdorf <markus@trippelsdorf.de>
+Date:   Fri Sep 8 19:57:12 2017 +0000
+
+    Update x86_64 ulps for AMD Ryzen.
+    
+            * sysdeps/x86_64/fpu/libm-test-ulps: Update for AMD Ryzen.
+    
+    (cherry picked from commit 4c03a696800e3bb4b433626a65c4fef465dcc98b)
+
+diff --git a/ChangeLog b/ChangeLog
+index 96c461c441..c180f8dbca 100644
+--- a/ChangeLog
++++ b/ChangeLog
+@@ -1,3 +1,7 @@
++2017-09-08  Markus Trippelsdorf  <markus@trippelsdorf.de>
++
++	* sysdeps/x86_64/fpu/libm-test-ulps: Update for AMD Ryzen.
++
+ 2017-09-07  H.J. Lu  <hongjiu.lu@intel.com>
+ 
+ 	* resolv/tst-resolv-qtypes.c (domain): Changed to
+diff --git a/sysdeps/x86_64/fpu/libm-test-ulps b/sysdeps/x86_64/fpu/libm-test-ulps
+index c347642044..1e28aaa9f1 100644
+--- a/sysdeps/x86_64/fpu/libm-test-ulps
++++ b/sysdeps/x86_64/fpu/libm-test-ulps
+@@ -1733,10 +1733,10 @@ ldouble: 3
+ 
+ Function: Imaginary part of "ctan_upward":
+ double: 2
+-float: 1
++float: 2
+ float128: 5
+ idouble: 2
+-ifloat: 1
++ifloat: 2
+ ifloat128: 5
+ ildouble: 3
+ ldouble: 3

@@ -214,7 +214,7 @@ Last-Update: <YYYY-MM-DD>
  			}
  		}
  
-@@ -182,10 +201,15 @@ namespace Mono.Security.X509 {
+@@ -182,10 +201.15 @@ namespace Mono.Security.X509 {
  
  		// private stuff
  
@@ -1613,7 +1613,7 @@ Last-Update: <YYYY-MM-DD>
 +}
 --- /dev/null
 +++ mono-4.2.1.102+dfsg2/mcs/class/System.Data/System.Data.Common/DataTableMapping.cs
-@@ -0,0 +1,159 @@
+@@ -0,0 +1.159 @@
 +//
 +// System.Data.Common.DataTableMapping.cs
 +//

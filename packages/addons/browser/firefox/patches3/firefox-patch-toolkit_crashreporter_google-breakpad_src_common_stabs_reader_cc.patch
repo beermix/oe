@@ -1,4 +1,4 @@
---- mozilla-release.orig/toolkit/crashreporter/google-breakpad/src/common/stabs_reader.cc	2013-09-11 01:15:25.000000000 +0200
+--- mozilla-release.orig/toolkit/crashreporter/google-breakpad/src/common/stabs_reader.cc	2013-09-11 01.15:25.000000000 +0200
 +++ mozilla-release/toolkit/crashreporter/google-breakpad/src/common/stabs_reader.cc	2013-10-24 12:08:16.000000000 +0200
 @@ -34,13 +34,31 @@
  #include "common/stabs_reader.h"

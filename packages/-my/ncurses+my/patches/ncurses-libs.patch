@@ -1,5 +1,5 @@
 diff -up ncurses-6.0-20150810/c++/Makefile.in.libs ncurses-6.0-20150810/c++/Makefile.in
---- ncurses-6.0-20150810/c++/Makefile.in.libs	2015-08-06 01:15:41.000000000 +0200
+--- ncurses-6.0-20150810/c++/Makefile.in.libs	2015-08-06 01.15:41.000000000 +0200
 +++ ncurses-6.0-20150810/c++/Makefile.in	2015-08-12 17:07:35.573822650 +0200
 @@ -112,7 +112,7 @@ LOCAL_LIBDIR	= @top_builddir@/lib
  

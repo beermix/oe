@@ -1,4 +1,4 @@
-From 2b06ab6d8603b511150d965e876ece1c24ee80e3 Mon Sep 17 00:00:00 2001
+From 2b06ab6d8603b51.150d965e876ece1c24ee80e3 Mon Sep 17 00:00:00 2001
 From: Stefan Saraev <stefan@saraev.ca>
 Date: Sat, 7 Mar 2015 00:16:48 +0200
 Subject: [PATCH] disable network mode on new installs

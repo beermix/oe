@@ -591,7 +591,7 @@ static char RCSid[] = "@(#)$Revision: 1.2 $ (BRL)";
 #endif
 
 #ifndef ULLONG_MAX
-#define ULLONG_MAX	18446744073709551615ULL
+#define ULLONG_MAX	18446744073709551.15ULL
 #endif
 
 #define MAXRATE 0xffffffffUL

@@ -1,7 +1,7 @@
 diff -Naur a/CMakeLists.txt b/CMakeLists.txt
 --- a/CMakeLists.txt	2016-03-09 15:16:52.000000000 -0800
 +++ b/CMakeLists.txt	2016-03-30 22:45:01.502582518 -0700
-@@ -1,46 +1,15 @@
+@@ -1,46 +1.15 @@
  project(asplib)
  
  cmake_minimum_required(VERSION 2.6)

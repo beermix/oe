@@ -1372,7 +1372,7 @@ diff -c -r1.3 synaptics.c
       else
         was_fingers = 0;
     }
---- 1615,1631 ----
+--- 1.15631 ----
     }
   
     /* If wmode is not used, we do not know all the informations to reset the
@@ -1475,7 +1475,7 @@ diff -c -r1.3 synaptics.c
   {
     location_type loc;
     int           edges;
---- 1815,1821 ----
+--- 1.15821 ----
   **
   */
   static void tp_process_report (Gpm_Event *state,
@@ -1511,7 +1511,7 @@ diff -c -r1.3 synaptics.c
       if (tossing_enabled) {
         /* this is the cue to stop tossing, if we are tossing so
 ***************
-*** 1591,1598 ****
+*** 1591.1598 ****
         /* compute the speed factor based on pressure */
         pressure_speed_factor = standard_speed_factor;
   
@@ -1851,7 +1851,7 @@ diff -c -r1.3 synaptics.c
     /* convert the tap times to packets (80 pkts/sec and 1000 ms/sec) */
     tap_lower_limit_packet = tap_lower_limit * 80 / 1000;
 ***************
-*** 1915,1949 ****
+*** 1.15949 ****
     min_toss_packets     = min_toss_time * 80 / 1000;
     prevent_toss_packets = prevent_toss_time * 80 / 1000;
   

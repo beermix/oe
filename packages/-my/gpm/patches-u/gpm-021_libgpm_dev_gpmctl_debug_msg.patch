@@ -30,7 +30,7 @@ index 25a1d5c..e789d09 100644
  
     /*....................................... First of all, check xterm */
  
-@@ -311,15 +312,28 @@ int Gpm_Open(Gpm_Connect *conn, int flag)
+@@ -311.15 +312,28 @@ int Gpm_Open(Gpm_Connect *conn, int flag)
        if(connect(gpm_fd,(struct sockaddr *)(&addr),i)<0 ) {
           struct stat stbuf;
  

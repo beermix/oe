@@ -1,6 +1,6 @@
 diff -up lua-5.3.0/configure.ac.autoxxx lua-5.3.0/configure.ac
---- lua-5.3.0/configure.ac.autoxxx	2015-01-15 10:20:03.826889574 -0500
-+++ lua-5.3.0/configure.ac	2015-01-15 10:20:03.826889574 -0500
+--- lua-5.3.0/configure.ac.autoxxx	2015-01.150:20:03.826889574 -0500
++++ lua-5.3.0/configure.ac	2015-01.150:20:03.826889574 -0500
 @@ -0,0 +1,69 @@
 +AC_PREREQ(2.59)
 +AC_INIT([lua], [5.3.0], [https://bugzilla.redhat.com/], [lua-at], [http://www.lua.org])
@@ -72,23 +72,23 @@ diff -up lua-5.3.0/configure.ac.autoxxx lua-5.3.0/configure.ac
 +])
 +AC_OUTPUT
 diff -up lua-5.3.0/doc/Makefile.am.autoxxx lua-5.3.0/doc/Makefile.am
---- lua-5.3.0/doc/Makefile.am.autoxxx	2015-01-15 10:20:03.826889574 -0500
-+++ lua-5.3.0/doc/Makefile.am	2015-01-15 10:20:03.826889574 -0500
+--- lua-5.3.0/doc/Makefile.am.autoxxx	2015-01.150:20:03.826889574 -0500
++++ lua-5.3.0/doc/Makefile.am	2015-01.150:20:03.826889574 -0500
 @@ -0,0 +1,4 @@
 +man1_MANS = lua.1 luac.1
 +
 +EXTRA_DIST = \
 +	contents.html logo.gif lua.1 luac.1 lua.css manual.css manual.html osi-certified-72x60.png readme.html
 diff -up lua-5.3.0/Makefile.am.autoxxx lua-5.3.0/Makefile.am
---- lua-5.3.0/Makefile.am.autoxxx	2015-01-15 10:20:03.826889574 -0500
-+++ lua-5.3.0/Makefile.am	2015-01-15 10:20:03.826889574 -0500
+--- lua-5.3.0/Makefile.am.autoxxx	2015-01.150:20:03.826889574 -0500
++++ lua-5.3.0/Makefile.am	2015-01.150:20:03.826889574 -0500
 @@ -0,0 +1,3 @@
 +SUBDIRS = src doc
 +
 +EXTRA_DIST = README
 diff -up lua-5.3.0/src/.gitignore.autoxxx lua-5.3.0/src/.gitignore
---- lua-5.3.0/src/.gitignore.autoxxx	2015-01-15 10:20:03.826889574 -0500
-+++ lua-5.3.0/src/.gitignore	2015-01-15 10:20:03.826889574 -0500
+--- lua-5.3.0/src/.gitignore.autoxxx	2015-01.150:20:03.826889574 -0500
++++ lua-5.3.0/src/.gitignore	2015-01.150:20:03.826889574 -0500
 @@ -0,0 +1,5 @@
 +lua
 +lua.pc
@@ -96,8 +96,8 @@ diff -up lua-5.3.0/src/.gitignore.autoxxx lua-5.3.0/src/.gitignore
 +luaconf.h
 +luaconf.h.template
 diff -up lua-5.3.0/src/luaconf.h.template.in.autoxxx lua-5.3.0/src/luaconf.h.template.in
---- lua-5.3.0/src/luaconf.h.template.in.autoxxx	2015-01-15 10:20:03.828889562 -0500
-+++ lua-5.3.0/src/luaconf.h.template.in	2015-01-15 10:22:37.420027778 -0500
+--- lua-5.3.0/src/luaconf.h.template.in.autoxxx	2015-01.150:20:03.828889562 -0500
++++ lua-5.3.0/src/luaconf.h.template.in	2015-01.150:22:37.420027778 -0500
 @@ -11,6 +11,11 @@
  #include <limits.h>
  #include <stddef.h>
@@ -124,8 +124,8 @@ diff -up lua-5.3.0/src/luaconf.h.template.in.autoxxx lua-5.3.0/src/luaconf.h.tem
  		LUA_LDIR"?.lua;"  LUA_LDIR"?/init.lua;" \
  		LUA_CDIR"?.lua;"  LUA_CDIR"?/init.lua;" \
 diff -up lua-5.3.0/src/lua.pc.in.autoxxx lua-5.3.0/src/lua.pc.in
---- lua-5.3.0/src/lua.pc.in.autoxxx	2015-01-15 10:20:03.827889568 -0500
-+++ lua-5.3.0/src/lua.pc.in	2015-01-15 10:20:03.827889568 -0500
+--- lua-5.3.0/src/lua.pc.in.autoxxx	2015-01.150:20:03.827889568 -0500
++++ lua-5.3.0/src/lua.pc.in	2015-01.150:20:03.827889568 -0500
 @@ -0,0 +1,13 @@
 +V= @MAJOR_VERSION@
 +R= @VERSION@
@@ -141,8 +141,8 @@ diff -up lua-5.3.0/src/lua.pc.in.autoxxx lua-5.3.0/src/lua.pc.in
 +Libs: -llua @LUA_LIBS@
 +Cflags: -I${includedir}
 diff -up lua-5.3.0/src/Makefile.am.autoxxx lua-5.3.0/src/Makefile.am
---- lua-5.3.0/src/Makefile.am.autoxxx	2015-01-15 10:20:03.826889574 -0500
-+++ lua-5.3.0/src/Makefile.am	2015-01-15 10:20:03.826889574 -0500
+--- lua-5.3.0/src/Makefile.am.autoxxx	2015-01.150:20:03.826889574 -0500
++++ lua-5.3.0/src/Makefile.am	2015-01.150:20:03.826889574 -0500
 @@ -0,0 +1,46 @@
 +AM_CFLAGS = -Wall
 +

@@ -51,7 +51,7 @@ index 0786a6f..3409d13 100644
  \&. See REPEAT HANDLING
  .TP
  \fB\-R\fR \fB\-\-repeat\fR <\fIdelay\fR[,\fIperiod\fR] | \fI,period\fR>
-@@ -171,15 +171,18 @@ using the
+@@ -171.15 +171,18 @@ using the
  .I --release
  option.
  Such events typically has an

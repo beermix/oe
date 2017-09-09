@@ -867,7 +867,7 @@
 +  * Uses /proc/sys/dev/cdrom/info instead of hardcoded paths to detect CDROM
 +    drives (closes: bug#293542). 
 +
-+ -- Aurelien Jarno <aurel32@debian.org>  Fri,  4 Feb 2005 11:15:37 +0100
++ -- Aurelien Jarno <aurel32@debian.org>  Fri,  4 Feb 2005 11.15:37 +0100
 +
 +hddtemp (0.3-beta12-10) unstable; urgency=low
 +
@@ -925,7 +925,7 @@
 +
 +  * Added support for WDC 200GB SE (closes: bug#275105).
 +
-+ -- Aurelien Jarno <aurel32@debian.org>  Thu,  7 Oct 2004 21:01:15 +0200
++ -- Aurelien Jarno <aurel32@debian.org>  Thu,  7 Oct 2004 21:01.15 +0200
 +
 +hddtemp (0.3-beta12-2) unstable; urgency=low
 +
@@ -957,7 +957,7 @@
 +
 + -- Aurelien Jarno <aurel32@debian.org>  Wed,  1 Sep 2004 11:29:55 +0200
 +
-+hddtemp (0.3-beta11-15) unstable; urgency=low
++hddtemp (0.3-beta11.15) unstable; urgency=low
 +
 +  * Added Danish debconf translation. Thanks to Claus Hindsgaul (closes:
 +    bug#267551).
@@ -2080,7 +2080,7 @@
 +# "WDC WD273BA"			9   C "Western Digital WD273BA"
 --- hddtemp-0.3-beta15.orig/debian/po/cs.po
 +++ hddtemp-0.3-beta15/debian/po/cs.po
-@@ -0,0 +1,159 @@
+@@ -0,0 +1.159 @@
 +#
 +#    Translators, if you are not familiar with the PO format, gettext
 +#    documentation is worth reading, especially sections dedicated to
@@ -2242,7 +2242,7 @@
 +"port nevyhovuje, můžete zadat jiný."
 --- hddtemp-0.3-beta15.orig/debian/po/fr.po
 +++ hddtemp-0.3-beta15/debian/po/fr.po
-@@ -0,0 +1,159 @@
+@@ -0,0 +1.159 @@
 +# Translation of hddtemp debconf templates to French
 +# Copyright (C) 2008 Christian Perrier <bubulle@debian.org>
 +# This file is distributed under the same license as the hddtemp package.
@@ -2404,7 +2404,7 @@
 +"port peut être modifié si nécessaire."
 --- hddtemp-0.3-beta15.orig/debian/po/vi.po
 +++ hddtemp-0.3-beta15/debian/po/vi.po
-@@ -0,0 +1,154 @@
+@@ -0,0 +1.154 @@
 +# Vietnamese Translation for hddtemp.
 +# Copyright © 2008 Free Software Foundation, Inc.
 +# Clytie Siddall <clytie@riverland.net.au>, 2005-2008.
@@ -2580,7 +2580,7 @@
 +"Project-Id-Version: hddtemp_0.3-beta7-1\n"
 +"Report-Msgid-Bugs-To: hddtemp@packages.debian.org\n"
 +"POT-Creation-Date: 2008-01-25 22:35+0100\n"
-+"PO-Revision-Date: 2007-12-11 15:33+0100\n"
++"PO-Revision-Date: 2007-12-11.15:33+0100\n"
 +"Last-Translator: Tiago Bortoletto Vaz <tiago@debian-ba.org>\n"
 +"Language-Team: Debian-BR Project <debian-l10n-portuguese@lists.debian.org>\n"
 +"MIME-Version: 1.0\n"
@@ -2769,7 +2769,7 @@
 +#~ msgstr "Em qual porta voc� deseja que o hddtemp escute ?"
 --- hddtemp-0.3-beta15.orig/debian/po/ru.po
 +++ hddtemp-0.3-beta15/debian/po/ru.po
-@@ -0,0 +1,156 @@
+@@ -0,0 +1.156 @@
 +# translation of ru.po to Russian
 +# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 +# This file is distributed under the same license as the PACKAGE package.
@@ -3058,7 +3058,7 @@
 +
 --- hddtemp-0.3-beta15.orig/debian/po/da.po
 +++ hddtemp-0.3-beta15/debian/po/da.po
-@@ -0,0 +1,158 @@
+@@ -0,0 +1.158 @@
 +# Danish translation hddtemp.
 +# Copyright (C) 2010 hddtemp & nedenstående oversættere.
 +# This file is distributed under the same license as the hddtemp package.
@@ -3219,7 +3219,7 @@
 +
 --- hddtemp-0.3-beta15.orig/debian/po/pt.po
 +++ hddtemp-0.3-beta15/debian/po/pt.po
-@@ -0,0 +1,158 @@
+@@ -0,0 +1.158 @@
 +# translation of pt.po to portugues
 +# Portuguese translation for hddtemp
 +# Copyright (C) 2006, 2007, 2008 Free Software Foundation, Inc.
@@ -3494,7 +3494,7 @@
 +
 --- hddtemp-0.3-beta15.orig/debian/po/it.po
 +++ hddtemp-0.3-beta15/debian/po/it.po
-@@ -0,0 +1,155 @@
+@@ -0,0 +1.155 @@
 +# Italian translation of the hddtemp debconf template
 +# This file is distributed under the same license as the hddtemp package
 +# Copyright (C) 2008 Free Software Foundation, Inc.
@@ -4351,7 +4351,7 @@
 +msgstr "デフォルトでは、hddtemp はポート 7634 で入力接続をリスンします。これは別のポート番号に変更できます。"
 --- hddtemp-0.3-beta15.orig/debian/po/fi.po
 +++ hddtemp-0.3-beta15/debian/po/fi.po
-@@ -0,0 +1,151 @@
+@@ -0,0 +1.151 @@
 +msgid ""
 +msgstr ""
 +"Project-Id-Version: hddtemp\n"
@@ -4814,7 +4814,7 @@
 +"cambiarlo por otro."
 --- hddtemp-0.3-beta15.orig/debian/po/sk.po
 +++ hddtemp-0.3-beta15/debian/po/sk.po
-@@ -0,0 +1,155 @@
+@@ -0,0 +1.155 @@
 +# Slovak translations for hddtemp package
 +# Slovenské preklady pre balík hddtemp.
 +# Copyright (C) 2011 THE hddtemp'S COPYRIGHT HOLDER
@@ -4976,7 +4976,7 @@
 +[type: gettext/rfc822deb] templates
 --- hddtemp-0.3-beta15.orig/debian/po/nl.po
 +++ hddtemp-0.3-beta15/debian/po/nl.po
-@@ -0,0 +1,159 @@
+@@ -0,0 +1.159 @@
 +# Dutch translation of hddtemp debconf templates.
 +# Copyright (C) 2006-2011 THE PACKAGE'S COPYRIGHT HOLDER
 +# This file is distributed under the same license as the hddtemp package.
@@ -5138,7 +5138,7 @@
 +"kan veranderd worden in een ander poortnummer."
 --- hddtemp-0.3-beta15.orig/debian/po/nb.po
 +++ hddtemp-0.3-beta15/debian/po/nb.po
-@@ -0,0 +1,152 @@
+@@ -0,0 +1.152 @@
 +# translation of hddtemp_nb.po to Norwegian Bokmål
 +# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 +# This file is distributed under the same license as the PACKAGE package.

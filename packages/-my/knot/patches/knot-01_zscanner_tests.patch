@@ -2,7 +2,7 @@ diff --git a/src/zscanner/tests/unittests.in b/src/zscanner/tests/unittests.in
 index 9a4af53..f9b45bf 100644
 --- a/src/zscanner/tests/unittests.in
 +++ b/src/zscanner/tests/unittests.in
-@@ -1,15 +1,14 @@
+@@ -1.15 +1,14 @@
  #!/bin/sh
  
 -SOURCE=@top_srcdir@/src/zscanner/tests

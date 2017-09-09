@@ -17,13 +17,13 @@
 ################################################################################
 
 PKG_NAME="libtool"
-PKG_VERSION="2.4.6"
+PKG_VERSION="6ca5e22"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/libtool/libtool.html"
-PKG_URL="http://ftp.gnu.org/gnu/libtool/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_HOST="ccache:host autoconf:host"
+PKG_URL="https://dl.dropboxusercontent.com/s/bnkfpojtqnjwm3y/libtool-6ca5e22.tar.xz"
+PKG_DEPENDS_HOST="ccache:host autoconf:host automake:host help2man:host"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_PRIORITY="optional"
 PKG_SECTION="devel"
@@ -33,8 +33,17 @@ PKG_IS_ADDON="no"
 
 PKG_AUTORECONF="no"
 
-find $ROOT/$PKG_BUILD -type f -exec sed -i 's/1.15.1/1.15/g' {} \;
+pre_configure_host() {
+  NOCONFIGURE=1 ./bootstrap
+}
 
-PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
-PKG_CONFIGURE_OPTS_TARGET="-C --enable-static --enable-shared"
+pre_configure_target() {
+  cd $ROOT/$PKG_BUILD
+  rm -rf .$TARGET_NAME
+  make clean
+  ./bootstrap
+}
 
+PKG_CONFIGURE_OPTS_HOST="lt_cv_sys_lib_dlsearch_path_spec=$SYSROOT_PREFIX/lib:$SYSROOT_PREFIX/usr/lib"
+			
+PKG_CONFIGURE_OPTS_TARGET="CONFIG_SHELL=/bin/bash --disable-static --enable-shared"
