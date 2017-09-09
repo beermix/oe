@@ -6,8 +6,9 @@ PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared --with-gpg-error-prefix=$SYSROOT_PREFIX/lib"
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared --disable-dependency-tracking --with-libgpg-error-prefix=$SYSROOT_PREFIX"
 
 pre_configure_target() {
   CFLAGS="$CFLAGS -fPIC"
+  LDFLAGS="$LDFLAGS -lgpg-error"
 }

@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libgpg-error"
-PKG_VERSION="1.27"
+PKG_VERSION="1.8"
 PKG_SITE="https://www.gnupg.org"
 PKG_URL="https://www.gnupg.org/ftp/gcrypt/libgpg-error/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain"
@@ -25,32 +25,12 @@ PKG_SECTION="security"
 PKG_SHORTDESC="libgpg-error: Library that defines common error values for GnuPG components"
 PKG_LONGDESC="This is a library that defines common error values for all GnuPG components. Among these are GPG, GPGSM, GPGME, GPG-Agent, libgcrypt, Libksba, DirMngr, Pinentry, SmartCard Daemon and possibly more in the future."
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC --enable-static --disable-shared --disable-nls --disable-rpath --with-gnu-ld"
 
 pre_configure_target() {
-# inspired by openembedded
-  case ${TARGET_ARCH} in
-    aarch64)
-      GPGERROR_TUPLE=aarch64-unknown-linux-gnu
-      GPGERROR_TARGET=linux-gnueabi
-      ;;
-    arm)
-      GPGERROR_TUPLE=arm-unknown-linux-gnueabi
-      GPGERROR_TARGET=linux-gnueabi
-      ;;
-    i386)
-      GPGERROR_TUPLE=i486-pc-linux-gnu
-      GPGERROR_TARGET=linux-gnu
-      ;;
-    x86_64)
-      GPGERROR_TUPLE=x86_64-pc-linux-gnu
-      GPGERROR_TARGET=linux-gnu
-      ;;
-  esac
-
-  cp $ROOT/$PKG_BUILD/src/syscfg/lock-obj-pub.$GPGERROR_TUPLE.h $ROOT/$PKG_BUILD/src/syscfg/lock-obj-pub.$GPGERROR_TARGET.h
+ # cp $ROOT/$PKG_BUILD/src/syscfg/lock-obj-pub.x86_64-pc-linux-gnu.h $ROOT/$PKG_BUILD/src/syscfg/lock-obj-pub.linux-gnu.h
   CFLAGS="$CFLAGS -fPIC"
 }
 
@@ -60,5 +40,4 @@ post_makeinstall_target() {
 
   sed -e "s:\(['= ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" -i src/gpg-error-config
   cp src/gpg-error-config $SYSROOT_PREFIX/usr/bin
-  ln -s $SYSROOT_PREFIX/usr/bin/gpg-error-config $ROOT/$BUILD/toolchain/bin/
 }
