@@ -28,11 +28,6 @@ PKG_SHORTDESC="gcc: The GNU Compiler Collection Version 4 (aka GNU C Compiler)"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-post_unpack() {
-  sed -i 's@\./fixinc\.sh@-c true@' $ROOT/$PKG_BUILD/gcc/Makefile.in
-  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $ROOT/$PKG_BUILD/libiberty/configure
-  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $ROOT/$PKG_BUILD/gcc/configure
-}
 
 GCC_COMMON_CONFIGURE_OPTS="MAKEINFO=missing \
                            --target=$TARGET_NAME \
@@ -51,6 +46,7 @@ GCC_COMMON_CONFIGURE_OPTS="MAKEINFO=missing \
                            --with-default-libstdcxx-abi=gcc4-compatible \
                            --enable-checking=release \
                            --disable-libssp \
+                           --disable-libsanitizer \
                            --without-ppl \
                            --without-cloog \
                            --disable-libmpx \
@@ -71,7 +67,6 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --without-headers \
                               --with-newlib \
                               --disable-decimal-float \
-                              --disable-libsanitizer \
                               $GCC_OPTS"
 
 PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
@@ -89,7 +84,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-clocale=gnu \
                          $GCC_OPTS"
 pre_configure_host() {
-  #export CXXFLAGS="$CXXFLAGS -std=gnu++98"
+  export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
 }
 
