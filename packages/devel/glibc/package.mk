@@ -46,7 +46,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/bash \
                            --with-__thread \
                            --with-binutils=$ROOT/$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
-                           --enable-kernel=3.0.0 \
+                           --enable-kernel=2.6.32 \
                            --without-cvs \
                            --without-gd \
                            --enable-obsolete-rpc \
@@ -103,9 +103,10 @@ pre_configure_target() {
 
   unset LD_LIBRARY_PATH
 
-# set some CFLAGS we need
-  export CFLAGS="$CFLAGS -g0"
+  # set some CFLAGS we need
+  export CFLAGS="$CFLAGS"
 
+  export BUILD_CC=$HOST_CC
   export OBJDUMP_FOR_HOST=objdump
 
 cat >config.cache <<EOF
@@ -117,18 +118,16 @@ EOF
 
 echo "sbindir=/usr/bin" >> configparms
 echo "rootsbindir=/usr/bin" >> configparms
-echo "build-programs=yes" >> configparms
-
-sed -i "/build-programs=/s#no#yes#" configparms
-echo "CC += -D_FORTIFY_SOURCE=2" >> configparms
-echo "CXX += -D_FORTIFY_SOURCE=2" >> configparms
 
 GLIBC_INCLUDE_BIN="iconv getent ldd locale"
 }
 
 post_makeinstall_target() {
+# xlocale.h was renamed - create symlink for compatibility
+  ln -sf $SYSROOT_PREFIX/usr/include/bits/types/__locale_t.h $SYSROOT_PREFIX/usr/include/xlocale.h
+
 # we are linking against ld.so, so symlink
-  ln -sf $(basename $INSTALL/usr/lib/ld-*.so) $INSTALL/lib/ld.so
+  ln -sf $(basename $INSTALL/lib/ld-*.so) $INSTALL/lib/ld.so
 
 # cleanup
 # remove any programs we don't want/need, keeping only those we want
@@ -148,29 +147,27 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/lib/libc_pic
   rm -rf $INSTALL/usr/lib/*.o
   rm -rf $INSTALL/usr/lib/*.map
+  
+  # remove unneeded libs
+  rm -rf $INSTALL/usr/lib/libBrokenLocale*
+  rm -rf $INSTALL/usr/lib/libSegFault.so
+  rm -rf $INSTALL/usr/lib/libmemusage.so
+  rm -rf $INSTALL/usr/lib/libpcprofile.so
 
   rm -rf $INSTALL/var
 
 # remove locales and charmaps
   rm -rf $INSTALL/usr/share/i18n/charmaps
+  rm -rf $INSTALL/usr/share/i18n/locales
 
-  if [ -n "$GLIBC_LOCALES" ]; then
-    mkdir -p $INSTALL/usr/lib/locale
-    for locale in $GLIBC_LOCALES; do
-      echo ">>> install inputfile $(echo $locale | cut -f1 -d ".") with charmap $(echo $locale | cut -f2 -d ".") as $locale <<<"
-      I18NPATH=../localedata \
-      $ROOT/$TOOLCHAIN/bin/localedef \
-        -i ../localedata/locales/$(echo $locale | cut -f1 -d ".") \
-        -f ../localedata/charmaps/$(echo $locale | cut -f2 -d ".") \
-        $locale --prefix=$INSTALL
-    done
-  fi
-
-  if [ ! "$GLIBC_LOCALES" = yes ]; then
-    rm -rf $INSTALL/usr/share/i18n/locales
-    mkdir -p $INSTALL/usr/share/i18n/locales
-      cp -PR $ROOT/$PKG_BUILD/localedata/locales/POSIX $INSTALL/usr/share/i18n/locales
-  fi
+# add default locale
+if [ "$GLIBC_LOCALES" = yes ]; then
+  mkdir -p $INSTALL/usr/lib/locale
+  mkdir -p $INSTALL/etc/profile.d
+  I18NPATH=../localedata 
+  localedef -i ../localedata/locales/en_US -f ../localedata/charmaps/UTF-8 en_US.UTF-8 --prefix=$INSTALL
+  echo "export LANG=en_US.UTF-8" > $INSTALL/etc/profile.d/01-locale.conf
+fi
 
 # create default configs
   mkdir -p $INSTALL/etc
@@ -179,9 +176,8 @@ post_makeinstall_target() {
     cp $PKG_DIR/config/gai.conf $INSTALL/etc
 
   if [ "$TARGET_ARCH" = "arm" -a "$TARGET_FLOAT" = "hard" ]; then
-    ln -sf ld.so $INSTALL/usr/lib/ld-linux.so.3
+    ln -sf ld.so $INSTALL/lib/ld-linux.so.3
   fi
-
 }
 
 configure_init() {
