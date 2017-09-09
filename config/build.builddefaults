@@ -29,9 +29,7 @@
                          --sbindir=/usr/sbin \
                          --sysconfdir=/etc \
                          --libexecdir=/usr/lib \
-                         --localstatedir=/var \
-                         --enable-silent-rules \
-                         --enable-shared"
+                         --localstatedir=/var"
 
   TARGET_CMAKE_OPTS="-DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
                      -DCMAKE_INSTALL_PREFIX=/usr"
@@ -44,9 +42,7 @@
                        --sbindir=$ROOT/$TOOLCHAIN/sbin \
                        --sysconfdir=$ROOT/$TOOLCHAIN/etc \
                        --libexecdir=$ROOT/$TOOLCHAIN/lib \
-                       --localstatedir=$ROOT/$TOOLCHAIN/var \
-                       --enable-silent-rules \
-                       --enable-shared"
+                       --localstatedir=$ROOT/$TOOLCHAIN/var"
 
   HOST_CMAKE_OPTS="-DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
                    -DCMAKE_INSTALL_PREFIX=$ROOT/$TOOLCHAIN"
