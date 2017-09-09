@@ -33,7 +33,8 @@ PKG_IS_ADDON="no"
 
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
+find . -type f -exec sed -i 's/1.15.1/1.15/g' {} \;
 
+PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
 PKG_CONFIGURE_OPTS_TARGET="-C --enable-static --enable-shared"
 
