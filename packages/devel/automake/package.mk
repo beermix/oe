@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="automake"
-PKG_VERSION="1.15.1"
+PKG_VERSION="f389ecb89acb7f51b6a9e8f41ebad3e45ac905a2"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://sources.redhat.com/automake/"
-PKG_URL="http://ftp.gnu.org/gnu/automake/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="http://git.savannah.gnu.org/cgit/automake.git/snapshot/automake-f389ecb89acb7f51b6a9e8f41ebad3e45ac905a2.tar.gz"
 PKG_DEPENDS_HOST="ccache:host autoconf:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="toolchain/devel"
@@ -31,6 +31,10 @@ PKG_LONGDESC="This is Automake, a Makefile generator. It was inspired by the 4.4
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
+
+pre_configure_host() {
+  NOCONFIGURE=1 ./bootstrap
+}
 
 PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME --disable-silent-rules"
 
