@@ -34,7 +34,7 @@ post_unpack() {
   sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $ROOT/$PKG_BUILD/gcc/configure
 }
 
-MAKEINFO=missing
+#MAKEINFO=missing
 
 GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-sysroot=$SYSROOT_PREFIX \
@@ -50,7 +50,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-ld=default \
                            --disable-multilib \
                            --disable-nls \
-                           --without-included-gettext \
                            --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
                            --without-ppl \

@@ -104,9 +104,8 @@ pre_configure_target() {
   unset LD_LIBRARY_PATH
 
   # set some CFLAGS we need
-  export CFLAGS="$CFLAGS"
+  export CFLAGS="-g0 $CFLAGS"
 
-  export BUILD_CC=$HOST_CC
   export OBJDUMP_FOR_HOST=objdump
 
 cat >config.cache <<EOF
