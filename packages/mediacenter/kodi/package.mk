@@ -56,7 +56,7 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$ROOT/$TOOLCHAIN \
                        -DENABLE_OPENSSL=ON \
                        -DENABLE_SDL=OFF \
                        -DENABLE_LCMS2=ON \
-                       -DENABLE_CCACHE=ON \
+                       -DENABLE_CCACHE=OFF \
                        -DENABLE_LIRC=ON \
                        -DENABLE_EVENTCLIENTS=ON \
                        -DENABLE_LIBUSB=OFF \
