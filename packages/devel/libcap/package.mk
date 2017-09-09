@@ -63,7 +63,7 @@ make_target() {
        BUILD_CC=$HOST_CC \
        BUILD_CFLAGS="$HOST_CFLAGS -I$ROOT/$PKG_BUILD/libcap/include" \
        PAM_CAP=no \
-       BUILD_GPERF=yes \
+       BUILD_GPERF=no \
        lib=/lib \
        -C libcap libcap.pc libcap.a
 }
