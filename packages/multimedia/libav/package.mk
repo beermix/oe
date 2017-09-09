@@ -35,7 +35,7 @@ configure_target() {
               --host-cflags="$HOST_CFLAGS" \
               --host-ldflags="$HOST_LDFLAGS" \
               --host-libs="-lm" \
-              --extra-cflags="$CFLAGS -D_DEFAULT_SOURCE" \
+              --extra-cflags="$CFLAGS" \
               --extra-ldflags="$LDFLAGS" \
               --extra-libs="$FFMPEG_LIBS" \
               --enable-static \

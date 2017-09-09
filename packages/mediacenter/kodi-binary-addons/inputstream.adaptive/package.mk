@@ -1,8 +1,8 @@
 PKG_NAME="inputstream.adaptive"
-PKG_VERSION="a02656d"
+PKG_VERSION="0b93432"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/peak3d/inputstream.adaptive/tree/Krypton"
-PKG_URL="https://dl.dropboxusercontent.com/s/9sfzlaviah0hout/inputstream.adaptive-a02656d.tar.xz"
+PKG_URL="https://dl.dropboxusercontent.com/s/m2h08r4gy0jck27/inputstream.adaptive-0b93432.tar.xz"
 PKG_DEPENDS_TARGET="toolchain kodi-platform"
 PKG_SECTION=""
 PKG_SHORTDESC="inputstream.adaptive"
@@ -27,5 +27,5 @@ addon() {
   cp -L $ROOT/$PKG_BUILD/.install_pkg/usr/lib/kodi/addons/$PKG_NAME/$ADDONSO $ADDON_BUILD/$PKG_ADDON_ID/
 
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/lib/
-  cp -P $ROOT/$PKG_BUILD/.$TARGET_NAME/wv/libssd_wv.so $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -P $ROOT/$PKG_BUILD/.$TARGET_NAME/libssd_wv.so $ADDON_BUILD/$PKG_ADDON_ID/lib
 }
