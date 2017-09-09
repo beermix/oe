@@ -17,20 +17,20 @@
 ################################################################################
 
 PKG_NAME="cairo"
-#PKG_VERSION="1.14.10"
-PKG_VERSION="1.15.8"
+PKG_VERSION="1.14.10"
+#PKG_VERSION="1.15.8"
 PKG_ARCH="any"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://cairographics.org/"
-#PKG_URL="http://cairographics.org/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_URL="https://cairographics.org/snapshots/cairo-$PKG_VERSION.tar.xz"
+PKG_URL="http://cairographics.org/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
+#PKG_URL="https://cairographics.org/snapshots/cairo-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain zlib freetype fontconfig libpng pixman"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="cairo: Multi-platform 2D graphics library"
 PKG_LONGDESC="Cairo is a vector graphics library with cross-device output support. Currently supported output targets include the X Window System and in-memory image buffers. PostScript and PDF file output is planned. Cairo is designed to produce identical output on all output media while taking advantage of display hardware acceleration when available."
 PKG_IS_ADDON="no"
 
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 pre_configure_target() {
   CFLAGS="$CFLAGS -fPIC"
@@ -38,12 +38,7 @@ pre_configure_target() {
   CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
 }
 
-pre_make_target() {
-  sed -iv -e 's/ -shared / -Wl,-O1,--as-needed\0/g' $ROOT/$PKG_BUILD/libtool
-}
-
 PKG_CONFIGURE_OPTS_TARGET="--disable-static \
-                           --disable-lto \
                            --disable-gl \
                            --enable-tee \
                            --enable-svg \
