@@ -44,6 +44,3 @@ post_makeinstall_target() {
     cp dnet-config $ROOT/$TOOLCHAIN/bin/
 }
 
-pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC"
-}
