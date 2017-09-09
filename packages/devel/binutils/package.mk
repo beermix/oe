@@ -17,11 +17,11 @@
 ################################################################################
 
 PKG_NAME="binutils"
-PKG_VERSION="2.29"
+PKG_VERSION="2.29.U"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/binutils/"
-PKG_URL="http://ftpmirror.gnu.org/binutils/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="ftp://root:openelec@192.168.1.4/www/binutils-2.29.U.tar.xz"
 PKG_DEPENDS_HOST="ccache:host bison:host flex:host libelf:host bc:host linux:host"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="binutils: A GNU collection of binary utilities"
