@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="gettext"
-PKG_VERSION="ce0d49f"
+PKG_VERSION="0.19.8.1"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/s/gettext/"
-PKG_GIT_URL="https://github.com/sabotage-linux/gettext-tiny"
+PKG_URL="http://ftp.gnu.org/pub/gnu/gettext/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="ccache:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="toolchain/devel"
@@ -32,8 +32,14 @@ PKG_LONGDESC="This is the GNU gettext package. It is interesting for authors or 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-makeinstall_host() {
-  make LIBINTL=FLAVOR
-  make DESTDIR=$ROOT/$TOOLCHAIN prefix=/ install
-}
+PKG_CONFIGURE_SCRIPT="gettext-tools/configure"
 
+PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared \
+                         --disable-rpath \
+                         --with-gnu-ld \
+                         --disable-java \
+                         --disable-curses \
+                         --with-included-libxml \
+                         --disable-native-java \
+                         --disable-csharp \
+                         --without-emacs"
