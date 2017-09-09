@@ -1,0 +1,479 @@
+From 11f520c61d8b21f1522968d6e6afb899070f0a6f Mon Sep 17 00:00:00 2001
+From: Zack Weinberg <zackw@panix.com>
+Date: Fri, 13 Sep 2013 20:42:04 -0400
+Subject: [PATCH] AC_CHECK_HEADER/AC_CHECK_HEADERS: complete transition to
+ compile tests.
+
+* lib/autoconf/headers.m4 (AC_CHECK_HEADER): Use _AC_CHECK_HEADER_COMPILE
+  by default.  Continue to use _AC_CHECK_HEADER_PREPROC if fourth arg is '-'.
+  (_AC_CHECK_HEADER_PREPROC): Issue a deprecation warning.
+  (_AC_CHECK_HEADER_MONGREL, _AC_CHECK_HEADER_MONGREL_BODY): Remove.
+
+* tests/c.at, tests/semantics.at: Update uses of AC_CHECK_HEADER(S).
+* doc/autoconf.texi, NEWS: Document change.
+---
+ NEWS                    |  10 ++++
+ doc/autoconf.texi       | 108 +++++++++++++++++++++---------------------
+ lib/autoconf/headers.m4 | 122 +++++++++++-------------------------------------
+ tests/c.at              |  28 +++++++----
+ tests/semantics.at      |  19 ++++----
+ 5 files changed, 122 insertions(+), 165 deletions(-)
+
+diff --git a/NEWS b/NEWS
+index 7003c44..5d6c657 100644
+--- a/NEWS
++++ b/NEWS
+@@ -17,6 +17,16 @@ GNU Autoconf NEWS - User visible changes.
+    echo.  Macros AS_ECHO and AS_ECHO_N now expand unconditionally to
+    'printf "%s\n"' and 'printf %s'.
+ 
++** AC_CHECK_HEADER and AC_CHECK_HEADERS now default to doing only a
++   compilation test.  This completes the transition from preprocessor-
++   based header tests begun in Autoconf 2.56.
++
++   The double test that was the default since Autoconf 2.64 is no
++   longer available.  You can still request a preprocessor-only test
++   by specifying '-' as the fourth argument to either macro, but this
++   is now deprecated.  If you really need that behavior use
++   AC_PREPROC_IFELSE.
++
+ ** Macros
+ 
+ - New macro AC_C__GENERIC.
+diff --git a/doc/autoconf.texi b/doc/autoconf.texi
+index 4932067..0c489a3 100644
+--- a/doc/autoconf.texi
++++ b/doc/autoconf.texi
+@@ -6264,26 +6264,21 @@ commands @var{action-if-found}, otherwise execute
+ header file is available, consider using @code{AC_CHECK_HEADERS}
+ instead.
+ 
+-@var{includes} is decoded to determine the appropriate include
+-directives.  If omitted or empty, @file{configure} will check for both header
+-existence (with the preprocessor) and usability (with the compiler),
+-using @code{AC_INCLUDES_DEFAULT} for the compile test.  If
+-there is a discrepancy between the results, a warning is issued to the
+-user, and the compiler results are favored (@pxref{Present But
+-Cannot Be Compiled}).  In general, favoring the compiler results means
+-that a header will be treated as not found even though the file exists,
+-because you did not provide enough prerequisites.
+-
+-Providing a non-empty @var{includes} argument allows the code to provide
+-any prerequisites prior to including the header under test; it is common
+-to use the argument @code{AC_INCLUDES_DEFAULT} (@pxref{Default
+-Includes}).  With an explicit fourth argument, no preprocessor test is
+-needed.  As a special case, an @var{includes} of exactly @samp{-}
+-triggers the older preprocessor check, which merely determines existence
+-of the file in the preprocessor search path; this should only be used as
+-a last resort (it is safer to determine the actual prerequisites and
+-perform a compiler check, or else use @code{AC_PREPROC_IFELSE} to make
+-it obvious that only a preprocessor check is desired).
++@var{includes} should be the appropriate @dfn{prerequisite} code, i.e.@:
++whatever might be required to appear above
++@samp{#include <@var{header-file}>} for it to compile without error.
++This can be anything, but will normally be additional @samp{#include}
++directives. If @var{includes} is omitted or empty, @file{configure} will
++use the contents of the macro @code{AC_INCLUDES_DEFAULT}.
++@xref{Default Includes}.
++
++This macro used to check only for the @emph{presence} of a header, not
++whether its contents were acceptable to the compiler.  Some older
++@command{configure} scripts rely on this behavior, so it is still
++available by specifying @samp{-} as @var{includes}.  This mechanism is
++deprecated as of Autoconf 2.70; situations where a preprocessor-only
++check is required should use @code{AC_PREPROC_IFELSE}.
++@xref{Running the Preprocessor}.
+ 
+ This macro caches its result in the @code{ac_cv_header_@var{header-file}}
+ variable, with characters not suitable for a variable name mapped to
+@@ -6314,47 +6309,49 @@ variable, with characters not suitable for a variable name mapped to
+ underscores.
+ @end defmac
+ 
+-Previous versions of Autoconf merely checked whether the header was
+-accepted by the preprocessor.  This was changed because the old test was
+-inappropriate for typical uses.  Headers are typically used to compile,
+-not merely to preprocess, and the old behavior sometimes accepted
+-headers that clashed at compile-time (@pxref{Present But Cannot Be
+-Compiled}).  If you need to check whether a header is preprocessable,
+-you can use @code{AC_PREPROC_IFELSE} (@pxref{Running the Preprocessor}).
++@defmac AC_CHECK_HEADERS_ONCE (@var{header-file}@dots{})
++@acindex{CHECK_HEADERS_ONCE}
++@cvindex HAVE_@var{header}
++For each given system header file @var{header-file} in the
++blank-separated argument list that exists, define
++@code{HAVE_@var{header-file}} (in all capitals).
+ 
+-Actually requiring a header to compile improves the robustness of the
+-test, but it also requires
+-that you make sure that headers that must be included before the
+-@var{header-file} be part of the @var{includes}, (@pxref{Default
+-Includes}).  If looking for @file{bar.h}, which requires that
+-@file{foo.h} be included before if it exists, we suggest the following
+-scheme:
++If you do not need the full power of @code{AC_CHECK_HEADERS}, this
++variant generates smaller, faster @command{configure} files.  All
++headers passed to @code{AC_CHECK_HEADERS_ONCE} are checked for in one
++pass, early during the @command{configure} run.  The checks cannot be
++conditionalized, you cannot specify an @var{action-if-found} or
++@var{action-if-not-found}, and @code{AC_INCLUDES_DEFAULT} is always used
++for the prerequisites.
++@end defmac
++
++In previous versions of Autoconf, these macros merely checked whether
++the header was accepted by the preprocessor.  This was changed because
++the old test was inappropriate for typical uses.  Headers are typically
++used to compile, not merely to preprocess, and the old behavior
++sometimes accepted headers that clashed at compile-time
++(@pxref{Present But Cannot Be Compiled}).  If for some reason it is
++inappropriate to check whether a header is compilable, you should use
++@code{AC_PREPROC_IFELSE} (@pxref{Running the Preprocessor}) instead of
++these macros.
++
++Requiring each header to compile improves the robustness of the test,
++but it also requires you to make sure that the @var{includes} are
++correct.  Most system headers nowadays make sure to @code{#include}
++whatever they require, or else have their dependencies satisfied by
++@code{AC_INCLUDES_DEFAULT} (@pxref{Default Includes}), but
++@pxref{Header Portability}, for known exceptions.  In general, if you
++are looking for @file{bar.h}, which requires that @file{foo.h} be
++included first if it exists, you should do something like this:
+ 
+-@verbatim
++@example
+ AC_CHECK_HEADERS([foo.h])
+ AC_CHECK_HEADERS([bar.h], [], [],
+ [#ifdef HAVE_FOO_H
+ # include <foo.h>
+ #endif
+ ])
+-@end verbatim
+-
+-The following variant generates smaller, faster @command{configure}
+-files if you do not need the full power of @code{AC_CHECK_HEADERS}.
+-
+-@defmac AC_CHECK_HEADERS_ONCE (@var{header-file}@dots{})
+-@acindex{CHECK_HEADERS_ONCE}
+-@cvindex HAVE_@var{header}
+-For each given system header file @var{header-file} in the
+-blank-separated argument list that exists, define
+-@code{HAVE_@var{header-file}} (in all capitals).
+-This is a once-only variant of @code{AC_CHECK_HEADERS}.  It generates the
+-checking code at most once, so that @command{configure} is smaller and
+-faster; but the checks cannot be conditionalized and are always done once,
+-early during the @command{configure} run.  Thus, this macro is only safe
+-for checking headers that do not have prerequisites beyond what
+-@code{AC_INCLUDES_DEFAULT} provides.
+-@end defmac
++@end example
+ 
+ @node Declarations
+ @section Declarations
+@@ -25994,7 +25991,8 @@ elsewhere.
+ The transition began with Autoconf 2.56.  As of Autoconf 2.64 both
+ checks are performed, and @command{configure} complains loudly if the
+ compiler and the preprocessor do not agree.  However, only the compiler
+-result is considered.
++result is considered.  As of Autoconf 2.70, only the compiler check is
++performed.
+ 
+ Consider the following example:
+ 
+@@ -26044,7 +26042,7 @@ checking for pi.h... no
+ @end smallexample
+ 
+ @noindent
+-The proper way the handle this case is using the fourth argument
++The proper way to handle this case is using the fourth argument
+ (@pxref{Generic Headers}):
+ 
+ @example
+diff --git a/lib/autoconf/headers.m4 b/lib/autoconf/headers.m4
+index 7f5dbce..6afff7d 100644
+--- a/lib/autoconf/headers.m4
++++ b/lib/autoconf/headers.m4
+@@ -46,99 +46,17 @@
+ #		  [ACTION-IF-FOUND], [ACTION-IF-NOT-FOUND],
+ #		  [INCLUDES])
+ # ---------------------------------------------------------
+-# We are slowly moving to checking headers with the compiler instead
+-# of the preproc, so that we actually learn about the usability of a
+-# header instead of its mere presence.  But since users are used to
+-# the old semantics, they check for headers in random order and
+-# without providing prerequisite headers.  This macro implements the
+-# transition phase, and should be cleaned up latter to use compilation
+-# only.
+-#
+-# If INCLUDES is empty, then check both via the compiler and preproc.
+-# If the results are different, issue a warning, but keep the preproc
+-# result.
+-#
+-# If INCLUDES is `-', keep only the old semantics.
+-#
+-# If INCLUDES is specified and different from `-', then use the new
+-# semantics only.
++# This used to check for headers using the preprocessor only, but we
++# have now switched to running a full compilation, so that we learn
++# about the usability of a header instead of its mere presence.
++# The old behavior is still available by specifying `-' as the
++# INCLUDES, but this triggers a deprecation warning.
+ #
+ # The m4_indir allows for fewer expansions of $@.
+ AC_DEFUN([AC_CHECK_HEADER],
+-[m4_indir(m4_case([$4],
+-		  [],  [[_AC_CHECK_HEADER_MONGREL]],
+-		  [-], [[_AC_CHECK_HEADER_PREPROC]],
+-		       [[_AC_CHECK_HEADER_COMPILE]]), $@)
+-])# AC_CHECK_HEADER
+-
+-
+-# _AC_CHECK_HEADER_MONGREL_BODY
+-# -----------------------------
+-# Shell function body for _AC_CHECK_HEADER_MONGREL
+-m4_define([_AC_CHECK_HEADER_MONGREL_BODY],
+-[  AS_LINENO_PUSH([$[]1])
+-  AS_VAR_SET_IF([$[]3],
+-		[AC_CACHE_CHECK([for $[]2], [$[]3], [])],
+-		[# Is the header compilable?
+-AC_MSG_CHECKING([$[]2 usability])
+-AC_COMPILE_IFELSE([AC_LANG_SOURCE([$[]4
+-@%:@include <$[]2>])],
+-		  [ac_header_compiler=yes],
+-		  [ac_header_compiler=no])
+-AC_MSG_RESULT([$ac_header_compiler])
+-
+-# Is the header present?
+-AC_MSG_CHECKING([$[]2 presence])
+-AC_PREPROC_IFELSE([AC_LANG_SOURCE([@%:@include <$[]2>])],
+-		  [ac_header_preproc=yes],
+-		  [ac_header_preproc=no])
+-AC_MSG_RESULT([$ac_header_preproc])
+-
+-# So?  What about this header?
+-case $ac_header_compiler:$ac_header_preproc:$ac_[]_AC_LANG_ABBREV[]_preproc_warn_flag in #((
+-  yes:no: )
+-    AC_MSG_WARN([$[]2: accepted by the compiler, rejected by the preprocessor!])
+-    AC_MSG_WARN([$[]2: proceeding with the compiler's result])
+-    ;;
+-  no:yes:* )
+-    AC_MSG_WARN([$[]2: present but cannot be compiled])
+-    AC_MSG_WARN([$[]2:     check for missing prerequisite headers?])
+-    AC_MSG_WARN([$[]2: see the Autoconf documentation])
+-    AC_MSG_WARN([$[]2:     section "Present But Cannot Be Compiled"])
+-    AC_MSG_WARN([$[]2: proceeding with the compiler's result])
+-m4_ifset([AC_PACKAGE_BUGREPORT],
+-[m4_n([( AS_BOX([Report this to ]AC_PACKAGE_BUGREPORT)
+-     ) | sed "s/^/$as_me: WARNING:     /" >&2])])dnl
+-    ;;
+-esac
+-  AC_CACHE_CHECK([for $[]2], [$[]3],
+-		 [AS_VAR_SET([$[]3], [$ac_header_compiler])])])
+-  AS_LINENO_POP
+-])#_AC_CHECK_HEADER_MONGREL_BODY
+-
+-# _AC_CHECK_HEADER_MONGREL(HEADER-FILE,
+-#			   [ACTION-IF-FOUND], [ACTION-IF-NOT-FOUND],
+-#			   [INCLUDES = DEFAULT-INCLUDES])
+-# ------------------------------------------------------------------
+-# Check using both the compiler and the preprocessor.  If they disagree,
+-# warn, and the preproc wins.
+-#
+-# This is not based on _AC_CHECK_HEADER_COMPILE and _AC_CHECK_HEADER_PREPROC
+-# because it obfuscate the code to try to factor everything, in particular
+-# because of the cache variables, and the `checking ...' messages.
+-AC_DEFUN([_AC_CHECK_HEADER_MONGREL],
+-[AC_REQUIRE_SHELL_FN([ac_fn_]_AC_LANG_ABBREV[_check_header_mongrel],
+-  [AS_FUNCTION_DESCRIBE([ac_fn_]_AC_LANG_ABBREV[_check_header_mongrel],
+-    [LINENO HEADER VAR INCLUDES],
+-    [Tests whether HEADER exists, giving a warning if it cannot be compiled
+-     using the include files in INCLUDES and setting the cache variable VAR
+-     accordingly.])],
+-  [$0_BODY])]dnl
+-[AS_VAR_PUSHDEF([ac_Header], [ac_cv_header_$1])]dnl
+-[ac_fn_[]_AC_LANG_ABBREV[]_check_header_mongrel ]dnl
+-["$LINENO" "$1" "ac_Header" "AS_ESCAPE([AC_INCLUDES_DEFAULT([$4])], [""])"
+-AS_VAR_IF([ac_Header], [yes], [$2], [$3])
+-AS_VAR_POPDEF([ac_Header])])# _AC_CHECK_HEADER_MONGREL
++[m4_indir(m4_if([$4], [-],
++                [[_AC_CHECK_HEADER_PREPROC]],
++                [[_AC_CHECK_HEADER_COMPILE]]), $@)])
+ 
+ 
+ # _AC_CHECK_HEADER_COMPILE_BODY
+@@ -154,6 +72,7 @@ m4_define([_AC_CHECK_HEADER_COMPILE_BODY],
+   AS_LINENO_POP
+ ])# _AC_CHECK_HEADER_COMPILE_BODY
+ 
++
+ # _AC_CHECK_HEADER_COMPILE(HEADER-FILE,
+ #		       [ACTION-IF-FOUND], [ACTION-IF-NOT-FOUND],
+ #		       [INCLUDES = DEFAULT-INCLUDES])
+@@ -172,6 +91,7 @@ AC_DEFUN([_AC_CHECK_HEADER_COMPILE],
+ AS_VAR_IF([ac_Header], [yes], [$2], [$3])
+ AS_VAR_POPDEF([ac_Header])])# _AC_CHECK_HEADER_COMPILE
+ 
++
+ # _AC_CHECK_HEADER_PREPROC_BODY
+ # -----------------------------
+ # Shell function body for _AC_CHECK_HEADER_PREPROC.
+@@ -185,22 +105,28 @@ m4_define([_AC_CHECK_HEADER_PREPROC_BODY],
+ ])# _AC_CHECK_HEADER_PREPROC_BODY
+ 
+ 
+-
+ # _AC_CHECK_HEADER_PREPROC(HEADER-FILE,
+ #		       [ACTION-IF-FOUND], [ACTION-IF-NOT-FOUND])
+ # --------------------------------------------------------------
+ # Check the preprocessor accepts HEADER-FILE.
+ AC_DEFUN([_AC_CHECK_HEADER_PREPROC],
++[AC_DIAGNOSE([obsolete], [Checking for headers with the preprocessor is
++deprecated. Specify prerequisite code to AC_CHECK_HEADER
++instead of using fourth argument `-'. (Many headers need
++no prerequisites. If you truly need to test whether
++something passes the preprocessor but not the compiler,
++use AC_PREPROC_IFELSE.)])]dnl
+ [AC_REQUIRE_SHELL_FN([ac_fn_]_AC_LANG_ABBREV[_check_header_preproc],
+   [AS_FUNCTION_DESCRIBE([ac_fn_]_AC_LANG_ABBREV[_check_header_preproc],
+     [LINENO HEADER VAR],
+-    [Tests whether HEADER is present, setting the cache variable VAR accordingly.])],
++    [Tests whether HEADER exists and can be preprocessed (in isolation),
++     setting the cache variable VAR accordingly.])],
+   [$0_BODY])]dnl
+ [AS_VAR_PUSHDEF([ac_Header], [ac_cv_header_$1])]dnl
+ [ac_fn_[]_AC_LANG_ABBREV[]_check_header_preproc "$LINENO" "$1" "ac_Header"
+ AS_VAR_IF([ac_Header], [yes], [$2], [$3])
+-AS_VAR_POPDEF([ac_Header])dnl
+-])# _AC_CHECK_HEADER_PREPROC
++AS_VAR_POPDEF([ac_Header])])# _AC_CHECK_HEADER_PREPROC
++
+ 
+ # _AC_CHECK_HEADER_OLD(HEADER-FILE, [ACTION-IF-FOUND],
+ #                      [ACTION-IF-NOT-FOUND])
+@@ -222,6 +148,14 @@ AC_DEFUN([_AC_CHECK_HEADER_NEW],
+ You should use AC_CHECK_HEADER with a fourth argument.])]dnl
+ [_AC_CHECK_HEADER_COMPILE($@)])
+ 
++# _AC_CHECK_HEADER_MONGREL(HEADER-FILE,
++#			   [ACTION-IF-FOUND], [ACTION-IF-NOT-FOUND])
++# ------------------------------------------------------------------
++# In case anyone used this undocumented macro.  Map to the _PREPROC
++# semantics to minimize the chance of breaking anything.
++AU_DEFUN([_AC_CHECK_HEADER_MONGREL],
++  [AC_CHECK_HEADER([$1], [$2], [$3], [-])])
++
+ 
+ # _AH_CHECK_HEADER(HEADER-FILE)
+ # -----------------------------
+diff --git a/tests/c.at b/tests/c.at
+index 2e8f149..b1d4644 100644
+--- a/tests/c.at
++++ b/tests/c.at
+@@ -123,8 +123,12 @@ test "x$ac_c_preproc_warn_flag" = xyes &&
+ CPP="./mycpp $CPP"
+ 
+ # Exercise CPP.
+-AC_CHECK_HEADERS(stdio.h autoconf_io.h, [], [], [-])]])
+ 
++AC_PREPROC_IFELSE([AC_LANG_SOURCE([[#include <stdio.h>]])],
++  [AC_DEFINE([HAVE_STDIO_H], [1], [Define if you have stdio.h])])
++AC_PREPROC_IFELSE([AC_LANG_SOURCE([[#include <autoconf_io.h>]])],
++  [AC_DEFINE([HAVE_AUTOCONF_IO_H], [1], [Define if you have autoconf_io.h])])
++]])
+ AT_CHECK_DEFINES(
+ [/* #undef HAVE_AUTOCONF_IO_H */
+ #define HAVE_STDIO_H 1
+@@ -139,14 +143,14 @@ AT_CLEANUP
+ 
+ AT_SETUP([AC_PROG_CPP without warnings])
+ 
+-# Ignore if /lib/cpp doesn't work
+-AT_CHECK([[echo '#include <stdio.h>' | /lib/cpp || exit 77]],
++# Ignore if the cpp in $PATH doesn't work
++AT_CHECK([[echo '#include <stdio.h>' | cpp || exit 77]],
+   [], [ignore], [ignore])
+ 
+ # A cpp which exit status is meaningless.
+ AT_DATA([mycpp],
+ [[#! /bin/sh
+-/lib/cpp "$@"
++cpp "$@"
+ exit 0
+ ]])
+ 
+@@ -159,7 +163,11 @@ test "x$ac_c_preproc_warn_flag" != xyes &&
+   AC_MSG_ERROR([failed to detect preprocessor warning option])
+ 
+ # Exercise CPP.
+-AC_CHECK_HEADERS(stdio.h autoconf_io.h, [], [], [-])]])
++AC_PREPROC_IFELSE([AC_LANG_SOURCE([[#include <stdio.h>]])],
++  [AC_DEFINE([HAVE_STDIO_H], [1], [Define if you have stdio.h])])
++AC_PREPROC_IFELSE([AC_LANG_SOURCE([[#include <autoconf_io.h>]])],
++  [AC_DEFINE([HAVE_AUTOCONF_IO_H], [1], [Define if you have autoconf_io.h])])
++]])
+ 
+ AT_CHECK_DEFINES(
+ [/* #undef HAVE_AUTOCONF_IO_H */
+@@ -179,8 +187,8 @@ AT_CLEANUP
+ 
+ AT_SETUP([AC_PROG_CPP via CC])
+ 
+-# Ignore if /lib/cpp doesn't work
+-AT_CHECK([[echo '#include <stdio.h>' | /lib/cpp || exit 77]],
++# Ignore if the cpp in $PATH doesn't work
++AT_CHECK([[echo '#include <stdio.h>' | cpp || exit 77]],
+   [], [ignore], [ignore])
+ 
+ AT_DATA([mycc],
+@@ -204,7 +212,11 @@ test "$CPP" != "$CC -E" &&
+   AC_MSG_ERROR([error messages on stderr cause the preprocessor selection to fail])
+ 
+ # Exercise CPP.
+-AC_CHECK_HEADERS(stdio.h autoconf_io.h, [], [], [-])]])
++AC_PREPROC_IFELSE([AC_LANG_SOURCE([[#include <stdio.h>]])],
++  [AC_DEFINE([HAVE_STDIO_H], [1], [Define if you have stdio.h])])
++AC_PREPROC_IFELSE([AC_LANG_SOURCE([[#include <autoconf_io.h>]])],
++  [AC_DEFINE([HAVE_AUTOCONF_IO_H], [1], [Define if you have autoconf_io.h])])
++]])
+ 
+ AT_CHECK_DEFINES(
+ [/* #undef HAVE_AUTOCONF_IO_H */
+diff --git a/tests/semantics.at b/tests/semantics.at
+index c0b78a1..f2b9ea5 100644
+--- a/tests/semantics.at
++++ b/tests/semantics.at
+@@ -219,13 +219,7 @@ AT_DATA([autoconf_io.h],
+ AT_CONFIGURE_AC([AC_CHECK_HEADERS(stdio.h autoconf_io.h)])
+ AT_CHECK_AUTOCONF([-W obsolete])
+ AT_CHECK_AUTOHEADER
+-AT_CHECK_CONFIGURE([CPPFLAGS=-I.], [0], [ignore],
+-[configure: WARNING: autoconf_io.h: present but cannot be compiled
+-configure: WARNING: autoconf_io.h:     check for missing prerequisite headers?
+-configure: WARNING: autoconf_io.h: see the Autoconf documentation
+-configure: WARNING: autoconf_io.h:     section "Present But Cannot Be Compiled"
+-configure: WARNING: autoconf_io.h: proceeding with the compiler's result
+-])
++AT_CHECK_CONFIGURE([CPPFLAGS=-I.])
+ AT_CHECK_ENV
+ AT_CHECK_DEFINES(
+ [/* #undef HAVE_AUTOCONF_IO_H */
+@@ -251,7 +245,16 @@ AT_DATA([header2.h],
+ 
+ AT_CONFIGURE_AC([AC_CHECK_HEADERS(header2.h, [], [], -)])
+ 
+-AT_CHECK_AUTOCONF([-W obsolete])
++AT_CHECK_AUTOCONF([-W obsolete], [], [], [stderr])
++AT_CHECK([[grep '^configure\.ac' stderr]], [0],
++[configure.ac:4: warning: Checking for headers with the preprocessor is
++configure.ac:4: deprecated. Specify prerequisite code to AC_CHECK_HEADER
++configure.ac:4: instead of using fourth argument `-'. (Many headers need
++configure.ac:4: no prerequisites. If you truly need to test whether
++configure.ac:4: something passes the preprocessor but not the compiler,
++configure.ac:4: use AC_PREPROC_IFELSE.)
++configure.ac:4: the top level
++])
+ AT_CHECK_AUTOHEADER
+ AT_CHECK_CONFIGURE([CPPFLAGS=-I.])
+ AT_CHECK_ENV
+-- 
+1.9.1
+

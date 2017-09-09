@@ -1,0 +1,51 @@
+From 785c3dff655e8d0607f2380e00460c9b72cd2edf Mon Sep 17 00:00:00 2001
+From: Paul Eggert <eggert@cs.ucla.edu>
+Date: Tue, 2 Sep 2014 11:43:32 -0700
+Subject: [PATCH] autoconf: port 'restrict' to GCC 4.2.1
+
+* lib/autoconf/c.m4 (AC_C_RESTRICT): Detect GCC bug 14050.
+Problem reported by Marco Munari for OpenBSD 5.5.
+---
+ lib/autoconf/c.m4 | 23 +++++++++++++----------
+ 1 file changed, 13 insertions(+), 10 deletions(-)
+
+diff --git a/lib/autoconf/c.m4 b/lib/autoconf/c.m4
+index a944529..a565339 100644
+--- a/lib/autoconf/c.m4
++++ b/lib/autoconf/c.m4
+@@ -1853,19 +1853,22 @@ fi
+ # Otherwise, define "restrict" to be empty.
+ AN_IDENTIFIER([restrict], [AC_C_RESTRICT])
+ AC_DEFUN([AC_C_RESTRICT],
+-[AC_CACHE_CHECK([for C/C++ restrict keyword], ac_cv_c_restrict,
++[AC_CACHE_CHECK([for C/C++ restrict keyword], [ac_cv_c_restrict],
+   [ac_cv_c_restrict=no
+    # The order here caters to the fact that C++ does not require restrict.
+    for ac_kw in __restrict __restrict__ _Restrict restrict; do
+-     AC_COMPILE_IFELSE([AC_LANG_PROGRAM(
+-      [[typedef int * int_ptr;
+-	int foo (int_ptr $ac_kw ip) {
+-	return ip[0];
+-       }]],
+-      [[int s[1];
+-	int * $ac_kw t = s;
+-	t[0] = 0;
+-	return foo(t)]])],
++     AC_COMPILE_IFELSE(
++      [AC_LANG_PROGRAM(
++	 [[typedef int *int_ptr;
++	   int foo (int_ptr $ac_kw ip) { return ip[0]; }
++	   int bar (int [$ac_kw]); /* Catch GCC bug 14050.  */
++	   int bar (int [$ac_kw ip]) { return ip[0]; }
++	 ]],
++	 [[int s[1];
++	   int *$ac_kw t = s;
++	   t[0] = 0;
++	   return foo (t) + bar (t);
++	 ]])],
+       [ac_cv_c_restrict=$ac_kw])
+      test "$ac_cv_c_restrict" != no && break
+    done
+-- 
+1.9.1
+

@@ -1,0 +1,64 @@
+From 0e2eecedb12dd472c9a008748be6edd6ea68fa0e Mon Sep 17 00:00:00 2001
+From: Paolo Bonzini <bonzini@gnu.org>
+Date: Mon, 31 Oct 2016 18:08:07 +0100
+Subject: [PATCH] autoconf: prefer an unrolled loop for trivial
+ AC_CHECK_HEADERS
+
+An unrolled loop avoids the cost of spawning sed in AS_TR_SH and
+AS_TR_CPP.  Prefer it if there is nothing in the second and third
+argument of AC_CHECK_HEADERS and the first argument is a literal.
+
+* lib/autoconf/headers.m4 (AC_CHECK_HEADERS): Unroll loop if safe.
+(_AC_CHECK_HEADERS): Move basic implementation here.
+(AC_CHECK_INCLUDES_DEFAULT): Remove unnecessary arguments after the first.
+
+Signed-off-by: Paolo Bonzini <bonzini@gnu.org>
+Message-Id: <1477933688-4884-3-git-send-email-bonzini@gnu.org>
+[eblake: perform AC_CHECK_HEADERS_ONCE changes separately, use
+dnl to reduce generated blank lines]
+Signed-off-by: Eric Blake <eblake@redhat.com>
+
+Signed-off-by: Eric Blake <eblake@redhat.com>
+---
+ lib/autoconf/headers.m4 | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
+
+diff --git a/lib/autoconf/headers.m4 b/lib/autoconf/headers.m4
+index 5f4ab4a..8e2dbb0 100644
+--- a/lib/autoconf/headers.m4
++++ b/lib/autoconf/headers.m4
+@@ -185,12 +185,17 @@ m4_define([AH_CHECK_HEADERS],
+ # header.  Either ACTION may include `break' to stop the search.
+ AC_DEFUN([AC_CHECK_HEADERS],
+ [m4_map_args_w([$1], [_AH_CHECK_HEADER(], [)])]dnl
+-[AS_FOR([AC_header], [ac_header], [$1],
+-[AC_CHECK_HEADER(AC_header,
+-		 [AC_DEFINE_UNQUOTED(AS_TR_CPP([HAVE_]AC_header)) $2],
+-		 [$3], [$4])dnl])
++[m4_if([$2$3]AS_LITERAL_IF([$1], [[yes]], [[no]]), [yes],
++       [m4_map_args_w([$1], [_$0(], [, [], [], [$4])])],
++       [AS_FOR([AC_header], [ac_header], [$1], [_$0(AC_header, [$2], [$3], [$4])])])dnl
+ ])# AC_CHECK_HEADERS
+ 
++m4_define([_AC_CHECK_HEADERS],
++[AC_CHECK_HEADER([$1],
++		 [AC_DEFINE_UNQUOTED(AS_TR_CPP([HAVE_]$1)) $2],
++		 [$3], [$4])dnl
++])
++
+ 
+ # _AC_CHECK_HEADER_ONCE(HEADER-FILE)
+ # ----------------------------------
+@@ -285,8 +290,7 @@ ac_includes_default="\
+ #endif"
+ ])]dnl
+ [_AC_CHECK_HEADERS_ONCE(
+-  [sys/types.h sys/stat.h strings.h inttypes.h stdint.h unistd.h],
+-  [], [], [$ac_includes_default])]dnl
++  [sys/types.h sys/stat.h strings.h inttypes.h stdint.h unistd.h])]dnl
+ dnl For backward compatibility, provide unconditional AC_DEFINEs of
+ dnl HAVE_STDLIB_H, HAVE_STRING_H, and STDC_HEADERS.
+ [AC_DEFINE([HAVE_STDLIB_H], [1],
+-- 
+1.9.1
+

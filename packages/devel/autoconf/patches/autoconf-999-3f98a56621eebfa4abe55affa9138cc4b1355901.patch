@@ -1,0 +1,39 @@
+From 3f98a56621eebfa4abe55affa9138cc4b1355901 Mon Sep 17 00:00:00 2001
+From: Eric Blake <eblake@redhat.com>
+Date: Fri, 30 May 2014 08:55:10 -0600
+Subject: [PATCH] AC_INIT: quote invalid feature names
+
+Changes:
+   configure: error: invalid feature name: debug
+to
+   configure: error: invalid feature name: `debug '
+to make it obvious if trailing space is the reason why a feature
+name was rejected; similar to existing error messages elsewhere
+about invalid shell variable names.
+
+* lib/autoconf/general.m4 (_AC_INIT_PARSE_ENABLE2): Add quotes.
+Reported by Noel Grandin.
+
+Signed-off-by: Eric Blake <eblake@redhat.com>
+---
+ lib/autoconf/general.m4 | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/lib/autoconf/general.m4 b/lib/autoconf/general.m4
+index e2e9b6a..696a9a1 100644
+--- a/lib/autoconf/general.m4
++++ b/lib/autoconf/general.m4
+@@ -998,8 +998,8 @@ m4_define([_AC_INIT_PARSE_ENABLE2],
+     ac_useropt=`expr "x$ac_option" : 'x-*$1-\(m4_if([$1], [$2], [[[^=]]], [.])*\)'`
+     # Reject names that are not valid shell variable names.
+     expr "x$ac_useropt" : "[.*[^-+._$as_cr_alnum]]" >/dev/null &&
+-      AC_MSG_ERROR(
+-	[invalid ]m4_if([$2], [with], [package], [feature])[ name: $ac_useropt])
++      AC_MSG_ERROR([invalid ]m4_if([$2], [with],
++        [package], [feature])[ name: `$ac_useropt'])
+     ac_useropt_orig=$ac_useropt
+     ac_useropt=`AS_ECHO(["$ac_useropt"]) | sed 's/[[-+.]]/_/g'`
+     case $ac_user_opts in
+-- 
+1.9.1
+

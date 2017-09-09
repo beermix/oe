@@ -1,0 +1,357 @@
+From f4e91bfc490da63209aad19636568da3b955dcd4 Mon Sep 17 00:00:00 2001
+From: Thomas Martitz <kugel@rockbox.org>
+Date: Mon, 13 Mar 2017 12:41:59 +0100
+Subject: [PATCH] automake: Shorter object file names under subdir-objects
+
+Combining the 'subdir-objects' option with target-specific flags had
+the consequence of producing long object file names.  This was done to
+preventively ensure the uniqueness of object file names.  We are now
+using shorter names by default, and handle long names when an actual
+conflict is detected.  This will hopefully reduce the necessity of
+using the 'prog_SHORTNAME' facility.
+
+Example:
+previously:
+  AUTOMAKE_OPTIONS = subdir-objects
+  bin_PROGRAMS += path/to/foo
+  path_to_foo_CFLAGS = $(AM_CFLAGS) -g
+
+resulted in objects:
+  sub/path_to_foo-foo.o
+
+now object file name is:
+  sub/foo-foo.o
+
+* bin/automake.in (proglist, liblist, ltliblist)
+(dup_shortnames): New globals.
+(initialize_per_input): Initialize them.
+(handle_targets): New subroutine.
+(handle_single_transform): Truncate object file names when possible.
+* t/subobj-objname-clash.sh: New test.
+* t/list-of-tests.mk (handwritten_TESTS): Add it.
+* NEWS: Update.
+
+Signed-off-by: Mathieu Lirzin <mthl@gnu.org>
+---
+ NEWS                      |   7 ++++
+ bin/automake.in           | 102 +++++++++++++++++++++++++++++++++++++--------
+ t/list-of-tests.mk        |   1 +
+ t/subobj-objname-clash.sh | 104 ++++++++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 197 insertions(+), 17 deletions(-)
+ create mode 100644 t/subobj-objname-clash.sh
+
+diff --git a/NEWS b/NEWS
+index 5aa2c88..5ddf6a0 100644
+--- a/NEWS
++++ b/NEWS
+@@ -64,6 +64,13 @@
+ 
+ New in 1.16:
+ 
++* Miscellaneous changes
++
++  - When subdir-objects is in effect, Automake will now construct
++    shorter object file names when no programs and libraries name
++    clashes are encountered.  This should make the discouraged use of
++    'foo_SHORTNAME' unnecessary in many cases.
++
+ * Bugs fixed:
+ 
+   - Automatic dependency tracking has been fixed to work also when the
+diff --git a/bin/automake.in b/bin/automake.in
+index 8db874c..d126836 100644
+--- a/bin/automake.in
++++ b/bin/automake.in
+@@ -74,6 +74,7 @@ use Automake::Wrap 'makefile_wrap';
+ use Automake::Language;
+ use File::Basename;
+ use File::Spec;
++use List::Util 'none';
+ use Carp;
+ 
+ ## ----------------------- ##
+@@ -472,6 +473,15 @@ my %dep_files;
+ # This is a list of all targets to run during "make dist".
+ my @dist_targets;
+ 
++# List of all programs, libraries and ltlibraries as returned
++# by am_install_var
++my @proglist;
++my @liblist;
++my @ltliblist;
++# Blacklist of targets (as canonical base name) for which object file names
++# may not be automatically shortened
++my @dup_shortnames;
++
+ # Keep track of all programs declared in this Makefile, without
+ # $(EXEEXT).  @substitutions@ are not listed.
+ my %known_programs;
+@@ -592,6 +602,11 @@ sub initialize_per_input ()
+     @dist_common = ();
+     $handle_dist_run = 0;
+ 
++    @proglist = ();
++    @liblist = ();
++    @ltliblist = ();
++    @dup_shortnames = ();
++
+     %known_programs = ();
+     %known_libraries = ();
+ 
+@@ -1704,14 +1719,48 @@ sub handle_single_transform
+ 		# object.  In this case we rewrite the object's
+ 		# name to ensure it is unique.
+ 
+-		# We choose the name 'DERIVED_OBJECT' to ensure
+-		# (1) uniqueness, and (2) continuity between
+-		# invocations.  However, this will result in a
+-		# name that is too long for losing systems, in
+-		# some situations.  So we provide _SHORTNAME to
+-		# override.
+-
+-		my $dname = $derived;
++                # We choose the name 'DERIVED_OBJECT' to ensure (1) uniqueness,
++                # and (2) continuity between invocations.  However, this will
++                # result in a name that is too long for losing systems, in some
++                # situations.  So we attempt to shorten automatically under
++                # subdir-objects, and provide _SHORTNAME to override as a last
++                # resort.  If subdir-object is in effect, it's usually
++                # unnecessary to use the complete 'DERIVED_OBJECT' (that is
++                # often the result from %canon_reldir%/%C% usage) since objects
++                # are placed next to their source file.  Generally, this means
++                # it is already unique within that directory (see below for an
++                # exception).  Thus, we try to avoid unnecessarily long file
++                # names by stripping the directory components of
++                # 'DERIVED_OBJECT'.  This allows avoiding explicit _SHORTNAME
++                # usage in many cases.  EXCEPTION: If two (or more) targets in
++                # different directories but with the same base name (after
++                # canonicalization), using target-specific FLAGS, link the same
++                # object, then this logic clashes.  Thus, we don't strip if
++                # this is detected.
++                my $dname = $derived;
++                if ($directory ne ''
++                    && option 'subdir-objects'
++                    && none { $dname =~ /$_$/ } @dup_shortnames)
++                  {
++                    # At this point, we don't clear information about what
++                    # parts of $derived are truly file name components.  We can
++                    # determine that by comparing against the canonicalization
++                    # of $directory.
++                    my $dir = $directory . "/";
++                    my $cdir = canonicalize ($dir);
++                    my $dir_len = length ($dir);
++                    # Make sure we only strip full file name components.  This
++                    # is done by repeatedly trying to find cdir at the
++                    # beginning.  Each iteration removes one file name
++                    # component from the end of cdir.
++                    while ($dir_len > 0 && index ($derived, $cdir) != 0)
++                      {
++                        # Eventually $dir_len becomes 0.
++                        $dir_len = rindex ($dir, "/", $dir_len - 2) + 1;
++                        $cdir = substr ($cdir, 0, $dir_len);
++                      }
++                    $dname = substr ($derived, $dir_len);
++                  }
+ 		my $var = var ($derived . '_SHORTNAME');
+ 		if ($var)
+ 		{
+@@ -2432,12 +2481,33 @@ sub handle_libtool ()
+ 				   LTRMS => join ("\n", @libtool_rms));
+ }
+ 
++# Check for duplicate targets
++sub handle_targets ()
++{
++  my %seen = ();
++  my @dups = ();
++  @proglist = am_install_var ('progs', 'PROGRAMS',
++                              'bin', 'sbin', 'libexec', 'pkglibexec',
++                              'noinst', 'check');
++  @liblist = am_install_var ('libs', 'LIBRARIES',
++                             'lib', 'pkglib', 'noinst', 'check');
++  @ltliblist = am_install_var ('ltlib', 'LTLIBRARIES',
++			       'noinst', 'lib', 'pkglib', 'check');
++
++  # Record duplications that may arise after canonicalization of the
++  # base names, in order to prevent object file clashes in the presence
++  # of target-specific *FLAGS
++  my @targetlist = (@proglist, @liblist, @ltliblist);
++  foreach my $pair (@targetlist)
++    {
++      my $base = canonicalize (basename (@$pair[1]));
++      push (@dup_shortnames, $base) if ($seen{$base});
++      $seen{$base} = $base;
++    }
++}
+ 
+ sub handle_programs ()
+ {
+-  my @proglist = am_install_var ('progs', 'PROGRAMS',
+-				 'bin', 'sbin', 'libexec', 'pkglibexec',
+-				 'noinst', 'check');
+   return if ! @proglist;
+   $must_handle_compiled_objects = 1;
+ 
+@@ -2524,8 +2594,6 @@ sub handle_programs ()
+ 
+ sub handle_libraries ()
+ {
+-  my @liblist = am_install_var ('libs', 'LIBRARIES',
+-                                'lib', 'pkglib', 'noinst', 'check');
+   return if ! @liblist;
+   $must_handle_compiled_objects = 1;
+ 
+@@ -2634,9 +2702,7 @@ sub handle_libraries ()
+ 
+ sub handle_ltlibraries ()
+ {
+-  my @liblist = am_install_var ('ltlib', 'LTLIBRARIES',
+-                                'noinst', 'lib', 'pkglib', 'check');
+-  return if ! @liblist;
++  return if ! @ltliblist;
+   $must_handle_compiled_objects = 1;
+ 
+   my @prefix = am_primary_prefixes ('LTLIBRARIES', 0, 'lib', 'pkglib',
+@@ -2729,7 +2795,7 @@ sub handle_ltlibraries ()
+ 	 skip_ac_subst => 1);
+     }
+ 
+-  foreach my $pair (@liblist)
++  foreach my $pair (@ltliblist)
+     {
+       my ($where, $onelib) = @$pair;
+ 
+@@ -7793,6 +7859,8 @@ sub generate_makefile
+ 
+   handle_configure ($makefile_am, $makefile_in, $makefile, @inputs);
+   handle_gettext;
++
++  handle_targets;
+   handle_libraries;
+   handle_ltlibraries;
+   handle_programs;
+diff --git a/t/list-of-tests.mk b/t/list-of-tests.mk
+index 15755c5..dacdc8d 100644
+--- a/t/list-of-tests.mk
++++ b/t/list-of-tests.mk
+@@ -1062,6 +1062,7 @@ t/subobjname.sh \
+ t/subobj-clean-pr10697.sh \
+ t/subobj-clean-lt-pr10697.sh \
+ t/subobj-indir-pr13928.sh \
++t/subobj-objname-clash.sh \
+ t/subobj-vpath-pr13928.sh \
+ t/subobj-pr13928-more-langs.sh \
+ t/subpkg.sh \
+diff --git a/t/subobj-objname-clash.sh b/t/subobj-objname-clash.sh
+new file mode 100644
+index 0000000..a33d36b
+--- /dev/null
++++ b/t/subobj-objname-clash.sh
+@@ -0,0 +1,104 @@
++#! /bin/sh
++# Copyright (C) 1996-2017 Free Software Foundation, Inc.
++#
++# This program is free software; you can redistribute it and/or modify
++# it under the terms of the GNU General Public License as published by
++# the Free Software Foundation; either version 2, or (at your option)
++# any later version.
++#
++# This program is distributed in the hope that it will be useful,
++# but WITHOUT ANY WARRANTY; without even the implied warranty of
++# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++# GNU General Public License for more details.
++#
++# You should have received a copy of the GNU General Public License
++# along with this program.  If not, see <http://www.gnu.org/licenses/>.
++
++# Make sure that object names don't clash when using subdir-objects.
++# The check is done for clashing programs, clashing libraries and
++# a program that clashes with a library
++
++. test-init.sh
++
++mkdir src
++
++cat >> configure.ac << 'END'
++AC_PROG_CC
++AC_PROG_RANLIB
++AC_OUTPUT
++END
++
++cat > Makefile.am << 'END'
++AUTOMAKE_OPTIONS = subdir-objects foreign
++noinst_PROGRAMS =
++noinst_LIBRARIES =
++
++# CLASHING PROGRAMS
++noinst_PROGRAMS += foo src/foo
++foo_SOURCES = src/foo.c src/main.c
++foo_CPPFLAGS = -DVAL=0
++src_foo_CPPFLAGS = -DVAL=1
++src_foo_SOURCES = src/foo.c src/main.c
++
++# CLASHING LIBS
++noinst_PROGRAMS += bar src/bar
++noinst_LIBRARIES += libbar.a src/libbar.a
++bar_SOURCES = src/main.c
++bar_LDADD = libbar.a
++src_bar_SOURCES = src/main.c
++src_bar_LDADD = src/libbar.a
++libbar_a_SOURCES = src/foo.c
++libbar_a_CPPFLAGS = -DVAL=0
++src_libbar_a_SOURCES = src/foo.c
++src_libbar_a_CPPFLAGS = -DVAL=1
++
++# CLASHING PROGRAM + LIB
++noinst_PROGRAMS += libzap_a src/zap
++noinst_LIBRARIES += src/libzap.a
++libzap_a_SOURCES = src/main.c src/foo.c
++libzap_a_CPPFLAGS = -DVAL=2
++src_zap_SOURCES = src/main.c
++src_zap_LDADD = src/libzap.a
++src_libzap_a_SOURCES = src/foo.c
++src_libzap_a_CPPFLAGS = -DVAL=3
++
++# NON-CLASHING
++noinst_PROGRAMS += src/foo-uniq
++src_foo_uniq_SOURCES = src/main.c src/foo.c
++src_foo_uniq_CPPFLAGS = -DVAL=4
++END
++
++cat > src/foo.c << 'END'
++int
++foo ()
++{
++  return VAL;
++}
++END
++
++cat > src/main.c << 'END'
++int foo (void);
++
++int
++main ()
++{
++  return foo ();
++}
++END
++
++$ACLOCAL
++$AUTOCONF
++$AUTOMAKE --add-missing
++
++./configure
++$MAKE
++set +e
++./foo || fail_ "./foo should return 0"
++./src/foo; test $? = 1 || fail_ "./src/foo should return 1"
++./bar || fail_ "./bar should return 0"
++./src/bar; test $? = 1 || fail_ "./src/bar should return 1"
++./libzap_a; test $? = 2  || fail_ "./libfoo_a should return 2"
++./src/zap; test $? = 3 || fail_ "./src/prog_libfoo should return 3"
++./src/foo-uniq; test $? = 4 || fail_ "./foo_uniq should return 4"
++set -e
++$MAKE clean
+-- 
+1.9.1
+

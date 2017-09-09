@@ -1,0 +1,48 @@
+From f5b1ea679360db7a6714bbf3953f4fe1a3174844 Mon Sep 17 00:00:00 2001
+From: Eric Blake <eblake@redhat.com>
+Date: Thu, 12 Sep 2013 09:23:35 -0600
+Subject: [PATCH] AC_PROG_CC: also try $CC -version, for cl6x compiler
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf8
+Content-Transfer-Encoding: 8bit
+
+AnaÃ¯s Bouque reported that the cl6x compiler only understands -version:
+https://lists.gnu.org/archive/html/bug-autoconf/2013-07/msg00003.html
+
+* c.m4 (AC_PROG_CC): Add another version probe.
+* THANKS: Update.
+
+Signed-off-by: Eric Blake <eblake@redhat.com>
+---
+ THANKS            | 1 +
+ lib/autoconf/c.m4 | 2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/THANKS b/THANKS
+index f41f16c..7f440ae 100644
+--- a/THANKS
++++ b/THANKS
+@@ -29,6 +29,7 @@ Alfred G. de Wijn           dwijn@iluvatar.eu.org
+ Alfred M. Szmidt            ams@gnu.org
+ Allan Caffee                allan.caffee@gmail.com
+ Allan Clark                 allanc@chickenandporn.com
++AnaÃ¯s Bouque                anais.bouque@fr.thalesgroup.com
+ Anders Kaseorg              andersk@MIT.EDU
+ Andreas Buening             andreas.buening@nexgo.de
+ Andreas Jaeger              aj@suse.de
+diff --git a/lib/autoconf/c.m4 b/lib/autoconf/c.m4
+index 53fec83..25780f9 100644
+--- a/lib/autoconf/c.m4
++++ b/lib/autoconf/c.m4
+@@ -465,7 +465,7 @@ test -z "$CC" && AC_MSG_FAILURE([no acceptable C compiler found in \$PATH])
+ _AS_ECHO_LOG([checking for _AC_LANG compiler version])
+ set X $ac_compile
+ ac_compiler=$[2]
+-for ac_option in --version -v -V -qversion; do
++for ac_option in --version -v -V -qversion -version; do
+   _AC_DO_LIMIT([$ac_compiler $ac_option >&AS_MESSAGE_LOG_FD])
+ done
+ 
+-- 
+1.9.1
+
