@@ -19,14 +19,13 @@
 # libcap,systemd,eudev depends on gperf and must be patched for gperf >= 3.1
 
 PKG_NAME="gperf"
-PKG_VERSION="793a229"
+PKG_VERSION="3.0.4"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://www.gnu.org/software/gperf/"
-PKG_GIT_URL="https://git.savannah.gnu.org/git/gperf.git"
+PKG_URL="https://ftp.gnu.org/pub/gnu/gperf/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="ccache:host"
-PKG_DEPENDS_TARGET="toolchain gperf:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="devel"
 PKG_SHORTDESC="gperf: a perfect hash function generator"
@@ -34,10 +33,3 @@ PKG_LONGDESC="GNU gperf is a perfect hash function generator. For a given list o
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
-
-
-pre_configure_host() {
-  cd $ROOT/$PKG_BUILD
-  rm -rf .$TARGET_NAME
-  NOCONFIGURE=1 ./autogen.sh
-}
