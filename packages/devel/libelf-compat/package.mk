@@ -15,11 +15,20 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 make_host() {
-  make CC=$HOST_CC prefix=$ROOT/$TOOLCHAIN
+  make prefix=$ROOT/$TOOLCHAIN install
+}
+
+makeinstall_host() {
+  make prefix=$ROOT/$TOOLCHAIN install
+}
+
+make_target() {
+  make -C CC=$CC prefix=$SYSROOT_PREFIX/usr install
 }
 
 makeinstall_target() {
-  make CC=$CC CFLAGS=$CFLAGS LDFLAGS=$LDFLAGS prefix=$SYSROOT_PREFIX
+  make -C CC=$CC prefix=$SYSROOT_PREFIX/usr install
 }
+
 
 
