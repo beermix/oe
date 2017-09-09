@@ -16,22 +16,24 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="make"
-PKG_VERSION="4.2.1"
-PKG_SITE="https://www.gnu.org/software/make/"
-PKG_URL="https://ftp.gnu.org/gnu/make/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_HOST=""
-PKG_PRIORITY="optional"
+PKG_NAME="flex"
+PKG_VERSION="2.6.4"
+PKG_SITE="http://flex.sourceforge.net/"
+PKG_URL="https://github.com/westes/flex/releases/download/v${PKG_VERSION}/${PKG_NAME}-${PKG_VERSION}.tar.gz"
+PKG_DEPENDS_HOST="ccache:host"
 PKG_SECTION="toolchain/devel"
-PKG_SHORTDESC="make: GNU make utility to maintain groups of programs"
-PKG_LONGDESC="The 'make' utility automatically determines which pieces of a large program need to be recompiled, and issues commands to recompile them. This is GNU 'make', which was implemented by Richard Stallman and Roland McGrath. GNU 'make' conforms to section 6.2 of EEE Standard 1003.2-1992' (POSIX.2)."
-
+PKG_SHORTDESC="flex: Fast lexical analyzer generator"
+PKG_LONGDESC="flex is a tool for generating programs that perform pattern-matching on text."
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-post_makeinstall_host() {
-  ln -sf make $ROOT/$TOOLCHAIN/bin/gmake
-}
+PKG_CONFIGURE_OPTS_HOST="ac_cv_lib_util_getloadavg=no --disable-shared"
 
-#PKG_CONFIGURE_OPTS_HOST="--disable-load --without-guile"
-PKG_CONFIGURE_OPTS_HOST="--enable-load --without-guile"
+post_makeinstall_host() {
+  cat > $ROOT/$TOOLCHAIN/bin/lex << "EOF"
+#!/bin/sh
+exec flex "$@"
+EOF
+
+  chmod -v 755 $ROOT/$TOOLCHAIN/bin/lex
+}
