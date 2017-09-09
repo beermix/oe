@@ -29,7 +29,7 @@ PKG_LONGDESC="The Glibc package contains the main C library. This library provid
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/bash \
+PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            libc_cv_slibdir=/lib \
                            ac_cv_path_PERL= \
                            ac_cv_prog_MAKEINFO= \
@@ -38,15 +38,14 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/bash \
                            --disable-profile \
                            --disable-sanity-checks \
                            --enable-add-ons \
-                           --enable-stack-protector=strong \
-                           --enable-stackguard-randomization \
                            --enable-bind-now \
                            --with-elf \
+                           --enable-stack-protector=strong \
                            --with-tls \
                            --with-__thread \
                            --with-binutils=$ROOT/$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
-                           --enable-kernel=2.6.32 \
+                           --enable-kernel=3.0.0 \
                            --without-cvs \
                            --without-gd \
                            --enable-obsolete-rpc \
@@ -103,10 +102,8 @@ pre_configure_target() {
 
   unset LD_LIBRARY_PATH
 
-  # set some CFLAGS we need
-  export CFLAGS="-g0 $CFLAGS"
-  export CPPFLAGS=""
-  export CXXFLAGS="-g0 $CFLAGS"
+# set some CFLAGS we need
+  export CFLAGS="$CFLAGS -g"
 
   export OBJDUMP_FOR_HOST=objdump
 
@@ -120,7 +117,7 @@ EOF
 echo "sbindir=/usr/bin" >> configparms
 echo "rootsbindir=/usr/bin" >> configparms
 
-GLIBC_INCLUDE_BIN="iconv getent ldd locale"
+GLIBC_INCLUDE_BIN="getent ldd locale"
 }
 
 post_makeinstall_target() {

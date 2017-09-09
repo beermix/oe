@@ -17,11 +17,11 @@
 ################################################################################
 
 PKG_NAME="binutils"
-PKG_VERSION="2.29.U"
+PKG_VERSION="2.29"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/binutils/"
-PKG_URL="ftp://root:openelec@192.168.1.4/www/binutils-2.29.U.tar.xz"
+PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="ccache:host bison:host flex:host libelf-compat:host bc:host linux:host"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="binutils: A GNU collection of binary utilities"
@@ -31,7 +31,8 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 MAKEINFO=true
-#LDFLAGS="-Wl,-z,relro"
+LDFLAGS="-Wl,-z,relro"
+#CFLAGS="$HOST_CFLAGS -O0"
 
 PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --with-sysroot=$SYSROOT_PREFIX \
@@ -50,11 +51,13 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-threads \
                          --with-pic \
                          --disable-nls \
+                         --enable-install-libiberty \
+                         --enable-build-warnings=no \
                          --enable-poison-system-directories"
 
 makeinstall_host() {
   cp -v ../include/libiberty.h $SYSROOT_PREFIX/usr/include
-  make install
+  make install -j1
 }
 
 pre_configure_host() {

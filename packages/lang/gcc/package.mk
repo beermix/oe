@@ -11,13 +11,13 @@
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-# --without-included-gettext \
+#
 #  You should have received a copy of the GNU General Public License
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="7-20170907"
+PKG_VERSION="6-20170906"
 PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/$PKG_VERSION/gcc-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host"
 PKG_DEPENDS_TARGET="gcc:host"
@@ -49,18 +49,12 @@ GCC_COMMON_CONFIGURE_OPTS="MAKEINFO=missing \
                            --enable-ld=default \
                            --disable-multilib \
                            --disable-nls \
-                           --without-included-gettext \
                            --with-default-libstdcxx-abi=gcc4-compatible \
                            --enable-checking=release \
                            --disable-libssp \
-                           --enable-gnu-unique-object \
-                           --enable-linker-build-id \
-                           --enable-gnu-indirect-function \
-                           --disable-werror \
                            --without-ppl \
                            --without-cloog \
                            --disable-libmpx \
-                           --disable-libsanitizer \
                            --with-tune=generic"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
@@ -78,6 +72,7 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --without-headers \
                               --with-newlib \
                               --disable-decimal-float \
+                              --disable-libsanitizer \
                               $GCC_OPTS"
 
 PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
