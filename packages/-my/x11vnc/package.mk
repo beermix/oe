@@ -15,28 +15,6 @@ pre_build_target() {
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \
 			      --with-x11vnc \
 			      --with-x \
-			      --without-xkeyboard \
-			      --without-xinerama \
-			      --without-xrandr \
-			      --without-xfixes \
-			      --without-xdamage \
-			      --without-xtrap \
-			      --without-xrecord \
-			      --without-fbpm \
-			      --without-dpms \
-			      --without-v4l \
-			      --without-fbdev \
-			      --without-uinput \
-			      --without-macosx-native \
-			      --without-crypt \
-			      --without-crypto \
-			      --without-ssl \
-			      --without-avahi \
-			      --with-jpeg \
-			      --without-libz \
-			      --without-zlib \
-			      --without-gnutls \
-			      --without-client-tls \
 			      --disable-nls"
 			      
 post_install () {
