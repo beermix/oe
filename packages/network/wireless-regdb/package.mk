@@ -18,7 +18,6 @@
 
 PKG_NAME="wireless-regdb"
 PKG_VERSION="2016.06.10"
-#PKG_VERSION="2017.03.07"
 PKG_SITE="http://wireless.kernel.org/en/developers/Regulatory"
 PKG_URL="https://www.kernel.org/pub/software/network/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain"
@@ -30,7 +29,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 make_target() {
-  : make SHELL='sh -x'
+  : # nothing to do
 }
 
 makeinstall_target() {

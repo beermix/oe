@@ -29,3 +29,11 @@ PKG_LONGDESC="libmnl is a minimalistic user-space library oriented to Netlink de
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
+
+
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static"
+
+pre_configure_target() {
+  CFLAGS="$CFLAGS -fPIC"
+  CXXFLAGS="$CXXFLAGS -fPIC"
+}
