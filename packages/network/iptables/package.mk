@@ -36,5 +36,5 @@ PKG_AUTORECONF="yes"
 # CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
 #}
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-ipv6 --enable-bpf-compiler --with-kernel=$(get_pkg_build linux)"
+PKG_CONFIGURE_OPTS_TARGET="--enable-bpf-compiler --with-kernel=$(get_pkg_build linux)"
 

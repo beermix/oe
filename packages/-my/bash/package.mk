@@ -11,7 +11,13 @@ PKG_CONFIGURE_OPTS_TARGET="--bindir=/bin
 			      --with-curses \
 			      --enable-readline \
 			      --without-bash-malloc \
-			      --with-installed-readline"
+			      --with-installed-readline \
+			      --disable-static-link \
+                           --disable-rpath \
+                           --cache-file=/dev/null \
+                           --enable-history \
+                           --enable-alias \
+                           --enable-job-control"
 
 post_makeinstall_target() {
   mkdir -p $INSTALL/bin
