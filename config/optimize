@@ -1,6 +1,6 @@
 if [ "$OPTIMIZATIONS" = normal ];then
-  GCC_OPTIM="-O2 -pipe -fstack-protector-strong -fno-plt"
-  LD_OPTIM="-Wl,-O1,--sort-common,--as-needed,-z,relro"
+  GCC_OPTIM="-O2 -pipe -fstack-protector-strong"
+  LD_OPTIM="-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now"
   CPP_OPTIM="-D_FORTIFY_SOURCE=2"
 fi
 
@@ -10,7 +10,6 @@ if [ "$OPTIMIZATIONS" = size ];then
   LD_OPTIM="-Wl,-O1 -Wl,-z,relro -Wl,--gc-sections"
   CPP_OPTIM="-D_FORTIFY_SOURCE=2"
   GCC_OPTIM="-O2 -pipe -fstack-protector-strong -fno-plt"
-  LD_OPTIM="-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now"
   LD_OPTIM="-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now"
 fi
 
@@ -28,8 +27,8 @@ if [ "$DEBUG" = yes ]; then
   TARGET_CXXFLAGS="$TARGET_CXXFLAGS -ggdb"
   TARGET_LDFLAGS="$TARGET_LDFLAGS -ggdb"
 else
-  #TARGET_CFLAGS="$TARGET_CFLAGS -fomit-frame-pointer"
-  #TARGET_CXXFLAGS="$TARGET_CXXFLAGS -fomit-frame-pointer"
+  TARGET_CFLAGS="$TARGET_CFLAGS -fomit-frame-pointer"
+  TARGET_CXXFLAGS="$TARGET_CXXFLAGS -fomit-frame-pointer"
   TARGET_LDFLAGS="$TARGET_LDFLAGS -s"
 fi
 
