@@ -19,6 +19,7 @@
 
 PKG_NAME="attr"
 PKG_VERSION="2.4.47"
+PKG_SHA256="25772f653ac5b2e3ceeb89df50e4688891e21f723c460636548971652af0a859"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE=""
@@ -34,7 +35,7 @@ PKG_AUTORECONF="no"
 PKG_CONFIGURE_OPTS_TARGET="OPTIMIZER= \
                            CONFIG_SHELL=/bin/bash \
                            INSTALL_USER=root INSTALL_GROUP=root \
-                           --enable-shared --enable-static"
+                           --disable-shared --enable-static"
 
 if [ "$DEBUG" = yes ]; then
   PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET DEBUG=-DDEBUG"
@@ -45,20 +46,28 @@ fi
 pre_configure_target() {
 # attr fails to build in subdirs
   cd $ROOT/$PKG_BUILD
-    rm -rf .$TARGET_NAME
+  rm -rf .$TARGET_NAME
 }
 
 makeinstall_target() {
   mkdir -p $SYSROOT_PREFIX/usr/lib/
-    cp -PR libattr/.libs/libattr.* $SYSROOT_PREFIX/usr/lib/
-    
-  mkdir -p $INSTALL/usr/bin
-  mkdir -p $INSTALL/usr/lib
-    cp -PR libattr/.libs/libattr.* $INSTALL/usr/lib
-    cp -PR getfattr/getfattr $INSTALL/usr/bin/
-    cp -PR setfattr/setfattr $INSTALL/usr/bin/
-    cp -PR attr/attr $INSTALL/usr/bin/
-  
+    cp libattr/.libs/libattr.a $SYSROOT_PREFIX/usr/lib/
+
+  mkdir -p $SYSROOT_PREFIX/usr/include/attr
+    cp include/*.h $SYSROOT_PREFIX/usr/include/attr
+}
+
+post_makeinstall_target() {
+  mkdir -p $INSTALL/usr/bin/
+  cp attr/attr $INSTALL/usr/bin/
+  cp setfattr/setfattr $INSTALL/usr/bin/
+  cp getfattr/getfattr $INSTALL/usr/bin/
+}
+
+PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
+
+
+makeinstall_target() {
   mkdir -p $SYSROOT_PREFIX/usr/include/attr
     cp include/*.h $SYSROOT_PREFIX/usr/include/attr
 }
