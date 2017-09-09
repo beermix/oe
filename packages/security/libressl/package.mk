@@ -24,7 +24,7 @@ PKG_PRIORITY="optional"
 PKG_SECTION="security"
 PKG_USE_CMAKE="no"
 PKG_AUTORECONF="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 pre_configure_host() {
   CFLAGS="$CFLAGS -fPIC"
