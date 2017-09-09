@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="7-20170907"
+PKG_VERSION="6-20170906"
 PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/$PKG_VERSION/gcc-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host"
 PKG_DEPENDS_TARGET="gcc:host"
@@ -61,12 +61,15 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-tune=generic"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
-                              --disable-libatomic \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
-                              --disable-libsanitizer \
-                              --disable-libssp \
                               --enable-cloog-backend=isl \
+                              --disable-libatomic \
+                              --disable-libquadmath \
+                              --disable-libmudflap \
+                              --disable-libada \
+                              --disable-libgomp \
+                              --disable-libitm \
                               --disable-shared \
                               --disable-threads \
                               --without-headers \
@@ -88,7 +91,6 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-libstdcxx-time=yes \
                          --enable-default-pie \
                          --enable-clocale=gnu \
-                         --enable-offload-targets=nvptx-none \
                          $GCC_OPTS"
 
 pre_configure_host() {
