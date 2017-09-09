@@ -2,7 +2,7 @@
 #      This file is part of OpenELEC - http://www.openelec.tv
 #      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
-#  OpenELEC is free software: you can redistribute it and/or modify
+#  OpenELEC is free software: you can redistribute it and/or modify--enable-install-libiberty --enable-build-warnings=no 
 #  it under the terms of the GNU General Public License as published by
 #  the Free Software Foundation, either version 2 of the License, or
 #  (at your option) any later version.
@@ -17,11 +17,11 @@
 ################################################################################
 
 PKG_NAME="binutils"
-PKG_VERSION="2.29"
+PKG_VERSION="dd9a28c"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/binutils/"
-PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_GIT_URL="git://sourceware.org/git/binutils-gdb.git"
 PKG_DEPENDS_HOST="ccache:host bison:host flex:host libelf-compat:host bc:host linux:host"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="binutils: A GNU collection of binary utilities"
@@ -30,8 +30,8 @@ PKG_LONGDESC="The GNU binutils are utilities of use when dealing with object fil
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-MAKEINFO=true
-LDFLAGS="-Wl,-z,relro"
+#MAKEINFO=true
+#LDFLAGS="-Wl,-z,relro"
 #CFLAGS="$HOST_CFLAGS -O0"
 
 PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
@@ -49,10 +49,12 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-ld=default \
                          --enable-lto \
                          --enable-threads \
+                         --enable-shared \
+                         --enable-relro \
+                         --enable-deterministic-archives \
+                         --disable-gdb \
                          --with-pic \
                          --disable-nls \
-                         --enable-install-libiberty \
-                         --enable-build-warnings=no \
                          --enable-poison-system-directories"
 
 makeinstall_host() {
