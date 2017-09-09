@@ -3,21 +3,17 @@ PKG_NAME="gnupg"
 PKG_VERSION="1.4.22"
 PKG_SITE="http://www.gnupg.org/"
 PKG_URL="ftp://ftp.gnupg.org/gcrypt/gnupg/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain zlib curl libassuan libksba npth"
+PKG_DEPENDS_TARGET="toolchain zlib curl libassuan npth libksba libgpg-error libgcrypt"
 PKG_SECTION="security"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-pre_configure_target() {
-  CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
-  CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-Os|"`
-}
+LTO_SUPPORT="no"
+GOLD_SUPPORT="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
-			      --with-gnu-ld \
-			      --with-pic \
-			      --disable-rpath \
-			      --enable-minimal \
-			      --disable-regex \
-			      --enable-sha256 \
-			      --enable-sha512"
+
+PKG_CONFIGURE_OPTS_TARGET="--with-libgpg-error-prefix=$SYSROOT_PREFIX/usr \
+			      --with-libgcrypt-prefix=$SYSROOT_PREFIX/usr \
+			      --with-libassuan-prefix=$SYSROOT_PREFIX/usr \
+			      --with-ksba-prefix=$SYSROOT_PREFIX/usr \
+			      --with-npth-prefix=$SYSROOT_PREFIX/usr"

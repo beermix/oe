@@ -15,4 +15,4 @@ pre_configure_target() {
   CXXFLAGS="$CXXFLAGS -fPIC -DPIC"
 }
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-documentation --enable-shared --enable-static"
+PKG_CONFIGURE_OPTS_TARGET="--disable-documentation --disable-shared --enable-static"
