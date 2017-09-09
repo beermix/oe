@@ -104,9 +104,9 @@ pre_configure_target() {
   unset LD_LIBRARY_PATH
 
   # set some CFLAGS we need
-  export CFLAGS="-O2 $(GLIBC_EXTRA_CFLAGS)"
+  export CFLAGS="-g0 $CFLAGS"
   export CPPFLAGS=""
-  export CXXFLAGS="-O2 $(GLIBC_EXTRA_CFLAGS)"
+  export CXXFLAGS="-g0 $CFLAGS"
 
   export OBJDUMP_FOR_HOST=objdump
 

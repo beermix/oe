@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="7-20170907"
+PKG_VERSION="6-20170906"
 PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/$PKG_VERSION/gcc-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host"
 PKG_DEPENDS_TARGET="gcc:host"
@@ -34,9 +34,8 @@ post_unpack() {
   sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $ROOT/$PKG_BUILD/gcc/configure
 }
 
-#MAKEINFO=missing
-
-GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
+GCC_COMMON_CONFIGURE_OPTS="MAKEINFO=missing \
+                           --target=$TARGET_NAME \
                            --with-sysroot=$SYSROOT_PREFIX \
                            --with-gmp=$ROOT/$TOOLCHAIN \
                            --with-mpfr=$ROOT/$TOOLCHAIN \
@@ -50,14 +49,17 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-ld=default \
                            --disable-multilib \
                            --disable-nls \
-                           --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
+                           --enable-checking=release \
+                           --disable-libssp \
+                           --enable-gnu-unique-object \
+                           --enable-linker-build-id \
+                           --enable-gnu-indirect-function \
+                           --disable-werror \
                            --without-ppl \
                            --without-cloog \
                            --disable-libmpx \
-                           --disable-libssp \
                            --disable-libsanitizer \
-                           --disable-werror \
                            --with-tune=generic"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
@@ -88,13 +90,11 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-long-long \
                          --enable-threads=posix \
                          --disable-libstdcxx-pch \
-                         --enable-libstdcxx-time=yes \
-                         --enable-default-pie \
+                         --enable-libstdcxx-time \
                          --enable-clocale=gnu \
                          $GCC_OPTS"
-
 pre_configure_host() {
-  #export CXXFLAGS="$CXXFLAGS -std=gnu++98"
+  export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
 }
 
