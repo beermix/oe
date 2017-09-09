@@ -4,12 +4,12 @@
 ################################################################################
 
 PKG_NAME="ffmpeg"
-PKG_VERSION="eadb52d"
+PKG_VERSION="3.2.7"
 PKG_REV="1"
 PKG_ARCH="any"
-PKG_SITE="https://github.com/FFmpeg/FFmpeg/tree/release/3.1"
-PKG_GIT_URL="https://github.com/FFmpeg/FFmpeg"
-PKG_GIT_BRANCH="release/3.1"
+PKG_LICENSE="LGPLv2.1+"
+PKG_SITE="https://ffmpeg.org/releases/?C=M;O=D"
+PKG_URL="https://ffmpeg.org/releases/${PKG_NAME}-${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl speex"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
