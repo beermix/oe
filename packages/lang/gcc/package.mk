@@ -49,6 +49,7 @@ GCC_COMMON_CONFIGURE_OPTS="MAKEINFO=missing \
                            --enable-ld=default \
                            --disable-multilib \
                            --disable-nls \
+                           --without-included-gettext \
                            --with-default-libstdcxx-abi=gcc4-compatible \
                            --enable-checking=release \
                            --disable-libssp \
