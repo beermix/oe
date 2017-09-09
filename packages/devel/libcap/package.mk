@@ -17,13 +17,13 @@
 ################################################################################
 
 PKG_NAME="libcap"
-PKG_VERSION="2.25"
+PKG_VERSION="8c67abc"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE=""
-PKG_URL="http://www.kernel.org/pub/linux/libs/security/linux-privs/libcap2/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_HOST="ccache:host gperf:host"
+PKG_GIT_URL="git://git.kernel.org/pub/scm/linux/kernel/git/morgan/libcap.git"
+PKG_DEPENDS_HOST="ccache:host"
 PKG_DEPENDS_TARGET="toolchain gperf:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="devel"
@@ -49,7 +49,7 @@ make_host() {
        CFLAGS="$HOST_CFLAGS" \
        BUILD_CFLAGS="$HOST_CFLAGS -I$ROOT/$PKG_BUILD/libcap/include" \
        PAM_CAP=no \
-       BUILD_GPERF=yes \
+       BUILD_GPERF=no \
        lib=/lib \
        -C libcap libcap.pc libcap.a
 }

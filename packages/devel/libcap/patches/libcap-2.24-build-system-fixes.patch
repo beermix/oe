@@ -1,0 +1,117 @@
+diff -Naur libcap-2.25/Make.Rules libcap-2.25.tpg/Make.Rules
+--- libcap-2.25/Make.Rules	2016-01-31 01:14:53.000000000 +0000
++++ libcap-2.25.tpg/Make.Rules	2016-07-26 19:49:38.171245364 +0000
+@@ -46,27 +46,30 @@
+ # Compilation specifics
+ 
+ KERNEL_HEADERS := $(topdir)/libcap/include/uapi
+-IPATH += -fPIC -I$(KERNEL_HEADERS) -I$(topdir)/libcap/include
+ 
+-CC := gcc
+-CFLAGS := -O2 -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64
+-BUILD_CC := $(CC)
+-BUILD_CFLAGS := $(CFLAGS) $(IPATH)
+-AR := ar
+-RANLIB := ranlib
++CC ?= gcc
++CFLAGS ?= -O2
++BUILD_CC ?= $(CC)
++BUILD_CFLAGS ?= $(CFLAGS)
++AR ?= ar
++RANLIB ?= ranlib
+ DEBUG = -g #-DDEBUG
+ WARNINGS=-Wall -Wwrite-strings \
+         -Wpointer-arith -Wcast-qual -Wcast-align \
+         -Wstrict-prototypes -Wmissing-prototypes \
+         -Wnested-externs -Winline -Wshadow
+ LD=$(CC) -Wl,-x -shared
+-LDFLAGS := #-g
++LDFLAGS ?= #-g
+ BUILD_GPERF := $(shell which gperf >/dev/null 2>/dev/null && echo yes)
+ 
+-SYSTEM_HEADERS = /usr/include
++LIBCAP_CPPFLAGS = -I$(KERNEL_HEADERS) -I$(topdir)/libcap/include
++LIBCAP_CPPFLAGS += -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64
++CPPFLAGS += $(LIBCAP_CPPFLAGS)
++BUILD_CPPFLAGS += $(LIBCAP_CPPFLAGS)
+ INCS=$(topdir)/libcap/include/sys/capability.h
+ LDFLAGS += -L$(topdir)/libcap
+-CFLAGS += -Dlinux $(WARNINGS) $(DEBUG)
++CPPFLAGS += -Dlinux
++CFLAGS += $(WARNINGS) $(DEBUG)
+ PAM_CAP := $(shell if [ -f /usr/include/security/pam_modules.h ]; then echo yes ; else echo no ; fi)
+ INDENT := $(shell if [ -n "$$(which indent 2>/dev/null)" ]; then echo "| indent -kr" ; fi)
+ DYNAMIC := $(shell if [ ! -d "$(topdir)/.git" ]; then echo yes; fi)
+diff -Naur libcap-2.25/libcap/Makefile libcap-2.25.tpg/libcap/Makefile
+--- libcap-2.25/libcap/Makefile	2016-01-31 00:01:41.000000000 +0000
++++ libcap-2.25.tpg/libcap/Makefile	2016-07-26 19:54:26.603239609 +0000
+@@ -17,6 +17,7 @@
+ MAJLIBNAME=$(LIBNAME).$(VERSION)
+ MINLIBNAME=$(MAJLIBNAME).$(MINOR)
+ GPERF_OUTPUT = _caps_output.gperf
++CFLAGS += -fPIC
+ 
+ all: $(MINLIBNAME) $(STALIBNAME) libcap.pc
+ 
+@@ -35,7 +36,7 @@
+ 		$< >$@
+ 
+ _makenames: _makenames.c cap_names.list.h
+-	$(BUILD_CC) $(BUILD_CFLAGS) $< -o $@
++	$(BUILD_CC) $(BUILD_CFLAGS) $(BUILD_CPPFLAGS) $< -o $@
+ 
+ cap_names.h: _makenames
+ 	./_makenames > cap_names.h
+@@ -57,10 +58,10 @@
+ 	ln -sf $(MAJLIBNAME) $(LIBNAME)
+ 
+ %.o: %.c $(INCLS)
+-	$(CC) $(CFLAGS) $(IPATH) -c $< -o $@
++	$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
+ 
+ cap_text.o: cap_text.c $(USE_GPERF_OUTPUT) $(INCLS)
+-	$(CC) $(CFLAGS) $(IPATH) $(INCLUDE_GPERF_OUTPUT) -c $< -o $@
++	$(CC) $(CFLAGS) $(CPPFLAGS) $(INCLUDE_GPERF_OUTPUT) -c $< -o $@
+ 
+ install: all
+ 	mkdir -p -m 0755 $(FAKEROOT)$(INCDIR)/sys
+diff -Naur libcap-2.25/pam_cap/Makefile libcap-2.25.tpg/pam_cap/Makefile
+--- libcap-2.25/pam_cap/Makefile	2014-05-31 20:19:10.000000000 +0000
++++ libcap-2.25.tpg/pam_cap/Makefile	2016-07-26 19:55:45.895238028 +0000
+@@ -8,6 +8,7 @@
+ # does, *verify that it does*, and if you observe that it fails as
+ # written (and you know why it fails), email me and explain why. Thanks!
+ LDLIBS += -L../libcap -lcap
++CFLAGS += -fPIC
+ 
+ all: pam_cap.so
+ 	$(MAKE) testcompile
+@@ -17,13 +18,13 @@
+ 	install -m 0755 pam_cap.so $(FAKEROOT)$(LIBDIR)/security
+ 
+ pam_cap.so: pam_cap.o
+-	$(LD) $(LDFLAGS) -o pam_cap.so $< $(LDLIBS)
++	$(LD) $(CFLAGS) $(LDFLAGS) -o pam_cap.so $< $(LDLIBS) -lpam
+ 
+ pam_cap.o: pam_cap.c
+-	$(CC) $(CFLAGS) $(IPATH) -c $< -o $@
++	$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
+ 
+ testcompile: test.c pam_cap.o
+-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $+ -lpam -ldl $(LDLIBS)
++	$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) -o $@ $+ -lpam -ldl $(LDLIBS)
+ 
+ clean:
+ 	rm -f *.o *.so testcompile *~
+diff -Naur libcap-2.25/progs/Makefile libcap-2.25.tpg/progs/Makefile
+--- libcap-2.25/progs/Makefile	2016-01-31 00:01:41.000000000 +0000
++++ libcap-2.25.tpg/progs/Makefile	2016-07-26 19:56:19.509237357 +0000
+@@ -19,7 +19,7 @@
+ 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $< $(LDLIBS)
+ 
+ %.o: %.c $(INCS)
+-	$(CC) $(IPATH) $(CFLAGS) -c $< -o $@
++	$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
+ 
+ install: all
+ 	mkdir -p -m 0755 $(FAKEROOT)$(SBINDIR)
