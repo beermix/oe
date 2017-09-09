@@ -1,5 +1,5 @@
 PKG_NAME="libvpx"
-PKG_VERSION="ab5704f"
+PKG_VERSION="9a2dd7e"
 PKG_GIT_URL="https://github.com/webmproject/libvpx/"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="tools"
@@ -16,7 +16,7 @@ configure_target() {
   ./configure --prefix="/usr" \
   		--target="x86_64-linux-gcc" \
   		--libc="$(get_pkg_build glibc)" \
-  		--cpu="ivybridge" \
+  		--cpu="$TARGET_CPU" \
   		--as=yasm \
   		--enable-pic \
   		--enable-vp8 \
