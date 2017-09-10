@@ -57,6 +57,7 @@ makeinstall_target() {
 
   mkdir -p $SYSROOT_PREFIX/usr/include/attr
     cp include/*.h $SYSROOT_PREFIX/usr/include/attr
+    
 }
 
 post_makeinstall_target() {
@@ -66,10 +67,5 @@ post_makeinstall_target() {
   cp getfattr/getfattr $INSTALL/usr/bin/
 }
 
-PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
 
 
-makeinstall_target() {
-  mkdir -p $SYSROOT_PREFIX/usr/include/attr
-    cp include/*.h $SYSROOT_PREFIX/usr/include/attr
-}
