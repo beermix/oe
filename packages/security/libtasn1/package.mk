@@ -6,9 +6,11 @@ PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
-			      --disable-nls \
+
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static \
 			      --disable-gtk-doc-html \
+			      --disable-doc \
+			      --disable-gcc-warnings \
 			      --with-libgpg-error-prefix=$SYSROOT_PREFIX/usr"
 
 pre_configure_target() {
