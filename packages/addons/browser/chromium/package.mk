@@ -36,10 +36,12 @@ PKG_ADDON_NAME="Chromium"
 PKG_ADDON_TYPE="xbmc.python.script"
 PKG_ADDON_PROVIDES="executable"
 
-#post_unpack() {
-#  mkdir -p $ROOT/$PKG_BUILD/out
-#  mount -t tmpfs -o size=15G,nr_inodes=40k,mode=1777 tmpfs $ROOT/$PKG_BUILD/out
-#}
+CCACHE_SLOPPINESS=include_file_mtime
+
+post_unpack() {
+  mkdir -p $ROOT/$PKG_BUILD/out
+  mount -t tmpfs -o size=15G,nr_inodes=40k,mode=1777 tmpfs $ROOT/$PKG_BUILD/out
+}
 
 pre_make_target() {
   strip_lto
@@ -81,7 +83,7 @@ make_target() {
   local _flags=(
     'is_clang=false'
     'clang_use_chrome_plugins=false'
-    'symbol_level=0'
+    'symbol_level=2'
     'is_debug=false'
     'fatal_linker_warnings=false'
     'treat_warnings_as_errors=false'
@@ -91,6 +93,9 @@ make_target() {
     'proprietary_codecs=true'
     'link_pulseaudio=true'
     'linux_use_bundled_binutils=false'
+    'use_debug_fission=false'
+    'is_clang=false'
+    'use_custom_libcxx=false'
     'use_allocator="none"'
     'use_cups=false'
     'use_gconf=false'
@@ -105,6 +110,8 @@ make_target() {
     'enable_hangout_services_extension=true'
     'enable_widevine=true'
     'enable_nacl=false'
+    'use_jumbo_build=true'
+    'is_component_build=true'
     'enable_swiftshader=false'
     "google_api_key=\"${_google_api_key}\""
     "google_default_client_id=\"${_google_default_client_id}\""
@@ -142,7 +149,7 @@ make_target() {
   ./tools/gn/bootstrap/bootstrap.py --gn-gen-args "${_flags[*]}"
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$ROOT/$TOOLCHAIN/bin/python
 
-  ninja -j1 -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
+  ionice -c3 nice -n20 ninja -j1 -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
 }
 
 makeinstall_target() {

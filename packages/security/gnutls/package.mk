@@ -10,9 +10,7 @@ PKG_SHORTDESC="GnuTLS is a secure communications library implementing the SSL, T
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-hardware-acceleration \
-			      --enable-cxx \
-			      --without-p11-kit \
+PKG_CONFIGURE_OPTS_TARGET="--without-p11-kit \
 			      --with-libgcrypt \
 			      --disable-tools \
 			      --disable-doc \
