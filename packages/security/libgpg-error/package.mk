@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libgpg-error"
-PKG_VERSION="1.27"
+PKG_VERSION="1.25"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
@@ -30,7 +30,7 @@ PKG_SHORTDESC="libgpg-error: Library that defines common error values for GnuPG 
 PKG_LONGDESC="This is a library that defines common error values for all GnuPG components. Among these are GPG, GPGSM, GPGME, GPG-Agent, libgcrypt, Libksba, DirMngr, Pinentry, SmartCard Daemon and possibly more in the future."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC --enable-static --disable-shared --disable-nls --disable-rpath --with-gnu-ld"
 
@@ -56,7 +56,6 @@ pre_configure_target() {
   esac
 
   cp $ROOT/$PKG_BUILD/src/syscfg/lock-obj-pub.$GPGERROR_TUPLE.h $ROOT/$PKG_BUILD/src/syscfg/lock-obj-pub.$GPGERROR_TARGET.h
-  CFLAGS="$CFLAGS -fPIC"
 }
 
 post_makeinstall_target() {
@@ -65,4 +64,5 @@ post_makeinstall_target() {
 
   sed -e "s:\(['= ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" -i src/gpg-error-config
   cp src/gpg-error-config $SYSROOT_PREFIX/usr/bin
+  ln -sf $SYSROOT_PREFIX/usr/bin/gpg-error-config $ROOT/$BUILD/toolchain/bin/
 }
