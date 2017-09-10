@@ -4,7 +4,7 @@
 ################################################################################
 
 PKG_NAME="ffmpeg"
-PKG_VERSION="f58e5b9"
+PKG_VERSION="3.1.9-Krypton-17.4"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_SITE="https://github.com/FFmpeg/FFmpeg/tree/release/3.1"
@@ -129,6 +129,7 @@ configure_target() {
               --disable-dxva2 \
               --enable-runtime-cpudetect \
               $FFMPEG_TABLES \
+              --disable-memalign-hack \
               --disable-encoders \
               --enable-encoder=ac3 \
               --enable-encoder=aac \
