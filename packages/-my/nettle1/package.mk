@@ -1,13 +1,15 @@
 PKG_NAME="nettle"
 PKG_VERSION="3.2"
-PKG_SITE="http://www.lysator.liu.se/~nisse/nettle"
-PKG_URL="http://www.lysator.liu.se/~nisse/archive/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_URL="ftp://ftp.gnu.org/gnu/nettle/nettle-${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
-
-PKG_SECTION="security"
-PKG_SHORTDESC="nettle: a cryptographic library"
+PKG_PRIORITY="optional"
+PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
+
+pre_configure_target() {
+  export CFLAGS="$CFLAGS -fPIC -DPIC"
+}
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared \
 			   --disable-openssl \
