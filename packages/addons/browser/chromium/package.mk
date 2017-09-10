@@ -91,7 +91,6 @@ make_target() {
     'proprietary_codecs=true'
     'link_pulseaudio=true'
     'linux_use_bundled_binutils=false'
-    'use_custom_libcxx=false'
     'use_allocator="none"'
     'use_cups=false'
     'use_gconf=false'
@@ -143,7 +142,6 @@ make_target() {
   ./tools/gn/bootstrap/bootstrap.py --gn-gen-args "${_flags[*]}"
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$ROOT/$TOOLCHAIN/bin/python
 
-  #ionice -c3 nice -n20 ninja -j6 -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
   ninja -j1 -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
 }
 

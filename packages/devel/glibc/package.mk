@@ -115,16 +115,29 @@ libc_cv_ssp=no
 libc_cv_ssp_strong=no
 EOF
 
-  echo "sbindir=/usr/bin" >> configparms
-  echo "rootsbindir=/usr/bin" >> configparms
-  echo "build-programs=no" >> configparms
+echo "sbindir=/usr/bin" >> configparms
+echo "rootsbindir=/usr/bin" >> configparms
+echo "build-programs=yes" >> configparms
+
+GLIBC_INCLUDE_BIN="getent ldd locale"
 }
 
 post_makeinstall_target() {
-  ln -sf ld-$PKG_VERSION.so $INSTALL/lib/ld.so
-  if [ "$TARGET_ARCH" = "arm" -a "$TARGET_FLOAT" = "hard" ]; then
-    ln -sf ld-$PKG_VERSION.so $INSTALL/lib/ld-linux.so.3
-  fi
+# we are linking against ld.so, so symlink
+  ln -sf $(basename $INSTALL/usr/lib/ld-*.so) $INSTALL/lib/ld.so
+
+# cleanup
+# remove any programs we don't want/need, keeping only those we want
+  for f in $(find $INSTALL/usr/bin -type f); do
+    fb="$(basename "${f}")"
+    for ib in $GLIBC_INCLUDE_BIN; do
+      if [ "${ib}" == "${fb}" ]; then
+        fb=
+        break
+      fi
+    done
+    [ -n "${fb}" ] && rm -rf ${f}
+  done
 
   rm -rf $INSTALL/usr/lib/audit
   rm -rf $INSTALL/usr/lib/glibc

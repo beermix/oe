@@ -4,13 +4,12 @@
 ################################################################################
 
 PKG_NAME="ffmpeg"
-PKG_VERSION="d98d29a"
+PKG_VERSION="f58e5b9"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_SITE="https://github.com/FFmpeg/FFmpeg/tree/release/3.1"
-PKG_GIT_URL="https://git.videolan.org/git/ffmpeg.git"
-#PKG_GIT_BRANCH="release/3.1"
-PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl speex libvorbis"
+PKG_GIT_URL="https://github.com/xbmc/FFmpeg"
+PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl speex"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
 PKG_LONGDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
@@ -86,6 +85,7 @@ configure_target() {
               --host-cc="$HOST_CC" \
               --host-cflags="$HOST_CFLAGS" \
               --host-ldflags="$HOST_LDFLAGS" \
+              --host-libs="-lm" \
               --extra-cflags="$CFLAGS" \
               --extra-ldflags="$LDFLAGS -fPIC" \
               --extra-libs="$FFMPEG_LIBS" \
@@ -160,12 +160,14 @@ configure_target() {
               --disable-libfreetype \
               --disable-libgsm \
               --disable-libmp3lame \
+              --disable-libnut \
               --disable-libopenjpeg \
               --disable-librtmp \
+              --disable-libschroedinger \
               --enable-libspeex \
               --disable-libtheora \
               --disable-libvo-amrwbenc \
-              --enable-libvorbis --enable-muxer=ogg --enable-encoder=libvorbis \
+              --disable-libvorbis \
               --disable-libvpx \
               --disable-libx264 \
               --disable-libxavs \
