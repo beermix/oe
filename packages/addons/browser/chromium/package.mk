@@ -38,11 +38,6 @@ PKG_ADDON_PROVIDES="executable"
 
 CCACHE_SLOPPINESS=include_file_mtime
 
-post_unpack() {
-  mkdir -p $ROOT/$PKG_BUILD/out
-  mount -t tmpfs -o size=15G,nr_inodes=40k,mode=1777 tmpfs $ROOT/$PKG_BUILD/out
-}
-
 pre_make_target() {
   strip_lto
   sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' third_party/widevine/cdm/stub/widevine_cdm_version.h
@@ -83,7 +78,7 @@ make_target() {
   local _flags=(
     'is_clang=false'
     'clang_use_chrome_plugins=false'
-    'symbol_level=2'
+    'symbol_level=0'
     'is_debug=false'
     'fatal_linker_warnings=false'
     'treat_warnings_as_errors=false'
@@ -110,8 +105,6 @@ make_target() {
     'enable_hangout_services_extension=true'
     'enable_widevine=true'
     'enable_nacl=false'
-    'use_jumbo_build=true'
-    'is_component_build=true'
     'enable_swiftshader=false'
     "google_api_key=\"${_google_api_key}\""
     "google_default_client_id=\"${_google_default_client_id}\""
