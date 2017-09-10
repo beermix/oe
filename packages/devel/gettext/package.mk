@@ -30,24 +30,16 @@ PKG_SHORTDESC="gettext: A program internationalization library and tools"
 PKG_LONGDESC="This is the GNU gettext package. It is interesting for authors or maintainers of other packages or programs which they want to see internationalized. As one step the handling of messages in different languages should be implemented. For this task GNU gettext provides the needed tools and library functions."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_SCRIPT="gettext-tools/configure"
 
 PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared \
                          --disable-rpath \
                          --with-gnu-ld \
+                         --disable-java \
+                         --disable-curses \
+                         --with-included-libxml \
+                         --disable-native-java \
                          --disable-csharp \
-			    --disable-native-java \
-			    --disable-java \
-			    --without-emacs \
-			    --disable-libasprintf \
-			    --disable-openmp \
-			    --with-included-libcroco \
-			    --with-included-glib \
-			    --disable-silent-rules \
-			    --with-included-libxml \
-			    --without-git \
-			    --without-cvs \
-			    --disable-shared \
-			    --disable-curses"
+                         --without-emacs"

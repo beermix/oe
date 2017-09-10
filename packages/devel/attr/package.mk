@@ -35,7 +35,7 @@ PKG_AUTORECONF="no"
 PKG_CONFIGURE_OPTS_TARGET="OPTIMIZER= \
                            CONFIG_SHELL=/bin/bash \
                            INSTALL_USER=root INSTALL_GROUP=root \
-                           --enable-shared --enable-static"
+                           --disable-shared --enable-static"
 
 if [ "$DEBUG" = yes ]; then
   PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET DEBUG=-DDEBUG"

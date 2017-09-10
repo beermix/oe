@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="binutils"
-PKG_VERSION="2.28.1"
+PKG_VERSION="2.29"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/binutils/"
@@ -30,11 +30,9 @@ PKG_LONGDESC="The GNU binutils are utilities of use when dealing with object fil
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-#MAKEINFO=true
-#LDFLAGS="-Wl,-z,relro"
-#CFLAGS="$HOST_CFLAGS -O0"
 
-PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
+PKG_CONFIGURE_OPTS_HOST="MAKEINFO=true \
+                         --target=$TARGET_NAME \
                          --with-sysroot=$SYSROOT_PREFIX \
                          --with-lib-path=$SYSROOT_PREFIX/lib:$SYSROOT_PREFIX/usr/lib \
                          --without-ppl \
@@ -48,10 +46,8 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-gold \
                          --enable-ld=default \
                          --enable-lto \
-                         --enable-threads \
-                         --enable-shared \
+                         --disable-shared \
                          --disable-gdb \
-                         --with-pic \
                          --disable-nls \
                          --enable-poison-system-directories"
 

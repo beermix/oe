@@ -36,10 +36,10 @@ PKG_ADDON_NAME="Chromium"
 PKG_ADDON_TYPE="xbmc.python.script"
 PKG_ADDON_PROVIDES="executable"
 
-post_unpack() {
-  mkdir -p $ROOT/$PKG_BUILD/out
-  mount -t tmpfs -o size=15G,nr_inodes=40k,mode=1777 tmpfs $ROOT/$PKG_BUILD/out
-}
+#post_unpack() {
+#  mkdir -p $ROOT/$PKG_BUILD/out
+#  mount -t tmpfs -o size=15G,nr_inodes=40k,mode=1777 tmpfs $ROOT/$PKG_BUILD/out
+#}
 
 pre_make_target() {
   strip_lto
@@ -144,7 +144,7 @@ make_target() {
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$ROOT/$TOOLCHAIN/bin/python
 
   #ionice -c3 nice -n20 ninja -j6 -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
-  ninja -j4 -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
+  ninja -j1 -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
 }
 
 makeinstall_target() {

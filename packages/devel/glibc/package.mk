@@ -128,7 +128,9 @@ post_makeinstall_target() {
 
   rm -rf $INSTALL/usr/lib/audit
   rm -rf $INSTALL/usr/lib/glibc
+  rm -rf $INSTALL/usr/lib/libc_pic
   rm -rf $INSTALL/usr/lib/*.o
+  rm -rf $INSTALL/usr/lib/*.map
   rm -rf $INSTALL/var
 
 # remove locales and charmaps
@@ -160,7 +162,7 @@ post_makeinstall_target() {
     cp $PKG_DIR/config/gai.conf $INSTALL/etc
 
   if [ "$TARGET_ARCH" = "arm" -a "$TARGET_FLOAT" = "hard" ]; then
-    ln -sf ld.so $INSTALL/lib/ld-linux.so.3
+    ln -sf ld-$PKG_VERSION.so $INSTALL/lib/ld-linux.so.3
   fi
 }
 
