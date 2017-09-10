@@ -133,7 +133,7 @@ make_target() {
 
   # Remove bundled libraries for which we will use the system copies; this
   # *should* do what the remove_bundled_libraries.py script does, with the
-  # added benefit of not having to list all the remaining libraries       \! -path "*base/third_party/icu/*" \
+  # added benefit of not having to list all the remaining libraries 
   local _lib
   for _lib in ${_system_libs}; do
     find -type f -path "*third_party/$_lib/*" \
@@ -149,7 +149,7 @@ make_target() {
   ./tools/gn/bootstrap/bootstrap.py --gn-gen-args "${_flags[*]}"
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$ROOT/$TOOLCHAIN/bin/python
 
-  ionice -c3 nice -n20 ninja -j1 -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
+  ionice -c4 nice -n20 ninja -j1 -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
 }
 
 makeinstall_target() {
