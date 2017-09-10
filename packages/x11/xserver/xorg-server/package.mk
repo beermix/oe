@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.X.org"
 PKG_URL="http://xorg.freedesktop.org/archive/individual/xserver/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain util-macros font-util fontsproto randrproto recordproto renderproto dri2proto dri3proto fixesproto damageproto videoproto inputproto xf86dgaproto xf86vidmodeproto xf86driproto xf86miscproto presentproto libpciaccess libX11 libXfont2 libXinerama libxshmfence libxkbfile libdrm openssl freetype pixman fontsproto systemd xorg-launch-helper libXcomposite glproto opengl libepoxy glu"
+PKG_DEPENDS_TARGET="toolchain util-macros font-util fontsproto randrproto recordproto renderproto dri2proto dri3proto fixesproto damageproto videoproto inputproto xf86dgaproto xf86vidmodeproto xf86driproto xf86miscproto presentproto libpciaccess libX11 libXfont2 libXinerama libxshmfence libxkbfile libdrm openssl freetype pixman fontsproto systemd xorg-launch-helper libXcomposite glproto opengl"
 PKG_PRIORITY="optional"
 PKG_SECTION="x11/xserver"
 PKG_SHORTDESC="xorg-server: The Xorg X server"
@@ -34,6 +34,19 @@ PKG_AUTORECONF="yes"
 
 get_graphicdrivers
 
+if [ "$COMPOSITE_SUPPORT" = "yes" ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libXcomposite"
+  XORG_COMPOSITE="--enable-composite"
+else
+  XORG_COMPOSITE="--disable-composite"
+fi
+
+if [ ! "$OPENGL" = "no" ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET glproto $OPENGL libepoxy glu"
+  XORG_MESA="--enable-glx --enable-dri --enable-glamor"
+else
+  XORG_MESA="--disable-glx --disable-dri --disable-glamor"
+fi
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
                            --enable-silent-rules \
@@ -53,9 +66,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
                            --disable-screensaver \
                            --disable-xdmcp \
                            --disable-xdm-auth-1 \
-                           --enable-glx \
-                           --enable-dri \
-                           --enable-glamor \
+                           $XORG_MESA \
                            --enable-dri2 \
                            --enable-dri3 \
                            --enable-present \
@@ -121,7 +132,6 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
                            --with-fontrootdir=/usr/share/fonts \
                            --with-default-font-path=/usr/share/fonts/misc,built-ins \
                            --with-serverconfig-path=/usr/lib/xserver \
-                           --without-doxygen \
                            --without-xmlto \
                            --without-fop"
 
@@ -129,13 +139,6 @@ pre_configure_target() {
 # hack to prevent a build error
   CFLAGS=`echo $CFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|" -e "s|-fno-plt||"`
   LDFLAGS=`echo $LDFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|" -e "s|-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now|-Wl,--as-needed|g"`
-  
-  sed -e 's/^DMX_SUBDIRS =.*/DMX_SUBDIRS =/' \
-      -e 's/^XVFB_SUBDIRS =.*/XVFB_SUBDIRS =/' \
-      -e 's/^XNEST_SUBDIRS =.*/XNEST_SUBDIRS = /' \
-      -e 's/^KDRIVE_SUBDIRS =.*/KDRIVE_SUBDIRS =/' \
-      -e 's/^XWAYLAND_SUBDIRS =.*/XWAYLAND_SUBDIRS =/' \
-      -i $ROOT/$PKG_BUILD/hw/Makefile
 }
 
 post_makeinstall_target() {
