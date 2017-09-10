@@ -33,35 +33,55 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 pre_configure_target() {
-  CFLAGS="$CFLAGS -fPIC"
-  CXXFLAGS="$CXXFLAGS -fPIC"
+  CFLAGS="$CFLAGS -fPIC -DPIC"
+  CXXFLAGS="$CXXFLAGS -fPIC -DPIC"
   CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
 }
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-static \
-                           --disable-gl \
-                           --enable-tee \
-                           --enable-svg \
-                           --enable-ps \
-                           --enable-pdf \
-                           --enable-gobject \
-                           --disable-gtk-doc \
-                           --enable-xlib \
-                           --enable-xlib-xrender \
-                           --enable-gl \
-                           --enable-glx \
-                           --disable-glesv2 \
-                           --disable-egl \
-                           --with-x \
+if [ "$DISPLAYSERVER" = "x11" ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libXrender libX11 mesa glu"
+  PKG_CAIRO_CONFIG="--x-includes="$SYSROOT_PREFIX/usr/include" \
+                    --x-libraries="$SYSROOT_PREFIX/usr/lib" \
+                    --enable-xlib \
+                    --enable-xlib-xrender \
+                    --enable-gl \
+                    --enable-glx \
+                    --disable-glesv2 \
+                    --disable-egl \
+                    --with-x"
+
+elif [ "$DISPLAYSERVER" = "weston" ]; then
+  PKG_CAIRO_CONFIG="--disable-xlib \
+                    --disable-xlib-xrender \
+                    --disable-gl \
+                    --disable-glx \
+                    --enable-glesv2 \
+                    --enable-egl \
+                    --without-x"
+fi
+
+PKG_CONFIGURE_OPTS_TARGET="$PKG_CAIRO_CONFIG \
                            --enable-silent-rules \
+                           --enable-shared \
+                           --disable-static \
+                           --disable-gtk-doc \
+                           --enable-largefile \
+                           --enable-atomic \
+                           --disable-gcov \
+                           --disable-valgrind \
+                           --disable-qt \
                            --enable-png \
                            --enable-ft \
                            --enable-fc \
                            --enable-ps \
                            --enable-pdf \
                            --enable-svg \
-                           --enable-shared \
-                           --disable-static \
-                           --disable-gtk-doc \
-                           --enable-largefile \
-                           --enable-atomic"
+                           --disable-test-surfaces \
+                           --disable-tee \
+                           --enable-pthread \
+                           --disable-full-testing \
+                           --disable-trace \
+                           --enable-interpreter \
+                           --disable-symbol-lookup \
+                           --enable-some-floating-point \
+                           --with-gnu-ld"
