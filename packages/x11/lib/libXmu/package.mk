@@ -27,9 +27,3 @@ PKG_LONGDESC="LibXmu provides a set of miscellaneous utility convenience functio
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
-
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --with-gnu-ld --without-xmlto"
-
-pre_configure_target() {
-  CFLAGS="$CFLAGS -fPIC -DPIC"
-}

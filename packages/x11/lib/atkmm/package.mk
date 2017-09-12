@@ -27,4 +27,3 @@ PKG_LONGDESC="Abstract network code for X."
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared"

@@ -32,8 +32,6 @@ PKG_LONGDESC="This package provides the main interface to the X11 Session Manage
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static \
-                           --disable-shared \
-                           --with-libuuid \
+PKG_CONFIGURE_OPTS_TARGET="--with-libuuid \
                            --without-xmlto \
                            --without-fop"

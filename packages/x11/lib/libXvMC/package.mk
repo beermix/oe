@@ -6,5 +6,5 @@ PKG_SECTION="devel"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-malloc0returnsnull --disable-shared --enable-static"
+PKG_CONFIGURE_OPTS_TARGET="--enable-malloc0returnsnull"
 			  
