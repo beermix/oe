@@ -15,6 +15,7 @@ pre_configure_target() {
    export MAKEFLAGS="-j1"
    strip_lto
    #export LDFLAGS="-ldl -lpthread -lsqlite3"
+   CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
    mkdir -p $INSTALL_DEV/usr/bin/
    mkdir -p $INSTALL/usr/bin/
 }
