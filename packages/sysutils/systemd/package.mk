@@ -81,17 +81,16 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-localed \
                            --disable-coredump \
                            --disable-polkit \
-                           --disable-kdbus \
                            --disable-resolved \
                            --disable-networkd \
                            --disable-efi \
                            --disable-gnuefi \
+                           --disable-kdbus \
                            --disable-myhostname \
                            --enable-hwdb \
                            --disable-manpages \
                            --disable-hibernate \
                            --disable-ldconfig \
-                           --disable-tpm --with-tpm-pcrindex=8 \
                            --enable-split-usr \
                            --disable-tests \
                            --without-python \
@@ -102,7 +101,8 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --with-dbussessionservicedir=/usr/share/dbus-1/services \
                            --with-dbussystemservicedir=/usr/share/dbus-1/system-services \
                            --with-rootprefix=/usr \
-                           --with-rootlibdir=/usr/lib"
+                           --with-rootlibdir=/usr/lib \
+                           --with-default-hierarchy=hybrid"
 
 pre_build_target() {
 # broken autoreconf
