@@ -191,6 +191,9 @@ addon() {
   # libexif
   cp -PL $(get_pkg_build libexif)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
   
+  # atk
+  cp -PL $(get_pkg_build atk)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  
   # libXScrnSaver
   cp -PL $(get_pkg_build libXScrnSaver)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
 

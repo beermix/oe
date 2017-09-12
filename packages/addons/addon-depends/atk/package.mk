@@ -1,6 +1,5 @@
 PKG_NAME="atk"
 PKG_VERSION="2.26.0"
-#PKG_VERSION="2.24.0"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://library.gnome.org/devel/atk/"
@@ -13,8 +12,4 @@ PKG_IS_ADDON="no"
 
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --disable-rebuilds --disable-glibtest"
-
-pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC"
-}
+PKG_CONFIGURE_OPTS_TARGET="--disable-rebuilds --disable-glibtest"
