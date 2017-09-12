@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="freetype"
-PKG_VERSION="2.8"
-PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_VERSION="21658c3"
+PKG_GIT_URL="git://git.sv.nongnu.org/freetype/freetype2.git"
 PKG_DEPENDS_TARGET="toolchain zlib libpng bzip2"
 PKG_DEPENDS_HOST="zlib:host"
 PKG_SECTION="print"
@@ -29,20 +29,16 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 PKG_USE_CMAKE="no"
 
-GOLD_SUPPORT="yes"
-
-PKG_CONFIGURE_OPTS_TARGET="--with-zlib=yes \
-                           --with-bzip2=yes \
-                           --with-png=yes \
+PKG_CONFIGURE_OPTS_TARGET="LIBPNG_CFLAGS=-I$SYSROOT_PREFIX/usr/include \
+                           LIBPNG_LDFLAGS=-L$SYSROOT_PREFIX/usr/lib \
                            --with-harfbuzz=no \
-                           --with-pic \
+                           --with-zlib \
                            --with-sysroot=$SYSROOT_PREFIX"
-
+                           
 pre_configure_target() {
   # unset LIBTOOL because freetype uses its own
     ( cd ..
-      unset LIBTOOL
-      sh autogen.sh
+      NOCONFIGURE=1 ./autogen.sh
     )
 }
 
