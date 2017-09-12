@@ -14,7 +14,7 @@ PKG_LONGDESC="The main motivation for VAAPI (Video Acceleration API) is to enabl
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-silent-rules \
+PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
                            --disable-docs \
                            --enable-drm \
                            --enable-x11 \
