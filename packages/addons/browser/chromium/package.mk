@@ -36,7 +36,6 @@ PKG_ADDON_NAME="Chromium"
 PKG_ADDON_TYPE="xbmc.python.script"
 PKG_ADDON_PROVIDES="executable"
 
-CCACHE_SLOPPINESS=include_file_mtime
 
 pre_make_target() {
   strip_lto
@@ -50,10 +49,14 @@ pre_make_target() {
 }
 
 make_target() {
-  CFLAGS=`echo $CFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|" -e "s|-fno-plt||" -e "s|-fno-caller-saves||"`
-  LDFLAGS=`echo $LDFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|" -e "s|-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now|-Wl,--as-needed|g"`
+
+  # CCACHE_SLOPPINESS=include_file_mtime
+  
+  # CFLAGS=`echo $CFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|" -e "s|-fno-plt||" -e "s|-fno-caller-saves||"`
+  # LDFLAGS=`echo $LDFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|" -e "s|-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now|-Wl,--as-needed|g"`
+  
+  export -n CFLAGS CXXFLAGS
   export LDFLAGS="$LDFLAGS -ludev"
-  export LD=$CXX
 
   # Use Python 2
   find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$ROOT/$TOOLCHAIN/bin/python|g" {} +
@@ -74,6 +77,13 @@ make_target() {
 
   export TMPDIR="/root/-3SDC/temp"
   mkdir -p "$TMPDIR"
+  
+  ## workaround for gcc-6
+#  mv -f /usr/lib/x86_64-linux-gnu/libstdc++.so.6 /usr/lib/x86_64-linux-gnu/libstdc++.so.6.org || true
+#  mv -f /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.19 /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.19.org || true
+#  cp -fP $SYSROOT_PREFIX/usr/lib/libstdc++.so.6 /usr/lib/x86_64-linux-gnu
+#  cp -fP $SYSROOT_PREFIX/usr/lib/libstdc++.so.6.0.22 /usr/lib/x86_64-linux-gnu
+  ## workaround for gcc-6
 
   local _flags=(
     'is_clang=false'
@@ -142,7 +152,14 @@ make_target() {
   ./tools/gn/bootstrap/bootstrap.py --gn-gen-args "${_flags[*]}"
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$ROOT/$TOOLCHAIN/bin/python
 
-  ionice -c4 nice -n20 ninja -j1 -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
+  ninja -j54 -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
+  
+  ## workaround for gcc-6
+#  rm -f /usr/lib/x86_64-linux-gnu/libstdc++.so.6
+#  rm -f /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.22
+#  mv -f /usr/lib/x86_64-linux-gnu/libstdc++.so.6.org /usr/lib/x86_64-linux-gnu/libstdc++.so.6 || true
+#  mv -f /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.19.org /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.19 || true
+  ## workaround for gcc-6
 }
 
 makeinstall_target() {
