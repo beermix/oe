@@ -20,12 +20,12 @@ PKG_NAME="pixman"
 PKG_VERSION="0.34.0"
 PKG_SITE="http://www.x.org/"
 PKG_URL="http://xorg.freedesktop.org/archive/individual/lib/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain util-macros"
+PKG_DEPENDS_TARGET="toolchain util-macros libpng"
 PKG_SECTION="x11/lib"
 PKG_SHORTDESC="pixman: Pixel manipulation library"
 PKG_LONGDESC="Pixman is a generic library for manipulating pixel regions, contains low-level pixel manipulation routines and is used by both xorg and cairo."
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-openmp \
                            --disable-loongson-mmi \
@@ -33,10 +33,10 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-openmp \
                            --enable-gcc-inline-asm \
                            --disable-timers \
                            --disable-gtk \
-                           --disable-libpng \
+                           --enable-libpng \
                            --enable-mmx \
                            --enable-sse2 \
-                           --disable-ssse3 \
+                           --enable-ssse3 \
                            --disable-vmx \
                            --disable-arm-simd \
                            --disable-arm-neon \
