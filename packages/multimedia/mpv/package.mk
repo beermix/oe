@@ -26,6 +26,14 @@ configure_target() {
   		    --disable-manpage-build \
   		    --check-c-compiler=gcc \
   		    --disable-dvdnav \
+  		    --enable-vaapi-hwaccel \
+  		    --disable-videotoolbox-hwaccel-new \
+  		    --disable-videotoolbox-hwaccel-old \
+  		    --disable-videotoolbox-gl \
+  		    --disable-vdpau-hwaccel \
+  		    --disable-cuda-hwaccel \
+  		    --disable-pulse \
+  		    --disable-vdpau \
   		    --disable-dvdread \
   		    --disable-apple-remote \
   		    --disable-static-build 
