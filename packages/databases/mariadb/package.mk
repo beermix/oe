@@ -125,6 +125,7 @@ configure_host() {
         -DWITH_LIBWRAP=OFF \
         -DWITH_WSREP=OFF \
         -DWITH_SYSTEMD=no \
+        -DSECURITY_HARDENED=1 \
         ..
 }
 
@@ -172,6 +173,7 @@ configure_target() {
         -DWITHOUT_FEDERATED_STORAGE_ENGINE=1 \
         -DWITHOUT_PBXT_STORAGE_ENGINE=1 \
         -DWITH_SSL=$SYSROOT_PREFIX/usr \
+        -DSECURITY_HARDENED=1 \
         -$MARIADB_OPTS \
         ..
 }
@@ -192,7 +194,4 @@ post_makeinstall_target() {
     rm -rf $INSTALL/usr/lib
     rm -rf $INSTALL/usr/share/mysql/*.sql
   fi
-  
- # rm -rf $SYSROOT_PREFIX/usr/lib/libmariadb.so.3
- # rm -rf $SYSROOT_PREFIX/usr/lib/libmariadb.so
 }
