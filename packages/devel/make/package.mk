@@ -33,4 +33,4 @@ post_makeinstall_host() {
   ln -sf make $ROOT/$TOOLCHAIN/bin/gmake
 }
 
-PKG_CONFIGURE_OPTS_HOST="--disable-load --without-guile"
+PKG_CONFIGURE_OPTS_HOST="--without-guile"
