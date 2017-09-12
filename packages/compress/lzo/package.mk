@@ -36,8 +36,3 @@ PKG_USE_CMAKE="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static --enable-shared --with-pic"
 PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared --with-pic"
-
-post_makeinstall_target() {
-  rm -rf $INSTALL/usr/libexec
-}
-
