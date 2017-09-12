@@ -30,8 +30,6 @@ PKG_LONGDESC="PyCryptodome is a self-contained Python package of low-level crypt
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-CONCURRENCY_MAKE_LEVEL=1
-
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
