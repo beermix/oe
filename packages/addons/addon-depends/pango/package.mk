@@ -31,8 +31,6 @@ PKG_LONGDESC="The goal of the Pango project is to provide an open-source framewo
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-GOLD_SUPPORT="yes"
-
 PKG_CONFIGURE_OPTS_TARGET="--disable-doc-cross-references \
                            --disable-gtk-doc \
                            --disable-man \

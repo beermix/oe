@@ -1,28 +1,13 @@
-From 01bdbad3e951014c58581635b94b22868537901c Mon Sep 17 00:00:00 2001
-From: Victor Stinner <victor.stinner@gmail.com>
-Date: Mon, 9 Jan 2017 11:10:41 +0100
-Subject: [PATCH] Don't use getentropy() on Linux
-
-Issue #29188: Support glibc 2.24 on Linux: don't use getentropy() function but
-read from /dev/urandom to get random bytes, for example in os.urandom().  On
-Linux, getentropy() is implemented which getrandom() is blocking mode, whereas
-os.urandom() should not block.
----
- Python/random.c | 11 +++++++++--
- 1 files changed, 11 insertions(+), 2 deletions(-)
-
-diff --git a/Python/random.c b/Python/random.c
-index 57c41ff..000cb36 100644
---- a/Python/random.c
-+++ b/Python/random.c
-@@ -97,8 +97,15 @@ win32_urandom(unsigned char *buffer, Py_ssize_t size, int raise)
+diff -r e908e90fb147 Python/random.c
+--- a/Python/random.c	Fri Jan 06 09:44:36 2017 +0100
++++ b/Python/random.c	Sat Jan 07 02:43:27 2017 +0100
+@@ -97,8 +97,14 @@ win32_urandom(unsigned char *buffer, Py_
  }
  
  /* Issue #25003: Don't use getentropy() on Solaris (available since
 - * Solaris 11.3), it is blocking whereas os.urandom() should not block. */
 -#elif defined(HAVE_GETENTROPY) && !defined(sun)
 +   Solaris 11.3), it is blocking whereas os.urandom() should not block.
-+
 +   Issue #29188: Don't use getentropy() on Linux since the glibc 2.24
 +   implements it with the getrandom() syscall which can fail with ENOSYS,
 +   and this error is not supported in py_getentropy() and getrandom() is called
