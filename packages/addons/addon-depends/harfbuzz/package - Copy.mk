@@ -35,5 +35,8 @@ PKG_AUTORECONF="no"
 
 GOLD_SUPPORT="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--with-cairo --with-freetype --with-glib --with-gobject --with-icu"
-
+PKG_CONFIGURE_OPTS_TARGET="--with-cairo=$SYSROOT_PREFIX/usr \
+			      --with-freetype=$SYSROOT_PREFIX/usr \
+			      --with-glib=$SYSROOT_PREFIX/usr \
+			      --with-gobject=$SYSROOT_PREFIX/usr \
+			      --with-icu=$SYSROOT_PREFIX/usr"

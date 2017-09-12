@@ -29,10 +29,14 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 PKG_USE_CMAKE="no"
 
+GOLD_SUPPORT="yes"
+
 PKG_CONFIGURE_OPTS_TARGET="--with-zlib=yes \
                            --with-bzip2=yes \
                            --with-png=yes \
-                           --with-harfbuzz=no"
+                           --with-harfbuzz=no \
+                           --with-pic \
+                           --with-sysroot=$SYSROOT_PREFIX"
 
 pre_configure_target() {
   # unset LIBTOOL because freetype uses its own
