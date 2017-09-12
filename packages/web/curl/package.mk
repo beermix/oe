@@ -31,7 +31,7 @@ PKG_ARCH="any"
 PKG_LICENSE="MIT"
 PKG_SITE="https://curl.haxx.se/download/?C=M;O=D"
 PKG_URL="http://curl.haxx.se/download/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain zlib openssl rtmpdump"
+PKG_DEPENDS_TARGET="toolchain zlib openssl rtmpdump c-ares"
 PKG_PRIORITY="optional"
 PKG_SECTION="web"
 PKG_SHORTDESC="curl: Client and library for (HTTP, HTTPS, FTP, ...) transfers"
@@ -47,7 +47,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            --enable-optimize \
                            --enable-warnings \
                            --disable-curldebug \
-                           --disable-ares \
                            --enable-largefile \
                            --enable-http \
                            --enable-ftp \
@@ -69,7 +68,8 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            --disable-ipv6 \
                            --enable-versioned-symbols \
                            --enable-nonblocking \
-                           --enable-threaded-resolver \
+                           --disable-threaded-resolver \
+                           --enable-ares \
                            --enable-verbose \
                            --disable-sspi \
                            --enable-crypto-auth \
@@ -99,7 +99,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
 
 pre_configure_target() {
 # link against librt because of undefined reference to 'clock_gettime'
-  export LIBS="-lrt -lm -lrtmp"
+  export LIBS="-lrt -lm"
 }
 
 post_makeinstall_target() {
