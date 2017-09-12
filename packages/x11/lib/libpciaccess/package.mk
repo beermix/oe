@@ -18,6 +18,8 @@
 
 PKG_NAME="libpciaccess"
 PKG_VERSION="0.13.5"
+PKG_ARCH="any"
+PKG_LICENSE="OSS"
 PKG_SITE="http://freedesktop.org"
 PKG_URL="http://xorg.freedesktop.org/archive/individual/lib/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain util-macros zlib"
@@ -26,10 +28,10 @@ PKG_SHORTDESC="libpciaccess: X.org libpciaccess library"
 PKG_LONGDESC="X.org libpciaccess library."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 CFLAGS="$CFLAGS -D_LARGEFILE64_SOURCE"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_header_asm_mtrr_h=set \
                            --with-pciids-path=/usr/share \
-                           --with-zlib"
+                           --with-zlib "
