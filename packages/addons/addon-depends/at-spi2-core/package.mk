@@ -1,5 +1,5 @@
 PKG_NAME="at-spi2-core"
-PKG_VERSION="2.25.91"
+PKG_VERSION="2.26.0"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://ftp.gnome.org/pub/gnome/sources/at-spi2-core/?C=M;O=D"
