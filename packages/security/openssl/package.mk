@@ -10,7 +10,7 @@ PKG_LONGDESC="The Open Source toolkit for Secure Sockets Layer and Transport Lay
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-CONCURRENCY_MAKE_LEVEL=1
+#CONCURRENCY_MAKE_LEVEL=1
 
 PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            --libdir=lib \
@@ -55,7 +55,7 @@ pre_configure_target() {
   CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3|"`
   export CCACHE_RECACHE=1
   strip_lto
-  #strip_gold
+  strip_gold
 }
 
 configure_target() {
@@ -80,9 +80,9 @@ post_makeinstall_target() {
   # cert from https://curl.haxx.se/docs/caextract.html
   
   mkdir -p $INSTALL/etc/ssl
-  perl $PKG_DIR/cert/mk-ca-bundle.pl
-  cp $ROOT/$PKG_BUILD/.$TARGET_NAME/ca-bundle.crt $INSTALL/etc/ssl/cert.pem
-  #cp $PKG_DIR/cert/cacert.pem $INSTALL/etc/ssl/cert.pem
+  #perl $PKG_DIR/cert/mk-ca-bundle.pl
+  #cp $ROOT/$PKG_BUILD/.$TARGET_NAME/ca-bundle.crt $INSTALL/etc/ssl/cert.pem
+  cp $PKG_DIR/cert/cacert.pem $INSTALL/etc/ssl/cert.pem
 
   # backwards comatibility
   mkdir -p $INSTALL/etc/pki/tls
