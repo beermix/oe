@@ -43,11 +43,15 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --enable-bind-now \
                            --with-elf \
                            --enable-stack-protector=strong \
+                           --enable-experimental-malloc \
+                           --enable-hidden-plt \
+                           --enable-stackguard-randomization \
+                           --enable-add-ons=libidn \
                            --with-tls \
                            --with-__thread \
                            --with-binutils=$ROOT/$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
-                           --enable-kernel=3.0.0 \
+                           --enable-kernel=2.6.32 \
                            --without-cvs \
                            --without-gd \
                            --enable-obsolete-rpc \
@@ -149,6 +153,13 @@ post_makeinstall_target() {
 # remove locales and charmaps
   rm -rf $INSTALL/usr/share/i18n/charmaps
   rm -rf $INSTALL/usr/share/i18n/locales
+
+# add UTF-8 charmap for Generic (charmap is needed for installer)
+  if [ "$PROJECT" = "Generic" ]; then
+    mkdir -p $INSTALL/usr/share/i18n/charmaps
+    cp -PR $PKG_BUILD/localedata/charmaps/UTF-8 $INSTALL/usr/share/i18n/charmaps
+    gzip $INSTALL/usr/share/i18n/charmaps/UTF-8
+  fi
 
   if [ -n "$GLIBC_LOCALES" ]; then
     mkdir -p $INSTALL/usr/lib/locale
