@@ -33,8 +33,10 @@ PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--with-cairo --with-freetype --with-glib --with-gobject --with-icu"
+GOLD_SUPPORT="yes"
 
-#pre_configure_target() {
-#  export LIBS="$LIBS -ldl"
-#}
+PKG_CONFIGURE_OPTS_TARGET="--with-cairo=$SYSROOT_PREFIX/usr \
+			      --with-freetype=$SYSROOT_PREFIX/usr \
+			      --with-glib=$SYSROOT_PREFIX/usr \
+			      --with-gobject=$SYSROOT_PREFIX/usr \
+			      --with-icu=$SYSROOT_PREFIX/usr"
