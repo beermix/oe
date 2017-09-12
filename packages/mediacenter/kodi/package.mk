@@ -58,7 +58,7 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$ROOT/$TOOLCHAIN \
                        -DENABLE_LCMS2=ON \
                        -DENABLE_CCACHE=OFF \
                        -DENABLE_LIRC=ON \
-                       -DENABLE_EVENTCLIENTS=ON \
+                       -DENABLE_EVENTCLIENTS=OFF \
                        -DENABLE_LIBUSB=OFF \
                        -DENABLE_BLUETOOTH=OFF \
                        -DENABLE_OPTICAL=OFF \
@@ -71,11 +71,7 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$ROOT/$TOOLCHAIN \
                        -DENABLE_SSE2=ON \
                        -DENABLE_SSE4_1=ON \
                        -DENABLE_SSE4_2=ON \
-                       -DENABLE_SSSE3=ON \
-                       -DHAVE_SSE=TRUE \
-                       -DHAVE_SSE2=TRUE \
-                       -DHAVE_SSE4_1=TRUE \
-                       -DHAVE_SSSE3=TRUE"
+                       -DENABLE_SSSE3=ON"
 
 if [ "$TARGET_ARCH" = "x86_64" ]; then
   PKG_CMAKE_OPTS_TARGET+=" -DWITH_CPU=$TARGET_ARCH"
