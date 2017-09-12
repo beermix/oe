@@ -32,13 +32,13 @@ PKG_USE_CMAKE="no"
 PKG_CONFIGURE_OPTS_TARGET="LIBPNG_CFLAGS=-I$SYSROOT_PREFIX/usr/include \
                            LIBPNG_LDFLAGS=-L$SYSROOT_PREFIX/usr/lib \
                            --with-harfbuzz=no \
-                           --with-zlib \
-                           --with-sysroot=$SYSROOT_PREFIX"
+                           --with-zlib"
                            
 pre_configure_target() {
   # unset LIBTOOL because freetype uses its own
     ( cd ..
-      NOCONFIGURE=1 ./autogen.sh
+    unset LIBTOOL
+    NOCONFIGURE=1 ./autogen.sh
     )
 }
 
