@@ -10,12 +10,13 @@ get_graphicdrivers
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
+  strip_lto
+  strip_gold
 }
 
 configure_target() {
   ./configure --prefix="/usr" \
   		--target="x86_64-linux-gcc" \
-  		--libc="$(get_pkg_build glibc)" \
   		--cpu="$TARGET_CPU" \
   		--as=yasm \
   		--enable-pic \
@@ -35,6 +36,6 @@ configure_target() {
   		--disable-install-docs \
   		--enable-runtime-cpu-detect \
   		--disable-shared \
-  		--enable-decode-perf-tests \
-  		--enable-encode-perf-tests
+  		--disable-decode-perf-tests \
+  		--disable-encode-perf-tests
 }
