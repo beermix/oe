@@ -152,7 +152,7 @@ make_target() {
   ./tools/gn/bootstrap/bootstrap.py --gn-gen-args "${_flags[*]}"
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$ROOT/$TOOLCHAIN/bin/python
 
-  ninja -j54 -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
+  ninja -j4 -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
   
   ## workaround for gcc-6
 #  rm -f /usr/lib/x86_64-linux-gnu/libstdc++.so.6
