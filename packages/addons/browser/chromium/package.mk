@@ -103,7 +103,7 @@ make_target() {
     'use_gconf=false'
     'use_gnome_keyring=false'
     'use_gold=false'
-    'use_gtk3=true'
+    'use_gtk3=false'
     'is_component_build=true'
     'use_vaapi=true'
     'use_kerberos=false'
@@ -188,8 +188,8 @@ addon() {
   cp -PL $(get_pkg_build cairo)/.install_pkg/usr/lib/libcairo.so.2 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # gtk
- # cp -PL $(get_pkg_build gtk+)/.install_pkg/usr/lib/libgdk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
- # cp -PL $(get_pkg_build gtk+)/.install_pkg/usr/lib/libgtk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_pkg_build gtk+)/.install_pkg/usr/lib/libgdk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_pkg_build gtk+)/.install_pkg/usr/lib/libgtk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # harfbuzz
   cp -PL $(get_pkg_build harfbuzz)/.install_pkg/usr/lib/libharfbuzz.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
