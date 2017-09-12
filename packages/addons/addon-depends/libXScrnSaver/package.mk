@@ -25,6 +25,6 @@ PKG_SECTION="x11/lib"
 PKG_SHORTDESC=""
 PKG_LONGDESC=""
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --with-pic --enable-malloc0returnsnull"
+PKG_CONFIGURE_OPTS_TARGET="--enable-malloc0returnsnull --disable-shared --with-pic --with-gnu-ld"
