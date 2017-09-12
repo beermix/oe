@@ -36,7 +36,7 @@ PKG_ADDON_NAME="Chromium"
 PKG_ADDON_TYPE="xbmc.python.script"
 PKG_ADDON_PROVIDES="executable"
 
-GOLD_SUPPORT="yes"
+#GOLD_SUPPORT="yes"
 
 pre_make_target() {
   strip_lto
@@ -96,7 +96,7 @@ make_target() {
     'use_cups=false'
     'use_gconf=false'
     'use_gnome_keyring=false'
-    'use_gold=false'
+    'use_gold=true'
     'use_gtk3=false'
     'is_component_build=true'
     'use_vaapi=true'
