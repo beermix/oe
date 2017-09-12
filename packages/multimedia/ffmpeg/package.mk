@@ -178,9 +178,7 @@ configure_target() {
               --disable-altivec \
               $FFMPEG_FPU \
               --enable-yasm \
-              --disable-lto \
-              --disable-symver \
-              --enable-indev=x11grab_xcb
+              --disable-symver
 }
 
 post_makeinstall_target() {
