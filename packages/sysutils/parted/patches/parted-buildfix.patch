@@ -1,5 +1,5 @@
 diff -Naur parted-3.2/libparted/arch/linux.c parted-3.2.patch/libparted/arch/linux.c
---- parted-3.2/libparted/arch/linux.c	2014-06-15 21.15:54.000000000 +0200
+--- parted-3.2/libparted/arch/linux.c	2014-06-15 21:15:54.000000000 +0200
 +++ parted-3.2.patch/libparted/arch/linux.c	2014-08-04 01:57:47.626611437 +0200
 @@ -2307,6 +2307,7 @@
  static char *
