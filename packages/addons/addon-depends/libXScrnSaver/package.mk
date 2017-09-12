@@ -27,4 +27,4 @@ PKG_LONGDESC=""
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-malloc0returnsnull --disable-shared --with-pic --with-gnu-ld"
+PKG_CONFIGURE_OPTS_TARGET="--enable-malloc0returnsnull --with-gnu-ld"
