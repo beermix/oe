@@ -36,6 +36,7 @@ PKG_ADDON_NAME="Chromium"
 PKG_ADDON_TYPE="xbmc.python.script"
 PKG_ADDON_PROVIDES="executable"
 
+GOLD_SUPPORT="yes"
 
 pre_make_target() {
   strip_lto
