@@ -63,7 +63,7 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$ROOT/$TOOLCHAIN \
                        -DENABLE_BLUETOOTH=OFF \
                        -DENABLE_OPTICAL=OFF \
                        -DENABLE_UDEV=ON \
-                       -DENABLE_XSLT=OFF \
+                       -DENABLE_XSLT=ON \
                        -DENABLE_DBUS=ON \
                        -DENABLE_AVX=ON \
                        -DENABLE_AVX2=OFF \
