@@ -32,10 +32,9 @@ PKG_LONGDESC="LZO is a data compression library which is suitable for data de-/c
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
-PKG_USE_CMAKE="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --enable-shared --with-pic"
-PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared --with-pic"
+PKG_CMAKE_OPTS_HOST="-DENABLE_SHARED=OFF -DENABLE_STATIC=ON"
+PKG_CMAKE_OPTS_TARGET="-DENABLE_SHARED=ON -DENABLE_STATIC=ON"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/libexec
