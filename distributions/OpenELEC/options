@@ -18,7 +18,7 @@
   ROOT_PASSWORD="openelec"
 
 # Install LLVM SUPPORT (yes / no)
-  LLVM_SUPPORT="no"
+  LLVM_SUPPORT="yes"
   
 # Install glibc locales to the build (yes / no)
   GLIBC_LOCALES="yes"
