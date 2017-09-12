@@ -34,6 +34,14 @@ PKG_CONFIGURE_OPTS_TARGET="--with-zlib=yes \
                            --with-png=yes \
                            --with-harfbuzz=no"
 
+pre_configure_target() {
+  # unset LIBTOOL because freetype uses its own
+    ( cd ..
+      unset LIBTOOL
+      sh autogen.sh
+    )
+}
+
 post_makeinstall_target() {
   $SED "s:\(['=\" ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" $SYSROOT_PREFIX/usr/bin/freetype-config
   ln -v -sf $SYSROOT_PREFIX/usr/include/freetype2 $SYSROOT_PREFIX/usr/include/freetype
