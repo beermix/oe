@@ -34,13 +34,6 @@ PKG_AUTORECONF="yes"
 
 get_graphicdrivers
 
-if [ "$COMPOSITE_SUPPORT" = "yes" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libXcomposite"
-  XORG_COMPOSITE="--enable-composite"
-else
-  XORG_COMPOSITE="--disable-composite"
-fi
-
 if [ ! "$OPENGL" = "no" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET glproto $OPENGL libepoxy glu"
   XORG_MESA="--enable-glx --enable-dri --enable-glamor"
@@ -138,7 +131,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
 pre_configure_target() {
 # hack to prevent a build error
   CFLAGS=`echo $CFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|" -e "s|-fno-plt||"`
-  LDFLAGS=`echo $LDFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|" -e "s|-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now|-Wl,--as-needed|g"`
+  LDFLAGS=`echo $LDFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|" -e "s|,-z,relro,-z,now||g" -e "s|,-z,relro||g"`
 }
 
 post_makeinstall_target() {
