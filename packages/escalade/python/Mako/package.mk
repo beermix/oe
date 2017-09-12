@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="Mako"
-PKG_VERSION="1.0.6"
+PKG_VERSION="1.0.7"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.makotemplates.org"
-PKG_URL="https://pypi.python.org/packages/56/4b/cb75836863a6382199aefb3d3809937e21fa4cb0db15a4f4ba0ecc2e7e8e/Mako-1.0.6.tar.gz"
+PKG_URL="https://pypi.python.org/packages/eb/f3/67579bb486517c0d49547f9697e36582cd19dafb5df9e687ed8e22de57fa/Mako-1.0.7.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python:host distutilscross:host"
 PKG_DEPENDS_HOST="$PKG_DEPENDS_TARGET"
 PKG_SECTION="python/devel"
