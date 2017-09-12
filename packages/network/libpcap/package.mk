@@ -18,7 +18,7 @@
 
 PKG_NAME="libpcap"
 #PKG_VERSION="1.8.1"
-PKG_VERSION="69fcdc6"
+PKG_VERSION="6913c4b"
 #PKG_URL="http://www.tcpdump.org/release/libpcap-$PKG_VERSION.tar.gz"
 PKG_GIT_URL="https://github.com/the-tcpdump-group/libpcap"
 PKG_DEPENDS_TARGET="toolchain libusb dbus"
@@ -48,9 +48,13 @@ pre_configure_target() {
 # When cross-compiling, configure can't set linux version
 # forcing it
   sed -i -e 's/ac_cv_linux_vers=unknown/ac_cv_linux_vers=2/' ../configure
-  export CFLAGS="$CFLAGS -D_DEFAULT_SOURCE -ffunction-sections -fdata-sections"
+  export CFLAGS="$CFLAGS -D_DEFAULT_SOURCE"
 }
 
-#post_makeinstall_target() {
-#  rm -rf $INSTALL/usr/bin
-#}
+post_makeinstall_target() {
+  rm -rf $INSTALL/usr/bin
+
+  sed -e "s:\(['= ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" -i pcap-config
+  cp pcap-config $SYSROOT_PREFIX/usr/bin
+  ln -sf $SYSROOT_PREFIX/usr/bin/pcap-config $ROOT/$BUILD/toolchain/bin/
+}
