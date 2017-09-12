@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="speex"
-PKG_VERSION="1.2rc2"
+PKG_VERSION="1.2.0"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="BSD"
