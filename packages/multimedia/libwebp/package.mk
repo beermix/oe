@@ -14,12 +14,6 @@ pre_configure_target() {
   cd $ROOT/$PKG_BUILD
 }
 
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release"
-
-post_makeinstall_target() {
-  rm -rf $INSTALL
-}
-
 PKG_CONFIGURE_OPTS_TARGET="--enable-swap-16bit-csp \
 			      --enable-experimental 
 			      --enable-libwebp-mux \
@@ -27,3 +21,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-swap-16bit-csp \
 			      --enable-libwebp-decoder \
 			      --enable-libwebp-extras \
 			      --disable-shared"
+
+post_makeinstall_target() {
+  rm -rf $INSTALL
+}
