@@ -50,7 +50,7 @@ pre_make_target() {
 
 make_target() {
 
-  CCACHE_SLOPPINESS=include_file_mtime
+  #CCACHE_SLOPPINESS=include_file_mtime
   
   export -n CFLAGS CXXFLAGS
   export LDFLAGS="$LDFLAGS -ludev"
@@ -74,13 +74,6 @@ make_target() {
 
   export TMPDIR="/root/-3SDC/temp"
   mkdir -p "$TMPDIR"
-  
-  ## workaround for gcc-6
-#  mv -f /usr/lib/x86_64-linux-gnu/libstdc++.so.6 /usr/lib/x86_64-linux-gnu/libstdc++.so.6.org || true
-#  mv -f /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.19 /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.19.org || true
-#  cp -fP $SYSROOT_PREFIX/usr/lib/libstdc++.so.6 /usr/lib/x86_64-linux-gnu
-#  cp -fP $SYSROOT_PREFIX/usr/lib/libstdc++.so.6.0.22 /usr/lib/x86_64-linux-gnu
-  ## workaround for gcc-6
 
   local _flags=(
     'is_clang=false'
@@ -107,7 +100,6 @@ make_target() {
     'is_component_build=true'
     'use_vaapi=true'
     'use_kerberos=false'
-    'use_pulseaudio=false'
     'use_sysroot=true'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_hangout_services_extension=true'
@@ -151,13 +143,6 @@ make_target() {
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$ROOT/$TOOLCHAIN/bin/python
 
   ninja -j4 -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
-  
-  ## workaround for gcc-6
-#  rm -f /usr/lib/x86_64-linux-gnu/libstdc++.so.6
-#  rm -f /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.22
-#  mv -f /usr/lib/x86_64-linux-gnu/libstdc++.so.6.org /usr/lib/x86_64-linux-gnu/libstdc++.so.6 || true
-#  mv -f /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.19.org /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.19 || true
-  ## workaround for gcc-6
 }
 
 makeinstall_target() {
