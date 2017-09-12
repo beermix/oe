@@ -39,9 +39,9 @@ diff --git a/bfd/ChangeLog b/bfd/ChangeLog
 index 89f4338677..ca2bf2d51a 100644
 --- a/bfd/ChangeLog
 +++ b/bfd/ChangeLog
-@@ -1,3 +1,12 @@
-+2017-07-24  Tristan Gingold  <gingold@adacore.com>
-+
+@@ -1,5 +1,14 @@
+ 2017-07-24  Tristan Gingold  <gingold@adacore.com>
+ 
 +	* version.m4: Bump version to 2.29.0
 +	* configure: Regenerate.
 +
@@ -49,9 +49,11 @@ index 89f4338677..ca2bf2d51a 100644
 +
 +	* development.sh: Set development to true.
 +
- 2017-07-24  Tristan Gingold  <gingold@adacore.com>
- 
++2017-07-24  Tristan Gingold  <gingold@adacore.com>
++
  	* version.m4: Bump version to 2.29
+ 	* configure: Regenerate.
+ 
 diff --git a/bfd/configure b/bfd/configure
 index 7c8ebb1c1c..cda26d8234 100755
 --- a/bfd/configure
@@ -12309,19 +12311,22 @@ diff --git a/bfd/ChangeLog b/bfd/ChangeLog
 index 103334d34e..048bf141c9 100644
 --- a/bfd/ChangeLog
 +++ b/bfd/ChangeLog
-@@ -1,3 +1,12 @@
-+2017-08-01  Andreas Krebbel  <krebbel@linux.vnet.ibm.com>
-+
-+	Backport from mainline
+@@ -1,6 +1,15 @@
+ 2017-08-01  Andreas Krebbel  <krebbel@linux.vnet.ibm.com>
+ 
+ 	Backport from mainline
 +	2017-08-01  Andreas Krebbel  <krebbel@linux.vnet.ibm.com>
 +
 +	* elf32-s390.c (elf_s390_finish_dynamic_sections): Skip if it
 +	isn't the S/390 specific elf data.
 +	* elf64-s390.c (elf_s390_finish_dynamic_sections): Likewise.
 +
- 2017-08-01  Andreas Krebbel  <krebbel@linux.vnet.ibm.com>
++2017-08-01  Andreas Krebbel  <krebbel@linux.vnet.ibm.com>
++
++	Backport from mainline
+ 	2017-07-28  Andreas Krebbel  <krebbel@linux.vnet.ibm.com>
  
- 	Backport from mainline
+ 	* elf32-s390.c (elf_s390_finish_dynamic_sections): Add NULL
 diff --git a/bfd/elf32-s390.c b/bfd/elf32-s390.c
 index 8adf9e4784..4aa3915cb2 100644
 --- a/bfd/elf32-s390.c
@@ -13754,17 +13759,19 @@ diff --git a/ld/ChangeLog b/ld/ChangeLog
 index 61458ebe06..8b656e66eb 100644
 --- a/ld/ChangeLog
 +++ b/ld/ChangeLog
-@@ -1,3 +1,10 @@
-+2017-08-13  H.J. Lu  <hongjiu.lu@intel.com>
-+
+@@ -1,5 +1,12 @@
+ 2017-08-13  H.J. Lu  <hongjiu.lu@intel.com>
+ 
 +	PR ld/21923
 +	* configure.ac (TESTBFDLIB): Replace --rpath with -Wl,--rpath,
 +	for --disable-static.
 +	* configure: Regenerated.
 +
- 2017-08-13  H.J. Lu  <hongjiu.lu@intel.com>
- 
++2017-08-13  H.J. Lu  <hongjiu.lu@intel.com>
++
  	* testsuite/ld-i386/i386.exp: Run pr21884-nacl.
+ 	* testsuite/ld-x86-64/x86-64.exp: Likewise.
+ 	* testsuite/ld-i386/pr21884.d: Don't run on nacl targets.
 diff --git a/ld/configure b/ld/configure
 index 7b66a4f77b..20fb84d036 100755
 --- a/ld/configure
@@ -14107,16 +14114,18 @@ diff --git a/bfd/ChangeLog b/bfd/ChangeLog
 index 497bcbc066..bb40871af2 100644
 --- a/bfd/ChangeLog
 +++ b/bfd/ChangeLog
-@@ -1,3 +1,9 @@
-+2017-08-17  Szabolcs Nagy  <szabolcs.nagy@arm.com>
-+
+@@ -1,5 +1,11 @@
+ 2017-08-17  Szabolcs Nagy  <szabolcs.nagy@arm.com>
+ 
 +	PR ld/18808
 +	* elfnn-aarch64.c (elfNN_aarch64_final_link_relocate): Skip IFUNC
 +	relocations in debug sections, change abort to _bfd_error_handler.
 +
- 2017-08-17  Szabolcs Nagy  <szabolcs.nagy@arm.com>
- 
++2017-08-17  Szabolcs Nagy  <szabolcs.nagy@arm.com>
++
  	PR ld/18841
+ 	* elfnn-aarch64.c (elfNN_aarch64_reloc_type_class): Return
+ 	reloc_class_ifunc for ifunc symbols.
 diff --git a/bfd/elfnn-aarch64.c b/bfd/elfnn-aarch64.c
 index 18db07f8a5..74beaf4f95 100644
 --- a/bfd/elfnn-aarch64.c
@@ -17936,18 +17945,20 @@ diff --git a/gas/ChangeLog b/gas/ChangeLog
 index 028a82c70c..84aad433e2 100644
 --- a/gas/ChangeLog
 +++ b/gas/ChangeLog
-@@ -1,3 +1,11 @@
-+2017-08-30  Maciej W. Rozycki  <macro@imgtec.com>
-+
+@@ -1,5 +1,13 @@
+ 2017-08-30  Maciej W. Rozycki  <macro@imgtec.com>
+ 
 +	* testsuite/gas/mips/branch-addend-micromips.d: New test.
 +	* testsuite/gas/mips/branch-addend-micromips-n32.d: New test.
 +	* testsuite/gas/mips/branch-addend-micromips-n64.d: New test.
 +	* testsuite/gas/mips/branch-addend-micromips.s: New test source.
 +	* testsuite/gas/mips/mips.exp: Run the new tests.
 +
- 2017-08-30  Maciej W. Rozycki  <macro@imgtec.com>
- 
++2017-08-30  Maciej W. Rozycki  <macro@imgtec.com>
++
  	* config/tc-mips.c (md_convert_frag): Respect
+ 	`mips_ignore_branch_isa'.
+ 	* testsuite/gas/mips/branch-local-5.d: New test.
 diff --git a/gas/testsuite/gas/mips/branch-addend-micromips-n32.d b/gas/testsuite/gas/mips/branch-addend-micromips-n32.d
 new file mode 100644
 index 0000000000..085cc2256f
@@ -21220,16 +21231,18 @@ diff --git a/bfd/ChangeLog b/bfd/ChangeLog
 index e9ea6cfdda..8db7080931 100644
 --- a/bfd/ChangeLog
 +++ b/bfd/ChangeLog
-@@ -1,3 +1,9 @@
-+2017-09-01  Nick Clifton  <nickc@redhat.com>
-+
+@@ -1,5 +1,11 @@
+ 2017-09-01  Nick Clifton  <nickc@redhat.com>
+ 
 +	PR 21933
 +	PR 22060
 +	* elf.c (elf_read_notes): Check for a note size of -1.
 +
- 2017-09-01  Nick Clifton  <nickc@redhat.com>
- 
++2017-09-01  Nick Clifton  <nickc@redhat.com>
++
  	PR 22058
+ 	* elf-attrs.c (_bfd_elf_parse_attributes): Ensure that the
+ 	attribute buffer is NUL terminated.
 diff --git a/bfd/elf.c b/bfd/elf.c
 index 063a6e4bb3..fbf639b357 100644
 --- a/bfd/elf.c
@@ -22421,16 +22434,18 @@ diff --git a/bfd/ChangeLog b/bfd/ChangeLog
 index 8db7080931..ce926fe727 100644
 --- a/bfd/ChangeLog
 +++ b/bfd/ChangeLog
-@@ -1,3 +1,9 @@
-+2017-09-01  Nick Clifton  <nickc@redhat.com>
-+
+@@ -1,5 +1,11 @@
+ 2017-09-01  Nick Clifton  <nickc@redhat.com>
+ 
 +	PR 22059
 +	* dwarf2.c (decode_line_info): Fix test for an overlong line info
 +	structure.
 +
- 2017-09-01  Nick Clifton  <nickc@redhat.com>
- 
++2017-09-01  Nick Clifton  <nickc@redhat.com>
++
  	PR 21933
+ 	PR 22060
+ 	* elf.c (elf_read_notes): Check for a note size of -1.
 diff --git a/bfd/dwarf2.c b/bfd/dwarf2.c
 index 04a2585be2..877962783b 100644
 --- a/bfd/dwarf2.c
@@ -23635,16 +23650,18 @@ diff --git a/bfd/ChangeLog b/bfd/ChangeLog
 index 93142541d0..b5f1204e64 100644
 --- a/bfd/ChangeLog
 +++ b/bfd/ChangeLog
-@@ -1,3 +1,9 @@
-+2017-09-01  H.J. Lu  <hongjiu.lu@intel.com>
-+
+@@ -1,5 +1,11 @@
+ 2017-09-01  H.J. Lu  <hongjiu.lu@intel.com>
+ 
 +	PR ld/22064
 +	* elf64-x86-64.c (elf_x86_64_finish_dynamic_symbol): Check
 +	ELF_COMMON_DEF_P for common symbols.
 +
- 2017-09-01  H.J. Lu  <hongjiu.lu@intel.com>
- 
++2017-09-01  H.J. Lu  <hongjiu.lu@intel.com>
++
  	PR ld/22061
+ 	* elf32-i386.c (elf_i386_link_setup_gnu_properties): Create
+ 	.eh_frame section for the second PLT.
 diff --git a/bfd/elf64-x86-64.c b/bfd/elf64-x86-64.c
 index bc60012f1e..59926b6092 100644
 --- a/bfd/elf64-x86-64.c
@@ -23662,17 +23679,19 @@ diff --git a/ld/ChangeLog b/ld/ChangeLog
 index f4335cfe26..24d0ed26a7 100644
 --- a/ld/ChangeLog
 +++ b/ld/ChangeLog
-@@ -1,3 +1,10 @@
-+2017-09-01  H.J. Lu  <hongjiu.lu@intel.com>
-+
+@@ -1,5 +1,12 @@
+ 2017-09-01  H.J. Lu  <hongjiu.lu@intel.com>
+ 
 +	PR ld/22064
 +	* testsuite/ld-x86-64/pr22064a.S: New file.
 +	* testsuite/ld-x86-64/pr22064b.c: Likewise.
 +	* testsuite/ld-x86-64/x86-64.exp: Run PR ld/22064 test.
 +
- 2017-09-01  H.J. Lu  <hongjiu.lu@intel.com>
- 
++2017-09-01  H.J. Lu  <hongjiu.lu@intel.com>
++
  	PR ld/22061
+ 	* testsuite/ld-i386/ibt-plt-1.d: Pass --hash-style=sysv to ld.
+ 	Updated.
 diff --git a/ld/testsuite/ld-x86-64/pr22064a.S b/ld/testsuite/ld-x86-64/pr22064a.S
 new file mode 100644
 index 0000000000..8065a112d7
@@ -26707,3 +26726,395 @@ index 612e06ffb5..451bd2eb99 100644
        active_seg_prefix = 0;
        all_prefixes[last_seg_prefix] = NOTRACK_PREFIX;
      }
+
+commit 68b908bd5851a0adde95e67afba1fb5178bce6c7
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sun Sep 10 00:01:32 2017 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 5bc5ca2e7a..4b89208cdc 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20170909
++#define BFD_VERSION_DATE 20170910
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 38d47c2247aea860c41aa4bdddc4bed34e378731
+Author: Alan Modra <amodra@gmail.com>
+Date:   Sat Sep 9 21:55:22 2017 +0930
+
+    PowerPC64 --plt-align
+    
+    This changes the PowerPC64 --plt-align option to perform the usual
+    alignment of code as suggested by its name, as well as the previous
+    behaviour of padding so as to reduce boundary crossing.  The old
+    behaviour is had by using a negative parameter.
+    
+    The default is also changed to align plt stub code by default to 32
+    byte boundaries, the point being to get better bctr branch prediction
+    on power8 and power9 hardware.
+    
+    bfd/
+            * elf64-ppp.c (plt_stub_pad): Handle positive and negative
+            plt_stub_align.
+    ld/
+            * ld.texinfo (--plt-align): Describe new behaviour of option.
+            * emultempl/ppc64elf.em (params): Default plt_stub_align to 5.
+            * testsuite/ld-powerpc/powerpc.exp: Pass --no-plt-align for
+            selected tests.
+            * testsuite/ld-powerpc/relbrlt.d: Pass --no-plt-align.
+            * testsuite/ld-powerpc/elfv2so.d: Adjust expected output.
+    
+    (cherry picked from commit 2420fff633eff03ec1f85eba82a926cd0ecf4229)
+    (and commit bab55c05 for part of elfv2so.d change)
+
+diff --git a/bfd/ChangeLog b/bfd/ChangeLog
+index a78e8192ae..708a4bf8f7 100644
+--- a/bfd/ChangeLog
++++ b/bfd/ChangeLog
+@@ -1,3 +1,8 @@
++2017-09-10  Alan Modra  <amodra@gmail.com>
++
++	* elf64-ppp.c (plt_stub_pad): Handle positive and negative
++	plt_stub_align.
++
+ 2017-09-09  H.J. Lu  <hongjiu.lu@intel.com>
+ 
+ 	PR binutils/22018
+diff --git a/bfd/elf64-ppc.c b/bfd/elf64-ppc.c
+index 4ff3f064f3..3f01ae62a1 100644
+--- a/bfd/elf64-ppc.c
++++ b/bfd/elf64-ppc.c
+@@ -10606,17 +10606,30 @@ plt_stub_size (struct ppc_link_hash_table *htab,
+   return size;
+ }
+ 
+-/* If this stub would cross fewer 2**plt_stub_align boundaries if we align,
+-   then return the padding needed to do so.  */
++/* Depending on the sign of plt_stub_align:
++   If positive, return the padding to align to a 2**plt_stub_align
++   boundary.
++   If negative, if this stub would cross fewer 2**plt_stub_align
++   boundaries if we align, then return the padding needed to do so.  */
++
+ static inline unsigned int
+ plt_stub_pad (struct ppc_link_hash_table *htab,
+ 	      struct ppc_stub_hash_entry *stub_entry,
+ 	      bfd_vma plt_off)
+ {
+-  int stub_align = 1 << htab->params->plt_stub_align;
++  int stub_align;
+   unsigned stub_size = plt_stub_size (htab, stub_entry, plt_off);
+   bfd_vma stub_off = stub_entry->group->stub_sec->size;
+ 
++  if (htab->params->plt_stub_align >= 0)
++    {
++      stub_align = 1 << htab->params->plt_stub_align;
++      if ((stub_off & (stub_align - 1)) != 0)
++	return stub_align - (stub_off & (stub_align - 1));
++      return 0;
++    }
++
++  stub_align = 1 << -htab->params->plt_stub_align;
+   if (((stub_off + stub_size - 1) & -stub_align) - (stub_off & -stub_align)
+       > ((stub_size - 1) & -stub_align))
+     return stub_align - (stub_off & (stub_align - 1));
+diff --git a/ld/ChangeLog b/ld/ChangeLog
+index e8ee459241..f1acd5b6d3 100644
+--- a/ld/ChangeLog
++++ b/ld/ChangeLog
+@@ -1,3 +1,12 @@
++2017-09-10  Alan Modra  <amodra@gmail.com>
++
++	* ld.texinfo (--plt-align): Describe new behaviour of option.
++	* emultempl/ppc64elf.em (params): Default plt_stub_align to 5.
++	* testsuite/ld-powerpc/powerpc.exp: Pass --no-plt-align for
++	selected tests.
++	* testsuite/ld-powerpc/relbrlt.d: Pass --no-plt-align.
++	* testsuite/ld-powerpc/elfv2so.d: Adjust expected output.
++
+ 2017-09-04  Nick Clifton  <nickc@redhat.com>
+ 
+ 	Import from mainline:
+diff --git a/ld/emultempl/ppc64elf.em b/ld/emultempl/ppc64elf.em
+index 58cb798cb1..cf75957fa9 100644
+--- a/ld/emultempl/ppc64elf.em
++++ b/ld/emultempl/ppc64elf.em
+@@ -37,7 +37,7 @@ static struct ppc64_elf_params params = { NULL,
+ 					  &ppc_add_stub_section,
+ 					  &ppc_layout_sections_again,
+ 					  1, -1, 0,
+-					  ${DEFAULT_PLT_STATIC_CHAIN-0}, -1, 0,
++					  ${DEFAULT_PLT_STATIC_CHAIN-0}, -1, 5,
+ 					  -1, 0, -1, -1, 0};
+ 
+ /* Fake input file for stubs.  */
+diff --git a/ld/ld.texinfo b/ld/ld.texinfo
+index 5d0b007ffa..950c794708 100644
+--- a/ld/ld.texinfo
++++ b/ld/ld.texinfo
+@@ -7572,10 +7572,12 @@ off this feature.
+ @item --plt-align
+ @itemx --no-plt-align
+ Use these options to control whether individual PLT call stubs are
+-padded so that they don't cross a 32-byte boundary, or to the
+-specified power of two boundary when using @code{--plt-align=}.  Note
+-that this isn't alignment in the usual sense.  By default PLT call
+-stubs are packed tightly.
++aligned to a 32-byte boundary, or to the specified power of two
++boundary when using @code{--plt-align=}.  A negative value may be
++specified to pad PLT call stubs so that they do not cross the
++specified power of two boundary (or the minimum number of boundaries
++if a PLT stub is so large that it must cross a boundary).  By default
++PLT call stubs are aligned to 32-byte boundaries.
+ 
+ @cindex PowerPC64 PLT call stub static chain
+ @kindex --plt-static-chain
+diff --git a/ld/testsuite/ld-powerpc/elfv2so.d b/ld/testsuite/ld-powerpc/elfv2so.d
+index f3962ac041..a577b2a7ea 100644
+--- a/ld/testsuite/ld-powerpc/elfv2so.d
++++ b/ld/testsuite/ld-powerpc/elfv2so.d
+@@ -7,53 +7,57 @@
+ 
+ Disassembly of section \.text:
+ 
+-0+300 <.*\.plt_call\.f4>:
++.* <.*\.plt_call\.f4>:
+ .*:	(f8 41 00 18|18 00 41 f8) 	std     r2,24\(r1\)
+ .*:	(e9 82 80 38|38 80 82 e9) 	ld      r12,-32712\(r2\)
+ .*:	(7d 89 03 a6|a6 03 89 7d) 	mtctr   r12
+ .*:	(4e 80 04 20|20 04 80 4e) 	bctr
++	\.\.\.
+ 
+-0+310 <.*\.plt_call\.f3>:
++.* <.*\.plt_call\.f3>:
+ .*:	(f8 41 00 18|18 00 41 f8) 	std     r2,24\(r1\)
+ .*:	(e9 82 80 28|28 80 82 e9) 	ld      r12,-32728\(r2\)
+ .*:	(7d 89 03 a6|a6 03 89 7d) 	mtctr   r12
+ .*:	(4e 80 04 20|20 04 80 4e) 	bctr
++	\.\.\.
+ 
+-0+320 <.*\.plt_call\.f2>:
++.* <.*\.plt_call\.f2>:
+ .*:	(f8 41 00 18|18 00 41 f8) 	std     r2,24\(r1\)
+ .*:	(e9 82 80 30|30 80 82 e9) 	ld      r12,-32720\(r2\)
+ .*:	(7d 89 03 a6|a6 03 89 7d) 	mtctr   r12
+ .*:	(4e 80 04 20|20 04 80 4e) 	bctr
++	\.\.\.
+ 
+-0+330 <.*\.plt_call\.f1>:
++.* <.*\.plt_call\.f1>:
+ .*:	(f8 41 00 18|18 00 41 f8) 	std     r2,24\(r1\)
+ .*:	(e9 82 80 40|40 80 82 e9) 	ld      r12,-32704\(r2\)
+ .*:	(7d 89 03 a6|a6 03 89 7d) 	mtctr   r12
+ .*:	(4e 80 04 20|20 04 80 4e) 	bctr
++	\.\.\.
+ 
+-0+340 <f1>:
++.* <f1>:
+ .*:	(3c 4c 00 02|02 00 4c 3c) 	addis   r2,r12,2
+-.*:	(38 42 82 c0|c0 82 42 38) 	addi    r2,r2,-32064
++.*:	(38 42 .. ..|.. .. 42 38) 	addi    r2,r2,.*
+ .*:	(7c 08 02 a6|a6 02 08 7c) 	mflr    r0
+ .*:	(f8 21 ff e1|e1 ff 21 f8) 	stdu    r1,-32\(r1\)
+ .*:	(f8 01 00 30|30 00 01 f8) 	std     r0,48\(r1\)
+-.*:	(4b ff ff dd|dd ff ff 4b) 	bl      .*\.plt_call\.f1>
++.*:	(4b ff ff cd|cd ff ff 4b) 	bl      .*\.plt_call\.f1>
+ .*:	(e8 62 80 08|08 80 62 e8) 	ld      r3,-32760\(r2\)
+-.*:	(4b ff ff c5|c5 ff ff 4b) 	bl      .*\.plt_call\.f2>
++.*:	(4b ff ff a5|a5 ff ff 4b) 	bl      .*\.plt_call\.f2>
+ .*:	(e8 41 00 18|18 00 41 e8) 	ld      r2,24\(r1\)
+ .*:	(e8 62 80 10|10 80 62 e8) 	ld      r3,-32752\(r2\)
+-.*:	(4b ff ff a9|a9 ff ff 4b) 	bl      .*\.plt_call\.f3>
++.*:	(4b ff ff 79|79 ff ff 4b) 	bl      .*\.plt_call\.f3>
+ .*:	(e8 41 00 18|18 00 41 e8) 	ld      r2,24\(r1\)
+-.*:	(4b ff ff 91|91 ff ff 4b) 	bl      .*\.plt_call\.f4>
++.*:	(4b ff ff 51|51 ff ff 4b) 	bl      .*\.plt_call\.f4>
+ .*:	(e8 41 00 18|18 00 41 e8) 	ld      r2,24\(r1\)
+ .*:	(e8 01 00 30|30 00 01 e8) 	ld      r0,48\(r1\)
+ .*:	(38 21 00 20|20 00 21 38) 	addi    r1,r1,32
+ .*:	(7c 08 03 a6|a6 03 08 7c) 	mtlr    r0
+ .*:	(4e 80 00 20|20 00 80 4e) 	blr
+-.*:	(00 00 00 00|80 02 01 00) 	.*
+-.*:	(00 01 02 80|00 00 00 00) 	.*
++.*
++.*
+ 
+-0+390 <__glink_PLTresolve>:
++.* <__glink_PLTresolve>:
+ .*:	(7c 08 02 a6|a6 02 08 7c) 	mflr    r0
+ .*:	(42 9f 00 05|05 00 9f 42) 	bcl     .*
+ .*:	(7d 68 02 a6|a6 02 68 7d) 	mflr    r11
+diff --git a/ld/testsuite/ld-powerpc/powerpc.exp b/ld/testsuite/ld-powerpc/powerpc.exp
+index 6249ccbdb9..cfbc7b2001 100644
+--- a/ld/testsuite/ld-powerpc/powerpc.exp
++++ b/ld/testsuite/ld-powerpc/powerpc.exp
+@@ -156,22 +156,22 @@ set ppcelftests {
+ }
+ 
+ set ppc64elftests {
+-    {"TLS static exec" "-melf64ppc" "" "-a64"  {tls.s tlslib.s}
++    {"TLS static exec" "-melf64ppc --no-plt-align" "" "-a64"  {tls.s tlslib.s}
+      {{objdump -dr tls.d} {objdump -sj.got tls.g} {objdump -sj.tdata tls.t}}
+       "tls"}
+     {"TLS helper shared library" "-shared -melf64ppc tmpdir/tlslib.o" "" "" {}
+      {} "libtlslib.so"}
+     {"TLS helper old shared lib" "-shared -melf64ppc" "" "-a64" {oldtlslib.s}
+      {} "liboldlib.so"}
+-    {"TLS dynamic exec" "-melf64ppc --no-ld-generated-unwind-info tmpdir/tls.o tmpdir/libtlslib.so" "" "" {}
++    {"TLS dynamic exec" "-melf64ppc --no-plt-align --no-ld-generated-unwind-info tmpdir/tls.o tmpdir/libtlslib.so" "" "" {}
+      {{readelf -WSsrl tlsexe.r} {objdump -dr tlsexe.d}
+       {objdump -sj.got tlsexe.g} {objdump -sj.tdata tlsexe.t}}
+       "tlsexe"}
+-    {"TLS dynamic old" "-melf64ppc --no-ld-generated-unwind-info tmpdir/tls.o tmpdir/liboldlib.so" "" "" {}
++    {"TLS dynamic old" "-melf64ppc --no-plt-align --no-ld-generated-unwind-info tmpdir/tls.o tmpdir/liboldlib.so" "" "" {}
+      {{readelf -WSsrl tlsexe.r} {objdump -dr tlsexe.d}
+       {objdump -sj.got tlsexe.g} {objdump -sj.tdata tlsexe.t}}
+       "tlsexeold"}
+-    {"TLS shared" "-shared -melf64ppc --no-ld-generated-unwind-info tmpdir/tls.o" "" "" {}
++    {"TLS shared" "-shared -melf64ppc --no-plt-align --no-ld-generated-unwind-info tmpdir/tls.o" "" "" {}
+      {{readelf -WSsrl tlsso.r} {objdump -dr tlsso.d}
+       {objdump -sj.got tlsso.g} {objdump -sj.tdata tlsso.t}}
+       "tls.so"}
+@@ -179,17 +179,17 @@ set ppc64elftests {
+      {{objdump -dr tlstoc.d} {objdump -sj.got tlstoc.g}
+       {objdump -sj.tdata tlstoc.t}}
+       "tlstoc"}
+-    {"TLSTOC dynamic exec" "-melf64ppc --no-ld-generated-unwind-info tmpdir/tlstoc.o tmpdir/libtlslib.so" ""
++    {"TLSTOC dynamic exec" "-melf64ppc --no-plt-align --no-ld-generated-unwind-info tmpdir/tlstoc.o tmpdir/libtlslib.so" ""
+      "" {}
+      {{readelf -WSsrl tlsexetoc.r} {objdump -dr tlsexetoc.d}
+       {objdump -sj.got tlsexetoc.g} {objdump -sj.tdata tlsexetoc.t}}
+       "tlsexetoc"}
+-    {"TLSTOC dynamic old" "-melf64ppc --no-ld-generated-unwind-info tmpdir/tlstoc.o tmpdir/liboldlib.so" ""
++    {"TLSTOC dynamic old" "-melf64ppc --no-plt-align --no-ld-generated-unwind-info tmpdir/tlstoc.o tmpdir/liboldlib.so" ""
+      "" {}
+      {{readelf -WSsrl tlsexetoc.r} {objdump -dr tlsexetoc.d}
+       {objdump -sj.got tlsexetoc.g} {objdump -sj.tdata tlsexetoc.t}}
+       "tlsexetocold"}
+-    {"TLSTOC shared" "-shared -melf64ppc --no-ld-generated-unwind-info tmpdir/tlstoc.o" "" "" {}
++    {"TLSTOC shared" "-shared -melf64ppc --no-plt-align --no-ld-generated-unwind-info tmpdir/tlstoc.o" "" "" {}
+      {{readelf -WSsrl tlstocso.r} {objdump -dr tlstocso.d}
+       {objdump -sj.got tlstocso.g} {objdump -sj.tdata tlstocso.t}}
+       "tlstoc.so"}
+@@ -210,7 +210,7 @@ set ppc64elftests {
+       "tlsopt4"}
+     {"TLS DLL" "-shared -melf64ppc --version-script tlsdll.ver" "" "-a64" {tlsdll.s}
+      {} "tlsdll.so"}
+-    {"TLS opt 5" "-melf64ppc -shared --gc-sections --no-plt-localentry tmpdir/tlsdll.so" "" "-a64"  {tlsopt5.s}
++    {"TLS opt 5" "-melf64ppc --no-plt-align -shared --gc-sections --no-plt-localentry tmpdir/tlsdll.so" "" "-a64"  {tlsopt5.s}
+      {{objdump -dr tlsopt5.d} {readelf -wf tlsopt5.wf}}
+       "tlsopt5"}
+     {"sym@tocbase" "-shared -melf64ppc" "" "-a64" {symtocbase-1.s symtocbase-2.s}
+diff --git a/ld/testsuite/ld-powerpc/relbrlt.d b/ld/testsuite/ld-powerpc/relbrlt.d
+index a5f2437d08..a00b1ffd0c 100644
+--- a/ld/testsuite/ld-powerpc/relbrlt.d
++++ b/ld/testsuite/ld-powerpc/relbrlt.d
+@@ -1,6 +1,6 @@
+ #source: relbrlt.s
+ #as: -a64
+-#ld: -melf64ppc --no-ld-generated-unwind-info --emit-relocs
++#ld: -melf64ppc --no-plt-align --no-ld-generated-unwind-info --emit-relocs
+ #objdump: -Dr
+ 
+ .*
+
+commit 4c730770f07e4b5da5ab0a7654056cc9532b967d
+Author: Nick Clifton <nickc@redhat.com>
+Date:   Sun Sep 10 10:26:33 2017 +0100
+
+    Import fix from mainline that fixes buffer overrun errors when parsing corrupt DWARF debug information string sections.
+    
+            PR 22047
+            * dwarf2.c (read_section): If necessary add a terminating NUL byte
+            to dwarf string sections.
+
+diff --git a/bfd/ChangeLog b/bfd/ChangeLog
+index 708a4bf8f7..ed97efc83f 100644
+--- a/bfd/ChangeLog
++++ b/bfd/ChangeLog
+@@ -1,3 +1,11 @@
++2017-09-10  Nick Clifton  <nickc@redhat.com>
++
++	Import from mainline:
++
++	PR 22047
++	* dwarf2.c (read_section): If necessary add a terminating NUL byte
++	to dwarf string sections.
++
+ 2017-09-10  Alan Modra  <amodra@gmail.com>
+ 
+ 	* elf64-ppp.c (plt_stub_pad): Handle positive and negative
+diff --git a/bfd/dwarf2.c b/bfd/dwarf2.c
+index 877962783b..3cb2c347c8 100644
+--- a/bfd/dwarf2.c
++++ b/bfd/dwarf2.c
+@@ -566,6 +566,29 @@ read_section (bfd *           abfd,
+ 					  0, *section_size))
+ 	    return FALSE;
+ 	}
++
++      /* Paranoia - if we are reading in a string section, make sure that it
++        is NUL terminated.  This is to prevent string functions from running
++        off the end of the buffer.  Note - knowing the size of the buffer is
++        not enough as some functions, eg strchr, do not have a range limited
++        equivalent.
++
++        FIXME: We ought to use a flag in the dwarf_debug_sections[] table to
++        determine the nature of a debug section, rather than checking the
++        section name as we do here.  */
++      if (*section_size > 0
++         && (*section_buffer)[*section_size - 1] != 0
++         && (strstr (section_name, "_str") || strstr (section_name, "names")))
++       {
++         bfd_byte * new_buffer = malloc (*section_size + 1);
++
++         _bfd_error_handler (_("warning: dwarf string section '%s' is not NUL terminated"),
++                             section_name);
++         memcpy (new_buffer, *section_buffer, *section_size);
++         new_buffer[*section_size] = 0;
++         free (*section_buffer);
++         *section_buffer = new_buffer;
++       }
+     }
+ 
+   /* It is possible to get a bad value for the offset into the section
+
+commit 42e1a3f3716b122c807b44cbabff1c98d9df5724
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Mon Sep 11 00:01:48 2017 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 4b89208cdc..17e0539f8e 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20170910
++#define BFD_VERSION_DATE 20170911
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 37e991bb143ca2106330bcdc625590d53838b7a1
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Tue Sep 12 00:01:42 2017 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 17e0539f8e..960afa07c0 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20170911
++#define BFD_VERSION_DATE 20170912
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@

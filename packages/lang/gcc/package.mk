@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="7-20170907"
+PKG_VERSION="6-20170906"
 PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/$PKG_VERSION/gcc-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host"
 PKG_DEPENDS_TARGET="gcc:host"
@@ -81,16 +81,6 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time \
                          --enable-clocale=gnu \
-                         --enable-default-pie \
-                         --enable-default-ssp \
-                         --disable-libunwind-exceptions \
-                         --enable-clocale=gnu \
-                         --enable-gnu-unique-object \
-                         --enable-linker-build-id \
-                         --enable-install-libiberty \
-                         --with-linker-hash-style=gnu \
-                         --enable-gnu-indirect-function \
-                         --disable-werror \
                          $GCC_OPTS"
 pre_configure_host() {
   export CXXFLAGS="$CXXFLAGS -std=gnu++98"
