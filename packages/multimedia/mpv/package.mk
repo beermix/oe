@@ -15,6 +15,7 @@ pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
   export LDFLAGS="$LDFLAGS -lresolv"
+  strip_gold
 }
 
 configure_target() {
@@ -31,6 +32,6 @@ configure_target() {
 }
 
 make_target() {
-  ./waf build -j7
+  ./waf build
   ./waf install --prefix=$INSTALL
 }
