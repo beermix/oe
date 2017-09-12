@@ -102,7 +102,8 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --with-gallium-drivers=$GALLIUM_DRIVERS \
                            --with-dri-drivers=$DRI_DRIVERS \
                            --with-vulkan-drivers=intel \
-                           --with-sysroot=$SYSROOT_PREFIX"
+                           --with-sysroot=$SYSROOT_PREFIX \
+                           --enable-shared"
 
 pre_configure_target() {
   export LIBS="-lxcb-dri3 -lxcb-dri2 -lxcb-xfixes -lxcb-present -lxcb-sync -lxshmfence -lz"
