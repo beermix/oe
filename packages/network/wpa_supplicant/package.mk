@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="wpa_supplicant"
-PKG_VERSION="cc8330b"
+PKG_VERSION="73b3de0"
 PKG_GIT_URL="http://w1.fi/hostap.git"
 PKG_DEPENDS_TARGET="toolchain dbus libnl openssl"
 PKG_SECTION="network"
@@ -31,7 +31,7 @@ PKG_MAKE_OPTS_TARGET="-C wpa_supplicant V=1 LIBDIR=/usr/lib BINDIR=/usr/bin"
 PKG_MAKEINSTALL_OPTS_TARGET="-C wpa_supplicant V=1 LIBDIR=/usr/lib BINDIR=/usr/bin"
 
 configure_target() {
-  export LDFLAGS="$LDFLAGS -lnl-3 -lm -lpthread -lresolv"
+  export LDFLAGS="$LDFLAGS -lnl-3 -lm -lpthread"
 
   cp $PKG_DIR/config/makefile.config wpa_supplicant/.config
   echo "CONFIG_TLS=gnutls" >> .config
