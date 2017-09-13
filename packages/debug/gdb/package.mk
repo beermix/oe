@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/gdb/"
 PKG_URL="http://ftp.gnu.org/gnu/gdb/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain zlib ncurses expat xz"
+PKG_DEPENDS_TARGET="toolchain zlib ncurses expat"
 PKG_PRIORITY="optional"
 PKG_SECTION="debug"
 PKG_SHORTDESC="gdb: The GNU Debugger"
@@ -54,7 +54,7 @@ PKG_CONFIGURE_OPTS_TARGET="bash_cv_have_mbstate_t=set \
                            --disable-libquadmath \
                            --disable-libquadmath-support \
                            --enable-libada \
-                           --disable-libssp \
+                           --enable-libssp \
                            --disable-werror"
 
 post_makeinstall_target() {
