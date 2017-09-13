@@ -1,6 +1,6 @@
 PKG_NAME="M2Crypto"
-PKG_VERSION="0.25.0"
-#PKG_VERSION="0.24.0"
+#PKG_VERSION="0.25.0"
+PKG_VERSION="0.24.0"
 PKG_GIT_URL="https://gitlab.com/m2crypto/m2crypto"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host openssl swig:host"
 PKG_IS_ADDON="no"

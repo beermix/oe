@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -25,19 +25,21 @@
 #   there: http://forum.xbmc.org/showthread.php?tid=177557
 
 PKG_NAME="curl"
-PKG_VERSION="7.54.0"
+PKG_VERSION="7.55.1"
+PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="MIT"
-PKG_SITE="http://curl.haxx.se"
+PKG_SITE="https://curl.haxx.se/download/?C=M;O=D"
 PKG_URL="http://curl.haxx.se/download/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain zlib openssl rtmpdump"
+PKG_PRIORITY="optional"
 PKG_SECTION="web"
 PKG_SHORTDESC="curl: Client and library for (HTTP, HTTPS, FTP, ...) transfers"
 PKG_LONGDESC="Curl is a client to get documents/files from or send documents to a server, using any of the supported protocols (HTTP, HTTPS, FTP, FTPS, GOPHER, DICT, TELNET, LDAP or FILE). The command is designed to work without user interaction or any kind of interactivity."
 
 PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            ac_cv_header_librtmp_rtmp_h=yes \
@@ -45,7 +47,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            --enable-optimize \
                            --enable-warnings \
                            --disable-curldebug \
-                           --disable-ares \
                            --enable-largefile \
                            --enable-http \
                            --enable-ftp \
@@ -64,10 +65,12 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            --disable-gopher \
                            --disable-manual \
                            --enable-libgcc \
-                           --enable-ipv6 \
+                           --disable-ipv6 \
                            --enable-versioned-symbols \
                            --enable-nonblocking \
                            --enable-threaded-resolver \
+                           --enable-pthreads \
+                           --disable-ares \
                            --enable-verbose \
                            --disable-sspi \
                            --enable-crypto-auth \
@@ -83,7 +86,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            --enable-thread \
                            --with-random=/dev/urandom \
                            --without-gnutls \
-                           --with-ssl \
+                           --with-ssl=$SYSROOT_PREFIX/usr \
                            --without-polarssl \
                            --without-nss \
                            --with-ca-bundle=/etc/ssl/cert.pem \
@@ -92,11 +95,12 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            --without-libmetalink \
                            --without-libssh2 \
                            --with-librtmp=$SYSROOT_PREFIX/usr \
-                           --without-libidn"
+                           --without-libidn2 \
+                           --without-nghttp2"
 
 pre_configure_target() {
 # link against librt because of undefined reference to 'clock_gettime'
-  export LIBS="-lrt -lm -lrtmp"
+  export LIBS="-lrt -lm -pthread"
 }
 
 post_makeinstall_target() {
