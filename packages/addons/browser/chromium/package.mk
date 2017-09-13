@@ -97,7 +97,6 @@ make_target() {
     'use_gconf=false'
     'use_gnome_keyring=false'
     'use_gold=true'
-    'is_component_build=true'
     'use_gtk3=false'
     'use_vaapi=true'
     'use_kerberos=false'
