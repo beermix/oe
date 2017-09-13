@@ -63,7 +63,6 @@ PKG_CONFIGURE_OPTS_TARGET="BUILD_CC=$HOST_CC \
                            --disable-uuidd \
                            --disable-nls \
                            --disable-rpath \
-                           --disable-fuse2fs \
                            --with-gnu-ld"
 
 PKG_CONFIGURE_OPTS_INIT="$PKG_CONFIGURE_OPTS_TARGET"

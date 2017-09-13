@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="eventlircd"
-PKG_VERSION="c6da4ba"
+PKG_VERSION="fb51489"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
