@@ -1,9 +1,9 @@
 PKG_NAME="perl"
-PKG_VERSION="5.24.2"
+PKG_VERSION="5.27.3"
 PKG_SITE="http://www.cpan.org/src/5.0/?C=M;O=D"
 #PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_URL="http://www.cpan.org/src/5.0/perl-${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_TARGET="toolchain openssl gdbm"
+PKG_DEPENDS_TARGET="toolchain openssl gdbm db"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
@@ -48,5 +48,5 @@ make_target() {
 
 post_makeinstall_target() {
   #rm -rf $INSTALL/usr/share
-  ln -sfr perl $INSTALL/usr/bin/perl${PKG_VERSION}
+  ln -sf perl $INSTALL/usr/bin/perl${PKG_VERSION}
 }
