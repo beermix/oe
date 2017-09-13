@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libmicrohttpd"
-PKG_VERSION="0.9.54"
+PKG_VERSION="0.9.51"
 PKG_ARCH="any"
 PKG_LICENSE="LGPLv2.1"
 PKG_SITE="https://ftp.gnu.org/gnu/libmicrohttpd/?C=M;O=D"
@@ -30,12 +30,14 @@ PKG_LONGDESC="GNU libmicrohttpd is a small C library that is supposed to make it
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared --disable-doc --disable-examples --disable-curl --disable-spdy --with-libgcrypt-prefix=$SYSROOT_PREFIX/usr"
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
+			      --disable-doc \
+			      --disable-examples \
+			      --disable-curl \
+			      --disable-spdy \
+			      --with-pic \
+			      --with-libgcrypt-prefix=$SYSROOT_PREFIX/usr"
 
-pre_configure_target() {
-  CFLAGS="$CFLAGS -fPIC"
-  CXXFLAGS="$CXXFLAGS -fPIC"
-}
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
