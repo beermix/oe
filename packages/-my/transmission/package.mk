@@ -12,7 +12,7 @@ PKG_IS_ADDON="yes"
 PKG_ADDON_TYPE="xbmc.service"
 PKG_ADDON_PROVIDES=""
 PKG_USE_CMAKE="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 unpack() {
   git clone --recursive --depth 1 https://github.com/transmission/transmission $ROOT/$PKG_BUILD/$PKG_NAME-git
@@ -26,7 +26,7 @@ unpack() {
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
-  #NOCONFIGURE=1 ./autogen.sh
+  NOCONFIGURE=1 ./autogen.sh
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-utp --enable-cli --enable-daemon --with-gnu-ld --with-systemd --with-crypto=openssl"
