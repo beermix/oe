@@ -66,13 +66,12 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-vconsole \
                            --disable-quotacheck \
                            --enable-tmpfiles \
-                           --disable-environment-d \
                            --disable-sysusers \
                            --disable-firstboot \
                            --disable-randomseed \
                            --disable-backlight \
                            --disable-rfkill \
-                           --enable-logind --without-kill-user-processes \
+                           --enable-logind \
                            --disable-machined \
                            --disable-importd \
                            --disable-hostnamed \
@@ -81,7 +80,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-localed \
                            --disable-coredump \
                            --disable-polkit \
-                           --disable-resolved --with-default-dnssec=allow-downgrade \
+                           --disable-resolved \
                            --disable-networkd \
                            --disable-efi \
                            --disable-gnuefi \
@@ -91,7 +90,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-manpages \
                            --disable-hibernate \
                            --disable-ldconfig \
-                           --disable-tpm --with-tpm-pcrindex=8 \
                            --enable-split-usr \
                            --disable-tests \
                            --without-python \
@@ -195,6 +193,7 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin/systemd-machine-id-setup
   mkdir -p $INSTALL/usr/bin
   cp $PKG_DIR/scripts/systemd-machine-id-setup $INSTALL/usr/bin
+#  cp $PKG_DIR/scripts/userconfig-setup $INSTALL/usr/bin
 
   # provide 'halt', 'shutdown', 'reboot' & co.
   mkdir -p $INSTALL/usr/sbin
@@ -209,6 +208,7 @@ post_makeinstall_target() {
   cp -PR $PKG_DIR/config/* $INSTALL/usr/config
 
   rm -rf $INSTALL/etc/modules-load.d
+#  ln -sf /storage/.config/modules-load.d $INSTALL/etc/modules-load.d
   rm -rf $INSTALL/etc/sysctl.d
   ln -sf /storage/.config/sysctl.d $INSTALL/etc/sysctl.d
   rm -rf $INSTALL/etc/tmpfiles.d
