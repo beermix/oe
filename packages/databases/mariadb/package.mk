@@ -36,6 +36,9 @@ PKG_AUTORECONF="no"
 
 PKG_MARIADB_SERVER="no"
 
+#LTO_SUPPORT="yes"
+#GOLD_SUPPORT="yes"
+
 # MariaDB Feature set. Selection of features. Options are
 # - xsmall : 
 # - small: embedded
@@ -123,7 +126,7 @@ configure_host() {
         -DWITH_LIBWRAP=OFF \
         -DWITH_WSREP=OFF \
         -DWITH_SYSTEMD=no \
-        -DSECURITY_HARDENED=1 \
+        -DSECURITY_HARDENED=0 \
         ..
 }
 
@@ -158,8 +161,8 @@ configure_target() {
         -DDISABLE_LIBMYSQLCLIENT_SYMBOL_VERSIONING=TRUE \
         -DENABLE_DTRACE=OFF \
         -DWITH_READLINE=0 \
-        -DWITH_PCRE=$SYSROOT_PREFIX/usr \
-        -DWITH_ZLIB=$SYSROOT_PREFIX/usr \
+        -DWITH_PCRE=bundled \
+        -DWITH_ZLIB=bundled \
         -DWITH_SYSTEMD=no \
         -DWITH_LIBWRAP=OFF \
         -DWITH_ARCHIVE_STORAGE_ENGINE=1 \
@@ -171,7 +174,7 @@ configure_target() {
         -DWITHOUT_FEDERATED_STORAGE_ENGINE=1 \
         -DWITHOUT_PBXT_STORAGE_ENGINE=1 \
         -DWITH_SSL=$SYSROOT_PREFIX/usr \
-        -DSECURITY_HARDENED=1 \
+        -DSECURITY_HARDENED=0 \
         -$MARIADB_OPTS \
         ..
 }
