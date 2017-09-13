@@ -20,7 +20,7 @@ PKG_NAME="xfsprogs"
 PKG_VERSION="v4.12.0"
 PKG_SITE="https://git.kernel.org/pub/scm/fs/xfs/xfsprogs-dev.git"
 PKG_GIT_URL="git://git.kernel.org/pub/scm/fs/xfs/xfsprogs-dev.git"
-PKG_DEPENDS_TARGET="toolchain util-linux libedit"
+PKG_DEPENDS_TARGET="toolchain util-linux readline"
 PKG_DEPENDS_INIT="xfsprogs"
 PKG_SECTION="tools"
 PKG_SHORTDESC="xfsprogs: Utilities for use with the xfs filesystem"
@@ -31,8 +31,8 @@ PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
 			      --exec-prefix=/ \
 			      --enable-shared=no \
 			      --with-gnu-ld \
-			      --enable-editline=yes \
-			      --enable-readline=no \
+			      --enable-editline=no \
+			      --enable-readline=yes \
 			      --enable-termcap=no \
 			      --enable-blkid=yes \
 			      --enable-librt=yes \

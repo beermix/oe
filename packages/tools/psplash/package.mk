@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="psplash"
-PKG_VERSION="42780c0"
+PKG_VERSION="5b3c1cc"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
