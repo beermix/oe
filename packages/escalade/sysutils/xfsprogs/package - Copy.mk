@@ -36,7 +36,8 @@ PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
 			      --enable-termcap=no \
 			      --enable-blkid=yes \
 			      --enable-librt=yes \
-			      --enable-lib64=no"
+			      --enable-lib64=no \
+			      --enable-gettext=no"
 
 pre_configure_target() {
   make configure
