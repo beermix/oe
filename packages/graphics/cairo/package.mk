@@ -18,12 +18,10 @@
 
 PKG_NAME="cairo"
 PKG_VERSION="1.14.10"
-#PKG_VERSION="1.15.8"
 PKG_ARCH="any"
 PKG_LICENSE="LGPL"
-PKG_SITE="http://cairographics.org/"
+PKG_SITE="https://www.cairographics.org/releases/?C=M;O=D"
 PKG_URL="http://cairographics.org/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
-#PKG_URL="https://cairographics.org/snapshots/cairo-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain zlib freetype fontconfig libpng pixman"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="cairo: Multi-platform 2D graphics library"
@@ -32,11 +30,11 @@ PKG_IS_ADDON="no"
 
 PKG_AUTORECONF="no"
 
-pre_configure_target() {
-  CFLAGS="$CFLAGS -fPIC -DPIC"
-  CXXFLAGS="$CXXFLAGS -fPIC -DPIC"
-  CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
-}
+#pre_configure_target() {
+#  CFLAGS="$CFLAGS -fPIC -DPIC"
+#  CXXFLAGS="$CXXFLAGS -fPIC -DPIC"
+#  CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
+#}
 
 if [ "$DISPLAYSERVER" = "x11" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libXrender libX11 mesa glu"
@@ -50,20 +48,10 @@ if [ "$DISPLAYSERVER" = "x11" ]; then
                     --disable-egl \
                     --with-x"
 
-elif [ "$DISPLAYSERVER" = "weston" ]; then
-  PKG_CAIRO_CONFIG="--disable-xlib \
-                    --disable-xlib-xrender \
-                    --disable-gl \
-                    --disable-glx \
-                    --enable-glesv2 \
-                    --enable-egl \
-                    --without-x"
-fi
-
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CAIRO_CONFIG \
                            --enable-silent-rules \
                            --enable-shared \
-                           --enable-static \
+                           --disable-static \
                            --disable-gtk-doc \
                            --enable-largefile \
                            --enable-atomic \
