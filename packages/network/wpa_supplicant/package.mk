@@ -27,7 +27,7 @@ PKG_LONGDESC="The wpa_supplicant is a free software implementation of an IEEE 80
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-GOLD_SUPPORT="yes"
+#GOLD_SUPPORT="yes"
 
 PKG_MAKE_OPTS_TARGET="-C wpa_supplicant V=1 LIBDIR=/usr/lib BINDIR=/usr/bin"
 PKG_MAKEINSTALL_OPTS_TARGET="-C wpa_supplicant V=1 LIBDIR=/usr/lib BINDIR=/usr/bin"
