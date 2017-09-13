@@ -6,8 +6,4 @@ PKG_DEPENDS_HOST="toolchain attr:host"
 PKG_SECTION="tools"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-gettext=no --disable-shared --with-pic LDFLAGS=-lattr"
-
-pre_configure_target() {
-  CFLAGS="$CFLAGS -fPIC"
-}
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared --with-pic"

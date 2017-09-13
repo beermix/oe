@@ -19,7 +19,6 @@
 
 PKG_NAME="attr"
 PKG_VERSION="2.4.47"
-PKG_SHA256="25772f653ac5b2e3ceeb89df50e4688891e21f723c460636548971652af0a859"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE=""
@@ -66,6 +65,4 @@ post_makeinstall_target() {
   cp setfattr/setfattr $INSTALL/usr/bin/
   cp getfattr/getfattr $INSTALL/usr/bin/
 }
-
-
 
