@@ -6,8 +6,6 @@ PKG_SECTION="python/system"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-GOLD_SUPPORT="yes"
-
 make_target() {
   python setup.py build --cross-compile
 }

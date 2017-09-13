@@ -16,7 +16,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 make_target() {
-  python setup.py build --cross-compile build_ext --openssl=$LIB_PREFIX
+  python setup.py build build_ext --openssl=$LIB_PREFIX
 }
 
 makeinstall_target() {
