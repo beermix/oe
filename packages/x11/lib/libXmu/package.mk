@@ -27,3 +27,5 @@ PKG_LONGDESC="LibXmu provides a set of miscellaneous utility convenience functio
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
+
+PKG_CONFIGURE_OPTS_TARGET="--without-xmlto"
