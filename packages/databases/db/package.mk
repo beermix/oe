@@ -8,10 +8,6 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC"
-}
-
 PKG_CONFIGURE_SCRIPT="dist/configure"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
@@ -22,6 +18,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-compat185 \
 			      --disable-debug \
 			      --enable-cxx \
+			      --with-pic \
 			      --disable-atomicsupport"
 
 PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"

@@ -42,11 +42,7 @@ configure_target() {
 		   -Di_db -Di_gdbm -Di_ndbm -Di_sdbm -Ui_odbm
 }
 
-make_target() {
- make && make && make
-}
-
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/share/man
-  ln -sf perl $INSTALL/usr/bin/perl${PKG_VERSION}
+  ln -sfv perl $INSTALL/bin/perl$PKG_VERSION
 }
