@@ -32,7 +32,6 @@ PKG_AUTORECONF="no"
 PKG_CONFIGURE_OPTS_TARGET="--disable-stack-for-recursion \
 			      --enable-pcre8 \
 			      --enable-pcre16 \
-			      --disable-pcre32 \
 			      --enable-jit \
 			      --enable-utf8 \
 			      --enable-unicode-properties \
