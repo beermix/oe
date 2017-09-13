@@ -148,14 +148,14 @@ post_makeinstall_target() {
   rm -rf $INSTALL/var
 
 # remove unneeded libs
-#  rm -rf $INSTALL/usr/lib/libBrokenLocale*
-#  rm -rf $INSTALL/usr/lib/libSegFault.so
-#  rm -rf $INSTALL/usr/lib/libmemusage.so
-#  rm -rf $INSTALL/usr/lib/libpcprofile.so
+  rm -rf $INSTALL/usr/lib/libBrokenLocale*
+  rm -rf $INSTALL/usr/lib/libSegFault.so
+  rm -rf $INSTALL/usr/lib/libmemusage.so
+  rm -rf $INSTALL/usr/lib/libpcprofile.so
 
 # remove ldscripts
-#  rm -rf $INSTALL/usr/lib/libc.so
-#  rm -rf $INSTALL/usr/lib/libpthread.so
+  rm -rf $INSTALL/usr/lib/libc.so
+  rm -rf $INSTALL/usr/lib/libpthread.so
 
 # remove locales and charmaps
   rm -rf $INSTALL/usr/share/i18n/charmaps
