@@ -100,7 +100,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
 
 pre_configure_target() {
 # link against librt because of undefined reference to 'clock_gettime'
-  export LIBS="-lrt -lm -pthread"
+  export LIBS="-lrt -lm -lpthread"
 }
 
 post_makeinstall_target() {
