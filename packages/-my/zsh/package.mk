@@ -6,8 +6,6 @@ PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-LTO_SUPPORT="yes"
-
 pre_configure_target() {
   export LIBS="$LIBS -lncursesw -ltinfo"
 }
