@@ -46,5 +46,4 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_c_restrict=no \
 			      --without-selinux \
 			      --with-openssl \
 			      --disable-rpath \
-			      --enable-threads=posix \
-			      --enable-install-program=dd,ls,du"
+			      --enable-threads=posix"
