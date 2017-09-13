@@ -7,7 +7,7 @@
 #  the Free Software Foundation, either version 2 of the License, or
 #  (at your option) any later version.
 #
-#  OpenELEC is distributed in the hope that it will be useful,
+#  OpenELEC is distributed in the hope that it will be useful,                           --enable-experimental-malloc --enable-stackguard-randomization \
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
@@ -43,8 +43,6 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --enable-bind-now \
                            --with-elf \
                            --enable-stack-protector=strong \
-                           --enable-experimental-malloc \
-                           --enable-stackguard-randomization \
                            --with-tls \
                            --with-__thread \
                            --with-binutils=$ROOT/$BUILD/toolchain/bin \
