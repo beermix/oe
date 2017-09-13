@@ -36,8 +36,6 @@ PKG_AUTORECONF="no"
 
 PKG_MARIADB_SERVER="no"
 
-#GOLD_SUPPORT="yes"
-
 # MariaDB Feature set. Selection of features. Options are
 # - xsmall : 
 # - small: embedded

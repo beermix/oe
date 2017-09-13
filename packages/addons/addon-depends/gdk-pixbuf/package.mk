@@ -31,9 +31,6 @@ PKG_LONGDESC="gdk-pixbuf (GdkPixbuf) is a GNOME library for image loading and ma
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-LTO_SUPPORT="no"
-GOLD_SUPPORT="no"
-
 pre_configure_target() {
   export CFLAGS="$CFLAGS -fPIC -DPIC"
   export CXXFLAGS="$CXXFLAGS -fPIC -DPIC"

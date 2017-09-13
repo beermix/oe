@@ -17,11 +17,11 @@
 ################################################################################
 
 PKG_NAME="unclutter"
-PKG_VERSION="v1.2"
+PKG_VERSION="1.09"
 PKG_ARCH="any"
 PKG_LICENSE="Public Domain"
 PKG_SITE="https://sourceforge.net/projects/unclutter/"
-PKG_GIT_URL="https://github.com/Airblader/unclutter-xfixes"
+PKG_URL="http://jaist.dl.sourceforge.net/project/unclutter/unclutter/source_$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libX11"
 PKG_SECTION="x11"
 PKG_SHORTDESC="Unclutter: Hide X11 Cursor"
@@ -30,8 +30,8 @@ PKG_LONGDESC="Unclutter runs in the background of an X11 session and after a spe
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-#LTO_SUPPORT="yes"
-#GOLD_SUPPORT="no"
+LTO_SUPPORT="yes"
+GOLD_SUPPORT="no"
 
 make_target() {
   rm -f Makefile

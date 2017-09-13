@@ -8,13 +8,11 @@ PKG_AUTORECONF="no"
 
 get_graphicdrivers
 
-LTO_SUPPORT="no"
-GOLD_SUPPORT="no"
-
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
   export LDFLAGS="$LDFLAGS -lresolv"
+  strip_lto
   strip_gold
 }
 
