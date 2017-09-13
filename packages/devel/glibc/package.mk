@@ -44,7 +44,6 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-elf \
                            --enable-stack-protector=strong \
                            --enable-experimental-malloc \
-                           --enable-hidden-plt \
                            --enable-stackguard-randomization \
                            --with-tls \
                            --with-__thread \
@@ -126,8 +125,11 @@ GLIBC_INCLUDE_BIN="getent ldd locale"
 }
 
 post_makeinstall_target() {
+# xlocale.h was renamed - create symlink for compatibility
+  ln -sf $SYSROOT_PREFIX/usr/include/bits/types/__locale_t.h $SYSROOT_PREFIX/usr/include/xlocale.h
+
 # we are linking against ld.so, so symlink
-  ln -sf $(basename $INSTALL/usr/lib/ld-*.so) $INSTALL/lib/ld.so
+  ln -sf $(basename $INSTALL/lib/ld-*.so) $INSTALL/lib/ld.so
 
 # cleanup
 # remove any programs we don't want/need, keeping only those we want
@@ -141,24 +143,14 @@ post_makeinstall_target() {
     done
     [ -n "${fb}" ] && rm -rf ${f}
   done
-
   rm -rf $INSTALL/usr/lib/audit
   rm -rf $INSTALL/usr/lib/glibc
-  rm -rf $INSTALL/usr/lib/libc_pic
   rm -rf $INSTALL/usr/lib/*.o
-  rm -rf $INSTALL/usr/lib/*.map
   rm -rf $INSTALL/var
 
 # remove locales and charmaps
   rm -rf $INSTALL/usr/share/i18n/charmaps
   rm -rf $INSTALL/usr/share/i18n/locales
-
-# add UTF-8 charmap for Generic (charmap is needed for installer)
-  if [ "$PROJECT" = "Generic" ]; then
-    mkdir -p $INSTALL/usr/share/i18n/charmaps
-    cp -PR $ROOT/$PKG_BUILD/localedata/charmaps/UTF-8 $INSTALL/usr/share/i18n/charmaps
-    gzip $INSTALL/usr/share/i18n/charmaps/UTF-8
-  fi
 
   if [ -n "$GLIBC_LOCALES" ]; then
     mkdir -p $INSTALL/usr/lib/locale
