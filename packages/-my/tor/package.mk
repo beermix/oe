@@ -5,7 +5,7 @@ PKG_DEPENDS_TARGET="toolchain openssl zlib libevent libcap"
 PKG_SECTION="security"
 PKG_AUTORECONF="yes"
 
-CROSS_COMPILE=yes
+#CROSS_COMPILE=yes
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-systemd \
 			      --disable-asciidoc \
