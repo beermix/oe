@@ -1112,7 +1112,7 @@ index 6cd65af670..fe2855fa84 100644
  msgstr "fanions privés = %x:"
  
 -#: coff-arm.c:2305 elf32-arm.c:12119
-+#: coff-arm.c:2301 elf32-arm.c:1.156
++#: coff-arm.c:2301 elf32-arm.c:14156
  #, c-format
  msgid " [floats passed in float registers]"
  msgstr " [valeurs en virgule flottante passées dans des registres de valeurs en virgule flottante]"
@@ -1124,7 +1124,7 @@ index 6cd65af670..fe2855fa84 100644
  msgstr " [valeurs en virgule flottante passées dans des registres de valeurs entières]"
  
 -#: coff-arm.c:2310 elf32-arm.c:12122
-+#: coff-arm.c:2306 elf32-arm.c:1.159
++#: coff-arm.c:2306 elf32-arm.c:14159
  #, c-format
  msgid " [position independent]"
  msgstr " [position indépendante]"
@@ -2016,7 +2016,7 @@ index 6cd65af670..fe2855fa84 100644
  msgstr "%B: aucune info de groupe pour la section %A"
  
 -#: elf.c:746 elf.c:3144 elflink.c:10290
-+#: elf.c:835 elf.c:3819 elflink.c:1.155
++#: elf.c:835 elf.c:3819 elflink.c:11155
 +#, c-format
  msgid "%B: warning: sh_link not set for section `%A'"
 -msgstr "%B: attention: sh_link n'a pas de valeur pour la section «%A»"
@@ -2691,12 +2691,12 @@ index 6cd65af670..fe2855fa84 100644
  msgid "unknown error"
  msgstr "erreur inconnue"
  
--#: elf32-arm.c:1.153
+-#: elf32-arm.c:11153
 -msgid "Warning: Clearing the interworking flag of %B because non-interworking code in %B has been linked with it"
 -msgstr "Attention: mise à zéro du fanion d'inter-réseautage %B en raison du code sans inter-réseautage dans %B lié avec lui"
 -
 -#: elf32-arm.c:11240
-+#: elf32-arm.c:1.153
++#: elf32-arm.c:13153
  msgid "%B: Unknown mandatory EABI object attribute %d"
  msgstr "%B: L'attribut d'objet EABI obligatoire %d est manquant"
  
@@ -2805,13 +2805,13 @@ index 6cd65af670..fe2855fa84 100644
  msgstr " [format flottant VFP]"
  
 -#: elf32-arm.c:12114
-+#: elf32-arm.c:1.151
++#: elf32-arm.c:14151
  #, c-format
  msgid " [Maverick float format]"
  msgstr " [format flottant Maverick]"
  
 -#: elf32-arm.c:12116
-+#: elf32-arm.c:1.153
++#: elf32-arm.c:14153
  #, c-format
  msgid " [FPA float format]"
  msgstr " [format flottant FPA]"
@@ -2840,25 +2840,25 @@ index 6cd65af670..fe2855fa84 100644
  msgid " [Version1 EABI]"
  msgstr " [Version1 EABI]"
  
--#: elf32-arm.c:12143 elf32-arm.c:1.154
+-#: elf32-arm.c:12143 elf32-arm.c:12154
 +#: elf32-arm.c:14180 elf32-arm.c:14191
  #, c-format
  msgid " [sorted symbol table]"
  msgstr " [table des symboles triés]"
  
--#: elf32-arm.c:12145 elf32-arm.c:1.156
+-#: elf32-arm.c:12145 elf32-arm.c:12156
 +#: elf32-arm.c:14182 elf32-arm.c:14193
  #, c-format
  msgid " [unsorted symbol table]"
  msgstr " [table des symboles non triés]"
  
--#: elf32-arm.c:1.151
+-#: elf32-arm.c:12151
 +#: elf32-arm.c:14188
  #, c-format
  msgid " [Version2 EABI]"
  msgstr " [Version2 EABI]"
  
--#: elf32-arm.c:1.159
+-#: elf32-arm.c:12159
 +#: elf32-arm.c:14196
  #, c-format
  msgid " [dynamic symbols use segment index]"
@@ -2938,7 +2938,7 @@ index 6cd65af670..fe2855fa84 100644
  
 -#: elf32-arm.c:12522 elf32-i386.c:1452 elf32-s390.c:1005 elf32-tic6x.c:2812
 -#: elf32-tilepro.c:1511 elf32-xtensa.c:999 elf64-s390.c:927
--#: elf64-x86-64.c:1467 elfxx-sparc.c:1.15 elfxx-tilegx.c:1728
+-#: elf64-x86-64.c:1467 elfxx-sparc.c:1415 elfxx-tilegx.c:1728
 -#: /src/binutils-gdb/bfd/elfnn-aarch64.c:5038
 +#: elf32-arm.c:14557 elf32-i386.c:2053 elf32-s390.c:956 elf32-tic6x.c:2814
 +#: elf32-tilepro.c:1491 elf32-xtensa.c:1018 elf64-s390.c:875
@@ -3020,12 +3020,12 @@ index 6cd65af670..fe2855fa84 100644
  msgid "error: %B uses FPA instructions, whereas %B does not"
  msgstr "erreur: %B utilise les instructions FPA alors que %B ne les utilise pas"
  
--#: elf32-arm.c:1.151
+-#: elf32-arm.c:16151
 +#: elf32-arm.c:19784
  msgid "error: %B uses Maverick instructions, whereas %B does not"
  msgstr "erreur: %B utilise les instructions Maverick alors que %B ne les utilise pas"
  
--#: elf32-arm.c:1.155
+-#: elf32-arm.c:16155
 +#: elf32-arm.c:19788
  msgid "error: %B does not use Maverick instructions, whereas %B does"
  msgstr "erreur: %B n'utilise pas les instructions Maverick alors que %B les utilise"
@@ -3186,7 +3186,7 @@ index 6cd65af670..fe2855fa84 100644
 +msgid "%B: invalid CRIS reloc number: %d"
 +msgstr "%B: numéro de réadressage CRIS invalide: %d"
 +
-+#: elf32-cris.c:1.15
++#: elf32-cris.c:1115
 +#, c-format
  msgid "%B, section %A: unresolvable relocation %s against symbol `%s'"
  msgstr "%B, section %A: réadressage %s non résolu sur le symbole « %s »"
@@ -3813,7 +3813,7 @@ index 6cd65af670..fe2855fa84 100644
  msgstr "liaison ip2k: instruction de page manquante à 0x%08lx (cible = 0x%08lx)."
  
 -#: elf32-ip2k.c:1308
-+#: elf32-ip2k.c:1.15
++#: elf32-ip2k.c:1315
  #, c-format
  msgid "ip2k linker: redundant page instruction at 0x%08lx (dest = 0x%08lx)."
  msgstr "liaison ip2k: instruction de page redondante à 0x%08lx (cible = 0x%08lx)."
@@ -4016,7 +4016,7 @@ index 6cd65af670..fe2855fa84 100644
  msgstr " [décalage RAM XGATE]"
  
 -#: elf32-m68k.c:1210 elf32-m68k.c:1211 vms-alpha.c:7207 vms-alpha.c:7222
-+#: elf32-m68k.c:1.15 elf32-m68k.c:1216 vms-alpha.c:7400 vms-alpha.c:7416
++#: elf32-m68k.c:1215 elf32-m68k.c:1216 vms-alpha.c:7400 vms-alpha.c:7416
  msgid "unknown"
  msgstr "inconnu"
  
@@ -10965,7 +10965,7 @@ index 6cd65af670..fe2855fa84 100644
  msgstr "Adresseur RVA"
  
 -#: peigen.c:1555 pepigen.c:1555 pex64igen.c:1555
-+#: peigen.c:1.15 pepigen.c:1.15 pex64igen.c:1.15
++#: peigen.c:1815 pepigen.c:1815 pex64igen.c:1815
  msgid "Export RVA"
  msgstr "Exportation RVA"
  
@@ -12273,7 +12273,7 @@ index f85f8cd748..4dfa007cc8 100644
 
 commit ff22155c1e315ce6058f179ec4c20ee1bd1d07bc
 Author: Andreas Krebbel <krebbel@linux.vnet.ibm.com>
-Date:   Tue Aug 1.155:38 2017 +0200
+Date:   Tue Aug 1 15:15:38 2017 +0200
 
     S/390: Fix claimfile failures
     
@@ -14675,7 +14675,7 @@ diff --git a/bfd/ChangeLog b/bfd/ChangeLog
 index f9b551557c..71e285a85d 100644
 --- a/bfd/ChangeLog
 +++ b/bfd/ChangeLog
-@@ -1,3 +1.15 @@
+@@ -1,3 +1,15 @@
 +2017-07-25  Alan Modra  <amodra@gmail.com>
 +
 +	* elf64-ppc.c (struct map_stub): Add tls_get_addr_opt_bctrl.
@@ -19953,7 +19953,7 @@ index 116998f2f7..cd1b9a2a8e 100644
 -#: iq2000-ibld.c:1016 lm32-ibld.c:824 m32c-ibld.c:3506 m32r-ibld.c:912
 -#: mep-ibld.c:2274 mt-ibld.c:1166 openrisc-ibld.c:807 xc16x-ibld.c:1190
 -#: xstormy16-ibld.c:931
-+#: epiphany-ibld.c:1.15 fr30-ibld.c:1084 frv-ibld.c:1454 ip2k-ibld.c:759
++#: epiphany-ibld.c:1315 fr30-ibld.c:1084 frv-ibld.c:1454 ip2k-ibld.c:759
 +#: iq2000-ibld.c:1022 lm32-ibld.c:830 m32c-ibld.c:3512 m32r-ibld.c:918
 +#: mep-ibld.c:2280 mt-ibld.c:1172 or1k-ibld.c:837 xc16x-ibld.c:1196
 +#: xstormy16-ibld.c:937
@@ -20174,7 +20174,7 @@ index 116998f2f7..cd1b9a2a8e 100644
 +msgid "  intel64     Display instruction in Intel64 ISA\n"
 +msgstr "  intel64       Afficher les instructions en Intel64 ISA\n"
 +
-+#: i386-dis.c:1.150
++#: i386-dis.c:13150
 +msgid "64-bit address is disabled"
 +msgstr "L’adressage 64 bits est désactivé"
 +
@@ -20201,7 +20201,7 @@ index 116998f2f7..cd1b9a2a8e 100644
  msgid "%s: %d: Missing `)' in bitfield: %s\n"
  msgstr "%s : %d : « ) » manquante dans le champ de bits : %s\n"
  
--#: i386-gen.c:1.15
+-#: i386-gen.c:1015
 +#: i386-gen.c:1179
  #, c-format
  msgid "can't find i386-opc.tbl for reading, errno = %s\n"
@@ -20851,7 +20851,7 @@ index 116998f2f7..cd1b9a2a8e 100644
  "de l’option -M :\n"
  
 -#: ppc-opc.c:887 ppc-opc.c:910 ppc-opc.c:935 ppc-opc.c:964
-+#: ppc-opc.c:992 ppc-opc.c:1.15 ppc-opc.c:1040 ppc-opc.c:1069
++#: ppc-opc.c:992 ppc-opc.c:1015 ppc-opc.c:1040 ppc-opc.c:1069
  msgid "invalid register"
  msgstr "registre invalide"
  
@@ -23757,7 +23757,7 @@ index 13c68b82ee..2535fb7091 100644
      ]
  
      run_ld_link_exec_tests [list \
-@@ -1.15,6 +1229,15 @@ if { [isnative] && [which $CC] != 0 } {
+@@ -1215,6 +1229,15 @@ if { [isnative] && [which $CC] != 0 } {
  	    {property-x86-2.S property-x86-1.S pass.c property-stack.S} \
  	    "property-5-static" "pass.out" \
  	] \
@@ -25412,7 +25412,7 @@ diff --git a/binutils/readelf.c b/binutils/readelf.c
 index 9349662197..fb16df8e2a 100644
 --- a/binutils/readelf.c
 +++ b/binutils/readelf.c
-@@ -1.153,9 +1.153,8 @@ process_version_sections (FILE * file)
+@@ -10153,9 +10153,8 @@ process_version_sections (FILE * file)
  	case SHT_GNU_verdef:
  	  {
  	    Elf_External_Verdef * edefs;
@@ -25695,6 +25695,1424 @@ index 176dfa6f4e..c6d32a485f 100644
 @@ -1,4 +1,4 @@
 -#define BFD_VERSION_DATE 20170907
 +#define BFD_VERSION_DATE 20170908
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit fe41779b563773586203b2e2bd21d28670c22b9c
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sat Sep 9 00:01:49 2017 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index c6d32a485f..5bc5ca2e7a 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20170908
++#define BFD_VERSION_DATE 20170909
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit bb0216e26681531bf967a6a3f1800789ade3693d
+Author: H.J. Lu <hjl.tools@gmail.com>
+Date:   Mon Aug 28 11:25:58 2017 -0700
+
+    x86: Check for valid PLT section size
+    
+    Update x86 get_synthetic_symtab to check for valid PLT section size
+    before examining PLT section contents.
+    
+            PR binutils/22018
+            * elf32-i386.c (elf_i386_get_synthetic_symtab): Check for valid
+            PLT section size.
+            * elf64-x86-64.c (elf_x86_64_get_synthetic_symtab): Likewise.
+    
+    (cherry picked from commit 90efb6422939ca031804266fba669f77c22a274a)
+
+diff --git a/bfd/ChangeLog b/bfd/ChangeLog
+index fc93decfae..a78e8192ae 100644
+--- a/bfd/ChangeLog
++++ b/bfd/ChangeLog
+@@ -1,3 +1,10 @@
++2017-09-09  H.J. Lu  <hongjiu.lu@intel.com>
++
++	PR binutils/22018
++	* elf32-i386.c (elf_i386_get_synthetic_symtab): Check for valid
++	PLT section size.
++	* elf64-x86-64.c (elf_x86_64_get_synthetic_symtab): Likewise.
++
+ 2017-09-05  Nick Clifton  <nickc@redhat.com>
+ 
+ 	Import from mainline:
+diff --git a/bfd/elf32-i386.c b/bfd/elf32-i386.c
+index c123f122c3..00a6397913 100644
+--- a/bfd/elf32-i386.c
++++ b/bfd/elf32-i386.c
+@@ -6372,7 +6372,7 @@ elf_i386_get_synthetic_symtab (bfd *abfd,
+   for (j = 0; plts[j].name != NULL; j++)
+     {
+       plt = bfd_get_section_by_name (abfd, plts[j].name);
+-      if (plt == NULL)
++      if (plt == NULL || plt->size == 0)
+ 	continue;
+ 
+       /* Get the PLT section contents.  */
+@@ -6388,7 +6388,9 @@ elf_i386_get_synthetic_symtab (bfd *abfd,
+ 
+       /* Check what kind of PLT it is.  */
+       plt_type = plt_unknown;
+-      if (plts[j].type == plt_unknown)
++      if (plts[j].type == plt_unknown
++	  && (plt->size >= (lazy_plt->plt0_entry_size
++			    + lazy_plt->plt_entry_size)))
+ 	{
+ 	  /* Match lazy PLT first.  */
+ 	  if (memcmp (plt_contents, lazy_plt->plt0_entry,
+@@ -6397,7 +6399,7 @@ elf_i386_get_synthetic_symtab (bfd *abfd,
+ 	      /* The fist entry in the lazy IBT PLT is the same as the
+ 		 normal lazy PLT.  */
+ 	      if (lazy_ibt_plt != NULL
+-		  && (memcmp (plt_contents + lazy_ibt_plt->plt_entry_size,
++		  && (memcmp (plt_contents + lazy_ibt_plt->plt0_entry_size,
+ 			      lazy_ibt_plt->plt_entry,
+ 			      lazy_ibt_plt->plt_got_offset) == 0))
+ 		plt_type = plt_lazy | plt_second;
+@@ -6410,7 +6412,7 @@ elf_i386_get_synthetic_symtab (bfd *abfd,
+ 	      /* The fist entry in the PIC lazy IBT PLT is the same as
+ 		 the normal PIC lazy PLT.  */
+ 	      if (lazy_ibt_plt != NULL
+-		  && (memcmp (plt_contents + lazy_ibt_plt->plt_entry_size,
++		  && (memcmp (plt_contents + lazy_ibt_plt->plt0_entry_size,
+ 			      lazy_ibt_plt->pic_plt_entry,
+ 			      lazy_ibt_plt->plt_got_offset) == 0))
+ 		plt_type = plt_lazy | plt_pic | plt_second;
+@@ -6420,7 +6422,8 @@ elf_i386_get_synthetic_symtab (bfd *abfd,
+ 	}
+ 
+       if (non_lazy_plt != NULL
+-	  && (plt_type == plt_unknown || plt_type == plt_non_lazy))
++	  && (plt_type == plt_unknown || plt_type == plt_non_lazy)
++	  && plt->size >= non_lazy_plt->plt_entry_size)
+ 	{
+ 	  /* Match non-lazy PLT.  */
+ 	  if (memcmp (plt_contents, non_lazy_plt->plt_entry,
+@@ -6432,7 +6435,8 @@ elf_i386_get_synthetic_symtab (bfd *abfd,
+ 	}
+ 
+       if ((non_lazy_ibt_plt != NULL)
+-	  && (plt_type == plt_unknown || plt_type == plt_second))
++	  && (plt_type == plt_unknown || plt_type == plt_second)
++	  && plt->size >= non_lazy_ibt_plt->plt_entry_size)
+ 	{
+ 	  if (memcmp (plt_contents,
+ 		      non_lazy_ibt_plt->plt_entry,
+@@ -6490,6 +6494,9 @@ elf_i386_get_synthetic_symtab (bfd *abfd,
+ 	got_addr = (bfd_vma) -1;
+     }
+ 
++  if (count == 0)
++    return -1;
++
+   size = count * sizeof (asymbol);
+   s = *ret = (asymbol *) bfd_zmalloc (size);
+   if (s == NULL)
+diff --git a/bfd/elf64-x86-64.c b/bfd/elf64-x86-64.c
+index c59b8c015b..6bc1898a96 100644
+--- a/bfd/elf64-x86-64.c
++++ b/bfd/elf64-x86-64.c
+@@ -6752,7 +6752,7 @@ elf_x86_64_get_synthetic_symtab (bfd *abfd,
+   for (j = 0; plts[j].name != NULL; j++)
+     {
+       plt = bfd_get_section_by_name (abfd, plts[j].name);
+-      if (plt == NULL)
++      if (plt == NULL || plt->size == 0)
+ 	continue;
+ 
+       /* Get the PLT section contents.  */
+@@ -6768,7 +6768,9 @@ elf_x86_64_get_synthetic_symtab (bfd *abfd,
+ 
+       /* Check what kind of PLT it is.  */
+       plt_type = plt_unknown;
+-      if (plts[j].type == plt_unknown)
++      if (plts[j].type == plt_unknown
++	  && (plt->size >= (lazy_plt->plt_entry_size
++			    + lazy_plt->plt_entry_size)))
+ 	{
+ 	  /* Match lazy PLT first.  Need to check the first two
+ 	     instructions.   */
+@@ -6796,7 +6798,8 @@ elf_x86_64_get_synthetic_symtab (bfd *abfd,
+ 	}
+ 
+       if (non_lazy_plt != NULL
+-	  && (plt_type == plt_unknown || plt_type == plt_non_lazy))
++	  && (plt_type == plt_unknown || plt_type == plt_non_lazy)
++	  && plt->size >= non_lazy_plt->plt_entry_size)
+ 	{
+ 	  /* Match non-lazy PLT.  */
+ 	  if (memcmp (plt_contents, non_lazy_plt->plt_entry,
+@@ -6807,6 +6810,7 @@ elf_x86_64_get_synthetic_symtab (bfd *abfd,
+       if (plt_type == plt_unknown || plt_type == plt_second)
+ 	{
+ 	  if (non_lazy_bnd_plt != NULL
++	      && plt->size >= non_lazy_bnd_plt->plt_entry_size
+ 	      && (memcmp (plt_contents, non_lazy_bnd_plt->plt_entry,
+ 			  non_lazy_bnd_plt->plt_got_offset) == 0))
+ 	    {
+@@ -6815,6 +6819,7 @@ elf_x86_64_get_synthetic_symtab (bfd *abfd,
+ 	      non_lazy_plt = non_lazy_bnd_plt;
+ 	    }
+ 	  else if (non_lazy_ibt_plt != NULL
++		   && plt->size >= non_lazy_ibt_plt->plt_entry_size
+ 		   && (memcmp (plt_contents,
+ 			       non_lazy_ibt_plt->plt_entry,
+ 			       non_lazy_ibt_plt->plt_got_offset) == 0))
+@@ -6860,6 +6865,9 @@ elf_x86_64_get_synthetic_symtab (bfd *abfd,
+       plts[j].contents = plt_contents;
+     }
+ 
++  if (count == 0)
++    return -1;
++
+   size = count * sizeof (asymbol);
+   s = *ret = (asymbol *) bfd_zmalloc (size);
+   if (s == NULL)
+
+commit 21ac70934525c0d380895e4a6ac0fa0d4481a705
+Author: H.J. Lu <hjl.tools@gmail.com>
+Date:   Sat Sep 9 05:31:30 2017 -0700
+
+    x86: Remove restriction on NOTRACK prefix position
+    
+    Since the NOTRACK prefix is no longer required to be the last prefix
+    before the REX prefix, restriction on the NOTRACK prefix position is
+    removed from assembler as well as disassembler.  Assembler encodes the
+    NOTRACK prefix the same way as the DS segment register, which places
+    it before other prefixes.  Disassembler displays prefixes in the order
+    they appear.
+    
+    gas/
+    
+            * config/tc-i386.c (NOTRACK_PREFIX): Removed.
+            (REX_PREFIX): Updated.
+            (MAX_PREFIXES): Likewise.
+            (parse_insn): Remove restriction on NOTRACK prefix position.
+            * testsuite/gas/i386/notrack.s: Add tests with NOTRACK prefix
+            before other prefixes.
+            * testsuite/gas/i386/x86-64-notrack.s: Likewise.
+            * testsuite/gas/i386/notrackbad.s: Remove tests with NOTRACK
+            prefix before other prefixes.
+            * testsuite/gas/i386/x86-64-notrackbad.s: Likewise.
+            * testsuite/gas/i386/notrack-intel.d: Updated.
+            * testsuite/gas/i386/notrack.d: Likewise.
+            * testsuite/gas/i386/notrackbad.l: Likewise.
+            * testsuite/gas/i386/x86-64-notrack-intel.d: Likewise.
+            * testsuite/gas/i386/x86-64-notrack.d: Likewise.
+            * testsuite/gas/i386/x86-64-notrackbad.l: Likewise.
+    
+    opcodes/
+    
+            * i386-dis.c (last_active_prefix): Removed.
+            (ckprefix): Don't set last_active_prefix.
+            (NOTRACK_Fixup): Don't check last_active_prefix.
+    
+    (cherry picked from commit 4e9ac44a8925c7da81735ef24beb5456a0c0fa24)
+
+diff --git a/gas/ChangeLog b/gas/ChangeLog
+index 84aad433e2..3dbac8c3ab 100644
+--- a/gas/ChangeLog
++++ b/gas/ChangeLog
+@@ -1,3 +1,22 @@
++2017-09-09  H.J. Lu  <hongjiu.lu@intel.com>
++
++	* config/tc-i386.c (NOTRACK_PREFIX): Removed.
++	(REX_PREFIX): Updated.
++	(MAX_PREFIXES): Likewise.
++	(parse_insn): Remove restriction on NOTRACK prefix position.
++	* testsuite/gas/i386/notrack.s: Add tests with NOTRACK prefix
++	before other prefixes.
++	* testsuite/gas/i386/x86-64-notrack.s: Likewise.
++	* testsuite/gas/i386/notrackbad.s: Remove tests with NOTRACK
++	prefix before other prefixes.
++	* testsuite/gas/i386/x86-64-notrackbad.s: Likewise.
++	* testsuite/gas/i386/notrack-intel.d: Updated.
++	* testsuite/gas/i386/notrack.d: Likewise.
++	* testsuite/gas/i386/notrackbad.l: Likewise.
++	* testsuite/gas/i386/x86-64-notrack-intel.d: Likewise.
++	* testsuite/gas/i386/x86-64-notrack.d: Likewise.
++	* testsuite/gas/i386/x86-64-notrackbad.l: Likewise.
++
+ 2017-08-30  Maciej W. Rozycki  <macro@imgtec.com>
+ 
+ 	* testsuite/gas/mips/branch-addend-micromips.d: New test.
+diff --git a/gas/config/tc-i386.c b/gas/config/tc-i386.c
+index 456be9e07c..fdff30153d 100644
+--- a/gas/config/tc-i386.c
++++ b/gas/config/tc-i386.c
+@@ -66,11 +66,8 @@
+ #define HLE_PREFIX	REP_PREFIX
+ #define BND_PREFIX	REP_PREFIX
+ #define LOCK_PREFIX	5
+-/* Only one of NOTRACK_PREFIX and SEG_PREFIX can be used at the same
+-   time.  */
+-#define NOTRACK_PREFIX	6
+-#define REX_PREFIX	7       /* must come last.  */
+-#define MAX_PREFIXES	8	/* max prefixes per opcode */
++#define REX_PREFIX	6       /* must come last.  */
++#define MAX_PREFIXES	7	/* max prefixes per opcode */
+ 
+ /* we define the syntax here (modulo base,index,scale syntax) */
+ #define REGISTER_PREFIX '%'
+@@ -3978,42 +3975,24 @@ parse_insn (char *line, char *mnemonic)
+ 	  else
+ 	    {
+ 	      /* Add prefix, checking for repeated prefixes.  */
+-	      enum PREFIX_GROUP p
+-		= add_prefix (current_templates->start->base_opcode);
+-	      if (p == PREFIX_DS
+-		  && current_templates->start->cpu_flags.bitfield.cpucet)
++	      switch (add_prefix (current_templates->start->base_opcode))
+ 		{
+-		  i.notrack_prefix = current_templates->start->name;
+-		  /* Move NOTRACK_PREFIX_OPCODE to NOTRACK_PREFIX slot so
+-		     that it is placed before others.  */
+-		  i.prefix[SEG_PREFIX] = 0;
+-		  i.prefix[NOTRACK_PREFIX] = NOTRACK_PREFIX_OPCODE;
+-		}
+-	      else
+-		{
+-		  switch (p)
+-		    {
+-		    case PREFIX_EXIST:
+-		      return NULL;
+-		    case PREFIX_REP:
+-		      if (current_templates->start->cpu_flags.bitfield.cpuhle)
+-			i.hle_prefix = current_templates->start->name;
+-		      else if (current_templates->start->cpu_flags.bitfield.cpumpx)
+-			i.bnd_prefix = current_templates->start->name;
+-		      else
+-			i.rep_prefix = current_templates->start->name;
+-		      break;
+-		    default:
+-		      break;
+-		    }
+-
+-		  if (i.notrack_prefix != NULL)
+-		    {
+-		      /* There must be no other prefixes after NOTRACK
+-			 prefix.  */
+-		      as_bad (_("expecting no other prefixes after `notrack'"));
+-		      return NULL;
+-		    }
++		case PREFIX_EXIST:
++		  return NULL;
++		case PREFIX_DS:
++		  if (current_templates->start->cpu_flags.bitfield.cpucet)
++		    i.notrack_prefix = current_templates->start->name;
++		  break;
++		case PREFIX_REP:
++		  if (current_templates->start->cpu_flags.bitfield.cpuhle)
++		    i.hle_prefix = current_templates->start->name;
++		  else if (current_templates->start->cpu_flags.bitfield.cpumpx)
++		    i.bnd_prefix = current_templates->start->name;
++		  else
++		    i.rep_prefix = current_templates->start->name;
++		  break;
++		default:
++		  break;
+ 		}
+ 	    }
+ 	  /* Skip past PREFIX_SEPARATOR and reset token_start.  */
+diff --git a/gas/testsuite/gas/i386/notrack-intel.d b/gas/testsuite/gas/i386/notrack-intel.d
+index 2ab6a8a7f8..7b72a39fd7 100644
+--- a/gas/testsuite/gas/i386/notrack-intel.d
++++ b/gas/testsuite/gas/i386/notrack-intel.d
+@@ -9,37 +9,45 @@ Disassembly of section .text:
+ 
+ 0+ <_start>:
+ [ 	]*[a-f0-9]+:	3e ff d0             	notrack call eax
+-[ 	]*[a-f0-9]+:	66 3e ff d0          	notrack call ax
++[ 	]*[a-f0-9]+:	3e 66 ff d0          	notrack call ax
+ [ 	]*[a-f0-9]+:	3e ff e0             	notrack jmp eax
+-[ 	]*[a-f0-9]+:	66 3e ff e0          	notrack jmp ax
++[ 	]*[a-f0-9]+:	3e 66 ff e0          	notrack jmp ax
+ [ 	]*[a-f0-9]+:	3e ff 10             	notrack call DWORD PTR \[eax\]
+-[ 	]*[a-f0-9]+:	66 3e ff 10          	notrack call WORD PTR \[eax\]
++[ 	]*[a-f0-9]+:	3e 66 ff 10          	notrack call WORD PTR \[eax\]
+ [ 	]*[a-f0-9]+:	3e ff 20             	notrack jmp DWORD PTR \[eax\]
+-[ 	]*[a-f0-9]+:	66 3e ff 20          	notrack jmp WORD PTR \[eax\]
+-[ 	]*[a-f0-9]+:	f2 3e ff d0          	bnd notrack call eax
+-[ 	]*[a-f0-9]+:	66 f2 3e ff d0       	bnd notrack call ax
+-[ 	]*[a-f0-9]+:	f2 3e ff e0          	bnd notrack jmp eax
+-[ 	]*[a-f0-9]+:	66 f2 3e ff e0       	bnd notrack jmp ax
+-[ 	]*[a-f0-9]+:	f2 3e ff 10          	bnd notrack call DWORD PTR \[eax\]
+-[ 	]*[a-f0-9]+:	66 f2 3e ff 10       	bnd notrack call WORD PTR \[eax\]
+-[ 	]*[a-f0-9]+:	f2 3e ff 20          	bnd notrack jmp DWORD PTR \[eax\]
+-[ 	]*[a-f0-9]+:	66 f2 3e ff 20       	bnd notrack jmp WORD PTR \[eax\]
++[ 	]*[a-f0-9]+:	3e 66 ff 20          	notrack jmp WORD PTR \[eax\]
++[ 	]*[a-f0-9]+:	3e f2 ff d0          	notrack bnd call eax
++[ 	]*[a-f0-9]+:	3e 66 f2 ff d0       	notrack bnd call ax
++[ 	]*[a-f0-9]+:	3e f2 ff e0          	notrack bnd jmp eax
++[ 	]*[a-f0-9]+:	3e 66 f2 ff e0       	notrack bnd jmp ax
++[ 	]*[a-f0-9]+:	3e f2 ff 10          	notrack bnd call DWORD PTR \[eax\]
++[ 	]*[a-f0-9]+:	3e 66 f2 ff 10       	notrack bnd call WORD PTR \[eax\]
++[ 	]*[a-f0-9]+:	3e f2 ff 20          	notrack bnd jmp DWORD PTR \[eax\]
++[ 	]*[a-f0-9]+:	3e 66 f2 ff 20       	notrack bnd jmp WORD PTR \[eax\]
++[ 	]*[a-f0-9]+:	3e f2 ff d0          	notrack bnd call eax
++[ 	]*[a-f0-9]+:	3e 66 f2 ff d0       	notrack bnd call ax
++[ 	]*[a-f0-9]+:	3e f2 ff 10          	notrack bnd call DWORD PTR \[eax\]
++[ 	]*[a-f0-9]+:	3e 66 f2 ff 10       	notrack bnd call WORD PTR \[eax\]
+ [ 	]*[a-f0-9]+:	3e ff d0             	notrack call eax
+-[ 	]*[a-f0-9]+:	66 3e ff d0          	notrack call ax
++[ 	]*[a-f0-9]+:	3e 66 ff d0          	notrack call ax
+ [ 	]*[a-f0-9]+:	3e ff e0             	notrack jmp eax
+-[ 	]*[a-f0-9]+:	66 3e ff e0          	notrack jmp ax
++[ 	]*[a-f0-9]+:	3e 66 ff e0          	notrack jmp ax
+ [ 	]*[a-f0-9]+:	3e ff 10             	notrack call DWORD PTR \[eax\]
+-[ 	]*[a-f0-9]+:	66 3e ff 10          	notrack call WORD PTR \[eax\]
++[ 	]*[a-f0-9]+:	3e 66 ff 10          	notrack call WORD PTR \[eax\]
+ [ 	]*[a-f0-9]+:	3e ff 20             	notrack jmp DWORD PTR \[eax\]
+-[ 	]*[a-f0-9]+:	66 3e ff 20          	notrack jmp WORD PTR \[eax\]
++[ 	]*[a-f0-9]+:	3e 66 ff 20          	notrack jmp WORD PTR \[eax\]
++[ 	]*[a-f0-9]+:	3e f2 ff d0          	notrack bnd call eax
++[ 	]*[a-f0-9]+:	3e 66 f2 ff d0       	notrack bnd call ax
++[ 	]*[a-f0-9]+:	3e f2 ff e0          	notrack bnd jmp eax
++[ 	]*[a-f0-9]+:	3e 66 f2 ff e0       	notrack bnd jmp ax
++[ 	]*[a-f0-9]+:	3e f2 ff 10          	notrack bnd call DWORD PTR \[eax\]
++[ 	]*[a-f0-9]+:	3e 66 f2 ff 10       	notrack bnd call WORD PTR \[eax\]
++[ 	]*[a-f0-9]+:	3e f2 ff 20          	notrack bnd jmp DWORD PTR \[eax\]
++[ 	]*[a-f0-9]+:	3e 66 f2 ff 20       	notrack bnd jmp WORD PTR \[eax\]
++[ 	]*[a-f0-9]+:	3e f2 ff d0          	notrack bnd call eax
++[ 	]*[a-f0-9]+:	3e 66 f2 ff d0       	notrack bnd call ax
++[ 	]*[a-f0-9]+:	3e f2 ff 10          	notrack bnd call DWORD PTR \[eax\]
++[ 	]*[a-f0-9]+:	3e 66 f2 ff 10       	notrack bnd call WORD PTR \[eax\]
+ [ 	]*[a-f0-9]+:	f2 3e ff d0          	bnd notrack call eax
+-[ 	]*[a-f0-9]+:	66 f2 3e ff d0       	bnd notrack call ax
+-[ 	]*[a-f0-9]+:	f2 3e ff e0          	bnd notrack jmp eax
+-[ 	]*[a-f0-9]+:	66 f2 3e ff e0       	bnd notrack jmp ax
+-[ 	]*[a-f0-9]+:	f2 3e ff 10          	bnd notrack call DWORD PTR \[eax\]
+-[ 	]*[a-f0-9]+:	66 f2 3e ff 10       	bnd notrack call WORD PTR \[eax\]
+-[ 	]*[a-f0-9]+:	f2 3e ff 20          	bnd notrack jmp DWORD PTR \[eax\]
+-[ 	]*[a-f0-9]+:	66 f2 3e ff 20       	bnd notrack jmp WORD PTR \[eax\]
+-[ 	]*[a-f0-9]+:	3e f2 ff d0          	ds bnd call eax
+-[ 	]*[a-f0-9]+:	3e 66 ff d0          	ds call ax
++[ 	]*[a-f0-9]+:	66 3e ff d0          	notrack call ax
+ #pass
+diff --git a/gas/testsuite/gas/i386/notrack.d b/gas/testsuite/gas/i386/notrack.d
+index 11d0ce9e15..44fd11036e 100644
+--- a/gas/testsuite/gas/i386/notrack.d
++++ b/gas/testsuite/gas/i386/notrack.d
+@@ -8,37 +8,45 @@ Disassembly of section .text:
+ 
+ 0+ <_start>:
+ [ 	]*[a-f0-9]+:	3e ff d0             	notrack call \*%eax
+-[ 	]*[a-f0-9]+:	66 3e ff d0          	notrack callw \*%ax
++[ 	]*[a-f0-9]+:	3e 66 ff d0          	notrack callw \*%ax
+ [ 	]*[a-f0-9]+:	3e ff e0             	notrack jmp \*%eax
+-[ 	]*[a-f0-9]+:	66 3e ff e0          	notrack jmpw \*%ax
++[ 	]*[a-f0-9]+:	3e 66 ff e0          	notrack jmpw \*%ax
+ [ 	]*[a-f0-9]+:	3e ff 10             	notrack call \*\(%eax\)
+-[ 	]*[a-f0-9]+:	66 3e ff 10          	notrack callw \*\(%eax\)
++[ 	]*[a-f0-9]+:	3e 66 ff 10          	notrack callw \*\(%eax\)
+ [ 	]*[a-f0-9]+:	3e ff 20             	notrack jmp \*\(%eax\)
+-[ 	]*[a-f0-9]+:	66 3e ff 20          	notrack jmpw \*\(%eax\)
+-[ 	]*[a-f0-9]+:	f2 3e ff d0          	bnd notrack call \*%eax
+-[ 	]*[a-f0-9]+:	66 f2 3e ff d0       	bnd notrack callw \*%ax
+-[ 	]*[a-f0-9]+:	f2 3e ff e0          	bnd notrack jmp \*%eax
+-[ 	]*[a-f0-9]+:	66 f2 3e ff e0       	bnd notrack jmpw \*%ax
+-[ 	]*[a-f0-9]+:	f2 3e ff 10          	bnd notrack call \*\(%eax\)
+-[ 	]*[a-f0-9]+:	66 f2 3e ff 10       	bnd notrack callw \*\(%eax\)
+-[ 	]*[a-f0-9]+:	f2 3e ff 20          	bnd notrack jmp \*\(%eax\)
+-[ 	]*[a-f0-9]+:	66 f2 3e ff 20       	bnd notrack jmpw \*\(%eax\)
++[ 	]*[a-f0-9]+:	3e 66 ff 20          	notrack jmpw \*\(%eax\)
++[ 	]*[a-f0-9]+:	3e f2 ff d0          	notrack bnd call \*%eax
++[ 	]*[a-f0-9]+:	3e 66 f2 ff d0       	notrack bnd callw \*%ax
++[ 	]*[a-f0-9]+:	3e f2 ff e0          	notrack bnd jmp \*%eax
++[ 	]*[a-f0-9]+:	3e 66 f2 ff e0       	notrack bnd jmpw \*%ax
++[ 	]*[a-f0-9]+:	3e f2 ff 10          	notrack bnd call \*\(%eax\)
++[ 	]*[a-f0-9]+:	3e 66 f2 ff 10       	notrack bnd callw \*\(%eax\)
++[ 	]*[a-f0-9]+:	3e f2 ff 20          	notrack bnd jmp \*\(%eax\)
++[ 	]*[a-f0-9]+:	3e 66 f2 ff 20       	notrack bnd jmpw \*\(%eax\)
++[ 	]*[a-f0-9]+:	3e f2 ff d0          	notrack bnd call \*%eax
++[ 	]*[a-f0-9]+:	3e 66 f2 ff d0       	notrack bnd callw \*%ax
++[ 	]*[a-f0-9]+:	3e f2 ff 10          	notrack bnd call \*\(%eax\)
++[ 	]*[a-f0-9]+:	3e 66 f2 ff 10       	notrack bnd callw \*\(%eax\)
+ [ 	]*[a-f0-9]+:	3e ff d0             	notrack call \*%eax
+-[ 	]*[a-f0-9]+:	66 3e ff d0          	notrack callw \*%ax
++[ 	]*[a-f0-9]+:	3e 66 ff d0          	notrack callw \*%ax
+ [ 	]*[a-f0-9]+:	3e ff e0             	notrack jmp \*%eax
+-[ 	]*[a-f0-9]+:	66 3e ff e0          	notrack jmpw \*%ax
++[ 	]*[a-f0-9]+:	3e 66 ff e0          	notrack jmpw \*%ax
+ [ 	]*[a-f0-9]+:	3e ff 10             	notrack call \*\(%eax\)
+-[ 	]*[a-f0-9]+:	66 3e ff 10          	notrack callw \*\(%eax\)
++[ 	]*[a-f0-9]+:	3e 66 ff 10          	notrack callw \*\(%eax\)
+ [ 	]*[a-f0-9]+:	3e ff 20             	notrack jmp \*\(%eax\)
+-[ 	]*[a-f0-9]+:	66 3e ff 20          	notrack jmpw \*\(%eax\)
++[ 	]*[a-f0-9]+:	3e 66 ff 20          	notrack jmpw \*\(%eax\)
++[ 	]*[a-f0-9]+:	3e f2 ff d0          	notrack bnd call \*%eax
++[ 	]*[a-f0-9]+:	3e 66 f2 ff d0       	notrack bnd callw \*%ax
++[ 	]*[a-f0-9]+:	3e f2 ff e0          	notrack bnd jmp \*%eax
++[ 	]*[a-f0-9]+:	3e 66 f2 ff e0       	notrack bnd jmpw \*%ax
++[ 	]*[a-f0-9]+:	3e f2 ff 10          	notrack bnd call \*\(%eax\)
++[ 	]*[a-f0-9]+:	3e 66 f2 ff 10       	notrack bnd callw \*\(%eax\)
++[ 	]*[a-f0-9]+:	3e f2 ff 20          	notrack bnd jmp \*\(%eax\)
++[ 	]*[a-f0-9]+:	3e 66 f2 ff 20       	notrack bnd jmpw \*\(%eax\)
++[ 	]*[a-f0-9]+:	3e f2 ff d0          	notrack bnd call \*%eax
++[ 	]*[a-f0-9]+:	3e 66 f2 ff d0       	notrack bnd callw \*%ax
++[ 	]*[a-f0-9]+:	3e f2 ff 10          	notrack bnd call \*\(%eax\)
++[ 	]*[a-f0-9]+:	3e 66 f2 ff 10       	notrack bnd callw \*\(%eax\)
+ [ 	]*[a-f0-9]+:	f2 3e ff d0          	bnd notrack call \*%eax
+-[ 	]*[a-f0-9]+:	66 f2 3e ff d0       	bnd notrack callw \*%ax
+-[ 	]*[a-f0-9]+:	f2 3e ff e0          	bnd notrack jmp \*%eax
+-[ 	]*[a-f0-9]+:	66 f2 3e ff e0       	bnd notrack jmpw \*%ax
+-[ 	]*[a-f0-9]+:	f2 3e ff 10          	bnd notrack call \*\(%eax\)
+-[ 	]*[a-f0-9]+:	66 f2 3e ff 10       	bnd notrack callw \*\(%eax\)
+-[ 	]*[a-f0-9]+:	f2 3e ff 20          	bnd notrack jmp \*\(%eax\)
+-[ 	]*[a-f0-9]+:	66 f2 3e ff 20       	bnd notrack jmpw \*\(%eax\)
+-[ 	]*[a-f0-9]+:	3e f2 ff d0          	ds bnd call \*%eax
+-[ 	]*[a-f0-9]+:	3e 66 ff d0          	ds callw \*%ax
++[ 	]*[a-f0-9]+:	66 3e ff d0          	notrack callw \*%ax
+ #pass
+diff --git a/gas/testsuite/gas/i386/notrack.s b/gas/testsuite/gas/i386/notrack.s
+index 8383645b01..e6db928fee 100644
+--- a/gas/testsuite/gas/i386/notrack.s
++++ b/gas/testsuite/gas/i386/notrack.s
+@@ -13,15 +13,20 @@ _start:
+ 	notrack jmp *(%eax)
+ 	notrack jmpw *(%eax)
+ 
++	notrack bnd call *%eax
++	notrack bnd call *%ax
++	notrack bnd jmp *%eax
++	notrack bnd jmp *%ax
++
++	notrack bnd call *(%eax)
++	notrack bnd callw *(%eax)
++	notrack bnd jmp *(%eax)
++	notrack bnd jmpw *(%eax)
++
+ 	bnd notrack call *%eax
+ 	bnd notrack call *%ax
+-	bnd notrack jmp *%eax
+-	bnd notrack jmp *%ax
+-
+ 	bnd notrack call *(%eax)
+ 	bnd notrack callw *(%eax)
+-	bnd notrack jmp *(%eax)
+-	bnd notrack jmpw *(%eax)
+ 
+ 	.intel_syntax noprefix
+ 	notrack call eax
+@@ -34,24 +39,29 @@ _start:
+ 	notrack jmp DWORD PTR [eax]
+ 	notrack jmp WORD PTR [eax]
+ 
++	notrack bnd call eax
++	notrack bnd call ax
++	notrack bnd jmp eax
++	notrack bnd jmp ax
++
++	notrack bnd call DWORD PTR [eax]
++	notrack bnd call WORD PTR [eax]
++	notrack bnd jmp DWORD PTR [eax]
++	notrack bnd jmp WORD PTR [eax]
++
+ 	bnd notrack call eax
+ 	bnd notrack call ax
+-	bnd notrack jmp eax
+-	bnd notrack jmp ax
+-
+ 	bnd notrack call DWORD PTR [eax]
+ 	bnd notrack call WORD PTR [eax]
+-	bnd notrack jmp DWORD PTR [eax]
+-	bnd notrack jmp WORD PTR [eax]
+ 
+-	# ds bnd call *%eax
+-	.byte 0x3e
++	# bnd notrack call *%eax
+ 	.byte 0xf2
++	.byte 0x3e
+ 	.byte 0xff
+ 	.byte 0xd0
+ 
+-	# ds callw *%ax
+-	.byte 0x3e
++	# notrack callw *%ax
+ 	.byte 0x66
++	.byte 0x3e
+ 	.byte 0xff
+ 	.byte 0xd0
+diff --git a/gas/testsuite/gas/i386/notrackbad.l b/gas/testsuite/gas/i386/notrackbad.l
+index 48ee69f96a..2271a92bf6 100644
+--- a/gas/testsuite/gas/i386/notrackbad.l
++++ b/gas/testsuite/gas/i386/notrackbad.l
+@@ -2,15 +2,10 @@
+ .*:6: Error: expecting indirect branch instruction after `notrack'
+ .*:6: Warning: skipping prefixes on this instruction
+ .*:7: Error: expecting indirect branch instruction after `notrack'
+-.*:7: Warning: skipping prefixes on this instruction
+ .*:9: Error: same type of prefix used twice
+-.*:10: Error: expecting no other prefixes after `notrack'
+-.*:11: Error: expecting no other prefixes after `notrack'
+-.*:12: Error: expecting no other prefixes after `notrack'
+-.*:15: Error: same type of prefix used twice
+-.*:16: Error: expecting no other prefixes after `notrack'
+-.*:17: Error: expecting no other prefixes after `notrack'
+-.*:18: Error: expecting no other prefixes after `notrack'
++.*:10: Error: same type of prefix used twice
++.*:13: Error: same type of prefix used twice
++.*:14: Error: same type of prefix used twice
+ GAS LISTING .*
+ 
+ 
+@@ -25,17 +20,12 @@ GAS LISTING .*
+ [ 	]*6[ 	]+[0-9A-F]*
+ [ 	]*7[ 	]+\?\?\?\? [0-9A-F]* 		notrack jmp foo
+ \*\*\*\*  Error: expecting indirect branch instruction after `notrack'
+-\*\*\*\*  Warning: skipping prefixes on this instruction
+ [ 	]*7[ 	]+[0-9A-F]*
+ [ 	]*8[ 	]+
+ [ 	]*9[ 	]+fs notrack call \*%eax
+ [ 	]*10[ 	]+notrack fs call \*%eax
+-[ 	]*11[ 	]+notrack bnd call \*%eax
+-[ 	]*12[ 	]+notrack data16 call \*%eax
+-[ 	]*13[ 	]+
+-[ 	]*14[ 	]+\.intel_syntax noprefix
+-[ 	]*15[ 	]+fs notrack call eax
+-[ 	]*16[ 	]+notrack fs call eax
+-[ 	]*17[ 	]+notrack bnd call eax
+-[ 	]*18[ 	]+[\? 0-9A-F]*[ 	]+notrack data16 call eax
++[ 	]*11[ 	]+
++[ 	]*12[ 	]+\.intel_syntax noprefix
++[ 	]*13[ 	]+fs notrack call eax
++[ 	]*14[ 	]+notrack fs call eax
+ #pass
+diff --git a/gas/testsuite/gas/i386/notrackbad.s b/gas/testsuite/gas/i386/notrackbad.s
+index 3f57ef0fb5..535ec56bba 100644
+--- a/gas/testsuite/gas/i386/notrackbad.s
++++ b/gas/testsuite/gas/i386/notrackbad.s
+@@ -8,11 +8,9 @@ _start:
+ 
+ 	fs notrack call *%eax
+ 	notrack fs call *%eax
+-	notrack bnd call *%eax
+-	notrack data16 call *%eax
+ 
+ 	.intel_syntax noprefix
+ 	fs notrack call eax
+ 	notrack fs call eax
+-	notrack bnd call eax
+-	notrack data16 call eax
++
++	.p2align	4,0
+diff --git a/gas/testsuite/gas/i386/x86-64-notrack-intel.d b/gas/testsuite/gas/i386/x86-64-notrack-intel.d
+index 0170a82dbe..b996790832 100644
+--- a/gas/testsuite/gas/i386/x86-64-notrack-intel.d
++++ b/gas/testsuite/gas/i386/x86-64-notrack-intel.d
+@@ -16,22 +16,28 @@ Disassembly of section .text:
+ [ 	]*[a-f0-9]+:	3e 41 ff 10          	notrack call QWORD PTR \[r8\]
+ [ 	]*[a-f0-9]+:	3e ff 20             	notrack jmp QWORD PTR \[rax\]
+ [ 	]*[a-f0-9]+:	3e 41 ff 20          	notrack jmp QWORD PTR \[r8\]
+-[ 	]*[a-f0-9]+:	67 3e ff 10          	notrack call QWORD PTR \[eax\]
+-[ 	]*[a-f0-9]+:	67 3e 41 ff 10       	notrack call QWORD PTR \[r8d\]
+-[ 	]*[a-f0-9]+:	67 3e ff 20          	notrack jmp QWORD PTR \[eax\]
+-[ 	]*[a-f0-9]+:	67 3e 41 ff 20       	notrack jmp QWORD PTR \[r8d\]
+-[ 	]*[a-f0-9]+:	f2 3e ff d0          	bnd notrack call rax
+-[ 	]*[a-f0-9]+:	f2 3e 41 ff d0       	bnd notrack call r8
+-[ 	]*[a-f0-9]+:	f2 3e ff e0          	bnd notrack jmp rax
+-[ 	]*[a-f0-9]+:	f2 3e 41 ff e0       	bnd notrack jmp r8
+-[ 	]*[a-f0-9]+:	f2 3e ff 10          	bnd notrack call QWORD PTR \[rax\]
+-[ 	]*[a-f0-9]+:	f2 3e 41 ff 10       	bnd notrack call QWORD PTR \[r8\]
+-[ 	]*[a-f0-9]+:	f2 3e ff 20          	bnd notrack jmp QWORD PTR \[rax\]
+-[ 	]*[a-f0-9]+:	f2 3e 41 ff 20       	bnd notrack jmp QWORD PTR \[r8\]
+-[ 	]*[a-f0-9]+:	67 f2 3e ff 10       	bnd notrack call QWORD PTR \[eax\]
+-[ 	]*[a-f0-9]+:	67 f2 3e 41 ff 10    	bnd notrack call QWORD PTR \[r8d\]
+-[ 	]*[a-f0-9]+:	67 f2 3e ff 20       	bnd notrack jmp QWORD PTR \[eax\]
+-[ 	]*[a-f0-9]+:	67 f2 3e 41 ff 20    	bnd notrack jmp QWORD PTR \[r8d\]
++[ 	]*[a-f0-9]+:	3e 67 ff 10          	notrack call QWORD PTR \[eax\]
++[ 	]*[a-f0-9]+:	3e 67 41 ff 10       	notrack call QWORD PTR \[r8d\]
++[ 	]*[a-f0-9]+:	3e 67 ff 20          	notrack jmp QWORD PTR \[eax\]
++[ 	]*[a-f0-9]+:	3e 67 41 ff 20       	notrack jmp QWORD PTR \[r8d\]
++[ 	]*[a-f0-9]+:	3e f2 ff d0          	notrack bnd call rax
++[ 	]*[a-f0-9]+:	3e f2 41 ff d0       	notrack bnd call r8
++[ 	]*[a-f0-9]+:	3e f2 ff e0          	notrack bnd jmp rax
++[ 	]*[a-f0-9]+:	3e f2 41 ff e0       	notrack bnd jmp r8
++[ 	]*[a-f0-9]+:	3e f2 ff 10          	notrack bnd call QWORD PTR \[rax\]
++[ 	]*[a-f0-9]+:	3e f2 41 ff 10       	notrack bnd call QWORD PTR \[r8\]
++[ 	]*[a-f0-9]+:	3e f2 ff 20          	notrack bnd jmp QWORD PTR \[rax\]
++[ 	]*[a-f0-9]+:	3e f2 41 ff 20       	notrack bnd jmp QWORD PTR \[r8\]
++[ 	]*[a-f0-9]+:	3e 67 f2 ff 10       	notrack bnd call QWORD PTR \[eax\]
++[ 	]*[a-f0-9]+:	3e 67 f2 41 ff 10    	notrack bnd call QWORD PTR \[r8d\]
++[ 	]*[a-f0-9]+:	3e 67 f2 ff 20       	notrack bnd jmp QWORD PTR \[eax\]
++[ 	]*[a-f0-9]+:	3e 67 f2 41 ff 20    	notrack bnd jmp QWORD PTR \[r8d\]
++[ 	]*[a-f0-9]+:	3e f2 ff d0          	notrack bnd call rax
++[ 	]*[a-f0-9]+:	3e f2 41 ff d0       	notrack bnd call r8
++[ 	]*[a-f0-9]+:	3e f2 ff 10          	notrack bnd call QWORD PTR \[rax\]
++[ 	]*[a-f0-9]+:	3e f2 41 ff 10       	notrack bnd call QWORD PTR \[r8\]
++[ 	]*[a-f0-9]+:	3e 67 f2 ff 10       	notrack bnd call QWORD PTR \[eax\]
++[ 	]*[a-f0-9]+:	3e 67 f2 41 ff 10    	notrack bnd call QWORD PTR \[r8d\]
+ [ 	]*[a-f0-9]+:	3e ff d0             	notrack call rax
+ [ 	]*[a-f0-9]+:	3e 41 ff d0          	notrack call r8
+ [ 	]*[a-f0-9]+:	3e ff e0             	notrack jmp rax
+@@ -40,23 +46,29 @@ Disassembly of section .text:
+ [ 	]*[a-f0-9]+:	3e 41 ff 10          	notrack call QWORD PTR \[r8\]
+ [ 	]*[a-f0-9]+:	3e ff 20             	notrack jmp QWORD PTR \[rax\]
+ [ 	]*[a-f0-9]+:	3e 41 ff 20          	notrack jmp QWORD PTR \[r8\]
+-[ 	]*[a-f0-9]+:	67 3e ff 10          	notrack call QWORD PTR \[eax\]
+-[ 	]*[a-f0-9]+:	67 3e 41 ff 10       	notrack call QWORD PTR \[r8d\]
+-[ 	]*[a-f0-9]+:	67 3e ff 20          	notrack jmp QWORD PTR \[eax\]
+-[ 	]*[a-f0-9]+:	67 3e 41 ff 20       	notrack jmp QWORD PTR \[r8d\]
++[ 	]*[a-f0-9]+:	3e 67 ff 10          	notrack call QWORD PTR \[eax\]
++[ 	]*[a-f0-9]+:	3e 67 41 ff 10       	notrack call QWORD PTR \[r8d\]
++[ 	]*[a-f0-9]+:	3e 67 ff 20          	notrack jmp QWORD PTR \[eax\]
++[ 	]*[a-f0-9]+:	3e 67 41 ff 20       	notrack jmp QWORD PTR \[r8d\]
++[ 	]*[a-f0-9]+:	3e f2 ff d0          	notrack bnd call rax
++[ 	]*[a-f0-9]+:	3e f2 41 ff d0       	notrack bnd call r8
++[ 	]*[a-f0-9]+:	3e f2 ff e0          	notrack bnd jmp rax
++[ 	]*[a-f0-9]+:	3e f2 41 ff e0       	notrack bnd jmp r8
++[ 	]*[a-f0-9]+:	3e f2 ff 10          	notrack bnd call QWORD PTR \[rax\]
++[ 	]*[a-f0-9]+:	3e f2 41 ff 10       	notrack bnd call QWORD PTR \[r8\]
++[ 	]*[a-f0-9]+:	3e f2 ff 20          	notrack bnd jmp QWORD PTR \[rax\]
++[ 	]*[a-f0-9]+:	3e f2 41 ff 20       	notrack bnd jmp QWORD PTR \[r8\]
++[ 	]*[a-f0-9]+:	3e 67 f2 ff 10       	notrack bnd call QWORD PTR \[eax\]
++[ 	]*[a-f0-9]+:	3e 67 f2 41 ff 10    	notrack bnd call QWORD PTR \[r8d\]
++[ 	]*[a-f0-9]+:	3e 67 f2 ff 20       	notrack bnd jmp QWORD PTR \[eax\]
++[ 	]*[a-f0-9]+:	3e 67 f2 41 ff 20    	notrack bnd jmp QWORD PTR \[r8d\]
++[ 	]*[a-f0-9]+:	3e f2 ff d0          	notrack bnd call rax
++[ 	]*[a-f0-9]+:	3e f2 41 ff d0       	notrack bnd call r8
++[ 	]*[a-f0-9]+:	3e f2 ff 10          	notrack bnd call QWORD PTR \[rax\]
++[ 	]*[a-f0-9]+:	3e f2 41 ff 10       	notrack bnd call QWORD PTR \[r8\]
++[ 	]*[a-f0-9]+:	3e 67 f2 ff 10       	notrack bnd call QWORD PTR \[eax\]
++[ 	]*[a-f0-9]+:	3e 67 f2 41 ff 10    	notrack bnd call QWORD PTR \[r8d\]
+ [ 	]*[a-f0-9]+:	f2 3e ff d0          	bnd notrack call rax
+-[ 	]*[a-f0-9]+:	f2 3e 41 ff d0       	bnd notrack call r8
+-[ 	]*[a-f0-9]+:	f2 3e ff e0          	bnd notrack jmp rax
+-[ 	]*[a-f0-9]+:	f2 3e 41 ff e0       	bnd notrack jmp r8
+-[ 	]*[a-f0-9]+:	f2 3e ff 10          	bnd notrack call QWORD PTR \[rax\]
+-[ 	]*[a-f0-9]+:	f2 3e 41 ff 10       	bnd notrack call QWORD PTR \[r8\]
+-[ 	]*[a-f0-9]+:	f2 3e ff 20          	bnd notrack jmp QWORD PTR \[rax\]
+-[ 	]*[a-f0-9]+:	f2 3e 41 ff 20       	bnd notrack jmp QWORD PTR \[r8\]
+-[ 	]*[a-f0-9]+:	67 f2 3e ff 10       	bnd notrack call QWORD PTR \[eax\]
+-[ 	]*[a-f0-9]+:	67 f2 3e 41 ff 10    	bnd notrack call QWORD PTR \[r8d\]
+-[ 	]*[a-f0-9]+:	67 f2 3e ff 20       	bnd notrack jmp QWORD PTR \[eax\]
+-[ 	]*[a-f0-9]+:	67 f2 3e 41 ff 20    	bnd notrack jmp QWORD PTR \[r8d\]
+-[ 	]*[a-f0-9]+:	3e f2 ff d0          	ds bnd call rax
+ [ 	]*[a-f0-9]+:	3e 66 ff d0          	ds call ax
+ [ 	]*[a-f0-9]+:	66 3e ff d0          	ds call ax
+ #pass
+diff --git a/gas/testsuite/gas/i386/x86-64-notrack.d b/gas/testsuite/gas/i386/x86-64-notrack.d
+index cf725d4578..e525f43cbc 100644
+--- a/gas/testsuite/gas/i386/x86-64-notrack.d
++++ b/gas/testsuite/gas/i386/x86-64-notrack.d
+@@ -15,22 +15,28 @@ Disassembly of section .text:
+ [ 	]*[a-f0-9]+:	3e 41 ff 10          	notrack callq \*\(%r8\)
+ [ 	]*[a-f0-9]+:	3e ff 20             	notrack jmpq \*\(%rax\)
+ [ 	]*[a-f0-9]+:	3e 41 ff 20          	notrack jmpq \*\(%r8\)
+-[ 	]*[a-f0-9]+:	67 3e ff 10          	notrack callq \*\(%eax\)
+-[ 	]*[a-f0-9]+:	67 3e 41 ff 10       	notrack callq \*\(%r8d\)
+-[ 	]*[a-f0-9]+:	67 3e ff 20          	notrack jmpq \*\(%eax\)
+-[ 	]*[a-f0-9]+:	67 3e 41 ff 20       	notrack jmpq \*\(%r8d\)
+-[ 	]*[a-f0-9]+:	f2 3e ff d0          	bnd notrack callq \*%rax
+-[ 	]*[a-f0-9]+:	f2 3e 41 ff d0       	bnd notrack callq \*%r8
+-[ 	]*[a-f0-9]+:	f2 3e ff e0          	bnd notrack jmpq \*%rax
+-[ 	]*[a-f0-9]+:	f2 3e 41 ff e0       	bnd notrack jmpq \*%r8
+-[ 	]*[a-f0-9]+:	f2 3e ff 10          	bnd notrack callq \*\(%rax\)
+-[ 	]*[a-f0-9]+:	f2 3e 41 ff 10       	bnd notrack callq \*\(%r8\)
+-[ 	]*[a-f0-9]+:	f2 3e ff 20          	bnd notrack jmpq \*\(%rax\)
+-[ 	]*[a-f0-9]+:	f2 3e 41 ff 20       	bnd notrack jmpq \*\(%r8\)
+-[ 	]*[a-f0-9]+:	67 f2 3e ff 10       	bnd notrack callq \*\(%eax\)
+-[ 	]*[a-f0-9]+:	67 f2 3e 41 ff 10    	bnd notrack callq \*\(%r8d\)
+-[ 	]*[a-f0-9]+:	67 f2 3e ff 20       	bnd notrack jmpq \*\(%eax\)
+-[ 	]*[a-f0-9]+:	67 f2 3e 41 ff 20    	bnd notrack jmpq \*\(%r8d\)
++[ 	]*[a-f0-9]+:	3e 67 ff 10          	notrack callq \*\(%eax\)
++[ 	]*[a-f0-9]+:	3e 67 41 ff 10       	notrack callq \*\(%r8d\)
++[ 	]*[a-f0-9]+:	3e 67 ff 20          	notrack jmpq \*\(%eax\)
++[ 	]*[a-f0-9]+:	3e 67 41 ff 20       	notrack jmpq \*\(%r8d\)
++[ 	]*[a-f0-9]+:	3e f2 ff d0          	notrack bnd callq \*%rax
++[ 	]*[a-f0-9]+:	3e f2 41 ff d0       	notrack bnd callq \*%r8
++[ 	]*[a-f0-9]+:	3e f2 ff e0          	notrack bnd jmpq \*%rax
++[ 	]*[a-f0-9]+:	3e f2 41 ff e0       	notrack bnd jmpq \*%r8
++[ 	]*[a-f0-9]+:	3e f2 ff 10          	notrack bnd callq \*\(%rax\)
++[ 	]*[a-f0-9]+:	3e f2 41 ff 10       	notrack bnd callq \*\(%r8\)
++[ 	]*[a-f0-9]+:	3e f2 ff 20          	notrack bnd jmpq \*\(%rax\)
++[ 	]*[a-f0-9]+:	3e f2 41 ff 20       	notrack bnd jmpq \*\(%r8\)
++[ 	]*[a-f0-9]+:	3e 67 f2 ff 10       	notrack bnd callq \*\(%eax\)
++[ 	]*[a-f0-9]+:	3e 67 f2 41 ff 10    	notrack bnd callq \*\(%r8d\)
++[ 	]*[a-f0-9]+:	3e 67 f2 ff 20       	notrack bnd jmpq \*\(%eax\)
++[ 	]*[a-f0-9]+:	3e 67 f2 41 ff 20    	notrack bnd jmpq \*\(%r8d\)
++[ 	]*[a-f0-9]+:	3e f2 ff d0          	notrack bnd callq \*%rax
++[ 	]*[a-f0-9]+:	3e f2 41 ff d0       	notrack bnd callq \*%r8
++[ 	]*[a-f0-9]+:	3e f2 ff 10          	notrack bnd callq \*\(%rax\)
++[ 	]*[a-f0-9]+:	3e f2 41 ff 10       	notrack bnd callq \*\(%r8\)
++[ 	]*[a-f0-9]+:	3e 67 f2 ff 10       	notrack bnd callq \*\(%eax\)
++[ 	]*[a-f0-9]+:	3e 67 f2 41 ff 10    	notrack bnd callq \*\(%r8d\)
+ [ 	]*[a-f0-9]+:	3e ff d0             	notrack callq \*%rax
+ [ 	]*[a-f0-9]+:	3e 41 ff d0          	notrack callq \*%r8
+ [ 	]*[a-f0-9]+:	3e ff e0             	notrack jmpq \*%rax
+@@ -39,23 +45,29 @@ Disassembly of section .text:
+ [ 	]*[a-f0-9]+:	3e 41 ff 10          	notrack callq \*\(%r8\)
+ [ 	]*[a-f0-9]+:	3e ff 20             	notrack jmpq \*\(%rax\)
+ [ 	]*[a-f0-9]+:	3e 41 ff 20          	notrack jmpq \*\(%r8\)
+-[ 	]*[a-f0-9]+:	67 3e ff 10          	notrack callq \*\(%eax\)
+-[ 	]*[a-f0-9]+:	67 3e 41 ff 10       	notrack callq \*\(%r8d\)
+-[ 	]*[a-f0-9]+:	67 3e ff 20          	notrack jmpq \*\(%eax\)
+-[ 	]*[a-f0-9]+:	67 3e 41 ff 20       	notrack jmpq \*\(%r8d\)
++[ 	]*[a-f0-9]+:	3e 67 ff 10          	notrack callq \*\(%eax\)
++[ 	]*[a-f0-9]+:	3e 67 41 ff 10       	notrack callq \*\(%r8d\)
++[ 	]*[a-f0-9]+:	3e 67 ff 20          	notrack jmpq \*\(%eax\)
++[ 	]*[a-f0-9]+:	3e 67 41 ff 20       	notrack jmpq \*\(%r8d\)
++[ 	]*[a-f0-9]+:	3e f2 ff d0          	notrack bnd callq \*%rax
++[ 	]*[a-f0-9]+:	3e f2 41 ff d0       	notrack bnd callq \*%r8
++[ 	]*[a-f0-9]+:	3e f2 ff e0          	notrack bnd jmpq \*%rax
++[ 	]*[a-f0-9]+:	3e f2 41 ff e0       	notrack bnd jmpq \*%r8
++[ 	]*[a-f0-9]+:	3e f2 ff 10          	notrack bnd callq \*\(%rax\)
++[ 	]*[a-f0-9]+:	3e f2 41 ff 10       	notrack bnd callq \*\(%r8\)
++[ 	]*[a-f0-9]+:	3e f2 ff 20          	notrack bnd jmpq \*\(%rax\)
++[ 	]*[a-f0-9]+:	3e f2 41 ff 20       	notrack bnd jmpq \*\(%r8\)
++[ 	]*[a-f0-9]+:	3e 67 f2 ff 10       	notrack bnd callq \*\(%eax\)
++[ 	]*[a-f0-9]+:	3e 67 f2 41 ff 10    	notrack bnd callq \*\(%r8d\)
++[ 	]*[a-f0-9]+:	3e 67 f2 ff 20       	notrack bnd jmpq \*\(%eax\)
++[ 	]*[a-f0-9]+:	3e 67 f2 41 ff 20    	notrack bnd jmpq \*\(%r8d\)
++[ 	]*[a-f0-9]+:	3e f2 ff d0          	notrack bnd callq \*%rax
++[ 	]*[a-f0-9]+:	3e f2 41 ff d0       	notrack bnd callq \*%r8
++[ 	]*[a-f0-9]+:	3e f2 ff 10          	notrack bnd callq \*\(%rax\)
++[ 	]*[a-f0-9]+:	3e f2 41 ff 10       	notrack bnd callq \*\(%r8\)
++[ 	]*[a-f0-9]+:	3e 67 f2 ff 10       	notrack bnd callq \*\(%eax\)
++[ 	]*[a-f0-9]+:	3e 67 f2 41 ff 10    	notrack bnd callq \*\(%r8d\)
+ [ 	]*[a-f0-9]+:	f2 3e ff d0          	bnd notrack callq \*%rax
+-[ 	]*[a-f0-9]+:	f2 3e 41 ff d0       	bnd notrack callq \*%r8
+-[ 	]*[a-f0-9]+:	f2 3e ff e0          	bnd notrack jmpq \*%rax
+-[ 	]*[a-f0-9]+:	f2 3e 41 ff e0       	bnd notrack jmpq \*%r8
+-[ 	]*[a-f0-9]+:	f2 3e ff 10          	bnd notrack callq \*\(%rax\)
+-[ 	]*[a-f0-9]+:	f2 3e 41 ff 10       	bnd notrack callq \*\(%r8\)
+-[ 	]*[a-f0-9]+:	f2 3e ff 20          	bnd notrack jmpq \*\(%rax\)
+-[ 	]*[a-f0-9]+:	f2 3e 41 ff 20       	bnd notrack jmpq \*\(%r8\)
+-[ 	]*[a-f0-9]+:	67 f2 3e ff 10       	bnd notrack callq \*\(%eax\)
+-[ 	]*[a-f0-9]+:	67 f2 3e 41 ff 10    	bnd notrack callq \*\(%r8d\)
+-[ 	]*[a-f0-9]+:	67 f2 3e ff 20       	bnd notrack jmpq \*\(%eax\)
+-[ 	]*[a-f0-9]+:	67 f2 3e 41 ff 20    	bnd notrack jmpq \*\(%r8d\)
+-[ 	]*[a-f0-9]+:	3e f2 ff d0          	ds bnd callq \*%rax
+ [ 	]*[a-f0-9]+:	3e 66 ff d0          	ds callw \*%ax
+ [ 	]*[a-f0-9]+:	66 3e ff d0          	ds callw \*%ax
+ #pass
+diff --git a/gas/testsuite/gas/i386/x86-64-notrack.s b/gas/testsuite/gas/i386/x86-64-notrack.s
+index 7db0812024..aeebd11a76 100644
+--- a/gas/testsuite/gas/i386/x86-64-notrack.s
++++ b/gas/testsuite/gas/i386/x86-64-notrack.s
+@@ -18,20 +18,27 @@ _start:
+ 	notrack jmp *(%eax)
+ 	notrack jmp *(%r8d)
+ 
++	notrack bnd call *%rax
++	notrack bnd call *%r8
++	notrack bnd jmp *%rax
++	notrack bnd jmp *%r8
++
++	notrack bnd call *(%rax)
++	notrack bnd call *(%r8)
++	notrack bnd jmp *(%rax)
++	notrack bnd jmp *(%r8)
++
++	notrack bnd call *(%eax)
++	notrack bnd call *(%r8d)
++	notrack bnd jmp *(%eax)
++	notrack bnd jmp *(%r8d)
++
+ 	bnd notrack call *%rax
+ 	bnd notrack call *%r8
+-	bnd notrack jmp *%rax
+-	bnd notrack jmp *%r8
+-
+ 	bnd notrack call *(%rax)
+ 	bnd notrack call *(%r8)
+-	bnd notrack jmp *(%rax)
+-	bnd notrack jmp *(%r8)
+-
+ 	bnd notrack call *(%eax)
+ 	bnd notrack call *(%r8d)
+-	bnd notrack jmp *(%eax)
+-	bnd notrack jmp *(%r8d)
+ 
+ 	.intel_syntax noprefix
+ 	notrack call rax
+@@ -49,24 +56,31 @@ _start:
+ 	notrack jmp QWORD PTR [eax]
+ 	notrack jmp QWORD PTR [r8d]
+ 
++	notrack bnd call rax
++	notrack bnd call r8
++	notrack bnd jmp rax
++	notrack bnd jmp r8
++
++	notrack bnd call QWORD PTR [rax]
++	notrack bnd call QWORD PTR [r8]
++	notrack bnd jmp QWORD PTR [rax]
++	notrack bnd jmp QWORD PTR [r8]
++
++	notrack bnd call QWORD PTR [eax]
++	notrack bnd call QWORD PTR [r8d]
++	notrack bnd jmp QWORD PTR [eax]
++	notrack bnd jmp QWORD PTR [r8d]
++
+ 	bnd notrack call rax
+ 	bnd notrack call r8
+-	bnd notrack jmp rax
+-	bnd notrack jmp r8
+-
+ 	bnd notrack call QWORD PTR [rax]
+ 	bnd notrack call QWORD PTR [r8]
+-	bnd notrack jmp QWORD PTR [rax]
+-	bnd notrack jmp QWORD PTR [r8]
+-
+ 	bnd notrack call QWORD PTR [eax]
+ 	bnd notrack call QWORD PTR [r8d]
+-	bnd notrack jmp QWORD PTR [eax]
+-	bnd notrack jmp QWORD PTR [r8d]
+ 
+-	# ds bnd callq *%rax
+-	.byte 0x3e
++	# bnd notrack callq *%rax
+ 	.byte 0xf2
++	.byte 0x3e
+ 	.byte 0xff
+ 	.byte 0xd0
+ 
+diff --git a/gas/testsuite/gas/i386/x86-64-notrackbad.l b/gas/testsuite/gas/i386/x86-64-notrackbad.l
+index cd516826b8..95a0f91ce1 100644
+--- a/gas/testsuite/gas/i386/x86-64-notrackbad.l
++++ b/gas/testsuite/gas/i386/x86-64-notrackbad.l
+@@ -2,15 +2,10 @@
+ .*:6: Error: expecting indirect branch instruction after `notrack'
+ .*:6: Warning: skipping prefixes on this instruction
+ .*:7: Error: expecting indirect branch instruction after `notrack'
+-.*:7: Warning: skipping prefixes on this instruction
+ .*:9: Error: same type of prefix used twice
+-.*:10: Error: expecting no other prefixes after `notrack'
+-.*:11: Error: expecting no other prefixes after `notrack'
+-.*:12: Error: expecting no other prefixes after `notrack'
+-.*:15: Error: same type of prefix used twice
+-.*:16: Error: expecting no other prefixes after `notrack'
+-.*:17: Error: expecting no other prefixes after `notrack'
+-.*:18: Error: expecting no other prefixes after `notrack'
++.*:10: Error: same type of prefix used twice
++.*:13: Error: same type of prefix used twice
++.*:14: Error: same type of prefix used twice
+ GAS LISTING .*
+ 
+ 
+@@ -25,17 +20,12 @@ GAS LISTING .*
+ [ 	]*6[ 	]+[0-9A-F]*
+ [ 	]*7[ 	]+\?\?\?\? [0-9A-F]* 		notrack jmp foo
+ \*\*\*\*  Error: expecting indirect branch instruction after `notrack'
+-\*\*\*\*  Warning: skipping prefixes on this instruction
+ [ 	]*7[ 	]+[0-9A-F]*
+ [ 	]*8[ 	]+
+ [ 	]*9[ 	]+fs notrack call \*%rax
+ [ 	]*10[ 	]+notrack fs call \*%rax
+-[ 	]*11[ 	]+notrack bnd call \*%rax
+-[ 	]*12[ 	]+notrack data16 call \*%rax
+-[ 	]*13[ 	]+
+-[ 	]*14[ 	]+\.intel_syntax noprefix
+-[ 	]*15[ 	]+fs notrack call rax
+-[ 	]*16[ 	]+notrack fs call rax
+-[ 	]*17[ 	]+notrack bnd call rax
+-[ 	]*18[ 	]+[\? 0-9A-F]*[ 	]+notrack data16 call rax
++[ 	]*11[ 	]+
++[ 	]*12[ 	]+\.intel_syntax noprefix
++[ 	]*13[ 	]+fs notrack call rax
++[ 	]*14[ 	]+notrack fs call rax
+ #pass
+diff --git a/gas/testsuite/gas/i386/x86-64-notrackbad.s b/gas/testsuite/gas/i386/x86-64-notrackbad.s
+index f859a9fb05..4f49328ac5 100644
+--- a/gas/testsuite/gas/i386/x86-64-notrackbad.s
++++ b/gas/testsuite/gas/i386/x86-64-notrackbad.s
+@@ -8,11 +8,9 @@ _start:
+ 
+ 	fs notrack call *%rax
+ 	notrack fs call *%rax
+-	notrack bnd call *%rax
+-	notrack data16 call *%rax
+ 
+ 	.intel_syntax noprefix
+ 	fs notrack call rax
+ 	notrack fs call rax
+-	notrack bnd call rax
+-	notrack data16 call rax
++
++	.p2align	4,0
+diff --git a/opcodes/ChangeLog b/opcodes/ChangeLog
+index 1a3f20e3e1..9ff92bb08e 100644
+--- a/opcodes/ChangeLog
++++ b/opcodes/ChangeLog
+@@ -1,3 +1,9 @@
++2017-09-09  H.J. Lu  <hongjiu.lu@intel.com>
++
++	* i386-dis.c (last_active_prefix): Removed.
++	(ckprefix): Don't set last_active_prefix.
++	(NOTRACK_Fixup): Don't check last_active_prefix.
++
+ 2017-08-31  Nick Clifton  <nickc@redhat.com>
+ 
+ 	* po/fr.po: Updated French translation.
+diff --git a/opcodes/i386-dis.c b/opcodes/i386-dis.c
+index 612e06ffb5..451bd2eb99 100644
+--- a/opcodes/i386-dis.c
++++ b/opcodes/i386-dis.c
+@@ -3169,7 +3169,6 @@ static int last_data_prefix;
+ static int last_addr_prefix;
+ static int last_rex_prefix;
+ static int last_seg_prefix;
+-static int last_active_prefix;
+ static int fwait_prefix;
+ /* The active segment register prefix.  */
+ static int active_seg_prefix;
+@@ -12303,7 +12302,6 @@ ckprefix (void)
+   last_addr_prefix = -1;
+   last_rex_prefix = -1;
+   last_seg_prefix = -1;
+-  last_active_prefix = -1;
+   fwait_prefix = -1;
+   active_seg_prefix = 0;
+   for (i = 0; i < (int) ARRAY_SIZE (all_prefixes); i++)
+@@ -12416,10 +12414,7 @@ ckprefix (void)
+ 	  return 1;
+ 	}
+       if (*codep != FWAIT_OPCODE)
+-	{
+-	  last_active_prefix = i;
+-	  all_prefixes[i++] = *codep;
+-	}
++	all_prefixes[i++] = *codep;
+       rex = newrex;
+       codep++;
+       length++;
+@@ -16820,17 +16815,8 @@ NOTRACK_Fixup (int bytemode ATTRIBUTE_UNUSED,
+   if (active_seg_prefix == PREFIX_DS
+       && (address_mode != mode_64bit || last_data_prefix < 0))
+     {
+-      /* NOTRACK prefix is only valid on indirect branch instructions
+-         and it must be the last prefix before REX prefix and opcode.
++      /* NOTRACK prefix is only valid on indirect branch instructions.
+ 	 NB: DATA prefix is unsupported for Intel64.  */
+-      if (last_active_prefix >= 0)
+-	{
+-	  int notrack_prefix = last_active_prefix;
+-	  if (last_rex_prefix == last_active_prefix)
+-	    notrack_prefix--;
+-	  if (all_prefixes[notrack_prefix] != NOTRACK_PREFIX_OPCODE)
+-	    return;
+-	}
+       active_seg_prefix = 0;
+       all_prefixes[last_seg_prefix] = NOTRACK_PREFIX;
+     }
+
+commit 68b908bd5851a0adde95e67afba1fb5178bce6c7
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sun Sep 10 00:01:32 2017 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 5bc5ca2e7a..4b89208cdc 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20170909
++#define BFD_VERSION_DATE 20170910
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 38d47c2247aea860c41aa4bdddc4bed34e378731
+Author: Alan Modra <amodra@gmail.com>
+Date:   Sat Sep 9 21:55:22 2017 +0930
+
+    PowerPC64 --plt-align
+    
+    This changes the PowerPC64 --plt-align option to perform the usual
+    alignment of code as suggested by its name, as well as the previous
+    behaviour of padding so as to reduce boundary crossing.  The old
+    behaviour is had by using a negative parameter.
+    
+    The default is also changed to align plt stub code by default to 32
+    byte boundaries, the point being to get better bctr branch prediction
+    on power8 and power9 hardware.
+    
+    bfd/
+            * elf64-ppp.c (plt_stub_pad): Handle positive and negative
+            plt_stub_align.
+    ld/
+            * ld.texinfo (--plt-align): Describe new behaviour of option.
+            * emultempl/ppc64elf.em (params): Default plt_stub_align to 5.
+            * testsuite/ld-powerpc/powerpc.exp: Pass --no-plt-align for
+            selected tests.
+            * testsuite/ld-powerpc/relbrlt.d: Pass --no-plt-align.
+            * testsuite/ld-powerpc/elfv2so.d: Adjust expected output.
+    
+    (cherry picked from commit 2420fff633eff03ec1f85eba82a926cd0ecf4229)
+    (and commit bab55c05 for part of elfv2so.d change)
+
+diff --git a/bfd/ChangeLog b/bfd/ChangeLog
+index a78e8192ae..708a4bf8f7 100644
+--- a/bfd/ChangeLog
++++ b/bfd/ChangeLog
+@@ -1,3 +1,8 @@
++2017-09-10  Alan Modra  <amodra@gmail.com>
++
++	* elf64-ppp.c (plt_stub_pad): Handle positive and negative
++	plt_stub_align.
++
+ 2017-09-09  H.J. Lu  <hongjiu.lu@intel.com>
+ 
+ 	PR binutils/22018
+diff --git a/bfd/elf64-ppc.c b/bfd/elf64-ppc.c
+index 4ff3f064f3..3f01ae62a1 100644
+--- a/bfd/elf64-ppc.c
++++ b/bfd/elf64-ppc.c
+@@ -10606,17 +10606,30 @@ plt_stub_size (struct ppc_link_hash_table *htab,
+   return size;
+ }
+ 
+-/* If this stub would cross fewer 2**plt_stub_align boundaries if we align,
+-   then return the padding needed to do so.  */
++/* Depending on the sign of plt_stub_align:
++   If positive, return the padding to align to a 2**plt_stub_align
++   boundary.
++   If negative, if this stub would cross fewer 2**plt_stub_align
++   boundaries if we align, then return the padding needed to do so.  */
++
+ static inline unsigned int
+ plt_stub_pad (struct ppc_link_hash_table *htab,
+ 	      struct ppc_stub_hash_entry *stub_entry,
+ 	      bfd_vma plt_off)
+ {
+-  int stub_align = 1 << htab->params->plt_stub_align;
++  int stub_align;
+   unsigned stub_size = plt_stub_size (htab, stub_entry, plt_off);
+   bfd_vma stub_off = stub_entry->group->stub_sec->size;
+ 
++  if (htab->params->plt_stub_align >= 0)
++    {
++      stub_align = 1 << htab->params->plt_stub_align;
++      if ((stub_off & (stub_align - 1)) != 0)
++	return stub_align - (stub_off & (stub_align - 1));
++      return 0;
++    }
++
++  stub_align = 1 << -htab->params->plt_stub_align;
+   if (((stub_off + stub_size - 1) & -stub_align) - (stub_off & -stub_align)
+       > ((stub_size - 1) & -stub_align))
+     return stub_align - (stub_off & (stub_align - 1));
+diff --git a/ld/ChangeLog b/ld/ChangeLog
+index e8ee459241..f1acd5b6d3 100644
+--- a/ld/ChangeLog
++++ b/ld/ChangeLog
+@@ -1,3 +1,12 @@
++2017-09-10  Alan Modra  <amodra@gmail.com>
++
++	* ld.texinfo (--plt-align): Describe new behaviour of option.
++	* emultempl/ppc64elf.em (params): Default plt_stub_align to 5.
++	* testsuite/ld-powerpc/powerpc.exp: Pass --no-plt-align for
++	selected tests.
++	* testsuite/ld-powerpc/relbrlt.d: Pass --no-plt-align.
++	* testsuite/ld-powerpc/elfv2so.d: Adjust expected output.
++
+ 2017-09-04  Nick Clifton  <nickc@redhat.com>
+ 
+ 	Import from mainline:
+diff --git a/ld/emultempl/ppc64elf.em b/ld/emultempl/ppc64elf.em
+index 58cb798cb1..cf75957fa9 100644
+--- a/ld/emultempl/ppc64elf.em
++++ b/ld/emultempl/ppc64elf.em
+@@ -37,7 +37,7 @@ static struct ppc64_elf_params params = { NULL,
+ 					  &ppc_add_stub_section,
+ 					  &ppc_layout_sections_again,
+ 					  1, -1, 0,
+-					  ${DEFAULT_PLT_STATIC_CHAIN-0}, -1, 0,
++					  ${DEFAULT_PLT_STATIC_CHAIN-0}, -1, 5,
+ 					  -1, 0, -1, -1, 0};
+ 
+ /* Fake input file for stubs.  */
+diff --git a/ld/ld.texinfo b/ld/ld.texinfo
+index 5d0b007ffa..950c794708 100644
+--- a/ld/ld.texinfo
++++ b/ld/ld.texinfo
+@@ -7572,10 +7572,12 @@ off this feature.
+ @item --plt-align
+ @itemx --no-plt-align
+ Use these options to control whether individual PLT call stubs are
+-padded so that they don't cross a 32-byte boundary, or to the
+-specified power of two boundary when using @code{--plt-align=}.  Note
+-that this isn't alignment in the usual sense.  By default PLT call
+-stubs are packed tightly.
++aligned to a 32-byte boundary, or to the specified power of two
++boundary when using @code{--plt-align=}.  A negative value may be
++specified to pad PLT call stubs so that they do not cross the
++specified power of two boundary (or the minimum number of boundaries
++if a PLT stub is so large that it must cross a boundary).  By default
++PLT call stubs are aligned to 32-byte boundaries.
+ 
+ @cindex PowerPC64 PLT call stub static chain
+ @kindex --plt-static-chain
+diff --git a/ld/testsuite/ld-powerpc/elfv2so.d b/ld/testsuite/ld-powerpc/elfv2so.d
+index f3962ac041..a577b2a7ea 100644
+--- a/ld/testsuite/ld-powerpc/elfv2so.d
++++ b/ld/testsuite/ld-powerpc/elfv2so.d
+@@ -7,53 +7,57 @@
+ 
+ Disassembly of section \.text:
+ 
+-0+300 <.*\.plt_call\.f4>:
++.* <.*\.plt_call\.f4>:
+ .*:	(f8 41 00 18|18 00 41 f8) 	std     r2,24\(r1\)
+ .*:	(e9 82 80 38|38 80 82 e9) 	ld      r12,-32712\(r2\)
+ .*:	(7d 89 03 a6|a6 03 89 7d) 	mtctr   r12
+ .*:	(4e 80 04 20|20 04 80 4e) 	bctr
++	\.\.\.
+ 
+-0+310 <.*\.plt_call\.f3>:
++.* <.*\.plt_call\.f3>:
+ .*:	(f8 41 00 18|18 00 41 f8) 	std     r2,24\(r1\)
+ .*:	(e9 82 80 28|28 80 82 e9) 	ld      r12,-32728\(r2\)
+ .*:	(7d 89 03 a6|a6 03 89 7d) 	mtctr   r12
+ .*:	(4e 80 04 20|20 04 80 4e) 	bctr
++	\.\.\.
+ 
+-0+320 <.*\.plt_call\.f2>:
++.* <.*\.plt_call\.f2>:
+ .*:	(f8 41 00 18|18 00 41 f8) 	std     r2,24\(r1\)
+ .*:	(e9 82 80 30|30 80 82 e9) 	ld      r12,-32720\(r2\)
+ .*:	(7d 89 03 a6|a6 03 89 7d) 	mtctr   r12
+ .*:	(4e 80 04 20|20 04 80 4e) 	bctr
++	\.\.\.
+ 
+-0+330 <.*\.plt_call\.f1>:
++.* <.*\.plt_call\.f1>:
+ .*:	(f8 41 00 18|18 00 41 f8) 	std     r2,24\(r1\)
+ .*:	(e9 82 80 40|40 80 82 e9) 	ld      r12,-32704\(r2\)
+ .*:	(7d 89 03 a6|a6 03 89 7d) 	mtctr   r12
+ .*:	(4e 80 04 20|20 04 80 4e) 	bctr
++	\.\.\.
+ 
+-0+340 <f1>:
++.* <f1>:
+ .*:	(3c 4c 00 02|02 00 4c 3c) 	addis   r2,r12,2
+-.*:	(38 42 82 c0|c0 82 42 38) 	addi    r2,r2,-32064
++.*:	(38 42 .. ..|.. .. 42 38) 	addi    r2,r2,.*
+ .*:	(7c 08 02 a6|a6 02 08 7c) 	mflr    r0
+ .*:	(f8 21 ff e1|e1 ff 21 f8) 	stdu    r1,-32\(r1\)
+ .*:	(f8 01 00 30|30 00 01 f8) 	std     r0,48\(r1\)
+-.*:	(4b ff ff dd|dd ff ff 4b) 	bl      .*\.plt_call\.f1>
++.*:	(4b ff ff cd|cd ff ff 4b) 	bl      .*\.plt_call\.f1>
+ .*:	(e8 62 80 08|08 80 62 e8) 	ld      r3,-32760\(r2\)
+-.*:	(4b ff ff c5|c5 ff ff 4b) 	bl      .*\.plt_call\.f2>
++.*:	(4b ff ff a5|a5 ff ff 4b) 	bl      .*\.plt_call\.f2>
+ .*:	(e8 41 00 18|18 00 41 e8) 	ld      r2,24\(r1\)
+ .*:	(e8 62 80 10|10 80 62 e8) 	ld      r3,-32752\(r2\)
+-.*:	(4b ff ff a9|a9 ff ff 4b) 	bl      .*\.plt_call\.f3>
++.*:	(4b ff ff 79|79 ff ff 4b) 	bl      .*\.plt_call\.f3>
+ .*:	(e8 41 00 18|18 00 41 e8) 	ld      r2,24\(r1\)
+-.*:	(4b ff ff 91|91 ff ff 4b) 	bl      .*\.plt_call\.f4>
++.*:	(4b ff ff 51|51 ff ff 4b) 	bl      .*\.plt_call\.f4>
+ .*:	(e8 41 00 18|18 00 41 e8) 	ld      r2,24\(r1\)
+ .*:	(e8 01 00 30|30 00 01 e8) 	ld      r0,48\(r1\)
+ .*:	(38 21 00 20|20 00 21 38) 	addi    r1,r1,32
+ .*:	(7c 08 03 a6|a6 03 08 7c) 	mtlr    r0
+ .*:	(4e 80 00 20|20 00 80 4e) 	blr
+-.*:	(00 00 00 00|80 02 01 00) 	.*
+-.*:	(00 01 02 80|00 00 00 00) 	.*
++.*
++.*
+ 
+-0+390 <__glink_PLTresolve>:
++.* <__glink_PLTresolve>:
+ .*:	(7c 08 02 a6|a6 02 08 7c) 	mflr    r0
+ .*:	(42 9f 00 05|05 00 9f 42) 	bcl     .*
+ .*:	(7d 68 02 a6|a6 02 68 7d) 	mflr    r11
+diff --git a/ld/testsuite/ld-powerpc/powerpc.exp b/ld/testsuite/ld-powerpc/powerpc.exp
+index 6249ccbdb9..cfbc7b2001 100644
+--- a/ld/testsuite/ld-powerpc/powerpc.exp
++++ b/ld/testsuite/ld-powerpc/powerpc.exp
+@@ -156,22 +156,22 @@ set ppcelftests {
+ }
+ 
+ set ppc64elftests {
+-    {"TLS static exec" "-melf64ppc" "" "-a64"  {tls.s tlslib.s}
++    {"TLS static exec" "-melf64ppc --no-plt-align" "" "-a64"  {tls.s tlslib.s}
+      {{objdump -dr tls.d} {objdump -sj.got tls.g} {objdump -sj.tdata tls.t}}
+       "tls"}
+     {"TLS helper shared library" "-shared -melf64ppc tmpdir/tlslib.o" "" "" {}
+      {} "libtlslib.so"}
+     {"TLS helper old shared lib" "-shared -melf64ppc" "" "-a64" {oldtlslib.s}
+      {} "liboldlib.so"}
+-    {"TLS dynamic exec" "-melf64ppc --no-ld-generated-unwind-info tmpdir/tls.o tmpdir/libtlslib.so" "" "" {}
++    {"TLS dynamic exec" "-melf64ppc --no-plt-align --no-ld-generated-unwind-info tmpdir/tls.o tmpdir/libtlslib.so" "" "" {}
+      {{readelf -WSsrl tlsexe.r} {objdump -dr tlsexe.d}
+       {objdump -sj.got tlsexe.g} {objdump -sj.tdata tlsexe.t}}
+       "tlsexe"}
+-    {"TLS dynamic old" "-melf64ppc --no-ld-generated-unwind-info tmpdir/tls.o tmpdir/liboldlib.so" "" "" {}
++    {"TLS dynamic old" "-melf64ppc --no-plt-align --no-ld-generated-unwind-info tmpdir/tls.o tmpdir/liboldlib.so" "" "" {}
+      {{readelf -WSsrl tlsexe.r} {objdump -dr tlsexe.d}
+       {objdump -sj.got tlsexe.g} {objdump -sj.tdata tlsexe.t}}
+       "tlsexeold"}
+-    {"TLS shared" "-shared -melf64ppc --no-ld-generated-unwind-info tmpdir/tls.o" "" "" {}
++    {"TLS shared" "-shared -melf64ppc --no-plt-align --no-ld-generated-unwind-info tmpdir/tls.o" "" "" {}
+      {{readelf -WSsrl tlsso.r} {objdump -dr tlsso.d}
+       {objdump -sj.got tlsso.g} {objdump -sj.tdata tlsso.t}}
+       "tls.so"}
+@@ -179,17 +179,17 @@ set ppc64elftests {
+      {{objdump -dr tlstoc.d} {objdump -sj.got tlstoc.g}
+       {objdump -sj.tdata tlstoc.t}}
+       "tlstoc"}
+-    {"TLSTOC dynamic exec" "-melf64ppc --no-ld-generated-unwind-info tmpdir/tlstoc.o tmpdir/libtlslib.so" ""
++    {"TLSTOC dynamic exec" "-melf64ppc --no-plt-align --no-ld-generated-unwind-info tmpdir/tlstoc.o tmpdir/libtlslib.so" ""
+      "" {}
+      {{readelf -WSsrl tlsexetoc.r} {objdump -dr tlsexetoc.d}
+       {objdump -sj.got tlsexetoc.g} {objdump -sj.tdata tlsexetoc.t}}
+       "tlsexetoc"}
+-    {"TLSTOC dynamic old" "-melf64ppc --no-ld-generated-unwind-info tmpdir/tlstoc.o tmpdir/liboldlib.so" ""
++    {"TLSTOC dynamic old" "-melf64ppc --no-plt-align --no-ld-generated-unwind-info tmpdir/tlstoc.o tmpdir/liboldlib.so" ""
+      "" {}
+      {{readelf -WSsrl tlsexetoc.r} {objdump -dr tlsexetoc.d}
+       {objdump -sj.got tlsexetoc.g} {objdump -sj.tdata tlsexetoc.t}}
+       "tlsexetocold"}
+-    {"TLSTOC shared" "-shared -melf64ppc --no-ld-generated-unwind-info tmpdir/tlstoc.o" "" "" {}
++    {"TLSTOC shared" "-shared -melf64ppc --no-plt-align --no-ld-generated-unwind-info tmpdir/tlstoc.o" "" "" {}
+      {{readelf -WSsrl tlstocso.r} {objdump -dr tlstocso.d}
+       {objdump -sj.got tlstocso.g} {objdump -sj.tdata tlstocso.t}}
+       "tlstoc.so"}
+@@ -210,7 +210,7 @@ set ppc64elftests {
+       "tlsopt4"}
+     {"TLS DLL" "-shared -melf64ppc --version-script tlsdll.ver" "" "-a64" {tlsdll.s}
+      {} "tlsdll.so"}
+-    {"TLS opt 5" "-melf64ppc -shared --gc-sections --no-plt-localentry tmpdir/tlsdll.so" "" "-a64"  {tlsopt5.s}
++    {"TLS opt 5" "-melf64ppc --no-plt-align -shared --gc-sections --no-plt-localentry tmpdir/tlsdll.so" "" "-a64"  {tlsopt5.s}
+      {{objdump -dr tlsopt5.d} {readelf -wf tlsopt5.wf}}
+       "tlsopt5"}
+     {"sym@tocbase" "-shared -melf64ppc" "" "-a64" {symtocbase-1.s symtocbase-2.s}
+diff --git a/ld/testsuite/ld-powerpc/relbrlt.d b/ld/testsuite/ld-powerpc/relbrlt.d
+index a5f2437d08..a00b1ffd0c 100644
+--- a/ld/testsuite/ld-powerpc/relbrlt.d
++++ b/ld/testsuite/ld-powerpc/relbrlt.d
+@@ -1,6 +1,6 @@
+ #source: relbrlt.s
+ #as: -a64
+-#ld: -melf64ppc --no-ld-generated-unwind-info --emit-relocs
++#ld: -melf64ppc --no-plt-align --no-ld-generated-unwind-info --emit-relocs
+ #objdump: -Dr
+ 
+ .*
+
+commit 4c730770f07e4b5da5ab0a7654056cc9532b967d
+Author: Nick Clifton <nickc@redhat.com>
+Date:   Sun Sep 10 10:26:33 2017 +0100
+
+    Import fix from mainline that fixes buffer overrun errors when parsing corrupt DWARF debug information string sections.
+    
+            PR 22047
+            * dwarf2.c (read_section): If necessary add a terminating NUL byte
+            to dwarf string sections.
+
+diff --git a/bfd/ChangeLog b/bfd/ChangeLog
+index 708a4bf8f7..ed97efc83f 100644
+--- a/bfd/ChangeLog
++++ b/bfd/ChangeLog
+@@ -1,3 +1,11 @@
++2017-09-10  Nick Clifton  <nickc@redhat.com>
++
++	Import from mainline:
++
++	PR 22047
++	* dwarf2.c (read_section): If necessary add a terminating NUL byte
++	to dwarf string sections.
++
+ 2017-09-10  Alan Modra  <amodra@gmail.com>
+ 
+ 	* elf64-ppp.c (plt_stub_pad): Handle positive and negative
+diff --git a/bfd/dwarf2.c b/bfd/dwarf2.c
+index 877962783b..3cb2c347c8 100644
+--- a/bfd/dwarf2.c
++++ b/bfd/dwarf2.c
+@@ -566,6 +566,29 @@ read_section (bfd *           abfd,
+ 					  0, *section_size))
+ 	    return FALSE;
+ 	}
++
++      /* Paranoia - if we are reading in a string section, make sure that it
++        is NUL terminated.  This is to prevent string functions from running
++        off the end of the buffer.  Note - knowing the size of the buffer is
++        not enough as some functions, eg strchr, do not have a range limited
++        equivalent.
++
++        FIXME: We ought to use a flag in the dwarf_debug_sections[] table to
++        determine the nature of a debug section, rather than checking the
++        section name as we do here.  */
++      if (*section_size > 0
++         && (*section_buffer)[*section_size - 1] != 0
++         && (strstr (section_name, "_str") || strstr (section_name, "names")))
++       {
++         bfd_byte * new_buffer = malloc (*section_size + 1);
++
++         _bfd_error_handler (_("warning: dwarf string section '%s' is not NUL terminated"),
++                             section_name);
++         memcpy (new_buffer, *section_buffer, *section_size);
++         new_buffer[*section_size] = 0;
++         free (*section_buffer);
++         *section_buffer = new_buffer;
++       }
+     }
+ 
+   /* It is possible to get a bad value for the offset into the section
+
+commit 42e1a3f3716b122c807b44cbabff1c98d9df5724
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Mon Sep 11 00:01:48 2017 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 4b89208cdc..17e0539f8e 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20170910
++#define BFD_VERSION_DATE 20170911
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 37e991bb143ca2106330bcdc625590d53838b7a1
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Tue Sep 12 00:01:42 2017 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 17e0539f8e..960afa07c0 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20170911
++#define BFD_VERSION_DATE 20170912
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 116eb00edd27c07a06178f9c26aad1186d81b536
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Wed Sep 13 00:01:36 2017 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 960afa07c0..bce6193fdd 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20170912
++#define BFD_VERSION_DATE 20170913
  #define BFD_VERSION @bfd_version@
  #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
  #define REPORT_BUGS_TO @report_bugs_to@
