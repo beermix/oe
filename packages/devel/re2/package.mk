@@ -7,19 +7,11 @@ PKG_IS_ADDON="no"
 PKG_USE_CMAKE="yes"
 PKG_AUTORECONF="no"
 
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=0 -DBUILD_TESTING=0"
+PKG_CMAKE_OPTS_TARGET="-DBUILD_SHARED_LIBS=0 -DBUILD_TESTING=0"
 
 PKG_CMAKE_OPTS_HOST="$PKG_CMAKE_OPTS_TARGET"
 
 pre_configure_target() {
-  cd $ROOT/$PKG_BUILD
-  rm -rf .$TARGET_NAME
-  export CC="$CC"
-  export CXX="$CXX"
-  export AR="$AR"
-  export NM="$NM"
-  #export LDFLAGS="$LDFLAGS -lpcre -lpthread -lstdc++"
-  export CFLAGS="$CFLAGS"
-  export CPPFLAGS="$CPPFLAGS"
-  export CXXFLAGS="$CXXFLAGS"
+  CFLAGS="$CFLAGS -fPIC"
+  CXXFLAGS="$CXXFLAGS -fPIC"
 }
