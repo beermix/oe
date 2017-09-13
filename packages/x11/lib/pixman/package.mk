@@ -33,16 +33,13 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-openmp \
                            --enable-gcc-inline-asm \
                            --disable-timers \
                            --disable-gtk \
-                           --enable-libpng \
                            --enable-mmx \
                            --enable-sse2 \
-                           --enable-ssse3 \
                            --disable-vmx \
                            --disable-arm-simd \
                            --disable-arm-neon \
                            --with-gnu-ld \
                            --disable-static"
-
 
 post_makeinstall_target() {
   cp $SYSROOT_PREFIX/usr/lib/pkgconfig/pixman-1.pc \
