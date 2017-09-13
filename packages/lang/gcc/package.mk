@@ -81,6 +81,10 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time \
                          --enable-clocale=gnu \
+                         --disable-libunwind-exceptions \
+                         --enable-gnu-indirect-function \
+                         --enable-default-pie \
+                         --enable-default-ssp \
                          $GCC_OPTS"
 pre_configure_host() {
   #export CXXFLAGS="$CXXFLAGS -std=gnu++98"
