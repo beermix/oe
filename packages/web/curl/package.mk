@@ -31,7 +31,7 @@ PKG_ARCH="any"
 PKG_LICENSE="MIT"
 PKG_SITE="https://curl.haxx.se/download/?C=M;O=D"
 PKG_URL="http://curl.haxx.se/download/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain zlib openssl rtmpdump c-ares"
+PKG_DEPENDS_TARGET="toolchain zlib openssl rtmpdump"
 PKG_PRIORITY="optional"
 PKG_SECTION="web"
 PKG_SHORTDESC="curl: Client and library for (HTTP, HTTPS, FTP, ...) transfers"
@@ -68,8 +68,9 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            --disable-ipv6 \
                            --enable-versioned-symbols \
                            --enable-nonblocking \
-                           --disable-threaded-resolver \
-                           --enable-ares \
+                           --enable-threaded-resolver \
+                           --enable-pthreads \
+                           --disable-ares \
                            --enable-verbose \
                            --disable-sspi \
                            --enable-crypto-auth \
