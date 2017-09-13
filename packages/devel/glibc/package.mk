@@ -124,7 +124,7 @@ GLIBC_INCLUDE_BIN="getent ldd locale"
 
 post_makeinstall_target() {
 # xlocale.h was renamed - create symlink for compatibility
-#  ln -sf $SYSROOT_PREFIX/usr/include/bits/types/__locale_t.h $SYSROOT_PREFIX/usr/include/xlocale.h
+  ln -sf $SYSROOT_PREFIX/usr/include/bits/types/__locale_t.h $SYSROOT_PREFIX/usr/include/xlocale.h
 
 # we are linking against ld.so, so symlink
   ln -sf $(basename $INSTALL/lib/ld-*.so) $INSTALL/lib/ld.so
