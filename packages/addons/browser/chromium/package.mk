@@ -96,7 +96,7 @@ make_target() {
     'use_cups=false'
     'use_gconf=false'
     'use_gnome_keyring=false'
-    'use_gold=false'
+    'use_gold=true'
     'use_gtk3=false'
     'use_vaapi=true'
     'use_kerberos=false'
@@ -143,7 +143,7 @@ make_target() {
   ./tools/gn/bootstrap/bootstrap.py --gn-gen-args "${_flags[*]}"
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$ROOT/$TOOLCHAIN/bin/python
 
-  ninja -j5 -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
+  ninja -j2 -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
 }
 
 makeinstall_target() {
