@@ -81,8 +81,8 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time \
                          --enable-clocale=gnu \
-                         --disable-libunwind-exceptions \
-                         --enable-gnu-indirect-function \
+                         --enable-gnu-unique-object \
+                         --enable-linker-build-id \
                          --enable-default-pie \
                          --enable-default-ssp \
                          $GCC_OPTS"
