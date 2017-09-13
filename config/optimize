@@ -24,7 +24,7 @@ fi
 if [ "$DEBUG" = yes ]; then
   TARGET_CFLAGS="$TARGET_CFLAGS -ggdb"
   TARGET_CXXFLAGS="$TARGET_CXXFLAGS -ggdb"
-  TARGET_LDFLAGS="$TARGET_LDFLAGS -ggdb"
+  TARGET_LDFLAGS="$TARGET_LDFLAGS -ggdb -s"
 else
   TARGET_CFLAGS="$TARGET_CFLAGS -fomit-frame-pointer"
   TARGET_CXXFLAGS="$TARGET_CXXFLAGS -fomit-frame-pointer"
