@@ -31,8 +31,6 @@ PKG_AUTORECONF="yes"
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_have_abstract_sockets=yes \
                            ac_cv_func_posix_getpwnam_r=yes \
                            have_abstract_sockets=yes \
-                           --enable-static \
-                           --disable-shared \
                            --disable-tests \
                            --disable-bash-completion \
                            --enable-asserts=no"
