@@ -28,9 +28,9 @@ PKG_LONGDESC="International Components for Unicode library"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-post_unpack() {
-  cp -r $ROOT/$PKG_BUILD/source/* $ROOT/$PKG_BUILD/
-}
+#post_unpack() {
+#  cp -r $ROOT/$PKG_BUILD/source/* $ROOT/$PKG_BUILD/
+#}
 
 pre_configure_target() {
   CFLAGS="$CFLAGS -fPIC"
@@ -61,9 +61,8 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
 			      --disable-samples \
 			      --with-cross-build=$ROOT/$PKG_BUILD/.$HOST_NAME"
 
+PKG_CONFIGURE_SCRIPT="source/configure"
+
 post_makeinstall_target() {
-  rm -rf $INSTALL/usr/lib/icu
-  rm -rf $INSTALL/usr/bin
-  rm -rf $INSTALL/usr/share
-  rm -rf $INSTALL/
+  rm -rf $INSTALL
 }
