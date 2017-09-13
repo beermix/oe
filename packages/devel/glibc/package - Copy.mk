@@ -46,6 +46,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --enable-experimental-malloc \
                            --enable-hidden-plt \
                            --enable-stackguard-randomization \
+                           --enable-add-ons=libidn \
                            --with-tls \
                            --with-__thread \
                            --with-binutils=$ROOT/$BUILD/toolchain/bin \
