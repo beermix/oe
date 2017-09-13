@@ -7,8 +7,6 @@ PKG_AUTORECONF="no"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-strip_lto
-
 pre_make_target() {
   export GOOS=linux
   export GOARCH=amd64
@@ -24,7 +22,7 @@ pre_make_target() {
 
 make_target() {
   mkdir -p bin
-  $GOLANG get -v -u github.com/anacrolix/torrent github.com/anacrolix/torrent/iplist github.com/dustin/go-humanize
+  $GOLANG get -v -u github.com/Sioro-Neoku/go-peerflix
   $GOLANG build -v -o bin/$PKG_NAME -a -ldflags "$LDFLAGS" ./
   $STRIP bin/$PKG_NAME
 }
