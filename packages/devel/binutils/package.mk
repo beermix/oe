@@ -30,7 +30,6 @@ PKG_LONGDESC="The GNU binutils are utilities of use when dealing with object fil
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-
 PKG_CONFIGURE_OPTS_HOST="MAKEINFO=true \
                          --target=$TARGET_NAME \
                          --with-sysroot=$SYSROOT_PREFIX \
