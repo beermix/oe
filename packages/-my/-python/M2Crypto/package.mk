@@ -4,8 +4,8 @@
 ################################################################################
 
 PKG_NAME="M2Crypto"
-#PKG_VERSION="0.25.1"
-PKG_VERSION="0.22.5"
+PKG_VERSION="0.25.1"
+#PKG_VERSION="0.22.5"
 PKG_GIT_URL="https://gitlab.com/m2crypto/m2crypto"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"
 PKG_PRIORITY="optional"
