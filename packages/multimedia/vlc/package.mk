@@ -15,7 +15,6 @@ PKG_LONGDESC="VLC is the VideoLAN project's media player. It plays MPEG, MPEG2, 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-
 PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --disable-dependency-tracking \
 			      --without-contrib \

@@ -44,8 +44,6 @@ if [ "$DISPLAYSERVER" = "x11" ]; then
                     --enable-xlib-xrender \
                     --enable-gl \
                     --enable-glx \
-                    --disable-glesv2 \
-                    --disable-egl \
                     --with-x"
 
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CAIRO_CONFIG \
