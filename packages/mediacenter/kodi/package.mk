@@ -47,7 +47,7 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$ROOT/$TOOLCHAIN \
                        -DCMAKE_BUILD_TYPE=none \
                        -DPYTHON_INCLUDE_DIRS=$SYSROOT_PREFIX/usr/include/python2.7 \
                        -DGIT_VERSION=$PKG_VERSION \
-                       -DENABLE_LDGOLD=ON \
+                       -DENABLE_LDGOLD=OFF \
                        -DKODI_DEPENDSBUILD=ON \
                        -DWITH_TEXTUREPACKER=$ROOT/$TOOLCHAIN/bin/TexturePacker \
                        -DENABLE_INTERNAL_FFMPEG=OFF \
@@ -254,6 +254,7 @@ makeinstall_host() {
 
 pre_configure_target() {
   strip_lto
+  strip_gold
 }
 
 pre_make_target() {

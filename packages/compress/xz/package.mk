@@ -28,16 +28,16 @@ PKG_LONGDESC="XZ Utils is free general-purpose data compression software with hi
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_HOST="--enable-static=yes --enable-shared=no --disable-doc"
+PKG_CONFIGURE_OPTS_HOST="--enable-static=yes --enable-shared=no --disable-doc --with-pic --enable-silent-rules --enable-threads"
                          
-PKG_CONFIGURE_OPTS_TARGET="--enable-threads --disable-rpath --disable-doc --enable-static"
+PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
 
-pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC -DPIC"
-  export CXXFLAGS="$CXXFLAGS -fPIC -DPIC"
-}
+#pre_configure_target() {
+#  export CFLAGS="$CFLAGS -fPIC -DPIC"
+#  export CXXFLAGS="$CXXFLAGS -fPIC -DPIC"
+#}
 
-pre_configure_host() {
-  export CFLAGS="$CFLAGS -fPIC"
-  export CXXFLAGS="$CXXFLAGS -fPIC"
-}
+#pre_configure_host() {
+#  export CFLAGS="$CFLAGS -fPIC"
+#  export CXXFLAGS="$CXXFLAGS -fPIC"
+#}
