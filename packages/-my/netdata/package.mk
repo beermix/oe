@@ -12,18 +12,18 @@ PKG_CONFIGURE_OPTS_TARGET="--with-zlib \
 			      --enable-x86-sse \
 			      --disable-lto \
 			      --with-user=netdata \
-			      --with-webdir=/storage/.config/webdir \
-			      --sysconfdir=/storage/.config \
-                           --datadir=/storage/.config \
-                           --libdir=/storage/.config \
-                           --libexecdir=/storage/.config \
-                           --sharedstatedir=/storage/.config \
-                           --localstatedir=/storage/.config \
-                           --includedir=/storage/.config \
-                           --oldincludedir=/storage/.config \
-                           --datarootdir=/storage/.config \
-                           --infodir=/storage/.config \
-                           --localedir=/storage/.config"
+			      --with-webdir=/storage/.config/netdata \
+			      --sysconfdir=/storage/.config/netdata \
+                           --datadir=/storage/.config/netdata \
+                           --libdir=/storage/.config/netdata \
+                           --libexecdir=/storage/.config/netdata \
+                           --sharedstatedir=/storage/.config/netdata \
+                           --localstatedir=/storage/.config/netdata \
+                           --includedir=/storage/.config/netdata \
+                           --oldincludedir=/storage/.config/netdata \
+                           --datarootdir=/storage/.config/netdata \
+                           --infodir=/storage/.config/netdata \
+                           --localedir=/storage/.config/netdata"
                  
 post_install() {
   add_user nobody x 990 990 "netdata" "/storage" "/bin/sh"
