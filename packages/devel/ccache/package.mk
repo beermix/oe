@@ -32,7 +32,11 @@ PKG_LONGDESC="Ccache is a compiler cache. It speeds up re-compilation of C/C++ c
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_HOST="--with-bundled-zlib"
+CFLAGS="-O2 -pipe -fstack-protector-strong -fno-plt"
+CPPFLAGS="-D_FORTIFY_SOURCE=2"
+LDDFLAGS="-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now"
+
+PKG_CONFIGURE_OPTS_HOST="--disable-silent-rules"
 
 post_makeinstall_host() {
 # setup ccache
