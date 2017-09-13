@@ -40,7 +40,7 @@ pre_configure_target() {
   # unset LIBTOOL because freetype uses its own
     ( cd ..
     unset LIBTOOL
-    NOCONFIGURE=1 ./autogen.sh
+    sh autogen.sh
     )
 }
 
