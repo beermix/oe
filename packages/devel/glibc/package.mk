@@ -79,7 +79,7 @@ pre_configure_target() {
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong -D_FORTIFY_SOURCE=2||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-ffast-math||g"`
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-Ofast|-O2|g"`
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-fno-caller-saves||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O2|g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong -fno-plt||g"`
@@ -154,8 +154,8 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/lib/libpcprofile.so
 
 # remove ldscripts
-  rm -rf $INSTALL/usr/lib/libc.so
-  rm -rf $INSTALL/usr/lib/libpthread.so
+#  rm -rf $INSTALL/usr/lib/libc.so
+#  rm -rf $INSTALL/usr/lib/libpthread.so
 
 # remove locales and charmaps
   rm -rf $INSTALL/usr/share/i18n/charmaps
