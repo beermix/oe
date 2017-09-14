@@ -17,14 +17,14 @@
 ################################################################################
 
 PKG_NAME="mono"
-PKG_VERSION="5.4.0.167"
+PKG_VERSION="5.2.0.215"
 PKG_REV="106"
 PKG_ARCH="any"
 PKG_LICENSE="MIT"
 PKG_SITE="http://www.mono-project.com"
 PKG_URL="http://download.mono-project.com/sources/mono/$PKG_NAME-$PKG_VERSION.tar.bz2"
 #PKG_SOURCE_DIR="$PKG_NAME-${PKG_VERSION%.*}"
-PKG_DEPENDS_TARGET="toolchain mono:host libgdiplus sqlite zlib"
+PKG_DEPENDS_TARGET="toolchain mono:host libgdiplus sqlite zlib avahi"
 PKG_SECTION="tools"
 PKG_SHORTDESC="Mono: a cross platform, open source .NET framework"
 PKG_LONGDESC="Mono ($PKG_VERSION) is a software platform designed to allow developers to easily create cross platform applications part of the .NET Foundation"
