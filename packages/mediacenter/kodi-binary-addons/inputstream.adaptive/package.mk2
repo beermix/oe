@@ -17,12 +17,13 @@
 ################################################################################
 
 PKG_NAME="inputstream.adaptive"
-PKG_VERSION="c69f134"
+PKG_VERSION="aa0d511"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_URL="https://dl.dropboxusercontent.com/s/dw4ogjdaknmwcgu/inputstream.adaptive-c69f134.tar.xz"
-#PKG_GIT_BRANCH="Krypton"
+#PKG_GIT_URL="https://github.com/peak3d/inputstream.adaptive"
+PKG_GIT_URL="https://github.com/liberty-developer/inputstream.adaptive"
+PKG_GIT_BRANCH="master"
 PKG_DEPENDS_TARGET="toolchain kodi-platform expat"
 PKG_PRIORITY="optional"
 PKG_SECTION=""
