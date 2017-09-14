@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2016-present Team LibreELEC
+#      Copyright (C) 2016 Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -13,18 +13,18 @@
 #  GNU General Public License for more details.
 #
 #  You should have received a copy of the GNU General Public License
-#  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
+#  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>. mono_sqlite
 ################################################################################
 
 PKG_NAME="mono"
-PKG_VERSION="5.4.0.167"
-PKG_REV="106"
+PKG_VERSION="4.2.1.102"
+PKG_REV="99"
 PKG_ARCH="any"
 PKG_LICENSE="MIT"
 PKG_SITE="http://www.mono-project.com"
 PKG_URL="http://download.mono-project.com/sources/mono/$PKG_NAME-$PKG_VERSION.tar.bz2"
-#PKG_SOURCE_DIR="$PKG_NAME-${PKG_VERSION%.*}"
-PKG_DEPENDS_TARGET="toolchain mono:host libgdiplus sqlite zlib"
+PKG_SOURCE_DIR="$PKG_NAME-${PKG_VERSION%.*}"
+PKG_DEPENDS_TARGET="toolchain mono:host libgdiplus sqlite zlib avahi"
 PKG_SECTION="tools"
 PKG_SHORTDESC="Mono: a cross platform, open source .NET framework"
 PKG_LONGDESC="Mono ($PKG_VERSION) is a software platform designed to allow developers to easily create cross platform applications part of the .NET Foundation"
@@ -33,7 +33,6 @@ PKG_AUTORECONF="yes"
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Mono"
 PKG_ADDON_TYPE="xbmc.python.script"
-PKG_MAINTAINER="Anton Voyl (awiouy)"
 
 prefix="/storage/.kodi/addons/$PKG_SECTION.$PKG_NAME"
 options="--build=$HOST_NAME \
@@ -55,6 +54,7 @@ configure_host() {
 makeinstall_host() {
   : # nop
 }
+
 
 configure_target() {
   cp -PR ../* .
