@@ -17,11 +17,12 @@
 ################################################################################
 
 PKG_NAME="glibc"
-PKG_VERSION="2.26"
+PKG_VERSION="58270c0"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/libc/"
-PKG_URL="http://ftp.gnu.org/pub/gnu/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_GIT_URL="git://sourceware.org/git/glibc.git"
+#PKG_URL="http://ftp.gnu.org/pub/gnu/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap localedef-eglibc:host"
 PKG_DEPENDS_INIT="glibc"
 PKG_SECTION="toolchain/devel"
@@ -47,7 +48,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-__thread \
                            --with-binutils=$ROOT/$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
-                           --enable-kernel=2.6.32 \
+                           --enable-kernel=3.0.0 \
                            --without-cvs \
                            --without-gd \
                            --enable-obsolete-rpc \
@@ -82,7 +83,7 @@ pre_configure_target() {
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fno-caller-saves||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O2|g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong||g"`
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong -fno-plt||g"`
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-fno-plt||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
   export CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
 
@@ -148,10 +149,10 @@ post_makeinstall_target() {
   rm -rf $INSTALL/var
 
 # remove unneeded libs
-  rm -rf $INSTALL/usr/lib/libBrokenLocale*
-  rm -rf $INSTALL/usr/lib/libSegFault.so
-  rm -rf $INSTALL/usr/lib/libmemusage.so
-  rm -rf $INSTALL/usr/lib/libpcprofile.so
+#  rm -rf $INSTALL/usr/lib/libBrokenLocale*
+#  rm -rf $INSTALL/usr/lib/libSegFault.so
+#  rm -rf $INSTALL/usr/lib/libmemusage.so
+#  rm -rf $INSTALL/usr/lib/libpcprofile.so
 
 # remove ldscripts
 #  rm -rf $INSTALL/usr/lib/libc.so
