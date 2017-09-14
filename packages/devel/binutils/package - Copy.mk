@@ -45,6 +45,9 @@ PKG_CONFIGURE_OPTS_HOST="MAKEINFO=true \
                          --enable-gold \
                          --enable-ld=default \
                          --enable-lto \
+                         --enable-shared \
+                         --enable-threads \
+                         --with-pic \
                          --disable-nls \
                          --enable-poison-system-directories"
 
