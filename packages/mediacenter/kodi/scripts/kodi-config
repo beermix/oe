@@ -35,13 +35,13 @@ if [ ! -f $HOME/.kodi/userdata/guisettings.xml ] ; then
   fi
 fi
 
-if [ -e /run/lirc/lircd.irtrans ]; then
-  KODI_ARGS="--lircdev /run/lirc/lircd.irtrans"
-else
-  KODI_ARGS="--lircdev /run/lirc/lircd"
-fi
+KODI_ARGS="--lircdev /run/lirc/lircd"
 
 
 mkdir -p /run/kodi
 
 echo "KODI_ARGS=\"$KODI_ARGS\"" > /run/openelec/kodi.conf
+
+if [ "$(uname -m)" = "x86_64" -o "$(uname -m)" = "aarch64" ]; then
+  echo "MALLOC_MMAP_THRESHOLD_=524288" >> /run/openelec/kodi.conf
+fi
