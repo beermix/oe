@@ -44,7 +44,7 @@ post_install() {
     fi
 
     mkdir -p $ROOT/$BUILD/image/
-      echo "mkdir -p dev; mknod -m 600 dev/console c 5 1; find . | cpio -H newc -ov -R 0:0 > $BUILD/image/initramfs.cpio" >> $FAKEROOT_SCRIPT_INIT
+      echo "find . | cpio -H newc -ov -R 0:0 > $ROOT/$BUILD/image/initramfs.cpio" >> $FAKEROOT_SCRIPT_INIT
 
     # run fakeroot
       chmod +x $FAKEROOT_SCRIPT_INIT

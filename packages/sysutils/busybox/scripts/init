@@ -1108,6 +1108,6 @@
   fi
 
   # switch to new sysroot and start real init
-  exec /usr/bin/busybox switch_root /sysroot /usr/lib/systemd/systemd $INIT_ARGS $INIT_UNIT
+  exec /bin/busybox switch_root /sysroot $SYSTEMD_BIN $INIT_ARGS $INIT_UNIT
 
   error "switch_root" "Error in initramfs. Could not switch to new root"
