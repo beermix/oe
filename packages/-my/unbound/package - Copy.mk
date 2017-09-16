@@ -12,6 +12,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-dsa \
 			      --disable-gost \
 			      --enable-allsymbols \
 			      --disable-rpath \
+			      --disable-flto \
 			      --enable-pie \
 			      --enable-relro-now \
 			      --disable-shared \
