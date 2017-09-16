@@ -1,0 +1,70 @@
+From 2f5ae3f5137463a79919ca3950657fb742dff576 Mon Sep 17 00:00:00 2001
+From: Joseph Nuzman <jnuzman@gmail.com>
+Date: Fri, 1 Sep 2017 14:20:38 +0300
+Subject: [PATCH] Set connector type when updating ELD
+
+---
+ drivers/gpu/drm/i915/intel_audio.c | 14 ++++++++++----
+ drivers/gpu/drm/i915/intel_drv.h   |  1 +
+ drivers/gpu/drm/i915/intel_modes.c |  1 +
+ 3 files changed, 12 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/gpu/drm/i915/intel_audio.c b/drivers/gpu/drm/i915/intel_audio.c
+index d805b6e6fe71..f22fabf76e0e 100644
+--- a/drivers/gpu/drm/i915/intel_audio.c
++++ b/drivers/gpu/drm/i915/intel_audio.c
+@@ -575,6 +575,15 @@ static void ilk_audio_codec_enable(struct drm_connector *connector,
+ 	I915_WRITE(aud_config, tmp);
+ }
+ 
++void intel_eld_set_conn_type(struct drm_connector *connector)
++{
++	enum intel_output_type type = intel_attached_encoder(connector)->type; 
++	/* ELD Conn_Type */
++	connector->eld[5] &= ~(3 << 2);
++	if (type == INTEL_OUTPUT_DP || type == INTEL_OUTPUT_EDP || type == INTEL_OUTPUT_DP_MST)
++		connector->eld[5] |= (1 << 2);
++}
++
+ /**
+  * intel_audio_codec_enable - Enable the audio codec for HD audio
+  * @intel_encoder: encoder on which to enable audio
+@@ -606,10 +615,7 @@ void intel_audio_codec_enable(struct intel_encoder *intel_encoder,
+ 			 connector->encoder->base.id,
+ 			 connector->encoder->name);
+ 
+-	/* ELD Conn_Type */
+-	connector->eld[5] &= ~(3 << 2);
+-	if (intel_crtc_has_dp_encoder(crtc_state))
+-		connector->eld[5] |= (1 << 2);
++	intel_eld_set_conn_type(connector);
+ 
+ 	connector->eld[6] = drm_av_sync_delay(connector, adjusted_mode) / 2;
+ 
+diff --git a/drivers/gpu/drm/i915/intel_drv.h b/drivers/gpu/drm/i915/intel_drv.h
+index d93efb49a2e2..e49d4c6397dc 100644
+--- a/drivers/gpu/drm/i915/intel_drv.h
++++ b/drivers/gpu/drm/i915/intel_drv.h
+@@ -1298,6 +1298,7 @@ unsigned int intel_fb_align_height(const struct drm_framebuffer *fb,
+ 
+ /* intel_audio.c */
+ void intel_init_audio_hooks(struct drm_i915_private *dev_priv);
++void intel_eld_set_conn_type(struct drm_connector *connector);
+ void intel_audio_codec_enable(struct intel_encoder *encoder,
+ 			      const struct intel_crtc_state *crtc_state,
+ 			      const struct drm_connector_state *conn_state);
+diff --git a/drivers/gpu/drm/i915/intel_modes.c b/drivers/gpu/drm/i915/intel_modes.c
+index 951e834dd274..9f2f0721750a 100644
+--- a/drivers/gpu/drm/i915/intel_modes.c
++++ b/drivers/gpu/drm/i915/intel_modes.c
+@@ -43,6 +43,7 @@ int intel_connector_update_modes(struct drm_connector *connector,
+ 	drm_mode_connector_update_edid_property(connector, edid);
+ 	ret = drm_add_edid_modes(connector, edid);
+ 	drm_edid_to_eld(connector, edid);
++	intel_eld_set_conn_type(connector);
+ 
+ 	return ret;
+ }
+-- 
+2.11.0
+
