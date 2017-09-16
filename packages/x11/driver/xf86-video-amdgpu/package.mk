@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="xf86-video-amdgpu"
-PKG_VERSION="1.3.0"
+PKG_VERSION="1.4.0"
 PKG_ARCH="x86_64"
 PKG_SITE="http://www.x.org/"
 PKG_URL="http://xorg.freedesktop.org/archive/individual/driver/$PKG_NAME-$PKG_VERSION.tar.bz2"

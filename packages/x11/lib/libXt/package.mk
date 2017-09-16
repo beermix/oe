@@ -28,8 +28,7 @@ PKG_LONGDESC="LibXt provides the X Toolkit Intrinsics, an abstract widget librar
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--with-gnu-ld \
-                           --enable-malloc0returnsnull"
+PKG_CONFIGURE_OPTS_TARGET="--with-gnu-ld --enable-malloc0returnsnull"
 
 pre_make_target() {
   make -C util CC=$HOST_CC \
