@@ -1,0 +1,11 @@
+--- a/util-linux/umount.c	2017-08-18 12:23:47.961146779 +0000
++++ b/util-linux/umount.c	2017-08-18 12:23:34.624652692 +0000
+@@ -69,7 +69,7 @@
+ #endif
+ 
+ /* ignored: -v -t -i */
+-#define OPTION_STRING           "fldnra" "vt:i"
++#define OPTION_STRING           "fldnrac" "vt:i"
+ #define OPT_FORCE               (1 << 0) // Same as MNT_FORCE
+ #define OPT_LAZY                (1 << 1) // Same as MNT_DETACH
+ #define OPT_FREELOOP            (1 << 2)

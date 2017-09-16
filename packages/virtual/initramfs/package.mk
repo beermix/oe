@@ -14,15 +14,16 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################ psplash:init xfsprogs:init
+################################################################################
 
 PKG_NAME="initramfs"
 PKG_VERSION=""
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.openelec.tv"
 PKG_URL=""
-PKG_DEPENDS_TARGET="toolchain libc:init busybox:init linux:init psplash:init util-linux:init e2fsprogs:init dosfstools:init xfsprogs:init"
+#PKG_DEPENDS_TARGET="toolchain libc:init busybox:init linux:init psplash:init util-linux:init e2fsprogs:init dosfstools:init xfsprogs:init"
 PKG_PRIORITY="optional"
+PKG_DEPENDS_TARGET="toolchain libc:init busybox:init linux:init plymouth-lite:init util-linux:init e2fsprogs:init dosfstools:init xfsprogs:init"
 PKG_SECTION="virtual"
 PKG_SHORTDESC="initramfs: Metapackage for installing initramfs"
 PKG_LONGDESC="debug is a Metapackage for installing initramfs"
@@ -43,7 +44,7 @@ post_install() {
     fi
 
     mkdir -p $ROOT/$BUILD/image/
-      echo "find . | cpio -H newc -ov -R 0:0 > $ROOT/$BUILD/image/initramfs.cpio" >> $FAKEROOT_SCRIPT_INIT
+      echo "mkdir -p dev; mknod -m 600 dev/console c 5 1; find . | cpio -H newc -ov -R 0:0 > $BUILD/image/initramfs.cpio" >> $FAKEROOT_SCRIPT_INIT
 
     # run fakeroot
       chmod +x $FAKEROOT_SCRIPT_INIT

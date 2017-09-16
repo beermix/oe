@@ -156,24 +156,25 @@ makeinstall_host() {
 
 makeinstall_target() {
   mkdir -p $INSTALL/usr/bin
+    [ $TARGET_ARCH = x86_64 ] && cp $PKG_DIR/scripts/getedid $INSTALL/usr/bin
     cp $PKG_DIR/scripts/createlog $INSTALL/usr/bin/
     cp $PKG_DIR/scripts/lsb_release $INSTALL/usr/bin/
     cp $PKG_DIR/scripts/apt-get $INSTALL/usr/bin/
     cp $PKG_DIR/scripts/passwd $INSTALL/usr/bin/
     cp $PKG_DIR/scripts/sudo $INSTALL/usr/bin/
-    ln -sf /bin/busybox $INSTALL/usr/bin/env          #/usr/bin/env is needed for most python scripts
     cp $PKG_DIR/scripts/pastebinit $INSTALL/usr/bin/
     ln -sf pastebinit $INSTALL/usr/bin/paste
 
-    
     #rm $INSTALL/bin/sh
     #rm $INSTALL/bin/hostname
     #rm $INSTALL/sbin/ip
     rm $INSTALL/bin/bash
 
   mkdir -p $INSTALL/usr/lib/openelec
+    cp $PKG_DIR/scripts/functions $INSTALL/usr/lib/openelec
     cp $PKG_DIR/scripts/fs-resize $INSTALL/usr/lib/openelec
-      sed -e "s/@DISTRONAME@/$DISTRONAME/g" -i $INSTALL/usr/lib/openelec/fs-resize
+    sed -e "s/@DISTRONAME@/$DISTRONAME/g" \
+        -i $INSTALL/usr/lib/openelec/fs-resize
 
   mkdir -p $INSTALL/etc
     cp $PKG_DIR/config/profile $INSTALL/etc
@@ -188,7 +189,7 @@ makeinstall_target() {
     touch $INSTALL/etc/fstab
 
   # /etc/machine-id, needed by systemd and dbus
-    ln -sf /run/machine-id $INSTALL/etc/machine-id
+    ln -sf /storage/.cache/machine-id $INSTALL/etc/machine-id
 
   # /etc/mtab is needed by udisks etc...
     ln -sf /proc/self/mounts $INSTALL/etc/mtab
@@ -223,7 +224,6 @@ post_install() {
 
   enable_service debug-shell.service
   enable_service shell.service
-  enable_service show-version.service
   enable_service var.mount
   enable_service var-log-debug.service
   enable_service fs-resize.service
@@ -249,12 +249,19 @@ makeinstall_init() {
     touch $INSTALL/etc/fstab
     ln -sf /proc/self/mounts $INSTALL/etc/mtab
 
-  if [ -f $PROJECT_DIR/$PROJECT/initramfs/platform_init ]; then
+  if [ -n "$DEVICE" -a -f $PROJECT_DIR/$PROJECT/devices/$DEVICE/initramfs/platform_init ]; then
+    cp $PROJECT_DIR/$PROJECT/devices/$DEVICE/initramfs/platform_init $INSTALL
+  elif [ -f $PROJECT_DIR/$PROJECT/initramfs/platform_init ]; then
     cp $PROJECT_DIR/$PROJECT/initramfs/platform_init $INSTALL
+  fi
+  if [ -f $INSTALL/platform_init ]; then
     chmod 755 $INSTALL/platform_init
   fi
 
-  cp $BUSYBOX_INIT_FILE $INSTALL
-    sed -e "s/@DISTRONAME@/$DISTRONAME/g" -i $INSTALL/init
+  cp $PKG_DIR/scripts/functions $INSTALL
+  cp $PKG_DIR/scripts/init $INSTALL
+  sed -e "s/@DISTRONAME@/$DISTRONAME/g" \
+      -e "s/@KERNEL_NAME@/$KERNEL_NAME/g" \
+      -i $INSTALL/init
   chmod 755 $INSTALL/init
 }
