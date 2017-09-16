@@ -53,8 +53,9 @@ make_target() {
 
   #CCACHE_SLOPPINESS=include_file_mtime
   
-  export -n CFLAGS CXXFLAGS
+#  export -n CFLAGS CXXFLAGS
   export LDFLAGS="$LDFLAGS -ludev"
+  export LD=$CXX
 
   # Use Python 2
   find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$ROOT/$TOOLCHAIN/bin/python|g" {} +
@@ -73,8 +74,8 @@ make_target() {
       -e 's|/usr/lib64/va/drivers|/usr/lib/dri|g' \
       -i ./content/common/sandbox_linux/bpf_gpu_policy_linux.cc
 
-  export TMPDIR="/root/-3SDC/temp"
-  mkdir -p "$TMPDIR"
+#  export TMPDIR="/root/-3SDC/temp"
+#  mkdir -p "$TMPDIR"
 
   local _flags=(
     'is_clang=false'
@@ -87,11 +88,8 @@ make_target() {
     'remove_webcore_debug_symbols=true'
     'ffmpeg_branding="Chrome"'
     'proprietary_codecs=true'
-    'link_pulseaudio=false'
+    'link_pulseaudio=true'
     'linux_use_bundled_binutils=false'
-    'use_debug_fission=false'
-    'is_clang=false'
-    'use_custom_libcxx=false'
     'use_allocator="none"'
     'use_cups=false'
     'use_gconf=false'
@@ -100,6 +98,7 @@ make_target() {
     'use_gtk3=false'
     'use_vaapi=true'
     'use_kerberos=false'
+    'use_pulseaudio=false'
     'use_sysroot=true'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_hangout_services_extension=true'
