@@ -1,5 +1,6 @@
 if [ "$OPTIMIZATIONS" = normal ];then
-  GCC_OPTIM="-O2 -pipe -fno-caller-saves -fno-plt"
+  GCC_OPTIM="-O2 -pipe -fstack-protector-strong -fno-plt"
+  CPP_OPTIM="-D_FORTIFY_SOURCE=2"
   LD_OPTIM="-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now"
 fi
 
@@ -38,7 +39,7 @@ TARGET_LDFLAGS="$TARGET_LDFLAGS $LD_OPTIM $LD_OPTIM_GOLD $LD_OPTIM_LTO"
 TARGET_LIBDIR="$SYSROOT_PREFIX/lib $SYSROOT_PREFIX/usr/lib"
 TARGET_INCDIR="$SYSROOT_PREFIX/include $SYSROOT_PREFIX/usr/include"
 
-HOST_CFLAGS="-march=core-avx2 -O2 -pipe -I$ROOT/$TOOLCHAIN/include"
+HOST_CFLAGS="-march=core-avx2 -mtune=core-avx2 -O2 -pipe -I$ROOT/$TOOLCHAIN/include"
 HOST_CXXFLAGS="$HOST_CFLAGS"
 HOST_CPPFLAGS="-I$ROOT/$TOOLCHAIN/include"
 HOST_LDFLAGS="-Wl,-rpath,$ROOT/$TOOLCHAIN/lib -L$ROOT/$TOOLCHAIN/lib -s"
