@@ -28,7 +28,8 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-dsa \
 			      --with-libsodium=$SYSROOT_PREFIX/usr \
 			      --with-libexpat=$SYSROOT_PREFIX/usr \
 			      --with-ssl=$SYSROOT_PREFIX/usr"
-#		
-#post_makeinstall_target() {
-#  rm -rf $INSTALL/storage
-#}
+		
+post_makeinstall_target() {
+  rm -rf $INSTALL/storage
+  enable_service unbound.service
+}
