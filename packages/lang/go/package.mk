@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="go"
-PKG_VERSION="0993369"
+PKG_VERSION="78a0a31"
 PKG_SITE="https://github.com/golang/go/tree/release-branch.go1.9"
 PKG_GIT_URL="https://github.com/golang/go"
 PKG_GIT_BRANCH="release-branch.go1.9"
