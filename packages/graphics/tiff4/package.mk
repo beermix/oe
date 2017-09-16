@@ -21,21 +21,37 @@ PKG_VERSION="4.0.8"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
-PKG_SITE="http://www.remotesensing.org/libtiff/"
+PKG_SITE="http://download.osgeo.org/libtiff/?C=M;O=D"
 PKG_URL="http://download.osgeo.org/libtiff/tiff-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain libjpeg-turbo zlib"
+PKG_DEPENDS_TARGET="toolchain libjpeg-turbo zlib xz"
 PKG_PRIORITY="optional"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="libtiff: A library for reading and writing TIFF files"
 PKG_LONGDESC="libtiff is a library for reading and writing data files encoded with the Tag Image File format, Revision 6.0 (or revision 5.0 or revision 4.0). This file format is suit- able for archiving multi-color and monochromatic image data."
 
 PKG_IS_ADDON="no"
+PKG_USE_CMAKE="no"
 PKG_AUTORECONF="no"
 
 PKG_CMAKE_OPTS_HOST="-DBUILD_SHARED_LIBS=0 -Dlzma=0"
 
-PKG_CMAKE_OPTS_TARGET="$PKG_CMAKE_OPTS_HOST"
+PKG_CMAKE_OPTS_TARGET="$PKG_CMAKE_OPTS_HOST -Dlzma=1"
 
+PKG_CONFIGURE_OPTS_TARGET="--enable-static \
+                           --disable-shared \
+                           --disable-mdi \
+                           --enable-cxx \
+                           --with-gl=no \
+                           --with-jpeg-lib-dir=$SYSROOT_PREFIX/usr/lib \
+                           --with-jpeg-include-dir=$SYSROOT_PREFIX/usr/include \
+                           --without-x \
+                           --enable-silent-rules"
+                           
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
+}
+
+pre_configure_target() {
+  export CFLAGS="$CFLAGS -fPIC -DPIC"
+  export CXXFLAGS="$CXXFLAGS -fPIC -DPIC"
 }
