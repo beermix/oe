@@ -6,4 +6,4 @@ PKG_DEPENDS_TARGET="toolchain zlib openssl libaio libevent c-ares libev jansson 
 PKG_USE_CMAKE="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="-with-libxml2 --without-jemalloc --disable-examples"
+PKG_CONFIGURE_OPTS_TARGET="--with-libxml2 --without-jemalloc --disable-examples"
