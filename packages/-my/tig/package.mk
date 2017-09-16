@@ -1,5 +1,5 @@
 PKG_NAME="tig"
-PKG_VERSION="1125ef9"
+PKG_VERSION="bd42c8b"
 PKG_GIT_URL="https://github.com/jonas/tig"
 PKG_DEPENDS_TARGET="toolchain ncurses"
 PKG_SECTION="tools"
@@ -7,11 +7,8 @@ PKG_AUTORECONF="yes"
 
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
-  #CONCURRENCY_MAKE_LEVEL=1
-  #CFLAGS="$CFLAGS -fPIC -DPIC -static"
-  #CXXFLAGS="$CXXFLAGS -fPIC -DPIC -static"
-  CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
-  CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3|"`
+  rm -rf .$TARGET_NAME
+  CONCURRENCY_MAKE_LEVEL=1
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config \
