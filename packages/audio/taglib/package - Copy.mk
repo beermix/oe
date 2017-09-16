@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="taglib"
-PKG_VERSION="4648394"
+PKG_VERSION="1.11.1"
 PKG_SITE="http://taglib.github.com/"
-PKG_GIT_URL="https://github.com/taglib/taglib"
+PKG_URL="http://taglib.github.io/releases/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain cmake:host zlib"
 PKG_SECTION="audio"
 PKG_SHORTDESC="taglib: a library for reading and editing the meta-data of several popular audio formats."
@@ -29,7 +29,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release \
-                       -DBUILD_SHARED_LIBS=OFF \
+                       -DBUILD_SHARED_LIBS=ON \
                        -DWITH_MP4=ON \
                        -DWITH_ASF=ON"
 
