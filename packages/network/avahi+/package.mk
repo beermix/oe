@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,9 +17,12 @@
 ################################################################################
 
 PKG_NAME="avahi"
-PKG_VERSION="0.7"
+PKG_VERSION="0.6.32"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://avahi.org/"
-PKG_URL="https://github.com/lathiat/avahi/releases/download/v$PKG_VERSION/avahi-$PKG_VERSION.tar.gz"
+PKG_URL="http://sources.openelec.tv/mirror/avahi/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain expat libdaemon dbus connman"
 PKG_PRIORITY="optional"
 PKG_SECTION="network"
@@ -27,7 +30,8 @@ PKG_SHORTDESC="avahi: A Zeroconf mDNS/DNS-SD responder"
 PKG_LONGDESC="Avahi is a framework for Multicast DNS Service Discovery (mDNS/DNS-SD a.k.a. Zeroconf) on Linux. It allows programs to publish and discover services running on a local network with no specific configuration. For example, you can plug into a network and instantly find printers to print to, files to look at, and people to talk to."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+#broken
+PKG_AUTORECONF="no"
 
 MAKEFLAGS="-j1"
 
@@ -35,8 +39,8 @@ PKG_CONFIGURE_OPTS_TARGET="py_cv_mod_gtk_=yes \
                            py_cv_mod_dbus_=yes \
                            ac_cv_func_chroot=no \
                            --with-distro=none \
-                           --enable-glib \
-                           --enable-gobject \
+                           --disable-glib \
+                           --disable-gobject \
                            --disable-qt3 \
                            --disable-qt4 \
                            --disable-gtk \
@@ -65,12 +69,16 @@ PKG_CONFIGURE_OPTS_TARGET="py_cv_mod_gtk_=yes \
                            --disable-manpages \
                            --disable-xmltoman \
                            --disable-tests \
-                           --enable-compat-libdns_sd \
+                           --disable-compat-libdns_sd \
                            --disable-compat-howl \
                            --with-xml=expat \
                            --with-avahi-user=avahi \
                            --with-avahi-group=avahi \
                            --disable-nls"
+
+pre_configure_target() {
+  NOCONFIGURE=1 ./autogen.sh
+}
 
 post_makeinstall_target() {
 # for some reason avai can fail to start see: http://forums.gentoo.org/viewtopic-p-7322172.html#7322172
@@ -95,11 +103,9 @@ post_makeinstall_target() {
   rm -f $INSTALL/usr/bin/avahi-bookmarks
   rm -f $INSTALL/usr/bin/avahi-publish*
   rm -f $INSTALL/usr/bin/avahi-resolve*
-  rm -f $INSTALL/usr/lib/libdns_sd*
 
   mkdir -p $INSTALL/usr/share/services
     cp -P $PKG_DIR/default.d/*.conf $INSTALL/usr/share/services
-
 }
 
 post_install() {
