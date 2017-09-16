@@ -35,8 +35,8 @@ PKG_CONFIGURE_OPTS_TARGET="py_cv_mod_gtk_=yes \
                            py_cv_mod_dbus_=yes \
                            ac_cv_func_chroot=no \
                            --with-distro=none \
-                           --disable-glib \
-                           --disable-gobject \
+                           --enable-glib \
+                           --enable-gobject \
                            --disable-qt3 \
                            --disable-qt4 \
                            --disable-gtk \
@@ -69,8 +69,7 @@ PKG_CONFIGURE_OPTS_TARGET="py_cv_mod_gtk_=yes \
                            --disable-compat-howl \
                            --with-xml=expat \
                            --with-avahi-user=avahi \
-                           --with-avahi-group=avahi \
-                           --disable-nls"
+                           --with-avahi-group=avahi"
 
 post_makeinstall_target() {
 # for some reason avai can fail to start see: http://forums.gentoo.org/viewtopic-p-7322172.html#7322172
