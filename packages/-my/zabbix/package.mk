@@ -6,23 +6,26 @@ PKG_SECTION="devel"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-pre_configure_target() {
-   cd $ROOT/$PKG_BUILD
-   export LDFLAGS="-lpthread -lrt"
-   #export LIBS="$LIBS -lssh2 -lmbedcrypto"
-   #export CPPFLAGS="-I$(get_pkg_build linux)"
+pre_configure_host() {
+  cd $ROOT/$PKG_BUILD
+  rm -rf .$TARGET_NAME
 }
 
-PKG_CONFIGURE_OPTS_TARGET="--datadir=/storage/.config \
+PKG_CONFIGURE_OPTS_TARGET="--datadir=/storage/.config/zabbix \
 			      --sysconfdir=/storage/.config/zabbix \
+			      --disable-ipv6 \
+			      --disable-java \
 			      --enable-server \
 			      --enable-proxy \
 			      --enable-agent \
 			      --with-mysql \
 			      --with-net-snmp=no \
 			      --with-ssh2=no \
-			      --with-openssl=$SYSROOT_PREFIX/usr"
-
+			      --with-gnutls=no \
+			      --with-libxml2=$SYSROOT_PREFIX/usr \
+			      --with-iconv=$SYSROOT_PREFIX/usr \
+			      --with-libpcre=$SYSROOT_PREFIX/usr \
+			      --with-libevent=$SYSROOT_PREFIX/usr"
 
 post_install() {
   add_user zabbix x 990 990 "zabbix server" "/storage" "/bin/sh"

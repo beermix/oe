@@ -10,7 +10,10 @@ PKG_AUTORECONF="no"
 
 pre_configure_target() {
    strip_lto
-   strip_gold
+   #strip_gold
+   #export CXXFLAGS="-O4 -pipe -ffast-math -fomit-frame-pointer -fexpensive-optimizations"
+   #export CFLAGS="$CXXFLAGS"
+   #export CPPFLAGS="-D_FORTIFY_SOURCE=2"
 }
 
 
