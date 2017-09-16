@@ -1,8 +1,9 @@
 PKG_NAME="transmission"
-PKG_VERSION="master"
+PKG_VERSION="2.92GIT"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.transmissionbt.com/"
+PKG_URL="https://dl.dropboxusercontent.com/s/cp1t4gfj3d6d8jo/transmission-2.92GIT.tar.xz"
 PKG_DEPENDS_TARGET="toolchain zlib openssl curl libevent miniupnpc"
 PKG_SECTION="service/downloadmanager"
 PKG_SHORTDESC="transmission: a fast, easy and free BitTorrent client"
@@ -14,14 +15,14 @@ PKG_ADDON_PROVIDES=""
 PKG_USE_CMAKE="no"
 PKG_AUTORECONF="no"
 
-unpack() {
-  git clone --recursive --depth 1 https://github.com/transmission/transmission $ROOT/$PKG_BUILD/$PKG_NAME-git
-  cd $ROOT/$PKG_BUILD/$PKG_NAME-git
-  git reset --hard $PKG_VERSION
-  cd -
-  mv $ROOT/$PKG_BUILD/$PKG_NAME-git/* $ROOT/$PKG_BUILD/
-  rm -rf $ROOT/$PKG_BUILD/$PKG_NAME-git
-}
+#unpack() {
+#  git clone --recursive --depth 1 https://github.com/transmission/transmission $ROOT/$PKG_BUILD/$PKG_NAME-git
+#  cd $ROOT/$PKG_BUILD/$PKG_NAME*
+#  git reset --hard $PKG_VERSION
+#  cd -
+#  mv $ROOT/$PKG_BUILD/$PKG_NAME-git/* $ROOT/$PKG_BUILD/
+#  rm -rf $ROOT/$PKG_BUILD/$PKG_NAME*
+#}
 
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
