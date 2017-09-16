@@ -51,11 +51,11 @@ pre_make_target() {
 
 make_target() {
 
-  #CCACHE_SLOPPINESS=include_file_mtime
-  
 #  export -n CFLAGS CXXFLAGS
   export LDFLAGS="$LDFLAGS -ludev"
   export LD=$CXX
+  
+  export CCACHE_SLOPPINESS=include_file_mtime
 
   # Use Python 2
   find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$ROOT/$TOOLCHAIN/bin/python|g" {} +

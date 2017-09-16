@@ -7,8 +7,18 @@ PKG_SECTION="tools"
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--with-ssl=openssl \
-                           --without-libgnutls \
                            --enable-largefile \
                            --disable-ipv6 \
                            --disable-rpath \
-                           --with-metalink"
+                           --with-metalink \
+                           --sysconfdir=/storage/.config \
+			      --datadir=/storage/.config \
+			      --libdir=/storage/.config \
+			      --libexecdir=/storage/.config \
+			      --sharedstatedir=/storage/.config \
+			      --localstatedir=/storage/.config \
+			      --includedir=/storage/.config \
+			      --oldincludedir=/storage/.config \
+			      --datarootdir=/storage/.config \
+			      --infodir=/storage/.config \     
+			      --localedir=/storage/.config"
