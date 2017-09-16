@@ -54,7 +54,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            ac_cv_have_long_long_format=yes \
                            --with-threads \
                            --enable-unicode=ucs4 \
-                           --without-cxx-main \
                            --disable-ipv6 \
                            --disable-profiling \
                            --without-pydebug \
@@ -63,8 +62,9 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            --with-pymalloc \
                            --without-fpectl \
                            --with-wctype-functions \
-                           --with-system-expat \
+                           --without-cxx-main \
                            --with-system-ffi \
+                           --with-system-expat \
                            --enable-shared \
                            --disable-static"
 
