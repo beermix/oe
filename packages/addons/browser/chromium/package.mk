@@ -129,6 +129,7 @@ make_target() {
     find -type f -path "*third_party/$_lib/*" \
       \! -path "*third_party/$_lib/chromium/*" \
       \! -path "*third_party/$_lib/google/*" \
+      \! -path "*base/third_party/icu/*" \
       \! -regex '.*\.\(gn\|gni\|isolate\|py\)' \
       -delete
   done
@@ -139,7 +140,7 @@ make_target() {
   ./tools/gn/bootstrap/bootstrap.py --gn-gen-args "${_flags[*]}"
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$ROOT/$TOOLCHAIN/bin/python
 
-  ninja -j1 -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
+  ninja -j4 -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
 }
 
 makeinstall_target() {
