@@ -36,7 +36,7 @@ PKG_AUTORECONF="no"
 
 PKG_MARIADB_SERVER="no"
 
-#LTO_SUPPORT="yes"
+LTO_SUPPORT="yes"
 #GOLD_SUPPORT="yes"
 
 # MariaDB Feature set. Selection of features. Options are
@@ -46,7 +46,7 @@ PKG_MARIADB_SERVER="no"
 # - large :  embedded + archive + federated + blackhole + innodb
 # - xlarge:  embedded + archive + federated + blackhole + innodb + partition
 # - community:  all  features (currently == xlarge)
-  MARIADB_OPTS+=" -DFEATURE_SET=xsmall"
+  MARIADB_OPTS+=" -DFEATURE_SET=community"
 
 # Build MariaDB Server support
   if [ "$PKG_MARIADB_SERVER" = "no" ]; then
@@ -60,8 +60,8 @@ PKG_MARIADB_SERVER="no"
 
 # Set MariaDB server storage engines
   MARIADB_OPTS+=" -DWITH_INNOBASE_STORAGE_ENGINE=ON"
-  MARIADB_OPTS+=" -WITH_PARTITION_STORAGE_ENGINE=OFF"
-  MARIADB_OPTS+=" -WITH_PERFSCHEMA_STORAGE_ENGINE=OFF"
+  MARIADB_OPTS+=" -WITH_PARTITION_STORAGE_ENGINE=ON"
+  MARIADB_OPTS+=" -WITH_PERFSCHEMA_STORAGE_ENGINE=ON"
 
 # According to MariaDB galera cluster documentation these options must be passed
 # to CMake, set to '0' if galera cluster support is not wanted:
@@ -123,9 +123,9 @@ configure_host() {
         -DWITH_READLINE=OFF \
         -DWITH_PCRE=bundled \
         -DWITH_ZLIB=bundled \
-        -DWITH_SYSTEMD=no \
         -DWITH_LIBWRAP=OFF \
         -DWITH_WSREP=OFF \
+        -DWITH_SYSTEMD=no \
         ..
 }
 
@@ -138,8 +138,7 @@ configure_target() {
         -DDISABLE_SHARED=ON \
         -DCMAKE_C_FLAGS="${TARGET_CFLAGS} -fPIC -DPIC -fno-strict-aliasing -DBIG_JOINS=1 -fomit-frame-pointer -fno-delete-null-pointer-checks" \
         -DCMAKE_CXX_FLAGS="${TARGET_CXXFLAGS} -fPIC -DPIC -fno-strict-aliasing -DBIG_JOINS=1 -felide-constructors -fno-delete-null-pointer-checks" \
-        -DWITH_MYSQLD_LDFLAGS="-pie ${TARGET_LDFLAGS},-z,now" \
-        -DCMAKE_BUILD_TYPE=Release \
+         -DCMAKE_BUILD_TYPE=Release \
         $MARIADB_IMPORT_EXECUTABLES \
         -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
         -DCMAKE_INSTALL_PREFIX=/usr \
@@ -160,13 +159,21 @@ configure_target() {
         -DTOKUDB_OK=0 \
         -DDISABLE_LIBMYSQLCLIENT_SYMBOL_VERSIONING=TRUE \
         -DENABLE_DTRACE=OFF \
-        -DWITH_READLINE=OFF \
+        -DWITH_READLINE=0 \
         -DWITH_PCRE=bundled \
         -DWITH_ZLIB=bundled \
         -DWITH_SYSTEMD=no \
         -DWITH_LIBWRAP=OFF \
+        -DWITH_ARCHIVE_STORAGE_ENGINE=1 \
+        -DWITH_BLACKHOLE_STORAGE_ENGINE=1 \
+        -DWITH_INNOBASE_STORAGE_ENGINE=1 \
+        -DWITH_PARTITION_STORAGE_ENGINE=1 \
+        -DWITH_TOKUDB_STORAGE_ENGINE=1 \
+        -DWITHOUT_EXAMPLE_STORAGE_ENGINE=1 \
+        -DWITHOUT_FEDERATED_STORAGE_ENGINE=1 \
+        -DWITHOUT_PBXT_STORAGE_ENGINE=1 \
         -DWITH_SSL=$SYSROOT_PREFIX/usr \
-        $MARIADB_OPTS \
+        -$MARIADB_OPTS \
         ..
 }
 

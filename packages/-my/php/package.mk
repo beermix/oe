@@ -4,7 +4,7 @@
 ################################################################################
 
 PKG_NAME="php"
-PKG_VERSION="5.6.31"
+PKG_VERSION="7.1.9"
 PKG_REV="0"
 PKG_ARCH="any"
 PKG_LICENSE="OpenSource"
@@ -36,7 +36,8 @@ configure_target() {
   strip_gold
 
   # Dynamic Library support
-  export LDFLAGS="$LDFLAGS -ldl -lpthread -lstdc++ -lmysqlclient"
+  # export LDFLAGS="$LDFLAGS -ldl -lpthread"
+  # export LIBS="$LIBS -ldl -lpthread"
 
   # libiconv
   export CFLAGS="$CFLAGS -I$SYSROOT_PREFIX/usr/include/iconv"
@@ -82,9 +83,9 @@ configure_target() {
                              --enable-filter \
                              --enable-calendar \
                              --with-pcre-regex \
-                             --with-sqlite3=$SYSROOT_PREFIX/usr \
+                             --with-sqlite3 \
                              --with-mysql=$SYSROOT_PREFIX/usr \
-                             --with-mysql-sock=/tmp/mysql.sock \
+                             --with-mysql-sock=/var/tmp/mysql.sock \
                              --with-gd \
                              --enable-gd-native-ttf \
                              --enable-gd-jis-conv \
