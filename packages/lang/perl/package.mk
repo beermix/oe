@@ -43,5 +43,5 @@ configure_target() {
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/share/man
-  ln -sf perl $INSTALL/usr/bin/perl${PKG_VERSION}
+  ln -sf perl $INSTALL/usr/bin/perl-${PKG_VERSION}
 }
