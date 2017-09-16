@@ -48,6 +48,8 @@ PKG_CONFIGURE_OPTS_HOST="MAKEINFO=true \
                          --enable-shared \
                          --enable-threads \
                          --with-pic \
+                         --enable-relro \
+                         --enable-deterministic-archives \
                          --disable-nls \
                          --enable-poison-system-directories"
 
