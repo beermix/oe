@@ -1,11 +1,11 @@
 diff --git a/Makefile.am b/Makefile.am
 old mode 100644
 new mode 100755
-index 8c254027..13f26785
+index 60168628..18ff4ce7
 --- a/Makefile.am
 +++ b/Makefile.am
 @@ -39,8 +39,6 @@ endif
- SUBDIRS += overlay benchmarks
+ SUBDIRS += overlay demos benchmarks
  endif
  
 -SUBDIRS += docs
@@ -28,13 +28,13 @@ index bed6c07c..1e70944c
 diff --git a/configure.ac b/configure.ac
 old mode 100644
 new mode 100755
-index c78f5194..e0d0afc7
+index 41ec4d26..027f3be1
 --- a/configure.ac
 +++ b/configure.ac
-@@ -402,10 +402,6 @@ AC_SUBST(REGISTER_FILES)
- AC_CONFIG_FILES([
+@@ -403,10 +403,6 @@ AC_CONFIG_FILES([
  		 Makefile
  		 benchmarks/Makefile
+ 		 demos/Makefile
 -		 docs/Makefile
 -		 docs/reference/Makefile
 -		 docs/reference/intel-gpu-tools/Makefile
@@ -42,7 +42,7 @@ index c78f5194..e0d0afc7
  		 lib/Makefile
  		 lib/tests/Makefile
  		 man/Makefile
-@@ -418,7 +414,6 @@ AC_CONFIG_FILES([
+@@ -419,7 +415,6 @@ AC_CONFIG_FILES([
  		 debugger/Makefile
  		 debugger/system_routine/Makefile
  		 assembler/Makefile

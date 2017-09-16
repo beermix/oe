@@ -44,8 +44,8 @@ PKG_CONFIGURE_OPTS_TARGET="--x-includes="$SYSROOT_PREFIX/usr/include" \
 			      --enable-gl \
 			      --enable-glx \
 			      --with-x--enable-silent-rules \
-                           --enable-shared \
-                           --disable-static \
+                           --disable-shared \
+                           --with-pic \
                            --disable-gtk-doc \
                            --enable-largefile \
                            --enable-atomic \
