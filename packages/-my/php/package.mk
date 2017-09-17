@@ -32,12 +32,9 @@ post_unpack() {
 configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
-  
-  strip_gold
 
   # Dynamic Library support
-  # export LDFLAGS="$LDFLAGS -ldl -lpthread"
-  # export LIBS="$LIBS -ldl -lpthread"
+  export LDFLAGS="$LDFLAGS -ldl -lpthread -lstdc++"
 
   # libiconv
   export CFLAGS="$CFLAGS -I$SYSROOT_PREFIX/usr/include/iconv"
@@ -83,7 +80,7 @@ configure_target() {
                              --enable-filter \
                              --enable-calendar \
                              --with-pcre-regex \
-                             --with-sqlite3 \
+                             --with-sqlite3=$SYSROOT_PREFIX/usr \
                              --with-mysql=$SYSROOT_PREFIX/usr \
                              --with-mysql-sock=/var/tmp/mysql.sock \
                              --with-gd \
