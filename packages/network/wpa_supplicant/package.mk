@@ -17,8 +17,10 @@
 ################################################################################
 
 PKG_NAME="wpa_supplicant"
-PKG_VERSION="5030d7d"
-PKG_GIT_URL="http://w1.fi/hostap.git"
+PKG_VERSION="2.6"
+PKG_URL="https://w1.fi/releases/wpa_supplicant-$PKG_VERSION.tar.gz"
+#PKG_VERSION="5030d7d"
+#PKG_GIT_URL="http://w1.fi/hostap.git"
 PKG_DEPENDS_TARGET="toolchain dbus libnl openssl"
 PKG_SECTION="network"
 PKG_SHORTDESC="wpa_supplicant: An IEEE 802.11i supplicant implementation"
@@ -27,13 +29,11 @@ PKG_LONGDESC="The wpa_supplicant is a free software implementation of an IEEE 80
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-#GOLD_SUPPORT="yes"
-
 PKG_MAKE_OPTS_TARGET="-C wpa_supplicant V=1 LIBDIR=/usr/lib BINDIR=/usr/bin"
 PKG_MAKEINSTALL_OPTS_TARGET="-C wpa_supplicant V=1 LIBDIR=/usr/lib BINDIR=/usr/bin"
 
 configure_target() {
-  export LDFLAGS="$LDFLAGS -lnl-3 -lm -pthread"
+  export LDFLAGS="$LDFLAGS -lpthread -lm"
 
   cp $PKG_DIR/config/makefile.config wpa_supplicant/.config
   echo "CONFIG_TLS=gnutls" >> .config
