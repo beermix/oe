@@ -25,7 +25,7 @@ PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_SITE="http://www.chromium.org/Home"
 PKG_URL="ftp://root:openelec@192.168.1.4/www/chromium-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain pciutils dbus libXcomposite libXcursor libXtst alsa-lib bzip2 yasm nss libXScrnSaver libexif ninja:host libpng harfbuzz atk gtk+ xdotool libvdpau unclutter libwebp re2 x11 ffmpeg pulseaudio"
+PKG_DEPENDS_TARGET="toolchain pciutils dbus libXcomposite libXcursor libXtst alsa-lib bzip2 yasm nss libXScrnSaver libexif ninja:host libpng harfbuzz atk gtk+ xdotool libvdpau unclutter libwebp re2 x11 ffmpeg"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -39,24 +39,23 @@ PKG_ADDON_PROVIDES="executable"
 GOLD_SUPPORT="yes"
 
 pre_make_target() {
+  export CCACHE_SLOPPINESS=include_file_mtime
   strip_lto
   sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' third_party/widevine/cdm/stub/widevine_cdm_version.h
   
   mkdir -p third_party/node/linux/node-linux-x64/bin
   ln -sfv /usr/bin/node third_party/node/linux/node-linux-x64/bin/node
-  
-#  mkdir -p $ROOT/$PKG_BUILD/out
-#  mount -t tmpfs -o size=20G,nr_inodes=40k,mode=1777 tmpfs $ROOT/$PKG_BUILD/out
 }
 
 make_target() {
-
-#  export -n CFLAGS CXXFLAGS
-  export LDFLAGS="$LDFLAGS -ludev"
-  export LD=$CXX
-  
   export CCACHE_SLOPPINESS=include_file_mtime
+  mkdir -p $ROOT/$PKG_BUILD/out
+  mount -t tmpfs -o size=20G,nr_inodes=40k,mode=1777 tmpfs $ROOT/$PKG_BUILD/out
 
+  export -n CFLAGS CXXFLAGS
+  export LDFLAGS="$LDFLAGS -ludev"
+#  export LD=$CXX
+  
   # Use Python 2
   find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$ROOT/$TOOLCHAIN/bin/python|g" {} +
 
@@ -74,8 +73,8 @@ make_target() {
       -e 's|/usr/lib64/va/drivers|/usr/lib/dri|g' \
       -i ./content/common/sandbox_linux/bpf_gpu_policy_linux.cc
 
-#  export TMPDIR="/root/-3SDC/temp"
-#  mkdir -p "$TMPDIR"
+  export TMPDIR="/root/-f2fs/temp"
+  mkdir -p "$TMPDIR"
 
   local _flags=(
     'is_clang=false'
