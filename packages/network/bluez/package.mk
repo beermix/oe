@@ -45,6 +45,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-dependency-tracking \
                            --disable-deprecated \
                            --enable-sixaxis \
                            --with-gnu-ld \
+                           $BLUEZ_CONFIG \
                            storagedir=/storage/.cache/bluetooth"
 
 if [ "$DEBUG" = "yes" ]; then
