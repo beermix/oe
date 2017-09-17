@@ -38,7 +38,8 @@ CFLAGS="-march=native -O3 -pipe -fstack-protector-strong"
 CPPFLAGS="-D_FORTIFY_SOURCE=2"
 LDDFLAGS="-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now"
 
-PKG_CONFIGURE_OPTS_HOST="--disable-silent-rules"
+PKG_CONFIGURE_OPTS_HOST="--with-bundled-zlib --disable-silent-rules"
+#PKG_CONFIGURE_OPTS_HOST="--disable-silent-rules"
 
 post_makeinstall_host() {
 # setup ccache
