@@ -48,7 +48,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-threads \
                          --with-pic \
                          --enable-relro \
-                         --enable-deterministic-archives \
+                         --disable-deterministic-archives \
                          --disable-nls \
                          --enable-poison-system-directories"
 

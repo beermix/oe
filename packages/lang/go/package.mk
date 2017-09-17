@@ -43,7 +43,7 @@ configure_host() {
   export GOROOT_FINAL=$ROOT/$TOOLCHAIN/lib/golang
   #export GOROOT_BOOTSTRAP=/usr/lib/golang
   export GOARCH=amd64
-  export CGO_ENABLED=1
+  export CGO_ENABLED=0
   export CC_FOR_TARGET="$CC"
   export CXX_FOR_TARGET="$CXX"
 }
