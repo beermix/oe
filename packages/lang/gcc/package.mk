@@ -17,8 +17,10 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="1bd23ca"
-PKG_GIT_URL="git://gcc.gnu.org/git/gcc.git"
+PKG_VERSION="7-20170914"
+PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/$PKG_VERSION/gcc-$PKG_VERSION.tar.xz"
+#PKG_VERSION="1bd23ca"
+#PKG_GIT_URL="git://gcc.gnu.org/git/gcc.git"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host"
 PKG_DEPENDS_TARGET="gcc:host"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
