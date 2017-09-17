@@ -17,16 +17,20 @@
 ################################################################################
 
 PKG_NAME="icu"
-PKG_VERSION="57.1U"
+PKG_VERSION="59.1"
 PKG_SITE="http://download.icu-project.org/files/icu4c/?C=M;O=D"
-PKG_URL="https://dl.dropboxusercontent.com/s/z3y8na4bk0d7t0h/icu-57.1U.tar.xz"
-#PKG_SOURCE_DIR="icu"
+PKG_URL="http://download.icu-project.org/files/${PKG_NAME}4c/${PKG_VERSION}/${PKG_NAME}4c-${PKG_VERSION//./_}-src.tgz"
+PKG_SOURCE_DIR="icu"
 PKG_DEPENDS_TARGET="toolchain icu:host"
 PKG_SECTION="textproc"
 PKG_SHORTDESC="International Components for Unicode library"
 PKG_LONGDESC="International Components for Unicode library"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
+
+post_unpack() {
+  cp -r $ROOT/$PKG_BUILD/source/* $ROOT/$PKG_BUILD/
+}
 
 pre_configure_target() {
   CFLAGS="$CFLAGS -fPIC"
@@ -57,7 +61,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
 			      --disable-samples \
 			      --with-cross-build=$ROOT/$PKG_BUILD/.$HOST_NAME"
 
-PKG_CONFIGURE_SCRIPT="source/configure"
+#PKG_CONFIGURE_SCRIPT="source/configure"
 
 post_makeinstall_target() {
   rm -rf $INSTALL
