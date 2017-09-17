@@ -59,7 +59,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --disable-werror \
                            --disable-debug \
                            --enable-shared \
-                           --enable-static"
+                           --disable-static"
 
 NSS_CONF_DIR="$ROOT/$PKG_BUILD/nss"
 

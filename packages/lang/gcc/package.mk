@@ -50,6 +50,8 @@ GCC_COMMON_CONFIGURE_OPTS="MAKEINFO=missing \
                            --without-ppl \
                            --without-cloog \
                            --disable-libmpx \
+                           --enable-shared \
+                           --disable-static \
                            --with-tune=generic"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
@@ -82,7 +84,6 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time=yes \
                          --enable-clocale=gnu \
-                         --enable-gnu-unique-object \
                          --enable-default-pie \
                          --enable-default-ssp \
                          $GCC_OPTS"
