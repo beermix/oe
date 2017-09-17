@@ -28,7 +28,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 #PKG_CONFIGURE_OPTS_HOST="ac_cv_lib_util_getloadavg=no --enable-static --disable-shared --disable-rpath --with-gnu-ld"
-PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared --disable-rpath --with-gnu-ld"
+PKG_CONFIGURE_OPTS_HOST="--disable-shared"
 
 post_makeinstall_host() {
   cat > $ROOT/$TOOLCHAIN/bin/lex << "EOF"
