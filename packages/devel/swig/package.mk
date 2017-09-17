@@ -30,3 +30,10 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 #PKG_CONFIGURE_OPTS_HOST="--with-pcre-prefix=$ROOT/$TOOLCHAIN"
+
+PKG_CONFIGURE_OPTS_HOST="--without-x \
+                         --without-tcl \
+                         --without-python3 \
+                         --without-perl5 \
+                         --without-octave \
+                         --without-java"
