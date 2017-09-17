@@ -5,6 +5,6 @@ PKG_DEPENDS_TARGET="toolchain ncurses confuse"
 PKG_AUTORECONF="yes"
 
 pre_configure_target() {
-  export LIBS="-lncursesw -ltinfo"
+  export LIBS="-lncursesw -ltinfo -pthread"
   export CFLAGS="$CFLAGS -D_GNU_SOURCE"
 }

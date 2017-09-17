@@ -1,7 +1,7 @@
 PKG_NAME="nano"
 PKG_VERSION="2.8.7"
 PKG_URL="https://www.nano-editor.org/dist/v2.8/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain readline file"
+PKG_DEPENDS_TARGET="toolchain readline file sed"
 PKG_SECTION="shell/texteditor"
 PKG_SHORTDESC="nano: Pico editor clone with enhancements"
 PKG_LONGDESC="GNU nano (Nano's ANOther editor, or Not ANOther editor) is an enhanced clone of the Pico text editor."
