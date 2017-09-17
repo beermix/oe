@@ -30,9 +30,10 @@ PKG_SHORTDESC="fontconfig: A library for font customization and configuration"
 PKG_LONGDESC="Fontconfig is a library for font customization and configuration."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--with-arch=$TARGET_ARCH \
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static \
+                           --with-arch=$TARGET_ARCH \
                            --with-cache-dir=/storage/.cache/fontconfig \
                            --with-default-fonts=/usr/share/fonts \
                            --without-add-fonts \
@@ -44,7 +45,10 @@ pre_configure_target() {
   CFLAGS=`echo $CFLAGS | sed -e "s|-O3|-O2|"`
   CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O3|-O2|"`
   CFLAGS="$CFLAGS -I$ROOT/$PKG_BUILD"
+  CFLAGS="$CFLAGS -fPIC"
   CXXFLAGS="$CXXFLAGS -I$ROOT/$PKG_BUILD"
+  CXXFLAGS="$CXXFLAGS -fPIC"
+  LDFLAGS="$LDFLAGS -lz"
 }
 
 post_makeinstall_target() {
