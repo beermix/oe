@@ -40,7 +40,7 @@
 
   # Kernel to use. values can be:
   # default:  default mainline kernel
-    LINUX="4.14"
+#    LINUX="4.14"
 
 
 ################################################################################
