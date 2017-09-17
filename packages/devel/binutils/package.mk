@@ -52,8 +52,6 @@ PKG_CONFIGURE_OPTS_HOST="MAKEINFO=true \
                          --disable-deterministic-archives \
                          --disable-nls \
                          --disable-gdb \
-                         --enable-shared \
-                         --disable-static \
                          --enable-poison-system-directories"
 
 makeinstall_host() {

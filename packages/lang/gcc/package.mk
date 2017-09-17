@@ -50,8 +50,6 @@ GCC_COMMON_CONFIGURE_OPTS="MAKEINFO=missing \
                            --without-ppl \
                            --without-cloog \
                            --disable-libmpx \
-                           --enable-shared \
-                           --disable-static \
                            --with-tune=generic"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
