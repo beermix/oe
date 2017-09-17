@@ -11,7 +11,6 @@ pre_build_target() {
    cp -RP $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$TARGET_NAME
 }
 
-
 PKG_CONFIGURE_OPTS_TARGET="--without-crypto \
 			      --without-ssl \
 			      --without-crypt \
@@ -30,9 +29,9 @@ PKG_CONFIGURE_OPTS_TARGET="--without-crypto \
 			      --without-fbdev \
 			      --without-uinput \
 			      --without-macosx-native \
-			      --with-jpeg \
+			      --with-jpeg=$SYSROOT_PREFIX/usr \
 			      --without-libz \
-			      --without-zlib \
+			      --with-zlib=$SYSROOT_PREFIX/usr \
 			      --without-gnutls \
 			      --without-client-tls \
 			      --with-gnu-ld"
