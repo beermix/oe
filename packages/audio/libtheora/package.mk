@@ -6,3 +6,7 @@ PKG_SECTION="tools"
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared --disable-examples"
+
+pre_configure_target() {
+  CFLAGS="$CFLAGS -fPIC"
+}
