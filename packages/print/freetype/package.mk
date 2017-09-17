@@ -32,7 +32,7 @@ PKG_USE_CMAKE="no"
 PKG_CONFIGURE_OPTS_TARGET="LIBPNG_CFLAGS=-I$SYSROOT_PREFIX/usr/include \
                            LIBPNG_LDFLAGS=-L$SYSROOT_PREFIX/usr/lib \
                            --with-harfbuzz=no \
-                           --with-zlib"
+                           --with-zlib --with-gnu-ld"
                            
 pre_configure_target() {
   # unset LIBTOOL because freetype uses its own
