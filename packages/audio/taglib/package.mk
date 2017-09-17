@@ -34,7 +34,7 @@ PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release \
                        -DWITH_ASF=ON"
 
 post_makeinstall_target() {
-  # rm -rf $INSTALL/usr/bin
+  rm -rf $INSTALL/usr/bin
   # pkgconf hack
   $SED "s:\(['=\" ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" $SYSROOT_PREFIX/usr/bin/taglib-config
   $SED "s:\([':\" ]\)-I/usr:\\1-I$SYSROOT_PREFIX/usr:g" $SYSROOT_PREFIX/usr/lib/pkgconfig/taglib.pc
