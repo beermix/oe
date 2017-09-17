@@ -18,7 +18,10 @@
 
 PKG_NAME="freetype"
 PKG_VERSION="2.8.1"
-PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
+PKG_SITE="http://www.freetype.org"
+PKG_URL="http://download.savannah.gnu.org/releases/freetype/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain zlib libpng"
 PKG_DEPENDS_HOST="zlib:host libpng:host"
 PKG_SECTION="print"
