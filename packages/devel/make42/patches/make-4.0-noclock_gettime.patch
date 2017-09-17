@@ -1,6 +1,6 @@
 diff -up make-3.82/configure\~ make-3.82/configure
 --- make-3.82/configure~	2010-07-28 07:41:51.000000000 +0200
-+++ make-3.82/configure	2010-08-11.15:07:50.000000000 +0200
++++ make-3.82/configure	2010-08-11 15:07:50.000000000 +0200
 @@ -7215,7 +7215,7 @@ return clock_gettime ();
    return 0;
  }
@@ -11,4 +11,4 @@ diff -up make-3.82/configure\~ make-3.82/configure
      ac_res="none required"
    else
 
-Diff finished.  Wed Aug 11.15:07:59 2010
+Diff finished.  Wed Aug 11 15:07:59 2010
