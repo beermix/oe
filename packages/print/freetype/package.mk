@@ -19,28 +19,25 @@
 PKG_NAME="freetype"
 PKG_VERSION="2.8.1"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain zlib libpng bzip2"
-PKG_DEPENDS_HOST="zlib:host"
+PKG_DEPENDS_TARGET="toolchain zlib libpng"
+PKG_DEPENDS_HOST="zlib:host libpng:host"
 PKG_SECTION="print"
 PKG_SHORTDESC="freetype: TrueType font rendering library"
 PKG_LONGDESC="The FreeType engine is a free and portable TrueType font rendering engine. It has been developed to provide TT support to a great variety of platforms and environments."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
 PKG_USE_CMAKE="no"
+PKG_AUTORECONF="no"
 
+# target specific configure options
 PKG_CONFIGURE_OPTS_TARGET="LIBPNG_CFLAGS=-I$SYSROOT_PREFIX/usr/include \
                            LIBPNG_LDFLAGS=-L$SYSROOT_PREFIX/usr/lib \
-                           --with-harfbuzz=no \
-                           --with-zlib --with-gnu-ld"
-                           
-pre_configure_target() {
-  # unset LIBTOOL because freetype uses its own
-    ( cd ..
-    unset LIBTOOL
-    sh autogen.sh
-    )
-}
+                           --with-zlib"
+
+# host specific configure options
+PKG_CONFIGURE_OPTS_HOST="LIBPNG_CFLAGS=-I$TOOLCHAIN/include \
+                           LIBPNG_LDFLAGS=-L$TOOLCHAIN/lib \
+                           --with-zlib"
 
 post_makeinstall_target() {
   $SED "s:\(['=\" ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" $SYSROOT_PREFIX/usr/bin/freetype-config

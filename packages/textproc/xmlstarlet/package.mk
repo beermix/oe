@@ -42,7 +42,6 @@ PKG_CONFIGURE_OPTS_HOST="  ac_cv_func_malloc_0_nonnull=yes \
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            ac_cv_func_realloc_0_nonnull=yes \
                            --enable-static-libs \
-                           enable_build_docs=no \
                            LIBXML_CONFIG=$SYSROOT_PREFIX/usr/bin/xml2-config \
                            LIBXSLT_CONFIG=$SYSROOT_PREFIX/usr/bin/xslt-config \
                            --with-libxml-include-prefix=$SYSROOT_PREFIX/usr/include/libxml2 \
