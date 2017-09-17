@@ -19,9 +19,9 @@
 PKG_NAME="gcc"
 PKG_VERSION="1bd23ca"
 PKG_GIT_URL="git://gcc.gnu.org/git/gcc.git"
-PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host"
+PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host"
 PKG_DEPENDS_TARGET="gcc:host"
-PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host glibc"
+PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
 PKG_PRIORITY="optional"
 PKG_SECTION="lang"
 PKG_SHORTDESC="gcc: The GNU Compiler Collection Version 4 (aka GNU C Compiler)"
@@ -34,7 +34,6 @@ GCC_COMMON_CONFIGURE_OPTS="MAKEINFO=missing \
                            --with-gmp=$ROOT/$TOOLCHAIN \
                            --with-mpfr=$ROOT/$TOOLCHAIN \
                            --with-mpc=$ROOT/$TOOLCHAIN \
-                           --with-isl=$ROOT/$TOOLCHAIN \
                            --with-gnu-as \
                            --with-gnu-ld \
                            --enable-plugin \
@@ -43,7 +42,7 @@ GCC_COMMON_CONFIGURE_OPTS="MAKEINFO=missing \
                            --enable-ld=default \
                            --disable-multilib \
                            --disable-nls \
-                           --with-default-libstdcxx-abi=new \
+                           --with-default-libstdcxx-abi=gcc4-compatible \
                            --with-abi=m64 \
                            --enable-checking=release \
                            --without-cuda-driver \
