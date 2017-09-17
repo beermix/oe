@@ -33,7 +33,7 @@ PKG_MAKE_OPTS_TARGET="-C wpa_supplicant V=1 LIBDIR=/usr/lib BINDIR=/usr/bin"
 PKG_MAKEINSTALL_OPTS_TARGET="-C wpa_supplicant V=1 LIBDIR=/usr/lib BINDIR=/usr/bin"
 
 configure_target() {
-  export LDFLAGS="$LDFLAGS -pthread -lm"
+  export LDFLAGS="$LDFLAGS -lpthread -lm"
 
   cp $PKG_DIR/config/makefile.config wpa_supplicant/.config
   echo "CONFIG_TLS=gnutls" >> .config
