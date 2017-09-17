@@ -280,6 +280,7 @@ if [ ! -f $STAMP ]; then
         pre_makeinstall_$TARGET
       fi
       if [ "$(type -t makeinstall_$TARGET)" = "function" ]; then
+        unset LD_LIBRARY_PATH
         makeinstall_$TARGET
         if [ "$TARGET" = "target" -a -d "$INSTALL_DEV" ]; then
           mkdir -p $INSTALL
