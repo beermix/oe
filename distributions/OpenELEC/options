@@ -153,7 +153,7 @@
   GRAPHIC_DRIVERS="i965"
 
 # build and install remote support (yes / no)
-  REMOTE_SUPPORT="no"
+  REMOTE_SUPPORT="yes"
 
 # build and install IRServer IR/LCD support (yes / no)
   IRSERVER_SUPPORT="no"
