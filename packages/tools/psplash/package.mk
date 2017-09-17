@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="psplash"
-PKG_VERSION="5b3c1cc"
+PKG_VERSION="2015f70"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -33,9 +33,6 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 pre_configure_init() {
-  CFLAGS=`echo $CFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|" -e "s|-fno-plt||"`
-  LDFLAGS=`echo $LDFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|" -e "s|,-z,relro,-z,now||g" -e "s|,-z,relro||g"`
-  
   if [ -f $PROJECT_DIR/$PROJECT/splash/splash.h ]; then
     PSPLASH_SPLASH="$PROJECT_DIR/$PROJECT/splash/splash.h"
   elif [ -f $DISTRO_DIR/$DISTRO/splash/splash.h ]; then
