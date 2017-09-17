@@ -31,6 +31,8 @@ PKG_USE_CMAKE="yes"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
+PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release"
+
 pre_configure_target() {
   export CFLAGS="$CFLAGS -fPIC"
 }
