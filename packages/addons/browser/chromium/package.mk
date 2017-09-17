@@ -55,7 +55,7 @@ make_target() {
 
   export -n CFLAGS CXXFLAGS
   export LDFLAGS="$LDFLAGS -ludev"
-#  export LD=$CXX
+  export LD=$CXX
   
   # Use Python 2
   find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$ROOT/$TOOLCHAIN/bin/python|g" {} +
@@ -140,7 +140,7 @@ make_target() {
   ./tools/gn/bootstrap/bootstrap.py --gn-gen-args "${_flags[*]}"
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$ROOT/$TOOLCHAIN/bin/python
 
-  ionice -c3 nice -n20 ninja -j4 -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
+  ninja -v -j4 -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
 }
 
 makeinstall_target() {
