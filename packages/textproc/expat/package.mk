@@ -6,13 +6,3 @@ PKG_SECTION="textproc"
 PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
 PKG_AUTORECONF="yes"
-
-pre_make_host() {
-  # fix builderror when building in subdirs
-  cp -r ../doc .
-}
-
-pre_make_target() {
-  # fix builderror when building in subdirs
-  cp -r ../doc .
-}
