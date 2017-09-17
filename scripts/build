@@ -296,7 +296,7 @@ if [ ! -f $STAMP ]; then
               $SED "s:\(['= ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" $i; \
             done
             mkdir -p $SYSROOT_PREFIX
-              cp -PRvf $INSTALL_DEV/* $SYSROOT_PREFIXf
+              cp -PRvf $INSTALL_DEV/* $SYSROOT_PREFIX
             mkdir -p $INSTALL
               cp -PRvf $INSTALL_DEV/* $INSTALL
             ;;
