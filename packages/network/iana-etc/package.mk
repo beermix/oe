@@ -30,12 +30,12 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 unpack() {
-  mkdir $PKG_BUILD
+  mkdir $ROOT/$PKG_BUILD
 }
 
 make_target() {
-  wget -q https://www.iana.org/assignments/protocol-numbers/protocol-numbers.xml
-  wget -q https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xml
+  aria2c https://www.iana.org/assignments/protocol-numbers/protocol-numbers.xml
+  aria2c https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xml
 }
 
 makeinstall_target() {
