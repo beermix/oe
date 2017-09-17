@@ -18,10 +18,9 @@
 
 PKG_NAME="fluxbox"
 PKG_VERSION="facb42f"
-PKG_GIT_URL="https://github.com/fluxbox/fluxbox"
-#PKG_VERSION="1.3.7"
 PKG_REV="1"
 PKG_SITE="http://fluxbox.org/"
+PKG_GIT_URL="https://github.com/fluxbox/fluxbox"
 PKG_DEPENDS_TARGET="toolchain libX11 libXrandr libXext libXrender"
 PKG_PRIORITY="optional"
 PKG_SECTION="x11/other"
