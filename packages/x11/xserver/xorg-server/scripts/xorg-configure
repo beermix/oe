@@ -2,7 +2,7 @@
 
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2014 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -110,5 +110,5 @@ logger -t Xorg "### creating needed directories and symlinks ###"
 ################################################################################
 
 logger -t Xorg "### starting Xorg with '$DISPLAY vt01 $XORG_ARGS' ###"
-  mkdir -p /run/openelec
-  echo "XORG_ARGS=\"$XORG_ARGS\"" > /run/openelec/xorg-settings.conf
+  mkdir -p /run/libreelec
+  echo "XORG_ARGS=\"$XORG_ARGS\"" > /run/libreelec/xorg-settings.conf

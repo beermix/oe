@@ -53,7 +53,11 @@ make_target() {
 #  mkdir -p $ROOT/$PKG_BUILD/out
 #  mount -t tmpfs -o size=20G,nr_inodes=40k,mode=1777 tmpfs $ROOT/$PKG_BUILD/out
 
-#  export -n CFLAGS CXXFLAGS
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now|-Wl,-O1,--as-needed|"`
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-fno-plt||g"`
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-fno-caller-saves||g"`
+
+# export -n CFLAGS CXXFLAGS
   export LDFLAGS="$LDFLAGS -ludev"
   export LD=$CXX
   
@@ -141,7 +145,7 @@ make_target() {
   ./tools/gn/bootstrap/bootstrap.py --gn-gen-args "${_flags[*]}"
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$ROOT/$TOOLCHAIN/bin/python
 
-  ninja -j4 -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
+  ninja -j2 -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
 }
 
 makeinstall_target() {
