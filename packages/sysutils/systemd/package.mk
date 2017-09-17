@@ -20,7 +20,7 @@ PKG_NAME="systemd"
 PKG_VERSION="234"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/systemd"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain gperf:host kmod libcap util-linux entropy"
+PKG_DEPENDS_TARGET="toolchain gperf:host libcap util-linux entropy"
 PKG_SECTION="system"
 PKG_SHORTDESC="systemd: a system and session manager"
 PKG_LONGDESC="systemd is a system and session manager for Linux, compatible with SysV and LSB init scripts. systemd provides aggressive parallelization capabilities, uses socket and D-Bus activation for starting services, offers on-demand starting of daemons, keeps track of processes using Linux cgroups, supports snapshotting and restoring of the system state, maintains mount and automount points and implements an elaborate transactional dependency-based service control logic. It can work as a drop-in replacement for sysvinit."
@@ -31,15 +31,14 @@ PKG_AUTORECONF="yes"
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            ac_cv_have_decl_IFLA_BOND_AD_INFO=no \
                            ac_cv_have_decl_IFLA_BRPORT_UNICAST_FLOOD=no \
-                           ac_cv_path_MOUNT_PATH="/bin/mount"
-                           ac_cv_path_UMOUNT_PATH="/bin/umount"
-                           KMOD=/usr/bin/kmod \
+                           ac_cv_path_MOUNT_PATH=/bin/mount \
+                           ac_cv_path_UMOUNT_PATH=/bin/umount \
                            --disable-nls \
                            --disable-lto \
                            --disable-dbus \
                            --disable-utmp \
                            --disable-coverage \
-                           --enable-kmod \
+                           --disable-kmod \
                            --disable-xkbcommon \
                            --enable-blkid \
                            --disable-seccomp \
@@ -142,9 +141,9 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/lib/udev/rules.d/80-net-setup-link.rules
 
   # remove the uaccess rules as we don't build systemd with ACL (see https://github.com/systemd/systemd/issues/4107)
-  rm -rf $INSTALL/usr/lib/udev/rules.d/70-uaccess.rules
-  rm -rf $INSTALL/usr/lib/udev/rules.d/71-seat.rules
-  rm -rf $INSTALL/usr/lib/udev/rules.d/73-seat-late.rules
+#  rm -rf $INSTALL/usr/lib/udev/rules.d/70-uaccess.rules
+#  rm -rf $INSTALL/usr/lib/udev/rules.d/71-seat.rules
+#  rm -rf $INSTALL/usr/lib/udev/rules.d/73-seat-late.rules
 
   # remove debug-shell.service, we install our own
   rm -rf $INSTALL/usr/lib/systemd/system/debug-shell.service
@@ -166,6 +165,9 @@ post_makeinstall_target() {
   # remove systemd-udev-hwdb-update. we have own hwdb.service
   rm -rf $INSTALL/usr/lib/systemd/system/systemd-udev-hwdb-update.service
   rm -rf $INSTALL/usr/lib/systemd/system/*.target.wants/systemd-udev-hwdb-update.service
+
+  # remove fuse mount rules, we ship this byself
+  rm -rf $INSTALL/usr/lib/systemd/system/sys-fs-fuse-connections.mount
 
   # remove nspawn
   rm -rf $INSTALL/usr/bin/systemd-nspawn
@@ -198,7 +200,7 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin/systemd-machine-id-setup
   mkdir -p $INSTALL/usr/bin
   cp $PKG_DIR/scripts/systemd-machine-id-setup $INSTALL/usr/bin
-  cp $PKG_DIR/scripts/userconfig-setup $INSTALL/usr/bin
+#  cp $PKG_DIR/scripts/userconfig-setup $INSTALL/usr/bin
 
   # provide 'halt', 'shutdown', 'reboot' & co.
   mkdir -p $INSTALL/usr/sbin
@@ -213,7 +215,7 @@ post_makeinstall_target() {
   cp -PR $PKG_DIR/config/* $INSTALL/usr/config
 
   rm -rf $INSTALL/etc/modules-load.d
-  ln -sf /storage/.config/modules-load.d $INSTALL/etc/modules-load.d
+#  ln -sf /storage/.config/modules-load.d $INSTALL/etc/modules-load.d
   rm -rf $INSTALL/etc/sysctl.d
   ln -sf /storage/.config/sysctl.d $INSTALL/etc/sysctl.d
   rm -rf $INSTALL/etc/tmpfiles.d
