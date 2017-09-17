@@ -1,5 +1,5 @@
 PKG_NAME="perl"
-PKG_VERSION="5.26.1"
+PKG_VERSION="5.27.3"
 PKG_SITE="http://www.cpan.org/src/5.0/?C=M;O=D"
 #PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_URL="http://www.cpan.org/src/5.0/perl-${PKG_VERSION}.tar.gz"
@@ -31,23 +31,17 @@ configure_target() {
 		   -Dscriptdir='/usr/bin/perlbin/core' \
 		   -Dsitescript='/usr/bin/perlbin/site' \
 		   -Dvendorscript='/usr/bin/perlbin/vendor' \
-		   -Dman1ext=1perl \
-		   -Dman3ext=3perl \
-		   -Duseshrplib \
-		   -Dlibperl=libperl.so.${PKG_VERSION} \
+		   -Dman1ext=1perl -Dman3ext=3perl \
+		   -Duseshrplib -Dlibperl=libperl.so.${PKG_VERSION} \
 		   -Dlibswanted="dl m c crypt db ndbm gdbm" \
-		   -des \
-		   -Dusethreads \
-		   -Dccdlflags="-rdynamic -Wl,-O1" \
-		   -Dlddlflags="-shared -Wl,-O1" \
-		   -Dldflags="$LDFLAGS" \
-		   -Dmyhostname=localhost \
-		   -Dperladmin=root at localhost \
+		   -des -Dusethreads \
+		   -Dccdlflags="-rdynamic -Wl,-O1" -Dlddlflags="-shared -Wl,-O1" -Dldflags="-Wl,-O1" \
+		   -Dmyhostname=localhost -Dperladmin=root at localhost \
 		   -Di_shadow -Di_syslog -Duseithreads -Duselargefiles \
 		   -Di_db -Di_gdbm -Di_ndbm -Di_sdbm -Ui_odbm
 }
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/share/man
-  ln -sfv perl $INSTALL/usr/bin/perl${PKG_VERSION}
+  ln -sf perl $INSTALL/usr/bin/perl${PKG_VERSION}
 }
