@@ -50,7 +50,7 @@ PKG_CONFIGURE_OPTS_HOST="MAKEINFO=true \
                          --with-pic \
                          --enable-relro \
                          --disable-deterministic-archives \
-                         --enable-nls \
+                         --disable-nls \
                          --disable-gdb \
                          --enable-poison-system-directories"
 

@@ -42,7 +42,7 @@ GCC_COMMON_CONFIGURE_OPTS="MAKEINFO=missing \
                            --enable-gold \
                            --enable-ld=default \
                            --disable-multilib \
-                           --enable-nls \
+                           --disable-nls \
                            --with-default-libstdcxx-abi=new \
                            --with-abi=m64 \
                            --enable-checking=release \

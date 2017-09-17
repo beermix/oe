@@ -21,7 +21,7 @@ PKG_VERSION="3.3.4"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="http://ccache.samba.org/"
+PKG_SITE="https://www.samba.org/ftp/ccache/?C=M;O=D"
 PKG_URL="https://samba.org/ftp/ccache/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST="make:host"
 PKG_PRIORITY="optional"
@@ -32,7 +32,9 @@ PKG_LONGDESC="Ccache is a compiler cache. It speeds up re-compilation of C/C++ c
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-CFLAGS="-O2 -pipe -fstack-protector-strong -fno-plt"
+CONCURRENCY_MAKE_LEVEL=1
+
+CFLAGS="-march=native -O3 -pipe -fstack-protector-strong"
 CPPFLAGS="-D_FORTIFY_SOURCE=2"
 LDDFLAGS="-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now"
 

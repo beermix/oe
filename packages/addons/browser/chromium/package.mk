@@ -50,8 +50,8 @@ pre_make_target() {
 
 make_target() {
   export CCACHE_SLOPPINESS=include_file_mtime
-  mkdir -p $ROOT/$PKG_BUILD/out
-  mount -t tmpfs -o size=20G,nr_inodes=40k,mode=1777 tmpfs $ROOT/$PKG_BUILD/out
+#  mkdir -p $ROOT/$PKG_BUILD/out
+#  mount -t tmpfs -o size=20G,nr_inodes=40k,mode=1777 tmpfs $ROOT/$PKG_BUILD/out
 
   export -n CFLAGS CXXFLAGS
   export LDFLAGS="$LDFLAGS -ludev"
@@ -140,7 +140,7 @@ make_target() {
   ./tools/gn/bootstrap/bootstrap.py --gn-gen-args "${_flags[*]}"
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$ROOT/$TOOLCHAIN/bin/python
 
-  ninja -j4 -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
+  ionice -c3 nice -n20 ninja -j4 -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
 }
 
 makeinstall_target() {
