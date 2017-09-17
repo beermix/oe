@@ -32,9 +32,15 @@ PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_z_zlibVersion=yes \
-                           --enable-static \
-                           --disable-shared"
+PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_z_zlibVersion=yes"
+
+if [ "$PROJECT" = "RPi2" ]; then
+  PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET --enable-arm-neon=yes"
+fi
+
+if [ "$TARGET_ARCH" = "x86_64" ]; then
+  PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET --enable-intel-sse"
+fi
 
 PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
 
