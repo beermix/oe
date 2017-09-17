@@ -41,6 +41,7 @@ GOLD_SUPPORT="yes"
 pre_make_target() {
   export CCACHE_SLOPPINESS=include_file_mtime
   strip_lto
+  touch chrome/test/data/webui/i18n_process_css_test.html
   sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' third_party/widevine/cdm/stub/widevine_cdm_version.h
   
   mkdir -p third_party/node/linux/node-linux-x64/bin
