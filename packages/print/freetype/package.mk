@@ -42,7 +42,6 @@ pre_configure_target() {
     unset LIBTOOL
     sh autogen.sh
     )
-  export CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
 }
 
 post_makeinstall_target() {

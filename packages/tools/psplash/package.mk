@@ -33,13 +33,8 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 pre_configure_init() {
-  if [ -f $PROJECT_DIR/$PROJECT/splash/splash.h ]; then
-    PSPLASH_SPLASH="$PROJECT_DIR/$PROJECT/splash/splash.h"
-  elif [ -f $DISTRO_DIR/$DISTRO/splash/splash.h ]; then
-    PSPLASH_SPLASH="$DISTRO_DIR/$DISTRO/splash/splash.h"
-  else
-    PSPLASH_SPLASH="$PKG_DIR/splash/splash.h"
-  fi
+  PSPLASH_SPLASH="$PKG_DIR/splash/splash.h"
+  
   cp $PSPLASH_SPLASH $ROOT/$PKG_BUILD/psplash-poky-img.h
 
   sed -e "s:#define PSPLASH_IMG_FULLSCREEN 0:#define PSPLASH_IMG_FULLSCREEN 1:g" \

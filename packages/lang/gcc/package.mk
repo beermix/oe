@@ -81,6 +81,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time=yes \
                          --enable-clocale=gnu \
+                         --disable-vtable-verify \
                          --enable-default-pie \
                          --enable-default-ssp \
                          $GCC_OPTS"
