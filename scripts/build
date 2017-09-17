@@ -289,6 +289,7 @@ if [ ! -f $STAMP ]; then
       else
         case "$TARGET" in
           target)
+          unset LD_LIBRARY_PATH
             make install DESTDIR=$INSTALL_DEV $PKG_MAKEINSTALL_OPTS_TARGET
             for i in `find $INSTALL_DEV/lib/ -name "*.la" 2>/dev/null`; do \
               $SED "s:\(['= ]\)/lib:\\1$SYSROOT_PREFIX/lib:g" $i; \
@@ -297,7 +298,7 @@ if [ ! -f $STAMP ]; then
               $SED "s:\(['= ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" $i; \
             done
             mkdir -p $SYSROOT_PREFIX
-              cp -PRvf $INSTALL_DEV/* $SYSROOT_PREFIX
+              cp -PRvf $INSTALL_DEV/* $SYSROOT_PREFIXf
             mkdir -p $INSTALL
               cp -PRvf $INSTALL_DEV/* $INSTALL
             ;;
