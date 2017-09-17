@@ -44,7 +44,6 @@ GCC_COMMON_CONFIGURE_OPTS="MAKEINFO=missing \
                            --disable-nls \
                            --with-default-libstdcxx-abi=gcc4-compatible \
                            --enable-checking=release \
-                           --without-cuda-driver \
                            --disable-libssp \
                            --disable-libsanitizer \
                            --without-ppl \
@@ -81,9 +80,9 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-threads=posix \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time=yes \
-                         --enable-gnu-unique-object \
-                         --disable-vtable-verify \
                          --enable-clocale=gnu \
+                         --enable-gnu-unique-object \
+                         --enable-linker-build-id \
                          --enable-default-pie \
                          --enable-default-ssp \
                          $GCC_OPTS"
