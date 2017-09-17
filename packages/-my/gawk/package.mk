@@ -6,6 +6,6 @@ PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static --without-mpfr"
+PKG_CONFIGURE_OPTS_TARGET="--bindir=/bin --without-mpfr"
 
 PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
