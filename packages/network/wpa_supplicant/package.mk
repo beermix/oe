@@ -17,10 +17,10 @@
 ################################################################################
 
 PKG_NAME="wpa_supplicant"
-PKG_VERSION="2.6"
-PKG_URL="https://w1.fi/releases/wpa_supplicant-$PKG_VERSION.tar.gz"
-#PKG_VERSION="5030d7d"
-#PKG_GIT_URL="http://w1.fi/hostap.git"
+#PKG_VERSION="2.6"
+#PKG_URL="https://w1.fi/releases/wpa_supplicant-$PKG_VERSION.tar.gz"
+PKG_VERSION="5030d7d"
+PKG_GIT_URL="http://w1.fi/hostap.git"
 PKG_DEPENDS_TARGET="toolchain dbus libnl openssl"
 PKG_SECTION="network"
 PKG_SHORTDESC="wpa_supplicant: An IEEE 802.11i supplicant implementation"
