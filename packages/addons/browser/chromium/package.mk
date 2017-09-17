@@ -117,6 +117,8 @@ make_target() {
     libxslt
     yasm
     libxml2
+    minizip
+    freetype2
   )
 
   # Remove bundled libraries for which we will use the system copies; this
