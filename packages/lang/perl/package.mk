@@ -1,8 +1,8 @@
 PKG_NAME="perl"
-PKG_VERSION="5.26.1"
+PKG_VERSION="5.26.0"
 PKG_SITE="http://www.cpan.org/src/5.0/?C=M;O=D"
-#PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_URL="http://www.cpan.org/src/5.0/perl-${PKG_VERSION}.tar.gz"
+#PKG_URL="http://www.cpan.org/src/5.0/perl-5.26.1-RC1.tar.xz"
+PKG_URL="http://www.cpan.org/src/5.0/perl-${PKG_VERSION}.tar.xz"
 PKG_DEPENDS_TARGET="toolchain openssl gdbm db"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
@@ -34,20 +34,19 @@ configure_target() {
 		   -Dman1ext=1perl \
 		   -Dman3ext=3perl \
 		   -Duseshrplib \
-		   -Dlibperl=libperl.so.${PKG_VERSION} \
+		   -Dlibperl=libperl.so \
 		   -Dlibswanted="dl m c crypt db ndbm gdbm" \
 		   -des \
 		   -Dusethreads \
 		   -Dccdlflags="-rdynamic -Wl,-O1" \
 		   -Dlddlflags="-shared -Wl,-O1" \
 		   -Dldflags="$LDFLAGS" \
-		   -Dmyhostname=localhost \
-		   -Dperladmin=root at localhost \
 		   -Di_shadow -Di_syslog -Duseithreads -Duselargefiles \
-		   -Di_db -Di_gdbm -Di_ndbm -Di_sdbm -Ui_odbm
+		   -Di_db -Di_gdbm -Di_ndbm -Di_sdbm -Ui_odbm \
+		   ..
 }
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/share/man
-  ln -sfv perl $INSTALL/usr/bin/perl${PKG_VERSION}
+  ln -sf perl${PKG_VERSION} $INSTALL/usr/bin/perl
 }

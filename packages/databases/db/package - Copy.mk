@@ -13,12 +13,13 @@ PKG_CONFIGURE_SCRIPT="dist/configure"
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-static \
 			      --disable-java \
+			      --with-mutex=POSIX/pthreads/library \
 			      --disable-tcl \
 			      --enable-compat185 \
 			      --disable-debug \
 			      --enable-cxx \
 			      --with-pic \
-			      --enable-atomicsupport"
+			      --disable-atomicsupport"
 
 PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
 			   
