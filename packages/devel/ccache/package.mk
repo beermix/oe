@@ -34,7 +34,7 @@ PKG_AUTORECONF="no"
 
 CONCURRENCY_MAKE_LEVEL=1
 
-CFLAGS="-march=native -O3 -pipe -fstack-protector-strong"
+CFLAGS="-march=native -O2 -pipe -fstack-protector-strong"
 CPPFLAGS="-D_FORTIFY_SOURCE=2"
 LDDFLAGS="-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now"
 
