@@ -46,13 +46,13 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_setpgrp_void=no \
 			      --enable-pointer-blank \
 			      --enable-text-shadow \
 			      --enable-menubar \
-			      --disable-transparency \
+			      --enable-transparency \
 			      --disable-tinting \
 			      --enable-xrender \
 			      --enable-xpm \
 			      --enable-jpeg \
 			      --enable-png \
-			      --disable-xft \
+			      --enable-xft \
 			      --enable-ttygid \
 			      --enable-backspace-key \
 			      --enable-delete-key \
@@ -62,4 +62,14 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_setpgrp_void=no \
 			      --disable-greek \
 			      --disable-xim \
 			      --disable-utempter\
-			      --with-term=xterm"
+			      --with-term=xterm-256color \
+			      --sysconfdir=/storage/.config/mrxvt \
+                           --datadir=/storage/.config/mrxvt \
+                           --libdir=/storage/.config/mrxvt \
+                           --libexecdir=/storage/.config/mrxvt \
+                           --sharedstatedir=/storage/.config/mrxvt \
+                           --localstatedir=/storage/.config/mrxvt \
+                           --includedir=/storage/.config/mrxvt \
+                           --oldincludedir=/storage/.config/mrxvt \
+                           --datarootdir=/storage/.config/mrxvt \
+                           --infodir=/storage/.config/mrxvt"

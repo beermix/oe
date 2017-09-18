@@ -1,4 +1,4 @@
-PKG_NAME="speedtest"
+PKG_NAME="speedtest-go"
 PKG_VERSION="7d194d0"
 PKG_GIT_URL="https://github.com/zpeters/speedtest"
 PKG_GIT_BRANCH="develop"
@@ -34,5 +34,3 @@ post_make_target() {
   mkdir -p $INSTALL/usr/bin/
   cp $ROOT/$PKG_BUILD/bin/$PKG_NAME $INSTALL/usr/bin/
 }
-CFLAGS="-march=corei7-avx -mtune=corei7-avx -O3 -pipe"
-LDFLAGS="-Wl,-O1 -Wl,--as-needed"
