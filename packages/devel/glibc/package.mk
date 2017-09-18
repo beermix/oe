@@ -107,7 +107,7 @@ pre_configure_target() {
   unset LD_LIBRARY_PATH
 
 # set some CFLAGS we need
-  export CFLAGS="$CFLAGS -g"
+#  export CFLAGS="$CFLAGS -g"
   export OBJDUMP_FOR_HOST=objdump
 
 cat >config.cache <<EOF
@@ -148,16 +148,6 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/lib/glibc
   rm -rf $INSTALL/usr/lib/*.o
   rm -rf $INSTALL/var
-
-# remove unneeded libs
-#  rm -rf $INSTALL/usr/lib/libBrokenLocale*
-#  rm -rf $INSTALL/usr/lib/libSegFault.so
-#  rm -rf $INSTALL/usr/lib/libmemusage.so
-#  rm -rf $INSTALL/usr/lib/libpcprofile.so
-
-# remove ldscripts
-#  rm -rf $INSTALL/usr/lib/libc.so
-#  rm -rf $INSTALL/usr/lib/libpthread.so
 
 # remove locales and charmaps
   rm -rf $INSTALL/usr/share/i18n/charmaps
