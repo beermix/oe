@@ -124,7 +124,7 @@ if [ -n "$PKG_URL" -o -n "$PKG_GIT_URL" ]; then
 
     pushd $ROOT/$SOURCES/${1}/${1}-${PKG_GIT_BRANCH}.git > /dev/null
       git archive --format=tar --prefix=${PKG_NAME}-${PKG_VERSION}/ ${PKG_VERSION} | \
-      xz --threads=0 -v  > $ROOT/$SOURCES/$1/${PKG_NAME}-${PKG_VERSION}.tar.xz
+        /usr/bin/xz --threads=0 -v  > $ROOT/$SOURCES/$1/${PKG_NAME}-${PKG_VERSION}.tar.xz
     popd > /dev/null
 
     echo "$PKG_GIT_URL $PKG_GIT_BRANCH $PKG_VERSION"> $STAMP
