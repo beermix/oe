@@ -100,7 +100,7 @@ make_target() {
     'use_gconf=false'
     'use_gnome_keyring=false'
     'use_gold=false'
-    'use_custom_libcxx=false'
+    'use_custom_libcxx=1'
     'use_gtk3=true'
     'use_vaapi=true'
     'use_kerberos=false'
@@ -123,7 +123,6 @@ make_target() {
     libxslt
     yasm
     libxml2
-    minizip
   )
 
   # Remove bundled libraries for which we will use the system copies; this
