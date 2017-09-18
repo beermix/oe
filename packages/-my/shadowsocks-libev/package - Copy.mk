@@ -1,7 +1,7 @@
 PKG_NAME="shadowsocks-libev"
-PKG_VERSION="3.1.0"
-PKG_URL="https://github.com/shadowsocks/shadowsocks-libev/releases/download/v3.1.0/shadowsocks-libev-3.1.0.tar.gz"
-PKG_DEPENDS_TARGET="toolchain pcre libsodium libev mbedtls c-ares"
+PKG_VERSION="git"
+#PKG_URL="https://dl.dropboxusercontent.com/s/sx6vms5ihja38ma/shadowsocks-libev-3.0.8.tar.xz"
+PKG_DEPENDS_TARGET="toolchain pcre libsodium libudns libev mbedtls c-ares"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
@@ -10,7 +10,17 @@ PKG_AUTORECONF="yes"
 LTO_SUPPORT="no"
 GOLD_SUPPORT="no"
 
-PKG_CMAKE_SCRIPT_TARGET="cmake/shadowsocks-libev.pc.cmake"
+unpack() {
+  git clone --recursive -v --depth 1 http://github.com/shadowsocks/shadowsocks-libev $ROOT/$PKG_BUILD
+}
+
+pre_configure_target() {
+  cd $ROOT/$PKG_BUILD
+  rm -rf .$TARGET_NAME
+ # LIBS="$LIBS -pthread"
+}
+
+#PKG_CMAKE_SCRIPT_TARGET="cmake/shadowsocks-libev.pc.cmake"
 
 PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release \
 			  -DWITH_DOC_HTML=OFF \
