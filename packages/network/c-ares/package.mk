@@ -1,5 +1,5 @@
 PKG_NAME="c-ares"
-PKG_VERSION="9ef37fe"
+PKG_VERSION="5ecc4c3"
 PKG_GIT_URL="https://github.com/c-ares/c-ares"
 #PKG_VERSION="1.13.0"
 #PKG_URL="https://c-ares.haxx.se/download/c-ares-$PKG_VERSION.tar.gz"
