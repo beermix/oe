@@ -42,11 +42,13 @@ PKG_CONFIGURE_OPTS_HOST="MAKEINFO=true \
                          --enable-libssp \
                          --enable-version-specific-runtime-libs \
                          --enable-plugins \
-                         --disable-sim \
-                         --disable-gdb \
+                         --enable-ld=default \
+                         --enable-lto \
+                         --enable-shared \
                          --enable-threads \
                          --with-pic \
-                         --enable-deterministic-archives \
+                         --disable-sim \
+                         --disable-gdb \
                          --enable-poison-system-directories"
 
 makeinstall_host() {
