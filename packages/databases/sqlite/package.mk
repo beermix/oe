@@ -40,8 +40,6 @@ PKG_AUTORECONF="no"
   CFLAGS="$CFLAGS -DSQLITE_ENABLE_STAT3"
 
 # relocation R_MIPS_HI16 against `a local symbol' can not be used when making a shared object; recompile with -fPIC
-#  CFLAGS="$CFLAGS -fPIC"
-#  CFLAGS="$CFLAGS -DPIC"
 
 # When this C-preprocessor macro is defined, SQLite includes some additional APIs
 # that provide convenient access to meta-data about tables and queries. The APIs that
@@ -71,14 +69,18 @@ PKG_AUTORECONF="no"
   CFLAGS="$CFLAGS -DSQLITE_MAX_VARIABLE_NUMBER=250000"
   CFLAGS="$CFLAGS -DSQLITE_MAX_EXPR_DEPTH=10000"
   
-  CFLAGS="$CFLAGS DSQLITE_ENABLE_JSON1"
-  CFLAGS="$CFLAGS DSQLITE_NO_SYNC"
+  CFLAGS="$CFLAGS -DSQLITE_ENABLE_JSON1"
+  CFLAGS="$CFLAGS -DSQLITE_NO_SYNC"
+  
+  CFLAGS="$CFLAGS -fPIC"
+  CFLAGS="$CFLAGS -DPIC"
 
 CONCURRENCY_MAKE_LEVEL=1
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-threadsafe \
                            --enable-dynamic-extensions \
                            --disable-silent-rules \
-                           --enable-readline"
+                           --enable-readline \
+                           --disable-static"
                            
 PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
