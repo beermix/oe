@@ -10,5 +10,5 @@ strip_lto
 strip_gold
 
 make_target() {
-  make CC="$CC" CXX="$CXX" AR="$AR" CFLAGS="$CFLAGS" CXXFLAGS="$CXXFLAGS" CPPFLAGS="$CPPFLAGS" LDFLAGS="$LDFLAGS" -j3
+  make CC="$CC" CXX="$CXX" AR="$AR" CFLAGS="-Wall $CFLAGS" CXXFLAGS="-Wall $CXXFLAGS" CPPFLAGS="$CPPFLAGS" LDFLAGS="$LDFLAGS" -j3
 }
