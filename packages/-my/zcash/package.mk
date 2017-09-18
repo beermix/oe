@@ -6,4 +6,4 @@ PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-wallet --disable-man --disable-debug --disable-mining"
+PKG_CONFIGURE_OPTS_TARGET="--disable-wallet --disable-man --disable-debug --disable-mining"

@@ -1,5 +1,5 @@
 PKG_NAME="unbound"
-PKG_VERSION="49eeb61"
+PKG_VERSION="5faee81"
 PKG_GIT_URL="https://github.com/jedisct1/unbound"
 PKG_DEPENDS_TARGET="toolchain expat openssl libevent libsodium expat"
 PKG_SECTION="my"
@@ -10,17 +10,18 @@ PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-dsa \
 			      --disable-gost \
-			      --enable-allsymbols \
 			      --disable-rpath \
 			      --enable-pie \
+			      --disable-flto \
 			      --enable-relro-now \
 			      --disable-shared \
-			      --enable-cachedb \
-			      --enable-dnscrypt \
+			      --disable-cachedb \
+			      --disable-dnscrypt \
 			      --disable-dnstap \
 			      --enable-checking \
 			      --enable-allsymbols \
 			      --enable-systemd \
+			      --with-pthreads \
 			      --sysconfdir=/storage/.config /
 			      --with-pidfile=/var/run/unbound.pid \
 			      --with-libevent=$SYSROOT_PREFIX/usr \
