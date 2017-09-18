@@ -4,7 +4,7 @@
 ################################################################################
 
 PKG_NAME="php"
-PKG_VERSION="7.0.23"
+PKG_VERSION="7.1.9"
 PKG_REV="0"
 PKG_ARCH="any"
 PKG_LICENSE="OpenSource"
@@ -34,14 +34,14 @@ configure_target() {
   rm -rf .$TARGET_NAME
 
   # Dynamic Library support
-  export LDFLAGS="$LDFLAGS -ldl -lpthread -lstdc++ -lsqlite3"
+#  export LDFLAGS="$LDFLAGS -ldl -lpthread -lstdc++ -lsqlite3"
 
   # libiconv
   export CFLAGS="$CFLAGS -I$SYSROOT_PREFIX/usr/include/iconv"
   export LDFLAGS="$LDFLAGS -L$SYSROOT_PREFIX/usr/lib/iconv -liconv"
 
-  export CXXFLAGS="$CFLAGS"
-  export CPPFLAGS="$CFLAGS"
+#  export CXXFLAGS="$CFLAGS"
+#  export CPPFLAGS="$CFLAGS"
 
   PKG_CONFIGURE_OPTS_TARGET="--enable-cli \
                              --enable-cgi \
@@ -80,7 +80,7 @@ configure_target() {
                              --enable-filter \
                              --enable-calendar \
                              --with-pcre-regex \
-                             --with-sqlite3 \
+                             --with-sqlite3=$SYSROOT_PREFIX/usr \
                              --with-mysql=$SYSROOT_PREFIX/usr \
                              --with-mysql-sock=/var/tmp/mysql.sock \
                              --with-gd \
