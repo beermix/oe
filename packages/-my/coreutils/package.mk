@@ -47,3 +47,5 @@ PKG_CONFIGURE_OPTS_TARGET="c_cv_c_restrict=no \
 			      --with-openssl \
 			      --disable-rpath \
 			      --enable-threads=posix"
+			      
+PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"

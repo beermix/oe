@@ -6,57 +6,54 @@ PKG_SECTION="security"
 PKG_SHORTDESC="Privoxy"
 PKG_LONGDESC=""
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 pre_configure_target() {
-  export LDFLAGS="$LDFLAGS -static -static-libgcc"
-  export MAKEFLAGS=-j1
   cd $ROOT/$PKG_BUILD
-  autoreconf --verbose --install --force -I m4
+  rm -rf .$TARGET_NAME
 }
 
-PKG_CONFIGURE_TARGET="--enable-compression \
-			 --disable-ipv6-support \
-			 --disable-dynamic-pcre \
-			 --enable-accept-filter \
-			 --enable-external-filters \
-			 --enable-extended-host-patterns \
-			 --enable-graceful-termination \
-			 --enable-large-file-support \
-			 --disable-silent-rules \
-			 --sysconfdir=/storage/.config \
-			 --datadir=/storage/.config \
-			 --libdir=/storage/.config \
-			 --libexecdir=/storage/.config \
-			 --sharedstatedir=/storage/.config \
-			 --includedir=/storage/.config \
-			 --datarootdir=/storage/.config \
-			 --infodir=/storage/.config \
-			 --localedir=/storage/.config"
-
+PKG_CONFIGURE_OPTS_TARGET="--disable-ipv6-support \
+			      --enable-no-gifs \
+			      --enable-large-file-support \
+			      --enable-graceful-termination \
+			      --enable-external-filters \
+			      --enable-accept-filter \
+			      --enable-compression \
+			      --sysconfdir=/storage/.config \
+			      --datadir=/storage/.config \
+			      --libdir=/storage/.config \
+			      --libexecdir=/storage/.config \
+			      --sharedstatedir=/storage/.config \
+			      --localstatedir=/storage/.config \
+			      --includedir=/storage/.config \
+			      --oldincludedir=/storage/.config \
+			      --datarootdir=/storage/.config \
+			      --infodir=/storage/.config \     
+			      --localedir=/storage/.config/privoxy/locale"
 
 makeinstall_target() {
   cd $ROOT/$PKG_BUILD
   mkdir -p $INSTALL/usr
   mkdir -p $INSTALL/usr/bin
-  mkdir -p $INSTALL/etc
-  mkdir -p $INSTALL/etc/privoxy
-  mkdir -p $INSTALL/etc/privoxy/templates
+  mkdir -p $INSTALL/storage/.config
+  mkdir -p $INSTALL/storage/.config/privoxy
+  mkdir -p $INSTALL/storage/.config/privoxy/templates
   cp privoxy $INSTALL/usr/bin/
   $STRIP $INSTALL/usr/bin/privoxy
-  sed -e "s/listen-address\ \ 127.0.0.1:8118/listen-address  0.0.0.0:8118/g" -e "s/confdir\ \./confdir\ \/etc\/privoxy/g" -e "s/logdir\ \./logdir\ \/var\/log\/privoxy/g" config > $INSTALL/etc/privoxy/config
-  echo "forward-socks5	/	127.0.0.1:1080 ." >> $INSTALL/etc/privoxy/config
-  echo "forward	.i2p	127.0.0.1:4444" >> $INSTALL/etc/privoxy/config
-  echo "forward         192.168.*.*/     ." >> $INSTALL/etc/privoxy/config
-  echo "forward            10.*.*.*/     ." >> $INSTALL/etc/privoxy/config
-  echo "forward           127.*.*.*/     ." >> $INSTALL/etc/privoxy/config
-  cp default.action $INSTALL/etc/privoxy
-  cp default.filter $INSTALL/etc/privoxy
-  cp match-all.action $INSTALL/etc/privoxy
-  cp trust $INSTALL/etc/privoxy
-  cp user.action $INSTALL/etc/privoxy
-  cp user.filter $INSTALL/etc/privoxy
-  cp templates/* $INSTALL/etc/privoxy/templates
+  sed -e "s/listen-address\ \ 127.0.0.1:8118/listen-address  0.0.0.0:8118/g" -e "s/confdir\ \./confdir\ \/storage/.config\/privoxy/g" -e "s/logdir\ \./logdir\ \/var\/log\/privoxy/g" config > $INSTALL/storage/.config/privoxy/config
+  echo "forward-socks5	/	127.0.0.1:1080 ." >> $INSTALL/storage/.config/privoxy/config
+  echo "forward	.i2p	127.0.0.1:4444" >> $INSTALL/storage/.config/privoxy/config
+  echo "forward         192.168.*.*/     ." >> $INSTALL/storage/.config/privoxy/config
+  echo "forward            10.*.*.*/     ." >> $INSTALL/storage/.config/privoxy/config
+  echo "forward           127.*.*.*/     ." >> $INSTALL/storage/.config/privoxy/config
+  cp default.action $INSTALL/storage/.config/privoxy
+  cp default.filter $INSTALL/storage/.config/privoxy
+  cp match-all.action $INSTALL/storage/.config/privoxy
+  cp trust $INSTALL/storage/.config/privoxy
+  cp user.action $INSTALL/storage/.config/privoxy
+  cp user.filter $INSTALL/storage/.config/privoxy
+  cp templates/* $INSTALL/storage/.config/privoxy/templates
   cd -
 }
 

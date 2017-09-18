@@ -1,8 +1,8 @@
 PKG_NAME="aria2"
-PKG_VERSION="1.32.0"
+PKG_VERSION="fce8909"
 PKG_SITE="https://github.com/aria2/aria2/releases"
-PKG_URL="https://github.com/aria2/aria2/releases/download/release-$PKG_VERSION/aria2-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain expat pcre curl libev libxml2 libuv"
+PKG_GIT_URL="https://github.com/aria2/aria2"
+PKG_DEPENDS_TARGET="toolchain expat pcre curl libev libxml2 libuv libssh2"
 PKG_SECTION="tools"
 PKG_AUTORECONF="yes"
 
@@ -16,12 +16,11 @@ PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
                            --with-openssl \
                            --disable-ipv6 \
                            --without-gnutls \
-                           --without-libssh2 \
+                           --with-libssh2 \
                            --with-libexpat \
                            --with-zlib \
                            --with-libuv \
-                           --without-libgcrypt \
+                           --with-libgcrypt \
                            --without-sqlite3 \
                            --with-libxml2 \
-                           --with-gnu-ld \
                            --with-ca-bundle=/etc/ssl/cert.pem"

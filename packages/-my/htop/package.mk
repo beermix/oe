@@ -5,12 +5,9 @@ PKG_DEPENDS_TARGET="toolchain ncurses libpciaccess libxml2 udevil"
 PKG_SECTION="debug/tools"
 PKG_AUTORECONF="yes"
 
-pre_configure_target() {
-  export CFLAGS="$CFLAGS -fno-strict-aliasing -lncursesw -ltinfo"
-  CONCURRENCY_MAKE_LEVEL=1
-}
 
 PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config/htop \
+			      --datarootdir=/storage/.config/htop \
                            --enable-proc \
                            --enable-taskstats \
                            --enable-unicode \

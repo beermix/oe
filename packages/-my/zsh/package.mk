@@ -15,6 +15,7 @@ PKG_CONFIGURE_OPTS_TARGET="--bindir=/bin \
 			      --enable-multibyte \
 			      --enable-function-subdirs \
 			      --with-tcsetpgrp \
+			      --with-term-lib=ncursesw \
 			      --enable-pcre \
 			      --enable-cap \
 			      --enable-zsh-secure-free"

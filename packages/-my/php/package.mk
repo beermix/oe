@@ -10,7 +10,7 @@ PKG_ARCH="any"
 PKG_LICENSE="OpenSource"
 PKG_SITE="http://fi2.php.net/downloads.php"
 PKG_URL="http://www.php.net/distributions/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain zlib pcre curl libxml2 openssl libxslt libiconv"
+PKG_DEPENDS_TARGET="toolchain zlib pcre curl libxml2 openssl libxslt libiconv icu"
 PKG_SECTION="xmedia/tools"
 PKG_SHORTDESC="php: Scripting language especially suited for Web development"
 PKG_LONGDESC="PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML."
@@ -34,7 +34,7 @@ configure_target() {
   rm -rf .$TARGET_NAME
 
   # Dynamic Library support
-#  export LDFLAGS="$LDFLAGS -ldl -lpthread -lstdc++ -lsqlite3"
+  export LDFLAGS="$LDFLAGS -ldl -lpthread -lstdc++"
 
   # libiconv
   export CFLAGS="$CFLAGS -I$SYSROOT_PREFIX/usr/include/iconv"
@@ -49,6 +49,8 @@ configure_target() {
                              --enable-opcache=no \
                              --without-pear \
                              --localstatedir=/var \
+                             --disable-phpdbg \
+                             --disable-rpath \
                              --enable-sockets \
                              --enable-session \
                              --enable-posix \
@@ -79,8 +81,9 @@ configure_target() {
                              --disable-sysvshm \
                              --enable-filter \
                              --enable-calendar \
-                             --with-pcre-regex \
+                             --with-pcre-regex=$SYSROOT_PREFIX/usr \
                              --with-sqlite3=$SYSROOT_PREFIX/usr \
+                             --with-pdo-sqlite=$SYSROOT_PREFIX/usr \
                              --with-mysql=$SYSROOT_PREFIX/usr \
                              --with-mysql-sock=/var/tmp/mysql.sock \
                              --with-gd \

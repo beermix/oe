@@ -1,5 +1,5 @@
 PKG_NAME="testdisk"
-PKG_VERSION="3b48223"
+PKG_VERSION="65543b0"
 PKG_SITE="https://git.cgsecurity.org/cgit/testdisk/log/"
 PKG_GIT_URL="https://git.cgsecurity.org/testdisk.git"
 PKG_DEPENDS_TARGET="toolchain readline ncurses"

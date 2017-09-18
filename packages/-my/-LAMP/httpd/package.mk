@@ -19,7 +19,7 @@
 ################################################################################
 
 PKG_NAME="httpd"
-PKG_VERSION="2.4.25"
+PKG_VERSION="2.4.27"
 PKG_SITE="http://www.linuxfromscratch.org/blfs/view/svn/server/apache.html"
 PKG_URL="http://archive.apache.org/dist/httpd/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain openssl pcre expat apr-util"
@@ -59,7 +59,7 @@ else
 	SIZEOF_SIZES="ac_cv_sizeof_struct_iovec=8"
 fi
 
-  PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$CC \
+  PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                              --with-crypto \
                              --enable-ssl \
                              --enable-so \
