@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="go1.4"
-PKG_VERSION="release-branch.go1.4"
+PKG_VERSION="a3310f9"
 PKG_GIT_URL="https://github.com/golang/go"
 PKG_DEPENDS_HOST="toolchain"
 PKG_SECTION="system"
