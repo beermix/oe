@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libfmt"
-PKG_VERSION="3.0.1"
+PKG_VERSION="3.0.2"
 PKG_ARCH="any"
 PKG_LICENSE="BSD"
 PKG_SITE="https://github.com/fmtlib/fmt"
@@ -30,4 +30,4 @@ PKG_LONGDESC="fmt is an open-source formatting library for C++. It can be used a
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release -DFMT_DOC=OFF -DFMT_INSTALL=ON -DFMT_TEST=OFF -DFMT_USE_CPP11=ON"
+PKG_CMAKE_OPTS_TARGET="-DFMT_DOC=OFF -DFMT_INSTALL=ON -DFMT_TEST=OFF -DFMT_USE_CPP11=ON"

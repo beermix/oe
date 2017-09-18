@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="swig"
-PKG_VERSION="3.0.10"
+PKG_VERSION="3.0.12"
 PKG_SITE="https://github.com/swig/swig/releases"
 PKG_URL="$SOURCEFORGE_SRC/swig/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_PRIORITY="optional"
@@ -36,4 +36,18 @@ PKG_CONFIGURE_OPTS_HOST="--without-x \
                          --without-python3 \
                          --without-perl5 \
                          --without-octave \
-                         --without-java"
+                         --without-java \
+                         --without-gcj \
+                         --without-android \
+                         --without-guile \
+                         --without-mzscheme \
+                         --without-ruby \
+                         --without-php \
+                         --without-ocaml \
+                         --without-pike \
+                         --without-chicken \
+                         --without-csharp \
+                         --without-allegrocl \
+                         --without-clisp \
+                         --without-r \
+                         --without-d"
