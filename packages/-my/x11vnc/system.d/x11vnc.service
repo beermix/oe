@@ -3,7 +3,7 @@ Description=x11vnc
 After=network.target
 
 [Service]
-ExecStart=/usr/bin/x11vnc -forever -loop  -display :0
+ExecStart=/usr/bin/x11vnc -forever -loop -threads -o /dev/null  -display :0
 TimeoutStopSec=1
 Restart=always
 RestartSec=2
