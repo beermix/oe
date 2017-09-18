@@ -1,7 +1,6 @@
 PKG_NAME="openssl"
-PKG_VERSION="1.0.2-stable-SNAP-20170918"
+PKG_VERSION="1.0.2l"
 PKG_URL="https://www.openssl.org/source/openssl-$PKG_VERSION.tar.gz"
-PKG_URL="https://www.openssl.org/source/snapshot/openssl-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="ccache:host yasm:host"
 PKG_DEPENDS_TARGET="toolchain yasm:host pcre zlib gmp"
 PKG_SECTION="security"
@@ -11,7 +10,7 @@ PKG_LONGDESC="The Open Source toolkit for Secure Sockets Layer and Transport Lay
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-CONCURRENCY_MAKE_LEVEL=1
+#CONCURRENCY_MAKE_LEVEL=1
 
 PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            --libdir=lib \
@@ -33,11 +32,11 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
 pre_configure_host() {
   mkdir -p $ROOT/$PKG_BUILD/.$HOST_NAME
   cp -a $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$HOST_NAME/
+  export CCACHE_RECACHE=1
 }
 
 configure_host() {
   cd $ROOT/$PKG_BUILD/.$HOST_NAME
-  export CCACHE_RECACHE=1
   ./Configure --prefix=/ $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $HOST_CFLAGS
 }
 
