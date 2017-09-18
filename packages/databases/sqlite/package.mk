@@ -17,12 +17,10 @@
 ################################################################################
 
 PKG_NAME="sqlite"
-PKG_VERSION="3200100"
+PKG_VERSION="autoconf-3200100"
 PKG_SITE="https://www.sqlite.org/"
-PKG_URL="https://www.sqlite.org/2017/sqlite-src-$PKG_VERSION.zip"
-PKG_SOURCE_DIR="${PKG_NAME}-src-${PKG_VERSION}"
-PKG_DEPENDS_TARGET="toolchain readline ncurses tcl:host"
-PKG_DEPENDS_HOST="tcl:host"
+PKG_URL="https://www.sqlite.org/2017/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_DEPENDS_TARGET="toolchain readline ncurses"
 PKG_SECTION="database"
 PKG_SHORTDESC="sqlite: An Embeddable SQL Database Engine"
 PKG_LONGDESC="SQLite is a C library that implements an embeddable SQL database engine. Programs that link with the SQLite library can have SQL database access without running a separate RDBMS process. The distribution comes with a standalone command-line access program (sqlite) that can be used to administer an SQLite database and which serves as an example of how to use the SQLite library. SQLite is not a client library used to connect to a big database server. SQLite is the server. The SQLite library reads and writes directly to and from the database files on disk."
@@ -39,11 +37,11 @@ PKG_AUTORECONF="no"
 # ANALYZE command is enhanced to collect histogram data from each index and store
 # that data in the sqlite_stat3 table. The query planner will then use the histogram
 # data to help it make better index choices.
-  CPPFLAGS="$CPPFLAGS -DSQLITE_ENABLE_STAT3"
+  CFLAGS="$CFLAGS -DSQLITE_ENABLE_STAT3"
 
 # relocation R_MIPS_HI16 against `a local symbol' can not be used when making a shared object; recompile with -fPIC
-#  CPPFLAGS="$CPPFLAGS -fPIC"
-#  CPPFLAGS="$CPPFLAGS -DPIC"
+#  CFLAGS="$CFLAGS -fPIC"
+#  CFLAGS="$CFLAGS -DPIC"
 
 # When this C-preprocessor macro is defined, SQLite includes some additional APIs
 # that provide convenient access to meta-data about tables and queries. The APIs that
@@ -55,7 +53,7 @@ PKG_AUTORECONF="no"
 #  - sqlite3_column_origin_name()
 #  - sqlite3_column_origin_name16()
 #  - sqlite3_table_column_metadata()
-  CPPFLAGS="$CPPFLAGS -DSQLITE_ENABLE_COLUMN_METADATA=1"
+  CFLAGS="$CFLAGS -DSQLITE_ENABLE_COLUMN_METADATA=1"
 
 # This macro sets the default limit on the amount of memory that will be used for
 # memory-mapped I/O for each open database file. If the N is zero, then memory
@@ -63,24 +61,24 @@ PKG_AUTORECONF="no"
 # SQLITE_MAX_MMAP_SIZE can be modified at start-time using the
 # sqlite3_config(SQLITE_CONFIG_MMAP_SIZE) call, or at run-time using the
 # mmap_size pragma.
-  CPPFLAGS="$CPPFLAGS -DSQLITE_DEFAULT_MMAP_SIZE=268435456"
+  CFLAGS="$CFLAGS -DSQLITE_TEMP_STORE=3 -DSQLITE_DEFAULT_MMAP_SIZE=268435456"
 
-  CPPFLAGS="$CPPFLAGS -DSQLITE_ENABLE_UNLOCK_NOTIFY"
-  CPPFLAGS="$CPPFLAGS -DSQLITE_ENABLE_DBSTAT_VTAB=1"
-  CPPFLAGS="$CPPFLAGS -DSQLITE_ENABLE_FTS3_TOKENIZER=1"
-  CPPFLAGS="$CPPFLAGS -DSQLITE_SECURE_DELETE"
-  CPPFLAGS="$CPPFLAGS -DSQLITE_MAX_VARIABLE_NUMBER=250000"
-  CPPFLAGS="$CPPFLAGS -DSQLITE_MAX_EXPR_DEPTH=10000"
+  CFLAGS="$CFLAGS -DSQLITE_ENABLE_UNLOCK_NOTIFY"
+  CFLAGS="$CFLAGS -DSQLITE_ENABLE_DBSTAT_VTAB=1"
+  CFLAGS="$CFLAGS -DSQLITE_ENABLE_FTS3"
+  CFLAGS="$CFLAGS -DSQLITE_ENABLE_FTS3_TOKENIZER=1"
+  CFLAGS="$CFLAGS -DSQLITE_SECURE_DELETE"
+  CFLAGS="$CFLAGS -DSQLITE_MAX_VARIABLE_NUMBER=250000"
+  CFLAGS="$CFLAGS -DSQLITE_MAX_EXPR_DEPTH=10000"
+  
+  CFLAGS="$CFLAGS DSQLITE_ENABLE_JSON1"
+  CFLAGS="$CFLAGS DSQLITE_NO_SYNC"
 
 CONCURRENCY_MAKE_LEVEL=1
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-threadsafe \
-                           --disable-static \
-                           --disable-amalgamation \
-                           --enable-fts3 \
-                           --enable-fts4 \
-                           --enable-fts5 \
-                           --enable-rtree \
-                           --enable-json1"
+                           --enable-dynamic-extensions \
+                           --disable-silent-rules \
+                           --enable-readline"
                            
 PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
