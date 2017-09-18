@@ -37,12 +37,12 @@ pre_configure_host() {
 
 configure_host() {
   cd $ROOT/$PKG_BUILD/.$HOST_NAME
-  ./Configure --prefix=/ $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $HOST_CFLAGS
+  ./Configure --prefix=/ $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $CFLAGS $LDFLAGS
 }
 
 makeinstall_host() {
   export CCACHE_RECACHE=1
-  make INSTALL_PREFIX=$ROOT/$TOOLCHAIN install_sw -j1
+  make -j1 INSTALL_PREFIX=$ROOT/$TOOLCHAIN install_sw
 }
 
 pre_configure_target() {
@@ -59,12 +59,12 @@ pre_configure_target() {
 
 configure_target() {
   cd $ROOT/$PKG_BUILD/.$TARGET_NAME
-  ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $CFLAGS $CPPFLAGS
+  ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $CFLAGS $CPPFLAGS $LDFLAGS
 }
 
 makeinstall_target() {
-  make INSTALL_PREFIX=$INSTALL install_sw -j1
-  make INSTALL_PREFIX=$SYSROOT_PREFIX install_sw -j1
+  make -j1 INSTALL_PREFIX=$INSTALL install_sw
+  make -j1 INSTALL_PREFIX=$SYSROOT_PREFIX install_sw
   chmod 755 $INSTALL/usr/lib/*.so*
   chmod 755 $INSTALL/usr/lib/engines/*.so
 }
