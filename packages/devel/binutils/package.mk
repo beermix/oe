@@ -56,6 +56,6 @@ makeinstall_host() {
   make install -j1
 }
 
-pre_configure_host() {
-  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $ROOT/$PKG_BUILD/libiberty/configure
-}
+#pre_configure_host() {
+#  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $ROOT/$PKG_BUILD/libiberty/configure
+#}
