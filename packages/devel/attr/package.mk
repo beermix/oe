@@ -56,7 +56,6 @@ makeinstall_target() {
 
   mkdir -p $SYSROOT_PREFIX/usr/include/attr
     cp include/*.h $SYSROOT_PREFIX/usr/include/attr
-    
 }
 
 post_makeinstall_target() {
