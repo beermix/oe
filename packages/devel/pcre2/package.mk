@@ -9,17 +9,9 @@ PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-stack-for-recursion \
-			      --enable-pcre2-8 \
-			      --enable-pcre2-16 \
-			      --disable-pcre2-32 \
-			      --enable-jit \
-			      --enable-utf8 \
-			      --enable-unicode-properties \
-			      --enable-newline-is-anycrlf \
-			      --enable-cpp"
+PKG_CONFIGURE_OPTS_TARGET="--enable-pcre2-16 --enable-pcre2-32 --enable-jit --enable-utf"
 
-PKG_CONFIGURE_OPTS_HOST="--prefix=$ROOT/$TOOLCHAIN $PKG_CONFIGURE_OPTS_TARGET"
+PKG_CONFIGURE_OPTS_HOST="--prefix=$ROOT/$TOOLCHAIN $PKG_CONFIGURE_OPTS_TARGET --disable-shared --with-pic"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
