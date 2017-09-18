@@ -13,5 +13,6 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static \
 			      --with-libgpg-error-prefix=$SYSROOT_PREFIX/usr"
 
 pre_configure_target() {
-  CFLAGS="$CFLAGS -fPIC"
+  export CFLAGS="$CFLAGS -fPIC -DPIC"
+  export CXXFLAGS="$CXXFLAGS -fPIC -DPIC"
 }
