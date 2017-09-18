@@ -40,7 +40,8 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_snprintf_c99=yes \
                            ac_cv_func_vsnprintf_c99=yes \
                            glib_cv_stack_grows=no \
                            glib_cv_uscore=no \
-                           glib_cv_va_val_copy=no
+                           glib_cv_va_val_copy=no \
+                           --disable-selinux \
                            --disable-fam \
                            --enable-xattr \
                            --disable-libelf \

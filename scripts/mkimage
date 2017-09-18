@@ -108,7 +108,7 @@ fi
   HEADS=4
   TRACKS=32
   SECTORS=$(( $SYSTEM_SIZE * 1024 * 1024 / 512 / $HEADS / $TRACKS ))
-
+  
   shopt -s expand_aliases  # enables alias expansion in script
   alias mformat="mformat -i $DISK@@$OFFSET -h $HEADS -t $TRACKS -s $SECTORS"
   alias mcopy="mcopy -i $DISK@@$OFFSET"
