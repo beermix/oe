@@ -15,9 +15,10 @@
 #  You should have received a copy of the GNU General Public License
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
-
+0710b02
 PKG_NAME="configtools"
-PKG_VERSION="36b490f"
+PKG_VERSION="0710b02"
+#PKG_VERSION="36b490f"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://git.savannah.gnu.org/cgit/config.git"

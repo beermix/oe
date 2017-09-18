@@ -43,7 +43,6 @@ PKG_CONFIGURE_OPTS_HOST="MAKEINFO=true \
                          --enable-version-specific-runtime-libs \
                          --enable-plugins \
                          --enable-gold \
-                         --enable-ld=default \
                          --enable-lto \
                          --enable-shared \
                          --enable-threads \
