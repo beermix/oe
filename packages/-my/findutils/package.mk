@@ -6,4 +6,4 @@ PKG_SECTION="network"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--bindir=/bin --without-selinux --disable-debug --disable-nls --enable-threads=posix"
+PKG_CONFIGURE_OPTS_TARGET="--bindir=/bin --without-selinux --disable-debug --enable-threads --disable-nls"
