@@ -17,11 +17,12 @@
 ################################################################################
 
 PKG_NAME="boost"
-PKG_VERSION="1.63UU"
-PKG_URL="https://dl.dropboxusercontent.com/s/zvjhs3vkktkct11/boost1.63UU.tar.xz"
-#PKG_VERSION="1_63_0"
+#PKG_VERSION="1.63UU"
+#PKG_URL="https://dl.dropboxusercontent.com/s/zvjhs3vkktkct11/boost1.63UU.tar.xz"
+PKG_VERSION="1_65_1"
 #PKG_URL="$SOURCEFORGE_SRC/boost/boost/1.63.0/${PKG_NAME}_${PKG_VERSION}.tar.bz2"
-PKG_SOURCE_DIR="${PKG_NAME}${PKG_VERSION}"
+PKG_URL="https://fossies.org/linux/misc/boost_1_65_1.tar.xz"
+PKG_SOURCE_DIR="${PKG_NAME}_${PKG_VERSION}"
 PKG_DEPENDS_HOST=""
 PKG_DEPENDS_TARGET="toolchain boost:host Python zlib bzip2"
 PKG_SECTION="devel"
@@ -79,7 +80,7 @@ makeinstall_target() {
                                 --with-program_options \
                                 --with-random \
                                 --with-exception \
-                                --with-signals -j3 \
+                                --with-signals -j2 \
                                 install
 
 }
