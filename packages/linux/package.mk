@@ -46,11 +46,6 @@ case "$LINUX" in
     PKG_PATCH_DIRS="linux-3.14 amlogic-3.14"
     KERNEL_EXTRA_CONFIG+=" kernel-3.x"
     ;;
-  rc)
-    PKG_VERSION="4.13-rc7"
-    PKG_URL="https://git.kernel.org/torvalds/t/linux-$PKG_VERSION.tar.gz"
-    PKG_PATCH_DIRS="linux-4.13"
-    ;;
   aufs)
     PKG_VERSION="88f3e9a"
     PKG_GIT_URL="http://github.com/sfjro/aufs4-linux"
@@ -63,7 +58,7 @@ case "$LINUX" in
     PKG_GIT_URL="http://github.com/zen-kernel/zen-kernel"
     PKG_PATCH_DIRS="linux-4.12"
     ;;
-  4.14)
+  rc)
     PKG_VERSION="4.14-rc1"
     PKG_URL="https://git.kernel.org/torvalds/t/linux-$PKG_VERSION.tar.gz"
     PKG_PATCH_DIRS="linux-4.14"
