@@ -46,7 +46,7 @@ PKG_CONFIGURE_OPTS_TARGET="BUILD_CC=$HOST_CC \
                            --enable-symlink-build \
                            --enable-compression \
                            --enable-htree \
-                           --enable-elf-shlibs \
+                           --disable-elf-shlibs \
                            --disable-bsd-shlibs \
                            --disable-profile \
                            --disable-jbd-debug \
