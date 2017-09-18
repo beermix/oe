@@ -79,8 +79,8 @@ pre_configure_target() {
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong -D_FORTIFY_SOURCE=2||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-ffast-math||g"`
-#  export CFLAGS=`echo $CFLAGS | sed -e "s|-fno-plt||g"`
-#  export CFLAGS=`echo $CFLAGS | sed -e "s|-fno-caller-saves||g"`
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-fno-plt||g"`
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-fno-caller-saves||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-Ofast|-O2|g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O2|g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong||g"`
