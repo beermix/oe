@@ -20,6 +20,9 @@
 
 PKG_NAME="libXcursor"
 PKG_VERSION="1.1.14"
+PKG_SHA256="9bc6acb21ca14da51bda5bc912c8955bc6e5e433f0ab00c5e8bef842596c33df"
+PKG_ARCH="any"
+PKG_LICENSE="OSS"
 PKG_SITE="http://www.X.org"
 PKG_URL="http://xorg.freedesktop.org/archive/individual/lib/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain libX11 libXfixes libXrender"
@@ -30,10 +33,4 @@ PKG_LONGDESC="X11 Cursor management library"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared --with-gnu-ld"
-
-pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC"
-  export CXXFLAGS="$CXXFLAGS -fPIC"
-}
-
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static"

@@ -1,5 +1,5 @@
 ################################################################################
-#      This file is part of LibreELEC - http://www.libreelec.tv
+#      This file is part of LibreELEC - https://libreelec.tv
 #      Copyright (C) 2016 Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
@@ -17,8 +17,11 @@
 ################################################################################
 
 PKG_NAME="efivar"
-PKG_VERSION="70e63d4" # 0.15 # Todo: later versions with buildproblems
+PKG_VERSION="70e63d4"
+# 0.15 # Todo: later versions with buildproblems
+PKG_SHA256="2638f1faa22e67bf99b4c537f7c21c336a5851a8c91c8dc09555da946a1b84c9"
 PKG_ARCH="x86_64"
+PKG_LICENSE="LGPL"
 PKG_SITE="https://github.com/vathpela/efivar"
 PKG_URL="https://github.com/vathpela/efivar-devel/archive/$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="efivar-devel-$PKG_VERSION*"

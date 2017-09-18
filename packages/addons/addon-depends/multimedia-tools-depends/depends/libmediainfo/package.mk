@@ -17,7 +17,10 @@
 ################################################################################
 
 PKG_NAME="libmediainfo"
-PKG_VERSION="0.7.98"
+PKG_VERSION="0.7.83"
+PKG_SHA256="27e2ae08349e0546f46f2af83cc0830c4b2e9a13fa3ff385566bb3b3c15e3df9"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://mediaarea.net/en/MediaInfo/Download/Source"
 PKG_URL="http://mediaarea.net/download/source/libmediainfo/$PKG_VERSION/libmediainfo_$PKG_VERSION.tar.bz2"
 PKG_SOURCE_DIR="MediaInfoLib"
@@ -51,5 +54,5 @@ post_makeinstall_target() {
     mkdir -p $SYSROOT_PREFIX/usr/include/MediaInfo/$i/
     cp -aP ../../../Source/MediaInfo/$i/*.h $SYSROOT_PREFIX/usr/include/MediaInfo/$i/
   done
-  cp -P libmediainfo-config $ROOT/$TOOLCHAIN/bin
+  cp -P libmediainfo-config $TOOLCHAIN/bin
 }

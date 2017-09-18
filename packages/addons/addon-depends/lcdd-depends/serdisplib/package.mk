@@ -19,6 +19,7 @@
 
 PKG_NAME="serdisplib"
 PKG_VERSION="1.97.9"
+PKG_SHA256="fe82ebe72731e91509083569dfe41a09e21632cc1211cdc4f76274f83ed218fa"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://serdisplib.sourceforge.net/"
@@ -38,7 +39,7 @@ PKG_CONFIGURE_OPTS_TARGET="--prefix=$SYSROOT_PREFIX/usr \
 
 pre_configure_target() {
   # serdisplib fails to build in subdirs
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
     rmdir .$TARGET_NAME
 
   # use libusb-config from sysroot

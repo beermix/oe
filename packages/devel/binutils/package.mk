@@ -42,19 +42,19 @@ PKG_CONFIGURE_OPTS_HOST="MAKEINFO=true \
                          --enable-libssp \
                          --enable-version-specific-runtime-libs \
                          --enable-plugins \
-                         --enable-gold \
                          --enable-lto \
                          --enable-shared \
                          --enable-threads \
                          --with-pic \
                          --disable-nls \
+                         --enable-deterministic-archives \
                          --enable-poison-system-directories"
 
 makeinstall_host() {
   cp -v ../include/libiberty.h $SYSROOT_PREFIX/usr/include
-  make install
+  make install -j1
 }
 
-#pre_configure_host() {
-#  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $ROOT/$PKG_BUILD/libiberty/configure
-#}
+pre_configure_host() {
+  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $ROOT/$PKG_BUILD/libiberty/configure
+}
