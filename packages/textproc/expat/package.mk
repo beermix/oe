@@ -28,7 +28,7 @@ PKG_IS_ADDON="no"
 PKG_USE_CMAKE="yes"
 PKG_AUTORECONF="no"
 
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release -DBUILD_tools=ON -DBUILD_examples=OFF -DBUILD_tests=OFF -DBUILD_shared=ON"
+PKG_CMAKE_OPTS_TARGET="-DBUILD_tools=ON -DBUILD_examples=OFF -DBUILD_tests=OFF -DBUILD_shared=ON"
 
 pre_make_target() {
   # fix builderror when building in subdirs
