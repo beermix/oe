@@ -152,7 +152,6 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/share/i18n/locales
 
 # add default locale
-if [ "$GLIBC_LOCALES" = yes ]; then
   mkdir -p $INSTALL/usr/lib/locale
   mkdir -p $INSTALL/etc/profile.d
   I18NPATH=../localedata 
@@ -160,7 +159,6 @@ if [ "$GLIBC_LOCALES" = yes ]; then
   localedef -i ../localedata/locales/ru_RU -f ../localedata/charmaps/UTF-8 ru_RU.UTF-8 --prefix=$INSTALL
   echo "export LANG=en_US.UTF-8" > $INSTALL/etc/profile.d/01-locale.conf
   echo "export LANG=ru_RU.UTF-8" > $INSTALL/etc/profile.d/01-locale.conf
-fi
 
 # create default configs
   mkdir -p $INSTALL/etc
