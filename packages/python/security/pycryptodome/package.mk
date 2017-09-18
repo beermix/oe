@@ -20,7 +20,7 @@ PKG_NAME="pycryptodome"
 PKG_VERSION="3.4.7"
 PKG_ARCH="any"
 PKG_LICENSE="BSD"
-PKG_SITE="https://github.com/Legrandin/pycryptodome/releases"
+PKG_SITE="https://pypi.python.org/pypi/pycryptodome"
 PKG_URL="https://pypi.python.org/packages/2b/9b/aaa940ab8affd66eed043d69332dc607cddd68f9e399d93dcdfc8149fb21/pycryptodome-3.4.7.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"
 PKG_SECTION="python/security"
@@ -29,6 +29,8 @@ PKG_LONGDESC="PyCryptodome is a self-contained Python package of low-level crypt
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
+
+CONCURRENCY_MAKE_LEVEL=1
 
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD

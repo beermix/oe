@@ -6,6 +6,8 @@ PKG_DEPENDS_TARGET="toolchain Python distutilscross:host openssl swig:host"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
+CONCURRENCY_MAKE_LEVEL=1
+
 make_target() {
   python setup.py build build_ext --openssl=$LIB_PREFIX
 }

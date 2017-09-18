@@ -7,6 +7,8 @@ PKG_SECTION="python/system"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
+CONCURRENCY_MAKE_LEVEL=1
+
 make_target() {
   python setup.py build --cross-compile
 }
