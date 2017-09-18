@@ -39,11 +39,11 @@ PKG_AUTORECONF="no"
 # ANALYZE command is enhanced to collect histogram data from each index and store
 # that data in the sqlite_stat3 table. The query planner will then use the histogram
 # data to help it make better index choices.
-  CFLAGS="$CFLAGS -DSQLITE_ENABLE_STAT3"
+  CPPFLAGS="$CPPFLAGS -DSQLITE_ENABLE_STAT3"
 
 # relocation R_MIPS_HI16 against `a local symbol' can not be used when making a shared object; recompile with -fPIC
-#  CFLAGS="$CFLAGS -fPIC"
-#  CFLAGS="$CFLAGS -DPIC"
+#  CPPFLAGS="$CPPFLAGS -fPIC"
+#  CPPFLAGS="$CPPFLAGS -DPIC"
 
 # When this C-preprocessor macro is defined, SQLite includes some additional APIs
 # that provide convenient access to meta-data about tables and queries. The APIs that
@@ -55,7 +55,7 @@ PKG_AUTORECONF="no"
 #  - sqlite3_column_origin_name()
 #  - sqlite3_column_origin_name16()
 #  - sqlite3_table_column_metadata()
-  CFLAGS="$CFLAGS -DSQLITE_ENABLE_COLUMN_METADATA=1"
+  CPPFLAGS="$CPPFLAGS -DSQLITE_ENABLE_COLUMN_METADATA=1"
 
 # This macro sets the default limit on the amount of memory that will be used for
 # memory-mapped I/O for each open database file. If the N is zero, then memory
@@ -63,14 +63,14 @@ PKG_AUTORECONF="no"
 # SQLITE_MAX_MMAP_SIZE can be modified at start-time using the
 # sqlite3_config(SQLITE_CONFIG_MMAP_SIZE) call, or at run-time using the
 # mmap_size pragma.
-  CFLAGS="$CFLAGS -DSQLITE_DEFAULT_MMAP_SIZE=268435456"
+  CPPFLAGS="$CPPFLAGS -DSQLITE_DEFAULT_MMAP_SIZE=268435456"
 
-  CFLAGS="$CFLAGS -DSQLITE_ENABLE_UNLOCK_NOTIFY"
-  CFLAGS="$CFLAGS -DSQLITE_ENABLE_DBSTAT_VTAB=1"
-  CFLAGS="$CFLAGS -DSQLITE_ENABLE_FTS3_TOKENIZER=1"
-  CFLAGS="$CFLAGS -DSQLITE_SECURE_DELETE"
-  CFLAGS="$CFLAGS -DSQLITE_MAX_VARIABLE_NUMBER=250000"
-  CFLAGS="$CFLAGS -DSQLITE_MAX_EXPR_DEPTH=10000"
+  CPPFLAGS="$CPPFLAGS -DSQLITE_ENABLE_UNLOCK_NOTIFY"
+  CPPFLAGS="$CPPFLAGS -DSQLITE_ENABLE_DBSTAT_VTAB=1"
+  CPPFLAGS="$CPPFLAGS -DSQLITE_ENABLE_FTS3_TOKENIZER=1"
+  CPPFLAGS="$CPPFLAGS -DSQLITE_SECURE_DELETE"
+  CPPFLAGS="$CPPFLAGS -DSQLITE_MAX_VARIABLE_NUMBER=250000"
+  CPPFLAGS="$CPPFLAGS -DSQLITE_MAX_EXPR_DEPTH=10000"
 
 CONCURRENCY_MAKE_LEVEL=1
 
