@@ -98,7 +98,7 @@ make_target() {
     'use_custom_libcxx=false'
     'use_gtk3=true'
     'use_vaapi=true'
-    'enable_hangout_services_extension=true'
+    'enable_hangout_services_extension=false'
     'use_kerberos=false'
     'use_pulseaudio=false'
     'use_sysroot=true'
@@ -112,7 +112,7 @@ make_target() {
   )
 
   # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
-  declare -rgA _system_libs=(
+  local _system_libs=(
     harfbuzz-ng
     libjpeg
     libxslt
