@@ -30,4 +30,4 @@ PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_HOST="--enable-cxx --enable-static --disable-shared --enable-fat --with-pic"
 
-PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
+PKG_CONFIGURE_OPTS_TARGET="--enable-cxx --enable-fat"
