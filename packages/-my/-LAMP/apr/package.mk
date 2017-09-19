@@ -22,6 +22,7 @@ PKG_VERSION="1.5.1"
 PKG_SITE="http://apr.apache.org/"
 PKG_URL="http://archive.apache.org/dist/apr/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
+
 PKG_SECTION="web"
 PKG_SHORTDESC="The Apache Portable Runtime"
 PKG_LONGDESC="The Apache Portable Runtime (APR) is a supporting library for the Apache web server."
@@ -54,8 +55,8 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            apr_cv_tcp_nodelay_with_cork=no \
                            apr_cv_process_shared_works=no \
                            $SIZEOF_SIZES \
-                           --disable-static \
-                           --enable-shared \
+                           --enable-static \
+                           --disable-shared \
                            --disable-libtool-lock \
                            --enable-lfs \
                            --enable-dso \

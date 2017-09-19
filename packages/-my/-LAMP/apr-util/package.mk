@@ -33,16 +33,16 @@ PKG_USE_CMAKE="no"
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
-  export CXX="g++ -fno-exceptions"
+  export CXX="g++ -static -static-libgcc -fno-exceptions"
   export LIBS="-lc"
   
   #APR_DIR_TARGET=$(get_pkg_build apr)/.install_dev/usr
   #APR_DIR_TARGET=$(get_pkg_build apr)/.$TARGET_NAME
   APR_DIR_TARGET=$(get_pkg_build apr)/.install_dev
   
-  export TARGET_PKG_CONFIG_LIBDIR="TARGET_PKG_CONFIG_LIBDIR $APR_DIR_TARGET/usr/lib/pkgconfig"
+  #export TARGET_PKG_CONFIG_LIBDIR="TARGET_PKG_CONFIG_LIBDIR $APR_DIR_TARGET/usr/lib/pkgconfig"
   
-  #export APRUTIL_LDFLAGS="-Wl,-static -static -lc"
+  export APRUTIL_LDFLAGS="-Wl,-static -static -lc"
 
   export CFLAGS="$CFLAGS -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64"
   export CPPFLAGS="-D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64"
