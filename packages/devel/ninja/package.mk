@@ -31,7 +31,7 @@ configure_host() {
 }
 
 make_host() {
-   python2 configure.py --bootstrap
+  python2 configure.py --bootstrap
 }
 
 makeinstall_host() {
