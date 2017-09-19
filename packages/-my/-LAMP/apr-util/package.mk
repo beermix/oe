@@ -22,7 +22,6 @@ PKG_VERSION="1.5.4"
 PKG_SITE="http://apr.apache.org/"
 PKG_URL="http://archive.apache.org/dist/apr/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain apr"
-
 PKG_SECTION="web"
 PKG_SHORTDESC="The Apache Portable Runtime Utility Library."
 PKG_LONGDESC="The Apache Portable Runtime Utility Library provides a predictable and consistent interface to underlying client library interfaces."
@@ -34,16 +33,16 @@ PKG_USE_CMAKE="no"
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
-  export CXX="g++ -static -static-libgcc -fno-exceptions"
+  export CXX="g++ -fno-exceptions"
   export LIBS="-lc"
   
   #APR_DIR_TARGET=$(get_pkg_build apr)/.install_dev/usr
   #APR_DIR_TARGET=$(get_pkg_build apr)/.$TARGET_NAME
   APR_DIR_TARGET=$(get_pkg_build apr)/.install_dev
   
-  #export TARGET_PKG_CONFIG_LIBDIR="TARGET_PKG_CONFIG_LIBDIR $APR_DIR_TARGET/usr/lib/pkgconfig"
+  export TARGET_PKG_CONFIG_LIBDIR="TARGET_PKG_CONFIG_LIBDIR $APR_DIR_TARGET/usr/lib/pkgconfig"
   
-  export APRUTIL_LDFLAGS="-Wl,-static -static -lc"
+  #export APRUTIL_LDFLAGS="-Wl,-static -static -lc"
 
   export CFLAGS="$CFLAGS -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64"
   export CPPFLAGS="-D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64"
