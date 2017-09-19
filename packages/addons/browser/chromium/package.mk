@@ -51,10 +51,7 @@ make_target() {
 #  mkdir -p $ROOT/$PKG_BUILD/out
 #  mount -t tmpfs -o size=20G,nr_inodes=40k,mode=1777 tmpfs $ROOT/$PKG_BUILD/out
 
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now|-Wl,-O1,--as-needed|"`
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--sort-common,--as-needed,-z,relro|-Wl,-O1,--as-needed|"`
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-fno-plt||g"`
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-fno-caller-saves||g"`
+  strip_hard
 
 # export -n CFLAGS CXXFLAGS
   export LDFLAGS="$LDFLAGS -ludev"
@@ -142,7 +139,7 @@ make_target() {
 
 	# chromedriver
 
-  ninja -j6 -C out/Release chrome chrome_sandbox widevinecdmadapter
+  ninja -j5 -C out/Release chrome chrome_sandbox widevinecdmadapter
 }
 
 makeinstall_target() {

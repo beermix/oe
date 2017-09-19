@@ -67,13 +67,9 @@ configure_target() {
   # Dynamic Library support
   export LDFLAGS="$LDFLAGS -ldl -lpthread -lstdc++"
 
-#  APXS_FILE=$(get_build_dir httpd)/.install_dev/usr/bin/apxs
-#  chmod +x $APXS_FILE
-  export CFLAGS="$CFLAGS -I$SYSROOT_PREFIX/usr/include/iconv"
-  export LDFLAGS="$LDFLAGS -L$SYSROOT_PREFIX/usr/lib/iconv -liconv"
-
-#  export CXXFLAGS="$CFLAGS"
-#  export CPPFLAGS="$CFLAGS"
+  APXS_FILE=$(get_build_dir httpd)/.install_dev/usr/bin/apxs
+  chmod +x $APXS_FILE
+    
 
   PKG_CONFIGURE_OPTS_TARGET="--enable-cli \
                              --enable-cgi \
@@ -105,7 +101,7 @@ configure_target() {
                              --with-zlib=$SYSROOT_PREFIX/usr \
                              --with-bz2=$SYSROOT_PREFIX/usr \
                              --with-iconv \
-                             --with-gettext \
+                             --without-gettext \
                              --with-gmp=$SYSROOT_PREFIX/usr \
                              --enable-json \
                              --enable-pcntl \
