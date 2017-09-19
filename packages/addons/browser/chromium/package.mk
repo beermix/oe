@@ -19,12 +19,12 @@
 ################################################################################
 
 PKG_NAME="chromium"
-PKG_VERSION="61.0.3163.98"
+PKG_VERSION="61.0.3163.91"
 PKG_REV="110"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_SITE="http://www.chromium.org/Home"
-PKG_URL="ftp://root:openelec@192.168.1.4/www/chromium-$PKG_VERSION.tar.xz"
+PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain pciutils dbus libXcomposite libXcursor libXtst alsa-lib bzip2 yasm nss libXScrnSaver libexif ninja:host libpng harfbuzz atk gtk+ xdotool libvdpau unclutter x11 ffmpeg"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
@@ -112,7 +112,7 @@ make_target() {
   )
 
   # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
-  local _system_libs=(
+  declare -rgA _system_libs=(
     harfbuzz-ng
     libjpeg
     libxslt
@@ -129,6 +129,7 @@ make_target() {
       \! -regex '.*\.\(gn\|gni\|isolate\|py\)' \
       -delete
   done
+
 
   ./build/linux/unbundle/replace_gn_files.py --system-libraries "${_system_libs}"
   ./third_party/libaddressinput/chromium/tools/update-strings.py
