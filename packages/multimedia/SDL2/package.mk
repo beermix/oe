@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="SDL2"
-PKG_VERSION="59bc23e"
+PKG_VERSION="1e197f8"
 PKG_SITE="https://www.libsdl.org/"
 PKG_GIT_URL="https://github.com/spurious/SDL-mirror"
 PKG_DEPENDS_TARGET="toolchain yasm:host alsa-lib systemd dbus"
@@ -28,12 +28,16 @@ PKG_LONGDESC="Simple DirectMedia Layer is a cross-platform multimedia library de
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CMAKE_OPTS_TARGET="-DSDL_STATIC=ON \
+pre_configure_target() {
+  unset LDDFLAGS
+}
+
+PKG_CMAKE_OPTS_TARGET="-DSDL_STATIC=ON -DSDL_SHARED=OFF \
 			  -DDUMMYAUDIO=OFF \
 			  -DOSS=OFF \
 			  -DRPATH=OFF \
 			  -DVIDEO_DUMMY=OFF \
-			  -DDISKAUDIO=OFF"
+			  -DDISKAUDIO=OFF -DCMAKE_BUILD_TYPE=Release"
 
 if [ "$DISPLAYSERVER" = "x11" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libX11 libXrandr"

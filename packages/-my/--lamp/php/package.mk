@@ -28,7 +28,7 @@ if [ -z "$PHP_VERSION" ]; then
   #PKG_VERSION="5.5.8"
 
 	# test latest
-	PKG_VERSION="5.6.9"
+	PKG_VERSION="7.2.0RC2"
 	#PKG_SOURCE_DIR="php-src-php-$PKG_VERSION"
 else
   PKG_VERSION="$PHP_VERSION"
@@ -41,13 +41,14 @@ PKG_SITE="http://www.php.net"
 
 if [ -z "$PHP_VERSION" ]; then
   # PKG_URL="http://www.php.net/distributions/$PKG_NAME-$PKG_VERSION.tar.bz2"
-  PKG_URL="http://www.php.net/distributions/$PKG_NAME-$PKG_VERSION.tar.xz"
+#  PKG_URL="http://www.php.net/distributions/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="https://downloads.php.net/~pollita/php-7.2.0RC2.tar.xz"
 else
   PKG_URL="http://museum.php.net/php5/php-$PKG_VERSION.tar.bz2"
 fi
 
 # add some other libraries which are need by php extensions
-PKG_DEPENDS_TARGET="toolchain zlib pcre curl libxml2 libressl libmcrypt libiconv mysql httpd"
+PKG_DEPENDS_TARGET="toolchain zlib pcre curl libxml2 openssl libmcrypt libiconv mariadb httpd"
 PKG_PRIORITY="optional"
 PKG_SECTION="web"
 PKG_SHORTDESC="php: Scripting language especially suited for Web development"
@@ -59,15 +60,15 @@ PKG_AUTORECONF="yes"
 #export MAKEFLAGS=-j1
 
 post_unpack() {
-	PHP_BUILD_DIR=$(get_build_dir php)
-	echo "downloading pear..."
-	if [ ! -f "$PHP_BUILD_DIR/../go-pear.phar" ]; then
-		wget -O $PHP_BUILD_DIR/../go-pear.phar http://pear.php.net/go-pear.phar
-	fi
-	cp $PHP_BUILD_DIR/../go-pear.phar $PHP_BUILD_DIR/pear/go-pear.phar
-	
-	# libtool fix
-	rm $ROOT/$PKG_BUILD/aclocal.m4
+  PHP_BUILD_DIR=$(get_build_dir php)
+  echo "downloading pear..."
+  if [ ! -f "$PHP_BUILD_DIR/../go-pear.phar" ]; then
+    wget -O $PHP_BUILD_DIR/../go-pear.phar http://pear.php.net/go-pear.phar
+  fi
+  cp $PHP_BUILD_DIR/../go-pear.phar $PHP_BUILD_DIR/pear/go-pear.phar
+
+  # libtool fix
+  rm $ROOT/$PKG_BUILD/aclocal.m4
 }
 
 configure_target() {
@@ -86,16 +87,24 @@ configure_target() {
 	export CFLAGS="$CFLAGS -I$HTTPD_DIR/usr/include"
 	
   # Dynamic Library support
-  export LDFLAGS="$LDFLAGS -ldl -lpthread"
+  export LDFLAGS="$LDFLAGS -ldl -lpthread -lstdc++"
 
-  APXS_FILE=$(get_build_dir httpd)/.install_dev/usr/bin/apxs
-  chmod +x $APXS_FILE
-    
+#  APXS_FILE=$(get_build_dir httpd)/.install_dev/usr/bin/apxs
+#  chmod +x $APXS_FILE
+  export CFLAGS="$CFLAGS -I$SYSROOT_PREFIX/usr/include/iconv"
+  export LDFLAGS="$LDFLAGS -L$SYSROOT_PREFIX/usr/lib/iconv -liconv"
+
+  export CXXFLAGS="$CFLAGS"
+  export CPPFLAGS="$CFLAGS"
+
   PKG_CONFIGURE_OPTS_TARGET="--enable-cli \
+                             --enable-cgi \
                              --enable-opcache=no \
                              --with-pear \
                              --with-config-file-path=/storage/.kodi/userdata/addon_data/service.web.lamp/srvroot/conf \
                              --localstatedir=/var \
+                             --disable-phpdbg \
+                             --disable-rpath \
                              --enable-sockets \
                              --enable-session \
                              --enable-posix \
@@ -104,6 +113,7 @@ configure_target() {
                              --enable-ctype \
                              --enable-zip \
                              --enable-ftp \
+                             --enable-json \
                              --with-openssl-dir=$SYSROOT_PREFIX/usr \
                              --enable-libxml \
                              --enable-xml \
@@ -111,15 +121,14 @@ configure_target() {
                              --enable-xmlwriter \
                              --enable-simplexml \
                              --enable-fileinfo \
+                             --with-libxml-dir=$SYSROOT_PREFIX/usr \
                              --with-curl=$SYSROOT_PREFIX/usr \
                              --with-openssl=$SYSROOT_PREFIX/usr \
                              --with-zlib=$SYSROOT_PREFIX/usr \
                              --with-bz2=$SYSROOT_PREFIX/usr \
-                             --with-zlib=$SYSROOT_PREFIX/usr \
-                             --with-iconv=$ICONV_DIR/usr \
-                             --disable-cgi \
-                             --without-gettext \
-                             --without-gmp \
+                             --with-iconv \
+                             --with-gettext \
+                             --with-gmp=$SYSROOT_PREFIX/usr \
                              --enable-json \
                              --enable-pcntl \
                              --disable-sysvmsg \
@@ -127,15 +136,13 @@ configure_target() {
                              --disable-sysvshm \
                              --enable-filter \
                              --enable-calendar \
-                             --with-pcre-regex \
+                             --with-pcre-regex=$SYSROOT_PREFIX/usr \
                              --with-sqlite3=$SYSROOT_PREFIX/usr \
                              --with-pdo-sqlite=$SYSROOT_PREFIX/usr \
                              --enable-pdo \
                              --with-mcrypt=$LIBMCRYPT_DIR_TARGET/usr \
-                             --with-mysqli=$SYSROOT_PREFIX/usr/bin/mysql_config \
                              --with-mysql=$SYSROOT_PREFIX/usr \
-                             --with-mysql-sock=/var/tmp/mysql.socket \
-                             --with-pdo-mysql=$SYSROOT_PREFIX/usr \
+                             --with-mysql-sock=/var/tmp/mysql.sock \
                              --with-gd \
                              --enable-gd-native-ttf \
                              --enable-gd-jis-conv \
@@ -143,41 +150,21 @@ configure_target() {
                              --with-jpeg-dir=$SYSROOT_PREFIX/usr \
                              --with-freetype-dir=$SYSROOT_PREFIX/usr \
                              --with-png-dir=$SYSROOT_PREFIX/usr \
-                             --with-apxs2=$APXS_FILE"
-  
+                             --disable-option-checking"
+
   ac_cv_func_strcasestr=yes \
-	$PKG_CONFIGURE_SCRIPT $TARGET_CONFIGURE_OPTS $PKG_CONFIGURE_OPTS_TARGET
+  $PKG_CONFIGURE_SCRIPT $TARGET_CONFIGURE_OPTS $PKG_CONFIGURE_OPTS_TARGET
 }
 
-post_configure_target() {
-	: # dummy
-  # quick hack
-  # not for new
-  sed -i "s|-I/usr/include|-I$SYSROOT_PREFIX/usr/include|g" Makefile
-  sed -i "s|-L/usr/lib|-L$SYSROOT_PREFIX/usr/lib|g" Makefile
-  
-  PHP_BIN=$(which php)
-  
-  sed -i "s|PHP_EXECUTABLE =.*|PHP_EXECUTABLE = $PHP_BIN|g" Makefile
-  sed -i 's|$(top_builddir)/$(SAPI_CLI_PATH)|dummy_sapi_cli_path|g' Makefile
-}
 
 makeinstall_target() {
-  export INSTALL_DEV=$(pwd)/.install_dev
-  
-  mkdir -p $INSTALL_DEV/etc/
-  cp $(get_build_dir httpd)/.install_dev/etc/httpd.conf $INSTALL_DEV/etc/httpd.conf 
-  
-  #sed -i "s|install-pear-installer:.*|install-pear-installer:\ndummy123:|g" Makefile
-  
-  #
-  sed -i 's|@$(top_builddir)/sapi/cli/php|php|g' Makefile
-  
-  make -j1 install INSTALL_ROOT=$INSTALL_DEV $PKG_MAKEINSTALL_OPTS_TARGET
-  	
-	sed -i "/prefix/ s|/usr|$INSTALL_DEV/usr|" $INSTALL_DEV/usr/bin/phpize
-	sed -i "/extension_dir/ s|/usr|$INSTALL_DEV/usr|" $INSTALL_DEV/usr/bin/php-config
-	sed -i "/prefix/ s|/usr|$INSTALL_DEV/usr|" $INSTALL_DEV/usr/bin/php-config
+  make -j1 install INSTALL_ROOT=$INSTALL $PKG_MAKEINSTALL_OPTS_TARGET
+  rm -f $INSTALL/usr/bin/php-config
+  rm -f $INSTALL/usr/bin/phpize
+  rm -fr $INSTALL/usr/lib
+  rm -fr $INSTALL/usr/php
+  mkdir -p $INSTALL/usr/config/php
+    cp php.ini-production $INSTALL/usr/config/php/php.ini
 }
 
 # zamenjaj php in naj namesti pear tudi

@@ -18,7 +18,7 @@
 ################################################################################
 
 PKG_NAME="apr-util"
-PKG_VERSION="1.5.4"
+PKG_VERSION="1.6.0"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="Apache License"
@@ -32,14 +32,15 @@ PKG_LONGDESC="The Apache Portable Runtime Utility Library provides a predictable
 PKG_MAINTAINER="ultraman"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
+PKG_USE_CMAKE="no"
 
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
   
-  #APR_DIR_TARGET=$(get_build_dir apr)/.install_dev/usr
-  #APR_DIR_TARGET=$(get_build_dir apr)/.$TARGET_NAME
-  APR_DIR_TARGET=$(get_build_dir apr)/.install_dev
+  #APR_DIR_TARGET=$(get_pkg_build apr)/.install_dev/usr
+  #APR_DIR_TARGET=$(get_pkg_build apr)/.$TARGET_NAME
+  APR_DIR_TARGET=$(get_pkg_build apr)/.install_dev
   
   #export TARGET_PKG_CONFIG_LIBDIR="TARGET_PKG_CONFIG_LIBDIR $APR_DIR_TARGET/usr/lib/pkgconfig"
   
@@ -61,8 +62,8 @@ makeinstall_target() {
   INSTALL_DEV=$ROOT/$PKG_BUILD/.install_dev
   make -j1 install DESTDIR=$INSTALL_DEV $PKG_MAKEINSTALL_OPTS_TARGET
 
-  $STRIP $(find $INSTALL_DEV -name "*.so" 2>/dev/null) 2>/dev/null || :
-  $STRIP $(find $INSTALL_DEV -name "*.so.[0-9]*" 2>/dev/null) 2>/dev/null || :
+ # $STRIP $(find $INSTALL_DEV -name "*.so" 2>/dev/null) 2>/dev/null || :
+ # $STRIP $(find $INSTALL_DEV -name "*.so.[0-9]*" 2>/dev/null) 2>/dev/null || :
 
   for i in $(find $INSTALL_DEV/usr/lib -name "*.la" 2>/dev/null); do
     $SED "s|\(['= ]\)/usr|\\1$INSTALL_DEV/usr|g" $i		#'

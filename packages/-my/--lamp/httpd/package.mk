@@ -19,13 +19,13 @@
 ################################################################################
 
 PKG_NAME="httpd"
-PKG_VERSION="2.4.10"
+PKG_VERSION="2.4.27"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OpenSource"
 PKG_SITE="http://www.linuxfromscratch.org/blfs/view/svn/server/apache.html"
 PKG_URL="http://archive.apache.org/dist/httpd/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain apr-util libressl"
+PKG_DEPENDS_TARGET="toolchain apr-util openssl"
 PKG_PRIORITY="optional"
 PKG_SECTION="web"
 PKG_SHORTDESC="The Apache web server."

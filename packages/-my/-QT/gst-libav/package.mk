@@ -20,7 +20,7 @@ PKG_NAME="gst-libav"
 PKG_VERSION="1.12.3"
 PKG_SITE="http://gstreamer.freedesktop.org/gstreamer"
 PKG_URL="https://gstreamer.freedesktop.org/src/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain gstreamer ffmpeg bzip2 xz zlib"
+PKG_DEPENDS_TARGET="toolchain gstreamer ffmpeg bzip2 xz zlib gst-plugins-base"
 PKG_SECTION="lib"
 
 PKG_IS_ADDON="no"
