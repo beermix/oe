@@ -32,4 +32,4 @@ PKG_LONGDESC="LibXext provides an X Window System client interface to several ex
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-malloc0returnsnull --without-xmlto"
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared --with-pic --enable-malloc0returnsnull --without-xmlto"
