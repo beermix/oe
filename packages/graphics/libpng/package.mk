@@ -30,19 +30,11 @@ PKG_LONGDESC="PNG (Portable Network Graphics) is an extensible file format for t
 
 PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_z_zlibVersion=yes"
+PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_z_zlibVersion=yes --enable-static --disable-shared --enable-intel-sse"
 
-if [ "$PROJECT" = "RPi2" ]; then
-  PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET --enable-arm-neon=yes"
-fi
-
-if [ "$TARGET_ARCH" = "x86_64" ]; then
-  PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET --enable-intel-sse"
-fi
-
-PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
+PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared --enable-intel-sse"
 
 pre_configure_host() {
   export CFLAGS="$CFLAGS -fPIC -DPIC"

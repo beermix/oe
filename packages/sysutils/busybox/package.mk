@@ -24,7 +24,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://www.busybox.net"
 PKG_URL="http://busybox.net/downloads/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain busybox:host hdparm dosfstools e2fsprogs zip unzip bzip2 zlib lzo unrar pciutils usbutils parted procps-ng gptfdisk psmisc findutils grep gawk sed coreutils bash less"
+PKG_DEPENDS_TARGET="toolchain busybox:host hdparm dosfstools e2fsprogs zip unzip bzip2 zlib lzo icu libarchive unrar pciutils usbutils parted procps-ng gptfdisk psmisc findutils grep gawk sed coreutils bash less"
 PKG_DEPENDS_INIT="toolchain"
 PKG_PRIORITY="required"
 PKG_SECTION="system"
@@ -178,8 +178,8 @@ makeinstall_target() {
   mkdir -p $INSTALL/etc
     cp $PKG_DIR/config/profile $INSTALL/etc
     cp $PKG_DIR/config/inputrc $INSTALL/etc
-    cp $PKG_DIR/config/httpd.conf $INSTALL/etc
     cp $PKG_DIR/config/suspend-modules.conf $INSTALL/etc
+#    cp $PKG_DIR/config/httpd.conf $INSTALL/etc
 
   mkdir -p $INSTALL/usr/config/sysctl.d
     cp $PKG_DIR/config/transmission.conf $INSTALL/usr/config/sysctl.d
