@@ -6,13 +6,9 @@ PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-LTO_SUPPORT="no"
-GOLD_SUPPORT="no"
+PKG_CONFIGURE_OPTS_TARGET="--with-libgpg-error-prefix=$SYSROOT_PREFIX/usr \
+                           --disable-doc \
+                           --disable-shared \
+                           --enable-static \
+                           --with-pic"
 
-PKG_CONFIGURE_OPTS_TARGET="-with-gnu-ld \
-                           --with-libgpg-error-prefix=$SYSROOT_PREFIX/usr \
-                           --disable-doc --disable-shared --enable-static"
-
-pre_configure_target() {
-  CFLAGS="$CFLAGS -fPIC"
-}

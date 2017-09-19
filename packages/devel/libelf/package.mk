@@ -28,3 +28,5 @@ PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_HOST="--disable-shared --enable-elf64"
 
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-elf64 --with-gnu-ld"
+

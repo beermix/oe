@@ -25,7 +25,7 @@
 #   there: http://forum.xbmc.org/showthread.php?tid=177557
 
 PKG_NAME="curl"
-PKG_VERSION="7.54.1"
+PKG_VERSION="7.55.1"
 PKG_ARCH="any"
 PKG_LICENSE="MIT"
 PKG_SITE="http://curl.haxx.se"
@@ -41,6 +41,7 @@ PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            ac_cv_header_librtmp_rtmp_h=yes \
+                           ac_cv_lib_crypto_CRYPTO_lock=yes \
                            --disable-debug \
                            --enable-optimize \
                            --enable-warnings \
@@ -85,12 +86,14 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            --without-gnutls \
                            --with-ssl \
                            --without-polarssl \
+                           --without-mbedtls \
                            --without-nss \
                            --with-ca-bundle=/etc/ssl/cert.pem \
                            --without-ca-path \
                            --without-libpsl \
                            --without-libmetalink \
                            --without-libssh2 \
+                           --disable-ntlm-wb \
                            --with-librtmp=$SYSROOT_PREFIX/usr \
                            --with-libidn2=$SYSROOT_PREFIX/usr \
                            --with-nghttp2=$SYSROOT_PREFIX/usr"
