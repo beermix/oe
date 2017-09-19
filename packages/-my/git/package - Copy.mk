@@ -17,9 +17,9 @@ pre_configure_target() {
   export LDFLAGS="$LDFLAGS"
   
 # export NO_EXPAT="YesPlease"
-#  export NO_MKSTEMPS="YesPlease"
-#  export NO_GETTEXT="YesPlease"
-#  export NO_UNIX_SOCKETS="YesPlease"
+  export NO_MKSTEMPS="YesPlease"
+  export NO_GETTEXT="YesPlease"
+  export NO_UNIX_SOCKETS="YesPlease"
   export NO_ICONV="YesPlease"
   export NO_NSEC="YesPlease"
   export NO_PERL="YesPlease"
@@ -29,11 +29,8 @@ pre_configure_target() {
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--with-curl=$SYSROOT_PREFIX/usr \
+			      --with-libpcre=$SYSROOT_PREFIX/usr \
 			      --with-zlib=$SYSROOT_PREFIX/usr \
-			      --with-editor=/usr/bin/nano \
-			      --with-expat=$SYSROOT_PREFIX/usr \
-			      --with-libpcre2=$SYSROOT_PREFIX/usr \
-			      --with-shell=/bin/zsh \
 			      --disable-option-checking"
 
 
