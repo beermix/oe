@@ -20,7 +20,7 @@ PKG_NAME="systemd"
 PKG_VERSION="234"
 PKG_SITE="https://github.com/systemd/systemd/releases"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain gperf:host libcap util-linux entropy lz4 zlib"
+PKG_DEPENDS_TARGET="toolchain gperf:host libcap util-linux entropy zlib pcre"
 PKG_SECTION="system"
 PKG_SHORTDESC="systemd: a system and session manager"
 PKG_LONGDESC="systemd is a system and session manager for Linux, compatible with SysV and LSB init scripts. systemd provides aggressive parallelization capabilities, uses socket and D-Bus activation for starting services, offers on-demand starting of daemons, keeps track of processes using Linux cgroups, supports snapshotting and restoring of the system state, maintains mount and automount points and implements an elaborate transactional dependency-based service control logic. It can work as a drop-in replacement for sysvinit."
@@ -48,7 +48,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-xz \
                            --enable-zlib \
                            --disable-bzip2 \
-                           --enable-lz4 \
+                           --disable-lz4 \
                            --disable-pam \
                            --disable-acl \
                            --disable-smack \
