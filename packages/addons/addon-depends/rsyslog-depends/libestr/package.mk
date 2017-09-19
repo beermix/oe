@@ -18,9 +18,6 @@
 
 PKG_NAME="libestr"
 PKG_VERSION="0.1.10"
-PKG_SHA256="bd655e126e750edd18544b88eb1568d200a424a0c23f665eb14bbece07ac703c"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://libestr.adiscon.com/"
 PKG_URL="http://libestr.adiscon.com/files/download/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"

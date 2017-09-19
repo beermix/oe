@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2016-present Team LibreELEC
+#      Copyright (C) 2016 Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,7 +18,6 @@
 
 PKG_NAME="lan951x-led-ctl"
 PKG_VERSION="0291b91"
-PKG_SHA256="c0d957ed043a3b709ef06e7b9f9620f15fd7c07225422ef445b59c886b8696e4"
 PKG_ARCH="arm"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/dradermacher/lan951x-led-ctl"

@@ -18,11 +18,8 @@
 
 PKG_NAME="hddtemp"
 PKG_VERSION="e16aed6"
-PKG_SHA256="5d5af74ba7449b6e56a8f872a0e10d654a512ed65d62beaef1575b0c1826d9f3"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.guzu.net/linux/hddtemp.php"
-PKG_URL="https://github.com/guzu/hddtemp/archive/${PKG_VERSION}.tar.gz"
+PKG_GIT_URL="https://github.com/guzu/hddtemp"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="debug/tools"
 PKG_SHORTDESC="hddtemp: tool that reports hard drive temperature"
@@ -30,11 +27,6 @@ PKG_LONGDESC="hddtemp is a small utility (daemonizable) that gives you the tempe
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--with-db-path=/storage/.kodi/addons/virtual.system-tools/data/hddtemp.db"
-
-post_unpack() {
-  cd $PKG_BUILD
-  wget -O hddtemp.db http://www.guzu.net/linux/hddtemp.db
-}
 
 makeinstall_target() {
   : # nop

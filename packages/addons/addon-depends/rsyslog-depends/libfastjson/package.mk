@@ -17,10 +17,7 @@
 ################################################################################
 
 PKG_NAME="libfastjson"
-PKG_VERSION="0.99.0"
-PKG_SHA256="5d19c39daaedfd9b335f6222b521e7529016bc11382cccebe41a9894d4ab32fd"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
+PKG_VERSION="0.99.6"
 PKG_SITE="http://www.rsyslog.com/tag/libfastjson/"
 PKG_URL="http://download.rsyslog.com/libfastjson/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
@@ -28,7 +25,7 @@ PKG_SECTION="rsyslog"
 PKG_SHORTDESC="libfastjson"
 PKG_LONGDESC="libfastjson"
 
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 PKG_IS_ADDON="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared \

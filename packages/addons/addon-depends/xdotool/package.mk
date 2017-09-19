@@ -18,13 +18,10 @@
 ################################################################################
 
 PKG_NAME="xdotool"
-PKG_VERSION="2.20110530.1"
-PKG_SHA256="e7b42c8b1d391970e1c1009b256033f30e57d8e0a2a3de229fd61ecfc27baf67"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
+PKG_VERSION="v3.20160805.1"
 PKG_SITE="http://www.semicomplete.com/projects/xdotool/"
-PKG_URL="http://semicomplete.googlecode.com/files/${PKG_NAME}-${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_TARGET="toolchain libXinerama libXtst"
+PKG_GIT_URL="https://github.com/jordansissel/xdotool"
+PKG_DEPENDS_TARGET="toolchain libXinerama libXtst libxkbcommon"
 PKG_SECTION="x11/app"
 PKG_SHORTDESC="This tool lets you simulate keyboard input and mouse activity, move and resize windows, etc."
 PKG_LONGDESC="This tool lets you simulate keyboard input and mouse activity, move and resize windows, etc."
@@ -33,11 +30,12 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 pre_configure_target() {
+  unset CPPFLAGS
   LDFLAGS="$LDFLAGS -lXext"
 }
 
 make_target() {
-  make xdotool.static
+  make LDFLAGS="$LDFLAGS -lXext" xdotool.static
   mv xdotool.static xdotool
 }
 

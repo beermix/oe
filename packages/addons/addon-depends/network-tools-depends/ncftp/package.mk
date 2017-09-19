@@ -1,5 +1,5 @@
 ################################################################################
-#      This file is part of LibreELEC - https://libreelec.tv
+#      This file is part of LibreELEC - http://www.libreelec.tv
 #      Copyright (C) 2016 Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
@@ -18,9 +18,6 @@
 
 PKG_NAME="ncftp"
 PKG_VERSION="3.2.5"
-PKG_SHA256="b4ebe2415761a5137cd1d313c8fc1352f26d8963cc9e9e354e29720aa2089d42"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.ncftp.com/ncftp/"
 PKG_URL="ftp://ftp.ncftp.com/ncftp/ncftp-${PKG_VERSION}-src.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain"

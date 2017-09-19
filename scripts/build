@@ -360,6 +360,10 @@ if [ ! -f $STAMP ]; then
       cd $ROOT
     fi  # ! "$PKG_SECTION" = "virtual"
 
+    for i in `find $SYSROOT_PREFIX/usr/lib/ -name "*.la" 2>/dev/null`; do \
+      $SED "s:\(['= ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" $i; \
+    done
+
     PKG_DEEPMD5=$(find $STAMP_DEPENDS -exec md5sum {} \; 2>/dev/null | sort | md5sum | cut -d" " -f1)
     for i in PKG_NAME PKG_DEEPMD5; do
       echo "STAMP_$i=\"${!i}\"" >> $STAMP

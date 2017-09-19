@@ -18,9 +18,6 @@
 
 PKG_NAME="autossh"
 PKG_VERSION="1.4e"
-PKG_SHA256="9e8e10a59d7619176f4b986e256f776097a364d1be012781ea52e08d04679156"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.harding.motd.ca/"
 PKG_URL="http://www.harding.motd.ca/autossh/${PKG_NAME}-${PKG_VERSION}.tgz"
 PKG_DEPENDS_TARGET="toolchain"

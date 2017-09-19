@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2016-present Team LibreELEC
+#      Copyright (C) 2016 Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,9 +18,6 @@
 
 PKG_NAME="irssi"
 PKG_VERSION="0.8.19"
-PKG_SHA256="fe4f4b778698de8e1c319b9cd9b9ed5534f0ece7ac2bfa0af351a3157c6ec85b"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://www.irssi.org/"
 PKG_URL="https://github.com/irssi-import/irssi/releases/download/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain glib ncurses openssl"
@@ -41,7 +38,8 @@ PKG_CONFIGURE_OPTS_TARGET="--with-sysroot=$SYSROOT_PREFIX \
         --without-sco"
 
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -I$PKG_BUILD"
+  export CFLAGS="$CFLAGS -I$ROOT/$PKG_BUILD"
+  export LIBS="-ltermcap"
 }
 
 makeinstall_target() {

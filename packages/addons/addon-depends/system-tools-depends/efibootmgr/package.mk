@@ -1,5 +1,5 @@
 ################################################################################
-#      This file is part of LibreELEC - https://libreelec.tv
+#      This file is part of LibreELEC - http://www.libreelec.tv
 #      Copyright (C) 2016 Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
@@ -17,13 +17,10 @@
 ################################################################################
 
 PKG_NAME="efibootmgr"
-PKG_VERSION="95f7a63"
-PKG_SHA256="a6f936508c5b50b6fb5693dd2f0db911da298da0f72ffc0e2e74b09b22592fd1"
+PKG_VERSION="95f7a63" # 0.8.0
 PKG_ARCH="x86_64"
-PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/vathpela/efibootmgr"
-PKG_URL="https://github.com/vathpela/efibootmgr-devel/archive/$PKG_VERSION.tar.gz"
-PKG_SOURCE_DIR="efibootmgr-devel-$PKG_VERSION*"
+PKG_GIT_URL="https://github.com/vathpela/efibootmgr-devel"
 PKG_DEPENDS_TARGET="toolchain efivar pciutils zlib"
 PKG_SECTION="tools"
 PKG_SHORTDESC="EFI Boot Manager"

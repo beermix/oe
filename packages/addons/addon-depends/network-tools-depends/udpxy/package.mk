@@ -1,5 +1,5 @@
 ################################################################################
-#      This file is part of LibreELEC - https://libreelec.tv
+#      This file is part of LibreELEC - http://www.libreelec.tv
 #      Copyright (C) 2016 Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
@@ -17,12 +17,11 @@
 ################################################################################
 
 PKG_NAME="udpxy"
-PKG_VERSION="1.0.23-9"
-PKG_SHA256="6ce33b1d14a1aeab4bd2566aca112e41943df4d002a7678d9a715108e6b714bd"
+PKG_VERSION="1.0.23-0"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.udpxy.com/download-en.html"
-PKG_URL="http://www.udpxy.com/download/1_23/${PKG_NAME}.${PKG_VERSION}-prod.tar.gz"
+PKG_URL="$SOURCEFORGE_SRC/project/udpxy/udpxy/Chipmunk-1.0/${PKG_NAME}.${PKG_VERSION}-prod.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="tools"
 PKG_SHORTDESC="udpxy is a UDP-to-HTTP multicast traffic relay daemon"

@@ -18,7 +18,6 @@
 
 PKG_NAME="libiconv"
 PKG_VERSION="1.15"
-PKG_SHA256="ccf536620a45458d26ba83887a983b96827001e92a13847b45e4925cc8913178"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://savannah.gnu.org/projects/libiconv/"
@@ -32,13 +31,18 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--host=$TARGET_NAME \
-            --build=$HOST_NAME \
-            --prefix=/usr \
-            --includedir=/usr/include/iconv \
-            --libdir=/usr/lib/iconv \
-            --sysconfdir=/etc \
-            --enable-static \
-            --disable-shared \
-            --disable-nls \
-            --disable-extra-encodings \
-            --with-gnu-ld"
+			      --build=$HOST_NAME \
+			      --prefix=/usr \
+			      --includedir=/usr/include/iconv \
+			      --libdir=/usr/lib/iconv \
+			      --sysconfdir=/etc \
+			      --enable-static \
+			      --disable-shared \
+			      --disable-nls \
+			      --enable-extra-encodings \
+			      --with-gnu-ld"
+      
+pre_configure_target() {
+  CFLAGS="$CFLAGS -fPIC"
+  CXXFLAGS="$CXXFLAGS -fPIC"
+}

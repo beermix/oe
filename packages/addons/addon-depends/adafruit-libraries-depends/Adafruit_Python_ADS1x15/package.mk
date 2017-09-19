@@ -16,7 +16,7 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="Adafruit_Python_ADS1x15"
+PKG_NAME="Adafruit_Python_ADS1.15"
 PKG_VERSION="a963cc0"
 PKG_SHA256="2f81a9a6b7b7f46b79faa5b01df0c25fa5f16af80842d74e35b5fbf01ab0c619"
 PKG_ARCH="any"
@@ -25,8 +25,8 @@ PKG_SITE="https://github.com/adafruit/${PKG_NAME}"
 PKG_URL="https://github.com/adafruit/${PKG_NAME}/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"
 PKG_SECTION="python"
-PKG_SHORTDESC="Adafruit Python ADS1x15 Library"
-PKG_LONGDESC="Python code to use the ADS1015 and ADS1115 analog to digital converters with a Raspberry Pi or BeagleBone black."
+PKG_SHORTDESC="Adafruit Python ADS1.15 Library"
+PKG_LONGDESC="Python code to use the ADS1.15 and ADS1.15 analog to digital converters with a Raspberry Pi or BeagleBone black."
 PKG_AUTORECONF="no"
 
 make_target() {

@@ -19,8 +19,7 @@
 ################################################################################
 
 PKG_NAME="pango"
-PKG_VERSION="1.40.6"
-PKG_SHA256="ca152b7383a1e9f7fd74ae96023dc6770dc5043414793bfe768ff06b6759e573"
+PKG_VERSION="1.40.12"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.pango.org/"
@@ -37,3 +36,5 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-doc-cross-references \
                            --disable-man \
                            --enable-debug=no \
                            --with-xft"
+                           
+PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"

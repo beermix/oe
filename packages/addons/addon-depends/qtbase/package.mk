@@ -28,8 +28,6 @@ PKG_SHORTDESC="A cross-platform application and UI framework"
 PKG_LONGDESC="A cross-platform application and UI framework"
 PKG_AUTORECONF="no"
 
-strip_hard
-
 PKG_CONFIGURE_OPTS_TARGET="-prefix /usr
                            -sysroot $SYSROOT_PREFIX
                            -hostprefix $TOOLCHAIN
@@ -64,7 +62,6 @@ PKG_CONFIGURE_OPTS_TARGET="-prefix /usr
                            -no-strip
                            -no-fontconfig
                            -no-dbus
-                           -qt-xcb
                            -no-opengl
                            -no-libudev
                            -no-libinput
@@ -99,9 +96,7 @@ configure_target() {
   echo '#include "../../linux-g++/qplatformdefs.h"' >> $QMAKE_CONF_DIR/qplatformdefs.h
 
   unset CC CXX LD RANLIB AR AS CPPFLAGS CFLAGS LDFLAGS CXXFLAGS
-  
-  mkdir -p $INSTALL/usr/bin/
-  mkdir -p $INSTALL_DEV/usr/bin/
-  
   ./configure $PKG_CONFIGURE_OPTS_TARGET
+  mkdir -p $INSTALL/usr
+  mkdir -p $INSTALL_DEV/usr
 }

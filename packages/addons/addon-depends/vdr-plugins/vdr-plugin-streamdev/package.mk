@@ -18,7 +18,6 @@
 
 PKG_NAME="vdr-plugin-streamdev"
 PKG_VERSION="fc52e92"
-PKG_SHA256="4c231f0ce9bd2dcf45c330a7c9733e14f02002e4370b3eeff080f614ef227ed3"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://projects.vdr-developer.org/projects/plg-streamdev"
@@ -47,8 +46,8 @@ post_make_target() {
   VDR_DIR=$(get_build_dir vdr)
   VDR_APIVERSION=`sed -ne '/define APIVERSION/s/^.*"\(.*\)".*$/\1/p' $VDR_DIR/config.h`
   LIB_NAME=lib${PKG_NAME/-plugin/}
-  cp --remove-destination $PKG_BUILD/server/${LIB_NAME}-server.so $PKG_BUILD/server/${LIB_NAME}-server.so.${VDR_APIVERSION}
-  cp --remove-destination $PKG_BUILD/client/${LIB_NAME}-client.so $PKG_BUILD/client/${LIB_NAME}-client.so.${VDR_APIVERSION}
+  cp --remove-destination $ROOT/$PKG_BUILD/server/${LIB_NAME}-server.so $ROOT/$PKG_BUILD/server/${LIB_NAME}-server.so.${VDR_APIVERSION}
+  cp --remove-destination $ROOT/$PKG_BUILD/client/${LIB_NAME}-client.so $ROOT/$PKG_BUILD/client/${LIB_NAME}-client.so.${VDR_APIVERSION}
 
   $STRIP client/libvdr-*.so*
   $STRIP server/libvdr-*.so*
