@@ -1,7 +1,9 @@
 if [ "$OPTIMIZATIONS" = normal ];then
-  GCC_OPTIM="-O2 -pipe -D_FORTIFY_SOURCE=2 -fstack-protector-strong"
-  LD_OPTIM="-Wl,-O1,--sort-common,--as-needed,-z,relro"
+  GCC_OPTIM="-O2 -pipe -fstack-protector-strong"
+  LD_OPTIM="-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now"
 fi
+
+# -D_FORTIFY_SOURCE=2
 
 if [ "$LTO_SUPPORT" = yes ];then
   GCC_OPTIM_LTO="-flto=$CONCURRENCY_MAKE_LEVEL -ffat-lto-objects"
