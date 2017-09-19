@@ -4,12 +4,13 @@
 ################################################################################
 
 PKG_NAME="php"
-PKG_VERSION="7.1.9"
+PKG_VERSION="7.2.0RC2"
 PKG_REV="0"
 PKG_ARCH="any"
 PKG_LICENSE="OpenSource"
 PKG_SITE="http://fi2.php.net/downloads.php"
 PKG_URL="http://www.php.net/distributions/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="https://downloads.php.net/~pollita/php-7.2.0RC2.tar.xz"
 PKG_DEPENDS_TARGET="toolchain zlib pcre curl libxml2 openssl libxslt libiconv icu"
 PKG_SECTION="xmedia/tools"
 PKG_SHORTDESC="php: Scripting language especially suited for Web development"
