@@ -99,8 +99,6 @@ make_target() {
     'use_gtk3=false'
     'fastbuild=true'
     'linux_link_gsettings=false'
-    'logging_like_official_build=true'
-    'tracing_like_official_build=true'
     'use_vaapi=true'
     'use_kerberos=false'
     'use_pulseaudio=false'
@@ -142,7 +140,7 @@ make_target() {
 
 	# chromedriver widevinecdmadapter
 
-  ninja -v -j5 -C out/Release chrome chrome_sandbox 
+  ninja -j6 -C out/Release chrome chrome_sandbox 
 }
 
 makeinstall_target() {
