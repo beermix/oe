@@ -50,11 +50,11 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-bzip2 \
                            --enable-lz4 \
                            --disable-pam \
-                           --disable-acl \
+                           --enable-acl \
                            --disable-smack \
                            --disable-gcrypt \
                            --disable-audit \
-                           --disable-elfutils \
+                           --enable-elfutils \
                            --disable-libcryptsetup \
                            --disable-qrencode \
                            --disable-microhttpd \
@@ -62,7 +62,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-libcurl \
                            --disable-libidn \
                            --disable-libiptc \
-                           --disable-binfmt \
+                           --enable-binfmt \
                            --disable-vconsole \
                            --disable-quotacheck \
                            --enable-tmpfiles \
