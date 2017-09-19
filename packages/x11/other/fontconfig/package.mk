@@ -30,7 +30,7 @@ PKG_SHORTDESC="fontconfig: A library for font customization and configuration"
 PKG_LONGDESC="Fontconfig is a library for font customization and configuration."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--with-arch=$TARGET_ARCH \
                            --with-cache-dir=/storage/.cache/fontconfig \
@@ -44,11 +44,13 @@ pre_configure_target() {
 # ensure we dont use '-O3' optimization.
   CFLAGS=`echo $CFLAGS | sed -e "s|-O3|-O2|"`
   CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O3|-O2|"`
+  CFLAGS=`echo $CFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|" -e "s|-fno-plt||"`
+  LDFLAGS=`echo $LDFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|" -e "s|,-z,now||g"`
   CFLAGS="$CFLAGS -I$ROOT/$PKG_BUILD"
-#  CFLAGS="$CFLAGS -fPIC"
   CXXFLAGS="$CXXFLAGS -I$ROOT/$PKG_BUILD"
 #  CXXFLAGS="$CXXFLAGS -fPIC"
-  LDFLAGS="$LDFLAGS -lz"
+#  CFLAGS="$CFLAGS -fPIC"
+#  LDFLAGS="$LDFLAGS -lz"
 }
 
 post_makeinstall_target() {
