@@ -31,7 +31,7 @@ PKG_SHORTDESC="e2fsprogs: Utilities for use with the ext2 filesystem"
 PKG_LONGDESC="The filesystem utilities for the EXT2 filesystem, including e2fsck, mke2fs, dumpe2fs, fsck, and others."
 PKG_IS_ADDON="no"
 
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 CONCURRENCY_MAKE_LEVEL=1
 
