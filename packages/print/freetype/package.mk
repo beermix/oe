@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="freetype"
-PKG_VERSION="2.8.1"
+PKG_VERSION="2.7.1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.freetype.org"
