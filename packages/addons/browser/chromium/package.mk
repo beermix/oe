@@ -54,7 +54,7 @@ make_target() {
   strip_hard
 
   export -n CFLAGS CXXFLAGS
-  export LDFLAGS="$LDFLAGS -ludev"
+#  export LDFLAGS="$LDFLAGS -ludev"
 #  export LD=$CXX
 
   # Use Python 2
@@ -94,7 +94,7 @@ make_target() {
     'use_cups=false'
     'use_gconf=false'
     'use_gnome_keyring=false'
-    'use_gold=false'
+    'use_gold=true'
     'use_custom_libcxx=false'
     'use_gtk3=false'
     'use_vaapi=true'
