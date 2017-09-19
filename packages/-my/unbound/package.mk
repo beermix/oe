@@ -6,13 +6,13 @@ PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-#LTO_SUPPORT="yes"
+LTO_SUPPORT="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-dsa \
 			      --disable-gost \
 			      --disable-rpath \
 			      --enable-pie \
-			      --disable-flto \
+			      --enable-flto \
 			      --enable-relro-now \
 			      --disable-shared \
 			      --disable-cachedb \

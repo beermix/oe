@@ -1,6 +1,8 @@
 PKG_NAME="openssl"
-PKG_VERSION="1.0.2l"
-PKG_URL="https://www.openssl.org/source/openssl-$PKG_VERSION.tar.gz"
+PKG_VERSION="772fc32"
+#PKG_URL="https://www.openssl.org/source/openssl-$PKG_VERSION.tar.gz"
+PKG_GIT_URL="https://github.com/openssl/openssl"
+PKG_GIT_BRANCH="OpenSSL_1_0_2-stable"
 PKG_DEPENDS_HOST="ccache:host yasm:host"
 PKG_DEPENDS_TARGET="toolchain yasm:host pcre zlib gmp"
 PKG_SECTION="security"
@@ -10,16 +12,17 @@ PKG_LONGDESC="The Open Source toolkit for Secure Sockets Layer and Transport Lay
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-CONCURRENCY_MAKE_LEVEL=1
+export CCACHE_DISABLE=1
+export MAKEFLAGS=-j1
+#CONCURRENCY_MAKE_LEVEL=1
 
 PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            --libdir=lib \
                            shared \
                            threads \
                            no-err \
-                           no-ssl2 \
-                           no-ssl2-method \
                            no-rfc3779 \
+                           no-ssl2 \
                            no-ssl3 \
                            no-rc5 \
                            enable-camellia \
@@ -34,7 +37,6 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
 pre_configure_host() {
   mkdir -p $ROOT/$PKG_BUILD/.$HOST_NAME
   cp -a $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$HOST_NAME/
-  export CCACHE_RECACHE=1
 }
 
 configure_host() {
@@ -43,8 +45,7 @@ configure_host() {
 }
 
 makeinstall_host() {
-  export CCACHE_RECACHE=1
-  make -j1 INSTALL_PREFIX=$ROOT/$TOOLCHAIN install_sw
+  make INSTALL_PREFIX=$ROOT/$TOOLCHAIN install_sw -j1
 }
 
 pre_configure_target() {
@@ -54,19 +55,18 @@ pre_configure_target() {
   #sed -i -e '/^"linux-x86_64"/ s/-m64 -DL_ENDIAN -O3 -Wall//' $ROOT/$PKG_BUILD/.$TARGET_NAME/Configure
   CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
   CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3|"`
-  export CCACHE_RECACHE=1
   strip_lto
   strip_gold
 }
 
 configure_target() {
   cd $ROOT/$PKG_BUILD/.$TARGET_NAME
-  ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $CFLAGS $CPPFLAGS $LDFLAGS
+  ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $CFLAGS $LDFLAGS
 }
 
 makeinstall_target() {
-  make -j1 INSTALL_PREFIX=$INSTALL install_sw
-  make -j1 INSTALL_PREFIX=$SYSROOT_PREFIX install_sw
+  make INSTALL_PREFIX=$INSTALL install_sw -j1
+  make INSTALL_PREFIX=$SYSROOT_PREFIX install_sw -j1
   chmod 755 $INSTALL/usr/lib/*.so*
   chmod 755 $INSTALL/usr/lib/engines/*.so
 }
@@ -79,10 +79,10 @@ post_makeinstall_target() {
 
   # create new cert: ./mkcerts.sh
   # cert from https://curl.haxx.se/docs/caextract.html
-  
+
   mkdir -p $INSTALL/etc/ssl
-  #perl $PKG_DIR/cert/mk-ca-bundle.pl
-  #cp $ROOT/$PKG_BUILD/.$TARGET_NAME/ca-bundle.crt $INSTALL/etc/ssl/cert.pem
+#  perl $PKG_DIR/cert/mk-ca-bundle.pl
+#  cp $ROOT/$PKG_BUILD/.$TARGET_NAME/ca-bundle.crt $INSTALL/etc/ssl/cert.pem
   cp $PKG_DIR/cert/cacert.pem $INSTALL/etc/ssl/cert.pem
 
   # backwards comatibility
