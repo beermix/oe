@@ -20,27 +20,11 @@ PKG_NAME="libelf"
 PKG_VERSION="0.8.13"
 PKG_SITE="http://www.mr511.de/software/"
 PKG_URL="http://www.mr511.de/software/libelf-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_HOST="intltool:host libtool:host bison:hos flex:host"
+PKG_DEPENDS_HOST="intltool:host libtool:host bison:host flex:host"
 PKG_SECTION="devel"
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_HOST="--disable-shared --enable-elf64"
-			 
-PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
-
-pre_configure_host() {
-  export CFLAGS="$CFLAGS -fPIC"
-  export CXXFLAGS="$CXXFLAGS -fPIC"
-}
-
-pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC"
-  export CXXFLAGS="$CXXFLAGS -fPIC"
-}
-
-post_make_target() {
-  mkdir -p $INSTALL_DEV/usr/bin/
-}
 
