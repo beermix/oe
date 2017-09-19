@@ -40,7 +40,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --disable-libada \
                          --enable-libssp \
                          --enable-version-specific-runtime-libs \
-                         --enable-shared \
+                         --enable-ld=default \
                          --enable-threads \
                          --with-pic \
                          --disable-nls \
