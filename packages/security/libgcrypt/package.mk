@@ -34,10 +34,9 @@ PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            ac_cv_sys_symbol_underscore=no \
-                           --enable-static --disable-shared \
+                           --disable-static \
                            --with-libgpg-error-prefix=$SYSROOT_PREFIX/usr \
-                           --disable-padlock-support \
-                           --disable-doc --with-pic"
+                           --disable-padlock-support"
 
 post_makeinstall_target() {
   sed -e "s:\(['= ]\)\"/usr:\\1\"$SYSROOT_PREFIX/usr:g" -i src/$PKG_NAME-config

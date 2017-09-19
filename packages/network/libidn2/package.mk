@@ -6,4 +6,4 @@ PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-java --disable-shared --with-pic"
+PKG_CONFIGURE_OPTS_TARGET="--disable-java"
