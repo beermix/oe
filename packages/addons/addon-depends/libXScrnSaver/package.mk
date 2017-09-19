@@ -31,4 +31,4 @@ PKG_LONGDESC=""
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --enable-malloc0returnsnull"
+PKG_CONFIGURE_OPTS_TARGET="--enable-malloc0returnsnull"

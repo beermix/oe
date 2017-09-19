@@ -17,11 +17,11 @@
 ################################################################################
 
 PKG_NAME="iana-etc"
-PKG_VERSION="2.30"
-PKG_SITE="http://www.linuxfromscratch.org/lfs/view/development/chapter06/iana-etc.html"
-PKG_URL="http://anduin.linuxfromscratch.org/sources/LFS/lfs-packages/conglomeration/iana-etc/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_VERSION="2017"
+PKG_ARCH="any"
+PKG_LICENSE="none"
+PKG_SITE="http://www.iana.org"
 PKG_DEPENDS_TARGET="toolchain"
-
 PKG_SECTION="network"
 PKG_SHORTDESC="iana-etc: The Iana-Etc package provides data for network services and protocols."
 PKG_LONGDESC="The Iana-Etc package provides data for network services and protocols."
@@ -29,12 +29,42 @@ PKG_LONGDESC="The Iana-Etc package provides data for network services and protoc
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-post_make_target() {
-  sed -e 's,^sunrpc,rpcbind,' -i services
+unpack() {
+  mkdir $ROOT/$PKG_BUILD
+}
+
+make_target() {
+  aria2c https://www.iana.org/assignments/protocol-numbers/protocol-numbers.xml
+  aria2c https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xml
 }
 
 makeinstall_target() {
   mkdir -p $INSTALL/etc
-    cp protocols $INSTALL/etc
-    cp services $INSTALL/etc
+  gawk '
+BEGIN {
+	print "# Full data: https://www.iana.org/assignments/protocol-numbers/protocol-numbers.xml\n"
+	FS="[<>]"
+}
+
+{
+	if (/<record/) { v=n=0 }
+	if (/<value/) v=$3
+	if (/<name/ && !($3~/ /)) n=$3
+	if (/<\/record/ && (v || n=="HOPOPT") && n) printf "%-12s %3i %s\n", tolower(n),v,n
+}
+' protocol-numbers.xml > $INSTALL/etc/protocols
+  gawk '
+BEGIN {
+        print "# Full data: https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xml\n"
+	FS="[<>]"
+}
+
+{
+	if (/<record/) { n=u=p=c=0 }
+	if (/<name/ && !/\(/) n=$3
+	if (/<number/) u=$3
+	if (/<protocol/) p=$3
+	if (/Unassigned/ || /Reserved/ || /historic/) c=1
+	if (/<\/record/ && n && u && p && !c) printf "%-15s %5i/%s\n", n,u,p
+}' service-names-port-numbers.xml > $INSTALL/etc/services
 }

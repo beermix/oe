@@ -51,18 +51,20 @@ post_makeinstall_host() {
 
 make_target() {
   cd $ROOT/$PKG_BUILD/nss
-
+  
   [ "$TARGET_ARCH" = "x86_64" ] && TARGET_USE_64="USE_64=1"
 
   make BUILD_OPT=1 $TARGET_USE_64 \
      NSPR_INCLUDE_DIR=$SYSROOT_PREFIX/usr/include/nspr \
-     USE_SYSTEM_ZLIB=1 ZLIB_LIBS=-lz NSS_USE_SYSTEM_SQLITE=1 \
+     NSS_USE_SYSTEM_ZLIB=1 NSS_USE_SYSTEM_SQLITE=1 \
      OS_TEST=$TARGET_ARCH \
+     ARTOOL="${TARGET_NAME}-ar" RANLIB="${TARGET_NAME}-ranlib" \
+     NSS_DISABLE_DBM=1 \
      NSS_TESTS="dummy" \
      NSINSTALL=$ROOT/$TOOLCHAIN/bin/nsinstall \
      CPU_ARCH_TAG=$TARGET_ARCH \
      NSS_ENABLE_WERROR=0 \
-     CC=$CC LDFLAGS="$LDFLAGS -L$SYSROOT_PREFIX/usr/lib" \
+     CC=$CC CXXFLAGS="$CXXFLAGS" CPPFLAGS="$CPPFLAGS" LDFLAGS="$LDFLAGS -L$SYSROOT_PREFIX/usr/lib" \
      V=1
 }
 
