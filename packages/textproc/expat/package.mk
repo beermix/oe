@@ -26,7 +26,7 @@ PKG_LONGDESC="Expat is an XML parser library written in C. It is a stream-orient
 
 PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 PKG_CMAKE_OPTS_TARGET="-DBUILD_tools=ON -DBUILD_examples=OFF -DBUILD_tests=OFF -DBUILD_shared=ON"
 
