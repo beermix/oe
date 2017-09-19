@@ -55,6 +55,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --disable-build-nscd \
                            --disable-nscd \
                            --enable-lock-elision \
+                           --disable-werror \
                            --disable-timezone-tools \
                            --disable-debug"
 
@@ -64,14 +65,14 @@ else
   PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET --disable-debug"
 fi
 
-NSS_CONF_DIR="$ROOT/$PKG_BUILD/nss"
+NSS_CONF_DIR="$PKG_BUILD/nss"
 
 GLIBC_EXCLUDE_BIN="catchsegv gencat getconf iconv iconvconfig ldconfig"
 GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN makedb mtrace pcprofiledump"
 GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN pldd rpcgen sln sotruss sprof xtrace"
 
 pre_build_target() {
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
     aclocal --force --verbose
     autoconf --force --verbose
   cd -
@@ -144,6 +145,7 @@ post_makeinstall_target() {
 
   rm -rf $INSTALL/usr/lib/audit
   rm -rf $INSTALL/usr/lib/glibc
+  rm -rf $INSTALL/usr/lib/libc_pic
   rm -rf $INSTALL/usr/lib/*.o
   rm -rf $INSTALL/var
 

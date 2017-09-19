@@ -55682,3 +55682,155 @@ index 87b7973ec1..8ee7fa58ad 100644
  2017-09-18  H.J. Lu  <hongjiu.lu@intel.com>
  
  	PR ld/22148
+
+commit 8161f998b6c3b3d4720e8a4438cfefa67fd23a33
+Author: Nick Clifton <nickc@redhat.com>
+Date:   Tue Sep 19 14:59:01 2017 +0100
+
+    Import xtensa patches from the mainline sources to fix name lookup and sorting.
+    
+            * xtensa-isa.c (xtensa_isa_init): Don't update lookup table
+            entries for sysregs with negative indices.
+    
+            * emultempl/xtensaelf.em (xtensa_wild_group_interleave_callback):
+            Only check for by_name sorting.
+
+diff --git a/bfd/ChangeLog b/bfd/ChangeLog
+index 8ee7fa58ad..f699b2ffc6 100644
+--- a/bfd/ChangeLog
++++ b/bfd/ChangeLog
+@@ -1,3 +1,18 @@
++2017-09-19  Nick Clifton  <nickc@redhat.com>
++
++	2.29.1 Release
++
++	* version.m4: Bump version to 2.29.1
++	* configure: Regenerate.
++	* po/bfd.pot: Regenerate.
++
++2017-09-19  Nick Clifton  <nickc@redhat.com>
++
++	Import from maiknline:
++
++	* xtensa-isa.c (xtensa_isa_init): Don't update lookup table
++	entries for sysregs with negative indices.
++
+ 2017-09-19  Alan Modra  <amodra@gmail.com>
+ 
+ 	PR 21441
+@@ -41,14 +56,6 @@
+ 	return from bfd_canonicalize_dynamic_reloc.
+ 	* elf64-x86-64.c (elf_x86_64_get_synthetic_symtab): Likewise.
+ 
+-2017-09-15  Nick Clifton  <nickc@redhat.com>
+-
+-	2.29.1 Release
+-
+-	* version.m4: Bump version to 2.29.1
+-	* configure: Regenerate.
+-	* po/bfd.pot: Regenerate.
+-
+ 2017-09-14  Nick Clifton  <nickc@redhat.com>
+ 
+ 	Import from mainline:
+diff --git a/bfd/xtensa-isa.c b/bfd/xtensa-isa.c
+index 8da75bea81..5656062646 100644
+--- a/bfd/xtensa-isa.c
++++ b/bfd/xtensa-isa.c
+@@ -292,7 +292,8 @@ xtensa_isa_init (xtensa_isa_status *errno_p, char **error_msg_p)
+       xtensa_sysreg_internal *sreg = &isa->sysregs[n];
+       is_user = sreg->is_user;
+ 
+-      isa->sysreg_table[is_user][sreg->number] = n;
++      if (sreg->number >= 0)
++	isa->sysreg_table[is_user][sreg->number] = n;
+     }
+ 
+   /* Set up the interface lookup table.  */
+@@ -1790,4 +1791,3 @@ xtensa_funcUnit_num_copies (xtensa_isa isa, xtensa_funcUnit fun)
+   CHECK_FUNCUNIT (intisa, fun, XTENSA_UNDEFINED);
+   return intisa->funcUnits[fun].num_copies;
+ }
+-
+diff --git a/ld/ChangeLog b/ld/ChangeLog
+index 65641fc5d6..058755e475 100644
+--- a/ld/ChangeLog
++++ b/ld/ChangeLog
+@@ -1,3 +1,18 @@
++2017-09-19  Nick Clifton  <nickc@redhat.com>
++
++	2.29.1 Release
++
++	* configure: Regenerate.
++	* po/ld.pot: Regenerate.
++
++2017-09-19  Nick Clifton  <nickc@redhat.com>
++
++	Import from mainline:
++
++	* emultempl/xtensaelf.em (xtensa_wild_group_interleave_callback):
++	Only check for by_name sorting.
++
++
+ 2017-08-31  Alan Modra  <amodra@gmail.com>
+ 
+ 	* testsuite/ld-elf/eh3.d: Update.
+@@ -17,13 +32,6 @@
+ 	* testsuite/ld-x86-64/tls.exp: Require GCC 5 or above for
+ 	"tlsdesc1" and "tlsdesc1 with PIE" tests.
+ 
+-2017-09-15  Nick Clifton  <nickc@redhat.com>
+-
+-	2.29.1 Release
+-
+-	* configure: Regenerate.
+-	* po/ld.pot: Regenerate.
+-
+ 2017-08-21  Hans-Peter Nilsson  <hp@bitrange.com>
+ 
+ 	Import from mainline:
+diff --git a/ld/emultempl/xtensaelf.em b/ld/emultempl/xtensaelf.em
+index 1447d526a2..3827d91b62 100644
+--- a/ld/emultempl/xtensaelf.em
++++ b/ld/emultempl/xtensaelf.em
+@@ -1432,7 +1432,7 @@ xtensa_wild_group_interleave_callback (lang_statement_union_type *statement)
+ 	  struct wildcard_list *l;
+ 	  for (l = w->section_list; l != NULL; l = l->next)
+ 	    {
+-	      if (l->spec.sorted != none)
++	      if (l->spec.sorted == by_name)
+ 		{
+ 		  no_reorder = TRUE;
+ 		  break;
+
+commit d1a6e7195b9bb0255fa77588985b969ad8aaacf5
+Author: Nick Clifton <nickc@redhat.com>
+Date:   Tue Sep 19 15:18:16 2017 +0100
+
+    Fix spelling ypos in changelog entries
+
+diff --git a/bfd/ChangeLog b/bfd/ChangeLog
+index f699b2ffc6..417ed273ab 100644
+--- a/bfd/ChangeLog
++++ b/bfd/ChangeLog
+@@ -8,7 +8,7 @@
+ 
+ 2017-09-19  Nick Clifton  <nickc@redhat.com>
+ 
+-	Import from maiknline:
++	Import from mainline:
+ 
+ 	* xtensa-isa.c (xtensa_isa_init): Don't update lookup table
+ 	entries for sysregs with negative indices.
+diff --git a/ld/ChangeLog b/ld/ChangeLog
+index 058755e475..73e05b618e 100644
+--- a/ld/ChangeLog
++++ b/ld/ChangeLog
+@@ -12,7 +12,6 @@
+ 	* emultempl/xtensaelf.em (xtensa_wild_group_interleave_callback):
+ 	Only check for by_name sorting.
+ 
+-
+ 2017-08-31  Alan Modra  <amodra@gmail.com>
+ 
+ 	* testsuite/ld-elf/eh3.d: Update.

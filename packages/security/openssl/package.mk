@@ -1,7 +1,6 @@
 PKG_NAME="openssl"
-PKG_VERSION="772fc32"
-#PKG_URL="https://www.openssl.org/source/openssl-$PKG_VERSION.tar.gz"
-PKG_GIT_URL="https://github.com/openssl/openssl"
+PKG_VERSION="1.0.2l"
+PKG_URL="https://www.openssl.org/source/openssl-$PKG_VERSION.tar.gz"
 PKG_GIT_BRANCH="OpenSSL_1_0_2-stable"
 PKG_DEPENDS_HOST="ccache:host yasm:host"
 PKG_DEPENDS_TARGET="toolchain yasm:host pcre zlib gmp"
@@ -13,8 +12,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 export CCACHE_DISABLE=1
-export MAKEFLAGS=-j1
-#CONCURRENCY_MAKE_LEVEL=1
+CONCURRENCY_MAKE_LEVEL=1
 
 PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            --libdir=lib \
