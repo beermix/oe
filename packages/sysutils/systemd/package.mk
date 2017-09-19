@@ -17,10 +17,13 @@
 ################################################################################
 
 PKG_NAME="systemd"
-PKG_VERSION="234"
-PKG_SITE="https://github.com/systemd/systemd/releases"
-PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain gperf:host libcap util-linux entropy zlib pcre"
+PKG_VERSION="233"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
+PKG_SITE="http://www.freedesktop.org/wiki/Software/systemd"
+PKG_URL="https://github.com/systemd/systemd/archive/v$PKG_VERSION.tar.gz"
+PKG_DEPENDS_TARGET="toolchain gperf:host libcap util-linux entropy"
 PKG_SECTION="system"
 PKG_SHORTDESC="systemd: a system and session manager"
 PKG_LONGDESC="systemd is a system and session manager for Linux, compatible with SysV and LSB init scripts. systemd provides aggressive parallelization capabilities, uses socket and D-Bus activation for starting services, offers on-demand starting of daemons, keeps track of processes using Linux cgroups, supports snapshotting and restoring of the system state, maintains mount and automount points and implements an elaborate transactional dependency-based service control logic. It can work as a drop-in replacement for sysvinit."
@@ -34,7 +37,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            ac_cv_path_MOUNT_PATH=/bin/mount \
                            ac_cv_path_UMOUNT_PATH=/bin/umount \
                            --disable-nls \
-                           --disable-lto \
                            --disable-dbus \
                            --disable-utmp \
                            --disable-coverage \
@@ -46,7 +48,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-selinux \
                            --disable-apparmor \
                            --disable-xz \
-                           --enable-zlib \
+                           --disable-zlib \
                            --disable-bzip2 \
                            --disable-lz4 \
                            --disable-pam \
@@ -72,7 +74,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-randomseed \
                            --disable-backlight \
                            --disable-rfkill \
-                           --enable-logind \
+                           --enable-logind --without-kill-user-processes \
                            --disable-machined \
                            --disable-importd \
                            --disable-hostnamed \
@@ -81,16 +83,16 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-localed \
                            --disable-coredump \
                            --disable-polkit \
-                           --disable-resolved \
+                           --disable-resolved --with-default-dnssec=allow-downgrade \
                            --disable-networkd \
                            --disable-efi \
                            --disable-gnuefi \
-                           --disable-kdbus \
                            --disable-myhostname \
                            --enable-hwdb \
                            --disable-manpages \
                            --disable-hibernate \
                            --disable-ldconfig \
+                           --disable-tpm --with-tpm-pcrindex=8 \
                            --enable-split-usr \
                            --disable-tests \
                            --without-python \
@@ -101,8 +103,11 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --with-dbussessionservicedir=/usr/share/dbus-1/services \
                            --with-dbussystemservicedir=/usr/share/dbus-1/system-services \
                            --with-rootprefix=/usr \
-                           --with-rootlibdir=/usr/lib \
-                           --with-default-hierarchy=hybrid"
+                           --with-rootlibdir=/usr/lib"
+
+unpack() {
+  tar xf $ROOT/$SOURCES/systemd/v$PKG_VERSION.tar.gz -C $ROOT/$BUILD
+}
 
 pre_build_target() {
 # broken autoreconf
@@ -111,9 +116,9 @@ pre_build_target() {
   )
 }
 
-#pre_configure_target() {
-#  export CFLAGS="$CFLAGS -fno-schedule-insns -fno-schedule-insns2"
-#}
+pre_configure_target() {
+  export CFLAGS="$CFLAGS -fno-schedule-insns -fno-schedule-insns2"
+}
 
 post_makeinstall_target() {
   # remove unneeded stuff
@@ -139,11 +144,6 @@ post_makeinstall_target() {
 
   # remove Network adaper renaming rule, this is confusing
   rm -rf $INSTALL/usr/lib/udev/rules.d/80-net-setup-link.rules
-
-  # remove the uaccess rules as we don't build systemd with ACL (see https://github.com/systemd/systemd/issues/4107)
-#  rm -rf $INSTALL/usr/lib/udev/rules.d/70-uaccess.rules
-#  rm -rf $INSTALL/usr/lib/udev/rules.d/71-seat.rules
-#  rm -rf $INSTALL/usr/lib/udev/rules.d/73-seat-late.rules
 
   # remove debug-shell.service, we install our own
   rm -rf $INSTALL/usr/lib/systemd/system/debug-shell.service

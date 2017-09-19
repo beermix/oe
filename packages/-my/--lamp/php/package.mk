@@ -4,10 +4,10 @@ PKG_NAME="php"
 #PHP_VERSION=5.3.3
 
 if [ -z "$PHP_VERSION" ]; then
-  #PKG_VERSION="5.5.8"
+  PKG_VERSION="5.6.31"
 
 	# test latest
-	PKG_VERSION="7.1.9"
+	#PKG_VERSION="7.1.9"
 	#PKG_SOURCE_DIR="php-src-php-$PKG_VERSION"
 else
   PKG_VERSION="$PHP_VERSION"
@@ -138,7 +138,7 @@ post_configure_target() {
   sed -i "s|-I/usr/include|-I$SYSROOT_PREFIX/usr/include|g" Makefile
   sed -i "s|-L/usr/lib|-L$SYSROOT_PREFIX/usr/lib|g" Makefile
   
-  PHP_BIN=$(which php)
+  #PHP_BIN=$(which php)
   
   sed -i "s|PHP_EXECUTABLE =.*|PHP_EXECUTABLE = $PHP_BIN|g" Makefile
   sed -i 's|$(top_builddir)/$(SAPI_CLI_PATH)|dummy_sapi_cli_path|g' Makefile

@@ -1,0 +1,73 @@
+From a2e57404f5ef674c538e18759270dd7e0ced57cf Mon Sep 17 00:00:00 2001
+From: Sriram Periyasamy <sriramx.periyasamy@intel.com>
+Date: Mon, 18 Sep 2017 12:28:00 +0530
+Subject: [PATCH] ALSA: hda - program ICT bits to support HBR audio
+
+On recent Intel platforms (Haswell, Broadwell, Skylake, ApolloLake,
+KabyLake, ...), the IEC Coding Type (ICT) bitfield in the Digital
+Converter Control #3 needs to be set explicitly for HDMI/DisplayPort
+High Bit Rate (HBR) audio playback to work. This was not required in
+earlier platforms when HBR was first introduced. The ICT bits are
+defined in Section 7.3.3.9 of the HDaudio 1.0a specification.
+
+Bugzilla: https://bugs.freedesktop.org/show_bug.cgi?id=98797
+
+Signed-off-by: Sriram Periyasamy <sriramx.periyasamy@intel.com>
+Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Signed-off-by: Subhransu S. Prusty <subhransu.s.prusty@intel.com>
+---
+ include/sound/hda_verbs.h  |  1 +
+ sound/pci/hda/patch_hdmi.c | 18 ++++++++++++++++++
+ 2 files changed, 19 insertions(+)
+
+diff --git a/include/sound/hda_verbs.h b/include/sound/hda_verbs.h
+index d0509db6d0ec..d2004d7feb2b 100644
+--- a/include/sound/hda_verbs.h
++++ b/include/sound/hda_verbs.h
+@@ -54,6 +54,7 @@ enum {
+ #define AC_VERB_GET_EAPD_BTLENABLE		0x0f0c
+ #define AC_VERB_GET_DIGI_CONVERT_1		0x0f0d
+ #define AC_VERB_GET_DIGI_CONVERT_2		0x0f0e /* unused */
++#define AC_VERB_SET_DIGI_CONVERT_3		0x73e
+ #define AC_VERB_GET_VOLUME_KNOB_CONTROL		0x0f0f
+ /* f10-f1a: GPIO */
+ #define AC_VERB_GET_GPIO_DATA			0x0f15
+diff --git a/sound/pci/hda/patch_hdmi.c b/sound/pci/hda/patch_hdmi.c
+index 53f9311370de..2dcd99d2a757 100644
+--- a/sound/pci/hda/patch_hdmi.c
++++ b/sound/pci/hda/patch_hdmi.c
+@@ -906,6 +906,7 @@ static int hdmi_setup_stream(struct hda_codec *codec, hda_nid_t cvt_nid,
+ 			      hda_nid_t pin_nid, u32 stream_tag, int format)
+ {
+ 	struct hdmi_spec *spec = codec->spec;
++	unsigned int param;
+ 	int err;
+ 
+ 	err = spec->ops.pin_hbr_setup(codec, pin_nid, is_hbr_format(format));
+@@ -915,6 +916,23 @@ static int hdmi_setup_stream(struct hda_codec *codec, hda_nid_t cvt_nid,
+ 		return err;
+ 	}
+ 
++	/*
++	 * on recent platforms IEC Coding Type is required for HBR support,
++	 * read current Digital Converter settings and set ICT bitfield if
++	 * needed.
++	 */
++	param = snd_hda_codec_read(codec, cvt_nid, 0,
++				AC_VERB_GET_DIGI_CONVERT_1, 0);
++
++	param = (param >> 16) & ~(AC_DIG3_ICT);
++
++	/* on recent platforms ICT mode is required for HBR support */
++	if (is_hbr_format(format))
++		param |= 0x1;
++
++	snd_hda_codec_write(codec, cvt_nid, 0,
++				AC_VERB_SET_DIGI_CONVERT_3, param);
++
+ 	snd_hda_codec_setup_stream(codec, cvt_nid, stream_tag, 0, format);
+ 	return 0;
+ }
+-- 
+1.9.1
+
