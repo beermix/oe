@@ -77,63 +77,67 @@ make_target() {
   export TMPDIR="/root/-f2fs/temp"
   mkdir -p "$TMPDIR"
 
-local _chromium_conf=(
-    -Dgoogle_api_key=$_google_api_key
-    -Dgoogle_default_client_id=$_google_default_client_id
-    -Dgoogle_default_client_secret=$_google_default_client_secret
-    -Dtarget_arch=x64
-    -Dfastbuild=2
-    -Dwerror=
-    -Dclang=0
-    -Dpython_ver=2.7
-    -Dlinux_link_gsettings=0
-    -Dlinux_strip_binary=1
-    -Dlinux_use_bundled_binutils=0
-    -Dlinux_use_bundled_gold=0
-    -Dlinux_use_gold_flags=0
-    -Dicu_use_data_file_flag=1
-    -Dlogging_like_official_build=1
-    -Dtracing_like_official_build=1
-    -Dfieldtrial_testing_like_official_build=1
-    -Dremove_webcore_debug_symbols=1
-    -Drelease_extra_cflags="$CFLAGS"
-    -Dlibspeechd_h_prefix=speech-dispatcher/
-    -Dffmpeg_branding=Chrome
-    -Dproprietary_codecs=1
-    -Duse_system_bzip2=1
-    -Duse_system_flac=0
-    -Duse_system_ffmpeg=0
-    -Duse_system_harfbuzz=1
-    -Duse_system_icu=0
-    -Duse_system_libevent=0
-    -Duse_system_libjpeg=1
-    -Duse_system_libpng=1
-    -Duse_system_libvpx=0
-    -Duse_system_libxml=0
-    -Duse_system_snappy=0
-    -Duse_system_xdg_utils=0
-    -Duse_system_yasm=1
-    -Duse_system_zlib=0
-    -Duse_mojo=0
-    -Duse_gconf=0
-    -Duse_gnome_keyring=0
-    -Duse_pulseaudio=0
-    -Duse_kerberos=0
-    -Duse_cups=0
-    -Duse_gtk3=0
-    -Duse_vaapi=1
-    -Duse_custom_libcxx=0
-    -Denable_hangout_services_extension=1
-    -Ddisable_fatal_linker_warnings=1
-    -Dsysroot=$SYSROOT_PREFIX
-    -Ddisable_glibc=1
-    -Denable_widevine=1
-    -Denable_nacl=0
-    -Denable_pnacl=0)
+  local _flags=(
+    'is_clang=false'
+    'clang_use_chrome_plugins=false'
+    'symbol_level=0'
+    'is_debug=false'
+    'fatal_linker_warnings=false'
+    'treat_warnings_as_errors=false'
+    'fieldtrial_testing_like_official_build=true'
+    'remove_webcore_debug_symbols=true'
+    'ffmpeg_branding="Chrome"'
+    'proprietary_codecs=true'
+    'link_pulseaudio=true'
+    'linux_use_bundled_binutils=false'
+    'use_allocator="none"'
+    'use_cups=false'
+    'use_gconf=false'
+    'use_gnome_keyring=false'
+    'use_gold=false'
+    'use_custom_libcxx=false'
+    'use_gtk3=false'
+    'use_vaapi=true'
+    'use_kerberos=false'
+    'use_pulseaudio=false'
+    'use_sysroot=true'
+    "target_sysroot=\"${SYSROOT_PREFIX}\""
+    'enable_hangout_services_extension=true'
+    'enable_widevine=true'
+    'enable_nacl=false'
+    'enable_swiftshader=false'
+    "google_api_key=\"${_google_api_key}\""
+    "google_default_client_id=\"${_google_default_client_id}\""
+    "google_default_client_secret=\"${_google_default_client_secret}\""
+  )
 
-  ./build/linux/unbundle/replace_gyp_files.py "${_chromium_conf[@]}"
-  ./build/gyp_chromium --depth=. "${_chromium_conf[@]}"  )
+  # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
+  local _system_libs=(
+    harfbuzz-ng
+    libjpeg
+    libxslt
+    yasm
+  )
 
+  # Remove bundled libraries for which we will use the system copies; this
+  # *should* do what the remove_bundled_libraries.py script does, with the
+  # added benefit of not having to list all the remaining libraries
+  local _lib
+  for _lib in ${_system_libs}; do
+    find -type f -path "*third_party/$_lib/*" \
+      \! -path "*third_party/$_lib/chromium/*" \
+      \! -path "*third_party/$_lib/google/*" \
+      \! -regex '.*\.\(gn\|gni\|isolate\|py\)' \
+      -delete
+  done
+
+  ./build/linux/unbundle/replace_gn_files.py --system-libraries "${_system_libs}"
+  ./third_party/libaddressinput/chromium/tools/update-strings.py
+
+  ./tools/gn/bootstrap/bootstrap.py --gn-gen-args "${_flags[*]}"
+  ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$ROOT/$TOOLCHAIN/bin/python
+
+	# chromedriver
 
   ninja -j5 -C out/Release chrome chrome_sandbox widevinecdmadapter
 }
