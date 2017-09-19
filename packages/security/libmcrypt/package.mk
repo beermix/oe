@@ -15,7 +15,9 @@ PKG_AUTORECONF="no"
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_realloc_0_nonnull=yes \
                            ac_cv_func_malloc_0_nonnull=yes \
                            --disable-static \
-                           --disable-padlock-support"
+                           --disable-padlock-support \
+                           --disable-shared \
+                           --with-pic"
 
 pre_configure_target() {
   # doesn't like to be build in target folder

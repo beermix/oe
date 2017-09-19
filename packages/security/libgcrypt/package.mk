@@ -36,6 +36,7 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            ac_cv_sys_symbol_underscore=no \
                            --enable-static --disable-shared \
                            --with-libgpg-error-prefix=$SYSROOT_PREFIX/usr \
+                           --disable-padlock-support \
                            --disable-doc --with-pic"
 
 post_makeinstall_target() {
