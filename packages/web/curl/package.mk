@@ -46,7 +46,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            --enable-optimize \
                            --enable-warnings \
                            --disable-curldebug \
-                           --disable-ares \
                            --enable-largefile \
                            --enable-http \
                            --enable-ftp \
@@ -69,6 +68,8 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            --enable-versioned-symbols \
                            --enable-nonblocking \
                            --enable-threaded-resolver \
+                           --enable-pthreads \
+                           --disable-ares \
                            --enable-verbose \
                            --disable-sspi \
                            --enable-crypto-auth \
@@ -84,7 +85,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            --enable-thread \
                            --with-random=/dev/urandom \
                            --without-gnutls \
-                           --with-ssl \
+                           --with-ssl=$SYSROOT_PREFIX/usr \
                            --without-polarssl \
                            --without-mbedtls \
                            --without-nss \
@@ -99,7 +100,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            --with-nghttp2=$SYSROOT_PREFIX/usr"
 
 pre_configure_target() {
- link against librt because of undefined reference to 'clock_gettime'
+ #link against librt because of undefined reference to 'clock_gettime'
   export LIBS="-lrt -lm -lrtmp"
 }
 
