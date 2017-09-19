@@ -28,7 +28,7 @@ if [ -z "$PHP_VERSION" ]; then
   #PKG_VERSION="5.5.8"
 
 	# test latest
-	PKG_VERSION="7.2.0RC2"
+	PKG_VERSION="7.1.9"
 	#PKG_SOURCE_DIR="php-src-php-$PKG_VERSION"
 else
   PKG_VERSION="$PHP_VERSION"
@@ -41,8 +41,7 @@ PKG_SITE="http://www.php.net"
 
 if [ -z "$PHP_VERSION" ]; then
   # PKG_URL="http://www.php.net/distributions/$PKG_NAME-$PKG_VERSION.tar.bz2"
-#  PKG_URL="http://www.php.net/distributions/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_URL="https://downloads.php.net/~pollita/php-7.2.0RC2.tar.xz"
+  PKG_URL="http://www.php.net/distributions/$PKG_NAME-$PKG_VERSION.tar.xz"
 else
   PKG_URL="http://museum.php.net/php5/php-$PKG_VERSION.tar.bz2"
 fi
