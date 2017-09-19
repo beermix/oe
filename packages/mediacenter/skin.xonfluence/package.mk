@@ -16,13 +16,7 @@ PKG_AUTORECONF="no"
 make_target() {
   TexturePacker -input media/ \
                 -output Textures.xbt \
-                -dupecheck
-
-  for theme in themes/*; do
-    TexturePacker -input $theme \
-                -output $(basename $theme).xbt \
-                -dupecheck
-  done
+                -dupecheck \
 }
 
 makeinstall_target() {

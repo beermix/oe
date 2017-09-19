@@ -6,13 +6,15 @@ PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
+CONCURRENCY_MAKE_LEVEL=1
+
 pre_configure_target() {
   strip_lto
-  #strip_gold
+  strip_gold
 }
 
 make_target() {
-  make CC="$CC" CFLAGS="$CFLAGS -Wall -DDEBUG=0" LDFLAGS="$LDFLAGS" -j1
+  make CC="$CC" CXX="$CXX" AR="$AR" CFLAGS="-Wall -DDEBUG=0 $CFLAGS" CXXFLAGS="-Wall $CXXFLAGS" CPPFLAGS="$CPPFLAGS" LDFLAGS="$LDFLAGS"
 }
 
 post_make_target() {
