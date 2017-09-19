@@ -17,20 +17,17 @@
 ################################################################################
 
 PKG_NAME="gconf"
-PKG_VERSION="3.2.6"
+PKG_VERSION="3.3.4"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://eigen.tuxfamily.org/index.php?title=Main_Page"
-PKG_URL="https://dl.dropboxusercontent.com/s/a3nfo3i31adwhj2/gconf-3.2.6.tar.xz"
-PKG_DEPENDS_TARGET="toolchain zlib glib dbus-glib"
+PKG_URL="https://dl.dropboxusercontent.com/s/lbmk45byzcqtpxn/gconf-3.3.4.tar.xz"
+PKG_DEPENDS_TARGET="toolchain zlib glib dbus-glib fftw"
 PKG_SECTION="depends"
 PKG_SHORTDESC="gconf"
 
 PKG_IS_ADDON="no"
+PKG_USE_CMAKE="yes"
 PKG_AUTORECONF="no"
 
-
 PKG_CONFIGURE_OPTS_TARGET="--disable-orbit --disable-static --disable-documentation"
-
-
-#PKG_CONFIGURE_OPTS_TARGET="--disable-orbit --disable-static --disable-documentation"
