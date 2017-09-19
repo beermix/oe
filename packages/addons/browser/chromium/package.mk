@@ -18,7 +18,7 @@
 #  http://www.gnu.org/copyleft/gpl.html
 ################################################################################
 
-PKG_NAME="	"
+PKG_NAME="chromium"
 PKG_VERSION="61.0.3163.91"
 PKG_REV="110"
 PKG_ARCH="x86_64"
@@ -35,8 +35,6 @@ PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Chromium"
 PKG_ADDON_TYPE="xbmc.python.script"
 PKG_ADDON_PROVIDES="executable"
-
-GOLD_SUPPORT="yes"
 
 pre_make_target() {
   export CCACHE_SLOPPINESS=include_file_mtime
@@ -100,7 +98,7 @@ make_target() {
     'use_gconf=false'
     'use_gnome_keyring=false'
     'use_gold=false'
-    'use_custom_libcxx=true'
+    'use_custom_libcxx=false'
     'use_gtk3=false'
     'use_vaapi=true'
     'use_kerberos=false'

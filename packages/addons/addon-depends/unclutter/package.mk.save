@@ -16,35 +16,30 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="nmap"
-PKG_VERSION="7.11"
-PKG_SHA256="dfc95db3a8ee4c56650dbaa5a1a1e989b2963de8faea2531c21e6fd6e0bccc2a"
+PKG_NAME="unclutter"
+PKG_VERSION="1.09"
 PKG_ARCH="any"
-PKG_LICENSE="GPL"
-PKG_SITE="http://nmap.org/"
-PKG_URL="http://nmap.org/dist/${PKG_NAME}-${PKG_VERSION}.tgz"
-PKG_DEPENDS_TARGET="toolchain"
-PKG_SECTION="tools"
-PKG_SHORTDESC="network tool"
-PKG_LONGDESC="Free Security Scanned for Network"
+PKG_LICENSE="Public Domain"
+PKG_SITE="https://sourceforge.net/projects/unclutter/"
+PKG_URL="http://jaist.dl.sourceforge.net/project/unclutter/unclutter/source_$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_DEPENDS_TARGET="toolchain libX11"
+PKG_SECTION="x11"
+PKG_SHORTDESC="Unclutter: Hide X11 Cursor"
+PKG_LONGDESC="Unclutter runs in the background of an X11 session and after a specified period of inactivity hides the cursor from display. When the cursor is moved its display is restored. Users may specify specific windows to be ignored by unclutter."
+
+PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static \
-                           --with-pcap=linux \
-                           --with-libpcap=included \
-                           --with-libpcre=included \
-                           --with-libdnet=included \
-                           --with-liblua=included \
-                           --with-liblinear=included"
+#LTO_SUPPORT="yes"
+#GOLD_SUPPORT="no"
 
-pre_configure_target() {
-# nmap fails to build in subdirs
-  cd $PKG_BUILD
-    rm -rf .$TARGET_NAME
-
-  export CPPFLAGS="$CPPFLAGS -Iliblua"
+make_target() {
+  rm -f Makefile
+  unset LDFLAGS
+  LDFLAGS="$LDFLAGS -lX11" $MAKE unclutter
 }
 
 makeinstall_target() {
-  : # nop
+  mkdir -p .install_pkg/usr/bin
+  install -m 755 unclutter .install_pkg/usr/bin/
 }
