@@ -30,7 +30,7 @@ PKG_LONGDESC="Netscape Portable Runtime (NSPR) provides a platform-neutral API f
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-MAKEFLAGS=-j1
+CONCURRENCY_MAKE_LEVEL=1
 
 if [ "$TARGET_ARCH" = "x86_64" ] ; then
   TARGET_USE_64="--enable-64bit"

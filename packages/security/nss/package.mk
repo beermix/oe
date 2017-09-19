@@ -31,7 +31,7 @@ PKG_LONGDESC="The Network Security Services (NSS) package is a set of libraries 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-MAKEFLAGS=-j1
+CONCURRENCY_MAKE_LEVEL=1
 
 make_host() {
   cd $ROOT/$PKG_BUILD/nss
@@ -58,12 +58,13 @@ make_target() {
      NSPR_INCLUDE_DIR=$SYSROOT_PREFIX/usr/include/nspr \
      NSS_USE_SYSTEM_ZLIB=1 NSS_USE_SYSTEM_SQLITE=1 \
      OS_TEST=$TARGET_ARCH \
-     ARTOOL="${TARGET_NAME}-ar" RANLIB="${TARGET_NAME}-ranlib" \
      NSS_DISABLE_DBM=1 \
      NSS_TESTS="dummy" \
      NSINSTALL=$ROOT/$TOOLCHAIN/bin/nsinstall \
      CPU_ARCH_TAG=$TARGET_ARCH \
      NSS_ENABLE_WERROR=0 \
+     ARTOOL="${TARGET_NAME}-ar" \
+     RANLIB="${TARGET_NAME}-ranlib" \
      CC=$CC CXXFLAGS="$CXXFLAGS" CPPFLAGS="$CPPFLAGS" LDFLAGS="$LDFLAGS -L$SYSROOT_PREFIX/usr/lib" \
      V=1
 }
