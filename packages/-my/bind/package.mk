@@ -6,6 +6,8 @@ PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
+#LDFLAGS="$LDFLAGS -static -static-libgcc"
+  
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-static \
 			      --with-randomdev="/dev/urandom" \
@@ -20,7 +22,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --with-gost=no \
 			      --with-gssapi=no \
 			      --with-ecdsa=yes \
-			      --with-readline=no \
+			      --with-readline \
 			      --sysconfdir=/storage/.config"
 
 
