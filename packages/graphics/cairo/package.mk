@@ -17,11 +17,11 @@
 ################################################################################
 
 PKG_NAME="cairo"
-#PKG_VERSION="1.14.10"
-PKG_VERSION="1.15.8"
+PKG_VERSION="1.14.10"
+#PKG_VERSION="1.15.8"
 PKG_ARCH="any"
-#PKG_URL="http://cairographics.org/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_URL="https://cairographics.org/snapshots/cairo-$PKG_VERSION.tar.xz"
+PKG_URL="http://cairographics.org/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
+#PKG_URL="https://cairographics.org/snapshots/cairo-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain zlib expat freetype fontconfig libpng pixman"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="cairo: Multi-platform 2D graphics library"
@@ -79,7 +79,6 @@ PKG_CONFIGURE_OPTS_TARGET="$PKG_CAIRO_CONFIG \
                            --disable-drm-xr \
                            --disable-gallium \
                            --disable-xcb-drm \
-
                            --enable-png \
                            --disable-directfb \
                            --disable-vg \
