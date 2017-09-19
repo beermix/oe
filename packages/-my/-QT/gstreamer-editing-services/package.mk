@@ -17,19 +17,19 @@
 ################################################################################
 
 PKG_NAME="gstreamer-editing-services"
-PKG_VERSION="1.12.0"
+PKG_VERSION="1.12.3"
 PKG_SITE="http://gstreamer.freedesktop.org/gstreamer"
-PKG_URL="https://gstreamer.freedesktop.org/src/gstreamer-editing-services/gstreamer-editing-services-$PKG_VERSION.tar.xz"
+PKG_URL="https://gstreamer.freedesktop.org/src/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain gstreamer"
 PKG_SECTION="lib"
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
-
+PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-examples \
-				--disable-tests \
-				--disable-failing-tests \
-				--disable-loadsave \
-				--enable-static \
-				--disable-shared"
+			      --disable-tests \
+			      --disable-failing-tests \
+			      --disable-loadsave \
+			      --enable-static \
+			      --with-pic \
+			      --disable-shared"

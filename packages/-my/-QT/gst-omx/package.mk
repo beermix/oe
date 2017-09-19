@@ -17,11 +17,10 @@
 ################################################################################
 
 PKG_NAME="gst-omx"
-PKG_VERSION="1.0.0"
+PKG_VERSION="1.12.3"
 PKG_SITE="http://gstreamer.freedesktop.org/gstreamer"
-PKG_URL="http://gstreamer.freedesktop.org/src/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="https://gstreamer.freedesktop.org/src/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain libpng tiff dbus fontconfig eglibc zlib gstreamer"
-
 PKG_SECTION="lib"
 PKG_SHORTDESC="gstreamer omx module"
 PKG_LONGDESC="gstreamer omx module"
@@ -33,11 +32,11 @@ if [ "$XBMCPLAYER_DRIVER" = "bcm2835-driver" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET bcm2835-driver"
 fi
 
-PKG_CONFIGURE_OPTS_TARGET="\
-		--disable-maintainer-mode \
-		--disable-dependency-tracking \
-        --disable-silent-rules \
-        --disable-fatal-warnings \
-		--disable-static \
-		--with-omx-target=rpi \
-		--with-omx-struct-packing=4"
+PKG_CONFIGURE_OPTS_TARGET="--disable-maintainer-mode \
+			      --disable-dependency-tracking \
+			      --disable-silent-rules \
+			      --disable-fatal-warnings \
+			      --disable-shared \
+			      --with-pic \
+			      --with-omx-target=rpi \
+			      --with-omx-struct-packing=4"

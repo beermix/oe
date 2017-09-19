@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="gst-libav"
-PKG_VERSION="1.10.5"
+PKG_VERSION="1.12.3"
 PKG_SITE="http://gstreamer.freedesktop.org/gstreamer"
-PKG_URL="https://gstreamer.freedesktop.org/src/gst-libav/gst-libav-$PKG_VERSION.tar.xz"
+PKG_URL="https://gstreamer.freedesktop.org/src/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain gstreamer ffmpeg bzip2 xz zlib"
 PKG_SECTION="lib"
 
@@ -33,6 +33,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-examples \
 			      --enable-static \
 			      --disable-shared \
 			      --disable-gtk-doc \
+			      --with-pic \
 			      --disable-gtk-doc-html \
 			      --disable-gtk-doc-pdf \
 			      --enable-static-plugins \

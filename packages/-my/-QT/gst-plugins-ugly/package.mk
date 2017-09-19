@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="gst-plugins-ugly"
-PKG_VERSION="1.12.2"
+PKG_VERSION="1.12.3"
 PKG_SITE="http://gstreamer.freedesktop.org/gstreamer"
 PKG_URL="http://gstreamer.freedesktop.org/src/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain libpng tiff dbus fontconfig eglibc zlib gstreamer"
