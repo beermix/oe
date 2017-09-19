@@ -33,7 +33,7 @@ PKG_LONGDESC="zlib is a general purpose data compression library. All the code i
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release"
+#PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release"
 #PKG_CMAKE_OPTS_HOST="$PKG_CMAKE_OPTS_TARGET"
 
 pre_build_target() {

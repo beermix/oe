@@ -33,6 +33,8 @@ PKG_IS_ADDON="no"
 
 PKG_AUTORECONF="yes"
 
+CONCURRENCY_MAKE_LEVEL=1
+
 PKG_CONFIGURE_OPTS_HOST="--prefix=$ROOT/$TOOLCHAIN/ \
                          --bindir=$ROOT/$TOOLCHAIN/bin \
                          --sbindir=$ROOT/$TOOLCHAIN/sbin"
@@ -66,11 +68,6 @@ PKG_CONFIGURE_OPTS_TARGET="BUILD_CC=$HOST_CC \
                            --with-gnu-ld"
 
 PKG_CONFIGURE_OPTS_INIT="$PKG_CONFIGURE_OPTS_TARGET"
-
-pre_make_host() {
-  # dont build parallel
-  MAKEFLAGS=-j1
-}
 
 post_makeinstall_target() {
   make -C lib/et LIBMODE=644 DESTDIR=$SYSROOT_PREFIX install
