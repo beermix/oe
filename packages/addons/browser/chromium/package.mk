@@ -97,15 +97,8 @@ make_target() {
     'use_gold=false'
     'use_custom_libcxx=false'
     'use_gtk3=false'
-    "release_extra_cflags="$CFLAGS""
-    'fastbuild=2'
-    'linux_link_gsettings=false'
-    'linux_strip_binary=true'
-    'linux_use_bundled_gold=false'
-    'linux_use_gold_flags=false'
-    'icu_use_data_file_flag=true'
-    'logging_like_official_build=true'
-    'tracing_like_official_build=true'
+    "release_extra_cflags=\"$CFLAGS\""
+    'fastbuild=true'
     'use_vaapi=true'
     'use_kerberos=false'
     'use_pulseaudio=false'
