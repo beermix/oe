@@ -34,3 +34,7 @@ makeinstall_target() {
     $SED "s|\(['= ]\)/usr|\\1$INSTALL_DEV/usr|g" $i
   done
 }
+
+post_makeinstall_target() {
+  rm -rf $INSTALL
+}
