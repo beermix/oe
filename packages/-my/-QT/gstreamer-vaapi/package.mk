@@ -17,17 +17,18 @@
 ################################################################################
 
 PKG_NAME="gstreamer-vaapi"
-PKG_VERSION="1.10.5"
+PKG_VERSION="1.12.2"
 PKG_SITE="http://gstreamer.freedesktop.org/gstreamer"
 PKG_URL="https://gstreamer.freedesktop.org/src/gstreamer/gstreamer-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain gstreamer intel-vaapi-driver gst-plugins-bad"
 PKG_SECTION="lib"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-examples \
 			      --enable-static \
 			      --disable-shared \
 			      --enable-wayland \
+			      --with-pic \
 			      --disable-examples \
 			      --disable-debug"

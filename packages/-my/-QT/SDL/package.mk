@@ -31,7 +31,7 @@ PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_HOST="--disable-nasm --disable-rpath --disable-static"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-nasm \
+PKG_CONFIGURE_OPTS_TARGET="--enable-nasm \
                            --with-x \
                            --disable-rpath \
                            --disable-static \

@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="gst-plugins-base"
-PKG_VERSION="1.10.5"
+PKG_VERSION="1.12.2"
 PKG_SITE="http://gstreamer.freedesktop.org/gstreamer"
 PKG_URL="https://gstreamer.freedesktop.org/src/gstreamer/gstreamer-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain libpng tiff dbus fontconfig eglibc zlib gstreamer"
@@ -26,12 +26,13 @@ PKG_SHORTDESC="gst-plugins-base"
 PKG_LONGDESC="gst-plugins-base"
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-maintainer-mode \
 			      --disable-dependency-tracking \
 			      --enable-silent-rules \
 			      --disable-fatal-warnings \
+			      --with-pic \
 			      --disable-audiotestsrc \
 			      --disable-videotestsrc \
 			      --disable-shared"
