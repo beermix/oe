@@ -98,11 +98,11 @@ make_target() {
     'use_custom_libcxx=false'
     'use_gtk3=true'
     'use_vaapi=true'
+    'enable_hangout_services_extension=true'
     'use_kerberos=false'
     'use_pulseaudio=false'
     'use_sysroot=true'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
-    'enable_hangout_services_extension=true'
     'enable_widevine=false'
     'enable_nacl=false'
     'enable_swiftshader=false'
