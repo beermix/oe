@@ -13,7 +13,7 @@ PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-overwrite \
 			      --disable-termcap \
-			      --enable-warnings \
+			      --disable-warnings \
 			      --with-termlib=tinfo \
 			      --with-ticlib \
 			      --with-ncursesw \
