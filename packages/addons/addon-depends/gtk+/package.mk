@@ -14,6 +14,11 @@ PKG_IS_ADDON="no"
 
 PKG_AUTORECONF="no"
 
+pre_configure_target() {
+  export LIBS="$LIBS -lX11 -lXext -lm"
+}
+
+
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_path_GLIB_GENMARSHAL=$SYSROOT_PREFIX/usr/bin/glib-genmarshal \
                            --disable-glibtest \
                            --enable-modules \

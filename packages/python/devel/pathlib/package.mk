@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2014 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,26 +16,26 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="ninja"
-PKG_VERSION="v1.8.2"
-PKG_GIT_URL="https://github.com/ninja-build/ninja"
-PKG_DEPENDS_HOST="re2c:host"
-PKG_SECTION="devel"
-PKG_SHORTDESC="Small build system with a focus on speed"
-PKG_LONGDESC="Small build system with a focus on speed"
+PKG_NAME="pathlib"
+PKG_VERSION="1.0.1"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="OSS"
+PKG_SITE="https://pypi.python.org/pypi/appdirs"
+PKG_URL="https://pypi.python.org/packages/ac/aa/9b065a76b9af472437a0059f77e8f962fe350438b927cb80184c32f075eb/pathlib-1.0.1.tar.gz"
+PKG_DEPENDS_HOST="Python:host"
+PKG_PRIORITY="optional"
+PKG_SECTION="python/devel"
+PKG_SHORTDESC="appdirs: Python module for determining appropriate platform-specific dirs"
+PKG_LONGDESC="appdirs is a small Python module for determining appropriate platform-specific dirs, e.g. a user data dir."
+
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-configure_host() {
-  :
-}
-
 make_host() {
-   python2 configure.py --bootstrap
+  : # nothing todo
 }
 
 makeinstall_host() {
-  cp ninja $ROOT/$TOOLCHAIN/bin/
-  
-  #cp $PKG_DIR/ninja $ROOT/$TOOLCHAIN/bin/
+  python setup.py install --prefix=$ROOT/$TOOLCHAIN
 }

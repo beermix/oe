@@ -19,7 +19,7 @@
 ################################################################################
 
 PKG_NAME="chromium"
-PKG_VERSION="61.0.3163.91"
+PKG_VERSION="61.0.3163.98"
 PKG_REV="110"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
@@ -55,7 +55,7 @@ make_target() {
 
   export -n CFLAGS CXXFLAGS
 #  export LDFLAGS="$LDFLAGS -ludev"
-#  export LD=$CXX
+  export LD=$CXX
 
   # Use Python 2
   find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$ROOT/$TOOLCHAIN/bin/python|g" {} +
@@ -94,16 +94,16 @@ make_target() {
     'use_cups=false'
     'use_gconf=false'
     'use_gnome_keyring=false'
-    'use_gold=true'
+    'use_gold=false'
     'use_custom_libcxx=false'
-    'use_gtk3=false'
+    'use_gtk3=true'
     'use_vaapi=true'
     'use_kerberos=false'
     'use_pulseaudio=false'
     'use_sysroot=true'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_hangout_services_extension=true'
-    'enable_widevine=true'
+    'enable_widevine=false'
     'enable_nacl=false'
     'enable_swiftshader=false'
     "google_api_key=\"${_google_api_key}\""

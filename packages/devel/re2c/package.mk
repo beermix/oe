@@ -4,7 +4,7 @@ PKG_URL="https://github.com/skvadrik/re2c/releases/download/$PKG_VERSION/re2c-$P
 PKG_DEPENDS_HOST="bison:host"
 PKG_SECTION="devel"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_HOST="--disable-docs"
 

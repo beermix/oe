@@ -16,10 +16,10 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="ninja"
-PKG_VERSION="v1.8.2"
-PKG_GIT_URL="https://github.com/ninja-build/ninja"
-PKG_DEPENDS_HOST="re2c:host"
+PKG_NAME="meson"
+PKG_VERSION="0.42.1"
+PKG_URL="https://github.com/mesonbuild/meson/releases/download/0.42.1/meson-0.42.1.tar.gz"
+PKG_DEPENDS_HOST="pathlib:host"
 PKG_SECTION="devel"
 PKG_SHORTDESC="Small build system with a focus on speed"
 PKG_LONGDESC="Small build system with a focus on speed"
@@ -31,11 +31,9 @@ configure_host() {
 }
 
 make_host() {
-   python2 configure.py --bootstrap
+  python3 setup.py build
 }
 
 makeinstall_host() {
-  cp ninja $ROOT/$TOOLCHAIN/bin/
-  
-  #cp $PKG_DIR/ninja $ROOT/$TOOLCHAIN/bin/
+  python3 setup.py install --prefix=$ROOT/$TOOLCHAIN --optimize=1
 }
