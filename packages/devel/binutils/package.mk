@@ -43,6 +43,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-threads \
                          --enable-plugins \
                          --enable-ld=default \
+                         --enable-nls \
                          --with-pic \
                          --disable-sim \
                          --disable-gdb \

@@ -27,6 +27,7 @@ PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc
 PKG_PRIORITY="optional"
 PKG_SECTION="lang"
 PKG_SHORTDESC="gcc: The GNU Compiler Collection Version 4 (aka GNU C Compiler)"
+PKG_LONGDESC="This package contains the GNU Compiler Collection. It includes compilers for the languages C, C++, Objective C, Fortran 95, Java and others ... This GCC contains the Stack-Smashing Protector Patch which can be enabled with the -fstack-protector command-line option. More information about it ca be found at http://www.research.ibm.com/trl/projects/security/ssp/."
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
@@ -38,15 +39,23 @@ GCC_COMMON_CONFIGURE_OPTS="MAKEINFO=missing \
                            --with-mpc=$ROOT/$TOOLCHAIN \
                            --disable-multilib \
                            --enable-plugin \
+                           --enable-lto \
                            --enable-ld=default \
+                           --enable-nls \
                            --with-default-libstdcxx-abi=new \
                            --enable-checking=release \
                            --disable-libunwind-exceptions \
-                           --enable-initfini-array \
                            --disable-libssp \
                            --disable-libsanitizer \
+                           --without-ppl \
                            --without-cloog \
                            --disable-libmpx \
+                           --enable-initfini-array \
+                           --enable-linker-build-id \
+                           --enable-gnu-unique-object \
+                           --disable-vtable-verify \
+                           --disable-werror \
+                           --enable-default-pie \
                            --with-tune=generic"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
@@ -79,12 +88,9 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time=yes \
                          --enable-clocale=gnu \
-                         --enable-linker-build-id \
-                         --enable-gnu-unique-object \
-                         --disable-vtable-verify \
                          $GCC_OPTS"
 pre_configure_host() {
-  #export CXXFLAGS="$CXXFLAGS -std=gnu++98"
+  export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
 }
 
