@@ -31,6 +31,12 @@ PKG_LONGDESC="This package contains the GNU Compiler Collection. It includes com
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
+post_unpack() {
+  sed -i 's@\./fixinc\.sh@-c true@' $ROOT/$PKG_BUILD/gcc/Makefile.in
+  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $ROOT/$PKG_BUILD/libiberty/configure
+  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $ROOT/$PKG_BUILD/gcc/configure
+}
+
 GCC_COMMON_CONFIGURE_OPTS="MAKEINFO=missing \
                            --target=$TARGET_NAME \
                            --with-sysroot=$SYSROOT_PREFIX \
@@ -51,6 +57,7 @@ GCC_COMMON_CONFIGURE_OPTS="MAKEINFO=missing \
                            --without-cloog \
                            --disable-libmpx \
                            --enable-initfini-array \
+                           --without-cuda-driver \
                            --enable-linker-build-id \
                            --enable-gnu-unique-object \
                            --disable-vtable-verify \

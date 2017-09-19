@@ -40,7 +40,7 @@
 
   # Kernel to use. values can be:
   # default:  default mainline kernel
-    LINUX="rc"
+#    LINUX="rc"
 
 
 ################################################################################
@@ -103,6 +103,6 @@
   # except the default-*.config and the ones included in packages/linux/package.mk
   # Space separated list is supported,
     KERNEL_EXTRA_CONFIG+=" keyboard-at"
-    KERNEL_EXTRA_CONFIG+=" sata lan-pci sound-pci"
+    KERNEL_EXTRA_CONFIG+=" lan-pci sound-pci"
     KERNEL_EXTRA_CONFIG+=" bluetooth filesystem wlan-usb"
 
