@@ -26,7 +26,7 @@ PKG_ARCH="any"
 PKG_LICENSE=""
 PKG_SITE=""
 PKG_URL=""
-PKG_DEPENDS_TARGET="toolchain httpd php mysqld ssh2 phpMyAdmin eglibc-localedef:host smbclient msmtp aria2"
+PKG_DEPENDS_TARGET="toolchain httpd php ssh2 phpMyAdmin smbclient msmtp"
 # only httpd for debug
 #PKG_DEPENDS_TARGET="toolchain httpd"
 PKG_PRIORITY="optional"
@@ -51,7 +51,7 @@ addon() {
 #set +e  # no exit on error
 
   HTTPD_DIR=$(get_build_dir httpd)/.install_dev
-  MYSQL_DIR=$(get_build_dir mysqld)/.install_pkg
+#  MYSQL_DIR=$(get_build_dir mysqld)/.install_pkg
   PHPMYADMIN_BASE_DIR=$(basename $(get_build_dir phpMyAdmin))
   PHPMYADMIN_ZIP_DIR=$(readlink -f $SOURCES/phpMyAdmin)
 

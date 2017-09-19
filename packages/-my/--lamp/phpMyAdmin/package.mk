@@ -18,14 +18,14 @@
 ################################################################################
 
 PKG_NAME="phpMyAdmin"
-PKG_VERSION="4.2.2"
+PKG_VERSION="4.7.4"
 # needs new mysql
 #PKG_VERSION="4.2.11"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL2"
 PKG_SITE="http://www.phpmyadmin.net/home_page/index.php"
-PKG_URL="http://softlayer-ams.dl.sourceforge.net/project/phpmyadmin/phpMyAdmin/$PKG_VERSION/phpMyAdmin-$PKG_VERSION-all-languages.zip"
+PKG_URL="https://files.phpmyadmin.net/phpMyAdmin/$PKG_VERSION/phpMyAdmin-$PKG_VERSION-all-languages.zip"
 PKG_DEPENDS_TARGET=""
 PKG_PRIORITY="optional"
 PKG_SECTION="tools"

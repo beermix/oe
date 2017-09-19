@@ -72,8 +72,8 @@ configure_target() {
   export CFLAGS="$CFLAGS -I$SYSROOT_PREFIX/usr/include/iconv"
   export LDFLAGS="$LDFLAGS -L$SYSROOT_PREFIX/usr/lib/iconv -liconv"
 
-  export CXXFLAGS="$CFLAGS"
-  export CPPFLAGS="$CFLAGS"
+#  export CXXFLAGS="$CFLAGS"
+#  export CPPFLAGS="$CFLAGS"
 
   PKG_CONFIGURE_OPTS_TARGET="--enable-cli \
                              --enable-cgi \
@@ -128,21 +128,42 @@ configure_target() {
                              --with-jpeg-dir=$SYSROOT_PREFIX/usr \
                              --with-freetype-dir=$SYSROOT_PREFIX/usr \
                              --with-png-dir=$SYSROOT_PREFIX/usr \
-                             --disable-option-checking"
+                             --with-apxs2=$APXS_FILE"
+  
 
   ac_cv_func_strcasestr=yes \
-  $PKG_CONFIGURE_SCRIPT $TARGET_CONFIGURE_OPTS $PKG_CONFIGURE_OPTS_TARGET
+	$PKG_CONFIGURE_SCRIPT $TARGET_CONFIGURE_OPTS $PKG_CONFIGURE_OPTS_TARGET
 }
 
+post_configure_target() {
+	: # dummy
+  # quick hack
+  # not for new
+  sed -i "s|-I/usr/include|-I$SYSROOT_PREFIX/usr/include|g" Makefile
+  sed -i "s|-L/usr/lib|-L$SYSROOT_PREFIX/usr/lib|g" Makefile
+  
+  PHP_BIN=$(which php)
+  
+  sed -i "s|PHP_EXECUTABLE =.*|PHP_EXECUTABLE = $PHP_BIN|g" Makefile
+  sed -i 's|$(top_builddir)/$(SAPI_CLI_PATH)|dummy_sapi_cli_path|g' Makefile
+}
 
 makeinstall_target() {
-  make -j1 install INSTALL_ROOT=$INSTALL $PKG_MAKEINSTALL_OPTS_TARGET
-  rm -f $INSTALL/usr/bin/php-config
-  rm -f $INSTALL/usr/bin/phpize
-  rm -fr $INSTALL/usr/lib
-  rm -fr $INSTALL/usr/php
-  mkdir -p $INSTALL/usr/config/php
-    cp php.ini-production $INSTALL/usr/config/php/php.ini
+  export INSTALL_DEV=$(pwd)/.install_dev
+  
+  mkdir -p $INSTALL_DEV/etc/
+  cp $(get_build_dir httpd)/.install_dev/etc/httpd.conf $INSTALL_DEV/etc/httpd.conf 
+  
+  #sed -i "s|install-pear-installer:.*|install-pear-installer:\ndummy123:|g" Makefile
+  
+  #
+  sed -i 's|@$(top_builddir)/sapi/cli/php|php|g' Makefile
+  
+  make -j1 install INSTALL_ROOT=$INSTALL_DEV $PKG_MAKEINSTALL_OPTS_TARGET
+  	
+	sed -i "/prefix/ s|/usr|$INSTALL_DEV/usr|" $INSTALL_DEV/usr/bin/phpize
+	sed -i "/extension_dir/ s|/usr|$INSTALL_DEV/usr|" $INSTALL_DEV/usr/bin/php-config
+	sed -i "/prefix/ s|/usr|$INSTALL_DEV/usr|" $INSTALL_DEV/usr/bin/php-config
 }
 
 # zamenjaj php in naj namesti pear tudi

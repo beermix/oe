@@ -59,7 +59,8 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            apr_cv_tcp_nodelay_with_cork=no \
                            apr_cv_process_shared_works=no \
                            $SIZEOF_SIZES \
-                           --disable-static \
+                           --disable-shared \
+                           --enable-static \
                            --disable-libtool-lock \
                            --enable-lfs \
                            --enable-dso \
@@ -70,6 +71,9 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
+  export LIBS="$LIBS -ldl -lpthread"
+    export CFLAGS="$CFLAGS -fPIC -DPIC"
+  export CXXFLAGS="$CXXFLAGS -fPIC -DPIC"
 }
 
 makeinstall_target() {

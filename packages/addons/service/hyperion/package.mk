@@ -22,7 +22,7 @@ PKG_REV="105"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/hyperion-project/hyperion"
 PKG_GIT_URL="https://github.com/hyperion-project/hyperion"
-PKG_DEPENDS_TARGET="toolchain Python libusb protobuf rpi_ws281x"
+PKG_DEPENDS_TARGET="toolchain Python libusb qtbase protobuf"
 PKG_SECTION="service"
 PKG_SHORTDESC="Hyperion: an AmbiLight controller"
 PKG_LONGDESC="Hyperion($PKG_VERSION) is an modern opensource AmbiLight implementation."
@@ -48,9 +48,6 @@ elif [ "$DISPLAYSERVER" = "x11" ]; then
   X11_SUPPORT="-DENABLE_X11=1"
 fi
 
-pre_build_target() {
-  cp -a $(get_pkg_build rpi_ws281x)/* $ROOT/$PKG_BUILD/dependencies/external/rpi_ws281x
-}
 
 pre_configure_target() {
   echo "" > ../cmake/FindGitVersion.cmake
@@ -71,7 +68,6 @@ PKG_CMAKE_OPTS_TARGET="-DCMAKE_NO_SYSTEM_FROM_IMPORTED=ON \
                        $X11_SUPPORT \
                        -DENABLE_QT5=1 \
                        -DENABLE_TESTS=0 \
-                       -DCMAKE_BUILD_TYPE=Release \
                        -Wno-dev"
 
 makeinstall_target() {

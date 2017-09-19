@@ -11,7 +11,8 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-openssl \
-			      --enable-fat \
-			      --enable-static \
+			      --disable-static \
 			      --enable-x86-aesni \
-			      --disable-documentation"
+			      --disable-documentation \
+			      --enable-mini-gmp \
+			      CC_FOR_BUILD=$HOST_CC"
