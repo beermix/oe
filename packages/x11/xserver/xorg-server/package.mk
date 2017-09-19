@@ -140,11 +140,8 @@ post_makeinstall_target() {
 
   mkdir -p $INSTALL/usr/lib/xorg
     cp -P $PKG_DIR/scripts/xorg-configure $INSTALL/usr/lib/xorg
-      . $ROOT/packages/x11/driver/xf86-video-nvidia/package.mk
-      sed -i -e "s|@NVIDIA_VERSION@|${PKG_VERSION}|g" $INSTALL/usr/lib/xorg/xorg-configure
-      . $ROOT/packages/x11/driver/xf86-video-nvidia-legacy/package.mk
-      sed -i -e "s|@NVIDIA_LEGACY_VERSION@|${PKG_VERSION}|g" $INSTALL/usr/lib/xorg/xorg-configure
-      . $ROOT/packages/x11/xserver/xorg-server/package.mk
+      sed -i -e "s|@NVIDIA_VERSION@|$(get_pkg_version xf86-video-nvidia)|g" $INSTALL/usr/lib/xorg/xorg-configure
+      sed -i -e "s|@NVIDIA_LEGACY_VERSION@|$(get_pkg_version xf86-video-nvidia-legacy)|g" $INSTALL/usr/lib/xorg/xorg-configure
 
   if [ ! "$OPENGL" = "no" ]; then
     if [ -f $INSTALL/usr/lib/xorg/modules/extensions/libglx.so ]; then
@@ -157,9 +154,9 @@ post_makeinstall_target() {
   mkdir -p $INSTALL/etc/X11
     if [ -f $PROJECT_DIR/$PROJECT/xorg/xorg.conf ]; then
       cp $PROJECT_DIR/$PROJECT/xorg/xorg.conf $INSTALL/etc/X11
-    elif [ -f $PKG_DIR/config/xorg.conf ]; then
-      cp $PKG_DIR/config/xorg.conf $INSTALL/etc/X11
+
     fi
+    cp $PKG_DIR/config/xorg*.conf $INSTALL/etc/X11
 
   if [ ! "$DEVTOOLS" = yes ]; then
     rm -rf $INSTALL/usr/bin/cvt
