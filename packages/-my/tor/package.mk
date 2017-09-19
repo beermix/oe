@@ -11,6 +11,8 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-systemd \
 			      --disable-asciidoc \
 			      --disable-unittests \
 			      --disable-seccomp \
+			      --disable-libscrypt 
+			      --disable-largefile \
 			      --sysconfdir=/storage/.config \
 			      --datarootdir=/storage/.cache/tor \
 			      --datadir=/storage/.cache/tor \
