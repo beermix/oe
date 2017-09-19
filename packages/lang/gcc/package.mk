@@ -39,11 +39,10 @@ GCC_COMMON_CONFIGURE_OPTS="MAKEINFO=missing \
                            --disable-multilib \
                            --enable-plugin \
                            --enable-ld=default \
-                           --disable-nls \
                            --with-default-libstdcxx-abi=new \
                            --enable-checking=release \
                            --disable-libunwind-exceptions \
-                           --enable-initfini-array
+                           --enable-initfini-array \
                            --disable-libssp \
                            --disable-libsanitizer \
                            --without-cloog \
