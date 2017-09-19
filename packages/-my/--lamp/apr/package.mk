@@ -51,7 +51,7 @@ else
 	              ac_cv_sizeof_struct_iovec=8"
 fi
 
-PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=gcc \
+PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            CFLAGS_FOR_BUILD= \
                            ac_cv_file__dev_zero=yes \
                            ac_cv_func_setpgrp_void=yes \
