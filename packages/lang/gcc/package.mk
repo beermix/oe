@@ -37,9 +37,13 @@ GCC_COMMON_CONFIGURE_OPTS="MAKEINFO=missing \
                            --with-mpfr=$ROOT/$TOOLCHAIN \
                            --with-mpc=$ROOT/$TOOLCHAIN \
                            --disable-multilib \
+                           --enable-plugin \
+                           --enable-ld=default \
                            --disable-nls \
                            --with-default-libstdcxx-abi=new \
                            --enable-checking=release \
+                           --disable-libunwind-exceptions \
+                           --enable-initfini-array
                            --disable-libssp \
                            --disable-libsanitizer \
                            --without-cloog \
@@ -79,8 +83,6 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-linker-build-id \
                          --enable-gnu-unique-object \
                          --disable-vtable-verify \
-                         --enable-default-pie \
-                         --enable-default-ssp \
                          $GCC_OPTS"
 pre_configure_host() {
   #export CXXFLAGS="$CXXFLAGS -std=gnu++98"

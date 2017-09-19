@@ -41,6 +41,8 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-libssp \
                          --enable-version-specific-runtime-libs \
                          --enable-threads \
+                         --enable-plugins \
+                         --enable-ld=default \
                          --with-pic \
                          --disable-nls \
                          --disable-sim \
