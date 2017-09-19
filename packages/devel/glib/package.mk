@@ -31,6 +31,7 @@ PKG_LONGDESC="GLib is a library which includes support routines for C such as li
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
+
 PKG_CONFIGURE_OPTS_HOST="--enable-static \
                          --disable-shared \
                          --disable-libmount \
@@ -54,7 +55,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_snprintf_c99=yes \
                            --enable-Bsymbolic \
                            --with-gnu-ld \
                            --with-threads=posix \
-                           --with-pcre=internal"
+                           --with-pcre=system"
 
 post_makeinstall_target() {
   mkdir -p $SYSROOT_PREFIX/usr/lib/pkgconfig
@@ -70,19 +71,19 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/lib/glib-2.0
   rm -rf $INSTALL/usr/share
   
-  ln -sf $SYSROOT_PREFIX/usr/bin/gapplication $ROOT/$BUILD/toolchain/bin/
-  ln -sf $SYSROOT_PREFIX/usr/bin/gdbus $ROOT/$BUILD/toolchain/bin/
-  ln -sf $SYSROOT_PREFIX/usr/bin/gio $ROOT/$BUILD/toolchain/bin/
-  ln -sf $SYSROOT_PREFIX/usr/bin/gio-querymodules $ROOT/$BUILD/toolchain/bin/
-  ln -sf $SYSROOT_PREFIX/usr/bin/glib-compile-resources $ROOT/$BUILD/toolchain/bin/
-  ln -sf $SYSROOT_PREFIX/usr/bin/glib-compile-schemas $ROOT/$BUILD/toolchain/bin/
-  ln -sf $SYSROOT_PREFIX/usr/bin/glib-genmarshal $ROOT/$BUILD/toolchain/bin/
-  ln -sf $SYSROOT_PREFIX/usr/bin/glib-gettextize $ROOT/$BUILD/toolchain/bin/
-  ln -sf $SYSROOT_PREFIX/usr/bin/glib-mkenums $ROOT/$BUILD/toolchain/bin/
-  ln -sf $SYSROOT_PREFIX/usr/bin/gobject-query $ROOT/$BUILD/toolchain/bin/
-  ln -sf $SYSROOT_PREFIX/usr/bin/gresource $ROOT/$BUILD/toolchain/bin/
-  ln -sf $SYSROOT_PREFIX/usr/bin/gsettings $ROOT/$BUILD/toolchain/bin/
-  ln -sf $SYSROOT_PREFIX/usr/bin/gtester $ROOT/$BUILD/toolchain/bin/
-  ln -sf $SYSROOT_PREFIX/usr/bin/gtester-report $ROOT/$BUILD/toolchain/bin/
-  ln -sf $SYSROOT_PREFIX/usr/bin/gdbus-codegen $ROOT/$BUILD/toolchain/bin/
+#  ln -sf $SYSROOT_PREFIX/usr/bin/gapplication $ROOT/$BUILD/toolchain/bin/
+#  ln -sf $SYSROOT_PREFIX/usr/bin/gdbus $ROOT/$BUILD/toolchain/bin/
+#  ln -sf $SYSROOT_PREFIX/usr/bin/gio $ROOT/$BUILD/toolchain/bin/
+#  ln -sf $SYSROOT_PREFIX/usr/bin/gio-querymodules $ROOT/$BUILD/toolchain/bin/
+#  ln -sf $SYSROOT_PREFIX/usr/bin/glib-compile-resources $ROOT/$BUILD/toolchain/bin/
+#  ln -sf $SYSROOT_PREFIX/usr/bin/glib-compile-schemas $ROOT/$BUILD/toolchain/bin/
+#  ln -sf $SYSROOT_PREFIX/usr/bin/glib-genmarshal $ROOT/$BUILD/toolchain/bin/
+#  ln -sf $SYSROOT_PREFIX/usr/bin/glib-gettextize $ROOT/$BUILD/toolchain/bin/
+#  ln -sf $SYSROOT_PREFIX/usr/bin/glib-mkenums $ROOT/$BUILD/toolchain/bin/
+#  ln -sf $SYSROOT_PREFIX/usr/bin/gobject-query $ROOT/$BUILD/toolchain/bin/
+#  ln -sf $SYSROOT_PREFIX/usr/bin/gresource $ROOT/$BUILD/toolchain/bin/
+#  ln -sf $SYSROOT_PREFIX/usr/bin/gsettings $ROOT/$BUILD/toolchain/bin/
+#  ln -sf $SYSROOT_PREFIX/usr/bin/gtester $ROOT/$BUILD/toolchain/bin/
+#  ln -sf $SYSROOT_PREFIX/usr/bin/gtester-report $ROOT/$BUILD/toolchain/bin/
+#  ln -sf $SYSROOT_PREFIX/usr/bin/gdbus-codegen $ROOT/$BUILD/toolchain/bin/
 }

@@ -97,8 +97,6 @@ make_target() {
     'use_gold=false'
     'use_custom_libcxx=false'
     'use_gtk3=false'
-    'fastbuild=true'
-    'linux_link_gsettings=false'
     'use_vaapi=true'
     'use_kerberos=false'
     'use_pulseaudio=false'
