@@ -34,7 +34,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            ac_cv_path_MOUNT_PATH=/bin/mount \
                            ac_cv_path_UMOUNT_PATH=/bin/umount \
                            --disable-nls \
-                           --enable-lto \
+                           --disable-lto \
                            --disable-dbus \
                            --disable-utmp \
                            --disable-coverage \
@@ -50,11 +50,11 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-bzip2 \
                            --enable-lz4 \
                            --disable-pam \
-                           --enable-acl \
+                           --disable-acl \
                            --disable-smack \
                            --disable-gcrypt \
                            --disable-audit \
-                           --enable-elfutils \
+                           --disable-elfutils \
                            --disable-libcryptsetup \
                            --disable-qrencode \
                            --disable-microhttpd \
@@ -62,7 +62,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-libcurl \
                            --disable-libidn \
                            --disable-libiptc \
-                           --enable-binfmt \
+                           --disable-binfmt \
                            --disable-vconsole \
                            --disable-quotacheck \
                            --enable-tmpfiles \
