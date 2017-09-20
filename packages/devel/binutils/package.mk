@@ -45,14 +45,15 @@ PKG_CONFIGURE_OPTS_HOST="MAKEINFO=true \
                          --disable-libada \
                          --enable-libssp \
                          --enable-version-specific-runtime-libs \
-                         --enable-threads \
                          --enable-plugins \
                          --enable-ld=default \
-                         --enable-nls \
+                         --enable-lto \
+                         --enable-shared \
+                         --enable-threads \
                          --with-pic \
                          --enable-poison-system-directories"
 
 makeinstall_host() {
   cp -v ../include/libiberty.h $SYSROOT_PREFIX/usr/include
-  make install
+  make install -j1
 }

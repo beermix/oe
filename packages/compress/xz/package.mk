@@ -32,12 +32,3 @@ PKG_CONFIGURE_OPTS_HOST="--enable-static=yes --enable-shared=no --disable-doc --
                          
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
 
-#pre_configure_target() {
-#  export CFLAGS="$CFLAGS -fPIC -DPIC"
-#  export CXXFLAGS="$CXXFLAGS -fPIC -DPIC"
-#}
-
-#pre_configure_host() {
-#  export CFLAGS="$CFLAGS -fPIC"
-#  export CXXFLAGS="$CXXFLAGS -fPIC"
-#}

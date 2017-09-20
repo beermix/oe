@@ -100,7 +100,7 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --with-osmesa-lib-name=OSMesa \
                            --with-gallium-drivers=$GALLIUM_DRIVERS \
                            --with-dri-drivers=$DRI_DRIVERS \
-                           --with-vulkan-drivers=no \
+                           --with-vulkan-drivers=intel \
                            --with-sysroot=$SYSROOT_PREFIX \
                            --enable-shared"
 

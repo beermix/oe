@@ -24,7 +24,7 @@ PKG_DEPENDS_HOST="intltool:host libtool:host bison:host flex:host"
 PKG_SECTION="devel"
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_HOST="--disable-shared --enable-elf64"
 
