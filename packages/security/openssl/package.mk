@@ -12,7 +12,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 export CCACHE_DISABLE=1
-CONCURRENCY_MAKE_LEVEL=1
+#CONCURRENCY_MAKE_LEVEL=1
 
 PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            --libdir=lib \
