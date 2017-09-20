@@ -39,9 +39,9 @@ diff --git a/bfd/ChangeLog b/bfd/ChangeLog
 index 89f4338677..ca2bf2d51a 100644
 --- a/bfd/ChangeLog
 +++ b/bfd/ChangeLog
-@@ -1,3 +1,12 @@
-+2017-07-24  Tristan Gingold  <gingold@adacore.com>
-+
+@@ -1,5 +1,14 @@
+ 2017-07-24  Tristan Gingold  <gingold@adacore.com>
+ 
 +	* version.m4: Bump version to 2.29.0
 +	* configure: Regenerate.
 +
@@ -49,9 +49,11 @@ index 89f4338677..ca2bf2d51a 100644
 +
 +	* development.sh: Set development to true.
 +
- 2017-07-24  Tristan Gingold  <gingold@adacore.com>
- 
++2017-07-24  Tristan Gingold  <gingold@adacore.com>
++
  	* version.m4: Bump version to 2.29
+ 	* configure: Regenerate.
+ 
 diff --git a/bfd/configure b/bfd/configure
 index 7c8ebb1c1c..cda26d8234 100755
 --- a/bfd/configure
@@ -12309,19 +12311,22 @@ diff --git a/bfd/ChangeLog b/bfd/ChangeLog
 index 103334d34e..048bf141c9 100644
 --- a/bfd/ChangeLog
 +++ b/bfd/ChangeLog
-@@ -1,3 +1,12 @@
-+2017-08-01  Andreas Krebbel  <krebbel@linux.vnet.ibm.com>
-+
-+	Backport from mainline
+@@ -1,6 +1,15 @@
+ 2017-08-01  Andreas Krebbel  <krebbel@linux.vnet.ibm.com>
+ 
+ 	Backport from mainline
 +	2017-08-01  Andreas Krebbel  <krebbel@linux.vnet.ibm.com>
 +
 +	* elf32-s390.c (elf_s390_finish_dynamic_sections): Skip if it
 +	isn't the S/390 specific elf data.
 +	* elf64-s390.c (elf_s390_finish_dynamic_sections): Likewise.
 +
- 2017-08-01  Andreas Krebbel  <krebbel@linux.vnet.ibm.com>
++2017-08-01  Andreas Krebbel  <krebbel@linux.vnet.ibm.com>
++
++	Backport from mainline
+ 	2017-07-28  Andreas Krebbel  <krebbel@linux.vnet.ibm.com>
  
- 	Backport from mainline
+ 	* elf32-s390.c (elf_s390_finish_dynamic_sections): Add NULL
 diff --git a/bfd/elf32-s390.c b/bfd/elf32-s390.c
 index 8adf9e4784..4aa3915cb2 100644
 --- a/bfd/elf32-s390.c
@@ -13754,17 +13759,19 @@ diff --git a/ld/ChangeLog b/ld/ChangeLog
 index 61458ebe06..8b656e66eb 100644
 --- a/ld/ChangeLog
 +++ b/ld/ChangeLog
-@@ -1,3 +1,10 @@
-+2017-08-13  H.J. Lu  <hongjiu.lu@intel.com>
-+
+@@ -1,5 +1,12 @@
+ 2017-08-13  H.J. Lu  <hongjiu.lu@intel.com>
+ 
 +	PR ld/21923
 +	* configure.ac (TESTBFDLIB): Replace --rpath with -Wl,--rpath,
 +	for --disable-static.
 +	* configure: Regenerated.
 +
- 2017-08-13  H.J. Lu  <hongjiu.lu@intel.com>
- 
++2017-08-13  H.J. Lu  <hongjiu.lu@intel.com>
++
  	* testsuite/ld-i386/i386.exp: Run pr21884-nacl.
+ 	* testsuite/ld-x86-64/x86-64.exp: Likewise.
+ 	* testsuite/ld-i386/pr21884.d: Don't run on nacl targets.
 diff --git a/ld/configure b/ld/configure
 index 7b66a4f77b..20fb84d036 100755
 --- a/ld/configure
@@ -14107,16 +14114,18 @@ diff --git a/bfd/ChangeLog b/bfd/ChangeLog
 index 497bcbc066..bb40871af2 100644
 --- a/bfd/ChangeLog
 +++ b/bfd/ChangeLog
-@@ -1,3 +1,9 @@
-+2017-08-17  Szabolcs Nagy  <szabolcs.nagy@arm.com>
-+
+@@ -1,5 +1,11 @@
+ 2017-08-17  Szabolcs Nagy  <szabolcs.nagy@arm.com>
+ 
 +	PR ld/18808
 +	* elfnn-aarch64.c (elfNN_aarch64_final_link_relocate): Skip IFUNC
 +	relocations in debug sections, change abort to _bfd_error_handler.
 +
- 2017-08-17  Szabolcs Nagy  <szabolcs.nagy@arm.com>
- 
++2017-08-17  Szabolcs Nagy  <szabolcs.nagy@arm.com>
++
  	PR ld/18841
+ 	* elfnn-aarch64.c (elfNN_aarch64_reloc_type_class): Return
+ 	reloc_class_ifunc for ifunc symbols.
 diff --git a/bfd/elfnn-aarch64.c b/bfd/elfnn-aarch64.c
 index 18db07f8a5..74beaf4f95 100644
 --- a/bfd/elfnn-aarch64.c
@@ -17936,18 +17945,20 @@ diff --git a/gas/ChangeLog b/gas/ChangeLog
 index 028a82c70c..84aad433e2 100644
 --- a/gas/ChangeLog
 +++ b/gas/ChangeLog
-@@ -1,3 +1,11 @@
-+2017-08-30  Maciej W. Rozycki  <macro@imgtec.com>
-+
+@@ -1,5 +1,13 @@
+ 2017-08-30  Maciej W. Rozycki  <macro@imgtec.com>
+ 
 +	* testsuite/gas/mips/branch-addend-micromips.d: New test.
 +	* testsuite/gas/mips/branch-addend-micromips-n32.d: New test.
 +	* testsuite/gas/mips/branch-addend-micromips-n64.d: New test.
 +	* testsuite/gas/mips/branch-addend-micromips.s: New test source.
 +	* testsuite/gas/mips/mips.exp: Run the new tests.
 +
- 2017-08-30  Maciej W. Rozycki  <macro@imgtec.com>
- 
++2017-08-30  Maciej W. Rozycki  <macro@imgtec.com>
++
  	* config/tc-mips.c (md_convert_frag): Respect
+ 	`mips_ignore_branch_isa'.
+ 	* testsuite/gas/mips/branch-local-5.d: New test.
 diff --git a/gas/testsuite/gas/mips/branch-addend-micromips-n32.d b/gas/testsuite/gas/mips/branch-addend-micromips-n32.d
 new file mode 100644
 index 0000000000..085cc2256f
@@ -21220,16 +21231,18 @@ diff --git a/bfd/ChangeLog b/bfd/ChangeLog
 index e9ea6cfdda..8db7080931 100644
 --- a/bfd/ChangeLog
 +++ b/bfd/ChangeLog
-@@ -1,3 +1,9 @@
-+2017-09-01  Nick Clifton  <nickc@redhat.com>
-+
+@@ -1,5 +1,11 @@
+ 2017-09-01  Nick Clifton  <nickc@redhat.com>
+ 
 +	PR 21933
 +	PR 22060
 +	* elf.c (elf_read_notes): Check for a note size of -1.
 +
- 2017-09-01  Nick Clifton  <nickc@redhat.com>
- 
++2017-09-01  Nick Clifton  <nickc@redhat.com>
++
  	PR 22058
+ 	* elf-attrs.c (_bfd_elf_parse_attributes): Ensure that the
+ 	attribute buffer is NUL terminated.
 diff --git a/bfd/elf.c b/bfd/elf.c
 index 063a6e4bb3..fbf639b357 100644
 --- a/bfd/elf.c
@@ -22421,16 +22434,18 @@ diff --git a/bfd/ChangeLog b/bfd/ChangeLog
 index 8db7080931..ce926fe727 100644
 --- a/bfd/ChangeLog
 +++ b/bfd/ChangeLog
-@@ -1,3 +1,9 @@
-+2017-09-01  Nick Clifton  <nickc@redhat.com>
-+
+@@ -1,5 +1,11 @@
+ 2017-09-01  Nick Clifton  <nickc@redhat.com>
+ 
 +	PR 22059
 +	* dwarf2.c (decode_line_info): Fix test for an overlong line info
 +	structure.
 +
- 2017-09-01  Nick Clifton  <nickc@redhat.com>
- 
++2017-09-01  Nick Clifton  <nickc@redhat.com>
++
  	PR 21933
+ 	PR 22060
+ 	* elf.c (elf_read_notes): Check for a note size of -1.
 diff --git a/bfd/dwarf2.c b/bfd/dwarf2.c
 index 04a2585be2..877962783b 100644
 --- a/bfd/dwarf2.c
@@ -23635,16 +23650,18 @@ diff --git a/bfd/ChangeLog b/bfd/ChangeLog
 index 93142541d0..b5f1204e64 100644
 --- a/bfd/ChangeLog
 +++ b/bfd/ChangeLog
-@@ -1,3 +1,9 @@
-+2017-09-01  H.J. Lu  <hongjiu.lu@intel.com>
-+
+@@ -1,5 +1,11 @@
+ 2017-09-01  H.J. Lu  <hongjiu.lu@intel.com>
+ 
 +	PR ld/22064
 +	* elf64-x86-64.c (elf_x86_64_finish_dynamic_symbol): Check
 +	ELF_COMMON_DEF_P for common symbols.
 +
- 2017-09-01  H.J. Lu  <hongjiu.lu@intel.com>
- 
++2017-09-01  H.J. Lu  <hongjiu.lu@intel.com>
++
  	PR ld/22061
+ 	* elf32-i386.c (elf_i386_link_setup_gnu_properties): Create
+ 	.eh_frame section for the second PLT.
 diff --git a/bfd/elf64-x86-64.c b/bfd/elf64-x86-64.c
 index bc60012f1e..59926b6092 100644
 --- a/bfd/elf64-x86-64.c
@@ -23662,17 +23679,19 @@ diff --git a/ld/ChangeLog b/ld/ChangeLog
 index f4335cfe26..24d0ed26a7 100644
 --- a/ld/ChangeLog
 +++ b/ld/ChangeLog
-@@ -1,3 +1,10 @@
-+2017-09-01  H.J. Lu  <hongjiu.lu@intel.com>
-+
+@@ -1,5 +1,12 @@
+ 2017-09-01  H.J. Lu  <hongjiu.lu@intel.com>
+ 
 +	PR ld/22064
 +	* testsuite/ld-x86-64/pr22064a.S: New file.
 +	* testsuite/ld-x86-64/pr22064b.c: Likewise.
 +	* testsuite/ld-x86-64/x86-64.exp: Run PR ld/22064 test.
 +
- 2017-09-01  H.J. Lu  <hongjiu.lu@intel.com>
- 
++2017-09-01  H.J. Lu  <hongjiu.lu@intel.com>
++
  	PR ld/22061
+ 	* testsuite/ld-i386/ibt-plt-1.d: Pass --hash-style=sysv to ld.
+ 	Updated.
 diff --git a/ld/testsuite/ld-x86-64/pr22064a.S b/ld/testsuite/ld-x86-64/pr22064a.S
 new file mode 100644
 index 0000000000..8065a112d7
@@ -54416,7 +54435,7 @@ diff --git a/ld/testsuite/ld-x86-64/tls.exp b/ld/testsuite/ld-x86-64/tls.exp
 index 4263d95bd1..7896451c01 100644
 --- a/ld/testsuite/ld-x86-64/tls.exp
 +++ b/ld/testsuite/ld-x86-64/tls.exp
-@@ -206,16 +206,30 @@ if { ![check_gnu2_tls_available] } {
+@@ -206,17 +206,31 @@ if { ![check_gnu2_tls_available] } {
      return
  }
  
@@ -54444,7 +54463,7 @@ index 4263d95bd1..7896451c01 100644
 +}
 +
  run_ld_link_exec_tests [list \
--    [list \
+     [list \
 -	"Run tlsdesc1" \
 -	"-Wl,--no-as-needed tmpdir/libtlsdesc1.so" \
 -	"" \
@@ -54453,14 +54472,14 @@ index 4263d95bd1..7896451c01 100644
 -	"pass.out" \
 -	"$GNU2_CFLAGS" \
 -    ] \
-     [list \
+-    [list \
  	"Run tlsdesc1 (-z now)" \
  	"-Wl,-z,now -Wl,--no-as-needed tmpdir/libtlsdesc1n.so" \
-@@ -225,15 +239,6 @@ run_ld_link_exec_tests [list \
- 	"pass.out" \
+ 	"" \
+@@ -226,15 +240,6 @@ run_ld_link_exec_tests [list \
  	"$GNU2_CFLAGS" \
      ] \
--    [list \
+     [list \
 -	"Run tlsdesc1 with PIE" \
 -	"-pie -Wl,--no-as-needed tmpdir/libtlsdesc1.so" \
 -	"" \
@@ -54469,9 +54488,10 @@ index 4263d95bd1..7896451c01 100644
 -	"pass.out" \
 -	"-fPIE $GNU2_CFLAGS" \
 -    ] \
-     [list \
+-    [list \
  	"Run tlsdesc1 with PIE (-z now)" \
  	"-pie -Wl,-z,now -Wl,--no-as-needed tmpdir/libtlsdesc1n.so" \
+ 	"" \
 
 commit 583043c2b8c641612e93b02b9266ca8adc349952
 Author: GDB Administrator <gdbadmin@sourceware.org>
@@ -55011,9 +55031,9 @@ diff --git a/bfd/ChangeLog b/bfd/ChangeLog
 index 268f187f56..6dce8cc3a7 100644
 --- a/bfd/ChangeLog
 +++ b/bfd/ChangeLog
-@@ -1,3 +1,12 @@
-+2017-08-31  Alan Modra  <amodra@gmail.com>
-+
+@@ -1,5 +1,14 @@
+ 2017-08-31  Alan Modra  <amodra@gmail.com>
+ 
 +	* elf-eh-frame.c (_bfd_elf_parse_eh_frame): Don't exit early
 +	for a section containing just a terminator.  Allow multiple
 +	terminators at end of section.
@@ -55021,9 +55041,11 @@ index 268f187f56..6dce8cc3a7 100644
 +	sections when not adding alignment.  Assert on terminator in
 +	the middle of FDEs.
 +
- 2017-08-31  Alan Modra  <amodra@gmail.com>
- 
++2017-08-31  Alan Modra  <amodra@gmail.com>
++
  	PR 21441
+ 	PR 22048
+ 	* elflink.c (bfd_elf_discard_info): Don't pad embedded zero
 diff --git a/bfd/elf-eh-frame.c b/bfd/elf-eh-frame.c
 index 7e0d63f569..f0ede2d6f7 100644
 --- a/bfd/elf-eh-frame.c
@@ -55606,16 +55628,18 @@ diff --git a/bfd/ChangeLog b/bfd/ChangeLog
 index fac315012a..87b7973ec1 100644
 --- a/bfd/ChangeLog
 +++ b/bfd/ChangeLog
-@@ -1,3 +1,9 @@
-+2017-09-19  Alan Modra  <amodra@gmail.com>
-+
+@@ -1,5 +1,11 @@
+ 2017-09-19  Alan Modra  <amodra@gmail.com>
+ 
 +	PR 21441
 +	* elf64-ppc.c (ppc64_elf_build_stubs): Don't check glink_eh_frame
 +	size.
 +
- 2017-09-19  Alan Modra  <amodra@gmail.com>
- 
++2017-09-19  Alan Modra  <amodra@gmail.com>
++
  	PR 22150
+ 	* elflink.c (bfd_elf_size_dynamic_sections): Garbage collect
+ 	symbols before calculating verrefs.  Don't renumber dynsyms
 diff --git a/bfd/elf64-ppc.c b/bfd/elf64-ppc.c
 index 3f01ae62a1..277bb0ef5d 100644
 --- a/bfd/elf64-ppc.c
@@ -55834,3 +55858,109 @@ index 058755e475..73e05b618e 100644
  2017-08-31  Alan Modra  <amodra@gmail.com>
  
  	* testsuite/ld-elf/eh3.d: Update.
+
+commit f625a739e567f0110b2675539b7a0e5d5f67c5dc
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Wed Sep 20 00:01:22 2017 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 3405e424f4..955269f804 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20170919
++#define BFD_VERSION_DATE 20170920
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 437ea1e4871b36e879ff8dcc821b04411e03e600
+Author: Alan Modra <amodra@gmail.com>
+Date:   Wed Sep 20 09:17:56 2017 +0930
+
+    [GOLD] PowerPC function address in non-PIC
+    
+    ppc32, like many targets, defines the address of a function as the PLT
+    call stub code for functions referenced but not defined in a non-PIC
+    executable.  ppc32 gold, unlike other targets, inherits the ppc64
+    multiple stub capability for dealing with very large binaries where
+    one set of stubs can't be reached from all code locations.  This means
+    there can be multiple choices of address for a function, which might
+    cause function pointer comparison failures.  So for ppc32, make
+    non-branch references always use the first stub group.
+    
+    (PowerPC64 ELFv1 is always PIC so doesn't need to define the address
+    of an external function as the PLT stub.  PowerPC64 ELFv2 needs a
+    special set of global entry stubs to serve as the address of external
+    functions, so it too is not affected by this bug.)
+    
+            * powerpc.cc (Target_powerpc::Branch_info::make_stub): Put
+            stubs for ppc32 non-branch relocs in first stub table.
+            (Target_powerpc::Relocate::relocate): Resolve similarly.
+    
+    (cherry picked from commit 64b5d6d785eb4c337b7c071ab9607186541a8b14)
+
+diff --git a/gold/ChangeLog b/gold/ChangeLog
+index 6071f8977a..795837b64a 100644
+--- a/gold/ChangeLog
++++ b/gold/ChangeLog
+@@ -1,3 +1,9 @@
++2017-09-20  Alan Modra  <amodra@gmail.com>
++
++	* powerpc.cc (Target_powerpc::Branch_info::make_stub): Put
++	stubs for ppc32 non-branch relocs in first stub table.
++	(Target_powerpc::Relocate::relocate): Resolve similarly.
++
+ 2017-09-19  Alan Modra  <amodra@gmail.com>
+ 
+ 	* options.h (stub-group-multi): Default to true.  Add
+diff --git a/gold/powerpc.cc b/gold/powerpc.cc
+index 629da4f8a1..ba20ef1ad7 100644
+--- a/gold/powerpc.cc
++++ b/gold/powerpc.cc
+@@ -3065,11 +3065,17 @@ Target_powerpc<size, big_endian>::Branch_info::make_stub(
+ 	target->glink_section()->add_global_entry(gsym);
+       else
+ 	{
+-	  if (stub_table == NULL)
++	  if (stub_table == NULL
++	      && !(size == 32
++		   && gsym != NULL
++		   && !parameters->options().output_is_position_independent()
++		   && !is_branch_reloc(this->r_type_)))
+ 	    stub_table = this->object_->stub_table(this->shndx_);
+ 	  if (stub_table == NULL)
+ 	    {
+-	      // This is a ref from a data section to an ifunc symbol.
++	      // This is a ref from a data section to an ifunc symbol,
++	      // or a non-branch reloc for which we always want to use
++	      // one set of stubs for resolving function addresses.
+ 	      stub_table = ifunc_stub_table;
+ 	    }
+ 	  gold_assert(stub_table != NULL);
+@@ -8052,11 +8058,20 @@ Target_powerpc<size, big_endian>::Relocate::relocate(
+ 	}
+       else
+ 	{
+-	  Stub_table<size, big_endian>* stub_table
+-	    = object->stub_table(relinfo->data_shndx);
++	  Stub_table<size, big_endian>* stub_table = NULL;
++	  if (target->stub_tables().size() == 1)
++	    stub_table = target->stub_tables()[0];
++	  if (stub_table == NULL
++	      && !(size == 32
++		   && gsym != NULL
++		   && !parameters->options().output_is_position_independent()
++		   && !is_branch_reloc(r_type)))
++	    stub_table = object->stub_table(relinfo->data_shndx);
+ 	  if (stub_table == NULL)
+ 	    {
+-	      // This is a ref from a data section to an ifunc symbol.
++	      // This is a ref from a data section to an ifunc symbol,
++	      // or a non-branch reloc for which we always want to use
++	      // one set of stubs for resolving function addresses.
+ 	      if (target->stub_tables().size() != 0)
+ 		stub_table = target->stub_tables()[0];
+ 	    }
