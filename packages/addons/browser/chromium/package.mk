@@ -53,9 +53,11 @@ make_target() {
 
   strip_hard
 
-  export -n CFLAGS CXXFLAGS
 #  export LDFLAGS="$LDFLAGS -ludev"
-  export LD=$CXX
+#  export LD=$CXX
+  
+  export -n CFLAGS CXXFLAGS
+  export LDFLAGS="$LDFLAGS -ludev"
 
   # Use Python 2
   find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$ROOT/$TOOLCHAIN/bin/python|g" {} +
