@@ -24,7 +24,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://e2fsprogs.sourceforge.net/"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain util-linux"
-PKG_DEPENDS_INIT="toolchain"
+PKG_DEPENDS_INIT="e2fsprogs"
 PKG_PRIORITY="optional"
 PKG_SECTION="tools"
 PKG_SHORTDESC="e2fsprogs: Utilities for use with the ext2 filesystem"
@@ -52,8 +52,8 @@ PKG_CONFIGURE_OPTS_TARGET="BUILD_CC=$HOST_CC \
                            --disable-jbd-debug \
                            --disable-blkid-debug \
                            --disable-testio-debug \
-                           --disable-libuuid \
-                           --disable-libblkid \
+                           --enable-libuuid \
+                           --enable-libblkid \
                            --disable-debugfs \
                            --disable-imager \
                            --enable-resizer \
@@ -67,6 +67,11 @@ PKG_CONFIGURE_OPTS_TARGET="BUILD_CC=$HOST_CC \
                            --with-gnu-ld"
 
 PKG_CONFIGURE_OPTS_INIT="$PKG_CONFIGURE_OPTS_TARGET"
+
+pre_make_host() {
+  # dont build parallel
+  MAKEFLAGS=-j1
+}
 
 post_makeinstall_target() {
   make -C lib/et LIBMODE=644 DESTDIR=$SYSROOT_PREFIX install
