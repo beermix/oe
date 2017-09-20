@@ -98,7 +98,7 @@ make_target() {
     'use_gnome_keyring=false'
     'use_gold=false'
     'use_custom_libcxx=false'
-    'use_gtk3=true'
+    'use_gtk3=false'
     'use_vaapi=true'
     'is_official_build=true'
     'is_chrome_branded=true'
