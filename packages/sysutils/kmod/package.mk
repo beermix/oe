@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="kmod"
-PKG_VERSION="24"
+PKG_VERSION="23"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -40,7 +40,6 @@ PKG_CONFIGURE_OPTS_HOST="--enable-tools \
                          --disable-gtk-doc-html \
                          --disable-gtk-doc-pdf \
                          --disable-manpages \
-                         --disable-test-modules \
                          --with-gnu-ld \
                          --without-xz \
                          --without-zlib"
@@ -52,7 +51,6 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-tools \
                            --disable-gtk-doc-html \
                            --disable-gtk-doc-pdf \
                            --disable-manpages \
-                           --disable-test-modules \
                            --with-gnu-ld \
                            --without-xz \
                            --without-zlib \

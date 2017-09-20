@@ -23,17 +23,15 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://e2fsprogs.sourceforge.net/"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain"
-PKG_DEPENDS_INIT="toolchain"
+PKG_DEPENDS_TARGET="toolchain util-linux"
+PKG_DEPENDS_INIT="e2fsprogs"
 PKG_PRIORITY="optional"
 PKG_SECTION="tools"
 PKG_SHORTDESC="e2fsprogs: Utilities for use with the ext2 filesystem"
 PKG_LONGDESC="The filesystem utilities for the EXT2 filesystem, including e2fsck, mke2fs, dumpe2fs, fsck, and others."
 PKG_IS_ADDON="no"
 
-PKG_AUTORECONF="yes"
-
-CONCURRENCY_MAKE_LEVEL=1
+PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$ROOT/$TOOLCHAIN/ \
                          --bindir=$ROOT/$TOOLCHAIN/bin \
@@ -54,8 +52,8 @@ PKG_CONFIGURE_OPTS_TARGET="BUILD_CC=$HOST_CC \
                            --disable-jbd-debug \
                            --disable-blkid-debug \
                            --disable-testio-debug \
-                           --enable-libuuid \
-                           --enable-libblkid \
+                           --disable-libuuid \
+                           --disable-libblkid \
                            --disable-debugfs \
                            --disable-imager \
                            --enable-resizer \
@@ -65,12 +63,14 @@ PKG_CONFIGURE_OPTS_TARGET="BUILD_CC=$HOST_CC \
                            --disable-uuidd \
                            --disable-nls \
                            --disable-rpath \
+                           --disable-fuse2fs \
                            --with-gnu-ld"
 
 PKG_CONFIGURE_OPTS_INIT="$PKG_CONFIGURE_OPTS_TARGET"
 
 post_makeinstall_target() {
   make -C lib/et LIBMODE=644 DESTDIR=$SYSROOT_PREFIX install
+  make -C lib/ext2fs LIBMODE=644 DESTDIR=$SYSROOT_PREFIX install
 
   rm -rf $INSTALL/sbin/badblocks
   rm -rf $INSTALL/sbin/blkid

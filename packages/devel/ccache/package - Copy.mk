@@ -29,17 +29,18 @@ PKG_SECTION="devel"
 PKG_SHORTDESC="ccache: A fast compiler cache"
 PKG_LONGDESC="Ccache is a compiler cache. It speeds up re-compilation of C/C++ code by caching previous compiles and detecting when the same compile is being done again."
 
-configure_host() {
-  :
-}
+PKG_IS_ADDON="no"
+PKG_AUTORECONF="no"
 
-make_host() {
-  :
-}
+CONCURRENCY_MAKE_LEVEL=1
 
-makeinstall_host() {
-  cp $PKG_DIR/ccache $ROOT/$TOOLCHAIN/bin/
-}
+CPPFLAGS="-D_FORTIFY_SOURCE=2"
+CFLAGS="-march=native -O2 -pipe -fstack-protector-strong -fno-plt"
+CXXFLAGS="-march=native -O2 -pipe -fstack-protector-strong -fno-plt"
+LDFLAGS="-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now -s"
+
+PKG_CONFIGURE_OPTS_HOST="--with-bundled-zlib --disable-silent-rules"
+#PKG_CONFIGURE_OPTS_HOST="--disable-silent-rules"
 
 post_makeinstall_host() {
 # setup ccache
