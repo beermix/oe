@@ -31,14 +31,17 @@ PKG_LONGDESC="GLib is a library which includes support routines for C such as li
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-
 PKG_CONFIGURE_OPTS_HOST="--enable-static \
                          --disable-shared \
                          --disable-libmount \
                          --disable-selinux \
                          --with-pcre=internal"
 
-PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_snprintf_c99=yes \
+PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_mmap_fixed_mapped=yes \
+                           ac_cv_func_posix_getpwuid_r=yes \
+                           ac_cv_func_posix_getgrgid_r=yes \
+                           ac_cv_func_printf_unix98=yes \
+                           ac_cv_func_snprintf_c99=yes \
                            ac_cv_func_vsnprintf_c99=yes \
                            glib_cv_stack_grows=no \
                            glib_cv_uscore=no \
