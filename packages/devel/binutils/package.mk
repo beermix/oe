@@ -50,8 +50,6 @@ PKG_CONFIGURE_OPTS_HOST="MAKEINFO=true \
                          --enable-ld=default \
                          --enable-nls \
                          --with-pic \
-                         --disable-sim \
-                         --disable-gdb \
                          --enable-poison-system-directories"
 
 makeinstall_host() {
