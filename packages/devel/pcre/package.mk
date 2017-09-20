@@ -29,7 +29,7 @@ PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-unicode-properties --enable-pcre16 --enable-pcre32 --enable-jit --enable-utf"
+PKG_CONFIGURE_OPTS_TARGET="--enable-unicode-properties --enable-pcre16 --enable-pcre32 --enable-jit --enable-utf8"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$ROOT/$TOOLCHAIN $PKG_CONFIGURE_OPTS_TARGET --disable-shared --with-pic"
 
