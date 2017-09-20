@@ -17,17 +17,17 @@
 ################################################################################
 
 PKG_NAME="jasper"
-PKG_VERSION="1.900.29"
+PKG_VERSION="version-1.900.31"
 PKG_SITE="http://www.ece.uvic.ca/~mdadams/jasper/"
-PKG_URL="http://www.ece.uvic.ca/~frodo/jasper/software/jasper-$PKG_VERSION.tar.gz"
+PKG_GIT_URL="https://github.com/mdadams/jasper"
 PKG_DEPENDS_TARGET="toolchain libjpeg-turbo"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="jasper: JPEG-2000 Part-1 standard (i.e., ISO/IEC 15444-1) implementation"
 PKG_LONGDESC="This distribution contains the public release of the an open-source implementation of the ISO/IEC 15444-1 also known as JPEG-2000 standard for image compression."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
 PKG_USE_CMAKE="no"
+PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static --with-pic"
 
