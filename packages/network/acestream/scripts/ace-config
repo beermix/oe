@@ -41,4 +41,4 @@ if [ "$ACE_CACHE_CLEAR" == "1" ]; then
   rm -fr $ACESTREAM_DIR/collected_torrent_files/*
 fi
 
-echo "ACE_ARGS=\"$ACE_ARG\"" > /run/alexelec/acestream.conf
+echo "ACE_ARGS=\"$ACE_ARG\"" > /run/openelec/acestream.conf
