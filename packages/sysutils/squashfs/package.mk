@@ -19,7 +19,7 @@
 PKG_NAME="squashfs"
 PKG_VERSION="1a6ffc7"
 PKG_GIT_URL="https://git.kernel.org/pub/scm/fs/squashfs/squashfs-tools.git"
-PKG_DEPENDS_HOST="ccache:host zlib:host xz:host zstd:host"
+PKG_DEPENDS_HOST="ccache:host xz:host zstd:host"
 PKG_SECTION="sysutils"
 PKG_SHORTDESC="squashfs-tools: A compressed read-only filesystem for Linux"
 PKG_LONGDESC="Squashfs is intended to be a general read-only filesystem, for archival use (i.e. in cases where a .tar.gz file may be used), and in constrained block device/memory systems (e.g. embedded systems) where low overhead is needed. The filesystem is currently stable and has been tested on PowerPC, i386, SPARC and ARM architectures."
@@ -29,7 +29,7 @@ PKG_AUTORECONF="no"
 
 make_host() {
   make -C squashfs-tools mksquashfs \
-       XZ_SUPPORT=1 LZO_SUPPORT=0 LZ4_SUPPORT=0 ZSTD_SUPPORT=1 \
+       XZ_SUPPORT=0 LZO_SUPPORT=0 LZ4_SUPPORT=0 ZSTD_SUPPORT=1 \
        INCLUDEDIR="-I. -I$ROOT/$TOOLCHAIN/include"
 }
 

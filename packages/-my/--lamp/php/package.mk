@@ -4,7 +4,7 @@ PKG_NAME="php"
 #PHP_VERSION=5.3.3
 
 if [ -z "$PHP_VERSION" ]; then
-  PKG_VERSION="5.6.31"
+  PKG_VERSION="7.1.9"
 
 	# test latest
 	#PKG_VERSION="7.1.9"
@@ -74,7 +74,9 @@ configure_target() {
   PKG_CONFIGURE_OPTS_TARGET="--enable-cli \
                              --enable-cgi \
                              --enable-opcache=no \
-                             --with-pear \
+                             --without-pear \
+                             --disable-shared \
+                             --enable-static \
                              --with-config-file-path=/storage/.kodi/userdata/addon_data/service.web.lamp/srvroot/conf \
                              --localstatedir=/var \
                              --disable-phpdbg \
@@ -116,7 +118,7 @@ configure_target() {
                              --enable-pdo \
                              --with-mcrypt=$LIBMCRYPT_DIR_TARGET/usr \
                              --with-mysql=$SYSROOT_PREFIX/usr \
-                             --with-mysql-sock=/var/tmp/mysql.sock \
+                             --with-mysql-sock=/run/mysql/mysql.sock \
                              --with-gd \
                              --enable-gd-native-ttf \
                              --enable-gd-jis-conv \
