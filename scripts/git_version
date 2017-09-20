@@ -20,6 +20,6 @@
 
 . config/options $1
 
-[ -f "$PKG_BUILD/VERSION" ] && PKG_GIT_VERSION=`git rev-parse --short HEAD`
+[ -f "$PKG_BUILD/VERSION" ] && PKG_GIT_VERSION=`cat $PKG_BUILD/VERSION`
 
 echo $PKG_GIT_VERSION

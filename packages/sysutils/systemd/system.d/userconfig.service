@@ -5,7 +5,7 @@ After=systemd-tmpfiles-setup.service
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/userconfig-setup
+ExecStart=/bin/sh -c "false | cp -iR /usr/config/* /storage/.config/ &>/dev/null"
 RemainAfterExit=yes
 
 [Install]

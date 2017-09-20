@@ -106,7 +106,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --with-dbussystemservicedir=/usr/share/dbus-1/system-services \
                            --with-rootprefix=/usr \
                            --with-rootlibdir=/usr/lib \
-                           --with-default-hierarchy=legacy"
+                           --with-default-hierarchy=hybrid"
 
 pre_build_target() {
 # broken autoreconf

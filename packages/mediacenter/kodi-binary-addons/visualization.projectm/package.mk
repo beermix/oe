@@ -34,9 +34,11 @@ PKG_AUTORECONF="no"
 PKG_IS_ADDON="yes"
 PKG_ADDON_TYPE="xbmc.player.musicviz"
 
-if [ "$OPENGL" = "no" ] ; then
+if [ ! "$OPENGL" = "mesa" ] ; then
   exit 0
 fi
+PKG_CMAKE_OPTS_TARGET="-DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/share/kodi \
+                       -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr"
 
 pre_configure_target() {
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed||"`
