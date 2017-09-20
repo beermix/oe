@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="binutils"
-PKG_VERSION="2.29"
+PKG_VERSION="2.28.1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/binutils/"
@@ -51,6 +51,7 @@ PKG_CONFIGURE_OPTS_HOST="MAKEINFO=true \
                          --enable-shared \
                          --enable-threads \
                          --with-pic \
+                         --disable-nls \
                          --enable-poison-system-directories"
 
 makeinstall_host() {
