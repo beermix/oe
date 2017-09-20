@@ -23,8 +23,8 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://e2fsprogs.sourceforge.net/"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain util-linux"
-PKG_DEPENDS_INIT="e2fsprogs"
+PKG_DEPENDS_TARGET="toolchain"
+PKG_DEPENDS_INIT="toolchain"
 PKG_PRIORITY="optional"
 PKG_SECTION="tools"
 PKG_SHORTDESC="e2fsprogs: Utilities for use with the ext2 filesystem"
@@ -75,7 +75,6 @@ pre_make_host() {
 
 post_makeinstall_target() {
   make -C lib/et LIBMODE=644 DESTDIR=$SYSROOT_PREFIX install
-  make -C lib/ext2fs LIBMODE=644 DESTDIR=$SYSROOT_PREFIX install
 
   rm -rf $INSTALL/sbin/badblocks
   rm -rf $INSTALL/sbin/blkid
