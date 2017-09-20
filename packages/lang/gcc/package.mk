@@ -58,10 +58,7 @@ GCC_COMMON_CONFIGURE_OPTS="MAKEINFO=missing \
                            --enable-initfini-array \
                            --without-cuda-driver \
                            --enable-linker-build-id \
-                           --enable-gnu-unique-object \
-                           --disable-vtable-verify \
                            --disable-werror \
-                           --enable-default-pie \
                            --with-tune=generic"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
@@ -93,10 +90,14 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-threads=posix \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time=yes \
+                         --enable-gnu-unique-object \
+                         --disable-vtable-verify \
                          --enable-clocale=gnu \
+                         --enable-default-pie \
+                         --enable-default-ssp \
                          $GCC_OPTS"
 pre_configure_host() {
-  export CXXFLAGS="$CXXFLAGS -std=gnu++98"
+  #export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
 }
 
