@@ -64,14 +64,7 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$ROOT/$TOOLCHAIN \
                        -DENABLE_OPTICAL=OFF \
                        -DENABLE_UDEV=ON \
                        -DENABLE_XSLT=ON \
-                       -DENABLE_DBUS=ON \
-                       -DENABLE_AVX=ON \
-                       -DENABLE_AVX2=OFF \
-                       -DENABLE_SSE=ON \
-                       -DENABLE_SSE2=ON \
-                       -DENABLE_SSE4_1=ON \
-                       -DENABLE_SSE4_2=ON \
-                       -DENABLE_SSSE3=ON"
+                       -DENABLE_DBUS=ON"
 
 if [ "$TARGET_ARCH" = "x86_64" ]; then
   PKG_CMAKE_OPTS_TARGET+=" -DWITH_CPU=$TARGET_ARCH"
@@ -334,8 +327,6 @@ post_makeinstall_target() {
   mkdir -p $INSTALL/usr/share/kodi/addons
     cp -R $PKG_DIR/config/os.openelec.tv $INSTALL/usr/share/kodi/addons
     $SED "s|@OS_VERSION@|$OS_VERSION|g" -i $INSTALL/usr/share/kodi/addons/os.openelec.tv/addon.xml
-    cp -R $PKG_DIR/config/os.libreelec.tv $INSTALL/usr/share/kodi/addons
-    $SED "s|@OS_VERSION@|$OS_VERSION|g" -i $INSTALL/usr/share/kodi/addons/os.libreelec.tv/addon.xml
     cp -R $PKG_DIR/config/repository.openelec.tv $INSTALL/usr/share/kodi/addons
     $SED "s|@ADDON_URL@|$ADDON_URL|g" -i $INSTALL/usr/share/kodi/addons/repository.openelec.tv/addon.xml
 
