@@ -55964,3 +55964,34 @@ index 629da4f8a1..ba20ef1ad7 100644
  	      if (target->stub_tables().size() != 0)
  		stub_table = target->stub_tables()[0];
  	    }
+
+commit db39886ddfef07d6518fefa6bb5fd4ba60344c75
+Author: Nick Clifton <nickc@redhat.com>
+Date:   Wed Sep 20 09:45:15 2017 +0100
+
+    Set the development flag to false on the 2.29 branch.
+    
+            * development.sh (development): Set to false.
+
+diff --git a/bfd/ChangeLog b/bfd/ChangeLog
+index 417ed273ab..dfb6351782 100644
+--- a/bfd/ChangeLog
++++ b/bfd/ChangeLog
+@@ -1,3 +1,7 @@
++2017-09-20  Nick Clifton  <nickc@redhat.com>
++
++	* development.sh (development): Set to false.
++
+ 2017-09-19  Nick Clifton  <nickc@redhat.com>
+ 
+ 	2.29.1 Release
+diff --git a/bfd/development.sh b/bfd/development.sh
+index cd31410a8e..b001a888ea 100644
+--- a/bfd/development.sh
++++ b/bfd/development.sh
+@@ -16,4 +16,4 @@
+ # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ 
+ # Controls whether to enable development-mode features by default.
+-development=true
++development=false
