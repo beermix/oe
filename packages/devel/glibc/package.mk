@@ -47,7 +47,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-__thread \
                            --with-binutils=$ROOT/$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
-                           --enable-kernel=3.0.0 \
+                           --enable-kernel=2.6.32 \
                            --without-cvs \
                            --without-gd \
                            --enable-obsolete-rpc \
@@ -55,8 +55,8 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --disable-build-nscd \
                            --disable-nscd \
                            --enable-lock-elision \
-                           --disable-werror \
                            --disable-timezone-tools \
+                           --disable-werror \
                            --disable-debug"
 
 if [ "$DEBUG" = yes ]; then
@@ -65,14 +65,14 @@ else
   PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET --disable-debug"
 fi
 
-NSS_CONF_DIR="$PKG_BUILD/nss"
+NSS_CONF_DIR="$ROOT/$PKG_BUILD/nss"
 
 GLIBC_EXCLUDE_BIN="catchsegv gencat getconf iconv iconvconfig ldconfig"
 GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN makedb mtrace pcprofiledump"
 GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN pldd rpcgen sln sotruss sprof xtrace"
 
 pre_build_target() {
-  cd $PKG_BUILD
+  cd $ROOT/$PKG_BUILD
     aclocal --force --verbose
     autoconf --force --verbose
   cd -
