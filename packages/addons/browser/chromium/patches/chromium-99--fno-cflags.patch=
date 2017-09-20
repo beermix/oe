@@ -3,7 +3,7 @@ diff -Naur chromium-61.0.3163.91-orig/build/config/compiler/BUILD.gn chromium-61
 +++ chromium-61.0.3163.91/build/config/compiler/BUILD.gn	2017-09-19 18:42:13.177102501 +0300
 @@ -203,19 +203,19 @@
        if (is_debug) {
-         cflags += [ "-fstack-protector-strong" ]
+         cflags += [ "-fno-stack-protector" ]
        } else {
 -        cflags += [ "-fstack-protector" ]
 +        cflags += [ "-mtune=core-avx-i" ]
@@ -12,11 +12,11 @@ diff -Naur chromium-61.0.3163.91-orig/build/config/compiler/BUILD.gn chromium-61
        # TODO(phajdan.jr): Use -fstack-protector-strong when our gcc supports it.
        # See also https://crbug.com/533294
 -      cflags += [ "--param=ssp-buffer-size=4" ]
-+      cflags += [ "-fstack-protector-strong" ]
++      cflags += [ "-fno-stack-protector" ]
  
        # The x86 toolchain currently has problems with stack-protector.
        if (is_android && current_cpu == "x86") {
-         cflags += [ "-fstack-protector-strong" ]
+         cflags += [ "-fno-stack-protector" ]
        } else if (current_os != "aix") {
          # Not available on aix.
 -        cflags += [ "-fstack-protector" ]

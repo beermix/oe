@@ -98,6 +98,9 @@ make_target() {
     'use_custom_libcxx=false'
     'use_gtk3=true'
     'use_vaapi=true'
+    'is_official_build=true'
+    'is_chrome_branded=true'
+    'is_debug=false'
     'enable_hangout_services_extension=false'
     'use_kerberos=false'
     'use_pulseaudio=false'
@@ -139,7 +142,7 @@ make_target() {
 
 	# chromedriver widevinecdmadapter
 
-  ninja -j5 -C out/Release chrome chrome_sandbox 
+  ninja -j3 -C out/Release chrome chrome_sandbox 
 }
 
 makeinstall_target() {
