@@ -47,7 +47,7 @@ pre_configure_target() {
   CXXFLAGS="$CXXFLAGS -I$ROOT/$PKG_BUILD"
 #  CXXFLAGS="$CXXFLAGS -fPIC"
 #  CFLAGS="$CFLAGS -fPIC"
-#  LDFLAGS="$LDFLAGS -lz"
+  LDFLAGS="$LDFLAGS -lz"
 }
 
 post_makeinstall_target() {
