@@ -51,7 +51,6 @@ PKG_CONFIGURE_OPTS_HOST="MAKEINFO=true \
                          --enable-shared \
                          --enable-threads \
                          --with-pic \
-                         --disable-nls \
                          --enable-poison-system-directories"
 
 makeinstall_host() {

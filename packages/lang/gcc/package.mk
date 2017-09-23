@@ -46,7 +46,6 @@ GCC_COMMON_CONFIGURE_OPTS="MAKEINFO=missing \
                            --enable-plugin \
                            --enable-lto \
                            --enable-ld=default \
-                           --disable-nls \
                            --with-default-libstdcxx-abi=new \
                            --enable-checking=release \
                            --disable-libunwind-exceptions \
