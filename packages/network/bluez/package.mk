@@ -54,7 +54,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-dependency-tracking \
                            --enable-datafiles \
                            --disable-experimental \
                            --enable-deprecated \
-                           --enable-sixaxis \
+                           --disable-sixaxis \
                            --with-gnu-ld \
                            $BLUEZ_CONFIG \
                            storagedir=/storage/.cache/bluetooth"
