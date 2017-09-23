@@ -3,7 +3,7 @@ PKG_VERSION="4.8.19"
 PKG_URL="http://ftp.midnight-commander.org/${PKG_NAME}-${PKG_VERSION}.tar.xz"
 #PKG_VERSION="5d14225"
 #PKG_GIT_URL="git://github.com/MidnightCommander/mc.git"
-PKG_DEPENDS_TARGET="toolchain libtool:host gettext:host e2fsprogs util-linux glib pcre fuse libssh2 libevent expat"
+PKG_DEPENDS_TARGET="toolchain libtool:host gettext:host e2fsprogs util-linux glib pcre fuse libssh2 expat"
 PKG_SECTION="tools"
 PKG_AUTORECONF="yes"
 
