@@ -17,10 +17,13 @@
 ################################################################################
 
 PKG_NAME="fluxbox"
-PKG_VERSION="facb42f"
+# dont bump or go back to ratpoison then f*** all 3rdparty stuff.
+PKG_VERSION="1.3.7"
 PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="OSS"
 PKG_SITE="http://fluxbox.org/"
-PKG_GIT_URL="https://github.com/fluxbox/fluxbox"
+PKG_URL="http://sourceforge.net/projects/fluxbox/files/fluxbox/${PKG_VERSION}/$PKG_NAME-${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libX11 libXrandr libXext libXrender"
 PKG_PRIORITY="optional"
 PKG_SECTION="x11/other"
@@ -42,8 +45,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_realloc_0_nonnull=yes \
                            --disable-debug \
                            --disable-test \
                            --disable-nls \
-                           --disable-imlib2 \
-                           --enable-silent-rules"
+                           --disable-imlib2"
 
 post_install() {
   enable_service windowmanager.service
