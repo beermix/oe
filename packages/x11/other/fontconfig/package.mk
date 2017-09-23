@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="fontconfig"
-PKG_VERSION="2.12.5"
+PKG_VERSION="2.12.3"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
@@ -48,6 +48,7 @@ pre_configure_target() {
 #  CXXFLAGS="$CXXFLAGS -fPIC"
 #  CFLAGS="$CFLAGS -fPIC"
   LDFLAGS="$LDFLAGS -lz"
+  strip_hard
 }
 
 post_makeinstall_target() {
