@@ -42,7 +42,7 @@ makeinstall_host() {
 pre_configure_target() {
   export CFLAGS="$CFLAGS -fPIC"
   export CXXFLAGS="$CXXFLAGS -fPIC"
-  export LDFLAGS="$LDFLAGS -fPIC"
+  #export LDFLAGS="$LDFLAGS -fPIC"
   #export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
   #export CXXLAGS=`echo $CXXLAGS | sed -e "s|-O.|-O3|"`
 }
@@ -77,7 +77,7 @@ makeinstall_target() {
                                 --with-program_options \
                                 --with-random \
                                 --with-exception \
-                                --with-signals -j2 \
+                                --with-signals \
                                 install
 
 }
