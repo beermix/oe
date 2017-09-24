@@ -19,8 +19,7 @@
 ################################################################################
 
 PKG_NAME="gtk+"
-PKG_VERSION="2.24.30"
-PKG_SHA256="0d15cec3b6d55c60eac205b1f3ba81a1ed4eadd9d0f8e7c508bc7065d0c4ca50"
+PKG_VERSION="2.24.31"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.gtk.org/"
@@ -33,18 +32,16 @@ PKG_IS_ADDON="no"
 
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="ac_cv_path_GLIB_GENMARSHAL=$TOOLCHAIN/bin/glib-genmarshal \
+PKG_CONFIGURE_OPTS_TARGET="ac_cv_path_GLIB_GENMARSHAL=$SYSROOT_PREFIX/usr/bin/glib-genmarshal \
                            --disable-glibtest \
                            --enable-modules \
                            --enable-explicit-deps=no \
                            --disable-debug \
-                           --enable-shm \
                            --disable-cups \
                            --disable-papi \
                            --enable-xkb \
                            --disable-xinerama \
-                           --disable-gtk-doc-html \
-                           --with-xinput"
+                           --disable-gtk-doc-html"
 
 make_target() {
   make SRC_SUBDIRS="gdk gtk modules"
