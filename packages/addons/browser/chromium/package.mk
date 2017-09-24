@@ -99,7 +99,6 @@ make_target() {
     'use_gold=false'
     'use_custom_libcxx=false'
     'is_official_build=true'
-    'is_chrome_branded=true'
     'is_debug=false'
     'use_gtk3=false'
     'use_vaapi=true'
