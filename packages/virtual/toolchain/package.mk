@@ -14,7 +14,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+################################################################################ mkfontscale:host mkfontdir:host
 
 PKG_NAME="toolchain"
 PKG_VERSION=""
@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.openelec.tv"
 PKG_URL=""
-PKG_DEPENDS_TARGET="configtools:host make:host xz:host sed:host pkg-config:host autoconf:host automake:host libtool:host intltool:host autoconf-archive:host gcc:host bison:host flex:host cmake:host yasm:host re2c:host xmlstarlet:host mkfontscale:host mkfontdir:host"
+PKG_DEPENDS_TARGET="configtools:host make:host xz:host sed:host pkg-config:host autoconf:host automake:host libtool:host intltool:host autoconf-archive:host gcc:host bison:host flex:host cmake:host yasm:host re2c:host xmlstarlet:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="virtual"
 PKG_SHORTDESC="toolchain: OpenELEC.tv' toolchain"
