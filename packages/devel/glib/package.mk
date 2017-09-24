@@ -31,7 +31,10 @@ PKG_LONGDESC="GLib is a library which includes support routines for C such as li
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared --with-pic --with-pcre=internal"
+PKG_CONFIGURE_OPTS_HOST="--enable-static \
+                         --disable-shared \
+                         --disable-libmount \
+                         --with-pcre=internal"
 
 PKG_CONFIGURE_OPTS_TARGET="glib_cv_stack_grows=no \
                            glib_cv_uscore=no \
@@ -41,6 +44,7 @@ PKG_CONFIGURE_OPTS_TARGET="glib_cv_stack_grows=no \
                            --enable-xattr \
                            --disable-libelf \
                            --disable-gtk-doc \
+                           --disable-gtk-doc-html \
                            --disable-man \
                            --disable-dtrace \
                            --disable-systemtap \
