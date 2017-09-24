@@ -37,7 +37,7 @@ PKG_ADDON_TYPE="xbmc.python.script"
 PKG_ADDON_PROVIDES="executable"
 
 pre_make_target() {
-#  export CCACHE_SLOPPINESS=include_file_mtime
+  export CCACHE_SLOPPINESS=include_file_mtime
   strip_lto
 #  touch chrome/test/data/webui/i18n_process_css_test.html
   sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' third_party/widevine/cdm/stub/widevine_cdm_version.h
@@ -47,7 +47,7 @@ pre_make_target() {
 }
 
 make_target() {
-#  export CCACHE_SLOPPINESS=include_file_mtime
+  export CCACHE_SLOPPINESS=include_file_mtime
 #  mkdir -p $ROOT/$PKG_BUILD/out
 #  mount -t tmpfs -o size=20G,nr_inodes=40k,mode=1777 tmpfs $ROOT/$PKG_BUILD/out
 
