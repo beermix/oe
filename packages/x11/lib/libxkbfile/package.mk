@@ -26,4 +26,5 @@ PKG_SHORTDESC="libxkbfile: X11 keyboard file manipulation library"
 PKG_LONGDESC="Libxkbfile provides an interface to read and manipulate description files for XKB, the X11 keyboard configuration extension."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
+
