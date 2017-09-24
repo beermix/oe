@@ -21,8 +21,8 @@ PKG_VERSION="5.47"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.bluez.org/"
-PKG_URL="https://git.kernel.org/pub/scm/bluetooth/bluez.git/snapshot/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain dbus glib readline systemd"
+PKG_URL="http://www.kernel.org/pub/linux/bluetooth/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_DEPENDS_TARGET="toolchain dbus glib readline"
 PKG_SECTION="network"
 PKG_SHORTDESC="bluez: Bluetooth Tools and System Daemons for Linux."
 PKG_LONGDESC="Bluetooth Tools and System Daemons for Linux."
@@ -43,20 +43,19 @@ else
 fi
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-dependency-tracking \
-                           --disable-silent-rules \
-                           --enable-library \
+                           --enable-silent-rules \
+                           --disable-library \
                            --enable-udev \
                            --disable-cups \
                            --disable-obex \
                            --enable-client \
-                           --enable-systemd \
+                           --disable-systemd \
                            --enable-tools \
                            --enable-datafiles \
                            --disable-experimental \
-                           --enable-deprecated \
+                           --disable-deprecated \
                            --disable-sixaxis \
                            --with-gnu-ld \
-                           $BLUEZ_CONFIG \
                            storagedir=/storage/.cache/bluetooth"
 
 pre_configure_target() {
