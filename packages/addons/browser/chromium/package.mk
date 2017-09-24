@@ -36,6 +36,8 @@ PKG_ADDON_NAME="Chromium"
 PKG_ADDON_TYPE="xbmc.python.script"
 PKG_ADDON_PROVIDES="executable"
 
+GOLD_SUPPORT="yes"
+
 pre_make_target() {
   export CCACHE_SLOPPINESS=include_file_mtime
   strip_lto
