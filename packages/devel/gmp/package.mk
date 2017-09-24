@@ -30,4 +30,4 @@ PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_HOST="--enable-cxx --disable-shared --with-pic --disable-assembly --enable-mpbsd"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-cxx --disable-shared --with-pic --without-readline --disable-fft"
+PKG_CONFIGURE_OPTS_TARGET="--enable-cxx --disable-shared --with-pic --without-readline"

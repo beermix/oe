@@ -49,7 +49,7 @@ pre_make_target() {
 }
 
 make_target() {
-  export CCACHE_SLOPPINESS=include_file_mtime
+#  export CCACHE_SLOPPINESS=include_file_mtime
 #  mkdir -p $ROOT/$PKG_BUILD/out
 #  mount -t tmpfs -o size=20G,nr_inodes=40k,mode=1777 tmpfs $ROOT/$PKG_BUILD/out
 
