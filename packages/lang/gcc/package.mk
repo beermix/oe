@@ -62,7 +62,6 @@ GCC_COMMON_CONFIGURE_OPTS="MAKEINFO=missing \
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
-                              --enable-cloog-backend=isl \
                               --disable-__cxa_atexit \
                               --disable-libatomic \
                               --disable-libquadmath \
