@@ -41,7 +41,7 @@ elif [ "$TARGET_ARCH" = x86_64  ]; then
   PIXMAN_CONFIG="--enable-mmx --enable-sse2 --enable-ssse3 --disable-vmx --disable-arm-simd --disable-arm-neon"
 fi
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-openmp \
+PKG_CONFIGURE_OPTS_TARGET="--enable-openmp \
                            --disable-loongson-mmi \
                            $PIXMAN_CONFIG \
                            --disable-mips-dspr2 \
