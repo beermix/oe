@@ -24,8 +24,8 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE=""
 PKG_URL="http://www.kernel.org/pub/linux/libs/security/linux-privs/libcap2/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_HOST="ccache:host"
-PKG_DEPENDS_TARGET="toolchain"
+PKG_DEPENDS_HOST="ccache:host gperf:host"
+PKG_DEPENDS_TARGET="toolchain gperf:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="devel"
 PKG_SHORTDESC="libcap: A library for getting and setting POSIX.1e capabilities"
@@ -50,7 +50,7 @@ make_host() {
        CFLAGS="$HOST_CFLAGS" \
        BUILD_CFLAGS="$HOST_CFLAGS -I$ROOT/$PKG_BUILD/libcap/include" \
        PAM_CAP=no \
-       BUILD_GPERF=no \
+       BUILD_GPERF=yes \
        lib=/lib \
        -C libcap libcap.pc libcap.a
 }
@@ -64,7 +64,7 @@ make_target() {
        BUILD_CC=$HOST_CC \
        BUILD_CFLAGS="$HOST_CFLAGS -I$ROOT/$PKG_BUILD/libcap/include" \
        PAM_CAP=no \
-       BUILD_GPERF=no \
+       BUILD_GPERF=yes \
        lib=/lib \
        -C libcap libcap.pc libcap.a
 }
