@@ -53,9 +53,8 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-dependency-tracking \
                            --enable-tools \
                            --enable-datafiles \
                            --disable-experimental \
-                           --disable-deprecated \
+                           --enable-deprecated \
                            --disable-sixaxis \
-                           --with-gnu-ld \
                            storagedir=/storage/.cache/bluetooth"
 
 pre_configure_target() {
