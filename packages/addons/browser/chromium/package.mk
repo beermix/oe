@@ -98,6 +98,9 @@ make_target() {
     'use_gnome_keyring=false'
     'use_gold=false'
     'use_custom_libcxx=false'
+    'is_official_build=true'
+    'is_chrome_branded=true'
+    'is_debug=false'
     'use_gtk3=false'
     'use_vaapi=true'
     'use_kerberos=false'
@@ -119,6 +122,9 @@ make_target() {
     libjpeg
     libxslt
     yasm
+    minizip
+    libxslt
+    libxml2
   )
   # Remove bundled libraries for which we will use the system copies; this
   # *should* do what the remove_bundled_libraries.py script does, with the

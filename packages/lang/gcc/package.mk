@@ -54,9 +54,7 @@ GCC_COMMON_CONFIGURE_OPTS="MAKEINFO=missing \
                            --without-ppl \
                            --without-cloog \
                            --disable-libmpx \
-                           --enable-initfini-array \
                            --without-cuda-driver \
-                           --enable-linker-build-id \
                            --disable-werror \
                            --with-tune=generic"
 
@@ -89,8 +87,6 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-gnu-unique-object \
                          --disable-vtable-verify \
                          --enable-clocale=gnu \
-                         --enable-default-pie \
-                         --enable-default-ssp \
                          $GCC_OPTS"
 pre_configure_host() {
   #export CXXFLAGS="$CXXFLAGS -std=gnu++98"
