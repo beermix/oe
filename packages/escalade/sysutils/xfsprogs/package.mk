@@ -30,7 +30,6 @@ PKG_AUTORECONF="no"
 PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
 			      --exec-prefix=/ \
 			      --enable-shared=no \
-			      --with-gnu-ld \
 			      --enable-editline=yes \
 			      --enable-readline=no \
 			      --enable-termcap=no \
