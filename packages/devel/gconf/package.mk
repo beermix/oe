@@ -25,7 +25,6 @@ PKG_URL="https://dl.dropboxusercontent.com/s/lbmk45byzcqtpxn/gconf-3.3.4.tar.xz"
 PKG_DEPENDS_TARGET="toolchain zlib glib dbus-glib"
 PKG_SECTION="depends"
 PKG_SHORTDESC="gconf"
-
 PKG_IS_ADDON="no"
 PKG_USE_CMAKE="yes"
 PKG_AUTORECONF="no"
