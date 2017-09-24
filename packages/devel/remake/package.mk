@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="remake"
-PKG_VERSION="689f5cf"
-PKG_GIT_URL="https://github.com/rocky/remake.git"
+PKG_VERSION="46093f1"
+PKG_GIT_URL="https://github.com/rocky/remake"
 PKG_DEPENDS_HOST="autotools:host"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="make: GNU make utility to maintain groups of programs"
@@ -28,7 +28,6 @@ PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_HOST="ac_cv_func_gettimeofday=yes \
 			    --disable-silent-rules \
-			    --disable-nls \
 			    --without-libintl-prefix \
 			    --without-libiconv-prefix"
 			 
@@ -36,7 +35,6 @@ PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
 			 
 			 
 post_makeinstall_host() {
-  make check	
   ln -sf remake $ROOT/$TOOLCHAIN/bin/gmake
   ln -sf remake $ROOT/$TOOLCHAIN/bin/make
 }
