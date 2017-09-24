@@ -34,7 +34,7 @@ PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_SITE="http://www.chromium.org/Home"
 PKG_URL="ftp://root:openelec@192.168.1.4/www/chromium-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain pciutils dbus libXcomposite libXcursor libXtst alsa-lib bzip2 yasm nss libXScrnSaver libexif ninja:host libpng harfbuzz atk gtk+ xdotool libvdpau unclutter x11 ffmpeg"
+PKG_DEPENDS_TARGET="toolchain pciutils dbus libXcomposite libXcursor libXtst alsa-lib bzip2 yasm nss libXScrnSaver libexif ninja:host libpng harfbuzz atk gtk+ xdotool libvdpau unclutter x11 gconf"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -105,7 +105,7 @@ make_target() {
     'linux_use_bundled_binutils=false'
     'use_allocator="none"'
     'use_cups=false'
-    'use_gconf=false'
+    'use_gconf=true'
     'use_gnome_keyring=false'
     'use_gold=false'
     'use_custom_libcxx=false'
