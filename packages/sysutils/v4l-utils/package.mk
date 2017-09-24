@@ -19,10 +19,10 @@
 # with 1.0.0 repeat delay is broken. test on upgrade
 
 PKG_NAME="v4l-utils"
-PKG_VERSION="1.12.3"
+PKG_VERSION="1.12.5"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="http://linuxtv.org/"
+PKG_SITE="https://linuxtv.org/downloads/v4l-utils/?C=M;O=D"
 PKG_URL="http://linuxtv.org/downloads/v4l-utils/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="system"
