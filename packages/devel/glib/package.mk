@@ -66,4 +66,20 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/lib/gdbus-2.0
   rm -rf $INSTALL/usr/lib/glib-2.0
   rm -rf $INSTALL/usr/share
+  
+  ln -sf $SYSROOT_PREFIX/usr/bin/gapplication $ROOT/$BUILD/toolchain/bin/
+  ln -sf $SYSROOT_PREFIX/usr/bin/gdbus $ROOT/$BUILD/toolchain/bin/
+  ln -sf $SYSROOT_PREFIX/usr/bin/gio $ROOT/$BUILD/toolchain/bin/
+  ln -sf $SYSROOT_PREFIX/usr/bin/gio-querymodules $ROOT/$BUILD/toolchain/bin/
+  ln -sf $SYSROOT_PREFIX/usr/bin/glib-compile-resources $ROOT/$BUILD/toolchain/bin/
+  ln -sf $SYSROOT_PREFIX/usr/bin/glib-compile-schemas $ROOT/$BUILD/toolchain/bin/
+  ln -sf $SYSROOT_PREFIX/usr/bin/glib-genmarshal $ROOT/$BUILD/toolchain/bin/
+  ln -sf $SYSROOT_PREFIX/usr/bin/glib-gettextize $ROOT/$BUILD/toolchain/bin/
+  ln -sf $SYSROOT_PREFIX/usr/bin/glib-mkenums $ROOT/$BUILD/toolchain/bin/
+  ln -sf $SYSROOT_PREFIX/usr/bin/gobject-query $ROOT/$BUILD/toolchain/bin/
+  ln -sf $SYSROOT_PREFIX/usr/bin/gresource $ROOT/$BUILD/toolchain/bin/
+  ln -sf $SYSROOT_PREFIX/usr/bin/gsettings $ROOT/$BUILD/toolchain/bin/
+  ln -sf $SYSROOT_PREFIX/usr/bin/gtester $ROOT/$BUILD/toolchain/bin/
+  ln -sf $SYSROOT_PREFIX/usr/bin/gtester-report $ROOT/$BUILD/toolchain/bin/
+  ln -sf $SYSROOT_PREFIX/usr/bin/gdbus-codegen $ROOT/$BUILD/toolchain/bin/
 }

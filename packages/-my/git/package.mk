@@ -32,7 +32,7 @@ PKG_CONFIGURE_OPTS_TARGET="--with-curl=$SYSROOT_PREFIX/usr \
 			      --with-zlib=$SYSROOT_PREFIX/usr \
 			      --with-editor=/usr/bin/nano \
 			      --with-expat=$SYSROOT_PREFIX/usr \
-			      --with-libpcre2=$SYSROOT_PREFIX/usr \
+			      --with-libpcre=$SYSROOT_PREFIX/usr \
 			      --disable-option-checking"
 
 
