@@ -9,16 +9,7 @@ PKG_SECTION="escalade/depends"
 PKG_SHORTDESC="Protocol definitions and daemon for D-Bus at-spi"
 PKG_IS_ADDON="no"
 
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="ac_cv_alignof_char=1 \
-			      ac_cv_alignof_dbind_pointer=8 \
-			      ac_cv_alignof_dbind_struct=1 \
-			      ac_cv_alignof_dbus_bool_t=4 \
-			      ac_cv_alignof_dbus_int16_t=2 \
-			      ac_cv_alignof_dbus_int32_t=4 \
-			      ac_cv_alignof_dbus_int64_t=8 \
-			      ac_cv_alignof_double=8 \
-			      --disable-shared \
-			      --with-pic"
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared --with-pic"
 
