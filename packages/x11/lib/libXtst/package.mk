@@ -26,6 +26,6 @@ PKG_SHORTDESC="libxtst: The Xtst Library"
 PKG_LONGDESC="The Xtst Library"
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared --with-pic --with-gnu-ld --without-xmlto"
+PKG_CONFIGURE_OPTS_TARGET="-without-xmlto"
