@@ -1,5 +1,5 @@
 PKG_NAME="unbound"
-PKG_VERSION="5faee81"
+PKG_VERSION="d6fb9d8"
 PKG_GIT_URL="https://github.com/jedisct1/unbound"
 PKG_DEPENDS_TARGET="toolchain expat openssl libevent libsodium expat"
 PKG_SECTION="my"
