@@ -128,6 +128,7 @@ make_target() {
     find -type f -path "*third_party/$_lib/*" \
       \! -path "*third_party/$_lib/chromium/*" \
       \! -path "*third_party/$_lib/google/*" \
+      \! -path "*base/third_party/icu/*" \
       \! -regex '.*\.\(gn\|gni\|isolate\|py\)' \
       -delete
   done
@@ -141,7 +142,7 @@ make_target() {
 
 	# chromedriver widevinecdmadapter
 
-  ninja -j2 -C out/Release chrome chrome_sandbox
+  ninja -C out/Release chrome chrome_sandbox
 }
 
 makeinstall_target() {
