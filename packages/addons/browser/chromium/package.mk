@@ -125,7 +125,6 @@ make_target() {
     minizip
     libxslt
     libxml2
-    freetype
   )
   # Remove bundled libraries for which we will use the system copies; this
   # *should* do what the remove_bundled_libraries.py script does, with the
