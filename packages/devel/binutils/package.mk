@@ -52,6 +52,7 @@ PKG_CONFIGURE_OPTS_HOST="MAKEINFO=true \
                          --enable-shared \
                          --enable-threads \
                          --with-pic \
+                         --disable-nls \
                          --disable-sim \
                          --disable-gdb \
                          --enable-poison-system-directories"

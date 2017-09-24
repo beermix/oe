@@ -44,9 +44,10 @@ GCC_COMMON_CONFIGURE_OPTS="MAKEINFO=missing \
                            --with-mpc=$ROOT/$TOOLCHAIN \
                            --disable-multilib \
                            --enable-plugin \
+                           --disable-nls
                            --enable-lto \
                            --enable-ld=default \
-                           --with-default-libstdcxx-abi=new \
+                           --with-default-libstdcxx-abi=gcc4-compatible \
                            --enable-checking=release \
                            --disable-libssp \
                            --disable-libsanitizer \
