@@ -48,7 +48,6 @@ GCC_COMMON_CONFIGURE_OPTS="MAKEINFO=missing \
                            --enable-ld=default \
                            --with-default-libstdcxx-abi=new \
                            --enable-checking=release \
-                           --disable-libunwind-exceptions \
                            --disable-libssp \
                            --disable-libsanitizer \
                            --without-ppl \

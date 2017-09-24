@@ -147,7 +147,7 @@ make_target() {
 
 	# chromedriver widevinecdmadapter
 
-  ninja -C out/Release chrome chrome_sandbox
+  ninja -j5 -C out/Release chrome chrome_sandbox
 }
 
 makeinstall_target() {
