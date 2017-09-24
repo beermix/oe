@@ -98,7 +98,7 @@ make_target() {
     'use_gnome_keyring=false'
     'use_gold=false'
     'use_custom_libcxx=false'
-    'use_gtk3=true'
+    'use_gtk3=false'
     'use_vaapi=true'
     'use_kerberos=false'
     'use_pulseaudio=false'
@@ -171,8 +171,9 @@ addon() {
   # cairo
   cp -PL $(get_build_dir cairo)/.install_pkg/usr/lib/libcairo.so.2 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
-  # gtk+
-  cp -PL $(get_pkg_build gtk+)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  # gtk
+  cp -PL $(get_pkg_build gtk+)/.install_pkg/usr/lib/libgdk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_pkg_build gtk+)/.install_pkg/usr/lib/libgtk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
   
   # atk
   cp -PL $(get_pkg_build atk)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
@@ -191,6 +192,8 @@ addon() {
   # libexif
   cp -PL $(get_pkg_build libexif)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
   
+  # jasper
+  cp -P $(get_build_dir jasper)/.install_pkg/usr/bin/unclutter $ADDON_BUILD/$PKG_ADDON_ID/bin
 
   # libXScrnSaver
   cp -PL $(get_pkg_build libXScrnSaver)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
