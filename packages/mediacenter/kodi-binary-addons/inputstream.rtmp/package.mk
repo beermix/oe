@@ -29,10 +29,8 @@ PKG_PRIORITY="optional"
 PKG_SECTION=""
 PKG_SHORTDESC="inputstream.rtmp"
 PKG_LONGDESC="inputstream.rtmp"
-PKG_AUTORECONF="no"
 
 PKG_IS_ADDON="yes"
-PKG_ADDON_TYPE="kodi.inputstream"
 
 
 addon() {
