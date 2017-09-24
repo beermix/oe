@@ -52,8 +52,8 @@ fi
 
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CAIRO_CONFIG \
                            --disable-silent-rules \
-                           --disable-shared \
-                           --enable-static \
+                           --enable-shared \
+                           --disable-static \
                            --disable-gtk-doc \
                            --enable-largefile \
                            --enable-atomic \
@@ -67,6 +67,7 @@ PKG_CONFIGURE_OPTS_TARGET="$PKG_CAIRO_CONFIG \
                            --enable-pthread \
                            --disable-full-testing \
                            --disable-trace \
+                           --enable-interpreter \
                            --disable-symbol-lookup \
                            --enable-some-floating-point \
                            --disable-interpreter \
