@@ -30,7 +30,7 @@ PKG_LONGDESC="PNG (Portable Network Graphics) is an extensible file format for t
 
 PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_z_zlibVersion=yes --enable-intel-sse"
 
