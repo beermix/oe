@@ -1,6 +1,6 @@
 # determines TARGET_CPU, if not forced by user
   if [ -z "$TARGET_CPU" ]; then
-    TARGET_CPU=core2
+    TARGET_CPU=core-avx-i
   fi
 
 # determine architecture's family
