@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2014 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,19 +16,21 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="libXft"
-PKG_VERSION="2.3.2"
-PKG_SITE="http://www.X.org"
-PKG_URL="http://xorg.freedesktop.org/archive/individual/lib/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain util-macros xproto libXrender fontconfig freetype"
-PKG_SECTION="x11/lib"
-PKG_SHORTDESC="libxft: X FreeType library"
-PKG_LONGDESC="X FreeType library"
+PKG_NAME="jasper"
+PKG_VERSION="version-1.900.31"
+PKG_SITE="http://www.ece.uvic.ca/~mdadams/jasper/"
+PKG_GIT_URL="https://github.com/mdadams/jasper"
+PKG_DEPENDS_TARGET="toolchain libjpeg-turbo"
+PKG_SECTION="graphics"
+PKG_SHORTDESC="jasper: JPEG-2000 Part-1 standard (i.e., ISO/IEC 15444-1) implementation"
+PKG_LONGDESC="This distribution contains the public release of the an open-source implementation of the ISO/IEC 15444-1 also known as JPEG-2000 standard for image compression."
+
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
+PKG_USE_CMAKE="no"
 
-pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC"
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static --with-pic"
+
+post_makeinstall_target() {
+  rm -rf $INSTALL/usr/bin
 }
-
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared"

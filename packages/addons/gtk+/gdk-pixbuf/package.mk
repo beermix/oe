@@ -19,17 +19,22 @@
 ################################################################################
 
 PKG_NAME="gdk-pixbuf"
-PKG_VERSION="2.34.0"
+PKG_VERSION="2.36.4"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.gtk.org/"
-PKG_URL="http://ftp.acc.umu.se/pub/gnome/sources/gdk-pixbuf/2.34/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="http://ftp.acc.umu.se/pub/gnome/sources/gdk-pixbuf/2.36/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain glib libjpeg-turbo libpng jasper tiff"
 PKG_SECTION="x11/toolkits"
 PKG_SHORTDESC="gdk-pixbuf: a GNOME library for image loading and manipulation."
 PKG_LONGDESC="gdk-pixbuf (GdkPixbuf) is a GNOME library for image loading and manipulation. The GdkPixbuf documentation contains both the programmer's guide and the API reference."
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
+
+pre_configure_target() {
+  export CFLAGS="$CFLAGS -fPIC -DPIC"
+  export CXXFLAGS="$CXXFLAGS -fPIC -DPIC"
+}
 
 PKG_CONFIGURE_OPTS_TARGET="gio_can_sniff=yes \
                            --disable-gtk-doc \
@@ -40,3 +45,7 @@ PKG_CONFIGURE_OPTS_TARGET="gio_can_sniff=yes \
                            --with-libjpeg \
                            --with-libtiff \
                            --with-libjasper"
+
+#post_makeinstall_target() {
+#  cp $PKG_DIR/config/gdk-pixbuf.loaders $INSTALL/usr/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache
+#}
