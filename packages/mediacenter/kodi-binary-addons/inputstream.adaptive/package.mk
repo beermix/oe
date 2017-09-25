@@ -27,6 +27,7 @@ PKG_SHORTDESC="inputstream.adaptive"
 PKG_LONGDESC="inputstream.adaptive"
 
 PKG_IS_ADDON="yes"
+LTO_SUPPORT="yes"
 
 post_makeinstall_target() {
   mkdir -p wv && cd wv
