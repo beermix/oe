@@ -50,7 +50,6 @@ GCC_COMMON_CONFIGURE_OPTS="MAKEINFO=missing \
                            --with-default-libstdcxx-abi=new \
                            --enable-checking=release \
                            --disable-libssp \
-                           --disable-libsanitizer \
                            --without-ppl \
                            --without-cloog \
                            --disable-libmpx \
@@ -63,6 +62,7 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
                               --enable-cloog-backend \
+                              --disable-libsanitizer \
                               --disable-libatomic \
                               --disable-libquadmath \
                               --disable-libmudflap \
