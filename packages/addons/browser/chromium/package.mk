@@ -53,13 +53,13 @@ make_target() {
 #  mkdir -p $ROOT/$PKG_BUILD/out
 #  mount -t tmpfs -o size=20G,nr_inodes=40k,mode=1777 tmpfs $ROOT/$PKG_BUILD/out
 
-#  strip_hard
+  strip_hard
 
-  export LDFLAGS="$LDFLAGS -ludev"
-  export LD=$CXX
-  
-#  export -n CFLAGS CXXFLAGS
 #  export LDFLAGS="$LDFLAGS -ludev"
+#  export LD=$CXX
+  
+  export -n CFLAGS CXXFLAGS
+  export LDFLAGS="$LDFLAGS -ludev"
 
   # Use Python 2
   find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$ROOT/$TOOLCHAIN/bin/python|g" {} +
@@ -162,6 +162,7 @@ addon() {
   cp -PR $ROOT/$PKG_BUILD/out/Release/locales $ADDON_BUILD/$PKG_ADDON_ID/bin/
   cp -PR $ROOT/$PKG_BUILD/out/Release/gen/content/content_resources.pak $ADDON_BUILD/$PKG_ADDON_ID/bin/
 #  cp -P  $ROOT/$PKG_BUILD/out/Release/{*.pak,*.dat,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
+  cp -P  $ROOT/$PKG_BUILD/out/Release/{*.pak,*.dat,*.bin} $ADDON_BUILD/$PKG_ADDON_ID/bin
 #  cp -P  $ROOT/$PKG_BUILD/out/Release/chromedriver $ADDON_BUILD/$PKG_ADDON_ID/bin/chromedriver
 
   # config
