@@ -36,7 +36,12 @@ PKG_CONFIGURE_OPTS_HOST="--enable-static \
                          --disable-libmount \
                          --with-pcre=internal"
 
-PKG_CONFIGURE_OPTS_TARGET="glib_cv_stack_grows=no \
+PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_mmap_fixed_mapped=yes \
+                           ac_cv_func_posix_getpwuid_r=yes \
+                           ac_cv_func_posix_getgrgid_r=yes \
+                           ac_cv_func_printf_unix98=yes \
+                           ac_cv_func_vsnprintf_c99=yes \
+                           glib_cv_stack_grows=no \
                            glib_cv_uscore=no \
                            glib_cv_va_val_copy=no \
                            --disable-selinux \

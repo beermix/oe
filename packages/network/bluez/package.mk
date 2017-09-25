@@ -42,17 +42,17 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-dependency-tracking \
                            --enable-datafiles \
                            --disable-experimental \
                            --enable-deprecated \
-                           --enable-sixaxis \
+                           --disable-sixaxis \
                            --with-gnu-ld \
                            storagedir=/storage/.cache/bluetooth"
 
-if [ "$DEBUG" = "yes" ]; then
+if [ "$DEBUG" = "no" ]; then
   PKG_CONFIGURE_OPTS_TARGET+=" --enable-debug"
 else
   PKG_CONFIGURE_OPTS_TARGET+=" --disable-debug"
 fi
 
-if [ "$DEVTOOLS" = "yes" ]; then
+if [ "$DEVTOOLS" = "no" ]; then
   PKG_CONFIGURE_OPTS_TARGET+=" --enable-monitor --enable-test"
 else
   PKG_CONFIGURE_OPTS_TARGET+=" --disable-monitor --disable-test"
@@ -62,7 +62,6 @@ pre_configure_target() {
 # bluez fails to build in subdirs
   cd $ROOT/$PKG_BUILD
     rm -rf .$TARGET_NAME
-  export LIBS="-lncurses -lterminfo"
 }
 
 post_makeinstall_target() {
