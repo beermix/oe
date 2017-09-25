@@ -18,15 +18,6 @@
 #  http://www.gnu.org/copyleft/gpl.html
 ################################################################################
 
-../../third_party/WebKit/Source/platform/wtf/text/TextCodec.h:76:52: warning: enum constant in boolean context [-Wint-in-bool-context]
- static_assert(kDataEOF, "DataEOF should be truthy");
-                                                    ^
-[29102/29102] LINK ./chrome
-/root/-f2fs/oe/build.OE-Generic.x86_64-8.0-devel/toolchain/lib/gcc/x86_64-openelec-linux-gnu/7.2.0/../../../../x86_64-openelec-linux-gnu/bin/ld: warning: libfreetype.so.6, needed by /root/-f2fs/oe/build.OE-Generic.x86_64-8.0-devel/toolchain/x86_64-openelec-linux-gnu/sysroot/usr/lib/libpangocairo-1.0.so, may conflict with libfreetype.so.6
-  CREATE ADDON  (Generic/x86_64) chromium
-cp: -r not specified; omitting directory '/root/-f2fs/oe/build.OE-Generic.x86_64-8.0-devel/gtk+-3.22.21/.install_pkg/usr/lib/gtk-3.0'
-
-
 PKG_NAME="chromium"
 PKG_VERSION="61.0.3163.100"
 PKG_REV="120"
@@ -64,11 +55,11 @@ make_target() {
 
   strip_hard
 
-#  export LDFLAGS="$LDFLAGS -ludev"
-#  export LD=$CXX
+  xport LDFLAGS="$LDFLAGS -ludev"
+  export LD=$CXX
   
-  export -n CFLAGS CXXFLAGS
-  export LDFLAGS="$LDFLAGS -ludev"
+#  export -n CFLAGS CXXFLAGS
+#  export LDFLAGS="$LDFLAGS -ludev"
 
   # Use Python 2
   find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$ROOT/$TOOLCHAIN/bin/python|g" {} +
@@ -110,7 +101,7 @@ make_target() {
     'use_gold=false'
     'use_custom_libcxx=false'
     'is_official_build=false'
-    'use_gtk3=true'
+    'use_gtk3=false'
     'use_vaapi=true'
     'use_kerberos=false'
     'use_pulseaudio=false'
@@ -134,6 +125,7 @@ make_target() {
     minizip
     libxslt
     libxml2
+    freetype
   )
   # Remove bundled libraries for which we will use the system copies; this
   # *should* do what the remove_bundled_libraries.py script does, with the
@@ -156,7 +148,7 @@ make_target() {
 
 	# chromedriver widevinecdmadapter
 
-  ninja -j5 -C out/Release chrome chrome_sandbox
+  ninja -j4 -C out/Release chrome chrome_sandbox
 }
 
 makeinstall_target() {
@@ -187,19 +179,19 @@ addon() {
   cp -PL $(get_build_dir cairo)/.install_pkg/usr/lib/libcairo.so.2 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # gtk+
-#  cp -PL $(get_pkg_build gtk+)/.install_pkg/usr/lib/libgdk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
-#  cp -PL $(get_pkg_build gtk+)/.install_pkg/usr/lib/libgtk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_pkg_build gtk+)/.install_pkg/usr/lib/libgdk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_pkg_build gtk+)/.install_pkg/usr/lib/libgtk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
-  cp -PL $(get_pkg_build gtk+)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
+#  cp -PL $(get_pkg_build gtk+)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
   
   # atk
   cp -PL $(get_pkg_build atk)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
   
   # at-spi2-atk
-  cp -PL $(get_pkg_build at-spi2-atk)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
+#  cp -PL $(get_pkg_build at-spi2-atk)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
   
   # at-spi2-core
-  cp -PL $(get_pkg_build at-spi2-core)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
+#  cp -PL $(get_pkg_build at-spi2-core)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # harfbuzz
   cp -PL $(get_build_dir harfbuzz)/.install_pkg/usr/lib/libharfbuzz.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
