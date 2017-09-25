@@ -55,7 +55,7 @@ make_target() {
 
   strip_hard
 
-  xport LDFLAGS="$LDFLAGS -ludev"
+  export LDFLAGS="$LDFLAGS -ludev"
   export LD=$CXX
   
 #  export -n CFLAGS CXXFLAGS
@@ -206,6 +206,9 @@ addon() {
 
   # libexif
   cp -PL $(get_pkg_build libexif)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  
+  # gconf
+  cp -PL $(get_pkg_build gconf)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
   
   # jasper
   cp -P $(get_build_dir jasper)/.install_pkg/usr/bin/unclutter $ADDON_BUILD/$PKG_ADDON_ID/bin
