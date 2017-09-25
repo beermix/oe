@@ -57,7 +57,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            ac_cv_have_long_long_format=yes \
                            --with-threads \
                            --enable-unicode=ucs4 \
-                           --enable-optimizations \
+                           --disable-optimizations \
                            --without-ensurepip \
                            --without-lto \
                            --disable-ipv6 \
