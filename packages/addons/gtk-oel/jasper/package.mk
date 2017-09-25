@@ -17,11 +17,11 @@
 ################################################################################
 
 PKG_NAME="jasper"
-PKG_VERSION="1.900.1"
+PKG_VERSION="2.0.14"
 PKG_ARCH="any"
 PKG_LICENSE="OpenSource"
 PKG_SITE="http://www.ece.uvic.ca/~mdadams/jasper/"
-PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_URL="https://www.ece.uvic.ca/~frodo/jasper/software/jasper-2.0.14.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libjpeg-turbo"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="jasper: JPEG-2000 Part-1 standard (i.e., ISO/IEC 15444-1) implementation"
