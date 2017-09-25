@@ -1,3 +1,8 @@
+################################################################################
+#      This file is part of Alex@ELEC - http://www.alexelec.in.ua
+#      Copyright (C) 2011-2016 Alexandr Zuyev (alex@alexelec.in.ua)
+################################################################################
+
 PKG_NAME="kodi-addon-chromium"
 PKG_VERSION="3ab35e6"
 PKG_REV="1"

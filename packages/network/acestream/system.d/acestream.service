@@ -8,7 +8,7 @@ ConditionPathExists=/storage/.cache/services/acestream.conf
 [Service]
 EnvironmentFile=-/run/openelec/acestream.conf
 ExecStartPre=-/usr/bin/ace-config
-ExecStart=/usr/bin/acestreamengine --client-console --live-cache-type memory --live-buffer 60 --live-cache-size 268435456 --cache-limit 10
+ExecStart=/usr/bin/acestreamengine --client-console $ACE_ARGS
 ExecStop=/bin/kill -TERM $MAINPID
 TimeoutStopSec=5
 Restart=always
