@@ -56,8 +56,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            ac_cv_have_long_long_format=yes \
                            --with-threads \
                            --enable-unicode=ucs4 \
-                           --disable-optimizations \
-                           --without-lto \
                            --disable-ipv6 \
                            --disable-profiling \
                            --without-pydebug \
@@ -68,7 +66,8 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            --with-wctype-functions \
                            --with-system-ffi \
                            --with-system-expat \
-                           --enable-shared"
+                           --enable-shared \
+                           --enable-optimizations"
 
 post_patch() {
   # This is needed to make sure the Python build process doesn't try to
@@ -99,7 +98,7 @@ pre_configure_target() {
 }
 
 make_target() {
-  make  -j1 CC="$CC" LDFLAGS="$TARGET_LDFLAGS -L." \
+  make  CC="$CC" LDFLAGS="$TARGET_LDFLAGS -L." \
         PYTHON_DISABLE_MODULES="$PY_DISABLED_MODULES" \
         PYTHON_MODULES_INCLUDE="$TARGET_INCDIR" \
         PYTHON_MODULES_LIB="$TARGET_LIBDIR"

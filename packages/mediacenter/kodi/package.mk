@@ -248,6 +248,7 @@ makeinstall_host() {
 pre_configure_target() {
   strip_lto
   strip_gold
+  export CCACHE_SLOPPINESS=include_file_mtime
 }
 
 pre_make_target() {
