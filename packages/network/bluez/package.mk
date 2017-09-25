@@ -46,13 +46,13 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-dependency-tracking \
                            --with-gnu-ld \
                            storagedir=/storage/.cache/bluetooth"
 
-if [ "$DEBUG" = "no" ]; then
+if [ "$DEBUG" = "yes" ]; then
   PKG_CONFIGURE_OPTS_TARGET+=" --enable-debug"
 else
   PKG_CONFIGURE_OPTS_TARGET+=" --disable-debug"
 fi
 
-if [ "$DEVTOOLS" = "no" ]; then
+if [ "$DEVTOOLS" = "yes" ]; then
   PKG_CONFIGURE_OPTS_TARGET+=" --enable-monitor --enable-test"
 else
   PKG_CONFIGURE_OPTS_TARGET+=" --disable-monitor --disable-test"
