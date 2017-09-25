@@ -110,7 +110,7 @@ make_target() {
     'use_sysroot=true'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_hangout_services_extension=false'
-    'enable_widevine=false'
+    'enable_widevine=true'
     'enable_nacl=false'
     'enable_swiftshader=false'
     "google_api_key=\"${_google_api_key}\""
@@ -151,7 +151,7 @@ make_target() {
 	
  #   ninja -C out/Release mksnapshot
 
-    ninja -j4 -C out/Release chrome chrome_sandbox
+    ninja -j1 -C out/Release chrome chrome_sandbox widevinecdmadapter
 }
 
 makeinstall_target() {
@@ -164,7 +164,7 @@ addon() {
   cp -P  $ROOT/$PKG_BUILD/out/Release/chrome_sandbox $ADDON_BUILD/$PKG_ADDON_ID/bin/chrome-sandbox
   cp -PR $ROOT/$PKG_BUILD/out/Release/locales $ADDON_BUILD/$PKG_ADDON_ID/bin/
   cp -PR $ROOT/$PKG_BUILD/out/Release/gen/content/content_resources.pak $ADDON_BUILD/$PKG_ADDON_ID/bin/
-#  cp -P  $ROOT/$PKG_BUILD/out/Release/{*.pak,*.dat,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
+  cp -P  $ROOT/$PKG_BUILD/out/Release/{*.pak,*.dat,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -P  $ROOT/$PKG_BUILD/out/Release/{*.pak,*.dat,*.bin} $ADDON_BUILD/$PKG_ADDON_ID/bin
 #  cp -P  $ROOT/$PKG_BUILD/out/Release/chromedriver $ADDON_BUILD/$PKG_ADDON_ID/bin/chromedriver
 
@@ -182,20 +182,21 @@ addon() {
   # cairo
   cp -PL $(get_build_dir cairo)/.install_pkg/usr/lib/libcairo.so.2 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
-  # gtk+
-  cp -PL $(get_pkg_build gtk+)/.install_pkg/usr/lib/libgdk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
-  cp -PL $(get_pkg_build gtk+)/.install_pkg/usr/lib/libgtk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  # gtk2
+#  cp -PL $(get_pkg_build gtk+)/.install_pkg/usr/lib/libgdk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+#  cp -PL $(get_pkg_build gtk+)/.install_pkg/usr/lib/libgtk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
-#  cp -r -i $(get_pkg_build gtk+)/.install_pkg/usr/lib/ $ADDON_BUILD/$PKG_ADDON_ID/lib
+  # gtk+
+  cp -r -i $(get_pkg_build gtk+)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
   
   # atk
-#  cp -PL $(get_pkg_build atk)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -r -i $(get_pkg_build atk)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
   
   # at-spi2-atk
-#  cp -PL $(get_pkg_build at-spi2-atk)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -r -i $(get_pkg_build at-spi2-atk)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
   
   # at-spi2-core
-#  cp -PL $(get_pkg_build at-spi2-core)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -r -i $(get_pkg_build at-spi2-core)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # harfbuzz
   cp -PL $(get_build_dir harfbuzz)/.install_pkg/usr/lib/libharfbuzz.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
