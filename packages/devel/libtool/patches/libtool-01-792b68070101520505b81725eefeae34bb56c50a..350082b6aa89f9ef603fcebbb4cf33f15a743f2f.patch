@@ -1,0 +1,32 @@
+From 350082b6aa89f9ef603fcebbb4cf33f15a743f2f Mon Sep 17 00:00:00 2001
+From: Bert Wesarg <bert.wesarg@googlemail.com>
+Date: Mon, 13 Jun 2016 22:28:47 +0200
+Subject: libtool: exit verbosely for fatal configure problems
+
+Instead of calling not-existing function and processing subsequent
+shell code.
+
+* build-aux/ltmain.in (func_fatal_configuration): Fix typo in
+func_fatal_error call.
+
+Copyright-paperwork-exempt: Yes
+---
+ build-aux/ltmain.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/build-aux/ltmain.in b/build-aux/ltmain.in
+index 0ad021d..c3058f2 100644
+--- a/build-aux/ltmain.in
++++ b/build-aux/ltmain.in
+@@ -212,7 +212,7 @@ fi
+ # a configuration failure hint, and exit.
+ func_fatal_configuration ()
+ {
+-    func__fatal_error ${1+"$@"} \
++    func_fatal_error ${1+"$@"} \
+       "See the $PACKAGE documentation for more information." \
+       "Fatal configuration error."
+ }
+-- 
+cgit v1.0-41-gc330
+
