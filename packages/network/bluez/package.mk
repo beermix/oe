@@ -1,4 +1,4 @@
-###############################################################################
+################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
 #      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
@@ -30,18 +30,6 @@ PKG_LONGDESC="Bluetooth Tools and System Daemons for Linux."
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-if [ "$DEBUG" = "yes" ]; then
-  BLUEZ_CONFIG="--enable-debug"
-else
-  BLUEZ_CONFIG="--disable-debug"
-fi
-
-if [ "$DEVTOOLS" = "yes" ]; then
-  BLUEZ_CONFIG="$BLUEZ_CONFIG --enable-monitor --enable-test"
-else
-  BLUEZ_CONFIG="$BLUEZ_CONFIG --disable-monitor --disable-test"
-fi
-
 PKG_CONFIGURE_OPTS_TARGET="--disable-dependency-tracking \
                            --enable-silent-rules \
                            --disable-library \
@@ -53,18 +41,31 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-dependency-tracking \
                            --enable-tools \
                            --enable-datafiles \
                            --disable-experimental \
-                           --disable-deprecated \
-                           --disable-sixaxis \
+                           --enable-deprecated \
+                           --enable-sixaxis \
+                           --with-gnu-ld \
                            storagedir=/storage/.cache/bluetooth"
+
+if [ "$DEBUG" = "yes" ]; then
+  PKG_CONFIGURE_OPTS_TARGET+=" --enable-debug"
+else
+  PKG_CONFIGURE_OPTS_TARGET+=" --disable-debug"
+fi
+
+if [ "$DEVTOOLS" = "yes" ]; then
+  PKG_CONFIGURE_OPTS_TARGET+=" --enable-monitor --enable-test"
+else
+  PKG_CONFIGURE_OPTS_TARGET+=" --disable-monitor --disable-test"
+fi
 
 pre_configure_target() {
 # bluez fails to build in subdirs
   cd $ROOT/$PKG_BUILD
     rm -rf .$TARGET_NAME
+  export LIBS="-lncurses -lterminfo"
 }
 
 post_makeinstall_target() {
-  rm -rf $INSTALL/usr/lib/systemd
   rm -rf $INSTALL/usr/bin/bccmd
   rm -rf $INSTALL/usr/bin/bluemoon
   rm -rf $INSTALL/usr/bin/ciptool
@@ -75,12 +76,8 @@ post_makeinstall_target() {
     cp tools/btmgmt $INSTALL/usr/bin
 
   mkdir -p $INSTALL/etc/bluetooth
-    cp src/main.conf $INSTALL/etc/bluetooth
-    sed -i $INSTALL/etc/bluetooth/main.conf \
-        -e 's/^#Name\ =.*/Name\ =\ %h/' \
-        -e "s|^#DiscoverableTimeout.*|DiscoverableTimeout\ =\ 0|g" \
-        -e "s|^#\[Policy\]|\[Policy\]|g" \
-        -e "s|^#AutoEnable.*|AutoEnable=true|g"
+    echo "[Policy]" > $INSTALL/etc/bluetooth/main.conf
+    echo "AutoEnable=true" >> $INSTALL/etc/bluetooth/main.conf
 }
 
 post_install() {
