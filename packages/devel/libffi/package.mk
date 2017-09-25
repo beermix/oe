@@ -31,8 +31,6 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
-                           --enable-static --disable-shared \
-                           --with-pic \
                            --enable-structs \
                            --enable-raw-api \
                            --disable-purify-safety \

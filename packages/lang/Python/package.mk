@@ -29,7 +29,9 @@ PKG_LONGDESC="Python is an interpreted object-oriented programming language, and
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-#CONCURRENCY_MAKE_LEVEL=1
+post_unpack() {
+  sed -i "/SQLITE_OMIT_LOAD_EXTENSION/d" $ROOT/$PKG_BUILD/setup.py
+}
 
 PY_DISABLED_MODULES="_tkinter nis gdbm bsddb ossaudiodev"
 
@@ -39,6 +41,7 @@ PKG_CONFIGURE_OPTS_HOST="--cache-file=config.cache \
                          --enable-unicode=ucs4 \
                          --disable-ipv6 \
                          --enable-shared \
+                         --without-ensurepip \
                          --disable-static"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
@@ -54,6 +57,9 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            ac_cv_have_long_long_format=yes \
                            --with-threads \
                            --enable-unicode=ucs4 \
+                           --enable-optimizations \
+                           --without-ensurepip \
+                           --without-lto \
                            --disable-ipv6 \
                            --disable-profiling \
                            --without-pydebug \
@@ -62,7 +68,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            --with-pymalloc \
                            --without-fpectl \
                            --with-wctype-functions \
-                           --without-cxx-main \
                            --with-system-ffi \
                            --with-system-expat \
                            --enable-shared"
@@ -125,10 +130,10 @@ post_makeinstall_target() {
 # set file permissions
   chmod 755 $INSTALL/usr/lib/libpython*.so*
 
-#  ( cd $INSTALL/usr/lib/python2.7
-#    python -Wi -t -B $ROOT/$PKG_BUILD/Lib/compileall.py -d /usr/lib/python2.7 -f .
-#    find $INSTALL/usr/lib/python2.7 -name "*.py" -exec rm -f {} \; &>/dev/null
-#  )
+  ( cd $INSTALL/usr/lib/python2.7
+    python -Wi -t -B $ROOT/$PKG_BUILD/Lib/compileall.py -d /usr/lib/python2.7 -f .
+    find $INSTALL/usr/lib/python2.7 -name "*.py" -exec rm -f {} \; &>/dev/null
+  )
 
   rm -rf $INSTALL/usr/lib/python*/config
   rm -rf $INSTALL/usr/bin/2to3
