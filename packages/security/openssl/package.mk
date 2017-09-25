@@ -17,6 +17,10 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            --libdir=lib \
                            shared \
                            threads \
+                           enable-camellia \
+                           enable-mdc2 \
+                           enable-tlsext \
+                           enable-unit-test \
                            no-ssl3-method \
                            enable-ec_nistp_64_gcc_128"
 
