@@ -1,8 +1,8 @@
 PKG_NAME="openssl"
 PKG_VERSION="1.0.2l"
 PKG_URL="https://www.openssl.org/source/openssl-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_HOST="ccache:host yasm:host"
-PKG_DEPENDS_TARGET="toolchain yasm:host zlib gmp"
+PKG_DEPENDS_HOST="ccache:host"
+PKG_DEPENDS_TARGET="toolchain yasm:host pcre zlib gmp"
 PKG_SECTION="security"
 PKG_SHORTDESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"
 PKG_LONGDESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"
@@ -17,11 +17,17 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            --libdir=lib \
                            shared \
                            threads \
+                           no-rfc3779 \
+                           no-ssl2 \
+                           no-ssl3 \
+                           no-rc5 \
                            enable-camellia \
                            enable-mdc2 \
                            enable-tlsext \
                            enable-unit-test \
-                           no-ssl3-method \
+                           no-krb5 \
+                           no-zlib-dynamic \
+                           no-zlib \
                            enable-ec_nistp_64_gcc_128"
 
 pre_configure_host() {
@@ -31,7 +37,7 @@ pre_configure_host() {
 
 configure_host() {
   cd $ROOT/$PKG_BUILD/.$HOST_NAME
-  ./Configure --prefix=/ $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 "-Wa,--noexecstack ${CPPFLAGS} ${CFLAGS} ${LDFLAGS}"
+  ./Configure --prefix=/ $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 "-Wa,--noexecstack $CFLAGS $LDFLAGS"
 }
 
 makeinstall_host() {
@@ -51,7 +57,7 @@ pre_configure_target() {
 
 configure_target() {
   cd $ROOT/$PKG_BUILD/.$TARGET_NAME
-  ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 "-Wa,--noexecstack ${CPPFLAGS} ${CFLAGS} ${LDFLAGS}"
+  ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 "-Wa,--noexecstack $CPPFLAGS $CFLAGS $LDFLAGS"
 }
 
 makeinstall_target() {
@@ -70,6 +76,7 @@ post_makeinstall_target() {
   # create new cert: ./mkcerts.sh
   # cert from https://curl.haxx.se/docs/caextract.html
 
+  
   mkdir -p $INSTALL/etc/ssl
 #  perl $PKG_DIR/cert/mk-ca-bundle.pl
 #  cp $ROOT/$PKG_BUILD/.$TARGET_NAME/ca-bundle.crt $INSTALL/etc/ssl/cert.pem

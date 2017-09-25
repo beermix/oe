@@ -7,14 +7,12 @@ PKG_SECTION="python/system"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-CONCURRENCY_MAKE_LEVEL=1
-
 make_target() {
   python setup.py build --cross-compile
 }
 
 makeinstall_target() {
-  python setup.py install --root=$INSTALL --prefix=/usr
+  python setup.py install --root=$INSTALL --prefix=/usr --optimize=1
 }
 
 post_makeinstall_target() {
