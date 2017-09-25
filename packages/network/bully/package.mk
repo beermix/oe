@@ -1,6 +1,8 @@
 PKG_NAME="bully"
 PKG_VERSION="17dda79"
 PKG_GIT_URL="https://github.com/Taikson/bully"
+#PKG_VERSION="17dda79"
+#PKG_GIT_URL="https://github.com/aanarchyy/bully"
 PKG_DEPENDS_TARGET="toolchain libpcap"
 PKG_SECTION="my"
 PKG_IS_ADDON="no"

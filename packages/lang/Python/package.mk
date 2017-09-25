@@ -64,13 +64,13 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            --with-pymalloc \
                            --without-fpectl \
                            --with-wctype-functions \
+                           --without-cxx-main \
                            --with-system-ffi \
                            --with-system-expat \
-                           --enable-shared \
-                           --disable-optimizations"
+                           --enable-shared"
 
 post_patch() {
-  # This is needed to make -j1 sure the Python build process doesn't try to
+  # This is needed to make sure the Python build process doesn't try to
   # regenerate those files with the pgen program. Otherwise, it builds
   # pgen for the target, and tries to run it on the host.
     touch $PKG_BUILD/Include/graminit.h
@@ -78,7 +78,7 @@ post_patch() {
 }
 
 make_host() {
-  make -j1 PYTHON_MODULES_INCLUDE="$HOST_INCDIR" \
+  make PYTHON_MODULES_INCLUDE="$HOST_INCDIR" \
        PYTHON_MODULES_LIB="$HOST_LIBDIR" \
        PYTHON_DISABLE_MODULES="readline _curses _curses_panel $PY_DISABLED_MODULES"
 

@@ -69,7 +69,7 @@
 # or projects/*/linux/*.config or distributions/*/linux/*.config
 # please add all configfiles which should be included without the suffix and prefix
 # except the default-*.config and the ones included in packages/linux/package.mk
-# Space separated list is supported, == joystick usb-serial usb-gadget
+# Space separated list is supported,  joystick usb-serial usb-gadget
   KERNEL_EXTRA_CONFIG+=" filesystem hid-drivers remote audio"
   KERNEL_EXTRA_CONFIG+=" led"
 
