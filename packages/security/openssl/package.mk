@@ -11,7 +11,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 export CCACHE_DISABLE=1
-#export MAKEFLAGS=-j1
+export MAKEFLAGS=-j1
 
 PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            --libdir=lib \
