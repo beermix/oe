@@ -17,9 +17,10 @@
 ################################################################################
 
 PKG_NAME="SDL2"
-PKG_VERSION="1e197f8"
+PKG_VERSION="2.0.6"
 PKG_SITE="https://www.libsdl.org/"
-PKG_GIT_URL="https://github.com/spurious/SDL-mirror"
+#PKG_GIT_URL="https://github.com/spurious/SDL-mirror"
+PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain yasm:host alsa-lib systemd dbus"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="SDL2: A cross-platform Graphic API"
@@ -29,7 +30,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 pre_configure_target() {
-  unset LDDFLAGS
+  unset LDFLAGS
 }
 
 PKG_CMAKE_OPTS_TARGET="-DSDL_STATIC=ON -DSDL_SHARED=OFF \
