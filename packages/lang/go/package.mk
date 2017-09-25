@@ -46,6 +46,14 @@ configure_host() {
   export CGO_ENABLED=1
   export CC_FOR_TARGET="$CC"
   export CXX_FOR_TARGET="$CXX"
+  
+  export CC="$CC"
+  export CXX="$CXX"
+  export LD="$LD"
+  
+#  export GOPATH="$srcdir"
+#  export GOROOT="$builddir"
+#  export GOBIN="$GOROOT"/bin
 }
 
 make_host() {

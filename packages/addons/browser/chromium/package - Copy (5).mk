@@ -96,12 +96,10 @@ make_target() {
     'linux_use_bundled_binutils=false'
     'use_gold=false'
     'linux_use_gold_flags=true'
-    'linux_use_tcmalloc=true'
-    'enable_precompiled_headers=false'
-    "use_allocator=\"none\""
-    'use_allocator_shim=false'
+    'linux_use_tcmalloc=false'
+    'use_allocator="none"'
     'use_cups=false'
-    'use_gconf=false'
+    'use_gconf=true'
     'use_gnome_keyring=false'
     'use_custom_libcxx=false'
     'is_official_build=false'
@@ -110,6 +108,7 @@ make_target() {
     'use_kerberos=false'
     'use_pulseaudio=false'
     'use_sysroot=true'
+    binutils_dir
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_hangout_services_extension=false'
     'enable_widevine=false'
@@ -139,12 +138,11 @@ make_target() {
     find -type f -path "*third_party/$_lib/*" \
       \! -path "*third_party/$_lib/chromium/*" \
       \! -path "*third_party/$_lib/google/*" \
+      \! -path "*base/third_party/icu/*" \
       \! -regex '.*\.\(gn\|gni\|isolate\|py\)' \
       -delete
   done
 
-  CFLAGS="$CFLAGS -fno-delete-null-pointer-checks"
-  
   ./build/linux/unbundle/replace_gn_files.py --system-libraries "${_system_libs}"
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
@@ -152,10 +150,8 @@ make_target() {
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$ROOT/$TOOLCHAIN/bin/python
 
 	# chromedriver widevinecdmadapter
-	
-	ninja -C out/$_buildtype mksnapshot
 
-  ninja -j5 -C out/Release chrome chrome_sandbox
+  ninja -j4 -C out/Release chrome chrome_sandbox
 }
 
 makeinstall_target() {
