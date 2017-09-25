@@ -39,7 +39,7 @@ PKG_ADDON_PROVIDES="executable"
 GOLD_SUPPORT="yes"
 
 pre_make_target() {
-#  export CCACHE_SLOPPINESS=include_file_mtime
+  export CCACHE_SLOPPINESS=include_file_mtime
   touch chrome/test/data/webui/i18n_process_css_test.html
 
   sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' third_party/widevine/cdm/stub/widevine_cdm_version.h
@@ -148,7 +148,7 @@ make_target() {
 
 	# chromedriver widevinecdmadapter
 
-  ninja -j4 -C out/Release chrome chrome_sandbox
+  ninja -j3 -C out/Release chrome chrome_sandbox
 }
 
 makeinstall_target() {
