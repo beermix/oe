@@ -1,14 +1,13 @@
 [Unit]
 Description=x11vnc
-After=graphical.target
-ConditionPathExists=/storage/.cache/services/x11vnc.conf
+After=network.target
 
 [Service]
-ExecStart=/usr/bin/x11vnc.start
+ExecStart=/usr/bin/x11vnc -forever -loop -threads -o /dev/null  -display :0
 TimeoutStopSec=1
 Restart=always
 RestartSec=2
-StartLimitInterval=0
+StartLimitInterval=4
 
 [Install]
-WantedBy=kodi.target
+WantedBy=multi-user.target

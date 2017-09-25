@@ -21,11 +21,11 @@ VNC_ARG=""
 [ -n "$VNC_SERVER_ARGS" ] && VNC_ARG=$VNC_SERVER_ARGS
 
 logger -t x11vnc "Set password for X11VNC server..."
-x11vnc $VNC_DIR/passwd.vnc >/dev/null &>/dev/null
+# x11vnc $VNC_DIR/passwd.vnc >/dev/null &>/dev/null
 
 logger -t x11vnc "Starting X11VNC server: debug=$VNC_DEBUG"
 if [ "$VNC_DEBUG" = "1" ]; then
-  exec x11vnc -forever -loop -nopw -rfbauth $VNC_DIR/passwd.vnc -display :0 -rfbport $VNC_PORT $VNC_ARG &>$VNC_LOGFILE
+  exec x11vnc -forever -loop -nopw -display :0 -rfbport $VNC_PORT $VNC_ARG &>$VNC_LOGFILE
 else
-  exec x11vnc -forever -loop -nopw -rfbauth $VNC_DIR/passwd.vnc -display :0 -rfbport $VNC_PORT $VNC_ARG &>/dev/null
+  exec x11vnc -forever -loop -nopw -display :0 -rfbport $VNC_PORT $VNC_ARG &>/dev/null
 fi
