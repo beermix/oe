@@ -26,6 +26,4 @@ PKG_SHORTDESC="libxshmfence: Shared memory 'SyncFence' synchronization primitive
 PKG_LONGDESC="libxshmfence is the Shared memory 'SyncFence' synchronization primitive."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
-
-
+PKG_AUTORECONF="no"

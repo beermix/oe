@@ -26,4 +26,4 @@ PKG_SHORTDESC="libxcomposite: X Composite Library"
 PKG_LONGDESC="X Composite Library"
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
