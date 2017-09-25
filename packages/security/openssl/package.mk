@@ -17,11 +17,6 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            --libdir=lib \
                            shared \
                            threads \
-                           no-err \
-                           no-rfc3779 \
-                           no-ssl2 \
-                           no-ssl3 \
-                           no-rc5 \
                            enable-camellia \
                            enable-mdc2 \
                            enable-tlsext \
@@ -29,7 +24,6 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            no-krb5 \
                            no-zlib-dynamic \
                            no-zlib \
-                           no-gmp \
                            enable-ec_nistp_64_gcc_128"
 
 pre_configure_host() {

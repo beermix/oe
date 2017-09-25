@@ -21,7 +21,7 @@ PKG_VERSION="facb42f"
 PKG_REV="1"
 PKG_SITE="http://fluxbox.org/"
 PKG_GIT_URL="https://github.com/fluxbox/fluxbox"
-PKG_DEPENDS_TARGET="toolchain libX11 libXrandr libXext libXrender libXext libXtst"
+PKG_DEPENDS_TARGET="toolchain libX11 libXrandr libXext libXrender libXext libXtst freetype"
 PKG_PRIORITY="optional"
 PKG_SECTION="x11/other"
 PKG_SHORTDESC="Fluxbox is a windowmanager for X that was based on the Blackbox 0.61.1 code"
@@ -40,6 +40,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_realloc_0_nonnull=yes \
                            --disable-xft \
                            --disable-fribidi \
                            --disable-debug \
+                           --enable-freetype2 \
                            --disable-test \
                            --disable-nls \
                            --disable-imlib2 \
