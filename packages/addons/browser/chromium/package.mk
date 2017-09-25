@@ -40,6 +40,7 @@ GOLD_SUPPORT="no"
 
 pre_make_target() {
 #  export CCACHE_SLOPPINESS=include_file_mtime
+  strip_lto
 #  touch chrome/test/data/webui/i18n_process_css_test.html
 
   sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' third_party/widevine/cdm/stub/widevine_cdm_version.h
@@ -60,6 +61,7 @@ make_target() {
   
   export -n CFLAGS CXXFLAGS
   export LDFLAGS="$LDFLAGS -ludev"
+#  export LD=$CXX
 
   # Use Python 2
   find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$ROOT/$TOOLCHAIN/bin/python|g" {} +
@@ -94,15 +96,11 @@ make_target() {
     'proprietary_codecs=true'
     'link_pulseaudio=true'
     'linux_use_bundled_binutils=false'
-    'use_gold=false'
-    'linux_use_gold_flags=true'
-    'linux_use_tcmalloc=true'
-    'enable_precompiled_headers=false'
-    "use_allocator=\"none\""
-    'use_allocator_shim=false'
+    'use_allocator="none"'
     'use_cups=false'
     'use_gconf=false'
     'use_gnome_keyring=false'
+    'use_gold=false'
     'use_custom_libcxx=false'
     'is_official_build=false'
     'use_gtk3=false'
@@ -143,19 +141,17 @@ make_target() {
       -delete
   done
 
-  CFLAGS="$CFLAGS -fno-delete-null-pointer-checks"
-  
   ./build/linux/unbundle/replace_gn_files.py --system-libraries "${_system_libs}"
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
   ./tools/gn/bootstrap/bootstrap.py --gn-gen-args "${_flags[*]}"
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$ROOT/$TOOLCHAIN/bin/python
 
-	# chromedriver widevinecdmadapter
+   # chromedriver widevinecdmadapter
 	
-	ninja -C out/$_buildtype mksnapshot
+ #   ninja -C out/Release mksnapshot
 
-  ninja -j5 -C out/Release chrome chrome_sandbox
+    ninja -j4 -C out/Release chrome chrome_sandbox
 }
 
 makeinstall_target() {

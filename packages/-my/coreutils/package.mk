@@ -46,6 +46,9 @@ PKG_CONFIGURE_OPTS_TARGET="c_cv_c_restrict=no \
 			      --without-selinux \
 			      --with-openssl \
 			      --disable-rpath \
-			      --enable-threads=posix"
+			      --enable-threads=posix \
+			      --disable-nls \
+			      --without-gmp \
+			      --enable-no-install-program=hostname,su,kill,uptime"
 			      
 PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"

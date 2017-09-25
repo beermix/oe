@@ -97,6 +97,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            --disable-ntlm-wb \
                            --with-librtmp=$SYSROOT_PREFIX/usr \
                            --without-libidn2 \
+                           --enable-unix-sockets
                            --with-nghttp2=$SYSROOT_PREFIX/usr"
 
 pre_configure_target() {

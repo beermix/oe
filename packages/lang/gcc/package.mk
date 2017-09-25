@@ -56,12 +56,13 @@ GCC_COMMON_CONFIGURE_OPTS="MAKEINFO=missing \
                            --disable-libmpx \
                            --without-cuda-driver \
                            --disable-werror \
+                           --with-linker-hash-style=gnu \
                            --with-tune=generic"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
-                              --enable-cloog-backend=isl \
+                              --enable-cloog-backend \
                               --disable-libatomic \
                               --disable-libquadmath \
                               --disable-libmudflap \
@@ -89,6 +90,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-libstdcxx-time=yes \
                          --enable-gnu-unique-object \
                          --disable-vtable-verify \
+                         --enable-default-pie \
                          --enable-clocale=gnu \
                          $GCC_OPTS"
 pre_configure_host() {

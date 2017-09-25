@@ -52,6 +52,7 @@ PKG_CONFIGURE_OPTS_HOST="MAKEINFO=true \
                          --enable-shared \
                          --enable-threads \
                          --with-pic \
+                         --enable-relro \
                          --disable-nls \
                          --disable-sim \
                          --disable-gdb \
