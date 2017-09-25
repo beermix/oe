@@ -6,7 +6,10 @@ PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-#LDFLAGS="$LDFLAGS -static -static-libgcc"
+LTO_SUPPORT="yes"
+GOLD_SUPPORT="yes"
+
+CFFLAGS="$CFFLAGS -static-libgcc -lrt -ldl"
   
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-static \
