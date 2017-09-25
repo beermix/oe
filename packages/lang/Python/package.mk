@@ -67,10 +67,10 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            --with-system-ffi \
                            --with-system-expat \
                            --enable-shared \
-                           --enable-optimizations"
+                           --disable-optimizations"
 
 post_patch() {
-  # This is needed to make sure the Python build process doesn't try to
+  # This is needed to make -j1 sure the Python build process doesn't try to
   # regenerate those files with the pgen program. Otherwise, it builds
   # pgen for the target, and tries to run it on the host.
     touch $PKG_BUILD/Include/graminit.h
@@ -78,7 +78,7 @@ post_patch() {
 }
 
 make_host() {
-  make PYTHON_MODULES_INCLUDE="$HOST_INCDIR" \
+  make -j1 PYTHON_MODULES_INCLUDE="$HOST_INCDIR" \
        PYTHON_MODULES_LIB="$HOST_LIBDIR" \
        PYTHON_DISABLE_MODULES="readline _curses _curses_panel $PY_DISABLED_MODULES"
 
@@ -98,20 +98,20 @@ pre_configure_target() {
 }
 
 make_target() {
-  make  CC="$CC" LDFLAGS="$TARGET_LDFLAGS -L." \
+  make -j1 CC="$CC" LDFLAGS="$TARGET_LDFLAGS -L." \
         PYTHON_DISABLE_MODULES="$PY_DISABLED_MODULES" \
         PYTHON_MODULES_INCLUDE="$TARGET_INCDIR" \
         PYTHON_MODULES_LIB="$TARGET_LIBDIR"
 }
 
 makeinstall_target() {
-  make  -j1 CC="$CC" DESTDIR=$SYSROOT_PREFIX \
+  make -j1 CC="$CC" DESTDIR=$SYSROOT_PREFIX \
         PYTHON_DISABLE_MODULES="$PY_DISABLED_MODULES" \
         PYTHON_MODULES_INCLUDE="$TARGET_INCDIR" \
         PYTHON_MODULES_LIB="$TARGET_LIBDIR" \
         install
 
-  make  -j1 CC="$CC" DESTDIR=$INSTALL \
+  make -j1 CC="$CC" DESTDIR=$INSTALL \
         PYTHON_DISABLE_MODULES="$PY_DISABLED_MODULES" \
         PYTHON_MODULES_INCLUDE="$TARGET_INCDIR" \
         PYTHON_MODULES_LIB="$TARGET_LIBDIR" \
