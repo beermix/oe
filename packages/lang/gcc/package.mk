@@ -47,7 +47,7 @@ GCC_COMMON_CONFIGURE_OPTS="MAKEINFO=missing \
                            --disable-nls
                            --enable-lto \
                            --enable-ld=default \
-                           --with-default-libstdcxx-abi=gcc4-compatible \
+                           --with-default-libstdcxx-abi=new \
                            --enable-checking=release \
                            --disable-libssp \
                            --disable-libsanitizer \
@@ -90,9 +90,11 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-libstdcxx-time=yes \
                          --enable-gnu-unique-object \
                          --disable-vtable-verify \
-                         --enable-default-pie \
                          --enable-clocale=gnu \
+                         --enable-default-pie \
+                         --enable-default-ssp
                          $GCC_OPTS"
+                         
 pre_configure_host() {
   #export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
