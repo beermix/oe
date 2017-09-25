@@ -17,13 +17,13 @@
 ################################################################################
 
 PKG_NAME="mariadb"
-PKG_VERSION="10.1.26"
+PKG_VERSION="10.1.27"
 #PKG_VERSION="10.2.8"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/MariaDB/server/releases"
-PKG_URL="https://downloads.mariadb.org/interstitial/$PKG_NAME-$PKG_VERSION/source/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_URL="https://ftp.heanet.ie/mirrors/mariadb/$PKG_NAME-$PKG_VERSION/source/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST=""
 PKG_DEPENDS_TARGET="toolchain readline libaio openssl libxml2 mariadb:host"
 PKG_PRIORITY="optional"
