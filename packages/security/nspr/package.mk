@@ -30,16 +30,17 @@ PKG_LONGDESC="Netscape Portable Runtime (NSPR) provides a platform-neutral API f
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_SCRIPT=nspr/configure
-PKG_CONFIGURE_OPTS_HOST="--with-pthreads"
-PKG_CONFIGURE_OPTS_TARGET="--with-pthreads"
+MAKEFLAGS=-j1
 
-post_makeinstall_host() {
-  cp config/nsinstall $ROOT/$TOOLCHAIN/bin
-}
+if [ "$TARGET_ARCH" = "x86_64" ] ; then
+  TARGET_USE_64="--enable-64bit"
+fi
 
-pre_configure_target() {
-  HOST_CFLAGS=$(sed "s/-Wall//;s/-pipe//" <<< $HOST_CFLAGS)
-  PKG_MAKE_OPTS_TARGET="-j1 NSINSTALL=$ROOT/$TOOLCHAIN/bin/nsinstall HOST_CFLAGS=$HOST_CFLAGS"
-  PKG_MAKEINSTALL_OPTS_TARGET="NSINSTALL=$ROOT/$TOOLCHAIN/bin/nsinstall"
+PKG_CONFIGURE_OPTS_TARGET="--with-pthreads $TARGET_USE_64"
+PKG_MAKE_OPTS_TARGET="NSINSTALL=$ROOT/$TOOLCHAIN/bin/nsinstall"
+PKG_MAKEINSTALL_OPTS_TARGET="NSINSTALL=$ROOT/$TOOLCHAIN/bin/nsinstall"
+
+configure_target() {
+  cd $(get_pkg_build nss)/nspr
+  ./configure --with-pthreads $TARGET_USE_64 $TARGET_CONFIGURE_OPTS 
 }
