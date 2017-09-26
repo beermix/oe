@@ -47,12 +47,15 @@ GCC_COMMON_CONFIGURE_OPTS="MAKEINFO=missing \
                            --disable-nls
                            --enable-lto \
                            --enable-ld=default \
-                           --with-default-libstdcxx-abi=new \
+                           --disable-multilib \
+                           --disable-nls \
                            --enable-checking=release \
-                           --disable-libssp \
+                           --with-default-libstdcxx-abi=gcc4-compatible \
                            --without-ppl \
                            --without-cloog \
                            --disable-libmpx \
+                           --disable-libsanitizer \
+                           --disable-libssp \
                            --without-cuda-driver \
                            --disable-werror \
                            --with-linker-hash-style=gnu \
@@ -62,7 +65,6 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
                               --enable-cloog-backend \
-                              --disable-libsanitizer \
                               --disable-libatomic \
                               --disable-libquadmath \
                               --disable-libmudflap \
@@ -88,8 +90,6 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-threads=posix \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time=yes \
-                         --enable-gnu-unique-object \
-                         --disable-vtable-verify \
                          --enable-clocale=gnu \
                          --enable-default-pie \
                          --enable-default-ssp
