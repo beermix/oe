@@ -38,17 +38,15 @@ PKG_ADDON_TYPE="xbmc.python.script"
 PKG_ADDON_PROVIDES="executable"
 
 post_patch() {
-  cd $(get_build_dir chromium)
-
   # Use Python 2
-  find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$ROOT/$TOOLCHAIN/bin/python|g" {} +
+  find $ROOT/$PKG_BUILD -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$ROOT/$TOOLCHAIN/bin/python|g" {} +
 
   # set correct widevine
-  sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' ./third_party/widevine/cdm/stub/widevine_cdm_version.h
+  sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' $ROOT/$PKG_BUILD/third_party/widevine/cdm/stub/widevine_cdm_version.h
 }
 
 make_host() {
-  ./tools/gn/bootstrap/bootstrap.py --no-rebuild --no-clean --verbose
+  $ROOT/$PKG_BUILD/tools/gn/bootstrap/bootstrap.py --no-rebuild --no-clean --verbose
 }
 
 makeinstall_host() {
@@ -141,7 +139,7 @@ make_target() {
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$ROOT/$TOOLCHAIN/bin/python
 
-  ninja -j2 -C out/Release chrome chrome_sandbox widevinecdmadapter
+  ninja -j3 -C out/Release chrome chrome_sandbox widevinecdmadapter
 }
 
 makeinstall_target() {
@@ -163,37 +161,37 @@ addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # pango
-  cp -PL $(get_build_dir pango)/.install_pkg/usr/lib/libpangocairo-1.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
-  cp -PL $(get_build_dir pango)/.install_pkg/usr/lib/libpango-1.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
-  cp -PL $(get_build_dir pango)/.install_pkg/usr/lib/libpangoft2-1.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_pkg_build pango)/.install_pkg/usr/lib/libpangocairo-1.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_pkg_build pango)/.install_pkg/usr/lib/libpango-1.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_pkg_build pango)/.install_pkg/usr/lib/libpangoft2-1.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # cairo
-  cp -PL $(get_build_dir cairo)/.install_pkg/usr/lib/libcairo.so.2 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_pkg_build cairo)/.install_pkg/usr/lib/libcairo.so.2 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # gtk2
-  cp -PL $(get_build_dir gtk2)/.install_pkg/usr/lib/libgdk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
-  cp -PL $(get_build_dir gtk2)/.install_pkg/usr/lib/libgtk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_pkg_build gtk2)/.install_pkg/usr/lib/libgdk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_pkg_build gtk2)/.install_pkg/usr/lib/libgtk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # harfbuzz
-  cp -PL $(get_build_dir harfbuzz)/.install_pkg/usr/lib/libharfbuzz.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
-  cp -PL $(get_build_dir harfbuzz)/.install_pkg/usr/lib/libharfbuzz-icu.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_pkg_build harfbuzz)/.install_pkg/usr/lib/libharfbuzz.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_pkg_build harfbuzz)/.install_pkg/usr/lib/libharfbuzz-icu.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # gdk-pixbuf
-  cp -PL $(get_build_dir gdk-pixbuf)/.install_pkg/usr/lib/libgdk_pixbuf-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_pkg_build gdk-pixbuf)/.install_pkg/usr/lib/libgdk_pixbuf-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
   
   # atk
-  cp -PL $(get_build_dir atk)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_pkg_build atk)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # pixbuf loaders
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules
-  cp -PL $(get_build_dir gdk-pixbuf)/.install_pkg/usr/lib/gdk-pixbuf-2.0/2.10.0/loaders/* $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules
+  cp -PL $(get_pkg_build gdk-pixbuf)/.install_pkg/usr/lib/gdk-pixbuf-2.0/2.10.0/loaders/* $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules
 
   # libexif
-  cp -PL $(get_build_dir libexif)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_pkg_build libexif)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # unclutter
-  cp -P $(get_build_dir unclutter)/.install_pkg/usr/bin/unclutter $ADDON_BUILD/$PKG_ADDON_ID/bin
+  cp -P $(get_pkg_build unclutter)/.install_pkg/usr/bin/unclutter $ADDON_BUILD/$PKG_ADDON_ID/bin
 
   # xdotool
-  cp -P $(get_build_dir xdotool)/xdotool $ADDON_BUILD/$PKG_ADDON_ID/bin
+  cp -P $(get_pkg_build xdotool)/xdotool $ADDON_BUILD/$PKG_ADDON_ID/bin
 }

@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/root/-f2fs/oe/build.OE-Generic.x86_64-8.0-devel/toolchain/bin/python
 # vim:set et sw=4:
 #
 # certdata2pem.py - splits certdata.txt into multiple files

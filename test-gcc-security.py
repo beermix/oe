@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/root/-f2fs/oe/build.OE-Generic.x86_64-8.0-devel/toolchain/bin/python
 #
 #    gcc-security.py regression testing script for GCC
 #    security features (and some glibc features too)

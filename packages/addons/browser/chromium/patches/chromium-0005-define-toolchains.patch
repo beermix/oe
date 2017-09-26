@@ -6,7 +6,7 @@
  gcc_toolchain("x64") {
 -  cc = "gcc"
 -  cxx = "g++"
-+  toolchainprefix = "x86_64-libreelec-linux-gnu-"
++  toolchainprefix = "x86_64-openelec-linux-gnu-"
 +  cc = "${toolchainprefix}gcc"
 +  cxx = "${toolchainprefix}g++"
  
@@ -25,8 +25,8 @@
  
 +gcc_toolchain("x64_host") {
 +  toolchainprefix = "host-"
-+  cc = "${toolchainprefix}gcc"
-+  cxx = "${toolchainprefix}g++"
++  cc = "gcc"
++  cxx = "g++"
 +
 +  readelf = "readelf"
 +  nm = "nm"
