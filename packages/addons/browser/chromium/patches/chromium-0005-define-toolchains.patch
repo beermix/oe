@@ -6,7 +6,7 @@
  gcc_toolchain("x64") {
 -  cc = "gcc"
 -  cxx = "g++"
-+  toolchainprefix = "x86_64-openelec-linux-gnu-"
++  toolchainprefix = "x86_64-libreelec-linux-gnu-"
 +  cc = "${toolchainprefix}gcc"
 +  cxx = "${toolchainprefix}g++"
  
