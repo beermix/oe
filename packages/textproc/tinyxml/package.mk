@@ -28,8 +28,4 @@ PKG_LONGDESC="TinyXML is a simple, small, C++ XML parser that can be easily inte
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --with-pic"
 
-post_makeinstall_target() {
-  rm -rf $INSTALL/usr
-}
