@@ -15,8 +15,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-threads \
 			      --enable-openmp \
 			      --enable-silent-rules \
 			      --enable-sse2 \
-			      --enable-avx \
-			      --with-gnu-ld"
+			      --enable-avx"
 
 post_makeinstall_target() {
   rm -rf $INSTALL
