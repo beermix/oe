@@ -4,7 +4,7 @@ PKG_NAME="php"
 #PHP_VERSION=5.3.3
 
 if [ -z "$PHP_VERSION" ]; then
-  PKG_VERSION="7.1.9"
+  PKG_VERSION="5.6.31"
 
 	# test latest
 	#PKG_VERSION="7.1.9"
@@ -71,12 +71,17 @@ configure_target() {
   chmod +x $APXS_FILE
     
 
+  # libiconv
+  export CFLAGS="$CFLAGS -I$SYSROOT_PREFIX/usr/include/iconv"
+  export LDFLAGS="$LDFLAGS -L$SYSROOT_PREFIX/usr/lib/iconv -liconv"
+
+  export CXXFLAGS="$CFLAGS"
+  export CPPFLAGS="$CFLAGS"
+
   PKG_CONFIGURE_OPTS_TARGET="--enable-cli \
                              --enable-cgi \
                              --enable-opcache=no \
                              --without-pear \
-                             --disable-shared \
-                             --enable-static \
                              --with-config-file-path=/storage/.kodi/userdata/addon_data/service.web.lamp/srvroot/conf \
                              --localstatedir=/var \
                              --disable-phpdbg \
@@ -103,7 +108,7 @@ configure_target() {
                              --with-zlib=$SYSROOT_PREFIX/usr \
                              --with-bz2=$SYSROOT_PREFIX/usr \
                              --with-iconv \
-                             --without-gettext \
+                             --with-gettext \
                              --with-gmp=$SYSROOT_PREFIX/usr \
                              --enable-json \
                              --enable-pcntl \
@@ -115,9 +120,8 @@ configure_target() {
                              --with-pcre-regex=$SYSROOT_PREFIX/usr \
                              --with-sqlite3=$SYSROOT_PREFIX/usr \
                              --with-pdo-sqlite=$SYSROOT_PREFIX/usr \
-                             --enable-pdo \
                              --with-mcrypt=$LIBMCRYPT_DIR_TARGET/usr \
-                             --with-mysql=$SYSROOT_PREFIX/usr \
+                             --with-mysql \
                              --with-mysql-sock=/run/mysql/mysql.sock \
                              --with-gd \
                              --enable-gd-native-ttf \
