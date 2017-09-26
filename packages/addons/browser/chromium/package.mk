@@ -141,7 +141,7 @@ make_target() {
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
 
-  ninja -j${CONCURRENCY_MAKE_LEVEL} -C out/Release chrome chrome_sandbox widevinecdmadapter
+  ninja -j2 -C out/Release chrome chrome_sandbox widevinecdmadapter
 }
 
 makeinstall_target() {
