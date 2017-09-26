@@ -31,9 +31,9 @@ configure_host() {
 }
 
 make_host() {
-  python3 setup.py build
+  /usr/bin/python3 setup.py build
 }
 
 makeinstall_host() {
-  python3 setup.py install --prefix=$ROOT/$TOOLCHAIN --optimize=1
+  /usr/bin/python3 setup.py install --prefix=$ROOT/$TOOLCHAIN --optimize=1
 }
