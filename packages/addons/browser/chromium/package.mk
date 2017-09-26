@@ -55,6 +55,7 @@ makeinstall_host() {
 
 make_target() {
   strip_lto
+  strip_hard
   export LDFLAGS="$LDFLAGS -ludev"
   export LD=$CXX
 
@@ -117,7 +118,7 @@ make_target() {
     libpng
     libxslt
     yasm
-#    minizip
+    minizip
 #    libxslt
 #    libxml2
 #    freetype
@@ -139,7 +140,7 @@ make_target() {
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$ROOT/$TOOLCHAIN/bin/python
 
-  ninja -j3 -C out/Release chrome chrome_sandbox widevinecdmadapter
+  ninja -j1 -C out/Release chrome chrome_sandbox widevinecdmadapter
 }
 
 makeinstall_target() {
