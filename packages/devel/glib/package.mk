@@ -31,10 +31,11 @@ PKG_LONGDESC="GLib is a library which includes support routines for C such as li
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_HOST="--enable-static \
-                         --disable-shared \
+PKG_CONFIGURE_OPTS_HOST="PCRE_LIBS=-l:libpcre.a \
+                         --disable-static \
+                         --enable-shared \
                          --disable-libmount \
-                         --with-pcre=internal"
+                         --with-python=python"
 
 PKG_CONFIGURE_OPTS_TARGET="glib_cv_stack_grows=no \
                            glib_cv_uscore=no \
@@ -55,6 +56,10 @@ PKG_CONFIGURE_OPTS_TARGET="glib_cv_stack_grows=no \
                            --with-pic \
                            --enable-static \
                            --with-pcre=system"
+
+pre_configure_host() {
+  CFLAGS="$CFLAGS -fPIC"
+}
 
 post_makeinstall_target() {
   mkdir -p $SYSROOT_PREFIX/usr/lib/pkgconfig
