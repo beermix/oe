@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="dbus"
-PKG_VERSION="1.10.22"
+PKG_VERSION="430643d"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://dbus.freedesktop.org/releases/dbus/?C=M;O=D"
-PKG_URL="https://dbus.freedesktop.org/releases/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_GIT_URL="git://anongit.freedesktop.org/git/dbus/dbus"
 PKG_DEPENDS_TARGET="toolchain expat systemd"
 PKG_PRIORITY="required"
 PKG_SECTION="system"
@@ -30,7 +30,7 @@ PKG_SHORTDESC="dbus: simple interprocess messaging system"
 PKG_LONGDESC="D-Bus is a message bus, used for sending messages between applications. This package contains the D-Bus daemon and related utilities and the dbus shared library."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="export ac_cv_have_abstract_sockets=yes \
                            --with-sysroot=$SYSROOT_PREFIX \
@@ -50,7 +50,8 @@ PKG_CONFIGURE_OPTS_TARGET="export ac_cv_have_abstract_sockets=yes \
                            --enable-inotify \
                            --without-valgrind \
                            --without-x \
-                           --with-dbus-user=dbus"
+                           --with-dbus-user=dbus \
+                           --enable-user-session"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/etc/rc.d

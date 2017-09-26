@@ -48,14 +48,11 @@ PKG_CONFIGURE_OPTS_HOST="MAKEINFO=true \
                          --enable-plugins \
                          --enable-ld=default \
                          --enable-lto \
-                         --enable-gold \
                          --enable-shared \
                          --enable-threads \
                          --with-pic \
                          --enable-relro \
                          --disable-nls \
-                         --disable-sim \
-                         --disable-gdb \
                          --enable-poison-system-directories"
 
 makeinstall_host() {
