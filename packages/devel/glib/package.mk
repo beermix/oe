@@ -23,7 +23,7 @@ PKG_LICENSE="LGPL"
 PKG_SITE="http://www.gtk.org/"
 PKG_URL="http://ftp.gnome.org/pub/gnome/sources/glib/${PKG_VERSION%.*}/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain zlib libffi pcre Python:host util-linux"
-PKG_DEPENDS_HOST="libffi:host"
+PKG_DEPENDS_HOST="libffi:host pcre:host"
 PKG_SECTION="devel"
 PKG_SHORTDESC="glib: C support library"
 PKG_LONGDESC="GLib is a library which includes support routines for C such as lists, trees, hashes, memory allocation, and many other things."
@@ -37,7 +37,9 @@ PKG_CONFIGURE_OPTS_HOST="PCRE_LIBS=-l:libpcre.a \
                          --disable-libmount \
                          --with-python=python"
 
-PKG_CONFIGURE_OPTS_TARGET="glib_cv_stack_grows=no \
+PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_snprintf_c99=yes \
+                           ac_cv_func_vsnprintf_c99=yes \
+                           glib_cv_stack_grows=no \
                            glib_cv_uscore=no \
                            glib_cv_va_val_copy=no \
                            --disable-selinux \
@@ -52,10 +54,8 @@ PKG_CONFIGURE_OPTS_TARGET="glib_cv_stack_grows=no \
                            --enable-Bsymbolic \
                            --with-gnu-ld \
                            --with-threads=posix \
-                           --disable-compile-warnings \
-                           --with-pic \
-                           --enable-static \
-                           --with-pcre=system"
+                           --with-pcre=system \
+                           --with-python=python"
 
 pre_configure_host() {
   CFLAGS="$CFLAGS -fPIC"
@@ -75,19 +75,11 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/lib/glib-2.0
   rm -rf $INSTALL/usr/share
       
-  ln -sf $SYSROOT_PREFIX/usr/bin/gapplication $ROOT/$BUILD/toolchain/bin/
-  ln -sf $SYSROOT_PREFIX/usr/bin/gdbus $ROOT/$BUILD/toolchain/bin/
-  ln -sf $SYSROOT_PREFIX/usr/bin/gio $ROOT/$BUILD/toolchain/bin/
   ln -sf $SYSROOT_PREFIX/usr/bin/gio-querymodules $ROOT/$BUILD/toolchain/bin/
   ln -sf $SYSROOT_PREFIX/usr/bin/glib-compile-resources $ROOT/$BUILD/toolchain/bin/
   ln -sf $SYSROOT_PREFIX/usr/bin/glib-compile-schemas $ROOT/$BUILD/toolchain/bin/
   ln -sf $SYSROOT_PREFIX/usr/bin/glib-genmarshal $ROOT/$BUILD/toolchain/bin/
   ln -sf $SYSROOT_PREFIX/usr/bin/glib-gettextize $ROOT/$BUILD/toolchain/bin/
   ln -sf $SYSROOT_PREFIX/usr/bin/glib-mkenums $ROOT/$BUILD/toolchain/bin/
-  ln -sf $SYSROOT_PREFIX/usr/bin/gobject-query $ROOT/$BUILD/toolchain/bin/
-  ln -sf $SYSROOT_PREFIX/usr/bin/gresource $ROOT/$BUILD/toolchain/bin/
-  ln -sf $SYSROOT_PREFIX/usr/bin/gsettings $ROOT/$BUILD/toolchain/bin/
-  ln -sf $SYSROOT_PREFIX/usr/bin/gtester $ROOT/$BUILD/toolchain/bin/
-  ln -sf $SYSROOT_PREFIX/usr/bin/gtester-report $ROOT/$BUILD/toolchain/bin/
   ln -sf $SYSROOT_PREFIX/usr/bin/gdbus-codegen $ROOT/$BUILD/toolchain/bin/
 }
