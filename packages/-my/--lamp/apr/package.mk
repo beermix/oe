@@ -59,8 +59,7 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            apr_cv_tcp_nodelay_with_cork=no \
                            apr_cv_process_shared_works=no \
                            $SIZEOF_SIZES \
-                           --disable-shared \
-                           --enable-static \
+                           --disable-static \
                            --disable-libtool-lock \
                            --enable-lfs \
                            --enable-dso \
