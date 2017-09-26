@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libdnet"
-PKG_VERSION="72de1b4"
+PKG_VERSION="libdnet-1.12"
 PKG_SITE="http://code.google.com/p/libdnet/"
 PKG_GIT_URL="https://github.com/AlexandreFournier/libdnet"
 PKG_DEPENDS_TARGET="toolchain"
@@ -30,13 +30,10 @@ PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_strlcat=no \
                            ac_cv_func_strlcpy=no \
-                           --enable-static \
-                           --disable-shared \
                            --without-python"
 
 pre_configure_target() {
   sed "s|@prefix@|$SYSROOT_PREFIX/usr|g" -i $ROOT/$PKG_BUILD/dnet-config.in
-  CFLAGS="$CFLAGS -fPIC"
 }
 
 post_makeinstall_target() {

@@ -36,7 +36,7 @@ PKG_ADDON_NAME="Chromium"
 PKG_ADDON_TYPE="xbmc.python.script"
 PKG_ADDON_PROVIDES="executable"
 
-#GOLD_SUPPORT="no"
+GOLD_SUPPORT="no"
 
 pre_make_target() {
 #  export CCACHE_SLOPPINESS=include_file_mtime
@@ -103,7 +103,7 @@ make_target() {
     'use_gold=false'
     'use_custom_libcxx=false'
     'is_official_build=false'
-    'use_gtk3=true'
+    'use_gtk3=false'
     'use_vaapi=true'
     'use_kerberos=false'
     'use_pulseaudio=false'
@@ -127,7 +127,7 @@ make_target() {
     minizip
     libxslt
     libxml2
-    #freetype
+    freetype
   )
   # Remove bundled libraries for which we will use the system copies; this
   # *should* do what the remove_bundled_libraries.py script does, with the
@@ -151,7 +151,7 @@ make_target() {
 	
  #   ninja -C out/Release mksnapshot
 
-    ninja -j2 -C out/Release chrome chrome_sandbox widevinecdmadapter
+    ninja -j1 -C out/Release chrome chrome_sandbox widevinecdmadapter
 }
 
 makeinstall_target() {
