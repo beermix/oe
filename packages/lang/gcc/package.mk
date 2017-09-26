@@ -58,7 +58,6 @@ GCC_COMMON_CONFIGURE_OPTS="MAKEINFO=missing \
                            --disable-libssp \
                            --without-cuda-driver \
                            --disable-werror \
-                           --with-linker-hash-style=gnu \
                            --with-tune=generic"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
@@ -81,6 +80,12 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
 PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-languages=c,c++ \
                          --enable-__cxa_atexit \
+                         --disable-libunwind-exceptions \
+                         --enable-gnu-unique-object \
+                         --enable-linker-build-id \
+                         --enable-install-libiberty \
+                         --with-linker-hash-style=gnu \
+                         --enable-gnu-indirect-function \
                          --enable-decimal-float \
                          --enable-tls \
                          --enable-shared \
