@@ -17,10 +17,10 @@
 ################################################################################
 
 PKG_NAME="Python3"
-PKG_VERSION="3.6.3rc1"
-PKG_URL="http://192.168.1.200:8080/%2FPython3-3.6.3rc1.tar.xz"
+PKG_VERSION="3.6.2"
+PKG_URL="http://192.168.1.200:8080/Python3-3.6.2.tar.xz"
 PKG_DEPENDS_HOST="zlib:host bzip2:host sqlite:host"
-PKG_DEPENDS_TARGET="toolchain sqlite expat zlib bzip2 openssl libffi readline Python:host"
+PKG_DEPENDS_TARGET="toolchain sqlite expat zlib bzip2 openssl libffi readline Python3:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="lang"
 PKG_SHORTDESC="python: The Python programming language"
@@ -29,7 +29,7 @@ PKG_LONGDESC="Python is an interpreted object-oriented programming language, and
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PY_DISABLED_MODULES="_tkinter nis gdbm bsddb ossaudiodev"
+PY_DISABLED_MODULES="_tkinter nis gdbm bsddb machinery ossaudiodev"
 
 PKG_CONFIGURE_OPTS_HOST="--cache-file=config.cache \
                          --without-cxx-main \
@@ -37,6 +37,7 @@ PKG_CONFIGURE_OPTS_HOST="--cache-file=config.cache \
                          --enable-unicode=ucs4 \
                          --disable-ipv6 \
                          --enable-shared \
+                         --without-ensurepip \
                          --disable-static"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
@@ -61,6 +62,8 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            --without-fpectl \
                            --with-wctype-functions \
                            --without-cxx-main \
+                           --without-ensurepip \
+                           --without-pymalloc \
                            --with-system-ffi \
                            --with-system-expat \
                            --enable-shared"
@@ -95,20 +98,20 @@ pre_configure_target() {
 }
 
 make_target() {
-  make -j1 CC="$CC" LDFLAGS="$TARGET_LDFLAGS -L." \
+  make  CC="$CC" LDFLAGS="$TARGET_LDFLAGS -L." \
         PYTHON_DISABLE_MODULES="$PY_DISABLED_MODULES" \
         PYTHON_MODULES_INCLUDE="$TARGET_INCDIR" \
         PYTHON_MODULES_LIB="$TARGET_LIBDIR"
 }
 
 makeinstall_target() {
-  make -j1 CC="$CC" DESTDIR=$SYSROOT_PREFIX \
+  make  CC="$CC" DESTDIR=$SYSROOT_PREFIX \
         PYTHON_DISABLE_MODULES="$PY_DISABLED_MODULES" \
         PYTHON_MODULES_INCLUDE="$TARGET_INCDIR" \
         PYTHON_MODULES_LIB="$TARGET_LIBDIR" \
         install
 
-  make -j1 CC="$CC" DESTDIR=$INSTALL \
+  make  CC="$CC" DESTDIR=$INSTALL \
         PYTHON_DISABLE_MODULES="$PY_DISABLED_MODULES" \
         PYTHON_MODULES_INCLUDE="$TARGET_INCDIR" \
         PYTHON_MODULES_LIB="$TARGET_LIBDIR" \
