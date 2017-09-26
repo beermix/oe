@@ -95,7 +95,7 @@ makeinstall_host() {
 
 pre_configure_target() {
   export PYTHON_FOR_BUILD=$ROOT/$TOOLCHAIN/bin/python
-  export LTO_SUPPORT="yes"
+  #export LTO_SUPPORT="yes"
 }
 
 make_target() {
