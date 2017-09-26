@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="bluez"
-PKG_VERSION="5.47"
+PKG_VERSION="5.45"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.bluez.org/"
@@ -27,6 +27,7 @@ PKG_SECTION="network"
 PKG_SHORTDESC="bluez: Bluetooth Tools and System Daemons for Linux."
 PKG_LONGDESC="Bluetooth Tools and System Daemons for Linux."
 
+PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
@@ -58,10 +59,8 @@ fi
 
 pre_configure_target() {
 # bluez fails to build in subdirs
-  cd $PKG_BUILD
+  cd $ROOT/$PKG_BUILD
     rm -rf .$TARGET_NAME
-
-  export LIBS="-lncurses -ltinfo"
 }
 
 post_makeinstall_target() {
@@ -71,10 +70,15 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin/ciptool
   rm -rf $INSTALL/usr/share/dbus-1
 
+  mkdir -p $INSTALL/usr/bin
+    cp tools/btinfo $INSTALL/usr/bin
+    cp tools/btmgmt $INSTALL/usr/bin
 
   mkdir -p $INSTALL/etc/bluetooth
     cp src/main.conf $INSTALL/etc/bluetooth
     sed -i $INSTALL/etc/bluetooth/main.conf \
+        -e 's/^#Name\ =.*/Name\ =\ %h/' \
+        -e "s|^#DiscoverableTimeout.*|DiscoverableTimeout\ =\ 0|g" \
         -e "s|^#\[Policy\]|\[Policy\]|g" \
         -e "s|^#AutoEnable.*|AutoEnable=true|g"
 }
