@@ -60,11 +60,23 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$ROOT/$TOOLCHAIN \
                        -DENABLE_LIRC=ON \
                        -DENABLE_EVENTCLIENTS=ON \
                        -DENABLE_LIBUSB=OFF \
-                       -DENABLE_BLUETOOTH=OFF \
                        -DENABLE_OPTICAL=OFF \
                        -DENABLE_UDEV=ON \
                        -DENABLE_XSLT=ON \
-                       -DENABLE_DBUS=ON"
+                       -DENABLE_DBUS=ON \
+                       -DENABLE_AVX=ON \
+                       -DENABLE_AVX2=OFF \
+                       -DENABLE_SSE=ON \
+                       -DENABLE_SSE2=ON \
+                       -DENABLE_SSE4_1=ON \
+                       -DENABLE_SSE4_2=ON \
+                       -DENABLE_SSSE3=ON \
+                       -DHAVE_SSE=TRUE \
+                       -DHAVE_SSE2=TRUE \
+                       -DHAVE_SSE4_1=TRUE \
+                       -DHAVE_SSSE3=TRUE"
+                       
+# -DENABLE_BLUETOOTH=OFF
 
 if [ "$TARGET_ARCH" = "x86_64" ]; then
   PKG_CMAKE_OPTS_TARGET+=" -DWITH_CPU=$TARGET_ARCH"
