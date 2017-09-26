@@ -18,7 +18,7 @@
 
 PKG_NAME="libjpeg-turbo"
 PKG_VERSION="1.5.2"
-PKG_URL="https://dl.dropboxusercontent.com/s/liwm36imr79w4qf/libjpeg-turbo-1.5.2.tar.gz"
+PKG_GIT_URL="https://github.com/libjpeg-turbo/libjpeg-turbo"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_PRIORITY="optional"
 PKG_SECTION="graphics"
@@ -34,15 +34,15 @@ PKG_CONFIGURE_OPTS_HOST="--enable-static \
                          --with-jpeg8 \
                          --without-simd"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --with-jpeg8"
+PKG_CONFIGURE_OPTS_TARGET="--with-jpeg8"
 
 pre_configure_host() {
   export CFLAGS="$CFLAGS -fPIC -DPIC"
 }
 
-pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC -DPIC"
-}
+#pre_configure_target() {
+#  export CFLAGS="$CFLAGS -fPIC -DPIC"
+#}
 
 if [ "$SIMD_SUPPORT" = "no" ]; then
   PKG_CONFIGURE_OPTS_TARGET+=" --without-simd"
