@@ -55,7 +55,8 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_snprintf_c99=yes \
                            --with-gnu-ld \
                            --with-threads=posix \
                            --with-pcre=system \
-                           --with-python=python"
+                           --with-python=python \
+                           --enable-static"
 
 pre_configure_host() {
   CFLAGS="$CFLAGS -fPIC"
