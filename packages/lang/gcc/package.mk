@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="7-20170921"
+PKG_VERSION="7-20170928"
 #PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/$PKG_VERSION/gcc-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host"
@@ -57,6 +57,7 @@ GCC_COMMON_CONFIGURE_OPTS="MAKEINFO=missing \
                            --disable-libsanitizer \
                            --disable-libssp \
                            --without-cuda-driver \
+                           --with-linker-hash-style=gnu \
                            --disable-werror \
                            --with-tune=generic"
 
@@ -84,7 +85,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-gnu-unique-object \
                          --enable-linker-build-id \
                          --enable-install-libiberty \
-                         --with-linker-hash-style=gnu \
+                         --disable-vtable-verify \
                          --enable-gnu-indirect-function \
                          --enable-decimal-float \
                          --enable-tls \
@@ -97,7 +98,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-libstdcxx-time=yes \
                          --enable-clocale=gnu \
                          --enable-default-pie \
-                         --enable-default-ssp
+                         --enable-default-ssp \
                          $GCC_OPTS"
                          
 pre_configure_host() {
