@@ -1,6 +1,6 @@
 PKG_NAME="libva-utils"
-PKG_VERSION="1.8.3"
-PKG_SITE="https://github.com/01org/libva-utils"
+PKG_VERSION="2.0.0.pre2"
+PKG_SITE="https://github.com/01org/libva-utils/releases"
 PKG_URL="https://github.com/01org/libva-utils/releases/download/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
 #PKG_GIT_URL="https://github.com/01org/libva-utils"
 PKG_DEPENDS_TARGET="toolchain readline intel-vaapi-driver libva"
