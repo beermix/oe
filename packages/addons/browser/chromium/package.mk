@@ -76,7 +76,6 @@ make_target() {
       -e 's|/usr/lib64/va/drivers|/usr/lib/dri|g' \
       -i ./content/common/sandbox_linux/bpf_gpu_policy_linux.cc
 
-
   local _flags=(
     "host_toolchain=\"//build/toolchain/linux:x64_host\""
     'is_clang=false'
@@ -94,7 +93,7 @@ make_target() {
     'use_allocator="none"'
     'use_cups=false'
     'use_custom_libcxx=false'
-    'use_gconf=false'
+    'use_gconf=true'
     'use_gnome_keyring=false'
     'use_gold=false'
     'use_gtk3=false'
