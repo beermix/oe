@@ -5,7 +5,7 @@
 
 PKG_NAME="vlc"
 PKG_VERSION="3.0.0-git"
-PKG_REV="20170923-0240"
+PKG_REV="20171001-0239"
 PKG_SITE="https://nightlies.videolan.org/build/source/"
 PKG_URL="https://nightlies.videolan.org/build/source/vlc-3.0.0-$PKG_REV-git.tar.xz"
 PKG_DEPENDS_TARGET="toolchain dbus ffmpeg libdvbpsi libmpeg2 libogg libvorbis flac libsamplerate zlib lua:host lua gnutls"
