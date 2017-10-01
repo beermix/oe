@@ -119,9 +119,8 @@ make_target() {
     libxslt
     yasm
     minizip
-#    libxslt
-#    libxml2
-#    freetype
+    libxslt
+    libxml2
   )
   # Remove bundled libraries for which we will use the system copies; this
   # *should* do what the remove_bundled_libraries.py script does, with the
