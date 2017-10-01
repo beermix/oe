@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="configtools"
-PKG_VERSION="0710b02"
+PKG_VERSION="c003e5c"
 #PKG_VERSION="36b490f"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
