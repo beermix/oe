@@ -1,7 +1,7 @@
 PKG_NAME="git"
 PKG_VERSION="2.14.2"
 PKG_URL="https://www.kernel.org/pub/software/scm/git/git-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain curl pcre expat zlib openssl"
+PKG_DEPENDS_TARGET="toolchain curl pcre2 expat zlib openssl"
 PKG_SECTION="devel"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
@@ -32,7 +32,7 @@ PKG_CONFIGURE_OPTS_TARGET="--with-curl=$SYSROOT_PREFIX/usr \
 			      --with-zlib=$SYSROOT_PREFIX/usr \
 			      --with-editor=/usr/bin/nano \
 			      --with-expat=$SYSROOT_PREFIX/usr \
-			      --with-libpcre=$SYSROOT_PREFIX/usr \
+			      --with-libpcre2=$SYSROOT_PREFIX/usr \
 			      --disable-option-checking"
 
 
