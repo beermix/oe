@@ -58,6 +58,9 @@ make_target() {
   strip_hard
   export LDFLAGS="$LDFLAGS -ludev"
   export LD=$CXX
+  
+  mkdir -p third_party/node/linux/node-linux-x64/bin
+  ln -sfv /usr/bin/node third_party/node/linux/node-linux-x64/bin/node
 
   # Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
   # Note: These are for OpenELEC use ONLY. For your own distribution, please
@@ -67,11 +70,11 @@ make_target() {
   _google_default_client_id=740889307901-4bkm4e0udppnp1lradko85qsbnmkfq3b.apps.googleusercontent.com
   _google_default_client_secret=9TJlhL661hvShQub4cWhANXa
   
-#  sed -e 's|i386-linux-gnu/||g' \
-#      -e 's|x86_64-linux-gnu/||g' \
-#      -e 's|/usr/lib/va/drivers|/usr/lib/dri|g' \
-#      -e 's|/usr/lib64/va/drivers|/usr/lib/dri|g' \
-#      -i ./content/common/sandbox_linux/bpf_gpu_policy_linux.cc
+  sed -e 's|i386-linux-gnu/||g' \
+      -e 's|x86_64-linux-gnu/||g' \
+      -e 's|/usr/lib/va/drivers|/usr/lib/dri|g' \
+      -e 's|/usr/lib64/va/drivers|/usr/lib/dri|g' \
+      -i ./content/common/sandbox_linux/bpf_gpu_policy_linux.cc
 
 
   local _flags=(
@@ -130,6 +133,7 @@ make_target() {
     find -type f -path "*third_party/$_lib/*" \
       \! -path "*third_party/$_lib/chromium/*" \
       \! -path "*third_party/$_lib/google/*" \
+      \! -path "*base/third_party/icu/*" \
       \! -regex '.*\.\(gn\|gni\|isolate\|py\)' \
       -delete
   done
