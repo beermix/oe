@@ -1,5 +1,5 @@
 PKG_NAME="fio"
-PKG_VERSION="3.0"
+PKG_VERSION="3.1"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="tools"
