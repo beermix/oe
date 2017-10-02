@@ -8,9 +8,10 @@ PKG_LONGDESC="gevent is a coroutine-based Python networking library."
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-post_unpack() {
-  sed -i -e 's/^cross_compiling=no/cross_compiling=yes/' $ROOT/$PKG_BUILD/libev/configure
-  sed -i -e 's/^cross_compiling=no/cross_compiling=yes/' $ROOT/$PKG_BUILD/c-ares/configure
+pre_configure_target() {
+  cd $ROOT/$PKG_BUILD
+    sed -i -e 's/^cross_compiling=no/cross_compiling=yes/' libev/configure
+    sed -i -e 's/^cross_compiling=no/cross_compiling=yes/' c-ares/configure
 }
 
 make_target() {
