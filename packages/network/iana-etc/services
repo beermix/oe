@@ -7499,6 +7499,7 @@ netscript        4118/tcp
 netscript        4118/udp
 assuria-slm      4119/tcp
 assuria-slm      4119/udp
+minirem          4120/tcp
 e-builder        4121/tcp
 e-builder        4121/udp
 fprams           4122/tcp
