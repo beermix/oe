@@ -22,7 +22,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.freetype.org"
 PKG_URL="http://download.savannah.gnu.org/releases/freetype/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain zlib libpng"
+PKG_DEPENDS_TARGET="toolchain zlib libpng bzip2"
 PKG_DEPENDS_HOST="zlib:host libpng:host"
 PKG_SECTION="print"
 PKG_SHORTDESC="freetype: TrueType font rendering library"
@@ -36,7 +36,7 @@ PKG_AUTORECONF="no"
 PKG_CONFIGURE_OPTS_TARGET="LIBPNG_CFLAGS=-I$SYSROOT_PREFIX/usr/include \
                            LIBPNG_LDFLAGS=-L$SYSROOT_PREFIX/usr/lib \
                            --with-zlib \
-                           --with-bzip2=no \
+                           --with-bzip2 \
                            --with-harfbuzz=no"
 
 # host specific configure options
