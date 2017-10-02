@@ -63,6 +63,10 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
 			      --disable-samples \
 			      --with-cross-build=$ROOT/$PKG_BUILD/.$HOST_NAME"
 
+makeinstall_host() {
+  : # nop
+}			      
+
 post_makeinstall_target() {
   rm -rf $INSTALL
 }
