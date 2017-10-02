@@ -55,8 +55,8 @@ makeinstall_host() {
 
 make_target() {
   strip_lto
-  strip_hard
-  export LDFLAGS="$LDFLAGS -ludev -s"
+  #strip_hard
+  export LDFLAGS="$LDFLAGS -ludev"
   export LD=$CXX
   
   mkdir -p third_party/node/linux/node-linux-x64/bin
@@ -72,11 +72,11 @@ make_target() {
   _google_default_client_id=740889307901-4bkm4e0udppnp1lradko85qsbnmkfq3b.apps.googleusercontent.com
   _google_default_client_secret=9TJlhL661hvShQub4cWhANXa
   
-  sed -e 's|i386-linux-gnu/||g' \
-      -e 's|x86_64-linux-gnu/||g' \
-      -e 's|/usr/lib/va/drivers|/usr/lib/dri|g' \
-      -e 's|/usr/lib64/va/drivers|/usr/lib/dri|g' \
-      -i $ROOT/$PKG_BUILD/content/common/sandbox_linux/bpf_gpu_policy_linux.cc
+#  sed -e 's|i386-linux-gnu/||g' \
+#      -e 's|x86_64-linux-gnu/||g' \
+#      -e 's|/usr/lib/va/drivers|/usr/lib/dri|g' \
+#      -e 's|/usr/lib64/va/drivers|/usr/lib/dri|g' \
+#      -i $ROOT/$PKG_BUILD/content/common/sandbox_linux/bpf_gpu_policy_linux.cc
 
   local _flags=(
     "host_toolchain=\"//build/toolchain/linux:x64_host\""
@@ -95,7 +95,7 @@ make_target() {
     'use_allocator="none"'
     'use_cups=false'
     'use_custom_libcxx=false'
-    'use_gconf=true'
+    'use_gconf=false'
     'use_gnome_keyring=false'
     'use_gold=false'
     'use_gtk3=false'
@@ -115,18 +115,17 @@ make_target() {
     "google_default_client_secret=\"${_google_default_client_secret}\""
   )
 
+
   # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
   local _system_libs=(
     harfbuzz-ng
     libjpeg
-    libpng
-    libxslt
-    minizip
-    libxslt
-    libxml2
-    re2
     libwebp
-    freetype
+    libxml2
+    libxslt
+    re2
+    yasm
+    minizip
   )
 
   # Remove bundled libraries for which we will use the system copies; this
