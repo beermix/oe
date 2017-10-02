@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="LGPL"
 PKG_SITE="https://github.com/GNOME/pygobject/releases"
 PKG_GIT_URL="https://git.gnome.org/browse/pygobject"
-PKG_DEPENDS_TARGET="toolchain Python libffi gobject-introspection:host gobject-introspection"
+PKG_DEPENDS_TARGET="toolchain Python libffi cairo gobject-introspection:host gobject-introspection"
 PKG_SECTION="python/devel"
 PKG_SHORTDESC="This archive contains bindings for the GLib, and GObject, to be used in Python."
 PKG_LONGDESC="This archive contains bindings for the GLib, and GObject, to be used in Python."
@@ -31,7 +31,7 @@ PKG_LONGDESC="This archive contains bindings for the GLib, and GObject, to be us
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-cairo --with-python=$ROOT/$TOOLCHAIN/bin/python2.7"
+PKG_CONFIGURE_OPTS_TARGET="--with-python=$ROOT/$TOOLCHAIN/bin/python2.7"
 
 pre_configure_target() {
   export PYTHON_INCLUDES="$($SYSROOT_PREFIX/usr/bin/python2-config --includes)"

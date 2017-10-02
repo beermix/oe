@@ -1,11 +1,11 @@
 PKG_NAME="gobject-introspection"
-PKG_VERSION="230b258"
+PKG_VERSION="1.54.0"
 PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://www.gtk.org/"
-PKG_GIT_URL="https://git.gnome.org/browse/gobject-introspection"
-PKG_DEPENDS_TARGET="toolchain glib qemu:host"
+PKG_GIT_URL="https://github.com/GNOME/gobject-introspection"
+PKG_DEPENDS_TARGET="toolchain glib qemu:host gobject-introspection:host"
 PKG_DEPENDS_HOST="glib:host"
 PKG_SECTION="devel"
 PKG_SHORTDESC="glib: C support library"
@@ -14,9 +14,9 @@ PKG_LONGDESC="GLib is a library which includes support routines for C such as li
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_HOST="--disable-static --disable-doctool"
+PKG_CONFIGURE_OPTS_HOST="--disable-doctool"
 
-PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
+PKG_CONFIGURE_OPTS_TARGET="--disable-doctool"
 
 post_unpack() {
   rm -f $ROOT/$PKG_BUILD/gtk-doc.make
@@ -34,7 +34,7 @@ pre_configure_target() {
   PYTHON_INCLUDES="-I$SYSROOT_PREFIX/usr/include/python2.7"
   CPPFLAGS="-I$SYSROOT_PREFIX/usr/include/python2.7"
   CFLAGS="$CFLAGS -fPIC"
-#  LDFLAGS="$LDFLAGS -Wl,--dynamic-linker=/usr/lib/ld-$(get_pkg_build glibc).so"
+  LDFLAGS="$LDFLAGS -Wl,--dynamic-linker=/usr/lib/ld-$(get_pkg_build glibc).so"
 
 cat > $ROOT/$TOOLCHAIN/bin/g-ir-scanner-wrapper << EOF
 #!/bin/sh
@@ -58,12 +58,20 @@ EOF
 
 cat > $ROOT/$TOOLCHAIN/bin/ldd-cross << EOF
 #!/bin/sh
-$ROOT/$TOOLCHAIN/bin/qemu-$TARGET_ARCH $SYSROOT_PREFIX/lib/ld-$(get_pkg_build glibc).so --list "\$1"
+$ROOT/$TOOLCHAIN/bin/qemu-$TARGET_ARCH $SYSROOT_PREFIX/usr/lib/ld-$(get_pkg_build glibc).so --list "\$1"
 EOF
 
   chmod +x $ROOT/$TOOLCHAIN/bin/ldd-cross
 }
 
+make_target() {
+  ##GI_SCANNER_DEBUG="save-temps" \
+  GI_CROSS_LAUNCHER="$ROOT/$TOOLCHAIN/bin/qemu-$TARGET_ARCH" \
+  GI_LDD=$ROOT/$TOOLCHAIN/bin/ldd-cross \
+  INTROSPECTION_SCANNER=$ROOT/$TOOLCHAIN/bin/g-ir-scanner-wrapper \
+  INTROSPECTION_COMPILER=$ROOT/$TOOLCHAIN/bin/g-ir-compiler-wrapper \
+  make
+}
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
