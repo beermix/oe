@@ -6,9 +6,7 @@ PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static \
-			      --disable-shared \
+PKG_CONFIGURE_OPTS_TARGET="-disable-shared \
 			      --disable-docs \
 			      --disable-option-checking \
-			      --with-gnu-ld \
 			      --sysconfdir=/storage/.config/megatools"

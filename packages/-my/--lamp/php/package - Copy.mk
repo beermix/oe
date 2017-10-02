@@ -65,18 +65,23 @@ configure_target() {
 	export CFLAGS="$CFLAGS -I$HTTPD_DIR/usr/include"
 	
   # Dynamic Library support
-  export LDFLAGS="$LDFLAGS -ldl -lpthread"
+  export LDFLAGS="$LDFLAGS -ldl -lpthread -lstdc++"
 
   APXS_FILE=$(get_build_dir httpd)/.install_dev/usr/bin/apxs
   chmod +x $APXS_FILE
-  
+    
+
+  # libiconv
   export CFLAGS="$CFLAGS -I$SYSROOT_PREFIX/usr/include/iconv"
   export LDFLAGS="$LDFLAGS -L$SYSROOT_PREFIX/usr/lib/iconv -liconv"
+
+  export CXXFLAGS="$CFLAGS"
+  export CPPFLAGS="$CFLAGS"
 
   PKG_CONFIGURE_OPTS_TARGET="--enable-cli \
                              --enable-cgi \
                              --enable-opcache=no \
-                             --with-pear \
+                             --without-pear \
                              --with-config-file-path=/storage/.kodi/userdata/addon_data/service.web.lamp/srvroot/conf \
                              --localstatedir=/var \
                              --disable-phpdbg \
@@ -93,6 +98,8 @@ configure_target() {
                              --with-openssl-dir=$SYSROOT_PREFIX/usr \
                              --enable-libxml \
                              --enable-xml \
+                             --disable-shared \
+                             --enable-static \
                              --enable-xmlreader \
                              --enable-xmlwriter \
                              --enable-simplexml \
@@ -102,7 +109,6 @@ configure_target() {
                              --with-openssl=$SYSROOT_PREFIX/usr \
                              --with-zlib=$SYSROOT_PREFIX/usr \
                              --with-bz2=$SYSROOT_PREFIX/usr \
-                             --with-zlib=$SYSROOT_PREFIX/usr \
                              --with-iconv \
                              --without-gettext \
                              --with-gmp=$SYSROOT_PREFIX/usr \
@@ -113,10 +119,9 @@ configure_target() {
                              --disable-sysvshm \
                              --enable-filter \
                              --enable-calendar \
-                             --with-pcre-regex \
+                             --with-pcre-regex=$SYSROOT_PREFIX/usr \
                              --with-sqlite3=$SYSROOT_PREFIX/usr \
                              --with-pdo-sqlite=$SYSROOT_PREFIX/usr \
-                             --enable-pdo \
                              --with-mcrypt=$LIBMCRYPT_DIR_TARGET/usr \
                              --with-mysql=$SYSROOT_PREFIX/usr \
                              --with-mysql-sock=/run/mysql/mysql.sock \
@@ -141,7 +146,7 @@ post_configure_target() {
   sed -i "s|-I/usr/include|-I$SYSROOT_PREFIX/usr/include|g" Makefile
   sed -i "s|-L/usr/lib|-L$SYSROOT_PREFIX/usr/lib|g" Makefile
   
-  PHP_BIN=$(which php)
+  #PHP_BIN=$(which php)
   
   sed -i "s|PHP_EXECUTABLE =.*|PHP_EXECUTABLE = $PHP_BIN|g" Makefile
   sed -i 's|$(top_builddir)/$(SAPI_CLI_PATH)|dummy_sapi_cli_path|g' Makefile
@@ -153,9 +158,9 @@ makeinstall_target() {
   mkdir -p $INSTALL_DEV/etc/
   cp $(get_build_dir httpd)/.install_dev/etc/httpd.conf $INSTALL_DEV/etc/httpd.conf 
   
-  sed -i "s|install-pear-installer:.*|install-pear-installer:\ndummy123:|g" Makefile
+  #sed -i "s|install-pear-installer:.*|install-pear-installer:\ndummy123:|g" Makefile
   
-  
+  #
   sed -i 's|@$(top_builddir)/sapi/cli/php|php|g' Makefile
   
   make -j1 install INSTALL_ROOT=$INSTALL_DEV $PKG_MAKEINSTALL_OPTS_TARGET

@@ -25,13 +25,9 @@ PKG_SECTION="lib"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="as_cv_unaligned_access=no \
-			      --disable-examples \
+PKG_CONFIGURE_OPTS_TARGET="--disable-examples \
 			      --disable-tests \
 			      --disable-failing-tests \
 			      --disable-loadsave \
-			      --enable-static \
-			      --with-pic \
 			      --disable-benchmarks \
-			      --disable-tools \
-			      --disable-shared"
+			      --disable-tools"

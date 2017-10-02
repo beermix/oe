@@ -62,8 +62,8 @@ makeinstall_target() {
   INSTALL_DEV=$ROOT/$PKG_BUILD/.install_dev
   make -j1 install DESTDIR=$INSTALL_DEV $PKG_MAKEINSTALL_OPTS_TARGET
 
- # $STRIP $(find $INSTALL_DEV -name "*.so" 2>/dev/null) 2>/dev/null || :
- # $STRIP $(find $INSTALL_DEV -name "*.so.[0-9]*" 2>/dev/null) 2>/dev/null || :
+  $STRIP $(find $INSTALL_DEV -name "*.so" 2>/dev/null) 2>/dev/null || :
+  $STRIP $(find $INSTALL_DEV -name "*.so.[0-9]*" 2>/dev/null) 2>/dev/null || :
 
   for i in $(find $INSTALL_DEV/usr/lib -name "*.la" 2>/dev/null); do
     $SED "s|\(['= ]\)/usr|\\1$INSTALL_DEV/usr|g" $i		#'
