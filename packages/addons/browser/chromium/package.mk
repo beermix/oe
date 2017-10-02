@@ -26,7 +26,7 @@ PKG_LICENSE="Mixed"
 PKG_SITE="http://www.chromium.org/Home"
 PKG_URL="ftp://root:openelec@192.168.1.4/www/chromium-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python:host"
-PKG_DEPENDS_TARGET="chromium:host pciutils dbus libXcomposite libXcursor libXtst alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng harfbuzz atk gtk2 unclutter xdotool"
+PKG_DEPENDS_TARGET="chromium:host pciutils dbus libXcomposite libXcursor libXtst alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng harfbuzz atk gtk2 unclutter xdotool libwebp re2"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -62,7 +62,7 @@ make_target() {
   mkdir -p third_party/node/linux/node-linux-x64/bin
   ln -sfv /usr/bin/node third_party/node/linux/node-linux-x64/bin/node
   
-#  export CCACHE_SLOPPINESS=include_file_mtime
+  export CCACHE_SLOPPINESS=include_file_mtime
 
   # Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
   # Note: These are for OpenELEC use ONLY. For your own distribution, please
@@ -125,6 +125,9 @@ make_target() {
     minizip
     libxslt
     libxml2
+    re2
+    libwebp
+    freetype
   )
 
   # Remove bundled libraries for which we will use the system copies; this

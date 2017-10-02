@@ -47,12 +47,12 @@ PKG_CONFIGURE_OPTS_HOST="LIBPNG_CFLAGS=-I$TOOLCHAIN/include \
 			    --with-harfbuzz=no"
 			    
 			    
-pre_configure_target() {
-    ( cd ..
-      unset LIBTOOL
-      sh autogen.sh
-    )
-}
+#pre_configure_target() {
+#    ( cd ..
+#      unset LIBTOOL
+#      sh autogen.sh
+#    )
+#}
 
 post_makeinstall_target() {
   $SED "s:\(['=\" ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" $SYSROOT_PREFIX/usr/bin/freetype-config
