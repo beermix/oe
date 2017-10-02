@@ -34,19 +34,12 @@ PKG_AUTORECONF="no"
 PKG_USE_CMAKE="no"
 
 # package specific configure options
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared \
-                           --disable-silent-rules \
-                           --disable-sqlite \
+PKG_CONFIGURE_OPTS_TARGET="--disable-sqlite \
                            --enable-alsa \
                            --disable-external-libs \
                            --disable-experimental \
                            --disable-test-coverage \
-                           --enable-largefile \
-                           --with-gnu-ld"
-
-pre_configure_target() {
-  CFLAGS="$CFLAGS -fPIC"
-}
+                           --enable-largefile"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
