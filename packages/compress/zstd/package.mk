@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="zstd"
-PKG_VERSION="v1.3.1"
+PKG_VERSION="fuzz-corpora"
 PKG_ARCH="any"
 PKG_LICENSE="BSD-3"
 PKG_SITE="https://github.com/facebook/zstd/releases"
