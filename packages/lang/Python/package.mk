@@ -40,6 +40,7 @@ PKG_CONFIGURE_OPTS_HOST="--cache-file=config.cache \
                          --with-threads \
                          --enable-unicode=ucs4 \
                          --disable-ipv6 \
+                         --enable-optimizations \
                          --enable-shared \
                          --disable-static"
 
