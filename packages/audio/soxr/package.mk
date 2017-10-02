@@ -36,8 +36,4 @@ PKG_AUTORECONF="no"
 PKG_CMAKE_OPTS_TARGET="-DHAVE_WORDS_BIGENDIAN_EXITCODE=1 \
                        -DBUILD_TESTS=0 \
                        -DBUILD_EXAMPLES=1 \
-                       -DBUILD_SHARED_LIBS=1"
-
-pre_configure_target() {
-  CFLAGS="$CFLAGS -fPIC"
-}
+                       -DBUILD_SHARED_LIBS=OFF"
