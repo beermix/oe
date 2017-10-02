@@ -18,7 +18,7 @@ pre_configure_target() {
   
 #  export NO_EXPAT="YesPlease"
   export NO_MKSTEMPS="YesPlease"
-#  export NO_GETTEXT="YesPlease"
+  export NO_GETTEXT="YesPlease"
   export NO_UNIX_SOCKETS="YesPlease"
   export NO_ICONV="YesPlease"
   export NO_NSEC="YesPlease"
