@@ -121,7 +121,7 @@ make_target() {
     libjpeg
     libpng
     libxslt
-    yasm
+#    yasm
     minizip
     libxslt
     libxml2
