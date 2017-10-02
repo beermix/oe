@@ -49,7 +49,6 @@ GCC_COMMON_CONFIGURE_OPTS="MAKEINFO=missing \
                            --enable-ld=default \
                            --disable-multilib \
                            --enable-checking=release \
-                           --without-ppl \
                            --without-cloog \
                            --disable-libmpx \
                            --disable-libsanitizer \
