@@ -4,7 +4,7 @@ PKG_NAME="php"
 #PHP_VERSION=5.3.3
 
 if [ -z "$PHP_VERSION" ]; then
-  PKG_VERSION="5.6.31"
+  PKG_VERSION="7.1.10"
 
 	# test latest
 	#PKG_VERSION="7.1.9"
@@ -16,7 +16,7 @@ fi
 PKG_REV="0"
 PKG_ARCH="any"
 PKG_LICENSE="OpenSource"
-PKG_SITE="http://www.php.net"
+PKG_SITE="http://www.php.net/distributions/"
 
 if [ -z "$PHP_VERSION" ]; then
   # PKG_URL="http://www.php.net/distributions/$PKG_NAME-$PKG_VERSION.tar.bz2"
@@ -98,6 +98,8 @@ configure_target() {
                              --with-openssl-dir=$SYSROOT_PREFIX/usr \
                              --enable-libxml \
                              --enable-xml \
+                             --disable-shared \
+                             --enable-static \
                              --enable-xmlreader \
                              --enable-xmlwriter \
                              --enable-simplexml \
@@ -108,7 +110,7 @@ configure_target() {
                              --with-zlib=$SYSROOT_PREFIX/usr \
                              --with-bz2=$SYSROOT_PREFIX/usr \
                              --with-iconv \
-                             --with-gettext \
+                             --without-gettext \
                              --with-gmp=$SYSROOT_PREFIX/usr \
                              --enable-json \
                              --enable-pcntl \
@@ -121,7 +123,7 @@ configure_target() {
                              --with-sqlite3=$SYSROOT_PREFIX/usr \
                              --with-pdo-sqlite=$SYSROOT_PREFIX/usr \
                              --with-mcrypt=$LIBMCRYPT_DIR_TARGET/usr \
-                             --with-mysql \
+                             --with-mysql=$SYSROOT_PREFIX/usr \
                              --with-mysql-sock=/run/mysql/mysql.sock \
                              --with-gd \
                              --enable-gd-native-ttf \
