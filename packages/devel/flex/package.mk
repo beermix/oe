@@ -25,7 +25,7 @@ PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="flex: Fast lexical analyzer generator"
 PKG_LONGDESC="flex is a tool for generating programs that perform pattern-matching on text."
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_HOST="ac_cv_lib_util_getloadavg=no --disable-shared"
 
