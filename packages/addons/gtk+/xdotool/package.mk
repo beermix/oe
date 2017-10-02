@@ -18,7 +18,7 @@
 ################################################################################
 
 PKG_NAME="xdotool"
-PKG_VERSION="v3.20160805.1"
+PKG_VERSION="1334329"
 PKG_SITE="http://www.semicomplete.com/projects/xdotool/"
 PKG_GIT_URL="https://github.com/jordansissel/xdotool"
 PKG_DEPENDS_TARGET="toolchain libXinerama libXtst libxkbcommon"
