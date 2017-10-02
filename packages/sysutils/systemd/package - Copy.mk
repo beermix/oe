@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="systemd"
-PKG_VERSION="v234"
+PKG_VERSION="234"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/systemd"
-PKG_GIT_URL="https://github.com/systemd/systemd"
+PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain libcap util-linux entropy"
 PKG_SECTION="system"
 PKG_SHORTDESC="systemd: a system and session manager"
