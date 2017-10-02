@@ -10,6 +10,9 @@ PKG_LONGDESC="The Open Source toolkit for Secure Sockets Layer and Transport Lay
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
+export CCACHE_DISABLE=1
+export MAKEFLAGS=-j1
+
 PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            --libdir=lib \
                            shared \
@@ -28,20 +31,11 @@ pre_configure_host() {
 
 configure_host() {
   cd $ROOT/$PKG_BUILD/.$HOST_NAME
-  ./Configure --prefix=/ $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 "-Wa,--noexecstack $CFLAGS"
-  MAKEFLAGS=-j1
-}
-
-make_host() {
-  echo "Executing (host): make build_libcrypto $PKG_MAKE_OPTS_HOST" | tr -s " "
-  make build_libcrypto $PKG_MAKE_OPTS_HOST
-
-  echo "Executing (host): make $PKG_MAKE_OPTS_HOST" | tr -s " "
-  make $PKG_MAKE_OPTS_HOST
+  ./Configure --prefix=/ $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 "-Wa,--noexecstack $CFLAGS $LDFLAGS"
 }
 
 makeinstall_host() {
-  make INSTALL_PREFIX=$ROOT/$TOOLCHAIN install_sw
+  make INSTALL_PREFIX=$ROOT/$TOOLCHAIN install_sw -j1
 }
 
 pre_configure_target() {
@@ -57,21 +51,12 @@ pre_configure_target() {
 
 configure_target() {
   cd $ROOT/$PKG_BUILD/.$TARGET_NAME
-  ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 "-Wa,--noexecstack $CFLAGS"
-  MAKEFLAGS=-j1
-}
-
-make_target() {
-  echo "Executing (target): make build_libcrypto $PKG_MAKE_OPTS_TARGET" | tr -s " "
-  make build_libcrypto $PKG_MAKE_OPTS_TARGET
-
-  echo "Executing (host): make $PKG_MAKE_OPTS_TARGET" | tr -s " "
-  make $PKG_MAKE_OPTS_TARGET
+  ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 "-Wa,--noexecstack $CPPFLAGS $CFLAGS"
 }
 
 makeinstall_target() {
-  make INSTALL_PREFIX=$INSTALL install_sw
-  make INSTALL_PREFIX=$SYSROOT_PREFIX install_sw
+  make INSTALL_PREFIX=$INSTALL install_sw -j1
+  make INSTALL_PREFIX=$SYSROOT_PREFIX install_sw -j1
   chmod 755 $INSTALL/usr/lib/*.so*
   chmod 755 $INSTALL/usr/lib/engines/*.so
 }
@@ -85,8 +70,11 @@ post_makeinstall_target() {
   # create new cert: ./mkcerts.sh
   # cert from https://curl.haxx.se/docs/caextract.html
 
+  
   mkdir -p $INSTALL/etc/ssl
-    cp $PKG_DIR/cert/cacert.pem $INSTALL/etc/ssl/cert.pem
+#  perl $PKG_DIR/cert/mk-ca-bundle.pl
+#  cp $ROOT/$PKG_BUILD/.$TARGET_NAME/ca-bundle.crt $INSTALL/etc/ssl/cert.pem
+  cp $PKG_DIR/cert/cacert.pem $INSTALL/etc/ssl/cert.pem
 
   # backwards comatibility
   mkdir -p $INSTALL/etc/pki/tls
