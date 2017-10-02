@@ -23,7 +23,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://www.freetype.org"
 PKG_URL="http://download.savannah.gnu.org/releases/freetype/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain zlib libpng bzip2"
-PKG_DEPENDS_HOST="zlib:host libpng:host"
+PKG_DEPENDS_HOST="zlib:host libpng:host bzip2:host"
 PKG_SECTION="print"
 PKG_SHORTDESC="freetype: TrueType font rendering library"
 PKG_LONGDESC="The FreeType engine is a free and portable TrueType font rendering engine. It has been developed to provide TT support to a great variety of platforms and environments."
@@ -40,19 +40,11 @@ PKG_CONFIGURE_OPTS_TARGET="LIBPNG_CFLAGS=-I$SYSROOT_PREFIX/usr/include \
                            --with-harfbuzz=no"
 
 # host specific configure options
-PKG_CONFIGURE_OPTS_HOST="LIBPNG_CFLAGS=-I$TOOLCHAIN/include \
-			    LIBPNG_LDFLAGS=-L$TOOLCHAIN/lib \
+PKG_CONFIGURE_OPTS_HOST="LIBPNG_CFLAGS=-I$ROOT/$TOOLCHAIN/include \
+			    LIBPNG_LDFLAGS=-L$ROOT/$TOOLCHAIN/lib \
 			    --with-zlib \
-			    --with-bzip2=no \
+			    --with-bzip2 \
 			    --with-harfbuzz=no"
-			    
-			    
-#pre_configure_target() {
-#    ( cd ..
-#      unset LIBTOOL
-#      sh autogen.sh
-#    )
-#}
 
 post_makeinstall_target() {
   $SED "s:\(['=\" ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" $SYSROOT_PREFIX/usr/bin/freetype-config
