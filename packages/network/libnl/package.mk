@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="libnl"
-PKG_VERSION="libnl3_4_0rc1"
-PKG_SITE="https://github.com/thom311/libnl"
-PKG_GIT_URL="https://github.com/thom311/libnl"
+PKG_VERSION="3.4.0-rc1"
+PKG_SITE="https://github.com/thom311/libnl/releases"
+PKG_URL="https://github.com/thom311/libnl/releases/download/libnl3_4_0rc1/libnl-3.4.0-rc1.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="network"
 PKG_SHORTDESC="libnl: libnl - netlink library"
@@ -27,8 +27,8 @@ PKG_LONGDESC="libnl is a library for applications dealing with netlink socket. I
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared --disable-cli"
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared --with-pic --disable-cli"
 
-pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC"
-}
+#pre_configure_target() {
+#  export CFLAGS="$CFLAGS -fPIC"
+#}

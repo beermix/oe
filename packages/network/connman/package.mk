@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="connman"
-PKG_VERSION="1.35"
+PKG_VERSION="bdb7211"
 PKG_SITE="http://www.connman.net"
 PKG_GIT_URL="git://git.kernel.org/pub/scm/network/connman/connman.git"
 #PKG_URL="https://www.kernel.org/pub/linux/network/connman/$PKG_NAME-$PKG_VERSION.tar.xz"
