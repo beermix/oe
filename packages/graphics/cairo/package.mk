@@ -38,6 +38,8 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-static \
 			      --enable-xlib \
 			      --enable-xlib-xrender \
 			      --enable-gl \
+			      --disable-glesv2 \
+			      --disable-egl \
 			      --with-x \
 			      --enable-glx \
 			      --enable-tee \
@@ -54,4 +56,6 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-static \
                            --enable-svg \
                            --enable-pthread \
 			      --enable-gobject \
+			      --disable-full-testing \
+                           --disable-trace \
 			      --disable-gtk-doc"
