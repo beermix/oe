@@ -27,7 +27,7 @@ PKG_SHORTDESC="cairo: Multi-platform 2D graphics library"
 PKG_LONGDESC="Cairo is a vector graphics library with cross-device output support. Currently supported output targets include the X Window System and in-memory image buffers. PostScript and PDF file output is planned. Cairo is designed to produce identical output on all output media while taking advantage of display hardware acceleration when available."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 #pre_configure_target() {
 #  export CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
@@ -56,6 +56,4 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-static \
                            --enable-svg \
                            --enable-pthread \
 			      --enable-gobject \
-			      --disable-full-testing \
-                           --disable-trace \
 			      --disable-gtk-doc"

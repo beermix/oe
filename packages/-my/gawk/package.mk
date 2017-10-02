@@ -10,7 +10,6 @@ PKG_CONFIGURE_OPTS_TARGET="--bindir=/bin \
 			      --libdir=/lib \
 			      --without-selinux \
 			      --disable-debug \
-			      --with-gnu-ld \
 			      --enable-threads=posix"
 
 PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
