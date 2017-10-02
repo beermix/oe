@@ -1,5 +1,5 @@
 PKG_NAME="acl"
-PKG_VERSION="fa5f683"
+PKG_VERSION="ea3c6bb"
 PKG_GIT_URL="git://git.sv.gnu.org/acl.git"
 PKG_DEPENDS_TARGET="toolchain attr"
 PKG_DEPENDS_HOST="toolchain attr:host"

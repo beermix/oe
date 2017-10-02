@@ -6,8 +6,4 @@ PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared --disable-java --with-gnu-ld"
-
-pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC"
-}
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared --disable-java --with-pic"
