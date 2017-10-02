@@ -21,7 +21,7 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            enable-mdc2 \
                            enable-tlsext \
                            enable-unit-test \
-                           no-zlib \
+                           no-ssl3-method \
                            enable-ec_nistp_64_gcc_128"
 
 pre_configure_host() {
