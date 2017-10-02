@@ -14,7 +14,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+################################################################################ ac_cv_lib_util_getloadavg=no 
 
 PKG_NAME="flex"
 PKG_VERSION="2.6.4"
@@ -27,7 +27,7 @@ PKG_LONGDESC="flex is a tool for generating programs that perform pattern-matchi
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_HOST="ac_cv_lib_util_getloadavg=no --disable-shared"
+PKG_CONFIGURE_OPTS_HOST="--disable-shared"
 
 post_makeinstall_host() {
   cat > $ROOT/$TOOLCHAIN/bin/lex << "EOF"
