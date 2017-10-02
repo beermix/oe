@@ -17,15 +17,15 @@
 ################################################################################
 
 PKG_NAME="libnl"
-PKG_VERSION="libnl3_4_0rc1"
+PKG_VERSION="3.3.0"
 PKG_SITE="https://github.com/thom311/libnl"
-PKG_GIT_URL="https://github.com/thom311/libnl"
+PKG_URL="https://github.com/thom311/$PKG_NAME/releases/download/${PKG_NAME}${PKG_VERSION//./_}/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="network"
 PKG_SHORTDESC="libnl: libnl - netlink library"
 PKG_LONGDESC="libnl is a library for applications dealing with netlink socket. It provides an easy to use interface for raw netlink message but also netlink family specific APIs."
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared --disable-cli"
 
