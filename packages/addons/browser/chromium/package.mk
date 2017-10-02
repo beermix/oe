@@ -39,14 +39,14 @@ PKG_ADDON_PROVIDES="executable"
 
 post_patch() {
   # Use Python 2
-  find $ROOT/$PKG_BUILD -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$ROOT/$TOOLCHAIN/bin/python|g" {} +
+  find $PKG_BUILD -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$ROOT/$TOOLCHAIN/bin/python|g" {} +
 
   # set correct widevine
-  sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' $ROOT/$PKG_BUILD/third_party/widevine/cdm/stub/widevine_cdm_version.h
+  sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' $PKG_BUILD/third_party/widevine/cdm/stub/widevine_cdm_version.h
 }
 
 make_host() {
-  $ROOT/$PKG_BUILD/tools/gn/bootstrap/bootstrap.py --no-rebuild --no-clean --verbose
+  ./tools/gn/bootstrap/bootstrap.py --no-rebuild --no-clean
 }
 
 makeinstall_host() {
@@ -55,14 +55,9 @@ makeinstall_host() {
 
 make_target() {
   strip_lto
-  #strip_hard
+  strip_hard
   export LDFLAGS="$LDFLAGS -ludev"
   export LD=$CXX
-  
-  mkdir -p third_party/node/linux/node-linux-x64/bin
-  ln -sfv /usr/bin/node third_party/node/linux/node-linux-x64/bin/node
-  
-#  export CCACHE_SLOPPINESS=include_file_mtime
 
   # Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
   # Note: These are for OpenELEC use ONLY. For your own distribution, please
@@ -71,12 +66,6 @@ make_target() {
   _google_api_key=AIzaSyAQ6L9vt9cnN4nM0weaa6Y38K4eyPvtKgI
   _google_default_client_id=740889307901-4bkm4e0udppnp1lradko85qsbnmkfq3b.apps.googleusercontent.com
   _google_default_client_secret=9TJlhL661hvShQub4cWhANXa
-  
-#  sed -e 's|i386-linux-gnu/||g' \
-#      -e 's|x86_64-linux-gnu/||g' \
-#      -e 's|/usr/lib/va/drivers|/usr/lib/dri|g' \
-#      -e 's|/usr/lib64/va/drivers|/usr/lib/dri|g' \
-#      -i $ROOT/$PKG_BUILD/content/common/sandbox_linux/bpf_gpu_policy_linux.cc
 
   local _flags=(
     "host_toolchain=\"//build/toolchain/linux:x64_host\""
@@ -95,7 +84,7 @@ make_target() {
     'use_allocator="none"'
     'use_cups=false'
     'use_custom_libcxx=false'
-    'use_gconf=true'
+    'use_gconf=false'
     'use_gnome_keyring=false'
     'use_gold=false'
     'use_gtk3=false'
@@ -120,8 +109,9 @@ make_target() {
   local _system_libs=(
     harfbuzz-ng
     libjpeg
-    libxml2
+    libpng
     libxslt
+    yasm
   )
 
   # Remove bundled libraries for which we will use the system copies; this

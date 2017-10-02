@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,11 +17,13 @@
 ################################################################################
 
 PKG_NAME="pulseaudio"
-PKG_VERSION="11.1"
+PKG_VERSION="11.0"
+PKG_SHA256="072305d4018fc5e75bb1b45ee6b938fa52fc9fd27493bf327415ef89ed14c969"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://pulseaudio.org/"
 PKG_URL="http://www.freedesktop.org/software/pulseaudio/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_PRIORITY="optional"
-PKG_DEPENDS_TARGET="toolchain libtool alsa-lib libsndfile soxr dbus systemd openssl libcap fftw"
+PKG_DEPENDS_TARGET="toolchain libtool alsa-lib libsndfile soxr dbus systemd openssl libcap"
 PKG_SECTION="audio"
 PKG_SHORTDESC="pulseaudio: Yet another sound server for Unix"
 PKG_LONGDESC="PulseAudio is a sound server for Linux and other Unix-like operating systems. It is intended to be an improved drop-in replacement for the Enlightened Sound Daemon (esound or esd). In addition to the features esound provides, PulseAudio has an extensible plugin architecture, support for more than one sink per source, better low-latency behavior, the ability to be embedded into other software, a completely asynchronous C API, a simple command line interface for reconfiguring the daemon while running, flexible and implicit sample type conversion and resampling, and a "Zero-Copy" architecture."
@@ -53,7 +55,7 @@ else
 fi
 
 # package specific configure options
-PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
+PKG_CONFIGURE_OPTS_TARGET="--disable-silent-rules \
                            --disable-nls \
                            --enable-largefile \
                            --disable-rpath \
@@ -84,7 +86,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
                            --enable-udev \
                            --with-udev-rules-dir=/usr/lib/udev/rules.d
                            --disable-hal-compat \
-                           --disable-ipv6 \
+                           --enable-ipv6 \
                            --enable-openssl \
                            --disable-xen \
                            --disable-orc \
@@ -96,15 +98,15 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
                            --with-system-group=root \
                            --with-access-group=root \
                            --without-caps \
-                           --enable-fftw \
+                           --without-fftw \
                            --without-speex \
                            --with-soxr \
                            --with-module-dir=/usr/lib/pulse"
 
-pre_configure_target() {
-  export CFLAGS="$CFLAGS -fopenmp"
+pre_configure_target()
+{
   sed -e 's|; remixing-use-all-sink-channels = yes|; remixing-use-all-sink-channels = no|' \
-      -i $ROOT/$PKG_BUILD/src/daemon/daemon.conf.in
+      -i $PKG_BUILD/src/daemon/daemon.conf.in
 }
 
 post_makeinstall_target() {
