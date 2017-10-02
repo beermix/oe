@@ -1,9 +1,9 @@
 PKG_NAME="transmission"
-PKG_VERSION="2.92"
+PKG_VERSION="2.92GIT"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.transmissionbt.com/"
-PKG_URL="https://github.com/transmission/transmission-releases/raw/master/transmission-$PKG_VERSION.tar.xz"
+PKG_URL="https://dl.dropboxusercontent.com/s/cp1t4gfj3d6d8jo/transmission-2.92GIT.tar.xz"
 PKG_DEPENDS_TARGET="toolchain zlib openssl curl libevent miniupnpc"
 PKG_SECTION="service/downloadmanager"
 PKG_SHORTDESC="transmission: a fast, easy and free BitTorrent client"
@@ -27,8 +27,7 @@ PKG_AUTORECONF="no"
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
-  
-  NOCONFIGURE=1 ./autogen.sh
+  autoreconf --verbose --install --force -I m4
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-utp --enable-cli --enable-daemon --with-systemd --with-crypto=openssl"

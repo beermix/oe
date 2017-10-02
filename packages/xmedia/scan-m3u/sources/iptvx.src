@@ -1,0 +1,111 @@
+#!/bin/sh
+################################################################################
+#      This file is part of Alex@ELEC - http://www.alexelec.in.ua
+#      Copyright (C) 2011-2017 Alexandr Zuyev (alex@alexelec.in.ua)
+################################################################################
+
+SERVICE_DIR="/storage/.cache/services"
+
+M3U_DIR="/storage/iptvx-m3u"
+LIST_M3U="$M3U_DIR/iptvx.m3u"
+
+IPTVX_DIR="/storage/.config/iptvx"
+IPTVX_FILE="$IPTVX_DIR/playlist/iptvx.m3u"
+IPTVX_TEMP_LIST="$IPTVX_DIR/playlist/iptvx.list"
+
+[ -f $SERVICE_DIR/iptvx.conf ] && . $SERVICE_DIR/iptvx.conf
+
+[ -z "$CAT_BELARUS" ] && CAT_BELARUS="0"
+[ -z "$CAT_KAZAKH" ] && CAT_KAZAKH="0"
+[ -z "$CAT_UZBEK" ] && CAT_UZBEK="0"
+[ -z "$CAT_ARMENIA" ] && CAT_ARMENIA="0"
+[ -z "$CAT_AZERB" ] && CAT_AZERB="0"
+
+# Create playlist
+list_run () {
+  [ -f $IPTVX_DIR/playlist.conf ] && . $IPTVX_DIR/playlist.conf
+
+  if [ -z "$PUBIC_KEY" ]; then
+    echo "IPTVX: Unknown playlist address (not found public key)."
+    exit
+  else
+    IPTVX_LIST_URL="https://cbilling.tv/playlist/$PUBIC_KEY.m3u8"
+  fi
+
+  mkdir -p $IPTVX_DIR/playlist
+  rm -f $IPTVX_FILE
+  curl -s --connect-timeout 5 --max-time 20 -o "$IPTVX_FILE" "$IPTVX_LIST_URL"
+
+  if [ ! -f "$IPTVX_FILE" ]; then
+    echo "IPTVX: Could not load playlist."
+    exit
+  fi
+
+  sed '/^#EXTM3U.*/d' -i $IPTVX_FILE
+  rm -f $IPTVX_TEMP_LIST
+
+  cat $IPTVX_FILE |  
+    while read -r LINE ; do
+      LINE_CH=`echo $LINE | grep '#EXTINF:'`
+      LINE_KT=`echo $LINE | grep '#EXTGRP:'`
+      LINE_UL=`echo $LINE | grep 'http://'`
+
+      if [ -n "$LINE_CH" ]; then
+        CH_NAME=`echo $LINE | sed 's/^#EXTINF:.*0,//; s/[ \t]*$//'`
+        continue
+      fi
+
+      if [ -n "$LINE_KT" ]; then
+        CAT_NAME=`echo $LINE | sed 's/^#EXTGRP://; s/[ \t]*$//'`
+        continue
+      fi
+
+      if [ -n "$LINE_UL" ]; then
+        CH_URL="$LINE_UL"
+        echo "$CH_NAME # $CAT_NAME # $CH_URL" >> $IPTVX_TEMP_LIST
+        CH_NAME=''
+        CAT_NAME=''
+        CH_URL=''
+      fi
+    done
+
+  [ "$CAT_COMM" == 0 ] && sed '/# Общероссийские #/d' -i $IPTVX_TEMP_LIST
+  [ "$CAT_NEWS" == 0 ] && sed '/# Новости #/d' -i $IPTVX_TEMP_LIST
+  [ "$CAT_FILMS" == 0 ] && sed '/# Кино #/d' -i $IPTVX_TEMP_LIST
+  [ "$CAT_SPORT" == 0 ] && sed '/# Спорт #/d' -i $IPTVX_TEMP_LIST
+  [ "$CAT_CHILDREN" == 0 ] && sed '/# Мультфильмы #/d' -i $IPTVX_TEMP_LIST
+  [ "$CAT_LEARN" == 0 ] && sed '/# Познавательные #/d' -i $IPTVX_TEMP_LIST
+  [ "$CAT_MUSIC" == 0 ] && sed '/# Музыкальные #/d' -i $IPTVX_TEMP_LIST
+  [ "$CAT_UKRAINE" == 0 ] && sed '/# Украина #/d' -i $IPTVX_TEMP_LIST
+  [ "$CAT_BELARUS" == 0 ] && sed '/# Белоруссия #/d' -i $IPTVX_TEMP_LIST
+  [ "$CAT_KAZAKH" == 0 ] && sed '/# Казахстан #/d' -i $IPTVX_TEMP_LIST
+  [ "$CAT_UZBEK" == 0 ] && sed '/# Узбекистан #/d' -i $IPTVX_TEMP_LIST
+  [ "$CAT_ARMENIA" == 0 ] && sed '/# Армения #/d' -i $IPTVX_TEMP_LIST
+  [ "$CAT_AZERB" == 0 ] && sed '/# Азербайджан #/d' -i $IPTVX_TEMP_LIST
+  [ "$CAT_EROS" == 0 ] && sed '/# Взрослые #/d' -i $IPTVX_TEMP_LIST
+
+  sed '/^$/d' -i $IPTVX_TEMP_LIST
+  sort -k1 $IPTVX_TEMP_LIST > $IPTVX_TEMP_LIST.sort
+  mv -f $IPTVX_TEMP_LIST.sort $IPTVX_TEMP_LIST
+  mkdir -p $M3U_DIR
+  echo '#EXTM3U' > $LIST_M3U
+
+  cat $IPTVX_TEMP_LIST |  
+    while read -r LINE ; do
+      NAME_CH=`echo $LINE | awk -F\\# '{print $1}' | sed 's/^[ \t]*//; s/[ \t]*$//'`
+      CATR_CH=`echo $LINE | awk -F\\# '{print $2}' | sed 's/^[ \t]*//; s/[ \t]*$//'`
+      PATH_CH=`echo $LINE | awk -F\\# '{print $3}' | sed 's/^[ \t]*//; s/[ \t]*$//'`
+      LOGO_CH=`echo $NAME_CH | tr 'A-Z' 'a-z' | sed 's/\// /'`
+
+      echo "#EXTINF:-1 group-title=\"$CATR_CH\" tvg-logo=\"$LOGO_CH.png\",$NAME_CH" >> $LIST_M3U
+      echo "$PATH_CH" >> $LIST_M3U
+    done
+
+  cat $LIST_M3U | sed 's/s.*\.iptvx\.tv/s01\.iptvx\.tv/' > $M3U_DIR/s01-iptvx.m3u
+  cat $LIST_M3U | sed 's/s.*\.iptvx\.tv/s02\.iptvx\.tv/' > $M3U_DIR/s02-iptvx.m3u
+  mv -f $LIST_M3U $M3U_DIR/org-iptvx.m3u
+}
+
+list_run
+echo "Done! Playlist created."
+exit

@@ -1,7 +1,7 @@
 PKG_NAME="gevent"
 PKG_VERSION="1.1.2"
 PKG_URL="https://github.com/gevent/gevent/releases/download/v$PKG_VERSION/gevent-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain Python distutilscross:host greenlet c-ares libev"
+PKG_DEPENDS_TARGET="toolchain Python distutilscross:host greenlet libev"
 PKG_SECTION="xmedia/depends"
 PKG_SHORTDESC="gevent is a coroutine-based Python networking library"
 PKG_LONGDESC="gevent is a coroutine-based Python networking library."

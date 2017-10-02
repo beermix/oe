@@ -20,6 +20,7 @@ JSON_FILE="$ACE_DIR/ttv-m3u/acelive.json"
 JSON_FILE_GZ="$JSON_FILE.gz"
 LOGO_LIST="$ACE_DIR/ttv-logo.list"
 TMP_LIST="/tmp/tmp-acettv.list"
+TOR_STATUS="none"
 RUN_STATUS=
 
 [ -f $SERVICE_DIR/acettv.conf ] && . $SERVICE_DIR/acettv.conf
@@ -45,7 +46,15 @@ ace_run () {
     STAT_OLD=`stat $JSON_FILE_GZ | grep 'Modify:'`
   fi
 
-  curl -s --connect-timeout 5 --max-time 20 -R -z "$JSON_FILE_GZ" -o "$JSON_FILE_GZ" -H "Accept-Encoding: gzip" "http://super-pomoyka.us.to/trash/ttv-list/acelive.json"
+  curl -s -k --connect-timeout 5 --max-time 20 -R -z "$JSON_FILE_GZ" -o "$JSON_FILE_GZ" -H "Accept-Encoding: gzip" "https://pomoyka.win/trash/ttv-list/acelive.json"
+
+  if [ ! -f "$JSON_FILE_GZ" ]; then
+    /usr/bin/tor > /dev/null 2>&1 &
+    sleep 6
+    curl -s --socks5-hostname "127.0.0.1:9050" --connect-timeout 8 --max-time 30 -R -z "$JSON_FILE_GZ" -o "$JSON_FILE_GZ" -H "Accept-Encoding: gzip" "http://hmxuku36whbypzxi.onion/trash/ttv-list/acelive.json"
+    killall -9 tor > /dev/null 2>&1
+    [ -e "$JSON_FILE_GZ" ] && TOR_STATUS="yes"
+  fi
 
   if [ ! -f "$JSON_FILE_GZ" ]; then
     if [ "$1" == "next" ]; then
@@ -89,7 +98,7 @@ ace_run () {
 
   sed '/^$/d' -i $TMP_LIST
  
-  echo '#EXTM3U' > $ACE_M3U
+  [ "$TOR_STATUS" == "none" ] && echo '#EXTM3U' > $ACE_M3U
   echo '#EXTM3U' > $ACE_M3U_DIRECT
 
   cat $TMP_LIST |  
@@ -100,9 +109,9 @@ ace_run () {
       CH_CID=`echo $LINE | awk -F\\# '{print $4}' | sed 's/^[ \t]*//; s/[ \t]*$//'`
       CH_LOGO=`grep -i -m 1 "$CH_NAME #" $LOGO_LIST | awk -F\\# '{print $2}' | sed 's/^[ \t]*//; s/[ \t]*$//'`
 
-      echo "#EXTINF:-1 group-title=\"$CH_CAT\" tvg-logo=\"$CH_LOGO\",$CH_NAME" >> $ACE_M3U
+      [ "$TOR_STATUS" == "none" ] && echo "#EXTINF:-1 group-title=\"$CH_CAT\" tvg-logo=\"$CH_LOGO\",$CH_NAME" >> $ACE_M3U
       echo "#EXTINF:-1 group-title=\"$CH_CAT\" tvg-logo=\"$CH_LOGO\",$CH_NAME" >> $ACE_M3U_DIRECT
-      echo "http://${URL_IP}:6878/ace/getstream?url=http%3A%2F%2Fsuper-pomoyka.us.to%2Ftrash%2Fttv-list%2Facelive%2F${CH_PATH}&.mp4" >> $ACE_M3U
+      [ "$TOR_STATUS" == "none" ] && echo "http://${URL_IP}:6878/ace/getstream?url=https%3A%2F%2Fpomoyka.win%2Ftrash%2Fttv-list%2Facelive%2F${CH_PATH}&.mp4" >> $ACE_M3U
       echo "http://${URL_IP}:6878/ace/getstream?id=${CH_CID}&.mp4" >> $ACE_M3U_DIRECT
     done
 
