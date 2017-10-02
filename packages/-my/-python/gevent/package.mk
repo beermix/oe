@@ -1,12 +1,19 @@
 PKG_NAME="gevent"
 PKG_VERSION="1.1.2"
 PKG_URL="https://github.com/gevent/gevent/releases/download/v$PKG_VERSION/gevent-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain Python distutilscross:host greenlet libev"
+PKG_DEPENDS_TARGET="toolchain Python distutilscross:host greenlet"
 PKG_SECTION="xmedia/depends"
 PKG_SHORTDESC="gevent is a coroutine-based Python networking library"
 PKG_LONGDESC="gevent is a coroutine-based Python networking library."
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
+
+pre_configure_target() {
+  cd $ROOT/$PKG_BUILD
+    sed -i -e 's/^cross_compiling=no/cross_compiling=yes/' libev/configure
+    sed -i -e 's/^cross_compiling=no/cross_compiling=yes/' c-ares/configure
+}
+
 
 make_target() {
   python setup.py build --cross-compile
