@@ -6,6 +6,10 @@ PKG_SECTION="tools"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
+pre_configure_target() {
+  #export LIBS="-lfreetype"
+  strip_lto
+}
 
 PKG_CONFIGURE_OPTS_TARGET="--with-wine-tools=$ROOT/$PKG_BUILD/.$HOST_NAME \
 			      --disable-tests \
@@ -13,6 +17,8 @@ PKG_CONFIGURE_OPTS_TARGET="--with-wine-tools=$ROOT/$PKG_BUILD/.$HOST_NAME \
 			      --enable-win64 \
 			      --without-capi \
 			      --without-coreaudio \
+			      --with-gettext \
+			      --without-gettextpo \
 			      --without-gphoto \
 			      --without-gsm \
 			      --without-hal \
@@ -32,7 +38,6 @@ PKG_CONFIGURE_OPTS_TARGET="--with-wine-tools=$ROOT/$PKG_BUILD/.$HOST_NAME \
 			      
 PKG_CONFIGURE_OPTS_HOST="--enable-win64 \
 			    --disable-tests \
-			    --disable-win16 \
 			    --without-alsa \
 			    --without-capi \
 			    --without-cms \
@@ -75,7 +80,8 @@ PKG_CONFIGURE_OPTS_HOST="--enable-win64 \
 			    --without-xshm \
 			    --without-xslt \
 			    --without-xxf86vm \
-			    --without-zlib"
+			    --without-zlib \
+			    --without-udev"
 
 makeinstall_host() {
   : # nop

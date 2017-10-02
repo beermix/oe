@@ -33,9 +33,13 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 pre_configure_target() {
-  CFLAGS="$CFLAGS -DNO_LEGACY"
-  CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
+  export CFLAGS="$CFLAGS -ffunction-sections -fdata-sections -DNO_LEGACY"
+  export CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
+  export LDFLAGS="$LDFLAGS -Wl,--gc-sections"
 }
 
-PKG_CONFIGURE_OPTS_TARGET="--with-kernel=$(get_pkg_build linux)"
+PKG_CONFIGURE_OPTS_TARGET="--enable-shared \
+			      --enable-static \
+			      --enable-devel \
+			      --with-kernel=$(get_pkg_build linux)"
 
