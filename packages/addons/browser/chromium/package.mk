@@ -162,6 +162,8 @@ addon() {
   cp -P  $PKG_BUILD/out/Release/{*.pak,*.dat,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -PR $PKG_BUILD/out/Release/locales $ADDON_BUILD/$PKG_ADDON_ID/bin/
   cp -PR $PKG_BUILD/out/Release/gen/content/content_resources.pak $ADDON_BUILD/$PKG_ADDON_ID/bin/
+  
+  $STRIP $ADDON_BUILD/$PKG_ADDON_ID/bin/chromium.bin
 
   # config
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/config
