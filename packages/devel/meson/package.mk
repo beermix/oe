@@ -18,8 +18,8 @@
 
 PKG_NAME="meson"
 PKG_VERSION="0.42.1"
-PKG_URL="https://github.com/mesonbuild/meson/releases/download/0.42.1/meson-0.42.1.tar.gz"
-PKG_DEPENDS_HOST="pathlib:host"
+PKG_URL="https://github.com/mesonbuild/meson/releases/download/$PKG_VERSION/meson-$PKG_VERSION.tar.gz"
+PKG_DEPENDS_HOST="Python3:host pathlib:host"
 PKG_SECTION="devel"
 PKG_SHORTDESC="Small build system with a focus on speed"
 PKG_LONGDESC="Small build system with a focus on speed"
@@ -31,9 +31,9 @@ configure_host() {
 }
 
 make_host() {
-  /usr/bin/python3 setup.py build
+  python3 setup.py build
 }
 
 makeinstall_host() {
-  /usr/bin/python3 setup.py install --prefix=$ROOT/$TOOLCHAIN --optimize=1
+  python3 setup.py install --prefix=$ROOT/$TOOLCHAIN
 }
