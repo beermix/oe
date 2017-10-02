@@ -21,4 +21,5 @@ PKG_CONFIGURE_OPTS_TARGET="--without-p11-kit \
 			      --enable-openssl-compatibility \
 			      --without-tpm \
 			      --disable-shared \
+			      --with-nettle-mini \
 			      --with-pic"
