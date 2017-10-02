@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="icu"
-PKG_VERSION="57.1"
+PKG_VERSION="59.1"
 PKG_SITE="http://download.icu-project.org/files/icu4c/?C=M;O=D"
 PKG_URL="http://download.icu-project.org/files/${PKG_NAME}4c/${PKG_VERSION}/${PKG_NAME}4c-${PKG_VERSION//./_}-src.tgz"
 PKG_SOURCE_DIR="icu"
