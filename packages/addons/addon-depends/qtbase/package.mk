@@ -50,6 +50,9 @@ PKG_CONFIGURE_OPTS_TARGET="-prefix /usr
                            -no-openssl
                            -no-libproxy
                            -system-pcre
+                           -no-glib
+                           -no-pulseaudio
+                           -no-alsa
                            -silent
                            -no-cups
                            -no-iconv
@@ -62,6 +65,7 @@ PKG_CONFIGURE_OPTS_TARGET="-prefix /usr
                            -no-opengl
                            -no-libudev
                            -no-libinput
+                           -no-gstreamer
                            -no-eglfs"
 
 configure_target() {
