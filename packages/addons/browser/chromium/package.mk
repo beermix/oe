@@ -56,11 +56,13 @@ makeinstall_host() {
 make_target() {
   strip_lto
   strip_hard
-  export LDFLAGS="$LDFLAGS -ludev"
+  export LDFLAGS="$LDFLAGS -ludev -s"
   export LD=$CXX
   
   mkdir -p third_party/node/linux/node-linux-x64/bin
   ln -sfv /usr/bin/node third_party/node/linux/node-linux-x64/bin/node
+  
+#  export CCACHE_SLOPPINESS=include_file_mtime
 
   # Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
   # Note: These are for OpenELEC use ONLY. For your own distribution, please
@@ -74,7 +76,7 @@ make_target() {
       -e 's|x86_64-linux-gnu/||g' \
       -e 's|/usr/lib/va/drivers|/usr/lib/dri|g' \
       -e 's|/usr/lib64/va/drivers|/usr/lib/dri|g' \
-      -i ./content/common/sandbox_linux/bpf_gpu_policy_linux.cc
+      -i $ROOT/$PKG_BUILD/content/common/sandbox_linux/bpf_gpu_policy_linux.cc
 
   local _flags=(
     "host_toolchain=\"//build/toolchain/linux:x64_host\""
@@ -124,6 +126,7 @@ make_target() {
     libxslt
     libxml2
   )
+
   # Remove bundled libraries for which we will use the system copies; this
   # *should* do what the remove_bundled_libraries.py script does, with the
   # added benefit of not having to list all the remaining libraries
