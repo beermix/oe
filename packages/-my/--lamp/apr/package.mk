@@ -22,7 +22,7 @@ PKG_VERSION="1.6.2"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="Apache License"
-PKG_SITE="http://apr.apache.org/"
+PKG_SITE="http://archive.apache.org/dist/apr/?C=M;O=D"
 PKG_URL="http://archive.apache.org/dist/apr/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_PRIORITY="optional"
@@ -71,7 +71,7 @@ pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
   export LIBS="$LIBS -ldl -lpthread"
-    export CFLAGS="$CFLAGS -fPIC -DPIC"
+  export CFLAGS="$CFLAGS -fPIC -DPIC"
   export CXXFLAGS="$CXXFLAGS -fPIC -DPIC"
 }
 
