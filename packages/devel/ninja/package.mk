@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="ninja"
-PKG_VERSION="v1.8.2"
+PKG_VERSION="v1.7.2"
 PKG_GIT_URL="https://github.com/ninja-build/ninja"
 PKG_DEPENDS_HOST="re2c:host"
 PKG_SECTION="devel"
@@ -31,7 +31,7 @@ configure_host() {
 }
 
 make_host() {
-   python configure.py --bootstrap
+   python configure.py --bootstrap --host=linux --with-python=$ROOT/$TOOLCHAIN/bin/python
 }
 
 makeinstall_host() {
