@@ -120,12 +120,8 @@ make_target() {
   local _system_libs=(
     harfbuzz-ng
     libjpeg
-    libwebp
     libxml2
     libxslt
-    re2
-    yasm
-    minizip
   )
 
   # Remove bundled libraries for which we will use the system copies; this
@@ -136,7 +132,6 @@ make_target() {
     find -type f -path "*third_party/$_lib/*" \
       \! -path "*third_party/$_lib/chromium/*" \
       \! -path "*third_party/$_lib/google/*" \
-      \! -path "*base/third_party/icu/*" \
       \! -regex '.*\.\(gn\|gni\|isolate\|py\)' \
       -delete
   done
