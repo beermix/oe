@@ -1,10 +1,5 @@
-################################################################################
-#      This file is part of Alex@ELEC - http://www.alexelec.in.ua
-#      Copyright (C) 2011-2017 Alexandr Zuyev (alex@alexelec.in.ua)
-################################################################################
-
 PKG_NAME="libdvbpsi"
-PKG_VERSION="1.3.0"
+PKG_VERSION="1.3.1"
 PKG_REV="2"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -17,8 +12,4 @@ PKG_LONGDESC="libdvbpsi is a simple library designed for MPEG TS and DVB PSI tab
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared"
-
-pre_configure_target() {
-  export CFLAGS+=" -fPIC -DPIC"
-}
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared --with-pic"

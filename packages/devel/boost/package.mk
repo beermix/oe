@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="boost"
-PKG_VERSION="1_63_0"
-PKG_URL="$SOURCEFORGE_SRC/boost/boost/1.63.0/${PKG_NAME}_${PKG_VERSION}.tar.bz2"
+PKG_VERSION="1_64_0"
+PKG_URL="https://dl.bintray.com/boostorg/release/1.64.0/source/boost_1_64_0.tar.gz"
 PKG_SOURCE_DIR="${PKG_NAME}_${PKG_VERSION}"
 PKG_DEPENDS_HOST=""
 PKG_DEPENDS_TARGET="toolchain boost:host Python zlib bzip2"
