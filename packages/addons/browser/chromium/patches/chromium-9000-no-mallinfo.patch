@@ -1,5 +1,5 @@
---- content/child/content_child_helpers.cc.orig
-+++ content/child/content_child_helpers.cc
+--- a/content/child/content_child_helpers.cc.orig
++++ b/content/child/content_child_helpers.cc
 @@ -24,7 +24,7 @@ namespace content {
  // though, this provides only a partial and misleading value.
  // Unfortunately some telemetry benchmark rely on it and these need to
@@ -9,8 +9,8 @@
  size_t GetMemoryUsageKB() {
    struct mallinfo minfo = mallinfo();
    uint64_t mem_usage =
---- base/trace_event/malloc_dump_provider.cc.orig
-+++ base/trace_event/malloc_dump_provider.cc
+--- a/base/trace_event/malloc_dump_provider.cc.orig
++++ b/base/trace_event/malloc_dump_provider.cc
 @@ -243,7 +243,7 @@
    allocated_objects_count = main_heap_info.block_count;
  #elif defined(OS_FUCHSIA)
@@ -22,8 +22,8 @@
  
 diff --git a/base/process/process_metrics_posix.cc b/base/process/process_metrics_posix.cc
 index 0eb5c1f..8af7799 100644
---- base/process/process_metrics_posix.cc
-+++ base/process/process_metrics_posix.cc
+--- a/base/process/process_metrics_posix.cc
++++ b/base/process/process_metrics_posix.cc
 @@ -94,14 +94,14 @@ size_t ProcessMetrics::GetMallocUsage() {
    malloc_statistics_t stats = {0};
    malloc_zone_statistics(nullptr, &stats);

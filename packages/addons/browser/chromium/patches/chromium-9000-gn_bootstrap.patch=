@@ -1,7 +1,7 @@
 diff --git a/tools/gn/bootstrap/bootstrap.py b/tools/gn/bootstrap/bootstrap.py
 index 1390560..5ce7832 100755
---- tools/gn/bootstrap/bootstrap.py
-+++ tools/gn/bootstrap/bootstrap.py
+--- a/tools/gn/bootstrap/bootstrap.py
++++ b/tools/gn/bootstrap/bootstrap.py
 @@ -20,6 +20,7 @@ import errno
  import logging
  import optparse
