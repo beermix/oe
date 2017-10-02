@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="autoconf-archive"
-PKG_VERSION="2017.03.21"
+PKG_VERSION="2017.09.28"
 PKG_SITE="http://ftp.gnu.org/gnu/autoconf-archive"
 PKG_URL="http://ftp.gnu.org/gnu/autoconf-archive/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="ccache:host"
