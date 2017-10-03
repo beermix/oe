@@ -35,7 +35,7 @@ PKG_AUTORECONF="no"
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET encodings font-xfree86-type1 font-bitstream-type1 font-misc-misc"
 
 # Server
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET xkeyboard-config xkbcomp libXft"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET xkeyboard-config xkbcomp"
 
 # Tools
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET xrandr setxkbmap"
@@ -47,7 +47,8 @@ fi
 get_graphicdrivers
 
 # Drivers 
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET xf86-input-libinput"
+#  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET xf86-input-libinput"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET xf86-input-evdev"
 
 for drv in $XORG_DRIVERS; do
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET xf86-video-$drv"
