@@ -17,11 +17,12 @@
 ################################################################################
 
 PKG_NAME="libinput"
-PKG_VERSION="master"
+PKG_VERSION="1.7.3"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/libinput/"
 PKG_URL="http://www.freedesktop.org/software/libinput/$PKG_NAME-$PKG_VERSION.tar.xz"
+#PKG_GIT_URL="https://github.com/bminor/libinput"
 PKG_DEPENDS_TARGET="toolchain systemd libxkbcommon libevdev mtdev"
 PKG_SECTION="wayland"
 PKG_SHORTDESC="libinput is a library to handle input devices in Wayland compositors and to provide a generic X.Org input driver."
@@ -37,7 +38,3 @@ PKG_CONFIGURE_OPTS_TARGET="--with-sysroot=$SYSROOT_PREFIX \
                            --disable-event-gui \
                            --disable-tests \
                            --disable-libwacom"
-                           
-make_target() {
-  LC_ALL=en_US.UTF-8 meson $ROOT/$PKG_BUILD $ROOT/$PKG_BUILD/.$TARGET_NAME --cross-file=$ROOT/meson-cross.cfg
-}

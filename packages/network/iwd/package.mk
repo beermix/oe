@@ -41,10 +41,10 @@ pre_build_target() {
   cp -a $(get_build_dir ell)/ell $PKG_BUILD/
 }
 
-#post_makeinstall_target() {
-#  mkdir -p $INSTALL/etc/dbus-1/system.d
-#    cp $ROOT/$PKG_BUILD/src/iwd-dbus.conf $INSTALL/etc/dbus-1/system.d
-#}
+post_makeinstall_target() {
+  mkdir -p $INSTALL/etc/dbus-1/system.d
+    cp $ROOT/$PKG_BUILD/src/iwd-dbus.conf $INSTALL/etc/dbus-1/system.d
+}
 
 post_install() {
   enable_service iwd.service
