@@ -14,11 +14,14 @@
 #
 #  You should have received a copy of the GNU General Public License  --disable-optimizations --with-lto \
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################ 
+################################################################################
 
 PKG_NAME="Python"
-PKG_VERSION="2.7.14"
-PKG_URL="http://www.python.org/ftp/python/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
+#PKG_VERSION="2.7.14"
+#PKG_URL="http://www.python.org/ftp/python/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_ARCH="any"
+PKG_VERSION="13da1a6"
+PKG_GIT_URL="https://github.com/python/cpython"
 PKG_DEPENDS_HOST="zlib:host bzip2:host sqlite:host"
 PKG_DEPENDS_TARGET="toolchain sqlite expat zlib bzip2 openssl libffi readline Python:host"
 PKG_PRIORITY="optional"
@@ -29,19 +32,16 @@ PKG_LONGDESC="Python is an interpreted object-oriented programming language, and
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-post_unpack() {
-  sed -i "/SQLITE_OMIT_LOAD_EXTENSION/d" $ROOT/$PKG_BUILD/setup.py
-}
+#post_unpack() {
+#  sed -i "/SQLITE_OMIT_LOAD_EXTENSION/d" $ROOT/$PKG_BUILD/setup.py
+#}
 
 PY_DISABLED_MODULES="_tkinter nis gdbm bsddb ossaudiodev"
 
 PKG_CONFIGURE_OPTS_HOST="--cache-file=config.cache \
                          --without-cxx-main \
                          --with-threads \
-                         --enable-unicode=ucs4 \
-                         --enable-ipv6 \
-                         --enable-shared \
-                         --disable-static"
+                         --enable-unicode=ucs4"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            ac_cv_file_dev_ptmx=yes \
@@ -49,6 +49,8 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            ac_cv_func_chflags_works=no \
                            ac_cv_func_printf_zd=yes \
                            ac_cv_buggy_getaddrinfo=no \
+                           ac_cv_header_bluetooth_bluetooth_h=no \
+                           ac_cv_header_bluetooth_h=no \
                            ac_cv_file__dev_ptmx=no \
                            ac_cv_file__dev_ptc=no \
                            ac_cv_have_long_long_format=yes \
@@ -96,20 +98,20 @@ pre_configure_target() {
 }
 
 make_target() {
-  make -j1 CC="$CC" LDFLAGS="$TARGET_LDFLAGS -L." \
+  make  -j1 CC="$CC" LDFLAGS="$TARGET_LDFLAGS -L." \
         PYTHON_DISABLE_MODULES="$PY_DISABLED_MODULES" \
         PYTHON_MODULES_INCLUDE="$TARGET_INCDIR" \
         PYTHON_MODULES_LIB="$TARGET_LIBDIR"
 }
 
 makeinstall_target() {
-  make -j1 CC="$CC" DESTDIR=$SYSROOT_PREFIX \
+  make  -j1 CC="$CC" DESTDIR=$SYSROOT_PREFIX \
         PYTHON_DISABLE_MODULES="$PY_DISABLED_MODULES" \
         PYTHON_MODULES_INCLUDE="$TARGET_INCDIR" \
         PYTHON_MODULES_LIB="$TARGET_LIBDIR" \
         install
 
-  make -j1 CC="$CC" DESTDIR=$INSTALL \
+  make  -j1 CC="$CC" DESTDIR=$INSTALL \
         PYTHON_DISABLE_MODULES="$PY_DISABLED_MODULES" \
         PYTHON_MODULES_INCLUDE="$TARGET_INCDIR" \
         PYTHON_MODULES_LIB="$TARGET_LIBDIR" \
@@ -135,5 +137,5 @@ post_makeinstall_target() {
 
   # strip
   chmod u+w $INSTALL/usr/lib/libpython*.so.*
-#  $STRIP $INSTALL/usr
+  debug_strip $INSTALL/usr
 }
