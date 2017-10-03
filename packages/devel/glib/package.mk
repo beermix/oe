@@ -33,8 +33,7 @@ PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_HOST="--disable-static \
                          --enable-shared \
-                         --disable-libmount \
-                         --with-python=python"
+                         --disable-libmount"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_snprintf_c99=yes \
                            ac_cv_func_vsnprintf_c99=yes \
@@ -53,8 +52,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_snprintf_c99=yes \
                            --enable-Bsymbolic \
                            --with-gnu-ld \
                            --with-threads=posix \
-                           --with-pcre=system \
-                           --with-python=python \
+                           --with-pcre=internal \
                            --enable-static"
 
 pre_configure_host() {
