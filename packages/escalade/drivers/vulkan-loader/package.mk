@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="vulkan-loader"
-PKG_VERSION="03359bf"
+PKG_VERSION="sdk-1.0.61.1"
 PKG_SITE="https://www.khronos.org"
 PKG_GIT_URL="https://github.com/KhronosGroup/Vulkan-LoaderAndValidationLayers"
 PKG_DEPENDS_TARGET="toolchain cmake:host"
@@ -31,18 +31,12 @@ PKG_CMAKE_OPTS_TARGET="-DBUILD_WSI_XLIB_SUPPORT=On \
 		       -DBUILD_TESTS=Off \
 		       -DBUILD_LAYERS=Off \
 		       -DBUILD_DEMOS=On \
-		       -DBUILD_VKJSON=Off"
+		       -DBUILD_VKJSON=Off \
+		       -DBUILD_WSI_WAYLAND_SUPPORT=Off \
+		       -DBUILD_WSI_MIR_SUPPORT=Off"
 
 pre_configure_target() {
   cd ..
   ./update_external_sources.sh
   cd -
-}
-
-makeinstall_target() {
-  mkdir -p $INSTALL/usr/lib
-  cp -r loader/libvulkan.so* $INSTALL/usr/lib/
-  cp -r loader/libvulkan.so* $SYSROOT_PREFIX/usr/lib/
-  mkdir -p $INSTALL/usr/bin
-  cp demos/vulkaninfo $INSTALL/usr/bin
 }

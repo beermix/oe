@@ -369,9 +369,10 @@ show_config() {
   
   echo -e "$show_message"
 }
+
 # strip
- debug_strip() {
-   if [ ! "$DEBUG" = yes ]; then
+debug_strip() {
+  if [ ! "$DEBUG" = yes ]; then
     find $* -type f -executable | xargs $STRIP 2>/dev/null || :
-   fi
- }
+  fi
+}

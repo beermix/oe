@@ -21,7 +21,7 @@ PKG_NAME="wpa_supplicant"
 #PKG_URL="https://w1.fi/releases/wpa_supplicant-$PKG_VERSION.tar.gz"
 PKG_VERSION="e37cea3"
 PKG_GIT_URL="http://w1.fi/hostap.git"
-PKG_DEPENDS_TARGET="toolchain dbus libnl openssl"
+PKG_DEPENDS_TARGET="toolchain dbus libnl gnutls"
 PKG_SECTION="network"
 PKG_SHORTDESC="wpa_supplicant: An IEEE 802.11i supplicant implementation"
 PKG_LONGDESC="The wpa_supplicant is a free software implementation of an IEEE 802.11i supplicant. In addition to being a full-featured WPA2 supplicant, it also has support for WPA and older wireless LAN security protocols."
@@ -37,8 +37,9 @@ configure_target() {
   export MAKEFLAGS=-j1
 
   cp $PKG_DIR/config/makefile.config wpa_supplicant/.config
-#  echo "CONFIG_TLS=gnutls" >> .config
-#  echo "CONFIG_GNUTLS_EXTRA=y" >> .config
+  echo "CONFIG_TLS=gnutls" >> .config
+  echo "CONFIG_GNUTLS_EXTRA=y" >> .config
+#  echo "CONFIG_TLS=openssl" >> .config
 }
 
 post_makeinstall_target() {

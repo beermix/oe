@@ -12,9 +12,9 @@
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
 #
-#  You should have received a copy of the GNU General Public License
+#  You should have received a copy of the GNU General Public License  --disable-optimizations --with-lto \
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+################################################################################ 
 
 PKG_NAME="Python"
 PKG_VERSION="2.7.14"
@@ -65,7 +65,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            --without-cxx-main \
                            --with-system-ffi \
                            --with-system-expat \
-                           --disable-optimizations \
                            --enable-shared"
 
 post_patch() {
@@ -94,7 +93,6 @@ makeinstall_host() {
 
 pre_configure_target() {
   export PYTHON_FOR_BUILD=$ROOT/$TOOLCHAIN/bin/python
-  #export LTO_SUPPORT="yes"
 }
 
 make_target() {

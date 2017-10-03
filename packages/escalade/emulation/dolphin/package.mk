@@ -21,7 +21,7 @@ PKG_VERSION="faced47"
 PKG_ARCH="x86_64"
 PKG_SITE="https://github.com/dolphin-emu/dolphin"
 PKG_GIT_URL="https://github.com/dolphin-emu/dolphin"
-PKG_DEPENDS_TARGET="toolchain cmake:host openal-soft libevdev gtk+ ffmpeg zlib bluez portaudio pulseaudio alsa-lib libogg libvorbis libSM enet"
+PKG_DEPENDS_TARGET="toolchain cmake:host openal-soft libevdev gtk2 ffmpeg zlib bluez portaudio pulseaudio alsa-lib libogg libvorbis libSM enet"
 PKG_SECTION="emulation"
 PKG_SHORTDESC="Dolphin GameCube/Wii emulator"
 

@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="vice"
-PKG_VERSION="3.1"
+PKG_VERSION="33800"
 PKG_SITE="http://vice-emu.sourceforge.net/"
 PKG_URL="https://sourceforge.net/projects/vice-emu/files/releases/vice-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain alsa-lib SDL2 libpng giflib zlib libvorbis libogg lame"
@@ -34,11 +34,19 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_prog_sdl2_config=$SYSROOT_PREFIX/usr/bin/sdl2-c
 			   --disable-catweasel \
 			   --enable-native-tools=$HOST_CC \
                            --enable-sdlui2 \
+			   --disable-parsid \
+			   --disable-hardsid \
 			   --without-oss \
 			   --without-pulse"
 
+pre_build_target() {
+  svn export -r $PKG_VERSION https://svn.code.sf.net/p/vice-emu/code/trunk/vice $PKG_BUILD/$PKG_NAME-svn
+  mv $PKG_BUILD/$PKG_NAME-svn/* $PKG_BUILD/
+  rm -rf $PKG_BUILD/$PKG_NAME-svn
+}
 pre_configure_target() {
   export LIBS="-ludev"
+  ./autogen.sh
 }
 
 post_makeinstall_target() {
