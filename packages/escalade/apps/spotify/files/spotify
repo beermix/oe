@@ -24,7 +24,7 @@ install_spotify() {
 }
 
 run_spotify() {
-  LD_PRELOAD="libcurl-compat.so libcrypto-compat.so libssl-compat.so" $SPOTIFY_HOME/spotify "$@"
+  LD_PRELOAD=libcurl-compat.so $SPOTIFY_HOME/spotify "$@"
 }
 
 if [ ! -x $SPOTIFY_HOME ]; then

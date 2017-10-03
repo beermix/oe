@@ -17,12 +17,11 @@
 ################################################################################
 
 PKG_NAME="retroarch"
-PKG_VERSION="2496a62"
+PKG_VERSION="c828a42"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv3"
 PKG_GIT_URL="https://github.com/libretro/RetroArch.git"
-#PKG_URL="custom"
-PKG_DEPENDS_TARGET="toolchain alsa-lib freetype zlib retroarch-assets core-info retroarch-joypad-autoconfig common-shaders libretro-database ffmpeg"
+PKG_DEPENDS_TARGET="toolchain alsa-lib freetype zlib retroarch-assets core-info retroarch-joypad-autoconfig common-shaders libretro-database ffmpeg tinyalsa"
 PKG_SECTION="emulation"
 PKG_SHORTDESC="Reference frontend for the libretro API."
 PKG_LONGDESC="RetroArch is the reference frontend for the libretro API. Popular examples of implementations for this API includes videogame system emulators and game engines, but also more generalized 3D programs. These programs are instantiated as dynamic libraries. We refer to these as libretro cores."
@@ -118,6 +117,7 @@ makeinstall_target() {
   sed -i -e "s/# assets_directory =/assets_directory =\/tmp\/assets/" $INSTALL/etc/retroarch.cfg
   sed -i -e "s/# menu_driver = \"rgui\"/menu_driver = \"xmb\"/" $INSTALL/etc/retroarch.cfg
   sed -i -e "s/# video_shared_context = false/video_shared_context = true/" $INSTALL/etc/retroarch.cfg
+  sed -i -e "s/# menu_show_core_updater = true/# menu_show_core_updater = false/" $INSTALL/etc/retroarch.cfg
   echo 'cursor_directory = "/tmp/database/cursors"' >> $INSTALL/etc/retroarch.cfg
   echo 'recording_output_directory = "/storage/videos"' >> $INSTALL/etc/retroarch.cfg
   echo 'system_directory = "/storage/roms/bios"' >> $INSTALL/etc/retroarch.cfg

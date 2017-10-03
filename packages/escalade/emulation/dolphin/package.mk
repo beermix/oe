@@ -17,25 +17,27 @@
 ################################################################################
 
 PKG_NAME="dolphin"
-PKG_VERSION="d7faba5"
+PKG_VERSION="faced47"
 PKG_ARCH="x86_64"
 PKG_SITE="https://github.com/dolphin-emu/dolphin"
 PKG_GIT_URL="https://github.com/dolphin-emu/dolphin"
-PKG_DEPENDS_TARGET="toolchain cmake:host openal-soft libevdev gtk+ ffmpeg zlib bluez portaudio pulseaudio alsa-lib libogg libvorbis libSM enet wxWidgets"
+PKG_DEPENDS_TARGET="toolchain cmake:host openal-soft libevdev gtk+ ffmpeg zlib bluez portaudio pulseaudio alsa-lib libogg libvorbis libSM enet"
 PKG_SECTION="emulation"
 PKG_SHORTDESC="Dolphin GameCube/Wii emulator"
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CMAKE_OPTS_TARGET="-DSYSTEM_PORTAUDIO_EXITCODE=0 -DENABLE_LTO=on -DUSE_SHARED_ENET=on"
+PKG_CMAKE_OPTS_TARGET="-DSYSTEM_PORTAUDIO_EXITCODE=0 -DENABLE_LTO=off -DUSE_SHARED_ENET=on -DENABLE_QT2=False"
 
 pre_configure_target() {
   strip_gold
+  strip_lto
 }
 
 pre_make_target() {
   find . -name flags.make -exec sed -i "s:isystem :I:g" \{} \;
+  #export VERBOSE=1
 }
 
 post_makeinstall_target() {

@@ -20,7 +20,7 @@ PKG_NAME="GConf"
 PKG_VERSION="3.2.6"
 PKG_SITE="http://eigen.tuxfamily.org/index.php?title=Main_Page"
 PKG_URL="ftp://ftp.gnome.org/pub/GNOME/sources/GConf/3.2/GConf-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain zlib glib libxml2"
+PKG_DEPENDS_TARGET="toolchain zlib glib"
 PKG_SECTION="depends"
 PKG_SHORTDESC="gconf"
 
