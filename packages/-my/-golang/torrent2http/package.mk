@@ -21,7 +21,7 @@ configure_target() {
  
 make_target() {
   mkdir -p bin
-  $GOLANG get -v "github.com/afedchin/torrent2http" "github.com/saintfish/chardet" "golang.org/x/net/html/charset" "golang.org/x/text/transform"
+  $GOLANG get -v github.com/afedchin/torrent2http
   $GOLANG build -v -o bin/torrent2http -a -ldflags "$LDFLAGS" .
 }
 
