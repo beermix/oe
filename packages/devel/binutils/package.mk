@@ -49,6 +49,7 @@ PKG_CONFIGURE_OPTS_HOST="MAKEINFO=true \
                          --enable-ld=default \
                          --enable-lto \
                          --enable-shared \
+                         --disable-gold \
                          --enable-relro \
                          --disable-nls \
                          --enable-poison-system-directories"
