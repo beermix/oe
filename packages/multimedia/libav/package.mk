@@ -8,14 +8,13 @@ PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-# configure GPU drivers and dependencies:
-  get_graphicdrivers
 
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
   strip_lto
   strip_gold
+  get_graphicdrivers
 }
 
 configure_target() {
@@ -49,51 +48,9 @@ configure_target() {
               --enable-pic \
               --pkg-config="$ROOT/$TOOLCHAIN/bin/pkg-config" \
               --enable-optimizations \
-              --disable-extra-warnings \
-              --enable-avdevice \
-              --enable-avcodec \
-              --enable-avformat \
-              --enable-swscale \
-              --enable-avfilter \
-              --enable-pthreads \
-              --disable-w32threads \
-              --enable-network \
-              --disable-gnutls --enable-openssl \
-              --disable-gray \
-              --enable-swscale-alpha \
-              --disable-small \
-              --enable-dct \
-              --enable-fft \
-              --enable-mdct \
-              --enable-rdft \
-              --enable-vaapi \
-              --disable-vdpau \
-              --disable-dxva2 \
-              --enable-thumb \
-              --enable-runtime-cpudetect \
-              --disable-memalign-hack \
-              --enable-encoders \
-              --enable-encoder=ac3 \
-              --enable-encoder=aac \
-              --enable-encoder=wmav2 \
-              --enable-encoder=mjpeg \
-              --enable-encoder=png \
-              --enable-hwaccels \
-              --enable-muxers \
-              --enable-muxer=spdif \
-              --enable-muxer=adts \
-              --enable-muxer=asf \
-              --enable-muxer=ipod \
-              --enable-muxer=mpegts \
-              --enable-demuxers \
-              --enable-parsers \
-              --enable-bsfs \
-              --enable-protocol=http \
-              --enable-filters \
-              --enable-bzlib \
-              --enable-libspeex \
-              --enable-zlib \
-              --enable-asm \
               --enable-yasm
+}
 
+makeinstall_target() {
+  : # nop
 }
