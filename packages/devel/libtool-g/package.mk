@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,14 +17,15 @@
 ################################################################################
 
 PKG_NAME="libtool"
-PKG_VERSION="2.4.6P"
+PKG_VERSION="6ca5e22"
+PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="http://www.gnu.org/software/libtool/"
-PKG_URL="https://dl.dropboxusercontent.com/s/pnqmyi4qi5sssj9/libtool-2.4.6P.tar.xz"
-#PKG_URL="http://ftpmirror.gnu.org/libtool/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_HOST="ccache:host autoconf:host"
+PKG_SITE="http://www.gnu.org/software/libtool/libtool.html"
+PKG_URL="https://dl.dropboxusercontent.com/s/bnkfpojtqnjwm3y/libtool-6ca5e22.tar.xz"
+PKG_DEPENDS_HOST="ccache:host autoconf:host automake:host help2man:host"
 PKG_DEPENDS_TARGET="toolchain"
+PKG_PRIORITY="optional"
 PKG_SECTION="devel"
 PKG_SHORTDESC="libtool: Generic library support script"
 PKG_LONGDESC="This is GNU Libtool, a generic library support script. Libtool hides the complexity of using shared libraries behind a consistent, portable interface."
@@ -32,5 +33,16 @@ PKG_IS_ADDON="no"
 
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_HOST="ac_init_version=2.4.6 --enable-static --disable-shared"
+pre_configure_host() {
+  sh bootstrap
+}
 
+pre_configure_target() {
+  cd $ROOT/$PKG_BUILD
+  make clean
+  sh bootstrap
+}
+
+#PKG_CONFIGURE_OPTS_HOST="lt_cv_sys_lib_dlsearch_path_spec=$SYSROOT_PREFIX/lib:$SYSROOT_PREFIX/usr/lib"
+PKG_CONFIGURE_OPTS_HOST="--disable-static --enable-shared"
+PKG_CONFIGURE_OPTS_TARGET="CONFIG_SHELL=/bin/bash --disable-static --enable-shared"
