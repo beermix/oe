@@ -32,15 +32,12 @@ CONCURRENCY_MAKE_LEVEL=1
 
 PKG_CONFIGURE_OPTS_TARGET="LIBS=-lpthread \
                            ac_cv_header_libusb_1_0_libusb_h=no \
-                           ac_cv_netfilter_can_compile=no \
                            ac_cv_linux_vers=2 \
-                           --disable-shared \
                            --with-pcap=linux \
                            --disable-bluetooth \
                            --disable-can \
                            --without-libnl \
                            --disable-yydebug \
-                           --disable-dbus \
                            --without-septel \
                            --without-dag"
 
@@ -48,7 +45,7 @@ pre_configure_target() {
 # When cross-compiling, configure can't set linux version
 # forcing it
   sed -i -e 's/ac_cv_linux_vers=unknown/ac_cv_linux_vers=2/' ../configure
-  export CFLAGS="$CFLAGS -D_DEFAULT_SOURCE -fPIC"
+  export CFLAGS="$CFLAGS -D_DEFAULT_SOURCE -fPIC -DPIC"
 }
 
 post_makeinstall_target() {
