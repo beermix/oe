@@ -65,6 +65,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            --without-cxx-main \
                            --with-system-ffi \
                            --with-system-expat \
+                           --disable-optimizations \
                            --enable-shared"
 
 post_patch() {

@@ -28,10 +28,17 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no" # ToDo
 
 
-PKG_CONFIGURE_OPTS_TARGET="-datadir=/usr/share \
+# package specific configure options
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
+                           --enable-static \
+                           --datadir=/usr/share \
                            --enable-fftw \
-                           --enable-sndfile"
+                           --enable-sndfile \
+                           --with-gnu-ld"
                            
+pre_configure_target() {
+  export CFLAGS+=" -fPIC -DPIC"
+}
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin

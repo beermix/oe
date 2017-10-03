@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="OpenELEC-settings"
-PKG_VERSION="72c3b3a"
+PKG_VERSION="0.8.1"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="prop."
 PKG_SITE="http://www.openelec.tv"
-PKG_GIT_URL="https://github.com/beermix/service.openelec.settings"
+PKG_GIT_URL="https://github.com/OpenELEC/service.openelec.settings.git"
 PKG_GIT_BRANCH="master"
 PKG_DEPENDS_TARGET="toolchain Python connman pygobject dbus-python"
 PKG_PRIORITY="optional"
