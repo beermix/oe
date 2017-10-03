@@ -6,8 +6,6 @@ PKG_SECTION="tools"
 PKG_AUTORECONF="no"
 
 make_target() {
-cd $ROOT/$PKG_BUILD
-
 # Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
 # Note: These are for Arch Linux use ONLY. For your own distribution, please
 # get your own set of keys. Feel free to contact foutrelis@archlinux.org for
@@ -21,9 +19,9 @@ _google_api_key=AIzaSyDwr302FpOSkGRpLlUpPThNTDPbXcIn_FM
 _mozilla_api_key=16674381-f021-49de-8622-3021c5942aff
 
   mkdir path
-  ln -s $ROOT/$TOOLCHAIN/python path/python
+  ln -s /$ROOT/$TOOLCHAIN/python path/python
 
- 
+  cd mozilla-unified
   
   echo -n "$_google_api_key" >google-api-key
   echo -n "$_mozilla_api_key" >mozilla-api-key
@@ -65,12 +63,13 @@ ac_add_options --enable-crashreporter
 ac_add_options --disable-updater
 END
 
+  cd mozilla-unified
 
   # _FORTIFY_SOURCE causes configure failures
   CPPFLAGS+=" -O2"
 
- # export PATH="$srcdir/path:$PATH"
- # export MOZ_SOURCE_REPO="$_repo"
+  export PATH="$srcdir/path:$PATH"
+  export MOZ_SOURCE_REPO="$_repo"
 
   # Do PGO
   #xvfb-run -a -n 95 -s "-extension GLX -screen 0 1280x1024x24" \
