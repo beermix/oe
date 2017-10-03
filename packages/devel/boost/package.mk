@@ -39,8 +39,8 @@ makeinstall_host() {
 }
 
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -I$SYSROOT_PREFIX/usr/include/python2.7 -fPIC"
-  export CXXFLAGS="$CXXFLAGS -I$SYSROOT_PREFIX/usr/include/python2.7 -fPIC"
+  export CFLAGS="$CFLAGS -I$SYSROOT_PREFIX/usr/include/python2.7 -O3 -fPIC"
+  export CXXFLAGS="$CXXFLAGS -I$SYSROOT_PREFIX/usr/include/python2.7 -O3 -fPIC"
 }
 
 configure_target() {
