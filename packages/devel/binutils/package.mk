@@ -17,11 +17,11 @@
 ################################################################################
 
 PKG_NAME="binutils"
-PKG_VERSION="2.29.1"
+PKG_VERSION="2.29"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/binutils/"
-PKG_URL="http://ftp.gnu.org.ua/gnu/binutils/binutils-2.29.1.tar.xz"
+PKG_URL="http://ftp.gnu.org.ua/gnu/binutils/binutils-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="ccache:host bison:host flex:host libelf:host bc:host linux:host"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="binutils: A GNU collection of binary utilities"

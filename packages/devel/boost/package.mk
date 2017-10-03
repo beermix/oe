@@ -18,10 +18,11 @@
 ################################################################################
 
 PKG_NAME="boost"
-PKG_VERSION="1_64_0"
-PKG_LICENSE="OSS"
-PKG_SITE="http://www.boost.org/"
-PKG_URL="https://dl.bintray.com/boostorg/release/1.64.0/source/boost_1_64_0.tar.gz"
+PKG_VERSION="1_63_0"
+PKG_URL="https://dl.bintray.com/boostorg/release/1.63.0/source/boost_1_63_0.tar.gz"
+#PKG_VERSION="1_63_0"
+#PKG_URL="$SOURCEFORGE_SRC/boost/boost/1.63.0/${PKG_NAME}_${PKG_VERSION}.tar.bz2"
+PKG_SOURCE_DIR="${PKG_NAME}_${PKG_VERSION}"
 PKG_SOURCE_DIR="${PKG_NAME}_${PKG_VERSION}"
 PKG_DEPENDS_HOST=""
 PKG_DEPENDS_TARGET="toolchain boost:host Python zlib bzip2"
@@ -39,8 +40,8 @@ makeinstall_host() {
 }
 
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -I$SYSROOT_PREFIX/usr/include/python2.7 -O3 -fPIC"
-  export CXXFLAGS="$CXXFLAGS -I$SYSROOT_PREFIX/usr/include/python2.7 -O3 -fPIC"
+  export CFLAGS="$CFLAGS -I$SYSROOT_PREFIX/usr/include/python2.7 -fPIC"
+  export CXXFLAGS="$CXXFLAGS -I$SYSROOT_PREFIX/usr/include/python2.7 -fPIC"
 }
 
 configure_target() {
@@ -58,7 +59,7 @@ make_target() {
 }
 
 makeinstall_target() {
-  $ROOT/$TOOLCHAIN/bin/bjam -d2 --ignore-site-config \
+  $ROOT/$TOOLCHAIN/bin/bjam -d2 variant=release threading=multi debug-symbols=off --ignore-site-config \
                           --layout=system \
                           --prefix=$SYSROOT_PREFIX/usr \
                           --toolset=gcc link=static \

@@ -53,6 +53,7 @@ GCC_COMMON_CONFIGURE_OPTS="MAKEINFO=missing \
                            --without-cloog \
                            --disable-libmpx \
                            --disable-libssp \
+                           --disable-libsanitizer \
                            --without-cuda-driver \
                            --with-linker-hash-style=gnu \
                            --disable-werror \
@@ -63,7 +64,6 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-__cxa_atexit \
                               --enable-cloog-backend \
                               --disable-libatomic \
-                              --disable-libsanitizer \
                               --disable-libquadmath \
                               --disable-libmudflap \
                               --disable-libada \
