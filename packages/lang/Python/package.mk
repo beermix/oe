@@ -17,11 +17,11 @@
 ################################################################################
 
 PKG_NAME="Python"
-#PKG_VERSION="2.7.14"
-#PKG_URL="http://www.python.org/ftp/python/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_VERSION="2.7.14"
+PKG_URL="http://www.python.org/ftp/python/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_ARCH="any"
-PKG_VERSION="13da1a6"
-PKG_GIT_URL="https://github.com/python/cpython"
+#PKG_VERSION="13da1a6"
+#PKG_GIT_URL="https://github.com/python/cpython"
 PKG_DEPENDS_HOST="zlib:host bzip2:host sqlite:host"
 PKG_DEPENDS_TARGET="toolchain sqlite expat zlib bzip2 openssl libffi readline Python:host"
 PKG_PRIORITY="optional"
