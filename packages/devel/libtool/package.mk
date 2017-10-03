@@ -38,6 +38,8 @@ pre_configure_host() {
 }
 
 pre_configure_target() {
+  cd $ROOT/$PKG_BUILD
+  #make clean
   sh bootstrap
 }
 
