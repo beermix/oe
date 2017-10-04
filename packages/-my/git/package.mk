@@ -10,19 +10,19 @@ pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
   
-  export CC="$CC"
-  export CFLAGS="$CFLAGS"
-  export CXXFLAGS="$CXXFLAGS"
-  export CPPFLAGS="$CPPFLAGS"
-  export LDFLAGS="$LDFLAGS"
+#  export CC="$CC"
+#  export CFLAGS="$CFLAGS"
+#  export CXXFLAGS="$CXXFLAGS"
+#  export CPPFLAGS="$CPPFLAGS"
+#  export LDFLAGS="$LDFLAGS"
   
 #  export NO_EXPAT="YesPlease"
 #  export NO_ICONV="YesPlease"
 #  export NO_PYTHON="YesPlease"
 
-  export NO_MKSTEMPS="YesPlease"
-  export NO_GETTEXT="YesPlease"
-  export NO_UNIX_SOCKETS="YesPlease"
+#  export NO_MKSTEMPS="YesPlease"
+#  export NO_GETTEXT="YesPlease"
+#  export NO_UNIX_SOCKETS="YesPlease"
   export NO_NSEC="YesPlease"
   export NO_PERL="YesPlease"
   export NO_TCLTK="YesPlease"
