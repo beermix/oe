@@ -30,6 +30,7 @@ PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-static --disable-shared \
+                         --enable-thread-safe \
                          --prefix=$ROOT/$TOOLCHAIN \
                          --with-gmp-lib=$ROOT/$TOOLCHAIN/lib \
                          --with-gmp-include=$ROOT/$TOOLCHAIN/include"
