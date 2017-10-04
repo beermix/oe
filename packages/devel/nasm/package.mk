@@ -1,6 +1,7 @@
 PKG_NAME="nasm"
 PKG_VERSION="2.13.01"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_DEPENDS_TARGET="toolchain fontconfig"
 PKG_DEPENDS_HOST=""
 PKG_SECTION="lang"
 PKG_SHORTDESC="nasm: A 80x86 assembler which can create a wide rande of object formats"
@@ -8,9 +9,3 @@ PKG_LONGDESC="The Netwide Assembler, NASM, is an 80x86 assembler designed for po
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
-
-PKG_CONFIGURE_OPTS_HOST="--enable-lto --enable-ccache=yes"
-
-#post_make_target() {
-#  mkdir -p $INSTALL_DEV/usr/bin/
-#}
