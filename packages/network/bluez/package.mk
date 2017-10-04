@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="bluez"
-PKG_VERSION="5.45"
+PKG_VERSION="5.47"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.bluez.org/"
@@ -64,7 +64,7 @@ pre_configure_target() {
     rm -rf .$TARGET_NAME
     strip_hard
 
-#  export LIBS="-lncurses -ltinfo"
+  export LIBS="-lncurses -ltinfo"
 }
 
 post_makeinstall_target() {
