@@ -8,4 +8,9 @@ PKG_SHORTDESC="nasm: A 80x86 assembler which can create a wide rande of object f
 PKG_LONGDESC="The Netwide Assembler, NASM, is an 80x86 assembler designed for portability and modularity. It supports a range of object file formats, including Linux, Microsoft 16-bit OBJ and Win32. It will also output plain binary files. Its syntax is designed to be sim- ple and easy to understand, similar to Intel's but less complex. It supports Pentium, P6 and MMX opcodes, and has macro capability. It includes a disassembler as well."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
+
+
+post_make_target() {
+  mkdir -p $INSTALL_DEV/usr/bin/
+}
