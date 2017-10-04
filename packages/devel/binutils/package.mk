@@ -56,5 +56,5 @@ PKG_CONFIGURE_OPTS_HOST="MAKEINFO=true \
 
 makeinstall_host() {
   cp -v ../include/libiberty.h $SYSROOT_PREFIX/usr/include
-  make install -j1
+  make install
 }
