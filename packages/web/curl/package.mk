@@ -25,10 +25,10 @@
 #   there: http://forum.xbmc.org/showthread.php?tid=177557
 
 PKG_NAME="curl"
-PKG_VERSION="7.55.1"
+PKG_VERSION="7.56.0"
 PKG_ARCH="any"
 PKG_LICENSE="MIT"
-PKG_SITE="http://curl.haxx.se"
+PKG_SITE="https://curl.haxx.se/download/?C=M;O=D"
 PKG_URL="http://curl.haxx.se/download/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain zlib openssl rtmpdump libtasn1"
 PKG_SECTION="web"
