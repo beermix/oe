@@ -30,10 +30,4 @@ PKG_LONGDESC="X11 Cursor management library"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared --with-gnu-ld"
-
-pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC"
-  export CXXFLAGS="$CXXFLAGS -fPIC"
-}
-
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared --with-gnu-ld --with-pic"
