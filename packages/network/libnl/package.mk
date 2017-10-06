@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="libnl"
-PKG_VERSION="3.4.0-rc1"
+PKG_VERSION="3.3.0"
 PKG_SITE="https://github.com/thom311/libnl/releases"
-PKG_URL="https://github.com/thom311/libnl/releases/download/libnl3_4_0rc1/libnl-3.4.0-rc1.tar.gz"
+PKG_URL="https://github.com/thom311/libnl/releases/download/libnl3_3_0/libnl-3.3.0.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="network"
 PKG_SHORTDESC="libnl: libnl - netlink library"
