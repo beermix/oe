@@ -44,6 +44,8 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-dependency-tracking \
                            --enable-deprecated \
                            --enable-sixaxis \
                            --with-gnu-ld \
+                           --enable-monitor \
+                           --enable-test \
                            storagedir=/storage/.cache/bluetooth"
 
 if [ "$DEBUG" = "yes" ]; then
@@ -68,6 +70,7 @@ pre_configure_target() {
 }
 
 post_makeinstall_target() {
+  rm -rf $INSTALL/usr/lib/systemd
   rm -rf $INSTALL/usr/bin/bccmd
   rm -rf $INSTALL/usr/bin/bluemoon
   rm -rf $INSTALL/usr/bin/ciptool
