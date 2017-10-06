@@ -15,3 +15,6 @@ post_makeinstall_target() {
 #  rm -rf $INSTALL/usr/lib
 }
 
+post_install() {
+  enable_service smartd.service
+}

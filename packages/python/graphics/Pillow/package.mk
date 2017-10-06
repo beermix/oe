@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="Pillow"
-PKG_VERSION="4.0.0"
+PKG_VERSION="4.3.0"
 PKG_SITE="http://www.pythonware.com/products/pil/"
-PKG_URL="https://pypi.python.org/packages/8d/80/eca7a2d1a3c2dafb960f32f844d570de988e609f5fd17de92e1cf6a01b0a/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_URL="https://pypi.python.org/packages/e0/82/ec499c78bfe4ecaa91c2f3000040451d187ed0a816d58b8543e29c48827f/Pillow-4.3.0.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host zlib freetype libjpeg-turbo tiff"
 PKG_SECTION="python"
 PKG_SHORTDESC="pil: Imaging handling/processing for Python"
