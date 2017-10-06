@@ -67,6 +67,8 @@ makeinstall_target() {
                           --with-filesystem \
                           --with-iostreams \
                           --with-python \
+                          --with-program_options \
+                          --with-exception \
                           --with-random \
                           --with-regex -sICU_PATH="$SYSROOT_PREFIX/usr" \
                           --with-serialization \
