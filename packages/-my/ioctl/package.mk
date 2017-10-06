@@ -18,7 +18,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 make_target() {
-  CC=$CC CFLAGS=$CFLAGS make
+  make CC=$CC CFLAGS=$CFLAGS
 }
 
 makeinstall_target() {
