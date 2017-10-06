@@ -2,7 +2,7 @@ PKG_NAME="netdata"
 PKG_VERSION="1.8.0"
 PKG_URL="https://github.com/firehol/netdata/releases/"
 PKG_URL="https://github.com/firehol/netdata/releases/download/v$PKG_VERSION/netdata-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain util-linux ncurses sysstat libmnl zlib lm_sensors libcap libnetfilter_acct mysqlclient"
+PKG_DEPENDS_TARGET="toolchain util-linux ncurses sysstat libmnl zlib lm_sensors libcap libnetfilter_acct"
 PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
 PKG_AUTORECONF="yes"
@@ -26,7 +26,9 @@ PKG_CONFIGURE_OPTS_TARGET="--with-zlib \
                            --datarootdir=/storage/.config/netdata \
                            --infodir=/storage/.config/netdata \
                            --localedir=/storage/.config/netdata"
-                 
+
+# mysqlclient
+
 #post_install() {
 #  add_user nobody x 990 990 "netdata" "/storage" "/bin/sh"
 #  add_group netdev 990

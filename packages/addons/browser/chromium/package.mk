@@ -26,7 +26,7 @@ PKG_LICENSE="Mixed"
 PKG_SITE="http://www.chromium.org/Home"
 PKG_URL="ftp://root:openelec@192.168.1.4/www/chromium-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python:host"
-PKG_DEPENDS_TARGET="chromium:host pciutils dbus x11 ffmpeg libXcomposite libXcursor libXtst alsa-lib bzip2 libXScrnSaver libexif libpng harfbuzz atk gtk2 unclutter xdotool libwebp re2 gconf libvdpau"
+PKG_DEPENDS_TARGET="chromium:host pciutils dbus x11 ffmpeg yasm libXcomposite libXcursor libXtst alsa-lib bzip2 libXScrnSaver libexif libpng harfbuzz atk gtk2 unclutter xdotool libwebp re2 gconf libvdpau"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -55,7 +55,6 @@ makeinstall_host() {
 
 make_target() {
   strip_lto
-  strip_hard
   export LDFLAGS="$LDFLAGS -ludev"
   export LD=$CXX
 
@@ -84,7 +83,7 @@ make_target() {
     'use_allocator="none"'
     'use_cups=false'
     'use_custom_libcxx=false'
-    'use_gconf=false'
+    'use_gconf=true'
     'use_gnome_keyring=false'
     'use_gold=false'
     'use_gtk3=false'
@@ -94,8 +93,8 @@ make_target() {
     'use_vulcanize=false'
     'use_vaapi=true'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
-    'enable_hangout_services_extension=false'
-    'enable_widevine=false'
+    'enable_hangout_services_extension=true'
+    'enable_widevine=true'
     'enable_nacl=false'
     'enable_nacl_nonsfi=false'
     'enable_swiftshader=false'
@@ -141,14 +140,11 @@ makeinstall_target() {
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
-  
   cp -P  $PKG_BUILD/out/Release/chrome $ADDON_BUILD/$PKG_ADDON_ID/bin/chromium.bin
   cp -P  $PKG_BUILD/out/Release/chrome_sandbox $ADDON_BUILD/$PKG_ADDON_ID/bin/chrome-sandbox
-  #cp -P  $PKG_BUILD/out/Release/{*.pak,*.dat,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
-  cp -P  $PKG_BUILD/out/Release/{*.pak,*.dat,*.bin} $ADDON_BUILD/$PKG_ADDON_ID/bin
+  cp -P  $PKG_BUILD/out/Release/{*.pak,*.dat,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -PR $PKG_BUILD/out/Release/locales $ADDON_BUILD/$PKG_ADDON_ID/bin/
   cp -PR $PKG_BUILD/out/Release/gen/content/content_resources.pak $ADDON_BUILD/$PKG_ADDON_ID/bin/
-  
   # config
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/config
   cp -P $PKG_DIR/config/* $ADDON_BUILD/$PKG_ADDON_ID/config
