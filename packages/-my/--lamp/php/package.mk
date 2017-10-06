@@ -4,7 +4,8 @@ PKG_NAME="php"
 #PHP_VERSION=5.3.3
 
 if [ -z "$PHP_VERSION" ]; then
-  PKG_VERSION="5.6.31"
+  #PKG_VERSION="5.6.31"
+  PKG_VERSION="7.1.10"
 
 	# test latest
 	#PKG_VERSION="7.1.9"

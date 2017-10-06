@@ -1,5 +1,5 @@
 PKG_NAME="gtk+"
-PKG_VERSION="3.22.22"
+PKG_VERSION="3.22.24"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.gtk.org/"

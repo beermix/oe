@@ -23,7 +23,6 @@ PKG_URL="https://dl.bintray.com/boostorg/release/1.63.0/source/boost_1_63_0.tar.
 #PKG_VERSION="1_63_0"
 #PKG_URL="$SOURCEFORGE_SRC/boost/boost/1.63.0/${PKG_NAME}_${PKG_VERSION}.tar.bz2"
 PKG_SOURCE_DIR="${PKG_NAME}_${PKG_VERSION}"
-PKG_SOURCE_DIR="${PKG_NAME}_${PKG_VERSION}"
 PKG_DEPENDS_HOST=""
 PKG_DEPENDS_TARGET="toolchain boost:host Python zlib bzip2"
 PKG_LONGDESC="boost: Peer-reviewed STL style libraries for C++"
