@@ -22,7 +22,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://eigen.tuxfamily.org/index.php?title=Main_Page"
 PKG_URL="https://dl.dropboxusercontent.com/s/a3nfo3i31adwhj2/gconf-3.2.6.tar.xz"
-PKG_DEPENDS_TARGET="toolchain zlib glib"
+PKG_DEPENDS_TARGET="toolchain zlib glib dbus-glib"
 PKG_SECTION="depends"
 PKG_SHORTDESC="gconf"
 
