@@ -14,7 +14,7 @@ PKG_LONGDESC="GLib is a library which includes support routines for C such as li
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_HOST="--disable-static --disable-doctool"
+PKG_CONFIGURE_OPTS_HOST="--disable-static --disable-doctool --disable-gtk-doc"
 
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
 
