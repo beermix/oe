@@ -50,10 +50,8 @@ GCC_COMMON_CONFIGURE_OPTS="MAKEINFO=missing \
                            --enable-ld=default \
                            --disable-multilib \
                            --enable-checking=release \
-                           --without-cloog \
                            --disable-libmpx \
                            --disable-libssp \
-                           --disable-libsanitizer \
                            --without-cuda-driver \
                            --with-linker-hash-style=gnu \
                            --disable-werror \
@@ -63,6 +61,7 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
                               --enable-cloog-backend \
+                              --disable-libsanitizer \
                               --disable-libatomic \
                               --disable-libquadmath \
                               --disable-libmudflap \
@@ -100,7 +99,6 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          $GCC_OPTS"
                          
 pre_configure_host() {
-  #export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
 }
 
