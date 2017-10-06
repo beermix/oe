@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="libplist"
-PKG_VERSION="2.0.0"
+PKG_VERSION="1.12+git+1+e37ca00"
 PKG_SITE="http://matt.colyer.name/projects/iphone-linux/"
-PKG_URL="http://www.libimobiledevice.org/downloads/libplist-2.0.0.tar.bz2"
+PKG_URL="https://dl.dropboxusercontent.com/s/mcu7m0zlu00d3ws/libplist-1.12+git+1+e37ca00.tar.xz"
 PKG_DEPENDS_TARGET="toolchain libxml2 glib"
 PKG_SECTION="devel"
 PKG_SHORTDESC="libplist: a library for manipulating Apple Binary and XML Property Lists"

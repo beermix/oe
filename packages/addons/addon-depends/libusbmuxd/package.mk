@@ -29,4 +29,5 @@ PKG_AUTORECONF="yes"
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            ac_cv_func_realloc_0_nonnull=yes \
                            --enable-static \
-                           --disable-shared"
+                           --disable-shared \
+                           --with-pic"
