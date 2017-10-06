@@ -17,16 +17,19 @@
 ################################################################################
 
 PKG_NAME="inputstream.adaptive"
-PKG_VERSION="f80d8bb"
+PKG_VERSION="c06affe3b5dd7bd2a4d86454d5fa5d265815c5f4"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
 PKG_GIT_URL="https://github.com/peak3d/inputstream.adaptive"
+PKG_GIT_BRANCH="Krypton"
 PKG_DEPENDS_TARGET="toolchain kodi-platform"
 PKG_SECTION=""
 PKG_SHORTDESC="inputstream.adaptive"
 PKG_LONGDESC="inputstream.adaptive"
 
 PKG_IS_ADDON="yes"
+
+CCACHE_DISABLE=1
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/
