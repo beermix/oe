@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="openssh"
-PKG_VERSION="7.6p1"
+PKG_VERSION="7.5p1"
 PKG_SITE="http://www.openssh.com/"
 PKG_URL="http://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_PRIORITY="optional"
@@ -49,7 +49,7 @@ PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/etc/ssh \
 
 pre_configure_target() {
   export LD="$CC"
-  export LDFLAGS="$TARGET_CFLAGS $TARGET_LDFLAGS"
+#  export LDFLAGS="$TARGET_CFLAGS $TARGET_LDFLAGS"
 }
 
 post_makeinstall_target() {
