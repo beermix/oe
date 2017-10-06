@@ -106,7 +106,6 @@ configure_target() {
                              --with-bz2=$SYSROOT_PREFIX/usr \
                              --with-zlib=$SYSROOT_PREFIX/usr \
                              --with-iconv \
-                             --without-gettext \
                              --with-gmp=$SYSROOT_PREFIX/usr \
                              --enable-json \
                              --enable-pcntl \
@@ -120,7 +119,7 @@ configure_target() {
                              --with-pdo-sqlite=$SYSROOT_PREFIX/usr \
                              --enable-pdo \
                              --with-mcrypt=$LIBMCRYPT_DIR_TARGET/usr \
-                             --with-mysql \
+                             --with-mysql=$SYSROOT_PREFIX/usr \
                              --with-mysql-sock=/run/mysql/mysql.sock \
                              --with-gd \
                              --enable-gd-native-ttf \
@@ -143,7 +142,7 @@ post_configure_target() {
   sed -i "s|-I/usr/include|-I$SYSROOT_PREFIX/usr/include|g" Makefile
   sed -i "s|-L/usr/lib|-L$SYSROOT_PREFIX/usr/lib|g" Makefile
   
-  #PHP_BIN=$(which php)
+#  PHP_BIN=$(which php)
   
   sed -i "s|PHP_EXECUTABLE =.*|PHP_EXECUTABLE = $PHP_BIN|g" Makefile
   sed -i 's|$(top_builddir)/$(SAPI_CLI_PATH)|dummy_sapi_cli_path|g' Makefile
