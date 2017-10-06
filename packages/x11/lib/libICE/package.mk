@@ -30,12 +30,7 @@ PKG_SHORTDESC="libICE: X Inter-Client Exchange (ICE) protocol library"
 PKG_LONGDESC="X Inter-Client Exchange (ICE) protocol library."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-ipv6 --without-xmlto --disable-shared"
-
-pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC -DPIC"
-  export CXXFLAGS="$CXXFLAGS -fPIC -DPIC"
-}
+PKG_CONFIGURE_OPTS_TARGET="--disable-ipv6 --without-xmlto"
 
