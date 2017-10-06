@@ -178,7 +178,6 @@ makeinstall_target() {
   mkdir -p $INSTALL/etc
     cp $PKG_DIR/config/profile $INSTALL/etc
     cp $PKG_DIR/config/inputrc $INSTALL/etc
-#    cp $PKG_DIR/config/httpd.conf $INSTALL/etc
     cp $PKG_DIR/config/suspend-modules.conf $INSTALL/etc
 
   mkdir -p $INSTALL/usr/config/sysctl.d

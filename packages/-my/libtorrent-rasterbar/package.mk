@@ -6,7 +6,7 @@ PKG_URL="https://github.com/arvidn/libtorrent/releases/download/libtorrent-1_1_4
 PKG_DEPENDS_TARGET="toolchain boost openssl"
 PKG_LONGDESC="An efficient feature complete C++ bittorrent implementation"
 PKG_USE_CMAKE="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 #post_unpack() {
 #  mkdir -p $ROOT/$PKG_BUILD/build-aux/
@@ -26,8 +26,8 @@ PKG_AUTORECONF="yes"
 PKG_CONFIGURE_OPTS_TARGET="--enable-python-binding \
                            --with-boost-libdir=$SYSROOT_PREFIX/usr/lib \
                            --with-boost-python=$SYSROOT_PREFIX/usr/lib \
-                           --without-libiconv \
-                           --disable-deprecated-functions \
+                           --with-libiconv \
+                           --enable-deprecated-functions \
                            --disable-shared \
                            --with-pic \
                            --with-gnu-ld \

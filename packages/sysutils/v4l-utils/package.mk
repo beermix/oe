@@ -32,12 +32,21 @@ PKG_LONGDESC="Linux V4L2 and DVB API utilities and v4l libraries (libv4l)."
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-v4l-utils"
+#PKG_CONFIGURE_OPTS_TARGET="--disable-v4l-utils"
 
+make_target() {
+    make -C utils/keytable CFLAGS="$TARGET_CFLAGS"
+    make -C utils/ir-ctl CFLAGS="$TARGET_CFLAGS"
+}
+
+makeinstall_target() {
+   make install DESTDIR=$INSTALL PREFIX=/usr -C utils/keytable
+   make install DESTDIR=$INSTALL PREFIX=/usr -C utils/ir-ctl
+}
 
 post_makeinstall_target() {
-  #rm -rf $INSTALL/etc/rc_keymaps
-   # ln -sf /storage/.config/rc_keymaps $INSTALL/usr/config/rc_keymaps
+  rm -rf $INSTALL/etc/rc_keymaps
+    ln -sf /storage/.config/rc_keymaps $INSTALL/etc/rc_keymaps
 
   mkdir -p $INSTALL/usr/config
     cp -PR $PKG_DIR/config/* $INSTALL/usr/config
