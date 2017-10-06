@@ -38,28 +38,28 @@ PKG_AUTORECONF="no"
 PGK_CMAKE_OPTS_TARGET="-DENABLE_CLI=On -DENABLE_LIGHTWEIGHT=On"
 
 pre_build_target() {
-  git clone --recursive https://github.com/transmission/transmission $PKG_BUILD/$PKG_NAME-git
-  cd $PKG_BUILD/$PKG_NAME-git
+  git clone --recursive https://github.com/transmission/transmission $ROOT/$PKG_BUILD/$PKG_NAME-git
+  cd $ROOT/$PKG_BUILD/$PKG_NAME-git
   git reset --hard $PKG_VERSION
   cd -
-  mv $PKG_BUILD/$PKG_NAME-git/* $PKG_BUILD/
-  rm -rf $PKG_BUILD/$PKG_NAME-git
+  mv $ROOT/$PKG_BUILD/$PKG_NAME-git/* $ROOT/$PKG_BUILD/
+  rm -rf $ROOT/$PKG_BUILD/$PKG_NAME-git
   for a in $PKG_DIR/patches/*.patch
   do
-    patch -p1 -d $PKG_BUILD < $a
+    patch -p1 -d $ROOT/$PKG_BUILD < $a
   done
 }
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
-  cp $PKG_BUILD/.$TARGET_NAME/daemon/transmission-daemon $ADDON_BUILD/$PKG_ADDON_ID/bin
-  cp $PKG_BUILD/.$TARGET_NAME/daemon/transmission-remote $ADDON_BUILD/$PKG_ADDON_ID/bin
-  cp $PKG_BUILD/.$TARGET_NAME/utils/transmission-create $ADDON_BUILD/$PKG_ADDON_ID/bin
-  cp $PKG_BUILD/.$TARGET_NAME/utils/transmission-edit $ADDON_BUILD/$PKG_ADDON_ID/bin
-  cp $PKG_BUILD/.$TARGET_NAME/utils/transmission-show $ADDON_BUILD/$PKG_ADDON_ID/bin
+  cp $ROOT/$PKG_BUILD/.$TARGET_NAME/daemon/transmission-daemon $ADDON_BUILD/$PKG_ADDON_ID/bin
+  cp $ROOT/$PKG_BUILD/.$TARGET_NAME/daemon/transmission-remote $ADDON_BUILD/$PKG_ADDON_ID/bin
+  cp $ROOT/$PKG_BUILD/.$TARGET_NAME/utils/transmission-create $ADDON_BUILD/$PKG_ADDON_ID/bin
+  cp $ROOT/$PKG_BUILD/.$TARGET_NAME/utils/transmission-edit $ADDON_BUILD/$PKG_ADDON_ID/bin
+  cp $ROOT/$PKG_BUILD/.$TARGET_NAME/utils/transmission-show $ADDON_BUILD/$PKG_ADDON_ID/bin
 
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/web
-  cp -R $PKG_BUILD/web/* $ADDON_BUILD/$PKG_ADDON_ID/web
+  cp -R $ROOT/$PKG_BUILD/web/* $ADDON_BUILD/$PKG_ADDON_ID/web
   find $ADDON_BUILD/$PKG_ADDON_ID/web -name "Makefile*" -exec rm -rf {} ";"
   rm -rf $ADDON_BUILD/$PKG_ADDON_ID/web/LICENSE
 }
