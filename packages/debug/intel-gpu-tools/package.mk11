@@ -1,9 +1,0 @@
-PKG_NAME="intel-gpu-tools"
-PKG_VERSION="6fb973c"
-PKG_GIT_URL="git://anongit.freedesktop.org/xorg/app/intel-gpu-tools"
-PKG_DEPENDS_TARGET="toolchain systemd mesa libdrm libpciaccess cairo dri2proto swig:host procps-ng"
-PKG_SECTION="tools"
-PKG_SHORTDESC="x11-utils"
-PKG_AUTORECONF="yes"
-
-KG_CONFIGURE_OPTS_TARGET="enable_gtk_doc=no --disable-tests --without-libunwind"
