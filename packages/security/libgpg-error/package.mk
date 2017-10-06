@@ -54,6 +54,8 @@ pre_configure_target() {
       GPGERROR_TARGET=linux-gnu
       ;;
   esac
+  
+  export CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=2||g"`
 
   cp $ROOT/$PKG_BUILD/src/syscfg/lock-obj-pub.$GPGERROR_TUPLE.h $ROOT/$PKG_BUILD/src/syscfg/lock-obj-pub.$GPGERROR_TARGET.h
 }
