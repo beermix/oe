@@ -25,8 +25,7 @@ PKG_SHORTDESC="libsamplerate: A Sample Rate Converter library for audio"
 PKG_LONGDESC="Libsamplerate is a Sample Rate Converter for audio. One example of where such a thing would be useful is converting audio from the CD sample rate of 44.1kHz to the 48kHz sample rate used by DAT players."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no" # ToDo
-
+PKG_AUTORECONF="yes" # ToDo
 
 # package specific configure options
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
