@@ -16,13 +16,18 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="six"
-PKG_VERSION="1.11.0"
-PKG_SHA256="927dc6fcfccd4e32e1ce161a20bf8cda39d8c9d5f7a845774486907178f69bd4"
-PKG_LICENSE="MIT"
-PKG_SITE="http://pypi.python.org/pypi/six/"
-PKG_URL="https://github.com/benjaminp/$PKG_NAME/archive/$PKG_VERSION.tar.gz"
+PKG_NAME="cryptography"
+PKG_VERSION="2.0.3"
+PKG_SHA256="adbb7ddb9623616ea2c0354b7ce0506eee529b7f2d0e3894e513de5b8dce4ef8"
+PKG_LICENSE="BSD"
+PKG_SITE="https://cryptography.io/"
+PKG_URL="https://github.com/pyca/$PKG_NAME/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET=""
-PKG_LONGDESC="Python 2 and 3 compatibility utilities"
+PKG_LONGDESC="A package designed to expose cryptographic primitives and recipes to Python developers"
 
 PKG_IS_PYTHON="yes"
+PKG_PYTHON_DEPENDS_TARGET="asn1crypto cffi enum34 idna ipaddress six"
+
+pre_configure_target() {
+  export CC="$CC -pthread"
+}

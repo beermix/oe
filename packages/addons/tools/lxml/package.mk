@@ -16,13 +16,25 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="six"
-PKG_VERSION="1.11.0"
-PKG_SHA256="927dc6fcfccd4e32e1ce161a20bf8cda39d8c9d5f7a845774486907178f69bd4"
-PKG_LICENSE="MIT"
-PKG_SITE="http://pypi.python.org/pypi/six/"
-PKG_URL="https://github.com/benjaminp/$PKG_NAME/archive/$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET=""
-PKG_LONGDESC="Python 2 and 3 compatibility utilities"
-
+PKG_NAME="lxml"
+PKG_VERSION="4.0.0"
+PKG_REV="100"
+PKG_LICENSE="BSD"
+PKG_SITE="http://lxml.de/"
+PKG_URL="https://github.com/lxml/$PKG_NAME/archive/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_SOURCE_DIR="lxml-$PKG_NAME-$PKG_VERSION"
+PKG_DEPENDS_TARGET="cython:host libxslt:host libxml2 libxslt"
 PKG_IS_PYTHON="yes"
+
+PKG_IS_ADDON="yes"
+PKG_ADDON_NAME="lxml"
+PKG_ADDON_TYPE="xbmc.python.module"
+PKG_SECTION="script.module"
+PKG_SHORTDESC="$PKG_ADDON_NAME: XML and HTML with Python"
+PKG_LONGDESC="$PKG_ADDON_NAME ($PKG_REV) is the most feature-rich and easy-to-use library for processing XML and HTML in the Python language"
+
+addon() {
+  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PR $PKG_BUILD/.install_pkg/usr/lib/python*/site-packages/* \
+         $ADDON_BUILD/$PKG_ADDON_ID/lib
+}

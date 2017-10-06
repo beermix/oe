@@ -16,13 +16,14 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="six"
-PKG_VERSION="1.11.0"
-PKG_SHA256="927dc6fcfccd4e32e1ce161a20bf8cda39d8c9d5f7a845774486907178f69bd4"
-PKG_LICENSE="MIT"
-PKG_SITE="http://pypi.python.org/pypi/six/"
-PKG_URL="https://github.com/benjaminp/$PKG_NAME/archive/$PKG_VERSION.tar.gz"
+PKG_NAME="enum34"
+PKG_VERSION="1.1.6"
+PKG_SHA256="b09c7f7ee925e600bd4efaa5fef49919eacdbdfd5a52e0696c5d03010cffb9ec"
+PKG_LICENSE="BSD"
+PKG_SITE="https://bitbucket.org/stoneleaf/enum34"
+PKG_URL="https://bitbucket.org/stoneleaf/$PKG_NAME/get/$PKG_VERSION.tar.bz2"
+PKG_SOURCE_DIR="stoneleaf-enum34-*"
 PKG_DEPENDS_TARGET=""
-PKG_LONGDESC="Python 2 and 3 compatibility utilities"
+PKG_LONGDESC="Backport of Python 3.4 Enum"
 
 PKG_IS_PYTHON="yes"

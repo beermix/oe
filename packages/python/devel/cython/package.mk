@@ -16,13 +16,24 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="six"
-PKG_VERSION="1.11.0"
-PKG_SHA256="927dc6fcfccd4e32e1ce161a20bf8cda39d8c9d5f7a845774486907178f69bd4"
-PKG_LICENSE="MIT"
-PKG_SITE="http://pypi.python.org/pypi/six/"
-PKG_URL="https://github.com/benjaminp/$PKG_NAME/archive/$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET=""
-PKG_LONGDESC="Python 2 and 3 compatibility utilities"
+PKG_NAME="cython"
+PKG_VERSION="0.27.1"
+PKG_SHA256="87d7c24f761dd8f00062706fe3c4375b3fb155fae7b0d117702636c55aa4e985"
+PKG_LICENSE="ASL"
+PKG_SITE="http://cython.org/"
+PKG_URL="https://github.com/cython/$PKG_NAME/archive/$PKG_VERSION.tar.gz"
+PKG_DEPENDS_HOST="toolchain distutilscross:host"
+PKG_LONGDESC="The Cython compiler for writing C extensions for the Python language"
 
-PKG_IS_PYTHON="yes"
+make_host() {
+  unset _python_exec_prefix _python_prefix _python_sysroot
+  mkdir -p .$HOST_NAME
+  cp -PR * .$HOST_NAME
+  cd .$HOST_NAME
+  export LDSHARED="$CC -shared"
+  python setup.py build
+}
+
+makeinstall_host() {
+  python setup.py install --prefix="$TOOLCHAIN"
+}
