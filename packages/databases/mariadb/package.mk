@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="mariadb"
-PKG_VERSION="10.1.28"
-#PKG_VERSION="10.2.9"
+#PKG_VERSION="10.1.28"
+PKG_VERSION="10.2.9"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
@@ -172,6 +172,11 @@ post_makeinstall_target() {
   sed -i "s|pkglibdir=.*|pkglibdir=\'$SYSROOT_PREFIX/usr/lib/mysql\'|" scripts/mysql_config
   cp scripts/mysql_config $SYSROOT_PREFIX/usr/bin
   ln -sf $SYSROOT_PREFIX/usr/bin/mysql_config $ROOT/$TOOLCHAIN/bin/mysql_config
+  
+  rm $SYSROOT_PREFIX/usr/lib/libmariadb.so.3
+  rm $SYSROOT_PREFIX/usr/lib/libmariadb.so
+  rm $SYSROOT_PREFIX/usr/lib/libmysqlclient.so
+  rm $SYSROOT_PREFIX/usr/lib/libmysqlclient_r.so
  
   rm -rf $INSTALL/usr/share/mysql/support-files
   rm -rf $INSTALL/usr/share/mysql/test
