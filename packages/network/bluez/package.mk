@@ -32,7 +32,7 @@ PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-dependency-tracking \
                            --disable-silent-rules \
-                           --disable-library \
+                           --enable-library \
                            --enable-udev \
                            --disable-cups \
                            --disable-obex \
@@ -78,8 +78,12 @@ post_makeinstall_target() {
     cp tools/btmgmt $INSTALL/usr/bin
 
   mkdir -p $INSTALL/etc/bluetooth
-    echo "[Policy]" > $INSTALL/etc/bluetooth/main.conf
-    echo "AutoEnable=true" >> $INSTALL/etc/bluetooth/main.conf
+    cp src/main.conf $INSTALL/etc/bluetooth
+    sed -i $INSTALL/etc/bluetooth/main.conf \
+        -e 's/^#Name\ =.*/Name\ =\ %h/' \
+        -e "s|^#DiscoverableTimeout.*|DiscoverableTimeout\ =\ 0|g" \
+        -e "s|^#\[Policy\]|\[Policy\]|g" \
+        -e "s|^#AutoEnable.*|AutoEnable=true|g"
 }
 
 post_install() {
