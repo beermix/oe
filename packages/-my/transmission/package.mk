@@ -28,10 +28,12 @@ pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
   
+  export CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=2||g"`
+  
   NOCONFIGURE=1 ./autogen.sh
 }
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-utp --enable-cli --enable-daemon --with-systemd --with-crypto=openssl"
+PKG_CONFIGURE_OPTS_TARGET="--enable-utp --enable-cli --enable-daemon --without-systemd --with-crypto=openssl"
 
 PGK_CMAKE_OPTS_TARGET="-DENABLE_CLI=1 -DENABLE_LIGHTWEIGHT=0 -DUSE_SYSTEM_MINIUPNPC=1 -DCMAKE_BUILD_TYPE=Release"
 
