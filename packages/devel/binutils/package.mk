@@ -58,3 +58,5 @@ makeinstall_host() {
   cp -v ../include/libiberty.h $SYSROOT_PREFIX/usr/include
   make install
 }
+
+PKG_CONFIGURE_OPTS_TARGET="MAKEINFO=true --disable-shared --disable-multilib --without-ppl --without-cloog"
