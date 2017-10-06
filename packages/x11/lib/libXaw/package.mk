@@ -5,6 +5,4 @@ PKG_URL="http://xorg.freedesktop.org/archive/individual/lib/$PKG_NAME-$PKG_VERSI
 PKG_DEPENDS_TARGET="toolchain util-macros randrproto libX11 libXrender libXext libXpm"
 PKG_SECTION="x11/lib"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
-
-#PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared"
+PKG_AUTORECONF="yes"
