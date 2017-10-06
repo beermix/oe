@@ -39,7 +39,6 @@ PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/etc/ssh \
                            --disable-wtmp \
                            --disable-wtmpx \
                            --without-rpath \
-                           --with-privsep-user=nobody \
                            --with-ssl-engine \
                            --disable-pututline \
                            --disable-pututxline \
@@ -49,7 +48,7 @@ PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/etc/ssh \
 
 pre_configure_target() {
   export LD="$CC"
-#  export LDFLAGS="$TARGET_CFLAGS $TARGET_LDFLAGS"
+  export LDFLAGS="$TARGET_CFLAGS $TARGET_LDFLAGS"
 }
 
 post_makeinstall_target() {
@@ -71,5 +70,7 @@ post_makeinstall_target() {
 }
 
 post_install() {
+  add_user sshd x 74 74 "Privilege-separated SSH" "/var/empty/sshd" "/bin/sh"
+  add_group sshd 74
   enable_service sshd.service
 }
