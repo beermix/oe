@@ -1,0 +1,11 @@
+--- bzip2-1.0.5.orig/Makefile	2008-02-14 13:39:18.000000000 +0100
++++ bzip2-1.0.5/Makefile	2009-08-23 20:18:12.000000000 +0200
+@@ -35,7 +35,7 @@ OBJS= blocksort.o  \
+       decompress.o \
+       bzlib.o
+ 
+-all: libbz2.a bzip2 bzip2recover test
++all: libbz2.a bzip2 bzip2recover
+ 
+ bzip2: libbz2.a bzip2.o
+ 	$(CC) $(CFLAGS) $(LDFLAGS) -o bzip2 bzip2.o -L. -lbz2
