@@ -10,7 +10,7 @@
 #  OpenELEC is distributed in the hope that it will be useful,
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU General Public License for more details.
+#  GNU General Public License for more details. --enable-optimizations
 #
 #  You should have received a copy of the GNU General Public License  --disable-optimizations --with-lto \
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
@@ -56,7 +56,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            ac_cv_have_long_long_format=yes \
                            --with-threads \
                            --enable-unicode=ucs4 \
-                           --enable-ipv6 \
+                           --disable-ipv6 \
                            --disable-profiling \
                            --without-pydebug \
                            --without-doc-strings \
@@ -67,7 +67,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            --without-cxx-main \
                            --with-system-ffi \
                            --with-system-expat \
-                           --enable-optimizations \
                            --enable-shared"
 
 post_patch() {
@@ -96,6 +95,8 @@ makeinstall_host() {
 
 pre_configure_target() {
   export PYTHON_FOR_BUILD=$ROOT/$TOOLCHAIN/bin/python
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
+  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3|"`
 }
 
 make_target() {
