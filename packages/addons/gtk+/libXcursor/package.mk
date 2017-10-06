@@ -30,4 +30,3 @@ PKG_LONGDESC="X11 Cursor management library"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared --with-gnu-ld --with-pic"
