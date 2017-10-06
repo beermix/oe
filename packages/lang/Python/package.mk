@@ -138,5 +138,5 @@ post_makeinstall_target() {
 
   # strip
   chmod u+w $INSTALL/usr/lib/libpython*.so.*
-  debug_strip $INSTALL/usr
+  #debug_strip $INSTALL/usr
 }
