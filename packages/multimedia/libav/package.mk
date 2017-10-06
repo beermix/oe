@@ -8,13 +8,13 @@ PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
+get_graphicdrivers
 
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
   strip_lto
   strip_gold
-  get_graphicdrivers
 }
 
 configure_target() {
