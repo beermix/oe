@@ -44,6 +44,7 @@ pre_configure_host() {
 pre_configure_target() {
   export CFLAGS="$CFLAGS -fPIC -DPIC"
   export CPPFLAGS="$CPPFLAGS -I$SYSROOT_PREFIX/usr/include"
+  export CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=2||g"`
 }
 
 post_makeinstall_target() {
