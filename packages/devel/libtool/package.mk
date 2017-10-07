@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/libtool/libtool.html"
 PKG_GIT_URL="https://git.savannah.gnu.org/git/libtool.git"
-PKG_DEPENDS_HOST="ccache:host autoconf:host automake:host help2man:host"
+PKG_DEPENDS_HOST="ccache:host autoconf:host automake:host help2man:host gnulib:host"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_PRIORITY="optional"
 PKG_SECTION="devel"
@@ -34,13 +34,13 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 pre_configure_host() {
-  ./bootstrap
+  sh bootstrap --skip-git
 }
 
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   make clean
-  ./bootstrap
+  sh bootstrap --skip-git
 }
 
 PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
