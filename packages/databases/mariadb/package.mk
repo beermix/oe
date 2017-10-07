@@ -57,8 +57,8 @@ PKG_MARIADB_SERVER="no"
 
 # Set MariaDB server storage engines
   MARIADB_OPTS+=" -DWITH_INNOBASE_STORAGE_ENGINE=ON"
-  MARIADB_OPTS+=" -WITH_PARTITION_STORAGE_ENGINE=ON"
-  MARIADB_OPTS+=" -WITH_PERFSCHEMA_STORAGE_ENGINE=ON"
+  MARIADB_OPTS+=" -WITH_PARTITION_STORAGE_ENGINE=OFF"
+  MARIADB_OPTS+=" -WITH_PERFSCHEMA_STORAGE_ENGINE=OFF"
 
 # According to MariaDB galera cluster documentation these options must be passed
 # to CMake, set to '0' if galera cluster support is not wanted:
@@ -172,7 +172,7 @@ post_makeinstall_target() {
   sed -i "s|pkglibdir=.*|pkglibdir=\'$SYSROOT_PREFIX/usr/lib/mysql\'|" scripts/mysql_config
   cp scripts/mysql_config $SYSROOT_PREFIX/usr/bin
   ln -sf $SYSROOT_PREFIX/usr/bin/mysql_config $ROOT/$TOOLCHAIN/bin/mysql_config
-  
+ 
   rm $SYSROOT_PREFIX/usr/lib/libmariadb.so.3
   rm $SYSROOT_PREFIX/usr/lib/libmariadb.so
   rm $SYSROOT_PREFIX/usr/lib/libmysqlclient.so
