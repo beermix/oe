@@ -29,7 +29,7 @@ PKG_LONGDESC="The 'make' utility automatically determines which pieces of a larg
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_HOST="--without-guile"
+PKG_CONFIGURE_OPTS_HOST="--disable-load --without-guile"
 
 post_makeinstall_host() {
   ln -sf make $ROOT/$TOOLCHAIN/bin/gmake
