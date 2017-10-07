@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libgcrypt"
-PKG_VERSION="1.7.6"
+PKG_VERSION="1.8.1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://www.gnupg.org/"
@@ -34,6 +34,7 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            ac_cv_sys_symbol_underscore=no \
                            --enable-asm \
                            --with-gnu-ld \
+                           --disable-padlock-support \
                            --with-libgpg-error-prefix=$SYSROOT_PREFIX/usr \
                            --disable-doc"
 

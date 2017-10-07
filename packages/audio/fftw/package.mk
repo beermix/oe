@@ -8,10 +8,11 @@ PKG_AUTORECONF="no"
 
 pre_configure_target() {
   export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
-  export CFLAGS="$CFLAGS -malign-double -fstrict-aliasing -ffast-math -fopenmp -fPIC"
+  export CFLAGS="$CFLAGS -fomit-frame-pointer -malign-double -fstrict-aliasing -ffast-math -fopenmp -fPIC"
 }
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-threads \
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
+			      --enable-threads \
 			      --enable-openmp \
 			      --enable-silent-rules \
 			      --enable-sse2 \
