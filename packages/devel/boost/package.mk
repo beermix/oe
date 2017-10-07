@@ -25,7 +25,7 @@ PKG_URL="https://dl.bintray.com/boostorg/release/1.64.0/source/boost_1_64_0.tar.
 #PKG_URL="$SOURCEFORGE_SRC/boost/boost/1.63.0/${PKG_NAME}_${PKG_VERSION}.tar.bz2"
 PKG_SOURCE_DIR="${PKG_NAME}_${PKG_VERSION}"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain boost:host Python zlib bzip2 icu"
+PKG_DEPENDS_TARGET="toolchain boost:host Python zlib bzip2"
 PKG_LONGDESC="boost: Peer-reviewed STL style libraries for C++"
 PKG_AUTORECONF="no"
 
@@ -48,7 +48,6 @@ configure_target() {
   sh bootstrap.sh --prefix=/usr \
                   --with-bjam=$ROOT/$TOOLCHAIN/bin/bjam \
                   --with-python=$ROOT/$TOOLCHAIN/bin/python \
-                  --with-icu=$SYSROOT_PREFIX/usr \
                   --with-python-root=$SYSROOT_PREFIX/usr
 
   echo "using gcc : `$CC -v 2>&1  | tail -n 1 |awk '{print $3}'` : $CC  : <compileflags>\"$CFLAGS\" <linkflags>\"$LDFLAGS\" ;" \
