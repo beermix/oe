@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="inputstream.adaptive"
-PKG_VERSION="c06affe3b5dd7bd2a4d86454d5fa5d265815c5f4"
+PKG_VERSION="742c4a3"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
 PKG_GIT_URL="https://github.com/peak3d/inputstream.adaptive"
@@ -29,7 +29,7 @@ PKG_LONGDESC="inputstream.adaptive"
 
 PKG_IS_ADDON="yes"
 
-CCACHE_DISABLE=1
+export CCACHE_DISABLE=1
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/
