@@ -14,7 +14,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+################################################################################  --skip-git
 
 PKG_NAME="libtool"
 PKG_VERSION="6ca5e22"
@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/libtool/libtool.html"
 PKG_GIT_URL="https://git.savannah.gnu.org/git/libtool.git"
-PKG_DEPENDS_HOST="ccache:host autoconf:host automake:host help2man:host gnulib:host"
+PKG_DEPENDS_HOST="ccache:host autoconf:host automake:host help2man:host"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_PRIORITY="optional"
 PKG_SECTION="devel"
