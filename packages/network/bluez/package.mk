@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="bluez"
-PKG_VERSION="5.45"
+PKG_VERSION="5.47"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -33,7 +33,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-dependency-tracking \
-                           --disable-silent-rules \
+                           --enable-silent-rules \
                            --disable-library \
                            --enable-udev \
                            --disable-cups \

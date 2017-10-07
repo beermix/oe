@@ -1,5 +1,5 @@
 PKG_NAME="intel-vaapi-driver"
-PKG_VERSION="2.0.0.pre2"
+PKG_VERSION="1.8.3"
 PKG_REV="1"
 PKG_ARCH="x86_64"
 PKG_SITE="https://github.com/01org/intel-vaapi-driver/releases"
