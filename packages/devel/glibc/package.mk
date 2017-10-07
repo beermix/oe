@@ -65,14 +65,14 @@ else
   PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET --disable-debug"
 fi
 
-NSS_CONF_DIR="$ROOT/$PKG_BUILD/nss"
+NSS_CONF_DIR="$PKG_BUILD/nss"
 
 GLIBC_EXCLUDE_BIN="catchsegv gencat getconf iconv iconvconfig ldconfig"
 GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN makedb mtrace pcprofiledump"
 GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN pldd rpcgen sln sotruss sprof xtrace"
 
 pre_build_target() {
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
     aclocal --force --verbose
     autoconf --force --verbose
   cd -
@@ -118,8 +118,10 @@ pre_configure_target() {
 
   unset LD_LIBRARY_PATH
 
-# set some CFLAGS we need
-#  export CFLAGS="$CFLAGS -g"
+  # set some CFLAGS we need
+  export CFLAGS="$CFLAGS -g -fno-stack-protector"
+
+  export BUILD_CC=$HOST_CC
   export OBJDUMP_FOR_HOST=objdump
 
 cat >config.cache <<EOF
