@@ -83,4 +83,4 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-threadsafe \
                            --enable-readline \
                            --disable-static"
                            
-PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
+#PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"

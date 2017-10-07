@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="bluez"
-PKG_VERSION="5.47"
+PKG_VERSION="5.43"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.bluez.org/"
@@ -40,7 +40,6 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-dependency-tracking \
                            --enable-tools \
                            --enable-datafiles \
                            --disable-experimental \
-                           --enable-deprecated \
                            --enable-sixaxis \
                            --with-gnu-ld \
                            storagedir=/storage/.cache/bluetooth"
@@ -76,11 +75,11 @@ post_makeinstall_target() {
 #    cp tools/btinfo $INSTALL/usr/bin
 #    cp tools/btmgmt $INSTALL/usr/bin
 
-  mkdir -p $INSTALL/etc/bluetooth
-    cp src/main.conf $INSTALL/etc/bluetooth
-    sed -i $INSTALL/etc/bluetooth/main.conf \
-        -e "s|^#\[Policy\]|\[Policy\]|g" \
-        -e "s|^#AutoEnable.*|AutoEnable=true|g"
+#  mkdir -p $INSTALL/etc/bluetooth
+#    cp src/main.conf $INSTALL/etc/bluetooth
+#    sed -i $INSTALL/etc/bluetooth/main.conf \
+#        -e "s|^#\[Policy\]|\[Policy\]|g" \
+#        -e "s|^#AutoEnable.*|AutoEnable=true|g"
 }
 
 post_install() {
