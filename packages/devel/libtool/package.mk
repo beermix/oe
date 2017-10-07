@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="libtool"
-PKG_VERSION="6ca5e22-3"
+PKG_VERSION="6ca5e22"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/libtool/libtool.html"
-PKG_URL="https://dl.dropboxusercontent.com/s/hogyedhvluzlzl5/libtool-6ca5e22-3.tar.xz"
+PKG_GIT_URL="https://git.savannah.gnu.org/git/libtool.git"
 PKG_DEPENDS_HOST="ccache:host autoconf:host automake:host help2man:host"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_PRIORITY="optional"
@@ -34,15 +34,13 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 pre_configure_host() {
-  sh bootstrap
+  ./bootstrap
 }
 
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   make clean
-  sh bootstrap
+  ./bootstrap
 }
 
-#PKG_CONFIGURE_OPTS_HOST="lt_cv_sys_lib_dlsearch_path_spec=$SYSROOT_PREFIX/lib:$SYSROOT_PREFIX/usr/lib"
-PKG_CONFIGURE_OPTS_HOST="--disable-static --enable-shared"
-PKG_CONFIGURE_OPTS_TARGET="CONFIG_SHELL=/bin/bash --disable-static --enable-shared"
+PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
