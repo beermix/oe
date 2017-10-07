@@ -26,41 +26,30 @@ PKG_SECTION="textproc"
 PKG_SHORTDESC="International Components for Unicode library"
 PKG_LONGDESC="International Components for Unicode library"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
-post_unpack() {
-  sed -i 's/xlocale/locale/' $ROOT/$PKG_BUILD/source/i18n/digitlst.cpp
-}
+#post_unpack() {
+#  sed -i 's/xlocale/locale/' $ROOT/$PKG_BUILD/source/i18n/digitlst.cpp
+#}
 
 pre_configure_target() {
   CFLAGS="$CFLAGS -fPIC"
   CXXFLAGS="$CXXFLAGS -fPIC"
+  LIBS="$LIBS -latomic"
 }
 
 PKG_CONFIGURE_SCRIPT="source/configure"
 
-PKG_CONFIGURE_OPTS_HOST="--disable-debug \
-			    --enable-release \
-			    --disable-shared \
-			    --enable-static \
-			    --enable-draft \
-			    --enable-renaming \
-			    --disable-tracing \
+PKG_CONFIGURE_OPTS_HOST="--disable-samples \
+			    --disable-tests \
 			    --disable-extras \
-			    --enable-dyload"
+			    --disable-icuio \
+			    --disable-layout \
+			    --disable-renaming"
 			   
-PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
-			      --enable-release \
-			      --disable-shared \
-			      --enable-static \
-			      --enable-draft \
-			      --enable-renaming \
-			      --disable-tracing \
-			      --disable-extras \
-			      --enable-dyload \
-			      --disable-tools \
+PKG_CONFIGURE_OPTS_TARGET="--disable-samples \
 			      --disable-tests \
-			      --disable-samples \
+			      --disable-shared \
 			      --with-cross-build=$ROOT/$PKG_BUILD/.$HOST_NAME"
 
 makeinstall_host() {
