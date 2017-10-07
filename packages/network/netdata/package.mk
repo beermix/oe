@@ -5,7 +5,7 @@ PKG_URL="https://github.com/firehol/netdata/releases/download/v$PKG_VERSION/netd
 PKG_DEPENDS_TARGET="toolchain util-linux ncurses sysstat libmnl zlib lm_sensors libcap libnetfilter_acct"
 PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
                            
 PKG_CONFIGURE_OPTS_TARGET="--with-zlib \
 			      --with-math \
