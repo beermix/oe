@@ -10,6 +10,8 @@ PKG_LONGDESC="The Open Source toolkit for Secure Sockets Layer and Transport Lay
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
+export CCACHE_DISABLE=1
+
 PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            --libdir=lib \
                            shared \
@@ -19,8 +21,6 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            enable-tlsext \
                            enable-unit-test \
                            no-ssl3-method \
-                           no-zlib \
-                           no-zlib-dynamic \
                            enable-ec_nistp_64_gcc_128"
 
 pre_configure_host() {
@@ -49,9 +49,9 @@ pre_configure_target() {
   mkdir -p $ROOT/$PKG_BUILD/.$TARGET_NAME
   cp -a $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$TARGET_NAME/
   
-  #sed -i -e '/^"linux-x86_64"/ s/-m64 -DL_ENDIAN -O3 -Wall//' $ROOT/$PKG_BUILD/.$TARGET_NAME/Configure
-  CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
-  CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3|"`
+  sed -i -e '/^"linux-x86_64"/ s/-m64 -DL_ENDIAN -O3 -Wall//' $ROOT/$PKG_BUILD/.$TARGET_NAME/Configure
+#  CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
+#  CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3|"`
   strip_lto
   strip_gold
 }
@@ -59,7 +59,7 @@ pre_configure_target() {
 configure_target() {
   cd $ROOT/$PKG_BUILD/.$TARGET_NAME
   ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 "-Wa,--noexecstack $CFLAGS"
-  MAKEFLAGS=-j1
+  #MAKEFLAGS=-j1
 }
 
 make_target() {
@@ -71,8 +71,8 @@ make_target() {
 }
 
 makeinstall_target() {
-  make INSTALL_PREFIX=$INSTALL install_sw
-  make INSTALL_PREFIX=$SYSROOT_PREFIX install_sw
+  make INSTALL_PREFIX=$INSTALL install_sw -j1
+  make INSTALL_PREFIX=$SYSROOT_PREFIX install_sw -j1
   chmod 755 $INSTALL/usr/lib/*.so*
   chmod 755 $INSTALL/usr/lib/engines/*.so
 }
