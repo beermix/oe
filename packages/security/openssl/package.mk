@@ -31,7 +31,6 @@ pre_configure_host() {
 configure_host() {
   cd $ROOT/$PKG_BUILD/.$HOST_NAME
   ./Configure --prefix=/ $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 "-Wa,--noexecstack $CFLAGS"
-  MAKEFLAGS=-j1
 }
 
 make_host() {
