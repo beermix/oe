@@ -30,4 +30,4 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-examples \
 			      --disable-failing-tests \
 			      --disable-loadsave \
 			      --disable-benchmarks \
-			      --disable-tools"
+			      --disable-tools --disable-shared --with-pic"

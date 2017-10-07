@@ -32,4 +32,4 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-maintainer-mode \
 			      --enable-silent-rules \
 			      --disable-fatal-warnings \
 			      --disable-audiotestsrc \
-			      --disable-videotestsrc"
+			      --disable-videotestsrc --disable-shared --with-pic"
