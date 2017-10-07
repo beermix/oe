@@ -27,7 +27,6 @@ PKG_SECTION="network"
 PKG_SHORTDESC="bluez: Bluetooth Tools and System Daemons for Linux."
 PKG_LONGDESC="Bluetooth Tools and System Daemons for Linux."
 
-PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-dependency-tracking \
@@ -37,7 +36,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-dependency-tracking \
                            --disable-cups \
                            --disable-obex \
                            --enable-client \
-                           --disable-systemd \
+                           --enable-systemd \
                            --enable-tools \
                            --enable-datafiles \
                            --disable-experimental \
@@ -64,7 +63,6 @@ pre_configure_target() {
 # bluez fails to build in subdirs
   cd $ROOT/$PKG_BUILD
     rm -rf .$TARGET_NAME
-    strip_hard
 
   export LIBS="-lncurses -ltinfo"
 }

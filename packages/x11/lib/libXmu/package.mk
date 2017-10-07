@@ -28,4 +28,8 @@ PKG_LONGDESC="LibXmu provides a set of miscellaneous utility convenience functio
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
+pre_configure_target() {
+  export CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
+}
+
 PKG_CONFIGURE_OPTS_TARGET="--without-xmlto"
