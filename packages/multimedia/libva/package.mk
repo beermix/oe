@@ -3,7 +3,6 @@ PKG_VERSION="2.0.0.pre2"
 PKG_REV="1"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPL"
-#PKG_GIT_URL="https://github.com/01org/libva"
 PKG_URL="https://github.com/01org/libva/releases/download/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain libX11 libXext libXfixes libdrm mesa glu"
 PKG_PRIORITY="optional"
@@ -21,5 +20,4 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
                            --enable-glx \
                            --enable-egl \
                            --disable-wayland \
-                           --disable-dummy-driver \
                            --with-drivers-path=/usr/lib/va"
