@@ -30,8 +30,7 @@ PKG_LONGDESC="Autoconf is an extensible package of m4 macros that produce shell 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_HOST="EMACS=no \
-                         ac_cv_path_M4=$ROOT/$TOOLCHAIN/bin/m4 \
+PKG_CONFIGURE_OPTS_HOST="ac_cv_path_M4=$ROOT/$TOOLCHAIN/bin/m4 \
                          ac_cv_prog_gnu_m4_gnu=no \
                          --target=$TARGET_NAME"
 
