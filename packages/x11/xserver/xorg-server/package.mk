@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.X.org"
 PKG_URL="http://xorg.freedesktop.org/archive/individual/xserver/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain util-macros font-util fontsproto randrproto recordproto renderproto dri2proto dri3proto fixesproto damageproto videoproto inputproto xf86dgaproto xf86vidmodeproto xf86driproto xf86miscproto presentproto libpciaccess libX11 libXfont2 libXinerama libxshmfence libxkbfile libdrm openssl freetype pixman fontsproto systemd xorg-launch-helper libXcomposite glproto libepoxy glu libXmu libXt libXfont libXaw libXpm"
+PKG_DEPENDS_TARGET="toolchain util-macros font-util fontsproto randrproto recordproto renderproto dri2proto dri3proto fixesproto damageproto videoproto inputproto xf86dgaproto xf86vidmodeproto xf86driproto xf86miscproto presentproto libpciaccess libX11 libXfont2 libXinerama libxshmfence libxkbfile libdrm openssl freetype pixman fontsproto systemd xorg-launch-helper libXcomposite glproto libepoxy glu libXmu libXt libXfont libXaw libXpm libXext libXtst libSM libICE libgcrypt"
 PKG_PRIORITY="optional"
 PKG_SECTION="x11/xserver"
 PKG_SHORTDESC="xorg-server: The Xorg X server"
@@ -84,7 +84,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
                            --disable-systemd-logind \
                            --enable-xorg \
                            --disable-dmx \
-                           --disable-xvfb \
+                           --enable-xvfb \
                            --disable-xnest \
                            --disable-xquartz \
                            --disable-standalone-xpbproxy \
@@ -110,7 +110,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
                            --disable-devel-docs \
                            --with-int10=x86emu \
                            --with-gnu-ld \
-                           --with-sha1=libcrypto \
+                           --with-sha1=libgcrypt \
                            --without-systemd-daemon \
                            --with-os-vendor=OE \
                            --with-module-dir=$XORG_PATH_MODULES \
@@ -120,6 +120,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
                            --with-fontrootdir=/usr/share/fonts \
                            --with-default-font-path=/usr/share/fonts/misc,built-ins \
                            --with-serverconfig-path=/usr/lib/xserver \
+                           --without-doxygen \
                            --without-xmlto \
                            --without-fop"
 
