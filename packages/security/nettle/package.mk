@@ -12,7 +12,7 @@ PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
 			      --disable-openssl \
-			      --enable-shared \
+			      --disable-static \
 			      --enable-x86-aesni \
 			      --disable-documentation \
 			      --enable-mini-gmp"

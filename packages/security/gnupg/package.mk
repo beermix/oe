@@ -16,4 +16,4 @@ PKG_CONFIGURE_OPTS_TARGET="--with-libgpg-error-prefix=$SYSROOT_PREFIX/usr \
 			      --with-libassuan-prefix=$SYSROOT_PREFIX/usr \
 			      --with-ksba-prefix=$SYSROOT_PREFIX/usr \
 			      --with-npth-prefix=$SYSROOT_PREFIX/usr \
-			      --enable-silent-rules --disable-shared"
+			      --enable-silent-rules --disable-shared --with-pic"
