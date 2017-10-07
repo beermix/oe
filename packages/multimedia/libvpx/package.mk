@@ -10,14 +10,10 @@ get_graphicdrivers
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
-  strip_lto
-  strip_gold
 }
 
 configure_target() {
   ./configure --prefix="/usr" \
-  		--target="x86_64-linux-gcc" \
-  		--cpu="$TARGET_CPU" \
   		--as=yasm \
   		--enable-pic \
   		--enable-runtime-cpu-detect \
@@ -30,5 +26,13 @@ configure_target() {
   		--enable-vp9 \
   		--enable-vp9-highbitdepth \
   		--enable-experimental \
-  		--enable-spatial-svc
+  		--enable-spatial-svc \
+  		--disable-encode-perf-tests \
+  		--disable-decode-perf-tests \
+  		--disable-decode-perf-tests \
+  		--disable-encode-perf-tests \
+  		--disable-unit-tests \
+  		--disable-examples \
+  		--disable-debug-libs \
+  		--disable-docs
 }

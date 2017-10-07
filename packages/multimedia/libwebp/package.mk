@@ -10,19 +10,14 @@ PKG_AUTORECONF="yes"
 
 get_graphicdrivers
 
-pre_configure_target() {
-#  CFLAGS="$CFLAGS -fPIC"
-#  CXXFLAGS="$CXXFLAGS -fPIC"
-  cd $ROOT/$PKG_BUILD
-}
-
 PKG_CONFIGURE_OPTS_TARGET="--enable-swap-16bit-csp \
 			      --enable-experimental 
 			      --enable-libwebp-mux \
 			      --enable-libwebp-demux \
 			      --enable-libwebp-decoder \
-			      --enable-libwebp-extras"
+			      --enable-libwebp-extras \
+			      --disable-static"
 
-post_makeinstall_target() {
-  rm -rf $INSTALL
-}
+#post_makeinstall_target() {
+#  rm -rf $INSTALL
+#}
