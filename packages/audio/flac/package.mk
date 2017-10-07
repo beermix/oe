@@ -38,13 +38,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-rpath \
                            --disable-xmms-plugin \
                            --disable-oggtest \
                            --enable-sse \
-                           --enable-static --disable-shared \
                            --with-ogg=$SYSROOT_PREFIX/usr"
-
-pre_configure_target() {
-  CFLAGS="$CFLAGS -fPIC"
-  CXXFLAGS="$CXXFLAGS -fPIC"
-}
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
