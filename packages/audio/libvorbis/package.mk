@@ -36,8 +36,5 @@ PKG_AUTORECONF="yes"
 PKG_CONFIGURE_OPTS_TARGET="--with-ogg=$SYSROOT_PREFIX/usr \
                            --disable-oggtest \
                            --disable-docs \
-                           --disable-examples --disable-shared"
+                           --disable-examples"
 
-pre_configure_target() {
-  export CFLAGS+=" -fPIC -DPIC"
-}
