@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libusb"
-PKG_VERSION="v1.0.21"
+PKG_VERSION="b4c9b42"
 PKG_SITE="http://libusb.info/"
 PKG_GIT_URL="https://github.com/libusb/libusb"
 PKG_DEPENDS_TARGET="toolchain systemd"
