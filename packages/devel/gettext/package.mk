@@ -43,6 +43,7 @@ PKG_CONFIGURE_OPTS_HOST="EMACS="no" \
                          --disable-java \
                          --disable-curses \
                          --with-included-libxml \
+                         --with-included-glib \
                          --disable-native-java \
                          --disable-csharp \
                          --without-emacs \
