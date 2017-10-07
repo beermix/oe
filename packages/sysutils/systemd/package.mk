@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/systemd"
 PKG_GIT_URL="https://github.com/systemd/systemd"
-PKG_DEPENDS_TARGET="toolchain libcap util-linux entropy elfutils"
+PKG_DEPENDS_TARGET="toolchain libcap util-linux entropy elfutils zlib xz"
 PKG_SECTION="system"
 PKG_SHORTDESC="systemd: a system and session manager"
 PKG_LONGDESC="systemd is a system and session manager for Linux, compatible with SysV and LSB init scripts. systemd provides aggressive parallelization capabilities, uses socket and D-Bus activation for starting services, offers on-demand starting of daemons, keeps track of processes using Linux cgroups, supports snapshotting and restoring of the system state, maintains mount and automount points and implements an elaborate transactional dependency-based service control logic. It can work as a drop-in replacement for sysvinit."
@@ -48,8 +48,8 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-ima \
                            --disable-selinux \
                            --disable-apparmor \
-                           --disable-xz \
-                           --disable-zlib \
+                           --enable-xz \
+                           --enable-zlib \
                            --disable-bzip2 \
                            --disable-lz4 \
                            --disable-pam \
@@ -57,7 +57,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-smack \
                            --disable-gcrypt \
                            --disable-audit \
-                           --disable-elfutils \
+                           --enable-elfutils \
                            --disable-libcryptsetup \
                            --disable-qrencode \
                            --disable-microhttpd \
@@ -69,7 +69,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-vconsole \
                            --disable-quotacheck \
                            --enable-tmpfiles \
-                           --disable-environment-d \
                            --disable-sysusers \
                            --disable-firstboot \
                            --disable-randomseed \
