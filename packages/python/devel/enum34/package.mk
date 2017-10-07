@@ -18,11 +18,9 @@
 
 PKG_NAME="enum34"
 PKG_VERSION="1.1.6"
-PKG_SHA256="b09c7f7ee925e600bd4efaa5fef49919eacdbdfd5a52e0696c5d03010cffb9ec"
 PKG_LICENSE="BSD"
 PKG_SITE="https://bitbucket.org/stoneleaf/enum34"
-PKG_URL="https://bitbucket.org/stoneleaf/$PKG_NAME/get/$PKG_VERSION.tar.bz2"
-PKG_SOURCE_DIR="stoneleaf-enum34-*"
+PKG_GIT_URL="https://bitbucket.org/stoneleaf/enum34"
 PKG_DEPENDS_TARGET=""
 PKG_LONGDESC="Backport of Python 3.4 Enum"
 
