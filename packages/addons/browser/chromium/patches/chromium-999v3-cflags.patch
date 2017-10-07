@@ -9,7 +9,7 @@ index 7888e2f858..e9c376e0a5
          cflags += [ "-fstack-protector-strong" ]
        } else {
 -        cflags += [ "-fstack-protector" ]
-+        cflags += [ "-fno-plt" ]
++        cflags += [ "-mtune=core-avx-i" ]
        }
      } else if (is_posix && !is_chromeos && !is_nacl) {
        # TODO(phajdan.jr): Use -fstack-protector-strong when our gcc supports it.
