@@ -56873,3 +56873,20 @@ index ee3cc6b8b4..39d878c814 100644
  		  return FALSE;
  		}
  	      o->flags |= SEC_ELF_REVERSE_COPY;
+
+commit 787c98737741b5471a7953ab710468411287d9e1
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Fri Oct 6 00:01:31 2017 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 1af9b78ad7..410ccb9c97 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20171005
++#define BFD_VERSION_DATE 20171006
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
