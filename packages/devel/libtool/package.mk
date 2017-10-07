@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="libtool"
-PKG_VERSION="6ca5e22-2"
+PKG_VERSION="6ca5e22-3"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/libtool/libtool.html"
-PKG_URL="https://dl.dropboxusercontent.com/s/i8vv333ezxqrhhl/libtool-6ca5e22-2.tar.xz"
+PKG_URL="https://dl.dropboxusercontent.com/s/hogyedhvluzlzl5/libtool-6ca5e22-3.tar.xz"
 PKG_DEPENDS_HOST="ccache:host autoconf:host automake:host help2man:host"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_PRIORITY="optional"
