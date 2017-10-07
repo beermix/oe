@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="appdirs"
-PKG_VERSION="1.4.2"
+PKG_VERSION="1.4.3"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="https://pypi.python.org/pypi/appdirs"
-PKG_URL="https://pypi.python.org/packages/88/99/293dac0b3cdf58ce029ec5393624fac5c6bde52f737f9775bd9ef608ec98/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_URL="https://pypi.python.org/packages/48/69/d87c60746b393309ca30761f8e2b49473d43450b150cb08f3c6df5c11be5/appdirs-1.4.3.tar.gz"
 PKG_DEPENDS_HOST="Python:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="python/devel"
