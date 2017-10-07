@@ -39,6 +39,5 @@ pre_configure_target() {
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-shared \
 			      --enable-static \
-			      --enable-devel \
 			      --with-kernel=$(get_pkg_build linux)"
 
