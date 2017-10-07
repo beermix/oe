@@ -1,4 +1,3 @@
-
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
 #      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
@@ -17,25 +16,26 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="readline"
-PKG_VERSION="6c32f81"
-#PKG_VERSION="7d5c553"
-PKG_SITE="http://www.gnu.org/software/readline/"
-PKG_GIT_URL="git://git.savannah.gnu.org/readline.git"
-PKG_DEPENDS_TARGET="toolchain ncurses"
-PKG_SECTION="devel"
-PKG_SHORTDESC="readline: The GNU Readline library provides a set of functions for use by applications that allow users to edit command lines as they are typed in."
-PKG_LONGDESC="The GNU Readline library provides a set of functions for use by applications that allow users to edit command lines as they are typed in."
-PKG_IS_ADDON="no"
+PKG_NAME="giflib"
+PKG_VERSION="5.1.4"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="OSS"
+PKG_SITE="http://giflib.sourceforge.net/"
+PKG_URL="$SOURCEFORGE_SRC/giflib/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_DEPENDS_HOST="zlib:host"
+PKG_DEPENDS_TARGET="toolchain zlib"
+PKG_PRIORITY="optional"
+PKG_SECTION="graphics"
+PKG_SHORTDESC="giflib: giflib service library"
+PKG_LONGDESC="giflib: giflib service library"
 
+PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="bash_cv_wcwidth_broken=no \
-                           --with-curses \
-                           --without-purify"
-                           
-PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
+PKG_CONFIGURE_OPTS_HOST="--disable-shared --enable-static"
+PKG_CONFIGURE_OPTS_TARGET="--with-sysroot=$SYSROOT_PREFIX"
 
 post_makeinstall_target() {
-  rm -rf $INSTALL/usr/share/readline
+  rm -rf $INSTALL/usr/bin
 }

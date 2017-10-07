@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="giflib"
-PKG_VERSION="5.1.4"
+PKG_VERSION="5.1.4U"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://giflib.sourceforge.net/"
-PKG_URL="$SOURCEFORGE_SRC/giflib/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_URL="https://dl.dropboxusercontent.com/s/t9lfsv9ykr844fz/giflib-5.1.4U.tar.xz"
 PKG_DEPENDS_HOST="zlib:host"
 PKG_DEPENDS_TARGET="toolchain zlib"
 PKG_PRIORITY="optional"
@@ -33,8 +33,9 @@ PKG_LONGDESC="giflib: giflib service library"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_HOST="--disable-shared --enable-static"
-PKG_CONFIGURE_OPTS_TARGET="--with-sysroot=$SYSROOT_PREFIX"
+PKG_CONFIGURE_OPTS_HOST="--disable-shared --disable-silent-rules"
+
+PKG_CONFIGURE_OPTS_TARGET="--with-sysroot=$SYSROOT_PREFIX --disable-silent-rules"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
