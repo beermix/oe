@@ -51,6 +51,7 @@ PKG_CONFIGURE_OPTS_HOST="MAKEINFO=true \
                          --enable-threads \
                          --with-pic \
                          --enable-relro \
+                         --with-system-zlib \
                          --enable-poison-system-directories"
 
 makeinstall_host() {

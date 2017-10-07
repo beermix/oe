@@ -54,6 +54,7 @@ GCC_COMMON_CONFIGURE_OPTS="MAKEINFO=missing \
                            --without-cuda-driver \
                            --with-linker-hash-style=gnu \
                            --disable-werror \
+                           --with-system-zlib \
                            --with-tune=generic"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
