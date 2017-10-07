@@ -10,7 +10,7 @@ PKG_ARCH="any"
 PKG_LICENSE="LGPLv2.1+"
 PKG_SITE="https://ffmpeg.org/releases/?C=M;O=D"
 PKG_GIT_URL="https://github.com/xbmc/FFmpeg"
-PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 gmp openssl speex libvorbis"
+PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 gmp openssl speex libvorbis libvpx libwebp fribidi fontconfig"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
 PKG_LONGDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
@@ -184,11 +184,11 @@ configure_target() {
               --disable-libxavs \
               --disable-libxvid \
               --enable-libvorbis --enable-muxer=ogg --enable-encoder=libvorbis \
-              --disable-libvpx \
-              --disable-libwebp \
-              --disable-libxcb \
-              --disable-fontconfig \
-              --disable-libfribidi \
+              --enable-libvpx \
+              --enable-libwebp \
+              --enable-libxcb \
+              --enable-fontconfig \
+              --enable-libfribidi \
               --enable-zlib \
               --enable-asm \
               --disable-altivec \

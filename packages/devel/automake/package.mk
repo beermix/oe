@@ -14,7 +14,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+################################################################################ am_cv_prog_PERL_ithreads=yes 
 
 PKG_NAME="automake"
 PKG_VERSION="1.15.1"
@@ -32,7 +32,7 @@ PKG_LONGDESC="This is Automake, a Makefile generator. It was inspired by the 4.4
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_HOST="am_cv_prog_PERL_ithreads=no --target=$TARGET_NAME --disable-silent-rules"
+PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME --disable-silent-rules"
 
 post_makeinstall_host() {
   make prefix=$SYSROOT_PREFIX/usr install
