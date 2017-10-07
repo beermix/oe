@@ -32,7 +32,7 @@ PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_SCRIPT="gettext-tools/configure"
 
-PKG_CONFIGURE_OPTS_HOST="EMACS=no \
+PKG_CONFIGURE_OPTS_HOST="EMACS="no" \
 			    am_cv_lib_iconv=no \
 			    am_cv_func_iconv=no \
 			    ac_cv_header_iconv_h=no \
@@ -47,5 +47,4 @@ PKG_CONFIGURE_OPTS_HOST="EMACS=no \
                          --disable-csharp \
                          --without-emacs \
                          --disable-openmp \
-                         --without-cvs \
-                         --without-libxml2-prefix"
+                         --without-cvs"
