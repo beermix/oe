@@ -149,7 +149,7 @@ post_makeinstall_target() {
       cp $PROJECT_DIR/$PROJECT/xorg/xorg.conf $INSTALL/etc/X11
 
     fi
-    cp $PKG_DIR/config/xorg*.conf $INSTALL/etc/X11
+    #cp $PKG_DIR/config/xorg*.conf $INSTALL/etc/X11
 
   if [ ! "$DEVTOOLS" = yes ]; then
     rm -rf $INSTALL/usr/bin/cvt

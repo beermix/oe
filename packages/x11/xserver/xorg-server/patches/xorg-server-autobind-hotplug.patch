@@ -196,6 +196,28 @@ index c29b3cc..4c5f54b 100644
  } xf86InfoRec, *xf86InfoPtr;
  
  #ifdef DPMSExtension
+diff --git a/hw/xfree86/common/xf86platformBus.c b/hw/xfree86/common/xf86platformBus.c
+index 063e81c..42789ca 100644
+--- a/hw/xfree86/common/xf86platformBus.c
++++ b/hw/xfree86/common/xf86platformBus.c
+@@ -48,6 +48,7 @@
+ #include "Pci.h"
+ #include "xf86platformBus.h"
+ #include "xf86Config.h"
++#include "xf86Crtc.h"
+ 
+ #include "randrstr.h"
+ int platformSlotClaimed;
+@@ -579,6 +580,9 @@ xf86platformAddDevice(int index)
+    }
+    /* attach unbound to 0 protocol screen */
+    AttachUnboundGPU(xf86Screens[0]->pScreen, xf86GPUScreens[i]->pScreen);
++   if (xf86Info.autoBindGPU)
++       RRProviderAutoConfigGpuScreen(xf86ScrnToScreen(xf86GPUScreens[i]),
++                                     xf86ScrnToScreen(xf86Screens[0]));
+ 
+    RRResourcesChanged(xf86Screens[0]->pScreen);
+    RRTellChanged(xf86Screens[0]->pScreen);
 diff --git a/hw/xfree86/man/Xorg.man b/hw/xfree86/man/Xorg.man
 index def9bfc..8df6b7d 100644
 --- a/hw/xfree86/man/Xorg.man
