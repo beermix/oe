@@ -45,7 +45,6 @@ GCC_COMMON_CONFIGURE_OPTS="MAKEINFO=missing \
                            --with-isl=$ROOT/$TOOLCHAIN \
                            --disable-multilib \
                            --enable-plugin \
-                           --disable-nls \
                            --enable-lto \
                            --enable-ld=default \
                            --disable-multilib \
