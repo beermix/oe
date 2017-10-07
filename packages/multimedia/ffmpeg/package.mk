@@ -10,7 +10,7 @@ PKG_ARCH="any"
 PKG_LICENSE="LGPLv2.1+"
 PKG_SITE="https://ffmpeg.org/releases/?C=M;O=D"
 PKG_GIT_URL="https://github.com/xbmc/FFmpeg"
-PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 gmp openssl speex libvorbis"
+PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl speex"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
 PKG_LONGDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
@@ -74,7 +74,7 @@ pre_configure_target() {
 
   if [ "$KODIPLAYER_DRIVER" = "bcm2835-firmware" ]; then
     export CFLAGS="-I$SYSROOT_PREFIX/usr/include/interface/vcos/pthreads -I$SYSROOT_PREFIX/usr/include/interface/vmcs_host/linux -DRPI=1 $CFLAGS"
-    export FFMPEG_LIBS="-lbcm_host -lvcos -lvchiq_arm -lmmal -lmmal_core -lmmal_util -lvcsm -lvchostif"
+    export FFMPEG_LIBS="-lbcm_host -lvcos -lvchiq_arm -lmmal -lmmal_core -lmmal_util -lvcsm"
   fi
 }
 
@@ -97,12 +97,12 @@ configure_target() {
               --host-ldflags="$HOST_LDFLAGS" \
               --host-libs="-lm" \
               --extra-cflags="$CFLAGS" \
-              --extra-ldflags="$LDFLAGS -fPIC" \
+              --extra-ldflags="$LDFLAGS" \
               --extra-libs="$FFMPEG_LIBS" \
               --disable-static \
               --enable-shared \
               --enable-gpl \
-              --enable-version3 \
+              --disable-version3 \
               --enable-nonfree \
               --enable-logging \
               --disable-doc \
@@ -118,7 +118,6 @@ configure_target() {
               --enable-avdevice \
               --enable-avcodec \
               --enable-avformat \
-              --enable-gmp \
               --enable-swscale \
               --enable-postproc \
               --enable-avfilter \
@@ -170,7 +169,7 @@ configure_target() {
               --disable-libopencv \
               --disable-libdc1394 \
               --disable-libfaac \
-              --enable-libfreetype \
+              --disable-libfreetype \
               --disable-libgsm \
               --disable-libmp3lame \
               --disable-libnut \
@@ -180,15 +179,11 @@ configure_target() {
               --enable-libspeex \
               --disable-libtheora \
               --disable-libvo-amrwbenc \
+              --disable-libvorbis \
+              --disable-libvpx \
               --disable-libx264 \
               --disable-libxavs \
               --disable-libxvid \
-              --enable-libvorbis --enable-muxer=ogg --enable-encoder=libvorbis \
-              --disable-libvpx \
-              --disable-libwebp \
-              --disable-libxcb \
-              --disable-fontconfig \
-              --disable-libfribidi \
               --enable-zlib \
               --enable-asm \
               --disable-altivec \

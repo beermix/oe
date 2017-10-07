@@ -41,7 +41,8 @@ PY_DISABLED_MODULES="_tkinter nis gdbm bsddb ossaudiodev"
 PKG_CONFIGURE_OPTS_HOST="--cache-file=config.cache \
                          --without-cxx-main \
                          --with-threads \
-                         --enable-unicode=ucs4"
+                         --enable-unicode=ucs4 \
+                         --disable-ipv6"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            ac_cv_file_dev_ptmx=yes \
@@ -95,8 +96,8 @@ makeinstall_host() {
 
 pre_configure_target() {
   export PYTHON_FOR_BUILD=$ROOT/$TOOLCHAIN/bin/python
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
-  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3|"`
+#  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
+#  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3|"`
 }
 
 make_target() {
