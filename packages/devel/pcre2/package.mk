@@ -7,7 +7,7 @@ PKG_DEPENDS_TARGET="toolchain zlib"
 PKG_SECTION="devel"
 PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-pcre2-8 --enable-pcre2-16 --enable-jit --enable-utf8 --disable-shared --with-pic"
 
