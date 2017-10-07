@@ -30,5 +30,5 @@ PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_HOST="--enable-static=yes --enable-shared=no --disable-doc --with-pic --enable-silent-rules --enable-threads"
                          
-PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
+PKG_CONFIGURE_OPTS_TARGET="--disable-doc --enable-threads"
 
