@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/systemd"
 PKG_GIT_URL="https://github.com/systemd/systemd"
-PKG_DEPENDS_TARGET="toolchain libcap util-linux entropy zlib lz4"
+PKG_DEPENDS_TARGET="toolchain libcap kmod util-linux entropy zlib lz4"
 PKG_SECTION="system"
 PKG_SHORTDESC="systemd: a system and session manager"
 PKG_LONGDESC="systemd is a system and session manager for Linux, compatible with SysV and LSB init scripts. systemd provides aggressive parallelization capabilities, uses socket and D-Bus activation for starting services, offers on-demand starting of daemons, keeps track of processes using Linux cgroups, supports snapshotting and restoring of the system state, maintains mount and automount points and implements an elaborate transactional dependency-based service control logic. It can work as a drop-in replacement for sysvinit."
@@ -34,14 +34,15 @@ PKG_AUTORECONF="yes"
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            ac_cv_have_decl_IFLA_BOND_AD_INFO=no \
                            ac_cv_have_decl_IFLA_BRPORT_UNICAST_FLOOD=no \
-                           ac_cv_path_MOUNT_PATH=/bin/mount \
-                           ac_cv_path_UMOUNT_PATH=/bin/umount \
+                           ac_cv_path_MOUNT_PATH="/bin/mount"
+                           ac_cv_path_UMOUNT_PATH="/bin/umount"
+                           KMOD=/usr/bin/kmod \
                            --disable-nls \
                            --disable-lto \
                            --disable-dbus \
                            --disable-utmp \
                            --disable-coverage \
-                           --disable-kmod \
+                           --enable-kmod \
                            --disable-xkbcommon \
                            --enable-blkid \
                            --disable-seccomp \
@@ -143,6 +144,10 @@ post_makeinstall_target() {
   # remove Network adaper renaming rule, this is confusing
   rm -rf $INSTALL/usr/lib/udev/rules.d/80-net-setup-link.rules
 
+  # remove the uaccess rules as we don't build systemd with ACL (see https://github.com/systemd/systemd/issues/4107)
+  rm -rf $INSTALL/usr/lib/udev/rules.d/70-uaccess.rules
+  rm -rf $INSTALL/usr/lib/udev/rules.d/71-seat.rules
+  rm -rf $INSTALL/usr/lib/udev/rules.d/73-seat-late.rules
   # remove debug-shell.service, we install our own
   rm -rf $INSTALL/usr/lib/systemd/system/debug-shell.service
 
@@ -164,20 +169,17 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/lib/systemd/system/systemd-udev-hwdb-update.service
   rm -rf $INSTALL/usr/lib/systemd/system/*.target.wants/systemd-udev-hwdb-update.service
 
-  # remove fuse mount rules, we ship this byself
-  rm -rf $INSTALL/usr/lib/systemd/system/sys-fs-fuse-connections.mount
-
   # remove nspawn
   rm -rf $INSTALL/usr/bin/systemd-nspawn
   rm -rf $INSTALL/usr/lib/systemd/system/systemd-nspawn@.service
 
-  # remove generators/catalog
-  rm -rf $INSTALL/lib/systemd/system-generators/*
+  # remove genetators/catalog
+  rm -rf $INSTALL/usr/lib/systemd/system-generators
   rm -rf $INSTALL/usr/lib/systemd/catalog
 
-  # disable usage of presets, see: https://freedesktop.org/wiki/Software/systemd/Preset/
-  rm -rf $INSTALL/usr/lib/systemd/system-preset/*
-  echo "disable *" $INSTALL/usr/lib/systemd/system-preset/99-default.preset
+  # distro preset policy
+  rm -f $INSTALL/usr/lib/systemd/system-preset/*
+  echo "disable *" > $INSTALL/usr/lib/systemd/system-preset/99-default.preset
 
   # remove networkd
   rm -rf $INSTALL/usr/lib/systemd/network
@@ -198,6 +200,7 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin/systemd-machine-id-setup
   mkdir -p $INSTALL/usr/bin
   cp $PKG_DIR/scripts/systemd-machine-id-setup $INSTALL/usr/bin
+  cp $PKG_DIR/scripts/userconfig-setup $INSTALL/usr/bin
   # provide 'halt', 'shutdown', 'reboot' & co.
   mkdir -p $INSTALL/usr/sbin
   ln -sf /usr/bin/systemctl $INSTALL/usr/sbin/halt
@@ -207,10 +210,15 @@ post_makeinstall_target() {
   ln -sf /usr/bin/systemctl $INSTALL/usr/sbin/shutdown
   ln -sf /usr/bin/systemctl $INSTALL/usr/sbin/telinit
 
+  # strip
+  debug_strip $INSTALL/usr
+
+  # defaults
   mkdir -p $INSTALL/usr/config
   cp -PR $PKG_DIR/config/* $INSTALL/usr/config
 
   rm -rf $INSTALL/etc/modules-load.d
+  ln -sf /storage/.config/modules-load.d $INSTALL/etc/modules-load.d
   rm -rf $INSTALL/etc/sysctl.d
   ln -sf /storage/.config/sysctl.d $INSTALL/etc/sysctl.d
   rm -rf $INSTALL/etc/tmpfiles.d

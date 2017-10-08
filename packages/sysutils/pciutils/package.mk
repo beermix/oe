@@ -21,7 +21,7 @@ PKG_VERSION="3.5.5"
 PKG_ARCH="x86_64"
 PKG_SITE="http://mj.ucw.cz/pciutils.shtml"
 PKG_URL="http://www.kernel.org/pub/software/utils/pciutils/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain systemd kmod"
+PKG_DEPENDS_TARGET="toolchain kmod systemd"
 PKG_SECTION="system"
 PKG_SHORTDESC="pciutils: Linux PCI Utilities"
 PKG_LONGDESC="This package contains various utilities for inspecting and setting of devices connected to the PCI bus and the PCI vendor/product ID database."
@@ -29,12 +29,7 @@ PKG_LONGDESC="This package contains various utilities for inspecting and setting
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC -DPIC"
-  export CXXFLAGS="$CXXFLAGS -fPIC -DPIC"
-}
-
-PKG_MAKE_OPTS="PREFIX=/usr SHARED=no STRIP= IDSDIR=/usr/share"
+PKG_MAKE_OPTS="PREFIX=/usr SHARED=yes STRIP= IDSDIR=/usr/share"
 
 make_target() {
   strip_lto

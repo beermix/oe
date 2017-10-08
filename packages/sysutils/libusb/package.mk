@@ -17,16 +17,16 @@
 ################################################################################
 
 PKG_NAME="libusb"
-PKG_VERSION="b4c9b42"
+PKG_VERSION="1.0.21"
 PKG_SITE="http://libusb.info/"
-PKG_GIT_URL="https://github.com/libusb/libusb"
+PKG_URL="https://github.com/libusb/libusb/releases/download/v$PKG_VERSION/libusb-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain systemd"
 PKG_SECTION="system"
 PKG_SHORTDESC="libusb: OS independent USB device access"
 PKG_LONGDESC="The libusb project's aim is to create a Library for use by user level applications to USB devices regardless of OS."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-shared \
             --enable-static \
