@@ -81,7 +81,7 @@ post_makeinstall_target() {
     echo "AutoEnable=true" >> $INSTALL/etc/bluetooth/main.conf
 }
 
-post_install() {
-  enable_service bluetooth.service
-  enable_service obex.service
-}
+#post_install() {
+#  enable_service bluetooth.service
+#  enable_service obex.service
+#}

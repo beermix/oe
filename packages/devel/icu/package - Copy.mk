@@ -28,13 +28,11 @@ PKG_LONGDESC="International Components for Unicode library"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-post_unpack() {
-  cp -r $ROOT/$PKG_BUILD/source/* $ROOT/$PKG_BUILD/
-}
 
 pre_configure_target() {
   CFLAGS="$CFLAGS -fPIC"
   CXXFLAGS="$CXXFLAGS -fPIC"
+  LIBS="$LIBS -latomic"
 }
 
 PKG_CONFIGURE_OPTS_HOST="--disable-debug \
@@ -61,7 +59,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
 			      --disable-samples \
 			      --with-cross-build=$ROOT/$PKG_BUILD/.$HOST_NAME"
 
-#PKG_CONFIGURE_SCRIPT="source/configure"
+PKG_CONFIGURE_SCRIPT="source/configure"
 
 post_makeinstall_target() {
   rm -rf $INSTALL
