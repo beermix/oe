@@ -35,9 +35,9 @@ PKG_AUTORECONF="yes"
 if [ "$LLVM_SUPPORT" = "yes" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET elfutils llvm"
   export LLVM_CONFIG="$SYSROOT_PREFIX/usr/bin/llvm-config-host"
-  MESA_GALLIUM_LLVM="--enable-gallium-llvm --enable-llvm-shared-libs"
+  MESA_GALLIUM_LLVM="--enable-llvm --enable-llvm-shared-libs"
 else
-  MESA_GALLIUM_LLVM="--disable-gallium-llvm"
+  MESA_GALLIUM_LLVM="--disable-llvm"
 fi
 
 if [ "$VDPAU_SUPPORT" = "yes" -a "$DISPLAYSERVER" = "x11" ]; then
@@ -53,12 +53,11 @@ for drv in $GRAPHIC_DRIVERS; do
 done
 
 if [ "$OPENGLES_SUPPORT" = "yes" ]; then
-  MESA_GLES="--enable-gles2"
+  MESA_GLES="--disable-gles1 --enable-gles2"
 else
-  MESA_GLES="--disable-gles2"
+  MESA_GLES="--disable-gles1 --disable-gles2"
 fi
 
- 
 PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            CXX_FOR_BUILD=$HOST_CXX \
                            CFLAGS_FOR_BUILD= \
@@ -89,9 +88,11 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --disable-omx \
                            --disable-va \
                            --disable-opencl \
+                           --enable-lmsensors \
                            --enable-opencl-icd \
                            --disable-gallium-tests \
                            --enable-shared-glapi \
+                           --enable-shader-cache \
                            --enable-driglx-direct \
                            --enable-glx-tls \
                            $MESA_GALLIUM_LLVM \
