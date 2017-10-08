@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libinput"
-PKG_VERSION="1.7.3"
+PKG_VERSION="1.8.3"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/libinput/"
@@ -31,10 +31,4 @@ PKG_LONGDESC="libinput is a library to handle input devices in Wayland composito
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--with-sysroot=$SYSROOT_PREFIX \
-                           --enable-shared \
-                           --disable-static \
-                           --disable-documentation \
-                           --disable-event-gui \
-                           --disable-tests \
-                           --disable-libwacom"
+PKG_CONFIGURE_OPTS_TARGET="--disable-tests --disable-libwacom --disable-debug-gui"

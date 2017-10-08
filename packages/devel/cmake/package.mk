@@ -38,6 +38,7 @@ configure_host() {
                -DCMAKE_CXX_FLAGS="-march=native -O2 -Wall -pipe -Wno-format-security" \
                -DCMAKE_EXE_LINKER_FLAGS="$HOST_LDFLAGS" \
                -DCMAKE_USE_SYSTEM_LIBRARY_LIBRHASH=1 \
+               -DCTEST_USE_XMLRPC=OFF \
                -DCMAKE_USE_OPENSSL=ON \
                -DBUILD_CursesDialog=0
 }
