@@ -192,6 +192,19 @@ get_pkg_build() {
   fi
 }
 
+get_pkg_directory() {
+  get_pkg_variable "$1" PKG_DIR
+}
+
+# get variable ($2) for package ($1)
+get_pkg_variable() {
+  if [ -n "$1" -a -n "$2" ] ; then
+    cd $ROOT
+    . config/options $1
+    echo "${!2}"
+  fi
+}
+
 # get kernel module dir
 get_module_dir() {
   basename $(ls -d $(get_pkg_build linux)/.install_pkg/usr/lib/modules/*)
