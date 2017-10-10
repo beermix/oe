@@ -1,0 +1,12 @@
+[Unit]
+Description=airfoilspeakers
+After=kodi.target
+
+[Service]
+ExecStart=/storage/.bin/airfoilspeakers/bin/airfoilspeakers
+TimeoutStopSec=1
+RestartSec=3
+StartLimitInterval=4
+
+[Install]
+WantedBy=kodi.target
