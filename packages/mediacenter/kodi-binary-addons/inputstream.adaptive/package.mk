@@ -8,7 +8,7 @@
 ################################################################################
 
 PKG_NAME="inputstream.adaptive"
-PKG_VERSION="c06affe3b5dd7bd2a4d86454d5fa5d265815c5f4"
+PKG_VERSION="f2904b5"
 #PKG_VERSION="a02656d"
 PKG_LICENSE="GPL"
 PKG_GIT_URL="https://github.com/peak3d/inputstream.adaptive"
