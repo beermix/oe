@@ -18,12 +18,10 @@
 
 PKG_NAME="Python2"
 PKG_VERSION="2.7.14"
-PKG_SHA256="71ffb26e09e78650e424929b2b457b9c912ac216576e6bd9e7d204ed03296a66"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.python.org/"
-PKG_URL="http://www.python.org/ftp/python/$PKG_VERSION/${PKG_NAME::-1}-$PKG_VERSION.tar.xz"
-PKG_SOURCE_DIR="${PKG_NAME::-1}-$PKG_VERSION*"
+PKG_URL="https://dl.dropboxusercontent.com/s/pf7nhiighvqo1si/Python2-2.7.14.tar.xz"
 PKG_DEPENDS_HOST="zlib:host bzip2:host sqlite:host"
 PKG_DEPENDS_TARGET="toolchain sqlite expat zlib bzip2 openssl libffi Python2:host"
 PKG_SECTION="lang"
@@ -54,7 +52,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            ac_cv_have_long_long_format=yes \
                            --with-threads \
                            --enable-unicode=ucs4 \
-                           --enable-ipv6 \
+                           --disable-ipv6 \
                            --disable-profiling \
                            --without-pydebug \
                            --without-doc-strings \
@@ -136,5 +134,5 @@ post_makeinstall_target() {
 
   # strip
   chmod u+w $INSTALL/usr/lib/libpython*.so.*
-  debug_strip $INSTALL/usr
+#  debug_strip $INSTALL/usr
 }
