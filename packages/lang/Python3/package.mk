@@ -1,74 +1,106 @@
 ################################################################################
-#      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
+#      This file is part of LibreELEC - https://libreelec.tv
+#      Copyright (C) 2017-present Team LibreELEC
 #
-#  OpenELEC is free software: you can redistribute it and/or modify
+#  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
 #  the Free Software Foundation, either version 2 of the License, or
 #  (at your option) any later version.
 #
-#  OpenELEC is distributed in the hope that it will be useful,
+#  LibreELEC is distributed in the hope that it will be useful,
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
 #
 #  You should have received a copy of the GNU General Public License
-#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
+#  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
 PKG_NAME="Python3"
-PKG_VERSION="3.6.2"
-PKG_URL="http://192.168.1.200:8080/Python3-3.6.2.tar.xz"
-PKG_DEPENDS_HOST="zlib:host bzip2:host sqlite:host"
-PKG_DEPENDS_TARGET="toolchain sqlite expat zlib bzip2 openssl libffi readline Python3:host"
-PKG_PRIORITY="optional"
+PKG_VERSION="3.6.3"
+PKG_SHA256="cda7d967c9a4bfa52337cdf551bcc5cff026b6ac50a8834e568ce4a794ca81da"
+PKG_ARCH="any"
+PKG_LICENSE="OSS"
+PKG_SITE="http://www.python.org/"
+PKG_URL="http://www.python.org/ftp/python/$PKG_VERSION/${PKG_NAME::-1}-$PKG_VERSION.tar.xz"
+PKG_SOURCE_DIR="${PKG_NAME::-1}-$PKG_VERSION*"
+PKG_DEPENDS_HOST="zlib:host bzip2:host"
+PKG_DEPENDS_TARGET="toolchain sqlite expat zlib bzip2 openssl Python3:host readline ncurses"
 PKG_SECTION="lang"
-PKG_SHORTDESC="python: The Python programming language"
-PKG_LONGDESC="Python is an interpreted object-oriented programming language, and is often compared with Tcl, Perl, Java or Scheme."
+PKG_SHORTDESC="python3: The Python3 programming language"
+PKG_LONGDESC="Python3 is an interpreted object-oriented programming language, and is often compared with Tcl, Perl, Java or Scheme."
 
-PKG_IS_ADDON="no"
+PKG_PYTHON_VERSION=python3.6
+
 PKG_AUTORECONF="yes"
 
-PY_DISABLED_MODULES="_tkinter nis gdbm bsddb machinery ossaudiodev"
+PKG_CONFIGURE_OPTS_HOST="ac_cv_prog_HAS_HG=/bin/false
+                         ac_cv_prog_SVNVERSION=/bin/false
+                         --disable-pyc-build
+                         --disable-ossaudiodev
+                         --disable-sqlite3
+                         --disable-codecs-cjk
+                         --disable-nis
+                         --enable-unicodedata
+                         --enable-openssl
+                         --disable-readline
+                         --disable-bzip2
+                         --enable-zlib
+                         --disable-xz
+                         --disable-tk
+                         --disable-curses
+                         --disable-pydoc
+                         --disable-test-modules
+                         --enable-lib2to3
+                         --disable-idle3
+                         --without-cxx-main
+                         --with-expat=builtin
+                         --with-libmpdec=none
+                         --with-doc-strings
+                         --without-pymalloc
+                         --without-ensurepi
+"
 
-PKG_CONFIGURE_OPTS_HOST="--cache-file=config.cache \
-                         --without-cxx-main \
-                         --with-threads \
-                         --enable-unicode=ucs4 \
-                         --disable-ipv6 \
-                         --enable-shared \
-                         --without-ensurepip \
-                         --disable-static"
+PKG_CONFIGURE_OPTS_TARGET="ac_cv_prog_HAS_HG=/bin/false
+                           ac_cv_prog_SVNVERSION=/bin/false
+                           ac_cv_file__dev_ptmx=no
+                           ac_cv_file__dev_ptc=no
+                           ac_cv_have_long_long_format=yes
+                           ac_cv_working_tzset=yes
+                           ac_cv_func_lchflags_works=no
+                           ac_cv_func_chflags_works=no
+                           ac_cv_func_printf_zd=yes
+                           ac_cv_buggy_getaddrinfo=no
+                           ac_cv_header_bluetooth_bluetooth_h=no
+                           ac_cv_header_bluetooth_h=no
+                           --disable-pyc-build
+                           --disable-ossaudiodev
+                           --enable-sqlite3
+                           --disable-codecs-cjk
+                           --disable-nis
+                           --enable-unicodedata
+                           --enable-openssl
+                           --enable-readline
+                           --enable-bzip2
+                           --enable-zlib
+                           --disable-xz
+                           --disable-tk
+                           --enable-curses
+                           --disable-pydoc
+                           --disable-test-modules
+                           --disable-lib2to3
+                           --disable-idle3
+                           --without-cxx-main
+                           --with-expat=system
+                           --with-libmpdec=none
+                           --with-doc-strings
+                           --without-pymalloc
+                           --without-ensurepip
+                           --with-threads
+                           --enable-ipv6
+"
 
-PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
-                           ac_cv_file_dev_ptmx=yes \
-                           ac_cv_func_lchflags_works=no \
-                           ac_cv_func_chflags_works=no \
-                           ac_cv_func_printf_zd=yes \
-                           ac_cv_buggy_getaddrinfo=no \
-                           ac_cv_header_bluetooth_bluetooth_h=no \
-                           ac_cv_header_bluetooth_h=no \
-                           ac_cv_file__dev_ptmx=no \
-                           ac_cv_file__dev_ptc=no \
-                           ac_cv_have_long_long_format=yes \
-                           --with-threads \
-                           --enable-unicode=ucs4 \
-                           --disable-ipv6 \
-                           --disable-profiling \
-                           --without-pydebug \
-                           --without-doc-strings \
-                           --without-tsc \
-                           --with-pymalloc \
-                           --without-fpectl \
-                           --with-wctype-functions \
-                           --without-cxx-main \
-                           --without-ensurepip \
-                           --without-pymalloc \
-                           --with-system-ffi \
-                           --with-system-expat \
-                           --enable-shared"
-
-post_patch() {
+post_unpack() {
   # This is needed to make sure the Python build process doesn't try to
   # regenerate those files with the pgen program. Otherwise, it builds
   # pgen for the target, and tries to run it on the host.
@@ -76,66 +108,35 @@ post_patch() {
     touch $PKG_BUILD/Python/graminit.c
 }
 
-make_host() {
-  make PYTHON_MODULES_INCLUDE="$HOST_INCDIR" \
-       PYTHON_MODULES_LIB="$HOST_LIBDIR" \
-       PYTHON_DISABLE_MODULES="readline _curses _curses_panel $PY_DISABLED_MODULES"
+post_makeinstall_host() {
+  (cd $ROOT && $SCRIPTS/switch_python $PKG_NAME)
 
-  # python distutils per default adds -L$LIBDIR when linking binary extensions
-    sed -e "s|^ 'LIBDIR':.*| 'LIBDIR': '/usr/lib',|g" -i $(cat pybuilddir.txt)/_sysconfigdata.py
-}
+  rm -f $TOOLCHAIN/bin/python*-config
+  rm -f $TOOLCHAIN/bin/smtpd.py*
+  rm -f $TOOLCHAIN/bin/pyvenv
+  rm -f $TOOLCHAIN/bin/pydoc*
 
-makeinstall_host() {
-  make -j1 PYTHON_MODULES_INCLUDE="$HOST_INCDIR" \
-       PYTHON_MODULES_LIB="$HOST_LIBDIR" \
-       PYTHON_DISABLE_MODULES="readline _curses _curses_panel $PY_DISABLED_MODULES" \
-       install
-}
-
-pre_configure_target() {
-  export PYTHON_FOR_BUILD=$ROOT/$TOOLCHAIN/bin/python
-  export LTO_SUPPORT="yes"
-}
-
-make_target() {
-  make  CC="$CC" LDFLAGS="$TARGET_LDFLAGS -L." \
-        PYTHON_DISABLE_MODULES="$PY_DISABLED_MODULES" \
-        PYTHON_MODULES_INCLUDE="$TARGET_INCDIR" \
-        PYTHON_MODULES_LIB="$TARGET_LIBDIR"
-}
-
-makeinstall_target() {
-  make  CC="$CC" DESTDIR=$SYSROOT_PREFIX \
-        PYTHON_DISABLE_MODULES="$PY_DISABLED_MODULES" \
-        PYTHON_MODULES_INCLUDE="$TARGET_INCDIR" \
-        PYTHON_MODULES_LIB="$TARGET_LIBDIR" \
-        install
-
-  make  CC="$CC" DESTDIR=$INSTALL \
-        PYTHON_DISABLE_MODULES="$PY_DISABLED_MODULES" \
-        PYTHON_MODULES_INCLUDE="$TARGET_INCDIR" \
-        PYTHON_MODULES_LIB="$TARGET_LIBDIR" \
-        install
+  cp $PKG_BUILD/Tools/scripts/reindent.py $TOOLCHAIN/lib/$PKG_PYTHON_VERSION
 }
 
 post_makeinstall_target() {
-  EXCLUDE_DIRS="bsddb idlelib lib-tk lib2to3 msilib pydoc_data test"
-  for dir in $EXCLUDE_DIRS; do
-    rm -rf $INSTALL/usr/lib/python*/$dir
+  (cd $ROOT && $SCRIPTS/switch_python $PKG_NAME)
+
+  PKG_INSTALL_PATH_LIB=$INSTALL/usr/lib/$PKG_PYTHON_VERSION
+
+  for dir in config compiler sysconfigdata lib-dynload/sysconfigdata lib2to3 test; do
+    rm -rf $PKG_INSTALL_PATH_LIB/$dir
   done
 
-# set file permissions
-  chmod 755 $INSTALL/usr/lib/libpython*.so*
-
-  ( cd $INSTALL/usr/lib/python2.7
-    python -Wi -t -B $ROOT/$PKG_BUILD/Lib/compileall.py -d /usr/lib/python2.7 -f .
-    find $INSTALL/usr/lib/python2.7 -name "*.py" -exec rm -f {} \; &>/dev/null
-  )
-
-  rm -rf $INSTALL/usr/lib/python*/config
-  rm -rf $INSTALL/usr/bin/2to3
-  rm -rf $INSTALL/usr/bin/idle
-  rm -rf $INSTALL/usr/bin/pydoc
-  rm -rf $INSTALL/usr/bin/smtpd.py
+  rm -rf $INSTALL/usr/bin/pyvenv
   rm -rf $INSTALL/usr/bin/python*-config
+  rm -rf $INSTALL/usr/bin/smtpd.py $INSTALL/usr/bin/smtpd.py.*
+  ln -s $PKG_PYTHON_VERSION $INSTALL/usr/bin/python
+
+  $TOOLCHAIN/bin/python -Wi -t -B $TOOLCHAIN/lib/$PKG_PYTHON_VERSION/compileall.py -d ${PKG_INSTALL_PATH_LIB#${INSTALL}} -b -f $PKG_INSTALL_PATH_LIB
+  find $PKG_INSTALL_PATH_LIB -name "*.py" -exec rm -f {} \; &>/dev/null
+
+  # strip
+  chmod u+w $INSTALL/usr/lib/libpython*.so.*
+  debug_strip $INSTALL/usr
 }

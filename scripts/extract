@@ -25,7 +25,7 @@ if [ -z "$3" ]; then
   exit 1
 fi
 
-[ -z "$PKG_URL" -a -z "$PKG_GIT_URL" ] && exit 1
+[ -z "$PKG_URL" -o -z "$PKG_SOURCE_NAME" ] && exit 1
 [ ! -d "$SOURCES/$1" -o ! -d "$3" ] && exit 1
 
 if [ -n "$PKG_URL" ]; then
