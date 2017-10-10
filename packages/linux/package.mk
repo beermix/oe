@@ -59,8 +59,8 @@ case "$LINUX" in
     PKG_PATCH_DIRS="linux-4.12"
     ;;
   rc)
-    PKG_VERSION="4.14-rc3"
-    PKG_URL="https://git.kernel.org/torvalds/t/linux-4.14-rc3.tar.gz"
+    PKG_VERSION="4.14-rc4"
+    PKG_URL="https://git.kernel.org/torvalds/t/linux-$PKG_VERSION.tar.gz"
     PKG_PATCH_DIRS="linux-4.14"
     ;;
   *)
