@@ -21,7 +21,6 @@ PKG_VERSION="6ca5e22"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="http://www.gnu.org/software/libtool/libtool.html"
 #PKG_GIT_URL="https://git.savannah.gnu.org/git/libtool.git"
 PKG_URL="https://dl.dropboxusercontent.com/s/bnkfpojtqnjwm3y/libtool-6ca5e22.tar.xz"
 PKG_DEPENDS_HOST="ccache:host autoconf:host automake:host"
@@ -35,13 +34,14 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 pre_configure_host() {
-  sh bootstrap --skip-git
+  cd $ROOT/$PKG_BUILD
+  sh bootstrap
 }
 
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
   make clean
-  sh bootstrap --skip-git
+  sh bootstrap
 }
 
 PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
