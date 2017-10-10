@@ -330,29 +330,25 @@ if [ ! -f $STAMP ]; then
           rm -rf $INSTALL/{usr/,}share/man
           rm -rf $INSTALL/{usr/,}share/pkgconfig
           rm -rf $INSTALL/{usr/,}var
-          find $INSTALL \( -name "*.orig" \
-                        -o -name "*.rej" \
-                        -o -name "*.a" \
-                        -o -name "*.la" \
-                        -o -name "*.o" \
-                        -o -name "*.in" \
-                        -o -name ".git*" \) \
-            -exec rm -f {} \; 2>/dev/null || :
-          find $INSTALL -type d -exec rmdir -p {} \; 2>/dev/null || :
+          find $INSTALL \( -name "*.orig" -o \
+                           -name "*.a" -o \
+                           -name "*.la" -o \
+                           -name "*.so*T" -o \
+                           -name "*.o" -o \
+                           -name "*.in" -o \
+                           -name "*.rej" -o \
+                           -name ".git*" \) \
+                           -exec rm -f "{}" ";" 2>/dev/null || true
+          find $INSTALL -type d -exec rmdir -p "{}" ";" 2>/dev/null || true
 
           if [ ! "$DEBUG" = yes ]; then
-            $STRIP `find $INSTALL \
-              -type f -name "*.so*" \
-              ! -name "ld-*.so" \
-              ! -name "libc-*.so" \
-              ! -name "libpthread-*.so" \
-              ! -name "libthread_db-*so" \
-              2>/dev/null` 2>/dev/null || :
-            if [ "$TARGET" = "init" ]; then
-              $STRIP `find $INSTALL -type f -name "*.so*" 2>/dev/null` 2>/dev/null || :
-            fi
-            $STRIP `find $INSTALL/bin $INSTALL/usr/bin $INSTALL/sbin $INSTALL/usr/sbin \
-              -type f -executable 2>/dev/null` 2>/dev/null || :
+            $STRIP `find $INSTALL -name "*.so" 2>/dev/null` 2>/dev/null || :
+            $STRIP `find $INSTALL -name "*.so.[0-9]*" 2>/dev/null` 2>/dev/null || :
+
+            # strip kernel modules
+            for MOD in `find $INSTALL/lib $INSTALL/usr/lib -type f -name *.ko`; do
+              $STRIP --strip-debug $MOD
+            done
           fi
         fi
       fi
@@ -362,6 +358,7 @@ if [ ! -f $STAMP ]; then
 
     PKG_DEEPMD5=$(find $STAMP_DEPENDS -exec md5sum {} \; 2>/dev/null | sort | md5sum | cut -d" " -f1)
     for i in PKG_NAME PKG_DEEPMD5; do
-      echo "STAMP_$i=\"${!i}\"" >> $STAMP
+      eval val=\$$i
+      echo "STAMP_$i=\"$val\"" >> $STAMP
     done
 fi
