@@ -16,7 +16,7 @@ set -e
     . config/arch.$TARGET_ARCH
   fi
 
-HOST_NAME=$(gcc -dumpmachine)
+[ -z "${HOST_NAME}" ] && export HOST_NAME="$($LOCAL_CC -dumpmachine)"
 TARGET_NAME=$TARGET_GCC_ARCH-openelec-linux-gnu${TARGET_ABI}
 
 BUILD=$BUILD_BASE.$DISTRONAME-$PROJECT.$TARGET_ARCH-$OPENELEC_VERSION
@@ -59,7 +59,7 @@ unset LD_LIBRARY_PATH
   reset_pkg_vars "$1"
 
   if [ -n "$1" ]; then
-    _PKG_ROOT_NAME=$(echo $1 | cut -d: -f1)
+    _PKG_ROOT_NAME=${1%:*}
     _ALL_DIRS=""
     _FOUND=0
     _ANCHOR="@?+?@"
@@ -105,7 +105,7 @@ unset LD_LIBRARY_PATH
         # found first, set $PKG_DIR
         PKG_DIR="$DIR"
         # keep track of dirs with package.mk for detecting multiple folders
-        _ALL_DIRS="${_ALL_DIRS}${DIR}\\n"
+        _ALL_DIRS+="${DIR}\n"
         _FOUND=$((_FOUND+1))
         if [ $_FOUND -gt 1 ]; then
           # _FOUND more ? fail
@@ -142,7 +142,7 @@ unset LD_LIBRARY_PATH
   fi
 
   if [ "$PKG_IS_ADDON" = "yes" ] ; then
-    [ -z $PKG_SECTION ] && PKG_ADDON_ID="$PKG_NAME" || PKG_ADDON_ID="`echo $PKG_SECTION | sed 's,/,.,g'`.$PKG_NAME"
+    [ -z $PKG_SECTION ] && PKG_ADDON_ID="$PKG_NAME" || PKG_ADDON_ID="${PKG_SECTION//\//.}.$PKG_NAME"
     PKG_NEED_UNPACK="${PKG_NEED_UNPACK} $(get_pkg_directory $MEDIACENTER)"
   fi
 
@@ -158,7 +158,7 @@ unset LD_LIBRARY_PATH
       echo "$PKG_URL"
       exit 1
     fi
-    PKG_SOURCE_NAME="$(basename "$PKG_URL")"
+    PKG_SOURCE_NAME="${PKG_URL##*/}"
     case $PKG_SOURCE_NAME in
       ${PKG_NAME}-${PKG_VERSION}.*)
         PKG_SOURCE_NAME=$PKG_SOURCE_NAME
