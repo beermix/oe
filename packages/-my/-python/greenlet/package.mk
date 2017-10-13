@@ -4,10 +4,10 @@
 ################################################################################
 
 PKG_NAME="greenlet"
-PKG_VERSION="0.4.9"
+PKG_VERSION="0.4.12"
 PKG_SITE="https://pypi.python.org/pypi/greenlet"
-PKG_URL="https://pypi.python.org/packages/source/g/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"
+PKG_URL="https://pypi.python.org/packages/be/76/82af375d98724054b7e273b5d9369346937324f9bcc20980b45b068ef0b0/greenlet-0.4.12.tar.gz"
+PKG_DEPENDS_TARGET="toolchain Python2 distutilscross:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="xmedia/depends"
 PKG_SHORTDESC="Lightweight in-process concurrent programming"
@@ -32,7 +32,7 @@ make_target() {
 }
 
 makeinstall_target() {
-  python setup.py install --root=$INSTALL --prefix=/usr --optimize=1
+  python setup.py install --root=$INSTALL --prefix=/usr
 }
 
 post_makeinstall_target() {

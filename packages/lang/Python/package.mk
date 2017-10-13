@@ -20,13 +20,56 @@ PKG_NAME="Python"
 PKG_VERSION="0"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
-PKG_SITE="http://www.python.org/"
 PKG_URL=""
 PKG_DEPENDS_HOST="Python2:host"
 PKG_DEPENDS_TARGET="Python2"
-PKG_SECTION="lang"
-PKG_SHORTDESC="python: The Python programming language"
-PKG_LONGDESC="Python is an interpreted object-oriented programming language, and is often compared with Tcl, Perl, Java or Scheme."
-
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
+
+configure_host() {
+  :
+}
+
+pre_configure_host() {
+  :
+}
+
+post_makeinstall_host() {
+  :
+}
+
+make_host() {
+  :
+}
+
+post_make_host() {
+  :
+}
+
+makeinstall_host() {
+  :
+}
+
+configure_target() {
+  :
+}
+
+pre_configure_target() {
+  :
+}
+
+post_makeinstall_target() {
+  :
+}
+
+make_target() {
+  :
+}
+
+post_make_target() {
+  :
+}
+
+makeinstall_target() {
+  :
+}
