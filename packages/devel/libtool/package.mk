@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="libtool"
-PKG_VERSION="2.4.6"
-PKG_SHA256="e3bd4d5d3d025a36c21dd6af7ea818a2afcd4dfc1ea5a17b39d7854bcd0c06e3"
+PKG_VERSION="6ca5e22"
+PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="http://www.gnu.org/software/libtool/"
-PKG_URL="http://ftpmirror.gnu.org/libtool/$PKG_NAME-$PKG_VERSION.tar.gz"
+#PKG_GIT_URL="https://git.savannah.gnu.org/git/libtool.git"
+PKG_URL="https://dl.dropboxusercontent.com/s/bnkfpojtqnjwm3y/libtool-6ca5e22.tar.xz"
 PKG_DEPENDS_HOST="ccache:host autoconf:host automake:host"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="devel"
@@ -36,6 +36,13 @@ PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
 
 pre_build_host() {
   cd $PKG_BUILD
-    autoreconf --force --verbose
+  ./bootstrap
   cd -
 }
+
+pre_configure_target() {
+  cd $ROOT
+  make clean
+  ./bootstrap
+}
+

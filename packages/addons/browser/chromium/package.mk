@@ -38,12 +38,11 @@ PKG_ADDON_TYPE="xbmc.python.script"
 PKG_ADDON_PROVIDES="executable"
 
 post_patch() {
-  cd $(get_build_dir chromium)
   # Use Python 2
-  find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$TOOLCHAIN/bin/python|g" {} +
+  find $PKG_BUILD -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$TOOLCHAIN/bin/python|g" {} +
 
   # set correct widevine
-  sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' ./third_party/widevine/cdm/stub/widevine_cdm_version.h
+  sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' $PKG_BUILD/third_party/widevine/cdm/stub/widevine_cdm_version.h
 }
 
 make_host() {
