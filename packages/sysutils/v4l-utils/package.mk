@@ -19,10 +19,11 @@
 # with 1.0.0 repeat delay is broken. test on upgrade
 
 PKG_NAME="v4l-utils"
-PKG_VERSION="1.12.5"
+PKG_VERSION="1.12.3"
+PKG_SHA256="5a47dd6f0e7dfe902d94605c01d385a4a4e87583ff5856d6f181900ea81cf46e"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="https://linuxtv.org/downloads/v4l-utils/?C=M;O=D"
+PKG_SITE="http://linuxtv.org/"
 PKG_URL="http://linuxtv.org/downloads/v4l-utils/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="system"
@@ -32,7 +33,7 @@ PKG_LONGDESC="Linux V4L2 and DVB API utilities and v4l libraries (libv4l)."
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-#PKG_CONFIGURE_OPTS_TARGET="--disable-v4l-utils"
+PKG_CONFIGURE_OPTS_TARGET="--without-jpeg"
 
 make_target() {
     make -C utils/keytable CFLAGS="$TARGET_CFLAGS"
@@ -54,4 +55,12 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/lib/udev/rules.d
     mkdir -p $INSTALL/usr/lib/udev/rules.d
     cp -PR $PKG_DIR/udev.d/*.rules $INSTALL/usr/lib/udev/rules.d
+
+  (
+    echo "# table libreelec_multi, type: RC6 NEC"
+    for f in rc6_mce xbox_360 zotac_ad10 hp_mce xbox_one cubox_i ; do
+      echo "# $f"
+      grep -v "^#" $INSTALL/usr/lib/udev/rc_keymaps/$f
+    done
+  ) > $INSTALL/usr/lib/udev/rc_keymaps/libreelec_multi
 }

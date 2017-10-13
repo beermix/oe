@@ -17,12 +17,14 @@
 ################################################################################
 
 PKG_NAME="game.libretro.mupen64plus"
-PKG_VERSION="db21202"
-PKG_REV="101"
-PKG_ARCH="any"
+PKG_VERSION="02f2216"
+PKG_SHA256="1e7b3c0791fbbc9a289d22f19a45424bc78f6871aae2457d483c806883ca5210"
+PKG_REV="103"
+# no openGL suport in retroplayer yet
+PKG_ARCH="none"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/kodi-game/game.libretro.mupen64plus"
-PKG_GIT_URL="https://github.com/kodi-game/game.libretro.mupen64plus"
+PKG_URL="https://github.com/kodi-game/game.libretro.mupen64plus/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain kodi-platform libretro-mupen64plus"
 PKG_SECTION=""
 PKG_SHORTDESC="game.libretro.mupen64plus: Mupen 64 Plus emulator for Kodi"
@@ -38,12 +40,4 @@ configure_target() {
         -DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
         -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
         ..
-}
-
-addon() {
-  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/
-  cp -R $ROOT/$PKG_BUILD/.install_pkg/usr/share/kodi/addons/$PKG_NAME/* $ADDON_BUILD/$PKG_ADDON_ID/
-
-  ADDONSO=$(xmlstarlet sel -t -v "/addon/extension/@library_linux" $ADDON_BUILD/$PKG_ADDON_ID/addon.xml)
-  cp -L $ROOT/$PKG_BUILD/.install_pkg/usr/lib/kodi/addons/$PKG_NAME/$ADDONSO $ADDON_BUILD/$PKG_ADDON_ID/
 }

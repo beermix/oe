@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,7 +18,6 @@
 
 PKG_NAME="busybox"
 PKG_VERSION="1.27.2"
-PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.busybox.net"
@@ -26,7 +25,6 @@ PKG_URL="http://busybox.net/downloads/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST=""
 PKG_DEPENDS_TARGET="toolchain busybox:host hdparm dosfstools e2fsprogs libtool zip unzip zlib unrar pciutils usbutils parted procps-ng gptfdisk psmisc findutils grep gawk sed coreutils bash less tar"
 PKG_DEPENDS_INIT="toolchain"
-PKG_PRIORITY="required"
 PKG_SECTION="system"
 PKG_SHORTDESC="BusyBox: The Swiss Army Knife of Embedded Linux"
 PKG_LONGDESC="BusyBox combines tiny versions of many common UNIX utilities into a single small executable. It provides replacements for most of the utilities you usually find in GNU fileutils, shellutils, etc. The utilities in BusyBox generally have fewer options than their full-featured GNU cousins; however, the options that are included provide the expected functionality and behave very much like their GNU counterparts. BusyBox provides a fairly complete environment for any small or embedded system."
@@ -36,13 +34,20 @@ PKG_AUTORECONF="no"
 
 PKG_MAKE_OPTS_HOST="ARCH=$TARGET_ARCH CROSS_COMPILE= KBUILD_VERBOSE=1 install"
 PKG_MAKE_OPTS_TARGET="ARCH=$TARGET_ARCH \
-                      CROSS_COMPILE=${TARGET_NAME}- \
+                      HOSTCC=$HOST_CC \
+                      CROSS_COMPILE=$TARGET_PREFIX \
                       KBUILD_VERBOSE=0 \
                       install"
 PKG_MAKE_OPTS_INIT="ARCH=$TARGET_ARCH \
-                    CROSS_COMPILE=${TARGET_NAME}- \
+                    HOSTCC=$HOST_CC \
+                    CROSS_COMPILE=$TARGET_PREFIX \
                     KBUILD_VERBOSE=0 \
                     install"
+
+# nano text editor
+  if [ "$NANO_EDITOR" = "yes" ]; then
+    PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET nano"
+  fi
 
 # nfs support
 if [ "$NFS_SUPPORT" = yes ]; then
@@ -61,12 +66,6 @@ else
   BUSYBOX_CFG_FILE_INIT=$PKG_DIR/config/busybox-init.conf
 fi
 
-if [ -f $PROJECT_DIR/$PROJECT/busybox/init ]; then
-  BUSYBOX_INIT_FILE=$PROJECT_DIR/$PROJECT/busybox/init
-else
-  BUSYBOX_INIT_FILE=$PKG_DIR/scripts/init
-fi
-
 pre_build_target() {
   mkdir -p $PKG_BUILD/.$TARGET_NAME
   cp -RP $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME
@@ -83,21 +82,21 @@ pre_build_init() {
 }
 
 configure_host() {
-  cd $ROOT/$PKG_BUILD/.$HOST_NAME
+  cd $PKG_BUILD/.$HOST_NAME
     cp $PKG_DIR/config/busybox-host.conf .config
 
     # set install dir
-    sed -i -e "s|^CONFIG_PREFIX=.*$|CONFIG_PREFIX=\"$ROOT/$PKG_BUILD/.install_host\"|" .config
+    sed -i -e "s|^CONFIG_PREFIX=.*$|CONFIG_PREFIX=\"$PKG_BUILD/.install_host\"|" .config
 
     make oldconfig
 }
 
 configure_target() {
-  cd $ROOT/$PKG_BUILD/.$TARGET_NAME
+  cd $PKG_BUILD/.$TARGET_NAME
     cp $BUSYBOX_CFG_FILE_TARGET .config
 
     # set install dir
-    sed -i -e "s|^CONFIG_PREFIX=.*$|CONFIG_PREFIX=\"$INSTALL\"|" .config
+    sed -i -e "s|^CONFIG_PREFIX=.*$|CONFIG_PREFIX=\"$INSTALL/usr\"|" .config
 
     if [ ! "$DEVTOOLS" = yes ]; then
       sed -i -e "s|^CONFIG_DEVMEM=.*$|# CONFIG_DEVMEM is not set|" .config
@@ -130,11 +129,11 @@ configure_target() {
 }
 
 configure_init() {
-  cd $ROOT/$PKG_BUILD/.$TARGET_NAME-init
+  cd $PKG_BUILD/.$TARGET_NAME-init
     cp $BUSYBOX_CFG_FILE_INIT .config
 
     # set install dir
-    sed -i -e "s|^CONFIG_PREFIX=.*$|CONFIG_PREFIX=\"$INSTALL\"|" .config
+    sed -i -e "s|^CONFIG_PREFIX=.*$|CONFIG_PREFIX=\"$INSTALL/usr\"|" .config
 
     # optimize for size
     CFLAGS=`echo $CFLAGS | sed -e "s|-Ofast|-Os|"`
@@ -148,56 +147,50 @@ configure_init() {
     make oldconfig
 }
 
-
 makeinstall_host() {
-  mkdir -p $ROOT/$TOOLCHAIN/
-    cp -PR $ROOT/$PKG_BUILD/.install_host/* $ROOT/$TOOLCHAIN/
+  mkdir -p $TOOLCHAIN/bin
+    cp -R $PKG_BUILD/.install_host/bin/* $TOOLCHAIN/bin
 }
 
 makeinstall_target() {
   mkdir -p $INSTALL/usr/bin
+    [ $TARGET_ARCH = x86_64 ] && cp $PKG_DIR/scripts/getedid $INSTALL/usr/bin
     cp $PKG_DIR/scripts/createlog $INSTALL/usr/bin/
     cp $PKG_DIR/scripts/lsb_release $INSTALL/usr/bin/
     cp $PKG_DIR/scripts/apt-get $INSTALL/usr/bin/
     cp $PKG_DIR/scripts/passwd $INSTALL/usr/bin/
     cp $PKG_DIR/scripts/sudo $INSTALL/usr/bin/
-    ln -sf /bin/busybox $INSTALL/usr/bin/env          #/usr/bin/env is needed for most python scripts
     cp $PKG_DIR/scripts/pastebinit $INSTALL/usr/bin/
     ln -sf pastebinit $INSTALL/usr/bin/paste
 
-    
+  mkdir -p $INSTALL/usr/lib/libreelec
+    cp $PKG_DIR/scripts/functions $INSTALL/usr/lib/libreelec
+    cp $PKG_DIR/scripts/fs-resize $INSTALL/usr/lib/libreelec
+    sed -e "s/@DISTRONAME@/$DISTRONAME/g" \
+        -i $INSTALL/usr/lib/libreelec/fs-resize
+
     #rm $INSTALL/bin/sh
     #rm $INSTALL/bin/hostname
     #rm $INSTALL/sbin/ip
     rm $INSTALL/bin/bash
 
-  mkdir -p $INSTALL/usr/lib/openelec
-    cp $PKG_DIR/scripts/fs-resize $INSTALL/usr/lib/openelec
-      sed -e "s/@DISTRONAME@/$DISTRONAME/g" -i $INSTALL/usr/lib/openelec/fs-resize
-
   mkdir -p $INSTALL/etc
     cp $PKG_DIR/config/profile $INSTALL/etc
     cp $PKG_DIR/config/inputrc $INSTALL/etc
+    cp $PKG_DIR/config/httpd.conf $INSTALL/etc
     cp $PKG_DIR/config/suspend-modules.conf $INSTALL/etc
-
-  mkdir -p $INSTALL/usr/config/sysctl.d
-    cp $PKG_DIR/config/transmission.conf $INSTALL/usr/config/sysctl.d
 
   # /etc/fstab is needed by...
     touch $INSTALL/etc/fstab
 
   # /etc/machine-id, needed by systemd and dbus
-    ln -sf /run/machine-id $INSTALL/etc/machine-id
+    ln -sf /storage/.cache/machine-id $INSTALL/etc/machine-id
 
   # /etc/mtab is needed by udisks etc...
     ln -sf /proc/self/mounts $INSTALL/etc/mtab
 
   # create /etc/hostname
     ln -sf /proc/sys/kernel/hostname $INSTALL/etc/hostname
-
-  # systemd wants /usr/bin/mkdir
-    mkdir -p $INSTALL/usr/bin
-      ln -sf /bin/busybox $INSTALL/usr/bin/mkdir
 
   # add webroot
     mkdir -p $INSTALL/usr/www
@@ -208,10 +201,10 @@ makeinstall_target() {
 }
 
 post_install() {
-  ROOT_PWD="`$ROOT/$TOOLCHAIN/bin/cryptpw -m sha512 $ROOT_PASSWORD`"
+  ROOT_PWD="`$TOOLCHAIN/bin/cryptpw -m sha512 $ROOT_PASSWORD`"
 
-  echo "chmod 4755 $INSTALL/bin/busybox" >> $FAKEROOT_SCRIPT_SYSTEM
-  echo "chmod 000 $INSTALL/etc/shadow" >> $FAKEROOT_SCRIPT_SYSTEM
+  echo "chmod 4755 $INSTALL/usr/bin/busybox" >> $FAKEROOT_SCRIPT
+  echo "chmod 000 $INSTALL/etc/shadow" >> $FAKEROOT_SCRIPT
 
   add_user root "$ROOT_PWD" 0 0 "Root User" "/storage" "/bin/sh"
   add_group root 0
@@ -241,19 +234,26 @@ post_install() {
 
 makeinstall_init() {
   mkdir -p $INSTALL/bin
-    ln -sf busybox $INSTALL/bin/sh
-    chmod 4755 $INSTALL/bin/busybox
+    ln -sf busybox $INSTALL/usr/bin/sh
+    chmod 4755 $INSTALL/usr/bin/busybox
 
   mkdir -p $INSTALL/etc
     touch $INSTALL/etc/fstab
     ln -sf /proc/self/mounts $INSTALL/etc/mtab
 
-  if [ -f $PROJECT_DIR/$PROJECT/initramfs/platform_init ]; then
+  if [ -n "$DEVICE" -a -f $PROJECT_DIR/$PROJECT/devices/$DEVICE/initramfs/platform_init ]; then
+    cp $PROJECT_DIR/$PROJECT/devices/$DEVICE/initramfs/platform_init $INSTALL
+  elif [ -f $PROJECT_DIR/$PROJECT/initramfs/platform_init ]; then
     cp $PROJECT_DIR/$PROJECT/initramfs/platform_init $INSTALL
+  fi
+  if [ -f $INSTALL/platform_init ]; then
     chmod 755 $INSTALL/platform_init
   fi
 
-  cp $BUSYBOX_INIT_FILE $INSTALL
-    sed -e "s/@DISTRONAME@/$DISTRONAME/g" -i $INSTALL/init
+  cp $PKG_DIR/scripts/functions $INSTALL
+  cp $PKG_DIR/scripts/init $INSTALL
+  sed -e "s/@DISTRONAME@/$DISTRONAME/g" \
+      -e "s/@KERNEL_NAME@/$KERNEL_NAME/g" \
+      -i $INSTALL/init
   chmod 755 $INSTALL/init
 }

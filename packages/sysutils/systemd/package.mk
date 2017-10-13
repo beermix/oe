@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,12 +17,11 @@
 ################################################################################
 
 PKG_NAME="systemd"
-PKG_VERSION="v234"
-PKG_REV="1"
+PKG_VERSION="234"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/systemd"
-PKG_GIT_URL="https://github.com/systemd/systemd"
+PKG_URL="https://github.com/systemd/systemd/archive/v$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libcap kmod util-linux entropy zlib lz4"
 PKG_SECTION="system"
 PKG_SHORTDESC="systemd: a system and session manager"
@@ -34,8 +33,8 @@ PKG_AUTORECONF="yes"
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            ac_cv_have_decl_IFLA_BOND_AD_INFO=no \
                            ac_cv_have_decl_IFLA_BRPORT_UNICAST_FLOOD=no \
-                           ac_cv_path_MOUNT_PATH="/bin/mount"
-                           ac_cv_path_UMOUNT_PATH="/bin/umount"
+                           ac_cv_path_MOUNT_PATH="/usr/bin/mount"
+                           ac_cv_path_UMOUNT_PATH="/usr/bin/umount"
                            KMOD=/usr/bin/kmod \
                            --disable-nls \
                            --disable-lto \
@@ -106,7 +105,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --with-dbussystemservicedir=/usr/share/dbus-1/system-services \
                            --with-rootprefix=/usr \
                            --with-rootlibdir=/usr/lib \
-                           --with-default-hierarchy=legacy"
+                           --with-default-hierarchy=hybrid"
 
 pre_build_target() {
 # broken autoreconf
@@ -148,6 +147,7 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/lib/udev/rules.d/70-uaccess.rules
   rm -rf $INSTALL/usr/lib/udev/rules.d/71-seat.rules
   rm -rf $INSTALL/usr/lib/udev/rules.d/73-seat-late.rules
+
   # remove debug-shell.service, we install our own
   rm -rf $INSTALL/usr/lib/systemd/system/debug-shell.service
 
@@ -165,6 +165,7 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/lib/systemd/systemd-update-done
   rm -rf $INSTALL/usr/lib/systemd/system/systemd-update-done.service
   rm -rf $INSTALL/usr/lib/systemd/system/*.target.wants/systemd-update-done.service
+
   # remove systemd-udev-hwdb-update. we have own hwdb.service
   rm -rf $INSTALL/usr/lib/systemd/system/systemd-udev-hwdb-update.service
   rm -rf $INSTALL/usr/lib/systemd/system/*.target.wants/systemd-udev-hwdb-update.service
@@ -190,6 +191,7 @@ post_makeinstall_target() {
   sed -e "s,^.*RuntimeMaxUse=.*$,RuntimeMaxUse=2M,g" -i $INSTALL/etc/systemd/journald.conf
   sed -e "s,^.*RuntimeMaxFileSize=.*$,RuntimeMaxFileSize=128K,g" -i $INSTALL/etc/systemd/journald.conf
   sed -e "s,^.*SystemMaxUse=.*$,SystemMaxUse=10M,g" -i $INSTALL/etc/systemd/journald.conf
+
   # tune logind.conf
   sed -e "s,^.*HandleLidSwitch=.*$,HandleLidSwitch=ignore,g" -i $INSTALL/etc/systemd/logind.conf
 
@@ -201,8 +203,11 @@ post_makeinstall_target() {
   mkdir -p $INSTALL/usr/bin
   cp $PKG_DIR/scripts/systemd-machine-id-setup $INSTALL/usr/bin
   cp $PKG_DIR/scripts/userconfig-setup $INSTALL/usr/bin
-  # provide 'halt', 'shutdown', 'reboot' & co.
+
   mkdir -p $INSTALL/usr/sbin
+  cp $PKG_DIR/scripts/kernel-overlays-setup $INSTALL/usr/sbin
+
+  # provide 'halt', 'shutdown', 'reboot' & co.
   ln -sf /usr/bin/systemctl $INSTALL/usr/sbin/halt
   ln -sf /usr/bin/systemctl $INSTALL/usr/sbin/poweroff
   ln -sf /usr/bin/systemctl $INSTALL/usr/sbin/reboot
@@ -251,5 +256,6 @@ post_install() {
   enable_service machine-id.service
   enable_service debugconfig.service
   enable_service userconfig.service
+  enable_service kernel-overlays.service
   enable_service hwdb.service
 }

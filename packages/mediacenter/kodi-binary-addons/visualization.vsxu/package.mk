@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,14 +18,13 @@
 
 PKG_NAME="visualization.vsxu"
 PKG_VERSION="caedcbc"
-PKG_REV="1"
+PKG_SHA256="a471095637e8c24d68b37a8c13ced75b66ef4fba7c9dab8a25defefe1c1dc807"
+PKG_REV="2"
 PKG_ARCH="i386 x86_64"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/notspiff/visualization.vsxu"
-PKG_GIT_URL="https://github.com/notspiff/visualization.vsxu"
-PKG_GIT_BRANCH="master"
+PKG_URL="https://github.com/notspiff/visualization.vsxu/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain kodi-platform vsxu"
-PKG_PRIORITY="optional"
 PKG_SECTION=""
 PKG_SHORTDESC="visualization.vsxu"
 PKG_LONGDESC="visualization.vsxu"
@@ -33,6 +32,3 @@ PKG_AUTORECONF="no"
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_TYPE="xbmc.player.musicviz"
-
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/share/kodi \
-                       -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr"

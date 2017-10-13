@@ -18,11 +18,11 @@
 
 PKG_NAME="iptables"
 PKG_VERSION="1.6.1"
+PKG_SHA256="0fc2d7bd5d7be11311726466789d4c65fb4c8e096c9182b56ce97440864f0cf5"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.netfilter.org/"
 PKG_URL="http://www.netfilter.org/projects/iptables/files/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_PRIORITY="optional"
 PKG_DEPENDS_TARGET="toolchain linux libmnl libnftnl libpcap libnetfilter_acct libnetfilter_conntrack libnetfilter_queue libnetfilter_log"
 PKG_SECTION="network"
 PKG_SHORTDESC="iptables: IP packet filter administration"
@@ -31,11 +31,4 @@ PKG_LONGDESC="Iptables is used to set up, maintain, and inspect the tables of IP
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-pre_configure_target() {
-#  export CFLAGS="$CFLAGS -ffunction-sections -fdata-sections -DNO_LEGACY"
-  export CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
-#  export LDFLAGS="$LDFLAGS -Wl,--gc-sections"
-}
-
-PKG_CONFIGURE_OPTS_TARGET="--with-kernel=$(get_pkg_build linux)"
-
+PKG_CONFIGURE_OPTS_TARGET="--with-kernel=$(kernel_path)"

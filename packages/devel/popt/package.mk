@@ -1,39 +1,43 @@
 ################################################################################
-#      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
+#      This file is part of LibreELEC - https://libreelec.tv
+#      Copyright (C) 2016 Team LibreELEC
 #
-#  OpenELEC is free software: you can redistribute it and/or modify
+#  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
 #  the Free Software Foundation, either version 2 of the License, or
 #  (at your option) any later version.
 #
-#  OpenELEC is distributed in the hope that it will be useful,
+#  LibreELEC is distributed in the hope that it will be useful,
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
 #
 #  You should have received a copy of the GNU General Public License
-#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
+#  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
 PKG_NAME="popt"
 PKG_VERSION="1.16"
-PKG_REV="1"
+PKG_SHA256="e728ed296fe9f069a0e005003c3d6b2dde3d9cad453422a10d6558616d304cc8"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="http://rpm5.org/"
-PKG_URL="http://rpm5.org/files/popt/${PKG_NAME}-${PKG_VERSION}.tar.gz"
+PKG_SITE="http://rpm5.org/files/popt/"
+PKG_URL="http://rpm5.org/files/popt/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
 PKG_SECTION="devel"
-PKG_SHORTDESC="popt: contains the popt libraries which are used by some programs to parse command-line options"
-PKG_LONGDESC="The popt package contains the popt libraries which are used by some programs to parse command-line options."
+PKG_SHORTDESC="popt: library for parsing command line options."
+PKG_LONGDESC="The popt library exists essentially for parsing command-line options. It is found superior in many ways when compared to parsing the argv array by hand or using the getopt functions getopt() and getopt_long()."
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared"
 
 pre_configure_target() {
-  CFLAGS="$CFLAGS -fPIC"
+ cd $PKG_BUILD
+ rm -rf .$TARGET_NAME
+}
+
+pre_configure_host() {
+ cd $PKG_BUILD
+ rm -rf .$HOST_NAME
 }

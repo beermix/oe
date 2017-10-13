@@ -19,6 +19,7 @@
 PKG_NAME="pciutils"
 PKG_VERSION="3.5.5"
 PKG_ARCH="x86_64"
+PKG_LICENSE="GPL"
 PKG_SITE="http://mj.ucw.cz/pciutils.shtml"
 PKG_URL="http://www.kernel.org/pub/software/utils/pciutils/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain kmod systemd"
@@ -29,12 +30,11 @@ PKG_LONGDESC="This package contains various utilities for inspecting and setting
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_MAKE_OPTS="PREFIX=/usr SHARED=yes STRIP= IDSDIR=/usr/share"
+PKG_MAKE_OPTS="PREFIX=/usr SHARED=no STRIP= IDSDIR=/usr/share"
 
 make_target() {
-  strip_lto
   make OPT="$CFLAGS" \
-       CROSS_COMPILE=${TARGET_NAME}- \
+       CROSS_COMPILE=${TARGET_PREFIX} \
        HOST=$TARGET_ARCH-linux \
        $PKG_MAKE_OPTS \
        ZLIB=no DNS=no LIBKMOD=yes HWDB=yes

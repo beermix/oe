@@ -18,8 +18,11 @@
 
 PKG_NAME="distutilscross"
 PKG_VERSION="0.1"
+PKG_SHA256="4ed3fb427708c8a3ed5fe9c599532480f581078a1e0aec0e50f40eb58e9f0015"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://bitbucket.org/lambacck/distutilscross/"
-PKG_URL="http://pypi.python.org/packages/source/d/distutilscross/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_URL="https://files.pythonhosted.org/packages/source/${PKG_NAME:0:1}/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="Python:host setuptools:host"
 PKG_SECTION="python/devel"
 PKG_SHORTDESC="distutilscross: Cross Compile Python Extensions"
@@ -33,5 +36,5 @@ make_host() {
 }
 
 makeinstall_host() {
-  python setup.py install --prefix=$ROOT/$TOOLCHAIN
+  python setup.py install --prefix=$TOOLCHAIN
 }

@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,15 +17,14 @@
 ################################################################################
 
 PKG_NAME="screensaver.stars"
-PKG_VERSION="55764aa"
-PKG_REV="1"
+PKG_VERSION="bb61e49"
+PKG_SHA256="418e5c0dcf010b83b2cdf7ca00ff27b663359d0706ed00ac85fd841a3e943f43"
+PKG_REV="2"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/notspiff/screensaver.stars"
-PKG_GIT_URL="https://github.com/notspiff/screensaver.stars"
-PKG_GIT_BRANCH="master"
+PKG_URL="https://github.com/notspiff/screensaver.stars/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain kodi-platform"
-PKG_PRIORITY="optional"
 PKG_SECTION=""
 PKG_SHORTDESC="screensaver.stars"
 PKG_LONGDESC="screensaver.stars"
@@ -34,9 +33,6 @@ PKG_AUTORECONF="no"
 PKG_IS_ADDON="yes"
 PKG_ADDON_TYPE="xbmc.ui.screensaver"
 
-if [ ! "$OPENGL" = "mesa" ] ; then
+if [ "$OPENGL" = "no" ] ; then
   exit 0
 fi
-
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/share/kodi \
-                       -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr"

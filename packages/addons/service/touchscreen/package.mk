@@ -18,7 +18,10 @@
 
 PKG_NAME="touchscreen"
 PKG_VERSION="1.0"
+PKG_REV="101"
+PKG_ARCH="any"
 PKG_ADDON_PROJECTS="Generic RPi RPi2 imx6"
+PKG_LICENSE="GPL"
 PKG_SITE=""
 PKG_URL=""
 PKG_DEPENDS_TARGET="toolchain tslib evtest"
@@ -50,6 +53,6 @@ addon() {
   $SED -e "s|@ADDON_VERSION@|$ADDON_VERSION.$PKG_REV|g" \
        -i $ADDON_BUILD/$PKG_ADDON_ID/addon.xml
 
-  cp $(get_pkg_build tslib)/.install_pkg/usr/bin/* $ADDON_BUILD/$PKG_ADDON_ID/bin
-  cp $(get_pkg_build evtest)/.$TARGET_NAME/evtest  $ADDON_BUILD/$PKG_ADDON_ID/bin
+  cp $(get_build_dir tslib)/.install_pkg/usr/bin/* $ADDON_BUILD/$PKG_ADDON_ID/bin
+  cp $(get_build_dir evtest)/.$TARGET_NAME/evtest  $ADDON_BUILD/$PKG_ADDON_ID/bin
 }

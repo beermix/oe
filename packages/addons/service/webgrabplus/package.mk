@@ -18,8 +18,12 @@
 
 PKG_NAME="webgrabplus"
 PKG_VERSION="56.29pre-20161021"
+PKG_SHA256="1b11551b8b7a5d6abac39a54c9f609af510297a1e6bc8265927f42b0fb3f4bab"
+PKG_REV="105"
+PKG_ARCH="any"
+PKG_LICENSE="prop."
 PKG_SITE="http://www.webgrabplus.com/"
-PKG_GIT_URL="https://github.com/awiouy/webgrabplus"
+PKG_URL="https://github.com/awiouy/webgrabplus/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="service"
 PKG_SHORTDESC="WebGrab+Plus: a multi-site incremental xmltv epg grabber"

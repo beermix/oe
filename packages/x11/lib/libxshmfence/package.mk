@@ -18,6 +18,9 @@
 
 PKG_NAME="libxshmfence"
 PKG_VERSION="1.2"
+PKG_SHA256="d21b2d1fd78c1efbe1f2c16dae1cb23f8fd231dcf891465b8debe636a9054b0c"
+PKG_ARCH="any"
+PKG_LICENSE="OSS"
 PKG_SITE="http://www.X.org"
 PKG_URL="http://xorg.freedesktop.org/archive/individual/lib/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain util-macros xproto"
@@ -27,3 +30,5 @@ PKG_LONGDESC="libxshmfence is the Shared memory 'SyncFence' synchronization prim
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
+
+

@@ -18,6 +18,7 @@
 
 PKG_NAME="libffi"
 PKG_VERSION="3.2.1"
+PKG_SHA256="d06ebb8e1d9a22d19e38d63fdb83954253f39bedc5d46232a05645685722ca37"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://sourceware.org/$PKG_NAME/"
@@ -31,6 +32,9 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
+                           --enable-static --disable-shared \
+                           --with-pic \
                            --enable-structs \
                            --enable-raw-api \
-                           --disable-purify-safety"
+                           --disable-purify-safety \
+                           --with-gnu-ld"

@@ -18,24 +18,28 @@
 
 PKG_NAME="tz"
 PKG_VERSION="2017b"
+PKG_SHA256="8e5d235f978a7463cda46fe0ea1f9d9f644a0f9f452678fcf61a37b73849a393"
+PKG_ARCH="any"
+PKG_LICENSE="Public Domain"
 PKG_SITE="http://www.iana.org/time-zones"
-PKG_GIT_URL="https://github.com/eggert/tz.git"
-PKG_GIT_BRANCH="master"
+PKG_URL="https://github.com/eggert/tz/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="system"
-PKG_SHORTDESC="tz: Time zone database and code"
-PKG_LONGDESC="tz is the Time zone database and code."
+PKG_SHORTDESC="tzdata"
+PKG_LONGDESC="tzdata"
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 PKG_MAKE_OPTS_TARGET="CC=$HOST_CC LDFLAGS="
 
-PKG_MAKEINSTALL_OPTS_TARGET="TOPDIR=$INSTALL"
+makeinstall_target() {
+  make TOPDIR="$INSTALL" install
+}
 
 post_makeinstall_target() {
   mkdir -p $INSTALL/usr/share/zoneinfo
-    mv $INSTALL/etc/zoneinfo/* $INSTALL/usr/share/zoneinfo
+  mv $INSTALL/etc/zoneinfo/* $INSTALL/usr/share/zoneinfo
 
   rm -rf $INSTALL/etc
   mkdir -p $INSTALL/etc

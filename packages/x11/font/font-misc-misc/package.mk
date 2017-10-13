@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,13 +18,12 @@
 
 PKG_NAME="font-misc-misc"
 PKG_VERSION="1.1.2"
-PKG_REV="1"
+PKG_SHA256="b8e77940e4e1769dc47ef1805918d8c9be37c708735832a07204258bacc11794"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.X.org"
 PKG_URL="http://xorg.freedesktop.org/archive/individual/font/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain util-macros font-util font-cursor-misc"
-PKG_PRIORITY="optional"
 PKG_SECTION="x11/font"
 PKG_SHORTDESC="font-misc-misc: A misc. public domain font"
 PKG_LONGDESC="A misc. public domain font."

@@ -17,23 +17,27 @@
 ################################################################################
 
 PKG_NAME="u-boot"
-if [ "$UBOOT_VERSION" = "default" ]; then
-  PKG_VERSION="2011.03-rc1"
-  PKG_SITE="http://www.denx.de/wiki/U-Boot/WebHome"
-  PKG_URL="ftp://ftp.denx.de/pub/u-boot/$PKG_NAME-$PKG_VERSION.tar.bz2"
-elif [ "$UBOOT_VERSION" = "imx6-cuboxi" ]; then
-  PKG_VERSION="10acd12"
-  PKG_SITE="http://imx.solid-run.com/wiki/index.php?title=Building_the_kernel_and_u-boot_for_the_CuBox-i_and_the_HummingBoard"
-  PKG_GIT_URL="https://github.com/SolidRun/u-boot-imx6.git"
-  PKG_GIT_BRANCH="imx6"
+PKG_DEPENDS_TARGET="toolchain"
+if [ "$UBOOT_VERSION" = "imx6-cuboxi" ]; then
+  PKG_COMMIT="ad02f49"
+  PKG_VERSION="imx6-$PKG_COMMIT"
+  PKG_SHA256="bee9c8f4d21230a53605ed0df2ee79a9d2a18a49870d235ec0993a26a37ba0fd"
+  PKG_SITE="http://solid-run.com/wiki/doku.php?id=products:imx6:software:development:u-boot"
+  PKG_URL="https://github.com/SolidRun/u-boot-imx6/archive/$PKG_COMMIT.tar.gz"
+  PKG_SOURCE_NAME="$PKG_NAME-sr-$PKG_VERSION.tar.gz"
+  PKG_SOURCE_DIR="$PKG_NAME-imx6-${PKG_COMMIT}*"
+  [ -n "$UBOOT_CONFIG_V2" ] && PKG_DEPENDS_TARGET="toolchain u-boot-v2"
+elif [ "$UBOOT_VERSION" = "hardkernel" ]; then
+  PKG_VERSION="6e4e886"
+  PKG_SHA256="0d05829e07e226d1acbc6b23ff038d6c92fa3ed738ddc28703d51987c0fab3bb"
+  PKG_SITE="https://github.com/hardkernel/u-boot"
+  PKG_URL="https://github.com/hardkernel/u-boot/archive/$PKG_VERSION.tar.gz"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET gcc-linaro-aarch64-elf:host gcc-linaro-arm-eabi:host"
 else
   exit 0
 fi
-PKG_REV="1"
 PKG_ARCH="arm aarch64"
 PKG_LICENSE="GPL"
-PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
 PKG_SECTION="tools"
 PKG_SHORTDESC="u-boot: Universal Bootloader project"
 PKG_LONGDESC="Das U-Boot is a cross-platform bootloader for embedded systems, used as the default boot loader by several board vendors. It is intended to be easy to port and to debug, and runs on many supported architectures, including PPC, ARM, MIPS, x86, m68k, NIOS, and Microblaze."
@@ -55,6 +59,9 @@ pre_configure_target() {
 
 # dont build in parallel because of problems
   MAKEFLAGS=-j1
+
+# copy compiler-gcc5.h to compiler-gcc6. for fake building
+  cp include/linux/compiler-gcc5.h include/linux/compiler-gcc6.h
 }
 
 make_target() {
@@ -65,35 +72,42 @@ make_target() {
   done
 
   for UBOOT_TARGET in $UBOOT_CONFIG; do
-    make CROSS_COMPILE=${TARGET_NAME}- ARCH=$TARGET_ARCH mrproper
-    make CROSS_COMPILE=${TARGET_NAME}- ARCH=$TARGET_ARCH $UBOOT_TARGET
-    make CROSS_COMPILE=${TARGET_NAME}- ARCH=$TARGET_ARCH HOSTCC="$HOST_CC" HOSTSTRIP="true"
+    if [ "$PROJECT" = "Odroid_C2" ]; then
+      export PATH=$TOOLCHAIN/lib/gcc-linaro-aarch64-elf/bin/:$TOOLCHAIN/lib/gcc-linaro-arm-eabi/bin/:$PATH
+      CROSS_COMPILE=aarch64-elf- ARCH=arm CFLAGS="" LDFLAGS="" make mrproper
+      CROSS_COMPILE=aarch64-elf- ARCH=arm CFLAGS="" LDFLAGS="" make $UBOOT_TARGET
+      CROSS_COMPILE=aarch64-elf- ARCH=arm CFLAGS="" LDFLAGS="" make HOSTCC="$HOST_CC" HOSTSTRIP="true"
+    else
+      make CROSS_COMPILE="$TARGET_PREFIX" ARCH=arm mrproper
+      make CROSS_COMPILE="$TARGET_PREFIX" ARCH=arm $UBOOT_TARGET
+      make CROSS_COMPILE="$TARGET_PREFIX" ARCH=arm HOSTCC="$HOST_CC" HOSTSTRIP="true"
+    fi
 
     # rename files in case of multiple targets
     if [ $UBOOT_TARGET_CNT -gt 1 ]; then
       if [ "$UBOOT_TARGET" = "mx6_cubox-i_config" ]; then
-        UBOOT_TARGET_NAME="cuboxi"
+        TARGET_NAME="cuboxi"
       elif [ "$UBOOT_TARGET" = "matrix" ]; then
-        UBOOT_TARGET_NAME="matrix"
+        TARGET_NAME="matrix"
       elif [ "$UBOOT_TARGET" = "udoo_config" ]; then
-        UBOOT_TARGET_NAME="udoo"
+        TARGET_NAME="udoo"
       else
-        UBOOT_TARGET_NAME="undef"
+        TARGET_NAME="undef"
       fi
 
-      [ -f u-boot.img ] && mv u-boot.img u-boot-$UBOOT_TARGET_NAME.img || :
-      [ -f u-boot.imx ] && mv u-boot.imx u-boot-$UBOOT_TARGET_NAME.imx || :
-      [ -f SPL ] && mv SPL SPL-$UBOOT_TARGET_NAME || :
+      [ -f u-boot.img ] && mv u-boot.img u-boot-$TARGET_NAME.img || :
+      [ -f u-boot.imx ] && mv u-boot.imx u-boot-$TARGET_NAME.imx || :
+      [ -f SPL ] && mv SPL SPL-$TARGET_NAME || :
     fi
   done
 }
 
 makeinstall_target() {
-  mkdir -p $ROOT/$TOOLCHAIN/bin
+  mkdir -p $TOOLCHAIN/bin
     if [ -f build/tools/mkimage ]; then
-      cp build/tools/mkimage $ROOT/$TOOLCHAIN/bin
+      cp build/tools/mkimage $TOOLCHAIN/bin
     else
-      cp tools/mkimage $ROOT/$TOOLCHAIN/bin
+      cp tools/mkimage $TOOLCHAIN/bin
     fi
 
   BOOT_CFG="$PROJECT_DIR/$PROJECT/bootloader/boot.cfg"
@@ -110,13 +124,26 @@ makeinstall_target() {
 
   mkdir -p $INSTALL/usr/share/bootloader
 
-  cp ./u-boot*.imx $INSTALL/usr/share/bootloader 2>/dev/null || :
-  cp ./u-boot*.img $INSTALL/usr/share/bootloader 2>/dev/null || :
-  cp ./SPL* $INSTALL/usr/share/bootloader 2>/dev/null || :
+  cp $PKG_BUILD/u-boot*.imx $INSTALL/usr/share/bootloader 2>/dev/null || :
+  cp $PKG_BUILD/u-boot*.img $INSTALL/usr/share/bootloader 2>/dev/null || :
+  cp $PKG_BUILD/SPL* $INSTALL/usr/share/bootloader 2>/dev/null || :
 
-  cp ./$UBOOT_CONFIGFILE $INSTALL/usr/share/bootloader 2>/dev/null || :
-
-  cp -PRv $PKG_DIR/scripts/update.sh $INSTALL/usr/share/bootloader
+  cp $PKG_BUILD/$UBOOT_CONFIGFILE $INSTALL/usr/share/bootloader 2>/dev/null || :
 
   cp -PR $PROJECT_DIR/$PROJECT/bootloader/uEnv*.txt $INSTALL/usr/share/bootloader 2>/dev/null || :
+
+  case $PROJECT in
+    Odroid_C2)
+      cp -PRv $PKG_DIR/scripts/update-c2.sh $INSTALL/usr/share/bootloader/update.sh
+      cp -PRv $PKG_BUILD/u-boot.bin $INSTALL/usr/share/bootloader/u-boot
+      if [ -f $PROJECT_DIR/$PROJECT/splash/boot-logo.bmp.gz ]; then
+        cp -PRv $PROJECT_DIR/$PROJECT/splash/boot-logo.bmp.gz $INSTALL/usr/share/bootloader
+      elif [ -f $DISTRO_DIR/$DISTRO/splash/boot-logo.bmp.gz ]; then
+        cp -PRv $DISTRO_DIR/$DISTRO/splash/boot-logo.bmp.gz $INSTALL/usr/share/bootloader
+      fi
+      ;;
+    imx6)
+      cp -PRv $PKG_DIR/scripts/update.sh $INSTALL/usr/share/bootloader
+      ;;
+  esac
 }

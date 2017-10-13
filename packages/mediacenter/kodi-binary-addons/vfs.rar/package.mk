@@ -17,12 +17,13 @@
 ################################################################################
 
 PKG_NAME="vfs.rar"
-PKG_VERSION="c3e051d"
-PKG_REV="1"
+PKG_VERSION="22292bc"
+PKG_SHA256="4d2df1c6dc31f46dedf828f057ed90ca83f400c6f521c1a05510f82999febcaa"
+PKG_REV="2"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
-PKG_GIT_URL="https://github.com/notspiff/vfs.rar"
+PKG_URL="https://github.com/notspiff/vfs.rar/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain kodi-platform"
 PKG_SECTION=""
 PKG_SHORTDESC="vfs.rar"
@@ -31,11 +32,3 @@ PKG_AUTORECONF="no"
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_TYPE="kodi.vfs"
-
-addon() {
-  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/
-  cp -R $ROOT/$PKG_BUILD/.install_pkg/usr/share/$MEDIACENTER/addons/$PKG_NAME/* $ADDON_BUILD/$PKG_ADDON_ID/
-
-  ADDONSO=$(xmlstarlet sel -t -v "/addon/extension/@library_linux" $ADDON_BUILD/$PKG_ADDON_ID/addon.xml)
-  cp -L $ROOT/$PKG_BUILD/.install_pkg/usr/lib/$MEDIACENTER/addons/$PKG_NAME/$ADDONSO $ADDON_BUILD/$PKG_ADDON_ID/
-}

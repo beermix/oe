@@ -18,8 +18,11 @@
 
 PKG_NAME="libssh"
 PKG_VERSION="0.7.5"
+PKG_SHA256="6f7d5b9f3089164eec7408d35b99194b17352cce436a4a95485b511bce2aab4b"
+PKG_ARCH="any"
+PKG_LICENSE="OpenSource"
 PKG_SITE="http://www.libssh.org/"
-PKG_URL="https://git.libssh.org/projects/libssh.git/snapshot/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_URL="https://git.libssh.org/projects/libssh.git/snapshot/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain zlib openssl"
 PKG_SECTION="network"
 PKG_SHORTDESC="libssh: A working SSH implementation by means of a library"

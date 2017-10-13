@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,14 +18,13 @@
 
 PKG_NAME="audiodecoder.wsr"
 PKG_VERSION="746fcbb"
-PKG_REV="1"
+PKG_SHA256="5887a5d84d0feb1f31c0687625f809b119695753bb0995b2529cf0043d2f2570"
+PKG_REV="2"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/notspiff/audiodecoder.wsr"
-PKG_GIT_URL="https://github.com/notspiff/audiodecoder.wsr"
-PKG_GIT_BRANCH="master"
+PKG_URL="https://github.com/notspiff/audiodecoder.wsr/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain kodi-platform"
-PKG_PRIORITY="optional"
 PKG_SECTION=""
 PKG_SHORTDESC="audiodecoder.wsr"
 PKG_LONGDESC="audiodecoder.wsr"
@@ -33,6 +32,3 @@ PKG_AUTORECONF="no"
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_TYPE="kodi.audiodecoder"
-
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/share/kodi \
-                       -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr"

@@ -17,7 +17,10 @@
 ################################################################################
 
 PKG_NAME="opus"
-PKG_VERSION="1.1.4"
+PKG_VERSION="1.1.2"
+PKG_SHA256="0e290078e31211baa7b5886bcc8ab6bc048b9fc83882532da4a1a45e58e907fd"
+PKG_ARCH="any"
+PKG_LICENSE="BSD"
 PKG_SITE="http://www.opus-codec.org"
 PKG_URL="http://downloads.us.xiph.org/releases/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
@@ -34,9 +37,6 @@ else
   FIXED_POINT="--disable-fixed-point"
 fi
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared $FIXED_POINT"
-
-pre_configure_target() {
-  CFLAGS="$CFLAGS -fPIC"
-  CXXFLAGS="$CXXFLAGS -fPIC"
-}
+PKG_CONFIGURE_OPTS_TARGET="--enable-static \
+                           --disable-shared \
+                           $FIXED_POINT"

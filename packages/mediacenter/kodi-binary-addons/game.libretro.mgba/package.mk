@@ -17,12 +17,13 @@
 ################################################################################
 
 PKG_NAME="game.libretro.mgba"
-PKG_VERSION="ae3644d"
-PKG_REV="101"
+PKG_VERSION="8a00593"
+PKG_SHA256="d88f184f0b9b8dac0ff3642486570297e9e981d47f07d61c47ec46bda5041d30"
+PKG_REV="103"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/kodi-game/game.libretro.mgba"
-PKG_GIT_URL="https://github.com/kodi-game/game.libretro.mgba"
+PKG_URL="https://github.com/kodi-game/game.libretro.mgba/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain kodi-platform libretro-mgba"
 PKG_SECTION=""
 PKG_SHORTDESC="game.libretro.mgba: mGBA emulator for Kodi"
@@ -38,12 +39,4 @@ configure_target() {
         -DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
         -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
         ..
-}
-
-addon() {
-  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/
-  cp -R $ROOT/$PKG_BUILD/.install_pkg/usr/share/kodi/addons/$PKG_NAME/* $ADDON_BUILD/$PKG_ADDON_ID/
-
-  ADDONSO=$(xmlstarlet sel -t -v "/addon/extension/@library_linux" $ADDON_BUILD/$PKG_ADDON_ID/addon.xml)
-  cp -L $ROOT/$PKG_BUILD/.install_pkg/usr/lib/kodi/addons/$PKG_NAME/$ADDONSO $ADDON_BUILD/$PKG_ADDON_ID/
 }

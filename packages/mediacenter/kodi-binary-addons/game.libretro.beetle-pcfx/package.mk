@@ -17,12 +17,13 @@
 ################################################################################
 
 PKG_NAME="game.libretro.beetle-pcfx"
-PKG_VERSION="e66ceb5"
-PKG_REV="101"
-PKG_ARCH="arm x86_64"
+PKG_VERSION="6ea4941"
+PKG_SHA256="345acd88501571ce15e2967b3447665d6a11ef588af9bee81d08642bd6680136"
+PKG_REV="103"
+PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/kodi-game/game.libretro.beetle-pcfx"
-PKG_GIT_URL="https://github.com/kodi-game/game.libretro.beetle-pcfx"
+PKG_URL="https://github.com/kodi-game/game.libretro.beetle-pcfx/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain kodi-platform libretro-beetle-pcfx"
 PKG_SECTION=""
 PKG_SHORTDESC="game.libretro.beetle-pcfx: Beetle pcfx for Kodi"
@@ -38,12 +39,4 @@ configure_target() {
         -DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
         -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
         ..
-}
-
-addon() {
-  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/
-  cp -R $ROOT/$PKG_BUILD/.install_pkg/usr/share/kodi/addons/$PKG_NAME/* $ADDON_BUILD/$PKG_ADDON_ID/
-
-  ADDONSO=$(xmlstarlet sel -t -v "/addon/extension/@library_linux" $ADDON_BUILD/$PKG_ADDON_ID/addon.xml)
-  cp -L $ROOT/$PKG_BUILD/.install_pkg/usr/lib/kodi/addons/$PKG_NAME/$ADDONSO $ADDON_BUILD/$PKG_ADDON_ID/
 }

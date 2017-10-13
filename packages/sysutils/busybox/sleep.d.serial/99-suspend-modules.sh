@@ -1,7 +1,7 @@
 #!/bin/sh
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2014 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -55,7 +55,7 @@ modunload()
 _rmmod()
 {
     if modprobe -r "$1"; then
-        touch "/run/openelec/suspend/module:$1"
+        touch "/run/libreelec/suspend/module:$1"
         return 0
     else
         logger -t suspend-modules "# could not unload '$1', usage count was $2"
@@ -65,7 +65,7 @@ _rmmod()
 
 resume_modules()
 {
-    for x in /run/openelec/suspend/module:* ; do
+    for x in /run/libreelec/suspend/module:* ; do
         [ -O "${x}" ] || continue
         modprobe "${x##*:}" &>/dev/null && \
             logger -t resume-modules "Reloaded module ${x##*:}." || \
@@ -77,8 +77,8 @@ suspend_modules()
 {
     [ -z "$SUSPEND_MODULES" ] && return 0
     # clean up
-    rm -rf /run/openelec/suspend
-    mkdir -p /run/openelec/suspend
+    rm -rf /run/libreelec/suspend
+    mkdir -p /run/libreelec/suspend
     for x in $SUSPEND_MODULES ; do
         modunload $x && \
             logger -t suspend-modules "Unloading kernel module $x: Done" || \

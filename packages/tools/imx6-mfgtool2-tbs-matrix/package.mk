@@ -18,11 +18,12 @@
 
 PKG_NAME="imx6-mfgtool2-tbs-matrix"
 PKG_VERSION="1.0"
+PKG_SHA256="c342b547d7493f60ba562c671e694a9e84b80b279880a891ca7962b72bdd8a69"
 PKG_ARCH="arm"
+PKG_LICENSE="GPL"
 PKG_SITE="http://sourceforge.net/projects/matrixtv/"
 PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.zip"
 PKG_DEPENDS_TARGET=""
-
 PKG_SECTION="tools"
 PKG_SHORTDESC="MfgTool2 flash tool"
 PKG_LONGDESC="Freescales manufacturing tool for flashing image to TBS Matrix system"

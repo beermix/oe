@@ -17,12 +17,13 @@
 ################################################################################
 
 PKG_NAME="game.libretro.bsnes-mercury-accuracy"
-PKG_VERSION="f4433c3"
-PKG_REV="101"
+PKG_VERSION="201fd5e"
+PKG_SHA256="952c59f5a4510646a58743bac19175cd05e886a048b9b2a6507d32cc04c56a25"
+PKG_REV="103"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/kodi-game/game.libretro.bsnes-mercury-accuracy"
-PKG_GIT_URL="https://github.com/kodi-game/game.libretro.bsnes-mercury-accuracy"
+PKG_URL="https://github.com/kodi-game/game.libretro.bsnes-mercury-accuracy/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain kodi-platform libretro-bsnes-mercury-accuracy"
 PKG_SECTION=""
 PKG_SHORTDESC="game.libretro.bsnes-mercury-accuracy: bSNES Mercury for Kodi"
@@ -38,12 +39,4 @@ configure_target() {
         -DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
         -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
         ..
-}
-
-addon() {
-  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/
-  cp -R $ROOT/$PKG_BUILD/.install_pkg/usr/share/kodi/addons/$PKG_NAME/* $ADDON_BUILD/$PKG_ADDON_ID/
-
-  ADDONSO=$(xmlstarlet sel -t -v "/addon/extension/@library_linux" $ADDON_BUILD/$PKG_ADDON_ID/addon.xml)
-  cp -L $ROOT/$PKG_BUILD/.install_pkg/usr/lib/kodi/addons/$PKG_NAME/$ADDONSO $ADDON_BUILD/$PKG_ADDON_ID/
 }

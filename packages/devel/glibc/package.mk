@@ -7,7 +7,7 @@
 #  the Free Software Foundation, either version 2 of the License, or
 #  (at your option) any later version.
 #
-#  OpenELEC is distributed |||| --enable-experimental-malloc --enable-stackguard-randomization
+#  OpenELEC is distributed in the hope that it will be useful,
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
@@ -18,6 +18,7 @@
 
 PKG_NAME="glibc"
 PKG_VERSION="2.26"
+PKG_SHA256="e54e0a934cd2bc94429be79da5e9385898d2306b9eaf3c92d5a77af96190f6bd"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/libc/"
@@ -32,7 +33,6 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
-                           libc_cv_slibdir=/lib \
                            ac_cv_path_PERL= \
                            ac_cv_prog_MAKEINFO= \
                            --libexecdir=/usr/lib/glibc \
@@ -45,9 +45,9 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --enable-stack-protector=strong \
                            --with-tls \
                            --with-__thread \
-                           --with-binutils=$ROOT/$BUILD/toolchain/bin \
+                           --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
-                           --enable-kernel=2.6.32 \
+                           --enable-kernel=3.0.0 \
                            --without-cvs \
                            --without-gd \
                            --enable-obsolete-rpc \
@@ -66,10 +66,6 @@ else
 fi
 
 NSS_CONF_DIR="$PKG_BUILD/nss"
-
-GLIBC_EXCLUDE_BIN="catchsegv gencat getconf iconv iconvconfig ldconfig"
-GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN makedb mtrace pcprofiledump"
-GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN pldd rpcgen sln sotruss sprof xtrace"
 
 pre_build_target() {
   cd $PKG_BUILD
@@ -129,10 +125,16 @@ libc_cv_forced_unwind=yes
 libc_cv_c_cleanup=yes
 libc_cv_ssp=no
 libc_cv_ssp_strong=no
+libc_cv_slibdir=/usr/lib
 EOF
 
+echo "libdir=/usr/lib" >> configparms
+echo "slibdir=/usr/lib" >> configparms
 echo "sbindir=/usr/bin" >> configparms
 echo "rootsbindir=/usr/bin" >> configparms
+echo "build-programs=yes" >> configparms
+
+GLIBC_INCLUDE_BIN="getent ldd locale"
 }
 
 post_makeinstall_target() {
@@ -140,11 +142,19 @@ post_makeinstall_target() {
   ln -sf $SYSROOT_PREFIX/usr/include/bits/types/__locale_t.h $SYSROOT_PREFIX/usr/include/xlocale.h
 
 # we are linking against ld.so, so symlink
-  ln -sf $(basename $INSTALL/lib/ld-*.so) $INSTALL/lib/ld.so
+  ln -sf $(basename $INSTALL/usr/lib/ld-*.so) $INSTALL/usr/lib/ld.so
 
 # cleanup
-  for i in $GLIBC_EXCLUDE_BIN; do
-    rm -rf $INSTALL/usr/bin/$i
+# remove any programs we don't want/need, keeping only those we want
+  for f in $(find $INSTALL/usr/bin -type f); do
+    fb="$(basename "${f}")"
+    for ib in $GLIBC_INCLUDE_BIN; do
+      if [ "${ib}" == "${fb}" ]; then
+        fb=
+        break
+      fi
+    done
+    [ -n "${fb}" ] && rm -rf ${f}
   done
 
   rm -rf $INSTALL/usr/lib/audit
@@ -174,13 +184,13 @@ post_makeinstall_target() {
     cp $PKG_DIR/config/gai.conf $INSTALL/etc
 
   if [ "$TARGET_ARCH" = "arm" -a "$TARGET_FLOAT" = "hard" ]; then
-    ln -sf ld.so $INSTALL/lib/ld-linux.so.3
+    ln -sf ld.so $INSTALL/usr/lib/ld-linux.so.3
   fi
 }
 
 configure_init() {
-  cd $ROOT/$PKG_BUILD
-    rm -rf $ROOT/$PKG_BUILD/.$TARGET_NAME-init
+  cd $PKG_BUILD
+    rm -rf $PKG_BUILD/.$TARGET_NAME-init
 }
 
 make_init() {
@@ -188,17 +198,17 @@ make_init() {
 }
 
 makeinstall_init() {
-  mkdir -p $INSTALL/lib
-    cp -PR $ROOT/$PKG_BUILD/.$TARGET_NAME/elf/ld*.so* $INSTALL/lib
-    cp -PR $ROOT/$PKG_BUILD/.$TARGET_NAME/libc.so* $INSTALL/lib
-    cp -PR $ROOT/$PKG_BUILD/.$TARGET_NAME/math/libm.so* $INSTALL/lib
-    cp -PR $ROOT/$PKG_BUILD/.$TARGET_NAME/nptl/libpthread.so* $INSTALL/lib
-    cp -PR $ROOT/$PKG_BUILD/.$TARGET_NAME/rt/librt.so* $INSTALL/lib
-    cp -PR $ROOT/$PKG_BUILD/.$TARGET_NAME/resolv/libnss_dns.so* $INSTALL/lib
-    cp -PR $ROOT/$PKG_BUILD/.$TARGET_NAME/resolv/libresolv.so* $INSTALL/lib
+  mkdir -p $INSTALL/usr/lib
+    cp -PR $PKG_BUILD/.$TARGET_NAME/elf/ld*.so* $INSTALL/usr/lib
+    cp -PR $PKG_BUILD/.$TARGET_NAME/libc.so* $INSTALL/usr/lib
+    cp -PR $PKG_BUILD/.$TARGET_NAME/math/libm.so* $INSTALL/usr/lib
+    cp -PR $PKG_BUILD/.$TARGET_NAME/nptl/libpthread.so* $INSTALL/usr/lib
+    cp -PR $PKG_BUILD/.$TARGET_NAME/rt/librt.so* $INSTALL/usr/lib
+    cp -PR $PKG_BUILD/.$TARGET_NAME/resolv/libnss_dns.so* $INSTALL/usr/lib
+    cp -PR $PKG_BUILD/.$TARGET_NAME/resolv/libresolv.so* $INSTALL/usr/lib
 
     if [ "$TARGET_ARCH" = "arm" -a "$TARGET_FLOAT" = "hard" ]; then
-      ln -sf ld.so $INSTALL/lib/ld-linux.so.3
+      ln -sf ld.so $INSTALL/usr/lib/ld-linux.so.3
     fi
 }
 

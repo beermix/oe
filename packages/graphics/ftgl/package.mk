@@ -18,9 +18,11 @@
 
 PKG_NAME="ftgl"
 PKG_VERSION="2.1.2"
+PKG_SHA256="0f61d978c28cd5d78daded591f5b03f71248c0a51c7965733e8729c874265f50"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://sourceforge.net/projects/ftgl/"
 PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_PRIORITY="optional"
 PKG_DEPENDS_TARGET="toolchain freetype"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="ftgl:"
@@ -28,10 +30,5 @@ PKG_LONGDESC="ftgl:"
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
-PKG_USE_CMAKE="no"
 
 PKG_CMAKE_OPTS_TARGET="-DOUTPUT_DIR=$SYSROOT_PREFIX/usr"
-
-post_make_target() {
-  mkdir -p $INSTALL_DEV/usr/bin/
-}

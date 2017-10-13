@@ -2,7 +2,7 @@
 <strings>
   <string id="1000">Allgemein</string>
   <string id="1014">Verzögerung bevor Treiber gestartet wird [Sek.]</string>
-  <string id="1.15">Skript welches vom Treiber-Stack gestartet werden soll</string>
+  <string id="1015">Skript welches vom Treiber-Stack gestartet werden soll</string>
   <string id="1030">Hardware PID Filter einschalten</string>
   <string id="1035">Fernbedienung unterstützen</string>
   <string id="1040">Niedrigste Adapter Nummer (/dev/dvb/adapterX/)</string>

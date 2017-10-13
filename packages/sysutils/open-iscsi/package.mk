@@ -19,9 +19,11 @@
 
 PKG_NAME="open-iscsi"
 PKG_VERSION="bf39941"
+PKG_SHA256="92b9f0a27a9a373b14eab7b12f1bfff5d4857695a688dc4434df8e7623354588"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/mikechristie/open-iscsi"
-PKG_GIT_URL="https://github.com/mikechristie/open-iscsi"
-PKG_GIT_BRANCH="master"
+PKG_URL="https://github.com/mikechristie/open-iscsi/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_INIT="toolchain util-linux"
 PKG_SECTION="initramfs/system"
 PKG_SHORTDESC="open-iscsi: system utilities for Linux to access iSCSI targets"
@@ -45,6 +47,6 @@ configure_init() {
 }
 
 makeinstall_init() {
-  mkdir -p $INSTALL/sbin
-    cp -P $ROOT/$PKG_BUILD/usr/iscsistart $INSTALL/sbin
+  mkdir -p $INSTALL/usr/sbin
+    cp -P $PKG_BUILD/usr/iscsistart $INSTALL/usr/sbin
 }

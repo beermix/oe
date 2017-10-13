@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -10,21 +10,20 @@
 #  OpenELEC is distributed in the hope that it will be useful,
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU General Public License for more details. --enable-optimizations
+#  GNU General Public License for more details.
 #
-#  You should have received a copy of the GNU General Public License  --disable-optimizations --with-lto \
+#  You should have received a copy of the GNU General Public License
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
 PKG_NAME="Python"
 PKG_VERSION="2.7.14"
-PKG_URL="http://www.python.org/ftp/python/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_ARCH="any"
-#PKG_VERSION="13da1a6"
-#PKG_GIT_URL="https://github.com/python/cpython"
+PKG_LICENSE="OSS"
+PKG_SITE="http://www.python.org/"
+PKG_URL="http://www.python.org/ftp/python/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="zlib:host bzip2:host sqlite:host"
-PKG_DEPENDS_TARGET="toolchain sqlite expat zlib bzip2 openssl libffi readline Python:host"
-PKG_PRIORITY="optional"
+PKG_DEPENDS_TARGET="toolchain sqlite expat zlib bzip2 openssl libffi Python:host"
 PKG_SECTION="lang"
 PKG_SHORTDESC="python: The Python programming language"
 PKG_LONGDESC="Python is an interpreted object-oriented programming language, and is often compared with Tcl, Perl, Java or Scheme."
@@ -32,17 +31,12 @@ PKG_LONGDESC="Python is an interpreted object-oriented programming language, and
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-#post_unpack() {
-#  sed -i "/SQLITE_OMIT_LOAD_EXTENSION/d" $ROOT/$PKG_BUILD/setup.py
-#}
-
 PY_DISABLED_MODULES="_tkinter nis gdbm bsddb ossaudiodev"
 
 PKG_CONFIGURE_OPTS_HOST="--cache-file=config.cache \
                          --without-cxx-main \
                          --with-threads \
-                         --enable-unicode=ucs4 \
-                         --disable-ipv6"
+                         --enable-unicode=ucs4"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            ac_cv_file_dev_ptmx=yes \
@@ -67,9 +61,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            --with-wctype-functions \
                            --without-cxx-main \
                            --with-system-ffi \
-                           --with-system-expat \
-                           --enable-shared"
-
+                           --with-system-expat"
 post_patch() {
   # This is needed to make sure the Python build process doesn't try to
   # regenerate those files with the pgen program. Otherwise, it builds
@@ -95,9 +87,7 @@ makeinstall_host() {
 }
 
 pre_configure_target() {
-  export PYTHON_FOR_BUILD=$ROOT/$TOOLCHAIN/bin/python
-#  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
-#  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3|"`
+  export PYTHON_FOR_BUILD=$TOOLCHAIN/bin/python
 }
 
 make_target() {
@@ -122,7 +112,7 @@ makeinstall_target() {
 }
 
 post_makeinstall_target() {
-  EXCLUDE_DIRS="bsddb idlelib lib-tk lib2to3 msilib pydoc_data test"
+  EXCLUDE_DIRS="bsddb idlelib lib-tk lib2to3 msilib pydoc_data test unittest"
   for dir in $EXCLUDE_DIRS; do
     rm -rf $INSTALL/usr/lib/python*/$dir
   done
@@ -135,10 +125,10 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin/python*-config
 
   cd $INSTALL/usr/lib/python2.7
-  python -Wi -t -B $ROOT/$PKG_BUILD/Lib/compileall.py -d /usr/lib/python2.7 -f .
+  python -Wi -t -B $PKG_BUILD/Lib/compileall.py -d /usr/lib/python2.7 -f .
   find $INSTALL/usr/lib/python2.7 -name "*.py" -exec rm -f {} \; &>/dev/null
 
   # strip
   chmod u+w $INSTALL/usr/lib/libpython*.so.*
-  #debug_strip $INSTALL/usr
+  debug_strip $INSTALL/usr
 }

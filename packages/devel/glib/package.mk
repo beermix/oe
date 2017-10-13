@@ -1,6 +1,7 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2016-     Team LibreELEC
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -14,7 +15,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################ internal
+################################################################################
 
 PKG_NAME="glib"
 PKG_VERSION="2.54.1"
@@ -31,10 +32,11 @@ PKG_LONGDESC="GLib is a library which includes support routines for C such as li
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_HOST="--disable-static \
-                         --enable-shared \
-                         --disable-libmount"
-
+PKG_CONFIGURE_OPTS_HOST="PCRE_LIBS=-l:libpcre.a \
+                         --enable-static \
+                         --disable-shared \
+                         --disable-libmount \
+                         --with-python=python"
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_snprintf_c99=yes \
                            ac_cv_func_vsnprintf_c99=yes \
                            glib_cv_stack_grows=no \
@@ -53,7 +55,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_snprintf_c99=yes \
                            --with-gnu-ld \
                            --with-threads=posix \
                            --with-pcre=system \
-                           --enable-static"
+                           --with-python=python"
 
 pre_configure_host() {
   CFLAGS="$CFLAGS -fPIC"

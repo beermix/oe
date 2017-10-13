@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,9 +18,12 @@
 
 PKG_NAME="cpio"
 PKG_VERSION="2.12"
-PKG_SITE="http://www.gnu.org/software/cpio/cpio.html"
-PKG_URL="http://ftp.gnu.org/gnu/cpio/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_HOST=""
+PKG_SHA256="08a35e92deb3c85d269a0059a27d4140a9667a6369459299d08c17f713a92e73"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
+PKG_SITE="http://www.gnu.org/software/cpio/"
+PKG_URL="http://ftpmirror.gnu.org/cpio/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_DEPENDS_HOST="toolchain"
 PKG_SECTION="compress"
 PKG_SHORTDESC="cpio: A GNU archiving program"
 PKG_LONGDESC="This is GNU cpio, a program to manage archives of files. As of version 2.0, it supports the features of the System V release 4 cpio, including support for tar archives."

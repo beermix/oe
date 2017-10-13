@@ -17,12 +17,13 @@
 ################################################################################
 
 PKG_NAME="game.libretro.2048"
-PKG_VERSION="5a215a7"
-PKG_REV="101"
+PKG_VERSION="ec99c48"
+PKG_SHA256="a45dfd7aee8ec4bc7e89f474f99e2d7184f2a263e9a6fee7d26ace1a43dfcc8d"
+PKG_REV="103"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/kodi-game/game.libretro.2048"
-PKG_GIT_URL="https://github.com/kodi-game/game.libretro.2048"
+PKG_URL="https://github.com/kodi-game/game.libretro.2048/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain kodi-platform libretro-2048"
 PKG_SECTION=""
 PKG_SHORTDESC="game.libretro.2048: 2048 for Kodi"
@@ -38,12 +39,4 @@ configure_target() {
         -DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
         -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
         ..
-}
-
-addon() {
-  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/
-  cp -R $ROOT/$PKG_BUILD/.install_pkg/usr/share/kodi/addons/$PKG_NAME/* $ADDON_BUILD/$PKG_ADDON_ID/
-
-  ADDONSO=$(xmlstarlet sel -t -v "/addon/extension/@library_linux" $ADDON_BUILD/$PKG_ADDON_ID/addon.xml)
-  cp -L $ROOT/$PKG_BUILD/.install_pkg/usr/lib/kodi/addons/$PKG_NAME/$ADDONSO $ADDON_BUILD/$PKG_ADDON_ID/
 }

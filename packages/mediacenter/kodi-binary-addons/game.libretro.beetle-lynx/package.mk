@@ -17,12 +17,13 @@
 ################################################################################
 
 PKG_NAME="game.libretro.beetle-lynx"
-PKG_VERSION="3f51d9f"
-PKG_REV="101"
+PKG_VERSION="99614ad"
+PKG_SHA256="e8497767d194e32d7f373a8c27b8992e65734df8ba9acf660d656d6a675d53b0"
+PKG_REV="103"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/kodi-game/game.libretro.beetle-lynx"
-PKG_GIT_URL="https://github.com/kodi-game/game.libretro.beetle-lynx"
+PKG_URL="https://github.com/kodi-game/game.libretro.beetle-lynx/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain kodi-platform libretro-beetle-lynx"
 PKG_SECTION=""
 PKG_SHORTDESC="game.libretro.beetle-lynx: Beetle lynx for Kodi"
@@ -38,12 +39,4 @@ configure_target() {
         -DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
         -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
         ..
-}
-
-addon() {
-  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/
-  cp -R $ROOT/$PKG_BUILD/.install_pkg/usr/share/kodi/addons/$PKG_NAME/* $ADDON_BUILD/$PKG_ADDON_ID/
-
-  ADDONSO=$(xmlstarlet sel -t -v "/addon/extension/@library_linux" $ADDON_BUILD/$PKG_ADDON_ID/addon.xml)
-  cp -L $ROOT/$PKG_BUILD/.install_pkg/usr/lib/kodi/addons/$PKG_NAME/$ADDONSO $ADDON_BUILD/$PKG_ADDON_ID/
 }

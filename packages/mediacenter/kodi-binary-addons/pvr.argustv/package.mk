@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,15 +17,14 @@
 ################################################################################
 
 PKG_NAME="pvr.argustv"
-PKG_VERSION="9040b14"
-PKG_REV="1"
+PKG_VERSION="23cc0e8"
+PKG_SHA256="e965a98240f6c7dee277a1a705ac5e26b138b2f1572572aea50bbfef92a54bf3"
+PKG_REV="2"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
-PKG_GIT_URL="https://github.com/kodi-pvr/pvr.argustv"
-PKG_GIT_BRANCH="master"
+PKG_URL="https://github.com/kodi-pvr/pvr.argustv/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain kodi-platform jsoncpp"
-PKG_PRIORITY="optional"
 PKG_SECTION=""
 PKG_SHORTDESC="pvr.argustv"
 PKG_LONGDESC="pvr.argustv"
@@ -37,6 +36,3 @@ PKG_ADDON_TYPE="xbmc.pvrclient"
 pre_configure_target() {
   CXXFLAGS="$CXXFLAGS -Wno-narrowing"
 }
-
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/share/kodi \
-                       -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr"

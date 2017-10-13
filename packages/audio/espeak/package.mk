@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,6 +18,9 @@
 
 PKG_NAME="espeak"
 PKG_VERSION="1.48.04-source"
+PKG_SHA256="bf9a17673adffcc28ff7ea18764f06136547e97bbd9edf2ec612f09b207f0659"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://espeak.sourceforge.net/"
 PKG_URL="http://sourceforge.net/projects/espeak/files/espeak/espeak-1.48/$PKG_NAME-$PKG_VERSION.zip"
 PKG_DEPENDS_TARGET="toolchain"

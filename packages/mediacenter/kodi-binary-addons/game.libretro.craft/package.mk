@@ -17,11 +17,13 @@
 ################################################################################
 
 PKG_NAME="game.libretro.craft"
-PKG_VERSION="5a215a7"
-PKG_REV="101"
-PKG_ARCH="any"
+PKG_VERSION="ec99c48"
+PKG_SHA256="38a63d2e0bef6ab39bb7a0c76fa299d39cd35ae9adc32c0f3c40dd8114cf9173"
+PKG_REV="103"
+# no openGL suport in retroplayer yet
+PKG_ARCH="none"
 PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/kodi-game/game.libretro.2048"
+PKG_SITE="https://github.com/kodi-game/game.libretro.craft"
 PKG_DEPENDS_TARGET="toolchain kodi-platform libretro-craft"
 PKG_SECTION=""
 PKG_SHORTDESC="game.libretro.craft: A simple Minecraft clone"
@@ -37,12 +39,4 @@ configure_target() {
         -DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
         -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
         ..
-}
-
-addon() {
-  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/
-  cp -R $ROOT/$PKG_BUILD/.install_pkg/usr/share/kodi/addons/$PKG_NAME/* $ADDON_BUILD/$PKG_ADDON_ID/
-
-  ADDONSO=$(xmlstarlet sel -t -v "/addon/extension/@library_linux" $ADDON_BUILD/$PKG_ADDON_ID/addon.xml)
-  cp -L $ROOT/$PKG_BUILD/.install_pkg/usr/lib/kodi/addons/$PKG_NAME/$ADDONSO $ADDON_BUILD/$PKG_ADDON_ID/
 }

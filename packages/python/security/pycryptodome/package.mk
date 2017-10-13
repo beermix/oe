@@ -21,7 +21,7 @@ PKG_VERSION="3.4.7"
 PKG_ARCH="any"
 PKG_LICENSE="BSD"
 PKG_SITE="https://pypi.python.org/pypi/pycryptodome"
-PKG_URL="https://pypi.python.org/packages/2b/9b/aaa940ab8affd66eed043d69332dc607cddd68f9e399d93dcdfc8149fb21/pycryptodome-3.4.7.tar.gz"
+PKG_URL="https://files.pythonhosted.org/packages/source/${PKG_NAME:0:1}/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"
 PKG_SECTION="python/security"
 PKG_SHORTDESC="Cryptographic library for Python"
@@ -31,8 +31,11 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 pre_configure_target() {
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
   rm -rf .$TARGET_NAME
+
+  export PYTHONXCPREFIX="$SYSROOT_PREFIX/usr"
+  export LDSHARED="$CC -shared"
 }
 
 make_target() {

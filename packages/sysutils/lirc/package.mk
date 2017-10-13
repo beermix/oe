@@ -17,11 +17,12 @@
 ################################################################################
 
 PKG_NAME="lirc"
-PKG_VERSION="0.9.4d"
+PKG_VERSION="0.10.0"
+PKG_SHA256="e57c2de8b1b91325d23f1c14fc553ec7912b0add7891e653d048300d38c3f553"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.lirc.org"
-PKG_URL="https://sourceforge.net/projects/lirc/files/LIRC/0.9.4d/lirc-0.9.4d.tar.gz"
+PKG_URL="https://sourceforge.net/projects/lirc/files/LIRC/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain libftdi1 libusb-compat libxslt"
 PKG_SECTION="sysutils/remote"
 PKG_SHORTDESC="lirc: Linux Infrared Remote Control"
@@ -30,10 +31,7 @@ PKG_LONGDESC="LIRC is a package that allows you to decode and send infra-red sig
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_forkpty=no \
-                           ac_cv_lib_util_forkpty=no \
-                           ac_cv_prog_HAVE_PYTHON3=no \
-                           --enable-devinput \
+PKG_CONFIGURE_OPTS_TARGET="--enable-devinput \
                            --localstatedir=/ \
                            --with-gnu-ld \
                            --without-x"
@@ -41,6 +39,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_forkpty=no \
 pre_configure_target() {
   export HAVE_WORKING_POLL=yes
   export HAVE_UINPUT=yes
+  export PYTHON=:
   if [ -e ${SYSROOT_PREFIX}/usr/include/linux/input-event-codes.h ] ; then
     export DEVINPUT_HEADER=${SYSROOT_PREFIX}/usr/include/linux/input-event-codes.h
   else
@@ -57,9 +56,9 @@ post_makeinstall_target() {
   mkdir -p $INSTALL/etc/lirc
     cp -r $PKG_DIR/config/* $INSTALL/etc/lirc
 
-  mkdir -p $INSTALL/usr/lib/openelec
-    cp $PKG_DIR/scripts/lircd_helper $INSTALL/usr/lib/openelec
-    cp $PKG_DIR/scripts/lircd_uinput_helper $INSTALL/usr/lib/openelec
+  mkdir -p $INSTALL/usr/lib/libreelec
+    cp $PKG_DIR/scripts/lircd_helper $INSTALL/usr/lib/libreelec
+    cp $PKG_DIR/scripts/lircd_uinput_helper $INSTALL/usr/lib/libreelec
 
   mkdir -p $INSTALL/usr/lib/udev
     cp $PKG_DIR/scripts/lircd_wakeup_enable $INSTALL/usr/lib/udev

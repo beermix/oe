@@ -18,16 +18,21 @@
 
 PKG_NAME="initramfs"
 PKG_VERSION=""
+PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.openelec.tv"
-PKG_DEPENDS_TARGET="toolchain libc:init busybox:init linux:init psplash:init util-linux:init e2fsprogs:init dosfstools:init xfsprogs:init"
-PKG_PRIORITY="optional"
+PKG_URL=""
+PKG_DEPENDS_TARGET="toolchain libc:init busybox:init linux:init plymouth-lite:init util-linux:init e2fsprogs:init dosfstools:init"
 PKG_SECTION="virtual"
 PKG_SHORTDESC="initramfs: Metapackage for installing initramfs"
 PKG_LONGDESC="debug is a Metapackage for installing initramfs"
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
+
+if [ "$ISCSI_SUPPORT" = yes ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET open-iscsi:init"
+fi
 
 if [ "$INITRAMFS_PARTED_SUPPORT" = yes ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET util-linux:init"
@@ -36,17 +41,19 @@ if [ "$INITRAMFS_PARTED_SUPPORT" = yes ]; then
 fi
 
 post_install() {
-  cd $ROOT/$BUILD/initramfs
+  ( cd $BUILD/initramfs
     if [ "$TARGET_ARCH" = "x86_64" -o "$TARGET_ARCH" = "powerpc64" ]; then
-      ln -s /lib $ROOT/$BUILD/initramfs/lib64
+      ln -sf /usr/lib $BUILD/initramfs/lib64
+      mkdir -p $BUILD/initramfs/usr
+      ln -sf /usr/lib $BUILD/initramfs/usr/lib64
     fi
 
-    mkdir -p $ROOT/$BUILD/image/
-      echo "find . | cpio -H newc -ov -R 0:0 > $ROOT/$BUILD/image/initramfs.cpio" >> $FAKEROOT_SCRIPT_INIT
+    ln -sf /usr/lib $BUILD/initramfs/lib
+    ln -sf /usr/bin $BUILD/initramfs/bin
+    ln -sf /usr/sbin $BUILD/initramfs/sbin
 
-    # run fakeroot
-      chmod +x $FAKEROOT_SCRIPT_INIT
-      $ROOT/$TOOLCHAIN/bin/fakeroot -- $FAKEROOT_SCRIPT_INIT
-      rm -rf $FAKEROOT_SCRIPT_INIT
-  cd -
+    mkdir -p $BUILD/image/
+    fakeroot -- sh -c \
+      "mkdir -p dev; mknod -m 600 dev/console c 5 1; find . | cpio -H newc -ov -R 0:0 > $BUILD/image/initramfs.cpio"
+  )
 }

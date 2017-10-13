@@ -18,9 +18,11 @@
 
 PKG_NAME="openssh"
 PKG_VERSION="7.5p1"
+PKG_SHA256="9846e3c5fab9f0547400b4d2c017992f914222b3fd1f8eee6c7dc6bc5e59f9f0"
+PKG_ARCH="any"
+PKG_LICENSE="OSS"
 PKG_SITE="http://www.openssh.com/"
 PKG_URL="http://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_PRIORITY="optional"
 PKG_DEPENDS_TARGET="toolchain zlib openssl"
 PKG_SECTION="network"
 PKG_SHORTDESC="openssh: An open re-implementation of the SSH package"
@@ -40,6 +42,7 @@ PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/etc/ssh \
                            --disable-wtmpx \
                            --without-rpath \
                            --with-ssl-engine \
+                           --with-privsep-user=nobody \
                            --disable-pututline \
                            --disable-pututxline \
                            --disable-etc-default-login \
@@ -66,11 +69,12 @@ post_makeinstall_target() {
       -e "s|^#X11Forwarding.*|X11Forwarding yes|g" \
       -e "s|^#UsePrivilegeSeparation.*|UsePrivilegeSeparation no|g" \
       -i $INSTALL/etc/ssh/sshd_config
+
   echo "PubkeyAcceptedKeyTypes +ssh-dss" >> $INSTALL/etc/ssh/sshd_config
+
+  debug_strip $INSTALL/usr
 }
 
 post_install() {
-  add_user sshd x 74 74 "Privilege-separated SSH" "/var/empty/sshd" "/bin/sh"
-  add_group sshd 74
   enable_service sshd.service
 }

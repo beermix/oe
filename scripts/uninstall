@@ -48,20 +48,14 @@ if [ -f $STAMP ]; then
 
       # setup configure script
       if [ -z "$PKG_CONFIGURE_SCRIPT" ]; then
-        PKG_CONFIGURE_SCRIPT="$ROOT/$PKG_BUILD/configure"
+        PKG_CONFIGURE_SCRIPT="$PKG_BUILD/configure"
       else
-        PKG_CONFIGURE_SCRIPT="$ROOT/$PKG_BUILD/$PKG_CONFIGURE_SCRIPT"
+        PKG_CONFIGURE_SCRIPT="$PKG_BUILD/$PKG_CONFIGURE_SCRIPT"
       fi
-
-      PKG_CMAKE_SCRIPT="$ROOT/$PKG_BUILD/CMakeLists.txt"
-      if [ "$TARGET" = "target" -a -n "$PKG_CMAKE_SCRIPT_TARGET" ]; then
-        PKG_CMAKE_SCRIPT="$ROOT/$PKG_BUILD/$PKG_CMAKE_SCRIPT_TARGET"
-      elif [ "$TARGET" = "host" -a -n "$PKG_CMAKE_SCRIPT_HOST" ]; then
-        PKG_CMAKE_SCRIPT="$ROOT/$PKG_BUILD/$PKG_CMAKE_SCRIPT_HOST"
-      elif [ "$TARGET" = "init" -a -n "$PKG_CMAKE_SCRIPT_INIT" ]; then
-        PKG_CMAKE_SCRIPT="$ROOT/$PKG_BUILD/$PKG_CMAKE_SCRIPT_INIT"
-      elif [ "$TARGET" = "bootstrap" -a -n "$PKG_CMAKE_SCRIPT_BOOTSTRAP" ]; then
-        PKG_CMAKE_SCRIPT="$ROOT/$PKG_BUILD/$PKG_CMAKE_SCRIPT_BOOTSTRAP"
+      if [ -z "$PKG_CMAKE_SCRIPT" ]; then
+        PKG_CMAKE_SCRIPT="$PKG_BUILD/CMakeLists.txt"
+      else
+        PKG_CMAKE_SCRIPT="$PKG_BUILD/$PKG_CMAKE_SCRIPT"
       fi
 
       # ensure $PKG_BUILD is there. (installer? PKG_URL="")
@@ -89,7 +83,7 @@ if [ -f $STAMP ]; then
         fi
       fi
 
-      MAKEUNINSTALL="$ROOT/$TOOLCHAIN/bin/make -j1 DESTDIR=$SYSROOT_PREFIX uninstall"
+      MAKEUNINSTALL="$TOOLCHAIN/bin/make -j1 DESTDIR=$SYSROOT_PREFIX uninstall"
 
       if [ "$TARGET" = "target" ]; then
         $MAKEUNINSTALL $PKG_MAKEINSTALL_OPTS_TARGET

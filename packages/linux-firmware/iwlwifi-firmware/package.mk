@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,15 +17,13 @@
 ################################################################################
 
 PKG_NAME="iwlwifi-firmware"
-PKG_VERSION="c2e8cc2"
-PKG_REV="1"
+PKG_VERSION="c68485d"
+PKG_SHA256="d5d785b186ec83dfeec6329957babbe1fcb2fe15fa8722ebf3852a8331e33dd5"
 PKG_ARCH="any"
 PKG_LICENSE="Free-to-use"
-PKG_SITE="https://github.com/OpenELEC/iwlwifi-firmware"
-PKG_GIT_URL="https://github.com/OpenELEC/iwlwifi-firmware.git"
-PKG_GIT_BRANCH="master"
+PKG_SITE="https://github.com/LibreELEC/iwlwifi-firmware"
+PKG_URL="https://github.com/LibreELEC/iwlwifi-firmware/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
 PKG_SECTION="firmware"
 PKG_SHORTDESC="iwlwifi-firmware: firmwares for various Intel WLAN drivers"
 PKG_LONGDESC="iwlwifi-firmware: firmwares for various Intel WLAN drivers"
@@ -38,5 +36,5 @@ make_target() {
 }
 
 makeinstall_target() {
-  DESTDIR=$INSTALL/usr ./install
+  DESTDIR=$INSTALL/$(get_kernel_overlay_dir) ./install
 }

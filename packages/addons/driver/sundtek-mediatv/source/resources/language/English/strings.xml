@@ -2,7 +2,7 @@
 <strings>
   <string id="1000">General</string>
   <string id="1014">Extra delay [sec]</string>
-  <string id="1.15">Run user script</string>
+  <string id="1015">Run user script</string>
   <string id="1030">Enable hardware PID filter</string>
   <string id="1035">Enable IR receiver</string>
   <string id="1040">Lowest adapter number (/dev/dvb/adapterX/)</string>

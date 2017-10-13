@@ -49,15 +49,14 @@ if [ -n "$PKG_ARCH" -a ! "$PKG_ARCH" = "any" ]; then
 fi
 
 if [ ! -f $PKG_DIR/package.mk ]; then
-  printf "${boldred}${PACKAGE_NAME}: no package.mk file found${endcolor}\n"
+  printf "$(print_color CLR_ERROR "${PACKAGE_NAME}: no package.mk file found")\n"
   exit 1
 fi
 
 $SCRIPTS/build $@
 
-printf "%${BUILD_INDENT}c ${boldgreen}INSTALL${endcolor}    $PACKAGE_NAME ${boldwhite}($TARGET)${endcolor}\n" ' '>&$SILENT_OUT
+printf "%${BUILD_INDENT}c $(print_color CLR_INSTALL "INSTALL")    $PACKAGE_NAME $(print_color CLR_TARGET "($TARGET)")\n" ' '>&$SILENT_OUT
 export BUILD_INDENT=$((${BUILD_INDENT:-1}+$BUILD_INDENT_SIZE))
-
 
 if [ "$TARGET" = target ] ; then
   for p in $PKG_DEPENDS_TARGET; do
@@ -81,11 +80,6 @@ if [ "$TARGET" = target ] ; then
   if [ -d $PKG_DIR/tmpfiles.d ]; then
     mkdir -p $INSTALL/usr/lib/tmpfiles.d
     cp $PKG_DIR/tmpfiles.d/*.conf $INSTALL/usr/lib/tmpfiles.d
-  fi
-
-  if [ -d $PKG_DIR/generators.d ]; then
-    mkdir -p $INSTALL/lib/systemd/system-generators
-    cp $PKG_DIR/generators.d/* $INSTALL/lib/systemd/system-generators
   fi
 
   if [ -d $PKG_DIR/system.d ]; then
@@ -155,7 +149,6 @@ elif [ "$TARGET" = "init" -a -d $PKG_BUILD/.install_init ]; then
   mkdir -p $INSTALL
   cp -PR $PKG_BUILD/.install_init/* $INSTALL
 fi
-
 
 if [ "$TARGET" = target ] ; then
   if [ "$(type -t post_install)" = "function" ]; then

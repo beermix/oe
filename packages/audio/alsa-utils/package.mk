@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,7 +18,10 @@
 
 PKG_NAME="alsa-utils"
 PKG_VERSION="1.1.4"
-PKG_SITE="ftp://ftp.alsa-project.org/pub/utils/"
+PKG_SHA256="a7831044de92c5bf33bf3365a3f36e49397f4191e934df460ae1ca15138c9d9d"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
+PKG_SITE="http://www.alsa-project.org/"
 PKG_URL="ftp://ftp.alsa-project.org/pub/utils/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain alsa-lib ncurses"
 PKG_SECTION="audio"
@@ -26,14 +29,18 @@ PKG_SHORTDESC="alsa-utils: Advanced Linux Sound Architecture utilities"
 PKG_LONGDESC="This package includes the utilities for ALSA, like alsamixer, aplay, arecord, alsactl, iecset and speaker-test."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 # package specific configure options
-PKG_CONFIGURE_OPTS_TARGET="--enable-xmlto \
-                           --enable-alsaconf \
-                           --enable-alsaloop \
+PKG_CONFIGURE_OPTS_TARGET="--disable-dependency-tracking \
+                           --disable-xmlto \
+                           --disable-alsaconf \
+                           --disable-alsaloop \
                            --enable-alsatest \
-                           --disable-bat"
+                           --disable-bat \
+                           --disable-nls \
+                           --disable-rst2man"
+
 
 post_makeinstall_target() {
   rm -rf $INSTALL/lib $INSTALL/var
@@ -41,13 +48,13 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/share/sounds
   rm -rf $INSTALL/usr/lib/systemd/system
 
-# install sample asound.conf
-  mkdir -p $INSTALL/usr/config
-  cp $PKG_DIR/config/* $INSTALL/usr/config/
-
 # remove default udev rule to restore mixer configs, we install our own.
 # so we avoid resetting our soundconfig
   rm -rf $INSTALL/usr/lib/udev/rules.d/90-alsa-restore.rules
+
+  for i in aconnect alsamixer alsaucm amidi aplaymidi arecord arecordmidi aseqdump aseqnet iecset; do
+    rm -rf $INSTALL/usr/bin/$i
+  done
 
   mkdir -p $INSTALL/usr/lib/udev
     cp $PKG_DIR/scripts/soundconfig $INSTALL/usr/lib/udev

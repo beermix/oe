@@ -18,6 +18,7 @@
 
 PKG_NAME="libnftnl"
 PKG_VERSION="1.0.7"
+PKG_SHA256="9bb66ecbc64b8508249402f0093829f44177770ad99f6042b86b3a467d963982"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://netfilter.org/projects/libnftnl"
@@ -30,9 +31,5 @@ PKG_LONGDESC="libnftnl is a userspace library providing a low-level netlink prog
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static"
 
-pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC"
-}
 

@@ -9,7 +9,7 @@ index e69fd6a..c0fe122 100644
 -*	rc-rc6-mce               rc6_mce
 +# use combined multi-table on MCE receivers
 +#*	rc-rc6-mce               rc6_mce
-+*	rc-rc6-mce               openelec_multi
++*	rc-rc6-mce               libreelec_multi
  *	rc-real-audio-220-32-keys real_audio_220_32_keys
  *	rc-reddo                 reddo
  *	rc-snapstream-firefly    snapstream_firefly
@@ -17,7 +17,7 @@ index e69fd6a..c0fe122 100644
  *	rc-videomate-tv-pvr      videomate_tv_pvr
  *	rc-winfast-usbii-deluxe  winfast_usbii_deluxe
  *	rc-winfast               winfast
-+# fake tables for openelec keymaps
++# fake tables for LibreELEC keymaps
 +*	rc-cubox-i               cubox-i
 +*	rc-hp-mce                hp_mce
 +*	rc-samsung               samsung

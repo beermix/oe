@@ -18,7 +18,9 @@
 
 PKG_NAME="xf86-video-vmware"
 PKG_VERSION="13.2.1"
+PKG_SHA256="e2f7f7101fba7f53b268e7a25908babbf155b3984fb5268b3d244eb6c11bf62b"
 PKG_ARCH="x86_64"
+PKG_LICENSE="OSS"
 PKG_SITE="http://www.vmware.com"
 PKG_URL="http://xorg.freedesktop.org/releases/individual/driver/${PKG_NAME}-${PKG_VERSION}.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain mesa glu libX11 xorg-server"

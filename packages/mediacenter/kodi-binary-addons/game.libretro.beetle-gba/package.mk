@@ -17,12 +17,13 @@
 ################################################################################
 
 PKG_NAME="game.libretro.beetle-gba"
-PKG_VERSION="491ece4"
-PKG_REV="101"
+PKG_VERSION="0450c73"
+PKG_SHA256="3196b9c3709ae64dc8715bd9751ecec60163b8f3914de36681eb7214b08720f3"
+PKG_REV="103"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/kodi-game/game.libretro.beetle-gba"
-PKG_GIT_URL="https://github.com/kodi-game/game.libretro.beetle-gba"
+PKG_URL="https://github.com/kodi-game/game.libretro.beetle-gba/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain kodi-platform libretro-beetle-gba"
 PKG_SECTION=""
 PKG_SHORTDESC="game.libretro.beetle-gba: Beetle GBA for Kodi"
@@ -38,12 +39,4 @@ configure_target() {
         -DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
         -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
         ..
-}
-
-addon() {
-  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/
-  cp -R $ROOT/$PKG_BUILD/.install_pkg/usr/share/kodi/addons/$PKG_NAME/* $ADDON_BUILD/$PKG_ADDON_ID/
-
-  ADDONSO=$(xmlstarlet sel -t -v "/addon/extension/@library_linux" $ADDON_BUILD/$PKG_ADDON_ID/addon.xml)
-  cp -L $ROOT/$PKG_BUILD/.install_pkg/usr/lib/kodi/addons/$PKG_NAME/$ADDONSO $ADDON_BUILD/$PKG_ADDON_ID/
 }

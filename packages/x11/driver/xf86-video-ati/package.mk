@@ -18,7 +18,9 @@
 
 PKG_NAME="xf86-video-ati"
 PKG_VERSION="7.10.0"
+PKG_SHA256="ee51d642e3105cb5424f02622dc2966b87b42d498bb34104a70fcf6d4a8f4e79"
 PKG_ARCH="x86_64"
+PKG_LICENSE="OSS"
 PKG_SITE="http://www.x.org/"
 PKG_URL="http://xorg.freedesktop.org/archive/individual/driver/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain libXcomposite xorg-server"

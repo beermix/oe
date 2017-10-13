@@ -17,14 +17,12 @@
 ################################################################################
 
 PKG_NAME="fluidsynth"
-PKG_VERSION="v1.1.7"
-PKG_REV="1"
+PKG_VERSION="1.1.7"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://fluidsynth.org/"
-PKG_GIT_URL="https://github.com/FluidSynth/fluidsynth"
+PKG_URL="$SOURCEFORGE_SRC/project/fluidsynth/fluidsynth-$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
 PKG_SECTION="audio"
 PKG_SHORTDESC="FluidSynth: A SoundFont Synthesizer."
 PKG_LONGDESC="FluidSynth renders midi music files as raw audio data, for playing or conversion. "
@@ -32,7 +30,7 @@ PKG_LONGDESC="FluidSynth renders midi music files as raw audio data, for playing
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CMAKE_OPTS_TARGET="-DBUILD_SHARED_LIBS=1 \
-                       -Denable-readline=1 \
+PKG_CMAKE_OPTS_TARGET="-DBUILD_SHARED_LIBS=0 \
+                       -Denable-readline=0 \
                        -Denable-pulseaudio=0 \
                        -Denable-libsndfile=0"

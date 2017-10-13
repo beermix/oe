@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2016-2017 Team LibreELEC
+#      Copyright (C) 2016-present Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,12 +18,13 @@
 
 PKG_NAME="lcdd"
 PKG_VERSION="466edd3"
-PKG_REV="103"
+PKG_SHA256="786aab192a788fd09119645d60576ba258eec3de1a455aaa6d9ddea5e30e1749"
+PKG_REV="105"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://lcdproc.org/"
-PKG_GIT_URL="https://github.com/lcdproc/lcdproc"
-PKG_SOURCE_DIR="lcdproc-lcdproc-$PKG_VERSION*"
+PKG_URL="https://github.com/lcdproc/lcdproc/archive/$PKG_VERSION.tar.gz"
+PKG_SOURCE_DIR="lcdproc-$PKG_VERSION*"
 PKG_DEPENDS_TARGET="toolchain freetype libftdi1 libhid libugpio libusb ncurses serdisplib"
 PKG_SECTION="service"
 PKG_SHORTDESC="LCDproc: Software to display system information from your Linux/*BSD box on a LCD"

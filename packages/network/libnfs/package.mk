@@ -17,10 +17,13 @@
 ################################################################################
 
 PKG_NAME="libnfs"
-PKG_VERSION="14adfbf"
+PKG_VERSION="2.0.0"
+PKG_SHA256="7ea6cd8fa6c461d01091e584d424d28e137d23ff4b65b95d01a3fd0ef95d120e"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/sahlberg/libnfs"
-PKG_GIT_URL="https://github.com/sahlberg/libnfs.git"
-PKG_GIT_BRANCH="master"
+PKG_URL="https://github.com/sahlberg/libnfs/archive/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_SOURCE_DIR="$PKG_NAME-$PKG_NAME-$PKG_VERSION"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="network"
 PKG_SHORTDESC="libnfs: a client library for accessing NFS shares over a network."
@@ -32,5 +35,5 @@ PKG_AUTORECONF="yes"
 PKG_CONFIGURE_OPTS_TARGET="--disable-examples --disable-tirpc"
 
 pre_configure_target() {
-  export CFLAGS+=" -D_FILE_OFFSET_BITS=64"
+  export CFLAGS="$CFLAGS -D_FILE_OFFSET_BITS=64"
 }

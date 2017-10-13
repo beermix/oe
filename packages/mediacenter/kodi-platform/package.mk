@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,15 +17,13 @@
 ################################################################################
 
 PKG_NAME="kodi-platform"
-PKG_VERSION="c8188d8"
-PKG_REV="1"
+PKG_VERSION="36fb493"
+PKG_SHA256="c53f37888d752e233f5adabc6ecfb8a1ea02728e010007200bbf671f6b9462de"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
-PKG_GIT_URL="https://github.com/xbmc/kodi-platform"
-PKG_GIT_BRANCH="master"
-PKG_DEPENDS_TARGET="toolchain tinyxml kodi p8-platform"
-PKG_PRIORITY="optional"
+PKG_URL="https://github.com/xbmc/kodi-platform/archive/$PKG_VERSION.tar.gz"
+PKG_DEPENDS_TARGET="toolchain tinyxml $MEDIACENTER p8-platform"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="kodi-platform:"
 PKG_LONGDESC="kodi-platform:"

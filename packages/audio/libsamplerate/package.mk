@@ -18,6 +18,10 @@
 
 PKG_NAME="libsamplerate"
 PKG_VERSION="0.1.9"
+PKG_SHA256="93b54bdf46d5e6d2354b7034395fe329c222a966790de34520702bb9642f1c06"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
+PKG_SITE="http://www.mega-nerd.com/SRC/"
 PKG_URL="http://www.mega-nerd.com/SRC/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain fftw"
 PKG_SECTION="audio"
@@ -32,9 +36,8 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
                            --enable-static \
                            --datadir=/usr/share \
                            --enable-fftw \
-                           --enable-sndfile \
-                           --with-gnu-ld"
-                           
+                           --disable-sndfile"
+
 pre_configure_target() {
   export CFLAGS+=" -fPIC -DPIC"
 }

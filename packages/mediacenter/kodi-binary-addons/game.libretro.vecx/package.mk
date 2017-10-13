@@ -17,12 +17,13 @@
 ################################################################################
 
 PKG_NAME="game.libretro.vecx"
-PKG_VERSION="0e70b5d"
-PKG_REV="101"
+PKG_VERSION="becb728"
+PKG_SHA256="4eac3ba1962e55187d160fea882e58536d709a2ecff725533e42ab895f4beb6a"
+PKG_REV="103"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/kodi-game/game.libretro.vecx"
-PKG_GIT_URL="https://github.com/kodi-game/game.libretro.vecx"
+PKG_URL="https://github.com/kodi-game/game.libretro.vecx/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain kodi-platform libretro-vecx"
 PKG_SECTION=""
 PKG_SHORTDESC="game.libretro.vecx: vecx for Kodi"
@@ -38,12 +39,4 @@ configure_target() {
         -DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
         -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
         ..
-}
-
-addon() {
-  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/
-  cp -R $ROOT/$PKG_BUILD/.install_pkg/usr/share/kodi/addons/$PKG_NAME/* $ADDON_BUILD/$PKG_ADDON_ID/
-
-  ADDONSO=$(xmlstarlet sel -t -v "/addon/extension/@library_linux" $ADDON_BUILD/$PKG_ADDON_ID/addon.xml)
-  cp -L $ROOT/$PKG_BUILD/.install_pkg/usr/lib/kodi/addons/$PKG_NAME/$ADDONSO $ADDON_BUILD/$PKG_ADDON_ID/
 }

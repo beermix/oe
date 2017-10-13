@@ -17,12 +17,13 @@
 ################################################################################
 
 PKG_NAME="game.libretro.handy"
-PKG_VERSION="bf3d91c"
-PKG_REV="101"
+PKG_VERSION="e39e728"
+PKG_SHA256="375199b3a48528abd0a1b43f7379f1c04c95f1dfcc3eb34947dccb27e0d8dcdb"
+PKG_REV="103"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/kodi-game/game.libretro.handy"
-PKG_GIT_URL="https://github.com/kodi-game/game.libretro.handy"
+PKG_URL="https://github.com/kodi-game/game.libretro.handy/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain kodi-platform libretro-handy"
 PKG_SECTION=""
 PKG_SHORTDESC="game.libretro.handy: handy for Kodi"
@@ -38,12 +39,4 @@ configure_target() {
         -DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
         -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
         ..
-}
-
-addon() {
-  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/
-  cp -R $ROOT/$PKG_BUILD/.install_pkg/usr/share/kodi/addons/$PKG_NAME/* $ADDON_BUILD/$PKG_ADDON_ID/
-
-  ADDONSO=$(xmlstarlet sel -t -v "/addon/extension/@library_linux" $ADDON_BUILD/$PKG_ADDON_ID/addon.xml)
-  cp -L $ROOT/$PKG_BUILD/.install_pkg/usr/lib/kodi/addons/$PKG_NAME/$ADDONSO $ADDON_BUILD/$PKG_ADDON_ID/
 }

@@ -17,12 +17,13 @@
 ################################################################################
 
 PKG_NAME="game.libretro.genplus"
-PKG_VERSION="90a5c48"
-PKG_REV="101"
+PKG_VERSION="2a98daf"
+PKG_SHA256="737e31c9849d8ca503251d12e48d5d103dc7a56ab7e95165838a562b0c18c53c"
+PKG_REV="103"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/kodi-game/game.libretro.genplus"
-PKG_GIT_URL="https://github.com/kodi-game/game.libretro.genplus"
+PKG_URL="https://github.com/kodi-game/game.libretro.genplus/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain kodi-platform libretro-genplus"
 PKG_SECTION=""
 PKG_SHORTDESC="game.libretro.genplus: Genesis Plus GX emulator for Kodi"
@@ -38,12 +39,4 @@ configure_target() {
         -DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
         -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
         ..
-}
-
-addon() {
-  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/
-  cp -R $ROOT/$PKG_BUILD/.install_pkg/usr/share/kodi/addons/$PKG_NAME/* $ADDON_BUILD/$PKG_ADDON_ID/
-
-  ADDONSO=$(xmlstarlet sel -t -v "/addon/extension/@library_linux" $ADDON_BUILD/$PKG_ADDON_ID/addon.xml)
-  cp -L $ROOT/$PKG_BUILD/.install_pkg/usr/lib/kodi/addons/$PKG_NAME/$ADDONSO $ADDON_BUILD/$PKG_ADDON_ID/
 }

@@ -18,7 +18,9 @@
 
 PKG_NAME="xf86-video-amdgpu"
 PKG_VERSION="1.4.0"
+PKG_SHA256="f8cac4bf3dd795b93cc337e5c0c62618026f597890a10d996f09c73eb88ba67c"
 PKG_ARCH="x86_64"
+PKG_LICENSE="OSS"
 PKG_SITE="http://www.x.org/"
 PKG_URL="http://xorg.freedesktop.org/archive/individual/driver/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain xorg-server"

@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,14 +18,13 @@
 
 PKG_NAME="cxxtools"
 PKG_VERSION="2.2.1"
-PKG_REV="1"
+PKG_SHA256="8cebb6d6cda7c93cc4f7c0d552a68d50dd5530b699cf87916bb3b708fdc4e342"
 PKG_ARCH="any"
 PKG_LICENSE="GPL-2"
 PKG_SITE="http://www.tntnet.org/cxxtools.html"
 PKG_URL="http://www.tntnet.org/download/${PKG_NAME}-${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_HOST=""
 PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
 PKG_SECTION="python/web"
 PKG_SHORTDESC="cxxtools: a collection of general-purpose C++ classes"
 PKG_LONGDESC="Cxxtools is a collection of general-purpose C++ classes"
@@ -37,9 +36,9 @@ PKG_CONFIGURE_OPTS_HOST="--disable-demos --with-atomictype=pthread --disable-uni
 PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --disable-demos --with-atomictype=pthread --disable-unittest"
 
 pre_configure_target() {
-  CFLAGS+=" -fPIC"
-  CXXFLAGS+=" -fPIC"
-  LDFLAGS+=" -fPIC"
+  CFLAGS="$CFLAGS -fPIC"
+  CXXFLAGS="$CXXFLAGS -fPIC"
+  LDFLAGS="$LDFLAGS -fPIC"
 }
 
 

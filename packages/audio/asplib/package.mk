@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,13 +18,12 @@
 
 PKG_NAME="asplib"
 PKG_VERSION="da66f51"
+PKG_SHA256="94b140029311b8cc5bb3568e4d938e197298c4e208db5a5fe734b20da334a264"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/AchimTuran/asplib"
-PKG_GIT_URL="https://github.com/AchimTuran/asplib"
-PKG_GIT_BRANCH="master"
+PKG_URL="https://github.com/AchimTuran/asplib/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
 PKG_SECTION="audio"
 PKG_SHORTDESC="asplib: Achim's Signal Processing LIBrary"
 PKG_LONGDESC="asplib is a small and lightweight C++ library for digital signal processing."
@@ -32,6 +31,4 @@ PKG_LONGDESC="asplib is a small and lightweight C++ library for digital signal p
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-CXXFLAGS="$CXXFLAGS -DTARGET_LINUX -fPIC"
-
-
+CXXFLAGS="$CXXFLAGS -DTARGET_LINUX"

@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,13 +18,12 @@
 
 PKG_NAME="util-linux"
 PKG_VERSION="2.30.2"
-PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_URL="http://www.kernel.org/pub/linux/utils/util-linux/v2.30/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain libcap-ng"
-PKG_DEPENDS_INIT="toolchain gcc:init"
-PKG_PRIORITY="optional"
+PKG_DEPENDS_HOST="toolchain"
+PKG_DEPENDS_TARGET="toolchain"
+PKG_DEPENDS_INIT="toolchain"
 PKG_SECTION="system"
 PKG_SHORTDESC="util-linux: Miscellaneous system utilities for Linux"
 PKG_LONGDESC="The util-linux package contains a large variety of low-level system utilities that are necessary for a Linux system to function. Among many features, Util-linux contains the fdisk configuration tool and the login program."
@@ -38,7 +37,6 @@ UTILLINUX_CONFIG_DEFAULT="--disable-gtk-doc \
                           --enable-tls \
                           --disable-all-programs \
                           --enable-chsh-only-listed \
-                          --enable-libmount-force-mountinfo \
                           --disable-bash-completion \
                           --disable-colors-default \
                           --disable-pylibmount \
@@ -53,7 +51,6 @@ UTILLINUX_CONFIG_DEFAULT="--disable-gtk-doc \
                           --without-ncurses \
                           --without-readline \
                           --without-slang \
-                          --without-termcap \
                           --without-tinfo \
                           --without-utempter \
                           --without-util \
@@ -64,9 +61,7 @@ UTILLINUX_CONFIG_DEFAULT="--disable-gtk-doc \
                           --without-python \
                           --without-systemdsystemunitdir"
 
-PKG_CONFIGURE_OPTS_TARGET="--sbindir=/sbin \
-                           --libexecdir=/lib \
-                           $UTILLINUX_CONFIG_DEFAULT \
+PKG_CONFIGURE_OPTS_TARGET="$UTILLINUX_CONFIG_DEFAULT \
                            --enable-libuuid \
                            --enable-libblkid \
                            --enable-libmount \
@@ -76,7 +71,7 @@ PKG_CONFIGURE_OPTS_TARGET="--sbindir=/sbin \
                            --enable-blkid"
 
 if [ "$SWAP_SUPPORT" = "yes" ]; then
-  PKG_CONFIGURE_OPTS_TARGET+=" --enable-swapon"
+  PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET --enable-swapon"
 fi
 
 PKG_CONFIGURE_OPTS_HOST="--enable-static \
@@ -85,25 +80,19 @@ PKG_CONFIGURE_OPTS_HOST="--enable-static \
                          --enable-uuidgen \
                          --enable-libuuid"
 
-PKG_CONFIGURE_OPTS_INIT="--prefix=/ \
-                         --bindir=/bin \
-                         --sbindir=/sbin \
-                         --sysconfdir=/etc \
-                         --libexecdir=/lib \
-                         --localstatedir=/var \
-                         $UTILLINUX_CONFIG_DEFAULT \
+PKG_CONFIGURE_OPTS_INIT="$UTILLINUX_CONFIG_DEFAULT \
                          --enable-libblkid \
                          --enable-libmount \
                          --enable-fsck"
 
 if [ "$INITRAMFS_PARTED_SUPPORT" = "yes" ]; then
-  PKG_CONFIGURE_OPTS_INIT+=" --enable-mkfs --enable-libuuid"
+  PKG_CONFIGURE_OPTS_INIT="$PKG_CONFIGURE_OPTS_INIT --enable-mkfs --enable-libuuid"
 fi
 
 post_makeinstall_target() {
   if [ "$SWAP_SUPPORT" = "yes" ]; then
-    mkdir -p $INSTALL/usr/lib/openelec
-      cp -PR $PKG_DIR/scripts/mount-swap $INSTALL/usr/lib/openelec
+    mkdir -p $INSTALL/usr/lib/libreelec
+      cp -PR $PKG_DIR/scripts/mount-swap $INSTALL/usr/lib/libreelec
 
     mkdir -p $INSTALL/etc
       cat $PKG_DIR/config/swap.conf | \

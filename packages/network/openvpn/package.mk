@@ -1,5 +1,5 @@
 ################################################################################
-#      This file is part of LibreELEC - http://libreelec.tv
+#      This file is part of LibreELEC - https://libreelec.tv
 #      Copyright (C) 2016-2017 Christian Hewitt (chewitt@libreelec.tv)
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
@@ -18,7 +18,8 @@
 ################################################################################
 
 PKG_NAME="openvpn"
-PKG_VERSION="2.4.3"
+PKG_VERSION="2.4.1"
+PKG_SHA256="fde9e22c6df7a335d2d58c6a4d5967be76df173c766a5c51ece57fd044c76ee5"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://openvpn.net"
@@ -32,6 +33,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_have_decl_TUNSETPERSIST=no \
+                           --disable-server \
                            --enable-password-save \
                            --disable-plugins \
                            --enable-iproute2 IPROUTE=/sbin/ip \

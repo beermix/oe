@@ -14,17 +14,15 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################ netperf
+################################################################################
 
 PKG_NAME="network"
 PKG_VERSION=""
-PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="various"
 PKG_SITE="http://www.openelec.tv"
 PKG_URL=""
-PKG_DEPENDS_TARGET="toolchain connman iana-etc ethtool openssh bluez pure-ftpd iperf nuttcp"
-PKG_PRIORITY="optional"
+PKG_DEPENDS_TARGET="toolchain connman netbase ethtool openssh pure-ftpd iperf netperf nuttcp"
 PKG_SECTION="virtual"
 PKG_SHORTDESC="network: Metapackage for packages to install network support"
 PKG_LONGDESC="network: Metapackage for various packages to install network support"
@@ -33,6 +31,13 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 if [ "$BLUETOOTH_SUPPORT" = "yes" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET bluez"
 fi
 
+if [ "$SAMBA_SERVER" = "yes" ] || [ "$SAMBA_SUPPORT" = "yes" ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET samba"
+fi
+
+if [ "$OPENVPN_SUPPORT" = "yes" ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET openvpn"
+fi

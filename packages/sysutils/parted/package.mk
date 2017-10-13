@@ -18,8 +18,11 @@
 
 PKG_NAME="parted"
 PKG_VERSION="3.2"
+PKG_SHA256="858b589c22297cacdf437f3baff6f04b333087521ab274f7ab677cb8c6bb78e4"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/parted/"
-PKG_URL="http://ftp.gnu.org/gnu/parted/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="http://ftpmirror.gnu.org/parted/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain util-linux:host"
 PKG_DEPENDS_TARGET="toolchain util-linux parted:host readline ncurses"
 PKG_DEPENDS_INIT="toolchain util-linux:init parted"
@@ -32,6 +35,7 @@ PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-device-mapper \
                            --disable-shared \
+                           --without-readline \
                            --disable-rpath \
                            --with-gnu-ld"
 

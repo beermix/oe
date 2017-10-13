@@ -13,16 +13,17 @@
 #  GNU General Public License for more details.
 #
 #  You should have received a copy of the GNU General Public License
-#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
+#  along with OpenELEC.  If not, see http://www.gnu.org/licenses/>.
 ################################################################################
 
 PKG_NAME="libmicrohttpd"
-PKG_VERSION="0.9.51"
+PKG_VERSION="0.9.55"
+PKG_SHA256="0c1cab8dc9f2588bd3076a28f77a7f8de9560cbf2d80e53f9a8696ada80ed0f8"
 PKG_ARCH="any"
 PKG_LICENSE="LGPLv2.1"
-PKG_SITE="https://ftp.gnu.org/gnu/libmicrohttpd/?C=M;O=D"
-PKG_URL="https://ftp.gnu.org/gnu/libmicrohttpd/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain libgcrypt"
+PKG_SITE="http://www.gnu.org/software/libmicrohttpd/"
+PKG_URL="http://ftpmirror.gnu.org/libmicrohttpd/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="web"
 PKG_SHORTDESC="libmicrohttpd: a small webserver C library"
 PKG_LONGDESC="GNU libmicrohttpd is a small C library that is supposed to make it easy to run an HTTP server as part of another application."
@@ -31,14 +32,11 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
-			      --disable-doc \
-			      --disable-examples \
-			      --disable-curl \
-			      --disable-spdy \
-			      --with-pic \
-			      --with-libgcrypt-prefix=$SYSROOT_PREFIX/usr"
+                           --enable-static \
+                           --disable-curl \
+                           --disable-https \
+                           --with-libgcrypt-prefix=$SYSROOT_PREFIX/usr"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
 }
-

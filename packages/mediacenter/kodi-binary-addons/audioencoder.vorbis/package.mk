@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,15 +17,14 @@
 ################################################################################
 
 PKG_NAME="audioencoder.vorbis"
-PKG_VERSION="8c928ed"
-PKG_REV="1"
+PKG_VERSION="6bd0b65"
+PKG_SHA256="50da259ac021bdff47b10092c885caacfed30e3f5d83eabb7b7c29b587282a00"
+PKG_REV="2"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
-PKG_GIT_URL="https://github.com/xbmc/audioencoder.vorbis"
-PKG_GIT_BRANCH="master"
+PKG_URL="https://github.com/xbmc/audioencoder.vorbis/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain kodi-platform libogg libvorbis"
-PKG_PRIORITY="optional"
 PKG_SECTION=""
 PKG_SHORTDESC="audioencoder.vorbis: A audioencoder addon for Kodi"
 PKG_LONGDESC="audioencoder.vorbis is a audioencoder addon for Kodi"
@@ -33,9 +32,3 @@ PKG_AUTORECONF="no"
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_TYPE="xbmc.audioencoder"
-
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/share/kodi \
-                       -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
-                       -DOGG_INCLUDE_DIRS=$SYSROOT_PREFIX/usr/include \
-                       -DVORBIS_INCLUDE_DIRS=$SYSROOT_PREFIX/usr/include \
-                       -DVORBISENC_INCLUDE_DIRS=$SYSROOT_PREFIX/usr/include"

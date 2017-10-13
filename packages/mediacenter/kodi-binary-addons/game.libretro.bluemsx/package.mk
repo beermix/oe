@@ -17,12 +17,13 @@
 ################################################################################
 
 PKG_NAME="game.libretro.bluemsx"
-PKG_VERSION="8c3ea6b"
-PKG_REV="101"
+PKG_VERSION="b528bea"
+PKG_SHA256="7b3da1d2d74b71f6e5d01ae731eac0dbfa8ac8715ebbde06a87f8945858166a1"
+PKG_REV="103"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/kodi-game/game.libretro.bluemsx"
-PKG_GIT_URL="https://github.com/kodi-game/game.libretro.bluemsx"
+PKG_URL="https://github.com/kodi-game/game.libretro.bluemsx/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain kodi-platform libretro-bluemsx"
 PKG_SECTION=""
 PKG_SHORTDESC="game.libretro.bluemsx: BlueMSX for Kodi"
@@ -38,12 +39,4 @@ configure_target() {
         -DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
         -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
         ..
-}
-
-addon() {
-  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/
-  cp -R $ROOT/$PKG_BUILD/.install_pkg/usr/share/kodi/addons/$PKG_NAME/* $ADDON_BUILD/$PKG_ADDON_ID/
-
-  ADDONSO=$(xmlstarlet sel -t -v "/addon/extension/@library_linux" $ADDON_BUILD/$PKG_ADDON_ID/addon.xml)
-  cp -L $ROOT/$PKG_BUILD/.install_pkg/usr/lib/kodi/addons/$PKG_NAME/$ADDONSO $ADDON_BUILD/$PKG_ADDON_ID/
 }

@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,15 +17,14 @@
 ################################################################################
 
 PKG_NAME="screensaver.biogenesis"
-PKG_VERSION="717fea7"
-PKG_REV="1"
+PKG_VERSION="5241aec"
+PKG_SHA256="57185a419f7c32dfefeb7c82ed3f07f6f8840f2ac7da5d4c03d023a2cda44238"
+PKG_REV="2"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/notspiff/screensaver.biogenesis"
-PKG_GIT_URL="https://github.com/notspiff/screensaver.biogenesis"
-PKG_GIT_BRANCH="master"
-PKG_DEPENDS_TARGET="toolchain kodi-platform opengl"
-PKG_PRIORITY="optional"
+PKG_URL="https://github.com/notspiff/screensaver.biogenesis/archive/$PKG_VERSION.tar.gz"
+PKG_DEPENDS_TARGET="toolchain kodi-platform"
 PKG_SECTION=""
 PKG_SHORTDESC="screensaver.biogenesis"
 PKG_LONGDESC="screensaver.biogenesis"
@@ -34,9 +33,6 @@ PKG_AUTORECONF="no"
 PKG_IS_ADDON="yes"
 PKG_ADDON_TYPE="xbmc.ui.screensaver"
 
-if [ ! "$OPENGL" = "mesa" ] ; then
+if [ "$OPENGL" = "no" ] ; then
   exit 0
 fi
-
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/share/kodi \
-                       -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr"

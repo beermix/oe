@@ -13,24 +13,22 @@
 #  GNU General Public License for more details.
 #
 #  You should have received a copy of the GNU General Public License
-#  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>. -DTHREADS_PTHREAD_ARG=1 
+#  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
 PKG_NAME="zstd"
-PKG_VERSION="v1.3.1"
+PKG_VERSION="1.3.1"
+PKG_SHA256="312fb9dc75668addbc9c8f33c7fa198b0fc965c576386b8451397e06256eadc6"
 PKG_ARCH="any"
-PKG_LICENSE="BSD-3"
-PKG_SITE="https://github.com/facebook/zstd/releases"
-PKG_GIT_URL="https://github.com/facebook/zstd"
+PKG_LICENSE="BSD/GPLv2"
+PKG_SITE="http://www.zstd.net"
+PKG_URL="https://github.com/facebook/zstd/archive/v${PKG_VERSION}.tar.gz"
+PKG_SOURCE_DIR=$PKG_NAME-$PKG_VERSION
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="compress"
 PKG_SHORTDESC="fast real-time compression algorithm"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
-PKG_USE_CMAKE="yes"
 
-PKG_CMAKE_SCRIPT_HOST="build/cmake/CMakeLists.txt"
-PKG_CMAKE_SCRIPT_TARGET="build/cmake/CMakeLists.txt"
-
-PKG_CMAKE_OPTS_HOST="-DTHREADS_PTHREAD_ARG=0 -DZSTD_BUILD_SHARED=0"
-PKG_CMAKE_OPTS_TARGET="-DTHREADS_PTHREAD_ARG=1 -DZSTD_BUILD_SHARED=0"
+PKG_CMAKE_SCRIPT="$PKG_BUILD/build/cmake/CMakeLists.txt"
+PKG_CMAKE_OPTS_HOST="-DTHREADS_PTHREAD_ARG=0"

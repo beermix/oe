@@ -29,9 +29,6 @@
   # Kernel target
     KERNEL_TARGET="bzImage"
 
-  # Kernel devicetree image
-    KERNEL_UBOOT_DT_IMAGE=""
-
   # Kernel extra targets to build
     KERNEL_UBOOT_EXTRA_TARGET=""
 
@@ -51,7 +48,7 @@
     OPTIMIZATIONS="hard"
 
   # Project CFLAGS
-    # PROJECT_CFLAGS="-mtune=$TARGET_CPU -mmmx -msse -msse2 -msse3 -mssse3 -msse4.1 -msse4.2 -maes -mfpmath=sse"
+  # PROJECT_CFLAGS="-mtune=$TARGET_CPU -mmmx -msse -msse2 -msse3 -mssse3 -msse4.1 -msse4.2 -maes -mfpmath=sse"
     PROJECT_CFLAGS="-mmmx -msse -msse2 -msse3 -msse4 -msse4.1 -msse4.2 -mavx -mfpmath=sse"
 
   # LTO (Link Time Optimization) support ( yes / no )
@@ -60,27 +57,29 @@
   # GOLD (Google Linker) support ( yes / no )
     GOLD_SUPPORT="no"
 
-  # SquashFS compression method ( gzip / lzo / xz / lz4 / zstd )
+  # SquashFS compression method (gzip / lzo / xz)
     SQUASHFS_COMPRESSION="zstd"
-
 
 ################################################################################
 # setup project defaults
 ################################################################################
 
-  # build and install ALSA Audio support ( yes / no )
+  # build and install ALSA Audio support (yes / no)
     ALSA_SUPPORT="yes"
 
-  # OpenGL (X/ES) implementation to use (mesa / bcm2835-firmware / meson6 / meson8 / meson-gxbb / gpu-imx-gpu-viv)
+  # OpenGL(X) implementation to use (no / mesa)
     OPENGL="mesa"
 
-  # include uvesafb support ( yes / no )
-    UVESAFB_SUPPORT="no"
+  # OpenGL-ES implementation to use (no / bcm2835-driver / gpu-viv-bin-mx6q)
+    OPENGLES="no"
+
+  # include uvesafb support (yes / no)
+    UVESAFB_SUPPORT="yes"
 
   # Displayserver to use (x11 / no)
     DISPLAYSERVER="x11"
 
-  # KODI Player implementation to use (default / bcm2835-firmware / libfslvpuwrap)
+  # KODI Player implementation to use (default / bcm2835-driver / libfslvpuwrap)
     KODIPLAYER_DRIVER="default"
 
   # Modules to install in initramfs for early boot
@@ -95,13 +94,4 @@
   # for a list of additinoal drivers see packages/linux-drivers
   # Space separated list is supported,
   # e.g. ADDITIONAL_DRIVERS="DRIVER1 DRIVER2"
-  # ADDITIONAL_DRIVERS="$ADDITIONAL_DRIVERS bcm_sta"
-
-  # install extra kernel drivers, see configfiles in packages/linux/config/*.config
-  # or projects/*/linux/*.config or distributions/*/linux/*.config
-  # please add all configfiles which should be included without the suffix and prefix
-  # except the default-*.config and the ones included in packages/linux/package.mk
-  # Space separated list is supported,
-    KERNEL_EXTRA_CONFIG+=" keyboard-at"
-    KERNEL_EXTRA_CONFIG+=" sata lan-pci sound-pci"
-    KERNEL_EXTRA_CONFIG+=" bluetooth filesystem wlan-usb"
+  # ADDITIONAL_DRIVERS="$ADDITIONAL_DRIVERS bcm_sta media_build intel_nuc_led"

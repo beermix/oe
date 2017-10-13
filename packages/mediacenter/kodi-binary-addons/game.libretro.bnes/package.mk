@@ -17,12 +17,13 @@
 ################################################################################
 
 PKG_NAME="game.libretro.bnes"
-PKG_VERSION="4538b85"
-PKG_REV="101"
+PKG_VERSION="5f9fd7f"
+PKG_SHA256="cce5a348486564bd12ca79e6166a6169375369911edf2aeebb9021038af3930c"
+PKG_REV="102"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/kodi-game/game.libretro.bnes"
-PKG_GIT_URL="https://github.com/kodi-game/game.libretro.bnes"
+PKG_URL="https://github.com/kodi-game/game.libretro.bnes/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain kodi-platform libretro-bnes"
 PKG_SECTION=""
 PKG_SHORTDESC="game.libretro.bnes: bNES for Kodi"
@@ -38,12 +39,4 @@ configure_target() {
         -DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
         -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
         ..
-}
-
-addon() {
-  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/
-  cp -R $ROOT/$PKG_BUILD/.install_pkg/usr/share/kodi/addons/$PKG_NAME/* $ADDON_BUILD/$PKG_ADDON_ID/
-
-  ADDONSO=$(xmlstarlet sel -t -v "/addon/extension/@library_linux" $ADDON_BUILD/$PKG_ADDON_ID/addon.xml)
-  cp -L $ROOT/$PKG_BUILD/.install_pkg/usr/lib/kodi/addons/$PKG_NAME/$ADDONSO $ADDON_BUILD/$PKG_ADDON_ID/
 }

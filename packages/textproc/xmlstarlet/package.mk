@@ -18,6 +18,9 @@
 
 PKG_NAME="xmlstarlet"
 PKG_VERSION="1.6.1"
+PKG_SHA256="15d838c4f3375332fd95554619179b69e4ec91418a3a5296e7c631b7ed19e7ca"
+PKG_ARCH="any"
+PKG_LICENSE="MIT"
 PKG_SITE="http://xmlstar.sourceforge.net"
 PKG_URL="http://netcologne.dl.sourceforge.net/project/xmlstar/$PKG_NAME/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="libxml2:host libxslt:host"
@@ -25,24 +28,21 @@ PKG_DEPENDS_TARGET="toolchain libxml2 libxslt"
 PKG_SECTION="tools"
 PKG_SHORTDESC="XMLStarlet is a command-line XML utility which allows the modification and validation of XML documents"
 PKG_LONGDESC="XMLStarlet is a command line XML toolkit which can be used to transform,query, validate, and edit XML documents and files using  simple set of shellcommands in similar way it is done for plain text files  using grep/sed/awk/tr/diff/patch."
-PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_HOST="  ac_cv_func_malloc_0_nonnull=yes \
                            ac_cv_func_realloc_0_nonnull=yes \
                            --enable-static-libs \
-                           enable_build_docs=no \
-                           LIBXML_CONFIG=$ROOT/$TOOLCHAIN/bin/xml2-config \
-                           LIBXSLT_CONFIG=$ROOT/$TOOLCHAIN/bin/xslt-config \
-                           --with-libxml-include-prefix=$ROOT/$TOOLCHAIN/include/libxml2 \
-                           --with-libxml-libs-prefix=$ROOT/$TOOLCHAIN/lib \
-                           --with-libxslt-include-prefix=$ROOT/$TOOLCHAIN/include \
-                           --with-libxslt-libs-prefix=$ROOT/$TOOLCHAIN/lib"
+                           LIBXML_CONFIG=$TOOLCHAIN/bin/xml2-config \
+                           LIBXSLT_CONFIG=$TOOLCHAIN/bin/xslt-config \
+                           --with-libxml-include-prefix=$TOOLCHAIN/include/libxml2 \
+                           --with-libxml-libs-prefix=$TOOLCHAIN/lib \
+                           --with-libxslt-include-prefix=$TOOLCHAIN/include \
+                           --with-libxslt-libs-prefix=$TOOLCHAIN/lib"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            ac_cv_func_realloc_0_nonnull=yes \
                            --enable-static-libs \
-                           enable_build_docs=no \
                            LIBXML_CONFIG=$SYSROOT_PREFIX/usr/bin/xml2-config \
                            LIBXSLT_CONFIG=$SYSROOT_PREFIX/usr/bin/xslt-config \
                            --with-libxml-include-prefix=$SYSROOT_PREFIX/usr/include/libxml2 \
@@ -51,7 +51,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --with-libxslt-libs-prefix=$SYSROOT_PREFIX/usr/lib"
 
 post_makeinstall_host() {
-  ln -sf xml $ROOT/$TOOLCHAIN/bin/xmlstarlet
+  ln -sf xml $TOOLCHAIN/bin/xmlstarlet
 }
 
 post_makeinstall_target() {

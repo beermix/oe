@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,6 +18,8 @@
 
 PKG_NAME="pulseaudio"
 PKG_VERSION="11.1"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://pulseaudio.org/"
 PKG_URL="http://www.freedesktop.org/software/pulseaudio/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain libtool alsa-lib libsndfile soxr dbus systemd openssl libcap fftw"
@@ -103,7 +105,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 pre_configure_target() {
   export CFLAGS="$CFLAGS -fopenmp"
   sed -e 's|; remixing-use-all-sink-channels = yes|; remixing-use-all-sink-channels = no|' \
-      -i $ROOT/$PKG_BUILD/src/daemon/daemon.conf.in
+      -i $PKG_BUILD/src/daemon/daemon.conf.in
 }
 
 post_makeinstall_target() {

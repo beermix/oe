@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,13 +18,11 @@
 
 PKG_NAME="imx6-status-led"
 PKG_VERSION="1.0"
-PKG_REV="1"
 PKG_ARCH="arm"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.openelec.tv/"
 PKG_URL=""
 PKG_DEPENDS_TARGET=""
-PKG_PRIORITY="optional"
 PKG_SECTION="system"
 PKG_SHORTDESC="i.MX6 status LED control"
 PKG_LONGDESC="Front status LED control for i.MX6 systems"
@@ -36,8 +34,8 @@ make_target() {
 }
 
 makeinstall_target() {
-  mkdir -p $INSTALL/usr/lib/openelec
-  cp $PKG_DIR/scripts/* $INSTALL/usr/lib/openelec
+  mkdir -p $INSTALL/usr/lib/libreelec
+  cp $PKG_DIR/scripts/* $INSTALL/usr/lib/libreelec
 }
 
 post_install() {

@@ -18,9 +18,11 @@
 
 PKG_NAME="heimdal"
 PKG_VERSION="7.4.0"
+PKG_SHA256="b1d5c19989ad9f2cd8038c1d7c3e8f2bc227f79a1fa4eb0ade42cab4a40637ab"
 PKG_ARCH="any"
-PKG_SITE="https://github.com/heimdal/heimdal/releases"
-PKG_URL="https://github.com/heimdal/heimdal/releases/download/heimdal-$PKG_VERSION/heimdal-$PKG_VERSION.tar.gz"
+PKG_LICENSE="BSD-3c"
+PKG_SITE="http://www.h5l.org/"
+PKG_URL="https://github.com/heimdal/heimdal/archive/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="$PKG_NAME-$PKG_NAME-$PKG_VERSION"
 PKG_DEPENDS_HOST="toolchain e2fsprogs:host"
 PKG_SECTION="devel"
@@ -47,6 +49,6 @@ PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared \
                          --disable-heimdal-documentation"
 
 makeinstall_host() {
-  mkdir -p $ROOT/$TOOLCHAIN/bin
-    cp -PR lib/asn1/asn1_compile $ROOT/$TOOLCHAIN/bin
+  mkdir -p $TOOLCHAIN/bin
+    cp -PR lib/asn1/asn1_compile $TOOLCHAIN/bin
 }

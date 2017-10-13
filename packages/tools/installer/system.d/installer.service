@@ -1,5 +1,5 @@
 [Unit]
-Description=OpenELEC Installer
+Description=XBMC Media Center
 Requires=installer.target
 
 [Service]

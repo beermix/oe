@@ -17,12 +17,14 @@
 ################################################################################
 
 PKG_NAME="game.libretro.beetle-saturn"
-PKG_VERSION="88e0a43"
-PKG_REV="101"
-PKG_ARCH="x86_64"
+PKG_VERSION="33c0d23"
+PKG_SHA256="b9e08ddc467a3563b56f2c9b4e514cb03c59b8e43d965ccecbf092a32fc7dbeb"
+PKG_REV="103"
+# no openGL suport in retroplayer yet
+PKG_ARCH="none"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/kodi-game/game.libretro.beetle-saturn"
-PKG_GIT_URL="https://github.com/kodi-game/game.libretro.beetle-saturn"
+PKG_URL="https://github.com/kodi-game/game.libretro.beetle-saturn/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain kodi-platform libretro-beetle-saturn"
 PKG_SECTION=""
 PKG_SHORTDESC="game.libretro.beetle-saturn: beetle-saturn for Kodi"
@@ -38,12 +40,4 @@ configure_target() {
         -DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
         -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
         ..
-}
-
-addon() {
-  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/
-  cp -R $ROOT/$PKG_BUILD/.install_pkg/usr/share/kodi/addons/$PKG_NAME/* $ADDON_BUILD/$PKG_ADDON_ID/
-
-  ADDONSO=$(xmlstarlet sel -t -v "/addon/extension/@library_linux" $ADDON_BUILD/$PKG_ADDON_ID/addon.xml)
-  cp -L $ROOT/$PKG_BUILD/.install_pkg/usr/lib/kodi/addons/$PKG_NAME/$ADDONSO $ADDON_BUILD/$PKG_ADDON_ID/
 }

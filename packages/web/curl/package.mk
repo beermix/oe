@@ -28,7 +28,7 @@ PKG_NAME="curl"
 PKG_VERSION="7.56.0"
 PKG_ARCH="any"
 PKG_LICENSE="MIT"
-PKG_SITE="https://curl.haxx.se/download/?C=M;O=D"
+PKG_SITE="http://curl.haxx.se"
 PKG_URL="http://curl.haxx.se/download/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain zlib openssl rtmpdump libgpg-error nghttp2"
 PKG_SECTION="web"
@@ -64,7 +64,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            --disable-gopher \
                            --disable-manual \
                            --enable-libgcc \
-                           --disable-ipv6 \
+                           --enable-ipv6 \
                            --enable-versioned-symbols \
                            --enable-nonblocking \
                            --enable-threaded-resolver \
@@ -85,7 +85,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            --without-gnutls \
                            --with-ssl \
                            --without-polarssl \
-                           --without-mbedtls \
                            --without-nss \
                            --with-ca-bundle=/etc/ssl/cert.pem \
                            --without-ca-path \

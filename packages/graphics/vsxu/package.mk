@@ -18,14 +18,13 @@
 
 PKG_NAME="vsxu"
 PKG_VERSION="0.5.1"
-PKG_REV="1"
+PKG_SHA256="6707b230ba6cb28c5b19ec6163722b801dd30afed8f966b57e188761b4d54b8e"
 PKG_ARCH="i386 x86_64"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.vsxu.com"
 # repackaged from https://github.com/vovoid/vsxu/archive/$PKG_VERSION.tar.gz
 PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain opengl libX11 glew glfw zlib libpng libjpeg-turbo freetype"
-PKG_PRIORITY="optional"
+PKG_DEPENDS_TARGET="toolchain $OPENGL libX11 glew glfw zlib libpng libjpeg-turbo freetype"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="vsxu:"
 PKG_LONGDESC="vsxu:"

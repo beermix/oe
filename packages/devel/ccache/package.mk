@@ -18,13 +18,12 @@
 
 PKG_NAME="ccache"
 PKG_VERSION="3.3.4"
-PKG_REV="1"
+PKG_SHA256="fa9d7f38367431bc86b19ad107d709ca7ecf1574fdacca01698bdf0a47cd8567"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="https://www.samba.org/ftp/ccache/?C=M;O=D"
+PKG_SITE="https://ccache.samba.org/"
 PKG_URL="https://samba.org/ftp/ccache/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST="make:host"
-PKG_PRIORITY="optional"
 PKG_SECTION="devel"
 PKG_SHORTDESC="ccache: A fast compiler cache"
 PKG_LONGDESC="Ccache is a compiler cache. It speeds up re-compilation of C/C++ code by caching previous compiles and detecting when the same compile is being done again."
@@ -32,16 +31,28 @@ PKG_LONGDESC="Ccache is a compiler cache. It speeds up re-compilation of C/C++ c
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
+export CC=$LOCAL_CC
+export CXX=$LOCAL_CXX
+
 PKG_CONFIGURE_OPTS_HOST="--with-bundled-zlib"
 
 post_makeinstall_host() {
 # setup ccache
-  $ROOT/$TOOLCHAIN/bin/ccache --max-size=$CCACHE_CACHE_SIZE
-  $ROOT/$TOOLCHAIN/bin/ccache --set-config=compiler_check=string:$(gcc -dumpversion)-$(get_pkg_version gcc)
+  if [ -z "$CCACHE_DISABLE" ]; then
+    $TOOLCHAIN/bin/ccache --max-size=$CCACHE_CACHE_SIZE
+  fi
 
-  mkdir -p $ROOT/$TOOLCHAIN/lib/ccache
-    ln -sf $ROOT/$TOOLCHAIN/bin/ccache $ROOT/$TOOLCHAIN/lib/ccache/gcc
-    ln -sf $ROOT/$TOOLCHAIN/bin/ccache $ROOT/$TOOLCHAIN/lib/ccache/g++
-    ln -sf $ROOT/$TOOLCHAIN/bin/ccache $ROOT/$TOOLCHAIN/lib/ccache/${HOST_NAME}-gcc
-    ln -sf $ROOT/$TOOLCHAIN/bin/ccache $ROOT/$TOOLCHAIN/lib/ccache/${HOST_NAME}-g++
+  cat > $TOOLCHAIN/bin/host-gcc <<EOF
+#!/bin/sh
+$TOOLCHAIN/bin/ccache $CC "\$@"
+EOF
+
+  chmod +x $TOOLCHAIN/bin/host-gcc
+
+  cat > $TOOLCHAIN/bin/host-g++ <<EOF
+#!/bin/sh
+$TOOLCHAIN/bin/ccache $CXX "\$@"
+EOF
+
+  chmod +x $TOOLCHAIN/bin/host-g++
 }

@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,11 +17,11 @@
 ################################################################################
 
 PKG_NAME="autoconf-archive"
-#PKG_VERSION="2015.09.25"
-#PKG_VERSION="2016.09.16"
 PKG_VERSION="2017.09.28"
-PKG_SITE="http://ftp.gnu.org/gnu/autoconf-archive"
-PKG_URL="http://ftp.gnu.org/gnu/autoconf-archive/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
+PKG_SITE="https://www.gnu.org/software/autoconf-archive/"
+PKG_URL="http://ftpmirror.gnu.org/autoconf-archive/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="ccache:host"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="autoconf-archive: macros for autoconf"
@@ -30,7 +30,7 @@ PKG_LONGDESC="autoconf-archive is an package of m4 macros"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME --prefix=$ROOT/$TOOLCHAIN"
+PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME --prefix=$TOOLCHAIN"
 
 makeinstall_host() {
 # make install

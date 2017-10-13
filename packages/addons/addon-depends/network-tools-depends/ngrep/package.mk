@@ -1,5 +1,5 @@
 ################################################################################
-#      This file is part of LibreELEC - http://www.libreelec.tv
+#      This file is part of LibreELEC - https://libreelec.tv
 #      Copyright (C) 2016 Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
@@ -18,6 +18,9 @@
 
 PKG_NAME="ngrep"
 PKG_VERSION="1.45"
+PKG_SHA256="aea6dd337da8781847c75b3b5b876e4de9c58520e0d77310679a979fc6402fa7"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://ngrep.sourceforge.net/"
 PKG_URL="http://prdownloads.sourceforge.net/ngrep/ngrep-${PKG_VERSION}.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain libpcap"

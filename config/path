@@ -16,12 +16,12 @@ set -e
     . config/arch.$TARGET_ARCH
   fi
 
-HOST_NAME=$(gcc -dumpmachine)
-TARGET_NAME=$TARGET_GCC_ARCH-openelec-linux-gnu${TARGET_ABI}
+HOST_NAME=`$LOCAL_CC -dumpmachine`
+TARGET_NAME=$TARGET_GCC_ARCH-libreelec-linux-gnu${TARGET_ABI}
 
-BUILD=$BUILD_BASE.$DISTRONAME-$PROJECT.$TARGET_ARCH-$OPENELEC_VERSION
-if [ "$OPENELEC_VERSION" = "devel" ] ; then
-  BUILD=$BUILD_BASE.$DISTRONAME-$PROJECT.$TARGET_ARCH-$OS_VERSION-$OPENELEC_VERSION
+BUILD=$ROOT/$BUILD_BASE.$DISTRONAME-${DEVICE:-$PROJECT}.$TARGET_ARCH-$LIBREELEC_VERSION
+if [ "$LIBREELEC_VERSION" = "devel" ] ; then
+  BUILD=$ROOT/$BUILD_BASE.$DISTRONAME-${DEVICE:-$PROJECT}.$TARGET_ARCH-$OS_VERSION-$LIBREELEC_VERSION
 fi
 
 if [ -n "$BUILD_SUFFIX" ]; then
@@ -36,12 +36,11 @@ STAMPS=$BUILD/.stamps
 STAMPS_INSTALL=$BUILD/image/.stamps
 DOCS=DOCS
 TOOLCHAIN=$BUILD/toolchain
-SYSROOT_PREFIX=$ROOT/$TOOLCHAIN/$TARGET_NAME/sysroot
+SYSROOT_PREFIX=$TOOLCHAIN/$TARGET_NAME/sysroot
 LIB_PREFIX=$SYSROOT_PREFIX/usr
-TARGET_PREFIX=$ROOT/$TOOLCHAIN/bin/$TARGET_NAME-
+TARGET_PREFIX=$TOOLCHAIN/bin/$TARGET_NAME-
 
-FAKEROOT_SCRIPT_SYSTEM=$ROOT/$BUILD/image/.fakeroot-system
-FAKEROOT_SCRIPT_INIT=$ROOT/$BUILD/image/.fakeroot-init
+FAKEROOT_SCRIPT=$BUILD/.fakeroot
 
 if [ -z "$INSTALL" ]; then
   INSTALL=$BUILD/image/system
@@ -50,11 +49,12 @@ INSTALL_INIT=$BUILD/image/initramfs/root-image
 
 . config/sources
 
-MAKE="$ROOT/$TOOLCHAIN/bin/make"
-MAKEINSTALL="$ROOT/$TOOLCHAIN/bin/make -j1 DESTDIR=$SYSROOT_PREFIX install"
+MAKE="$TOOLCHAIN/bin/make"
+MAKEINSTALL="$TOOLCHAIN/bin/make -j1 DESTDIR=$SYSROOT_PREFIX install"
 SED="sed -i"
 
 unset LD_LIBRARY_PATH
+
 # set package metadata
   reset_pkg_vars "$1"
 
@@ -65,84 +65,60 @@ unset LD_LIBRARY_PATH
     _ANCHOR="@?+?@"
     PKG_DIR=""
 
-    # check project folder for a package in home dir
-    for DIR in $(find $HOME/.openelec/projects/$PROJECT/packages -type d -name $_PKG_ROOT_NAME 2>/dev/null); do
-      if [ -r "$DIR/package.mk" ]; then
-        # found first, set $PKG_DIR
-        PKG_DIR="$DIR"
-        # keep track of dirs with package.mk for detecting multiple folders
-        _ALL_DIRS="${_ALL_DIRS}${DIR}\\n"
-        _FOUND=$((_FOUND+1))
-        if [ $_FOUND -gt 1 ]; then
-          # _FOUND more ? fail
-          echo "Error - multiple package folders:"
-          echo -e "$_ALL_DIRS"
-          exit 1
-        fi
-      fi
+    # If the package caches are unset, then populate them
+    if [ -z "${_CACHE_PACKAGE_LOCAL+x}" -o -z "${_CACHE_PACKAGE_GLOBAL+x}" ]; then
+      _CACHE_PACKAGE_LOCAL=""
+      _CACHE_PACKAGE_GLOBAL=""
+
+      # cache project folder for a package
+      for DIR in $(find $ROOT/projects/$PROJECT/packages -type d 2>/dev/null); do
+        [ -r "$DIR/package.mk" ] && _CACHE_PACKAGE_LOCAL+="${DIR}${_ANCHOR}\n"
+      done
+
+      # cache packages folder
+      for DIR in $(find $ROOT/$PACKAGES -type d 2>/dev/null); do
+        [ -r "$DIR/package.mk" ] && _CACHE_PACKAGE_GLOBAL+="${DIR}${_ANCHOR}\n"
+      done
+
+      export _CACHE_PACKAGE_LOCAL _CACHE_PACKAGE_GLOBAL
+    fi
+
+    # Check for any available local package in preference to a global package
+    for DIR in $(echo -e "${_CACHE_PACKAGE_LOCAL}" | grep -F "/${_PKG_ROOT_NAME}${_ANCHOR}"); do
+      DIR="${DIR%${_ANCHOR}}"
+      # found first, set $PKG_DIR
+      PKG_DIR="$DIR"
+      # keep track of dirs with package.mk for detecting multiple folders
+      _ALL_DIRS+="${DIR}\n"
+      _FOUND=$((_FOUND+1))
     done
 
-    # check for a package in home dir if not found already
-    for DIR in $(find $HOME/.openelec/packages -type d -name $_PKG_ROOT_NAME 2>/dev/null); do
-      if [ -r "$DIR/package.mk" ]; then
-        # found first, set $PKG_DIR
-        PKG_DIR="$DIR"
-        # keep track of dirs with package.mk for detecting multiple folders
-        _ALL_DIRS="${_ALL_DIRS}${DIR}\\n"
-        _FOUND=$((_FOUND+1))
-        if [ $_FOUND -gt 1 ]; then
-          # _FOUND more ? fail
-          echo "Error - multiple package folders:"
-          echo -e "$_ALL_DIRS"
-          exit 1
-        fi
-      fi
-    done
-
-    # check project folder for a package if not found already
-    for DIR in $(find $ROOT/projects/$PROJECT/packages -type d -name $_PKG_ROOT_NAME 2>/dev/null); do
-      if [ -r "$DIR/package.mk" ]; then
+    # If there's no local package available, use the global package
+    if [ $_FOUND -eq 0 ]; then
+      for DIR in $(echo -e "${_CACHE_PACKAGE_GLOBAL}" | grep -F "/${_PKG_ROOT_NAME}${_ANCHOR}"); do
+        DIR="${DIR%${_ANCHOR}}"
         # found first, set $PKG_DIR
         PKG_DIR="$DIR"
         # keep track of dirs with package.mk for detecting multiple folders
         _ALL_DIRS+="${DIR}\n"
         _FOUND=$((_FOUND+1))
-        if [ $_FOUND -gt 1 ]; then
-          # _FOUND more ? fail
-          echo "Error - multiple package folders:"
-          echo -e "$_ALL_DIRS"
-          exit 1
-        fi
-      fi
-    done
-
-    # then check packages folder if not found already
-    if [ $_FOUND -eq 0 ]; then
-      for DIR in $(find $ROOT/$PACKAGES -type d -name $_PKG_ROOT_NAME 2>/dev/null); do
-        if [ -r "$DIR/package.mk" ]; then
-          # found first, set $PKG_DIR
-          PKG_DIR="$DIR"
-          # keep track of dirs with package.mk for detecting multiple folders
-          _ALL_DIRS="${_ALL_DIRS}${DIR}\\n"
-          _FOUND=$((_FOUND+1))
-          if [ $_FOUND -gt 1 ]; then
-            # found more ? fail
-            echo "Error - multiple package folders:"
-            echo -e "$_ALL_DIRS"
-            exit 1
-          fi
-        fi
       done
     fi
 
+    # _FOUND multiple packages? fail
+    if [ $_FOUND -gt 1 ]; then
+      echo "Error - multiple package folders:"
+      echo -e "$_ALL_DIRS"
+      exit 1
+    fi
   fi
 
-  if [ -r $PKG_DIR/package.mk ]; then
+  if [ -n "$PKG_DIR" -a -r $PKG_DIR/package.mk ]; then
     . $PKG_DIR/package.mk
   fi
 
   if [ "$PKG_IS_ADDON" = "yes" ] ; then
-    [ -z $PKG_SECTION ] && PKG_ADDON_ID="$PKG_NAME" || PKG_ADDON_ID="${PKG_SECTION//\//.}.$PKG_NAME"
+    [ -z $PKG_SECTION ] && PKG_ADDON_ID="$PKG_NAME" || PKG_ADDON_ID="`echo $PKG_SECTION | sed 's,/,.,g'`.$PKG_NAME"
     PKG_NEED_UNPACK="${PKG_NEED_UNPACK} $(get_pkg_directory $MEDIACENTER)"
   fi
 
@@ -158,7 +134,7 @@ unset LD_LIBRARY_PATH
       echo "$PKG_URL"
       exit 1
     fi
-    PKG_SOURCE_NAME="${PKG_URL##*/}"
+    PKG_SOURCE_NAME="$(basename "$PKG_URL")"
     case $PKG_SOURCE_NAME in
       ${PKG_NAME}-${PKG_VERSION}.*)
         PKG_SOURCE_NAME=$PKG_SOURCE_NAME
@@ -190,12 +166,12 @@ XORG_PATH_DRIVERS=/usr/lib/xorg/modules/drivers
 . config/optimize
 
 if [ -z "$CCACHE_DIR" ]; then
-    export CCACHE_DIR=$HOME/-3SDC/.ccache-oe
+  export CCACHE_DIR=$BUILD/.ccache
 fi
 export MAKEFLAGS=-j$CONCURRENCY_MAKE_LEVEL
 
-if [ -z "$PATH" -o "$PATH" = "${PATH#$ROOT/$TOOLCHAIN/bin:}" ]; then
-  export PATH="$ROOT/$TOOLCHAIN/lib/ccache:$ROOT/$TOOLCHAIN/bin:$ROOT/$TOOLCHAIN/sbin:$PATH"
+if [[ -z "$PATH" || ( "$PATH" != "$TOOLCHAIN/bin:$TOOLCHAIN/sbin" && "$PATH" = "${PATH#$TOOLCHAIN/bin:$TOOLCHAIN/sbin:}" ) ]]; then
+  export PATH="$TOOLCHAIN/bin:$TOOLCHAIN/sbin${PATH:+":$PATH"}"
 fi
 
 VERSION_SUFFIX=$TARGET_ARCH
@@ -215,6 +191,7 @@ fi
 BUILD_INDENT_SIZE=4
 
 # define colors
+if [ "$DISABLE_COLORS" != "yes" ]; then
   black="\e[0;30m"
   boldblack="\e[1;30m"
   red="\e[0;31m"
@@ -232,6 +209,7 @@ BUILD_INDENT_SIZE=4
   white="\e[0;37m"
   boldwhite="\e[1;37m"
   endcolor="\e[0m"
+fi
 
 # multilib? nah
 unset CONFIG_SITE

@@ -18,7 +18,9 @@
 
 PKG_NAME="opengl-mali"
 PKG_VERSION="20130520"
+PKG_SHA256="4832c8b56fa2b844ff5ead96185a83e08731767062ed711b86fd70543211a9db"
 PKG_ARCH="arm"
+PKG_LICENSE="nonfree"
 PKG_SITE="http://www.arm.com/products/multimedia/mali-graphics-hardware/mali-400-mp.php"
 PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain"

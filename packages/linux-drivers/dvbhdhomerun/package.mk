@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
 
 PKG_NAME="dvbhdhomerun"
 PKG_VERSION="20130704"
-PKG_REV="1"
+PKG_SHA256="1af817b85b163f3c6c3a9a07410f54875e74513c197709638b4922165e894f54"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://sourceforge.net/projects/dvbhdhomerun/"
@@ -27,19 +27,19 @@ PKG_URL="${DISTRO_SRC}/${PKG_NAME}-${PKG_VERSION}.tar.xz"
 #PKG_SOURCE_DIR="${PKG_NAME}_${PKG_VERSION}"
 PKG_DEPENDS_TARGET="toolchain linux libhdhomerun"
 PKG_NEED_UNPACK="$LINUX_DEPENDS"
-PKG_PRIORITY="optional"
 PKG_SECTION="driver/dvb"
 PKG_SHORTDESC="A linux DVB driver for the HDHomeRun TV tuner (http://www.silicondust.com)."
 PKG_LONGDESC="A linux DVB driver for the HDHomeRun TV tuner (http://www.silicondust.com)."
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
+PKG_IS_KERNEL_PKG="yes"
 
-PKG_CMAKE_SCRIPT_TARGET="userhdhomerun/CMakeLists.txt"
+PKG_CMAKE_SCRIPT="userhdhomerun/CMakeLists.txt"
 
 pre_make_target() {
   ( cd ../kernel
-    LDFLAGS="" make dvb_hdhomerun KERNEL_DIR=$(get_pkg_build linux)
+    LDFLAGS="" make dvb_hdhomerun KERNEL_DIR=$(kernel_path)
     fix_module_depends dvb_hdhomerun_core.ko "dvb_core"
   )
 }
@@ -47,19 +47,19 @@ pre_make_target() {
 pre_configure_target() {
 
 # use it here to be sure libhdhomerun is already built
-  PKG_CMAKE_OPTS_TARGET="-DLIBHDHOMERUN_PATH=$(ls -d $ROOT/$BUILD/libhdhomerun-*/)"
+  PKG_CMAKE_OPTS_TARGET="-DLIBHDHOMERUN_PATH=$(ls -d $BUILD/libhdhomerun-*/)"
 
 # absolute path
-  LIBHDHOMERUN_PATH=$(ls -d $ROOT/$BUILD/libhdhomerun-*/)
+  LIBHDHOMERUN_PATH=$(ls -d $BUILD/libhdhomerun-*/)
   sed -i "s|SET(LIBHDHOMERUN_PATH .*)|SET(LIBHDHOMERUN_PATH $LIBHDHOMERUN_PATH)|g" ../userhdhomerun/CMakeLists.txt
   sed -i "s|/etc/dvbhdhomerun|/tmp/dvbhdhomerun|g" ../userhdhomerun/hdhomerun_tuner.cpp
   sed -i "s|/etc/dvbhdhomerun|/tmp/dvbhdhomerun|g" ../userhdhomerun/hdhomerun_controller.cpp
 }
 
 makeinstall_target() {
-  cd $ROOT/$PKG_BUILD
-    mkdir -p $INSTALL/usr/lib/modules/$(get_module_dir)/hdhomerun
-      cp kernel/*.ko $INSTALL/usr/lib/modules/$(get_module_dir)/hdhomerun/
+  cd $PKG_BUILD
+    mkdir -p $INSTALL/$(get_full_module_dir)/hdhomerun
+      cp kernel/*.ko $INSTALL/$(get_full_module_dir)/hdhomerun/
 
     mkdir -p $INSTALL/usr/bin
       cp -PR .$TARGET_NAME/userhdhomerun $INSTALL/usr/bin

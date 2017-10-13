@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,15 +17,14 @@
 ################################################################################
 
 PKG_NAME="audioencoder.lame"
-PKG_VERSION="6e5c838"
-PKG_REV="1"
+PKG_VERSION="6a250f9"
+PKG_SHA256="6d268b135c59e83cc53d6fc553b40a54fcc19321142d00b5b342ddf39d462934"
+PKG_REV="2"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
-PKG_GIT_URL="https://github.com/xbmc/audioencoder.lame"
-PKG_GIT_BRANCH="master"
+PKG_URL="https://github.com/xbmc/audioencoder.lame/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain kodi-platform lame"
-PKG_PRIORITY="optional"
 PKG_SECTION=""
 PKG_SHORTDESC="audioencoder.lame: A audioencoder addon for Kodi"
 PKG_LONGDESC="audioencoder.lame is a audioencoder addon for Kodi"
@@ -33,7 +32,3 @@ PKG_AUTORECONF="no"
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_TYPE="xbmc.audioencoder"
-
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/share/kodi \
-                       -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
-                       -DLAME_INCLUDE_DIRS=$SYSROOT_PREFIX/usr/include"

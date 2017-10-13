@@ -18,10 +18,11 @@
 
 PKG_NAME="mediacenter"
 PKG_VERSION=""
-PKG_SITE="http://www.openelec.tv"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
+PKG_SITE="https://libreelec.tv"
 PKG_URL=""
 PKG_DEPENDS_TARGET="toolchain $MEDIACENTER"
-PKG_PRIORITY="optional"
 PKG_SECTION="virtual"
 PKG_SHORTDESC="Mediacenter: Metapackage"
 PKG_LONGDESC=""
@@ -30,29 +31,22 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 if [ "$MEDIACENTER" = "kodi" ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET $MEDIACENTER-theme-$SKIN_DEFAULT"
+
+  for i in $SKINS; do
+    PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET $MEDIACENTER-theme-$i"
+  done
+  
 # some python stuff needed for various addons
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET Pillow"
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET simplejson"
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pycryptodome"
-#  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pybluez"
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET xmlstarlet"
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pvr.iptvsimple"
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET pvr.iptvsimple.multi"
-
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET inputstream.rtmp"
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET inputstream.adaptive"
-# PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET visualization.shadertoy"
-# PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET audioencoder.flac"
-# PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET kodi-theme-AeonNox"
-# PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET peripheral.joystick"
-
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET Pillow \
+                                          simplejson \
+                                          pycryptodome"
 # other packages
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET OpenELEC-settings"
-
-  if [ -n "$SKINS" ]; then
-    for i in $SKINS; do
-      PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET $MEDIACENTER-theme-$i"
-    done
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET LibreELEC-settings \
+                                          xmlstarlet"
+  
+  if [ "$JOYSTICK_SUPPORT" = "yes" ]; then
+    PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET peripheral.joystick"
   fi
 
 fi

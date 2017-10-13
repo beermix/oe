@@ -17,12 +17,13 @@
 ################################################################################
 
 PKG_NAME="game.libretro.virtualjaguar"
-PKG_VERSION="33833f2"
-PKG_REV="101"
+PKG_VERSION="9b1de42"
+PKG_SHA256="ab3e9668fa0dd2c939e783d6c26cc5a0ca2ad9d8b15dd09c805f000f3e91d6b5"
+PKG_REV="103"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/kodi-game/game.libretro.virtualjaguar"
-PKG_GIT_URL="https://github.com/kodi-game/game.libretro.virtualjaguar"
+PKG_URL="https://github.com/kodi-game/game.libretro.virtualjaguar/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain kodi-platform libretro-virtualjaguar"
 PKG_SECTION=""
 PKG_SHORTDESC="game.libretro.virtualjaguar: VirtualJaguar for Kodi"
@@ -38,12 +39,4 @@ configure_target() {
         -DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
         -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
         ..
-}
-
-addon() {
-  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/
-  cp -R $ROOT/$PKG_BUILD/.install_pkg/usr/share/kodi/addons/$PKG_NAME/* $ADDON_BUILD/$PKG_ADDON_ID/
-
-  ADDONSO=$(xmlstarlet sel -t -v "/addon/extension/@library_linux" $ADDON_BUILD/$PKG_ADDON_ID/addon.xml)
-  cp -L $ROOT/$PKG_BUILD/.install_pkg/usr/lib/kodi/addons/$PKG_NAME/$ADDONSO $ADDON_BUILD/$PKG_ADDON_ID/
 }

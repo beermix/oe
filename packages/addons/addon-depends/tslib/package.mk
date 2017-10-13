@@ -17,9 +17,12 @@
 ################################################################################
 
 PKG_NAME="tslib"
-PKG_VERSION="1.12"
+PKG_VERSION="1.1"
+PKG_SHA256="fe35e5f710ea933b118f710e2ce4403ac076fe69926b570333867d4de082a51c"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/kergoth/tslib"
-PKG_URL="https://github.com/kergoth/tslib/releases/download/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="https://github.com/kergoth/tslib/releases/download/1.1/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain evtest"
 PKG_SECTION="service/system"
 PKG_SHORTDESC="Touchscreen access library with ts_uinput_touch daemon."
@@ -33,8 +36,6 @@ TSLIB_MODULES_DISABLED="arctic2 corgi collie h3600 linear_h2200 mk712 cy8mrln_pa
 TSLIB_BUILD_STATIC="yes"  # no .so files (easy to manage)
 
 pre_configure_target() {
-  CFLAGS="$CFLAGS -fPIC"
-  CXXFLAGS="$CXXFLAGS -fPIC"
   local OPTS_MODULES=""
 
   if [ "$TSLIB_BUILD_STATIC" = "yes" ]; then

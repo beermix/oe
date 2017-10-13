@@ -17,11 +17,12 @@
 ################################################################################
 
 PKG_NAME="kernel-firmware"
-PKG_VERSION="b141345"
+PKG_VERSION="7d2c913"
+PKG_SHA256="fd127d2e36d8a0d2c1e9f70b37d7e31350260fb0755485d9a8c50638596f1791"
 PKG_ARCH="any"
 PKG_LICENSE="other"
-PKG_SITE="http://git.kernel.org/cgit/linux/kernel/git/firmware/linux-firmware.git/"
-PKG_URL="http://git.kernel.org/cgit/linux/kernel/git/firmware/linux-firmware.git/snapshot/$PKG_VERSION.tar.xz"
+PKG_SITE="https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/"
+PKG_URL="https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/snapshot/$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="$PKG_VERSION"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="linux-firmware"
@@ -41,7 +42,7 @@ make_target() {
 
 # Install additional miscellaneous drivers
 makeinstall_target() {
-  FW_TARGET_DIR=$INSTALL/usr/lib/firmware
+  FW_TARGET_DIR=$INSTALL/$(get_full_firmware_dir)
 
   FW_LISTS="${PKG_DIR}/firmwares/any.dat ${PKG_DIR}/firmwares/${TARGET_ARCH}.dat"
   FW_LISTS+=" ${PROJECT_DIR}/${PROJECT}/${PKG_NAME}/firmwares/any.dat"
@@ -67,4 +68,7 @@ makeinstall_target() {
       done
     done < ${fwlist}
   done
+
+  # The following file is installed by brcmfmac_sdio-firmware-rpi
+  rm -fr $FW_TARGET_DIR/brcm/brcmfmac43430-sdio.bin
 }

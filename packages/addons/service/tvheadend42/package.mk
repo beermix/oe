@@ -1,6 +1,6 @@
 ################################################################################
-#      This file is part of LibreELEC - https://LibreELEC.tv
-#      Copyright (C) 2016-2017 Team LibreELEC
+#      This file is part of LibreELEC - https://libreelec.tv
+#      Copyright (C) 2016-present Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,9 +17,10 @@
 ################################################################################
 
 PKG_NAME="tvheadend42"
-PKG_VERSION="4d4bf14"
-PKG_VERSION_NUMBER="4.2.1.7"
-PKG_REV="109"
+PKG_VERSION="407c8a3"
+PKG_SHA256="8569ab42650ca02e47d3d88276342fe2ffde4f40bd11893a3bf6879a79f36fb3"
+PKG_VERSION_NUMBER="4.2.3-20"
+PKG_REV="112"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.tvheadend.org"
@@ -32,7 +33,7 @@ PKG_LONGDESC="Tvheadend ($PKG_VERSION_NUMBER): is a TV streaming server for Linu
 PKG_AUTORECONF="no"
 
 PKG_IS_ADDON="yes"
-PKG_ADDON_NAME="Tvheadend 4.2"
+PKG_ADDON_NAME="Tvheadend Server 4.2"
 PKG_ADDON_TYPE="xbmc.service"
 
 # transcoding only for generic
@@ -79,6 +80,8 @@ pre_configure_target() {
 # transcoding
   if [ "$TARGET_ARCH" = x86_64 ]; then
     export AS=$TOOLCHAIN/bin/yasm
+    export LDFLAGS="$LDFLAGS -lX11 -lm -lvdpau -lva -lva-drm -lva-x11"
+    export ARCH=$TARGET_ARCH
   fi
 
   export CROSS_COMPILE=$TARGET_PREFIX

@@ -17,12 +17,13 @@
 ################################################################################
 
 PKG_NAME="game.libretro.nx"
-PKG_VERSION="de82a7a"
-PKG_REV="101"
+PKG_VERSION="d4f642e"
+PKG_SHA256="06e773a789435fc6449595b4ab250c44633480504ca66b7047b38801b6aa2462"
+PKG_REV="103"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/kodi-game/game.libretro.nx"
-PKG_GIT_URL="https://github.com/kodi-game/game.libretro.nx"
+PKG_URL="https://github.com/kodi-game/game.libretro.nx/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain kodi-platform libretro-nx"
 PKG_SECTION=""
 PKG_SHORTDESC="game.libretro.nx: nx for Kodi"
@@ -38,12 +39,4 @@ configure_target() {
         -DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
         -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
         ..
-}
-
-addon() {
-  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/
-  cp -R $ROOT/$PKG_BUILD/.install_pkg/usr/share/kodi/addons/$PKG_NAME/* $ADDON_BUILD/$PKG_ADDON_ID/
-
-  ADDONSO=$(xmlstarlet sel -t -v "/addon/extension/@library_linux" $ADDON_BUILD/$PKG_ADDON_ID/addon.xml)
-  cp -L $ROOT/$PKG_BUILD/.install_pkg/usr/lib/kodi/addons/$PKG_NAME/$ADDONSO $ADDON_BUILD/$PKG_ADDON_ID/
 }

@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,13 +18,11 @@
 
 PKG_NAME="xkeyboard-config"
 PKG_VERSION="2.22"
-PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.X.org"
 PKG_URL="http://www.x.org/releases/individual/data/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain util-macros xkbcomp"
-PKG_PRIORITY="optional"
 PKG_SECTION="x11/data"
 PKG_SHORTDESC="xkeyboard-config: X keyboard extension data files"
 PKG_LONGDESC="X keyboard extension data files."
@@ -38,7 +36,7 @@ PKG_CONFIGURE_OPTS_TARGET="XKBCOMP=/usr/bin/xkbcomp \
                            --enable-runtime-deps \
                            --enable-nls \
                            --disable-rpath \
-                           --with-xkb-base=/usr/share/X11/xkb \
+                           --with-xkb-base=$XORG_PATH_XKB \
                            --with-xkb-rules-symlink=xorg \
                            --with-gnu-ld"
 

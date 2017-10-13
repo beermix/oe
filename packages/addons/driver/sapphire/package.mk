@@ -18,6 +18,10 @@
 
 PKG_NAME="sapphire"
 PKG_VERSION="6.6"
+PKG_SHA256="ed8e01764a6e41112a6544d1f8203379711d56b3e951f3291e80d5a6949eb71e"
+PKG_REV="103"
+PKG_ARCH="any"
+PKG_LICENSE="OSS"
 PKG_SITE="https://libreelec.tv"
 PKG_URL="http://www.rtr.ca/sapphire_remote/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain linux bash"
@@ -29,6 +33,7 @@ PKG_AUTORECONF="no"
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Sapphire Remote Driver"
 PKG_ADDON_TYPE="xbmc.service"
+PKG_IS_KERNEL_PKG="yes"
 
 if [ -f $SYSROOT_PREFIX/usr/include/linux/input-event-codes.h ]; then
   INPUT_H="$SYSROOT_PREFIX/usr/include/linux/input-event-codes.h"

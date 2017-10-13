@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,67 +18,65 @@
 
 PKG_NAME="bluez"
 PKG_VERSION="5.47"
-PKG_REV="1"
+PKG_SHA256="cf75bf7cd5d564f21cc4a2bd01d5c39ce425397335fd47d9bbe43af0a58342c8"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.bluez.org/"
 PKG_URL="http://www.kernel.org/pub/linux/bluetooth/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain dbus glib readline ncurses"
-PKG_PRIORITY="optional"
+PKG_DEPENDS_TARGET="toolchain dbus glib readline systemd"
 PKG_SECTION="network"
 PKG_SHORTDESC="bluez: Bluetooth Tools and System Daemons for Linux."
 PKG_LONGDESC="Bluetooth Tools and System Daemons for Linux."
-
-PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
+if [ "$DEBUG" = "yes" ]; then
+  BLUEZ_CONFIG="--enable-debug"
+else
+  BLUEZ_CONFIG="--disable-debug"
+fi
+
+if [ "$DEVTOOLS" = "yes" ]; then
+  BLUEZ_CONFIG="$BLUEZ_CONFIG --enable-monitor --enable-test"
+else
+  BLUEZ_CONFIG="$BLUEZ_CONFIG --disable-monitor --disable-test"
+fi
+
 PKG_CONFIGURE_OPTS_TARGET="--disable-dependency-tracking \
-                           --enable-silent-rules \
+                           --disable-silent-rules \
                            --disable-library \
                            --enable-udev \
                            --disable-cups \
                            --disable-obex \
                            --enable-client \
-                           --disable-systemd \
-                           --enable-tools \
+                           --enable-systemd \
+                           --enable-tools --enable-deprecated \
                            --enable-datafiles \
                            --disable-experimental \
-                           --enable-deprecated \
                            --enable-sixaxis \
                            --with-gnu-ld \
+                           $BLUEZ_CONFIG \
                            storagedir=/storage/.cache/bluetooth"
-
-if [ "$DEBUG" = "yes" ]; then
-  PKG_CONFIGURE_OPTS_TARGET+=" --enable-debug"
-else
-  PKG_CONFIGURE_OPTS_TARGET+=" --disable-debug"
-fi
-
-if [ "$DEVTOOLS" = "yes" ]; then
-  PKG_CONFIGURE_OPTS_TARGET+=" --enable-monitor --enable-test"
-else
-  PKG_CONFIGURE_OPTS_TARGET+=" --disable-monitor --disable-test"
-fi
 
 pre_configure_target() {
 # bluez fails to build in subdirs
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
     rm -rf .$TARGET_NAME
+
+  export LIBS="-lncurses"
 }
 
 post_makeinstall_target() {
+  rm -rf $INSTALL/usr/lib/systemd
   rm -rf $INSTALL/usr/bin/bccmd
   rm -rf $INSTALL/usr/bin/bluemoon
   rm -rf $INSTALL/usr/bin/ciptool
   rm -rf $INSTALL/usr/share/dbus-1
 
-  mkdir -p $INSTALL/usr/bin
-    cp tools/btinfo $INSTALL/usr/bin
-    cp tools/btmgmt $INSTALL/usr/bin
-
   mkdir -p $INSTALL/etc/bluetooth
-    echo "[Policy]" > $INSTALL/etc/bluetooth/main.conf
-    echo "AutoEnable=true" >> $INSTALL/etc/bluetooth/main.conf
+    cp src/main.conf $INSTALL/etc/bluetooth
+    sed -i $INSTALL/etc/bluetooth/main.conf \
+        -e "s|^#\[Policy\]|\[Policy\]|g" \
+        -e "s|^#AutoEnable.*|AutoEnable=true|g"
 }
 
 post_install() {

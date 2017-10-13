@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,13 +18,13 @@
 
 PKG_NAME="arm-mem"
 PKG_VERSION="3aee5f4"
+PKG_SHA256="c7ac6fea60c01d34e71b24065b65ad6fbef42b9b702a226a22fe4a0caff33382"
 PKG_ARCH="arm"
+PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/bavison/arm-mem"
-PKG_GIT_URL="https://github.com/bavison/arm-mem.git"
-PKG_GIT_BRANCH="master"
+PKG_URL="https://github.com/bavison/arm-mem/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_DEPENDS_INIT="toolchain arm-mem"
-
 PKG_SECTION="devel"
 PKG_SHORTDESC="arm-mem: ARM-accelerated versions of selected functions from string.h"
 PKG_LONGDESC="arm-mem is a ARM-accelerated versions of selected functions from string.h"
@@ -35,7 +35,7 @@ PKG_AUTORECONF="no"
 PKG_MAKE_OPTS_TARGET="libarmmem.so"
 
 pre_make_target() {
-  export CROSS_COMPILE=${TARGET_NAME}-
+  export CROSS_COMPILE=$TARGET_PREFIX
   export CFLAGS="$CFLAGS -fPIC"
 }
 
@@ -44,18 +44,18 @@ make_init() {
 }
 
 makeinstall_target() {
-  mkdir -p $INSTALL/lib
-    cp -P libarmmem.so $INSTALL/lib
+  mkdir -p $INSTALL/usr/lib
+    cp -P libarmmem.so $INSTALL/usr/lib
 
   mkdir -p $INSTALL/etc
-    echo "/lib/libarmmem.so" >> $INSTALL/etc/ld.so.preload
+    echo "/usr/lib/libarmmem.so" >> $INSTALL/etc/ld.so.preload
 }
 
 makeinstall_init() {
-  mkdir -p $INSTALL/lib
-    cp -P libarmmem.so $INSTALL/lib
+  mkdir -p $INSTALL/usr/lib
+    cp -P libarmmem.so $INSTALL/usr/lib
 
   mkdir -p $INSTALL/etc
-    echo "/lib/libarmmem.so" >> $INSTALL/etc/ld.so.preload
+    echo "/usr/lib/libarmmem.so" >> $INSTALL/etc/ld.so.preload
 }
 
