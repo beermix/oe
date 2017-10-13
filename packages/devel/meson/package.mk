@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="meson"
-PKG_VERSION="0.42.1"
+PKG_VERSION="0.43.0"
 PKG_URL="https://github.com/mesonbuild/meson/releases/download/$PKG_VERSION/meson-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="Python3:host pathlib:host"
 PKG_SECTION="devel"
@@ -35,5 +35,5 @@ make_host() {
 }
 
 makeinstall_host() {
-  python3 setup.py install --prefix=$ROOT/$TOOLCHAIN
+  python3 setup.py install --prefix=$TOOLCHAIN
 }
