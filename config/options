@@ -74,7 +74,7 @@ fi
 #  Try value 1 (default) to 4 on single CPU computer, or more on
 #  multi-processor computer (like hyperthreading SMP CPU)
   if test -z "${CONCURRENCY_MAKE_LEVEL}"; then
-    CONCURRENCY_MAKE_LEVEL=`cat /proc/cpuinfo | grep -c '^processor[[:cntrl:]]*:'`
+    CONCURRENCY_MAKE_LEVEL="7"
   fi
 
 # cache size for ccache
