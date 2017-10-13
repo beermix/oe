@@ -1,5 +1,5 @@
 PKG_NAME="reaver-wps-fork-t6x"
-PKG_VERSION="7f73786"
+PKG_VERSION="dc16493"
 PKG_URL="https://github.com/t6x/reaver-wps-fork-t6x/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain sqlite libpcap aircrack-ng pixiewps"
 PKG_SECTION="my"

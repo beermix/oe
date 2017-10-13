@@ -12,5 +12,5 @@ configure_target() {
 }
 
 make_target() {
-  make CC="$CC" AR="$AR" XCFLAGS="$CFLAGS -ffunction-sections -fdata-sections" LDFLAGS="-lm -pthread" -j1
+  make CC="$CC" AR="$AR" XCFLAGS="$CFLAGS -ffunction-sections -fdata-sections" LDFLAGS="-lm -lpthread" -j1
 }
