@@ -32,8 +32,6 @@ PKG_IS_ADDON="no"
 
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
-
 pre_build_host() {
   cd $PKG_BUILD
   ./bootstrap
@@ -46,3 +44,4 @@ pre_configure_target() {
   ./bootstrap
 }
 
+PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
