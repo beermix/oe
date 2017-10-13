@@ -35,8 +35,8 @@ pre_configure_target() {
 }
 
 post_makeinstall_target() {
-  cp misc/ncurses-config $ROOT/$TOOLCHAIN/bin
-  chmod +x $ROOT/$TOOLCHAIN/bin/ncurses-config
+  cp misc/ncurses-config $TOOLCHAIN/bin
+  chmod +x $TOOLCHAIN/bin/ncurses-config
 
   ln -sf ncursesw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/ncurses.pc
   ln -sf formw.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/form.pc
