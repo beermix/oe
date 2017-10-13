@@ -231,11 +231,11 @@ Description:             Adds auto-generated nss.pc and nss-config script, and a
  
  nss_clean_all: clobber_nspr clobber
  
---- a/nss/manifest.mn	2013-05-28 23:43:24.000000000 +0200
-+++ b/nss/manifest.mn	2013-07-02 14:52:58.331417666 +0200
+--- a/nss/manifest.mn	2017-07-31 15:29:13.950458892 +0200
++++ b/nss/manifest.mn	2017-07-31 15:35:05.347650414 +0200
 @@ -10,4 +10,4 @@
  
  RELEASE = nss
  
--DIRS = coreconf lib cmd gtests
-+DIRS = coreconf lib cmd config
+-DIRS = coreconf lib cmd cpputil gtests
++DIRS = coreconf lib cmd cpputil config
