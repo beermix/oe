@@ -44,7 +44,7 @@ make_host() {
 
 makeinstall_host() {
   make \
-  INSTALL_TOP=$ROOT/$TOOLCHAIN \
+  INSTALL_TOP=$TOOLCHAIN \
   install
 }
 
