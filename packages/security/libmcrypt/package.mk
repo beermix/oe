@@ -21,7 +21,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_realloc_0_nonnull=yes \
 
 pre_configure_target() {
   # doesn't like to be build in target folder
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
   rm -fr .$TARGET_NAME
 }
 
