@@ -193,6 +193,9 @@ if [ ! -f $STAMP ]; then
 
     if [ "$PKG_AUTORECONF" = yes ]; then
       $SCRIPTS/autoreconf $PACKAGE_NAME
+      touch $PKG_BUILD/NEWS $PKG_BUILD/AUTHORS $PKG_BUILD/ChangeLog
+      mkdir -p $PKG_BUILD/m4
+      mkdir -p $PKG_BUILD/build-aux
     fi
 
     # virtual packages dont must be build, they only contains dependencies, so dont go further here

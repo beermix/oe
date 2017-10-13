@@ -17,11 +17,10 @@
 ################################################################################
 
 PKG_NAME="zstd"
-PKG_VERSION="1.3.1"
-PKG_SHA256="312fb9dc75668addbc9c8f33c7fa198b0fc965c576386b8451397e06256eadc6"
+PKG_VERSION="1.3.2"
 PKG_ARCH="any"
 PKG_LICENSE="BSD/GPLv2"
-PKG_SITE="http://www.zstd.net"
+PKG_SITE="https://github.com/facebook/zstd/releases"
 PKG_URL="https://github.com/facebook/zstd/archive/v${PKG_VERSION}.tar.gz"
 PKG_SOURCE_DIR=$PKG_NAME-$PKG_VERSION
 PKG_DEPENDS_TARGET="toolchain"
