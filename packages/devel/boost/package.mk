@@ -17,12 +17,11 @@
 ################################################################################
 
 PKG_NAME="boost"
-PKG_VERSION="1_61_0"
-PKG_SHA256="a547bd06c2fd9a71ba1d169d9cf0339da7ebf4753849a8f7d6fdb8feee99b640"
-PKG_ARCH="any"
-PKG_LICENSE="OSS"
-PKG_SITE="http://www.boost.org/"
-PKG_URL="$SOURCEFORGE_SRC/boost/boost/1.61.0/${PKG_NAME}_${PKG_VERSION}.tar.bz2"
+PKG_VERSION="1_65_1"
+PKG_URL="https://fossies.org/linux/misc/boost_1_65_1.tar.xz"
+#PKG_URL="https://dl.bintray.com/boostorg/release/1.64.0/source/boost_1_64_0.tar.gz"
+#PKG_VERSION="1_63_0"
+#PKG_URL="$SOURCEFORGE_SRC/boost/boost/1.63.0/${PKG_NAME}_${PKG_VERSION}.tar.bz2"
 PKG_SOURCE_DIR="${PKG_NAME}_${PKG_VERSION}"
 PKG_DEPENDS_HOST=""
 PKG_DEPENDS_TARGET="toolchain boost:host Python2:host zlib bzip2"
@@ -44,22 +43,22 @@ makeinstall_host() {
 }
 
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC"
-  export CXXFLAGS="$CXXFLAGS -fPIC"
-  export LDFLAGS="$LDFLAGS -fPIC"
+  export CFLAGS="$CFLAGS -I$SYSROOT_PREFIX/usr/include/python2.7 -fPIC"
+  export CXXFLAGS="$CXXFLAGS -I$SYSROOT_PREFIX/usr/include/python2.7 -fPIC"
 }
 
 configure_target() {
   sh bootstrap.sh --prefix=/usr \
                   --with-bjam=$TOOLCHAIN/bin/bjam \
                   --with-python=$TOOLCHAIN/bin/python \
+                  --with-python-root=$SYSROOT_PREFIX/usr
 
   echo "using gcc : `$CC -v 2>&1  | tail -n 1 |awk '{print $3}'` : $CC  : <compileflags>\"$CFLAGS\" <linkflags>\"$LDFLAGS\" ;" \
     > tools/build/src/user-config.jam
 }
 
 make_target() {
-  : # nothing todo, we use makeinstall_target()
+  :
 }
 
 makeinstall_target() {
@@ -78,6 +77,6 @@ makeinstall_target() {
                           --with-regex -sICU_PATH="$SYSROOT_PREFIX/usr" \
                           --with-serialization \
                           --with-system \
-                          --with-thread -j2 \
+                          --with-thread \
                           install
 }

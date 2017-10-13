@@ -46,6 +46,6 @@ PKG_CONFIGURE_OPTS_TARGET="gio_can_sniff=yes \
                            --with-libtiff \
                            --with-libjasper"
 
-#post_makeinstall_target() {
-#  cp $PKG_DIR/config/gdk-pixbuf.loaders $INSTALL/usr/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache
-#}
+post_makeinstall_target() {
+  cp $PKG_DIR/config/gdk-pixbuf.loaders $INSTALL/usr/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache
+}
