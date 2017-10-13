@@ -1,6 +1,6 @@
 PKG_NAME="bash"
 PKG_VERSION="bc00779"
-PKG_GIT_URL="https://github.com/bminor/bash"
+PKG_URL="https://github.com/bminor/bash/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain ncurses readline"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
