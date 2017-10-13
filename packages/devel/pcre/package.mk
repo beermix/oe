@@ -36,7 +36,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-unicode-properties \
 			      --enable-utf8 \
 			      --with-match-limit-recursion=16000"
 
-PKG_CONFIGURE_OPTS_HOST="--prefix=$ROOT/$TOOLCHAIN $PKG_CONFIGURE_OPTS_TARGET --disable-shared --with-pic"
+PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN $PKG_CONFIGURE_OPTS_TARGET --disable-shared --with-pic"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
