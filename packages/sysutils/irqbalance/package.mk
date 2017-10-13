@@ -19,7 +19,7 @@
 PKG_NAME="irqbalance"
 PKG_VERSION="aae4eb6"
 PKG_SITE="https://github.com/Irqbalance/irqbalance"
-PKG_GIT_URL="https://github.com/Irqbalance/irqbalance"
+PKG_URL="https://github.com/Irqbalance/irqbalance/archive/${PKG_VERSION}.tar.gz"
 PKG_GIT_BRANCH="master"
 PKG_DEPENDS_TARGET="toolchain glib systemd ncurses libcap-ng"
 PKG_SECTION="system"

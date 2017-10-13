@@ -1,6 +1,6 @@
 PKG_NAME="rclone"
-PKG_VERSION="6d59887"
-PKG_GIT_URL="https://github.com/ncw/rclone"
+PKG_VERSION="fc8b13c"
+PKG_URL=""
 PKG_DEPENDS_TARGET="toolchain go:host"
 PKG_SECTION="system"
 PKG_IS_ADDON="no"
@@ -13,9 +13,9 @@ pre_make_target() {
   export CGO_NO_EMULATION=1
   export CGO_CFLAGS=$CFLAGS
   export LDFLAGS="-s -w -linkmode external -extld $CC"
-  export GOLANG=$ROOT/$TOOLCHAIN/lib/golang/bin/go
-  export GOPATH=$ROOT/$PKG_BUILD.gopath:$ROOT/$PKG_BUILD/
-  export GOROOT=$ROOT/$TOOLCHAIN/lib/golang
+  export GOLANG=$TOOLCHAIN/lib/golang/bin/go
+  export GOPATH=$PKG_BUILD.gopath:$PKG_BUILD/
+  export GOROOT=$TOOLCHAIN/lib/golang
   export PATH=$PATH:$GOROOT/bin
 }
 
@@ -32,5 +32,5 @@ makeinstall_target() {
 
 post_make_target() {
   mkdir -p $INSTALL/usr/bin/
-  cp $ROOT/$PKG_BUILD/bin/$PKG_NAME $INSTALL/usr/bin/
+  cp $PKG_BUILD/bin/$PKG_NAME $INSTALL/usr/bin/
 }
