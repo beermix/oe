@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="xf86-video-intel"
-PKG_VERSION="291fdcd"
+PKG_VERSION="04b4f3b"
 PKG_ARCH="x86_64"
 PKG_LICENSE="OSS"
 PKG_SITE="http://intellinuxgraphics.org/"
@@ -31,7 +31,7 @@ PKG_LONGDESC="The Xorg driver for Intel i810, i815, 830M, 845G, 852GM, 855GM, 86
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--with-default-dri=3 with-xorg-module-dir=$XORG_PATH_MODULES"
+PKG_CONFIGURE_OPTS_TARGET="--with-default-dri=3 --with-xorg-module-dir=$XORG_PATH_MODULES"
 
 pre_configure_target() {
 # xf86-video-intel is broken enough. dont link with LTO
