@@ -8,11 +8,10 @@ PKG_AUTORECONF="yes"
 
 pre_configure_target() {
   export LIBS="$LIBS -lncursesw -ltinfo"
-  export CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=2||g"`
+#  export CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=2||g"`
 }
 
-PKG_CONFIGURE_OPTS_TARGET="--bindir=/bin \
-			      --enable-multibyte \
+PKG_CONFIGURE_OPTS_TARGET="--enable-multibyte \
 			      --enable-function-subdirs \
 			      --with-tcsetpgrp \
 			      --with-term-lib=ncursesw \

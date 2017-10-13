@@ -7,7 +7,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 make_target() {
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
   rm -rf .$TARGET_NAME
   strip_hard
   make \
@@ -23,8 +23,8 @@ make_target() {
 post_make_target() {
   mkdir -p $INSTALL/usr/bin/
   mkdir -p $INSTALL_DEV/usr/bin/
-  $STRIP $ROOT/$PKG_BUILD/ps3remote
-  cp $ROOT/$PKG_BUILD/ps3remote $INSTALL/usr/bin/
+  $STRIP $PKG_BUILD/ps3remote
+  cp $PKG_BUILD/ps3remote $INSTALL/usr/bin/
 }
 
 makeinstall_target() {

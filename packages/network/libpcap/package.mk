@@ -56,5 +56,5 @@ post_makeinstall_target() {
 
   sed -e "s:\(['= ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" -i pcap-config
   cp pcap-config $SYSROOT_PREFIX/usr/bin
-  ln -sf $SYSROOT_PREFIX/usr/bin/pcap-config $ROOT/$BUILD/toolchain/bin/
+  ln -sf $SYSROOT_PREFIX/usr/bin/pcap-config $BUILD/toolchain/bin/
 }

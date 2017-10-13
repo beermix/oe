@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="Python"
-PKG_VERSION="2.7.14"
+PKG_VERSION="0"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.python.org/"

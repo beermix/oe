@@ -42,7 +42,7 @@ else
 fi
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-dependency-tracking \
-                           --disable-silent-rules \
+                           --enable-silent-rules \
                            --disable-library \
                            --enable-udev \
                            --disable-cups \
@@ -62,7 +62,7 @@ pre_configure_target() {
   cd $PKG_BUILD
     rm -rf .$TARGET_NAME
 
-  export LIBS="-lncurses"
+  export LIBS="-lncursesw -ltinfo"
 }
 
 post_makeinstall_target() {
