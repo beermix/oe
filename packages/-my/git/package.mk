@@ -7,8 +7,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 pre_configure_target() {
-  cd $ROOT/$PKG_BUILD
-  rm -rf .$TARGET_NAME
+  cd $PKG_BUILD
   
 #  export CC="$CC"
 #  export CFLAGS="$CFLAGS"

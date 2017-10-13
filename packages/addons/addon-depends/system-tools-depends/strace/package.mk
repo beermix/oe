@@ -1,6 +1,6 @@
 ################################################################################
-#      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2016-present Team LibreELEC
+#      This file is part of LibreELEC - http://www.libreelec.tv
+#      Copyright (C) 2016 Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,18 +17,17 @@
 ################################################################################
 
 PKG_NAME="strace"
-PKG_VERSION="4.17"
-PKG_SHA256="81f35b085fbb3cfa806eb521a8522ac3406deaccfe121ce35064bad268237419"
-PKG_ARCH="any"
-PKG_LICENSE="BSD"
+PKG_VERSION="4.19"
 PKG_SITE="http://sourceforge.net/projects/strace/"
-PKG_URL="$SOURCEFORGE_SRC/strace/strace/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="tools"
 PKG_SHORTDESC="strace: Trace system calls and signals"
 PKG_LONGDESC="In the simplest case strace runs the specified command until it exits. It intercepts and records the system calls which are called by a process and the signals which are received by a process. The name of each system call, its arguments and its return value are printed on standard error or to the file specified with the -o option."
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
-makeinstall_target() {
-  : # nothing to do here
+pre_configure_target() {
+  export CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
 }
+
+

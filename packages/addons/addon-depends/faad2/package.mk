@@ -34,8 +34,7 @@ PKG_AUTORECONF="no"
 PKG_MAINTAINER="Team LibreELEC (addons@libreelec.tv)"
 
 # package specific configure options
-PKG_CONFIGURE_OPTS_TARGET="--enable-static \
-                           --disable-shared \
+PKG_CONFIGURE_OPTS_TARGET="--disable-static \
                            --without-xmms \
                            --without-drm \
                            --without-mpeg4ip \
