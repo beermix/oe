@@ -31,5 +31,3 @@ PKG_LONGDESC="libnftnl is a userspace library providing a low-level netlink prog
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-
-

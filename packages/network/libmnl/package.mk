@@ -31,4 +31,3 @@ PKG_LONGDESC="libmnl is a minimalistic user-space library oriented to Netlink de
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-
