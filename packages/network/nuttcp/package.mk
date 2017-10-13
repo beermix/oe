@@ -10,8 +10,8 @@ make_target() {
 
 post_make_target() {
   mkdir -p $INSTALL/usr/bin/
-  $STRIP $ROOT/$PKG_BUILD/nuttcp
-  cp $ROOT/$PKG_BUILD/nuttcp $INSTALL/usr/bin/nuttcp
+  $STRIP $PKG_BUILD/nuttcp
+  cp $PKG_BUILD/nuttcp $INSTALL/usr/bin/nuttcp
 }
 
 makeinstall_target() {

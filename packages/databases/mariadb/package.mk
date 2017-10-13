@@ -98,13 +98,13 @@ PKG_MARIADB_SERVER="no"
 # the target. They are then included by import_executables.cmake which is
 # generated during the build of the host helpers. It is not necessary to build
 # the whole host package, only the "import_executables" target.
-# -DIMPORT_EXECUTABLES=$ROOT/$PKG_BUILD/.$HOST_NAME/import_executables.cmake
+# -DIMPORT_EXECUTABLES=$PKG_BUILD/.$HOST_NAME/import_executables.cmake
 # must then be passed to cmake during target build.
   PKG_MAKE_OPTS_HOST="import_executables"
-  MARIADB_IMPORT_EXECUTABLES="-DIMPORT_EXECUTABLES=$ROOT/$PKG_BUILD/.$HOST_NAME/import_executables.cmake"
+  MARIADB_IMPORT_EXECUTABLES="-DIMPORT_EXECUTABLES=$PKG_BUILD/.$HOST_NAME/import_executables.cmake"
 
 configure_host() {
-  cmake -DCMAKE_PREFIX_PATH=$ROOT/$TOOLCHAIN/ \
+  cmake -DCMAKE_PREFIX_PATH=$TOOLCHAIN/ \
         -DCMAKE_BUILD_TYPE=Release \
         -DFEATURE_SET=xsmall \
         -DWITHOUT_SERVER=OFF \
@@ -171,7 +171,7 @@ post_makeinstall_target() {
   sed -i "s|pkgincludedir=.*|pkgincludedir=\'$SYSROOT_PREFIX/usr/include/mysql\'|" scripts/mysql_config
   sed -i "s|pkglibdir=.*|pkglibdir=\'$SYSROOT_PREFIX/usr/lib/mysql\'|" scripts/mysql_config
   cp scripts/mysql_config $SYSROOT_PREFIX/usr/bin
-  ln -sf $SYSROOT_PREFIX/usr/bin/mysql_config $ROOT/$TOOLCHAIN/bin/mysql_config
+  ln -sf $SYSROOT_PREFIX/usr/bin/mysql_config $TOOLCHAIN/bin/mysql_config
  
   rm $SYSROOT_PREFIX/usr/lib/libmariadb.so.3
   rm $SYSROOT_PREFIX/usr/lib/libmariadb.so

@@ -28,7 +28,7 @@ make_target() {
 
 makeinstall_target() {
   mkdir -p $INSTALL
-    cp -a $ROOT/$PKG_BUILD/usr $INSTALL
+    cp -a $PKG_BUILD/usr $INSTALL
     cp $PKG_DIR/scripts/* $INSTALL/usr/bin
   mkdir -p $INSTALL/usr/config
     cp $PKG_DIR/config/* $INSTALL/usr/config
