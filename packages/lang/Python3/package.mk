@@ -18,10 +18,12 @@
 
 PKG_NAME="Python3"
 PKG_VERSION="3.6.3"
+PKG_SHA256="cda7d967c9a4bfa52337cdf551bcc5cff026b6ac50a8834e568ce4a794ca81da"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.python.org/"
-PKG_URL="https://dl.dropboxusercontent.com/s/0jk90zusjypj1ef/Python3-3.6.3.tar.xz"
+PKG_URL="http://www.python.org/ftp/python/$PKG_VERSION/${PKG_NAME::-1}-$PKG_VERSION.tar.xz"
+PKG_SOURCE_DIR="${PKG_NAME::-1}-$PKG_VERSION*"
 PKG_DEPENDS_HOST="zlib:host bzip2:host"
 PKG_DEPENDS_TARGET="toolchain sqlite expat zlib bzip2 openssl Python3:host readline ncurses"
 PKG_SECTION="lang"

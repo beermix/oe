@@ -18,10 +18,12 @@
 
 PKG_NAME="Python2"
 PKG_VERSION="2.7.14"
+PKG_SHA256="71ffb26e09e78650e424929b2b457b9c912ac216576e6bd9e7d204ed03296a66"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.python.org/"
-PKG_URL="https://dl.dropboxusercontent.com/s/pf7nhiighvqo1si/Python2-2.7.14.tar.xz"
+PKG_URL="http://www.python.org/ftp/python/$PKG_VERSION/${PKG_NAME::-1}-$PKG_VERSION.tar.xz"
+PKG_SOURCE_DIR="${PKG_NAME::-1}-$PKG_VERSION*"
 PKG_DEPENDS_HOST="zlib:host bzip2:host sqlite:host"
 PKG_DEPENDS_TARGET="toolchain sqlite expat zlib bzip2 openssl libffi Python2:host"
 PKG_SECTION="lang"
