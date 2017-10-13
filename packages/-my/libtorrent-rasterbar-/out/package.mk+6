@@ -4,7 +4,7 @@ PKG_SITE="http://www.boost.org/"
 PKG_URL="http://downloads.sourceforge.net/project/libtorrent/libtorrent/${PKG_NAME}-${PKG_VERSION}.tar.gz"
 #PKG_SOURCE_DIR="${PKG_NAME}-${PKG_VERSION}"
 PKG_DEPENDS_HOST="toolchain"
-PKG_DEPENDS_TARGET="toolchain boost Python:host Python:target zlib bzip2"
+PKG_DEPENDS_TARGET="toolchain boost Python2:host Python:target zlib bzip2"
 
 PKG_SECTION="devel"
 PKG_SHORTDESC="libtorrent is a feature complete C++ bittorrent implementation focusing on efficiency and scalability."

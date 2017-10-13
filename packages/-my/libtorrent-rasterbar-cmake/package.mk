@@ -2,7 +2,7 @@ PKG_NAME="libtorrent-rasterbar-cmake"
 PKG_VERSION="master"
 PKG_URL="https://github.com/arvidn/libtorrent/archive/$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="libtorrent-$PKG_VERSION"
-PKG_DEPENDS_TARGET="toolchain boost Python:host Python:target zlib bzip2 curl ncurses libsigc++"
+PKG_DEPENDS_TARGET="toolchain boost Python2:host Python:target zlib bzip2 curl ncurses libsigc++"
 
 PKG_SECTION="devel"
 PKG_IS_ADDON="no"
