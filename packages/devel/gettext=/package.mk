@@ -33,12 +33,20 @@ PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_SCRIPT="gettext-tools/configure"
 
-PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared \
+PKG_CONFIGURE_OPTS_HOST="EMACS="no" \
+			    am_cv_lib_iconv=no \
+			    am_cv_func_iconv=no \
+			    ac_cv_header_iconv_h=no \
+			    --enable-static \
+			    --disable-shared \
                          --disable-rpath \
                          --with-gnu-ld \
                          --disable-java \
                          --disable-curses \
+                         --with-included-libcroco \
+                         --with-included-libunistring \
                          --with-included-libxml \
+                         --with-included-glib \
                          --disable-native-java \
                          --disable-csharp \
                          --without-emacs"
