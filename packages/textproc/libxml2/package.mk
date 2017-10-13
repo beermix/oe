@@ -32,7 +32,7 @@ PKG_AUTORECONF="no"
 PKG_CONFIGURE_OPTS_ALL="ac_cv_header_ansidecl_h=no \
              --enable-static \
              --enable-shared \
-             --disable-silent-rules \
+             --enable-silent-rules \
              --disable-ipv6 \
              --without-python \
              --with-zlib=$TOOLCHAIN \
