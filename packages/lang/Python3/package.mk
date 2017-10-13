@@ -107,8 +107,11 @@ post_unpack() {
 }
 
 post_makeinstall_host() {
+<<<<<<< HEAD
   (cd $ROOT && $SCRIPTS/switch_python $PKG_NAME)
 
+=======
+>>>>>>> 84ffa204a91bb651792d636d48b481679ee820ef
   rm -f $TOOLCHAIN/bin/python*-config
   rm -f $TOOLCHAIN/bin/smtpd.py*
   rm -f $TOOLCHAIN/bin/pyvenv
@@ -118,8 +121,11 @@ post_makeinstall_host() {
 }
 
 post_makeinstall_target() {
+<<<<<<< HEAD
   (cd $ROOT && $SCRIPTS/switch_python $PKG_NAME)
 
+=======
+>>>>>>> 84ffa204a91bb651792d636d48b481679ee820ef
   PKG_INSTALL_PATH_LIB=$INSTALL/usr/lib/$PKG_PYTHON_VERSION
 
   for dir in config compiler sysconfigdata lib-dynload/sysconfigdata lib2to3 test; do
@@ -129,12 +135,17 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin/pyvenv
   rm -rf $INSTALL/usr/bin/python*-config
   rm -rf $INSTALL/usr/bin/smtpd.py $INSTALL/usr/bin/smtpd.py.*
+<<<<<<< HEAD
   ln -s $PKG_PYTHON_VERSION $INSTALL/usr/bin/python
 
   $TOOLCHAIN/bin/python -Wi -t -B $TOOLCHAIN/lib/$PKG_PYTHON_VERSION/compileall.py -d ${PKG_INSTALL_PATH_LIB#${INSTALL}} -b -f $PKG_INSTALL_PATH_LIB
+=======
+
+  $TOOLCHAIN/bin/python3 -Wi -t -B $TOOLCHAIN/lib/$PKG_PYTHON_VERSION/compileall.py -d ${PKG_INSTALL_PATH_LIB#${INSTALL}} -b -f $PKG_INSTALL_PATH_LIB
+>>>>>>> 84ffa204a91bb651792d636d48b481679ee820ef
   find $PKG_INSTALL_PATH_LIB -name "*.py" -exec rm -f {} \; &>/dev/null
 
   # strip
   chmod u+w $INSTALL/usr/lib/libpython*.so.*
-#  debug_strip $INSTALL/usr
+  debug_strip $INSTALL/usr
 }

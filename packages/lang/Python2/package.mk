@@ -27,8 +27,11 @@ PKG_DEPENDS_TARGET="toolchain sqlite expat zlib bzip2 openssl libffi Python2:hos
 PKG_SECTION="lang"
 PKG_SHORTDESC="python2: The Python2 programming language"
 PKG_LONGDESC="Python2 is an interpreted object-oriented programming language, and is often compared with Tcl, Perl, Java or Scheme."
+<<<<<<< HEAD:packages/lang/Python2/package.mk
 
 PKG_PYTHON_VERSION=python2.7
+=======
+>>>>>>> 84ffa204a91bb651792d636d48b481679ee820ef:packages/lang/Python2/package.mk
 
 PKG_AUTORECONF="yes"
 
@@ -134,5 +137,5 @@ post_makeinstall_target() {
 
   # strip
   chmod u+w $INSTALL/usr/lib/libpython*.so.*
-#  debug_strip $INSTALL/usr
+  debug_strip $INSTALL/usr
 }
