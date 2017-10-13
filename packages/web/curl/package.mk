@@ -64,7 +64,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            --disable-gopher \
                            --disable-manual \
                            --enable-libgcc \
-                           --enable-ipv6 \
+                           --disable-ipv6 \
                            --enable-versioned-symbols \
                            --enable-nonblocking \
                            --enable-threaded-resolver \
