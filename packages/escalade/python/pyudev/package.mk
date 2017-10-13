@@ -18,11 +18,10 @@
 
 PKG_NAME="pyudev"
 PKG_VERSION="0.21.0"
-PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="https://github.com/pyudev/pyudev"
-PKG_GIT_URL="https://github.com/pyudev/pyudev/archive/v$PKG_VERSION.tar.gz"
+PKG_URL="https://github.com/pyudev/pyudev/archive/v$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"
 PKG_SECTION="python/devel"
 PKG_SHORTDESC="Python bindings to libudev."

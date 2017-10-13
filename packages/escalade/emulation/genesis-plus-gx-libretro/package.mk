@@ -19,9 +19,12 @@
 ################################################################################
 
 PKG_NAME="genesis-plus-gx-libretro"
-PKG_VERSION="365a28c"
+PKG_VERSION="accc1c0"
+PKG_ARCH="any"
+PKG_LICENSE="Non-commercial"
 PKG_SITE="https://github.com/libretro/Genesis-Plus-GX"
-PKG_GIT_URL="https://github.com/libretro/Genesis-Plus-GX"
+PKG_URL="https://github.com/libretro/Genesis-Plus-GX/archive/$PKG_VERSION.tar.gz"
+PKG_SOURCE_DIR="Genesis-Plus-GX-$PKG_VERSION*"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="emulation"
 PKG_SHORTDESC="An enhanced port of Genesis Plus for Gamecube/Wii"

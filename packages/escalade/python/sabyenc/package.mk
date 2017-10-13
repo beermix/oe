@@ -17,17 +17,22 @@
 ################################################################################
 
 PKG_NAME="sabyenc"
-PKG_VERSION="v3.0.2"
+PKG_VERSION="3.3.1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="https://pypi.python.org/pypi/sabyenc"
-PKG_GIT_URL="https://github.com/sabnzbd/sabyenc"
+PKG_URL="https://github.com/sabnzbd/sabyenc/archive/v$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"
 PKG_SECTION="python/devel"
 PKG_SHORTDESC="yEnc Module for Python modified for SABnzbd"
 PKG_IS_ADDON="no"
 
 PKG_AUTORECONF="no"
+
+pre_make_target() {
+  export PYTHONXCPREFIX="$SYSROOT_PREFIX/usr"
+  export LDSHARED="$CC -shared"
+}
 
 make_target() {
   python setup.py build --cross-compile

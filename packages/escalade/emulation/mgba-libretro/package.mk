@@ -17,9 +17,12 @@
 ################################################################################
 
 PKG_NAME="mgba-libretro"
-PKG_VERSION="1e95e89"
+PKG_VERSION="24fb0a5"
+PKG_ARCH="any"
+PKG_LICENSE="MPLv2.0"
 PKG_SITE="https://github.com/libretro/mgba"
-PKG_GIT_URL="https://github.com/libretro/mgba"
+PKG_URL="https://github.com/libretro/mgba/archive/$PKG_VERSION.tar.gz"
+PKG_SOURCE_DIR="mgba-$PKG_VERSION*"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="emulation"
 PKG_SHORTDESC="mGBA Game Boy Advance Emulator"

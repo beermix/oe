@@ -18,8 +18,9 @@
 
 PKG_NAME="scraper"
 PKG_VERSION="1.1.10"
+PKG_ARCH="any"
+PKG_LICENSE="MIT"
 PKG_SITE="https://github.com/sselph/scraper"
-PKG_URL="custom"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="emulation"
 PKG_SHORTDESC="Docker is an open-source engine that automates the deployment of any application as a lightweight, portable, self-sufficient container that will run virtually anywhere."
@@ -28,8 +29,7 @@ PKG_LONGDESC="Docker containers can encapsulate any payload, and will run consis
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-unpack() {
-  mkdir -p $PKG_BUILD
+pre_build_target() {
   cd $PKG_BUILD
   if [ "$PROJECT" = "RPi" ]; then
     wget $PKG_SITE/releases/download/v$PKG_VERSION/scraper_rpi.zip
@@ -39,7 +39,7 @@ unpack() {
     wget $PKG_SITE/releases/download/v$PKG_VERSION/scraper_linux_amd64.zip
   fi
   unzip -o *.zip
-  cd $ROOT
+  cd -
 }
 
 make_target() {

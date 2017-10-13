@@ -18,12 +18,12 @@
 
 PKG_NAME="dosbox-sdl2"
 PKG_VERSION="1427002"
-PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/duganchen/dosbox"
-PKG_GIT_URL="https://github.com/duganchen/dosbox"
-PKG_DEPENDS_TARGET="toolchain alsa-lib SDL2 SDL2_net SDL_sound fluidsynth libpng"
+PKG_URL="https://github.com/duganchen/dosbox/archive/$PKG_VERSION.tar.gz"
+PKG_SOURCE_DIR="dosbox-$PKG_VERSION*"
+PKG_DEPENDS_TARGET="toolchain alsa-lib SDL2 SDL2_net SDL_sound fluidsynth libpng munt"
 PKG_SECTION="emulation"
 PKG_SHORTDESC="DOSBox emulator SDL2 fork by duganchen"
 
@@ -42,7 +42,7 @@ PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
 
 pre_configure_target () {
   cd ..
-  rm -rf .$TARGET
+  rm -rf .$TARGET_NAME
 }
 
 pre_make_target() {
@@ -54,6 +54,9 @@ pre_make_target() {
 
 post_makeinstall_target() {
   cp $PKG_DIR/scripts/* $INSTALL/usr/bin/
-  mkdir -p $INSTALL/etc
-  cp $PKG_DIR/config/dosbox-SDL2.conf $INSTALL/etc/
+  mkdir -p $INSTALL/usr/config/dosbox
+  cp $PKG_DIR/config/dosbox-SDL2.conf $INSTALL/usr/config/dosbox/
+  mkdir -p $INSTALL/usr/config/dosbox/shaders
+  wget -q https://github.com/duganchen/dosbox_shaders/archive/master.zip
+  unzip -j master.zip -d $INSTALL/usr/config/dosbox/shaders
 }

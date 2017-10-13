@@ -18,8 +18,10 @@
 
 PKG_NAME="RTL8723BS"
 PKG_VERSION="7708383"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/hadess/rtl8723bs"
-PKG_GIT_URL="https://github.com/anthonywong/rtl8723bs"
+PKG_URL="https://github.com/anthonywong/rtl8723bs/archive/$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="rtl8723bs-$PKG_VERSION*"
 PKG_DEPENDS_TARGET="toolchain linux"
 PKG_NEED_UNPACK="$LINUX_DEPENDS"
@@ -36,15 +38,15 @@ pre_make_target() {
 make_target() {
   make V=1 \
        ARCH=$TARGET_KERNEL_ARCH \
-       KSRC=$(get_pkg_build linux) \
+       KSRC=$(kernel_path) \
        CROSS_COMPILE=$TARGET_PREFIX \
        CONFIG_POWER_SAVING=n
   git clone --depth 1 https://github.com/hadess/rtl8723bs.git
 }
 
 makeinstall_target() {
-  mkdir -p $INSTALL/lib/modules/$(get_module_dir)/$PKG_NAME
-    cp *.ko $INSTALL/lib/modules/$(get_module_dir)/$PKG_NAME
-  mkdir -p $INSTALL/lib/firmware/rtlwifi
-    cp rtl8723bs/*.bin $INSTALL/lib/firmware/rtlwifi/
+  mkdir -p $INSTALL/usr/lib/modules/$(get_module_dir)/$PKG_NAME
+    cp *.ko $INSTALL/usr/lib/modules/$(get_module_dir)/$PKG_NAME
+  mkdir -p $INSTALL/usr/lib/firmware/rtlwifi
+    cp rtl8723bs/*.bin $INSTALL/usr/lib/firmware/rtlwifi/
 }

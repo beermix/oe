@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2011-2017 Alexandr Zuyev (alex@alexelec.in.ua)
+#      Copyright (C) 2009-2012 Stephan Raue (stephan@openelec.tv)
 #
 #  This Program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -19,18 +19,22 @@
 ################################################################################
 
 PKG_NAME="retroarch-joypad-autoconfig"
-PKG_VERSION="ab52442"
-PKG_REV="1"
+PKG_VERSION="837e5d2"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/libretro/retroarch-joypad-autoconfig"
-PKG_GIT_URL="https://github.com/libretro/retroarch-joypad-autoconfig"
+PKG_SITE="https://github.com/libretro/retroarch-joypad-autoconfig.git"
+PKG_URL="https://github.com/libretro/retroarch-joypad-autoconfig/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="emulation"
 PKG_SHORTDESC="RetroArch joypad autoconfig files"
 PKG_LONGDESC="RetroArch joypad autoconfig files"
+
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
+
+post_unpack() {
+  rm $PKG_BUILD/configure $PKG_BUILD/Makefile
+}
 
 make_target() {
   :

@@ -19,9 +19,12 @@
 ################################################################################
 
 PKG_NAME="fbalpha-libretro"
-PKG_VERSION="1eb106e"
+PKG_VERSION="c20d719"
+PKG_ARCH="any"
+PKG_LICENSE="Non-commercial"
 PKG_SITE="https://github.com/libretro/fbalpha"
-PKG_GIT_URL="https://github.com/libretro/fbalpha"
+PKG_URL="https://github.com/libretro/fbalpha/archive/$PKG_VERSION.tar.gz"
+PKG_SOURCE_DIR="fbalpha-$PKG_VERSION*"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="emulation"
 PKG_SHORTDESC="Port of Final Burn Alpha to Libretro."
@@ -30,20 +33,16 @@ PKG_LONGDESC="Currently, FB Alpha supports games on Capcom CPS-1 and CPS-2 hardw
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-pre_build_target() {
-  export GIT_VERSION=$PKG_VERSION
-}
-
 make_target() {
   case $PROJECT in
     RPi)
-      make -f makefile.libretro platform=armv CC=$CC CXX=$CXX
+      make -f makefile.libretro platform=armv CC=$CC CXX=$CXX GIT_VERSION=$PKG_VERSION
       ;;
     RPi2)
-      make -f makefile.libretro platform=rpi2 CC=$CC CXX=$CXX
+      make -f makefile.libretro platform=rpi2 CC=$CC CXX=$CXX GIT_VERSION=$PKG_VERSION
       ;;
     Generic)
-      make -f makefile.libretro CC=$CC CXX=$CXX
+      make -f makefile.libretro CC=$CC CXX=$CXX GIT_VERSION=$PKG_VERSION
       ;;
   esac
 }

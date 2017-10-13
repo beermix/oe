@@ -18,15 +18,17 @@
 
 PKG_NAME="reicast"
 PKG_VERSION="ca837e1"
+PKG_ARCH="any"
+PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/reicast/reicast-emulator"
-PKG_GIT_URL="https://github.com/reicast/reicast-emulator"
-PKG_DEPENDS_TARGET="toolchain alsa-utils"
+PKG_URL="https://github.com/reicast/reicast-emulator/archive/$PKG_VERSION.tar.gz"
+PKG_SOURCE_DIR="reicast-emulator-$PKG_VERSION*"
+PKG_DEPENDS_TARGET="toolchain alsa-utils libevdev"
 PKG_SECTION="emulation"
 PKG_SHORTDESC="Reicast is a multi-platform Sega Dreamcast emulator"
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
-
 
 make_target() {
   cd shell/linux

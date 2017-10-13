@@ -18,6 +18,8 @@
 
 PKG_NAME="buildbot-cores"
 PKG_VERSION="latest"
+PKG_ARCH="any"
+PKG_LICENSE="MIT"
 PKG_SITE="http://buildbot.libretro.com"
 PKG_DEPENDS_TARGET="toolchain retroarch"
 PKG_SECTION="emulation"

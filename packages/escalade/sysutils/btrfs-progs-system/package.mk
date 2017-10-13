@@ -17,8 +17,12 @@
 ################################################################################
 
 PKG_NAME="btrfs-progs-system"
-PKG_VERSION="v4.9.1"
-PKG_GIT_URL="https://github.com/kdave/btrfs-progs"
+PKG_VERSION="v4.12.1"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
+PKG_SITE="https://github.com/kdave/btrfs-progs"
+PKG_URL="https://www.kernel.org/pub/linux/kernel/people/kdave/btrfs-progs/btrfs-progs-$PKG_VERSION.tar.gz"
+PKG_SOURCE_DIR="btrfs-progs-$PKG_VERSION"
 PKG_DEPENDS_TARGET="toolchain e2fsprogs util-linux zlib lzo"
 PKG_DEPENDS_INIT="btrfs-progs-system zlib:init"
 PKG_PRIORITY="optional"

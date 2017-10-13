@@ -17,9 +17,11 @@
 ################################################################################
 
 PKG_NAME="desmume-libretro"
-PKG_VERSION="63ed05b"
+PKG_VERSION="73531d7"
+PKG_ARCH="any"
+PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/desmume"
-PKG_GIT_URL="https://github.com/libretro/desmume"
+PKG_URL="https://github.com/libretro/desmume/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="emulation"
 PKG_SHORTDESC="libretro wrapper for desmume NDS emulator."
@@ -27,8 +29,10 @@ PKG_LONGDESC="libretro wrapper for desmume NDS emulator."
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
+
 pre_build_target() {
   export GIT_VERSION=$PKG_VERSION
+  export LIBS=-lpthread
 }
 
 post_unpack() {

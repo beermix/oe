@@ -17,11 +17,11 @@
 ################################################################################
 
 PKG_NAME="snes9x-libretro"
-PKG_VERSION="0240276"
+PKG_VERSION="3fb8977"
 PKG_ARCH="any"
 PKG_LICENSE="Non-commercial"
 PKG_SITE="https://github.com/libretro/snes9x"
-PKG_GIT_URL="https://github.com/libretro/snes9x"
+PKG_URL="https://github.com/libretro/snes9x/archive/$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="snes9x-$PKG_VERSION*"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="emulation"

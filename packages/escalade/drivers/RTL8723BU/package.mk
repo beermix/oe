@@ -18,8 +18,10 @@
 
 PKG_NAME="RTL8723BU"
 PKG_VERSION="4051c16"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/lwfinger/rtl8723bu"
-PKG_GIT_URL="https://github.com/lwfinger/rtl8723bu"
+PKG_URL="https://github.com/lwfinger/rtl8723bu/archive/$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="rtl8723bu-$PKG_VERSION*"
 PKG_DEPENDS_TARGET="toolchain linux"
 PKG_NEED_UNPACK="$LINUX_DEPENDS"
@@ -36,7 +38,7 @@ pre_make_target() {
 make_target() {
   make V=1 \
        ARCH=$TARGET_KERNEL_ARCH \
-       KSRC=$(get_pkg_build linux) \
+       KSRC=$(kernel_path) \
        CROSS_COMPILE=$TARGET_PREFIX \
        CONFIG_POWER_SAVING=n
 }

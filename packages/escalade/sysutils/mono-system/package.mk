@@ -18,6 +18,8 @@
 
 PKG_NAME="mono-system"
 PKG_VERSION="4.6.2.7"
+PKG_ARCH="any"
+PKG_LICENSE="MIT"
 PKG_SITE="http://www.mono-project.com"
 PKG_URL="http://download.mono-project.com/sources/mono/${PKG_NAME%-*}-$PKG_VERSION.tar.bz2"
 PKG_SOURCE_DIR="${PKG_NAME%-*}-${PKG_VERSION%.*}"
@@ -63,7 +65,7 @@ configure_target() {
 
 makeinstall_target() {
   export MAKEFLAGS="-j1"
-  make -C "$ROOT/$PKG_BUILD/.$HOST_NAME" install DESTDIR="$INSTALL"
-  make -C "$ROOT/$PKG_BUILD/.$TARGET_NAME" install DESTDIR="$INSTALL"
+  make -C "$PKG_BUILD/.$HOST_NAME" install DESTDIR="$INSTALL"
+  make -C "$PKG_BUILD/.$TARGET_NAME" install DESTDIR="$INSTALL"
   $STRIP "$INSTALL/usr/bin/mono"
 }

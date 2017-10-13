@@ -17,9 +17,10 @@
 ################################################################################
 
 PKG_NAME="ppsspp-libretro"
-PKG_VERSION="5f7bcf7"
-PKG_SITE="https://github.com/libretro/libretro-ppsspp"
-PKG_GIT_URL="https://github.com/libretro/libretro-ppsspp"
+PKG_VERSION="ab4ae0d"
+PKG_ARCH="any"
+PKG_LICENSE="GPLv2"
+PKG_SITE="https://github.com/libretro/ppsspp"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="libretro"
 PKG_SHORTDESC="Non-shallow fork of PPSSPP for libretro exclusively."
@@ -27,20 +28,24 @@ PKG_LONGDESC="A fast and portable PSP emulator"
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
+PKG_USE_CMAKE="no"
 
-unpack() {
-  git clone --recursive https://github.com/libretro/libretro-ppsspp $ROOT/$PKG_BUILD
-  cd $ROOT/$PKG_BUILD
+pre_build_target() {
+  git clone --recursive https://github.com/libretro/ppsspp $PKG_BUILD/$PKG_NAME-git
+  cd $PKG_BUILD/$PKG_NAME-git
   git reset --hard $PKG_VERSION
-  cd $ROOT
+  cd -
+  mv $PKG_BUILD/$PKG_NAME-git/* $PKG_BUILD/
+  rm -rf $PKG_BUILD/$PKG_NAME-git
 }
 
 pre_configure_target() {
   strip_lto
+  cd ..
+  rm -rf .$TARGET_NAME
 }
 
 make_target() {
-  cd $ROOT/$PKG_BUILD/libretro
   if [ "$OPENGLES" == "gpu-viv-bin-mx6q" ]; then
     CFLAGS="$CFLAGS -DLINUX -DEGL_API_FB"
     CXXFLAGS="$CXXFLAGS -DLINUX -DEGL_API_FB"
@@ -48,11 +53,11 @@ make_target() {
   if [ "$ARCH" == "arm" ]; then
     SYSROOT_PREFIX=$SYSROOT_PREFIX make platform=imx6
   else
-    make
+    make -C libretro GIT_VERSION=$PKG_VERSION
   fi
 }
 
 makeinstall_target() {
   mkdir -p $INSTALL/usr/lib/libretro
-  cp ../libretro/ppsspp_libretro.so $INSTALL/usr/lib/libretro/
+  cp libretro/ppsspp_libretro.so $INSTALL/usr/lib/libretro/
 }

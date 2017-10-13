@@ -19,9 +19,12 @@
 ################################################################################
 
 PKG_NAME="scummvm-libretro"
-PKG_VERSION="de8d7e5"
+PKG_VERSION="fbbe839"
+PKG_ARCH="any"
+PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/scummvm"
-PKG_GIT_URL="https://github.com/libretro/scummvm"
+PKG_URL="https://github.com/libretro/scummvm/archive/$PKG_VERSION.tar.gz"
+PKG_SOURCE_DIR="scummvm-$PKG_VERSION*"
 PKG_DEPENDS_TARGET="toolchain flac libmad munt"
 PKG_SECTION="emulation"
 PKG_SHORTDESC="ScummVM with libretro backend."
@@ -35,7 +38,6 @@ pre_configure_target() {
   cd ..
   rm -rf .$TARGET_NAME
 }
-
 
 configure_target() {
   :

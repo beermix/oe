@@ -20,8 +20,10 @@
 
 PKG_NAME="beetle-wswan-libretro"
 PKG_VERSION="2295eb5"
+PKG_ARCH="any"
+PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/beetle-wswan-libretro"
-PKG_GIT_URL="https://github.com/libretro/beetle-wswan-libretro"
+PKG_URL="https://github.com/libretro/beetle-wswan-libretro/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="libretro"
 PKG_SHORTDESC="libretro implementation of Mednafen wswan"
@@ -29,6 +31,7 @@ PKG_LONGDESC="libretro implementation of Mednafen wswan"
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
+
 pre_build_target() {
   export GIT_VERSION=$PKG_VERSION
 }

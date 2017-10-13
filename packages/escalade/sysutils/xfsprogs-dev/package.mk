@@ -17,11 +17,11 @@
 ################################################################################
 
 PKG_NAME="xfsprogs-dev"
-PKG_VERSION="v4.12.0"
+PKG_VERSION="4.13.1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.xfs.org"
-PKG_GIT_URL="https://git.kernel.org/pub/scm/fs/xfs/xfsprogs-dev.git"
+PKG_URL="https://git.kernel.org/cgit/fs/xfs/xfsprogs-dev.git/snapshot/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain util-linux libedit"
 PKG_DEPENDS_INIT="xfsprogs-dev"
 PKG_SECTION="tools"
@@ -40,6 +40,7 @@ PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
 
 pre_configure_target() {
   cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
   rm -rf $TARGET_NAME
   make configure
 }

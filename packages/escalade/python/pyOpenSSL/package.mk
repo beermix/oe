@@ -17,14 +17,13 @@
 ################################################################################
 
 PKG_NAME="pyOpenSSL"
-PKG_VERSION="16.2.0"
-PKG_REV="1"
+PKG_VERSION="17.2.0"
 PKG_ARCH="any"
 PKG_LICENSE="LGPL"
 PKG_SITE="https://pypi.python.org/pypi/pyOpenSSL"
-PKG_GIT_URL="https://github.com/pyca/pyopenssl"
+PKG_URL="https://github.com/pyca/pyopenssl/archive/$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="pyopenssl-$PKG_VERSION"
-PKG_DEPENDS_TARGET="toolchain Python distutilscross:host libressl cryptography"
+PKG_DEPENDS_TARGET="toolchain Python distutilscross:host openssl cryptography"
 PKG_SECTION="python/security"
 PKG_SHORTDESC="pyOpenSSL: Python interface to the OpenSSL library"
 PKG_LONGDESC="Python interface to the OpenSSL library. Includes: SSL Context objects, SSL Connection objects, using Python sockets as transport layer. The Connection object wraps all the socket methods and can therefore be used interchangeably."

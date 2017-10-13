@@ -17,9 +17,11 @@
 ################################################################################
 
 PKG_NAME="fs-uae"
-PKG_VERSION="184db07"
+PKG_VERSION="92c64a8"
+PKG_ARCH="any"
+PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/FrodeSolheim/fs-uae"
-PKG_GIT_URL="https://github.com/FrodeSolheim/fs-uae"
+PKG_URL="https://github.com/FrodeSolheim/fs-uae/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain SDL2 glew glu libmpeg2 libXi openal-soft"
 PKG_SECTION="emulation"
 PKG_SHORTDESC="FS-UAE amiga emulator."

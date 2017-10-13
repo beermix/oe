@@ -19,9 +19,12 @@
 ################################################################################
 
 PKG_NAME="quicknes-libretro"
-PKG_VERSION="8613b48"
+PKG_VERSION="05a742e"
+PKG_ARCH="any"
+PKG_LICENSE="LGPLv2.1+"
 PKG_SITE="https://github.com/libretro/QuickNES_Core"
-PKG_GIT_URL="https://github.com/libretro/QuickNES_Core"
+PKG_URL="https://github.com/libretro/QuickNES_Core/archive/$PKG_VERSION.tar.gz"
+PKG_SOURCE_DIR="QuickNES_Core-$PKG_VERSION*"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="emulation"
 PKG_SHORTDESC="The QuickNES core library, originally by Shay Green, heavily modified"

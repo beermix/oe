@@ -17,9 +17,11 @@
 ################################################################################
 
 PKG_NAME="craft-libretro"
-PKG_VERSION="ccf83df"
+PKG_VERSION="a6176bd"
+PKG_ARCH="any"
+PKG_LICENSE="MAME"
 PKG_SITE="https://github.com/libretro/Craft"
-PKG_GIT_URL="https://github.com/libretro/Craft"
+PKG_URL="https://github.com/libretro/Craft/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain retroarch"
 PKG_SECTION="emulation"
 PKG_SHORTDESC="libretro Craft core"
@@ -27,6 +29,7 @@ PKG_SHORTDESC="libretro Craft core"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 PKG_USE_CMAKE="no"
+
 pre_build_target() {
   export GIT_VERSION=$PKG_VERSION
 }

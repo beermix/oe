@@ -17,7 +17,9 @@
 ################################################################################
 
 PKG_NAME="openal-soft"
-PKG_VERSION="1.17.2"
+PKG_VERSION="1.18.1"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://www.openal.org/"
 PKG_URL="http://kcat.strangesoft.net/openal-releases/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain alsa-lib"

@@ -5,7 +5,7 @@
 ################################################################################
 
 PKG_NAME="mrboom-libretro"
-PKG_VERSION="d4559ce"
+PKG_VERSION="752918d"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/libretro/mrboom-libretro"
@@ -17,8 +17,8 @@ PKG_SHORTDESC="Mr.Boom is a 8 players Bomberman clone for RetroArch/Libretro."
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-pre_build_target() {
-  export GIT_VERSION=$PKG_VERSION
+make_target() {
+  make GIT_VERSION=$PKG_VERSION
 }
 
 makeinstall_target() {

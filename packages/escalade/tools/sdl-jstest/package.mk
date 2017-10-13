@@ -18,15 +18,13 @@
 
 PKG_NAME="sdl-jstest"
 PKG_VERSION="c749562"
+PKG_ARCH="any"
+PKG_LICENSE="GPLv2"
 PKG_SITE="http://fs-uae.net"
-PKG_GIT_URL="https://github.com/Grumbel/sdl-jstest"
-PKG_DEPENDS_TARGET="toolchain cmake:host SDL2 ncurses"
+PKG_URL="https://github.com/Grumbel/sdl-jstest/archive/$PKG_VERSION.tar.gz"
+PKG_DEPENDS_TARGET="toolchain cmake:host SDL2 netbsd-curses"
 PKG_SECTION="tools"
 PKG_SHORTDESC="jstest"
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
-
-pre_configure_target() {
-  export LIBS="-lterminfo"
-}

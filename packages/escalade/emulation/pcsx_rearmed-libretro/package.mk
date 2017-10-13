@@ -19,9 +19,12 @@
 ################################################################################
 
 PKG_NAME="pcsx_rearmed-libretro"
-PKG_VERSION="511848c"
+PKG_VERSION="358a876"
+PKG_ARCH="any"
+PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/pcsx_rearmed"
-PKG_GIT_URL="https://github.com/libretro/pcsx_rearmed"
+PKG_URL="https://github.com/libretro/pcsx_rearmed/archive/$PKG_VERSION.tar.gz"
+PKG_SOURCE_DIR="pcsx_rearmed-$PKG_VERSION*"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="emulation"
 PKG_SHORTDESC="ARM optimized PCSX fork"
@@ -33,11 +36,10 @@ PKG_AUTORECONF="no"
 configure_target() {
   cd ../
   rm -rf .$TARGET_NAME
+  export GIT_VERSION=$PKG_VERSION
+  strip_gold
 }
 
-pre_build_target() {
-  export GIT_VERSION=$PKG_VERSION
-}
 make_target() {
   case $PROJECT in
     RPi)
@@ -47,7 +49,7 @@ make_target() {
       make -f Makefile.libretro platform=rpi2
       ;;
     *)
-      make -f Makefile.libretro USE_DYNAREC=1 BUILTIN_GPU=neon
+      make -f Makefile.libretro
       ;;
   esac
 }

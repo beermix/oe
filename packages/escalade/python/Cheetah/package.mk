@@ -18,7 +18,6 @@
 
 PKG_NAME="Cheetah"
 PKG_VERSION="2.4.4"
-PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.cheetahtemplate.org/"
@@ -32,6 +31,12 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 PKG_MAINTAINER="unofficial.addon.pro"
+
+pre_make_target() {
+  export PYTHONXCPREFIX="$SYSROOT_PREFIX/usr"
+  export LDFLAGS="$LDFLAGS -L$SYSROOT_PREFIX/usr/lib -L$SYSROOT_PREFIX/lib"
+  export LDSHARED="$CC -shared"
+}
 
 make_target() {
   python setup.py build --cross-compile

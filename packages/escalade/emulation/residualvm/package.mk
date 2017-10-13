@@ -17,9 +17,11 @@
 ################################################################################
 
 PKG_NAME="residualvm"
-PKG_VERSION="2490cb9"
+PKG_VERSION="abd8c58"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/residualvm/residualvm"
-PKG_GIT_URL="https://github.com/residualvm/residualvm"
+PKG_URL="https://github.com/residualvm/residualvm/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain SDL2 libmpeg2 flac libogg libmad libjpeg-turbo libpng zlib alsa-lib freetype"
 PKG_SECTION="emulation"
 PKG_SHORTDESC="Game engine reimplementation of Grim Fandango, Escape from Monkey Island and Myst III"

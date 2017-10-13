@@ -17,7 +17,9 @@
 ################################################################################
 
 PKG_NAME="SABnzbd"
-PKG_VERSION="2.1.0"
+PKG_VERSION="2.3.0"
+PKG_ARCH="any"
+PKG_LICENSE="OSS"
 PKG_SITE="http://sabnzbd.org/"
 PKG_URL="https://github.com/sabnzbd/sabnzbd/releases/download/$PKG_VERSION/$PKG_NAME-$PKG_VERSION-src.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python Cheetah sabyenc six par2cmdline unrar cryptography p7zip"

@@ -1,7 +1,7 @@
 # Made by github.com/escalade
 
 PKG_NAME="makemkv"
-PKG_VERSION="1.10.6"
+PKG_VERSION="1.10.7"
 PKG_ARCH="x86_64"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.makemkv.com/forum2/viewforum.php?f=3"

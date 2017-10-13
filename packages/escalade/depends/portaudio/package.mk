@@ -15,13 +15,17 @@
 #  You should have received a copy of the GNU General Public License
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
+
 PKG_NAME="portaudio"
-PKG_VERSION="a1f61a9"
+PKG_VERSION="190600_20161012"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://www.portaudio.com"
-PKG_GIT_URL="https://git.assembla.com/portaudio.git"
+PKG_URL="http://www.portaudio.com/archives/pa_rc_v190600_20161012.tgz"
+PKG_SOURCE_DIR="portaudio"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="depends"
 PKG_SHORTDESC="Portable cross-platform audio I/O"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+
 PKG_AUTORECONF="no"

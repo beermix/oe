@@ -18,8 +18,11 @@
 
 PKG_NAME="fsuae-libretro"
 PKG_VERSION="1a2b8b7"
+PKG_ARCH="any"
+PKG_LICENSE="GPLv2"
 PKG_SITE="http://fs-uae.net"
-PKG_GIT_URL="https://github.com/libretro/libretro-fsuae"
+PKG_URL="https://github.com/libretro/libretro-fsuae/archive/$PKG_VERSION.tar.gz"
+PKG_SOURCE_DIR="libretro-fsuae-$PKG_VERSION*"
 PKG_DEPENDS_TARGET="toolchain libmpeg2 openal-soft glib"
 PKG_SECTION="emulation"
 PKG_SHORTDESC="FS-UAE amiga emulator libretro core."
@@ -34,7 +37,7 @@ case $PROJECT in
 esac
 
 pre_configure_target() {
-  cd $ROOT/$BUILD/$PKG_NAME-$PKG_VERSION
+  cd ..
   rm -rf .$TARGET_NAME
   export ac_cv_func_realloc_0_nonnull=yes
   strip_lto

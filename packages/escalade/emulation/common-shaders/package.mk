@@ -20,7 +20,7 @@ PKG_NAME="common-shaders"
 PKG_VERSION="latest"
 PKG_ARCH="any"
 PKG_LICENSE="MIT"
-PKG_GIT_URL="https://github.com/libretro/common-shaders"
+PKG_SITE="https://github.com/libretro/common-shaders"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="emulation"
 PKG_SHORTDESC="Collection of commonly used shaders"
@@ -28,14 +28,14 @@ PKG_SHORTDESC="Collection of commonly used shaders"
 PKG_AUTORECONF="no"
 PKG_IS_ADDON="no"
 
-unpack() {
-  mkdir -p $PKG_BUILD && cd $PKG_BUILD
+pre_build_target() {
+  cd $PKG_BUILD
   wget http://buildbot.libretro.com/assets/frontend/shaders_glsl.zip
   unzip -o -d common shaders_glsl.zip
   git clone --depth 1 https://github.com/RetroPie/common-shaders.git retropie
   git clone --depth 1 https://github.com/libretro/slang-shaders.git slang
   find . -type f -exec chmod 644 {} \;
-  cd $ROOT
+  cd -
 }
 
 make_target() {

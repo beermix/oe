@@ -17,37 +17,26 @@
 ################################################################################
 
 PKG_NAME="cups"
-PKG_VERSION="1.7.1"
+PKG_VERSION="2.2.1"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://www.cups.org"
-PKG_URL="https://www.cups.org/software/$PKG_VERSION/$PKG_NAME-$PKG_VERSION-source.tar.bz2"
-#PKG_URL="https://github.com/apple/cups/releases/download/v$PKG_VERSION/cups-$PKG_VERSION-source.tar.gz"
+PKG_URL="https://github.com/apple/cups/archive/v$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain avahi zlib openssl"
 PKG_SECTION="depends"
 PKG_SHORTDESC="CUPS printing system"
 PKG_LONGDESC="CUPS is the standards-based, open source printing system developed by Apple Inc. for macOS® and other UNIX®-like operating sysms"
+
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-CONCURRENCY_MAKE_LEVEL=1
-
 pre_configure_target() {
-  cd $ROOT/$PKG_BUILD
+  cd ..
   rm -rf .$TARGET_NAME
 }
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-webif \
-			      --disable-launchd \
-			      --disable-dnssd \
-			      --disable-avahi \
-			      --disable-ssl \
-			      --disable-gssapi \
-			      --disable-libusb"
-
+PKG_CONFIGURE_OPTS_TARGET="--libdir=/usr/lib --disable-gssapi"
 
 makeinstall_target() {
-  $ROOT/$TOOLCHAIN/bin/make -j1 DESTDIR=$SYSROOT_PREFIX install-libs install-headers
-  make DESTDIR=$INSTALL install-libs
-  if test -d $INSTALL/usr/lib64; then
-    mv $INSTALL/usr/lib64 $INSTALL/usr/lib
-  fi
+  make BUILDROOT=$INSTALL install-headers install-libs
 }

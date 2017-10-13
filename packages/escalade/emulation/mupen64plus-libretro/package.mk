@@ -17,9 +17,11 @@
 ################################################################################
 
 PKG_NAME="mupen64plus-libretro"
-PKG_VERSION="938277a"
+PKG_VERSION="2a7893e"
+PKG_ARCH="any"
+PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/mupen64plus-libretro"
-PKG_GIT_URL="https://github.com/libretro/mupen64plus-libretro"
+PKG_URL="https://github.com/libretro/mupen64plus-libretro/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="emulation"
 PKG_SHORTDESC="mupen64plus + RSP-HLE + GLideN64 + libretro"
@@ -29,6 +31,10 @@ PKG_AUTORECONF="no"
 
 pre_configure_target() {
   strip_lto
+}
+
+pre_build_target() {
+  export GIT_VERSION=$PKG_VERSION
 }
 
 make_target() {
@@ -44,7 +50,6 @@ make_target() {
       ;;
     WeTek_Play)
       make platform=armv7-neon-gles-cortex-a9
-
       ;;
     Generic)
       make WITH_DYNAREC=$TARGET_ARCH
