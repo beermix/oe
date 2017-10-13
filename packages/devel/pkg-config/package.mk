@@ -39,3 +39,7 @@ post_makeinstall_host() {
   mkdir -p $SYSROOT_PREFIX/usr/share/aclocal
     cp pkg.m4 $SYSROOT_PREFIX/usr/share/aclocal
 }
+
+pre_configure_host() {
+  export CFLAGS="$CFLAGS -Wall"
+}
