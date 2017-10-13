@@ -54,6 +54,7 @@ PKG_CONFIGURE_OPTS_HOST="MAKEINFO=true \
                          --disable-gold \
                          --enable-threads \
                          --with-pic \
+                         --disable-nls \
                          --enable-relro \
                          --with-system-zlib \
                          --enable-poison-system-directories"
