@@ -1,3 +1,8 @@
+################################################################################
+#      This file is part of Alex@ELEC - http://www.alexelec.in.ua
+#      Copyright (C) 2011-2017 Alexandr Zuyev (alex@alexelec.in.ua)
+################################################################################
+
 PKG_NAME="M2Crypto"
 PKG_VERSION="0.24.0u"
 PKG_SITE="https://pypi.python.org/pypi/M2Crypto"
@@ -5,8 +10,15 @@ PKG_URL="https://dl.dropboxusercontent.com/s/5szbmcgaobdds6k/M2Crypto-0.24.0u.ta
 PKG_SOURCE_DIR="m2crypto-${PKG_VERSION}"
 PKG_DEPENDS_TARGET="toolchain Python2 distutilscross:host"
 PKG_SECTION="xmedia/torrent"
+PKG_SHORTDESC="M2Crypto is the most complete Python wrapper for OpenSSL"
+PKG_LONGDESC="M2Crypto is the most complete Python wrapper for OpenSSL."
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
+
+pre_configure_target() {
+  export PYTHONXCPREFIX="$SYSROOT_PREFIX/usr"
+  export LDSHARED="$CC -shared"
+}
 
 make_target() {
   python setup.py build build_ext --openssl=$LIB_PREFIX
