@@ -29,7 +29,7 @@ PKG_LONGDESC="Command line and full screen utilities for browsing procfs, a "pse
 PKG_AUTORECONF="no"
 
 pre_configure_target() {
- sed 's:<ncursesw/:<:g' -i $ROOT/$PKG_BUILD/watch.c
+ sed 's:<ncursesw/:<:g' -i $PKG_BUILD/watch.c
 # CFLAGS="$CFLAGS -fPIC"
 # CXXFLAGS="$CXXFLAGS -fPIC"
 }

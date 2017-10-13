@@ -75,11 +75,11 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/lib/glib-2.0
   rm -rf $INSTALL/usr/share
       
-  ln -sf $SYSROOT_PREFIX/usr/bin/gio-querymodules $ROOT/$BUILD/toolchain/bin/
-  ln -sf $SYSROOT_PREFIX/usr/bin/glib-compile-resources $ROOT/$BUILD/toolchain/bin/
-  ln -sf $SYSROOT_PREFIX/usr/bin/glib-compile-schemas $ROOT/$BUILD/toolchain/bin/
-  ln -sf $SYSROOT_PREFIX/usr/bin/glib-genmarshal $ROOT/$BUILD/toolchain/bin/
-  ln -sf $SYSROOT_PREFIX/usr/bin/glib-gettextize $ROOT/$BUILD/toolchain/bin/
-  ln -sf $SYSROOT_PREFIX/usr/bin/glib-mkenums $ROOT/$BUILD/toolchain/bin/
-  ln -sf $SYSROOT_PREFIX/usr/bin/gdbus-codegen $ROOT/$BUILD/toolchain/bin/
+  ln -sf $SYSROOT_PREFIX/usr/bin/gio-querymodules $BUILD/toolchain/bin/
+  ln -sf $SYSROOT_PREFIX/usr/bin/glib-compile-resources $BUILD/toolchain/bin/
+  ln -sf $SYSROOT_PREFIX/usr/bin/glib-compile-schemas $BUILD/toolchain/bin/
+  ln -sf $SYSROOT_PREFIX/usr/bin/glib-genmarshal $BUILD/toolchain/bin/
+  ln -sf $SYSROOT_PREFIX/usr/bin/glib-gettextize $BUILD/toolchain/bin/
+  ln -sf $SYSROOT_PREFIX/usr/bin/glib-mkenums $BUILD/toolchain/bin/
+  ln -sf $SYSROOT_PREFIX/usr/bin/gdbus-codegen $BUILD/toolchain/bin/
 }

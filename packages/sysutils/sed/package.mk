@@ -32,4 +32,4 @@ PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_HOST="--disable-nls --disable-acl --without-selinux"
 
-PKG_CONFIGURE_OPTS_TARGET="-C --bindir=/bin --without-selinux"
+PKG_CONFIGURE_OPTS_TARGET="-C --without-selinux"

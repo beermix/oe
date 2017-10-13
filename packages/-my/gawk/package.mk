@@ -6,9 +6,7 @@ PKG_SECTION="my"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--bindir=/bin \
-			      --libdir=/lib \
-			      --without-selinux \
+PKG_CONFIGURE_OPTS_TARGET="--without-selinux \
 			      --disable-debug \
 			      --enable-threads=posix"
 
