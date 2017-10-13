@@ -59,6 +59,8 @@ PKG_CONFIGURE_OPTS_HOST="ac_cv_prog_HAS_HG=/bin/false
                          --with-doc-strings
                          --without-pymalloc
                          --without-ensurepi
+                         --enable-shared
+                         --disable-static
 "
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_prog_HAS_HG=/bin/false
@@ -98,6 +100,8 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_prog_HAS_HG=/bin/false
                            --without-ensurepip
                            --with-threads
                            --disable-ipv6
+                           --enable-shared
+                           --disable-static
 "
 
 post_unpack() {
