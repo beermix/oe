@@ -1,14 +1,14 @@
 PKG_NAME="tig"
 PKG_VERSION="35af931"
-PKG_GIT_URL="https://github.com/jonas/tig"
+PKG_URL="https://github.com/jonas/tig/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain ncurses readline"
 PKG_SECTION="tools"
 PKG_AUTORECONF="yes"
 
 pre_configure_target() {
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
   rm -rf .$TARGET_NAME
-  CONCURRENCY_MAKE_LEVEL=1
+  MAKEFLAGS=-j1
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config \
