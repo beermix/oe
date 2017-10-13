@@ -5,9 +5,9 @@ PKG_DEPENDS_TARGET="toolchain glib gmp x11 mesa xorg-server pcre libXcursor free
 PKG_DEPENDS_HOST="freetype:host"
 PKG_SECTION="tools"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--with-wine-tools=$ROOT/$PKG_BUILD/.$HOST_NAME \
+PKG_CONFIGURE_OPTS_TARGET="--with-wine-tools=$PKG_BUILD/.$HOST_NAME \
 			      --disable-win64 \
 			      --disable-tests \
 			      --with-x \
