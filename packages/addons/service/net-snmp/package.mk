@@ -18,12 +18,11 @@
 
 PKG_NAME="net-snmp"
 PKG_VERSION="5.7.3"
-PKG_SHA256="12ef89613c7707dc96d13335f153c1921efc9d61d3708ef09f3fc4a7014fb4f0"
 PKG_REV="102"
 PKG_ARCH="any"
 PKG_LICENSE="BSD"
 PKG_SITE="http://www.net-snmp.org"
-PKG_URL="http://sourceforge.net/projects/net-snmp/files/$PKG_NAME/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain libnl"
 PKG_SECTION="service"
 PKG_SHORTDESC="Simple Network Management Protocol utilities."
@@ -62,14 +61,14 @@ make_target() {
 }
 
 makeinstall_target() {
-  make install INSTALL_PREFIX=$PKG_BUILD/.$TARGET_NAME
+  make install INSTALL_PREFIX=$ROOT/$PKG_BUILD/.$TARGET_NAME
 }
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/lib
-  cp -r $PKG_BUILD/.$TARGET_NAME/storage/.kodi/addons/${PKG_ADDON_ID}/bin $PKG_BUILD/.$TARGET_NAME/storage/.kodi/userdata/addon_data/${PKG_ADDON_ID}/share $ADDON_BUILD/$PKG_ADDON_ID/
+  cp -r $ROOT/$PKG_BUILD/.$TARGET_NAME/storage/.kodi/addons/${PKG_ADDON_ID}/bin $ROOT/$PKG_BUILD/.$TARGET_NAME/storage/.kodi/userdata/addon_data/${PKG_ADDON_ID}/share $ADDON_BUILD/$PKG_ADDON_ID/
   #Do not copy symlinks
-  find $PKG_BUILD/.$TARGET_NAME/storage/.kodi/addons/${PKG_ADDON_ID}/lib/ -type f -name '*.so.*' -exec cp '{}' $ADDON_BUILD/$PKG_ADDON_ID/lib/ \;
+  find $ROOT/$PKG_BUILD/.$TARGET_NAME/storage/.kodi/addons/${PKG_ADDON_ID}/lib/ -type f -name '*.so.*' -exec cp '{}' $ADDON_BUILD/$PKG_ADDON_ID/lib/ \;
   #remove all but major version from so file
   for f in $ADDON_BUILD/$PKG_ADDON_ID/lib/*.so.* ; do mv "$f" "${f%.*.*}" ; done
 }

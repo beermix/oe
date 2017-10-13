@@ -18,11 +18,9 @@
 
 PKG_NAME="picamera"
 PKG_VERSION="1.10"
-PKG_SHA256="f0dfc3a6983f63da2ff7cbefeedcacb8c98cc41ad651e55148e8f798940ca73d"
 PKG_ARCH="arm"
-PKG_LICENSE="BSD"
 PKG_SITE="https://github.com/waveform80/picamera"
-PKG_URL="https://files.pythonhosted.org/packages/source/${PKG_NAME:0:1}/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_URL="https://pypi.python.org/packages/source/p/picamera/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host bcm2835-driver"
 PKG_SECTION="python"
 PKG_SHORTDESC="A python and shell interface for the Raspberry Pi camera module"

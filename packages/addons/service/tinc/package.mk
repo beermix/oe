@@ -18,8 +18,7 @@
 
 PKG_NAME="tinc"
 PKG_VERSION="1.1pre14"
-PKG_SHA256="e349e78f0e0d10899b8ab51c285bdb96c5ee322e847dfcf6ac9e21036286221f"
-PKG_REV="102"
+PKG_REV="101"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="http://www.tinc-vpn.org/"
@@ -41,7 +40,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-curses   \
 
 pre_configure_target() {
   # tinc fails to build in subdirs
-  cd $PKG_BUILD
+  cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
 }
 
@@ -51,7 +50,7 @@ makeinstall_target() {
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
-  cp $PKG_BUILD/src/tinc \
-     $PKG_BUILD/src/tincd \
+  cp $ROOT/$PKG_BUILD/src/tinc \
+     $ROOT/$PKG_BUILD/src/tincd \
      $ADDON_BUILD/$PKG_ADDON_ID/bin
 }

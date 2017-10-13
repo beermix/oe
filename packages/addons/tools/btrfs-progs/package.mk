@@ -17,13 +17,9 @@
 ################################################################################
 
 PKG_NAME="btrfs-progs"
-PKG_VERSION="4.8.4"
-PKG_SHA256="4741764daa4eee9179ae1d366f25b08e8ec99a2857bab03487e6a991f26a25ff"
-PKG_REV="101"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
+PKG_VERSION="v4.13"
 PKG_SITE="https://btrfs.wiki.kernel.org/index.php/Main_Page"
-PKG_URL="https://github.com/kdave/btrfs-progs/archive/v$PKG_VERSION.tar.gz"
+PKG_GIT_URL="https://github.com/kdave/btrfs-progs"
 PKG_DEPENDS_TARGET="toolchain util-linux zlib lzo"
 PKG_SECTION="tools"
 PKG_SHORTDESC="tools for the btrfs filesystem"

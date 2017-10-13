@@ -17,9 +17,8 @@
 ################################################################################
 
 PKG_NAME="rsyslog"
-PKG_VERSION="8.21.0"
-PKG_SHA256="bdb1fde87b75107b58d1cd5d00408822fb15b9f3efb8d9dbb93a1dee128339ab"
-PKG_REV="103"
+PKG_VERSION="8.29.0"
+PKG_REV="102"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/rsyslog"
@@ -28,7 +27,7 @@ PKG_DEPENDS_TARGET="toolchain util-linux libestr libfastjson liblognorm librelp 
 PKG_SECTION="service"
 PKG_SHORTDESC="Rsyslog: a rocket-fast system for log processing."
 PKG_LONGDESC="Rsyslog ($PKG_VERSION) offers high-performance, great security features and a modular design."
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Rsyslog"

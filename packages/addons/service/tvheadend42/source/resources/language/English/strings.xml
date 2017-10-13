@@ -24,7 +24,7 @@
   <string id="1112">IP of the AVM Repeater</string>
   <string id="1113">Router IP range (last digits are always .254)</string>
   <string id="1114">Used network</string>
-  <string id="1115">Virtual IP #1</string>
+  <string id="1.15">Virtual IP #1</string>
   <string id="1116">Virtual IP #2</string>
   <string id="1117">Virtual IP #3</string>
   <string id="1118">Virtual IP #4</string>

@@ -7,7 +7,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 pre_configure_target() {
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-documentation --disable-nls --sharedstatedir=/storage/.config"

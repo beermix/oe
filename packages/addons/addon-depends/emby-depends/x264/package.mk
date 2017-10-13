@@ -17,8 +17,7 @@
 ################################################################################
 
 PKG_NAME="x264"
-PKG_VERSION="snapshot-20170327-2245-stable"
-PKG_SHA256="b96a858a35e36a9248d73f710aeb5ea0f26805517d276a347915fb2d6f3f8550"
+PKG_VERSION="snapshot-20170524-2245-stable"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.videolan.org/developers/x264.html"
@@ -32,9 +31,10 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 pre_configure_target() {
-  cd $PKG_BUILD
+  cd $ROOT/$PKG_BUILD
   rm -rf .$TARGET_NAME
 }
+
 
 configure_target() {
   ./configure \

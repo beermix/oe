@@ -1,5 +1,5 @@
 ################################################################################
-#      This file is part of LibreELEC - https://libreelec.tv
+#      This file is part of LibreELEC - http://www.libreelec.tv
 #      Copyright (C) 2016 Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
@@ -18,12 +18,10 @@
 
 PKG_NAME="iw"
 PKG_VERSION="4.3"
-PKG_SHA256="a6add81a51667649d8d7cfba783ab6a0f82e250a663a4065b13babdff3f6b220"
-PKG_ARCH="any"
-PKG_LICENSE="PUBLIC_DOMAIN"
 PKG_SITE="http://wireless.kernel.org/en/users/Documentation/iw"
 PKG_URL="https://www.kernel.org/pub/software/network/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain libnl"
+
 PKG_SECTION="tools"
 PKG_SHORTDESC="iw is a new nl80211 based CLI configuration utility for wireless devices"
 PKG_LONGDESC="iw is a new nl80211 based CLI configuration utility for wireless devices. It supports all new drivers that have been added to the kernel recently."

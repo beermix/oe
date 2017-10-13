@@ -18,8 +18,7 @@
 
 PKG_NAME="usbmuxd"
 PKG_VERSION="1.1.0"
-PKG_SHA256="3e8948b4fe4250ee5c4bd41ccd1b83c09b8a6f5518a7d131a66fd38bd461b42d"
-PKG_REV="101"
+PKG_REV="100"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.libimobiledevice.org"
@@ -28,7 +27,7 @@ PKG_DEPENDS_TARGET="toolchain libusb libimobiledevice"
 PKG_SECTION="service"
 PKG_SHORTDESC="USB Multiplex Daemon"
 PKG_LONGDESC="USB Multiplex Daemon"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="iPhone Tether"
@@ -46,4 +45,8 @@ makeinstall_target() {
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
     cp -P $PKG_BUILD/.$TARGET_NAME/src/usbmuxd $ADDON_BUILD/$PKG_ADDON_ID/bin/
+}
+
+pre_configure_target() {
+  export CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
 }

@@ -1,6 +1,6 @@
 ################################################################################
-#      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2016-present Team LibreELEC
+#      This file is part of LibreELEC - http://www.libreelec.tv
+#      Copyright (C) 2016 Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,9 +18,6 @@
 
 PKG_NAME="libmtp"
 PKG_VERSION="1.1.13"
-PKG_SHA256="494ee02fbfbc316aad75b93263dac00f02a4899f28cfda1decbbd6e26fda6d40"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
 PKG_SITE="http://libmtp.sourceforge.net/"
 PKG_URL="$SOURCEFORGE_SRC/project/$PKG_NAME/$PKG_NAME/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libusb"

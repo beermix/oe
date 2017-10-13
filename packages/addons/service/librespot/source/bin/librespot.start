@@ -101,13 +101,12 @@ if [ -n "$ls_p" -a -n "$ls_u" ]; then
 fi
 
 if [ "$ls_O" == "Kodi" ]; then
-  LIBRESPOT="$LIBRESPOT --backend pulseaudio --device-type TV"
+  LIBRESPOT="$LIBRESPOT --backend pulseaudio"
 else
   init_alsa
   if [ -n "$ls_o" ]; then
     LIBRESPOT="$LIBRESPOT --device \"$ls_o\""
   fi
-  LIBRESPOT="$LIBRESPOT --device-type Speaker"
 fi
 
 if [ -z "$(pactl list short modules | grep sink_name=$LS_SINK)" ]; then

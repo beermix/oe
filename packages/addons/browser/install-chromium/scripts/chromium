@@ -1,0 +1,117 @@
+#!/bin/sh
+################################################################################
+#      This file is part of Alex@ELEC - http://www.alexelec.in.ua
+#      Copyright (C) 2011-2016 Alexandr Zuyev (alex@alexelec.in.ua)
+################################################################################
+
+. /etc/profile
+
+CHROME_DIR="/storage/.config/chromium"
+SERVICE_DIR="/storage/.cache/services"
+ADDON_HOME="/storage/.kodi/userdata/addon_data/web.browser.chromium"
+
+if [ -f "$ADDON_HOME/settings.xml" ]; then
+  cat "$ADDON_HOME/settings.xml" | awk -F\" '{print $2"=\""$4"\""}' | sed '/^=/d' > $CHROME_DIR/config/chromium.conf
+  . $CHROME_DIR/config/chromium.conf
+else
+  CHROME_HARDWARE="true"
+  CHROME_WINDOW="maximized"
+  CHROME_EXIT="false"
+fi
+
+# stop kodi
+if [ "$CHROME_EXIT" == "false" ]; then
+  systemctl stop kodi.service
+else
+  if [ "$CHROME_SOUND" == "true" ]; then
+      kodi-send --action="RunScript(/usr/bin/sound-kodi.py, pause)"
+  fi
+fi
+
+################################################################################
+
+ARGS_CHROME="--user-data-dir=$CHROME_DIR/profile"
+
+# HW acceleration mode
+if [ "$CHROME_HARDWARE" == "true" ]; then
+  export LIBVA_DRIVERS_PATH=/usr/lib/va
+  if [ "$GPUTYPE" == "INTEL" ]; then
+      export LIBVA_DRIVER_NAME=i965
+  else
+      export LIBVA_DRIVER_NAME=vdpau
+      [ "$GPUTYPE" == "NVIDIA" ] && ARGS_CHROME="$ARGS_CHROME --allow-no-sandbox-job --disable-gpu-sandbox"
+  fi
+
+  # rasterization mode
+  if [ "$CHROME_RASTER" == "off" ]; then
+      ARGS_CHROME="$ARGS_CHROME --disable-accelerated-2d-canvas --disable-gpu-compositing"
+  elif [ "$CHROME_RASTER" == "force" ]; then
+      ARGS_CHROME="$ARGS_CHROME --enable-gpu-rasterization --enable-accelerated-2d-canvas --ignore-gpu-blacklist"
+  fi
+else
+  export LIBGL_ALWAYS_SOFTWARE=1
+fi
+
+# window mode
+if [ "$CHROME_WINDOW" == "maximized" ]; then
+  ARGS_CHROME="$ARGS_CHROME --start-maximized"
+elif [ "$CHROME_WINDOW" == "kiosk" ]; then
+  ARGS_CHROME="$ARGS_CHROME --kiosk"
+fi
+
+# debug
+if [ "$CHROME_DEBUG" == "true" ]; then
+  ARGS_DEBUG="/var/log/chromium.log"
+else
+  ARGS_DEBUG="/dev/null"
+fi
+
+# remote control
+if [ "$CHROME_REMOTE" == "true" ]; then
+  /usr/bin/irexec -d $CHROME_DIR/config/remote.conf > /dev/null 2>&1
+fi
+
+# locale
+[ -f "$SERVICE_DIR/locale.conf" ] && . $SERVICE_DIR/locale.conf
+[ -z "$SYS_LOCALE" ] && SYS_LOCALE="ru_RU.UTF-8"
+
+# user config
+if [ -f "$CHROME_DIR/config/user.conf" ]; then
+  . $CHROME_DIR/config/user.conf
+  [ -n "$CHOMIUM_ARGS" ] && ARGS_CHROME=$CHOMIUM_ARGS
+fi
+
+################################################################################
+
+# make sure we use "own" nss
+export LD_LIBRARY_PATH=$CHROME_DIR/lib
+
+# font rendering in gtk widgets is brokeen with nvidia blob. use our Xdefaults
+export XENVIRONMENT=$CHROME_DIR/config/Xdefaults
+
+chmod 4755 $CHROME_DIR/chrome-sandbox
+
+# start chromium
+logger -t chromium "Chromium run: $ARGS_CHROME"
+LD_PRELOAD=/usr/lib/libGL.so LANG=$SYS_LOCALE $CHROME_DIR/chromium.bin \
+  --ppapi-flash-path=$CHROME_DIR/PepperFlash/libpepflashplayer.so \
+  --test-type $ARGS_CHROME > $ARGS_DEBUG 2>&1
+
+logger -t chromium "Chromium stop..."
+
+# disable remote control
+if [ "$CHROME_REMOTE" == "true" ]; then
+  killall -9 irexec > /dev/null 2>&1
+fi
+
+# start kodi
+if [ "$CHROME_EXIT" == "false" ]; then
+  touch /var/lock/start.kodi
+  systemctl start kodi.service
+else
+  if [ "$CHROME_SOUND" == "true" ]; then
+      kodi-send --action="RunScript(/usr/bin/sound-kodi.py, resume)"
+  fi
+fi
+
+exit 0
