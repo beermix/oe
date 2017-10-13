@@ -19,7 +19,7 @@
 PKG_NAME="jasper"
 PKG_VERSION="version-1.900.31"
 PKG_SITE="http://www.ece.uvic.ca/~mdadams/jasper/"
-PKG_GIT_URL="https://github.com/mdadams/jasper"
+PKG_URL="https://github.com/mdadams/jasper/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libjpeg-turbo"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="jasper: JPEG-2000 Part-1 standard (i.e., ISO/IEC 15444-1) implementation"
