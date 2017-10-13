@@ -169,10 +169,10 @@ makeinstall_target() {
     sed -e "s/@DISTRONAME@/$DISTRONAME/g" \
         -i $INSTALL/usr/lib/libreelec/fs-resize
 
-    #rm $INSTALL/bin/sh
-    #rm $INSTALL/bin/hostname
-    #rm $INSTALL/sbin/ip
-    rm $INSTALL/bin/bash
+    #rm $INSTALL/usr/bin/sh
+    #rm $INSTALL/usr/bin/hostname
+    #rm $INSTALL/usr/sbin/ip
+    rm $INSTALL/usr/bin/bash
 
   mkdir -p $INSTALL/etc
     cp $PKG_DIR/config/profile $INSTALL/etc
