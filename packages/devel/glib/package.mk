@@ -53,7 +53,8 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_snprintf_c99=yes \
                            --enable-Bsymbolic \
                            --with-gnu-ld \
                            --with-threads=posix \
-                           --with-pcre=system"
+                           --with-pcre=internal \
+                           --enable-static"
 
 pre_configure_host() {
   CFLAGS="$CFLAGS -fPIC"

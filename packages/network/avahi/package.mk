@@ -73,10 +73,6 @@ PKG_CONFIGURE_OPTS_TARGET="py_cv_mod_gtk_=yes \
                            --with-avahi-group=avahi \
                            --disable-nls"
 
-pre_configure_target() {
-  NOCONFIGURE=1 ./autogen.sh
-}
-
 post_makeinstall_target() {
 # for some reason avai can fail to start see: http://forums.gentoo.org/viewtopic-p-7322172.html#7322172
   sed -e "s,^.*disallow-other-stacks=.*$,disallow-other-stacks=yes,g" -i $INSTALL/etc/avahi/avahi-daemon.conf
