@@ -32,5 +32,5 @@ PKG_LONGDESC="This is an X driver based on libinput."
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--with-xorg-module-dir=/usr/lib/xorg/modules"
+PKG_CONFIGURE_OPTS_TARGET="--with-xorg-module-dir=$XORG_PATH_MODULES"
 
