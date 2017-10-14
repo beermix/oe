@@ -85,4 +85,4 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-static \
                            --disable-readline \
                            --enable-threadsafe \
                            --enable-dynamic-extensions \
-                           --with-gnu-ld"
+                           --with-gnu-ld --disable-silent-rules"

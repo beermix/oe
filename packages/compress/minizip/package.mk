@@ -16,23 +16,22 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="Adafruit_Python_LED_Backpack"
-PKG_VERSION="ac6e25a"
-PKG_SHA256="55e82c45858e6ede604b5e31408e34d1f71c2610ae4a6a595a683e197e083fa2"
+PKG_NAME="minizip"
+PKG_VERSION="1.1"
+PKG_SHA256="5666b5ee3e85dfd2dd119970613c12e6267d31813f07d3ffa5d359fe272cb6d1"
 PKG_ARCH="any"
-PKG_LICENSE="MIT"
-PKG_SITE="https://github.com/adafruit/${PKG_NAME}"
-PKG_URL="https://github.com/adafruit/${PKG_NAME}/archive/$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain Python2 distutilscross:host"
-PKG_SECTION="python"
-PKG_SHORTDESC="Python library for controlling LED backpack displays."
-PKG_LONGDESC="Python library for controlling LED backpack displays such as 8x8 matrices, bar graphs, and 7/14-segment displays on a Raspberry Pi or BeagleBone Black."
-PKG_AUTORECONF="no"
+PKG_LICENSE="zlib"
+PKG_SITE="https://github.com/nmoinvaz/minizip"
+PKG_URL="https://github.com/nmoinvaz/minizip/archive/$PKG_VERSION.tar.gz"
+PKG_DEPENDS_TARGET="zlib"
+PKG_SECTION="compress"
+PKG_SHORTDESC="Minizip zlib contribution fork with latest bug fixes"
+PKG_LONGDESC="Minizip zlib contribution fork with latest bug fixes"
 
-make_target() {
-  : # nop
-}
+PKG_CMAKE_OPTS_TARGET="-DUSE_AES=OFF \
+                       -DBUILD_TEST=ON"
 
 makeinstall_target() {
-  : # nop
+  cp -v miniunz_exec $SYSROOT_PREFIX/usr/bin/miniunz
+  cp -v minizip_exec $SYSROOT_PREFIX/usr/bin/minizip
 }

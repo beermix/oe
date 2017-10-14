@@ -53,6 +53,7 @@
   RUN_FSCK="yes"
   RUN_FSCK_DISKS=""
   SYSLINUX_DEFAULT=""
+  GRUB_DEFAULT=""
 
   NBD_DEVS="0"
   FLASH_FREE_MIN="5"
@@ -62,6 +63,7 @@
 
   LIVE="no"
 
+  BREAK_TRIPPED="no"
 
   # Get a serial number if present (eg. RPi) otherwise use MAC address from eth0
   MACHINE_UID="$(cat /proc/cpuinfo | awk '/^Serial/{s=$3; gsub ("^0*","",s); print s}')"
@@ -152,6 +154,13 @@
       portable)
         SYSLINUX_DEFAULT="run"
         ;;
+      grub_live)
+        LIVE=yes
+        GRUB_DEFAULT="Live"
+        ;;
+      grub_portable)
+        GRUB_DEFAULT="Run"
+        ;;
       overlay)
         OVERLAY=yes
         ;;
@@ -183,7 +192,7 @@
   }
 
   debug_shell() {
-    echo "### Starting debugging shell... type  exit  to quit ###"
+    echo "### Starting debugging shell for boot step: $BOOT_STEP... type  exit  to quit ###"
 
     showcursor
 
@@ -201,12 +210,17 @@
   }
 
   break_after() {
-    # Start debug shell after boot step $1
-    case $BREAK in
-      all|*$1*)
-        debug_shell
-        ;;
-    esac
+    # Start debug shell after boot step $1, and all subsequent steps
+    if [ $BREAK_TRIPPED == yes ]; then
+      debug_shell
+    else
+      case $BREAK in
+        all|*$1*)
+          BREAK_TRIPPED=yes
+          debug_shell
+          ;;
+      esac
+    fi
   }
 
   # Mount handlers
@@ -686,37 +700,7 @@
           disk="$target/$OVERLAY_DIR,$options"
         fi
       fi
-      if [ -f /flash/mountopts.cfg ]; then
-        mount_part "$disk" "/storage" "`cat /flash/mountopts.cfg`"
-      else
-        mount_part "$disk" "/storage" "rw,noatime"
-      fi
-      # get the disk. /storage on 2nd partition
-      PART=$(/bin/busybox grep "/storage " /proc/mounts | /bin/busybox cut -d" " -f1 | /bin/busybox grep '2$')
-      # if requested, do a backup first
-      if [ -f /storage/.backup ]; then
-        mkdir -p /backup && /bin/busybox mount -t tmpfs none /backup
-        /bin/busybox tar -czf /backup/storage.tar.gz /storage
-      fi
-      if [ -f /storage/.please_reformat_f2fs -a -x /sbin/mkfs.f2fs ]; then
-        /bin/busybox umount /storage
-        mkfs.f2fs -l Storage "$PART"
-        mount_part "$PART" "/storage" "rw,noatime"
-      elif [ -f /storage/.please_reformat_btrfs -a -x /sbin/mkfs.btrfs ]; then
-        /bin/busybox umount /storage
-        mkfs.btrfs -f -L Storage "$PART"
-        mount_part "$PART" "/storage" "rw,noatime"
-      elif [ -f /storage/.please_reformat_ext4 -a -L /sbin/mkfs.ext4 ]; then
-        /bin/busybox umount /storage
-        mkfs.ext4 -F -L Storage "$PART"
-        mount_part "$PART" "/storage" "rw,noatime"
-      elif [ -f /storage/.please_reformat_xfs -a -x /sbin/mkfs.xfs ]; then
-        /bin/busybox umount /storage
-        mkfs.xfs -f -L Storage "$PART"
-        mount_part "$PART" "/storage" "rw,noatime"
-      fi
-      [ -f /backup/storage.tar.gz ] && /bin/busybox tar -C / -zxf /backup/storage.tar.gz && /bin/busybox umount /backup
-      rm -f /storage/.backup /storage/.please_reformat*
+      mount_part "$disk" "/storage" "rw,noatime"
     else
       # /storage should always be writable
       mount -t tmpfs none /storage
@@ -724,7 +708,7 @@
   }
 
   # Make last bootloader label (installer, live, run etc.) as the new default
-  update_syslinux() {
+  update_bootmenu() {
     local crnt_default
 
     if [ -n "$SYSLINUX_DEFAULT" -a -f /flash/syslinux.cfg ]; then
@@ -736,6 +720,20 @@
           mount -o remount,rw /flash
           sed -i "s/^DEFAULT .*/DEFAULT $SYSLINUX_DEFAULT/" /flash/syslinux.cfg
           [ -f /flash/EFI/BOOT/syslinux.cfg ] && cp /flash/syslinux.cfg /flash/EFI/BOOT/syslinux.cfg
+          mount -o remount,ro /flash
+        fi
+      fi
+    fi
+
+    if [ -n "\"$GRUB_DEFAULT\"" -a -f /flash/grub.cfg ]; then
+      if grep -q "^menuentry \"$GRUB_DEFAULT\"" /flash/grub.cfg; then
+        crnt_default="$(awk '/^set default/ {print substr($2,9,19)}' /flash/grub.cfg)"
+        if [ ! "$crnt_default" = "\"$GRUB_DEFAULT\"" ]; then
+          progress "Updating /flash/grub.cfg [$crnt_default -> \"$GRUB_DEFAULT\"]"
+
+          mount -o remount,rw /flash
+          sed -i "s/^set default=.*/set default=\"$GRUB_DEFAULT\"/" /flash/grub.cfg
+          [ -f /flash/EFI/BOOT/grub.cfg ] && cp /flash/grub.cfg /flash/EFI/BOOT/grub.cfg
           mount -o remount,ro /flash
         fi
       fi
@@ -1035,7 +1033,7 @@
     mount --move /flash /sysroot/flash
     mount --move /storage /sysroot/storage
 
-    if [ ! -d "/sysroot/usr/lib/modules/$(uname -r)/" -a -f "/sysroot/usr/lib/systemd/systemd" ]; then
+    if [ ! -d "/sysroot/usr/lib/kernel-overlays/base/lib/modules/$(uname -r)/" -a -f "/sysroot/usr/lib/systemd/systemd" ]; then
       echo ""
       echo "NEVER TOUCH boot= in extlinux.conf / cmdline.txt!"
       echo "If you don't know what you are doing,"
@@ -1062,7 +1060,7 @@
       load_modules \
       check_disks \
       mount_flash \
-      update_syslinux \
+      update_bootmenu \
       load_splash \
       mount_storage \
       check_update \
