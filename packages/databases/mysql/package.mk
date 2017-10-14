@@ -29,6 +29,7 @@ PKG_SECTION="database"
 PKG_SHORTDESC="mysql: A database server"
 PKG_LONGDESC="MySQL is a SQL (Structured Query Language) database server. SQL is the most popular database language in the world. MySQL is a client server implementation that consists of a server daemon mysqld and many different client programs/libraries."
 PKG_AUTORECONF="no"
+PKG_USE_NINJA="no"
 
 post_unpack() {
   sed -i 's|GET_TARGET_PROPERTY(LIBMYSQL_OS_OUTPUT_NAME libmysql OUTPUT_NAME)|SET(LIBMYSQL_OS_OUTPUT_NAME "mysqlclient")|' $PKG_BUILD/scripts/CMakeLists.txt
@@ -63,9 +64,9 @@ if [ "$DEBUG" = yes -a "$TARGET_ARCH" = aarch64 ]; then
 fi
 
 make_host() {
-  ninja comp_err
-  ninja gen_lex_hash
-  ninja comp_sql
+  make comp_err
+  make gen_lex_hash
+  make comp_sql
 }
 
 post_make_host() {

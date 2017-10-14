@@ -144,24 +144,7 @@ kernel_version() {
 
 # get kernel module dir
 get_module_dir() {
-  basename $(ls -d $(get_build_dir linux)/.install_pkg/usr/lib/kernel-overlays/base/lib/modules/*)
-}
-
-# get base path to kernel modules and firmware
-get_kernel_overlay_dir() {
-  echo "/usr/lib/kernel-overlays/${1:-base}"
-}
-
-# get full path to kernel module dir
-# optional parameter specifies overlay level (default is base)
-get_full_module_dir() {
-  echo "$(get_kernel_overlay_dir $1)/lib/modules/$(get_module_dir)"
-}
-
-# get full path to firmware dir
-# optional parameter specifies overlay level (default is base)
-get_full_firmware_dir() {
-  echo "$(get_kernel_overlay_dir $1)/lib/firmware"
+  basename $(ls -d $(get_build_dir linux)/.install_pkg/usr/lib/modules/*)
 }
 
 # get package's build dir
@@ -477,7 +460,7 @@ dashes="==========================="
     exit 1
   fi
 
-  if [ \( -z "$DEVICE" -a -d "$PROJECT_DIR/$PROJECT/devices" \) -o \( -n "$DEVICE" -a ! -d "$PROJECT_DIR/$PROJECT/devices/$DEVICE" \) ]; then
+  if [ -n "$DEVICE" -a ! -d "$PROJECT_DIR/$PROJECT/devices/$DEVICE" ]; then
     check_device="$check_device\n $dashes$dashes$dashes"
     check_device="$check_device\n ERROR: You need to specify a valid device for the $PROJECT project"
     check_device="$check_device\n $dashes$dashes$dashes"
@@ -496,8 +479,8 @@ dashes="==========================="
     linux_config_dir="$PROJECT_DIR/$PROJECT/linux"
   fi
 
-  if [ ! -e $linux_config_dir/linux.${TARGET_PATCH_ARCH:-$TARGET_ARCH}.conf ] &&
-     ! ls $linux_config_dir/*/linux.${TARGET_PATCH_ARCH:-$TARGET_ARCH}.conf &>/dev/null; then
+  if [ ! -e $linux_config_dir/linux.$TARGET_ARCH.conf ] &&
+     ! ls $linux_config_dir/*/linux.$TARGET_ARCH.conf &>/dev/null; then
     check_arch="$check_arch\n $dashes$dashes$dashes"
     check_arch="$check_arch\n ERROR: Architecture not found, use a valid Architecture"
     check_arch="$check_arch\n for your project or create a new config"

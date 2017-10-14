@@ -65,17 +65,10 @@ case "$LINUX" in
 esac
 
 PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
-PKG_IS_KERNEL_PKG="yes"
 
-if [ "$TARGET_KERNEL_ARCH" = "arm64" -a "$TARGET_ARCH" = "arm" ]; then
-  PKG_DEPENDS_HOST="$PKG_DEPENDS_HOST gcc-linaro-aarch64-elf:host"
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET gcc-linaro-aarch64-elf:host"
-  TARGET_PREFIX=$TOOLCHAIN/lib/gcc-linaro-aarch64-elf/bin/aarch64-elf-
-  HEADERS_ARCH=$TARGET_ARCH
-fi
-
-PKG_MAKE_OPTS_HOST="ARCH=${HEADERS_ARCH:-$TARGET_KERNEL_ARCH} headers_check"
+PKG_MAKE_OPTS_HOST="ARCH=$TARGET_KERNEL_ARCH headers_check"
 
 if [ "$TARGET_ARCH" = "x86_64" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET intel-ucode:host kernel-firmware"
@@ -86,25 +79,18 @@ if [ "$BUILD_ANDROID_BOOTIMG" = "yes" ]; then
 fi
 
 post_patch() {
-  CFG_FILE="$PKG_NAME.${TARGET_PATCH_ARCH:-$TARGET_ARCH}.conf"
-  if [ -n "$DEVICE" -a -f $PROJECT_DIR/$PROJECT/devices/$DEVICE/$PKG_NAME/$PKG_VERSION/$CFG_FILE ]; then
-    KERNEL_CFG_FILE=$PROJECT_DIR/$PROJECT/devices/$DEVICE/$PKG_NAME/$PKG_VERSION/$CFG_FILE
-  elif [ -n "$DEVICE" -a -f $PROJECT_DIR/$PROJECT/devices/$DEVICE/$PKG_NAME/$LINUX/$CFG_FILE ]; then
-    KERNEL_CFG_FILE=$PROJECT_DIR/$PROJECT/devices/$DEVICE/$PKG_NAME/$LINUX/$CFG_FILE
-  elif [ -n "$DEVICE" -a -f $PROJECT_DIR/$PROJECT/devices/$DEVICE/$PKG_NAME/$CFG_FILE ]; then
-    KERNEL_CFG_FILE=$PROJECT_DIR/$PROJECT/devices/$DEVICE/$PKG_NAME/$CFG_FILE
-  elif [ -f $PROJECT_DIR/$PROJECT/$PKG_NAME/$PKG_VERSION/$CFG_FILE ]; then
-    KERNEL_CFG_FILE=$PROJECT_DIR/$PROJECT/$PKG_NAME/$PKG_VERSION/$CFG_FILE
-  elif [ -f $PROJECT_DIR/$PROJECT/$PKG_NAME/$LINUX/$CFG_FILE ]; then
-    KERNEL_CFG_FILE=$PROJECT_DIR/$PROJECT/$PKG_NAME/$LINUX/$CFG_FILE
-  elif [ -f $PROJECT_DIR/$PROJECT/$PKG_NAME/$CFG_FILE ]; then
-    KERNEL_CFG_FILE=$PROJECT_DIR/$PROJECT/$PKG_NAME/$CFG_FILE
-  elif [ -f $PKG_DIR/config/$PKG_VERSION/$CFG_FILE ]; then
-    KERNEL_CFG_FILE=$PKG_DIR/config/$PKG_VERSION/$CFG_FILE
-  elif [ -f $PKG_DIR/config/$LINUX/$CFG_FILE ]; then
-    KERNEL_CFG_FILE=$PKG_DIR/config/$LINUX/$CFG_FILE
+  if [ -n "$DEVICE" -a -f $PROJECT_DIR/$PROJECT/devices/$DEVICE/$PKG_NAME/$PKG_VERSION/$PKG_NAME.$TARGET_ARCH.conf ]; then
+    KERNEL_CFG_FILE=$PROJECT_DIR/$PROJECT/devices/$DEVICE/$PKG_NAME/$PKG_VERSION/$PKG_NAME.$TARGET_ARCH.conf
+  elif [ -n "$DEVICE" -a -f $PROJECT_DIR/$PROJECT/devices/$DEVICE/$PKG_NAME/$PKG_NAME.$TARGET_ARCH.conf ]; then
+    KERNEL_CFG_FILE=$PROJECT_DIR/$PROJECT/devices/$DEVICE/$PKG_NAME/$PKG_NAME.$TARGET_ARCH.conf
+  elif [ -f $PROJECT_DIR/$PROJECT/$PKG_NAME/$PKG_VERSION/$PKG_NAME.$TARGET_ARCH.conf ]; then
+    KERNEL_CFG_FILE=$PROJECT_DIR/$PROJECT/$PKG_NAME/$PKG_VERSION/$PKG_NAME.$TARGET_ARCH.conf
+  elif [ -f $PROJECT_DIR/$PROJECT/$PKG_NAME/$PKG_NAME.$TARGET_ARCH.conf ]; then
+    KERNEL_CFG_FILE=$PROJECT_DIR/$PROJECT/$PKG_NAME/$PKG_NAME.$TARGET_ARCH.conf
+  elif [ -f $PKG_DIR/config/$PKG_VERSION/$PKG_NAME.$TARGET_ARCH.conf ]; then
+    KERNEL_CFG_FILE=$PKG_DIR/config/$PKG_VERSION/$PKG_NAME.$TARGET_ARCH.conf
   else
-    KERNEL_CFG_FILE=$PKG_DIR/config/$CFG_FILE
+    KERNEL_CFG_FILE=$PKG_DIR/config/$PKG_NAME.$TARGET_ARCH.conf
   fi
 
   sed -i -e "s|^HOSTCC[[:space:]]*=.*$|HOSTCC = $TOOLCHAIN/bin/host-gcc|" \
@@ -144,20 +130,10 @@ post_patch() {
     sed -i -e "s|^CONFIG_ISCSI_IBFT_FIND=.*$|# CONFIG_ISCSI_IBFT_FIND is not set|" $PKG_BUILD/.config
     sed -i -e "s|^CONFIG_ISCSI_IBFT=.*$|# CONFIG_ISCSI_IBFT is not set|" $PKG_BUILD/.config
   fi
-
-  # install extra dts files
-  for f in $PROJECT_DIR/$PROJECT/config/*-overlay.dts; do
-    [ -f "$f" ] && cp -v $f $PKG_BUILD/arch/$TARGET_KERNEL_ARCH/boot/dts/overlays || true
-  done
-  if [ -n "$DEVICE" ]; then
-    for f in $PROJECT_DIR/$PROJECT/devices/$DEVICE/config/*-overlay.dts; do
-      [ -f "$f" ] && cp -v $f $PKG_BUILD/arch/$TARGET_KERNEL_ARCH/boot/dts/overlays || true
-    done
-  fi
 }
 
 makeinstall_host() {
-  make ARCH=${HEADERS_ARCH:-$TARGET_KERNEL_ARCH} INSTALL_HDR_PATH=dest headers_install
+  make ARCH=$TARGET_KERNEL_ARCH INSTALL_HDR_PATH=dest headers_install
   mkdir -p $SYSROOT_PREFIX/usr/include
     cp -R dest/include/* $SYSROOT_PREFIX/usr/include
 }
@@ -188,9 +164,9 @@ pre_make_target() {
 
 make_target() {
   LDFLAGS="" make modules
-  LDFLAGS="" make INSTALL_MOD_PATH=$INSTALL/$(get_kernel_overlay_dir) DEPMOD="$TOOLCHAIN/bin/depmod" modules_install
-  rm -f $INSTALL/$(get_kernel_overlay_dir)/lib/modules/*/build
-  rm -f $INSTALL/$(get_kernel_overlay_dir)/lib/modules/*/source
+  LDFLAGS="" make INSTALL_MOD_PATH=$INSTALL/usr DEPMOD="$TOOLCHAIN/bin/depmod" modules_install
+  rm -f $INSTALL/usr/lib/modules/*/build
+  rm -f $INSTALL/usr/lib/modules/*/source
 
   ( cd $ROOT
     rm -rf $BUILD/initramfs
@@ -241,7 +217,7 @@ makeinstall_init() {
     mkdir -p $INSTALL/usr/lib/modules
 
     for i in $INITRAMFS_MODULES; do
-      module=`find .install_pkg/$(get_full_module_dir)/kernel -name $i.ko`
+      module=`find .install_pkg/usr/lib/modules/$(get_module_dir)/kernel -name $i.ko`
       if [ -n "$module" ]; then
         echo $i >> $INSTALL/etc/modules
         cp $module $INSTALL/usr/lib/modules/`basename $module`
@@ -251,15 +227,15 @@ makeinstall_init() {
 
   if [ "$UVESAFB_SUPPORT" = yes ]; then
     mkdir -p $INSTALL/usr/lib/modules
-      uvesafb=`find .install_pkg/$(get_full_module_dir)/kernel -name uvesafb.ko`
+      uvesafb=`find .install_pkg/usr/lib/modules/$(get_module_dir)/kernel -name uvesafb.ko`
       cp $uvesafb $INSTALL/usr/lib/modules/`basename $uvesafb`
   fi
 }
 
 post_install() {
-  mkdir -p $INSTALL/$(get_full_firmware_dir)/
-    ln -sf /storage/.config/firmware/ $INSTALL/$(get_full_firmware_dir)/updates
+  mkdir -p $INSTALL/usr/lib/firmware/
+    ln -sf /storage/.config/firmware/ $INSTALL/usr/lib/firmware/updates
 
   # bluez looks in /etc/firmware/
-    ln -sf /$(get_full_firmware_dir)/ $INSTALL/etc/firmware
+    ln -sf /usr/lib/firmware/ $INSTALL/etc/firmware
 }
