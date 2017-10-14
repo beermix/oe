@@ -38,10 +38,10 @@ else
   DISPLAYSERVER_LIBVA="--disable-x11 --disable-glx"
 fi
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-silent-rules \
+PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
                            --disable-docs \
                            --enable-drm \
                            --enable-egl \
                            $DISPLAYSERVER_LIBVA \
                            --disable-wayland \
-                           --disable-dummy-driver"
+                           --enable-dummy-driver"
