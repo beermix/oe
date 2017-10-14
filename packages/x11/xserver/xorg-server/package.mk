@@ -56,7 +56,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
                            --disable-unit-tests \
                            --disable-sparkle \
                            --disable-xselinux \
-                           --enable-composite \
+                           $XORG_COMPOSITE \
                            --enable-mitshm \
                            --disable-xres \
                            --enable-record \
