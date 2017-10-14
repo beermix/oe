@@ -31,7 +31,7 @@ PKG_LONGDESC="HarfBuzz is an OpenType text shaping engine."
 
 PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 pre_configure_target() {
   export LIBS="$LIBS -ldl"
