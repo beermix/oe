@@ -154,7 +154,6 @@ makeinstall_host() {
 
 makeinstall_target() {
   mkdir -p $INSTALL/usr/bin
-  mkdir -p $INSTALL/bin
     [ $TARGET_ARCH = x86_64 ] && cp $PKG_DIR/scripts/getedid $INSTALL/usr/bin
     cp $PKG_DIR/scripts/createlog $INSTALL/usr/bin/
     cp $PKG_DIR/scripts/lsb_release $INSTALL/usr/bin/
