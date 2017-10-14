@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -14,7 +14,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################  --skip-git
+################################################################################
 
 PKG_NAME="libtool"
 PKG_VERSION="6ca5e22"
@@ -25,7 +25,6 @@ PKG_LICENSE="GPL"
 PKG_URL="https://dl.dropboxusercontent.com/s/bnkfpojtqnjwm3y/libtool-6ca5e22.tar.xz"
 PKG_DEPENDS_HOST="ccache:host autoconf:host automake:host"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
 PKG_SECTION="devel"
 PKG_SHORTDESC="libtool: Generic library support script"
 PKG_LONGDESC="This is GNU Libtool, a generic library support script. Libtool hides the complexity of using shared libraries behind a consistent, portable interface."
@@ -33,15 +32,16 @@ PKG_IS_ADDON="no"
 
 PKG_AUTORECONF="no"
 
-pre_configure_host() {
+pre_build_host() {
   cd $PKG_BUILD
-  sh bootstrap
+  ./bootstrap
+#  cd -
 }
 
 pre_configure_target() {
-  cd $PKG_BUILD
+  cd $ROOT
   make clean
-  sh bootstrap
+  ./bootstrap
 }
 
 PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
