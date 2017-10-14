@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="mysql"
-PKG_VERSION="5.7.18"
-PKG_SHA256="0b5d71ed608656cd8181d3bb0434d3e36bac192899038dbdddf5a7594aaea1a2"
+PKG_VERSION="5.7.19"
+PKG_SHA256="3e51e76f93179ca7b165a7008a6cc14d56195b3aef35d26d3ac194333d291eb1"
 PKG_ARCH="any"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://www.mysql.com"
