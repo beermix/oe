@@ -1,0 +1,59 @@
+diff --git a/xbmc/addons/Addon.cpp b/xbmc/addons/Addon.cpp
+index 09b4b7d175..2cfd7fbdf9 100644
+--- a/xbmc/addons/Addon.cpp
++++ b/xbmc/addons/Addon.cpp
+@@ -393,6 +393,16 @@ AddonVersion CAddon::GetDependencyVersion(const std::string &dependencyID) const
+   return AddonVersion("0.0.0");
+ }
+ 
++void OnEnabled(const AddonPtr& addon)
++{
++  addon->OnEnabled();
++}
++
++void OnDisabled(const AddonPtr& addon)
++{
++  addon->OnDisabled();
++}
++
+ void OnPreInstall(const AddonPtr& addon)
+ {
+   //Fallback to the pre-install callback in the addon.
+diff --git a/xbmc/addons/Addon.h b/xbmc/addons/Addon.h
+index b877839848..95f3f23437 100644
+--- a/xbmc/addons/Addon.h
++++ b/xbmc/addons/Addon.h
+@@ -36,10 +36,12 @@ namespace ADDON
+ 
+   const char* const ORIGIN_SYSTEM = "b6a50484-93a0-4afb-a01c-8d17e059feda";
+ 
+-  void OnPreInstall(const AddonPtr& addon);
+-  void OnPostInstall(const AddonPtr& addon, bool update, bool modal);
+-  void OnPreUnInstall(const AddonPtr& addon);
+-  void OnPostUnInstall(const AddonPtr& addon);
++void OnEnabled(const AddonPtr& addon);
++void OnDisabled(const AddonPtr& addon);
++void OnPreInstall(const AddonPtr& addon);
++void OnPostInstall(const AddonPtr& addon, bool update, bool modal);
++void OnPreUnInstall(const AddonPtr& addon);
++void OnPostUnInstall(const AddonPtr& addon);
+ 
+ class CAddon : public IAddon
+ {
+@@ -192,6 +194,16 @@ public:
+   bool MeetsVersion(const AddonVersion &version) const override { return m_addonInfo.MeetsVersion(version); }
+   bool ReloadSettings() override;
+ 
++  /*! \brief callback for when this add-on is disabled.
++   Use to perform any needed actions (e.g. stop a service)
++   */
++  void OnDisabled() override {};
++
++  /*! \brief callback for when this add-on is enabled.
++   Use to perform any needed actions (e.g. start a service)
++   */
++  void OnEnabled() override {};
++
+   /*! \brief retrieve the running instance of an add-on if it persists while running.
+    */
+   AddonPtr GetRunningInstance() const override { return AddonPtr(); }
