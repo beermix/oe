@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="binutils"
-PKG_VERSION="2.29"
-PKG_SHA256="172e8c89472cf52712fd23a9f14e9bca6182727fb45b0f8f482652a83d5a11b4"
+PKG_VERSION="2.29.1"
+PKG_SHA256="e7010a46969f9d3e53b650a518663f98a5dde3c3ae21b7d71e5e6803bc36b577"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/binutils/"
-PKG_URL="http://ftpmirror.gnu.org/binutils/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_URL="http://ftpmirror.gnu.org/binutils/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="ccache:host bison:host flex:host libelf:host bc:host linux:host"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="binutils: A GNU collection of binary utilities"
@@ -46,22 +46,40 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-libssp \
                          --enable-version-specific-runtime-libs \
                          --enable-plugins \
-                         --enable-gold \
                          --enable-ld=default \
                          --enable-lto \
                          --enable-shared \
-                         --disable-gold \
-                         --enable-threads \
-                         --with-pic \
                          --disable-nls \
-                         --enable-relro \
-                         --with-system-zlib \
                          --enable-poison-system-directories \
-                         MAKEINFO=true"
+                         MAKEINFO=true LDFLAGS=-s"
+
+pre_configure_host() {
+  unset CPPFLAGS
+  unset CFLAGS
+  unset CXXFLAGS
+  unset LDFLAGS
+}
+
+make_host() {
+  make configure-host
+  make
+}
+
+make_target() {
+  make configure-host
+  make -C libiberty
+  make -C bfd
+  make -C binutils ar
+}
 
 makeinstall_host() {
   cp -v ../include/libiberty.h $SYSROOT_PREFIX/usr/include
   make install
+}
+
+makeinstall_target() {
+  mkdir -p $INSTALL/usr/bin
+  cp binutils/ar $INSTALL/usr/bin
 }
 
 PKG_CONFIGURE_OPTS_TARGET="MAKEINFO=true --disable-shared --disable-multilib --without-ppl --without-cloog"

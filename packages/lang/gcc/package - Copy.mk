@@ -52,23 +52,27 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-default-libstdcxx-abi=gcc4-compatible \
                            --without-ppl \
                            --without-cloog \
-                           --disable-libada \
-                           --disable-libmudflap \
-                           --disable-libatomic \
-                           --disable-libitm \
-                           --disable-libquadmath \
                            --disable-libmpx \
+                           --disable-libsanitizer \
                            --disable-libssp \
-                           --with-tune=generic"
+                           --without-cuda-driver \
+                           --with-linker-hash-style=gnu \
+                           --disable-werror \
+                           --with-system-zlib \
+                           --with-tune=generic \
+                           MAKEINFO=missing"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
-                              --disable-libsanitizer \
-                              --enable-cloog-backend=isl \
+                              --disable-libatomic \
+                              --disable-libquadmath \
+                              --disable-libmudflap \
+                              --disable-libada \
+                              --disable-libgomp \
+                              --disable-libitm \
                               --disable-shared \
                               --disable-threads \
-                              --disable-libgomp \
                               --without-headers \
                               --with-newlib \
                               --disable-decimal-float \
@@ -85,13 +89,12 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-long-long \
                          --enable-threads=posix \
                          --disable-libstdcxx-pch \
-                         --enable-libstdcxx-time \
+                         --enable-libstdcxx-time=yes \
                          --enable-clocale=gnu \
-                         --enable-libatomic \
+                         --disable-vtable-verify \
                          $GCC_OPTS"
 
 pre_configure_host() {
-  export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
 }
 
