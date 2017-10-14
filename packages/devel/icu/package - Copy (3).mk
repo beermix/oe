@@ -55,7 +55,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
 			      --disable-tools \
 			      --disable-tests \
 			      --disable-samples \
-			      --with-cross-build=$ROOT/$PKG_BUILD/.$HOST_NAME"
+			      --with-cross-build=$PKG_BUILD/.$HOST_NAME"
 
 PKG_CONFIGURE_SCRIPT="source/configure"
 

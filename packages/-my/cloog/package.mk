@@ -6,5 +6,5 @@ PKG_SECTION="devel"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_HOST="--with-polylib=no --with-isl=$ROOT/$TOOLCHAIN"
+PKG_CONFIGURE_OPTS_HOST="--with-polylib=no --with-isl=$TOOLCHAIN"
 

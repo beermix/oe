@@ -9,7 +9,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 pre_configure_target() {
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
   rm -rf .$TARGET_NAME
 }
 
@@ -33,7 +33,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-ipv6-support \
 			      --localedir=/storage/.config/privoxy/locale"
 
 makeinstall_target() {
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
   mkdir -p $INSTALL/usr
   mkdir -p $INSTALL/usr/bin
   mkdir -p $INSTALL/storage/.config

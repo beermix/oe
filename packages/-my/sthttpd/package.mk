@@ -13,8 +13,8 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 make_target() {
-  cd $ROOT/$PKG_BUILD
-  ./configure --prefix=/usr --srcdir=$ROOT/$PKG_BUILD/ --host=$TARGET_NAME
+  cd $PKG_BUILD
+  ./configure --prefix=/usr --srcdir=$PKG_BUILD/ --host=$TARGET_NAME
   cd src
   make
 }

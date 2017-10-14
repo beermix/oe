@@ -38,5 +38,5 @@ make_target() {
 
 makeinstall_target() {
   mkdir -p $INSTALL/opt/emby
-  unzip -q $ROOT/$SOURCES/$PKG_NAME/$PKG_SOURCE_NAME -d $INSTALL/opt/emby
+  unzip -q $SOURCES/$PKG_NAME/$PKG_SOURCE_NAME -d $INSTALL/opt/emby
 }

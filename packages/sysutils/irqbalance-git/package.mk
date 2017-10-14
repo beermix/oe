@@ -38,10 +38,10 @@ PKG_CONFIGURE_OPTS_TARGET="--with-systemd --with-glib2 --without-libcap-ng"
 
 post_makeinstall_target() {
   mkdir -p $INSTALL/etc
-    cp $ROOT/$PKG_BUILD/misc/irqbalance.env $INSTALL/etc/irqbalance
+    cp $PKG_BUILD/misc/irqbalance.env $INSTALL/etc/irqbalance
 
   mkdir -p $INSTALL/usr/lib/systemd/system
-    cp $ROOT/$PKG_BUILD/misc/irqbalance.service $INSTALL/usr/lib/systemd/system
+    cp $PKG_BUILD/misc/irqbalance.service $INSTALL/usr/lib/systemd/system
 }
 
 post_install() {

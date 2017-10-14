@@ -9,7 +9,7 @@ PKG_AUTORECONF="yes"
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-all \
 			      --enable-static \
-			      --with-zlib-dir=$ROOT/$TOOLCHAIN \
+			      --with-zlib-dir=$TOOLCHAIN \
 			      --enable-scripts \
 			      --with-random-device=/dev/random \
 			      --with-urandom-device=/dev/urandom \

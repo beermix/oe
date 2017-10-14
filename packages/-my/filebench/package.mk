@@ -9,7 +9,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 configure_target() {
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
   ./configure --prefix=/usr --enable-rdtsc=yes --enable-system=yes --datarootdir=/storage/.config LDFLAGS="-static"
 }
 

@@ -38,9 +38,9 @@ cd $PKG_BUILD
        LDFLAGS="$HOST_LDFLAGS" \
        linux
 
-  mkdir -p $ROOT/$TOOLCHAIN/bin
-    cp -P src.host/lua $ROOT/$TOOLCHAIN/bin
-    cp -P src.host/luac $ROOT/$TOOLCHAIN/bin
+  mkdir -p $TOOLCHAIN/bin
+    cp -P src.host/lua $TOOLCHAIN/bin
+    cp -P src.host/luac $TOOLCHAIN/bin
 
 # build and install target packages
   setup_toolchain target

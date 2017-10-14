@@ -18,6 +18,6 @@ pre_configure_target() {
 PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release -DFOUND_LIBRT=$SYSROOT_PREFIX/usr/lib/librt.so"
 
 makeinstall_target() {
-  cp $ROOT/$PKG_BUILD/.x86_64-openelec-linux-gnu/crypto/libcrypto.a $SYSROOT_PREFIX/usr/lib
-  cp $ROOT/$PKG_BUILD/.x86_64-openelec-linux-gnu/ssl/libssl.a $SYSROOT_PREFIX/usr/lib
+  cp $PKG_BUILD/.x86_64-openelec-linux-gnu/crypto/libcrypto.a $SYSROOT_PREFIX/usr/lib
+  cp $PKG_BUILD/.x86_64-openelec-linux-gnu/ssl/libssl.a $SYSROOT_PREFIX/usr/lib
 }

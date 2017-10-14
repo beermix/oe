@@ -11,14 +11,14 @@ PKG_LONGDESC="QEMU is a generic and open source machine emulator and virtualizer
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-HOST_CONFIGURE_OPTS="--prefix=$ROOT/$TOOLCHAIN \
-			--bindir=$ROOT/$TOOLCHAIN/bin \
-			--sbindir=$ROOT/$TOOLCHAIN/sbin \
-			--sysconfdir=$ROOT/$TOOLCHAIN/etc \
-			--libexecdir=$ROOT/$TOOLCHAIN/lib \
-			--localstatedir=$ROOT/$TOOLCHAIN/var \
-			--extra-cflags=-I$ROOT/$TOOLCHAIN/include \
-			--extra-ldflags=-L$ROOT/$TOOLCHAIN/lib \
+HOST_CONFIGURE_OPTS="--prefix=$TOOLCHAIN \
+			--bindir=$TOOLCHAIN/bin \
+			--sbindir=$TOOLCHAIN/sbin \
+			--sysconfdir=$TOOLCHAIN/etc \
+			--libexecdir=$TOOLCHAIN/lib \
+			--localstatedir=$TOOLCHAIN/var \
+			--extra-cflags=-I$TOOLCHAIN/include \
+			--extra-ldflags=-L$TOOLCHAIN/lib \
 			--static \
 			--disable-vnc \
 			--disable-werror \
@@ -28,7 +28,7 @@ HOST_CONFIGURE_OPTS="--prefix=$ROOT/$TOOLCHAIN \
 			--disable-docs"
 			
 pre_configure_target() {
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
   rm -rf .$TARGET_NAME
   
   #strip_lto

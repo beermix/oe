@@ -9,7 +9,7 @@ PKG_AUTORECONF="no"
 MAKEFLAGS="-j1"
 
 pre_configure_target() {
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
   rm -rf .$TARGET_NAME
  # strip_lto
 }

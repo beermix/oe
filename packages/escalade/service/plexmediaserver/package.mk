@@ -48,10 +48,10 @@ makeinstall_target() {
 
 case $ARCH in
   x86_64)
-    rpm2cpio $ROOT/$SOURCES/$PKG_NAME/$PKG_SOURCE_NAME | bsdtar -xf -
+    rpm2cpio $SOURCES/$PKG_NAME/$PKG_SOURCE_NAME | bsdtar -xf -
     ;;
   arm)
-    tar -xf $ROOT/$SOURCES/$PKG_NAME/$PKG_SOURCE_NAME
+    tar -xf $SOURCES/$PKG_NAME/$PKG_SOURCE_NAME
     mkdir -p usr/lib/plexmediaserver
     tar -zxf package.tgz -C usr/lib/plexmediaserver/
     ;;

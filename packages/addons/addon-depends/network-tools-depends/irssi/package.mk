@@ -38,7 +38,7 @@ PKG_CONFIGURE_OPTS_TARGET="--with-sysroot=$SYSROOT_PREFIX \
         --without-sco"
 
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -I$ROOT/$PKG_BUILD"
+  export CFLAGS="$CFLAGS -I$PKG_BUILD"
   export LIBS="-ltermcap"
 }
 

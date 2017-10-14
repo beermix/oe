@@ -9,7 +9,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 configure_target() {
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
   rm -rf .$TARGET_NAME
   cmake -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
   	-DCMAKE_INSTALL_PREFIX=/usr \

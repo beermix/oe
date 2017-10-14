@@ -12,7 +12,7 @@ post_unpack() {
 
 pre_configure_target() {
    export MAKEFLAGS="-j1"
-   cd $ROOT/$PKG_BUILD
+   cd $PKG_BUILD
    strip_lto
    #strip_gold
 }
@@ -24,7 +24,7 @@ make_target() {
 post_make_target() {
   mkdir -p $INSTALL/usr/sbin/
   mkdir -p $INSTALL_DEV/usr/sbin/
-  cp $ROOT/$PKG_BUILD/zizzania $INSTALL/usr/sbin/
+  cp $PKG_BUILD/zizzania $INSTALL/usr/sbin/
 }
 
 

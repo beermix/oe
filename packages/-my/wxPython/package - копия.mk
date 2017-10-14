@@ -7,7 +7,7 @@ PKG_AUTORECONF="no"
 
 pre_configure_target() {
 # makemkv fails to build in subdirs
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
     rm -rf .$TARGET_NAME
 }
 

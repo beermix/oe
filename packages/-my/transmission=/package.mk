@@ -7,11 +7,11 @@ PKG_USE_CMAKE="yes"
 PKG_AUTORECONF="no"
 
 unpack() {
-  git clone --recursive -v --depth 1 https://github.com/transmission/transmission $ROOT/$PKG_BUILD
+  git clone --recursive -v --depth 1 https://github.com/transmission/transmission $PKG_BUILD
 }
 
 pre_configure_target() {
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
   rm -rf .$TARGET_NAME
 }
 

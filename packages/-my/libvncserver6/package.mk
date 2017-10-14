@@ -19,7 +19,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
                            --without-ipv6 \
                            --without-sdl \
                            --without-gcrypt \
-                           --with-zlib=$ROOT/$TOOLCHAIN \
+                           --with-zlib=$TOOLCHAIN \
                            --with-ssl \
                            --without-crypto \
                            --without-crypt \

@@ -178,8 +178,8 @@ post_install() {
 			# need to remove libc.so and libpthread.so linker scripts to enable cross compilation with qmake.
 			# otherwise it would try to fail when linking with the wrong libraries.
 			
-			rm $ROOT/$INSTALL/usr/lib/libc.so
-			rm $ROOT/$INSTALL/usr/lib/libpthread.so
+			rm $INSTALL/usr/lib/libc.so
+			rm $INSTALL/usr/lib/libpthread.so
 		;;
 	esac
 }

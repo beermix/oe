@@ -21,13 +21,13 @@ make_host() {
 }
 
 #make_target() {
-#  cd $ROOT/$PKG_BUILD
+#  cd $PKG_BUILD
 #  make makefile.linux_amd64 CXX=$CXX CC=$CC 7z 7za
 #}
 
 makeinstall_host() {
-  mkdir -p $ROOT/$TOOLCHAIN/bin
-    cp bin/7za $ROOT/$TOOLCHAIN/bin
+  mkdir -p $TOOLCHAIN/bin
+    cp bin/7za $TOOLCHAIN/bin
 }
 
 

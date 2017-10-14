@@ -69,7 +69,7 @@ else
 fi
 
 pre_configure_host() {
-  ( cd $ROOT/$PKG_BUILD
+  ( cd $PKG_BUILD
     # Skip autoheader because there is a problem with AC_DEFINE's in the configure.in in SDL 1.2.14.
     # Added include directory 'acinclude' because SDL 1.2.14 has no Makefile.am in which to specify it.
       AUTOHEADER=true autoreconf --verbose --install --force -I $SYSROOT_PREFIX/usr/share/aclocal -I acinclude
@@ -82,10 +82,10 @@ pre_configure_target() {
 }
 
 post_makeinstall_target() {
-  mkdir -p $ROOT/$TOOLCHAIN/bin
-    cp $SYSROOT_PREFIX/usr/bin/sdl-config $ROOT/$TOOLCHAIN/bin
+  mkdir -p $TOOLCHAIN/bin
+    cp $SYSROOT_PREFIX/usr/bin/sdl-config $TOOLCHAIN/bin
     sed -e "s:\(['= ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" \
-        -i $ROOT/$TOOLCHAIN/bin/sdl-config
+        -i $TOOLCHAIN/bin/sdl-config
 
   rm -rf $INSTALL/usr/bin
 }

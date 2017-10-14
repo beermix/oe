@@ -31,5 +31,5 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 makeinstall_host() {
-  make LIBINTL=NONE DESTDIR=$ROOT/$TOOLCHAIN prefix=/ all install
+  make LIBINTL=NONE DESTDIR=$TOOLCHAIN prefix=/ all install
 }

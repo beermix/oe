@@ -6,7 +6,7 @@ PKG_SECTION="tools"
 PKG_AUTORECONF="no"
 
 configure_target() {
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
   rm -rf .$TARGET_NAME
   
   ./waf-light configure
@@ -14,7 +14,7 @@ configure_target() {
   ./waf-light build	
    
   #point waf binary to waflib dir and strip payload
-        sed -e "/INSTALL=/s:=.*:='$ROOT/$TOOLCHAIN/bin':" \
+        sed -e "/INSTALL=/s:=.*:='$TOOLCHAIN/bin':" \
                 -e "/REVISION=/s:=.*:='1.9.9':" \
                 -e "s:/lib/:/$(get_libdir)/:" \
                 -e "/^#\(==>\|BZ\|<==\)/d" \

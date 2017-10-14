@@ -7,11 +7,11 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 configure_host() {
-  cd $ROOT/$PKG_BUILD
-  ./configure --prefix=$ROOT/$TOOLCHAIN \
+  cd $PKG_BUILD
+  ./configure --prefix=$TOOLCHAIN \
    	       --cflags="-O2 -pipe" \
-   	       --with-rpath=$ROOT/$TOOLCHAIN/usr/lib \
+   	       --with-rpath=$TOOLCHAIN/usr/lib \
    	       --bits=64 \
-   	       --libdir=$ROOT/$TOOLCHAIN/usr/lib \
+   	       --libdir=$TOOLCHAIN/usr/lib \
    	       --with-static-sqlite=/root/build.OE-Generic.x86_64-8.0-devel/toolchain/include/sqlite3.h
 }

@@ -29,7 +29,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 post_unpack() {
-  cp -r $ROOT/$PKG_BUILD/source/* $ROOT/$PKG_BUILD/
+  cp -r $PKG_BUILD/source/* $PKG_BUILD/
 }
 
 pre_configure_target() {
@@ -59,7 +59,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
 			      --disable-tools \
 			      --disable-tests \
 			      --disable-samples \
-			      --with-cross-build=$ROOT/$PKG_BUILD/.$HOST_NAME"
+			      --with-cross-build=$PKG_BUILD/.$HOST_NAME"
 
 #PKG_CONFIGURE_SCRIPT="source/configure"
 

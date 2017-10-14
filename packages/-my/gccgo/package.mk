@@ -14,9 +14,9 @@ pre_configure_host() {
 
 PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --with-sysroot=$SYSROOT_PREFIX \
-                         --with-gmp=$ROOT/$TOOLCHAIN \
-                         --with-mpfr=$ROOT/$TOOLCHAIN \
-                         --with-mpc=$ROOT/$TOOLCHAIN \
+                         --with-gmp=$TOOLCHAIN \
+                         --with-mpfr=$TOOLCHAIN \
+                         --with-mpc=$TOOLCHAIN \
                          --without-ppl \
                          --without-cloog \
                          --enable-languages=go \

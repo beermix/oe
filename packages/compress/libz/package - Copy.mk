@@ -31,7 +31,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 TARGET_CONFIGURE_OPTS="--prefix=/usr"
-HOST_CONFIGURE_OPTS="--prefix=$ROOT/$TOOLCHAIN"
+HOST_CONFIGURE_OPTS="--prefix=$TOOLCHAIN"
 
 pre_configure_host() {
 # clean host cflags and use libz's own

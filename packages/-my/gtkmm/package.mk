@@ -27,7 +27,7 @@ PKG_LONGDESC="aria2 is a lightweight multi-protocol & multi-source command-line 
 PKG_AUTORECONF="no"
 
 pre_configure_target() {
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
   rm -rf .$TARGET_NAME
 }
 

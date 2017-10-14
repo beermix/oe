@@ -11,7 +11,7 @@ strip_gold
 
 
 make_target() {
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
   rm -rf .$TARGET_NAME
   make \
   	CXX="$CXX" \

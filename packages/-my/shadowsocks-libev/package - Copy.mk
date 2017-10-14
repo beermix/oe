@@ -11,11 +11,11 @@ LTO_SUPPORT="no"
 GOLD_SUPPORT="no"
 
 unpack() {
-  git clone --recursive -v --depth 1 http://github.com/shadowsocks/shadowsocks-libev $ROOT/$PKG_BUILD
+  git clone --recursive -v --depth 1 http://github.com/shadowsocks/shadowsocks-libev $PKG_BUILD
 }
 
 pre_configure_target() {
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
   rm -rf .$TARGET_NAME
  # LIBS="$LIBS -pthread"
 }

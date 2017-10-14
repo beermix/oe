@@ -39,7 +39,7 @@ PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
 			      --enable-gettext=no"
 
 pre_configure_target() {
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
   cd $PKG_BUILD
   rm -rf $TARGET_NAME
   make configure

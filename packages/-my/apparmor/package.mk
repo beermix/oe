@@ -30,7 +30,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 pre_configure_target() {
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
   rm -rf .$TARGET_NAME
   strip_lto
   strip_gold
@@ -49,8 +49,8 @@ configure_target() {
 make_init() {
   echo "Making $PKG_NAME"
   USE_SYSTEM=1
-  HOST_YACC=$ROOT/$TOOLCHAIN/bin/bison
-  HOST_LEX=$ROOT/$TOOLCHAIN/bin/flex
+  HOST_YACC=$TOOLCHAIN/bin/bison
+  HOST_LEX=$TOOLCHAIN/bin/flex
   (cd parser
     make YACC=$HOST_YACC LEX=$HOST_LEX BISON=$HOST_YACC CPP="$TARGET_CC -E -o - -" arch)
 }
@@ -79,7 +79,7 @@ makeinstall_target() {
 }
 
 post_install() {
-  local install_dir="$ROOT/$BUILD/initramfs"
+  local install_dir="$BUILD/initramfs"
   if ! grep -q apparmor "$install_dir/init"; then
     echo "Patching $install_dir/init..."
 

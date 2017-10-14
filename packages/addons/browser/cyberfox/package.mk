@@ -6,7 +6,7 @@ PKG_SECTION="tools"
 PKG_AUTORECONF="no"
 
 make_target() {
-cd $ROOT/$PKG_BUILD
+cd $PKG_BUILD
 
 # Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
 # Note: These are for Arch Linux use ONLY. For your own distribution, please
@@ -21,7 +21,7 @@ _google_api_key=AIzaSyDwr302FpOSkGRpLlUpPThNTDPbXcIn_FM
 _mozilla_api_key=16674381-f021-49de-8622-3021c5942aff
 
   mkdir path
-  ln -s $ROOT/$TOOLCHAIN/python path/python
+  ln -s $TOOLCHAIN/python path/python
 
  
   

@@ -7,8 +7,8 @@ PKG_SECTION="service/system"
 PKG_AUTORECONF="yes"
 
 pre_build_target() {
-   mkdir -p $ROOT/$PKG_BUILD/.$TARGET_NAME
-   cp -RP $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$TARGET_NAME
+   mkdir -p $PKG_BUILD/.$TARGET_NAME
+   cp -RP $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME
    #export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
 }
 

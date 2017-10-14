@@ -84,7 +84,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
 
 unpack() {
   mkdir -p $BUILD/$PKG_NAME-$PKG_VERSION ; cd $BUILD/$PKG_NAME-$PKG_VERSION
-  tar -jxf $ROOT/$SOURCES/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.bz2
+  tar -jxf $SOURCES/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.bz2
   mv curl-$PKG_VERSION/* .
   rm -rf curl-$PKG_VERSION
   cd -

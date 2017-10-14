@@ -35,5 +35,5 @@ PKG_AUTORECONF="no"
 PKG_CONFIGURE_OPTS_HOST="--without-guile"
 
 post_makeinstall_host() {
-  ln -sf make $ROOT/$TOOLCHAIN/bin/gmake
+  ln -sf make $TOOLCHAIN/bin/gmake
 }

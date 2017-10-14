@@ -16,7 +16,7 @@ pre_configure_target() {
 
 
 configure_target() {
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
   ./fullinstall
 
 }

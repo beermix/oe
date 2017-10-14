@@ -9,7 +9,7 @@ PKG_AUTORECONF="no"
 
 
 configure_target() {
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
   export LIBS="-ltermcap"
   export PYTHON_VERSION="2.7"
   export PYTHON_CPPFLAGS="-I$SYSROOT_PREFIX/usr/include/python$PYTHON_VERSION"
@@ -46,7 +46,7 @@ PKG_CONFIGURE_OPTS="-v --prefix=${ROOT}/${PKG_BUILD} \
 			--classic \
 			--check-cxx-compiler=g++"
 #make_target() {
-#  cd $ROOT/$PKG_BUILD
+#  cd $PKG_BUILD
 #  ./waf build
 # ./waf install prefix=$INSTALL/usr
 #}

@@ -8,12 +8,12 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 configure_target() {
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
   ./configure
 }
 
 
 make_target() {
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
 
 }

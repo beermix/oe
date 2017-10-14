@@ -16,9 +16,9 @@ make_target() {
 post_make_target() {
   mkdir -p $INSTALL/bin/
   #mkdir -p $INSTALL_DEV/usr/bin/
-  cp $ROOT/$PKG_BUILD/fbset $INSTALL/bin/
-  cp $ROOT/$PKG_BUILD/con2fbmap $INSTALL/bin/
-  cp $ROOT/$PKG_BUILD/modeline2fb $INSTALL/bin/
+  cp $PKG_BUILD/fbset $INSTALL/bin/
+  cp $PKG_BUILD/con2fbmap $INSTALL/bin/
+  cp $PKG_BUILD/modeline2fb $INSTALL/bin/
 }
 
 

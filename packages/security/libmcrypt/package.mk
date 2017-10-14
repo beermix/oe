@@ -27,7 +27,7 @@ pre_configure_target() {
 
 makeinstall_target() {
   # use this version only for addon (don't install it to a system)
-  INSTALL_DEV=$ROOT/$PKG_BUILD/.install_dev
+  INSTALL_DEV=$PKG_BUILD/.install_dev
   make -j1 install DESTDIR=$INSTALL_DEV $PKG_MAKEINSTALL_OPTS_TARGET
 
   for i in $(find $INSTALL_DEV/usr/lib/ -name "*.la" 2>/dev/null); do

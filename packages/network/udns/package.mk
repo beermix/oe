@@ -8,7 +8,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 configure_target() {
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
   mkdir -p $INSTALL/usr/bin
  ./configure --disable-ipv6
 }  
@@ -18,11 +18,11 @@ make_target() {
 }
 
 post_make_target() {
-  cp $ROOT/$PKG_BUILD/libudns.a $SYSROOT_PREFIX/usr/lib
-  cp $ROOT/$PKG_BUILD/udns.h $SYSROOT_PREFIX/usr/include
-  cp -fv $ROOT/$PKG_BUILD/dnsget $INSTALL/usr/bin/
-  cp -fv $ROOT/$PKG_BUILD/rblcheck $INSTALL/usr/bin/
-  cp -fv $ROOT/$PKG_BUILD/ex-rdns $INSTALL/usr/bin/
+  cp $PKG_BUILD/libudns.a $SYSROOT_PREFIX/usr/lib
+  cp $PKG_BUILD/udns.h $SYSROOT_PREFIX/usr/include
+  cp -fv $PKG_BUILD/dnsget $INSTALL/usr/bin/
+  cp -fv $PKG_BUILD/rblcheck $INSTALL/usr/bin/
+  cp -fv $PKG_BUILD/ex-rdns $INSTALL/usr/bin/
 }
 
 makeinstall_target() {

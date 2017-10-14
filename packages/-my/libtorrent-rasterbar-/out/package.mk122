@@ -11,10 +11,10 @@ PKG_SHORTDESC="libtorrent is a feature complete C++ bittorrent implementation fo
 PKG_LONGDESC="libtorrent is a feature complete C++ bittorrent implementation focusing on efficiency and scalability. It runs on embedded devices as well as desktops. It boasts a well documented library interface that is easy to use. It comes with a simple bittorrent client demonstrating the use of the library."
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
-export CFLAGS="$CFLAGS -I$ROOT/$PKG_BUILD/include/"
-export CXXFLAGS="$CXXFLAGS -I$ROOT/$PKG_BUILD/include/"
+export CFLAGS="$CFLAGS -I$PKG_BUILD/include/"
+export CXXFLAGS="$CXXFLAGS -I$PKG_BUILD/include/"
 export PYTHON_VERSION="2.7"
-export PYTHON_CPPFLAGS="-I$SYSROOT_PREFIX/usr/include/python$PYTHON_VERSION -I$ROOT/$PKG_BUILD/include/"
+export PYTHON_CPPFLAGS="-I$SYSROOT_PREFIX/usr/include/python$PYTHON_VERSION -I$PKG_BUILD/include/"
 export PYTHON_LDFLAGS="-L$SYSROOT_PREFIX/usr/lib/python$PYTHON_VERSION -lpython$PYTHON_VERSION"
 export PYTHON_SITE_PKG="$SYSROOT_PREFIX/usr/lib/python$PYTHON_VERSION/site-packages"
 
@@ -33,10 +33,10 @@ PKG_CONFIGURE_OPTS_TARGET="--with-sysroot=$SYSROOT_PREFIX \
 echo $PKG_CONFIGURE_OPTS_TARGET
 
 pre_configure_target() {
-./bootstrap.sh && sed -i 's/$PKG_CONFIG openssl --libs-only-/$PKG_CONFIG openssl --static --libs-only-/' $ROOT/$PKG_BUILD/configure
+./bootstrap.sh && sed -i 's/$PKG_CONFIG openssl --libs-only-/$PKG_CONFIG openssl --static --libs-only-/' $PKG_BUILD/configure
 }
 
 post_configure_target()
 {
-cp -R $ROOT/$PKG_BUILD/bindings/python $ROOT/$PKG_BUILD/.$TARGET_NAME/bindings
+cp -R $PKG_BUILD/bindings/python $PKG_BUILD/.$TARGET_NAME/bindings
 }

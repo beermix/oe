@@ -8,7 +8,7 @@ PKG_AUTORECONF="yes"
 
 
 make_target() {
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
 #https://github.com/archlinuxarm/PKGBUILDs/blob/master/extra/firefox/PKGBUILD
 
 # Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
@@ -28,7 +28,7 @@ _mozilla_api_key=16674381-f021-49de-8622-3021c5942aff
   mkdir path
   
   
-  ln -s $ROOT/$TOOLCHAIN/bin/python path/python
+  ln -s $TOOLCHAIN/bin/python path/python
 
 
   echo -n "$_google_api_key" >google-api-key

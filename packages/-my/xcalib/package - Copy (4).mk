@@ -8,7 +8,7 @@ PKG_AUTORECONF="no"
 PKG_USE_CMAKE="yes"
 
 pre_configure_target() {
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
   mkdir -p $INSTALL/usr/bin
   export LDFLAGS="-lX11 -lXrandr -lXxf86vm -lXext -lm"
 }

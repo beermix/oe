@@ -22,7 +22,7 @@ make_target() {
 }
 
 makeinstall_target() {
-   cd $ROOT/$PKG_BUILD
+   cd $PKG_BUILD
   cp ./crypto/libcrypto.a $SYSROOT_PREFIX/usr/lib
   cp ./ssl/libssl.a $SYSROOT_PREFIX/usr/lib
 }

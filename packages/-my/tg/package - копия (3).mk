@@ -30,7 +30,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
 		
 post_make_target() {
   mkdir -p $INSTALL/usr/bin/
-  cp $ROOT/$PKG_BUILD/bin/telegram-cli $INSTALL/usr/bin/tg
-  cp $ROOT/$PKG_BUILD/bin/tl-parser $INSTALL/usr/bin/
-  cp $ROOT/$PKG_BUILD/bin/generate $INSTALL/usr/bin/
+  cp $PKG_BUILD/bin/telegram-cli $INSTALL/usr/bin/tg
+  cp $PKG_BUILD/bin/tl-parser $INSTALL/usr/bin/
+  cp $PKG_BUILD/bin/generate $INSTALL/usr/bin/
 }

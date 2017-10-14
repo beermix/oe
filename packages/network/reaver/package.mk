@@ -12,7 +12,7 @@ post_unpack() {
 }
 
 pre_configure_target() {
-   cd $ROOT/$PKG_BUILD
+   cd $PKG_BUILD
    export MAKEFLAGS="-j1"
    strip_lto
    export LDFLAGS="-ldl -lpthread -lsqlite3"

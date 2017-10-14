@@ -80,11 +80,11 @@ pre_configure_target() {
 }
 
 post_makeinstall_target() {
-  cp misc/ncurses-config $ROOT/$TOOLCHAIN/bin
-  chmod +x $ROOT/$TOOLCHAIN/bin/ncurses-config
-  $SED "s:\(['=\" ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" $ROOT/$TOOLCHAIN/bin/ncurses-config
-  ln -sf ncurses-config $ROOT/$TOOLCHAIN/bin/ncurses5-config
-  ln -sf ncurses5-config $ROOT/$TOOLCHAIN/bin/ncurses6-config
+  cp misc/ncurses-config $TOOLCHAIN/bin
+  chmod +x $TOOLCHAIN/bin/ncurses-config
+  $SED "s:\(['=\" ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" $TOOLCHAIN/bin/ncurses-config
+  ln -sf ncurses-config $TOOLCHAIN/bin/ncurses5-config
+  ln -sf ncurses5-config $TOOLCHAIN/bin/ncurses6-config
 
   rm -rf $INSTALL/usr/bin/ncurses*-config
 }

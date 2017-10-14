@@ -35,8 +35,8 @@ PKG_AUTORECONF="no"
 PKG_ADDON_REPOVERSION="8.1"
 
 make_target() {
-  mkdir -p $ROOT/$PKG_BUILD
-  cd $ROOT/$PKG_BUILD
+  mkdir -p $PKG_BUILD
+  cd $PKG_BUILD
 
   case $TARGET_ARCH in
     x86_64)

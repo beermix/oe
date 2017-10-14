@@ -50,15 +50,15 @@ pre_make_target() {
 
 make_target() {
   export CCACHE_SLOPPINESS=include_file_mtime
-#  mkdir -p $ROOT/$PKG_BUILD/out
-#  mount -t tmpfs -o size=20G,nr_inodes=40k,mode=1777 tmpfs $ROOT/$PKG_BUILD/out
+#  mkdir -p $PKG_BUILD/out
+#  mount -t tmpfs -o size=20G,nr_inodes=40k,mode=1777 tmpfs $PKG_BUILD/out
 
 #  export -n CFLAGS CXXFLAGS
   export LDFLAGS="$LDFLAGS -ludev"
   export LD=$CXX
   
   # Use Python 2
-  find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$ROOT/$TOOLCHAIN/bin/python|g" {} +
+  find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$TOOLCHAIN/bin/python|g" {} +
 
   # Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
   # Note: These are for OpenELEC use ONLY. For your own distribution, please
@@ -137,7 +137,7 @@ make_target() {
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
   ./tools/gn/bootstrap/bootstrap.py --gn-gen-args "${_flags[*]}"
-  ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$ROOT/$TOOLCHAIN/bin/python
+  ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
 
   ninja -j4 -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
 }
@@ -148,12 +148,12 @@ makeinstall_target() {
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
-  cp -P  $ROOT/$PKG_BUILD/out/Release/chrome $ADDON_BUILD/$PKG_ADDON_ID/bin/chromium.bin
-  cp -P  $ROOT/$PKG_BUILD/out/Release/chromedriver $ADDON_BUILD/$PKG_ADDON_ID/bin/chromedriver
-  cp -P  $ROOT/$PKG_BUILD/out/Release/chrome_sandbox $ADDON_BUILD/$PKG_ADDON_ID/bin/chrome-sandbox
-  cp -P  $ROOT/$PKG_BUILD/out/Release/{*.pak,*.dat,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
-  cp -PR $ROOT/$PKG_BUILD/out/Release/locales $ADDON_BUILD/$PKG_ADDON_ID/bin/
-  cp -PR $ROOT/$PKG_BUILD/out/Release/gen/content/content_resources.pak $ADDON_BUILD/$PKG_ADDON_ID/bin/
+  cp -P  $PKG_BUILD/out/Release/chrome $ADDON_BUILD/$PKG_ADDON_ID/bin/chromium.bin
+  cp -P  $PKG_BUILD/out/Release/chromedriver $ADDON_BUILD/$PKG_ADDON_ID/bin/chromedriver
+  cp -P  $PKG_BUILD/out/Release/chrome_sandbox $ADDON_BUILD/$PKG_ADDON_ID/bin/chrome-sandbox
+  cp -P  $PKG_BUILD/out/Release/{*.pak,*.dat,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
+  cp -PR $PKG_BUILD/out/Release/locales $ADDON_BUILD/$PKG_ADDON_ID/bin/
+  cp -PR $PKG_BUILD/out/Release/gen/content/content_resources.pak $ADDON_BUILD/$PKG_ADDON_ID/bin/
 
   # config
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/config

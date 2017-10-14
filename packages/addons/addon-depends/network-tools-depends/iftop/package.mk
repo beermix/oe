@@ -27,8 +27,8 @@ PKG_LONGDESC="iftop does for network usage what top(1) does for CPU usage. It li
 PKG_AUTORECONF="no"
 
 pre_build_target() {
-  mkdir -p $ROOT/$PKG_BUILD/.$TARGET_NAME
-  cp -RP $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$TARGET_NAME
+  mkdir -p $PKG_BUILD/.$TARGET_NAME
+  cp -RP $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME
 }
 
 pre_configure_target() {

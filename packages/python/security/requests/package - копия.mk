@@ -34,7 +34,7 @@ PKG_AUTORECONF="no"
 CONCURRENCY_MAKE_LEVEL=1
 
 pre_configure_target() {
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
   rm -rf .$TARGET_NAME
 }
 

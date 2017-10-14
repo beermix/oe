@@ -7,5 +7,5 @@ PKG_AUTORECONF="no"
 PKG_LOCALE_INSTALL="no"
 
 pre_configure_target() {
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
 }

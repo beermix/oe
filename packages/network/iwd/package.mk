@@ -43,7 +43,7 @@ pre_build_target() {
 
 post_makeinstall_target() {
   mkdir -p $INSTALL/etc/dbus-1/system.d
-    cp $ROOT/$PKG_BUILD/src/iwd-dbus.conf $INSTALL/etc/dbus-1/system.d
+    cp $PKG_BUILD/src/iwd-dbus.conf $INSTALL/etc/dbus-1/system.d
 }
 
 post_install() {

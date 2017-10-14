@@ -11,7 +11,7 @@ PKG_SHORTDESC="Simple Network Management Protocol utilities."
 PKG_AUTORECONF="no"
 
 configure_target() {
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
   ./configure --host=$TARGET_NAME \
   		--build=$HOST_NAME \
   		--prefix=/usr \

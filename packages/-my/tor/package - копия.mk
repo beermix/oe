@@ -15,7 +15,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-gcc-hardening \
 			      --sysconfdir=/storage/.config \
 			      --datarootdir=/storage/.cache/tor \
 			      --datadir=/storage/.cache/tor \
-			      --with-zlib-dir=$ROOT/$TOOLCHAIN \
+			      --with-zlib-dir=$TOOLCHAIN \
 			      --with-libevent-dir=$SYSROOT_PREFIX/usr \
 			      --with-openssl-dir=$SYSROOT_PREFIX/usr"
 

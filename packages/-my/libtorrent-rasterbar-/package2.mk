@@ -8,10 +8,10 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 pre_configure_target() {
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
   export CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
-  sed -i 's/$PKG_CONFIG openssl --libs-only-/$PKG_CONFIG openssl --static --libs-only-/' $ROOT/$PKG_BUILD/configure
-  sed -i -e s/Windows.h/windows.h/ -e s/Wincrypt.h/wincrypt.h/ $ROOT/$PKG_BUILD/ed25519/src/seed.cpp
+  sed -i 's/$PKG_CONFIG openssl --libs-only-/$PKG_CONFIG openssl --static --libs-only-/' $PKG_BUILD/configure
+  sed -i -e s/Windows.h/windows.h/ -e s/Wincrypt.h/wincrypt.h/ $PKG_BUILD/ed25519/src/seed.cpp
   
   #CFLAGS="-O3 -pipe -fstack-protector-strong"
   #CPPFLAGS="-D_FORTIFY_SOURCE=2"

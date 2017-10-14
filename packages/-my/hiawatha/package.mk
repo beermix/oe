@@ -13,13 +13,13 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 make_target() {
-  mkdir -p $ROOT/$PKG_BUILD/build
-  cd $ROOT/$PKG_BUILD/build
+  mkdir -p $PKG_BUILD/build
+  cd $PKG_BUILD/build
   cmake -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF -DCMAKE_INSTALL_PREFIX=/usr -DENABLE_XSLT=off ..
   mkdir -p $INSTALL/etc/hiawatha
   cp $PKG_DIR/hiawatha.conf.tmpl $INSTALL/etc/hiawatha
   cp $PKG_DIR/cgi-wrapper.conf.tmpl $INSTALL/etc/hiawatha
-  cp $ROOT/$PKG_BUILD/config/mimetype.conf $INSTALL/etc/hiawatha
+  cp $PKG_BUILD/config/mimetype.conf $INSTALL/etc/hiawatha
 }
 
 post_makeinstall_target() {

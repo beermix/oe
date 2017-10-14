@@ -37,6 +37,6 @@ PKG_CONFIGURE_OPTS_HOST="--prefix=/usr --with-glibc=../eglibc"
 CFLAGS+=" -fgnu89-inline"
 
 makeinstall_host() {
-  mkdir -p $ROOT/$TOOLCHAIN/bin
-    cp localedef $ROOT/$TOOLCHAIN/bin
+  mkdir -p $TOOLCHAIN/bin
+    cp localedef $TOOLCHAIN/bin
 }

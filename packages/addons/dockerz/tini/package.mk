@@ -36,7 +36,7 @@ PKG_CMAKE_TARGET_OPTS="-DCMAKE_BUILD_TYPE=Release -DMINIMAL=1"
 PKG_MAKE_TARGET_OPTS="tini-static"
 
 pre_configure_target(){
-  sed -i "s|@tini_VERSION_GIT@| - git.${PKG_VERSION}|" $ROOT/$PKG_BUILD/src/tiniConfig.h.in
+  sed -i "s|@tini_VERSION_GIT@| - git.${PKG_VERSION}|" $PKG_BUILD/src/tiniConfig.h.in
 }
 
 makeinstall_target() {

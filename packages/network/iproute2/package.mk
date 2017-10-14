@@ -9,18 +9,18 @@ PKG_AUTORECONF="no"
 CONCURRENCY_MAKE_LEVEL=1
 
 pre_configure_target() {
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
   rm -rf .$TARGET_NAME
   
-  echo "TC_CONFIG_IPSET:=n" >> $ROOT/$PKG_BUILD/Config
-  echo "TC_CONFIG_XT:=n" >> $ROOT/$PKG_BUILD/Config
-  echo "HAVE_BERKELEY_DB:=n" >> $ROOT/$PKG_BUILD/Config
+  echo "TC_CONFIG_IPSET:=n" >> $PKG_BUILD/Config
+  echo "TC_CONFIG_XT:=n" >> $PKG_BUILD/Config
+  echo "HAVE_BERKELEY_DB:=n" >> $PKG_BUILD/Config
   
-  sed "s,-I/usr/include/db3,," $ROOT/$PKG_BUILD/Makefile
+  sed "s,-I/usr/include/db3,," $PKG_BUILD/Makefile
         sed "s,^KERNEL_INCLUDE.*,KERNEL_INCLUDE=$(get_pkg_build linux)/include," \
-                $ROOT/$PKG_BUILD/Makefile
+                $PKG_BUILD/Makefile
         sed "s,^LIBC_INCLUDE.*,LIBC_INCLUDE=$SYSROOT_PREFIX/include," \
-                $ROOT/$PKG_BUILD/Makefile
+                $PKG_BUILD/Makefile
                 
   export CC="$CC"
   export CFLAGS="$CFLAGS"

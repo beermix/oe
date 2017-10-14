@@ -35,6 +35,6 @@ PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
 			 
 			 
 post_makeinstall_host() {
-  ln -sf remake $ROOT/$TOOLCHAIN/bin/gmake
-  ln -sf remake $ROOT/$TOOLCHAIN/bin/make
+  ln -sf remake $TOOLCHAIN/bin/gmake
+  ln -sf remake $TOOLCHAIN/bin/make
 }

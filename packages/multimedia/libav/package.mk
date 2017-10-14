@@ -11,7 +11,7 @@ PKG_AUTORECONF="no"
 get_graphicdrivers
 
 pre_configure_target() {
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
   rm -rf .$TARGET_NAME
   strip_lto
   strip_gold
@@ -46,7 +46,7 @@ configure_target() {
               --enable-logging \
               --disable-doc \
               --enable-pic \
-              --pkg-config="$ROOT/$TOOLCHAIN/bin/pkg-config" \
+              --pkg-config="$TOOLCHAIN/bin/pkg-config" \
               --enable-optimizations \
               --enable-yasm
 }

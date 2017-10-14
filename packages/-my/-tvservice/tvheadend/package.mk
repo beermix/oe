@@ -53,14 +53,14 @@ PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
                            --enable-timeshift \
                            --disable-dvbscan \
                            --nowerror \
-                           --python=$ROOT/$TOOLCHAIN/bin/python"
+                           --python=$TOOLCHAIN/bin/python"
 
 pre_configure_target() {
 # fails to build in subdirs
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
     rm -rf .$TARGET_NAME
 
-  export AS=$ROOT/$TOOLCHAIN/bin/yasm
+  export AS=$TOOLCHAIN/bin/yasm
   export CROSS_COMPILE=$TARGET_PREFIX
   export CFLAGS="$CFLAGS -I$SYSROOT_PREFIX/usr/include/iconv -L$SYSROOT_PREFIX/usr/lib/iconv -logg"
 }

@@ -16,7 +16,7 @@ PKG_CMAKE_OPTS_TARGET="-Dshared=OFF \
 			  -Ddeprecated-functions=OFF \
 			  -DOPENSSL_CRYPTO_LIBRARY=$SYSROOT_PREFIX/usr/lib/libcrypto.a \
 			  -DOPENSSL_SSL_LIBRARY=$SYSROOT_PREFIX/usr/lib/libssl.a \
-			  -DPKG_CONFIG_EXECUTABLE=$ROOT/$TOOLCHAIN/bin/pkg-config \
+			  -DPKG_CONFIG_EXECUTABLE=$TOOLCHAIN/bin/pkg-config \
 			  -DCMAKE_VERBOSE_MAKEFILE=TRUE"
 			      
 			      

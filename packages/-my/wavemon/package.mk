@@ -7,7 +7,7 @@ PKG_SECTION="network/analyzer"
 PKG_AUTORECONF="no"
 
 configure_target() {
-cd $ROOT/$PKG_BUILD
+cd $PKG_BUILD
 LIBS="-lcurses -lterminfo" ./configure
 make LDFLAGS="-lcurses -lterminfo" install
 }

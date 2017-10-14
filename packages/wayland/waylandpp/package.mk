@@ -14,9 +14,9 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 pre_make_host() {
-  mkdir -p $ROOT/$PKG_BUILD/.$HOST_NAME
-    cp -a $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$HOST_NAME/
-    cd $ROOT/$PKG_BUILD/.$HOST_NAME/
+  mkdir -p $PKG_BUILD/.$HOST_NAME
+    cp -a $PKG_BUILD/* $PKG_BUILD/.$HOST_NAME/
+    cd $PKG_BUILD/.$HOST_NAME/
 }
 
 make_host() {
@@ -29,9 +29,9 @@ makeinstall_host() {
 }
 
 pre_make_target() {
-  mkdir -p $ROOT/$PKG_BUILD/.$TARGET_NAME
-    cp -a $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$TARGET_NAME/
-    cd $ROOT/$PKG_BUILD/.$TARGET_NAME/
+  mkdir -p $PKG_BUILD/.$TARGET_NAME
+    cp -a $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME/
+    cd $PKG_BUILD/.$TARGET_NAME/
 }
 
 make_target() {

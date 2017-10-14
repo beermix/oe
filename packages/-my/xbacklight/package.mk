@@ -10,6 +10,6 @@ PKG_AUTORECONF="yes"
 #export CXX='g++ -static -static-libgcc -fno-exceptions'
 #export LDFLAGS='-Wl,-static -static -lc'
 #export LIBS='-lc'
-#cd $ROOT/$PKG_BUILD
+#cd $PKG_BUILD
 #}
 

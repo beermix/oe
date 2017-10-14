@@ -25,8 +25,8 @@ get_go_arch() {
 
 make_target() {
   BIN_GO=$SYSROOT_PREFIX/usr/share/gopath/bin/go
-  [ -d $ROOT/$PKG_BUILD/obfs4proxy ] || git clone https://git.torproject.org/pluggable-transports/obfs4.git $ROOT/$PKG_BUILD
-  cd $ROOT/$PKG_BUILD/obfs4proxy
+  [ -d $PKG_BUILD/obfs4proxy ] || git clone https://git.torproject.org/pluggable-transports/obfs4.git $PKG_BUILD
+  cd $PKG_BUILD/obfs4proxy
   export GOHOSTARCH=$(get_go_arch $HOST_NAME)
   export GOARCH=$(get_go_arch $TARGET_NAME)
   export GOPATH=$SYSROOT_PREFIX/usr/share/gopath
@@ -42,6 +42,6 @@ make_target() {
 
 makeinstall_target() {
   mkdir -p $INSTALL/usr/bin
-  cp -f $ROOT/$PKG_BUILD/obfs4proxy/obfs4proxy $INSTALL/usr/bin
+  cp -f $PKG_BUILD/obfs4proxy/obfs4proxy $INSTALL/usr/bin
 }
 

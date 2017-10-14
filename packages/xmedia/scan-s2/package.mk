@@ -23,7 +23,7 @@ make_target() {
 
 makeinstall_target() {
   mkdir -p $INSTALL/usr/bin
-    cp -P $ROOT/$PKG_BUILD/scan-s2 $INSTALL/usr/bin
+    cp -P $PKG_BUILD/scan-s2 $INSTALL/usr/bin
 
   mkdir -p $INSTALL/usr/config/scan-s2
     cp -pR $PKG_DIR/config/* $INSTALL/usr/config/scan-s2

@@ -7,7 +7,7 @@ PKG_SECTION="security"
 PKG_AUTORECONF="yes"
 
 pre_configure_target() {
-   cd $ROOT/$PKG_BUILD
+   cd $PKG_BUILD
    export CFLAGS="$CFLAGS -fPIC"
 }
 

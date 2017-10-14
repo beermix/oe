@@ -8,7 +8,7 @@ PKG_AUTORECONF="yes"
 
 pre_configure_target() {
    export LIBS="-ldl -lpthread"
-   cd $ROOT/$PKG_BUILD
+   cd $PKG_BUILD
    export MAKEFLAGS="-j1"
    export CPPFLAGS="$CPPFLAGS -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64"
 }

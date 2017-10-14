@@ -12,6 +12,6 @@ make_host() {
  }
 
 makeinstall_host() {
-  make LIB_INSTALL_PATH=$ROOT/$TOOLCHAIN/lib install
+  make LIB_INSTALL_PATH=$TOOLCHAIN/lib install
 }
 

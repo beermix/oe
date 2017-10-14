@@ -9,7 +9,7 @@ PKG_AUTORECONF="no"
 get_graphicdrivers
 
 pre_configure_target() {
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
   strip_lto
   strip_gold
 }
@@ -19,7 +19,7 @@ configure_target() {
   		--disable-inet6 \
   		--enable-big-endian \
   		--prefix=/usr \
-  		--yasm=$ROOT/$TOOLCHAIN/bin/yasm  \
+  		--yasm=$TOOLCHAIN/bin/yasm  \
   		--nm="$NM" \
   		--ar="$AR" \
   		--as="$CC" \

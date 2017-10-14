@@ -9,7 +9,7 @@ PKG_AUTORECONF="no"
 get_graphicdrivers
 
 pre_configure_target() {
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
   rm -rf .$TARGET_NAME
   export LDFLAGS="$LDFLAGS -lresolv"
   strip_lto

@@ -8,7 +8,7 @@ PKG_SECTION="devel"
 PKG_AUTORECONF="no"
 
 pre_configure_target() {
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
   ./configure   --prefix=/usr  --sysconfdir=/storage/.config  --datarootdir=/storage/.config/fish/share
 }
 

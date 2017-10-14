@@ -52,5 +52,5 @@ makeinstall_target() {
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
-    cp -a $ROOT/$BUILD/systemd-[0-9]*/.$TARGET_NAME/systemd-nspawn $ADDON_BUILD/$PKG_ADDON_ID/bin/
+    cp -a $BUILD/systemd-[0-9]*/.$TARGET_NAME/systemd-nspawn $ADDON_BUILD/$PKG_ADDON_ID/bin/
 }

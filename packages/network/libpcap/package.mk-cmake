@@ -28,7 +28,7 @@ PKG_LONGDESC="libpcap (Packet CAPture) provides a portable framework for low-lev
 PKG_AUTORECONF="no"
 
 pre_configure_target() {
-   cd $ROOT/$PKG_BUILD
+   cd $PKG_BUILD
    rm -rf .$TARGET_NAME
 }
 configure_target() {

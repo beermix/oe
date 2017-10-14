@@ -10,7 +10,7 @@ PKG_AUTORECONF="no"
 
 
 configure_target() {
-cd $ROOT/$PKG_BUILD
+cd $PKG_BUILD
 LIBS="-lcurses -lterminfo" ./configure --with-libstatgrab --with-time --enable-64bit --with-ncurses --with-sysctl --with-procnetdev --with-strip --with-procnetdev --enable-html --enable-extendedstats --with-getopt_long
 make LDFLAGS="-lcurses -lterminfo" install
 }

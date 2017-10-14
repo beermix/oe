@@ -42,7 +42,7 @@ make_target() {
 
 makeinstall_target() {
   mkdir -p $INSTALL/usr/bin
-  cp $ROOT/$PKG_BUILD/uae4arm $INSTALL/usr/bin
+  cp $PKG_BUILD/uae4arm $INSTALL/usr/bin
   cp $PKG_DIR/scripts/* $INSTALL/usr/bin
   mkdir -p $INSTALL/usr/config
   cp -R $PKG_DIR/config $INSTALL/usr/config/uae4arm

@@ -76,10 +76,10 @@ makeinstall_target() {
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
-    cp $ROOT/$PKG_BUILD/.$TARGET_NAME/bin/* $ADDON_BUILD/$PKG_ADDON_ID/bin
+    cp $PKG_BUILD/.$TARGET_NAME/bin/* $ADDON_BUILD/$PKG_ADDON_ID/bin
 
-  cp -PR $ROOT/$PKG_BUILD/assets/webconfig $ADDON_BUILD/$PKG_ADDON_ID
-  cp -PR $ROOT/$PKG_BUILD/effects $ADDON_BUILD/$PKG_ADDON_ID
+  cp -PR $PKG_BUILD/assets/webconfig $ADDON_BUILD/$PKG_ADDON_ID
+  cp -PR $PKG_BUILD/effects $ADDON_BUILD/$PKG_ADDON_ID
 
   debug_strip $ADDON_BUILD/$PKG_ADDON_ID/bin
 }

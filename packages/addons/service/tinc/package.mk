@@ -40,7 +40,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-curses   \
 
 pre_configure_target() {
   # tinc fails to build in subdirs
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
   rm -rf .$TARGET_NAME
 }
 
@@ -50,7 +50,7 @@ makeinstall_target() {
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
-  cp $ROOT/$PKG_BUILD/src/tinc \
-     $ROOT/$PKG_BUILD/src/tincd \
+  cp $PKG_BUILD/src/tinc \
+     $PKG_BUILD/src/tincd \
      $ADDON_BUILD/$PKG_ADDON_ID/bin
 }

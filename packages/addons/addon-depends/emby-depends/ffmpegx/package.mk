@@ -32,7 +32,7 @@ PKG_AUTORECONF="no"
 
 
 pre_configure_target() {
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
   rm -rf .$TARGET_NAME
   cp -PR $(get_pkg_build ffmpeg)/* .
   make clean

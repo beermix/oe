@@ -31,6 +31,6 @@ PKG_CONFIGURE_OPTS_HOST="ac_cv_func_gettimeofday=no --disable-load --without-gui
 PKG_CONFIGURE_OPTS_TARGET="-C $PKG_CONFIGURE_OPTS_HOST"
 			 
 post_makeinstall_host() {
-  ln -sf make $ROOT/$TOOLCHAIN/bin/gmake
+  ln -sf make $TOOLCHAIN/bin/gmake
 
 }

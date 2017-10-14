@@ -59,7 +59,7 @@ PKG_CONFIGURE_OPTS="--prefix=/usr \
                     --with-configdir=/run/samba \
                     --with-libiconv=$SYSROOT_PREFIX/usr \
                     --cross-compile \
-                    --cross-answers=$ROOT/$PKG_BUILD/cache.txt \
+                    --cross-answers=$PKG_BUILD/cache.txt \
                     --hostcc=gcc \
                     --enable-fhs \
                     --without-dmapi \
@@ -104,7 +104,7 @@ PKG_SAMBA_TARGET="smbclient"
 
 pre_configure_target() {
 # samba uses its own build directory
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
     rm -rf .$TARGET_NAME
 # samba fails to build with gold support
   strip_gold
@@ -119,8 +119,8 @@ pre_configure_target() {
 }
 
 configure_target() {
-  cp $PKG_DIR/config/samba4-cache.txt $ROOT/$PKG_BUILD/cache.txt
-    echo "Checking uname machine type: \"$TARGET_ARCH\"" >> $ROOT/$PKG_BUILD/cache.txt
+  cp $PKG_DIR/config/samba4-cache.txt $PKG_BUILD/cache.txt
+    echo "Checking uname machine type: \"$TARGET_ARCH\"" >> $PKG_BUILD/cache.txt
 
   PYTHON_CONFIG="$SYSROOT_PREFIX/usr/bin/python-config" \
   python_LDFLAGS="" python_LIBDIR="" \

@@ -37,9 +37,9 @@ MAKEFLAGS=-j1
 PKG_CONFIGURE_SCRIPT=nspr/configure
 #PKG_CONFIGURE_OPTS_HOST="--with-pthreads"
 PKG_CONFIGURE_OPTS_TARGET="--with-pthreads"
-PKG_MAKE_OPTS_TARGET="NSINSTALL=$ROOT/$TOOLCHAIN/bin/nsinstall HOST_CFLAGS=$(sed "s/-Wall//;s/-pipe//" <<< $HOST_CFLAGS)"
-PKG_MAKEINSTALL_OPTS_TARGET="NSINSTALL=$ROOT/$TOOLCHAIN/bin/nsinstall"
+PKG_MAKE_OPTS_TARGET="NSINSTALL=$TOOLCHAIN/bin/nsinstall HOST_CFLAGS=$(sed "s/-Wall//;s/-pipe//" <<< $HOST_CFLAGS)"
+PKG_MAKEINSTALL_OPTS_TARGET="NSINSTALL=$TOOLCHAIN/bin/nsinstall"
 
 post_makeinstall_host() {
-  cp config/nsinstall $ROOT/$TOOLCHAIN/bin
+  cp config/nsinstall $TOOLCHAIN/bin
 }

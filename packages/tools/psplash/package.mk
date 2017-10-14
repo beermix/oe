@@ -35,14 +35,14 @@ PKG_AUTORECONF="yes"
 pre_configure_init() {
   PSPLASH_SPLASH="$PKG_DIR/splash/splash.h"
   
-  cp $PSPLASH_SPLASH $ROOT/$PKG_BUILD/psplash-poky-img.h
+  cp $PSPLASH_SPLASH $PKG_BUILD/psplash-poky-img.h
 
   sed -e "s:#define PSPLASH_IMG_FULLSCREEN 0:#define PSPLASH_IMG_FULLSCREEN 1:g" \
-      -i $ROOT/$PKG_BUILD/psplash-config.h
+      -i $PKG_BUILD/psplash-config.h
 
   sed -e "s:#define PSPLASH_BACKGROUND_COLOR 0xec,0xec,0xe1:#define PSPLASH_BACKGROUND_COLOR 0x00,0x00,0x00:g" \
       -e "s:#define PSPLASH_TEXT_COLOR 0x6d,0x6d,0x70:#define PSPLASH_TEXT_COLOR 0x96,0xc8,0xea:g" \
-      -i $ROOT/$PKG_BUILD/psplash-colors.h
+      -i $PKG_BUILD/psplash-colors.h
 }
 
 makeinstall_init() {

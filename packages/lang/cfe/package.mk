@@ -13,7 +13,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 post_unpack() {
-  ln -sf $ROOT/$PKG_BUILD/.$TARGET_NAME/bin/clang-tblgen $ROOT/$BUILD/toolchain/bin/
+  ln -sf $PKG_BUILD/.$TARGET_NAME/bin/clang-tblgen $BUILD/toolchain/bin/
 }
 
 pre_configure_target() {

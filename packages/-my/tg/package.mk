@@ -6,7 +6,7 @@ PKG_SECTION="debug/tools"
 PKG_AUTORECONF="no"
 
 pre_configure_target() {
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
   #export LIBS="-lreadline"
   #export LUA_LIBS="-L$SYSROOT_PREFIX/usr/lib -llua -lm"
   #export LDFLAGS="$LDFLAGS -llua -lm" 
@@ -17,7 +17,7 @@ pre_configure_target() {
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
 			      ac_cv_func_realloc_0_nonnull=yes \
-			      --with-zlib=$ROOT/$TOOLCHAIN \
+			      --with-zlib=$TOOLCHAIN \
 			      --disable-option-checking
 			      --enable-openssl \
 			      --enable-json \
@@ -32,7 +32,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
 		
 post_make_target() {
   mkdir -p $INSTALL/usr/bin/
-  cp $ROOT/$PKG_BUILD/bin/telegram-cli $INSTALL/usr/bin/tg
-  cp $ROOT/$PKG_BUILD/bin/tl-parser $INSTALL/usr/bin/
-  cp $ROOT/$PKG_BUILD/bin/generate $INSTALL/usr/bin/
+  cp $PKG_BUILD/bin/telegram-cli $INSTALL/usr/bin/tg
+  cp $PKG_BUILD/bin/tl-parser $INSTALL/usr/bin/
+  cp $PKG_BUILD/bin/generate $INSTALL/usr/bin/
 }

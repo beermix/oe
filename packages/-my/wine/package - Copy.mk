@@ -11,7 +11,7 @@ pre_configure_target() {
   strip_lto
 }
 
-PKG_CONFIGURE_OPTS_TARGET="--with-wine-tools=$ROOT/$PKG_BUILD/.$HOST_NAME \
+PKG_CONFIGURE_OPTS_TARGET="--with-wine-tools=$PKG_BUILD/.$HOST_NAME \
 			      --disable-tests \
 			      --with-x \
 			      --enable-win64 \

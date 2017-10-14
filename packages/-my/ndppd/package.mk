@@ -11,7 +11,7 @@ PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
 		           --with-gnu-ld \
 		           --disable-shared \
 		           --enable-static \
-		           --with-zlib-dir=$ROOT/$TOOLCHAIN \
+		           --with-zlib-dir=$TOOLCHAIN \
 		           --disable-scripts \
 		           --disable-fast \
 		           --with-random-device=/dev/random \

@@ -13,28 +13,28 @@ PKG_AUTORECONF="no"
 
 download() {
   local PACKAGE="$PKG_NAME-$PKG_VERSION"
-  if (test ! -d "$ROOT/$SOURCES/$PKG_NAME") || (test ! -f $ROOT/$SOURCES/$PKG_NAME/$PACKAGE.tar.gz); then
-    rm -rf $ROOT/$SOURCES/$PKG_NAME/tmp
-    rm -f $ROOT/$SOURCES/$PKG_NAME/$PACKAGE.tar.gz
-    rm -f $ROOT/$SOURCES/$PKG_NAME/$PACKAGE.tar.gz.md5
-    rm -f $ROOT/$SOURCES/$PKG_NAME/$PACKAGE.tar.gz.url
-    mkdir -p $ROOT/$SOURCES/$PKG_NAME/tmp
-    (cd $ROOT/$SOURCES/$PKG_NAME/tmp
+  if (test ! -d "$SOURCES/$PKG_NAME") || (test ! -f $SOURCES/$PKG_NAME/$PACKAGE.tar.gz); then
+    rm -rf $SOURCES/$PKG_NAME/tmp
+    rm -f $SOURCES/$PKG_NAME/$PACKAGE.tar.gz
+    rm -f $SOURCES/$PKG_NAME/$PACKAGE.tar.gz.md5
+    rm -f $SOURCES/$PKG_NAME/$PACKAGE.tar.gz.url
+    mkdir -p $SOURCES/$PKG_NAME/tmp
+    (cd $SOURCES/$PKG_NAME/tmp
     git clone https://github.com/gegel/onionphone
     mv onionphone $PACKAGE
     tar czf ../$PACKAGE.tar.gz $PACKAGE)
-    echo $PKG_SITE >$ROOT/$SOURCES/$PKG_NAME/$PACKAGE.tar.gz.url
-    (cd $ROOT/$SOURCES/$PKG_NAME; md5sum -t $PACKAGE.tar.gz >$PACKAGE.tar.gz.md5)
+    echo $PKG_SITE >$SOURCES/$PKG_NAME/$PACKAGE.tar.gz.url
+    (cd $SOURCES/$PKG_NAME; md5sum -t $PACKAGE.tar.gz >$PACKAGE.tar.gz.md5)
   fi
 }
 
 unpack() {
   local PACKAGE="$PKG_NAME-$PKG_VERSION"
-  if (test ! -d "$ROOT/$PKG_BUILD") || (test ! -f "$ROOT/$PKG_BUILD/.openelec-unpack"); then
-    (cd "$ROOT/$BUILD"
+  if (test ! -d "$PKG_BUILD") || (test ! -f "$PKG_BUILD/.openelec-unpack"); then
+    (cd "$BUILD"
     rm -rf $PACKAGE
-    tar xzf $ROOT/$SOURCES/$PKG_NAME/$PACKAGE.tar.gz
-    cd $ROOT/$PKG_BUILD
+    tar xzf $SOURCES/$PKG_NAME/$PACKAGE.tar.gz
+    cd $PKG_BUILD
     rm -rf ".openelec-unpack"
     for i in PKG_NAME PKG_VERSION PKG_REV PKG_SHORTDESC PKG_LONGDESC PKG_SITE PKG_URL PKG_SECTION; do
       eval val=\$$i
@@ -53,7 +53,7 @@ configure_target() {
 }
 
 make_target() {
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
   make 
   ${TARGET_STRIP} oph
   ${TARGET_STRIP} addkey 
@@ -61,7 +61,7 @@ make_target() {
 
 makeinstall_target() {
   mkdir -p $INSTALL/usr/bin
-  cp $ROOT/$PKG_BUILD/oph $INSTALL/usr/bin
-  cp $ROOT/$PKG_BUILD/addkey $INSTALL/usr/bin
+  cp $PKG_BUILD/oph $INSTALL/usr/bin
+  cp $PKG_BUILD/addkey $INSTALL/usr/bin
 }
 

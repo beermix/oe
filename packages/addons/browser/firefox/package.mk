@@ -8,7 +8,7 @@ PKG_AUTORECONF="no"
 make_target() {
 
 mkdir path
-  ln -sfr $ROOT/$TOOLCHAIN/python path/python
+  ln -sfr $TOOLCHAIN/python path/python
 
   cd mozilla-unified
 

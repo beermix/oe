@@ -11,7 +11,7 @@ PKG_AUTORECONF="yes"
 
 pre_configure_target() {
   strip_lto
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
   ./autogen.sh
   ./configure --prefix=/usr
   make

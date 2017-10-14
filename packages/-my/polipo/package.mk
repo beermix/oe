@@ -21,5 +21,5 @@ install_target(){
 post_make_target() {
   mkdir -p $INSTALL/usr/bin/
   mkdir -p $INSTALL_DEV/usr/bin/
-  cp $ROOT/$PKG_BUILD/polipo $INSTALL/usr/bin/
+  cp $PKG_BUILD/polipo $INSTALL/usr/bin/
 }

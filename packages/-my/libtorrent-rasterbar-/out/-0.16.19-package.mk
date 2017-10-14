@@ -15,7 +15,7 @@ PKG_AUTORECONF="no"
 
 
 configure_target() {
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
 
   export PYTHON_VERSION="2.7"
   export PYTHON_CPPFLAGS="-I$SYSROOT_PREFIX/usr/include/python$PYTHON_VERSION"

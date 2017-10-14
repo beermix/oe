@@ -10,7 +10,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 pre_configure_target() {
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
   rm -rf .$TARGET_NAME
   export PYTHONXCPREFIX="$SYSROOT_PREFIX/usr"
 }

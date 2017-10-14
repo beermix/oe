@@ -46,7 +46,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_curses_refresh=yes \
 
 pre_configure_target() {
 # htop fails to build in subdirs
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
     rm -rf .$HOST_NAME
 
   export LIBS="-lncurses -lterminfo"

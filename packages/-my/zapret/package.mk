@@ -17,8 +17,8 @@ make_target() {
 post_make_target() {
   mkdir -p $INSTALL/usr/sbin/
   mkdir -p $INSTALL_DEV/usr/sbin/
-  cp $ROOT/$PKG_BUILD/nfq/nfqws $INSTALL/usr/sbin/
-  cp $ROOT/$PKG_BUILD/tpws/tpws $INSTALL/usr/sbin/
+  cp $PKG_BUILD/nfq/nfqws $INSTALL/usr/sbin/
+  cp $PKG_BUILD/tpws/tpws $INSTALL/usr/sbin/
 }
 
 makeinstall_target() {

@@ -46,7 +46,7 @@ PKG_CONFIGURE_OPTS_HOST="--disable-bmp \
                          --disable-xcf \
                          --disable-xpm \
                          --disable-xv \
-                         --with-sdl-prefix=$ROOT/$TOOLCHAIN"
+                         --with-sdl-prefix=$TOOLCHAIN"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-bmp \
                            --enable-gif \

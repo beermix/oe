@@ -26,11 +26,11 @@ post_unpack() {
   cp $PHP_BUILD_DIR/../go-pear.phar $PHP_BUILD_DIR/pear/go-pear.phar
 
   # libtool fix
-  rm $ROOT/$PKG_BUILD/aclocal.m4
+  rm $PKG_BUILD/aclocal.m4
 }
 
 configure_target() {
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
   rm -rf .$TARGET_NAME
 
   # Dynamic Library support

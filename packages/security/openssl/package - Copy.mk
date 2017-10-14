@@ -25,24 +25,24 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            enable-ec_nistp_64_gcc_128"
 
 pre_configure_host() {
-  mkdir -p $ROOT/$PKG_BUILD/.$HOST_NAME
-  cp -a $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$HOST_NAME/
+  mkdir -p $PKG_BUILD/.$HOST_NAME
+  cp -a $PKG_BUILD/* $PKG_BUILD/.$HOST_NAME/
 }
 
 configure_host() {
-  cd $ROOT/$PKG_BUILD/.$HOST_NAME
+  cd $PKG_BUILD/.$HOST_NAME
   ./Configure --prefix=/ $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 "-Wa,--noexecstack $CFLAGS $LDFLAGS"
 }
 
 makeinstall_host() {
-  make INSTALL_PREFIX=$ROOT/$TOOLCHAIN install_sw -j1
+  make INSTALL_PREFIX=$TOOLCHAIN install_sw -j1
 }
 
 pre_configure_target() {
-  mkdir -p $ROOT/$PKG_BUILD/.$TARGET_NAME
-  cp -a $ROOT/$PKG_BUILD/* $ROOT/$PKG_BUILD/.$TARGET_NAME/
+  mkdir -p $PKG_BUILD/.$TARGET_NAME
+  cp -a $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME/
   
-  #sed -i -e '/^"linux-x86_64"/ s/-m64 -DL_ENDIAN -O3 -Wall//' $ROOT/$PKG_BUILD/.$TARGET_NAME/Configure
+  #sed -i -e '/^"linux-x86_64"/ s/-m64 -DL_ENDIAN -O3 -Wall//' $PKG_BUILD/.$TARGET_NAME/Configure
   CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
   CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3|"`
   strip_lto
@@ -50,7 +50,7 @@ pre_configure_target() {
 }
 
 configure_target() {
-  cd $ROOT/$PKG_BUILD/.$TARGET_NAME
+  cd $PKG_BUILD/.$TARGET_NAME
   ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 "-Wa,--noexecstack $CPPFLAGS $CFLAGS"
 }
 
@@ -73,7 +73,7 @@ post_makeinstall_target() {
   
   mkdir -p $INSTALL/etc/ssl
 #  perl $PKG_DIR/cert/mk-ca-bundle.pl
-#  cp $ROOT/$PKG_BUILD/.$TARGET_NAME/ca-bundle.crt $INSTALL/etc/ssl/cert.pem
+#  cp $PKG_BUILD/.$TARGET_NAME/ca-bundle.crt $INSTALL/etc/ssl/cert.pem
   cp $PKG_DIR/cert/cacert.pem $INSTALL/etc/ssl/cert.pem
 
   # backwards comatibility

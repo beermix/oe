@@ -51,10 +51,10 @@ PKG_MAKE_OPTS_TARGET="libs"
 PKG_MAKEINSTALL_OPTS_TARGET="install-libs install-headers"
 
 pre_configure_target() {
-  local DIRS_=$(find $ROOT/$PKG_BUILD -type d | sed s%^$ROOT/$PKG_BUILD%%\;/^$/d\;s%^/%%\;/^[.]/d)
+  local DIRS_=$(find $PKG_BUILD -type d | sed s%^$PKG_BUILD%%\;/^$/d\;s%^/%%\;/^[.]/d)
   for d in $DIRS_ .; do
     mkdir -p $d
-    for f in $ROOT/$PKG_BUILD/$d/*; do
+    for f in $PKG_BUILD/$d/*; do
       if test -f $f; then
         ln -s $f $d/`basename $f`
       fi
@@ -63,7 +63,7 @@ pre_configure_target() {
 }
 
 makeinstall_target() {
-  $ROOT/$TOOLCHAIN/bin/make -j1 DESTDIR=$SYSROOT_PREFIX install-libs install-headers
+  $TOOLCHAIN/bin/make -j1 DESTDIR=$SYSROOT_PREFIX install-libs install-headers
   make DESTDIR=$INSTALL install-libs
   if test -d $INSTALL/usr/lib64; then
     mv $INSTALL/usr/lib64 $INSTALL/usr/lib

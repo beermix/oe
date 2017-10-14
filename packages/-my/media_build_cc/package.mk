@@ -40,6 +40,6 @@ post_install() {
   # install media_build drivers
   cp -Pa $INSTALL/lib/modules/$MOD_VER $INSTALL/lib/modules/$MOD_VER-mbcc
   mkdir -p $INSTALL/lib/modules/$MOD_VER-mbcc/updates/mbcc
-  find $ROOT/$PKG_BUILD/v4l/ -name \*.ko -exec cp {} $INSTALL/lib/modules/$MOD_VER-mbcc/updates/mbcc \;
+  find $PKG_BUILD/v4l/ -name \*.ko -exec cp {} $INSTALL/lib/modules/$MOD_VER-mbcc/updates/mbcc \;
   echo "Media_Build CrazyCat drivers version: $PKG_VERSION" > $INSTALL/lib/modules/$MOD_VER-mbcc/updates/mbcc-drivers.txt
 }

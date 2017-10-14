@@ -7,7 +7,7 @@ PKG_SECTION="my"
 PKG_AUTORECONF="no"
 
 pre_configure_target() {
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
   mkdir -p $INSTALL/usr/bin
 }
 

@@ -9,5 +9,5 @@ PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-largefile --disable-doc --enable-static-bin"
 
-PKG_CONFIGURE_OPTS_HOST="--enable-largefile --disable-doc --with-zlib=$ROOT/$TOOLCHAIN"
+PKG_CONFIGURE_OPTS_HOST="--enable-largefile --disable-doc --with-zlib=$TOOLCHAIN"
 

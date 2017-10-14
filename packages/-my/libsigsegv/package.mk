@@ -10,7 +10,7 @@ PKG_AUTORECONF="yes"
 
 pre_configure_target() {
    strip_lto
-   cd $ROOT/$PKG_BUILD
+   cd $PKG_BUILD
 }
 
 PKG_CONFIGURE_OPTS_HOST="--enable-static \

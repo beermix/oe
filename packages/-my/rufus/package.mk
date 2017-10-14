@@ -60,7 +60,7 @@ configure_host() {
   unset -v TARGET_CPP
   
   export TARGET_NAME=i386-pc-mingw32
-  export TARGET_PREFIX=$ROOT/$TOOLCHAIN/mingw32/bin/$TARGET_NAME-
+  export TARGET_PREFIX=$TOOLCHAIN/mingw32/bin/$TARGET_NAME-
   export CC=${TARGET_PREFIX}gcc
   export LD=${TARGET_PREFIX}ld
   export AS=${TARGET_PREFIX}as
@@ -93,10 +93,10 @@ configure_host() {
                         OBJDUMP=$OBJDUMP \
                         STRIP=$STRIP \
                         WINDRES=$WINDRES \
-                        CFLAGS="-I$ROOT/$TOOLCHAIN/mingw32/include" \
-                        INCLUDES="-I$ROOT/$TOOLCHAIN/mingw32/include" \
-                        CPPFLAGS="-D__386__ -D__MINGW32__ -D__MSVCRT_VERSION__=0x801 -m32 -static -I$ROOT/$TOOLCHAIN/mingw32/include" \
-                        LDFLAGS="-m32 -static -L$ROOT/$TOOLCHAIN/mingw32/lib" \
+                        CFLAGS="-I$TOOLCHAIN/mingw32/include" \
+                        INCLUDES="-I$TOOLCHAIN/mingw32/include" \
+                        CPPFLAGS="-D__386__ -D__MINGW32__ -D__MSVCRT_VERSION__=0x801 -m32 -static -I$TOOLCHAIN/mingw32/include" \
+                        LDFLAGS="-m32 -static -L$TOOLCHAIN/mingw32/lib" \
                         LIBS='-lcomdlg32' \
                         --host=$TARGET_NAME \
                         --prefix=$p
@@ -121,7 +121,7 @@ make_host() {
   unset -v TARGET_CPP
   
   export TARGET_NAME=i386-pc-mingw32
-  export TARGET_PREFIX=$ROOT/$TOOLCHAIN/mingw32/bin/$TARGET_NAME-
+  export TARGET_PREFIX=$TOOLCHAIN/mingw32/bin/$TARGET_NAME-
   export CC=${TARGET_PREFIX}gcc
   export LD=${TARGET_PREFIX}ld
   export AS=${TARGET_PREFIX}as
@@ -153,9 +153,9 @@ make_host() {
         OBJDUMP=$OBJDUMP \
         STRIP=$STRIP \
         WINDRES=$WINDRES \
-        INCLUDES="-I$ROOT/$TOOLCHAIN/mingw32/include" \
-        CPPFLAGS="-D__386__ -D__MINGW32__ -D__MSVCRT_VERSION__=0x801 -m32 -static -I$ROOT/$TOOLCHAIN/mingw32/include" \
-        LDFLAGS="-m32 -static -L$ROOT/$TOOLCHAIN/mingw32/lib" \
+        INCLUDES="-I$TOOLCHAIN/mingw32/include" \
+        CPPFLAGS="-D__386__ -D__MINGW32__ -D__MSVCRT_VERSION__=0x801 -m32 -static -I$TOOLCHAIN/mingw32/include" \
+        LDFLAGS="-m32 -static -L$TOOLCHAIN/mingw32/lib" \
         LIBS='-lcomdlg32' \
        -j1
   cd -
@@ -163,8 +163,8 @@ make_host() {
 
 makeinstall_host() {
   cd ..
-  mkdir -p $ROOT/$PACKAGES/tools/syslinux/files/3rdparty/format
-  cp src/rufus.exe $ROOT/$PACKAGES/tools/syslinux/files/3rdparty/format/antiprism-fmt.exe
+  mkdir -p $PACKAGES/tools/syslinux/files/3rdparty/format
+  cp src/rufus.exe $PACKAGES/tools/syslinux/files/3rdparty/format/antiprism-fmt.exe
   cd -
 }
 

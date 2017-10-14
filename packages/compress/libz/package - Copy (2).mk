@@ -30,7 +30,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 TARGET_CONFIGURE_OPTS="--prefix=/usr"
-HOST_CONFIGURE_OPTS="--prefix=$ROOT/$TOOLCHAIN"
+HOST_CONFIGURE_OPTS="--prefix=$TOOLCHAIN"
 
 pre_configure_host() {
 # clean host cflags and use libz's own
@@ -48,7 +48,7 @@ pre_build_host() {
 }
 
 post_makeinstall_host() {
-  rm $ROOT/$TOOLCHAIN/lib/libz.so
-  rm $ROOT/$TOOLCHAIN/lib/libz.so.1
-  rm $ROOT/$TOOLCHAIN/lib/libz.so.1.2.8
+  rm $TOOLCHAIN/lib/libz.so
+  rm $TOOLCHAIN/lib/libz.so.1
+  rm $TOOLCHAIN/lib/libz.so.1.2.8
 }

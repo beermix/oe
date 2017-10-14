@@ -37,6 +37,6 @@ make_host() {
 }
 
 makeinstall_host() {
-  mkdir -p $ROOT/$TOOLCHAIN/lib/python2.7/site-packages
-    cp -R pyparsing.py $ROOT/$TOOLCHAIN/lib/python2.7/site-packages
+  mkdir -p $TOOLCHAIN/lib/python2.7/site-packages
+    cp -R pyparsing.py $TOOLCHAIN/lib/python2.7/site-packages
 }

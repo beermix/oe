@@ -142,7 +142,7 @@ addon() {
 
   # list libraries
   echo "Required libraries:"
-  find $ROOT/$BUILD/addons/lamp/service.web.lamp/ -type f -exec objdump -x "{}" ";" 2>/dev/null | grep NEEDED | sort | uniq | grep -Ev "libc.so|libdl.so|libgcc_s.so|libm.so|libnsl.so|libpthread.so|libresolv.so|librt.so|librtmp.so|libstdc\+\+.so|libuuid.so|libcrypt.so" | awk '{printf("  %s\n", $2)}' | tee $ADDON_BUILD/libs-required.dat
+  find $BUILD/addons/lamp/service.web.lamp/ -type f -exec objdump -x "{}" ";" 2>/dev/null | grep NEEDED | sort | uniq | grep -Ev "libc.so|libdl.so|libgcc_s.so|libm.so|libnsl.so|libpthread.so|libresolv.so|librt.so|librtmp.so|libstdc\+\+.so|libuuid.so|libcrypt.so" | awk '{printf("  %s\n", $2)}' | tee $ADDON_BUILD/libs-required.dat
   cat $ADDON_BUILD/libs-required.dat
   missing_lib="0"
 

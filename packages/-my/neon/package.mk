@@ -23,7 +23,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
 			 
 post_makeinstall_target() {
-  ln -sf $PKG_NAME-config $ROOT/$TOOLCHAIN/bin/$PKG_NAME-config
+  ln -sf $PKG_NAME-config $TOOLCHAIN/bin/$PKG_NAME-config
   sed -e "s:\(['= ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" -i $SYSROOT_PREFIX/usr/bin/$PKG_NAME-config
   rm -rf $INSTALL
 }

@@ -11,11 +11,11 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 make_host() {
-  make prefix=$ROOT/$TOOLCHAIN install
+  make prefix=$TOOLCHAIN install
 }
 
 makeinstall_host() {
-  make prefix=$ROOT/$TOOLCHAIN install
+  make prefix=$TOOLCHAIN install
 }
 
 make_target() {

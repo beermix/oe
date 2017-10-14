@@ -35,7 +35,7 @@ PKG_AUTORECONF="no"
 PKG_MAINTAINER="Daniel Forsberg (jenkins101)"
 
 pre_patch() {
-  chmod -R +w $ROOT/$BUILD/${PKG_NAME}-${PKG_VERSION}/*
+  chmod -R +w $BUILD/${PKG_NAME}-${PKG_VERSION}/*
 }
 
 make_target() {

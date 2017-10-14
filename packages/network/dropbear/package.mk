@@ -5,7 +5,7 @@ PKG_DEPENDS_TARGET="toolchain openssl"
 PKG_AUTORECONF="yes"
 
 pre_configure_target() {
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
   rm -rf .$TARGET_NAME
 }
 

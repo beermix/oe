@@ -55,5 +55,5 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
   rm -rf $INSTALL/usr/share
 
-  cp $ROOT/$TOOLCHAIN/lib/pkgconfig/wayland-scanner.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/
+  cp $TOOLCHAIN/lib/pkgconfig/wayland-scanner.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/
 }

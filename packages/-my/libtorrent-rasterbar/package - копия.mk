@@ -15,8 +15,8 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-python-binding \
                            --with-libiconv"
 
 post_unpack() {
-  mkdir -p $ROOT/$PKG_BUILD/build-aux/
-  touch $ROOT/$PKG_BUILD/build-aux/config.rpath
+  mkdir -p $PKG_BUILD/build-aux/
+  touch $PKG_BUILD/build-aux/config.rpath
 }
 
 pre_configure_target() {

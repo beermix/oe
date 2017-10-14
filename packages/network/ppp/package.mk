@@ -31,7 +31,7 @@ PKG_AUTORECONF="no"
 
 pre_configure_target() {
 # ppp fails to build in subdirs
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
     rm -rf .$TARGET_NAME
 
 # ppp-2.4.5 contains an out of date copy of the kernel header linux/if_pppol2tp.h.

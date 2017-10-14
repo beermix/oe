@@ -8,7 +8,7 @@ PKG_AUTORECONF="yes"
 
 
 configure_target(){
-cd $ROOT/$PKG_BUILD
+cd $PKG_BUILD
 LIBS="-lcurses -lterminfo" \
 ./configure --without-gtk
 make LDFLAGS="-lcurses -lterminfo"

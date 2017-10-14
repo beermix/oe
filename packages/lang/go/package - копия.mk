@@ -39,8 +39,8 @@ PKG_AUTORECONF="no"
 
 configure_host() {
   export GOOS=linux
-  export GOROOT_FINAL=$ROOT/$TOOLCHAIN/lib/golang
-  #export GOROOT_BOOTSTRAP=$ROOT/$TOOLCHAIN/lib/golang-1.4
+  export GOROOT_FINAL=$TOOLCHAIN/lib/golang
+  #export GOROOT_BOOTSTRAP=$TOOLCHAIN/lib/golang-1.4
   export GOARCH=amd64
   export CGO_ENABLED=1
   export CC="$CC"
@@ -49,11 +49,11 @@ configure_host() {
 }
 
 make_host() {
-  cd $ROOT/$PKG_BUILD/src
+  cd $PKG_BUILD/src
   ./make.bash --no-banner
 }
 
 makeinstall_host() {
-  mkdir -p $ROOT/$TOOLCHAIN/lib/golang
-  cp -av $ROOT/$PKG_BUILD/* $ROOT/$TOOLCHAIN/lib/golang/
+  mkdir -p $TOOLCHAIN/lib/golang
+  cp -av $PKG_BUILD/* $TOOLCHAIN/lib/golang/
 }

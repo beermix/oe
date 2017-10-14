@@ -26,5 +26,5 @@ makeinstall_target() {
 
 post_make_target() {
   mkdir -p $INSTALL/usr/sbin/
-  cp $ROOT/$PKG_BUILD/i2pd $INSTALL/usr/sbin/
+  cp $PKG_BUILD/i2pd $INSTALL/usr/sbin/
 }

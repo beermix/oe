@@ -12,7 +12,7 @@ pre_configure_target() {
   export CFLAGS="$CFLAGS -fPIC"
   export CXXFLAGS="$CXXFLAGS -fPIC"
   export LDFLAGS="$LDFLAGS -fPIC"
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
   export LIBS="-ltermcap"
 }
 
