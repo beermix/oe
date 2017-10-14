@@ -29,8 +29,6 @@ PKG_SHORTDESC="kodi: Kodi Mediacenter"
 PKG_LONGDESC="Kodi Media Center (which was formerly named Xbox Media Center or XBMC) is a free and open source cross-platform media player and home entertainment system software with a 10-foot user interface designed for the living-room TV. Its graphical user interface allows the user to easily manage video, photos, podcasts, and music from a computer, optical disk, local network, and the internet using a remote control."
 PKG_AUTORECONF="no"
 
-PKG_USE_NINJA="no"
-
 get_graphicdrivers
 
 PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET dbus"
@@ -87,7 +85,7 @@ fi
 
 if [ "$KODI_DVDCSS_SUPPORT" = yes ]; then
   KODI_DVDCSS="-DENABLE_DVDCSS=ON \
-               -DLIBDVDCSS_URL=$SOURCES/libdvdcss/libdvdcss-$(get_pkg_version libdvdcss).tar.gz"
+               -DLIBDVDCSS_URL=$ROOT/$SOURCES/libdvdcss/libdvdcss-$(get_pkg_version libdvdcss).tar.gz"
 else
   KODI_DVDCSS="-DENABLE_DVDCSS=OFF"
 fi
@@ -203,13 +201,13 @@ if [ ! "$KODIPLAYER_DRIVER" = default ]; then
 fi
 
 KODI_LIBDVD="$KODI_DVDCSS \
-             -DLIBDVDNAV_URL=$SOURCES/libdvdnav/libdvdnav-$(get_pkg_version libdvdnav).tar.gz \
-             -DLIBDVDREAD_URL=$SOURCES/libdvdread/libdvdread-$(get_pkg_version libdvdread).tar.gz"
+             -DLIBDVDNAV_URL=$ROOT/$SOURCES/libdvdnav/libdvdnav-$(get_pkg_version libdvdnav).tar.gz \
+             -DLIBDVDREAD_URL=$ROOT/$SOURCES/libdvdread/libdvdread-$(get_pkg_version libdvdread).tar.gz"
 
 PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$TOOLCHAIN \
                        -DWITH_TEXTUREPACKER=$TOOLCHAIN/bin/TexturePacker \
                        -DDEPENDS_PATH=$PKG_BUILD/depends \
-                       -DPYTHON_EXECUTABLE=$TOOLCHAIN/bin/$PKG_PYTHON_VERSION \
+                       -DPYTHON_EXECUTABLE=$TOOLCHAIN/bin/python2.7 \
                        -DPYTHON_INCLUDE_DIRS=$SYSROOT_PREFIX/usr/include/python2.7 \
                        -DGIT_VERSION=$PKG_VERSION \
                        -DWITH_FFMPEG=$(get_build_dir ffmpeg) \
