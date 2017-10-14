@@ -156,7 +156,7 @@ configure_target() {
               --disable-dxva2 \
               --enable-runtime-cpudetect \
               $FFMPEG_TABLES \
-              --disable-encoders \
+              --enable-encoders \
               --enable-encoder=ac3 \
               --enable-encoder=aac \
               --enable-encoder=wmav2 \
