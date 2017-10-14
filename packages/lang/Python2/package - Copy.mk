@@ -30,15 +30,17 @@ PKG_SECTION="lang"
 PKG_SHORTDESC="python2: The Python2 programming language"
 PKG_LONGDESC="Python2 is an interpreted object-oriented programming language, and is often compared with Tcl, Perl, Java or Scheme."
 
-PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PY_DISABLED_MODULES="_tkinter nis gdbm bsddb ossaudiodev"
+PKG_PY_DISABLED_MODULES="_tkinter nis gdbm bsddb ossaudiodev"
 
 PKG_CONFIGURE_OPTS_HOST="--cache-file=config.cache \
                          --without-cxx-main \
                          --with-threads \
-                         --enable-unicode=ucs4"
+                         --enable-unicode=ucs4 \
+                         --disable-ipv6 \
+                         --enable-shared \
+                         --disable-static"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            ac_cv_file_dev_ptmx=yes \
@@ -63,7 +65,9 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            --with-wctype-functions \
                            --without-cxx-main \
                            --with-system-ffi \
-                           --with-system-expat"
+                           --with-system-expat \
+                           --enable-shared \
+                           --disable-static"
 post_patch() {
   # This is needed to make sure the Python build process doesn't try to
   # regenerate those files with the pgen program. Otherwise, it builds
@@ -75,7 +79,7 @@ post_patch() {
 make_host() {
   make PYTHON_MODULES_INCLUDE="$HOST_INCDIR" \
        PYTHON_MODULES_LIB="$HOST_LIBDIR" \
-       PYTHON_DISABLE_MODULES="readline _curses _curses_panel $PY_DISABLED_MODULES"
+       PYTHON_DISABLE_MODULES="readline _curses _curses_panel $PKG_PY_DISABLED_MODULES"
 
   # python distutils per default adds -L$LIBDIR when linking binary extensions
     sed -e "s|^ 'LIBDIR':.*| 'LIBDIR': '/usr/lib',|g" -i $(cat pybuilddir.txt)/_sysconfigdata.py
@@ -84,7 +88,7 @@ make_host() {
 makeinstall_host() {
   make -j1 PYTHON_MODULES_INCLUDE="$HOST_INCDIR" \
        PYTHON_MODULES_LIB="$HOST_LIBDIR" \
-       PYTHON_DISABLE_MODULES="readline _curses _curses_panel $PY_DISABLED_MODULES" \
+       PYTHON_DISABLE_MODULES="readline _curses _curses_panel $PKG_PY_DISABLED_MODULES" \
        install
 }
 
@@ -94,28 +98,27 @@ pre_configure_target() {
 
 make_target() {
   make  -j1 CC="$CC" LDFLAGS="$TARGET_LDFLAGS -L." \
-        PYTHON_DISABLE_MODULES="$PY_DISABLED_MODULES" \
+        PYTHON_DISABLE_MODULES="$PKG_PY_DISABLED_MODULES" \
         PYTHON_MODULES_INCLUDE="$TARGET_INCDIR" \
         PYTHON_MODULES_LIB="$TARGET_LIBDIR"
 }
 
 makeinstall_target() {
   make  -j1 CC="$CC" DESTDIR=$SYSROOT_PREFIX \
-        PYTHON_DISABLE_MODULES="$PY_DISABLED_MODULES" \
+        PYTHON_DISABLE_MODULES="$PKG_PY_DISABLED_MODULES" \
         PYTHON_MODULES_INCLUDE="$TARGET_INCDIR" \
         PYTHON_MODULES_LIB="$TARGET_LIBDIR" \
         install
 
   make  -j1 CC="$CC" DESTDIR=$INSTALL \
-        PYTHON_DISABLE_MODULES="$PY_DISABLED_MODULES" \
+        PYTHON_DISABLE_MODULES="$PKG_PY_DISABLED_MODULES" \
         PYTHON_MODULES_INCLUDE="$TARGET_INCDIR" \
         PYTHON_MODULES_LIB="$TARGET_LIBDIR" \
         install
 }
 
 post_makeinstall_target() {
-  EXCLUDE_DIRS="bsddb idlelib lib-tk lib2to3 msilib pydoc_data test unittest"
-  for dir in $EXCLUDE_DIRS; do
+  for dir in bsddb idlelib lib-tk lib2to3 msilib pydoc_data test; do
     rm -rf $INSTALL/usr/lib/python*/$dir
   done
 
@@ -126,11 +129,13 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin/smtpd.py
   rm -rf $INSTALL/usr/bin/python*-config
 
-  cd $INSTALL/usr/lib/python2.7
-  python -Wi -t -B $PKG_BUILD/Lib/compileall.py -d /usr/lib/python2.7 -f .
-  find $INSTALL/usr/lib/python2.7 -name "*.py" -exec rm -f {} \; &>/dev/null
+  cd $INSTALL/usr/lib/$PKG_PYTHON_VERSION
+  $TOOLCHAIN/bin/python -Wi -t -B $PKG_BUILD/Lib/compileall.py -d /usr/lib/$PKG_PYTHON_VERSION -f .
+  find $INSTALL/usr/lib/$PKG_PYTHON_VERSION -name "*.py" -exec rm -f {} \; &>/dev/null
 
   # strip
   chmod u+w $INSTALL/usr/lib/libpython*.so.*
   debug_strip $INSTALL/usr
+  
+#  ln -sf $SYSROOT_PREFIX/usr/bin/python2.7-config $BUILD/toolchain/bin/
 }

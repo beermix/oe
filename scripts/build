@@ -321,9 +321,11 @@ if [ ! -f $STAMP ]; then
         pre_makeinstall_$TARGET
       fi
       if [ "$(type -t makeinstall_$TARGET)" = "function" ]; then
+        unset LD_LIBRARY_PATH
         makeinstall_$TARGET
       else
         if [ "$TARGET" = "target" ]; then
+          unset LD_LIBRARY_PATH
           $MAKEINSTALL $PKG_MAKEINSTALL_OPTS_TARGET
           make install DESTDIR=$INSTALL $PKG_MAKEINSTALL_OPTS_TARGET
         elif [ "$TARGET" = "host" ]; then
