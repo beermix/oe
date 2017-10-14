@@ -23,7 +23,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://www.busybox.net"
 PKG_URL="http://busybox.net/downloads/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain busybox:host hdparm dosfstools e2fsprogs zip unzip zlib pciutils usbutils parted procps-ng gptfdisk psmisc findutils grep gawk sed coreutils bash less tar"
+PKG_DEPENDS_TARGET="toolchain busybox:host hdparm dosfstools e2fsprogs zip unzip zlib pciutils usbutils parted procps-ng gptfdisk psmisc findutils grep gawk sed coreutils less tar bash"
 PKG_DEPENDS_INIT="toolchain"
 PKG_SECTION="system"
 PKG_SHORTDESC="BusyBox: The Swiss Army Knife of Embedded Linux"
@@ -154,6 +154,7 @@ makeinstall_host() {
 
 makeinstall_target() {
   mkdir -p $INSTALL/usr/bin
+  mkdir -p $INSTALL/bin
     [ $TARGET_ARCH = x86_64 ] && cp $PKG_DIR/scripts/getedid $INSTALL/usr/bin
     cp $PKG_DIR/scripts/createlog $INSTALL/usr/bin/
     cp $PKG_DIR/scripts/lsb_release $INSTALL/usr/bin/

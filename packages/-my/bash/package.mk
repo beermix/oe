@@ -18,5 +18,5 @@ PKG_CONFIGURE_OPTS_TARGET="--with-curses \
 
 #post_makeinstall_target() {
 #  mkdir -p $INSTALL/bin
-  #ln -sf bash $INSTALL/bin/sh
+#  ln -sf bash $INSTALL/bin/bash
 #}
