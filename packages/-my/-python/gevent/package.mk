@@ -12,6 +12,9 @@ pre_configure_target() {
   cd $PKG_BUILD
     sed -i -e 's/^cross_compiling=no/cross_compiling=yes/' libev/configure
     sed -i -e 's/^cross_compiling=no/cross_compiling=yes/' c-ares/configure
+    
+    export PYTHONXCPREFIX="$SYSROOT_PREFIX/usr"
+    export LDSHARED="$CC -shared"
 }
 
 make_target() {
