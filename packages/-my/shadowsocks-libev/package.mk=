@@ -13,7 +13,7 @@ unpack() {
 
 
 
-PKG_CMAKE_SCRIPT_TARGET="cmake/shadowsocks-libev.pc.cmake"
+PKG_CMAKE_SCRIPT="$PKG_BUILD/cmake/shadowsocks-libev.pc.cmake"
 
 PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release"
 

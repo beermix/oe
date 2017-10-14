@@ -11,7 +11,7 @@ pre_configure_target() {
    strip_gold
 }
 
-PKG_CMAKE_SCRIPT_TARGET="build/CMakeLists.txt"
+PKG_CMAKE_SCRIPT="$PKG_BUILD/build/CMakeLists.txt"
 
 PKG_CMAKE_OPTS_TARGET="-DWITH_LIBRARY=ON \
 			  -DWITH_PCH=OFF \

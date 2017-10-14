@@ -20,7 +20,7 @@ pre_configure_target() {
  # LIBS="$LIBS -pthread"
 }
 
-#PKG_CMAKE_SCRIPT_TARGET="cmake/shadowsocks-libev.pc.cmake"
+#PKG_CMAKE_SCRIPT="$PKG_BUILD/cmake/shadowsocks-libev.pc.cmake"
 
 PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release \
 			  -DWITH_DOC_HTML=OFF \
