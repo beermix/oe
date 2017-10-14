@@ -38,9 +38,9 @@ pre_configure_target() {
   cd $PKG_BUILD
   rm -rf .$TARGET_NAME
   
-  #APR_DIR_TARGET=$(get_pkg_build apr)/.install_dev/usr
-  #APR_DIR_TARGET=$(get_pkg_build apr)/.$TARGET_NAME
-  APR_DIR_TARGET=$(get_pkg_build apr)/.install_dev
+  APR_DIR_TARGET=$(get_build_dir apr)/.install_dev/usr
+  APR_DIR_TARGET=$(get_build_dir apr)/.$TARGET_NAME
+  APR_DIR_TARGET=$(get_build_dir apr)/.install_dev
   
   #export TARGET_PKG_CONFIG_LIBDIR="TARGET_PKG_CONFIG_LIBDIR $APR_DIR_TARGET/usr/lib/pkgconfig"
   
@@ -52,6 +52,7 @@ pre_configure_target() {
   PKG_CONFIGURE_OPTS_TARGET="--with-apr=$APR_DIR_TARGET/usr/bin/apr-1-config \
                              --with-openssl \
                              --with-crypto \
+                             --enable-static --enable-shared \
                              --with-openssl=$SYSROOT_PREFIX/usr \
                              --with-sqlite3=$SYSROOT_PREFIX/usr"
 }
