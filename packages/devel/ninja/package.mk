@@ -31,10 +31,10 @@ configure_host() {
 }
 
 make_host() {
-   python configure.py --bootstrap --host=linux --with-python=$ROOT/$TOOLCHAIN/bin/python
+  python2 configure.py --bootstrap
 }
 
 makeinstall_host() {
-   cp ninja $ROOT/$TOOLCHAIN/bin/
-  #cp $PKG_DIR/ninja $ROOT/$TOOLCHAIN/bin/
+ cp ninja $TOOLCHAIN/bin/
+  #cp $PKG_DIR/ninja $TOOLCHAIN/bin/
 }
