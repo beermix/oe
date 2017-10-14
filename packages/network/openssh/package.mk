@@ -67,7 +67,6 @@ post_makeinstall_target() {
   sed -e "s|^#PermitRootLogin.*|PermitRootLogin yes|g" \
       -e "s|^#StrictModes.*|StrictModes no|g" \
       -e "s|^#X11Forwarding.*|X11Forwarding yes|g" \
-      -e "s|^#UsePrivilegeSeparation.*|UsePrivilegeSeparation no|g" \
       -i $INSTALL/etc/ssh/sshd_config
 
   echo "PubkeyAcceptedKeyTypes +ssh-dss" >> $INSTALL/etc/ssh/sshd_config
