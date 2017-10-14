@@ -33,6 +33,7 @@ PKG_LONGDESC="MariaDB is a community-developed fork and a drop-in replacement fo
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
+PKG_USE_NINJA="no"
 
 PKG_MARIADB_SERVER="no"
 
