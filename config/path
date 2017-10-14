@@ -53,7 +53,7 @@ MAKE="$TOOLCHAIN/bin/make"
 MAKEINSTALL="$TOOLCHAIN/bin/make -j1 DESTDIR=$SYSROOT_PREFIX install"
 SED="sed -i"
 
-unset LD_LIBRARY_PATH
+#unset LD_LIBRARY_PATH
 
 # set package metadata
   reset_pkg_vars "$1"
