@@ -1,0 +1,433 @@
+From c9989b60af594f085cc7f6481b598d7b8c94ded7 Mon Sep 17 00:00:00 2001
+From: carpalis <30320745+carpalis@users.noreply.github.com>
+Date: Mon, 24 Jul 2017 13:21:16 +0200
+Subject: [PATCH 1/2] implement intensity compensation for VC-1 decoding
+
+Intensity compensation was not present for B-frames, but only for P-frames. When a P-frame flags intensity compensation for its forward reference frame, all subsequent B-frames that use this reference frame as well, need to do intensity compensation as well.
+---
+ src/gen75_mfd.c | 44 ++++++++++++++++++++++++++++++++++++++------
+ src/gen7_mfd.c  | 44 ++++++++++++++++++++++++++++++++++++++------
+ src/gen7_mfd.h  |  3 +++
+ src/gen8_mfd.c  | 44 ++++++++++++++++++++++++++++++++++++++------
+ 4 files changed, 117 insertions(+), 18 deletions(-)
+
+diff --git a/src/gen75_mfd.c b/src/gen75_mfd.c
+index 926d3dfa..08855a0b 100644
+--- a/src/gen75_mfd.c
++++ b/src/gen75_mfd.c
+@@ -1518,6 +1518,9 @@ gen75_mfd_init_vc1_surface(VADriverContextP ctx,
+     }
+ 
+     gen7_vc1_surface->picture_type = pic_param->picture_fields.bits.picture_type;
++    gen7_vc1_surface->intensity_compensation = 0;
++    gen7_vc1_surface->luma_scale = 0;
++    gen7_vc1_surface->luma_shift = 0;
+ 
+     if (gen7_vc1_surface->dmv == NULL) {
+         gen7_vc1_surface->dmv = dri_bo_alloc(i965->intel.bufmgr,
+@@ -1538,17 +1541,33 @@ gen75_mfd_vc1_decode_init(VADriverContextP ctx,
+     dri_bo *bo;
+     int width_in_mbs;
+     int picture_type;
++    int intensity_compensation;
+ 
+     assert(decode_state->pic_param && decode_state->pic_param->buffer);
+     pic_param = (VAPictureParameterBufferVC1 *)decode_state->pic_param->buffer;
+     width_in_mbs = ALIGN(pic_param->coded_width, 16) / 16;
+     picture_type = pic_param->picture_fields.bits.picture_type;
++    intensity_compensation = (pic_param->mv_fields.bits.mv_mode == VAMvModeIntensityCompensation);
+ 
+     intel_update_vc1_frame_store_index(ctx,
+                                        decode_state,
+                                        pic_param,
+                                        gen7_mfd_context->reference_surface);
+ 
++    /* Forward reference picture */
++    obj_surface = decode_state->reference_objects[0];
++    if (pic_param->forward_reference_picture != VA_INVALID_ID &&
++        obj_surface &&
++        obj_surface->private_data) {
++        if (picture_type == 1 && intensity_compensation) { /* P picture */
++            struct gen7_vc1_surface *gen7_vc1_surface = obj_surface->private_data;
++
++            gen7_vc1_surface->intensity_compensation = intensity_compensation;
++            gen7_vc1_surface->luma_scale = pic_param->luma_scale;
++            gen7_vc1_surface->luma_shift = pic_param->luma_shift;
++        }
++    }
++
+     /* Current decoded picture */
+     obj_surface = decode_state->render_object;
+     i965_check_alloc_surface_bo(ctx, obj_surface, 1, VA_FOURCC_NV12, SUBSAMPLE_YUV420);
+@@ -1915,24 +1934,37 @@ gen75_mfd_vc1_pred_pipe_state(VADriverContextP ctx,
+ {
+     struct intel_batchbuffer *batch = gen7_mfd_context->base.batch;
+     VAPictureParameterBufferVC1 *pic_param;
+-    int intensitycomp_single;
++    int picture_type;
++    int intensitycomp_single_fwd = 0;
++    int luma_scale1 = 0;
++    int luma_shift1 = 0;
+ 
+     assert(decode_state->pic_param && decode_state->pic_param->buffer);
+     pic_param = (VAPictureParameterBufferVC1 *)decode_state->pic_param->buffer;
+-    intensitycomp_single = (pic_param->mv_fields.bits.mv_mode == VAMvModeIntensityCompensation);
++    picture_type = pic_param->picture_fields.bits.picture_type;
++
++    if (gen7_mfd_context->reference_surface[0].surface_id != VA_INVALID_ID) {
++        if (picture_type == 1 || picture_type == 2) { /* P/B picture */
++            struct gen7_vc1_surface *gen7_vc1_surface = gen7_mfd_context->reference_surface[0].obj_surface->private_data;
++
++            intensitycomp_single_fwd = gen7_vc1_surface->intensity_compensation;
++            luma_scale1 = gen7_vc1_surface->luma_scale;
++            luma_shift1 = gen7_vc1_surface->luma_shift;
++        }
++    }
+ 
+     BEGIN_BCS_BATCH(batch, 6);
+     OUT_BCS_BATCH(batch, MFX_VC1_PRED_PIPE_STATE | (6 - 2));
+     OUT_BCS_BATCH(batch,
+                   0 << 14 | /* FIXME: double ??? */
+                   0 << 12 |
+-                  intensitycomp_single << 10 |
+-                  intensitycomp_single << 8 |
++                  intensitycomp_single_fwd << 10 |
++                  0 << 8 |
+                   0 << 4 | /* FIXME: interlace mode */
+                   0);
+     OUT_BCS_BATCH(batch,
+-                  pic_param->luma_shift << 16 |
+-                  pic_param->luma_scale << 0); /* FIXME: Luma Scaling */
++                  luma_shift1 << 16 |
++                  luma_scale1 << 0);
+     OUT_BCS_BATCH(batch, 0);
+     OUT_BCS_BATCH(batch, 0);
+     OUT_BCS_BATCH(batch, 0);
+diff --git a/src/gen7_mfd.c b/src/gen7_mfd.c
+index 7c836a29..fe4d66d3 100644
+--- a/src/gen7_mfd.c
++++ b/src/gen7_mfd.c
+@@ -1253,6 +1253,9 @@ gen7_mfd_init_vc1_surface(VADriverContextP ctx,
+     }
+ 
+     gen7_vc1_surface->picture_type = pic_param->picture_fields.bits.picture_type;
++    gen7_vc1_surface->intensity_compensation = 0;
++    gen7_vc1_surface->luma_scale = 0;
++    gen7_vc1_surface->luma_shift = 0;
+ 
+     if (gen7_vc1_surface->dmv == NULL) {
+         gen7_vc1_surface->dmv = dri_bo_alloc(i965->intel.bufmgr,
+@@ -1273,17 +1276,33 @@ gen7_mfd_vc1_decode_init(VADriverContextP ctx,
+     dri_bo *bo;
+     int width_in_mbs;
+     int picture_type;
++    int intensity_compensation;
+ 
+     assert(decode_state->pic_param && decode_state->pic_param->buffer);
+     pic_param = (VAPictureParameterBufferVC1 *)decode_state->pic_param->buffer;
+     width_in_mbs = ALIGN(pic_param->coded_width, 16) / 16;
+     picture_type = pic_param->picture_fields.bits.picture_type;
++    intensity_compensation = (pic_param->mv_fields.bits.mv_mode == VAMvModeIntensityCompensation);
+ 
+     intel_update_vc1_frame_store_index(ctx,
+                                        decode_state,
+                                        pic_param,
+                                        gen7_mfd_context->reference_surface);
+ 
++    /* Forward reference picture */
++    obj_surface = decode_state->reference_objects[0];
++    if (pic_param->forward_reference_picture != VA_INVALID_ID &&
++        obj_surface &&
++        obj_surface->private_data) {
++        if (picture_type == 1 && intensity_compensation) { /* P picture */
++            struct gen7_vc1_surface *gen7_vc1_surface = obj_surface->private_data;
++
++            gen7_vc1_surface->intensity_compensation = intensity_compensation;
++            gen7_vc1_surface->luma_scale = pic_param->luma_scale;
++            gen7_vc1_surface->luma_shift = pic_param->luma_shift;
++        }
++    }
++
+     /* Current decoded picture */
+     obj_surface = decode_state->render_object;
+     i965_check_alloc_surface_bo(ctx, obj_surface, 1, VA_FOURCC_NV12, SUBSAMPLE_YUV420);
+@@ -1650,24 +1669,37 @@ gen7_mfd_vc1_pred_pipe_state(VADriverContextP ctx,
+ {
+     struct intel_batchbuffer *batch = gen7_mfd_context->base.batch;
+     VAPictureParameterBufferVC1 *pic_param;
+-    int intensitycomp_single;
++    int picture_type;
++    int intensitycomp_single_fwd = 0;
++    int luma_scale1 = 0;
++    int luma_shift1 = 0;
+ 
+     assert(decode_state->pic_param && decode_state->pic_param->buffer);
+     pic_param = (VAPictureParameterBufferVC1 *)decode_state->pic_param->buffer;
+-    intensitycomp_single = (pic_param->mv_fields.bits.mv_mode == VAMvModeIntensityCompensation);
++    picture_type = pic_param->picture_fields.bits.picture_type;
++
++    if (gen7_mfd_context->reference_surface[0].surface_id != VA_INVALID_ID) {
++        if (picture_type == 1 || picture_type == 2) { /* P/B picture */
++            struct gen7_vc1_surface *gen7_vc1_surface = gen7_mfd_context->reference_surface[0].obj_surface->private_data;
++
++            intensitycomp_single_fwd = gen7_vc1_surface->intensity_compensation;
++            luma_scale1 = gen7_vc1_surface->luma_scale;
++            luma_shift1 = gen7_vc1_surface->luma_shift;
++        }
++    }
+ 
+     BEGIN_BCS_BATCH(batch, 6);
+     OUT_BCS_BATCH(batch, MFX_VC1_PRED_PIPE_STATE | (6 - 2));
+     OUT_BCS_BATCH(batch,
+                   0 << 14 | /* FIXME: double ??? */
+                   0 << 12 |
+-                  intensitycomp_single << 10 |
+-                  intensitycomp_single << 8 |
++                  intensitycomp_single_fwd << 10 |
++                  0 << 8 |
+                   0 << 4 | /* FIXME: interlace mode */
+                   0);
+     OUT_BCS_BATCH(batch,
+-                  pic_param->luma_shift << 16 |
+-                  pic_param->luma_scale << 0); /* FIXME: Luma Scaling */
++                  luma_shift1 << 16 |
++                  luma_scale1 << 0);
+     OUT_BCS_BATCH(batch, 0);
+     OUT_BCS_BATCH(batch, 0);
+     OUT_BCS_BATCH(batch, 0);
+diff --git a/src/gen7_mfd.h b/src/gen7_mfd.h
+index aede3743..d8938ab0 100644
+--- a/src/gen7_mfd.h
++++ b/src/gen7_mfd.h
+@@ -63,6 +63,9 @@
+ struct gen7_vc1_surface {
+     dri_bo *dmv;
+     int picture_type;
++    int intensity_compensation;
++    int luma_scale;
++    int luma_shift;
+ };
+ 
+ struct hw_context;
+diff --git a/src/gen8_mfd.c b/src/gen8_mfd.c
+index 5c70ff0c..c93c26df 100644
+--- a/src/gen8_mfd.c
++++ b/src/gen8_mfd.c
+@@ -1297,6 +1297,9 @@ gen8_mfd_init_vc1_surface(VADriverContextP ctx,
+     }
+ 
+     gen7_vc1_surface->picture_type = pic_param->picture_fields.bits.picture_type;
++    gen7_vc1_surface->intensity_compensation = 0;
++    gen7_vc1_surface->luma_scale = 0;
++    gen7_vc1_surface->luma_shift = 0;
+ 
+     if (gen7_vc1_surface->dmv == NULL) {
+         gen7_vc1_surface->dmv = dri_bo_alloc(i965->intel.bufmgr,
+@@ -1317,17 +1320,33 @@ gen8_mfd_vc1_decode_init(VADriverContextP ctx,
+     dri_bo *bo;
+     int width_in_mbs;
+     int picture_type;
++    int intensity_compensation;
+ 
+     assert(decode_state->pic_param && decode_state->pic_param->buffer);
+     pic_param = (VAPictureParameterBufferVC1 *)decode_state->pic_param->buffer;
+     width_in_mbs = ALIGN(pic_param->coded_width, 16) / 16;
+     picture_type = pic_param->picture_fields.bits.picture_type;
++    intensity_compensation = (pic_param->mv_fields.bits.mv_mode == VAMvModeIntensityCompensation);
+ 
+     intel_update_vc1_frame_store_index(ctx,
+                                        decode_state,
+                                        pic_param,
+                                        gen7_mfd_context->reference_surface);
+ 
++    /* Forward reference picture */
++    obj_surface = decode_state->reference_objects[0];
++    if (pic_param->forward_reference_picture != VA_INVALID_ID &&
++        obj_surface &&
++        obj_surface->private_data) {
++        if (picture_type == 1 && intensity_compensation) { /* P picture */
++            struct gen7_vc1_surface *gen7_vc1_surface = obj_surface->private_data;
++
++            gen7_vc1_surface->intensity_compensation = intensity_compensation;
++            gen7_vc1_surface->luma_scale = pic_param->luma_scale;
++            gen7_vc1_surface->luma_shift = pic_param->luma_shift;
++        }
++    }
++
+     /* Current decoded picture */
+     obj_surface = decode_state->render_object;
+     i965_check_alloc_surface_bo(ctx, obj_surface, 1, VA_FOURCC_NV12, SUBSAMPLE_YUV420);
+@@ -1694,24 +1713,37 @@ gen8_mfd_vc1_pred_pipe_state(VADriverContextP ctx,
+ {
+     struct intel_batchbuffer *batch = gen7_mfd_context->base.batch;
+     VAPictureParameterBufferVC1 *pic_param;
+-    int intensitycomp_single;
++    int picture_type;
++    int intensitycomp_single_fwd = 0;
++    int luma_scale1 = 0;
++    int luma_shift1 = 0;
+ 
+     assert(decode_state->pic_param && decode_state->pic_param->buffer);
+     pic_param = (VAPictureParameterBufferVC1 *)decode_state->pic_param->buffer;
+-    intensitycomp_single = (pic_param->mv_fields.bits.mv_mode == VAMvModeIntensityCompensation);
++    picture_type = pic_param->picture_fields.bits.picture_type;
++
++    if (gen7_mfd_context->reference_surface[0].surface_id != VA_INVALID_ID) {
++        if (picture_type == 1 || picture_type == 2) { /* P/B picture */
++            struct gen7_vc1_surface *gen7_vc1_surface = gen7_mfd_context->reference_surface[0].obj_surface->private_data;
++
++            intensitycomp_single_fwd = gen7_vc1_surface->intensity_compensation;
++            luma_scale1 = gen7_vc1_surface->luma_scale;
++            luma_shift1 = gen7_vc1_surface->luma_shift;
++        }
++    }
+ 
+     BEGIN_BCS_BATCH(batch, 6);
+     OUT_BCS_BATCH(batch, MFX_VC1_PRED_PIPE_STATE | (6 - 2));
+     OUT_BCS_BATCH(batch,
+                   0 << 14 | /* FIXME: double ??? */
+                   0 << 12 |
+-                  intensitycomp_single << 10 |
+-                  intensitycomp_single << 8 |
++                  intensitycomp_single_fwd << 10 |
++                  0 << 8 |
+                   0 << 4 | /* FIXME: interlace mode */
+                   0);
+     OUT_BCS_BATCH(batch,
+-                  pic_param->luma_shift << 16 |
+-                  pic_param->luma_scale << 0); /* FIXME: Luma Scaling */
++                  luma_shift1 << 16 |
++                  luma_scale1 << 0);
+     OUT_BCS_BATCH(batch, 0);
+     OUT_BCS_BATCH(batch, 0);
+     OUT_BCS_BATCH(batch, 0);
+
+From 794ae156d403e141921917d97c12a237b108fe80 Mon Sep 17 00:00:00 2001
+From: carpalis <30320745+carpalis@users.noreply.github.com>
+Date: Wed, 26 Jul 2017 09:48:00 +0200
+Subject: [PATCH 2/2] add VC-1 intensity compensation for SNB
+
+---
+ src/gen6_mfd.c | 44 ++++++++++++++++++++++++++++++++++++++------
+ src/gen6_mfd.h |  3 +++
+ 2 files changed, 41 insertions(+), 6 deletions(-)
+
+diff --git a/src/gen6_mfd.c b/src/gen6_mfd.c
+index dffd94a4..cb9713aa 100644
+--- a/src/gen6_mfd.c
++++ b/src/gen6_mfd.c
+@@ -1193,6 +1193,9 @@ gen6_mfd_init_vc1_surface(VADriverContextP ctx,
+     }
+ 
+     gen6_vc1_surface->picture_type = pic_param->picture_fields.bits.picture_type;
++    gen6_vc1_surface->intensity_compensation = 0;
++    gen6_vc1_surface->luma_scale = 0;
++    gen6_vc1_surface->luma_shift = 0;
+ 
+     if (gen6_vc1_surface->dmv == NULL) {
+         gen6_vc1_surface->dmv = dri_bo_alloc(i965->intel.bufmgr,
+@@ -1213,17 +1216,33 @@ gen6_mfd_vc1_decode_init(VADriverContextP ctx,
+     dri_bo *bo;
+     int width_in_mbs;
+     int picture_type;
++    int intensity_compensation;
+ 
+     assert(decode_state->pic_param && decode_state->pic_param->buffer);
+     pic_param = (VAPictureParameterBufferVC1 *)decode_state->pic_param->buffer;
+     width_in_mbs = ALIGN(pic_param->coded_width, 16) / 16;
+     picture_type = pic_param->picture_fields.bits.picture_type;
++    intensity_compensation = (pic_param->mv_fields.bits.mv_mode == VAMvModeIntensityCompensation);
+ 
+     intel_update_vc1_frame_store_index(ctx,
+                                        decode_state,
+                                        pic_param,
+                                        gen6_mfd_context->reference_surface);
+ 
++    /* Forward reference picture */
++    obj_surface = decode_state->reference_objects[0];
++    if (pic_param->forward_reference_picture != VA_INVALID_ID &&
++        obj_surface &&
++        obj_surface->private_data) {
++        if (picture_type == 1 && intensity_compensation) { /* P picture */
++            struct gen6_vc1_surface *gen6_vc1_surface = obj_surface->private_data;
++
++            gen6_vc1_surface->intensity_compensation = intensity_compensation;
++            gen6_vc1_surface->luma_scale = pic_param->luma_scale;
++            gen6_vc1_surface->luma_shift = pic_param->luma_shift;
++        }
++    }
++
+     /* Current decoded picture */
+     obj_surface = decode_state->render_object;
+     i965_check_alloc_surface_bo(ctx, obj_surface, 1, VA_FOURCC_NV12, SUBSAMPLE_YUV420);
+@@ -1573,11 +1592,15 @@ gen6_mfd_vc1_pred_pipe_state(VADriverContextP ctx,
+ {
+     struct intel_batchbuffer *batch = gen6_mfd_context->base.batch;
+     VAPictureParameterBufferVC1 *pic_param;
++    int picture_type;
+     int interpolation_mode = 0;
+-    int intensitycomp_single;
++    int intensitycomp_single_fwd = 0;
++    int luma_scale1 = 0;
++    int luma_shift1 = 0;
+ 
+     assert(decode_state->pic_param && decode_state->pic_param->buffer);
+     pic_param = (VAPictureParameterBufferVC1 *)decode_state->pic_param->buffer;
++    picture_type = pic_param->picture_fields.bits.picture_type;
+ 
+     if (pic_param->mv_fields.bits.mv_mode == VAMvMode1MvHalfPelBilinear ||
+         (pic_param->mv_fields.bits.mv_mode == VAMvModeIntensityCompensation &&
+@@ -1592,7 +1615,16 @@ gen6_mfd_vc1_pred_pipe_state(VADriverContextP ctx,
+ 
+     assert(decode_state->pic_param && decode_state->pic_param->buffer);
+     pic_param = (VAPictureParameterBufferVC1 *)decode_state->pic_param->buffer;
+-    intensitycomp_single = (pic_param->mv_fields.bits.mv_mode == VAMvModeIntensityCompensation);
++
++    if (gen6_mfd_context->reference_surface[0].surface_id != VA_INVALID_ID) {
++        if (picture_type == 1 || picture_type == 2) { /* P/B picture */
++            struct gen6_vc1_surface *gen6_vc1_surface = gen6_mfd_context->reference_surface[0].obj_surface->private_data;
++
++            intensitycomp_single_fwd = gen6_vc1_surface->intensity_compensation;
++            luma_scale1 = gen6_vc1_surface->luma_scale;
++            luma_shift1 = gen6_vc1_surface->luma_shift;
++        }
++    }
+ 
+     BEGIN_BCS_BATCH(batch, 7);
+     OUT_BCS_BATCH(batch, MFX_VC1_PRED_PIPE_STATE | (7 - 2));
+@@ -1601,8 +1633,8 @@ gen6_mfd_vc1_pred_pipe_state(VADriverContextP ctx,
+                   pic_param->rounding_control << 4 |
+                   va_to_gen6_vc1_profile[pic_param->sequence_fields.bits.profile] << 2);
+     OUT_BCS_BATCH(batch,
+-                  pic_param->luma_shift << 16 |
+-                  pic_param->luma_scale << 0); /* FIXME: Luma Scaling */
++                  luma_shift1 << 16 |
++                  luma_scale1 << 0);
+     OUT_BCS_BATCH(batch, 0);
+     OUT_BCS_BATCH(batch, 0);
+     OUT_BCS_BATCH(batch, 0);
+@@ -1613,8 +1645,8 @@ gen6_mfd_vc1_pred_pipe_state(VADriverContextP ctx,
+                   pic_param->range_reduction_frame << 16 |
+                   0 << 6 | /* FIXME: double ??? */
+                   0 << 4 |
+-                  intensitycomp_single << 2 |
+-                  intensitycomp_single << 0);
++                  intensitycomp_single_fwd << 2 |
++                  0 << 0);
+     ADVANCE_BCS_BATCH(batch);
+ }
+ 
+diff --git a/src/gen6_mfd.h b/src/gen6_mfd.h
+index 1b2f3b71..fd7b40f2 100644
+--- a/src/gen6_mfd.h
++++ b/src/gen6_mfd.h
+@@ -49,6 +49,9 @@
+ struct gen6_vc1_surface {
+     dri_bo *dmv;
+     int picture_type;
++    int intensity_compensation;
++    int luma_scale;
++    int luma_shift;
+ };
+ 
+ struct hw_context;
