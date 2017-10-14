@@ -20,19 +20,6 @@
 
 . config/options $1
 
-if [ ! -f "$PKG_BUILD/configure.in" \
-    -a ! -f "$PKG_BUILD/configure.ac" ] ; then
-  echo "configure.in or configure.ac not found"
-  exit 1
-fi
+[ -f "$PKG_BUILD/VERSION" ] && PKG_GIT_VERSION=`cat $PKG_BUILD/VERSION`
 
-if [ ! -f $PKG_BUILD/.autoreconf-done ] ; then
-  touch $PKG_BUILD/NEWS $PKG_BUILD/AUTHORS $PKG_BUILD/ChangeLog
-  mkdir -p $PKG_BUILD/m4
-
-  printf "%${BUILD_INDENT}c $(print_color CLR_AUTORECONF "AUTORECONF")   $1\n" ' '>&$SILENT_OUT
-  export BUILD_INDENT=$((${BUILD_INDENT:-1}+$BUILD_INDENT_SIZE))
-
-  do_autoreconf $PKG_BUILD
-  touch $PKG_BUILD/.autoreconf-done
-fi
+echo $PKG_GIT_VERSION

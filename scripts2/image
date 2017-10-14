@@ -35,7 +35,7 @@ $SCRIPTS/build kmod:host
 $SCRIPTS/build mtools:host
 $SCRIPTS/build populatefs:host
 
-BUILD_DATE=`date +%Y%m%d%H%M%S`
+BUILD_DATE=`date +%Y%m%d`
 
 GIT_HASH=$(git rev-parse HEAD)
 
