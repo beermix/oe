@@ -1,8 +1,8 @@
 # LTO (Link Time Optimization) support
-  LTO_SUPPORT="yes"
+  LTO_SUPPORT="no"
 
 # GOLD (Google Linker) support
-  GOLD_SUPPORT="yes"
+  GOLD_SUPPORT="no"
 
 # Name of the Distro to build (full name, without special characters)
   DISTRONAME="OE"
@@ -21,7 +21,7 @@
   ROOT_PASSWORD="libreelec"
 
 # Install LLVM SUPPORT (yes / no)
-  LLVM_SUPPORT="no"
+  LLVM_SUPPORT="yes"
   
 # Install glibc locales to the build (yes / no)
   GLIBC_LOCALES="yes"

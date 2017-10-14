@@ -9,7 +9,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 
-PKG_CMAKE_SCRIPT="CPP/7zip/CMAKE/CMakeLists.txt"
+PKG_CMAKE_SCRIPT="$PKG_BUILD/CPP/7zip/CMAKE/CMakeLists.txt"
 
 PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release"
 
@@ -20,10 +20,10 @@ make_host() {
   make CXX=$CXX CC=$CC 7za
 }
 
-make_target() {
-  cd $ROOT/$PKG_BUILD
-  make makefile.linux_amd64 CXX=$CXX CC=$CC 7z 7za
-}
+#make_target() {
+#  cd $ROOT/$PKG_BUILD
+#  make makefile.linux_amd64 CXX=$CXX CC=$CC 7z 7za
+#}
 
 makeinstall_host() {
   mkdir -p $ROOT/$TOOLCHAIN/bin
