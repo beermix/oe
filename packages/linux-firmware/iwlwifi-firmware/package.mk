@@ -36,5 +36,5 @@ make_target() {
 }
 
 makeinstall_target() {
-  DESTDIR=$INSTALL/$(get_kernel_overlay_dir) ./install
+  DESTDIR=$INSTALL/usr ./install
 }
