@@ -174,7 +174,7 @@ get_pkg_variable() {
 
 # return 0 if $2 in space-separated list $1, otherwise return 1
 listcontains() {
-  [[ ${1} =~ (^[[:space:]])${2}($[[:space:]]) ]] && return 0  return 1
+  [[ ${1} =~ (^|[[:space:]])${2}($|[[:space:]]) ]] && return 0 || return 1
 }
 
 install_binary_addon() {
@@ -448,7 +448,7 @@ dashes="==========================="
     exit 1
   fi
 
-  if [ -n "$DEVICE" -a ! -d "$PROJECT_DIR/$PROJECT/devices/$DEVICE" ]; then
+  if [ \( -z "$DEVICE" -a -d "$PROJECT_DIR/$PROJECT/devices" \) -o \( -n "$DEVICE" -a ! -d "$PROJECT_DIR/$PROJECT/devices/$DEVICE" \) ]; then
     check_device="$check_device\n $dashes$dashes$dashes"
     check_device="$check_device\n ERROR: You need to specify a valid device for the $PROJECT project"
     check_device="$check_device\n $dashes$dashes$dashes"
@@ -467,8 +467,8 @@ dashes="==========================="
     linux_config_dir="$PROJECT_DIR/$PROJECT/linux"
   fi
 
-  if [ ! -e $linux_config_dir/linux.$TARGET_ARCH.conf ] &&
-     ! ls $linux_config_dir/*/linux.$TARGET_ARCH.conf &>/dev/null; then
+  if [ ! -e $linux_config_dir/linux.${TARGET_PATCH_ARCH:-$TARGET_ARCH}.conf ] &&
+     ! ls $linux_config_dir/*/linux.${TARGET_PATCH_ARCH:-$TARGET_ARCH}.conf &>/dev/null; then
     check_arch="$check_arch\n $dashes$dashes$dashes"
     check_arch="$check_arch\n ERROR: Architecture not found, use a valid Architecture"
     check_arch="$check_arch\n for your project or create a new config"
