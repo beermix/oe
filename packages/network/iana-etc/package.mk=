@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,28 +16,28 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="network"
-PKG_VERSION=""
+PKG_NAME="iana-etc"
+PKG_VERSION="2.30"
+PKG_REV="1"
 PKG_ARCH="any"
-PKG_LICENSE="various"
-PKG_SITE="http://www.openelec.tv"
-PKG_URL=""
-PKG_DEPENDS_TARGET="toolchain connman iana-etc ethtool openssh bluez pure-ftpd iperf netperf nuttcp"
-PKG_SECTION="virtual"
-PKG_SHORTDESC="network: Metapackage for packages to install network support"
-PKG_LONGDESC="network: Metapackage for various packages to install network support"
+PKG_LICENSE="GPL"
+PKG_SITE="http://www.linuxfromscratch.org/lfs/view/development/chapter06/iana-etc.html"
+PKG_URL="http://anduin.linuxfromscratch.org/sources/LFS/lfs-packages/conglomeration/iana-etc/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_DEPENDS_TARGET="toolchain"
+PKG_PRIORITY="optional"
+PKG_SECTION="network"
+PKG_SHORTDESC="iana-etc: The Iana-Etc package provides data for network services and protocols."
+PKG_LONGDESC="The Iana-Etc package provides data for network services and protocols."
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-if [ "$BLUETOOTH_SUPPORT" = "yes" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET bluez"
-fi
+post_make_target() {
+  :
+}
 
-if [ "$SAMBA_SERVER" = "yes" ] || [ "$SAMBA_SUPPORT" = "yes" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET samba"
-fi
-
-if [ "$OPENVPN_SUPPORT" = "yes" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET openvpn"
-fi
+makeinstall_target() {
+  mkdir -p $INSTALL/etc
+    cp $PKG_DIR/protocols $INSTALL/etc
+    cp $PKG_DIR/services $INSTALL/etc
+}
