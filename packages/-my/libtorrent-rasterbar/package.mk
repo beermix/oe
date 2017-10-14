@@ -9,12 +9,12 @@ PKG_USE_CMAKE="no"
 PKG_AUTORECONF="no"
 
 post_unpack() {
-  mkdir -p $ROOT/$PKG_BUILD/build-aux/
-  touch $ROOT/$PKG_BUILD/build-aux/config.rpath
+  mkdir -p $PKG_BUILD/build-aux/
+  touch $PKG_BUILD/build-aux/config.rpath
 }
 
 #pre_configure_target() {
-#  cd $ROOT/$PKG_BUILD
+#  cd $PKG_BUILD
 #  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
 #  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3|"`
 #  ./autotool.sh
