@@ -5,8 +5,7 @@ PKG_DEPENDS_TARGET="toolchain ncurses readline"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--bindir=/bin \
-			      --with-curses \
+PKG_CONFIGURE_OPTS_TARGET="--with-curses \
 			      --enable-readline \
 			      --without-bash-malloc \
 			      --with-installed-readline \
