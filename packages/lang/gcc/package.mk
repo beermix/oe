@@ -59,7 +59,8 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-linker-hash-style=gnu \
                            --disable-werror \
                            --with-system-zlib \
-                           --with-tune=generic"
+                           --with-tune=generic \
+                           MAKEINFO=missing"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
