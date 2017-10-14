@@ -52,7 +52,7 @@
     PROJECT_CFLAGS="-mmmx -msse -msse2 -msse3 -msse4 -msse4.1 -msse4.2 -mavx -mfpmath=sse"
 
   # SquashFS compression method (gzip / lzo / xz)
-    SQUASHFS_COMPRESSION="zstd"
+    SQUASHFS_COMPRESSION="gzip"
 
 ################################################################################
 # setup project defaults

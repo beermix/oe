@@ -11,9 +11,9 @@
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-#
+#  fbset time lrzip gperf nettle libarchive unrar tar psmisc findutils grep gawk sed coreutils bash
 #  You should have received a copy of the GNU General Public License
-#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.    fbset time lrzip gperf nettle libarchive unrar
+#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.    
 ################################################################################
 
 PKG_NAME="busybox"
@@ -23,7 +23,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://www.busybox.net"
 PKG_URL="http://busybox.net/downloads/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain busybox:host hdparm dosfstools e2fsprogs zip unzip zlib pciutils usbutils parted procps-ng gptfdisk psmisc findutils grep gawk sed coreutils less tar bash"
+PKG_DEPENDS_TARGET="toolchain busybox:host hdparm dosfstools e2fsprogs zip unzip zlib pciutils usbutils parted procps-ng gptfdisk  less"
 PKG_DEPENDS_INIT="toolchain"
 PKG_SECTION="system"
 PKG_SHORTDESC="BusyBox: The Swiss Army Knife of Embedded Linux"
@@ -32,7 +32,7 @@ PKG_LONGDESC="BusyBox combines tiny versions of many common UNIX utilities into 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_MAKE_OPTS_HOST="ARCH=$TARGET_ARCH CROSS_COMPILE= KBUILD_VERBOSE=1 install"
+PKG_MAKE_OPTS_HOST="ARCH=$TARGET_ARCH CROSS_COMPILE= KBUILD_VERBOSE=0 install"
 PKG_MAKE_OPTS_TARGET="ARCH=$TARGET_ARCH \
                       HOSTCC=$HOST_CC \
                       CROSS_COMPILE=$TARGET_PREFIX \
@@ -96,7 +96,7 @@ configure_target() {
     cp $BUSYBOX_CFG_FILE_TARGET .config
 
     # set install dir
-    sed -i -e "s|^CONFIG_PREFIX=.*$|CONFIG_PREFIX=\"$INSTALL/usr\"|" .config
+    sed -i -e "s|^CONFIG_PREFIX=.*$|CONFIG_PREFIX=\"$INSTALL\"|" .config
 
     if [ ! "$DEVTOOLS" = yes ]; then
       sed -i -e "s|^CONFIG_DEVMEM=.*$|# CONFIG_DEVMEM is not set|" .config
@@ -133,7 +133,7 @@ configure_init() {
     cp $BUSYBOX_CFG_FILE_INIT .config
 
     # set install dir
-    sed -i -e "s|^CONFIG_PREFIX=.*$|CONFIG_PREFIX=\"$INSTALL/usr\"|" .config
+    sed -i -e "s|^CONFIG_PREFIX=.*$|CONFIG_PREFIX=\"$INSTALL\"|" .config
 
     # optimize for size
     CFLAGS=`echo $CFLAGS | sed -e "s|-Ofast|-Os|"`
@@ -148,8 +148,8 @@ configure_init() {
 }
 
 makeinstall_host() {
-  mkdir -p $TOOLCHAIN/bin
-    cp -R $PKG_BUILD/.install_host/bin/* $TOOLCHAIN/bin
+  mkdir -p $TOOLCHAIN/
+    cp -PR $PKG_BUILD/.install_host/* $TOOLCHAIN/
 }
 
 makeinstall_target() {
@@ -160,6 +160,7 @@ makeinstall_target() {
     cp $PKG_DIR/scripts/apt-get $INSTALL/usr/bin/
     cp $PKG_DIR/scripts/passwd $INSTALL/usr/bin/
     cp $PKG_DIR/scripts/sudo $INSTALL/usr/bin/
+    ln -sf /bin/busybox $INSTALL/usr/bin/env          #/usr/bin/env is needed for most python scripts
     cp $PKG_DIR/scripts/pastebinit $INSTALL/usr/bin/
     ln -sf pastebinit $INSTALL/usr/bin/paste
 
@@ -172,14 +173,16 @@ makeinstall_target() {
     #rm $INSTALL/usr/bin/sh
     #rm $INSTALL/usr/bin/hostname
     #rm $INSTALL/usr/sbin/ip
-    rm $INSTALL/usr/bin/bash
+   # rm $INSTALL/usr/bin/bash
 
   mkdir -p $INSTALL/etc
     cp $PKG_DIR/config/profile $INSTALL/etc
     cp $PKG_DIR/config/inputrc $INSTALL/etc
-    cp $PKG_DIR/config/httpd.conf $INSTALL/etc
+#    cp $PKG_DIR/config/httpd.conf $INSTALL/etc
     cp $PKG_DIR/config/suspend-modules.conf $INSTALL/etc
 
+  mkdir -p $INSTALL/usr/config/sysctl.d
+    cp $PKG_DIR/config/transmission.conf $INSTALL/usr/config/sysctl.d
   # /etc/fstab is needed by...
     touch $INSTALL/etc/fstab
 
@@ -192,6 +195,10 @@ makeinstall_target() {
   # create /etc/hostname
     ln -sf /proc/sys/kernel/hostname $INSTALL/etc/hostname
 
+  # systemd wants /usr/bin/mkdir
+    mkdir -p $INSTALL/usr/bin
+      ln -sf /bin/busybox $INSTALL/usr/bin/mkdir
+
   # add webroot
     mkdir -p $INSTALL/usr/www
       echo "It works" > $INSTALL/usr/www/index.html
@@ -203,7 +210,7 @@ makeinstall_target() {
 post_install() {
   ROOT_PWD="`$TOOLCHAIN/bin/cryptpw -m sha512 $ROOT_PASSWORD`"
 
-  echo "chmod 4755 $INSTALL/usr/bin/busybox" >> $FAKEROOT_SCRIPT
+  echo "chmod 4755 $INSTALL/bin/busybox" >> $FAKEROOT_SCRIPT
   echo "chmod 000 $INSTALL/etc/shadow" >> $FAKEROOT_SCRIPT
 
   add_user root "$ROOT_PWD" 0 0 "Root User" "/storage" "/bin/sh"
@@ -215,7 +222,7 @@ post_install() {
 
   enable_service debug-shell.service
   enable_service shell.service
-#  enable_service show-version.service
+  enable_service show-version.service
   enable_service var.mount
   enable_service var-log-debug.service
   enable_service fs-resize.service
@@ -234,8 +241,8 @@ post_install() {
 
 makeinstall_init() {
   mkdir -p $INSTALL/bin
-    ln -sf busybox $INSTALL/usr/bin/sh
-    chmod 4755 $INSTALL/usr/bin/busybox
+    ln -sf busybox $INSTALL/bin/sh
+    chmod 4755 $INSTALL/bin/busybox
 
   mkdir -p $INSTALL/etc
     touch $INSTALL/etc/fstab
