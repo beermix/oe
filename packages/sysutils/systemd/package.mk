@@ -105,7 +105,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --with-dbussystemservicedir=/usr/share/dbus-1/system-services \
                            --with-rootprefix=/usr \
                            --with-rootlibdir=/usr/lib \
-                           --with-default-hierarchy=hybrid"
+                           --with-default-hierarchy=legacy"
 
 pre_build_target() {
 # broken autoreconf
@@ -204,10 +204,8 @@ post_makeinstall_target() {
   cp $PKG_DIR/scripts/systemd-machine-id-setup $INSTALL/usr/bin
   cp $PKG_DIR/scripts/userconfig-setup $INSTALL/usr/bin
 
-  mkdir -p $INSTALL/usr/sbin
-  cp $PKG_DIR/scripts/kernel-overlays-setup $INSTALL/usr/sbin
-
   # provide 'halt', 'shutdown', 'reboot' & co.
+  mkdir -p $INSTALL/usr/sbin
   ln -sf /usr/bin/systemctl $INSTALL/usr/sbin/halt
   ln -sf /usr/bin/systemctl $INSTALL/usr/sbin/poweroff
   ln -sf /usr/bin/systemctl $INSTALL/usr/sbin/reboot
@@ -256,6 +254,5 @@ post_install() {
   enable_service machine-id.service
   enable_service debugconfig.service
   enable_service userconfig.service
-  enable_service kernel-overlays.service
   enable_service hwdb.service
 }
