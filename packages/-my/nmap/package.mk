@@ -7,7 +7,7 @@ PKG_SECTION="tools"
 PKG_AUTORECONF="no"
 
 pre_configure_target() {
-  cd $ROOT/$PKG_BUILD
+  cd $PKG_BUILD
   rm -rf .$TARGET_NAME
   export CPPFLAGS="$CPPFLAGS -Iliblua"
   #export LDFLAGS="$LDFLAGS -lz -lpthread -lm -ldl"
