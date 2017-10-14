@@ -35,7 +35,7 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 post_unpack() {
-  mkdir -p $ROOT/$PKG_BUILD/build-aux/
+  mkdir -p $PKG_BUILD/build-aux/
 }
 
 PKG_CONFIGURE_OPTS_HOST="--with-gnu-ld"
