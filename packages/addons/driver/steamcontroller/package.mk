@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2016-present Team LibreELEC
+#      Copyright (C) 2016 Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,13 +18,12 @@
 
 PKG_NAME="steamcontroller"
 PKG_VERSION="60499dc"
-PKG_SHA256="04a846c6f659fb5efca7747fe78e15c1348b5e0579437bb425f538318289bb80"
-PKG_REV="102"
+PKG_REV="101"
 PKG_ARCH="any"
 PKG_LICENSE="MIT"
 PKG_SITE="https://github.com/ynsta/steamcontroller"
 PKG_URL="https://github.com/ynsta/steamcontroller/archive/$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain Python2 distutilscross:host python-libusb1 enum34 linux:host"
+PKG_DEPENDS_TARGET="toolchain Python distutilscross:host python-libusb1 enum34 linux:host"
 PKG_SECTION="driver"
 PKG_SHORTDESC="A standalone userland driver for the steam controller to be used where steam client can't be installed."
 PKG_LONGDESC="A standalone userland driver for the steam controller to be used where steam client can't be installed."
@@ -51,7 +50,7 @@ addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
     cp -a $PKG_BUILD/build/scripts-2.7/* $ADDON_BUILD/$PKG_ADDON_ID/bin/
 
-  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/lib
+  mkdir	-p $ADDON_BUILD/$PKG_ADDON_ID/lib
     cp -a $PKG_BUILD/build/lib.linux-*-2.7/* $ADDON_BUILD/$PKG_ADDON_ID/lib/
     cp -a $(get_build_dir python-libusb1)/build/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib/
     cp -a $(get_build_dir enum34)/build/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib/
@@ -62,6 +61,6 @@ addon() {
     fi
     cp $(get_build_dir linux)/usr/include/linux/input.h $ADDON_BUILD/$PKG_ADDON_ID/include/linux/
 
-  $TOOLCHAIN/bin/python -Wi -t -B $TOOLCHAIN/lib/$PKG_PYTHON_VERSION/compileall.py $ADDON_BUILD/$PKG_ADDON_ID/lib/ -f 1>/dev/null
+  python -Wi -t -B $TOOLCHAIN/lib/python2.7/compileall.py $ADDON_BUILD/$PKG_ADDON_ID/lib/ -f 1>/dev/null
   find $ADDON_BUILD/$PKG_ADDON_ID/lib/ -name '*.py' -exec rm {} \;
 }

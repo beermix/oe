@@ -1,48 +1,76 @@
 ################################################################################
-#      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2017-present Team LibreELEC
+#      This file is part of OpenELEC - http://www.openelec.tv
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
-#  LibreELEC is free software: you can redistribute it and/or modify
+#  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
 #  the Free Software Foundation, either version 2 of the License, or
 #  (at your option) any later version.
 #
-#  LibreELEC is distributed in the hope that it will be useful,
+#  OpenELEC is distributed in the hope that it will be useful,
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
 #
 #  You should have received a copy of the GNU General Public License
-#  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
+#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
 PKG_NAME="tvheadend"
-PKG_VERSION="1.0"
-PKG_REV="100"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
-PKG_SITE=""
-PKG_URL=""
-PKG_DEPENDS_TARGET="toolchain"
-PKG_SECTION="service"
-PKG_SHORTDESC="Add-on removed"
-PKG_LONGDESC="Add-on removed"
+PKG_VERSION="e5400e2"
+PKG_VERSION_NUMBER="4.0.9"
+PKG_SITE="http://www.tvheadend.org"
+PKG_GIT_URL="https://github.com/tvheadend/tvheadend"
+PKG_DEPENDS_TARGET="toolchain curl libdvbcsa libiconv openssl Python:host"
+PKG_SECTION="service.multimedia"
+PKG_SHORTDESC="Tvheadend: a TV streaming server for Linux"
+PKG_LONGDESC="Tvheadend ($PKG_VERSION_NUMBER): is a TV streaming server for Linux supporting DVB-S/S2, DVB-C, DVB-T/T2, IPTV, SAT>IP and ATSC"
 PKG_AUTORECONF="no"
 
-PKG_ADDON_BROKEN="Tvheadend 4.0 is no longer maintained and has been superseded by Tvheadend 4.2."
-
 PKG_IS_ADDON="yes"
-PKG_ADDON_NAME="Tvheadend Server 4.0"
-PKG_ADDON_TYPE="xbmc.broken"
+PKG_ADDON_NAME="Tvheadend 4.0"
+PKG_ADDON_TYPE="xbmc.service"
 
-make_target() {
-  :
+PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
+                           --arch=$TARGET_ARCH \
+                           --cpu=$TARGET_CPU \
+                           --cc=$CC \
+                           --enable-hdhomerun_client \
+                           --enable-hdhomerun_static \
+                           --disable-avahi \
+                           --disable-libav \
+                           --enable-inotify \
+                           --enable-epoll \
+                           --disable-uriparser \
+                           --enable-tvhcsa \
+                           --enable-bundle \
+                           --enable-dvbcsa \
+                           --disable-dbus_1 \
+                           --python=$TOOLCHAIN/bin/python"
+
+post_unpack() {
+  sed -e 's/VER="0.0.0~unknown"/VER="'$PKG_VERSION_NUMBER' ~ LibreELEC Tvh-addon v'$PKG_ADDON_REPOVERSION'.'$PKG_REV'"/g' -i $PKG_BUILD/support/version
+}
+
+pre_configure_target() {
+# fails to build in subdirs
+  cd $PKG_BUILD
+  rm -rf .$TARGET_NAME
+
+  export CROSS_COMPILE=$TARGET_PREFIX
+  export CFLAGS="$CFLAGS -I$SYSROOT_PREFIX/usr/include/iconv -L$SYSROOT_PREFIX/usr/lib/iconv"
+}
+
+post_make_target() {
+  $CC -O -fbuiltin -fomit-frame-pointer -fPIC -shared -o capmt_ca.so src/extra/capmt_ca.c -ldl
 }
 
 makeinstall_target() {
-  :
+  : # nothing to do here
 }
 
 addon() {
-  :
+  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
+  cp -P $PKG_BUILD/build.linux/tvheadend $ADDON_BUILD/$PKG_ADDON_ID/bin
+  cp -P $PKG_BUILD/capmt_ca.so $ADDON_BUILD/$PKG_ADDON_ID/bin
 }

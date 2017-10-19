@@ -40,7 +40,7 @@ fi
 # start chromium
 LD_PRELOAD=/usr/lib/libGL.so /storage/.kodi/addons/browser.chromium/bin/chromium.bin \
   --user-data-dir=/storage/.kodi/userdata/addon_data/browser.chromium/profile \
-  --test-type $@
+  --disable-smooth-scrolling --disable-gpu-compositing  --ppapi-flash-path=/storage/.kodi/PepperFlash/libpepflashplayer.so --test-type $@
 
 # kill unclutter
 if [ "$HIDE_CURSOR" == "true" ]
