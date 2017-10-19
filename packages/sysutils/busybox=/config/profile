@@ -16,12 +16,34 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-d    /var/lock                 0755 root root - -
-d    /var/media                0755 root root - -
+# parse command line arguments
+  for arg in $(cat /proc/cmdline); do
+    case $arg in
+      debugging)
+        export DEBUG=yes
+        ;;
+      progress)
+        PROGRESS=yes
+        ;;
+    esac
+  done
 
-f    /var/run/utmp             1777 root root - -
-d    /storage/backup           0755 root root - -
-d    /storage/.update          0755 root root - -
-d    /storage/.cache/cores     0755 root root - -
-d    /storage/.cache/services  0755 root root - -
-d    /storage/.config          0755 root root - -
+  if [ -e /storage/.cache/debug.libreelec ] ; then
+    export DEBUG=yes
+  fi
+
+# functions
+  progress() {
+    if test "$PROGRESS" = yes; then
+      logger -s -t Boot "### $1 ###"
+    else
+      logger -t Boot "### $1 ###"
+    fi
+  }
+
+# read config files
+  for config in /etc/profile.d/*; do
+    if [ -f "$config" ] ; then
+      . $config
+    fi
+  done
