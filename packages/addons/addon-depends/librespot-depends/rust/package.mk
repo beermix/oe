@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="rust"
-PKG_VERSION="1.20.0"
+PKG_VERSION="1.18.0"
 PKG_ARCH="any"
 PKG_LICENSE="MIT"
 PKG_SITE="https://www.rust-lang.org"
@@ -25,6 +25,8 @@ PKG_URL=""
 PKG_DEPENDS="toolchain"
 PKG_SECTION="devel"
 PKG_LONGDESC="Rust is a systems programming language that runs blazingly fast, prevents segfaults, and guarantees thread safety."
+
+
 PKG_AUTORECONF="no"
 
 unpack() {

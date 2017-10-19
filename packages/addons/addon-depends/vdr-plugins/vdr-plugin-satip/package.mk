@@ -17,8 +17,7 @@
 ################################################################################
 
 PKG_NAME="vdr-plugin-satip"
-PKG_VERSION="ee88aad"
-PKG_SHA256="340fa7366b63ec6760f41c204a993df336e2f571c2ff6b8cb5517ceccbc0e249"
+PKG_VERSION="ed99cfb"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.saunalahti.fi/~rahrenbe/vdr/satip/"
@@ -27,6 +26,8 @@ PKG_DEPENDS_TARGET="toolchain vdr curl tinyxml"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="VDR-satip: SAT>IP plugin for VDR"
 PKG_LONGDESC="This is an SAT>IP plugin for the Video Disk Recorder (VDR)."
+
+
 PKG_AUTORECONF="no"
 
 make_target() {

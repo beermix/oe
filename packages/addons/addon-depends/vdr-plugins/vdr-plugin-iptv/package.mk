@@ -18,7 +18,6 @@
 
 PKG_NAME="vdr-plugin-iptv"
 PKG_VERSION="2226be2"
-PKG_SHA256="8c8297a6834cc7104901b256a4b31dfb25f3956ce3c4837c7ffb8ddf0507d09b"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.saunalahti.fi/~rahrenbe/vdr/iptv/"
@@ -27,6 +26,8 @@ PKG_DEPENDS_TARGET="toolchain vdr curl"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="vdr-iptv: an IPTV plugin for the Video Disk Recorder (VDR)"
 PKG_LONGDESC="vdr-iptv is an IPTV plugin for the Video Disk Recorder (VDR)"
+
+
 PKG_AUTORECONF="no"
 
 make_target() {

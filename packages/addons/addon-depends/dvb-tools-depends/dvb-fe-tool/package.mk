@@ -19,8 +19,7 @@
 ################################################################################
 
 PKG_NAME="dvb-fe-tool"
-PKG_VERSION="326060c"
-PKG_SHA256="00b6795dd9c8a400e65451883002355c32c854bc22a01647ec9d161819d82c1c"
+PKG_VERSION="1388a04"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://linuxtv.org/"

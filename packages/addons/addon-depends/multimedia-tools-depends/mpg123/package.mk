@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2016-present Team LibreELEC
+#      Copyright (C) 2016 Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,15 +18,14 @@
 
 PKG_NAME="mpg123"
 PKG_VERSION="1.23.6"
-PKG_SHA256="4073d9c60a43872f6f5a3a322f5ea21ab7f0869d2ed25e79c3eb8521fa3c32d4"
-PKG_ARCH="any"
-PKG_LICENSE="LGPLv2"
 PKG_SITE="http://www.mpg123.org/"
 PKG_URL="http://netcologne.dl.sourceforge.net/project/$PKG_NAME/$PKG_NAME/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain alsa-lib SDL2"
 PKG_SECTION="tools"
 PKG_SHORTDESC="mpg123"
 PKG_LONGDESC="A fast MP3 Player"
-PKG_AUTORECONF="no"
+
+
+PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static"
