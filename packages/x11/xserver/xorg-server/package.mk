@@ -47,7 +47,7 @@ else
 fi
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
-                           --disable-silent-rules \
+                           --enable-silent-rules \
                            --disable-strict-compilation \
                            --enable-largefile \
                            --enable-visibility \
