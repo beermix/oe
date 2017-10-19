@@ -124,7 +124,6 @@ configure_host() {
         -DWITH_SYSTEMD=no \
         -DWITH_LIBWRAP=OFF \
         -DWITH_WSREP=OFF \
-        -DSECURITY_HARDENED=0 \
         ..
 }
 
@@ -164,7 +163,6 @@ configure_target() {
         -DWITH_ZLIB=bundled \
         -DWITH_SYSTEMD=no \
         -DWITH_LIBWRAP=OFF \
-        -DSECURITY_HARDENED=1 \
         -DWITH_SSL=$SYSROOT_PREFIX/usr \
         $MARIADB_OPTS \
         ..
@@ -182,9 +180,9 @@ post_makeinstall_target() {
   rm $SYSROOT_PREFIX/usr/lib/libmysqlclient_r.so
  
   rm -rf $INSTALL/usr/share/mysql/support-files
-  rm -rf $INSTALL/usr/share/mysql/test
-  rm -rf $INSTALL/usr/share/mysql/bench
-  rm -rf $INSTALL/usr/data
+#  rm -rf $INSTALL/usr/share/mysql/test
+#  rm -rf $INSTALL/usr/share/mysql/bench
+#  rm -rf $INSTALL/usr/data
 
   if [ "$PKG_MARIADB_SERVER" = "no" ]; then
     rm -rf $INSTALL/usr/bin
