@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,16 +18,18 @@
 
 PKG_NAME="samba"
 PKG_VERSION="4.7.0"
-PKG_SHA256="bd16d169988eb513e685a87e9964a5210482498fa9b3a22aaa8287a061e3c936"
+PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv3+"
-PKG_SITE="https://www.samba.org"
-PKG_URL="https://download.samba.org/pub/samba/stable/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain heimdal:host e2fsprogs Python2 zlib readline popt libaio connman"
-PKG_NEED_UNPACK="$(get_pkg_directory heimdal) $(get_pkg_directory e2fsprogs)"
+PKG_SITE="https://download.samba.org/pub/samba/stable/?C=M;O=D"
+PKG_URL="https://samba.org/samba/ftp/stable/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_DEPENDS_TARGET="toolchain heimdal:host e2fsprogs Python zlib readline popt libaio connman"
+PKG_PRIORITY="optional"
 PKG_SECTION="network"
 PKG_SHORTDESC="samba: The free SMB / CIFS fileserver and client"
 PKG_LONGDESC="Samba is a SMB server that runs on Unix and other operating systems. It allows these operating systems (currently Unix, Netware, OS/2 and AmigaDOS) to act as a file and print server for SMB and CIFS clients. There are many Lan-Manager compatible clients such as LanManager for DOS, Windows for Workgroups, Windows NT, Windows 95, Linux smbfs, OS/2, Pathworks and more."
+
+
 PKG_AUTORECONF="no"
 
 PKG_MAKE_OPTS_TARGET="V=1"
@@ -44,7 +46,6 @@ if [ "$TARGET_ARCH" = x86_64 ]; then
 else
   SMB_AESNI="--accel-aes=none"
 fi
-
 PKG_CONFIGURE_OPTS="--prefix=/usr \
                     --sysconfdir=/etc \
                     --localstatedir=/var \

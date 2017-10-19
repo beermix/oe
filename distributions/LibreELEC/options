@@ -99,7 +99,7 @@
   KODI_AIRTUNES_SUPPORT="no"
 
 # build with libnfs support (mounting nfs shares with KODI) (yes / no)
-  KODI_NFS_SUPPORT="no"
+  KODI_NFS_SUPPORT="yes"
 
 # build with Samba Client support (mounting SAMBA shares with KODI) (yes / no)
   KODI_SAMBA_SUPPORT="no"
@@ -108,10 +108,10 @@
   NFS_SUPPORT="no"
 
 # build with Samba Client support (mounting samba shares via the OS) (yes / no)
-  SAMBA_SUPPORT="no"
+  SAMBA_SUPPORT="yes"
 
 # build and install Samba Server (yes / no)
-  SAMBA_SERVER="no"
+  SAMBA_SERVER="yes"
 
 # build and install SFTP Server (yes / no)
   SFTP_SERVER="yes"

@@ -27,6 +27,7 @@ fi
 SAMBA_WORKGROUP=WORKGROUP
 SAMBA_MINPROTOCOL=SMB2
 SAMBA_MAXPROTOCOL=SMB3
+
 . /storage/.cache/services/samba.conf
 
 # handle external drives
@@ -38,6 +39,7 @@ if [ "$SAMBA_AUTOSHARE" == "true" ] ; then
     fi
   done
 fi
+
 ADD_CONFIG=
 
 # If workgroup is not set, don't set it - who knows, user may know better.

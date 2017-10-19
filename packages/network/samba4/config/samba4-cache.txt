@@ -37,5 +37,5 @@ Checking value of NSIG: "32"
 Checking value of _NSIG: "64"
 Checking value of SIGRTMAX: "64"
 Checking value of SIGRTMIN: "32"
-Checking errno of iconv for illegal multibyte sequence: "84"
+Checking errno of iconv for illegal multibyte sequence: "0"
 
