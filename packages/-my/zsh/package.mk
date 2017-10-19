@@ -5,8 +5,7 @@ PKG_DEPENDS_TARGET="toolchain ncurses pcre readline libcap"
 PKG_SECTION="my"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--bindir=/bin \
-			      --enable-multibyte \
+PKG_CONFIGURE_OPTS_TARGET="--enable-multibyte \
 			      --enable-function-subdirs \
 			      --with-tcsetpgrp \
 			      --enable-pcre \

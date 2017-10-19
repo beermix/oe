@@ -111,8 +111,8 @@ mkdir -p $INSTALL/flash
 mkdir -p $INSTALL/storage
 ln -sf /var/media $INSTALL/media
 ln -sf /usr/lib $INSTALL/lib
-#ln -sf /usr/bin $INSTALL/bin
-#ln -sf /usr/sbin $INSTALL/sbin
+ln -sf /usr/bin $INSTALL/bin
+ln -sf /usr/sbin $INSTALL/sbin
 
 if [ "$TARGET_ARCH" = "x86_64" -o "$TARGET_ARCH" = "powerpc64" ]; then
   ln -s /usr/lib $INSTALL/lib64
