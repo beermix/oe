@@ -32,7 +32,7 @@ PKG_LONGDESC="Heimdal is an implementation of Kerberos 5 (and some more stuff) l
 
 PKG_AUTORECONF="yes"
 
-MAKEFLAGS="-j1"
+#MAKEFLAGS="-j1"
 
 PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared \
                          --without-openldap \

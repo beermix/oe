@@ -31,11 +31,11 @@ PKG_LONGDESC="Distribute is intended to replace Setuptools as the standard metho
 PKG_AUTORECONF="no"
 
 make_host() {
-  python bootstrap.py
+  python2 bootstrap.py
 }
 
 makeinstall_host() {
-  python setup.py install --prefix=$TOOLCHAIN
+  python2 setup.py install --prefix=$TOOLCHAIN
 }
 
 make_target() {
@@ -43,7 +43,7 @@ make_target() {
 }
 
 makeinstall_target() {
-  python setup.py install --root=$INSTALL --prefix=/usr
+  python2 setup.py install --root=$INSTALL --prefix=/usr
 }
 
 post_makeinstall_target() {
