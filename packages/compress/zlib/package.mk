@@ -30,6 +30,7 @@ PKG_LONGDESC="zlib is a general purpose data compression library. All the code i
 
 
 PKG_AUTORECONF="no"
+PKG_USE_NINJA="no"
 
 post_configure_target() {
  ## configure minizip

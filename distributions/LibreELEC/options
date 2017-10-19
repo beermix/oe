@@ -2,7 +2,7 @@
   LTO_SUPPORT="no"
 
 # GOLD (Google Linker) support
-  GOLD_SUPPORT="yes"
+  GOLD_SUPPORT="no"
 
 # Name of the Distro to build (full name, without special characters)
   DISTRONAME="OE"
