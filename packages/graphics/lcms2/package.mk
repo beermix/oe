@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,18 +16,29 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="libinput"
-PKG_VERSION="1.8.3"
+PKG_NAME="lcms2"
+PKG_VERSION="2.8"
+PKG_REV="1"
 PKG_ARCH="any"
-PKG_LICENSE="GPL"
-PKG_SITE="http://www.freedesktop.org/wiki/Software/libinput/"
-PKG_URL="http://www.freedesktop.org/software/libinput/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain systemd libxkbcommon libevdev mtdev"
-PKG_SECTION="wayland"
-PKG_SHORTDESC="libinput is a library to handle input devices in Wayland compositors and to provide a generic X.Org input driver."
-PKG_LONGDESC="libinput is a library to handle input devices in Wayland compositors and to provide a generic X.Org input driver."
+PKG_LICENSE="MIT"
+PKG_SITE="http://www.littlecms.com"
+PKG_URL="http://downloads.sourceforge.net/sourceforge/lcms/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_DEPENDS_TARGET="toolchain zlib"
+PKG_SECTION="devel"
+PKG_SHORTDESC="lcms2: small-footprint color management engine"
+PKG_LONGDESC="lcms2 is a Small-footprint color management engine."
 
-
+PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-tests --disable-libwacom --disable-documentation --disable-debug-gui"
+PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared \
+                           --with-zlib --with-threads \
+                           --without-jpeg --without-tiff"
+
+pre_configure_target() {
+  CFLAGS="$CFLAGS -fPIC"
+}
+
+post_makeinstall_target() {
+  rm -rf $INSTALL/usr/bin
+}
