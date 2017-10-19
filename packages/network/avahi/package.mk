@@ -30,7 +30,7 @@ PKG_LONGDESC="Avahi is a framework for Multicast DNS Service Discovery (mDNS/DNS
 
 PKG_AUTORECONF="yes"
 
-MAKEFLAGS="-j1"
+#MAKEFLAGS="-j1"
 
 PKG_CONFIGURE_OPTS_TARGET="py_cv_mod_gtk_=yes \
                            py_cv_mod_dbus_=yes \
