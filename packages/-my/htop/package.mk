@@ -1,5 +1,5 @@
 PKG_NAME="htop"
-PKG_VERSION="e3f65c8"
+PKG_VERSION="ef34a83"
 PKG_URL="https://github.com/hishamhm/htop/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain ncurses libpciaccess libxml2 udevil"
 PKG_SECTION="debug/tools"
