@@ -17,37 +17,47 @@
 ################################################################################
 
 PKG_NAME="cairo"
-#PKG_VERSION="1.14.10"
-#PKG_URL="http://cairographics.org/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_VERSION="1.15.8"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain zlib expat freetype fontconfig libpng pixman tiff"
+PKG_DEPENDS_TARGET="toolchain zlib expat freetype fontconfig libpng pixman"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="cairo: Multi-platform 2D graphics library"
 PKG_LONGDESC="Cairo is a vector graphics library with cross-device output support. Currently supported output targets include the X Window System and in-memory image buffers. PostScript and PDF file output is planned. Cairo is designed to produce identical output on all output media while taking advantage of display hardware acceleration when available."
 
 
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
-#pre_configure_target() {
-#  export CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
-#}
+if [ "$DISPLAYSERVER" = "x11" ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libXrender libX11 mesa glu"
+  PKG_CAIRO_CONFIG="--x-includes="$SYSROOT_PREFIX/usr/include" \
+                    --x-libraries="$SYSROOT_PREFIX/usr/lib" \
+                    --enable-xlib \
+                    --enable-xlib-xrender \
+                    --enable-gl \
+                    --enable-glx \
+                    --disable-glesv2 \
+                    --disable-egl \
+                    --with-x"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-static \
-			      --disable-lto \
-			      --enable-xlib \
-			      --enable-xlib-xrender \
-			      --enable-gl \
-			      --disable-glesv2 \
-			      --disable-egl \
-			      --with-x \
-			      --enable-glx \
-			      --enable-tee \
-			      --enable-svg \
-			      --enable-ps \
-			      --enable-pdf \
-			      --enable-largefile \
+
+elif [ "$DISPLAYSERVER" = "weston" ]; then
+  PKG_CAIRO_CONFIG="--disable-xlib \
+                    --disable-xlib-xrender \
+                    --disable-gl \
+                    --disable-glx \
+                    --enable-glesv2 \
+                    --enable-egl \
+                    --without-x"
+fi
+
+PKG_CONFIGURE_OPTS_TARGET="$PKG_CAIRO_CONFIG \
+                           --disable-silent-rules \
+                           --enable-shared \
+                           --disable-static \
+                           --disable-gtk-doc \
+                           --enable-largefile \
                            --enable-atomic \
+                           --disable-gcov \
                            --enable-png \
                            --enable-ft \
                            --enable-fc \
@@ -55,5 +65,10 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-static \
                            --enable-pdf \
                            --enable-svg \
                            --enable-pthread \
-			      --enable-gobject \
-			      --disable-gtk-doc"
+                           --disable-full-testing \
+                           --disable-trace \
+                           --enable-interpreter \
+                           --disable-symbol-lookup \
+                           --enable-some-floating-point \
+                           --disable-interpreter \
+                           --with-gnu-ld"

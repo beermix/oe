@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2016-present Team LibreELEC
+#      Copyright (C) 2016 Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,26 +16,22 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="libraw"
-PKG_VERSION="0.18.2"
-PKG_SHA256="ce366bb38c1144130737eb16e919038937b4dc1ab165179a225d5e847af2abc6"
+PKG_NAME="freeglut"
+PKG_VERSION="FG_3_0_0"
 PKG_ARCH="any"
 PKG_LICENSE="LGPL"
-PKG_SITE="http://www.libraw.org/"
-PKG_URL="http://www.libraw.org/data/LibRaw-$PKG_VERSION.tar.gz"
-PKG_SOURCE_DIR="LibRaw-$PKG_VERSION*"
-PKG_DEPENDS_TARGET="toolchain libjpeg-turbo lcms2"
+#PKG_GIT_URL="https://github.com/dcnieho/FreeGLUT"
+PKG_URL="https://github.com/dcnieho/FreeGLUT/archive/${PKG_VERSION}.tar.gz"
+PKG_SOURCE_DIR="FreeGLUT-$PKG_VERSION*"
+PKG_GIT_BRANCH="git_master"
+PKG_DEPENDS_TARGET="toolchain mesa libXi"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="A library for reading RAW files obtained from digital photo cameras (CRW/CR2, NEF, RAF, DNG, and others)"
 PKG_LONGDESC="A library for reading RAW files obtained from digital photo cameras (CRW/CR2, NEF, RAF, DNG, and others)"
+
+
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static \
-                           --disable-shared \
-                           --enable-openmp \
-                           --enable-jpeg \
-                           --disable-jasper \
-                           --enable-lcms \
-                           --disable-examples \
-                           --disable-demosaic-pack-gpl2 \
-                           --disable-demosaic-pack-gpl3"
+PKG_CMAKE_SCRIPT="$PKG_BUILD/freeglut/freeglut/CMakeLists.txt"
+
+PKG_CMAKE_OPTS_TARGET="-DFREEGLUT_BUILD_SHARED_LIBS=1 -DFREEGLUT_BUILD_STATIC_LIBS=0"

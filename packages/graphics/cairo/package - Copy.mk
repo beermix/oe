@@ -17,11 +17,12 @@
 ################################################################################
 
 PKG_NAME="cairo"
-#PKG_VERSION="1.14.10"
-#PKG_URL="http://cairographics.org/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_VERSION="1.15.8"
-PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain zlib expat freetype fontconfig libpng pixman tiff"
+PKG_VERSION="1.14.10"
+PKG_ARCH="any"
+PKG_LICENSE="LGPL"
+PKG_SITE="https://www.cairographics.org/releases/?C=M;O=D"
+PKG_URL="http://cairographics.org/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_DEPENDS_TARGET="toolchain zlib freetype fontconfig libpng pixman libXrender libX11 mesa glu"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="cairo: Multi-platform 2D graphics library"
 PKG_LONGDESC="Cairo is a vector graphics library with cross-device output support. Currently supported output targets include the X Window System and in-memory image buffers. PostScript and PDF file output is planned. Cairo is designed to produce identical output on all output media while taking advantage of display hardware acceleration when available."
@@ -29,31 +30,40 @@ PKG_LONGDESC="Cairo is a vector graphics library with cross-device output suppor
 
 PKG_AUTORECONF="no"
 
-#pre_configure_target() {
-#  export CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
-#}
+pre_configure_target() {
+#  CFLAGS="$CFLAGS -fPIC -DPIC"
+#  CXXFLAGS="$CXXFLAGS -fPIC -DPIC"
+  CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
+}
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-static \
-			      --disable-lto \
+
+PKG_CONFIGURE_OPTS_TARGET="--x-includes="$SYSROOT_PREFIX/usr/include" \
+			      --x-libraries="$SYSROOT_PREFIX/usr/lib" \
 			      --enable-xlib \
 			      --enable-xlib-xrender \
 			      --enable-gl \
-			      --disable-glesv2 \
-			      --disable-egl \
-			      --with-x \
 			      --enable-glx \
-			      --enable-tee \
-			      --enable-svg \
-			      --enable-ps \
-			      --enable-pdf \
-			      --enable-largefile \
+			      --with-x--enable-silent-rules \
+                           --enable-shared \
+                           --with-pic \
+                           --disable-gtk-doc \
+                           --enable-largefile \
                            --enable-atomic \
+                           --disable-gcov \
+                           --disable-valgrind \
+                           --disable-qt \
                            --enable-png \
                            --enable-ft \
                            --enable-fc \
                            --enable-ps \
                            --enable-pdf \
                            --enable-svg \
+                           --disable-test-surfaces \
+                           --disable-tee \
                            --enable-pthread \
-			      --enable-gobject \
-			      --disable-gtk-doc"
+                           --disable-full-testing \
+                           --disable-trace \
+                           --enable-interpreter \
+                           --disable-symbol-lookup \
+                           --enable-some-floating-point \
+                           --with-gnu-ld"
