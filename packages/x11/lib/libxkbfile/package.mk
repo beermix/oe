@@ -31,4 +31,3 @@ PKG_LONGDESC="Libxkbfile provides an interface to read and manipulate descriptio
 
 PKG_AUTORECONF="no"
 
-

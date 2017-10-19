@@ -31,4 +31,4 @@ PKG_LONGDESC="The Xtst Library"
 
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--without-xmlto"
+PKG_CONFIGURE_OPTS_TARGET="--with-gnu-ld --without-xmlto"
