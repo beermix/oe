@@ -17,13 +17,13 @@
 ################################################################################
 
 PKG_NAME="freetype"
-PKG_VERSION="2.6.5"
-PKG_SHA256="e20a6e1400798fd5e3d831dd821b61c35b1f9a6465d6b18a53a9df4cf441acf0"
+PKG_VERSION="2.8.1"
+PKG_SHA256="e5435f02e02d2b87bb8e4efdcaa14b1f78c9cf3ab1ed80f94b6382fb6acc7d78"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.freetype.org"
 PKG_URL="http://download.savannah.gnu.org/releases/freetype/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain zlib libpng"
+PKG_DEPENDS_TARGET="toolchain zlib libpng bzip2"
 PKG_SECTION="print"
 PKG_SHORTDESC="freetype: TrueType font rendering library"
 PKG_LONGDESC="The FreeType engine is a free and portable TrueType font rendering engine. It has been developed to provide TT support to a great variety of platforms and environments."
