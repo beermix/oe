@@ -43,6 +43,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --enable-bind-now \
                            --with-elf \
                            --enable-stack-protector=strong \
+                           --enable-stackguard-randomization \
                            --with-tls \
                            --with-__thread \
                            --with-binutils=$BUILD/toolchain/bin \
