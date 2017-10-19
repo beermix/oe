@@ -1,0 +1,7 @@
+# /etc/shells: valid login shells
+/usr/bin/sh
+/usr/bin/bash
+/usr/bin/rbash
+/usr/bin/tmux
+/usr/bin/screen
+/usr/bin/zsh

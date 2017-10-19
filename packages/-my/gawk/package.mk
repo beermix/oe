@@ -3,10 +3,9 @@ PKG_VERSION="4.1.4"
 PKG_URL="http://ftpmirror.gnu.org/gawk/gawk-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain readline ncurses"
 PKG_SECTION="my"
-
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--without-selinux \
+PKG_CONFIGURE_OPTS_TARGET="--bindir=/bin --without-selinux \
 			      --disable-debug \
 			      --enable-threads=posix"
 

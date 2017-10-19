@@ -6,4 +6,4 @@ PKG_SECTION="my"
 
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-threads=posix"
+PKG_CONFIGURE_OPTS_TARGET="--bindir=/bin --enable-threads=posix"

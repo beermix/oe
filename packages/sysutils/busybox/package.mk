@@ -97,7 +97,7 @@ configure_target() {
     cp $BUSYBOX_CFG_FILE_TARGET .config
 
     # set install dir
-    sed -i -e "s|^CONFIG_PREFIX=.*$|CONFIG_PREFIX=\"$INSTALL/usr\"|" .config
+    sed -i -e "s|^CONFIG_PREFIX=.*$|CONFIG_PREFIX=\"$INSTALL\"|" .config
 
     if [ ! "$DEVTOOLS" = yes ]; then
       sed -i -e "s|^CONFIG_DEVMEM=.*$|# CONFIG_DEVMEM is not set|" .config
@@ -134,7 +134,7 @@ configure_init() {
     cp $BUSYBOX_CFG_FILE_INIT .config
 
     # set install dir
-    sed -i -e "s|^CONFIG_PREFIX=.*$|CONFIG_PREFIX=\"$INSTALL/usr\"|" .config
+    sed -i -e "s|^CONFIG_PREFIX=.*$|CONFIG_PREFIX=\"$INSTALL\"|" .config
 
     # optimize for size
     CFLAGS=`echo $CFLAGS | sed -e "s|-Ofast|-Os|"`
@@ -150,8 +150,8 @@ configure_init() {
 
 
 makeinstall_host() {
-  mkdir -p $TOOLCHAIN/bin
-    cp -R $PKG_BUILD/.install_host/bin/* $TOOLCHAIN/bin
+  mkdir -p $TOOLCHAIN/
+    cp -R $PKG_BUILD/.install_host/* $TOOLCHAIN/
 }
 
 makeinstall_target() {
@@ -174,7 +174,7 @@ makeinstall_target() {
     #rm $INSTALL/usr/bin/sh
     #rm $INSTALL/usr/bin/hostname
     #rm $INSTALL/usr/sbin/ip
-    rm $INSTALL/usr/bin/bash
+    rm $INSTALL/bin/bash
 
   mkdir -p $INSTALL/etc
     cp $PKG_DIR/config/profile $INSTALL/etc
@@ -204,7 +204,7 @@ makeinstall_target() {
 post_install() {
   ROOT_PWD="`$TOOLCHAIN/bin/cryptpw -m sha512 $ROOT_PASSWORD`"
 
-  echo "chmod 4755 $INSTALL/usr/bin/busybox" >> $FAKEROOT_SCRIPT
+  echo "chmod 4755 $INSTALL/bin/busybox" >> $FAKEROOT_SCRIPT
   echo "chmod 000 $INSTALL/etc/shadow" >> $FAKEROOT_SCRIPT
 
   add_user root "$ROOT_PWD" 0 0 "Root User" "/storage" "/bin/sh"
@@ -235,8 +235,8 @@ post_install() {
 
 makeinstall_init() {
   mkdir -p $INSTALL/bin
-    ln -sf busybox $INSTALL/usr/bin/sh
-    chmod 4755 $INSTALL/usr/bin/busybox
+    ln -sf busybox $INSTALL/bin/sh
+    chmod 4755 $INSTALL/bin/busybox
 
   mkdir -p $INSTALL/etc
     touch $INSTALL/etc/fstab

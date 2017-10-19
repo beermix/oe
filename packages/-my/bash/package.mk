@@ -2,10 +2,9 @@ PKG_NAME="bash"
 PKG_VERSION="bc00779"
 PKG_URL="https://github.com/bminor/bash/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain ncurses readline"
-
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--with-curses \
+PKG_CONFIGURE_OPTS_TARGET="--bindir=/bin --with-curses \
 			      --enable-readline \
 			      --without-bash-malloc \
 			      --with-installed-readline \
