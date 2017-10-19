@@ -17,8 +17,7 @@
 ################################################################################
 
 PKG_NAME="libxkbcommon"
-PKG_VERSION="0.6.1"
-PKG_SHA256="5b0887b080b42169096a61106661f8d35bae783f8b6c58f97ebcd3af83ea8760"
+PKG_VERSION="0.7.1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://xkbcommon.org"
@@ -27,6 +26,8 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="wayland"
 PKG_SHORTDESC="xkbcommon: a library to handle keyboard descriptions"
 PKG_LONGDESC="xkbcommon is a library to handle keyboard descriptions, including loading them from disk, parsing them and handling their state. It's mainly meant for client toolkits, window systems, and other system applications; currently that includes Wayland, kmscon, GTK+, Qt, Clutter, and more. It is also used by some XCB applications for proper keyboard support."
+
+
 PKG_AUTORECONF="no"
 
 if [ "$DISPLAYSERVER" = "x11" ]; then
