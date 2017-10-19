@@ -134,7 +134,7 @@ if [ ! -f $STAMP ]; then
     if [ "$DEBUG" = "yes" ]; then
       CMAKE_BUILD_TYPE="Debug"
     else
-      CMAKE_BUILD_TYPE="MinSizeRel"
+      CMAKE_BUILD_TYPE="Release"
     fi
 
     if [ "$PKG_USE_NINJA" = "no" ]; then
