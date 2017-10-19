@@ -49,14 +49,27 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-ld=default \
                          --enable-lto \
                          --enable-nls \
-                         --enable-poison-system-directories"
+                         --enable-poison-system-directories \
+                         MAKEINFO=true LDFLAGS=-s"
 
-#pre_configure_host() {
-#  unset CPPFLAGS
-#  unset CFLAGS
-#  unset CXXFLAGS
-#  unset LDFLAGS
-#}
+pre_configure_host() {
+  unset CPPFLAGS
+  unset CFLAGS
+  unset CXXFLAGS
+  unset LDFLAGS
+}
+
+make_host() {
+  make configure-host
+  make
+}
+
+make_target() {
+  make configure-host
+  make -C libiberty
+  make -C bfd
+  make -C binutils ar
+}
 
 makeinstall_host() {
   cp -v ../include/libiberty.h $SYSROOT_PREFIX/usr/include
