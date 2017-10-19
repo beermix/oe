@@ -1,3 +1,5 @@
+#!/bin/sh
+
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
 #      Copyright (C) 2009-2014 Stephan Raue (stephan@openelec.tv)
@@ -16,34 +18,9 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-# parse command line arguments
-  for arg in $(cat /proc/cmdline); do
-    case $arg in
-      debugging)
-        export DEBUG=yes
-        ;;
-      progress)
-        PROGRESS=yes
-        ;;
-    esac
-  done
+#
+# wrapper for curl, posting to the sprunge.us pastebin
+# reads from stdin if called without an argument
+#
 
-  if [ -e /storage/.cache/debug.libreelec ] ; then
-    export DEBUG=yes
-  fi
-
-# functions
-  progress() {
-    if test "$PROGRESS" = yes; then
-      logger -s -t Boot "### $1 ###"
-    else
-      logger -t Boot "### $1 ###"
-    fi
-  }
-
-# read config files
-  for config in /etc/profile.d/*; do
-    if [ -f "$config" ] ; then
-      . $config
-    fi
-  done
+cat "$@" | curl -F 'sprunge=<-' http://sprunge.us
