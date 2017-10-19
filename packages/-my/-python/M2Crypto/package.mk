@@ -21,11 +21,11 @@ pre_configure_target() {
 }
 
 make_target() {
-  python setup.py build build_ext --openssl=$LIB_PREFIX
+  python2 setup.py build build_ext --openssl=$LIB_PREFIX
 }
 
 makeinstall_target() {
-  python setup.py install --root=$INSTALL --prefix=/usr build_ext --openssl=$LIB_PREFIX
+  python2 setup.py install --root=$INSTALL --prefix=/usr build_ext --openssl=$LIB_PREFIX
 }
 
 post_makeinstall_target() {

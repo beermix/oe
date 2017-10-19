@@ -13,11 +13,11 @@ pre_configure_target() {
 }
 
 make_target() {
-  python setup.py build --cross-compile
+  python2 setup.py build --cross-compile
 }
 
 makeinstall_target() {
-  python setup.py install --root=$INSTALL --prefix=/usr
+  python2 setup.py install --root=$INSTALL --prefix=/usr
 }
 
 post_makeinstall_target() {
