@@ -34,7 +34,6 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            ac_cv_sys_symbol_underscore=no \
                            --enable-asm \
                            --with-gnu-ld \
-                           --disable-padlock-support \
                            --with-libgpg-error-prefix=$SYSROOT_PREFIX/usr \
                            --disable-doc"
 
