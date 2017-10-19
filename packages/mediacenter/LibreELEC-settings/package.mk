@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="LibreELEC-settings"
-PKG_VERSION="12c5f24"
+PKG_VERSION="85b86d4"
 PKG_ARCH="any"
 PKG_LICENSE="prop."
 PKG_SITE="https://libreelec.tv"
@@ -31,7 +31,7 @@ PKG_LONGDESC="LibreELEC-settings: is a settings dialog for LibreELEC"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_MAKE_OPTS_TARGET="DISTRONAME=$DISTRONAME ROOT_PASSWORD=$ROOT_PASSWORD"
+PKG_MAKE_OPTS_TARGET="DISTRONAME=LibreELEC ROOT_PASSWORD=$ROOT_PASSWORD"
 
 if [ "$DISPLAYSERVER" = "x11" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET setxkbmap"

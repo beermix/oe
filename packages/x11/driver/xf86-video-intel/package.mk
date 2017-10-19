@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="xf86-video-intel"
-PKG_VERSION="04b4f3b"
+PKG_VERSION="4798e18"
 PKG_ARCH="x86_64"
 PKG_LICENSE="OSS"
 PKG_SITE="http://intellinuxgraphics.org/"
