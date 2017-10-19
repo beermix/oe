@@ -6,7 +6,4 @@ PKG_SECTION="tools"
 PKG_USE_CMAKE="no"
 PKG_AUTORECONF="yes"
 
-
-
-
 PKG_CONFIGURE_OPTS_TARGET="--disable-dependency-tracking --enable-silent-rules --with-pcre --disable-shared --enable-static"
