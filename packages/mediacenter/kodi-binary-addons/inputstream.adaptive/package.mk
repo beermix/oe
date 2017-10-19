@@ -27,7 +27,6 @@ PKG_SHORTDESC="inputstream.adaptive"
 PKG_LONGDESC="inputstream.adaptive"
 
 PKG_IS_ADDON="yes"
-PKG_USE_NINJA="no"
 
 export CCACHE_DISABLE=1
 
