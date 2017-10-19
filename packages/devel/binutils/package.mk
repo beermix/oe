@@ -48,9 +48,6 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-plugins \
                          --enable-ld=default \
                          --enable-lto \
-                         --enable-threads \
-                         --with-pic \
-                         --enable-shared \
                          --disable-nls \
                          --enable-poison-system-directories \
                          MAKEINFO=true LDFLAGS=-s"
