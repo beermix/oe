@@ -127,9 +127,7 @@ if [ ! -f $STAMP ]; then
                            --libdir=/usr/lib \
                            --libexecdir=/usr/lib \
                            --localstatedir=/var \
-                           --enable-silent-rules \
-                           --disable-static \
-                           --enable-shared"
+                           --enable-silent-rules"
 
     if [ "$DEBUG" = "yes" ]; then
       CMAKE_BUILD_TYPE="Debug"
