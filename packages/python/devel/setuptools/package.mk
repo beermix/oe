@@ -31,24 +31,9 @@ PKG_LONGDESC="Distribute is intended to replace Setuptools as the standard metho
 PKG_AUTORECONF="no"
 
 make_host() {
-  python2 bootstrap.py
+  python bootstrap.py
 }
 
 makeinstall_host() {
-  python2 setup.py install --prefix=$TOOLCHAIN
-}
-
-make_target() {
-  : # nothing todo
-}
-
-makeinstall_target() {
-  python2 setup.py install --root=$INSTALL --prefix=/usr
-}
-
-post_makeinstall_target() {
-  find $INSTALL/usr/lib -name "*.py" -exec rm -rf "{}" ";"
-  rm -rf $INSTALL/usr/bin
-  rm -rf $INSTALL/usr/lib/python*/site-packages/*/tests
-  rm -rf $INSTALL/usr/lib/python*/site-packages/*.egg-info
+  python setup.py install --prefix=$TOOLCHAIN
 }
