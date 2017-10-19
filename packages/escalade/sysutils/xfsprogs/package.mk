@@ -27,7 +27,7 @@ PKG_DEPENDS_TARGET="toolchain util-linux libedit"
 PKG_DEPENDS_INIT="xfsprogs"
 PKG_SECTION="tools"
 PKG_SHORTDESC="xfsprogs: Utilities for use with the xfs filesystem"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \

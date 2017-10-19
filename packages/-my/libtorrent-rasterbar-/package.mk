@@ -6,7 +6,7 @@ PKG_GIT_URL="https://github.com/arvidn/libtorrent"
 PKG_DEPENDS_TARGET="toolchain openssl expat boost libsigc++"
 PKG_SECTION="devel"
 PKG_USE_CMAKE="no"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 pre_configure_target() {

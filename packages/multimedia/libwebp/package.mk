@@ -4,7 +4,7 @@ PKG_GIT_URL="https://chromium.googlesource.com/webm/libwebp"
 PKG_DEPENDS_TARGET="toolchain intel-vaapi-driver libva"
 PKG_PRIORITY="optional"
 PKG_SECTION="multimedia"
-PKG_IS_ADDON="no"
+
 PKG_USE_CMAKE="no"
 PKG_AUTORECONF="yes"
 

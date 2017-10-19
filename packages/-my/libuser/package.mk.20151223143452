@@ -26,7 +26,7 @@ PKG_URL="https://copy.com/tw3DpZjmhVNP/zsh-5.2.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python sqlite ncurses"
 
 PKG_SECTION="my"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"
 
 pre_configure_target() {

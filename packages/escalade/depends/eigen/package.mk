@@ -24,7 +24,7 @@ PKG_DEPENDS_TARGET="toolchain cmake:host"
 PKG_SECTION="depends"
 PKG_SHORTDESC="eigen c++ headers"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 post_unpack() {

@@ -6,7 +6,7 @@ PKG_SECTION="audio"
 PKG_SHORTDESC="DTS Coherent Acoustics decoder with support for HD extensions"
 PKG_LONGDESC="DTS Coherent Acoustics decoder with support for HD extensions"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 make_target() {

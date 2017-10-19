@@ -27,7 +27,7 @@ PKG_SECTION=""
 PKG_SHORTDESC="Gamestream client for embedded systems"
 PKG_LONGDESC="Moonlight Embedded is an open source implementation of NVIDIA's GameStream, as used by the NVIDIA Shield, but built for Linux"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 FREESCALE_V4L_INCLUDE=""

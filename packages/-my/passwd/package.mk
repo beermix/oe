@@ -26,7 +26,7 @@ PKG_URL="https://copy.com/Vq7oa4NS9hj1/passwd-0.79.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain Python sqlite ncurses"
 
 PKG_SECTION="my"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 pre_configure_target() {

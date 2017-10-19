@@ -14,7 +14,7 @@ PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"
 PKG_SECTION="xmedia/torrent"
 PKG_SHORTDESC="A cross-platform process and system utilities module for Python2"
 PKG_LONGDESC="psutil is a cross-platform library for retrieving information onrunning processes and system utilization (CPU, memory, disks, network)in Python."
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 pre_configure_target() {

@@ -22,7 +22,7 @@ PKG_SITE="http://plex.tv"
 PKG_SECTION="service"
 PKG_SHORTDESC="Plex Media Server"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 case $ARCH in

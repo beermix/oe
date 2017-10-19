@@ -26,7 +26,7 @@ PKG_SHORTDESC="librelp"
 PKG_LONGDESC="librelp"
 
 PKG_AUTORECONF="no"
-PKG_IS_ADDON="no"
+
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-tls \
                            --enable-static --disable-shared \

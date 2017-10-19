@@ -25,7 +25,7 @@ PKG_SECTION="tools"
 PKG_SHORTDESC="vim: VI IMproved"
 PKG_LONGDESC="Vim is a highly configurable text editor built to enable efficient text editing. It is an improved version of the vi editor distributed with most UNIX systems."
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="vim_cv_toupper_broken=no \

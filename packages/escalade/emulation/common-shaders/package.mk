@@ -26,7 +26,7 @@ PKG_SECTION="emulation"
 PKG_SHORTDESC="Collection of commonly used shaders"
 
 PKG_AUTORECONF="no"
-PKG_IS_ADDON="no"
+
 
 pre_build_target() {
   cd $PKG_BUILD

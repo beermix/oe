@@ -26,7 +26,7 @@ PKG_SECTION="system"
 PKG_SHORTDESC="xxd - make a hexdump or do the reverse"
 PKG_LONGDESC="xxd - make a hexdump or do the reverse"
 PKG_MAINTAINER="vpeter"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 make_target() {

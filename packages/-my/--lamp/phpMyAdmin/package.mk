@@ -32,7 +32,7 @@ PKG_SECTION="tools"
 PKG_SHORTDESC="phpMyAdmin is a tool to handle the administration of MySQL databases."
 PKG_LONGDESC="phpMyAdmin is a free software tool written in PHP, intended to handle the administration of MySQL over the Web."
 PKG_MAINTAINER="ultraman"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 configure_target() {

@@ -27,7 +27,7 @@ PKG_SECTION="virtual"
 PKG_SHORTDESC="Mediacenter: Metapackage"
 PKG_LONGDESC=""
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 if [ "$MEDIACENTER" = "kodi" ]; then

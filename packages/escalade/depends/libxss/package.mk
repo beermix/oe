@@ -24,7 +24,7 @@ PKG_DEPENDS_TARGET="toolchain util-macros libXext scrnsaverproto"
 PKG_SECTION="depends"
 PKG_SHORTDESC="X11 Screen Saver extension library"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"
 
 post_unpack() {

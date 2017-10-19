@@ -15,7 +15,7 @@ PKG_PRIORITY="optional"
 PKG_SECTION="xmedia/tvservice"
 PKG_SHORTDESC="TvGuideNG is a highly customizable 2D EPG viewer plugin for Skindesigner Skins"
 PKG_LONGDESC="TvGuideNG is a highly customizable 2D EPG viewer plugin for Skindesigner Skins."
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 PKG_LOCALE_INSTALL="yes"
 

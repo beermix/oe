@@ -26,7 +26,7 @@ PKG_SOURCE_DIR="nmon-$PKG_VERSION*"
 PKG_DEPENDS_TARGET="toolchain netbsd-curses"
 PKG_SECTION="tools"
 PKG_SHORTDESC="Systems administrator, tuner, benchmark tool gives you a huge amount of important performance information in one go"
-PKG_IS_ADDON="no"
+
 
 PKG_AUTORECONF="no"
 

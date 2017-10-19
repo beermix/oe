@@ -25,7 +25,7 @@ PKG_SECTION="tools"
 PKG_SHORTDESC="squeezelite"
 PKG_LONGDESC="A client for the Logitech Media Server"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 pre_make_target() {

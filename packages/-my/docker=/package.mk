@@ -4,7 +4,7 @@ PKG_GIT_URL="git://git.code.sf.net/p/aufs/aufs-util"
 PKG_GIT_BRANCH="aufs4.x-rcN"
 #PKG_SOURCE_DIR="aufs2-util"
 PKG_SECTION="devel"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 pre_configure_target() {

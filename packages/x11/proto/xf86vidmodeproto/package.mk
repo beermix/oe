@@ -28,7 +28,7 @@ PKG_SECTION="x11/proto"
 PKG_SHORTDESC="xf86vidmodeproto: XF86VidMode extension headers"
 PKG_LONGDESC="XF86VidMode extension headers"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 # package specific configure options

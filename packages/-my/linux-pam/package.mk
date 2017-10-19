@@ -5,7 +5,7 @@ PKG_DEPENDS_HOST="toolchain linux"
 PKG_DEPENDS_TARGET="toolchain linux"
 PKG_SECTION="devel"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"
 
 

@@ -26,7 +26,7 @@ PKG_SECTION="tools"
 PKG_SHORTDESC="rufus: Create bootable USB drives the easy way "
 PKG_LONGDESC="Rufus is a utility that helps format and create bootable USB flash drives, such as USB keys/pendrives, memory sticks, etc."
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 unpack() {

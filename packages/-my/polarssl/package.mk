@@ -4,7 +4,7 @@ PKG_URL="https://tls.mbed.org/code/releases/polarssl-$PKG_VERSION-gpl.tgz"
 PKG_DEPENDS_TARGET="toolchain zlib"
 
 PKG_SECTION="my"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 PKG_CMAKE_OPTS_TARGET="-DENABLE_PROGRAMS=OFF \

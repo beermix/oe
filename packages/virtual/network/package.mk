@@ -27,7 +27,7 @@ PKG_SECTION="virtual"
 PKG_SHORTDESC="network: Metapackage for packages to install network support"
 PKG_LONGDESC="network: Metapackage for various packages to install network support"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 if [ "$BLUETOOTH_SUPPORT" = "yes" ]; then

@@ -3,7 +3,7 @@ PKG_VERSION="27b1788"
 PKG_GIT_URL="https://github.com/darkk/redsocks"
 PKG_DEPENDS_TARGET="toolchain openssl libevent"
 PKG_SECTION="my"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 make_target() {

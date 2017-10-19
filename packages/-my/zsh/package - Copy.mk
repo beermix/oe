@@ -5,7 +5,7 @@ PKG_URL="https://sourceforge.net/projects/zsh/files/zsh/${PKG_VERSION}/zsh-${PKG
 PKG_DEPENDS_TARGET="toolchain libcap pcre gawk readline gdbm libsigc++ jansson which valgrind"
 
 PKG_SECTION="my"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"
 
 pre_configure_target() {

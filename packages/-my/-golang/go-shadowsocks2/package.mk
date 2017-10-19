@@ -3,7 +3,7 @@ PKG_VERSION="aced562"
 PKG_GIT_URL="https://github.com/shadowsocks/go-shadowsocks2"
 PKG_DEPENDS_TARGET="toolchain go:host"
 PKG_SECTION="golang"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 

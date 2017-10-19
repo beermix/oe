@@ -14,7 +14,7 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="xmedia/tools"
 PKG_SHORTDESC="scan-m3u: scan IPTV channels for VDR"
 PKG_LONGDESC="scan-m3u: scan IPTV channels for VDR."
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 pre_configure_target() {

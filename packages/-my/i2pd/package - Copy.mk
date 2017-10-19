@@ -4,7 +4,7 @@ PKG_URL="https://dl.dropboxusercontent.com/s/qfsu9bwzbpm41oe/i2pd-90.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain boost zlib libressl miniupnpc"
 
 PKG_SECTION="my"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 configure_target() {

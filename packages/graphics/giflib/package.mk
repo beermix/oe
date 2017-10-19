@@ -29,7 +29,7 @@ PKG_SECTION="graphics"
 PKG_SHORTDESC="giflib: giflib service library"
 PKG_LONGDESC="giflib: giflib service library"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_HOST="--disable-shared --enable-static"

@@ -30,7 +30,7 @@ PKG_SECTION="security"
 PKG_SHORTDESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"
 PKG_LONGDESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \

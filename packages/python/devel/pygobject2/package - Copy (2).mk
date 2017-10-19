@@ -28,7 +28,7 @@ PKG_SECTION="python/devel"
 PKG_SHORTDESC="This archive contains bindings for the GLib, and GObject, to be used in Python."
 PKG_LONGDESC="This archive contains bindings for the GLib, and GObject, to be used in Python."
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--with-python=$TOOLCHAIN/bin/python2.7"

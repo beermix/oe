@@ -16,7 +16,7 @@ PKG_PRIORITY="optional"
 PKG_SECTION="xmedia/tvservice"
 PKG_SHORTDESC="VDR plugin that displays system informations"
 PKG_LONGDESC="VDR plugin that displays system informations."
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 PKG_LOCALE_INSTALL="yes"
 

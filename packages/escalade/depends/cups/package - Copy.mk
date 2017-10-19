@@ -24,7 +24,7 @@ PKG_DEPENDS_TARGET="toolchain avahi zlib openssl"
 PKG_SECTION="depends"
 PKG_SHORTDESC="CUPS printing system"
 PKG_LONGDESC="CUPS is the standards-based, open source printing system developed by Apple Inc. for macOS® and other UNIX®-like operating sysms"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 

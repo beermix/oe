@@ -4,7 +4,7 @@ PKG_URL="http://download.savannah.gnu.org/releases/lzip/plzip/${PKG_NAME}-${PKG_
 PKG_DEPENDS_TARGET="toolchain lzo tar lzd"
 
 PKG_SECTION="network"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 

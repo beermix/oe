@@ -23,7 +23,7 @@ PKG_GIT_URL="https://github.com/axibase/nmon"
 PKG_DEPENDS_TARGET="toolchain ncurses"
 PKG_SECTION="tools"
 PKG_SHORTDESC="Systems administrator, tuner, benchmark tool gives you a huge amount of important performance information in one go"
-PKG_IS_ADDON="no"
+
 
 PKG_AUTORECONF="no"
 

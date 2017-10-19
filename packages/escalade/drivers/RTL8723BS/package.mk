@@ -28,7 +28,7 @@ PKG_NEED_UNPACK="$LINUX_DEPENDS"
 PKG_SECTION="driver"
 PKG_SHORTDESC="Realtek RTL8723BS Linux driver"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 pre_make_target() {

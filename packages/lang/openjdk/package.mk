@@ -38,7 +38,7 @@ PKG_PRIORITY="optional"
 PKG_SECTION="security"
 PKG_SHORTDESC="Open JDK"
 PKG_LONGDESC="Open JDK"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 unpack() {

@@ -24,7 +24,7 @@ PKG_DEPENDS_TARGET="toolchain gtk3 libXcomposite libXcursor libxss nss gconf scr
 PKG_SECTION="apps"
 PKG_SHORTDESC="Google Chrome browser"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 make_target() {

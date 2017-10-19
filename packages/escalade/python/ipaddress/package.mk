@@ -25,7 +25,7 @@ PKG_URL="http://pypi.python.org/packages/source/i/ipaddress/$PKG_NAME-$PKG_VERSI
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"
 PKG_SECTION="python/devel"
 PKG_SHORTDESC="IPv4/IPv6 manipulation library"
-PKG_IS_ADDON="no"
+
 
 PKG_AUTORECONF="no"
 

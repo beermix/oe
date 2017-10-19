@@ -24,6 +24,6 @@ PKG_SOURCE_DIR="soundtouch"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="depends"
 PKG_SHORTDESC="Audio processing library"
-PKG_IS_ADDON="no"
+
 
 PKG_AUTORECONF="yes"

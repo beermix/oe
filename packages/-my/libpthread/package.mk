@@ -4,7 +4,7 @@ PKG_URL="https://dl.dropboxusercontent.com/s/psdgktqf7hzehlv/libpthread-2.tar.xz
 PKG_DEPENDS_TARGET="toolchain"
 
 PKG_SECTION="network"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"
 
 

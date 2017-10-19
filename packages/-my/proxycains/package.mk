@@ -7,7 +7,7 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="web"
 PKG_SHORTDESC="hiawatha"
 PKG_LONGDESC="An advanced and secure webserver for Unix"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 pre_configure_target() {

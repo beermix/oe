@@ -3,7 +3,7 @@ PKG_VERSION="2.92"
 PKG_URL="https://dl.dropboxusercontent.com/s/cvzxz7ojqw3il3y/transmission-2.92.tar.xz"
 PKG_DEPENDS_TARGET="toolchain zlib openssl miniupnpc"
 PKG_SECTION="my"
-PKG_IS_ADDON="no"
+
 PKG_USE_CMAKE="yes"
 PKG_AUTORECONF="no"
 

@@ -33,7 +33,7 @@ PKG_SECTION="web"
 PKG_SHORTDESC="php: Scripting language especially suited for Web development"
 PKG_LONGDESC="PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML."
 PKG_MAINTAINER="ultraman"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"
 
 #export MAKEFLAGS=-j1

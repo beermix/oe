@@ -30,7 +30,7 @@ PKG_SECTION="emulation"
 PKG_SHORTDESC="ARM optimized PCSX fork"
 PKG_LONGDESC="PCSX ReARMed is yet another PCSX fork based on the PCSX-Reloaded project, which itself contains code from PCSX, PCSX-df and PCSX-Revolution."
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 configure_target() {

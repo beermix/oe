@@ -4,7 +4,7 @@ PKG_URL="https://github.com/jedisct1/unbound/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain openssl libevent expat"
 
 PKG_SECTION="my"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"
 
 pre_configure_target() {

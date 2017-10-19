@@ -15,7 +15,7 @@ PKG_PRIORITY="optional"
 PKG_SECTION="xmedia/tvservice"
 PKG_SHORTDESC="VDR -- epgsearch plugin"
 PKG_LONGDESC="vdr-epgsearch is a plugin for VDR, the Video Disk Recorder."
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 PKG_LOCALE_INSTALL="yes"
 

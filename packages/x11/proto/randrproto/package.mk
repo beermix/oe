@@ -28,7 +28,7 @@ PKG_SECTION="x11/proto"
 PKG_SHORTDESC="randrproto: Randr extension headers"
 PKG_LONGDESC="Randr extension headers"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 # package specific configure options

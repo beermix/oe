@@ -2,8 +2,8 @@ PKG_NAME="chrpath"
 PKG_VERSION="0.16"
 PKG_URL="https://dl.dropboxusercontent.com/s/toh840hns83gr4b/chrpath-0.16.tar.xz"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_IS_ADDON="no"
-PKG_IS_ADDON="no"
+
+
 PKG_AUTORECONF="yes"
 
 

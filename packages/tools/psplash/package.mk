@@ -29,7 +29,7 @@ PKG_SECTION="tools"
 PKG_SHORTDESC="psplash: Boot splash screen based on Fedora's Plymouth code"
 PKG_LONGDESC="PSplash is a userspace graphical boot splash screen for mainly embedded Linux devices supporting a 16bpp or 32bpp framebuffer."
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"
 
 pre_configure_init() {

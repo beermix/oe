@@ -23,7 +23,7 @@ PKG_URL="https://s3-eu-west-1.amazonaws.com/watszy/ShareX/2015-07/$PKG_NAME-$PKG
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"
 
 PKG_SECTION="python/system"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 pre_configure_target() {

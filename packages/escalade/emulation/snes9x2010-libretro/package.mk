@@ -29,7 +29,7 @@ PKG_SECTION="emulation"
 PKG_SHORTDESC="Optimized port/rewrite of SNES9x 1.52+ to Libretro."
 PKG_LONGDESC="Optimized port/rewrite of SNES9x 1.52+ to Libretro."
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 post_unpack() {

@@ -37,7 +37,7 @@ PKG_SECTION="multimedia"
 PKG_SHORTDESC="libamcodec: Interface library for Amlogic media codecs"
 PKG_LONGDESC="libamplayer: Interface library for Amlogic media codecs"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 make_target() {

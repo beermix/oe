@@ -12,7 +12,7 @@ PKG_PRIORITY="optional"
 PKG_SECTION="xmedia/torrent"
 PKG_SHORTDESC="PyAMF provides Action Message Format (AMF) support for Python that is compatible with the Adobe Flash Player"
 PKG_LONGDESC="PyAMF provides Action Message Format (AMF) support for Python that is compatible with the Adobe Flash Player."
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 make_target() {

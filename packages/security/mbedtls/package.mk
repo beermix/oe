@@ -3,7 +3,7 @@ PKG_VERSION="2.6.0"
 PKG_URL="https://tls.mbed.org/download/mbedtls-$PKG_VERSION-gpl.tgz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="security"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release \

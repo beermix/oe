@@ -4,7 +4,7 @@ PKG_URL="https://github.com/cockpit-project/cockpit/releases/download/0.108/cock
 PKG_DEPENDS_TARGET="toolchain"
 
 PKG_SECTION="network"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr"

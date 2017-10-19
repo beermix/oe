@@ -9,7 +9,7 @@ PKG_DEPENDS_TARGET="toolchain llvm:host libxml2"
 PKG_SECTION="lang"
 PKG_SHORTDESC="C language family frontend for LLVM"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 post_unpack() {

@@ -5,7 +5,7 @@ PKG_URL="http://downloads.sourceforge.net/project/filebench/filebench/filebench-
 PKG_DEPENDS_TARGET="toolchain openssl curl grep libgcrypt"
 
 PKG_SECTION="devel"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"
 
 configure_target() {

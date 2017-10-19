@@ -4,6 +4,6 @@ PKG_GIT_URL="https://github.com/zsh-users/zsh-syntax-highlighting.git"
 PKG_DEPENDS_TARGET="toolchain Python sqlite ncurses zsh"
 
 PKG_SECTION="my"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 

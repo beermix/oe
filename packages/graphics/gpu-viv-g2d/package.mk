@@ -28,7 +28,7 @@ PKG_SECTION="graphics"
 PKG_SHORTDESC="gpu-viv-g2d: Another vivante Binary for performant resizing"
 PKG_LONGDESC="gpu-viv-g2d: Another vivante Binary for performant resizing"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 make_target() {

@@ -3,7 +3,7 @@ PKG_VERSION="e2f480a"
 PKG_URL="https://github.com/wiire/pixiewps/archive/${PKG_VERSION}.tar.gz"
 #PKG_DEPENDS_TARGET="toolchain sqlite libpcap"
 PKG_SECTION="my"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 post_unpack() {

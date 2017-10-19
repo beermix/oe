@@ -23,7 +23,7 @@ PKG_URL="https://pypi.python.org/packages/source/x/xbmcswift2/xbmcswift2-0.3.0.t
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"
 
 PKG_SECTION="python/system"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 

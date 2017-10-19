@@ -27,7 +27,7 @@ PKG_DEPENDS_TARGET="toolchain libusb-compat"
 PKG_SHORTDESC="serdisplib: a lcd control library"
 PKG_LONGDESC="Library to drive serial/parallel/usb displays with built-in controllers"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--prefix=$SYSROOT_PREFIX/usr \

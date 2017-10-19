@@ -15,7 +15,7 @@ PKG_PRIORITY="optional"
 PKG_SECTION="xmedia/tvservice"
 PKG_SHORTDESC="History of the latest viewed channels"
 PKG_LONGDESC="History of the latest viewed channels."
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 PKG_LOCALE_INSTALL="yes"
 

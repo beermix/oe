@@ -25,6 +25,6 @@ PKG_SITE="http://shadowsocks.org"
 PKG_GIT_URL="https://github.com/haad/proxychains"
 PKG_DEPENDS_TARGET="toolchain Python boost openssl Libevent"
 PKG_SECTION="my"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 

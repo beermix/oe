@@ -26,7 +26,7 @@ PKG_SECTION="system"
 PKG_SHORTDESC="Touchscreen access library"
 PKG_LONGDESC="Touchscreen access library"
 PKG_MAINTAINER="vpeter"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"
 
 STATIC="yes"

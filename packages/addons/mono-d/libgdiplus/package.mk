@@ -27,7 +27,7 @@ PKG_SECTION="tools"
 PKG_SHORTDESC="libgiplus"
 PKG_LONGDESC="An Open Source implementation of the GDI+ API"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--with-libgif=$SYSROOT_PREFIX/usr \

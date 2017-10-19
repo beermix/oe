@@ -4,7 +4,7 @@ PKG_URL="https://www.python.org/ftp/python/3.4.0/Python-3.4.0.tar.xz"
 PKG_SOURCE_DIR="Python-3.4.0"
 PKG_DEPENDS_TARGET="toolchain sqlite expat zlib bzip2 openssl libffi"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \

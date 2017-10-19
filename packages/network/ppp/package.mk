@@ -26,7 +26,7 @@ PKG_SECTION="network"
 PKG_SHORTDESC="ppp: contains the pppd daemon and the chat program. This is used for connecting to other machines; often for connecting to the Internet via a dial-up or PPPoE connection to an ISP."
 PKG_LONGDESC="The PPP package contains the pppd daemon and the chat program. This is used for connecting to other machines; often for connecting to the Internet via a dial-up or PPPoE connection to an ISP."
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 pre_configure_target() {

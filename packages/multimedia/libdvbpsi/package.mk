@@ -9,7 +9,7 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="xmedia/tools"
 PKG_SHORTDESC="library for MPEG TS and DVB PSI tables decoding and generating"
 PKG_LONGDESC="libdvbpsi is a simple library designed for MPEG TS and DVB PSI tables decoding and generating."
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared --with-pic"

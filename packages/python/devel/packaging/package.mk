@@ -29,7 +29,7 @@ PKG_SECTION="python/devel"
 PKG_SHORTDESC="packaging: Core utilities for Python packages"
 PKG_LONGDESC="Packaging is the Core utilities for Python packages package"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 make_host() {

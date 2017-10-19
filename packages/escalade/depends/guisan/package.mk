@@ -24,7 +24,7 @@ PKG_DEPENDS_TARGET="toolchain SDL2 SDL2_image SDL2_ttf"
 PKG_SECTION="depends"
 PKG_SHORTDESC="guisan GUI library"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 make_target() {

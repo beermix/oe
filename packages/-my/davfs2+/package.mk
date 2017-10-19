@@ -23,7 +23,7 @@ PKG_URL="http://download.savannah.gnu.org/releases/davfs2/davfs2-${PKG_VERSION}.
 PKG_DEPENDS_TARGET="toolchain neon"
 
 PKG_SECTION="torrenter"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-lib \

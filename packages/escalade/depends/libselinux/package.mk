@@ -23,7 +23,7 @@ PKG_GIT_URL="https://github.com/SELinuxProject/selinux"
 PKG_DEPENDS_TARGET="toolchain pcre"
 PKG_SECTION="tools"
 PKG_SHORTDESC="Security Enhanced Linux (SELinux) userland libraries."
-PKG_IS_ADDON="no"
+
 
 PKG_AUTORECONF="no"
 

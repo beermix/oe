@@ -14,7 +14,7 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="xmedia/games"
 PKG_SHORTDESC="Common GSLS shaders for RetroArch"
 PKG_LONGDESC="Common GSLS shaders for RetroArch"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 unpack() {

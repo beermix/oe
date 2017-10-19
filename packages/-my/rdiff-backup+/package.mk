@@ -6,7 +6,7 @@ PKG_URL="http://savannah.nongnu.org/download/rdiff-backup/rdiff-backup-1.2.8.tar
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host libpthread-stubs"
 
 PKG_SECTION="python/system"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 pre_configure_target() {

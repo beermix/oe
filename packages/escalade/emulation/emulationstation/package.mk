@@ -24,7 +24,7 @@ PKG_DEPENDS_TARGET="toolchain SDL2 boost freetype curl cmake:host freeimage eige
 PKG_SECTION="emulation"
 PKG_SHORTDESC="Emulationstation emulator frontend"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 pre_configure_target() {

@@ -29,7 +29,7 @@ PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="localedef: Locale definition compiler"
 PKG_LONGDESC="The localedef program reads the indicated charmap and input files, compiles them to a form usable by the locale(7) functions in the C library, and places the six output files in the outputpath directory."
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=/usr --with-glibc=../eglibc"

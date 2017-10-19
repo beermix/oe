@@ -23,7 +23,7 @@ PKG_GIT_URL="https://github.com/dagwieers/dstat"
 PKG_DEPENDS_TARGET="toolchain Python"
 PKG_SECTION="tools"
 PKG_SHORTDESC="Versatile resource statistics tool"
-PKG_IS_ADDON="no"
+
 
 PKG_AUTORECONF="no"
 

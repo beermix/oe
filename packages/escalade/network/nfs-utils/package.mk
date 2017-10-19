@@ -9,7 +9,7 @@ PKG_DEPENDS_TARGET="toolchain libnfsidmap libtirpc libevent"
 PKG_SECTION="escalade"
 PKG_SHORTDESC="Support programs for Network File Systems"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--without-tcp-wrappers \

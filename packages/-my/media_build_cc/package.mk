@@ -16,7 +16,7 @@ PKG_PRIORITY="optional"
 PKG_SECTION="xmedia/dvb"
 PKG_SHORTDESC="Build system to use the latest experimental drivers/patches without needing to replace the entire Kernel"
 PKG_LONGDESC="Build system to use the latest experimental drivers/patches without needing to replace the entire Kernel"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 pre_make_target() {

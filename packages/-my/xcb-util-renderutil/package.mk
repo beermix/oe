@@ -15,5 +15,5 @@ PKG_PRIORITY="optional"
 PKG_SECTION="xmedia/depends"
 PKG_SHORTDESC="Utility libraries for XC Binding - Convenience functions for the Render extension"
 PKG_LONGDESC="Utility libraries for XC Binding - Convenience functions for the Render extension."
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"

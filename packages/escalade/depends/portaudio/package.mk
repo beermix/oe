@@ -26,6 +26,6 @@ PKG_SOURCE_DIR="portaudio"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="depends"
 PKG_SHORTDESC="Portable cross-platform audio I/O"
-PKG_IS_ADDON="no"
+
 
 PKG_AUTORECONF="no"

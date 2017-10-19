@@ -7,7 +7,7 @@ PKG_DEPENDS_TARGET="toolchain readline ncurses"
 PKG_SECTION="system"
 PKG_SHORTDESC="whois is a client-side application which queries the whois directory service for information pertaining to a particular domain name."
 PKG_LONGDESC="whois is a client-side application which queries the whois directory service for information pertaining to a particular domain name."
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 

@@ -30,7 +30,7 @@ PKG_SECTION="wayland"
 PKG_SHORTDESC=""
 PKG_LONGDESC=""
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_HOST="--enable-shared \

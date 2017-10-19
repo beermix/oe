@@ -25,7 +25,7 @@ PKG_SECTION="lib"
 PKG_SHORTDESC="C/C++ Configuration File Library"
 PKG_LONGDESC="C/C++ Configuration File Library"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \

@@ -28,7 +28,7 @@ PKG_SECTION="network"
 PKG_SHORTDESC="Embedded Linux library"
 PKG_LONGDESC="Embedded Linux library"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 configure_target() {

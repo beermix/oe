@@ -28,7 +28,7 @@ PKG_SECTION="network"
 PKG_SHORTDESC="The netbase package provides data for network services and protocols from the iana db."
 PKG_LONGDESC="The netbase package provides data for network services and protocols from the iana db."
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 make_target() {

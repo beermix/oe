@@ -16,5 +16,5 @@ PKG_PRIORITY="optional"
 PKG_SECTION="xmedia/browser"
 PKG_SHORTDESC="AlexELEC-settings: Advanced settings dialog for AlexELEC"
 PKG_LONGDESC="AlexELEC-settings: is a Advanced settings dialog for AlexELEC"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"

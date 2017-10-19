@@ -4,7 +4,7 @@ PKG_URL="https://github.com/jackaudio/jack2/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain flac bzip2 libsamplerate opus"
 
 PKG_SECTION="my"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 

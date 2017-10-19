@@ -26,7 +26,7 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="emulation"
 PKG_SHORTDESC="Frodo C64 emulator libretro core"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 #post_unpack() {

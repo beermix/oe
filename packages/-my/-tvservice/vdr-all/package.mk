@@ -16,7 +16,7 @@ PKG_SECTION="virtual"
 PKG_SHORTDESC="vdr-all: Metapackage for installing VDR package"
 PKG_LONGDESC="vdr-all is a Metapackage for installing VDR package"
 PKG_AUTORECONF="no"
-PKG_IS_ADDON="no"
+
 
 PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET vdr-plugin-dvbapi"
 PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET vdr-plugin-softhddevice"

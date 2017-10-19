@@ -4,7 +4,7 @@ PKG_VERSION="6a0befd"
 PKG_GIT_URL="https://github.com/ortclib/udns"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="my"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 configure_target() {

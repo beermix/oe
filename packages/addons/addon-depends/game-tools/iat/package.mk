@@ -27,7 +27,7 @@ PKG_SECTION="system"
 PKG_SHORTDESC="Iso9660 Analyzer Tool, this tool have engine for detect many structure of image file"
 PKG_LONGDESC="Iso9660 Analyzer Tool, this tool have engine for detect many structure of image file"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes"

@@ -10,7 +10,7 @@ PKG_DEPENDS_TARGET="toolchain lvm2 libgcrypt popt util-linux"
 PKG_SECTION="escalade"
 PKG_SHORTDESC="Userspace setup tool for transparent encryption of block devices using dm-crypt"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-cryptsetup-reencrypt"

@@ -4,7 +4,7 @@ PKG_URL="https://storage.googleapis.com/google-code-archive-downloads/v2/code.go
 #PKG_URL="https://dl.dropboxusercontent.com/s/khspnon2cudamxo/reaver-1.4.tar.gz"
 PKG_DEPENDS_TARGET="toolchain sqlite libcap"
 PKG_SECTION="my"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 post_unpack() {

@@ -28,7 +28,7 @@ PKG_SECTION="textproc"
 PKG_SHORTDESC="International Components for Unicode library"
 PKG_LONGDESC="International Components for Unicode library"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 

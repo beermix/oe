@@ -24,7 +24,7 @@ PKG_DEPENDS_TARGET="toolchain libpng tiff dbus fontconfig eglibc zlib gstreamer 
 PKG_SECTION="lib"
 PKG_SHORTDESC="gst-plugins-good"
 PKG_LONGDESC="gst-plugins-good"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-maintainer-mode \

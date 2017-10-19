@@ -23,7 +23,7 @@ PKG_GIT_URL="https://github.com/zehome/MLVPN"
 PKG_DEPENDS_TARGET="toolchain libpcap libsodium libev"
 PKG_SECTION="network"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared"

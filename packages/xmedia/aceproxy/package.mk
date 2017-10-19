@@ -14,7 +14,7 @@ PKG_DEPENDS_TARGET="toolchain gevent psutil M2Crypto"
 PKG_SECTION="xmedia/torrent"
 PKG_SHORTDESC="AceProxy: Ace Stream HTTP Proxy"
 PKG_LONGDESC="AceProxy: Ace Stream HTTP Proxy."
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 PKG_LOCALE_INSTALL="yes"
 

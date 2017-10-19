@@ -28,6 +28,6 @@ PKG_BUILD_DEPENDS="Python-host toolchain"
 PKG_SECTION="oem"
 PKG_SHORTDESC="QT5Dev: Metapackage for various qt5/multimedia packages"
 PKG_LONGDESC=""
-PKG_IS_ADDON="no"
+
 
 PKG_AUTORECONF="no"

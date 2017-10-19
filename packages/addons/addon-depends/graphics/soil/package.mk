@@ -29,7 +29,7 @@ PKG_SECTION="graphics"
 PKG_SHORTDESC="libsoil: Simple OpenGL Image Library"
 PKG_LONGDESC="libsoil: Simple OpenGL Image Library"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 make_target() {

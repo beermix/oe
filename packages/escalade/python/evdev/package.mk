@@ -26,7 +26,7 @@ PKG_SOURCE_DIR="python-evdev-$PKG_VERSION"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"
 PKG_SECTION="python/devel"
 PKG_SHORTDESC="Python bindings for the Linux input subsystem."
-PKG_IS_ADDON="no"
+
 
 PKG_AUTORECONF="no"
 

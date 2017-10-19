@@ -6,7 +6,7 @@ PKG_BUILD_DEPENDS_TARGET="toolchain openssl"
 PKG_BUILD_DEPENDS_HOST=""
 
 PKG_SECTION="devel"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"
 
 

@@ -11,7 +11,7 @@ PKG_DEPENDS_TARGET="toolchain systemd readline util-linux"
 PKG_SECTION="escalade"
 PKG_SHORTDESC="Logical Volume Manager 2 utilities"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \

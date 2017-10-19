@@ -28,7 +28,7 @@ PKG_SECTION="system"
 PKG_SHORTDESC="libugpio: library to use kernel's sysfs gpio interface from C programs and/or other libraries"
 PKG_LONGDESC="A free software library to ease the use of linux kernel's sysfs gpio interface from C programs and/or other libraries"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared"

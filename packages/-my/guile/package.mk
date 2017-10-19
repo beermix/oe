@@ -6,7 +6,7 @@ PKG_DEPENDS_HOST="toolchain libffi libunistring readline"
 PKG_DEPENDS_TARGET="toolchain zlib readline libtool gmp libunistring libffi"
 
 PKG_SECTION="toolchain/devel"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"
 
 pre_configure_target() {

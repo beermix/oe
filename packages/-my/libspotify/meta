@@ -61,5 +61,5 @@ PKG_BUILD_DEPENDS="toolchain"
 PKG_SECTION="audio"
 PKG_SHORTDESC="libspotify: A library for Spotify, needs developer appkey and Premium account"
 PKG_LONGDESC="libspotify is a library for streaming music from the spotify backend. The appkey.h needs to be put in the folder directly above your git repository, you get it from http://developer.spotify.com. Then, to actually use the application you will need to login with a valid premium account username and password."
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"

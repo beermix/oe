@@ -5,7 +5,7 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_DEPENDS_HOST=""
 
 PKG_SECTION="compress"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 TARGET_CONFIGURE_OPTS="--prefix=/usr"

@@ -27,7 +27,7 @@ PKG_SECTION="emulation"
 PKG_SHORTDESC="A port of the Fuse Unix Spectrum Emulator to libretro "
 PKG_LONGDESC="A port of the Fuse Unix Spectrum Emulator to libretro "
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 pre_build_target() {
   export GIT_VERSION=$PKG_VERSION

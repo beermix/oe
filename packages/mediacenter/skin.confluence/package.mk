@@ -11,7 +11,7 @@ PKG_DEPENDS_TARGET="toolchain kodi"
 PKG_SECTION="mediacenter"
 PKG_SHORTDESC="kodi-theme-AeonNox: Kodi Mediacenter theme"
 PKG_LONGDESC="kodi-theme-AeonNox: Kodi Mediacenter theme."
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 make_target() {

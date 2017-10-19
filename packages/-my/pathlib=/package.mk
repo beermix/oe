@@ -23,7 +23,7 @@ PKG_URL="https://pypi.python.org/packages/source/p/pathlib/pathlib-1.0.1.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host Distutils2"
 
 PKG_SECTION="python/system"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 

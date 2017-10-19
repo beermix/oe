@@ -31,7 +31,7 @@ PKG_SECTION="web"
 PKG_SHORTDESC="The Apache web server."
 PKG_LONGDESC="The Apache web server."
 PKG_MAINTAINER="vpeter"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"
 PKG_USE_NINJA="no"
 

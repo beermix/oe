@@ -14,7 +14,7 @@ PKG_DEPENDS_TARGET="toolchain sqlite libexif libid3tag flac libvorbis"
 PKG_SECTION="xmedia/tools"
 PKG_SHORTDESC="MiniDLNA is server software with the aim of being fully compliant with DLNA/UPnP-AV clients"
 PKG_LONGDESC="MiniDLNA is server software with the aim of being fully compliant with DLNA/UPnP-AV clients."
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"
 PKG_LOCALE_INSTALL="yes"
 

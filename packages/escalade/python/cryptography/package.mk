@@ -26,7 +26,7 @@ PKG_DEPENDS_TARGET="toolchain Python distutilscross:host cffi:host cffi enum idn
 PKG_SECTION="python/devel"
 PKG_SHORTDESC="Provides cryptographic recipes and primitives to Python developers"
 PKG_LONGDESC="Includes both high level recipes, and low level interfaces to common cryptographic algorithms such as symmetric ciphers, message digests and key derivation functions. For example, to encrypt something with cryptography's high level symmetric encryption recipe"
-PKG_IS_ADDON="no"
+
 
 PKG_AUTORECONF="no"
 

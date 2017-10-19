@@ -23,7 +23,7 @@ PKG_GIT_URL="https://github.com/ninja-build/ninja"
 PKG_SECTION="devel"
 PKG_SHORTDESC="Small build system with a focus on speed"
 PKG_LONGDESC="Small build system with a focus on speed"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 configure_host() {

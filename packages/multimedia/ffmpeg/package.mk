@@ -29,7 +29,7 @@ PKG_SECTION="multimedia"
 PKG_SHORTDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
 PKG_LONGDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 # Dependencies
@@ -68,7 +68,7 @@ case "$TARGET_ARCH" in
     ;;
 esac
 
-if echo "$TARGET_FPU" | grep -q '^neon' || [[ "$TARGET_ARCH" = "aarch64" ]]; then
+if target_has_feature neon; then
   FFMPEG_FPU="--enable-neon"
 else
   FFMPEG_FPU="--disable-neon"

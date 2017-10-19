@@ -12,7 +12,7 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="xmedia/tools"
 PKG_SHORTDESC="Zeroconf LIRC daemon using input event devices"
 PKG_LONGDESC="This is a small LIRC-compatible daemon that reads from /dev/input/eventX devices and sends the received keycodes to connecting LIRC clients"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 make_target() {

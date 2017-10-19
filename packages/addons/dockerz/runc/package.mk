@@ -23,7 +23,7 @@ PKG_LICENSE="APL"
 PKG_SITE="https://github.com/opencontainers/runc"
 PKG_URL="https://github.com/opencontainers/runc/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain go:host"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 unpack() {

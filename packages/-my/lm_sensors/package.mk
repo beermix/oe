@@ -4,7 +4,7 @@ PKG_URL="https://github.com/groeck/lm-sensors/archive/${PKG_VERSION}.tar.gz"
 PKG_SOURCE_DIR="lm-sensors-$PKG_VERSION*"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="devel"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 PKG_MAKE_OPTS_TARGET="BUILD_STATIC_LIB=1 SBINDIR=/usr/bin CC=$CC AR=$AR"

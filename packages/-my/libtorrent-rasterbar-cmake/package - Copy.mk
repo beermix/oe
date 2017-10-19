@@ -5,7 +5,7 @@ PKG_SOURCE_DIR="libtorrent_libtorrent-1_1_1"
 PKG_DEPENDS_TARGET="toolchain boost Python2:host Python:target zlib bzip2 curl ncurses libsigc++"
 
 PKG_SECTION="devel"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 configure_target() {

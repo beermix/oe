@@ -27,6 +27,6 @@ PKG_SECTION="virtual"
 PKG_SHORTDESC="autotools: Metapackage"
 PKG_LONGDESC=""
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 

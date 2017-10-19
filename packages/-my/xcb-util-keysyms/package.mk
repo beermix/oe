@@ -15,5 +15,5 @@ PKG_PRIORITY="optional"
 PKG_SECTION="xmedia/depends"
 PKG_SHORTDESC="utility libraries for X C Binding -- keysyms"
 PKG_LONGDESC="This package contains the library files needed to run software using libxcb-keysyms, providing standard X key constants and conversion to/from keycodes."
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"

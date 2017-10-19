@@ -29,7 +29,7 @@ PKG_PRIORITY="optional"
 PKG_SECTION="compress"
 
 PKG_USE_CMAKE="yes"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 pre_configure_target() {

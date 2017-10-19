@@ -26,7 +26,7 @@ PKG_SECTION="multimedia"
 PKG_SHORTDESC="libsdl_image: A cross-platform Graphic API"
 PKG_LONGDESC="SDL_image is an image loading library that is used with the SDL library, and almost as portable. It allows a programmer to use multiple image formats without having to code all the loading and conversion algorithms themselves."
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_HOST="--disable-bmp \

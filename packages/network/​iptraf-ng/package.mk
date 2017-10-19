@@ -3,7 +3,7 @@ PKG_VERSION="8b9c12a"
 PKG_GIT_URL="git://repo.or.cz/iptraf-ng.git"
 PKG_DEPENDS_TARGET="toolchain libpcap readline"
 PKG_SECTION="my"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 #pre_configure_target() {

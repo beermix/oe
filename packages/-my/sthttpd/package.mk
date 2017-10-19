@@ -9,7 +9,7 @@ PKG_SECTION="system"
 PKG_SHORTDESC="sthttpd"
 PKG_LONGDESC="This is a fork of Jef Poskanzer's popular thttpd server"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 make_target() {

@@ -24,7 +24,7 @@ PKG_DEPENDS_TARGET="toolchain SDL"
 PKG_SECTION="emulators/depends"
 PKG_SHORTDESC="guichan GUI library"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 pre_configure_target() {

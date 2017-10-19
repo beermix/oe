@@ -4,7 +4,7 @@ PKG_GIT_URL="https://github.com/ivmai/libatomic_ops"
 PKG_DEPENDS_TARGET="toolchain openssl"
 
 PKG_SECTION="my"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \

@@ -3,7 +3,7 @@ PKG_VERSION="4.13.0"
 PKG_URL="https://www.kernel.org/pub/linux/utils/net/iproute2/iproute2-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain libelf-compat linux iptables libmnl"
 PKG_SECTION="my"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 CONCURRENCY_MAKE_LEVEL=1

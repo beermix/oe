@@ -18,7 +18,7 @@
   GREETING4=""
 
 # Root password to integrate in the target system
-  ROOT_PASSWORD="libreelec"
+  ROOT_PASSWORD="openelec"
 
 # Install LLVM SUPPORT (yes / no)
   LLVM_SUPPORT="no"

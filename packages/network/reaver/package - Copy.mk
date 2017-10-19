@@ -5,7 +5,7 @@ PKG_URL="https://dl.dropboxusercontent.com/s/zu77hev68w81o67/reaver-1.4-src.tar.
 PKG_DEPENDS_TARGET="toolchain sqlite libpcap"
 
 PKG_SECTION="my"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"
 
 pre_configure_target() {

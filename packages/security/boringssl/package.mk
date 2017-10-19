@@ -7,7 +7,7 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="security"
 PKG_SHORTDESC="openssl: a FREE version of the SSL/TLS protocol forked from openssl"
 PKG_LONGDESC="openssl is a FREE version of the SSL/TLS protocol forked from openssl"
-PKG_IS_ADDON="no"
+
 PKG_USE_CMAKE="yes"
 PKG_AUTORECONF="no"
 

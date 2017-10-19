@@ -27,5 +27,5 @@ PKG_DEPENDS_HOST=""
 PKG_SECTION="tools"
 PKG_SHORTDESC="mtools: A collection of utilities to access MS-DOS disks"
 PKG_LONGDESC="mtools: A collection of utilities to access MS-DOS disks"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"

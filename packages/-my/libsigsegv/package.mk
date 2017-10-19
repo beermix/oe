@@ -5,7 +5,7 @@ PKG_DEPENDS_HOST="ccache:host"
 PKG_DEPENDS_TARGET=""
 
 PKG_SECTION="devel"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"
 
 pre_configure_target() {

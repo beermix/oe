@@ -29,7 +29,7 @@ PKG_SECTION="python/devel"
 PKG_SHORTDESC="appdirs: Python module for determining appropriate platform-specific dirs"
 PKG_LONGDESC="appdirs is a small Python module for determining appropriate platform-specific dirs, e.g. a user data dir."
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 make_host() {

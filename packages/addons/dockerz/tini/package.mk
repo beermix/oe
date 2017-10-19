@@ -28,7 +28,7 @@ PKG_SECTION="system"
 PKG_SHORTDESC="Tini is the simplest init you could think of"
 PKG_LONGDESC="Tini is the simplest init you could think of"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 PKG_CMAKE_TARGET_OPTS="-DCMAKE_BUILD_TYPE=Release -DMINIMAL=1"

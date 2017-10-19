@@ -29,5 +29,5 @@ PKG_SECTION="virtual"
 PKG_SHORTDESC="QT5Dev: Metapackage for various qt5/multimedia packages"
 PKG_LONGDESC=""
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"

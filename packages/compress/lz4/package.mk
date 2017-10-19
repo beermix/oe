@@ -4,7 +4,7 @@ PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_DEPENDS_HOST="cmake:host"
 PKG_SECTION="compress"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 PKG_USE_CMAKE="yes"
 

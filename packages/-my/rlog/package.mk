@@ -28,7 +28,7 @@ PKG_SECTION="libs"
 PKG_SHORTDESC="flexible message logging facility"
 PKG_LONGDESC="flexible message logging facility"
 
-PKG_IS_ADDON="no"
+
 
 PKG_AUTORECONF="yes"
 

@@ -29,7 +29,7 @@ PKG_SECTION="driver"
 PKG_SHORTDESC="Intel NUC7i[x]BN and NUC6CAY LED Control for Linux"
 PKG_LONGDESC="Intel NUC7i[x]BN and NUC6CAY LED Control for Linux"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 PKG_IS_KERNEL_PKG="yes"
 

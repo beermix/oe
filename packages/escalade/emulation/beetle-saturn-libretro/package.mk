@@ -27,7 +27,7 @@ PKG_SECTION="libretro"
 PKG_SHORTDESC="Standalone port of Mednafen Saturn to libretro."
 PKG_LONGDESC="Standalone port of Mednafen Saturn to libretro."
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 makeinstall_target() {

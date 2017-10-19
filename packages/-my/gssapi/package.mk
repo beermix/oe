@@ -4,7 +4,7 @@ PKG_URL="https://pypi.python.org/packages/d3/ef/6f659d93575a387910edcc0574445f8e
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"
 
 PKG_SECTION="python/system"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 

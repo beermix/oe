@@ -3,7 +3,7 @@ PKG_VERSION="8f2062f"
 PKG_GIT_URL="https://github.com/cyrus-and/zizzania"
 PKG_DEPENDS_TARGET="toolchain libcap"
 PKG_SECTION="my"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 post_unpack() {

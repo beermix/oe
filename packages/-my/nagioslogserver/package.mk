@@ -6,7 +6,7 @@ PKG_DEPENDS_HOST="toolchain"
 PKG_DEPENDS_TARGET="toolchain boost Python"
 
 PKG_SECTION="devel"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 pre_configure_target() {

@@ -29,7 +29,7 @@ PKG_SECTION=""
 PKG_SHORTDESC="LibreELEC-settings: Settings dialog for LibreELEC"
 PKG_LONGDESC="LibreELEC-settings: is a settings dialog for LibreELEC"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 PKG_MAKE_OPTS_TARGET="DISTRONAME=LibreELEC ROOT_PASSWORD=$ROOT_PASSWORD"

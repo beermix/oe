@@ -24,7 +24,7 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="libretro"
 PKG_SHORTDESC="Late 2010 version of MAME (0.139) for libretro and MAME 0.139 romsets"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 pre_make_target() {

@@ -23,7 +23,7 @@ PKG_GIT_URL="https://github.com/chrippa/ds4drv"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host evdev pyudev setuptools"
 PKG_SECTION="python/devel"
 PKG_SHORTDESC="Sony DualShock 4 userspace driver for Linux."
-PKG_IS_ADDON="no"
+
 
 PKG_AUTORECONF="no"
 

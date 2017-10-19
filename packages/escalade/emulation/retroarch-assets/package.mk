@@ -29,7 +29,7 @@ PKG_SECTION="emulation"
 PKG_SHORTDESC="RetroArch assets"
 PKG_LONGDESC="RetroArch assets. Background and icon themes for the menu drivers."
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 configure_target() {

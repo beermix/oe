@@ -30,7 +30,7 @@ PKG_SECTION="multimedia"
 PKG_SHORTDESC="vdr-plugin-epgsearch"
 PKG_LONGDESC="vdr-plugin-epgsearch"
 
-PKG_IS_ADDON="no"
+
 
 PKG_AUTORECONF="no"
 

@@ -31,7 +31,7 @@ PKG_SECTION="web"
 PKG_SHORTDESC="The Apache web server."
 PKG_LONGDESC="The Apache web server."
 PKG_MAINTAINER="ultraman"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"
 #export MAKEFLAGS=-j1
 # If you still desire to serve pages as root

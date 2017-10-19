@@ -3,7 +3,7 @@ PKG_VERSION="f2c5ef0"
 PKG_URL="https://github.com/LunaNode/dnsbench/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain go:host"
 PKG_SECTION="golang"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 pre_make_target() {

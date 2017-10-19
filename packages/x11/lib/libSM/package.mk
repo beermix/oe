@@ -28,7 +28,7 @@ PKG_SECTION="x11/lib"
 PKG_SHORTDESC="libSM: X11 Inter-Client Exchange library"
 PKG_LONGDESC="This package provides the main interface to the X11 Session Management library, which allows for applications to both manage sessions, and make use of session managers to save and restore their state for later use."
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--with-libuuid --without-xmlto --without-fop"

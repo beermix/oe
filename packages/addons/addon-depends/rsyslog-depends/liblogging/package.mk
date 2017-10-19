@@ -25,7 +25,7 @@ PKG_SHORTDESC="liblogging"
 PKG_LONGDESC="liblogging"
 
 PKG_AUTORECONF="no"
-PKG_IS_ADDON="no"
+
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-man-pages \
                            --enable-static --disable-shared \

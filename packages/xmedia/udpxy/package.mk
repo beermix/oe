@@ -14,7 +14,7 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="xmedia/tools"
 PKG_SHORTDESC="udpxy is a UDP-to-HTTP multicast traffic relay daemon"
 PKG_LONGDESC="udpxy is a UDP-to-HTTP multicast traffic relay daemon."
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 make_target() {

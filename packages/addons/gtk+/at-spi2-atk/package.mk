@@ -8,7 +8,7 @@ PKG_DEPENDS_TARGET="toolchain libX11 libxkbcommon at-spi2-core atk libXtst"
 PKG_SECTION="escalade/depends"
 PKG_SHORTDESC="A GTK+ module that bridges ATK to D-Bus at-spi"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 #PKG_CONFIGURE_OPTS_TARGET="--disable-shared --with-pic"

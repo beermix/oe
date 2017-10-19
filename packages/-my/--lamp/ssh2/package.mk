@@ -31,7 +31,7 @@ PKG_SECTION="security"
 PKG_SHORTDESC="ssh2 php extension"
 PKG_LONGDESC="ssh2 php extension"
 PKG_MAINTAINER="ultraman"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 pre_configure_target() {

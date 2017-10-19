@@ -25,7 +25,7 @@ PKG_SITE="http://shadowsocks.org"
 PKG_URL="https://copy.com/LOUO6tehjZJy/dnsperf-1.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python sqlite ncurses"
 PKG_SECTION="my"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 pre_configure_target() {

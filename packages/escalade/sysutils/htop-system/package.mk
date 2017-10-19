@@ -26,7 +26,7 @@ PKG_SOURCE_DIR="htop-$PKG_VERSION*"
 PKG_DEPENDS_TARGET="toolchain netbsd-curses"
 PKG_SECTION="tools"
 PKG_SHORTDESC="An interactive process viewer for Unix"
-PKG_IS_ADDON="no"
+
 
 PKG_AUTORECONF="yes"
 

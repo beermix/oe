@@ -30,7 +30,7 @@ PKG_SECTION="multimedia"
 PKG_SHORTDESC="vdr-plugin-satip: SAT>IP plugin for VDR"
 PKG_LONGDESC="vdr-plugin-satip is a SAT>IP plugin for VDR"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 make_target() {

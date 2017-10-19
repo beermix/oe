@@ -25,7 +25,7 @@ PKG_URL="https://pypi.io/packages/source/p/pyasn1/pyasn1-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"
 PKG_SECTION="python/devel"
 PKG_SHORTDESC="This is an implementation of ASN.1 types and codecs in Python programming language"
-PKG_IS_ADDON="no"
+
 
 PKG_AUTORECONF="no"
 

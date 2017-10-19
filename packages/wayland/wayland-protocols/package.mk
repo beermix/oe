@@ -29,7 +29,7 @@ PKG_SECTION="wayland"
 PKG_SHORTDESC=""
 PKG_LONGDESC=""
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"
 
 pre_makeinstall_target() {

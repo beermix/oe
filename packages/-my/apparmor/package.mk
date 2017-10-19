@@ -26,7 +26,7 @@ PKG_DEPENDS_TARGET="apparmor:init"
 PKG_SECTION="security"
 PKG_SHORTDESC="Apparmor DAC"
 PKG_LONGDESC="Linux application security framework - mandatory access control for programs"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 pre_configure_target() {

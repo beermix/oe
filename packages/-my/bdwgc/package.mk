@@ -4,7 +4,7 @@ PKG_URL="https://github.com/ivmai/bdwgc/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libatomic_ops"
 
 PKG_SECTION="devel"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"
 
 

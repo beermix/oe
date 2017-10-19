@@ -3,7 +3,7 @@ PKG_VERSION="1.13.0"
 PKG_URL="https://c-ares.haxx.se/download/c-ares-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain zlib openssl"
 PKG_SECTION="my"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 PKG_USE_CMAKE="no"
 

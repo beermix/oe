@@ -25,7 +25,7 @@ PKG_URL="https://github.com/sabnzbd/sabyenc/archive/v$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"
 PKG_SECTION="python/devel"
 PKG_SHORTDESC="yEnc Module for Python modified for SABnzbd"
-PKG_IS_ADDON="no"
+
 
 PKG_AUTORECONF="no"
 

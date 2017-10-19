@@ -24,5 +24,5 @@ PKG_DEPENDS_TARGET="toolchain SDL2"
 PKG_SECTION="emulation/depends"
 PKG_SHORTDESC="SDL2_net: network library" 
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"

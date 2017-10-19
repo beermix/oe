@@ -26,7 +26,7 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="emulation"
 PKG_SHORTDESC="Optimized port/rewrite of bsnes 0.59 to Libretro."
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 unpack() {

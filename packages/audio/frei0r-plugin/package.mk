@@ -26,5 +26,5 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_PRIORITY="optional"
 PKG_SECTION="audio"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"

@@ -14,7 +14,7 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="xmedia/tools"
 PKG_SHORTDESC="DVB-T/S(T2/S2) scan utils"
 PKG_LONGDESC="DVB-T/S(T2/S2) scan utils"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 make_target() {

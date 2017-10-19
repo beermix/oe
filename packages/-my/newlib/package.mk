@@ -4,7 +4,7 @@ PKG_URL="ftp://sourceware.org/pub/newlib/newlib-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain xz expat xz"
 
 PKG_SECTION="x11/lib"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 

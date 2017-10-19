@@ -24,7 +24,7 @@ PKG_DEPENDS_TARGET="toolchain alsa-lib SDL SDL_net SDL_sound munt libpng"
 PKG_SECTION="emulation"
 PKG_SHORTDESC="DOSBox emulator"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"
 
 unpack() {

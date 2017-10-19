@@ -26,7 +26,7 @@ PKG_SECTION="system"
 PKG_SHORTDESC="Go is an open source programming language that makes it easy to build simple, reliable, and efficient software."
 PKG_LONGDESC="Go is an open source programming language that makes it easy to build simple, reliable, and efficient software."
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 ####################################################################

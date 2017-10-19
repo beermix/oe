@@ -25,7 +25,7 @@ PKG_SECTION="lib"
 PKG_SHORTDESC="gstreamer omx module"
 PKG_LONGDESC="gstreamer omx module"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 if [ "$XBMCPLAYER_DRIVER" = "bcm2835-driver" ]; then

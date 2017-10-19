@@ -27,7 +27,7 @@ PKG_DEPENDS_TARGET="toolchain ffmpeg2 libmad"
 PKG_SECTION="escalade/depends"
 PKG_SHORTDESC="VLC library"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-lua --disable-a52 --disable-vlc"

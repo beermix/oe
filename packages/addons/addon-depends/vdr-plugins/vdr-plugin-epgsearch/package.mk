@@ -27,7 +27,7 @@ PKG_SECTION="multimedia"
 PKG_SHORTDESC="vdr-epgsearch"
 PKG_LONGDESC="vdr-epgsearch"
 
-PKG_IS_ADDON="no"
+
 
 PKG_AUTORECONF="no"
 

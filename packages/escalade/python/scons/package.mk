@@ -25,7 +25,7 @@ PKG_URL="http://prdownloads.sourceforge.net/scons/scons-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="toolchain Python2:host"
 PKG_SECTION="python"
 PKG_SHORTDESC="scons"
-PKG_IS_ADDON="no"
+
 
 PKG_AUTORECONF="no"
 

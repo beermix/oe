@@ -25,7 +25,7 @@ PKG_DEPENDS_TARGET="toolchain libgpg-error libgcrypt ncurses"
 PKG_SECTION="network"
 PKG_SHORTDESC="afpfs-ng: an Apple Filing Protocol client"
 PKG_LONGDESC="afpfs-ng is an Apple Filing Protocol client that will allow BSD, Linux and Mac OS X systems to access files exported from a Mac OS system with AFP over TCP."
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"
 
 

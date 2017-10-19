@@ -31,7 +31,7 @@ PKG_SECTION="utility"
 PKG_SHORTDESC="locale"
 PKG_LONGDESC="locale"
 PKG_MAINTAINER="ultraman"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 pre_configure_host() {

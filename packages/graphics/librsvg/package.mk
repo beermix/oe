@@ -8,7 +8,7 @@ PKG_URL="https://download.gnome.org/sources/librsvg/2.40/librsvg-$PKG_VERSION.ta
 PKG_DEPENDS_TARGET="toolchain glib gdk-pixbuf libxml2 pango cairo"
 PKG_PRIORITY="optional"
 PKG_SECTION="graphics"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 

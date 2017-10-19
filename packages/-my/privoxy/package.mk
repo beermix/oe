@@ -5,7 +5,7 @@ PKG_DEPENDS_TARGET="toolchain openssl zlib pcre"
 PKG_SECTION="security"
 PKG_SHORTDESC="Privoxy"
 PKG_LONGDESC=""
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"
 
 pre_configure_target() {

@@ -28,7 +28,7 @@ PKG_SECTION="x11/lib"
 PKG_SHORTDESC="libXinerama: The Xinerama library."
 PKG_LONGDESC="libXinerama is the Xinerama library."
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-malloc0returnsnull"

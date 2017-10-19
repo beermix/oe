@@ -25,7 +25,7 @@ PKG_DEPENDS_TARGET="toolchain mono-system libmediainfo"
 PKG_SECTION="service/downloadmanager"
 PKG_SHORTDESC="Smart PVR for newsgroup and bittorrent users."
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 make_target() {

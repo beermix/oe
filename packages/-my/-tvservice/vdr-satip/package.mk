@@ -16,7 +16,7 @@ PKG_PRIORITY="optional"
 PKG_SECTION="xmedia/tvservice"
 PKG_SHORTDESC="vdr-satip: SAT>IP plugin for VDR"
 PKG_LONGDESC="vdr-satip is a SAT>IP plugin for VDR"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 PKG_LOCALE_INSTALL="yes"
 

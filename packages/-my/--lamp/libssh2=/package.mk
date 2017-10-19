@@ -31,7 +31,7 @@ PKG_SECTION="security"
 PKG_SHORTDESC="libssh2 library"
 PKG_LONGDESC="libssh2 library"
 PKG_MAINTAINER="ultraman"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 	#LIBS="$(shell $(STAGING_DIR)/usr/bin/libgcrypt-config --libs)"

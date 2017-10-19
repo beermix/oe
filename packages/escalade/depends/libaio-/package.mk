@@ -24,7 +24,7 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="depends"
 PKG_SHORTDESC="Kernel Asynchronous I/O (AIO) Support for Linux"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 pre_build_target() {

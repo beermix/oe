@@ -30,7 +30,7 @@ PKG_SECTION="python/web"
 PKG_SHORTDESC="cxxtools: a collection of general-purpose C++ classes"
 PKG_LONGDESC="Cxxtools is a collection of general-purpose C++ classes"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_HOST="--disable-demos --with-atomictype=pthread --disable-unittest"

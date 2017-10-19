@@ -26,7 +26,7 @@ PKG_SECTION="shell/texteditor"
 PKG_SHORTDESC="nano: Pico editor clone with enhancements"
 PKG_LONGDESC="GNU nano (Nano's ANOther editor, or Not ANOther editor) is an enhanced clone of the Pico text editor."
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"
 PKG_LOCALE_INSTALL="yes"
 

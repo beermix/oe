@@ -24,7 +24,7 @@ PKG_DEPENDS_TARGET="toolchain docker-system"
 PKG_SECTION="service"
 PKG_SHORTDESC="Scripts to run my Docker containers"
 PKG_AUTORECONF="no"
-PKG_IS_ADDON="no"
+
 
 make_target() {
   :

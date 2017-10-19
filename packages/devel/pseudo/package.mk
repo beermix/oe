@@ -3,7 +3,7 @@ PKG_VERSION="b6b68db"
 PKG_GIT_URL="https://git.yoctoproject.org/git/pseudo"
 PKG_DEPENDS_HOST="ccache:host"
 PKG_SECTION="toolchain/devel"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 configure_host() {

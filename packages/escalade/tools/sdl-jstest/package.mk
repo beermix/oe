@@ -26,5 +26,5 @@ PKG_DEPENDS_TARGET="toolchain cmake:host SDL2 netbsd-curses"
 PKG_SECTION="tools"
 PKG_SHORTDESC="jstest"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"

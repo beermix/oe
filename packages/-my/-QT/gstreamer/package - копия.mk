@@ -25,7 +25,7 @@ PKG_SECTION="lib"
 PKG_SHORTDESC="gstreamer library"
 PKG_LONGDESC="gstreamer library and components"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"
 
 

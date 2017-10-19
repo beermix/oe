@@ -4,7 +4,7 @@ PKG_URL="https://github.com/arvidn/libtorrent/releases/download/libtorrent-1_0_1
 PKG_DEPENDS_TARGET="toolchain openssl expat boost"
 PKG_SECTION="devel"
 PKG_USE_CMAKE="no"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"
 
 pre_configure_target() {

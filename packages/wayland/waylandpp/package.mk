@@ -10,7 +10,7 @@ PKG_SECTION="wayland"
 PKG_SHORTDESC="Wayland C++ bindings"
 PKG_LONGDESC="Wayland C++ bindings"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 pre_make_host() {

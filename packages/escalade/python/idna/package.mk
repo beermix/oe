@@ -25,7 +25,7 @@ PKG_URL="https://github.com/kjd/idna/archive/v$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"
 PKG_SECTION="python/devel"
 PKG_SHORTDESC="A library to support the Internationalised Domain Names in IDNA protocol"
-PKG_IS_ADDON="no"
+
 
 PKG_AUTORECONF="no"
 

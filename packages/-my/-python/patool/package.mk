@@ -11,7 +11,7 @@ PKG_DEPENDS_TARGET="toolchain Python distutilscross:host greenlet"
 PKG_SECTION="xmedia/depends"
 PKG_SHORTDESC="gevent is a coroutine-based Python networking library"
 PKG_LONGDESC="gevent is a coroutine-based Python networking library."
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 

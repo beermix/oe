@@ -15,7 +15,7 @@ PKG_PRIORITY="optional"
 PKG_SECTION="xmedia/browser"
 PKG_SHORTDESC="Install Chromium Browser"
 PKG_LONGDESC="Install Chromium Browser."
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 make_target() {

@@ -28,6 +28,6 @@ PKG_SOURCE_DIR="par2cmdline-$PKG_VERSION*"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="system"
 PKG_SHORTDESC="A utility to create and repair data files using Reed Solomon coding (multi threaded OpenMP version)."
-PKG_IS_ADDON="no"
+
 
 PKG_AUTORECONF="yes"

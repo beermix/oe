@@ -29,7 +29,7 @@ PKG_SHORTDESC="Cross platform, open source .NET framework"
 PKG_LONGDESC="Mono ($PKG_VERSION) is a software platform designed to allow developers to easily create cross platform applications part of the .NET Foundation"
 PKG_MAINTAINER="Anton Voyl (awiouy)"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"
 
 prefix="/usr"

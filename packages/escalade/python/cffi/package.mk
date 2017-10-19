@@ -26,7 +26,7 @@ PKG_DEPENDS_TARGET="toolchain Python distutilscross:host pycparser libffi"
 PKG_DEPENDS_HOST="toolchain Python2:host libffi:host"
 PKG_SECTION="python/devel"
 PKG_SHORTDESC="Foreign Function Interface for Python calling C code"
-PKG_IS_ADDON="no"
+
 
 PKG_AUTORECONF="no"
 PKG_MAINTAINER="unofficial.addon.pro"

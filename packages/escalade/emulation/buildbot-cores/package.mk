@@ -26,7 +26,7 @@ PKG_SECTION="emulation"
 PKG_SHORTDESC="libretro cores from buildbot.libretro.com"
 PKG_AUTORECONF="no"
 
-PKG_IS_ADDON="no"
+
 
 configure_target() {
   :

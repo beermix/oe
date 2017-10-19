@@ -14,7 +14,7 @@ PKG_DEPENDS_TARGET="toolchain libX11"
 PKG_SECTION="xmedia/tools"
 PKG_SHORTDESC="image manipulation library"
 PKG_LONGDESC="ImageMagick is a software suite to create, edit, and compose bitmap images. It can read, convert and write images in a variety of formats (over 100)."
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 PKG_LOCALE_INSTALL="yes"
 

@@ -26,7 +26,7 @@ PKG_DEPENDS_TARGET="toolchain SDL2"
 PKG_SECTION="depends"
 PKG_SHORTDESC="This is a sample library which allows you to use TrueType fonts in your SDL applications"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 if [ ! "$DISPLAYSERVER" = "x11" ]; then

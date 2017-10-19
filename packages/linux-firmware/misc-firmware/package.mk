@@ -27,8 +27,6 @@ PKG_DEPENDS_TARGET="toolchain kernel-firmware"
 PKG_SECTION="firmware"
 PKG_SHORTDESC="misc-firmware: firmwares for various drivers"
 PKG_LONGDESC="misc-firmware: firmwares for various drivers"
-
-PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 make_target() {
@@ -36,5 +34,5 @@ make_target() {
 }
 
 makeinstall_target() {
-  DESTDIR=$INSTALL/usr ./install
+  DESTDIR=$INSTALL/$(get_kernel_overlay_dir) ./install
 }

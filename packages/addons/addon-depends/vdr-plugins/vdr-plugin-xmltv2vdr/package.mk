@@ -27,7 +27,7 @@ PKG_SECTION="multimedia"
 PKG_SHORTDESC="vdr-xmltv2vdr"
 PKG_LONGDESC="vdr-xmltv2vdr"
 
-PKG_IS_ADDON="no"
+
 
 PKG_AUTORECONF="no"
 

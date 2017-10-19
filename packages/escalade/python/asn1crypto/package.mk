@@ -8,7 +8,7 @@ PKG_URL="https://github.com/wbond/asn1crypto/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"
 PKG_SECTION="escalade/python"
 PKG_SHORTDESC="Python ASN.1 library with a focus on performance and a pythonic API"
-PKG_IS_ADDON="no"
+
 
 PKG_AUTORECONF="no"
 

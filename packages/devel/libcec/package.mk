@@ -28,8 +28,6 @@ PKG_DEPENDS_TARGET="toolchain systemd lockdev p8-platform"
 PKG_SECTION="system"
 PKG_SHORTDESC="libCEC is an open-source dual licensed library designed for communicating with the Pulse-Eight USB - CEC Adaptor"
 PKG_LONGDESC="libCEC is an open-source dual licensed library designed for communicating with the Pulse-Eight USB - CEC Adaptor."
-
-PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 PKG_CMAKE_OPTS_TARGET="-DBUILD_SHARED_LIBS=1 \
@@ -56,6 +54,11 @@ else
   PKG_CMAKE_OPTS_TARGET="$PKG_CMAKE_OPTS_TARGET -DHAVE_AOCEC_API=0 -DHAVE_AMLOGIC_API=0"
 fi
 
+if [ "$CEC_FRAMEWORK_SUPPORT" = "yes" ]; then
+  PKG_PATCH_DIRS="cec-framework"
+  PKG_CMAKE_OPTS_TARGET="$PKG_CMAKE_OPTS_TARGET -DHAVE_LINUX_API=1"
+fi
+
 pre_configure_target() {
   if [ "$KODIPLAYER_DRIVER" = "bcm2835-driver" ]; then
     export CXXFLAGS="$CXXFLAGS \
@@ -68,7 +71,8 @@ pre_configure_target() {
 }
 
 post_makeinstall_target() {
-  if [ -d $INSTALL/usr/lib/python2.7/dist-packages ]; then 
-    mv $INSTALL/usr/lib/python2.7/dist-packages $INSTALL/usr/lib/python2.7/site-packages
+  PYTHON_DIR=$INSTALL/usr/lib/$PKG_PYTHON_VERSION
+  if [ -d $PYTHON_DIR/dist-packages ]; then
+    mv $PYTHON_DIR/dist-packages $PYTHON_DIR/site-packages
   fi
 }

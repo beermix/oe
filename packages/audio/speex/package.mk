@@ -28,5 +28,5 @@ PKG_SECTION="audio"
 PKG_SHORTDESC="Speex / OPUS audio codec"
 PKG_LONGDESC="Speex / OPUS audio codec"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"

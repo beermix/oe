@@ -25,7 +25,7 @@ PKG_SECTION="lib"
 PKG_SHORTDESC="gst-plugins-base"
 PKG_LONGDESC="gst-plugins-base"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-maintainer-mode \

@@ -26,10 +26,6 @@ PKG_DEPENDS_TARGET="toolchain libtool alsa-lib libsndfile soxr dbus systemd open
 PKG_SECTION="audio"
 PKG_SHORTDESC="pulseaudio: Yet another sound server for Unix"
 PKG_LONGDESC="PulseAudio is a sound server for Linux and other Unix-like operating systems. It is intended to be an improved drop-in replacement for the Enlightened Sound Daemon (esound or esd). In addition to the features esound provides, PulseAudio has an extensible plugin architecture, support for more than one sink per source, better low-latency behavior, the ability to be embedded into other software, a completely asynchronous C API, a simple command line interface for reconfiguring the daemon while running, flexible and implicit sample type conversion and resampling, and a "Zero-Copy" architecture."
-
-PKG_IS_ADDON="no"
-
-# broken
 PKG_AUTORECONF="no"
 
 if [ "$BLUETOOTH_SUPPORT" = "yes" ]; then
@@ -47,7 +43,7 @@ else
 fi
 
 # PulseAudio fails to build on aarch64 when NEON is enabled, so don't enable NEON for aarch64 until upstream supports it
-if echo "$TARGET_FPU" | grep -q '^neon'; then
+if [ "$TARGET_ARCH" = "arm" ] && target_has_feature neon; then
   PULSEAUDIO_NEON="--enable-neon-opt"
 else
   PULSEAUDIO_NEON="--disable-neon-opt"

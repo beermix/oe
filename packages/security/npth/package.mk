@@ -3,7 +3,7 @@ PKG_VERSION="1.5"
 PKG_URL="https://www.gnupg.org/ftp/gcrypt/npth/npth-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain libgpg-error"
 PKG_SECTION="my"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 pre_configure_target() {

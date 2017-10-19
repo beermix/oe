@@ -4,7 +4,7 @@ PKG_URL="https://dl.dropboxusercontent.com/s/8o0t82j8vt5ulnv/pyspotify-2.0.5.tar
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"
 
 PKG_SECTION="python/security"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 

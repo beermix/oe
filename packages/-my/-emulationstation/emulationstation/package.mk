@@ -11,7 +11,7 @@ PKG_SOURCE_DIR="EmulationStation*"
 PKG_DEPENDS_TARGET="toolchain systemd SDL2 boost freetype curl cmake:host freeimage eigen"
 PKG_SECTION="xmedia/games"
 PKG_SHORTDESC="Emulationstation emulator frontend"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 # theme for Emulationstation

@@ -3,7 +3,7 @@ PKG_VERSION="0.6.0"
 PKG_URL="http://pyxattr.k1024.org/downloads/pyxattr-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host attr"
 PKG_SECTION="python/system"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 pre_configure_target() {

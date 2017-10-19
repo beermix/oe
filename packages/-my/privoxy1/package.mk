@@ -4,7 +4,7 @@ PKG_SITE="https://www.privoxy.org"
 PKG_URL="https://sourceforge.net/projects/ijbswa/files/Sources/3.0.24%20%28stable%29/privoxy-$PKG_VERSION-src.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 configure_target() {

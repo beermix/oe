@@ -14,7 +14,7 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="xmedia/tools"
 PKG_SHORTDESC="service reference tool for VDR"
 PKG_LONGDESC="service reference tool for VDR"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 make_target() {

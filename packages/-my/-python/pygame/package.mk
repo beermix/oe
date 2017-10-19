@@ -4,7 +4,7 @@ PKG_SITE="https://pypi.python.org/pypi/numpy/#downloads"
 PKG_URL="https://pypi.python.org/packages/61/06/3c25051549c252cc6fde01c8aeae90b96831370884504fe428a623316def/pygame-1.9.3.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host freetype SDL"
 PKG_SECTION="python/system"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 make_target() {

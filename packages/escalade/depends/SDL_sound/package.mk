@@ -29,7 +29,7 @@ PKG_DEPENDS_TARGET="toolchain alsa-lib SDL2"
 PKG_SECTION="emulators/depends"
 PKG_SHORTDESC="SDL_sound library"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \

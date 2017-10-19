@@ -24,7 +24,7 @@ PKG_DEPENDS_TARGET="toolchain SDL"
 PKG_SECTION="emulation/depends"
 PKG_SHORTDESC="SDL_net: network library" 
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared"

@@ -24,7 +24,7 @@ PKG_SHORTDESC="protobuf: Protocol Buffers - Google's data interchange format"
 PKG_LONGDESC="protobuf: Protocol Buffers - Google's data interchange format"
 
 PKG_USE_CMAKE="yes"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 PKG_CMAKE_SCRIPT="$PKG_BUILD/cmake/CMakeLists.txt"

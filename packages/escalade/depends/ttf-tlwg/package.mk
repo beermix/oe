@@ -24,7 +24,7 @@ PKG_DEPENDS_TARGET="toolchain util-macros"
 PKG_SECTION="x11/fonts"
 PKG_SHORTDESC="Collection of scalable Thai fonts"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 make_target() {

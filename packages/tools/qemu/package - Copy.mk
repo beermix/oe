@@ -27,7 +27,7 @@ PKG_SECTION="tools"
 PKG_SHORTDESC="QEMU is a generic and open source machine emulator and virtualizer."
 PKG_LONGDESC="QEMU is a generic and open source machine emulator and virtualizer."
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 HOST_CONFIGURE_OPTS="--prefix=$TOOLCHAIN \

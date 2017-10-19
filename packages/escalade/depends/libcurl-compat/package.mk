@@ -24,7 +24,7 @@ PKG_DEPENDS_TARGET="toolchain zlib openssl rtmpdump"
 PKG_SECTION="escalade/depends"
 PKG_SHORTDESC="libcurl without versioned symbols"
 
-PKG_IS_ADDON="no"
+
 PKG_USE_CMAKE="no"
 PKG_AUTORECONF="no"
 

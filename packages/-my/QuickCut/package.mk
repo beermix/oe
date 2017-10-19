@@ -23,7 +23,7 @@ PKG_URL="https://pypi.python.org/packages/source/Q/QuickCut/QuickCut-0.0.1.tar.g
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"
 
 PKG_SECTION="python/system"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 

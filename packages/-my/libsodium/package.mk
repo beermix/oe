@@ -5,7 +5,7 @@ PKG_URL="https://github.com/jedisct1/libsodium/releases/download/$PKG_VERSION/li
 PKG_GIT_BRANCH="stable"
 PKG_DEPENDS_TARGET="toolchain openssl"
 PKG_SECTION="my"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-minimal --with-pic"

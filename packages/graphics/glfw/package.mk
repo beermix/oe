@@ -25,10 +25,10 @@ PKG_SITE="http://glfw.org"
 PKG_URL="$SOURCEFORGE_SRC/glfw/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain mesa glu"
 PKG_SECTION="graphics"
-PKG_SHORTDESC="glfw:"
-PKG_LONGDESC="glfw:"
+PKG_SHORTDESC="provides a simple API for creating windows, contexts and surfaces, receiving input and events"
+PKG_LONGDESC="provides a simple API for creating windows, contexts and surfaces, receiving input and events"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 if [ "$OPENGL" = "no" ] ; then

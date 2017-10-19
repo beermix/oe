@@ -4,7 +4,7 @@ PKG_URL="https://fossies.org/linux/misc/wine-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain glib gmp x11 mesa xorg-server pcre libXcursor freetype fontconfig libjpeg-turbo libpng tiff libdrm glu libexif expat harfbuzz libxcb libXcursor libXrender libX11 x11 libXext libXtst cairo unclutter xdotool  libXScrnSaver libexif libXcomposite libXcursor libXtst libpcap gtk2 gst-plugins-base wine:host"
 PKG_DEPENDS_HOST="freetype:host"
 PKG_SECTION="tools"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--with-wine-tools=$PKG_BUILD/.$HOST_NAME \

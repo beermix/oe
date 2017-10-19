@@ -27,7 +27,7 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="emulation"
 PKG_SHORTDESC="Snes9x - Portable Super Nintendo Entertainment System (TM) emulator"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 pre_build_target() {

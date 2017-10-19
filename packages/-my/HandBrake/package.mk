@@ -5,7 +5,7 @@ PKG_SOURCE_DIR="HandBrake-$PKG_VERSION"
 PKG_BUILD_DEPENDS_TARGET="toolchain openssl ffmpeg libdvdnav lame flac opus"
 
 PKG_SECTION="devel"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 configure_target() {

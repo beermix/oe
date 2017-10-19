@@ -3,7 +3,7 @@ PKG_VERSION="5.3"
 PKG_URL="https://sourceforge.net/projects/zsh/files/zsh/$PKG_VERSION/zsh-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain ncurses libcap pcre readline gdbm libpcap"
 PKG_SECTION="my"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"
 
 CONCURRENCY_MAKE_LEVEL=1

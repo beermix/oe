@@ -29,7 +29,7 @@ PKG_SECTION="network"
 PKG_SHORTDESC="iana-etc: The Iana-Etc package provides data for network services and protocols."
 PKG_LONGDESC="The Iana-Etc package provides data for network services and protocols."
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 post_make_target() {

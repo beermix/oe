@@ -5,7 +5,7 @@ PKG_SOURCE_DIR="$PKG_VERSION*"
 PKG_DEPENDS_TARGET="toolchain readline file"
 
 PKG_SECTION="shell/texteditor"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"
 
 pre_configure_target() {

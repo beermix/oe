@@ -29,7 +29,7 @@ PKG_SECTION="graphics"
 PKG_SHORTDESC="glu: The OpenGL utility library"
 PKG_LONGDESC="libglu is the The OpenGL utility library"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 PKG_CMAKE_OPTS_TARGET="-DENABLE_API_TESTS=OFF \

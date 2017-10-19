@@ -29,7 +29,7 @@ PKG_SECTION="tools"
 PKG_SHORTDESC="led_tools"
 PKG_LONGDESC="LED tools, these are a set of tools to control the LEDs on Slice"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 make_target() {

@@ -28,7 +28,7 @@ PKG_SECTION="network"
 PKG_SHORTDESC="Wireless daemon for Linux"
 PKG_LONGDESC="Wireless daemon for Linux"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/etc/iwd"

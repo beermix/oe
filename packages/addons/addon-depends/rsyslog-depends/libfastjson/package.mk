@@ -26,7 +26,7 @@ PKG_SHORTDESC="libfastjson"
 PKG_LONGDESC="libfastjson"
 
 PKG_AUTORECONF="yes"
-PKG_IS_ADDON="no"
+
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared \
                            ac_cv_func_malloc_0_nonnull=yes \

@@ -27,7 +27,7 @@ PKG_DEPENDS_HOST="ccache:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="toolchain/devel"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 makeinstall_host() {

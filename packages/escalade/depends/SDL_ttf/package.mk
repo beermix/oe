@@ -26,7 +26,7 @@ PKG_DEPENDS_TARGET="toolchain SDL freetype"
 PKG_SECTION="emulators/depends"
 PKG_SHORTDESC="libsdl_ttf: TTF rendering for SDL"
 PKG_LONGDESC="This is a sample library which allows you to use TrueType fonts in your SDL applications."
-PKG_IS_ADDON="no"
+
 PKG_ADDON_TYPE="xbmc.python.pluginsource"
 
 PKG_AUTORECONF="no"

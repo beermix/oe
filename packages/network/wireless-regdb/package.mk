@@ -28,7 +28,7 @@ PKG_SECTION="network"
 PKG_SHORTDESC="wireless-regdb: regulatory database"
 PKG_LONGDESC="wireless-regdb is a regulatory database"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 make_target() {

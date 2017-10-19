@@ -5,7 +5,7 @@ PKG_URL="https://bitbucket.org/multicoreware/x265/downloads/x265_$PKG_VERSION.ta
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SOURCE_DIR="x265_$PKG_VERSION"
 PKG_SECTION="multimedia"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 PKG_USE_NINJA="no"
 

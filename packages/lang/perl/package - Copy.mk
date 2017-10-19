@@ -5,7 +5,7 @@ PKG_SITE="http://www.cpan.org/src/5.0/?C=M;O=D"
 PKG_URL="http://www.cpan.org/src/5.0/perl-${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain openssl gdbm db"
 PKG_SECTION="my"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 pre_configure_target() {

@@ -27,7 +27,7 @@ PKG_SECTION="toolchain/toolchains"
 PKG_SHORTDESC="darwin-cross: darwin gcc etc"
 PKG_LONGDESC="This package contains the GNU Compiler Collection to build for darwin systems"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 post_unpack() {

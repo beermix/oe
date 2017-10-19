@@ -25,7 +25,7 @@ PKG_SECTION="service"
 PKG_SHORTDESC="Emby: a personal media server"
 PKG_LONGDESC="Emby ($PKG_VERSION) brings your home videos, music, and photos together, automatically converting and streaming your media on-the-fly to any device"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 unpack() {

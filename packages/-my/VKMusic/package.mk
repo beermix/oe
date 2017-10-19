@@ -22,7 +22,7 @@ PKG_SITE="https://pypi.python.org/pypi/VKMusic/"
 PKG_URL="https://pypi.python.org/packages/source/V/VKMusic/VKMusic-0.1.3.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"
 PKG_SECTION="python/system"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 pre_make_target() {

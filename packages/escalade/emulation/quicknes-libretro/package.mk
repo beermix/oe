@@ -30,7 +30,7 @@ PKG_SECTION="emulation"
 PKG_SHORTDESC="The QuickNES core library, originally by Shay Green, heavily modified"
 PKG_LONGDESC="The QuickNES core library, originally by Shay Green, heavily modified"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 pre_build_target() {

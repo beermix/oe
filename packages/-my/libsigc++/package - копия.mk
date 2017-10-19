@@ -4,7 +4,7 @@ PKG_SITE="http://libsigc.sourceforge.net"
 PKG_URL="http://ftp.gnome.org/pub/GNOME/sources/libsigc++/2.99/libsigc++-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain boost"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 pre_configure_target() {

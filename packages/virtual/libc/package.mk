@@ -30,7 +30,7 @@ PKG_LONGDESC=""
 PKG_SHORTDESC="libc: Meta package for installing various tools and libs needed for libc"
 PKG_LONGDESC="Meta package for installing various tools and libs needed for libc"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 if [ "$BOOTLOADER" = "bcm2835-bootloader" ]; then

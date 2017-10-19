@@ -25,7 +25,7 @@ PKG_SECTION="libretro"
 PKG_SHORTDESC="libretro wrapper for the DOSBox emulator"
 PKG_LONGDESC="An open source DOS emulator for BeOS, Linux, Mac OS X, OS/2, and Windows. Primarily focuses on running DOS Games."
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 make_target() {

@@ -25,7 +25,7 @@ PKG_SECTION="network"
 PKG_SHORTDESC="ENet's purpose is to provide a relatively thin, simple and robust network communication layer on top of UDP (User Datagram Protocol)"
 PKG_LONGDESC="ENet's purpose is to provide a relatively thin, simple and robust network communication layer on top of UDP (User Datagram Protocol)"
 
-PKG_IS_ADDON="no"
+
 PKG_USE_CMAKE="no"
 PKG_AUTORECONF="yes"
 

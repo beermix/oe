@@ -24,7 +24,7 @@ PKG_DEPENDS_TARGET="toolchain util-linux readline"
 PKG_DEPENDS_INIT="xfsprogs"
 PKG_SECTION="tools"
 PKG_SHORTDESC="xfsprogs: Utilities for use with the xfs filesystem"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 LTO_SUPPORT="yes"

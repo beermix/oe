@@ -5,7 +5,7 @@ PKG_GIT_URL="https://github.com/Taikson/bully"
 #PKG_GIT_URL="https://github.com/aanarchyy/bully"
 PKG_DEPENDS_TARGET="toolchain libpcap"
 PKG_SECTION="my"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 post_unpack() {

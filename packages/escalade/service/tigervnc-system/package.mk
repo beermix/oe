@@ -24,7 +24,7 @@ PKG_DEPENDS_TARGET="toolchain cmake:host libX11 libXdamage libXext libXtst zlib 
 PKG_SECTION="service"
 PKG_SHORTDESC="TigerVNC server"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 PKG_CMAKE_OPTS_TARGET="-DBUILD_VIEWER=off -Wno-dev"

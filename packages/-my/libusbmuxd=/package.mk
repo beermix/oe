@@ -4,7 +4,7 @@ PKG_GIT_URL="https://github.com/libimobiledevice/libusbmuxd"
 PKG_DEPENDS_TARGET="toolchain libplist"
 
 PKG_SECTION="my"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"
 
 

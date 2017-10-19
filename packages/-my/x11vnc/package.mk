@@ -15,7 +15,7 @@ PKG_PRIORITY="optional"
 PKG_SECTION="xmedia/tools"
 PKG_SHORTDESC="x11vnc allows one to view remotely and interact with real X displays"
 PKG_LONGDESC="x11vnc allows one to view remotely and interact with real X displays"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \

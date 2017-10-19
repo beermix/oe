@@ -27,7 +27,7 @@ PKG_DEPENDS_TARGET="toolchain Python distutilscross:host openssl cryptography"
 PKG_SECTION="python/security"
 PKG_SHORTDESC="pyOpenSSL: Python interface to the OpenSSL library"
 PKG_LONGDESC="Python interface to the OpenSSL library. Includes: SSL Context objects, SSL Connection objects, using Python sockets as transport layer. The Connection object wraps all the socket methods and can therefore be used interchangeably."
-PKG_IS_ADDON="no"
+
 
 PKG_AUTORECONF="no"
 

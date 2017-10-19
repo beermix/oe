@@ -30,7 +30,7 @@ PKG_SECTION="security"
 PKG_SHORTDESC="msmtp is an SMTP client."
 PKG_LONGDESC="msmtp is an SMTP client."
 PKG_MAINTAINER="ultraman"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 pre_configure_target() {

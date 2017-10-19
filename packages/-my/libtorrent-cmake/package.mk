@@ -4,7 +4,7 @@ PKG_URL="https://github.com/arvidn/libtorrent/releases/download/libtorrent-1_1_3
 PKG_SOURCE_DIR="libtorrent-rasterbar-1.1.3"
 PKG_DEPENDS_TARGET="toolchain boost zlib bzip2 curl libsigc++"
 PKG_SECTION="devel"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 

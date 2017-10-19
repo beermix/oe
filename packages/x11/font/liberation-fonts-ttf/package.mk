@@ -28,7 +28,7 @@ PKG_SECTION="x11/fonts"
 PKG_SHORTDESC="liberation-fonts: High quality "open-sourced" vector fonts"
 PKG_LONGDESC="This packages included the high-quality and open-sourced TrueType vector fonts released by RedHat."
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 make_target() {

@@ -27,19 +27,17 @@ PKG_DEPENDS_TARGET="toolchain dtc:host"
 PKG_SECTION="linux-firmware"
 PKG_SHORTDESC="BCM270x firmware related stuff for Slice"
 PKG_LONGDESC="BCM270x firmware related stuff for Slice"
-
-PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 make_target() {
   if [ "$DEVICE" = "Slice3" ]; then
-    dtc -O dtb -I dts -o dt-blob.bin slice3-dt-blob.dts
+    $(kernel_path)/scripts/dtc/dtc -O dtb -I dts -o dt-blob.bin slice3-dt-blob.dts
   elif [ "$DEVICE" = "Slice" ]; then
-    dtc -O dtb -I dts -o dt-blob.bin slice-dt-blob.dts
+    $(kernel_path)/scripts/dtc/dtc -O dtb -I dts -o dt-blob.bin slice-dt-blob.dts
   fi
 }
 
 makeinstall_target() {
   mkdir -p $INSTALL/usr/share/bootloader/
-    cp -a dt-blob.bin $INSTALL/usr/share/bootloader/
+    cp -a $PKG_BUILD/dt-blob.bin $INSTALL/usr/share/bootloader/
 }

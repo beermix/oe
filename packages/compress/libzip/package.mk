@@ -24,7 +24,7 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SHORTDESC="libzip"
 PKG_LONGDESC="libzip"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static"

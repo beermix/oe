@@ -22,7 +22,7 @@ PKG_SITE="https://pypi.python.org/pypi/Pykka/"
 PKG_URL="https://pypi.python.org/packages/source/P/Pykka/Pykka-1.2.1.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python2 distutilscross:host"
 PKG_SECTION="python/system"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 

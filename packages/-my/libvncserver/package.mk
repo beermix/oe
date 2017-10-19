@@ -3,7 +3,7 @@ PKG_VERSION="6814e94"
 PKG_GIT_URL="https://github.com/LibVNC/libvncserver"
 PKG_DEPENDS_TARGET="toolchain libpng"
 PKG_SECTION="x11"
-PKG_IS_ADDON="no"
+
 PKG_USE_CMAKE="yes"
 PKG_AUTORECONF="no"
 

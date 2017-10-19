@@ -3,7 +3,7 @@ PKG_VERSION="c1d88f3"
 PKG_GIT_URL="https://github.com/hashcat/hashcat"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="my"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 pre_configure_target() {

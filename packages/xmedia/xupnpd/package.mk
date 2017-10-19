@@ -14,7 +14,7 @@ PKG_DEPENDS_HOST="toolchain"
 PKG_SECTION="xmedia/tools"
 PKG_SHORTDESC="xupnpd - eXtensible UPnP agent"
 PKG_LONGDESC="xupnpd - eXtensible UPnP agent."
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 pre_make_target() {

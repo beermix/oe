@@ -27,7 +27,7 @@ PKG_SECTION="emulation"
 PKG_SHORTDESC="libretro implementation of Doom"
 PKG_LONGDESC="libretro implementation of Doom"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 unpack() {

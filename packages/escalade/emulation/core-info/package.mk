@@ -27,7 +27,7 @@ PKG_SECTION="emulation"
 PKG_SHORTDESC="Info files for libretro cores"
 PKG_LONGDESC="Super repo for other libretro projects. Fetches, builds and installs."
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 

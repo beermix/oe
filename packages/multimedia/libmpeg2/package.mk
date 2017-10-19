@@ -24,7 +24,7 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="libmpeg2: The MPEG Library - version 2"
 PKG_LONGDESC="The MPEG Library is a collection of C routines to decode MPEG-1 and MPEG-2 movies and dither them in a variety of colour schemes."
-PKG_IS_ADDON="no"
+
 
 PKG_AUTORECONF="no"
 

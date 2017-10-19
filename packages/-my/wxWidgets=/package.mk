@@ -3,7 +3,7 @@ PKG_VERSION="3.0.2"
 PKG_SITE="http://www.wxwidgets.org/"
 PKG_URL="ftp://ftp.wxwidgets.org/pub/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain gtk+ expat"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"
 
 

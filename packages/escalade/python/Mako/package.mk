@@ -26,7 +26,7 @@ PKG_DEPENDS_TARGET="toolchain Python2:host distutilscross:host"
 PKG_DEPENDS_HOST="$PKG_DEPENDS_TARGET"
 PKG_SECTION="python/devel"
 PKG_SHORTDESC="Hyperfast and lightweight templating for the Python platform."
-PKG_IS_ADDON="no"
+
 
 PKG_AUTORECONF="no"
 

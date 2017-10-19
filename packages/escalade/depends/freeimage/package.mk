@@ -25,7 +25,7 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="emulators/depends"
 PKG_SHORTDESC="FreeImage library"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 pre_make_target() {

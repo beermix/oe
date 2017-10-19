@@ -26,7 +26,7 @@ PKG_DEPENDS_TARGET="toolchain zlib glib"
 PKG_SECTION="depends"
 PKG_SHORTDESC="gconf"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 post_unpack() {

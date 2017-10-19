@@ -5,7 +5,7 @@ PKG_BUILD_DEPENDS_TARGET="toolchain ncurses acl libunwind attr"
 #PKG_BUILD_DEPENDS_TARGET="toolchain ncurses grep openssl libcap attr libunwind"
 
 PKG_SECTION="my"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"
 
 

@@ -14,7 +14,7 @@ PKG_DEPENDS_TARGET="toolchain zlib pcre curl libxml2 openssl libxslt libiconv"
 PKG_SECTION="xmedia/tools"
 PKG_SHORTDESC="php: Scripting language especially suited for Web development"
 PKG_LONGDESC="PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML."
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"
 
 post_unpack() {

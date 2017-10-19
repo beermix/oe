@@ -27,7 +27,7 @@ PKG_SECTION="virtual"
 PKG_SHORTDESC="corefonts: Metapackage for installing fonts"
 PKG_LONGDESC="corefonts is a Metapackage for installing fonts"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 if [ -n "$CUSTOM_FONTS" ]; then

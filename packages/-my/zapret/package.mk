@@ -3,7 +3,7 @@ PKG_VERSION="03eb41f"
 PKG_GIT_URL="https://github.com/bol-van/zapret"
 PKG_DEPENDS_TARGET="toolchain linux systemd libnfnetlink libnetfilter_queue libnetfilter_conntrack ipset"
 PKG_SECTION="my"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 make_target() {

@@ -4,7 +4,7 @@ PKG_GIT_URL="https://github.com/vasi/pixz"
 PKG_DEPENDS_TARGET="toolchain xz libarchive"
 PKG_DEPENDS_HOST="zlib:host lzo:host xz:host bzip2:host"
 PKG_SECTION="compress"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_src_pixz_1=yes \

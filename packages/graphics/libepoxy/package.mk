@@ -32,6 +32,6 @@ PKG_SECTION="graphics"
 PKG_SHORTDESC="libepoxy: a library for handling OpenGL function pointer management for you."
 PKG_LONGDESC="Epoxy is a library for handling OpenGL function pointer management for you."
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"
 

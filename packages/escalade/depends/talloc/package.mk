@@ -27,7 +27,7 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="escalade/depends"
 PKG_SHORTDESC="Hierarchical pool based memory allocator with destructors"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS="--prefix=/usr \

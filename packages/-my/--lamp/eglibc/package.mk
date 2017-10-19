@@ -29,7 +29,7 @@ PKG_PRIORITY="optional"
 PKG_SECTION="virtual"
 PKG_SHORTDESC="eglibc: The Embedded GNU C library"
 KG_LONGDESC="The Embedded GLIBC (EGLIBC) is a variant of the GNU C Library (GLIBC) that is designed to work well on embedded systems. EGLIBC strives to be source and binary compatible with GLIBC. EGLIBCs goals include reduced footprint, configurable components, better support for cross-compilation and cross-testing. In contrast to what Ulrich Drepper makes out of GLIBC, in EGLIBC all patches assigned to the FSF will be considered regardless of individual or company affiliation and cooperation is encouraged, as well as communication, civility, and respect among developers."
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 # don't build here - used by eglibc-localedef:host

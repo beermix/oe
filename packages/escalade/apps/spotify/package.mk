@@ -25,7 +25,7 @@ PKG_DEPENDS_TARGET="toolchain gtk+ libX11 openssl-compat libcurl-compat freetype
 PKG_SECTION="apps"
 PKG_SHORTDESC="A proprietary music streaming service"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 make_target() {

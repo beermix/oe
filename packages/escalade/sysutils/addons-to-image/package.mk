@@ -25,7 +25,7 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="system"
 PKG_SHORTDESC="create addons and copy them to image"
 PKG_LONGDESC="create addons and copy them to image"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 PKG_ADDONS_INCLUDE=""
 

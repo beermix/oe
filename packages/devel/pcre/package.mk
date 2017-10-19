@@ -25,7 +25,7 @@ PKG_URL="http://ftp.csx.cam.ac.uk/pub/software/programming/pcre/$PKG_NAME-$PKG_V
 PKG_DEPENDS_HOST="zlib:host"
 PKG_DEPENDS_TARGET="toolchain zlib"
 PKG_SECTION="devel"
-PKG_IS_ADDON="no"
+
 PKG_USE_CMAKE="no"
 PKG_AUTORECONF="no"
 

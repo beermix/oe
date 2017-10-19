@@ -4,7 +4,7 @@ PKG_URL="https://www.cl.cam.ac.uk/~mgk25/jbigkit/download/jbigkit-2.1.tar.gz"
 PKG_DEPENDS_TARGET="toolchain ncurses"
 
 PKG_SECTION="python/system"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 

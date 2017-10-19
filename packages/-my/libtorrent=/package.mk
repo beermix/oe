@@ -4,7 +4,7 @@ PKG_SITE="http://libtorrent.rakshasa.no"
 PKG_URL="http://rtorrent.net/downloads/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain openssl curl zlib ncurses libsigc++"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"
 
 

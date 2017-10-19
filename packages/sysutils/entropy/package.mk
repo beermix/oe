@@ -27,7 +27,7 @@ PKG_SECTION="system"
 PKG_SHORTDESC="A simple way to add entropy at boot"
 PKG_LONGDESC="A simple way to add entropy at boot"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 make_target(){

@@ -26,7 +26,7 @@ PKG_DEPENDS_INIT="btrfs-progs"
 PKG_SECTION="tools"
 PKG_SHORTDESC="f2fs-tools: Utilities for use with the f2fs filesystem"
 PKG_LONGDESC="The filesystem utilities for the f2fs filesystem"
-PKG_IS_ADDON="no"
+
 
 PKG_AUTORECONF="no"
 

@@ -3,7 +3,7 @@ PKG_VERSION="230"
 PKG_URL="http://ftp.acc.umu.se/pub/GNOME/sources/libgudev/$PKG_VERSION/libgudev-$PKG_VERSION.tar.xz"
 PKG_BUILD_DEPENDS_TARGET="toolchain glib"
 PKG_SECTION="devel"
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"
 
 pre_configure_target() {

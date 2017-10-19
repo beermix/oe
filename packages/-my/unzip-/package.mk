@@ -3,7 +3,7 @@ PKG_VERSION="6.0"
 PKG_URL="http://ftpmirror.gnu.org/tar/tar-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"
 
 CFLAGS="$CFLAGS -fPIC -DPIC"

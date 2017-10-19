@@ -27,7 +27,7 @@ PKG_SECTION="graphics"
 PKG_SHORTDESC="VDPAU backend for VA API"
 PKG_LONGDESC="VDPAU backend for VA API"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="yes"
 
 post_makeinstall_target() {

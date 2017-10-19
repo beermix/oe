@@ -28,7 +28,7 @@ PKG_SECTION="system"
 PKG_SHORTDESC="bkeymaps: binary keyboard maps for busybox"
 PKG_LONGDESC="bkeymaps: binary keyboard maps for busybox"
 
-PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
 make_target() {
