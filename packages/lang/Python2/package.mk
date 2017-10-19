@@ -119,7 +119,7 @@ makeinstall_target() {
 }
 
 post_makeinstall_target() {
-  for dir in bsddb idlelib lib-tk lib2to3 msilib pydoc_data; do
+  for dir in bsddb idlelib lib-tk lib2to3 msilib pydoc_data test; do
     rm -rf $INSTALL/usr/lib/python*/$dir
   done
 
