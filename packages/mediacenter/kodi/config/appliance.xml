@@ -8,7 +8,7 @@
           <visible>false</visible>
         </setting>
         <setting id="videoscreen.limitedrange">
-          <level>1</level>
+          <level>0</level>
         </setting>
       </group>
       <group id="3">
