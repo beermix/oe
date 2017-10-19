@@ -21,18 +21,18 @@
 ################################################################################
 
   # create directories
-  /usr/bin/busybox mkdir -p /dev
-  /usr/bin/busybox mkdir -p /proc
-  /usr/bin/busybox mkdir -p /sys
-  /usr/bin/busybox mkdir -p /tmp
-  /usr/bin/busybox mkdir -p /flash
-  /usr/bin/busybox mkdir -p /sysroot
-  /usr/bin/busybox mkdir -p /storage
+  /bin/busybox mkdir -p /dev
+  /bin/busybox mkdir -p /proc
+  /bin/busybox mkdir -p /sys
+  /bin/busybox mkdir -p /tmp
+  /bin/busybox mkdir -p /flash
+  /bin/busybox mkdir -p /sysroot
+  /bin/busybox mkdir -p /storage
 
   # mount all needed special filesystems
-  /usr/bin/busybox mount -t devtmpfs devtmpfs /dev
-  /usr/bin/busybox mount -t proc proc /proc
-  /usr/bin/busybox mount -t sysfs sysfs /sys
+  /bin/busybox mount -t devtmpfs devtmpfs /dev
+  /bin/busybox mount -t proc proc /proc
+  /bin/busybox mount -t sysfs sysfs /sys
 
   # common functions
   . /functions
@@ -575,16 +575,16 @@
     sync
 
     # unmount filesystems
-    if /usr/bin/busybox mountpoint -q /flash ; then
-      /usr/bin/busybox umount /flash
+    if /bin/busybox mountpoint -q /flash ; then
+      /bin/busybox umount /flash
     fi
 
-    if /usr/bin/busybox mountpoint -q /storage ; then
-      /usr/bin/busybox umount /storage
+    if /bin/busybox mountpoint -q /storage ; then
+      /bin/busybox umount /storage
     fi
 
     usleep 2000000
-    /usr/bin/busybox reboot
+    /bin/busybox reboot
   }
 
   force_fsck() {
@@ -1086,10 +1086,10 @@
     fi
   done
   # move some special filesystems
-  /usr/bin/busybox mount --move /dev /sysroot/dev
-  /usr/bin/busybox mount --move /proc /sysroot/proc
-  /usr/bin/busybox mount --move /sys /sysroot/sys
-  /usr/bin/busybox rm -fr /tmp
+  /bin/busybox mount --move /dev /sysroot/dev
+  /bin/busybox mount --move /proc /sysroot/proc
+  /bin/busybox mount --move /sys /sysroot/sys
+  /bin/busybox rm -fr /tmp
 
   # tell OE settings addon to disable updates
   if [ "$UPDATE_DISABLED" = "yes" ] ; then
@@ -1114,6 +1114,6 @@
   fi
 
   # switch to new sysroot and start real init
-  exec /usr/bin/busybox switch_root /sysroot /usr/lib/systemd/systemd $INIT_ARGS $INIT_UNIT
+  exec /bin/busybox switch_root /sysroot /usr/lib/systemd/systemd $INIT_ARGS $INIT_UNIT
 
   error "switch_root" "Error in initramfs. Could not switch to new root"

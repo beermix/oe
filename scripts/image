@@ -110,7 +110,7 @@ mkdir -p $INSTALL/var
 mkdir -p $INSTALL/flash
 mkdir -p $INSTALL/storage
 ln -sf /var/media $INSTALL/media
-#ln -sf /usr/lib $INSTALL/lib
+ln -sf /usr/lib $INSTALL/lib
 #ln -sf /usr/bin $INSTALL/bin
 #ln -sf /usr/sbin $INSTALL/sbin
 
