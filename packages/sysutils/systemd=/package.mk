@@ -17,8 +17,7 @@
 ################################################################################
 
 PKG_NAME="systemd"
-PKG_VERSION="233"
-PKG_SHA256="8b3e99da3d4164b66581830a7f2436c0c8fe697b5fbdc3927bdb960646be0083"
+PKG_VERSION="234"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/systemd"
@@ -27,6 +26,8 @@ PKG_DEPENDS_TARGET="toolchain libcap kmod util-linux entropy"
 PKG_SECTION="system"
 PKG_SHORTDESC="systemd: a system and session manager"
 PKG_LONGDESC="systemd is a system and session manager for Linux, compatible with SysV and LSB init scripts. systemd provides aggressive parallelization capabilities, uses socket and D-Bus activation for starting services, offers on-demand starting of daemons, keeps track of processes using Linux cgroups, supports snapshotting and restoring of the system state, maintains mount and automount points and implements an elaborate transactional dependency-based service control logic. It can work as a drop-in replacement for sysvinit."
+
+
 PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
@@ -141,7 +142,6 @@ post_makeinstall_target() {
 
   # remove Network adaper renaming rule, this is confusing
   rm -rf $INSTALL/usr/lib/udev/rules.d/80-net-setup-link.rules
-
   # remove the uaccess rules as we don't build systemd with ACL (see https://github.com/systemd/systemd/issues/4107)
   rm -rf $INSTALL/usr/lib/udev/rules.d/70-uaccess.rules
   rm -rf $INSTALL/usr/lib/udev/rules.d/71-seat.rules
@@ -205,7 +205,6 @@ post_makeinstall_target() {
 
   mkdir -p $INSTALL/usr/sbin
   cp $PKG_DIR/scripts/kernel-overlays-setup $INSTALL/usr/sbin
-
   # provide 'halt', 'shutdown', 'reboot' & co.
   ln -sf /usr/bin/systemctl $INSTALL/usr/sbin/halt
   ln -sf /usr/bin/systemctl $INSTALL/usr/sbin/poweroff

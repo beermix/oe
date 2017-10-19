@@ -1,6 +1,7 @@
+#!/bin/sh
 ################################################################################
-#      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2016-present Team LibreELEC
+#      This file is part of LibreELEC - http://www.libreelec.tv
+#      Copyright (C) 2017 Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,22 +17,10 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="minizip"
-PKG_VERSION="1.1"
-PKG_SHA256="5666b5ee3e85dfd2dd119970613c12e6267d31813f07d3ffa5d359fe272cb6d1"
-PKG_ARCH="any"
-PKG_LICENSE="zlib"
-PKG_SITE="https://github.com/nmoinvaz/minizip"
-PKG_URL="https://github.com/nmoinvaz/minizip/archive/$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="zlib"
-PKG_SECTION="compress"
-PKG_SHORTDESC="Minizip zlib contribution fork with latest bug fixes"
-PKG_LONGDESC="Minizip zlib contribution fork with latest bug fixes"
+# Remove those sample files that we manage
+for sample in $(find /storage/.config -name '*.sample' 2>/dev/null); do
+  [ -f /usr/config/${sample:16} ] && rm -f ${sample}
+done
 
-PKG_CMAKE_OPTS_TARGET="-DUSE_AES=OFF \
-                       -DBUILD_TEST=ON"
-
-makeinstall_target() {
-  cp -v miniunz_exec $SYSROOT_PREFIX/usr/bin/miniunz
-  cp -v minizip_exec $SYSROOT_PREFIX/usr/bin/minizip
-}
+# Copy config files, but don't overwrite - this should replace our sample files
+false | cp -iRp /usr/config/* /storage/.config/ &>/dev/null
