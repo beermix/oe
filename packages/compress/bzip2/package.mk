@@ -28,8 +28,6 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="compress"
 PKG_SHORTDESC="bzip2 data compressor"
 PKG_LONGDESC="bzip2 is a freely available, patent free (see below), high-quality data compressor. It typically compresses files to within 10% to 15% of the best available techniques (the PPM family of statistical compressors), whilst being around twice as fast at compression and six times faster at decompression."
-
-
 PKG_AUTORECONF="no"
 
 pre_build_host() {
@@ -58,7 +56,6 @@ pre_make_target() {
 
 make_target() {
   make -f Makefile-libbz2_so CC=$CC CFLAGS="$CFLAGS -fPIC -DPIC"
-  make -f Makefile libbz2.a bzip2 bzip2recover CC="$CC" CFLAGS="$CFLAGS -fPIC -DPIC"
 }
 
 post_make_target() {
@@ -70,14 +67,7 @@ makeinstall_target() {
     cp bzlib.h $SYSROOT_PREFIX/usr/include
   mkdir -p $SYSROOT_PREFIX/usr/lib
     cp -P libbz2.so* $SYSROOT_PREFIX/usr/lib
-    cp libbz2.a $SYSROOT_PREFIX/usr/lib
 
   mkdir -p $INSTALL/usr/lib
     cp -P libbz2.so* $INSTALL/usr/lib
-    
-  mkdir -p $INSTALL/usr/bin
-    cp -P bzdiff $INSTALL/usr/bin
-    cp -P bzgrep $INSTALL/usr/bin
-    cp -P bzip2 $INSTALL/usr/bin
-    cp -P bzmore $INSTALL/usr/bin
 }

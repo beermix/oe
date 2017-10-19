@@ -18,6 +18,7 @@
 
 PKG_NAME="vdr-plugin-vnsiserver"
 PKG_VERSION="615a077"
+PKG_SHA256="7a3fcacd4113d5352a14b7172260da32d1c0621de9e4eb6d3eb0cb64be968154"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/FernetMenta/vdr-plugin-vnsiserver"
@@ -26,8 +27,6 @@ PKG_DEPENDS_TARGET="toolchain vdr"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="TV"
 PKG_LONGDESC="TV"
-
-
 PKG_AUTORECONF="no"
 
 make_target() {

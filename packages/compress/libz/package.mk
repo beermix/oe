@@ -1,8 +1,0 @@
-PKG_NAME="libz"
-PKG_VERSION=""
-PKG_URL=""
-PKG_DEPENDS_TARGET="zlib"
-PKG_DEPENDS_HOST="zlib:host"
-PKG_SECTION="virtual"
-
-PKG_AUTORECONF="no"

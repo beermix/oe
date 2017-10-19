@@ -20,6 +20,9 @@
 
 PKG_NAME="tstools"
 PKG_VERSION="1.11"
+PKG_SHA256="4e207ad7298ec421c6710e3024147b486320d792cec2dbd34efb7e6d9e96230a"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://tstools.berlios.de/"
 PKG_URL="$SOURCEFORGE_SRC/project/tstools.berlios/tstools-1_11.tgz"
 PKG_DEPENDS_TARGET="toolchain"

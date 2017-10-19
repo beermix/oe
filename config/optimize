@@ -1,12 +1,5 @@
-if [ "$OPTIMIZATIONS" = hard ];then
-  GCC_OPTIM="-O2 -pipe"
-  LD_OPTIM="-Wl,--as-needed"
-fi
-
-if [ "$OPTIMIZATIONS" = normal ];then
-  GCC_OPTIM="-O2 -pipe -fstack-protector-strong -D_FORTIFY_SOURCE=2 -fno-plt"
-  LD_OPTIM="-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now"
-fi
+GCC_OPTIM="-O2"
+LD_OPTIM="-Wl,--as-needed"
 
 if [ "$LTO_SUPPORT" = yes ];then
   GCC_OPTIM_LTO="-flto -ffat-lto-objects"
@@ -28,14 +21,14 @@ else
 fi
 
 TARGET_CPPFLAGS=
-TARGET_CFLAGS="$TARGET_CFLAGS $GCC_OPTIM $GCC_OPTIM_LTO $PROJECT_CFLAGS"
+TARGET_CFLAGS="$TARGET_CFLAGS -Wall -pipe $GCC_OPTIM $GCC_OPTIM_LTO $PROJECT_CFLAGS"
 TARGET_CXXFLAGS="$TARGET_CFLAGS"
 TARGET_LDFLAGS="$TARGET_LDFLAGS $LD_OPTIM $LD_OPTIM_GOLD $LD_OPTIM_LTO"
 TARGET_LIBDIR="$SYSROOT_PREFIX/lib $SYSROOT_PREFIX/usr/lib"
 TARGET_INCDIR="$SYSROOT_PREFIX/include $SYSROOT_PREFIX/usr/include"
 
 HOST_CPPFLAGS=""
-HOST_CFLAGS="-O2 -pipe -I$TOOLCHAIN/include"
+HOST_CFLAGS="-O2 -Wall -pipe -I$TOOLCHAIN/include"
 HOST_CXXFLAGS="$HOST_CFLAGS"
 HOST_LDFLAGS="-Wl,-rpath,$TOOLCHAIN/lib -L$TOOLCHAIN/lib -s"
 HOST_INCDIR="$TOOLCHAIN/include /usr/include"

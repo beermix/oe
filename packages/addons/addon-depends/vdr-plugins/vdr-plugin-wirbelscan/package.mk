@@ -18,6 +18,7 @@
 
 PKG_NAME="vdr-plugin-wirbelscan"
 PKG_VERSION="0.0.9"
+PKG_SHA256="731137512de0047e7514f72b04c4e8f938c773ea7873c9281b5937e7413d2dc9"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://wirbel.htpc-forum.de/wirbelscan/index2.html"
@@ -27,8 +28,6 @@ PKG_DEPENDS_TARGET="toolchain vdr"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="TV"
 PKG_LONGDESC="TV"
-
-
 PKG_AUTORECONF="no"
 
 pre_configure_target() {
@@ -47,4 +46,3 @@ make_target() {
 makeinstall_target() {
   : # installation not needed, done by create-addon script
 }
-

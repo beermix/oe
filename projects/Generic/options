@@ -10,7 +10,8 @@
         #               athlon-fx amdfam10 barcelona
         # (Intel CPUs)  atom core2 nocona
         #
-        TARGET_CPU="core-avx-i"
+        TARGET_CPU="x86-64"
+        TARGET_FEATURES="64bit"
         ;;
     esac
 
@@ -37,7 +38,7 @@
 
   # Kernel to use. values can be:
   # default:  default mainline kernel
-#    LINUX="rc"
+    LINUX="default"
 
 
 ################################################################################
@@ -52,7 +53,8 @@
     PROJECT_CFLAGS="-mmmx -msse -msse2 -msse3 -msse4 -msse4.1 -msse4.2 -mavx -mfpmath=sse"
 
   # SquashFS compression method ( gzip / lzo / xz / lz4 / zstd )
-    SQUASHFS_COMPRESSION="zstd"
+    SQUASHFS_COMPRESSION="gzip"
+
 
 ################################################################################
 # setup project defaults

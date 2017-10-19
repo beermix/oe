@@ -12,7 +12,7 @@
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
 #
-#  You should have received a copy of the GNU General Public License libirman
+#  You should have received a copy of the GNU General Public License
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
@@ -26,8 +26,6 @@ PKG_DEPENDS_TARGET="toolchain eventlircd v4l-utils"
 PKG_SECTION="virtual"
 PKG_SHORTDESC="remote: Meta package for installing various tools needed for remote support"
 PKG_LONGDESC="Meta package for installing various tools needed for remote support"
-
-
 PKG_AUTORECONF="no"
 
 if [ "$ATVCLIENT_SUPPORT" = "yes" ]; then

@@ -9,10 +9,6 @@
 # prebuild target binarys to provide
 /target/
 
-# scripts for getting and packing source packages
-/tools/mkpkg/*
-!/tools/mkpkg/mkpkg_*
-
 # mkpkg temp
 mkpkg-temp
 
@@ -23,14 +19,12 @@ mkpkg-temp
 /sources
 /.work
 
+# ccache
+/.ccache/
+
 # backup files
 *.orig
 
 # crap
 .DS_Store
-
-.git
-ltmain.sh
-/tmp/
-cpack
-*OE-Generic*
+.directory

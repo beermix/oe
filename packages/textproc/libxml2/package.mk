@@ -17,7 +17,8 @@
 ################################################################################
 
 PKG_NAME="libxml2"
-PKG_VERSION="2.9.5"
+PKG_VERSION="2.9.4"
+PKG_SHA256="ffb911191e509b966deb55de705387f14156e1a56b21824357cdf0053233633c"
 PKG_ARCH="any"
 PKG_LICENSE="MIT"
 PKG_SITE="http://xmlsoft.org"
@@ -32,8 +33,8 @@ PKG_AUTORECONF="no"
 PKG_CONFIGURE_OPTS_ALL="ac_cv_header_ansidecl_h=no \
              --enable-static \
              --enable-shared \
-             --enable-silent-rules \
-             --disable-ipv6 \
+             --disable-silent-rules \
+             --enable-ipv6 \
              --without-python \
              --with-zlib=$TOOLCHAIN \
              --without-lzma"

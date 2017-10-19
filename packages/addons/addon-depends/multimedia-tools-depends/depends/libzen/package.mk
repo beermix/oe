@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2016 Team LibreELEC
+#      Copyright (C) 2016-present Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,7 +17,10 @@
 ################################################################################
 
 PKG_NAME="libzen"
-PKG_VERSION="0.4.36"
+PKG_VERSION="0.4.33"
+PKG_SHA256="a289197a24ca94c506abab3113a1af2dcc82bc97736b23e02fd57ca99e8ac55f"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://mediaarea.net/en/MediaInfo/"
 PKG_URL="http://mediaarea.net/download/source/libzen/$PKG_VERSION/libzen_$PKG_VERSION.tar.bz2"
 PKG_SOURCE_DIR="ZenLib"
@@ -25,7 +28,6 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="MediaInfo is a convenient unified display of the most relevant technical and tag data for video and audio files"
 PKG_LONGDESC="MediaInfo is a convenient unified display of the most relevant technical and tag data for video and audio files"
-
 PKG_AUTORECONF="no"
 
 make_target() {

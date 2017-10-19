@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2016 Team LibreELEC
+#      Copyright (C) 2016-present Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
 
 PKG_NAME="network-tools"
 PKG_VERSION=""
-PKG_REV="100"
+PKG_REV="101"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE=""
@@ -104,6 +104,4 @@ addon() {
     ln -s iwmulticall $ADDON_BUILD/$PKG_ADDON_ID/bin/iwlist
     ln -s iwmulticall $ADDON_BUILD/$PKG_ADDON_ID/bin/iwspy
     ln -s iwmulticall $ADDON_BUILD/$PKG_ADDON_ID/bin/iwpriv
-
-  debug_strip $ADDON_BUILD/$PKG_ADDON_ID/bin
 }

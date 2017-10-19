@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2016 Team LibreELEC
+#      Copyright (C) 2016-present Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 
 PKG_NAME="bchunk"
 PKG_VERSION="1.2.0"
+PKG_SHA256="afdc9d5e38bdd16f0b8b9d9d382b0faee0b1e0494446d686a08b256446f78b5d"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://he.fi/bchunk/"
@@ -26,8 +27,6 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="system"
 PKG_SHORTDESC="binchunker converts a CD image in a .bin / .cue format (sometimes .raw / .cue) to a set of .iso and .cdr tracks"
 PKG_LONGDESC="binchunker converts a CD image in a .bin / .cue format (sometimes .raw / .cue) to a set of .iso and .cdr tracks"
-
-
 PKG_AUTORECONF="no"
 
 makeinstall_target() {
