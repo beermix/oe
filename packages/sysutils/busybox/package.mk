@@ -14,7 +14,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+################################################################################ unrar
 
 PKG_NAME="busybox"
 PKG_VERSION="1.27.2"
@@ -24,7 +24,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://www.busybox.net"
 PKG_URL="http://busybox.net/downloads/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain busybox:host hdparm dosfstools e2fsprogs zip unzip zlib unrar pciutils usbutils parted procps-ng gptfdisk psmisc findutils grep gawk coreutils bash less tar"
+PKG_DEPENDS_TARGET="toolchain busybox:host hdparm dosfstools e2fsprogs zip unzip zlib pciutils usbutils parted procps-ng gptfdisk psmisc findutils grep gawk coreutils bash less tar"
 PKG_DEPENDS_INIT="toolchain"
 PKG_PRIORITY="required"
 PKG_SECTION="system"
@@ -34,16 +34,16 @@ PKG_LONGDESC="BusyBox combines tiny versions of many common UNIX utilities into 
 
 PKG_AUTORECONF="no"
 
-PKG_MAKE_OPTS_HOST="ARCH=$TARGET_ARCH CROSS_COMPILE= KBUILD_VERBOSE=1 install"
+PKG_MAKE_OPTS_HOST="ARCH=$TARGET_ARCH CROSS_COMPILE= KBUILD_VERBOSE=0 install"
 PKG_MAKE_OPTS_TARGET="ARCH=$TARGET_ARCH \
                       HOSTCC=$HOST_CC \
                       CROSS_COMPILE=$TARGET_PREFIX \
-                      KBUILD_VERBOSE=1 \
+                      KBUILD_VERBOSE=0 \
                       install"
 PKG_MAKE_OPTS_INIT="ARCH=$TARGET_ARCH \
                     HOSTCC=$HOST_CC \
                     CROSS_COMPILE=$TARGET_PREFIX \
-                    KBUILD_VERBOSE=1 \
+                    KBUILD_VERBOSE=0 \
                     install"
 
 # nano text editor
@@ -170,6 +170,11 @@ makeinstall_target() {
     cp $PKG_DIR/scripts/fs-resize $INSTALL/usr/lib/libreelec
     sed -e "s/@DISTRONAME@/$DISTRONAME/g" \
         -i $INSTALL/usr/lib/libreelec/fs-resize
+
+    #rm $INSTALL/usr/bin/sh
+    #rm $INSTALL/usr/bin/hostname
+    #rm $INSTALL/usr/sbin/ip
+   # rm $INSTALL/usr/bin/bash
 
   mkdir -p $INSTALL/etc
     cp $PKG_DIR/config/profile $INSTALL/etc

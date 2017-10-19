@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="connman"
-PKG_VERSION="d9a19bb"
+PKG_VERSION="22a9e38"
 PKG_SITE="http://www.connman.net"
 #PKG_GIT_URL="git://git.kernel.org/pub/scm/network/connman/connman.git"
 PKG_URL="https://git.kernel.org/pub/scm/network/connman/connman.git/snapshot/$PKG_NAME-$PKG_VERSION.tar.gz"
