@@ -174,7 +174,7 @@ makeinstall_target() {
     #rm $INSTALL/usr/bin/sh
     #rm $INSTALL/usr/bin/hostname
     #rm $INSTALL/usr/sbin/ip
-   # rm $INSTALL/usr/bin/bash
+    rm $INSTALL/usr/bin/bash
 
   mkdir -p $INSTALL/etc
     cp $PKG_DIR/config/profile $INSTALL/etc
