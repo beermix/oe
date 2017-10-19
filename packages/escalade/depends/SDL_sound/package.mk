@@ -23,13 +23,13 @@ PKG_VERSION="719dade41745"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://www.icculus.org/SDL_sound/"
-PKG_URL="http://hg.icculus.org/icculus/SDL_sound"
+PKG_URL="http://hg.icculus.org/icculus/SDL_sound/archive/$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="SDL_sound-$PKG_VERSION"
 PKG_DEPENDS_TARGET="toolchain alsa-lib SDL2"
 PKG_SECTION="emulators/depends"
 PKG_SHORTDESC="SDL_sound library"
 
-
+PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \

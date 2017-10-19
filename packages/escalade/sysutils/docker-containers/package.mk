@@ -19,12 +19,13 @@
 PKG_NAME="docker-containers"
 PKG_VERSION="1.0"
 PKG_ARCH="x86_64"
+PKG_LICENSE="GPL"
 PKG_SITE="https://plex.tv"
 PKG_DEPENDS_TARGET="toolchain docker-system"
 PKG_SECTION="service"
 PKG_SHORTDESC="Scripts to run my Docker containers"
 PKG_AUTORECONF="no"
-
+PKG_IS_ADDON="no"
 
 make_target() {
   :

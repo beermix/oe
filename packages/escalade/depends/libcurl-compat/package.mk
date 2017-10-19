@@ -18,13 +18,15 @@
 
 PKG_NAME="libcurl-compat"
 PKG_VERSION="7.56.0"
+PKG_ARCH="any"
+PKG_LICENSE="MIT"
 PKG_SITE="http://curl.haxx.se"
 PKG_URL="http://curl.haxx.se/download/curl-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain zlib openssl rtmpdump"
 PKG_SECTION="escalade/depends"
 PKG_SHORTDESC="libcurl without versioned symbols"
 
-
+PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
 PKG_AUTORECONF="no"
 
@@ -53,7 +55,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            --disable-gopher \
                            --disable-manual \
                            --enable-libgcc \
-                           --disable-ipv6 \
+                           --enable-ipv6 \
                            --disable-versioned-symbols \
                            --enable-nonblocking \
                            --enable-threaded-resolver \
@@ -84,7 +86,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
 
 unpack() {
   mkdir -p $BUILD/$PKG_NAME-$PKG_VERSION ; cd $BUILD/$PKG_NAME-$PKG_VERSION
-  tar -jxf $SOURCES/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.bz2
+  tar -jxf $ROOT/$SOURCES/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.bz2
   mv curl-$PKG_VERSION/* .
   rm -rf curl-$PKG_VERSION
   cd -
@@ -92,14 +94,10 @@ unpack() {
 
 pre_configure_target() {
 # link against librt because of undefined reference to 'clock_gettime'
-  export LIBS="-lrt -lm -lrtmp"
-}
-
-post_configure_target() {
-  $SED "s:CURL_OPENSSL_4:CURL_OPENSSL_3:" lib/libcurl.vers
+  export LIBS="-lrt -lm"
 }
 
 makeinstall_target() {
   mkdir -p $INSTALL/usr/lib
-  cp lib/.libs/libcurl.so.4.4.0 $INSTALL/usr/lib/libcurl-compat.so
+  cp lib/.libs/libcurl.so.?.?.0 $INSTALL/usr/lib/libcurl-compat.so
 }

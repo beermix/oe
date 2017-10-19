@@ -39,17 +39,26 @@ makeinstall_host() {
   python setup.py install --prefix=$TOOLCHAIN
 }
 
-make_target() {
-  : # nothing todo
+configure_target() {
+  :
 }
 
-makeinstall_target() {
-  python setup.py install --root=$INSTALL --prefix=/usr
+pre_configure_target() {
+  :
 }
 
 post_makeinstall_target() {
-  find $INSTALL/usr/lib -name "*.py" -exec rm -rf "{}" ";"
-  rm -rf $INSTALL/usr/bin
-  rm -rf $INSTALL/usr/lib/python*/site-packages/*/tests
-  rm -rf $INSTALL/usr/lib/python*/site-packages/*.egg-info
+  :
+}
+
+make_target() {
+  :
+}
+
+post_make_target() {
+  :
+}
+
+makeinstall_target() {
+  :
 }

@@ -19,14 +19,15 @@
 PKG_NAME="reicast-libretro"
 PKG_VERSION="3ea9f94"
 PKG_ARCH="x86_64 arm"
+PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/reicast-emulator"
-PKG_GIT_URL="https://github.com/libretro/reicast-emulator"
+PKG_URL="https://github.com/libretro/reicast-emulator/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="libretro"
 PKG_SHORTDESC="Reicast is a multiplatform Sega Dreamcast emulator"
 PKG_LONGDESC="Reicast is a multiplatform Sega Dreamcast emulator"
 
-
+PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 post_unpack() {

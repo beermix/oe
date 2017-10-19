@@ -20,16 +20,18 @@
 
 PKG_NAME="core-info"
 PKG_VERSION="ccf69a7"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/libretro/libretro-super"
-PKG_GIT_URL="https://github.com/libretro/libretro-super"
+PKG_URL="https://github.com/libretro/libretro-super/archive/$PKG_VERSION.tar.gz"
+PKG_SOURCE_DIR="libretro-super-$PKG_VERSION*"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="emulation"
 PKG_SHORTDESC="Info files for libretro cores"
 PKG_LONGDESC="Super repo for other libretro projects. Fetches, builds and installs."
 
-
+PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
-
 
 make_target() {
   :

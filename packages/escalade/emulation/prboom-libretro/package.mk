@@ -20,14 +20,16 @@
 
 PKG_NAME="prboom-libretro"
 PKG_VERSION="b326bff"
+PKG_ARCH="any"
+PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/libretro-prboom"
-PKG_GIT_URL="https://github.com/libretro/libretro-prboom"
+PKG_URL="https://github.com/libretro/libretro-prboom/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="emulation"
 PKG_SHORTDESC="libretro implementation of Doom"
 PKG_LONGDESC="libretro implementation of Doom"
 
-
+PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 unpack() {

@@ -18,16 +18,19 @@
 
 PKG_NAME="guichan"
 PKG_VERSION="1a72794"
+PKG_ARCH="any"
+PKG_LICENSE="OSS"
 PKG_SITE="https://github.com/sphaero/guichan.git"
-PKG_GIT_URL="https://github.com/sphaero/guichan"
+PKG_URL="https://github.com/sphaero/guichan/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain SDL"
 PKG_SECTION="emulators/depends"
 PKG_SHORTDESC="guichan GUI library"
 
-
+PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 pre_configure_target() {
   export SYSROOT_PREFIX
 }
+
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_prog_HAVE_SDL=yes"

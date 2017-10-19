@@ -18,13 +18,15 @@
 
 PKG_NAME="guisan"
 PKG_VERSION="ae7ea55"
+PKG_ARCH="any"
+PKG_LICENSE="OSS"
 PKG_SITE="https://github.com/kallisti5/guisan"
-PKG_GIT_URL="https://github.com/kallisti5/guisan"
+PKG_URL="https://github.com/kallisti5/guisan/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain SDL2 SDL2_image SDL2_ttf"
 PKG_SECTION="depends"
 PKG_SHORTDESC="guisan GUI library"
 
-
+PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 make_target() {

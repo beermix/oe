@@ -5,6 +5,11 @@ PKG_DEPENDS_TARGET="toolchain ncurses pcre readline libcap"
 PKG_SECTION="my"
 PKG_AUTORECONF="yes"
 
+pre_configure_target() {
+  export LIBS="$LIBS -lncursesw -ltinfo"
+#  export CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=2||g"`
+}
+
 PKG_CONFIGURE_OPTS_TARGET="--enable-multibyte \
 			      --enable-function-subdirs \
 			      --with-tcsetpgrp \

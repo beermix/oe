@@ -20,14 +20,18 @@
 
 PKG_NAME="emulationstation-theme-carbon"
 PKG_VERSION="70880ca"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/RetroPie/es-theme-carbon"
-PKG_GIT_URL="https://github.com/RetroPie/es-theme-carbon"
+PKG_URL="https://github.com/RetroPie/es-theme-carbon/archive/$PKG_VERSION.tar.gz"
+PKG_SOURCE_DIR="es-theme-carbon-$PKG_VERSION*"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="emulation"
 PKG_SHORTDESC="Simple dark theme for Emulationstation"
 
-
+PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
+
 make_target() {
   :
 }

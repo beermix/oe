@@ -18,11 +18,13 @@
 
 PKG_NAME="plexmediaserver-plexpass"
 PKG_VERSION="1.0.1.2396"
+PKG_ARCH="any"
+PKG_LICENSE="Freemium"
 PKG_SITE="http://plex.tv"
 PKG_SECTION="service"
 PKG_SHORTDESC="Plex Media Server"
 
-
+PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 case $ARCH in
@@ -48,10 +50,10 @@ makeinstall_target() {
 
 case $ARCH in
   x86_64)
-    rpm2cpio $SOURCES/$PKG_NAME/$PKG_SOURCE_NAME | bsdtar -xf -
+    rpm2cpio $ROOT/$SOURCES/$PKG_NAME/$PKG_SOURCE_NAME | bsdtar -xf -
     ;;
   arm)
-    tar -xf $SOURCES/$PKG_NAME/$PKG_SOURCE_NAME
+    tar -xf $ROOT/$SOURCES/$PKG_NAME/$PKG_SOURCE_NAME
     mkdir -p usr/lib/plexmediaserver
     tar -zxf package.tgz -C usr/lib/plexmediaserver/
     ;;

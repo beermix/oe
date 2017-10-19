@@ -18,6 +18,8 @@
 
 PKG_NAME="emby-system"
 PKG_VERSION="3.0.5986"
+PKG_ARCH="any"
+PKG_LICENSE="OSS"
 PKG_SITE="http://emby.media"
 PKG_URL="https://github.com/MediaBrowser/Emby/releases/download/$PKG_VERSION/Emby.Mono.zip"
 PKG_DEPENDS_TARGET="toolchain mono-system imagemagick"
@@ -25,7 +27,7 @@ PKG_SECTION="service"
 PKG_SHORTDESC="Emby: a personal media server"
 PKG_LONGDESC="Emby ($PKG_VERSION) brings your home videos, music, and photos together, automatically converting and streaming your media on-the-fly to any device"
 
-
+PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 unpack() {
@@ -38,5 +40,5 @@ make_target() {
 
 makeinstall_target() {
   mkdir -p $INSTALL/opt/emby
-  unzip -q $SOURCES/$PKG_NAME/$PKG_SOURCE_NAME -d $INSTALL/opt/emby
+  unzip -q $ROOT/$SOURCES/$PKG_NAME/$PKG_SOURCE_NAME -d $INSTALL/opt/emby
 }

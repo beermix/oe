@@ -18,12 +18,14 @@
 
 PKG_NAME="soundtouch"
 PKG_VERSION="1.9.2"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://www.surina.net"
 PKG_URL="http://www.surina.net/soundtouch/soundtouch-$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="soundtouch"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="depends"
 PKG_SHORTDESC="Audio processing library"
-
+PKG_IS_ADDON="no"
 
 PKG_AUTORECONF="yes"

@@ -40,7 +40,6 @@ PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
 
 pre_configure_target() {
   cd $PKG_BUILD
-  cd $PKG_BUILD
   rm -rf $TARGET_NAME
   make configure
 }

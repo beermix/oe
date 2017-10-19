@@ -18,14 +18,16 @@
 
 PKG_NAME="dosbox-libretro"
 PKG_VERSION="dfe0f31"
+PKG_ARCH="any"
+PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/dosbox-libretro"
-PKG_GIT_URL="https://github.com/libretro/dosbox-libretro"
+PKG_URL="https://github.com/libretro/dosbox-libretro/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="libretro"
 PKG_SHORTDESC="libretro wrapper for the DOSBox emulator"
 PKG_LONGDESC="An open source DOS emulator for BeOS, Linux, Mac OS X, OS/2, and Windows. Primarily focuses on running DOS Games."
 
-
+PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 make_target() {

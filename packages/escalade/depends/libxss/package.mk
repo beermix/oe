@@ -18,13 +18,15 @@
 
 PKG_NAME="libxss"
 PKG_VERSION="1.2.2"
+PKG_ARCH="any"
+PKG_LICENSE="OSS"
 PKG_SITE="http://www.X.org"
 PKG_URL="http://xorg.freedesktop.org/archive/individual/lib/libXScrnSaver-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain util-macros libXext scrnsaverproto"
 PKG_SECTION="depends"
 PKG_SHORTDESC="X11 Screen Saver extension library"
 
-
+PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 post_unpack() {

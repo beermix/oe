@@ -20,14 +20,17 @@
 
 PKG_NAME="nestopia-libretro"
 PKG_VERSION="5ae1871"
+PKG_ARCH="any"
+PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/nestopia"
-PKG_GIT_URL="https://github.com/libretro/nestopia"
+PKG_URL="https://github.com/libretro/nestopia/archive/$PKG_VERSION.tar.gz"
+PKG_SOURCE_DIR="nestopia-$PKG_VERSION*"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="emulation"
 PKG_SHORTDESC="Libretro implementation of NEStopia. (Nintendo Entertainment System)"
 PKG_LONGDESC="This project is a fork of the original Nestopia source code, plus the Linux port. The purpose of the project is to enhance the original, and ensure it continues to work on modern operating systems."
 
-
+PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 PKG_USE_CMAKE="no"
 

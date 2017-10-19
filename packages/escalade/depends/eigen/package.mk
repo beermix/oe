@@ -18,13 +18,15 @@
 
 PKG_NAME="eigen"
 PKG_VERSION="3.2.10"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://eigen.tuxfamily.org/index.php?title=Main_Page"
 PKG_URL="http://bitbucket.org/eigen/eigen/get/$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain cmake:host"
 PKG_SECTION="depends"
 PKG_SHORTDESC="eigen c++ headers"
 
-
+PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 post_unpack() {
