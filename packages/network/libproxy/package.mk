@@ -2,8 +2,7 @@ PKG_NAME="libproxy"
 PKG_VERSION="5c19cfe"
 PKG_GIT_URL="https://github.com/libproxy/libproxy"
 PKG_DEPENDS_TARGET="toolchain zlib openssl libgpg-error"
-PKG_SECTION="my"
-
+PKG_SECTION="network"
 PKG_AUTORECONF="no"
 
 #PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release"
