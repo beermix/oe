@@ -22,8 +22,8 @@
 # in Xorg.log
 
 PKG_NAME="libepoxy"
-PKG_VERSION="1.4.2"
-PKG_SHA256="bea6fdec3d10939954495da898d872ee836b75c35699074cbf02a64fcb80d5b3"
+PKG_VERSION="1.4.3"
+PKG_SHA256="0b808a06c9685a62fca34b680abb8bc7fb2fda074478e329b063c1f872b826f6"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/anholt/libepoxy"
