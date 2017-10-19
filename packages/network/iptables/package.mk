@@ -28,14 +28,12 @@ PKG_DEPENDS_TARGET="toolchain linux libmnl libnftnl libpcap libnetfilter_acct li
 PKG_SECTION="network"
 PKG_SHORTDESC="iptables: IP packet filter administration"
 PKG_LONGDESC="Iptables is used to set up, maintain, and inspect the tables of IP packet filter rules in the Linux kernel. There are several different tables which may be defined, and each table contains a number of built-in chains, and may contain user-defined chains."
-
-
 PKG_AUTORECONF="yes"
 
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -ffunction-sections -fdata-sections -DNO_LEGACY"
+#  export CFLAGS="$CFLAGS -ffunction-sections -fdata-sections -DNO_LEGACY"
   export CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
-  export LDFLAGS="$LDFLAGS -Wl,--gc-sections"
+#  export LDFLAGS="$LDFLAGS -Wl,--gc-sections"
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--with-kernel=$(kernel_path)"
