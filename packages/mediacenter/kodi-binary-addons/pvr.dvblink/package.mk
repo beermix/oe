@@ -17,9 +17,8 @@
 ################################################################################
 
 PKG_NAME="pvr.dvblink"
-PKG_VERSION="816f90c"
-PKG_SHA256="da36250a838077775b3657b271e763bbf1abde07d819b3836859ae9783fe11d8"
-PKG_REV="2"
+PKG_VERSION="17d1263"
+PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
@@ -32,3 +31,11 @@ PKG_AUTORECONF="no"
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_TYPE="xbmc.pvrclient"
+
+addon() {
+  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/
+  cp -R $PKG_BUILD/.install_pkg/usr/share/$MEDIACENTER/addons/$PKG_NAME/* $ADDON_BUILD/$PKG_ADDON_ID/
+
+  ADDONSO=$(xmlstarlet sel -t -v "/addon/extension/@library_linux" $ADDON_BUILD/$PKG_ADDON_ID/addon.xml)
+  cp -L $PKG_BUILD/.install_pkg/usr/lib/$MEDIACENTER/addons/$PKG_NAME/$ADDONSO $ADDON_BUILD/$PKG_ADDON_ID/
+}

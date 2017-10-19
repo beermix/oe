@@ -17,9 +17,8 @@
 ################################################################################
 
 PKG_NAME="audiodecoder.gme"
-PKG_VERSION="a7d64dd"
-PKG_SHA256="4ebc2570bbf8bc83636a6e52fb4d7d5abf70bcc004cfdc66476b3399464b7821"
-PKG_REV="2"
+PKG_VERSION="4f8c49a"
+PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/notspiff/audiodecoder.gme"
@@ -32,3 +31,11 @@ PKG_AUTORECONF="no"
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_TYPE="kodi.audiodecoder"
+
+addon() {
+  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/
+  cp -R $PKG_BUILD/.install_pkg/usr/share/$MEDIACENTER/addons/$PKG_NAME/* $ADDON_BUILD/$PKG_ADDON_ID/
+
+  ADDONSO=$(xmlstarlet sel -t -v "/addon/extension/@library_linux" $ADDON_BUILD/$PKG_ADDON_ID/addon.xml)
+  cp -L $PKG_BUILD/.install_pkg/usr/lib/$MEDIACENTER/addons/$PKG_NAME/$ADDONSO $ADDON_BUILD/$PKG_ADDON_ID/
+}

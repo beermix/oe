@@ -17,9 +17,8 @@
 ################################################################################
 
 PKG_NAME="audioencoder.flac"
-PKG_VERSION="ed75200"
-PKG_SHA256="25f4449024fcaba0ccf519e565ae679e701dafb36035a56afd2197f6121c9bba"
-PKG_REV="2"
+PKG_VERSION="f7a8daa"
+PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
@@ -32,3 +31,11 @@ PKG_AUTORECONF="no"
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_TYPE="xbmc.audioencoder"
+
+addon() {
+  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/
+  cp -R $PKG_BUILD/.install_pkg/usr/share/$MEDIACENTER/addons/$PKG_NAME/* $ADDON_BUILD/$PKG_ADDON_ID/
+
+  ADDONSO=$(xmlstarlet sel -t -v "/addon/extension/@library_linux" $ADDON_BUILD/$PKG_ADDON_ID/addon.xml)
+  cp -L $PKG_BUILD/.install_pkg/usr/lib/$MEDIACENTER/addons/$PKG_NAME/$ADDONSO $ADDON_BUILD/$PKG_ADDON_ID/
+}

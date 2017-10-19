@@ -17,9 +17,8 @@
 ################################################################################
 
 PKG_NAME="screensaver.pyro"
-PKG_VERSION="f91a732"
-PKG_SHA256="3f016bef45d36c0b8a6ab16b6b82c7c47b433d349db9d025d049d04901457ffc"
-PKG_REV="2"
+PKG_VERSION="4810d75"
+PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/notspiff/screensaver.pyro"
@@ -36,3 +35,11 @@ PKG_ADDON_TYPE="xbmc.ui.screensaver"
 if [ "$OPENGL" = "no" ] ; then
   exit 0
 fi
+
+addon() {
+  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/
+  cp -R $PKG_BUILD/.install_pkg/usr/share/$MEDIACENTER/addons/$PKG_NAME/* $ADDON_BUILD/$PKG_ADDON_ID/
+
+  ADDONSO=$(xmlstarlet sel -t -v "/addon/extension/@library_linux" $ADDON_BUILD/$PKG_ADDON_ID/addon.xml)
+  cp -L $PKG_BUILD/.install_pkg/usr/lib/$MEDIACENTER/addons/$PKG_NAME/$ADDONSO $ADDON_BUILD/$PKG_ADDON_ID/
+}

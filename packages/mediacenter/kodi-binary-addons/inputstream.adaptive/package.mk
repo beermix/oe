@@ -17,10 +17,9 @@
 ################################################################################
 
 PKG_NAME="inputstream.adaptive"
-PKG_VERSION="dde3921"
-PKG_SHA256="a3b2f2c47a9545921980fe1b81825538fd877c0ad9809ed266c80f5cba7544e6"
+PKG_VERSION="f2904b5"
 PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/peak3d/inputstream.adaptive/"
+PKG_SITE="http://www.kodi.tv"
 PKG_URL="https://github.com/peak3d/inputstream.adaptive/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain kodi-platform"
 PKG_SECTION=""
@@ -29,21 +28,12 @@ PKG_LONGDESC="inputstream.adaptive"
 
 PKG_IS_ADDON="yes"
 
-export CCACHE_DISABLE=1
-
-post_makeinstall_target() {
-  mkdir -p wv && cd wv
-    cmake -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
-        -DCMAKE_INSTALL_PREFIX=/usr \
-        -DDECRYPTERPATH=special://home/cdm \
-        $PKG_BUILD/wvdecrypter
-    make
-
-  cp -P $PKG_BUILD/.$TARGET_NAME/wv/libssd_wv.so $INSTALL/usr/lib
-}
-
 addon() {
-  install_binary_addon $PKG_ADDON_ID
+  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/
+  cp -R $PKG_BUILD/.install_pkg/usr/share/$MEDIACENTER/addons/$PKG_NAME/* $ADDON_BUILD/$PKG_ADDON_ID/
+
+  ADDONSO=$(xmlstarlet sel -t -v "/addon/extension/@library_linux" $ADDON_BUILD/$PKG_ADDON_ID/addon.xml)
+  cp -L $PKG_BUILD/.install_pkg/usr/lib/$MEDIACENTER/addons/$PKG_NAME/$ADDONSO $ADDON_BUILD/$PKG_ADDON_ID/
 
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID
   cp -P $PKG_BUILD/.$TARGET_NAME/wvdecrypter/libssd_wv.so $ADDON_BUILD/$PKG_ADDON_ID

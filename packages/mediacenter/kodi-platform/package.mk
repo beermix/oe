@@ -17,8 +17,7 @@
 ################################################################################
 
 PKG_NAME="kodi-platform"
-PKG_VERSION="36fb493"
-PKG_SHA256="c53f37888d752e233f5adabc6ecfb8a1ea02728e010007200bbf671f6b9462de"
+PKG_VERSION="c8188d8"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
@@ -28,7 +27,7 @@ PKG_SECTION="multimedia"
 PKG_SHORTDESC="kodi-platform:"
 PKG_LONGDESC="kodi-platform:"
 
-
+PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 PKG_CMAKE_OPTS_TARGET="-DCMAKE_INSTALL_LIBDIR:STRING=lib \

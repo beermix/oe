@@ -17,9 +17,8 @@
 ################################################################################
 
 PKG_NAME="screensaver.shadertoy"
-PKG_VERSION="2638205"
-PKG_SHA256="0c04af6aa45f1838ad785a2914a47ad4ce5c6b7998f73d848aa92b4480096b58"
-PKG_REV="2"
+PKG_VERSION="eb31b44"
+PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/popcornmix/screensaver.shadertoy"
@@ -44,7 +43,7 @@ if [ "$OPENGLES_SUPPORT" = yes ]; then
 fi
 
 pre_configure_target() {
-  if [ "$KODIPLAYER_DRIVER" = bcm2835-driver ]; then
+  if [ "$KODIPLAYER_DRIVER" = bcm2835-firmware ]; then
     BCM2835_INCLUDES="-I$SYSROOT_PREFIX/usr/include/interface/vcos/pthreads/ \
                       -I$SYSROOT_PREFIX/usr/include/interface/vmcs_host/linux"
     export CFLAGS="$CFLAGS $BCM2835_INCLUDES"
@@ -53,4 +52,12 @@ pre_configure_target() {
     export CFLAGS="$CFLAGS -DLINUX -DEGL_API_FB"
     export CXXFLAGS="$CXXFLAGS -DLINUX -DEGL_API_FB"
   fi
+}
+
+addon() {
+  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/
+  cp -R $PKG_BUILD/.install_pkg/usr/share/$MEDIACENTER/addons/$PKG_NAME/* $ADDON_BUILD/$PKG_ADDON_ID/
+
+  ADDONSO=$(xmlstarlet sel -t -v "/addon/extension/@library_linux" $ADDON_BUILD/$PKG_ADDON_ID/addon.xml)
+  cp -L $PKG_BUILD/.install_pkg/usr/lib/$MEDIACENTER/addons/$PKG_NAME/$ADDONSO $ADDON_BUILD/$PKG_ADDON_ID/
 }

@@ -17,9 +17,8 @@
 ################################################################################
 
 PKG_NAME="pvr.nextpvr"
-PKG_VERSION="03933e9"
-PKG_SHA256="b0d32816deed7e744e9785d23fffaa8e63d8dadb416aa841cc061f4cb559dd4d"
-PKG_REV="2"
+PKG_VERSION="dd03d62"
+PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
@@ -35,4 +34,12 @@ PKG_ADDON_TYPE="xbmc.pvrclient"
 
 pre_configure_target() {
   CXXFLAGS="$CXXFLAGS -Wno-narrowing"
+}
+
+addon() {
+  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/
+  cp -R $PKG_BUILD/.install_pkg/usr/share/$MEDIACENTER/addons/$PKG_NAME/* $ADDON_BUILD/$PKG_ADDON_ID/
+
+  ADDONSO=$(xmlstarlet sel -t -v "/addon/extension/@library_linux" $ADDON_BUILD/$PKG_ADDON_ID/addon.xml)
+  cp -L $PKG_BUILD/.install_pkg/usr/lib/$MEDIACENTER/addons/$PKG_NAME/$ADDONSO $ADDON_BUILD/$PKG_ADDON_ID/
 }
