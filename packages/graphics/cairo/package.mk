@@ -17,43 +17,84 @@
 ################################################################################
 
 PKG_NAME="cairo"
-#PKG_VERSION="1.14.10"
-#PKG_URL="http://cairographics.org/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_VERSION="1.15.8"
-PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain zlib expat freetype fontconfig libpng pixman tiff"
+PKG_VERSION="1.14.6"
+PKG_SHA256="613cb38447b76a93ff7235e17acd55a78b52ea84a9df128c3f2257f8eaa7b252"
+PKG_ARCH="any"
+PKG_LICENSE="LGPL"
+PKG_SITE="http://cairographics.org/"
+PKG_URL="http://cairographics.org/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_DEPENDS_TARGET="toolchain zlib freetype fontconfig libpng pixman"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="cairo: Multi-platform 2D graphics library"
 PKG_LONGDESC="Cairo is a vector graphics library with cross-device output support. Currently supported output targets include the X Window System and in-memory image buffers. PostScript and PDF file output is planned. Cairo is designed to produce identical output on all output media while taking advantage of display hardware acceleration when available."
+PKG_AUTORECONF="no" # ToDo
 
+if [ "$DISPLAYSERVER" = "x11" ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libXrender libX11 mesa glu"
+  PKG_CAIRO_CONFIG="--x-includes="$SYSROOT_PREFIX/usr/include" \
+                    --x-libraries="$SYSROOT_PREFIX/usr/lib" \
+                    --enable-xlib \
+                    --enable-xlib-xrender \
+                    --enable-gl \
+                    --enable-glx \
+                    --disable-glesv2 \
+                    --disable-egl \
+                    --with-x"
 
-PKG_AUTORECONF="no"
+elif [ "$DISPLAYSERVER" = "weston" ]; then
+  PKG_CAIRO_CONFIG="--disable-xlib \
+                    --disable-xlib-xrender \
+                    --disable-gl \
+                    --disable-glx \
+                    --enable-glesv2 \
+                    --enable-egl \
+                    --without-x"
+fi
 
-#pre_configure_target() {
-#  export CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
-#}
-
-PKG_CONFIGURE_OPTS_TARGET="--disable-static \
-			      --disable-lto \
-			      --enable-xlib \
-			      --enable-xlib-xrender \
-			      --enable-gl \
-			      --disable-glesv2 \
-			      --disable-egl \
-			      --with-x \
-			      --enable-glx \
-			      --enable-tee \
-			      --enable-svg \
-			      --enable-ps \
-			      --enable-pdf \
-			      --enable-largefile \
+PKG_CONFIGURE_OPTS_TARGET="$PKG_CAIRO_CONFIG \
+                           --disable-silent-rules \
+                           --enable-shared \
+                           --disable-static \
+                           --disable-gtk-doc \
+                           --enable-largefile \
                            --enable-atomic \
+                           --disable-gcov \
+                           --disable-valgrind \
+                           --disable-xcb \
+                           --disable-xlib-xcb \
+                           --disable-xcb-shm \
+                           --disable-qt \
+                           --disable-quartz \
+                           --disable-quartz-font \
+                           --disable-quartz-image \
+                           --disable-win32 \
+                           --disable-win32-font \
+                           --disable-skia \
+                           --disable-os2 \
+                           --disable-beos \
+                           --disable-cogl \
+                           --disable-drm \
+                           --disable-drm-xr \
+                           --disable-gallium \
+                           --disable-xcb-drm \
                            --enable-png \
+                           --disable-directfb \
+                           --disable-vg \
+                           --disable-wgl \
+                           --disable-script \
                            --enable-ft \
                            --enable-fc \
                            --enable-ps \
                            --enable-pdf \
                            --enable-svg \
+                           --disable-test-surfaces \
+                           --disable-tee \
+                           --disable-xml \
                            --enable-pthread \
-			      --enable-gobject \
-			      --disable-gtk-doc"
+                           --disable-gobject \
+                           --disable-full-testing \
+                           --disable-trace \
+                           --enable-interpreter \
+                           --disable-symbol-lookup \
+                           --enable-some-floating-point \
+                           --with-gnu-ld"

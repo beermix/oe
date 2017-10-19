@@ -17,7 +17,8 @@
 ################################################################################
 
 PKG_NAME="libjpeg-turbo"
-PKG_VERSION="1.5.2"
+PKG_VERSION="1.5.1"
+PKG_SHA256="41429d3d253017433f66e3d472b8c7d998491d2f41caa7306b8d9a6f2a2c666c"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://libjpeg-turbo.virtualgl.org/"
@@ -27,8 +28,6 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="libjpeg-turbo: a high-speed version of libjpeg for x86 and x86-64 processors which uses SIMD instructions (MMX, SSE2, etc.) to accelerate baseline JPEG compression and decompression."
 PKG_LONGDESC="libjpeg-turbo is a high-speed version of libjpeg for x86 and x86-64 processors which uses SIMD instructions (MMX, SSE2, etc.) to accelerate baseline JPEG compression and decompression. libjpeg-turbo is generally 2-4x as fast as the unmodified version of libjpeg, all else being equal."
-
-
 PKG_USE_CMAKE="no"
 PKG_AUTORECONF="no"
 
@@ -37,7 +36,7 @@ PKG_CONFIGURE_OPTS_HOST="--enable-static \
                          --with-jpeg8 \
                          --without-simd"
 
-PKG_CONFIGURE_OPTS_TARGET="--with-jpeg8 --enable-static"
+PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --with-jpeg8"
 
 pre_configure_host() {
   export CFLAGS="$CFLAGS -fPIC -DPIC"

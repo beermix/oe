@@ -24,20 +24,18 @@ PKG_LICENSE="LGPL"
 PKG_SITE="http://www.libraw.org/"
 PKG_URL="http://www.libraw.org/data/LibRaw-$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="LibRaw-$PKG_VERSION*"
-PKG_DEPENDS_TARGET="toolchain libjpeg-turbo lcms2"
+PKG_DEPENDS_TARGET="toolchain libjpeg-turbo"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="A library for reading RAW files obtained from digital photo cameras (CRW/CR2, NEF, RAF, DNG, and others)"
 PKG_LONGDESC="A library for reading RAW files obtained from digital photo cameras (CRW/CR2, NEF, RAF, DNG, and others)"
-
-
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --disable-shared \
-                           --enable-openmp \
+                           --disable-openmp \
                            --enable-jpeg \
                            --disable-jasper \
-                           --enable-lcms \
+                           --disable-lcms \
                            --disable-examples \
                            --disable-demosaic-pack-gpl2 \
                            --disable-demosaic-pack-gpl3"
