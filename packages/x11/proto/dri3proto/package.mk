@@ -27,6 +27,8 @@ PKG_DEPENDS_TARGET="toolchain util-macros"
 PKG_SECTION="x11/proto"
 PKG_SHORTDESC="dri3proto: X.Org DRI3 protocol headers"
 PKG_LONGDESC="X.Org DRI3 protocol headers."
+
+
 PKG_AUTORECONF="no"
 
 # package specific configure options

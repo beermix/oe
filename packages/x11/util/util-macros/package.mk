@@ -27,6 +27,8 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="x11/util"
 PKG_SHORTDESC="util-macros: X.org autoconf utilities"
 PKG_LONGDESC="X.org autoconf utilities such as M4 macros."
+
+
 PKG_AUTORECONF="no"
 
 post_makeinstall_target() {

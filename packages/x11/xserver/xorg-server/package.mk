@@ -28,6 +28,8 @@ PKG_NEED_UNPACK="$(get_pkg_directory xf86-video-nvidia) $(get_pkg_directory xf86
 PKG_SECTION="x11/xserver"
 PKG_SHORTDESC="xorg-server: The Xorg X server"
 PKG_LONGDESC="Xorg is a full featured X server that was originally designed for UNIX and UNIX-like operating systems running on Intel x86 hardware."
+
+
 PKG_AUTORECONF="yes"
 
 get_graphicdrivers
@@ -135,8 +137,8 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
 
 pre_configure_target() {
 # hack to prevent a build error
-  CFLAGS=`echo $CFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|"`
-  LDFLAGS=`echo $LDFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|"`
+  CFLAGS=`echo $CFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|" -e "s|-fno-plt||"`
+  LDFLAGS=`echo $LDFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|" -e "s|,-z,now||g"`
 }
 
 post_makeinstall_target() {

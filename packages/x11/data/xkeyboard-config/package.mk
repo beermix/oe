@@ -17,8 +17,7 @@
 ################################################################################
 
 PKG_NAME="xkeyboard-config"
-PKG_VERSION="2.20"
-PKG_SHA256="d1bfc72553c4e3ef1cd6f13eec0488cf940498b612ab8a0b362e7090c94bc134"
+PKG_VERSION="2.22"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.X.org"
@@ -27,6 +26,8 @@ PKG_DEPENDS_TARGET="toolchain util-macros xkbcomp"
 PKG_SECTION="x11/data"
 PKG_SHORTDESC="xkeyboard-config: X keyboard extension data files"
 PKG_LONGDESC="X keyboard extension data files."
+
+
 PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="XKBCOMP=/usr/bin/xkbcomp \

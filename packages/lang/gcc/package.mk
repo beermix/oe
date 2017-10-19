@@ -59,7 +59,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libssp \
                            --disable-libsanitizer \
                            --without-cuda-driver \
-                           --enable-offload-targets=nvptx-none \
                            --disable-vtable-verify \
                            --disable-werror \
                            --enable-default-pie \
@@ -92,6 +91,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-threads=posix \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time=yes \
+                         --enable-offload-targets=nvptx-none \
                          --enable-clocale=gnu \
                          --enable-libatomic \
                          $GCC_OPTS"

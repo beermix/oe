@@ -27,6 +27,8 @@ PKG_DEPENDS_TARGET="toolchain util-macros"
 PKG_SECTION="x11/proto"
 PKG_SHORTDESC="xineramaproto: Xinerama extension headers"
 PKG_LONGDESC="Xinerama extension headers"
+
+
 PKG_AUTORECONF="no"
 
 # package specific configure options

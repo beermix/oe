@@ -27,20 +27,19 @@ PKG_DEPENDS_TARGET="toolchain util-macros Python2:host xcb-proto libpthread-stub
 PKG_SECTION="x11/lib"
 PKG_SHORTDESC="libxcb: X C-language Bindings library"
 PKG_LONGDESC="X C-language Bindings library."
+
+
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared \
-                           --disable-screensaver \
+PKG_CONFIGURE_OPTS_TARGET="--disable-screensaver \
                            --disable-xprint \
                            --disable-selinux \
                            --disable-xvmc"
 
 pre_configure_target() {
-  PYTHON_LIBDIR=$SYSROOT_PREFIX/usr/lib/$PKG_PYTHON_VERSION
-  PYTHON_TOOLCHAIN_PATH=$PYTHON_LIBDIR/site-packages
+  PYTHON_LIBDIR="`ls -d $SYSROOT_PREFIX/usr/lib/python*`"
+  PYTHON_TOOLCHAIN_PATH=`ls -d $PYTHON_LIBDIR/site-packages`
 
   PKG_CONFIG="$PKG_CONFIG --define-variable=pythondir=$PYTHON_TOOLCHAIN_PATH"
   PKG_CONFIG="$PKG_CONFIG --define-variable=xcbincludedir=$SYSROOT_PREFIX/usr/share/xcb"
-
-  CFLAGS="$CFLAGS -fPIC -DPIC"
 }
