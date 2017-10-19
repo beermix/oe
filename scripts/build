@@ -403,7 +403,6 @@ if [ ! -f $STAMP ]; then
           rm -rf $INSTALL/{usr/,}share/locale
           rm -rf $INSTALL/{usr/,}share/man
           rm -rf $INSTALL/{usr/,}share/pkgconfig
-          rm -rf $INSTALL/{usr/,}share/zsh
           rm -rf $INSTALL/{usr/,}var
           find $INSTALL \( -name "*.orig" \
                         -o -name "*.rej" \

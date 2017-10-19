@@ -4,9 +4,9 @@
 ################################################################################
 
 PKG_NAME="skin.confluence"
-PKG_VERSION="5c4c80f"
+PKG_VERSION="0da98e2"
 PKG_SITE="https://github.com/xbmc/skin.confluence"
-PKG_GIT_URL="https://github.com/xbmc/skin.confluence"
+PKG_URL="https://github.com/xbmc/skin.confluence/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain kodi"
 PKG_SECTION="mediacenter"
 PKG_SHORTDESC="kodi-theme-AeonNox: Kodi Mediacenter theme"

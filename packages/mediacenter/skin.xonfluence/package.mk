@@ -4,8 +4,9 @@
 ################################################################################
 
 PKG_NAME="skin.xonfluence"
-PKG_VERSION="177119d"
-PKG_GIT_URL="https://github.com/Helly1206/skin.xonfluence"
+PKG_VERSION="11af9da"
+PKG_SITE="https://github.com/Helly1206/skin.xonfluence"
+PKG_URL="https://github.com/Helly1206/skin.xonfluence/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain kodi"
 PKG_SECTION="mediacenter"
 PKG_SHORTDESC="kodi-theme-AeonNox: Kodi Mediacenter theme"
@@ -16,7 +17,7 @@ PKG_AUTORECONF="no"
 make_target() {
   TexturePacker -input media/ \
                 -output Textures.xbt \
-                -dupecheck \
+                -dupecheck
 }
 
 makeinstall_target() {
