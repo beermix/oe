@@ -14,40 +14,42 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+################################################################################ unrar coreutils psmisc procps-ng
 
 PKG_NAME="busybox"
-PKG_VERSION="1.27.1"
-PKG_SHA256="c890ac53fb218eb4c6ad9ed3207a896783b142e6d306f292b8d9bec82af5f936"
+PKG_VERSION="1.27.2"
+PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.busybox.net"
 PKG_URL="http://busybox.net/downloads/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain busybox:host hdparm dosfstools e2fsprogs zip unzip pciutils usbutils parted procps-ng gptfdisk"
+PKG_DEPENDS_TARGET="toolchain busybox:host hdparm dosfstools e2fsprogs libtool zip unzip zlib xz pciutils usbutils parted gptfdisk findutils grep gawk bash less tar"
 PKG_DEPENDS_INIT="toolchain"
+PKG_PRIORITY="required"
 PKG_SECTION="system"
 PKG_SHORTDESC="BusyBox: The Swiss Army Knife of Embedded Linux"
 PKG_LONGDESC="BusyBox combines tiny versions of many common UNIX utilities into a single small executable. It provides replacements for most of the utilities you usually find in GNU fileutils, shellutils, etc. The utilities in BusyBox generally have fewer options than their full-featured GNU cousins; however, the options that are included provide the expected functionality and behave very much like their GNU counterparts. BusyBox provides a fairly complete environment for any small or embedded system."
+
+
 PKG_AUTORECONF="no"
 
-PKG_MAKE_OPTS_HOST="ARCH=$TARGET_ARCH CROSS_COMPILE= KBUILD_VERBOSE=1 install"
+PKG_MAKE_OPTS_HOST="ARCH=$TARGET_ARCH CROSS_COMPILE= KBUILD_VERBOSE=0 install"
 PKG_MAKE_OPTS_TARGET="ARCH=$TARGET_ARCH \
                       HOSTCC=$HOST_CC \
                       CROSS_COMPILE=$TARGET_PREFIX \
-                      KBUILD_VERBOSE=1 \
+                      KBUILD_VERBOSE=0 \
                       install"
 PKG_MAKE_OPTS_INIT="ARCH=$TARGET_ARCH \
                     HOSTCC=$HOST_CC \
                     CROSS_COMPILE=$TARGET_PREFIX \
-                    KBUILD_VERBOSE=1 \
+                    KBUILD_VERBOSE=0 \
                     install"
 
 # nano text editor
   if [ "$NANO_EDITOR" = "yes" ]; then
     PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET nano"
   fi
-
 # nfs support
 if [ "$NFS_SUPPORT" = yes ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET rpcbind"
@@ -146,6 +148,7 @@ configure_init() {
     make oldconfig
 }
 
+
 makeinstall_host() {
   mkdir -p $TOOLCHAIN/bin
     cp -R $PKG_BUILD/.install_host/bin/* $TOOLCHAIN/bin
@@ -168,6 +171,11 @@ makeinstall_target() {
     sed -e "s/@DISTRONAME@/$DISTRONAME/g" \
         -i $INSTALL/usr/lib/libreelec/fs-resize
 
+    #rm $INSTALL/usr/bin/sh
+    #rm $INSTALL/usr/bin/hostname
+    #rm $INSTALL/usr/sbin/ip
+    rm $INSTALL/usr/bin/bash
+
   mkdir -p $INSTALL/etc
     cp $PKG_DIR/config/profile $INSTALL/etc
     cp $PKG_DIR/config/inputrc $INSTALL/etc
@@ -189,7 +197,6 @@ makeinstall_target() {
   # add webroot
     mkdir -p $INSTALL/usr/www
       echo "It works" > $INSTALL/usr/www/index.html
-
     mkdir -p $INSTALL/usr/www/error
       echo "404" > $INSTALL/usr/www/error/404.html
 }

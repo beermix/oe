@@ -27,9 +27,9 @@ PKG_DEPENDS_TARGET="toolchain util-macros xtrans"
 PKG_SECTION="x11/lib"
 PKG_SHORTDESC="libICE: X Inter-Client Exchange (ICE) protocol library"
 PKG_LONGDESC="X Inter-Client Exchange (ICE) protocol library."
-
-
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-ipv6 --without-xmlto"
-
+PKG_CONFIGURE_OPTS_TARGET="--enable-static \
+                           --disable-shared \
+                           --disable-ipv6 \
+                           --without-xmlto"

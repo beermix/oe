@@ -27,8 +27,10 @@ PKG_DEPENDS_TARGET="toolchain util-macros renderproto libX11"
 PKG_SECTION="x11/lib"
 PKG_SHORTDESC="libxrender: X Rendering Extension client library"
 PKG_LONGDESC="The X Rendering Extension (Render) introduces digital image composition as the foundation of a new rendering model within the X Window System. Rendering geometric figures is accomplished by client-side tesselation into either triangles or trapezoids."
-
-
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-malloc0returnsnull"
+PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --enable-malloc0returnsnull"
+
+pre_configure_target() {
+  export CFLAGS="$CFLAGS -fPIC"
+}

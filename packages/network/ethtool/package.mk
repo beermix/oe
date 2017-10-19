@@ -18,6 +18,7 @@
 
 PKG_NAME="ethtool"
 PKG_VERSION="4.11"
+PKG_SHA256="12d8edaa8064966b8ef19cc44fecc096a68828035b6a1f2c67a27531a718e1b2"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kernel.org/pub/software/network/ethtool/"
@@ -26,8 +27,4 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="network"
 PKG_SHORTDESC="ethtool: Display or change ethernet card settings"
 PKG_LONGDESC="Ethtool is used for querying settings of an ethernet device and changing them."
-
-
 PKG_AUTORECONF="no"
-
-PKG_CONFIGURE_OPTS_TARGET="--enable-pretty-dump"

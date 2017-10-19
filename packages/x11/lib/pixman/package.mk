@@ -27,8 +27,6 @@ PKG_DEPENDS_TARGET="toolchain util-macros"
 PKG_SECTION="x11/lib"
 PKG_SHORTDESC="pixman: Pixel manipulation library"
 PKG_LONGDESC="Pixman is a generic library for manipulating pixel regions, contains low-level pixel manipulation routines and is used by both xorg and cairo."
-
-
 PKG_AUTORECONF="no"
 
 if [ "$TARGET_ARCH" = arm ]; then
@@ -39,10 +37,10 @@ if [ "$TARGET_ARCH" = arm ]; then
   fi
   PIXMAN_CONFIG="--disable-mmx --disable-sse2 --disable-vmx --enable-arm-simd $PIXMAN_NEON --disable-arm-iwmmxt"
 elif [ "$TARGET_ARCH" = x86_64  ]; then
-  PIXMAN_CONFIG="--enable-mmx --enable-sse2 --enable-ssse3 --disable-vmx --disable-arm-simd --disable-arm-neon"
+  PIXMAN_CONFIG="--enable-mmx --enable-sse2 --disable-ssse3 --disable-vmx --disable-arm-simd --disable-arm-neon"
 fi
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-openmp \
+PKG_CONFIGURE_OPTS_TARGET="--disable-openmp \
                            --disable-loongson-mmi \
                            $PIXMAN_CONFIG \
                            --disable-mips-dspr2 \
@@ -50,7 +48,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-openmp \
                            --disable-timers \
                            --disable-gtk \
                            --disable-libpng \
-                           --with-gnu-ld --disable-static"
+                           --with-gnu-ld"
 
 post_makeinstall_target() {
   cp $SYSROOT_PREFIX/usr/lib/pkgconfig/pixman-1.pc \

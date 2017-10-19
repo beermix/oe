@@ -14,7 +14,8 @@
 ################################################################################
 
 PKG_NAME="configtools"
-PKG_VERSION="c003e5c"
+PKG_VERSION="706fbe5"
+#PKG_VERSION="c003e5c"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://git.savannah.gnu.org/cgit/config.git"

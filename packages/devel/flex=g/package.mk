@@ -16,14 +16,26 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="glibmm"
-PKG_VERSION="2.51.7"
-PKG_SITE="http://www.X.org"
-PKG_URL="http://ftp.gnome.org/pub/GNOME/sources/glibmm/2.51/glibmm-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain util-macros libsigc++"
-PKG_SECTION="x11/lib"
-PKG_SHORTDESC="xtrans: Abstract network code for X"
-PKG_LONGDESC="Abstract network code for X."
+PKG_NAME="flex"
+PKG_VERSION="2.6.4"
+PKG_SITE="http://flex.sourceforge.net/"
+PKG_URL="https://github.com/westes/flex/releases/download/v${PKG_VERSION}/${PKG_NAME}-${PKG_VERSION}.tar.gz"
+PKG_DEPENDS_HOST="ccache:host"
+PKG_SECTION="toolchain/devel"
+PKG_SHORTDESC="flex: Fast lexical analyzer generator"
+PKG_LONGDESC="flex is a tool for generating programs that perform pattern-matching on text."
 
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
+#PKG_CONFIGURE_OPTS_HOST="ac_cv_lib_util_getloadavg=no --disable-shared"
+PKG_CONFIGURE_OPTS_HOST="--disable-shared"
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared --with-pic"
+
+post_makeinstall_host() {
+  cat > $TOOLCHAIN/bin/lex << "EOF"
+#!/bin/sh
+exec flex "$@"
+EOF
+
+  chmod -v 755 $TOOLCHAIN/bin/lex
+}
