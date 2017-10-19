@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="freeglut"
-PKG_VERSION="a5e7ca9"
+PKG_VERSION="FG_3_0_0"
 PKG_ARCH="any"
 PKG_LICENSE="LGPL"
 #PKG_GIT_URL="https://github.com/dcnieho/FreeGLUT"
