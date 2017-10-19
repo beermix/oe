@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2009-2014 Stephan Raue (stephan@openelec.tv)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,17 +16,25 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="autotools"
-PKG_VERSION=""
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
-PKG_SITE="http://www.openelec.tv"
-PKG_URL=""
-PKG_DEPENDS_HOST="ccache:host autoconf:host automake:host intltool:host libtool:host autoconf-archive:host"
-PKG_SECTION="virtual"
-PKG_SHORTDESC="autotools: Metapackage"
-PKG_LONGDESC="autotools: Metapackage"
-
+PKG_NAME="ninja"
+PKG_VERSION="1.8.2"
+PKG_URL="https://github.com/ninja-build/ninja/archive/v${PKG_VERSION}.tar.gz"
+PKG_DEPENDS_HOST="re2c:host"
+PKG_SECTION="devel"
+PKG_SHORTDESC="Small build system with a focus on speed"
+PKG_LONGDESC="Small build system with a focus on speed"
 
 PKG_AUTORECONF="no"
 
+configure_host() {
+  :
+}
+
+make_host() {
+ : python2 configure.py --bootstrap
+}
+
+makeinstall_host() {
+# cp ninja $TOOLCHAIN/bin/
+  cp $PKG_DIR/ninja $TOOLCHAIN/bin/
+}

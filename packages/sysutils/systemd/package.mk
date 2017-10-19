@@ -203,8 +203,9 @@ post_makeinstall_target() {
   cp $PKG_DIR/scripts/systemd-machine-id-setup $INSTALL/usr/bin
   cp $PKG_DIR/scripts/userconfig-setup $INSTALL/usr/bin
 
-  # provide 'halt', 'shutdown', 'reboot' & co.
   mkdir -p $INSTALL/usr/sbin
+  cp $PKG_DIR/scripts/kernel-overlays-setup $INSTALL/usr/sbin
+  # provide 'halt', 'shutdown', 'reboot' & co.
   ln -sf /usr/bin/systemctl $INSTALL/usr/sbin/halt
   ln -sf /usr/bin/systemctl $INSTALL/usr/sbin/poweroff
   ln -sf /usr/bin/systemctl $INSTALL/usr/sbin/reboot
@@ -253,5 +254,6 @@ post_install() {
   enable_service machine-id.service
   enable_service debugconfig.service
   enable_service userconfig.service
+  enable_service kernel-overlays.service
   enable_service hwdb.service
 }

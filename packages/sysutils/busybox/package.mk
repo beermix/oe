@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="busybox"
-PKG_VERSION="1.27.2"
+PKG_VERSION="1.27.1"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -46,6 +46,10 @@ PKG_MAKE_OPTS_INIT="ARCH=$TARGET_ARCH \
                     KBUILD_VERBOSE=1 \
                     install"
 
+# nano text editor
+  if [ "$NANO_EDITOR" = "yes" ]; then
+    PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET nano"
+  fi
 # nfs support
 if [ "$NFS_SUPPORT" = yes ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET rpcbind"

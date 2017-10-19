@@ -34,8 +34,8 @@ PKG_MAKE_OPTS_TARGET="NO_ARLIB=0 NO_SOLIB=1 BINDIR=/usr/bin SBINDIR=/usr/sbin LI
 PKG_MAKEINSTALL_OPTS_TARGET="$PKG_MAKE_OPTS_TARGET"
 
 post_makeinstall_target() {
-	rm -rf $INSTALL/usr/share
-	rmdir $INSTALL/etc/request-key.d
-	ln -sf /storage/.config/request-key.d $INSTALL/etc/request-key.d
+  rm -rf $INSTALL/usr/share
+  rmdir $INSTALL/etc/request-key.d
+  ln -sf /storage/.config/request-key.d $INSTALL/etc/request-key.d
 }
 

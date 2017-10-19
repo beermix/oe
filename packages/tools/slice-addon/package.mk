@@ -1,6 +1,6 @@
-###############################################################################
+################################################################################
 #      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2014 Gordon Hollingworth (gordon@fiveninjas.com)
+#      Copyright (C) 2016-present Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,27 +16,26 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="led_tools"
-PKG_VERSION="0.1"
-PKG_SHA256="0484b4a2da9d586accef87ba7dd18595baae1d602c1b1bd9e0a8565ab50419a2"
+PKG_NAME="slice-addon"
+PKG_VERSION="1.0"
+PKG_REV="101"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="http://www.fiveninjas.com"
-PKG_URL="http://updates.fiveninjas.com/src/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain zlib libpng slice-addon"
-PKG_DEPENDS_HOST="toolchain"
-PKG_SECTION="tools"
-PKG_SHORTDESC="led_tools"
-PKG_LONGDESC="LED tools, these are a set of tools to control the LEDs on Slice"
+PKG_SITE=""
+PKG_URL=""
+PKG_DEPENDS_TARGET=""
+PKG_SHORTDESC="Controls the LED lights on the Slice box using Kodi actions"
+PKG_LONGDESC="Controls the LED lights on the Slice box using Kodi actions"
 PKG_AUTORECONF="no"
 
 make_target() {
-  make CC="$CC" \
-       CFLAGS="$CFLAGS" \
-       LDFLAGS="$LDFLAGS"
+(
+  cd $ROOT
+  scripts/create_addon slice
+)
 }
 
 makeinstall_target() {
-  mkdir -p $INSTALL/usr/bin
-    cp led_png $INSTALL/usr/bin
+  mkdir -p $INSTALL/usr/share/kodi/addons
+    cp -R $BUILD/$ADDONS/slice/service.slice $INSTALL/usr/share/kodi/addons
 }

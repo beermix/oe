@@ -17,7 +17,7 @@
 ################################################################################
 
 # Notes:
-# - build curl with OpenSSL support instead GnuTLS support to 
+# - build curl with OpenSSL support instead GnuTLS support to
 #   work around a long standing bug on Pi where https streams often hang on
 #   start. This hang is normally fatal and requires a reboot.
 #   see also http://trac.xbmc.org/ticket/14674 .
@@ -96,9 +96,8 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            --without-libidn2"
 
 pre_configure_target() {
- #link against librt because of undefined reference to 'clock_gettime'
- export LIBS="-lrt -lm -lrtmp"
-# export LIBS="-lrtmp"
+# link against librt because of undefined reference to 'clock_gettime'
+  export LIBS="-lrt -lm -lrtmp"
 }
 
 post_makeinstall_target() {
