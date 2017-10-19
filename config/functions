@@ -144,7 +144,24 @@ kernel_version() {
 
 # get kernel module dir
 get_module_dir() {
-  basename $(ls -d $(get_build_dir linux)/.install_pkg/usr/lib/modules/*)
+  basename $(ls -d $(get_build_dir linux)/.install_pkg/usr/lib/kernel-overlays/base/lib/modules/*)
+}
+
+# get base path to kernel modules and firmware
+get_kernel_overlay_dir() {
+  echo "/usr/lib/kernel-overlays/${1:-base}"
+}
+
+# get full path to kernel module dir
+# optional parameter specifies overlay level (default is base)
+get_full_module_dir() {
+  echo "$(get_kernel_overlay_dir $1)/lib/modules/$(get_module_dir)"
+}
+
+# get full path to firmware dir
+# optional parameter specifies overlay level (default is base)
+get_full_firmware_dir() {
+  echo "$(get_kernel_overlay_dir $1)/lib/firmware"
 }
 
 # get package's build dir
@@ -174,7 +191,15 @@ get_pkg_variable() {
 
 # return 0 if $2 in space-separated list $1, otherwise return 1
 listcontains() {
-  [[ ${1} =~ (^|[[:space:]])${2}($|[[:space:]]) ]] && return 0 || return 1
+  if [ -n "$1" -a -n "$2" ]; then
+    [[ ${1} =~ (^|[[:space:]])${2}($|[[:space:]]) ]] && return 0 || return 1
+  else
+    return 1
+  fi
+}
+
+target_has_feature() {
+  listcontains "$TARGET_FEATURES" "$1"
 }
 
 install_binary_addon() {
@@ -354,7 +379,11 @@ do_autoreconf() {
 
   if [ -e "$TOOLCHAIN/bin/autoreconf" -a -e "$INTLTOOLIZE" ]; then
     mkdir -p $ACLOCAL_DIR
-    export AUTORECONF="$TOOLCHAIN/bin/autoreconf --verbose --force --install -I $ACLOCAL_DIR"
+    if [ -e "$LIBTOOLIZE" ]; then
+      export AUTORECONF="$TOOLCHAIN/bin/autoreconf --verbose --force --install -I $ACLOCAL_DIR"
+    else
+      export AUTORECONF="$TOOLCHAIN/bin/autoreconf --verbose --force -I $ACLOCAL_DIR"
+    fi
     $AUTORECONF $@
   fi
 }
@@ -540,6 +569,7 @@ show_config() {
   config_message="$config_message\n - Remote support:\t\t\t $REMOTE_SUPPORT"
   config_message="$config_message\n - ATV Remote support:\t\t\t $ATVCLIENT_SUPPORT"
   config_message="$config_message\n - CEC Adapter support:\t\t\t $CEC_SUPPORT"
+  config_message="$config_message\n - CEC Framework support:\t\t\t $CEC_FRAMEWORK_SUPPORT"
   config_message="$config_message\n - Kodi Joystick support:\t\t $JOYSTICK_SUPPORT"
 
   # Misc. hardware configuration
@@ -633,6 +663,9 @@ show_config() {
 
   config_message="$config_message\n - Default Skin:\t\t\t $SKIN_DEFAULT"
   config_message="$config_message\n - Include extra fonts:\t\t\t $KODI_EXTRA_FONTS"
+  if [ "$(type -t show_distro_config)" = "function" ]; then
+    show_distro_config
+  fi
 
   config_message="$config_message\n"
   config_message="$config_message\n $dashes$dashes$dashes"

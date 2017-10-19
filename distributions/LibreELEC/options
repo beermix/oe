@@ -75,7 +75,7 @@
   BLUETOOTH_SUPPORT="yes"
 
 # build and install with KODI webfrontend (yes / no)
-  KODI_WEBSERVER_SUPPORT="no"
+  KODI_WEBSERVER_SUPPORT="yes"
 
 # build and install Avahi (Zeroconf) daemon (yes / no)
   AVAHI_DAEMON="no"
@@ -84,7 +84,7 @@
   KODI_UPNP_SUPPORT="yes"
 
 # build with MySQL support (yes / no)
-  KODI_MYSQL_SUPPORT="no"
+  KODI_MYSQL_SUPPORT="yes"
 
 # build xbmc with sshlib support (yes / no)
   KODI_SSHLIB_SUPPORT="no"
@@ -102,16 +102,16 @@
   KODI_NFS_SUPPORT="no"
 
 # build with Samba Client support (mounting SAMBA shares with KODI) (yes / no)
-  KODI_SAMBA_SUPPORT="no"
+  KODI_SAMBA_SUPPORT="yes"
 
 # build with NFS support (mounting nfs shares via the OS) (yes / no)
   NFS_SUPPORT="no"
 
 # build with Samba Client support (mounting samba shares via the OS) (yes / no)
-  SAMBA_SUPPORT="no"
+  SAMBA_SUPPORT="yes"
 
 # build and install Samba Server (yes / no)
-  SAMBA_SERVER="no"
+  SAMBA_SERVER="yes"
 
 # build and install SFTP Server (yes / no)
   SFTP_SERVER="yes"
@@ -148,10 +148,13 @@
   ATVCLIENT_SUPPORT="no"
 
 # build and install Joystick support (yes / no)
-  JOYSTICK_SUPPORT="no"
+  JOYSTICK_SUPPORT="yes"
 
 # build and install CEC adapter support (yes / no)
   CEC_SUPPORT="no"
+
+# build and install CEC framework support (yes / no)
+  CEC_FRAMEWORK_SUPPORT="no"
 
 # build and install iSCSI support - iscsistart (yes / no)
   ISCSI_SUPPORT="no"
@@ -170,7 +173,7 @@
   SWAPFILESIZE="128"
 
 # build with installer (yes / no)
-  INSTALLER_SUPPORT="no"
+  INSTALLER_SUPPORT="yes"
 
 # Testpackages for development (yes / no)
   TESTING="no"
