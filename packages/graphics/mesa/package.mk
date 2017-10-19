@@ -98,6 +98,8 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --enable-glx-tls \
                            $MESA_GALLIUM_LLVM \
                            --enable-silent-rules \
+                           --enable-shared \
+                           --disable-static \
                            --with-gl-lib-name=GL \
                            --with-osmesa-lib-name=OSMesa \
                            --with-gallium-drivers=$GALLIUM_DRIVERS \
