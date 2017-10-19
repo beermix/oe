@@ -16,16 +16,15 @@ PKG_LONGDESC="M2Crypto is the most complete Python wrapper for OpenSSL."
 PKG_AUTORECONF="no"
 
 pre_configure_target() {
-  export PYTHONXCPREFIX="$SYSROOT_PREFIX/usr"
   export LDSHARED="$CC -shared"
 }
 
 make_target() {
-  python2 setup.py build build_ext --openssl=$LIB_PREFIX
+  python setup.py build build_ext --openssl=$LIB_PREFIX
 }
 
 makeinstall_target() {
-  python2 setup.py install --root=$INSTALL --prefix=/usr build_ext --openssl=$LIB_PREFIX
+  python setup.py install --root=$INSTALL --prefix=/usr build_ext --openssl=$LIB_PREFIX
 }
 
 post_makeinstall_target() {

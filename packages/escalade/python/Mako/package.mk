@@ -17,11 +17,11 @@
 ################################################################################
 
 PKG_NAME="Mako"
-PKG_VERSION="1.0.4"
+PKG_VERSION="1.0.7"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.makotemplates.org"
-PKG_URL="http://pypi.python.org/packages/source/M/Mako/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_URL="https://pypi.python.org/packages/eb/f3/67579bb486517c0d49547f9697e36582cd19dafb5df9e687ed8e22de57fa/Mako-1.0.7.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python2:host distutilscross:host"
 PKG_DEPENDS_HOST="$PKG_DEPENDS_TARGET"
 PKG_SECTION="python/devel"
@@ -54,19 +54,19 @@ pre_make_target() {
 }
 
 make_host() {
-  python setup.py build
+  python2 setup.py build
 }
 
 make_target() {
-  python setup.py build --cross-compile
+  python2 setup.py build --cross-compile
 }
 
 makeinstall_target() {
-  python setup.py install --root=$INSTALL --prefix=/usr
+  python2 setup.py install --root=$INSTALL --prefix=/usr
 }
 
 makeinstall_host() {
-  python setup.py install --prefix=$TOOLCHAIN
+  python2 setup.py install --prefix=$TOOLCHAIN
 }
 
 post_makeinstall_target() {
