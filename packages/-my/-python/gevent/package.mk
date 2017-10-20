@@ -5,7 +5,6 @@ PKG_DEPENDS_TARGET="toolchain Python2 distutilscross:host greenlet"
 PKG_SECTION="xmedia/depends"
 PKG_SHORTDESC="gevent is a coroutine-based Python networking library"
 PKG_LONGDESC="gevent is a coroutine-based Python networking library."
-
 PKG_AUTORECONF="no"
 
 pre_configure_target() {
@@ -13,8 +12,8 @@ pre_configure_target() {
     sed -i -e 's/^cross_compiling=no/cross_compiling=yes/' libev/configure
     sed -i -e 's/^cross_compiling=no/cross_compiling=yes/' c-ares/configure
     
-    export PYTHONXCPREFIX="$SYSROOT_PREFIX/usr"
-    export LDSHARED="$CC -shared"
+  export PYTHONXCPREFIX="$SYSROOT_PREFIX/usr"
+  export LDSHARED="$CC -shared"
 }
 
 make_target() {

@@ -35,30 +35,22 @@ make_host() {
   python bootstrap.py
 }
 
+
 makeinstall_host() {
   python setup.py install --prefix=$TOOLCHAIN
 }
 
-configure_target() {
-  :
-}
-
-pre_configure_target() {
-  :
-}
-
-post_makeinstall_target() {
-  :
-}
-
 make_target() {
-  :
-}
-
-post_make_target() {
-  :
+  : # nothing todo
 }
 
 makeinstall_target() {
-  :
+  python setup.py install --root=$INSTALL --prefix=/usr
+}
+
+post_makeinstall_target() {
+  find $INSTALL/usr/lib -name "*.py" -exec rm -rf "{}" ";"
+  rm -rf $INSTALL/usr/bin
+  rm -rf $INSTALL/usr/lib/python*/site-packages/*/tests
+  rm -rf $INSTALL/usr/lib/python*/site-packages/*.egg-info
 }

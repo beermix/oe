@@ -16,6 +16,7 @@ PKG_LONGDESC="M2Crypto is the most complete Python wrapper for OpenSSL."
 PKG_AUTORECONF="no"
 
 pre_configure_target() {
+  export CFLAGS="-I$TOOLCHAIN/include/python2.7 $CFLAGS"
   export LDSHARED="$CC -shared"
 }
 
