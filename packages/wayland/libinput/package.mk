@@ -33,6 +33,6 @@ PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--with-sysroot=$SYSROOT_PREFIX \
                            --disable-documentation \
-                           --disable-event-gui \
+                           --disable-event-gui --disable-debug-gui \
                            --disable-tests \
                            --disable-libwacom"
