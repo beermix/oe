@@ -39,3 +39,7 @@ fi
 if [ "$OPENVPN_SUPPORT" = "yes" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET openvpn"
 fi
+
+if [ "$TARGET_ARCH" = "x86_64" ]  [ "$TARGET_ARCH" = "arm" ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET nss"
+fi
