@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="e2fsprogs"
-PKG_VERSION="1.43.4"
-PKG_SHA256="a648a90a513f1b25113c7f981af978b8a19f832b3a32bd10707af3ff682ba66d"
+PKG_VERSION="1.43.7"
+PKG_SHA256="65e523f400c11c5215abc1f8fa1a31988850f5a34a4faad34ec4783dd1af204c"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://e2fsprogs.sourceforge.net/"
-PKG_URL="$SOURCEFORGE_SRC/$PKG_NAME/$PKG_NAME/1.42/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_DEPENDS_INIT="toolchain"
 PKG_SECTION="tools"
