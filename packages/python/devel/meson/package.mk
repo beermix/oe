@@ -16,22 +16,22 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="pathlib"
-PKG_VERSION="1.0.1"
-PKG_SHA256="6940718dfc3eff4258203ad5021090933e5c04707d5ca8cc9e73c94a7894ea9f"
+PKG_NAME="meson"
+PKG_VERSION="0.42.1"
+PKG_SHA256="30bdded6fefc48211d30818d96dd34aae56ee86ce9710476f501bd7695469c4b"
 PKG_ARCH="any"
-PKG_LICENSE="MIT"
-PKG_SITE="http://pathlib.readthedocs.org"
-PKG_URL="http://pypi.python.org/packages/source/p/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_HOST="Python3:host"
-PKG_SECTION="python/devel"
-PKG_SHORTDESC="This module offers a set of classes featuring all the common operations on paths in an easy, object-oriented way"
-PKG_LONGDESC="This module offers a set of classes featuring all the common operations on paths in an easy, object-oriented way"
+PKG_LICENSE="Apache"
+PKG_SITE="http://mesonbuild.com"
+PKG_URL="https://github.com/mesonbuild/meson/releases/download/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_DEPENDS_HOST="Python3:host pathlib:host"
+PKG_SECTION="toolchain/devel"
+PKG_SHORTDESC="High productivity build system"
+PKG_LONGDESC="High productivity build system"
 
 make_host() {
-  :
+  python3 setup.py build
 }
 
 makeinstall_host() {
-  python3 setup.py install --prefix=$TOOLCHAIN
+  python3 setup.py install --prefix=$TOOLCHAIN --skip-build
 }

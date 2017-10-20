@@ -17,10 +17,11 @@
 ################################################################################
 
 PKG_NAME="util-linux"
-PKG_VERSION="2.30.2"
+PKG_VERSION="2.31-rc2"
+PKG_SHA256="adf02ca514d20fc31e608f158bf11de27875fb22db9a6702ed60c36dd052b275"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_URL="http://www.kernel.org/pub/linux/utils/util-linux/v2.30/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="http://www.kernel.org/pub/linux/utils/util-linux/v${PKG_VERSION%-*}/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_DEPENDS_INIT="toolchain"

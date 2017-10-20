@@ -93,10 +93,10 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            --with-nghttp=$SYSROOT_PREFIX/usr \
                            --without-libidn2"
 
-#pre_configure_target() {
+pre_configure_target() {
 # link against librt because of undefined reference to 'clock_gettime'
-#  export LIBS="-lrt -lm -lrtmp"
-#}
+  export LIBS="-lrt -lm -lrtmp"
+}
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/share/zsh
