@@ -55,15 +55,10 @@ case "$LINUX" in
     PKG_SOURCE_DIR="$PKG_NAME-fslc-${PKG_COMMIT}*"
     PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET imx6-status-led imx6-soc-fan"
     ;;
-  imx6-4.4-xbian)
-    PKG_VERSION="4.4-xbian"
-    PKG_SHA256="5d7074937a31042b0764bc975f7280500a0728a00a7a46ab6b06372f42d37ede"
-    PKG_COMMIT="3bde863"
-    PKG_SITE="https://github.com/xbianonpi/xbian-sources-kernel/tree/imx6-4.4.y"
-    PKG_URL="https://github.com/xbianonpi/xbian-sources-kernel/archive/$PKG_COMMIT.tar.gz"
-    PKG_SOURCE_NAME="$PKG_NAME-$LINUX-$PKG_COMMIT.tar.gz"
-    PKG_SOURCE_DIR="xbian-sources-kernel-${PKG_COMMIT}*"
-    PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET imx6-status-led imx6-soc-fan irqbalanced"
+  rc)
+    PKG_VERSION="4.14-rc5"
+    PKG_URL="https://git.kernel.org/torvalds/t/linux-$PKG_VERSION.tar.gz"
+    PKG_PATCH_DIRS="4.14"
     ;;
   *)
     PKG_VERSION="4.13.8"
