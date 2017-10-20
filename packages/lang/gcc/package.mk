@@ -27,10 +27,6 @@ PKG_SHORTDESC="gcc: The GNU Compiler Collection Version 4 (aka GNU C Compiler)"
 PKG_LONGDESC="This package contains the GNU Compiler Collection. It includes compilers for the languages C, C++, Objective C, Fortran 95, Java and others ... This GCC contains the Stack-Smashing Protector Patch which can be enabled with the -fstack-protector command-line option. More information about it ca be found at http://www.research.ibm.com/trl/projects/security/ssp/."
 PKG_AUTORECONF="no"
 
-post_unpack() {
-  sed -i 's@\./fixinc\.sh@-c true@' $PKG_BUILD/gcc/Makefile.in
-}
-
 GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-sysroot=$SYSROOT_PREFIX \
                            --with-gmp=$TOOLCHAIN \
@@ -54,6 +50,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libitm \
                            --disable-libquadmath \
                            --disable-libmpx \
+                           --disable-libsanitizer \
                            --disable-libssp \
                            --without-cuda-driver \
                            --with-tune=generic"
@@ -61,7 +58,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
-                              --disable-libsanitizer \
                               --enable-cloog-backend=isl \
                               --disable-shared \
                               --disable-threads \
