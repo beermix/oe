@@ -11,10 +11,10 @@
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-#
+# unrar coreutils psmisc procps-ng coreutils psmisc tar
 #  You should have received a copy of the GNU General Public License
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################ unrar coreutils psmisc procps-ng
+################################################################################
 
 PKG_NAME="busybox"
 PKG_VERSION="1.27.2"
@@ -24,7 +24,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://www.busybox.net"
 PKG_URL="http://busybox.net/downloads/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain busybox:host hdparm dosfstools e2fsprogs libtool zip unzip zlib xz pciutils usbutils parted gptfdisk findutils grep gawk bash less coreutils psmisc sed tar"
+PKG_DEPENDS_TARGET="toolchain busybox:host hdparm dosfstools e2fsprogs libtool zip unzip zlib xz pciutils usbutils parted gptfdisk findutils grep gawk bash less sed"
 PKG_DEPENDS_INIT="toolchain"
 PKG_PRIORITY="required"
 PKG_SECTION="system"
