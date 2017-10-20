@@ -16,18 +16,16 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="gettext"
-PKG_VERSION="ce0d49f"
+PKG_NAME="gettext-tiny"
+PKG_VERSION="55a5bcf"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="http://www.gnu.org/s/gettext/"
-PKG_GIT_URL="https://github.com/sabotage-linux/gettext-tiny"
+PKG_SITE="https://github.com/sabotage-linux/gettext-tiny"
+PKG_URL="https://github.com/sabotage-linux/gettext-tiny/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_HOST="ccache:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="toolchain/devel"
-
-
 PKG_AUTORECONF="no"
 
 makeinstall_host() {
