@@ -68,12 +68,6 @@ case "$TARGET_ARCH" in
     ;;
 esac
 
-if target_has_feature neon; then
-  FFMPEG_FPU="--enable-neon"
-else
-  FFMPEG_FPU="--disable-neon"
-fi
-
 if [ "$DISPLAYSERVER" = "x11" ]; then
   FFMPEG_X11GRAB="--enable-indev=x11grab_xcb"
 fi

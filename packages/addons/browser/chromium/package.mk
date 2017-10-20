@@ -19,13 +19,14 @@
 ################################################################################
 
 PKG_NAME="chromium"
-PKG_VERSION="61.0.3163.100"
+PKG_VERSION="62.0.3202.62"
 PKG_REV="120"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_SITE="http://www.chromium.org/Home"
-PKG_URL="ftp://root:openelec@192.168.1.4/www/chromium-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_HOST="toolchain ninja:host Python:host"
+#PKG_URL="ftp://root:openelec@192.168.1.4/www/chromium-$PKG_VERSION.tar.xz"
+PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
 PKG_DEPENDS_TARGET="chromium:host pciutils dbus x11 ffmpeg yasm libXcomposite libXcursor libXtst alsa-lib bzip2 libXScrnSaver libexif libpng harfbuzz atk gtk2 unclutter xdotool libvdpau minizip"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
@@ -39,7 +40,7 @@ PKG_ADDON_PROVIDES="executable"
 
 post_patch() {
   # Use Python 2
-  find $PKG_BUILD -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$TOOLCHAIN/bin/python|g" {} +
+  find $PKG_BUILD -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$TOOLCHAIN/bin/python2|g" {} +
 
   # set correct widevine
   sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' $PKG_BUILD/third_party/widevine/cdm/stub/widevine_cdm_version.h
@@ -128,7 +129,7 @@ make_target() {
   ./build/linux/unbundle/replace_gn_files.py --system-libraries "${_system_libs}"
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
-  ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
+  ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python2
 
   ninja -j${CONCURRENCY_MAKE_LEVEL} -C out/Release chrome chrome_sandbox widevinecdmadapter
 }
