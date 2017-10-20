@@ -54,19 +54,19 @@ pre_make_target() {
 }
 
 make_host() {
-  python2 setup.py build
+  python setup.py build
 }
 
 make_target() {
-  python2 setup.py build --cross-compile
+  python setup.py build --cross-compile
 }
 
 makeinstall_target() {
-  python2 setup.py install --root=$INSTALL --prefix=/usr
+  python setup.py install --root=$INSTALL --prefix=/usr
 }
 
 makeinstall_host() {
-  python2 setup.py install --prefix=$TOOLCHAIN
+  python setup.py install --prefix=$TOOLCHAIN
 }
 
 post_makeinstall_target() {
