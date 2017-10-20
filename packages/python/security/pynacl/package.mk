@@ -1,7 +1,6 @@
 ################################################################################
 #      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2009-2015 Stephan Raue (stephan@openelec.tv)
-#      Copyright (C) 2016-present Team LibreELEC
+#      Copyright (C) 2017-present Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,28 +16,33 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="xdotool"
-PKG_VERSION="2.20110530.1"
-PKG_SHA256="e7b42c8b1d391970e1c1009b256033f30e57d8e0a2a3de229fd61ecfc27baf67"
+PKG_NAME="pynacl"
+PKG_VERSION="1.1.2"
+PKG_SHA256="448897f0cfe3607dc23a871fa4405ef00926179df27ee8dfd0e46d42c60d8968"
 PKG_ARCH="any"
-PKG_LICENSE="GPL"
-PKG_SITE="http://www.semicomplete.com/projects/xdotool/"
-PKG_URL="http://semicomplete.googlecode.com/files/${PKG_NAME}-${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_TARGET="toolchain libXinerama libXtst"
-PKG_SECTION="x11/app"
-PKG_SHORTDESC="This tool lets you simulate keyboard input and mouse activity, move and resize windows, etc."
-PKG_LONGDESC="This tool lets you simulate keyboard input and mouse activity, move and resize windows, etc."
+PKG_LICENSE="Apache"
+PKG_SITE="https://github.com/pyca/pynacl"
+PKG_URL="https://github.com/pyca/pynacl/archive/$PKG_VERSION.tar.gz"
+PKG_DEPENDS_TARGET="toolchain Python2 distutilscross:host python-cffi:host libsodium python-six python-cffi"
+PKG_SECTION="python/security"
+PKG_SHORTDESC="Python binding to the Networking and Cryptography (NaCl) library"
+PKG_LONGDESC="PyNaCl is a Python binding to libsodium, which is a fork of the Networking and Cryptography library."
 PKG_AUTORECONF="no"
 
 pre_configure_target() {
-  LDFLAGS="$LDFLAGS -lXext"
+  export PYTHONXCPREFIX="$SYSROOT_PREFIX/usr"
+  export LDSHARED="$CC -shared"
+  export SODIUM_INSTALL=system
 }
 
 make_target() {
-  make xdotool.static
-  mv xdotool.static xdotool
+  python setup.py build --cross-compile
 }
 
 makeinstall_target() {
-  : # nothing to do here
+  python setup.py install --root=$INSTALL --prefix=/usr
+}
+
+post_makeinstall_target() {
+  find $INSTALL/usr/lib -name "*.py" -exec rm -rf "{}" ";"
 }

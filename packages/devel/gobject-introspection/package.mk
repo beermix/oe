@@ -1,22 +1,22 @@
 PKG_NAME="gobject-introspection"
-PKG_VERSION="230b258"
+PKG_VERSION="1.52.1"
 PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://www.gtk.org/"
-PKG_GIT_URL="https://git.gnome.org/browse/gobject-introspection"
-PKG_DEPENDS_TARGET="toolchain glib qemu:host"
+PKG_URL="https://github.com/GNOME/$PKG_NAME/archive/$PKG_VERSION.tar.gz"
+PKG_DEPENDS_TARGET="toolchain glib qemu:host gobject-introspection:host"
 PKG_DEPENDS_HOST="glib:host"
 PKG_SECTION="devel"
 PKG_SHORTDESC="glib: C support library"
 PKG_LONGDESC="GLib is a library which includes support routines for C such as lists, trees, hashes, memory allocation, and many other things."
 
-
+PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_HOST="--disable-static --disable-doctool --disable-gtk-doc"
+PKG_CONFIGURE_OPTS_HOST="--disable-doctool"
 
-PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
+PKG_CONFIGURE_OPTS_TARGET="--disable-doctool"
 
 post_unpack() {
   rm -f $PKG_BUILD/gtk-doc.make
@@ -28,13 +28,15 @@ EOF
 
 pre_configure_host() {
   CFLAGS="$CFLAGS -fPIC"
+  PYTHON_INCLUDES="-I$TOOLCHAIN/include/$PKG_PYTHON_VERSION"
+  CPPFLAGS="-I$TOOLCHAIN/usr/$PKG_PYTHON_VERSION"
 }
 
 pre_configure_target() {
-  PYTHON_INCLUDES="-I$SYSROOT_PREFIX/usr/include/python2.7"
-  CPPFLAGS="-I$SYSROOT_PREFIX/usr/include/python2.7"
+  PYTHON_INCLUDES="-I$SYSROOT_PREFIX/usr/include/$PKG_PYTHON_VERSION"
+  CPPFLAGS="-I$SYSROOT_PREFIX/usr/include/$PKG_PYTHON_VERSION"
   CFLAGS="$CFLAGS -fPIC"
-#  LDFLAGS="$LDFLAGS -Wl,--dynamic-linker=/usr/lib/ld-$(get_pkg_build glibc).so"
+  LDFLAGS="$LDFLAGS -Wl,--dynamic-linker=/usr/lib/ld-$(get_pkg_version glibc).so"
 
 cat > $TOOLCHAIN/bin/g-ir-scanner-wrapper << EOF
 #!/bin/sh
@@ -58,12 +60,20 @@ EOF
 
 cat > $TOOLCHAIN/bin/ldd-cross << EOF
 #!/bin/sh
-$TOOLCHAIN/bin/qemu-$TARGET_ARCH $SYSROOT_PREFIX/lib/ld-$(get_pkg_build glibc).so --list "\$1"
+$TOOLCHAIN/bin/qemu-$TARGET_ARCH $SYSROOT_PREFIX/usr/lib/ld-$(get_pkg_version glibc).so --list "\$1"
 EOF
 
   chmod +x $TOOLCHAIN/bin/ldd-cross
 }
 
+make_target() {
+  ##GI_SCANNER_DEBUG="save-temps" \
+  GI_CROSS_LAUNCHER="$TOOLCHAIN/bin/qemu-$TARGET_ARCH" \
+  GI_LDD=$TOOLCHAIN/bin/ldd-cross \
+  INTROSPECTION_SCANNER=$TOOLCHAIN/bin/g-ir-scanner-wrapper \
+  INTROSPECTION_COMPILER=$TOOLCHAIN/bin/g-ir-compiler-wrapper \
+  make
+}
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin

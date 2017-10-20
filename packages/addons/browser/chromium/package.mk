@@ -20,7 +20,8 @@
 
 PKG_NAME="chromium"
 PKG_VERSION="62.0.3202.62"
-PKG_REV="120"
+PKG_SHA256="e8df3150386729ddcb4971636627e54815ad447be5f122201e310f5bb0bcc362"
+PKG_REV="107.008"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_SITE="http://www.chromium.org/Home"
@@ -39,16 +40,17 @@ PKG_ADDON_TYPE="xbmc.python.script"
 PKG_ADDON_PROVIDES="executable"
 
 post_patch() {
+  cd $(get_build_dir chromium)
   # Use Python 2
-  find $PKG_BUILD -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$TOOLCHAIN/bin/python2|g" {} +
+  find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$TOOLCHAIN/bin/python2|g" {} +
 
   # set correct widevine
-  sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' $PKG_BUILD/third_party/widevine/cdm/stub/widevine_cdm_version.h
+  sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' ./third_party/widevine/cdm/stub/widevine_cdm_version.h
 
 }
 
 make_host() {
-  ./tools/gn/bootstrap/bootstrap.py --no-rebuild --no-clean
+  ./tools/gn/bootstrap/bootstrap.py --no-rebuild --no-clean --verbose
 }
 
 makeinstall_host() {
@@ -59,7 +61,7 @@ make_target() {
   strip_lto
   export LDFLAGS="$LDFLAGS -ludev"
   export LD=$CXX
-  
+
   # Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
   # Note: These are for OpenELEC use ONLY. For your own distribution, please
   # get your own set of keys.
@@ -94,6 +96,7 @@ make_target() {
     'use_sysroot=true'
     'use_vulcanize=false'
     'use_vaapi=true'
+    'exclude_unwind_tables=true'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_hangout_services_extension=true'
     'enable_widevine=true'

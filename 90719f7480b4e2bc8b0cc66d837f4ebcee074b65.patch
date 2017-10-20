@@ -1,0 +1,31 @@
+From 90719f7480b4e2bc8b0cc66d837f4ebcee074b65 Mon Sep 17 00:00:00 2001
+From: Lukas Rusak <lorusak@gmail.com>
+Date: Fri, 20 Oct 2017 10:06:08 -0700
+Subject: [PATCH] fixup! scripts/build: add meson to buildsystem
+
+---
+ config/functions | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/config/functions b/config/functions
+index 5ef252a85bb..27f853b33fe 100644
+--- a/config/functions
++++ b/config/functions
+@@ -57,6 +57,8 @@ setup_toolchain() {
+         echo "" >> $MESON_CONF
+         echo "[properties]" >> $MESON_CONF
+         echo "root = '$SYSROOT_PREFIX/usr'" >> $MESON_CONF
++        python -c "import os; print('c_args = {}'.format([x for x in os.getenv('CFLAGS').split()]))" >> $MESON_CONF
++        python -c "import os; print('c_link_args = {}'.format([x for x in os.getenv('LDFLAGS').split()]))" >> $MESON_CONF
+       fi
+       export HOST_CC="$TOOLCHAIN/bin/host-gcc"
+       export HOST_CXX="$TOOLCHAIN/bin/host-g++"
+@@ -128,6 +130,8 @@ setup_toolchain() {
+         echo ""	>> $MESON_CONF
+         echo "[properties]" >> $MESON_CONF
+         echo "root = '$TOOLCHAIN'" >> $MESON_CONF
++        python -c "import os; print('c_args = {}'.format([x for x in os.getenv('CFLAGS').split()]))" >> $MESON_CONF
++        python -c "import os; print('c_link_args = {}'.format([x for x in os.getenv('LDFLAGS').split()]))" >> $MESON_CONF
+       fi
+       export HOST_CC="$CC"
+       export HOST_CXX="$CXX"

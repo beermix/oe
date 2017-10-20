@@ -1,0 +1,14 @@
+diff: pycryptodome-3.4.5.orig/.install_pkg/usr/lib/python2.7/site-packages/Cryptodome: No such file or directory
+diff: pycryptodome-3.4.5/.install_pkg/usr/lib/python2.7/site-packages/Cryptodome: No such file or directory
+diff -Naur pycryptodome-3.4.5.orig/lib/Crypto/Util/_raw_api.py pycryptodome-3.4.5/lib/Crypto/Util/_raw_api.py
+--- pycryptodome-3.4.5.orig/lib/Crypto/Util/_raw_api.py 2017-09-22 11:10:11.230330575 +0200
++++ pycryptodome-3.4.5/lib/Crypto/Util/_raw_api.py      2017-09-22 11:11:37.929677154 +0200
+@@ -49,7 +49,7 @@
+         """
+
+         lib = ffi.dlopen(name)
+-        ffi.cdef(cdecl)
++        ffi.cdef(cdecl, override=True)
+         return lib
+
+     def c_ulong(x):
