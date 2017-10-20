@@ -59,7 +59,7 @@ pre_configure_target() {
 
 configure_target() {
   cd $PKG_BUILD/.$TARGET_NAME
-  ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 "-Wa,--noexecstack $CFLAGS"
+  ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 "-Wa,--noexecstack $OPENSSL_TARGET $CFLAGS $LDFLAGS"
   #MAKEFLAGS=-j1
 }
 
@@ -82,7 +82,7 @@ post_makeinstall_target() {
   rm -rf $INSTALL/etc/ssl/misc
   rm -rf $INSTALL/usr/bin/c_rehash
 
-  $STRIP $INSTALL/usr/bin/openssl
+  debug_strip $INSTALL/usr/bin/openssl
 
   # create new cert: ./mkcerts.sh
   # cert from https://curl.haxx.se/docs/caextract.html
