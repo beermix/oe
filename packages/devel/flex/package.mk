@@ -30,7 +30,8 @@ PKG_AUTORECONF="yes"
 PKG_CONFIGURE_OPTS_HOST="ac_cv_path_M4=$TOOLCHAIN/bin/m4 \
 			    ac_cv_func_reallocarray=no \
 			    --disable-shared \
-			    --disable-rpath"
+			    --disable-rpath \
+			    --disable-doc"
 
 post_makeinstall_host() {
   cat > $TOOLCHAIN/bin/lex << "EOF"
