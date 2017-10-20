@@ -30,7 +30,7 @@ PKG_LONGDESC="Kodi Media Center (which was formerly named Xbox Media Center or X
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
-PKG_USE_NINJA="no"
+PKG_USE_NINJA="yes"
 
 PKG_CMAKE_SCRIPT="$PKG_BUILD/project/cmake/CMakeLists.txt"
 
@@ -189,24 +189,20 @@ else
   KODI_ARCH="-DWITH_ARCH=$TARGET_ARCH"
 fi
 
-if [ "$DEVICE" = "Slice" -o "$DEVICE" = "Slice3" ]; then
+if [ "$PROJECT" = "Slice" -o "$PROJECT" = "Slice3" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET led_tools"
 fi
 
 if [ ! "$KODIPLAYER_DRIVER" = default ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET $KODIPLAYER_DRIVER"
   if [ "$KODIPLAYER_DRIVER" = bcm2835-driver ]; then
-    KODI_PLAYER="-DCORE_PLATFORM_NAME=rbpi"
-  elif [ "$KODIPLAYER_DRIVER" = mesa ]; then
-    KODI_PLAYER="-DCORE_PLATFORM_NAME=gbm"
-    CFLAGS="$CFLAGS -DMESA_EGL_NO_X11_HEADERS"
-    CXXFLAGS="$CXXFLAGS -DMESA_EGL_NO_X11_HEADERS"
+    KODI_PLAYER="-DENABLE_MMAL=ON -DCORE_SYSTEM_NAME=rbpi"
   elif [ "$KODIPLAYER_DRIVER" = libfslvpuwrap ]; then
-    KODI_PLAYER="-DCORE_PLATFORM_NAME=imx"
+    KODI_PLAYER="-DENABLE_IMX=ON"
     CFLAGS="$CFLAGS -DHAS_IMXVPU -DLINUX -DEGL_API_FB"
     CXXFLAGS="$CXXFLAGS -DHAS_IMXVPU -DLINUX -DEGL_API_FB"
   elif [ "$KODIPLAYER_DRIVER" = libamcodec ]; then
-    KODI_PLAYER="-DCORE_PLATFORM_NAME=aml"
+    KODI_PLAYER="-DENABLE_AML=ON"
   fi
 fi
 
@@ -217,8 +213,7 @@ KODI_LIBDVD="$KODI_DVDCSS \
 PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$TOOLCHAIN \
                        -DWITH_TEXTUREPACKER=$TOOLCHAIN/bin/TexturePacker \
                        -DDEPENDS_PATH=$PKG_BUILD/depends \
-                       -DPYTHON_EXECUTABLE=$TOOLCHAIN/bin/$PKG_PYTHON_VERSION \
-                       -DPYTHON_INCLUDE_DIRS=$SYSROOT_PREFIX/usr/include/$PKG_PYTHON_VERSION \
+                       -DPYTHON_INCLUDE_DIRS=$SYSROOT_PREFIX/usr/include/python2.7 \
                        -DGIT_VERSION=$PKG_VERSION \
                        -DENABLE_INTERNAL_FFMPEG=OFF \
                        -DFFMPEG_INCLUDE_DIRS=$SYSROOT_PREFIX/usr \
@@ -283,8 +278,8 @@ post_makeinstall_target() {
     cp $PKG_DIR/scripts/kodi-config $INSTALL/usr/lib/kodi
     cp $PKG_DIR/scripts/kodi.sh $INSTALL/usr/lib/kodi
 
-  mkdir -p $INSTALL/usr/sbin
-    cp $PKG_DIR/scripts/service-addon-wrapper $INSTALL/usr/sbin
+  mkdir -p $INSTALL/usr/lib/libreelec
+    cp $PKG_DIR/scripts/systemd-addon-wrapper $INSTALL/usr/lib/libreelec
 
   mkdir -p $INSTALL/usr/bin
     cp $PKG_DIR/scripts/cputemp $INSTALL/usr/bin
@@ -345,7 +340,7 @@ post_makeinstall_target() {
   xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "repository.libreelec.tv" $ADDON_MANIFEST
   xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "repository.retroplayer.libreelec.tv" $ADDON_MANIFEST
   xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "service.libreelec.settings" $ADDON_MANIFEST
-  if [ "$DEVICE" = "Slice" -o "$DEVICE" = "Slice3" ]; then
+  if [ "$PROJECT" = "Slice" -o "$PROJECT" = "Slice3" ]; then
     xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "service.slice" $ADDON_MANIFEST
   fi
 
