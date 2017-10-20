@@ -1,6 +1,6 @@
 PKG_NAME="libvpx"
-PKG_VERSION="5bc4c37"
-PKG_GIT_URL="https://github.com/webmproject/libvpx/"
+PKG_VERSION="b58259a"
+PKG_URL="https://github.com/webmproject/libvpx/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="tools"
 PKG_AUTORECONF="no"
@@ -17,7 +17,7 @@ configure_target() {
   		--as=yasm \
   		--enable-pic \
   		--enable-runtime-cpu-detect \
-  		--enable-shared \
+  		--disable-shared \
   		--enable-pic \
   		--disable-install-docs \
   		--disable-install-srcs \
