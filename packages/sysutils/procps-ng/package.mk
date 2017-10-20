@@ -30,15 +30,14 @@ PKG_AUTORECONF="no"
 
 pre_configure_target() {
  sed 's:<ncursesw/:<:g' -i $PKG_BUILD/watch.c
-# CFLAGS="$CFLAGS -fPIC"
-# CXXFLAGS="$CXXFLAGS -fPIC"
 }
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            ac_cv_func_realloc_0_nonnull=yes \
                            --disable-modern-top \
                            --enable-watch8bit \
-                           --disable-shared --with-pic \
+                           --disable-shared \
+                           --with-pic \
                            --disable-kill"
 
 #makeinstall_target() {
