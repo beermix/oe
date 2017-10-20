@@ -50,7 +50,7 @@ post_patch() {
 }
 
 make_host() {
-  ./tools/gn/bootstrap/bootstrap.py --no-rebuild --no-clean --verbose
+  ./tools/gn/bootstrap/bootstrap.py --no-rebuild --no-clean
 }
 
 makeinstall_host() {

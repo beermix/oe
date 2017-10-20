@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2016 Team LibreELEC
+#      Copyright (C) 2016-present Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,22 +18,18 @@
 
 PKG_NAME="libgdiplus"
 PKG_VERSION="5.4"
-PKG_ARCH="any"
+PKG_SHA256="ce31da0c6952c8fd160813dfa9bf4a9a871bfe7284e9e3abff9a8ee689acfe58"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/mono/libgdiplus"
-PKG_GIT_URL="https://github.com/mono/libgdiplus"
+PKG_URL="https://github.com/mono/libgdiplus/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain giflib libjpeg-turbo tiff libXext libexif glib cairo"
-PKG_SECTION="tools"
-PKG_SHORTDESC="libgiplus"
 PKG_LONGDESC="An Open Source implementation of the GDI+ API"
-
-
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--with-libgif=$SYSROOT_PREFIX/usr \
-			      --with-libjpeg=$SYSROOT_PREFIX/usr \
-			      --with-libtiff=$SYSROOT_PREFIX/usr \
-			      --enable-shared"
+PKG_CONFIGURE_OPTS_TARGET="--enable-shared               \
+                           --with-libgif=$TARGET_PREFIX  \
+                           --with-libjpeg=$TARGET_PREFIX \
+                           --with-libtiff=$TARGET_PREFIX"
 
 makeinstall_target() {
   make install DESTDIR=$INSTALL

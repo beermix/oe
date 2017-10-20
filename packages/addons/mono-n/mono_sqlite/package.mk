@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2016 Team LibreELEC
+#      Copyright (C) 2016-present Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-. "packages/databases/sqlite/package.mk"
+. "$ROOT/packages/databases/sqlite/package.mk"
 
 PKG_NAME="mono_sqlite"
 PKG_URL=""
@@ -28,7 +28,7 @@ PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET --disable-static --enable-
 
 unpack() {
   mkdir -p $PKG_BUILD
-  cp -r $(get_pkg_build sqlite)/* $PKG_BUILD/
+  cp -r $(get_build_dir sqlite)/* $PKG_BUILD/
 }
 
 makeinstall_target() {
