@@ -44,6 +44,7 @@ post_patch() {
 
   # set correct widevine
   sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' $PKG_BUILD/third_party/widevine/cdm/stub/widevine_cdm_version.h
+
 }
 
 make_host() {
@@ -58,7 +59,7 @@ make_target() {
   strip_lto
   export LDFLAGS="$LDFLAGS -ludev"
   export LD=$CXX
-
+  
   # Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
   # Note: These are for OpenELEC use ONLY. For your own distribution, please
   # get your own set of keys.
