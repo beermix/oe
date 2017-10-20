@@ -56,6 +56,7 @@ pre_make_target() {
 
 make_target() {
   make -f Makefile-libbz2_so CC=$CC CFLAGS="$CFLAGS -fPIC -DPIC"
+  make -f Makefile libbz2.a bzip2 bzip2recover CC="$CC" CFLAGS="$CFLAGS -fPIC -DPIC"
 }
 
 post_make_target() {
@@ -67,7 +68,14 @@ makeinstall_target() {
     cp bzlib.h $SYSROOT_PREFIX/usr/include
   mkdir -p $SYSROOT_PREFIX/usr/lib
     cp -P libbz2.so* $SYSROOT_PREFIX/usr/lib
+    cp libbz2.a $SYSROOT_PREFIX/usr/lib
 
   mkdir -p $INSTALL/usr/lib
     cp -P libbz2.so* $INSTALL/usr/lib
+    
+  mkdir -p $INSTALL/usr/bin
+    cp -P bzdiff $INSTALL/usr/bin
+    cp -P bzgrep $INSTALL/usr/bin
+    cp -P bzip2 $INSTALL/usr/bin
+    cp -P bzmore $INSTALL/usr/bin
 }
