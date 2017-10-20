@@ -22,7 +22,7 @@ PKG_ARCH="any"
 PKG_LICENSE="various"
 PKG_SITE="http://www.openelec.tv"
 PKG_URL=""
-PKG_DEPENDS_TARGET="toolchain connman iana-etc ethtool openssh bluez pure-ftpd iperf netperf nuttcp"
+PKG_DEPENDS_TARGET="toolchain connman iana-etc ethtool openssh bluez pure-ftpd iperf netperf nuttcp nss"
 PKG_SECTION="virtual"
 PKG_SHORTDESC="network: Metapackage for packages to install network support"
 PKG_LONGDESC="network: Metapackage for various packages to install network support"
@@ -38,8 +38,4 @@ fi
 
 if [ "$OPENVPN_SUPPORT" = "yes" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET openvpn"
-fi
-
-if [ "$TARGET_ARCH" = "x86_64" ]  [ "$TARGET_ARCH" = "arm" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET nss"
 fi
