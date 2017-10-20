@@ -5,4 +5,4 @@ PKG_DEPENDS_TARGET="toolchain readline pcre libcap"
 PKG_SECTION="my"
 PKG_AUTORECONF="no"
 
-#PKG_CONFIGURE_OPTS_TARGET="--with-included-regex"
+PKG_CONFIGURE_OPTS_TARGET="--disable-perl-regexp"
