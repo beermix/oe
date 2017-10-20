@@ -47,20 +47,21 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-lto \
                            --enable-ld=default \
                            --disable-multilib \
-                           --enable-nls \
-                           --with-default-libstdcxx-abi=new \
+                           --disable-nls \
                            --enable-checking=release \
+                           --with-default-libstdcxx-abi=gcc4-compatible \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
                            --disable-libmudflap \
                            --disable-libatomic \
+                           --disable-libitm \
+                           --disable-libquadmath \
                            --disable-libmpx \
                            --disable-libssp \
                            --disable-libsanitizer \
                            --without-cuda-driver \
                            --disable-vtable-verify \
-                           --disable-werror \
                            --with-tune=generic"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
@@ -70,8 +71,6 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-cloog-backend=isl \
                               --disable-shared \
                               --disable-threads \
-                              --disable-libitm \
-                              --disable-libquadmath \
                               --disable-libgomp \
                               --without-headers \
                               --with-newlib \
