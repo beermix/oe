@@ -85,7 +85,7 @@
   # Space separated list is supported,
   # e.g. FIRMWARE="dvb-firmware misc-firmware wlan-firmware"
   # FIRMWARE="misc-firmware wlan-firmware dvb-firmware iwlwifi-firmware"
-    FIRMWARE="wlan-firmware"
+  # FIRMWARE="wlan-firmware"
 
   # additional drivers to install:
   # for a list of additinoal drivers see packages/linux-drivers
