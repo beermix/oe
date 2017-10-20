@@ -11,10 +11,10 @@
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-#
+# unrar coreutils psmisc
 #  You should have received a copy of the GNU General Public License
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################ unrar coreutils psmisc procps-ng
+################################################################################ 
 
 PKG_NAME="busybox"
 PKG_VERSION="1.27.2"
@@ -24,7 +24,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://www.busybox.net"
 PKG_URL="http://busybox.net/downloads/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain busybox:host hdparm dosfstools e2fsprogs zip unzip pciutils usbutils parted procps-ng gptfdisk findutils grep gawk sed coreutils bash less"
+PKG_DEPENDS_TARGET="toolchain busybox:host hdparm dosfstools e2fsprogs zip unzip pciutils usbutils parted procps-ng gptfdisk findutils grep gawk sed bash less"
 PKG_DEPENDS_INIT="toolchain"
 PKG_SECTION="system"
 PKG_SHORTDESC="BusyBox: The Swiss Army Knife of Embedded Linux"
@@ -173,7 +173,7 @@ makeinstall_target() {
 #    rm $INSTALL/usr/bin/sh
 #    rm $INSTALL/usr/bin/hostname
 #    rm $INSTALL/usr/sbin/ip
-#    rm $INSTALL/usr/bin/bash
+    rm $INSTALL/usr/bin/bash
 
   mkdir -p $INSTALL/etc
     cp $PKG_DIR/config/profile $INSTALL/etc
