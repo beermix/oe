@@ -27,13 +27,13 @@ PKG_DEPENDS_TARGET="toolchain zlib"
 PKG_SECTION="devel"
 
 PKG_USE_CMAKE="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-unicode-properties \
 			      --enable-pcre16 \
-			      --enable-pcre32 \
 			      --enable-jit \
-			      --enable-utf8"
+			      --enable-utf8 \
+			      --with-gnu-ld"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN $PKG_CONFIGURE_OPTS_TARGET --disable-shared --with-pic"
 
