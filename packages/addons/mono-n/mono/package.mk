@@ -30,7 +30,6 @@ PKG_SECTION="tools"
 PKG_SHORTDESC="Mono: a cross platform, open source .NET framework"
 PKG_LONGDESC="Mono ($PKG_VERSION) is a software platform designed to allow developers to easily create cross platform applications part of the .NET Foundation"
 PKG_AUTORECONF="yes"
-PKG_USE_NINJA="no"
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Mono"
