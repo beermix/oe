@@ -3,7 +3,6 @@ PKG_VERSION="8.28"
 PKG_URL="http://ftpmirror.gnu.org/coreutils/coreutils-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain acl libcap pcre readline gmp openssl"
 PKG_SECTION="my"
-
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="c_cv_c_restrict=no \
@@ -47,6 +46,7 @@ PKG_CONFIGURE_OPTS_TARGET="c_cv_c_restrict=no \
 			      --with-openssl \
 			      --disable-rpath \
 			      --enable-threads=posix \
+			      --disable-shared \
 			      --with-gmp"
 			      
 PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
