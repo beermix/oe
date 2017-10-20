@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="boost"
-PKG_VERSION="1_65_1"
-PKG_URL="https://fossies.org/linux/misc/boost_1_65_1.tar.xz"
-#PKG_URL="https://dl.bintray.com/boostorg/release/1.64.0/source/boost_1_64_0.tar.gz"
+PKG_VERSION="1_64_0"
+#PKG_URL="https://fossies.org/linux/misc/boost_1_65_1.tar.xz"
+PKG_URL="https://dl.bintray.com/boostorg/release/1.64.0/source/boost_$PKG_VERSION.tar.gz"
 #PKG_VERSION="1_63_0"
 #PKG_URL="$SOURCEFORGE_SRC/boost/boost/1.63.0/${PKG_NAME}_${PKG_VERSION}.tar.bz2"
 PKG_SOURCE_DIR="${PKG_NAME}_${PKG_VERSION}"
