@@ -29,5 +29,5 @@ PKG_SHORTDESC="libxmu: X11 miscellaneous utility library"
 PKG_LONGDESC="LibXmu provides a set of miscellaneous utility convenience functions for X libraries to use."
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--with-gnu-ld --without-xmlto"
+PKG_CONFIGURE_OPTS_TARGET="--without-xmlto"
 

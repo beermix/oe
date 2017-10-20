@@ -30,11 +30,9 @@ PKG_LONGDESC="LibXi provides an X Window System client interface to the XINPUT e
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-malloc0returnsnull \
-                           --enable-silent-rules \
                            --disable-docs \
                            --disable-specs \
                            --without-xmlto \
                            --without-fop \
                            --without-xsltproc \
-                           --without-asciidoc \
-                           --with-gnu-ld"
+                           --without-asciidoc"

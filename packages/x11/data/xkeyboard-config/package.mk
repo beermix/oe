@@ -35,8 +35,7 @@ PKG_CONFIGURE_OPTS_TARGET="XKBCOMP=/usr/bin/xkbcomp \
                            --enable-nls \
                            --disable-rpath \
                            --with-xkb-base=$XORG_PATH_XKB \
-                           --with-xkb-rules-symlink=xorg \
-                           --with-gnu-ld"
+                           --with-xkb-rules-symlink=xorg"
 
 pre_build_target() {
 # broken autoreconf

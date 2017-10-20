@@ -50,7 +50,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-openmp \
                            --disable-timers \
                            --disable-gtk \
                            --disable-libpng \
-                           --with-gnu-ld --disable-static"
+                           --disable-static"
 
 post_makeinstall_target() {
   cp $SYSROOT_PREFIX/usr/lib/pkgconfig/pixman-1.pc \
