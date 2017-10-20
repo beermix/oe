@@ -5,3 +5,4 @@ PKG_URL="https://github.com/libfuse/sshfs/releases/download/sshfs-$PKG_VERSION/s
 PKG_DEPENDS_TARGET="toolchain fuse"
 PKG_SECTION="tools"
 PKG_AUTORECONF="no"
+PKG_USE_MESON="no"
