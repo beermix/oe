@@ -17,44 +17,24 @@
 ################################################################################
 
 PKG_NAME="libpcap"
-PKG_VERSION="1.8.1"
-#PKG_VERSION="6913c4b"
-PKG_URL="http://www.tcpdump.org/release/libpcap-$PKG_VERSION.tar.gz"
+PKG_VERSION="164dcd9"
+#PKG_URL="http://www.tcpdump.org/release/libpcap-$PKG_VERSION.tar.gz"
 #PKG_GIT_URL="https://github.com/the-tcpdump-group/libpcap"
-PKG_DEPENDS_TARGET="toolchain libusb dbus"
+PKG_URL="https://github.com/the-tcpdump-group/libpcap/archive/${PKG_VERSION}.tar.gz"
+PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="devel"
 PKG_SHORTDESC="system interface for user-level packet capture"
 PKG_LONGDESC="libpcap (Packet CAPture) provides a portable framework for low-level network monitoring. Applications include network statistics collection, security monitoring, network debugging, etc."
-PKG_USE_CMAKE="no"
+PKG_USE_CMAKE="yes"
 PKG_AUTORECONF="no"
+PKG_USE_NINJA="no"
 
-CONCURRENCY_MAKE_LEVEL=1
-
-PKG_CONFIGURE_OPTS_TARGET="LIBS=-lpthread \
-                           ac_cv_header_libusb_1_0_libusb_h=no \
-                           ac_cv_netfilter_can_compile=no \
-                           ac_cv_linux_vers=2 \
-                           --disable-shared \
-                           --with-pcap=linux \
-                           --disable-bluetooth \
-                           --disable-can \
-                           --without-libnl \
-                           --disable-yydebug \
-                           --disable-dbus \
-                           --without-septel \
-                           --without-dag"
-
-pre_configure_target() {
-# When cross-compiling, configure can't set linux version
-# forcing it
-  sed -i -e 's/ac_cv_linux_vers=unknown/ac_cv_linux_vers=2/' ../configure
-  export CFLAGS="$CFLAGS -D_DEFAULT_SOURCE -fPIC"
-}
+PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release \
+			  -DINET6=0 \
+			  -DBUILD_WITH_LIBNL=0 \
+			  -DBUILD_SHARED_LIBS=0 \
+			  -DENABLE_REMOTE=0"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
-
-  sed -e "s:\(['= ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" -i pcap-config
-  cp pcap-config $SYSROOT_PREFIX/usr/bin
-  ln -sf $SYSROOT_PREFIX/usr/bin/pcap-config $BUILD/toolchain/bin/
 }

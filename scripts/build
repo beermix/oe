@@ -150,7 +150,7 @@ if [ ! -f $STAMP ]; then
     if [ "$DEBUG" = "yes" ]; then
       MESON_BUILD_TYPE="debug"
     else
-      MESON_BUILD_TYPE="plain"
+      MESON_BUILD_TYPE="release"
     fi
 
     TARGET_MESON_OPTS="--prefix=/usr \
