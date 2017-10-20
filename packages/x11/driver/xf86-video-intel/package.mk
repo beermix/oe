@@ -31,7 +31,27 @@ PKG_LONGDESC="The Xorg driver for Intel i810, i815, 830M, 845G, 852GM, 855GM, 86
 
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--with-default-dri=3 --with-xorg-module-dir=$XORG_PATH_MODULES"
+PKG_CONFIGURE_OPTS_TARGET="--disable-backlight \
+                           --disable-backlight-helper \
+                           --disable-gen4asm \
+                           --enable-udev \
+                           --disable-tools \
+                           --enable-dri \
+                           --disable-dri1 \
+                           --enable-dri2 \
+                           --enable-dri3 \
+                           --enable-kms --enable-kms-only \
+                           --disable-ums --disable-ums-only \
+                           --enable-sna \
+                           --enable-uxa \
+                           --disable-xvmc \
+                           --disable-xaa \
+                           --disable-dga \
+                           --disable-tear-free \
+                           --disable-create2 \
+                           --disable-async-swap \
+                           --with-default-dri=3 \
+                           --with-xorg-module-dir=$XORG_PATH_MODULES"
 
 pre_configure_target() {
 # xf86-video-intel is broken enough. dont link with LTO

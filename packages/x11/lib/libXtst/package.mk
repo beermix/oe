@@ -27,8 +27,6 @@ PKG_DEPENDS_TARGET="toolchain util-macros recordproto xextproto libXext inputpro
 PKG_SECTION="x11/lib"
 PKG_SHORTDESC="libxtst: The Xtst Library"
 PKG_LONGDESC="The Xtst Library"
-
-
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--without-xmlto"
+PKG_CONFIGURE_OPTS_TARGET="--with-gnu-ld --without-xmlto"
