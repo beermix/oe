@@ -59,7 +59,7 @@ pre_configure_target() {
 
 configure_target() {
   cd $PKG_BUILD/.$TARGET_NAME
-  ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 "-Wa,--noexecstack $OPENSSL_TARGET $CFLAGS $LDFLAGS"
+  ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 "-Wa,--noexecstack $CPPFLAGS $CFLAGS $LDFLAGS"
   #MAKEFLAGS=-j1
 }
 
