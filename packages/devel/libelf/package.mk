@@ -22,11 +22,9 @@ PKG_SITE="http://www.mr511.de/software/"
 PKG_URL="http://www.mr511.de/software/libelf-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="intltool:host libtool:host bison:host flex:host"
 PKG_SECTION="devel"
-
-
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_HOST="--disable-shared --enable-elf64"
+PKG_CONFIGURE_OPTS_HOST="--disable-shared --enable-elf64 --disable-rpath --with-gnu-ld"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-elf64 --with-gnu-ld"
+PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
 
