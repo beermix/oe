@@ -68,9 +68,9 @@ for drv in $GRAPHIC_DRIVERS; do
 done
 
 if [ "$OPENGLES_SUPPORT" = "yes" ]; then
-  MESA_GLES="--enable-gles2"
+  MESA_GLES="--disable-gles1 --enable-gles2"
 else
-  MESA_GLES="--disable-gles2"
+  MESA_GLES="--disable-gles1 --disable-gles2"
 fi
 
 PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
@@ -78,23 +78,19 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            CFLAGS_FOR_BUILD= \
                            CXXFLAGS_FOR_BUILD= \
                            LDFLAGS_FOR_BUILD= \
-                           X11_INCLUDES= \
-                           DRI_DRIVER_INSTALL_DIR=$XORG_PATH_DRI \
-                           DRI_DRIVER_SEARCH_DIR=$XORG_PATH_DRI \
                            --disable-debug \
                            --disable-mangling \
                            --enable-texture-float \
                            --enable-asm \
                            --disable-selinux \
                            --enable-opengl \
-                           --disable-gles1 \
                            $MESA_GLES \
-                           --enable-dri \
-                           --enable-dri3 \
-                           --enable-glx \
+                           $MESA_DRI \
+                           $MESA_GLX \
                            --disable-osmesa \
                            --disable-gallium-osmesa \
-                           --enable-egl --with-egl-platforms=x11,drm \
+                           --enable-egl \
+                           $MESA_EGL_PLATFORMS \
                            $XA_CONFIG \
                            --enable-gbm \
                            --disable-nine \
@@ -106,9 +102,7 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --enable-opencl-icd \
                            --disable-gallium-tests \
                            --enable-shared-glapi \
-                           --enable-driglx-direct \
                            --enable-shader-cache \
-                           --enable-glx-tls \
                            $MESA_GALLIUM_LLVM \
                            --enable-silent-rules \
                            --with-gl-lib-name=GL \
