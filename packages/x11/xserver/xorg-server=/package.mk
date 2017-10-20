@@ -11,7 +11,7 @@
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-#
+# libXcomposite glproto libepoxy glu libXmu libXt libXfont libXaw libXpm libXext libXtst libXft libSM libICE
 #  You should have received a copy of the GNU General Public License
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
@@ -139,7 +139,6 @@ pre_configure_target() {
   LDFLAGS=`echo $LDFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|" -e "s|,-z,relro,-z,now||g"`
 }
 
-
 post_makeinstall_target() {
   rm -rf $INSTALL/var/cache/xkb
 
@@ -159,9 +158,8 @@ post_makeinstall_target() {
   mkdir -p $INSTALL/etc/X11
     if [ -f $PROJECT_DIR/$PROJECT/xorg/xorg.conf ]; then
       cp $PROJECT_DIR/$PROJECT/xorg/xorg.conf $INSTALL/etc/X11
-    elif [ -f $PKG_DIR/config/xorg.conf ]; then
-      cp $PKG_DIR/config/xorg.conf $INSTALL/etc/X11
     fi
+    cp $PKG_DIR/config/xorg*.conf $INSTALL/etc/X11
 
   if [ ! "$DEVTOOLS" = yes ]; then
     rm -rf $INSTALL/usr/bin/cvt
