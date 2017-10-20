@@ -42,17 +42,17 @@ if [ "$TARGET_ARCH" = x86_64 ]; then
 	              ac_cv_sizeof_size_t=8 \
 	              ac_cv_sizeof_off_t=8 \
 	              ac_cv_sizeof_ino_t=8 \
-	              ac_cv_sizeof_struct_iovec=16"
+	              ac_cv_sizeof_struct_iovec=16 --disable-static"
 else
 	SIZEOF_SIZES="ac_cv_sizeof_pid_t=4 \
 	              ac_cv_sizeof_ssize_t=4 \
 	              ac_cv_sizeof_size_t=4 \
 	              ac_cv_sizeof_off_t=8 \
 	              ac_cv_sizeof_ino_t=8 \
-	              ac_cv_sizeof_struct_iovec=8"
+	              ac_cv_sizeof_struct_iovec=8 --disable-static"
 fi
 
-PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
+PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$CC \
                            CFLAGS_FOR_BUILD= \
                            ac_cv_file__dev_zero=yes \
                            ac_cv_func_setpgrp_void=yes \

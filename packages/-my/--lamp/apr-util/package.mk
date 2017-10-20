@@ -52,7 +52,6 @@ pre_configure_target() {
   PKG_CONFIGURE_OPTS_TARGET="--with-apr=$APR_DIR_TARGET/usr/bin/apr-1-config \
                              --with-openssl \
                              --with-crypto \
-                             --enable-static --enable-shared \
                              --with-openssl=$SYSROOT_PREFIX/usr \
                              --with-sqlite3=$SYSROOT_PREFIX/usr"
 }

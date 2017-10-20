@@ -1,5 +1,5 @@
 PKG_NAME="fio"
-PKG_VERSION="fio-2.18"
+PKG_VERSION="fio-3.1"
 PKG_URL="https://github.com/axboe/fio/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET=""
 PKG_SECTION="tools"
