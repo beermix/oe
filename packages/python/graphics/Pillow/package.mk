@@ -36,7 +36,8 @@ pre_make_target() {
 }
 
 make_target() {
-  python setup.py build_ext --disable-platform-guessing
+#  python setup.py build_ext --disable-platform-guessing
+  python setup.py build --cross-compile
 }
 
 makeinstall_target() {
