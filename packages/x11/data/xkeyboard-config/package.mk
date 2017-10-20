@@ -26,8 +26,6 @@ PKG_DEPENDS_TARGET="toolchain util-macros xkbcomp"
 PKG_SECTION="x11/data"
 PKG_SHORTDESC="xkeyboard-config: X keyboard extension data files"
 PKG_LONGDESC="X keyboard extension data files."
-
-
 PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="XKBCOMP=/usr/bin/xkbcomp \
@@ -40,9 +38,9 @@ PKG_CONFIGURE_OPTS_TARGET="XKBCOMP=/usr/bin/xkbcomp \
                            --with-xkb-rules-symlink=xorg \
                            --with-gnu-ld"
 
-pre_build_target() {
+#pre_build_target() {
 # broken autoreconf
-  ( cd $PKG_BUILD
-    intltoolize --force
-  )
-}
+#  ( cd $PKG_BUILD
+#    intltoolize --force
+#  )
+#}
