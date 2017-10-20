@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="binutils"
-PKG_VERSION="2.29"
-PKG_SHA256="0b871e271c4c620444f8264f72143b4d224aa305306d85dd77ab8dce785b1e85"
+PKG_VERSION="2.29.1"
+PKG_SHA256="e7010a46969f9d3e53b650a518663f98a5dde3c3ae21b7d71e5e6803bc36b577"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/binutils/"
@@ -49,14 +49,27 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-ld=default \
                          --enable-lto \
                          --disable-nls \
-                         --enable-poison-system-directories"
+                         --enable-poison-system-directories \
+                         LDFLAGS=-s"
 
-#pre_configure_host() {
-#  unset CPPFLAGS
-#  unset CFLAGS
-#  unset CXXFLAGS
-#  unset LDFLAGS
-#}
+pre_configure_host() {
+  unset CPPFLAGS
+  unset CFLAGS
+  unset CXXFLAGS
+  unset LDFLAGS
+}
+
+make_host() {
+  make configure-host
+  make
+}
+
+make_target() {
+  make configure-host
+  make -C libiberty
+  make -C bfd
+  make -C binutils ar
+}
 
 makeinstall_host() {
   cp -v ../include/libiberty.h $SYSROOT_PREFIX/usr/include
@@ -68,4 +81,5 @@ makeinstall_target() {
   cp binutils/ar $INSTALL/usr/bin
 }
 
-PKG_CONFIGURE_OPTS_TARGET="MAKEINFO=true --disable-shared --disable-multilib --without-ppl --without-cloog"
+#PKG_CONFIGURE_OPTS_TARGET="MAKEINFO=true --disable-shared --disable-multilib --without-ppl --without-cloog"
+PKG_CONFIGURE_OPTS_TARGET="--enable-shared=no"

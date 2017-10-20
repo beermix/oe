@@ -5,8 +5,6 @@ PKG_DEPENDS_TARGET="toolchain readline ncurses"
 PKG_SECTION="my"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--without-selinux \
-			      --disable-debug \
-			      --enable-threads=posix"
+PKG_CONFIGURE_OPTS_TARGET="--without-selinux --disable-debug --without-libsigsegv"
 
 PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"

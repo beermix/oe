@@ -31,6 +31,7 @@ PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-unicode-properties \
 			      --enable-pcre16 \
+			      --enable-pcre32 \
 			      --enable-jit \
 			      --enable-utf8 \
 			      --with-gnu-ld"

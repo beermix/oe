@@ -4,12 +4,12 @@
 ################################################################################
 
 PKG_NAME="Alexelec-settings"
-PKG_VERSION="2e5e937"
+PKG_VERSION="10b322b"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="prop."
 PKG_SITE="http://www.alexelec.in.ua"
-PKG_GIT_URL="https://github.com/AlexELEC/Alexelec.settings-aml"
+PKG_URL="https://github.com/AlexELEC/Alexelec.settings-aml/archive/$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="Alexelec.settings-aml-$PKG_VERSION*"
 PKG_DEPENDS_TARGET="toolchain Python connman pygobject dbus-python bkeymaps"
 PKG_SECTION=""
