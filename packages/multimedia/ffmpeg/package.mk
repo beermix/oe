@@ -151,7 +151,7 @@ configure_target() {
               --enable-runtime-cpudetect \
               $FFMPEG_TABLES \
               --disable-memalign-hack \
-              --enable-encoders \
+              --disable-encoders \
               --enable-encoder=ac3 \
               --enable-encoder=aac \
               --enable-encoder=wmav2 \
