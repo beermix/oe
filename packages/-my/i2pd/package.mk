@@ -4,7 +4,7 @@ PKG_URL="https://github.com/PurpleI2P/i2pd/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain boost zlib openssl miniupnpc boost"
 PKG_SECTION="my"
 PKG_AUTORECONF="no"
-PKG_USE_CMAKE="yes"
+PKG_USE_CMAKE="no"
 
 PKG_CMAKE_SCRIPT="$PKG_BUILD/build/CMakeLists.txt"
 
@@ -17,13 +17,13 @@ PKG_CMAKE_OPTS_TARGET="-DWITH_LIBRARY=OFF \
 			  -DWITH_HARDENING=OFF \
 			  -DWITH_AESNI=ON"
 			  
-#make_target() {
-#  cd $PKG_BUILD
-#  make \
-#  	CC="$CC" \
-#  	CFLAGS="$CFLAGS" \
-#  	LDFLAGS="$LDFLAGS" \
-#  	RANLIB="$RANLIB" \
-#  	AR="$AR" \
-#  	STRIP="$STRIP"
-#}
+make_target() {
+  cd $PKG_BUILD
+  make \
+  	CC="$CC" \
+  	CFLAGS="$CFLAGS" \
+  	LDFLAGS="$LDFLAGS" \
+  	RANLIB="$RANLIB" \
+  	AR="$AR" \
+  	STRIP="$STRIP"
+}
