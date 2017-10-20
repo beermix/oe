@@ -1,9 +1,9 @@
 PKG_NAME="zsh"
 PKG_VERSION="5.4.2"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain ncurses pcre readline libcap"
+PKG_DEPENDS_TARGET="toolchain ncurses pcre readline libcap gdbm"
 PKG_SECTION="my"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 pre_configure_target() {
   export LIBS="$LIBS -lncursesw -ltinfo"
@@ -11,8 +11,18 @@ pre_configure_target() {
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-multibyte \
+			      --enable-cap \
+			      --enable-pcre \
+			      --disable-ansi2knr \
+			      --disable-dynamic \
+			      --sysconfdir=/storage/.config \
+			      --with-term-lib=ncursesw \
+			      --enable-etcdir \
 			      --enable-function-subdirs \
 			      --with-tcsetpgrp \
-			      --enable-pcre \
-			      --enable-cap \
-			      --enable-zsh-secure-free"
+			      --enable-gdbm \
+			      --enable-zsh-secure-free \
+			      --enable-readnullcmd=pager \
+			      --enable-max-jobtable-size=256 \
+			      --disable-dynamic-nss \
+			      --disable-zsh-debug"
