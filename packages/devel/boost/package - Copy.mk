@@ -17,13 +17,19 @@
 ################################################################################
 
 PKG_NAME="boost"
-PKG_VERSION="1_65_1"
-PKG_LICENSE="OSS"
-PKG_SITE="http://www.boost.org/"
-PKG_URL="https://dl.bintray.com/boostorg/release/1.65.1/source/boost_$PKG_VERSION.tar.gz"
+PKG_VERSION="1_64_0"
+#PKG_URL="https://fossies.org/linux/misc/boost_1_65_1.tar.xz"
+PKG_URL="https://dl.bintray.com/boostorg/release/1.64.0/source/boost_$PKG_VERSION.tar.gz"
+#PKG_VERSION="1_63_0"
+#PKG_URL="$SOURCEFORGE_SRC/boost/boost/1.63.0/${PKG_NAME}_${PKG_VERSION}.tar.bz2"
 PKG_SOURCE_DIR="${PKG_NAME}_${PKG_VERSION}"
-PKG_DEPENDS_TARGET="toolchain boost:host Python2 zlib bzip2"
-PKG_LONGDESC="boost: Peer-reviewed STL style libraries for C++"
+PKG_DEPENDS_HOST=""
+PKG_DEPENDS_TARGET="toolchain boost:host Python2:host zlib bzip2"
+PKG_SECTION="devel"
+PKG_SHORTDESC="boost: Peer-reviewed STL style libraries for C++"
+PKG_LONGDESC="Boost provides free peer-reviewed portable C++ source libraries. The emphasis is on libraries which work well with the C++ Standard Library. One goal is to establish existing practice and provide reference implementations so that the Boost libraries are suitable for eventual standardization. Some of the libraries have already been proposed for inclusion in the C++ Standards Committee's upcoming C++ Standard Library Technical Report."
+
+
 PKG_AUTORECONF="no"
 
 make_host() {
@@ -37,8 +43,8 @@ makeinstall_host() {
 }
 
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -I$SYSROOT_PREFIX/usr/include/$PKG_PYTHON_VERSION -fPIC"
-  export CXXFLAGS="$CXXFLAGS -I$SYSROOT_PREFIX/usr/include/$PKG_PYTHON_VERSION -fPIC"
+  export CFLAGS="$CFLAGS -I$SYSROOT_PREFIX/usr/include/python2.7 -fPIC"
+  export CXXFLAGS="$CXXFLAGS -I$SYSROOT_PREFIX/usr/include/python2.7 -fPIC"
 }
 
 configure_target() {
@@ -56,7 +62,7 @@ make_target() {
 }
 
 makeinstall_target() {
-  $TOOLCHAIN/bin/bjam -d2 --ignore-site-config \
+  $TOOLCHAIN/bin/bjam -d2 variant=release threading=multi debug-symbols=off --ignore-site-config \
                           --layout=system \
                           --prefix=$SYSROOT_PREFIX/usr \
                           --toolset=gcc link=static \
@@ -64,9 +70,9 @@ makeinstall_target() {
                           --with-date_time \
                           --with-filesystem \
                           --with-iostreams \
+                          --with-python \
                           --with-program_options \
                           --with-exception \
-                          --with-python \
                           --with-random \
                           --with-regex -sICU_PATH="$SYSROOT_PREFIX/usr" \
                           --with-serialization \

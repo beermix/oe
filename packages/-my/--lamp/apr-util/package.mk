@@ -38,8 +38,8 @@ pre_configure_target() {
   cd $PKG_BUILD
   rm -rf .$TARGET_NAME
   
-  APR_DIR_TARGET=$(get_build_dir apr)/.install_dev/usr
-  APR_DIR_TARGET=$(get_build_dir apr)/.$TARGET_NAME
+  #APR_DIR_TARGET=$(get_build_dir apr)/.install_dev/usr
+  #APR_DIR_TARGET=$(get_build_dir apr)/.$TARGET_NAME
   APR_DIR_TARGET=$(get_build_dir apr)/.install_dev
   
   #export TARGET_PKG_CONFIG_LIBDIR="TARGET_PKG_CONFIG_LIBDIR $APR_DIR_TARGET/usr/lib/pkgconfig"

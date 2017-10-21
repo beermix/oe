@@ -5,14 +5,12 @@ PKG_URL="https://bitcoin.org/bin/bitcoin-core-$PKG_VERSION/$PKG_NAME-$PKG_VERSIO
 PKG_SOURCE_DIR="${PKG_NAME}-0.15.0"
 PKG_DEPENDS_TARGET="toolchain db miniupnpc libdaemon boost libevent"
 PKG_SECTION="web"
-
 PKG_AUTORECONF="yes"
 
-CONCURRENCY_MAKE_LEVEL=3
+#CONCURRENCY_MAKE_LEVEL=3
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-malloc0returnsnull \
 			      --with-boost-libdir=$SYSROOT_PREFIX/usr/lib \
-			      --enable-static \
 			      --with-miniupnpc \
 			      --disable-tests \
 			      --enable-upnp-default \
