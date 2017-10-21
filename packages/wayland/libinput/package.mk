@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libinput"
-PKG_VERSION="1.8.3"
+PKG_VERSION="1.9.0"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/libinput/"
@@ -26,11 +26,6 @@ PKG_DEPENDS_TARGET="toolchain systemd libxkbcommon libevdev mtdev"
 PKG_SECTION="wayland"
 PKG_SHORTDESC="libinput is a library to handle input devices in Wayland compositors and to provide a generic X.Org input driver."
 PKG_LONGDESC="libinput is a library to handle input devices in Wayland compositors and to provide a generic X.Org input driver."
-PKG_AUTORECONF="yes"
-PKG_USE_MESON="no"
+PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--with-sysroot=$SYSROOT_PREFIX \
-                           --disable-documentation \
-                           --disable-event-gui --disable-debug-gui \
-                           --disable-tests \
-                           --disable-libwacom"
+PKG_MESON_OPTS_TARGET="-Ddocumentation=false -Dlibwacom=false -Dtests=false -Ddebug-gui=false"
