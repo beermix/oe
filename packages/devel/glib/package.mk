@@ -28,16 +28,16 @@ PKG_DEPENDS_HOST="libffi:host pcre:host"
 PKG_SECTION="devel"
 PKG_SHORTDESC="glib: C support library"
 PKG_LONGDESC="GLib is a library which includes support routines for C such as lists, trees, hashes, memory allocation, and many other things."
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 PKG_USE_MESON="no"
+ 
+PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared --with-pic --with-pcre=internal"
 
-PKG_CONFIGURE_OPTS_HOST="PCRE_LIBS=-l:libpcre.a \
-                         --enable-static \
-                         --disable-shared \
-                         --disable-libmount \
-                         --with-python=python"
-
-PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_snprintf_c99=yes \
+PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_mmap_fixed_mapped=yes \
+                           ac_cv_func_posix_getpwuid_r=yes \
+                           ac_cv_func_posix_getgrgid_r=yes \
+                           ac_cv_func_printf_unix98=yes \
+                           ac_cv_func_snprintf_c99=yes \
                            ac_cv_func_vsnprintf_c99=yes \
                            glib_cv_stack_grows=no \
                            glib_cv_uscore=no \
@@ -47,19 +47,13 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_snprintf_c99=yes \
                            --enable-xattr \
                            --disable-libelf \
                            --disable-gtk-doc \
-                           --disable-gtk-doc-html \
                            --disable-man \
                            --disable-dtrace \
                            --disable-systemtap \
                            --enable-Bsymbolic \
                            --with-gnu-ld \
                            --with-threads=posix \
-                           --with-pcre=internal \
-                           --with-python=python"
-
-pre_configure_host() {
-  CFLAGS="$CFLAGS -fPIC"
-}
+                           --with-pcre=internal"
 
 post_makeinstall_target() {
   mkdir -p $SYSROOT_PREFIX/usr/lib/pkgconfig
