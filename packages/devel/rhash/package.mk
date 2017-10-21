@@ -5,14 +5,13 @@ PKG_URL="https://github.com/rhash/RHash/archive/v1.3.5.tar.gz"
 PKG_SOURCE_DIR="RHash-$PKG_VERSION"
 PKG_DEPENDS_HOST=""
 PKG_SECTION="devel"
-
-PKG_USE_CMAKE="no"
 PKG_AUTORECONF="no"
+PKG_USE_CMAKE="no"
 
 pre_configure_host() {
   cd $PKG_BUILD
 
-  export CFLAGS="$HOST_CFLAGS -DUSE_GETTEXT -Wall -fPIC"
+  export CFLAGS="$CFLAGS -DUSE_GETTEXT -Wall -fPIC"
   export PREFIX="$TOOLCHAIN"
 }
 
