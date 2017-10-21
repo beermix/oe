@@ -15,7 +15,8 @@ PKG_CONFIGURE_OPTS_TARGET="--with-curses \
                            --enable-alias \
                            --enable-job-control"
 
-#post_makeinstall_target() {
-#  mkdir -p $INSTALL/bin
-#  ln -sf bash $INSTALL/bin/bash
-#}
+post_makeinstall_target() {
+ # mkdir -p $INSTALL/bin
+  #ln -sfv bash $INSTALL/bin/rbash
+  ln -sfv bash $INSTALL/usr/bin/sh
+}
