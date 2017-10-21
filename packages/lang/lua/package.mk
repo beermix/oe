@@ -11,7 +11,7 @@ PKG_LICENSE="MIT"
 PKG_SITE="http://www.lua.org/"
 PKG_URL="http://www.lua.org/ftp/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain readline lua:host"
-#PKG_DEPENDS_HOST="readline:host"
+PKG_DEPENDS_HOST="readline:host"
 PKG_SECTION="xmedia/tools"
 PKG_SHORTDESC="lua: A lightweight, extensible programming language"
 PKG_LONGDESC="Lua is a powerful light-weight programming language designed for extending applications. Lua is also frequently used as a general-purpose, stand-alone language."
@@ -39,7 +39,7 @@ pre_make_host() {
 }
 
 make_host() {
-  make CC="$CC" CFLAGS="$CFLAGS -fPIC -DLUA_COMPAT_5_2 -DLUA_COMPAT_5_1" linux all
+  make CC="$CC" CFLAGS="$CFLAGS -fPIC -DLUA_COMPAT_5_2 -DLUA_COMPAT_5_1" LDFLAGS="$LDFLAGS -lreadline" linux all
 }
 
 makeinstall_host() {
