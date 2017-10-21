@@ -31,10 +31,10 @@ PKG_SHORTDESC="libcap: A library for getting and setting POSIX.1e capabilities"
 PKG_LONGDESC="As of Linux 2.2.0, the power of the superuser has been partitioned into a set of discrete capabilities (in other places, these capabilities are know as privileges). The contents of the libcap package are a library and a number of simple programs that are intended to show how an application/daemon can be protected (with wrappers) or rewritten to take advantage of this fine grained approach to constraining the danger to your system from programs running as 'root'."
 PKG_AUTORECONF="no"
 
-post_unpack() {
+post_patch() {
   mkdir -p $PKG_BUILD/.$HOST_NAME
   cp -r $PKG_BUILD/* $PKG_BUILD/.$HOST_NAME
-  mkdir -p $PKG_BUILD/.$TARGET_NAME
+  mkdir -p $PKG_BUILD/.$TARGET_NAME 
   cp -r $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME
 }
 
@@ -47,7 +47,7 @@ make_host() {
        BUILD_CFLAGS="$HOST_CFLAGS -I$PKG_BUILD/libcap/include" \
        PAM_CAP=no \
        lib=/lib \
-       BUILD_GPERF=no \
+       BUILD_GPERF=yes \
        -C libcap libcap.pc libcap.a
 }
 
@@ -61,7 +61,7 @@ make_target() {
        BUILD_CFLAGS="$HOST_CFLAGS -I$PKG_BUILD/libcap/include" \
        PAM_CAP=no \
        lib=/lib \
-       BUILD_GPERF=no \
+       BUILD_GPERF=yes \
        -C libcap libcap.pc libcap.a
 }
 

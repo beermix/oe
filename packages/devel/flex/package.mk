@@ -40,3 +40,8 @@ EOF
 
   chmod -v 755 $TOOLCHAIN/bin/lex
 }
+
+
+PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
+			      ac_cv_func_realloc_0_nonnull=yes \
+			      --disable-shared --with-pic"
