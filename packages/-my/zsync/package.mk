@@ -7,3 +7,7 @@ PKG_SECTION="system"
 
 PKG_AUTORECONF="no"
 
+pre_configure_target() {
+  cd $PKG_BUILD
+  rm -rf .$TARGET_NAME
+}
