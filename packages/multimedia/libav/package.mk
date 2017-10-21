@@ -17,12 +17,12 @@ pre_configure_target() {
 }
 
 configure_target() {
-  ./configure --prefix=/usr \
-              --cpu=$TARGET_CPU \
-              --arch=$TARGET_ARCH \
+  ./configure --prefix="/usr" \
+              --cpu="$TARGET_CPU" \
+              --arch="$TARGET_ARCH" \
               --enable-cross-compile \
-              --cross-prefix=${TARGET_NAME}- \
-              --sysroot=$SYSROOT_PREFIX \
+              --cross-prefix="$TARGET_PREFIX" \
+              --sysroot="$SYSROOT_PREFIX" \
               --sysinclude="$SYSROOT_PREFIX/usr/include" \
               --target-os="linux" \
               --nm="$NM" \

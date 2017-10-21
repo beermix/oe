@@ -24,7 +24,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://www.busybox.net"
 PKG_URL="http://busybox.net/downloads/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain busybox:host hdparm dosfstools e2fsprogs zip unzip pciutils usbutils parted procps-ng gptfdisk findutils sed bash grep less psmisc binutils"
+PKG_DEPENDS_TARGET="toolchain busybox:host hdparm dosfstools e2fsprogs zip unzip pciutils usbutils parted procps-ng gptfdisk findutils sed grep less psmisc binutils bash"
 PKG_DEPENDS_INIT="toolchain"
 PKG_SECTION="system"
 PKG_SHORTDESC="BusyBox: The Swiss Army Knife of Embedded Linux"
@@ -171,8 +171,8 @@ makeinstall_target() {
 #    rm $INSTALL/usr/bin/sh
 #    rm $INSTALL/usr/bin/hostname
 #    rm $INSTALL/usr/sbin/ip
-    rm $INSTALL/usr/bin/bash
-    rm $INSTALL/usr/bin/sh
+#    rm $INSTALL/usr/bin/bash
+#    rm $INSTALL/usr/bin/sh
 
   mkdir -p $INSTALL/etc
     cp $PKG_DIR/config/profile $INSTALL/etc
