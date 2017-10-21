@@ -52,7 +52,7 @@ makeinstall_init() {
   mkdir -p $INSTALL/usr/lib
     cp ../.$TARGET_NAME/parted/parted $INSTALL/usr/sbin
     cp ../.$TARGET_NAME/partprobe/partprobe $INSTALL/usr/sbin
-    cp $(get_build_dir readline)/.install_pkg/usr/lib/libreadline.so.* $INSTALL/usr/lib
-    cp -PL $(get_build_dir ncurses)/.install_pkg/usr/lib/libncursesw.so.* $INSTALL/usr/lib
-    cp -PL $(get_build_dir ncurses)/.install_pkg/usr/lib/libtinfo.so.* $INSTALL/usr/lib
+#    cp $(get_build_dir readline)/.install_pkg/usr/lib/libreadline.so.* $INSTALL/usr/lib
+#    cp -PL $(get_build_dir ncurses)/.install_pkg/usr/lib/libncursesw.so.* $INSTALL/usr/lib
+#    cp -PL $(get_build_dir ncurses)/.install_pkg/usr/lib/libtinfo.so.* $INSTALL/usr/lib
 }
