@@ -5,5 +5,5 @@ PKG_DEPENDS_TARGET="toolchain glib"
 PKG_SECTION="my"
 PKG_AUTORECONF="no"
 
-PKG_MESON_OPTS_TARGET="--default_library=static"
+#PKG_MESON_OPTS_TARGET="--default_library=static"
 

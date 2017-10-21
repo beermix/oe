@@ -3,14 +3,12 @@ PKG_VERSION="master"
 PKG_URL=""
 PKG_DEPENDS_TARGET="toolchain readline libevent jansson zlib libconfig openssl lua"
 PKG_SECTION="debug/tools"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 unpack() {
   git clone --recursive -v --depth 1 git://github.com/vysheng/tg $PKG_BUILD
-  cd $PKG_BUILD
   git reset --hard $PKG_VERSION
   rm -rf .git
-  cd $ROOT
 }
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
@@ -21,6 +19,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
 			      --enable-static \
 			      --enable-libevent \
 			      --enable-libconfig \
+			      --disable-option-checking \
 			      --enable-libgcrypt=no \
 			      --enable-extf \
 			      --enable-python \

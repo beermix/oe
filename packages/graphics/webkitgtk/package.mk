@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="webkitgtk"
-PKG_VERSION="2.17.1"
+PKG_VERSION="2.18.1"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
@@ -28,8 +28,6 @@ PKG_PRIORITY="optional"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="glu: The OpenGL utility library"
 PKG_LONGDESC="libglu is the The OpenGL utility library"
-
-
 PKG_AUTORECONF="no"
 
 PKG_CMAKE_OPTS_TARGET="-DENABLE_API_TESTS=OFF \

@@ -1,0 +1,24 @@
+diff --git a/build-aux/ltmain.in b/build-aux/ltmain.in
+old mode 100644
+new mode 100755
+index bbc76433..b0fafc11
+--- a/build-aux/ltmain.in
++++ b/build-aux/ltmain.in
+@@ -5382,7 +5382,7 @@ func_mode_link ()
+       # -fuse-ld=*           Linker select flags for GCC
+       -64|-mips[0-9]|-r[0-9][0-9]*|-xarch=*|-xtarget=*|+DA*|+DD*|-q*|-m*| \
+       -t[45]*|-txscale*|-p|-pg|--coverage|-fprofile-*|-F*|@*|-tp=*|--sysroot=*| \
+-      -O*|-g*|-flto*|-fwhopr*|-fuse-linker-plugin|-fstack-protector*|-stdlib=*| \
++      -O*|-g*|-flto*|-fwhopr*|-fuse-linker-plugin|-fstack-protector*|-stdlib=*|-fuse-ld=*| \
+       -specs=*|-fsanitize=*|-fuse-ld=*)
+         func_quote_arg pretty "$arg"
+ 	arg=$func_quote_arg_result
+@@ -6469,7 +6469,7 @@ func_mode_link ()
+ 	      fi
+ 	    else
+ 	      # We cannot seem to hardcode it, guess we'll fake it.
+-	      add_dir=-L$libdir
++	      #add_dir=-L$libdir
+ 	      # Try looking first in the location we're being installed to.
+ 	      if test -n "$inst_prefix_dir"; then
+ 		case $libdir in
