@@ -82,7 +82,6 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-libstdcxx-time=yes \
                          --enable-clocale=gnu \
                          --disable-vtable-verify \
-                         --enable-offload-targets=nvptx-none \
                          --enable-libatomic \
                          $GCC_OPTS"
 
