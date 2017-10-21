@@ -1,0 +1,159 @@
+diff --git a/Makefile.am b/Makefile.am
+old mode 100644
+new mode 100755
+index a479b97d..d0bbbf98
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -58,9 +58,7 @@ SCRIPT_ENV	= GREP='$(GREP)' SED='$(SED)'
+ 
+ build_scripts	= $(srcdir)/$(aux_dir)/announce-gen \
+ 		  $(srcdir)/$(aux_dir)/do-release-commit-and-tag \
+-		  $(srcdir)/$(aux_dir)/gendocs.sh \
+ 		  $(srcdir)/$(aux_dir)/git-version-gen \
+-		  $(srcdir)/$(aux_dir)/gnu-web-doc-update \
+ 		  $(srcdir)/$(aux_dir)/gnupload \
+ 		  $(srcdir)/$(aux_dir)/useless-if-before-free \
+ 		  $(srcdir)/$(aux_dir)/vc-list-files
+@@ -378,55 +376,6 @@ $(lt_config_h_in): $(lt_configure_deps)
+ 	$(AM_V_at)touch '$@'
+ 
+ 
+-## -------------- ##
+-## Documentation. ##
+-## -------------- ##
+-
+-doc_dir		= $(srcdir)/doc
+-
+-libtool_1	= $(doc_dir)/libtool.1
+-libtoolize_1	= $(doc_dir)/libtoolize.1
+-notes_texi	= $(doc_dir)/notes.texi
+-notes_txt	= $(doc_dir)/notes.txt
+-
+-EXTRA_DIST	+= $(doc_dir)/gendocs_template
+-
+-# A bug in automake 1.11.1 (at least) prevents us from using:
+-#
+-#   info_TEXINFOS	= $(doc_dir)/libtool.texi
+-#
+-# Producing the following error, even though srcdir is implicitly set:
+-# "cannot open < ./$(srcdir)/doc/libtool.texi: No such file or directory"
+-info_TEXINFOS		= doc/libtool.texi
+-doc_libtool_TEXINFOS	= $(doc_dir)/PLATFORMS $(doc_dir)/fdl.texi \
+-			  $(notes_texi)
+-EXTRA_DIST	       += $(notes_txt)
+-## Workaround for a texinfo bug described here:
+-## http://thread.gmane.org/gmane.comp.tex.texinfo.bugs/3930
+-DISTCLEANFILES	       += libtool.dvi
+-
+-all-local: $(notes_txt)
+-
+-$(notes_txt): $(notes_texi)
+-	$(AM_V_GEN)$(MAKEINFO) -P '$(srcdir)/doc' --no-headers \
+-	    $(MAKEINFOFLAGS) -o '$@' '$(notes_texi)'
+-
+-dist_man1_MANS		= $(libtool_1) $(libtoolize_1)
+-MAINTAINERCLEANFILES	+= $(dist_man1_MANS)
+-update_mans = \
+-  PATH=".$(PATH_SEPARATOR)$$PATH"; export PATH; \
+-  $(HELP2MAN) --output='$@'
+-
+-# It's wrong to make distributed files (e.g. $(libtool_1)) rely on
+-# files created in the build tree, so instead we regenerate the
+-# manual pages if the sources for the build-tree files we want to
+-# run have changed.
+-$(libtool_1): $(ltmain_sh)
+-	$(AM_V_GEN)$(update_mans) --help-option=--help-all libtool
+-$(libtoolize_1): $(libtoolize_in)
+-	$(AM_V_GEN)$(update_mans) libtoolize
+-
+-
+ ## ------------- ##
+ ## Installation. ##
+ ## ------------- ##
+diff --git a/bootstrap b/bootstrap
+index 79aab708..513b150d 100755
+--- a/bootstrap
++++ b/bootstrap
+@@ -129,7 +129,6 @@ package_bugreport=
+ # These are extracted from 'gnulib-cache.m4', or else fall-back
+ # automatically on the gnulib defaults; unless you set the values
+ # manually in 'bootstrap.conf'.
+-doc_base=
+ gnulib_mk=
+ gnulib_name=
+ local_gl_path=
+@@ -151,7 +150,6 @@ gnulib_non_module_files="
+         build-aux/depcomp
+         build-aux/config.guess
+         build-aux/config.sub
+-        doc/INSTALL
+ "
+ 
+ # Relative path to the local gnulib submodule, and url to the upstream
+@@ -3925,28 +3923,6 @@ defaulting to '$copyright_holder'."
+ }
+ 
+ 
+-# require_doc_base
+-# ----------------
+-# Ensure doc_base has a sensible value, extracted from 'gnulib-cache.m4'
+-# if possible, otherwise letting 'gnulib-tool' pick a default.
+-require_doc_base=func_require_doc_base
+-func_require_doc_base ()
+-{
+-    $debug_cmd
+-
+-    $require_gnulib_cache
+-
+-    test -f "$gnulib_cache" && test -z "$doc_base" && {
+-      func_extract_trace_first "gl_DOC_BASE" "$gnulib_cache"
+-      doc_base=$func_extract_trace_first_result
+-
+-      test -n "$doc_base" && func_verbose "doc_base='$doc_base'"
+-    }
+-
+-    require_doc_base=:
+-}
+-
+-
+ # require_dotgitmodules
+ # ---------------------
+ # Ensure we have a '.gitmodules' file, with appropriate 'gnulib' settings.
+@@ -4291,9 +4267,6 @@ func_require_gnulib_tool_base_options ()
+       $require_macro_dir
+       test -n "$macro_dir" \
+           && func_append_uniq gnulib_tool_base_options " --m4-base=$macro_dir"
+-      $require_doc_base
+-      test -n "$doc_base" \
+-          && func_append_uniq gnulib_tool_base_options " --doc-base=$doc_base"
+       $require_gnulib_name
+       test -n "$gnulib_name" \
+           && func_append_uniq gnulib_tool_base_options " --lib=$gnulib_name"
+diff --git a/bootstrap.conf b/bootstrap.conf
+old mode 100644
+new mode 100755
+index 67b88fc2..ef86731b
+--- a/bootstrap.conf
++++ b/bootstrap.conf
+@@ -44,7 +44,6 @@ checkout_only_file=HACKING
+ # List of programs (and minimum versions) required to bootstrap, maintain
+ # and release Libtool.
+ buildreq="
+-        help2man   1.29        http://www.gnu.org/s/help2man
+         make       3.81        http://www.gnu.org/s/make
+         makeinfo   4.8         http://www.gnu.org/s/texinfo
+         xz         4.999.8beta http://tukaani.org/xz
+diff --git a/configure.ac b/configure.ac
+old mode 100644
+new mode 100755
+index ce34990a..e2873e03
+--- a/configure.ac
++++ b/configure.ac
+@@ -177,7 +177,6 @@ GL_INIT
+ ## ------------- ##
+ ## Documentation ##
+ ## ------------- ##
+-AM_MISSING_PROG([HELP2MAN], [help2man])
+ 
+ ## -------- ##
+ ## Outputs. ##
