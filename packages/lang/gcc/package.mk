@@ -59,7 +59,8 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libsanitizer \
                            --disable-libssp \
                            --without-cuda-driver \
-                           --with-tune=generic"
+                           --with-tune=generic \
+                           MAKEINFO=missing"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
