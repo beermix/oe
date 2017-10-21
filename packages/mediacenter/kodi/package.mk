@@ -30,7 +30,7 @@ PKG_LONGDESC="Kodi Media Center (which was formerly named Xbox Media Center or X
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
-PKG_USE_NINJA="yes"
+PKG_USE_NINJA="no"
 
 PKG_CMAKE_SCRIPT="$PKG_BUILD/project/cmake/CMakeLists.txt"
 
@@ -257,7 +257,7 @@ pre_configure_target() {
 # kodi should never be built with lto
   strip_lto
 
-#  export LIBS="$LIBS -lz -lterminfo"
+  unset LD_LIBRARY_PATH
 }
 
 post_makeinstall_target() {

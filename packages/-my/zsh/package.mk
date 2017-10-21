@@ -1,7 +1,7 @@
 PKG_NAME="zsh"
 PKG_VERSION="5.4.2"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain ncurses pcre readline libcap gdbm"
+PKG_DEPENDS_TARGET="toolchain ncurses pcre readline libcap"
 PKG_SECTION="my"
 PKG_AUTORECONF="no"
 
@@ -20,7 +20,6 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-multibyte \
 			      --enable-etcdir \
 			      --enable-function-subdirs \
 			      --with-tcsetpgrp \
-			      --enable-gdbm \
 			      --enable-zsh-secure-free \
 			      --enable-readnullcmd=pager \
 			      --enable-max-jobtable-size=256 \
