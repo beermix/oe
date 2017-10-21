@@ -1,6 +1,7 @@
 PKG_NAME="bash"
-PKG_VERSION="bc00779"
-PKG_URL="https://github.com/bminor/bash/archive/${PKG_VERSION}.tar.gz"
+PKG_VERSION="4.4.12"
+PKG_SITE="http://ftp.gnu.org/gnu/bash/?C=M;O=D"
+PKG_URL="http://ftp.gnu.org/gnu/bash/bash-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain ncurses readline"
 PKG_AUTORECONF="no"
 
