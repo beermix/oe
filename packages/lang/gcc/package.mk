@@ -91,7 +91,11 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
 
 pre_configure_host() {
   unset CPP
-  export MAKEINFO=missing
+  MAKEINFO=missing
+}
+
+pre_configure_bootstrap() {
+  MAKEINFO=missing
 }
 
 post_make_host() {
