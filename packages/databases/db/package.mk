@@ -15,13 +15,10 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-compat185 \
 			      --enable-cxx \
 			      --enable-dbm \
 			      --enable-stl \
-			      --with-pic"
+			      --with-pic \
+			      --disable-atomicsupport"
 
 PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
-
-make_target() {
-  make LIBSO_LIBS=-lpthread
-}
 			   
 post_makeinstall_target() {
   rm -rf $INSTALL
