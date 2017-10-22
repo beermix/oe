@@ -37,5 +37,6 @@ makeinstall_host() {
 }
 
 post_makeinstall_host() {
+  mkdir -p $TOOLCHAIN/bin/
   ln -sf make $TOOLCHAIN/bin/gmake
 }
