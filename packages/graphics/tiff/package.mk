@@ -30,8 +30,7 @@ PKG_SHORTDESC="libtiff: A library for reading and writing TIFF files"
 PKG_LONGDESC="libtiff is a library for reading and writing data files encoded with the Tag Image File format, Revision 6.0 (or revision 5.0 or revision 4.0). This file format is suit- able for archiving multi-color and monochromatic image data."
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static \
-                           --disable-shared \
+PKG_CONFIGURE_OPTS_TARGET="--disable-static \
                            --disable-mdi \
                            --enable-cxx \
                            --with-gl=no \
@@ -40,8 +39,8 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --without-x"
 
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC -DPIC"
-  export CXXFLAGS="$CXXFLAGS -fPIC -DPIC"
+  export CFLAGS="$CFLAGS -fPIC"
+  export CXXFLAGS="$CXXFLAGS -fPIC"
 }
 
 post_makeinstall_target() {
