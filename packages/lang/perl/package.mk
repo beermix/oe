@@ -41,7 +41,8 @@ configure_target() {
 		   -Dlddlflags="-shared -Wl,-O1" \
 		   -Dldflags="$LDFLAGS" \
 		   -Di_shadow -Di_syslog -Duseithreads -Duselargefiles \
-		   -Di_db -Di_gdbm -Di_ndbm -Di_sdbm -Ui_odbm
+		   -Di_db -Di_gdbm -Di_ndbm -Di_sdbm -Ui_odbm \
+		   ..
 }
 
 post_makeinstall_target() {
