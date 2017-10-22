@@ -21,6 +21,7 @@ PKG_VERSION="0.8.13"
 PKG_SITE="http://www.mr511.de/software/"
 PKG_URL="http://www.mr511.de/software/libelf-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="intltool:host libtool:host bison:host flex:host"
+PKG_DEPENDS_TARGET="libelf:host"
 PKG_SECTION="devel"
 PKG_AUTORECONF="yes"
 
@@ -28,3 +29,15 @@ PKG_CONFIGURE_OPTS_HOST="--disable-shared --enable-elf64 --disable-rpath --with-
 
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
 
+makeinstall_target() {
+  mkdir -p $INSTALL_DEV/bin
+  mkdir -p $SYSROOT_PREFIX/usr/include
+    cp lib/elf_repl.h $SYSROOT_PREFIX/usr/include
+    cp lib/gelf.h $SYSROOT_PREFIX/usr/include
+    cp lib/libelf.h $SYSROOT_PREFIX/usr/include
+    cp lib/nlist.h $SYSROOT_PREFIX/usr/include
+    cp lib/sys_elf.h $SYSROOT_PREFIX/usr/include
+    
+  mkdir -p $SYSROOT_PREFIX/usr/lib
+    cp lib/libelf.a $SYSROOT_PREFIX/usr/lib
+}
