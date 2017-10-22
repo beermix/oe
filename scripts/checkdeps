@@ -53,7 +53,7 @@ if  [ -f /etc/os-release ]; then
 fi
 
 deps="wget bash bc gcc sed patch lsdiff tar bzip2 gzip perl gawk gperf zip unzip diff lzop"
-deps_pkg="wget bash bc gcc sed patch patchutils tar bzip2 gzip perl gawk gperf zip unzip diffutils lzop libxml-parser-perl"
+deps_pkg="wget bash bc gcc sed patch patchutils tar bzip2 gzip perl gawk gperf zip unzip diffutils lzop"
 
 files="/usr/include/stdio.h /usr/include/ncurses.h"
 files_pkg="libc6-dev libncurses5-dev"
@@ -82,7 +82,7 @@ case "$DISTRO" in
       ;;
     *)
       deps="$deps g++ mkfontscale mkfontdir bdftopcf xsltproc java"
-      deps_pkg="$deps_pkg g++ xfonts-utils xfonts-utils xfonts-utils xsltproc default-jre"
+      deps_pkg="$deps_pkg g++ xfonts-utils xfonts-utils xfonts-utils xsltproc default-jre libxml-parser-perl"
       ;;
 esac
 
