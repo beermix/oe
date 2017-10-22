@@ -17,13 +17,12 @@
 ################################################################################
 
 PKG_NAME="systemd"
-PKG_VERSION="235"
-PKG_SHA256="25811f96f5a027bf2a4c9383495cf5b623e385d84da31e473cf375932b3e9c52"
+PKG_VERSION="02fa054"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/systemd"
-PKG_URL="https://github.com/systemd/systemd/archive/v$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain libcap kmod util-linux entropy"
+PKG_URL="https://github.com/systemd/systemd/archive/$PKG_VERSION.tar.gz"
+PKG_DEPENDS_TARGET="toolchain libcap kmod util-linux entropy lz4"
 PKG_SECTION="system"
 PKG_SHORTDESC="systemd: a system and session manager"
 PKG_LONGDESC="systemd is a system and session manager for Linux, compatible with SysV and LSB init scripts. systemd provides aggressive parallelization capabilities, uses socket and D-Bus activation for starting services, offers on-demand starting of daemons, keeps track of processes using Linux cgroups, supports snapshotting and restoring of the system state, maintains mount and automount points and implements an elaborate transactional dependency-based service control logic. It can work as a drop-in replacement for sysvinit."
@@ -55,7 +54,7 @@ PKG_MESON_OPTS_TARGET="--libdir=/usr/lib \
                        -Dzlib=false \
                        -Dbzip2=false \
                        -Dxz=false \
-                       -Dlz4=false \
+                       -Dlz4=true \
                        -Dxkbcommon=false \
                        -Dglib=false \
                        -Ddbus=false \

@@ -28,9 +28,15 @@ PKG_SHORTDESC="libinput is a library to handle input devices in Wayland composit
 PKG_LONGDESC="libinput is a library to handle input devices in Wayland compositors and to provide a generic X.Org input driver."
 PKG_AUTORECONF="no"
 
-export LC_ALL=en_US.UTF-8
-  
 PKG_MESON_OPTS_TARGET="-Ddocumentation=false \
 			  -Dlibwacom=false \
 			  -Dtests=false \
 			  -Ddebug-gui=false"
+			  
+pre_configure_target() {
+  export LC_ALL=en_US.UTF-8
+
+  # meson needs a host compiler and it's detected through the environment. meh.
+  export CC="$HOST_CC"
+  export CXX="$HOST_CXX"
+}
