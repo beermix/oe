@@ -32,5 +32,5 @@ pre_configure_target() {
 
 configure_target() {
   cd $PKG_BUILD
-  ./configure --prefix=/ --build-static --disable-optimizations
+  ./configure --prefix=/ 
 }
