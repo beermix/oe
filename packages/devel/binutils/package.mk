@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="binutils"
-PKG_VERSION="2.29.1"
-PKG_SHA256="e7010a46969f9d3e53b650a518663f98a5dde3c3ae21b7d71e5e6803bc36b577"
+PKG_VERSION="2.29"
+#PKG_SHA256="e7010a46969f9d3e53b650a518663f98a5dde3c3ae21b7d71e5e6803bc36b577"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/binutils/"
