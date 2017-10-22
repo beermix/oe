@@ -17,24 +17,17 @@
 ################################################################################
 
 PKG_NAME="libtool"
-PKG_VERSION="gg"
-#PKG_SHA256="1c0e019e554fa9d094242f7e13af142e1b5c36ac36510f31ee3ea9c4c500ed9c"
+PKG_VERSION="2.4.6"
+PKG_SHA256="e3bd4d5d3d025a36c21dd6af7ea818a2afcd4dfc1ea5a17b39d7854bcd0c06e3"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/libtool/"
-PKG_URL="https://dl.dropboxusercontent.com/s/eex8dmc1mzmnbq0/libtool-gg.tar.xz"
+PKG_URL="http://ftpmirror.gnu.org/libtool/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="ccache:host autoconf:host automake:host"
-#PKG_NEED_UNPACK="$(get_pkg_directory gnulib)"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="devel"
 PKG_SHORTDESC="libtool: Generic library support script"
 PKG_LONGDESC="This is GNU Libtool, a generic library support script. Libtool hides the complexity of using shared libraries behind a consistent, portable interface."
-PKG_AUTORECONF="no"
-
-post_patch() {
-  cd $PKG_BUILD
-  export MAKEINFO=$TOOLCHAIN/bin/true
-  ./bootstrap --no-git
-}
+PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"

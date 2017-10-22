@@ -34,7 +34,7 @@ PKG_DEPENDS_TARGET="toolchain zlib openssl rtmpdump libgpg-error nghttp2"
 PKG_SECTION="web"
 PKG_SHORTDESC="curl: Client and library for (HTTP, HTTPS, FTP, ...) transfers"
 PKG_LONGDESC="Curl is a client to get documents/files from or send documents to a server, using any of the supported protocols (HTTP, HTTPS, FTP, FTPS, GOPHER, DICT, TELNET, LDAP or FILE). The command is designed to work without user interaction or any kind of interactivity."
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 PKG_USE_CMAKE="no"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
@@ -93,10 +93,10 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            --with-nghttp=$SYSROOT_PREFIX/usr \
                            --without-libidn2"
 
-pre_configure_target() {
+#pre_configure_target() {
 # link against librt because of undefined reference to 'clock_gettime'
-  export LIBS="-lrt -lm -lrtmp"
-}
+#  export LIBS="-lrt -lm -lrtmp"
+#}
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/share/zsh

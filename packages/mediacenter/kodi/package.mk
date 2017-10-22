@@ -257,7 +257,7 @@ pre_configure_target() {
 # kodi should never be built with lto
   strip_lto
 
-  unset LD_LIBRARY_PATH
+#  unset LD_LIBRARY_PATH
 }
 
 post_makeinstall_target() {
