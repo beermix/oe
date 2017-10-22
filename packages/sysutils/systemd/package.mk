@@ -165,8 +165,8 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/lib/systemd/system/*.target.wants/systemd-udev-hwdb-update.service
 
   # remove systemd-user-sessions
-  rm -rf $INSTALL/usr/lib/systemd/system/systemd-user-sessions.service
-  rm -rf $INSTALL/usr/lib/systemd/system/*.target.wants/systemd-user-sessions.service
+#  rm -rf $INSTALL/usr/lib/systemd/system/systemd-user-sessions.service
+#  rm -rf $INSTALL/usr/lib/systemd/system/*.target.wants/systemd-user-sessions.service
 
   # remove nspawn
   rm -rf $INSTALL/usr/bin/systemd-nspawn

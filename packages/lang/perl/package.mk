@@ -7,7 +7,7 @@ PKG_DEPENDS_TARGET="toolchain openssl db gdbm"
 PKG_SECTION="my"
 PKG_AUTORECONF="no"
 
-export CCACHE_DISABLE=1
+#export CCACHE_DISABLE=1
 
 pre_configure_target() {
  cd $PKG_BUILD
@@ -18,33 +18,32 @@ pre_configure_target() {
 
 configure_target() {
 ./Configure -Dusedevel \
-		   -Doptimize="$CFLAGS" \
-		   -Dcc=$CC \
-		   -Dprefix=/usr  \
-		   -Dvendorprefix=/usr \
-		   -Dprivlib=/usr/share/perl5/core_perl \
-		   -Darchlib=/usr/lib/perl5/core_perl \
-		   -Dsitelib=/usr/share/perl5/site_perl/${PKG_VERSION} \
-		   -Dsitearch=/usr/lib/perl5/site_perl/${PKG_VERSION} \
-		   -Dvendorlib=/usr/share/perl5/vendor_perl \
-		   -Dvendorarch=/usr/lib/perl5/vendor_perl \
-		   -Dotherlibdirs=/usr/lib/perl5/current:/usr/lib/perl5/site_perl/current \
-		   -Dscriptdir='/usr/bin/perlbin/core' \
-		   -Dsitescript='/usr/bin/perlbin/site' \
-		   -Dvendorscript='/usr/bin/perlbin/vendor' \
-		   -Dman1ext=1perl \
-		   -Dman3ext=3perl \
-		   -Duseshrplib \
-		   -Dlibperl=libperl.so \
-		   -Dlibswanted="dl m c crypt db ndbm gdbm" \
-		   -des \
-		   -Dusethreads \
-		   -Dccdlflags="-rdynamic -Wl,-O1" \
-		   -Dlddlflags="-shared -Wl,-O1" \
-		   -Dldflags="$LDFLAGS" \
-		   -Di_shadow -Di_syslog -Duseithreads -Duselargefiles \
-		   -Di_db -Di_gdbm -Di_ndbm -Di_sdbm -Ui_odbm \
-		   ..
+	     -Doptimize="$CFLAGS" \
+	     -Dcc=$CC \
+	     -Dprefix=/usr  \
+	     -Dvendorprefix=/usr \
+	     -Dprivlib=/usr/share/perl5/core_perl \
+	     -Darchlib=/usr/lib/perl5/core_perl \
+	     -Dsitelib=/usr/share/perl5/site_perl/${PKG_VERSION} \
+	     -Dsitearch=/usr/lib/perl5/site_perl/${PKG_VERSION} \
+	     -Dvendorlib=/usr/share/perl5/vendor_perl \
+	     -Dvendorarch=/usr/lib/perl5/vendor_perl \
+	     -Dotherlibdirs=/usr/lib/perl5/current:/usr/lib/perl5/site_perl/current \
+	     -Dscriptdir='/usr/bin/perlbin/core' \
+	     -Dsitescript='/usr/bin/perlbin/site' \
+	     -Dvendorscript='/usr/bin/perlbin/vendor' \
+	     -Dman1ext=1perl \
+	     -Dman3ext=3perl \
+	     -Duseshrplib \
+	     -Dlibperl=libperl.so \
+	     -Dlibswanted="dl m c crypt db ndbm gdbm" \
+	     -des \
+	     -Dusethreads \
+	     -Dccdlflags="-rdynamic -Wl,-O1" \
+	     -Dlddlflags="-shared -Wl,-O1" \
+	     -Dldflags="$LDFLAGS" \
+	     -Di_shadow -Di_syslog -Duseithreads -Duselargefiles \
+	     -Di_db -Di_gdbm -Di_ndbm -Di_sdbm -Ui_odbm
 }
 
 post_makeinstall_target() {
