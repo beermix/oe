@@ -33,8 +33,7 @@ PKG_AUTORECONF="no"
 
 post_patch() {
   cd $PKG_BUILD
-  export MAKEINFO=true
-  ./bootstrap --no-git
+  ./bootstrap
 }
 
 PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
