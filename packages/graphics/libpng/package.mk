@@ -32,7 +32,7 @@ PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_z_zlibVersion=yes \
                            --enable-static \
-                           --disable-shared --enable-intel-sse"
+                           --enable-intel-sse"
 
 PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
 
@@ -42,7 +42,7 @@ pre_configure_host() {
 }
 
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC -DPIC"
+  export CFLAGS="$CFLAGS -fPIC"
   export CPPFLAGS="$CPPFLAGS -I$SYSROOT_PREFIX/usr/include"
 }
 
