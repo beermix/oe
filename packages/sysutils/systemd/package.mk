@@ -112,7 +112,7 @@ pre_configure_target() {
 
 post_makeinstall_target() {
   # remove unneeded stuff
-  rm -rf $INSTALL/etc/init.d
+#  rm -rf $INSTALL/etc/init.d
   rm -rf $INSTALL/etc/pam.d
   rm -rf $INSTALL/etc/systemd/system
   rm -rf $INSTALL/etc/xdg
@@ -165,8 +165,8 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/lib/systemd/system/*.target.wants/systemd-udev-hwdb-update.service
 
   # remove systemd-user-sessions
-#  rm -rf $INSTALL/usr/lib/systemd/system/systemd-user-sessions.service
-#  rm -rf $INSTALL/usr/lib/systemd/system/*.target.wants/systemd-user-sessions.service
+  rm -rf $INSTALL/usr/lib/systemd/system/systemd-user-sessions.service
+  rm -rf $INSTALL/usr/lib/systemd/system/*.target.wants/systemd-user-sessions.service
 
   # remove nspawn
   rm -rf $INSTALL/usr/bin/systemd-nspawn

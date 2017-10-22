@@ -52,6 +52,6 @@ pre_configure_target() {
   export MAKEFLAGS=-j1
 }
 
-#post_makeinstall_target() {
-#  rm -rf $INSTALL/usr/bin
-#}
+post_makeinstall_target() {
+  rm -rf $INSTALL/usr/bin
+}

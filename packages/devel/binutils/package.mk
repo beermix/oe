@@ -53,6 +53,7 @@ pre_configure_host() {
   unset CFLAGS
   unset CXXFLAGS
   unset LDFLAGS
+  export LDFLAGS="$LDFLAGS -s"
 }
 
 make_host() {
