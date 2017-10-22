@@ -46,13 +46,11 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-plugins \
                          --enable-ld=default \
                          --enable-lto \
-                         --enable-gold \
                          --disable-sim \
                          --disable-gdb \
                          --disable-nls \
                          --enable-relro \
-                         --enable-poison-system-directories \
-                         LDFLAGS=-s"
+                         --enable-poison-system-directories"
 
 pre_configure_host() {
   unset CPPFLAGS

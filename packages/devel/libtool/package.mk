@@ -33,7 +33,7 @@ PKG_AUTORECONF="no"
 
 post_patch() {
   cd $PKG_BUILD
-  export MAKEINFO=$TOOLCHAIN/bin/true
+  export MAKEINFO=true
   ./bootstrap --no-git
 }
 
