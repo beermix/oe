@@ -19,6 +19,10 @@
 PKG_NAME="gcc"
 PKG_VERSION="7.2.0"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
+PKG_SITE="http://gcc.gnu.org/"
+PKG_URL="http://ftpmirror.gnu.org/gcc/$PKG_NAME-$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host"
 PKG_DEPENDS_TARGET="gcc:host"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host glibc"
@@ -50,11 +54,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-default-libstdcxx-abi=gcc4-compatible \
                            --without-ppl \
                            --without-cloog \
-                           --disable-libada \
-                           --disable-libmudflap \
-                           --disable-libatomic \
-                           --disable-libitm \
-                           --disable-libquadmath \
                            --disable-libmpx \
                            --disable-libsanitizer \
                            --disable-libssp \
@@ -65,10 +64,16 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
+                              --disable-libsanitizer \
                               --enable-cloog-backend=isl \
                               --disable-shared \
                               --disable-threads \
+                              --disable-libatomic \
+                              --disable-libquadmath \
+                              --disable-libmudflap \
+                              --disable-libada \
                               --disable-libgomp \
+                              --disable-libitm \
                               --without-headers \
                               --with-newlib \
                               --disable-decimal-float \
