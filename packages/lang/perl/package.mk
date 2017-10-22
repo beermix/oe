@@ -7,6 +7,8 @@ PKG_DEPENDS_TARGET="toolchain openssl db gdbm"
 PKG_SECTION="my"
 PKG_AUTORECONF="no"
 
+export CCACHE_DISABLE=1
+
 pre_configure_target() {
  cd $PKG_BUILD
  rm -rf .$TARGET_NAME
