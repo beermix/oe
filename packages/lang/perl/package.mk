@@ -18,7 +18,6 @@ pre_configure_target() {
 
 configure_target() {
 ./Configure -Dusedevel \
-	     -Doptimize="$CFLAGS" \
 	     -Dcc=$CC \
 	     -Dprefix=/usr  \
 	     -Dvendorprefix=/usr \
@@ -34,13 +33,15 @@ configure_target() {
 	     -Dvendorscript='/usr/bin/perlbin/vendor' \
 	     -Dman1ext=1perl \
 	     -Dman3ext=3perl \
-	     -Duseshrplib \
-	     -Dlibperl=libperl.so \
 	     -Dlibswanted="dl m c crypt db ndbm gdbm" \
 	     -des \
 	     -Dusethreads \
-	     -Dlddlflags="-shared $LDFLAGS" \
-	     -Dldflags="$LDFLAGS" \
+	     -Dldflags="$LDFLAGS -lm" \
+	     -Dccflags="$CFLAGS" \
+	     -Dmydomain="" \
+	     -Dmyhostname="noname" \
+	     -Dosname=linux \
+	     -Dperladmin=root \
 	     -Di_shadow -Di_syslog -Duseithreads -Duselargefiles \
 	     -Di_db -Di_gdbm -Di_ndbm -Di_sdbm -Ui_odbm
 }
