@@ -3,7 +3,7 @@ PKG_VERSION="9.21"
 PKG_SITE="http://software.schmorp.de/pkg/rxvt-unicode.html"
 PKG_URL="http://dist.schmorp.de/rxvt-unicode/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS="toolchain"
-PKG_BUILD_DEPENDS_TARGET="toolchain libX11 ncurses gdk-pixbuf"
+PKG_DEPENDS_TARGET="toolchain libX11 ncurses gdk-pixbuf"
 
 PKG_SECTION="x11/app"
 PKG_SHORTDESC="The rxvt-unicode program is a terminal emulator for X Window System."

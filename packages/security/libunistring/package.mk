@@ -2,7 +2,7 @@ PKG_NAME="libunistring"
 PKG_VERSION="0.9.7"
 PKG_SITE="https://ftp.gnu.org/gnu/libunistring/?C=M;O=D"
 PKG_URL="https://ftp.gnu.org/gnu/libunistring/libunistring-$PKG_VERSION.tar.xz"
-PKG_BUILD_DEPENDS_TARGET="toolchain openssl"
+PKG_DEPENDS_TARGET="toolchain openssl"
 PKG_SECTION="devel"
 
 PKG_AUTORECONF="no"

@@ -1,7 +1,7 @@
 PKG_NAME="libgudev"
 PKG_VERSION="232"
 PKG_URL="http://ftp.acc.umu.se/pub/GNOME/sources/libgudev/$PKG_VERSION/libgudev-$PKG_VERSION.tar.xz"
-PKG_BUILD_DEPENDS_TARGET="toolchain glib"
+PKG_DEPENDS_TARGET="toolchain glib"
 PKG_SECTION="devel"
 PKG_AUTORECONF="no"
 

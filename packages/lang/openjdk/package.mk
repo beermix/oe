@@ -33,7 +33,7 @@ PKG_URL="\
     http://hg.openjdk.java.net/jdk8u/jdk8u/nashorn/archive/39bfb9eb75dc.zip"
 
 PKG_DEPENDS_TARGET="cups libXtst"
-PKG_BUILD_DEPENDS_TARGET="toolchain cups libXtst"
+PKG_DEPENDS_TARGET="toolchain cups libXtst"
 PKG_PRIORITY="optional"
 PKG_SECTION="security"
 PKG_SHORTDESC="Open JDK"

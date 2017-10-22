@@ -1,7 +1,7 @@
 PKG_NAME="vsftpd"
 PKG_VERSION="3.0.3"
 PKG_URL="https://security.appspot.com/downloads/vsftpd-3.0.3.tar.gz"
-PKG_BUILD_DEPENDS_TARGET="toolchain libsodium libevent"
+PKG_DEPENDS_TARGET="toolchain libsodium libevent"
 
 PKG_SECTION="my"
 
