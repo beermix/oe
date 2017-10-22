@@ -151,7 +151,7 @@ configure_target() {
               --enable-runtime-cpudetect \
               $FFMPEG_TABLES \
               --disable-memalign-hack \
-              --disable-encoders \
+              --enable-encoders \
               --enable-encoder=ac3 \
               --enable-encoder=aac \
               --enable-encoder=wmav2 \
@@ -201,7 +201,7 @@ configure_target() {
               $FFMPEG_FPU \
               --enable-yasm \
               --disable-symver \
-              --disable-lto \
+              --enable-lto \
               $FFMPEG_X11GRAB
 }
 
