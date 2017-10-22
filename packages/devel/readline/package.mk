@@ -27,7 +27,19 @@ PKG_SHORTDESC="readline: The GNU Readline library provides a set of functions fo
 PKG_LONGDESC="The GNU Readline library provides a set of functions for use by applications that allow users to edit command lines as they are typed in."
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="bash_cv_wcwidth_broken=no --with-curses"
+post_unpack() {
+  sed -i 's|-Wl,-rpath,$(libdir) ||g' $PKG_BUILD/support/shobj-conf
+}
+
+pre_configure_target() {
+  CFLAGS="$CFLAGS -fPIC"
+}
+
+#PKG_CONFIGURE_OPTS_TARGET="bash_cv_wcwidth_broken=no --with-curses"
+
+make_target() {
+  make SHLIB_LIBS=-lncurses
+}
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/share/readline
