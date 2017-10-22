@@ -135,7 +135,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
 
 pre_configure_target() {
 # hack to prevent a build error
-  CFLAGS=`echo $CFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|" -e "s|-fno-plt||" -e "s|-fstack-protector-strong -D_FORTIFY_SOURCE=2||"`
+  CFLAGS=`echo $CFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|" -e "s|-fno-plt||"`
   LDFLAGS=`echo $LDFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|" -e "s|,-z,relro,-z,now||g"`
 }
 

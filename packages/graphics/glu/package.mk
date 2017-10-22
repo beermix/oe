@@ -29,6 +29,10 @@ PKG_SHORTDESC="glu: The OpenGL utility library"
 PKG_LONGDESC="libglu is the The OpenGL utility library"
 PKG_AUTORECONF="yes"
 
+pre_configure_target() {
+  CFLAGS=`echo $CFLAGS | sed -e "s|-D_FORTIFY_SOURCE=2||"`
+}
+
 PKG_CONFIGURE_OPTS_TARGET="--disable-silent-rules \
             --disable-debug \
             --disable-osmesa \
