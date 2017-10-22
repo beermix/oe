@@ -22,9 +22,8 @@ PKG_LICENSE="MIT"
 PKG_SITE="http://cffi.readthedocs.io/"
 PKG_URL="https://files.pythonhosted.org/packages/source/${PKG_NAME:0:1}/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_LONGDESC="Foreign Function Interface for Python calling C code"
-
-
 PKG_DEPENDS_HOST="toolchain distutilscross:host libffi:host"
+PKG_DEPENDS_TARGET="toolchain cffi:host distutilscross:host Python libffi"
 
 make_host() {
   unset _python_exec_prefix _python_prefix _python_sysroot
@@ -38,9 +37,6 @@ make_host() {
 makeinstall_host() {
   python setup.py install --prefix=$TOOLCHAIN
 }
-
-
-PKG_DEPENDS_TARGET="toolchain cffi:host distutilscross:host Python libffi"
 
 make_target() {
   mkdir -p .$TARGET_NAME
