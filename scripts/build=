@@ -145,8 +145,7 @@ if [ ! -f $STAMP ]; then
 
     TARGET_CMAKE_OPTS="$CMAKE_GENERATOR \
                        -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
-                       -DCMAKE_INSTALL_PREFIX=/usr \
-                       -DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE"
+                       -DCMAKE_INSTALL_PREFIX=/usr"
 
     if [ "$DEBUG" = "yes" ]; then
       MESON_BUILD_TYPE="debug"
