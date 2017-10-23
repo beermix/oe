@@ -44,6 +44,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-lto \
                          --disable-sim \
                          --disable-gdb \
+                         --disable-nls \
                          --enable-relro \
                          --enable-poison-system-directories"
 
@@ -52,7 +53,6 @@ pre_configure_host() {
   unset CFLAGS
   unset CXXFLAGS
   unset LDFLAGS
-#  LDFLAGS=-s
 }
 
 make_host() {
@@ -69,7 +69,7 @@ make_target() {
 
 makeinstall_host() {
   cp -v ../include/libiberty.h $SYSROOT_PREFIX/usr/include
-  make MAKEINFO=true install
+  make MAKEINFO=true install -j1
 }
 
 makeinstall_target() {
