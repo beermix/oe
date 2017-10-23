@@ -89,7 +89,7 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            $MESA_GLX \
                            --disable-osmesa \
                            --disable-gallium-osmesa \
-                           --enable-egl \
+                           --enable-egl --with-egl-platforms=x11,drm \
                            $MESA_EGL_PLATFORMS \
                            $XA_CONFIG \
                            --enable-gbm \

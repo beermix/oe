@@ -33,10 +33,17 @@ PKG_CONFIGURE_SCRIPT="gettext-tools/configure"
 
 PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared \
                          --disable-rpath \
-                         --with-gnu-ld \
-                         --disable-java \
-                         --disable-curses \
-                         --with-included-libxml \
-                         --disable-native-java \
+                         --without-lispdir \
                          --disable-csharp \
-                         --without-emacs"
+                         --disable-libasprintf \
+                         --disable-java \
+                         --disable-native-java \
+                         --disable-openmp \
+                         --disable-acl \
+                         --with-included-glib \
+                         --without-emacs \
+                         --without-cvs \
+                         --without-git \
+                         --with-included-libxml \
+                         --with-included-libcroco \
+                         --with-included-libunistring"
