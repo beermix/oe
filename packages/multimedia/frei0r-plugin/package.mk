@@ -25,6 +25,4 @@ PKG_URL="https://johnvansickle.com/ffmpeg/release-source/$PKG_NAME-$PKG_VERSION.
 PKG_DEPENDS_TARGET="toolchain"
 PKG_PRIORITY="optional"
 PKG_SECTION="audio"
-
-
 PKG_AUTORECONF="no"
