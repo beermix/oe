@@ -19,7 +19,7 @@
 ################################################################################
 
 PKG_NAME="harfbuzz"
-PKG_VERSION="1.6.0"
+PKG_VERSION="1.6.1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/HarfBuzz"
@@ -28,8 +28,6 @@ PKG_DEPENDS_TARGET="toolchain glib freetype cairo icu"
 PKG_SECTION="x11/toolkits"
 PKG_SHORTDESC="harfbuzz: an OpenType text shaping engine."
 PKG_LONGDESC="HarfBuzz is an OpenType text shaping engine."
-
-
 PKG_USE_CMAKE="no"
 PKG_AUTORECONF="no"
 
