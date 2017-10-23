@@ -6,8 +6,6 @@ PKG_DEPENDS_TARGET="toolchain yasm:host pcre zlib gmp"
 PKG_SECTION="security"
 PKG_SHORTDESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"
 PKG_LONGDESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"
-
-
 PKG_AUTORECONF="no"
 
 export CCACHE_DISABLE=1
