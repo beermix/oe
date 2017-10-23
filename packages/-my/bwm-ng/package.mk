@@ -4,8 +4,8 @@ PKG_URL="https://github.com/virtualboots/bwm-ng/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libstatgrab"
 PKG_AUTORECONF="yes"
 
-CFLAGS="$CFLAGS -static"
-CXXFLAGS="$CXXFLAGS -static"
+#CFLAGS="$CFLAGS -static"
+#CXXFLAGS="$CXXFLAGS -static"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
 			      ac_cv_func_realloc_0_nonnull=yes \
@@ -24,5 +24,4 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
 			      --enable-configfile \
 			      --enable-html \
 			      --enable-extendedstats \
-			      --with-getopt_long \
-			      --with-gnu-ld"
+			      --with-getopt_long"

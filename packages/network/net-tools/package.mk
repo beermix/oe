@@ -1,12 +1,15 @@
 PKG_NAME="net-tools"
-PKG_VERSION="1.60"
-PKG_URL="https://netcologne.dl.sourceforge.net/project/net-tools/net-tools-1.60.tar.bz2"
+PKG_VERSION="1.60-git"
+PKG_URL="https://dl.dropboxusercontent.com/s/itcgguojj6sw2an/net-tools-1.60-git.tar.xz"
 PKG_DEPENDS_TARGET="toolchain readline openssl"
 PKG_SECTION="my"
-
 PKG_AUTORECONF="no"
 
+pre_configure_target() {
+  cd $PKG_BUILD
+  yes "" | ./configure.sh config.in
+}
 
 make_target() {
-  make SHELL='sh -x' CC="$CC" CFLAGS="$CFLAGS -DDEBUG=0" CPPFLAGS="$CPPFLAGS" LDFLAGS="$LDFLAGS" -j1
+  make CC="$CC" CXX="$CXX" RANLIB="$RANLIB" AR="$AR" STRIP="$STRIP" -j1
 }
