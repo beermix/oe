@@ -1,0 +1,23 @@
+PKG_NAME="opencv"
+PKG_VERSION="2.4.13.4"
+PKG_URL="https://github.com/opencv/opencv/archive/${PKG_VERSION}.tar.gz"
+PKG_DEPENDS_TARGET="toolchain intel-vaapi-driver libva"
+PKG_PRIORITY="optional"
+PKG_SECTION="multimedia"
+PKG_USE_CMAKE="yes"
+PKG_AUTORECONF="no"
+PKG_USE_NINJA="yes"
+
+PKG_CMAKE_OPTS_TARGET="-DWITH_OPENCL=OFF \
+			  -DWITH_OPENGL=ON \
+			  -DWITH_TBB=ON \
+			  -DWITH_XINE=ON \
+			  -DWITH_GSTREAMER=OFF \
+			  -DBUILD_WITH_DEBUG_INFO=OFF \
+			  -DBUILD_TESTS=OFF \
+			  -DBUILD_PERF_TESTS=OFF \
+			  -DBUILD_EXAMPLES=OFF \
+			  -DINSTALL_C_EXAMPLES=OFF \
+			  -DINSTALL_PYTHON_EXAMPLES=OFF \
+			  -DCMAKE_BUILD_TYPE=Release \
+			  -DCMAKE_SKIP_RPATH=ON"
