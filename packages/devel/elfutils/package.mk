@@ -31,7 +31,7 @@ PKG_AUTORECONF="yes"
 PKG_CONFIGURE_OPTS_TARGET="utrace_cv_cc_biarch=false \
                            --disable-werror \
                            --disable-progs \
-                           --enable-deterministic-archives \
+                           --disable-nls \
                            --with-zlib \
                            --with-bzlib \
                            --without-lzma"
