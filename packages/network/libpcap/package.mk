@@ -34,7 +34,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_header_libusb_1_0_libusb_h=no \
                            ac_cv_linux_vers=2 \
                            --with-pcap=linux \
                            --disable-silent-rules \
-                           --disable-bluetooth \
+                           --enable-bluetooth \
                            --disable-can \
                            --without-libnl \
                            --disable-dbus \
