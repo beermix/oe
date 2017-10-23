@@ -56,7 +56,7 @@ case "$LINUX" in
     PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET imx6-status-led imx6-soc-fan"
     ;;
   rc)
-    PKG_VERSION="4.14-rc5"
+    PKG_VERSION="4.14-rc6"
     PKG_URL="https://git.kernel.org/torvalds/t/linux-$PKG_VERSION.tar.gz"
     PKG_PATCH_DIRS="4.14"
     ;;
