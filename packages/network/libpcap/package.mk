@@ -17,23 +17,26 @@
 ################################################################################
 
 PKG_NAME="libpcap"
-PKG_VERSION="fd5b92d"
-#PKG_URL="http://www.tcpdump.org/release/libpcap-$PKG_VERSION.tar.gz"
+PKG_VERSION="1.8.1"
+PKG_URL="http://www.tcpdump.org/release/libpcap-$PKG_VERSION.tar.gz"
 #PKG_GIT_URL="https://github.com/the-tcpdump-group/libpcap"
-PKG_URL="https://github.com/the-tcpdump-group/libpcap/archive/${PKG_VERSION}.tar.gz"
+#PKG_URL="https://github.com/the-tcpdump-group/libpcap/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libnl"
 PKG_SECTION="devel"
 PKG_SHORTDESC="system interface for user-level packet capture"
 PKG_LONGDESC="libpcap (Packet CAPture) provides a portable framework for low-level network monitoring. Applications include network statistics collection, security monitoring, network debugging, etc."
 PKG_USE_CMAKE="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 PKG_USE_NINJA="no"
 
-PKG_CONFIGURE_OPTS_TARGET="ac_cv_header_libusb_1_0_libusb_h=no \
+MAKEFLAGS=-j1
+
+PKG_CONFIGURE_OPTS_TARGET="LIBS=-lpthread \
+                           ac_cv_header_libusb_1_0_libusb_h=no \
                            ac_cv_netfilter_can_compile=no \
                            ac_cv_linux_vers=2 \
+                           --disable-shared \
                            --with-pcap=linux \
-                           --disable-silent-rules \
                            --disable-bluetooth \
                            --disable-can \
                            --without-libnl \
@@ -48,8 +51,7 @@ pre_configure_target() {
 # When cross-compiling, configure can't set linux version
 # forcing it
   sed -i -e 's/ac_cv_linux_vers=unknown/ac_cv_linux_vers=2/' ../configure
-  CFLAGS="$CFLAGS -I$SYSROOT_PREFIX/usr/include $(pkg-config libnl-genl-3.0 --cflags) -D_DEFAULT_SOURCE -fPIC"
-  MAKEFLAGS=-j1
+  CFLAGS="$CFLAGS -D_DEFAULT_SOURCE -fPIC -DPIC"
 }
 
 post_makeinstall_target() {
