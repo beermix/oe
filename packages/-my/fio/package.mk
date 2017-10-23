@@ -7,5 +7,5 @@ PKG_AUTORECONF="no"
 
 configure_target() {
   cd $PKG_BUILD
-  ./configure --prefix=/usr --enable-lex --esx --cpu=$TARGET_CPU --cc=$CC
+  ./configure --prefix=/usr --enable-lex --esx --cpu=$TARGET_CPU --cc=$CC --build-static
 }
