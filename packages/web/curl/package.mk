@@ -25,7 +25,7 @@
 #   there: http://forum.xbmc.org/showthread.php?tid=177557
 
 PKG_NAME="curl"
-PKG_VERSION="7.56.0"
+PKG_VERSION="7.56.1"
 PKG_ARCH="any"
 PKG_LICENSE="MIT"
 PKG_SITE="https://curl.haxx.se/download/?C=M;O=D"
