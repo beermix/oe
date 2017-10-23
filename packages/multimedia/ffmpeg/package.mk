@@ -24,7 +24,7 @@ PKG_LICENSE="LGPLv2.1+"
 PKG_SITE="https://github.com/xbmc/FFmpeg/releases"
 PKG_URL="https://github.com/xbmc/FFmpeg/archive/${PKG_VERSION}.tar.gz"
 PKG_SOURCE_DIR="FFmpeg-${PKG_VERSION}*"
-PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl speex frei0r-plugins libwebp libvidstab"
+PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl speex frei0r-plugins libwebp"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
 PKG_LONGDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
@@ -202,7 +202,7 @@ configure_target() {
               --enable-yasm \
               --disable-symver \
               --disable-lto \
-              --enable-libvidstab \
+              --disable-libvidstab \
               --enable-libwebp \
               --disable-libsoxr \
               $FFMPEG_X11GRAB

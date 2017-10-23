@@ -31,5 +31,5 @@ PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_HOST="--enable-cxx --disable-shared --with-pic"
 
-PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
+PKG_CONFIGURE_OPTS_TARGET="--enable-cxx --enable-static --with-pic"
 
