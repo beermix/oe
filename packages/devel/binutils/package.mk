@@ -42,8 +42,6 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-plugins \
                          --enable-ld=default \
                          --enable-lto \
-                         --disable-sim \
-                         --disable-gdb \
                          --disable-nls \
                          --enable-poison-system-directories"
 
