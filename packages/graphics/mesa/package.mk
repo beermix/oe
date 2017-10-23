@@ -97,7 +97,7 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --disable-nine \
                            --disable-xvmc \
                            $MESA_VDPAU \
-                           --disable-omx \
+                           --disable-omx-bellagio \
                            --disable-va \
                            --disable-opencl \
                            --enable-opencl-icd \
@@ -110,7 +110,7 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --with-osmesa-lib-name=OSMesa \
                            --with-gallium-drivers=$GALLIUM_DRIVERS \
                            --with-dri-drivers=$DRI_DRIVERS \
-                           --with-vulkan-drivers=intel \
+                           --with-vulkan-drivers=no \
                            --with-sysroot=$SYSROOT_PREFIX"
 
 pre_configure_target() {
