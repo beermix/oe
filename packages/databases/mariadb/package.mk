@@ -35,7 +35,7 @@ PKG_LONGDESC="MariaDB is a community-developed fork and a drop-in replacement fo
 PKG_AUTORECONF="no"
 PKG_USE_NINJA="no"
 
-PKG_MARIADB_SERVER="no"
+PKG_MARIADB_SERVER="yes"
 
 # MariaDB Feature set. Selection of features. Options are
 # - xsmall : 
@@ -161,7 +161,7 @@ configure_target() {
         -DWITH_READLINE=OFF \
         -DWITH_PCRE=bundled \
         -DWITH_ZLIB=bundled \
-        -DWITH_SYSTEMD=no \
+        -DWITH_SYSTEMD=yes \
         -DWITH_LIBWRAP=OFF \
         -DWITH_SSL=$SYSROOT_PREFIX/usr \
         $MARIADB_OPTS \
@@ -180,9 +180,9 @@ post_makeinstall_target() {
   rm $SYSROOT_PREFIX/usr/lib/libmysqlclient_r.so
  
   rm -rf $INSTALL/usr/share/mysql/support-files
-#  rm -rf $INSTALL/usr/share/mysql/test
-#  rm -rf $INSTALL/usr/share/mysql/bench
-#  rm -rf $INSTALL/usr/data
+  rm -rf $INSTALL/usr/share/mysql/test
+  rm -rf $INSTALL/usr/share/mysql/bench
+  rm -rf $INSTALL/usr/data
 
   if [ "$PKG_MARIADB_SERVER" = "no" ]; then
     rm -rf $INSTALL/usr/bin
