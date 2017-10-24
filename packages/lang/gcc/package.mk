@@ -45,6 +45,8 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-nls \
                            --enable-checking=release \
                            --with-default-libstdcxx-abi=new \
+                           --enable-gnu-unique-object \
+                           --disable-vtable-verify \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
@@ -53,6 +55,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libquadmath \
                            --disable-libmpx \
                            --disable-libssp \
+                           --disable-libsanitizer \
                            --without-cuda-driver \
                            --disable-werror \
                            --with-tune=generic"
@@ -60,7 +63,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
-                              --disable-libsanitizer \
                               --enable-cloog-backend=isl \
                               --disable-libatomic \
                               --disable-shared \
@@ -84,7 +86,6 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time=yes \
                          --enable-clocale=gnu \
-                         --disable-vtable-verify \
                          --enable-libatomic \
                          $GCC_OPTS"
 
