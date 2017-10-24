@@ -43,6 +43,10 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-ld=default \
                          --enable-lto \
                          --disable-nls \
+                         --enable-64-bit-bfd \
+                         --enable-install-libiberty \
+                         --enable-install-libbfd \
+                         --with-system-zlib \
                          --enable-poison-system-directories"
 
 pre_configure_host() {
