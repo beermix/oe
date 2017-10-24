@@ -25,10 +25,10 @@
 #   there: http://forum.xbmc.org/showthread.php?tid=177557
 
 PKG_NAME="curl"
-PKG_VERSION="7.56.0"
+PKG_VERSION="7.56.1"
 PKG_ARCH="any"
 PKG_LICENSE="MIT"
-PKG_SITE="http://curl.haxx.se"
+PKG_SITE="https://curl.haxx.se/download/?C=M;O=D"
 PKG_URL="http://curl.haxx.se/download/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain zlib openssl rtmpdump libgpg-error nghttp2"
 PKG_SECTION="web"
@@ -88,10 +88,10 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            --without-ca-path \
                            --without-libpsl \
                            --without-libmetalink \
-                           --without-libssh2 \
                            --with-librtmp=$SYSROOT_PREFIX/usr \
                            --with-nghttp=$SYSROOT_PREFIX/usr \
-                           --without-libidn2"
+                           --without-libidn2 \
+                           --without-libssh2"
 
 pre_configure_target() {
 # link against librt because of undefined reference to 'clock_gettime'
