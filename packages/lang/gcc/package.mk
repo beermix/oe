@@ -35,12 +35,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-gmp=$TOOLCHAIN \
                            --with-mpfr=$TOOLCHAIN \
                            --with-mpc=$TOOLCHAIN \
-                           --with-gnu-as \
-                           --with-gnu-ld \
-                           --enable-plugin \
-                           --enable-lto \
-                           --enable-gold \
-                           --enable-ld=default \
                            --disable-multilib \
                            --enable-checking=release \
                            --enable-gnu-unique-object \
@@ -55,7 +49,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libquadmath \
                            --disable-libmpx \
                            --disable-libssp \
-                           --disable-libsanitizer \
                            --without-cuda-driver \
                            --disable-werror \
                            --enable-poison-system-directories \
@@ -72,6 +65,7 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-threads \
                               --disable-libgomp \
                               --disable-libquadmath \
+                              --disable-libsanitizer \
                               --enable-decimal-float=no \
                               --without-headers \
                               --with-newlib \
