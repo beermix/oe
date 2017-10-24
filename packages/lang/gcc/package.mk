@@ -17,12 +17,11 @@
 ################################################################################
 
 PKG_NAME="gcc"
-#PKG_VERSION="7.2.0"
-#PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_VERSION="7.2.0"
+PKG_SHA256="1cf7adf8ff4b5aa49041c8734bbcf1ad18cc4c94d0029aae0f4e48841088479a"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_VERSION="7-20171019"
-PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/LATEST-7/gcc-$PKG_VERSION.tar.xz"
+PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host"
 PKG_DEPENDS_TARGET="gcc:host"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
@@ -38,16 +37,15 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-mpc=$TOOLCHAIN \
                            --with-gnu-as \
                            --with-gnu-ld \
-                           --enable-plugin \
-                           --enable-ld=default \
                            --disable-multilib \
-                           --enable-nls \
                            --enable-checking=release \
-                           --with-default-libstdcxx-abi=new \
                            --enable-gnu-unique-object \
                            --disable-vtable-verify \
-                           --without-ppl \
-                           --without-cloog \
+                           --enable-linker-build-id \
+                           --with-ppl=no \
+                           --with-cloog=no \
+                           --enable-checking=release \
+                           --enable-cheaders=c_global \
                            --disable-libada \
                            --disable-libmudflap \
                            --disable-libitm \
@@ -57,6 +55,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libsanitizer \
                            --without-cuda-driver \
                            --disable-werror \
+                           --enable-poison-system-directories \
                            --with-tune=generic"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
@@ -67,9 +66,11 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-shared \
                               --disable-threads \
                               --disable-libgomp \
+                              --disable-libquadmath \
+                              --enable-decimal-float=no \
                               --without-headers \
                               --with-newlib \
-                              --disable-decimal-float \
+                              gcc_cv_libc_provides_ssp=yes
                               $GCC_OPTS"
 
 PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
@@ -86,10 +87,10 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-libstdcxx-time=yes \
                          --enable-clocale=gnu \
                          --enable-libatomic \
+                         --enable-libitm
                          $GCC_OPTS"
 
 pre_configure_host() {
-#  export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
 }
 
