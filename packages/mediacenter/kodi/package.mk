@@ -30,7 +30,11 @@ PKG_LONGDESC="Kodi Media Center (which was formerly named Xbox Media Center or X
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
-PKG_USE_NINJA="no"
+PKG_USE_NINJA="yes"
+
+make_target() {
+  ninja -j7
+}
 
 PKG_CMAKE_SCRIPT="$PKG_BUILD/project/cmake/CMakeLists.txt"
 
