@@ -1,5 +1,3 @@
-# Made by github.com/escalade
-
 PKG_NAME="gtk3"
 PKG_VERSION="3.92.1"
 PKG_ARCH="any"
@@ -50,4 +48,12 @@ PKG_MESON_OPTS_TARGET="-Denable-wayland-backend=false \
 
 post_makeinstall_target() {
   cp $PKG_DIR/files/settings.ini $INSTALL/etc/gtk-3.0/
+}
+
+pre_configure_target() {
+  export LC_ALL=en_US.UTF-8
+
+  # meson needs a host compiler and it's detected through the environment. meh.
+  export CC="$HOST_CC"
+  export CXX="$HOST_CXX"
 }

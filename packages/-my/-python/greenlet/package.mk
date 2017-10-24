@@ -1,18 +1,20 @@
 ################################################################################
 #      This file is part of Alex@ELEC - http://www.alexelec.in.ua
-#      Copyright (C) 2011-2016 Alexandr Zuyev (alex@alexelec.in.ua)
+#      Copyright (C) 2011-2017 Alexandr Zuyev (alex@alexelec.in.ua)
 ################################################################################
 
 PKG_NAME="greenlet"
-PKG_VERSION="0.4.12"
+PKG_VERSION="0.4.9"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="OSS"
 PKG_SITE="https://pypi.python.org/pypi/greenlet"
-PKG_URL="https://pypi.python.org/packages/be/76/82af375d98724054b7e273b5d9369346937324f9bcc20980b45b068ef0b0/greenlet-0.4.12.tar.gz"
-PKG_DEPENDS_TARGET="toolchain Python2 distutilscross:host"
-PKG_PRIORITY="optional"
-PKG_SECTION="xmedia/depends"
+PKG_URL="https://pypi.python.org/packages/source/g/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"
+PKG_SECTION="xmedia/torrent"
 PKG_SHORTDESC="Lightweight in-process concurrent programming"
 PKG_LONGDESC="Lightweight in-process concurrent programming."
-
+PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 pre_configure_target() {
