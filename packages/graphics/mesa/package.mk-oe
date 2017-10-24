@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="mesa"
-PKG_VERSION="17.2.3"
-PKG_SHA256="a0b0ec8f7b24dd044d7ab30a8c7e6d3767521e245f88d4ed5dd93315dc56f837"
+PKG_VERSION="17.3.0-rc1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.mesa3d.org/"
-PKG_URL="ftp://freedesktop.org/pub/mesa/$PKG_NAME-$PKG_VERSION.tar.xz"
+#PKG_URL="ftp://freedesktop.org/pub/mesa/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="mesa: 3-D graphics library with OpenGL API"
 PKG_LONGDESC="Mesa is a 3-D graphics library with an API which is very similar to that of OpenGL*. To the extent that Mesa utilizes the OpenGL command syntax or state machine, it is being used with authorization from Silicon Graphics, Inc. However, the author makes no claim that Mesa is in any way a compatible replacement for OpenGL or associated with Silicon Graphics, Inc. Those who want a licensed implementation of OpenGL should contact a licensed vendor. While Mesa is not a licensed OpenGL implementation, it is currently being tested with the OpenGL conformance tests. For the current conformance status see the CONFORM file included in the Mesa distribution."
@@ -100,7 +100,7 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --disable-nine \
                            --disable-xvmc \
                            $MESA_VDPAU \
-                           --disable-omx \
+                           --disable-omx-bellagio \
                            --disable-va \
                            --disable-opencl \
                            --enable-opencl-icd \
@@ -119,18 +119,13 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --with-sysroot=$SYSROOT_PREFIX"
 
 pre_configure_target() {
-  if [ "$DISPLAYSERVER" = "x11" ]; then
     export LIBS="-lxcb-dri3 -lxcb-dri2 -lxcb-xfixes -lxcb-present -lxcb-sync -lxshmfence -lz"
-  fi
 }
 
 post_makeinstall_target() {
-  if [ "$DISPLAYSERVER" = "x11" ]; then
-    # rename and relink for cooperate with nvidia drivers
     rm -rf $INSTALL/usr/lib/libGL.so
     rm -rf $INSTALL/usr/lib/libGL.so.1
     ln -sf libGL.so.1 $INSTALL/usr/lib/libGL.so
     ln -sf /var/lib/libGL.so $INSTALL/usr/lib/libGL.so.1
     mv $INSTALL/usr/lib/libGL.so.1.2.0 $INSTALL/usr/lib/libGL_mesa.so.1
-  fi
 }

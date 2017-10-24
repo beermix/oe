@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://www.gtk.org/"
 PKG_URL="http://ftp.gnome.org/pub/gnome/sources/glib/${PKG_VERSION%.*}/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain zlib libffi pcre elfutils Python2:host util-linux"
+PKG_DEPENDS_TARGET="toolchain zlib libffi pcre Python2:host util-linux"
 PKG_DEPENDS_HOST="libffi:host pcre:host"
 PKG_SECTION="devel"
 PKG_SHORTDESC="glib: C support library"
@@ -35,11 +35,7 @@ PKG_MESON_OPTS_TARGET="-Dwith-docs=no -Dwith-man=no -Dwith-pcre=system -Denable-
  
 PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared --disable-libmount --with-pic --with-pcre=internal"
 
-PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_mmap_fixed_mapped=yes \
-                           ac_cv_func_posix_getpwuid_r=yes \
-                           ac_cv_func_posix_getgrgid_r=yes \
-                           ac_cv_func_printf_unix98=yes \
-                           ac_cv_func_snprintf_c99=yes \
+PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_snprintf_c99=yes \
                            ac_cv_func_vsnprintf_c99=yes \
                            glib_cv_stack_grows=no \
                            glib_cv_uscore=no \
@@ -47,15 +43,17 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_mmap_fixed_mapped=yes \
                            --disable-selinux \
                            --disable-fam \
                            --enable-xattr \
-                           --enable-libelf \
+                           --disable-libelf \
                            --disable-gtk-doc \
+                           --disable-gtk-doc-html \
                            --disable-man \
                            --disable-dtrace \
                            --disable-systemtap \
                            --enable-Bsymbolic \
                            --with-gnu-ld \
                            --with-threads=posix \
-                           --with-pcre=system"
+                           --with-pcre=internal \
+                           --with-python=python"
 
 post_makeinstall_target() {
   mkdir -p $SYSROOT_PREFIX/usr/lib/pkgconfig

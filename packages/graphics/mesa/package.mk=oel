@@ -18,6 +18,7 @@
 
 PKG_NAME="mesa"
 PKG_VERSION="17.3.0-rc1"
+#PKG_SHA256="a0b0ec8f7b24dd044d7ab30a8c7e6d3767521e245f88d4ed5dd93315dc56f837"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.mesa3d.org/"
@@ -29,7 +30,7 @@ PKG_LONGDESC="Mesa is a 3-D graphics library with an API which is very similar t
 PKG_AUTORECONF="yes"
 
 if [ "$DISPLAYSERVER" = "x11" ]; then
-  PKG_DEPENDS_TARGET="toolchain Python2:host expat glproto dri2proto presentproto libdrm libXext libXdamage libXfixes libXxf86vm libxcb libX11 systemd dri3proto libxshmfence openssl"
+  PKG_DEPENDS_TARGET="toolchain Python2:host expat elfutils glproto dri2proto presentproto libdrm libXext libXdamage libXfixes libXxf86vm libxcb libX11 systemd dri3proto libxshmfence libXt openssl"
 
   export DRI_DRIVER_INSTALL_DIR=$XORG_PATH_DRI
   export DRI_DRIVER_SEARCH_DIR=$XORG_PATH_DRI
@@ -104,7 +105,7 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --enable-shared-glapi \
                            --enable-shader-cache \
                            $MESA_GALLIUM_LLVM \
-                           --disable-silent-rules \
+                           --enable-silent-rules \
                            --with-gl-lib-name=GL \
                            --with-osmesa-lib-name=OSMesa \
                            --with-gallium-drivers=$GALLIUM_DRIVERS \
