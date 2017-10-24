@@ -37,6 +37,10 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-mpc=$TOOLCHAIN \
                            --with-gnu-as \
                            --with-gnu-ld \
+                           --enable-plugin \
+                           --enable-lto \
+                           --enable-gold \
+                           --enable-ld=default \
                            --disable-multilib \
                            --enable-checking=release \
                            --enable-gnu-unique-object \
@@ -44,7 +48,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-linker-build-id \
                            --with-ppl=no \
                            --with-cloog=no \
-                           --enable-checking=release \
                            --enable-cheaders=c_global \
                            --disable-libada \
                            --disable-libmudflap \
@@ -57,7 +60,8 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-werror \
                            --enable-poison-system-directories \
                            --with-system-zlib \
-                           --with-tune=generic"
+                           --with-tune=generic \
+                           gcc_cv_libc_provides_ssp=yes"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
@@ -71,7 +75,6 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-decimal-float=no \
                               --without-headers \
                               --with-newlib \
-                              gcc_cv_libc_provides_ssp=yes
                               $GCC_OPTS"
 
 PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \

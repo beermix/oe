@@ -33,7 +33,7 @@ PKG_AUTORECONF="no"
 PKG_USE_NINJA="yes"
 
 make_target() {
-  ninja -j7
+  ninja -j${CONCURRENCY_MAKE_LEVEL}
 }
 
 PKG_CMAKE_SCRIPT="$PKG_BUILD/project/cmake/CMakeLists.txt"

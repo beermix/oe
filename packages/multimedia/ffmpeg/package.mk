@@ -204,7 +204,6 @@ configure_target() {
               --disable-libvidstab \
               --disable-libwebp \
               --disable-frei0r \
-              --disable-libsoxr \
               $FFMPEG_X11GRAB
 }
 

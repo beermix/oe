@@ -65,7 +65,8 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            --with-system-ffi \
                            --with-system-expat \
                            --enable-shared \
-                           --disable-static"
+                           --disable-static \
+                           --enable-optimizations"
 
 post_patch() {
   # This is needed to make sure the Python build process doesn't try to

@@ -40,6 +40,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-libssp \
                          --enable-version-specific-runtime-libs \
                          --enable-plugins \
+                         --enable-gold \
                          --enable-ld=default \
                          --enable-lto \
                          --disable-nls \
@@ -70,7 +71,7 @@ make_target() {
 
 makeinstall_host() {
   cp -v ../include/libiberty.h $SYSROOT_PREFIX/usr/include
-  make MAKEINFO=true install -j1
+  make MAKEINFO=true install
 }
 
 makeinstall_target() {
