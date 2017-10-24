@@ -35,7 +35,11 @@ PKG_MESON_OPTS_TARGET="-Dwith-docs=no -Dwith-man=no -Dwith-pcre=system -Denable-
  
 PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared --disable-libmount --with-pic --with-pcre=internal"
 
-PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_snprintf_c99=yes \
+PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_mmap_fixed_mapped=yes \
+                           ac_cv_func_posix_getpwuid_r=yes \
+                           ac_cv_func_posix_getgrgid_r=yes \
+                           ac_cv_func_printf_unix98=yes \
+                           ac_cv_func_snprintf_c99=yes \
                            ac_cv_func_vsnprintf_c99=yes \
                            glib_cv_stack_grows=no \
                            glib_cv_uscore=no \
