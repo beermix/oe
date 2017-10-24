@@ -1,11 +1,9 @@
-GCC_OPTIM="-O2 -pipe -fno-plt"
-LD_OPTIM="-Wl,-O1,--sort-common,--as-needed"
-
-#  -fstack-protector-strong -D_FORTIFY_SOURCE=2 
+GCC_OPTIM="-O2 -pipe -fstack-protector-strong -D_FORTIFY_SOURCE=2"
+LD_OPTIM="-Wl,-O1,--as-needed"
 
 if [ "$LTO_SUPPORT" = yes ];then
-  GCC_OPTIM_LTO="-flto -ffat-lto-objects"
-  LD_OPTIM_LTO="-fuse-linker-plugin -flto"
+  GCC_OPTIM_LTO="-flto=$CONCURRENCY_MAKE_LEVEL -ffat-lto-objects"
+  LD_OPTIM_LTO="-fuse-linker-plugin -flto=$CONCURRENCY_MAKE_LEVEL"
 fi
 
 if [ "$GOLD_SUPPORT" = yes ];then
