@@ -37,8 +37,8 @@
     KERNEL_MAKE_EXTRACMD=""
 
   # Kernel to use. values can be:
-  # default:  default mainline kernel
-    LINUX="rc"
+  # default:  default mainline kernel rc
+    LINUX="default"
 
 
 ################################################################################
