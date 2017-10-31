@@ -36,7 +36,8 @@ else
   DISPLAYSERVER_LIBVA="--disable-x11 --disable-glx"
 fi
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-docs \
+PKG_CONFIGURE_OPTS_TARGET="--disable-silent-rules \
+                           --disable-docs \
                            --enable-drm \
                            --enable-egl \
                            $DISPLAYSERVER_LIBVA \
