@@ -19,14 +19,14 @@
 ################################################################################
 
 PKG_NAME="chromium"
-PKG_VERSION="62.0.3202.62"
-PKG_SHA256="e8df3150386729ddcb4971636627e54815ad447be5f122201e310f5bb0bcc362"
+PKG_VERSION="62.0.3202.75"
+#PKG_SHA256="e8df3150386729ddcb4971636627e54815ad447be5f122201e310f5bb0bcc362"
 PKG_REV="107.008"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_SITE="http://www.chromium.org/Home"
-#PKG_URL="ftp://root:openelec@192.168.1.4/www/chromium-$PKG_VERSION.tar.xz"
-PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="ftp://root:openelec@192.168.1.4/www/chromium-$PKG_VERSION.tar.xz"
+#PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
 PKG_DEPENDS_TARGET="chromium:host pciutils dbus x11 ffmpeg yasm libXcomposite libXcursor libXtst alsa-lib bzip2 libXScrnSaver libexif libpng harfbuzz atk gtk2 unclutter xdotool libvdpau minizip"
 PKG_SECTION="browser"
