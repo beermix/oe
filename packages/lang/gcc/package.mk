@@ -52,6 +52,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libssp \
                            --without-cuda-driver \
                            --disable-werror \
+                           --disable-libsanitizer \
                            --enable-poison-system-directories \
                            --with-system-zlib \
                            --with-tune=generic \
@@ -66,7 +67,6 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-threads \
                               --disable-libgomp \
                               --disable-libquadmath \
-                              --disable-libsanitizer \
                               --enable-decimal-float=no \
                               --without-headers \
                               --with-newlib \
