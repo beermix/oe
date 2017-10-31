@@ -46,8 +46,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-cheaders=c_global \
                            --disable-libada \
                            --disable-libmudflap \
-                           --disable-libitm \
-                           --disable-libquadmath \
                            --disable-libmpx \
                            --disable-libssp \
                            --without-cuda-driver \
@@ -67,6 +65,7 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-threads \
                               --disable-libgomp \
                               --disable-libquadmath \
+                              --disable-libitm \
                               --enable-decimal-float=no \
                               --without-headers \
                               --with-newlib \
@@ -86,7 +85,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-libstdcxx-time=yes \
                          --enable-clocale=gnu \
                          --enable-libatomic \
-                         --enable-libitm
+                         --enable-libitm \
                          $GCC_OPTS"
 
 pre_configure_host() {
