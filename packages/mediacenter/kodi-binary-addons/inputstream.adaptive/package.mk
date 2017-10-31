@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="inputstream.adaptive"
-PKG_VERSION="f05370d"
+PKG_VERSION="f2904b5"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
 PKG_URL="https://github.com/peak3d/inputstream.adaptive/archive/$PKG_VERSION.tar.gz"
@@ -27,9 +27,20 @@ PKG_SHORTDESC="inputstream.adaptive"
 PKG_LONGDESC="inputstream.adaptive"
 
 PKG_IS_ADDON="yes"
-PKG_USE_NINJA="yes"
+PKG_USE_NINJA="no"
 
 export CCACHE_DISABLE=1
+
+post_makeinstall_target() {
+  mkdir -p wv && cd wv
+    cmake -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+        -DDECRYPTERPATH=special://home/cdm \
+        $PKG_BUILD/wvdecrypter
+    make
+
+  cp -P $PKG_BUILD/.$TARGET_NAME/wv/libssd_wv.so $INSTALL/usr/lib
+}
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/

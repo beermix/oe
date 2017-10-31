@@ -1,5 +1,5 @@
 PKG_NAME="wget"
-PKG_VERSION="1.19.1"
+PKG_VERSION="1.19.2"
 PKG_SITE="http://www.wget-editor.org/"
 PKG_URL="http://ftpmirror.gnu.org/wget/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain openssl libunistring libevent libidn2 libtasn1"
