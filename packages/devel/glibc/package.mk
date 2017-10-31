@@ -17,11 +17,11 @@
 ################################################################################
 
 PKG_NAME="glibc"
-PKG_VERSION="git54"
+PKG_VERSION="b61afe8"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="http://www.gnu.org/software/libc/"
-PKG_URL="https://dl.dropboxusercontent.com/s/jjvql05wluwp4ab/glibc-git54.tar.xz"
+PKG_SITE="https://github.com/bminor/glibc"
+PKG_URL="https://github.com/bminor/glibc/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap"
 PKG_DEPENDS_INIT="glibc"
 PKG_SECTION="toolchain/devel"
