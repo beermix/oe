@@ -46,7 +46,7 @@ fi
 
 get_graphicdrivers
 
-# Drivers 
+# Drivers
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET xf86-input-libinput"
 
 for drv in $XORG_DRIVERS; do

@@ -31,6 +31,7 @@ PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-backlight \
                            --disable-backlight-helper \
+                           --disable-gen4asm \
                            --enable-udev \
                            --disable-tools \
                            --enable-dri \
@@ -41,8 +42,12 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-backlight \
                            --disable-ums --disable-ums-only \
                            --enable-sna \
                            --enable-uxa \
+                           --disable-xvmc \
+                           --disable-xaa \
+                           --disable-dga \
                            --disable-tear-free \
                            --disable-create2 \
+                           --disable-async-swap \
                            --with-default-dri=3 \
                            --with-xorg-module-dir=$XORG_PATH_MODULES"
 

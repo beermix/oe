@@ -18,6 +18,7 @@
 
 PKG_NAME="xkeyboard-config"
 PKG_VERSION="2.22"
+PKG_SHA256="deaec9989fbc443358b43864437b7b6d39caff07890a4a8055105ce9fcaa59bd"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.X.org"
@@ -35,7 +36,8 @@ PKG_CONFIGURE_OPTS_TARGET="XKBCOMP=/usr/bin/xkbcomp \
                            --enable-nls \
                            --disable-rpath \
                            --with-xkb-base=$XORG_PATH_XKB \
-                           --with-xkb-rules-symlink=xorg"
+                           --with-xkb-rules-symlink=xorg \
+                           --with-gnu-ld"
 
 pre_build_target() {
 # broken autoreconf

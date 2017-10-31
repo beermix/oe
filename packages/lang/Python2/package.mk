@@ -65,8 +65,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            --with-system-ffi \
                            --with-system-expat \
                            --enable-shared \
-                           --disable-static \
-                           --enable-optimizations"
+                           --disable-static"
 
 post_patch() {
   # This is needed to make sure the Python build process doesn't try to
@@ -118,7 +117,7 @@ makeinstall_target() {
 }
 
 post_makeinstall_target() {
-  for dir in bsddb idlelib lib-tk lib2to3 msilib pydoc_data test; do
+  for dir in bsddb idlelib lib-tk lib2to3 msilib pydoc_data test unittest; do
     rm -rf $INSTALL/usr/lib/python*/$dir
   done
 

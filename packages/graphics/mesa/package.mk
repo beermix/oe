@@ -96,7 +96,7 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --disable-nine \
                            --disable-xvmc \
                            $MESA_VDPAU \
-                           --disable-omx-bellagio \
+                           --disable-omx \
                            --disable-va \
                            --disable-opencl \
                            --enable-opencl-icd \

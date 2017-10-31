@@ -1,4 +1,4 @@
-GCC_OPTIM="-O2 -pipe -fstack-protector-strong -D_FORTIFY_SOURCE=2 -fno-plt"
+GCC_OPTIM="-O2 -pipe -fno-plt"
 LD_OPTIM="-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now"
 
 if [ "$LTO_SUPPORT" = yes ];then

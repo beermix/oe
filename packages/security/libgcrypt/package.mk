@@ -35,7 +35,7 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --enable-asm \
                            --with-gnu-ld \
                            --with-libgpg-error-prefix=$SYSROOT_PREFIX/usr \
-                           --disable-doc --disable-shared --with-pic"
+                           --disable-doc"
 
 pre_configure_target() {
   # libgcrypt-1.7.x fails to build with LTO support

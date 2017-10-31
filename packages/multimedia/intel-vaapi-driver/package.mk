@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="intel-vaapi-driver"
-PKG_VERSION="1.8.3"
+PKG_VERSION="2.0.0"
 PKG_SHA256="54411d9e579300ed63f8b9b06152a1a9ec95b7699507d7ffa014cd7b2aeaff6f"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPL"
@@ -29,4 +29,13 @@ PKG_SHORTDESC="intel-vaapi-driver: VA-API user mode driver for Intel GEN Graphic
 PKG_LONGDESC="intel-vaapi-driver: VA-API user mode driver for Intel GEN Graphics family"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-drm --disable-wayland --enable-x11 $DISPLAYSERVER_LIBVA"
+if [ "$DISPLAYSERVER" = "x11" ]; then
+  DISPLAYSERVER_LIBVA="--enable-x11"
+else
+  DISPLAYSERVER_LIBVA="--disable-x11"
+fi
+
+PKG_CONFIGURE_OPTS_TARGET="--disable-silent-rules \
+                           --enable-drm \
+                           --disable-wayland \
+                           $DISPLAYSERVER_LIBVA"
