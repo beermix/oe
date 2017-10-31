@@ -30,8 +30,6 @@ PKG_PRIORITY="optional"
 PKG_SECTION="database"
 PKG_SHORTDESC="mariadb: A community developed branch of MySQL"
 PKG_LONGDESC="MariaDB is a community-developed fork and a drop-in replacement for the MySQL relational database management system."
-
-
 PKG_AUTORECONF="no"
 PKG_USE_NINJA="no"
 
