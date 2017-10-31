@@ -39,6 +39,8 @@ PKG_ADDON_NAME="Chromium"
 PKG_ADDON_TYPE="xbmc.python.script"
 PKG_ADDON_PROVIDES="executable"
 
+export CCACHE_SLOPPINESS=include_file_mtime
+
 post_patch() {
   cd $(get_build_dir chromium)
   # Use Python 2
