@@ -3,13 +3,9 @@ PKG_VERSION="9.11.2"
 PKG_URL="https://fossies.org/linux/misc/dns/bind9/$PKG_VERSION/bind-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain sqlite libcap openssl libidn2 readline"
 PKG_SECTION="my"
-
 PKG_AUTORECONF="yes"
 
 LTO_SUPPORT="yes"
-GOLD_SUPPORT="yes"
-
-CFFLAGS="$CFFLAGS -static-libgcc -lrt -ldl"
   
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-static \
