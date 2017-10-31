@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="screen"
-PKG_VERSION="4.5.0"
+PKG_VERSION="4.6.2"
 PKG_SITE="http://www.gnu.org/software/screen/"
 PKG_URL="http://ftpmirror.gnu.org/screen/$PKG_NAME-${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain ncurses"
