@@ -40,15 +40,14 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-libssp \
                          --enable-version-specific-runtime-libs \
                          --enable-plugins \
-                         --enable-gold \
                          --enable-ld=default \
                          --enable-lto \
                          --disable-sim \
                          --disable-gdb \
                          --disable-nls \
-                         --enable-64-bit-bfd \
-                         --enable-install-libiberty \
-                         --enable-install-libbfd \
+                         --enable-threads \
+                         --with-pic \
+                         --enable-relro \
                          --with-system-zlib \
                          --enable-poison-system-directories"
 
