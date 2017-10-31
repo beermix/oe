@@ -45,7 +45,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-checking=release \
                            --enable-gnu-unique-object \
                            --disable-vtable-verify \
-                           --enable-linker-build-id \
                            --with-ppl=no \
                            --with-cloog=no \
                            --enable-cheaders=c_global \
@@ -56,7 +55,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --without-cuda-driver \
                            --disable-werror \
                            --disable-libsanitizer \
-                           --enable-poison-system-directories \
                            --with-system-zlib \
                            --with-tune=generic \
                            --enable-poison-system-directories"
