@@ -1,17 +1,17 @@
 PKG_NAME="unbound"
-PKG_VERSION="c8504c8"
+PKG_VERSION="8fed3a4"
 PKG_URL="https://github.com/jedisct1/unbound/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain expat openssl libevent libsodium expat"
 PKG_SECTION="my"
 PKG_AUTORECONF="yes"
 
-LTO_SUPPORT="yes"
+#LTO_SUPPORT="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-dsa \
 			      --disable-gost \
 			      --disable-rpath \
 			      --enable-pie \
-			      --enable-flto \
+			      --disable-flto \
 			      --enable-relro-now \
 			      --disable-shared \
 			      --disable-cachedb \
