@@ -1,7 +1,7 @@
 PKG_NAME="wget"
 PKG_VERSION="1.19.2"
 PKG_SITE="http://www.wget-editor.org/"
-PKG_URL="http://ftpmirror.gnu.org/wget/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="https://ftp.gnu.org/gnu/wget/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain openssl libunistring libevent libidn2 libtasn1"
 PKG_SECTION="tools"
 PKG_AUTORECONF="no"
