@@ -54,7 +54,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-poison-system-directories \
                            --with-system-zlib \
                            --with-tune=generic \
-                           gcc_cv_libc_provides_ssp=yes"
+                           --enable-poison-system-directories"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
@@ -85,7 +85,6 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-libstdcxx-time=yes \
                          --enable-clocale=gnu \
                          --enable-libatomic \
-                         --enable-libitm \
                          $GCC_OPTS"
 
 pre_configure_host() {
