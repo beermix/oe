@@ -1,5 +1,5 @@
 PKG_NAME="pure-ftpd"
-PKG_VERSION="1.0.46"
+PKG_VERSION="1.0.47"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain libcap"
 #PKG_DEPENDS_TARGET="toolchain libcap libevent libsodium"
