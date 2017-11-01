@@ -451,6 +451,13 @@ strip_gold() {
   TARGET_LDFLAGS=`echo $TARGET_LDFLAGS | sed -e "s|-fuse-ld=gold||g"`
 }
 
+strip_hard() {
+  CFLAGS=`echo $CFLAGS | sed -e "s|-fno-plt||g"`
+  TARGET_CFLAGS=`echo $TARGET_CFLAGS | sed -e "s|-fno-plt||g"`
+  LDFLAGS=`echo $LDFLAGS | sed -e "s|,-z,now||g"`
+  TARGET_LDFLAGS=`echo $TARGET_LDFLAGS | sed -e "s|,-z,now||g"`
+}
+
 fix_module_depends() {
   # modify .modinfo section in kernel module to depends on other required modules
   local MODULE="$1"
