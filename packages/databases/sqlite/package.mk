@@ -17,17 +17,15 @@
 ################################################################################
 
 PKG_NAME="sqlite"
-PKG_VERSION="autoconf-3200100"
+PKG_VERSION="autoconf-3210000"
 PKG_ARCH="any"
 PKG_LICENSE="PublicDomain"
-PKG_SITE="https://www.sqlite.org/"
+PKG_SITE="https://www.sqlite.org/download.html"
 PKG_URL="https://www.sqlite.org/2017/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain readline ncurses"
+PKG_DEPENDS_TARGET="toolchain readline ncurses sqlite:host"
 PKG_SECTION="database"
 PKG_SHORTDESC="sqlite: An Embeddable SQL Database Engine"
 PKG_LONGDESC="SQLite is a C library that implements an embeddable SQL database engine. Programs that link with the SQLite library can have SQL database access without running a separate RDBMS process. The distribution comes with a standalone command-line access program (sqlite) that can be used to administer an SQLite database and which serves as an example of how to use the SQLite library. SQLite is not a client library used to connect to a big database server. SQLite is the server. The SQLite library reads and writes directly to and from the database files on disk."
-
-
 PKG_AUTORECONF="no"
 
 # sqlite fails to compile with fast-math link time optimization.
