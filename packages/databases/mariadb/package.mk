@@ -172,10 +172,8 @@ post_makeinstall_target() {
   cp scripts/mysql_config $SYSROOT_PREFIX/usr/bin
   ln -sf $SYSROOT_PREFIX/usr/bin/mysql_config $TOOLCHAIN/bin/mysql_config
  
-  rm $SYSROOT_PREFIX/usr/lib/libmariadb.so.3
-  rm $SYSROOT_PREFIX/usr/lib/libmariadb.so
-  rm $SYSROOT_PREFIX/usr/lib/libmysqlclient.so
-  rm $SYSROOT_PREFIX/usr/lib/libmysqlclient_r.so
+  rm -rf $SYSROOT_PREFIX/usr/lib/*.so.*
+  rm -rf $SYSROOT_PREFIX/usr/lib/*.so
  
   rm -rf $INSTALL/usr/share/mysql/support-files
   rm -rf $INSTALL/usr/share/mysql/test
@@ -187,9 +185,7 @@ post_makeinstall_target() {
     rm -rf $INSTALL/usr/lib
     rm -rf $INSTALL/usr/share/mysql/*.sql
     
-    rm $SYSROOT_PREFIX/usr/lib/libmariadb.so.3
-    rm $SYSROOT_PREFIX/usr/lib/libmariadb.so
-    rm $SYSROOT_PREFIX/usr/lib/libmysqlclient.so
-    rm $SYSROOT_PREFIX/usr/lib/libmysqlclient_r.so
+    rm -rf $SYSROOT_PREFIX/usr/lib/*.so.*
+    rm -rf $SYSROOT_PREFIX/usr/lib/*.so
   fi
 }
