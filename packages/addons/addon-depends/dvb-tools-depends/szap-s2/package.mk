@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2016 Team LibreELEC
+#      Copyright (C) 2017-present Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,13 +16,19 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="libconfuse"
-PKG_VERSION="3.2"
-PKG_LICENSE="https://github.com/martinh/libconfuse/blob/master/LICENSE"
-PKG_SITE="https://github.com/martinh/libconfuse"
-PKG_URL="https://github.com/martinh/libconfuse/archive/v$PKG_VERSION.tar.gz"
+PKG_NAME="szap-s2"
+PKG_VERSION="69ff358"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
+PKG_SITE="https://bitbucket.org/updatelee/tune-s2"
+PKG_URL="https://bitbucket.org/CrazyCat/szap-s2/get/$PKG_VERSION.tar.gz"
+PKG_SOURCE_DIR="CrazyCat-${PKG_NAME}-${PKG_VERSION}*"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_LONGDESC="Small configuration file parser library for C"
-PKG_AUTORECONF="yes"
+PKG_SECTION="tools"
+PKG_SHORTDESC="szap-s2 is a simple zapping tool for the Linux DVB S2 API"
+PKG_LONGDESC="szap-s2 is a simple zapping tool for the Linux DVB S2 API"
+PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared"
+makeinstall_target() {
+  :
+}

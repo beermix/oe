@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2016 Team LibreELEC
+#      Copyright (C) 2017-present Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,13 +16,18 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="libconfuse"
-PKG_VERSION="3.2"
-PKG_LICENSE="https://github.com/martinh/libconfuse/blob/master/LICENSE"
-PKG_SITE="https://github.com/martinh/libconfuse"
-PKG_URL="https://github.com/martinh/libconfuse/archive/v$PKG_VERSION.tar.gz"
+PKG_NAME="dvbsnoop"
+PKG_VERSION="c1ec72f"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
+PKG_SITE="http://dvbsnoop.sourceforge.net/"
+PKG_URL="https://github.com/persianpros/dvbsnoop/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_LONGDESC="Small configuration file parser library for C"
+PKG_SECTION="tools"
+PKG_SHORTDESC="dvbsnoop is a DVB/MPEG stream analyzer program"
+PKG_LONGDESC="dvbsnoop is a DVB/MPEG stream analyzer program"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared"
+makeinstall_target() {
+  :
+}

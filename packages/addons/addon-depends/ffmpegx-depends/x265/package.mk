@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2016 Team LibreELEC
+#      Copyright (C) 2017-present Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,13 +16,18 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="libconfuse"
-PKG_VERSION="3.2"
-PKG_LICENSE="https://github.com/martinh/libconfuse/blob/master/LICENSE"
-PKG_SITE="https://github.com/martinh/libconfuse"
-PKG_URL="https://github.com/martinh/libconfuse/archive/v$PKG_VERSION.tar.gz"
+PKG_NAME="x265"
+PKG_VERSION="2.5"
+PKG_ARCH="x86_64"
+PKG_LICENSE="GPL"
+PKG_SITE="https://github.com/videolan/x265"
+PKG_URL="https://github.com/videolan/x265/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_LONGDESC="Small configuration file parser library for C"
-PKG_AUTORECONF="yes"
+PKG_SECTION="multimedia"
+PKG_LONGDESC="x265 is a H.265/HEVC video encoder application library"
+PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared"
+pre_configure_target() {
+  LDFLAGS="$LDFLAGS -ldl"
+  cmake -G "Unix Makefiles" ./source
+}

@@ -18,16 +18,17 @@
 
 PKG_NAME="libusbmuxd"
 PKG_VERSION="1.0.10"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://www.libimobiledevice.org"
 PKG_URL="http://www.libimobiledevice.org/downloads/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain libplist"
 PKG_SECTION="libs"
 PKG_SHORTDESC="USB Multiplex Daemon"
 PKG_LONGDESC="USB Multiplex Daemon"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            ac_cv_func_realloc_0_nonnull=yes \
                            --enable-static \
-                           --disable-shared \
-                           --with-pic"
+                           --disable-shared"

@@ -19,8 +19,10 @@
 PKG_NAME="efibootmgr"
 PKG_VERSION="95f7a63" # 0.8.0
 PKG_ARCH="x86_64"
+PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/vathpela/efibootmgr"
-PKG_GIT_URL="https://github.com/vathpela/efibootmgr-devel"
+PKG_URL="https://github.com/vathpela/efibootmgr-devel/archive/$PKG_VERSION.tar.gz"
+PKG_SOURCE_DIR="efibootmgr-devel-$PKG_VERSION*"
 PKG_DEPENDS_TARGET="toolchain efivar pciutils zlib"
 PKG_SECTION="tools"
 PKG_SHORTDESC="EFI Boot Manager"
