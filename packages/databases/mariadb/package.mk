@@ -17,12 +17,13 @@
 ################################################################################
 
 PKG_NAME="mariadb"
-PKG_VERSION="10.2.9"
+PKG_VERSION="10.2.10"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/MariaDB/server/releases"
-PKG_URL="https://ftp.heanet.ie/mirrors/mariadb/$PKG_NAME-$PKG_VERSION/source/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
+#PKG_URL="https://ftp.heanet.ie/mirrors/mariadb/$PKG_NAME-$PKG_VERSION/source/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST=""
 PKG_DEPENDS_TARGET="toolchain readline libaio openssl libxml2 mariadb:host"
 PKG_PRIORITY="optional"
@@ -185,5 +186,10 @@ post_makeinstall_target() {
     rm -rf $INSTALL/usr/bin
     rm -rf $INSTALL/usr/lib
     rm -rf $INSTALL/usr/share/mysql/*.sql
+    
+    rm $SYSROOT_PREFIX/usr/lib/libmariadb.so.3
+    rm $SYSROOT_PREFIX/usr/lib/libmariadb.so
+    rm $SYSROOT_PREFIX/usr/lib/libmysqlclient.so
+    rm $SYSROOT_PREFIX/usr/lib/libmysqlclient_r.so
   fi
 }
