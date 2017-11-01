@@ -17,11 +17,13 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="7.2.0"
-PKG_SHA256="1cf7adf8ff4b5aa49041c8734bbcf1ad18cc4c94d0029aae0f4e48841088479a"
+PKG_VERSION="7-20171026"
+PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/$PKG_VERSION/gcc-$PKG_VERSION.tar.xz"
+#PKG_VERSION="7.2.0"
+#PKG_SHA256="1cf7adf8ff4b5aa49041c8734bbcf1ad18cc4c94d0029aae0f4e48841088479a"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
+#PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host isl:host mpc:host"
 PKG_DEPENDS_TARGET="gcc:host"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host glibc"
@@ -46,17 +48,12 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-vtable-verify \
                            --with-ppl=no \
                            --with-cloog=no \
-                           --enable-cheaders=c_global \
                            --disable-libada \
-                           --disable-libmudflap \
-                           --disable-libatomic \
-                           --disable-libitm \
-                           --disable-libquadmath \
                            --disable-libmpx \
                            --disable-libssp \
+                           --disable-libsanitizer \
                            --without-cuda-driver \
                            --disable-werror \
-                           --disable-libsanitizer \
                            --with-system-zlib \
                            --with-tune=generic \
                            --enable-poison-system-directories"
@@ -66,6 +63,9 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-__cxa_atexit \
                               --enable-cloog-backend=isl \
                               --disable-libatomic \
+                              --disable-libmudflap \
+                              --disable-libitm \
+                              --disable-libquadmath \
                               --disable-shared \
                               --disable-threads \
                               --disable-libgomp \

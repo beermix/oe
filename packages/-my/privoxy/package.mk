@@ -4,13 +4,12 @@ PKG_URL="http://www.silvester.org.uk/privoxy/source/3.0.26%20%28stable%29/privox
 PKG_DEPENDS_TARGET="toolchain openssl zlib pcre"
 PKG_SECTION="security"
 PKG_SHORTDESC="Privoxy"
-PKG_LONGDESC=""
-
 PKG_AUTORECONF="yes"
 
 pre_configure_target() {
   cd $PKG_BUILD
   rm -rf .$TARGET_NAME
+  export LDFLAGS="-static"
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-ipv6-support \
@@ -56,5 +55,3 @@ makeinstall_target() {
   cp templates/* $INSTALL/storage/.config/privoxy/templates
   cd -
 }
-
-

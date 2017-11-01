@@ -1,6 +1,6 @@
 PKG_NAME="fio"
-PKG_VERSION="fio-3.1"
-PKG_URL="https://github.com/axboe/fio/archive/${PKG_VERSION}.tar.gz"
+PKG_VERSION="3.1"
+PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET=""
 PKG_SECTION="tools"
 PKG_AUTORECONF="no"

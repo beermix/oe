@@ -17,11 +17,14 @@
 ################################################################################
 
 PKG_NAME="glibc"
-PKG_VERSION="caa6857"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/bminor/glibc/tree/release/2.26/master"
+PKG_VERSION="glibc-2.26.9000"
+#PKG_SITE="https://github.com/bminor/glibc/tree/release/2.26/master"
 PKG_URL="https://github.com/bminor/glibc/archive/$PKG_VERSION.tar.gz"
+#PKG_VERSION="2.26"
+#PKG_SHA256="e54e0a934cd2bc94429be79da5e9385898d2306b9eaf3c92d5a77af96190f6bd"
+#PKG_URL="http://ftp.gnu.org/pub/gnu/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap"
 PKG_DEPENDS_INIT="glibc"
 PKG_SECTION="toolchain/devel"
@@ -112,7 +115,7 @@ pre_configure_target() {
   unset LD_LIBRARY_PATH
 
   # set some CFLAGS we need
-  export CFLAGS="$CFLAGS -g"
+  export CFLAGS="$CFLAGS -g -fno-stack-protector"
 
   export BUILD_CC=$HOST_CC
   export OBJDUMP_FOR_HOST=objdump

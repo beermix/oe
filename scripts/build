@@ -126,9 +126,7 @@ if [ ! -f $STAMP ]; then
                            --sysconfdir=/etc \
                            --libdir=/usr/lib \
                            --libexecdir=/usr/lib \
-                           --localstatedir=/var \
-                           --disable-static \
-                           --enable-shared"
+                           --localstatedir=/var"
 
     if [ "$DEBUG" = "yes" ]; then
       CMAKE_BUILD_TYPE="Debug"
@@ -171,9 +169,7 @@ if [ ! -f $STAMP ]; then
                          --sbindir=$TOOLCHAIN/sbin \
                          --sysconfdir=$TOOLCHAIN/etc \
                          --libexecdir=$TOOLCHAIN/lib \
-                         --localstatedir=$TOOLCHAIN/var \
-                         --disable-static \
-                         --enable-shared"
+                         --localstatedir=$TOOLCHAIN/var"
 
     HOST_CMAKE_OPTS="$CMAKE_GENERATOR \
                      -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \

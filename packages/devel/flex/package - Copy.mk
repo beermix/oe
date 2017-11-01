@@ -27,6 +27,7 @@ PKG_LONGDESC="flex is a tool for generating programs that perform pattern-matchi
 PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_HOST="ac_cv_path_M4=$TOOLCHAIN/bin/m4 \
+			    ac_cv_func_reallocarray=no \
 			    --disable-shared \
 			    --disable-rpath \
 			    --disable-doc"
