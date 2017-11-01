@@ -33,5 +33,5 @@ PKG_AUTORECONF="yes"
 # CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
 #}
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-ipv6 --with-kernel=$(kernel_path)"
+PKG_CONFIGURE_OPTS_TARGET="--disable-ipv6 --disable-static --with-kernel=$(kernel_path)"
 
