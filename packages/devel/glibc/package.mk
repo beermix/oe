@@ -17,14 +17,12 @@
 ################################################################################
 
 PKG_NAME="glibc"
+PKG_VERSION="2.26.9000"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_VERSION="glibc-2.26.9000"
-#PKG_SITE="https://github.com/bminor/glibc/tree/release/2.26/master"
-PKG_URL="https://github.com/bminor/glibc/archive/$PKG_VERSION.tar.gz"
-#PKG_VERSION="2.26"
-#PKG_SHA256="e54e0a934cd2bc94429be79da5e9385898d2306b9eaf3c92d5a77af96190f6bd"
-#PKG_URL="http://ftp.gnu.org/pub/gnu/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_SITE="https://github.com/bminor/glibc/tree/release/2.26/master"
+PKG_URL="https://github.com/bminor/glibc/archive/glibc-$PKG_VERSION.tar.gz"
+PKG_SOURCE_DIR="${PKG_NAME}-${PKG_NAME}-${PKG_VERSION}"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap"
 PKG_DEPENDS_INIT="glibc"
 PKG_SECTION="toolchain/devel"
@@ -85,7 +83,7 @@ pre_configure_target() {
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong -D_FORTIFY_SOURCE=2||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-ffast-math||g"`
-#  export CFLAGS=`echo $CFLAGS | sed -e "s|-fno-plt||g"`
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-fno-plt||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fno-caller-saves||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-Ofast|-O2|g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O2|g"`
@@ -105,12 +103,12 @@ pre_configure_target() {
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-O.|-O2|g"`
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-fstack-protector-strong||g"`
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
-#  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--sort-common,--as-needed,-z,relro||g"`
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--sort-common,--as-needed,-z,relro||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
 
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--as-needed||g"`
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed||"`
-#  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now||"`
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now||"`
 
   unset LD_LIBRARY_PATH
 
@@ -145,16 +143,8 @@ post_makeinstall_target() {
   ln -sf $(basename $INSTALL/usr/lib/ld-*.so) $INSTALL/usr/lib/ld.so
 
 # cleanup
-# remove any programs we don't want/need, keeping only those we want
-  for f in $(find $INSTALL/usr/bin -type f); do
-    fb="$(basename "${f}")"
-    for ib in $GLIBC_INCLUDE_BIN; do
-      if [ "${ib}" == "${fb}" ]; then
-        fb=
-        break
-      fi
-    done
-    [ -n "${fb}" ] && rm -rf ${f}
+  for i in $GLIBC_EXCLUDE_BIN; do
+    rm -rf $INSTALL/usr/bin/$i
   done
 
   rm -rf $INSTALL/usr/lib/audit
