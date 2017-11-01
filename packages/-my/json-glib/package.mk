@@ -4,6 +4,7 @@ PKG_URL="http://ftp.gnome.org/pub/GNOME/sources/json-glib/1.2/json-glib-$PKG_VER
 PKG_DEPENDS_TARGET="toolchain glib"
 PKG_SECTION="my"
 PKG_AUTORECONF="yes"
+PKG_USE_MESON="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared --with-pic"
 
