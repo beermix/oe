@@ -1,0 +1,1502 @@
+From 7e7b5de8ffc9ac8fda45b988cde5650004bdbca7 Mon Sep 17 00:00:00 2001
+From: "H.J. Lu" <hjl.tools@gmail.com>
+Date: Mon, 7 Aug 2017 08:19:59 -0700
+Subject: [PATCH] x86-64: Add FMA multiarch functions to libm
+
+This patch adds multiarch functions optimized with -mfma -mavx2 to libm.
+e_pow-fma.c is compiled with $(config-cflags-nofma) due to PR 19003.
+
+	* sysdeps/x86_64/fpu/multiarch/Makefile (libm-sysdep_routines):
+	Add e_exp-fma, e_log-fma, e_pow-fma, s_atan-fma, e_asin-fma,
+	e_atan2-fma, s_sin-fma, s_tan-fma, mplog-fma, mpa-fma,
+	slowexp-fma, slowpow-fma, sincos32-fma, doasin-fma, dosincos-fma,
+	halfulp-fma, mpexp-fma, mpatan2-fma, mpatan-fma, mpsqrt-fma,
+	and mptan-fma.
+	(CFLAGS-doasin-fma.c): New.
+	(CFLAGS-dosincos-fma.c): Likewise.
+	(CFLAGS-e_asin-fma.c): Likewise.
+	(CFLAGS-e_atan2-fma.c): Likewise.
+	(CFLAGS-e_exp-fma.c): Likewise.
+	(CFLAGS-e_log-fma.c): Likewise.
+	(CFLAGS-e_pow-fma.c): Likewise.
+	(CFLAGS-halfulp-fma.c): Likewise.
+	(CFLAGS-mpa-fma.c): Likewise.
+	(CFLAGS-mpatan-fma.c): Likewise.
+	(CFLAGS-mpatan2-fma.c): Likewise.
+	(CFLAGS-mpexp-fma.c): Likewise.
+	(CFLAGS-mplog-fma.c): Likewise.
+	(CFLAGS-mpsqrt-fma.c): Likewise.
+	(CFLAGS-mptan-fma.c): Likewise.
+	(CFLAGS-s_atan-fma.c): Likewise.
+	(CFLAGS-sincos32-fma.c): Likewise.
+	(CFLAGS-slowexp-fma.c): Likewise.
+	(CFLAGS-slowpow-fma.c): Likewise.
+	(CFLAGS-s_sin-fma.c): Likewise.
+	(CFLAGS-s_tan-fma.c): Likewise.
+	* sysdeps/x86_64/fpu/multiarch/doasin-fma.c: New file.
+	* sysdeps/x86_64/fpu/multiarch/dosincos-fma.c: Likewise.
+	* sysdeps/x86_64/fpu/multiarch/e_asin-fma.c: Likewise.
+	* sysdeps/x86_64/fpu/multiarch/e_atan2-fma.c: Likewise.
+	* sysdeps/x86_64/fpu/multiarch/e_exp-fma.c: Likewise.
+	* sysdeps/x86_64/fpu/multiarch/e_log-fma.c: Likewise.
+	* sysdeps/x86_64/fpu/multiarch/e_pow-fma.c: Likewise.
+	* sysdeps/x86_64/fpu/multiarch/halfulp-fma.c: Likewise.
+	* sysdeps/x86_64/fpu/multiarch/ifunc-avx-fma4.h: Likewise.
+	* sysdeps/x86_64/fpu/multiarch/ifunc-fma4.h: Likewise.
+	* sysdeps/x86_64/fpu/multiarch/mpa-fma.c: Likewise.
+	* sysdeps/x86_64/fpu/multiarch/mpatan-fma.c: Likewise.
+	* sysdeps/x86_64/fpu/multiarch/mpatan2-fma.c: Likewise.
+	* sysdeps/x86_64/fpu/multiarch/mpexp-fma.c: Likewise.
+	* sysdeps/x86_64/fpu/multiarch/mplog-fma.c: Likewise.
+	* sysdeps/x86_64/fpu/multiarch/mpsqrt-fma.c: Likewise.
+	* sysdeps/x86_64/fpu/multiarch/mptan-fma.c: Likewise.
+	* sysdeps/x86_64/fpu/multiarch/s_atan-fma.c: Likewise.
+	* sysdeps/x86_64/fpu/multiarch/s_sin-fma.c: Likewise.
+	* sysdeps/x86_64/fpu/multiarch/s_tan-fma.c: Likewise.
+	* sysdeps/x86_64/fpu/multiarch/sincos32-fma.c: Likewise.
+	* sysdeps/x86_64/fpu/multiarch/slowexp-fma.c: Likewise.
+	* sysdeps/x86_64/fpu/multiarch/slowpow-fma.c: Likewise.
+	* sysdeps/x86_64/fpu/multiarch/e_asin.c: Rewrite.
+	* sysdeps/x86_64/fpu/multiarch/e_atan2.c: Likewise.
+	* sysdeps/x86_64/fpu/multiarch/e_exp.c: Likewise.
+	* sysdeps/x86_64/fpu/multiarch/e_log.c: Likewise.
+	* sysdeps/x86_64/fpu/multiarch/e_pow.c: Likewise.
+	* sysdeps/x86_64/fpu/multiarch/s_atan.c: Likewise.
+	* sysdeps/x86_64/fpu/multiarch/s_sin.c: Likewise.
+	* sysdeps/x86_64/fpu/multiarch/s_tan.c: Likewise.
+
+(cherry picked from commit 57a72fa3502673754d14707da02c7c44e83b8d20)
+---
+ sysdeps/x86_64/fpu/multiarch/Makefile         | 29 ++++++++++++++
+ sysdeps/x86_64/fpu/multiarch/doasin-fma.c     |  4 ++
+ sysdeps/x86_64/fpu/multiarch/dosincos-fma.c   |  6 +++
+ sysdeps/x86_64/fpu/multiarch/e_asin-fma.c     | 11 ++++++
+ sysdeps/x86_64/fpu/multiarch/e_asin.c         | 54 +++++++++++++++++----------
+ sysdeps/x86_64/fpu/multiarch/e_atan2-fma.c    | 10 +++++
+ sysdeps/x86_64/fpu/multiarch/e_atan2.c        | 35 +++++++++++------
+ sysdeps/x86_64/fpu/multiarch/e_exp-fma.c      |  6 +++
+ sysdeps/x86_64/fpu/multiarch/e_exp.c          | 35 +++++++++++------
+ sysdeps/x86_64/fpu/multiarch/e_log-fma.c      |  8 ++++
+ sysdeps/x86_64/fpu/multiarch/e_log.c          | 35 +++++++++++------
+ sysdeps/x86_64/fpu/multiarch/e_pow-fma.c      |  6 +++
+ sysdeps/x86_64/fpu/multiarch/e_pow.c          | 34 +++++++++++------
+ sysdeps/x86_64/fpu/multiarch/halfulp-fma.c    |  4 ++
+ sysdeps/x86_64/fpu/multiarch/ifunc-avx-fma4.h | 43 +++++++++++++++++++++
+ sysdeps/x86_64/fpu/multiarch/ifunc-fma4.h     | 39 +++++++++++++++++++
+ sysdeps/x86_64/fpu/multiarch/mpa-fma.c        | 14 +++++++
+ sysdeps/x86_64/fpu/multiarch/mpatan-fma.c     | 10 +++++
+ sysdeps/x86_64/fpu/multiarch/mpatan2-fma.c    |  9 +++++
+ sysdeps/x86_64/fpu/multiarch/mpexp-fma.c      |  9 +++++
+ sysdeps/x86_64/fpu/multiarch/mplog-fma.c      |  8 ++++
+ sysdeps/x86_64/fpu/multiarch/mpsqrt-fma.c     |  8 ++++
+ sysdeps/x86_64/fpu/multiarch/mptan-fma.c      |  7 ++++
+ sysdeps/x86_64/fpu/multiarch/s_atan-fma.c     |  9 +++++
+ sysdeps/x86_64/fpu/multiarch/s_atan.c         | 30 ++++++++++-----
+ sysdeps/x86_64/fpu/multiarch/s_sin-fma.c      | 11 ++++++
+ sysdeps/x86_64/fpu/multiarch/s_sin.c          | 51 +++++++++++++++----------
+ sysdeps/x86_64/fpu/multiarch/s_tan-fma.c      |  8 ++++
+ sysdeps/x86_64/fpu/multiarch/s_tan.c          | 30 ++++++++++-----
+ sysdeps/x86_64/fpu/multiarch/sincos32-fma.c   | 15 ++++++++
+ sysdeps/x86_64/fpu/multiarch/slowexp-fma.c    |  9 +++++
+ sysdeps/x86_64/fpu/multiarch/slowpow-fma.c    | 11 ++++++
+ 32 files changed, 493 insertions(+), 105 deletions(-)
+ create mode 100644 sysdeps/x86_64/fpu/multiarch/doasin-fma.c
+ create mode 100644 sysdeps/x86_64/fpu/multiarch/dosincos-fma.c
+ create mode 100644 sysdeps/x86_64/fpu/multiarch/e_asin-fma.c
+ create mode 100644 sysdeps/x86_64/fpu/multiarch/e_atan2-fma.c
+ create mode 100644 sysdeps/x86_64/fpu/multiarch/e_exp-fma.c
+ create mode 100644 sysdeps/x86_64/fpu/multiarch/e_log-fma.c
+ create mode 100644 sysdeps/x86_64/fpu/multiarch/e_pow-fma.c
+ create mode 100644 sysdeps/x86_64/fpu/multiarch/halfulp-fma.c
+ create mode 100644 sysdeps/x86_64/fpu/multiarch/ifunc-avx-fma4.h
+ create mode 100644 sysdeps/x86_64/fpu/multiarch/ifunc-fma4.h
+ create mode 100644 sysdeps/x86_64/fpu/multiarch/mpa-fma.c
+ create mode 100644 sysdeps/x86_64/fpu/multiarch/mpatan-fma.c
+ create mode 100644 sysdeps/x86_64/fpu/multiarch/mpatan2-fma.c
+ create mode 100644 sysdeps/x86_64/fpu/multiarch/mpexp-fma.c
+ create mode 100644 sysdeps/x86_64/fpu/multiarch/mplog-fma.c
+ create mode 100644 sysdeps/x86_64/fpu/multiarch/mpsqrt-fma.c
+ create mode 100644 sysdeps/x86_64/fpu/multiarch/mptan-fma.c
+ create mode 100644 sysdeps/x86_64/fpu/multiarch/s_atan-fma.c
+ create mode 100644 sysdeps/x86_64/fpu/multiarch/s_sin-fma.c
+ create mode 100644 sysdeps/x86_64/fpu/multiarch/s_tan-fma.c
+ create mode 100644 sysdeps/x86_64/fpu/multiarch/sincos32-fma.c
+ create mode 100644 sysdeps/x86_64/fpu/multiarch/slowexp-fma.c
+ create mode 100644 sysdeps/x86_64/fpu/multiarch/slowpow-fma.c
+
+diff --git a/sysdeps/x86_64/fpu/multiarch/Makefile b/sysdeps/x86_64/fpu/multiarch/Makefile
+index 34542155aa..e9e4f7c745 100644
+--- a/sysdeps/x86_64/fpu/multiarch/Makefile
++++ b/sysdeps/x86_64/fpu/multiarch/Makefile
+@@ -2,6 +2,35 @@ ifeq ($(subdir),math)
+ libm-sysdep_routines += s_floor-c s_ceil-c s_floorf-c s_ceilf-c \
+ 			s_rint-c s_rintf-c s_nearbyint-c s_nearbyintf-c
+ 
++libm-sysdep_routines += e_exp-fma e_log-fma e_pow-fma s_atan-fma \
++			e_asin-fma e_atan2-fma s_sin-fma s_tan-fma \
++			mplog-fma mpa-fma slowexp-fma slowpow-fma \
++			sincos32-fma doasin-fma dosincos-fma \
++			halfulp-fma mpexp-fma \
++			mpatan2-fma mpatan-fma mpsqrt-fma mptan-fma
++
++CFLAGS-doasin-fma.c = -mfma -mavx2
++CFLAGS-dosincos-fma.c = -mfma -mavx2
++CFLAGS-e_asin-fma.c = -mfma -mavx2
++CFLAGS-e_atan2-fma.c = -mfma -mavx2
++CFLAGS-e_exp-fma.c = -mfma -mavx2
++CFLAGS-e_log-fma.c = -mfma -mavx2
++CFLAGS-e_pow-fma.c = -mfma -mavx2 $(config-cflags-nofma)
++CFLAGS-halfulp-fma.c = -mfma -mavx2
++CFLAGS-mpa-fma.c = -mfma -mavx2
++CFLAGS-mpatan-fma.c = -mfma -mavx2
++CFLAGS-mpatan2-fma.c = -mfma -mavx2
++CFLAGS-mpexp-fma.c = -mfma -mavx2
++CFLAGS-mplog-fma.c = -mfma -mavx2
++CFLAGS-mpsqrt-fma.c = -mfma -mavx2
++CFLAGS-mptan-fma.c = -mfma -mavx2
++CFLAGS-s_atan-fma.c = -mfma -mavx2
++CFLAGS-sincos32-fma.c = -mfma -mavx2
++CFLAGS-slowexp-fma.c = -mfma -mavx2
++CFLAGS-slowpow-fma.c = -mfma -mavx2
++CFLAGS-s_sin-fma.c = -mfma -mavx2
++CFLAGS-s_tan-fma.c = -mfma -mavx2
++
+ libm-sysdep_routines += e_exp-fma4 e_log-fma4 e_pow-fma4 s_atan-fma4 \
+ 			e_asin-fma4 e_atan2-fma4 s_sin-fma4 s_tan-fma4 \
+ 			mplog-fma4 mpa-fma4 slowexp-fma4 slowpow-fma4 \
+diff --git a/sysdeps/x86_64/fpu/multiarch/doasin-fma.c b/sysdeps/x86_64/fpu/multiarch/doasin-fma.c
+new file mode 100644
+index 0000000000..7a09865fca
+--- /dev/null
++++ b/sysdeps/x86_64/fpu/multiarch/doasin-fma.c
+@@ -0,0 +1,4 @@
++#define __doasin __doasin_fma
++#define SECTION __attribute__ ((section (".text.fma")))
++
++#include <sysdeps/ieee754/dbl-64/doasin.c>
+diff --git a/sysdeps/x86_64/fpu/multiarch/dosincos-fma.c b/sysdeps/x86_64/fpu/multiarch/dosincos-fma.c
+new file mode 100644
+index 0000000000..5744586bdb
+--- /dev/null
++++ b/sysdeps/x86_64/fpu/multiarch/dosincos-fma.c
+@@ -0,0 +1,6 @@
++#define __docos __docos_fma
++#define __dubcos __dubcos_fma
++#define __dubsin __dubsin_fma
++#define SECTION __attribute__ ((section (".text.fma")))
++
++#include <sysdeps/ieee754/dbl-64/dosincos.c>
+diff --git a/sysdeps/x86_64/fpu/multiarch/e_asin-fma.c b/sysdeps/x86_64/fpu/multiarch/e_asin-fma.c
+new file mode 100644
+index 0000000000..50e9c64247
+--- /dev/null
++++ b/sysdeps/x86_64/fpu/multiarch/e_asin-fma.c
+@@ -0,0 +1,11 @@
++#define __ieee754_acos __ieee754_acos_fma
++#define __ieee754_asin __ieee754_asin_fma
++#define __cos32 __cos32_fma
++#define __doasin __doasin_fma
++#define __docos __docos_fma
++#define __dubcos __dubcos_fma
++#define __dubsin __dubsin_fma
++#define __sin32 __sin32_fma
++#define SECTION __attribute__ ((section (".text.fma")))
++
++#include <sysdeps/ieee754/dbl-64/e_asin.c>
+diff --git a/sysdeps/x86_64/fpu/multiarch/e_asin.c b/sysdeps/x86_64/fpu/multiarch/e_asin.c
+index 111a5b99bd..37a44b2388 100644
+--- a/sysdeps/x86_64/fpu/multiarch/e_asin.c
++++ b/sysdeps/x86_64/fpu/multiarch/e_asin.c
+@@ -1,26 +1,40 @@
+-#include <init-arch.h>
+-#include <math.h>
+-#include <math_private.h>
+-
+-extern double __ieee754_acos_sse2 (double);
+-extern double __ieee754_asin_sse2 (double);
+-extern double __ieee754_acos_fma4 (double);
+-extern double __ieee754_asin_fma4 (double);
+-
+-libm_ifunc (__ieee754_acos,
+-	    HAS_ARCH_FEATURE (FMA4_Usable)
+-	    ? __ieee754_acos_fma4
+-	    : __ieee754_acos_sse2);
+-strong_alias (__ieee754_acos, __acos_finite)
++/* Multiple versions of IEEE 754 asin and acos.
++   Copyright (C) 2017 Free Software Foundation, Inc.
++   This file is part of the GNU C Library.
++
++   The GNU C Library is free software; you can redistribute it and/or
++   modify it under the terms of the GNU Lesser General Public
++   License as published by the Free Software Foundation; either
++   version 2.1 of the License, or (at your option) any later version.
++
++   The GNU C Library is distributed in the hope that it will be useful,
++   but WITHOUT ANY WARRANTY; without even the implied warranty of
++   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++   Lesser General Public License for more details.
++
++   You should have received a copy of the GNU Lesser General Public
++   License along with the GNU C Library; if not, see
++   <http://www.gnu.org/licenses/>.  */
++
++extern double __redirect_ieee754_asin (double);
++extern double __redirect_ieee754_acos (double);
++
++#define SYMBOL_NAME ieee754_asin
++#include "ifunc-fma4.h"
+ 
+-libm_ifunc (__ieee754_asin,
+-	    HAS_ARCH_FEATURE (FMA4_Usable)
+-	    ? __ieee754_asin_fma4
+-	    : __ieee754_asin_sse2);
++libc_ifunc_redirected (__redirect_ieee754_asin, __ieee754_asin,
++		       IFUNC_SELECTOR ());
+ strong_alias (__ieee754_asin, __asin_finite)
+ 
+-#define __ieee754_acos __ieee754_acos_sse2
+-#define __ieee754_asin __ieee754_asin_sse2
++#undef SYMBOL_NAME
++#define SYMBOL_NAME ieee754_acos
++#include "ifunc-fma4.h"
++
++libc_ifunc_redirected (__redirect_ieee754_acos, __ieee754_acos,
++		       IFUNC_SELECTOR ());
++strong_alias (__ieee754_acos, __acos_finite)
+ 
+ 
++#define __ieee754_acos __ieee754_acos_sse2
++#define __ieee754_asin __ieee754_asin_sse2
+ #include <sysdeps/ieee754/dbl-64/e_asin.c>
+diff --git a/sysdeps/x86_64/fpu/multiarch/e_atan2-fma.c b/sysdeps/x86_64/fpu/multiarch/e_atan2-fma.c
+new file mode 100644
+index 0000000000..caba686496
+--- /dev/null
++++ b/sysdeps/x86_64/fpu/multiarch/e_atan2-fma.c
+@@ -0,0 +1,10 @@
++#define __ieee754_atan2 __ieee754_atan2_fma
++#define __add __add_fma
++#define __dbl_mp __dbl_mp_fma
++#define __dvd __dvd_fma
++#define __mpatan2 __mpatan2_fma
++#define __mul __mul_fma
++#define __sub __sub_fma
++#define SECTION __attribute__ ((section (".text.fma")))
++
++#include <sysdeps/ieee754/dbl-64/e_atan2.c>
+diff --git a/sysdeps/x86_64/fpu/multiarch/e_atan2.c b/sysdeps/x86_64/fpu/multiarch/e_atan2.c
+index 9ca3c02a44..a2c8cfc159 100644
+--- a/sysdeps/x86_64/fpu/multiarch/e_atan2.c
++++ b/sysdeps/x86_64/fpu/multiarch/e_atan2.c
+@@ -1,18 +1,29 @@
+-#include <init-arch.h>
+-#include <math.h>
+-#include <math_private.h>
++/* Multiple versions of IEEE 754 atan.
++   Copyright (C) 2017 Free Software Foundation, Inc.
++   This file is part of the GNU C Library.
+ 
+-extern double __ieee754_atan2_sse2 (double, double);
+-extern double __ieee754_atan2_avx (double, double);
+-extern double __ieee754_atan2_fma4 (double, double);
++   The GNU C Library is free software; you can redistribute it and/or
++   modify it under the terms of the GNU Lesser General Public
++   License as published by the Free Software Foundation; either
++   version 2.1 of the License, or (at your option) any later version.
+ 
+-libm_ifunc (__ieee754_atan2,
+-	    HAS_ARCH_FEATURE (FMA4_Usable) ? __ieee754_atan2_fma4
+-	    : (HAS_ARCH_FEATURE (AVX_Usable)
+-	       ? __ieee754_atan2_avx : __ieee754_atan2_sse2));
+-strong_alias (__ieee754_atan2, __atan2_finite)
++   The GNU C Library is distributed in the hope that it will be useful,
++   but WITHOUT ANY WARRANTY; without even the implied warranty of
++   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++   Lesser General Public License for more details.
+ 
+-#define __ieee754_atan2 __ieee754_atan2_sse2
++   You should have received a copy of the GNU Lesser General Public
++   License along with the GNU C Library; if not, see
++   <http://www.gnu.org/licenses/>.  */
++
++extern double __redirect_ieee754_atan2 (double, double);
+ 
++#define SYMBOL_NAME ieee754_atan2
++#include "ifunc-avx-fma4.h"
+ 
++libc_ifunc_redirected (__redirect_ieee754_atan2,
++		       __ieee754_atan2, IFUNC_SELECTOR ());
++strong_alias (__ieee754_atan2, __atan2_finite)
++
++#define __ieee754_atan2 __ieee754_atan2_sse2
+ #include <sysdeps/ieee754/dbl-64/e_atan2.c>
+diff --git a/sysdeps/x86_64/fpu/multiarch/e_exp-fma.c b/sysdeps/x86_64/fpu/multiarch/e_exp-fma.c
+new file mode 100644
+index 0000000000..6e0fdb7941
+--- /dev/null
++++ b/sysdeps/x86_64/fpu/multiarch/e_exp-fma.c
+@@ -0,0 +1,6 @@
++#define __ieee754_exp __ieee754_exp_fma
++#define __exp1 __exp1_fma
++#define __slowexp __slowexp_fma
++#define SECTION __attribute__ ((section (".text.fma")))
++
++#include <sysdeps/ieee754/dbl-64/e_exp.c>
+diff --git a/sysdeps/x86_64/fpu/multiarch/e_exp.c b/sysdeps/x86_64/fpu/multiarch/e_exp.c
+index b7d7b5ff27..81211f4ace 100644
+--- a/sysdeps/x86_64/fpu/multiarch/e_exp.c
++++ b/sysdeps/x86_64/fpu/multiarch/e_exp.c
+@@ -1,18 +1,29 @@
+-#include <init-arch.h>
+-#include <math.h>
+-#include <math_private.h>
++/* Multiple versions of IEEE 754 exp.
++   Copyright (C) 2017 Free Software Foundation, Inc.
++   This file is part of the GNU C Library.
+ 
+-extern double __ieee754_exp_sse2 (double);
+-extern double __ieee754_exp_avx (double);
+-extern double __ieee754_exp_fma4 (double);
++   The GNU C Library is free software; you can redistribute it and/or
++   modify it under the terms of the GNU Lesser General Public
++   License as published by the Free Software Foundation; either
++   version 2.1 of the License, or (at your option) any later version.
+ 
+-libm_ifunc (__ieee754_exp,
+-	    HAS_ARCH_FEATURE (FMA4_Usable) ? __ieee754_exp_fma4
+-	    : (HAS_ARCH_FEATURE (AVX_Usable)
+-	       ? __ieee754_exp_avx : __ieee754_exp_sse2));
+-strong_alias (__ieee754_exp, __exp_finite)
++   The GNU C Library is distributed in the hope that it will be useful,
++   but WITHOUT ANY WARRANTY; without even the implied warranty of
++   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++   Lesser General Public License for more details.
+ 
+-#define __ieee754_exp __ieee754_exp_sse2
++   You should have received a copy of the GNU Lesser General Public
++   License along with the GNU C Library; if not, see
++   <http://www.gnu.org/licenses/>.  */
++
++extern double __redirect_ieee754_exp (double);
+ 
++#define SYMBOL_NAME ieee754_exp
++#include "ifunc-avx-fma4.h"
+ 
++libc_ifunc_redirected (__redirect_ieee754_exp, __ieee754_exp,
++		       IFUNC_SELECTOR ());
++strong_alias (__ieee754_exp, __exp_finite)
++
++#define __ieee754_exp __ieee754_exp_sse2
+ #include <sysdeps/ieee754/dbl-64/e_exp.c>
+diff --git a/sysdeps/x86_64/fpu/multiarch/e_log-fma.c b/sysdeps/x86_64/fpu/multiarch/e_log-fma.c
+new file mode 100644
+index 0000000000..a7123b1a06
+--- /dev/null
++++ b/sysdeps/x86_64/fpu/multiarch/e_log-fma.c
+@@ -0,0 +1,8 @@
++#define __ieee754_log __ieee754_log_fma
++#define __mplog __mplog_fma
++#define __add __add_fma
++#define __dbl_mp __dbl_mp_fma
++#define __sub __sub_fma
++#define SECTION __attribute__ ((section (".text.fma")))
++
++#include <sysdeps/ieee754/dbl-64/e_log.c>
+diff --git a/sysdeps/x86_64/fpu/multiarch/e_log.c b/sysdeps/x86_64/fpu/multiarch/e_log.c
+index cf9533d6c0..de1fbf1696 100644
+--- a/sysdeps/x86_64/fpu/multiarch/e_log.c
++++ b/sysdeps/x86_64/fpu/multiarch/e_log.c
+@@ -1,18 +1,29 @@
+-#include <init-arch.h>
+-#include <math.h>
+-#include <math_private.h>
++/* Multiple versions of IEEE 754 log.
++   Copyright (C) 2017 Free Software Foundation, Inc.
++   This file is part of the GNU C Library.
+ 
+-extern double __ieee754_log_sse2 (double);
+-extern double __ieee754_log_avx (double);
+-extern double __ieee754_log_fma4 (double);
++   The GNU C Library is free software; you can redistribute it and/or
++   modify it under the terms of the GNU Lesser General Public
++   License as published by the Free Software Foundation; either
++   version 2.1 of the License, or (at your option) any later version.
+ 
+-libm_ifunc (__ieee754_log,
+-	    HAS_ARCH_FEATURE (FMA4_Usable) ? __ieee754_log_fma4
+-	    : (HAS_ARCH_FEATURE (AVX_Usable)
+-	       ? __ieee754_log_avx : __ieee754_log_sse2));
+-strong_alias (__ieee754_log, __log_finite)
++   The GNU C Library is distributed in the hope that it will be useful,
++   but WITHOUT ANY WARRANTY; without even the implied warranty of
++   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++   Lesser General Public License for more details.
+ 
+-#define __ieee754_log __ieee754_log_sse2
++   You should have received a copy of the GNU Lesser General Public
++   License along with the GNU C Library; if not, see
++   <http://www.gnu.org/licenses/>.  */
++
++extern double __redirect_ieee754_log (double);
+ 
++#define SYMBOL_NAME ieee754_log
++#include "ifunc-avx-fma4.h"
+ 
++libc_ifunc_redirected (__redirect_ieee754_log, __ieee754_log,
++		       IFUNC_SELECTOR ());
++strong_alias (__ieee754_log, __log_finite)
++
++#define __ieee754_log __ieee754_log_sse2
+ #include <sysdeps/ieee754/dbl-64/e_log.c>
+diff --git a/sysdeps/x86_64/fpu/multiarch/e_pow-fma.c b/sysdeps/x86_64/fpu/multiarch/e_pow-fma.c
+new file mode 100644
+index 0000000000..6fd408342e
+--- /dev/null
++++ b/sysdeps/x86_64/fpu/multiarch/e_pow-fma.c
+@@ -0,0 +1,6 @@
++#define __ieee754_pow __ieee754_pow_fma
++#define __exp1 __exp1_fma
++#define __slowpow __slowpow_fma
++#define SECTION __attribute__ ((section (".text.fma")))
++
++#include <sysdeps/ieee754/dbl-64/e_pow.c>
+diff --git a/sysdeps/x86_64/fpu/multiarch/e_pow.c b/sysdeps/x86_64/fpu/multiarch/e_pow.c
+index a5c5d89c3e..07a7929d32 100644
+--- a/sysdeps/x86_64/fpu/multiarch/e_pow.c
++++ b/sysdeps/x86_64/fpu/multiarch/e_pow.c
+@@ -1,17 +1,29 @@
+-#include <init-arch.h>
+-#include <math.h>
+-#include <math_private.h>
++/* Multiple versions of IEEE 754 pow.
++   Copyright (C) 2017 Free Software Foundation, Inc.
++   This file is part of the GNU C Library.
+ 
+-extern double __ieee754_pow_sse2 (double, double);
+-extern double __ieee754_pow_fma4 (double, double);
++   The GNU C Library is free software; you can redistribute it and/or
++   modify it under the terms of the GNU Lesser General Public
++   License as published by the Free Software Foundation; either
++   version 2.1 of the License, or (at your option) any later version.
+ 
+-libm_ifunc (__ieee754_pow,
+-	    HAS_ARCH_FEATURE (FMA4_Usable)
+-	    ? __ieee754_pow_fma4
+-	    : __ieee754_pow_sse2);
+-strong_alias (__ieee754_pow, __pow_finite)
++   The GNU C Library is distributed in the hope that it will be useful,
++   but WITHOUT ANY WARRANTY; without even the implied warranty of
++   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++   Lesser General Public License for more details.
+ 
+-#define __ieee754_pow __ieee754_pow_sse2
++   You should have received a copy of the GNU Lesser General Public
++   License along with the GNU C Library; if not, see
++   <http://www.gnu.org/licenses/>.  */
++
++extern double __redirect_ieee754_pow (double, double);
+ 
++#define SYMBOL_NAME ieee754_pow
++#include "ifunc-fma4.h"
+ 
++libc_ifunc_redirected (__redirect_ieee754_pow,
++		       __ieee754_pow, IFUNC_SELECTOR ());
++strong_alias (__ieee754_pow, __pow_finite)
++
++#define __ieee754_pow __ieee754_pow_sse2
+ #include <sysdeps/ieee754/dbl-64/e_pow.c>
+diff --git a/sysdeps/x86_64/fpu/multiarch/halfulp-fma.c b/sysdeps/x86_64/fpu/multiarch/halfulp-fma.c
+new file mode 100644
+index 0000000000..6ca70462ca
+--- /dev/null
++++ b/sysdeps/x86_64/fpu/multiarch/halfulp-fma.c
+@@ -0,0 +1,4 @@
++#define __halfulp __halfulp_fma
++#define SECTION __attribute__ ((section (".text.fma")))
++
++#include <sysdeps/ieee754/dbl-64/halfulp.c>
+diff --git a/sysdeps/x86_64/fpu/multiarch/ifunc-avx-fma4.h b/sysdeps/x86_64/fpu/multiarch/ifunc-avx-fma4.h
+new file mode 100644
+index 0000000000..2277c0a725
+--- /dev/null
++++ b/sysdeps/x86_64/fpu/multiarch/ifunc-avx-fma4.h
+@@ -0,0 +1,43 @@
++/* Common definition for ifunc selections optimized with AVX, AVX2/FMA
++   and FMA4.
++   Copyright (C) 2017 Free Software Foundation, Inc.
++   This file is part of the GNU C Library.
++
++   The GNU C Library is free software; you can redistribute it and/or
++   modify it under the terms of the GNU Lesser General Public
++   License as published by the Free Software Foundation; either
++   version 2.1 of the License, or (at your option) any later version.
++
++   The GNU C Library is distributed in the hope that it will be useful,
++   but WITHOUT ANY WARRANTY; without even the implied warranty of
++   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++   Lesser General Public License for more details.
++
++   You should have received a copy of the GNU Lesser General Public
++   License along with the GNU C Library; if not, see
++   <http://www.gnu.org/licenses/>.  */
++
++#include <init-arch.h>
++
++extern __typeof (REDIRECT_NAME) OPTIMIZE (sse2) attribute_hidden;
++extern __typeof (REDIRECT_NAME) OPTIMIZE (avx) attribute_hidden;
++extern __typeof (REDIRECT_NAME) OPTIMIZE (fma) attribute_hidden;
++extern __typeof (REDIRECT_NAME) OPTIMIZE (fma4) attribute_hidden;
++
++static inline void *
++IFUNC_SELECTOR (void)
++{
++  const struct cpu_features* cpu_features = __get_cpu_features ();
++
++  if (CPU_FEATURES_ARCH_P (cpu_features, FMA_Usable)
++      && CPU_FEATURES_ARCH_P (cpu_features, AVX2_Usable))
++    return OPTIMIZE (fma);
++
++  if (CPU_FEATURES_ARCH_P (cpu_features, FMA4_Usable))
++    return OPTIMIZE (fma4);
++
++  if (CPU_FEATURES_ARCH_P (cpu_features, AVX_Usable))
++    return OPTIMIZE (avx);
++
++  return OPTIMIZE (sse2);
++}
+diff --git a/sysdeps/x86_64/fpu/multiarch/ifunc-fma4.h b/sysdeps/x86_64/fpu/multiarch/ifunc-fma4.h
+new file mode 100644
+index 0000000000..5928984e54
+--- /dev/null
++++ b/sysdeps/x86_64/fpu/multiarch/ifunc-fma4.h
+@@ -0,0 +1,39 @@
++/* Common definition for ifunc selections optimized with AVX2/FMA and
++   FMA4.
++   Copyright (C) 2017 Free Software Foundation, Inc.
++   This file is part of the GNU C Library.
++
++   The GNU C Library is free software; you can redistribute it and/or
++   modify it under the terms of the GNU Lesser General Public
++   License as published by the Free Software Foundation; either
++   version 2.1 of the License, or (at your option) any later version.
++
++   The GNU C Library is distributed in the hope that it will be useful,
++   but WITHOUT ANY WARRANTY; without even the implied warranty of
++   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++   Lesser General Public License for more details.
++
++   You should have received a copy of the GNU Lesser General Public
++   License along with the GNU C Library; if not, see
++   <http://www.gnu.org/licenses/>.  */
++
++#include <init-arch.h>
++
++extern __typeof (REDIRECT_NAME) OPTIMIZE (sse2) attribute_hidden;
++extern __typeof (REDIRECT_NAME) OPTIMIZE (fma) attribute_hidden;
++extern __typeof (REDIRECT_NAME) OPTIMIZE (fma4) attribute_hidden;
++
++static inline void *
++IFUNC_SELECTOR (void)
++{
++  const struct cpu_features* cpu_features = __get_cpu_features ();
++
++  if (CPU_FEATURES_ARCH_P (cpu_features, FMA_Usable)
++      && CPU_FEATURES_ARCH_P (cpu_features, AVX2_Usable))
++    return OPTIMIZE (fma);
++
++  if (CPU_FEATURES_ARCH_P (cpu_features, FMA4_Usable))
++    return OPTIMIZE (fma4);
++
++  return OPTIMIZE (sse2);
++}
+diff --git a/sysdeps/x86_64/fpu/multiarch/mpa-fma.c b/sysdeps/x86_64/fpu/multiarch/mpa-fma.c
+new file mode 100644
+index 0000000000..177cc2517f
+--- /dev/null
++++ b/sysdeps/x86_64/fpu/multiarch/mpa-fma.c
+@@ -0,0 +1,14 @@
++#define __add __add_fma
++#define __mul __mul_fma
++#define __sqr __sqr_fma
++#define __sub __sub_fma
++#define __dbl_mp __dbl_mp_fma
++#define __dvd __dvd_fma
++
++#define NO___CPY 1
++#define NO___MP_DBL 1
++#define NO___ACR 1
++#define NO__CONST 1
++#define SECTION __attribute__ ((section (".text.fma")))
++
++#include <sysdeps/ieee754/dbl-64/mpa.c>
+diff --git a/sysdeps/x86_64/fpu/multiarch/mpatan-fma.c b/sysdeps/x86_64/fpu/multiarch/mpatan-fma.c
+new file mode 100644
+index 0000000000..d216f9142d
+--- /dev/null
++++ b/sysdeps/x86_64/fpu/multiarch/mpatan-fma.c
+@@ -0,0 +1,10 @@
++#define __mpatan __mpatan_fma
++#define __add __add_fma
++#define __dvd __dvd_fma
++#define __mpsqrt __mpsqrt_fma
++#define __mul __mul_fma
++#define __sub __sub_fma
++#define AVOID_MPATAN_H 1
++#define SECTION __attribute__ ((section (".text.fma")))
++
++#include <sysdeps/ieee754/dbl-64/mpatan.c>
+diff --git a/sysdeps/x86_64/fpu/multiarch/mpatan2-fma.c b/sysdeps/x86_64/fpu/multiarch/mpatan2-fma.c
+new file mode 100644
+index 0000000000..98df336f79
+--- /dev/null
++++ b/sysdeps/x86_64/fpu/multiarch/mpatan2-fma.c
+@@ -0,0 +1,9 @@
++#define __mpatan2 __mpatan2_fma
++#define __add __add_fma
++#define __dvd __dvd_fma
++#define __mpatan __mpatan_fma
++#define __mpsqrt __mpsqrt_fma
++#define __mul __mul_fma
++#define SECTION __attribute__ ((section (".text.fma")))
++
++#include <sysdeps/ieee754/dbl-64/mpatan2.c>
+diff --git a/sysdeps/x86_64/fpu/multiarch/mpexp-fma.c b/sysdeps/x86_64/fpu/multiarch/mpexp-fma.c
+new file mode 100644
+index 0000000000..637631ba06
+--- /dev/null
++++ b/sysdeps/x86_64/fpu/multiarch/mpexp-fma.c
+@@ -0,0 +1,9 @@
++#define __mpexp __mpexp_fma
++#define __add __add_fma
++#define __dbl_mp __dbl_mp_fma
++#define __dvd __dvd_fma
++#define __mul __mul_fma
++#define AVOID_MPEXP_H 1
++#define SECTION __attribute__ ((section (".text.fma")))
++
++#include <sysdeps/ieee754/dbl-64/mpexp.c>
+diff --git a/sysdeps/x86_64/fpu/multiarch/mplog-fma.c b/sysdeps/x86_64/fpu/multiarch/mplog-fma.c
+new file mode 100644
+index 0000000000..645b6b7c57
+--- /dev/null
++++ b/sysdeps/x86_64/fpu/multiarch/mplog-fma.c
+@@ -0,0 +1,8 @@
++#define __mplog __mplog_fma
++#define __add __add_fma
++#define __mpexp __mpexp_fma
++#define __mul __mul_fma
++#define __sub __sub_fma
++#define SECTION __attribute__ ((section (".text.fma")))
++
++#include <sysdeps/ieee754/dbl-64/mplog.c>
+diff --git a/sysdeps/x86_64/fpu/multiarch/mpsqrt-fma.c b/sysdeps/x86_64/fpu/multiarch/mpsqrt-fma.c
+new file mode 100644
+index 0000000000..44d7a23ae3
+--- /dev/null
++++ b/sysdeps/x86_64/fpu/multiarch/mpsqrt-fma.c
+@@ -0,0 +1,8 @@
++#define __mpsqrt __mpsqrt_fma
++#define __dbl_mp __dbl_mp_fma
++#define __mul __mul_fma
++#define __sub __sub_fma
++#define AVOID_MPSQRT_H 1
++#define SECTION __attribute__ ((section (".text.fma")))
++
++#include <sysdeps/ieee754/dbl-64/mpsqrt.c>
+diff --git a/sysdeps/x86_64/fpu/multiarch/mptan-fma.c b/sysdeps/x86_64/fpu/multiarch/mptan-fma.c
+new file mode 100644
+index 0000000000..d1a691413c
+--- /dev/null
++++ b/sysdeps/x86_64/fpu/multiarch/mptan-fma.c
+@@ -0,0 +1,7 @@
++#define __mptan __mptan_fma
++#define __c32 __c32_fma
++#define __dvd __dvd_fma
++#define __mpranred __mpranred_fma
++#define SECTION __attribute__ ((section (".text.fma")))
++
++#include <sysdeps/ieee754/dbl-64/mptan.c>
+diff --git a/sysdeps/x86_64/fpu/multiarch/s_atan-fma.c b/sysdeps/x86_64/fpu/multiarch/s_atan-fma.c
+new file mode 100644
+index 0000000000..bedb3f2053
+--- /dev/null
++++ b/sysdeps/x86_64/fpu/multiarch/s_atan-fma.c
+@@ -0,0 +1,9 @@
++#define atan __atan_fma
++#define __add __add_fma
++#define __dbl_mp __dbl_mp_fma
++#define __mpatan __mpatan_fma
++#define __mul __mul_fma
++#define __sub __sub_fma
++#define SECTION __attribute__ ((section (".text.fma")))
++
++#include <sysdeps/ieee754/dbl-64/s_atan.c>
+diff --git a/sysdeps/x86_64/fpu/multiarch/s_atan.c b/sysdeps/x86_64/fpu/multiarch/s_atan.c
+index 742e95cb96..f81919cbbe 100644
+--- a/sysdeps/x86_64/fpu/multiarch/s_atan.c
++++ b/sysdeps/x86_64/fpu/multiarch/s_atan.c
+@@ -1,15 +1,27 @@
+-#include <init-arch.h>
+-#include <math.h>
++/* Multiple versions of atan.
++   Copyright (C) 2017 Free Software Foundation, Inc.
++   This file is part of the GNU C Library.
+ 
+-extern double __atan_sse2 (double);
+-extern double __atan_avx (double);
+-extern double __atan_fma4 (double);
++   The GNU C Library is free software; you can redistribute it and/or
++   modify it under the terms of the GNU Lesser General Public
++   License as published by the Free Software Foundation; either
++   version 2.1 of the License, or (at your option) any later version.
+ 
+-libm_ifunc (atan, (HAS_ARCH_FEATURE (FMA4_Usable) ? __atan_fma4 :
+-		   HAS_ARCH_FEATURE (AVX_Usable)
+-		   ? __atan_avx : __atan_sse2));
++   The GNU C Library is distributed in the hope that it will be useful,
++   but WITHOUT ANY WARRANTY; without even the implied warranty of
++   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++   Lesser General Public License for more details.
+ 
+-#define atan __atan_sse2
++   You should have received a copy of the GNU Lesser General Public
++   License along with the GNU C Library; if not, see
++   <http://www.gnu.org/licenses/>.  */
++
++extern double __redirect_atan (double);
+ 
++#define SYMBOL_NAME atan
++#include "ifunc-avx-fma4.h"
+ 
++libc_ifunc_redirected (__redirect_atan, atan, IFUNC_SELECTOR ());
++
++#define atan __atan_sse2
+ #include <sysdeps/ieee754/dbl-64/s_atan.c>
+diff --git a/sysdeps/x86_64/fpu/multiarch/s_sin-fma.c b/sysdeps/x86_64/fpu/multiarch/s_sin-fma.c
+new file mode 100644
+index 0000000000..15f3c394d5
+--- /dev/null
++++ b/sysdeps/x86_64/fpu/multiarch/s_sin-fma.c
+@@ -0,0 +1,11 @@
++#define __cos __cos_fma
++#define __sin __sin_fma
++#define __docos __docos_fma
++#define __dubsin __dubsin_fma
++#define __mpcos __mpcos_fma
++#define __mpcos1 __mpcos1_fma
++#define __mpsin __mpsin_fma
++#define __mpsin1 __mpsin1_fma
++#define SECTION __attribute__ ((section (".text.fma")))
++
++#include <sysdeps/ieee754/dbl-64/s_sin.c>
+diff --git a/sysdeps/x86_64/fpu/multiarch/s_sin.c b/sysdeps/x86_64/fpu/multiarch/s_sin.c
+index 8ffd3e7125..eafc06374f 100644
+--- a/sysdeps/x86_64/fpu/multiarch/s_sin.c
++++ b/sysdeps/x86_64/fpu/multiarch/s_sin.c
+@@ -1,26 +1,37 @@
+-#include <init-arch.h>
+-#include <math.h>
+-#undef NAN
+-
+-extern double __cos_sse2 (double);
+-extern double __sin_sse2 (double);
+-extern double __cos_avx (double);
+-extern double __sin_avx (double);
+-extern double __cos_fma4 (double);
+-extern double __sin_fma4 (double);
+-
+-libm_ifunc (__cos, (HAS_ARCH_FEATURE (FMA4_Usable) ? __cos_fma4 :
+-		    HAS_ARCH_FEATURE (AVX_Usable)
+-		    ? __cos_avx : __cos_sse2));
+-weak_alias (__cos, cos)
++/* Multiple versions of sin and cos.
++   Copyright (C) 2017 Free Software Foundation, Inc.
++   This file is part of the GNU C Library.
++
++   The GNU C Library is free software; you can redistribute it and/or
++   modify it under the terms of the GNU Lesser General Public
++   License as published by the Free Software Foundation; either
++   version 2.1 of the License, or (at your option) any later version.
++
++   The GNU C Library is distributed in the hope that it will be useful,
++   but WITHOUT ANY WARRANTY; without even the implied warranty of
++   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++   Lesser Genera ð’ml Public License for more details.
++
++   You should have received a copy of the GNU Lesser General Public
++   License along with the GNU C Library; if not, see
++   <http://www.gnu.org/licenses/>.  */
++
++extern double __redirect_sin (double);
++extern double __redirect_cos (double);
++
++#define SYMBOL_NAME sin
++#include "ifunc-avx-fma4.h"
+ 
+-libm_ifunc (__sin, (HAS_ARCH_FEATURE (FMA4_Usable) ? __sin_fma4 :
+-		    HAS_ARCH_FEATURE (AVX_Usable)
+-		    ? __sin_avx : __sin_sse2));
++libc_ifunc_redirected (__redirect_sin, __sin, IFUNC_SELECTOR ());
+ weak_alias (__sin, sin)
+ 
+-#define __cos __cos_sse2
+-#define __sin __sin_sse2
++#undef SYMBOL_NAME
++#define SYMBOL_NAME cos
++#include "ifunc-avx-fma4.h"
+ 
++libc_ifunc_redirected (__redirect_cos, __cos, IFUNC_SELECTOR ());
++weak_alias (__cos, cos)
+ 
++#define __cos __cos_sse2
++#define __sin __sin_sse2
+ #include <sysdeps/ieee754/dbl-64/s_sin.c>
+diff --git a/sysdeps/x86_64/fpu/multiarch/s_tan-fma.c b/sysdeps/x86_64/fpu/multiarch/s_tan-fma.c
+new file mode 100644
+index 0000000000..c85f8bceed
+--- /dev/null
++++ b/sysdeps/x86_64/fpu/multiarch/s_tan-fma.c
+@@ -0,0 +1,8 @@
++#define tan __tan_fma
++#define __dbl_mp __dbl_mp_fma
++#define __mpranred __mpranred_fma
++#define __mptan __mptan_fma
++#define __sub __sub_fma
++#define SECTION __attribute__ ((section (".text.fma")))
++
++#include <sysdeps/ieee754/dbl-64/s_tan.c>
+diff --git a/sysdeps/x86_64/fpu/multiarch/s_tan.c b/sysdeps/x86_64/fpu/multiarch/s_tan.c
+index 25f3bca07e..96a73811f3 100644
+--- a/sysdeps/x86_64/fpu/multiarch/s_tan.c
++++ b/sysdeps/x86_64/fpu/multiarch/s_tan.c
+@@ -1,15 +1,27 @@
+-#include <init-arch.h>
+-#include <math.h>
++/* Multiple versions of tan.
++   Copyright (C) 2017 Free Software Foundation, Inc.
++   This file is part of the GNU C Library.
+ 
+-extern double __tan_sse2 (double);
+-extern double __tan_avx (double);
+-extern double __tan_fma4 (double);
++   The GNU C Library is free software; you can redistribute it and/or
++   modify it under the terms of the GNU Lesser General Public
++   License as published by the Free Software Foundation; either
++   version 2.1 of the License, or (at your option) any later version.
+ 
+-libm_ifunc (tan, (HAS_ARCH_FEATURE (FMA4_Usable) ? __tan_fma4 :
+-		  HAS_ARCH_FEATURE (AVX_Usable)
+-		  ? __tan_avx : __tan_sse2));
++   The GNU C Library is distributed in the hope that it will be useful,
++   but WITHOUT ANY WARRANTY; without even the implied warranty of
++   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++   Lesser General Public License for more details.
+ 
+-#define tan __tan_sse2
++   You should have received a copy of the GNU Lesser General Public
++   License along with the GNU C Library; if not, see
++   <http://www.gnu.org/licenses/>.  */
++
++extern double __redirect_tan (double);
+ 
++#define SYMBOL_NAME tan
++#include "ifunc-avx-fma4.h"
+ 
++libc_ifunc_redirected (__redirect_tan, tan, IFUNC_SELECTOR ());
++
++#define tan __tan_sse2
+ #include <sysdeps/ieee754/dbl-64/s_tan.c>
+diff --git a/sysdeps/x86_64/fpu/multiarch/sincos32-fma.c b/sysdeps/x86_64/fpu/multiarch/sincos32-fma.c
+new file mode 100644
+index 0000000000..dcd44bc5e8
+--- /dev/null
++++ b/sysdeps/x86_64/fpu/multiarch/sincos32-fma.c
+@@ -0,0 +1,15 @@
++#define __cos32 __cos32_fma
++#define __sin32 __sin32_fma
++#define __c32 __c32_fma
++#define __mpsin __mpsin_fma
++#define __mpsin1 __mpsin1_fma
++#define __mpcos __mpcos_fma
++#define __mpcos1 __mpcos1_fma
++#define __mpranred __mpranred_fma
++#define __add __add_fma
++#define __dbl_mp __dbl_mp_fma
++#define __mul __mul_fma
++#define __sub __sub_fma
++#define SECTION __attribute__ ((section (".text.fma")))
++
++#include <sysdeps/ieee754/dbl-64/sincos32.c>
+diff --git a/sysdeps/x86_64/fpu/multiarch/slowexp-fma.c b/sysdeps/x86_64/fpu/multiarch/slowexp-fma.c
+new file mode 100644
+index 0000000000..6fffca1a93
+--- /dev/null
++++ b/sysdeps/x86_64/fpu/multiarch/slowexp-fma.c
+@@ -0,0 +1,9 @@
++#define __slowexp __slowexp_fma
++#define __add __add_fma
++#define __dbl_mp __dbl_mp_fma
++#define __mpexp __mpexp_fma
++#define __mul __mul_fma
++#define __sub __sub_fma
++#define SECTION __attribute__ ((section (".text.fma")))
++
++#include <sysdeps/ieee754/dbl-64/slowexp.c>
+diff --git a/sysdeps/x86_64/fpu/multiarch/slowpow-fma.c b/sysdeps/x86_64/fpu/multiarch/slowpow-fma.c
+new file mode 100644
+index 0000000000..160ed683ab
+--- /dev/null
++++ b/sysdeps/x86_64/fpu/multiarch/slowpow-fma.c
+@@ -0,0 +1,11 @@
++#define __slowpow __slowpow_fma
++#define __add __add_fma
++#define __dbl_mp __dbl_mp_fma
++#define __mpexp __mpexp_fma
++#define __mplog __mplog_fma
++#define __mul __mul_fma
++#define __sub __sub_fma
++#define __halfulp __halfulp_fma
++#define SECTION __attribute__ ((section (".text.fma")))
++
++#include <sysdeps/ieee754/dbl-64/slowpow.c>
+-- 
+2.1From 02e4202afc6f9d7a2e68e916b231ae7295c75263 Mon Sep 17 00:00:00 2001
+From: "H.J. Lu" <hjl.tools@gmail.com>
+Date: Tue, 15 Aug 2017 08:45:34 -0700
+Subject: [PATCH] x86-64: Optimize e_expf with FMA [BZ #21912]
+
+	[BZ #21912]
+	* sysdeps/x86_64/fpu/multiarch/e_expf-fma.S: New file.
+	* sysdeps/x86_64/fpu/multiarch/e_expf-sse2.S: Likewise.
+	* sysdeps/x86_64/fpu/multiarch/e_expf.c: Likewise.
+	* sysdeps/x86_64/fpu/multiarch/ifunc-fma.h: Likewise.
+---
+ sysdeps/x86_64/fpu/multiarch/Makefile      |   4 +
+ sysdeps/x86_64/fpu/multiarch/e_expf-fma.S  | 325 +++++++++++++++++++++++++++++
+ sysdeps/x86_64/fpu/multiarch/e_expf-sse2.S |  24 +++
+ sysdeps/x86_64/fpu/multiarch/e_expf.c      |  26 +++
+ sysdeps/x86_64/fpu/multiarch/ifunc-fma.h   |  34 +++
+ 5 files changed, 413 insertions(+)
+ create mode 100644 sysdeps/x86_64/fpu/multiarch/e_expf-fma.S
+ create mode 100644 sysdeps/x86_64/fpu/multiarch/e_expf-sse2.S
+ create mode 100644 sysdeps/x86_64/fpu/multiarch/e_expf.c
+ create mode 100644 sysdeps/x86_64/fpu/multiarch/ifunc-fma.h
+
+diff --git a/sysdeps/x86_64/fpu/multiarch/Makefile b/sysdeps/x86_64/fpu/multiarch/Makefile
+index e9e4f7c745..379215efa1 100644
+--- a/sysdeps/x86_64/fpu/multiarch/Makefile
++++ b/sysdeps/x86_64/fpu/multiarch/Makefile
+@@ -31,6 +31,10 @@ CFLAGS-slowpow-fma.c = -mfma -mavx2
+ CFLAGS-s_sin-fma.c = -mfma -mavx2
+ CFLAGS-s_tan-fma.c = -mfma -mavx2
+ 
++libm-sysdep_routines += e_expf-sse2 e_expf-fma
++
++CFLAGS-e_expf-fma.c = -mfma -mavx2
++
+ libm-sysdep_routines += e_exp-fma4 e_log-fma4 e_pow-fma4 s_atan-fma4 \
+ 			e_asin-fma4 e_atan2-fma4 s_sin-fma4 s_tan-fma4 \
+ 			mplog-fma4 mpa-fma4 slowexp-fma4 slowpow-fma4 \
+diff --git a/sysdeps/x86_64/fpu/multiarch/e_expf-fma.S b/sysdeps/x86_64/fpu/multiarch/e_expf-fma.S
+new file mode 100644
+index 0000000000..b27287c419
+--- /dev/null
++++ b/sysdeps/x86_64/fpu/multiarch/e_expf-fma.S
+@@ -0,0 +1,325 @@
++/* FMA/AVX2 version of IEEE 754 expf.
++   Copyright (C) 2017 Free Software Foundation, Inc.
++   This file is part of the GNU C Library.
++
++   The GNU C Library is free software; you can redistribute it and/or
++   modify it under the terms of the GNU Lesser General Public
++   License as published by the Free Software Foundation; either
++   version 2.1 of the License, or (at your option) any later version.
++
++   The GNU C Library is distributed in the hope that it will be useful,
++   but WITHOUT ANY WARRANTY; without even the implied warranty of
++   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++   Lesser General Public License for more details.
++
++   You should have received a copy of the GNU Lesser General Public
++   License along with the GNU C Library; if not, see
++   <http://www.gnu.org/licenses/>.  */
++
++#include <sysdep.h>
++
++/* Short algorithm description:
++ *
++ *  Let K = 64 (table size).
++ *       e^x  = 2^(x/log(2)) = 2^n * T[j] * (1 + P(y))
++ *  where
++ *       x = m*log(2)/K + y,    y in [0.0..log(2)/K]
++ *       m = n*K + j,           m,n,j - signed integer, j in [0..K-1]
++ *       values of 2^(j/K) are tabulated as T[j].
++ *
++ *       P(y) is a minimax polynomial approximation of expf(x)-1
++ *       on small interval [0.0..log(2)/K].
++ *
++ *       P(y) = P3*y*y*y*y + P2*y*y*y + P1*y*y + P0*y, calculated as
++ *       z = y*y;    P(y) = (P3*z + P1)*z + (P2*z + P0)*y
++ *
++ * Special cases:
++ *  expf(NaN) = NaN
++ *  expf(+INF) = +INF
++ *  expf(-INF) = 0
++ *  expf(x) = 1 for subnormals
++ *  for finite argument, only expf(0)=1 is exact
++ *  expf(x) overflows if x>88.7228317260742190
++ *  expf(x) underflows if x<-103.972076416015620
++ */
++
++	.section .text.fma,"ax",@progbits
++ENTRY(__ieee754_expf_fma)
++	/* Input: single precision x in %xmm0 */
++	vcvtss2sd %xmm0, %xmm0, %xmm1	/* Convert x to double precision */
++	vmovd	%xmm0, %ecx		/* Copy x */
++	vmovsd	L(DP_KLN2)(%rip), %xmm2	/* DP K/log(2) */
++	vfmadd213sd L(DP_RD)(%rip), %xmm1, %xmm2 /* DP x*K/log(2)+RD */
++	vmovsd	L(DP_P2)(%rip), %xmm3	/* DP P2 */
++	movl	%ecx, %eax		/* x */
++	andl	$0x7fffffff, %ecx	/* |x| */
++	lea	L(DP_T)(%rip), %rsi	/* address of table T[j] */
++	vmovsd	L(DP_P3)(%rip), %xmm4	/* DP P3 */
++
++	cmpl	$0x42ad496b, %ecx	/* |x|<125*log(2) ? */
++	jae	L(special_paths)
++
++	/* Here if |x|<125*log(2) */
++	cmpl	$0x31800000, %ecx	/* |x|<2^(-28) ? */
++	jb	L(small_arg)
++
++	/* Main path: here if 2^(-28)<=|x|<125*log(2) */
++						/* %xmm2 = SP x*K/log(2)+RS */
++	vmovd	  %xmm2, %eax
++	vsubsd	  L(DP_RD)(%rip), %xmm2, %xmm2 	/* DP t=round(x*K/log(2)) */
++	movl	  %eax, %edx			/* n*K+j with trash */
++	andl	  $0x3f, %eax			/* bits of j */
++	vmovsd	  (%rsi,%rax,8), %xmm5		/* T[j] */
++	andl	  $0xffffffc0, %edx		/* bits of n */
++
++	vfmadd132sd  L(DP_NLN2K)(%rip), %xmm1, %xmm2 /*  DP y=x-t*log(2)/K */
++	vmulsd	    %xmm2, %xmm2, %xmm6		/* DP z=y*y */
++
++
++	vfmadd213sd L(DP_P1)(%rip), %xmm6, %xmm4 /* DP P3*z + P1 */
++	vfmadd213sd L(DP_P0)(%rip), %xmm6, %xmm3 /* DP P2*z+P0 */
++
++	addl	    $0x1fc0, %edx		/* bits of n + SP exponent bias */
++	shll	    $17, %edx			/* SP 2^n */
++	vmovd       %edx, %xmm1			/* SP 2^n */
++
++	vmulsd      %xmm6, %xmm4, %xmm4		/* DP (P3*z+P1)*z */
++
++	vfmadd213sd %xmm4, %xmm3, %xmm2		/* DP P(Y)  (P2*z+P0)*y */
++	vfmadd213sd %xmm5, %xmm5, %xmm2		/* DP T[j]*(P(y)+1) */
++	vcvtsd2ss   %xmm2, %xmm2, %xmm0		/* SP T[j]*(P(y)+1) */
++	vmulss	    %xmm1, %xmm0, %xmm0		/* SP result=2^n*(T[j]*(P(y)+1)) */
++	ret
++
++	.p2align	4
++L(small_arg):
++	/* Here if 0<=|x|<2^(-28) */
++	vaddss	L(SP_ONE)(%rip), %xmm0, %xmm0	/* 1.0 + x */
++	/* Return 1.0 with inexact raised, except for x==0 */
++	ret
++
++	.p2align	4
++L(special_paths):
++	/* Here if 125*log(2)<=|x| */
++	shrl	$31, %eax		/* Get sign bit of x, and depending on it: */
++	lea	L(SP_RANGE)(%rip), %rdx	/* load over/underflow bound */
++	cmpl	(%rdx,%rax,4), %ecx	/* |x|<under/overflow bound ? */
++	jbe	L(near_under_or_overflow)
++
++	/* Here if |x|>under/overflow bound */
++	cmpl	$0x7f800000, %ecx	/* |x| is finite ? */
++	jae	L(arg_inf_or_nan)
++
++	/* Here if |x|>under/overflow bound, and x is finite */
++	testl	%eax, %eax		/* sign of x nonzero ? */
++	je	L(res_overflow)
++
++	/* Here if -inf<x<underflow bound (x<0) */
++	vmovss	L(SP_SMALL)(%rip), %xmm0/* load small value 2^(-100) */
++	vmulss	%xmm0, %xmm0, %xmm0	/* Return underflowed result (zero or subnormal) */
++	ret
++
++	.p2align	4
++L(res_overflow):
++	/* Here if overflow bound<x<inf (x>0) */
++	vmovss	L(SP_LARGE)(%rip), %xmm0/* load large value 2^100 */
++	vmulss	%xmm0, %xmm0, %xmm0	/* Return overflowed result (Inf or max normal) */
++	ret
++
++	.p2align	4
++L(arg_inf_or_nan):
++	/* Here if |x| is Inf or NAN */
++	jne	L(arg_nan)	/* |x| is Inf ? */
++
++	/* Here if |x| is Inf */
++	lea	L(SP_INF_0)(%rip), %rdx	/* depending on sign of x: */
++	vmovss	(%rdx,%rax,4), %xmm0	/* return zero or Inf */
++	ret
++
++	.p2align	4
++L(arg_nan):
++	/* Here if |x| is NaN */
++	vaddss	%xmm0, %xmm0, %xmm0	/* Return x+x (raise invalid) */
++	ret
++
++	.p2align	4
++L(near_under_or_overflow):
++	/* Here if 125*log(2)<=|x|<under/overflow bound */
++	vmovd	%xmm2, %eax		/* bits of n*K+j with trash */
++	vsubsd	L(DP_RD)(%rip), %xmm2, %xmm2 	/* DP t=round(x*K/log(2)) */
++	movl	%eax, %edx		/* n*K+j with trash */
++	andl	$0x3f, %eax		/* bits of j */
++	vmulsd	L(DP_NLN2K)(%rip),%xmm2, %xmm2/* DP -t*log(2)/K */
++	andl	$0xffffffc0, %edx	/* bits of n */
++	vaddsd	%xmm1, %xmm2, %xmm0	/* DP y=x-t*log(2)/K */
++	vmulsd	%xmm0, %xmm0, %xmm2	/* DP z=y*y */
++	addl	$0xffc0, %edx		/* bits of n + DP exponent bias */
++	vfmadd213sd L(DP_P0)(%rip), %xmm2, %xmm3/* DP P2*z+P0 */
++	shlq	$46, %rdx		/* DP 2^n */
++	vfmadd213sd L(DP_P1)(%rip), %xmm2, %xmm4/* DP P3*z+P1 */
++	vmovq	%rdx, %xmm1		/* DP 2^n */
++	vmulsd	%xmm2, %xmm4, %xmm4	/* DP (P3*z+P1)*z */
++	vfmadd213sd %xmm4, %xmm3, %xmm0	/* DP (P2*z+P0)*y */
++	vmovsd	(%rsi,%rax,8), %xmm2
++	vfmadd213sd %xmm2, %xmm2, %xmm0 /* DP T[j]*(P(y)+1) */
++	vmulsd	%xmm1, %xmm0, %xmm0	/* DP result=2^n*(T[j]*(P(y)+1)) */
++	vcvtsd2ss %xmm0, %xmm0, %xmm0	/* convert result to single precision */
++	ret
++END(__ieee754_expf_fma)
++
++	.section .rodata, "a"
++	.p2align 3
++L(DP_T): /* table of double precision values 2^(j/K) for j=[0..K-1] */
++	.long	0x00000000, 0x3ff00000
++	.long	0x3e778061, 0x3ff02c9a
++	.long	0xd3158574, 0x3ff059b0
++	.long	0x18759bc8, 0x3ff08745
++	.long	0x6cf9890f, 0x3ff0b558
++	.long	0x32d3d1a2, 0x3ff0e3ec
++	.long	0xd0125b51, 0x3ff11301
++	.long	0xaea92de0, 0x3ff1429a
++	.long	0x3c7d517b, 0x3ff172b8
++	.long	0xeb6fcb75, 0x3ff1a35b
++	.long	0x3168b9aa, 0x3ff1d487
++	.long	0x88628cd6, 0x3ff2063b
++	.long	0x6e756238, 0x3ff2387a
++	.long	0x65e27cdd, 0x3ff26b45
++	.long	0xf51fdee1, 0x3ff29e9d
++	.long	0xa6e4030b, 0x3ff2d285
++	.long	0x0a31b715, 0x3ff306fe
++	.long	0xb26416ff, 0x3ff33c08
++	.long	0x373aa9cb, 0x3ff371a7
++	.long	0x34e59ff7, 0x3ff3a7db
++	.long	0x4c123422, 0x3ff3dea6
++	.long	0x21f72e2a, 0x3ff4160a
++	.long	0x6061892d, 0x3ff44e08
++	.long	0xb5c13cd0, 0x3ff486a2
++	.long	0xd5362a27, 0x3ff4bfda
++	.long	0x769d2ca7, 0x3ff4f9b2
++	.long	0x569d4f82, 0x3ff5342b
++	.long	0x36b527da, 0x3ff56f47
++	.long	0xdd485429, 0x3ff5ab07
++	.long	0x15ad2148, 0x3ff5e76f
++	.long	0xb03a5585, 0x3ff6247e
++	.long	0x82552225, 0x3ff66238
++	.long	0x667f3bcd, 0x3ff6a09e
++	.long	0x3c651a2f, 0x3ff6dfb2
++	.long	0xe8ec5f74, 0x3ff71f75
++	.long	0x564267c9, 0x3ff75feb
++	.long	0x73eb0187, 0x3ff7a114
++	.long	0x36cf4e62, 0x3ff7e2f3
++	.long	0x994cce13, 0x3ff82589
++	.long	0x9b4492ed, 0x3ff868d9
++	.long	0x422aa0db, 0x3ff8ace5
++	.long	0x99157736, 0x3ff8f1ae
++	.long	0xb0cdc5e5, 0x3ff93737
++	.long	0x9fde4e50, 0x3ff97d82
++	.long	0x82a3f090, 0x3ff9c491
++	.long	0x7b5de565, 0x3ffa0c66
++	.long	0xb23e255d, 0x3ffa5503
++	.long	0x5579fdbf, 0x3ffa9e6b
++	.long	0x995ad3ad, 0x3ffae89f
++	.long	0xb84f15fb, 0x3ffb33a2
++	.long	0xf2fb5e47, 0x3ffb7f76
++	.long	0x904bc1d2, 0x3ffbcc1e
++	.long	0xdd85529c, 0x3ffc199b
++	.long	0x2e57d14b, 0x3ffc67f1
++	.long	0xdcef9069, 0x3ffcb720
++	.long	0x4a07897c, 0x3ffd072d
++	.long	0xdcfba487, 0x3ffd5818
++	.long	0x03db3285, 0x3ffda9e6
++	.long	0x337b9b5f, 0x3ffdfc97
++	.long	0xe78b3ff6, 0x3ffe502e
++	.long	0xa2a490da, 0x3ffea4af
++	.long	0xee615a27, 0x3ffefa1b
++	.long	0x5b6e4540, 0x3fff5076
++	.long	0x819e90d8, 0x3fffa7c1
++	.type L(DP_T), @object
++	ASM_SIZE_DIRECTIVE(L(DP_T))
++
++	.section .rodata.cst8,"aM",@progbits,8
++	.p2align 3
++L(DP_KLN2): /* double precision K/log(2) */
++	.long	0x652b82fe, 0x40571547
++	.type L(DP_KLN2), @object
++	ASM_SIZE_DIRECTIVE(L(DP_KLN2))
++
++	.p2align 3
++L(DP_NLN2K): /* double precision -log(2)/K */
++	.long	0xfefa39ef, 0xbf862e42
++	.type L(DP_NLN2K), @object
++	ASM_SIZE_DIRECTIVE(L(DP_NLN2K))
++
++	.p2align 3
++L(DP_RS): /* double precision 2^23+2^22 */
++	.long	0x00000000, 0x41680000
++	.type L(DP_RS), @object
++	ASM_SIZE_DIRECTIVE(L(DP_RS))
++	.p2align 3
++L(DP_RD): /* double precision 2^52+2^51 */
++	.long	0x00000000, 0x43380000
++	.type L(DP_RD), @object
++	ASM_SIZE_DIRECTIVE(L(DP_RD))
++
++	.p2align 3
++L(DP_P3): /* double precision polynomial coefficient P3 */
++	.long	0xeb78fa85, 0x3fa56420
++	.type L(DP_P3), @object
++	ASM_SIZE_DIRECTIVE(L(DP_P3))
++
++	.p2align 3
++L(DP_P1): /* double precision polynomial coefficient P1 */
++	.long	0x008d6118, 0x3fe00000
++	.type L(DP_P1), @object
++	ASM_SIZE_DIRECTIVE(L(DP_P1))
++
++	.p2align 3
++L(DP_P2): /* double precision polynomial coefficient P2 */
++	.long	0xda752d4f, 0x3fc55550
++	.type L(DP_P2), @object
++	ASM_SIZE_DIRECTIVE(L(DP_P2))
++
++	.p2align 3
++L(DP_P0): /* double precision polynomial coefficient P0 */
++	.long	0xffffe7c6, 0x3fefffff
++	.type L(DP_P0), @object
++	ASM_SIZE_DIRECTIVE(L(DP_P0))
++
++	.p2align 3
++L(SP_RANGE): /* single precision overflow/underflow bounds */
++	.long	0x42b17217	/* if x>this bound, then result overflows */
++	.long	0x42cff1b4	/* if x<this bound, then result underflows */
++	.type L(SP_RANGE), @object
++	ASM_SIZE_DIRECTIVE(L(SP_RANGE))
++
++	.p2align 3
++L(SP_INF_0):
++	.long	0x7f800000	/* single precision Inf */
++	.long	0		/* single precision zero */
++	.type L(SP_INF_0), @object
++	ASM_SIZE_DIRECTIVE(L(SP_INF_0))
++
++	.section .rodata.cst4,"aM",@progbits,4
++	.p2align 2
++L(SP_RS): /* single precision 2^23+2^22 */
++	.long	0x4b400000
++	.type L(SP_RS), @object
++	ASM_SIZE_DIRECTIVE(L(SP_RS))
++
++	.p2align 2
++L(SP_SMALL): /* single precision small value 2^(-100) */
++	.long	0x0d800000
++	.type L(SP_SMALL), @object
++	ASM_SIZE_DIRECTIVE(L(SP_SMALL))
++
++	.p2align 2
++L(SP_LARGE): /* single precision large value 2^100 */
++	.long	0x71800000
++	.type L(SP_LARGE), @object
++	ASM_SIZE_DIRECTIVE(L(SP_LARGE))
++
++	.p2align 2
++L(SP_ONE): /* single precision 1.0 */
++	.long	0x3f800000
++	.type L(SP_ONE), @object
++	ASM_SIZE_DIRECTIVE(L(SP_ONE))
+diff --git a/sysdeps/x86_64/fpu/multiarch/e_expf-sse2.S b/sysdeps/x86_64/fpu/multiarch/e_expf-sse2.S
+new file mode 100644
+index 0000000000..8af10e3eb4
+--- /dev/null
++++ b/sysdeps/x86_64/fpu/multiarch/e_expf-sse2.S
+@@ -0,0 +1,24 @@
++/* SSE2 version of IEEE 754 expf.
++   Copyright (C) 2017 Free Software Foundation, Inc.
++   This file is part of the GNU C Library.
++
++   The GNU C Library is free software; you can redistribute it and/or
++   modify it under the terms of the GNU Lesser General Public
++   License as published by the Free Software Foundation; either
++   version 2.1 of the License, or (at your option) any later version.
++
++   The GNU C Library is distributed in the hope that it will be useful,
++   but WITHOUT ANY WARRANTY; without even the implied warranty of
++   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++   Lesser General Public License for more details.
++
++   You should have received a copy of the GNU Lesser General Public
++   License along with the GNU C Library; if not, see
++   <http://www.gnu.org/licenses/>.  */
++
++#define __ieee754_expf __ieee754_expf_sse2
++
++#undef strong_alias
++#define strong_alias(ignored1, ignored2)
++
++#include <sysdeps/x86_64/fpu/e_expf.S>
+diff --git a/sysdeps/x86_64/fpu/multiarch/e_expf.c b/sysdeps/x86_64/fpu/multiarch/e_expf.c
+new file mode 100644
+index 0000000000..864d5f9b21
+--- /dev/null
++++ b/sysdeps/x86_64/fpu/multiarch/e_expf.c
+@@ -0,0 +1,26 @@
++/* Multiple versions of IEEE 754 expf.
++   Copyright (C) 2017 Free Software Foundation, Inc.
++   This file is part of the GNU C Library.
++
++   The GNU C Library is free software; you can redistribute it and/or
++   modify it under the terms of the GNU Lesser General Public
++   License as published by the Free Software Foundation; either
++   version 2.1 of the License, or (at your option) any later version.
++
++   The GNU C Library is distributed in the hope that it will be useful,
++   but WITHOUT ANY WARRANTY; without even the implied warranty of
++   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++   Lesser General Public License for more details.
++
++   You should have received a copy of the GNU Lesser General Public
++   License along with the GNU C Library; if not, see
++   <http://www.gnu.org/licenses/>.  */
++
++extern double __redirect_ieee754_expf (double);
++
++#define SYMBOL_NAME ieee754_expf
++#include "ifunc-fma.h"
++
++libc_ifunc_redirected (__redirect_ieee754_expf, __ieee754_expf,
++		       IFUNC_SELECTOR ());
++strong_alias (__ieee754_expf, __expf_finite)
+diff --git a/sysdeps/x86_64/fpu/multiarch/ifunc-fma.h b/sysdeps/x86_64/fpu/multiarch/ifunc-fma.h
+new file mode 100644
+index 0000000000..383c41ffb1
+--- /dev/null
++++ b/sysdeps/x86_64/fpu/multiarch/ifunc-fma.h
+@@ -0,0 +1,34 @@
++/* Common definition for ifunc selections optimized with AVX2/FMA.
++   Copyright (C) 2017 Free Software Foundation, Inc.
++   This file is part of the GNU C Library.
++
++   The GNU C Library is free software; you can redistribute it and/or
++   modify it under the terms of the GNU Lesser General Public
++   License as published by the Free Software Foundation; either
++   version 2.1 of the License, or (at your option) any later version.
++
++   The GNU C Library is distributed in the hope that it will be useful,
++   but WITHOUT ANY WARRANTY; without even the implied warranty of
++   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++   Lesser General Public License for more details.
++
++   You should have received a copy of the GNU Lesser General Public
++   License along with the GNU C Library; if not, see
++   <http://www.gnu.org/licenses/>.  */
++
++#include <init-arch.h>
++
++extern __typeof (REDIRECT_NAME) OPTIMIZE (sse2) attribute_hidden;
++extern __typeof (REDIRECT_NAME) OPTIMIZE (fma) attribute_hidden;
++
++static inline void *
++IFUNC_SELECTOR (void)
++{
++  const struct cpu_features* cpu_features = __get_cpu_features ();
++
++  if (CPU_FEATURES_ARCH_P (cpu_features, FMA_Usable)
++      && CPU_FEATURES_ARCH_P (cpu_features, AVX2_Usable))
++    return OPTIMIZE (fma);
++
++  return OPTIMIZE (sse2);
++}
+-- 
+2.13.4
+
+From ce3e7f4136a9f5943328c74511542834ca05811b Mon Sep 17 00:00:00 2001
+From: "H.J. Lu" <hjl.tools@gmail.com>
+Date: Tue, 15 Aug 2017 14:04:59 -0700
+Subject: [PATCH] x86-64: Align L(SP_RANGE)/L(SP_INF_0) to 8 bytes [BZ #21955]
+
+sysdeps/x86_64/fpu/e_expf.S has
+
+        lea     L(SP_RANGE)(%rip), %rdx /* load over/underflow bound */
+        cmpl    (%rdx,%rax,4), %ecx     /* |x|<under/overflow bound ? */
+...
+        /* Here if |x| is Inf */
+        lea     L(SP_INF_0)(%rip), %rdx /* depending on sign of x: */
+        movss   (%rdx,%rax,4), %xmm0    /* return zero or Inf */
+        ret
+...
+         .section .rodata.cst8,"aM",@progbits,8
+...
+        .p2align 2
+L(SP_RANGE): /* single precision overflow/underflow bounds */
+        .long   0x42b17217      /* if x>this bound, then result overflows */
+        .long   0x42cff1b4      /* if x<this bound, then result underflows */
+        .type L(SP_RANGE), @object
+        ASM_SIZE_DIRECTIVE(L(SP_RANGE))
+
+        .p2align 2
+L(SP_INF_0):
+        .long   0x7f800000      /* single precision Inf */
+        .long   0               /* single precision zero */
+        .type L(SP_INF_0), @object
+        ASM_SIZE_DIRECTIVE(L(SP_INF_0))
+
+Since L(SP_RANGE) and L(SP_INF_0) are in .rodata.cst8 section, they must
+be aligned to 8 bytes.
+
+	[BZ #21955]
+	* sysdeps/x86_64/fpu/e_expf.S (L(SP_RANGE)): Aligned to 8 bytes.
+	(L(SP_INF_0)): Likewise.
+
+(cherry picked from commit f59f7adb4a00b7784cab1becdf257366104587b7)
+---
+ sysdeps/x86_64/fpu/e_expf.S | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/sysdeps/x86_64/fpu/e_expf.S b/sysdeps/x86_64/fpu/e_expf.S
+index 4fd2bb1fb5..c3bf312c44 100644
+--- a/sysdeps/x86_64/fpu/e_expf.S
++++ b/sysdeps/x86_64/fpu/e_expf.S
+@@ -297,14 +297,14 @@ L(DP_P0): /* double precision polynomial coefficient P0 */
+ 	.type L(DP_P0), @object
+ 	ASM_SIZE_DIRECTIVE(L(DP_P0))
+ 
+-	.p2align 2
++	.p2align 3
+ L(SP_RANGE): /* single precision overflow/underflow bounds */
+ 	.long	0x42b17217	/* if x>this bound, then result overflows */
+ 	.long	0x42cff1b4	/* if x<this bound, then result underflows */
+ 	.type L(SP_RANGE), @object
+ 	ASM_SIZE_DIRECTIVE(L(SP_RANGE))
+ 
+-	.p2align 2
++	.p2align 3
+ L(SP_INF_0):
+ 	.long	0x7f800000	/* single precision Inf */
+ 	.long	0		/* single precision zero */
+-- 
+2.13.4
+
