@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="snes9x-libretro"
-PKG_VERSION="3fb8977"
+PKG_VERSION="1000c2d"
 PKG_ARCH="any"
 PKG_LICENSE="Non-commercial"
 PKG_SITE="https://github.com/libretro/snes9x"
@@ -27,15 +27,11 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="emulation"
 PKG_SHORTDESC="Snes9x - Portable Super Nintendo Entertainment System (TM) emulator"
 
-
+PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-pre_build_target() {
-  export GIT_VERSION=$PKG_VERSION
-}
-
 make_target() {
-  make -C libretro
+  make -C libretro GIT_VERSION=$PKG_VERSION
 }
 
 makeinstall_target() {
