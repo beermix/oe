@@ -30,7 +30,13 @@ PKG_SHORTDESC="giflib: giflib service library"
 PKG_LONGDESC="giflib: giflib service library"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_HOST="--disable-shared --enable-static"
+pre_configure_host() {
+ export HOST_CPPFLAGS="$HOST_CPPFLAGS -fno-stack-protector -D_FORTIFY_SOURCE=0"
+ export HOST_CFLAGS="$HOST_CFLAGS -fno-stack-protector -D_FORTIFY_SOURCE=0"
+ export HOST_LDFLAGS="$HOST_LDFLAGS -fno-stack-protector -D_FORTIFY_SOURCE=0"
+}
+
+PKG_CONFIGURE_OPTS_HOST="--disable-shared --disable-silent-rules"
 PKG_CONFIGURE_OPTS_TARGET="--with-sysroot=$SYSROOT_PREFIX"
 
 post_makeinstall_target() {
