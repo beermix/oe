@@ -4,6 +4,6 @@ pcm.!default {
         @func getenv
         vars [ ALSAPCM ]
         # Device name can be found using the command 'aplay -L'
-        default "hdmi:CARD=HDMI,DEV=1"
+        default "hdmi:CARD=PCH,DEV=1"
     }
 }
