@@ -57387,3 +57387,695 @@ index 5b539d2d9c..ad1621010d 100644
  #define BFD_VERSION @bfd_version@
  #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
  #define REPORT_BUGS_TO @report_bugs_to@
+
+commit e6b4adf53138eaf344802bc1ce41943d451d0430
+Author: Alan Modra <amodra@gmail.com>
+Date:   Wed Oct 25 15:32:52 2017 +1030
+
+    Allow for __gnu_lto_slim prefixed with extra "_"
+    
+    Some targets prefix global symbols with "_".
+    
+    bfd/
+            * archive.c (_bfd_compute_and_write_armap): Match "__gnu_lto_slim"
+            optionally prefixed with "_".
+            * linker.c (_bfd_generic_link_add_one_symbol): Likewise.
+    binutils/
+            * nm.c (filter_symbols): Match "__gnu_lto_slim" optionally prefixed
+            with "_".
+    gold/
+            * symtab.cc (Symbol_table::add_from_relobj): Match "__gnu_lto_slim"
+            optionally prefixed with "_".
+    ld/
+            * testsuite/ld-plugin/lto-3r.d: Match "__gnu_lto_v" optionally
+            prefixed with "_".
+            * testsuite/ld-plugin/lto-5r.d: Likewise.
+    
+    (cherry picked from commit e601d38b7cc222345d4128f45db18529b9fb477b)
+
+diff --git a/bfd/ChangeLog b/bfd/ChangeLog
+index cd0a8f24d1..320e3f5ff7 100644
+--- a/bfd/ChangeLog
++++ b/bfd/ChangeLog
+@@ -1,3 +1,11 @@
++2017-11-01  Alan Modra  <amodra@gmail.com>
++
++	Apply from master
++	2017-10-25  Alan Modra  <amodra@gmail.com>
++	* archive.c (_bfd_compute_and_write_armap): Match "__gnu_lto_slim"
++	optionally prefixed with "_".
++	* linker.c (_bfd_generic_link_add_one_symbol): Likewise.
++
+ 2017-10-05  Alan Modra  <amodra@gmail.com>
+ 
+ 	* elflink.c (elf_link_input_bfd): Correct ctor/dtor in init_array/
+diff --git a/bfd/archive.c b/bfd/archive.c
+index 885bf489c0..af964ad19a 100644
+--- a/bfd/archive.c
++++ b/bfd/archive.c
+@@ -2405,7 +2405,11 @@ _bfd_compute_and_write_armap (bfd *arch, unsigned int elength)
+ 			  map = new_map;
+ 			}
+ 
+-		      if (strcmp (syms[src_count]->name, "__gnu_lto_slim") == 0)
++		      if (syms[src_count]->name[0] == '_'
++			  && syms[src_count]->name[1] == '_'
++			  && strcmp (syms[src_count]->name
++				     + (syms[src_count]->name[2] == '_'),
++				     "__gnu_lto_slim") == 0)
+ 			_bfd_error_handler
+ 			  (_("%B: plugin needed to handle lto object"),
+ 			   current);
+diff --git a/bfd/linker.c b/bfd/linker.c
+index 72d5705e63..a96c6ed1dd 100644
+--- a/bfd/linker.c
++++ b/bfd/linker.c
+@@ -1403,7 +1403,9 @@ _bfd_generic_link_add_one_symbol (struct bfd_link_info *info,
+     {
+       row = COMMON_ROW;
+       if (!bfd_link_relocatable (info)
+-	  && strcmp (name, "__gnu_lto_slim") == 0)
++	  && name[0] == '_'
++	  && name[1] == '_'
++	  && strcmp (name + (name[2] == '_'), "__gnu_lto_slim") == 0)
+ 	_bfd_error_handler
+ 	  (_("%B: plugin needed to handle lto object"), abfd);
+     }
+diff --git a/binutils/ChangeLog b/binutils/ChangeLog
+index ffb34fbb78..6856b61e86 100644
+--- a/binutils/ChangeLog
++++ b/binutils/ChangeLog
+@@ -1,3 +1,10 @@
++2017-11-01  Alan Modra  <amodra@gmail.com>
++
++	Apply from master
++	2017-10-25  Alan Modra  <amodra@gmail.com>
++	* nm.c (filter_symbols): Match "__gnu_lto_slim" optionally prefixed
++	with "_".
++
+ 2017-09-21  Maciej W. Rozycki  <macro@imgtec.com>
+ 
+ 	* readelf.c (get_machine_flags) <E_MIPS_MACH_5900>: New case.
+diff --git a/binutils/nm.c b/binutils/nm.c
+index 7ddcc8a113..2d8866ceda 100644
+--- a/binutils/nm.c
++++ b/binutils/nm.c
+@@ -480,7 +480,9 @@ filter_symbols (bfd *abfd, bfd_boolean is_dynamic, void *minisyms,
+       if (sym == NULL)
+ 	bfd_fatal (bfd_get_filename (abfd));
+ 
+-      if (strcmp (sym->name, "__gnu_lto_slim") == 0)
++      if (sym->name[0] == '_'
++	  && sym->name[1] == '_'
++	  && strcmp (sym->name + (sym->name[2] == '_'), "__gnu_lto_slim") == 0)
+ 	non_fatal (_("%s: plugin needed to handle lto object"),
+ 		   bfd_get_filename (abfd));
+ 
+diff --git a/gold/ChangeLog b/gold/ChangeLog
+index 622a63a214..c8633e40b4 100644
+--- a/gold/ChangeLog
++++ b/gold/ChangeLog
+@@ -1,3 +1,10 @@
++2017-11-01  Alan Modra  <amodra@gmail.com>
++
++	Apply from master
++	2017-10-25  Alan Modra  <amodra@gmail.com>
++	* symtab.cc (Symbol_table::add_from_relobj): Match "__gnu_lto_slim"
++	optionally prefixed with "_".
++
+ 2017-10-18  Kyle Butt  <iteratee@google.com>
+ 	    Alan Modra  <amodra@gmail.com>
+ 
+diff --git a/gold/symtab.cc b/gold/symtab.cc
+index 7e0a3f80d2..1b4810ed53 100644
+--- a/gold/symtab.cc
++++ b/gold/symtab.cc
+@@ -1185,7 +1185,9 @@ Symbol_table::add_from_relobj(
+       const char* name = sym_names + st_name;
+ 
+       if (!parameters->options().relocatable()
+-	  && strcmp (name, "__gnu_lto_slim") == 0)
++	  && name[0] == '_'
++	  && name[1] == '_'
++	  && strcmp (name + (name[2] == '_'), "__gnu_lto_slim") == 0)
+         gold_info(_("%s: plugin needed to handle lto object"),
+ 		  relobj->name().c_str());
+ 
+diff --git a/ld/ChangeLog b/ld/ChangeLog
+index ba67e20bf9..364b1040ec 100644
+--- a/ld/ChangeLog
++++ b/ld/ChangeLog
+@@ -1,3 +1,11 @@
++2017-11-01  Alan Modra  <amodra@gmail.com>
++
++	Apply from master
++	2017-10-25  Alan Modra  <amodra@gmail.com>
++	* testsuite/ld-plugin/lto-3r.d: Match "__gnu_lto_v" optionally
++	prefixed with "_".
++	* testsuite/ld-plugin/lto-5r.d: Likewise.
++
+ 2017-09-28  Alan Modra  <amodra@gmail.com>
+ 
+ 	* testsuite/ld-plugin/pr22220.h,
+diff --git a/ld/testsuite/ld-plugin/lto-3r.d b/ld/testsuite/ld-plugin/lto-3r.d
+index 1d1befe90f..3726718f2a 100644
+--- a/ld/testsuite/ld-plugin/lto-3r.d
++++ b/ld/testsuite/ld-plugin/lto-3r.d
+@@ -3,5 +3,5 @@
+ #nm: -p
+ 
+ #...
+-[0-9a-f]+ C __gnu_lto_v.*
++[0-9a-f]+ C _?__gnu_lto_v.*
+ #pass
+diff --git a/ld/testsuite/ld-plugin/lto-5r.d b/ld/testsuite/ld-plugin/lto-5r.d
+index 43e9a5c5a3..ad1da7047b 100644
+--- a/ld/testsuite/ld-plugin/lto-5r.d
++++ b/ld/testsuite/ld-plugin/lto-5r.d
+@@ -3,5 +3,5 @@
+ #nm: -p
+ 
+ #...
+-[0-9a-f]+ C __gnu_lto_v.*
++[0-9a-f]+ C _?__gnu_lto_v.*
+ #pass
+
+commit fb5a5a91519f7c6f499c591983a57c2b0262b661
+Author: Alan Modra <amodra@gmail.com>
+Date:   Wed Oct 25 21:59:14 2017 +1030
+
+    PR22348, conflicting global vars in crx and cr16
+    
+    include/
+            PR 22348
+            * opcode/cr16.h (instruction): Delete.
+            (cr16_words, cr16_allWords, cr16_currInsn): Delete.
+            * opcode/crx.h (crx_cst4_map): Rename from cst4_map.
+            (crx_cst4_maps): Rename from cst4_maps.
+            (crx_no_op_insn): Rename from no_op_insn.
+            (instruction): Delete.
+    opcodes/
+            PR 22348
+            * cr16-dis.c (cr16_cinvs, instruction, cr16_currInsn): Make static.
+            (cr16_words, cr16_allWords, processing_argument_number): Likewise.
+            (imm4flag, size_changed): Likewise.
+            * crx-dis.c (crx_cinvs, NUMCINVS, instruction, currInsn): Likewise.
+            (words, allWords, processing_argument_number): Likewise.
+            (cst4flag, size_changed): Likewise.
+            * crx-opc.c (crx_cst4_map): Rename from cst4_map.
+            (crx_cst4_maps): Rename from cst4_maps.
+            (crx_no_op_insn): Rename from no_op_insn.
+    gas/
+            PR 22348
+            * config/tc-crx.c (instruction, output_opcode): Make static.
+            (relocatable, ins_parse, cur_arg_num): Likewise.
+            (parse_insn): Adjust for renamed opcodes globals.
+            (check_range): Likewise
+    
+    (cherry picked from commit e5d70d6b5a5c2832ad199ac1b91f68324b4a12c9)
+
+diff --git a/gas/ChangeLog b/gas/ChangeLog
+index 9aa3dbca3a..9191780041 100644
+--- a/gas/ChangeLog
++++ b/gas/ChangeLog
+@@ -1,3 +1,13 @@
++2017-11-01  Alan Modra  <amodra@gmail.com>
++
++	Apply from master
++	2017-10-25  Alan Modra  <amodra@gmail.com>
++	PR 22348
++	* config/tc-crx.c (instruction, output_opcode): Make static.
++	(relocatable, ins_parse, cur_arg_num): Likewise.
++	(parse_insn): Adjust for renamed opcodes globals.
++	(check_range): Likewise
++
+ 2017-09-21  Maciej W. Rozycki  <macro@imgtec.com>
+ 
+ 	* testsuite/gas/mips/elf_mach_5900.d: New test.
+diff --git a/gas/config/tc-crx.c b/gas/config/tc-crx.c
+index be0d455587..c5a21441b5 100644
+--- a/gas/config/tc-crx.c
++++ b/gas/config/tc-crx.c
+@@ -69,21 +69,21 @@ static struct hash_control *reg_hash;
+ /* CRX coprocessor registers hash table.  */
+ static struct hash_control *copreg_hash;
+ /* Current instruction we're assembling.  */
+-const inst *instruction;
++static const inst *instruction;
+ 
+ /* Global variables.  */
+ 
+ /* Array to hold an instruction encoding.  */
+-long output_opcode[2];
++static long output_opcode[2];
+ 
+ /* Nonzero means a relocatable symbol.  */
+-int relocatable;
++static int relocatable;
+ 
+ /* A copy of the original instruction (used in error messages).  */
+-char ins_parse[MAX_INST_LEN];
++static char ins_parse[MAX_INST_LEN];
+ 
+ /* The current processed argument number.  */
+-int cur_arg_num;
++static int cur_arg_num;
+ 
+ /* Generic assembler global variables which must be defined by all targets.  */
+ 
+@@ -1043,9 +1043,9 @@ parse_insn (ins *insn, char *operands)
+   int i;
+ 
+   /* Handle instructions with no operands.  */
+-  for (i = 0; no_op_insn[i] != NULL; i++)
++  for (i = 0; crx_no_op_insn[i] != NULL; i++)
+   {
+-    if (streq (no_op_insn[i], instruction->mnemonic))
++    if (streq (crx_no_op_insn[i], instruction->mnemonic))
+     {
+       insn->nargs = 0;
+       return;
+@@ -1387,7 +1387,7 @@ check_range (long *num, int bits, int unsigned flags, int update)
+ 		      : instruction->flags & DISPUD4 ? 4
+ 		      : 0);
+ 
+-      for (bin = 0; bin < cst4_maps; bin++)
++      for (bin = 0; bin < crx_cst4_maps; bin++)
+ 	{
+ 	  if (value == mul * bin)
+ 	    {
+@@ -1404,9 +1404,9 @@ check_range (long *num, int bits, int unsigned flags, int update)
+     {
+       int is_cst4 = 0;
+ 
+-      for (bin = 0; bin < cst4_maps; bin++)
++      for (bin = 0; bin < crx_cst4_maps; bin++)
+ 	{
+-	  if (value == (uint32_t) cst4_map[bin])
++	  if (value == (uint32_t) crx_cst4_map[bin])
+ 	    {
+ 	      is_cst4 = 1;
+ 	      if (update)
+diff --git a/include/ChangeLog b/include/ChangeLog
+index 8b25ce724d..239c63e742 100644
+--- a/include/ChangeLog
++++ b/include/ChangeLog
+@@ -1,3 +1,15 @@
++2017-11-01  Alan Modra  <amodra@gmail.com>
++
++	Apply from master
++	2017-10-25  Alan Modra  <amodra@gmail.com>
++	PR 22348
++	* opcode/cr16.h (instruction): Delete.
++	(cr16_words, cr16_allWords, cr16_currInsn): Delete.
++	* opcode/crx.h (crx_cst4_map): Rename from cst4_map.
++	(crx_cst4_maps): Rename from cst4_maps.
++	(crx_no_op_insn): Rename from no_op_insn.
++	(instruction): Delete.
++
+ 2017-07-02  Jan Kratochvil  <jan.kratochvil@redhat.com>
+ 
+ 	* dwarf2.def (DW_IDX_compile_unit, DW_IDX_type_unit, DW_IDX_die_offset)
+diff --git a/include/opcode/cr16.h b/include/opcode/cr16.h
+index 80f48dfbfd..4613951d0d 100644
+--- a/include/opcode/cr16.h
++++ b/include/opcode/cr16.h
+@@ -404,9 +404,6 @@ extern const unsigned int cr16_num_cc;
+ /* Table of instructions with no operands.  */
+ extern const char * cr16_no_op_insn[];
+ 
+-/* Current instruction we're assembling.  */
+-extern const inst *instruction;
+-
+ /* A macro for representing the instruction "constant" opcode, that is,
+    the FIXED part of the instruction. The "constant" opcode is represented
+    as a 32-bit unsigned long, where OPC is expanded (by a left SHIFT)
+@@ -439,11 +436,6 @@ typedef unsigned long long ULONGLONG;
+ typedef unsigned long dwordU;
+ typedef unsigned short wordU;
+ 
+-/* Globals to store opcode data and build the instruction.  */
+-extern wordU cr16_words[3];
+-extern ULONGLONG cr16_allWords;
+-extern ins cr16_currInsn;
+-
+ /* Prototypes for function in cr16-dis.c.  */
+ extern void cr16_make_instruction (void);
+ extern int  cr16_match_opcode (void);
+diff --git a/include/opcode/crx.h b/include/opcode/crx.h
+index 23062edf21..7cb5abe610 100644
+--- a/include/opcode/crx.h
++++ b/include/opcode/crx.h
+@@ -384,14 +384,11 @@ extern const int crx_num_traps;
+ #define NUMTRAPS crx_num_traps
+ 
+ /* cst4 operand mapping.  */
+-extern const int cst4_map[];
+-extern const int cst4_maps;
++extern const int crx_cst4_map[];
++extern const int crx_cst4_maps;
+ 
+ /* Table of instructions with no operands.  */
+-extern const char* no_op_insn[];
+-
+-/* Current instruction we're assembling.  */
+-extern const inst *instruction;
++extern const char* crx_no_op_insn[];
+ 
+ /* A macro for representing the instruction "constant" opcode, that is,
+    the FIXED part of the instruction. The "constant" opcode is represented
+diff --git a/opcodes/ChangeLog b/opcodes/ChangeLog
+index ab622cafef..9baff278c4 100644
+--- a/opcodes/ChangeLog
++++ b/opcodes/ChangeLog
+@@ -1,3 +1,18 @@
++2017-11-01  Alan Modra  <amodra@gmail.com>
++
++	Apply from master
++	2017-10-25  Alan Modra  <amodra@gmail.com>
++	PR 22348
++	* cr16-dis.c (cr16_cinvs, instruction, cr16_currInsn): Make static.
++	(cr16_words, cr16_allWords, processing_argument_number): Likewise.
++	(imm4flag, size_changed): Likewise.
++	* crx-dis.c (crx_cinvs, NUMCINVS, instruction, currInsn): Likewise.
++	(words, allWords, processing_argument_number): Likewise.
++	(cst4flag, size_changed): Likewise.
++	* crx-opc.c (crx_cst4_map): Rename from cst4_map.
++	(crx_cst4_maps): Rename from cst4_maps.
++	(crx_no_op_insn): Rename from no_op_insn.
++
+ 2017-09-15  Nick Clifton  <nickc@redhat.com>
+ 
+ 	2.29.1 Release
+diff --git a/opcodes/cr16-dis.c b/opcodes/cr16-dis.c
+index 16385c35c9..4a3f3b7833 100644
+--- a/opcodes/cr16-dis.c
++++ b/opcodes/cr16-dis.c
+@@ -54,7 +54,7 @@ typedef struct
+ cinv_entry;
+ 
+ /* CR16 'cinv' options mapping.  */
+-const cinv_entry cr16_cinvs[] =
++static const cinv_entry cr16_cinvs[] =
+ {
+   {"cinv[i]",     "cinv    [i]"},
+   {"cinv[i,u]",   "cinv    [i,u]"},
+@@ -78,20 +78,20 @@ typedef enum REG_ARG_TYPE
+ REG_ARG_TYPE;
+ 
+ /* Current opcode table entry we're disassembling.  */
+-const inst *instruction;
++static const inst *instruction;
+ /* Current instruction we're disassembling.  */
+-ins cr16_currInsn;
++static ins cr16_currInsn;
+ /* The current instruction is read into 3 consecutive words.  */
+-wordU cr16_words[3];
++static wordU cr16_words[3];
+ /* Contains all words in appropriate order.  */
+-ULONGLONG cr16_allWords;
++static ULONGLONG cr16_allWords;
+ /* Holds the current processed argument number.  */
+-int processing_argument_number;
++static int processing_argument_number;
+ /* Nonzero means a IMM4 instruction.  */
+-int imm4flag;
++static int imm4flag;
+ /* Nonzero means the instruction's original size is
+    incremented (escape sequence is used).  */
+-int size_changed;
++static int size_changed;
+ 
+ 
+ /* Print the constant expression length.  */
+diff --git a/opcodes/crx-dis.c b/opcodes/crx-dis.c
+index 4e48668f68..cb0f08025b 100644
+--- a/opcodes/crx-dis.c
++++ b/opcodes/crx-dis.c
+@@ -58,7 +58,7 @@ typedef struct
+ cinv_entry;
+ 
+ /* CRX 'cinv' options.  */
+-const cinv_entry crx_cinvs[] =
++static const cinv_entry crx_cinvs[] =
+ {
+   {"[i]", 2}, {"[i,u]", 3}, {"[d]", 4}, {"[d,u]", 5},
+   {"[d,i]", 6}, {"[d,i,u]", 7}, {"[b]", 8},
+@@ -81,22 +81,22 @@ typedef enum REG_ARG_TYPE
+ REG_ARG_TYPE;
+ 
+ /* Number of valid 'cinv' instruction options.  */
+-int NUMCINVS = ((sizeof crx_cinvs)/(sizeof crx_cinvs[0]));
++static int NUMCINVS = ((sizeof crx_cinvs)/(sizeof crx_cinvs[0]));
+ /* Current opcode table entry we're disassembling.  */
+-const inst *instruction;
++static const inst *instruction;
+ /* Current instruction we're disassembling.  */
+-ins currInsn;
++static ins currInsn;
+ /* The current instruction is read into 3 consecutive words.  */
+-wordU words[3];
++static wordU words[3];
+ /* Contains all words in appropriate order.  */
+-ULONGLONG allWords;
++static ULONGLONG allWords;
+ /* Holds the current processed argument number.  */
+-int processing_argument_number;
++static int processing_argument_number;
+ /* Nonzero means a CST4 instruction.  */
+-int cst4flag;
++static int cst4flag;
+ /* Nonzero means the instruction's original size is
+    incremented (escape sequence is used).  */
+-int size_changed;
++static int size_changed;
+ 
+ static int get_number_of_operands (void);
+ static argtype getargtype     (operand_type);
+diff --git a/opcodes/crx-opc.c b/opcodes/crx-opc.c
+index f6f2da669f..05b661da9d 100644
+--- a/opcodes/crx-opc.c
++++ b/opcodes/crx-opc.c
+@@ -704,15 +704,15 @@ The value in entry <N> is mapped to the value <N>
+ Example (for N=5):
+ 
+     cst4_map[5]=-4  -->>	5		*/
+-const int cst4_map[] =
++const int crx_cst4_map[] =
+ {
+   0, 1, 2, 3, 4, -4, -1, 7, 8, 16, 32, 20, 12, 48
+ };
+ 
+-const int cst4_maps = ARRAY_SIZE (cst4_map);
++const int crx_cst4_maps = ARRAY_SIZE (crx_cst4_map);
+ 
+ /* CRX instructions that don't have arguments.  */
+-const char* no_op_insn[] =
++const char* crx_no_op_insn[] =
+ {
+   "di", "ei", "eiwait", "nop", "retx", "wait", NULL
+ };
+
+commit 1dac3b4518f811cc124df2040db3c5a0e9049bb3
+Author: Alan Modra <amodra@gmail.com>
+Date:   Sat Oct 28 14:10:55 2017 +1030
+
+    PR22300, Abort in elf32_hppa_relocate_section building polyml
+    
+    polyml produces object files with the wrong OS/ABI for hppa-linux.
+    This, along with the fact that elf32-hppa.c is using the strictest
+    backend relocs_compatible, results in wrong merging of ELF symbols.
+    
+    So, remove the relocs_compatible check in _bfd_elf_merge_symbol.
+    _bfd_elf_merge_symbol is only called nowadays from within blocks
+    protected by is_elf_hash_table, so "we are doing an ELF link" as the
+    removed comment says, is true.
+    
+    Also relax relocs_compatible for hppa and powerpc.  relocs_compatible
+    is used for more than just merging symbols, as the name suggests.
+    This allows objects that are in fact reasonably compatible to be
+    linked.
+    
+            PR 22300
+            * elflink.c (_bfd_elf_merge_symbol): Remove relocs_compatible check.
+            * elf32-hppa.c (elf_backend_relocs_compatible): Define.
+            * elf32-ppc.c (elf_backend_relocs_compatible): Define.
+            * elf64-ppc.c (elf_backend_relocs_compatible): Define.
+    
+    (cherry picked from commit c0e331c794d6bd75d9be9bea6145513074c33f39)
+
+diff --git a/bfd/ChangeLog b/bfd/ChangeLog
+index 320e3f5ff7..ea035e76ff 100644
+--- a/bfd/ChangeLog
++++ b/bfd/ChangeLog
+@@ -1,6 +1,13 @@
+ 2017-11-01  Alan Modra  <amodra@gmail.com>
+ 
+ 	Apply from master
++	2017-10-28  Alan Modra  <amodra@gmail.com>
++	PR 22300
++	* elflink.c (_bfd_elf_merge_symbol): Remove relocs_compatible check.
++	* elf32-hppa.c (elf_backend_relocs_compatible): Define.
++	* elf32-ppc.c (elf_backend_relocs_compatible): Define.
++	* elf64-ppc.c (elf_backend_relocs_compatible): Define.
++
+ 	2017-10-25  Alan Modra  <amodra@gmail.com>
+ 	* archive.c (_bfd_compute_and_write_armap): Match "__gnu_lto_slim"
+ 	optionally prefixed with "_".
+diff --git a/bfd/elf32-hppa.c b/bfd/elf32-hppa.c
+index 548d656776..62a689ae5e 100644
+--- a/bfd/elf32-hppa.c
++++ b/bfd/elf32-hppa.c
+@@ -4615,6 +4615,7 @@ elf32_hppa_elf_get_symbol_type (Elf_Internal_Sym *elf_sym, int type)
+ #define elf_backend_adjust_dynamic_symbol    elf32_hppa_adjust_dynamic_symbol
+ #define elf_backend_copy_indirect_symbol     elf32_hppa_copy_indirect_symbol
+ #define elf_backend_check_relocs	     elf32_hppa_check_relocs
++#define elf_backend_relocs_compatible	     _bfd_elf_relocs_compatible
+ #define elf_backend_create_dynamic_sections  elf32_hppa_create_dynamic_sections
+ #define elf_backend_fake_sections	     elf_hppa_fake_sections
+ #define elf_backend_relocate_section	     elf32_hppa_relocate_section
+diff --git a/bfd/elf32-ppc.c b/bfd/elf32-ppc.c
+index f9a32c2e87..3f42f2a4d8 100644
+--- a/bfd/elf32-ppc.c
++++ b/bfd/elf32-ppc.c
+@@ -10931,6 +10931,7 @@ ppc_elf_finish_dynamic_sections (bfd *output_bfd,
+ #define elf_backend_relocate_section		ppc_elf_relocate_section
+ #define elf_backend_create_dynamic_sections	ppc_elf_create_dynamic_sections
+ #define elf_backend_check_relocs		ppc_elf_check_relocs
++#define elf_backend_relocs_compatible		_bfd_elf_relocs_compatible
+ #define elf_backend_copy_indirect_symbol	ppc_elf_copy_indirect_symbol
+ #define elf_backend_adjust_dynamic_symbol	ppc_elf_adjust_dynamic_symbol
+ #define elf_backend_add_symbol_hook		ppc_elf_add_symbol_hook
+diff --git a/bfd/elf64-ppc.c b/bfd/elf64-ppc.c
+index 277bb0ef5d..3c8e2865d7 100644
+--- a/bfd/elf64-ppc.c
++++ b/bfd/elf64-ppc.c
+@@ -101,6 +101,7 @@ static bfd_vma opd_entry_value
+ #define elf_backend_notice_as_needed	      ppc64_elf_notice_as_needed
+ #define elf_backend_archive_symbol_lookup     ppc64_elf_archive_symbol_lookup
+ #define elf_backend_check_relocs	      ppc64_elf_check_relocs
++#define elf_backend_relocs_compatible	      _bfd_elf_relocs_compatible
+ #define elf_backend_gc_keep		      ppc64_elf_gc_keep
+ #define elf_backend_gc_mark_dynamic_ref       ppc64_elf_gc_mark_dynamic_ref
+ #define elf_backend_gc_mark_hook	      ppc64_elf_gc_mark_hook
+diff --git a/bfd/elflink.c b/bfd/elflink.c
+index 39d878c814..245d89c6f4 100644
+--- a/bfd/elflink.c
++++ b/bfd/elflink.c
+@@ -1161,11 +1161,6 @@ _bfd_elf_merge_symbol (bfd *abfd,
+   if (pold_weak)
+     *pold_weak = oldweak;
+ 
+-  /* This code is for coping with dynamic objects, and is only useful
+-     if we are doing an ELF link.  */
+-  if (!(*bed->relocs_compatible) (abfd->xvec, info->output_bfd->xvec))
+-    return TRUE;
+-
+   /* We have to check it for every instance since the first few may be
+      references and not all compilers emit symbol type for undefined
+      symbols.  */
+
+commit 5e769a82c35d580ed81a52e6fbd072841530d3f6
+Author: Alan Modra <amodra@gmail.com>
+Date:   Mon Oct 30 10:20:29 2017 +1030
+
+    relocs_compatible test for gc-sections
+    
+    I noticed when looking at pr22300 that before calling check_relocs we
+    have an elf_object_id test (added for pr11933) as well as the
+    relocs_compatible test.  I believe backend gc_mark_hook and
+    gc_sweep_hook ought to be protected similarly from being confused by
+    unexpected relocations (for example, both elf64-ppc.c and elf32-ppc.c
+    use _bfd_elf_relocs_compatible, so I think it would be possible for
+    the ppc64 gc_mark_hook to be presented with a ppc32 relocatable
+    object).
+    
+            * elflink.c (elf_gc_sweep): Test elf_object_id in addition to
+            relocs_compatible.
+            (bfd_elf_gc_sections): Likewise.
+
+diff --git a/bfd/ChangeLog b/bfd/ChangeLog
+index ea035e76ff..a86ad613ea 100644
+--- a/bfd/ChangeLog
++++ b/bfd/ChangeLog
+@@ -1,6 +1,11 @@
+ 2017-11-01  Alan Modra  <amodra@gmail.com>
+ 
+ 	Apply from master
++	2017-10-30  Alan Modra  <amodra@gmail.com>
++	* elflink.c (elf_gc_sweep): Test elf_object_id in addition to
++	relocs_compatible.
++	(bfd_elf_gc_sections): Likewise.
++
+ 	2017-10-28  Alan Modra  <amodra@gmail.com>
+ 	PR 22300
+ 	* elflink.c (_bfd_elf_merge_symbol): Remove relocs_compatible check.
+diff --git a/bfd/elflink.c b/bfd/elflink.c
+index 245d89c6f4..9e0c1bb2c7 100644
+--- a/bfd/elflink.c
++++ b/bfd/elflink.c
+@@ -13023,6 +13023,7 @@ elf_gc_sweep (bfd *abfd, struct bfd_link_info *info)
+       asection *o;
+ 
+       if (bfd_get_flavour (sub) != bfd_target_elf_flavour
++	  || elf_object_id (sub) != elf_hash_table_id (elf_hash_table (info))
+ 	  || !(*bed->relocs_compatible) (sub->xvec, abfd->xvec))
+ 	continue;
+       o = sub->sections;
+@@ -13351,6 +13352,7 @@ bfd_elf_gc_sections (bfd *abfd, struct bfd_link_info *info)
+       asection *o;
+ 
+       if (bfd_get_flavour (sub) != bfd_target_elf_flavour
++	  || elf_object_id (sub) != elf_hash_table_id (htab)
+ 	  || !(*bed->relocs_compatible) (sub->xvec, abfd->xvec))
+ 	continue;
+ 
+
+commit a60fff76279225bcb2eeaeb9f89b02bba8d3a126
+Author: Alan Modra <amodra@gmail.com>
+Date:   Mon Oct 30 12:02:42 2017 +1030
+
+    frv-elf --gc-sections failures
+    
+    git commit 81742b83e9 exposed an frv-elf bug, with the object id not
+    matching the hash table id.
+    
+            * elf32-frv.c (ELF_TARGET_ID): Don't define for generic
+            elf target.
+
+diff --git a/bfd/ChangeLog b/bfd/ChangeLog
+index a86ad613ea..97c4b1d9e8 100644
+--- a/bfd/ChangeLog
++++ b/bfd/ChangeLog
+@@ -1,6 +1,10 @@
+ 2017-11-01  Alan Modra  <amodra@gmail.com>
+ 
+ 	Apply from master
++	2017-10-30  Alan Modra  <amodra@gmail.com>
++	* elf32-frv.c (ELF_TARGET_ID): Don't define for generic
++	elf target.
++
+ 	2017-10-30  Alan Modra  <amodra@gmail.com>
+ 	* elflink.c (elf_gc_sweep): Test elf_object_id in addition to
+ 	relocs_compatible.
+diff --git a/bfd/elf32-frv.c b/bfd/elf32-frv.c
+index ef609ff540..67b3c6a9eb 100644
+--- a/bfd/elf32-frv.c
++++ b/bfd/elf32-frv.c
+@@ -6773,7 +6773,6 @@ elf32_frv_grok_psinfo (bfd *abfd, Elf_Internal_Note *note)
+   return TRUE;
+ }
+ #define ELF_ARCH		bfd_arch_frv
+-#define ELF_TARGET_ID		FRV_ELF_DATA
+ #define ELF_MACHINE_CODE	EM_CYGNUS_FRV
+ #define ELF_MAXPAGESIZE		0x1000
+ 
+@@ -6812,6 +6811,8 @@ elf32_frv_grok_psinfo (bfd *abfd, Elf_Internal_Note *note)
+ 
+ #include "elf32-target.h"
+ 
++#undef ELF_TARGET_ID
++#define ELF_TARGET_ID		FRV_ELF_DATA
+ #undef ELF_MAXPAGESIZE
+ #define ELF_MAXPAGESIZE		0x4000
+ 
