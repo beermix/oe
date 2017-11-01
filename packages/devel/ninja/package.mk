@@ -37,6 +37,7 @@ make_host() {
 }
 
 makeinstall_host() {
+ strip ninja
  cp ninja $TOOLCHAIN/bin/
   
  # cp -r -i $PKG_DIR/ninja $TOOLCHAIN/bin/
