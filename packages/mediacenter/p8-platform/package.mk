@@ -30,6 +30,7 @@ PKG_LONGDESC="Platform support library used by libCEC and binary add-ons for Kod
 
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
+PKG_USE_NINJA="no"
 
 PKG_CMAKE_OPTS_TARGET="-DCMAKE_INSTALL_LIBDIR:STRING=lib \
                        -DCMAKE_INSTALL_LIBDIR_NOARCH:STRING=lib \
