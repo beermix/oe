@@ -5,23 +5,15 @@ PKG_URL="http://ftp.gnu.org/gnu/bash/bash-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain ncurses readline"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="bash_cv_getcwd_malloc=yes \
-			      bash_cv_job_control_missing=present \
-			      bash_cv_sys_named_pipes=present \
-			      bash_cv_func_sigsetjmp=present \
-			      bash_cv_printf_a_format=yes \
-			      bash_cv_getenv_redef=no \
-			      --with-curses \
+PKG_CONFIGURE_OPTS_TARGET="--with-curses \
 			      --enable-history \
-			      --disable-rpath \
-			      --disable-nls \
 			      --enable-readline \
 			      --without-bash-malloc \
 			      --with-installed-readline \
-                           --cache-file=/dev/null"
+                           --cache-file=/dev/null \
+                           --disable-rpath"
 
-
-post_makeinstall_target() {
-  ln -sfv bash $INSTALL/usr/bin/sh
-}
+#post_makeinstall_target() {
+#  ln -sfv bash $INSTALL/usr/bin/sh
+#}
 
