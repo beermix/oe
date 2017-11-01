@@ -6,9 +6,9 @@ PKG_DEPENDS_HOST="zlib:host"
 PKG_DEPENDS_TARGET="toolchain zlib"
 PKG_SECTION="devel"
 PKG_USE_CMAKE="no"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-pcre2-16 --enable-jit --enable-utf8 --disable-shared --with-gnu-ld --with-pic"
+PKG_CONFIGURE_OPTS_TARGET="--enable-pcre2-16 --enable-jit --enable-utf8 --enable-unicode-properties --disable-shared --with-pic"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN $PKG_CONFIGURE_OPTS_TARGET"
 

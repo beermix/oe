@@ -39,7 +39,7 @@ PKG_ADDON_NAME="Chromium"
 PKG_ADDON_TYPE="xbmc.python.script"
 PKG_ADDON_PROVIDES="executable"
 
-export CCACHE_SLOPPINESS=include_file_mtime
+#export CCACHE_SLOPPINESS=include_file_mtime
 
 post_patch() {
   cd $(get_build_dir chromium)
@@ -140,7 +140,7 @@ make_target() {
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python2
 
-  ninja -j${CONCURRENCY_MAKE_LEVEL} -C out/Release chrome chrome_sandbox widevinecdmadapter
+  ninja -j4 -C out/Release chrome chrome_sandbox widevinecdmadapter
 }
 
 makeinstall_target() {
