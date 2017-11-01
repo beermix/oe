@@ -38,7 +38,9 @@ PKG_CONFIGURE_OPTS_HOST="--cache-file=config.cache \
                          --without-cxx-main \
                          --with-threads \
                          --enable-unicode=ucs4 \
-                         --disable-ipv6"
+                         --disable-ipv6 \
+                         --enable-shared \
+                         --disable-static"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            ac_cv_file_dev_ptmx=yes \
