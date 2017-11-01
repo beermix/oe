@@ -43,13 +43,15 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-ld=default \
                            --disable-multilib \
                            --enable-checking=release \
-                           --enable-gnu-unique-object \
                            --disable-vtable-verify \
                            --with-ppl=no \
                            --with-cloog=no \
                            --enable-cheaders=c_global \
                            --disable-libada \
                            --disable-libmudflap \
+                           --disable-libatomic \
+                           --disable-libitm \
+                           --disable-libquadmath \
                            --disable-libmpx \
                            --disable-libssp \
                            --without-cuda-driver \
@@ -67,8 +69,6 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-shared \
                               --disable-threads \
                               --disable-libgomp \
-                              --disable-libquadmath \
-                              --disable-libitm \
                               --enable-decimal-float=no \
                               --without-headers \
                               --with-newlib \
