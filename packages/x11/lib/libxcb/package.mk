@@ -23,15 +23,16 @@ PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://xcb.freedesktop.org"
 PKG_URL="http://xcb.freedesktop.org/dist/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain util-macros Python2:host xcb-proto libpthread-stubs libXau"
+PKG_DEPENDS_TARGET="toolchain util-macros Python2:host xcb-proto libXau"
 PKG_SECTION="x11/lib"
 PKG_SHORTDESC="libxcb: X C-language Bindings library"
 PKG_LONGDESC="X C-language Bindings library."
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-screensaver \
                            --disable-xprint \
                            --disable-selinux \
+                           --disable-devel-docs \
                            --disable-xvmc"
 
 pre_configure_target() {
