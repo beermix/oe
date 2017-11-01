@@ -32,10 +32,6 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 PKG_USE_NINJA="no"
 
-#make_target() {
-#  ninja -j${CONCURRENCY_MAKE_LEVEL}
-#}
-
 PKG_CMAKE_SCRIPT="$PKG_BUILD/project/cmake/CMakeLists.txt"
 
   get_graphicdrivers
