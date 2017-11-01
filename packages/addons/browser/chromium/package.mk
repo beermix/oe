@@ -121,6 +121,7 @@ make_target() {
     icu
     libdrm
     libxslt
+    libxml
   )
 
   # Remove bundled libraries for which we will use the system copies; this
