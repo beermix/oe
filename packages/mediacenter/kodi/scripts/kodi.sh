@@ -98,19 +98,6 @@ for file in /storage/.kodi/userdata/Database/*.db; do
   [ -s $file ] || rm -f $file
 done
 
-# wait for AceStream
-#ACE_CONF="/storage/.cache/services/acestream.conf"
-#ACE_START="/tmp/ace_run.tmp"
-#
-#if [ ! -f "$ACE_START" -a -f "$ACE_CONF" ]; then
-#  . $ACE_CONF
-#  touch $ACE_START
-#  [ -z "$ACE_WAIT" ] && ACE_WAIT="none"
-#  if [ "$ACE_WAIT" != "none" ]; then
-#      sleep $ACE_WAIT
-#  fi
-#fi
-
 /usr/lib/kodi/kodi.bin $SAVED_ARGS
 RET=$?
 
