@@ -38,5 +38,6 @@ PKG_CONFIGURE_OPTS_TARGET="utrace_cv_cc_biarch=false \
 
 pre_configure_target() {
   export CFLAGS="$CFLAGS -fPIC -DPIC"
+  strip_hard
 }
 
