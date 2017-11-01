@@ -9,7 +9,7 @@ index 7888e2f858..e9c376e0a5
          cflags += [ "-fstack-protector-strong" ]
        } else {
 -        cflags += [ "-fstack-protector" ]
-+        cflags += [ "-mtune=core-avx-i" ]
++        cflags += [ "-mtune=ivybridge" ]
        }
      } else if (is_posix && !is_chromeos && !is_nacl) {
        # TODO(phajdan.jr): Use -fstack-protector-strong when our gcc supports it.
@@ -32,7 +32,7 @@ index 7888e2f858..e9c376e0a5
        cflags += [
          "-m64",
 -        "-march=x86-64",
-+        "-march=core-avx-i",
++        "-march=ivybridge",
        ]
        ldflags += [ "-m64" ]
      } else if (current_cpu == "x86") {
