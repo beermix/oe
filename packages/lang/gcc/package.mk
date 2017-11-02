@@ -42,19 +42,18 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-lto \
                            --enable-ld=default \
                            --disable-multilib \
-                           --disable-nls \
+                           --enable-nls \
+                           --with-default-libstdcxx-abi=new \
+                           --enable-offload-targets=nvptx-none \
+                           --disable-vtable-verify \
                            --enable-checking=release \
-                           --with-default-libstdcxx-abi=gcc4-compatible \
-                           --without-ppl \
-                           --without-cloog \
-                           --disable-libada \
+                           --with-ppl=no \
+                           --with-cloog=no \
                            --disable-libmudflap \
-                           --disable-libitm \
-                           --disable-libquadmath \
-                           --disable-libmpx \
                            --disable-libssp \
                            --disable-libsanitizer \
                            --without-cuda-driver \
+                           --disable-werror \
                            --with-tune=generic"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
@@ -83,6 +82,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time \
                          --enable-clocale=gnu \
+                         --disable-vtable-verify \
                          --enable-libatomic \
                          $GCC_OPTS"
 

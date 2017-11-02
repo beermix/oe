@@ -17,19 +17,21 @@
 ################################################################################
 
 PKG_NAME="mariadb"
+#PKG_VERSION="10.1.28"
 PKG_VERSION="10.2.10"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/MariaDB/server/releases"
-PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
-#PKG_URL="https://ftp.heanet.ie/mirrors/mariadb/$PKG_NAME-$PKG_VERSION/source/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_URL="https://ftp.heanet.ie/mirrors/mariadb/$PKG_NAME-$PKG_VERSION/source/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST=""
 PKG_DEPENDS_TARGET="toolchain readline libaio openssl libxml2 mariadb:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="database"
 PKG_SHORTDESC="mariadb: A community developed branch of MySQL"
 PKG_LONGDESC="MariaDB is a community-developed fork and a drop-in replacement for the MySQL relational database management system."
+
+PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 PKG_USE_NINJA="no"
 
@@ -97,13 +99,13 @@ PKG_MARIADB_SERVER="no"
 # the target. They are then included by import_executables.cmake which is
 # generated during the build of the host helpers. It is not necessary to build
 # the whole host package, only the "import_executables" target.
-# -DIMPORT_EXECUTABLES=$PKG_BUILD/.$HOST_NAME/import_executables.cmake
+# -DIMPORT_EXECUTABLES=$ROOT/$PKG_BUILD/.$HOST_NAME/import_executables.cmake
 # must then be passed to cmake during target build.
   PKG_MAKE_OPTS_HOST="import_executables"
-  MARIADB_IMPORT_EXECUTABLES="-DIMPORT_EXECUTABLES=$PKG_BUILD/.$HOST_NAME/import_executables.cmake"
+  MARIADB_IMPORT_EXECUTABLES="-DIMPORT_EXECUTABLES=$ROOT/$PKG_BUILD/.$HOST_NAME/import_executables.cmake"
 
 configure_host() {
-  cmake -DCMAKE_PREFIX_PATH=$TOOLCHAIN/ \
+  cmake -DCMAKE_PREFIX_PATH=$ROOT/$TOOLCHAIN/ \
         -DCMAKE_BUILD_TYPE=Release \
         -DFEATURE_SET=xsmall \
         -DWITHOUT_SERVER=OFF \
@@ -170,10 +172,12 @@ post_makeinstall_target() {
   sed -i "s|pkgincludedir=.*|pkgincludedir=\'$SYSROOT_PREFIX/usr/include/mysql\'|" scripts/mysql_config
   sed -i "s|pkglibdir=.*|pkglibdir=\'$SYSROOT_PREFIX/usr/lib/mysql\'|" scripts/mysql_config
   cp scripts/mysql_config $SYSROOT_PREFIX/usr/bin
-  ln -sf $SYSROOT_PREFIX/usr/bin/mysql_config $TOOLCHAIN/bin/mysql_config
+  ln -sf $SYSROOT_PREFIX/usr/bin/mysql_config $ROOT/$TOOLCHAIN/bin/mysql_config
  
-  rm -rf $SYSROOT_PREFIX/usr/lib/*.so.*
-  rm -rf $SYSROOT_PREFIX/usr/lib/*.so
+  rm $SYSROOT_PREFIX/usr/lib/libmariadb.so.3
+  rm $SYSROOT_PREFIX/usr/lib/libmariadb.so
+  rm $SYSROOT_PREFIX/usr/lib/libmysqlclient.so
+  rm $SYSROOT_PREFIX/usr/lib/libmysqlclient_r.so
  
   rm -rf $INSTALL/usr/share/mysql/support-files
   rm -rf $INSTALL/usr/share/mysql/test
@@ -184,8 +188,5 @@ post_makeinstall_target() {
     rm -rf $INSTALL/usr/bin
     rm -rf $INSTALL/usr/lib
     rm -rf $INSTALL/usr/share/mysql/*.sql
-    
-    rm -rf $SYSROOT_PREFIX/usr/lib/*.so.*
-    rm -rf $SYSROOT_PREFIX/usr/lib/*.so
   fi
 }
