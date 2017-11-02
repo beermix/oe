@@ -17,10 +17,10 @@
 ################################################################################
 
 PKG_NAME="meson"
-#PKG_VERSION="0.42.1"
-#PKG_SHA256="30bdded6fefc48211d30818d96dd34aae56ee86ce9710476f501bd7695469c4b"
-PKG_VERSION="0.43.0"
-PKG_SHA256="c513eca90e0d70bf14cd1eaafea2fa91cf40a73326a7ff61f08a005048057340"
+PKG_VERSION="0.42.1"
+PKG_SHA256="30bdded6fefc48211d30818d96dd34aae56ee86ce9710476f501bd7695469c4b"
+#PKG_VERSION="0.43.0"
+#PKG_SHA256="c513eca90e0d70bf14cd1eaafea2fa91cf40a73326a7ff61f08a005048057340"
 PKG_ARCH="any"
 PKG_LICENSE="Apache"
 PKG_SITE="https://github.com/mesonbuild/meson/releases/"
