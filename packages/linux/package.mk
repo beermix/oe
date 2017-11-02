@@ -61,7 +61,7 @@ case "$LINUX" in
     PKG_PATCH_DIRS="4.14"
     ;;
   *)
-    PKG_VERSION="4.13.10"
+    PKG_VERSION="4.13.11"
     PKG_URL="https://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
     PKG_PATCH_DIRS="default"
     ;;
