@@ -44,8 +44,11 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-lto \
                            --enable-ld=default \
                            --disable-multilib \
-                           --enable-checking=release \
+                           --enable-nls \
+                           --with-default-libstdcxx-abi=new \
+                           --enable-offload-targets=nvptx-none \
                            --disable-vtable-verify \
+                           --enable-checking=release \
                            --with-ppl=no \
                            --with-cloog=no \
                            --disable-libada \
