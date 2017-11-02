@@ -23,7 +23,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/xbmc/xbmc/tree/Krypton"
 PKG_URL="https://github.com/xbmc/xbmc/archive/$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="xbmc-$PKG_VERSION*"
-PKG_DEPENDS_TARGET="toolchain JsonSchemaBuilder:host TexturePacker:host xmlstarlet:host Python2 zlib systemd pciutils lzo pcre swig:host libass curl fontconfig fribidi tinyxml libjpeg-turbo freetype libcdio taglib libxml2 libxslt rapidjson sqlite ffmpeg crossguid giflib libdvdnav lcms2 nss"
+PKG_DEPENDS_TARGET="toolchain JsonSchemaBuilder:host TexturePacker:host xmlstarlet:host Python2 zlib systemd pciutils lzo pcre swig:host libass curl fontconfig fribidi tinyxml libjpeg-turbo freetype libcdio taglib libxml2 libxslt rapidjson sqlite ffmpeg crossguid giflib libdvdnav libhdhomerun nss"
 PKG_SECTION="mediacenter"
 PKG_SHORTDESC="kodi: Kodi Mediacenter"
 PKG_LONGDESC="Kodi Media Center (which was formerly named Xbox Media Center or XBMC) is a free and open source cross-platform media player and home entertainment system software with a 10-foot user interface designed for the living-room TV. Its graphical user interface allows the user to easily manage video, photos, podcasts, and music from a computer, optical disk, local network, and the internet using a remote control."
@@ -216,7 +216,6 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$TOOLCHAIN \
                        -DPYTHON_EXECUTABLE=$TOOLCHAIN/bin/$PKG_PYTHON_VERSION \
                        -DPYTHON_INCLUDE_DIRS=$SYSROOT_PREFIX/usr/include/$PKG_PYTHON_VERSION \
                        -DGIT_VERSION=$PKG_VERSION \
-                       -DWITH_FFMPEG=$(get_build_dir ffmpeg) \
                        -DENABLE_INTERNAL_FFMPEG=OFF \
                        -DFFMPEG_INCLUDE_DIRS=$SYSROOT_PREFIX/usr \
                        -DENABLE_INTERNAL_CROSSGUID=OFF \
@@ -226,10 +225,10 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$TOOLCHAIN \
                        -DENABLE_DBUS=ON \
                        -DENABLE_XSLT=ON \
                        -DENABLE_CCACHE=ON \
-                       -DENABLE_LCMS2=ON \
+                       -DENABLE_LCMS2=OFF \
                        -DENABLE_LIRC=ON \
                        -DENABLE_EVENTCLIENTS=ON \
-                       -DENABLE_LDGOLD=OFF \
+                       -DENABLE_LDGOLD=ON \
                        $KODI_ARCH \
                        $KODI_OPENGL \
                        $KODI_OPENGLES \
@@ -280,8 +279,8 @@ post_makeinstall_target() {
     cp $PKG_DIR/scripts/kodi-config $INSTALL/usr/lib/kodi
     cp $PKG_DIR/scripts/kodi.sh $INSTALL/usr/lib/kodi
 
-  mkdir -p $INSTALL/usr/sbin
-    cp $PKG_DIR/scripts/service-addon-wrapper $INSTALL/usr/sbin
+  mkdir -p $INSTALL/usr/lib/libreelec
+    cp $PKG_DIR/scripts/systemd-addon-wrapper $INSTALL/usr/lib/libreelec
 
   mkdir -p $INSTALL/usr/bin
     cp $PKG_DIR/scripts/cputemp $INSTALL/usr/bin
@@ -297,27 +296,39 @@ post_makeinstall_target() {
     $SED "s|@ADDON_URL@|$ADDON_URL|g" -i $INSTALL/usr/share/kodi/addons/repository.libreelec.tv/addon.xml
 
   mkdir -p $INSTALL/usr/share/kodi/config
+    cp $PKG_DIR/config/guisettings.xml $INSTALL/usr/share/kodi/config
+    cp $PKG_DIR/config/sources.xml $INSTALL/usr/share/kodi/config
+
+# install project specific configs
+    if [ -n "$DEVICE" -a -f $PROJECT_DIR/$PROJECT/devices/$DEVICE/kodi/guisettings.xml ]; then
+      cp -R $PROJECT_DIR/$PROJECT/devices/$DEVICE/kodi/guisettings.xml $INSTALL/usr/share/kodi/config
+    elif [ -f $PROJECT_DIR/$PROJECT/kodi/guisettings.xml ]; then
+      cp -R $PROJECT_DIR/$PROJECT/kodi/guisettings.xml $INSTALL/usr/share/kodi/config
+    fi
+
+    if [ -n "$DEVICE" -a -f $PROJECT_DIR/$PROJECT/devices/$DEVICE/kodi/sources.xml ]; then
+      cp -R $PROJECT_DIR/$PROJECT/devices/$DEVICE/kodi/sources.xml $INSTALL/usr/share/kodi/config
+    elif [ -f $PROJECT_DIR/$PROJECT/kodi/sources.xml ]; then
+      cp -R $PROJECT_DIR/$PROJECT/kodi/sources.xml $INSTALL/usr/share/kodi/config
+    fi
+
+  mkdir -p $INSTALL/usr/share/kodi/system/
+    if [ -n "$DEVICE" -a -f $PROJECT_DIR/$PROJECT/devices/$DEVICE/kodi/advancedsettings.xml ]; then
+      cp $PROJECT_DIR/$PROJECT/devices/$DEVICE/kodi/advancedsettings.xml $INSTALL/usr/share/kodi/system/
+    elif [ -f $PROJECT_DIR/$PROJECT/kodi/advancedsettings.xml ]; then
+      cp $PROJECT_DIR/$PROJECT/kodi/advancedsettings.xml $INSTALL/usr/share/kodi/system/
+    else
+      cp $PKG_DIR/config/advancedsettings.xml $INSTALL/usr/share/kodi/system/
+    fi
+
   mkdir -p $INSTALL/usr/share/kodi/system/settings
-
-  $PKG_DIR/scripts/xml_merge.py $PKG_DIR/config/guisettings.xml \
-                                $PROJECT_DIR/$PROJECT/kodi/guisettings.xml \
-                                $PROJECT_DIR/$PROJECT/devices/$DEVICE/kodi/guisettings.xml \
-                                > $INSTALL/usr/share/kodi/config/guisettings.xml
-
-  $PKG_DIR/scripts/xml_merge.py $PKG_DIR/config/sources.xml \
-                                $PROJECT_DIR/$PROJECT/kodi/sources.xml \
-                                $PROJECT_DIR/$PROJECT/devices/$DEVICE/kodi/sources.xml \
-                                > $INSTALL/usr/share/kodi/config/sources.xml
-
-  $PKG_DIR/scripts/xml_merge.py $PKG_DIR/config/advancedsettings.xml \
-                                $PROJECT_DIR/$PROJECT/kodi/advancedsettings.xml \
-                                $PROJECT_DIR/$PROJECT/devices/$DEVICE/kodi/advancedsettings.xml \
-                                > $INSTALL/usr/share/kodi/system/advancedsettings.xml
-
-  $PKG_DIR/scripts/xml_merge.py $PKG_DIR/config/appliance.xml \
-                                $PROJECT_DIR/$PROJECT/kodi/appliance.xml \
-                                $PROJECT_DIR/$PROJECT/devices/$DEVICE/kodi/appliance.xml \
-                                > $INSTALL/usr/share/kodi/system/settings/appliance.xml
+    if [ -n "$DEVICE" -a -f $PROJECT_DIR/$PROJECT/devices/$DEVICE/kodi/appliance.xml ]; then
+      cp $PROJECT_DIR/$PROJECT/devices/$DEVICE/kodi/appliance.xml $INSTALL/usr/share/kodi/system/settings
+    elif [ -f $PROJECT_DIR/$PROJECT/kodi/appliance.xml ]; then
+      cp $PROJECT_DIR/$PROJECT/kodi/appliance.xml $INSTALL/usr/share/kodi/system/settings
+    else
+      cp $PKG_DIR/config/appliance.xml $INSTALL/usr/share/kodi/system/settings
+    fi
 
   # update addon manifest
   ADDON_MANIFEST=$INSTALL/usr/share/kodi/system/addon-manifest.xml
@@ -327,7 +338,7 @@ post_makeinstall_target() {
   xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "os.openelec.tv" $ADDON_MANIFEST
   xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "repository.libreelec.tv" $ADDON_MANIFEST
   xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "service.libreelec.settings" $ADDON_MANIFEST
-  if [ "$DEVICE" = "Slice" -o "$DEVICE" = "Slice3" ]; then
+  if [ "$PROJECT" = "Slice" -o "$PROJECT" = "Slice3" ]; then
     xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "service.slice" $ADDON_MANIFEST
   fi
 
