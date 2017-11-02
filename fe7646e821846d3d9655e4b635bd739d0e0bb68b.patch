@@ -1,0 +1,89 @@
+From fe7646e821846d3d9655e4b635bd739d0e0bb68b Mon Sep 17 00:00:00 2001
+From: MilhouseVH <milhouseVH.github@nmacleod.com>
+Date: Sun, 29 Oct 2017 12:01:52 +0100
+Subject: [PATCH] buildsystem: remove grep from PKG_ARCH check
+
+More efficient, slightly more functional.
+
+Can be a space delimited list of architectures.
+
+Architectures to be excluded can be specified with !ARCH.
+
+Allows "any !arm" to be interpreted as "any arch, but not arm".
+
+Blank/undefined is equivalent to "any".
+---
+ scripts/build        | 6 +++---
+ scripts/create_addon | 6 +++---
+ scripts/install      | 6 +++---
+ scripts/uninstall    | 6 +++---
+ 4 files changed, 12 insertions(+), 12 deletions(-)
+
+diff --git a/scripts/build b/scripts/build
+index fa50ff8529a..9de67ef3499 100755
+--- a/scripts/build
++++ b/scripts/build
+@@ -44,9 +44,9 @@ else
+ fi
+ [ -z "$TARGET" ] && TARGET="target"
+ 
+-if [ -n "$PKG_ARCH" -a ! "$PKG_ARCH" = "any" ]; then
+-  echo "$PKG_ARCH" | grep -q "$TARGET_ARCH" || exit 0
+-  echo "$PKG_ARCH" | grep -q "\-$TARGET_ARCH" && exit 0
++if [ -n "$PKG_ARCH" ]; then
++  listcontains "$PKG_ARCH" "!$TARGET_ARCH" && exit 0
++  listcontains "$PKG_ARCH" "$TARGET_ARCH" || listcontains "$PKG_ARCH" "any" || exit 0
+ fi
+ 
+ unset INSTALL
+diff --git a/scripts/create_addon b/scripts/create_addon
+index 89131d1e403..2b147117a57 100755
+--- a/scripts/create_addon
++++ b/scripts/create_addon
+@@ -25,9 +25,9 @@ if [ -z "$1" ]; then
+   exit 1
+ fi
+ 
+-if [ -n "$PKG_ARCH" -a ! "$PKG_ARCH" = "any" ]; then
+-  echo "$PKG_ARCH" | grep -q "$TARGET_ARCH" || exit 0
+-  echo "$PKG_ARCH" | grep -q "\-$TARGET_ARCH" && exit 0
++if [ -n "$PKG_ARCH" ]; then
++  listcontains "$PKG_ARCH" "!$TARGET_ARCH" && exit 0
++  listcontains "$PKG_ARCH" "$TARGET_ARCH" || listcontains "$PKG_ARCH" "any" || exit 0
+ fi
+ 
+ if [ -n "$PKG_ADDON_PROJECTS" -a ! "$PKG_ADDON_PROJECTS" = "any" ]; then
+diff --git a/scripts/install b/scripts/install
+index 96ff3b5f25b..5c04d61caee 100755
+--- a/scripts/install
++++ b/scripts/install
+@@ -46,9 +46,9 @@ mkdir -p $STAMPS_INSTALL/$PACKAGE_NAME
+ 
+ [ -f $STAMP ] && exit 0
+ 
+-if [ -n "$PKG_ARCH" -a ! "$PKG_ARCH" = "any" ]; then
+-  echo "$PKG_ARCH" | grep -q "$TARGET_ARCH" || exit 0
+-  echo "$PKG_ARCH" | grep -q "\-$TARGET_ARCH" && exit 0
++if [ -n "$PKG_ARCH" ]; then
++  listcontains "$PKG_ARCH" "!$TARGET_ARCH" && exit 0
++  listcontains "$PKG_ARCH" "$TARGET_ARCH" || listcontains "$PKG_ARCH" "any" || exit 0
+ fi
+ 
+ if [ ! -f $PKG_DIR/package.mk ]; then
+diff --git a/scripts/uninstall b/scripts/uninstall
+index 7acd58f9e57..37146d9dc93 100755
+--- a/scripts/uninstall
++++ b/scripts/uninstall
+@@ -34,9 +34,9 @@ else
+ fi
+ [ -z "$TARGET" ] && TARGET="target"
+ 
+-if [ -n "$PKG_ARCH" -a ! "$PKG_ARCH" = "any" ]; then
+-  echo "$PKG_ARCH" | grep -q "$TARGET_ARCH" || exit 0
+-  echo "$PKG_ARCH" | grep -q "\-$TARGET_ARCH" && exit 0
++if [ -n "$PKG_ARCH" ]; then
++  listcontains "$PKG_ARCH" "!$TARGET_ARCH" && exit 0
++  listcontains "$PKG_ARCH" "$TARGET_ARCH" || listcontains "$PKG_ARCH" "any" || exit 0
+ fi
+ 
+ STAMP=$STAMPS/$PACKAGE_NAME/build_$TARGET
