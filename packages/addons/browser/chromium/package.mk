@@ -43,7 +43,7 @@ PKG_ADDON_PROVIDES="executable"
 
 post_patch() {
   cd $(get_build_dir chromium)
-  # Use Python 2
+  # Use Python2
   find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$TOOLCHAIN/bin/python2|g" {} +
 
   # set correct widevine
@@ -118,9 +118,6 @@ make_target() {
     libpng
     libxslt
     yasm
-    libdrm
-    libxslt
-    libxml
   )
 
   # Remove bundled libraries for which we will use the system copies; this
@@ -140,7 +137,7 @@ make_target() {
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python2
 
-  ninja -j4 -C out/Release chrome chrome_sandbox widevinecdmadapter
+  ninja -j${CONCURRENCY_MAKE_LEVEL} -C out/Release chrome chrome_sandbox widevinecdmadapter
 }
 
 makeinstall_target() {
@@ -154,6 +151,9 @@ addon() {
   cp -P  $PKG_BUILD/out/Release/{*.pak,*.dat,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -PR $PKG_BUILD/out/Release/locales $ADDON_BUILD/$PKG_ADDON_ID/bin/
   cp -PR $PKG_BUILD/out/Release/gen/content/content_resources.pak $ADDON_BUILD/$PKG_ADDON_ID/bin/
+
+  debug_strip $ADDON_BUILD/$PKG_ADDON_ID/bin
+
   # config
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/config
   cp -P $PKG_DIR/config/* $ADDON_BUILD/$PKG_ADDON_ID/config
