@@ -27,6 +27,7 @@ PKG_DEPENDS_TARGET="zlib"
 PKG_SECTION="compress"
 PKG_SHORTDESC="Minizip zlib contribution fork with latest bug fixes"
 PKG_LONGDESC="Minizip zlib contribution fork with latest bug fixes"
+PKG_USE_NINJA="no"
 
 PKG_CMAKE_OPTS_TARGET="-DUSE_AES=OFF -DBUILD_TEST=ON"
 
