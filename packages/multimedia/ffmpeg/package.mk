@@ -78,6 +78,7 @@ pre_configure_target() {
 
 # ffmpeg fails building for x86_64 with LTO support
   strip_lto
+  strip_hard
 
 # ffmpeg fails running with GOLD support
   strip_gold
