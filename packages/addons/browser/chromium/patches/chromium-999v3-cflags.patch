@@ -15,7 +15,7 @@ index 7888e2f858..e9c376e0a5
        # TODO(phajdan.jr): Use -fstack-protector-strong when our gcc supports it.
        # See also https://crbug.com/533294
 -      cflags += [ "--param=ssp-buffer-size=4" ]
-+      cflags += [ "-fno-plt" ]
++      cflags += [ "-D_FORTIFY_SOURCE=2" ]
  
        # The x86 toolchain currently has problems with stack-protector.
        if (is_android && current_cpu == "x86") {
@@ -23,7 +23,7 @@ index 7888e2f858..e9c376e0a5
        } else if (current_os != "aix") {
          # Not available on aix.
 -        cflags += [ "-fstack-protector" ]
-+        cflags += [ "-fno-protector-strong" ]
++        cflags += [ "-fstack-protector-strong" ]
        }
      }
  
