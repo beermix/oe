@@ -45,8 +45,6 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --disable-sim \
                          --disable-gdb \
                          --disable-nls \
-                         --enable-threads \
-                         --with-pic \
                          --enable-relro \
                          --enable-poison-system-directories"
 
