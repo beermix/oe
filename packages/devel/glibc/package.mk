@@ -34,7 +34,6 @@ PKG_CONFIGURE_OPTS_TARGET="AUTOCONF=false \
                            MAKEINFO=: \
                            BASH_SHELL=/bin/sh \
                            ac_cv_path_PERL= \
-                           ac_cv_prog_MAKEINFO= \
                            --libexecdir=/usr/lib/glibc \
                            --cache-file=config.cache \
                            --disable-profile \
