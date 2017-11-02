@@ -48,7 +48,7 @@ fi
 
 if [ "$LLVM_SUPPORT" = "yes" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET elfutils llvm"
-  export LLVM_CONFIG="$SYSROOT_PREFIX/usr/bin/llvm-config-host"
+  export LLVM_CONFIG="$TOOLCHAIN/bin/llvm-config-host"
   MESA_GALLIUM_LLVM="--enable-llvm --enable-llvm-shared-libs"
 else
   MESA_GALLIUM_LLVM="--disable-llvm"
