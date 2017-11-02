@@ -52,6 +52,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libsanitizer \
                            --without-cuda-driver \
                            --disable-werror \
+                           --enable-default-pie \
                            --with-tune=generic \
                            --enable-poison-system-directories"
 
