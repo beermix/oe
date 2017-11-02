@@ -177,6 +177,12 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/share/mysql/test
   rm -rf $INSTALL/usr/share/mysql/bench
   rm -rf $INSTALL/usr/data
+  
+  rm -rf $SYSROOT_PREFIX/usr/lib/libmariadb.so.3
+  rm -rf $SYSROOT_PREFIX/usr/lib/libmariadb.so
+  rm -rf $SYSROOT_PREFIX/usr/lib/libmysqlclient.so
+  rm -rf $SYSROOT_PREFIX/usr/lib/libmysqlclient_r.so
+
 
   if [ "$PKG_MARIADB_SERVER" = "no" ]; then
     rm -rf $INSTALL/usr/bin
