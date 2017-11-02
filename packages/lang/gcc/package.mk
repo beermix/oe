@@ -48,7 +48,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
-                           --disable-vtable-verify \
                            --disable-libmudflap \
                            --disable-libitm \
                            --disable-libquadmath \
@@ -56,7 +55,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libssp \
                            --disable-libsanitizer \
                            --without-cuda-driver \
-                           --disable-werror \
                            --with-tune=generic"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
@@ -83,10 +81,9 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-long-long \
                          --enable-threads=posix \
                          --disable-libstdcxx-pch \
-                         --enable-libstdcxx-time=yes \
+                         --enable-libstdcxx-time \
                          --enable-clocale=gnu \
                          --enable-libatomic \
-                         --enable-poison-system-directories \
                          $GCC_OPTS"
 
 pre_configure_host() {
