@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="minizip"
-PKG_VERSION="db8df5b"
-PKG_SHA256="72e877f94027beb6fa34f13ea6637569ba291d075c9129098227eaa76025df97"
+PKG_VERSION="1.1"
+PKG_SHA256="5666b5ee3e85dfd2dd119970613c12e6267d31813f07d3ffa5d359fe272cb6d1"
 PKG_ARCH="any"
 PKG_LICENSE="zlib"
 PKG_SITE="https://github.com/nmoinvaz/minizip"
