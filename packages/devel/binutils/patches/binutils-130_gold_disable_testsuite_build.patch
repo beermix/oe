@@ -1,0 +1,30 @@
+Author: 
+Description: Description: Disable build of gold/testsuite
+Author: Matthias Klose
+Upstream status: local
+Index: b/gold/Makefile.am
+===================================================================
+--- a/gold/Makefile.am
++++ b/gold/Makefile.am
+@@ -19,7 +19,7 @@
+ 
+ AUTOMAKE_OPTIONS = foreign
+ 
+-SUBDIRS = po testsuite
++SUBDIRS = po
+ 
+ tooldir = $(exec_prefix)/$(target_alias)
+ 
+Index: b/gold/Makefile.in
+===================================================================
+--- a/gold/Makefile.in
++++ b/gold/Makefile.in
+@@ -475,7 +475,7 @@ top_srcdir = @top_srcdir@
+ zlibdir = @zlibdir@
+ zlibinc = @zlibinc@
+ AUTOMAKE_OPTIONS = foreign
+-SUBDIRS = po testsuite
++SUBDIRS = po
+ tooldir = $(exec_prefix)/$(target_alias)
+ ACLOCAL_AMFLAGS = -I ../bfd -I ../config
+ 
