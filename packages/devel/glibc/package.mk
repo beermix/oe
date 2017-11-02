@@ -30,13 +30,16 @@ PKG_SHORTDESC="glibc: The GNU C library"
 PKG_LONGDESC="The Glibc package contains the main C library. This library provides the basic routines for allocating memory, searching directories, opening and closing files, reading and writing files, string handling, pattern matching, arithmetic, and so on."
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
+PKG_CONFIGURE_OPTS_TARGET="AUTOCONF=false \
+                           MAKEINFO=: \
+                           BASH_SHELL=/bin/sh \
                            ac_cv_path_PERL= \
                            ac_cv_prog_MAKEINFO= \
                            --libexecdir=/usr/lib/glibc \
                            --cache-file=config.cache \
                            --disable-profile \
                            --disable-sanity-checks \
+                           --without-selinux \
                            --enable-add-ons \
                            --enable-bind-now \
                            --with-elf \
