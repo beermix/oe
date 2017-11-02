@@ -18,12 +18,10 @@
 
 PKG_NAME="gcc"
 PKG_VERSION="7.2.0"
-PKG_SHA256="1cf7adf8ff4b5aa49041c8734bbcf1ad18cc4c94d0029aae0f4e48841088479a"
 PKG_ARCH="any"
-PKG_SITE="http://gcc.gnu.org/"
 PKG_LICENSE="GPL"
-#PKG_URL="https://github.com/gcc-mirror/gcc/archive/${PKG_VERSION}.tar.gz"
-PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_SITE="http://gcc.gnu.org/"
+PKG_URL="ftp://gcc.gnu.org/pub/gcc/releases/gcc-7.2.0/gcc-7.2.0.tar.xz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host isl:host mpc:host"
 PKG_DEPENDS_TARGET="gcc:host"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host glibc"
@@ -46,13 +44,15 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-multilib \
                            --disable-nls \
                            --enable-checking=release \
-                           --enable-offload-targets=nvptx-none \
+                           --with-default-libstdcxx-abi=gcc4-compatible \
+                           --without-ppl \
+                           --without-cloog \
+                           --disable-libada \
                            --disable-vtable-verify \
-                           --enable-checking=release \
-                           --with-ppl=no \
-                           --with-cloog=no \
-                           --disable-libgomp \
                            --disable-libmudflap \
+                           --disable-libitm \
+                           --disable-libquadmath \
+                           --disable-libmpx \
                            --disable-libssp \
                            --disable-libsanitizer \
                            --without-cuda-driver \
@@ -66,7 +66,7 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-libatomic \
                               --disable-shared \
                               --disable-threads \
-                              --enable-decimal-float=no \
+                              --disable-libgomp \
                               --without-headers \
                               --with-newlib \
                               --disable-decimal-float \
