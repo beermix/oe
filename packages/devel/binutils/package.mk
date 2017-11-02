@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="binutils"
-PKG_VERSION="2.29"
-PKG_SHA256="172e8c89472cf52712fd23a9f14e9bca6182727fb45b0f8f482652a83d5a11b4"
+PKG_VERSION="2.29.1"
+#PKG_SHA256="172e8c89472cf52712fd23a9f14e9bca6182727fb45b0f8f482652a83d5a11b4"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/binutils/"
-PKG_URL="http://ftpmirror.gnu.org/binutils/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_URL="http://ftpmirror.gnu.org/binutils/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="ccache:host bison:host flex:host libelf:host quilt:host linux:host"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="binutils: A GNU collection of binary utilities"
@@ -42,8 +42,6 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-plugins \
                          --enable-ld=default \
                          --enable-lto \
-                         --disable-sim \
-                         --disable-gdb \
                          --disable-nls \
                          --enable-poison-system-directories"
 
