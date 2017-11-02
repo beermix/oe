@@ -27,6 +27,7 @@ pre_configure_target() {
   export PYTHONXCPREFIX="$SYSROOT_PREFIX/usr"
   export LDSHARED="$CC -shared"
   export CFLAGS="$CFLAGS $PYTHON_CPPFLAGS $PYTHON_LDFLAGS"
+  strip_hard
 }
 
 make_target() {

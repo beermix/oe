@@ -18,7 +18,6 @@
 
 PKG_NAME="gdb"
 PKG_VERSION="8.0.1"
-PKG_SHA256="3dbd5f93e36ba2815ad0efab030dcd0c7b211d7b353a40a53f4c02d7d56295e3"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/gdb/"
@@ -35,7 +34,6 @@ CFLAGS_FOR_BUILD="$HOST_CFLAGS"
 pre_configure_target() {
   # gdb could fail on runtime if build with LTO support
     strip_lto
-    strip_hard
 }
 
 PKG_CONFIGURE_OPTS_TARGET="bash_cv_have_mbstate_t=set \

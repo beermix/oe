@@ -17,12 +17,11 @@
 ################################################################################
 
 PKG_NAME="glibc"
-PKG_VERSION="glibc-2.26-73-g4b692dffb95ac4812b161eb6a16113d7e824982e"
-#PKG_SHA256="e54e0a934cd2bc94429be79da5e9385898d2306b9eaf3c92d5a77af96190f6bd"
+PKG_VERSION="caa6857"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="http://www.gnu.org/software/libc/"
-PKG_URL="https://dl.dropboxusercontent.com/s/6ndy6gmamstaoij/glibc-glibc-2.26-73-g4b692dffb95ac4812b161eb6a16113d7e824982e.tar.gz"
+#PKG_SITE="https://github.com/bminor/glibc/tree/release/2.26/master"
+PKG_URL="https://github.com/bminor/glibc/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap"
 PKG_DEPENDS_INIT="glibc"
 PKG_SECTION="toolchain/devel"
