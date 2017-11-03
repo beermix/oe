@@ -37,7 +37,7 @@ pre_build_target() {
   cd -
   mv $PKG_BUILD/$PKG_NAME-git/* $PKG_BUILD/
   rm -rf $PKG_BUILD/$PKG_NAME-git
-  for a in $PKG_DIR/patches/*.patch
+  for a in $PKG_DIR/patches-r/*.patch
   do
     patch -p1 -d $PKG_BUILD < $a
   done

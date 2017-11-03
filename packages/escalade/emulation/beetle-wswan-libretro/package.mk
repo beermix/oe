@@ -29,7 +29,7 @@ PKG_SECTION="libretro"
 PKG_SHORTDESC="libretro implementation of Mednafen wswan"
 PKG_LONGDESC="libretro implementation of Mednafen wswan"
 
-
+PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 pre_build_target() {

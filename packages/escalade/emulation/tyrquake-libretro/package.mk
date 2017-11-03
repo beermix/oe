@@ -29,7 +29,7 @@ PKG_SECTION="libretro"
 PKG_SHORTDESC="Libretro port of Tyrquake (Quake 1 engine)"
 PKG_LONGDESC="Libretro port of Tyrquake (Quake 1 engine)"
 
-
+PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 post_unpack() {

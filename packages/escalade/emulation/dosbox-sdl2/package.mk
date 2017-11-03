@@ -27,7 +27,7 @@ PKG_DEPENDS_TARGET="toolchain alsa-lib SDL2 SDL2_net SDL_sound fluidsynth libpng
 PKG_SECTION="emulation"
 PKG_SHORTDESC="DOSBox emulator SDL2 fork by duganchen"
 
-
+PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 if [ "$PROJECT" = "Generic" ]; then

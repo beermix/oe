@@ -27,7 +27,7 @@ PKG_DEPENDS_TARGET="toolchain libmpeg2 openal-soft glib"
 PKG_SECTION="emulation"
 PKG_SHORTDESC="FS-UAE amiga emulator libretro core."
 
-
+PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 case $PROJECT in

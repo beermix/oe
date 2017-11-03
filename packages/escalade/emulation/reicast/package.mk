@@ -27,7 +27,7 @@ PKG_DEPENDS_TARGET="toolchain alsa-utils libevdev"
 PKG_SECTION="emulation"
 PKG_SHORTDESC="Reicast is a multi-platform Sega Dreamcast emulator"
 
-
+PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 make_target() {

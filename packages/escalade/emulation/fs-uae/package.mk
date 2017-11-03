@@ -26,7 +26,7 @@ PKG_DEPENDS_TARGET="toolchain SDL2 glew glu libmpeg2 libXi openal-soft"
 PKG_SECTION="emulation"
 PKG_SHORTDESC="FS-UAE amiga emulator."
 
-
+PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
 pre_configure_target() {

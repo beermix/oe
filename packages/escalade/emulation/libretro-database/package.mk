@@ -29,7 +29,7 @@ PKG_SECTION="emulation"
 PKG_SHORTDESC="Repository containing cheatcode files, content data files, etc."
 PKG_LONGDESC="Repository containing cheatcode files, content data files, etc."
 
-
+PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 pre_configure_target() {

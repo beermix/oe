@@ -29,7 +29,7 @@ PKG_SECTION="emulation"
 PKG_SHORTDESC="RetroArch joypad autoconfig files"
 PKG_LONGDESC="RetroArch joypad autoconfig files"
 
-
+PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 post_unpack() {

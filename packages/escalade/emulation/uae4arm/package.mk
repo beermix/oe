@@ -26,7 +26,7 @@ PKG_DEPENDS_TARGET="toolchain alsa-lib freetype zlib SDL SDL_image SDL_ttf SDL_g
 PKG_SECTION="emulation"
 PKG_SHORTDESC="uae4arm-rpi amiga emulator."
 
-
+PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 post_unpack() {

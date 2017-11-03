@@ -26,7 +26,7 @@ PKG_DEPENDS_TARGET="toolchain retroarch"
 PKG_SECTION="emulation"
 PKG_SHORTDESC="libretro Craft core"
 
-
+PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 PKG_USE_CMAKE="no"
 

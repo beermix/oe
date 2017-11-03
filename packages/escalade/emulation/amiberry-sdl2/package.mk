@@ -15,7 +15,7 @@ PKG_DEPENDS_TARGET="toolchain alsa-lib freetype zlib SDL2 SDL2_ttf SDL2_image li
 PKG_SECTION="emulation"
 PKG_SHORTDESC="Amiga emulator optimized for Raspberry Pi"
 
-
+PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 make_target() {

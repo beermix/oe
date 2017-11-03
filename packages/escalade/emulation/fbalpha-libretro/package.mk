@@ -30,7 +30,7 @@ PKG_SECTION="emulation"
 PKG_SHORTDESC="Port of Final Burn Alpha to Libretro."
 PKG_LONGDESC="Currently, FB Alpha supports games on Capcom CPS-1 and CPS-2 hardware, SNK Neo-Geo hardware, Toaplan hardware, Cave hardware, and various games on miscellaneous hardware. "
 
-
+PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 make_target() {

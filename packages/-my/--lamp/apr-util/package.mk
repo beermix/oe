@@ -18,7 +18,7 @@
 ################################################################################
 
 PKG_NAME="apr-util"
-PKG_VERSION="1.6.0"
+PKG_VERSION="1.6.1"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="Apache License"
