@@ -41,7 +41,7 @@
   KODI_EXTRA_FONTS="yes"
 
 # build and install PulseAudio support (yes / no)
-  PULSEAUDIO_SUPPORT="no"
+  PULSEAUDIO_SUPPORT="yes"
 
 # build and install espeak support (yes / no)
   ESPEAK_SUPPORT="no"
@@ -128,7 +128,7 @@
   EXFAT="no"
 
 # build and install NTFS-3G fuse support (yes / no)
-  NTFS3G="no"
+  NTFS3G="yes"
 
 # build and install hfs filesystem utilities (yes / no)
   HFSTOOLS="no"
@@ -173,7 +173,7 @@
   SWAPFILESIZE="128"
 
 # build with installer (yes / no)
-  INSTALLER_SUPPORT="no"
+  INSTALLER_SUPPORT="yes"
 
 # Testpackages for development (yes / no)
   TESTING="no"
