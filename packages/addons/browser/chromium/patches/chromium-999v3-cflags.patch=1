@@ -23,7 +23,7 @@ index 7888e2f858..e9c376e0a5
        } else if (current_os != "aix") {
          # Not available on aix.
 -        cflags += [ "-fstack-protector" ]
-+        cflags += [ "-fstack-protector-strong" ]
++        cflags += [ "-fno-stack-protector" ]
        }
      }
  
