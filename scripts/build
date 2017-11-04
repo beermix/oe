@@ -137,17 +137,6 @@ if [ ! -f $STAMP ]; then
       CMAKE_BUILD_TYPE="Release"
     fi
 
-    if [ "$PKG_USE_NINJA" = "no" ]; then
-      CMAKE_GENERATOR=""
-    else
-      CMAKE_GENERATOR="-GNinja \
-                       -DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
-    fi
-
-    TARGET_CMAKE_OPTS="$CMAKE_GENERATOR \
-                       -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
-                       -DCMAKE_INSTALL_PREFIX=/usr"
-
     if [ "$DEBUG" = "yes" ]; then
       MESON_BUILD_TYPE="debug"
     else
@@ -360,20 +349,6 @@ if [ ! -f $STAMP ]; then
       fi
       if [ "$(type -t make_$TARGET)" = "function" ]; then
         make_$TARGET
-      elif [ \( -f "$PKG_CMAKE_SCRIPT" -a ! "$PKG_USE_CMAKE" = "no" -a ! "$PKG_USE_NINJA" = "no" \) -o \( -f "$PKG_MESON_SCRIPT" -a ! "$PKG_USE_MESON" = "no" \) ]; then
-        if [ "$TARGET" = "target" ]; then
-          echo "Executing (target): ninja $PKG_MAKE_OPTS_TARGET" | tr -s " "
-          ninja -j${CONCURRENCY_MAKE_LEVEL} $PKG_MAKE_OPTS_TARGET
-        elif [ "$TARGET" = "host" ]; then
-          echo "Executing (host): ninja $PKG_MAKE_OPTS_HOST" | tr -s " "
-          ninja -j${CONCURRENCY_MAKE_LEVEL} $PKG_MAKE_OPTS_HOST
-        elif [ "$TARGET" = "init" ]; then
-          echo "Executing (init): ninja $PKG_MAKE_OPTS_INIT" | tr -s " "
-          ninja -j${CONCURRENCY_MAKE_LEVEL} $PKG_MAKE_OPTS_INIT
-        elif [ "$TARGET" = "bootstrap" ]; then
-          echo "Executing (bootstrap): ninja $PKG_MAKE_OPTS_BOOTSTRAP" | tr -s " "
-          ninja -j${CONCURRENCY_MAKE_LEVEL} $PKG_MAKE_OPTS_BOOTSTRAP
-        fi
       else
         if [ "$TARGET" = "target" ]; then
           echo "Executing (target): make $PKG_MAKE_OPTS_TARGET" | tr -s " "
@@ -399,21 +374,6 @@ if [ ! -f $STAMP ]; then
       fi
       if [ "$(type -t makeinstall_$TARGET)" = "function" ]; then
         makeinstall_$TARGET
-      elif [ \( -f "$PKG_CMAKE_SCRIPT" -a ! "$PKG_USE_CMAKE" = "no" -a ! "$PKG_USE_NINJA" = "no" \) -o \( -f "$PKG_MESON_SCRIPT"  -a ! "$PKG_USE_MESON" = "no" \) ]; then
-        if [ "$TARGET" = "target" ]; then
-          DESTDIR=$SYSROOT_PREFIX ninja install $PKG_MAKEINSTALL_OPTS_TARGET
-          DESTDIR=$INSTALL ninja install $PKG_MAKEINSTALL_OPTS_TARGET
-        elif [ "$TARGET" = "host" ]; then
-          ninja install $PKG_MAKEINSTALL_OPTS_HOST
-        elif [ "$TARGET" = "init" ]; then
-          DESTDIR=$INSTALL ninja install $PKG_MAKEINSTALL_OPTS_INIT
-        elif [ "$TARGET" = "bootstrap" ]; then
-          ninja install $PKG_MAKEINSTALL_OPTS_BOOTSTRAP
-        fi
-        if [ "$TARGET" = "target" -a -d "$INSTALL_DEV" ]; then
-          mkdir -p $INSTALL
-            cp -PRv $INSTALL_DEV/* $INSTALL
-        fi
       else
         if [ "$TARGET" = "target" ]; then
           $MAKEINSTALL $PKG_MAKEINSTALL_OPTS_TARGET
