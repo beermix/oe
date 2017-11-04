@@ -687,7 +687,7 @@
       if [ -n "$OVERLAY" ]; then
         OVERLAY_DIR=`cat /sys/class/net/eth0/address | tr -d :`
 
-        mount_part "$disk" "/storage" "attr2,inode64,noquota,relatime,rw"
+        mount_part "$disk" "/storage" "rw,noatime"
         mkdir -p /storage/$OVERLAY_DIR
         umount /storage
 
@@ -700,7 +700,7 @@
           disk="$target/$OVERLAY_DIR,$options"
         fi
       fi
-      mount_part "$disk" "/storage" "attr2,inode64,noquota,relatime,rw"
+      mount_part "$disk" "/storage" "rw,noatime"
     else
       # /storage should always be writable
       mount -t tmpfs none /storage
