@@ -138,7 +138,8 @@ if [ ! -f $STAMP ]; then
     if [ "$PKG_USE_NINJA" = "no" ]; then
       CMAKE_GENERATOR=""
     else
-      CMAKE_GENERATOR=""
+      CMAKE_GENERATOR="-GNinja \
+                       -DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
     fi
 
     TARGET_CMAKE_OPTS="$CMAKE_GENERATOR \

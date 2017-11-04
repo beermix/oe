@@ -32,7 +32,15 @@ PKG_MESON_OPTS_TARGET="-Ddocumentation=false \
 			  -Dlibwacom=false \
 			  -Dtests=false \
 			  -Ddebug-gui=false"
-			  
+
+make_target() {
+  ninja -j${CONCURRENCY_MAKE_LEVEL}
+}
+
+makeinstall_target() {
+  ninja install
+}
+
 pre_configure_target() {
   export LC_ALL=en_US.UTF-8
 
