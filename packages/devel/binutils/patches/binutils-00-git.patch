@@ -58096,3 +58096,37 @@ index ad1621010d..bc41a70515 100644
  #define BFD_VERSION @bfd_version@
  #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
  #define REPORT_BUGS_TO @report_bugs_to@
+
+commit e7098a0b49cff5d117666d05b159833467666e06
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Fri Nov 3 00:01:25 2017 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index bc41a70515..ace5cacb63 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20171102
++#define BFD_VERSION_DATE 20171103
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit ec6cda43202b04dd30d07a59eaabe610d057405a
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sat Nov 4 00:01:23 2017 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index ace5cacb63..52ce8b1ced 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20171103
++#define BFD_VERSION_DATE 20171104
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
