@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="glibc"
-PKG_VERSION="00cdcf5"
+PKG_VERSION="febbdd6"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/bminor/glibc/tree/release/2.26/master"
@@ -166,6 +166,14 @@ post_makeinstall_target() {
     mkdir -p $INSTALL/usr/share/i18n/charmaps
     cp -PR $PKG_BUILD/localedata/charmaps/UTF-8 $INSTALL/usr/share/i18n/charmaps
     gzip $INSTALL/usr/share/i18n/charmaps/UTF-8
+    
+    mkdir -p $INSTALL/usr/lib/locale
+    mkdir -p $INSTALL/etc/profile.d
+    I18NPATH=../localedata 
+    localedef -i ../localedata/locales/en_US -f ../localedata/charmaps/UTF-8 en_US.UTF-8 --prefix=$INSTALL
+    localedef -i ../localedata/locales/ru_RU -f ../localedata/charmaps/UTF-8 ru_RU.UTF-8 --prefix=$INSTALL
+    echo "export LANG=en_US.UTF-8" > $INSTALL/etc/profile.d/01-locale.conf
+    echo "export LANG=ru_RU.UTF-8" > $INSTALL/etc/profile.d/01-locale.conf
   fi
 
   if [ ! "$GLIBC_LOCALES" = yes ]; then
