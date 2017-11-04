@@ -46,6 +46,7 @@ pre_configure_target() {
   else
     export DEVINPUT_HEADER=${SYSROOT_PREFIX}/usr/include/linux/input.h
   fi
+  strip_hard
 }
 
 post_makeinstall_target() {
