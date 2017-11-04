@@ -33,18 +33,6 @@ PKG_MESON_OPTS_TARGET="-Ddocumentation=false \
 			  -Dtests=false \
 			  -Ddebug-gui=false"
 
-make_target() {
-  ninja -j${CONCURRENCY_MAKE_LEVEL}
-}
-
-makeinstall_target() {
-  ninja install
-}
-
 pre_configure_target() {
   export LC_ALL=en_US.UTF-8
-
-  # meson needs a host compiler and it's detected through the environment. meh.
-  export CC="$HOST_CC"
-  export CXX="$HOST_CXX"
 }
