@@ -56,6 +56,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libssp \
                            --without-cuda-driver \
                            --disable-vtable-verify \
+                           --enable-default-pie \
                            --enable-poison-system-directories \
                            --with-tune=generic -v"
 
