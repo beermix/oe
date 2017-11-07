@@ -55,6 +55,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libssp \
                            --without-cuda-driver \
                            --disable-vtable-verify \
+                           --disable-libsanitizer \
                            --enable-default-pie \
                            --enable-poison-system-directories \
                            --with-tune=generic -v"
@@ -62,7 +63,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
-                              --disable-libsanitizer \
                               --enable-cloog-backend=isl \
                               --disable-shared \
                               --disable-threads \
