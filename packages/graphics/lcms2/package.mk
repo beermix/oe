@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="lcms2"
-PKG_VERSION="f0341e4"
+PKG_VERSION="29b019f"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="MIT"
