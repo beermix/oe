@@ -34,30 +34,32 @@ PKG_AUTORECONF="no"
 # On Fedora `dnf install golang` will install go to /usr/lib/golang
 #
 # On Ubuntu you need to install golang manually, similar to:
-# $ wget https://storage.googleapis.com/golang/go1.6.linux-amd64.tar.gz
-# $ tar xf go1.6.linux-amd64.tar.gz -C /opt/
+# $ wget https://storage.googleapis.com/golang/go1.7.1.linux-amd64.tar.gz
+# $ tar xf go1.7.1.linux-amd64.tar.gz -C /opt/
 # $ ln -s /opt/go /usr/lib/golang
 ####################################################################
 
 configure_host() {
   export GOOS=linux
   export GOROOT_FINAL=$TOOLCHAIN/lib/golang
-  if [ -x /usr/lib/go/bin/go ]; then
-    export GOROOT_BOOTSTRAP=/usr/lib/go
-  else
-    export GOROOT_BOOTSTRAP=/usr/lib/golang
-  fi
+  #export GOROOT_BOOTSTRAP=/usr/lib/golang
   export GOARCH=amd64
+  export CGO_ENABLED=1
+  export CC_FOR_TARGET="$CC"
+  export CXX_FOR_TARGET="$CXX"
+  
+  export CC="$CC"
+  export CXX="$CXX"
+  export LD="$LD"
+  
+#  export GOPATH="$srcdir"
+#  export GOROOT="$builddir"
+#  export GOBIN="$GOROOT"/bin
 }
 
 make_host() {
   cd $PKG_BUILD/src
-  bash make.bash --no-banner
-}
-
-pre_makeinstall_host() {
-  # need to cleanup old golang version when updating to a new version
-  rm -rf $TOOLCHAIN/lib/golang
+  ./make.bash --no-clear
 }
 
 makeinstall_host() {
