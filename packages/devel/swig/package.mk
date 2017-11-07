@@ -17,7 +17,8 @@
 ################################################################################
 
 PKG_NAME="swig"
-PKG_VERSION="3.0.10"
+PKG_VERSION="3.0.12"
+PKG_SHA256="7cf9f447ae7ed1c51722efc45e7f14418d15d7a1e143ac9f09a668999f4fc94d"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.swig.org"
@@ -26,10 +27,10 @@ PKG_DEPENDS_HOST="ccache:host pcre:host"
 PKG_SECTION="devel"
 PKG_SHORTDESC="SWIG: a software development tool that connects programs written in C and C++ with a variety of high-level programming languages."
 PKG_LONGDESC="SWIG is a software development tool that connects programs written in C and C++ with a variety of high-level programming languages."
-PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_HOST="--with-boost=no \
+PKG_CONFIGURE_OPTS_HOST="--program-suffix=3.0 \
+                         --with-boost=no \
                          --without-x \
                          --without-tcl \
                          --without-perl5 \
@@ -45,7 +46,12 @@ PKG_CONFIGURE_OPTS_HOST="--with-boost=no \
                          --without-pike \
                          --without-chicken \
                          --without-csharp \
+                         --without-lua \
                          --without-allegrocl \
                          --without-clisp \
                          --without-r \
                          --without-d"
+
+post_makeinstall_host() {
+  ln -sf swig3.0 $TOOLCHAIN/bin/swig
+}
