@@ -17,32 +17,56 @@
 ################################################################################
 
 PKG_NAME="runc"
-PKG_VERSION="9c2d8d184e5da67c95d601382adf14862e4f2228"
+PKG_VERSION="0351df1"
+PKG_SHA256="f3c59d337e52808da93e2514ddac829dd81a2b4f19529a35301819ae2524434e"
 PKG_ARCH="any"
 PKG_LICENSE="APL"
 PKG_SITE="https://github.com/opencontainers/runc"
-PKG_URL="https://github.com/opencontainers/runc/archive/$PKG_VERSION.tar.gz"
+PKG_URL="https://github.com/opencontainers/runc/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain go:host"
-
+PKG_SECTION="system"
+PKG_SHORTDESC="runc is a CLI tool for spawning and running containers according to the OCI specification"
+PKG_LONGDESC="runc is a CLI tool for spawning and running containers according to the OCI specification"
 PKG_AUTORECONF="no"
 
-unpack() {
-  tar xf $SOURCES/$PKG_NAME/$PKG_VERSION.tar.gz -C $BUILD
-}
-
 pre_make_target() {
+  case $TARGET_ARCH in
+    x86_64)
+      export GOARCH=amd64
+      ;;
+    arm)
+      export GOARCH=arm
+
+      case $TARGET_CPU in
+        arm1176jzf-s)
+          export GOARM=6
+          ;;
+        cortex-a7)
+         export GOARM=7
+         ;;
+      esac
+      ;;
+    aarch64)
+      export GOARCH=arm64
+      ;;
+  esac
+
   export GOOS=linux
-  export GOARCH=amd64
   export CGO_ENABLED=1
   export CGO_NO_EMULATION=1
   export CGO_CFLAGS=$CFLAGS
-  export LDFLAGS="-s -w -extldflags -static -X main.gitCommit=${PKG_VERSION} -X main.version=$(cat ./VERSION) -extld $CC"
+  export LDFLAGS="-w -extldflags -static -X main.gitCommit=${PKG_VERSION} -X main.version=$(cat ./VERSION) -extld $CC -s"
   export GOLANG=$TOOLCHAIN/lib/golang/bin/go
-  export GOPATH=$PKG_BUILD.gopath:$PKG_BUILD/Godeps/_workspace/
+  export GOPATH=$PKG_BUILD/.gopath
   export GOROOT=$TOOLCHAIN/lib/golang
   export PATH=$PATH:$GOROOT/bin
 
-  ln -fs $PKG_BUILD $PKG_BUILD/Godeps/_workspace/src/github.com/opencontainers/runc
+  mkdir -p $PKG_BUILD/.gopath
+  if [ -d $PKG_BUILD/vendor ]; then
+    mv $PKG_BUILD/vendor $PKG_BUILD/.gopath/src
+  fi
+
+  ln -fs $PKG_BUILD $PKG_BUILD/.gopath/src/github.com/opencontainers/runc
 }
 
 make_target() {
