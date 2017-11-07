@@ -30,9 +30,9 @@ PKG_SHORTDESC="iptables: IP packet filter administration"
 PKG_LONGDESC="Iptables is used to set up, maintain, and inspect the tables of IP packet filter rules in the Linux kernel. There are several different tables which may be defined, and each table contains a number of built-in chains, and may contain user-defined chains."
 PKG_AUTORECONF="yes"
 
-pre_configure_target() {
- CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
-}
+#pre_configure_target() {
+# CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
+#}
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-static --with-kernel=$(kernel_path)"
+PKG_CONFIGURE_OPTS_TARGET="--disable-ipv6 --with-kernel=$(kernel_path)"
 
