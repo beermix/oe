@@ -39,9 +39,9 @@ diff --git a/bfd/ChangeLog b/bfd/ChangeLog
 index 89f4338677..ca2bf2d51a 100644
 --- a/bfd/ChangeLog
 +++ b/bfd/ChangeLog
-@@ -1,3 +1,12 @@
-+2017-07-24  Tristan Gingold  <gingold@adacore.com>
-+
+@@ -1,5 +1,14 @@
+ 2017-07-24  Tristan Gingold  <gingold@adacore.com>
+ 
 +	* version.m4: Bump version to 2.29.0
 +	* configure: Regenerate.
 +
@@ -49,9 +49,11 @@ index 89f4338677..ca2bf2d51a 100644
 +
 +	* development.sh: Set development to true.
 +
- 2017-07-24  Tristan Gingold  <gingold@adacore.com>
- 
++2017-07-24  Tristan Gingold  <gingold@adacore.com>
++
  	* version.m4: Bump version to 2.29
+ 	* configure: Regenerate.
+ 
 diff --git a/bfd/configure b/bfd/configure
 index 7c8ebb1c1c..cda26d8234 100755
 --- a/bfd/configure
@@ -12309,19 +12311,22 @@ diff --git a/bfd/ChangeLog b/bfd/ChangeLog
 index 103334d34e..048bf141c9 100644
 --- a/bfd/ChangeLog
 +++ b/bfd/ChangeLog
-@@ -1,3 +1,12 @@
-+2017-08-01  Andreas Krebbel  <krebbel@linux.vnet.ibm.com>
-+
-+	Backport from mainline
+@@ -1,6 +1,15 @@
+ 2017-08-01  Andreas Krebbel  <krebbel@linux.vnet.ibm.com>
+ 
+ 	Backport from mainline
 +	2017-08-01  Andreas Krebbel  <krebbel@linux.vnet.ibm.com>
 +
 +	* elf32-s390.c (elf_s390_finish_dynamic_sections): Skip if it
 +	isn't the S/390 specific elf data.
 +	* elf64-s390.c (elf_s390_finish_dynamic_sections): Likewise.
 +
- 2017-08-01  Andreas Krebbel  <krebbel@linux.vnet.ibm.com>
++2017-08-01  Andreas Krebbel  <krebbel@linux.vnet.ibm.com>
++
++	Backport from mainline
+ 	2017-07-28  Andreas Krebbel  <krebbel@linux.vnet.ibm.com>
  
- 	Backport from mainline
+ 	* elf32-s390.c (elf_s390_finish_dynamic_sections): Add NULL
 diff --git a/bfd/elf32-s390.c b/bfd/elf32-s390.c
 index 8adf9e4784..4aa3915cb2 100644
 --- a/bfd/elf32-s390.c
@@ -13754,17 +13759,19 @@ diff --git a/ld/ChangeLog b/ld/ChangeLog
 index 61458ebe06..8b656e66eb 100644
 --- a/ld/ChangeLog
 +++ b/ld/ChangeLog
-@@ -1,3 +1,10 @@
-+2017-08-13  H.J. Lu  <hongjiu.lu@intel.com>
-+
+@@ -1,5 +1,12 @@
+ 2017-08-13  H.J. Lu  <hongjiu.lu@intel.com>
+ 
 +	PR ld/21923
 +	* configure.ac (TESTBFDLIB): Replace --rpath with -Wl,--rpath,
 +	for --disable-static.
 +	* configure: Regenerated.
 +
- 2017-08-13  H.J. Lu  <hongjiu.lu@intel.com>
- 
++2017-08-13  H.J. Lu  <hongjiu.lu@intel.com>
++
  	* testsuite/ld-i386/i386.exp: Run pr21884-nacl.
+ 	* testsuite/ld-x86-64/x86-64.exp: Likewise.
+ 	* testsuite/ld-i386/pr21884.d: Don't run on nacl targets.
 diff --git a/ld/configure b/ld/configure
 index 7b66a4f77b..20fb84d036 100755
 --- a/ld/configure
@@ -14107,16 +14114,18 @@ diff --git a/bfd/ChangeLog b/bfd/ChangeLog
 index 497bcbc066..bb40871af2 100644
 --- a/bfd/ChangeLog
 +++ b/bfd/ChangeLog
-@@ -1,3 +1,9 @@
-+2017-08-17  Szabolcs Nagy  <szabolcs.nagy@arm.com>
-+
+@@ -1,5 +1,11 @@
+ 2017-08-17  Szabolcs Nagy  <szabolcs.nagy@arm.com>
+ 
 +	PR ld/18808
 +	* elfnn-aarch64.c (elfNN_aarch64_final_link_relocate): Skip IFUNC
 +	relocations in debug sections, change abort to _bfd_error_handler.
 +
- 2017-08-17  Szabolcs Nagy  <szabolcs.nagy@arm.com>
- 
++2017-08-17  Szabolcs Nagy  <szabolcs.nagy@arm.com>
++
  	PR ld/18841
+ 	* elfnn-aarch64.c (elfNN_aarch64_reloc_type_class): Return
+ 	reloc_class_ifunc for ifunc symbols.
 diff --git a/bfd/elfnn-aarch64.c b/bfd/elfnn-aarch64.c
 index 18db07f8a5..74beaf4f95 100644
 --- a/bfd/elfnn-aarch64.c
@@ -17936,18 +17945,20 @@ diff --git a/gas/ChangeLog b/gas/ChangeLog
 index 028a82c70c..84aad433e2 100644
 --- a/gas/ChangeLog
 +++ b/gas/ChangeLog
-@@ -1,3 +1,11 @@
-+2017-08-30  Maciej W. Rozycki  <macro@imgtec.com>
-+
+@@ -1,5 +1,13 @@
+ 2017-08-30  Maciej W. Rozycki  <macro@imgtec.com>
+ 
 +	* testsuite/gas/mips/branch-addend-micromips.d: New test.
 +	* testsuite/gas/mips/branch-addend-micromips-n32.d: New test.
 +	* testsuite/gas/mips/branch-addend-micromips-n64.d: New test.
 +	* testsuite/gas/mips/branch-addend-micromips.s: New test source.
 +	* testsuite/gas/mips/mips.exp: Run the new tests.
 +
- 2017-08-30  Maciej W. Rozycki  <macro@imgtec.com>
- 
++2017-08-30  Maciej W. Rozycki  <macro@imgtec.com>
++
  	* config/tc-mips.c (md_convert_frag): Respect
+ 	`mips_ignore_branch_isa'.
+ 	* testsuite/gas/mips/branch-local-5.d: New test.
 diff --git a/gas/testsuite/gas/mips/branch-addend-micromips-n32.d b/gas/testsuite/gas/mips/branch-addend-micromips-n32.d
 new file mode 100644
 index 0000000000..085cc2256f
@@ -21220,16 +21231,18 @@ diff --git a/bfd/ChangeLog b/bfd/ChangeLog
 index e9ea6cfdda..8db7080931 100644
 --- a/bfd/ChangeLog
 +++ b/bfd/ChangeLog
-@@ -1,3 +1,9 @@
-+2017-09-01  Nick Clifton  <nickc@redhat.com>
-+
+@@ -1,5 +1,11 @@
+ 2017-09-01  Nick Clifton  <nickc@redhat.com>
+ 
 +	PR 21933
 +	PR 22060
 +	* elf.c (elf_read_notes): Check for a note size of -1.
 +
- 2017-09-01  Nick Clifton  <nickc@redhat.com>
- 
++2017-09-01  Nick Clifton  <nickc@redhat.com>
++
  	PR 22058
+ 	* elf-attrs.c (_bfd_elf_parse_attributes): Ensure that the
+ 	attribute buffer is NUL terminated.
 diff --git a/bfd/elf.c b/bfd/elf.c
 index 063a6e4bb3..fbf639b357 100644
 --- a/bfd/elf.c
@@ -22421,16 +22434,18 @@ diff --git a/bfd/ChangeLog b/bfd/ChangeLog
 index 8db7080931..ce926fe727 100644
 --- a/bfd/ChangeLog
 +++ b/bfd/ChangeLog
-@@ -1,3 +1,9 @@
-+2017-09-01  Nick Clifton  <nickc@redhat.com>
-+
+@@ -1,5 +1,11 @@
+ 2017-09-01  Nick Clifton  <nickc@redhat.com>
+ 
 +	PR 22059
 +	* dwarf2.c (decode_line_info): Fix test for an overlong line info
 +	structure.
 +
- 2017-09-01  Nick Clifton  <nickc@redhat.com>
- 
++2017-09-01  Nick Clifton  <nickc@redhat.com>
++
  	PR 21933
+ 	PR 22060
+ 	* elf.c (elf_read_notes): Check for a note size of -1.
 diff --git a/bfd/dwarf2.c b/bfd/dwarf2.c
 index 04a2585be2..877962783b 100644
 --- a/bfd/dwarf2.c
@@ -23635,16 +23650,18 @@ diff --git a/bfd/ChangeLog b/bfd/ChangeLog
 index 93142541d0..b5f1204e64 100644
 --- a/bfd/ChangeLog
 +++ b/bfd/ChangeLog
-@@ -1,3 +1,9 @@
-+2017-09-01  H.J. Lu  <hongjiu.lu@intel.com>
-+
+@@ -1,5 +1,11 @@
+ 2017-09-01  H.J. Lu  <hongjiu.lu@intel.com>
+ 
 +	PR ld/22064
 +	* elf64-x86-64.c (elf_x86_64_finish_dynamic_symbol): Check
 +	ELF_COMMON_DEF_P for common symbols.
 +
- 2017-09-01  H.J. Lu  <hongjiu.lu@intel.com>
- 
++2017-09-01  H.J. Lu  <hongjiu.lu@intel.com>
++
  	PR ld/22061
+ 	* elf32-i386.c (elf_i386_link_setup_gnu_properties): Create
+ 	.eh_frame section for the second PLT.
 diff --git a/bfd/elf64-x86-64.c b/bfd/elf64-x86-64.c
 index bc60012f1e..59926b6092 100644
 --- a/bfd/elf64-x86-64.c
@@ -23662,17 +23679,19 @@ diff --git a/ld/ChangeLog b/ld/ChangeLog
 index f4335cfe26..24d0ed26a7 100644
 --- a/ld/ChangeLog
 +++ b/ld/ChangeLog
-@@ -1,3 +1,10 @@
-+2017-09-01  H.J. Lu  <hongjiu.lu@intel.com>
-+
+@@ -1,5 +1,12 @@
+ 2017-09-01  H.J. Lu  <hongjiu.lu@intel.com>
+ 
 +	PR ld/22064
 +	* testsuite/ld-x86-64/pr22064a.S: New file.
 +	* testsuite/ld-x86-64/pr22064b.c: Likewise.
 +	* testsuite/ld-x86-64/x86-64.exp: Run PR ld/22064 test.
 +
- 2017-09-01  H.J. Lu  <hongjiu.lu@intel.com>
- 
++2017-09-01  H.J. Lu  <hongjiu.lu@intel.com>
++
  	PR ld/22061
+ 	* testsuite/ld-i386/ibt-plt-1.d: Pass --hash-style=sysv to ld.
+ 	Updated.
 diff --git a/ld/testsuite/ld-x86-64/pr22064a.S b/ld/testsuite/ld-x86-64/pr22064a.S
 new file mode 100644
 index 0000000000..8065a112d7
@@ -54416,7 +54435,7 @@ diff --git a/ld/testsuite/ld-x86-64/tls.exp b/ld/testsuite/ld-x86-64/tls.exp
 index 4263d95bd1..7896451c01 100644
 --- a/ld/testsuite/ld-x86-64/tls.exp
 +++ b/ld/testsuite/ld-x86-64/tls.exp
-@@ -206,16 +206,30 @@ if { ![check_gnu2_tls_available] } {
+@@ -206,17 +206,31 @@ if { ![check_gnu2_tls_available] } {
      return
  }
  
@@ -54444,7 +54463,7 @@ index 4263d95bd1..7896451c01 100644
 +}
 +
  run_ld_link_exec_tests [list \
--    [list \
+     [list \
 -	"Run tlsdesc1" \
 -	"-Wl,--no-as-needed tmpdir/libtlsdesc1.so" \
 -	"" \
@@ -54453,14 +54472,14 @@ index 4263d95bd1..7896451c01 100644
 -	"pass.out" \
 -	"$GNU2_CFLAGS" \
 -    ] \
-     [list \
+-    [list \
  	"Run tlsdesc1 (-z now)" \
  	"-Wl,-z,now -Wl,--no-as-needed tmpdir/libtlsdesc1n.so" \
-@@ -225,15 +239,6 @@ run_ld_link_exec_tests [list \
- 	"pass.out" \
+ 	"" \
+@@ -226,15 +240,6 @@ run_ld_link_exec_tests [list \
  	"$GNU2_CFLAGS" \
      ] \
--    [list \
+     [list \
 -	"Run tlsdesc1 with PIE" \
 -	"-pie -Wl,--no-as-needed tmpdir/libtlsdesc1.so" \
 -	"" \
@@ -54469,9 +54488,10 @@ index 4263d95bd1..7896451c01 100644
 -	"pass.out" \
 -	"-fPIE $GNU2_CFLAGS" \
 -    ] \
-     [list \
+-    [list \
  	"Run tlsdesc1 with PIE (-z now)" \
  	"-pie -Wl,-z,now -Wl,--no-as-needed tmpdir/libtlsdesc1n.so" \
+ 	"" \
 
 commit 583043c2b8c641612e93b02b9266ca8adc349952
 Author: GDB Administrator <gdbadmin@sourceware.org>
@@ -55011,9 +55031,9 @@ diff --git a/bfd/ChangeLog b/bfd/ChangeLog
 index 268f187f56..6dce8cc3a7 100644
 --- a/bfd/ChangeLog
 +++ b/bfd/ChangeLog
-@@ -1,3 +1,12 @@
-+2017-08-31  Alan Modra  <amodra@gmail.com>
-+
+@@ -1,5 +1,14 @@
+ 2017-08-31  Alan Modra  <amodra@gmail.com>
+ 
 +	* elf-eh-frame.c (_bfd_elf_parse_eh_frame): Don't exit early
 +	for a section containing just a terminator.  Allow multiple
 +	terminators at end of section.
@@ -55021,9 +55041,11 @@ index 268f187f56..6dce8cc3a7 100644
 +	sections when not adding alignment.  Assert on terminator in
 +	the middle of FDEs.
 +
- 2017-08-31  Alan Modra  <amodra@gmail.com>
- 
++2017-08-31  Alan Modra  <amodra@gmail.com>
++
  	PR 21441
+ 	PR 22048
+ 	* elflink.c (bfd_elf_discard_info): Don't pad embedded zero
 diff --git a/bfd/elf-eh-frame.c b/bfd/elf-eh-frame.c
 index 7e0d63f569..f0ede2d6f7 100644
 --- a/bfd/elf-eh-frame.c
@@ -55606,16 +55628,18 @@ diff --git a/bfd/ChangeLog b/bfd/ChangeLog
 index fac315012a..87b7973ec1 100644
 --- a/bfd/ChangeLog
 +++ b/bfd/ChangeLog
-@@ -1,3 +1,9 @@
-+2017-09-19  Alan Modra  <amodra@gmail.com>
-+
+@@ -1,5 +1,11 @@
+ 2017-09-19  Alan Modra  <amodra@gmail.com>
+ 
 +	PR 21441
 +	* elf64-ppc.c (ppc64_elf_build_stubs): Don't check glink_eh_frame
 +	size.
 +
- 2017-09-19  Alan Modra  <amodra@gmail.com>
- 
++2017-09-19  Alan Modra  <amodra@gmail.com>
++
  	PR 22150
+ 	* elflink.c (bfd_elf_size_dynamic_sections): Garbage collect
+ 	symbols before calculating verrefs.  Don't renumber dynsyms
 diff --git a/bfd/elf64-ppc.c b/bfd/elf64-ppc.c
 index 3f01ae62a1..277bb0ef5d 100644
 --- a/bfd/elf64-ppc.c
@@ -56252,17 +56276,19 @@ diff --git a/bfd/ChangeLog b/bfd/ChangeLog
 index 31e2a7f9c6..7091d7543f 100644
 --- a/bfd/ChangeLog
 +++ b/bfd/ChangeLog
-@@ -1,3 +1,10 @@
-+2017-09-22  H.J. Lu  <hongjiu.lu@intel.com>
-+
+@@ -1,5 +1,12 @@
+ 2017-09-22  H.J. Lu  <hongjiu.lu@intel.com>
+ 
 +	PR binutils/22170
 +	* elf32-i386.c (elf_i386_get_synthetic_symtab): Guard against
 +	corrupted PLT.
 +	* elf64-x86-64.c (elf_x86_64_get_synthetic_symtab): Likewise.
 +
- 2017-09-22  H.J. Lu  <hongjiu.lu@intel.com>
- 
++2017-09-22  H.J. Lu  <hongjiu.lu@intel.com>
++
  	PR binutils/22163
+ 	* elf32-i386.c (elf_i386_get_synthetic_symtab): Also return -1
+ 	if bfd_canonicalize_dynamic_reloc returns 0.
 diff --git a/bfd/elf32-i386.c b/bfd/elf32-i386.c
 index 9dc2d25863..ba50c93f33 100644
 --- a/bfd/elf32-i386.c
@@ -58047,17 +58073,17 @@ diff --git a/bfd/ChangeLog b/bfd/ChangeLog
 index a86ad613ea..97c4b1d9e8 100644
 --- a/bfd/ChangeLog
 +++ b/bfd/ChangeLog
-@@ -1,6 +1,10 @@
- 2017-11-01  Alan Modra  <amodra@gmail.com>
+@@ -2,6 +2,10 @@
  
  	Apply from master
-+	2017-10-30  Alan Modra  <amodra@gmail.com>
+ 	2017-10-30  Alan Modra  <amodra@gmail.com>
 +	* elf32-frv.c (ELF_TARGET_ID): Don't define for generic
 +	elf target.
 +
- 	2017-10-30  Alan Modra  <amodra@gmail.com>
++	2017-10-30  Alan Modra  <amodra@gmail.com>
  	* elflink.c (elf_gc_sweep): Test elf_object_id in addition to
  	relocs_compatible.
+ 	(bfd_elf_gc_sections): Likewise.
 diff --git a/bfd/elf32-frv.c b/bfd/elf32-frv.c
 index ef609ff540..67b3c6a9eb 100644
 --- a/bfd/elf32-frv.c
@@ -58127,6 +58153,763 @@ index ace5cacb63..52ce8b1ced 100644
 @@ -1,4 +1,4 @@
 -#define BFD_VERSION_DATE 20171103
 +#define BFD_VERSION_DATE 20171104
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 5eb4bfb18ee535ecf12058b64e089e10c5cbfc31
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sun Nov 5 00:01:34 2017 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 52ce8b1ced..fc6934d0ab 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20171104
++#define BFD_VERSION_DATE 20171105
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit cf341703b111d13a336c4ec15f150d2e657894db
+Author: Pedro Alves <palves@redhat.com>
+Date:   Wed Oct 11 12:47:25 2017 +0100
+
+    Rename _doprnt -> _bfd_doprnt to fix DJGPP bfd build (and likely others)
+    
+    Building bfd/ for DJGPP, I see:
+    
+     ../../src/bfd/bfd.c:642:1: error: conflicting types for '_doprnt'
+      _doprnt (FILE *stream, const char *format, va_list ap)
+      ^~~~~~~
+     In file included from ../../src/bfd/sysdep.h:37:0,
+                      from ../../src/bfd/bfd.c:367:
+     /usr/lib64/gcc/i586-pc-msdosdjgpp/6.1.0/include-fixed/stdio.h:171:5: note: previous declaration of '_doprnt' was here
+      int _doprnt(const char *_fmt, va_list _args, FILE *_f);
+          ^~~~~~~
+    
+    Possible fixes the build on other systems too -- _doprnt was/is an
+    exported symbol on old Unix/BSD systems too.
+    
+    bfd/ChangeLog:
+    2017-10-11  Pedro Alves  <palves@redhat.com>
+    
+            * bfd.c (_doprnt): Rename to ...
+            (_bfd_doprnt): ... this.
+            (error_handler_internal): Adjust.
+    
+    (cherry picked from commit 8f314ad58ec824ce6c8467af29f11583f79a80ea)
+
+diff --git a/bfd/ChangeLog b/bfd/ChangeLog
+index 97c4b1d9e8..991648b92a 100644
+--- a/bfd/ChangeLog
++++ b/bfd/ChangeLog
+@@ -1,3 +1,11 @@
++2017-11-05  Alan Modra  <amodra@gmail.com>
++
++	Apply from master
++	2017-10-11  Pedro Alves  <palves@redhat.com>
++	* bfd.c (_doprnt): Rename to ...
++	(_bfd_doprnt): ... this.
++	(error_handler_internal): Adjust.
++
+ 2017-11-01  Alan Modra  <amodra@gmail.com>
+ 
+ 	Apply from master
+diff --git a/bfd/bfd.c b/bfd/bfd.c
+index 5da1a6fd53..5c6e250a82 100644
+--- a/bfd/bfd.c
++++ b/bfd/bfd.c
+@@ -611,10 +611,11 @@ CODE_FRAGMENT
+ 
+ static const char *_bfd_error_program_name;
+ 
+-/* This macro and _doprnt taken from libiberty _doprnt.c, tidied a
+-   little and extended to handle '%A' and '%B'.  'L' as a modifer for
+-   integer formats is used for bfd_vma and bfd_size_type args, which
+-   vary in size depending on BFD configuration.  */
++/* This macro and _bfd_doprnt (originally _doprint) taken from
++   libiberty _doprnt.c, tidied a little and extended to handle '%A'
++   and '%B'.  'L' as a modifer for integer formats is used for bfd_vma
++   and bfd_size_type args, which vary in size depending on BFD
++   configuration.  */
+ 
+ #define PRINT_TYPE(TYPE) \
+   do								\
+@@ -624,7 +625,7 @@ static const char *_bfd_error_program_name;
+     } while (0)
+ 
+ static int
+-_doprnt (FILE *stream, const char *format, va_list ap)
++_bfd_doprnt (FILE *stream, const char *format, va_list ap)
+ {
+   const char *ptr = format;
+   char specifier[128];
+@@ -868,7 +869,7 @@ error_handler_internal (const char *fmt, va_list ap)
+   else
+     fprintf (stderr, "BFD: ");
+ 
+-  _doprnt (stderr, fmt, ap);
++  _bfd_doprnt (stderr, fmt, ap);
+ 
+   /* On AIX, putc is implemented as a macro that triggers a -Wunused-value
+      warning, so use the fputc function to avoid it.  */
+
+commit 3f0c3363d614793edcf27ec21bf54f287a9f1117
+Author: Alan Modra <amodra@gmail.com>
+Date:   Sun Nov 5 16:22:55 2017 +1030
+
+    PR22397, BFD internal error when message locale isn't C
+    
+    This adds positional parameter support to the bfd error handler,
+    something that was lost 2017-04-13 when _doprnt was added with commit
+    c08bb8dd.  The number of format args is now limited to 9, which is
+    sufficient for current _bfd_error_handler messages.  If someone
+    exceeds 9 args they get the joy of modifying this code to support more
+    args (shouldn't be too difficult).
+    
+            PR 22397
+            * bfd.c (union _bfd_doprnt_args): New.
+            (PRINT_TYPE): Add FIELD arg.  Take value from args.
+            (_bfd_doprnt): Replace ap parameter with args.  Adjust all
+            PRINT_TYPE invocations and reading of format args to suit.
+            Move "%%" handling out of switch handling args.  Support
+            positional parameters.
+            (_bfd_doprnt_scan): New function.
+            (error_handler_internal): Call _bfd_doprnt_scan and read args.
+    
+    (cherry picked from commit 7167fe4c70ea74f1bb74a6130bb7e6bf5ca354ee)
+
+diff --git a/bfd/ChangeLog b/bfd/ChangeLog
+index 991648b92a..3ddb1dce73 100644
+--- a/bfd/ChangeLog
++++ b/bfd/ChangeLog
+@@ -1,5 +1,17 @@
+ 2017-11-05  Alan Modra  <amodra@gmail.com>
+ 
++	PR 22397
++	* bfd.c (union _bfd_doprnt_args): New.
++	(PRINT_TYPE): Add FIELD arg.  Take value from args.
++	(_bfd_doprnt): Replace ap parameter with args.  Adjust all
++	PRINT_TYPE invocations and reading of format args to suit.
++	Move "%%" handling out of switch handling args.  Support
++	positional parameters.
++	(_bfd_doprnt_scan): New function.
++	(error_handler_internal): Call _bfd_doprnt_scan and read args.
++
++2017-11-05  Alan Modra  <amodra@gmail.com>
++
+ 	Apply from master
+ 	2017-10-11  Pedro Alves  <palves@redhat.com>
+ 	* bfd.c (_doprnt): Rename to ...
+diff --git a/bfd/bfd.c b/bfd/bfd.c
+index 5c6e250a82..0bec897240 100644
+--- a/bfd/bfd.c
++++ b/bfd/bfd.c
+@@ -611,25 +611,47 @@ CODE_FRAGMENT
+ 
+ static const char *_bfd_error_program_name;
+ 
+-/* This macro and _bfd_doprnt (originally _doprint) taken from
+-   libiberty _doprnt.c, tidied a little and extended to handle '%A'
+-   and '%B'.  'L' as a modifer for integer formats is used for bfd_vma
+-   and bfd_size_type args, which vary in size depending on BFD
++/* Support for positional parameters.  */
++
++union _bfd_doprnt_args
++{
++  int i;
++  long l;
++  long long ll;
++  double d;
++  long double ld;
++  void *p;
++  enum
++  {
++    Int,
++    Long,
++    LongLong,
++    Double,
++    LongDouble,
++    Ptr
++  } type;
++};
++
++/* This macro and _bfd_doprnt taken from libiberty _doprnt.c, tidied a
++   little and extended to handle '%A', '%B' and positional parameters.
++   'L' as a modifer for integer formats is used for bfd_vma and
++   bfd_size_type args, which vary in size depending on BFD
+    configuration.  */
+ 
+-#define PRINT_TYPE(TYPE) \
++#define PRINT_TYPE(TYPE, FIELD) \
+   do								\
+     {								\
+-      TYPE value = va_arg (ap, TYPE);				\
++      TYPE value = (TYPE) args[arg_no].FIELD;			\
+       result = fprintf (stream, specifier, value);		\
+     } while (0)
+ 
+ static int
+-_bfd_doprnt (FILE *stream, const char *format, va_list ap)
++_bfd_doprnt (FILE *stream, const char *format, union _bfd_doprnt_args *args)
+ {
+   const char *ptr = format;
+   char specifier[128];
+   int total_printed = 0;
++  unsigned int arg_count = 0;
+ 
+   while (*ptr != '\0')
+     {
+@@ -645,39 +667,75 @@ _bfd_doprnt (FILE *stream, const char *format, va_list ap)
+ 	    result = fprintf (stream, "%s", ptr);
+ 	  ptr += result;
+ 	}
++      else if (ptr[1] == '%')
++	{
++	  fputc ('%', stream);
++	  result = 1;
++	  ptr += 2;
++	}
+       else
+ 	{
+ 	  /* We have a format specifier!  */
+ 	  char *sptr = specifier;
+ 	  int wide_width = 0, short_width = 0;
++	  unsigned int arg_no;
+ 
+ 	  /* Copy the % and move forward.  */
+ 	  *sptr++ = *ptr++;
+ 
++	  /* Check for a positional parameter.  */
++	  arg_no = -1u;
++	  if (*ptr != '0' && ISDIGIT (*ptr) && ptr[1] == '$')
++	    {
++	      arg_no = *ptr - '1';
++	      ptr += 2;
++	    }
++
+ 	  /* Move past flags.  */
+ 	  while (strchr ("-+ #0", *ptr))
+ 	    *sptr++ = *ptr++;
+ 
+ 	  if (*ptr == '*')
+ 	    {
+-	      int value = abs (va_arg (ap, int));
+-	      sptr += sprintf (sptr, "%d", value);
++	      int value;
++	      unsigned int arg_index;
++
+ 	      ptr++;
++	      arg_index = arg_count;
++	      if (*ptr != '0' && ISDIGIT (*ptr) && ptr[1] == '$')
++		{
++		  arg_index = *ptr - '1';
++		  ptr += 2;
++		}
++	      value = abs (args[arg_index].i);
++	      arg_count++;
++	      sptr += sprintf (sptr, "%d", value);
+ 	    }
+ 	  else
+ 	    /* Handle explicit numeric value.  */
+ 	    while (ISDIGIT (*ptr))
+ 	      *sptr++ = *ptr++;
+ 
++	  /* Precision.  */
+ 	  if (*ptr == '.')
+ 	    {
+ 	      /* Copy and go past the period.  */
+ 	      *sptr++ = *ptr++;
+ 	      if (*ptr == '*')
+ 		{
+-		  int value = abs (va_arg (ap, int));
+-		  sptr += sprintf (sptr, "%d", value);
++		  int value;
++		  unsigned int arg_index;
++
+ 		  ptr++;
++		  arg_index = arg_count;
++		  if (*ptr != '0' && ISDIGIT (*ptr) && ptr[1] == '$')
++		    {
++		      arg_index = *ptr - '1';
++		      ptr += 2;
++		    }
++		  value = abs (args[arg_index].i);
++		  arg_count++;
++		  sptr += sprintf (sptr, "%d", value);
+ 		}
+ 	      else
+ 		/* Handle explicit numeric value.  */
+@@ -706,6 +764,8 @@ _bfd_doprnt (FILE *stream, const char *format, va_list ap)
+ 	  /* Copy the type specifier, and NULL terminate.  */
+ 	  *sptr++ = *ptr++;
+ 	  *sptr = '\0';
++	  if ((int) arg_no < 0)
++	    arg_no = arg_count;
+ 
+ 	  switch (ptr[-1])
+ 	    {
+@@ -721,12 +781,12 @@ _bfd_doprnt (FILE *stream, const char *format, va_list ap)
+ 		   as an int and trust the C library printf to cast it
+ 		   to the right width.  */
+ 		if (short_width)
+-		  PRINT_TYPE (int);
++		  PRINT_TYPE (int, i);
+ 		else
+ 		  {
+ 		    /* L modifier for bfd_vma or bfd_size_type may be
+ 		       either long long or long.  */
+-		    if (sptr[-2] == 'L')
++		    if (ptr[-2] == 'L')
+ 		      {
+ 			sptr[-2] = 'l';
+ 			if (BFD_ARCH_SIZE < 64 || BFD_HOST_64BIT_LONG)
+@@ -742,10 +802,10 @@ _bfd_doprnt (FILE *stream, const char *format, va_list ap)
+ 		    switch (wide_width)
+ 		      {
+ 		      case 0:
+-			PRINT_TYPE (int);
++			PRINT_TYPE (int, i);
+ 			break;
+ 		      case 1:
+-			PRINT_TYPE (long);
++			PRINT_TYPE (long, l);
+ 			break;
+ 		      case 2:
+ 		      default:
+@@ -757,10 +817,10 @@ _bfd_doprnt (FILE *stream, const char *format, va_list ap)
+ 			*sptr = '\0';
+ #endif
+ #if defined (__GNUC__) || defined (HAVE_LONG_LONG)
+-			PRINT_TYPE (long long);
++			PRINT_TYPE (long long, ll);
+ #else
+ 			/* Fake it and hope for the best.  */
+-			PRINT_TYPE (long);
++			PRINT_TYPE (long, l);
+ #endif
+ 			break;
+ 		      }
+@@ -774,35 +834,32 @@ _bfd_doprnt (FILE *stream, const char *format, va_list ap)
+ 	    case 'G':
+ 	      {
+ 		if (wide_width == 0)
+-		  PRINT_TYPE (double);
++		  PRINT_TYPE (double, d);
+ 		else
+ 		  {
+ #if defined (__GNUC__) || defined (HAVE_LONG_DOUBLE)
+-		    PRINT_TYPE (long double);
++		    PRINT_TYPE (long double, ld);
+ #else
+ 		    /* Fake it and hope for the best.  */
+-		    PRINT_TYPE (double);
++		    PRINT_TYPE (double, d);
+ #endif
+ 		  }
+ 	      }
+ 	      break;
+ 	    case 's':
+-	      PRINT_TYPE (char *);
++	      PRINT_TYPE (char *, p);
+ 	      break;
+ 	    case 'p':
+-	      PRINT_TYPE (void *);
+-	      break;
+-	    case '%':
+-	      fputc ('%', stream);
+-	      result = 1;
++	      PRINT_TYPE (void *, p);
+ 	      break;
+ 	    case 'A':
+ 	      {
+-		asection *sec = va_arg (ap, asection *);
++		asection *sec;
+ 		bfd *abfd;
+ 		const char *group = NULL;
+ 		struct coff_comdat_info *ci;
+ 
++		sec = (asection *) args[arg_no].p;
+ 		if (sec == NULL)
+ 		  /* Invoking %A with a null section pointer is an
+ 		     internal error.  */
+@@ -826,8 +883,9 @@ _bfd_doprnt (FILE *stream, const char *format, va_list ap)
+ 	      break;
+ 	    case 'B':
+ 	      {
+-		bfd *abfd = va_arg (ap, bfd *);
++		bfd *abfd;
+ 
++		abfd = (bfd *) args[arg_no].p;
+ 		if (abfd == NULL)
+ 		  /* Invoking %B with a null bfd pointer is an
+ 		     internal error.  */
+@@ -843,6 +901,7 @@ _bfd_doprnt (FILE *stream, const char *format, va_list ap)
+ 	    default:
+ 	      abort();
+ 	    }
++	  arg_count++;
+ 	}
+       if (result == -1)
+ 	return -1;
+@@ -852,15 +911,230 @@ _bfd_doprnt (FILE *stream, const char *format, va_list ap)
+   return total_printed;
+ }
+ 
++/* First pass over FORMAT to gather ARGS.  Returns number of args.  */
++
++static unsigned int
++_bfd_doprnt_scan (const char *format, union _bfd_doprnt_args *args)
++{
++  const char *ptr = format;
++  unsigned int arg_count = 0;
++
++  while (*ptr != '\0')
++    {
++      if (*ptr != '%')
++	{
++	  ptr = strchr (ptr, '%');
++	  if (ptr == NULL)
++	    break;
++	}
++      else if (ptr[1] == '%')
++	ptr += 2;
++      else
++	{
++	  int wide_width = 0, short_width = 0;
++	  unsigned int arg_no;
++
++	  ptr++;
++
++	  /* Check for a positional parameter.  */
++	  arg_no = -1u;
++	  if (*ptr != '0' && ISDIGIT (*ptr) && ptr[1] == '$')
++	    {
++	      arg_no = *ptr - '1';
++	      ptr += 2;
++	    }
++
++	  /* Move past flags.  */
++	  while (strchr ("-+ #0", *ptr))
++	    ptr++;
++
++	  if (*ptr == '*')
++	    {
++	      unsigned int arg_index;
++
++	      ptr++;
++	      arg_index = arg_count;
++	      if (*ptr != '0' && ISDIGIT (*ptr) && ptr[1] == '$')
++		{
++		  arg_index = *ptr - '1';
++		  ptr += 2;
++		}
++	      args[arg_index].type = Int;
++	      arg_count++;
++	      if (arg_count > 9)
++		abort ();
++	    }
++	  else
++	    /* Handle explicit numeric value.  */
++	    while (ISDIGIT (*ptr))
++	      ptr++;
++
++	  /* Precision.  */
++	  if (*ptr == '.')
++	    {
++	      ptr++;
++	      if (*ptr == '*')
++		{
++		  unsigned int arg_index;
++
++		  ptr++;
++		  arg_index = arg_count;
++		  if (*ptr != '0' && ISDIGIT (*ptr) && ptr[1] == '$')
++		    {
++		      arg_index = *ptr - '1';
++		      ptr += 2;
++		    }
++		  args[arg_index].type = Int;
++		  arg_count++;
++		  if (arg_count > 9)
++		    abort ();
++		}
++	      else
++		/* Handle explicit numeric value.  */
++		while (ISDIGIT (*ptr))
++		  ptr++;
++	    }
++	  while (strchr ("hlL", *ptr))
++	    {
++	      switch (*ptr)
++		{
++		case 'h':
++		  short_width = 1;
++		  break;
++		case 'l':
++		  wide_width++;
++		  break;
++		case 'L':
++		  wide_width = 2;
++		  break;
++		default:
++		  abort();
++		}
++	      ptr++;
++	    }
++
++	  ptr++;
++	  if ((int) arg_no < 0)
++	    arg_no = arg_count;
++
++	  switch (ptr[-1])
++	    {
++	    case 'd':
++	    case 'i':
++	    case 'o':
++	    case 'u':
++	    case 'x':
++	    case 'X':
++	    case 'c':
++	      {
++		if (short_width)
++		  args[arg_no].type = Int;
++		else
++		  {
++		    if (ptr[-2] == 'L')
++		      {
++			if (BFD_ARCH_SIZE < 64 || BFD_HOST_64BIT_LONG)
++			  wide_width = 1;
++		      }
++
++		    switch (wide_width)
++		      {
++		      case 0:
++			args[arg_no].type = Int;
++			break;
++		      case 1:
++			args[arg_no].type = Long;
++			break;
++		      case 2:
++		      default:
++#if defined (__GNUC__) || defined (HAVE_LONG_LONG)
++			args[arg_no].type = LongLong;
++#else
++			args[arg_no].type = Long;
++#endif
++			break;
++		      }
++		  }
++	      }
++	      break;
++	    case 'f':
++	    case 'e':
++	    case 'E':
++	    case 'g':
++	    case 'G':
++	      {
++		if (wide_width == 0)
++		  args[arg_no].type = Double;
++		else
++		  {
++#if defined (__GNUC__) || defined (HAVE_LONG_DOUBLE)
++		    args[arg_no].type = LongDouble;
++#else
++		    args[arg_no].type = Double;
++#endif
++		  }
++	      }
++	      break;
++	    case 's':
++	    case 'p':
++	    case 'A':
++	    case 'B':
++	      args[arg_no].type = Ptr;
++	      break;
++	    default:
++	      abort();
++	    }
++	  arg_count++;
++	  if (arg_count > 9)
++	    abort ();
++	}
++    }
++
++  return arg_count;
++}
++
+ /* This is the default routine to handle BFD error messages.
+    Like fprintf (stderr, ...), but also handles some extra format specifiers.
+ 
+-   %A section name from section.  For group components, print group name too.
+-   %B file name from bfd.  For archive components, prints archive too.  */
++   %A section name from section.  For group components, prints group name too.
++   %B file name from bfd.  For archive components, prints archive too.
++
++   Beware: Only supports a maximum of 9 format arguments.  */
+ 
+ static void
+ error_handler_internal (const char *fmt, va_list ap)
+ {
++  int i, arg_count;
++  union _bfd_doprnt_args args[9];
++
++  arg_count = _bfd_doprnt_scan (fmt, args);
++  for (i = 0; i < arg_count; i++)
++    {
++      switch (args[i].type)
++	{
++	case Int:
++	  args[i].i = va_arg (ap, int);
++	  break;
++	case Long:
++	  args[i].l = va_arg (ap, long);
++	  break;
++	case LongLong:
++	  args[i].ll = va_arg (ap, long long);
++	  break;
++	case Double:
++	  args[i].d = va_arg (ap, double);
++	  break;
++	case LongDouble:
++	  args[i].ld = va_arg (ap, long double);
++	  break;
++	case Ptr:
++	  args[i].p = va_arg (ap, void *);
++	  break;
++	default:
++	  abort ();
++	}
++    }
++
+   /* PR 4992: Don't interrupt output being sent to stdout.  */
+   fflush (stdout);
+ 
+@@ -869,7 +1143,7 @@ error_handler_internal (const char *fmt, va_list ap)
+   else
+     fprintf (stderr, "BFD: ");
+ 
+-  _bfd_doprnt (stderr, fmt, ap);
++  _bfd_doprnt (stderr, fmt, args);
+ 
+   /* On AIX, putc is implemented as a macro that triggers a -Wunused-value
+      warning, so use the fputc function to avoid it.  */
+
+commit d6b67f5774b1f320ee1e6f26e47c49ace651d0a7
+Author: Alan Modra <amodra@gmail.com>
+Date:   Sun Nov 5 19:52:13 2017 +1030
+
+    Proper bound check in _bfd_doprnt_scan
+    
+    While an abort after storing out of bounds by one to an array in our
+    caller is probably OK in practice, it's better to check before storing.
+    
+            PR 22397
+            * bfd.c (_bfd_doprnt_scan): Check args index before storing, not
+            after.
+    
+    (cherry picked from commit 26a9301057457ae576b51b8127bb805b4e484a6b)
+
+diff --git a/bfd/ChangeLog b/bfd/ChangeLog
+index 3ddb1dce73..4ad3675763 100644
+--- a/bfd/ChangeLog
++++ b/bfd/ChangeLog
+@@ -1,6 +1,12 @@
+ 2017-11-05  Alan Modra  <amodra@gmail.com>
+ 
+ 	PR 22397
++	* bfd.c (_bfd_doprnt_scan): Check args index before storing, not
++	after.
++
++2017-11-05  Alan Modra  <amodra@gmail.com>
++
++	PR 22397
+ 	* bfd.c (union _bfd_doprnt_args): New.
+ 	(PRINT_TYPE): Add FIELD arg.  Take value from args.
+ 	(_bfd_doprnt): Replace ap parameter with args.  Adjust all
+diff --git a/bfd/bfd.c b/bfd/bfd.c
+index 0bec897240..3e882297e0 100644
+--- a/bfd/bfd.c
++++ b/bfd/bfd.c
+@@ -959,10 +959,10 @@ _bfd_doprnt_scan (const char *format, union _bfd_doprnt_args *args)
+ 		  arg_index = *ptr - '1';
+ 		  ptr += 2;
+ 		}
++	      if (arg_index >= 9)
++		abort ();
+ 	      args[arg_index].type = Int;
+ 	      arg_count++;
+-	      if (arg_count > 9)
+-		abort ();
+ 	    }
+ 	  else
+ 	    /* Handle explicit numeric value.  */
+@@ -984,10 +984,10 @@ _bfd_doprnt_scan (const char *format, union _bfd_doprnt_args *args)
+ 		      arg_index = *ptr - '1';
+ 		      ptr += 2;
+ 		    }
++		  if (arg_index >= 9)
++		    abort ();
+ 		  args[arg_index].type = Int;
+ 		  arg_count++;
+-		  if (arg_count > 9)
+-		    abort ();
+ 		}
+ 	      else
+ 		/* Handle explicit numeric value.  */
+@@ -1017,6 +1017,8 @@ _bfd_doprnt_scan (const char *format, union _bfd_doprnt_args *args)
+ 	  if ((int) arg_no < 0)
+ 	    arg_no = arg_count;
+ 
++	  if (arg_no >= 9)
++	    abort ();
+ 	  switch (ptr[-1])
+ 	    {
+ 	    case 'd':
+@@ -1085,8 +1087,6 @@ _bfd_doprnt_scan (const char *format, union _bfd_doprnt_args *args)
+ 	      abort();
+ 	    }
+ 	  arg_count++;
+-	  if (arg_count > 9)
+-	    abort ();
+ 	}
+     }
+ 
+
+commit 686dd4c0d5e10d1da56e91f4a3d544f235784d65
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Mon Nov 6 00:01:39 2017 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index fc6934d0ab..98a4030424 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20171105
++#define BFD_VERSION_DATE 20171106
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 369dcb261faee47f6b52a262893283f3f17272b4
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Tue Nov 7 00:01:20 2017 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 98a4030424..73df3b1d23 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20171106
++#define BFD_VERSION_DATE 20171107
  #define BFD_VERSION @bfd_version@
  #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
  #define REPORT_BUGS_TO @report_bugs_to@
