@@ -1,5 +1,5 @@
 PKG_NAME="gtk+"
-PKG_VERSION="3.22.25"
+PKG_VERSION="3.22.26"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://ftp.acc.umu.se/pub/gnome/sources/gtk+/3.22/?C=M;O=D"
