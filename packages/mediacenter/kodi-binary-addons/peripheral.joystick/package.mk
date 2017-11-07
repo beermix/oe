@@ -30,6 +30,7 @@ PKG_LONGDESC="peripheral.joystick provides joystick support and button mapping"
 PKG_AUTORECONF="no"
 
 PKG_IS_ADDON="yes"
+PKG_USE_NINJA="no"
 PKG_ADDON_TYPE="kodi.peripheral"
 
 addon() {

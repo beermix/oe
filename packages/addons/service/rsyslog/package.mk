@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="rsyslog"
-PKG_VERSION="8.29.0"
+PKG_VERSION="8.30.0"
 PKG_REV="102"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"

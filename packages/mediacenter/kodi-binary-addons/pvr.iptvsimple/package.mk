@@ -30,6 +30,7 @@ PKG_LONGDESC="pvr.iptvsimple"
 PKG_AUTORECONF="no"
 
 PKG_IS_ADDON="yes"
+PKG_USE_NINJA="no"
 PKG_ADDON_TYPE="xbmc.pvrclient"
 
 addon() {
