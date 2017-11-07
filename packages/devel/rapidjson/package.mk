@@ -28,6 +28,7 @@ PKG_SECTION="devel"
 PKG_SHORTDESC="rapidjson: JSON parser/generator"
 PKG_LONGDESC="A fast JSON parser/generator for C++ with both SAX/DOM style API"
 PKG_AUTORECONF="no"
+PKG_USE_NINJA="no"
 
 PKG_CMAKE_OPTS_TARGET="-DRAPIDJSON_BUILD_DOC=OFF \
                        -DRAPIDJSON_BUILD_EXAMPLES=OFF

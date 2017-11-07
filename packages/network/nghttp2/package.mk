@@ -5,6 +5,7 @@ PKG_URL="https://github.com/nghttp2/nghttp2/releases/download/v$PKG_VERSION/nght
 PKG_DEPENDS_TARGET="toolchain"
 PKG_USE_CMAKE="yes"
 PKG_AUTORECONF="no"
+PKG_USE_NINJA="no"
 
 PKG_CMAKE_OPTS_TARGET="-DENABLE_LIB_ONLY=1 \
 			  -DENABLE_EXAMPLES=0 \
