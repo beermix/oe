@@ -1,9 +1,8 @@
 PKG_NAME="rclone"
-PKG_VERSION="fc8b13c"
+PKG_VERSION="8c8abfd"
 PKG_URL="https://github.com/ncw/rclone/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain go:host"
 PKG_SECTION="system"
-
 PKG_AUTORECONF="no"
 
 pre_make_target() {
@@ -12,7 +11,7 @@ pre_make_target() {
   export CGO_ENABLED=1
   export CGO_NO_EMULATION=1
   export CGO_CFLAGS=$CFLAGS
-  export LDFLAGS="-s -w -linkmode external -extld $CC"
+  export LDFLAGS="-w -linkmode external -extld $CC -s"
   export GOLANG=$TOOLCHAIN/lib/golang/bin/go
   export GOPATH=$PKG_BUILD.gopath:$PKG_BUILD/
   export GOROOT=$TOOLCHAIN/lib/golang
