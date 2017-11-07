@@ -112,7 +112,7 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --disable-gallium-tests \
                            --enable-shared-glapi \
                            $MESA_GALLIUM_LLVM \
-                           --disable-silent-rules \
+                           --enable-silent-rules \
                            --with-gl-lib-name=GL \
                            --with-osmesa-lib-name=OSMesa \
                            --with-gallium-drivers=$GALLIUM_DRIVERS \
@@ -120,9 +120,9 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --with-vulkan-drivers=no \
                            --with-sysroot=$SYSROOT_PREFIX"
 
-pre_configure_target() {
-  export LIBS="-lLLVM"
-}
+#pre_configure_target() {
+#  export LIBS="-lLLVM"
+#}
 
 post_makeinstall_target() {
   # Similar hack is needed on EGL, GLES* front. Might as well drop it and test the GLVND?
