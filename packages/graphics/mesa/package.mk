@@ -127,10 +127,6 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --with-vulkan-drivers=intel \
                            --with-sysroot=$SYSROOT_PREFIX"
 
-#pre_configure_target() {
-#  export LIBS="-lLLVM"
-#}
-
 post_makeinstall_target() {
   # Similar hack is needed on EGL, GLES* front. Might as well drop it and test the GLVND?
   if [ "$DISPLAYSERVER" = "x11" ]; then
