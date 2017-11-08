@@ -17,11 +17,12 @@
 ################################################################################
 
 PKG_NAME="glibc"
-PKG_VERSION="glibc-2.24.90"
+PKG_VERSION="febbdd6"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/bminor/glibc/tree/release/2.26/master"
+PKG_SITE="https://github.com/bminor/glibc/tree/ibm/2.26/master"
 PKG_URL="https://github.com/bminor/glibc/archive/$PKG_VERSION.tar.gz"
+#PKG_SOURCE_DIR="glibc-glibc-$PKG_VERSION*"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap"
 PKG_DEPENDS_INIT="glibc"
 PKG_SECTION="toolchain/devel"
@@ -41,7 +42,8 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-elf \
                            --with-tls \
                            --with-__thread \
-                            --with-binutils=$BUILD/toolchain/bin \
+                           --enable-stack-protector=strong \
+                           --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
                            --enable-kernel=3.2.0 \
                            --without-cvs \
