@@ -48,6 +48,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libssp \
                            --disable-libsanitizer \
                            --without-cuda-driver \
+                           --enable-offload-targets=nvptx-none \
                            --disable-werror \
                            --with-tune=generic -v"
 
