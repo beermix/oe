@@ -43,7 +43,7 @@
     <setting id="AVM_ROUTER_FAKE_IP" type="ipaddress" label="1113" default="192.168.178.254" visible="eq(-3,true)+eq(-2,1)"/>
     <setting id="AVM_ETH" type="labelenum" label="1114" visible="eq(-4,true)" values="eth0|wlan0|eth1|wlan1" />
     <setting type="sep" visible="eq(-5,true)"/>
-    <setting id="AVM_IP1" type="ipaddress" label="1.15" default="192.168.178.201" visible="eq(-6,true)"/>
+    <setting id="AVM_IP1" type="ipaddress" label="1115" default="192.168.178.201" visible="eq(-6,true)"/>
     <setting id="AVM_IP2" type="ipaddress" label="1116" default="192.168.178.202" visible="eq(-7,true)"/>
     <setting id="AVM_IP3" type="ipaddress" label="1117" default="192.168.178.203" visible="eq(-8,true)+eq(-7,1)"/>
     <setting id="AVM_IP4" type="ipaddress" label="1118" default="192.168.178.204" visible="eq(-9,true)+eq(-8,1)"/>

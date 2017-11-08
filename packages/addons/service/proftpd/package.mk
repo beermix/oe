@@ -20,7 +20,8 @@
 
 PKG_NAME="proftpd"
 PKG_VERSION="1.3.5b"
-PKG_REV="100"
+PKG_SHA256="afc1789f2478acf88dfdc7d70da90a4fa2786d628218e9574273295d044b4fc8"
+PKG_REV="101"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.proftpd.org/"
@@ -46,7 +47,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --enable-facl \
                            --enable-autoshadow \
                            --enable-ctrls \
-                           --disable-ipv6 \
+                           --enable-ipv6 \
                            --enable-nls \
                            --enable-pcre \
                            --enable-largefile"
@@ -57,7 +58,7 @@ pre_build_target() {
 }
 
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -I$SYSROOT_PREFIX/usr/include/ncurses -I$PKG_BUILD/.$TARGET_NAME/include/"
+  export CFLAGS="$CFLAGS -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -I$PKG_BUILD/.$TARGET_NAME/include/"
   export LDFLAGS="$LDFLAGS -L$PKG_BUILD/.$TARGET_NAME/lib"
 }
 

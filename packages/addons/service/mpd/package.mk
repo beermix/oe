@@ -19,13 +19,14 @@
 ################################################################################
 
 PKG_NAME="mpd"
-PKG_VERSION="0.20.10"
-PKG_REV="102"
+PKG_VERSION="0.20.9"
+PKG_SHA256="cd77a2869e32354b004cc6b34fcb0bee56114caa2d9ed862aaa8071441e34eb7"
+PKG_REV="103"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://www.musicpd.org"
 PKG_URL="http://www.musicpd.org/download/${PKG_NAME}/${PKG_VERSION%.*}/${PKG_NAME}-${PKG_VERSION}.tar.xz"
-PKG_DEPENDS_TARGET="toolchain boost glib ffmpeg libmad libogg flac faad2 curl alsa-lib yajl libid3tag lame libsndfile icu"
+PKG_DEPENDS_TARGET="toolchain boost glib ffmpeg libmad libogg flac faad2 curl alsa-lib yajl libid3tag lame"
 PKG_SECTION="service.multimedia"
 PKG_SHORTDESC="Music Player Daemon (MPD): a free and open Music Player Server"
 PKG_LONGDESC="Music Player Daemon ($PKG_VERSION) is a flexible and powerful server-side application for playing music"
@@ -40,55 +41,55 @@ pre_configure_target() {
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-alsa \
-			      --disable-roar \
-			      --disable-ao \
-			      --disable-audiofile \
-			      --enable-bzip2 \
-			      --disable-cdio-paranoia \
-			      --enable-curl \
-			      --disable-smbclient \
-			      --disable-soup \
-			      --disable-debug \
-			      --disable-documentation \
-			      --disable-ffado \
-			      --enable-ffmpeg \
-			      --disable-fluidsynth \
-			      --disable-gme \
-			      --enable-httpd-output \
-			      --enable-id3 \
-			      --disable-jack \
-			      --enable-lastfm \
-			      --disable-despotify \
-			      --enable-soundcloud \
-			      --enable-lame-encoder \
-			      --disable-libwrap \
-			      --disable-lsr \
-			      --enable-mad \
-			      --disable-mikmod\
-			      --disable-mms \
-			      --disable-modplug \
-			      --disable-mpg123 \
-			      --disable-mvp \
-			      --disable-openal \
-			      --disable-oss \
-			      --disable-pipe-output \
-			      --disable-pulse \
-			      --enable-recorder-output \
-			      --disable-sidplay \
-			      --disable-shout \
-			      --enable-sndfile \
-			      --disable-solaris-output \
-			      --enable-sqlite \
-			      --enable-systemd-daemon \
-			      --disable-test \
-			      --disable-twolame-encoder \
-			      --disable-zzip \
-			      --with-zeroconf=yes \
-			      --enable-icu"
+             --disable-roar \
+             --disable-ao \
+             --disable-audiofile \
+             --disable-bzip2 \
+             --disable-cdio-paranoia \
+             --enable-curl \
+             --disable-smbclient \
+             --disable-soup \
+             --disable-debug \
+             --disable-documentation \
+             --disable-ffado \
+             --enable-ffmpeg \
+             --disable-fluidsynth \
+             --disable-gme \
+             --enable-httpd-output \
+             --enable-id3 \
+             --disable-jack \
+             --disable-lastfm \
+             --disable-despotify \
+             --disable-soundcloud \
+             --enable-lame-encoder \
+             --disable-libwrap \
+             --disable-lsr \
+             --enable-mad \
+             --disable-mikmod\
+             --disable-mms \
+             --disable-modplug \
+             --disable-mpg123 \
+             --disable-mvp \
+             --disable-openal \
+             --disable-oss \
+             --disable-pipe-output \
+             --disable-pulse \
+             --disable-recorder-output \
+             --disable-sidplay \
+             --disable-shout \
+             --disable-sndfile \
+             --disable-solaris-output \
+             --disable-sqlite \
+             --disable-systemd-daemon \
+             --disable-test \
+             --disable-twolame-encoder \
+             --disable-zzip \
+             --with-zeroconf=no \
+             --disable-icu"
 
-#makeinstall_target() {
-#  : # nop
-#}
+makeinstall_target() {
+  : # nop
+}
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin

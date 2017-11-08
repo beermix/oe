@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2016 Team LibreELEC
+#      Copyright (C) 2016-present Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,8 +17,9 @@
 ################################################################################
 
 PKG_NAME="dispmanx_vnc"
-PKG_VERSION="78e6673"
-PKG_REV="102"
+PKG_VERSION="77b33a6"
+PKG_SHA256="69ca5b7bd18709cb8df1054d1656c0be30fbdae6ccfefaffe70e313df4e31b4f"
+PKG_REV="103"
 PKG_ARCH="arm"
 PKG_ADDON_PROJECTS="RPi RPi2"
 PKG_LICENSE="OSS"

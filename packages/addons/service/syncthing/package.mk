@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2016 Team LibreELEC
+#      Copyright (C) 2016-present Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,9 +17,12 @@
 ################################################################################
 
 PKG_NAME="syncthing"
-PKG_VERSION="v0.14.37"
+PKG_VERSION="0.14.40"
+PKG_REV="105"
+PKG_ARCH="any"
+PKG_LICENSE="MPLv2"
 PKG_SITE="https://syncthing.net/"
-PKG_GIT_URL="https://github.com/syncthing/syncthing"
+PKG_URL="https://github.com/syncthing/syncthing/archive/v${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain go:host"
 PKG_SECTION="service/system"
 PKG_SHORTDESC="Syncthing: open source continuous file synchronization"
