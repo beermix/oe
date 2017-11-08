@@ -46,6 +46,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --without-cloog \
                            --disable-libmpx \
                            --disable-libssp \
+                           --disable-libsanitizer \
                            --without-cuda-driver \
                            --disable-werror \
                            --with-tune=generic -v"
@@ -55,7 +56,6 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-__cxa_atexit \
                               --enable-cloog-backend=isl \
                               --disable-shared \
-                              --disable-libsanitizer \
                               --disable-threads \
                               --disable-libgomp \
                               --disable-libada \
