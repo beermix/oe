@@ -31,7 +31,7 @@ PKG_AUTORECONF="no"
 
 export CC=$LOCAL_CC
 
-PKG_CONFIGURE_OPTS_HOST="--disable-load --without-guile"
+PKG_CONFIGURE_OPTS_HOST="--without-guile"
 
 post_makeinstall_host() {
   ln -sf make $TOOLCHAIN/bin/gmake
