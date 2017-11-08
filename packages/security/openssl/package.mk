@@ -16,9 +16,8 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            threads \
                            enable-tlsext \
                            enable-unit-test \
+                           no-ssl2 \
                            no-ssl3 \
-                           no-zlib \
-                           no-zlib-dynamic \
                            enable-ec_nistp_64_gcc_128"
 
 pre_configure_host() {
@@ -30,7 +29,7 @@ configure_host() {
   cd $PKG_BUILD/.$HOST_NAME
   sed -i -e '/^"linux-x86_64"/ s/-m64 -DL_ENDIAN -O3 -Wall/-m64 -DL_ENDIAN -Wall/' $PKG_BUILD/.$HOST_NAME/Configure
   ./Configure --prefix=/ $PKG_CONFIGURE_OPTS_SHARED no-static-engine linux-x86_64 $CFLAGS $LDFLAGS
-  MAKEFLAGS=-j1
+#  MAKEFLAGS=-j1
 }
 
 make_host() {
@@ -59,7 +58,7 @@ pre_configure_target() {
 configure_target() {
   cd $PKG_BUILD/.$TARGET_NAME
   ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 "-Wa,--noexecstack $CPPFLAGS $CFLAGS $LDFLAGS"
-  MAKEFLAGS=-j1
+#  MAKEFLAGS=-j1
 }
 
 make_target() {
