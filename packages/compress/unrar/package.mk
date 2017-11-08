@@ -29,9 +29,21 @@ PKG_AUTORECONF="no"
 
 make_target() {
   make CXX="$CXX" \
-     CXXFLAGS="$TARGET_CXXFLAGS" \
+     CXXFLAGS="$TARGET_CXXFLAGS -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DRAR_SMP" \
      RANLIB="$RANLIB" \
      AR="$AR" \
      STRIP="$STRIP" \
+     LDFLAGS="$LDFLAGS -pthread" \
+     PREFIX=/usr \
      -f makefile
 }
+
+makeinstall_target() {
+  : # nop
+}
+
+post_make_target() {
+  mkdir -p $INSTALL/usr/bin
+  cp $PKG_BUILD/unrar $INSTALL/usr/bin
+}
+
