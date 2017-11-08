@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="glibc"
-PKG_VERSION="3683b42"
+PKG_VERSION="2.26.9000"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/bminor/glibc/tree/ibm/2.26/master"
-PKG_URL="https://github.com/bminor/glibc/archive/$PKG_VERSION.tar.gz"
-#PKG_SOURCE_DIR="glibc-glibc-$PKG_VERSION*"
+PKG_URL="https://github.com/bminor/glibc/archive/glibc-$PKG_VERSION.tar.gz"
+PKG_SOURCE_DIR="glibc-glibc-$PKG_VERSION*"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap"
 PKG_DEPENDS_INIT="glibc"
 PKG_SECTION="toolchain/devel"
@@ -119,6 +119,7 @@ cat >config.cache <<EOF
 libc_cv_forced_unwind=yes
 libc_cv_c_cleanup=yes
 libc_cv_ssp=no
+libc_cv_ssp_strong=no
 libc_cv_slibdir=/usr/lib
 EOF
 

@@ -1,10 +1,28 @@
+################################################################################
+#      This file is part of OpenELEC - http://www.openelec.tv
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+#
+#  OpenELEC is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  OpenELEC is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
+################################################################################
+
 PKG_NAME="gdb"
 PKG_VERSION="8.0.1"
-PKG_SHA256=""
+PKG_SHA256="3dbd5f93e36ba2815ad0efab030dcd0c7b211d7b353a40a53f4c02d7d56295e3"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/gdb/"
-PKG_URL=""
+PKG_URL="http://ftpmirror.gnu.org/gdb/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain zlib ncurses expat"
 PKG_SECTION="debug"
 PKG_SHORTDESC="gdb: The GNU Debugger"
@@ -13,11 +31,6 @@ PKG_AUTORECONF="no"
 
 CC_FOR_BUILD="$HOST_CC"
 CFLAGS_FOR_BUILD="$HOST_CFLAGS"
-
-unpack() {
-  mkdir -p $PKG_BUILD
-  cp -r $(get_build_dir binutils)/gdb/* $PKG_BUILD/
-}
 
 pre_configure_target() {
   # gdb could fail on runtime if build with LTO support

@@ -48,14 +48,12 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libssp \
                            --disable-libsanitizer \
                            --without-cuda-driver \
-                           --enable-offload-targets=nvptx-none \
                            --disable-werror \
                            --with-tune=generic -v"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
-                              --enable-cloog-backend=isl \
                               --disable-shared \
                               --disable-threads \
                               --disable-libgomp \
