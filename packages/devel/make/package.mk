@@ -31,6 +31,8 @@ PKG_AUTORECONF="no"
 
 export CC=$LOCAL_CC
 
+LDFLAGS=-static
+
 PKG_CONFIGURE_OPTS_HOST="--without-guile"
 
 post_makeinstall_host() {
