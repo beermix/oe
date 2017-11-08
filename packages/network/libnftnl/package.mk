@@ -29,4 +29,4 @@ PKG_SHORTDESC="libnftnl: a userspace library providing a low-level netlink progr
 PKG_LONGDESC="libnftnl is a userspace library providing a low-level netlink programming interface (API) to the in-kernel nf_tables subsystem. The library libnftnl has been previously known as libnftables. This library is currently used by nftables."
 PKG_AUTORECONF="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static"
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static --with-pic"
