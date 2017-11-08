@@ -6,8 +6,5 @@ PKG_DEPENDS_TARGET="toolchain libnfnetlink libnl"
 PKG_SECTION="my"
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static"
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static --with-pic"
 
-pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC"
-}
