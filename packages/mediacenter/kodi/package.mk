@@ -189,20 +189,24 @@ else
   KODI_ARCH="-DWITH_ARCH=$TARGET_ARCH"
 fi
 
-if [ "$PROJECT" = "Slice" -o "$PROJECT" = "Slice3" ]; then
+if [ "$DEVICE" = "Slice" -o "$DEVICE" = "Slice3" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET led_tools"
 fi
 
 if [ ! "$KODIPLAYER_DRIVER" = default ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET $KODIPLAYER_DRIVER"
   if [ "$KODIPLAYER_DRIVER" = bcm2835-driver ]; then
-    KODI_PLAYER="-DENABLE_MMAL=ON -DCORE_SYSTEM_NAME=rbpi"
+    KODI_PLAYER="-DCORE_PLATFORM_NAME=rbpi"
+  elif [ "$KODIPLAYER_DRIVER" = mesa ]; then
+    KODI_PLAYER="-DCORE_PLATFORM_NAME=gbm"
+    CFLAGS="$CFLAGS -DMESA_EGL_NO_X11_HEADERS"
+    CXXFLAGS="$CXXFLAGS -DMESA_EGL_NO_X11_HEADERS"
   elif [ "$KODIPLAYER_DRIVER" = libfslvpuwrap ]; then
-    KODI_PLAYER="-DENABLE_IMX=ON"
+    KODI_PLAYER="-DCORE_PLATFORM_NAME=imx"
     CFLAGS="$CFLAGS -DHAS_IMXVPU -DLINUX -DEGL_API_FB"
     CXXFLAGS="$CXXFLAGS -DHAS_IMXVPU -DLINUX -DEGL_API_FB"
   elif [ "$KODIPLAYER_DRIVER" = libamcodec ]; then
-    KODI_PLAYER="-DENABLE_AML=ON"
+    KODI_PLAYER="-DCORE_PLATFORM_NAME=aml"
   fi
 fi
 
@@ -213,8 +217,10 @@ KODI_LIBDVD="$KODI_DVDCSS \
 PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$TOOLCHAIN \
                        -DWITH_TEXTUREPACKER=$TOOLCHAIN/bin/TexturePacker \
                        -DDEPENDS_PATH=$PKG_BUILD/depends \
+                       -DPYTHON_EXECUTABLE=$TOOLCHAIN/bin/$PKG_PYTHON_VERSION \
                        -DPYTHON_INCLUDE_DIRS=$SYSROOT_PREFIX/usr/include/$PKG_PYTHON_VERSION \
                        -DGIT_VERSION=$PKG_VERSION \
+                       -DWITH_FFMPEG=$(get_build_dir ffmpeg) \
                        -DENABLE_INTERNAL_FFMPEG=OFF \
                        -DFFMPEG_INCLUDE_DIRS=$SYSROOT_PREFIX/usr \
                        -DENABLE_INTERNAL_CROSSGUID=OFF \
