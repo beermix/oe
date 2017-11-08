@@ -46,14 +46,15 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --with-pic \
                          --enable-relro \
                          --disable-nls \
+                         --disable-sim \
+                         --disable-gdb \
                          --enable-poison-system-directories"
 
 pre_configure_host() {
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-rpath,$TOOLCHAIN/lib -L$TOOLCHAIN/lib -s||g"`
   unset CPPFLAGS
   unset CFLAGS
   unset CXXFLAGS
-#  unset LDFLAGS
+  unset LDFLAGS
 }
 
 make_host() {
