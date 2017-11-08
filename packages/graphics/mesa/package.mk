@@ -79,19 +79,23 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            CFLAGS_FOR_BUILD= \
                            CXXFLAGS_FOR_BUILD= \
                            LDFLAGS_FOR_BUILD= \
+                           X11_INCLUDES= \
+                           DRI_DRIVER_INSTALL_DIR=$XORG_PATH_DRI \
+                           DRI_DRIVER_SEARCH_DIR=$XORG_PATH_DRI \
                            --disable-debug \
                            --disable-mangling \
                            --enable-texture-float \
                            --enable-asm \
                            --disable-selinux \
                            --enable-opengl \
+                           --disable-gles1 \
                            $MESA_GLES \
-                           $MESA_DRI \
-                           $MESA_GLX \
+                           --enable-dri \
+                           --enable-dri3 \
+                           --enable-glx \
                            --disable-osmesa \
                            --disable-gallium-osmesa \
-                           --enable-egl \
-                           $MESA_EGL_PLATFORMS \
+                           --enable-egl --with-egl-platforms=x11,drm \
                            $XA_CONFIG \
                            --enable-gbm \
                            --disable-nine \
