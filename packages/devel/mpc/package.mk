@@ -33,3 +33,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-static --disable-shared \
                          --with-gmp=$TOOLCHAIN \
                          --with-mpfr=$TOOLCHAIN"
+                         
+pre_configure_host() {
+  unset CFLAGS
+}

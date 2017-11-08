@@ -39,5 +39,10 @@ post_configure_host() {
 }
 
 post_makeinstall_host() {
-  cp $PKG_DIR/scripts/yacc $TOOLCHAIN/bin/yacc
+  cat > $TOOLCHAIN/bin/yacc << "EOF"
+#!/bin/sh
+exec bison -y "$@"
+EOF
+
+  chmod -v 755 $TOOLCHAIN/bin/yacc
 }
