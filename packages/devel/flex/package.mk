@@ -31,6 +31,11 @@ PKG_CONFIGURE_OPTS_HOST="ac_cv_path_M4=$TOOLCHAIN/bin/m4 \
 			    ac_cv_lib_util_getloadavg=no \
 			    --enable-static --disable-shared --disable-rpath --with-gnu-ld"
 
+PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_util_getloadavg=no \
+			      ac_cv_func_malloc_0_nonnull=yes \
+			      ac_cv_func_realloc_0_nonnull=yes \
+			      ac_cv_func_reallocarray=no"
+
 post_makeinstall_host() {
   cat > $TOOLCHAIN/bin/lex << "EOF"
 #!/bin/sh
@@ -40,7 +45,3 @@ EOF
   chmod -v 755 $TOOLCHAIN/bin/lex
 }
 
-PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_util_getloadavg=no \
-			      ac_cv_func_malloc_0_nonnull=yes \
-			      ac_cv_func_realloc_0_nonnull=yes \
-			      ac_cv_func_reallocarray=no"
