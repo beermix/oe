@@ -17,11 +17,11 @@
 ################################################################################
 
 PKG_NAME="expat"
-PKG_VERSION="2.2.4"
+PKG_VERSION="2.2.5"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://expat.sourceforge.net/"
-PKG_URL="http://sources.lede-project.org/expat-$PKG_VERSION.tar.bz2"
+PKG_URL="https://github.com/libexpat/libexpat/releases/download/R_2_2_5/expat-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="textproc"
 PKG_SHORTDESC="expat: XML parser library"
