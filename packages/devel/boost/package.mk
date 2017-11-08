@@ -71,6 +71,6 @@ makeinstall_target() {
                           --with-regex -sICU_PATH="$SYSROOT_PREFIX/usr" \
                           --with-serialization \
                           --with-system \
-                          --with-thread -j3 \
+                          --with-thread \
                           install
 }
