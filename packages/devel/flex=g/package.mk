@@ -18,7 +18,7 @@
 
 PKG_NAME="flex"
 PKG_VERSION="2.6.4"
-PKG_SITE="http://flex.sourceforge.net/"
+PKG_SITE="https://github.com/westes/flex/releases"
 PKG_URL="https://github.com/westes/flex/releases/download/v${PKG_VERSION}/${PKG_NAME}-${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_HOST="ccache:host"
 PKG_SECTION="toolchain/devel"
@@ -26,11 +26,7 @@ PKG_SHORTDESC="flex: Fast lexical analyzer generator"
 PKG_LONGDESC="flex is a tool for generating programs that perform pattern-matching on text."
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_HOST="ac_cv_path_M4=$TOOLCHAIN/bin/m4 \
-			    ac_cv_func_reallocarray=no \
-			    --disable-shared \
-			    --disable-rpath \
-			    --disable-doc"
+PKG_CONFIGURE_OPTS_HOST="ac_cv_func_reallocarray=no --enable-static --disable-shared --disable-rpath --with-gnu-ld"
 
 post_makeinstall_host() {
   cat > $TOOLCHAIN/bin/lex << "EOF"
@@ -41,7 +37,4 @@ EOF
   chmod -v 755 $TOOLCHAIN/bin/lex
 }
 
-
-PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
-			      ac_cv_func_realloc_0_nonnull=yes \
-			      --disable-shared --with-pic"
+PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes ac_cv_func_realloc_0_nonnull=yes ac_cv_func_reallocarray=no"
