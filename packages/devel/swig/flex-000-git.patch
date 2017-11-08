@@ -1,0 +1,2143 @@
+diff --git a/Makefile.am b/Makefile.am
+index 638c549..b3b0810 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -49,6 +49,29 @@ SUBDIRS = \
+ 	tests \
+ 	tools
+ 
++# Convenience targets to build libfl only
++# These are actually wrappers around automake- and libtool-generated targets
++
++libfl:
++	cd src && $(MAKE) $(AM_MAKEFLAGS) libfl.la libfl.pc
++
++install-libfl:
++	cd src && \
++	$(MAKE) $(AM_MAKEFLAGS) lib_LTLIBRARIES=libfl.la \
++	pkgconfig_DATA=libfl.pc install-libLTLIBRARIES install-pkgconfigDATA
++
++uninstall-libfl:
++	cd src && \
++	$(MAKE) $(AM_MAKEFLAGS) \
++	lib_LTLIBRARIES=libfl.la pkgconfig_DATA=libfl.pc \
++	uninstall-libLTLIBRARIES uninstall-pkgconfigDATA
++
++# libfl.pc is cleaned via 'distclean' target
++clean-libfl:
++	cd src && \
++	$(MAKE) $(AM_MAKEFLAGS) lib_LTLIBRARIES=libfl.la clean-libLTLIBRARIES \
++	clean-libtool
++
+ # Create the ChangeLog, but only if we're inside a git working directory
+ 
+ ChangeLog: $(srcdir)/tools/git2cl
+@@ -63,4 +86,5 @@ install-exec-hook:
+ 	cd $(DESTDIR)$(bindir) && \
+ 		$(LN_S) -f flex$(EXEEXT) flex++$(EXEEXT)
+ 
+-.PHONY: ChangeLog indent
++.PHONY: libfl install-libfl uninstall-libfl clean-libfl \
++	ChangeLog indent
+diff --git a/NEWS b/NEWS
+index 85d900b..89d5e7b 100644
+--- a/NEWS
++++ b/NEWS
+@@ -1,5 +1,56 @@
+ flex NEWS
+ 
++* Noteworthy changes in release  ?.? (????-??-??) [?]
++
++** build
++
++*** Flex now includes its own <config.h> header before including
++    system headers so that any system specific features detected by
++    configure are taken into account during compilation of flex
++    itself.
++
++*** The flex build system now includes Makefile targets at the top
++    level to allow just building and installing libfl.
++
++*** The flex distribution now includes a file, src/libfl.pc, to allow
++    using pkgconfig to find out what flags to use when building
++    against libfl from flex.
++
++*** Various edge cases, mostly involving out-of-tree builds have been
++    accounted for in the autotools build system.
++
++*** A crash during building on NetBSD has been fixed.
++
++** documentation
++
++*** a new Ukrainian translation has been submitted from the Translation Project.
++
++** scanner
++
++*** Some memory leaks have been fixed.
++
++*** A long standing bug that effected expressions of the form c{i,j}
++    where 'c' is a character and {i,j} describes the number of times
++    to match against 'c' when case sensitivity was turned on has been
++    fixed.
++
++*** New option: --backup-file allows setting the name of the file
++    written containing backing up information. Useful if you need
++    backing up information from multiple scanners in the same
++    directory.
++
++*** flex emits correct line number directives when line numbers refer
++    to the file containing the line number directives.
++
++*** The options {no,}yy{get,set}_column are now supported.
++
++** test
++
++*** Generating the various tableoptions make rules is now more portable.
++
++*** Tests of the options -C*f and -C*F will now run correctly on
++    filesystems that are not case sensitive.
++
+ * Noteworthy changes in release 2.6.4 (2017-05-06) [stable]
+ 
+ ** build
+diff --git a/README.md b/README.md
+index b979b01..b388c07 100644
+--- a/README.md
++++ b/README.md
+@@ -33,7 +33,7 @@ interest:
+ * COPYING - flex's copyright and license.
+ * doc/ - user documentation.
+ * examples/ - containing examples of some possible flex scanners and a
+-	      few other things. See the file examples/README for more
++              few other things. See the file examples/README for more
+               details.
+ * tests/ - regression tests. See TESTS/README for details.
+ * po/ - internationalization support files.
+@@ -43,7 +43,7 @@ repository:
+ 
+ * compiler suite - flex is built with gcc
+ * bash, or a good Bourne-style shell
+-* m4 - m4 -p needs to work; GNU m4 and a few others are suitable
++* m4 - `m4 -P` needs to work; GNU m4 and a few others are suitable
+ * GNU bison;  to generate parse.c from parse.y
+ * autoconf; for handling the build system
+ * automake; for Makefile generation
+@@ -74,12 +74,14 @@ in the top level of the flex source tree.
+ This script calls the various tools needed to get flex ready for the
+ GNU-style configure script to be able to work.
+ 
+-From this point on, building flex follows the usual  routine:
++From this point on, building flex follows the usual routine:
+ 
+ ```bash
+ configure && make && make install
+ ```
+ 
++---
++
+ This file is part of flex.
+ 
+ This code is derived from software contributed to Berkeley by
+diff --git a/configure.ac b/configure.ac
+index 55e774b..3c977a4 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -25,10 +25,12 @@
+ # autoconf requirements and initialization
+ 
+ AC_INIT([the fast lexical analyser generator],[2.6.4],[flex-help@lists.sourceforge.net],[flex])
++AC_PREREQ([2.60])
+ AC_CONFIG_SRCDIR([src/scan.l])
+ AC_CONFIG_AUX_DIR([build-aux])
++AC_USE_SYSTEM_EXTENSIONS
+ LT_INIT
+-AM_INIT_AUTOMAKE([1.11.3 -Wno-portability foreign check-news std-options dist-lzip parallel-tests subdir-objects])
++AM_INIT_AUTOMAKE([1.15 -Wno-portability foreign std-options dist-lzip parallel-tests subdir-objects])
+ AC_CONFIG_HEADER([src/config.h])
+ AC_CONFIG_LIBOBJ_DIR([lib])
+ AC_CONFIG_MACRO_DIR([m4])
+@@ -38,7 +40,7 @@ AC_SUBST(SHARED_VERSION_INFO)
+ # checks for programs
+ 
+ AM_GNU_GETTEXT([external])
+-AM_GNU_GETTEXT_VERSION([0.18])
++AM_GNU_GETTEXT_VERSION([0.19.7])
+ AC_PROG_YACC
+ AS_IF([test "$YACC" != 'bison -y'], [
+ 	YACC="\${top_srcdir}/build-aux/missing bison -y"
+@@ -54,6 +56,9 @@ AC_PROG_LN_S
+ AC_PROG_AWK
+ AC_PROG_INSTALL
+ 
++pkgconfigdir=${libdir}/pkgconfig
++AC_SUBST(pkgconfigdir)
++
+ # allow passing a variable `WARNINGFLAGS',
+ #   either when invoking `configure', or when invoking `make'
+ # default to something useful if GCC was detected
+@@ -166,6 +171,7 @@ strtol dnl
+ AC_CHECK_FUNCS([dnl
+ pow dnl           Used only by "examples/manual/expr"
+ setlocale dnl     Needed only if NLS is enabled
++reallocarr dnl    NetBSD function. Use reallocarray if not available.
+ reallocarray dnl  OpenBSD function. We have replacement if not available.
+ ])
+ 
+@@ -176,6 +182,7 @@ examples/Makefile
+ examples/fastwc/Makefile
+ examples/manual/Makefile
+ po/Makefile.in
++src/libfl.pc
+ src/Makefile
+ tools/Makefile
+ tests/Makefile
+diff --git a/po/LINGUAS b/po/LINGUAS
+index 4c51e38..ab7f200 100644
+--- a/po/LINGUAS
++++ b/po/LINGUAS
+@@ -1,23 +1,2 @@
+-ca
+-da
+-de
+-en@quot
+-en@boldquot
+-eo
+-es
+-fi
+-fr
+-ga
+-hr
+-ko
+-nl
+-pl
+-pt_BR
+-ro
+-ru
+-sr
+-sv
+-tr
+-vi
+-zh_CN
+-zh_TW
++# List of available languages.
++ca da de en@boldquot en@quot eo es fi fr ga hr ko nl pl pt_BR ro ru sr sv tr uk vi zh_CN zh_TW
+diff --git a/po/uk.po b/po/uk.po
+new file mode 100644
+index 0000000..e047fda
+--- /dev/null
++++ b/po/uk.po
+@@ -0,0 +1,975 @@
++# Ukrainian translations for flex.
++# Copyright (C) 2017 The Flex Project (msgids)
++# This file is distributed under the same license as the flex package.
++#
++# Viktor Shepel <shepelvictor@bigmir.net>, 2017.
++# Yuri Chornoivan <yurchor@ukr.net>, 2017.
++msgid ""
++msgstr ""
++"Project-Id-Version: flex 2.5.38\n"
++"Report-Msgid-Bugs-To: flex-devel@lists.sourceforge.net\n"
++"POT-Creation-Date: 2017-05-24 18:00-0400\n"
++"PO-Revision-Date: 2017-06-17 09:26+0300\n"
++"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
++"Language-Team: Ukrainian <translation-team-uk@lists.sourceforge.net>\n"
++"Language: uk\n"
++"MIME-Version: 1.0\n"
++"Content-Type: text/plain; charset=UTF-8\n"
++"Content-Transfer-Encoding: 8bit\n"
++"X-Bugs: Report translation errors to the Language-Team address.\n"
++"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
++"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
++"X-Generator: Lokalize 1.5\n"
++
++#: src/buf.c:79
++msgid "Allocation of buffer to print string failed"
++msgstr "Не вдалось виділити буфер для рядка, що виводиться"
++
++#: src/buf.c:107
++msgid "Allocation of buffer for line directive failed"
++msgstr "Не вдалось виділити буфер для рядкової директиви"
++
++#: src/buf.c:177
++msgid "Allocation of buffer for m4 def failed"
++msgstr "Не вдалось виділити буфер для m4 def"
++
++#: src/buf.c:198
++msgid "Allocation of buffer for m4 undef failed"
++msgstr "Не вдалось виділити буфер для m4 undef"
++
++#: src/dfa.c:59
++#, c-format
++msgid "State #%d is non-accepting -\n"
++msgstr "Стан #%d не є допустимим -\n"
++
++#: src/dfa.c:119
++msgid "dangerous trailing context"
++msgstr "небезпечний замикаючий контекст"
++
++#: src/dfa.c:159
++#, c-format
++msgid " associated rule line numbers:"
++msgstr " номера рядків асоційованого правила:"
++
++#: src/dfa.c:193
++#, c-format
++msgid " out-transitions: "
++msgstr " out-переходи: "
++
++#: src/dfa.c:201
++#, c-format
++msgid ""
++"\n"
++" jam-transitions: EOF "
++msgstr ""
++"\n"
++" jam-переходи: EOF "
++
++#: src/dfa.c:331
++msgid "consistency check failed in epsclosure()"
++msgstr "помилка при перевірці на цілісність у epsclosure()"
++
++#: src/dfa.c:419
++msgid ""
++"\n"
++"\n"
++"DFA Dump:\n"
++"\n"
++msgstr ""
++"\n"
++"\n"
++"Дамп ДСА:\n"
++"\n"
++
++#: src/dfa.c:587
++msgid "could not create unique end-of-buffer state"
++msgstr "неможливо створити унікальний стан end_of_buffer"
++
++#: src/dfa.c:608
++#, c-format
++msgid "state # %d:\n"
++msgstr "стан # %d:\n"
++
++#: src/dfa.c:768
++msgid "Could not write yynxt_tbl[][]"
++msgstr "Неможливо записати yynxt_tbl[][]"
++
++#: src/dfa.c:1028
++msgid "bad transition character detected in sympartition()"
++msgstr "виявлено невірний символ переходу в sympartition()"
++
++#: src/gen.c:480
++msgid ""
++"\n"
++"\n"
++"Equivalence Classes:\n"
++"\n"
++msgstr ""
++"\n"
++"\n"
++"Класи еквівалентності:\n"
++"\n"
++
++#: src/gen.c:669 src/gen.c:698 src/gen.c:1218
++#, c-format
++msgid "state # %d accepts: [%d]\n"
++msgstr "стан # %d приймає: [%d]\n"
++
++#: src/gen.c:1115
++#, c-format
++msgid "state # %d accepts: "
++msgstr "стан # %d приймає: "
++
++#: src/gen.c:1162
++msgid "Could not write yyacclist_tbl"
++msgstr "Неможливо записати yyacclist_tbl"
++
++#: src/gen.c:1236
++msgid "Could not write yyacc_tbl"
++msgstr "Неможливо записати yyacc_tbl"
++
++#: src/gen.c:1251 src/gen.c:1623 src/gen.c:1646
++msgid "Could not write ecstbl"
++msgstr "Неможливо записати ecstbl"
++
++#: src/gen.c:1271
++msgid ""
++"\n"
++"\n"
++"Meta-Equivalence Classes:\n"
++msgstr ""
++"\n"
++"\n"
++"Мета-Еквівалентні Класи:\n"
++
++#: src/gen.c:1293
++msgid "Could not write yymeta_tbl"
++msgstr "Неможливо записати yymeta_tbl"
++
++#: src/gen.c:1352
++msgid "Could not write yybase_tbl"
++msgstr "Неможливо записати yybase_tbl"
++
++#: src/gen.c:1384
++msgid "Could not write yydef_tbl"
++msgstr "Неможливо записати yydef_tbl"
++
++#: src/gen.c:1422
++msgid "Could not write yynxt_tbl"
++msgstr "Неможливо записати yynxt_tbl"
++
++#: src/gen.c:1456
++msgid "Could not write yychk_tbl"
++msgstr "Неможливо записати yychk_tbl"
++
++#: src/gen.c:1608 src/gen.c:1637
++msgid "Could not write ftbl"
++msgstr "Неможливо записати ftbl"
++
++#: src/gen.c:1614
++msgid "Could not write ssltbl"
++msgstr "Неможливо записати ssltbl"
++
++#: src/gen.c:1665
++msgid "Could not write eoltbl"
++msgstr "Неможливо записати eoltbl"
++
++#: src/gen.c:1722
++msgid "Could not write yynultrans_tbl"
++msgstr "Неможливо записати yynultrans_tbl"
++
++#: src/main.c:178
++msgid "rule cannot be matched"
++msgstr "неможливо застосувати правило"
++
++#: src/main.c:183
++msgid "-s option given but default rule can be matched"
++msgstr ""
++"вказано параметр -s, але правило за замовчуванням може бути застосоване"
++
++#: src/main.c:221
++msgid "Can't use -+ with -l option"
++msgstr "Неможливо використовувати -+ з параметром -l"
++
++#: src/main.c:224
++msgid "Can't use -f or -F with -l option"
++msgstr "Неможливо використовувати -f або -F з параметром -l"
++
++#: src/main.c:228
++msgid "Can't use --reentrant or --bison-bridge with -l option"
++msgstr ""
++"Неможливо використовувати --reentrant або --bison-bridge з параметром -l"
++
++#: src/main.c:260
++msgid "-Cf/-CF and -Cm don't make sense together"
++msgstr "Параметри -Cf/-CF і -Cm разом не мають сенсу"
++
++#: src/main.c:263
++msgid "-Cf/-CF and -I are incompatible"
++msgstr "Параметри -Cf/-CF і -I несумісні"
++
++#: src/main.c:267
++msgid "-Cf/-CF are incompatible with lex-compatibility mode"
++msgstr "Параметри -Cf/-CF несумісні з режимом lex-compatibility"
++
++#: src/main.c:272
++msgid "-Cf and -CF are mutually exclusive"
++msgstr "Параметри -Cf і -CF є взаємовиключними"
++
++#: src/main.c:276
++msgid "Can't use -+ with -CF option"
++msgstr "Неможливо використовувати -+ з параметром -CF"
++
++#: src/main.c:279
++#, c-format
++msgid "%array incompatible with -+ option"
++msgstr "%array несумісний з параметром -+"
++
++#: src/main.c:284
++msgid "Options -+ and --reentrant are mutually exclusive."
++msgstr "Параметри -+ і --reentrant є взаємовиключними."
++
++#: src/main.c:287
++msgid "bison bridge not supported for the C++ scanner."
++msgstr "bison bridge не підтримується для сканера C++."
++
++#: src/main.c:336 src/main.c:419
++#, c-format
++msgid "could not create %s"
++msgstr "неможливо створити %s"
++
++#: src/main.c:431
++msgid "could not write tables header"
++msgstr "Неможливо записати заголовок таблиць"
++
++#: src/main.c:435
++#, c-format
++msgid "can't open skeleton file %s"
++msgstr "Неможливо відкрити файл-каркас %s"
++
++#: src/main.c:450
++msgid "Prefix cannot include '[' or ']'"
++msgstr "Префікс не може містити «[» або «]»"
++
++#: src/main.c:474
++msgid "allocation of macro definition failed"
++msgstr "Не вдалось розмістити визначення макросу"
++
++#: src/main.c:521
++#, c-format
++msgid "input error reading skeleton file %s"
++msgstr "помилка читання файла-каркаса %s"
++
++#: src/main.c:525
++#, c-format
++msgid "error closing skeleton file %s"
++msgstr "помилка при закритті файла-каркаса %s"
++
++#: src/main.c:711
++#, c-format
++msgid "error creating header file %s"
++msgstr "помилка створення файла-заголовку %s"
++
++#: src/main.c:719
++#, c-format
++msgid "error writing output file %s"
++msgstr "помилка запису у вихідний файл %s"
++
++#: src/main.c:723
++#, c-format
++msgid "error closing output file %s"
++msgstr "помилка закриття вихідного файла %s"
++
++#: src/main.c:727
++#, c-format
++msgid "error deleting output file %s"
++msgstr "помилка видалення вихідного файла %s"
++
++#: src/main.c:734
++#, c-format
++msgid "No backing up.\n"
++msgstr "Резервне копіювання вимкнено.\n"
++
++#: src/main.c:738
++#, c-format
++msgid "%d backing up (non-accepting) states.\n"
++msgstr "резервне копіювання %d (недопустимих) станів.\n"
++
++#: src/main.c:742
++#, c-format
++msgid "Compressed tables always back up.\n"
++msgstr "Створення резервних копій стислих таблиць виконується завжди.\n"
++
++#: src/main.c:745
++#, c-format
++msgid "error writing backup file %s"
++msgstr "помилка запису резервної копії файла %s"
++
++#: src/main.c:749
++#, c-format
++msgid "error closing backup file %s"
++msgstr "помилка закриття резервної копії файла %s"
++
++#: src/main.c:754
++#, c-format
++msgid "%s version %s usage statistics:\n"
++msgstr "статистика використання %s версії %s:\n"
++
++#: src/main.c:757
++#, c-format
++msgid "  scanner options: -"
++msgstr "  параметри сканера: -"
++
++#: src/main.c:836
++#, c-format
++msgid "  %d/%d NFA states\n"
++msgstr "  %d/%d станів НСА\n"
++
++#: src/main.c:838
++#, c-format
++msgid "  %d/%d DFA states (%d words)\n"
++msgstr "  %d/%d станів ДСА (%d слів)\n"
++
++#: src/main.c:840
++#, c-format
++msgid "  %d rules\n"
++msgstr "  %d правил\n"
++
++#: src/main.c:845
++#, c-format
++msgid "  No backing up\n"
++msgstr " Резервне копіювання вимкнено\n"
++
++#: src/main.c:849
++#, c-format
++msgid "  %d backing-up (non-accepting) states\n"
++msgstr " резервне копіювання %d (недопустимих) станів\n"
++
++#: src/main.c:854
++#, c-format
++msgid "  Compressed tables always back-up\n"
++msgstr " Створення резервних копій стислих таблиць виконується завжди\n"
++
++#: src/main.c:858
++#, c-format
++msgid "  Beginning-of-line patterns used\n"
++msgstr " Використовуються шаблони початку рядка\n"
++
++#: src/main.c:860
++#, c-format
++msgid "  %d/%d start conditions\n"
++msgstr "  %d/%d початкових умов\n"
++
++#: src/main.c:864
++#, c-format
++msgid "  %d epsilon states, %d double epsilon states\n"
++msgstr "  %d епсилон-станів, %d подвійних епсилон-станів\n"
++
++#: src/main.c:868
++#, c-format
++msgid "  no character classes\n"
++msgstr "  відсутні класи символів\n"
++
++#: src/main.c:872
++#, c-format
++msgid "  %d/%d character classes needed %d/%d words of storage, %d reused\n"
++msgstr ""
++"  %d/%d символьних класів потребують %d/%d слів для зберігання, %d "
++"використано вдруге\n"
++
++#: src/main.c:877
++#, c-format
++msgid "  %d state/nextstate pairs created\n"
++msgstr " створено %d пар стан/наступний-стан\n"
++
++#: src/main.c:880
++#, c-format
++msgid "  %d/%d unique/duplicate transitions\n"
++msgstr "  %d/%d унікальних/повторюваних переходів\n"
++
++#: src/main.c:885
++#, c-format
++msgid "  %d table entries\n"
++msgstr "  %d елементів таблиці\n"
++
++#: src/main.c:893
++#, c-format
++msgid "  %d/%d base-def entries created\n"
++msgstr " створено %d/%d base-def елементів\n"
++
++#: src/main.c:897
++#, c-format
++msgid "  %d/%d (peak %d) nxt-chk entries created\n"
++msgstr "  створено %d/%d (пік %d) записів nxt-chk\n"
++
++#: src/main.c:901
++#, c-format
++msgid "  %d/%d (peak %d) template nxt-chk entries created\n"
++msgstr "  створено %d/%d (пік %d) шаблонних записів nxt-chk\n"
++
++#: src/main.c:905
++#, c-format
++msgid "  %d empty table entries\n"
++msgstr "  %d порожніх елементів таблиці\n"
++
++#: src/main.c:907
++#, c-format
++msgid "  %d protos created\n"
++msgstr "  створено %d прототипів\n"
++
++#: src/main.c:910
++#, c-format
++msgid "  %d templates created, %d uses\n"
++msgstr "  створено %d шаблонів, %d використовується\n"
++
++#: src/main.c:918
++#, c-format
++msgid "  %d/%d equivalence classes created\n"
++msgstr "  створено класів еквівалентності %d/%d\n"
++
++#: src/main.c:926
++#, c-format
++msgid "  %d/%d meta-equivalence classes created\n"
++msgstr "  створено класів мета-еквівалентності %d/%d\n"
++
++#: src/main.c:932
++#, c-format
++msgid "  %d (%d saved) hash collisions, %d DFAs equal\n"
++msgstr "  %d (%d записано) колізій хеш-таблиці, %d еквівалентних ДСА\n"
++
++#: src/main.c:934
++#, c-format
++msgid "  %d sets of reallocations needed\n"
++msgstr "  потрібно %d наборів повторних розміщень\n"
++
++#: src/main.c:936
++#, c-format
++msgid "  %d total table entries needed\n"
++msgstr "  всього потрібно %d елементів таблиці\n"
++
++#: src/main.c:1010
++#, c-format
++msgid "Internal error. flexopts are malformed.\n"
++msgstr "Внутрішня помилка. Неправильне значення flexopts.\n"
++
++#: src/main.c:1020
++#, c-format
++msgid "Try `%s --help' for more information.\n"
++msgstr "Спробуйте «%s --help» для отримання більш докладного опису.\n"
++
++#: src/main.c:1077
++#, c-format
++msgid "unknown -C option '%c'"
++msgstr "невідоме значення «%c» для параметру -C"
++
++#: src/main.c:1206
++#, c-format
++msgid "%s %s\n"
++msgstr "%s %s\n"
++
++#: src/main.c:1486
++msgid "fatal parse error"
++msgstr "фатальна помилка розбору"
++
++#: src/main.c:1518
++#, c-format
++msgid "could not create backing-up info file %s"
++msgstr "неможливо створити резервну копію інформаційного файла %s"
++
++#: src/main.c:1539
++#, c-format
++msgid "-l AT&T lex compatibility option entails a large performance penalty\n"
++msgstr ""
++"Параметр -l сумісності з AT&T lex спричиняє значне зниження продуктивності\n"
++
++#: src/main.c:1542
++#, c-format
++msgid " and may be the actual source of other reported performance penalties\n"
++msgstr "і також може бути істинним джерелом проблем з продуктивністю\n"
++
++#: src/main.c:1548
++#, c-format
++msgid ""
++"%%option yylineno entails a performance penalty ONLY on rules that can match "
++"newline characters\n"
++msgstr ""
++"%%option yylineno спричиняе значне зниження продуктивності ТІЛЬКИ для "
++"правил, котрі описують символи нового рядка\n"
++
++#: src/main.c:1555
++#, c-format
++msgid "-I (interactive) entails a minor performance penalty\n"
++msgstr "-I (інтерактивний) спричиняе незначне зниження продуктивності\n"
++
++#: src/main.c:1560
++#, c-format
++msgid "yymore() entails a minor performance penalty\n"
++msgstr "yymore() спричиняе незначне зниження продуктивності\n"
++
++#: src/main.c:1566
++#, c-format
++msgid "REJECT entails a large performance penalty\n"
++msgstr "REJECT спричиняе значне зниження продуктивності\n"
++
++#: src/main.c:1571
++#, c-format
++msgid "Variable trailing context rules entail a large performance penalty\n"
++msgstr ""
++"Правила котрі мають замикаючий контекст змінної довжини значно знижують "
++"продуктивність\n"
++
++#: src/main.c:1583
++msgid "REJECT cannot be used with -f or -F"
++msgstr "REJECT не може бути використано разом з -f або -F"
++
++#: src/main.c:1586
++#, c-format
++msgid "%option yylineno cannot be used with REJECT"
++msgstr "%option yylineno не може бути використано з REJECT"
++
++#: src/main.c:1589
++msgid "variable trailing context rules cannot be used with -f or -F"
++msgstr ""
++"Правила котрі мають замикаючий контекст змінної довжини не можуть бути "
++"використані з -f or -F"
++
++#: src/main.c:1714
++#, c-format
++msgid "%option yyclass only meaningful for C++ scanners"
++msgstr "%option yyclass має сенс тільки для сканерів C++"
++
++#: src/main.c:1801
++#, c-format
++msgid "Usage: %s [OPTIONS] [FILE]...\n"
++msgstr "Використання: %s [ПАРАМЕТРИ] [ФАЙЛ]…\n"
++
++#: src/main.c:1804
++#, fuzzy, c-format
++msgid ""
++"Generates programs that perform pattern-matching on text.\n"
++"\n"
++"Table Compression:\n"
++"  -Ca, --align      trade off larger tables for better memory alignment\n"
++"  -Ce, --ecs        construct equivalence classes\n"
++"  -Cf               do not compress tables; use -f representation\n"
++"  -CF               do not compress tables; use -F representation\n"
++"  -Cm, --meta-ecs   construct meta-equivalence classes\n"
++"  -Cr, --read       use read() instead of stdio for scanner input\n"
++"  -f, --full        generate fast, large scanner. Same as -Cfr\n"
++"  -F, --fast        use alternate table representation. Same as -CFr\n"
++"  -Cem              default compression (same as --ecs --meta-ecs)\n"
++"\n"
++"Debugging:\n"
++"  -d, --debug             enable debug mode in scanner\n"
++"  -b, --backup            write backing-up information to %s\n"
++"  -p, --perf-report       write performance report to stderr\n"
++"  -s, --nodefault         suppress default rule to ECHO unmatched text\n"
++"  -T, --trace             %s should run in trace mode\n"
++"  -w, --nowarn            do not generate warnings\n"
++"  -v, --verbose           write summary of scanner statistics to stdout\n"
++"      --hex               use hexadecimal numbers instead of octal in debug "
++"outputs\n"
++"\n"
++"Files:\n"
++"  -o, --outfile=FILE      specify output filename\n"
++"  -S, --skel=FILE         specify skeleton file\n"
++"  -t, --stdout            write scanner on stdout instead of %s\n"
++"      --yyclass=NAME      name of C++ class\n"
++"      --header-file=FILE   create a C header file in addition to the "
++"scanner\n"
++"      --tables-file[=FILE] write tables to FILE\n"
++"\n"
++"Scanner behavior:\n"
++"  -7, --7bit              generate 7-bit scanner\n"
++"  -8, --8bit              generate 8-bit scanner\n"
++"  -B, --batch             generate batch scanner (opposite of -I)\n"
++"  -i, --case-insensitive  ignore case in patterns\n"
++"  -l, --lex-compat        maximal compatibility with original lex\n"
++"  -X, --posix-compat      maximal compatibility with POSIX lex\n"
++"  -I, --interactive       generate interactive scanner (opposite of -B)\n"
++"      --yylineno          track line count in yylineno\n"
++"\n"
++"Generated code:\n"
++"  -+,  --c++               generate C++ scanner class\n"
++"  -Dmacro[=defn]           #define macro defn  (default defn is '1')\n"
++"  -L,  --noline            suppress #line directives in scanner\n"
++"  -P,  --prefix=STRING     use STRING as prefix instead of \"yy\"\n"
++"  -R,  --reentrant         generate a reentrant C scanner\n"
++"       --bison-bridge      scanner for bison pure parser.\n"
++"       --bison-locations   include yylloc support.\n"
++"       --stdinit           initialize yyin/yyout to stdin/stdout\n"
++"       --nounistd          do not include <unistd.h>\n"
++"       --noFUNCTION        do not generate a particular FUNCTION\n"
++"\n"
++"Miscellaneous:\n"
++"  -c                      do-nothing POSIX option\n"
++"  -n                      do-nothing POSIX option\n"
++"  -?\n"
++"  -h, --help              produce this help message\n"
++"  -V, --version           report %s version\n"
++msgstr ""
++"Генерує програми, що знаходять шаблони у тексті.\n"
++"\n"
++"Стиснення таблиць:\n"
++"  -Ca, --align       вирівняти таблиці у пам'яті збільшивши розмір\n"
++"                     їх елементів\n"
++"  -Ce, --ecs         створювати класи еквівалентності\n"
++"  -Cf                не стискати таблиці; використовувати -f представлення\n"
++"  -CF                не стискати таблиці; використовувати -F представлення\n"
++"  -Cm, --meta-ecs    створювати класи мета-еквівалентності\n"
++"  -Cr, --read        використати read() замість stdio як\n"
++"                     вхідні дані сканера\n"
++"  -f, --full         створити швидкий, великий сканер. Теж саме, що -Cfr\n"
++"  -F, --fast         застосувати альтернативний опис таблиць.\n"
++"                     Теж саме, що -CFr\n"
++"  -Cem               степінь стиснення за замовчуванням\n"
++"                     (теж саме, що --ecs --meta-ecs)\n"
++"\n"
++"Налагодження:\n"
++"  -d, --debug             увімкнути режим налагодження сканера\n"
++"  -b, --backup            записати резервну копію до %s\n"
++"  -p, --perf-report       записати звіт про продуктивність до stderr\n"
++"  -s, --nodefault         припинити вивід тексту (ECHO до stdout)\n"
++"                          що не збігається з жодним правилом\n"
++"  -T, --trace             %s повинен запускатися у режимі трасування\n"
++"  -w, --nowarn            не видавати попереджень\n"
++"  -v, --verbose           записати підсумкову статистику сканера до stdout\n"
++"\n"
++"Файли:\n"
++"  -o, --outfile=ФАЙЛ        вказати ім'я вихідного файла\n"
++"  -S, --skel=ФАЙЛ           вказати файл каркасу\n"
++"  -t, --stdout              записати сканер до stdout замість %s\n"
++"      --yyclass=ІМ'Я        ім'я класу C++\n"
++"      --header-file=ФАЙЛ    створити C файл заголовок сканера\n"
++"      --tables-file[=ФАЙЛ]  записати таблиці у ФАЙЛ\n"
++"\n"
++"Поведінка сканера:\n"
++"  -7, --7bit              створити 7-бітний сканер\n"
++"  -8, --8bit              створити 8-бітний сканер\n"
++"  -B, --batch             створити пакетний сканер\n"
++"                          (протилежна за властивостями до опції -I)\n"
++"  -i, --case-insensitive  ігнорувати регістр символів у шаблонах\n"
++"  -l, --lex-compat        максимальна сумісність з оригінальним lex\n"
++"  -X, --posix-compat      максимальна сумісність з POSIX lex\n"
++"  -I, --interactive       створити інтерактивний сканер\n"
++"                          (протилежна за властивостями до опції -B)\n"
++"      --yylineno          відслідковувати число рядків у yylineno\n"
++"\n"
++"Генерація коду:\n"
++"  -+,  --c++                створити C++ клас сканера\n"
++"  -Dmacro[=defn]            #define macro defn (за замовчуванням defn='1')\n"
++"  -L,  --noline             не створювати #line директиви для сканера\n"
++"  -P,  --prefix=РЯДОК       використати РЯДОК як префікс замість «yy»\n"
++"  -R,  --reentrant          генерувати реентерабельний C-сканер\n"
++"       --bison-bridge       сканер тільки для bison аналізатору\n"
++"       --bison-locations    додати підтримку yylloc\n"
++"       --stdinit            ініціалізувати yyin/yyout до stdin/stdout\n"
++"       --noansi-definitions визначення функцій у застарілому стилі\n"
++"       --noansi-prototypes  порожній список параметрів у прототипах\n"
++"       --nounistd           не додавати <unistd.h>\n"
++"       --noФУНКЦІЯ          не генерувати задану функцію ФУНКЦІЯ\n"
++"\n"
++"Інше:\n"
++"  -с                      недіючий POSIX параметр\n"
++"  -n                      недіючий POSIX параметр\n"
++"  -?\n"
++"  -h, --help              показати цю довідку\n"
++"  -V, --version           показати версію %s\n"
++
++#: src/misc.c:64
++msgid "allocation of sko_stack failed"
++msgstr "не вдалось отримати пам’ять під sko_stack"
++
++#: src/misc.c:100
++#, c-format
++msgid "name \"%s\" ridiculously long"
++msgstr "ім'я «%s» занадто довге"
++
++#: src/misc.c:149 src/misc.c:162
++msgid "memory allocation failed in allocate_array()"
++msgstr "помилка виділення пам'яті у allocate_array()"
++
++#: src/misc.c:212
++#, c-format
++msgid "bad character '%s' detected in check_char()"
++msgstr "check_char() виявив недопустимий символ «%s»"
++
++#: src/misc.c:217
++#, c-format
++msgid "scanner requires -8 flag to use the character %s"
++msgstr "для використання символу %s сканер потребує опцію -8"
++
++#: src/misc.c:236
++msgid "memory allocation failure in xstrdup()"
++msgstr "помилка виділення пам'яті у xstrdup()"
++
++#: src/misc.c:310
++#, c-format
++msgid "%s: fatal internal error, %s\n"
++msgstr "%s: фатальна внутрішня помилка, %s\n"
++
++#: src/misc.c:671 src/misc.c:683
++msgid "attempt to increase array size failed"
++msgstr "помилка при спробі збільшити розмір масиву"
++
++#: src/misc.c:807
++msgid "bad line in skeleton file"
++msgstr "невідомий рядок у файлі-каркасі"
++
++#: src/misc.c:857
++msgid "memory allocation failed in yy_flex_xmalloc()"
++msgstr "помилка виділення пам'яті у yy_flex_xmalloc()"
++
++#: src/nfa.c:100
++#, c-format
++msgid ""
++"\n"
++"\n"
++"********** beginning dump of nfa with start state %d\n"
++msgstr ""
++"\n"
++"\n"
++"********** початок дампу НСА з початковим станом %d\n"
++
++#: src/nfa.c:111
++#, c-format
++msgid "state # %4d\t"
++msgstr "стан # %4d\t"
++
++#: src/nfa.c:126
++#, c-format
++msgid "********** end of dump\n"
++msgstr "********** кінець дампу\n"
++
++#: src/nfa.c:169
++msgid "empty machine in dupmachine()"
++msgstr "порожній автомат у dupmachine()"
++
++#: src/nfa.c:234
++#, c-format
++msgid "Variable trailing context rule at line %d\n"
++msgstr "Правило із замикаючим контекстом змінної довжини у стрічці %d\n"
++
++#: src/nfa.c:357
++msgid "bad state type in mark_beginning_as_normal()"
++msgstr "невідомий тип стану у mark_beginning_as_normal()"
++
++#: src/nfa.c:595
++#, c-format
++msgid "input rules are too complicated (>= %d NFA states)"
++msgstr "вхідні правила занадто складні (>= %d станів НСА)"
++
++#: src/nfa.c:673
++msgid "found too many transitions in mkxtion()"
++msgstr "знайдено занадто багато переходів у mkxtion()"
++
++#: src/nfa.c:699
++#, c-format
++msgid "too many rules (> %d)!"
++msgstr "занадто багато правил (> %d)!"
++
++#: src/parse.y:159
++msgid "unknown error processing section 1"
++msgstr "невідома помилка при обробці розділу 1"
++
++#: src/parse.y:184 src/parse.y:353
++msgid "bad start condition list"
++msgstr "невірний список початкових умов"
++
++#: src/parse.y:204
++msgid "Prefix must not contain [ or ]"
++msgstr "Префікс не може містити символи «[» або «]»"
++
++#: src/parse.y:317
++msgid "unrecognized rule"
++msgstr "нерозпізнане правило"
++
++#: src/parse.y:436 src/parse.y:449 src/parse.y:518
++msgid "trailing context used twice"
++msgstr "замикаючий контекст використано двічі"
++
++#: src/parse.y:554 src/parse.y:564 src/parse.y:637 src/parse.y:647
++msgid "bad iteration values"
++msgstr "невірно сформований діапазон ітерацій"
++
++#: src/parse.y:582 src/parse.y:600 src/parse.y:665 src/parse.y:683
++msgid "iteration value must be positive"
++msgstr "кількість ітерацій повинна бути додатнім числом"
++
++#: src/parse.y:806 src/parse.y:816
++#, c-format
++msgid "the character range [%c-%c] is ambiguous in a case-insensitive scanner"
++msgstr ""
++"використання діапазону символів [%c-%c] є двозначним для сканера, що не "
++"чутливий до регістру символів"
++
++#: src/parse.y:821
++msgid "negative range in character class"
++msgstr ""
++"символьний клас описано діапазоном, перший елемент котрого більший за "
++"останній"
++
++#: src/parse.y:918
++msgid "[:^lower:] is ambiguous in case insensitive scanner"
++msgstr ""
++"використання [:^lower:] є невизначеним для сканера, що не чутливий до "
++"регістру символів"
++
++#: src/parse.y:924
++msgid "[:^upper:] ambiguous in case insensitive scanner"
++msgstr ""
++"використання [:^upper:] є невизначеним для сканера, що не чутливий до "
++"регістру символів"
++
++#: src/scan.l:82 src/scan.l:646 src/scan.l:704
++msgid "Input line too long\n"
++msgstr "Занадто довгий вхідний рядок\n"
++
++#: src/scan.l:183
++#, c-format
++msgid "malformed '%top' directive"
++msgstr "нерозпізнана директива «%top»"
++
++#: src/scan.l:205
++#, no-c-format
++msgid "unrecognized '%' directive"
++msgstr "нерозпізнана директива «%»"
++
++#: src/scan.l:214
++msgid "Definition name too long\n"
++msgstr "Визначення має занадто довге ім'я\n"
++
++#: src/scan.l:309
++msgid "Unmatched '{'"
++msgstr "Непарна «{»"
++
++#: src/scan.l:325
++#, c-format
++msgid "Definition value for {%s} too long\n"
++msgstr "Визначення {%s} має занадто довге значення\n"
++
++#: src/scan.l:342
++msgid "incomplete name definition"
++msgstr "неповне визначення імені"
++
++#: src/scan.l:469
++msgid "Option line too long\n"
++msgstr "Занадто довгий параметр\n"
++
++#: src/scan.l:477
++#, c-format
++msgid "unrecognized %%option: %s"
++msgstr "нерозпізнаний %%option: %s"
++
++#: src/scan.l:661 src/scan.l:834
++msgid "bad character class"
++msgstr "помилковий символьний клас"
++
++#: src/scan.l:711
++#, c-format
++msgid "undefined definition {%s}"
++msgstr "нерозпізнане визначення {%s}"
++
++#: src/scan.l:774
++msgid "unbalanced parenthesis"
++msgstr "незбалансовані круглі дужки"
++
++#: src/scan.l:789
++#, c-format
++msgid "bad <start condition>: %s"
++msgstr "невірно сформованана <умова, що активує правило>: %s"
++
++#: src/scan.l:802
++msgid "missing quote"
++msgstr "відсутні лапки"
++
++#: src/scan.l:868
++#, c-format
++msgid "bad character class expression: %s"
++msgstr "символьний клас заданий некоректним виразом: %s"
++
++#: src/scan.l:890
++msgid "bad character inside {}'s"
++msgstr "неприйнятний символ всередині {}"
++
++#: src/scan.l:896
++msgid "missing }"
++msgstr "відсутній }"
++
++#: src/scan.l:974
++msgid "EOF encountered inside an action"
++msgstr "знайдено EOF всередині коду котрий асоційований з правилом"
++
++#: src/scan.l:979
++msgid "EOF encountered inside pattern"
++msgstr "знайдено EOF всередині шаблону, що задає правило"
++
++#: src/scan.l:1012
++#, c-format
++msgid "bad character: %s"
++msgstr "неочікуваний символ: %s"
++
++#: src/scan.l:1040
++#, c-format
++msgid "can't open %s"
++msgstr "неможливо відкрити %s"
++
++#: src/scanopt.c:259
++#, c-format
++msgid "Usage: %s [OPTIONS]...\n"
++msgstr "Використання: %s [ПАРАМЕТРИ]…\n"
++
++#: src/scanopt.c:524
++#, c-format
++msgid "option `%s' doesn't allow an argument\n"
++msgstr "параметр «%s» повинен використовуватись без аргументу\n"
++
++#: src/scanopt.c:529
++#, c-format
++msgid "option `%s' requires an argument\n"
++msgstr "параметр «% s» повинен використовуватись з аргументом\n"
++
++#: src/scanopt.c:533
++#, c-format
++msgid "option `%s' is ambiguous\n"
++msgstr "параметр «%s» є двозначним\n"
++
++#: src/scanopt.c:537
++#, c-format
++msgid "Unrecognized option `%s'\n"
++msgstr "Нерозпізнаний параметр «%s»\n"
++
++#: src/scanopt.c:541
++#, c-format
++msgid "Unknown error=(%d)\n"
++msgstr "Невідома помилка=(%d)\n"
++
++#: src/sym.c:92
++msgid "symbol table memory allocation failed"
++msgstr "помилка виділення пам'яті для таблиці символів"
++
++#: src/sym.c:183
++msgid "name defined twice"
++msgstr "ім'я визначено двічі"
++
++#: src/sym.c:231
++#, c-format
++msgid "start condition %s declared twice"
++msgstr "початкова умова %s описана двічі"
++
++#: src/yylex.c:57
++msgid "premature EOF"
++msgstr "неочікуваний EOF"
++
++#: src/yylex.c:200
++#, c-format
++msgid "End Marker\n"
++msgstr "Мітка кінця\n"
++
++#: src/yylex.c:206
++#, c-format
++msgid "*Something Weird* - tok: %d val: %d\n"
++msgstr "*Щось не так* — tok: %d val: %d\n"
++
++#~ msgid "dynamic memory failure in copy_string()"
++#~ msgstr "помилка під час роботи з динамічною пам’яттю у copy_string()"
+diff --git a/src/Makefile.am b/src/Makefile.am
+index e379692..6e71893 100644
+--- a/src/Makefile.am
++++ b/src/Makefile.am
+@@ -1,6 +1,7 @@
+ AM_YFLAGS = -d
+ AM_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\"
+ LIBS = @LIBS@
++pkgconfigdir = @pkgconfigdir@
+ 
+ m4 = @M4@
+ 
+@@ -11,6 +12,7 @@ endif
+ 
+ if ENABLE_LIBFL
+ lib_LTLIBRARIES = libfl.la
++pkgconfig_DATA = libfl.pc
+ endif
+ libfl_la_SOURCES = \
+ 	libmain.c \
+@@ -79,6 +81,8 @@ COMMON_SOURCES = \
+ 
+ LDADD = $(LIBOBJS) @LIBINTL@
+ 
++$(LIBOBJS): $(LIBOBJDIR)$(am__dirstamp)
++
+ include_HEADERS = \
+ 	FlexLexer.h
+ 
+diff --git a/src/filter.c b/src/filter.c
+index 71f3635..ccdcdd6 100644
+--- a/src/filter.c
++++ b/src/filter.c
+@@ -230,8 +230,7 @@ int filter_tee_header (struct filter *chain)
+ 	 * header file at the same time.
+ 	 */
+ 
+-	const int readsz = 512;
+-	char   *buf;
++	char    buf[512];
+ 	int     to_cfd = -1;
+ 	FILE   *to_c = NULL, *to_h = NULL;
+ 	bool    write_header;
+@@ -283,10 +282,7 @@ int filter_tee_header (struct filter *chain)
+ 	fprintf (to_c, "m4_define( [[M4_YY_OUTFILE_NAME]],[[%s]])m4_dnl\n",
+ 		 outfilename ? outfilename : "<stdout>");
+ 
+-	buf = malloc((size_t) readsz);
+-	if (!buf)
+-		flexerror(_("malloc failed in filter_tee_header"));
+-	while (fgets (buf, readsz, stdin)) {
++	while (fgets (buf, sizeof buf, stdin)) {
+ 		fputs (buf, to_c);
+ 		if (write_header)
+ 			fputs (buf, to_h);
+@@ -328,6 +324,13 @@ int filter_tee_header (struct filter *chain)
+ 	return 0;
+ }
+ 
++static bool is_blank_line (const char *str)
++{
++	while (isspace(*str))
++		str++;
++	return (*str == '\0');
++}
++
+ /** Adjust the line numbers in the #line directives of the generated scanner.
+  * After the m4 expansion, the line numbers are incorrect since the m4 macros
+  * can add or remove lines.  This only adjusts line numbers for generated code,
+@@ -336,8 +339,8 @@ int filter_tee_header (struct filter *chain)
+  */
+ int filter_fix_linedirs (struct filter *chain)
+ {
+-	char   *buf;
+-	const size_t readsz = 512;
++	char   buf[512];
++	const size_t readsz = sizeof buf;
+ 	int     lineno = 1;
+ 	bool    in_gen = true;	/* in generated code */
+ 	bool    last_was_blank = false;
+@@ -345,10 +348,6 @@ int filter_fix_linedirs (struct filter *chain)
+ 	if (!chain)
+ 		return 0;
+ 
+-	buf = malloc(readsz);
+-	if (!buf)
+-		flexerror(_("malloc failed in filter_fix_linedirs"));
+-
+ 	while (fgets (buf, (int) readsz, stdin)) {
+ 
+ 		regmatch_t m[10];
+@@ -391,7 +390,7 @@ int filter_fix_linedirs (struct filter *chain)
+ 				/* Adjust the line directives. */
+ 				in_gen = true;
+ 				snprintf (buf, readsz, "#line %d \"%s\"\n",
+-					  lineno, filename);
++					  lineno + 1, filename);
+ 			}
+ 			else {
+ 				/* it's a #line directive for code we didn't write */
+@@ -403,9 +402,7 @@ int filter_fix_linedirs (struct filter *chain)
+ 		}
+ 
+ 		/* squeeze blank lines from generated code */
+-		else if (in_gen
+-			 && regexec (&regex_blank_line, buf, 0, NULL,
+-				     0) == 0) {
++		else if (in_gen && is_blank_line(buf)) {
+ 			if (last_was_blank)
+ 				continue;
+ 			else
+diff --git a/src/flex.skl b/src/flex.skl
+index 786c977..332d3c0 100644
+--- a/src/flex.skl
++++ b/src/flex.skl
+@@ -15,7 +15,7 @@
+ %#      The quoting is "[[" and "]]" so we don't interfere with
+ %#      user code.
+ %#
+-%# All generate macros for the m4 stage contain the text "m4" or "M4"
++%# All generated macros for the m4 stage contain the text "m4" or "M4"
+ %# in them. This is to distinguish them from CPP macros.
+ %# The exception to this rule is YY_G, which is an m4 macro,
+ %# but it needs to be remain short because it is used everywhere.
+@@ -218,6 +218,14 @@ m4_ifdef( [[M4_YY_TABLES_EXTERNAL]],
+ 
+ /* begin standard C headers. */
+ %if-c-only
++m4_ifdef( [[M4_YY_ALWAYS_INTERACTIVE]], ,
++[[m4_ifdef( [[M4_YY_NEVER_INTERACTIVE]], ,
++[[#ifndef _POSIX_C_SOURCE
++#define _POSIX_C_SOURCE 1 /* for fileno() */
++#ifndef _POSIX_SOURCE
++#define _POSIX_SOURCE 1
++#endif
++#endif]])]])
+ #include <stdio.h>
+ #include <string.h>
+ #include <errno.h>
+diff --git a/src/flexdef.h b/src/flexdef.h
+index 9dac654..b4981c4 100644
+--- a/src/flexdef.h
++++ b/src/flexdef.h
+@@ -44,7 +44,6 @@
+ #include <stdarg.h>
+ #include <setjmp.h>
+ #include <ctype.h>
+-#include <libgen.h> /* for XPG version of basename(3) */
+ #include <string.h>
+ #include <math.h>
+ 
+@@ -631,10 +630,6 @@ extern int sectnum, nummt, hshcol, dfaeql, numeps, eps2, num_reallocs;
+ extern int tmpuses, totnst, peakpairs, numuniq, numdup, hshsave;
+ extern int num_backing_up, bol_needed;
+ 
+-#ifndef HAVE_REALLOCARRAY
+-void *reallocarray(void *, size_t, size_t);
+-#endif
+-
+ void   *allocate_array(int, size_t);
+ void   *reallocate_array(void *, int, size_t);
+ 
+@@ -1131,7 +1126,7 @@ extern int filter_fix_linedirs(struct filter *chain);
+  * From "regex.c"
+  */
+ 
+-extern regex_t regex_linedir, regex_blank_line;
++extern regex_t regex_linedir;
+ bool flex_init_regex(void);
+ void flex_regcomp(regex_t *preg, const char *regex, int cflags);
+ char   *regmatch_dup (regmatch_t * m, const char *src);
+diff --git a/src/gen.c b/src/gen.c
+index 590e5d8..c959f75 100644
+--- a/src/gen.c
++++ b/src/gen.c
+@@ -464,14 +464,14 @@ static struct yytbl_data *mkecstbl (void)
+ 
+ void genecs (void)
+ {
+-	int i, j;
++	int ch, row;
+ 	int     numrows;
+ 
+ 	out_str_dec (get_yy_char_decl (), "yy_ec", csize);
+ 
+-	for (i = 1; i < csize; ++i) {
+-		ecgroup[i] = ABS (ecgroup[i]);
+-		mkdata (ecgroup[i]);
++	for (ch = 1; ch < csize; ++ch) {
++		ecgroup[ch] = ABS (ecgroup[ch]);
++		mkdata (ecgroup[ch]);
+ 	}
+ 
+ 	dataend ();
+@@ -479,12 +479,13 @@ void genecs (void)
+ 	if (trace) {
+ 		fputs (_("\n\nEquivalence Classes:\n\n"), stderr);
+ 
++		/* Print in 8 columns */
+ 		numrows = csize / 8;
+ 
+-		for (j = 0; j < numrows; ++j) {
+-			for (i = j; i < csize; i = i + numrows) {
++		for (row = 0; row < numrows; ++row) {
++			for (ch = row; ch < csize; ch += numrows) {
+ 				fprintf (stderr, "%4s = %-2d",
+-					 readable_form (i), ecgroup[i]);
++					 readable_form (ch), ecgroup[ch]);
+ 
+ 				putc (' ', stderr);
+ 			}
+@@ -1234,9 +1235,9 @@ void gentabs (void)
+ 		yytbl_data_compress (yyacc_tbl);
+ 		if (yytbl_data_fwrite (&tableswr, yyacc_tbl) < 0)
+ 			flexerror (_("Could not write yyacc_tbl"));
+-		yytbl_data_destroy (yyacc_tbl);
+-		yyacc_tbl = NULL;
+ 	}
++	yytbl_data_destroy (yyacc_tbl);
++	yyacc_tbl = NULL;
+ 	/* End generating yy_accept */
+ 
+ 	if (useecs) {
+@@ -1289,11 +1290,10 @@ void gentabs (void)
+ 		if (tablesext) {
+ 			yytbl_data_compress (yymeta_tbl);
+ 			if (yytbl_data_fwrite (&tableswr, yymeta_tbl) < 0)
+-				flexerror (_
+-					   ("Could not write yymeta_tbl"));
+-			yytbl_data_destroy (yymeta_tbl);
+-			yymeta_tbl = NULL;
++				flexerror (_("Could not write yymeta_tbl"));
+ 		}
++		yytbl_data_destroy (yymeta_tbl);
++		yymeta_tbl = NULL;
+ 		/* End generating yy_meta */
+ 	}
+ 
+@@ -1350,9 +1350,9 @@ void gentabs (void)
+ 		yytbl_data_compress (yybase_tbl);
+ 		if (yytbl_data_fwrite (&tableswr, yybase_tbl) < 0)
+ 			flexerror (_("Could not write yybase_tbl"));
+-		yytbl_data_destroy (yybase_tbl);
+-		yybase_tbl = NULL;
+ 	}
++	yytbl_data_destroy (yybase_tbl);
++	yybase_tbl = NULL;
+ 	/* End generating yy_base */
+ 
+ 
+@@ -1382,9 +1382,9 @@ void gentabs (void)
+ 		yytbl_data_compress (yydef_tbl);
+ 		if (yytbl_data_fwrite (&tableswr, yydef_tbl) < 0)
+ 			flexerror (_("Could not write yydef_tbl"));
+-		yytbl_data_destroy (yydef_tbl);
+-		yydef_tbl = NULL;
+ 	}
++	yytbl_data_destroy (yydef_tbl);
++	yydef_tbl = NULL;
+ 	/* End generating yy_def */
+ 
+ 
+@@ -1420,9 +1420,9 @@ void gentabs (void)
+ 		yytbl_data_compress (yynxt_tbl);
+ 		if (yytbl_data_fwrite (&tableswr, yynxt_tbl) < 0)
+ 			flexerror (_("Could not write yynxt_tbl"));
+-		yytbl_data_destroy (yynxt_tbl);
+-		yynxt_tbl = NULL;
+ 	}
++	yytbl_data_destroy (yynxt_tbl);
++	yynxt_tbl = NULL;
+ 	/* End generating yy_nxt */
+ 
+ 	/* Begin generating yy_chk */
+@@ -1454,9 +1454,9 @@ void gentabs (void)
+ 		yytbl_data_compress (yychk_tbl);
+ 		if (yytbl_data_fwrite (&tableswr, yychk_tbl) < 0)
+ 			flexerror (_("Could not write yychk_tbl"));
+-		yytbl_data_destroy (yychk_tbl);
+-		yychk_tbl = NULL;
+ 	}
++	yytbl_data_destroy (yychk_tbl);
++	yychk_tbl = NULL;
+ 	/* End generating yy_chk */
+ 
+ 	free(acc_array);
+diff --git a/src/gettext.h b/src/gettext.h
+index ea67f30..3f62961 100644
+--- a/src/gettext.h
++++ b/src/gettext.h
+@@ -20,7 +20,7 @@
+ #define _LIBGETTEXT_H 1
+ 
+ /* NLS can be disabled through the configure --disable-nls option.  */
+-#if ENABLE_NLS
++#ifdef ENABLE_NLS
+ 
+ /* Get declarations of GNU message catalog functions.  */
+ # include <libintl.h>
+diff --git a/src/libfl.pc.in b/src/libfl.pc.in
+new file mode 100644
+index 0000000..8d4240c
+--- /dev/null
++++ b/src/libfl.pc.in
+@@ -0,0 +1,8 @@
++prefix=@prefix@
++exec_prefix=@exec_prefix@
++libdir=@libdir@
++
++Name: libfl
++Description: Flex (the fast lexical analyzer) support library
++Version: @PACKAGE_VERSION@
++Libs: -L${libdir} -lfl
+diff --git a/src/main.c b/src/main.c
+index e5eac44..65285a0 100644
+--- a/src/main.c
++++ b/src/main.c
+@@ -117,7 +117,7 @@ struct yytbl_writer tableswr;
+ char   *program_name = "flex";
+ 
+ static const char outfile_template[] = "lex.%s.%s";
+-static const char backing_name[] = "lex.backup";
++static const char *backing_name = "lex.backup";
+ static const char tablesfile_template[] = "lex.%s.tables";
+ 
+ /* From scan.l */
+@@ -197,7 +197,7 @@ int flex_main (int argc, char *argv[])
+ /* Wrapper around flex_main, so flex_main can be built as a library. */
+ int main (int argc, char *argv[])
+ {
+-#if ENABLE_NLS
++#ifdef ENABLE_NLS
+ #if HAVE_LOCALE_H
+ 	setlocale (LC_MESSAGES, "");
+         setlocale (LC_CTYPE, "");
+@@ -648,6 +648,7 @@ void flexend (int exit_status)
+                 "yyget_extra",
+                 "yyget_in",
+                 "yyget_leng",
++                "yyget_column",
+                 "yyget_lineno",
+                 "yyget_lloc",
+                 "yyget_lval",
+@@ -670,6 +671,7 @@ void flexend (int exit_status)
+                 "yyset_debug",
+                 "yyset_extra",
+                 "yyset_in",
++                "yyset_column",
+                 "yyset_lineno",
+                 "yyset_lloc",
+                 "yyset_lval",
+@@ -994,7 +996,7 @@ void flexinit (int argc, char **argv)
+     flex_init_regex();
+ 
+ 	/* Enable C++ if program name ends with '+'. */
+-	program_name = basename (argv[0]);
++	program_name = argv[0];
+ 
+ 	if (program_name != NULL &&
+ 	    program_name[strlen (program_name) - 1] == '+')
+@@ -1033,6 +1035,11 @@ void flexinit (int argc, char **argv)
+ 			backing_up_report = true;
+ 			break;
+ 
++		case OPT_BACKUP_FILE:
++			backing_up_report = true;
++                        backing_name = arg;
++			break;
++
+ 		case OPT_DONOTHING:
+ 			break;
+ 
+@@ -1201,7 +1208,7 @@ void flexinit (int argc, char **argv)
+ 			break;
+ 
+ 		case OPT_VERSION:
+-			printf (_("%s %s\n"), program_name, flex_version);
++			printf ("%s %s\n", (C_plus_plus ? "flex++" : "flex"), flex_version);
+ 			FLEX_EXIT (0);
+ 
+ 		case OPT_WARN:
+@@ -1394,6 +1401,14 @@ void flexinit (int argc, char **argv)
+ 			//buf_strdefine (&userdef_buf, "YY_NO_SET_LINENO", "1");
+             buf_m4_define( &m4defs_buf, "M4_YY_NO_SET_LINENO",0);
+ 			break;
++		case OPT_NO_YYGET_COLUMN:
++			//buf_strdefine (&userdef_buf, "YY_NO_GET_COLUMN", "1");
++            buf_m4_define( &m4defs_buf, "M4_YY_NO_GET_COLUMN",0);
++			break;
++		case OPT_NO_YYSET_COLUMN:
++			//buf_strdefine (&userdef_buf, "YY_NO_SET_COLUMN", "1");
++            buf_m4_define( &m4defs_buf, "M4_YY_NO_SET_COLUMN",0);
++			break;
+ 		case OPT_NO_YYGET_IN:
+ 			//buf_strdefine (&userdef_buf, "YY_NO_GET_IN", "1");
+             buf_m4_define( &m4defs_buf, "M4_YY_NO_GET_IN",0);
+@@ -1817,7 +1832,8 @@ void usage (void)
+ 		  "  -t, --stdout            write scanner on stdout instead of %s\n"
+ 		  "      --yyclass=NAME      name of C++ class\n"
+ 		  "      --header-file=FILE   create a C header file in addition to the scanner\n"
+-		  "      --tables-file[=FILE] write tables to FILE\n" "\n"
++		  "      --tables-file[=FILE] write tables to FILE\n"
++		  "      --backup-file=FILE  write backing-up information to FILE\n" "\n"
+ 		  "Scanner behavior:\n"
+ 		  "  -7, --7bit              generate 7-bit scanner\n"
+ 		  "  -8, --8bit              generate 8-bit scanner\n"
+@@ -1844,6 +1860,6 @@ void usage (void)
+ 		  "  -?\n"
+ 		  "  -h, --help              produce this help message\n"
+ 		  "  -V, --version           report %s version\n"),
+-		 backing_name, program_name, outfile_path, program_name);
++		 backing_name, "flex", outfile_path, "flex");
+ 
+ }
+diff --git a/src/misc.c b/src/misc.c
+index ef27833..fa33a5b 100644
+--- a/src/misc.c
++++ b/src/misc.c
+@@ -141,20 +141,24 @@ void add_action (const char *new_text)
+ 
+ void   *allocate_array (int size, size_t element_size)
+ {
+-	void *mem;
+-#if HAVE_REALLOCARRAY
+-	/* reallocarray has built-in overflow detection */
+-	mem = reallocarray(NULL, (size_t) size, element_size);
++	void *new_array;
++#if HAVE_REALLOCARR
++	new_array = NULL;
++	if (reallocarr(&new_array, (size_t) size, element_size))
++		flexfatal (_("memory allocation failed in allocate_array()"));
+ #else
++# if HAVE_REALLOCARRAY
++	new_array = reallocarray(NULL, (size_t) size, element_size);
++# else
++	/* Do manual overflow detection */
+ 	size_t num_bytes = (size_t) size * element_size;
+-	mem = (size && SIZE_MAX / (size_t) size < element_size) ? NULL :
++	new_array = (size && SIZE_MAX / (size_t) size < element_size) ? NULL :
+ 		malloc(num_bytes);
++# endif
++	if (!new_array)
++		flexfatal (_("memory allocation failed in allocate_array()"));
+ #endif
+-	if (!mem)
+-		flexfatal (_
+-			   ("memory allocation failed in allocate_array()"));
+-
+-	return mem;
++	return new_array;
+ }
+ 
+ 
+@@ -659,17 +663,22 @@ char   *readable_form (int c)
+ void   *reallocate_array (void *array, int size, size_t element_size)
+ {
+ 	void *new_array;
+-#if HAVE_REALLOCARRAY
+-	/* reallocarray has built-in overflow detection */
+-	new_array = reallocarray(array, (size_t) size, element_size);
++#if HAVE_REALLOCARR
++	new_array = array;
++	if (reallocarr(&new_array, (size_t) size, element_size))
++		flexfatal (_("attempt to increase array size failed"));
+ #else
++# if HAVE_REALLOCARRAY
++	new_array = reallocarray(array, (size_t) size, element_size);
++# else
++	/* Do manual overflow detection */
+ 	size_t num_bytes = (size_t) size * element_size;
+ 	new_array = (size && SIZE_MAX / (size_t) size < element_size) ? NULL :
+ 		realloc(array, num_bytes);
+-#endif
++# endif
+ 	if (!new_array)
+ 		flexfatal (_("attempt to increase array size failed"));
+-
++#endif
+ 	return new_array;
+ }
+ 
+@@ -720,7 +729,10 @@ void skelout (void)
+ 			 */
+ #define cmd_match(s) (strncmp(buf,(s),strlen(s))==0)
+ 
+-			if (buf[1] == '%') {
++		if (buf[1] == '#') {
++                	/* %# indicates comment line to be ignored */
++            	} 
++		else if (buf[1] == '%') {
+ 				/* %% is a break point for skelout() */
+ 				return;
+ 			}
+diff --git a/src/mkskel.sh b/src/mkskel.sh
+index 1aa59e1..2d6ae9f 100755
+--- a/src/mkskel.sh
++++ b/src/mkskel.sh
+@@ -48,7 +48,7 @@ sed '/^%#/d
+ s/m4_/m4preproc_/g
+ s/a4_/4_/g
+ s/[\\"]/\\&/g
+-s/.*/  "&",/'
++s/[^\r]*/  "&",/'
+ 
+ echo '  0
+ };'
+diff --git a/src/nfa.c b/src/nfa.c
+index 9143cf6..3d9bf24 100644
+--- a/src/nfa.c
++++ b/src/nfa.c
+@@ -499,6 +499,8 @@ int     mkor (int first, int second)
+ 		}
+ 	}
+ 
++	firstst[first] = MIN(firstst[first], firstst[second]);
++
+ 	finalst[first] = orend;
+ 	return first;
+ }
+diff --git a/src/options.c b/src/options.c
+index 366bc2e..e98159c 100644
+--- a/src/options.c
++++ b/src/options.c
+@@ -62,6 +62,8 @@ optspec_t flexopts[] = {
+ 	,
+ 	{"--backup", OPT_BACKUP, 0}
+ 	,			/* Generate backing-up information to lex.backup. */
++	{"--backup-file=FILE", OPT_BACKUP_FILE, 0}
++	,			/* Generate backing-up information to FILE. */
+ 	{"-B", OPT_BATCH, 0}
+ 	,
+ 	{"--batch", OPT_BATCH, 0}
+@@ -255,6 +257,10 @@ optspec_t flexopts[] = {
+ 	,
+ 	{"--noyyset_lineno", OPT_NO_YYSET_LINENO, 0}
+ 	,
++	{"--noyyget_column", OPT_NO_YYGET_COLUMN, 0}
++	,
++	{"--noyyset_column", OPT_NO_YYSET_COLUMN, 0}
++	,
+ 	{"--noyyget_in", OPT_NO_YYGET_IN, 0}
+ 	,
+ 	{"--noyyset_in", OPT_NO_YYSET_IN, 0}
+diff --git a/src/options.h b/src/options.h
+index 5b51c23..acee275 100644
+--- a/src/options.h
++++ b/src/options.h
+@@ -46,6 +46,7 @@ enum flexopt_flag_t {
+ 	OPT_ALWAYS_INTERACTIVE,
+ 	OPT_ARRAY,
+ 	OPT_BACKUP,
++	OPT_BACKUP_FILE,
+ 	OPT_BATCH,
+         OPT_BISON_BRIDGE,
+         OPT_BISON_BRIDGE_LOCATIONS,
+@@ -83,6 +84,7 @@ enum flexopt_flag_t {
+ 	OPT_NO_YYGET_IN,
+ 	OPT_NO_YYGET_LENG,
+ 	OPT_NO_YYGET_LINENO,
++	OPT_NO_YYGET_COLUMN,
+ 	OPT_NO_YYGET_LLOC,
+ 	OPT_NO_YYGET_LVAL,
+ 	OPT_NO_YYGET_OUT,
+@@ -92,6 +94,7 @@ enum flexopt_flag_t {
+ 	OPT_NO_YYSET_EXTRA,
+ 	OPT_NO_YYSET_IN,
+ 	OPT_NO_YYSET_LINENO,
++	OPT_NO_YYSET_COLUMN,
+ 	OPT_NO_YYSET_LLOC,
+ 	OPT_NO_YYSET_LVAL,
+ 	OPT_NO_YYSET_OUT,
+diff --git a/src/regex.c b/src/regex.c
+index 38e658b..f4c4163 100644
+--- a/src/regex.c
++++ b/src/regex.c
+@@ -25,10 +25,8 @@
+ 
+ 
+ static const char* REGEXP_LINEDIR = "^#line ([[:digit:]]+) \"(.*)\"";
+-static const char* REGEXP_BLANK_LINE = "^[[:space:]]*$";
+ 
+ regex_t regex_linedir; /**< matches line directives */
+-regex_t regex_blank_line; /**< matches blank lines */
+ 
+ 
+ /** Initialize the regular expressions.
+@@ -37,8 +35,6 @@ regex_t regex_blank_line; /**< matches blank lines */
+ bool flex_init_regex(void)
+ {
+     flex_regcomp(&regex_linedir, REGEXP_LINEDIR, REG_EXTENDED);
+-    flex_regcomp(&regex_blank_line, REGEXP_BLANK_LINE, REG_EXTENDED);
+-
+     return true;
+ }
+ 
+diff --git a/src/scan.l b/src/scan.l
+index 66db864..4f497ac 100644
+--- a/src/scan.l
++++ b/src/scan.l
+@@ -1,5 +1,11 @@
+ /* scan.l - scanner for flex input -*-C-*- */
+ 
++%top{
++/* flexdef.h includes config.h, which may contain macros that alter the API */
++/* of libc functions. Must include first before any libc header. */
++#include "flexdef.h"
++}
++
+ %{
+ /*  Copyright (c) 1990 The Regents of the University of California. */
+ /*  All rights reserved. */
+@@ -32,7 +38,6 @@
+ /*  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR */
+ /*  PURPOSE. */
+ 
+-#include "flexdef.h"
+ #include "parse.h"
+ extern bool tablesverify, tablesext;
+ extern int trlcontxt; /* Set in  parse.y for each rule. */
+@@ -433,6 +438,8 @@ M4QEND      "]""]"
+     yyset_extra     ACTION_M4_IFDEF("M4""_YY_NO_SET_EXTRA", ! option_sense);
+     yyget_leng      ACTION_M4_IFDEF("M4""_YY_NO_GET_LENG", ! option_sense);
+     yyget_text      ACTION_M4_IFDEF("M4""_YY_NO_GET_TEXT", ! option_sense);
++    yyget_column    ACTION_M4_IFDEF("M4""_YY_NO_GET_COLUMN", ! option_sense);
++    yyset_column    ACTION_M4_IFDEF("M4""_YY_NO_SET_COLUMN", ! option_sense);
+     yyget_lineno    ACTION_M4_IFDEF("M4""_YY_NO_GET_LINENO", ! option_sense);
+     yyset_lineno    ACTION_M4_IFDEF("M4""_YY_NO_SET_LINENO", ! option_sense);
+     yyget_in        ACTION_M4_IFDEF("M4""_YY_NO_GET_IN", ! option_sense);
+diff --git a/src/scanopt.c b/src/scanopt.c
+index a475b6f..0b6d7d1 100644
+--- a/src/scanopt.c
++++ b/src/scanopt.c
+@@ -247,16 +247,7 @@ int     scanopt_usage (scanopt_t *scanner, FILE *fp, const char *usage)
+ 		fprintf (fp, "%s\n", usage);
+ 	}
+ 	else {
+-		/* Find the basename of argv[0] */
+-		const char *p;
+-
+-		p = s->argv[0] + strlen (s->argv[0]);
+-		while (p != s->argv[0] && *p != '/')
+-			--p;
+-		if (*p == '/')
+-			p++;
+-
+-		fprintf (fp, _("Usage: %s [OPTIONS]...\n"), p);
++		fprintf (fp, _("Usage: %s [OPTIONS]...\n"), s->argv[0]);
+ 	}
+ 	fprintf (fp, "\n");
+ 
+@@ -375,14 +366,8 @@ int     scanopt_usage (scanopt_t *scanner, FILE *fp, const char *usage)
+ 	}
+ 	desccol = maxlen[0] + indent * 2;
+ 
+-#define PRINT_SPACES(fp,n)\
+-    do{\
+-        int _n;\
+-        _n=(n);\
+-        while(_n-- > 0)\
+-            fputc(' ',(fp));\
+-    }while(0)
+-
++#define PRINT_SPACES(fp,n) \
++	fprintf((fp), "%*s", (n), "")
+ 
+ 	/* Second pass (same as above loop), this time we print. */
+ 	/* Sloppy hack: We iterate twice. The first time we print short and long options.
+diff --git a/tests/Makefile.am b/tests/Makefile.am
+index 2cb51df..4f3cd2c 100644
+--- a/tests/Makefile.am
++++ b/tests/Makefile.am
+@@ -445,7 +445,7 @@ top.h: top.c
+ # things) and the resultant list is both long an unenlightening. And
+ # it can be / is generated by a shell script, tableopts.sh.
+ 
+-tableopts.am: tableopts.sh
++$(srcdir)/tableopts.am: tableopts.sh
+ 	$(SHELL) $(srcdir)/tableopts.sh > $(srcdir)/tableopts.am
+ 
+ include $(srcdir)/tableopts.am
+@@ -462,13 +462,13 @@ OPT_LOG_COMPILER = $(SHELL) $(srcdir)/testwrapper.sh
+ AM_OPT_LOG_FLAGS = -d $(srcdir) -i $(srcdir)/tableopts.txt -r
+ 
+ tableopts_opt_nr%.c: tableopts.l4 $(FLEX)
+-	$(AM_V_LEX)$(FLEX) --unsafe-no-m4-sect3-escape -P $(subst -,_,$(basename $(*F))) $* -o $@ $<
++	$(AM_V_LEX)$(FLEX) --unsafe-no-m4-sect3-escape -P $(subst -,_,$(basename $(*F))) $(*:_F=F) -o $@ $<
+ 
+ tableopts_opt_nr%.$(OBJEXT): tableopts_opt_nr%.c 
+ 	$(AM_V_CC)$(COMPILE) -c -o $@ $<
+ 
+ tableopts_opt_r%.c: tableopts.l4 $(FLEX)
+-	$(AM_V_LEX)$(FLEX) --unsafe-no-m4-sect3-escape -P $(subst -,_,$(basename $(*F))) --reentrant $*  -o $@ $<
++	$(AM_V_LEX)$(FLEX) --unsafe-no-m4-sect3-escape -P $(subst -,_,$(basename $(*F))) --reentrant $(subst _F,F,$*)  -o $@ $<
+ 
+ tableopts_opt_r%.$(OBJEXT):  tableopts_opt_r%.c 
+ 	$(AM_V_CC)$(COMPILE) -DTEST_IS_REENTRANT -c -o $@ $<
+@@ -477,13 +477,13 @@ SER_LOG_COMPILER = $(SHELL) $(srcdir)/testwrapper.sh
+ AM_SER_LOG_FLAGS = -d $(builddir) -i $(srcdir)/tableopts.txt -r -t
+ 
+ tableopts_ser_nr%.c: tableopts.l4 $(FLEX)
+-	$(AM_V_LEX)$(FLEX) --unsafe-no-m4-sect3-escape -P $(subst -,_,$(basename $(*F))) --tables-file="tableopts_ser_nr$*.ser.tables"  $* -o $@ $<
++	$(AM_V_LEX)$(FLEX) --unsafe-no-m4-sect3-escape -P $(subst -,_,$(basename $(*F))) --tables-file="tableopts_ser_nr$*.ser.tables"  $(subst _F,F,$*) -o $@ $<
+ 
+ tableopts_ser_nr%.$(OBJEXT): tableopts_ser_nr%.c 
+ 	$(AM_V_CC)$(COMPILE) -DTEST_HAS_TABLES_EXTERNAL -c -o $@ $<
+ 
+ tableopts_ser_r%.c: tableopts.l4 $(FLEX)
+-	$(AM_V_LEX)$(FLEX) --unsafe-no-m4-sect3-escape -P $(subst -,_,$(basename $(*F))) -R --tables-file="tableopts_ser_r$*.ser.tables" $*  -o $@ $<
++	$(AM_V_LEX)$(FLEX) --unsafe-no-m4-sect3-escape -P $(subst -,_,$(basename $(*F))) -R --tables-file="tableopts_ser_r$*.ser.tables" $(subst _F,F,$*)  -o $@ $<
+ 
+ tableopts_ser_r%.$(OBJEXT):  tableopts_ser_r%.c
+ 	$(AM_V_CC)$(COMPILE) -DTEST_HAS_TABLES_EXTERNAL -DTEST_IS_REENTRANT -c -o $@ $<
+@@ -492,7 +492,7 @@ VER_LOG_COMPILER = $(SHELL) $(srcdir)/testwrapper.sh
+ AM_VER_LOG_FLAGS = -d $(builddir) -i $(srcdir)/tableopts.txt -r -t
+ 
+ tableopts_ver_nr%.c: tableopts.l4 $(FLEX)
+-	$(AM_V_LEX)$(FLEX) --unsafe-no-m4-sect3-escape -P $(subst -,_,$(basename $(*F))) --tables-file="tableopts_ver_nr$*.ver.tables" --tables-verify $* -o $@ $<
++	$(AM_V_LEX)$(FLEX) --unsafe-no-m4-sect3-escape -P $(subst -,_,$(basename $(*F))) --tables-file="tableopts_ver_nr$*.ver.tables" --tables-verify $(subst _F,F,$*) -o $@ $<
+ 
+ tableopts_ver_nr%.$(OBJEXT): tableopts_ver_nr%.c 
+ 	$(AM_V_CC)$(COMPILE) -DTEST_HAS_TABLES_EXTERNAL -c -o $@ $<
+@@ -501,7 +501,7 @@ tableopts_ver_nr%.ver$(EXEEXT): tableopts_ver_nr%.$(OBJEXT)
+ 	$(AM_V_CCLD)$(LINK) -o $@ $^
+ 
+ tableopts_ver_r%.c: tableopts.l4 $(FLEX)
+-	$(AM_V_LEX)$(FLEX) --unsafe-no-m4-sect3-escape -P $(subst -,_,$(basename $(*F))) -R --tables-file="tableopts_ver_r$*.ver.tables" --tables-verify $*  -o $@ $<
++	$(AM_V_LEX)$(FLEX) --unsafe-no-m4-sect3-escape -P $(subst -,_,$(basename $(*F))) -R --tables-file="tableopts_ver_r$*.ver.tables" --tables-verify $(subst _F,F,$*)  -o $@ $<
+ 
+ tableopts_ver_r%.$(OBJEXT):  tableopts_ver_r%.c  
+ 	$(AM_V_CC)$(COMPILE) -DTEST_HAS_TABLES_EXTERNAL -DTEST_IS_REENTRANT -c -o $@ $<
+diff --git a/tests/tableopts.am b/tests/tableopts.am
+index 099870b..4952303 100644
+--- a/tests/tableopts.am
++++ b/tests/tableopts.am
+@@ -13,9 +13,9 @@ tableopts_opt_nr_Cf_opt_SOURCES = tableopts.l4
+ tableopts_opt_nr-Cf.opt$(EXEEXT): tableopts_opt_nr-Cf.$(OBJEXT)
+ 	$(AM_V_CCLD)$(LINK) -o $@ $<
+ 
+-tableopts_opt_nr_CF_opt_SOURCES = tableopts.l4
++tableopts_opt_nr_C_F_opt_SOURCES = tableopts.l4
+ 
+-tableopts_opt_nr-CF.opt$(EXEEXT): tableopts_opt_nr-CF.$(OBJEXT)
++tableopts_opt_nr-C_F.opt$(EXEEXT): tableopts_opt_nr-C_F.$(OBJEXT)
+ 	$(AM_V_CCLD)$(LINK) -o $@ $<
+ 
+ tableopts_opt_nr_Cm_opt_SOURCES = tableopts.l4
+@@ -38,9 +38,9 @@ tableopts_opt_nr_Caef_opt_SOURCES = tableopts.l4
+ tableopts_opt_nr-Caef.opt$(EXEEXT): tableopts_opt_nr-Caef.$(OBJEXT)
+ 	$(AM_V_CCLD)$(LINK) -o $@ $<
+ 
+-tableopts_opt_nr_CaeF_opt_SOURCES = tableopts.l4
++tableopts_opt_nr_Cae_F_opt_SOURCES = tableopts.l4
+ 
+-tableopts_opt_nr-CaeF.opt$(EXEEXT): tableopts_opt_nr-CaeF.$(OBJEXT)
++tableopts_opt_nr-Cae_F.opt$(EXEEXT): tableopts_opt_nr-Cae_F.$(OBJEXT)
+ 	$(AM_V_CCLD)$(LINK) -o $@ $<
+ 
+ tableopts_opt_nr_Cam_opt_SOURCES = tableopts.l4
+@@ -68,9 +68,9 @@ tableopts_opt_r_Cf_opt_SOURCES = tableopts.l4
+ tableopts_opt_r-Cf.opt$(EXEEXT): tableopts_opt_r-Cf.$(OBJEXT)
+ 	$(AM_V_CCLD)$(LINK) -o $@ $<
+ 
+-tableopts_opt_r_CF_opt_SOURCES = tableopts.l4
++tableopts_opt_r_C_F_opt_SOURCES = tableopts.l4
+ 
+-tableopts_opt_r-CF.opt$(EXEEXT): tableopts_opt_r-CF.$(OBJEXT)
++tableopts_opt_r-C_F.opt$(EXEEXT): tableopts_opt_r-C_F.$(OBJEXT)
+ 	$(AM_V_CCLD)$(LINK) -o $@ $<
+ 
+ tableopts_opt_r_Cm_opt_SOURCES = tableopts.l4
+@@ -93,9 +93,9 @@ tableopts_opt_r_Caef_opt_SOURCES = tableopts.l4
+ tableopts_opt_r-Caef.opt$(EXEEXT): tableopts_opt_r-Caef.$(OBJEXT)
+ 	$(AM_V_CCLD)$(LINK) -o $@ $<
+ 
+-tableopts_opt_r_CaeF_opt_SOURCES = tableopts.l4
++tableopts_opt_r_Cae_F_opt_SOURCES = tableopts.l4
+ 
+-tableopts_opt_r-CaeF.opt$(EXEEXT): tableopts_opt_r-CaeF.$(OBJEXT)
++tableopts_opt_r-Cae_F.opt$(EXEEXT): tableopts_opt_r-Cae_F.$(OBJEXT)
+ 	$(AM_V_CCLD)$(LINK) -o $@ $<
+ 
+ tableopts_opt_r_Cam_opt_SOURCES = tableopts.l4
+@@ -123,9 +123,9 @@ tableopts_ser_nr_Cf_ser_SOURCES = tableopts.l4
+ tableopts_ser_nr-Cf.ser$(EXEEXT): tableopts_ser_nr-Cf.$(OBJEXT)
+ 	$(AM_V_CCLD)$(LINK) -o $@ $<
+ 
+-tableopts_ser_nr_CF_ser_SOURCES = tableopts.l4
++tableopts_ser_nr_C_F_ser_SOURCES = tableopts.l4
+ 
+-tableopts_ser_nr-CF.ser$(EXEEXT): tableopts_ser_nr-CF.$(OBJEXT)
++tableopts_ser_nr-C_F.ser$(EXEEXT): tableopts_ser_nr-C_F.$(OBJEXT)
+ 	$(AM_V_CCLD)$(LINK) -o $@ $<
+ 
+ tableopts_ser_nr_Cm_ser_SOURCES = tableopts.l4
+@@ -148,9 +148,9 @@ tableopts_ser_nr_Caef_ser_SOURCES = tableopts.l4
+ tableopts_ser_nr-Caef.ser$(EXEEXT): tableopts_ser_nr-Caef.$(OBJEXT)
+ 	$(AM_V_CCLD)$(LINK) -o $@ $<
+ 
+-tableopts_ser_nr_CaeF_ser_SOURCES = tableopts.l4
++tableopts_ser_nr_Cae_F_ser_SOURCES = tableopts.l4
+ 
+-tableopts_ser_nr-CaeF.ser$(EXEEXT): tableopts_ser_nr-CaeF.$(OBJEXT)
++tableopts_ser_nr-Cae_F.ser$(EXEEXT): tableopts_ser_nr-Cae_F.$(OBJEXT)
+ 	$(AM_V_CCLD)$(LINK) -o $@ $<
+ 
+ tableopts_ser_nr_Cam_ser_SOURCES = tableopts.l4
+@@ -178,9 +178,9 @@ tableopts_ser_r_Cf_ser_SOURCES = tableopts.l4
+ tableopts_ser_r-Cf.ser$(EXEEXT): tableopts_ser_r-Cf.$(OBJEXT)
+ 	$(AM_V_CCLD)$(LINK) -o $@ $<
+ 
+-tableopts_ser_r_CF_ser_SOURCES = tableopts.l4
++tableopts_ser_r_C_F_ser_SOURCES = tableopts.l4
+ 
+-tableopts_ser_r-CF.ser$(EXEEXT): tableopts_ser_r-CF.$(OBJEXT)
++tableopts_ser_r-C_F.ser$(EXEEXT): tableopts_ser_r-C_F.$(OBJEXT)
+ 	$(AM_V_CCLD)$(LINK) -o $@ $<
+ 
+ tableopts_ser_r_Cm_ser_SOURCES = tableopts.l4
+@@ -203,9 +203,9 @@ tableopts_ser_r_Caef_ser_SOURCES = tableopts.l4
+ tableopts_ser_r-Caef.ser$(EXEEXT): tableopts_ser_r-Caef.$(OBJEXT)
+ 	$(AM_V_CCLD)$(LINK) -o $@ $<
+ 
+-tableopts_ser_r_CaeF_ser_SOURCES = tableopts.l4
++tableopts_ser_r_Cae_F_ser_SOURCES = tableopts.l4
+ 
+-tableopts_ser_r-CaeF.ser$(EXEEXT): tableopts_ser_r-CaeF.$(OBJEXT)
++tableopts_ser_r-Cae_F.ser$(EXEEXT): tableopts_ser_r-Cae_F.$(OBJEXT)
+ 	$(AM_V_CCLD)$(LINK) -o $@ $<
+ 
+ tableopts_ser_r_Cam_ser_SOURCES = tableopts.l4
+@@ -233,9 +233,9 @@ tableopts_ver_nr_Cf_ver_SOURCES = tableopts.l4
+ tableopts_ver_nr-Cf.ver$(EXEEXT): tableopts_ver_nr-Cf.$(OBJEXT)
+ 	$(AM_V_CCLD)$(LINK) -o $@ $<
+ 
+-tableopts_ver_nr_CF_ver_SOURCES = tableopts.l4
++tableopts_ver_nr_C_F_ver_SOURCES = tableopts.l4
+ 
+-tableopts_ver_nr-CF.ver$(EXEEXT): tableopts_ver_nr-CF.$(OBJEXT)
++tableopts_ver_nr-C_F.ver$(EXEEXT): tableopts_ver_nr-C_F.$(OBJEXT)
+ 	$(AM_V_CCLD)$(LINK) -o $@ $<
+ 
+ tableopts_ver_nr_Cm_ver_SOURCES = tableopts.l4
+@@ -258,9 +258,9 @@ tableopts_ver_nr_Caef_ver_SOURCES = tableopts.l4
+ tableopts_ver_nr-Caef.ver$(EXEEXT): tableopts_ver_nr-Caef.$(OBJEXT)
+ 	$(AM_V_CCLD)$(LINK) -o $@ $<
+ 
+-tableopts_ver_nr_CaeF_ver_SOURCES = tableopts.l4
++tableopts_ver_nr_Cae_F_ver_SOURCES = tableopts.l4
+ 
+-tableopts_ver_nr-CaeF.ver$(EXEEXT): tableopts_ver_nr-CaeF.$(OBJEXT)
++tableopts_ver_nr-Cae_F.ver$(EXEEXT): tableopts_ver_nr-Cae_F.$(OBJEXT)
+ 	$(AM_V_CCLD)$(LINK) -o $@ $<
+ 
+ tableopts_ver_nr_Cam_ver_SOURCES = tableopts.l4
+@@ -288,9 +288,9 @@ tableopts_ver_r_Cf_ver_SOURCES = tableopts.l4
+ tableopts_ver_r-Cf.ver$(EXEEXT): tableopts_ver_r-Cf.$(OBJEXT)
+ 	$(AM_V_CCLD)$(LINK) -o $@ $<
+ 
+-tableopts_ver_r_CF_ver_SOURCES = tableopts.l4
++tableopts_ver_r_C_F_ver_SOURCES = tableopts.l4
+ 
+-tableopts_ver_r-CF.ver$(EXEEXT): tableopts_ver_r-CF.$(OBJEXT)
++tableopts_ver_r-C_F.ver$(EXEEXT): tableopts_ver_r-C_F.$(OBJEXT)
+ 	$(AM_V_CCLD)$(LINK) -o $@ $<
+ 
+ tableopts_ver_r_Cm_ver_SOURCES = tableopts.l4
+@@ -313,9 +313,9 @@ tableopts_ver_r_Caef_ver_SOURCES = tableopts.l4
+ tableopts_ver_r-Caef.ver$(EXEEXT): tableopts_ver_r-Caef.$(OBJEXT)
+ 	$(AM_V_CCLD)$(LINK) -o $@ $<
+ 
+-tableopts_ver_r_CaeF_ver_SOURCES = tableopts.l4
++tableopts_ver_r_Cae_F_ver_SOURCES = tableopts.l4
+ 
+-tableopts_ver_r-CaeF.ver$(EXEEXT): tableopts_ver_r-CaeF.$(OBJEXT)
++tableopts_ver_r-Cae_F.ver$(EXEEXT): tableopts_ver_r-Cae_F.$(OBJEXT)
+ 	$(AM_V_CCLD)$(LINK) -o $@ $<
+ 
+ tableopts_ver_r_Cam_ver_SOURCES = tableopts.l4
+@@ -328,6 +328,6 @@ tableopts_ver_r_Caem_ver_SOURCES = tableopts.l4
+ tableopts_ver_r-Caem.ver$(EXEEXT): tableopts_ver_r-Caem.$(OBJEXT)
+ 	$(AM_V_CCLD)$(LINK) -o $@ $<
+ 
+-TABLEOPTS_TESTS = tableopts_opt_nr-Ca.opt tableopts_opt_nr-Ce.opt tableopts_opt_nr-Cf.opt tableopts_opt_nr-CF.opt tableopts_opt_nr-Cm.opt tableopts_opt_nr-Cem.opt tableopts_opt_nr-Cae.opt tableopts_opt_nr-Caef.opt tableopts_opt_nr-CaeF.opt tableopts_opt_nr-Cam.opt tableopts_opt_nr-Caem.opt tableopts_opt_r-Ca.opt tableopts_opt_r-Ce.opt tableopts_opt_r-Cf.opt tableopts_opt_r-CF.opt tableopts_opt_r-Cm.opt tableopts_opt_r-Cem.opt tableopts_opt_r-Cae.opt tableopts_opt_r-Caef.opt tableopts_opt_r-CaeF.opt tableopts_opt_r-Cam.opt tableopts_opt_r-Caem.opt tableopts_ser_nr-Ca.ser tableopts_ser_nr-Ce.ser tableopts_ser_nr-Cf.ser tableopts_ser_nr-CF.ser tableopts_ser_nr-Cm.ser tableopts_ser_nr-Cem.ser tableopts_ser_nr-Cae.ser tableopts_ser_nr-Caef.ser tableopts_ser_nr-CaeF.ser tableopts_ser_nr-Cam.ser tableopts_ser_nr-Caem.ser tableopts_ser_r-Ca.ser tableopts_ser_r-Ce.ser tableopts_ser_r-Cf.ser tableopts_ser_r-CF.ser tableopts_ser_r-Cm.ser tableopts_ser_r-Cem.ser tableopts_ser_r-Cae.ser tableopts_ser_r-Caef.ser tableopts_ser_r-CaeF.ser tableopts_ser_r-Cam.ser tableopts_ser_r-Caem.ser tableopts_ver_nr-Ca.ver tableopts_ver_nr-Ce.ver tableopts_ver_nr-Cf.ver tableopts_ver_nr-CF.ver tableopts_ver_nr-Cm.ver tableopts_ver_nr-Cem.ver tableopts_ver_nr-Cae.ver tableopts_ver_nr-Caef.ver tableopts_ver_nr-CaeF.ver tableopts_ver_nr-Cam.ver tableopts_ver_nr-Caem.ver tableopts_ver_r-Ca.ver tableopts_ver_r-Ce.ver tableopts_ver_r-Cf.ver tableopts_ver_r-CF.ver tableopts_ver_r-Cm.ver tableopts_ver_r-Cem.ver tableopts_ver_r-Cae.ver tableopts_ver_r-Caef.ver tableopts_ver_r-CaeF.ver tableopts_ver_r-Cam.ver tableopts_ver_r-Caem.ver
++TABLEOPTS_TESTS = tableopts_opt_nr-Ca.opt tableopts_opt_nr-Ce.opt tableopts_opt_nr-Cf.opt tableopts_opt_nr-C_F.opt tableopts_opt_nr-Cm.opt tableopts_opt_nr-Cem.opt tableopts_opt_nr-Cae.opt tableopts_opt_nr-Caef.opt tableopts_opt_nr-Cae_F.opt tableopts_opt_nr-Cam.opt tableopts_opt_nr-Caem.opt tableopts_opt_r-Ca.opt tableopts_opt_r-Ce.opt tableopts_opt_r-Cf.opt tableopts_opt_r-C_F.opt tableopts_opt_r-Cm.opt tableopts_opt_r-Cem.opt tableopts_opt_r-Cae.opt tableopts_opt_r-Caef.opt tableopts_opt_r-Cae_F.opt tableopts_opt_r-Cam.opt tableopts_opt_r-Caem.opt tableopts_ser_nr-Ca.ser tableopts_ser_nr-Ce.ser tableopts_ser_nr-Cf.ser tableopts_ser_nr-C_F.ser tableopts_ser_nr-Cm.ser tableopts_ser_nr-Cem.ser tableopts_ser_nr-Cae.ser tableopts_ser_nr-Caef.ser tableopts_ser_nr-Cae_F.ser tableopts_ser_nr-Cam.ser tableopts_ser_nr-Caem.ser tableopts_ser_r-Ca.ser tableopts_ser_r-Ce.ser tableopts_ser_r-Cf.ser tableopts_ser_r-C_F.ser tableopts_ser_r-Cm.ser tableopts_ser_r-Cem.ser tableopts_ser_r-Cae.ser tableopts_ser_r-Caef.ser tableopts_ser_r-Cae_F.ser tableopts_ser_r-Cam.ser tableopts_ser_r-Caem.ser tableopts_ver_nr-Ca.ver tableopts_ver_nr-Ce.ver tableopts_ver_nr-Cf.ver tableopts_ver_nr-C_F.ver tableopts_ver_nr-Cm.ver tableopts_ver_nr-Cem.ver tableopts_ver_nr-Cae.ver tableopts_ver_nr-Caef.ver tableopts_ver_nr-Cae_F.ver tableopts_ver_nr-Cam.ver tableopts_ver_nr-Caem.ver tableopts_ver_r-Ca.ver tableopts_ver_r-Ce.ver tableopts_ver_r-Cf.ver tableopts_ver_r-C_F.ver tableopts_ver_r-Cm.ver tableopts_ver_r-Cem.ver tableopts_ver_r-Cae.ver tableopts_ver_r-Caef.ver tableopts_ver_r-Cae_F.ver tableopts_ver_r-Cam.ver tableopts_ver_r-Caem.ver
+ 
+-tableopts_tables =  tableopts_ser_nr-Ca.ser.tables tableopts_ser_nr-Ce.ser.tables tableopts_ser_nr-Cf.ser.tables tableopts_ser_nr-CF.ser.tables tableopts_ser_nr-Cm.ser.tables tableopts_ser_nr-Cem.ser.tables tableopts_ser_nr-Cae.ser.tables tableopts_ser_nr-Caef.ser.tables tableopts_ser_nr-CaeF.ser.tables tableopts_ser_nr-Cam.ser.tables tableopts_ser_nr-Caem.ser.tables tableopts_ser_r-Ca.ser.tables tableopts_ser_r-Ce.ser.tables tableopts_ser_r-Cf.ser.tables tableopts_ser_r-CF.ser.tables tableopts_ser_r-Cm.ser.tables tableopts_ser_r-Cem.ser.tables tableopts_ser_r-Cae.ser.tables tableopts_ser_r-Caef.ser.tables tableopts_ser_r-CaeF.ser.tables tableopts_ser_r-Cam.ser.tables tableopts_ser_r-Caem.ser.tables tableopts_ver_nr-Ca.ver.tables tableopts_ver_nr-Ce.ver.tables tableopts_ver_nr-Cf.ver.tables tableopts_ver_nr-CF.ver.tables tableopts_ver_nr-Cm.ver.tables tableopts_ver_nr-Cem.ver.tables tableopts_ver_nr-Cae.ver.tables tableopts_ver_nr-Caef.ver.tables tableopts_ver_nr-CaeF.ver.tables tableopts_ver_nr-Cam.ver.tables tableopts_ver_nr-Caem.ver.tables tableopts_ver_r-Ca.ver.tables tableopts_ver_r-Ce.ver.tables tableopts_ver_r-Cf.ver.tables tableopts_ver_r-CF.ver.tables tableopts_ver_r-Cm.ver.tables tableopts_ver_r-Cem.ver.tables tableopts_ver_r-Cae.ver.tables tableopts_ver_r-Caef.ver.tables tableopts_ver_r-CaeF.ver.tables tableopts_ver_r-Cam.ver.tables tableopts_ver_r-Caem.ver.tables
++tableopts_tables =  tableopts_ser_nr-Ca.ser.tables tableopts_ser_nr-Ce.ser.tables tableopts_ser_nr-Cf.ser.tables tableopts_ser_nr-C_F.ser.tables tableopts_ser_nr-Cm.ser.tables tableopts_ser_nr-Cem.ser.tables tableopts_ser_nr-Cae.ser.tables tableopts_ser_nr-Caef.ser.tables tableopts_ser_nr-Cae_F.ser.tables tableopts_ser_nr-Cam.ser.tables tableopts_ser_nr-Caem.ser.tables tableopts_ser_r-Ca.ser.tables tableopts_ser_r-Ce.ser.tables tableopts_ser_r-Cf.ser.tables tableopts_ser_r-C_F.ser.tables tableopts_ser_r-Cm.ser.tables tableopts_ser_r-Cem.ser.tables tableopts_ser_r-Cae.ser.tables tableopts_ser_r-Caef.ser.tables tableopts_ser_r-Cae_F.ser.tables tableopts_ser_r-Cam.ser.tables tableopts_ser_r-Caem.ser.tables tableopts_ver_nr-Ca.ver.tables tableopts_ver_nr-Ce.ver.tables tableopts_ver_nr-Cf.ver.tables tableopts_ver_nr-C_F.ver.tables tableopts_ver_nr-Cm.ver.tables tableopts_ver_nr-Cem.ver.tables tableopts_ver_nr-Cae.ver.tables tableopts_ver_nr-Caef.ver.tables tableopts_ver_nr-Cae_F.ver.tables tableopts_ver_nr-Cam.ver.tables tableopts_ver_nr-Caem.ver.tables tableopts_ver_r-Ca.ver.tables tableopts_ver_r-Ce.ver.tables tableopts_ver_r-Cf.ver.tables tableopts_ver_r-C_F.ver.tables tableopts_ver_r-Cm.ver.tables tableopts_ver_r-Cem.ver.tables tableopts_ver_r-Cae.ver.tables tableopts_ver_r-Caef.ver.tables tableopts_ver_r-Cae_F.ver.tables tableopts_ver_r-Cam.ver.tables tableopts_ver_r-Caem.ver.tables
+diff --git a/tests/tableopts.sh b/tests/tableopts.sh
+index c1ac19e..497829e 100755
+--- a/tests/tableopts.sh
++++ b/tests/tableopts.sh
+@@ -17,7 +17,11 @@ tableopts_tables=""
+ for kind in opt ser ver ; do
+     for threading in nr r ; do
+         for opt in -Ca -Ce -Cf -CF -Cm -Cem -Cae -Caef -CaeF -Cam -Caem ; do
+-            testname=tableopts_${kind}_${threading}${opt}.${kind}
++            bare_opt=${opt#-}
++            # The filenames must work on case-insensitive filesystems.
++            bare_opt=`echo ${bare_opt}| sed 's/F$/_F/'`
++
++            testname=tableopts_${kind}_${threading}-${bare_opt}.${kind}
+             if [ "${TABLEOPTS_TESTS}" = "" ] ;then
+                 TABLEOPTS_TESTS=${testname}
+                 if [ "$kind" = "ser" ] || [ "$kind" = "ver" ] ; then
+@@ -30,11 +34,10 @@ for kind in opt ser ver ; do
+                 fi
+             fi
+ 
+-            bare_opt=${opt#-}
+             cat << EOF
+ tableopts_${kind}_${threading}_${bare_opt}_${kind}_SOURCES = tableopts.l4
+ 
+-${testname}\$(EXEEXT): tableopts_${kind}_${threading}${opt}.\$(OBJEXT)
++${testname}\$(EXEEXT): tableopts_${kind}_${threading}-${bare_opt}.\$(OBJEXT)
+ 	\$(AM_V_CCLD)\$(LINK) -o \$@ \$<
+ 
+ EOF
+diff --git a/tests/testwrapper-direct.sh b/tests/testwrapper-direct.sh
+index 589ad33..9160501 100755
+--- a/tests/testwrapper-direct.sh
++++ b/tests/testwrapper-direct.sh
+@@ -1,5 +1,5 @@
+ #!/bin/sh
+-set -vx
++echo 'set -euvx'
+ set -euvx
+ 
+ # testwrapper-direct.sh: run some specialized flex tests that care where
+diff --git a/tests/testwrapper.sh b/tests/testwrapper.sh
+index 6a7e666..293f8cc 100755
+--- a/tests/testwrapper.sh
++++ b/tests/testwrapper.sh
+@@ -1,5 +1,5 @@
+ #!/bin/sh
+-set -vx
++echo 'set -euvx'
+ set -euvx
+ 
+ # testwrapper.sh: run a flex test, typically called by a Makefile
