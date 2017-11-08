@@ -91,9 +91,9 @@ pre_configure_target() {
   export CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-Wp,||g"`
   export CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
 
-  if [ -n "$PROJECT_CFLAGS" ]; then
-    export CFLAGS=`echo $CFLAGS | sed -e "s|$PROJECT_CFLAGS||g"`
-  fi
+#  if [ -n "$PROJECT_CFLAGS" ]; then
+#    export CFLAGS=`echo $CFLAGS | sed -e "s|$PROJECT_CFLAGS||g"`
+#  fi
 
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-ffast-math||g"`
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Ofast|-O2|g"`
@@ -119,6 +119,7 @@ cat >config.cache <<EOF
 libc_cv_forced_unwind=yes
 libc_cv_c_cleanup=yes
 libc_cv_ssp=no
+libc_cv_ssp_strong=no
 libc_cv_slibdir=/usr/lib
 EOF
 
