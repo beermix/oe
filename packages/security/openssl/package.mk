@@ -16,7 +16,6 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            threads \
                            enable-tlsext \
                            enable-unit-test \
-                           no-ssl2 \
                            no-ssl3 \
                            enable-ec_nistp_64_gcc_128"
 
