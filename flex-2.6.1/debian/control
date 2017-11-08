@@ -1,0 +1,65 @@
+Source: flex
+VCS-Git: https://anonscm.debian.org/git/users/srivasta/debian/flex.git
+VCS-Browser: https://anonscm.debian.org/gitweb/?p=users/srivasta/debian/flex.git
+Section: devel
+Homepage: http://flex.sf.net/
+Priority: optional
+Build-Depends: bison, gettext, texinfo, help2man, file, po-debconf,
+               debhelper (>= 9.20141010), dh-autoreconf, dpkg-dev (>= 1.17.14),
+               flex <cross>
+Build-Depends-Indep: texlive-latex-base, texlive-fonts-recommended, cm-super-minimal
+Maintainer: Manoj Srivastava <srivasta@debian.org>
+Standards-Version: 3.9.8
+
+Package: flex
+Architecture: any
+Pre-Depends: debconf | debconf-2.0
+Depends: ${shlibs:Depends}, m4,
+         dpkg (>= 1.15.4) |  install-info, ${misc:Depends}
+Recommends: gcc | c-compiler, libfl-dev
+Suggests: bison, build-essential
+Multi-Arch: foreign
+Description: fast lexical analyzer generator
+ Flex is a tool for generating scanners: programs which recognized lexical
+ patterns in text. It reads the given input files for a description of a
+ scanner to generate. The description is in the form of pairs of regular
+ expressions and C code, called rules. Flex generates as output a C source
+ file, lex.yy.c, which defines a routine yylex().  This file is compiled
+ and linked with the -lfl library to produce an executable. When the
+ executable is run, it analyzes its input for occurrences of the regular
+ expressions. Whenever it finds one, it executes the corresponding C code.
+
+Package: flex-doc
+Section: doc
+Architecture: all
+Depends: ${misc:Depends}
+Description: Documentation for flex (a fast lexical analyzer generator)
+ Flex is a tool for generating scanners: programs which recognized lexical
+ patterns in text. It reads the given input files for a description of a
+ scanner to generate. The description is in the form of pairs of regular
+ expressions and C code, called rules. Flex generates as output a C source
+ file, lex.yy.c, which defines a routine yylex().  This file is compiled
+ and linked with the -lfl library to produce an executable. When the
+ executable is run, it analyzes its input for occurrences of the regular
+ expressions. Whenever it finds one, it executes the corresponding C code.
+ .
+ This package contains the HTML documentation for flex.
+
+Package: libfl-dev
+Section: libdevel
+Architecture: any
+Multi-Arch: same
+Depends: ${misc:Depends}, ${shlibs:Depends}, flex (= ${binary:Version})
+Replaces: flex (<< 2.5.39), flex-old (<= 2.5.4a-10)
+Breaks: flex (<< 2.5.39), flex-old (<= 2.5.4a-10)
+Description: static library for flex (a fast lexical analyzer generator)
+ Flex is a tool for generating scanners: programs which recognized lexical
+ patterns in text. It reads the given input files for a description of a
+ scanner to generate. The description is in the form of pairs of regular
+ expressions and C code, called rules. Flex generates as output a C source
+ file, lex.yy.c, which defines a routine yylex().  This file is compiled
+ and linked with the -lfl library to produce an executable. When the
+ executable is run, it analyzes its input for occurrences of the regular
+ expressions. Whenever it finds one, it executes the corresponding C code.
+ .
+ This package contains the static library for flex.
