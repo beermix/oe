@@ -43,7 +43,6 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-ld=default \
                          --enable-lto \
                          --enable-relro \
-                         --disable-nls \
                          --enable-poison-system-directories"
 
 pre_configure_host() {
