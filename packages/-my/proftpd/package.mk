@@ -19,6 +19,5 @@ pre_configure_target() {
 PKG_CONFIGURE_OPTS_TARGET="--enable-statcic \
 			   --disable-auth-pam \
 			   --disable-ipv6 \
-			   --disable-silent-rules \
 			   --sysconfdir=/storage/.config/proftpd"
 

@@ -32,7 +32,6 @@ PKG_AUTORECONF="no"
 PKG_CONFIGURE_OPTS_TARGET="--disable-test \
                            --enable-fontconfig \
                            --disable-harfbuzz \
-                           --disable-silent-rules \
                            --with-gnu-ld"
 
 if [ $TARGET_ARCH = "x86_64" ]; then
