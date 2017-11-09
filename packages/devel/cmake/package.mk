@@ -17,11 +17,11 @@
 ################################################################################
 
 PKG_NAME="cmake"
-PKG_VERSION="3.8.2"
+PKG_VERSION="3.7.2"
 PKG_ARCH="any"
 PKG_LICENSE="BSD"
 PKG_SITE="https://cmake.org/download/"
-PKG_URL="http://www.cmake.org/files/v3.8/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_URL="http://www.cmake.org/files/v3.7/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="ccache:host openssl:host"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="cmake: A cross-platform, open-source make system"
@@ -33,8 +33,8 @@ configure_host() {
   ../configure --prefix=$TOOLCHAIN \
                --no-qt-gui --no-system-libs \
                -- \
-               -DCMAKE_C_FLAGS="-march=haswell -O2 -Wall -pipe -Wno-format-security" \
-               -DCMAKE_CXX_FLAGS="-march=haswell -O2 -Wall -pipe -Wno-format-security" \
+               -DCMAKE_C_FLAGS="-O2 -Wall -pipe -Wno-format-security" \
+               -DCMAKE_CXX_FLAGS="-O2 -Wall -pipe -Wno-format-security" \
                -DCMAKE_EXE_LINKER_FLAGS="$HOST_LDFLAGS" \
                -DCMAKE_USE_OPENSSL=ON \
                -DBUILD_CursesDialog=0
