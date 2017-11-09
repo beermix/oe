@@ -5,7 +5,7 @@ PKG_NAME="php"
 
 if [ -z "$PHP_VERSION" ]; then
   #PKG_VERSION="5.6.31"
-  PKG_VERSION="7.1.10"
+  PKG_VERSION="7.1.11"
 
 	# test latest
 	#PKG_VERSION="7.1.9"
@@ -27,7 +27,7 @@ else
 fi
 
 # add some other libraries which are need by php extensions
-PKG_DEPENDS_TARGET="toolchain zlib pcre gmp curl libxml2 openssl libmcrypt libiconv mariadb httpd icu"
+PKG_DEPENDS_TARGET="toolchain zlib pcre gmp curl libxml2 openssl libmcrypt libiconv mariadb icu"
 PKG_PRIORITY="optional"
 PKG_SECTION="web"
 PKG_SHORTDESC="php: Scripting language especially suited for Web development"
@@ -69,7 +69,7 @@ configure_target() {
   export LDFLAGS="$LDFLAGS -ldl -lpthread"
 
   APXS_FILE=$(get_build_dir httpd)/.install_dev/usr/bin/apxs
-  chmod +x $APXS_FILE
+  #chmod +x $APXS_FILE
   
   export CFLAGS="$CFLAGS -I$SYSROOT_PREFIX/usr/include/iconv"
   export LDFLAGS="$LDFLAGS -L$SYSROOT_PREFIX/usr/lib/iconv -liconv"

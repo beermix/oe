@@ -72,22 +72,3 @@ pre_configure_target() {
   rm -rf .$TARGET_NAME
 }
 
-makeinstall_target() {
-  # use this version only for addon (don't install it to a system)
-  INSTALL_DEV=$PKG_BUILD/.install_dev
-  make -j1 install DESTDIR=$INSTALL_DEV $PKG_MAKEINSTALL_OPTS_TARGET
-
-  $STRIP $(find $INSTALL_DEV -name "*.so" 2>/dev/null) 2>/dev/null || :
-  $STRIP $(find $INSTALL_DEV -name "*.so.[0-9]*" 2>/dev/null) 2>/dev/null || :
-
-  for i in $(find $INSTALL_DEV/usr/lib -name "*.la" 2>/dev/null); do
-    $SED "s|\(['= ]\)/usr|\\1$INSTALL_DEV/usr|g" $i   #'
-  done
-
-  $SED -i "s|^prefix=\"|prefix=\"$INSTALL_DEV|" $INSTALL_DEV/usr/bin/apr-1-config
-  $SED -i "s|^bindir=\"|bindir=\"$INSTALL_DEV|" $INSTALL_DEV/usr/bin/apr-1-config
-
-  $SED -i "s|apr_builddir=|apr_builddir=$INSTALL_DEV|" $INSTALL_DEV/usr/build-1/apr_rules.mk
-  $SED -i "s|apr_builders=|apr_builders=$INSTALL_DEV|" $INSTALL_DEV/usr/build-1/apr_rules.mk
-  $SED -i "s|top_builddir=|top_builddir=$INSTALL_DEV|" $INSTALL_DEV/usr/build-1/apr_rules.mk
-}
