@@ -3,7 +3,7 @@ PKG_VERSION="5.4.2"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain ncurses pcre readline libcap"
 PKG_SECTION="my"
-PKG_AUTORECONF="yes"
+PKG_AUTORECONF="no"
 
 pre_configure_target() {
   export LIBS="$LIBS -lncursesw -ltinfo"
@@ -23,15 +23,4 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-multibyte \
 			      --with-tcsetpgrp \
 			      --enable-zsh-secure-free \
 			      --enable-readnullcmd=pager \
-			      --enable-max-jobtable-size=256 \
-			      --disable-dynamic-nss \
-			      --disable-zsh-debug \
-			      --enable-function-subdirs \
-			      zsh_cv_shared_environ=yes \
-			      zsh_cv_sys_dynamic_clash_ok=yes\
-			      zsh_cv_sys_dynamic_execsyms=yes \
-			      zsh_cv_sys_dynamic_rtld_global=yes \
-			      zsh_cv_sys_dynamic_strip_exe=yes \
-			      zsh_cv_sys_dynamic_strip_lib=yes \
-			      zsh_cv_sys_nis=no \
-			      zsh_cv_sys_nis_plus=no"
+			      --disable-zsh-debug"
