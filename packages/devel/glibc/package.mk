@@ -48,6 +48,8 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --enable-kernel=3.2.0 \
                            --without-cvs \
                            --without-gd \
+                           --disable-build-nscd \
+                           --disable-nscd \
                            --enable-obsolete-rpc \
                            --enable-obsolete-nsl \
                            --enable-lock-elision \
@@ -60,6 +62,10 @@ else
 fi
 
 NSS_CONF_DIR="$PKG_BUILD/nss"
+
+GLIBC_EXCLUDE_BIN="catchsegv gencat getconf iconv iconvconfig ldconfig"
+GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN makedb mtrace pcprofiledump"
+GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN pldd rpcgen sln sotruss sprof xtrace"
 
 pre_build_target() {
   cd $PKG_BUILD
@@ -88,11 +94,6 @@ pre_configure_target() {
   export CFLAGS=`echo $CFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
   export CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-Wp,||g"`
   export CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
-
-#  if [ -n "$PROJECT_CFLAGS" ]; then
-#    export CFLAGS=`echo $CFLAGS | sed -e "s|$PROJECT_CFLAGS||g"`
-#  fi
-
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-ffast-math||g"`
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Ofast|-O2|g"`
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-O.|-O2|g"`
@@ -138,16 +139,8 @@ post_makeinstall_target() {
   ln -sf $(basename $INSTALL/usr/lib/ld-*.so) $INSTALL/usr/lib/ld.so
 
 # cleanup
-# remove any programs we don't want/need, keeping only those we want
-  for f in $(find $INSTALL/usr/bin -type f); do
-    fb="$(basename "${f}")"
-    for ib in $GLIBC_INCLUDE_BIN; do
-      if [ "${ib}" == "${fb}" ]; then
-        fb=
-        break
-      fi
-    done
-    [ -n "${fb}" ] && rm -rf ${f}
+  for i in $GLIBC_EXCLUDE_BIN; do
+    rm -rf $INSTALL/usr/bin/$i
   done
 
   rm -rf $INSTALL/usr/lib/audit
