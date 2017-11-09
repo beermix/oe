@@ -17,14 +17,14 @@
 ################################################################################
 
 PKG_NAME="systemd"
-PKG_VERSION="235"
-PKG_SHA256="6d993db60f6fd63c3b5858c145984af8ae2607cba1bddc4726090e106b24b2af"
+PKG_VERSION="f5f0dca"
+#PKG_SHA256="6d993db60f6fd63c3b5858c145984af8ae2607cba1bddc4726090e106b24b2af"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/systemd"
-PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
-#PKG_URL="https://github.com/systemd/systemd/archive/$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain libcap kmod util-linux entropy zlib lz4 elfutils"
+#PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="https://github.com/systemd/systemd/archive/$PKG_VERSION.tar.gz"
+PKG_DEPENDS_TARGET="toolchain libcap kmod util-linux entropy"
 PKG_SECTION="system"
 PKG_SHORTDESC="systemd: a system and session manager"
 PKG_LONGDESC="systemd is a system and session manager for Linux, compatible with SysV and LSB init scripts. systemd provides aggressive parallelization capabilities, uses socket and D-Bus activation for starting services, offers on-demand starting of daemons, keeps track of processes using Linux cgroups, supports snapshotting and restoring of the system state, maintains mount and automount points and implements an elaborate transactional dependency-based service control logic. It can work as a drop-in replacement for sysvinit."
@@ -52,11 +52,11 @@ PKG_MESON_OPTS_TARGET="--libdir=/usr/lib \
                        -Dqrencode=false \
                        -Dgcrypt=false \
                        -Dgnutls=false \
-                       -Delfutils=true \
-                       -Dzlib=true \
+                       -Delfutils=false \
+                       -Dzlib=false \
                        -Dbzip2=false \
                        -Dxz=false \
-                       -Dlz4=true \
+                       -Dlz4=false \
                        -Dxkbcommon=false \
                        -Dglib=false \
                        -Ddbus=false \
