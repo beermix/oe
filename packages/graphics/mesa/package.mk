@@ -79,23 +79,19 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            CFLAGS_FOR_BUILD= \
                            CXXFLAGS_FOR_BUILD= \
                            LDFLAGS_FOR_BUILD= \
-                           X11_INCLUDES= \
-                           DRI_DRIVER_INSTALL_DIR=$XORG_PATH_DRI \
-                           DRI_DRIVER_SEARCH_DIR=$XORG_PATH_DRI \
                            --disable-debug \
                            --disable-mangling \
                            --enable-texture-float \
                            --enable-asm \
                            --disable-selinux \
                            --enable-opengl \
-                           --disable-gles1 \
                            $MESA_GLES \
-                           --enable-dri \
-                           --enable-dri3 \
-                           --enable-glx \
+                           $MESA_DRI \
+                           $MESA_GLX \
                            --disable-osmesa \
                            --disable-gallium-osmesa \
-                           --enable-egl --with-egl-platforms=x11,drm \
+                           --enable-egl \
+                           $MESA_EGL_PLATFORMS \
                            $XA_CONFIG \
                            --enable-gbm \
                            --disable-nine \
@@ -114,7 +110,7 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --with-osmesa-lib-name=OSMesa \
                            --with-gallium-drivers=$GALLIUM_DRIVERS \
                            --with-dri-drivers=$DRI_DRIVERS \
-                           --with-vulkan-drivers=intel \
+                           --with-vulkan-drivers=no \
                            --with-sysroot=$SYSROOT_PREFIX"
 
 post_makeinstall_target() {
