@@ -27,9 +27,7 @@ PKG_DEPENDS_TARGET="toolchain util-macros"
 PKG_SECTION="x11/lib"
 PKG_SHORTDESC="pixman: Pixel manipulation library"
 PKG_LONGDESC="Pixman is a generic library for manipulating pixel regions, contains low-level pixel manipulation routines and is used by both xorg and cairo."
-
-
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 if [ "$TARGET_ARCH" = arm ]; then
   if [ "$TARGET_FPU" = neon -o "$TARGET_FPU" = neon-fp16 ]; then

@@ -17,12 +17,13 @@
 ################################################################################
 
 PKG_NAME="binutils"
-PKG_VERSION="d1a6e71"
+PKG_VERSION="2.29"
+PKG_SHA256="0b871e271c4c620444f8264f72143b4d224aa305306d85dd77ab8dce785b1e85"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/bminor/binutils-gdb/releases"
-PKG_URL="https://github.com/bminor/binutils-gdb/archive/${PKG_VERSION}.tar.gz"
-PKG_SOURCE_DIR="binutils-gdb-$PKG_VERSION*"
+PKG_SITE="http://www.gnu.org/software/binutils/"
+PKG_URL="http://ftpmirror.gnu.org/binutils/$PKG_NAME-$PKG_VERSION.tar.xz"
+#PKG_SOURCE_DIR="binutils-gdb-$PKG_VERSION*"
 PKG_DEPENDS_HOST="ccache:host bison:host flex:host linux:host"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="binutils: A GNU collection of binary utilities"
@@ -32,11 +33,8 @@ PKG_AUTORECONF="no"
 PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --with-sysroot=$SYSROOT_PREFIX \
                          --with-lib-path=$SYSROOT_PREFIX/lib:$SYSROOT_PREFIX/usr/lib \
-                         --without-ppl \
-                         --without-cloog \
                          --disable-werror \
                          --disable-multilib \
-                         --disable-libada \
                          --enable-libssp \
                          --enable-version-specific-runtime-libs \
                          --enable-plugins \
@@ -46,9 +44,8 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --with-pic \
                          --enable-relro \
                          --disable-nls \
-                         --disable-sim \
-                         --disable-gdb \
-                         --enable-poison-system-directories"
+                         --enable-poison-system-directories\
+                         LDFLAGS=-s"
 
 pre_configure_host() {
   unset CPPFLAGS
