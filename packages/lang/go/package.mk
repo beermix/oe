@@ -47,7 +47,7 @@ configure_host() {
 
 make_host() {
   cd $PKG_BUILD/src
-  CC_FOR_TARGET=$HOST_CC CXX_FOR_TARGET=$HOST_CXX GOOS=linux GOARCH=amd64 CGO_ENABLED=1 ./make.bash --no-clean
+  CC_FOR_TARGET=x86_64-libreelec-linux-gnu-gcc CXX_FOR_TARGET=x86_64-libreelec-linux-gnu-g++ GOARCH=amd64 CGO_ENABLED=1 ./make.bash --no-clean
 }
 
 pre_makeinstall_host() {
