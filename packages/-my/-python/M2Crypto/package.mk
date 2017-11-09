@@ -4,22 +4,24 @@
 ################################################################################
 
 PKG_NAME="M2Crypto"
-PKG_VERSION="0.24.0"
-PKG_SITE="https://pypi.python.org/pypi/M2Crypto"
-#PKG_URL="https://dl.dropboxusercontent.com/s/5szbmcgaobdds6k/M2Crypto-0.24.0u.tar.xz"
-PKG_URL="https://gitlab.com/m2crypto/m2crypto/repository/0.24.0/archive.tar.gz"
+PKG_VERSION="0.26.4"
+PKG_URL="https://gitlab.com/m2crypto/m2crypto/repository/$PKG_VERSION/archive.tar.gz"
 PKG_SOURCE_DIR="m2crypto-${PKG_VERSION}*"
-PKG_DEPENDS_TARGET="toolchain distutilscross:host"
+PKG_DEPENDS_TARGET="toolchain distutilscross:host openssl:host swig:host"
 PKG_SECTION="xmedia/torrent"
 PKG_SHORTDESC="M2Crypto is the most complete Python wrapper for OpenSSL"
 PKG_LONGDESC="M2Crypto is the most complete Python wrapper for OpenSSL."
 PKG_AUTORECONF="no"
 
+export CCACHE_DISABLE=1
+
 pre_configure_target() {
-  export CFLAGS="-I$TOOLCHAIN/include/python2.7 $CFLAGS"
+  cd $PKG_BUILD
+  rm -rf .$TARGET_NAME
+
+  export PYTHONXCPREFIX="$SYSROOT_PREFIX/usr"
   export LDSHARED="$CC -shared"
 }
-
 make_target() {
   python setup.py build build_ext --openssl=$LIB_PREFIX
 }

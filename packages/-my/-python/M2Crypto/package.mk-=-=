@@ -1,10 +1,10 @@
 PKG_NAME="M2Crypto"
-PKG_VERSION="0.25.1"
-#PKG_VERSION="0.24.0"
-PKG_GIT_URL="https://gitlab.com/m2crypto/m2crypto"
+PKG_VERSION="0.27.0"
+PKG_URL="https://gitlab.com/m2crypto/m2crypto/repository/$PKG_VERSION/archive.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host openssl swig:host"
-
 PKG_AUTORECONF="no"
+
+export CCACHE_DISABLE=1
 
 make_target() {
   python setup.py build build_ext --openssl=$LIB_PREFIX

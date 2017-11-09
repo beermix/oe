@@ -17,14 +17,14 @@
 ################################################################################
 
 PKG_NAME="apsw"
-PKG_VERSION="148658c"
+PKG_VERSION="3.20.1"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/rogerbinns/apsw"
-PKG_URL="https://github.com/rogerbinns/apsw/archive/${PKG_VERSION}.tar.gz"
-#PKG_URL="https://github.com/rogerbinns/apsw/releases/download/$PKG_VERSION/apsw-$PKG_VERSION.zip"
-PKG_DEPENDS_TARGET="Python2 sqlite"
+#PKG_URL="https://github.com/rogerbinns/apsw/archive/${PKG_VERSION}.tar.gz"
+PKG_URL="https://github.com/rogerbinns/apsw/releases/download/$PKG_VERSION-r1/apsw-$PKG_VERSION-r1.zip"
+PKG_DEPENDS_TARGET="toolchain Python2 distutilscross:host expat sqlite"
 PKG_PRIORITY="optional"
 PKG_SECTION="python/devel"
 PKG_SHORTDESC="Mako: A super-fast templating language that borrows the best ideas from the existing templating languages."
@@ -34,11 +34,19 @@ PKG_AUTORECONF="no"
 
 export CCACHE_DISABLE=1
 
+pre_configure_target() {
+  cd $PKG_BUILD
+  rm -rf .$TARGET_NAME
+
+  export PYTHONXCPREFIX="$SYSROOT_PREFIX/usr"
+  export LDSHARED="$CC -shared"
+}
+
 make_target() {
-  : python2 setup.py build --help
+  python2 setup.py build --enable=load_extension
 }
 
 makeinstall_target() {
-  python setup.py install --skip-build
+  python2 setup.py install --root=$INSTALL/  
 }
 
