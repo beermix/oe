@@ -1,6 +1,8 @@
+diff --git a/ld/emultempl/elf32.em b/ld/emultempl/elf32.em
+index 137446f..bb8391a 100644
 --- a/ld/emultempl/elf32.em
 +++ b/ld/emultempl/elf32.em
-@@ -1463,6 +1463,8 @@ fragment <<EOF
+@@ -1195,6 +1195,8 @@ fragment <<EOF
  	      && command_line.rpath == NULL)
  	    {
  	      path = (const char *) getenv ("LD_RUN_PATH");
@@ -9,11 +11,11 @@
  	      if (path
  		  && gld${EMULATION_NAME}_search_needed (path, &n, force))
  		break;
-@@ -1740,6 +1742,8 @@ gld${EMULATION_NAME}_before_allocation (
+@@ -1458,6 +1460,8 @@ gld${EMULATION_NAME}_before_allocation (void)
    rpath = command_line.rpath;
    if (rpath == NULL)
      rpath = (const char *) getenv ("LD_RUN_PATH");
-+  if ((rpath) && (strlen (rpath) == 0))
++  if ((rpath) && (*rpath == '\0'))
 +  	rpath = NULL;
  
    for (abfd = link_info.input_bfds; abfd; abfd = abfd->link.next)
