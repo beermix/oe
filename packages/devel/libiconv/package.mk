@@ -26,8 +26,6 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="devel"
 PKG_SHORTDESC="Libiconv converts from one character encoding to another through Unicode conversion."
 PKG_LONGDESC="Libiconv converts from one character encoding to another through Unicode conversion."
-
-
 PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--host=$TARGET_NAME \
@@ -38,11 +36,17 @@ PKG_CONFIGURE_OPTS_TARGET="--host=$TARGET_NAME \
 			      --sysconfdir=/etc \
 			      --enable-static \
 			      --disable-shared \
-			      --disable-nls \
 			      --enable-extra-encodings \
 			      --with-gnu-ld"
       
 pre_configure_target() {
+  CFLAGS="$CFLAGS -fPIC"
+  CXXFLAGS="$CXXFLAGS -fPIC"
+}
+
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared"
+
+pre_configure_host() {
   CFLAGS="$CFLAGS -fPIC"
   CXXFLAGS="$CXXFLAGS -fPIC"
 }
