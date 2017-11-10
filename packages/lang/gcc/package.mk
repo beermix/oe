@@ -41,6 +41,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-lto \
                            --enable-ld=default \
                            --disable-multilib \
+                           --without-included-gettext \
                            --enable-checking=release \
                            --without-ppl \
                            --without-cloog \
@@ -49,7 +50,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libsanitizer \
                            --without-cuda-driver \
                            --disable-werror \
-                           --with-system-zlib \
                            --with-tune=generic -v"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
