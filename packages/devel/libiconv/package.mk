@@ -36,15 +36,20 @@ PKG_CONFIGURE_OPTS_TARGET="--host=$TARGET_NAME \
 			      --sysconfdir=/etc \
 			      --enable-static \
 			      --disable-shared \
+			      --disable-nls \
 			      --enable-extra-encodings \
 			      --with-gnu-ld"
-      
+			      
+PKG_CONFIGURE_OPTS_HOST="--enable-static \
+			    --disable-shared \
+			    --disable-nls \
+			    --enable-extra-encodings \
+			    --with-gnu-ld"
+
 pre_configure_target() {
   CFLAGS="$CFLAGS -fPIC"
   CXXFLAGS="$CXXFLAGS -fPIC"
 }
-
-PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared --enable-extra-encodings --with-gnu-ld"
 
 pre_configure_host() {
   CFLAGS="$CFLAGS -fPIC"

@@ -22,7 +22,6 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/bminor/glibc/tree/ibm/2.26/master"
 PKG_URL="https://github.com/bminor/glibc/archive/$PKG_VERSION.tar.gz"
-#PKG_SOURCE_DIR="glibc-glibc-$PKG_VERSION*"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap"
 PKG_DEPENDS_INIT="glibc"
 PKG_SECTION="toolchain/devel"
@@ -114,7 +113,6 @@ pre_configure_target() {
   export OBJDUMP_FOR_HOST=objdump
 
 cat >config.cache <<EOF
-libc_cv_forced_unwind=yes
 libc_cv_c_cleanup=yes
 libc_cv_ssp=no
 libc_cv_ssp_strong=no
