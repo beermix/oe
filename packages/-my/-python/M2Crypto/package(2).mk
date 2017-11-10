@@ -1,27 +1,25 @@
 ################################################################################
 #      This file is part of Alex@ELEC - http://www.alexelec.in.ua
-#      Copyright (C) 2011-2017 Alexandr Zuyev (alex@alexelec.in.ua)
+#      Copyright (C) 2011-2016 Alexandr Zuyev (alex@alexelec.in.ua)
 ################################################################################
 
 PKG_NAME="M2Crypto"
-PKG_VERSION="0.24.0"
-PKG_URL="https://gitlab.com/m2crypto/m2crypto/repository/$PKG_VERSION/archive.tar.gz"
-PKG_SOURCE_DIR="m2crypto-${PKG_VERSION}*"
-PKG_DEPENDS_TARGET="toolchain distutilscross:host openssl:host swig:host"
+PKG_VERSION="0.22.6rc4"
+PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="OSS"
+PKG_SITE="https://pypi.python.org/pypi/M2Crypto"
+PKG_URL="http://pypi.python.org/packages/source/M/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"
+PKG_PRIORITY="optional"
 PKG_SECTION="xmedia/torrent"
 PKG_SHORTDESC="M2Crypto is the most complete Python wrapper for OpenSSL"
 PKG_LONGDESC="M2Crypto is the most complete Python wrapper for OpenSSL."
+PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-export CCACHE_DISABLE=1
-
-pre_configure_target() {
-  export PYTHONXCPREFIX="$SYSROOT_PREFIX/usr"
-  export LDSHARED="$CC -shared"
-}
-
 make_target() {
-  python setup.py build build_ext --openssl=$LIB_PREFIX
+  python setup.py build --cross-compile build_ext --openssl=$LIB_PREFIX
 }
 
 makeinstall_target() {

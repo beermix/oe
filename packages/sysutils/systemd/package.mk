@@ -17,13 +17,12 @@
 ################################################################################
 
 PKG_NAME="systemd"
-PKG_VERSION="f5f0dca"
-#PKG_SHA256="6d993db60f6fd63c3b5858c145984af8ae2607cba1bddc4726090e106b24b2af"
+PKG_VERSION="235"
+PKG_SHA256="25811f96f5a027bf2a4c9383495cf5b623e385d84da31e473cf375932b3e9c52"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/systemd"
-#PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_URL="https://github.com/systemd/systemd/archive/$PKG_VERSION.tar.gz"
+PKG_URL="https://github.com/systemd/systemd/archive/v$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libcap kmod util-linux entropy"
 PKG_SECTION="system"
 PKG_SHORTDESC="systemd: a system and session manager"

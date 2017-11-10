@@ -35,15 +35,18 @@ PKG_AUTORECONF="no"
 export CCACHE_DISABLE=1
 
 pre_configure_target() {
+  cd $PKG_BUILD
+  rm -rf .$TARGET_NAME
+
   export PYTHONXCPREFIX="$SYSROOT_PREFIX/usr"
   export LDSHARED="$CC -shared"
 }
 
 make_target() {
-  python setup.py build
+  python2 setup.py build --enable=load_extension
 }
 
 makeinstall_target() {
-  python setup.py install --root=$INSTALL --prefix=/usr
+  python2 setup.py install --root=$INSTALL/  
 }
 
