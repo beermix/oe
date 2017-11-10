@@ -17,10 +17,10 @@
 ################################################################################
 
 PKG_NAME="systemd"
-PKG_VERSION="743b771c559c6101544f7358a42c8c519fe4b0db"
+PKG_VERSION="f332611"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="http://www.freedesktop.org/wiki/Software/systemd"
+PKG_SITE="https://github.com/systemd/systemd"
 PKG_URL="https://github.com/systemd/systemd/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libcap kmod util-linux entropy"
 PKG_SECTION="system"
