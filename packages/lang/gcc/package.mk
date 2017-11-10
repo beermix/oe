@@ -41,7 +41,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-lto \
                            --enable-ld=default \
                            --disable-multilib \
-                           --without-included-gettext \
                            --enable-checking=release \
                            --without-ppl \
                            --without-cloog \
