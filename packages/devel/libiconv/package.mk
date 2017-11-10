@@ -44,7 +44,7 @@ pre_configure_target() {
   CXXFLAGS="$CXXFLAGS -fPIC"
 }
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared"
+PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared --enable-extra-encodings --with-gnu-ld"
 
 pre_configure_host() {
   CFLAGS="$CFLAGS -fPIC"
