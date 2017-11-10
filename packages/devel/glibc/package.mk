@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="glibc"
-PKG_VERSION="3683b42"
+PKG_VERSION="8cb5295"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/bminor/glibc/tree/ibm/2.26/master"
@@ -125,9 +125,6 @@ echo "libdir=/usr/lib" >> configparms
 echo "slibdir=/usr/lib" >> configparms
 echo "sbindir=/usr/bin" >> configparms
 echo "rootsbindir=/usr/bin" >> configparms
-echo "build-programs=yes" >> configparms
-
-GLIBC_INCLUDE_BIN="getent ldd locale"
 }
 
 post_makeinstall_target() {
@@ -153,27 +150,16 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/share/i18n/charmaps
   rm -rf $INSTALL/usr/share/i18n/locales
 
-# add UTF-8 charmap for Generic (charmap is needed for installer)
-  if [ "$PROJECT" = "Generic" ]; then
-    mkdir -p $INSTALL/usr/share/i18n/charmaps
-    cp -PR $PKG_BUILD/localedata/charmaps/UTF-8 $INSTALL/usr/share/i18n/charmaps
-    gzip $INSTALL/usr/share/i18n/charmaps/UTF-8
-    
-    mkdir -p $INSTALL/usr/lib/locale
-    mkdir -p $INSTALL/etc/profile.d
-    I18NPATH=../localedata 
+# add default locale
+if [ "$GLIBC_LOCALES" = yes ]; then
+  mkdir -p $INSTALL/usr/lib/locale
+  mkdir -p $INSTALL/etc/profile.d
+  I18NPATH=../localedata 
     localedef -i ../localedata/locales/en_US -f ../localedata/charmaps/UTF-8 en_US.UTF-8 --prefix=$INSTALL
     localedef -i ../localedata/locales/ru_RU -f ../localedata/charmaps/UTF-8 ru_RU.UTF-8 --prefix=$INSTALL
     echo "export LANG=en_US.UTF-8" > $INSTALL/etc/profile.d/01-locale.conf
     echo "export LANG=ru_RU.UTF-8" > $INSTALL/etc/profile.d/01-locale.conf
-  fi
-
-  if [ ! "$GLIBC_LOCALES" = yes ]; then
-    rm -rf $INSTALL/usr/share/i18n/locales
-
-    mkdir -p $INSTALL/usr/share/i18n/locales
-      cp -PR $PKG_BUILD/localedata/locales/POSIX $INSTALL/usr/share/i18n/locales
-  fi
+fi
 
 # create default configs
   mkdir -p $INSTALL/etc
