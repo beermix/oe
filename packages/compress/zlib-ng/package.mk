@@ -1,0 +1,11 @@
+PKG_NAME="zlib-ng"
+PKG_VERSION="e07a52d"
+PKG_URL="https://github.com/Dead2/zlib-ng/archive/${PKG_VERSION}.tar.gz"
+PKG_DEPENDS_TARGET="cmake:host"
+PKG_DEPENDS_HOST=""
+PKG_SECTION="compress"
+PKG_AUTORECONF="no"
+PKG_USE_NINJA="no"
+
+PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release"
+PKG_CMAKE_OPTS_HOST="-DCMAKE_BUILD_TYPE=Release"
