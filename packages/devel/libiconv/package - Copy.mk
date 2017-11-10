@@ -26,7 +26,7 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="devel"
 PKG_SHORTDESC="Libiconv converts from one character encoding to another through Unicode conversion."
 PKG_LONGDESC="Libiconv converts from one character encoding to another through Unicode conversion."
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 
 post_unpack() {
   sed -i '/preload/d' $PKG_BUILD/Makefile.in
@@ -43,12 +43,7 @@ PKG_CONFIGURE_OPTS_TARGET="--host=$TARGET_NAME \
 			      --disable-nls \
 			      --enable-extra-encodings \
 			      --with-gnu-ld"
-			      
-PKG_CONFIGURE_OPTS_HOST="--enable-static \
-			    --disable-shared \
-			    --disable-nls \
-			    --disable-extra-encodings \
-			    --with-gnu-ld"
+      
 
 pre_configure_target() {
   CFLAGS="$CFLAGS -fPIC"
