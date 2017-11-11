@@ -28,6 +28,8 @@ PKG_SHORTDESC="Libiconv converts from one character encoding to another through 
 PKG_LONGDESC="Libiconv converts from one character encoding to another through Unicode conversion."
 PKG_AUTORECONF="no"
 
+export CCACHE_DISABLE=1
+
 post_unpack() {
   sed -i '/preload/d' $PKG_BUILD/Makefile.in
 }
@@ -43,19 +45,8 @@ PKG_CONFIGURE_OPTS_TARGET="--host=$TARGET_NAME \
 			      --disable-nls \
 			      --enable-extra-encodings \
 			      --with-gnu-ld"
-			      
-PKG_CONFIGURE_OPTS_HOST="--enable-static \
-			    --disable-shared \
-			    --disable-nls \
-			    --disable-extra-encodings \
-			    --with-gnu-ld"
 
 pre_configure_target() {
-  CFLAGS="$CFLAGS -fPIC"
-  CXXFLAGS="$CXXFLAGS -fPIC"
-}
-
-pre_configure_host() {
   CFLAGS="$CFLAGS -fPIC"
   CXXFLAGS="$CXXFLAGS -fPIC"
 }
