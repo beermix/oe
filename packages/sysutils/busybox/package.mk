@@ -11,7 +11,7 @@
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-# unrar psmisc grep gawk coreutils
+# psmisc grep
 #  You should have received a copy of the GNU General Public License
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################ 
@@ -167,12 +167,6 @@ makeinstall_target() {
     cp $PKG_DIR/scripts/fs-resize $INSTALL/usr/lib/libreelec
     sed -e "s/@DISTRONAME@/$DISTRONAME/g" \
         -i $INSTALL/usr/lib/libreelec/fs-resize
-
-#    rm $INSTALL/usr/bin/sh
-#    rm $INSTALL/usr/bin/hostname
-#    rm $INSTALL/usr/sbin/ip
-#    rm $INSTALL/usr/bin/bash
-#    rm $INSTALL/usr/bin/sh
 
   mkdir -p $INSTALL/etc
     cp $PKG_DIR/config/profile $INSTALL/etc

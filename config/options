@@ -1,5 +1,6 @@
 # set default language for buildsystem
   export LC_ALL=C
+  export CCACHE_SLOPPINESS=include_file_mtime
 #  export LC_ALL=en_US.UTF-8
 
 # determines DISTRO, if not forced by user

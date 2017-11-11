@@ -24,7 +24,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/parted/"
 PKG_URL="http://ftpmirror.gnu.org/parted/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain util-linux:host"
-PKG_DEPENDS_TARGET="toolchain util-linux parted:host readline ncurses"
+PKG_DEPENDS_TARGET="toolchain util-linux parted:host"
 PKG_DEPENDS_INIT="toolchain util-linux:init parted"
 PKG_SECTION="system"
 PKG_SHORTDESC="parted: GNU partition editor"
@@ -48,11 +48,7 @@ make_init() {
 }
 
 makeinstall_init() {
-  mkdir -p $INSTALL/usr/sbin
-  mkdir -p $INSTALL/usr/lib
-    cp ../.$TARGET_NAME/parted/parted $INSTALL/usr/sbin
-    cp ../.$TARGET_NAME/partprobe/partprobe $INSTALL/usr/sbin
-#    cp $(get_build_dir readline)/.install_pkg/usr/lib/libreadline.so.* $INSTALL/usr/lib
-#    cp -PL $(get_build_dir ncurses)/.install_pkg/usr/lib/libncursesw.so.* $INSTALL/usr/lib
-#    cp -PL $(get_build_dir ncurses)/.install_pkg/usr/lib/libtinfo.so.* $INSTALL/usr/lib
+  mkdir -p $INSTALL/sbin
+    cp ../.$TARGET_NAME/parted/parted $INSTALL/sbin
+    cp ../.$TARGET_NAME/partprobe/partprobe $INSTALL/sbin
 }
