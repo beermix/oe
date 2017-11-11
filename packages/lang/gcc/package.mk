@@ -42,11 +42,13 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-lto \
                            --enable-ld=default \
                            --disable-multilib \
+                           --disable-nls \
                            --enable-checking=release \
                            --without-ppl \
                            --without-cloog \
                            --disable-libmpx \
                            --disable-libssp \
+                           --disable-libsanitizer \
                            --without-cuda-driver \
                            --disable-werror \
                            --with-tune=generic -v"
@@ -62,7 +64,6 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-libatomic \
                               --disable-libitm \
                               --disable-libquadmath \
-                              --disable-libsanitizer \
                               --without-headers \
                               --with-newlib \
                               --disable-decimal-float \
