@@ -33,7 +33,7 @@ PKG_USE_MESON="no"
 
 PKG_MESON_OPTS_TARGET="-Dwith-docs=no -Dwith-man=no -Dwith-pcre=system -Denable-libmount=yes -Denable-dtrace=false"
  
-PKG_CONFIGURE_OPTS_HOST="--disable-libmount --with-pcre=system"
+PKG_CONFIGURE_OPTS_HOST="--disable-libmount --disable-gtk-doc --disable-gtk-doc-html --disable-man"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_snprintf_c99=yes \
                            ac_cv_func_vsnprintf_c99=yes \
