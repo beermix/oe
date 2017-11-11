@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="xfsprogs"
-PKG_VERSION="4.13.1"
+PKG_VERSION="4.14.0-rc1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://git.kernel.org/cgit/fs/xfs/xfsprogs-dev.git"
