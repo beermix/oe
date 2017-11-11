@@ -41,9 +41,8 @@ PKG_CONFIGURE_OPTS_TARGET="--with-defaults \
         --disable-deprecated \
         --disable-snmptrapd-subagent \
         --disable-scripts \
-        --enable-static=no \
-        --enable-shared=yes \
-        --enable-mini-agent \
+        --enable-static=yes \
+        --enable-shared=no \
         --with-nl \
         --with-logfile=/storage/.kodi/userdata/addon_data/${PKG_ADDON_ID} \
         --with-persistent-directory=/storage/.kodi/userdata/addon_data/${PKG_ADDON_ID} \
@@ -68,8 +67,4 @@ makeinstall_target() {
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/lib
   cp -r $PKG_BUILD/.$TARGET_NAME/storage/.kodi/addons/${PKG_ADDON_ID}/bin $PKG_BUILD/.$TARGET_NAME/storage/.kodi/userdata/addon_data/${PKG_ADDON_ID}/share $ADDON_BUILD/$PKG_ADDON_ID/
-  #Do not copy symlinks
-  find $PKG_BUILD/.$TARGET_NAME/storage/.kodi/addons/${PKG_ADDON_ID}/lib/ -type f -name '*.so.*' -exec cp '{}' $ADDON_BUILD/$PKG_ADDON_ID/lib/ \;
-  #remove all but major version from so file
-  for f in $ADDON_BUILD/$PKG_ADDON_ID/lib/*.so.* ; do mv "$f" "${f%.*.*}" ; done
 }
