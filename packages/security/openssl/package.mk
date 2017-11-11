@@ -17,8 +17,6 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            enable-tlsext \
                            enable-unit-test \
                            no-ssl3 \
-                           zlib \
-                           zlib-shared \
                            enable-ec_nistp_64_gcc_128"
 
 pre_configure_host() {
@@ -58,7 +56,7 @@ pre_configure_target() {
 
 configure_target() {
   cd $PKG_BUILD/.$TARGET_NAME
-  ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 "-Wa,--noexecstack $CPPFLAGS $CFLAGS $LDFLAGS"
+  ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED zlib zlib-shared linux-x86_64 "-Wa,--noexecstack $CPPFLAGS $CFLAGS $LDFLAGS"
 #  MAKEFLAGS=-j1
 }
 
