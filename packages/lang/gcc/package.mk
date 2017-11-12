@@ -51,7 +51,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --without-cloog \
                            --disable-libmpx \
                            --disable-libssp \
-                           --disable-libsanitizer \
                            --without-cuda-driver \
                            --disable-werror \
                            --with-system-zlib \
@@ -68,6 +67,7 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-libatomic \
                               --disable-libitm \
                               --disable-libquadmath \
+                              --disable-libsanitizer \
                               --without-headers \
                               --with-newlib \
                               --disable-decimal-float \
