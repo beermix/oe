@@ -33,4 +33,10 @@ PKG_CONFIGURE_OPTS_HOST="gl_cv_func_gettimeofday_clobber=no --target=$TARGET_NAM
 
 post_makeinstall_host() {
   make prefix=$SYSROOT_PREFIX/usr install
+  
+  cp $PKG_DIR/src/bin/help2man $TOOLCHAIN/bin/
+  cp $PKG_DIR/src/bin/makeinfo $TOOLCHAIN/bin/
+
+#  mkdir -p $SYSROOT_PREFIX/usr/share/aclocal
+#  cp -pr $PKG_DIR/src/m4/* $SYSROOT_PREFIX/usr/share/aclocal/
 }

@@ -37,7 +37,4 @@ post_makeinstall_host() {
   ln -sfr make $TOOLCHAIN/bin/gmake
   
 #  ln -sfr /usr/bin/make $TOOLCHAIN/bin/make
-
-#  cp $PKG_DIR/src/bin/help2man $TOOLCHAIN/bin/
-#  cp $PKG_DIR/src/bin/makeinfo $TOOLCHAIN/bin/
 }
