@@ -48,6 +48,8 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/bash \
                            --without-gd \
                            --enable-obsolete-rpc \
                            --enable-obsolete-nsl \
+                           --disable-build-nscd \
+                           --disable-nscd \
                            --enable-lock-elision \
                            --disable-timezone-tools"
 
