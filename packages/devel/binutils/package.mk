@@ -44,6 +44,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-lto \
                          --enable-relro \
                          --disable-nls \
+                         --with-system-zlib \
                          --enable-poison-system-directories"
 
 pre_configure_host() {
@@ -54,8 +55,8 @@ pre_configure_host() {
 }
 
 make_host() {
-   make MAKEINFO=true configure-host
-   make MAKEINFO=true
+  make MAKEINFO=true configure-host
+  make MAKEINFO=true
 }
 
 make_target() {
