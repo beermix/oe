@@ -32,9 +32,12 @@ PKG_AUTORECONF="no"
 PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --with-sysroot=$SYSROOT_PREFIX \
                          --with-lib-path=$SYSROOT_PREFIX/lib:$SYSROOT_PREFIX/usr/lib \
+                         --without-ppl \
+                         --without-cloog \
                          --disable-werror \
                          --disable-multilib \
-                         --enable-libssp \
+                         --disable-libada \
+                         --disable-libssp \
                          --enable-version-specific-runtime-libs \
                          --enable-plugins \
                          --enable-ld=default \
@@ -47,23 +50,23 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-poison-system-directories"
 
 pre_configure_host() {
-  unset CPPFLAGS
+#  unset CPPFLAGS
 #  unset CFLAGS
-  unset CXXFLAGS
+#  unset CXXFLAGS
   unset LDFLAGS
 }
 
-make_host() {
-   make MAKEINFO=true configure-host
-   make MAKEINFO=true
-}
+#make_host() {
+#   make MAKEINFO=true configure-host
+#   make MAKEINFO=true
+#}
 
-make_target() {
-  make MAKEINFO=true configure-host
-  make MAKEINFO=true -C libiberty
-  make MAKEINFO=true -C bfd
-  make MAKEINFO=true -C binutils ar
-}
+#make_target() {
+#  make MAKEINFO=true configure-host
+#  make MAKEINFO=true -C libiberty
+#  make MAKEINFO=true -C bfd
+#  make MAKEINFO=true -C binutils ar
+#}
 
 makeinstall_host() {
   cp -v ../include/libiberty.h $SYSROOT_PREFIX/usr/include
