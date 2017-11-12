@@ -46,8 +46,6 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/bash \
                            --enable-kernel=3.2.0 \
                            --without-cvs \
                            --without-gd \
-                           --disable-build-nscd \
-                           --disable-nscd \
                            --enable-obsolete-rpc \
                            --enable-obsolete-nsl \
                            --enable-lock-elision \
