@@ -61,7 +61,7 @@ fi
 
 NSS_CONF_DIR="$PKG_BUILD/nss"
 
-GLIBC_EXCLUDE_BIN="catchsegv gencat getconf"
+GLIBC_EXCLUDE_BIN="catchsegv gencat getconf iconv iconvconfig ldconfig"
 GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN makedb mtrace pcprofiledump"
 GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN pldd rpcgen sln sotruss sprof xtrace"
 
@@ -156,7 +156,6 @@ if [ "$GLIBC_LOCALES" = yes ]; then
   localedef -i ../localedata/locales/en_US -f ../localedata/charmaps/UTF-8 en_US.UTF-8 --prefix=$INSTALL
   localedef -i ../localedata/locales/ru_RU -f ../localedata/charmaps/UTF-8 ru_RU.UTF-8 --prefix=$INSTALL
   echo "export LANG=en_US.UTF-8" > $INSTALL/etc/profile.d/01-locale.conf
-  echo "export LANG=ru_RU.UTF-8" > $INSTALL/etc/profile.d/01-locale.conf
 fi
 
 # create default configs
