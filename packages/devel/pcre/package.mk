@@ -25,7 +25,7 @@ PKG_URL="http://ftp.csx.cam.ac.uk/pub/software/programming/pcre/$PKG_NAME-$PKG_V
 PKG_DEPENDS_HOST=""
 PKG_DEPENDS_TARGET="toolchain zlib"
 PKG_SECTION="devel"
-PKG_AUTORECONF="no"
+PKG_AUTORECONF="yes"
 PKG_USE_CMAKE="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-unicode-properties \
