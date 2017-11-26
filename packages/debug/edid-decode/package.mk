@@ -16,15 +16,25 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="Adafruit_Python_MCP3008"
-PKG_VERSION="e721d26"
-PKG_SHA256="f5e4c847a87716c16f0209df95c281b5071549644a79a143a77b212f25c464dc"
+PKG_NAME="edid-decode"
+PKG_VERSION="f56f329"
+PKG_SHA256="d9347ddf6933c6f90c79230b1898da5686083f0e5ebb7ef67acb011108cfaeae"
 PKG_ARCH="any"
-PKG_LICENSE="MIT"
-PKG_SITE="https://github.com/adafruit/${PKG_NAME}"
-PKG_URL="https://github.com/adafruit/${PKG_NAME}/archive/$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain Python2 distutilscross:host"
-PKG_SECTION="python"
-PKG_SHORTDESC="Adafruit Python MCP3008 Library"
-PKG_LONGDESC="Python code to use the MCP3008 analog to digital converter with a Raspberry Pi or BeagleBone black."
-PKG_TOOLCHAIN="manual"
+PKG_LICENSE="None"
+PKG_SITE="https://cgit.freedesktop.org/xorg/app/edid-decode/"
+PKG_URL="https://cgit.freedesktop.org/xorg/app/edid-decode/snapshot/$PKG_VERSION.tar.xz"
+PKG_SOURCE_DIR="$PKG_VERSION*"
+PKG_DEPENDS_TARGET="toolchain"
+PKG_SECTION="debug"
+PKG_SHORTDESC="Decode EDID data in human-readable format"
+PKG_LONGDESC="Decode EDID data in human-readable format"
+
+make_target() {
+  echo "$CC $CFLAGS -Wall $LDFLAGS -lm -o edid-decode edid-decode.c"
+  $CC $CFLAGS -Wall $LDFLAGS -lm -o edid-decode edid-decode.c
+}
+
+makeinstall_target() {
+  mkdir -p $INSTALL/usr/bin
+    cp edid-decode $INSTALL/usr/bin
+}

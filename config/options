@@ -3,6 +3,7 @@ if [[ $EUID -eq 0 ]]; then
   echo "Building as the root user is NOT supported. Use a regular user account for the build." 1>&2
   exit 1
 fi
+
 # set default language for buildsystem
   export LC_ALL=C
 #  export CCACHE_SLOPPINESS=include_file_mtime
