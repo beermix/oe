@@ -24,7 +24,7 @@ PKG_DEPENDS_TARGET="toolchain xmlstarlet:host"
 PKG_SECTION=""
 PKG_SHORTDESC="Kodinerds add-on repository"
 PKG_LONGDESC="Kodinerds add-on repository"
-PKG_AUTORECONF="no"
+
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Kodinerds Repository"

@@ -4,7 +4,7 @@ PKG_URL="http://www.nico.schottelius.org/software/gpm/archives/gpm-$PKG_VERSION.
 PKG_DEPENDS_TARGET="toolchain" 
 PKG_SECTION="my"
 
-PKG_AUTORECONF="no"
+
 
 MAKEFLAGS="-j1"
 

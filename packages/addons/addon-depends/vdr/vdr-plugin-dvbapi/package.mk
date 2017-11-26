@@ -32,7 +32,7 @@ PKG_LONGDESC="TV"
 
 
 
-PKG_AUTORECONF="no"
+
 
 pre_make_target() {
   # dont build parallel

@@ -27,7 +27,7 @@ PKG_SECTION="python/devel"
 PKG_SHORTDESC="IPv4/IPv6 manipulation library"
 
 
-PKG_AUTORECONF="no"
+
 
 PKG_MAINTAINER="unofficial.addon.pro"
 

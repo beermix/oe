@@ -8,7 +8,7 @@ PKG_PRIORITY="optional"
 PKG_SECTION="toolchain/devel"
 
 
-PKG_AUTORECONF="no"
+
 
 make_host() {
   make prefix=$TOOLCHAIN install

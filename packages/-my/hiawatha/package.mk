@@ -10,7 +10,7 @@ PKG_SHORTDESC="hiawatha"
 PKG_LONGDESC="An advanced and secure webserver for Unix"
 
 
-PKG_AUTORECONF="no"
+
 
 make_target() {
   mkdir -p $PKG_BUILD/build

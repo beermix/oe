@@ -31,7 +31,7 @@ PKG_SHORTDESC="MAME - Multiple Arcade Machine Emulator"
 PKG_LONGDESC="MAME - Multiple Arcade Machine Emulator"
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+
 
 pre_make_target() {
   strip_lto

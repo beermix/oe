@@ -4,7 +4,7 @@ PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain lzo xz"
 PKG_SECTION="network"
 
-PKG_AUTORECONF="no"
+
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared"
 

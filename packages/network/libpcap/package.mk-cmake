@@ -25,7 +25,7 @@ PKG_DEPENDS_TARGET="toolchain dbus"
 PKG_SECTION="devel"
 PKG_SHORTDESC="system interface for user-level packet capture"
 PKG_LONGDESC="libpcap (Packet CAPture) provides a portable framework for low-level network monitoring. Applications include network statistics collection, security monitoring, network debugging, etc."
-PKG_AUTORECONF="no"
+
 
 pre_configure_target() {
    cd $PKG_BUILD

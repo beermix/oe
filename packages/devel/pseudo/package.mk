@@ -4,7 +4,7 @@ PKG_GIT_URL="https://git.yoctoproject.org/git/pseudo"
 PKG_DEPENDS_HOST="ccache:host"
 PKG_SECTION="toolchain/devel"
 
-PKG_AUTORECONF="no"
+
 
 configure_host() {
   cd $PKG_BUILD

@@ -29,7 +29,7 @@ PKG_SECTION="driver"
 PKG_SHORTDESC="Realtek RTL8723BS Linux driver"
 
 
-PKG_AUTORECONF="no"
+
 
 pre_make_target() {
   unset LDFLAGS

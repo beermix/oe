@@ -12,7 +12,7 @@ PKG_DEPENDS_TARGET="toolchain systemd SDL2 boost freetype curl cmake:host freeim
 PKG_SECTION="xmedia/games"
 PKG_SHORTDESC="Emulationstation emulator frontend"
 
-PKG_AUTORECONF="no"
+
 
 # theme for Emulationstation
 PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET emulationstation-theme-simple-dark"

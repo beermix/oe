@@ -26,7 +26,7 @@ PKG_SHORTDESC="alsa-utils: Advanced Linux Sound Architecture utilities"
 PKG_LONGDESC="This package includes the utilities for ALSA, like alsamixer, aplay, arecord, alsactl, iecset and speaker-test."
 
 
-PKG_AUTORECONF="no"
+
 
 make_target() {
   cd $PKG_BUILD

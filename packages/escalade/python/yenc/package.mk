@@ -28,7 +28,7 @@ PKG_SHORTDESC="yenc: a fairly simple module, it provide only raw yEnc encoding/d
 PKG_LONGDESC="This a fairly simple module, it provide only raw yEnc encoding/decoding with builitin crc32 calculation. Header parsing, checkings and yenc formatting are left to you (see examples directory for possible implementations). The interface is similar to the uu module from python standard library."
 
 
-PKG_AUTORECONF="no"
+
 
 pre_make_target() {
   export PYTHONXCPREFIX="$SYSROOT_PREFIX/usr"

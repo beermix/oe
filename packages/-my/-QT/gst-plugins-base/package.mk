@@ -26,7 +26,7 @@ PKG_SHORTDESC="gst-plugins-base"
 PKG_LONGDESC="gst-plugins-base"
 
 
-PKG_AUTORECONF="no"
+
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-maintainer-mode \
 			      --enable-silent-rules \

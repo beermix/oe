@@ -27,7 +27,7 @@ PKG_DEPENDS_TARGET="toolchain firmware-imx"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="imx-vpu: platform specific unit tests for mxc platform"
 PKG_LONGDESC="imx-vpu: platform specific unit tests for mxc platform"
-PKG_AUTORECONF="no"
+
 
 make_target() {
   make DIRS="vpu" CFLAGS="$CFLAGS" PLATFORM=IMX6Q CROSS_COMPILE=$TARGET_PREFIX

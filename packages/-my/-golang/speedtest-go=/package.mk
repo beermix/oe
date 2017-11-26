@@ -4,7 +4,7 @@ PKG_GIT_URL="https://github.com/zpeters/speedtest"
 PKG_GIT_BRANCH="develop"
 PKG_DEPENDS_TARGET="toolchain go:host"
 PKG_SECTION="tools"
-PKG_AUTORECONF="no"
+
 
 pre_make_target() {
   export GOOS=linux

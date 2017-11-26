@@ -25,7 +25,7 @@ PKG_SECTION="rsyslog"
 PKG_SHORTDESC="liblognorm"
 PKG_LONGDESC="liblognorm"
 
-PKG_AUTORECONF="no"
+
 
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared \

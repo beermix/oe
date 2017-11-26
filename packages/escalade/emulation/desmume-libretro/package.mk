@@ -28,7 +28,7 @@ PKG_SHORTDESC="libretro wrapper for desmume NDS emulator."
 PKG_LONGDESC="libretro wrapper for desmume NDS emulator."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+
 
 pre_build_target() {
   export GIT_VERSION=$PKG_VERSION

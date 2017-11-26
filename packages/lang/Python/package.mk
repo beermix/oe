@@ -24,7 +24,7 @@ PKG_URL=""
 PKG_DEPENDS_HOST="Python2:host"
 PKG_DEPENDS_TARGET="Python2"
 
-PKG_AUTORECONF="no"
+
 
 configure_host() {
   :

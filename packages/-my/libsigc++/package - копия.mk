@@ -5,7 +5,7 @@ PKG_URL="http://ftp.gnome.org/pub/GNOME/sources/libsigc++/2.99/libsigc++-$PKG_VE
 PKG_DEPENDS_TARGET="toolchain boost"
 
 
-PKG_AUTORECONF="no"
+
 
 pre_configure_target() {
   export CFLAGS="$CFLAGS -fPIC"

@@ -4,7 +4,7 @@ PKG_GIT_URL="https://github.com/hashcat/hashcat"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="my"
 
-PKG_AUTORECONF="no"
+
 
 pre_configure_target() {
    strip_lto

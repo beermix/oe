@@ -36,7 +36,7 @@ PKG_LONGDESC="LAMP (Linux Apache MySQL PHP) software bundle. Done by ultraman, s
 PKG_MAINTAINER="vpeter"
 PKG_IS_ADDON="yes"
 PKG_ADDON_TYPE="xbmc.service"
-PKG_AUTORECONF="no"
+
 PKG_ADDON_NAME="Web server"
 
 make_target() {

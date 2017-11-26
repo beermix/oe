@@ -25,7 +25,7 @@ PKG_SECTION="python/security"
 PKG_SHORTDESC="PyCrypto - The Python Cryptography Toolkit"
 PKG_LONGDESC="The Python Cryptography Toolkit describes a package containing various cryptographic modules for the Python programming language"
 
-PKG_AUTORECONF="no"
+
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_realloc_0_nonnull=yes \
                            ac_cv_func_malloc_0_nonnull=yes \

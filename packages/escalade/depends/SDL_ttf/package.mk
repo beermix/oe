@@ -29,7 +29,7 @@ PKG_LONGDESC="This is a sample library which allows you to use TrueType fonts in
 
 PKG_ADDON_TYPE="xbmc.python.pluginsource"
 
-PKG_AUTORECONF="no"
+
 
 PKG_CONFIGURE_OPTS_TARGET="--with-gnu-ld \
 			   --disable-shared \

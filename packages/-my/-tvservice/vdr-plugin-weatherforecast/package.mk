@@ -16,7 +16,7 @@ PKG_SECTION="xmedia/tvservice"
 PKG_SHORTDESC="WeatherForecast provides a weather forecast"
 PKG_LONGDESC="WeatherForecast provides a weather forecast"
 
-PKG_AUTORECONF="no"
+
 PKG_LOCALE_INSTALL="yes"
 
 make_target() {

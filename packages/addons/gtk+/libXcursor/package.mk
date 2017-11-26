@@ -26,5 +26,5 @@ PKG_DEPENDS_TARGET="toolchain libX11 libXfixes libXrender"
 PKG_SECTION="x11/lib"
 PKG_SHORTDESC="libXcursor: X Cursor Library"
 PKG_LONGDESC="X11 Cursor management library"
-PKG_AUTORECONF="no"
+
 

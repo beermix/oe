@@ -32,7 +32,7 @@ PKG_DEPENDS_TARGET="chromium:host pciutils dbus x11 ffmpeg yasm libXcomposite li
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
-PKG_AUTORECONF="no"
+
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Chromium"

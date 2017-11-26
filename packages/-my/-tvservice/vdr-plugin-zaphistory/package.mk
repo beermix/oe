@@ -16,7 +16,7 @@ PKG_SECTION="xmedia/tvservice"
 PKG_SHORTDESC="History of the latest viewed channels"
 PKG_LONGDESC="History of the latest viewed channels."
 
-PKG_AUTORECONF="no"
+
 PKG_LOCALE_INSTALL="yes"
 
 make_target() {

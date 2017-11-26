@@ -3,7 +3,7 @@ PKG_VERSION="17.06"
 PKG_GIT_URL="https://github.com/docker/docker-ce"
 PKG_DEPENDS_TARGET="toolchain sqlite go:host containerd runc libnetwork tini curl"
 PKG_SECTION="service/system"
-PKG_AUTORECONF="no"
+
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Docker"
 PKG_ADDON_TYPE="xbmc.service"

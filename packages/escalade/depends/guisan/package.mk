@@ -27,7 +27,7 @@ PKG_SECTION="depends"
 PKG_SHORTDESC="guisan GUI library"
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+
 
 make_target() {
   scons

@@ -4,7 +4,7 @@ PKG_GIT_URL="https://github.com/rootlis/ps3remote"
 PKG_DEPENDS_TARGET="toolchain systemd"
 PKG_SECTION="my"
 
-PKG_AUTORECONF="no"
+
 
 CONCURRENCY_MAKE_LEVEL=1
 

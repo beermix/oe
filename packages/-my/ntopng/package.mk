@@ -4,7 +4,7 @@ PKG_URL="http://downloads.sourceforge.net/project/ntop/ntopng/ntopng-2.4-stable.
 PKG_DEPENDS_TARGET="toolchain readline"
 
 PKG_SECTION="tools"
-PKG_AUTORECONF="no"
+
 
 pre_configure_target() {
    cd $PKG_BUILD

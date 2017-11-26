@@ -5,4 +5,3 @@ PKG_DEPENDS_TARGET="toolchain ipset"
 
 PKG_SECTION="my"
 
-PKG_AUTORECONF="no"

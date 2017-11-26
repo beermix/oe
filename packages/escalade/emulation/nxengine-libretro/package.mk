@@ -30,7 +30,7 @@ PKG_SHORTDESC="Libretro port of NXEngine (Cave Story engine)"
 PKG_LONGDESC="Libretro port of NXEngine (Cave Story engine)"
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+
 
 make_target() {
   case $PROJECT in

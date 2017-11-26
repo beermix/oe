@@ -28,7 +28,7 @@ PKG_SECTION="python/devel"
 PKG_SHORTDESC="Foreign Function Interface for Python calling C code"
 
 
-PKG_AUTORECONF="no"
+
 PKG_MAINTAINER="unofficial.addon.pro"
 
 post_unpack() {

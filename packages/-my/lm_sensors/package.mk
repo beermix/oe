@@ -4,7 +4,7 @@ PKG_URL="https://github.com/groeck/lm-sensors/archive/${PKG_VERSION}.tar.gz"
 PKG_SOURCE_DIR="lm-sensors-$PKG_VERSION*"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="devel"
-PKG_AUTORECONF="no"
+
 
 # TODO: PKG_MAKE_OPTS_TARGET + ETCDIR=/storage/.kodi/addons/tools.lm_sensors/data if one wants sensor3.co$
 PKG_MAKE_OPTS_TARGET="BUILD_STATIC_LIB=1 BUILD_SHARED_LIB=0 PREFIX=/usr CC=$CC AR=$AR"

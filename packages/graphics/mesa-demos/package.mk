@@ -25,6 +25,6 @@ PKG_DEPENDS_TARGET="toolchain libX11 mesa glu glew freeglut"
 PKG_SECTION="tools"
 PKG_SHORTDESC="mesa-demos: Mesa 3D demos"
 PKG_LONGDESC="Mesa 3D demos - installed are the well known glxinfo and glxgears."
-PKG_AUTORECONF="no"
+
 
 #PKG_CONFIGURE_OPTS_TARGET="--without-glut"

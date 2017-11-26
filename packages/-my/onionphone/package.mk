@@ -9,7 +9,7 @@ PKG_SHORTDESC="OnionPhone"
 PKG_LONGDESC="OnionPhone is a VOIP tool for calling over Tor network."
 
 
-PKG_AUTORECONF="no"
+
 
 download() {
   local PACKAGE="$PKG_NAME-$PKG_VERSION"

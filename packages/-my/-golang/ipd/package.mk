@@ -3,7 +3,7 @@ PKG_VERSION="faf2f62"
 PKG_GIT_URL="https://github.com/martinp/ipd"
 PKG_DEPENDS_TARGET="toolchain go:host"
 PKG_SECTION="tools"
-PKG_AUTORECONF="no"
+
 
 pre_make_target() {
   export GOARCH=amd64

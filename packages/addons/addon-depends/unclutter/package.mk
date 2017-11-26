@@ -28,7 +28,7 @@ PKG_SHORTDESC="Unclutter: Hide X11 Cursor"
 PKG_LONGDESC="Unclutter runs in the background of an X11 session and after a specified period of inactivity hides the cursor from display. When the cursor is moved its display is restored. Users may specify specific windows to be ignored by unclutter."
 
 
-PKG_AUTORECONF="no"
+
 
 make_target() {
   rm -f Makefile

@@ -3,9 +3,9 @@ PKG_VERSION="abb60b4"
 PKG_GIT_URL="https://github.com/Sioro-Neoku/go-peerflix"
 PKG_DEPENDS_TARGET="toolchain go:host"
 PKG_SECTION="tools"
-PKG_AUTORECONF="no"
 
-PKG_AUTORECONF="no"
+
+
 
 pre_make_target() {
   export GOOS=linux

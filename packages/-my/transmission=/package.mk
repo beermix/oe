@@ -4,7 +4,7 @@ PKG_SITE="https://github.com/transmission/transmission-releases"
 #PKG_URL="https://github.com/transmission/transmission-releases/raw/master/transmission-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain openssl curl miniupnpc libevent"
 PKG_USE_CMAKE="yes"
-PKG_AUTORECONF="no"
+
 
 unpack() {
   git clone --recursive -v --depth 1 https://github.com/transmission/transmission $PKG_BUILD

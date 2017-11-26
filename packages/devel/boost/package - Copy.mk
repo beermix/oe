@@ -30,7 +30,7 @@ PKG_SHORTDESC="boost: Peer-reviewed STL style libraries for C++"
 PKG_LONGDESC="Boost provides free peer-reviewed portable C++ source libraries. The emphasis is on libraries which work well with the C++ Standard Library. One goal is to establish existing practice and provide reference implementations so that the Boost libraries are suitable for eventual standardization. Some of the libraries have already been proposed for inclusion in the C++ Standards Committee's upcoming C++ Standard Library Technical Report."
 
 
-PKG_AUTORECONF="no"
+
 
 make_host() {
   cd tools/build/src/engine

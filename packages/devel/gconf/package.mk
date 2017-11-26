@@ -27,6 +27,6 @@ PKG_SECTION="depends"
 PKG_SHORTDESC="gconf"
 
 
-PKG_AUTORECONF="no"
+
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-orbit --disable-static"

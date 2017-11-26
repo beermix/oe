@@ -5,7 +5,7 @@ PKG_DEPENDS_TARGET="toolchain openssl expat boost"
 PKG_SECTION="devel"
 PKG_USE_CMAKE="yes"
 
-PKG_AUTORECONF="no"
+
 
 
 CFLAGS="-O3 -pipe -fstack-protector-strong"

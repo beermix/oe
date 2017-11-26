@@ -27,7 +27,7 @@ PKG_SECTION="depends"
 PKG_SHORTDESC="gconf"
 
 
-PKG_AUTORECONF="no"
+
 
 post_unpack() {
   mv $BUILD/GConf-$PKG_VERSION $BUILD/$PKG_NAME-$PKG_VERSION

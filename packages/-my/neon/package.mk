@@ -3,7 +3,7 @@ PKG_VERSION="0.30.2"
 PKG_URL="http://www.webdav.org/neon/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain fuse libxml2 expat"
 PKG_SECTION="tools"
-PKG_AUTORECONF="no"
+
 
 pre_configure_target() {
   CFLAGS="$CFLAGS -fPIC"

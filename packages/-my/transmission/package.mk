@@ -13,7 +13,7 @@ PKG_IS_ADDON="yes"
 PKG_ADDON_TYPE="xbmc.service"
 PKG_ADDON_PROVIDES=""
 PKG_USE_CMAKE="no"
-PKG_AUTORECONF="no"
+
 
 #unpack() {
 #  git clone --recursive --depth 1 https://github.com/transmission/transmission $PKG_BUILD/$PKG_NAME-git

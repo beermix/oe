@@ -30,7 +30,7 @@ PKG_SHORTDESC="packaging: Core utilities for Python packages"
 PKG_LONGDESC="Packaging is the Core utilities for Python packages package"
 
 
-PKG_AUTORECONF="no"
+
 
 make_host() {
   : # nothing todo

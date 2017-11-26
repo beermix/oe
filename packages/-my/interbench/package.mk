@@ -6,7 +6,7 @@ PKG_SOURCE_DIR="$PKG_VERSION"
 PKG_DEPENDS_TARGET="toolchain systemd"
 PKG_SECTION="my"
 
-PKG_AUTORECONF="no"
+
 
 make_target() {
   make CC="$CC" AR="$AR" CFLAGS="-O2 -pipe -fstack-protector-strong -DDEBUG=0" CPPFLAGS="$CPPFLAGS" -j1

@@ -4,7 +4,7 @@ PKG_GIT_URL="https://github.com/xelerance/xl2tpd"
 PKG_DEPENDS_TARGET="toolchain systemd pptp ppp openssl libpcap"
 PKG_SECTION="network"
 
-PKG_AUTORECONF="no"
+
 
 make_target() {
   make prefix=/usr \

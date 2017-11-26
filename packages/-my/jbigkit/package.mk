@@ -5,7 +5,7 @@ PKG_DEPENDS_TARGET="toolchain ncurses"
 
 PKG_SECTION="python/system"
 
-PKG_AUTORECONF="no"
+
 
 
 MAKEFLAGS="-j1"

@@ -25,7 +25,7 @@ PKG_SECTION="tools"
 PKG_SHORTDESC="Versatile resource statistics tool"
 
 
-PKG_AUTORECONF="no"
+
 
 make_target() {
   :

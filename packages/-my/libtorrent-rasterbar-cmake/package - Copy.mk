@@ -6,7 +6,7 @@ PKG_DEPENDS_TARGET="toolchain boost Python2:host Python:target zlib bzip2 curl n
 
 PKG_SECTION="devel"
 
-PKG_AUTORECONF="no"
+
 
 configure_target() {
   cd $PKG_BUILD

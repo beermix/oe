@@ -5,7 +5,7 @@ PKG_SITE="http://www.gnupg.org/"
 PKG_URL="ftp://ftp.gnupg.org/gcrypt/gnupg/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain zlib curl libassuan npth libksba libgpg-error libgcrypt"
 PKG_SECTION="security"
-PKG_AUTORECONF="no"
+
 
 PKG_CONFIGURE_OPTS_TARGET="--with-libgpg-error-prefix=$SYSROOT_PREFIX/usr \
 			      --with-libgcrypt-prefix=$SYSROOT_PREFIX/usr \

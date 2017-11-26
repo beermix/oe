@@ -7,7 +7,7 @@ PKG_SECTION="xmedia/depends"
 PKG_SHORTDESC="gevent is a coroutine-based Python networking library"
 PKG_LONGDESC="gevent is a coroutine-based Python networking library."
 
-PKG_AUTORECONF="no"
+
 
 
 make_target() {

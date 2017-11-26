@@ -29,7 +29,7 @@ PKG_SHORTDESC="liberation-fonts: High quality "open-sourced" vector fonts"
 PKG_LONGDESC="This packages included the high-quality and open-sourced TrueType vector fonts released by RedHat."
 
 
-PKG_AUTORECONF="no"
+
 
 make_target() {
   : # nothing to make

@@ -28,7 +28,7 @@ PKG_SHORTDESC="FFmpeg+"
 PKG_LONGDESC="FFmpeg built static with additional features"
 
 
-PKG_AUTORECONF="no"
+
 
 
 pre_configure_target() {

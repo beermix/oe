@@ -28,7 +28,7 @@ PKG_SECTION="emulators/depends"
 PKG_SHORTDESC="FreeImage library"
 
 
-PKG_AUTORECONF="no"
+
 
 pre_make_target() {
   export CXXFLAGS="$CXXFLAGS -Wno-narrowing"

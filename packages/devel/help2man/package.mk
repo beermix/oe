@@ -5,6 +5,6 @@ PKG_DEPENDS_HOST="ccache:host"
 PKG_SECTION="toolchain/devel"
 
 
-PKG_AUTORECONF="no"
+
 
 PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"

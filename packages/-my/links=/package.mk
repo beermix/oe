@@ -33,7 +33,7 @@ PKG_IS_ADDON="yes"
 PKG_ADDON_TYPE="xbmc.python.script"
 PKG_ADDON_PROVIDES=""
 PKG_ADDON_REPOVERSION="7.0"
-PKG_AUTORECONF="no"
+
 
 PKG_CONFIGURE_OPTS_TARGET="--x-includes=$SYSROOT_PREFIX/usr/include/X11/ \
         --x-libraries=$SYSROOT_PREFIX/usr/X11/lib/ \

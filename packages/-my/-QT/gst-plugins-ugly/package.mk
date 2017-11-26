@@ -26,7 +26,7 @@ PKG_SHORTDESC="gst-plugins-ugly"
 PKG_LONGDESC="gst-plugins-ugly"
 
 
-PKG_AUTORECONF="no"
+
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-maintainer-mode \
 			      --disable-dependency-tracking \

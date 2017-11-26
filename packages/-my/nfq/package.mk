@@ -5,4 +5,3 @@ PKG_DEPENDS_TARGET="toolchain libnetfilter_queue"
 
 PKG_SECTION="my"
 
-PKG_AUTORECONF="no"

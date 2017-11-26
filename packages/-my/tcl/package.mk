@@ -4,7 +4,7 @@ PKG_GIT_URL="https://github.com/tcltk/tcl"
 PKG_DEPENDS_HOST="ccache:host"
 PKG_SECTION="toolchain/devel"
 
-PKG_AUTORECONF="no"
+
 
 strip_lto
 

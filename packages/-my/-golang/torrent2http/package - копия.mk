@@ -4,7 +4,7 @@ PKG_VERSION="81d961a"
 PKG_GIT_URL="https://github.com/beermix/torrent2http"
 PKG_DEPENDS_TARGET="toolchain go:host openssl swig:host boost libtorrent-rasterbar"
 PKG_SECTION="tools"
-PKG_AUTORECONF="no"
+
 
 strip_lto
 

@@ -6,7 +6,7 @@ PKG_DEPENDS_TARGET="toolchain openssl ffmpeg libdvdnav lame flac opus"
 
 PKG_SECTION="devel"
 
-PKG_AUTORECONF="no"
+
 
 configure_target() {
   cd $PKG_BUILD

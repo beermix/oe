@@ -24,7 +24,7 @@ PKG_DEPENDS_TARGET="toolchain neon"
 
 PKG_SECTION="torrenter"
 
-PKG_AUTORECONF="no"
+
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-lib \
                            --enable-util \

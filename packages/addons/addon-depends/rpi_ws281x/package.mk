@@ -26,7 +26,7 @@ PKG_SHORTDESC="Userspace Raspberry Pi PWM library for WS281X LEDs"
 PKG_LONGDESC="Userspace Raspberry Pi PWM library for WS281X LEDs"
 
 
-PKG_AUTORECONF="no"
+
 
 make_target() {
   :

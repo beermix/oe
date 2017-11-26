@@ -10,7 +10,7 @@ PKG_SECTION="devel"
 PKG_SHORTDESC="libtorrent is a feature complete C++ bittorrent implementation focusing on efficiency and scalability."
 PKG_LONGDESC="libtorrent is a feature complete C++ bittorrent implementation focusing on efficiency and scalability. It runs on embedded devices as well as desktops. It boasts a well documented library interface that is easy to use. It comes with a simple bittorrent client demonstrating the use of the library."
 
-PKG_AUTORECONF="no"
+
 
 configure_target() {
   cd $PKG_BUILD

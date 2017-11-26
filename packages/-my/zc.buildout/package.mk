@@ -23,7 +23,7 @@ PKG_URL="https://pypi.python.org/packages/source/z/zc.buildout/zc.buildout-2.4.3
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host cffi libffi"
 PKG_SECTION="python/system"
 
-PKG_AUTORECONF="no"
+
 
 pre_configure_target() {
   cd $PKG_BUILD

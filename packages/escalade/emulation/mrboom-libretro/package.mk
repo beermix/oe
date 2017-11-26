@@ -15,7 +15,7 @@ PKG_SECTION="emulation"
 PKG_SHORTDESC="Mr.Boom is a 8 players Bomberman clone for RetroArch/Libretro."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+
 
 make_target() {
   make GIT_VERSION=$PKG_VERSION

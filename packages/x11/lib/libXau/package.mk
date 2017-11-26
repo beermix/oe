@@ -29,6 +29,6 @@ PKG_SHORTDESC="libXau: X authorization file management libary"
 PKG_LONGDESC="X authorization file management libary"
 
 
-PKG_AUTORECONF="no"
+
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-xthreads"

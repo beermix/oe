@@ -10,7 +10,7 @@ PKG_SHORTDESC="Extensible Python-based build utility"
 PKG_LONGDESC="Extensible Python-based build utility"
 
 
-PKG_AUTORECONF="no"
+
 
 make_host() {
   :

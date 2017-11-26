@@ -3,7 +3,7 @@ PKG_VERSION="b58259a"
 PKG_URL="https://github.com/webmproject/libvpx/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="tools"
-PKG_AUTORECONF="no"
+
 
 get_graphicdrivers
 

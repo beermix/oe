@@ -27,7 +27,7 @@ PKG_SECTION="emulation"
 PKG_SHORTDESC="Game engine reimplementation of Grim Fandango, Escape from Monkey Island and Myst III"
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+
 
 if [ "$PROJECT" = "Generic" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET glew glu"

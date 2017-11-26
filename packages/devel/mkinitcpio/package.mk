@@ -6,5 +6,5 @@ PKG_DEPENDS_HOST=""
 PKG_SECTION="dev"
 
 
-PKG_AUTORECONF="no"
+
 

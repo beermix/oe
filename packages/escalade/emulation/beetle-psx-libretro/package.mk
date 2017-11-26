@@ -30,7 +30,7 @@ PKG_SHORTDESC="Standalone port of Mednafen PSX to libretro."
 PKG_LONGDESC="Standalone port of Mednafen PSX to libretro."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+
 
 pre_build_target() {
   export GIT_VERSION=$PKG_VERSION

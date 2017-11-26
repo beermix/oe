@@ -5,7 +5,7 @@ PKG_DEPENDS_TARGET="toolchain lzo tar"
 
 PKG_SECTION="network"
 
-PKG_AUTORECONF="no"
+
 
 
 MAKEFLAGS="-j1"

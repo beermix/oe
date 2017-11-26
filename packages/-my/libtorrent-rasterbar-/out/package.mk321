@@ -24,7 +24,7 @@ PKG_DEPENDS_TARGET="toolchain Python boost"
 
 PKG_SECTION="torrenter"
 
-PKG_AUTORECONF="no"
+
 
 configure_target() {
   cd $PKG_BUILD

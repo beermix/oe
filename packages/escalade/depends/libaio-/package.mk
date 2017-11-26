@@ -25,7 +25,7 @@ PKG_SECTION="depends"
 PKG_SHORTDESC="Kernel Asynchronous I/O (AIO) Support for Linux"
 
 
-PKG_AUTORECONF="no"
+
 
 pre_build_target() {
   strip_lto

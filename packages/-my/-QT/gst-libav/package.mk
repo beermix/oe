@@ -24,7 +24,7 @@ PKG_DEPENDS_TARGET="toolchain gstreamer ffmpeg bzip2 xz zlib gst-plugins-base"
 PKG_SECTION="lib"
 
 
-PKG_AUTORECONF="no"
+
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-examples \
 			      --disable-tests \

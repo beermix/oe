@@ -27,7 +27,7 @@ PKG_SECTION="python/devel"
 PKG_SHORTDESC="This is an implementation of ASN.1 types and codecs in Python programming language"
 
 
-PKG_AUTORECONF="no"
+
 
 PKG_MAINTAINER="unofficial.addon.pro"
 

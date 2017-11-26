@@ -3,7 +3,7 @@ PKG_VERSION="b06aef9"
 PKG_GIT_URL="https://github.com/beermix/libtorrent-go.git"
 PKG_DEPENDS_TARGET="toolchain go:host boost"
 PKG_SECTION="system"
-PKG_AUTORECONF="no"
+
 
 configure_target() {
   export GOOS=linux

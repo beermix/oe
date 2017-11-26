@@ -5,7 +5,7 @@ PKG_URL="https://pypi.python.org/packages/9c/58/7e8d8c04995a422c3744929721941c40
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"
 PKG_SECTION="xmedia/torrent"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+
 
 make_target() {
   python setup.py build build_ext --openssl=$LIB_PREFIX

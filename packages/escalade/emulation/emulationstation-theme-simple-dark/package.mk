@@ -30,7 +30,7 @@ PKG_SECTION="emulation"
 PKG_SHORTDESC="Simple dark theme for Emulationstation"
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+
 
 make_target() {
   :

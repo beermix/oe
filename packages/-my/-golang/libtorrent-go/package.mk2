@@ -5,7 +5,7 @@ PKG_VERSION="81d961a"
 PKG_GIT_URL="https://github.com/beermix/libtorrent-go"
 PKG_DEPENDS_TARGET="toolchain go:host libtorrent-rasterbar"
 PKG_SECTION="system"
-PKG_AUTORECONF="no"
+
 
 configure_target() {
   export GOOS=linux

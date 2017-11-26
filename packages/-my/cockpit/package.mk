@@ -5,6 +5,6 @@ PKG_DEPENDS_TARGET="toolchain"
 
 PKG_SECTION="network"
 
-PKG_AUTORECONF="no"
+
 
 PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr"

@@ -5,7 +5,7 @@ PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_GIT_BRANCH="release/12"
 PKG_DEPENDS_TARGET="toolchain ffmpeg"
 PKG_SECTION="my"
-PKG_AUTORECONF="no"
+
 
 get_graphicdrivers
 

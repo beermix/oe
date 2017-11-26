@@ -5,7 +5,7 @@ PKG_URL="https://ftp.gnu.org/gnu/libunistring/libunistring-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain openssl"
 PKG_SECTION="devel"
 
-PKG_AUTORECONF="no"
+
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared"
 

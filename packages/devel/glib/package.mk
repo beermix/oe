@@ -18,7 +18,7 @@
 ################################################################################
 
 PKG_NAME="glib"
-PKG_VERSION="2.54.2"
+PKG_VERSION="2.55.0"
 PKG_ARCH="any"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://www.gtk.org/"
@@ -28,8 +28,7 @@ PKG_DEPENDS_HOST="libffi:host pcre:host"
 PKG_SECTION="devel"
 PKG_SHORTDESC="glib: C support library"
 PKG_LONGDESC="GLib is a library which includes support routines for C such as lists, trees, hashes, memory allocation, and many other things."
-PKG_AUTORECONF="yes"
-PKG_USE_MESON="no"
+PKG_TOOLCHAIN="autotools"
 
 PKG_MESON_OPTS_TARGET="-Dwith-docs=no -Dwith-man=no -Dwith-pcre=system -Denable-libmount=yes -Denable-dtrace=false"
  

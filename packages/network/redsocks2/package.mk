@@ -4,7 +4,7 @@ PKG_GIT_URL="https://github.com/semigodking/redsocks"
 PKG_DEPENDS_TARGET="toolchain openssl libevent"
 PKG_SECTION="my"
 
-PKG_AUTORECONF="no"
+
 
 make_target() {
   make CC="$CC" CXX="$CXX" AR="$AR" CFLAGS="-Wall $CFLAGS" CXXFLAGS="-Wall $CXXFLAGS" CPPFLAGS="$CPPFLAGS" LDFLAGS="$LDFLAGS" -j3

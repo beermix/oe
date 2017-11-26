@@ -38,7 +38,7 @@ PKG_SHORTDESC="Qt GUI toolkit"
 PKG_LONGDESC="Qt GUI toolkit"
 
 
-PKG_AUTORECONF="no"
+
 
 case $PROJECT in
 	Generic)

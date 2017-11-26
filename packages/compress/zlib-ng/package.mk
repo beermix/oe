@@ -4,7 +4,7 @@ PKG_URL="https://github.com/Dead2/zlib-ng/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET=""
 PKG_DEPENDS_HOST=""
 PKG_SECTION="compress"
-PKG_AUTORECONF="no"
+
 PKG_USE_CMAKE="yes"
 PKG_USE_NINJA="no"
 

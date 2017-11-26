@@ -27,7 +27,7 @@ PKG_SHORTDESC="GnuPG"
 PKG_LONGDESC="GnuPG"
 
 
-PKG_AUTORECONF="no"
+
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-asm --with-libcurl"
 

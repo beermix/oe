@@ -5,7 +5,7 @@ PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"
 
 PKG_SECTION="python/security"
 
-PKG_AUTORECONF="no"
+
 
 
 make_target() {

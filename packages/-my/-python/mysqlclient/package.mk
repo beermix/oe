@@ -5,7 +5,7 @@ PKG_URL="https://pypi.python.org/packages/40/9b/0bc869f290b8f49a99b8d97927f57126
 PKG_DEPENDS_TARGET="toolchain Python2 distutilscross:host mariadb"
 PKG_SECTION="python/system"
 
-PKG_AUTORECONF="no"
+
 
 make_target() {
   python setup.py build --cross-compile

@@ -4,7 +4,7 @@ PKG_URL="https://fossies.org/linux/misc/wine-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain glib gmp x11 mesa xorg-server pcre libXcursor freetype fontconfig libjpeg-turbo libpng tiff libdrm glu libexif expat harfbuzz libxcb libXcursor libXrender libX11 x11 libXext libXtst wine:host gstreamer"
 PKG_SECTION="tools"
 
-PKG_AUTORECONF="no"
+
 
 pre_configure_target() {
   #export LIBS="-lfreetype"

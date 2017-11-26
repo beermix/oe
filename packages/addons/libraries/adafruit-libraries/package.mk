@@ -25,7 +25,7 @@ PKG_DEPENDS_TARGET="Adafruit_Python_ADS1.15 Adafruit_Python_ADXL345 Adafruit_Pyt
 PKG_SECTION="virtual"
 PKG_SHORTDESC="A bundle of libraries from Adafruit"
 PKG_LONGDESC="This bundle currently includes Adafruit_ADS1.15, Adafruit_ADXL345, Adafruit_BMP, Adafruit_CharLCD, Adafruit_DHT, Adafruit_GPIO, Adafruit_LED_Backpack, Adafruit_LSM303, Adafruit_MCP3008, Adafruit_MCP4725, Adafruit_PCA9685, Adafruit_PureIO, Adafruit_SI1145 Adafruit_TCS34725, Adafruit_VCNL40xx and Adafruit_WS2801 python modules"
-PKG_AUTORECONF="no"
+
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Adafruit Libraries"

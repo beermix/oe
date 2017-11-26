@@ -23,7 +23,7 @@ PKG_URL="https://gstreamer.freedesktop.org/src/$PKG_NAME/$PKG_NAME-$PKG_VERSION.
 PKG_DEPENDS_TARGET="toolchain gstreamer intel-vaapi-driver gst-plugins-bad"
 PKG_SECTION="lib"
 
-PKG_AUTORECONF="no"
+
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-examples \
 			      --enable-static \

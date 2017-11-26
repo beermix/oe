@@ -27,7 +27,7 @@ PKG_SECTION="emulation"
 PKG_SHORTDESC="uae4arm-rpi amiga emulator."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+
 
 post_unpack() {
   mv $BUILD/uae4arm-rpi* $BUILD/$PKG_NAME-$PKG_VERSION

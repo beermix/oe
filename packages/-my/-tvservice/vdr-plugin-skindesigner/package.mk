@@ -16,7 +16,7 @@ PKG_SECTION="xmedia/tvservice"
 PKG_SHORTDESC="Skindesigner is a VDR skin engine that displays XML based Skins"
 PKG_LONGDESC="Skindesigner is a VDR skin engine that displays XML based Skins."
 
-PKG_AUTORECONF="no"
+
 PKG_LOCALE_INSTALL="yes"
 
 pre_make_target() {

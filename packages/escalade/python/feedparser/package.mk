@@ -28,7 +28,7 @@ PKG_SHORTDESC="feedparser: Universal feed parser"
 PKG_LONGDESC="Universal feed parser, handles RSS 0.9x, RSS 1.0, RSS 2.0, CDF, Atom 0.3, and Atom 1.0 feeds"
 
 
-PKG_AUTORECONF="no"
+
 
 PKG_MAINTAINER="unofficial.addon.pro"
 

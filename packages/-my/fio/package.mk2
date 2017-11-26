@@ -3,7 +3,7 @@ PKG_VERSION="1633aa6"
 PKG_URL="https://github.com/axboe/fio/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET=""
 PKG_SECTION="tools"
-PKG_AUTORECONF="no"
+
 
 configure_target() {
   cd $PKG_BUILD

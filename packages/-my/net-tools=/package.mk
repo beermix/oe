@@ -4,4 +4,4 @@ PKG_URL="https://dl.dropboxusercontent.com/s/tr6vat2hzkplp5i/net-tools-479bb4a.t
 PKG_DEPENDS_TARGET="toolchain acl attr libcap readline openssl"
 PKG_SECTION="my"
 
-PKG_AUTORECONF="no"
+

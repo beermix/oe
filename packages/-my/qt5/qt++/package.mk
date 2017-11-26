@@ -26,7 +26,7 @@ PKG_DEPENDS_TARGET="toolchain libxml2 sqlite"
 PKG_SECTION="tools"
 PKG_SHORTDESC=""
 PKG_LONGDESC=""
-PKG_AUTORECONF="no"
+
 
 pre_configure_target() {
   cd $PKG_BUILD

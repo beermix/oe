@@ -4,7 +4,7 @@ PKG_URL="http://downloads.sourceforge.net/project/openicc/xcalib/xcalib%200.9/xc
 PKG_DEPENDS_TARGET="toolchain libX11 libXrandr libXxf86vm libxcb libXau libXext"
 
 PKG_SECTION="my"
-PKG_AUTORECONF="no"
+
 
 pre_configure_target() {
   cd $PKG_BUILD

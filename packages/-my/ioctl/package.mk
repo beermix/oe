@@ -15,7 +15,7 @@ PKG_SECTION="xmedia/tools"
 PKG_SHORTDESC="The missing tool to call arbitrary ioctl on devices"
 PKG_LONGDESC="The missing tool to call arbitrary ioctl on devices."
 
-PKG_AUTORECONF="no"
+
 
 make_target() {
   make CC=$CC CFLAGS=$CFLAGS

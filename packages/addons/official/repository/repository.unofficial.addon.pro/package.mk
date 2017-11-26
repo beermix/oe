@@ -33,7 +33,7 @@ PKG_IS_ADDON="yes"
 PKG_ADDON_TYPE="xbmc.addon.repository"
 PKG_ADDON_PROVIDES=""
 
-PKG_AUTORECONF="no"
+
 
 PKG_MAINTAINER="unofficial.addon.pro"
 

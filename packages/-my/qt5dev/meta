@@ -30,4 +30,4 @@ PKG_SHORTDESC="QT5Dev: Metapackage for various qt5/multimedia packages"
 PKG_LONGDESC=""
 
 
-PKG_AUTORECONF="no"
+

@@ -31,7 +31,7 @@ PKG_SHORTDESC="repository.kodi.game: Kodi addon repository"
 PKG_LONGDESC="repository.kodi.game: Kodi addon repository"
 
 
-PKG_AUTORECONF="no"
+
 
 make_target() {
   :

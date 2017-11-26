@@ -5,7 +5,7 @@ PKG_DEPENDS_TARGET="toolchain go:host"
 PKG_GIT_BRANCH="master"
 PKG_KEEP_CHECKOUT="no"
 PKG_SECTION="tools"
-PKG_AUTORECONF="no"
+
 
 pre_make_target() {
   export GOARCH=amd64

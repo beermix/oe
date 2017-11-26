@@ -27,7 +27,7 @@ PKG_SECTION="emulation"
 PKG_SHORTDESC="libretro uae4arm"
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+
 
 post_unpack() {
   mv $BUILD/libretro-uae4arm-$PKG_VERSION* $BUILD/$PKG_NAME-$PKG_VERSION

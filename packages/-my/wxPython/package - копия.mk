@@ -3,7 +3,7 @@ PKG_VERSION="src-3.0.2.0"
 PKG_URL="https://sourceforge.net/projects/wxpython/files/wxPython/3.0.2.0/wxPython-src-3.0.2.0.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain gtk+"
 PKG_SECTION="system"
-PKG_AUTORECONF="no"
+
 
 pre_configure_target() {
 # makemkv fails to build in subdirs

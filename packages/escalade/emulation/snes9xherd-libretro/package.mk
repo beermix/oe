@@ -27,7 +27,7 @@ PKG_SECTION="emulation"
 PKG_SHORTDESC="Optimized port/rewrite of SNES9x 1.52+ to Libretro"
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+
 
 post_unpack() {
   mv $BUILD/snes9xherd-$PKG_VERSION* $BUILD/$PKG_NAME-$PKG_VERSION

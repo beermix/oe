@@ -23,7 +23,7 @@ PKG_DEPENDS_TARGET="toolchain gtk2 libSM tiff libpng gst-plugins-base"
 PKG_SECTION="depends"
 PKG_SHORTDESC="A cross-platform GUI and tools library for GTK, MS Windows, and MacOS."
 PKG_LONGDESC="A cross-platform GUI and tools library for GTK, MS Windows, and MacOS."
-PKG_AUTORECONF="no"
+
 
 PKG_CONFIGURE_OPTS_TARGET="--with-gtk=2 \
 			      --with-opengl \

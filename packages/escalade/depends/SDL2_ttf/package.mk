@@ -27,7 +27,7 @@ PKG_SECTION="depends"
 PKG_SHORTDESC="This is a sample library which allows you to use TrueType fonts in your SDL applications"
 
 
-PKG_AUTORECONF="no"
+
 
 if [ ! "$DISPLAYSERVER" = "x11" ]; then
   X11="--without-x"

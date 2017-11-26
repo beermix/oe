@@ -27,7 +27,7 @@ PKG_DEPENDS_TARGET="toolchain Python2 distutilscross:host python-securesystemsli
 PKG_SECTION="python/security"
 PKG_SHORTDESC="The Update Framework"
 PKG_LONGDESC="TUF: Like the S in HTTPS, a plug-and-play library for securing a software updater"
-PKG_AUTORECONF="no"
+
 
 pre_configure_target() {
   cd $PKG_BUILD

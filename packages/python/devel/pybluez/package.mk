@@ -23,7 +23,7 @@ PKG_GIT_URL="https://github.com/karulis/pybluez"
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"
 PKG_SECTION="python/security"
 
-PKG_AUTORECONF="no"
+
 
 make_target() {
   python setup.py build --cross-compile

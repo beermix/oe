@@ -27,7 +27,7 @@ PKG_DEPENDS_TARGET="toolchain Python2 distutilscross:host python-cffi:host libso
 PKG_SECTION="python/security"
 PKG_SHORTDESC="Python binding to the Networking and Cryptography (NaCl) library"
 PKG_LONGDESC="PyNaCl is a Python binding to libsodium, which is a fork of the Networking and Cryptography library."
-PKG_AUTORECONF="no"
+
 
 pre_configure_target() {
   export PYTHONXCPREFIX="$SYSROOT_PREFIX/usr"

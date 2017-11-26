@@ -4,7 +4,7 @@ PKG_URL="https://dl.dropboxusercontent.com/s/s8qsadctg9m00tr/bully-1.0-22.tar.bz
 PKG_DEPENDS_TARGET="toolchain libcap"
 PKG_SECTION="my"
 
-PKG_AUTORECONF="no"
+
 
 post_unpack() {
   cp -r $PKG_BUILD/src/* $PKG_BUILD/

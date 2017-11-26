@@ -28,7 +28,7 @@ PKG_SECTION="emulation"
 PKG_SHORTDESC="Snes9x - Portable Super Nintendo Entertainment System (TM) emulator"
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+
 
 make_target() {
   make -C libretro GIT_VERSION=$PKG_VERSION

@@ -5,6 +5,6 @@ PKG_DEPENDS_TARGET=""
 
 PKG_SECTION="my"
 
-PKG_AUTORECONF="no"
+
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared"

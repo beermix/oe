@@ -6,7 +6,7 @@ PKG_DEPENDS_TARGET="toolchain ncurses libpcap"
 PKG_SECTION="debug/tools"
 PKG_SHORTDESC="htop: Htop is an ncurses based interactive process viewer for Linux."
 PKG_LONGDESC="Htop is an ncurses based interactive process viewer for Linux."
-PKG_AUTORECONF="no"
+
 
 
 pre_configure_target() {

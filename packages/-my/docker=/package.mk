@@ -5,7 +5,7 @@ PKG_GIT_BRANCH="aufs4.x-rcN"
 #PKG_SOURCE_DIR="aufs2-util"
 PKG_SECTION="devel"
 
-PKG_AUTORECONF="no"
+
 
 pre_configure_target() {
 # attr fails to build in subdirs

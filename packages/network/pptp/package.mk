@@ -27,7 +27,7 @@ PKG_SHORTDESC="pptp: a Linux, FreeBSD, NetBSD and OpenBSD client for the proprie
 PKG_LONGDESC="PPTP Client is a Linux, FreeBSD, NetBSD and OpenBSD client for the proprietary Microsoft Point-to-Point Tunneling Protocol, PPTP. Allows connection to a PPTP based Virtual Private Network (VPN)."
 
 
-PKG_AUTORECONF="no"
+
 
 make_target() {
   make PPPD="/usr/sbin/pppd" \

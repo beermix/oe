@@ -4,7 +4,7 @@ PKG_URL="https://fedorahosted.org/releases/m/l/mlocate/mlocate-0.26.tar.xz"
 PKG_DEPENDS_TARGET="toolchain readline libiconv"
 PKG_SECTION="my"
 
-PKG_AUTORECONF="no"
+
 
 pre_configure_target() {
   export LDFLAGS="-ldl -lpthread -lsqlite3"

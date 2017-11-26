@@ -28,7 +28,7 @@ PKG_SHORTDESC="SABnzbd makes Usenet as simple and streamlined as possible by aut
 PKG_LONGDESC="SABnzbd makes Usenet as simple and streamlined as possible by automating everything we can. All you have to do is add a .nzb file. SABnzbd+ takes over from there, where it will be automatically downloaded, verified, repaired, extracted and filed away with zero human interaction."
 
 
-PKG_AUTORECONF="no"
+
 
 make_target() {
   : # nothing to do here

@@ -3,7 +3,7 @@ PKG_VERSION="1.5.4"
 PKG_GIT_URL="https://github.com/ebassi/graphene"
 PKG_PRIORITY="optional"
 PKG_SECTION="graphics"
-PKG_AUTORECONF="no"
+
 
 pre_configure_target() {
   #sed -i '1s/python$/&2/' $PKG_BUILD/build/identfilter.py

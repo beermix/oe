@@ -16,7 +16,7 @@ PKG_SECTION="xmedia/browser"
 PKG_SHORTDESC="Install Chromium Browser"
 PKG_LONGDESC="Install Chromium Browser."
 
-PKG_AUTORECONF="no"
+
 
 make_target() {
   : # nothing to do here

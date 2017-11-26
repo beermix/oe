@@ -16,7 +16,7 @@ PKG_SECTION="xmedia/tvservice"
 PKG_SHORTDESC="vdr lcdproc"
 PKG_LONGDESC="vdr lcdproc"
 
-PKG_AUTORECONF="no"
+
 PKG_LOCALE_INSTALL="yes"
 
 make_target() {

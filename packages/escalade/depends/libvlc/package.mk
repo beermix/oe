@@ -28,7 +28,7 @@ PKG_SECTION="escalade/depends"
 PKG_SHORTDESC="VLC library"
 
 
-PKG_AUTORECONF="no"
+
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-lua --disable-a52 --disable-vlc"
 

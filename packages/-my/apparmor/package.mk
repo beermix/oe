@@ -27,7 +27,7 @@ PKG_SECTION="security"
 PKG_SHORTDESC="Apparmor DAC"
 PKG_LONGDESC="Linux application security framework - mandatory access control for programs"
 
-PKG_AUTORECONF="no"
+
 
 pre_configure_target() {
   cd $PKG_BUILD

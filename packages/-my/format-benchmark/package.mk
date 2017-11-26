@@ -3,7 +3,7 @@ PKG_VERSION="9b179a1"
 PKG_URL=""
 PKG_DEPENDS_TARGET="toolchain readline"
 PKG_SECTION="debug/tools"
-PKG_AUTORECONF="no"
+
 
 unpack() {
   git clone --recursive -v --depth 1 git://github.com/fmtlib/format-benchmark $PKG_BUILD

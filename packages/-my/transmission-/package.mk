@@ -5,7 +5,7 @@ PKG_DEPENDS_TARGET="toolchain zlib openssl miniupnpc"
 PKG_SECTION="my"
 
 PKG_USE_CMAKE="yes"
-PKG_AUTORECONF="no"
+
 
 #unpack() {
 #  git clone --recursive -v --depth 1 https://github.com/transmission/transmission $PKG_BUILD

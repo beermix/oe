@@ -34,7 +34,7 @@ PKG_ADDON_TYPE="xbmc.service"
 PKG_ADDON_PROVIDES=""
 PKG_ADDON_REPOVERSION="8.1"
 
-PKG_AUTORECONF="no"
+
 
 make_target() {
   : # nothing to do here

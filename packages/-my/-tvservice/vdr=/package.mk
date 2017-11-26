@@ -16,7 +16,7 @@ PKG_SECTION="xmedia/tvservice"
 PKG_SHORTDESC="vdr: A powerful DVB TV application"
 PKG_LONGDESC="This project describes how to build your own digital satellite receiver and video disk recorder. It is based mainly on the DVB-S digital satellite receiver card, which used to be available from Fujitsu Siemens and the driver software developed by the LinuxTV project."
 
-PKG_AUTORECONF="no"
+
 PKG_LOCALE_INSTALL="yes"
 
 post_unpack() {

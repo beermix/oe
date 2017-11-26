@@ -7,7 +7,7 @@ PKG_SHORTDESC="DTS Coherent Acoustics decoder with support for HD extensions"
 PKG_LONGDESC="DTS Coherent Acoustics decoder with support for HD extensions"
 
 
-PKG_AUTORECONF="no"
+
 
 make_target() {
   make SHELL='sh -x' CC="$CC" CFLAGS="$CFLAGS" CPPFLAGS="$CPPFLAGS" LDFLAGS="$LDFLAGS"

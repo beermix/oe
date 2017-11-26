@@ -5,5 +5,5 @@ PKG_DEPENDS_TARGET="toolchain Python sqlite ncurses zsh"
 
 PKG_SECTION="my"
 
-PKG_AUTORECONF="no"
+
 

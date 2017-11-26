@@ -27,7 +27,7 @@ PKG_SECTION="python/devel"
 PKG_SHORTDESC="Sony DualShock 4 userspace driver for Linux."
 PKG_IS_ADDON="no"
 
-PKG_AUTORECONF="no"
+
 
 pre_make_target() {
   export PYTHONXCPREFIX="$SYSROOT_PREFIX/usr"

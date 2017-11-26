@@ -13,7 +13,7 @@ PKG_SECTION="xmedia/depends"
 PKG_SHORTDESC="Lightweight in-process concurrent programming"
 PKG_LONGDESC="Lightweight in-process concurrent programming."
 
-PKG_AUTORECONF="no"
+
 
 pre_configure_target() {
   export PYTHON_VERSION="2.7"

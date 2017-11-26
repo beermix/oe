@@ -31,7 +31,7 @@ PKG_SHORTDESC="msmtp is an SMTP client."
 PKG_LONGDESC="msmtp is an SMTP client."
 PKG_MAINTAINER="ultraman"
 
-PKG_AUTORECONF="no"
+
 
 pre_configure_target() {
   PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.kodi/userdata/addon_data/service.web.lamp/srvroot/conf"

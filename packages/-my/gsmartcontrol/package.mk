@@ -4,7 +4,7 @@ PKG_ARCH="x86_64"
 PKG_URL="https://sourceforge.net/projects/gsmartcontrol/files/0.8.7/gsmartcontrol-0.8.7.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="tools"
-PKG_AUTORECONF="no"
+
 
 pre_configure_target() {
   cd $PKG_BUILD

@@ -26,7 +26,7 @@ PKG_URL="https://github.com/gperftools/gperftools/releases/download/gperftools-$
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION=""
 PKG_SHORTDESC="Google Performance Tools"
-PKG_AUTORECONF="no"
+
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared"
 

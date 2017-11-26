@@ -26,7 +26,7 @@ PKG_SECTION="system"
 PKG_SHORTDESC="create addons and copy them to image"
 PKG_LONGDESC="create addons and copy them to image"
 
-PKG_AUTORECONF="no"
+
 PKG_ADDONS_INCLUDE=""
 
 make_target() {

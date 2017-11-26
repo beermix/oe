@@ -4,7 +4,7 @@ PKG_URL="https://dl.dropboxusercontent.com/s/78rcj8bheoz8lq2/crossguid-8f399e8bd
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="tools"
 PKG_USE_CMAKE="no"
-PKG_AUTORECONF="no"
+
 
 pre_configure_target() {
 # attr fails to build in subdirs

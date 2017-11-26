@@ -5,7 +5,7 @@ PKG_URL="https://pypi.python.org/packages/05/84/0feb999c05f252af50a5fbc463268044
 PKG_DEPENDS_TARGET="toolchain Python2 distutilscross:host Cython"
 PKG_SECTION="python/system"
 
-PKG_AUTORECONF="no"
+
 
 make_target() {
   python setup.py build 

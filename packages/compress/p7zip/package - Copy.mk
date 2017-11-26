@@ -6,7 +6,7 @@ PKG_SOURCE_DIR="${PKG_NAME}_${PKG_VERSION}"
 PKG_DEPENDS_TARGET="toolchain zlib"
 PKG_USE_CMAKE="yes"
 
-PKG_AUTORECONF="no"
+
 
 pre_configure_target() {
    strip_lto

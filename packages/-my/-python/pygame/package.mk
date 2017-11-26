@@ -5,7 +5,7 @@ PKG_URL="https://pypi.python.org/packages/61/06/3c25051549c252cc6fde01c8aeae90b9
 PKG_DEPENDS_TARGET="toolchain Python distutilscross:host freetype SDL"
 PKG_SECTION="python/system"
 
-PKG_AUTORECONF="no"
+
 
 make_target() {
   python setup.py build --cross-compile

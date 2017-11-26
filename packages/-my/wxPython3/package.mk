@@ -4,7 +4,7 @@ PKG_VERSION="x999"
 PKG_URL="https://dl.dropboxusercontent.com/s/aq3kif17m2o5yyk/wxpython-x999.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain libX11 setuptools:host libpng libjpeg-turbo gtk+ pango gstreamer"
 PKG_SECTION="service/system"
-PKG_AUTORECONF="no"
+
 
 #pre_configure_target() {
 #  strip_gold

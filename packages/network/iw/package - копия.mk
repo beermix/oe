@@ -6,7 +6,7 @@ PKG_DEPENDS_TARGET="toolchain libnl"
 
 PKG_SECTION="tools"
 
-PKG_AUTORECONF="no"
+
 
 configure_target() {
    strip_lto

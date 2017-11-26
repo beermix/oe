@@ -4,7 +4,7 @@ PKG_GIT_URL="https://github.com/juniorjbn/ifconfig"
 PKG_KEEP_CHECKOUT="yes"
 PKG_DEPENDS_TARGET="toolchain go:host"
 PKG_SECTION="tools"
-PKG_AUTORECONF="no"
+
 
 configure_target() {
   export GOOS=linux

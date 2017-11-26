@@ -31,7 +31,7 @@ PKG_SHORTDESC="vdr-iptv: an IPTV plugin for the Video Disk Recorder (VDR)"
 PKG_LONGDESC="vdr-iptv is an IPTV plugin for the Video Disk Recorder (VDR)"
 
 
-PKG_AUTORECONF="no"
+
 
 make_target() {
   VDR_DIR=$(get_pkg_build vdr)

@@ -28,7 +28,7 @@ PKG_SHORTDESC="Error Code Modeler"
 PKG_LONGDESC="Error Code Modeler"
 
 
-PKG_AUTORECONF="no"
+
 
 makeinstall_target() {
   :

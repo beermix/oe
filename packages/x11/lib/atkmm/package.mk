@@ -25,5 +25,5 @@ PKG_SECTION="x11/lib"
 PKG_SHORTDESC="xtrans: Abstract network code for X"
 PKG_LONGDESC="Abstract network code for X."
 
-PKG_AUTORECONF="no"
+
 

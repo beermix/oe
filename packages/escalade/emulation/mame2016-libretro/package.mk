@@ -27,7 +27,7 @@ PKG_SECTION="libretro"
 PKG_SHORTDESC="MAME (0.174-ish) for libretro"
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+
 
 pre_make_target() {
   export OVERRIDE_CC=$CC

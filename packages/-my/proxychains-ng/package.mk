@@ -4,7 +4,7 @@ PKG_GIT_URL="https://github.com/rofl0r/proxychains-ng"
 PKG_DEPENDS_HOST="toolchain"
 PKG_DEPENDS_TARGET="toolchain openssl curl"
 
-PKG_AUTORECONF="no"
+
 
 pre_configure_target() {
   cd $PKG_BUILD

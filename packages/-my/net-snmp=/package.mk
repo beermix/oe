@@ -8,7 +8,7 @@ PKG_URL="http://sourceforge.net/projects/net-snmp/files/$PKG_NAME/$PKG_VERSION/$
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="service"
 PKG_SHORTDESC="Simple Network Management Protocol utilities."
-PKG_AUTORECONF="no"
+
 
 configure_target() {
   cd $PKG_BUILD

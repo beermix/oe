@@ -27,7 +27,7 @@ PKG_SECTION="python/devel"
 PKG_SHORTDESC="A library to support the Internationalised Domain Names in IDNA protocol"
 
 
-PKG_AUTORECONF="no"
+
 
 PKG_MAINTAINER="unofficial.addon.pro"
 

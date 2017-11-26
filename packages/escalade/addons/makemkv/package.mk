@@ -16,7 +16,7 @@ PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="MakeMKV"
 PKG_ADDON_TYPE="xbmc.python.script"
 
-PKG_AUTORECONF="no"
+
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-gui"
 

@@ -5,7 +5,7 @@ PKG_DEPENDS_TARGET="toolchain intel-vaapi-driver libva"
 PKG_PRIORITY="optional"
 PKG_SECTION="multimedia"
 PKG_USE_CMAKE="yes"
-PKG_AUTORECONF="no"
+
 PKG_USE_NINJA="yes"
 
 PKG_CMAKE_OPTS_TARGET="-DWITH_OPENCL=OFF \

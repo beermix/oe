@@ -27,7 +27,7 @@ PKG_SHORTDESC="xxd - make a hexdump or do the reverse"
 PKG_LONGDESC="xxd - make a hexdump or do the reverse"
 PKG_MAINTAINER="vpeter"
 
-PKG_AUTORECONF="no"
+
 
 make_target() {
   #cp $PKG_DIR/xxd.c $(get_build_dir xxd)

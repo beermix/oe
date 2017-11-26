@@ -11,6 +11,6 @@ PKG_SECTION="escalade"
 PKG_SHORTDESC="Userspace setup tool for transparent encryption of block devices using dm-crypt"
 
 
-PKG_AUTORECONF="no"
+
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-cryptsetup-reencrypt"

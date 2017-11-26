@@ -7,7 +7,7 @@ PKG_URL="http://ftp.gnome.org/pub/gnome/sources/$PKG_NAME/2.26/$PKG_NAME-$PKG_VE
 PKG_DEPENDS_TARGET="toolchain dbus glib libXtst"
 PKG_SECTION="escalade/depends"
 PKG_SHORTDESC="Protocol definitions and daemon for D-Bus at-spi"
-PKG_AUTORECONF="no"
+
 PKG_USE_MESON="no"
 
 #PKG_CONFIGURE_OPTS_TARGET="--disable-shared --with-pic"

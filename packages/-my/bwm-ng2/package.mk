@@ -5,7 +5,7 @@ PKG_URL="http://www.gropp.org/bwm-ng/bwm-ng-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libstatgrab"
 
 PKG_SECTION="network/analyzer"
-PKG_AUTORECONF="no"
+
 
 
 

@@ -10,7 +10,7 @@ PKG_SHORTDESC="The rxvt-unicode program is a terminal emulator for X Window Syst
 PKG_LONGDESC="rxvt-unicode is a fork of the well known terminal emulator rxvt"
 
 
-PKG_AUTORECONF="no"
+
 PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr --with-x --with-terminfo=/usr/share/terminfo/ --enable-everything --enable-256-color --enable-8bitctrls --disable-perl --x-includes=$SYSROOT_PREFIX/usr/include/X11/ --x-libraries=$SYSROOT_PREFIX/usr/X11/lib/"
 
 post_makeinstall_target() {

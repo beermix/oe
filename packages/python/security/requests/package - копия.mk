@@ -29,7 +29,7 @@ PKG_SHORTDESC="Cryptographic library for Python"
 PKG_LONGDESC="PyCryptodome is a self-contained Python package of low-level cryptographic primitives."
 
 
-PKG_AUTORECONF="no"
+
 
 CONCURRENCY_MAKE_LEVEL=1
 

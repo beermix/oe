@@ -9,7 +9,7 @@ PKG_DEPENDS_TARGET="toolchain glib gdk-pixbuf libxml2 pango cairo"
 PKG_PRIORITY="optional"
 PKG_SECTION="graphics"
 
-PKG_AUTORECONF="no"
+
 
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared"

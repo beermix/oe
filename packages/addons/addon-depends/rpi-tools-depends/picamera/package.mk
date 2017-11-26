@@ -25,7 +25,7 @@ PKG_DEPENDS_TARGET="toolchain Python distutilscross:host bcm2835-driver"
 PKG_SECTION="python"
 PKG_SHORTDESC="A python and shell interface for the Raspberry Pi camera module"
 PKG_LONGDESC="A python and shell interface for the Raspberry Pi camera module"
-PKG_AUTORECONF="no"
+
 
 make_target() {
   : # nop

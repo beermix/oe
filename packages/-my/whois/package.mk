@@ -5,5 +5,5 @@ PKG_URL="http://ftp.debian.org/debian/pool/main/w/whois/${PKG_NAME}_${PKG_VERSIO
 PKG_DEPENDS_TARGET="toolchain libidn2"
 PKG_SECTION="system"
 
-PKG_AUTORECONF="no"
+
 

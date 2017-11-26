@@ -4,7 +4,7 @@ PKG_URL="https://www.libssh2.org/download/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libz mbedtls"
 
 PKG_USE_CMAKE="yes"
-PKG_AUTORECONF="no"
+
 
 PKG_CMAKE_OPTS_TARGET="-DBUILD_EXAMPLES=OFF \
 			  -DBUILD_SHARED_LIBS=OFF \

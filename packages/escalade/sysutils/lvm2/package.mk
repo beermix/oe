@@ -12,7 +12,7 @@ PKG_SECTION="escalade"
 PKG_SHORTDESC="Logical Volume Manager 2 utilities"
 
 
-PKG_AUTORECONF="no"
+
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
 			   ac_cv_func_realloc_0_nonnull=yes \

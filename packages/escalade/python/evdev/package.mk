@@ -28,7 +28,7 @@ PKG_SECTION="python/devel"
 PKG_SHORTDESC="Python bindings for the Linux input subsystem."
 
 
-PKG_AUTORECONF="no"
+
 
 pre_make_target() {
   export PYTHONXCPREFIX="$SYSROOT_PREFIX/usr"

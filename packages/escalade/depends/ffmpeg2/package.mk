@@ -29,7 +29,7 @@ PKG_SHORTDESC="FFmpeg is a complete, cross-platform solution to record, convert 
 PKG_LONGDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
 
 
-PKG_AUTORECONF="no"
+
 
 # Dependencies
 get_graphicdrivers

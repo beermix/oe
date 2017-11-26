@@ -24,7 +24,7 @@ PKG_DEPENDS_TARGET="toolchain systemd"
 PKG_SHORTDESC="liblogging"
 PKG_LONGDESC="liblogging"
 
-PKG_AUTORECONF="no"
+
 
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-man-pages \

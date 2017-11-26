@@ -29,7 +29,7 @@ PKG_SHORTDESC="inputproto: Input extension headers"
 PKG_LONGDESC="Input extension headers"
 
 
-PKG_AUTORECONF="no"
+
 
 # package specific configure options
 PKG_CONFIGURE_OPTS_TARGET="--without-xmlto"

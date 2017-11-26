@@ -5,7 +5,7 @@ PKG_DEPENDS_TARGET="toolchain boost zlib libressl miniupnpc"
 
 PKG_SECTION="my"
 
-PKG_AUTORECONF="no"
+
 
 configure_target() {
   git pull

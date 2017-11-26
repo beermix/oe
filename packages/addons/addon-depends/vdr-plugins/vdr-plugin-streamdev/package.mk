@@ -29,7 +29,7 @@ PKG_LONGDESC="TV"
 
 
 
-PKG_AUTORECONF="no"
+
 
 make_target() {
   VDR_DIR=$(get_build_dir vdr)

@@ -5,7 +5,7 @@ PKG_DEPENDS_TARGET="toolchain flac bzip2 libsamplerate opus"
 
 PKG_SECTION="my"
 
-PKG_AUTORECONF="no"
+
 
 
 configure_target() {

@@ -29,7 +29,7 @@ PKG_SHORTDESC="Platform support library used by libCEC and binary add-ons for Ko
 PKG_LONGDESC="Platform support library used by libCEC and binary add-ons for Kodi"
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+
 PKG_USE_NINJA="no"
 
 PKG_CMAKE_OPTS_TARGET="-DCMAKE_INSTALL_LIBDIR:STRING=lib \

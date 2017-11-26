@@ -26,7 +26,7 @@ PKG_URL="https://github.com/sabotage-linux/gettext-tiny/archive/${PKG_VERSION}.t
 PKG_DEPENDS_HOST="ccache:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="toolchain/devel"
-PKG_AUTORECONF="no"
+
 
 makeinstall_host() {
   make LIBINTL=NONE DESTDIR=$TOOLCHAIN prefix=/ all install

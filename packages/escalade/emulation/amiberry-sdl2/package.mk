@@ -16,7 +16,7 @@ PKG_SECTION="emulation"
 PKG_SHORTDESC="Amiga emulator optimized for Raspberry Pi"
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+
 
 make_target() {
   case $PROJECT in

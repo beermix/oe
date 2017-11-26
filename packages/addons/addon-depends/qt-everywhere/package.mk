@@ -27,7 +27,7 @@ PKG_URL="http://download.qt.io/official_releases/qt/5.9/$PKG_VERSION/single/$PKG
 PKG_DEPENDS_TARGET="pcre2 zlib"
 PKG_SOURCE_DIR="$PKG_NAME-opensource-src-$PKG_VERSION"
 PKG_LONGDESC="A cross-platform application and UI framework"
-PKG_AUTORECONF="no"
+
 
 PKG_CONFIGURE_OPTS_TARGET="-prefix /usr
                            -sysroot $SYSROOT_PREFIX

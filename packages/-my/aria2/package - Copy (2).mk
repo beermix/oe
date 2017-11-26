@@ -4,7 +4,7 @@ PKG_URL="https://github.com/aria2/aria2/releases/download/release-$PKG_VERSION/a
 PKG_DEPENDS_TARGET="toolchain libssh2 expat pcre curl libidn libuv libev xmlstarlet libxml2 c-ares"
 
 PKG_SECTION="tools"
-PKG_AUTORECONF="no"
+
 
 
 PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \

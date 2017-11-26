@@ -3,7 +3,7 @@ PKG_VERSION="56"
 PKG_URL="ftp://root:openelec@192.168.1.4/www/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="tools"
-PKG_AUTORECONF="no"
+
 
 make_target() {
 

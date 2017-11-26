@@ -4,7 +4,7 @@ PKG_GIT_URL="https://github.com/cyrus-and/zizzania"
 PKG_DEPENDS_TARGET="toolchain libcap"
 PKG_SECTION="my"
 
-PKG_AUTORECONF="no"
+
 
 post_unpack() {
   cp -r $PKG_BUILD/src/* $PKG_BUILD/

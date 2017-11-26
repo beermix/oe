@@ -31,7 +31,7 @@ PKG_SHORTDESC="The Apache Portable Runtime Utility Library."
 PKG_LONGDESC="The Apache Portable Runtime Utility Library provides a predictable and consistent interface to underlying client library interfaces."
 PKG_MAINTAINER="ultraman"
 
-PKG_AUTORECONF="no"
+
 PKG_USE_CMAKE="no"
 
 pre_configure_target() {

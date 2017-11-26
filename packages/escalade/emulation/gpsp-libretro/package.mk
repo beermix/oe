@@ -29,7 +29,7 @@ PKG_SHORTDESC="gpSP for libretro."
 PKG_LONGDESC="gameplaySP is a Gameboy Advance emulator for Playstation Portable"
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+
 
 pre_build_target() {
   export GIT_VERSION=$PKG_VERSION

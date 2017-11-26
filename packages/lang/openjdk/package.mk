@@ -39,7 +39,7 @@ PKG_SECTION="security"
 PKG_SHORTDESC="Open JDK"
 PKG_LONGDESC="Open JDK"
 
-PKG_AUTORECONF="no"
+
 
 unpack() {
   for url in $PKG_URL; do

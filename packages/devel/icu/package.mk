@@ -27,7 +27,7 @@ PKG_DEPENDS_TARGET="toolchain icu:host"
 PKG_SECTION="textproc"
 PKG_SHORTDESC="International Components for Unicode library"
 PKG_LONGDESC="International Components for Unicode library"
-PKG_AUTORECONF="no"
+
 
 post_unpack() {
   sed -i 's/xlocale/locale/' $PKG_BUILD/source/i18n/digitlst.cpp

@@ -27,7 +27,7 @@ PKG_SHORTDESC="tntnet: C++ Dynamite for the Web"
 PKG_LONGDESC="Tntnet is a modular, multithreaded, high performance webapplicationserver for C++"
 
 
-PKG_AUTORECONF="no"
+
 
 PKG_CONFIGURE_OPTS_HOST="--disable-unittest \
                          --with-server=no \

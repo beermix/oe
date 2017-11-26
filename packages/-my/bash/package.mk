@@ -3,7 +3,7 @@ PKG_VERSION="4.4.12"
 PKG_SITE="http://ftp.gnu.org/gnu/bash/?C=M;O=D"
 PKG_URL="http://ftp.gnu.org/gnu/bash/bash-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain ncurses readline"
-PKG_AUTORECONF="no"
+
 
 PKG_CONFIGURE_OPTS_TARGET="--with-curses \
 			      --enable-history \

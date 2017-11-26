@@ -16,7 +16,7 @@ PKG_SECTION=""
 PKG_SHORTDESC="AlexELEC-settings: Advanced settings dialog for AlexELEC"
 PKG_LONGDESC="AlexELEC-settings: is a Advanced settings dialog for AlexELEC"
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+
 
 PKG_MAKE_OPTS_TARGET="DISTRONAME=$DISTRONAME ROOT_PASSWORD=$ROOT_PASSWORD"
 

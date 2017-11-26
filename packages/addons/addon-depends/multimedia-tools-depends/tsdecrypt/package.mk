@@ -26,7 +26,7 @@ PKG_DEPENDS_TARGET="toolchain libdvbcsa"
 PKG_SECTION="tools"
 PKG_SHORTDESC="tsdecrypt"
 PKG_LONGDESC="tsdecrypt reads incoming mpeg transport stream over UDP/RTP and then decrypts it using libdvbcsa/ffdecsa and keys obtained from OSCAM or similar cam server"
-PKG_AUTORECONF="no"
+
 
 makeinstall_target() {
   : # nop

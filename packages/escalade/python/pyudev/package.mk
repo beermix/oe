@@ -27,7 +27,7 @@ PKG_SECTION="python/devel"
 PKG_SHORTDESC="Python bindings to libudev."
 
 
-PKG_AUTORECONF="no"
+
 
 pre_make_target() {
   export PYTHONXCPREFIX="$SYSROOT_PREFIX/usr"

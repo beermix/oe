@@ -17,7 +17,7 @@ PKG_SECTION="xmedia/tvservice"
 PKG_SHORTDESC="VDR plugin that displays system informations"
 PKG_LONGDESC="VDR plugin that displays system informations."
 
-PKG_AUTORECONF="no"
+
 PKG_LOCALE_INSTALL="yes"
 
 make_target() {

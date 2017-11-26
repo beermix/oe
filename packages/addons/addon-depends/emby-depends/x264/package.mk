@@ -28,7 +28,7 @@ PKG_SHORTDESC="x264"
 PKG_LONGDESC="x264"
 
 
-PKG_AUTORECONF="no"
+
 
 pre_configure_target() {
   cd $PKG_BUILD

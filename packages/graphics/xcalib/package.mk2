@@ -5,7 +5,7 @@ PKG_URL="https://dl.dropboxusercontent.com/s/xuwrntdqqyi7trm/xcalib_0.8.dfsg1.or
 PKG_DEPENDS_TARGET="toolchain xorg-server libX11 libXau libXext libXrandr libXxf86vm libxcb"
 #PKG_DEPENDS_TARGET="toolchain libICE libpciaccess libSM libX11 libXau libxcb libXcomposite libXdamage libXext libXfixes libXfont libXi libXinerama libxkbfile libXmu libXrandr libXrender libxshmfence libXt libXtst libXxf86vm"
 PKG_SECTION="my"
-PKG_AUTORECONF="no"
+
 
 
 pre_configure_target() {

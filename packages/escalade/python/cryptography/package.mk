@@ -28,7 +28,7 @@ PKG_SHORTDESC="Provides cryptographic recipes and primitives to Python developer
 PKG_LONGDESC="Includes both high level recipes, and low level interfaces to common cryptographic algorithms such as symmetric ciphers, message digests and key derivation functions. For example, to encrypt something with cryptography's high level symmetric encryption recipe"
 
 
-PKG_AUTORECONF="no"
+
 
 pre_make_target() {
   export PYTHONXCPREFIX="$SYSROOT_PREFIX/usr"

@@ -30,7 +30,7 @@ PKG_SHORTDESC="iana-etc: The Iana-Etc package provides data for network services
 PKG_LONGDESC="The Iana-Etc package provides data for network services and protocols."
 
 
-PKG_AUTORECONF="no"
+
 
 post_make_target() {
   :

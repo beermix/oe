@@ -24,7 +24,7 @@ PKG_DEPENDS_TARGET="toolchain M2Crypto PyAMF"
 
 PKG_SECTION="torrenter"
 
-PKG_AUTORECONF="no"
+
 
 make_target() {
   : # nothing todo

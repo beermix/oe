@@ -7,7 +7,7 @@ PKG_DEPENDS_TARGET="toolchain boost Python"
 
 PKG_SECTION="devel"
 
-PKG_AUTORECONF="no"
+
 
 pre_configure_target() {
   CFLAGS="$CFLAGS -fPIC -DPIC"

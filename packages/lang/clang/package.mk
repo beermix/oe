@@ -12,7 +12,7 @@ PKG_SECTION="lang"
 PKG_SHORTDESC="C language family frontend for LLVM"
 
 
-PKG_AUTORECONF="no"
+
 
 pre_configure_target() {
   strip_lto

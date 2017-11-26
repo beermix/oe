@@ -32,7 +32,7 @@ PKG_SHORTDESC="ssh2 php extension"
 PKG_LONGDESC="ssh2 php extension"
 PKG_MAINTAINER="ultraman"
 
-PKG_AUTORECONF="no"
+
 
 pre_configure_target() {
 	LIBSSH2_DIR=$(get_build_dir libssh2)/.install_dev

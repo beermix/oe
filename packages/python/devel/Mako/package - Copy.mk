@@ -28,7 +28,7 @@ PKG_SECTION="python/devel"
 PKG_SHORTDESC="Hyperfast and lightweight templating for the Python platform."
 
 
-PKG_AUTORECONF="no"
+
 
 pre_build_host() {
   mkdir -p $PKG_BUILD/.$HOST_NAME

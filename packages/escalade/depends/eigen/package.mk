@@ -27,7 +27,7 @@ PKG_SECTION="depends"
 PKG_SHORTDESC="eigen c++ headers"
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+
 
 post_unpack() {
   mv $BUILD/eigen-* $BUILD/$PKG_NAME-$PKG_VERSION

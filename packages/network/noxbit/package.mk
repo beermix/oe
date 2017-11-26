@@ -15,7 +15,7 @@ PKG_SECTION="xmedia/torrent"
 PKG_SHORTDESC="NoxBit: Meet the New Generation of Live Video Streaming"
 PKG_LONGDESC="NoxBit: Meet the New Generation of Live Video Streaming."
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+
 
 make_target() {
   : # nothing to make here

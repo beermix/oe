@@ -31,7 +31,7 @@ PKG_SHORTDESC="The Apache Portable Runtime"
 PKG_LONGDESC="The Apache Portable Runtime (APR) is a supporting library for the Apache web server."
 PKG_MAINTAINER="vpeter"
 
-PKG_AUTORECONF="no"
+
 PKG_USE_CMAKE="no"
 
 export CFLAGS="$CFLAGS -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64"

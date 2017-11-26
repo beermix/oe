@@ -27,4 +27,4 @@ PKG_SECTION="tools"
 PKG_SHORTDESC="jstest"
 
 
-PKG_AUTORECONF="no"
+

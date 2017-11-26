@@ -29,7 +29,7 @@ PKG_MAINTAINER="AntiPrism.ca (antiprism@antiprism.ca)"
 PKG_DISCLAIMER="this is an unofficial addon. please don't ask for support in openelec forum / irc channel"
 PKG_IS_ADDON="yes"
 PKG_ADDON_TYPE="xbmc.python.script"
-PKG_AUTORECONF="no"
+
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-graphics \
 			      --with-ssl \

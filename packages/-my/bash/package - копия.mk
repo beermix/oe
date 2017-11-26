@@ -3,7 +3,7 @@ PKG_VERSION="4.3.48"
 PKG_URL="https://dl.dropboxusercontent.com/s/afsixaktnwv42b7/bash-4.3.48.tar.gz"
 PKG_DEPENDS_TARGET="toolchain ncurses readline"
 
-PKG_AUTORECONF="no"
+
 
 pre_configure_target() {
   export LIBS="-lterminfo -ltermcap"

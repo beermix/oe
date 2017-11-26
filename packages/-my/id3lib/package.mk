@@ -5,7 +5,7 @@ PKG_URL="https://sourceforge.net/projects/id3lib/files/id3lib/3.8.3/id3lib-3.8.3
 PKG_DEPENDS_TARGET="toolchain libxml2 sqlite"
 
 PKG_SECTION="tools"
-PKG_AUTORECONF="no"
+
 
 pre_configure_target() {
   CFLAGS="$CFLAGS -fPIC -DPIC"

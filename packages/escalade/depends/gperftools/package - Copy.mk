@@ -28,7 +28,7 @@ PKG_SECTION=""
 PKG_SHORTDESC="Google Performance Tools"
 
 
-PKG_AUTORECONF="no"
+
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --wth-pic"
 

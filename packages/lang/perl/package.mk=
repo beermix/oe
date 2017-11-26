@@ -4,5 +4,5 @@ PKG_GIT_URL="https://github.com/arsv/perl-cross/"
 PKG_DEPENDS_TARGET="toolchain pcre openssl gdbm expat"
 PKG_SECTION="my"
 
-PKG_AUTORECONF="no"
+
 

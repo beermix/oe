@@ -5,7 +5,7 @@ PKG_DEPENDS_TARGET="toolchain libpng"
 PKG_SECTION="x11"
 
 PKG_USE_CMAKE="yes"
-PKG_AUTORECONF="no"
+
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-static \

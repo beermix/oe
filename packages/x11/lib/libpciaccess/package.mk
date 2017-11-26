@@ -29,7 +29,7 @@ PKG_SHORTDESC="libpciaccess: X.org libpciaccess library"
 PKG_LONGDESC="X.org libpciaccess library."
 
 
-PKG_AUTORECONF="no"
+
 
 CFLAGS="$CFLAGS -D_LARGEFILE64_SOURCE"
 

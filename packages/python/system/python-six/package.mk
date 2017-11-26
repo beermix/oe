@@ -29,7 +29,7 @@ PKG_DEPENDS_TARGET="toolchain Python2 distutilscross:host"
 PKG_SECTION="python/system"
 PKG_SHORTDESC="Python 2 and 3 compatibility utilities"
 PKG_LONGDESC="Python 2 and 3 compatibility utilities"
-PKG_AUTORECONF="no"
+
 
 make_target() {
   :

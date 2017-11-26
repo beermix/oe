@@ -24,7 +24,7 @@ PKG_DEPENDS_TARGET="systemd"
 PKG_SECTION="system"
 PKG_SHORTDESC="This addon provides extra systemd utilities"
 PKG_LONGDESC="This addon provides extra systemd utilities"
-PKG_AUTORECONF="no"
+
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_TYPE="xbmc.python.script"

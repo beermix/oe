@@ -3,7 +3,7 @@ PKG_VERSION="master"
 PKG_URL=""
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="debug/tools"
-PKG_AUTORECONF="no"
+
 
 unpack() {
   git clone --recursive -v --depth 1 https://github.com/hashcat/hashcat $PKG_BUILD

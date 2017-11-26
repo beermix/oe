@@ -28,7 +28,7 @@ PKG_SHORTDESC="cheetah: Python-powered template engine and code generator"
 PKG_LONGDESC="Cheetah is a Python-powered template engine and code generator. It can be used as a standalone utility or it can be combined with other tools. Cheetah has many potential uses, but web developers looking for a viable alternative to ASP, JSP, PHP and PSP are expected to be its principle user group."
 
 
-PKG_AUTORECONF="no"
+
 
 PKG_MAINTAINER="unofficial.addon.pro"
 

@@ -5,7 +5,7 @@ PKG_URL="https://www.kernel.org/pub/software/network/$PKG_NAME/$PKG_NAME-$PKG_VE
 PKG_DEPENDS_TARGET="toolchain libnl"
 PKG_SECTION="tools"
 
-PKG_AUTORECONF="no"
+
 
 configure_target() {
    strip_lto

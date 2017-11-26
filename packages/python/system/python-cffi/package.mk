@@ -30,7 +30,7 @@ PKG_DEPENDS_TARGET="toolchain Python2 distutilscross:host pycparser libffi"
 PKG_SECTION="python/system"
 PKG_SHORTDESC="Foreign Function Interface for Python calling C code."
 PKG_LONGDESC="Foreign Function Interface for Python calling C code."
-PKG_AUTORECONF="no"
+
 
 pre_build_host() {
   mkdir -p $PKG_BUILD/.$HOST_NAME

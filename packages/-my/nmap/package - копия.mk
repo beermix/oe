@@ -4,7 +4,7 @@ PKG_SITE="http://nmap.org/"
 PKG_URL="http://nmap.org/dist/${PKG_NAME}-${PKG_VERSION}.tgz"
 PKG_DEPENDS_TARGET="toolchain ncurses libpcap libdnet pcre lua"
 PKG_SECTION="tools"
-PKG_AUTORECONF="no"
+
 
 pre_configure_target() {
   cd $PKG_BUILD

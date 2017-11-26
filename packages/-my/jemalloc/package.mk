@@ -4,7 +4,7 @@ PKG_URL="https://github.com/jemalloc/jemalloc/releases/download/$PKG_VERSION/jem
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="my"
 
-PKG_AUTORECONF="no"
+
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-autogen --disable-valgrind"
 

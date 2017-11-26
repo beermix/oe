@@ -27,16 +27,9 @@ PKG_DEPENDS_HOST="ccache:host"
 PKG_SECTION="devel"
 PKG_SHORTDESC="m4: The m4 macro processor"
 PKG_LONGDESC="GNU 'M4' is an implementation of the traditional Unix macro processor. It is mostly SVR4 compatible, although it has some extensions (for example, handling more than 9 positional parameters to macros). 'M4' also has built-in functions for including files, running shell commands, doing arithmetic, etc. Autoconf needs GNU 'M4' for generating 'configure' scripts, but not for running them."
-PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_HOST="gl_cv_func_gettimeofday_clobber=no --target=$TARGET_NAME"
 
 post_makeinstall_host() {
   make prefix=$SYSROOT_PREFIX/usr install
-  
-  cp $PKG_DIR/src/bin/help2man $TOOLCHAIN/bin/
-  cp $PKG_DIR/src/bin/makeinfo $TOOLCHAIN/bin/
-
-#  mkdir -p $SYSROOT_PREFIX/usr/share/aclocal
-#  cp -pr $PKG_DIR/src/m4/* $SYSROOT_PREFIX/usr/share/aclocal/
 }

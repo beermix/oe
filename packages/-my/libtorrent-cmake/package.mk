@@ -5,7 +5,7 @@ PKG_SOURCE_DIR="libtorrent-rasterbar-1.1.3"
 PKG_DEPENDS_TARGET="toolchain boost zlib bzip2 curl libsigc++"
 PKG_SECTION="devel"
 
-PKG_AUTORECONF="no"
+
 
 
 #PKG_CMAKE_OPTS_TARGET="-Ddht=ON \

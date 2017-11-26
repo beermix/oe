@@ -5,7 +5,7 @@ PKG_DEPENDS_TARGET="toolchain readline file"
 PKG_SECTION="shell/texteditor"
 PKG_SHORTDESC="nano: Pico editor clone with enhancements"
 PKG_LONGDESC="GNU nano (Nano's ANOther editor, or Not ANOther editor) is an enhanced clone of the Pico text editor."
-PKG_AUTORECONF="no"
+
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-color --disable-libmagic --enable-utf8 --sysconfdir=/storage/.config/nano --datarootdir=/storage/.config/nano"
 

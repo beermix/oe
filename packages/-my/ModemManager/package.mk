@@ -4,7 +4,7 @@ PKG_URL="https://www.freedesktop.org/software/ModemManager/${PKG_NAME}-${PKG_VER
 PKG_DEPENDS_TARGET="toolchain libgudev" 
 PKG_SECTION="my"
 
-PKG_AUTORECONF="no"
+
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \
 			      --disable-shared \

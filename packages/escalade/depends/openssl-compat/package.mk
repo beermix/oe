@@ -31,7 +31,7 @@ PKG_SHORTDESC="The Open Source toolkit for Secure Sockets Layer and Transport La
 PKG_LONGDESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"
 
 
-PKG_AUTORECONF="no"
+
 
 PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            --libdir=lib \

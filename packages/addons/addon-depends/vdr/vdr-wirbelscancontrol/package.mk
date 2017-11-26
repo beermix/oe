@@ -32,7 +32,7 @@ PKG_LONGDESC="TV"
 
 
 
-PKG_AUTORECONF="no"
+
 
 pre_configure_target() {
   export CFLAGS="$CFLAGS -fPIC"

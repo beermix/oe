@@ -26,7 +26,7 @@ PKG_SHORTDESC="gstreamer omx module"
 PKG_LONGDESC="gstreamer omx module"
 
 
-PKG_AUTORECONF="no"
+
 
 if [ "$XBMCPLAYER_DRIVER" = "bcm2835-driver" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET bcm2835-driver"

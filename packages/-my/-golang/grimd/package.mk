@@ -4,7 +4,7 @@ PKG_GIT_URL="https://github.com/looterz/grimd"
 PKG_DEPENDS_TARGET="toolchain go:host"
 PKG_KEEP_CHECKOUT="no"
 PKG_SECTION="tools"
-PKG_AUTORECONF="no"
+
 
 CONCURRENCY_MAKE_LEVEL=1
 

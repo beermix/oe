@@ -27,4 +27,4 @@ PKG_SHORTDESC="OEM: Metapackage for various OEM packages"
 PKG_LONGDESC="OEM: Metapackage for various OEM packages"
 
 
-PKG_AUTORECONF="no"
+

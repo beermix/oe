@@ -28,7 +28,7 @@ PKG_SHORTDESC="kodi-platform:"
 PKG_LONGDESC="kodi-platform:"
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+
 PKG_USE_NINJA="no"
 
 PKG_CMAKE_SCRIPT="$(get_build_dir $MEDIACENTER)/tools/depends/native/JsonSchemaBuilder/CMakeLists.txt"

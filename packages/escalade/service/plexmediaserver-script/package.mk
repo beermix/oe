@@ -24,7 +24,7 @@ PKG_SITE="https://plex.tv"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="service"
 PKG_SHORTDESC="Script to download and run Plex Media Server"
-PKG_AUTORECONF="no"
+
 PKG_IS_ADDON="no"
 
 make_target() {

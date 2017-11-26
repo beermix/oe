@@ -28,7 +28,7 @@ PKG_SHORTDESC="Set of utilities for joysticks and serial devices"
 PKG_LONGDESC="Set of utilities for joysticks and serial devices"
 
 
-PKG_AUTORECONF="no"
+
 
 PKG_MAKE_OPTS_TARGET="SYSTEMD_SUPPORT=0"
 

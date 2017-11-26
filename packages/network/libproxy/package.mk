@@ -3,7 +3,7 @@ PKG_VERSION="0.4.15"
 PKG_URL="https://github.com/libproxy/libproxy/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain zlib openssl libgpg-error"
 PKG_SECTION="network"
-PKG_AUTORECONF="no"
+
 
 #PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release"
 

@@ -27,7 +27,7 @@ PKG_DEPENDS_TARGET=""
 PKG_SECTION="tools"
 PKG_SHORTDESC="MfgTool2 flash tool"
 PKG_LONGDESC="Freescales manufacturing tool for flashing image to TBS Matrix system"
-PKG_AUTORECONF="no"
+
 
 make_target() {
   : # nothing

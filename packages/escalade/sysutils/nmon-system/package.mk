@@ -28,7 +28,7 @@ PKG_SECTION="tools"
 PKG_SHORTDESC="Systems administrator, tuner, benchmark tool gives you a huge amount of important performance information in one go"
 
 
-PKG_AUTORECONF="no"
+
 
 make_target() {
   case $TARGET_ARCH in

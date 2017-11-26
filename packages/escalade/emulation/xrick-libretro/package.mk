@@ -11,7 +11,7 @@ PKG_SECTION="emulation"
 PKG_SHORTDESC="Xrick is an open source implementation of the legendary game Rick Dangerous."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+
 
 make_target() {
   make -f Makefile.libretro CC=$CC

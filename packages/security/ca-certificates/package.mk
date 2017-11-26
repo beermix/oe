@@ -3,7 +3,7 @@ PKG_VERSION="20161130"
 PKG_URL="http://ftp.ru.debian.org/debian/pool/main/c/ca-certificates/ca-certificates_$PKG_VERSION.tar.xz"
 PKG_SOURCE_DIR="ca-certificates"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_AUTORECONF="no"
+
 
 pre_configure_target() {
   mkdir -p $INSTALL/usr/share/ca-certificates/mozilla/

@@ -8,7 +8,7 @@ PKG_SECTION="multimedia"
 PKG_SHORTDESC="libsdl_mixer: Simple Directmedia Layer - Mixer"
 PKG_LONGDESC="SDL_mixer is a sound mixing library that is used with the SDL library, and almost as portable. It allows a programmer to use multiple samples along with music without having to code a mixing algorithm themselves. It also simplyfies the handling of loading and playing samples and music from all sorts of file formats."
 
-PKG_AUTORECONF="no"
+
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-music-cmd \
                            --enable-music-wave \

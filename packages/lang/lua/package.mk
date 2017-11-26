@@ -16,7 +16,7 @@ PKG_SECTION="xmedia/tools"
 PKG_SHORTDESC="lua: A lightweight, extensible programming language"
 PKG_LONGDESC="Lua is a powerful light-weight programming language designed for extending applications. Lua is also frequently used as a general-purpose, stand-alone language."
 
-PKG_AUTORECONF="no"
+
 
 _MAJORVER=${PKG_VERSION%.*}
 

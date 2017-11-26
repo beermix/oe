@@ -15,7 +15,7 @@ PKG_SECTION="xmedia/torrent"
 PKG_SHORTDESC="AcePHProxy: PHP proxy daemon for Ace Stream"
 PKG_LONGDESC="AcePHProxy: PHP proxy daemon for Ace Stream."
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+
 
 make_target() {
   : # nothing to make here

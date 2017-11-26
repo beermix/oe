@@ -24,7 +24,7 @@ PKG_DEPENDS_TARGET="toolchain Python distutilscross:host Distutils2"
 
 PKG_SECTION="python/system"
 
-PKG_AUTORECONF="no"
+
 
 
 pre_configure_target() {

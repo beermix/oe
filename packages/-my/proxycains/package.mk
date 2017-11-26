@@ -8,7 +8,7 @@ PKG_SECTION="web"
 PKG_SHORTDESC="hiawatha"
 PKG_LONGDESC="An advanced and secure webserver for Unix"
 
-PKG_AUTORECONF="no"
+
 
 pre_configure_target() {
   cd $PKG_BUILD

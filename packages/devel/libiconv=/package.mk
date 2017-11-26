@@ -26,7 +26,7 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="devel"
 PKG_SHORTDESC="Libiconv converts from one character encoding to another through Unicode conversion."
 PKG_LONGDESC="Libiconv converts from one character encoding to another through Unicode conversion."
-PKG_AUTORECONF="no"
+
 
 export CCACHE_DISABLE=1
 

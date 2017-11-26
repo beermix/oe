@@ -3,7 +3,7 @@ PKG_VERSION="x3"
 PKG_URL="https://dl.dropboxusercontent.com/s/8b44s8uhpti6xt4/tg-x3.tar.xz"
 PKG_DEPENDS_TARGET="toolchain readline libevent jansson zlib libconfig openssl lua"
 PKG_SECTION="debug/tools"
-PKG_AUTORECONF="no"
+
 
 pre_configure_target() {
   cd $PKG_BUILD

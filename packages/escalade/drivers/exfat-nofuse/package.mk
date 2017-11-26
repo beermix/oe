@@ -12,7 +12,7 @@ PKG_SECTION="escalade"
 PKG_SHORTDESC="Linux non-fuse read/write kernel driver for exFat"
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+
 
 make_target() {
   make KDIR=$(kernel_path)

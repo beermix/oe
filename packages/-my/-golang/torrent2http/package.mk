@@ -3,7 +3,7 @@ PKG_VERSION="a55fd4e"
 PKG_GIT_URL="https://github.com/afedchin/torrent2http"
 PKG_DEPENDS_TARGET="toolchain go:host openssl swig:host boost libtorrent-rasterbar"
 PKG_SECTION="tools"
-PKG_AUTORECONF="no"
+
 
 strip_lto
 

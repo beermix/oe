@@ -30,7 +30,7 @@ PKG_SHORTDESC="libretro implementation of Doom"
 PKG_LONGDESC="libretro implementation of Doom"
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+
 
 unpack() {
   tar -zxf $SOURCES/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.gz -C $BUILD

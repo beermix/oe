@@ -3,7 +3,7 @@ PKG_VERSION="90af466"
 PKG_URL="https://github.com/showwin/speedtest-go/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain go:host"
 PKG_SECTION="system"
-PKG_AUTORECONF="no"
+
 
 pre_make_target() {
   export GOOS=linux

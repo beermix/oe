@@ -28,7 +28,7 @@ PKG_SHORTDESC="library for id3 tagging"
 PKG_LONGDESC="library for id3 tagging"
 
 
-PKG_AUTORECONF="no"
+
 
 PKG_MAINTAINER="Lukas Sabota (LTsmooth42@gmail.com)"
 

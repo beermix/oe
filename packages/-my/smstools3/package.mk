@@ -5,6 +5,6 @@ PKG_SOURCE_DIR="smstools3"
 PKG_DEPENDS_TARGET="toolchain zlib openssl"
 PKG_SECTION="service/downloadmanager"
 PKG_ADDON_TYPE="kodi.service" ## -DHAVE_XFS_XFS_H=1
-PKG_AUTORECONF="no"
+
 
 TARGET_CFLAGS="-D NUMBER_OF_MODEMS=1"

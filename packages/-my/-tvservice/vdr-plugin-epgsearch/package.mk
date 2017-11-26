@@ -16,7 +16,7 @@ PKG_SECTION="xmedia/tvservice"
 PKG_SHORTDESC="VDR -- epgsearch plugin"
 PKG_LONGDESC="vdr-epgsearch is a plugin for VDR, the Video Disk Recorder."
 
-PKG_AUTORECONF="no"
+
 PKG_LOCALE_INSTALL="yes"
 
 make_target() {

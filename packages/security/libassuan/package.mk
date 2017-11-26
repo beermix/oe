@@ -4,7 +4,7 @@ PKG_URL="ftp://ftp.gnupg.org/gcrypt/libassuan/libassuan-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain libgpg-error"
 PKG_SECTION="my"
 
-PKG_AUTORECONF="no"
+
 
 pre_configure_target() {
   CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`

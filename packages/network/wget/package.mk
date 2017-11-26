@@ -4,7 +4,7 @@ PKG_SITE="http://www.wget-editor.org/"
 PKG_URL="https://ftp.gnu.org/gnu/wget/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain openssl libunistring libevent libidn2 libtasn1"
 PKG_SECTION="tools"
-PKG_AUTORECONF="no"
+
 
 PKG_CONFIGURE_OPTS_TARGET="--with-ssl=openssl \
                            --enable-largefile \

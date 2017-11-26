@@ -29,7 +29,7 @@ PKG_LONGDESC="This plugin parses the Extended (2 to 10 day) EPG data which is se
 
 
 
-PKG_AUTORECONF="no"
+
 
 make_target() {
   VDR_DIR=$(get_build_dir vdr)

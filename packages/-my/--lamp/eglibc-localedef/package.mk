@@ -32,7 +32,7 @@ PKG_SHORTDESC="locale"
 PKG_LONGDESC="locale"
 PKG_MAINTAINER="ultraman"
 
-PKG_AUTORECONF="no"
+
 
 pre_configure_host() {
   PKG_CONFIGURE_OPTS_HOST="--prefix=$PKG_BUILD \

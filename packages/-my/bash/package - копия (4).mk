@@ -3,7 +3,7 @@ PKG_VERSION="bc00779"
 PKG_GIT_URL="https://github.com/bminor/bash"
 PKG_DEPENDS_TARGET="toolchain ncurses readline"
 
-PKG_AUTORECONF="no"
+
 
 #CONCURRENCY_MAKE_LEVEL=1
 

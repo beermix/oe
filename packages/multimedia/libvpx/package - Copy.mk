@@ -3,7 +3,7 @@ PKG_VERSION="c8f6e7b"
 PKG_GIT_URL="https://github.com/webmproject/libvpx/"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="tools"
-PKG_AUTORECONF="no"
+
 
 pre_configure_target() {
   cd $PKG_BUILD

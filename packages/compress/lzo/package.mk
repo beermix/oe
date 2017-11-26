@@ -28,7 +28,7 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="compress"
 PKG_SHORTDESC="LZO data compressor"
 PKG_LONGDESC="LZO is a data compression library which is suitable for data de-/compression in real-time. This means it favours speed over compression ratio."
-PKG_AUTORECONF="no"
+
 PKG_USE_NINJA="no"
 CFLAGS="-DLZO_CFG_NO_UNALIGNED=1"
 

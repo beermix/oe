@@ -28,7 +28,7 @@ PKG_SECTION="tools"
 PKG_SHORTDESC="Security Enhanced Linux (SELinux) userland libraries."
 PKG_IS_ADDON="no"
 
-PKG_AUTORECONF="no"
+
 
 pre_build_target() {
   strip_lto

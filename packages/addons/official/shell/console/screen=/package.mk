@@ -34,7 +34,7 @@ PKG_ADDON_TYPE="xbmc.python.script"
 PKG_ADDON_PROVIDES=""
 PKG_ADDON_REPOVERSION="8.1"
 
-PKG_AUTORECONF="no"
+
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_header_utempter_h=no \
                            --disable-pam \

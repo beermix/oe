@@ -4,7 +4,7 @@ PKG_GIT_URL="https://github.com/jech/polipo"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="service/proxy"
 
-PKG_AUTORECONF="no"
+
 
 pre_configure_target() {
   export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|g"`

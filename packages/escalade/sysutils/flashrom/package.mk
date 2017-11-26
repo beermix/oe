@@ -28,7 +28,7 @@ PKG_SECTION="tools"
 PKG_SHORTDESC="flashrom: linux BIOS programmer"
 PKG_LONGDESC="flashrom is a utility for identifying, reading, writing, verifying and erasing flash chips. It is designed to flash BIOS/EFI/coreboot/firmware/optionROM images on mainboards, network/graphics/storage controller cards, and various programmer devices."
 
-PKG_AUTORECONF="no"
+
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_TYPE="xbmc.python.script"

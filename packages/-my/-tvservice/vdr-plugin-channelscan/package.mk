@@ -16,7 +16,7 @@ PKG_SECTION="xmedia/tvservice"
 PKG_SHORTDESC="VDR -- channel scan plugin"
 PKG_LONGDESC="channelscan is a plugin for VDR, the Video Disk Recorder."
 
-PKG_AUTORECONF="no"
+
 PKG_LOCALE_INSTALL="yes"
 
 pre_make_target() {

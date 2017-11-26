@@ -16,7 +16,7 @@ PKG_SECTION="xmedia/tvservice"
 PKG_SHORTDESC="VDR -- Boblight plugin"
 PKG_LONGDESC="vdr-boblight is a plugin for VDR, the Video Disk Recorder. Boblight with data from softhddevice."
 
-PKG_AUTORECONF="no"
+
 PKG_LOCALE_INSTALL="yes"
 
 make_target() {

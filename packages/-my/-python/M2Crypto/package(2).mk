@@ -16,7 +16,7 @@ PKG_SECTION="xmedia/torrent"
 PKG_SHORTDESC="M2Crypto is the most complete Python wrapper for OpenSSL"
 PKG_LONGDESC="M2Crypto is the most complete Python wrapper for OpenSSL."
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+
 
 make_target() {
   python setup.py build --cross-compile build_ext --openssl=$LIB_PREFIX

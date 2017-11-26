@@ -4,7 +4,7 @@ PKG_URL="https://tls.mbed.org/download/mbedtls-$PKG_VERSION-gpl.tgz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="security"
 
-PKG_AUTORECONF="no"
+
 
 PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release \
 			  -DENABLE_PROGRAMS=0 \

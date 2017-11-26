@@ -10,7 +10,7 @@ PKG_SECTION="lang"
 PKG_SHORTDESC="C language family frontend for LLVM"
 
 
-PKG_AUTORECONF="no"
+
 
 post_unpack() {
   ln -sf $PKG_BUILD/.$TARGET_NAME/bin/clang-tblgen $BUILD/toolchain/bin/

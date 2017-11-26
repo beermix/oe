@@ -3,7 +3,7 @@ PKG_VERSION="f244d9d"
 PKG_GIT_URL="https://github.com/wxWidgets/wxPython"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="system"
-PKG_AUTORECONF="no"
+
 
 make_target() {
   python build-wxpython.py build

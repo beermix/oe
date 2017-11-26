@@ -7,7 +7,7 @@ PKG_DEPENDS_TARGET="toolchain openssl expat boost libsigc++"
 PKG_SECTION="devel"
 PKG_USE_CMAKE="no"
 
-PKG_AUTORECONF="no"
+
 
 pre_configure_target() {
   cd $PKG_BUILD

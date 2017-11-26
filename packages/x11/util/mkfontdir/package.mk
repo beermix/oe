@@ -27,4 +27,4 @@ PKG_SECTION="x11/util"
 PKG_SHORTDESC="mkfontdir creates the fonts.dir files needed by the legacy X server core font system."
 
 
-PKG_AUTORECONF="no"
+

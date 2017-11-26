@@ -29,7 +29,7 @@ PKG_SHORTDESC="fontsproto: Fonts extension headers"
 PKG_LONGDESC="Fonts extension headers"
 
 
-PKG_AUTORECONF="no"
+
 
 # package specific configure options
 PKG_CONFIGURE_OPTS_TARGET="--without-xmlto"

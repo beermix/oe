@@ -33,7 +33,7 @@ PKG_ADDON_TYPE="xbmc.python.module"
 PKG_ADDON_PROVIDES=""
 PKG_ADDON_PROJECTS="RPi RPi2"
 
-PKG_AUTORECONF="no"
+
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/lib/RPi/

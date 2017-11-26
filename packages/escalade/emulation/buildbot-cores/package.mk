@@ -24,7 +24,7 @@ PKG_SITE="http://buildbot.libretro.com"
 PKG_DEPENDS_TARGET="toolchain retroarch"
 PKG_SECTION="emulation"
 PKG_SHORTDESC="libretro cores from buildbot.libretro.com"
-PKG_AUTORECONF="no"
+
 
 PKG_IS_ADDON="no"
 

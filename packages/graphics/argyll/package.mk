@@ -4,7 +4,7 @@ PKG_URL="https://dl.dropboxusercontent.com/s/99fg6i9kh30imi2/argyll-1.9.2.tar.xz
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="graphics"
 
-PKG_AUTORECONF="no"
+
 
 strip_lto
 strip_gold

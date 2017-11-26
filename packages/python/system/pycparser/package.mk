@@ -27,7 +27,7 @@ PKG_DEPENDS_TARGET="toolchain Python2 distutilscross:host"
 PKG_SECTION="python/system"
 PKG_SHORTDESC="C parser in Python"
 PKG_LONGDESC="C parser in Python"
-PKG_AUTORECONF="no"
+
 
 make_target() {
   :

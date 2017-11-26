@@ -27,7 +27,7 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SHORTDESC=""
 PKG_LONGDESC=""
 
-PKG_AUTORECONF="no"
+
 
 PKG_MAINTAINER="Daniel Forsberg (jenkins101)"
 

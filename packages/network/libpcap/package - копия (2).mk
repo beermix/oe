@@ -26,7 +26,7 @@ PKG_SECTION="devel"
 PKG_SHORTDESC="system interface for user-level packet capture"
 PKG_LONGDESC="libpcap (Packet CAPture) provides a portable framework for low-level network monitoring. Applications include network statistics collection, security monitoring, network debugging, etc."
 PKG_USE_CMAKE="no"
-PKG_AUTORECONF="no"
+
 
 MAKEFLAGS=-j1
 

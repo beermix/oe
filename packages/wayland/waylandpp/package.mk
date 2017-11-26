@@ -11,7 +11,7 @@ PKG_SHORTDESC="Wayland C++ bindings"
 PKG_LONGDESC="Wayland C++ bindings"
 
 
-PKG_AUTORECONF="no"
+
 
 pre_make_host() {
   mkdir -p $PKG_BUILD/.$HOST_NAME

@@ -26,7 +26,7 @@ PKG_SECTION="textproc"
 PKG_SHORTDESC="International Components for Unicode library"
 PKG_LONGDESC="International Components for Unicode library"
 
-PKG_AUTORECONF="no"
+
 
 
 pre_configure_target() {

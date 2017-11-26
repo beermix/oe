@@ -28,7 +28,7 @@ PKG_SECTION="depends"
 PKG_SHORTDESC="Vulkan Installable Client Driver (ICD) Loader."
 
 
-PKG_AUTORECONF="no"
+
 
 PKG_CMAKE_OPTS_TARGET="-DBUILD_WSI_XLIB_SUPPORT=On \
 		       -DBUILD_TESTS=Off \

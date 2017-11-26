@@ -16,7 +16,7 @@ PKG_SECTION="xmedia/tvservice"
 PKG_SHORTDESC="vdr-live: the LIVE Interactive VDR Environment/"
 PKG_LONGDESC="vdr-live allows a comfortable operation of VDR and some of its plugins trough a web interface"
 
-PKG_AUTORECONF="no"
+
 PKG_LOCALE_INSTALL="yes"
 
 make_target() {

@@ -26,7 +26,7 @@ PKG_DEPENDS_TARGET="toolchain efivar:host"
 PKG_SECTION="tools"
 PKG_SHORTDESC="evivar: maniulate EFI Variables"
 PKG_LONGDESC="Tools and library to manipulate EFI variables."
-PKG_AUTORECONF="no"
+
 
 make_host() {
   make -C src/ makeguids

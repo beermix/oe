@@ -27,7 +27,7 @@ PKG_SECTION="emulation/depends"
 PKG_SHORTDESC="Software synthesizer capable of emulating Roland MT-32"
 
 
-PKG_AUTORECONF="no"
+
 
 PKG_CMAKE_OPTS_TARGET="-Dmunt_WITH_MT32EMU_QT=0 \
 		       -Dmunt_WITH_MT32EMU_SMF2WAV=0 \

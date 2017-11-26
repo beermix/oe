@@ -7,7 +7,7 @@ PKG_DEPENDS_TARGET="toolchain zlib openssl curl libevent miniupnpc xfsprogs-dev"
 PKG_IS_ADDON="yes"
 PKG_ADDON_TYPE="xbmc.service"
 PKG_ADDON_PROVIDES=""
-PKG_AUTORECONF="no"
+
 
 PGK_CMAKE_OPTS_TARGET="-DENABLE_CLI=On -DENABLE_LIGHTWEIGHT=On"
 

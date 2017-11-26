@@ -15,7 +15,7 @@ PKG_SECTION="xmedia/games"
 PKG_SHORTDESC="Common Overlays for RetroArch"
 PKG_LONGDESC="Common Overlays for RetroArch."
 
-PKG_AUTORECONF="no"
+
 
 unpack() {
   mkdir -p $PKG_BUILD

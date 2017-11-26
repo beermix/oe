@@ -3,7 +3,7 @@ PKG_VERSION="0.5.9.1"
 PKG_URL="http://ftp.osuosl.org/pub/blfs/svn/d/dash-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libedit"
 
-PKG_AUTORECONF="no"
+
 
 PKG_CONFIGURE_OPTS_TARGET="--bindir=/bin"
 

@@ -5,7 +5,7 @@ PKG_DEPENDS_TARGET="toolchain xz expat xz"
 
 PKG_SECTION="x11/lib"
 
-PKG_AUTORECONF="no"
+
 
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --with-gnu-ld"

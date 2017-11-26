@@ -29,7 +29,7 @@ PKG_SECTION="emulation"
 PKG_SHORTDESC="Optimized port/rewrite of bsnes 0.59 to Libretro."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+
 
 unpack() {
   tar -zxf $SOURCES/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.gz -C $BUILD

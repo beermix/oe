@@ -3,7 +3,7 @@ PKG_VERSION="506088e"
 PKG_GIT_URL="https://r-w-x.org/oggfwd.git"
 PKG_DEPENDS_TARGET="toolchain libshout libogg libvorbis libtheora"
 PKG_SECTION="tools"
-PKG_AUTORECONF="no"
+
 
 make_target() {
   strip_lto

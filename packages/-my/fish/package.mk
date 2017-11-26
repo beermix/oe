@@ -5,7 +5,7 @@ PKG_DEPENDS_HOST="toolchain"
 PKG_DEPENDS_TARGET="toolchain ncurses"
 
 PKG_SECTION="devel"
-PKG_AUTORECONF="no"
+
 
 pre_configure_target() {
   cd $PKG_BUILD

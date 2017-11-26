@@ -8,7 +8,7 @@ PKG_SHORTDESC="The Open Source toolkit for Secure Sockets Layer and Transport La
 PKG_LONGDESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"
 
 
-PKG_AUTORECONF="no"
+
 
 export CCACHE_DISABLE=1
 export MAKEFLAGS=-j1

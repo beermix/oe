@@ -26,7 +26,7 @@ PKG_SECTION="apps"
 PKG_SHORTDESC="A proprietary music streaming service"
 
 
-PKG_AUTORECONF="no"
+
 
 make_target() {
   :

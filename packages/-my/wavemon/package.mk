@@ -4,7 +4,7 @@ PKG_URL="https://github.com/uoaerg/wavemon/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libstatgrab"
 
 PKG_SECTION="network/analyzer"
-PKG_AUTORECONF="no"
+
 
 configure_target() {
 cd $PKG_BUILD

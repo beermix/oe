@@ -27,7 +27,7 @@ PKG_DEPENDS_TARGET=""
 PKG_SECTION="virtual"
 PKG_SHORTDESC="virtual: Meta package to install Virtual project extra deps"
 PKG_LONGDESC="virtual is a Meta package to install Virtual project extra dependencies"
-PKG_AUTORECONF="no"
+
 
 get_graphicdrivers
 

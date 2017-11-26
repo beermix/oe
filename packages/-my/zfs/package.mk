@@ -5,7 +5,7 @@ PKG_DEPENDS_TARGET="toolchain libaio attr udevil spl"
 PKG_SECTION="debug/tools"
 PKG_SHORTDESC="htop: Htop is an ncurses based interactive process viewer for Linux."
 PKG_LONGDESC="Htop is an ncurses based interactive process viewer for Linux."
-PKG_AUTORECONF="no"
+
 
 PKG_CONFIGURE_OPTS_TARGET="cross_compiling=maybe \
 			      --with-config=user \

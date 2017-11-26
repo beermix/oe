@@ -30,7 +30,7 @@ PKG_SHORTDESC="libsoil: Simple OpenGL Image Library"
 PKG_LONGDESC="libsoil: Simple OpenGL Image Library"
 
 
-PKG_AUTORECONF="no"
+
 
 make_target() {
   mkdir projects/makefile/obj

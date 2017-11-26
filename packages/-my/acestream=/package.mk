@@ -24,7 +24,7 @@ PKG_DEPENDS_TARGET="toolchain"
 
 PKG_SECTION="torrenter"
 
-PKG_AUTORECONF="no"
+
 
 make_target() {
   : # nothing todo

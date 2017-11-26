@@ -29,7 +29,7 @@ PKG_SHORTDESC="Embedded Linux library"
 PKG_LONGDESC="Embedded Linux library"
 
 
-PKG_AUTORECONF="no"
+
 
 configure_target() {
   :

@@ -15,7 +15,7 @@ PKG_SECTION="xmedia/torrent"
 PKG_SHORTDESC="Lightweight in-process concurrent programming"
 PKG_LONGDESC="Lightweight in-process concurrent programming."
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+
 
 pre_configure_target() {
   export PYTHON_VERSION="2.7"

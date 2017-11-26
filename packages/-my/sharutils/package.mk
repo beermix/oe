@@ -6,6 +6,6 @@ PKG_DEPENDS_HOST="gettext:host binutils:host"
 PKG_SECTION="debug/tools"
 PKG_SHORTDESC="htop: Htop is an ncurses based interactive process viewer for Linux."
 PKG_LONGDESC="Htop is an ncurses based interactive process viewer for Linux."
-PKG_AUTORECONF="no"
+
 
 PKG_CONFIGURE_OPTS_HOST="--with-gnu-ld --disable-nls --enable-static"

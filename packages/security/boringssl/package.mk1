@@ -9,7 +9,7 @@ PKG_SHORTDESC="openssl: a FREE version of the SSL/TLS protocol forked from opens
 PKG_LONGDESC="openssl is a FREE version of the SSL/TLS protocol forked from openssl"
 
 PKG_USE_CMAKE="yes"
-PKG_AUTORECONF="no"
+
 
 strip_lto
 

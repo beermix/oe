@@ -32,7 +32,7 @@ PKG_LONGDESC="Plugin for modifying EPG data using regular expressions."
 
 
 
-PKG_AUTORECONF="no"
+
 
 make_target() {
   VDR_DIR=$(get_pkg_build vdr)

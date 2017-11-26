@@ -4,5 +4,5 @@ PKG_URL="https://www.wireshark.org/download/src/all-versions/wireshark-$PKG_VERS
 PKG_DEPENDS_TARGET="toolchain libz libevent wireshark:host"
 PKG_SECTION="security"
 PKG_USE_CMAKE="yes"
-PKG_AUTORECONF="no"
+
 

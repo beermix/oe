@@ -29,7 +29,7 @@ PKG_DEPENDS_TARGET="toolchain Python2 distutilscross:host"
 PKG_SECTION="python/system"
 PKG_SHORTDESC="Simple module to parse ISO 8601 dates"
 PKG_LONGDESC="Simple module to parse ISO 8601 dates"
-PKG_AUTORECONF="no"
+
 
 make_target() {
   :

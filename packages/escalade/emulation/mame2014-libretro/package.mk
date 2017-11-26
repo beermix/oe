@@ -27,7 +27,7 @@ PKG_SECTION="libretro"
 PKG_SHORTDESC="Late 2014 version of MAME (0.159-ish) for libretro and MAME 0.159 romsets"
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+
 
 pre_make_target() {
   export REALCC=$CC

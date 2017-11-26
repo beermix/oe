@@ -5,7 +5,7 @@ PKG_DEPENDS_TARGET="toolchain Python sqlite ncurses"
 
 PKG_SECTION="my"
 
-PKG_AUTORECONF="no"
+
 
 pre_configure_target() {
   cd $PKG_BUILD

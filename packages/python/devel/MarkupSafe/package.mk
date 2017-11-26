@@ -30,7 +30,7 @@ PKG_SHORTDESC="MarkupSafe: Implements a XML/HTML/XHTML Markup safe string for Py
 PKG_LONGDESC="MarkupSafe implements a XML/HTML/XHTML Markup safe string for Python"
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+
 
 make_host() {
  : # nothing todo

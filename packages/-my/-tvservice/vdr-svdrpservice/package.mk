@@ -16,7 +16,7 @@ PKG_SECTION="xmedia/tvservice"
 PKG_SHORTDESC="Offers SVDRP connections as a service to other plugins"
 PKG_LONGDESC="Offers SVDRP connections as a service to other plugins."
 
-PKG_AUTORECONF="no"
+
 PKG_LOCALE_INSTALL="yes"
 
 make_target() {

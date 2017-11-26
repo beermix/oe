@@ -29,7 +29,7 @@ PKG_DEPENDS_TARGET="toolchain avahi"
 PKG_SECTION="service"
 PKG_SHORTDESC="Spotify Connect Web: play Spotify through LibreELEC"
 PKG_LONGDESC="Spotify Connect Web ($PKG_VERSION) plays Spotify through LibreELEC, using a Spotify app as a remote."
-PKG_AUTORECONF="no"
+
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Spotify Connect Web"

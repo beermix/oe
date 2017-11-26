@@ -26,7 +26,7 @@ PKG_SHORTDESC="Pure-python wrapper for libusb-1.0"
 PKG_LONGDESC="Pure-python wrapper for libusb-1.0"
 
 
-PKG_AUTORECONF="no"
+
 
 make_target() {
   python setup.py build

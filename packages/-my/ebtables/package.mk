@@ -5,6 +5,6 @@ PKG_DEPENDS_TARGET="toolchain"
 
 PKG_SECTION="network"
 
-PKG_AUTORECONF="no"
+
 
 MAKEFLAGS=-j1

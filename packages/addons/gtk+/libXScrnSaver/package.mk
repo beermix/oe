@@ -25,6 +25,6 @@ PKG_SECTION="x11/lib"
 PKG_SHORTDESC=""
 PKG_LONGDESC=""
 
-PKG_AUTORECONF="no"
+
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-malloc0returnsnull --with-gnu-ld"

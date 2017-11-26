@@ -26,7 +26,7 @@ PKG_DEPENDS_TARGET="toolchain connman iana-etc ethtool openssh bluez pure-ftpd i
 PKG_SECTION="virtual"
 PKG_SHORTDESC="network: Metapackage for packages to install network support"
 PKG_LONGDESC="network: Metapackage for various packages to install network support"
-PKG_AUTORECONF="no"
+
 
 if [ "$BLUETOOTH_SUPPORT" = "yes" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET bluez"

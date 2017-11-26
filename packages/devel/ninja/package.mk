@@ -26,7 +26,7 @@ PKG_DEPENDS_HOST="Python2:host re2c:host"
 PKG_SECTION="devel"
 PKG_SHORTDESC="Small build system with a focus on speed"
 PKG_LONGDESC="Small build system with a focus on speed"
-PKG_AUTORECONF="no"
+
 
 configure_host() {
   :

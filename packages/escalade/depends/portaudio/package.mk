@@ -28,4 +28,4 @@ PKG_SECTION="depends"
 PKG_SHORTDESC="Portable cross-platform audio I/O"
 
 
-PKG_AUTORECONF="no"
+

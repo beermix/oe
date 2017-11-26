@@ -26,7 +26,7 @@ PKG_SECTION="apps"
 PKG_SHORTDESC="Google Chrome browser"
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+
 
 make_target() {
   :

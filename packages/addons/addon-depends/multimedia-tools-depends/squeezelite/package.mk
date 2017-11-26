@@ -26,7 +26,7 @@ PKG_SHORTDESC="squeezelite"
 PKG_LONGDESC="A client for the Logitech Media Server"
 
 
-PKG_AUTORECONF="no"
+
 
 pre_make_target() {
   OPTS="-DDSD -DFFMPEG -DRESAMPLE -DVISEXPORT"

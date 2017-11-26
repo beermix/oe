@@ -10,7 +10,7 @@ PKG_SECTION="escalade"
 PKG_SHORTDESC="Support programs for Network File Systems"
 
 
-PKG_AUTORECONF="no"
+
 
 PKG_CONFIGURE_OPTS_TARGET="--without-tcp-wrappers \
 			   --disable-nfsv41 \

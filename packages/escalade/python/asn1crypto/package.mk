@@ -10,7 +10,7 @@ PKG_SECTION="escalade/python"
 PKG_SHORTDESC="Python ASN.1 library with a focus on performance and a pythonic API"
 
 
-PKG_AUTORECONF="no"
+
 
 pre_make_target() {
   export PYTHONXCPREFIX="$SYSROOT_PREFIX/usr"

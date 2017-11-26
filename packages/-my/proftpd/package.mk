@@ -6,7 +6,7 @@ PKG_URL="https://github.com/proftpd/proftpd/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libcap whois pcre libsodium openssl"
 
 PKG_SECTION="service/system"
-PKG_AUTORECONF="no"
+
 
 pre_configure_target() {
   export CFLAGS="$CFLAGS -fPIC"

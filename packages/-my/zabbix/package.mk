@@ -4,7 +4,7 @@ PKG_URL="https://fossies.org/linux/misc/zabbix-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain curl libxml2 mariadb ncurses openssl libevent"
 PKG_SECTION="devel"
 
-PKG_AUTORECONF="no"
+
 
 pre_configure_host() {
   cd $PKG_BUILD

@@ -13,7 +13,7 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="xmedia/games"
 PKG_SHORTDESC="Pixel theme for Emulationstation"
 
-PKG_AUTORECONF="no"
+
 
 make_target() {
   : not

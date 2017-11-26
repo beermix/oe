@@ -5,6 +5,6 @@ PKG_DEPENDS_TARGET="toolchain lzo tar lzd"
 
 PKG_SECTION="network"
 
-PKG_AUTORECONF="no"
+
 
 

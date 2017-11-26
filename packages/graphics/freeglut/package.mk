@@ -28,6 +28,6 @@ PKG_DEPENDS_TARGET="toolchain mesa libXi"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="A library for reading RAW files obtained from digital photo cameras (CRW/CR2, NEF, RAF, DNG, and others)"
 PKG_LONGDESC="A library for reading RAW files obtained from digital photo cameras (CRW/CR2, NEF, RAF, DNG, and others)"
-PKG_AUTORECONF="no"
+
 
 PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release"

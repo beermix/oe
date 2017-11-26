@@ -27,4 +27,4 @@ PKG_SECTION="x11/util"
 PKG_SHORTDESC="mkfontscale creates an index of scalable font files for X."
 
 
-PKG_AUTORECONF="no"
+

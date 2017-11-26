@@ -28,7 +28,7 @@ PKG_SHORTDESC="vdr-plugin-restfulapi: the restful API for the VDR/"
 PKG_LONGDESC="vdr-plugin-restfulapi allows to access many internals of the VDR via a restful API"
 
 
-PKG_AUTORECONF="no"
+
 
 pre_make_target() {
   # dont build parallel

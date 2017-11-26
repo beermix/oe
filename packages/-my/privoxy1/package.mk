@@ -5,7 +5,7 @@ PKG_URL="https://sourceforge.net/projects/ijbswa/files/Sources/3.0.24%20%28stabl
 PKG_DEPENDS_TARGET="toolchain"
 
 
-PKG_AUTORECONF="no"
+
 
 configure_target() {
   cd $PKG_BUILD

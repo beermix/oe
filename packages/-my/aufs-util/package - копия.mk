@@ -5,7 +5,7 @@ PKG_GIT_BRANCH="aufs4.x-rcN"
 #PKG_SOURCE_DIR="aufs2-util"
 PKG_SECTION="devel"
 
-PKG_AUTORECONF="no"
+
 
 make_target() {
   make HOSTCC="$HOSTCC" CC="$CC" CFLAGS="$CFLAGS" AR="$AR" LD="$LD" CPPFLAGS="$CPPFLAGS -I$$SYSROOT_PREFIX/include/uapi" -j1

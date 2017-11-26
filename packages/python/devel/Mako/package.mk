@@ -30,7 +30,7 @@ PKG_SHORTDESC="Mako: A super-fast templating language that borrows the best idea
 PKG_LONGDESC="Mako is a super-fast templating language that borrows the best ideas from the existing templating languages."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
+
 
 make_host() {
  : # nothing todo

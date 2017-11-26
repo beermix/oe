@@ -8,7 +8,7 @@ PKG_SHORTDESC="Obfs4proxy is a pluggable transport proxy written in Go."
 PKG_LONGDESC=""
 
 
-PKG_AUTORECONF="no"
+
 
 get_go_arch() {
   case $1 in

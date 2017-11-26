@@ -5,7 +5,7 @@ PKG_DEPENDS_TARGET="toolchain libsodium libevent"
 
 PKG_SECTION="my"
 
-PKG_AUTORECONF="no"
+
 
 CFLAGS="$CFLAGS -fPIC -DPIC"
 

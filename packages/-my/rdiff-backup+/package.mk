@@ -7,7 +7,7 @@ PKG_DEPENDS_TARGET="toolchain Python distutilscross:host libpthread-stubs"
 
 PKG_SECTION="python/system"
 
-PKG_AUTORECONF="no"
+
 
 pre_configure_target() {
   cd $PKG_BUILD

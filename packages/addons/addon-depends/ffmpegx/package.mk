@@ -26,7 +26,7 @@ PKG_SOURCE_DIR="FFmpeg-n${PKG_VERSION}"
 PKG_DEPENDS_TARGET="toolchain bzip2 fdk-aac libvorbis openssl opus x264 x265 zlib"
 PKG_SECTION="multimedia"
 PKG_LONGDESC="FFmpegx is an complete FFmpeg build to support encoding and decoding"
-PKG_AUTORECONF="no"
+
 
 # Dependencies
 get_graphicdrivers

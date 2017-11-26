@@ -27,7 +27,7 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="gpu-viv-g2d: Another vivante Binary for performant resizing"
 PKG_LONGDESC="gpu-viv-g2d: Another vivante Binary for performant resizing"
-PKG_AUTORECONF="no"
+
 
 make_target() {
  : # nothing to make all binary

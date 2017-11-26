@@ -5,7 +5,7 @@ PKG_GIT_URL="https://github.com/the-tcpdump-group/libpcap"
 PKG_DEPENDS_TARGET="toolchain libz"
 PKG_SECTION="devel"
 PKG_USE_CMAKE="no"
-PKG_AUTORECONF="no"
+
 PKG_AUTORECONF="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="LIBS=-lpthread \
