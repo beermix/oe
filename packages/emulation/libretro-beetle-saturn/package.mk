@@ -29,8 +29,6 @@ PKG_SECTION="emulation"
 PKG_SHORTDESC="game.libretro.beetle-saturn: beetle-saturn for Kodi"
 PKG_LONGDESC="game.libretro.beetle-saturn: beetle-saturn for Kodi"
 
-PKG_USE_CMAKE="no"
-
 PKG_LIBNAME="mednafen_saturn_libretro.so"
 PKG_LIBPATH="$PKG_LIBNAME"
 PKG_LIBVAR="BEETLE-SATURN_LIB"

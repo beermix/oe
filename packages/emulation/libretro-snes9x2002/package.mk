@@ -29,8 +29,6 @@ PKG_SECTION="emulation"
 PKG_SHORTDESC="Port of SNES9x 1.39 for libretro. Heavily optimized for ARM."
 PKG_LONGDESC="Port of SNES9x 1.39 for libretro. Heavily optimized for ARM."
 
-PKG_USE_CMAKE="no"
-
 PKG_LIBNAME="snes9x2002_libretro.so"
 PKG_LIBPATH="$PKG_LIBNAME"
 PKG_LIBVAR="SNES9X2002_LIB"

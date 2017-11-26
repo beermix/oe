@@ -29,8 +29,6 @@ PKG_SECTION="emulation"
 PKG_SHORTDESC="game.libretro.beetle-bsnes: Beetle bSNES for Kodi"
 PKG_LONGDESC="game.libretro.beetle-bsnes: Beetle bSNES for Kodi"
 
-PKG_USE_CMAKE="no"
-
 PKG_LIBNAME="mednafen_snes_libretro.so"
 PKG_LIBPATH="$PKG_LIBNAME"
 PKG_LIBVAR="BEETLE-BSNES_LIB"

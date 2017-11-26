@@ -29,8 +29,6 @@ PKG_SECTION="emulation"
 PKG_SHORTDESC="game.libretro.dinothawr: dinothawr for Kodi"
 PKG_LONGDESC="game.libretro.dinothawr: dinothawr for Kodi"
 
-PKG_USE_CMAKE="no"
-
 PKG_LIBNAME="dinothawr_libretro.so"
 PKG_LIBPATH="$PKG_LIBNAME"
 PKG_LIBVAR="DINOTHAWR_LIB"

@@ -28,8 +28,6 @@ PKG_SECTION="emulation"
 PKG_SHORTDESC="A PSP emulator for Android, Windows, Mac, Linux and Blackberry 10, written in C++."
 PKG_LONGDESC="A PSP emulator for Android, Windows, Mac, Linux and Blackberry 10, written in C++."
 
-PKG_USE_CMAKE="no"
-
 PKG_LIBNAME="ppsspp_libretro.so"
 PKG_LIBPATH="libretro/$PKG_LIBNAME"
 PKG_LIBVAR="PPSSPP_LIB"

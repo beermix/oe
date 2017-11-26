@@ -29,8 +29,6 @@ PKG_SECTION="emulation"
 PKG_SHORTDESC="libretro wrapper for desmume NDS emulator."
 PKG_LONGDESC="libretro wrapper for desmume NDS emulator."
 
-PKG_USE_CMAKE="no"
-
 PKG_LIBNAME="desmume_libretro.so"
 PKG_LIBPATH="$PKG_LIBNAME"
 PKG_LIBVAR="DESMUME_LIB"

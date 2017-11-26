@@ -29,8 +29,6 @@ PKG_SECTION="emulation"
 PKG_SHORTDESC="Port of ProSystem to libretro"
 PKG_LONGDESC="Port of ProSystem to libretro"
 
-PKG_USE_CMAKE="no"
-
 PKG_LIBNAME="prosystem_libretro.so"
 PKG_LIBPATH="$PKG_LIBNAME"
 PKG_LIBVAR="PROSYSTEM_LIB"

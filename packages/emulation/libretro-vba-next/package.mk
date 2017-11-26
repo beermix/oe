@@ -29,8 +29,6 @@ PKG_SECTION="emulation"
 PKG_SHORTDESC="game.libretro.vba-next: VBA-Next for Kodi"
 PKG_LONGDESC="game.libretro.vba-next: VBA-Next for Kodi"
 
-PKG_USE_CMAKE="no"
-
 PKG_LIBNAME="vba_next_libretro.so"
 PKG_LIBPATH="$PKG_LIBNAME"
 PKG_LIBVAR="VBA-NEXT_LIB"

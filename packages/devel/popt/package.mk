@@ -28,7 +28,6 @@ PKG_SECTION="devel"
 PKG_SHORTDESC="popt: library for parsing command line options."
 PKG_LONGDESC="The popt library exists essentially for parsing command-line options. It is found superior in many ways when compared to parsing the argv array by hand or using the getopt functions getopt() and getopt_long()."
 
-
 pre_configure_target() {
  cd $PKG_BUILD
  rm -rf .$TARGET_NAME

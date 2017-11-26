@@ -29,8 +29,6 @@ PKG_SECTION="emulation"
 PKG_SHORTDESC="Late 2014/Early 2015 version of MAME (0.159-ish) for libretro"
 PKG_LONGDESC="Late 2014/Early 2015 version of MAME (0.159-ish) for libretro"
 
-PKG_USE_CMAKE="no"
-
 PKG_LIBNAME="mame2014_libretro.so"
 PKG_LIBPATH="$PKG_LIBNAME"
 PKG_LIBVAR="MAME2014_LIB"

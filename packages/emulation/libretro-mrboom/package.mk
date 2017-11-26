@@ -29,8 +29,6 @@ PKG_SECTION="emulation"
 PKG_SHORTDESC="game.libretro.mrboom: mrboom for Kodi"
 PKG_LONGDESC="game.libretro.mrboom: mrboom for Kodi"
 
-PKG_USE_CMAKE="no"
-
 PKG_LIBNAME="mrboom_libretro.so"
 PKG_LIBPATH="$PKG_LIBNAME"
 PKG_LIBVAR="MRBOOM_LIB"

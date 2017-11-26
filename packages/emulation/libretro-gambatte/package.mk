@@ -29,8 +29,6 @@ PKG_SECTION="emulation"
 PKG_SHORTDESC="game.libretro.gambatte: Gambatte for Kodi"
 PKG_LONGDESC="game.libretro.gambatte: Gambatte for Kodi"
 
-PKG_USE_CMAKE="no"
-
 PKG_LIBNAME="gambatte_libretro.so"
 PKG_LIBPATH="$PKG_LIBNAME"
 PKG_LIBVAR="GAMBATTE_LIB"

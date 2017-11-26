@@ -29,8 +29,6 @@ PKG_SECTION="emulation"
 PKG_SHORTDESC="game.libretro.2048: 2048 for Kodi"
 PKG_LONGDESC="game.libretro.2048: 2048 for Kodi"
 
-PKG_USE_CMAKE="no"
-
 PKG_LIBNAME="2048_libretro.so"
 PKG_LIBPATH="$PKG_LIBNAME"
 PKG_LIBVAR="2048_LIB"

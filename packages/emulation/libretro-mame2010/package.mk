@@ -29,8 +29,6 @@ PKG_SECTION="emulation"
 PKG_SHORTDESC="Late 2010 version of MAME (0.139) for libretro"
 PKG_LONGDESC="Late 2010 version of MAME (0.139) for libretro"
 
-PKG_USE_CMAKE="no"
-
 PKG_LIBNAME="mame2010_libretro.so"
 PKG_LIBPATH="$PKG_LIBNAME"
 PKG_LIBVAR="MAME2010_LIB"

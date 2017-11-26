@@ -29,8 +29,6 @@ PKG_SECTION="emulation"
 PKG_SHORTDESC="A simple Minecraft clone written in C using modern OpenGL (shaders)"
 PKG_LONGDESC="A simple Minecraft clone written in C using modern OpenGL (shaders)"
 
-PKG_USE_CMAKE="no"
-
 PKG_LIBNAME="craft_libretro.so"
 PKG_LIBPATH="$PKG_LIBNAME"
 PKG_LIBVAR="CRAFT_LIB"

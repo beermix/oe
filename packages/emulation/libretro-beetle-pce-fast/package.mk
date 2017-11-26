@@ -29,8 +29,6 @@ PKG_SECTION="emulation"
 PKG_SHORTDESC="game.libretro.beetle-pce-fast: Beetle PCE Fast for Kodi"
 PKG_LONGDESC="game.libretro.beetle-pce-fast: Beetle PCE Fast for Kodi"
 
-PKG_USE_CMAKE="no"
-
 PKG_LIBNAME="mednafen_pce_fast_libretro.so"
 PKG_LIBPATH="$PKG_LIBNAME"
 PKG_LIBVAR="BEETLE-PCE-FAST_LIB"

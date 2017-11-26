@@ -29,8 +29,6 @@ PKG_SECTION="emulation"
 PKG_SHORTDESC="2000 version of MAME (0.37b5) for libretro"
 PKG_LONGDESC="2000 version of MAME (0.37b5) for libretro"
 
-PKG_USE_CMAKE="no"
-
 PKG_LIBNAME="mame2000_libretro.so"
 PKG_LIBPATH="$PKG_LIBNAME"
 PKG_LIBVAR="MAME2000_LIB"

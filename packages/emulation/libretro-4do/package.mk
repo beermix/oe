@@ -29,8 +29,6 @@ PKG_SECTION="emulation"
 PKG_SHORTDESC="Port of 4DO/libfreedo to libretro."
 PKG_LONGDESC="Port of 4DO/libfreedo to libretro."
 
-PKG_USE_CMAKE="no"
-
 PKG_LIBNAME="4do_libretro.so"
 PKG_LIBPATH="$PKG_LIBNAME"
 PKG_LIBVAR="4DO_LIB"

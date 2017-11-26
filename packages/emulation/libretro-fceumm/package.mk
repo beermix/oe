@@ -29,8 +29,6 @@ PKG_SECTION="emulation"
 PKG_SHORTDESC="game.libretro.fceumm: FCEUmm emulator for Kodi"
 PKG_LONGDESC="game.libretro.fceumm: FCEUmm emulator for Kodi"
 
-PKG_USE_CMAKE="no"
-
 PKG_LIBNAME="fceumm_libretro.so"
 PKG_LIBPATH="$PKG_LIBNAME"
 PKG_LIBVAR="FCEUMM_LIB"

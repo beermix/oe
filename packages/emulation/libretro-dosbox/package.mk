@@ -29,8 +29,6 @@ PKG_SECTION="emulation"
 PKG_SHORTDESC="game.libretro.dosbox: DOSBox for Kodi"
 PKG_LONGDESC="game.libretro.dosbox: DOSBox for Kodi"
 
-PKG_USE_CMAKE="no"
-
 PKG_LIBNAME="dosbox_libretro.so"
 PKG_LIBPATH="$PKG_LIBNAME"
 PKG_LIBVAR="DOSBOX_LIB"

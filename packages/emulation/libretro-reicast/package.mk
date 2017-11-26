@@ -29,8 +29,6 @@ PKG_SECTION="emulation"
 PKG_SHORTDESC="Reicast is a multiplatform Sega Dreamcast emulator"
 PKG_LONGDESC="Reicast is a multiplatform Sega Dreamcast emulator"
 
-PKG_USE_CMAKE="no"
-
 PKG_LIBNAME="reicast_libretro.so"
 PKG_LIBPATH="$PKG_LIBNAME"
 PKG_LIBVAR="REICAST_LIB"

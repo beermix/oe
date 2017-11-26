@@ -28,8 +28,6 @@ PKG_SECTION="emulation"
 PKG_SHORTDESC="game.libretro.prboom: prboom for Kodi"
 PKG_LONGDESC="game.libretro.prboom: prboom for Kodi"
 
-PKG_USE_CMAKE="no"
-
 PKG_LIBNAME="prboom_libretro.so"
 PKG_LIBPATH="$PKG_LIBNAME"
 PKG_LIBVAR="PRBOOM_LIB"

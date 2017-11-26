@@ -29,8 +29,6 @@ PKG_SECTION="emulation"
 PKG_SHORTDESC="Late 2003 version of MAME (0.78) for libretro"
 PKG_LONGDESC="Late 2003 version of MAME (0.78) for libretro"
 
-PKG_USE_CMAKE="no"
-
 PKG_LIBNAME="mame2003_libretro.so"
 PKG_LIBPATH="$PKG_LIBNAME"
 PKG_LIBVAR="MAME2003_LIB"

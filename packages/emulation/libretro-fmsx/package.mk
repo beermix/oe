@@ -29,8 +29,6 @@ PKG_SECTION="emulation"
 PKG_SHORTDESC="game.libretro.fmsx: fmsx for Kodi"
 PKG_LONGDESC="game.libretro.fmsx: fmsx for Kodi"
 
-PKG_USE_CMAKE="no"
-
 PKG_LIBNAME="fmsx_libretro.so"
 PKG_LIBPATH="$PKG_LIBNAME"
 PKG_LIBVAR="FMSX_LIB"

@@ -29,8 +29,6 @@ PKG_SECTION="emulation"
 PKG_SHORTDESC="game.libretro.tyrquake: tyrquake for Kodi"
 PKG_LONGDESC="game.libretro.tyrquake: tyrquake for Kodi"
 
-PKG_USE_CMAKE="no"
-
 PKG_LIBNAME="tyrquake_libretro.so"
 PKG_LIBPATH="$PKG_LIBNAME"
 PKG_LIBVAR="TYRQUAKE_LIB"

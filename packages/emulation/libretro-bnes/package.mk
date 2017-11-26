@@ -29,8 +29,6 @@ PKG_SECTION="emulation"
 PKG_SHORTDESC="game.libretro.bnes: bNES for Kodi"
 PKG_LONGDESC="game.libretro.bnes: bNES for Kodi"
 
-PKG_USE_CMAKE="no"
-
 PKG_LIBNAME="bnes_libretro.so"
 PKG_LIBPATH="$PKG_LIBNAME"
 PKG_LIBVAR="BNES_LIB"
