@@ -58967,3 +58967,488 @@ index e098a3a672..ec2760918a 100644
  #define BFD_VERSION @bfd_version@
  #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
  #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 9f5a909c665b38993fcf853e80060b563decd9c1
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Mon Nov 13 00:01:21 2017 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index ec2760918a..063b0e0ced 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20171112
++#define BFD_VERSION_DATE 20171113
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 2a37c49fe783bfd4e10633a385716119300cd915
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Tue Nov 14 00:01:29 2017 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 063b0e0ced..9d0750f72e 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20171113
++#define BFD_VERSION_DATE 20171114
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit e9882b1ba00bab104becfce3d3de4ae03590ef33
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Wed Nov 15 00:01:28 2017 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 9d0750f72e..c32c7c0e55 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20171114
++#define BFD_VERSION_DATE 20171115
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit b033fbb7ad0359603fd86f0513b0a98405ee6559
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Thu Nov 16 00:01:30 2017 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index c32c7c0e55..1f16bcd843 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20171115
++#define BFD_VERSION_DATE 20171116
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 17886fc9c64bf7516fe9f8ee19e53525f4dffc37
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Fri Nov 17 00:01:24 2017 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 1f16bcd843..dc9c7e28d4 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20171116
++#define BFD_VERSION_DATE 20171117
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 4c88d16418de51c4b4621c69cc30f9ecec830aae
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sat Nov 18 00:01:19 2017 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index dc9c7e28d4..c404ccacbb 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20171117
++#define BFD_VERSION_DATE 20171118
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit b3b92588a1b367ef36b9320aea078d5820daa0e0
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sun Nov 19 00:01:32 2017 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index c404ccacbb..d45d236cd4 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20171118
++#define BFD_VERSION_DATE 20171119
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit a9f255ddb0aadbcbad210be1ec075ca792071ef9
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Mon Nov 20 00:01:27 2017 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index d45d236cd4..5043f91b27 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20171119
++#define BFD_VERSION_DATE 20171120
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 671be75d0d485dba57234686307314e8e46a6974
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Tue Nov 21 00:01:26 2017 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 5043f91b27..b5acc05c3f 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20171120
++#define BFD_VERSION_DATE 20171121
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 417a62732f52cf605dd45bc7864c4e96b1ef8d6f
+Author: Cary Coutant <ccoutant@gmail.com>
+Date:   Sun Nov 19 17:56:30 2017 -0800
+
+    Fix DWARF reader to use correct size for DW_FORM_ref_addr.
+    
+    2017-11-19  Ian Lance Taylor  <iant@google.com>
+                Cary Coutant  <ccoutant@gmail.com>
+    
+    gold/
+            * gold/dwarf_reader.h (class Dwarf_info_reader): Add ref_addr_size
+            method.
+            * gold/dwarf_reader.cc (Dwarf_die::read_attributes): Use ref_addr_size
+            for DW_FORM_ref_addr_size.
+            (Dwarf_die::skip_attributes): Likewise.
+
+diff --git a/gold/ChangeLog b/gold/ChangeLog
+index c8633e40b4..a17377050f 100644
+--- a/gold/ChangeLog
++++ b/gold/ChangeLog
+@@ -1,3 +1,14 @@
++2017-11-21  Ian Lance Taylor  <iant@google.com>
++
++	Apply from master:
++	2017-11-19  Ian Lance Taylor  <iant@google.com>
++		    Cary Coutant  <ccoutant@gmail.com>
++	* gold/dwarf_reader.h (class Dwarf_info_reader): Add ref_addr_size
++	method.
++	* gold/dwarf_reader.cc (Dwarf_die::read_attributes): Use ref_addr_size
++	for DW_FORM_ref_addr_size.
++	(Dwarf_die::skip_attributes): Likewise.
++
+ 2017-11-01  Alan Modra  <amodra@gmail.com>
+ 
+ 	Apply from master
+diff --git a/gold/dwarf_reader.cc b/gold/dwarf_reader.cc
+index 8c0d593752..4da9c1e2be 100644
+--- a/gold/dwarf_reader.cc
++++ b/gold/dwarf_reader.cc
+@@ -737,7 +737,6 @@ Dwarf_die::read_attributes()
+ 	      break;
+ 	    }
+ 	  case elfcpp::DW_FORM_addr:
+-	  case elfcpp::DW_FORM_ref_addr:
+ 	    {
+ 	      off_t sec_off;
+ 	      if (this->dwinfo_->address_size() == 4)
+@@ -751,6 +750,20 @@ Dwarf_die::read_attributes()
+ 	      ref_form = true;
+ 	      break;
+ 	    }
++	  case elfcpp::DW_FORM_ref_addr:
++	    {
++	      off_t sec_off;
++	      if (this->dwinfo_->ref_addr_size() == 4)
++		sec_off = this->dwinfo_->read_from_pointer<32>(&pattr);
++	      else
++		sec_off = this->dwinfo_->read_from_pointer<64>(&pattr);
++	      unsigned int shndx =
++		  this->dwinfo_->lookup_reloc(attr_off, &sec_off);
++	      attr_value.aux.shndx = shndx;
++	      attr_value.val.refval = sec_off;
++	      ref_form = true;
++	      break;
++	    }
+ 	  case elfcpp::DW_FORM_block1:
+ 	    attr_value.aux.blocklen = *pattr++;
+ 	    attr_value.val.blockval = pattr;
+@@ -947,9 +960,11 @@ Dwarf_die::skip_attributes()
+ 	    pattr += this->dwinfo_->offset_size();
+ 	    break;
+ 	  case elfcpp::DW_FORM_addr:
+-	  case elfcpp::DW_FORM_ref_addr:
+ 	    pattr += this->dwinfo_->address_size();
+ 	    break;
++	  case elfcpp::DW_FORM_ref_addr:
++	    pattr += this->dwinfo_->ref_addr_size();
++	    break;
+ 	  case elfcpp::DW_FORM_block1:
+ 	    pattr += 1 + *pattr;
+ 	    break;
+diff --git a/gold/dwarf_reader.h b/gold/dwarf_reader.h
+index b41e057621..31e76ce347 100644
+--- a/gold/dwarf_reader.h
++++ b/gold/dwarf_reader.h
+@@ -764,6 +764,13 @@ class Dwarf_info_reader
+   address_size() const
+   { return this->address_size_; }
+ 
++  // Return the size of a DW_FORM_ref_addr.
++  // In DWARF v2, this was the size of an address; in DWARF v3 and later,
++  // it is the size of an DWARF offset.
++  unsigned int
++  ref_addr_size() const
++  { return this->cu_version_ > 2 ? this->offset_size_ : this->address_size_; }
++
+   // Set the section index of the .debug_abbrev section.
+   // We use this if there are no relocations for the .debug_info section.
+   // If not set, the code parse() routine will search for the section by name.
+
+commit c1717314635717784dcbca1e2e9e13500107b4d0
+Author: Cary Coutant <ccoutant@gmail.com>
+Date:   Sun Nov 19 18:02:31 2017 -0800
+
+    Fix typo in ChangeLog entry.
+
+diff --git a/gold/ChangeLog b/gold/ChangeLog
+index a17377050f..f4210664b1 100644
+--- a/gold/ChangeLog
++++ b/gold/ChangeLog
+@@ -3,9 +3,9 @@
+ 	Apply from master:
+ 	2017-11-19  Ian Lance Taylor  <iant@google.com>
+ 		    Cary Coutant  <ccoutant@gmail.com>
+-	* gold/dwarf_reader.h (class Dwarf_info_reader): Add ref_addr_size
++	* dwarf_reader.h (class Dwarf_info_reader): Add ref_addr_size
+ 	method.
+-	* gold/dwarf_reader.cc (Dwarf_die::read_attributes): Use ref_addr_size
++	* dwarf_reader.cc (Dwarf_die::read_attributes): Use ref_addr_size
+ 	for DW_FORM_ref_addr_size.
+ 	(Dwarf_die::skip_attributes): Likewise.
+ 
+
+commit ca5b09d3f7ec6876f5d1065170ab387ff4f632a9
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Wed Nov 22 00:01:20 2017 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index b5acc05c3f..00edca7fdf 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20171121
++#define BFD_VERSION_DATE 20171122
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit bfd2d7afdafb0acc921d801299ee72ef9d3d78b3
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Thu Nov 23 00:01:24 2017 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 00edca7fdf..b92eb77bad 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20171122
++#define BFD_VERSION_DATE 20171123
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit e4495167d97f38d4e1f78b518e59e00a5533d768
+Author: Alan Modra <amodra@gmail.com>
+Date:   Tue Nov 14 18:47:34 2017 +1030
+
+    PR22431, powerpc64 ld segfault when .plt discarded
+    
+    The fix for the PR is to not use input_section->output_section->owner
+    to get to the output bfd, but use the output bfd directly since it is
+    available nowadays in struct bfd_link_info.
+    
+    I thought it worth warning when non-empty dynamic sections are
+    discarded too, which meant a tweak to one of the ld tests to avoid the
+    warning.
+    
+    bfd/
+            PR 22431
+            * elf64-ppc.c (ppc64_elf_size_dynamic_sections): Warn on discarding
+            non-empty dynamic section.
+            (ppc_build_one_stub): Take elf_gp from output bfd, not output
+            section owner.
+            (ppc_size_one_stub, ppc64_elf_next_toc_section): Likewise.
+    ld/
+            * testsuite/ld-elf/note-3.t: Don't discard .got.
+    
+    (cherry picked from commit 06bcf5416feae129e239476ab1408e038bba171d)
+
+diff --git a/bfd/ChangeLog b/bfd/ChangeLog
+index 4ad3675763..c8bcf8eabe 100644
+--- a/bfd/ChangeLog
++++ b/bfd/ChangeLog
+@@ -1,3 +1,14 @@
++2017-11-24  Alan Modra  <amodra@gmail.com>
++
++	Apply from master
++	2017-11-14  Alan Modra  <amodra@gmail.com>
++	PR 22431
++	* elf64-ppc.c (ppc64_elf_size_dynamic_sections): Warn on discarding
++	non-empty dynamic section.
++	(ppc_build_one_stub): Take elf_gp from output bfd, not output
++	section owner.
++	(ppc_size_one_stub, ppc64_elf_next_toc_section): Likewise.
++
+ 2017-11-05  Alan Modra  <amodra@gmail.com>
+ 
+ 	PR 22397
+diff --git a/bfd/elf64-ppc.c b/bfd/elf64-ppc.c
+index 3c8e2865d7..e2d4ba15e5 100644
+--- a/bfd/elf64-ppc.c
++++ b/bfd/elf64-ppc.c
+@@ -10329,6 +10329,10 @@ ppc64_elf_size_dynamic_sections (bfd *output_bfd,
+ 	  continue;
+ 	}
+ 
++      if (bfd_is_abs_section (s->output_section))
++	_bfd_error_handler (_("warning: discarding dynamic section %s"),
++			    s->name);
++
+       if ((s->flags & SEC_HAS_CONTENTS) == 0)
+ 	continue;
+ 
+@@ -11123,7 +11127,7 @@ ppc_build_one_stub (struct bfd_hash_entry *gen_entry, void *in_arg)
+ 	      + htab->brlt->output_section->vma);
+ 
+       off = (dest
+-	     - elf_gp (htab->brlt->output_section->owner)
++	     - elf_gp (info->output_bfd)
+ 	     - htab->sec_info[stub_entry->group->link_sec->id].toc_off);
+ 
+       if (off + 0x80008000 > 0xffffffff || (off & 7) != 0)
+@@ -11274,7 +11278,7 @@ ppc_build_one_stub (struct bfd_hash_entry *gen_entry, void *in_arg)
+ 	}
+ 
+       off = (dest
+-	     - elf_gp (plt->output_section->owner)
++	     - elf_gp (info->output_bfd)
+ 	     - htab->sec_info[stub_entry->group->link_sec->id].toc_off);
+ 
+       if (off + 0x80008000 > 0xffffffff || (off & 7) != 0)
+@@ -11422,7 +11426,7 @@ ppc_size_one_stub (struct bfd_hash_entry *gen_entry, void *in_arg)
+ 	plt = htab->elf.iplt;
+       off += (plt->output_offset
+ 	      + plt->output_section->vma
+-	      - elf_gp (plt->output_section->owner)
++	      - elf_gp (info->output_bfd)
+ 	      - htab->sec_info[stub_entry->group->link_sec->id].toc_off);
+ 
+       size = plt_stub_size (htab, stub_entry, off);
+@@ -11525,7 +11529,7 @@ ppc_size_one_stub (struct bfd_hash_entry *gen_entry, void *in_arg)
+ 	  off = (br_entry->offset
+ 		 + htab->brlt->output_offset
+ 		 + htab->brlt->output_section->vma
+-		 - elf_gp (htab->brlt->output_section->owner)
++		 - elf_gp (info->output_bfd)
+ 		 - htab->sec_info[stub_entry->group->link_sec->id].toc_off);
+ 
+ 	  if (info->emitrelocations)
+@@ -11645,7 +11649,7 @@ ppc64_elf_next_toc_section (struct bfd_link_info *info, asection *isec)
+ 	 output toc base plus 0x8000.  Making the input elf_gp an
+ 	 offset allows us to move the toc as a whole without
+ 	 recalculating input elf_gp.  */
+-      off = htab->toc_curr - elf_gp (isec->output_section->owner);
++      off = htab->toc_curr - elf_gp (info->output_bfd);
+       off += TOC_BASE_OFF;
+ 
+       /* Die if someone uses a linker script that doesn't keep input
+@@ -11674,7 +11678,7 @@ ppc64_elf_next_toc_section (struct bfd_link_info *info, asection *isec)
+     }
+   addr = (htab->toc_first_sec->output_offset
+ 	  + htab->toc_first_sec->output_section->vma);
+-  off = addr - elf_gp (isec->output_section->owner) + TOC_BASE_OFF;
++  off = addr - elf_gp (info->output_bfd) + TOC_BASE_OFF;
+   elf_gp (isec->owner) = off;
+ 
+   return TRUE;
+diff --git a/ld/ChangeLog b/ld/ChangeLog
+index 364b1040ec..0415ea9777 100644
+--- a/ld/ChangeLog
++++ b/ld/ChangeLog
+@@ -1,3 +1,9 @@
++2017-11-24  Alan Modra  <amodra@gmail.com>
++
++	Apply from master
++	2017-11-14  Alan Modra  <amodra@gmail.com>
++	* testsuite/ld-elf/note-3.t: Don't discard .got.
++
+ 2017-11-01  Alan Modra  <amodra@gmail.com>
+ 
+ 	Apply from master
+diff --git a/ld/testsuite/ld-elf/note-3.t b/ld/testsuite/ld-elf/note-3.t
+index 13324ae547..4c617d8f2a 100644
+--- a/ld/testsuite/ld-elf/note-3.t
++++ b/ld/testsuite/ld-elf/note-3.t
+@@ -17,6 +17,7 @@ SECTIONS
+   
+   .dynstr : { *(.dynstr) }
+   .dynsym : { *(.dynsym) }
++  .got : { *(.got .toc) *(.igot) }
+   .got.plt : { *(.got.plt) *(.igot.plt) }
+   /DISCARD/ : { *(*) }
+ }
+
+commit 5d91374ff5c46549fc3f29f1338e73c1dee03e4a
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Fri Nov 24 00:01:55 2017 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index b92eb77bad..3b8df2af09 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20171123
++#define BFD_VERSION_DATE 20171124
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 8f3307bc993040f7d006d8c72adad2d77ff80c6b
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sat Nov 25 00:01:32 2017 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 3b8df2af09..628ba74cc0 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20171124
++#define BFD_VERSION_DATE 20171125
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
