@@ -1,5 +1,5 @@
 PKG_NAME="nettle"
-PKG_VERSION="3.3"
+PKG_VERSION="3.4"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://www.lysator.liu.se/~nisse/nettle/"

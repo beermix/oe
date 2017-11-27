@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="squashfs"
-PKG_VERSION="1a6ffc7"
-PKG_SHA256="2a641ae2f3ae772b9b34dce955a77cfa0717eda57efb3df3a4a5222607c24b2c"
+PKG_VERSION="e38956b"
+#PKG_SHA256="2a641ae2f3ae772b9b34dce955a77cfa0717eda57efb3df3a4a5222607c24b2c"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://git.kernel.org/pub/scm/fs/squashfs/squashfs-tools.git"
