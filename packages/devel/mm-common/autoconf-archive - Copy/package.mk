@@ -16,16 +16,23 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="mm-common"
-PKG_VERSION="0.9.11"
+PKG_NAME="autoconf-archive"
+PKG_VERSION="2017.09.28"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://www.gnu.org/software/autoconf-archive/"
-PKG_URL="http://ftp.gnome.org/pub/GNOME/sources/mm-common/0.9/mm-common-$PKG_VERSION.tar.xz"
+PKG_URL="http://ftpmirror.gnu.org/autoconf-archive/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="ccache:host"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="autoconf-archive: macros for autoconf"
 PKG_LONGDESC="autoconf-archive is an package of m4 macros"
-PKG_AUTORECONF="yes"
 
+PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME --prefix=$TOOLCHAIN"
 
+makeinstall_host() {
+# make install
+  make prefix=$SYSROOT_PREFIX/usr install
+
+# remove problematic m4 file
+  rm -rf $SYSROOT_PREFIX/usr/share/aclocal/ax_prog_cc_for_build.m4
+}
