@@ -29,7 +29,8 @@ PKG_SHORTDESC="Minizip zlib contribution fork with latest bug fixes"
 PKG_LONGDESC="Minizip zlib contribution fork with latest bug fixes"
 PKG_USE_NINJA="no"
 
-PKG_CMAKE_OPTS_TARGET="-DUSE_AES=OFF -DBUILD_TEST=ON"
+PKG_CMAKE_OPTS_TARGET="-DUSE_AES=OFF \
+                       -DBUILD_TEST=ON"
 
 makeinstall_target() {
   cp -v miniunz_exec $SYSROOT_PREFIX/usr/bin/miniunz

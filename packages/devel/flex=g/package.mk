@@ -17,19 +17,18 @@
 ################################################################################
 
 PKG_NAME="flex"
-PKG_VERSION="2.5.39"
-PKG_SHA256="add2b55f3bc38cb512b48fad7d72f43b11ef244487ff25fc00aabec1e32b617f"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
+PKG_VERSION="2.6.4"
 PKG_SITE="http://flex.sourceforge.net/"
-PKG_URL="$SOURCEFORGE_SRC/flex/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_HOST="ccache:host"
+PKG_URL="https://github.com/westes/flex/releases/download/v${PKG_VERSION}/${PKG_NAME}-${PKG_VERSION}.tar.gz"
+PKG_DEPENDS_HOST="ccache:host m4:host"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="flex: Fast lexical analyzer generator"
 PKG_LONGDESC="flex is a tool for generating programs that perform pattern-matching on text."
 PKG_AUTORECONF="yes"
 
-PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared --disable-rpath --with-gnu-ld"
+PKG_CONFIGURE_OPTS_HOST="ac_cv_path_M4=$TOOLCHAIN/bin/m4 --disable-doc --disable-shared"
+
+PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_reallocarray=no --disable-program --disable-doc"
 
 post_makeinstall_host() {
   cat > $TOOLCHAIN/bin/lex << "EOF"
@@ -39,3 +38,4 @@ EOF
 
   chmod -v 755 $TOOLCHAIN/bin/lex
 }
+

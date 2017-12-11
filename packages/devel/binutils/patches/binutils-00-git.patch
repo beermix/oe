@@ -59452,3 +59452,564 @@ index 3b8df2af09..628ba74cc0 100644
  #define BFD_VERSION @bfd_version@
  #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
  #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 131549ce88279728c3a270831190747a512134f4
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sun Nov 26 00:01:50 2017 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 628ba74cc0..82e28ac62b 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20171125
++#define BFD_VERSION_DATE 20171126
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit a22d4423d47699a98fb4ea82bfbcda7ac399d41b
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Mon Nov 27 00:01:40 2017 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 82e28ac62b..994e4081d8 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20171126
++#define BFD_VERSION_DATE 20171127
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit cb4246328fbb9dfba7cb4805fb64f69376b1a64f
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Tue Nov 28 00:01:36 2017 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 994e4081d8..f1f51b78f7 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20171127
++#define BFD_VERSION_DATE 20171128
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 7c9ffe322a40e3c1c4509546f9e0f7546e1514b0
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Wed Nov 29 00:01:34 2017 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index f1f51b78f7..743fe4c2f8 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20171128
++#define BFD_VERSION_DATE 20171129
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 34f95f8f4cacdbedbbf86c80e47bde731b50cf0a
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Thu Nov 30 00:01:09 2017 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 743fe4c2f8..0e744c779a 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20171129
++#define BFD_VERSION_DATE 20171130
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 33130d00dc1422c5a3071d771b90dafd77e22643
+Author: Peter Smith <peter.smith@linaro.org>
+Date:   Thu Nov 30 13:30:58 2017 -0800
+
+    Fix segfault in relocate_erratum_stub on aarch64.
+    
+    The fix for PR21868 (an internal error when --fix-cortex-a53-843419
+    is applied) has a small mistake in it. When the stub_owner section
+    needs an erratum fix an incorrect address for the stubs for the section
+    is given to relocate_erratum_stub. If we are lucky we will get a segfault;
+    if we aren't, an incorrect patch or data corruption is possible.
+    The error is visible in PR21868, but the side-effects aren't fatal.
+    
+    gold/
+            PR gold/22233
+            * aarch64.cc (AArch64_relobj::fix_errata_and_relocate_erratum_stubs):
+            Fix calculation of stub address.
+
+diff --git a/gold/ChangeLog b/gold/ChangeLog
+index f4210664b1..b02dcba5b5 100644
+--- a/gold/ChangeLog
++++ b/gold/ChangeLog
+@@ -1,3 +1,9 @@
++2017-11-30  Peter Smith  <peter.smith@linaro.org>
++
++	PR gold/22233
++	* aarch64.cc (AArch64_relobj::fix_errata_and_relocate_erratum_stubs):
++	Fix calculation of stub address.
++
+ 2017-11-21  Ian Lance Taylor  <iant@google.com>
+ 
+ 	Apply from master:
+diff --git a/gold/aarch64.cc b/gold/aarch64.cc
+index b4287a6f25..d0839ce0af 100644
+--- a/gold/aarch64.cc
++++ b/gold/aarch64.cc
+@@ -2041,7 +2041,7 @@ AArch64_relobj<size, big_endian>::fix_errata_and_relocate_erratum_stubs(
+           // executed.
+           stub_table->relocate_erratum_stub(
+ 	    stub,
+-	    pview.view + view_offset + (stub_table->address() - pview.address));
++	    pview.view + (stub_table->address() - pview.address));
+ 
+           // Next erratum stub.
+ 	  ++p;
+
+commit c2fd86f2bdfa2f565cf6da6530f1bfb65824e2d3
+Author: Cary Coutant <ccoutant@gmail.com>
+Date:   Thu Nov 30 13:44:28 2017 -0800
+
+    Fix problem where erratum stubs are not always applied.
+    
+    I checked over the results of applying --fix-cortex-a53-843419 to
+    a very large program (gitit) with two stub tables and thousands
+    of erratum fixes. I noticed that all the erratum_stubs were being
+    created but about 1/3 of them were being skipped over by
+    fix_errata_and_relocate_erratum_stubs(). By skipped over I mean
+    no branch relocation or adrp -> adr transformation was applied to
+    the erratum address, leaving the erratum_stub unreachable, and
+    with a branch with a 0 immediate.
+    
+    The root cause of the skipped over erratum_stubs is
+    Erratum_stub::invalidate_erratum_stub() that is used to set
+    relobj_ to NULL when an erratum_stub has been processed.
+    Unfortunately relobj_ is used in operator<() so altering relobj
+    makes the results from erratum_stubs_.lower_bound() as used in
+    find_erratum_stubs_for_input_section() unreliable.
+    
+    2017-11-30  Peter Smith  <peter.smith@linaro.org>
+                Cary Coutant  <ccoutant@gmail.com>
+    
+    gold/
+            PR gold/20765
+            * aarch64.cc (Erratum_stub::invalidate_erratum_stub): Use erratum_insn_
+            instead of relobj_ to invalidate the stub.
+            (Erratum_stub::is_invalidated_erratum_stub): Likewise.
+
+diff --git a/gold/ChangeLog b/gold/ChangeLog
+index b02dcba5b5..297ffe98c3 100644
+--- a/gold/ChangeLog
++++ b/gold/ChangeLog
+@@ -1,3 +1,11 @@
++2017-11-30  Peter Smith  <peter.smith@linaro.org>
++	    Cary Coutant  <ccoutant@gmail.com>
++
++	PR gold/20765
++	* aarch64.cc (Erratum_stub::invalidate_erratum_stub): Use erratum_insn_
++	instead of relobj_ to invalidate the stub.
++	(Erratum_stub::is_invalidated_erratum_stub): Likewise.
++
+ 2017-11-30  Peter Smith  <peter.smith@linaro.org>
+ 
+ 	PR gold/22233
+diff --git a/gold/aarch64.cc b/gold/aarch64.cc
+index d0839ce0af..aa7561a69d 100644
+--- a/gold/aarch64.cc
++++ b/gold/aarch64.cc
+@@ -1052,13 +1052,13 @@ public:
+   void
+   invalidate_erratum_stub()
+   {
+-     gold_assert(this->relobj_ != NULL);
+-     this->relobj_ = NULL;
++     gold_assert(this->erratum_insn_ != invalid_insn);
++     this->erratum_insn_ = invalid_insn;
+   }
+ 
+   bool
+   is_invalidated_erratum_stub()
+-  { return this->relobj_ == NULL; }
++  { return this->erratum_insn_ == invalid_insn; }
+ 
+ protected:
+   virtual void
+
+commit ce8bf2af57bc1d188f52e815805be202c6877d19
+Author: Peter Smith <peter.smith@linaro.org>
+Date:   Thu Nov 30 15:07:26 2017 -0800
+
+    Fix internal error in fix_errata on aarch64.
+    
+    The addresses of erratum stubs can be changed by relaxation passes, and
+    need to be updated.
+    
+    gold/
+            PR gold/20765
+            * aarch64.cc (Aarch64_relobj::update_erratum_address): New method.
+            (AArch64_relobj::scan_errata): Update addresses in stub table after
+            relaxation pass.
+
+diff --git a/gold/ChangeLog b/gold/ChangeLog
+index 297ffe98c3..94e3f02b9c 100644
+--- a/gold/ChangeLog
++++ b/gold/ChangeLog
+@@ -1,3 +1,10 @@
++2017-11-30  Peter Smith  <peter.smith@linaro.org>
++
++	PR gold/20765
++	* aarch64.cc (Aarch64_relobj::update_erratum_address): New method.
++	(AArch64_relobj::scan_errata): Update addresses in stub table after
++	relaxation pass.
++
+ 2017-11-30  Peter Smith  <peter.smith@linaro.org>
+ 	    Cary Coutant  <ccoutant@gmail.com>
+ 
+diff --git a/gold/aarch64.cc b/gold/aarch64.cc
+index aa7561a69d..c7c9279adb 100644
+--- a/gold/aarch64.cc
++++ b/gold/aarch64.cc
+@@ -1031,6 +1031,18 @@ public:
+   set_erratum_address(AArch64_address addr)
+   { this->erratum_address_ = addr; }
+ 
++  // Later relaxation passes of may alter the recorded erratum and destination
++  // address. Given an up to date output section address of shidx_ in
++  // relobj_ we can derive the erratum_address and destination address.
++  void
++  update_erratum_address(AArch64_address output_section_addr)
++  {
++    const int BPI = AArch64_insn_utilities<big_endian>::BYTES_PER_INSN;
++    AArch64_address updated_addr = output_section_addr + this->sh_offset_;
++    this->set_erratum_address(updated_addr);
++    this->set_destination_address(updated_addr + BPI);
++  }
++
+   // Comparator used to group Erratum_stubs in a set by (obj, shndx,
+   // sh_offset). We do not include 'type' in the calculation, because there is
+   // at most one stub type at (obj, shndx, sh_offset).
+@@ -2304,6 +2316,19 @@ AArch64_relobj<size, big_endian>::scan_errata(
+       output_address = poris->address();
+     }
+ 
++  // Update the addresses in previously generated erratum stubs. Unlike when
++  // we scan relocations for stubs, if section addresses have changed due to
++  // other relaxations we are unlikely to scan the same erratum instances
++  // again.
++  The_stub_table* stub_table = this->stub_table(shndx);
++  if (stub_table)
++    {
++      std::pair<Erratum_stub_set_iter, Erratum_stub_set_iter>
++	  ipair(stub_table->find_erratum_stubs_for_input_section(this, shndx));
++      for (Erratum_stub_set_iter p = ipair.first;  p != ipair.second; ++p)
++          (*p)->update_erratum_address(output_address);
++    }
++
+   section_size_type input_view_size = 0;
+   const unsigned char* input_view =
+     this->section_contents(shndx, &input_view_size, false);
+
+commit e4fb4db4f3f7eb1780927638eebf367fb9424111
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Fri Dec 1 00:01:40 2017 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 0e744c779a..ccb8c0425f 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20171130
++#define BFD_VERSION_DATE 20171201
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit a003939d711691d3b0b573ca41b1713b44b27db3
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sat Dec 2 00:01:29 2017 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index ccb8c0425f..a0b5d3daae 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20171201
++#define BFD_VERSION_DATE 20171202
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit e0fa9b596532ade90f82d30fa5b057063eec3c2a
+Author: Cary Coutant <ccoutant@gmail.com>
+Date:   Fri Dec 1 22:03:09 2017 -0800
+
+    Fix incremental linking failure with GCC 7+.
+    
+    With the new compiler, we're running out of patch space for the .eh_frame
+    section. To workaround that issue, we compile the before and after versions
+    both with no unwind tables.
+    
+    gold/
+            PR gold/22309
+            * testsuite/Makefile.am (two_file_test_1_v1_ndebug.o): Compile with
+            no EH information.
+            (two_file_test_1_ndebug.o): Likewise.
+            * testsuite/Makefile.in: Regenerate.
+            * testsuite/two_file_test_1.cc: Touch to force recompilation with new
+            flags.
+            * testsuite/two_file_test_1_v1.cc: Likewise.
+
+diff --git a/gold/ChangeLog b/gold/ChangeLog
+index 94e3f02b9c..9e45ad360d 100644
+--- a/gold/ChangeLog
++++ b/gold/ChangeLog
+@@ -1,3 +1,14 @@
++2017-12-01  Cary Coutant  <ccoutant@gmail.com>
++
++	PR gold/22309
++	* testsuite/Makefile.am (two_file_test_1_v1_ndebug.o): Compile with
++	no EH information.
++	(two_file_test_1_ndebug.o): Likewise.
++	* testsuite/Makefile.in: Regenerate.
++	* testsuite/two_file_test_1.cc: Touch to force recompilation with new
++	flags.
++	* testsuite/two_file_test_1_v1.cc: Likewise.
++
+ 2017-11-30  Peter Smith  <peter.smith@linaro.org>
+ 
+ 	PR gold/20765
+diff --git a/gold/testsuite/Makefile.am b/gold/testsuite/Makefile.am
+index 26ee77abcc..31c3d3e8a0 100644
+--- a/gold/testsuite/Makefile.am
++++ b/gold/testsuite/Makefile.am
+@@ -2970,9 +2970,9 @@ pr20976-d.o: pr20976.o gcctestdir/ld
+ if DEFAULT_TARGET_X86_64
+ 
+ two_file_test_1_v1_ndebug.o: two_file_test_1_v1.cc
+-	$(CXXCOMPILE) -O0 -g0 -c -o $@ $<
++	$(CXXCOMPILE) -O0 -g0 -fno-exceptions -fno-asynchronous-unwind-tables -c -o $@ $<
+ two_file_test_1_ndebug.o: two_file_test_1.cc
+-	$(CXXCOMPILE) -O0 -g0 -c -o $@ $<
++	$(CXXCOMPILE) -O0 -g0 -fno-exceptions -fno-asynchronous-unwind-tables -c -o $@ $<
+ two_file_test_1b_ndebug.o: two_file_test_1b.cc
+ 	$(CXXCOMPILE) -O0 -g0 -c -o $@ $<
+ two_file_test_2_ndebug.o: two_file_test_2.cc
+diff --git a/gold/testsuite/Makefile.in b/gold/testsuite/Makefile.in
+index eae68b56cb..1ba382e1c9 100644
+--- a/gold/testsuite/Makefile.in
++++ b/gold/testsuite/Makefile.in
+@@ -7244,9 +7244,9 @@ uninstall-am:
+ # Incremental linking is currently supported only on the x86_64 target.
+ 
+ @DEFAULT_TARGET_X86_64_TRUE@@GCC_TRUE@@NATIVE_LINKER_TRUE@two_file_test_1_v1_ndebug.o: two_file_test_1_v1.cc
+-@DEFAULT_TARGET_X86_64_TRUE@@GCC_TRUE@@NATIVE_LINKER_TRUE@	$(CXXCOMPILE) -O0 -g0 -c -o $@ $<
++@DEFAULT_TARGET_X86_64_TRUE@@GCC_TRUE@@NATIVE_LINKER_TRUE@	$(CXXCOMPILE) -O0 -g0 -fno-exceptions -fno-asynchronous-unwind-tables -c -o $@ $<
+ @DEFAULT_TARGET_X86_64_TRUE@@GCC_TRUE@@NATIVE_LINKER_TRUE@two_file_test_1_ndebug.o: two_file_test_1.cc
+-@DEFAULT_TARGET_X86_64_TRUE@@GCC_TRUE@@NATIVE_LINKER_TRUE@	$(CXXCOMPILE) -O0 -g0 -c -o $@ $<
++@DEFAULT_TARGET_X86_64_TRUE@@GCC_TRUE@@NATIVE_LINKER_TRUE@	$(CXXCOMPILE) -O0 -g0 -fno-exceptions -fno-asynchronous-unwind-tables -c -o $@ $<
+ @DEFAULT_TARGET_X86_64_TRUE@@GCC_TRUE@@NATIVE_LINKER_TRUE@two_file_test_1b_ndebug.o: two_file_test_1b.cc
+ @DEFAULT_TARGET_X86_64_TRUE@@GCC_TRUE@@NATIVE_LINKER_TRUE@	$(CXXCOMPILE) -O0 -g0 -c -o $@ $<
+ @DEFAULT_TARGET_X86_64_TRUE@@GCC_TRUE@@NATIVE_LINKER_TRUE@two_file_test_2_ndebug.o: two_file_test_2.cc
+diff --git a/gold/testsuite/two_file_test_1.cc b/gold/testsuite/two_file_test_1.cc
+index 567409af26..8c26c6344e 100644
+--- a/gold/testsuite/two_file_test_1.cc
++++ b/gold/testsuite/two_file_test_1.cc
+@@ -20,6 +20,9 @@
+ // Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston,
+ // MA 02110-1301, USA.
+ 
++// For incremental linking tests, this file needs to be compiled with
++// -fno-exceptions -fno-asynchronous-unwind-tables.
++
+ // This tests references between files.  This is file 1, and
+ // two_file_test_2.cc is file 2.  We test in several different ways:
+ 
+diff --git a/gold/testsuite/two_file_test_1_v1.cc b/gold/testsuite/two_file_test_1_v1.cc
+index d2ea0e217a..f95ee737ad 100644
+--- a/gold/testsuite/two_file_test_1_v1.cc
++++ b/gold/testsuite/two_file_test_1_v1.cc
+@@ -25,6 +25,9 @@
+ // source file, then do an incremental link with the primary version of
+ // the file.
+ 
++// For incremental linking tests, this file needs to be compiled with
++// -fno-exceptions -fno-asynchronous-unwind-tables.
++
+ // This tests references between files.  This is file 1, and
+ // two_file_test_2.cc is file 2.  We test in several different ways:
+ 
+
+commit b5693c6c9d1e9bd29d6e9534dec3f8c2d025d624
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sun Dec 3 00:01:36 2017 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index a0b5d3daae..622d4870e3 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20171202
++#define BFD_VERSION_DATE 20171203
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit b1bf843d4bb68c3051cb29dd94c756d1378bcb23
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Mon Dec 4 00:01:42 2017 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 622d4870e3..b7f8e1c2f7 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20171203
++#define BFD_VERSION_DATE 20171204
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit db491bbcb0fdb5ee981e218f97c4453588140db2
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Tue Dec 5 00:01:27 2017 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index b7f8e1c2f7..3efb1812a5 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20171204
++#define BFD_VERSION_DATE 20171205
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit c9e74abb034040a2bea6fdb9e21f39688a58b4f7
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Wed Dec 6 00:01:41 2017 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 3efb1812a5..d3ee7b821b 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20171205
++#define BFD_VERSION_DATE 20171206
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 24d59b95913cab42bd44f95484a92f7b2cec9b51
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Thu Dec 7 00:01:19 2017 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index d3ee7b821b..11606be82f 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20171206
++#define BFD_VERSION_DATE 20171207
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit fb5dab14a6903060c33428a592135bd652270503
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Fri Dec 8 00:01:30 2017 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 11606be82f..9bfdc19a4d 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20171207
++#define BFD_VERSION_DATE 20171208
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit c7ffe19a3697bc8bf45ecbf3b7471a0120fc2172
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sat Dec 9 00:01:34 2017 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 9bfdc19a4d..5c0c6378f7 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20171208
++#define BFD_VERSION_DATE 20171209
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit e6d71583360b0948d7ce81d5b3903a2295d6fb14
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sun Dec 10 00:01:36 2017 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 5c0c6378f7..15fcb0b22f 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20171209
++#define BFD_VERSION_DATE 20171210
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 38b5267a0002154e2fdf2c894e7f4a0d27234eca
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Mon Dec 11 00:01:16 2017 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 15fcb0b22f..603c325476 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20171210
++#define BFD_VERSION_DATE 20171211
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@

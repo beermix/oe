@@ -17,19 +17,20 @@
 ################################################################################
 
 PKG_NAME="mesa"
-PKG_VERSION="17.2.5"
+PKG_VERSION="17.3.0"
+PKG_SHA256="29a0a3a6c39990d491a1a58ed5c692e596b3bfc6c01d0b45e0b787116c50c6d9"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.mesa3d.org/"
 PKG_URL="ftp://freedesktop.org/pub/mesa/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_DEPENDS_TARGET="toolchain expat libdrm"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="mesa: 3-D graphics library with OpenGL API"
 PKG_LONGDESC="Mesa is a 3-D graphics library with an API which is very similar to that of OpenGL*. To the extent that Mesa utilizes the OpenGL command syntax or state machine, it is being used with authorization from Silicon Graphics, Inc. However, the author makes no claim that Mesa is in any way a compatible replacement for OpenGL or associated with Silicon Graphics, Inc. Those who want a licensed implementation of OpenGL should contact a licensed vendor. While Mesa is not a licensed OpenGL implementation, it is currently being tested with the OpenGL conformance tests. For the current conformance status see the CONFORM file included in the Mesa distribution."
-PKG_AUTORECONF="yes"
-PKG_USE_MESON="no"
+PKG_TOOLCHAIN="autotools"
 
 if [ "$DISPLAYSERVER" = "x11" ]; then
-  PKG_DEPENDS_TARGET="toolchain Python2:host expat glproto dri2proto presentproto libdrm libXext libXdamage libXfixes libXxf86vm libxcb libX11 systemd dri3proto libxshmfence openssl"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET glproto dri2proto presentproto libXext libXdamage libXfixes libXxf86vm libxcb libX11 dri3proto libxshmfence"
 
   export DRI_DRIVER_INSTALL_DIR=$XORG_PATH_DRI
   export DRI_DRIVER_SEARCH_DIR=$XORG_PATH_DRI
@@ -38,7 +39,6 @@ if [ "$DISPLAYSERVER" = "x11" ]; then
   MESA_GLX="--enable-glx --enable-driglx-direct --enable-glx-tls"
   MESA_PLATFORMS="--with-platforms=x11,drm"
 else
-  PKG_DEPENDS_TARGET="toolchain Python2:host expat libdrm"
   MESA_DRI="--enable-dri --disable-dri3"
   # The glx in glx-tls is a misnomer - there's nothing glx in it.
   MESA_GLX="--disable-glx --disable-driglx-direct --enable-glx-tls"
@@ -98,7 +98,7 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --disable-nine \
                            --disable-xvmc \
                            $MESA_VDPAU \
-                           --disable-omx \
+                           --disable-omx-bellagio \
                            --disable-va \
                            --disable-opencl \
                            --enable-opencl-icd \
@@ -112,6 +112,16 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --with-dri-drivers=$DRI_DRIVERS \
                            --with-vulkan-drivers=no \
                            --with-sysroot=$SYSROOT_PREFIX"
+
+# Temporary workaround:
+# Listed libraries are static, while mesa expects shared ones. This breaks the
+# dependency tracking. The following has some ideas on how to address that.
+# https://github.com/LibreELEC/LibreELEC.tv/pull/2163
+pre_configure_target() {
+  if [ "$DISPLAYSERVER" = "x11" ]; then
+    export LIBS="-lxcb-dri3 -lxcb-dri2 -lxcb-xfixes -lxcb-present -lxcb-sync -lxshmfence -lz"
+  fi
+}
 
 post_makeinstall_target() {
   # Similar hack is needed on EGL, GLES* front. Might as well drop it and test the GLVND?
