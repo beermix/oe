@@ -1,6 +1,6 @@
 ################################################################################
-#      This file is part of LibreELEC - http://www.libreelec.tv
-#      Copyright (C) 2016 Team LibreELEC
+#      This file is part of LibreELEC - https://libreelec.tv
+#      Copyright (C) 2016-present Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="tools"
 PKG_SHORTDESC="unrar: Extract, test and view RAR archives"
 PKG_LONGDESC="Unrar is a package to handle files compressed in the RAR format. Due to strange licensing issues this package can only view, test and extract files in a given archive, but not pack files. But since we have far more advanced open-source compression utils it should be enough to extract the content when you get a RAR archive."
-
+PKG_TOOLCHAIN="manual"
 
 make_target() {
   make CXX="$CXX" \
@@ -36,10 +36,6 @@ make_target() {
      LDFLAGS="$LDFLAGS -pthread" \
      PREFIX=/usr \
      -f makefile
-}
-
-makeinstall_target() {
-  : # nop
 }
 
 post_make_target() {
