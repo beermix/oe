@@ -28,7 +28,6 @@ PKG_SECTION="system"
 PKG_SHORTDESC="libusb: OS independent USB device access"
 PKG_LONGDESC="The libusb project's aim is to create a Library for use by user level applications to USB devices regardless of OS."
 
-
 PKG_CONFIGURE_OPTS_TARGET="--enable-shared \
             --enable-static \
             --disable-log \

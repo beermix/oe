@@ -28,7 +28,6 @@ PKG_SECTION="system"
 PKG_SHORTDESC="usbutils: Linux USB Utilities"
 PKG_LONGDESC="This package contains various utilities for inspecting and setting of devices connected to the USB bus. Requires a kernel version including usbdevfs support - and this usbdevfs mounted to /proc/bus/usb."
 
-
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin/lsusb.py
   rm -rf $INSTALL/usr/bin/usbhid-dump

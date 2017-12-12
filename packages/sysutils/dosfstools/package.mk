@@ -29,7 +29,6 @@ PKG_SECTION="tools"
 PKG_SHORTDESC="dosfstools: utilities for making and checking MS-DOS FAT filesystems."
 PKG_LONGDESC="dosfstools contains utilities for making and checking MS-DOS FAT filesystems."
 
-
 PKG_MAKE_OPTS_TARGET="PREFIX=/usr"
 PKG_MAKEINSTALL_OPTS_TARGET="PREFIX=/usr"
 

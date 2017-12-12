@@ -28,7 +28,6 @@ PKG_SECTION="system"
 PKG_SHORTDESC="tzdata"
 PKG_LONGDESC="tzdata"
 
-
 PKG_MAKE_OPTS_TARGET="CC=$HOST_CC LDFLAGS="
 
 makeinstall_target() {

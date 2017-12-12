@@ -29,7 +29,6 @@ PKG_SECTION="system"
 PKG_SHORTDESC="kmod offers the needed flexibility and fine grained control over insertion, removal, configuration and listing of kernel modules."
 PKG_LONGDESC="kmod offers the needed flexibility and fine grained control over insertion, removal, configuration and listing of kernel modules."
 
-
 PKG_CONFIGURE_OPTS_HOST="--enable-tools \
                          --disable-logging \
                          --disable-debug \
