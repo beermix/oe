@@ -7,8 +7,6 @@ PKG_DEPENDS_HOST="zlib:host"
 PKG_SECTION="devel"
 PKG_SHORTDESC="ncurses: The ncurses (new curses) library"
 
-
-
 PKG_CONFIGURE_OPTS_TARGET="--enable-overwrite \
 			      --disable-termcap \
 			      --disable-warnings \
