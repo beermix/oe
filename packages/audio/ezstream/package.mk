@@ -5,7 +5,6 @@ PKG_DEPENDS_TARGET="toolchain libshout libxml2 taglib libvorbis libtheora opus t
 PKG_SECTION="tools"
 PKG_TOOLCHAIN="autotools"
 
-
 PKG_CONFIGURE_OPTS_TARGET="--disable-rpath --disable-debug"
 
 pre_configure_target() {
