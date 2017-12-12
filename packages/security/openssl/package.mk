@@ -6,6 +6,8 @@ PKG_DEPENDS_TARGET="toolchain yasm:host pcre zlib gmp"
 PKG_SECTION="security"
 PKG_SHORTDESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"
 PKG_LONGDESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"
+PKG_IS_ADDON="no"
+PKG_AUTORECONF="no"
 
 export CCACHE_DISABLE=1
 
@@ -19,7 +21,6 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            no-rc5 \
                            enable-camellia \
                            enable-mdc2 \
-                           zlib-dynamic \
                            enable-ec_nistp_64_gcc_128"
 
 pre_configure_host() {
@@ -30,7 +31,7 @@ pre_configure_host() {
 configure_host() {
   cd $PKG_BUILD/.$HOST_NAME
   sed -i -e '/^"linux-x86_64"/ s/-m64 -DL_ENDIAN -O3 -Wall/-m64 -DL_ENDIAN -Wall/' $PKG_BUILD/.$HOST_NAME/Configure
-  ./Configure --prefix=/ $PKG_CONFIGURE_OPTS_SHARED no-static-engine linux-x86_64 $CFLAGS -DHAVE_CRYPTODEV -DUSE_CRYPTODEV_DIGESTS $LDFLAGS
+  ./Configure --prefix=/ $PKG_CONFIGURE_OPTS_SHARED no-static-engine linux-x86_64 $CFLAGS $LDFLAGS
 #  MAKEFLAGS=-j1
 }
 
