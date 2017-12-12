@@ -4,14 +4,15 @@ PKG_SITE="ftp://ftp.fftw.org/pub/fftw/"
 PKG_URL="ftp://ftp.fftw.org/pub/fftw/fftw-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="service/system"
-PKG_USE_CMAKE="no"
-
+PKG_TOOLCHAIN="cmake-make"
 
 pre_configure_target() {
   export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
   export CFLAGS="$CFLAGS -fopenmp -fPIC"
-#  export CFLAGS="$CFLAGS -fomit-frame-pointer -malign-double -fstrict-aliasing -ffast-math -fopenmp -fPIC"
+  export CFLAGS="$CFLAGS -fomit-frame-pointer -malign-double -fstrict-aliasing -ffast-math -fopenmp -fPIC"
 }
+
+PKG_CMAKE_OPTS_TARGET="-DBUILD_SHARED_LIBS=0 -DBUILD_TESTS=0"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-static \
