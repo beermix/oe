@@ -6,7 +6,7 @@ PKG_DEPENDS_HOST="zlib:host"
 PKG_DEPENDS_TARGET="toolchain zlib"
 PKG_SECTION="devel"
 PKG_USE_CMAKE="no"
-
+PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-pcre2-16 --enable-jit --enable-utf8 --enable-unicode-properties --disable-shared --with-pic"
 

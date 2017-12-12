@@ -26,7 +26,6 @@ PKG_DEPENDS_HOST=""
 PKG_DEPENDS_TARGET="toolchain zlib"
 PKG_SECTION="devel"
 PKG_TOOLCHAIN="autotools"
-PKG_USE_CMAKE="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-unicode-properties \
 			      --enable-pcre16 \

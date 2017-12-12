@@ -19,13 +19,13 @@
 PKG_NAME="libpcap"
 PKG_VERSION="1.8.1"
 PKG_URL="http://www.tcpdump.org/release/libpcap-$PKG_VERSION.tar.gz"
-#PKG_GIT_URL="https://github.com/the-tcpdump-group/libpcap"
+PKG_SITE="https://github.com/the-tcpdump-group/libpcap"
 #PKG_URL="https://github.com/the-tcpdump-group/libpcap/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libnl"
 PKG_SECTION="devel"
 PKG_SHORTDESC="system interface for user-level packet capture"
 PKG_LONGDESC="libpcap (Packet CAPture) provides a portable framework for low-level network monitoring. Applications include network statistics collection, security monitoring, network debugging, etc."
-PKG_TOOLCHAIN="autotools"
+PKG_TOOLCHAIN="configure"
 
 PKG_CONFIGURE_OPTS_TARGET="LIBS=-lpthread \
                            ac_cv_header_libusb_1_0_libusb_h=no \
