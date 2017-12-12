@@ -28,5 +28,4 @@ PKG_SECTION="audio"
 PKG_SHORTDESC="asplib: Achim's Signal Processing LIBrary"
 PKG_LONGDESC="asplib is a small and lightweight C++ library for digital signal processing."
 
-
 CXXFLAGS="$CXXFLAGS -DTARGET_LINUX"

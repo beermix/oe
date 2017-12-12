@@ -29,7 +29,6 @@ PKG_SECTION="compress"
 PKG_SHORTDESC="bzip2 data compressor"
 PKG_LONGDESC="bzip2 is a freely available, patent free (see below), high-quality data compressor. It typically compresses files to within 10% to 15% of the best available techniques (the PPM family of statistical compressors), whilst being around twice as fast at compression and six times faster at decompression."
 
-
 pre_build_host() {
   mkdir -p $PKG_BUILD/.$HOST_NAME
   cp -r $PKG_BUILD/* $PKG_BUILD/.$HOST_NAME

@@ -28,7 +28,6 @@ PKG_SECTION="audio"
 PKG_SHORTDESC="sidplay-libs"
 PKG_LONGDESC="sidplay-libs"
 
-
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static"
 
 pre_configure_target() {
