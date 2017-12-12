@@ -14,11 +14,10 @@ PKG_DEPENDS_TARGET="toolchain kodi-platform zlib"
 PKG_SECTION=""
 PKG_SHORTDESC="pvr.iptvsimple.multi"
 PKG_LONGDESC="pvr.iptvsimple.multi"
-
+PKG_TOOLCHAIN="cmake-make"
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_TYPE="xbmc.pvrclient"
-PKG_USE_NINJA="no"
 
 PKG_CMAKE_OPTS_TARGET="-DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
                        -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr"

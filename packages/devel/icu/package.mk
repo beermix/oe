@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="icu"
-PKG_VERSION="59.1"
+PKG_VERSION="60.2"
 PKG_ARCH="any"
 PKG_LICENSE="Custom"
 PKG_SITE="http://www.icu-project.org"
@@ -27,7 +27,6 @@ PKG_DEPENDS_TARGET="toolchain icu:host"
 PKG_SECTION="textproc"
 PKG_SHORTDESC="International Components for Unicode library"
 PKG_LONGDESC="International Components for Unicode library"
-
 
 post_unpack() {
   sed -i 's/xlocale/locale/' $PKG_BUILD/source/i18n/digitlst.cpp

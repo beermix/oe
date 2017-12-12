@@ -1,9 +1,8 @@
 PKG_NAME="neon"
 PKG_VERSION="0.30.2"
-PKG_URL="http://www.webdav.org/neon/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain fuse libxml2 expat"
+PKG_URL="https://fossies.org/linux/www/neon-0.30.2.tar.gz"
+PKG_DEPENDS_TARGET="toolchain fuse libxml2 expat openssl"
 PKG_SECTION="tools"
-
 
 pre_configure_target() {
   CFLAGS="$CFLAGS -fPIC"
