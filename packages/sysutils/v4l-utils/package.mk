@@ -19,8 +19,8 @@
 # with 1.0.0 repeat delay is broken. test on upgrade
 
 PKG_NAME="v4l-utils"
-PKG_VERSION="1.12.3"
-PKG_SHA256="5a47dd6f0e7dfe902d94605c01d385a4a4e87583ff5856d6f181900ea81cf46e"
+PKG_VERSION="1.12.6"
+PKG_SHA256="74da1040284eaba48277ad051ffe1fca0ee05c5591bb01179d928def6d0a4561"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://linuxtv.org/"
@@ -32,26 +32,14 @@ PKG_LONGDESC="Linux V4L2 and DVB API utilities and v4l libraries (libv4l)."
 
 PKG_CONFIGURE_OPTS_TARGET="--without-jpeg"
 
-pre_configure_target() {
-  # cec-ctl fails to build in subdirs
-  cd $PKG_BUILD
-  rm -rf .$TARGET_NAME
-}
-
 make_target() {
-  make -C utils/keytable CFLAGS="$TARGET_CFLAGS"
-  make -C utils/ir-ctl CFLAGS="$TARGET_CFLAGS"
-  if [ "$CEC_FRAMEWORK_SUPPORT" = "yes" ]; then
-    make -C utils/cec-ctl CFLAGS="$TARGET_CFLAGS"
-  fi
+    make -C utils/keytable CFLAGS="$TARGET_CFLAGS"
+    make -C utils/ir-ctl CFLAGS="$TARGET_CFLAGS"
 }
 
 makeinstall_target() {
-  make install DESTDIR=$INSTALL PREFIX=/usr -C utils/keytable
-  make install DESTDIR=$INSTALL PREFIX=/usr -C utils/ir-ctl
-  if [ "$CEC_FRAMEWORK_SUPPORT" = "yes" ]; then
-    make install DESTDIR=$INSTALL PREFIX=/usr -C utils/cec-ctl
-  fi
+   make install DESTDIR=$INSTALL PREFIX=/usr -C utils/keytable
+   make install DESTDIR=$INSTALL PREFIX=/usr -C utils/ir-ctl
 }
 
 post_makeinstall_target() {
