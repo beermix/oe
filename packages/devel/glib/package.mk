@@ -24,13 +24,13 @@ PKG_LICENSE="LGPL"
 PKG_SITE="http://www.gtk.org/"
 PKG_URL="http://ftp.gnome.org/pub/gnome/sources/glib/${PKG_VERSION%.*}/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain zlib libffi pcre Python2:host util-linux"
-PKG_DEPENDS_HOST="libffi:host pcre:host"
+PKG_DEPENDS_HOST="libffi:host"
 PKG_SECTION="devel"
 PKG_SHORTDESC="glib: C support library"
 PKG_LONGDESC="GLib is a library which includes support routines for C such as lists, trees, hashes, memory allocation, and many other things."
 PKG_TOOLCHAIN="autotools"
 
-PKG_MESON_OPTS_TARGET="-Dwith-docs=no -Dwith-man=no -Dwith-pcre=system -Denable-libmount=yes -Denable-dtrace=false"
+PKG_MESON_OPTS_TARGET="-Dwith-docs=no -Dwith-man=no -Dwith-pcre=internal -Denable-libmount=yes -Denable-dtrace=false"
  
 PKG_CONFIGURE_OPTS_HOST="--disable-shared --with-pic --disable-libmount --disable-gtk-doc --disable-gtk-doc-html --disable-man"
 
@@ -51,7 +51,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_snprintf_c99=yes \
                            --enable-Bsymbolic \
                            --with-gnu-ld \
                            --with-threads=posix \
-                           --with-pcre=system \
+                           --with-pcre=internal \
                            --with-python=python"
 
 post_makeinstall_target() {
