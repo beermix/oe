@@ -18,6 +18,7 @@
 
 PKG_NAME="moonlight-common-c"
 PKG_VERSION="957b1de"
+PKG_SHA256="1e31014b233bd7ab5578e03b4dd872117e796a400ebd912f6624d27133b2e415"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/moonlight-stream/moonlight-common-c"
@@ -26,12 +27,4 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION=""
 PKG_SHORTDESC="Shared C code for the implementation of Nvidia's GameStream protocol"
 PKG_LONGDESC="Shared C code for the implementation of Nvidia's GameStream protocol"
-
-
-make_target() {
-  :
-}
-
-makeinstall_target() {
-  :
-}
+PKG_TOOLCHAIN="manual"

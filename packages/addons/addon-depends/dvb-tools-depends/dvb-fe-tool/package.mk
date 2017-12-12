@@ -20,6 +20,7 @@
 
 PKG_NAME="dvb-fe-tool"
 PKG_VERSION="326060c"
+PKG_SHA256="00b6795dd9c8a400e65451883002355c32c854bc22a01647ec9d161819d82c1c"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://linuxtv.org/"
@@ -46,6 +47,10 @@ post_patch() {
     touch $PKG_BUILD/build-aux/config.rpath
     touch $PKG_BUILD/libdvbv5-po/Makefile.in.in
     touch $PKG_BUILD/v4l-utils-po/Makefile.in.in
+}
+
+pre_configure_target() {
+  export LDFLAGS="$LDFLAGS -pthread"
 }
 
 make_target() {

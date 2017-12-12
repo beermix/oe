@@ -20,6 +20,7 @@
 
 PKG_NAME="dvblast"
 PKG_VERSION="3.1"
+PKG_SHA256="3159e8666a3b1822aeccd01684bdcad712a0da88d758bef6b7e2c396f27fd3e0"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.videolan.org"
@@ -28,7 +29,6 @@ PKG_DEPENDS_TARGET="toolchain bitstream libev"
 PKG_SECTION="tools"
 PKG_SHORTDESC="DVBlast is a simple and powerful MPEG-2/TS demux and streaming application"
 PKG_LONGDESC="DVBlast is a simple and powerful MPEG-2/TS demux and streaming application"
-
 
 MAKEFLAGS="V=1"
 

@@ -28,7 +28,6 @@ PKG_SECTION="multimedia"
 PKG_SHORTDESC="WebM VP8/VP9 Codec SDK"
 PKG_LONGDESC="The WebM Project is dedicated to developing a high-quality, open video format for the web that's freely available to everyone."
 
-
 configure_target() {
 
   case $ARCH in

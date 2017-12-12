@@ -28,7 +28,6 @@ PKG_SECTION="multimedia"
 PKG_SHORTDESC="x264"
 PKG_LONGDESC="x264"
 
-
 pre_configure_target() {
   cd $PKG_BUILD
   rm -rf .$TARGET_NAME

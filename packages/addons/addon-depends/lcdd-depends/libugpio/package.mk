@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2017 Team LibreELEC
+#      Copyright (C) 2017-present Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 
 PKG_NAME="libugpio"
 PKG_VERSION="0.0.6"
+PKG_SHA256="5093c34cdb891560b0807cb371521cf94fa5c090ee7a84779663b16c831b9e9e"
 PKG_ARCH="any"
 PKG_LICENSE="LGPLv2.1"
 PKG_SITE="https://github.com/mhei/libugpio"

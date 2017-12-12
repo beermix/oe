@@ -28,7 +28,6 @@ PKG_SECTION="tools"
 PKG_SHORTDESC="blindscan-s2 is a program to blindscan digital satellite signals"
 PKG_LONGDESC="blindscan-s2 is a program to blindscan digital satellite signals"
 
-
 makeinstall_target() {
   :
 }
