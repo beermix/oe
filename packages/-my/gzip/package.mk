@@ -4,7 +4,7 @@ PKG_URL="http://ftpmirror.gnu.org/gzip/${PKG_NAME}-${PKG_VERSION}.tar.xz"
 PKG_DEPENDS_TARGET="toolchain lzo tar"
 PKG_SECTION="network"
 
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 pre_configure_target() {
   export CFLAGS="-D_GNU_SOURCE"

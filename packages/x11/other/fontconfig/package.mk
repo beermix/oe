@@ -28,7 +28,6 @@ PKG_SECTION="x11/other"
 PKG_SHORTDESC="fontconfig: A library for font customization and configuration"
 PKG_LONGDESC="Fontconfig is a library for font customization and configuration."
 
-
 PKG_CONFIGURE_OPTS_TARGET="--with-arch=$TARGET_ARCH \
                            --with-cache-dir=/storage/.cache/fontconfig \
                            --with-default-fonts=/usr/share/fonts \
@@ -49,4 +48,7 @@ pre_configure_target() {
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
+
+  mkdir -p $INSTALL/etc/fonts/conf.d
+    cp $PKG_DIR/conf.d/*.conf $INSTALL/etc/fonts/conf.d
 }

@@ -27,7 +27,6 @@ PKG_SECTION="wayland"
 PKG_SHORTDESC="libinput is a library to handle input devices in Wayland compositors and to provide a generic X.Org input driver."
 PKG_LONGDESC="libinput is a library to handle input devices in Wayland compositors and to provide a generic X.Org input driver."
 
-
 PKG_MESON_OPTS_TARGET="-Ddocumentation=false \
 			  -Dlibwacom=false \
 			  -Dtests=false \

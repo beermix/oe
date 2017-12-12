@@ -4,7 +4,7 @@ PKG_GIT_URL="git://git.kernel.org/pub/scm/linux/kernel/git/jaegeuk/f2fs-tools.gi
 PKG_DEPENDS_TARGET="toolchain util-linux"
 
 PKG_SECTION="security"
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_file__git=no \

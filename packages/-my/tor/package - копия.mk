@@ -3,7 +3,7 @@ PKG_VERSION="1243c10"
 PKG_GIT_URL="https://github.com/torproject/tor.git"
 PKG_DEPENDS_TARGET="toolchain openssl libz libevent libcap"
 PKG_SECTION="security"
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-gcc-hardening \

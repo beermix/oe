@@ -31,7 +31,7 @@ PKG_LONGDESC="libtiff is a library for reading and writing data files encoded wi
 
 
 PKG_USE_CMAKE="no"
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --disable-shared \

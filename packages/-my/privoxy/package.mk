@@ -4,7 +4,7 @@ PKG_URL="http://www.silvester.org.uk/privoxy/source/3.0.26%20%28stable%29/privox
 PKG_DEPENDS_TARGET="toolchain openssl zlib pcre"
 PKG_SECTION="security"
 PKG_SHORTDESC="Privoxy"
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 pre_configure_target() {
   cd $PKG_BUILD

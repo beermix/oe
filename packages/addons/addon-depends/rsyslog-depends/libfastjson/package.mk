@@ -25,7 +25,7 @@ PKG_SECTION="rsyslog"
 PKG_SHORTDESC="libfastjson"
 PKG_LONGDESC="libfastjson"
 
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared \

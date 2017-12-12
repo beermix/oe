@@ -18,11 +18,14 @@
 
 PKG_NAME="x264"
 PKG_VERSION="snapshot-20171015-2245"
+PKG_SHA256="0a1fb77545821285227bcbd85244e127af5e45180298d3f2c27dcec42a133992"
+PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.videolan.org/developers/x264.html"
 PKG_URL="https://download.videolan.org/x264/snapshots/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="multimedia"
+PKG_SHORTDESC="x264"
 PKG_LONGDESC="x264"
 
 

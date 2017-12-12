@@ -18,9 +18,9 @@
 
 PKG_NAME="systemd"
 PKG_VERSION="235"
+PKG_SHA256="25811f96f5a027bf2a4c9383495cf5b623e385d84da31e473cf375932b3e9c52"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_URL="https://github.com/systemd/systemd/archive/$PKG_VERSION.tar.gz"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/systemd"
 PKG_URL="https://github.com/systemd/systemd/archive/v$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libcap kmod util-linux entropy"
@@ -30,7 +30,7 @@ PKG_LONGDESC="systemd is a system and session manager for Linux, compatible with
 
 PKG_MESON_OPTS_TARGET="--libdir=/usr/lib \
                        -Drootprefix=/usr \
-                       -Dsplit-usr=true \
+                       -Dsplit-usr=false \
                        -Ddefault-hierarchy=hybrid \
                        -Dtty-gid=5 \
                        -Dseccomp=false \
@@ -202,6 +202,7 @@ post_makeinstall_target() {
   mkdir -p $INSTALL/usr/bin
   cp $PKG_DIR/scripts/systemd-machine-id-setup $INSTALL/usr/bin
   cp $PKG_DIR/scripts/userconfig-setup $INSTALL/usr/bin
+  cp $PKG_DIR/scripts/usercache-setup $INSTALL/usr/bin
 
   mkdir -p $INSTALL/usr/sbin
   cp $PKG_DIR/scripts/kernel-overlays-setup $INSTALL/usr/sbin
@@ -255,6 +256,7 @@ post_install() {
   enable_service machine-id.service
   enable_service debugconfig.service
   enable_service userconfig.service
+  enable_service usercache.service
   enable_service kernel-overlays.service
   enable_service hwdb.service
 }

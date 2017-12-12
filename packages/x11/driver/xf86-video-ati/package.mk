@@ -23,13 +23,13 @@ PKG_ARCH="x86_64"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.x.org/"
 PKG_URL="http://xorg.freedesktop.org/archive/individual/driver/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain libXcomposite xorg-server"
+PKG_DEPENDS_TARGET="toolchain xorg-server"
 PKG_SECTION="x11/driver"
 PKG_SHORTDESC="xf86-video-ati: The Xorg driver for ATI video chips"
 PKG_LONGDESC="The ati driver supports various ATi, know AMD, video chips."
 
 
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-glamor --with-xorg-module-dir=$XORG_PATH_MODULES"
 

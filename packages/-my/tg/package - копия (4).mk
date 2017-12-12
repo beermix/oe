@@ -3,7 +3,7 @@ PKG_VERSION="master"
 PKG_URL=""
 PKG_DEPENDS_TARGET="toolchain readline libevent jansson zlib libconfig openssl lua"
 PKG_SECTION="debug/tools"
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 unpack() {
   git clone --recursive -v --depth 1 git://github.com/vysheng/tg $PKG_BUILD

@@ -6,7 +6,7 @@ PKG_DEPENDS_TARGET="toolchain libjpeg-turbo libpng"
 PKG_SECTION="libs"
 
 
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 pre_configure_target() {
   export LIBS="-ltermcap"

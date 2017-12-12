@@ -28,7 +28,7 @@ PKG_SHORTDESC="serdisplib: a lcd control library"
 PKG_LONGDESC="Library to drive serial/parallel/usb displays with built-in controllers"
 
 
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--prefix=$SYSROOT_PREFIX/usr \
                            --bindir=$SYSROOT_PREFIX/usr/bin \

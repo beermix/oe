@@ -3,7 +3,7 @@ PKG_VERSION="9b"
 PKG_URL="http://www.ijg.org/files/jpegsrc.v$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="graphics"
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 pre_configure_target() {
   export CFLAGS="$CFLAGS -fPIC"

@@ -5,6 +5,6 @@ PKG_DEPENDS_TARGET="toolchain Python swig:host"
 
 PKG_SECTION="devel"
 
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --with-gnu-ld"

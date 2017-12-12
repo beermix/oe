@@ -4,7 +4,7 @@ PKG_URL="https://github.com/shadowsocks/shadowsocks-libev/releases/download/v$PK
 PKG_DEPENDS_TARGET="toolchain pcre libsodium libev mbedtls c-ares"
 PKG_SECTION="my"
 PKG_USE_CMAKE="no"
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-static \

@@ -31,7 +31,7 @@ PKG_LONGDESC="SWIG is a software development tool that connects programs written
 
 PKG_CONFIGURE_OPTS_HOST="--program-suffix=3.0 \
                          --with-pcre-prefix=$TOOLCHAIN \
-                         --without-boost \
+                         --with-boost=no \
                          --without-pcre \
                          --without-x \
                          --without-tcl \

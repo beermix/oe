@@ -4,7 +4,7 @@ PKG_GIT_URL="https://github.com/vysheng/tgl"
 PKG_KEEP_CHECKOUT="yes"
 PKG_DEPENDS_TARGET="toolchain openssl"
 
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
 			   ac_cv_func_realloc_0_nonnull=yes \

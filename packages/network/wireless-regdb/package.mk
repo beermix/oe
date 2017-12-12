@@ -29,10 +29,4 @@ PKG_SHORTDESC="wireless-regdb: regulatory database"
 PKG_LONGDESC="wireless-regdb is a regulatory database"
 
 
-make_target() {
-  : # nothing to do
-}
-
-makeinstall_target() {
-  : # nothing to do
-}
+PKG_TOOLCHAIN="manual"

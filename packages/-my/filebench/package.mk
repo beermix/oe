@@ -6,7 +6,7 @@ PKG_DEPENDS_TARGET="toolchain openssl curl grep libgcrypt"
 
 PKG_SECTION="devel"
 
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 configure_target() {
   cd $PKG_BUILD

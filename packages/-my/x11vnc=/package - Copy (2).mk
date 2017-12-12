@@ -4,7 +4,7 @@ PKG_SITE="http://www.karlrunge.com/x11vnc/#downloading"
 PKG_GIT_URL="https://github.com/LibVNC/x11vnc"
 PKG_DEPENDS_TARGET="toolchain libX11 libXext libXtst libjpeg-turbo libvncserver"
 PKG_SECTION="service/system"
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 pre_build_target() {
   export LIBS="$LIBS -lpthread -lsystemd -lz -ljpeg"

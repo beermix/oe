@@ -5,7 +5,7 @@ PKG_DEPENDS_TARGET="toolchain zlib openssl curl libxml2"
 PKG_SECTION="my"
 
 PKG_USE_CMAKE="no"
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            ac_cv_func_realloc_0_nonnull=yes--disable-shared \

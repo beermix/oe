@@ -6,7 +6,7 @@ PKG_KEEP_CHECKOUT="no"
 PKG_DEPENDS_TARGET="toolchain libva-intel-driver"
 
 PKG_SECTION="security"
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 
 

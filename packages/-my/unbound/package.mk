@@ -3,7 +3,7 @@ PKG_VERSION="5d0d5b4"
 PKG_URL="https://github.com/jedisct1/unbound/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain expat openssl libevent libsodium expat"
 PKG_SECTION="my"
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 #LTO_SUPPORT="yes"
 

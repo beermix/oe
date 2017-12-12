@@ -4,7 +4,7 @@ PKG_URL="https://github.com/hishamhm/dit/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain zlib libevent openssl"
 
 PKG_SECTION="security"
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 pre_configure_target() {
   export CFLAGS="$CFLAGS -fPIC"

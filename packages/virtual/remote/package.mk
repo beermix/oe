@@ -14,7 +14,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################ libirman
+################################################################################
 
 PKG_NAME="remote"
 PKG_VERSION="1"
@@ -22,12 +22,10 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.openelec.tv"
 PKG_URL=""
-#PKG_DEPENDS_TARGET="toolchain ps3remote v4l-utils"
-PKG_DEPENDS_TARGET="toolchain eventlircd v4l-utils"
+PKG_DEPENDS_TARGET="toolchain eventlircd libirman v4l-utils"
 PKG_SECTION="virtual"
 PKG_SHORTDESC="remote: Meta package for installing various tools needed for remote support"
 PKG_LONGDESC="Meta package for installing various tools needed for remote support"
-
 
 if [ "$ATVCLIENT_SUPPORT" = "yes" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET atvclient"

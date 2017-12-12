@@ -3,7 +3,7 @@ PKG_VERSION="0f340c0"
 PKG_URL="https://github.com/jonas/tig/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain ncurses readline"
 PKG_SECTION="tools"
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 pre_configure_target() {
   cd $PKG_BUILD

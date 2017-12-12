@@ -24,7 +24,7 @@ PKG_DEPENDS_TARGET="toolchain libpng tiff dbus fontconfig eglibc zlib glib"
 PKG_SECTION="lib"
 
 
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 
 PKG_CONFIGURE_OPTS_TARGET="as_cv_unaligned_access=no \

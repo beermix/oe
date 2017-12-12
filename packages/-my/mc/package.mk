@@ -5,7 +5,7 @@ PKG_URL="http://ftp.midnight-commander.org/${PKG_NAME}-${PKG_VERSION}.tar.xz"
 #PKG_GIT_URL="git://github.com/MidnightCommander/mc.git"
 PKG_DEPENDS_TARGET="toolchain libtool:host gettext:host e2fsprogs util-linux glib pcre fuse libssh2 expat"
 PKG_SECTION="tools"
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 LDFLAGS="$LDFLAGS -lssh2 -lncursesw -ltinfo"
 

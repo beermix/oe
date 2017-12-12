@@ -30,7 +30,7 @@ PKG_LONGDESC="flexible message logging facility"
 
 
 
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 PKG_MAINTAINER="Stefan Saraev (seo at irc.freenode.net)"
 

@@ -4,7 +4,7 @@ PKG_DEPENDS_TARGET="toolchain pcre libsodium libudns libev mbedtls"
 PKG_SECTION="my"
 
 PKG_USE_CMAKE="no"
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 unpack() {
   git clone --recursive -v --depth 1 http://github.com/shadowsocks/shadowsocks-libev $PKG_BUILD

@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="RTL8812AU"
-PKG_VERSION="8e7ccba"
-PKG_SHA256="9caf7db8cca8ae74fc2daa4c522a92a0648a55ee3958cf48424e1dbe7074e240"
+PKG_VERSION="da70677"
+PKG_SHA256="2a8950db3314833b32cf7ea2720509d05210ce11daa01d8f19c2ecc70c705fe2"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/paspro/rtl8812au"
@@ -29,7 +29,6 @@ PKG_NEED_UNPACK="$LINUX_DEPENDS"
 PKG_SECTION="driver"
 PKG_SHORTDESC="Realtek RTL8812AU Linux 3.x driver"
 PKG_LONGDESC="Realtek RTL8812AU Linux 3.x driver"
-
 PKG_IS_KERNEL_PKG="yes"
 
 pre_make_target() {

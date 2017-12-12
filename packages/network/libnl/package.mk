@@ -27,5 +27,4 @@ PKG_SECTION="network"
 PKG_SHORTDESC="libnl: libnl - netlink library"
 PKG_LONGDESC="libnl is a library for applications dealing with netlink socket. It provides an easy to use interface for raw netlink message but also netlink family specific APIs."
 
-
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared --with-pic --disable-cli"

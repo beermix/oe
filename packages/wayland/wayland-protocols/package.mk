@@ -30,7 +30,7 @@ PKG_SHORTDESC=""
 PKG_LONGDESC=""
 
 
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 pre_makeinstall_target() {
   sed "s|prefix=/usr|prefix=$SYSROOT_PREFIX/usr|" -i wayland-protocols.pc

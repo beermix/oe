@@ -29,4 +29,4 @@ PKG_SECTION="system"
 PKG_SHORTDESC="A utility to create and repair data files using Reed Solomon coding (multi threaded OpenMP version)."
 
 
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"

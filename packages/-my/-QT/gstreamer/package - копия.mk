@@ -26,7 +26,7 @@ PKG_SHORTDESC="gstreamer library"
 PKG_LONGDESC="gstreamer library and components"
 
 
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 
 PKG_CONFIGURE_OPTS_TARGET="as_cv_unaligned_access=no \

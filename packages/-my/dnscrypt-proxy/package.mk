@@ -4,7 +4,7 @@ PKG_SITE="https://github.com/jedisct1/dnscrypt-proxy"
 PKG_URL="https://github.com/jedisct1/dnscrypt-proxy/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain systemd libsodium"
 PKG_SECTION="my"
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 pre_configure_target() {
   cd $PKG_BUILD

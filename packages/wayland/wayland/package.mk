@@ -29,7 +29,7 @@ PKG_PRIORITY="optional"
 PKG_SECTION="wayland"
 PKG_SHORTDESC=""
 PKG_LONGDESC=""
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_HOST="--enable-shared \
                          --disable-static \

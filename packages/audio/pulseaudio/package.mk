@@ -93,7 +93,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
                            --with-system-group=root \
                            --with-access-group=root \
                            --without-caps \
-                           --enable-fftw \
+                           --without-fftw \
                            --without-speex \
                            --with-soxr \
                            --with-module-dir=/usr/lib/pulse"

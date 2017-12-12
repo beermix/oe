@@ -5,7 +5,7 @@ PKG_DEPENDS_TARGET="toolchain intel-vaapi-driver libva"
 PKG_PRIORITY="optional"
 PKG_SECTION="multimedia"
 PKG_USE_CMAKE="no"
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-swap-16bit-csp \
 			      --enable-experimental 

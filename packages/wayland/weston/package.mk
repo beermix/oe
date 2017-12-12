@@ -30,7 +30,7 @@ PKG_SHORTDESC=""
 PKG_LONGDESC=""
 
 
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="CFLAGS=-DMESA_EGL_NO_X11_HEADERS \
                            --with-cairo-glesv2 \

@@ -6,7 +6,7 @@ PKG_DEPENDS_TARGET="toolchain boost gdb which libxslt"
 PKG_SECTION="debug/tools"
 PKG_SHORTDESC="htop: Htop is an ncurses based interactive process viewer for Linux."
 PKG_LONGDESC="Htop is an ncurses based interactive process viewer for Linux."
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 
 pre_configure_target() {

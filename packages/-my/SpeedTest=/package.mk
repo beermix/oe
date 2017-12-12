@@ -2,7 +2,7 @@ PKG_NAME="SpeedTest"
 PKG_VERSION="4ecabc8"
 PKG_GIT_URL="https://github.com/taganaka/SpeedTest"
 PKG_DEPENDS_TARGET="toolchain confuse"
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 CONCURRENCY_MAKE_LEVEL=1
 

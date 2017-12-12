@@ -24,7 +24,7 @@ PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="make: GNU make utility to maintain groups of programs"
 PKG_LONGDESC="Patched GNU Make 4.1 sources to add improved error reporting, tracing, target listing, graph visualization, and profiling. It also contains debugger. See the remake-3-82 branch for a patched GNU Make 3.82."
 
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_HOST="ac_cv_func_gettimeofday=yes \
 			    --disable-silent-rules \

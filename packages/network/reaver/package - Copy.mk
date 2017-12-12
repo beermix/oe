@@ -6,7 +6,7 @@ PKG_DEPENDS_TARGET="toolchain sqlite libpcap"
 
 PKG_SECTION="my"
 
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 pre_configure_target() {
    cd $PKG_BUILD

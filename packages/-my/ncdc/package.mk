@@ -5,7 +5,7 @@ PKG_URL="https://dev.yorhel.nl/download/ncdc-$PKG_VERSION.tar.gz"
 #PKG_GIT_URL="git://g.blicky.net/ncdu.git"
 PKG_DEPENDS_TARGET="toolchain ncurses sqlite"
 PKG_SECTION="tools"
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 pre_configure_target() {
   export LIBS="-lterminfo"

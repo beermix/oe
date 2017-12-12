@@ -4,7 +4,7 @@ PKG_URL="https://sourceforge.net/projects/zsh/files/zsh/$PKG_VERSION/zsh-$PKG_VE
 PKG_DEPENDS_TARGET="toolchain ncurses libcap pcre readline gdbm libpcap"
 PKG_SECTION="my"
 
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 CONCURRENCY_MAKE_LEVEL=1
 

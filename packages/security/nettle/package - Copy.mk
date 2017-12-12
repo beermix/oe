@@ -8,7 +8,7 @@ PKG_DEPENDS_TARGET="toolchain gmp openssl"
 PKG_SECTION="escalade/depends"
 PKG_SHORTDESC="Nettle is a cryptographic library that is designed to fit easily in more or less any context: In crypto toolkits for object-oriented languages (C++, Python, Pike, ...), in applications like LSH or GNUPG, or even in kernel space."
 
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 pre_configure_target() {
   CFLAGS="$CFLAGS -fPIC -DPIC"

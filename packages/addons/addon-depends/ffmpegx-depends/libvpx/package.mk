@@ -18,6 +18,7 @@
 
 PKG_NAME="libvpx"
 PKG_VERSION="1.6.1"
+PKG_SHA256="cda8bb6f0e4848c018177d3a576fa83ed96d762554d7010fe4cfb9d70c22e588"
 PKG_ARCH="any"
 PKG_LICENSE="BSD"
 PKG_SITE="https://www.webmproject.org"
@@ -32,20 +33,20 @@ configure_target() {
 
   case $ARCH in
     aarch64)
-      TARGET_NAME_LIBVPX="arm64-linux-gcc"
+      PKG_TARGET_NAME_LIBVPX="arm64-linux-gcc"
       ;;
     arm)
-      TARGET_NAME_LIBVPX="armv7-linux-gcc"
+      PKG_TARGET_NAME_LIBVPX="armv7-linux-gcc"
       ;;
     x86_64)
-      TARGET_NAME_LIBVPX="x86_64-linux-gcc"
+      PKG_TARGET_NAME_LIBVPX="x86_64-linux-gcc"
       ;;
   esac
 
   $PKG_CONFIGURE_SCRIPT --prefix=/usr \
                         --extra-cflags="$CFLAGS" \
                         --as=yasm \
-                        --target=$TARGET_NAME_LIBVPX \
+                        --target=$PKG_TARGET_NAME_LIBVPX \
                         --disable-docs \
                         --disable-examples \
                         --disable-shared \

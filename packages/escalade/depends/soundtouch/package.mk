@@ -28,4 +28,4 @@ PKG_SECTION="depends"
 PKG_SHORTDESC="Audio processing library"
 PKG_IS_ADDON="no"
 
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"

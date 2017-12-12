@@ -28,7 +28,6 @@ PKG_SECTION="firmware"
 PKG_SHORTDESC="brcmfmac_sdio-firmware: firmware for brcm bluetooth chips used in some Amlogic based devices"
 PKG_LONGDESC="Firmware for Broadcom Bluetooth devices used in some Amlogic based devices, and brcm-patchram-plus that downloads a patchram files in the HCD format to the Bluetooth based silicon and combo chips and other utility functions."
 
-
 makeinstall_target() {
-  DESTDIR=$INSTALL/$(get_kernel_overlay_dir) make install
+  DESTDIR=$INSTALL FWDIR=$INSTALL/$(get_kernel_overlay_dir) make install
 }

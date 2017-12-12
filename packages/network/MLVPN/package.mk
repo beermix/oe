@@ -24,6 +24,6 @@ PKG_DEPENDS_TARGET="toolchain libpcap libsodium libev"
 PKG_SECTION="network"
 
 
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared"

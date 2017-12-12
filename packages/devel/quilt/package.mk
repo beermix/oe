@@ -6,7 +6,7 @@ PKG_DEPENDS_HOST=""
 PKG_SECTION="dev"
 
 
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 pre_configure_host() {
   cd $PKG_BUILD

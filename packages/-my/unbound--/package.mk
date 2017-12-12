@@ -5,7 +5,7 @@ PKG_DEPENDS_TARGET="toolchain openssl libevent expat"
 
 PKG_SECTION="my"
 
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 pre_configure_target() {
   export CFLAGS="$CFLAGS -fPIC"

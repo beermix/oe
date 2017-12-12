@@ -27,7 +27,7 @@ PKG_DEPENDS_TARGET="toolchain zlib libjpeg-turbo tiff"
 PKG_SECTION="devel"
 PKG_SHORTDESC="lcms2: small-footprint color management engine"
 PKG_LONGDESC="lcms2 is a Small-footprint color management engine."
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--with-zlib --with-threads --with-jpeg --with-tiff"
 

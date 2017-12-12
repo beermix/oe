@@ -28,7 +28,6 @@ PKG_SECTION="x11/lib"
 PKG_SHORTDESC="libxmu: X11 miscellaneous utility library"
 PKG_LONGDESC="LibXmu provides a set of miscellaneous utility convenience functions for X libraries to use."
 
-
 pre_configure_target() {
  CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
 }

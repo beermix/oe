@@ -27,7 +27,7 @@ PKG_DEPENDS_TARGET="toolchain imx-vpu"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="libfslvpuwrap: Freescale Multimedia VPU wrapper"
 PKG_LONGDESC="libfslvpuwrap: Freescale Multimedia VPU wrapper"
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/share

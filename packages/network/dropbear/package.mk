@@ -2,7 +2,7 @@ PKG_NAME="dropbear"
 PKG_VERSION="2016.74"
 PKG_URL="https://matt.ucc.asn.au/dropbear/dropbear-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain openssl"
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 pre_configure_target() {
   cd $PKG_BUILD

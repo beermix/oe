@@ -29,7 +29,7 @@ PKG_SHORTDESC="This archive contains bindings for the GLib, and GObject, to be u
 PKG_LONGDESC="This archive contains bindings for the GLib, and GObject, to be used in Python."
 
 
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--with-python=$TOOLCHAIN/bin/python2.7"
 

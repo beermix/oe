@@ -16,7 +16,7 @@ PKG_SECTION="xmedia/tools"
 PKG_SHORTDESC="php: Scripting language especially suited for Web development"
 PKG_LONGDESC="PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML."
 
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 post_unpack() {
   PHP_BUILD_DIR=$(get_build_dir php)

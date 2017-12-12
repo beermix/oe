@@ -6,7 +6,7 @@ PKG_URL="https://github.com/arvidn/libtorrent/archive/libtorrent-$PKG_VERSION.ta
 PKG_SOURCE_DIR="libtorrent-libtorrent-$PKG_VERSION"
 PKG_DEPENDS_TARGET="toolchain boost libiconv openssl"
 PKG_LONGDESC="An efficient feature complete C++ bittorrent implementation"
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 PKG_USE_CMAKE="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-python-binding \

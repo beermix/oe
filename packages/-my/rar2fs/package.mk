@@ -5,7 +5,7 @@ PKG_DEPENDS_TARGET="toolchain openssl zlib"
 
 PKG_SECTION="my"
 
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
   
 TARGET_CFLAGS="$CFLAGS -fPIC -DPIC"
 TARGET_CPPFLAGS="$CPPFLAGS -fexceptions"

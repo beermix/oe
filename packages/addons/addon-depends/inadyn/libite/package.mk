@@ -22,6 +22,6 @@ PKG_SITE="https://github.com/troglobit/libite"
 PKG_URL="https://github.com/troglobit/libite/archive/v$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="That missing frog DNA you've been looking for"
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared"

@@ -22,11 +22,10 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.openelec.tv"
 PKG_URL=""
-PKG_DEPENDS_TARGET="toolchain"
+PKG_DEPENDS_TARGET="toolchain gdb edid-decode"
 PKG_SECTION="virtual"
 PKG_SHORTDESC="debug: Metapackage for installing debugging tools"
 PKG_LONGDESC="debug is a Metapackage for installing debugging tools"
-
 
 # configure GPU drivers and dependencies:
   get_graphicdrivers

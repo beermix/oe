@@ -28,7 +28,7 @@ PKG_SECTION="emulation"
 PKG_SHORTDESC="DOSBox emulator SDL2 fork by duganchen"
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 if [ "$PROJECT" = "Generic" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET glew"

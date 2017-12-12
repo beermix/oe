@@ -5,7 +5,7 @@ PKG_DEPENDS_TARGET="toolchain libatomic_ops"
 
 PKG_SECTION="devel"
 
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \

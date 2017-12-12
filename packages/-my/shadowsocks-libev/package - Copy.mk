@@ -5,7 +5,7 @@ PKG_DEPENDS_TARGET="toolchain pcre libsodium libudns libev mbedtls c-ares"
 PKG_SECTION="my"
 
 PKG_USE_CMAKE="no"
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 LTO_SUPPORT="no"
 GOLD_SUPPORT="no"

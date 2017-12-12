@@ -5,6 +5,6 @@ PKG_SOURCE_DIR="bonnie++-$PKG_VERSION"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="my"
 
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 #PKG_CONFIGURE_OPTS_TARGET="--enable-static"

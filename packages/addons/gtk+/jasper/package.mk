@@ -27,7 +27,7 @@ PKG_LONGDESC="This distribution contains the public release of the an open-sourc
 
 
 PKG_USE_CMAKE="no"
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared --with-pic"
 

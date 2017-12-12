@@ -5,7 +5,7 @@ PKG_SOURCE_DIR="Python-3.4.0"
 PKG_DEPENDS_TARGET="toolchain sqlite expat zlib bzip2 openssl libffi"
 
 
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            ac_cv_file_dev_ptmx=yes \

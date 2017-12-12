@@ -6,7 +6,7 @@ PKG_DEPENDS_TARGET="toolchain linux"
 PKG_SECTION="devel"
 
 
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 
 PKG_CONFIGURE_OPTS_TARGET="\

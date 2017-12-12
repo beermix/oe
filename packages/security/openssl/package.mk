@@ -1,5 +1,5 @@
 PKG_NAME="openssl"
-PKG_VERSION="1.0.2m"
+PKG_VERSION="1.0.2n"
 PKG_URL="https://www.openssl.org/source/openssl-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST=""
 PKG_DEPENDS_TARGET="toolchain yasm:host pcre zlib gmp"

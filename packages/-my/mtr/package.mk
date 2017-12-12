@@ -4,7 +4,7 @@ PKG_URL="https://dl.dropboxusercontent.com/s/ri1jx1jhzfzjmre/mtr-1.tar.xz"
 PKG_DEPENDS_TARGET="toolchain readline"
 
 PKG_SECTION="tools"
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 
 configure_target(){

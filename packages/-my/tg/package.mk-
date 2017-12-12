@@ -3,7 +3,7 @@ PKG_VERSION="002"
 PKG_URL="https://dl.dropboxusercontent.com/s/2ipj1e9srji0ekm/tg-002.tar.xz"
 PKG_DEPENDS_TARGET="toolchain readline libevent jansson zlib libconfig openssl lua"
 PKG_SECTION="debug/tools"
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 
 

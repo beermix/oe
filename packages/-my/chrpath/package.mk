@@ -4,7 +4,7 @@ PKG_URL="https://dl.dropboxusercontent.com/s/toh840hns83gr4b/chrpath-0.16.tar.xz
 PKG_DEPENDS_TARGET="toolchain"
 
 
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 
 

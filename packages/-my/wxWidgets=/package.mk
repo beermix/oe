@@ -4,7 +4,7 @@ PKG_SITE="http://www.wxwidgets.org/"
 PKG_URL="ftp://ftp.wxwidgets.org/pub/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain gtk+ expat"
 
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \

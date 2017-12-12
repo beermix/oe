@@ -3,7 +3,7 @@ PKG_VERSION="51.0.1"
 PKG_URL="http://releases.mozilla.org/pub/firefox/releases/51.0.1/source/firefox-51.0.1.source.tar.xz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="tools"
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 
 PKG_CONFIGURE_OPTS_TARGET="CROSS_COMPILE=1 \

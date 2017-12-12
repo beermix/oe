@@ -5,7 +5,7 @@ PKG_SITE="https://www.libssh2.org/download/?C=M;O=D"
 PKG_DEPENDS_TARGET="toolchain zlib openssl"
 
 PKG_USE_CMAKE="no"
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-static \

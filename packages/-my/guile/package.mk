@@ -7,7 +7,7 @@ PKG_DEPENDS_TARGET="toolchain zlib readline libtool gmp libunistring libffi"
 
 PKG_SECTION="toolchain/devel"
 
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 pre_configure_target() {
    strip_lto

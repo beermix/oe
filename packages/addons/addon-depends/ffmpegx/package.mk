@@ -18,6 +18,7 @@
 
 PKG_NAME="ffmpegx"
 PKG_VERSION="3.4"
+PKG_SHA256="2865712ead48b9e5939c1eb23c409c8f1d60e49bc6434ca489271ea677c81adc"
 PKG_ARCH="any"
 PKG_LICENSE="LGPLv2.1+"
 PKG_SITE="https://ffmpeg.org"
@@ -27,7 +28,6 @@ PKG_DEPENDS_TARGET="toolchain bzip2 fdk-aac libvorbis openssl opus x264 x265 zli
 PKG_SECTION="multimedia"
 PKG_LONGDESC="FFmpegx is an complete FFmpeg build to support encoding and decoding"
 
-
 # Dependencies
 get_graphicdrivers
 
@@ -35,8 +35,7 @@ if [ "$KODIPLAYER_DRIVER" == "bcm2835-driver" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET bcm2835-driver"
 fi
 
-# ARMv6 is no longer supported by libvpx
-if [ "$PROJECT" != "RPi" -a "$PROJECT" != "Slice" ]; then
+if [[ ! $TARGET_ARCH = arm ]] || target_has_feature neon; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libvpx"
 fi
 
@@ -150,6 +149,8 @@ configure_target() {
     \
     `#General options` \
     --enable-avresample \
+    --disable-lzma \
+    --disable-alsa \
     \
     `#Toolchain options` \
     --arch="$TARGET_ARCH" \

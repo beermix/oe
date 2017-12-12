@@ -6,7 +6,7 @@ PKG_GIT_BRANCH="RC_1_1"
 PKG_DEPENDS_TARGET="toolchain boost libiconv openssl"
 PKG_LONGDESC="An efficient feature complete C++ bittorrent implementation"
 PKG_USE_CMAKE="no"
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 #CONCURRENCY_MAKE_LEVEL=1
 

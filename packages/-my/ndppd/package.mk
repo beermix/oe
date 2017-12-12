@@ -5,7 +5,7 @@ PKG_DEPENDS_TARGET="toolchain openssl iptables gmp xl2tpd"
 
 PKG_SECTION="network"
 
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
 		           --with-gnu-ld \

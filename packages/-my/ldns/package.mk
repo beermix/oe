@@ -5,7 +5,7 @@ PKG_DEPENDS_TARGET="toolchain Python ffmpeg flac bzip2 libsamplerate"
 
 PKG_SECTION="my"
 
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 configure_target() {
   cd $PKG_BUILD

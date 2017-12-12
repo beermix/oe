@@ -4,7 +4,7 @@ PKG_URL="ftp://invisible-island.net/diffstat/diffstat-1.61.tgz"
 PKG_DEPENDS_TARGET="toolchain"
 
 PKG_SECTION="security"
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 pre_configure_target() {
   export CFLAGS="$CFLAGS -fPIC -DPIC"

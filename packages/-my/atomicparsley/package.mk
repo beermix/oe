@@ -4,6 +4,6 @@ PKG_URL="https://dl.dropboxusercontent.com/s/nl2qgius1vdijac/atomicparsley-0.9.6
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="my"
 
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --with-gnu-ld"

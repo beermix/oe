@@ -6,7 +6,7 @@ PKG_DEPENDS_TARGET="toolchain libcap pcre gawk readline gdbm libsigc++ jansson w
 
 PKG_SECTION="my"
 
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 pre_configure_target() {
    strip_lto

@@ -27,9 +27,7 @@ PKG_DEPENDS_TARGET="toolchain systemd"
 PKG_SECTION="system/remote"
 PKG_SHORTDESC="eventlircd:The eventlircd daemon provides various functions for LIRC devices"
 PKG_LONGDESC="The eventlircd daemon provides four functions for LIRC devices"
-
-PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--with-udev-dir=/usr/lib/udev \
                            --with-lircd-socket=/run/lirc/lircd"

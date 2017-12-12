@@ -5,7 +5,7 @@ PKG_URL="http://www.squid-cache.org/Versions/v3/3.5/squid-$PKG_VERSION.tar.xz"
 #PKG_URL="http://www.squid-cache.org/Versions/v4/squid-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain fuse ncurses openssl glib libcap libnetfilter_conntrack"
 PKG_SECTION="tools"
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 
 PKG_CONFIGURE_OPTS_TARGET="squid_cv_gnu_atomics=no \

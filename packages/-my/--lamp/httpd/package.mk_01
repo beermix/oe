@@ -32,7 +32,7 @@ PKG_SHORTDESC="The Apache web server."
 PKG_LONGDESC="The Apache web server."
 PKG_MAINTAINER="ultraman"
 
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 #export MAKEFLAGS=-j1
 # If you still desire to serve pages as root
 APACHE_RUN_AS_ROOT=no

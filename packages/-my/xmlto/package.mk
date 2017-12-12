@@ -4,5 +4,5 @@ PKG_URL="https://releases.pagure.org/xmlto/xmlto-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="my"
 
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 

@@ -32,7 +32,7 @@ PKG_SHORTDESC="The Apache web server."
 PKG_LONGDESC="The Apache web server."
 PKG_MAINTAINER="vpeter"
 
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 PKG_USE_NINJA="no"
 
 # If you still desire to serve pages as root

@@ -5,7 +5,7 @@ PKG_SITE="https://github.com/rakshasa/libtorrent"
 PKG_GIT_URL="https://github.com/rakshasa/libtorrent"
 PKG_DEPENDS_TARGET="toolchain openssl zlib"
 PKG_LONGDESC="libtorrent"
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 pre_configure_target() {
   export CFLAGS="$CFLAGS -fPIC"

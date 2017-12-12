@@ -5,7 +5,7 @@ PKG_DEPENDS_TARGET="toolchain libnfnetlink libnl libmnl libmnl libnftnl jansson"
 
 PKG_SECTION="my"
 
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 pre_configure_target() {
    export LIBS="-lterminfo"

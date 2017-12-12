@@ -5,7 +5,7 @@ PKG_SOURCE_DIR="x11vnc-0.9.14"
 PKG_DEPENDS_TARGET="toolchain"
 
 PKG_SECTION="service/system"
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 pre_configure_target() {
   cd $PKG_BUILD

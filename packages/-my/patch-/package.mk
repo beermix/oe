@@ -6,7 +6,7 @@ PKG_DEPENDS_TARGET="toolchain attr"
 PKG_SECTION="devel"
 PKG_SHORTDESC="GNU patch"
 PKG_LONGDESC="Patch takes a patch file containing a difference listing produced by the diff program and applies those differences to one or more original files, producing patched versions"
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 pre_configure_target() {
   export LIBS="$LIBS -ldl"

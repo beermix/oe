@@ -6,7 +6,7 @@ PKG_DEPENDS_TARGET="toolchain readline file"
 
 PKG_SECTION="shell/texteditor"
 
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 pre_configure_target() {
   export LDFLAGS="-lcurses -lterminfo"

@@ -28,7 +28,7 @@ PKG_SECTION="sysutils"
 PKG_SHORTDESC="CIFS filesystem user-space tools"
 
 
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes ROOTSBINDIR=/usr/sbin --disable-systemd"
 

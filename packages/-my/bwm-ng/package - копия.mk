@@ -2,7 +2,7 @@ PKG_NAME="bwm-ng"
 PKG_VERSION="f54b3fa"
 PKG_GIT_URL="https://github.com/vgropp/bwm-ng"
 PKG_DEPENDS_TARGET="toolchain libstatgrab"
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 pre_configure_target() {
   export LIBS="-lterminfo"

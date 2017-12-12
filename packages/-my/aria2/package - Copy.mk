@@ -3,7 +3,7 @@ PKG_VERSION="2cfe192"
 PKG_GIT_URL="https://github.com/aria2/aria2"
 PKG_DEPENDS_TARGET="toolchain expat pcre curl libev xmlstarlet libxml2 c-ares"
 PKG_SECTION="tools"
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
                            --enable-static \

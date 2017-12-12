@@ -26,6 +26,6 @@ PKG_DEPENDS_HOST="ccache:host"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="autoconf-archive: macros for autoconf"
 PKG_LONGDESC="autoconf-archive is an package of m4 macros"
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 

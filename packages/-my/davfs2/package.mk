@@ -4,7 +4,7 @@ PKG_URL="http://download.savannah.gnu.org/releases/davfs2/davfs2-$PKG_VERSION.ta
 PKG_DEPENDS_TARGET="toolchain fuse neon"
 PKG_SECTION="system"
 
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 pre_configure_target() {
    export LIBS="-ldl -lpthread"

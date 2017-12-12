@@ -26,7 +26,7 @@ PKG_SECTION="network"
 PKG_SHORTDESC="afpfs-ng: an Apple Filing Protocol client"
 PKG_LONGDESC="afpfs-ng is an Apple Filing Protocol client that will allow BSD, Linux and Mac OS X systems to access files exported from a Mac OS system with AFP over TCP."
 
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \

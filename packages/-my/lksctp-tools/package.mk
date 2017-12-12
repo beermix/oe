@@ -4,7 +4,7 @@ PKG_GIT_URL="https://github.com/sctp/lksctp-tools"
 PKG_DEPENDS_TARGET="toolchain libz"
 
 PKG_SECTION="security"
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 pre_configure_target() {
   strip_lto

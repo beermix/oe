@@ -28,6 +28,5 @@ PKG_SECTION="x11/lib"
 PKG_SHORTDESC="libICE: X Inter-Client Exchange (ICE) protocol library"
 PKG_LONGDESC="X Inter-Client Exchange (ICE) protocol library."
 
-
 PKG_CONFIGURE_OPTS_TARGET="--disable-ipv6 --without-xmlto"
 

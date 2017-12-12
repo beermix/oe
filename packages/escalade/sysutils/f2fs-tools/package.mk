@@ -29,7 +29,7 @@ PKG_SHORTDESC="f2fs-tools: Utilities for use with the f2fs filesystem"
 PKG_LONGDESC="The filesystem utilities for the f2fs filesystem"
 PKG_IS_ADDON="no"
 
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="cross_compiling=maybe \
                            --prefix=/usr \

@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="wetekdvb"
-PKG_VERSION="20170404"
-PKG_SHA256="6fb718425bdd9a3bb68966a5033233cb2c2d5d7b41579309f7f7370ff41aaf40"
+PKG_VERSION="20171207"
+PKG_SHA256="9543e07fc8b8abd94542ea9049a242c9f78b49bef07ca675d86728cf141c3fa2"
 PKG_ARCH="arm aarch64"
 PKG_LICENSE="nonfree"
 PKG_SITE="http://www.wetek.com/"
@@ -28,12 +28,8 @@ PKG_NEED_UNPACK="$LINUX_DEPENDS"
 PKG_SECTION="driver"
 PKG_SHORTDESC="wetekdvb: Wetek DVB driver"
 PKG_LONGDESC="These package contains Wetek's DVB driver "
-
 PKG_IS_KERNEL_PKG="yes"
-
-make_target() {
-  : # nothing todo
-}
+PKG_TOOLCHAIN="manual"
 
 makeinstall_target() {
   mkdir -p $INSTALL/$(get_full_module_dir)/$PKG_NAME

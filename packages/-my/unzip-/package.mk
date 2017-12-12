@@ -4,7 +4,7 @@ PKG_URL="http://ftpmirror.gnu.org/tar/tar-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain"
 
 
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 CFLAGS="$CFLAGS -fPIC -DPIC"
 

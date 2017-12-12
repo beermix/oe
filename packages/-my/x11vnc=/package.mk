@@ -4,7 +4,7 @@ PKG_SITE="http://www.karlrunge.com/x11vnc/#downloading"
 PKG_URL="https://sourceforge.net/projects/libvncserver/files/x11vnc/$PKG_VERSION/x11vnc-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libX11 libXext libXtst libjpeg-turbo"
 PKG_SECTION="service/system"
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 pre_build_target() {
    mkdir -p $PKG_BUILD/.$TARGET_NAME

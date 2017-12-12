@@ -27,7 +27,7 @@ PKG_SECTION="depends"
 PKG_SHORTDESC="X11 Screen Saver extension library"
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 post_unpack() {
   mv $BUILD/libXScrnSaver-$PKG_VERSION $BUILD/$PKG_NAME-$PKG_VERSION

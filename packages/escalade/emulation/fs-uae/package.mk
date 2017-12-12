@@ -27,7 +27,7 @@ PKG_SECTION="emulation"
 PKG_SHORTDESC="FS-UAE amiga emulator."
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 pre_configure_target() {
   export ac_cv_func_realloc_0_nonnull=yes

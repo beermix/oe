@@ -2,7 +2,7 @@ PKG_NAME="bwm-ng"
 PKG_VERSION="d9d7f7c"
 PKG_URL="https://github.com/virtualboots/bwm-ng/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libstatgrab"
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 #CFLAGS="$CFLAGS -static"
 #CXXFLAGS="$CXXFLAGS -static"

@@ -5,7 +5,7 @@ PKG_URL="http://download.mono-project.com/sources/mono/$PKG_NAME-$PKG_VERSION.ta
 PKG_SOURCE_DIR="$PKG_NAME-${PKG_VERSION%.*}"
 PKG_DEPENDS_TARGET="toolchain mono:host libgdiplus sqlite zlib"
 PKG_IS_ADDON="yes"
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 
 prefix="/storage/.kodi/addons/$PKG_SECTION.$PKG_NAME"

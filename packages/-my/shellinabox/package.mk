@@ -4,7 +4,7 @@ PKG_URL="https://github.com/shellinabox/shellinabox/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain zlib"
 
 PKG_SECTION="security"
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 pre_configure_target() {
    cd $PKG_BUILD

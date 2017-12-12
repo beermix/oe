@@ -28,10 +28,6 @@ PKG_SECTION="multimedia"
 PKG_SHORTDESC="Platform support library used by libCEC and binary add-ons for Kodi"
 PKG_LONGDESC="Platform support library used by libCEC and binary add-ons for Kodi"
 
-PKG_IS_ADDON="no"
-
-PKG_USE_NINJA="no"
-
 PKG_CMAKE_OPTS_TARGET="-DCMAKE_INSTALL_LIBDIR:STRING=lib \
                        -DCMAKE_INSTALL_LIBDIR_NOARCH:STRING=lib \
                        -DCMAKE_INSTALL_PREFIX_TOOLCHAIN=$SYSROOT_PREFIX/usr \

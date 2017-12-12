@@ -30,7 +30,7 @@ PKG_LONGDESC="Mono ($PKG_VERSION) is a software platform designed to allow devel
 PKG_MAINTAINER="Anton Voyl (awiouy)"
 
 
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 prefix="/usr"
 options="--build=$HOST_NAME \

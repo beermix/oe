@@ -4,7 +4,7 @@ PKG_URL="https://fossies.org/linux/misc/zsh-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain ncurses libcap pcre readline gdbm"
 PKG_SECTION="my"
 
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 pre_configure_target() {
   export LIBS="-lterminfo"

@@ -4,6 +4,6 @@ PKG_URL="http://ftpmirror.gnu.org/libidn/libidn-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="my"
 
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared --disable-java --with-pic"

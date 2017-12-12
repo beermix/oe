@@ -30,7 +30,7 @@ PKG_SECTION="emulators/depends"
 PKG_SHORTDESC="SDL_sound library"
 
 PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
 			   --disable-speex \

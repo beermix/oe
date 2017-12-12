@@ -6,7 +6,7 @@ PKG_DEPENDS_TARGET=""
 
 PKG_SECTION="devel"
 
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 pre_configure_target() {
    strip_lto

@@ -16,4 +16,4 @@ PKG_SECTION="xmedia/depends"
 PKG_SHORTDESC="utility libraries for X C Binding -- image"
 PKG_LONGDESC="This package contains the library files needed to run software using libxcb-image, providing port of Xlib's XImage and XShmImage functions."
 
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"

@@ -5,7 +5,7 @@ PKG_URL="https://bitcoin.org/bin/bitcoin-core-$PKG_VERSION/$PKG_NAME-$PKG_VERSIO
 PKG_SOURCE_DIR="${PKG_NAME}-0.15.0"
 PKG_DEPENDS_TARGET="toolchain db miniupnpc libdaemon boost libevent"
 PKG_SECTION="web"
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 #CONCURRENCY_MAKE_LEVEL=3
 

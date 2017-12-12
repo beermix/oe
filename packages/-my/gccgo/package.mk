@@ -6,7 +6,7 @@ PKG_DEPENDS_TARGET=""
 
 PKG_SECTION="devel"
 
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 pre_configure_host() {
   export CXXFLAGS="$CXXFLAGS -std=gnu++98"

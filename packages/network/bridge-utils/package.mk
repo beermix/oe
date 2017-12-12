@@ -4,7 +4,7 @@ PKG_URL="https://www.kernel.org/pub/linux/utils/net/bridge-utils/bridge-utils-$P
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="devel"
 
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 pre_configure_target() {
   cd $PKG_BUILD

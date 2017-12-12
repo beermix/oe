@@ -29,7 +29,7 @@ PKG_SHORTDESC="Wireless daemon for Linux"
 PKG_LONGDESC="Wireless daemon for Linux"
 
 
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/etc/iwd"
 
