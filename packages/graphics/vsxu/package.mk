@@ -29,7 +29,6 @@ PKG_SECTION="multimedia"
 PKG_SHORTDESC="an OpenGL-based programming environment to visualize music and create graphic effects"
 PKG_LONGDESC="an OpenGL-based programming environment to visualize music and create graphic effects"
 
-
 export LDFLAGS="$LDFLAGS -lX11"
 
 PKG_CMAKE_OPTS_TARGET="-DBUILD_SHARED_LIBS=0 \

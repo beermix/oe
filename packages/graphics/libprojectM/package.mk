@@ -28,5 +28,4 @@ PKG_SECTION="multimedia"
 PKG_SHORTDESC="a MilkDrop compatible opensource music visualizer"
 PKG_LONGDESC="a MilkDrop compatible opensource music visualizer"
 
-
 PKG_CMAKE_OPTS_TARGET="-DBUILD_PROJECTM_STATIC=1"
