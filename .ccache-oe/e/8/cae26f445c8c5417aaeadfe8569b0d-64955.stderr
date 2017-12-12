@@ -1,0 +1,9 @@
+/home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/gettext-0.19.8.1/gettext-tools/src/search-path.c: In function 'get_search_path':
+/home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/gettext-0.19.8.1/gettext-tools/src/search-path.c:145:9: warning: passing argument 1 of 'free' discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
+   free (array.sub);
+         ^~~~~
+In file included from ../gnulib-lib/stdlib.h:36:0,
+                 from /home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/gettext-0.19.8.1/gettext-tools/src/search-path.c:26:
+/usr/include/stdlib.h:460:13: note: expected 'void *' but argument is of type 'const char *'
+ extern void free (void *__ptr) __THROW;
+             ^~~~

@@ -1,0 +1,12 @@
+conftest.cpp:809:0: warning: "GNULIB_LOCK" redefined
+ #define GNULIB_LOCK IN_GETTEXT_TOOLS_LIBGREP
+ 
+conftest.cpp:393:0: note: this is the location of the previous definition
+ #define GNULIB_LOCK 1
+ 
+conftest.cpp:828:0: warning: "GNULIB_LOCK" redefined
+ #define GNULIB_LOCK 1
+ 
+conftest.cpp:809:0: note: this is the location of the previous definition
+ #define GNULIB_LOCK IN_GETTEXT_TOOLS_LIBGREP
+ 

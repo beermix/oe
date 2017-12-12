@@ -1,0 +1,5 @@
+In file included from /home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/gettext-0.19.8.1/gettext-tools/gnulib-lib/libxml/xmlregexp.c:18:0:
+/home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/gettext-0.19.8.1/gettext-tools/gnulib-lib/libxml/libxml.h:110:0: warning: "LIBXML_STATIC" redefined
+ #  define LIBXML_STATIC
+ 
+<command-line>:0:0: note: this is the location of the previous definition
