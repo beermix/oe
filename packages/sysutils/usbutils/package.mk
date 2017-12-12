@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="usbutils"
-PKG_VERSION="008"
-PKG_SHA256="44741af0bae9d402a0ef160a29b2fa700bb656ab5e0a4b3343d51249c2a44c8c"
+PKG_VERSION="009"
+PKG_SHA256="8bbff0e54cb5f65a52be4feb9162fc0b022a97eb841b44784f7a89a9ea567160"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.linux-usb.org/"
