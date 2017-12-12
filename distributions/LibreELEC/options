@@ -72,19 +72,19 @@
   ADDITIONAL_DRIVERS=""
 
 # build and install bluetooth support (yes / no)
-  BLUETOOTH_SUPPORT="yes"
+  BLUETOOTH_SUPPORT="no"
 
 # build and install with KODI webfrontend (yes / no)
   KODI_WEBSERVER_SUPPORT="yes"
 
 # build and install Avahi (Zeroconf) daemon (yes / no)
-  AVAHI_DAEMON="yes"
+  AVAHI_DAEMON="no"
 
 # build with UPnP support (yes / no)
   KODI_UPNP_SUPPORT="yes"
 
 # build with MySQL support (yes / no)
-  KODI_MYSQL_SUPPORT="yes"
+  KODI_MYSQL_SUPPORT="no"
 
 # build xbmc with sshlib support (yes / no)
   KODI_SSHLIB_SUPPORT="no"
@@ -148,7 +148,7 @@
   ATVCLIENT_SUPPORT="no"
 
 # build and install Joystick support (yes / no)
-  JOYSTICK_SUPPORT="yes"
+  JOYSTICK_SUPPORT="no"
 
 # build and install CEC adapter support (yes / no)
   CEC_SUPPORT="no"

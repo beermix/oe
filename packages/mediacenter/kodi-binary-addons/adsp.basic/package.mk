@@ -28,7 +28,6 @@ PKG_SECTION=""
 PKG_SHORTDESC="adsp.basic"
 PKG_LONGDESC="adsp.basic"
 
-
 PKG_IS_ADDON="yes"
 PKG_ADDON_TYPE="kodi.adsp"
 
