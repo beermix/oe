@@ -55,7 +55,8 @@
   # PROJECT_CFLAGS="-mmmx -msse -msse2 -msse3 -mssse3 -mcx16 -msahf -maes -mpclmul -mpopcnt -mavx -msse4.2 -msse4.1 -mrdrnd -mf16c -mfsgsbase -mfxsr -mxsave -mxsaveopt -mfpmath=sse -mtune=$TARGET_CPU"
 
   # SquashFS compression method ( gzip / lzo / xz / lz4 / zstd )
-    SQUASHFS_COMPRESSION="zstd"
+    SQUASHFS_COMPRESSION="gzip"
+
 
 ################################################################################
 # setup project defaults
