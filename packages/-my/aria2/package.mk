@@ -5,7 +5,6 @@ PKG_URL="https://github.com/aria2/aria2/releases/download/release-$PKG_VERSION/a
 PKG_DEPENDS_TARGET="toolchain expat pcre curl libev libxml2 libuv"
 PKG_SECTION="tools"
 
-
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --sysconfdir=/storage/.config \
                            --datadir=/storage/.config \

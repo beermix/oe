@@ -32,7 +32,7 @@ PKG_TOOLCHAIN="autotools"
 
 PKG_MESON_OPTS_TARGET="-Dwith-docs=no -Dwith-man=no -Dwith-pcre=internal -Denable-libmount=yes -Denable-dtrace=false"
  
-PKG_CONFIGURE_OPTS_HOST="--disable-shared --with-pic --disable-libmount --disable-gtk-doc --disable-gtk-doc-html --disable-man"
+PKG_CONFIGURE_OPTS_HOST="--disable-shared --with-pcre=internal --with-pic --disable-libmount --disable-gtk-doc --disable-gtk-doc-html --disable-man"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_snprintf_c99=yes \
                            ac_cv_func_vsnprintf_c99=yes \
