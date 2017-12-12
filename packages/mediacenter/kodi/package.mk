@@ -28,15 +28,9 @@ PKG_SECTION="mediacenter"
 PKG_SHORTDESC="kodi: Kodi Mediacenter"
 PKG_LONGDESC="Kodi Media Center (which was formerly named Xbox Media Center or XBMC) is a free and open source cross-platform media player and home entertainment system software with a 10-foot user interface designed for the living-room TV. Its graphical user interface allows the user to easily manage video, photos, podcasts, and music from a computer, optical disk, local network, and the internet using a remote control."
 
-PKG_IS_ADDON="no"
+get_graphicdrivers
 
-PKG_USE_NINJA="no"
-
-PKG_CMAKE_SCRIPT="$PKG_BUILD/project/cmake/CMakeLists.txt"
-
-  get_graphicdrivers
-
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET dbus"
+PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET dbus"
 
 if [ "$DISPLAYSERVER" = "x11" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libX11 libXext libdrm libXrandr"

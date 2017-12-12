@@ -136,11 +136,7 @@ echo -e "LIBREELEC_ARCH=\"$LIBREELEC_ARCH\"" >> $INSTALL/etc/os-release
 echo -e "LIBREELEC_BUILD=\"$LIBREELEC_BUILD\"" >> $INSTALL/etc/os-release
 
 # create /etc/issue
-if [ -n "$CUSTOM_ISSUE" ]; then
-   echo "$CUSTOM_ISSUE" >> $INSTALL/etc/issue
-else
-   echo "$DISTRONAME ($LIBREELEC_BUILD): $LIBREELEC_VERSION ($LIBREELEC_ARCH)" >> $INSTALL/etc/issue
-fi
+echo "$DISTRONAME ($LIBREELEC_BUILD): $LIBREELEC_VERSION ($LIBREELEC_ARCH)" >> $INSTALL/etc/issue
 
 ln -sf /etc/issue $INSTALL/etc/motd
 
@@ -266,6 +262,7 @@ if [ "$1" = "release" -o "$1" = "mkimage" -o "$1" = "amlpkg" -o "$1" = "noobs" ]
 
   # remove n previous created release image
   rm -rf $TARGET_IMG/$IMAGE_NAME.img.gz
+
   if [ -n "$BOOTLOADER" ]; then
 
     BOOTLOADER_DIR="$(get_pkg_directory "$BOOTLOADER")"
@@ -340,6 +337,7 @@ if [ "$1" = "release" -o "$1" = "mkimage" -o "$1" = "amlpkg" -o "$1" = "noobs" ]
       RELEASE_DIR=$RELEASE_DIR \
       UUID_STORAGE="$(uuidgen)" \
       UBOOT_SYSTEM="$UBOOT_SYSTEM" \
+      UBOOT_VERSION="$UBOOT_VERSION" \
       EXTRA_CMDLINE="$EXTRA_CMDLINE" \
       SYSTEM_SIZE="$SYSTEM_SIZE" \
       SYSTEM_PART_START="$SYSTEM_PART_START" \
