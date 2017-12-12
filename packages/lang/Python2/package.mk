@@ -37,10 +37,7 @@ PKG_PY_DISABLED_MODULES="_tkinter nis gdbm bsddb ossaudiodev"
 PKG_CONFIGURE_OPTS_HOST="--cache-file=config.cache \
                          --without-cxx-main \
                          --with-threads \
-                         --enable-unicode=ucs4 \
-                         --disable-ipv6 \
-                         --enable-shared \
-                         --disable-static"
+                         --enable-unicode=ucs4"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            ac_cv_file_dev_ptmx=yes \
@@ -65,9 +62,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            --with-wctype-functions \
                            --without-cxx-main \
                            --with-system-ffi \
-                           --with-system-expat \
-                           --enable-shared \
-                           --disable-static"
+                           --with-system-expat"
 
 post_patch() {
   # This is needed to make sure the Python build process doesn't try to
@@ -119,13 +114,11 @@ makeinstall_target() {
 }
 
 post_makeinstall_target() {
-  for dir in bsddb ensurepip idlelib lib-tk msilib pydoc_data test unittest; do
+  for dir in bsddb idlelib lib-tk lib2to3 msilib pydoc_data test unittest; do
     rm -rf $INSTALL/usr/lib/python*/$dir
   done
 
   rm -rf $INSTALL/usr/lib/python*/config
-  rm -rf $INSTALL/usr/lib/python*/distutils/command/wininst*.exe
-  rm -rf $INSTALL/usr/lib/python*/lib2to3/tests
   rm -rf $INSTALL/usr/bin/2to3
   rm -rf $INSTALL/usr/bin/idle
   rm -rf $INSTALL/usr/bin/pydoc

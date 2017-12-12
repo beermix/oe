@@ -54,7 +54,6 @@ PKG_CMAKE_OPTS_COMMON="-DLLVM_INCLUDE_TOOLS=ON \
                        -DLLVM_APPEND_VC_REV=OFF"
 
 PKG_CMAKE_OPTS_HOST="$PKG_CMAKE_OPTS_COMMON \
-                     -DLLVM_ENABLE_ZLIB=OFF \
                      -DCMAKE_INSTALL_RPATH=$TOOLCHAIN/lib"
 
 make_host() {
