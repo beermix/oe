@@ -29,7 +29,6 @@ PKG_SECTION="database"
 PKG_SHORTDESC="mysql: A database server"
 PKG_LONGDESC="MySQL is a SQL (Structured Query Language) database server. SQL is the most popular database language in the world. MySQL is a client server implementation that consists of a server daemon mysqld and many different client programs/libraries."
 
-
 post_unpack() {
   sed -i 's|GET_TARGET_PROPERTY(LIBMYSQL_OS_OUTPUT_NAME libmysql OUTPUT_NAME)|SET(LIBMYSQL_OS_OUTPUT_NAME "mysqlclient")|' $PKG_BUILD/scripts/CMakeLists.txt
   sed -i "s|COMMAND comp_err|COMMAND $TOOLCHAIN/bin/comp_err|" $PKG_BUILD/extra/CMakeLists.txt
