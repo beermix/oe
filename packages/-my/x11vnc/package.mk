@@ -1,8 +1,3 @@
-################################################################################
-#      This file is part of Alex@ELEC - http://www.alexelec.in.ua
-#      Copyright (C) 2011-2016 Alexandr Zuyev (alex@alexelec.in.ua)
-################################################################################
-
 PKG_NAME="x11vnc"
 PKG_VERSION="0.9.13"
 PKG_REV="1"
