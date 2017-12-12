@@ -28,13 +28,7 @@ PKG_PRIORITY="optional"
 PKG_SECTION="python/devel"
 PKG_SHORTDESC="appdirs: Python module for determining appropriate platform-specific dirs"
 PKG_LONGDESC="appdirs is a small Python module for determining appropriate platform-specific dirs, e.g. a user data dir."
-
-
-
-
-make_host() {
-  : # nothing todo
-}
+PKG_TOOLCHAIN="manual"
 
 makeinstall_host() {
   python setup.py install --prefix=$TOOLCHAIN

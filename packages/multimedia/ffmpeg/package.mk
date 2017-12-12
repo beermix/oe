@@ -65,6 +65,12 @@ case "$TARGET_ARCH" in
     ;;
 esac
 
+if target_has_feature neon; then
+  FFMPEG_FPU="--enable-neon"
+else
+  FFMPEG_FPU="--disable-neon"
+fi
+
 if [ "$DISPLAYSERVER" = "x11" ]; then
   FFMPEG_X11GRAB="--enable-indev=x11grab_xcb"
 fi
@@ -75,15 +81,16 @@ pre_configure_target() {
 
 # ffmpeg fails building for x86_64 with LTO support
   strip_lto
-  strip_hard
 
 # ffmpeg fails running with GOLD support
   strip_gold
 
-
   if [ "$KODIPLAYER_DRIVER" = "bcm2835-driver" ]; then
     CFLAGS="-I$SYSROOT_PREFIX/usr/include/interface/vcos/pthreads -I$SYSROOT_PREFIX/usr/include/interface/vmcs_host/linux $CFLAGS"
     FFMPEG_LIBS="-lbcm_host -lvcos -lvchiq_arm -lmmal -lmmal_core -lmmal_util -lvcsm"
+    FFMPEG_RPI="--enable-rpi"
+  else
+    FFMPEG_RPI="--disable-rpi"
   fi
 }
 
@@ -144,11 +151,9 @@ configure_target() {
               --disable-crystalhd \
               $FFMPEG_VAAPI \
               $FFMPEG_VDPAU \
-              $FFMPEG_RPI \
               --disable-dxva2 \
               --enable-runtime-cpudetect \
               $FFMPEG_TABLES \
-              --disable-memalign-hack \
               --disable-encoders \
               --enable-encoder=ac3 \
               --enable-encoder=aac \
@@ -173,20 +178,16 @@ configure_target() {
               --disable-avisynth \
               --enable-bzlib \
               --disable-lzma \
-              --disable-alsa \
               --disable-frei0r \
               --disable-libopencore-amrnb \
               --disable-libopencore-amrwb \
               --disable-libopencv \
               --disable-libdc1394 \
-              --disable-libfaac \
               --disable-libfreetype \
               --disable-libgsm \
               --disable-libmp3lame \
-              --disable-libnut \
               --disable-libopenjpeg \
               --disable-librtmp \
-              --disable-libschroedinger \
               --enable-libspeex \
               --disable-libtheora \
               --disable-libvo-amrwbenc \
@@ -201,10 +202,7 @@ configure_target() {
               $FFMPEG_FPU \
               --enable-yasm \
               --disable-symver \
-              --enable-lto \
-              --disable-libvidstab \
-              --disable-libwebp \
-              --disable-frei0r \
+              --disable-lto \
               $FFMPEG_X11GRAB
 }
 

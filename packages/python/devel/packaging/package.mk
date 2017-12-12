@@ -28,13 +28,7 @@ PKG_PRIORITY="optional"
 PKG_SECTION="python/devel"
 PKG_SHORTDESC="packaging: Core utilities for Python packages"
 PKG_LONGDESC="Packaging is the Core utilities for Python packages package"
-
-
-
-
-make_host() {
-  : # nothing todo
-}
+PKG_TOOLCHAIN="manual"
 
 makeinstall_host() {
   python setup.py install --prefix=$TOOLCHAIN

@@ -28,20 +28,10 @@ PKG_PRIORITY="optional"
 PKG_SECTION="python/devel"
 PKG_SHORTDESC="six: Python 2 and 3 compatibility utilities"
 PKG_LONGDESC="Six is a Python 2 and 3 compatibility library. It provides utility functions for smoothing over the differences between the Python versions with the goal of writing Python code that is compatible on both Python versions."
-
-
-
-
-make_host() {
-  : # nothing todo
-}
+PKG_TOOLCHAIN="manual"
 
 makeinstall_host() {
   python setup.py install --prefix=$TOOLCHAIN
-}
-
-make_target() {
-  : # nop
 }
 
 makeinstall_target() {
