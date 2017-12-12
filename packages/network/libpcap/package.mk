@@ -1,6 +1,6 @@
 ################################################################################
-#      This file is part of LibreELEC - http://www.libreelec.tv
-#      Copyright (C) 2016 Team LibreELEC
+#      This file is part of LibreELEC - https://libreelec.tv
+#      Copyright (C) 2016-present Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -25,27 +25,17 @@ PKG_DEPENDS_TARGET="toolchain libnl"
 PKG_SECTION="devel"
 PKG_SHORTDESC="system interface for user-level packet capture"
 PKG_LONGDESC="libpcap (Packet CAPture) provides a portable framework for low-level network monitoring. Applications include network statistics collection, security monitoring, network debugging, etc."
-PKG_USE_CMAKE="no"
-
-PKG_USE_NINJA="no"
-
-MAKEFLAGS=-j1
+PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="LIBS=-lpthread \
                            ac_cv_header_libusb_1_0_libusb_h=no \
-                           ac_cv_netfilter_can_compile=no \
-                           ac_cv_linux_vers=2 \
                            --disable-shared \
                            --with-pcap=linux \
                            --disable-bluetooth \
                            --disable-can \
                            --without-libnl \
                            --disable-dbus \
-                           --disable-canusb \
-                           --disable-yydebug \
-                           --without-septel \
-                           --without-dag \
-                           --without-snf"
+                           --disable-canusb"
 
 pre_configure_target() {
 # When cross-compiling, configure can't set linux version
