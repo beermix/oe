@@ -28,7 +28,6 @@ PKG_SECTION="devel"
 PKG_SHORTDESC="SWIG: a software development tool that connects programs written in C and C++ with a variety of high-level programming languages."
 PKG_LONGDESC="SWIG is a software development tool that connects programs written in C and C++ with a variety of high-level programming languages."
 
-
 PKG_CONFIGURE_OPTS_HOST="--program-suffix=3.0 \
                          --with-pcre-prefix=$TOOLCHAIN \
                          --with-boost=no \

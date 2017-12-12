@@ -28,7 +28,6 @@ PKG_SECTION="graphics"
 PKG_SHORTDESC="gpu-viv-bin-mx6q: OpenGL-ES and VIVANTE driver for imx6q"
 PKG_LONGDESC="gpu-viv-bin-mx6q: OpenGL-ES and VIVANTE driver for imx6q"
 
-
 make_target() {
  : # nothing to make
 }

@@ -29,7 +29,6 @@ PKG_SECTION="service"
 PKG_SHORTDESC="USB Multiplex Daemon"
 PKG_LONGDESC="USB Multiplex Daemon"
 
-
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="iPhone Tether"
 PKG_ADDON_TYPE="xbmc.service"

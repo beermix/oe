@@ -33,6 +33,7 @@ get_graphicdrivers
 
 DRM_CONFIG="--disable-intel --disable-radeon --disable-amdgpu"
 DRM_CONFIG="$DRM_CONFIG --disable-nouveau --disable-vmwgfx --disable-vc4"
+
 for drv in $GRAPHIC_DRIVERS; do
   [ "$drv" = "i915" -o "$drv" = "i965" ] && \
     DRM_CONFIG=`echo $DRM_CONFIG | sed -e 's/disable-intel/enable-intel/'`

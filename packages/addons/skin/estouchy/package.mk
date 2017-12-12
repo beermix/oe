@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2016 Team LibreELEC
+#      Copyright (C) 2016-present Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,6 +18,9 @@
 
 PKG_NAME="estouchy"
 PKG_VERSION="1.0"
+PKG_REV="101"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
 PKG_URL=""
 PKG_DEPENDS_TARGET="toolchain kodi"
@@ -25,19 +28,11 @@ PKG_PRIORITY="optional"
 PKG_SECTION="skin"
 PKG_SHORTDESC="Kodi skin Estouchy"
 PKG_LONGDESC="Kodi skin Estouchy"
+PKG_TOOLCHAIN="manual"
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Estouchy"
 PKG_ADDON_TYPE="xbmc.gui.skin"
-
-
-make_target() {
-  : # already build with kodi
-}
-
-makeinstall_target() {
-  : # nothing to install
-}
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID
