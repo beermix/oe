@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libxslt"
-PKG_VERSION="1.1.30"
+PKG_VERSION="1.1.32"
 PKG_ARCH="any"
 PKG_LICENSE="MIT"
 PKG_SITE="http://xmlsoft.org/xslt/"
