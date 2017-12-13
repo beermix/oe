@@ -44,12 +44,12 @@ fi
 get_graphicdrivers
 
 # Drivers
-if [ -n "$LIBINPUT" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET xf86-input-libinput"
-else
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET xf86-input-evdev xf86-input-synaptics"
-fi
 
-#for drv in $XORG_DRIVERS; do
-#  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET xf86-video-$drv"
-#done
+for drv in $XORG_DRIVERS; do
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET xf86-input-libinput"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET xf86-input-evdev"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET xf86-input-mouse"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET xf86-input-keyboard"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET xf86-video-$drv"
+done

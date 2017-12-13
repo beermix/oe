@@ -40,7 +40,7 @@ if [ "$MEDIACENTER" = "kodi" ]; then
                                           pycryptodome"
 # other packages
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET LibreELEC-settings \
-                                          xmlstarlet pvr.iptvsimple pvr.iptvsimple.multi inputstream.rtmp inputstream.adaptive"
+                                          xmlstarlet pvr.iptvsimple pvr.iptvsimple.multi inputstream.rtmp"
 
   if [ "$JOYSTICK_SUPPORT" = "yes" ]; then
     PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET peripheral.joystick"
