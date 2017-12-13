@@ -29,7 +29,6 @@ PKG_SECTION="driver"
 PKG_SHORTDESC="The library provides functionality to setup the HDHomeRun, change channels, setup PID filtering, get signal quality and so on."
 PKG_LONGDESC="The library provides functionality to setup the HDHomeRun, change channels, setup PID filtering, get signal quality and so on."
 
-
 PKG_MAKE_OPTS_TARGET="CROSS_COMPILE=$TARGET_PREFIX"
 
 makeinstall_target() {

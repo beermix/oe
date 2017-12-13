@@ -28,7 +28,6 @@ PKG_SECTION="tools"
 PKG_SHORTDESC="plymouth-lite: Boot splash screen based on Fedora's Plymouth code"
 PKG_LONGDESC="Boot splash screen based on Fedora's Plymouth code"
 
-
 if [ "$UVESAFB_SUPPORT" = yes ]; then
   PKG_DEPENDS_INIT="$PKG_DEPENDS_INIT v86d:init"
 fi

@@ -28,7 +28,6 @@ PKG_SECTION="sysutils/remote"
 PKG_SHORTDESC="amremote - IR remote configuration utility for Amlogic-based devices"
 PKG_LONGDESC="amremote - IR remote configuration utility for Amlogic-based devices"
 
-
 makeinstall_target() {
   mkdir -p $INSTALL/usr/bin
     cp remotecfg $INSTALL/usr/bin

@@ -28,7 +28,6 @@ PKG_SECTION="graphics"
 PKG_SHORTDESC="provides a simple API for creating windows, contexts and surfaces, receiving input and events"
 PKG_LONGDESC="provides a simple API for creating windows, contexts and surfaces, receiving input and events"
 
-
 if [ "$OPENGL" = "no" ] ; then
   exit 0
 fi

@@ -60,12 +60,12 @@ make_host() {
 }
 
 makeinstall_host() {
-  cp -a bin/llvm-config $TOOLCHAIN/llvm-config-host
+  cp -a bin/llvm-config $SYSROOT_PREFIX/usr/bin/llvm-config-host
   cp -a bin/llvm-tblgen $TOOLCHAIN/bin
 }
 
 PKG_CMAKE_OPTS_TARGET="$PKG_CMAKE_OPTS_COMMON \
-                       -DCMAKE_BUILD_TYPE=Release \
+                       -DCMAKE_BUILD_TYPE=MinSizeRel \
                        -DCMAKE_C_FLAGS="$CFLAGS" \
                        -DCMAKE_CXX_FLAGS="$CXXFLAGS" \
                        -DLLVM_TARGET_ARCH="$TARGET_ARCH" \

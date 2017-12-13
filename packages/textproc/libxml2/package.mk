@@ -33,8 +33,6 @@ PKG_CONFIGURE_OPTS_ALL="ac_cv_header_ansidecl_h=no \
              --enable-shared \
              --enable-silent-rules \
              --disable-ipv6 \
-             --with-threads \
-             --with-history \
              --without-python \
              --with-zlib=$TOOLCHAIN \
              --without-lzma"

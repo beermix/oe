@@ -47,6 +47,7 @@ PKG_MAKE_OPTS_INIT="ARCH=$TARGET_ARCH \
   if [ "$NANO_EDITOR" = "yes" ]; then
     PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET nano"
   fi
+
 # nfs support
 if [ "$NFS_SUPPORT" = yes ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET rpcbind"
@@ -145,7 +146,6 @@ configure_init() {
     make oldconfig
 }
 
-
 makeinstall_host() {
   mkdir -p $TOOLCHAIN/bin
     cp -R $PKG_BUILD/.install_host/bin/* $TOOLCHAIN/bin
@@ -157,7 +157,6 @@ makeinstall_target() {
     cp $PKG_DIR/scripts/createlog $INSTALL/usr/bin/
     cp $PKG_DIR/scripts/lsb_release $INSTALL/usr/bin/
     cp $PKG_DIR/scripts/apt-get $INSTALL/usr/bin/
-    cp $PKG_DIR/scripts/passwd $INSTALL/usr/bin/
     cp $PKG_DIR/scripts/sudo $INSTALL/usr/bin/
     cp $PKG_DIR/scripts/pastebinit $INSTALL/usr/bin/
     ln -sf pastebinit $INSTALL/usr/bin/paste
@@ -189,6 +188,7 @@ makeinstall_target() {
   # add webroot
     mkdir -p $INSTALL/usr/www
       echo "It works" > $INSTALL/usr/www/index.html
+
     mkdir -p $INSTALL/usr/www/error
       echo "404" > $INSTALL/usr/www/error/404.html
 }

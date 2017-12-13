@@ -29,7 +29,6 @@ PKG_SECTION="tools"
 PKG_SHORTDESC="e2fsprogs: Utilities for use with the ext2 filesystem"
 PKG_LONGDESC="The filesystem utilities for the EXT2 filesystem, including e2fsck, mke2fs, dumpe2fs, fsck, and others."
 
-
 if [ "$HFSTOOLS" = "yes" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET diskdev_cmds"
 fi

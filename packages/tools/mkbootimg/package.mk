@@ -28,7 +28,6 @@ PKG_SECTION="tools"
 PKG_SHORTDESC="mkbootimg: Creates kernel boot images for Android"
 PKG_LONGDESC="mkbootimg: Creates kernel boot images for Android"
 
-
 makeinstall_host() {
   mkdir -p $SYSROOT_PREFIX/usr/include
   cp mkbootimg $TOOLCHAIN/bin/

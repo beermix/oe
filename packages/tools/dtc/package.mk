@@ -30,7 +30,6 @@ PKG_SECTION="tools"
 PKG_SHORTDESC="The Device Tree Compiler"
 PKG_LONGDESC="The Device Tree Compiler"
 
-
 PKG_MAKE_OPTS_HOST="dtc libfdt"
 PKG_MAKE_OPTS_TARGET="dtc libfdt"
 

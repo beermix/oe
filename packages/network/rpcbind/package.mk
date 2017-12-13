@@ -28,7 +28,6 @@ PKG_SECTION="network"
 PKG_SHORTDESC="rpcbind: a server that converts RPC program numbers into universal addresses."
 PKG_LONGDESC="The rpcbind utility is a server that converts RPC program numbers into universal addresses."
 
-
 PKG_CONFIGURE_OPTS_TARGET="--disable-warmstarts \
                            --disable-libwrap \
                            --with-statedir=/tmp \

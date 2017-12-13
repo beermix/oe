@@ -6,8 +6,6 @@ PKG_DEPENDS_TARGET="toolchain yasm:host pcre zlib"
 PKG_SECTION="security"
 PKG_SHORTDESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"
 PKG_LONGDESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"
-PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
 
 export CCACHE_DISABLE=1
 
@@ -87,7 +85,6 @@ post_makeinstall_target() {
 
   # create new cert: ./mkcerts.sh
   # cert from https://curl.haxx.se/docs/caextract.html
-
   mkdir -p $INSTALL/etc/ssl
     cp $PKG_DIR/cert/cacert.pem $INSTALL/etc/ssl/cert.pem
 

@@ -29,7 +29,6 @@ PKG_SECTION="tools"
 PKG_SHORTDESC="led_tools"
 PKG_LONGDESC="LED tools, these are a set of tools to control the LEDs on Slice"
 
-
 make_target() {
   make CC="$CC" \
        CFLAGS="$CFLAGS" \

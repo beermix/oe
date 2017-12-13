@@ -27,7 +27,6 @@ PKG_SECTION="virtual"
 PKG_SHORTDESC="corefonts: Metapackage for installing fonts"
 PKG_LONGDESC="corefonts is a Metapackage for installing fonts"
 
-
 if [ -n "$CUSTOM_FONTS" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET $CUSTOM_FONTS"
 else

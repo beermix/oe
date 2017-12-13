@@ -39,7 +39,7 @@ pre_configure_host() {
 }
 
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC"
+  export CFLAGS="$CFLAGS -fPIC -DPIC"
   export CPPFLAGS="$CPPFLAGS -I$SYSROOT_PREFIX/usr/include"
 }
 

@@ -37,10 +37,6 @@ makeinstall_host() {
   python setup.py install --prefix=$TOOLCHAIN
 }
 
-make_target() {
-  : # nothing todo
-}
-
 makeinstall_target() {
   python setup.py install --root=$INSTALL --prefix=/usr
 }

@@ -28,7 +28,6 @@ PKG_SECTION="network"
 PKG_SHORTDESC="A simplified, portable interface to several low-level networking routines"
 PKG_LONGDESC="A simplified, portable interface to several low-level networking routines"
 
-
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_strlcat=no \
                            ac_cv_func_strlcpy=no \
                            --enable-static \
