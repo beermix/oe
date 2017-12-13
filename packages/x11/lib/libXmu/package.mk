@@ -33,4 +33,3 @@ pre_configure_target() {
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--without-xmlto --disable-static"
-

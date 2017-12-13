@@ -28,8 +28,5 @@ PKG_SECTION="x11/proto"
 PKG_SHORTDESC="fontcacheproto: Fontcache extension headers"
 PKG_LONGDESC="Fontcache extension headers"
 
-
-
-
 # package specific configure options
 PKG_CONFIGURE_OPTS_TARGET="--without-xmlto"

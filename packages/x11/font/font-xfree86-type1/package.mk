@@ -28,9 +28,6 @@ PKG_SECTION="x11/font"
 PKG_SHORTDESC="font-xfree86-type1: A Xfree86 Inc. Type1 font"
 PKG_LONGDESC="A Xfree86 Inc. Type1 font."
 
-
-
-
 PKG_CONFIGURE_OPTS_TARGET="--with-fontrootdir=/usr/share/fonts"
 
 post_install() {

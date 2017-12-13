@@ -28,9 +28,6 @@ PKG_SECTION="x11/app"
 PKG_SHORTDESC="xrandr: A primitive command line interface to RandR extension"
 PKG_LONGDESC="Xrandr is a primitive command line interface to the RandR extension and used to set the screen size, orientation and/or reflection."
 
-
-
-
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin/xkeystone
 }

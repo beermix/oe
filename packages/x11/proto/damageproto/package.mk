@@ -28,8 +28,5 @@ PKG_SECTION="x11/proto"
 PKG_SHORTDESC="damageproto: Damage extension header"
 PKG_LONGDESC="Damage extension headers"
 
-
-
-
 # package specific configure options
 PKG_CONFIGURE_OPTS_TARGET="--without-xmlto"

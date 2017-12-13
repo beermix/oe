@@ -28,6 +28,5 @@ PKG_SECTION="x11/proto"
 PKG_SHORTDESC="xcb-proto: X C-language Bindings protocol headers"
 PKG_LONGDESC="X C-language Bindings protocol headers."
 
-
 # package specific configure options
 PKG_CONFIGURE_OPTS_TARGET="--without-xmlto"

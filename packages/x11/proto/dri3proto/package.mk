@@ -28,8 +28,5 @@ PKG_SECTION="x11/proto"
 PKG_SHORTDESC="dri3proto: X.Org DRI3 protocol headers"
 PKG_LONGDESC="X.Org DRI3 protocol headers."
 
-
-
-
 # package specific configure options
 PKG_CONFIGURE_OPTS_TARGET="--without-xmlto"

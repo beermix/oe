@@ -28,8 +28,5 @@ PKG_SECTION="x11/proto"
 PKG_SHORTDESC="xf86miscproto: XF86Misc extension headers"
 PKG_LONGDESC="XF86Misc extension headers"
 
-
-
-
 # package specific configure options
 PKG_CONFIGURE_OPTS_TARGET="--without-xmlto"

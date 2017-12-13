@@ -28,9 +28,6 @@ PKG_SECTION="x11/font"
 PKG_SHORTDESC="encodings: X font encodings"
 PKG_LONGDESC="X font encoding meta files."
 
-
-
-
 PKG_CONFIGURE_OPTS_TARGET="--enable-gzip-small-encodings \
                            --enable-gzip-large-encodings \
                            --with-fontrootdir=/usr/share/fonts"

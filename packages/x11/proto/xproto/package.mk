@@ -29,9 +29,6 @@ PKG_SECTION="x11/proto"
 PKG_SHORTDESC="xproto: KB extension headers"
 PKG_LONGDESC="X11 extension headers"
 
-
-
-
 # package specific configure options
 PKG_CONFIGURE_OPTS_TARGET="--without-xmlto"
 PKG_CONFIGURE_OPTS_HOST="--without-xmlto"

@@ -140,7 +140,6 @@ pre_configure_target() {
   strip_hard
 }
 
-
 post_makeinstall_target() {
   rm -rf $INSTALL/var/cache/xkb
 

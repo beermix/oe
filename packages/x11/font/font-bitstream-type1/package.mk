@@ -28,9 +28,6 @@ PKG_SECTION="x11/font"
 PKG_SHORTDESC="font-bitstream-type1: Bitstream font family"
 PKG_LONGDESC="Bitstream font family."
 
-
-
-
 PKG_CONFIGURE_OPTS_TARGET="--with-fontrootdir=/usr/share/fonts"
 
 post_install() {

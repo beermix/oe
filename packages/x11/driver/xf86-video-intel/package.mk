@@ -31,36 +31,30 @@ PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-backlight \
                            --disable-backlight-helper \
-                           --with-default-dri=3 \
+                           --disable-gen4asm \
+                           --enable-udev \
+                           --disable-tools \
+                           --enable-dri \
+                           --disable-dri1 \
+                           --enable-dri2 \
+                           --enable-dri3 \
+                           --enable-kms --enable-kms-only \
+                           --disable-ums --disable-ums-only \
+                           --enable-sna \
+                           --enable-uxa \
+                           --disable-xvmc \
+                           --disable-xaa \
+                           --disable-dga \
+                           --disable-tear-free \
+                           --disable-create2 \
+                           --disable-async-swap \
+                           --with-default-dri=2 \
                            --with-xorg-module-dir=$XORG_PATH_MODULES"
 
 pre_configure_target() {
 # xf86-video-intel is broken enough. dont link with LTO
   strip_lto
   strip_hard
-  
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-ffast-math||g"`
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Ofast|-O2|g"`
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-O.|-O2|g"`
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-fstack-protector-strong||g"`
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--sort-common,--as-needed,-z,relro||g"`
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--as-needed||g"`
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed||"`
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now||"`
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong -D_FORTIFY_SOURCE=2||g"`
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong||g"`
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-ffast-math||g"`
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-fno-plt||g"`
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-fno-caller-saves||g"`
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-Ofast|-O2|g"`
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O2|g"`
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong||g"`
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong -fno-plt||g"`
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
-  export CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-Wp,||g"`
-  export CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
 }
 
 post_makeinstall_target() {

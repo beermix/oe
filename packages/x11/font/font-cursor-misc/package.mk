@@ -28,9 +28,6 @@ PKG_SECTION="x11/font"
 PKG_SHORTDESC="font-cursor-misc: X11 cursor fonts"
 PKG_LONGDESC="X11 cursor fonts."
 
-
-
-
 PKG_CONFIGURE_OPTS_TARGET="--with-fontrootdir=/usr/share/fonts"
 
 post_install() {

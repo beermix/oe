@@ -28,9 +28,6 @@ PKG_SECTION="x11/lib"
 PKG_SHORTDESC="libpciaccess: X.org libpciaccess library"
 PKG_LONGDESC="X.org libpciaccess library."
 
-
-
-
 CFLAGS="$CFLAGS -D_LARGEFILE64_SOURCE"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_header_asm_mtrr_h=set \

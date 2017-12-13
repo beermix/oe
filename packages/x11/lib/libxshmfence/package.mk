@@ -27,5 +27,3 @@ PKG_DEPENDS_TARGET="toolchain util-macros xproto"
 PKG_SECTION="x11/lib"
 PKG_SHORTDESC="libxshmfence: Shared memory 'SyncFence' synchronization primitive."
 PKG_LONGDESC="libxshmfence is the Shared memory 'SyncFence' synchronization primitive."
-
-

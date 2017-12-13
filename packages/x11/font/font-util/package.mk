@@ -29,9 +29,6 @@ PKG_SECTION="x11/font"
 PKG_SHORTDESC="font-util: X.org font utilities"
 PKG_LONGDESC="X.org font utilities."
 
-
-
-
 PKG_CONFIGURE_OPTS_TARGET="--with-mapdir=/usr/share/fonts/util"
 
 post_makeinstall_target() {
