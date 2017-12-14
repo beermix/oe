@@ -188,8 +188,10 @@ configure_target() {
               --disable-libfreetype \
               --disable-libgsm \
               --disable-libmp3lame \
+              --disable-libnut \
               --disable-libopenjpeg \
               --disable-librtmp \
+              --disable-libschroedinger \
               --enable-libspeex \
               --disable-libtheora \
               --disable-libvo-amrwbenc \

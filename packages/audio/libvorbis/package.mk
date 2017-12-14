@@ -30,12 +30,11 @@ PKG_LONGDESC="Ogg Vorbis is a fully open, non-proprietary, patent-and-royalty-fr
 PKG_TOOLCHAIN="autotools"
 
 # package specific configure options
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared \
-                           --with-ogg=$SYSROOT_PREFIX/usr \
+PKG_CONFIGURE_OPTS_TARGET="--with-ogg=$SYSROOT_PREFIX/usr \
                            --disable-oggtest \
                            --disable-docs \
                            --disable-examples"
 
-pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC"
-}
+#pre_configure_target() {
+#  export CFLAGS="$CFLAGS -fPIC"
+#}
