@@ -47,7 +47,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --disable-nls \
                          --disable-gdb \
                          --enable-deterministic-archives \
-                         --with-system-zlib \
+                         --with-system-zlib=$TOOLCHAIN \
                          --enable-poison-system-directories"
 
 pre_configure_host() {
