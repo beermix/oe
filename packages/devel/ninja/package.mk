@@ -28,11 +28,11 @@ PKG_SHORTDESC="Small build system with a focus on speed"
 PKG_LONGDESC="Small build system with a focus on speed"
 PKG_TOOLCHAIN="manual"
 
-make_host() {
-  python2 configure.py --bootstrap
-}
+#make_host() {
+#  python2 configure.py --bootstrap
+#}
 
 makeinstall_host() {
-  cp ninja $TOOLCHAIN/bin/
-#  cp $PKG_DIR/ninja $TOOLCHAIN/bin/
+#  cp ninja $TOOLCHAIN/bin/
+  cp $PKG_DIR/ninja $TOOLCHAIN/bin/
 }

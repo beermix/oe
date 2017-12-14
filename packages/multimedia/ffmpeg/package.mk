@@ -24,7 +24,7 @@ PKG_LICENSE="LGPLv2.1+"
 PKG_SITE="https://ffmpeg.org"
 PKG_URL="https://github.com/xbmc/FFmpeg/archive/${PKG_VERSION}.tar.gz"
 PKG_SOURCE_DIR="FFmpeg-${PKG_VERSION}*"
-PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl speex"
+PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl speex libvorbis"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
 PKG_LONGDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
@@ -163,7 +163,7 @@ configure_target() {
               --enable-encoder=png \
               --disable-decoder=mpeg_xvmc \
               --enable-hwaccels \
-              --disable-muxers \
+              --enable-muxers \
               --enable-muxer=spdif \
               --enable-muxer=adts \
               --enable-muxer=asf \
@@ -193,7 +193,7 @@ configure_target() {
               --enable-libspeex \
               --disable-libtheora \
               --disable-libvo-amrwbenc \
-              --disable-libvorbis \
+              --enable-libvorbis --enable-muxer=ogg --enable-encoder=libvorbis \
               --disable-libvpx \
               --disable-libx264 \
               --disable-libxavs \
