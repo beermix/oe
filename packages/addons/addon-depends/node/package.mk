@@ -23,19 +23,36 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://nodejs.org"
 PKG_URL="https://github.com/nodejs/node/archive/v$PKG_VERSION.tar.gz"
-PKG_DEPENDS_HOST="toolchain libuv:host ninja:host"
-PKG_DEPENDS_TARGET="toolchain openssl libuv"
+PKG_DEPENDS_HOST="toolchain libuv:host"
+PKG_DEPENDS_TARGET="toolchain zlib openssl libuv"
 PKG_SHORTDESC="Node.js JavaScript runtime"
 PKG_LONGDESC="Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient. The Node.js package ecosystem, npm, is the largest ecosystem of open source libraries in the world."
 
-HOST_CONFIGURE_OPTS="--prefix=$TOOLCHAIN \
-                     --fully-static \
-                     --with-intl=none \
-                     --without-npm \
-                     --without-ssl \
-                     --ninja"
+HOST_CONFIGURE_OPTS="--prefix=$TOOLCHAIN --with-intl=none --without-npm --without-ssl --ninja"
                      
-HOST_CONFIGURE_TARGET="--fully-static"
+TARGET_CONFIGURE_OPTS="--prefix=/usr --shared-zlib --shared-openssl --with-intl=none --ninja"
+
+pre_configure_host() {
+  unset CPPFLAGS
+  unset CFLAGS
+  unset CXXFLAGS
+  cd ..
+}
+
+#pre_configure_target() {
+#  LDFLAGS="$LDFLAGS -lz -lssl -lstdc++ -lm -luv -lrt -lpthread -lnsl -ldl"
+#  cd ..
+#}
+
+make_target() {
+  cd $PKG_BUILD/out/Release
+  ninja -j${CONCURRENCY_MAKE_LEVEL}
+}
+
+makeinstall_target() {
+  mkdir -p $INSTALL/bin/
+  cp $PKG_BUILD/out/Release/node $INSTALL/bin/
+}
 
 make_host() {
   cd $PKG_BUILD/out/Release
@@ -43,5 +60,6 @@ make_host() {
 }
 
 makeinstall_host() {
+  mkdir -p $INSTALL/bin/
   cp $PKG_BUILD/out/Release/node $TOOLCHAIN/bin/
 }

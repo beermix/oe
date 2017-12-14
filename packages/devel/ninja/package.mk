@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="ninja"
-PKG_VERSION="e234a7b"
+PKG_VERSION="1.8.2"
 PKG_ARCH="any"
 PKG_LICENSE="Apache"
 PKG_SITE="https://github.com/ninja-build/ninja"
@@ -34,4 +34,5 @@ make_host() {
 
 makeinstall_host() {
   cp ninja $TOOLCHAIN/bin/
+#  cp $PKG_DIR/ninja $TOOLCHAIN/bin/
 }
