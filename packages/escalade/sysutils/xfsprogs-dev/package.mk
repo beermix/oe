@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="xfsprogs-dev"
-PKG_VERSION="4.13.1"
+PKG_VERSION="4.14.0"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.xfs.org"
@@ -27,14 +27,12 @@ PKG_DEPENDS_INIT="xfsprogs-dev"
 PKG_SECTION="tools"
 PKG_SHORTDESC="xfsprogs: Utilities for use with the xfs filesystem"
 
-
 PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
 			      --exec-prefix=/ \
 			      --enable-shared=no \
 			      --with-gnu-ld \
 			      --enable-editline=yes \
-			      --enable-lib64=no \
-			      --enable-gettext=no"
+			      --enable-lib64=no"
 
 pre_configure_target() {
   cd $PKG_BUILD
@@ -44,14 +42,6 @@ pre_configure_target() {
 
 make_target() {
   make SYSROOT_PREFIX=$SYSROOT_PREFIX
-}
-
-configure_init() {
-  : # reuse target
-}
-
-make_init() {
-  : # reuse target
 }
 
 post_makeinstall_target() {

@@ -29,22 +29,16 @@ PKG_SECTION="tools"
 PKG_SHORTDESC="xfsprogs: Utilities for use with the xfs filesystem"
 
 PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
-			      --exec-prefix=/ \
-			      --enable-shared=no \
-			      --enable-editline=yes \
-			      --enable-readline=no \
-			      --enable-termcap=no \
-			      --enable-blkid=yes \
-			      --enable-librt=yes \
-			      --enable-lib64=no"
-
+			   --exec-prefix=/ \
+			   --enable-shared=no \
+			   --with-gnu-ld \
+			   --enable-editline=yes \
+			   --enable-gettext=no"
+			      
 pre_configure_target() {
   make configure
 }
 
-makeinstall_init() {
-  mkdir -p $INSTALL/usr/sbin
-  cp ../.install_pkg/usr/sbin/xfs_repair $INSTALL/usr/sbin
-  cp ../.install_pkg/usr/sbin/fsck.xfs $INSTALL/usr/sbin
-  cp ../.install_pkg/usr/sbin/mkfs.xfs $INSTALL/usr/sbin
+pre_configure_init() {
+  make configure
 }

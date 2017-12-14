@@ -19,27 +19,24 @@
 ################################################################################
 
 PKG_NAME="chromium"
-PKG_VERSION="62.0.3202.75"
-#PKG_SHA256="e8df3150386729ddcb4971636627e54815ad447be5f122201e310f5bb0bcc362"
-PKG_REV="107.008"
+PKG_VERSION="63.0.3239.84"
+PKG_SHA256="6de2754dfc333675ae6a67ae13c95666009b35c84f847b058edbf312e42fa3af"
+PKG_REV="108"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_SITE="http://www.chromium.org/Home"
-PKG_URL="ftp://root:openelec@192.168.1.4/www/chromium-$PKG_VERSION.tar.xz"
-#PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="chromium:host pciutils dbus x11 ffmpeg yasm libXcomposite libXcursor libXtst alsa-lib bzip2 libXScrnSaver libexif libpng harfbuzz atk gtk2 unclutter xdotool libvdpau"
+PKG_DEPENDS_TARGET="chromium:host pciutils dbus x11 ffmpeg yasm libXcomposite libXcursor libXtst alsa-lib bzip2 libXScrnSaver libexif libpng harfbuzz atk gtk+ unclutter xdotool libvdpau"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
-
+PKG_TOOLCHAIN="manual"
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Chromium"
 PKG_ADDON_TYPE="xbmc.python.script"
 PKG_ADDON_PROVIDES="executable"
-
-#export CCACHE_SLOPPINESS=include_file_mtime
 
 post_patch() {
   cd $(get_build_dir chromium)
@@ -53,10 +50,6 @@ post_patch() {
 
 make_host() {
   ./tools/gn/bootstrap/bootstrap.py --no-rebuild --no-clean
-}
-
-makeinstall_host() {
-  :
 }
 
 make_target() {
@@ -110,7 +103,6 @@ make_target() {
     "google_default_client_secret=\"${_google_default_client_secret}\""
   )
 
-
   # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
   local _system_libs=(
     harfbuzz-ng
@@ -135,13 +127,10 @@ make_target() {
   ./build/linux/unbundle/replace_gn_files.py --system-libraries "${_system_libs}"
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
+  ./tools/gn/bootstrap/bootstrap.py --gn-gen-args "${_flags[*]}"
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
 
-  ninja -j${CONCURRENCY_MAKE_LEVEL} -C out/Release chrome chrome_sandbox widevinecdmadapter
-}
-
-makeinstall_target() {
-  :
+  ninja -j${CONCURRENCY_MAKE_LEVEL} -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
 }
 
 addon() {
@@ -151,9 +140,6 @@ addon() {
   cp -P  $PKG_BUILD/out/Release/{*.pak,*.dat,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -PR $PKG_BUILD/out/Release/locales $ADDON_BUILD/$PKG_ADDON_ID/bin/
   cp -PR $PKG_BUILD/out/Release/gen/content/content_resources.pak $ADDON_BUILD/$PKG_ADDON_ID/bin/
-
-#  debug_strip $ADDON_BUILD/$PKG_ADDON_ID/bin
-
   # config
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/config
   cp -P $PKG_DIR/config/* $ADDON_BUILD/$PKG_ADDON_ID/config
@@ -168,9 +154,9 @@ addon() {
   # cairo
   cp -PL $(get_build_dir cairo)/.install_pkg/usr/lib/libcairo.so.2 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
-  # gtk2
-  cp -PL $(get_build_dir gtk2)/.install_pkg/usr/lib/libgdk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
-  cp -PL $(get_build_dir gtk2)/.install_pkg/usr/lib/libgtk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  # gtk
+  cp -PL $(get_build_dir gtk+)/.install_pkg/usr/lib/libgdk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_build_dir gtk+)/.install_pkg/usr/lib/libgtk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # harfbuzz
   cp -PL $(get_build_dir harfbuzz)/.install_pkg/usr/lib/libharfbuzz.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
@@ -180,16 +166,16 @@ addon() {
   cp -PL $(get_build_dir gdk-pixbuf)/.install_pkg/usr/lib/libgdk_pixbuf-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
   
   # atk
-  cp -PL $(get_build_dir atk)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
+#  cp -PL $(get_build_dir atk)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
   
   # libvdpau
-  cp -r -i $(get_build_dir libvdpau)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
+#  cp -r -i $(get_build_dir libvdpau)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
   
   # libXScrnSaver
-  cp -r -i $(get_build_dir libXScrnSaver)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
+#  cp -r -i $(get_build_dir libXScrnSaver)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
   
   # libXcursor
-  cp -r -i $(get_build_dir libXcursor)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
+#  cp -r -i $(get_build_dir libXcursor)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # pixbuf loaders
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules

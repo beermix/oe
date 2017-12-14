@@ -1,4 +1,4 @@
-################################################################################
+	################################################################################
 #      This file is part of LibreELEC - http://www.libreelec.tv
 #      Copyright (C) 2016 Team LibreELEC
 #
@@ -27,8 +27,6 @@ PKG_DEPENDS_INIT="f2fs-tools"
 PKG_SECTION="tools"
 PKG_SHORTDESC="f2fs-tools: Utilities for use with the f2fs filesystem"
 PKG_LONGDESC="The filesystem utilities for the f2fs filesystem"
-PKG_IS_ADDON="no"
-
 PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="cross_compiling=maybe \
