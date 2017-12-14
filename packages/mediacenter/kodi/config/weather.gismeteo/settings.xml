@@ -1,0 +1,14 @@
+<settings>
+    <setting id="Language" value="0" />
+    <setting id="Location1" value="Киев" />
+    <setting id="Location1ID" value="4944" />
+    <setting id="Location2" value="" />
+    <setting id="Location2ID" value="" />
+    <setting id="Location3" value="" />
+    <setting id="Location3ID" value="" />
+    <setting id="Location4" value="" />
+    <setting id="Location4ID" value="" />
+    <setting id="Location5" value="" />
+    <setting id="Location5ID" value="" />
+    <setting id="Weekend" value="0" />
+</settings>

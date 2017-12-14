@@ -1,0 +1,27 @@
+diff -Naurp kodi-theme-Estuary-17.1-rc1-9e73395/xml/DialogButtonMenu.xml kodi-theme-Estuary-17.1-rc1-9e73395-patch/xml/DialogButtonMenu.xml
+--- kodi-theme-Estuary-17.1-rc1-9e73395/xml/DialogButtonMenu.xml	2017-02-04 17:04:13.000000000 +0200
++++ kodi-theme-Estuary-17.1-rc1-9e73395-patch/xml/DialogButtonMenu.xml	2017-02-06 10:42:18.000000000 +0200
+@@ -18,11 +18,6 @@
+ 				<include>ButtonMenuList</include>
+ 				<content>
+ 					<item>
+-						<label>$LOCALIZE[13012]</label>
+-						<onclick>Quit()</onclick>
+-						<visible>System.ShowExitButton</visible>
+-					</item>
+-					<item>
+ 						<label>$LOCALIZE[13016]</label>
+ 						<onclick>Powerdown()</onclick>
+ 						<visible>System.CanPowerDown</visible>
+@@ -39,6 +34,11 @@
+ 						<visible>System.HasAlarm(shutdowntimer)</visible>
+ 					</item>
+ 					<item>
++						<label>$LOCALIZE[13012]</label>
++						<onclick>Quit()</onclick>
++						<visible>System.ShowExitButton</visible>
++					</item>
++					<item>
+ 						<label>$LOCALIZE[13011]</label>
+ 						<onclick>Suspend()</onclick>
+ 						<visible>System.CanSuspend</visible>

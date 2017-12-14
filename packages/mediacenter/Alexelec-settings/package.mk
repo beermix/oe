@@ -1,10 +1,10 @@
 ################################################################################
 #      This file is part of Alex@ELEC - http://www.alexelec.in.ua
-#      Copyright (C) 2011-2017 Alexandr Zuyev (alex@alexelec.in.ua)
+#      Copyright (C) 2011-present Alexandr Zuyev (alex@alexelec.in.ua)
 ################################################################################
 
 PKG_NAME="Alexelec-settings"
-PKG_VERSION="10b322b"
+PKG_VERSION="30c0064"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="prop."

@@ -4,12 +4,12 @@
 ################################################################################
 
 PKG_NAME="kodi-theme-AeonNox"
-PKG_VERSION="d7ec6e4"
+PKG_VERSION="216cc97"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/BigNoid/Aeon-Nox"
-PKG_URL="https://github.com/BigNoid/Aeon-Nox/archive/${PKG_VERSION}.tar.gz"
+PKG_URL="https://github.com/BigNoid/Aeon-Nox/archive/$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="Aeon-Nox-$PKG_VERSION*"
 PKG_DEPENDS_TARGET="toolchain kodi"
 PKG_SECTION="mediacenter"

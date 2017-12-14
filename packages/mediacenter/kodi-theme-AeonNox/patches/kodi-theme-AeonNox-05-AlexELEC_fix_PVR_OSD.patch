@@ -1,0 +1,78 @@
+diff -Naurp kodi-theme-AeonNox-216cc97/1080i/DialogFullScreenInfo.xml kodi-theme-AeonNox-216cc97-patch/1080i/DialogFullScreenInfo.xml
+--- kodi-theme-AeonNox-216cc97/1080i/DialogFullScreenInfo.xml	2017-05-03 15:59:30.000000000 +0300
++++ kodi-theme-AeonNox-216cc97-patch/1080i/DialogFullScreenInfo.xml	2017-09-08 11:50:56.000000000 +0300
+@@ -340,23 +340,13 @@
+ 		<control type="group" id="9006">
+ 			<top>10</top>
+ 			<visible>VideoPlayer.Content(LiveTV) + !Window.IsActive(notification) + !Control.IsVisible(9001) + !Control.IsVisible(9002) + !Skin.HasSetting(TogglePlotLiveTV)</visible>			
+-			<!-- Small PlotInfo BG -->
+-			<control type="image">
+-				<left>17</left>
+-				<width>1885</width>
+-				<height>300</height>
+-				<texture border="40">dialogs/default/bg.png</texture>
+-				<animation effect="fade" end="90" condition="true">Conditional</animation>
+-				<visible>!String.IsEmpty(VideoPlayer.PlotOutline) + !String.IsEqual(VideoPlayer.PlotOutline,N/A) + !Skin.HasSetting(Enable.LiveTVFullPlot)</visible>
+-			</control>
+-			<!-- Big PlotInfo BG -->
++			<!-- PlotInfo BG -->
+ 			<control type="image">
+ 				<left>17</left>
+ 				<width>1885</width>
+ 				<height>720</height>
+ 				<texture border="40">dialogs/default/bg.png</texture>
+ 				<animation effect="fade" end="90" condition="true">Conditional</animation>
+-				<visible>String.IsEmpty(VideoPlayer.PlotOutline) | String.IsEqual(VideoPlayer.PlotOutline,N/A) | Skin.HasSetting(Enable.LiveTVFullPlot)</visible>
+ 			</control>
+ 			<!-- NOW playing in channel -->
+ 			<control type="grouplist">
+@@ -404,28 +394,10 @@
+ 				</control>
+ 				<control type="textbox">
+ 					<width>1805</width>
+-					<height>174</height>
+-					<label>$INFO[VideoPlayer.PlotOutline]</label>
+-					<font>font15_textbox</font>
+-					<autoscroll delay="6000" time="3000" repeat="6000">true</autoscroll>
+-					<visible>!String.IsEmpty(VideoPlayer.PlotOutline) + !String.IsEqual(VideoPlayer.PlotOutline,N/A) + !Skin.HasSetting(Enable.LiveTVFullPlot)</visible>
+-				</control>
+-				<control type="textbox">
+-					<width>1805</width>
+ 					<height>774</height>
+ 					<label>$INFO[VideoPlayer.Plot]</label>
+ 					<font>font15_textbox</font>
+ 					<autoscroll delay="6000" time="3000" repeat="6000">true</autoscroll>
+-					<visible>Skin.HasSetting(Enable.LiveTVFullPlot)</visible>
+-				</control>
+-				<!-- Plot only one line -->
+-				<control type="textbox">
+-					<width>1805</width>
+-					<height>50</height>
+-					<label>$INFO[VideoPlayer.Plot]</label>
+-					<font>font15_textbox</font>
+-					<autoscroll delay="6000" time="3000" repeat="6000">true</autoscroll>
+-					<visible>[IsEmpty(VideoPlayer.PlotOutline) | String.IsEqual(VideoPlayer.PlotOutline,N/A)] + !Skin.HasSetting(Enable.LiveTVFullPlot)</visible>
+ 				</control>
+ 			</control>
+ 			<!-- NEXT playing on channel -->
+diff -Naurp kodi-theme-AeonNox-216cc97/1080i/Includes_LiveTV_Views.xml kodi-theme-AeonNox-216cc97-patch/1080i/Includes_LiveTV_Views.xml
+--- kodi-theme-AeonNox-216cc97/1080i/Includes_LiveTV_Views.xml	2017-05-03 15:59:30.000000000 +0300
++++ kodi-theme-AeonNox-216cc97-patch/1080i/Includes_LiveTV_Views.xml	2017-09-08 12:00:48.000000000 +0300
+@@ -644,7 +644,7 @@
+ 			<width>550</width>
+ 			<font>font13</font>
+ 			<align>right</align>
+-			<label>$INFO[System.Date(DDD)], $INFO[System.Date(dd.mm.yyyy)] ՠ$INFO[System.Time(hh:mm xx)]</label>
++			<label>$INFO[System.Date(DDD)], $INFO[System.Date(dd.mm.yyyy)]  $INFO[System.Time(hh:mm xx)]</label>
+ 		</control>
+ 		<control type="image">
+ 			<left>60</left>
+@@ -944,7 +944,7 @@
+ 			<height>100</height>
+ 			<width>900</width>
+ 			<font>font24_bold</font>
+-			<label>$LOCALIZE[14301]: $INFO[Container(11).NumItems]    ՠ   $INFO[Container(11).CurrentPage] / $INFO[Container(11).NumPages]</label>
++			<label>$LOCALIZE[14301]: $INFO[Container(11).NumItems]    |   $INFO[Container(11).CurrentPage] / $INFO[Container(11).NumPages]</label>
+ 			<textcolor>white</textcolor>
+ 		</control>
+ 	</include>
