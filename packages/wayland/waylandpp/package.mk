@@ -1,17 +1,14 @@
 PKG_NAME="waylandpp"
-PKG_VERSION="0ac2c88"
+PKG_VERSION="0.1.5"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/NilsBrause/waylandpp"
-PKG_GIT_URL="https://github.com/pkerling/waylandpp"
+PKG_URL="http://sources.buildroot.net/waylandpp-0.1.5.tar.gz"
 PKG_DEPENDS_TARGET="toolchain scons:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="wayland"
 PKG_SHORTDESC="Wayland C++ bindings"
 PKG_LONGDESC="Wayland C++ bindings"
-
-
-
 
 pre_make_host() {
   mkdir -p $PKG_BUILD/.$HOST_NAME

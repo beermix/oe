@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="gettext-tiny"
-PKG_VERSION="55a5bcf"
+PKG_VERSION="63a947a"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -26,7 +26,6 @@ PKG_URL="https://github.com/sabotage-linux/gettext-tiny/archive/${PKG_VERSION}.t
 PKG_DEPENDS_HOST="ccache:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="toolchain/devel"
-
 
 makeinstall_host() {
   make LIBINTL=NONE DESTDIR=$TOOLCHAIN prefix=/ all install

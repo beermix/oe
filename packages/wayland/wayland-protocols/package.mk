@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="wayland-protocols"
-PKG_VERSION="1.11"
+PKG_VERSION="1.12"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
@@ -28,8 +28,6 @@ PKG_PRIORITY="optional"
 PKG_SECTION="wayland"
 PKG_SHORTDESC=""
 PKG_LONGDESC=""
-
-
 PKG_TOOLCHAIN="autotools"
 
 pre_makeinstall_target() {
