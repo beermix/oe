@@ -55,12 +55,12 @@ pre_configure_host() {
 #  unset CFLAGS
 #  unset CXXFLAGS
 #  unset LDFLAGS
-  export LDFLAGS=-s
+  export LDFLAGS=""
 }
 
 make_host() {
-  make MAKEINFO=true LDFLAGS=-s configure-host
-  make MAKEINFO=true LDFLAGS=-s
+  make MAKEINFO=true configure-host
+  make MAKEINFO=true
 }
 
 make_target() {
