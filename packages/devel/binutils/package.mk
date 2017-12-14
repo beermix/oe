@@ -42,13 +42,14 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-ld=default \
                          --enable-lto \
                          --disable-nls \
+                         --enable-deterministic-archives \
                          --enable-poison-system-directories"
 
 pre_configure_host() {
   unset CPPFLAGS
   unset CFLAGS
   unset CXXFLAGS
-  unset LDFLAGS
+#  unset LDFLAGS
 }
 
 make_host() {

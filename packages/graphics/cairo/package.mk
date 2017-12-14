@@ -21,7 +21,7 @@ PKG_NAME="cairo"
 #PKG_URL="http://cairographics.org/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_VERSION="1.15.10"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain zlib expat freetype fontconfig libpng pixman tiff"
+PKG_DEPENDS_TARGET="toolchain zlib expat freetype fontconfig libpng pixman libpng libjpeg-turbo tiff"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="cairo: Multi-platform 2D graphics library"
 PKG_LONGDESC="Cairo is a vector graphics library with cross-device output support. Currently supported output targets include the X Window System and in-memory image buffers. PostScript and PDF file output is planned. Cairo is designed to produce identical output on all output media while taking advantage of display hardware acceleration when available."
@@ -41,11 +41,17 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-shared \
 			      --enable-largefile \
                            --enable-atomic \
                            --enable-png \
+                           --disable-directfb \
+                           --disable-vg \
+                           --disable-wgl \
+                           --disable-script \
                            --enable-ft \
                            --enable-fc \
                            --enable-ps \
                            --enable-pdf \
                            --enable-svg \
+                           --disable-test-surfaces \
+                           --disable-tee \
+                           --disable-xml \
                            --enable-pthread \
-			      --enable-gobject \
-			      --disable-gtk-doc"
+                           --disable-gtk-doc"
