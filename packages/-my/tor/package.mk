@@ -1,5 +1,5 @@
 PKG_NAME="tor"
-PKG_VERSION="0.3.1.8"
+PKG_VERSION="0.3.1.9"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain openssl zlib libevent libcap xz"
 PKG_SECTION="security"
