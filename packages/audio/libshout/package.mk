@@ -5,4 +5,4 @@ PKG_DEPENDS_TARGET="toolchain libogg speex libtheora libvorbis"
 PKG_SECTION="tools"
 PKG_TOOLCHAIN="autotools"
 
-#PKG_CONFIGURE_OPTS_TARGET="--disable-shared --with-pic"
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared --with-pic"
