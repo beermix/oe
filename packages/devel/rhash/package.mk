@@ -5,8 +5,7 @@ PKG_URL="https://github.com/rhash/RHash/archive/v1.3.5.tar.gz"
 PKG_SOURCE_DIR="RHash-$PKG_VERSION"
 PKG_DEPENDS_HOST=""
 PKG_SECTION="devel"
-
-PKG_USE_CMAKE="no"
+PKG_TOOLCHAIN="manual"
 
 pre_configure_host() {
   cd $PKG_BUILD

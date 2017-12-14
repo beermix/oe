@@ -26,7 +26,4 @@ PKG_DEPENDS_TARGET="toolchain zlib glib dbus-glib"
 PKG_SECTION="depends"
 PKG_SHORTDESC="gconf"
 
-
-
-
 PKG_CONFIGURE_OPTS_TARGET="--disable-orbit --disable-static"

@@ -91,7 +91,6 @@ make_target() {
     'use_kerberos=false'
     'use_pulseaudio=false'
     'use_sysroot=true'
-    'use_vulcanize=false'
     'use_vaapi=true'
     'exclude_unwind_tables=true'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
