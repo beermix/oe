@@ -51,9 +51,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --without-cuda-driver \
                            --disable-werror \
                            --enable-__cxa_atexit \
-                           --enable-initfini-array \
-                           --disable-libsanitizer \
-                           --enable-offload-targets=nvptx-none \
                            --with-tune=generic"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
@@ -70,6 +67,7 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-libquadmath \
                               --without-headers \
                               --with-newlib \
+                              --disable-libsanitizer \
                               --disable-decimal-float \
                               $GCC_OPTS"
 
