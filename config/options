@@ -35,9 +35,6 @@ ROOT="${PWD}"
 DISTRO_DIR="$ROOT/distributions"
 PROJECT_DIR="$ROOT/projects"
 
-# includ helper functions
-. config/functions
-
 # include versioning
   . config/version
 
@@ -84,7 +81,7 @@ fi
 # Concurrency make level (-j option)
 #  Try value 1 (default) to 4 on single CPU computer, or more on
 #  multi-processor computer (like hyperthreading SMP CPU)
- export CONCURRENCY_MAKE_LEVEL=7
+  [ -z "${CONCURRENCY_MAKE_LEVEL}" ] && export CONCURRENCY_MAKE_LEVEL=7
 
 # cache size for ccache
 # Set the maximum size of the files stored in the cache. You can specify a
@@ -108,9 +105,6 @@ fi
 if [ "$OEM" = yes -o "$OEM" = no ]; then
   OEM_SUPPORT=$OEM
 fi
-
-check_path >&2
-check_config >&2
 
 . config/graphic
 . config/path $1
