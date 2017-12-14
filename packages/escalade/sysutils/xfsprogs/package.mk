@@ -42,14 +42,6 @@ pre_configure_target() {
   make configure
 }
 
-configure_init() {
-  : # reuse target
-}
-
-make_init() {
-  : # reuse target
-}
-
 makeinstall_init() {
   mkdir -p $INSTALL/usr/sbin
   cp ../.install_pkg/usr/sbin/xfs_repair $INSTALL/usr/sbin
