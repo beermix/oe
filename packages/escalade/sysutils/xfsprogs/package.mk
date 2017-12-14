@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="xfsprogs"
-PKG_VERSION="4.14.0-rc1"
+PKG_VERSION="4.14.0"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://git.kernel.org/cgit/fs/xfs/xfsprogs-dev.git"
@@ -27,7 +27,6 @@ PKG_DEPENDS_TARGET="toolchain util-linux libedit"
 PKG_DEPENDS_INIT="xfsprogs"
 PKG_SECTION="tools"
 PKG_SHORTDESC="xfsprogs: Utilities for use with the xfs filesystem"
-
 
 PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
 			      --exec-prefix=/ \
