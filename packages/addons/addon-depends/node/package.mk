@@ -27,12 +27,14 @@ PKG_DEPENDS_HOST="toolchain libuv:host"
 PKG_DEPENDS_TARGET="toolchain openssl libuv"
 PKG_SHORTDESC="Node.js JavaScript runtime"
 PKG_LONGDESC="Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient. The Node.js package ecosystem, npm, is the largest ecosystem of open source libraries in the world."
+PKG_DEPENDS_HOST="ninja"
 
 HOST_CONFIGURE_OPTS="--prefix=$TOOLCHAIN \
                      --fully-static \
                      --with-intl=none \
                      --without-npm \
-                     --without-ssl"
+                     --without-ssl \
+                     --ninja"
                      
 HOST_CONFIGURE_TARGET="--fully-static --with-intl=none --with-npm --with-ssl"
 
@@ -43,3 +45,13 @@ pre_configure_host() {
 pre_configure_target() {
   cd ..
 }
+
+make_host() {
+  cd $PKG_BUILD/out/Release
+  ninja -j${CONCURRENCY_MAKE_LEVEL}
+}
+
+makeinstall_host() {
+  cp $PKG_BUILD/out/Release/node $TOOLCHAIN/bin/
+}
+
