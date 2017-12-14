@@ -98,7 +98,6 @@ LD_PRELOAD=/usr/lib/libGL.so /storage/.kodi/addons/browser.chromium/bin/chromium
   $CHROMIUM_OPTS \
   --no-sandbox \
   --disable-smooth-scrolling \
-  --disable-gpu-compositing \
   --user-data-dir=$ADDON_HOME/profile \
   --test-type $@ \
   2>&1 | tee $ADDON_LOG_FILE

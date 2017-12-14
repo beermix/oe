@@ -4,7 +4,6 @@ PKG_GIT_URL="https://github.com/InternalError503/cyberfox"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="tools"
 
-
 make_target() {
 cd $PKG_BUILD
 
@@ -22,8 +21,6 @@ _mozilla_api_key=16674381-f021-49de-8622-3021c5942aff
 
   mkdir path
   ln -s $TOOLCHAIN/python path/python
-
- 
   
   echo -n "$_google_api_key" >google-api-key
   echo -n "$_mozilla_api_key" >mozilla-api-key
