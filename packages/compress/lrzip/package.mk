@@ -6,7 +6,6 @@ PKG_DEPENDS_HOST="zlib:host lzo:host xz:host bzip2:host"
 PKG_SECTION="compress"
 PKG_TOOLCHAIN="autotools"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-largefile --disable-doc --enable-static-bin"
-
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-largefile --disable-doc"
 PKG_CONFIGURE_OPTS_HOST="--enable-largefile --disable-doc --with-zlib=$TOOLCHAIN"
 
