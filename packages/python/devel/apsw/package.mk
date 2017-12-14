@@ -17,8 +17,7 @@
 ################################################################################
 
 PKG_NAME="apsw"
-PKG_VERSION="3.20.1"
-PKG_REV="1"
+PKG_VERSION="3.21.0"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/rogerbinns/apsw"
@@ -29,10 +28,7 @@ PKG_PRIORITY="optional"
 PKG_SECTION="python/devel"
 PKG_SHORTDESC="Mako: A super-fast templating language that borrows the best ideas from the existing templating languages."
 PKG_LONGDESC="Mako is a super-fast templating language that borrows the best ideas from the existing templating languages."
-PKG_IS_ADDON="no"
-
-
-export CCACHE_DISABLE=1
+PKG_TOOLCHAIN="manual"
 
 pre_configure_target() {
   export PYTHONXCPREFIX="$SYSROOT_PREFIX/usr"
