@@ -48,19 +48,19 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --disable-gdb \
                          --enable-deterministic-archives \
                          --with-system-zlib \
-                         --enable-poison-system-directories \
-                          LDFLAGS="
+                         --enable-poison-system-directories"
 
-#pre_configure_host() {
+pre_configure_host() {
 #  unset CPPFLAGS
 #  unset CFLAGS
 #  unset CXXFLAGS
 #  unset LDFLAGS
-#}
+  export LDFLAGS=-s
+}
 
 make_host() {
-  make MAKEINFO=true configure-host
-  make MAKEINFO=true
+  make MAKEINFO=true LDFLAGS=-s configure-host
+  make MAKEINFO=true LDFLAGS=-s
 }
 
 make_target() {
@@ -72,7 +72,7 @@ make_target() {
 
 makeinstall_host() {
   cp -v ../include/libiberty.h $SYSROOT_PREFIX/usr/include
-  make MAKEINFO=true install -j1
+  make MAKEINFO=true LDFLAGS=-s install -j1
 }
 
 makeinstall_target() {
