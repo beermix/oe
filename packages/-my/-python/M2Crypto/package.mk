@@ -11,9 +11,7 @@ PKG_DEPENDS_TARGET="toolchain distutilscross:host openssl:host swig:host"
 PKG_SECTION="xmedia/torrent"
 PKG_SHORTDESC="M2Crypto is the most complete Python wrapper for OpenSSL"
 PKG_LONGDESC="M2Crypto is the most complete Python wrapper for OpenSSL."
-
-
-export CCACHE_DISABLE=1
+PKG_TOOLCHAIN="manual"
 
 pre_configure_target() {
   export PYTHONXCPREFIX="$SYSROOT_PREFIX/usr"
