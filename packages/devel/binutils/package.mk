@@ -55,12 +55,12 @@ pre_configure_host() {
 #  unset CFLAGS
 #  unset CXXFLAGS
 #  unset LDFLAGS
-  export LDFLAGS="-s"
+  export LDFLAGS=-s
 }
 
 make_host() {
-  make MAKEINFO=true LDFLAGS="-s" configure-host
-  make MAKEINFO=true LDFLAGS="-s"
+  make MAKEINFO=true LDFLAGS=-s configure-host
+  make MAKEINFO=true LDFLAGS=-s
 }
 
 make_target() {
@@ -72,7 +72,7 @@ make_target() {
 
 makeinstall_host() {
   cp -v ../include/libiberty.h $SYSROOT_PREFIX/usr/include
-  make MAKEINFO=true LDFLAGS="-s" install -j1
+  make MAKEINFO=true install
 }
 
 makeinstall_target() {
