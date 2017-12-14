@@ -1,0 +1,388 @@
+From 227f9d7df4e777b778201d5211ba1434783c78de Mon Sep 17 00:00:00 2001
+From: Radostan Riedel <raybuntu@googlemail.com>
+Date: Fri, 26 May 2017 14:26:10 +0200
+Subject: [PATCH] iptables: Add default net filters
+
+Default: Only allow private subnets
+Don't overwrite rules from docker or connman
+Option to turn on/off through LE Settings addon
+---
+ packages/network/iptables/config/README            | 16 ++++
+ packages/network/iptables/config/examples/home.v4  | 46 +++++++++++
+ packages/network/iptables/config/examples/home.v6  | 36 +++++++++
+ .../network/iptables/config/examples/public.v4     | 33 ++++++++
+ .../network/iptables/config/examples/public.v6     | 32 ++++++++
+ packages/network/iptables/config/rules.v4          |  1 +
+ packages/network/iptables/config/rules.v6          |  1 +
+ packages/network/iptables/package.mk               | 17 ++++
+ packages/network/iptables/scripts/iptables_helper  | 94 ++++++++++++++++++++++
+ .../network/iptables/system.d/iptables.service     | 18 +++++
+ 10 files changed, 294 insertions(+)
+ create mode 100644 packages/network/iptables/config/README
+ create mode 100644 packages/network/iptables/config/examples/home.v4
+ create mode 100644 packages/network/iptables/config/examples/home.v6
+ create mode 100644 packages/network/iptables/config/examples/public.v4
+ create mode 100644 packages/network/iptables/config/examples/public.v6
+ create mode 120000 packages/network/iptables/config/rules.v4
+ create mode 120000 packages/network/iptables/config/rules.v6
+ create mode 100755 packages/network/iptables/scripts/iptables_helper
+ create mode 100644 packages/network/iptables/system.d/iptables.service
+
+diff --git a/packages/network/iptables/config/README b/packages/network/iptables/config/README
+new file mode 100644
+index 00000000000..24d7c39a5f6
+--- /dev/null
++++ b/packages/network/iptables/config/README
+@@ -0,0 +1,16 @@
++To create your own set of Netfilters you can save your rules in:
++/storage/.config/iptables/rules.v4 for ipv4
++and /storage/.config/iptables/rules.v6 for ipv6
++
++You can alter tables and save them with:
++
++iptables-save /storage/.config/iptables/rules.v4
++and/or
++ip6tables-save /storage/.config/iptables/rules.v6
++
++If you want to disable iptables systemd service you can use 
++the following command:
++systemctl mask iptables
++
++to enable:
++systemctl unmask iptables
+diff --git a/packages/network/iptables/config/examples/home.v4 b/packages/network/iptables/config/examples/home.v4
+new file mode 100644
+index 00000000000..d16384d756d
+--- /dev/null
++++ b/packages/network/iptables/config/examples/home.v4
+@@ -0,0 +1,46 @@
++*filter
++:INPUT DROP [0:0]
++:FORWARD DROP [0:0]
++:OUTPUT DROP [0:0]
++:DOCKER-USER - [0:0]
++:private-subnets - [0:0]
++-A INPUT -i lo -j ACCEPT
++-A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
++-A INPUT -i tether -p udp -m conntrack --ctstate NEW -j ACCEPT
++-A INPUT -j private-subnets
++-A FORWARD -i tether -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
++-A FORWARD -o tether -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
++-A OUTPUT -m conntrack --ctstate NEW -j ACCEPT
++-A OUTPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
++-A DOCKER-USER -j private-subnets
++-A private-subnets -m conntrack --ctstate RELATED,ESTABLISHED -j RETURN
++-A private-subnets -s 10.0.0.0/8 -i eth+ -m conntrack --ctstate NEW -j ACCEPT
++-A private-subnets -s 172.16.0.0/12 -i eth+ -m conntrack --ctstate NEW -j ACCEPT
++-A private-subnets -s 192.168.0.0/16 -i eth+ -m conntrack --ctstate NEW -j ACCEPT
++-A private-subnets -s 10.0.0.0/8 -i en+ -m conntrack --ctstate NEW -j ACCEPT
++-A private-subnets -s 172.16.0.0/12 -i en+ -m conntrack --ctstate NEW -j ACCEPT
++-A private-subnets -s 192.168.0.0/16 -i en+ -m conntrack --ctstate NEW -j ACCEPT
++-A private-subnets -s 10.0.0.0/8 -i wl+ -m conntrack --ctstate NEW -j ACCEPT
++-A private-subnets -s 172.16.0.0/12 -i wl+ -m conntrack --ctstate NEW -j ACCEPT
++-A private-subnets -s 192.168.0.0/16 -i wl+ -m conntrack --ctstate NEW -j ACCEPT
++-A private-subnets -s 10.0.0.0/8 -i tether -m conntrack --ctstate NEW -j ACCEPT
++-A private-subnets -s 172.16.0.0/12 -i tether -m conntrack --ctstate NEW -j ACCEPT
++-A private-subnets -s 192.168.0.0/16 -i tether -m conntrack --ctstate NEW -j ACCEPT
++-A private-subnets -s 10.0.0.0/8 -i docker+ -m conntrack --ctstate NEW -j ACCEPT
++-A private-subnets -s 172.16.0.0/12 -i docker+ -m conntrack --ctstate NEW -j ACCEPT
++-A private-subnets -s 192.168.0.0/16 -i docker+ -m conntrack --ctstate NEW -j ACCEPT
++-A private-subnets -j REJECT --reject-with icmp-port-unreachable
++COMMIT
++*nat
++:PREROUTING ACCEPT [0:0]
++:INPUT ACCEPT [0:0]
++:OUTPUT ACCEPT [0:0]
++:POSTROUTING ACCEPT [0:0]
++COMMIT
++*mangle
++:PREROUTING ACCEPT [0:0]
++:INPUT ACCEPT [0:0]
++:FORWARD ACCEPT [0:0]
++:OUTPUT ACCEPT [0:0]
++:POSTROUTING ACCEPT [0:0]
++COMMIT
+diff --git a/packages/network/iptables/config/examples/home.v6 b/packages/network/iptables/config/examples/home.v6
+new file mode 100644
+index 00000000000..ee04548b4d5
+--- /dev/null
++++ b/packages/network/iptables/config/examples/home.v6
+@@ -0,0 +1,36 @@
++*filter
++:INPUT DROP [0:0]
++:FORWARD DROP [0:0]
++:OUTPUT DROP [0:0]
++:DOCKER-USER - [0:0]
++:private-subnets - [0:0]
++-A INPUT -i lo -j ACCEPT
++-A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
++-A INPUT -i tether -p udp -m conntrack --ctstate NEW -j ACCEPT
++-A INPUT -j private-subnets
++-A FORWARD -i tether -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
++-A FORWARD -o tether -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
++-A OUTPUT -m conntrack --ctstate NEW -j ACCEPT
++-A OUTPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
++-A DOCKER-USER -j private-subnets
++-A private-subnets -m conntrack --ctstate RELATED,ESTABLISHED -j RETURN
++-A private-subnets -s fc00::/7 -i eth+ -m conntrack --ctstate NEW -j ACCEPT
++-A private-subnets -s fc00::/7 -i en+ -m conntrack --ctstate NEW -j ACCEPT
++-A private-subnets -s fc00::/7 -i wl+ -m conntrack --ctstate NEW -j ACCEPT
++-A private-subnets -s fc00::/7 -i tether -m conntrack --ctstate NEW -j ACCEPT
++-A private-subnets -s fc00::/7 -i docker+ -m conntrack --ctstate NEW -j ACCEPT
++-A private-subnets -j REJECT --reject-with icmp6-port-unreachable
++COMMIT
++*nat
++:PREROUTING ACCEPT [0:0]
++:INPUT ACCEPT [0:0]
++:OUTPUT ACCEPT [0:0]
++:POSTROUTING ACCEPT [0:0]
++COMMIT
++*mangle
++:PREROUTING ACCEPT [0:0]
++:INPUT ACCEPT [0:0]
++:FORWARD ACCEPT [0:0]
++:OUTPUT ACCEPT [0:0]
++:POSTROUTING ACCEPT [0:0]
++COMMIT
+diff --git a/packages/network/iptables/config/examples/public.v4 b/packages/network/iptables/config/examples/public.v4
+new file mode 100644
+index 00000000000..d82e442b500
+--- /dev/null
++++ b/packages/network/iptables/config/examples/public.v4
+@@ -0,0 +1,33 @@
++# Netfilter rules for public "untrusted" networks
++*mangle
++:PREROUTING ACCEPT [0:0]
++:INPUT ACCEPT [0:0]
++:FORWARD ACCEPT [0:0]
++:OUTPUT ACCEPT [0:0]
++:POSTROUTING ACCEPT [0:0]
++:DOCKER-USER - [0:0]
++COMMIT
++*nat
++:PREROUTING ACCEPT [0:0]
++:INPUT ACCEPT [0:0]
++:OUTPUT ACCEPT [0:0]
++:POSTROUTING ACCEPT [0:0]
++COMMIT
++*filter
++:INPUT DROP [0:0]
++:FORWARD DROP [0:0]
++:OUTPUT DROP [0:0]
++-A OUTPUT -m conntrack --ctstate NEW -j ACCEPT
++-A OUTPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
++-A INPUT -i lo -j ACCEPT
++-A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
++# Allow tethered Wifi AP
++-A INPUT -i tether -p udp -m conntrack --ctstate NEW -j ACCEPT
++-A INPUT -i tether -s 10.0.0.0/8,172.16.0.0/12,192.168.0.0/16 -m conntrack --ctstate NEW -j ACCEPT
++-A FORWARD -i tether -s 10.0.0.0/8,172.16.0.0/12,192.168.0.0/16 -m conntrack --ctstate NEW -j ACCEPT
++-A FORWARD -i tether -s 10.0.0.0/8,172.16.0.0/12,192.168.0.0/16 -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
++-A FORWARD -o tether -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
++# Block DOCKER
++-A DOCKER-USER -m conntrack --ctstate RELATED,ESTABLISHED -j RETURN
++-A DOCKER-USER -j REJECT --reject-with icmp-port-unreachable
++COMMIT
+diff --git a/packages/network/iptables/config/examples/public.v6 b/packages/network/iptables/config/examples/public.v6
+new file mode 100644
+index 00000000000..07f46a59d50
+--- /dev/null
++++ b/packages/network/iptables/config/examples/public.v6
+@@ -0,0 +1,32 @@
++# Netfilter Rules for trusted home networks.
++*mangle
++:PREROUTING ACCEPT [0:0]
++:INPUT ACCEPT [0:0]
++:FORWARD ACCEPT [0:0]
++:OUTPUT ACCEPT [0:0]
++:POSTROUTING ACCEPT [0:0]
++COMMIT
++*nat
++:PREROUTING ACCEPT [0:0]
++:INPUT ACCEPT [0:0]
++:OUTPUT ACCEPT [0:0]
++:POSTROUTING ACCEPT [0:0]
++COMMIT
++*filter
++:INPUT DROP [0:0]
++:FORWARD DROP [0:0]
++:OUTPUT DROP [0:0]
++:DOCKER-USER - [0:0]
++-A OUTPUT -m conntrack --ctstate NEW -j ACCEPT
++-A OUTPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
++-A INPUT -i lo -j ACCEPT
++-A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
++# Allow tethered Wifi AP
++-A INPUT -i tether -p udp -m conntrack --ctstate NEW -j ACCEPT
++-A INPUT -i tether -s fc00::/7 -m conntrack --ctstate NEW -j ACCEPT
++-A FORWARD -i tether -s fc00::/7 -m conntrack --ctstate NEW -j ACCEPT
++-A FORWARD -i tether -s fc00::/7 -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
++-A FORWARD -o tether -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
++-A DOCKER-USER -m conntrack --ctstate RELATED,ESTABLISHED -j RETURN
++-A DOCKER-USER -j REJECT --reject-with icmp6-port-unreachable
++COMMIT
+diff --git a/packages/network/iptables/config/rules.v4 b/packages/network/iptables/config/rules.v4
+new file mode 120000
+index 00000000000..bea6feecf05
+--- /dev/null
++++ b/packages/network/iptables/config/rules.v4
+@@ -0,0 +1 @@
++examples/home.v4
+\ No newline at end of file
+diff --git a/packages/network/iptables/config/rules.v6 b/packages/network/iptables/config/rules.v6
+new file mode 120000
+index 00000000000..e8d5a546dd3
+--- /dev/null
++++ b/packages/network/iptables/config/rules.v6
+@@ -0,0 +1 @@
++examples/home.v6
+\ No newline at end of file
+diff --git a/packages/network/iptables/package.mk b/packages/network/iptables/package.mk
+index 0761f034502..4c92662f89e 100644
+--- a/packages/network/iptables/package.mk
++++ b/packages/network/iptables/package.mk
+@@ -30,3 +30,20 @@ PKG_LONGDESC="Iptables is used to set up, maintain, and inspect the tables of IP
+ PKG_TOOLCHAIN="autotools"
+ 
+ PKG_CONFIGURE_OPTS_TARGET="--with-kernel=$(kernel_path)"
++
++
++post_makeinstall_target() {
++  mkdir -p $INSTALL/usr/config/iptables/
++    cp -PR $PKG_DIR/config/README $INSTALL/usr/config/iptables/
++
++  mkdir -p $INSTALL/etc/iptables/
++    cp -PR $PKG_DIR/config/* $INSTALL/etc/iptables/
++
++  mkdir -p $INSTALL/usr/lib/libreelec
++    cp $PKG_DIR/scripts/iptables_helper $INSTALL/usr/lib/libreelec
++}
++
++post_install() {
++  enable_service iptables.service
++}
++
+diff --git a/packages/network/iptables/scripts/iptables_helper b/packages/network/iptables/scripts/iptables_helper
+new file mode 100755
+index 00000000000..65867f804c7
+--- /dev/null
++++ b/packages/network/iptables/scripts/iptables_helper
+@@ -0,0 +1,94 @@
++#!/bin/sh -
++################################################################################
++#      This file is part of LibreELEC - https://libreelec.tv
++#      Copyright (C) 2017-present Team LibreELEC
++#
++#  LibreELEC is free software: you can redistribute it and/or modify
++#  it under the terms of the GNU General Public License as published by
++#  the Free Software Foundation, either version 2 of the License, or
++#  (at your option) any later version.
++#
++#  LibreELEC is distributed in the hope that it will be useful,
++#  but WITHOUT ANY WARRANTY; without even the implied warranty of
++#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++#  GNU General Public License for more details.
++#
++#  You should have received a copy of the GNU General Public License
++#  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
++################################################################################
++
++IPTABLES4="/usr/sbin/iptables"
++IPTABLES6="/usr/sbin/ip6tables"
++IPTABLES_CMDS="$IPTABLES4 $IPTABLES6"
++GLOBAL_RULES="/etc/iptables/rules.v"
++LOCAL_RULES="/storage/.config/iptables/rules.v"
++
++if [ -e "${LOCAL_RULES}4" ]; then
++  RULES4="${LOCAL_RULES}4"
++else
++  RULES4="${GLOBAL_RULES}4"
++fi
++
++if [ -e "${LOCAL_RULES}6" ]; then
++  RULES6="${LOCAL_RULES}6"
++else
++  RULES6="${GLOBAL_RULES}6"
++fi
++
++check_docker() {
++    if [ "`/usr/bin/systemctl is-active docker.service`" == "active" ]; then
++	/usr/bin/systemctl restart docker
++    fi
++}
++
++check_tether() {
++    if [ -n "`/usr/bin/connmanctl technologies|grep 'Tethering = True'`" ]; then
++	/usr/bin/connmanctl tether wifi off
++	sleep 1
++	/usr/bin/connmanctl tether wifi on
++    fi
++}
++
++flush() {
++  for cmd in $IPTABLES_CMDS; do
++    $cmd -F
++    $cmd -X
++    $cmd -t nat -F
++    $cmd -t nat -X
++    $cmd -t mangle -F
++    $cmd -t mangle -X
++    $cmd -P INPUT ACCEPT
++    $cmd -P FORWARD ACCEPT
++    $cmd -P OUTPUT ACCEPT
++  done
++  check_docker
++  check_tether
++}
++
++enable() {
++  for cmd in $IPTABLES_CMDS; do
++    case "$cmd" in
++      *6*) 
++         rules="$RULES6"
++	 ipv="6"
++	 ;;
++        *) 
++         rules="$RULES4"
++	 ipv="4"
++	 ;;
++    esac
++    "$cmd-restore" "$rules" 
++  done
++  check_docker
++  check_tether
++}
++
++if [ "$1" = "enable" ]; then
++  enable
++elif [ "$1" = "disable" ]; then
++  flush
++else
++  exit 1
++fi
++
++exit 0
+diff --git a/packages/network/iptables/system.d/iptables.service b/packages/network/iptables/system.d/iptables.service
+new file mode 100644
+index 00000000000..3e3f4c0f619
+--- /dev/null
++++ b/packages/network/iptables/system.d/iptables.service
+@@ -0,0 +1,18 @@
++[Unit]
++Description=IPTABLES Packet Filtering
++ConditionPathExists=/usr/lib/libreelec/iptables_helper
++ConditionPathExists=/etc/iptables/rules.v4
++ConditionPathExists=/etc/iptables/rules.v6
++ConditionPathExists=/storage/.cache/services/iptables.conf
++Before=network.target
++Wants=network.target
++
++[Service]
++Type=oneshot
++ExecStart=/usr/lib/libreelec/iptables_helper enable
++ExecReload=/usr/lib/libreelec/iptables_helper enable
++ExecStop=/usr/lib/libreelec/iptables_helper disable
++RemainAfterExit=yes
++
++[Install]
++WantedBy=multi-user.target
