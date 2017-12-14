@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2016-2017 Team LibreELEC
+#      Copyright (C) 2016-present Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,8 +18,9 @@
 
 PKG_NAME="moonlight"
 PKG_VERSION="391de3f"
+PKG_SHA256="10aa7613afec0f7035135f67aa9cdcb12b8c444b8f92cf976fd2ceec5865a278"
 PKG_VERSION_NUMBER="2.2.2"
-PKG_REV="105"
+PKG_REV="107"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/dead/script.moonlight"
@@ -29,7 +30,7 @@ PKG_DEPENDS_TARGET="toolchain moonlight-embedded"
 PKG_SECTION="script"
 PKG_SHORTDESC="Moonlight: implementation of NVIDIA's GameStream protocol"
 PKG_LONGDESC="Moonlight ($PKG_VERSION_NUMBER): allows you to stream your collection of games from your PC (with NVIDIA Gamestream) to your device and play them remotely"
-
+PKG_TOOLCHAIN="manual"
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Moonlight"
@@ -40,14 +41,6 @@ post_unpack() {
   # don't use the files from the script
   rm $PKG_BUILD/script.moonlight/icon.png
   rm $PKG_BUILD/script.moonlight/changelog.txt
-}
-
-make_target() {
-  :
-}
-
-makeinstall_target() {
-  :
 }
 
 addon() {
@@ -64,22 +57,18 @@ addon() {
     cp -P $(get_build_dir moonlight-embedded)/.$TARGET_NAME/moonlight $ADDON_BUILD/$PKG_ADDON_ID/bin
 
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/lib
-    cp -P $(get_build_dir moonlight-embedded)/.$TARGET_NAME/libgamestream/libgamestream.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
-    cp -P $(get_build_dir moonlight-embedded)/.$TARGET_NAME/libgamestream/libmoonlight-common.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
+    cp $(get_build_dir moonlight-embedded)/.$TARGET_NAME/libgamestream/libgamestream.so.2 $ADDON_BUILD/$PKG_ADDON_ID/lib
+    cp $(get_build_dir moonlight-embedded)/.$TARGET_NAME/libgamestream/libmoonlight-common.so.2 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
     if [ "$KODIPLAYER_DRIVER" = "bcm2835-driver" ]; then
       cp -P $(get_build_dir moonlight-embedded)/.$TARGET_NAME/libmoonlight-pi.so $ADDON_BUILD/$PKG_ADDON_ID/lib
-    elif [ "$KODIPLAYER_DRIVER" = "libfslvpuwrap" ]; then
-      cp -P $(get_build_dir moonlight-embedded)/.$TARGET_NAME/libmoonlight-imx.so $ADDON_BUILD/$PKG_ADDON_ID/lib
     elif [ "$KODIPLAYER_DRIVER" = "libamcodec" ]; then
       cp -P $(get_build_dir moonlight-embedded)/.$TARGET_NAME/libmoonlight-aml.so $ADDON_BUILD/$PKG_ADDON_ID/lib
     fi
 
-    cp -P $(get_build_dir libevdev)/.install_pkg/usr/lib/libevdev.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
+    cp $(get_build_dir libevdev)/.install_pkg/usr/lib/libevdev.so.2 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/etc
     cp -P $(get_build_dir moonlight-embedded)/moonlight.conf $ADDON_BUILD/$PKG_ADDON_ID/etc
-
-  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/share/moonlight
-    cp -PR $(get_build_dir moonlight-embedded)/mappings $ADDON_BUILD/$PKG_ADDON_ID/share/moonlight
+    cp -P $(get_build_dir moonlight-embedded)/gamecontrollerdb.txt $ADDON_BUILD/$PKG_ADDON_ID/etc
 }
