@@ -40,7 +40,6 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-elf \
                            --with-tls \
                            --with-__thread \
-                           --enable-stack-protector=strong \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
                            --enable-kernel=3.2.0 \
@@ -101,9 +100,9 @@ pre_configure_target() {
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--sort-common,--as-needed,-z,relro||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
   
-  if [ -n "$PROJECT_CFLAGS" ]; then
-    export CFLAGS=`echo $CFLAGS | sed -e "s|$PROJECT_CFLAGS||g"`
-  fi
+#  if [ -n "$PROJECT_CFLAGS" ]; then
+#    export CFLAGS=`echo $CFLAGS | sed -e "s|$PROJECT_CFLAGS||g"`
+#  fi
 
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--as-needed||g"`
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed||"`
@@ -112,7 +111,7 @@ pre_configure_target() {
   unset LD_LIBRARY_PATH
 
   # set some CFLAGS we need
-  export CFLAGS="$CFLAGS -g"
+  export CFLAGS="$CFLAGS -g -fno-stack-protector"
 
   export BUILD_CC=$HOST_CC
   export OBJDUMP_FOR_HOST=objdump

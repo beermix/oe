@@ -23,7 +23,8 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://nodejs.org"
 PKG_URL="https://github.com/nodejs/node/archive/v$PKG_VERSION.tar.gz"
-PKG_DEPENDS_HOST="toolchain"
+PKG_DEPENDS_HOST="toolchain libuv:host"
+PKG_DEPENDS_TARGET="toolchain openssl libuv"
 PKG_SHORTDESC="Node.js JavaScript runtime"
 PKG_LONGDESC="Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient. The Node.js package ecosystem, npm, is the largest ecosystem of open source libraries in the world."
 
@@ -32,7 +33,13 @@ HOST_CONFIGURE_OPTS="--prefix=$TOOLCHAIN \
                      --with-intl=none \
                      --without-npm \
                      --without-ssl"
+                     
+HOST_CONFIGURE_TARGET="--fully-static --with-intl=none --with-npm --with-ssl"
 
 pre_configure_host() {
+  cd ..
+}
+
+pre_configure_target() {
   cd ..
 }
