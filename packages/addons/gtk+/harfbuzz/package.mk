@@ -28,7 +28,7 @@ PKG_DEPENDS_TARGET="toolchain glib freetype cairo icu"
 PKG_SECTION="x11/toolkits"
 PKG_SHORTDESC="harfbuzz: an OpenType text shaping engine."
 PKG_LONGDESC="HarfBuzz is an OpenType text shaping engine."
-PKG_USE_CMAKE="no"
+PKG_TOOLCHAIN="autotools"
 
 pre_configure_target() {
   export LIBS="$LIBS -ldl"

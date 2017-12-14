@@ -28,7 +28,6 @@ PKG_LONGDESC="Cairo is a vector graphics library with cross-device output suppor
 PKG_TOOLCHAIN="configure" # ToDo
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-shared \
-			      --enable-lto \
 			      --with-pic \
 			      --enable-xlib \
 			      --enable-xlib-xrender \

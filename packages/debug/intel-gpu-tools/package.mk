@@ -7,8 +7,5 @@ PKG_DEPENDS_TARGET="toolchain systemd procps-ng glib mesa libdrm libpciaccess ca
 PKG_SECTION="tools"
 PKG_SHORTDESC="x11-utils"
 PKG_TOOLCHAIN="autotools"
-PKG_USE_MESON="no"
 
 PKG_CONFIGURE_OPTS_TARGET="enable_gtk_doc=no --disable-tests --with-libunwind --disable-shared"
-
-PKG_MESON_OPTS_TARGET=""

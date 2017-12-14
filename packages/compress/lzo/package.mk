@@ -31,11 +31,11 @@ PKG_LONGDESC="LZO is a data compression library which is suitable for data de-/c
 PKG_TOOLCHAIN="cmake-make"
 
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -DLZO_CFG_NO_UNALIGNED=1"
+  export CFLAGS="$CFLAGS -DLZO_CFG_NO_UNALIGNED=1 -fPIC"
 }
 
 pre_configure_host() {
-  export CFLAGS="$CFLAGS -DLZO_CFG_NO_UNALIGNED=1"
+  export CFLAGS="$CFLAGS -DLZO_CFG_NO_UNALIGNED=1 -fPIC"
 }
 
 PKG_CMAKE_OPTS_HOST="-DENABLE_SHARED=OFF -DENABLE_STATIC=ON"

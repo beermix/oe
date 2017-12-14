@@ -55,6 +55,9 @@ make_target() {
   strip_lto
   export LDFLAGS="$LDFLAGS -ludev"
   export LD=$CXX
+  
+  mkdir -p third_party/node/linux/node-linux-x64/bin
+  ln -sfv /usr/bin/node third_party/node/linux/node-linux-x64/bin/node
 
   # Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
   # Note: These are for OpenELEC use ONLY. For your own distribution, please
@@ -104,7 +107,7 @@ make_target() {
 
   # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
   local _system_libs=(
-    harfbuzz-ng
+    libxml
     libjpeg
     libpng
     libxslt
