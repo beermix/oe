@@ -151,7 +151,6 @@ configure_target() {
               --disable-crystalhd \
               $FFMPEG_VAAPI \
               $FFMPEG_VDPAU \
-              $FFMPEG_RPI \
               --disable-dxva2 \
               --enable-runtime-cpudetect \
               $FFMPEG_TABLES \
@@ -188,10 +187,8 @@ configure_target() {
               --disable-libfreetype \
               --disable-libgsm \
               --disable-libmp3lame \
-              --disable-libnut \
               --disable-libopenjpeg \
               --disable-librtmp \
-              --disable-libschroedinger \
               --enable-libspeex \
               --disable-libtheora \
               --disable-libvo-amrwbenc \
@@ -204,9 +201,8 @@ configure_target() {
               --enable-asm \
               --disable-altivec \
               $FFMPEG_FPU \
-              --enable-yasm \
-              --disable-symver \
-              $FFMPEG_X11GRAB
+              --enable-x86asm \
+              --disable-symver
 }
 
 post_makeinstall_target() {
