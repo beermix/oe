@@ -1,7 +1,5 @@
 set -e
 
-. config/functions
-
 # setup initial directorys (relative to root)
   CONFIG=config
   SCRIPTS=scripts
@@ -175,9 +173,6 @@ if [[ -z "$PATH" || ( "$PATH" != "$TOOLCHAIN/bin:$TOOLCHAIN/sbin" && "$PATH" = "
 fi
 
 VERSION_SUFFIX=$TARGET_ARCH
-
-check_path
-check_config
 
 SILENT_OUT=3
 VERBOSE_OUT=4
