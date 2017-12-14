@@ -53,13 +53,13 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-werror \
                            --enable-__cxa_atexit \
                            --enable-initfini-array \
+                           --disable-libsanitizer \
                            --enable-offload-targets=nvptx-none \
                            --with-tune=generic"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
-                              --disable-libsanitizer \
                               --enable-cloog-backend=isl \
                               --disable-shared \
                               --disable-threads \
@@ -69,7 +69,6 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-libatomic \
                               --disable-libitm \
                               --disable-libquadmath \
-                              --disable-libsanitizer \
                               --without-headers \
                               --with-newlib \
                               --disable-decimal-float \
