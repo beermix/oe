@@ -340,16 +340,10 @@ post_makeinstall_target() {
   xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "os.openelec.tv" $ADDON_MANIFEST
   xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "repository.libreelec.tv" $ADDON_MANIFEST
   xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "service.libreelec.settings" $ADDON_MANIFEST
-  xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "script.module.unidecode" $ADDON_MANIFEST
-  xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "script.module.simplejson" $ADDON_MANIFEST
-  xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "resource.language.ru_ru" $ADDON_MANIFEST
-  xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "weather.gismeteo" $ADDON_MANIFEST
+#  xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "script.module.unidecode" $ADDON_MANIFEST
+#  xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "script.module.simplejson" $ADDON_MANIFEST
 
-  if [ "$DRIVER_ADDONS_SUPPORT" = "yes" ]; then
-    xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "script.program.driverselect" $ADDON_MANIFEST
-  fi 
-
-  if [ "$DEVICE" = "Slice" -o "$DEVICE" = "Slice3" ]; then
+  if [ "$PROJECT" = "Slice" -o "$PROJECT" = "Slice3" ]; then
     xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "service.slice" $ADDON_MANIFEST
   fi
 
@@ -367,11 +361,6 @@ post_makeinstall_target() {
   if [ -f $PKG_DIR/config/addons-alexelec/plugins.tbz2 ]; then
       mkdir -p $INSTALL/usr/share/kodi/config/addons-alexelec
       cp $PKG_DIR/config/addons-alexelec/plugins.tbz2 $INSTALL/usr/share/kodi/config/addons-alexelec
-  fi
-
-# install addons config
-  if [ -d $PKG_DIR/config/weather.gismeteo ]; then
-      cp -R $PKG_DIR/config/weather.gismeteo $INSTALL/usr/share/kodi/config
   fi
 
   debug_strip $INSTALL/usr/lib/kodi/kodi.bin
