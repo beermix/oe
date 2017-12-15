@@ -19,7 +19,7 @@
 PKG_NAME="dispmanx_vnc"
 PKG_VERSION="77b33a6"
 PKG_SHA256="69ca5b7bd18709cb8df1054d1656c0be30fbdae6ccfefaffe70e313df4e31b4f"
-PKG_REV="103"
+PKG_REV="104"
 PKG_ARCH="arm"
 PKG_ADDON_PROJECTS="RPi RPi2"
 PKG_LICENSE="OSS"
@@ -29,7 +29,6 @@ PKG_DEPENDS_TARGET="toolchain libvncserver bcm2835-bootloader bcm2835-driver lib
 PKG_SECTION="service/system"
 PKG_SHORTDESC="Raspberry Pi VNC: a Virtual Network Computing server for Raspberry Pi"
 PKG_LONGDESC="Raspberry Pi VNC ($PKG_VERSION) is a Virtual Network Computing (VNC) server for Raspberry Pi using dispmanx"
-
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Raspberry Pi VNC"

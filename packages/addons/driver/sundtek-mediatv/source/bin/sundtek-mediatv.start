@@ -67,7 +67,15 @@ fi
 [ ! -f $SUNDTEK_ADDON_HOME/rc_key_ok.map ] && mv $SUNDTEK_ADDON_HOME/rc_key_ok $SUNDTEK_ADDON_HOME/rc_key_ok.map
 
 mkdir -p /var/config
-cat "$SUNDTEK_ADDON_SETTINGS" | awk -F\" '{print $2"=\""$4"\""}' | sed '/^=/d' > /var/config/sundtek-addon.conf
+
+# check settings version
+XML_SETTINGS_VER="$(xmlstarlet sel -t -m settings -v @version $SUNDTEK_ADDON_SETTINGS)"
+if [ "$XML_SETTINGS_VER" = "2" ]; then
+  xmlstarlet sel -t -m settings/setting -v @id -o "=\"" -v . -o "\"" -n "$SUNDTEK_ADDON_SETTINGS" > /var/config/sundtek-addon.conf
+else
+  xmlstarlet sel -t -m settings -m setting -v @id -o "=\"" -v @value -o "\"" -n "$SUNDTEK_ADDON_SETTINGS" > /var/config/sundtek-addon.conf
+fi
+
 . /var/config/sundtek-addon.conf
 
 # check if there is new driver on web
@@ -136,7 +144,7 @@ if [ -z "$(pidof mediasrv)" ]; then
 
   if [ "$USE_NET_TUNERS" = "true" -a -n "$DEVICE1_IP" ]; then
     # delete all network tuner entries
-    awk '/^\[NETWORK\]/{flag=1; next} /^device=|^#|^$/{if (flag==1) next} /.*/{flag=0; print}' $SUNDTEK_CONF_TMP >${SUNDTEK_CONF_TMP}-net
+    awk '/^\[NETWORK\]/{flag=1; next} /^[^\[]|^$/{if (flag==1) next} /.*/{flag=0; print}' $SUNDTEK_CONF_TMP >${SUNDTEK_CONF_TMP}-net
     mv ${SUNDTEK_CONF_TMP}-net $SUNDTEK_CONF_TMP
     echo "" >>$SUNDTEK_CONF_TMP
     # remove empty lines at the end of file
@@ -168,7 +176,7 @@ if [ -z "$(pidof mediasrv)" ]; then
     fi
   else
     # delete all network tuner entries
-    awk '/^\[NETWORK\]/{flag=1; next} /^device=|^#|^$/{if (flag==1) next} /.*/{flag=0; print}' $SUNDTEK_CONF_TMP >${SUNDTEK_CONF_TMP}-net
+    awk '/^\[NETWORK\]/{flag=1; next} /^[^\[]|^$/{if (flag==1) next} /.*/{flag=0; print}' $SUNDTEK_CONF_TMP >${SUNDTEK_CONF_TMP}-net
     mv ${SUNDTEK_CONF_TMP}-net $SUNDTEK_CONF_TMP
     echo "" >>$SUNDTEK_CONF_TMP
     # remove empty lines at the end of file
@@ -186,7 +194,7 @@ if [ -z "$(pidof mediasrv)" ]; then
       KEYMAP=$(eval echo \$ATTACHED_TUNER_${SERIAL}_KEYMAP)
 
       if [ "$DVBMODE" = "DVB-T" ]; then
-        # only set DVB-T because default is DVB-C (and DVB-S is not set either)
+        # only set DVB-T because default is DVB-C (and DVB-S/S2 is not set either)
         DVBMODE="DVBT"
       else
         DVBMODE=""
@@ -197,25 +205,25 @@ if [ -z "$(pidof mediasrv)" ]; then
       [ ! -f $KEYMAP ] && KEYMAP=""
 
       # remove setttings for this tuner
-      awk -v val="[$SERIAL]" '$0 == val {flag=1; next} /^ir_protocol=|^rcmap=|^initial_dvb_mode=|^#|^$/{if (flag==1) next} /.*/{flag=0; print}' $SUNDTEK_CONF_TMP >${SUNDTEK_CONF_TMP}-types
+      awk -v val="[$SERIAL]" '$0 == val {flag=1; next} /^[^\[]|^$/{if (flag==1) next} /.*/{flag=0; print}' $SUNDTEK_CONF_TMP >${SUNDTEK_CONF_TMP}-types
       mv ${SUNDTEK_CONF_TMP}-types $SUNDTEK_CONF_TMP
       echo "" >>$SUNDTEK_CONF_TMP
       # remove empty lines at the end of file
       sed -i -e ':a' -e '/^\n*$/{$d;N;};/\n$/ba' $SUNDTEK_CONF_TMP
 
-      ADDNEW=true
-      if [ -n "$DVBMODE" ]; then
-        [ $ADDNEW = true ] && ADDNEW=false && echo -e "\n[$SERIAL]" >>$SUNDTEK_CONF_TMP
-        echo "initial_dvb_mode=$DVBMODE" >>$SUNDTEK_CONF_TMP
+      echo "" >>$SUNDTEK_CONF_TMP
+      echo "[$SERIAL]" >>$SUNDTEK_CONF_TMP
+
+      [ -n "$DVBMODE" ] && echo "initial_dvb_mode=$DVBMODE" >>$SUNDTEK_CONF_TMP
+
+      if [ "$ENABLE_IR_RECEIVER" = "true" ]; then
+        echo "ir_disabled=0" >>$SUNDTEK_CONF_TMP
+      else
+        echo "ir_disabled=1" >>$SUNDTEK_CONF_TMP
       fi
-      if [ -n "$IRPROT" ]; then
-        [ $ADDNEW = true ] && ADDNEW=false && echo -e "\n[$SERIAL]" >>$SUNDTEK_CONF_TMP
-        echo "ir_protocol=$IRPROT" >>$SUNDTEK_CONF_TMP
-      fi
-      if [ -n "$KEYMAP" ]; then
-        [ $ADDNEW = true ] && ADDNEW=false && echo -e "\n[$SERIAL]" >>$SUNDTEK_CONF_TMP
-        echo "rcmap=$KEYMAP" >>$SUNDTEK_CONF_TMP
-      fi
+
+      [ -n "$IRPROT" ] && echo "ir_protocol=$IRPROT" >>$SUNDTEK_CONF_TMP
+      [ -n "$KEYMAP" ] && echo "rcmap=$KEYMAP" >>$SUNDTEK_CONF_TMP
 
       echo "" >>$SUNDTEK_CONF_TMP
     done

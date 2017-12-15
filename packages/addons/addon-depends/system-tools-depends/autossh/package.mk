@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2016 Team LibreELEC
+#      Copyright (C) 2016-present Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,6 +18,9 @@
 
 PKG_NAME="autossh"
 PKG_VERSION="1.4e"
+PKG_SHA256="9e8e10a59d7619176f4b986e256f776097a364d1be012781ea52e08d04679156"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://www.harding.motd.ca/"
 PKG_URL="http://www.harding.motd.ca/autossh/${PKG_NAME}-${PKG_VERSION}.tgz"
 PKG_DEPENDS_TARGET="toolchain"
@@ -28,7 +31,7 @@ PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            ac_cv_func_realloc_0_nonnull=yes"
-     
+
 pre_configure_target() {
   export CFLAGS="$CFLAGS -I."
 }

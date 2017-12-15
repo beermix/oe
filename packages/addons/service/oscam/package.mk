@@ -30,7 +30,6 @@ PKG_SECTION="service.softcam"
 PKG_SHORTDESC="OSCam: an Open Source Conditional Access Modul"
 PKG_LONGDESC="OSCam($PKG_VERSION_NUMBER) is a software to be used to decrypt digital television channels, as an alternative for a conditional access module."
 
-
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="OSCam"
 PKG_ADDON_TYPE="xbmc.service"
