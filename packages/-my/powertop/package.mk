@@ -1,9 +1,10 @@
 PKG_NAME="powertop"
-PKG_VERSION="f3f350f"
+PKG_VERSION="b9c431a"
 PKG_URL="https://github.com/fenrus75/powertop/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain readline libnl"
 PKG_SECTION="tools"
 PKG_TOOLCHAIN="manual"
+PKG_TOOLCHAIN="configure"
 
 pre_configure_target() {
   #cd $PKG_BUILD
