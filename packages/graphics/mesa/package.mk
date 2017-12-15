@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="mesa"
-PKG_VERSION="30abe7d"
+PKG_VERSION="a68873f"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.mesa3d.org/"
@@ -107,7 +107,7 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --with-osmesa-lib-name=OSMesa \
                            --with-gallium-drivers=$GALLIUM_DRIVERS \
                            --with-dri-drivers=$DRI_DRIVERS \
-                           --with-vulkan-drivers=intel,radeon \
+                           --with-vulkan-drivers=intel \
                            --with-sysroot=$SYSROOT_PREFIX"
 
 pre_configure_target() {
