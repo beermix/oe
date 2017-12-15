@@ -128,29 +128,18 @@ echo "libdir=/usr/lib" >> configparms
 echo "slibdir=/usr/lib" >> configparms
 echo "sbindir=/usr/bin" >> configparms
 echo "rootsbindir=/usr/bin" >> configparms
-echo "build-programs=yes" >> configparms
-
-GLIBC_INCLUDE_BIN="getent ldd locale"
 }
 
 post_makeinstall_target() {
 # xlocale.h was renamed - create symlink for compatibility
-#  ln -sf $SYSROOT_PREFIX/usr/include/bits/types/__locale_t.h $SYSROOT_PREFIX/usr/include/xlocale.h
+  ln -sf $SYSROOT_PREFIX/usr/include/bits/types/__locale_t.h $SYSROOT_PREFIX/usr/include/xlocale.h
 
 # we are linking against ld.so, so symlink
   ln -sf $(basename $INSTALL/usr/lib/ld-*.so) $INSTALL/usr/lib/ld.so
 
 # cleanup
-# remove any programs we don't want/need, keeping only those we want
-  for f in $(find $INSTALL/usr/bin -type f); do
-    fb="$(basename "${f}")"
-    for ib in $GLIBC_INCLUDE_BIN; do
-      if [ "${ib}" == "${fb}" ]; then
-        fb=
-        break
-      fi
-    done
-    [ -n "${fb}" ] && rm -rf ${f}
+  for i in $GLIBC_EXCLUDE_BIN; do
+    rm -rf $INSTALL/usr/bin/$i
   done
 
   rm -rf $INSTALL/usr/lib/audit
@@ -162,20 +151,17 @@ post_makeinstall_target() {
 
 # remove locales and charmaps
   rm -rf $INSTALL/usr/share/i18n/charmaps
+  rm -rf $INSTALL/usr/share/i18n/locales
 
-# add UTF-8 charmap for Generic (charmap is needed for installer)
-  if [ "$PROJECT" = "Generic" ]; then
-    mkdir -p $INSTALL/usr/share/i18n/charmaps
-    cp -PR $PKG_BUILD/localedata/charmaps/UTF-8 $INSTALL/usr/share/i18n/charmaps
-    gzip $INSTALL/usr/share/i18n/charmaps/UTF-8
-  fi
-
-  if [ ! "$GLIBC_LOCALES" = yes ]; then
-    rm -rf $INSTALL/usr/share/i18n/locales
-
-    mkdir -p $INSTALL/usr/share/i18n/locales
-      cp -PR $PKG_BUILD/localedata/locales/POSIX $INSTALL/usr/share/i18n/locales
-  fi
+# add default locale
+if [ "$GLIBC_LOCALES" = yes ]; then
+  mkdir -p $INSTALL/usr/lib/locale
+  mkdir -p $INSTALL/etc/profile.d
+  I18NPATH=../localedata 
+  localedef -i ../localedata/locales/en_US -f ../localedata/charmaps/UTF-8 en_US.UTF-8 --prefix=$INSTALL
+  localedef -i ../localedata/locales/ru_RU -f ../localedata/charmaps/UTF-8 ru_RU.UTF-8 --prefix=$INSTALL
+#  echo "export LANG=en_US.UTF-8" > $INSTALL/etc/profile.d/01-locale.conf
+fi
 
 # create default configs
   mkdir -p $INSTALL/etc
