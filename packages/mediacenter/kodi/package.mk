@@ -350,8 +350,14 @@ post_makeinstall_target() {
       -i $SYSROOT_PREFIX/usr/share/kodi/cmake/KodiConfig.cmake
 
   if [ "$KODI_EXTRA_FONTS" = yes ]; then
-    mkdir -p $INSTALL/usr/share/kodi/media/Fonts
+      mkdir -p $INSTALL/usr/share/kodi/media/Fonts
       cp $PKG_DIR/fonts/*.ttf $INSTALL/usr/share/kodi/media/Fonts
+  fi
+
+  # install AlexELEC addons
+  if [ -f $PKG_DIR/config/addons-alexelec/plugins.tbz2 ]; then
+      mkdir -p $INSTALL/usr/share/kodi/config/addons-alexelec
+      cp $PKG_DIR/config/addons-alexelec/plugins.tbz2 $INSTALL/usr/share/kodi/config/addons-alexelec
   fi
 
   debug_strip $INSTALL/usr/lib/kodi/kodi.bin

@@ -1,0 +1,14 @@
+--------------------
+/home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/zlib-1.2.8.dfsg/configure --help
+Fri Dec 15 03:04:20 MSK 2017
+usage:
+  configure [--const] [--zprefix] [--prefix=PREFIX]  [--eprefix=EXPREFIX]
+    [--static] [--64] [--libdir=LIBDIR] [--sharedlibdir=LIBDIR]
+    [--includedir=INCLUDEDIR] [--archs="-arch i386 -arch x86_64"]
+--------------------
+/home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/zlib-1.2.8.dfsg/configure --help
+Fri Dec 15 03:10:12 MSK 2017
+usage:
+  configure [--const] [--zprefix] [--prefix=PREFIX]  [--eprefix=EXPREFIX]
+    [--static] [--64] [--libdir=LIBDIR] [--sharedlibdir=LIBDIR]
+    [--includedir=INCLUDEDIR] [--archs="-arch i386 -arch x86_64"]
