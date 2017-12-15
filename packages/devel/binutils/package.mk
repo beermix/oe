@@ -42,11 +42,8 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-plugins \
                          --enable-ld=default \
                          --enable-lto \
-                         --enable-threads \
                          --with-pic \
                          --disable-nls \
-                         --disable-gdb \
-                         --enable-deterministic-archives \
                          --with-system-zlib=$TOOLCHAIN \
                          --enable-poison-system-directories"
 
@@ -55,7 +52,7 @@ pre_configure_host() {
   unset CFLAGS
   unset CXXFLAGS
   unset LDFLAGS
-  export LDFLAGS=""
+#  export LDFLAGS=""
 }
 
 make_host() {
