@@ -24,7 +24,7 @@ PKG_LICENSE="OSS"
 PKG_SITE="http://www.zlib.net"
 PKG_URL="http://192.168.1.200:8080/%2Fzlib-1.2.8.dfsg.tar.xz"
 PKG_DEPENDS_HOST="ccache:host"
-PKG_DEPENDS_TARGET="toolchain"
+PKG_DEPENDS_TARGET=""
 PKG_SECTION="compress"
 PKG_SHORTDESC="zlib: A general purpose (ZIP) data compression library"
 PKG_LONGDESC="zlib is a general purpose data compression library. All the code is thread safe. The data format used by the zlib library is described by RFCs (Request for Comments) 1950 to 1952 in the files ftp://ds.internic.net/rfc/rfc1950.txt (zlib format), rfc1951.txt (deflate format) and rfc1952.txt (gzip format)."
@@ -37,9 +37,12 @@ pre_configure_host() {
 
 configure_host() {
   cd $PKG_BUILD/.$HOST_NAME
-  CC="$HOST_CC" CFLAGS="$HOST_CFLAGS -Wwrite-strings -Wpointer-arith -Wconversion -Wstrict-prototypes -Wmissing-prototypes" LDFLAGS="$HOST_LDFLAGS" \
+  
+  CC="$HOST_CC" \
+  CFLAGS="$HOST_CFLAGS -O3 -Wall" \
+  LDFLAGS="$HOST_LDFLAGS" \
   mandir=$TOOLCHAIN/share/man includedir=$TOOLCHAIN/include pkgconfigdir=$TOOLCHAIN/lib/pkgconfig \
-  ./configure --shared --prefix=/usr --libdir=$TOOLCHAIN/lib
+  ./configure --prefix=/usr --libdir=$TOOLCHAIN/lib
 }
 
 pre_configure_target() {
@@ -49,6 +52,9 @@ pre_configure_target() {
 
 configure_target() {
   cd $PKG_BUILD/.$TARGET_NAME
-  CC="$CC" CFLAGS="$CFLAGS -Wall -Wwrite-strings -Wpointer-arith -Wconversion -Wstrict-prototypes -Wmissing-prototypes" LDFLAGS="$LDFLAGS" \
+  
+  CC="$CC" \
+  CFLAGS="$CFLAGS -O3 -Wall" \
+  LDFLAGS="$LDFLAGS" \
   ./configure -prefix=/usr
 }
