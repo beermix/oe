@@ -30,7 +30,7 @@ PKG_LONGDESC="Mesa is a 3-D graphics library with an API which is very similar t
 PKG_TOOLCHAIN="autotools"
 
 if [ "$DISPLAYSERVER" = "x11" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET glproto dri2proto presentproto libXext libXdamage libXfixes libXxf86vm libxcb libX11 dri3proto libxshmfence"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET glproto dri2proto presentproto libXext libXdamage libXfixes libXxf86vm libxcb libX11 dri3proto libxshmfence libvdpau"
   export DRI_DRIVER_INSTALL_DIR=$XORG_PATH_DRI
   export DRI_DRIVER_SEARCH_DIR=$XORG_PATH_DRI
   export X11_INCLUDES=
@@ -55,7 +55,7 @@ else
 fi
 
 if [ "$VDPAU_SUPPORT" = "yes" -a "$DISPLAYSERVER" = "x11" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libvdpau"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libvdpau libglvnd"
   MESA_VDPAU="--enable-vdpau"
 else
   MESA_VDPAU="--disable-vdpau"
@@ -67,7 +67,7 @@ for drv in $GRAPHIC_DRIVERS; do
 done
 
 if [ "$OPENGLES_SUPPORT" = "yes" ]; then
-  MESA_GLES="--disable-gles1 --enable-gles2"
+  MESA_GLES="--enable-gles1 --enable-gles2"
 else
   MESA_GLES="--disable-gles1 --disable-gles2"
 fi
@@ -83,35 +83,38 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --enable-asm \
                            --disable-selinux \
                            --enable-opengl \
-                           $MESA_GLES \
-                           $MESA_DRI \
-                           $MESA_GLX \
+                           --enable-gles1 \
+                           --enable-gles2 \
+                           --enable-dri \
+                           --enable-dri3 \
+                           --with-dri-driverdir=/usr/lib/dri \
+                           --disable-libglvnd \
+                           --enable-glx --enable-driglx-direct --enable-glx-tls \
                            --disable-osmesa \
                            --disable-gallium-osmesa \
                            --enable-egl \
-                           $MESA_EGL_PLATFORMS \
-                           $XA_CONFIG \
+                           --with-platforms=x11,drm \
+                           --enable-xa \
                            --enable-gbm \
                            --disable-nine \
                            --disable-xvmc \
-                           $MESA_VDPAU \
+                           --enable-vdpau \
                            --disable-va \
                            --disable-opencl \
                            --enable-opencl-icd \
                            --disable-gallium-tests \
                            --enable-shared-glapi \
                            --enable-shader-cache \
-                           $MESA_GALLIUM_LLVM \
-                           --disable-silent-rules \
+                           --enable-silent-rules \
                            --with-gl-lib-name=GL \
                            --with-osmesa-lib-name=OSMesa \
                            --with-gallium-drivers=$GALLIUM_DRIVERS \
-                           --with-dri-drivers=$DRI_DRIVERS \
+                           --with-dri-drivers=$DRI_DRIVERS,swrast \
                            --with-vulkan-drivers=intel \
                            --with-sysroot=$SYSROOT_PREFIX"
 
 pre_configure_target() {
-  export LIBS="-lxcb-dri3 -lxcb-dri2 -lxcb-xfixes -lxcb-present -lxcb-sync -lxshmfence -lz -lLLVM"
+  export LIBS="-lxcb-dri3 -lxcb-dri2 -lxcb-xfixes -lxcb-present -lxcb-sync -lxshmfence -lz"
 }
 
 post_makeinstall_target() {
