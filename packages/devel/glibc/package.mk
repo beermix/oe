@@ -18,7 +18,7 @@
 
 PKG_NAME="glibc"
 #PKG_VERSION="828efe7"
-PKG_VERSION="8f50b4a"
+PKG_VERSION="71170e"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/bminor/glibc/tree/release/2.26/master"
@@ -99,11 +99,14 @@ pre_configure_target() {
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--sort-common,--as-needed,-z,relro||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
-  
+
   if [ -n "$PROJECT_CFLAGS" ]; then
     export CFLAGS=`echo $CFLAGS | sed -e "s|$PROJECT_CFLAGS||g"`
   fi
 
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-ffast-math||g"`
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Ofast|-O2|g"`
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-O.|-O2|g"`
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--as-needed||g"`
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed||"`
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now||"`

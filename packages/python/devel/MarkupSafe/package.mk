@@ -28,13 +28,7 @@ PKG_PRIORITY="optional"
 PKG_SECTION="python/devel"
 PKG_SHORTDESC="MarkupSafe: Implements a XML/HTML/XHTML Markup safe string for Python"
 PKG_LONGDESC="MarkupSafe implements a XML/HTML/XHTML Markup safe string for Python"
-
-PKG_IS_ADDON="no"
-
-
-make_host() {
- : # nothing todo
-}
+PKG_TOOLCHAIN="manual"
 
 makeinstall_host() {
   python setup.py install --prefix=$TOOLCHAIN

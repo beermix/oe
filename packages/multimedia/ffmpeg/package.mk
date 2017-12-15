@@ -32,7 +32,7 @@ PKG_LONGDESC="FFmpeg is a complete, cross-platform solution to record, convert a
 get_graphicdrivers
 
 if [ "$VAAPI_SUPPORT" = "yes" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET intel-vaapi-driver"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET intel-vaapi-driver libva-utils"
   FFMPEG_VAAPI="--enable-vaapi"
 else
   FFMPEG_VAAPI="--disable-vaapi"
