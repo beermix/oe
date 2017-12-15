@@ -1,3 +1,4 @@
+#!/bin/sh
 ################################################################################
 #      This file is part of LibreELEC - https://libreelec.tv
 #      Copyright (C) 2016-present Team LibreELEC
@@ -16,16 +17,33 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="bitstream"
-PKG_VERSION="1.2"
-PKG_SHA256="ccfbb438711606de1fad881b58c8f134e2d82b4d53a88ea48f2d1bcb49ca5ad2"
-PKG_ARCH="any"
-PKG_LICENSE="GPL"
-PKG_SITE="http://www.videolan.org"
-PKG_URL="http://download.videolan.org/pub/videolan/${PKG_NAME}/${PKG_VERSION}/${PKG_NAME}-${PKG_VERSION}.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain"
-PKG_SECTION="multimedia"
-PKG_SHORTDESC="biTStream is a set of C headers allowing a simpler access to binary structures such as specified by MPEG, DVB, IETF, etc."
-PKG_LONGDESC="biTStream is a set of C headers allowing a simpler access to binary structures such as specified by MPEG, DVB, IETF, etc."
+KODI_ROOT=$HOME/.kodi
 
-PKG_MAKEINSTALL_OPTS_TARGET="PREFIX=/usr"
+KODI_ROOT_FAILED=$KODI_ROOT.FAILED
+BOOT_STATUS=$HOME/.config/boot.status
+
+process_boot_status()
+{
+  BOOT_STATE="$(cat $BOOT_STATUS 2>/dev/null)"
+
+  if [ "${BOOT_STATE}" = "SAFE" ]; then
+    if [ ! -d $KODI_ROOT_FAILED ]; then
+      # entering safe mode - rename failed .kodi, and restart with clean .kodi
+      mv $KODI_ROOT $KODI_ROOT_FAILED
+      reboot
+    else
+      # exiting safe mode - restore failed .kodi
+      rm -fr $KODI_ROOT
+      mv $KODI_ROOT_FAILED $KODI_ROOT
+      echo "OK" > $BOOT_STATUS
+    fi
+  else
+    echo "OK" > $BOOT_STATUS
+  fi
+
+  return 0
+}
+
+process_boot_status
+
+exit 0

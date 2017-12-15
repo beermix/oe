@@ -20,13 +20,15 @@
 
 PKG_NAME="tstools"
 PKG_VERSION="1.11"
+PKG_SHA256="4e207ad7298ec421c6710e3024147b486320d792cec2dbd34efb7e6d9e96230a"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
 PKG_SITE="http://tstools.berlios.de/"
 PKG_URL="$SOURCEFORGE_SRC/project/tstools.berlios/tstools-1_11.tgz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="tools"
 PKG_SHORTDESC="command line tools for working with MPEG data"
 PKG_LONGDESC="This is a set of cross-platform command line tools for working with MPEG data."
-
 
 make_target() {
   make -j1 CROSS_COMPILE=$TARGET_PREFIX

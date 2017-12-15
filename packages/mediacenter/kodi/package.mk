@@ -275,14 +275,18 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/share/kodi/addons/visualization.vortex
   rm -rf $INSTALL/usr/share/xsessions
 
-  mv $INSTALL/usr/lib/python2.7/dist-packages $INSTALL/usr/lib/python2.7/site-packages
-
   mkdir -p $INSTALL/usr/lib/kodi
     cp $PKG_DIR/scripts/kodi-config $INSTALL/usr/lib/kodi
+    cp $PKG_DIR/scripts/kodi-safe-mode $INSTALL/usr/lib/kodi
     cp $PKG_DIR/scripts/kodi.sh $INSTALL/usr/lib/kodi
 
-  mkdir -p $INSTALL/usr/lib/libreelec
-    cp $PKG_DIR/scripts/systemd-addon-wrapper $INSTALL/usr/lib/libreelec
+    # Configure safe mode triggers - default 5 restarts within 900 seconds/15 minutes
+    $SED -e "s|@KODI_MAX_RESTARTS@|${KODI_MAX_RESTARTS:-5}|g" \
+         -e "s|@KODI_MAX_SECONDS@|${KODI_MAX_SECONDS:-900}|g" \
+         -i $INSTALL/usr/lib/kodi/kodi.sh
+
+  mkdir -p $INSTALL/usr/sbin
+    cp $PKG_DIR/scripts/service-addon-wrapper $INSTALL/usr/sbin
 
   mkdir -p $INSTALL/usr/bin
     cp $PKG_DIR/scripts/cputemp $INSTALL/usr/bin
@@ -298,39 +302,27 @@ post_makeinstall_target() {
     $SED "s|@ADDON_URL@|$ADDON_URL|g" -i $INSTALL/usr/share/kodi/addons/repository.libreelec.tv/addon.xml
 
   mkdir -p $INSTALL/usr/share/kodi/config
-    cp $PKG_DIR/config/guisettings.xml $INSTALL/usr/share/kodi/config
-    cp $PKG_DIR/config/sources.xml $INSTALL/usr/share/kodi/config
-
-# install project specific configs
-    if [ -n "$DEVICE" -a -f $PROJECT_DIR/$PROJECT/devices/$DEVICE/kodi/guisettings.xml ]; then
-      cp -R $PROJECT_DIR/$PROJECT/devices/$DEVICE/kodi/guisettings.xml $INSTALL/usr/share/kodi/config
-    elif [ -f $PROJECT_DIR/$PROJECT/kodi/guisettings.xml ]; then
-      cp -R $PROJECT_DIR/$PROJECT/kodi/guisettings.xml $INSTALL/usr/share/kodi/config
-    fi
-
-    if [ -n "$DEVICE" -a -f $PROJECT_DIR/$PROJECT/devices/$DEVICE/kodi/sources.xml ]; then
-      cp -R $PROJECT_DIR/$PROJECT/devices/$DEVICE/kodi/sources.xml $INSTALL/usr/share/kodi/config
-    elif [ -f $PROJECT_DIR/$PROJECT/kodi/sources.xml ]; then
-      cp -R $PROJECT_DIR/$PROJECT/kodi/sources.xml $INSTALL/usr/share/kodi/config
-    fi
-
-  mkdir -p $INSTALL/usr/share/kodi/system/
-    if [ -n "$DEVICE" -a -f $PROJECT_DIR/$PROJECT/devices/$DEVICE/kodi/advancedsettings.xml ]; then
-      cp $PROJECT_DIR/$PROJECT/devices/$DEVICE/kodi/advancedsettings.xml $INSTALL/usr/share/kodi/system/
-    elif [ -f $PROJECT_DIR/$PROJECT/kodi/advancedsettings.xml ]; then
-      cp $PROJECT_DIR/$PROJECT/kodi/advancedsettings.xml $INSTALL/usr/share/kodi/system/
-    else
-      cp $PKG_DIR/config/advancedsettings.xml $INSTALL/usr/share/kodi/system/
-    fi
-
   mkdir -p $INSTALL/usr/share/kodi/system/settings
-    if [ -n "$DEVICE" -a -f $PROJECT_DIR/$PROJECT/devices/$DEVICE/kodi/appliance.xml ]; then
-      cp $PROJECT_DIR/$PROJECT/devices/$DEVICE/kodi/appliance.xml $INSTALL/usr/share/kodi/system/settings
-    elif [ -f $PROJECT_DIR/$PROJECT/kodi/appliance.xml ]; then
-      cp $PROJECT_DIR/$PROJECT/kodi/appliance.xml $INSTALL/usr/share/kodi/system/settings
-    else
-      cp $PKG_DIR/config/appliance.xml $INSTALL/usr/share/kodi/system/settings
-    fi
+
+  $PKG_DIR/scripts/xml_merge.py $PKG_DIR/config/guisettings.xml \
+                                $PROJECT_DIR/$PROJECT/kodi/guisettings.xml \
+                                $PROJECT_DIR/$PROJECT/devices/$DEVICE/kodi/guisettings.xml \
+                                > $INSTALL/usr/share/kodi/config/guisettings.xml
+
+  $PKG_DIR/scripts/xml_merge.py $PKG_DIR/config/sources.xml \
+                                $PROJECT_DIR/$PROJECT/kodi/sources.xml \
+                                $PROJECT_DIR/$PROJECT/devices/$DEVICE/kodi/sources.xml \
+                                > $INSTALL/usr/share/kodi/config/sources.xml
+
+  $PKG_DIR/scripts/xml_merge.py $PKG_DIR/config/advancedsettings.xml \
+                                $PROJECT_DIR/$PROJECT/kodi/advancedsettings.xml \
+                                $PROJECT_DIR/$PROJECT/devices/$DEVICE/kodi/advancedsettings.xml \
+                                > $INSTALL/usr/share/kodi/system/advancedsettings.xml
+
+  $PKG_DIR/scripts/xml_merge.py $PKG_DIR/config/appliance.xml \
+                                $PROJECT_DIR/$PROJECT/kodi/appliance.xml \
+                                $PROJECT_DIR/$PROJECT/devices/$DEVICE/kodi/appliance.xml \
+                                > $INSTALL/usr/share/kodi/system/settings/appliance.xml
 
   # update addon manifest
   ADDON_MANIFEST=$INSTALL/usr/share/kodi/system/addon-manifest.xml
@@ -340,6 +332,13 @@ post_makeinstall_target() {
   xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "os.openelec.tv" $ADDON_MANIFEST
   xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "repository.libreelec.tv" $ADDON_MANIFEST
   xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "service.libreelec.settings" $ADDON_MANIFEST
+  xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "script.module.unidecode" $ADDON_MANIFEST
+  xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "script.module.simplejson" $ADDON_MANIFEST
+
+  if [ "$DRIVER_ADDONS_SUPPORT" = "yes" ]; then
+    xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "script.program.driverselect" $ADDON_MANIFEST
+  fi 
+
   if [ "$DEVICE" = "Slice" -o "$DEVICE" = "Slice3" ]; then
     xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "service.slice" $ADDON_MANIFEST
   fi
@@ -350,7 +349,7 @@ post_makeinstall_target() {
       -i $SYSROOT_PREFIX/usr/share/kodi/cmake/KodiConfig.cmake
 
   if [ "$KODI_EXTRA_FONTS" = yes ]; then
-      mkdir -p $INSTALL/usr/share/kodi/media/Fonts
+    mkdir -p $INSTALL/usr/share/kodi/media/Fonts
       cp $PKG_DIR/fonts/*.ttf $INSTALL/usr/share/kodi/media/Fonts
   fi
 
