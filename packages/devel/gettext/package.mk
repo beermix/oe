@@ -40,5 +40,4 @@ PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared \
                          --without-emacs \
                          --disable-libasprintf \
                          --disable-acl \
-                         --disable-openmp \
-                         --disable-relocatable"
+                         --disable-openmp"
