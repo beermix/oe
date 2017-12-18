@@ -4,8 +4,7 @@ PKG_URL="https://github.com/virtualboots/bwm-ng/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libstatgrab"
 PKG_TOOLCHAIN="autotools"
 
-#CFLAGS="$CFLAGS -static"
-#CXXFLAGS="$CXXFLAGS -static"
+CFLAGS="$CFLAGS -static -lpthread -static-libstdc++ -static-libgcc -lrt -ldl"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
 			      ac_cv_func_realloc_0_nonnull=yes \
