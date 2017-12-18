@@ -18,7 +18,7 @@
 
 PKG_NAME="glibc"
 #PKG_VERSION="828efe7"
-PKG_VERSION="71170e"
+PKG_VERSION="633e2f7"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/bminor/glibc/tree/release/2.26/master"
