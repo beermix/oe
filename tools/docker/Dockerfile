@@ -22,11 +22,11 @@ RUN apt-get update && apt-get install -y \
     g++ xfonts-utils xfonts-utils xfonts-utils xsltproc default-jre-headless \
     libc6-dev libncurses5-dev \
     u-boot-tools \
-    xz-utils make file libxml-parser-perl zsh \
+    xz-utils make file libxml-parser-perl \
     libjson-perl \
     golang-go \
     git openssh-client \
     --no-install-recommends \
  && rm -rf /var/lib/apt/lists/*
- 
+
 USER docker

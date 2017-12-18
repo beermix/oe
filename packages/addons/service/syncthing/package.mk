@@ -27,7 +27,7 @@ PKG_DEPENDS_TARGET="toolchain go:host"
 PKG_SECTION="service/system"
 PKG_SHORTDESC="Syncthing: open source continuous file synchronization"
 PKG_LONGDESC="Syncthing ($PKG_VERSION) replaces proprietary sync and cloud services with something open, trustworthy and decentralized. Your data is your data alone and you deserve to choose where it is stored, if it is shared with some third party and how it's transmitted over the Internet."
-
+PKG_TOOLCHAIN="manual"
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Syncthing"
@@ -64,22 +64,17 @@ configure_target() {
         arm1176jzf-s)
           export GOARM=6
           ;;
-        cortex-a7|cortex-a9)
+        *)
           export GOARM=7
           ;;
       esac
       ;;
   esac
 }
-
 make_target() {
   cd $PKG_BUILD/src/github.com/syncthing/syncthing
   mkdir -p bin
   $GOLANG build -v -o bin/syncthing -a -ldflags "$LDFLAGS" ./cmd/syncthing
-}
-
-makeinstall_target() {
-  :
 }
 
 addon() {

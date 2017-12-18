@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2016 Team LibreELEC
+#      Copyright (C) 2016-present Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
 
 PKG_NAME="game-tools"
 PKG_VERSION=""
-PKG_REV="100"
+PKG_REV="101"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE=""
@@ -27,7 +27,6 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="virtual"
 PKG_SHORTDESC="A bundle of game tools and programs"
 PKG_LONGDESC="This bundle currently includes bchunk, ecm-tools, iat, and linuxconsoletools"
-
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Game Tools"
@@ -55,6 +54,4 @@ addon() {
     cp -P $(get_build_dir linuxconsoletools)/utils/fftest $ADDON_BUILD/$PKG_ADDON_ID/bin
     cp -P $(get_build_dir linuxconsoletools)/utils/jscal $ADDON_BUILD/$PKG_ADDON_ID/bin
     cp -P $(get_build_dir linuxconsoletools)/utils/jstest $ADDON_BUILD/$PKG_ADDON_ID/bin
-
-  debug_strip $ADDON_BUILD/$PKG_ADDON_ID/bin
 }
