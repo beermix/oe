@@ -38,12 +38,10 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-gnu-as \
                            --with-gnu-ld \
                            --enable-plugin \
-                           --enable-lto \
                            --enable-ld=default \
                            --disable-multilib \
-                           --disable-nls \
                            --enable-checking=release \
-                           --with-default-libstdcxx-abi=gcc4-compatible \
+                           --with-default-libstdcxx-abi=new \
                            --without-ppl \
                            --without-cloog \
                            --disable-libmpx \
