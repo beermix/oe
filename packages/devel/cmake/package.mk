@@ -33,8 +33,8 @@ configure_host() {
   ../configure --prefix=$TOOLCHAIN \
                --no-qt-gui --no-system-libs \
                -- \
-               -DCMAKE_C_FLAGS="-O2 -Wall -pipe -Wno-format-security" \
-               -DCMAKE_CXX_FLAGS="-O2 -Wall -pipe -Wno-format-security" \
+               -DCMAKE_C_FLAGS="-O2 -pipe -Wall -pipe -Wno-format-security" \
+               -DCMAKE_CXX_FLAGS="-O2 -pipe -Wall -pipe -Wno-format-security" \
                -DCMAKE_EXE_LINKER_FLAGS="$HOST_LDFLAGS" \
                -DCMAKE_USE_SYSTEM_LIBRARY_LIBRHASH=1 \
                -DCMAKE_USE_OPENSSL=ON \
