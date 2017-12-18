@@ -39,7 +39,7 @@ configure_host() {
   cd $PKG_BUILD/.$HOST_NAME
   
   CC="$HOST_CC" \
-  CFLAGS="$HOST_CFLAGS -O3 -Wall" \
+  CFLAGS="$HOST_CFLAGS -O3 -pipe -Wall" \
   LDFLAGS="$HOST_LDFLAGS" \
   mandir=$TOOLCHAIN/share/man includedir=$TOOLCHAIN/include pkgconfigdir=$TOOLCHAIN/lib/pkgconfig \
   ./configure --prefix=/usr --libdir=$TOOLCHAIN/lib
