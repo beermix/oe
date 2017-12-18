@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="cmake"
-PKG_VERSION="3.10.0"
-PKG_SHA256="b3345c17609ea0f039960ef470aa099de9942135990930a57c14575aae884987"
+PKG_VERSION="3.10.1"
+PKG_SHA256="7be36ee24b0f5928251b644d29f5ff268330a916944ef4a75e23ba01e7573284"
 PKG_ARCH="any"
 PKG_LICENSE="BSD"
 PKG_SITE="http://www.cmake.org/"
