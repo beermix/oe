@@ -17,30 +17,37 @@
 ################################################################################
 
 PKG_NAME="mesa"
-PKG_VERSION="a68873f"
+PKG_VERSION="17.3.0"
+PKG_SHA256="29a0a3a6c39990d491a1a58ed5c692e596b3bfc6c01d0b45e0b787116c50c6d9"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.mesa3d.org/"
-PKG_URL="https://cgit.freedesktop.org/mesa/mesa/snapshot/$PKG_VERSION.tar.xz"
-PKG_SOURCE_DIR="$PKG_VERSION"
-PKG_DEPENDS_TARGET="toolchain expat libdrm Mako:host"
+PKG_URL="ftp://freedesktop.org/pub/mesa/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_DEPENDS_TARGET="toolchain expat libdrm"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="mesa: 3-D graphics library with OpenGL API"
 PKG_LONGDESC="Mesa is a 3-D graphics library with an API which is very similar to that of OpenGL*. To the extent that Mesa utilizes the OpenGL command syntax or state machine, it is being used with authorization from Silicon Graphics, Inc. However, the author makes no claim that Mesa is in any way a compatible replacement for OpenGL or associated with Silicon Graphics, Inc. Those who want a licensed implementation of OpenGL should contact a licensed vendor. While Mesa is not a licensed OpenGL implementation, it is currently being tested with the OpenGL conformance tests. For the current conformance status see the CONFORM file included in the Mesa distribution."
 PKG_TOOLCHAIN="autotools"
 
 if [ "$DISPLAYSERVER" = "x11" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET glproto dri2proto presentproto libXext libXdamage libXfixes libXxf86vm libxcb libX11 dri3proto libxshmfence libvdpau"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET glproto dri2proto presentproto libXext libXdamage libXfixes libXxf86vm libxcb libX11 dri3proto libxshmfence"
   export DRI_DRIVER_INSTALL_DIR=$XORG_PATH_DRI
   export DRI_DRIVER_SEARCH_DIR=$XORG_PATH_DRI
   export X11_INCLUDES=
   MESA_DRI="--enable-dri --enable-dri3"
   MESA_GLX="--enable-glx --enable-driglx-direct --enable-glx-tls"
-  MESA_EGL_PLATFORMS="--with-platforms=x11,drm"
+  MESA_PLATFORMS="--with-platforms=x11,drm"
+elif [ "$DISPLAYSERVER" = "weston" ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET wayland wayland-protocols"
+  MESA_DRI="--enable-dri --disable-dri3"
+  # The glx in glx-tls is a misnomer - there's nothing glx in it.
+  MESA_GLX="--disable-glx --disable-driglx-direct --enable-glx-tls"
+  MESA_PLATFORMS="--with-platforms=drm,wayland"
 else
   MESA_DRI="--enable-dri --disable-dri3"
-  MESA_GLX="--disable-glx --disable-driglx-direct --disable-glx-tls"
-  MESA_EGL_PLATFORMS="--with-platforms=drm"
+  # The glx in glx-tls is a misnomer - there's nothing glx in it.
+  MESA_GLX="--disable-glx --disable-driglx-direct --enable-glx-tls"
+  MESA_PLATFORMS="--with-platforms=drm"
 fi
 
 # configure GPU drivers and dependencies:
@@ -67,7 +74,7 @@ for drv in $GRAPHIC_DRIVERS; do
 done
 
 if [ "$OPENGLES_SUPPORT" = "yes" ]; then
-  MESA_GLES="--enable-gles1 --enable-gles2"
+  MESA_GLES="--disable-gles1 --enable-gles2"
 else
   MESA_GLES="--disable-gles1 --disable-gles2"
 fi
@@ -82,42 +89,45 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --enable-texture-float \
                            --enable-asm \
                            --disable-selinux \
+                           $MESA_PLATFORMS \
                            --enable-opengl \
-                           --enable-gles1 \
-                           --enable-gles2 \
-                           --enable-dri \
-                           --enable-dri3 \
-                           --with-dri-driverdir=/usr/lib/dri \
-                           --disable-libglvnd \
-                           --enable-glx --enable-driglx-direct --enable-glx-tls \
+                           $MESA_GLES \
+                           $MESA_DRI \
+                           $MESA_GLX \
                            --disable-osmesa \
                            --disable-gallium-osmesa \
                            --enable-egl \
-                           --with-platforms=x11,drm \
-                           --enable-xa \
+                           $XA_CONFIG \
                            --enable-gbm \
                            --disable-nine \
                            --disable-xvmc \
-                           --enable-vdpau \
+                           $MESA_VDPAU \
+                           --disable-omx-bellagio \
                            --disable-va \
                            --disable-opencl \
                            --enable-opencl-icd \
                            --disable-gallium-tests \
                            --enable-shared-glapi \
-                           --enable-shader-cache \
+                           $MESA_GALLIUM_LLVM \
                            --enable-silent-rules \
-                           --with-gl-lib-name=GL \
                            --with-osmesa-lib-name=OSMesa \
                            --with-gallium-drivers=$GALLIUM_DRIVERS \
                            --with-dri-drivers=$DRI_DRIVERS,swrast \
                            --with-vulkan-drivers=intel \
                            --with-sysroot=$SYSROOT_PREFIX"
 
+# Temporary workaround:
+# Listed libraries are static, while mesa expects shared ones. This breaks the
+# dependency tracking. The following has some ideas on how to address that.
+# https://github.com/LibreELEC/LibreELEC.tv/pull/2163
 pre_configure_target() {
-  export LIBS="-lxcb-dri3 -lxcb-dri2 -lxcb-xfixes -lxcb-present -lxcb-sync -lxshmfence -lz"
+  if [ "$DISPLAYSERVER" = "x11" ]; then
+    export LIBS="-lxcb-dri3 -lxcb-dri2 -lxcb-xfixes -lxcb-present -lxcb-sync -lxshmfence -lz"
+  fi
 }
 
 post_makeinstall_target() {
+  # Similar hack is needed on EGL, GLES* front. Might as well drop it and test the GLVND?
   if [ "$DISPLAYSERVER" = "x11" ]; then
     # rename and relink for cooperate with nvidia drivers
     rm -rf $INSTALL/usr/lib/libGL.so

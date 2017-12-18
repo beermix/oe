@@ -1,63 +1,37 @@
+################################################################################
+#      This file is part of LibreELEC - https://libreelec.tv
+#      Copyright (C) 2016-present Team LibreELEC
+#
+#  LibreELEC is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  LibreELEC is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
+################################################################################
+
 PKG_NAME="waylandpp"
-PKG_VERSION="0.1.5"
+PKG_VERSION="0.1.6"
+PKG_SHA256="33d3ec385704c5545fb50d2283aabf4ef26aaaf3e416b292e650fea67c430d23"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/NilsBrause/waylandpp"
-PKG_URL="http://sources.buildroot.net/waylandpp-0.1.5.tar.gz"
-PKG_DEPENDS_TARGET="toolchain scons:host"
-PKG_PRIORITY="optional"
+PKG_URL="https://github.com/NilsBrause/waylandpp/archive/$PKG_VERSION.tar.gz"
+PKG_DEPENDS_TARGET="toolchain waylandpp:host"
 PKG_SECTION="wayland"
 PKG_SHORTDESC="Wayland C++ bindings"
 PKG_LONGDESC="Wayland C++ bindings"
 
-pre_make_host() {
-  mkdir -p $PKG_BUILD/.$HOST_NAME
-    cp -a $PKG_BUILD/* $PKG_BUILD/.$HOST_NAME/
-    cd $PKG_BUILD/.$HOST_NAME/
-}
+PKG_CMAKE_OPTS_HOST="-DBUILD_SCANNER=ON \
+                     -DBUILD_LIBRARIES=OFF"
 
-make_host() {
-  $CXX $CXXFLAGS -std=c++11 -Wall -Werror -Iscanner -o scanner/wayland-scanner++ scanner/scanner.cpp scanner/pugixml.cpp
-}
-
-makeinstall_host() {
-  mkdir -p $TOOLCHAIN/bin
-    cp -a scanner/wayland-scanner++ $TOOLCHAIN/bin
-}
-
-pre_make_target() {
-  mkdir -p $PKG_BUILD/.$TARGET_NAME
-    cp -a $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME/
-    cd $PKG_BUILD/.$TARGET_NAME/
-}
-
-make_target() {
-  wayland-scanner++ protocols/wayland.xml \
-                    include/wayland-client-protocol.hpp \
-                    src/wayland-client-protocol.cpp
-
-  $CXX $CXXFLAGS -std=c++11 -Wall -Werror -fPIC -Iinclude -shared -lwayland-client -o src/libwayland-client++.so \
-                                                                                      src/wayland-client.cpp \
-                                                                                      src/wayland-client-protocol.cpp \
-                                                                                      src/wayland-util.cpp
-
-  $CXX $CXXFLAGS -std=c++11 -Wall -Werror -fPIC -Iinclude -shared -lwayland-egl -o src/libwayland-egl++.so \
-                                                                                   src/wayland-egl.cpp
-
-  $CXX $CXXFLAGS -std=c++11 -Wall -Werror -fPIC -Iinclude -shared -lwayland-cursor -o src/libwayland-cursor++.so \
-                                                                                      src/wayland-cursor.cpp
-}
-
-makeinstall_target() {
-  mkdir -p $INSTALL/usr/lib
-    cp -a src/*.so $INSTALL/usr/lib/
-
-  mkdir -p $SYSROOT_PREFIX/usr/include
-    cp -a include/*.hpp $SYSROOT_PREFIX/usr/include/
-
-  mkdir -p $SYSROOT_PREFIX/usr/lib
-    cp -a src/*.so $SYSROOT_PREFIX/usr/lib/
-
-  mkdir -p $SYSROOT_PREFIX/usr/share/waylandpp
-    cp -a protocols/wayland.xml $SYSROOT_PREFIX/usr/share/waylandpp/
-}
+PKG_CMAKE_OPTS_TARGET="-DBUILD_SCANNER=OFF \
+                       -DBUILD_LIBRARIES=ON \
+                       -DCMAKE_CROSSCOMPILING=ON \
+                       -DWAYLAND_SCANNERPP=$TOOLCHAIN/bin/wayland-scanner++"
