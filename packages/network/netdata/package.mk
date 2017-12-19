@@ -1,5 +1,5 @@
 PKG_NAME="netdata"
-PKG_VERSION="1.8.0"
+PKG_VERSION="1.9.0"
 PKG_URL="https://github.com/firehol/netdata/releases/"
 PKG_URL="https://github.com/firehol/netdata/releases/download/v$PKG_VERSION/netdata-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain util-linux ncurses sysstat libmnl zlib lm_sensors libcap libnetfilter_acct"
@@ -33,6 +33,6 @@ PKG_CONFIGURE_OPTS_TARGET="--with-zlib \
 #  add_group netdev 990
 #}
 
-post_makeinstall_target() {
-  rm -rf $INSTALL/storage
-}
+#post_makeinstall_target() {
+#  rm -rf $INSTALL/storage
+#}
