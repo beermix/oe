@@ -5,6 +5,7 @@ PKG_URL="https://www.x.org/releases/individual/app/intel-gpu-tools-$PKG_VERSION.
 #PKG_GIT_URL="git://anongit.freedesktop.org/xorg/app/intel-gpu-tools"
 PKG_DEPENDS_TARGET="toolchain systemd procps-ng glib mesa libdrm libpciaccess cairo dri2proto swig:host libunwind"
 PKG_SECTION="tools"
+PKG_TOOLCHAIN="autotools"
 
 pre_configure_target() {
   export LC_ALL=en_US.UTF-8
