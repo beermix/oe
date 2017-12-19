@@ -17,22 +17,23 @@
 ################################################################################
 
 PKG_NAME="ninja"
-PKG_VERSION="1.8.2"
+PKG_VERSION="e234a7b"
 PKG_ARCH="any"
 PKG_LICENSE="Apache"
 PKG_SITE="https://github.com/ninja-build/ninja"
-PKG_URL="https://github.com/ninja-build/ninja/archive/v$PKG_VERSION.tar.gz"
+PKG_URL="https://github.com/ninja-build/ninja/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="Python2:host re2c:host"
 PKG_SECTION="devel"
 PKG_SHORTDESC="Small build system with a focus on speed"
 PKG_LONGDESC="Small build system with a focus on speed"
 PKG_TOOLCHAIN="manual"
 
-#make_host() {
-#  python2 configure.py --bootstrap
-#}
+make_host() {
+  export HOST_LDFLAGS="-s"
+  python2 configure.py --bootstrap
+}
 
 makeinstall_host() {
-#  cp ninja $TOOLCHAIN/bin/
-  cp $PKG_DIR/ninja $TOOLCHAIN/bin/
+  cp ninja $TOOLCHAIN/bin/
+#  cp $PKG_DIR/ninja $TOOLCHAIN/bin/
 }
