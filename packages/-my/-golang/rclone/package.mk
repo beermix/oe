@@ -3,7 +3,7 @@ PKG_VERSION="8c8abfd"
 PKG_URL="https://github.com/ncw/rclone/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain go:host"
 PKG_SECTION="system"
-
+PKG_TOOLCHAIN="manual"
 
 pre_make_target() {
   export GOOS=linux

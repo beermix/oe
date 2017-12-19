@@ -28,6 +28,7 @@ PKG_DEPENDS_HOST="toolchain"
 PKG_SECTION="system"
 PKG_SHORTDESC="Go is an open source programming language that makes it easy to build simple, reliable, and efficient software."
 PKG_LONGDESC="Go is an open source programming language that makes it easy to build simple, reliable, and efficient software."
+PKG_TOOLCHAIN="manual"
 
 configure_host() {
   export GOOS=linux
@@ -37,7 +38,7 @@ configure_host() {
 
 make_host() {
   cd $PKG_BUILD/src
-  CC_FOR_TARGET=$(CC) CXX_FOR_TARGET=$(CXX) GOARCH=amd64 CGO_ENABLED=1 ./make.bash --no-clean
+  ./make.bash --no-clean
 }
 
 pre_makeinstall_host() {
