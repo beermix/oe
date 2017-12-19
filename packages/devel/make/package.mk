@@ -33,7 +33,5 @@ export CC=$LOCAL_CC
 PKG_CONFIGURE_OPTS_HOST="--without-guile"
 
 post_makeinstall_host() {
-  ln -sfr make $TOOLCHAIN/bin/gmake
-  
-#  ln -sfr /usr/bin/make $TOOLCHAIN/bin/make
+  ln -sf make $TOOLCHAIN/bin/gmake
 }

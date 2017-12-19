@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="libva-utils"
-PKG_VERSION="1.8.3"
-#PKG_SHA256="a921df31311d8f49d2e392a5fc2a068d79f89aeb588309fbff24365310dbc5f6"
+PKG_VERSION="2.0.0"
+PKG_SHA256="a921df31311d8f49d2e392a5fc2a068d79f89aeb588309fbff24365310dbc5f6"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/01org/libva-utils"
@@ -29,7 +29,7 @@ PKG_LONGDESC="Libva-utils is a collection of tests for VA-API (VIdeo Acceleratio
 PKG_TOOLCHAIN="autotools"
 
 if [ "$DISPLAYSERVER" = "x11" ]; then
-  PKG_DEPENDS_TARGET="toolchain libva libdrm libX11 intel-vaapi-driver"
+  PKG_DEPENDS_TARGET="toolchain libva libdrm libX11"
   DISPLAYSERVER_LIBVA="--enable-x11"
 else
   PKG_DEPENDS_TARGET="toolchain libva libdrm"

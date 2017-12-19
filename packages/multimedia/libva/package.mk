@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="libva"
-PKG_VERSION="1.8.3"
-PKG_SHA256="56ee129deba99b06eb4a8d4f746b117c5d1dc2ec5b7a0bfc06971fca1598ab9b"
+PKG_VERSION="2.0.0"
+PKG_SHA256="bb0601f9a209e60d8d0b867067323661a7816ff429021441b775452b8589e533"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPL"
 PKG_SITE="https://01.org/linuxmedia"
@@ -30,10 +30,13 @@ PKG_TOOLCHAIN="autotools"
 
 if [ "$DISPLAYSERVER" = "x11" ]; then
   PKG_DEPENDS_TARGET="toolchain libX11 libXext libXfixes libdrm mesa"
-  DISPLAYSERVER_LIBVA="--enable-x11 --enable-glx"
+  DISPLAYSERVER_LIBVA="--enable-x11 --enable-glx --disable-wayland"
+elif [ "$DISPLAYSERVER" = "weston" ]; then
+  DISPLAYSERVER_LIBVA="--disable-x11 --disable-glx --enable-wayland"
+  PKG_DEPENDS_TARGET="toolchain libdrm mesa wayland"
 else
   PKG_DEPENDS_TARGET="toolchain libdrm"
-  DISPLAYSERVER_LIBVA="--disable-x11 --disable-glx"
+  DISPLAYSERVER_LIBVA="--disable-x11 --disable-glx --disable-wayland"
 fi
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-silent-rules \
@@ -41,5 +44,4 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-silent-rules \
                            --enable-drm \
                            --enable-egl \
                            $DISPLAYSERVER_LIBVA \
-                           --disable-wayland \
                            --disable-dummy-driver"
