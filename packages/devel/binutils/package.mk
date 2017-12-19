@@ -43,6 +43,8 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --with-threads \
                          --with-pic \
                          --disable-nls \
+                         --disable-gdb \
+                         --disable-sim \
                          --with-system-zlib=$TOOLCHAIN \
                          --enable-poison-system-directories"
 
@@ -51,7 +53,6 @@ pre_configure_host() {
   unset CFLAGS
   unset CXXFLAGS
   unset LDFLAGS
-  export CFLAGS="-march=haswell -mtune=haswell -O2 -pipe"
 }
 
 make_host() {
