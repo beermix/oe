@@ -50,7 +50,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
 
 pre_configure_host() {
   unset CPPFLAGS
-  unset CFLAGS
+#  unset CFLAGS
   unset CXXFLAGS
   unset LDFLAGS
 }
