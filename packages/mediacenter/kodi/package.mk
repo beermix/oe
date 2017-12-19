@@ -37,12 +37,9 @@ PKG_CMAKE_SCRIPT="$PKG_BUILD/project/cmake/CMakeLists.txt"
 
 if [ "$DISPLAYSERVER" = "x11" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libX11 libXext libdrm libXrandr"
-  KODI_XORG="-DCORE_PLATFORM_NAME=x11"
-elif [ "$DISPLAYSERVER" = "weston" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET wayland waylandpp"
-  CFLAGS="$CFLAGS -DMESA_EGL_NO_X11_HEADERS"
-  CXXFLAGS="$CXXFLAGS -DMESA_EGL_NO_X11_HEADERS"
-  KODI_XORG="-DCORE_PLATFORM_NAME=wayland -DWAYLAND_RENDER_SYSTEM=gles"
+  KODI_XORG="-DENABLE_X11=ON"
+else
+  KODI_XORG="-DENABLE_X11=OFF"
 fi
 
 if [ ! "$OPENGL" = "no" ]; then
@@ -189,24 +186,20 @@ else
   KODI_ARCH="-DWITH_ARCH=$TARGET_ARCH"
 fi
 
-if [ "$DEVICE" = "Slice" -o "$DEVICE" = "Slice3" ]; then
+if [ "$PROJECT" = "Slice" -o "$PROJECT" = "Slice3" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET led_tools"
 fi
 
 if [ ! "$KODIPLAYER_DRIVER" = default ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET $KODIPLAYER_DRIVER"
   if [ "$KODIPLAYER_DRIVER" = bcm2835-driver ]; then
-    KODI_PLAYER="-DCORE_PLATFORM_NAME=rbpi"
-  elif [ "$KODIPLAYER_DRIVER" = mesa ]; then
-    KODI_PLAYER="-DCORE_PLATFORM_NAME=gbm"
-    CFLAGS="$CFLAGS -DMESA_EGL_NO_X11_HEADERS"
-    CXXFLAGS="$CXXFLAGS -DMESA_EGL_NO_X11_HEADERS"
+    KODI_PLAYER="-DENABLE_MMAL=ON -DCORE_SYSTEM_NAME=rbpi"
   elif [ "$KODIPLAYER_DRIVER" = libfslvpuwrap ]; then
-    KODI_PLAYER="-DCORE_PLATFORM_NAME=imx"
+    KODI_PLAYER="-DENABLE_IMX=ON"
     CFLAGS="$CFLAGS -DHAS_IMXVPU -DLINUX -DEGL_API_FB"
     CXXFLAGS="$CXXFLAGS -DHAS_IMXVPU -DLINUX -DEGL_API_FB"
   elif [ "$KODIPLAYER_DRIVER" = libamcodec ]; then
-    KODI_PLAYER="-DCORE_PLATFORM_NAME=aml"
+    KODI_PLAYER="-DENABLE_AML=ON"
   fi
 fi
 
@@ -358,12 +351,6 @@ post_makeinstall_target() {
   if [ "$KODI_EXTRA_FONTS" = yes ]; then
     mkdir -p $INSTALL/usr/share/kodi/media/Fonts
       cp $PKG_DIR/fonts/*.ttf $INSTALL/usr/share/kodi/media/Fonts
-  fi
-
-  # install AlexELEC addons
-  if [ -f $PKG_DIR/config/addons-alexelec/plugins.tbz2 ]; then
-      mkdir -p $INSTALL/usr/share/kodi/config/addons-alexelec
-      cp $PKG_DIR/config/addons-alexelec/plugins.tbz2 $INSTALL/usr/share/kodi/config/addons-alexelec
   fi
 
   debug_strip $INSTALL/usr/lib/kodi/kodi.bin
