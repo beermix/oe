@@ -29,7 +29,7 @@ PKG_LONGDESC="Small build system with a focus on speed"
 PKG_TOOLCHAIN="manual"
 
 make_host() {
-  export HOST_LDFLAGS="-s"
+  export LDFLAGS=-s
   python2 configure.py --bootstrap
 }
 
