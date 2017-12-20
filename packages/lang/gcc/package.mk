@@ -47,6 +47,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --without-cuda-driver \
                            --with-system-zlib \
                            --disable-libsanitizer \
+                           --disable-libmudflap \
                            --with-tune=generic"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
@@ -57,7 +58,6 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-threads \
                               --disable-libgomp \
                               --disable-libada \
-                              --disable-libmudflap \
                               --disable-libatomic \
                               --disable-libitm \
                               --disable-libquadmath \
@@ -84,6 +84,11 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
 
 pre_configure_host() {
   unset CPP
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-pipe||g"`
+}
+
+pre_configure_bootstrap() {
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-pipe||g"`
 }
 
 post_make_host() {

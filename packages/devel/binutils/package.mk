@@ -40,8 +40,6 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-relro \
                          --enable-version-specific-runtime-libs \
                          --enable-plugins \
-                         --with-threads \
-                         --with-pic \
                          --disable-nls \
                          --disable-gdb \
                          --disable-sim \
@@ -53,7 +51,7 @@ pre_configure_host() {
   unset CFLAGS
   unset CXXFLAGS
   unset LDFLAGS
-  export CFLAGS="-march=haswell -mtune=haswell -O2"
+  export CFLAGS="-O2 -pipe"
 }
 
 make_host() {
