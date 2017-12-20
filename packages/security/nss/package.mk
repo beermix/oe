@@ -24,6 +24,7 @@ PKG_ARCH="any"
 PKG_LICENSE="Mozilla Public License"
 PKG_SITE="https://ftp.mozilla.org/pub/security/nss/releases/"
 PKG_URL="https://ftp.mozilla.org/pub/security/nss/releases/NSS_3_34_1_RTM/src/nss-3.34.1-with-nspr-4.17.tar.gz"
+PKG_DEPENDS_HOST="nspr:host zlib:host"
 PKG_DEPENDS_TARGET="toolchain nss:host nspr zlib sqlite"
 PKG_SECTION="security"
 PKG_SHORTDESC="The Network Security Services (NSS) package is a set of libraries designed to support cross-platform development of security-enabled client and server applications"
@@ -35,25 +36,43 @@ MAKEFLAGS=-j1
 make_host() {
   cd $PKG_BUILD/nss
 
-  make USE_64=1 -C coreconf/nsinstall
+  make clean || true
+  rm -rf $PKG_BUILD/dist
+
+  make BUILD_OPT=1 USE_64=1 \
+     PREFIX=$TOOLCHAIN \
+     NSPR_INCLUDE_DIR=$TOOLCHAIN/include/nspr \
+     USE_SYSTEM_ZLIB=1 ZLIB_LIBS=-lz \
+     SKIP_SHLIBSIGN=1 \
+     NSS_TESTS="dummy" \
+     CC=$CC LDFLAGS="$LDFLAGS -L$TOOLCHAIN/lib" \
+     V=1
 }
 
 makeinstall_host() {
-  cp $PKG_BUILD/nss/coreconf/nsinstall/*/nsinstall $TOOLCHAIN/bin
-}
-
-post_makeinstall_host() {
-  rm -rf $PKG_BUILD/nss/coreconf/nsinstall/Linux*
+  cd $PKG_BUILD
+  $STRIP dist/Linux*/lib/*.so
+  cp -L dist/Linux*/lib/*.so $TOOLCHAIN/lib
+  cp -L dist/Linux*/lib/libcrmf.a $TOOLCHAIN/lib
+  mkdir -p $TOOLCHAIN/include/nss
+  cp -RL dist/{public,private}/nss/* $TOOLCHAIN/include/nss
+  cp -L dist/Linux*/lib/pkgconfig/nss.pc $TOOLCHAIN/lib/pkgconfig
+  cp -L nss/coreconf/nsinstall/*/nsinstall $TOOLCHAIN/bin
 }
 
 make_target() {
   cd $PKG_BUILD/nss
 
-  [ "$TARGET_ARCH" = "x86_64" ] && TARGET_USE_64="USE_64=1"
+  local TARGET_USE_64=""
+  [ "$TARGET_ARCH" = "x86_64" -o "$TARGET_ARCH" = "aarch64" ] && TARGET_USE_64="USE_64=1"
+
+  make clean || true
+  rm -rf $PKG_BUILD/dist
 
   make BUILD_OPT=1 $TARGET_USE_64 \
      NSS_USE_SYSTEM_SQLITE=1 \
      NSPR_INCLUDE_DIR=$SYSROOT_PREFIX/usr/include/nspr \
+     NSS_USE_SYSTEM_SQLITE=1 \
      USE_SYSTEM_ZLIB=1 ZLIB_LIBS=-lz \
      SKIP_SHLIBSIGN=1 \
      OS_TEST=$TARGET_ARCH \
