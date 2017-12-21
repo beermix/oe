@@ -62,7 +62,7 @@ else
 fi
 
 if [ "$VDPAU_SUPPORT" = "yes" -a "$DISPLAYSERVER" = "x11" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libvdpau libglvnd"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libvdpau"
   MESA_VDPAU="--enable-vdpau"
 else
   MESA_VDPAU="--disable-vdpau"
