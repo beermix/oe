@@ -48,6 +48,8 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-system-zlib \
                            --disable-libsanitizer \
                            --disable-libmudflap \
+                           --disable-libquadmath \
+                           --disable-libada \
                            --with-tune=generic"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
@@ -56,10 +58,8 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-shared \
                               --disable-threads \
                               --disable-libgomp \
-                              --disable-libada \
                               --disable-libatomic \
                               --disable-libitm \
-                              --disable-libquadmath \
                               --without-headers \
                               --with-newlib \
                               --disable-decimal-float \
@@ -83,11 +83,13 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
 
 pre_configure_host() {
   unset CPP
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-pipe||g"`
+  CFLAGS="-O2 -I$TOOLCHAIN/include"
+  CXXFLAGS="$CFLAGS"
 }
 
 pre_configure_bootstrap() {
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-pipe||g"`
+  CFLAGS="-O2 -I$TOOLCHAIN/include"
+  CXXFLAGS="$CFLAGS"
 }
 
 post_make_host() {
