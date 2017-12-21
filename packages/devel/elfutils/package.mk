@@ -37,7 +37,7 @@ PKG_CONFIGURE_OPTS_TARGET="utrace_cv_cc_biarch=false \
                            --without-lzma"
 
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC -DPIC"
+  export CFLAGS="$CFLAGS -D_GNU_SOURCE -Wno-unused-result -Wno-format-nonliteral -fPIC -DPIC"
   strip_hard
 }
 

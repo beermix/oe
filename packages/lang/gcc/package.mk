@@ -48,7 +48,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-system-zlib \
                            --disable-libsanitizer \
                            --disable-libmudflap \
-                           --disable-libquadmath \
                            --disable-libada \
                            --with-tune=generic"
 
@@ -60,6 +59,7 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-libgomp \
                               --disable-libatomic \
                               --disable-libitm \
+                              --disable-libquadmath \
                               --without-headers \
                               --with-newlib \
                               --disable-decimal-float \
