@@ -51,7 +51,6 @@ pre_configure_host() {
   unset CFLAGS
   unset CXXFLAGS
   unset LDFLAGS
-  export CFLAGS="-O2 -pipe"
 }
 
 make_host() {

@@ -46,20 +46,21 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libssp \
                            --without-cuda-driver \
                            --with-system-zlib \
-                           --disable-libsanitizer \
                            --disable-libmudflap \
+                           --disable-libatomic \
+                           --disable-libitm \
+                           --disable-libquadmath \
+                           --disable-libgomp \
+                           --disable-libsanitizer \
                            --disable-libada \
                            --with-tune=generic"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
+                              --enable-cloog-backend=isl \
                               --disable-shared \
                               --disable-threads \
-                              --disable-libgomp \
-                              --disable-libatomic \
-                              --disable-libitm \
-                              --disable-libquadmath \
                               --without-headers \
                               --with-newlib \
                               --disable-decimal-float \
@@ -79,17 +80,11 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-libstdcxx-time \
                          --enable-clocale=gnu \
                          --enable-libatomic \
+                         --enable-libgomp \
                          $GCC_OPTS"
 
 pre_configure_host() {
   unset CPP
-  CFLAGS="-O2 -I$TOOLCHAIN/include"
-  CXXFLAGS="$CFLAGS"
-}
-
-pre_configure_bootstrap() {
-  CFLAGS="-O2 -I$TOOLCHAIN/include"
-  CXXFLAGS="$CFLAGS"
 }
 
 post_make_host() {
