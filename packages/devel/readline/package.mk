@@ -26,9 +26,9 @@ PKG_SECTION="devel"
 PKG_SHORTDESC="readline: The GNU Readline library provides a set of functions for use by applications that allow users to edit command lines as they are typed in."
 PKG_LONGDESC="The GNU Readline library provides a set of functions for use by applications that allow users to edit command lines as they are typed in."
 
-post_unpack() {
-  sed -i 's|-Wl,-rpath,$(libdir) ||g' $PKG_BUILD/support/shobj-conf
-}
+#post_unpack() {
+#  sed -i 's|-Wl,-rpath,$(libdir) ||g' $PKG_BUILD/support/shobj-conf
+#}
 
 pre_configure_target() {
   CFLAGS="$CFLAGS -fPIC"
