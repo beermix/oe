@@ -43,7 +43,6 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --disable-nls \
                          --disable-gdb \
                          --disable-sim \
-                         --with-system-zlib=$TOOLCHAIN \
                          --enable-poison-system-directories"
 
 pre_configure_host() {
@@ -51,7 +50,8 @@ pre_configure_host() {
   unset CFLAGS
   unset CXXFLAGS
   unset LDFLAGS
-  export CFLAGS="-O2 -pipe"
+  export CFLAGS="-O2"
+  export CXXFLAGS="-O2"
 }
 
 make_host() {
