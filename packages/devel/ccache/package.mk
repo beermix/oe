@@ -31,6 +31,10 @@ PKG_LONGDESC="Ccache is a compiler cache. It speeds up re-compilation of C/C++ c
 export CC=$LOCAL_CC
 export CXX=$LOCAL_CXX
 
+export CFLAGS="-mtune=generic -O3 -pipe -Wall"
+export CXXFLAGS="$CFLAGS"
+export LDFLAGS="-Wl,-O1,-z,relro,-z,now -s"
+
 PKG_CONFIGURE_OPTS_HOST="--with-bundled-zlib"
 
 post_makeinstall_host() {

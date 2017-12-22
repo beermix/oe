@@ -30,7 +30,8 @@ PKG_LONGDESC="The 'make' utility automatically determines which pieces of a larg
 
 export CC=$LOCAL_CC
 
-export CFLAGS="-march=x86-64 -mtune=generic -O2 -pipe"
+export CFLAGS="-mtune=generic -O3 -pipe -Wall"
+export CXXFLAGS="$CFLAGS"
 export LDFLAGS="-Wl,-O1,-z,relro,-z,now -s"
 
 PKG_CONFIGURE_OPTS_HOST="--without-guile"
