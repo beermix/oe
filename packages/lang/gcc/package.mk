@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="bce1ab0"
+PKG_VERSION="ddc2766"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/gcc-mirror/gcc/tree/gcc-7-branch"
@@ -45,6 +45,8 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --without-cloog \
                            --disable-libmpx \
                            --disable-libssp \
+                           --disable-libsanitizer \
+                           --disable-libada \
                            --without-cuda-driver \
                            --with-tune=generic"
 
@@ -57,8 +59,6 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-libitm \
                               --disable-libquadmath \
                               --disable-libgomp \
-                              --disable-libsanitizer \
-                              --disable-libada \
                               --disable-shared \
                               --disable-threads \
                               --without-headers \
