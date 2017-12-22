@@ -17,12 +17,11 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="7-20171221"
+PKG_VERSION="bce1ab0"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/$PKG_VERSION/gcc-$PKG_VERSION.tar.xz"
-PKG_SITE="https://github.com/gcc-mirror/gcc/tree/gcc-7-branch"
-#PKG_URL="https://github.com/gcc-mirror/gcc/archive/$PKG_VERSION.tar.gz"
+PKG_SITE="http://gcc.gnu.org/"
+PKG_URL="https://github.com/gcc-mirror/gcc/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host zlib:host"
 PKG_DEPENDS_TARGET="gcc:host"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host zlib:host glibc"
@@ -40,31 +39,28 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-gnu-ld \
                            --enable-plugin \
                            --disable-multilib \
-                           --disable-nls \
                            --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
                            --without-ppl \
                            --without-cloog \
                            --disable-libmpx \
-                           --disable-libsanitizer \
                            --disable-libssp \
                            --without-cuda-driver \
-                           --disable-werror \
                            --with-system-zlib \
-                           --with-tune=generic \
-                           MAKEINFO=missing"
+                           --disable-libsanitizer \
+                           --disable-libmudflap \
+                           --disable-libquadmath \
+                           --disable-libada \
+                           --with-tune=generic"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
-                              --disable-libatomic \
-                              --disable-libquadmath \
-                              --disable-libmudflap \
-                              --disable-libada \
-                              --disable-libgomp \
-                              --disable-libitm \
                               --disable-shared \
                               --disable-threads \
+                              --disable-libgomp \
+                              --disable-libatomic \
+                              --disable-libitm \
                               --without-headers \
                               --with-newlib \
                               --disable-decimal-float \
@@ -81,14 +77,20 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-long-long \
                          --enable-threads=posix \
                          --disable-libstdcxx-pch \
-                         --enable-libstdcxx-time=yes \
+                         --enable-libstdcxx-time \
                          --enable-clocale=gnu \
                          --enable-libatomic \
-                         --enable-libgomp \
                          $GCC_OPTS"
 
 pre_configure_host() {
   unset CPP
+  CFLAGS="-O2 -I$TOOLCHAIN/include"
+  CXXFLAGS="$CFLAGS"
+}
+
+pre_configure_bootstrap() {
+  CFLAGS="-O2 -I$TOOLCHAIN/include"
+  CXXFLAGS="$CFLAGS"
 }
 
 post_make_host() {

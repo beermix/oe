@@ -23,14 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.X.org"
 PKG_URL="http://xorg.freedesktop.org/archive/individual/lib/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_TARGET="util-macros xproto"
+PKG_DEPENDS_TARGET="toolchain util-macros xproto"
 PKG_SECTION="x11/lib"
 PKG_SHORTDESC="libxshmfence: Shared memory 'SyncFence' synchronization primitive."
 PKG_LONGDESC="libxshmfence is the Shared memory 'SyncFence' synchronization primitive."
-#PKG_TOOLCHAIN="autotools"
-
-PKG_CONFIGURE_OPTS_TARGET="--enable-futex"
-
-#pre_configure_target() {
-#  CFLAGS="$CFLAGS -fPIC -DPIC"
-#}

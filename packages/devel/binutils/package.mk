@@ -40,8 +40,10 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-relro \
                          --enable-version-specific-runtime-libs \
                          --enable-plugins \
-                         --with-pic \
                          --disable-nls \
+                         --disable-gdb \
+                         --disable-sim \
+                         --with-system-zlib=$TOOLCHAIN \
                          --enable-poison-system-directories"
 
 pre_configure_host() {
@@ -49,8 +51,7 @@ pre_configure_host() {
   unset CFLAGS
   unset CXXFLAGS
   unset LDFLAGS
-#  export CFLAGS="-O2 -pipe"
-#  export CXXFLAGS="-O2 -pipe"
+  export CFLAGS="-O2 -pipe"
 }
 
 make_host() {
