@@ -28,7 +28,7 @@ pre_configure_host() {
 
 configure_host() {
   cd $PKG_BUILD/.$HOST_NAME
-  sed -i -e '/^"linux-x86_64"/ s/-m64 -DL_ENDIAN -O3 -Wall/-m64 -DL_ENDIAN -Wall/' $PKG_BUILD/.$HOST_NAME/Configure
+  sed -i -e '/^"linux-x86_64"/ s/-m64 -DL_ENDIAN -O3 -Wall/-m64 -DL_ENDIAN -Wall -fomit-frame-pointer/' $PKG_BUILD/.$HOST_NAME/Configure
   ./Configure --prefix=/ $PKG_CONFIGURE_OPTS_SHARED no-static-engine linux-x86_64 $CFLAGS $LDFLAGS
 #  MAKEFLAGS=-j1
 }
@@ -49,7 +49,7 @@ pre_configure_target() {
   mkdir -p $PKG_BUILD/.$TARGET_NAME
   cp -a $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME/
   
-  sed -i -e '/^"linux-x86_64"/ s/-m64 -DL_ENDIAN -O3 -Wall/-m64 -DL_ENDIAN -Wall/' $PKG_BUILD/.$TARGET_NAME/Configure
+  sed -i -e '/^"linux-x86_64"/ s/-m64 -DL_ENDIAN -O3 -Wall/-m64 -DL_ENDIAN -Wall -fomit-frame-pointer/' $PKG_BUILD/.$TARGET_NAME/Configure
   CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
   CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3|"`
   strip_lto
