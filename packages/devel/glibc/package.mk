@@ -113,7 +113,7 @@ pre_configure_target() {
   unset LD_LIBRARY_PATH
 
   # set some CFLAGS we need
-  export CFLAGS="$CFLAGS"
+  export CFLAGS="-mtune=generic -O2"
   export CPPFLAGS=""
   export CXXFLAGS="$CFLAGS"
 
