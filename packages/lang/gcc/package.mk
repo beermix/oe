@@ -17,11 +17,12 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="ddc2766"
+PKG_VERSION="7-20171221"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
+PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/$PKG_VERSION/gcc-$PKG_VERSION.tar.xz"
 PKG_SITE="https://github.com/gcc-mirror/gcc/tree/gcc-7-branch"
-PKG_URL="https://github.com/gcc-mirror/gcc/archive/$PKG_VERSION.tar.gz"
+#PKG_URL="https://github.com/gcc-mirror/gcc/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host zlib:host"
 PKG_DEPENDS_TARGET="gcc:host"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host zlib:host glibc"
@@ -34,6 +35,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-gmp=$TOOLCHAIN \
                            --with-mpfr=$TOOLCHAIN \
                            --with-mpc=$TOOLCHAIN \
+                           --with-isl=$TOOLCHAIN \
                            --with-gnu-as \
                            --with-gnu-ld \
                            --enable-plugin \
@@ -44,21 +46,23 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --without-ppl \
                            --without-cloog \
                            --disable-libmpx \
-                           --disable-libssp \
                            --disable-libsanitizer \
-                           --disable-libada \
+                           --disable-libssp \
                            --without-cuda-driver \
-                           --with-tune=generic"
+                           --disable-werror \
+                           --with-system-zlib \
+                           --with-tune=generic \
+                           MAKEINFO=missing"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
-                              --enable-cloog-backend=isl \
-                              --disable-libmudflap \
                               --disable-libatomic \
-                              --disable-libitm \
                               --disable-libquadmath \
+                              --disable-libmudflap \
+                              --disable-libada \
                               --disable-libgomp \
+                              --disable-libitm \
                               --disable-shared \
                               --disable-threads \
                               --without-headers \
@@ -77,7 +81,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-long-long \
                          --enable-threads=posix \
                          --disable-libstdcxx-pch \
-                         --enable-libstdcxx-time \
+                         --enable-libstdcxx-time=yes \
                          --enable-clocale=gnu \
                          --enable-libatomic \
                          --enable-libgomp \
