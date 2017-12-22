@@ -113,7 +113,7 @@ pre_configure_target() {
   unset LD_LIBRARY_PATH
 
   # set some CFLAGS we need
-  export CFLAGS="$CFLAGS -g1"
+  export CFLAGS="$CFLAGS -fno-asynchronous-unwind-tables"
   export CPPFLAGS=""
   export CXXFLAGS="$CFLAGS"
 
