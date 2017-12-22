@@ -86,14 +86,14 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
 
 pre_configure_host() {
   unset CPP
-  CFLAGS="-O2 -I$TOOLCHAIN/include"
-  CXXFLAGS="$CFLAGS"
+#  CFLAGS="-O2 -I$TOOLCHAIN/include"
+#  CXXFLAGS="$CFLAGS"
 }
 
-pre_configure_bootstrap() {
-  CFLAGS="-O2 -I$TOOLCHAIN/include"
-  CXXFLAGS="$CFLAGS"
-}
+#pre_configure_bootstrap() {
+#  CFLAGS="-O2 -I$TOOLCHAIN/include"
+#  CXXFLAGS="$CFLAGS"
+#}
 
 post_make_host() {
   # fix wrong link
