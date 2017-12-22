@@ -41,8 +41,6 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-version-specific-runtime-libs \
                          --enable-plugins \
                          --disable-nls \
-                         --disable-gdb \
-                         --disable-sim \
                          --enable-poison-system-directories"
 
 pre_configure_host() {
