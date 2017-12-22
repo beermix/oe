@@ -82,6 +82,7 @@ pre_configure_target() {
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong -D_FORTIFY_SOURCE=2||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-pipe||g"`
+  export CFLAGS=`echo $CFLAGS | sed -e "s|--param l1-cache-line-size=64 --param l1-cache-size=32 --param l2-cache-size=3072||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fno-plt||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fno-caller-saves||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-pipe -fno-caller-saves -fno-plt||g"`
@@ -114,7 +115,7 @@ pre_configure_target() {
   unset LD_LIBRARY_PATH
 
   # set some CFLAGS we need
-  export CFLAGS="-mtune=generic -O2"
+  export CFLAGS="-march=westmere -g -O2"
   export CPPFLAGS=""
   export CXXFLAGS="$CFLAGS"
 
