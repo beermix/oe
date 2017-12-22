@@ -29,11 +29,13 @@ PKG_LONGDESC="Small build system with a focus on speed"
 PKG_TOOLCHAIN="manual"
 
 make_host() {
-  export LDFLAGS=-s
-  python2 configure.py --bootstrap
+  export LDFLAGS="-s"
+  export CFLAGS="-mtune=generic -O2 -pipe"
+  CXX=/usr/bin/clang++ ./configure.py --bootstrap
 }
 
 makeinstall_host() {
+#  strip ninja
   cp ninja $TOOLCHAIN/bin/
 #  cp $PKG_DIR/ninja $TOOLCHAIN/bin/
 }
