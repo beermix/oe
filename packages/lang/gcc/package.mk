@@ -40,6 +40,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-plugin \
                            --disable-multilib \
                            --enable-checking=release \
+                           --disable-nls \
                            --with-default-libstdcxx-abi=gcc4-compatible \
                            --without-ppl \
                            --without-cloog \
@@ -51,7 +52,8 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libmudflap \
                            --disable-libquadmath \
                            --disable-libada \
-                           --with-tune=generic"
+                           --with-tune=generic \
+                           gcc_cv_libc_provides_ssp=yes"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
