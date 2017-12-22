@@ -31,7 +31,7 @@ PKG_TOOLCHAIN="manual"
 make_host() {
   export LDFLAGS="-s"
   export CFLAGS="-mtune=generic -O2 -pipe"
-  CXX=/usr/bin/clang++ ./configure.py --bootstrap
+  CXX=/usr/bin/clang++ python2 ./configure.py --bootstrap
 }
 
 makeinstall_host() {
