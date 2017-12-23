@@ -6,18 +6,19 @@ fi
 
 # set default language for buildsystem
   export LC_ALL=C
+  
+  export CCACHE_DISABLE=true
 
   export CCACHE_OPTIONS="--zero-stats"
   export CCACHE_COMPILERCHECK=mtime
   export CCACHE_CPP2=false
 #  export CCACHE_COMPRESS=true
 #  export CCACHE_COMPRESSLEVEL=5
-#  export CCACHE_DISABLE=true
 
 # determines DISTRO, if not forced by user
 # default is LibreELEC
 if [ -z "$DISTRO" ]; then
-  DISTRO="LibreELEC"
+  DISTRO="OE"
 else
   DISTRO="$DISTRO"
 fi
