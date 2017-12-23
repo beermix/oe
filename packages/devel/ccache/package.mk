@@ -31,6 +31,8 @@ PKG_LONGDESC="Ccache is a compiler cache. It speeds up re-compilation of C/C++ c
 export CC=$LOCAL_CC
 export CXX=$LOCAL_CXX
 
+export CFLAGS=`echo $CFLAGS | sed -e "s|-fdiagnostics-color=always||g"`
+
 export CFLAGS="-mtune=haswell -O3 -pipe -Wall"
 export CXXFLAGS="$CFLAGS"
 export LDFLAGS="-Wl,-O1,-z,relro,-z,now -s"
