@@ -34,8 +34,6 @@ export CXX=$LOCAL_CXX
 export CFLAGS=`echo $CFLAGS | sed -e "s|-fdiagnostics-color=always||g"`
 
 export CFLAGS="-mtune=haswell -O3 -pipe -Wall"
-export CXXFLAGS="$CFLAGS"
-export LDFLAGS="-Wl,-O1,-z,relro,-z,now -s"
 
 PKG_CONFIGURE_OPTS_HOST="--with-bundled-zlib"
 

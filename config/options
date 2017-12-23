@@ -18,7 +18,7 @@ export CCACHE_DISABLE=true
 # determines DISTRO, if not forced by user
 # default is LibreELEC
 if [ -z "$DISTRO" ]; then
-  DISTRO="OE"
+  DISTRO="LibreELEC"
 else
   DISTRO="$DISTRO"
 fi
