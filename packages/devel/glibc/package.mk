@@ -116,7 +116,7 @@ pre_configure_target() {
   unset LD_LIBRARY_PATH
 
   # set some CFLAGS we need
-  export CFLAGS="-mtune=westmere -g -O3 -fno-asynchronous-unwind-tables"
+  export CFLAGS="-mtune=westmere -g -O3 -pipe -fno-asynchronous-unwind-tables"
 
   export BUILD_CC=$HOST_CC
   export OBJDUMP_FOR_HOST=objdump
@@ -192,7 +192,7 @@ post_makeinstall_target() {
     ln -sf ld.so $INSTALL/usr/lib/ld-linux.so.3
   fi
 
-  $STRIP $INSTALL/usr/lib
+  debug_strip $INSTALL/usr/lib
 }
 
 configure_init() {
