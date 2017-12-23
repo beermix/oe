@@ -1,4 +1,4 @@
-GCC_OPTIM="-march=westmere -mno-aes -mno-pclmul --param l1-cache-line-size=64 --param l1-cache-size=32 --param l2-cache-size=3072 -O2 -pipe -fomit-frame-pointer"
+GCC_OPTIM="-O2 -pipe --param l1-cache-line-size=64 --param l1-cache-size=32 --param l2-cache-size=3072 -fomit-frame-pointer"
 LD_OPTIM="-Wl,-O1,--as-needed"
 
 if [ "$LTO_SUPPORT" = yes ];then
@@ -18,7 +18,7 @@ TARGET_LIBDIR="$SYSROOT_PREFIX/lib $SYSROOT_PREFIX/usr/lib"
 TARGET_INCDIR="$SYSROOT_PREFIX/include $SYSROOT_PREFIX/usr/include"
 
 HOST_CPPFLAGS=""
-HOST_CFLAGS="-O2 -I$TOOLCHAIN/include"
+HOST_CFLAGS="-O2 -pipe -I$TOOLCHAIN/include"
 HOST_CXXFLAGS="$HOST_CFLAGS"
 HOST_LDFLAGS="-Wl,-rpath,$TOOLCHAIN/lib -L$TOOLCHAIN/lib"
 HOST_INCDIR="$TOOLCHAIN/include /usr/include"

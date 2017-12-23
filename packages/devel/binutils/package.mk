@@ -50,8 +50,6 @@ pre_configure_host() {
   unset CFLAGS
   unset CXXFLAGS
   unset LDFLAGS
-#  export CFLAGS="-O2"
-#  export CXXFLAGS="-O2"
 }
 
 make_host() {

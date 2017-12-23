@@ -52,8 +52,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libmudflap \
                            --disable-libquadmath \
                            --disable-libada \
-                           --with-tune=generic \
-                           gcc_cv_libc_provides_ssp=yes"
+                           --with-tune=generic"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
@@ -86,14 +85,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
 
 pre_configure_host() {
   unset CPP
-#  CFLAGS="-O2 -I$TOOLCHAIN/include"
-#  CXXFLAGS="$CFLAGS"
 }
-
-#pre_configure_bootstrap() {
-#  CFLAGS="-O2 -I$TOOLCHAIN/include"
-#  CXXFLAGS="$CFLAGS"
-#}
 
 post_make_host() {
   # fix wrong link
