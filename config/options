@@ -13,7 +13,7 @@ fi
 #  export CCACHE_COMPILERCHECK=mtime
   export CCACHE_CPP2=false
   export CCACHE_COMPRESS=true
-  export CCACHE_COMPRESSLEVEL=9
+  export CCACHE_COMPRESSLEVEL=5
 
   
 # determines DISTRO, if not forced by user
