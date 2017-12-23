@@ -5,7 +5,7 @@ PKG_VERSION="5.3.28.NC"
 #PKG_VERSION="6.2.32.NC"
 PKG_URL="http://download.oracle.com/berkeley-db/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
-
+PKG_TOOLCHAIN="configure"
 
 PKG_CONFIGURE_SCRIPT="dist/configure"
 

@@ -36,6 +36,9 @@ PKG_CONFIGURE_OPTS_HOST="--disable-shared --enable-static \
                          --enable-lzma-links \
                          --enable-silent-rules \
                          --disable-scripts \
-                         --disable-nls"
+                         --disable-nls --enable-threads  --with-pic"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-doc --enable-threads --disable-shared --with-pic --enable-silent-rules --disable-nls"
+PKG_CONFIGURE_OPTS_TARGET="--disable-doc \
+			      --enable-threads \
+			      --disable-shared \
+			      --with-pic"

@@ -40,7 +40,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-plugin \
                            --disable-multilib \
                            --enable-checking=release \
-                           --disable-nls \
                            --with-default-libstdcxx-abi=gcc4-compatible \
                            --without-ppl \
                            --without-cloog \
@@ -50,8 +49,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-system-zlib \
                            --disable-libsanitizer \
                            --disable-libmudflap \
-                           --disable-libquadmath \
-                           --disable-libada \
                            --with-tune=generic"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
@@ -60,8 +57,10 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-shared \
                               --disable-threads \
                               --disable-libgomp \
+                              --disable-libada \
                               --disable-libatomic \
                               --disable-libitm \
+                              --disable-libquadmath \
                               --without-headers \
                               --with-newlib \
                               --disable-decimal-float \

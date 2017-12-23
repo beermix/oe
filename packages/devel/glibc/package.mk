@@ -43,7 +43,6 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/bash \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
                            --enable-kernel=3.2.0 \
-                           --enable-tunables \
                            --without-cvs \
                            --without-gd \
                            --enable-obsolete-rpc \
@@ -51,9 +50,6 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/bash \
                            --disable-build-nscd \
                            --disable-nscd \
                            --enable-lock-elision \
-                           --disable-werror \
-                           --without-selinux \
-                           --disable-nss-crypt \
                            --disable-timezone-tools"
 
 if [ "$DEBUG" = yes ]; then
@@ -118,9 +114,7 @@ pre_configure_target() {
   unset LD_LIBRARY_PATH
 
   # set some CFLAGS we need
-  export CFLAGS="-mtune=westmere -g -O3 -fno-asynchronous-unwind-tables"
-  export CPPFLAGS=""
-  export CXXFLAGS="$CFLAGS"
+  export CFLAGS="-mtune=westmere -g -O2 -fno-asynchronous-unwind-tables"
 
   export BUILD_CC=$HOST_CC
   export OBJDUMP_FOR_HOST=objdump
@@ -130,9 +124,6 @@ libc_cv_forced_unwind=yes
 libc_cv_c_cleanup=yes
 libc_cv_ssp=no
 libc_cv_ssp_strong=no
-libc_cv_gnu99_inline=yes
-libc_cv_initfini_array=yes
-libc_cv_cc_with_libunwind=yes
 libc_cv_slibdir=/usr/lib
 EOF
 
@@ -147,7 +138,7 @@ GLIBC_INCLUDE_BIN="getent ldd locale"
 
 post_makeinstall_target() {
 # xlocale.h was renamed - create symlink for compatibility
-  ln -sf $SYSROOT_PREFIX/usr/include/bits/types/__locale_t.h $SYSROOT_PREFIX/usr/include/xlocale.h
+#  ln -sf $SYSROOT_PREFIX/usr/include/bits/types/__locale_t.h $SYSROOT_PREFIX/usr/include/xlocale.h
 
 # we are linking against ld.so, so symlink
   ln -sf $(basename $INSTALL/usr/lib/ld-*.so) $INSTALL/usr/lib/ld.so
