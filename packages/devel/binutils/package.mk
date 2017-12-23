@@ -41,7 +41,8 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-version-specific-runtime-libs \
                          --enable-plugins \
                          --disable-nls \
-                         --enable-ld=default \
+                         --disable-gdb \
+                         --disable-sim \
                          --with-system-zlib=$TOOLCHAIN \
                          --enable-poison-system-directories"
 
