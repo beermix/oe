@@ -50,6 +50,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/bash \
                            --disable-build-nscd \
                            --disable-nscd \
                            --enable-lock-elision \
+                           --disable-werror \
                            --disable-timezone-tools"
 
 if [ "$DEBUG" = yes ]; then
@@ -114,7 +115,7 @@ pre_configure_target() {
   unset LD_LIBRARY_PATH
 
   # set some CFLAGS we need
-  export CFLAGS="-mtune=westmere -g -O2 -fno-asynchronous-unwind-tables"
+  export CFLAGS="-mtune=westmere -g -O3 -fno-asynchronous-unwind-tables"
 
   export BUILD_CC=$HOST_CC
   export OBJDUMP_FOR_HOST=objdump
@@ -185,10 +186,12 @@ post_makeinstall_target() {
     cp $PKG_DIR/config/nsswitch-target.conf $INSTALL/etc/nsswitch.conf
     cp $PKG_DIR/config/host.conf $INSTALL/etc
     cp $PKG_DIR/config/gai.conf $INSTALL/etc
-
+    
   if [ "$TARGET_ARCH" = "arm" -a "$TARGET_FLOAT" = "hard" ]; then
     ln -sf ld.so $INSTALL/usr/lib/ld-linux.so.3
   fi
+  
+  debug_strip $INSTALL/usr/lib
 }
 
 configure_init() {
@@ -219,8 +222,4 @@ post_makeinstall_init() {
 # create default configs
   mkdir -p $INSTALL/etc
     cp $PKG_DIR/config/nsswitch-init.conf $INSTALL/etc/nsswitch.conf
-}
-
-post_makeinstall_target() {
-  debug_strip $INSTALL/usr/lib
 }

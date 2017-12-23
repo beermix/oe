@@ -30,10 +30,6 @@ PKG_LONGDESC="The 'make' utility automatically determines which pieces of a larg
 
 export CC=$LOCAL_CC
 
-export CFLAGS="-mtune=haswell -O2 -pipe -Wall"
-export CXXFLAGS="$CFLAGS"
-export LDFLAGS="-Wl,-O1,-z,relro,-z,now -s"
-
 PKG_CONFIGURE_OPTS_HOST="--without-guile"
 
 post_makeinstall_host() {
