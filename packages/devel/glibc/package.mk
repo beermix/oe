@@ -190,7 +190,7 @@ post_makeinstall_target() {
     ln -sf ld.so $INSTALL/usr/lib/ld-linux.so.3
   fi
 
-  debug_strip $INSTALL/usr/lib
+  $STRIP $INSTALL/usr/lib
 }
 
 configure_init() {
