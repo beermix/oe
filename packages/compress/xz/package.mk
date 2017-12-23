@@ -34,11 +34,12 @@ PKG_CONFIGURE_OPTS_HOST="--disable-shared --enable-static \
                          --disable-lzmadec \
                          --disable-lzmainfo \
                          --enable-lzma-links \
-                         --enable-silent-rules \
                          --disable-scripts \
-                         --disable-nls --enable-threads  --with-pic"
+                         --disable-nls \
+                         --disable-doc"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-doc \
 			      --enable-threads \
 			      --disable-shared \
-			      --with-pic"
+			      --with-pic \
+			      --disable-doc"
