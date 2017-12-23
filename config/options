@@ -11,6 +11,7 @@ fi
 
   export CCACHE_OPTIONS="--zero-stats"
   export CCACHE_COMPILERCHECK=content
+  export CCACHE_CPP2=false
 
 # determines DISTRO, if not forced by user
 # default is LibreELEC
