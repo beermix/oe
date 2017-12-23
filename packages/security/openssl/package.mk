@@ -2,7 +2,7 @@ PKG_NAME="openssl"
 PKG_VERSION="1.0.2n"
 PKG_URL="https://www.openssl.org/source/openssl-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain yasm:host pcre zlib gmp"
+PKG_DEPENDS_TARGET="toolchain yasm:host pcre zlib"
 PKG_SECTION="security"
 PKG_SHORTDESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"
 PKG_LONGDESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"
@@ -50,8 +50,8 @@ pre_configure_target() {
   cp -a $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME/
   
   sed -i -e '/^"linux-x86_64"/ s/-m64 -DL_ENDIAN -O3 -Wall/-m64 -DL_ENDIAN -Wall/' $PKG_BUILD/.$TARGET_NAME/Configure
-  CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
-  CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3|"`
+#  CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
+#  CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3|"`
   strip_lto
   strip_gold
 }
