@@ -18,7 +18,7 @@
 
 PKG_NAME="util-linux"
 PKG_VERSION="2.31.1"
-PKG_SHA256="f9be7cdcf4fc5c5064a226599acdda6bdf3d86c640152ba01ea642d91108dc8a"
+PKG_SHA256="37c05b551432c713b8e555f2be674e714d7dce765eff6d388277e0438e60daa9"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_URL="https://github.com/karelzak/util-linux/archive/v${PKG_VERSION}.tar.gz"
@@ -59,7 +59,8 @@ UTILLINUX_CONFIG_DEFAULT="--disable-gtk-doc \
                           --without-systemd \
                           --without-smack \
                           --without-python \
-                          --without-systemdsystemunitdir"
+                          --without-systemdsystemunitdir \
+                          --disable-makeinstall-chown"
 
 PKG_CONFIGURE_OPTS_TARGET="$UTILLINUX_CONFIG_DEFAULT \
                            --enable-libuuid \
