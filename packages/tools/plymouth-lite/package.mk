@@ -43,16 +43,16 @@ makeinstall_init() {
     cp ply-image $INSTALL/usr/bin
 
   mkdir -p $INSTALL/splash
-    if [ -f $PROJECT_DIR/$PROJECT/splash/splash.conf ]; then
-      cp $PROJECT_DIR/$PROJECT/splash/splash.conf $INSTALL/splash
-      cp $PROJECT_DIR/$PROJECT/splash/*.png $INSTALL/splash
-    elif ls $PROJECT_DIR/$PROJECT/splash/splash-*.png 1>/dev/null 2>&1; then
-      cp $PROJECT_DIR/$PROJECT/splash/splash-*.png $INSTALL/splash
-    elif [ -f $DISTRO_DIR/$DISTRO/splash/splash.conf ]; then
-      cp $DISTRO_DIR/$DISTRO/splash/splash.conf $INSTALL/splash
-      cp $DISTRO_DIR/$DISTRO/splash/*.png $INSTALL/splash
-    elif ls $DISTRO_DIR/$DISTRO/splash/splash-*.png 1>/dev/null 2>&1; then
-      cp $DISTRO_DIR/$DISTRO/splash/splash-*.png $INSTALL/splash
+    if [ -f distributions/LibreELEC/splash/splash.conf ]; then
+      cp distributions/LibreELEC/splash/splash.conf $INSTALL/splash
+      cp distributions/LibreELEC/splash/*.png $INSTALL/splash
+    elif ls distributions/LibreELEC/splash/splash-*.png 1>/dev/null 2>&1; then
+      cp distributions/LibreELEC/splash/splash-*.png $INSTALL/splash
+    elif [ -f distributions/LibreELEC/splash/splash.conf ]; then
+      cp distributions/LibreELEC/splash/splash.conf $INSTALL/splash
+      cp distributions/LibreELEC/splash/*.png $INSTALL/splash
+    elif ls distributions/LibreELEC/splash/splash-*.png 1>/dev/null 2>&1; then
+      cp distributions/LibreELEC/splash/splash-*.png $INSTALL/splash
     else
       cp $PKG_DIR/splash/splash-*.png $INSTALL/splash
     fi
