@@ -5,4 +5,5 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="network"
 PKG_TOOLCHAIN="configure"
 
-PKG_CONFIGURE_OPTS_TARGET="--without-selinux --disable-debug --enable-threads=posix"
+PKG_CONFIGURE_OPTS_TARGET="--without-selinux --disable-debug"
+PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
