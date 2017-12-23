@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="qemu"
-PKG_VERSION="2.11.0"
-#PKG_SHA256="018e4c7ed22c220395cf41f835d01505e49d0e579a548bd3d72b03809442bbcd"
+PKG_VERSION="2.10.1"
+PKG_SHA256="8e040bc7556401ebb3a347a8f7878e9d4028cf71b2744b1a1699f4e741966ba8"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://wiki.qemu.org"
