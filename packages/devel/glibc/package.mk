@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="glibc"
-PKG_VERSION="633e2f7"
+PKG_VERSION="98f244e"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/bminor/glibc/tree/release/2.26/master"
@@ -127,7 +127,6 @@ libc_cv_forced_unwind=yes
 libc_cv_c_cleanup=yes
 libc_cv_ssp=no
 libc_cv_ssp_strong=no
-ac_cv_header_cpuid_h=yes
 libc_cv_gnu99_inline=yes
 libc_cv_initfini_array=yes
 libc_cv_slibdir=/usr/lib
