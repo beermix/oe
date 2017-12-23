@@ -11,7 +11,8 @@ else
   TARGET_LDFLAGS="$TARGET_LDFLAGS"
 fi
 
-CCACHE_FLAGS="-fdiagnostics-color=always -fsanitize=undefined"
+CCACHE_FLAGS="-fdiagnostics-color=auto"
+#CCACHE_FLAGS="-fdiagnostics-color=always -fsanitize=undefined"
 
 TARGET_CPPFLAGS=
 TARGET_CFLAGS="$TARGET_CFLAGS $GCC_OPTIM $PROJECT_CFLAGS $CCACHE_FLAGS"
