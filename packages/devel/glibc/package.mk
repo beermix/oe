@@ -13,7 +13,7 @@
 #  GNU General Public License for more details.
 #
 #  You should have received a copy of the GNU General Public License
-#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.  --disable-werror
+#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
 PKG_NAME="glibc"
@@ -43,6 +43,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/bash \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
                            --enable-kernel=3.2.0 \
+                           --enable-tunables \
                            --without-cvs \
                            --without-gd \
                            --enable-obsolete-rpc \
@@ -50,6 +51,9 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/bash \
                            --disable-build-nscd \
                            --disable-nscd \
                            --enable-lock-elision \
+                           --disable-werror \
+                           --without-selinux \
+                           --disable-nss-crypt \
                            --disable-timezone-tools"
 
 if [ "$DEBUG" = yes ]; then
@@ -81,7 +85,6 @@ pre_configure_target() {
 # Filter out some problematic *FLAGS
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong -D_FORTIFY_SOURCE=2||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong||g"`
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-pipe||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|--param l1-cache-line-size=64 --param l1-cache-size=32 --param l2-cache-size=3072||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fno-plt||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fno-caller-saves||g"`
@@ -115,7 +118,7 @@ pre_configure_target() {
   unset LD_LIBRARY_PATH
 
   # set some CFLAGS we need
-  export CFLAGS="-march=westmere -g -O2 -fno-asynchronous-unwind-tables"
+  export CFLAGS="-mtune=westmere -g -O3 -fno-asynchronous-unwind-tables"
   export CPPFLAGS=""
   export CXXFLAGS="$CFLAGS"
 
@@ -129,6 +132,7 @@ libc_cv_ssp=no
 libc_cv_ssp_strong=no
 libc_cv_gnu99_inline=yes
 libc_cv_initfini_array=yes
+libc_cv_cc_with_libunwind=yes
 libc_cv_slibdir=/usr/lib
 EOF
 
