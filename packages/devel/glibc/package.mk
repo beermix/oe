@@ -177,7 +177,7 @@ if [ "$GLIBC_LOCALES" = yes ]; then
   mkdir -p $INSTALL/etc/profile.d
   I18NPATH=../localedata 
   localedef -i ../localedata/locales/en_US -f ../localedata/charmaps/UTF-8 en_US.UTF-8 --prefix=$INSTALL
-  localedef -i ../localedata/locales/en_US -f ../localedata/charmaps/LC_CTYPE=ru_RU.UTF-8 --prefix=$INSTALL
+  localedef -i ../localedata/locales/en_US -f ../localedata/charmaps/UTF-8 ru_ru.utf-8 --prefix=$INSTALL
   echo "export LANG=en_US.UTF-8" > $INSTALL/etc/profile.d/01-locale.conf
 fi
 
