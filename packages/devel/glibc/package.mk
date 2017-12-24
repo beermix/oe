@@ -65,14 +65,14 @@ GLIBC_EXCLUDE_BIN="catchsegv gencat getconf iconv iconvconfig ldconfig"
 GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN makedb mtrace pcprofiledump"
 GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN pldd rpcgen sln sotruss sprof xtrace"
 
-post_patch() {
-  # Add patches from Clear Linux
-  if [ "$TARGET_ARCH" = "x86_64" ]; then
-    for file in $PKG_DIR/clear/*.patch; do
-      patch -p1 -d $PKG_BUILD < $file
-    done
-  fi
-}
+#post_patch() {
+#  # Add patches from Clear Linux
+#  if [ "$TARGET_ARCH" = "x86_64" ]; then
+#    for file in $PKG_DIR/clear/*.patch; do
+#      patch -p1 -d $PKG_BUILD < $file
+#    done
+#  fi
+#}
 
 pre_build_target() {
   cd $PKG_BUILD
