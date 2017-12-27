@@ -7,7 +7,7 @@ fi
 # set default language for buildsystem
   export LC_ALL=C
   
-#export CCACHE_DISABLE=true
+export CCACHE_DISABLE=true
 
 #export CCACHE_OPTIONS="--zero-stats"
 #export CCACHE_COMPILERCHECK=mtime
