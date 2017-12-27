@@ -49,17 +49,8 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --enable-obsolete-nsl \
                            --disable-build-nscd \
                            --disable-nscd \
-                           --disable-werror \
-                           --disable-timezone-tools \
-                           --disable-silent-rules \
-                           --disable-dependency-tracking \
-                           --enable-kernel=3.10 \
-                           --disable-debug \
-                           --enable-clocale=gnu \
-                           --without-selinux \
-                           --enable-lock-elision=yes \
-                           --enable-tunables \
-                           --enable-stack-protector=strong"
+                           --enable-lock-elision \
+                           --disable-timezone-tools"
 
 if [ "$DEBUG" = yes ]; then
   PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET --enable-debug"
@@ -125,10 +116,8 @@ pre_configure_target() {
   unset LD_LIBRARY_PATH
 
   # set some CFLAGS we need
-  export SOURCE_DATE_EPOCH=1484361909
-  export CFLAGS="-O3 -march=westmere -mtune=westmere -g -m64 -Wl,-z,max-page-size=0x1000 "
-  unset LDFLAGS
-  export LDFLAGS="-Wl,-z,max-page-size=0x1000 "
+#  export SOURCE_DATE_EPOCH=1484361909
+  export CFLAGS="-O2 -march=westmere -mtune=westmere -g -m64"
 
   export BUILD_CC=$HOST_CC
   export OBJDUMP_FOR_HOST=objdump
@@ -152,7 +141,7 @@ GLIBC_INCLUDE_BIN="getent ldd locale"
 
 post_makeinstall_target() {
 # xlocale.h was renamed - create symlink for compatibility
-  ln -sf $SYSROOT_PREFIX/usr/include/bits/types/__locale_t.h $SYSROOT_PREFIX/usr/include/xlocale.h
+#  ln -sf $SYSROOT_PREFIX/usr/include/bits/types/__locale_t.h $SYSROOT_PREFIX/usr/include/xlocale.h
 
 # we are linking against ld.so, so symlink
   ln -sf $(basename $INSTALL/usr/lib/ld-*.so) $INSTALL/usr/lib/ld.so
