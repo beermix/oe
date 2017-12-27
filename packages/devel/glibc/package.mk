@@ -64,6 +64,15 @@ GLIBC_EXCLUDE_BIN="catchsegv gencat getconf iconv iconvconfig ldconfig"
 GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN makedb mtrace pcprofiledump"
 GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN pldd rpcgen sln sotruss sprof xtrace"
 
+post_patch() {
+  # Add patches from Clear Linux
+  if [ "$TARGET_ARCH" = "x86_64" ]; then
+    for file in $PKG_DIR/clear/*.patch; do
+      patch -p1 -d $PKG_BUILD < $file
+    done
+  fi
+}
+
 pre_build_target() {
   cd $PKG_BUILD
     aclocal --force --verbose
@@ -170,7 +179,7 @@ if [ "$GLIBC_LOCALES" = yes ]; then
   mkdir -p $INSTALL/etc/profile.d
   I18NPATH=../localedata 
   localedef -i ../localedata/locales/en_US -f ../localedata/charmaps/UTF-8 en_US.UTF-8 --prefix=$INSTALL
-  localedef -i ../localedata/locales/en_US -f ../localedata/charmaps/UTF-8 ru_ru.utf-8 --prefix=$INSTALL
+  localedef -i ../localedata/locales/en_US -f ../localedata/charmaps/UTF-8 ru_RU.UTF-8 --prefix=$INSTALL
   echo "export LANG=en_US.UTF-8" > $INSTALL/etc/profile.d/01-locale.conf
 fi
 
