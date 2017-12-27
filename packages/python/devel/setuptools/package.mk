@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="setuptools"
-PKG_VERSION="38.2.4"
+PKG_VERSION="38.2.5"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://github.com/pypa/setuptools/releases"

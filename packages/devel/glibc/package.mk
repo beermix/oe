@@ -47,6 +47,8 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-__thread \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
+                           --enable-kernel=3.2.0 \
+                           --without-cvs \
                            --without-gd \
                            --enable-obsolete-rpc \
                            --enable-obsolete-nsl \
@@ -57,7 +59,6 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --disable-silent-rules \
                            --disable-dependency-tracking \
                            --enable-kernel=3.10 \
-                           --without-cvs \
                            --disable-debug \
                            --enable-clocale=gnu \
                            --without-selinux \
@@ -76,15 +77,6 @@ NSS_CONF_DIR="$PKG_BUILD/nss"
 GLIBC_EXCLUDE_BIN="catchsegv gencat getconf iconv iconvconfig ldconfig"
 GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN makedb mtrace pcprofiledump"
 GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN pldd rpcgen sln sotruss sprof xtrace"
-
-#post_patch() {
-#  # Add patches from Clear Linux
-#  if [ "$TARGET_ARCH" = "x86_64" ]; then
-#    for file in $PKG_DIR/clear/*.patch; do
-#      patch -p1 -d $PKG_BUILD < $file
-#    done
-#  fi
-#}
 
 pre_build_target() {
   cd $PKG_BUILD
@@ -138,7 +130,9 @@ pre_configure_target() {
   unset LD_LIBRARY_PATH
 
   # set some CFLAGS we need
-#  export CFLAGS="-mtune=westmere -g -O2 -fno-asynchronous-unwind-tables"
+  export CFLAGS="-O3 -march=westmere -mtune=westmere -g -m64  -Wl,-z,max-page-size=0x1000 "
+  unset LDFLAGS
+  export LDFLAGS="-Wl,-z,max-page-size=0x1000 "
 
   export BUILD_CC=$HOST_CC
   export OBJDUMP_FOR_HOST=objdump
@@ -158,10 +152,6 @@ echo "rootsbindir=/usr/bin" >> configparms
 echo "build-programs=yes" >> configparms
 
 GLIBC_INCLUDE_BIN="getent ldd locale"
-
-export CFLAGS="-O3 -march=westmere -mtune=westmere -g2 -m64  -Wl,-z,max-page-size=0x1000 "
-unset LDFLAGS
-export LDFLAGS="-Wl,-z,max-page-size=0x1000 "
 }
 
 post_makeinstall_target() {

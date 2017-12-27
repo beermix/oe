@@ -39,7 +39,9 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-gnu-ld \
                            --enable-plugin \
                            --disable-multilib \
+                           --disable-nls \
                            --enable-checking=release \
+                           --with-default-libstdcxx-abi=gcc4-compatible \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
@@ -81,9 +83,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-libstdcxx-time \
                          --enable-clocale=gnu \
                          --enable-libatomic \
-                         --enable-gnu-indirect-function \
-                         --disable-vtable-verify \
-                         --disable-libunwind-exceptions"
+                         $GCC_OPTS"
 
 pre_configure_host() {
   unset CPP
