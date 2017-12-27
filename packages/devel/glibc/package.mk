@@ -17,11 +17,12 @@
 ################################################################################
 
 PKG_NAME="glibc"
-PKG_VERSION="98f244e"
+PKG_VERSION="2.26"
+PKG_SHA256="e54e0a934cd2bc94429be79da5e9385898d2306b9eaf3c92d5a77af96190f6bd"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/bminor/glibc/tree/release/2.26/master"
-PKG_URL="https://github.com/bminor/glibc/archive/$PKG_VERSION.tar.gz"
+PKG_SITE="http://www.gnu.org/software/libc/"
+PKG_URL="http://ftp.gnu.org/pub/gnu/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap"
 PKG_DEPENDS_INIT="glibc"
 PKG_SECTION="toolchain/devel"
@@ -126,9 +127,9 @@ pre_configure_target() {
 
   # set some CFLAGS we need
 #  export SOURCE_DATE_EPOCH=1484361909
-#  export CFLAGS="-O2 -march=westmere -mtune=westmere -g -m64"
+  export CFLAGS="-O3 -march=westmere -mtune=westmere -g -m64"
 
-  export CFLAGS="$CFLAGS -g"
+#  export CFLAGS="$CFLAGS -g"
 
   export BUILD_CC=$HOST_CC
   export OBJDUMP_FOR_HOST=objdump
@@ -193,7 +194,7 @@ fi
     ln -sf ld.so $INSTALL/usr/lib/ld-linux.so.3
   fi
 
-#  debug_strip $INSTALL/usr/lib
+  debug_strip $INSTALL/usr/lib
 }
 
 configure_init() {
