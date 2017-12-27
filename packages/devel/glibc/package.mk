@@ -28,11 +28,6 @@ PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="glibc: The GNU C library"
 PKG_LONGDESC="The Glibc package contains the main C library. This library provides the basic routines for allocating memory, searching directories, opening and closing files, reading and writing files, string handling, pattern matching, arithmetic, and so on."
 
-export SOURCE_DATE_EPOCH=1484361909
-
-export CFLAGS="-O3 -march=haswell -mtune=haswell -g2 -m64  -Wl,-z,max-page-size=0x1000 "
-export LDFLAGS="-Wl,-z,max-page-size=0x1000 "
-
 PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            ac_cv_path_PERL=no \
                            ac_cv_prog_MAKEINFO= \
@@ -130,7 +125,8 @@ pre_configure_target() {
   unset LD_LIBRARY_PATH
 
   # set some CFLAGS we need
-  export CFLAGS="-O3 -march=westmere -mtune=westmere -g -m64  -Wl,-z,max-page-size=0x1000 "
+  export SOURCE_DATE_EPOCH=1484361909
+  export CFLAGS="-O3 -march=westmere -mtune=westmere -g -m64 -Wl,-z,max-page-size=0x1000 "
   unset LDFLAGS
   export LDFLAGS="-Wl,-z,max-page-size=0x1000 "
 
