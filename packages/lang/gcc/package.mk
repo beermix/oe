@@ -92,10 +92,8 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
 
 pre_configure_host() {
   unset CPP
-  unset CFLAGS
-  unset CXXFLAGS
-  export CFLAGS="-march=westmere -g1 -O3 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro  -Wl,-z,max-page-size=0x1000 -mtune=haswell -I$TOOLCHAIN/include"
-  export CXXFLAGS="-march=westmere -g1 -O3  -Wl,-z,max-page-size=0x1000 -mtune=haswell -I$TOOLCHAIN/include"
+  export CFLAGS="-march=westmere -g1 -O3 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro  -Wl,-z,max-page-size=0x1000"
+  export CXXFLAGS="-march=westmere -g1 -O3  -Wl,-z,max-page-size=0x1000"
   export CFLAGS_FOR_TARGET="$CFLAGS"
   export CXXFLAGS_FOR_TARGET="$CXXFLAGS"
   export FFLAGS_FOR_TARGET="$FFLAGS"
