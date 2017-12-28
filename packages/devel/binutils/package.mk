@@ -40,6 +40,9 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-relro \
                          --enable-version-specific-runtime-libs \
                          --enable-plugins \
+                         --enable-gold \
+                         --enable-ld=default \
+                         --enable-lto \
                          --enable-secureplt \
                          --disable-nls \
                          --with-system-zlib=$TOOLCHAIN \
