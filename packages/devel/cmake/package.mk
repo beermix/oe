@@ -17,10 +17,10 @@
 ################################################################################
 
 PKG_NAME="cmake"
-PKG_VERSION="3.6.3"
+PKG_VERSION="3.10.1"
 PKG_ARCH="any"
 PKG_LICENSE="BSD"
-PKG_SITE="http://www.cmake.org/"
+PKG_SITE="https://cmake.org/download/"
 PKG_URL="http://www.cmake.org/files/v${PKG_VERSION%.*}/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="ccache:host bzip2:host openssl:host"
 PKG_SECTION="toolchain/devel"

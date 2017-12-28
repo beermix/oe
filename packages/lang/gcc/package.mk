@@ -48,7 +48,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libmpx \
                            --disable-libssp \
                            --without-cuda-driver \
-                           --disable-libsanitizer \
                            --with-system-zlib \
                            --with-tune=haswell \
                            --with-arch=westmere"
@@ -64,6 +63,7 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-libmudflap \
                               --disable-libitm \
                               --disable-libquadmath \
+                              --disable-libsanitizer \
                               --without-headers \
                               --with-newlib \
                               --disable-decimal-float \
