@@ -22,7 +22,11 @@ export FFLAGS_USE="$FFLAGS -fprofile-use -fprofile-dir=pgo -fprofile-correction 
 export CXXFLAGS_USE="$CXXFLAGS -fprofile-use -fprofile-dir=pgo -fprofile-correction "
 }
 
-
 make_target() {
-  make V=1 all2 OPTFLAGS="$CFLAGS_GENERATE"
+  make all OPTFLAGS="$CFLAGS" 
+}
+
+post_makeinstall_target() {
+  mkdir -p $INSTALL/usr/bin
+  cp $PKG_BUILD/bin/7za $INSTALL/usr/bin
 }
