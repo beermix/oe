@@ -91,11 +91,11 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          $GCC_OPTS"
 
 pre_configure_host() {
-  unset CPP
   export CFLAGS="-march=westmere -g1 -O3 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro -Wl,-z,max-page-size=0x1000"
   export CXXFLAGS="-march=westmere -g1 -O3  -Wl,-z,max-page-size=0x1000"
   export CFLAGS_FOR_TARGET="$CFLAGS"
   export CXXFLAGS_FOR_TARGET="$CXXFLAGS"
+  unset CPP
 }
 
 post_make_host() {
@@ -141,18 +141,6 @@ EOF
 
   # To avoid cache trashing
   touch -c -t $DATE $CROSS_CXX
-  
-  
-  
-  cat > ${TARGET_PREFIX}gfortran <<EOF
-#!/bin/sh
-$TOOLCHAIN/bin/ccache $CROSS_CC "\$@"
-EOF
-
-  chmod +x ${TARGET_PREFIX}gfortran
-
-  # To avoid cache trashing
-  touch -c -t $DATE $CROSS_CC
 }
 
 configure_target() {
@@ -166,7 +154,6 @@ make_target() {
 makeinstall_target() {
   mkdir -p $INSTALL/usr/lib
     cp -P $PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libgcc/libgcc_s.so* $INSTALL/usr/lib
-    cp -P $PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libgcc/libgfortran.so* $INSTALL/usr/lib
     cp -P $PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libgomp/.libs/libgomp.so* $INSTALL/usr/lib
     cp -P $PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libstdc++-v3/src/.libs/libstdc++.so* $INSTALL/usr/lib
     cp -P $PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libatomic/.libs/libatomic.so* $INSTALL/usr/lib
@@ -183,5 +170,4 @@ make_init() {
 makeinstall_init() {
   mkdir -p $INSTALL/usr/lib
     cp -P $PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libgcc/libgcc_s.so* $INSTALL/usr/lib
-    cp -P $PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libgcc/libgfortran.so* $INSTALL/usr/lib
 }
