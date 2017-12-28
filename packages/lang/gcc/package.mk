@@ -75,7 +75,7 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               $GCC_OPTS"
 
 PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
-                         --enable-languages=c,c++,fortran \
+                         --enable-languages=c,c++ \
                          --enable-__cxa_atexit \
                          --enable-decimal-float \
                          --enable-tls \
@@ -94,9 +94,8 @@ pre_configure_host() {
   unset CPP
   export CFLAGS="-march=westmere -g1 -O3 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro -Wl,-z,max-page-size=0x1000"
   export CXXFLAGS="-march=westmere -g1 -O3  -Wl,-z,max-page-size=0x1000"
-#  export CFLAGS_FOR_TARGET="$CFLAGS"
-#  export CXXFLAGS_FOR_TARGET="$CXXFLAGS"
-#  export FFLAGS_FOR_TARGET="$FFLAGS"
+  export CFLAGS_FOR_TARGET="$CFLAGS"
+  export CXXFLAGS_FOR_TARGET="$CXXFLAGS"
 }
 
 post_make_host() {
