@@ -19,16 +19,17 @@
 ################################################################################
 
 PKG_NAME="gtk+"
-PKG_VERSION="3.22.26"
-PKG_SHA256="61eef0d320e541976e2dfe445729f12b5ade53050ee9de6184235cb60cd4b967"
+PKG_VERSION="2.24.31"
+PKG_SHA256="68c1922732c7efc08df4656a5366dcc3afdc8791513400dac276009b40954658"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.gtk.org/"
-PKG_URL="http://ftp.gnome.org/pub/gnome/sources/gtk+/${PKG_VERSION%.*}/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain atk glib pango gdk-pixbuf libepoxy"
-PKG_SECTION="multimedia"
+PKG_URL="http://ftp.gnome.org/pub/gnome/sources/gtk+/2.24/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_DEPENDS_TARGET="toolchain atk libX11 libXrandr libXi glib pango cairo gdk-pixbuf"
+PKG_SECTION="x11/toolkits"
 PKG_SHORTDESC="gtk+: The Gimp ToolKit (GTK)"
 PKG_LONGDESC="This is GTK+. GTK+, which stands for the Gimp ToolKit, is a library for creating graphical user interfaces for the X Window System. It is designed to be small, efficient, and flexible. GTK+ is written in C with a very object-oriented approach."
+PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_path_GLIB_GENMARSHAL=$TOOLCHAIN/bin/glib-genmarshal \
                            --disable-glibtest \
@@ -40,22 +41,14 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_path_GLIB_GENMARSHAL=$TOOLCHAIN/bin/glib-genmar
                            --disable-papi \
                            --enable-xkb \
                            --disable-xinerama \
-                           --disable-gtk-doc \
-                           --enable-introspection=no \
-                           --with-xinput \
-                           --disable-mir-backend \
-                           --disable-win32-backend \
-                           --disable-quartz-backend \
-                           --disable-broadway-backend"
+                           --disable-gtk-doc-html \
+                           --with-xinput"
 
-case "$DISPLAYSERVER" in
-  "x11")
-    PKG_DEPENDS_TARGET+=" libX11 libXrandr libXi cairo at-spi2-atk"
-    PKG_CONFIGURE_OPTS_TARGET+=" --enable-x11-backend --disable-wayland-backend"
-    ;;
+make_target() {
+  make SRC_SUBDIRS="gdk gtk modules"
+  $MAKEINSTALL SRC_SUBDIRS="gdk gtk modules"
+}
 
-  "wayland")
-    PKG_DEPENDS_TARGET+=" wayland"
-    PKG_CONFIGURE_OPTS_TARGET+=" --enable-wayland-backend --disable-x11-backend"
-    ;;
-esac
+makeinstall_target() {
+  make install DESTDIR=$INSTALL SRC_SUBDIRS="gdk gtk modules"
+}
