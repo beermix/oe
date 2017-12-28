@@ -20,7 +20,7 @@
 
 PKG_NAME="chromium"
 PKG_VERSION="63.0.3239.108"
-#PKG_SHA256="6de2754dfc333675ae6a67ae13c95666009b35c84f847b058edbf312e42fa3af"
+PKG_SHA256="47d80798194da78bdd519b7ce012425b13cf89d6eb287e22a34342a245c31a2b"
 PKG_REV="108"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
@@ -56,11 +56,6 @@ make_target() {
   strip_lto
   export LDFLAGS="$LDFLAGS -ludev -s"
   export LD=$CXX
-  
-  export CC=$CC
-  export CXX=$CXX
-  export AR=$AR
-  export NM=$NM
   
   export CCACHE_SLOPPINESS=time_macros
 
@@ -119,6 +114,9 @@ make_target() {
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
   mkdir -p $PKG_BUILD/third_party/node/linux/node-linux-x64/bin
   ln -fs $TOOLCHAIN/bin/node $PKG_BUILD/third_party/node/linux/node-linux-x64/bin/node
+  
+  touch $PKG_BUILD/chrome/test/data/webui/i18n_process_css_test.html
+  
 
   ninja -j${CONCURRENCY_MAKE_LEVEL} -C out/Release chrome chrome_sandbox widevinecdmadapter
 }
