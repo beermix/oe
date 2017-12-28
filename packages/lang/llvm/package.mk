@@ -56,7 +56,7 @@ PKG_CMAKE_OPTS_HOST="$PKG_CMAKE_OPTS_COMMON \
                      -DCMAKE_INSTALL_RPATH=$TOOLCHAIN/lib"
 
 make_host() {
-  ninja -j${CONCURRENCY_MAKE_LEVEL} llvm-config llvm-tblgen
+  ninja -l4 llvm-config llvm-tblgen
 }
 
 makeinstall_host() {
