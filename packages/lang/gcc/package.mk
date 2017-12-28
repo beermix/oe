@@ -46,7 +46,9 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-nls \
                            --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
-                           --without-ppl \
+                           --enable-gnu-indirect-function \
+                           --disable-vtable-verify \
+                           --with-ppl=yes \
                            --without-cloog \
                            --disable-libmpx \
                            --disable-libssp \
@@ -73,7 +75,7 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               $GCC_OPTS"
 
 PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
-                         --enable-languages=c,c++ \
+                         --enable-languages=c,c++,fortran \
                          --enable-__cxa_atexit \
                          --enable-decimal-float \
                          --enable-tls \
@@ -90,6 +92,13 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
 
 pre_configure_host() {
   unset CPP
+  unset CFLAGS
+  unset CXXFLAGS
+  export CFLAGS="-march=westmere -g1 -O3 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro  -Wl,-z,max-page-size=0x1000 -mtune=haswell -I$TOOLCHAIN/include"
+  export CXXFLAGS="-march=westmere -g1 -O3  -Wl,-z,max-page-size=0x1000 -mtune=haswell -I$TOOLCHAIN/include"
+  export CFLAGS_FOR_TARGET="$CFLAGS"
+  export CXXFLAGS_FOR_TARGET="$CXXFLAGS"
+  export FFLAGS_FOR_TARGET="$FFLAGS"
 }
 
 post_make_host() {
