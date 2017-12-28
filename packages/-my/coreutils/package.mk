@@ -1,8 +1,8 @@
 PKG_NAME="coreutils"
-PKG_VERSION="8.28"
+PKG_VERSION="8.29"
 PKG_URL="http://ftpmirror.gnu.org/coreutils/coreutils-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain acl libcap pcre readline openssl"
-PKG_SECTION="my"
+PKG_TOOLCHAIN="configure"
 
 PKG_CONFIGURE_OPTS_TARGET="c_cv_c_restrict=no \
 			      ac_cv_func_chown_works=yes \
