@@ -29,10 +29,11 @@ PKG_LONGDESC="Small build system with a focus on speed"
 PKG_TOOLCHAIN="manual"
 
 make_host() {
-  export CFLAGS="-mtune=generic -O3 -pipe -Wall"
+  export CFLAGS="-mtune=generic -O2 -pipe -Wall"
   export CXXFLAGS="$CFLAGS"
   export LDFLAGS="-Wl,-O1,-z,relro,-z,now -s"
-  CXX=/usr/bin/clang++-5.0 python2 ./configure.py --bootstrap
+#  CXX=/usr/bin/clang++-5.0 python2 ./configure.py --bootstrap
+  python2 ./configure.py --bootstrap
 }
 
 makeinstall_host() {
