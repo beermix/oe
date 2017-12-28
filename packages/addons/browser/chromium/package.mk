@@ -54,7 +54,7 @@ make_host() {
 
 make_target() {
   strip_lto
-  export LDFLAGS="$LDFLAGS -ludev"
+  export LDFLAGS="$LDFLAGS -ludev -s"
   export LD=$CXX
 
   # Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
