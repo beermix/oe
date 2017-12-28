@@ -32,9 +32,11 @@ PKG_CONFIGURE_OPTS_HOST="--enable-cxx --disable-shared --with-pic"
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
 
 pre_configure_host() {
-  export CPPFLAGS="$CPPFLAGS -fexceptions"
+  export CFLAGS="-O3  -g -fno-semantic-interposition -ffat-lto-objects  -flto=4 "
+  export CXXFLAGS="$CFLAGS"
 }
 
 pre_configure_target() {
-  export CPPFLAGS="$CPPFLAGS -fexceptions"
+  export CFLAGS="-O3  -g -fno-semantic-interposition -ffat-lto-objects  -flto=4 "
+  export CXXFLAGS="$CFLAGS"
 }

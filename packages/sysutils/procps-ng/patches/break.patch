@@ -1,0 +1,10 @@
+--- procps-ng-3.3.12/sysctl.c~	2016-07-09 21:49:25.000000000 +0000
++++ procps-ng-3.3.12/sysctl.c	2017-09-26 20:33:29.049504417 +0000
+@@ -278,6 +278,7 @@
+ 			default:
+ 				xwarnx(_("reading key \"%s\""), outname);
+ 				rc = -1;
++				break;
+ 			case 0:
+ 				break;
+ 			}

@@ -1,0 +1,23 @@
+--- procps-ng-3.3.12/Makefile.am~	2016-07-09 22:40:44.000000000 +0000
++++ procps-ng-3.3.12/Makefile.am	2017-06-03 17:00:08.184102897 +0000
+@@ -99,9 +99,9 @@
+ 	watch.1 \
+ 	top/top.1
+ slabtop_SOURCES = slabtop.c lib/strutils.c lib/fileutils.c
+-slabtop_LDADD = $(LDADD) @NCURSES_LIBS@
++slabtop_LDADD = $(LDADD) @NCURSESW_LIBS@
+ watch_SOURCES = watch.c lib/strutils.c lib/fileutils.c
+-watch_LDADD = @WATCH_NCURSES_LIBS@ $(CYGWINFLAGS)
++watch_LDADD = @WATCH_NCURSES_LIBS@ $(CYGWINFLAGS)
+ top_top_SOURCES = \
+ 	top/top.h \
+ 	top/top.c \
+@@ -112,7 +112,7 @@
+   top_top_SOURCES += lib/strverscmp.c
+ endif
+ 
+-top_top_LDADD = $(LDADD) @NCURSES_LIBS@ $(DL_LIB)
++top_top_LDADD = $(LDADD) @NCURSESW_LIBS@ $(DL_LIB)
+ endif
+ 
+ if BUILD_SKILL

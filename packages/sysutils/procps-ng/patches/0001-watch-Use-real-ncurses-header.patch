@@ -1,0 +1,26 @@
+From b9ab1ecdf6c50f0d977bbf69ab499bacaa880c78 Mon Sep 17 00:00:00 2001
+From: Ikey Doherty <michael.i.doherty@intel.com>
+Date: Tue, 2 Jun 2015 13:58:43 +0100
+Subject: [PATCH] watch: Use real ncurses header
+
+Signed-off-by: Ikey Doherty <michael.i.doherty@intel.com>
+---
+ watch.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/watch.c b/watch.c
+index c6ef389..561af69 100644
+--- a/watch.c
++++ b/watch.c
+@@ -51,7 +51,7 @@
+ #ifdef WITH_WATCH8BIT
+ # include <wchar.h>
+ # include <wctype.h>
+-# include <ncursesw/ncurses.h>
++# include <ncurses.h>
+ #else
+ # include <ncurses.h>
+ #endif	/* WITH_WATCH8BIT */
+-- 
+1.9.1
+
