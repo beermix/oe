@@ -44,8 +44,9 @@ pre_configure_target() {
 # attr fails to build in subdirs
   cd $PKG_BUILD
     rm -rf .$TARGET_NAME
-  CFLAGS="$CFLAGS -fPIC"
-  CXXFLAGS="$CXXFLAGS -fPIC"
+
+  export CFLAGS="$CFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto -fno-semantic-interposition -fPIC "
+  export CXXFLAGS="$CXXFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto -fno-semantic-interposition -fPIC "
 }
 
 makeinstall_target() {
