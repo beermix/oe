@@ -135,11 +135,9 @@ echo -e "BUILD_ID=\"$GIT_HASH\"" >> $INSTALL/etc/os-release
 echo -e "OPENELEC_ARCH=\"$LIBREELEC_ARCH\"" >> $INSTALL/etc/os-release
 echo -e "LIBREELEC_ARCH=\"$LIBREELEC_ARCH\"" >> $INSTALL/etc/os-release
 echo -e "LIBREELEC_BUILD=\"$LIBREELEC_BUILD\"" >> $INSTALL/etc/os-release
-echo "$DISTRONAME git: $GIT_HASH" >> $INSTALL/etc/issue
 
 # create /etc/issue
-#echo "$DISTRONAME ($LIBREELEC_BUILD): $LIBREELEC_VERSION ($LIBREELEC_ARCH)" >> $INSTALL/etc/issue
-echo "$DISTRONAME ($LIBREELEC_BUILD): $DISTRONAME git: $GIT_HASH" >> $INSTALL/etc/issue
+echo "$DISTRONAME ($LIBREELEC_BUILD): $LIBREELEC_VERSION $DISTRONAME git: $GIT_HASH" >> $INSTALL/etc/issue
 
 ln -sf /etc/issue $INSTALL/etc/motd
 
@@ -257,7 +255,7 @@ fi
 
 # create squashfs file, default to gzip if no compression configured
 echo "rm -rf \"$TARGET_IMG/$IMAGE_NAME.system\"" >> $FAKEROOT_SCRIPT
-echo "$TOOLCHAIN/bin/mksquashfs \"$BUILD/image/system\" \"$TARGET_IMG/$IMAGE_NAME.system\" -noappend -comp ${SQUASHFS_COMPRESSION:-gzip}" >> $FAKEROOT_SCRIPT
+echo "$TOOLCHAIN/bin/mksquashfs \"$BUILD/image/system\" \"$TARGET_IMG/$IMAGE_NAME.system\" -noappend -comp $SQUASHFS_COMPRESSION $SQUASHFS_COMPRESSION_LEVEL" >> $FAKEROOT_SCRIPT
 
 # run fakeroot
 $TOOLCHAIN/bin/fakeroot -- $FAKEROOT_SCRIPT
@@ -304,7 +302,7 @@ if [ "$1" = "release" -o "$1" = "mkimage" -o "$1" = "amlpkg" -o "$1" = "noobs" ]
   echo "$TARGET_VERSION" > $RELEASE_DIR/RELEASE
 
   if [ -n "$MEDIACENTER" ] ; then
-    echo "build commit: $GIT_HASH" >> $RELEASE_DIR/RELEASE
+    echo "Kodi commit: `scripts/git_version $MEDIACENTER`" >> $RELEASE_DIR/RELEASE
   fi
 
   mkdir -p $RELEASE_DIR/licenses
