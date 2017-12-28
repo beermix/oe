@@ -4,6 +4,7 @@ setup_toolchain() {
       export DESTIMAGE="target"
       export CC="${TARGET_PREFIX}gcc"
       export CXX="${TARGET_PREFIX}g++"
+      export F="${TARGET_PREFIX}gfortran"
       export CPP="${TARGET_PREFIX}cpp"
       export LD="${TARGET_PREFIX}ld"
       export AS="${TARGET_PREFIX}as"
@@ -16,6 +17,7 @@ setup_toolchain() {
       export CPPFLAGS="$TARGET_CPPFLAGS"
       export CFLAGS="$TARGET_CFLAGS"
       export CXXFLAGS="$TARGET_CXXFLAGS"
+      export FFLAGS="$TARGET_FFLAGS"
       export LDFLAGS="$TARGET_LDFLAGS"
       export PKG_CONFIG="$TOOLCHAIN/bin/pkg-config"
       export PKG_CONFIG_PATH=""
@@ -105,6 +107,7 @@ setup_toolchain() {
         echo "SET(CMAKE_C_COMPILER   $CC)"  >> $CMAKE_CONF
         echo "SET(CMAKE_CXX_COMPILER $CXX)" >> $CMAKE_CONF
         echo "SET(CMAKE_CPP_COMPILER $CXX)" >> $CMAKE_CONF
+        echo "SET(CMAKE_F_COMPILER   $F)"  >> $CMAKE_CONF
         echo "SET(CMAKE_AR $AR CACHE FILEPATH "Archiver")" >> $CMAKE_CONF # hum?
         echo "SET(CMAKE_FIND_ROOT_PATH  $TOOLCHAIN)" >> $CMAKE_CONF
         echo "SET(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM BOTH)" >> $CMAKE_CONF

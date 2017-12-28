@@ -4,7 +4,6 @@ PKG_SITE="https://github.com/libevent/libevent/releases/"
 PKG_URL="https://github.com/libevent/libevent/releases/download/release-$PKG_VERSION/libevent-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain openssl zlib"
 PKG_SHORTDESC="libevent: a library for asynchronous event notification"
-
 PKG_USE_CMAKE="no"
 PKG_TOOLCHAIN="autotools"
 

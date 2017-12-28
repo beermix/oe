@@ -17,12 +17,11 @@
 ################################################################################
 
 PKG_NAME="glibc"
-PKG_VERSION="2.26"
-PKG_SHA256="e54e0a934cd2bc94429be79da5e9385898d2306b9eaf3c92d5a77af96190f6bd"
+PKG_VERSION="98f244e"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="http://www.gnu.org/software/libc/"
-PKG_URL="http://ftp.gnu.org/pub/gnu/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_SITE="https://github.com/bminor/glibc/tree/release/2.26/master"
+PKG_URL="https://github.com/bminor/glibc/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap"
 PKG_DEPENDS_INIT="glibc"
 PKG_SECTION="toolchain/devel"
@@ -127,8 +126,10 @@ pre_configure_target() {
   unset LD_LIBRARY_PATH
 
   # set some CFLAGS we need
-  export SOURCE_DATE_EPOCH=1484361909
-  export CFLAGS="-march=westmere -mtune=westmere -O3 -g -m64"
+  
+  export CFLAGS="-O3 -march=westmere -mtune=westmere -g2 -m64  -Wl,-z,max-page-size=0x1000 "
+  unset LDFLAGS
+  export LDFLAGS="-Wl,-z,max-page-size=0x1000 "
 
   export BUILD_CC=$HOST_CC
   export OBJDUMP_FOR_HOST=objdump
@@ -147,7 +148,7 @@ echo "sbindir=/usr/bin" >> configparms
 echo "rootsbindir=/usr/bin" >> configparms
 echo "build-programs=yes" >> configparms
 
-GLIBC_INCLUDE_BIN="getent ldd locale"
+GLIBC_INCLUDE_BIN="getent ldd locale localedef"
 }
 
 post_makeinstall_target() {
