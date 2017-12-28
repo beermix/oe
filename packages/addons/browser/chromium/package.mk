@@ -118,7 +118,7 @@ make_target() {
   touch $PKG_BUILD/chrome/test/data/webui/i18n_process_css_test.html
   
 
-  ninja -j${CONCURRENCY_MAKE_LEVEL} -C out/Release chrome chrome_sandbox widevinecdmadapter
+  ninja -k0 -j${CONCURRENCY_MAKE_LEVEL} -C out/Release chrome chrome_sandbox widevinecdmadapter
 }
 
 addon() {
