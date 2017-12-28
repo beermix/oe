@@ -56,6 +56,13 @@ make_target() {
   strip_lto
   export LDFLAGS="$LDFLAGS -ludev -s"
   export LD=$CXX
+  
+  export CC=$CC
+  export CXX=$CXX
+  export AR=$AR
+  export NM=$NM
+  
+  export CCACHE_SLOPPINESS=time_macros
 
   # Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
   # Note: These are for OpenELEC use ONLY. For your own distribution, please
@@ -82,6 +89,8 @@ make_target() {
     'use_allocator="none"'
     'use_cups=false'
     'use_custom_libcxx=false'
+    'use_system_freetype=true'
+    'use_system_harfbuzz=true'
     'use_gconf=false'
     'use_gnome_keyring=false'
     'use_gold=false'
@@ -111,7 +120,7 @@ make_target() {
   mkdir -p $PKG_BUILD/third_party/node/linux/node-linux-x64/bin
   ln -fs $TOOLCHAIN/bin/node $PKG_BUILD/third_party/node/linux/node-linux-x64/bin/node
 
-  ninja -j${CONCURRENCY_MAKE_LEVEL} -C out/Release chrome chrome_sandbox widevinecdmadapter
+  ninja -v -j${CONCURRENCY_MAKE_LEVEL} -C out/Release chrome chrome_sandbox widevinecdmadapter
 }
 
 addon() {
