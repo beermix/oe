@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="cryptography"
-PKG_VERSION="2.0.3"
+PKG_VERSION="2.1.4"
 PKG_SHA256="adbb7ddb9623616ea2c0354b7ce0506eee529b7f2d0e3894e513de5b8dce4ef8"
 PKG_LICENSE="BSD"
 PKG_SITE="https://cryptography.io/"
