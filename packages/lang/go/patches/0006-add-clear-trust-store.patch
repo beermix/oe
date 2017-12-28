@@ -1,0 +1,23 @@
+From 9926835922f39789a567a9755c2f56128d83cbb0 Mon Sep 17 00:00:00 2001
+From: Arzhan Kinzhalin <arzhan.i.kinzhalin@intel.com>
+Date: Sat, 16 Sep 2017 02:20:20 +0000
+Subject: [PATCH] Prepend Clear Linux trust store location.
+
+---
+ src/crypto/x509/root_unix.go | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/crypto/x509/root_unix.go b/src/crypto/x509/root_unix.go
+index 65b5a5fdbc..7d7ae3a691 100644
+--- a/src/crypto/x509/root_unix.go
++++ b/src/crypto/x509/root_unix.go
+@@ -14,6 +14,7 @@ import (
+ // Possible directories with certificate files; stop after successfully
+ // reading at least one file from a directory.
+ var certDirectories = []string{
++	"/var/cache/ca-certs/anchors",  // Clear Linux
+ 	"/etc/ssl/certs",               // SLES10/SLES11, https://golang.org/issue/12139
+ 	"/system/etc/security/cacerts", // Android
+ 	"/usr/local/share/certs",       // FreeBSD
+-- 
+2.13.2

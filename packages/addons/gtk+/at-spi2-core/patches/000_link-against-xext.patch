@@ -1,0 +1,11 @@
+--- a/meson.build	2017-12-23 11:46:21.118687887 +0100
++++ b/meson.build	2017-12-23 11:47:31.411046133 +0100
+@@ -64,6 +64,8 @@
+     at_spi_conf.set('HAVE_X11', 1)
+     xtest_dep = dependency('xtst')
+     x11_deps += xtest_dep
++    xext_dep = dependency('xext')
++    x11_deps += xext_dep
+ 
+     if cc.has_function('XkbGetMap', dependencies: x11_deps)
+       at_spi_conf.set('HAVE_XKB', 1)

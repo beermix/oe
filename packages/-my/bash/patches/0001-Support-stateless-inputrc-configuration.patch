@@ -1,0 +1,41 @@
+From 92d91ccb3f803599614f94da16d4d8edf0370d57 Mon Sep 17 00:00:00 2001
+From: Ikey Doherty <michael.i.doherty@intel.com>
+Date: Fri, 26 Jun 2015 11:27:14 +0100
+Subject: [PATCH] Support stateless inputrc configuration
+
+Signed-off-by: Ikey Doherty <michael.i.doherty@intel.com>
+---
+ lib/readline/bind.c   | 3 +++
+ lib/readline/rlconf.h | 2 ++
+ 2 files changed, 5 insertions(+)
+
+diff --git a/lib/readline/bind.c b/lib/readline/bind.c
+index 8acf4ac..35186f2 100644
+--- a/lib/readline/bind.c
++++ b/lib/readline/bind.c
+@@ -898,6 +898,9 @@ rl_read_init_file (filename)
+     return 0;
+   filename = "~/_inputrc";
+ #endif
++  if (_rl_read_init_file (filename, 0) == 0)
++    return 0;
++  filename = STATELESS_INPUTRC;
+   return (_rl_read_init_file (filename, 0));
+ }
+ 
+diff --git a/lib/readline/rlconf.h b/lib/readline/rlconf.h
+index 1a40afc..3efb918 100644
+--- a/lib/readline/rlconf.h
++++ b/lib/readline/rlconf.h
+@@ -45,6 +45,8 @@
+ /* The ultimate last-ditch filenname for an init file -- system-wide. */
+ #define SYS_INPUTRC "/etc/inputrc"
+ 
++#define STATELESS_INPUTRC "/usr/share/defaults/etc/inputrc"
++
+ /* If defined, expand tabs to spaces. */
+ #define DISPLAY_TABS
+ 
+-- 
+1.9.1
+

@@ -54,7 +54,7 @@ make_host() {
 
 make_target() {
   strip_lto
-  export LDFLAGS="$LDFLAGS -ludev -s"
+  export LDFLAGS="$LDFLAGS -ludev"
   export LD=$CXX
   
   export CCACHE_SLOPPINESS=time_macros
@@ -89,7 +89,7 @@ make_target() {
     'use_gconf=false'
     'use_gnome_keyring=false'
     'use_gold=false'
-    'use_gtk3=false'
+    'use_gtk3=true'
     'use_kerberos=false'
     'use_pulseaudio=false'
     'use_sysroot=true'

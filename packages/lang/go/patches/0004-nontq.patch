@@ -1,0 +1,11 @@
+--- go/src/runtime/memclr_amd64.s~	2016-02-17 15:35:22.000000000 -0500
++++ go/src/runtime/memclr_amd64.s	2016-03-06 10:58:23.024233493 -0500
+@@ -69,8 +69,6 @@
+ 	// For smaller sizes MOVNTDQ may be faster or slower depending on hardware.
+ 	// For larger sizes it is always faster, even on dual Xeons with 30M cache.
+ 	// TODO take into account actual LLC size. E. g. glibc uses LLC size/2.
+-	CMPQ    BX, $0x2000000
+-	JAE     loop_preheader_avx2_huge
+ loop_avx2:
+ 	VMOVDQU	Y0, 0(DI)
+ 	VMOVDQU	Y0, 32(DI)
