@@ -34,23 +34,25 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/bash \
                            --libexecdir=/usr/lib/glibc \
                            --cache-file=config.cache \
                            --disable-profile \
-                           --disable-sanity-checks \
                            --enable-add-ons \
                            --enable-bind-now \
                            --with-elf \
                            --with-tls \
+                           --enable-tunables \
                            --with-__thread \
+                           --enable-clocale=gnu \
+                           --without-selinux \
                            --enable-stack-protector=strong \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
-                           --enable-kernel=3.2.0 \
+                           --enable-kernel=3.10 \
+                           --enable-lock-elision=yes \
                            --without-cvs \
                            --without-gd \
                            --enable-obsolete-rpc \
                            --enable-obsolete-nsl \
                            --disable-build-nscd \
                            --disable-nscd \
-                           --enable-lock-elision \
                            --disable-timezone-tools"
 
 if [ "$DEBUG" = yes ]; then
