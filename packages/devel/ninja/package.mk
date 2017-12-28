@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="ninja"
-PKG_VERSION="1.8.2"
+PKG_VERSION="e234a7b"
 PKG_ARCH="any"
 PKG_LICENSE="Apache"
 PKG_SITE="https://github.com/ninja-build/ninja"
@@ -31,11 +31,10 @@ PKG_TOOLCHAIN="manual"
 make_host() {
   export CFLAGS="-mtune=generic -march=x86-64 -O3 -pipe -Wall"
   export CXXFLAGS="$CFLAGS"
-  export LDFLAGS="-Wl,-O1,-z,relro,-z,now -s"
+  export LDFLAGS="-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now -s"
   CXX=/usr/bin/clang++-5.0 python2 ./configure.py --bootstrap
 }
 
 makeinstall_host() {
   cp ninja $TOOLCHAIN/bin/
-# cp $PKG_DIR/ninja $TOOLCHAIN/bin/
 }

@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="node"
-PKG_VERSION="8.9.3"
-PKG_SHA256="a5042d983f9815ee18a5c6fd75f8b3b2022ed96a2aaa8834300cd1ee81e8870c"
+PKG_VERSION="9.3.0"
+#PKG_SHA256="a5042d983f9815ee18a5c6fd75f8b3b2022ed96a2aaa8834300cd1ee81e8870c"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://nodejs.org"
@@ -27,11 +27,11 @@ PKG_DEPENDS_HOST="toolchain"
 PKG_SHORTDESC="Node.js JavaScript runtime"
 PKG_LONGDESC="Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient. The Node.js package ecosystem, npm, is the largest ecosystem of open source libraries in the world."
 
-HOST_CONFIGURE_OPTS="--prefix=$TOOLCHAIN \
-                     --fully-static \
-                     --with-intl=none \
-                     --without-npm \
-                     --without-ssl"
+make_host() {
+  export LDFLAGS="-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now -s"
+}
+
+HOST_CONFIGURE_OPTS="--prefix=$TOOLCHAIN --partly-static --without-dtrace --without-ssl"
 
 pre_configure_host() {
   cd ..
