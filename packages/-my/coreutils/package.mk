@@ -5,10 +5,8 @@ PKG_DEPENDS_TARGET="toolchain acl libcap gmp pcre readline openssl"
 PKG_TOOLCHAIN="configure"
 
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition "
-  export FCFLAGS="$CFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition "
-  export FFLAGS="$CFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition "
-  export CXXFLAGS="$CXXFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition "
+  export CFLAGS="$CFLAGS -O3 -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition "
+  export CXXFLAGS="$CXXFLAGS -O3 -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition "
 }
 
 PKG_CONFIGURE_OPTS_TARGET="PERL=missing \
