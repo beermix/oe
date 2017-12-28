@@ -69,6 +69,9 @@ PKG_CONFIGURE_OPTS_TARGET="$PKG_CAIRO_CONFIG \
                            --enable-atomic \
                            --disable-gcov \
                            --disable-valgrind \
+                           --disable-xcb \
+                           --disable-xlib-xcb \
+                           --disable-xcb-shm \
                            --disable-qt \
                            --disable-quartz \
                            --disable-quartz-font \
@@ -79,10 +82,14 @@ PKG_CONFIGURE_OPTS_TARGET="$PKG_CAIRO_CONFIG \
                            --disable-os2 \
                            --disable-beos \
                            --disable-cogl \
+                           --disable-drm \
+                           --disable-drm-xr \
                            --disable-gallium \
+                           --disable-xcb-drm \
                            --enable-png \
                            --disable-directfb \
                            --disable-vg \
+                           --disable-wgl \
                            --disable-script \
                            --enable-ft \
                            --enable-fc \
@@ -91,7 +98,9 @@ PKG_CONFIGURE_OPTS_TARGET="$PKG_CAIRO_CONFIG \
                            --enable-svg \
                            --disable-test-surfaces \
                            --disable-tee \
+                           --disable-xml \
                            --enable-pthread \
+                           --enable-gobject \
                            --disable-full-testing \
                            --disable-trace \
                            --enable-interpreter \
