@@ -11,9 +11,9 @@ fi
 
   export CCACHE_OPTIONS="--zero-stats"
   export CCACHE_COMPILERCHECK=mtime
-  export CCACHE_CPP2=false
-  #export CCACHE_COMPRESS=true
-  #export CCACHE_COMPRESSLEVEL=9
+#  export CCACHE_CPP2=false
+  export CCACHE_COMPRESS=true
+  export CCACHE_COMPRESSLEVEL=3
 
 # determines DISTRO, if not forced by user
 # default is LibreELEC
