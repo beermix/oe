@@ -55,7 +55,7 @@ index a894a3997d..9034ff9871
 +      ]
 +      ldflags += [
 +        "-m64",
-+        "-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now",
++        "-Wl,-z,relro,-z,now",
 +        "-s",
        ]
 -      ldflags += [ "-m64" ]
