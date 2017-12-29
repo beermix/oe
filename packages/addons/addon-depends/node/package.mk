@@ -27,13 +27,10 @@ PKG_DEPENDS_HOST="toolchain"
 PKG_SHORTDESC="Node.js JavaScript runtime"
 PKG_LONGDESC="Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient. The Node.js package ecosystem, npm, is the largest ecosystem of open source libraries in the world."
 
-pre_configure_host() {
-  LDFLAGS="-s"
-  unset CFLAGS
-}
-
 HOST_CONFIGURE_OPTS="--prefix=$TOOLCHAIN --no-cross-compiling --partly-static --without-npm --without-perfctr --without-ssl"
 
 pre_configure_host() {
   cd ..
+  LDFLAGS="-s"
+  unset CFLAGS
 }
