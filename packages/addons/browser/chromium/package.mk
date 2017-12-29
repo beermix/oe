@@ -88,7 +88,7 @@ make_target() {
     'use_system_harfbuzz=true'
     'use_gconf=false'
     'use_gnome_keyring=false'
-    'use_gold=false'
+    'use_gold=true'
     'use_gtk3=false'
     'use_kerberos=false'
     'use_pulseaudio=false'
