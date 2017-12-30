@@ -11,20 +11,19 @@
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-# grep icu
+# grep icu # coreutils findutils sed grep psmisc sysstat gawk
 #  You should have received a copy of the GNU General Public License
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################ 
+################################################################################
 
 PKG_NAME="busybox"
 PKG_VERSION="1.27.2"
-PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.busybox.net"
 PKG_URL="http://busybox.net/downloads/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain busybox:host hdparm dosfstools libiconv e2fsprogs zip unzip unrar bzip2 lzo pciutils usbutils parted procps-ng gptfdisk coreutils findutils sed grep less psmisc sysstat bash gawk"
+PKG_DEPENDS_TARGET="toolchain busybox:host hdparm dosfstools libiconv e2fsprogs zip unzip unrar bzip2 pciutils usbutils parted procps-ng gptfdisk less bash"
 PKG_DEPENDS_INIT="toolchain"
 PKG_SECTION="system"
 PKG_SHORTDESC="BusyBox: The Swiss Army Knife of Embedded Linux"
