@@ -17,11 +17,12 @@
 ################################################################################
 
 PKG_NAME="mesa"
-PKG_VERSION="e0eaeef"
+PKG_VERSION="17.3.1"
+PKG_SHA256="9ae607e0998a586fb2c866cfc8e45e6f52d1c56cb1b41288253ea83eada824c1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.mesa3d.org/"
-PKG_URL="https://cgit.freedesktop.org/mesa/mesa/snapshot/$PKG_VERSION.tar.xz"
+PKG_URL="ftp://freedesktop.org/pub/mesa/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_SOURCE_DIR="$PKG_VERSION"
 PKG_DEPENDS_TARGET="toolchain expat libdrm elfutils Mako:host"
 PKG_SECTION="graphics"
@@ -108,7 +109,6 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --enable-opencl-icd \
                            --disable-gallium-tests \
                            --enable-shared-glapi \
-                           --enable-shader-cache \
                            $MESA_GALLIUM_LLVM \
                            --enable-silent-rules \
                            --with-gl-lib-name=GL \
