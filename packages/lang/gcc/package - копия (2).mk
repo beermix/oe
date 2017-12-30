@@ -45,6 +45,8 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-nls \
                            --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
+                           --enable-gnu-indirect-function \
+                           --disable-vtable-verify \
                            --with-ppl=yes \
                            --without-cloog \
                            --disable-libmpx \
