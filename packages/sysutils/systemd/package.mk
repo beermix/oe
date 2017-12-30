@@ -69,7 +69,7 @@ PKG_MESON_OPTS_TARGET="--libdir=/usr/lib \
                        -Dcoredump=false \
                        -Dresolve=false \
                        -Dlogind=true \
-                       -Dhostnamed=false \
+                       -Dhostnamed=true \
                        -Dlocaled=false \
                        -Dmachined=false \
                        -Dnetworkd=false \
@@ -231,6 +231,8 @@ post_makeinstall_target() {
 
   rm -rf $INSTALL/etc/modules-load.d
   ln -sf /storage/.config/modules-load.d $INSTALL/etc/modules-load.d
+  rm -rf $INSTALL/etc/systemd/sleep.conf.d
+  ln -sf /storage/.config/sleep.conf.d $INSTALL/etc/systemd/sleep.conf.d
   rm -rf $INSTALL/etc/sysctl.d
   ln -sf /storage/.config/sysctl.d $INSTALL/etc/sysctl.d
   rm -rf $INSTALL/etc/tmpfiles.d
