@@ -13,8 +13,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-static \
 			      --enable-progcomp \
 			      --enable-arith-for-command \
 			      --enable-directory-stack \
-			      --with-bash-malloc=no \
-			      --bindir=/bin"
+			      --with-bash-malloc=no"
 
 #post_makeinstall_target() {
 #  ln -sfv bash $INSTALL/usr/bin/sh
