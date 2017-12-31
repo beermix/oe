@@ -58,8 +58,8 @@ make_target() {
   export LD=$CXX
   
 #  export CCACHE_NODISABLE=1
-#  export CCACHE_HARDLINK=1
-#  export CCACHE_SLOPPINESS=time_macros
+  export CCACHE_HARDLINK=1
+  export CCACHE_SLOPPINESS=time_macros
   
   # Fix paths.
   sed -e 's|i386-linux-gnu/||g' \

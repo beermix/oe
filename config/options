@@ -10,12 +10,12 @@ fi
 #  export CCACHE_DISABLE=1
   export CCACHE_HARDLINK=1
   export CCACHE_NOSTATS=1
-#  export CCACHE_CPP2=1
-  export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime
-  export CCACHE_COMPILERCHECK=mtime
+  export CCACHE_CPP2=1
+#  export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime
+#  export CCACHE_COMPILERCHECK=mtime
 #  export CCACHE_SLOPPINESS=time_macros
   export CCACHE_COMPRESS=1
-  export CCACHE_COMPRESSLEVEL=9
+#  export CCACHE_COMPRESSLEVEL=4
  
  #  export CCACHE_OPTIONS="--zero-stats"
 
