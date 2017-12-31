@@ -7,13 +7,13 @@ fi
 # set default language for buildsystem
   export LC_ALL=C
 
-  export CCACHE_DISABLE=true
+#  export CCACHE_DISABLE=true
 
   export CCACHE_NOSTATS=true
   export CCACHE_CPP2=true
   export CCACHE_HARDLINK=true
   export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime
-  export CCACHE_COMPILERCHECK=mtime
+#  export CCACHE_COMPILERCHECK=mtime
 #  export CCACHE_CPP2=false
 #  export CCACHE_OPTIONS="--zero-stats"
 
@@ -77,7 +77,7 @@ LINUX_DEPENDS="$PROJECT_DIR/$PROJECT/linux $PROJECT_DIR/$PROJECT/patches/linux $
 
 # Need to point to your actual cc
 # If you have ccache installed, take care that LOCAL_CC don't point to it
-  [ -z "${LOCAL_CC}" ] && export LOCAL_CC="/usr/bin/builder-cc"
+  [ -z "${LOCAL_CC}" ] && export LOCAL_CC="$(which gcc)"
 
 if [ -z "$LOCAL_CC" ] ; then
   echo "***** Please install gcc *****"
@@ -86,7 +86,7 @@ fi
 
 # Need to point to your actual g++
 # If you have ccache installed, take care that LOCAL_CXX don't point to it
-  [ -z "${LOCAL_CXX}" ] && export LOCAL_CXX="/usr/bin/builder-c++"
+  [ -z "${LOCAL_CXX}" ] && export LOCAL_CXX="$(which g++)"
 
 # verbose compilation mode (yes/no)
   VERBOSE="yes"
