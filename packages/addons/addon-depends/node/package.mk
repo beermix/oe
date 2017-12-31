@@ -31,6 +31,6 @@ HOST_CONFIGURE_OPTS="--prefix=$TOOLCHAIN --no-cross-compiling --fully-static --w
 
 pre_configure_host() {
   cd ..
-  LDFLAGS="-s"
-  unset CFLAGS
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.||"`
+  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.||"`
 }

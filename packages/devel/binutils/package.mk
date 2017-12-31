@@ -50,7 +50,6 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-secureplt \
                          --disable-nls \
                          --with-pic \
-                         --with-system-zlib \
                          --enable-poison-system-directories"
 
 pre_configure_host() {
@@ -58,8 +57,8 @@ pre_configure_host() {
   unset CFLAGS
   unset CXXFLAGS
   unset LDFLAGS
-#  CFLAGS="-g1 -O2"
-#  CXXFLAGS="-g1 -O2"
+#  CFLAGS="-g3 -O2"
+#  CXXFLAGS="-g3 -O2"
 }
 
 make_host() {

@@ -7,7 +7,7 @@ index d6d4e295..981bb55e 100755
  elif test $ac_cv_prog_cc_g = yes; then
    if test "$GCC" = yes; then
 -    CFLAGS="-g -O2"
-+    CFLAGS="-g1 -O2"
++    CFLAGS="-mtune=generic -march=x86-64 -g3 -O2"
    else
      CFLAGS="-g"
    fi
@@ -16,7 +16,7 @@ index d6d4e295..981bb55e 100755
  elif test $ac_cv_prog_cc_g = yes; then
    if test "$GCC" = yes; then
 -    CFLAGS="-g -O2"
-+    CFLAGS="-g1 -O2"
++    CFLAGS="-mtune=generic -march=x86-64 -g3 -O2"
    else
      CFLAGS="-g"
    fi
@@ -29,7 +29,7 @@ index 7854d5c3..ff286f82 100755
  elif test $ac_cv_prog_cc_g = yes; then
    if test "$GCC" = yes; then
 -    CFLAGS="-g -O2"
-+    CFLAGS="-g1 -O2"
++    CFLAGS="-mtune=generic -march=x86-64 -g3 -O2"
    else
      CFLAGS="-g"
    fi
@@ -38,7 +38,7 @@ index 7854d5c3..ff286f82 100755
  elif test $ac_cv_prog_cc_g = yes; then
    if test "$GCC" = yes; then
 -    CFLAGS="-g -O2"
-+    CFLAGS="-g1 -O2"
++    CFLAGS="-mtune=generic -march=x86-64 -g3 -O2"
    else
      CFLAGS="-g"
    fi
@@ -51,18 +51,18 @@ index 8242b2c7..6ba1c9bd 100644
      CXXFLAGS="$ac_save_CXXFLAGS"
    elif test $ac_cv_prog_cxx_g = yes; then
 -    CXXFLAGS="-g -O2"
-+    CXXFLAGS="-g1 -O2"
++    CXXFLAGS="-mtune=generic -march=x86-64 -g3 -O2"
    else
-     CXXFLAGS="-g1 -O2"
+     CXXFLAGS="-mtune=generic -march=x86-64 -g3 -O2"
    fi
 @@ -121,7 +121,7 @@ dnl normal versions of a library), tasteless as that idea is.
    if test "$ac_test_CFLAGS" = set; then
      CFLAGS="$ac_save_CFLAGS"
    elif test $ac_cv_prog_cc_g = yes; then
 -    CFLAGS="-g -O2"
-+    CFLAGS="-g1 -O2"
++    CFLAGS="-mtune=generic -march=x86-64 -g3 -O2"
    else
-     CFLAGS="-g1 -O2"
+     CFLAGS="-mtune=generic -march=x86-64 -g3 -O2"
    fi
 diff --git a/configure b/configure
 index be9dd89d..a8b3a11b 100755
@@ -73,7 +73,7 @@ index be9dd89d..a8b3a11b 100755
  elif test $ac_cv_prog_cc_g = yes; then
    if test "$GCC" = yes; then
 -    CFLAGS="-g -O2"
-+    CFLAGS="-g1 -O2"
++    CFLAGS="-mtune=generic -march=x86-64 -g3 -O2"
    else
      CFLAGS="-g"
    fi
@@ -82,7 +82,7 @@ index be9dd89d..a8b3a11b 100755
  elif test $ac_cv_prog_cxx_g = yes; then
    if test "$GXX" = yes; then
 -    CXXFLAGS="-g -O2"
-+    CXXFLAGS="-g1 -O2"
++    CXXFLAGS="-mtune=generic -march=x86-64 -g3 -O2"
    else
      CXXFLAGS="-g"
    fi
@@ -91,7 +91,7 @@ index be9dd89d..a8b3a11b 100755
  if test "x$CFLAGS_FOR_TARGET" = x; then
    if test "x${is_cross_compiler}" = xyes; then
 -    CFLAGS_FOR_TARGET="-g -O2"
-+    CFLAGS_FOR_TARGET="-g1 -O2"
++    CFLAGS_FOR_TARGET="-mtune=generic -march=x86-64 -g3 -O2"
    else
      CFLAGS_FOR_TARGET=$CFLAGS
      case " $CFLAGS " in
@@ -100,7 +100,7 @@ index be9dd89d..a8b3a11b 100755
  if test "x$CXXFLAGS_FOR_TARGET" = x; then
    if test "x${is_cross_compiler}" = xyes; then
 -    CXXFLAGS_FOR_TARGET="-g -O2"
-+    CXXFLAGS_FOR_TARGET="-g1 -O2"
++    CXXFLAGS_FOR_TARGET="-mtune=generic -march=x86-64 -g3 -O2"
    else
      CXXFLAGS_FOR_TARGET=$CXXFLAGS
      case " $CXXFLAGS " in
@@ -113,7 +113,7 @@ index 532c5c27..3acf65ba 100644
  if test "x$CFLAGS_FOR_TARGET" = x; then
    if test "x${is_cross_compiler}" = xyes; then
 -    CFLAGS_FOR_TARGET="-g -O2"
-+    CFLAGS_FOR_TARGET="-g1 -O2"
++    CFLAGS_FOR_TARGET="-mtune=generic -march=x86-64 -g3 -O2"
    else
      CFLAGS_FOR_TARGET=$CFLAGS
      case " $CFLAGS " in
@@ -122,7 +122,7 @@ index 532c5c27..3acf65ba 100644
  if test "x$CXXFLAGS_FOR_TARGET" = x; then
    if test "x${is_cross_compiler}" = xyes; then
 -    CXXFLAGS_FOR_TARGET="-g -O2"
-+    CXXFLAGS_FOR_TARGET="-g1 -O2"
++    CXXFLAGS_FOR_TARGET="-mtune=generic -march=x86-64 -g3 -O2"
    else
      CXXFLAGS_FOR_TARGET=$CXXFLAGS
      case " $CXXFLAGS " in
@@ -135,7 +135,7 @@ index e6e985e7..640e4c5d 100755
  elif test $ac_cv_prog_cc_g = yes; then
    if test "$GCC" = yes; then
 -    CFLAGS="-g -O2"
-+    CFLAGS="-g1 -O2"
++    CFLAGS="-mtune=generic -march=x86-64 -g3 -O2"
    else
      CFLAGS="-g"
    fi
@@ -144,7 +144,7 @@ index e6e985e7..640e4c5d 100755
  elif test $ac_cv_prog_cc_g = yes; then
    if test "$GCC" = yes; then
 -    CFLAGS="-g -O2"
-+    CFLAGS="-g1 -O2"
++    CFLAGS="-mtune=generic -march=x86-64 -g3 -O2"
    else
      CFLAGS="-g"
    fi
@@ -157,7 +157,7 @@ index cb020be5..b0eb28eb 100755
  elif test $ac_cv_prog_cc_g = yes; then
    if test "$GCC" = yes; then
 -    CFLAGS="-g -O2"
-+    CFLAGS="-g1 -O2"
++    CFLAGS="-mtune=generic -march=x86-64 -g3 -O2"
    else
      CFLAGS="-g"
    fi
@@ -166,7 +166,7 @@ index cb020be5..b0eb28eb 100755
  elif test $ac_cv_prog_cxx_g = yes; then
    if test "$GXX" = yes; then
 -    CXXFLAGS="-g -O2"
-+    CXXFLAGS="-g1 -O2"
++    CXXFLAGS="-mtune=generic -march=x86-64 -g3 -O2"
    else
      CXXFLAGS="-g"
    fi
@@ -179,7 +179,7 @@ index 6abea208..c14ce5cf 100755
  elif test $ac_cv_prog_cc_g = yes; then
    if test "$GCC" = yes; then
 -    CFLAGS="-g -O2"
-+    CFLAGS="-g1 -O2"
++    CFLAGS="-mtune=generic -march=x86-64 -g3 -O2"
    else
      CFLAGS="-g"
    fi
@@ -188,7 +188,7 @@ index 6abea208..c14ce5cf 100755
  elif test $ac_cv_prog_cc_g = yes; then
    if test "$GCC" = yes; then
 -    CFLAGS="-g -O2"
-+    CFLAGS="-g1 -O2"
++    CFLAGS="-mtune=generic -march=x86-64 -g3 -O2"
    else
      CFLAGS="-g"
    fi
@@ -201,7 +201,7 @@ index d7af03fc..705b7e05 100755
  elif test $ac_cv_prog_cc_g = yes; then
    if test "$GCC" = yes; then
 -    CFLAGS="-g -O2"
-+    CFLAGS="-g1 -O2"
++    CFLAGS="-mtune=generic -march=x86-64 -g3 -O2"
    else
      CFLAGS="-g"
    fi
@@ -214,7 +214,7 @@ index 5087f017..3278d18e 100755
  elif test $ac_cv_prog_cc_g = yes; then
    if test "$GCC" = yes; then
 -    CFLAGS="-g -O2"
-+    CFLAGS="-g1 -O2"
++    CFLAGS="-mtune=generic -march=x86-64 -g3 -O2"
    else
      CFLAGS="-g"
    fi
@@ -223,7 +223,7 @@ index 5087f017..3278d18e 100755
  elif test $ac_cv_prog_cc_g = yes; then
    if test "$GCC" = yes; then
 -    CFLAGS="-g -O2"
-+    CFLAGS="-g1 -O2"
++    CFLAGS="-mtune=generic -march=x86-64 -g3 -O2"
    else
      CFLAGS="-g"
    fi
@@ -232,7 +232,7 @@ index 5087f017..3278d18e 100755
  elif test $ac_cv_prog_cxx_g = yes; then
    if test "$GXX" = yes; then
 -    CXXFLAGS="-g -O2"
-+    CXXFLAGS="-g1 -O2"
++    CXXFLAGS="-mtune=generic -march=x86-64 -g3 -O2"
    else
      CXXFLAGS="-g"
    fi
@@ -245,7 +245,7 @@ index f5cb1884..f6c543c2 100644
  }
  if {![info exists CFLAGS]} {
 -    set CFLAGS "-g -O2"
-+    set CFLAGS "-g1 -O2"
++    set CFLAGS "-mtune=generic -march=x86-64 -g3 -O2"
  }
  if {![info exists CXX]} {
      set CXX [find_g++]
@@ -258,7 +258,7 @@ index ccadfaa8..521ac8ce 100755
  elif test $ac_cv_prog_cc_g = yes; then
    if test "$GCC" = yes; then
 -    CFLAGS="-g -O2"
-+    CFLAGS="-g1 -O2"
++    CFLAGS="-mtune=generic -march=x86-64 -g3 -O2"
    else
      CFLAGS="-g"
    fi
@@ -271,7 +271,7 @@ index 24d13f34..ebae02ce 100644
    [m4_ifdef([A][M_PROG_GCJ], [A][M_PROG_GCJ],
      [AC_CHECK_TOOL(GCJ, gcj,)
 -      test "x${GCJFLAGS+set}" = xset || GCJFLAGS="-g -O2"
-+      test "x${GCJFLAGS+set}" = xset || GCJFLAGS="-g1 -O2"
++      test "x${GCJFLAGS+set}" = xset || GCJFLAGS="-mtune=generic -march=x86-64 -g3 -O2"
        AC_SUBST(GCJFLAGS)])])[]dnl
  ])
  
@@ -284,7 +284,7 @@ index 7e5e2538..9dfa0318 100755
  elif test $ac_cv_prog_cc_g = yes; then
    if test "$GCC" = yes; then
 -    CFLAGS="-g -O2"
-+    CFLAGS="-g1 -O2"
++    CFLAGS="-mtune=generic -march=x86-64 -g3 -O2"
    else
      CFLAGS="-g"
    fi
@@ -293,7 +293,7 @@ index 7e5e2538..9dfa0318 100755
  elif test $ac_cv_prog_cc_g = yes; then
    if test "$GCC" = yes; then
 -    CFLAGS="-g -O2"
-+    CFLAGS="-g1 -O2"
++    CFLAGS="-mtune=generic -march=x86-64 -g3 -O2"
    else
      CFLAGS="-g"
    fi
@@ -306,7 +306,7 @@ index bed9e3ea..e5eba2e1 100755
  elif test $ac_cv_prog_cc_g = yes; then
    if test "$GCC" = yes; then
 -    CFLAGS="-g -O2"
-+    CFLAGS="-g1 -O2"
++    CFLAGS="-mtune=generic -march=x86-64 -g3 -O2"
    else
      CFLAGS="-g"
    fi
