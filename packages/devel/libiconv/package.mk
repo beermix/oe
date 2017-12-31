@@ -27,9 +27,6 @@ PKG_SECTION="devel"
 PKG_SHORTDESC="Libiconv converts from one character encoding to another through Unicode conversion."
 PKG_LONGDESC="Libiconv converts from one character encoding to another through Unicode conversion."
 
-
-export CCACHE_DISABLE=1
-
 post_unpack() {
   sed -i '/preload/d' $PKG_BUILD/Makefile.in
 }
@@ -42,11 +39,4 @@ PKG_CONFIGURE_OPTS_TARGET="--host=$TARGET_NAME \
 			      --sysconfdir=/etc \
 			      --enable-static \
 			      --disable-shared \
-			      --disable-nls \
-			      --enable-extra-encodings \
-			      --with-gnu-ld"
-
-pre_configure_target() {
-  CFLAGS="$CFLAGS -fPIC"
-  CXXFLAGS="$CXXFLAGS -fPIC"
-}
+			      --enable-extra-encodings"
