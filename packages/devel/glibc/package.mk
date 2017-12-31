@@ -120,9 +120,9 @@ pre_configure_target() {
 
   # set some CFLAGS we need
   
-  export CFLAGS="-march=westmere -mtune=westmere -g -O2 -m64 -Wl,-z,max-page-size=0x1000 "
-  unset LDFLAGS
-  export LDFLAGS="-Wl,-z,max-page-size=0x1000 "
+  export CFLAGS="-mtune=generic -march=x86-64 -O3 -g3 -m64"
+#  unset LDFLAGS
+#  export LDFLAGS="-Wl,-z,max-page-size=0x1000 "
 
   export BUILD_CC=$HOST_CC
   export OBJDUMP_FOR_HOST=objdump
