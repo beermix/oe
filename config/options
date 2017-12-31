@@ -6,9 +6,7 @@ fi
 
 # set default language for buildsystem
   export LC_ALL=C
-  
-  ulimit -u unlimited
-  
+
   export CCACHE_DISABLE=true
 
   export CCACHE_NOSTATS=true

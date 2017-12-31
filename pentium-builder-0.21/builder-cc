@@ -1,0 +1,16 @@
+#! /usr/bin/perl
+
+if ($ENV{DEBIAN_BUILDARCH} eq undef && $ENV{DEBIAN_BUILDGCCVER} eq undef) {
+    @target = ("gcc.real", @ARGV);
+} elsif ($ENV{DEBIAN_BUILDARCH} eq undef) {
+    @target = ("gcc-" . $ENV{DEBIAN_BUILDGCCVER}, @ARGV);
+} elsif ($ENV{DEBIAN_BUILDGCCVER} eq undef) {
+    @target = ("gcc.real", "-mcpu=$ENV{DEBIAN_BUILDARCH}",
+    "-march=$ENV{DEBIAN_BUILDARCH}", @ARGV);
+} else {
+    @target = ("gcc-" . $ENV{DEBIAN_BUILDGCCVER},
+    "-mcpu=$ENV{DEBIAN_BUILDARCH}", "-march=$ENV{DEBIAN_BUILDARCH}",
+    @ARGV);
+}
+
+exec @target or die "Unable to exec @target[0]: $!\n";

@@ -1,0 +1,17 @@
+The way this package works is it diverts gcc, cc, g++, etc, with shell
+scripts that, if the environment variable DEBIAN_BUILDARCH is set and
+exported, call "gcc -m$DEBIAN_BUILDARCH". So with DEBIAN_BUILDARCH=pentium
+set and exported, you build pentium optimized binaries, without it set, you
+build normal i386 binaries.
+
+It also specially interecpts dpkg's call to gcc --print-libgcc-file-name and
+munges the result to that dpkg thinks the taget architecture is the value of
+$DEBIAN_BUILDARCH
+
+Why did I do it this way? There are alternatives after all. I could just set
+CFLAGS or GCC, or I could place the shell script wrappers in a separate
+directory and set the PATH to point to them when you want to build pentium
+optimized stuff. The problem with all these ideas is that I can imagine
+packages that would circumvent them.
+
+It's a hack, but it works. I welcome a cleaner solution.

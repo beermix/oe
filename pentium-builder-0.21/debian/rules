@@ -1,0 +1,67 @@
+#!/usr/bin/make -f
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+build: build-stamp
+build-stamp:
+	dh_testdir
+
+	# Add here commands to compile the package.
+	#$(MAKE)
+
+	touch build-stamp
+
+clean:
+	dh_testdir
+	dh_testroot
+	rm -f build-stamp
+
+	# Add here commands to clean up after the build process.
+	#-$(MAKE) clean
+	#-$(MAKE) distclean
+
+	dh_clean
+
+install: build
+	dh_testdir
+	dh_testroot
+	dh_clean -k
+	dh_installdirs usr/bin
+	install builder-cc builder-c++ debian/pentium-builder/usr/bin
+	dh_link usr/bin/builder-cc usr/bin/gcc \
+		usr/bin/builder-c++ usr/bin/g++
+
+# Build architecture-dependent files here.
+binary-arch:
+# We have nothing to do by default.
+
+# Build architecture-independent files here.
+binary-indep: build install
+#	dh_testversion
+	dh_perl
+	dh_testdir
+	dh_testroot
+	dh_installdocs
+	dh_installexamples
+	dh_installmenu
+#	dh_installinit
+	dh_installcron
+	dh_installman
+#	dh_undocumented
+	dh_installchangelogs
+	dh_strip
+	dh_compress
+	dh_fixperms
+	dh_installdeb
+	dh_shlibdeps
+	dh_gencontrol
+#	dh_makeshlibs
+	dh_md5sums
+	dh_builddeb
+
+source diff:                                                                  
+	@echo >&2 'source and diff are obsolete - use dpkg-source -b'; false
+
+binary: binary-indep binary-arch
+.PHONY: build clean binary-indep binary-arch binary

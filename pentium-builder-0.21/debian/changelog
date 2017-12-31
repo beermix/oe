@@ -1,0 +1,185 @@
+pentium-builder (0.21) unstable; urgency=medium
+
+  * Fix "FTBFS with dpkg-buildpackage -A: dpkg-genchanges: error: binary
+    build with no binary artifacts found; cannot distribute", thanks
+    Santiago Vila (Closes: #831964).
+  * Fix email address in previous changelog entry.
+
+ -- Alex Pennace <alex@pennace.org>  Wed, 17 Aug 2016 21:54:37 -0400
+
+pentium-builder (0.20) unstable; urgency=low
+
+  * Bump debhelper compat level (Closes: #800199).
+
+ -- Alex Pennace <alex@pennace.org>  Sun, 29 Nov 2015 18:44:57 -0500
+
+pentium-builder (0.19) unstable; urgency=low
+
+  * Not entirely sure about making this package non-native.  
+  * Acknowledge NMU, thanks Amaya Rodrigo Sastre (Closes: #359560, #169159).
+  * Fixed bug where it doesn't handle DEBIAN_BUILDGCCVER being defined
+    while DEBIAN_BUILDARCH is not, thanks Michael Blakeley (Closes:
+    #322959).
+
+ -- Alex Pennace <alex@pennace.org>  Mon,  4 Sep 2006 23:38:17 -0400
+
+pentium-builder (0.18-1.1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * Get rid of the /usr/doc link in postinst (Closes: #359560).
+  * Change occurences of DEBAIN to DEBIAN in manpages (Closes: #169159).
+  * Package switches from native to non-native
+
+ -- Amaya Rodrigo Sastre <amaya@debian.org>  Mon, 17 Jul 2006 20:03:49 +0200
+
+pentium-builder (0.18) unstable; urgency=low
+
+  * Horrible bug: the pentium-builder scripts fail silently and indicate
+    success to the parent process if they are unable to execute the real
+    compiler. Execution can fail due to a variety of temporary or
+    permanent problems. In the case of pentium-builder, the chief problem
+    was calling a binary that wasn't there. pentium-builder now prints a
+    diagnostic and terminates with a non-zero exit code if execution
+    fails. Thanks Francesco Potorti`. (closes: Bug#151077)
+  * Updated copyright.
+
+ -- Alex Pennace <alex@pennace.org>  Sat,  3 Aug 2002 06:10:57 -0400
+
+pentium-builder (0.17) unstable; urgency=low
+
+  * Acknowledge NMU, thanks Junichi Uekawa. (closes: Bug#126243)
+  * Cleaned up man pages.
+
+ -- Alex Pennace <alex@pennace.org>  Sat,  2 Mar 2002 16:14:44 -0500
+
+pentium-builder (0.16.1) unstable; urgency=low
+
+  * NMU at the request of maintainer.
+  * merging athlon-builder to pentium-builder (closes: #122488, #95393)
+
+ -- Junichi Uekawa <dancer@debian.org>  Sun, 23 Dec 2001 15:04:24 +0900
+
+pentium-builder (0.16) unstable; urgency=low
+
+  * Removed --print-libgcc-file-name kludge because it causes problems
+    when used as input to 'gcc -E'. (closes: Bug#106727)
+
+ -- Alex Pennace <alex@pennace.org>  Tue, 31 Jul 2001 00:51:16 -0400
+
+pentium-builder (0.15) unstable; urgency=low
+
+  * New maintainer. (closes: Bug#100372)
+  * Fixed --print-libgcc-file-name kludge. Note that 'dpkg
+    --print-architecture' warns about the strange gcc output but otherwise
+    behaves as expected, and dpkg-architecture will return i386. This may
+    cause other problems. (closes: Bug#92325)
+  * Arranged for proper Perl dependency with dh_perl.
+  * Changed debhelper build dependency from Build-Depends-Indep to
+    Build-Depends, since dh_testdir is called from the build target in
+    debian/rules, see Debian Policy Manual ver. 3.5.5.0 sec. 7.6.
+  * Added dependency on 'gcc | g++'; the package is useless without either
+    of those packages.
+  * Added basic manual pages for builder-cc and builder-c++.
+  * New copyright file.
+  * Complies with Debian Policy ver. 3.5.5.0; updated Standards-Version
+    control field accordingly.
+
+ -- Alex Pennace <alex@pennace.org>  Sun, 15 Jul 2001 21:34:07 -0400
+
+pentium-builder (0.14) unstable; urgency=low
+
+  * I forgot to change the maintainer field...
+  * Standards-Version: 3.5.2 (no changes)
+
+ -- Adrian Bunk <bunk@fs.tum.de>  Wed,  7 Mar 2001 22:51:44 +0100
+
+pentium-builder (0.13) unstable; urgency=low
+
+  * New maintainer. (closes: #82247)
+
+ -- Adrian Bunk <bunk@fs.tum.de>  Wed,  7 Mar 2001 11:28:20 +0100
+
+pentium-builder (0.12) unstable; urgency=low
+
+  * Orphaned the package.
+
+ -- Joey Hess <joeyh@debian.org>  Sat, 13 Jan 2001 21:15:44 -0800
+
+pentium-builder (0.11) unstable; urgency=low
+
+  * Wow. This package has not been touched in almost a year. I sorta forgot
+    about it..
+  * Updated the extended description.
+
+ -- Joey Hess <joeyh@debian.org>  Sun, 31 Dec 2000 17:48:07 -0800
+
+pentium-builder (0.10) unstable; urgency=low
+
+  * Documented that yes, you have to export variables before this package
+    can see them. Closes: #56969
+
+ -- Joey Hess <joeyh@debian.org>  Mon,  7 Feb 2000 13:55:05 -0800
+
+pentium-builder (0.9) unstable; urgency=low
+
+  * I think this fixes an upgrade problem where dpkg-divert would not remove
+    the c++ diversion because there was a file there. Closes: #54618
+  * Fixed typo that broke g++, Closes: #54992
+
+ -- Joey Hess <joeyh@debian.org>  Tue, 11 Jan 2000 18:06:04 -0800
+
+pentium-builder (0.8) unstable; urgency=low
+
+  * Fixed c++, which is now managed by alternatives. Closes: #54094
+  * Fixed doc symlink, Closes: #52974
+
+ -- Joey Hess <joeyh@debian.org>  Wed,  5 Jan 2000 13:41:25 -0800
+
+pentium-builder (0.7) unstable; urgency=low
+
+  * Build dep.
+
+ -- Joey Hess <joeyh@debian.org>  Sat,  4 Dec 1999 15:17:28 -0800
+
+pentium-builder (0.6) unstable; urgency=low
+
+  * Removed install-stamp, which can do some bad things.
+
+ -- Joey Hess <joeyh@debian.org>  Thu, 30 Sep 1999 13:23:40 -0700
+
+pentium-builder (0.5) unstable; urgency=low
+
+  * FHS
+  * Changed priority to extra. You don't want to install this unless you
+    nkow what you're doing.
+
+ -- Joey Hess <joeyh@debian.org>  Thu, 16 Sep 1999 20:58:34 -0700
+
+pentium-builder (0.4) unstable; urgency=low
+
+  * Don't use egcc anymore, gcc in unstable is egcc and can optimize.
+
+ -- Joey Hess <joeyh@debian.org>  Fri, 19 Mar 1999 20:37:59 -0800
+
+pentium-builder (0.3) experimental; urgency=low
+
+  * Fixed gcc wrapper so it will work if passed things like -Dfoo="bar baz"
+
+ -- Joey Hess <joeyh@debian.org>  Thu, 18 Mar 1999 16:49:56 -0800
+
+pentium-builder (0.2) experimental; urgency=low
+
+  * Now uses an enviroment variable DPKG_BUILDARCH, instead of
+    DPKG_OPTIMIZATION.
+  * Now intercepts dpkg's call to gcc --print-libgcc-file-name and 
+    munges the result so dpkg builds a package in the wanted architecture.
+  * Use -mcpu= and -march=, instead of just -m.
+
+ -- Joey Hess <joeyh@debian.org>  Sat, 25 Jul 1998 16:44:09 -0700
+
+pentium-builder (0.1) experimental; urgency=low
+
+  * First release.
+
+ -- Joey Hess <joeyh@debian.org>  Tue, 21 Jul 1998 23:13:04 -0700
+

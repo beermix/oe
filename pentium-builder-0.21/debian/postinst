@@ -1,0 +1,19 @@
+#!/bin/sh -e
+if [ "$1" = "configure" ]; then
+        if [ -d /usr/doc -a -h /usr/doc/pentium-builder -a -d /usr/share/doc/pentium-builder ]; then
+                rm -f /usr/doc/pentium-builder
+        fi
+fi
+
+#DEBHELPER#
+
+# Old cruft
+dpkg-divert --rename --remove /usr/bin/c++
+
+update-alternatives --install /usr/bin/cc cc /usr/bin/builder-cc 100 \
+	--slave /usr/share/man/man1/cc.1.gz cc.1.gz /usr/share/man/man1/gcc.1.gz
+	
+update-alternatives --install /usr/bin/c++ c++ /usr/bin/builder-c++ 100 \
+	--slave /usr/share/man/man1/c++.1.gz c++.1.gz /usr/share/man/man1/g++.1.gz
+	
+#DEBHELPER#
