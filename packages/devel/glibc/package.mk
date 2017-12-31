@@ -91,6 +91,7 @@ pre_configure_target() {
   export CFLAGS=`echo $CFLAGS | sed -e "s|-pipe -fno-caller-saves -fno-plt||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-Ofast|-O2|g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O2|g"`
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-g0|-O2|g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong -fno-plt||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
