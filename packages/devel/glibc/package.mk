@@ -28,7 +28,7 @@ PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="glibc: The GNU C library"
 PKG_LONGDESC="The Glibc package contains the main C library. This library provides the basic routines for allocating memory, searching directories, opening and closing files, reading and writing files, string handling, pattern matching, arithmetic, and so on."
 
-PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/bash \
+PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            ac_cv_path_PERL=no \
                            ac_cv_prog_MAKEINFO= \
                            --libexecdir=/usr/lib/glibc \
@@ -120,7 +120,7 @@ pre_configure_target() {
 
   # set some CFLAGS we need
   
-  export CFLAGS="-mtune=generic -march=x86-64 -O3 -g3 -m64"
+  export CFLAGS="-mtune=generic -march=x86-64 -O3 -g -m64"
 #  unset LDFLAGS
 #  export LDFLAGS="-Wl,-z,max-page-size=0x1000 "
 
