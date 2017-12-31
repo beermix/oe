@@ -142,7 +142,7 @@ TARGET_CONFIGURE_OPTS="--host=$TARGET_NAME \
 if [ "$DEBUG" = "yes" ]; then
   CMAKE_BUILD_TYPE="Debug"
 else
-  CMAKE_BUILD_TYPE="Release"
+  CMAKE_BUILD_TYPE=""
 fi
 
 CMAKE_GENERATOR_NINJA="-GNinja \
