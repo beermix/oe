@@ -56,7 +56,8 @@ pre_configure_host() {
   unset CFLAGS
   unset CXXFLAGS
   unset LDFLAGS
-  export SOURCE_DATE_EPOCH=1502738392
+  CFLAGS="-g1 -O2"
+  CXXFLAGS="-g1 -O2"
 }
 
 make_host() {

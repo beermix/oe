@@ -49,7 +49,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libmpx \
                            --disable-libssp \
                            --disable-libmudflap \
-                           --disable-libitm \
                            --disable-libquadmath \
                            --disable-libsanitizer \
                            --without-cuda-driver \
@@ -64,6 +63,7 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-libgomp \
                               --disable-libatomic \
                               --disable-libada \
+                              --disable-libitm \
                               --without-headers \
                               --with-newlib \
                               --disable-decimal-float \
@@ -86,10 +86,6 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          $GCC_OPTS"
 
 pre_configure_host() {
-#  export CFLAGS="-march=westmere -g1 -O3 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro -Wl,-z,max-page-size=0x1000"
-#  export CXXFLAGS="-march=westmere -g1 -O3  -Wl,-z,max-page-size=0x1000"
-#  export CFLAGS_FOR_TARGET="$CFLAGS"
-#  export CXXFLAGS_FOR_TARGET="$CXXFLAGS"
   unset CPP
 }
 
