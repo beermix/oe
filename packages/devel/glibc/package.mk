@@ -42,7 +42,6 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/bash \
                            --with-__thread \
                            --enable-clocale=gnu \
                            --without-selinux \
-                           --enable-stack-protector=strong \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
                            --enable-kernel=3.10 \
@@ -66,15 +65,6 @@ NSS_CONF_DIR="$PKG_BUILD/nss"
 GLIBC_EXCLUDE_BIN="catchsegv gencat getconf iconv iconvconfig ldconfig"
 GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN makedb mtrace pcprofiledump"
 GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN pldd rpcgen sln sotruss sprof xtrace"
-
-#post_patch() {
-#  # Add patches from Clear Linux
-#  if [ "$TARGET_ARCH" = "x86_64" ]; then
-#    for file in $PKG_DIR/clear/*.patch; do
-#      patch -p1 -d $PKG_BUILD < $file
-#    done
-#  fi
-#}
 
 pre_build_target() {
   cd $PKG_BUILD
@@ -129,7 +119,7 @@ pre_configure_target() {
 
   # set some CFLAGS we need
   
-  export CFLAGS="-O3 -march=westmere -mtune=westmere -g2 -m64  -Wl,-z,max-page-size=0x1000 "
+  export CFLAGS="-march=westmere -mtune=westmere -g -O2 -m64 -Wl,-z,max-page-size=0x1000 "
   unset LDFLAGS
   export LDFLAGS="-Wl,-z,max-page-size=0x1000 "
 
