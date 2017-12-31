@@ -48,6 +48,9 @@ ROOT="${PWD}"
 DISTRO_DIR="$ROOT/distributions"
 PROJECT_DIR="$ROOT/projects"
 
+# include helper functions
+. config/functions
+
 # include versioning
   . config/version
 
@@ -118,6 +121,9 @@ fi
 if [ "$OEM" = yes -o "$OEM" = no ]; then
   OEM_SUPPORT=$OEM
 fi
+
+check_path >&2
+check_config >&2
 
 . config/graphic
 . config/path $1

@@ -7,7 +7,7 @@
   TARGET_SUBARCH=x86_64
 
   TARGET_GCC_ARCH="${TARGET_SUBARCH/-/}"
-  TARGET_KERNEL_ARCH=x86 
+  TARGET_KERNEL_ARCH=x86
 
 # setup ARCH specific *FLAGS
   TARGET_CFLAGS="-mtune=generic -march=x86-64 -m64"
