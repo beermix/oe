@@ -142,6 +142,7 @@ post_patch() {
       [ -f "$f" ] && cp -v $f $PKG_BUILD/arch/$TARGET_KERNEL_ARCH/boot/dts/overlays || true
     done
   fi
+
 }
 
 makeinstall_host() {
