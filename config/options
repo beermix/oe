@@ -7,18 +7,17 @@ fi
 # set default language for buildsystem
   export LC_ALL=C
 
-  export CCACHE_DISABLE=true
-
-  export CCACHE_NOSTATS=true
-  export CCACHE_CPP2=true
-  export CCACHE_HARDLINK=true
+#  export CCACHE_DISABLE=1
+  export CCACHE_HARDLINK=1
+  export CCACHE_NOSTATS=1
+  export CCACHE_CPP2=1
   export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime
-#  export CCACHE_COMPILERCHECK=mtime
-#  export CCACHE_CPP2=false
-#  export CCACHE_OPTIONS="--zero-stats"
-
-  export CCACHE_COMPRESS=true
-#  export CCACHE_COMPRESSLEVEL=6
+  export CCACHE_COMPILERCHECK=mtime
+#  export CCACHE_SLOPPINESS=time_macros
+  export CCACHE_COMPRESS=1
+  export CCACHE_COMPRESSLEVEL=9
+ 
+ #  export CCACHE_OPTIONS="--zero-stats"
 
 # determines DISTRO, if not forced by user
 # default is LibreELEC
@@ -92,7 +91,7 @@ fi
   [ -z "${LOCAL_CXX}" ] && export LOCAL_CXX="$(which g++)"
 
 # verbose compilation mode (yes/no)
-  VERBOSE="yes"
+  VERBOSE="no"
 
 # Concurrency make level (-j option)
 #  Try value 1 (default) to 4 on single CPU computer, or more on

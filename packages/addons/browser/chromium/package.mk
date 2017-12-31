@@ -38,6 +38,10 @@ PKG_ADDON_NAME="Chromium"
 PKG_ADDON_TYPE="xbmc.python.script"
 PKG_ADDON_PROVIDES="executable"
 
+export CCACHE_NODISABLE=1
+export CCACHE_HARDLINK=1
+export CCACHE_SLOPPINESS=time_macros
+  
 post_patch() {
   cd $(get_build_dir chromium)
 
@@ -57,7 +61,12 @@ make_target() {
   export LDFLAGS="$LDFLAGS -ludev"
   export LD=$CXX
   
-#  export CCACHE_SLOPPINESS=time_macros
+  # Fix paths.
+  sed -e 's|i386-linux-gnu/||g' \
+      -e 's|x86_64-linux-gnu/||g' \
+      -e 's|/usr/lib/va/drivers|/usr/lib/dri|g' \
+      -e 's|/usr/lib64/va/drivers|/usr/lib/dri|g' \
+      -i $PKG_BUILD/content/common/sandbox_linux/bpf_gpu_policy_linux.cc
 
   # Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
   # Note: These are for OpenELEC use ONLY. For your own distribution, please
