@@ -30,6 +30,7 @@ PKG_LONGDESC="The GNU binutils are utilities of use when dealing with object fil
 
 post_unpack() {
   rm -rf $PKG_BUILD/gdb $PKG_BUILD/libdecnumber $PKG_BUILD/readline $PKG_BUILD/sim
+  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $PKG_BUILD/libiberty/configure
 }
 
 PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
@@ -48,6 +49,8 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-lto \
                          --enable-secureplt \
                          --disable-nls \
+                         --with-pic \
+                         --with-system-zlib \
                          --enable-poison-system-directories"
 
 pre_configure_host() {
@@ -55,8 +58,8 @@ pre_configure_host() {
   unset CFLAGS
   unset CXXFLAGS
   unset LDFLAGS
-  CFLAGS="-g1 -O2"
-  CXXFLAGS="-g1 -O2"
+#  CFLAGS="-g1 -O2"
+#  CXXFLAGS="-g1 -O2"
 }
 
 make_host() {
