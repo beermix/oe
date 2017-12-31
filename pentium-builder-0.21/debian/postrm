@@ -1,7 +1,0 @@
-#!/bin/sh -e
-if [ "$1" = remove ]; then
-	dpkg-divert --rename --remove /usr/bin/gcc
-	dpkg-divert --rename --remove /usr/bin/g++
-fi
-
-#DEBHELPER#

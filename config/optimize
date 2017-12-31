@@ -1,4 +1,4 @@
-GCC_OPTIM="-g0 --param l1-cache-size=24 --param l1-cache-line-size=64 --param l2-cache-size=512 -O2 -pipe -fstack-protector-strong -D_FORTIFY_SOURCE=2 -fno-caller-saves -fno-plt -fomit-frame-pointer"
+GCC_OPTIM="-g0 --param l1-cache-size=24 --param l1-cache-line-size=64 --param l2-cache-size=512 -O2 -pipe -fno-caller-saves -fno-plt -fomit-frame-pointer"
 LD_OPTIM="-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now"
 
 if [ "$LTO_SUPPORT" = yes ];then

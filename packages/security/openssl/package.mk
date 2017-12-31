@@ -19,6 +19,7 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            zlib-dynamic \
                            no-ssl2 \
                            no-ssl3 \
+                           no-err \
                            enable-camellia \
                            enable-mdc2 \
                            enable-ec_nistp_64_gcc_128"
@@ -59,7 +60,7 @@ pre_configure_target() {
 
 configure_target() {
   cd $PKG_BUILD/.$TARGET_NAME
-  ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED zlib-dynamic linux-x86_64 "-Wa,--noexecstack $CFLAGS -ffunction-sections -fsemantic-interposition"
+  ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED zlib-dynamic linux-x86_64 "-Wa,--noexecstack $CFLAGS -$LDFLAGS -fsemantic-interposition"
 #  MAKEFLAGS=-j1
 }
 

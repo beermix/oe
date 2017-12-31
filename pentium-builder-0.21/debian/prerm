@@ -1,7 +1,0 @@
-#!/bin/sh -e
-if [ $1 != "upgrade" ]; then
-	update-alternatives --remove cc /usr/bin/builder-cc
-	update-alternatives --remove c++ /usr/bin/builder-c++
-fi
-
-#DEBHELPER#
