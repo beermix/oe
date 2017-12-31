@@ -38,10 +38,6 @@ PKG_ADDON_NAME="Chromium"
 PKG_ADDON_TYPE="xbmc.python.script"
 PKG_ADDON_PROVIDES="executable"
 
-export CCACHE_NODISABLE=1
-export CCACHE_HARDLINK=1
-export CCACHE_SLOPPINESS=time_macros
-  
 post_patch() {
   cd $(get_build_dir chromium)
 
@@ -60,6 +56,10 @@ make_target() {
   strip_lto
   export LDFLAGS="$LDFLAGS -ludev"
   export LD=$CXX
+  
+#  export CCACHE_NODISABLE=1
+#  export CCACHE_HARDLINK=1
+#  export CCACHE_SLOPPINESS=time_macros
   
   # Fix paths.
   sed -e 's|i386-linux-gnu/||g' \
