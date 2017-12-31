@@ -33,7 +33,7 @@ configure_host() {
   cd $PKG_BUILD/.$HOST_NAME
   unset CFLAGS
   sed -i -e '/^"linux-x86_64"/ s/-m64 -DL_ENDIAN -O3 -Wall/-m64 -DL_ENDIAN -Wall/' $PKG_BUILD/.$HOST_NAME/Configure
-  ./Configure --prefix=/ $PKG_CONFIGURE_OPTS_SHARED no-zlib no-zlib-dynamic linux-x86_64 "$CFLAGS -ffunction-sections -fdata-sections -Wl,--gc-sections"
+  ./Configure --prefix=/ $PKG_CONFIGURE_OPTS_SHARED no-zlib no-zlib-dynamic linux-x86_64 $CFLAGS $LDFLAGS
 #  MAKEFLAGS=-j1
 }
 
@@ -60,7 +60,7 @@ pre_configure_target() {
 
 configure_target() {
   cd $PKG_BUILD/.$TARGET_NAME
-  ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 "-ffunction-sections -fdata-sections -Wl,--gc-sections"
+  ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $CFLAGS $LDFLAGS
 #  MAKEFLAGS=-j1
 }
 
