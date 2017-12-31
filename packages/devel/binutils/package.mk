@@ -42,13 +42,12 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --disable-multilib \
                          --disable-libada \
                          --enable-libssp \
-                         --enable-relro \
                          --enable-version-specific-runtime-libs \
                          --enable-plugins \
                          --enable-ld=default \
                          --enable-lto \
-                         --enable-secureplt \
                          --disable-nls \
+                         --enable-threads \
                          --with-pic \
                          --enable-poison-system-directories"
 
@@ -57,8 +56,6 @@ pre_configure_host() {
   unset CFLAGS
   unset CXXFLAGS
   unset LDFLAGS
-#  CFLAGS="-g3 -O2"
-#  CXXFLAGS="-g3 -O2"
 }
 
 make_host() {
