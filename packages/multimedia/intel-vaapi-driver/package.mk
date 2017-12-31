@@ -37,6 +37,6 @@ else
   DISPLAYSERVER_LIBVA="--disable-x11 --disable-wayland"
 fi
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-silent-rules \
+PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
                            --enable-drm \
                            $DISPLAYSERVER_LIBVA"
