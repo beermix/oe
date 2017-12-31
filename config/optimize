@@ -1,4 +1,4 @@
-GCC_OPTIM="--param l1-cache-size=24 --param l1-cache-line-size=64 --param l2-cache-size=512 -O2 -pipe -fno-plt -fomit-frame-pointer"
+GCC_OPTIM="-O2 -pipe -fno-plt -fomit-frame-pointer"
 LD_OPTIM="-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now"
 
 if [ "$LTO_SUPPORT" = yes ];then
@@ -31,7 +31,7 @@ TARGET_LIBDIR="$SYSROOT_PREFIX/lib $SYSROOT_PREFIX/usr/lib"
 TARGET_INCDIR="$SYSROOT_PREFIX/include $SYSROOT_PREFIX/usr/include"
 
 HOST_CPPFLAGS=""
-HOST_CFLAGS="-mtune=generic -march=x86-64 -O2 -pipe $CCACHE_FLAGS -I$TOOLCHAIN/include"
+HOST_CFLAGS="-march=x86-64 -mtune=haswell -O2 -pipe $CCACHE_FLAGS -I$TOOLCHAIN/include"
 HOST_CXXFLAGS="$HOST_CFLAGS"
 HOST_LDFLAGS="-Wl,-rpath,$TOOLCHAIN/lib -L$TOOLCHAIN/lib -s"
 HOST_INCDIR="$TOOLCHAIN/include /usr/include"
