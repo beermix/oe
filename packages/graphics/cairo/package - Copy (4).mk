@@ -51,7 +51,7 @@ elif [ "$DISPLAYSERVER" = "weston" ]; then
 fi
 
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CAIRO_CONFIG \
-                           --disable-silent-rules \
+                           --enable-silent-rules \
                            --enable-shared \
                            --disable-static \
                            --disable-gtk-doc \

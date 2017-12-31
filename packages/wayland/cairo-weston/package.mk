@@ -38,7 +38,7 @@ PKG_TOOLCHAIN="autotools"
 PKG_MAINTAINER="none"
 
 PKG_CONFIGURE_OPTS_TARGET=" \
-            --disable-silent-rules \
+            --enable-silent-rules \
             --enable-shared \
             --disable-static \
             --disable-gtk-doc \

@@ -14,6 +14,6 @@ pre_configure_target() {
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
-			   --disable-silent-rules \
+			   --enable-silent-rules \
 			   --enable-static \
 			   --disable-nls"

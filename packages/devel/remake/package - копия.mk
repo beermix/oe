@@ -26,7 +26,7 @@ PKG_LONGDESC="Patched GNU Make 4.1 sources to add improved error reporting, trac
 PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_HOST="ac_cv_func_gettimeofday=yes \
-			    --disable-silent-rules \
+			    --enable-silent-rules \
 			    --without-libintl-prefix \
 			    --without-libiconv-prefix"
 			 

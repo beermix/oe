@@ -6,4 +6,4 @@ PKG_SECTION="my"
 
 PKG_TOOLCHAIN="autotools"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared --disable-silent-rules"
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-silent-rules"

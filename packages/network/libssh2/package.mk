@@ -10,7 +10,7 @@ PKG_TOOLCHAIN="autotools"
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-static \
 			      --with-libz \
-			      --disable-silent-rules \
+			      --enable-silent-rules \
 			      --disable-examples-build \
 			      --disable-debug \
 			      --with-pic \

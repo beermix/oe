@@ -32,7 +32,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
                            --enable-static \
                            --disable-debug \
                            --disable-deprecated \
-                           --disable-silent-rules \
+                           --enable-silent-rules \
                            --enable-malloc \
                            --enable-charsets \
                            --with-gnu-ld \

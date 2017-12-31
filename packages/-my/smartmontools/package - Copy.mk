@@ -7,7 +7,7 @@ PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config/smartmontools \
 			      --datarootdir=/storage/.config/smartmontools/share \
-			      --disable-silent-rules"
+			      --enable-silent-rules"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/storage

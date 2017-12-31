@@ -24,7 +24,7 @@ configure_target() {
 
 autoreconf -i; ./configure --host=$TARGET_NAME \
               --build=$HOST_NAME \
-              --disable-silent-rules \
+              --enable-silent-rules \
               --disable-encryption \
               --enable-static \
               --with-boost-thread=$SYSROOT_PREFIX/usr/lib \

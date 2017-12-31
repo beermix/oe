@@ -22,7 +22,7 @@ configure_target() {
   ./configure LIBS= \
               --host=$TARGET_NAME \
               --build=$HOST_NAME \
-              --disable-silent-rules \
+              --enable-silent-rules \
               --disable-encryption \
               --enable-static \
               --enable-python-binding \

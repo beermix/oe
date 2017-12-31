@@ -32,7 +32,7 @@ PKG_LONGDESC="libass is a portable subtitle renderer for the ASS/SSA (Advanced S
 PKG_CONFIGURE_OPTS_TARGET="--disable-test \
                            --enable-fontconfig \
                            --disable-harfbuzz \
-                           --disable-silent-rules \
+                           --enable-silent-rules \
                            --with-gnu-ld"
 
 if [ $TARGET_ARCH = "x86_64" ]; then

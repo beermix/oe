@@ -18,7 +18,7 @@ PKG_CONFIGURE_OPTS_TARGET="squid_cv_gnu_atomics=no \
                            --enable-epoll \
                            --enable-removal-policies="lru,heap" \
                            --disable-strict-error-checking \
-                           --disable-silent-rules \
+                           --enable-silent-rules \
                            --with-openssl \
                            --with-expat \
                            --without-libxml2 \

@@ -24,7 +24,7 @@ PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config \
                            --disable-doxygen-dot \
                            --disable-doxygen-html \
                            --without-internal-edit \
-                           --disable-silent-rules \
+                           --enable-silent-rules \
                            --enable-charset \
                            --enable-largefile \
                            --without-gpm-mouse \

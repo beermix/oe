@@ -13,5 +13,5 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --enable-static \
 			   --disable-shared \
 			   --with-gnu-ld \
-			   --disable-silent-rules"
+			   --enable-silent-rules"
 		

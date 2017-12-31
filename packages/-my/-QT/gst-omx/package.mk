@@ -34,7 +34,7 @@ fi
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-maintainer-mode \
 			      --disable-dependency-tracking \
-			      --disable-silent-rules \
+			      --enable-silent-rules \
 			      --disable-fatal-warnings \
 			      --disable-shared \
 			      --with-pic \

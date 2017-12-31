@@ -14,7 +14,7 @@ pre_configure_target() {
 
 PKG_CONFIGURE_OPTS_TARGET="--bindir=/bin \
 			      --enable-multibyte \
-			      --disable-silent-rules \
+			      --enable-silent-rules \
 			      --enable-cap \
 			      --enable-pcre \
 			      --disable-ansi2knr \
