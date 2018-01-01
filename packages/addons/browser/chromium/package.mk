@@ -58,8 +58,12 @@ make_target() {
   export LD=$CXX
   
 #  export CCACHE_NODISABLE=1
-  export CCACHE_HARDLINK=1
+#  export CCACHE_HARDLINK=1
   export CCACHE_SLOPPINESS=time_macros
+  
+#  export PATH="$PKG_BUILD/python2-path:$PATH"
+  export TMPDIR="$PKG_BUILD/temp"
+  mkdir -p "$TMPDIR"
   
   # Fix paths.
   sed -e 's|i386-linux-gnu/||g' \
