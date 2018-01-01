@@ -22,7 +22,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/bminor/glibc/tree/release/2.26/master"
 PKG_URL="https://github.com/bminor/glibc/archive/$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host python3:host gcc:bootstrap"
+PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host Python3:host gcc:bootstrap"
 PKG_DEPENDS_INIT="glibc"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="glibc: The GNU C library"
@@ -45,13 +45,10 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
                            --enable-kernel=3.10 \
-                           --enable-lock-elision=yes \
-                           --without-cvs \
-                           --without-gd \
+                           --enable-lock-elision \
                            --enable-obsolete-rpc \
                            --enable-obsolete-nsl \
-                           --disable-build-nscd \
-                           --disable-nscd \
+                           --disable-werror \
                            --disable-timezone-tools"
 
 if [ "$DEBUG" = yes ]; then

@@ -16,4 +16,5 @@ PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config/htop \
                            --enable-unicode \
                            --enable-linux-affinity \
                            --enable-setuid \
-                           --disable-hwloc"
+                           --disable-hwloc \
+                           --enable-cgroup"

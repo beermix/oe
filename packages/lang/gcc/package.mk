@@ -55,6 +55,9 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libmpx \
                            --disable-libssp \
                            --disable-libsanitizer \
+                           --disable-libitm \
+                           --disable-libmudflap \
+                           --disable-libquadmath \
                            --without-cuda-driver \
                            --enable-gnu-indirect-function \
                            --with-tune=haswell \
@@ -68,9 +71,6 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-libgomp \
                               --disable-libatomic \
                               --disable-libada \
-                              --disable-libitm \
-                              --disable-libmudflap \
-                              --disable-libquadmath \
                               --without-headers \
                               --with-newlib \
                               --disable-decimal-float \
@@ -85,9 +85,15 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --disable-static \
                          --enable-c99 \
                          --enable-long-long \
+                         --enable-gnu-unique-object \
+                         --enable-linker-build-id \
+                         --enable-install-libiberty \
+                         --with-linker-hash-style=gnu \
                          --enable-threads=posix \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time \
+                         --enable-default-pie \
+                         --enable-default-ssp \
                          --enable-clocale=gnu \
                          --enable-libatomic \
                          $GCC_OPTS"
