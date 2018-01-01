@@ -78,6 +78,9 @@ make_target() {
 
   local _flags=(
     "host_toolchain=\"//build/toolchain/linux:x64_host\""
+    'enable_hotwording=false'
+    'enable_precompiled_headers=false'
+    'linux_use_bundled_binutils=false'
     'is_clang=false'
     'clang_use_chrome_plugins=false'
     'symbol_level=0'
@@ -125,6 +128,9 @@ make_target() {
   ln -fs /home/user/.bin/node $PKG_BUILD/third_party/node/linux/node-linux-x64/bin/node
   
   touch $PKG_BUILD/chrome/test/data/webui/i18n_process_css_test.html
+  
+  ninja -j${CONCURRENCY_MAKE_LEVEL} -C out/Release gen/ui/accessibility/ax_enums.h gen/ui/accessibility/ax_enums.cc
+  ninja -j${CONCURRENCY_MAKE_LEVEL} -C out/Release mksnapshot
   
   ninja -j${CONCURRENCY_MAKE_LEVEL} -C out/Release chrome chrome_sandbox widevinecdmadapter
 }
