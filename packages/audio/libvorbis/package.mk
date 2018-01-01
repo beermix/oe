@@ -35,6 +35,6 @@ PKG_CONFIGURE_OPTS_TARGET="--with-ogg=$SYSROOT_PREFIX/usr \
                            --disable-docs \
                            --disable-examples"
 
-#pre_configure_target() {
-#  export CFLAGS="$CFLAGS -fPIC"
-#}
+pre_configure_target() {
+  export CFLAGS="$CFLAGS -fPIC"
+}
