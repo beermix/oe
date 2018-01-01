@@ -122,11 +122,10 @@ make_target() {
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
   mkdir -p $PKG_BUILD/third_party/node/linux/node-linux-x64/bin
-  ln -fs $TOOLCHAIN/bin/node $PKG_BUILD/third_party/node/linux/node-linux-x64/bin/node
+  ln -fs /home/user/.bin/node $PKG_BUILD/third_party/node/linux/node-linux-x64/bin/node
   
   touch $PKG_BUILD/chrome/test/data/webui/i18n_process_css_test.html
   
-
   ninja -j${CONCURRENCY_MAKE_LEVEL} -C out/Release chrome chrome_sandbox widevinecdmadapter
 }
 
