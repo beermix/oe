@@ -30,7 +30,8 @@ PKG_SECTION="lang"
 PKG_SHORTDESC="llvm: Low Level Virtual Machine"
 PKG_LONGDESC="Low-Level Virtual Machine (LLVM) is a compiler infrastructure designed for compile-time, link-time, run-time, and idle-time optimization of programs from arbitrary programming languages. It currently supports compilation of C, Objective-C, and C++ programs, using front-ends derived from GCC 4.0, GCC 4.2, and a custom new front-end, "clang". It supports x86, x86-64, ia64, PowerPC, and SPARC, with support for Alpha and ARM under development."
 
-PKG_CMAKE_OPTS_COMMON="-DLLVM_INCLUDE_TOOLS=ON \
+PKG_CMAKE_OPTS_COMMON="-DCMAKE_BUILD_TYPE=Release \
+                       -DLLVM_INCLUDE_TOOLS=ON \
                        -DLLVM_BUILD_TOOLS=OFF \
                        -DLLVM_BUILD_UTILS=OFF \
                        -DLLVM_BUILD_EXAMPLES=OFF \
@@ -56,7 +57,7 @@ PKG_CMAKE_OPTS_HOST="$PKG_CMAKE_OPTS_COMMON \
                      -DCMAKE_INSTALL_RPATH=$TOOLCHAIN/lib"
 
 make_host() {
-  ninja -l4 llvm-config llvm-tblgen
+  ninja -j${CONCURRENCY_MAKE_LEVEL} llvm-config llvm-tblgen
 }
 
 makeinstall_host() {
@@ -65,7 +66,7 @@ makeinstall_host() {
 }
 
 PKG_CMAKE_OPTS_TARGET="$PKG_CMAKE_OPTS_COMMON \
-                       -DCMAKE_BUILD_TYPE=MinSizeRel \
+                       -DCMAKE_BUILD_TYPE=Release \
                        -DCMAKE_C_FLAGS="$CFLAGS" \
                        -DCMAKE_CXX_FLAGS="$CXXFLAGS" \
                        -DLLVM_TARGET_ARCH="$TARGET_ARCH" \
