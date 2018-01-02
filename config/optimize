@@ -1,4 +1,4 @@
-GCC_OPTIM="-O2 -pipe -fno-plt -fomit-frame-pointer"
+GCC_OPTIM="-O2 -pipe -fstack-protector-strong -D_FORTIFY_SOURCE=2 -fno-plt -fomit-frame-pointer"
 LD_OPTIM="-Wl,-O1,--as-needed"
 
 if [ "$LTO_SUPPORT" = yes ];then
