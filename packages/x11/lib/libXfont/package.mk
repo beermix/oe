@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libXfont"
-PKG_VERSION="1.5.3"
+PKG_VERSION="1.5.4"
 PKG_SITE="http://www.X.org"
 PKG_URL="http://xorg.freedesktop.org/archive/individual/lib/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain util-macros fontcacheproto fontsproto xtrans freetype libfontenc"

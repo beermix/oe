@@ -41,23 +41,13 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-mpfr=$TOOLCHAIN \
                            --with-mpc=$TOOLCHAIN \
                            --with-isl=$TOOLCHAIN \
-                           --with-gnu-as \
-                           --with-gnu-ld \
-                           --enable-plugin \
-                           --enable-lto \
-                           --enable-ld=default \
                            --disable-multilib \
-                           --disable-nls \
                            --enable-checking=release \
-                           --with-default-libstdcxx-abi=gcc4-compatible \
                            --with-ppl=yes \
                            --without-cloog \
                            --disable-libmpx \
                            --disable-libssp \
                            --disable-libsanitizer \
-                           --disable-libitm \
-                           --disable-libmudflap \
-                           --disable-libquadmath \
                            --without-cuda-driver \
                            --enable-gnu-indirect-function \
                            --with-tune=haswell \
@@ -69,6 +59,9 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-shared \
                               --disable-threads \
                               --disable-libgomp \
+                              --disable-libitm \
+                              --disable-libmudflap \
+                              --disable-libquadmath \
                               --disable-libatomic \
                               --disable-libada \
                               --without-headers \

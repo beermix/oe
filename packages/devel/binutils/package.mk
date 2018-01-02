@@ -44,10 +44,6 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-libssp \
                          --enable-version-specific-runtime-libs \
                          --enable-plugins \
-                         --enable-ld=default \
-                         --disable-nls \
-                         --enable-threads \
-                         --with-pic \
                          --enable-poison-system-directories"
 
 pre_configure_host() {
