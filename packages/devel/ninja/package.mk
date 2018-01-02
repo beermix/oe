@@ -32,9 +32,7 @@ make_host() {
 #  export CFLAGS="-mtune=generic -march=x86-64 -O3 -Wall"
 #  export CXXFLAGS="-mtune=generic -march=x86-64 -O3 -Wall"
 #  export LDFLAGS="-Wl,-z,relro,-z,now -s"
-  CXX=/usr/bin/clang++ python3 ./configure.py --bootstrap --verbose
-  ./ninja ninja_test   &&
-  ./ninja_test --gtest_filter=-SubprocessTest.SetWithLots
+  CXX=/usr/bin/clang++ python2 ./configure.py --bootstrap --verbose
 }
 
 makeinstall_host() {
