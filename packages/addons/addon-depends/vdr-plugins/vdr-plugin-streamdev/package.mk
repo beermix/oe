@@ -18,6 +18,7 @@
 
 PKG_NAME="vdr-plugin-streamdev"
 PKG_VERSION="fc52e92"
+PKG_SHA256="4c231f0ce9bd2dcf45c330a7c9733e14f02002e4370b3eeff080f614ef227ed3"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://projects.vdr-developer.org/projects/plg-streamdev"
@@ -26,10 +27,6 @@ PKG_DEPENDS_TARGET="toolchain vdr openssl"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="TV"
 PKG_LONGDESC="TV"
-
-
-
-
 
 make_target() {
   VDR_DIR=$(get_build_dir vdr)
@@ -56,4 +53,3 @@ post_make_target() {
 makeinstall_target() {
   : # installation not needed, done by create-addon script
 }
-
