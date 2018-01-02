@@ -43,6 +43,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-isl=$TOOLCHAIN \
                            --disable-multilib \
                            --enable-checking=release \
+                           --with-default-libstdcxx-abi=new \
                            --with-ppl=yes \
                            --without-cloog \
                            --disable-libmpx \
