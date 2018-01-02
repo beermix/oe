@@ -47,9 +47,9 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-poison-system-directories"
 
 pre_configure_host() {
-#  unset CPPFLAGS
-#  unset CFLAGS
-#  unset CXXFLAGS
+  unset CPPFLAGS
+  unset CFLAGS
+  unset CXXFLAGS
   unset LDFLAGS
 }
 
