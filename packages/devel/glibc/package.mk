@@ -42,6 +42,9 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-__thread \
                            --enable-clocale=gnu \
                            --without-selinux \
+                           --enable-add-ons \
+                           --enable-stack-protector=strong \
+                           --enable-stackguard-randomization \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
                            --enable-kernel=3.10 \
