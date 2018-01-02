@@ -25,15 +25,10 @@ PKG_URL="http://xorg.freedesktop.org/archive/individual/lib/libXScrnSaver-$PKG_V
 PKG_DEPENDS_TARGET="toolchain util-macros libXext scrnsaverproto"
 PKG_SECTION="depends"
 PKG_SHORTDESC="X11 Screen Saver extension library"
-
 PKG_IS_ADDON="no"
 PKG_TOOLCHAIN="autotools"
 
 post_unpack() {
   mv $BUILD/libXScrnSaver-$PKG_VERSION $BUILD/$PKG_NAME-$PKG_VERSION
 }
-pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC"
-}
-
 PKG_CONFIGURE_OPTS_TARGET="--enable-malloc0returnsnull"

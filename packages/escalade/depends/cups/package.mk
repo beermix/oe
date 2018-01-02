@@ -27,9 +27,6 @@ PKG_SECTION="depends"
 PKG_SHORTDESC="CUPS printing system"
 PKG_LONGDESC="CUPS is the standards-based, open source printing system developed by Apple Inc. for macOS® and other UNIX®-like operating sysms"
 
-
-
-
 pre_configure_target() {
   cd ..
   rm -rf .$TARGET_NAME
