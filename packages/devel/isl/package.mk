@@ -5,4 +5,4 @@ PKG_DEPENDS_HOST="libtool:host intltool:host gmp:host"
 PKG_SECTION="devel"
 PKG_TOOLCHAIN="configure"
 
-PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared --with-gmp-prefix=$TOOLCHAIN"
+PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared --with-gmp-prefix=$TOOLCHAIN --with-pic"
