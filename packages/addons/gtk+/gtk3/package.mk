@@ -43,13 +43,13 @@ PKG_MESON_OPTS_TARGET="-Denable-wayland-backend=false \
 			  -Denable-broadway-backend=false \
 			  -Denable-cups-print-backend=no"
 
-post_makeinstall_target() {
-  cp $PKG_DIR/files/settings.ini $INSTALL/etc/gtk-3.0/
-}
+#post_makeinstall_target() {
+#  cp $PKG_DIR/files/settings.ini $INSTALL/etc/gtk-3.0/
+#}
 
 pre_configure_target() {
   export LC_ALL=en_US.UTF-8
   
-  export CC="$HOST_CC"
-  export CXX="$HOST_CXX"
+#  export CC="$HOST_CC"
+#  export CXX="$HOST_CXX"
 }
