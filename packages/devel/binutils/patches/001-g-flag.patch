@@ -51,7 +51,7 @@ index 8242b2c7..6ba1c9bd 100644
      CXXFLAGS="$ac_save_CXXFLAGS"
    elif test $ac_cv_prog_cxx_g = yes; then
 -    CXXFLAGS="-g -O2"
-+    CXXFLAGS="-mtune=generic -march=x86-64 -g1 -O2"
++    CXXFLAGS="-march=native -g1 -O2"
    else
      CXXFLAGS="-mtune=generic -march=x86-64 -g1 -O2"
    fi
