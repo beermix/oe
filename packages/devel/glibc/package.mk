@@ -130,8 +130,6 @@ libc_cv_c_cleanup=yes
 libc_cv_ssp=no
 libc_cv_ssp_strong=no
 libc_cv_slibdir=/usr/lib
-libc_cv_gnu99_inline=yes
-libc_cv_initfini_array=yes
 EOF
 
 echo "libdir=/usr/lib" >> configparms
