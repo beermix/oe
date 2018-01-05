@@ -19,8 +19,8 @@
 # with 1.0.0 repeat delay is broken. test on upgrade
 
 PKG_NAME="v4l-utils"
-PKG_VERSION="1.14.1"
-PKG_SHA256="7974e5626447407d8a1ed531da0461c0fe00e599a696cb548a240d17d3519005"
+PKG_VERSION="1.12.3"
+PKG_SHA256="5a47dd6f0e7dfe902d94605c01d385a4a4e87583ff5856d6f181900ea81cf46e"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://linuxtv.org/"
@@ -54,7 +54,23 @@ makeinstall_target() {
   fi
 }
 
+create_multi_keymap() {
+  local f name protocols
+  name="$1"
+  protocols="$2"
+  shift 2
+  (
+    echo "# table $name, type: $protocols"
+    for f in "$@" ; do
+      echo "# $f"
+      grep -v "^#" $INSTALL/usr/lib/udev/rc_keymaps/$f
+    done
+  ) > $INSTALL/usr/lib/udev/rc_keymaps/$name
+}
+
 post_makeinstall_target() {
+  local default_multi_maps f keymap
+
   rm -rf $INSTALL/etc/rc_keymaps
     ln -sf /storage/.config/rc_keymaps $INSTALL/etc/rc_keymaps
 
@@ -65,11 +81,34 @@ post_makeinstall_target() {
     mkdir -p $INSTALL/usr/lib/udev/rules.d
     cp -PR $PKG_DIR/udev.d/*.rules $INSTALL/usr/lib/udev/rules.d
 
+  # install additional keymaps without overwriting upstream maps
   (
-    echo "# table libreelec_multi, type: RC6 NEC"
-    for f in rc6_mce xbox_360 zotac_ad10 hp_mce xbox_one cubox_i ; do
-      echo "# $f"
-      grep -v "^#" $INSTALL/usr/lib/udev/rc_keymaps/$f
+    set -C
+    for f in $PKG_DIR/keymaps/* ; do
+      if [ -e $f ] ; then
+        keymap=$(basename $f)
+        cat $f > $INSTALL/usr/lib/udev/rc_keymaps/$keymap
+      fi
     done
-  ) > $INSTALL/usr/lib/udev/rc_keymaps/libreelec_multi
+  )
+
+  # create multi keymap to support several remotes OOTB
+
+  default_multi_maps="rc6_mce xbox_360 zotac_ad10 hp_mce xbox_one cubox_i"
+
+  create_multi_keymap libreelec_multi "RC6 NEC" $default_multi_maps
+
+  # use multi-keymap instead of default one
+  sed -i '/^\*\s*rc-rc6-mce\s*rc6_mce/d' $INSTALL/etc/rc_maps.cfg
+  cat << EOF >> $INSTALL/etc/rc_maps.cfg
+#
+# Custom LibreELEC configuration starts here
+#
+# use combined multi-table on MCE receivers
+# *	rc-rc6-mce	rc6_mce
+*	rc-rc6-mce	libreelec_multi
+# additional non-upstreamed keymaps
+*	rc-odroid	odroid
+*	rc-wetek-hub	wetek_hub
+EOF
 }
