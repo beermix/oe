@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libva"
-PKG_VERSION="68a4bef"
+PKG_VERSION="fbed1db"
 #PKG_SHA256="bb0601f9a209e60d8d0b867067323661a7816ff429021441b775452b8589e533"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPL"
