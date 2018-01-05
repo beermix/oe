@@ -30,12 +30,8 @@ PKG_LONGDESC="The ConnMan project provides a daemon for managing internet connec
 PKG_TOOLCHAIN="autotools"
 
 pre_configure_target() {
-export LANG=C
-export SOURCE_DATE_EPOCH=1502420774
-export CFLAGS="$CFLAGS -fstack-protector-strong "
-export FCFLAGS="$CFLAGS -fstack-protector-strong "
-export FFLAGS="$CFLAGS -fstack-protector-strong "
-export CXXFLAGS="$CXXFLAGS -fstack-protector-strong "
+  export CFLAGS="$CFLAGS -fstack-protector-strong "
+  export CXXFLAGS="$CXXFLAGS -fstack-protector-strong "
 }
 
 

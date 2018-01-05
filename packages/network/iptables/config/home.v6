@@ -1,7 +1,7 @@
 *filter
 :INPUT DROP [0:0]
 :FORWARD DROP [0:0]
-:OUTPUT DROP [0:0]
+:OUTPUT ACCEPT [0:0]
 :DOCKER-USER - [0:0]
 :private-subnets - [0:0]
 -A INPUT -i lo -j ACCEPT
@@ -10,10 +10,8 @@
 -A INPUT -j private-subnets
 -A FORWARD -i tether -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 -A FORWARD -o tether -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
--A OUTPUT -m conntrack --ctstate NEW -j ACCEPT
--A OUTPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 -A DOCKER-USER -j private-subnets
--A private-subnets -m conntrack --ctstate RELATED,ESTABLISHED -j RETURN
+-A private-subnets -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 -A private-subnets -s fc00::/7 -i eth+ -m conntrack --ctstate NEW -j ACCEPT
 -A private-subnets -s fc00::/7 -i en+ -m conntrack --ctstate NEW -j ACCEPT
 -A private-subnets -s fc00::/7 -i wl+ -m conntrack --ctstate NEW -j ACCEPT

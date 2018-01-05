@@ -31,7 +31,7 @@ PKG_LONGDESC="The SoX Resampler library performs one-dimensional sample-rate con
 
 PKG_CMAKE_OPTS_TARGET="-DHAVE_WORDS_BIGENDIAN_EXITCODE=1 \
                        -DBUILD_EXAMPLES=OFF \
-                       -DBUILD_SHARED_LIBS=ON \
+                       -DBUILD_SHARED_LIBS=OFF \
                        -DCMAKE_BUILD_TYPE=Release \
                        -DVISIBILITY_HIDDENL=ON \
                        -DWITH_AVFFT=ON \
@@ -41,3 +41,6 @@ PKG_CMAKE_OPTS_TARGET="-DHAVE_WORDS_BIGENDIAN_EXITCODE=1 \
                        -DWITH_PFFFT=ON \
                        -DWITH_SIMD=ON"
 
+pre_configure_target() {
+  CFLAGS="$CFLAGS -fPIC"
+}

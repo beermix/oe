@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="systemd"
-PKG_VERSION="8481e3e"
+PKG_VERSION="2df4611"
 #PKG_SHA256="0cadccfa7109232ec2a469d41ca595d5595b83b648b534ea669c15dbca904c43"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"

@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="crazycat"
-PKG_VERSION="2017-11-13"
+PKG_VERSION="2017-12-06"
 PKG_SHA256="14d951eb8d40cee40d601d7c737bca07171d8b4f201d63d5e70a24c4841f9d73"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"

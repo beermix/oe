@@ -29,9 +29,9 @@ PKG_LONGDESC="Elfutils is a collection of utilities, including eu-ld (a linker),
 PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="utrace_cv_cc_biarch=false \
-			      --program-prefix="eu-" \
-			      --enable-valgrind \
-			      --disable-werror \
+                           --program-prefix="eu-" \
+                           --enable-valgrind \
+                           --disable-werror \
                            --disable-progs \
                            --disable-nls \
                            --with-zlib \

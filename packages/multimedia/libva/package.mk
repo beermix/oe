@@ -39,16 +39,10 @@ else
   DISPLAYSERVER_LIBVA="--disable-x11 --disable-glx --disable-wayland"
 fi
 
-#pre_configure_target() {
-#  export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
-#  export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
-#}
-
 PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
                            --disable-docs \
                            --enable-drm \
                            --enable-egl \
                            $DISPLAYSERVER_LIBVA \
                            --disable-dummy-driver"
-                           
-                           
+

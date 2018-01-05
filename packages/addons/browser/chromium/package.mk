@@ -27,7 +27,7 @@ PKG_LICENSE="Mixed"
 PKG_SITE="http://www.chromium.org/Home"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="chromium:host pciutils dbus libXcomposite libXcursor libXtst alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk gtk+ libva-vdpau-driver unclutter xdotool harfbuzz"
+PKG_DEPENDS_TARGET="chromium:host node:host pciutils dbus libXcomposite libXcursor libXtst alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk gtk+ libva-vdpau-driver unclutter xdotool"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -99,8 +99,6 @@ make_target() {
     'use_allocator="none"'
     'use_cups=false'
     'use_custom_libcxx=false'
-    'use_system_freetype=true'
-    'use_system_harfbuzz=true'
     'use_gconf=false'
     'use_gnome_keyring=false'
     'use_gold=false'
@@ -132,8 +130,8 @@ make_target() {
   
   touch $PKG_BUILD/chrome/test/data/webui/i18n_process_css_test.html
   
-  ninja -j${CONCURRENCY_MAKE_LEVEL} -C out/Release gen/ui/accessibility/ax_enums.h gen/ui/accessibility/ax_enums.cc
-  ninja -j${CONCURRENCY_MAKE_LEVEL} -C out/Release mksnapshot
+#  ninja -j${CONCURRENCY_MAKE_LEVEL} -C out/Release gen/ui/accessibility/ax_enums.h gen/ui/accessibility/ax_enums.cc
+#  ninja -j${CONCURRENCY_MAKE_LEVEL} -C out/Release mksnapshot
   
   ninja -j${CONCURRENCY_MAKE_LEVEL} -C out/Release chrome chrome_sandbox widevinecdmadapter
 }
