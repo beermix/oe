@@ -1,6 +1,10 @@
 PKG_NAME="openssl"
 PKG_VERSION="1.0.2n"
-PKG_URL="https://www.openssl.org/source/openssl-$PKG_VERSION.tar.gz"
+PKG_SHA256="370babb75f278c39e0c50e8c4e7493bc0f18db6867478341a832a982fd15a8fe"
+PKG_ARCH="any"
+PKG_LICENSE="BSD"
+PKG_SITE="https://www.openssl.org"
+PKG_URL="https://www.openssl.org/source/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST=""
 PKG_DEPENDS_TARGET="toolchain yasm:host pcre zlib"
 PKG_SECTION="security"
@@ -19,7 +23,6 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            zlib-dynamic \
                            no-ssl2 \
                            no-ssl3 \
-                           no-err \
                            enable-camellia \
                            enable-mdc2 \
                            enable-ec_nistp_64_gcc_128"
@@ -31,18 +34,7 @@ pre_configure_host() {
 
 configure_host() {
   cd $PKG_BUILD/.$HOST_NAME
-  unset CFLAGS
-  sed -i -e '/^"linux-x86_64"/ s/-m64 -DL_ENDIAN -O3 -Wall/-m64 -DL_ENDIAN -Wall/' $PKG_BUILD/.$HOST_NAME/Configure
   ./Configure --prefix=/ $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $CFLAGS $LDFLAGS
-#  MAKEFLAGS=-j1
-}
-
-make_host() {
-  echo "Executing (host): make build_libcrypto $PKG_MAKE_OPTS_HOST" | tr -s " "
-  make build_libcrypto $PKG_MAKE_OPTS_HOST
-
-  echo "Executing (host): make $PKG_MAKE_OPTS_HOST" | tr -s " "
-  make $PKG_MAKE_OPTS_HOST
 }
 
 makeinstall_host() {
