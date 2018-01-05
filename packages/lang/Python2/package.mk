@@ -87,9 +87,9 @@ makeinstall_host() {
        install
 }
 
-pre_configure_host() {
-  unset CFLAGS
-}
+#pre_configure_host() {
+#  unset CFLAGS
+#}
 
 pre_configure_target() {
   export PYTHON_FOR_BUILD=$TOOLCHAIN/bin/python
