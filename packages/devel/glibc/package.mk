@@ -120,7 +120,7 @@ pre_configure_target() {
 
   # set some CFLAGS we need
   
-  export CFLAGS="-mtune=generic -march=x86-64 -O2 -g -m64"
+  export CFLAGS="-mtune=generic -march=westmere -O2 -g -m64"
 #  unset LDFLAGS
 #  export LDFLAGS="-Wl,-z,max-page-size=0x1000 "
 
