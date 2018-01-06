@@ -36,7 +36,6 @@ PKG_CMAKE_OPTS_COMMON="-DCMAKE_BUILD_TYPE=Release \
                        -DLLVM_ENABLE_FFI=ON \
                        -DLLVM_BUILD_LLVM_DYLIB=ON \
                        -DLLVM_TARGETS_TO_BUILD=X86 \
-                       -DLLVM_CCACHE_BUILD=ON \
                        -DLLVM_INSTALL_TOOLCHAIN_ONLY=ON \
                        -DLLVM_INSTALL_UTILS=ON \
                        -DCMAKE_INSTALL_RPATH=$TOOLCHAIN/lib"
@@ -48,18 +47,12 @@ PKG_CMAKE_OPTS_TARGET="$PKG_CMAKE_OPTS_COMMON \
                        -DCMAKE_CXX_FLAGS="$CXXFLAGS" \
                        -DLLVM_TARGET_ARCH="$TARGET_ARCH" \
                        -DLLVM_TARGETS_TO_BUILD=X86 \
-                       -DLLVM_CCACHE_BUILD=ON \
                        -DFFI_INCLUDE_DIR=$($TOOLCHAIN/bin/pkg-config --variable=includedir libffi) \
                        -DLLVM_TABLEGEN=$TOOLCHAIN/bin/llvm-tblgen"
 
-#make_host() {
-#  ninja -j${CONCURRENCY_MAKE_LEVEL}
-#}
-
-makeinstall_host() {
+post_makeinstall_host() {
   cp -a bin/llvm-config $SYSROOT_PREFIX/usr/bin/llvm-config-host
   cp -a bin/llvm-tblgen $TOOLCHAIN/bin
-  make install
 }
 
 post_makeinstall_target() {
