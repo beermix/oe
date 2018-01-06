@@ -35,7 +35,7 @@ PKG_CMAKE_OPTS_COMMON="-DCMAKE_BUILD_TYPE=Release \
                        -DCMAKE_INSTALL_PREFIX=/usr \
                        -DLLVM_ENABLE_FFI=ON \
                        -DLLVM_BUILD_LLVM_DYLIB=ON \
-                       -DLLVM_TARGETS_TO_BUILD=X86 \
+                       -DLLVM_TARGETS_TO_BUILD="X86" \
                        -DLLVM_INSTALL_TOOLCHAIN_ONLY=ON \
                        -DLLVM_INSTALL_UTILS=ON \
                        -DCMAKE_INSTALL_RPATH=$TOOLCHAIN/lib"
@@ -46,8 +46,7 @@ PKG_CMAKE_OPTS_TARGET="$PKG_CMAKE_OPTS_COMMON \
                        -DLLVM_ENABLE_FFI=ON \
                        -DCMAKE_CXX_FLAGS="$CXXFLAGS" \
                        -DLLVM_TARGET_ARCH="$TARGET_ARCH" \
-                       -DLLVM_TARGETS_TO_BUILD=X86 \
-                       -DFFI_INCLUDE_DIR=$($TOOLCHAIN/bin/pkg-config --variable=includedir libffi) \
+                       -DLLVM_TARGETS_TO_BUILD="X86" \
                        -DLLVM_TABLEGEN=$TOOLCHAIN/bin/llvm-tblgen"
 
 post_makeinstall_host() {

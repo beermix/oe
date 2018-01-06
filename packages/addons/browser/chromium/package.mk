@@ -27,7 +27,7 @@ PKG_LICENSE="Mixed"
 PKG_SITE="http://www.chromium.org/Home"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="chromium:host node:host pciutils dbus libXcomposite libXcursor libXtst alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk gtk+ libva-vdpau-driver unclutter xdotool"
+PKG_DEPENDS_TARGET="chromium:host pciutils dbus libXcomposite libXcursor libXtst alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk gtk+ libva-vdpau-driver unclutter xdotool"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -126,7 +126,7 @@ make_target() {
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
   mkdir -p $PKG_BUILD/third_party/node/linux/node-linux-x64/bin
-  ln -fs $TOOLCHAIN/bin/node $PKG_BUILD/third_party/node/linux/node-linux-x64/bin/node
+  ln -fs /home/user/.bin/node $PKG_BUILD/third_party/node/linux/node-linux-x64/bin/node
   
   touch $PKG_BUILD/chrome/test/data/webui/i18n_process_css_test.html
   
