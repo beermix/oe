@@ -10,7 +10,7 @@ index a894a3997d..9829db63c2
          "-m64",
 -        "-march=x86-64",
 +        "-march=westmere",
-+        "-mtune=westmere",
++        "-fno-plt",
 +        "-fdiagnostics-color=always",
 +      ]
 +      ldflags += [
