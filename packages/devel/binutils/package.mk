@@ -44,7 +44,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-libssp \
                          --enable-version-specific-runtime-libs \
                          --enable-plugins \
-                         --enable-poison-system-directories"
+                         --enable-poison-system-directories --disable-nls"
 
 pre_configure_host() {
   unset CPPFLAGS

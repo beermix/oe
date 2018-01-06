@@ -42,9 +42,10 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-mpc=$TOOLCHAIN \
                            --with-isl=$TOOLCHAIN \
                            --disable-multilib \
+                           --disable-nls \
                            --enable-checking=release \
-                           --with-default-libstdcxx-abi=new \
-                           --with-ppl=yes \
+                           --with-default-libstdcxx-abi=gcc4-compatible \
+                           --without-ppl \
                            --without-cloog \
                            --disable-libmpx \
                            --disable-libssp \
