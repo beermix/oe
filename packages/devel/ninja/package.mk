@@ -22,17 +22,17 @@ PKG_ARCH="any"
 PKG_LICENSE="Apache"
 PKG_SITE="https://github.com/ninja-build/ninja"
 PKG_URL="https://github.com/ninja-build/ninja/archive/v$PKG_VERSION.tar.gz"
-PKG_DEPENDS_HOST="Python2:host re2c:host"
+PKG_DEPENDS_HOST="Python3:host re2c:host"
 PKG_SECTION="devel"
 PKG_SHORTDESC="Small build system with a focus on speed"
 PKG_LONGDESC="Small build system with a focus on speed"
 PKG_TOOLCHAIN="manual"
 
 make_host() {
-#  export CFLAGS="-mtune=generic -march=x86-64 -O3 -Wall"
-#  export CXXFLAGS="-mtune=generic -march=x86-64 -O3 -Wall"
-  export LDFLAGS="-Wl,-z,relro,-z,now -s"
-  CXX=/usr/bin/clang++-5.0 python2 ./configure.py --bootstrap --verbose
+  export CFLAGS="-march=haswell -O3"
+  export CXXFLAGS="-march=haswell -O3"
+#  export LDFLAGS="-Wl,-z,relro,-z,now -s"
+  CXX=/usr/bin/clang++-5.0 python3 ./configure.py --bootstrap --verbose
 }
 
 makeinstall_host() {

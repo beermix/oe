@@ -51,8 +51,8 @@ pre_configure_host() {
   unset CFLAGS
   unset CXXFLAGS
   unset LDFLAGS
-  CFLAGS="-g1 -O2"
-  CXXFLAGS="-g1 -O2"
+  CFLAGS="-march=haswell -g -O2"
+  CXXFLAGS="-march=haswell -g -O2"
 }
 
 make_host() {

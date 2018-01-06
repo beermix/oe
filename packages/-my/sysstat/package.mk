@@ -4,7 +4,6 @@ PKG_URL="http://pagesperso-orange.fr/sebastien.godard/sysstat-$PKG_VERSION.tar.x
 PKG_DEPENDS_TARGET="toolchain util-linux ncurses lm_sensors"
 PKG_SECTION="devel"
 
-
 pre_configure_target() {
   cd $PKG_BUILD
 }
