@@ -17,14 +17,14 @@
 ################################################################################
 
 PKG_NAME="Python3"
-PKG_VERSION="3.6.4"
-PKG_SHA256="159b932bf56aeaa76fd66e7420522d8c8853d486b8567c459b84fe2ed13bcaba"
+PKG_VERSION="3.6.3"
+PKG_SHA256="cda7d967c9a4bfa52337cdf551bcc5cff026b6ac50a8834e568ce4a794ca81da"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.python.org/"
 PKG_URL="http://www.python.org/ftp/python/$PKG_VERSION/${PKG_NAME::-1}-$PKG_VERSION.tar.xz"
 PKG_SOURCE_DIR="${PKG_NAME::-1}-$PKG_VERSION*"
-PKG_DEPENDS_HOST="Python2:host zlib:host bzip2:host openssl:host sqlite:host"
+PKG_DEPENDS_HOST="zlib:host bzip2:host"
 PKG_DEPENDS_TARGET="toolchain sqlite expat zlib bzip2 openssl Python3:host readline ncurses"
 PKG_SECTION="lang"
 PKG_SHORTDESC="python3: The Python3 programming language"
@@ -106,10 +106,6 @@ post_unpack() {
   # pgen for the target, and tries to run it on the host.
     touch $PKG_BUILD/Include/graminit.h
     touch $PKG_BUILD/Python/graminit.c
-}
-
-pre_configure_host() {
-  unset CFLAGS
 }
 
 post_makeinstall_host() {

@@ -109,6 +109,8 @@ pre_configure_target() {
   # meson needs a host compiler and it's detected through the environment. meh.
   export CC="$HOST_CC"
   export CXX="$HOST_CXX"
+  
+  cd ..
 }
 
 post_makeinstall_target() {
