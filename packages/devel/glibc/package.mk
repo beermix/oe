@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="glibc"
-PKG_VERSION="2.26"
+PKG_VERSION="bfda785"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/bminor/glibc/tree/release/2.26/master"
-PKG_URL="http://192.168.1.200:8080/%2Fglibc-2.26.tar.xz"
-PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host Python3:host gcc:bootstrap"
+PKG_URL="https://github.com/bminor/glibc/archive/$PKG_VERSION.tar.gz"
+PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap"
 PKG_DEPENDS_INIT="glibc"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="glibc: The GNU C library"
