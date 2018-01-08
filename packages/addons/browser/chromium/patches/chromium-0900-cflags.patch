@@ -10,12 +10,12 @@ index a894a3997d..9829db63c2
          "-m64",
 -        "-march=x86-64",
 +        "-march=westmere",
-+        "-fno-plt",
++        "-mtune=westmere",
 +        "-fdiagnostics-color=always",
 +      ]
 +      ldflags += [
 +        "-m64",
-+        "-s",
++        "-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now",
        ]
 -      ldflags += [ "-m64" ]
      } else if (current_cpu == "x86") {

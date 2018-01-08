@@ -122,17 +122,38 @@ make_target() {
     "google_default_client_secret=\"${_google_default_client_secret}\""
   )
 
+  # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
+  local _system_libs=(
+  [libdrm]=
+  [libxml]=libxml2
+  [libxslt]=libxslt
+  [yasm]=
+  )
+  # Remove bundled libraries for which we will use the system copies; this
+  # *should* do what the remove_bundled_libraries.py script does, with the
+  # added benefit of not having to list all the remaining libraries
+  local _lib
+  for _lib in ${_system_libs}; do
+    find -type f -path "*third_party/$_lib/*" \
+      \! -path "*third_party/$_lib/chromium/*" \
+      \! -path "*third_party/$_lib/google/*" \
+      \! -path './base/third_party/icu/*' \
+      \! -path './third_party/freetype/src/src/psnames/pstables.h' \
+      \! -path './third_party/yasm/run_yasm.py' \
+      \! -regex '.*\.\(gn\|gni\|isolate\)' \
+      -delete
+  done
+
+  ./build/linux/unbundle/replace_gn_files.py --system-libraries "${_system_libs}"
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
+  ./tools/gn/bootstrap/bootstrap.py --gn-gen-args "${_flags[*]}"
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
   mkdir -p $PKG_BUILD/third_party/node/linux/node-linux-x64/bin
   ln -fs /home/user/.bin/node $PKG_BUILD/third_party/node/linux/node-linux-x64/bin/node
   
   touch $PKG_BUILD/chrome/test/data/webui/i18n_process_css_test.html
-  
-#  ninja -j${CONCURRENCY_MAKE_LEVEL} -C out/Release gen/ui/accessibility/ax_enums.h gen/ui/accessibility/ax_enums.cc
-#  ninja -j${CONCURRENCY_MAKE_LEVEL} -C out/Release mksnapshot
-  
+
   ninja -j${CONCURRENCY_MAKE_LEVEL} -C out/Release chrome chrome_sandbox widevinecdmadapter
 }
 
