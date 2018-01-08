@@ -30,9 +30,9 @@ PKG_SHORTDESC="gcc: The GNU Compiler Collection Version 4 (aka GNU C Compiler)"
 PKG_LONGDESC="This package contains the GNU Compiler Collection. It includes compilers for the languages C, C++, Objective C, Fortran 95, Java and others ... This GCC contains the Stack-Smashing Protector Patch which can be enabled with the -fstack-protector command-line option. More information about it ca be found at http://www.research.ibm.com/trl/projects/security/ssp/."
 
 post_unpack() {
-  sed -i 's@\./fixinc\.sh@-c true@' $PKG_BUILD/gcc/Makefile.in
-  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $PKG_BUILD/libiberty/configure
-  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $PKG_BUILD/gcc/configure
+  mkdir -p $PKG_BUILD/isl
+  cp -r -i $(get_build_dir isl)/* $PKG_BUILD/isl
+  rm -rf $PKG_BUILD/isl/.x86_64-linux-gnu
 }
 
 GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
@@ -40,18 +40,26 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-gmp=$TOOLCHAIN \
                            --with-mpfr=$TOOLCHAIN \
                            --with-mpc=$TOOLCHAIN \
-                           --with-isl=$TOOLCHAIN \
+                           --with-isl \
+                           --with-gnu-as \
+                           --with-gnu-ld \
+                           --enable-plugin \
+                           --enable-lto \
+                           --enable-ld=default \
                            --disable-multilib \
                            --disable-nls \
                            --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
-                           --without-ppl \
+                           --with-ppl=yes \
                            --without-cloog \
                            --disable-libmpx \
                            --disable-libssp \
                            --disable-libsanitizer \
                            --without-cuda-driver \
                            --enable-gnu-indirect-function \
+                           --disable-libunwind-exceptions \
+                           --disable-vtable-verify \
+                           --with-system-zlib \
                            --with-tune=haswell \
                            --with-arch=westmere"
 
@@ -80,15 +88,9 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --disable-static \
                          --enable-c99 \
                          --enable-long-long \
-                         --enable-gnu-unique-object \
-                         --enable-linker-build-id \
-                         --enable-install-libiberty \
-                         --with-linker-hash-style=gnu \
                          --enable-threads=posix \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time \
-                         --enable-default-pie \
-                         --enable-default-ssp \
                          --enable-clocale=gnu \
                          --enable-libatomic \
                          $GCC_OPTS"
