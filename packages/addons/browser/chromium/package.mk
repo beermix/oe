@@ -120,11 +120,25 @@ make_target() {
     "google_default_client_secret=\"${_google_default_client_secret}\""
   )
 
+readonly -A _system_libs=(
+  [libdrm]=
+  [libjpeg]=libjpeg
+  [libxml]=libxml2
+  [libxslt]=libxslt
+)
+readonly _unwanted_bundled_libs=(
+  ${!_system_libs[@]}
+  ${_system_libs[libjpeg]+libjpeg_turbo}
+  freetype
+  harfbuzz-ng
+)
+depends+=(${_system_libs[@]} freetype2 harfbuzz)
+
   # Remove bundled libraries for which we will use the system copies; this
   # *should* do what the remove_bundled_libraries.py script does, with the
   # added benefit of not having to list all the remaining libraries
   local _lib
-  for _lib in ${_system_libs}; do
+  for _lib in ${_unwanted_bundled_libs[@]}; do
     find -type f -path "*third_party/$_lib/*" \
       \! -path "*third_party/$_lib/chromium/*" \
       \! -path "*third_party/$_lib/google/*" \
@@ -135,7 +149,7 @@ make_target() {
       -delete
   done
 
-  ./build/linux/unbundle/replace_gn_files.py --system-libraries "${_system_libs}"
+  ./build/linux/unbundle/replace_gn_files.py  --system-libraries "${!_system_libs[@]}"
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
