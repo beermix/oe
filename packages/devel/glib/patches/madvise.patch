@@ -1,0 +1,31 @@
+--- glib-2.52.1/glib/gmem.c.org	2017-04-29 17:22:53.245848445 +0000
++++ glib-2.52.1/glib/gmem.c	2017-04-29 17:23:25.338515732 +0000
+@@ -33,6 +33,8 @@
+ #include <stdlib.h>
+ #include <string.h>
+ #include <signal.h>
++#include <sys/mman.h>
++#include <malloc.h>
+ 
+ #include "gslice.h"
+ #include "gbacktrace.h"
+@@ -238,10 +239,16 @@
+ {
+   gpointer mem;
+ 
+-  if (G_LIKELY (n_bytes))
+-    mem = malloc (n_bytes);
+-  else
++  if (G_LIKELY (n_bytes)) {
++    if (n_bytes > 64 * 1024) {
++	mem = memalign(4096, n_bytes);
++	madvise(mem, n_bytes, MADV_MERGEABLE);
++    } else {
++    	mem = malloc (n_bytes);
++    }
++  } else {
+     mem = NULL;
++  }
+ 
+   TRACE (GLIB_MEM_ALLOC((void*) mem, (unsigned int) n_bytes, 0, 1));
+ 
