@@ -50,7 +50,6 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --enable-clocale=gnu \
                            --enable-lock-elision=yes \
                            --enable-stack-protector=strong \
-                           --enable-stackguard-randomization \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
                            --enable-obsolete-rpc \
