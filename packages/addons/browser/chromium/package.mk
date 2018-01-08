@@ -57,20 +57,17 @@ make_target() {
   export LDFLAGS="$LDFLAGS -ludev"
   export LD=$CXX
   
-#  export CCACHE_NODISABLE=1
-#  export CCACHE_HARDLINK=1
   export CCACHE_SLOPPINESS=time_macros
   
-#  export PATH="$PKG_BUILD/python2-path:$PATH"
-  export TMPDIR="$PKG_BUILD/temp"
-  mkdir -p "$TMPDIR"
+#  export TMPDIR="$PKG_BUILD/temp"
+#  mkdir -p "$TMPDIR"
   
   # Fix paths.
-  sed -e 's|i386-linux-gnu/||g' \
-      -e 's|x86_64-linux-gnu/||g' \
-      -e 's|/usr/lib/va/drivers|/usr/lib/dri|g' \
-      -e 's|/usr/lib64/va/drivers|/usr/lib/dri|g' \
-      -i $PKG_BUILD/content/common/sandbox_linux/bpf_gpu_policy_linux.cc
+#  sed -e 's|i386-linux-gnu/||g' \
+#      -e 's|x86_64-linux-gnu/||g' \
+#      -e 's|/usr/lib/va/drivers|/usr/lib/dri|g' \
+#      -e 's|/usr/lib64/va/drivers|/usr/lib/dri|g' \
+#      -i $PKG_BUILD/content/common/sandbox_linux/bpf_gpu_policy_linux.cc
 
   # Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
   # Note: These are for OpenELEC use ONLY. For your own distribution, please
@@ -102,13 +99,14 @@ make_target() {
     'use_gconf=false'
     'use_gnome_keyring=false'
     'use_gold=false'
+    'use_system_freetype=true'
+    'use_system_harfbuzz=true'
     'use_gtk3=false'
     'use_kerberos=false'
     'use_pulseaudio=false'
     'use_sysroot=true'
     'use_vaapi=true'
     'use_v8_context_snapshot=false'
-    'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'exclude_unwind_tables=true'
     'enable_hangout_services_extension=true'
@@ -122,13 +120,6 @@ make_target() {
     "google_default_client_secret=\"${_google_default_client_secret}\""
   )
 
-  # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
-  local _system_libs=(
-  [libdrm]=
-  [libxml]=libxml2
-  [libxslt]=libxslt
-  [yasm]=
-  )
   # Remove bundled libraries for which we will use the system copies; this
   # *should* do what the remove_bundled_libraries.py script does, with the
   # added benefit of not having to list all the remaining libraries
@@ -147,11 +138,10 @@ make_target() {
   ./build/linux/unbundle/replace_gn_files.py --system-libraries "${_system_libs}"
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
-  ./tools/gn/bootstrap/bootstrap.py --gn-gen-args "${_flags[*]}"
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
   mkdir -p $PKG_BUILD/third_party/node/linux/node-linux-x64/bin
   ln -fs /home/user/.bin/node $PKG_BUILD/third_party/node/linux/node-linux-x64/bin/node
-  
+
   touch $PKG_BUILD/chrome/test/data/webui/i18n_process_css_test.html
 
   ninja -j${CONCURRENCY_MAKE_LEVEL} -C out/Release chrome chrome_sandbox widevinecdmadapter
