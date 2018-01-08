@@ -15,7 +15,7 @@ index a894a3997d..9829db63c2
 +      ]
 +      ldflags += [
 +        "-m64",
-+        "-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now",
++        "-march=westmere",
        ]
 -      ldflags += [ "-m64" ]
      } else if (current_cpu == "x86") {
