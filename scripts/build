@@ -163,7 +163,8 @@ TARGET_CMAKE_OPTS="-DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
 if [ "$DEBUG" = "yes" ]; then
   MESON_BUILD_TYPE="debug"
 else
-  MESON_BUILD_TYPE="release"
+  MESON_BUILD_TYPE="plain"
+#  MESON_BUILD_TYPE="release"
 fi
 
 TARGET_MESON_OPTS="--prefix=/usr \
