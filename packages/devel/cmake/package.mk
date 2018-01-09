@@ -31,18 +31,18 @@ PKG_TOOLCHAIN="configure"
 
 configure_host() {
   ../configure --prefix=$TOOLCHAIN \
-               --no-qt-gui \
+               --no-qt-gui --no-system-libs \
                -- \
                -DCMAKE_C_FLAGS="-march=haswell -O2 -Wall -pipe -Wno-format-security" \
                -DCMAKE_CXX_FLAGS="-march=haswell -O2 -Wall -pipe -Wno-format-security" \
                -DCMAKE_EXE_LINKER_FLAGS="$HOST_LDFLAGS" \
                -DCMAKE_USE_OPENSSL=ON \
                -DBUILD_CursesDialog=0 \
-               -DBUILD_DOC=OFF \
-               -DBUILD_DOCS=OFF \
-               -DBUILD_EXAMPLE=OFF \
-               -DBUILD_EXAMPLES=OFF \
-               -DBUILD_TEST=OFF \
-               -DBUILD_TESTS=OFF \
-               -DBUILD_TESTING=OFF
+               -DBUILD_DOC=0 \
+               -DBUILD_DOCS=0 \
+               -DBUILD_EXAMPLE=0 \
+               -DBUILD_EXAMPLES=0 \
+               -DBUILD_TEST=0 \
+               -DBUILD_TESTS=0 \
+               -DBUILD_TESTING=0
 }
