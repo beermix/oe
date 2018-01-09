@@ -28,7 +28,7 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="compress"
 PKG_SHORTDESC="LZO data compressor"
 PKG_LONGDESC="LZO is a data compression library which is suitable for data de-/compression in real-time. This means it favours speed over compression ratio."
-PKG_TOOLCHAIN="cmake-make"
+PKG_TOOLCHAIN="configure"
 
 pre_configure_target() {
   export CFLAGS="$CFLAGS -fPIC"
@@ -37,7 +37,8 @@ pre_configure_target() {
 }
 
 pre_configure_host() {
-  export CFLAGS="$CFLAGS -DLZO_CFG_NO_UNALIGNED=1 -fPIC"
+  export CFLAGS="$CFLAGS -fPIC"
+  # -DLZO_CFG_NO_UNALIGNED=1
 }
 
 PKG_CMAKE_OPTS_HOST="-DENABLE_SHARED=OFF -DENABLE_STATIC=ON"
