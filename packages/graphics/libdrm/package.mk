@@ -52,7 +52,7 @@ done
 PKG_CONFIGURE_OPTS_TARGET="--disable-udev \
                            --enable-largefile \
                            --with-kernel-source=$(kernel_path) \
-                           --disable-libkms \
+                           --enable-libkms \
                            $DRM_CONFIG \
                            --disable-nouveau \
                            --disable-freedreno \

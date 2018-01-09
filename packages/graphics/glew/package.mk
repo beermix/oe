@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="glew"
-PKG_VERSION="1.13.0"
-PKG_SHA256="aa25dc48ed84b0b64b8d41cdd42c8f40f149c37fa2ffa39cd97f42c78d128bc7"
+PKG_VERSION="2.0.0"
+PKG_SHA256="c572c30a4e64689c342ba1624130ac98936d7af90c3103f9ce12b8a0c5736764"
 PKG_ARCH="any"
 PKG_LICENSE="BSD"
 PKG_SITE="http://glew.sourceforge.net/"
-PKG_URL="$SOURCEFORGE_SRC/glew/glew/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tgz"
+PKG_URL="https://github.com/nigels-com/glew/releases/download/glew-2.0.0/glew-2.0.0.tgz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="glew: The OpenGL Extension Wrangler Library"

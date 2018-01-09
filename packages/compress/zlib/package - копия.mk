@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="zlib"
-PKG_VERSION="1.2.8_jtkv4"
-PKG_SHA256="b359ef3796f8daa8fe437886164684445a58c65979920127e9df94cb821ed2f0"
+PKG_VERSION="1.2.8.dfsg"
+PKG_SHA256="180a1e3cff02f5a496e541fb7fafcd97acb8922e97521ee29ef7c5dcb5978d57"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.zlib.net"
-PKG_URL="https://github.com/jtkukunas/zlib/archive/v1.2.8_jtkv4.tar.gz"
+PKG_URL="http://192.168.1.200:8080/%2Fzlib-1.2.8.dfsg.tar.xz"
 PKG_DEPENDS_HOST=""
 PKG_DEPENDS_TARGET=""
 PKG_SECTION="compress"
@@ -37,15 +37,12 @@ pre_configure_host() {
 
 configure_host() {
   cd $PKG_BUILD/.$HOST_NAME
-
-  export CFLAGS="$CFLAGS -O3 -march=haswell -falign-functions=32 -ffat-lto-objects -flto -fno-semantic-interposition "
-  export CXXFLAGS="$CXXFLAGS -O3 -march=haswell -falign-functions=32 -ffat-lto-objects -flto -fno-semantic-interposition "
-  export CFLAGS_GENERATE="$CFLAGS -fprofile-generate -fprofile-dir=pgo "
-  export CXXFLAGS_GENERATE="$CXXFLAGS -fprofile-generate -fprofile-dir=pgo "
-  export CFLAGS_USE="$CFLAGS -fprofile-use -fprofile-dir=pgo -fprofile-correction "
-  export CXXFLAGS_USE="$CXXFLAGS -fprofile-use -fprofile-dir=pgo -fprofile-correction "
-
-  CC="$HOST_CC" CFLAGS="${CFLAGS_USE}" CXXFLAGS="${CXXFLAGS_USE}" mandir=$TOOLCHAIN/share/man includedir=$TOOLCHAIN/include pkgconfigdir=$TOOLCHAIN/lib/pkgconfig ./configure --prefix=/usr --libdir=$TOOLCHAIN/lib --static --shared
+  
+  CC="$HOST_CC" \
+  CFLAGS="$HOST_CFLAGS -O3 -pipe -Wall" \
+  LDFLAGS="$HOST_LDFLAGS" \
+  mandir=$TOOLCHAIN/share/man includedir=$TOOLCHAIN/include pkgconfigdir=$TOOLCHAIN/lib/pkgconfig \
+  ./configure --prefix=/usr --libdir=$TOOLCHAIN/lib
 }
 
 pre_configure_target() {
@@ -55,13 +52,9 @@ pre_configure_target() {
 
 configure_target() {
   cd $PKG_BUILD/.$TARGET_NAME
-
-  export CFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto -fno-semantic-interposition "
-  export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto -fno-semantic-interposition "
-  export CFLAGS_GENERATE="$CFLAGS -fprofile-generate -fprofile-dir=pgo "
-  export CXXFLAGS_GENERATE="$CXXFLAGS -fprofile-generate -fprofile-dir=pgo "
-  export CFLAGS_USE="$CFLAGS -fprofile-use -fprofile-dir=pgo -fprofile-correction "
-  export CXXFLAGS_USE="$CXXFLAGS -fprofile-use -fprofile-dir=pgo -fprofile-correction "
-
-  CC="$CC" CFLAGS="${CFLAGS_USE}" CXXFLAGS="${CXXFLAGS_USE}" ./configure -prefix=/usr --static --shared
+  
+  CC="$CC" \
+  CFLAGS="$CFLAGS -O3 -Wall" \
+  LDFLAGS="$LDFLAGS" \
+  ./configure -prefix=/usr
 }

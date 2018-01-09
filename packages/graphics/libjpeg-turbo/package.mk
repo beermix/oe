@@ -37,11 +37,11 @@ PKG_CONFIGURE_OPTS_HOST="--enable-static \
 PKG_CONFIGURE_OPTS_TARGET="--enable-static --with-jpeg8"
 
 pre_configure_host() {
-  export CFLAGS="$CFLAGS -fPIC -DPIC"
+  export CFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -fPIC -DPIC"
 }
 
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC"
+  export CFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -fPIC"
 }
 
 if [ "$SIMD_SUPPORT" = "no" ]; then
