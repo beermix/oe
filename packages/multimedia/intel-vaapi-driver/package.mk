@@ -29,6 +29,11 @@ PKG_SHORTDESC="intel-vaapi-driver: VA-API user mode driver for Intel GEN Graphic
 PKG_LONGDESC="intel-vaapi-driver: VA-API user mode driver for Intel GEN Graphics family"
 PKG_TOOLCHAIN="autotools"
 
+pre_configure_target() {
+  export CFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
+  export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
+}
+
 if [ "$DISPLAYSERVER" = "x11" ]; then
   DISPLAYSERVER_LIBVA="--enable-x11 --disable-wayland"
 elif [ "$DISPLAYSERVER" = "weston" ]; then
@@ -37,6 +42,6 @@ else
   DISPLAYSERVER_LIBVA="--disable-x11 --disable-wayland"
 fi
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
+PKG_CONFIGURE_OPTS_TARGET="--enable-hybrid-codec \
                            --enable-drm \
                            $DISPLAYSERVER_LIBVA"

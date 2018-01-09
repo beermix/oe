@@ -103,7 +103,7 @@ PKG_MESON_OPTS_TARGET="--libdir=/usr/lib \
                        -Dumount-path=/usr/bin/umount"
 
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -fno-schedule-insns -fno-schedule-insns2"
+  export CFLAGS="$CFLAGS -fno-semantic-interposition -Os -fno-tree-vectorize"
   export LC_ALL=en_US.UTF-8
 
   # meson needs a host compiler and it's detected through the environment. meh.
