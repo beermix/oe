@@ -29,8 +29,8 @@ PKG_LONGDESC="Small build system with a focus on speed"
 PKG_TOOLCHAIN="manual"
 
 make_host() {
-  export CFLAGS="-march=haswell -O3"
-  export CXXFLAGS="-march=haswell -O3"
+#  export CFLAGS="-march=haswell -O3"
+#  export CXXFLAGS="-march=haswell -O3"
 #  export LDFLAGS="-Wl,-z,relro,-z,now -s"
   CXX=/usr/bin/clang++-5.0 python3 ./configure.py --bootstrap --verbose
 }
