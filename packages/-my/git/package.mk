@@ -28,7 +28,6 @@ PKG_CONFIGURE_OPTS_TARGET="--with-curl=$SYSROOT_PREFIX/usr \
 			      --with-libpcre=$SYSROOT_PREFIX/usr \
 			      --disable-option-checking"
 
-
 #make_target() {
 #  make SHELL='sh -x'
 #}
