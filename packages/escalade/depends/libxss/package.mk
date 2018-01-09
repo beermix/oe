@@ -33,3 +33,7 @@ post_unpack() {
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-malloc0returnsnull"
+
+pre_configure_target() {
+  CFLAGS="$CFLAGS -fPIC -DPIC"
+}
