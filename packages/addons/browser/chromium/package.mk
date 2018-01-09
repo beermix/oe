@@ -63,11 +63,11 @@ make_target() {
 #  mkdir -p "$TMPDIR"
   
   # Fix paths.
-#  sed -e 's|i386-linux-gnu/||g' \
-#      -e 's|x86_64-linux-gnu/||g' \
-#      -e 's|/usr/lib/va/drivers|/usr/lib/dri|g' \
-#      -e 's|/usr/lib64/va/drivers|/usr/lib/dri|g' \
-#      -i $PKG_BUILD/content/common/sandbox_linux/bpf_gpu_policy_linux.cc
+  sed -e 's|i386-linux-gnu/||g' \
+      -e 's|x86_64-linux-gnu/||g' \
+      -e 's|/usr/lib/va/drivers|/usr/lib/dri|g' \
+      -e 's|/usr/lib64/va/drivers|/usr/lib/dri|g' \
+      -i $PKG_BUILD/content/common/sandbox_linux/bpf_gpu_policy_linux.cc
 
   # Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
   # Note: These are for OpenELEC use ONLY. For your own distribution, please
@@ -79,8 +79,6 @@ make_target() {
 
   local _flags=(
     "host_toolchain=\"//build/toolchain/linux:x64_host\""
-    'enable_hotwording=false'
-    'enable_precompiled_headers=false'
     'is_clang=false'
     'clang_use_chrome_plugins=false'
     'symbol_level=0'
@@ -149,9 +147,6 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
       -delete
   done
 
-  $TOOLCHAIN/bin/python2 ./build/linux/unbundle/replace_gn_files.py \
-    --system-libraries "${!_system_libs[@]}"
-
   ./build/linux/unbundle/replace_gn_files.py  --system-libraries "${!_system_libs[@]}"
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
@@ -189,9 +184,6 @@ addon() {
   # atk
   cp -PL $(get_build_dir atk)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
   
-  # libxss
-#  cp -PL $(get_build_dir libxss)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib  
-
   # gtk
   cp -PL $(get_build_dir gtk+)/.install_pkg/usr/lib/libgdk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
   cp -PL $(get_build_dir gtk+)/.install_pkg/usr/lib/libgtk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
