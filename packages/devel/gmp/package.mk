@@ -33,7 +33,7 @@ PKG_CONFIGURE_OPTS_HOST="--enable-cxx --disable-shared --with-pic"
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
 
 pre_configure_host() {
-  export CFLAGS="-O3 -pipe -fno-semantic-interposition "
+  export CFLAGS="-march=haswell -O3 -pipe -fno-semantic-interposition "
   export CXXFLAGS="$CFLAGS"
 }
 
