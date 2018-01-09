@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="node"
-PKG_VERSION="8.9.3"
-PKG_SHA256="a5042d983f9815ee18a5c6fd75f8b3b2022ed96a2aaa8834300cd1ee81e8870c"
+PKG_VERSION="8.9.4"
+PKG_SHA256="7dd570b083f75cf2332c42446a01ec140409fa1df46f7af806e0775bdddf6852"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://nodejs.org"
@@ -28,14 +28,14 @@ PKG_SHORTDESC="Node.js JavaScript runtime"
 PKG_LONGDESC="Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient. The Node.js package ecosystem, npm, is the largest ecosystem of open source libraries in the world."
 
 HOST_CONFIGURE_OPTS="--prefix=$TOOLCHAIN \
-                     --partly-static \
+                     --fully-static \
                      --with-intl=none \
                      --without-npm \
                      --without-ssl"
 
 pre_configure_host() {
   cd ..
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.||"`
-  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.||"`
-  export LDFLAGS=`-Wl,--gc-sections -s"`
+#  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.||"`
+#  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.||"`
+#  export LDFLAGS=`$LDFLAGS -s"`
 }
