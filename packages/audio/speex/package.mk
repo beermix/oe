@@ -28,3 +28,5 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="audio"
 PKG_SHORTDESC="Speex / OPUS audio codec"
 PKG_LONGDESC="Speex / OPUS audio codec"
+
+PKG_CONFIGURE_OPTS_TARGET="--enable-sse"
