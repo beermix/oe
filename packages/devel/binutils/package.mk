@@ -43,7 +43,6 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-lto \
                          --disable-nls \
                          --enable-relro \
-                         --with-pic \
                          --with-system-zlib \
                          --enable-poison-system-directories"
 
@@ -52,8 +51,8 @@ pre_configure_host() {
   unset CFLAGS
   unset CXXFLAGS
   unset LDFLAGS
-#  CFLAGS="-march=haswell -g -O2"
-#  CXXFLAGS="-march=haswell -g -O2"
+  export CFLAGS="-march=haswell -g1 -O2"
+  export CXXFLAGS="-march=haswell -g1 -O2"
 }
 
 make_host() {
