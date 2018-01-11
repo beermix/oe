@@ -1,0 +1,58 @@
+--docdir=DIR            documentation root [DATAROOTDIR/doc/v4l-utils]
+  --disable-libv4l        disable dynamic libv4l compilation
+  --disable-v4l-utils     disable v4l-utils compilation
+  --disable-v4l2-compliance-libv4l
+                          disable use of libv4l in v4l2-compliance
+  --disable-v4l2-ctl-libv4l
+                          disable use of libv4l in v4l2-ctl
+  --disable-qv4l2         disable qv4l2 compilation
+  --with-libv4l1subdir=DIR
+                          set libv4l1 library subdir (default=libv4l)
+  --with-libv4l2subdir=DIR
+                          set libv4l2 library subdir (default=libv4l)
+  --with-libv4lconvertsubdir=DIR
+                          set libv4lconvert library subdir (default=libv4l)
+
+
+
+
+
+
+
+CONFIG_PERF_EVENTS_INTEL_UNCORE=y
+CONFIG_PERF_EVENTS_INTEL_RAPL=y
+CONFIG_PERF_EVENTS_INTEL_CSTATE=y
+
+CONFIG_I2C_I801=y
+
+CONFIG_INTEL_POWERCLAMP=y
+
+CONFIG_LPC_ICH=y
+
+CONFIG_INPUT=y
+CONFIG_USB=y
+
+
+dpkg -l |grep mesa | pastebinit
+DISPLAY=:0 vainfo | pastebinit
+cat ~/.kodi/temp/kodi.log | pastebinit
+dmesg | pastebinit
+id | pastebinit
+amixer | pastebinit
+
+dmesg | paste
+journalctl -a | paste
+systemctl status lircd.service | paste
+ir-keytable | paste
+
+
+OUTPUT=`xrandr -display :0 -q | sed '/ connected/!d;s/ .*//;q'`
+xrandr -display :0 --output $OUTPUT --set "Broadcast RGB" "Full"
+
+xsetroot #000000
+devmon &
+MALLOC_MMAP_THRESHOLD_=131072 /usr/bin/kodi --standalone
+while [ $? -ne 0 ]; do
+  MALLOC_MMAP_THRESHOLD_=131072 /usr/bin/kodi --standalone
+done
+openbox --exit
