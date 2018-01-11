@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="mpc"
-PKG_VERSION="1.0.3"
-PKG_SHA256="617decc6ea09889fb08ede330917a00b16809b8db88c29c31bfbb49cbf88ecc3"
+PKG_VERSION="1.1.0"
+PKG_SHA256="6985c538143c1208dcb1ac42cedad6ff52e267b47e5f970183a3e75125b43c2e"
 PKG_ARCH="any"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://www.multiprecision.org"

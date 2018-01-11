@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="mesa"
-PKG_VERSION="17.3.1"
-PKG_SHA256="9ae607e0998a586fb2c866cfc8e45e6f52d1c56cb1b41288253ea83eada824c1"
+PKG_VERSION="17.3.2"
+#PKG_SHA256="9ae607e0998a586fb2c866cfc8e45e6f52d1c56cb1b41288253ea83eada824c1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.mesa3d.org/"
