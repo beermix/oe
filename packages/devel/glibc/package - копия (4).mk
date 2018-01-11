@@ -34,7 +34,6 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --libexecdir=/usr/lib/glibc \
                            --cache-file=config.cache \
                            --disable-profile \
-                           --disable-sanity-checks \
                            --enable-add-ons \
                            --enable-bind-now \
                            --with-elf \
@@ -43,6 +42,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-__thread \
                            --without-selinux \
                            --disable-silent-rules \
+                           --disable-dependency-tracking \
                            --enable-kernel=3.10 \
                            --without-cvs \
                            --disable-debug \
@@ -142,9 +142,6 @@ echo "libdir=/usr/lib" >> configparms
 echo "slibdir=/usr/lib" >> configparms
 echo "sbindir=/usr/bin" >> configparms
 echo "rootsbindir=/usr/bin" >> configparms
-echo "build-programs=yes" >> configparms
-
-GLIBC_INCLUDE_BIN="getent ldd locale"
 }
 
 post_makeinstall_target() {
@@ -155,16 +152,8 @@ post_makeinstall_target() {
   ln -sf $(basename $INSTALL/usr/lib/ld-*.so) $INSTALL/usr/lib/ld.so
 
 # cleanup
-# remove any programs we don't want/need, keeping only those we want
-  for f in $(find $INSTALL/usr/bin -type f); do
-    fb="$(basename "${f}")"
-    for ib in $GLIBC_INCLUDE_BIN; do
-      if [ "${ib}" == "${fb}" ]; then
-        fb=
-        break
-      fi
-    done
-    [ -n "${fb}" ] && rm -rf ${f}
+  for i in $GLIBC_EXCLUDE_BIN; do
+    rm -rf $INSTALL/usr/bin/$i
   done
 
   rm -rf $INSTALL/usr/lib/audit
