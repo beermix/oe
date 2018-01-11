@@ -39,7 +39,7 @@ case "$LINUX" in
     PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET aml-dtbtools:host"
     ;;
   amlogic-3.14)
-    PKG_VERSION="da53aa7"
+    PKG_VERSION="0228a64"
     PKG_SHA256="f79650b9c31f668e48d7a8bd6c419deed11ba8ea728a613b902445ad8feefa89"
     PKG_URL="https://github.com/LibreELEC/linux-amlogic/archive/$PKG_VERSION.tar.gz"
     PKG_SOURCE_DIR="$PKG_NAME-amlogic-$PKG_VERSION*"
@@ -47,9 +47,9 @@ case "$LINUX" in
     PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET aml-dtbtools:host"
     ;;
   *)
-    PKG_VERSION="4.15-rc7"
-    PKG_SHA256="703606d4477f22d58c519766992a33c6590e902d8d95b58fac023156be5603de"
-    PKG_URL="https://git.kernel.org/torvalds/t/$PKG_NAME-$PKG_VERSION.tar.gz"
+    PKG_VERSION="4.14.13"
+    PKG_SHA256="4ab46d1b5a0f8ef83b80760f89ae4f5c88431b19b3cf79ffa0c66d6b33e45772"
+    PKG_URL="https://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
     PKG_PATCH_DIRS="default"
     ;;
 esac
@@ -168,10 +168,8 @@ pre_make_target() {
 
   make oldconfig
 
-  # regdb (backward compatability with pre-4.15 kernels)
-  if grep -q ^CONFIG_CFG80211_INTERNAL_REGDB= $PKG_BUILD/.config ; then
-    cp $(get_build_dir wireless-regdb)/db.txt $PKG_BUILD/net/wireless/db.txt
-  fi
+  # regdb
+  cp $(get_build_dir wireless-regdb)/db.txt $PKG_BUILD/net/wireless/db.txt
 }
 
 make_target() {
@@ -267,9 +265,4 @@ post_install() {
 
   # bluez looks in /etc/firmware/
     ln -sf /$(get_full_firmware_dir)/ $INSTALL/etc/firmware
-
-  # regdb and signature is now loaded as firmware by 4.15+
-    if grep -q ^CONFIG_CFG80211_REQUIRE_SIGNED_REGDB= $PKG_BUILD/.config; then
-      cp $(get_build_dir wireless-regdb)/regulatory.db{,.p7s} $INSTALL/$(get_full_firmware_dir)
-    fi
 }
