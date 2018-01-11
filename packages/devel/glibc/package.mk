@@ -123,7 +123,7 @@ pre_configure_target() {
 
   # set some CFLAGS we need
 
-  export CFLAGS="-O3 -m64 -march=westmere -g -Wl,-z,max-page-size=0x1000 -m64"
+  export CFLAGS="-O2 -m64 -march=westmere -g -Wl,-z,max-page-size=0x1000 -m64"
   unset LDFLAGS
   export LDFLAGS="-Wl,-z,max-page-size=0x1000"
 
