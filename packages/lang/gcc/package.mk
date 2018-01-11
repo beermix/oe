@@ -56,9 +56,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libssp \
                            --disable-libsanitizer \
                            --without-cuda-driver \
-                           --enable-gnu-indirect-function \
-                           --disable-libunwind-exceptions \
-                           --disable-vtable-verify \
                            --with-system-zlib \
                            --with-tune=haswell \
                            --with-arch=westmere"
