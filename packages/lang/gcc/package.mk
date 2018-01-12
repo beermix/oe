@@ -55,7 +55,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libmpx \
                            --disable-libssp \
                            --disable-libsanitizer \
-                           --disable-libmudflap \
                            --disable-vtable-verify \
                            --without-cuda-driver \
                            --disable-libada \
@@ -70,6 +69,7 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-threads \
                               --disable-libgomp \
                               --disable-libitm \
+                              --disable-libmudflap \
                               --disable-libquadmath \
                               --disable-libatomic \
                               --without-headers \
