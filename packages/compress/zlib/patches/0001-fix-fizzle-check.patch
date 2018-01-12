@@ -1,0 +1,29 @@
+From 5cb25ff6ad7788677dae717b6942f17af52b5362 Mon Sep 17 00:00:00 2001
+From: Jim Kukunas <james.t.kukunas@linux.intel.com>
+Date: Tue, 11 Aug 2015 13:06:58 -0700
+Subject: [PATCH] fix fizzle check
+
+---
+ deflate_medium.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/deflate_medium.c b/deflate_medium.c
+index 4beada8..574e32b 100644
+--- a/deflate_medium.c
++++ b/deflate_medium.c
+@@ -113,9 +113,9 @@ static void fizzle_matches(deflate_state *s, struct match *current, struct match
+ 
+     if (current->match_length <= 1)
+             return;
+-
+-    match = s->window - current->match_length + 1 + next->match_start ;
+-    orig  = s->window - current->match_length + 1 + next->strstart ;
++    
++    match = &s->window[s->match_start - 1];
++    orig  = &s->window[s->strstart - 1];
+     
+     /* quick exit check.. if this fails then don't bother with anything else */
+     if (zlikely(*match != *orig))
+-- 
+2.1.0
+
