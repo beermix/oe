@@ -17,10 +17,10 @@
 #  the Free Software Foundation, 51 Franklin Street, Suite 500, Boston, MA 02110, USA.
 #  http://www.gnu.org/copyleft/gpl.html
 ################################################################################
-
+  
 PKG_NAME="gtk+"
-PKG_VERSION="2.24.31"
-PKG_SHA256="68c1922732c7efc08df4656a5366dcc3afdc8791513400dac276009b40954658"
+PKG_VERSION="2.24.32"
+PKG_SHA256="b6c8a93ddda5eabe3bfee1eb39636c9a03d2a56c7b62828b359bf197943c582e"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.gtk.org/"
@@ -31,9 +31,7 @@ PKG_SHORTDESC="gtk+: The Gimp ToolKit (GTK)"
 PKG_LONGDESC="This is GTK+. GTK+, which stands for the Gimp ToolKit, is a library for creating graphical user interfaces for the X Window System. It is designed to be small, efficient, and flexible. GTK+ is written in C with a very object-oriented approach."
 PKG_TOOLCHAIN="autotools"
 
-PKG_CONFIGURE_OPTS_TARGET="ac_cv_path_GLIB_GENMARSHAL=$TOOLCHAIN/bin/glib-genmarshal \
-                           --disable-glibtest \
-                           --enable-modules \
+PKG_CONFIGURE_OPTS_TARGET="--enable-modules \
                            --enable-explicit-deps=no \
                            --disable-debug \
                            --enable-shm \
