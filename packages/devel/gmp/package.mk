@@ -38,6 +38,6 @@ pre_configure_host() {
 }
 
 pre_configure_target() {
-  export CFLAGS="-O3  -g -fno-semantic-interposition "
+  export CFLAGS="$CFLAGS -O3 -fno-semantic-interposition "
   export CXXFLAGS="$CFLAGS"
 }
