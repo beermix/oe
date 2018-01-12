@@ -42,6 +42,5 @@ else
   DISPLAYSERVER_LIBVA="--disable-x11 --disable-wayland"
 fi
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-hybrid-codec \
-                           --enable-drm \
+PKG_CONFIGURE_OPTS_TARGET="--enable-drm \
                            $DISPLAYSERVER_LIBVA"
