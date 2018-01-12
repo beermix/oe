@@ -39,18 +39,22 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --enable-bind-now \
                            --with-elf \
                            --with-tls \
+                           --enable-tunables \
                            --with-__thread \
+                           --without-selinux \
+                           --disable-silent-rules \
+                           --enable-kernel=3.10 \
+                           --without-cvs \
+                           --disable-debug \
+                           --without-gd  \
+                           --enable-clocale=gnu \
+                           --enable-lock-elision=yes \
                            --enable-stack-protector=strong \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
-                           --enable-kernel=3.10 \
-                           --without-cvs \
-                           --without-gd \
                            --enable-obsolete-rpc \
                            --enable-obsolete-nsl \
-                           --disable-build-nscd \
-                           --disable-nscd \
-                           --enable-lock-elision \
+                           --disable-werror \
                            --disable-timezone-tools"
 
 if [ "$DEBUG" = yes ]; then
@@ -64,15 +68,6 @@ NSS_CONF_DIR="$PKG_BUILD/nss"
 GLIBC_EXCLUDE_BIN="catchsegv gencat getconf iconv iconvconfig ldconfig"
 GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN makedb mtrace pcprofiledump"
 GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN pldd rpcgen sln sotruss sprof xtrace"
-
-post_patch() {
-  # Add patches from Clear Linux
-  if [ "$TARGET_ARCH" = "x86_64" ]; then
-    for file in $PKG_DIR/clear/*.patch; do
-      patch -p1 -d $PKG_BUILD < $file
-    done
-  fi
-}
 
 pre_build_target() {
   cd $PKG_BUILD
@@ -160,8 +155,16 @@ post_makeinstall_target() {
   ln -sf $(basename $INSTALL/usr/lib/ld-*.so) $INSTALL/usr/lib/ld.so
 
 # cleanup
-  for i in $GLIBC_EXCLUDE_BIN; do
-    rm -rf $INSTALL/usr/bin/$i
+# remove any programs we don't want/need, keeping only those we want
+  for f in $(find $INSTALL/usr/bin -type f); do
+    fb="$(basename "${f}")"
+    for ib in $GLIBC_INCLUDE_BIN; do
+      if [ "${ib}" == "${fb}" ]; then
+        fb=
+        break
+      fi
+    done
+    [ -n "${fb}" ] && rm -rf ${f}
   done
 
   rm -rf $INSTALL/usr/lib/audit
@@ -183,6 +186,7 @@ if [ "$GLIBC_LOCALES" = yes ]; then
   localedef -i ../localedata/locales/en_US -f ../localedata/charmaps/UTF-8 en_US.UTF-8 --prefix=$INSTALL
   localedef -i ../localedata/locales/en_US -f ../localedata/charmaps/UTF-8 ru_RU.UTF-8 --prefix=$INSTALL
   echo "export LANG=en_US.UTF-8" > $INSTALL/etc/profile.d/01-locale.conf
+  echo "export LANG=ru_RU.UTF-8" > $INSTALL/etc/profile.d/01-locale.conf
 fi
 
 # create default configs
