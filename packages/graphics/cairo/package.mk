@@ -17,13 +17,13 @@
 ################################################################################
 
 PKG_NAME="cairo"
-PKG_VERSION="1.14.12"
-#PKG_VERSION="1.15.8"
+#PKG_VERSION="1.14.12"
+PKG_VERSION="1.15.10"
 PKG_ARCH="any"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://cairographics.org/"
-PKG_URL="http://cairographics.org/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
-#PKG_URL="https://cairographics.org/snapshots/cairo-$PKG_VERSION.tar.xz"
+#PKG_URL="http://cairographics.org/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="https://cairographics.org/snapshots/cairo-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain zlib freetype fontconfig libpng pixman"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="cairo: Multi-platform 2D graphics library"
