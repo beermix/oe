@@ -31,7 +31,6 @@ PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-unicode-properties \
 			      --enable-pcre16 \
-			      --enable-pcre32 \
 			      --enable-jit \
 			      --enable-utf8"
 
