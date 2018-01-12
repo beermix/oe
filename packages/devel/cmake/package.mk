@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="cmake"
-PKG_VERSION="3.10.1"
-PKG_SHA256="7be36ee24b0f5928251b644d29f5ff268330a916944ef4a75e23ba01e7573284"
+PKG_VERSION="3.6.3"
+#PKG_SHA256="7be36ee24b0f5928251b644d29f5ff268330a916944ef4a75e23ba01e7573284"
 PKG_ARCH="any"
 PKG_LICENSE="BSD"
 PKG_SITE="https://cmake.org/download/"
@@ -35,7 +35,7 @@ configure_host() {
                -- \
                -DCMAKE_C_FLAGS="-march=haswell -O2 -Wall -pipe -Wno-format-security" \
                -DCMAKE_CXX_FLAGS="-march=haswell -O2 -Wall -pipe -Wno-format-security" \
-               -DCMAKE_EXE_LINKER_FLAGS="$HOST_LDFLAGS" \
+               -DCMAKE_EXE_LINKER_FLAGS="$HOST_LDFLAGS -s" \
                -DCMAKE_USE_OPENSSL=ON \
                -DBUILD_CursesDialog=0 \
                -DBUILD_DOC=0 \
