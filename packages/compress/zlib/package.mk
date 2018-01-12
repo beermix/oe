@@ -17,51 +17,18 @@
 ################################################################################
 
 PKG_NAME="zlib"
-PKG_VERSION="1.2.8_jtkv4"
-PKG_SHA256="b359ef3796f8daa8fe437886164684445a58c65979920127e9df94cb821ed2f0"
+PKG_VERSION="1.2.11"
+PKG_SHA256="4ff941449631ace0d4d203e3483be9dbc9da454084111f97ea0a2114e19bf066"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.zlib.net"
-PKG_URL="https://github.com/jtkukunas/zlib/archive/v1.2.8_jtkv4.tar.gz"
+PKG_URL="http://zlib.net/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET=""
+PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="compress"
 PKG_SHORTDESC="zlib: A general purpose (ZIP) data compression library"
 PKG_LONGDESC="zlib is a general purpose data compression library. All the code is thread safe. The data format used by the zlib library is described by RFCs (Request for Comments) 1950 to 1952 in the files ftp://ds.internic.net/rfc/rfc1950.txt (zlib format), rfc1951.txt (deflate format) and rfc1952.txt (gzip format)."
-PKG_TOOLCHAIN="make"
+PKG_TOOLCHAIN="cmake-make"
 
-pre_configure_host() {
-  mkdir -p $PKG_BUILD/.$HOST_NAME
-  cp -a $PKG_BUILD/* $PKG_BUILD/.$HOST_NAME/
-}
-
-configure_host() {
-  cd $PKG_BUILD/.$HOST_NAME
-
-  export CFLAGS="$CFLAGS -O3 -march=haswell -falign-functions=32 -ffat-lto-objects -flto -fno-semantic-interposition "
-  export CXXFLAGS="$CXXFLAGS -O3 -march=haswell -falign-functions=32 -ffat-lto-objects -flto -fno-semantic-interposition "
-  export CFLAGS_GENERATE="$CFLAGS -fprofile-generate -fprofile-dir=pgo "
-  export CXXFLAGS_GENERATE="$CXXFLAGS -fprofile-generate -fprofile-dir=pgo "
-  export CFLAGS_USE="$CFLAGS -fprofile-use -fprofile-dir=pgo -fprofile-correction "
-  export CXXFLAGS_USE="$CXXFLAGS -fprofile-use -fprofile-dir=pgo -fprofile-correction "
-
-  CC="$HOST_CC" CFLAGS="${CFLAGS_USE}" CXXFLAGS="${CXXFLAGS_USE}" mandir=$TOOLCHAIN/share/man includedir=$TOOLCHAIN/include pkgconfigdir=$TOOLCHAIN/lib/pkgconfig ./configure --prefix=/usr --libdir=$TOOLCHAIN/lib --static --shared
-}
-
-pre_configure_target() {
-  mkdir -p $PKG_BUILD/.$TARGET_NAME
-  cp -a $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME/
-}
-
-configure_target() {
-  cd $PKG_BUILD/.$TARGET_NAME
-
-  export CFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto -fno-semantic-interposition "
-  export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto -fno-semantic-interposition "
-  export CFLAGS_GENERATE="$CFLAGS -fprofile-generate -fprofile-dir=pgo "
-  export CXXFLAGS_GENERATE="$CXXFLAGS -fprofile-generate -fprofile-dir=pgo "
-  export CFLAGS_USE="$CFLAGS -fprofile-use -fprofile-dir=pgo -fprofile-correction "
-  export CXXFLAGS_USE="$CXXFLAGS -fprofile-use -fprofile-dir=pgo -fprofile-correction "
-
-  CC="$CC" CFLAGS="${CFLAGS_USE}" CXXFLAGS="${CXXFLAGS_USE}" ./configure -prefix=/usr --static --shared
-}
+PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release"
+PKG_CMAKE_OPTS_HOST="-DCMAKE_BUILD_TYPE=Release"
