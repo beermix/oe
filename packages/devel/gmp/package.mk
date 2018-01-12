@@ -29,11 +29,8 @@ PKG_SHORTDESC="gmp: The GNU MP (multiple precision arithmetic) library"
 PKG_LONGDESC="GNU MP is a library for arbitrary precision arithmetic, operating on signed integers, rational numbers, and floating point numbers. It has a rich set of functions, and the functions have a regular interface. GNU MP is designed to be as fast as possible, both for small operands and for huge operands. The speed is achieved by using fullwords as the basic arithmetic type, by using fast algorithms, by carefully optimized assembly code for the most common inner loops for a lots of CPUs, and by a general emphasis on speed (instead of simplicity or elegance). The speed of GNU MP is believed to be faster than any other similar library. The advantage for GNU MP increases with the operand sizes for certain operations, since GNU MP in many cases has asymptotically faster algorithms."
 PKG_TOOLCHAIN="autotools"
 
-PKG_CONFIGURE_OPTS_HOST="--enable-cxx --disable-shared --with-pic"
-PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
-
 pre_configure_host() {
-  export CFLAGS="-march=haswell -O3 -pipe -fno-semantic-interposition "
+  export CFLAGS="$CFLAGS -O3 -fno-semantic-interposition "
   export CXXFLAGS="$CFLAGS"
 }
 
@@ -41,3 +38,6 @@ pre_configure_target() {
   export CFLAGS="$CFLAGS -O3 -fno-semantic-interposition "
   export CXXFLAGS="$CFLAGS"
 }
+
+PKG_CONFIGURE_OPTS_HOST="--enable-cxx --disable-shared --with-pic"
+PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
