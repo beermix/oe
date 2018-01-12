@@ -55,6 +55,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libmpx \
                            --disable-libssp \
                            --disable-libsanitizer \
+                           --disable-vtable-verify \
                            --without-cuda-driver \
                            --with-system-zlib \
                            --with-tune=haswell \
@@ -90,7 +91,6 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-libstdcxx-time \
                          --enable-clocale=gnu \
                          --enable-libatomic \
-                         --disable-vtable-verify \
                          $GCC_OPTS"
 
 pre_configure_host() {
