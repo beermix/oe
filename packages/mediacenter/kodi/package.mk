@@ -207,6 +207,9 @@ KODI_LIBDVD="$KODI_DVDCSS \
              -DLIBDVDNAV_URL=$SOURCES/libdvdnav/libdvdnav-$(get_pkg_version libdvdnav).tar.gz \
              -DLIBDVDREAD_URL=$SOURCES/libdvdread/libdvdread-$(get_pkg_version libdvdread).tar.gz"
 
+# Build Kodi using parallel LTO
+[ "$LTO_SUPPORT" = "yes" ] && PKG_KODI_USE_LTO="-DUSE_LTO=$CONCURRENCY_MAKE_LEVEL"
+
 PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$TOOLCHAIN \
                        -DWITH_TEXTUREPACKER=$TOOLCHAIN/bin/TexturePacker \
                        -DDEPENDS_PATH=$PKG_BUILD/depends \
@@ -227,6 +230,9 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$TOOLCHAIN \
                        -DENABLE_LIRC=ON \
                        -DENABLE_EVENTCLIENTS=ON \
                        -DENABLE_LDGOLD=ON \
+                       -DENABLE_DEBUGFISSION=OFF \
+                       -DENABLE_APP_AUTONAME=OFF \
+                       $PKG_KODI_USE_LTO \
                        $KODI_ARCH \
                        $KODI_OPENGL \
                        $KODI_OPENGLES \
@@ -250,10 +256,10 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$TOOLCHAIN \
                        $KODI_PLAYER"
 
 pre_configure_target() {
-# kodi should never be built with lto
+  # Single threaded LTO is very slow so rely on Kodi for LTO support
   strip_lto
 
-#  unset LD_LIBRARY_PATH
+  export LIBS="$LIBS -lncurses"
 }
 
 post_makeinstall_target() {
