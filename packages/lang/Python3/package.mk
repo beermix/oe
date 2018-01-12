@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="Python3"
-PKG_VERSION="3.6.4"
-#PKG_SHA256="cda7d967c9a4bfa52337cdf551bcc5cff026b6ac50a8834e568ce4a794ca81da"
+PKG_VERSION="3.6.3"
+PKG_SHA256="cda7d967c9a4bfa52337cdf551bcc5cff026b6ac50a8834e568ce4a794ca81da"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.python.org/"
@@ -59,6 +59,7 @@ PKG_CONFIGURE_OPTS_HOST="ac_cv_prog_HAS_HG=/bin/false
                          --with-doc-strings
                          --without-pymalloc
                          --without-ensurepi
+                         --disable-ipv6
 "
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_prog_HAS_HG=/bin/false
@@ -97,7 +98,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_prog_HAS_HG=/bin/false
                            --without-pymalloc
                            --without-ensurepip
                            --with-threads
-                           --enable-ipv6
+                           --disable-ipv6
 "
 
 post_unpack() {
