@@ -32,7 +32,6 @@ PKG_CONFIGURE_SCRIPT="gettext-tools/configure"
 
 PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared \
                          --disable-rpath \
-                         --with-gnu-ld \
                          --disable-java \
                          --disable-curses \
                          --disable-native-java \
