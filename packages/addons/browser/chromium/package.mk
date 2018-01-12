@@ -63,11 +63,11 @@ make_target() {
 #  mkdir -p "$TMPDIR"
   
   # Fix paths.
-#  sed -e 's|i386-linux-gnu/||g' \
-#      -e 's|x86_64-linux-gnu/||g' \
-#      -e 's|/usr/lib/va/drivers|/usr/lib/dri|g' \
-#      -e 's|/usr/lib64/va/drivers|/usr/lib/dri|g' \
-#      -i ./content/common/sandbox_linux/bpf_gpu_policy_linux.cc
+  sed -e 's|i386-linux-gnu/||g' \
+      -e 's|x86_64-linux-gnu/||g' \
+      -e 's|/usr/lib/va/drivers|/usr/lib/dri|g' \
+      -e 's|/usr/lib64/va/drivers|/usr/lib/dri|g' \
+      -i ./content/common/sandbox_linux/bpf_gpu_policy_linux.cc
 
   # Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
   # Note: These are for OpenELEC use ONLY. For your own distribution, please
@@ -97,13 +97,14 @@ make_target() {
     'use_gconf=false'
     'use_gnome_keyring=false'
     'use_gold=false'
+    'use_system_freetype=true'
+    'use_system_harfbuzz=true'
     'use_gtk3=false'
     'use_kerberos=false'
     'use_pulseaudio=false'
     'use_sysroot=true'
     'use_vaapi=true'
     'use_v8_context_snapshot=false'
-    'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'exclude_unwind_tables=true'
     'enable_hangout_services_extension=true'
@@ -117,36 +118,36 @@ make_target() {
     "google_default_client_secret=\"${_google_default_client_secret}\""
   )
 
-#readonly -A _system_libs=(
-#  [libdrm]=
-#  [libjpeg]=libjpeg
-#  [libxml]=libxml2
-#  [libxslt]=libxslt
-#)
-#readonly _unwanted_bundled_libs=(
-#  ${!_system_libs[@]}
-#  ${_system_libs[libjpeg]+libjpeg_turbo}
-#  freetype
-#  harfbuzz-ng
-#)
-#depends+=(${_system_libs[@]} freetype2 harfbuzz)
+readonly -A _system_libs=(
+  [libdrm]=
+  [libjpeg]=libjpeg
+  [libxml]=libxml2
+  [libxslt]=libxslt
+)
+readonly _unwanted_bundled_libs=(
+  ${!_system_libs[@]}
+  ${_system_libs[libjpeg]+libjpeg_turbo}
+  freetype
+  harfbuzz-ng
+)
+depends+=(${_system_libs[@]} freetype2 harfbuzz)
 
   # Remove bundled libraries for which we will use the system copies; this
   # *should* do what the remove_bundled_libraries.py script does, with the
   # added benefit of not having to list all the remaining libraries
-#  local _lib
-#  for _lib in ${_unwanted_bundled_libs[@]}; do
-#    find -type f -path "*third_party/$_lib/*" \
-#      \! -path "*third_party/$_lib/chromium/*" \
-#      \! -path "*third_party/$_lib/google/*" \
-#      \! -path './base/third_party/icu/*' \
-#      \! -path './third_party/freetype/src/src/psnames/pstables.h' \
-#      \! -path './third_party/yasm/run_yasm.py' \
-#    \! -regex '.*\.\(gn\|gni\|isolate\)' \
-#      -delete
-#  done
+  local _lib
+  for _lib in ${_unwanted_bundled_libs[@]}; do
+    find -type f -path "*third_party/$_lib/*" \
+      \! -path "*third_party/$_lib/chromium/*" \
+      \! -path "*third_party/$_lib/google/*" \
+      \! -path './base/third_party/icu/*' \
+      \! -path './third_party/freetype/src/src/psnames/pstables.h' \
+      \! -path './third_party/yasm/run_yasm.py' \
+      \! -regex '.*\.\(gn\|gni\|isolate\)' \
+      -delete
+  done
 
-#  ./build/linux/unbundle/replace_gn_files.py  --system-libraries "${!_system_libs[@]}"
+  ./build/linux/unbundle/replace_gn_files.py  --system-libraries "${!_system_libs[@]}"
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python2

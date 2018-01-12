@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="zlib"
-PKG_VERSION="860d7a3"
+PKG_VERSION="a17fefa"
 PKG_URL="https://github.com/Dead2/zlib-ng/archive/${PKG_VERSION}.tar.gz"
 PKG_SOURCE_DIR="zlib-ng-$PKG_VERSION*"
 PKG_DEPENDS_TARGET=""
