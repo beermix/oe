@@ -31,7 +31,7 @@ PKG_TOOLCHAIN="manual"
 make_host() {
   export CFLAGS="$CFLAGS -O3 -fstack-protector-strong"
   export CXXFLAGS="$CXXFLAGS -O3 -fstack-protector-strong"
-  export LDFLAGS="$LDFLAGS -s"
+#  export LDFLAGS="$LDFLAGS -s"
   CXX=/usr/bin/clang++-5.0 python3 ./configure.py --bootstrap --verbose
 }
 
