@@ -30,8 +30,8 @@ PKG_LONGDESC="The MPFR library is a C library for multiple-precision floating-po
 PKG_TOOLCHAIN="autotools"
 
 pre_configure_host() {
-  export CFLAGS="$CFLAGS -O3"
-  export CXXFLAGS="$CFLAGS"
+  export CFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math
+  export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
 }
 
 PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
