@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="lz4"
-PKG_VERSION="1.8.0"
-PKG_SHA256="2ca482ea7a9bb103603108b5a7510b7592b90158c151ff50a28f1ca8389fccf6"
+PKG_VERSION="1.8.1"
+#PKG_SHA256="2ca482ea7a9bb103603108b5a7510b7592b90158c151ff50a28f1ca8389fccf6"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/lz4/lz4"
