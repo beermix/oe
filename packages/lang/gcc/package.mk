@@ -22,9 +22,9 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://gcc.gnu.org/"
 PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/$PKG_VERSION/gcc-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host zlib:host"
+PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host"
 PKG_DEPENDS_TARGET="gcc:host"
-PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host zlib:host glibc"
+PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
 PKG_SECTION="lang"
 PKG_SHORTDESC="gcc: The GNU Compiler Collection Version 4 (aka GNU C Compiler)"
 PKG_LONGDESC="This package contains the GNU Compiler Collection. It includes compilers for the languages C, C++, Objective C, Fortran 95, Java and others ... This GCC contains the Stack-Smashing Protector Patch which can be enabled with the -fstack-protector command-line option. More information about it ca be found at http://www.research.ibm.com/trl/projects/security/ssp/."
@@ -45,7 +45,8 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-gnu-ld \
                            --enable-plugin \
                            --enable-lto \
-                           --enable-ld=default \
+                           --enable-ld=yes \
+                           --enable-gold=no \
                            --disable-multilib \
                            --disable-nls \
                            --enable-checking=release \
@@ -54,6 +55,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --without-cloog \
                            --disable-libmpx \
                            --disable-libssp \
+                           --disable-libmudflap \
                            --without-cuda-driver \
                            --disable-libada \
                            --with-tune=haswell \
@@ -66,10 +68,9 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-libsanitizer \
                               --disable-shared \
                               --disable-threads \
-                              --disable-libgomp \
                               --disable-libitm \
-                              --disable-libmudflap \
                               --disable-libquadmath \
+                              --disable-libgomp \
                               --disable-libatomic \
                               --without-headers \
                               --with-newlib \
