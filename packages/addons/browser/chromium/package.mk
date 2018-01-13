@@ -19,14 +19,13 @@
 ################################################################################
 
 PKG_NAME="chromium"
-PKG_VERSION="65.0.3315.0"
-#PKG_SHA256="84c46c2c42faaa102abe0647ee1213615a2522627124924c2741ddc2161b3d8d"
+PKG_VERSION="63.0.3239.132"
+PKG_SHA256="84c46c2c42faaa102abe0647ee1213615a2522627124924c2741ddc2161b3d8d"
 PKG_REV="108"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_SITE="http://www.chromium.org/Home"
-PKG_URL="https://chromium.googlesource.com/experimental/chromium/src/+archive/$PKG_VERSION.tar.gz"
-#PKG_SOURCE_DIR="$PKG_VERSION*"
+PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
 PKG_DEPENDS_TARGET="chromium:host pciutils dbus libXcomposite libXcursor libXtst alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk gtk+ libva-vdpau-driver unclutter xdotool"
 PKG_SECTION="browser"
@@ -114,6 +113,15 @@ make_target() {
     'enable_nacl_nonsfi=false'
     'enable_swiftshader=false'
     'enable_vulkan=false'
+    'enable_google_now=false'
+    'enable_hevc_demuxing=true'
+    'enable_hotwording=false'
+    'is_component_build=false'
+    'remove_webcore_debug_symbols=true'
+    'enable_webrtc=false'
+    'rtc_use_h264=false'
+    'rtc_use_lto=false'
+    'use_openh264=false'
     "google_api_key=\"${_google_api_key}\""
     "google_default_client_id=\"${_google_default_client_id}\""
     "google_default_client_secret=\"${_google_default_client_secret}\""
