@@ -30,10 +30,10 @@ PKG_SHORTDESC="glib: C support library"
 PKG_LONGDESC="GLib is a library which includes support routines for C such as lists, trees, hashes, memory allocation, and many other things."
 PKG_TOOLCHAIN="autotools"
  
-pre_configure_target() {
-  export CFLAGS="$CFLAGS -O3 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
-  export CXXFLAGS="$CXXFLAGS -O3 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
-}
+#pre_configure_target() {
+#  export CFLAGS="$CFLAGS -O3"
+#  export CXXFLAGS="$CXXFLAGS -O3"
+#}
 
 PKG_CONFIGURE_OPTS_HOST="--disable-shared --with-pcre=internal --with-pic --disable-libmount --disable-gtk-doc --disable-gtk-doc-html --disable-man"
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_snprintf_c99=yes \
@@ -53,7 +53,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_snprintf_c99=yes \
                            --enable-Bsymbolic \
                            --with-gnu-ld \
                            --with-threads=posix \
-                           --with-pcre=system \
+                           --with-pcre=internal \
                            --with-python=python"
 
 post_makeinstall_target() {

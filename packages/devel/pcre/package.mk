@@ -30,9 +30,9 @@ PKG_LONGDESC="The PCRE library is a set of functions that implement regular expr
 PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-unicode-properties \
-			      --enable-pcre16 \
 			      --enable-jit \
-			      --enable-utf8"
+			      --enable-utf8 \
+			      --enable-static"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN $PKG_CONFIGURE_OPTS_TARGET --disable-shared --with-pic"
 
