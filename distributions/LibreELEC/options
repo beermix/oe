@@ -1,5 +1,5 @@
 # LTO (Link Time Optimization) support
-  LTO_SUPPORT="yes"
+  LTO_SUPPORT="no"
 
 # GOLD (Google Linker) support
   GOLD_SUPPORT="no"
