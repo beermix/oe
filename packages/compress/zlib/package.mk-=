@@ -17,18 +17,14 @@
 ################################################################################
 
 PKG_NAME="zlib"
-PKG_VERSION="4b9e3f0"
-#PKG_SHA256="b359ef3796f8daa8fe437886164684445a58c65979920127e9df94cb821ed2f0"
-PKG_ARCH="any"
-PKG_LICENSE="OSS"
-PKG_SITE="http://www.zlib.net"
-PKG_URL="https://github.com/jtkukunas/zlib/archive/$PKG_VERSION.tar.gz"
-PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain"
+PKG_VERSION="a17fefa"
+PKG_URL="https://github.com/mtl1979/zlib-ng/archive/${PKG_VERSION}.tar.gz"
+PKG_SOURCE_DIR="zlib-ng-$PKG_VERSION*"
+PKG_DEPENDS_TARGET=""
+PKG_DEPENDS_HOST="ccache:host"
 PKG_SECTION="compress"
-PKG_SHORTDESC="zlib: A general purpose (ZIP) data compression library"
-PKG_LONGDESC="zlib is a general purpose data compression library. All the code is thread safe. The data format used by the zlib library is described by RFCs (Request for Comments) 1950 to 1952 in the files ftp://ds.internic.net/rfc/rfc1950.txt (zlib format), rfc1951.txt (deflate format) and rfc1952.txt (gzip format)."
 PKG_TOOLCHAIN="cmake-make"
 
-PKG_CMAKE_OPTS_TARGET="-DAMD64=ON -DASM686=OFF -DCMAKE_BUILD_TYPE=Release"
-PKG_CMAKE_OPTS_HOST="$PKG_CMAKE_OPTS_TARGET -DCMAKE_VERBOSE_MAKEFILE=ON"
+PKG_CMAKE_OPTS_TARGET="-DZLIB_COMPAT=1 -DWITH_GZFILEOP=1 -DWITH_OPTIM=1 -DCMAKE_VERBOSE_MAKEFILE=0 -DWITH_NEW_STRATEGIES=1 -DWITH_NATIVE_INSTRUCTIONS=1 -DHAVE_SSE3_INTRIN_EXITCODE=1 -DHAVE_SSSE3_INTRIN_EXITCODE=1 -DHAVE_SSE41_INTRIN_EXITCODE=1 -DHAVE_AVX_INTRIN_EXITCODE=0 -DHAVE_AVX2_INTRIN_EXITCODE=0 -DCMAKE_BUILD_TYPE=Release -DCMAKE_SYSTEM_PROCESSOR=AMD64"
+
+PKG_CMAKE_OPTS_HOST="$PKG_CMAKE_OPTS_TARGET"

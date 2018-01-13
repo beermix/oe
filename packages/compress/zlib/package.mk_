@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="zlib"
-PKG_VERSION="1.2.8_jtkv4"
+PKG_VERSION="4b9e3f0"
 PKG_SHA256="b359ef3796f8daa8fe437886164684445a58c65979920127e9df94cb821ed2f0"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
@@ -31,4 +31,4 @@ PKG_LONGDESC="zlib is a general purpose data compression library. All the code i
 PKG_TOOLCHAIN="cmake-make"
 
 PKG_CMAKE_OPTS_TARGET="-DAMD64=ON -DASM686=OFF -DCMAKE_BUILD_TYPE=Release"
-PKG_CMAKE_OPTS_HOST="$PKG_CMAKE_OPTS_TARGET -DCMAKE_VERBOSE_MAKEFILE=ON"
+PKG_CMAKE_OPTS_HOST="$PKG_CMAKE_OPTS_TARGET -DCMAKE_VERBOSE_MAKEFILE=0"

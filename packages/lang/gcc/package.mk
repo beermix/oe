@@ -57,7 +57,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libssp \
                            --disable-libmudflap \
                            --without-cuda-driver \
-                           --disable-libsanitizer \
                            --disable-libada \
                            --with-system-zlib \
                            --with-tune=haswell \
@@ -67,6 +66,7 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
                               --enable-cloog-backend=isl \
+                              --disable-libsanitizer \
                               --disable-shared \
                               --disable-threads \
                               --disable-libitm \
