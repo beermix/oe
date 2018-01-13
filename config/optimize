@@ -20,7 +20,7 @@ else
   TARGET_LDFLAGS="$TARGET_LDFLAGS"
 fi
 
-CCACHE_FLAGS="-fdiagnostics-color=always"
+#CCACHE_FLAGS="-fdiagnostics-color=always"
 #CCACHE_FLAGS="-fdiagnostics-color=always -fsanitize=undefined"
 
 TARGET_CPPFLAGS=
@@ -31,7 +31,7 @@ TARGET_LIBDIR="$SYSROOT_PREFIX/lib $SYSROOT_PREFIX/usr/lib"
 TARGET_INCDIR="$SYSROOT_PREFIX/include $SYSROOT_PREFIX/usr/include"
 
 HOST_CPPFLAGS=""
-HOST_CFLAGS="-march=haswell -msse2 -O2 $CCACHE_FLAGS -I$TOOLCHAIN/include"
+HOST_CFLAGS="-march=haswell -O2 $CCACHE_FLAGS -I$TOOLCHAIN/include"
 HOST_CXXFLAGS="$HOST_CFLAGS"
 HOST_LDFLAGS="-Wl,-rpath,$TOOLCHAIN/lib -L$TOOLCHAIN/lib -s"
 HOST_INCDIR="$TOOLCHAIN/include /usr/include"

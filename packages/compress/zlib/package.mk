@@ -28,3 +28,7 @@ PKG_TOOLCHAIN="cmake-make"
 PKG_CMAKE_OPTS_TARGET="-DZLIB_COMPAT=1 -DWITH_GZFILEOP=1 -DWITH_OPTIM=1 -DCMAKE_BUILD_TYPE=Release"
 
 PKG_CMAKE_OPTS_HOST="$PKG_CMAKE_OPTS_TARGET"
+
+post_makeinstall_host() {
+  mv -f $TOOLCHAIN/share/pkgconfig/zlib.pc $TOOLCHAIN/lib/pkgconfig/zlib.pc
+}
