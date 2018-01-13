@@ -32,3 +32,7 @@ PKG_CMAKE_OPTS_HOST="$PKG_CMAKE_OPTS_TARGET"
 post_makeinstall_host() {
   mv -f $TOOLCHAIN/share/pkgconfig/zlib.pc $TOOLCHAIN/lib/pkgconfig/zlib.pc
 }
+
+post_makeinstall_target() {
+  mv -f $SYSROOT_PREFIX/usr/share/pkgconfig/zlib.pc $SYSROOT_PREFIX/usr/lib/pkgconfig/zlib.pc
+}
