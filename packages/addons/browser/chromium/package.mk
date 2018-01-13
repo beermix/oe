@@ -117,11 +117,6 @@ make_target() {
     'enable_hevc_demuxing=true'
     'enable_hotwording=false'
     'is_component_build=false'
-    'remove_webcore_debug_symbols=true'
-    'enable_webrtc=false'
-    'rtc_use_h264=false'
-    'rtc_use_lto=false'
-    'use_openh264=false'
     "google_api_key=\"${_google_api_key}\""
     "google_default_client_id=\"${_google_default_client_id}\""
     "google_default_client_secret=\"${_google_default_client_secret}\""
