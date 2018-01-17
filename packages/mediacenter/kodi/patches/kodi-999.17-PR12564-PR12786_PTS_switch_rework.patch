@@ -1,0 +1,141 @@
+diff -Naurp kodi-17.5-rc1-07424d3/xbmc/cores/VideoPlayer/DVDCodecs/Video/AMLCodec.cpp kodi-17.5-rc1-07424d3-patch/xbmc/cores/VideoPlayer/DVDCodecs/Video/AMLCodec.cpp
+--- kodi-17.5-rc1-07424d3/xbmc/cores/VideoPlayer/DVDCodecs/Video/AMLCodec.cpp	2017-09-11 08:58:27.000000000 +0300
++++ kodi-17.5-rc1-07424d3-patch/xbmc/cores/VideoPlayer/DVDCodecs/Video/AMLCodec.cpp	2017-09-11 09:43:58.000000000 +0300
+@@ -1499,6 +1499,7 @@ CAMLCodec::CAMLCodec()
+   : m_opened(false)
+   , m_ptsIs64us(false)
+   , m_cur_pts(INT64_0)
++  , m_ptsOverflow(0)
+   , m_last_pts(0)
+   , m_bufferIndex(-1)
+   , m_state(0)
+@@ -1555,7 +1556,6 @@ bool CAMLCodec::OpenDecoder(CDVDStreamIn
+   m_zoom = -1;
+   m_contrast = -1;
+   m_brightness = -1;
+-  m_start_adj = 0;
+   m_hints = hints;
+   m_state = 0;
+   m_frameSizes.clear();
+@@ -1797,6 +1797,8 @@ bool CAMLCodec::OpenDecoder(CDVDStreamIn
+ 
+   CLog::Log(LOGNOTICE, "CAMLCodec::OpenDecoder - using V4L2 pts format: %s", m_ptsIs64us ? "64Bit":"32Bit");
+ 
++  m_ptsOverflow = (sizeof(long) == 8) ? 0 : INT64_0;
++
+   m_opened = true;
+   // vcodec is open, update speed if it was
+   // changed before VideoPlayer called OpenDecoder.
+@@ -1925,8 +1927,8 @@ void CAMLCodec::Reset()
+ 
+   // reset some interal vars
+   m_cur_pts = INT64_0;
++  m_ptsOverflow = (sizeof(long) == 8) ? 0 : INT64_0;
+   m_state = 0;
+-  m_start_adj = 0;
+   m_frameSizes.clear();
+   m_frameSizeSum = 0;
+ 
+@@ -1961,10 +1963,7 @@ int CAMLCodec::Decode(uint8_t *pData, si
+       am_private->am_pkt.avpts = INT64_0;
+     else
+     {
+-      am_private->am_pkt.avpts = 0.5 + (pts * PTS_FREQ) / DVD_TIME_BASE;\
+-      if (!m_start_adj && am_private->am_pkt.avpts >= 0x7fffffff)
+-        m_start_adj = am_private->am_pkt.avpts & ~0x0000ffff;
+-      am_private->am_pkt.avpts -= m_start_adj;
++    am_private->am_pkt.avpts = 0.5 + (pts * PTS_FREQ) / DVD_TIME_BASE;
+       m_state |= STATE_HASPTS;
+     }
+ 
+@@ -1975,14 +1974,25 @@ int CAMLCodec::Decode(uint8_t *pData, si
+     else
+     {
+       am_private->am_pkt.avdts = 0.5 + (dts * PTS_FREQ) / DVD_TIME_BASE;
+-      if (!m_start_adj && am_private->am_pkt.avdts >= 0x7fffffff)
+-        m_start_adj = am_private->am_pkt.avdts & ~0x0000ffff;
+-      am_private->am_pkt.avdts -= m_start_adj;
+ 
+       // For VC1 AML decoder uses PTS only on I-Frames
+       if (am_private->am_pkt.avpts == INT64_0 && (((size_t)am_private->gcodec.param) & KEYFRAME_PTS_ONLY))
+         am_private->am_pkt.avpts = am_private->am_pkt.avdts;
+     }
++
++    //Handle PTS overflow
++    if (sizeof(long) < 8)
++    {
++      if (am_private->am_pkt.avpts != INT64_0)
++      {
++        if (m_ptsOverflow == INT64_0)
++          m_ptsOverflow = am_private->am_pkt.avpts & 0xFFFF80000000ULL;
++        am_private->am_pkt.avpts &= 0x7FFFFFFF;
++      }
++      if (am_private->am_pkt.avdts != INT64_0)
++        am_private->am_pkt.avdts &= 0x7FFFFFFF;
++    }
++
+     // We use this to determine the fill state if no PTS is given
+     if (m_cur_pts == INT64_0)
+     {
+@@ -2028,16 +2038,16 @@ int CAMLCodec::Decode(uint8_t *pData, si
+ 
+   if (g_advancedSettings.CanLogComponent(LOGVIDEO))
+   {
+-    CLog::Log(LOGDEBUG, "CAMLCodec::Decode: ret: %d, sz: %u, dts_in: %0.4lf[%llX], pts_in: %0.4lf[%llX], adj:%llu, ptsOut:%0.4f, amlpts:%d, idx:%u, timesize:%0.4f",
++    CLog::Log(LOGDEBUG, "CAMLCodec::Decode: ret: %d, sz: %u, dts_in: %0.4lf[%llX], pts_in: %0.4lf[%llX], ptsOut:%0.4f, amlpts:%d, idx:%u, timesize:%0.4f, overflow:%llx",
+       rtn,
+       static_cast<unsigned int>(iSize),
+       dts / DVD_TIME_BASE, am_private->am_pkt.avdts,
+       pts / DVD_TIME_BASE, am_private->am_pkt.avpts,
+-      m_start_adj,
+       static_cast<float>(m_cur_pts)/PTS_FREQ,
+       static_cast<int>(m_cur_pts),
+       m_bufferIndex,
+-      timesize
++      timesize,
++      m_ptsOverflow
+     );
+   }
+ 
+@@ -2159,10 +2169,18 @@ bool CAMLCodec::GetPicture(DVDVideoPictu
+   if (m_last_pts <= 0)
+     pDvdVideoPicture->iDuration = (double)(am_private->video_rate * DVD_TIME_BASE) / UNIT_FREQ;
+   else
++  {
++    // Check for int overflow
++    if (m_cur_pts + 0xFFFFFFF < m_last_pts)
++    {
++      m_last_pts -= 0x7FFFFFFF;
++      m_ptsOverflow += 0x80000000;
++      CLog::Log(LOGDEBUG, "CAMLCodec::GetPicture, PTS overflow incremented(%llX)", m_ptsOverflow);
++    }
+     pDvdVideoPicture->iDuration = (double)((m_cur_pts - m_last_pts) * DVD_TIME_BASE) / PTS_FREQ;
+-
++  }
+   pDvdVideoPicture->dts = DVD_NOPTS_VALUE;
+-  pDvdVideoPicture->pts = (double)GetCurPts() / PTS_FREQ * DVD_TIME_BASE;
++  pDvdVideoPicture->pts = (double)(m_cur_pts + m_ptsOverflow) / PTS_FREQ * DVD_TIME_BASE;
+ 
+   return true;
+ }
+diff -Naurp kodi-17.5-rc1-07424d3/xbmc/cores/VideoPlayer/DVDCodecs/Video/AMLCodec.h kodi-17.5-rc1-07424d3-patch/xbmc/cores/VideoPlayer/DVDCodecs/Video/AMLCodec.h
+--- kodi-17.5-rc1-07424d3/xbmc/cores/VideoPlayer/DVDCodecs/Video/AMLCodec.h	2017-09-11 08:58:27.000000000 +0300
++++ kodi-17.5-rc1-07424d3-patch/xbmc/cores/VideoPlayer/DVDCodecs/Video/AMLCodec.h	2017-09-11 09:30:44.000000000 +0300
+@@ -49,7 +49,6 @@ public:
+   void          SetSpeed(int speed);
+   void          SetVideoRect(const CRect &SrcRect, const CRect &DestRect);
+   void          SetVideoRate(int videoRate);
+-  int64_t       GetCurPts() const { return m_cur_pts + m_start_adj; }
+   int           GetOMXPts() const { return static_cast<int>(m_cur_pts); }
+   uint32_t      GetBufferIndex() const { return m_bufferIndex; };
+   static float  OMXPtsToSeconds(int omxpts);
+@@ -83,8 +82,8 @@ private:
+   int              m_speed;
+   int64_t          m_cur_pts;
+   uint32_t         m_max_frame_size;
+-  int64_t          m_start_adj;
+   int64_t          m_last_pts;
++  int64_t          m_ptsOverflow;
+   uint32_t         m_bufferIndex;
+ 
+   CRect            m_dst_rect;
