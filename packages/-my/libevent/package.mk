@@ -7,7 +7,7 @@ PKG_SHORTDESC="libevent: a library for asynchronous event notification"
 PKG_USE_CMAKE="no"
 PKG_TOOLCHAIN="autotools"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-libevent-regress --disable-samples --disable-shared --enable-openssl --with-pic"
+PKG_CONFIGURE_OPTS_TARGET="--disable-libevent-regress --disable-shared --enable-openssl --with-pic"
 
 post_makeinstall_target() {
   rm -fr $INSTALL
