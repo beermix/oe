@@ -65,9 +65,6 @@ make_target() {
   make MAKEINFO=true -C libiberty
   make MAKEINFO=true -C bfd
   make MAKEINFO=true -C binutils ar
-#  make MAKEINFO=true -C all-ld
-#  make MAKEINFO=true -C check
-  
 }
 
 makeinstall_host() {
