@@ -45,8 +45,8 @@ pre_configure_target() {
   cd $PKG_BUILD
     rm -rf .$TARGET_NAME
 
-  export CFLAGS="$CFLAGS -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto -fno-semantic-interposition -fPIC "
-  export CXXFLAGS="$CXXFLAGS -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto -fno-semantic-interposition -fPIC "
+  export CFLAGS="$CFLAGS -Os -fdata-sections -ffunction-sections -fPIC "
+  export CXXFLAGS="$CXXFLAGS -Os -fdata-sections -ffunction-sections -fPIC "
 }
 
 makeinstall_target() {
