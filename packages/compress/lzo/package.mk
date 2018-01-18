@@ -28,10 +28,19 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="compress"
 PKG_SHORTDESC="LZO data compressor"
 PKG_LONGDESC="LZO is a data compression library which is suitable for data de-/compression in real-time. This means it favours speed over compression ratio."
-PKG_TOOLCHAIN="configure"
+PKG_TOOLCHAIN="cmake-make"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-shared --enable-static --with-pic"
-PKG_CONFIGURE_OPTS_HOST="--disable-shared --with-pic"
+pre_configure_target() {
+  export CFLAGS="$CFLAGS -O3 -DLZO_CFG_NO_UNALIGNED=1 -ffat-lto-objects -flto -fno-semantic-interposition -fPIC -Wall"
+  export CXXFLAGS="$CXXFLAGS -O3 -DLZO_CFG_NO_UNALIGNED=1 -ffat-lto-objects -flto -fno-semantic-interposition -fPIC -Wall"
+}
+
+pre_configure_host() {
+  export CFLAGS="$CFLAGS -DLZO_CFG_NO_UNALIGNED=1 -fPIC"
+}
+
+PKG_CMAKE_OPTS_HOST="-DENABLE_SHARED=OFF -DENABLE_STATIC=ON"
+PKG_CMAKE_OPTS_TARGET="-DENABLE_SHARED=ON -DENABLE_STATIC=OFF"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/libexec

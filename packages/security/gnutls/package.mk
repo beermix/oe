@@ -9,7 +9,6 @@ PKG_DEPENDS_TARGET="toolchain openssl nettle"
 PKG_SECTION="escalade/depends"
 PKG_SHORTDESC="GnuTLS is a secure communications library implementing the SSL, TLS and DTLS protocols and technologies around them."
 
-
 PKG_CONFIGURE_OPTS_TARGET="--without-p11-kit \
 			      --without-libgcrypt \
 			      --disable-tools \
@@ -23,4 +22,6 @@ PKG_CONFIGURE_OPTS_TARGET="--without-p11-kit \
 			      --with-included-unistring \
 			      --without-tpm \
 			      --with-nettle-mini \
-			      --disable-shared --enable-static --with-pic"
+			      --disable-shared \
+			      --enable-static \
+			      --with-pic"
