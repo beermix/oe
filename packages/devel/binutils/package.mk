@@ -37,14 +37,12 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --disable-multilib \
                          --disable-libada \
                          --enable-libssp \
-                         --with-ppl=no \
                          --enable-version-specific-runtime-libs \
                          --enable-plugins \
                          --enable-gold=no \
                          --enable-lto=no \
                          --disable-nls \
                          --enable-relro \
-                         --enable-deterministic-archives \
                          --with-system-zlib=$TOOLCHAIN \
                          --enable-poison-system-directories"
 
@@ -60,12 +58,12 @@ make_host() {
   make MAKEINFO=true
 }
 
-make_target() {
-  make MAKEINFO=true configure-host
-  make MAKEINFO=true -C libiberty
-  make MAKEINFO=true -C bfd
-  make MAKEINFO=true -C binutils ar
-}
+#make_target() {
+#  make MAKEINFO=true configure-host
+#  make MAKEINFO=true -C libiberty
+#  make MAKEINFO=true -C bfd
+#  make MAKEINFO=true -C binutils ar
+#}
 
 makeinstall_host() {
   cp -v ../include/libiberty.h $SYSROOT_PREFIX/usr/include
