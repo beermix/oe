@@ -30,12 +30,12 @@ PKG_LONGDESC="GNU MP is a library for arbitrary precision arithmetic, operating 
 PKG_TOOLCHAIN="autotools"
 
 pre_configure_host() {
-  export CFLAGS="$CFLAGS -O3 -fno-semantic-interposition "
+  export CFLAGS="$CFLAGS -fno-semantic-interposition"
   export CXXFLAGS="$CFLAGS"
 }
 
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -O3 -fno-semantic-interposition "
+  export CFLAGS="$CFLAGS -fno-semantic-interposition"
   export CXXFLAGS="$CFLAGS"
 }
 

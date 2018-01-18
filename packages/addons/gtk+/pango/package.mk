@@ -19,12 +19,12 @@
 ################################################################################
 
 PKG_NAME="pango"
-PKG_VERSION="1.40.14"
-PKG_SHA256="90af1beaa7bf9e4c52db29ec251ec4fd0a8f2cc185d521ad1f88d01b3a6a17e3"
+PKG_VERSION="1.41.0"
+PKG_SHA256="1f76ef95953dc58ee5d6a53e5f1cb6db913f3e0eb489713ee9266695cae580ba"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.pango.org/"
-PKG_URL="http://ftp.gnome.org/pub/gnome/sources/pango/1.40/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="http://ftp.gnome.org/pub/gnome/sources/pango/1.41/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain cairo freetype fontconfig libX11 libXft harfbuzz"
 PKG_SECTION="x11/toolkits"
 PKG_SHORTDESC="pango: Library for layout and rendering of internationalized text"
@@ -35,4 +35,6 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-doc-cross-references \
                            --disable-gtk-doc \
                            --disable-man \
                            --enable-debug=no \
-                           --with-xft"
+                           --with-xft \
+                           --enable-explicit-deps=yes  \
+                           --with-included-modules=basic-fc"
