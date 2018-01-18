@@ -32,3 +32,38 @@ PKG_TOOLCHAIN="cmake-make"
 
 PKG_CMAKE_OPTS_TARGET="-DAMD64=ON -DASM686=OFF -DCMAKE_BUILD_TYPE=Release"
 PKG_CMAKE_OPTS_HOST="$PKG_CMAKE_OPTS_TARGET -DCMAKE_VERBOSE_MAKEFILE=0"
+
+post_configure_target() {
+ ## configure minizip
+ (
+  cd $PKG_BUILD/contrib/minizip
+  rm Makefile
+  export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:../../"
+  do_autoreconf
+  cp $PKG_BUILD/.$TARGET_NAME/zconf.h ./
+  ./configure --host=$TARGET_NAME --build=$HOST_NAME $TARGET_CONFIGURE_OPTS --disable-shared --enable-static
+ )
+}
+
+post_make_target() {
+ # make minizip
+ make -C $PKG_BUILD/contrib/minizip
+}
+
+post_makeinstall_target() {
+ # Install minizip
+ make -C $PKG_BUILD/contrib/minizip DESTDIR=$SYSROOT_PREFIX install
+}
+
+configure_init() {
+ : # reuse target
+}
+
+make_init() {
+ : # reuse target
+}
+
+makeinstall_init() {
+  mkdir -p $INSTALL/usr/lib
+  cp -a ../.install_pkg/usr/lib/* $INSTALL/usr/lib
+}
