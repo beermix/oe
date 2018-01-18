@@ -17,10 +17,10 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="28ff7d6"
+PKG_VERSION="d56301c"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="http://gcc.gnu.org/"
+PKG_SITE="https://github.com/gcc-mirror/gcc/tree/gcc-7-branch"
 #PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/$PKG_VERSION/gcc-$PKG_VERSION.tar.xz"
 PKG_URL="https://github.com/gcc-mirror/gcc/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host zlib:host mpc:host"
@@ -57,6 +57,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libmpx \
                            --disable-libssp \
                            --disable-libsanitizer \
+                           --disable-libquadmath \
                            --without-cuda-driver \
                            --disable-libada \
                            --with-system-zlib \
@@ -66,11 +67,9 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
-                              --enable-cloog-backend=isl \
                               --disable-shared \
                               --disable-threads \
                               --disable-libitm \
-                              --disable-libquadmath \
                               --disable-libgomp \
                               --disable-libatomic \
                               --without-headers \
