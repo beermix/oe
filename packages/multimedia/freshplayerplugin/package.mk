@@ -1,10 +1,9 @@
 PKG_NAME="freshplayerplugin"
-PKG_VERSION="934aa9c"
+PKG_VERSION="1f48001"
 PKG_URL="https://github.com/i-rinat/freshplayerplugin/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain ragel:host alsa xrandr libXrender libXcursor libdrm libevent freetype openssl icu libva libvdpau cairo pango"
 PKG_SECTION="multimedia"
-PKG_USE_CMAKE="yes"
-PKG_USE_NINJA="no"
+PKG_TOOLCHAIN="cmake-make"
 
 PKG_CMAKE_OPTS_TARGET="-DWITH_LIBV4L2=0 \
 			  -DWITH_JACK=0 \
