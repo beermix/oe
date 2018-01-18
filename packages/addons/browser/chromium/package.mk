@@ -109,6 +109,7 @@ make_target() {
     'exclude_unwind_tables=true'
     'enable_hangout_services_extension=true'
     'enable_widevine=true'
+    'enable_vulkan=true'
     'enable_nacl=false'
     'enable_swiftshader=false'
     "google_api_key=\"${_google_api_key}\""
