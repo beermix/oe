@@ -4,8 +4,6 @@ PKG_URL="https://fossies.org/linux/misc/zabbix-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain curl libxml2 mariadb ncurses openssl libevent"
 PKG_SECTION="devel"
 
-
-
 pre_configure_host() {
   cd $PKG_BUILD
   rm -rf .$TARGET_NAME
@@ -18,7 +16,7 @@ PKG_CONFIGURE_OPTS_TARGET="--datadir=/storage/.config/zabbix \
 			      --enable-server \
 			      --enable-proxy \
 			      --enable-agent \
-			      --with-mysql \
+			      --with-mysql=$SYSROOT_PREFIX/usr \
 			      --with-net-snmp=no \
 			      --with-ssh2=no \
 			      --with-gnutls=no \
