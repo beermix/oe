@@ -1,9 +1,8 @@
 PKG_NAME="libvpx"
-PKG_VERSION="b58259a"
+PKG_VERSION="373e08f"
 PKG_URL="https://github.com/webmproject/libvpx/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="tools"
-
 
 get_graphicdrivers
 
