@@ -16,21 +16,14 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="minizip"
-PKG_VERSION="98cd93d"
-#PKG_SHA256="5666b5ee3e85dfd2dd119970613c12e6267d31813f07d3ffa5d359fe272cb6d1"
+PKG_NAME="re2"
+PKG_VERSION="2018-01-01"
 PKG_ARCH="any"
 PKG_LICENSE="zlib"
-PKG_SITE="https://github.com/nmoinvaz/minizip"
-PKG_URL="https://github.com/nmoinvaz/minizip/archive/$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="zlib libbsd"
+PKG_SITE="https://github.com/google/re2"
+PKG_URL="https://github.com/google/re2/archive/$PKG_VERSION.tar.gz"
+PKG_DEPENDS_TARGET=""
 PKG_SECTION="compress"
-PKG_SHORTDESC="Minizip zlib contribution fork with latest bug fixes"
-PKG_LONGDESC="Minizip zlib contribution fork with latest bug fixes"
 PKG_TOOLCHAIN="cmake-make"
 
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release -DUSE_AES=OFF -DBUILD_TEST=ON"
-
-makeinstall_target() {
-  cp -v minizip $SYSROOT_PREFIX/usr/bin/minizip
-}
+PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF"
