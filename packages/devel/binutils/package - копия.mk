@@ -40,8 +40,9 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --with-ppl=no \
                          --enable-version-specific-runtime-libs \
                          --enable-plugins \
+                         --enable-ld=yes \
                          --enable-gold=no \
-                         --enable-lto=no \
+                         --enable-lto \
                          --disable-nls \
                          --enable-relro \
                          --enable-deterministic-archives \
