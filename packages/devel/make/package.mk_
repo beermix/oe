@@ -17,19 +17,21 @@
 ################################################################################
 
 PKG_NAME="make"
-PKG_VERSION=""
+PKG_VERSION="4.2.1"
+PKG_SHA256="d6e262bf3601b42d2b1e4ef8310029e1dcf20083c5446b4b7aa67081fdffc589"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://www.gnu.org/software/make/"
-PKG_URL=""
+PKG_URL="http://ftpmirror.gnu.org/make/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST=""
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="make: GNU make utility to maintain groups of programs"
 PKG_LONGDESC="The 'make' utility automatically determines which pieces of a large program need to be recompiled, and issues commands to recompile them. This is GNU 'make', which was implemented by Richard Stallman and Roland McGrath. GNU 'make' conforms to section 6.2 of EEE Standard 1003.2-1992' (POSIX.2)."
-PKG_TOOLCHAIN="manual"
+
+export CC=$LOCAL_CC
+
+PKG_CONFIGURE_OPTS_HOST="--without-guile"
 
 post_makeinstall_host() {
-  mkdir -p $TOOLCHAIN/bin/
-  ln -sf /usr/bin/make $TOOLCHAIN/bin/gmake
-  ln -sf /usr/bin/make $TOOLCHAIN/bin/make
+  ln -sf make $TOOLCHAIN/bin/gmake
 }
