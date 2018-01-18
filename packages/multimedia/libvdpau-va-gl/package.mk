@@ -26,8 +26,6 @@ PKG_URL="https://github.com/i-rinat/libvdpau-va-gl/archive/${PKG_VERSION}.tar.gz
 PKG_DEPENDS_TARGET="toolchain intel-vaapi-driver libva"
 PKG_PRIORITY="optional"
 PKG_SECTION="multimedia"
-
-PKG_USE_CMAKE="yes"
-
+PKG_TOOLCHAIN="cmake-make"
 
 PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release"
