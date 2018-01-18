@@ -70,6 +70,7 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-shared \
                               --disable-threads \
                               --disable-libitm \
+                              --disable-libquadmath \
                               --disable-libgomp \
                               --disable-libatomic \
                               --without-headers \
