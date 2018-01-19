@@ -27,7 +27,7 @@ PKG_LICENSE="Mixed"
 PKG_SITE="http://www.chromium.org/Home"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="chromium:host pciutils dbus libXcomposite libXcursor libXtst alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk gtk+ libva-vdpau-driver unclutter xdotool freetype harfbuzz libva re2"
+PKG_DEPENDS_TARGET="chromium:host pciutils dbus libxss libXcomposite libXcursor libXtst alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk gtk+ libva-vdpau-driver unclutter xdotool freetype harfbuzz libva re2"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -42,14 +42,14 @@ post_patch() {
   cd $(get_build_dir chromium)
 
   # Use Python 2
-  find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$TOOLCHAIN/bin/python2|g" {} +
+  find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$TOOLCHAIN/bin/python|g" {} +
 
   # set correct widevine
   sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' ./third_party/widevine/cdm/stub/widevine_cdm_version.h
 }
 
 make_host() {
-  ./tools/gn/bootstrap/bootstrap.py --no-rebuild --no-clean
+  ./tools/gn/bootstrap/bootstrap.py --no-rebuild --no-clean --verbose
 }
 
 make_target() {
@@ -105,13 +105,15 @@ make_target() {
     'use_sysroot=true'
     'use_vaapi=true'
     'use_v8_context_snapshot=false'
+    'enable_vulkan=true'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'exclude_unwind_tables=true'
     'enable_hangout_services_extension=true'
     'enable_widevine=true'
-    'enable_vulkan=true'
     'enable_nacl=false'
+    'enable_nacl_nonsfi=false'
     'enable_swiftshader=false'
+    'enable_vulkan=true'
     "google_api_key=\"${_google_api_key}\""
     "google_default_client_id=\"${_google_default_client_id}\""
     "google_default_client_secret=\"${_google_default_client_secret}\""
@@ -152,11 +154,11 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
   ./build/linux/unbundle/replace_gn_files.py  --system-libraries "${!_system_libs[@]}"
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
-  ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python2
+  ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
   mkdir -p $PKG_BUILD/third_party/node/linux/node-linux-x64/bin
   ln -fs /home/user/.bin/node $PKG_BUILD/third_party/node/linux/node-linux-x64/bin/node
 
-  touch $PKG_BUILD/chrome/test/data/webui/i18n_process_css_test.html
+#  touch $PKG_BUILD/chrome/test/data/webui/i18n_process_css_test.html
 
   ninja -j${CONCURRENCY_MAKE_LEVEL} -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
 }
