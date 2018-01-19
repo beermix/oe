@@ -50,24 +50,24 @@ post_unpack() {
   rm -rf $PKG_BUILD/ppapi/native_client/tests/
   rm -rf $PKG_BUILD/third_party/apache-win32/
   rm -rf $PKG_BUILD/third_party/binutils/
-  rm -rf $PKG_BUILD/third_party/expat/files/
-  rm -rf $PKG_BUILD/third_party/ffmpeg/*/*
-  rm -rf $PKG_BUILD/third_party/ffmpeg/*.[ch]
-  rm -rf $PKG_BUILD/third_party/flac/{include,src}
+#  rm -rf $PKG_BUILD/third_party/expat/files/
+#  rm -rf $PKG_BUILD/third_party/ffmpeg/*/*
+#  rm -rf $PKG_BUILD/third_party/ffmpeg/*.[ch]
+#  rm -rf $PKG_BUILD/third_party/flac/{include,src}
 #  rm -rf $PKG_BUILD/third_party/freetype/{src,include}
-  rm -rf $PKG_BUILD/third_party/icu/{android,linux,mac,patches,public,source,windows}
-  rm -rf $PKG_BUILD/third_party/jsoncpp/source
-  rm -rf $PKG_BUILD/third_party/lcov
+#  rm -rf $PKG_BUILD/third_party/icu/{android,linux,mac,patches,public,source,windows}
+#  rm -rf $PKG_BUILD/third_party/jsoncpp/source
+  #rm -rf $PKG_BUILD/third_party/lcov
 #  rm -rf $PKG_BUILD/base/third_party/libevent/*/*
 #  rm -rf $PKG_BUILD/base/third_party/libevent/*.[ch]
-  rm -rf $PKG_BUILD/third_party/libvpx/source/{libvpx,config}
-  rm -rf $PKG_BUILD/third_party/libexif/sources
-  rm -rf $PKG_BUILD/third_party/libjpeg/*.[ch]
-  rm -rf $PKG_BUILD/third_party/libjpeg_turbo/*.[ch]
-  rm -rf $PKG_BUILD/third_party/libpng/*.[ch]
-  rm -rf $PKG_BUILD/third_party/libxslt/{libexslt,libxslt,linux,mac,win32}
+#  rm -rf $PKG_BUILD/third_party/libvpx/source/{libvpx,config}
+  #rm -rf $PKG_BUILD/third_party/libexif/sources
+  #rm -rf $PKG_BUILD/third_party/libjpeg/*.[ch]
+  #rm -rf $PKG_BUILD/third_party/libjpeg_turbo/*.[ch]
+  #rm -rf $PKG_BUILD/third_party/libpng/*.[ch]
+#  rm -rf $PKG_BUILD/third_party/libxslt/{libexslt,libxslt,linux,mac,win32}
 #  rm -rf $PKG_BUILD/third_party/mesa/src/src
-  rm -rf $PKG_BUILD/third_party/swig
+#  rm -rf $PKG_BUILD/third_party/swig
   rm -rf $PKG_BUILD/third_party/WebKit/LayoutTests/
   rm -rf $PKG_BUILD/third_party/WebKit/Tools/Scripts/
   rm -rf $PKG_BUILD/third_party/xdg-utils/tests/
@@ -76,7 +76,7 @@ post_unpack() {
   rm -rf $PKG_BUILD/tools/gyp/test/
 #  rm -rf $PKG_BUILD/v8/test/
   rm -f $PKG_BUILD/third_party/pdfium/third_party/libjpeg/*.[ch]
-  rm -f $PKG_BUILD/third_party/pdfium/third_party/libopenjpeg20/*.[ch]
+#  rm -f $PKG_BUILD/third_party/pdfium/third_party/libopenjpeg20/*.[ch]
   rm -rf $PKG_BUILD/third_party/pdfium/third_party/libpng16
   rm -f $PKG_BUILD/third_party/pdfium/third_party/libtiff/*.[ch]
   rm -rf $PKG_BUILD/third_party/pdfium/third_party/zlib_v128
@@ -113,7 +113,7 @@ post_patch() {
 }
 
 make_host() {
-  ./tools/gn/bootstrap/bootstrap.py --no-rebuild --no-clean --verbose
+  ./tools/gn/bootstrap/bootstrap.py --no-rebuild --no-clean
 }
 
 make_target() {
@@ -221,7 +221,7 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
   mkdir -p $PKG_BUILD/third_party/node/linux/node-linux-x64/bin
   ln -fs /home/user/.bin/node $PKG_BUILD/third_party/node/linux/node-linux-x64/bin/node
 
-  ninja -v -j${CONCURRENCY_MAKE_LEVEL} -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
+  ninja -j${CONCURRENCY_MAKE_LEVEL} -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
 }
 
 addon() {
