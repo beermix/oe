@@ -41,8 +41,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-mpfr=$TOOLCHAIN \
                            --with-mpc=$TOOLCHAIN \
                            --with-isl \
-                           --with-gnu-as \
-                           --with-gnu-ld \
                            --enable-plugin \
                            --enable-lto \
                            --enable-ld=yes \
@@ -50,7 +48,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-multilib \
                            --disable-nls \
                            --enable-checking=release \
-                           --with-default-libstdcxx-abi=gcc4-compatible \
                            --with-ppl=no \
                            --without-cloog \
                            --disable-libmpx \
@@ -88,7 +85,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          $GCC_OPTS"
 
 pre_configure_host() {
-  export CXXFLAGS="$CXXFLAGS -std=gnu++98"
+#  export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
 }
 
