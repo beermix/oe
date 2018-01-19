@@ -17,12 +17,14 @@
 ################################################################################
 
 PKG_NAME="binutils"
-PKG_VERSION="2.29"
-PKG_SHA256="0b871e271c4c620444f8264f72143b4d224aa305306d85dd77ab8dce785b1e85"
+PKG_VERSION="35fd2b2"
+#PKG_SHA256="0b871e271c4c620444f8264f72143b4d224aa305306d85dd77ab8dce785b1e85"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/bminor/binutils-gdb"
-PKG_URL="http://ftpmirror.gnu.org/binutils/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="https://github.com/bminor/binutils-gdb/archive/$PKG_VERSION.tar.gz"
+#PKG_URL="http://ftpmirror.gnu.org/binutils/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_SOURCE_DIR="binutils-gdb-$PKG_VERSION*"
 PKG_DEPENDS_HOST="ccache:host zlib:host bison:host flex:host linux:host"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="binutils: A GNU collection of binary utilities"
@@ -43,7 +45,8 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-lto=no \
                          --disable-nls \
                          --enable-relro \
-                         --enable-poison-system-directories"
+                         --disable-gdb \
+                         --disable-sim"
 
 pre_configure_host() {
   unset CPPFLAGS
