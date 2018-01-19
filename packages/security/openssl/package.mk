@@ -35,34 +35,21 @@ pre_configure_host() {
 
 configure_host() {
   cd $PKG_BUILD/.$HOST_NAME
-  perl Configure --prefix=/ $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $CFLAGS $LDFLAGS
+  ./Configure --prefix=/ $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $CFLAGS $LDFLAGS
 }
 
 makeinstall_host() {
-  make INSTALL_PREFIX=$TOOLCHAIN install_sw
+  make INSTALL_PREFIX=$TOOLCHAIN install_sw -j1
 }
 
 pre_configure_target() {
   mkdir -p $PKG_BUILD/.$TARGET_NAME
   cp -a $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME/
-  
-#  sed -i -e '/^"linux-x86_64"/ s/-m64 -DL_ENDIAN -O3 -Wall/-m64 -DL_ENDIAN -Wall/' $PKG_BUILD/.$TARGET_NAME/Configure
-  CFLAGS=`echo $CFLAGS | sed -e "s|-O.||"`
-  CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.||"`
 }
 
 configure_target() {
   cd $PKG_BUILD/.$TARGET_NAME
-  perl Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $CFLAGS
-#  MAKEFLAGS=-j1
-}
-
-make_target() {
-  echo "Executing (target): make build_libcrypto $PKG_MAKE_OPTS_TARGET" | tr -s " "
-  make build_libcrypto $PKG_MAKE_OPTS_TARGET
-
-  echo "Executing (host): make $PKG_MAKE_OPTS_TARGET" | tr -s " "
-  make $PKG_MAKE_OPTS_TARGET
+  ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $OPENSSL_TARGET $CFLAGS $LDFLAGS
 }
 
 makeinstall_target() {
