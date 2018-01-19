@@ -31,17 +31,12 @@ PKG_TOOLCHAIN="configure"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-mdi \
                            --enable-cxx \
-                           --with-gl=no \
+                           --with-gl \
                            --with-jpeg-lib-dir=$SYSROOT_PREFIX/usr/lib \
                            --with-jpeg-include-dir=$SYSROOT_PREFIX/usr/include \
                            --without-x \
                            --enable-static \
                            --with-pic"
-
-#pre_configure_target() {
-#  export CFLAGS="$CFLAGS -fPIC -DPIC"
-#  export CXXFLAGS="$CXXFLAGS -fPIC -DPIC"
-#}
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
