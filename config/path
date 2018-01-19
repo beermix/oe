@@ -151,7 +151,7 @@ XORG_PATH_DRIVERS=/usr/lib/xorg/modules/drivers
 . config/optimize
 
 if [ -z "$CCACHE_DIR" ]; then
-  export CCACHE_DIR="/home/user/.btr/.ccache_oe"
+  export CCACHE_DIR="/home/user/.aa/.ccache_oe"
 fi
 export MAKEFLAGS=-j$CONCURRENCY_MAKE_LEVEL
 
