@@ -136,8 +136,7 @@ TARGET_CONFIGURE_OPTS="--host=$TARGET_NAME \
                        --libexecdir=/usr/lib \
                        --localstatedir=/var \
                        --disable-static \
-                       --enable-shared \
-                       --disable-nls"
+                       --enable-shared"
 
 # cmake build defaults
 if [ "$DEBUG" = "yes" ]; then
