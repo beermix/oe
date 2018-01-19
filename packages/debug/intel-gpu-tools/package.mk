@@ -8,8 +8,7 @@ PKG_SECTION="tools"
 PKG_TOOLCHAIN="autotools"
 
 pre_configure_target() {
-#  export LC_ALL=en_US.UTF-8
-  export CFLAGS="$CFLAGS -static -lpthread -static-libstdc++ -static-libgcc -lrt -ldl"
+  export LC_ALL=en_US.UTF-8
 }
 
 PKG_CONFIGURE_OPTS_TARGET="enable_gtk_doc=no --disable-tests --with-libunwind --disable-shared"

@@ -119,7 +119,7 @@ make_host() {
 
 make_target() {
   strip_lto
-#  export LDFLAGS="$LDFLAGS -ludev"
+  export LDFLAGS="$LDFLAGS -ludev"
   export LD=$CXX
   
   export CCACHE_SLOPPINESS=time_macros

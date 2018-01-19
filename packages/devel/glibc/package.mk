@@ -40,10 +40,9 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/usr/bin/bash \
                            --with-elf \
                            --with-tls \
                            --with-__thread \
-                           --enable-stack-protector=no \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
-                           --enable-kernel=3.10 \
+                           --enable-kernel=3.2.0 \
                            --without-cvs \
                            --without-gd \
                            --enable-obsolete-rpc \
@@ -186,7 +185,7 @@ fi
     ln -sf ld.so $INSTALL/usr/lib/ld-linux.so.3
   fi
 
-  debug_strip $INSTALL/usr/lib
+#  debug_strip $INSTALL/usr/lib
 }
 
 configure_init() {
