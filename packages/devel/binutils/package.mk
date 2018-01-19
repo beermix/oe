@@ -43,7 +43,6 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-lto=no \
                          --disable-nls \
                          --enable-relro \
-                         --with-system-zlib=$TOOLCHAIN \
                          --enable-poison-system-directories"
 
 pre_configure_host() {

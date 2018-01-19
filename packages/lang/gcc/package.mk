@@ -57,11 +57,8 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libssp \
                            --disable-libsanitizer \
                            --without-cuda-driver \
-                           --disable-libmudflap \
                            --disable-libada \
-                           --with-system-zlib \
-                           --with-tune=haswell \
-                           --with-arch=westmere"
+                           --with-tune=generic"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
