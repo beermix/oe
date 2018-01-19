@@ -136,13 +136,14 @@ TARGET_CONFIGURE_OPTS="--host=$TARGET_NAME \
                        --libexecdir=/usr/lib \
                        --localstatedir=/var \
                        --disable-static \
-                       --enable-shared"
+                       --enable-shared \
+                       --disable-nls"
 
 # cmake build defaults
 if [ "$DEBUG" = "yes" ]; then
   CMAKE_BUILD_TYPE="Debug"
 else
-  CMAKE_BUILD_TYPE=""
+  CMAKE_BUILD_TYPE="Release"
 fi
 
 CMAKE_GENERATOR_NINJA="-GNinja \
