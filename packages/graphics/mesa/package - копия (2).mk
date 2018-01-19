@@ -36,18 +36,11 @@ if [ "$DISPLAYSERVER" = "x11" ]; then
   export X11_INCLUDES=
   MESA_DRI="--enable-dri --enable-dri3"
   MESA_GLX="--enable-glx --enable-driglx-direct --enable-glx-tls"
-  MESA_PLATFORMS="--with-platforms=x11,drm"
-elif [ "$DISPLAYSERVER" = "weston" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET wayland wayland-protocols"
-  MESA_DRI="--enable-dri --disable-dri3"
-  # The glx in glx-tls is a misnomer - there's nothing glx in it.
-  MESA_GLX="--disable-glx --disable-driglx-direct --enable-glx-tls"
-  MESA_PLATFORMS="--with-platforms=drm,wayland"
+  MESA_EGL_PLATFORMS="--with-platforms=x11,drm"
 else
   MESA_DRI="--enable-dri --disable-dri3"
-  # The glx in glx-tls is a misnomer - there's nothing glx in it.
-  MESA_GLX="--disable-glx --disable-driglx-direct --enable-glx-tls"
-  MESA_PLATFORMS="--with-platforms=drm"
+  MESA_GLX="--disable-glx --disable-driglx-direct --disable-glx-tls"
+  MESA_EGL_PLATFORMS="--with-platforms=drm"
 fi
 
 # configure GPU drivers and dependencies:
@@ -89,7 +82,6 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --enable-texture-float \
                            --enable-asm \
                            --disable-selinux \
-                           $MESA_PLATFORMS \
                            --enable-opengl \
                            $MESA_GLES \
                            $MESA_DRI \
@@ -97,12 +89,12 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --disable-osmesa \
                            --disable-gallium-osmesa \
                            --enable-egl \
+                           $MESA_EGL_PLATFORMS \
                            $XA_CONFIG \
                            --enable-gbm \
                            --disable-nine \
                            --disable-xvmc \
                            $MESA_VDPAU \
-                           --disable-omx-bellagio \
                            --disable-va \
                            --disable-opencl \
                            --enable-opencl-icd \
