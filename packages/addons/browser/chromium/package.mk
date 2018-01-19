@@ -3,7 +3,7 @@
 #      Copyright (C) 2009-2012 Stephan Raue (stephan@openelec.tv)
 #
 #  This Program is free software; you can redistribute it and/or modify
-#  it under the terms of the GNU General Public License as published by
+#  it under the te  rms of the GNU General Public License as published by
 #  the Free Software Foundation; either version 2, or (at your option)
 #  any later version.
 #
@@ -38,6 +38,70 @@ PKG_ADDON_NAME="Chromium"
 PKG_ADDON_TYPE="xbmc.python.script"
 PKG_ADDON_PROVIDES="executable"
 
+post_unpack() {
+  rmdir $PKG_BUILD/chrome/test/data/webui/settings/a11y
+  rmdir $PKG_BUILD/chrome/test/data/webui/{engagement,extensions,media_router,print_preview,cr_elements,settings,md_bookmarks,md_downloads,md_history,md_user_manager,net_internals}
+  rm -rf $PKG_BUILD/chrome/tools/test/reference_build/chrome_linux/
+  rm -rf $PKG_BUILD/components/test/data/component_updater/jebgalgnebhfojomionfpkfelancnnkf/component1.dll
+  rm -rf $PKG_BUILD/content/test/data/
+#  rm -rf $PKG_BUILD/net/data/
+# v the root BUILD.gn includes files from this dir
+#  rm -rf $PKG_BUILD/ppapi/examples/
+  rm -rf $PKG_BUILD/ppapi/native_client/tests/
+  rm -rf $PKG_BUILD/third_party/apache-win32/
+  rm -rf $PKG_BUILD/third_party/binutils/
+  rm -rf $PKG_BUILD/third_party/expat/files/
+  rm -rf $PKG_BUILD/third_party/ffmpeg/*/*
+  rm -rf $PKG_BUILD/third_party/ffmpeg/*.[ch]
+  rm -rf $PKG_BUILD/third_party/flac/{include,src}
+#  rm -rf $PKG_BUILD/third_party/freetype/{src,include}
+  rm -rf $PKG_BUILD/third_party/icu/{android,linux,mac,patches,public,source,windows}
+  rm -rf $PKG_BUILD/third_party/jsoncpp/source
+  rm -rf $PKG_BUILD/third_party/lcov
+#  rm -rf $PKG_BUILD/base/third_party/libevent/*/*
+#  rm -rf $PKG_BUILD/base/third_party/libevent/*.[ch]
+  rm -rf $PKG_BUILD/third_party/libvpx/source/{libvpx,config}
+  rm -rf $PKG_BUILD/third_party/libexif/sources
+  rm -rf $PKG_BUILD/third_party/libjpeg/*.[ch]
+  rm -rf $PKG_BUILD/third_party/libjpeg_turbo/*.[ch]
+  rm -rf $PKG_BUILD/third_party/libpng/*.[ch]
+  rm -rf $PKG_BUILD/third_party/libxslt/{libexslt,libxslt,linux,mac,win32}
+#  rm -rf $PKG_BUILD/third_party/mesa/src/src
+  rm -rf $PKG_BUILD/third_party/swig
+  rm -rf $PKG_BUILD/third_party/WebKit/LayoutTests/
+  rm -rf $PKG_BUILD/third_party/WebKit/Tools/Scripts/
+  rm -rf $PKG_BUILD/third_party/xdg-utils/tests/
+  rm -rf $PKG_BUILD/third_party/yasm/source/
+  rm -rf $PKG_BUILD/third_party/zlib/{*.[ch],contrib/minizip}
+  rm -rf $PKG_BUILD/tools/gyp/test/
+#  rm -rf $PKG_BUILD/v8/test/
+  rm -f $PKG_BUILD/third_party/pdfium/third_party/libjpeg/*.[ch]
+  rm -f $PKG_BUILD/third_party/pdfium/third_party/libopenjpeg20/*.[ch]
+  rm -rf $PKG_BUILD/third_party/pdfium/third_party/libpng16
+  rm -f $PKG_BUILD/third_party/pdfium/third_party/libtiff/*.[ch]
+  rm -rf $PKG_BUILD/third_party/pdfium/third_party/zlib_v128
+
+  rm -f $PKG_BUILD/third_party/skia/platform_tools/android/apps/gradle/wrapper/gradle-wrapper.jar
+  rm -f $PKG_BUILD/third_party/WebKit/Source/devtools/scripts/jsdoc-validator/jsdoc-validator.jar
+  rm -f $PKG_BUILD/third_party/WebKit/Source/devtools/scripts/closure/compiler.jar
+  rm -f $PKG_BUILD/third_party/WebKit/Source/devtools/scripts/compiler-runner/closure-runner.jar
+  rm -rf $PKG_BUILD/third_party/sfntly/src/java/lib
+  rm -f $PKG_BUILD/third_party/haha/haha-2.0.2.jar
+  rm -f $PKG_BUILD/third_party/android_platform/webview/frameworks_5.1.0_r1.jar
+  rm -f $PKG_BUILD/third_party/android_platform/webview/frameworks_6.0.jar
+  rm -f $PKG_BUILD/third_party/libphonenumber/dist/tools/java/java-build/target/java-build-1.0-SNAPSHOT-jar-with-dependencies.jar
+  rm -f $PKG_BUILD/third_party/libphonenumber/dist/tools/java/cpp-build/target/cpp-build-1.0-SNAPSHOT-jar-with-dependencies.jar
+  rm -rf $PKG_BUILD/third_party/libphonenumber/dist/java/demo/war/WEB-INF/lib
+  rm -rf $PKG_BUILD/third_party/libphonenumber/dist/java/lib
+  rm -f $PKG_BUILD/third_party/webrtc/examples/androidapp/third_party/autobanh/autobanh.jar
+  rm -rf $PKG_BUILD/third_party/cacheinvalidation/src/example-app-build/libs
+  rm -f $PKG_BUILD/third_party/closure_compiler/runner/runner.jar
+  rm -f $PKG_BUILD/third_party/closure_compiler/compiler/compiler.jar
+  rm -rf $PKG_BUILD/third_party/proguard/lib
+  rm -f $PKG_BUILD/third_party/checkstyle/checkstyle-6.5-all.jar
+  rm -rf $PKG_BUILD/third_party/sfntly/src/cpp/ext
+}
+
 post_patch() {
   cd $(get_build_dir chromium)
 
@@ -54,7 +118,7 @@ make_host() {
 
 make_target() {
   strip_lto
-  export LDFLAGS="$LDFLAGS -ludev"
+#  export LDFLAGS="$LDFLAGS -ludev"
   export LD=$CXX
   
   export CCACHE_SLOPPINESS=time_macros
@@ -105,7 +169,6 @@ make_target() {
     'use_sysroot=true'
     'use_vaapi=true'
     'use_v8_context_snapshot=false'
-    'enable_vulkan=true'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'exclude_unwind_tables=true'
     'enable_hangout_services_extension=true'
@@ -158,9 +221,7 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
   mkdir -p $PKG_BUILD/third_party/node/linux/node-linux-x64/bin
   ln -fs /home/user/.bin/node $PKG_BUILD/third_party/node/linux/node-linux-x64/bin/node
 
-#  touch $PKG_BUILD/chrome/test/data/webui/i18n_process_css_test.html
-
-  ninja -j${CONCURRENCY_MAKE_LEVEL} -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
+  ninja -v -j${CONCURRENCY_MAKE_LEVEL} -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
 }
 
 addon() {
