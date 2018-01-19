@@ -60691,3 +60691,119 @@ index 6dd83f21c9..4c79edf58f 100644
  #define BFD_VERSION @bfd_version@
  #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
  #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 9f1eb2da277faf0991bead7d3d0a9750c4a3d162
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Fri Jan 12 00:01:25 2018 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 4c79edf58f..f143e09d72 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20180111
++#define BFD_VERSION_DATE 20180112
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit c19049c30fc4af93b56ed0ef2ef896142e09e855
+Author: Eric Christopher <echristo@gmail.com>
+Date:   Fri Jan 12 11:12:55 2018 -0800
+
+    2018-01-12  Eric Christopher  <echristo@gmail.com>
+    
+                Apply from master:
+                2018-01-12 Sterling Augustine <saugustine@google.com>
+    
+            * cref.cc (Cref_inputs::Cref_table_compare::operator): Add
+            conditionals and calls to is_forwarder.
+
+diff --git a/gold/ChangeLog b/gold/ChangeLog
+index 9e45ad360d..1403db5029 100644
+--- a/gold/ChangeLog
++++ b/gold/ChangeLog
+@@ -1,3 +1,11 @@
++2018-01-12  Eric Christopher  <echristo@gmail.com>
++
++	Apply from master:
++	2018-01-12 Sterling Augustine <saugustine@google.com>
++
++	* cref.cc (Cref_inputs::Cref_table_compare::operator): Add
++	conditionals and calls to is_forwarder.
++
+ 2017-12-01  Cary Coutant  <ccoutant@gmail.com>
+ 
+ 	PR gold/22309
+diff --git a/gold/cref.cc b/gold/cref.cc
+index d3337b9d6b..ff9e217334 100644
+--- a/gold/cref.cc
++++ b/gold/cref.cc
+@@ -236,9 +236,13 @@ Cref_inputs::Cref_table_compare::operator()(const Symbol* s1,
+     }
+ 
+   // We should never have two different symbols with the same name and
+-  // version.
++  // version, where one doesn't forward to the other.
+   if (s1 == s2)
+     return false;
++  if (s1->is_forwarder() && !s2->is_forwarder())
++    return true;
++  if (!s1->is_forwarder() && s2->is_forwarder())
++    return false;
+   gold_unreachable();
+ }
+ 
+
+commit 096ed335d3d85766bb722e27d37c0555cafabae7
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sat Jan 13 00:01:31 2018 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index f143e09d72..d1b4046b3b 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20180112
++#define BFD_VERSION_DATE 20180113
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 2bc3dad9bb2aee834bb267d06b31c29b2146ccb7
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sun Jan 14 00:01:48 2018 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index d1b4046b3b..c3b3d54441 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20180113
++#define BFD_VERSION_DATE 20180114
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit b449b9e82a0fa72ca483f11c2bb75ef0ad9042d5
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Mon Jan 15 00:03:47 2018 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index c3b3d54441..c6eada3954 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -1,4 +1,4 @@
+-#define BFD_VERSION_DATE 20180114
++#define BFD_VERSION_DATE 20180115
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
