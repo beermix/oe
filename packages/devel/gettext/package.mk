@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/s/gettext/"
 PKG_URL="http://ftp.gnu.org/pub/gnu/gettext/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_HOST="ccache:host libxml2:host"
+PKG_DEPENDS_HOST="ccache:host"
 PKG_DEPENDS_TARGET="libiconv libxml2"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="gettext: A program internationalization library and tools"
@@ -48,6 +48,7 @@ PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared \
                          --with-included-glib \
                          --with-included-libcroco \
                          --with-included-libunistring \
+                         --with-included-libxml \
                          --with-pic"
                          
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST --with-included-libxml=no"
