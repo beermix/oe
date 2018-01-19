@@ -27,7 +27,6 @@ PKG_SHORTDESC="inputstream.rtmp"
 PKG_LONGDESC="inputstream.rtmp"
 
 PKG_IS_ADDON="yes"
-PKG_USE_NINJA="no"
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/
