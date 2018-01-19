@@ -28,7 +28,7 @@ PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="glibc: The GNU C library"
 PKG_LONGDESC="The Glibc package contains the main C library. This library provides the basic routines for allocating memory, searching directories, opening and closing files, reading and writing files, string handling, pattern matching, arithmetic, and so on."
 
-PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/usr/bin/bash \
+PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            ac_cv_path_PERL=no \
                            ac_cv_prog_MAKEINFO= \
                            --libexecdir=/usr/lib/glibc \
@@ -42,7 +42,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/usr/bin/bash \
                            --with-__thread \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
-                           --enable-kernel=3.2.0 \
+                           --enable-kernel=2.6.0 \
                            --without-cvs \
                            --without-gd \
                            --enable-obsolete-rpc \
@@ -164,6 +164,13 @@ post_makeinstall_target() {
 # remove locales and charmaps
   rm -rf $INSTALL/usr/share/i18n/charmaps
   rm -rf $INSTALL/usr/share/i18n/locales
+
+# add UTF-8 charmap for Generic (charmap is needed for installer)
+  if [ "$PROJECT" = "Generic" ]; then
+    mkdir -p $INSTALL/usr/share/i18n/charmaps
+    cp -PR $PKG_BUILD/localedata/charmaps/UTF-8 $INSTALL/usr/share/i18n/charmaps
+    gzip $INSTALL/usr/share/i18n/charmaps/UTF-8
+  fi
 
 # add default locale
 if [ "$GLIBC_LOCALES" = yes ]; then
