@@ -40,7 +40,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/usr/bin/bash \
                            --with-elf \
                            --with-tls \
                            --with-__thread \
-                           --enable-stack-protector=strong \
+                           --enable-stack-protector=no \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
                            --enable-kernel=3.10 \
@@ -119,7 +119,7 @@ pre_configure_target() {
 
   # set some CFLAGS we need
 
-  export CFLAGS="-O3 -m64 -march=westmere -g"
+  export CFLAGS="-O2 -m64 -march=westmere -g"
 #  unset LDFLAGS
 #  export LDFLAGS="-Wl,-z,max-page-size=0x1000"
 
@@ -186,7 +186,7 @@ fi
     ln -sf ld.so $INSTALL/usr/lib/ld-linux.so.3
   fi
 
-#  debug_strip $INSTALL/usr/lib
+  debug_strip $INSTALL/usr/lib
 }
 
 configure_init() {
