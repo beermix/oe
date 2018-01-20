@@ -108,10 +108,8 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --enable-opencl-icd \
                            --disable-gallium-tests \
                            --enable-shared-glapi \
-                           --enable-shader-cache \
                            $MESA_GALLIUM_LLVM \
                            --enable-silent-rules \
-                           --with-gl-lib-name=GL \
                            --with-osmesa-lib-name=OSMesa \
                            --with-gallium-drivers=$GALLIUM_DRIVERS \
                            --with-dri-drivers=$DRI_DRIVERS \
@@ -123,7 +121,9 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
 # dependency tracking. The following has some ideas on how to address that.
 # https://github.com/LibreELEC/LibreELEC.tv/pull/2163
 pre_configure_target() {
-  export LIBS="-lxcb-dri3 -lxcb-dri2 -lxcb-xfixes -lxcb-present -lxcb-sync -lxshmfence -lz"
+  if [ "$DISPLAYSERVER" = "x11" ]; then
+    export LIBS="-lxcb-dri3 -lxcb-dri2 -lxcb-xfixes -lxcb-present -lxcb-sync -lxshmfence -lz"
+  fi
 }
 
 post_makeinstall_target() {
