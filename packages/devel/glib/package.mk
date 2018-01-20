@@ -18,7 +18,7 @@
 ################################################################################
 
 PKG_NAME="glib"
-PKG_VERSION="2.55.1"
+PKG_VERSION="2.54.3"
 PKG_ARCH="any"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://www.gtk.org/"

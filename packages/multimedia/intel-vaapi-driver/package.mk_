@@ -30,8 +30,8 @@ PKG_LONGDESC="intel-vaapi-driver: VA-API user mode driver for Intel GEN Graphics
 PKG_TOOLCHAIN="autotools"
 
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
-  export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
+  export CFLAGS="$CFLAGS -O3"
+  export CXXFLAGS="$CXXFLAGS -O3"
 }
 
 if [ "$DISPLAYSERVER" = "x11" ]; then
