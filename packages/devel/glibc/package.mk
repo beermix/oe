@@ -43,6 +43,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
                            --enable-kernel=3.2.0 \
+                           --enable-stack-protector=strong \
                            --without-cvs \
                            --without-gd \
                            --enable-obsolete-rpc \
@@ -50,7 +51,6 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --disable-build-nscd \
                            --disable-nscd \
                            --enable-lock-elision \
-                           --disable-werror \
                            --disable-timezone-tools"
 
 if [ "$DEBUG" = yes ]; then

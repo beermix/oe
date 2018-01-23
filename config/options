@@ -16,7 +16,7 @@ fi
 #  export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime
 #  export CCACHE_COMPILERCHECK=mtime
 #  export CCACHE_SLOPPINESS=time_macros
-  export CCACHE_COMPRESS=0
+#  export CCACHE_COMPRESS=0
 #  export CCACHE_OPTIONS="--zero-stats"
 
 # determines DISTRO, if not forced by user
