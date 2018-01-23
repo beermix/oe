@@ -32,8 +32,7 @@ PKG_TOOLCHAIN="configure"
 PKG_CONFIGURE_OPTS_TARGET="--enable-unicode-properties \
 			      --enable-jit \
 			      --enable-utf8 \
-			      --enable-pcre16 \
-			      --enable-pcre32"
+			      --enable-pcre16"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN $PKG_CONFIGURE_OPTS_TARGET --disable-shared --with-pic"
 
