@@ -35,6 +35,7 @@ PKG_CMAKE_OPTS_HOST="$PKG_CMAKE_OPTS_TARGET -DCMAKE_VERBOSE_MAKEFILE=0"
 
 post_configure_target() {
  ## configure minizip
+ export CFLAGS="$CFLAGS -fPIC"
  (
   cd $PKG_BUILD/contrib/minizip
   rm Makefile
