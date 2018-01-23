@@ -31,13 +31,13 @@ PKG_TOOLCHAIN="autotools"
 
 pre_configure_host() {
   export CFLAGS="$CFLAGS -fno-semantic-interposition"
-  export CXXFLAGS="$CFLAGS"
+  export CXXFLAGS="$CFLAGS -fno-semantic-interposition"
 }
 
 pre_configure_target() {
   export CFLAGS="$CFLAGS -fno-semantic-interposition"
-  export CXXFLAGS="$CFLAGS"
+  export CXXFLAGS="$CFLAGS -fno-semantic-interposition"
 }
 
-PKG_CONFIGURE_OPTS_HOST="--enable-cxx --enable-fft --disable-shared --with-pic"
+PKG_CONFIGURE_OPTS_HOST="--enable-cxx --disable-shared --with-pic"
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
