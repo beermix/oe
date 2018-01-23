@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="libnftnl"
-PKG_VERSION="1.0.8"
-PKG_SHA256="e6bdd799ef9c59fc247954aba9f2c6469d8e04cfaee73526728011eaa3632038"
+PKG_VERSION="1.0.9"
+PKG_SHA256="fec1d824aee301e59a11aeaae2a2d429cb99ead81e6bafab791a4dd6569b3635"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://netfilter.org/projects/libnftnl"
