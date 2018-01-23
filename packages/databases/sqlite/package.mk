@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="sqlite"
-PKG_VERSION="autoconf-3210000"
-PKG_SHA256="d7dd516775005ad87a57f428b6f86afd206cb341722927f104d3f0cf65fbbbe3"
+PKG_VERSION="autoconf-3220000"
+PKG_SHA256="faf7d367cad1ec92bf6eea1970f6d7604b1c46469fdd87271a6d15434485011d"
 PKG_ARCH="any"
 PKG_LICENSE="PublicDomain"
 PKG_SITE="https://www.sqlite.org/"
-PKG_URL="https://www.sqlite.org/2017/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="database"
 PKG_SHORTDESC="sqlite: An Embeddable SQL Database Engine"
