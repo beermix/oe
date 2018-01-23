@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="ebba51a"
+PKG_VERSION="2443174"
 PKG_ARCH="any"
 PKG_SITE="https://github.com/gcc-mirror/gcc/tree/gcc-7-branch"
 PKG_LICENSE="GPL"
