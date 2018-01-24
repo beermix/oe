@@ -30,7 +30,7 @@ PKG_SHORTDESC="glib: C support library"
 PKG_LONGDESC="GLib is a library which includes support routines for C such as lists, trees, hashes, memory allocation, and many other things."
 PKG_TOOLCHAIN="autotools"
 
-PKG_CONFIGURE_OPTS_HOST="--with-pcre=internal --with-pic --disable-libmount --disable-gtk-doc --disable-gtk-doc-html --disable-man"
+PKG_CONFIGURE_OPTS_HOST="--disable-shared --with-pcre=internal --with-pic --disable-libmount --disable-gtk-doc --disable-gtk-doc-html --disable-man --disable-selinux --disable-dtrace --with-threads=posix --with-python=python"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_snprintf_c99=yes \
                            ac_cv_func_vsnprintf_c99=yes \
