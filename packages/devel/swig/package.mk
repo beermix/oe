@@ -34,6 +34,8 @@ PKG_CONFIGURE_OPTS_HOST="--program-suffix=3.0 \
                          --without-pcre \
                          --without-x \
                          --without-tcl \
+                         --without-python \
+                         --without-python3 \
                          --without-perl5 \
                          --without-octave \
                          --without-java \
@@ -47,9 +49,11 @@ PKG_CONFIGURE_OPTS_HOST="--program-suffix=3.0 \
                          --without-pike \
                          --without-chicken \
                          --without-csharp \
+                         --without-lua \
                          --without-allegrocl \
                          --without-clisp \
                          --without-r \
+                         --without-go \
                          --without-d"
 
 post_makeinstall_host() {
