@@ -55,22 +55,19 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libssp \
                            --disable-libsanitizer \
                            --without-cuda-driver \
-                           --disable-libada \
                            --with-tune=haswell \
                            --with-arch=westmere"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
-                              --disable-__cxa_atexit \
-                              --disable-libsanitizer \
                               --disable-shared \
                               --disable-threads \
                               --disable-libitm \
                               --disable-libquadmath \
                               --disable-libgomp \
+                              --disable-libada \
                               --disable-libatomic \
                               --with-newlib \
-                              --disable-decimal-float \
                               $GCC_OPTS"
 
 PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
