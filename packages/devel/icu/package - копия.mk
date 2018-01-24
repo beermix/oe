@@ -17,8 +17,7 @@
 ################################################################################
 
 PKG_NAME="icu"
-PKG_VERSION="57.1"
-PKG_SHA256="ff8c67cb65949b1e7808f2359f2b80f722697048e90e7cfc382ec1fe229e9581"
+PKG_VERSION="60.2"
 PKG_ARCH="any"
 PKG_LICENSE="Custom"
 PKG_SITE="http://www.icu-project.org"
@@ -39,7 +38,15 @@ pre_configure_target() {
 #  LIBS="$LIBS -latomic"
 }
 
-PKG_CONFIGURE_OPTS_HOST="--disable-debug --enable-release --disable-shared --disable-tools --disable-tests --disable-samples"
+PKG_CONFIGURE_OPTS_HOST="--disable-debug \
+			    --enable-release \
+			    --disable-shared \
+			    --enable-static \
+			    --enable-draft \
+			    --enable-renaming \
+			    --disable-tracing \
+			    --disable-extras \
+			    --enable-dyload"
 			   
 PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
 			      --enable-release \
