@@ -113,7 +113,7 @@ make_target() {
     'use_libpci=true'
     'enable_ac3_eac3_audio_demuxing=true'
     'enable_mse_mpeg2ts_stream_parser=true'
-    'pdf_enable_xfa=true'
+    'pdf_enable_xfa=false'
     'enable_hevc_demuxing=true'
     'use_v8_context_snapshot=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
