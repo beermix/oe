@@ -42,7 +42,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-__thread \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
-                           --enable-kernel=3.2.0 \
+                           --enable-kernel=2.6.32 \
                            --enable-stack-protector=strong \
                            --without-cvs \
                            --without-gd \
@@ -51,6 +51,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --disable-build-nscd \
                            --disable-nscd \
                            --enable-lock-elision \
+                           --disable-werror \
                            --disable-timezone-tools"
 
 if [ "$DEBUG" = yes ]; then
@@ -119,7 +120,7 @@ pre_configure_target() {
 
   # set some CFLAGS we need
 
-  export CFLAGS="-O2 -m64 -march=westmere -g"
+  export CFLAGS="-O2 -m64 -march=westmere -g3"
 #  unset LDFLAGS
 #  export LDFLAGS="-Wl,-z,max-page-size=0x1000"
 
