@@ -32,11 +32,12 @@ PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_HOST="--disable-shared --with-pcre=internal --with-pic --disable-libmount --disable-gtk-doc --disable-gtk-doc-html --disable-man --disable-selinux --disable-dtrace --with-threads=posix --with-python=python"
 
-PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_snprintf_c99=yes \
-                           ac_cv_func_vsnprintf_c99=yes \
-                           glib_cv_stack_grows=no \
+PKG_CONFIGURE_OPTS_TARGET="glib_cv_stack_grows=no \
                            glib_cv_uscore=no \
                            glib_cv_va_val_copy=no \
+                           ac_cv_func_mmap_fixed_mapped=yes \
+                           ac_cv_func_posix_getpwuid_r=yes \
+                           ac_cv_func_posix_getgrgid_r=yes \
                            --disable-selinux \
                            --disable-fam \
                            --enable-xattr \
