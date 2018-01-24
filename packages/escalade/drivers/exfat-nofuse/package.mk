@@ -10,9 +10,7 @@ PKG_DEPENDS_TARGET="toolchain linux"
 PKG_NEED_UNPACK="$LINUX_DEPENDS"
 PKG_SECTION="escalade"
 PKG_SHORTDESC="Linux non-fuse read/write kernel driver for exFat"
-
 PKG_IS_ADDON="no"
-
 
 make_target() {
   make KDIR=$(kernel_path)
