@@ -56,10 +56,10 @@ make_host() {
 make_target() {
   strip_lto
 #  export LDFLAGS="$LDFLAGS -ludev"
-  export LD=$CXX
-  CFLAGS=$(echo "$CFLAGS"|sed -e 's/-g //')
-  CXXFLAGS=$(echo "$CXXFLAGS"|sed -e 's/-g //')
-  CXXFLAGS="$CXXFLAGS -Wno-error=attributes -Wno-error=comment -Wno-error=unused-variable -Wno-error=noexcept-type -Wno-error=register -Wno-error=strict-overflow -Wno-error=deprecated-declarations"
+#  export LD=$CXX
+#  CFLAGS=$(echo "$CFLAGS"|sed -e 's/-g //')
+#  CXXFLAGS=$(echo "$CXXFLAGS"|sed -e 's/-g //')
+#  CXXFLAGS="$CXXFLAGS -Wno-error=attributes -Wno-error=comment -Wno-error=unused-variable -Wno-error=noexcept-type -Wno-error=register -Wno-error=strict-overflow -Wno-error=deprecated-declarations"
   
   export CCACHE_SLOPPINESS=time_macros
   
@@ -165,8 +165,8 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
-  mkdir -p $PKG_BUILD/third_party/node/linux/node-linux-x64/bin
-  ln -fs /home/user/.bin/node $PKG_BUILD/third_party/node/linux/node-linux-x64/bin/node
+#  mkdir -p $PKG_BUILD/third_party/node/linux/node-linux-x64/bin
+#  ln -fs /home/user/.bin/node $PKG_BUILD/third_party/node/linux/node-linux-x64/bin/node
 
   ninja -j${CONCURRENCY_MAKE_LEVEL} -C out/Release chrome chrome_sandbox widevinecdmadapter
 }
@@ -192,8 +192,8 @@ addon() {
   # cairo
   cp -PL $(get_build_dir cairo)/.install_pkg/usr/lib/libcairo.so.2 $ADDON_BUILD/$PKG_ADDON_ID/lib
   
-  # atk
-#  cp -PL $(get_build_dir atk)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  # gconf
+  cp -PL $(get_build_dir gconf)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
   
   # gtk
   cp -PL $(get_build_dir gtk+)/.install_pkg/usr/lib/libgdk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
@@ -220,7 +220,4 @@ addon() {
 
   # xdotool
   cp -P $(get_build_dir xdotool)/xdotool $ADDON_BUILD/$PKG_ADDON_ID/bin
-  
-  # gconf
-  cp -PL $(get_build_dir gconf)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
 }
