@@ -16,15 +16,19 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="moonlight-common-c"
-PKG_VERSION="f6ae7fc"
-PKG_SHA256="36cc8ddb03d248730ee57e936e133fb642e61589cc294da7ee7c8bed30ba8c18"
+PKG_NAME="evtest"
+PKG_VERSION="1.33"
+PKG_SHA256="5037d1162f4c407053cd97e85763ba03150a0c35f929ee9bf9a360abd32ef1c1"
 PKG_ARCH="any"
-PKG_LICENSE="GPLv3"
-PKG_SITE="https://github.com/moonlight-stream/moonlight-common-c"
-PKG_URL="https://github.com/moonlight-stream/moonlight-common-c/archive/${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_TARGET="toolchain"
-PKG_SECTION=""
-PKG_SHORTDESC="Shared C code for the implementation of Nvidia's GameStream protocol"
-PKG_LONGDESC="Shared C code for the implementation of Nvidia's GameStream protocol"
-PKG_TOOLCHAIN="manual"
+PKG_LICENSE="GPL"
+PKG_SITE="http://cgit.freedesktop.org/evtest/"
+PKG_URL="http://cgit.freedesktop.org/evtest/snapshot/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_DEPENDS_TARGET="toolchain libxml2"
+PKG_SECTION="debug/tools"
+PKG_SHORTDESC="evtest: Simple tool for input event debugging."
+PKG_LONGDESC="evtest is a simple tool for input event debugging."
+PKG_TOOLCHAIN="autotools"
+
+makeinstall_target() {
+  : # nop
+}
