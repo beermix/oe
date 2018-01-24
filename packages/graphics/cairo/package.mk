@@ -17,19 +17,16 @@
 ################################################################################
 
 PKG_NAME="cairo"
-#PKG_VERSION="1.14.12"
 PKG_VERSION="1.15.10"
 PKG_ARCH="any"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://cairographics.org/"
-#PKG_URL="http://cairographics.org/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_URL="https://cairographics.org/snapshots/cairo-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain zlib freetype fontconfig libpng pixman"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="cairo: Multi-platform 2D graphics library"
 PKG_LONGDESC="Cairo is a vector graphics library with cross-device output support. Currently supported output targets include the X Window System and in-memory image buffers. PostScript and PDF file output is planned. Cairo is designed to produce identical output on all output media while taking advantage of display hardware acceleration when available."
-#PKG_TOOLCHAIN="configure" # ToDo
-PKG_TOOLCHAIN="autotools"
+PKG_TOOLCHAIN="configure" # ToDo
 
 if [ "$OPENGL" != "no" ]; then
   PKG_DEPENDS_TARGET+=" $OPENGL"
@@ -64,7 +61,6 @@ fi
 
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CAIRO_CONFIG \
                            --enable-silent-rules \
-                           --disable-lto \
                            --enable-shared \
                            --disable-static \
                            --disable-gtk-doc \
@@ -72,9 +68,9 @@ PKG_CONFIGURE_OPTS_TARGET="$PKG_CAIRO_CONFIG \
                            --enable-atomic \
                            --disable-gcov \
                            --disable-valgrind \
-                           --enable-xcb \
-                           --enable-xlib-xcb \
-                           --enable-xcb-shm \
+                           --disable-xcb \
+                           --disable-xlib-xcb \
+                           --disable-xcb-shm \
                            --disable-qt \
                            --disable-quartz \
                            --disable-quartz-font \
@@ -85,6 +81,10 @@ PKG_CONFIGURE_OPTS_TARGET="$PKG_CAIRO_CONFIG \
                            --disable-os2 \
                            --disable-beos \
                            --disable-cogl \
+                           --disable-drm \
+                           --disable-drm-xr \
+                           --disable-gallium \
+                           --disable-xcb-drm \
                            --enable-png \
                            --disable-directfb \
                            --disable-vg \
@@ -97,11 +97,12 @@ PKG_CONFIGURE_OPTS_TARGET="$PKG_CAIRO_CONFIG \
                            --enable-svg \
                            --disable-test-surfaces \
                            --disable-tee \
+                           --disable-xml \
                            --enable-pthread \
-                           --enable-gobject \
                            --disable-full-testing \
                            --disable-trace \
                            --enable-interpreter \
                            --disable-symbol-lookup \
                            --enable-some-floating-point \
+                           --disable-interpreter \
                            --with-gnu-ld"
