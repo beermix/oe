@@ -4,7 +4,7 @@
 ################################################################################
 
 PKG_NAME="greenlet"
-PKG_VERSION="0.4.9"
+PKG_VERSION="0.4.12"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
@@ -15,7 +15,7 @@ PKG_SECTION="xmedia/torrent"
 PKG_SHORTDESC="Lightweight in-process concurrent programming"
 PKG_LONGDESC="Lightweight in-process concurrent programming."
 PKG_IS_ADDON="no"
-
+PKG_TOOLCHAIN="manual"
 
 pre_configure_target() {
   export PYTHON_VERSION="2.7"

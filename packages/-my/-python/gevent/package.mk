@@ -15,7 +15,7 @@ PKG_SECTION="xmedia/torrent"
 PKG_SHORTDESC="gevent is a coroutine-based Python networking library"
 PKG_LONGDESC="gevent is a coroutine-based Python networking library."
 PKG_IS_ADDON="no"
-
+PKG_TOOLCHAIN="manual"
 
 pre_configure_target() {
   cd $PKG_BUILD

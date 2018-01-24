@@ -17,13 +17,14 @@
 ################################################################################
 
 PKG_NAME="cffi"
-PKG_VERSION="1.11.1"
+PKG_VERSION="1.11.4"
 PKG_LICENSE="MIT"
 PKG_SITE="http://cffi.readthedocs.io/"
 PKG_URL="https://files.pythonhosted.org/packages/source/${PKG_NAME:0:1}/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_LONGDESC="Foreign Function Interface for Python calling C code"
 PKG_DEPENDS_HOST="toolchain distutilscross:host libffi:host"
-PKG_DEPENDS_TARGET="toolchain cffi:host distutilscross:host Python libffi"
+PKG_DEPENDS_TARGET="toolchain cffi:host distutilscross:host Python2 libffi"
+PKG_TOOLCHAIN="manual"
 
 make_host() {
   unset _python_exec_prefix _python_prefix _python_sysroot
