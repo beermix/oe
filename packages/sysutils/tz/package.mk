@@ -34,15 +34,6 @@ makeinstall_target() {
   make TOPDIR="$INSTALL" install
 }
 
-post_makeinstall_target() {
-  mkdir -p $INSTALL/usr/share/zoneinfo
-  mv $INSTALL/etc/zoneinfo/* $INSTALL/usr/share/zoneinfo
-
-  rm -rf $INSTALL/etc
-  mkdir -p $INSTALL/etc
-    ln -sf /var/run/localtime $INSTALL/etc/localtime
-}
-
 post_install() {
   enable_service tz-data.service
 }
