@@ -14,9 +14,7 @@ pre_configure_host() {
 }
 
 PKG_CONFIGURE_OPTS_HOST="--disable-shared --enable-static --with-gnu-ld"
-
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
-
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin

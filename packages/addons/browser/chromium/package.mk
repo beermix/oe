@@ -128,13 +128,16 @@ readonly -A _system_libs=(
   [yasm]=
   [zlib]=minizip
   [re2]=re2
+  [icu]=icu 
 )
+
 readonly _unwanted_bundled_libs=(
   ${!_system_libs[@]}
   ${_system_libs[libjpeg]+libjpeg_turbo}
   freetype
   harfbuzz-ng
 )
+
 depends+=(${_system_libs[@]} freetype2 harfbuzz)
 
   # Remove bundled libraries for which we will use the system copies; this
@@ -192,7 +195,7 @@ addon() {
   # gtk
  # cp -PL $(get_build_dir gtk+)/.install_pkg/usr/lib/libgdk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
  # cp -PL $(get_build_dir gtk+)/.install_pkg/usr/lib/libgtk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
-  
+
   # gtk3
   cp -ri $(get_build_dir gtk3)/.install_pkg/usr/lib/ $ADDON_BUILD/$PKG_ADDON_ID
 
