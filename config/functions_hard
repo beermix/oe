@@ -480,6 +480,32 @@ strip_hard() {
   TARGET_CFLAGS=`echo $TARGET_CFLAGS | sed -e "s|-fno-plt||g"`
   LDFLAGS=`echo $LDFLAGS | sed -e "s|,-z,now||g"`
   TARGET_LDFLAGS=`echo $TARGET_LDFLAGS | sed -e "s|,-z,now||g"`
+  CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=2||g"`
+  TARGET_CPPFLAGS=`echo $TARGET_CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=2||g"`
+  CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong||g"`
+  TARGET_CFLAGS=`echo $TARGET_CFLAGS | sed -e "s|-fstack-protector-strong||g"`
+  CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong -D_FORTIFY_SOURCE=2||g"`
+  CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong||g"`
+  CFLAGS=`echo $CFLAGS | sed -e "s|-ffast-math||g"`
+  FLAGS=`echo $CFLAGS | sed -e "s|-fno-plt||g"`
+  CFLAGS=`echo $CFLAGS | sed -e "s|-fno-caller-saves||g"`
+  CFLAGS=`echo $CFLAGS | sed -e "s|-Ofast|-O2|g"`
+  CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O2|g"`
+  CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong||g"`
+  CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong -fno-plt||g"`
+  CFLAGS=`echo $CFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
+  CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-Wp,||g"`
+  CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
+  LDFLAGS=`echo $LDFLAGS | sed -e "s|-ffast-math||g"`
+  LDFLAGS=`echo $LDFLAGS | sed -e "s|-Ofast|-O2|g"`
+  LDFLAGS=`echo $LDFLAGS | sed -e "s|-O.|-O2|g"`
+  LDFLAGS=`echo $LDFLAGS | sed -e "s|-fstack-protector-strong||g"`
+  LDFLAGS=`echo $LDFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
+  LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--sort-common,--as-needed,-z,relro||g"`
+  CFLAGS=`echo $CFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
+  LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--as-needed||g"`
+  LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed||"`
+  LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now||"`
 }
 
 fix_module_depends() {
