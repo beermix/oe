@@ -31,7 +31,8 @@ PKG_TOOLCHAIN="cmake-make"
 
 PKG_CMAKE_OPTS_TARGET="-DBUILD_SHARED_LIBS=ON \
                        -DWITH_MP4=ON \
-                       -DWITH_ASF=ON"
+                       -DWITH_ASF=ON \
+                       -DCMAKE_BUILD_TYPE=Release"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
