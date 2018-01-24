@@ -35,7 +35,7 @@ post_unpack() {
 pre_configure_target() {
   CFLAGS="$CFLAGS -fPIC"
   CXXFLAGS="$CXXFLAGS -fPIC"
-  LIBS="$LIBS -latomic"
+#  LIBS="$LIBS -latomic"
 }
 
 PKG_CONFIGURE_OPTS_HOST="--disable-debug \
