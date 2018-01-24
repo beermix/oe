@@ -8,7 +8,7 @@ PKG_SECTION="tools"
 PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--with-wine-tools=$PKG_BUILD/.$HOST_NAME \
-			      --disable-win64 \
+			      --enable-win64 \
 			      --disable-tests \
 			      --with-x \
 			      --without-gsm \
