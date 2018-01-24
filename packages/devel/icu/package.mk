@@ -39,7 +39,7 @@ pre_configure_target() {
 #  LIBS="$LIBS -latomic"
 }
 
-PKG_CONFIGURE_OPTS_HOST="--disable-debug --enable-release --disable-shared --disable-tools --disable-tests --disable-samples"
+PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared --disable-tests --disable-samples"
 			   
 PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
 			      --enable-release \

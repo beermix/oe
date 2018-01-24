@@ -57,11 +57,8 @@ make_target() {
   strip_lto
 #  export LDFLAGS="$LDFLAGS -ludev"
 #  export LD=$CXX
-#  CFLAGS=$(echo "$CFLAGS"|sed -e 's/-g //')
-#  CXXFLAGS=$(echo "$CXXFLAGS"|sed -e 's/-g //')
-#  CXXFLAGS="$CXXFLAGS -Wno-error=attributes -Wno-error=comment -Wno-error=unused-variable -Wno-error=noexcept-type -Wno-error=register -Wno-error=strict-overflow -Wno-error=deprecated-declarations"
 
-  export CCACHE_SLOPPINESS=time_macros
+#  export CCACHE_SLOPPINESS=time_macros
 
   # Fix paths.
   sed -e 's|i386-linux-gnu/||g' \
@@ -112,6 +109,7 @@ make_target() {
     'enable_mse_mpeg2ts_stream_parser=true'
     'enable_hevc_demuxing=true'
     'use_v8_context_snapshot=false'
+    'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'exclude_unwind_tables=true'
     'enable_hangout_services_extension=true'
@@ -168,7 +166,6 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -P  $PKG_BUILD/out/Release/chrome $ADDON_BUILD/$PKG_ADDON_ID/bin/chromium.bin
-#  cp -P  $PKG_BUILD/out/Release/chromedriver $ADDON_BUILD/$PKG_ADDON_ID/bin/chromedriver
   cp -P  $PKG_BUILD/out/Release/chrome_sandbox $ADDON_BUILD/$PKG_ADDON_ID/bin/chrome-sandbox
   cp -P  $PKG_BUILD/out/Release/{*.pak,*.dat,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -PR $PKG_BUILD/out/Release/locales $ADDON_BUILD/$PKG_ADDON_ID/bin/
@@ -181,23 +178,28 @@ addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # pango
-  cp -ri $(get_build_dir pango)/.install_pkg/usr/lib/ $ADDON_BUILD/$PKG_ADDON_ID/
+  cp -PL $(get_build_dir pango)/.install_pkg/usr/lib/libpangocairo-1.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_build_dir pango)/.install_pkg/usr/lib/libpango-1.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_build_dir pango)/.install_pkg/usr/lib/libpangoft2-1.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # cairo
-  cp -ri $(get_build_dir cairo)/.install_pkg/usr/lib/ $ADDON_BUILD/$PKG_ADDON_ID/
-  
+  cp -PL $(get_build_dir cairo)/.install_pkg/usr/lib/libcairo.so.2 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_build_dir cairo)/.install_pkg/usr/lib/libcairo-gobject.so.2 $ADDON_BUILD/$PKG_ADDON_ID/lib
+
   # openjpeg
-  cp -ri $(get_build_dir openjpeg)/.install_pkg/usr/lib/ $ADDON_BUILD/$PKG_ADDON_ID/
-  
+  cp -PL $(get_build_dir openjpeg)/.install_pkg/usr/lib/libopenjp2.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
+
   # gconf
-  cp -ri $(get_build_dir gconf)/.install_pkg/usr/lib/ $ADDON_BUILD/$PKG_ADDON_ID/lib
-  
+  cp -PL $(get_build_dir gconf)/.install_pkg/usr/lib/libgconf-2.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
+
   # gtk
   cp -PL $(get_build_dir gtk+)/.install_pkg/usr/lib/libgdk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
   cp -PL $(get_build_dir gtk+)/.install_pkg/usr/lib/libgtk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # harfbuzz
-  cp -ri $(get_build_dir harfbuzz)/.install_pkg/usr/lib/ $ADDON_BUILD/$PKG_ADDON_ID/
+  cp -PL $(get_build_dir harfbuzz)/.install_pkg/usr/lib/libharfbuzz.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_build_dir harfbuzz)/.install_pkg/usr/lib/libharfbuzz-icu.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_build_dir harfbuzz)/.install_pkg/usr/lib/libharfbuzz-gobject.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # gdk-pixbuf
   cp -PL $(get_build_dir gdk-pixbuf)/.install_pkg/usr/lib/libgdk_pixbuf-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
@@ -207,10 +209,10 @@ addon() {
   cp -PL $(get_build_dir gdk-pixbuf)/.install_pkg/usr/lib/gdk-pixbuf-2.0/2.10.0/loaders/* $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules
 
   # libexif
-  cp -ri $(get_build_dir libexif)/.install_pkg/usr/lib/ $ADDON_BUILD/$PKG_ADDON_ID/
+  cp -PL $(get_build_dir libexif)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # libva-vdpau-driver
-  cp -ri $(get_build_dir libva-vdpau-driver)/.install_pkg/usr/lib/dri/*.so $ADDON_BUILD/$PKG_ADDON_ID/
+  cp -PL $(get_build_dir libva-vdpau-driver)/.install_pkg/usr/lib/dri/*.so $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # unclutter
   cp -P $(get_build_dir unclutter)/.install_pkg/usr/bin/unclutter $ADDON_BUILD/$PKG_ADDON_ID/bin
