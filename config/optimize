@@ -20,7 +20,7 @@ else
   TARGET_LDFLAGS="$TARGET_LDFLAGS"
 fi
 
-#CCACHE_FLAGS="-fdiagnostics-color=always"
+CCACHE_FLAGS="-fdiagnostics-color=always"
 #CCACHE_FLAGS="-fdiagnostics-color=always -fsanitize=undefined"
 
 TARGET_CPPFLAGS=
