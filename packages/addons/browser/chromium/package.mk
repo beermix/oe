@@ -55,7 +55,7 @@ make_host() {
 
 make_target() {
   strip_lto
-  export LDFLAGS="$LDFLAGS -ludev"
+#  export LDFLAGS="$LDFLAGS -ludev"
   export LD=$CXX
   CFLAGS=$(echo "$CFLAGS"|sed -e 's/-g //')
   CXXFLAGS=$(echo "$CXXFLAGS"|sed -e 's/-g //')
@@ -107,10 +107,9 @@ make_target() {
     'use_kerberos=false'
     'use_pulseaudio=false'
     'use_sysroot=true'
+    'use_vaapi=true'
     'linux_link_libgio=true'
     'linux_link_libudev=true'
-    'linux_link_libspeechd=true'
-    'use_vaapi=true'
     'use_libpci=true'
     'enable_ac3_eac3_audio_demuxing=true'
     'enable_mse_mpeg2ts_stream_parser=true'
