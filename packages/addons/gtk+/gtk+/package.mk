@@ -40,7 +40,8 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-modules \
                            --enable-xkb \
                            --disable-xinerama \
                            --disable-gtk-doc-html \
-                           --with-xinput"
+                           --with-xinput
+                           --enable-silent-rules"
 
 make_target() {
   make SRC_SUBDIRS="gdk gtk modules"
