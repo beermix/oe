@@ -273,3 +273,26 @@
      return pthread_getspecific(gSkTLSKey);
  }
  
+--- chromium-62.0.3202.9/third_party/crc32c/BUILD.gn.gcc7-1	2017-09-06 21:06:53.000000000 +0200
++++ chromium-62.0.3202.9/third_party/crc32c/BUILD.gn	2017-09-13 18:25:33.647016467 +0200
+@@ -39,6 +39,12 @@
+   }
+ }
+ 
++config("crc32c_pubconfig") {
++  if (!is_win) {
++    cflags_cc = [ "-std=c++17" ]
++  }
++}
++
+ source_set("crc32c") {
+   sources = [
+     "config/crc32c/crc32c_config.h",
+@@ -54,6 +60,7 @@
+   ]
+ 
+   configs += [ ":crc32c_config" ]
++  all_dependent_configs = [ ":crc32c_pubconfig" ]
+   deps = [
+     ":crc32c_arm64",
+     ":crc32c_sse42",

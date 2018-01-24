@@ -28,7 +28,7 @@ PKG_LICENSE="Mixed"
 PKG_SITE="http://www.chromium.org/Home"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="pciutils dbus libXcomposite libXcursor libXtst alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk gtk+ libva-vdpau-driver unclutter xdotool freetype harfbuzz libva re2 openjpeg gconf chromium:host"
+PKG_DEPENDS_TARGET="pciutils dbus libXcomposite libXcursor libXtst alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk gtk+ libva-vdpau-driver unclutter xdotool freetype harfbuzz libva re2 gconf openjpeg chromium:host"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -60,12 +60,9 @@ make_target() {
 #  CFLAGS=$(echo "$CFLAGS"|sed -e 's/-g //')
 #  CXXFLAGS=$(echo "$CXXFLAGS"|sed -e 's/-g //')
 #  CXXFLAGS="$CXXFLAGS -Wno-error=attributes -Wno-error=comment -Wno-error=unused-variable -Wno-error=noexcept-type -Wno-error=register -Wno-error=strict-overflow -Wno-error=deprecated-declarations"
-  
+
   export CCACHE_SLOPPINESS=time_macros
-  
-#  export TMPDIR="$PKG_BUILD/temp"
-#  mkdir -p "$TMPDIR"
-  
+
   # Fix paths.
   sed -e 's|i386-linux-gnu/||g' \
       -e 's|x86_64-linux-gnu/||g' \
@@ -113,7 +110,6 @@ make_target() {
     'use_libpci=true'
     'enable_ac3_eac3_audio_demuxing=true'
     'enable_mse_mpeg2ts_stream_parser=true'
-    'pdf_enable_xfa=false'
     'enable_hevc_demuxing=true'
     'use_v8_context_snapshot=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
@@ -165,8 +161,6 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
-#  mkdir -p $PKG_BUILD/third_party/node/linux/node-linux-x64/bin
-#  ln -fs /home/user/.bin/node $PKG_BUILD/third_party/node/linux/node-linux-x64/bin/node
 
   ninja -j${CONCURRENCY_MAKE_LEVEL} -C out/Release chrome chrome_sandbox widevinecdmadapter
 }
@@ -187,20 +181,23 @@ addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # pango
-  cp -PL $(get_build_dir pango)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -ri $(get_build_dir pango)/.install_pkg/usr/lib/ $ADDON_BUILD/$PKG_ADDON_ID/
 
   # cairo
-  cp -PL $(get_build_dir cairo)/.install_pkg/usr/lib/libcairo.so.2 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -ri $(get_build_dir cairo)/.install_pkg/usr/lib/ $ADDON_BUILD/$PKG_ADDON_ID/
+  
+  # openjpeg
+  cp -ri $(get_build_dir openjpeg)/.install_pkg/usr/lib/ $ADDON_BUILD/$PKG_ADDON_ID/
   
   # gconf
-  cp -PL $(get_build_dir gconf)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -ri $(get_build_dir gconf)/.install_pkg/usr/lib/ $ADDON_BUILD/$PKG_ADDON_ID/lib
   
   # gtk
   cp -PL $(get_build_dir gtk+)/.install_pkg/usr/lib/libgdk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
   cp -PL $(get_build_dir gtk+)/.install_pkg/usr/lib/libgtk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # harfbuzz
-  cp -PL $(get_build_dir harfbuzz)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -ri $(get_build_dir harfbuzz)/.install_pkg/usr/lib/ $ADDON_BUILD/$PKG_ADDON_ID/
 
   # gdk-pixbuf
   cp -PL $(get_build_dir gdk-pixbuf)/.install_pkg/usr/lib/libgdk_pixbuf-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
@@ -210,10 +207,10 @@ addon() {
   cp -PL $(get_build_dir gdk-pixbuf)/.install_pkg/usr/lib/gdk-pixbuf-2.0/2.10.0/loaders/* $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules
 
   # libexif
-  cp -PL $(get_build_dir libexif)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -ri $(get_build_dir libexif)/.install_pkg/usr/lib/ $ADDON_BUILD/$PKG_ADDON_ID/
 
   # libva-vdpau-driver
-  cp -PL $(get_build_dir libva-vdpau-driver)/.install_pkg/usr/lib/dri/*.so $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -ri $(get_build_dir libva-vdpau-driver)/.install_pkg/usr/lib/dri/*.so $ADDON_BUILD/$PKG_ADDON_ID/
 
   # unclutter
   cp -P $(get_build_dir unclutter)/.install_pkg/usr/bin/unclutter $ADDON_BUILD/$PKG_ADDON_ID/bin

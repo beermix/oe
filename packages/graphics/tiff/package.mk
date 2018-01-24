@@ -35,7 +35,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-mdi \
                            --with-jpeg-lib-dir=$SYSROOT_PREFIX/usr/lib \
                            --with-jpeg-include-dir=$SYSROOT_PREFIX/usr/include \
                            --without-x"
-
+                           
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
 }
