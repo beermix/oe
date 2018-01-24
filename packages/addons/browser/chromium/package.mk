@@ -57,6 +57,9 @@ make_target() {
   strip_lto
   export LDFLAGS="$LDFLAGS -ludev"
   export LD=$CXX
+  CFLAGS=$(echo "$CFLAGS"|sed -e 's/-g //')
+  CXXFLAGS=$(echo "$CXXFLAGS"|sed -e 's/-g //')
+  CXXFLAGS="$CXXFLAGS -Wno-error=attributes -Wno-error=comment -Wno-error=unused-variable -Wno-error=noexcept-type -Wno-error=register -Wno-error=strict-overflow -Wno-error=deprecated-declarations"
   
   export CCACHE_SLOPPINESS=time_macros
   
@@ -104,7 +107,15 @@ make_target() {
     'use_kerberos=false'
     'use_pulseaudio=false'
     'use_sysroot=true'
+    'linux_link_libgio=true'
+    'linux_link_libudev=true'
+    'linux_link_libspeechd=true'
     'use_vaapi=true'
+    'use_libpci=true'
+    'enable_ac3_eac3_audio_demuxing=true'
+    'enable_mse_mpeg2ts_stream_parser=true'
+    'pdf_enable_xfa=true'
+    'enable_hevc_demuxing=true'
     'use_v8_context_snapshot=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'exclude_unwind_tables=true'
