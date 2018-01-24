@@ -58,7 +58,7 @@ make_target() {
 #  export LDFLAGS="$LDFLAGS -ludev"
 #  export LD=$CXX
 
-#  export CCACHE_SLOPPINESS=time_macros
+  export CCACHE_SLOPPINESS=time_macros
 
   # Fix paths.
   sed -e 's|i386-linux-gnu/||g' \
@@ -92,7 +92,7 @@ make_target() {
     'use_allocator="none"'
     'use_cups=false'
     'use_custom_libcxx=false'
-    'use_gconf=true'
+    'use_gconf=false'
     'use_gnome_keyring=false'
     'use_gold=false'
     'use_system_freetype=true'
@@ -187,7 +187,7 @@ addon() {
   cp -PL $(get_build_dir openjpeg)/.install_pkg/usr/lib/libopenjp2.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # gconf
-  cp -PL $(get_build_dir gconf)/.install_pkg/usr/lib/libgconf-2.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
+#  cp -PL $(get_build_dir gconf)/.install_pkg/usr/lib/libgconf-2.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # gtk
  # cp -PL $(get_build_dir gtk+)/.install_pkg/usr/lib/libgdk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
