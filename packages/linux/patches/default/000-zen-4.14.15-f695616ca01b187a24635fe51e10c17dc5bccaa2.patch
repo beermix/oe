@@ -12,9 +12,9 @@
  arch/x86/include/asm/module.h                    |    38 +
  block/Kconfig.iosched                            |    50 +
  block/Makefile                                   |     2 +
- block/bfq-cgroup-included.c                      |  1348 +
+ block/bfq-cgroup-included.c                      |  1353 +
  block/bfq-ioc.c                                  |    36 +
- block/bfq-mq-iosched.c                           |  6084 +++
+ block/bfq-mq-iosched.c                           |  6085 +++
  block/bfq-mq.h                                   |  1005 +
  block/bfq-sched.c                                |  2066 +
  block/bfq-sq-iosched.c                           |  5618 +++
@@ -127,7 +127,7 @@
  net/ipv4/Kconfig                                 |     4 +
  net/xfrm/xfrm_policy.c                           |     8 +-
  scripts/mkcompile_h                              |     4 +-
- 129 files changed, 102167 insertions(+), 562 deletions(-)
+ 129 files changed, 102173 insertions(+), 562 deletions(-)
 
 diff --git a/Documentation/block/bfq-iosched.txt b/Documentation/block/bfq-iosched.txt
 index 3d6951d63489..30ef2dba85ad 100644
@@ -1331,13 +1331,13 @@ index 000000000000..a249678a8866
 +thinkpad_ec module and the H8S hardware documentation:
 +http://documentation.renesas.com/eng/products/mpumcu/rej09b0300_2140bhm.pdf
 diff --git a/Makefile b/Makefile
-index 4951305eb867..6323d3ad8a58 100644
+index bf1a277a67a4..1e1834d1ff99 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -2,8 +2,8 @@
  VERSION = 4
  PATCHLEVEL = 14
- SUBLEVEL = 14
+ SUBLEVEL = 15
 -EXTRAVERSION =
 -NAME = Petit Gorille
 +EXTRAVERSION = -zen
@@ -2018,10 +2018,10 @@ index 6a56303b9925..a571329c23f0 100644
  obj-$(CONFIG_BLK_CMDLINE_PARSER)	+= cmdline-parser.o
 diff --git a/block/bfq-cgroup-included.c b/block/bfq-cgroup-included.c
 new file mode 100644
-index 000000000000..45fefb2e2d57
+index 000000000000..a4f8a03edfc9
 --- /dev/null
 +++ b/block/bfq-cgroup-included.c
-@@ -0,0 +1,1348 @@
+@@ -0,0 +1,1353 @@
 +/*
 + * BFQ: CGROUPS support.
 + *
@@ -2406,6 +2406,8 @@ index 000000000000..45fefb2e2d57
 +		 * Make sure that bfqg and its associated blkg do not
 +		 * disappear before entity.
 +		 */
++		bfq_log_bfqq(bfqq->bfqd, bfqq, "[%s] getting bfqg %p and blkg\n", __func__, bfqg);
++
 +		bfqg_and_blkg_get(bfqg);
 +#else
 +		bfqg_get(bfqg);
@@ -2499,7 +2501,6 @@ index 000000000000..45fefb2e2d57
 +		kfree(bfqg);
 +		return NULL;
 +	}
-+
 +#ifdef BFQ_MQ
 +	/* see comments in bfq_bic_update_cgroup for why refcounting */
 +	bfqg_get(bfqg);
@@ -2674,6 +2675,8 @@ index 000000000000..45fefb2e2d57
 +		bfq_put_idle_entity(bfq_entity_service_tree(entity), entity);
 +	}
 +#ifdef BFQ_MQ
++	bfq_log_bfqq(bfqq->bfqd, bfqq, "[%s] putting blkg and bfqg %p\n", __func__, bfqg);
++
 +	bfqg_and_blkg_put(bfqq_group(bfqq));
 +#else
 +	bfqg_put(bfqq_group(bfqq));
@@ -2682,6 +2685,8 @@ index 000000000000..45fefb2e2d57
 +	entity->parent = bfqg->my_entity;
 +	entity->sched_data = &bfqg->sched_data;
 +#ifdef BFQ_MQ
++	bfq_log_bfqq(bfqq->bfqd, bfqq, "[%s] getting blkg and bfqg %p\n", __func__, bfqg);
++
 +	/* pin down bfqg and its associated blkg  */
 +	bfqg_and_blkg_get(bfqg);
 +#else
@@ -3414,10 +3419,10 @@ index 000000000000..fb7bb8f08b75
 +}
 diff --git a/block/bfq-mq-iosched.c b/block/bfq-mq-iosched.c
 new file mode 100644
-index 000000000000..ce3b1283caab
+index 000000000000..2581fe0f6f2f
 --- /dev/null
 +++ b/block/bfq-mq-iosched.c
-@@ -0,0 +1,6084 @@
+@@ -0,0 +1,6085 @@
 +/*
 + * Budget Fair Queueing (BFQ) I/O scheduler.
 + *
@@ -7805,10 +7810,11 @@ index 000000000000..ce3b1283caab
 +	if (bfqq->bfqd)
 +		bfq_log_bfqq(bfqq->bfqd, bfqq, "put_queue: %p freed", bfqq);
 +
-+	kmem_cache_free(bfq_pool, bfqq);
 +#ifdef BFQ_GROUP_IOSCHED_ENABLED
++	bfq_log_bfqq(bfqq->bfqd, bfqq, "[%s] putting blkg and bfqg %p\n", __func__, bfqg);
 +	bfqg_and_blkg_put(bfqg);
 +#endif
++	kmem_cache_free(bfq_pool, bfqq);
 +}
 +
 +static void bfq_put_cooperator(struct bfq_queue *bfqq)
@@ -96462,10 +96468,10 @@ index 172d151d429c..38b9a81ddffc 100644
  obj-$(CONFIG_MODULES) += kmod.o
  obj-$(CONFIG_MULTIUSER) += groups.o
 diff --git a/kernel/delayacct.c b/kernel/delayacct.c
-index 4a1c33416b6a..e9ffeea9d468 100644
+index e2764d767f18..2f85428d22b9 100644
 --- a/kernel/delayacct.c
 +++ b/kernel/delayacct.c
-@@ -106,7 +106,7 @@ int __delayacct_add_tsk(struct taskstats *d, struct task_struct *tsk)
+@@ -114,7 +114,7 @@ int __delayacct_add_tsk(struct taskstats *d, struct task_struct *tsk)
  	 */
  	t1 = tsk->sched_info.pcount;
  	t2 = tsk->sched_info.run_delay;
@@ -104978,7 +104984,7 @@ index 5b117110b55b..67d94423acde 100644
  			return 1;
  	}
 diff --git a/kernel/time/timer.c b/kernel/time/timer.c
-index 73e3cdbc61f1..1c8ca808cd23 100644
+index db5e6daadd94..aad7645ffe47 100644
 --- a/kernel/time/timer.c
 +++ b/kernel/time/timer.c
 @@ -1434,24 +1434,27 @@ static unsigned long __next_timer_interrupt(struct timer_base *base)
