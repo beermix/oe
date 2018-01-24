@@ -37,3 +37,5 @@ PKG_CONFIGURE_OPTS_HOST="--disable-debug \
                          --disable-nls \
                          --disable-sim \
                          --disable-gdb"
+
+PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
