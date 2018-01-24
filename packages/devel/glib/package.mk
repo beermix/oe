@@ -30,7 +30,7 @@ PKG_SHORTDESC="glib: C support library"
 PKG_LONGDESC="GLib is a library which includes support routines for C such as lists, trees, hashes, memory allocation, and many other things."
 PKG_TOOLCHAIN="autotools"
 
-PKG_CONFIGURE_OPTS_HOST="--disable-shared --with-pcre=internal --with-pic --enable-libmount=no --disable-gtk-doc --disable-gtk-doc-html --disable-man --disable-selinux --with-threads=posix --with-python=python --with-libiconv=gnu"
+PKG_CONFIGURE_OPTS_HOST="--disable-shared --with-pcre=internal --with-pic --enable-libmount=no --disable-gtk-doc --disable-gtk-doc-html --disable-man --disable-selinux --with-threads=posix --with-python=python"
 
 PKG_CONFIGURE_OPTS_TARGET="glib_cv_stack_grows=no \
                            glib_cv_uscore=no \
@@ -49,11 +49,9 @@ PKG_CONFIGURE_OPTS_TARGET="glib_cv_stack_grows=no \
                            --disable-systemtap \
                            --enable-Bsymbolic \
                            --with-gnu-ld \
-                           --enable-debug=no \
                            --with-threads=posix \
                            --with-pcre=internal \
-                           --with-python=python \
-                           --with-libiconv=gnu"
+                           --with-python=python"
 
 post_makeinstall_target() {
   mkdir -p $SYSROOT_PREFIX/usr/lib/pkgconfig
