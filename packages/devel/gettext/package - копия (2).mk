@@ -45,6 +45,9 @@ PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared \
                          --disable-csharp \
                          --without-emacs \
                          --disable-openmp \
+                         --with-included-glib \
+                         --with-included-libcroco \
+                         --with-included-libunistring \
                          --with-pic"
                          
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST --with-included-libxml=no"
