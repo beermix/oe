@@ -18,16 +18,15 @@
 ################################################################################
 
 PKG_NAME="qt-everywhere"
-PKG_VERSION="5.9.2"
-PKG_SHA256="6c6171a4d1ea3fbd4212d6a04899650218583df3ec583a8a6a4a589fe18620ff"
+PKG_VERSION="5.6.3"
+PKG_SHA256="2fa0cf2e5e8841b29a4be62062c1a65c4f6f2cf1beaf61a5fd661f520cd776d0"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://qt-project.org"
-PKG_URL="http://download.qt.io/official_releases/qt/5.9/$PKG_VERSION/single/$PKG_NAME-opensource-src-$PKG_VERSION.tar.xz"
+PKG_URL="http://download.qt.io/official_releases/qt/5.6/$PKG_VERSION/single/$PKG_NAME-opensource-src-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="pcre2 zlib"
 PKG_SOURCE_DIR="$PKG_NAME-opensource-src-$PKG_VERSION"
 PKG_LONGDESC="A cross-platform application and UI framework"
-
 
 PKG_CONFIGURE_OPTS_TARGET="-prefix /usr
                            -sysroot $SYSROOT_PREFIX
