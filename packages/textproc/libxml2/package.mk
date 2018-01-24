@@ -22,7 +22,7 @@ PKG_ARCH="any"
 PKG_LICENSE="MIT"
 PKG_SITE="http://xmlsoft.org"
 PKG_URL="ftp://xmlsoft.org/libxml2/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_HOST="zlib:host"
+PKG_DEPENDS_HOST="zlib:host icu:host"
 PKG_DEPENDS_TARGET="toolchain zlib icu libxml2:host"
 PKG_SECTION="textproc"
 PKG_SHORTDESC="libxml: XML parser library for Gnome"
@@ -35,7 +35,8 @@ PKG_CONFIGURE_OPTS_ALL="ac_cv_header_ansidecl_h=no \
              --disable-ipv6 \
              --without-python \
              --with-zlib=$TOOLCHAIN \
-             --without-lzma"
+             --without-lzma \
+             --with-icu=$TOOLCHAIN"
 
 PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_ALL --with-zlib=$TOOLCHAIN"
 
