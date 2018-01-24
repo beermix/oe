@@ -158,13 +158,13 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
   mkdir -p $PKG_BUILD/third_party/node/linux/node-linux-x64/bin
   ln -fs /home/user/.bin/node $PKG_BUILD/third_party/node/linux/node-linux-x64/bin/node
 
-  ninja -j${CONCURRENCY_MAKE_LEVEL} -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
+  ninja -j${CONCURRENCY_MAKE_LEVEL} -C out/Release chrome chrome_sandbox widevinecdmadapter
 }
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -P  $PKG_BUILD/out/Release/chrome $ADDON_BUILD/$PKG_ADDON_ID/bin/chromium.bin
-  cp -P  $PKG_BUILD/out/Release/chromedriver $ADDON_BUILD/$PKG_ADDON_ID/bin/chromedriver
+#  cp -P  $PKG_BUILD/out/Release/chromedriver $ADDON_BUILD/$PKG_ADDON_ID/bin/chromedriver
   cp -P  $PKG_BUILD/out/Release/chrome_sandbox $ADDON_BUILD/$PKG_ADDON_ID/bin/chrome-sandbox
   cp -P  $PKG_BUILD/out/Release/{*.pak,*.dat,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -PR $PKG_BUILD/out/Release/locales $ADDON_BUILD/$PKG_ADDON_ID/bin/
