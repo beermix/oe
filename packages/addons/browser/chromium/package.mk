@@ -15,13 +15,13 @@
 #  You should have received a copy of the GNU General Public License
 #  along with OpenELEC.tv; see the file COPYING.  If not, write to
 #  the Free Software Foundation, 51 Franklin Street, Suite 500, Boston, MA 02110, USA.
-#  http://www.gnu.org/copyleft/gpl.html
 #  http://svnweb.mageia.org/packages/cauldron/chromium-browser-stable/current
+#  https://chromereleases.googleblog.com/
 ################################################################################
 
 PKG_NAME="chromium"
-PKG_VERSION="63.0.3239.132"
-PKG_SHA256="84c46c2c42faaa102abe0647ee1213615a2522627124924c2741ddc2161b3d8d"
+PKG_VERSION="64.0.3282.119"
+#PKG_SHA256="84c46c2c42faaa102abe0647ee1213615a2522627124924c2741ddc2161b3d8d"
 PKG_REV="108"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
