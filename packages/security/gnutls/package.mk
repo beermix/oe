@@ -22,6 +22,4 @@ PKG_CONFIGURE_OPTS_TARGET="--without-p11-kit \
 			      --with-included-unistring \
 			      --without-tpm \
 			      --with-nettle-mini \
-			      --disable-shared \
-			      --enable-static \
 			      --with-pic"

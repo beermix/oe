@@ -489,7 +489,7 @@ if [ "$(type -t pre_makeinstall_$TARGET)" = "function" ]; then
   pre_makeinstall_$TARGET
 fi
 if [ "$(type -t makeinstall_$TARGET)" = "function" ]; then
-  makeinstall_$TARGET -j1
+  makeinstall_$TARGET
 else
   case "$PKG_TOOLCHAIN:$TARGET" in
     # ninja based builds

@@ -20,8 +20,8 @@
 ################################################################################
 
 PKG_NAME="chromium"
-PKG_VERSION="64.0.3282.119"
-#PKG_SHA256="84c46c2c42faaa102abe0647ee1213615a2522627124924c2741ddc2161b3d8d"
+PKG_VERSION="63.0.3239.108"
+PKG_SHA256="47d80798194da78bdd519b7ce012425b13cf89d6eb287e22a34342a245c31a2b"
 PKG_REV="108"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"

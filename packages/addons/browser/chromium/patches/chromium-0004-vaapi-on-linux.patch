@@ -621,6 +621,19 @@ index dc01117..2f9ee03 100644
        !cmd_line->HasSwitch(switches::kDisableGpuMemoryBufferVideoFrames) &&
 diff --git a/gpu/command_buffer/service/gpu_preferences.h b/gpu/command_buffer/service/gpu_preferences.h
 index b37c2cc..a721eb7 100644
+--- a/gpu/command_buffer/service/gpu_preferences.h
++++ b/gpu/command_buffer/service/gpu_preferences.h
+@@ -50,7 +50,7 @@
+   // Disables hardware acceleration of video decode, where available.
+   bool disable_accelerated_video_decode = false;
+ 
+-#if defined(OS_CHROMEOS)
++#if defined(OS_CHROMEOS) || defined(OS_LINUX)
+   // Disables VA-API accelerated video encode.
+   bool disable_vaapi_accelerated_video_encode = false;
+ #endif
+diff --git a/gpu/config/software_rendering_list.json b/gpu/config/software_rendering_list.json
+index 1289a55..22e11e5 100644
 --- a/gpu/config/software_rendering_list.json
 +++ b/gpu/config/software_rendering_list.json
 @@ -374,17 +374,6 @@
@@ -641,6 +654,21 @@ index b37c2cc..a721eb7 100644
        "id": 50,
        "description": "Disable VMware software renderer on older Mesa",
        "cr_bugs": [145531, 332596, 571899, 629434],
+diff --git a/media/filters/BUILD.gn b/media/filters/BUILD.gn
+index 490722c..1cda2fb 100644
+--- a/media/filters/BUILD.gn
++++ b/media/filters/BUILD.gn
+@@ -189,7 +189,7 @@
+     deps += [ "//media/base/android" ]
+   }
+ 
+-  if (current_cpu != "arm" && is_chromeos) {
++  if (current_cpu != "arm" && (is_chromeos || is_desktop_linux)) {
+     sources += [
+       "h264_bitstream_buffer.cc",
+       "h264_bitstream_buffer.h",
+diff --git a/media/gpu/BUILD.gn b/media/gpu/BUILD.gn
+index 729c6fa..4878251 100644
 --- a/media/gpu/BUILD.gn
 +++ b/media/gpu/BUILD.gn
 @@ -24,6 +24,14 @@
@@ -685,9 +713,9 @@ index 1e72893..6495642 100644
 --- a/media/gpu/vaapi_wrapper.cc
 +++ b/media/gpu/vaapi_wrapper.cc
 @@ -1117,6 +1117,7 @@
-       base::File::FLAG_OPEN | base::File::FLAG_READ | base::File::FLAG_WRITE);
    if (drm_file.IsValid())
-     VADisplayState::Get()->SetDrmFd(drm_file.GetPlatformFile());
+     GetDisplayState()->SetDrmFd(drm_file.GetPlatformFile());
+ #endif
 +  GetProfileInfos();  // dlopen all necessary libraries
  }
  

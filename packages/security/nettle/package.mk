@@ -10,8 +10,6 @@ PKG_SHORTDESC="Nettle is a cryptographic library that is designed to fit easily 
 PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-openssl \
-			      --disable-shared \
-			      --enable-static \
 			      --enable-x86-aesni \
 			      --disable-documentation \
 			      --enable-mini-gmp"
