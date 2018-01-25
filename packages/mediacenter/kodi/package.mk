@@ -212,7 +212,7 @@ KODI_LIBDVD="$KODI_DVDCSS \
 
 PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$TOOLCHAIN \
                        -DWITH_TEXTUREPACKER=$TOOLCHAIN/bin/TexturePacker \
-                       -DDEPENDS_PATH=$PKG_BUILD/depends \
+                       -DDEPENDS_PATH=$BUILD/$PKG_NAME-$PKG_VERSION/depends \
                        -DPYTHON_EXECUTABLE=$TOOLCHAIN/bin/$PKG_PYTHON_VERSION \
                        -DPYTHON_INCLUDE_DIRS=$SYSROOT_PREFIX/usr/include/$PKG_PYTHON_VERSION \
                        -DGIT_VERSION=$PKG_VERSION \

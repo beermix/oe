@@ -40,16 +40,18 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-gmp=$TOOLCHAIN \
                            --with-mpfr=$TOOLCHAIN \
                            --with-mpc=$TOOLCHAIN \
+                           --with-gnu-ld \
                            --with-isl \
                            --enable-plugin \
                            --enable-lto \
-                           --enable-ld=yes \
+                           --enable-ld=default \
                            --enable-gold=no \
                            --disable-multilib \
                            --disable-nls \
                            --enable-checking=release \
-                           --with-default-libstdcxx-abi=gcc4-compatible \
-                           --without-ppl \
+                           --disable-libunwind-exceptions \
+                           --enable-gnu-indirect-function \
+                           --with-ppl=yes \
                            --without-cloog \
                            --disable-libmpx \
                            --disable-libssp \
@@ -60,8 +62,11 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
+                              --without-headers \
+                              --disable-decimal-float \
                               --disable-shared \
                               --disable-threads \
+                              --disable-libffi
                               --disable-libitm \
                               --disable-libquadmath \
                               --disable-libgomp \

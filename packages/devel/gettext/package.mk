@@ -41,10 +41,7 @@ PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared \
                          --with-gnu-ld \
                          --disable-java \
                          --disable-curses \
+                         --with-included-libxml \
                          --disable-native-java \
                          --disable-csharp \
-                         --without-emacs \
-                         --disable-openmp \
-                         --with-pic"
-                         
-PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST --with-included-libxml=no"
+                         --without-emacs"

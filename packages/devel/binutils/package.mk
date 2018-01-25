@@ -32,15 +32,14 @@ PKG_LONGDESC="The GNU binutils are utilities of use when dealing with object fil
 PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --with-sysroot=$SYSROOT_PREFIX \
                          --with-lib-path=$SYSROOT_PREFIX/lib:$SYSROOT_PREFIX/usr/lib \
-                         --with-ppl=no \
+                         --with-ppl=yes \
                          --without-cloog \
                          --disable-werror \
                          --disable-multilib \
                          --enable-libssp \
                          --enable-version-specific-runtime-libs \
+                         --enable-lto \
                          --enable-plugins \
-                         --enable-gold=no \
-                         --enable-lto=no \
                          --disable-nls \
                          --enable-poison-system-directories"
 
