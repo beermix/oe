@@ -12,6 +12,16 @@
    m_multiple = 1;
    const int32_t outputHeight = 1;
    const int32_t outputWidth = codeLength;
+--- chromium-63.0.3239.108/third_party/webrtc/p2p/base/port.cc.gcc7	2017-12-15 02:05:40.000000000 +0100
++++ chromium-63.0.3239.108/third_party/webrtc/p2p/base/port.cc	2017-12-29 07:24:01.248851177 +0100
+@@ -12,6 +12,7 @@
+ 
+ #include <algorithm>
+ #include <vector>
++#include <cmath>
+ 
+ #include "p2p/base/common.h"
+ #include "p2p/base/portallocator.h"
 --- chromium-63.0.3239.108/third_party/WebKit/Source/platform/graphics/Color.h.gcc7	2017-12-15 02:04:47.000000000 +0100
 +++ chromium-63.0.3239.108/third_party/WebKit/Source/platform/graphics/Color.h	2017-12-29 09:01:32.218326587 +0100
 @@ -66,8 +66,8 @@
