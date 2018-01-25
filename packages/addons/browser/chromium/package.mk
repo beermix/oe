@@ -28,7 +28,7 @@ PKG_LICENSE="Mixed"
 PKG_SITE="http://www.chromium.org/Home"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="pciutils dbus libXcomposite libXcursor libXtst alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk gtk3 libva-vdpau-driver unclutter xdotool freetype harfbuzz libva re2 gconf openjpeg chromium:host"
+PKG_DEPENDS_TARGET="pciutils dbus libXcomposite libXcursor libXtst alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk gtk+ libva-vdpau-driver unclutter xdotool freetype harfbuzz libva re2 gconf openjpeg chromium:host"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -97,7 +97,7 @@ make_target() {
     'use_gold=false'
     'use_system_freetype=true'
     'use_system_harfbuzz=true'
-    'use_gtk3=true'
+    'use_gtk3=false'
     'use_kerberos=false'
     'use_pulseaudio=false'
     'use_sysroot=true'
@@ -188,15 +188,15 @@ addon() {
   # openjpeg
   cp -PL $(get_build_dir openjpeg)/.install_pkg/usr/lib/libopenjp2.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
 
-  # gconf
-#  cp -PL $(get_build_dir gconf)/.install_pkg/usr/lib/libgconf-2.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  # atk
+  cp -PL $(get_build_dir atk)/.install_pkg/usr/lib/libatk-1.0.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # gtk
- # cp -PL $(get_build_dir gtk+)/.install_pkg/usr/lib/libgdk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
- # cp -PL $(get_build_dir gtk+)/.install_pkg/usr/lib/libgtk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_build_dir gtk+)/.install_pkg/usr/lib/libgdk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_build_dir gtk+)/.install_pkg/usr/lib/libgtk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # gtk3
-  cp -ri $(get_build_dir gtk3)/.install_pkg/usr/lib/ $ADDON_BUILD/$PKG_ADDON_ID
+#  cp -ri $(get_build_dir gtk3)/.install_pkg/usr/lib/ $ADDON_BUILD/$PKG_ADDON_ID
 
   # harfbuzz
   cp -PL $(get_build_dir harfbuzz)/.install_pkg/usr/lib/libharfbuzz.so* $ADDON_BUILD/$PKG_ADDON_ID/lib

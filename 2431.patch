@@ -1,0 +1,140 @@
+From 0d84bfcecbe0c89605d3cdb5b3c08094f246d381 Mon Sep 17 00:00:00 2001
+From: Jonas Karlman <jonas@kwiboo.se>
+Date: Tue, 23 Jan 2018 21:35:14 +0100
+Subject: [PATCH 1/4] scripts/build: rebuild package when PKG_STAMP has changed
+
+---
+ scripts/build | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/scripts/build b/scripts/build
+index a145f9d4313..cef1838157d 100755
+--- a/scripts/build
++++ b/scripts/build
+@@ -62,7 +62,7 @@ STAMP_DEPENDS="$PKG_DIR $PKG_NEED_UNPACK $PROJECT_DIR/$PROJECT/patches/$PKG_NAME
+ if [ -f $STAMP ] ; then
+   . $STAMP
+   PKG_DEEPMD5=$(find $STAMP_DEPENDS -exec md5sum {} \; 2>/dev/null | sort | md5sum | cut -d" " -f1)
+-  if [ ! "$PKG_DEEPMD5" = "$STAMP_PKG_DEEPMD5" ] ; then
++  if [ ! "$PKG_DEEPMD5" = "$STAMP_PKG_DEEPMD5" -o ! "$PKG_STAMP" = "$STAMP_PKG_STAMP" ] ; then
+     rm -f $STAMP
+   fi
+ 
+@@ -238,7 +238,7 @@ export BUILD_INDENT=$((${BUILD_INDENT:-1}+$BUILD_INDENT_SIZE))
+ # virtual packages dont must be build, they only contains dependencies, so dont go further here
+ if [ "$PKG_SECTION" = "virtual" ]; then
+   PKG_DEEPMD5=$(find $STAMP_DEPENDS -exec md5sum {} \; 2>/dev/null | sort | md5sum | cut -d" " -f1)
+-  for i in PKG_NAME PKG_DEEPMD5; do
++  for i in PKG_NAME PKG_DEEPMD5 PKG_STAMP; do
+     echo "STAMP_$i=\"${!i}\"" >> $STAMP
+   done
+ 
+@@ -562,7 +562,7 @@ for i in `find $SYSROOT_PREFIX/usr/lib/ -name "*.la" 2>/dev/null`; do \
+ done
+ 
+ PKG_DEEPMD5=$(find $STAMP_DEPENDS -exec md5sum {} \; 2>/dev/null | sort | md5sum | cut -d" " -f1)
+-for i in PKG_NAME PKG_DEEPMD5; do
++for i in PKG_NAME PKG_DEEPMD5 PKG_STAMP; do
+   echo "STAMP_$i=\"${!i}\"" >> $STAMP
+ done
+ 
+
+From b3845ff6e2b1b3764d18eb55cb15fef74294b227 Mon Sep 17 00:00:00 2001
+From: Jonas Karlman <jonas@kwiboo.se>
+Date: Tue, 23 Jan 2018 21:35:14 +0100
+Subject: [PATCH 2/4] scripts/unpack: clean package when PKG_STAMP has changed
+
+---
+ scripts/unpack | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/scripts/unpack b/scripts/unpack
+index 322e2da06e5..a7a74a3fae3 100755
+--- a/scripts/unpack
++++ b/scripts/unpack
+@@ -46,7 +46,7 @@ for i in $BUILD/$1-*; do
+     . "$i/.libreelec-unpack"
+     if [ "$STAMP_PKG_NAME" = "$1" ]; then
+       [ -z "${PKG_DEEPMD5}" ] && PKG_DEEPMD5=$(find $STAMP_DEPENDS -exec md5sum {} \; 2>/dev/null | sort | md5sum | cut -d" " -f1)
+-      if [ ! "$PKG_DEEPMD5" = "$STAMP_PKG_DEEPMD5" ] ; then
++      if [ ! "$PKG_DEEPMD5" = "$STAMP_PKG_DEEPMD5" -o ! "$PKG_STAMP" = "$STAMP_PKG_STAMP" ] ; then
+         $SCRIPTS/clean $1
+       fi
+     fi
+@@ -199,7 +199,7 @@ if [ "$PKG_SECTION" != "virtual" ]; then
+   rm -f $STAMPS/$1/build_*
+ 
+   PKG_DEEPMD5=$(find $STAMP_DEPENDS -exec md5sum {} \; 2>/dev/null | sort | md5sum | cut -d" " -f1)
+-  for i in PKG_NAME PKG_DEEPMD5; do
++  for i in PKG_NAME PKG_DEEPMD5 PKG_STAMP; do
+     echo "STAMP_$i=\"${!i}\"" >> $STAMP
+   done
+ fi
+
+From d2b3c97827ebaf65cf7c25bc4cdeb8f6ea375a74 Mon Sep 17 00:00:00 2001
+From: Jonas Karlman <jonas@kwiboo.se>
+Date: Tue, 23 Jan 2018 21:35:14 +0100
+Subject: [PATCH 3/4] u-boot: use PKG_STAMP to trigger rebuild
+
+---
+ packages/tools/u-boot/package.mk | 1 +
+ scripts/build                    | 8 --------
+ 2 files changed, 1 insertion(+), 8 deletions(-)
+
+diff --git a/packages/tools/u-boot/package.mk b/packages/tools/u-boot/package.mk
+index 71860e518e5..79a97541ca8 100644
+--- a/packages/tools/u-boot/package.mk
++++ b/packages/tools/u-boot/package.mk
+@@ -27,6 +27,7 @@ PKG_SECTION="tools"
+ PKG_SHORTDESC="u-boot: Universal Bootloader project"
+ PKG_LONGDESC="Das U-Boot is a cross-platform bootloader for embedded systems, used as the default boot loader by several board vendors. It is intended to be easy to port and to debug, and runs on many supported architectures, including PPC, ARM, MIPS, x86, m68k, NIOS, and Microblaze."
+ PKG_IS_KERNEL_PKG="yes"
++PKG_STAMP="$UBOOT_SYSTEM"
+ 
+ PKG_NEED_UNPACK="$PROJECT_DIR/$PROJECT/bootloader"
+ [ -n "$DEVICE" ] && PKG_NEED_UNPACK+=" $PROJECT_DIR/$PROJECT/devices/$DEVICE/bootloader"
+diff --git a/scripts/build b/scripts/build
+index cef1838157d..467416c56b7 100755
+--- a/scripts/build
++++ b/scripts/build
+@@ -65,10 +65,6 @@ if [ -f $STAMP ] ; then
+   if [ ! "$PKG_DEEPMD5" = "$STAMP_PKG_DEEPMD5" -o ! "$PKG_STAMP" = "$STAMP_PKG_STAMP" ] ; then
+     rm -f $STAMP
+   fi
+-
+-  if [ "$1" = "u-boot" -a ! "$UBOOT_SYSTEM" = "$STAMP_UBOOT_SYSTEM" ]; then
+-    rm -f $STAMP
+-  fi
+ fi
+ 
+ if [ -f $STAMP ]; then
+@@ -565,7 +561,3 @@ PKG_DEEPMD5=$(find $STAMP_DEPENDS -exec md5sum {} \; 2>/dev/null | sort | md5sum
+ for i in PKG_NAME PKG_DEEPMD5 PKG_STAMP; do
+   echo "STAMP_$i=\"${!i}\"" >> $STAMP
+ done
+-
+-if [ "$1" = "u-boot" ]; then
+-  echo "STAMP_UBOOT_SYSTEM=\"${UBOOT_SYSTEM}\"" >> $STAMP
+-fi
+
+From 481f3ba620d60de943c00583ff9b639b5e22f7d5 Mon Sep 17 00:00:00 2001
+From: Jonas Karlman <jonas@kwiboo.se>
+Date: Tue, 23 Jan 2018 21:35:14 +0100
+Subject: [PATCH 4/4] linux: add PKG_STAMP with make targets
+
+---
+ packages/linux/package.mk | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/packages/linux/package.mk b/packages/linux/package.mk
+index ee840c868de..bf360ddcb8a 100644
+--- a/packages/linux/package.mk
++++ b/packages/linux/package.mk
+@@ -28,6 +28,7 @@ PKG_SECTION="linux"
+ PKG_SHORTDESC="linux26: The Linux kernel 2.6 precompiled kernel binary image and modules"
+ PKG_LONGDESC="This package contains a precompiled kernel image and the modules."
+ PKG_IS_KERNEL_PKG="yes"
++PKG_STAMP="$KERNEL_TARGET $KERNEL_MAKE_EXTRACMD $KERNEL_UBOOT_EXTRA_TARGET"
+ 
+ case "$LINUX" in
+   amlogic-3.10)
