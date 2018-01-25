@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="mesa"
-PKG_VERSION="17.3.3"
-#PKG_SHA256="41bac5de0ef6adc1f41a1ec0f80c19e361298ce02fa81b5f9ba4fdca33a9379b"
+PKG_VERSION="17.2.3"
+PKG_SHA256="a0b0ec8f7b24dd044d7ab30a8c7e6d3767521e245f88d4ed5dd93315dc56f837"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.mesa3d.org/"
@@ -96,18 +96,18 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --disable-nine \
                            --disable-xvmc \
                            $MESA_VDPAU \
-                           --disable-omx-bellagio \
-                           --enable-va \
+                           --disable-omx \
+                           --disable-va \
                            --disable-opencl \
                            --enable-opencl-icd \
                            --disable-gallium-tests \
                            --enable-shared-glapi \
                            $MESA_GALLIUM_LLVM \
-                           --enable-silent-rules \
+                           --disable-silent-rules \
                            --with-gl-lib-name=GL \
                            --with-osmesa-lib-name=OSMesa \
                            --with-gallium-drivers=$GALLIUM_DRIVERS \
-                           --with-dri-drivers=$DRI_DRIVERS,swrast \
+                           --with-dri-drivers=$DRI_DRIVERS \
                            --with-vulkan-drivers=no \
                            --with-sysroot=$SYSROOT_PREFIX"
 
