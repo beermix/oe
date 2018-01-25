@@ -128,7 +128,6 @@ readonly -A _system_libs=(
   [yasm]=
   [zlib]=minizip
   [re2]=re2
-  [icu]=icu 
 )
 
 readonly _unwanted_bundled_libs=(
