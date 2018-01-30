@@ -17,11 +17,11 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="7.3.0-RC-20180122"
+PKG_VERSION="7-20180125"
 PKG_ARCH="any"
 PKG_SITE="https://github.com/gcc-mirror/gcc/tree/gcc-7-branch"
 PKG_LICENSE="GPL"
-PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/7.3.0-RC-20180122/gcc-7.3.0-RC-20180122.tar.xz"
+PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/LATEST-7/gcc-7-20180125.tar.xz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host zlib:host mpc:host"
 PKG_DEPENDS_TARGET="gcc:host"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host zlib:host glibc"
