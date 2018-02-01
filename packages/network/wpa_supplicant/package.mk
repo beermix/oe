@@ -34,8 +34,8 @@ PKG_MAKEINSTALL_OPTS_TARGET="-C wpa_supplicant V=1 LIBDIR=/usr/lib BINDIR=/usr/b
 
 configure_target() {
   export LIBS="$LIBS -lnl-3 -lm -lpthread"
-  export CFLAGS="$CFLAGS -fstack-protector-strong "
-  export CXXFLAGS="$CXXFLAGS -fstack-protector-strong "
+#  export CFLAGS="$CFLAGS -fstack-protector-strong"
+#  export CXXFLAGS="$CXXFLAGS -fstack-protector-strong"
 
   cp $PKG_DIR/config/makefile.config wpa_supplicant/.config
 
