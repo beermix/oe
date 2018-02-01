@@ -32,10 +32,14 @@ PKG_TOOLCHAIN="configure"
 PKG_CONFIGURE_OPTS_HOST="--disable-debug \
                          --disable-warnerror \
                          --disable-profiling \
-                         --disable-multilib \
-                         --disable-werror \
-                         --disable-nls \
-                         --disable-sim \
-                         --disable-gdb"
+                         --disable-gcov \
+                         --disable-python \
+                         --disable-python-bindings \
+                         --enable-nls \
+                         --disable-rpath \
+                         --without-dmalloc \
+                         --with-gnu-ld \
+                         --without-libiconv-prefix \
+                         --without-libintl-prefix"
 
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
