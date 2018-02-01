@@ -50,7 +50,6 @@ PKG_CONFIGURE_OPTS_TARGET="WPASUPPLICANT=/usr/bin/wpa_supplicant \
                            --enable-ethernet \
                            --disable-gadget \
                            --enable-wifi \
-                           --disable-ipv6 \
                            --disable-bluetooth \
                            --disable-ofono \
                            --disable-dundee \
