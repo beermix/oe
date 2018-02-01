@@ -30,8 +30,8 @@ PKG_LONGDESC="The ConnMan project provides a daemon for managing internet connec
 PKG_TOOLCHAIN="autotools"
 
 #pre_configure_target() {
-#  export CFLAGS="$CFLAGS -fstack-protector-strong "
-#  export CXXFLAGS="$CXXFLAGS -fstack-protector-strong "
+#  export CFLAGS="$CFLAGS -fstack-protector-strong"
+#  export CXXFLAGS="$CXXFLAGS -fstack-protector-strong"
 #}
 
 PKG_CONFIGURE_OPTS_TARGET="WPASUPPLICANT=/usr/bin/wpa_supplicant \
