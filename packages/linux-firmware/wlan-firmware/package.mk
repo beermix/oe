@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="wlan-firmware"
-PKG_VERSION="cfc1842"
-PKG_SHA256="52d56658d7f426cf8b99637179cbca39058b781d3720599f838764571151fc64"
+PKG_VERSION="0.0.32"
+PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="Free-to-use"
 PKG_SITE="https://github.com/LibreELEC/wlan-firmware"
@@ -27,8 +27,14 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="firmware"
 PKG_SHORTDESC="wlan-firmware: firmwares for various WLAN drivers"
 PKG_LONGDESC="wlan-firmware: firmwares for various WLAN drivers"
-PKG_TOOLCHAIN="manual"
+
+PKG_IS_ADDON="no"
+PKG_AUTORECONF="no"
+
+make_target() {
+  : # nothing todo
+}
 
 makeinstall_target() {
-  DESTDIR=$INSTALL/$(get_kernel_overlay_dir) ./install
+  DESTDIR=$INSTALL ./install
 }

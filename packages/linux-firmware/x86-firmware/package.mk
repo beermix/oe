@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2017-present Team LibreELEC
+#      Copyright (C) 2016 Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,24 +16,30 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="qca9377-firmware-aml"
-PKG_VERSION="1.0.0"
-PKG_SHA256="239b10d6fb006f566aa20638a81f98a447fa222e6b74bed2f6039a75b8ccd422"
-PKG_ARCH="arm aarch64"
-PKG_LICENSE="BSD-3c"
-PKG_SITE="http://linode.boundarydevices.com/repos/apt/ubuntu-relx/pool/main/q/qca-firmware/"
-PKG_URL="http://linode.boundarydevices.com/repos/apt/ubuntu-relx/pool/main/q/qca-firmware/qca-firmware_${PKG_VERSION}.orig.tar.gz"
-PKG_SOURCE_DIR="qca-firmware-$PKG_VERSION"
+PKG_NAME="x86-firmware"
+PKG_VERSION="c4c07a8"
+PKG_REV="1"
+PKG_ARCH="x86_64"
+PKG_LICENSE="other"
+PKG_SITE="http://git.kernel.org/cgit/linux/kernel/git/firmware/linux-firmware.git/"
+PKG_URL="http://git.kernel.org/cgit/linux/kernel/git/firmware/linux-firmware.git/snapshot/$PKG_VERSION.tar.xz"
+PKG_SOURCE_DIR="$PKG_VERSION"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_SECTION="firmware"
-PKG_SHORTDESC="qca9377 Linux firmware"
-PKG_LONGDESC="qca9377 Linux firmware"
-PKG_TOOLCHAIN="manual"
+PKG_SECTION="linux-firmware"
+PKG_SHORTDESC="x86-firmware: x86 related firmware"
+PKG_LONGDESC="x86-firmware: x86 related firmware"
+
+PKG_IS_ADDON="no"
+PKG_AUTORECONF="no"
+
+configure_target() {
+  :
+}
+
+make_target() {
+  :
+}
 
 makeinstall_target() {
-  mkdir -p $INSTALL/$(get_full_firmware_dir)
-    cp -a *.bin $INSTALL/$(get_full_firmware_dir)
-    cp -a qca $INSTALL/$(get_full_firmware_dir)
-    cp -a wlan $INSTALL/$(get_full_firmware_dir)
-    cp LICENSE.TXT $INSTALL/$(get_full_firmware_dir)/LICENSE.qca
+  :
 }

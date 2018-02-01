@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2016-present Team LibreELEC
+#      Copyright (C) 2016 Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -17,20 +17,37 @@
 ################################################################################
 
 PKG_NAME="intel-ucode"
-PKG_VERSION="20180108"
-PKG_SHA256="063f1aa3a546cb49323a5e0b516894e4b040007107b8c8ff017aca8a86204130"
+PKG_VERSION="20160714"
+PKG_REV="1"
 PKG_ARCH="x86_64"
 PKG_LICENSE="other"
 PKG_SITE="https://downloadcenter.intel.com/search?keyword=linux+microcode"
-PKG_URL="https://downloadmirror.intel.com/27431/eng/microcode-${PKG_VERSION}.tgz"
-PKG_DEPENDS_HOST="toolchain"
+PKG_URL="https://downloadmirror.intel.com/26156/eng/microcode-${PKG_VERSION}.tgz"
 PKG_DEPENDS_TARGET="toolchain intel-ucode:host"
 PKG_SECTION="linux-firmware"
 PKG_SHORTDESC="intel-ucode: Intel CPU microcodes"
 PKG_LONGDESC="intel-ucode: Intel CPU microcodes"
-PKG_TOOLCHAIN="manual"
+
+PKG_IS_ADDON="no"
+PKG_AUTORECONF="no"
 
 unpack() {
-  mkdir -p $PKG_BUILD
-  tar xf $SOURCES/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tgz -C $PKG_BUILD
+  mkdir -p $ROOT/$PKG_BUILD
+  tar xf $SOURCES/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tgz -C $ROOT/$PKG_BUILD
+}
+
+make_host() {
+  $CC $CFLAGS -o intel-microcode2ucode intel-microcode2ucode.c
+}
+
+makeinstall_host() {
+  cp intel-microcode2ucode $ROOT/$TOOLCHAIN/bin/
+}
+
+make_target() {
+  intel-microcode2ucode ./microcode.dat
+}
+
+makeinstall_target() {
+  :
 }
