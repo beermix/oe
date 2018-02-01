@@ -3,7 +3,7 @@ LD_OPTIM="-Wl,-O1,--sort-common,--as-needed,-z,relro"
 
 if [ "$LTO_SUPPORT" = yes ];then
   GCC_OPTIM_LTO="-falign-functions=32 -ffat-lto-objects -ffat-lto-objects -flto=$CONCURRENCY_MAKE_LEVEL -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
-#  LD_OPTIM_LTO="-fuse-linker-plugin -flto=$CONCURRENCY_MAKE_LEVEL"
+  LD_OPTIM_LTO="-fuse-linker-plugin -flto=$CONCURRENCY_MAKE_LEVEL"
 fi
 
 if [ "$GOLD_SUPPORT" = yes ];then
@@ -21,7 +21,6 @@ else
 fi
 
 CCACHE_FLAGS="-fdiagnostics-color=always"
-#CCACHE_FLAGS="-fdiagnostics-color=always -fsanitize=undefined"
 
 TARGET_CPPFLAGS=
 TARGET_CFLAGS="$TARGET_CFLAGS $GCC_OPTIM $GCC_OPTIM_LTO $PROJECT_CFLAGS $CCACHE_FLAGS"
