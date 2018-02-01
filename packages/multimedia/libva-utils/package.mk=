@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2017-present Team LibreELEC
+#      Copyright (C) 2016-present Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,30 +16,28 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="intel-vaapi-driver"
-PKG_VERSION="3541852"
-PKG_ARCH="x86_64"
+PKG_NAME="libva-utils"
+PKG_VERSION="2.0.0"
+PKG_SHA256="a921df31311d8f49d2e392a5fc2a068d79f89aeb588309fbff24365310dbc5f6"
+PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/01org/intel-vaapi-driver"
-PKG_URL="https://github.com/01org/intel-vaapi-driver/archive/$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain libva libdrm"
-PKG_SECTION="multimedia"
-PKG_SHORTDESC="intel-vaapi-driver: VA-API user mode driver for Intel GEN Graphics family"
-PKG_LONGDESC="intel-vaapi-driver: VA-API user mode driver for Intel GEN Graphics family"
+PKG_SITE="https://github.com/01org/libva-utils"
+PKG_URL="https://github.com/01org/libva-utils/releases/download/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_SECTION="debug"
+PKG_SHORTDESC="Libva-utils is a collection of tests for VA-API (VIdeo Acceleration API)"
+PKG_LONGDESC="Libva-utils is a collection of tests for VA-API (VIdeo Acceleration API)"
 PKG_TOOLCHAIN="autotools"
 
-#pre_configure_target() {
-#  export CFLAGS="$CFLAGS -O3"
-#  export CXXFLAGS="$CXXFLAGS -O3"
-#}
-
 if [ "$DISPLAYSERVER" = "x11" ]; then
-  DISPLAYSERVER_LIBVA="--enable-x11 --disable-wayland"
-elif [ "$DISPLAYSERVER" = "weston" ]; then
-  DISPLAYSERVER_LIBVA="--disable-x11 --enable-wayland"
+  PKG_DEPENDS_TARGET="toolchain libva libdrm libX11"
+  DISPLAYSERVER_LIBVA="--enable-x11"
 else
-  DISPLAYSERVER_LIBVA="--disable-x11 --disable-wayland"
+  PKG_DEPENDS_TARGET="toolchain libva libdrm"
+  DISPLAYSERVER_LIBVA="--disable-x11"
 fi
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-drm \
-                           $DISPLAYSERVER_LIBVA"
+PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
+                           --enable-drm \
+                           $DISPLAYSERVER_LIBVA \
+                           --disable-wayland \
+                           --disable-tests"

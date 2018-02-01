@@ -17,12 +17,11 @@
 ################################################################################
 
 PKG_NAME="libva"
-PKG_VERSION="2.0.0"
-PKG_SHA256="bb0601f9a209e60d8d0b867067323661a7816ff429021441b775452b8589e533"
+PKG_VERSION="2e41bfd"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPL"
-PKG_SITE="https://01.org/linuxmedia"
-PKG_URL="https://github.com/01org/libva/releases/download/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_SITE="https://github.com/01org/libva"
+PKG_URL="https://github.com/01org/libva/archive/$PKG_VERSION.tar.gz"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="Libva is an implementation for VA-API (VIdeo Acceleration API)."
 PKG_LONGDESC="Libva is an open source software library and API specification to provide access to hardware accelerated video decoding/encoding and video processing."
@@ -44,8 +43,7 @@ else
   DISPLAYSERVER_LIBVA="--disable-x11 --disable-glx --disable-wayland"
 fi
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
-                           --disable-docs \
+PKG_CONFIGURE_OPTS_TARGET="--disable-docs \
                            --enable-drm \
                            --enable-egl \
                            $DISPLAYSERVER_LIBVA \

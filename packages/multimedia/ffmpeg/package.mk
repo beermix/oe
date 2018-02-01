@@ -114,7 +114,7 @@ configure_target() {
               --host-ldflags="$HOST_LDFLAGS" \
               --host-libs="-lm" \
               --extra-cflags="$CFLAGS" \
-              --extra-ldflags="$LDFLAGS -fPIC" \
+              --extra-ldflags="$LDFLAGS" \
               --extra-libs="$FFMPEG_LIBS" \
               --disable-static \
               --enable-shared \
@@ -206,7 +206,6 @@ configure_target() {
               $FFMPEG_FPU \
               --enable-yasm \
               --disable-symver \
-              --enable-lto \
               $FFMPEG_X11GRAB
 }
 
