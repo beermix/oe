@@ -83,46 +83,6 @@
             moving_object_[mb_row * mb_cols_ + mb_col])) {
          // Copy y source.
          filter_->CopyMem16x16(mb_src, stride_src, mb_dst, stride_dst);
---- chromium-62.0.3192.0/v8/src/compiler/store-store-elimination.cc.gcc7	2017-08-22 21:06:45.000000000 +0200
-+++ chromium-62.0.3192.0/v8/src/compiler/store-store-elimination.cc	2017-09-08 23:46:06.624665417 +0200
-@@ -79,7 +79,6 @@
-   StoreOffset offset_;
- 
-   bool operator==(const UnobservableStore) const;
--  bool operator!=(const UnobservableStore) const;
-   bool operator<(const UnobservableStore) const;
- };
- 
-@@ -140,7 +139,6 @@
-   void Visit(Node* node);
- 
-  private:
--  static bool IsEffectful(Node* node);
-   void VisitEffectfulNode(Node* node);
-   UnobservablesSet RecomputeUseIntersection(Node* node);
-   UnobservablesSet RecomputeSet(Node* node, UnobservablesSet uses);
-@@ -251,10 +249,6 @@
-   }
- }
- 
--bool RedundantStoreFinder::IsEffectful(Node* node) {
--  return (node->op()->EffectInputCount() >= 1);
--}
--
- // Recompute unobservables-set for a node. Will also mark superfluous nodes
- // as to be removed.
- 
-@@ -552,10 +546,6 @@
-   return (id_ == other.id_) && (offset_ == other.offset_);
- }
- 
--bool UnobservableStore::operator!=(const UnobservableStore other) const {
--  return !(*this == other);
--}
--
- bool UnobservableStore::operator<(const UnobservableStore other) const {
-   return (id_ < other.id_) || (id_ == other.id_ && offset_ < other.offset_);
- }
 --- chromium-62.0.3192.0/extensions/common/permissions/settings_override_permission.cc.gcc7	2017-08-22 21:04:44.000000000 +0200
 +++ chromium-62.0.3192.0/extensions/common/permissions/settings_override_permission.cc	2017-09-09 00:43:40.708568094 +0200
 @@ -43,7 +43,9 @@
@@ -206,15 +166,17 @@
      // If we're navigating to the same site instance, we won't need to use any
 --- chromium-62.0.3192.0/third_party/WebKit/Source/platform/wtf/text/TextCodec.h.gcc7	2017-08-22 21:05:01.000000000 +0200
 +++ chromium-62.0.3192.0/third_party/WebKit/Source/platform/wtf/text/TextCodec.h	2017-09-09 03:00:28.743370090 +0200
-@@ -73,7 +73,7 @@
+@@ -69,8 +69,8 @@
+ };
  
  static_assert(!kDoNotFlush, "DoNotFlush should be falsy");
- static_assert(kFetchEOF, "FetchEOF should be truthy");
+-static_assert(kFetchEOF, "FetchEOF should be truthy");
 -static_assert(kDataEOF, "DataEOF should be truthy");
++static_assert(kFetchEOF != 0, "FetchEOF should be truthy");
 +static_assert(kDataEOF != 0, "DataEOF should be truthy");
  
  class WTF_EXPORT TextCodec {
-   WTF_MAKE_NONCOPYABLE(TextCodec);
+   USING_FAST_MALLOC(TextCodec);
 --- chromium-62.0.3192.0/media/cast/receiver/video_decoder.cc.gcc7	2017-08-22 21:04:45.000000000 +0200
 +++ chromium-62.0.3192.0/media/cast/receiver/video_decoder.cc	2017-09-09 05:02:17.907818439 +0200
 @@ -133,7 +133,9 @@
