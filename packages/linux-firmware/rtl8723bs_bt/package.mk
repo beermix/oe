@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2016 Team LibreELEC
+#      Copyright (C) 2017-present Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,30 +16,14 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="x86-firmware"
-PKG_VERSION="c4c07a8"
-PKG_REV="1"
-PKG_ARCH="x86_64"
-PKG_LICENSE="other"
-PKG_SITE="http://git.kernel.org/cgit/linux/kernel/git/firmware/linux-firmware.git/"
-PKG_URL="http://git.kernel.org/cgit/linux/kernel/git/firmware/linux-firmware.git/snapshot/$PKG_VERSION.tar.xz"
-PKG_SOURCE_DIR="$PKG_VERSION"
+PKG_NAME="rtl8723bs_bt"
+PKG_VERSION="09eb91f"
+PKG_SHA256="4bb8483c4a14a9e0dfc4a6ddca18486caab5f361be2441b91e9e2a399ca9f33e"
+PKG_ARCH="any"
+PKG_LICENSE="GPL"
+PKG_SITE="https://github.com/lwfinger/rtl8723bs_bt"
+PKG_URL="https://github.com/lwfinger/rtl8723bs_bt/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_SECTION="linux-firmware"
-PKG_SHORTDESC="x86-firmware: x86 related firmware"
-PKG_LONGDESC="x86-firmware: x86 related firmware"
-
-PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
-
-configure_target() {
-  :
-}
-
-make_target() {
-  :
-}
-
-makeinstall_target() {
-  :
-}
+PKG_SECTION="firmware"
+PKG_SHORTDESC="rtl8723bs_bt Linux firmware"
+PKG_LONGDESC="rtl8723bs_bt Linux firmware"
