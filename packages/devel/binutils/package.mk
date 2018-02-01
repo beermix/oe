@@ -55,13 +55,6 @@ make_host() {
   make MAKEINFO=true
 }
 
-#make_target() {
-#  make MAKEINFO=true configure-host
-#  make MAKEINFO=true -C libiberty
-#  make MAKEINFO=true -C bfd
-#  make MAKEINFO=true -C binutils ar
-#}
-
 makeinstall_host() {
   cp -v ../include/libiberty.h $SYSROOT_PREFIX/usr/include
   make MAKEINFO=true install
