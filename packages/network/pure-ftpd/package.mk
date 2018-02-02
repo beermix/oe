@@ -5,7 +5,6 @@ PKG_DEPENDS_TARGET="toolchain libcap"
 #PKG_DEPENDS_TARGET="toolchain libcap libevent libsodium"
 PKG_SECTION="network"
 
-
 PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config \
 			      --datadir=/storage/.config \
 			      --libdir=/storage/.config \
