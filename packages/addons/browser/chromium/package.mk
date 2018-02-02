@@ -60,13 +60,6 @@ make_target() {
 
   export CCACHE_SLOPPINESS=time_macros
 
-  # Fix paths.
-  sed -e 's|i386-linux-gnu/||g' \
-      -e 's|x86_64-linux-gnu/||g' \
-      -e 's|/usr/lib/va/drivers|/usr/lib/dri|g' \
-      -e 's|/usr/lib64/va/drivers|/usr/lib/dri|g' \
-      -i ./content/common/sandbox_linux/bpf_gpu_policy_linux.cc
-
   # Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
   # Note: These are for OpenELEC use ONLY. For your own distribution, please
   # get your own set of keys.
