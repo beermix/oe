@@ -45,6 +45,14 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
 			      --enable-release \
 			      --disable-shared \
 			      --enable-static \
+			      --enable-draft \
+			      --enable-renaming \
+			      --disable-tracing \
+			      --disable-extras \
+			      --enable-dyload \
+			      --disable-tools \
+			      --disable-tests \
+			      --disable-samples \
 			      --with-cross-build=$PKG_BUILD/.$HOST_NAME"
 
 PKG_CONFIGURE_SCRIPT="source/configure"
