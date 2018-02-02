@@ -6,7 +6,6 @@ PKG_GIT_BRANCH="release/12"
 PKG_DEPENDS_TARGET="toolchain ffmpeg"
 PKG_SECTION="my"
 
-
 get_graphicdrivers
 
 pre_configure_target() {

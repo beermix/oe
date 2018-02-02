@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="intel-vaapi-driver"
-PKG_VERSION="dcae7d3"
+PKG_VERSION="d1453b5"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/01org/intel-vaapi-driver"
@@ -27,11 +27,6 @@ PKG_SECTION="multimedia"
 PKG_SHORTDESC="intel-vaapi-driver: VA-API user mode driver for Intel GEN Graphics family"
 PKG_LONGDESC="intel-vaapi-driver: VA-API user mode driver for Intel GEN Graphics family"
 PKG_TOOLCHAIN="autotools"
-
-#pre_configure_target() {
-#  export CFLAGS="$CFLAGS -O3"
-#  export CXXFLAGS="$CXXFLAGS -O3"
-#}
 
 if [ "$DISPLAYSERVER" = "x11" ]; then
   DISPLAYSERVER_LIBVA="--enable-x11 --disable-wayland"

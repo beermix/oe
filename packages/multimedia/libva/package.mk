@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libva"
-PKG_VERSION="2e41bfd"
+PKG_VERSION="b2fdaf4"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/01org/libva"
