@@ -57,6 +57,8 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libmpx \
                            --disable-libssp \
                            --without-cuda-driver \
+                           --disable-libquadmath \
+                           --disable-libmudflap \
                            --with-tune=haswell \
                            --with-arch=westmere"
 
@@ -68,7 +70,6 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-threads \
                               --disable-libffi
                               --disable-libitm \
-                              --disable-libquadmath \
                               --disable-libgomp \
                               --disable-libada \
                               --disable-libatomic \
