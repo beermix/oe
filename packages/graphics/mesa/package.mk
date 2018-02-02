@@ -100,10 +100,8 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            $XA_CONFIG \
                            --enable-gbm \
                            --disable-nine \
-                           --disable-xvmc \
                            $MESA_VDPAU \
                            --disable-omx-bellagio \
-                           --disable-va \
                            --disable-opencl \
                            --enable-opencl-icd \
                            --disable-gallium-tests \
