@@ -88,6 +88,7 @@ make_target() {
     'use_gconf=false'
     'use_gnome_keyring=false'
     'use_gold=false'
+    'use_lld=false'
     'use_system_freetype=true'
     'use_system_harfbuzz=true'
     'use_gtk3=false'
@@ -116,7 +117,7 @@ make_target() {
 readonly -A _system_libs=(
   [libdrm]=
   [libjpeg]=libjpeg
-  [icu]=icu
+  #[icu]=icu
   #[libxml]=libxml2           # https://crbug.com/736026
   [libxslt]=libxslt
   [yasm]=
@@ -141,7 +142,6 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
     find -type f -path "*third_party/$_lib/*" \
       \! -path "*third_party/$_lib/chromium/*" \
       \! -path "*third_party/$_lib/google/*" \
-      \! -path './base/third_party/icu/*' \
       \! -path './third_party/freetype/src/src/psnames/pstables.h' \
       \! -path './third_party/yasm/run_yasm.py' \
       \! -regex '.*\.\(gn\|gni\|isolate\)' \
