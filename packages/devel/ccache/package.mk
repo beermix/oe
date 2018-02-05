@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="ccache"
-PKG_VERSION="3.3.5"
-PKG_SHA256="ccc7cae7263fc39a8d2a3f18fac67289d91114d1d08b01b33812eb76a2a07657"
+PKG_VERSION="3.3.6"
+PKG_SHA256="eac8d2a5055014bebae1434d9b7c66c25d64323800808c27a4534cee167e6bea"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://ccache.samba.org/"

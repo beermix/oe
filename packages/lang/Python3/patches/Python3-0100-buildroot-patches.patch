@@ -459,6 +459,62 @@ Signed-off-by: Peter Korsgaard <peter@korsgaard.com>
  Misc/python-config.sh.in | 12 ++++++------
  1 file changed, 6 insertions(+), 6 deletions(-)
 
+diff --git a/Misc/python-config.sh.in b/Misc/python-config.sh.in
+index 30c6927..f905a71 100644
+--- a/Misc/python-config.sh.in
++++ b/Misc/python-config.sh.in
+@@ -29,12 +29,12 @@ prefix_real=$(installed_prefix "$0")
+ 
+ # Use sed to fix paths from their built-to locations to their installed-to
+ # locations.
+-prefix=$(echo "$prefix_build" | sed "s#$prefix_build#$prefix_real#")
++prefix=$(echo "$prefix_build" | sed "s#^$prefix_build#$prefix_real#")
+ exec_prefix_build="@exec_prefix@"
+-exec_prefix=$(echo "$exec_prefix_build" | sed "s#$exec_prefix_build#$prefix_real#")
+-includedir=$(echo "@includedir@" | sed "s#$prefix_build#$prefix_real#")
+-libdir=$(echo "@libdir@" | sed "s#$prefix_build#$prefix_real#")
+-CFLAGS=$(echo "@CFLAGS@" | sed "s#$prefix_build#$prefix_real#")
++exec_prefix=$(echo "$exec_prefix_build" | sed "s#^$exec_prefix_build#$prefix_real#")
++includedir=$(echo "@includedir@" | sed "s#^$prefix_build#$prefix_real#")
++libdir=$(echo "@libdir@" | sed "s#^$prefix_build#$prefix_real#")
++CFLAGS=$(echo "@CFLAGS@" | sed "s#^$prefix_build#$prefix_real#")
+ VERSION="@VERSION@"
+ LIBM="@LIBM@"
+ LIBC="@LIBC@"
+@@ -48,7 +48,7 @@ OPT="@OPT@"
+ PY_ENABLE_SHARED="@PY_ENABLE_SHARED@"
+ LDVERSION="@LDVERSION@"
+ LIBDEST=${prefix}/lib/python${VERSION}
+-LIBPL=$(echo "@LIBPL@" | sed "s#$prefix_build#$prefix_real#")
++LIBPL=$(echo "@LIBPL@" | sed "s#^$prefix_build#$prefix_real#")
+ SO="@EXT_SUFFIX@"
+ PYTHONFRAMEWORK="@PYTHONFRAMEWORK@"
+ INCDIR="-I$includedir/python${VERSION}${ABIFLAGS}"
+-- 
+2.11.0
+
+
+From 2d68f738170735e5fb01684f532850da536e1abb Mon Sep 17 00:00:00 2001
+From: Samuel Cabrero <samuelcabrero@gmail.com>
+Date: Wed, 23 Dec 2015 11:45:48 +0100
+Subject: [PATCH 11/29] Override system locale and set to default when adding
+ gcc paths
+
+Forces the use of the default locale in the function
+add_gcc_paths, which is called when cross compiling to add the
+include and library paths. This is necessary because otherwise
+the gcc output is localized and the output parsing fails, which
+results in no paths added and detect_modules not able to find
+any system library (eg. libz, libssl, etc.)
+
+[Thomas: patch taken from https://bugs.python.org/issue23767.]
+
+Signed-off-by: Samuel Cabrero <samuelcabrero@gmail.com>
+Signed-off-by: Thomas Petazzoni <thomas.petazzoni@free-electrons.com>
+---
+ setup.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
 diff --git a/setup.py b/setup.py
 index b3add2b..29bfd17 100644
 --- a/setup.py
