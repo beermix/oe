@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="libevdev"
-PKG_VERSION="1.5.7"
-PKG_SHA256="a1e59e37a2f0d397ffd7e83b73af0e638db83b8dd08902ef0f651a21cc1dd422"
+PKG_VERSION="1.5.8"
+PKG_SHA256="6083d81e46609da8ba80cb826c02d9080764a6dec33c8267ccb7e158833d4c6d"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/libevdev/"
