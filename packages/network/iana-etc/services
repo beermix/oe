@@ -742,6 +742,7 @@ alpes             463/udp
 kpasswd           464/tcp
 kpasswd           464/udp
 urd               465/tcp
+submissions       465/tcp
 igmpv3lite        465/udp
 digital-vrc       466/tcp
 digital-vrc       466/udp
@@ -3570,8 +3571,8 @@ idonix-metanet   2112/tcp
 idonix-metanet   2112/udp
 hsl-storm        2113/tcp
 hsl-storm        2113/udp
-newheights       2114/tcp
-newheights       2114/udp
+ariascribe       2114/tcp
+ariascribe       2114/udp
 kdm              2115/tcp
 kdm              2115/udp
 ccowcmr          2116/tcp
@@ -8779,7 +8780,9 @@ auriga-router    5680/udp
 ncxcp            5681/tcp
 ncxcp            5681/udp
 brightcore       5682/udp
+coap             5683/tcp
 coap             5683/udp
+coaps            5684/tcp
 coaps            5684/udp
 gog-multiplayer  5687/udp
 ggz              5688/tcp
@@ -9521,6 +9524,7 @@ ionixnetmon      7410/tcp
 ionixnetmon      7410/udp
 daqstream        7411/tcp
 daqstream        7411/udp
+ipluminary       7420/udp
 mtportmon        7421/tcp
 mtportmon        7421/udp
 pmdmgr           7426/tcp
@@ -9736,6 +9740,7 @@ teradataordbms   8002/tcp
 teradataordbms   8002/udp
 mcreport         8003/tcp
 mcreport         8003/udp
+p2pevolvenet     8004/tcp
 mxi              8005/tcp
 mxi              8005/udp
 wpl-analytics    8006/tcp
@@ -10103,6 +10108,7 @@ CardWeb-IO       9060/tcp
 CardWeb-RT       9060/udp
 glrpc            9080/tcp
 glrpc            9080/udp
+cisco-aqos       9081/udp
 lcs-ap           9082/sctp
 emc-pp-mgmtsvc   9083/tcp
 aurora           9084/tcp
@@ -10898,6 +10904,7 @@ athand-mmp      20999/udp
 irtrans         21000/tcp
 irtrans         21000/udp
 notezilla-lan   21010/tcp
+trinket-agent   21212/tcp
 aigairserver    21221/tcp
 rdm-tfs         21553/tcp
 dfserver        21554/tcp
@@ -11186,6 +11193,7 @@ speedtrace      33334/tcp
 speedtrace-disc 33334/udp
 traceroute      33434/tcp
 traceroute      33434/udp
+mtrace          33435/udp
 snip-slave      33656/tcp
 snip-slave      33656/udp
 turbonote-2     34249/tcp
@@ -11376,3 +11384,4 @@ robotraconteur  48653/udp
 matahari        49000/tcp
 nusrp           49001/tcp
 nusdp-disc      49001/udp
+inspider        49150/tcp
