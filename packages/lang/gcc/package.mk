@@ -57,7 +57,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libmpx \
                            --disable-libssp \
                            --without-cuda-driver \
-                           --disable-libquadmath \
                            --disable-libsanitizer \
                            --with-tune=haswell \
                            --with-arch=westmere"
