@@ -114,12 +114,15 @@ else
   KODI_AVAHI="-DENABLE_AVAHI=OFF"
 fi
 
-if [ "$KODI_MYSQL_SUPPORT" = yes ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET mariadb"
-  KODI_MYSQL="-DENABLE_MYSQLCLIENT=ON"
-else
-  KODI_MYSQL="-DENABLE_MYSQLCLIENT=OFF"
-fi
+case "$KODI_MYSQL_SUPPORT" in
+  mysql)   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET mysql"
+           KODI_MYSQL="-DENABLE_MYSQLCLIENT=ON -DENABLE_MARIADBCLIENT=OFF"
+           ;;
+  mariadb) PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET mariadb-connector-c"
+           KODI_MYSQL="-DENABLE_MARIADBCLIENT=ON -DENABLE_MYSQLCLIENT=OFF"
+           ;;
+  *)       KODI_MYSQL="-DENABLE_MYSQLCLIENT=OFF -DENABLE_MARIADBCLIENT=OFF"
+esac
 
 if [ "$KODI_AIRPLAY_SUPPORT" = yes ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libplist"
@@ -208,11 +211,11 @@ KODI_LIBDVD="$KODI_DVDCSS \
              -DLIBDVDREAD_URL=$SOURCES/libdvdread/libdvdread-$(get_pkg_version libdvdread).tar.gz"
 
 # Build Kodi using parallel LTO
-#[ "$LTO_SUPPORT" = "yes" ] && PKG_KODI_USE_LTO="-DUSE_LTO=$CONCURRENCY_MAKE_LEVEL"
+[ "$LTO_SUPPORT" = "yes" ] && PKG_KODI_USE_LTO="-DUSE_LTO=$CONCURRENCY_MAKE_LEVEL"
 
 PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$TOOLCHAIN \
                        -DWITH_TEXTUREPACKER=$TOOLCHAIN/bin/TexturePacker \
-                       -DDEPENDS_PATH=$BUILD/$PKG_NAME-$PKG_VERSION/depends \
+                       -DDEPENDS_PATH=$PKG_BUILD/depends \
                        -DPYTHON_EXECUTABLE=$TOOLCHAIN/bin/$PKG_PYTHON_VERSION \
                        -DPYTHON_INCLUDE_DIRS=$SYSROOT_PREFIX/usr/include/$PKG_PYTHON_VERSION \
                        -DGIT_VERSION=$PKG_VERSION \
@@ -344,7 +347,11 @@ post_makeinstall_target() {
 #  xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "script.module.unidecode" $ADDON_MANIFEST
 #  xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "script.module.simplejson" $ADDON_MANIFEST
 
-  if [ "$PROJECT" = "Slice" -o "$PROJECT" = "Slice3" ]; then
+  if [ "$DRIVER_ADDONS_SUPPORT" = "yes" ]; then
+    xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "script.program.driverselect" $ADDON_MANIFEST
+  fi 
+
+  if [ "$DEVICE" = "Slice" -o "$DEVICE" = "Slice3" ]; then
     xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "service.slice" $ADDON_MANIFEST
   fi
 
