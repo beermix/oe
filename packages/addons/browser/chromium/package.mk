@@ -64,6 +64,13 @@ make_target() {
   export CFLAGS=$(echo "$CFLAGS"|sed -e 's/-g //')
   export CXXFLAGS=$(echo "$CXXFLAGS"|sed -e 's/-g //')
   export CXXFLAGS="$CXXFLAGS -Wno-error=attributes -Wno-error=comment -Wno-error=unused-variable -Wno-error=noexcept-type -Wno-error=register -Wno-error=strict-overflow -Wno-error=deprecated-declarations"
+  
+  # https://chromium-review.googlesource.com/c/chromium/src/+/712575
+  # _flags+=('exclude_unwind_tables=true')
+  export CFLAGS='$CFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables'
+  export CXXFLAGS='$CXXFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables'
+  export CPPFLAGS='$CPPFLAGS -DNO_UNWIND_TABLES'
+   fi
 
   export CCACHE_SLOPPINESS=time_macros
 
