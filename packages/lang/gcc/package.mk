@@ -70,6 +70,7 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-libffi
                               --disable-libitm \
                               --disable-libgomp \
+                              --disable-libquadmath \
                               --disable-libada \
                               --disable-libatomic \
                               --without-headers \
