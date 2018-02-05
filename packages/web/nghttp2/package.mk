@@ -1,5 +1,5 @@
 PKG_NAME="nghttp2"
-PKG_VERSION="1.29.0"
+PKG_VERSION="1.30.0"
 PKG_SITE="https://github.com/nghttp2/nghttp2/releases/"
 PKG_URL="https://github.com/nghttp2/nghttp2/releases/download/v$PKG_VERSION/nghttp2-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain"
