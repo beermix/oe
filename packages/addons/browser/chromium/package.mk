@@ -57,20 +57,22 @@ make_host() {
 
 make_target() {
   strip_lto
-#  export LDFLAGS="$LDFLAGS -ludev"
-#  export LD=$CXX
+  # export LDFLAGS="$LDFLAGS -ludev"
+  # export LD=$CXX
+
+  # https://chromium-review.googlesource.com/c/chromium/src/+/712575
+  # _flags+=('exclude_unwind_tables=true')
+  export CFLAGS="$CFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables"
+  export CXXFLAGS="$CXXFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables"
+  export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
+  
+  export LDFLAGS="$LDFLAGS -s"
 
   # filter out -g from CFLAGS and CXXFLAGS to fix builds
   export CFLAGS=$(echo "$CFLAGS"|sed -e 's/-g //')
   export CXXFLAGS=$(echo "$CXXFLAGS"|sed -e 's/-g //')
   export CXXFLAGS="$CXXFLAGS -Wno-error=attributes -Wno-error=comment -Wno-error=unused-variable -Wno-error=noexcept-type -Wno-error=register -Wno-error=strict-overflow -Wno-error=deprecated-declarations"
   
-  # https://chromium-review.googlesource.com/c/chromium/src/+/712575
-  # _flags+=('exclude_unwind_tables=true')
-  export CFLAGS='$CFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables'
-  export CXXFLAGS='$CXXFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables'
-  export CPPFLAGS='$CPPFLAGS -DNO_UNWIND_TABLES'
-
   export CCACHE_SLOPPINESS=time_macros
 
   # Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
@@ -116,7 +118,6 @@ make_target() {
     'use_v8_context_snapshot=false'
     'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
-    'exclude_unwind_tables=true'
     'enable_hangout_services_extension=true'
     'enable_widevine=true'
     'enable_nacl=false'
