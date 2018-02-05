@@ -1,6 +1,7 @@
 # Kodi Media Center language file
 # Addon Name: minidlna
 # Addon id: service.minidlna
+# Addon Provider: Team LibreELEC
 msgid ""
 msgstr ""
 

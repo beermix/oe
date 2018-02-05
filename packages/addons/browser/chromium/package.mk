@@ -117,8 +117,8 @@ make_target() {
 readonly -A _system_libs=(
   [libdrm]=
   [libjpeg]=libjpeg
-  #[icu]=icu
-  #[libxml]=libxml2           # https://crbug.com/736026
+  [icu]=icu
+  [libxml]=libxml2           # https://crbug.com/736026
   [libxslt]=libxslt
   [yasm]=
   [zlib]=minizip
@@ -142,6 +142,7 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
     find -type f -path "*third_party/$_lib/*" \
       \! -path "*third_party/$_lib/chromium/*" \
       \! -path "*third_party/$_lib/google/*" \
+      \! -path './base/third_party/icu/*' \
       \! -path './third_party/freetype/src/src/psnames/pstables.h' \
       \! -path './third_party/yasm/run_yasm.py' \
       \! -regex '.*\.\(gn\|gni\|isolate\)' \

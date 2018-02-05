@@ -18,7 +18,7 @@
 
 PKG_NAME="mesa"
 PKG_VERSION="17.3.3"
-#PKG_SHA256="41bac5de0ef6adc1f41a1ec0f80c19e361298ce02fa81b5f9ba4fdca33a9379b"
+PKG_SHA256="41bac5de0ef6adc1f41a1ec0f80c19e361298ce02fa81b5f9ba4fdca33a9379b"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.mesa3d.org/"
@@ -100,8 +100,10 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            $XA_CONFIG \
                            --enable-gbm \
                            --disable-nine \
+                           --disable-xvmc \
                            $MESA_VDPAU \
                            --disable-omx-bellagio \
+                           --disable-va \
                            --disable-opencl \
                            --enable-opencl-icd \
                            --disable-gallium-tests \

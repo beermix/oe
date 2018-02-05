@@ -37,11 +37,11 @@ PKG_CONFIGURE_OPTS_HOST="--enable-static \
 PKG_CONFIGURE_OPTS_TARGET="--enable-static --with-jpeg8"
 
 pre_configure_host() {
-  export CFLAGS="$CFLAGS -O3 -fstack-protector-strong -fPIC -DPIC"
+  export CFLAGS="$CFLAGS -fPIC -DPIC"
 }
 
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -O3 -fstack-protector-strong -fPIC"
+  export CFLAGS="$CFLAGS  -fstack-protector-strong -fPIC"
 }
 
 if [ "$SIMD_SUPPORT" = "no" ]; then

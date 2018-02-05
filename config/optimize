@@ -1,4 +1,4 @@
-GCC_OPTIM="-O2 -pipe -fno-plt -fomit-frame-pointer"
+GCC_OPTIM="-O2 -pipe -fno-plt"
 LD_OPTIM="-Wl,-O1,--sort-common,--as-needed,-z,relro"
 
 if [ "$LTO_SUPPORT" = yes ];then
@@ -15,8 +15,8 @@ if [ "$DEBUG" = yes ]; then
   TARGET_CXXFLAGS="$TARGET_CXXFLAGS -ggdb"
   TARGET_LDFLAGS="$TARGET_LDFLAGS -ggdb"
 else
-  TARGET_CFLAGS="$TARGET_CFLAGS"
-  TARGET_CXXFLAGS="$TARGET_CXXFLAGS"
+  TARGET_CFLAGS="$TARGET_CFLAGS -fomit-frame-pointer"
+  TARGET_CXXFLAGS="$TARGET_CXXFLAGS -fomit-frame-pointer"
   TARGET_LDFLAGS="$TARGET_LDFLAGS"
 fi
 

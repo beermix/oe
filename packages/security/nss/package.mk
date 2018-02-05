@@ -50,7 +50,6 @@ make_host() {
      NSS_ENABLE_TLS_1_3=1 \
      NSS_TESTS="dummy" \
      CC=$CC LDFLAGS="$LDFLAGS -L$TOOLCHAIN/lib" \
-     MAKE_FLAGS="BUILD_OPT=1 NSS_ENABLE_ECC=1" \
      V=1
 }
 
@@ -88,7 +87,6 @@ make_target() {
      NSINSTALL=$TOOLCHAIN/bin/nsinstall \
      CPU_ARCH_TAG=$TARGET_ARCH \
      CC=$CC LDFLAGS="$LDFLAGS -L$SYSROOT_PREFIX/usr/lib" \
-     MAKE_FLAGS="BUILD_OPT=1 NSS_ENABLE_ECC=1" \
      V=1
 }
 

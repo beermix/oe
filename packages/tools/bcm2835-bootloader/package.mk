@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="bcm2835-bootloader"
-PKG_VERSION="008700b"
-PKG_SHA256="f96620ad3e1d682ff0a15b12f7f0f0bda0e0b8d3802eb948ee7e8202355edb46"
+PKG_VERSION="5e55ff0"
+PKG_SHA256="2ab04a21a4aaa64a4e2f7d5b02cf20a4633b7a765f79423070a2c47402092f11"
 PKG_ARCH="arm"
 PKG_LICENSE="nonfree"
 PKG_SITE="http://www.broadcom.com"
@@ -36,29 +36,10 @@ makeinstall_target() {
     cp -PRv fixup_x.dat $INSTALL/usr/share/bootloader/fixup.dat
     cp -PRv start_x.elf $INSTALL/usr/share/bootloader/start.elf
 
-    if [ -f $PROJECT_DIR/$PROJECT/devices/$DEVICE/config/dt-blob.bin ]; then
-      cp -PRv $PROJECT_DIR/$PROJECT/devices/$DEVICE/config/dt-blob.bin $INSTALL/usr/share/bootloader
-    fi
+    find_file_path config/dt-blob.bin && cp -PRv $FOUND_PATH $INSTALL/usr/share/bootloader
 
     cp -PRv $PKG_DIR/scripts/update.sh $INSTALL/usr/share/bootloader
 
-    if [ -f $PROJECT_DIR/$PROJECT/devices/$DEVICE/config/distroconfig.txt ]; then
-      cp -PRv $PROJECT_DIR/$PROJECT/devices/$DEVICE/config/distroconfig.txt $INSTALL/usr/share/bootloader
-    elif [ -f $PROJECT_DIR/$PROJECT/config/distroconfig.txt ]; then
-      cp -PRv $PROJECT_DIR/$PROJECT/config/distroconfig.txt $INSTALL/usr/share/bootloader
-    elif [ -f $DISTRO_DIR/$DISTRO/config/distroconfig.txt ]; then
-      cp -PRv $DISTRO_DIR/$DISTRO/config/distroconfig.txt $INSTALL/usr/share/bootloader
-    else
-      cp -PRv $PKG_DIR/files/3rdparty/bootloader/distroconfig.txt $INSTALL/usr/share/bootloader
-    fi
-
-    if [ -f $PROJECT_DIR/$PROJECT/devices/$DEVICE/config/config.txt ]; then
-      cp -PRv $PROJECT_DIR/$PROJECT/devices/$DEVICE/config/config.txt $INSTALL/usr/share/bootloader
-    elif [ -f $PROJECT_DIR/$PROJECT/config/config.txt ]; then
-      cp -PRv $PROJECT_DIR/$PROJECT/config/config.txt $INSTALL/usr/share/bootloader
-    elif [ -f $DISTRO_DIR/$DISTRO/config/config.txt ]; then
-      cp -PRv $DISTRO_DIR/$DISTRO/config/config.txt $INSTALL/usr/share/bootloader
-    else
-      cp -PRv $PKG_DIR/files/3rdparty/bootloader/config.txt $INSTALL/usr/share/bootloader
-    fi
+    find_file_path config/distroconfig.txt $PKG_DIR/files/3rdparty/bootloader/distroconfig.txt && cp -PRv ${FOUND_PATH} $INSTALL/usr/share/bootloader
+    find_file_path config/config.txt $PKG_DIR/files/3rdparty/bootloader/config.txt && cp -PRv ${FOUND_PATH} $INSTALL/usr/share/bootloader
 }

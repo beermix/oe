@@ -18,10 +18,12 @@
 
 PKG_NAME="expat"
 PKG_VERSION="2.2.5"
+PKG_SHA256="b3781742738611eaa737543ee94264dd511c52a3ba7e53111f7d705f6bff65a8"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="https://github.com/libexpat/libexpat/releases"
-PKG_URL="https://github.com/libexpat/libexpat/releases/download/R_2_2_5/expat-$PKG_VERSION.tar.bz2"
+PKG_URL="https://github.com/libexpat/libexpat/archive/R_${PKG_VERSION//./_}.tar.gz"
+PKG_SOURCE_DIR="libexpat-*/expat"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="textproc"
 PKG_SHORTDESC="expat: XML parser library"
@@ -31,3 +33,7 @@ PKG_TOOLCHAIN="configure"
 PKG_CMAKE_OPTS_TARGET="-BUILD_doc=OFF -DBUILD_tools=OFF -DBUILD_examples=OFF -DBUILD_tests=OFF -DBUILD_shared=ON"
 PKG_CMAKE_OPTS_HOST="$PKG_CMAKE_OPTS_TARGET"
 
+# cleanup
+post_unpack() {
+  rm -fr $BUILD/libexpat-R_${PKG_VERSION//./_}
+}
