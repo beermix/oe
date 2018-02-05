@@ -31,7 +31,7 @@ PKG_TOOLCHAIN="configure"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_z_zlibVersion=yes --enable-static --enable-hardware-optimizations --enable-intel-sse"
 
-PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared --enable-intel-sse"
+PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
 
 pre_configure_host() {
   export CFLAGS="$CFLAGS -fPIC -DPIC"

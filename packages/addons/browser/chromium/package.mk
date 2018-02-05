@@ -47,6 +47,8 @@ post_patch() {
 
   # set correct widevine
   sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' ./third_party/widevine/cdm/stub/widevine_cdm_version.h
+  
+  patch -Np4 -i $PKG_DIR/chromium-skia-harmony.patch
 }
 
 make_host() {
@@ -57,6 +59,11 @@ make_target() {
   strip_lto
 #  export LDFLAGS="$LDFLAGS -ludev"
 #  export LD=$CXX
+
+  # filter out -g from CFLAGS and CXXFLAGS to fix builds
+  export CFLAGS=$(echo "$CFLAGS"|sed -e 's/-g //')
+  export CXXFLAGS=$(echo "$CXXFLAGS"|sed -e 's/-g //')
+  export CXXFLAGS="$CXXFLAGS -Wno-error=attributes -Wno-error=comment -Wno-error=unused-variable -Wno-error=noexcept-type -Wno-error=register -Wno-error=strict-overflow -Wno-error=deprecated-declarations"
 
   export CCACHE_SLOPPINESS=time_macros
 
