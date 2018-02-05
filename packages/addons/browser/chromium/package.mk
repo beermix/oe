@@ -98,6 +98,7 @@ make_target() {
     'use_lld=false'
     'use_system_freetype=true'
     'use_system_harfbuzz=true'
+    'use_system_libpng=true'
     'use_gtk3=false'
     'use_kerberos=false'
     'use_pulseaudio=false'
@@ -125,7 +126,7 @@ readonly -A _system_libs=(
   [libdrm]=
   [libjpeg]=libjpeg
   [icu]=icu
-  [libxml]=libxml2           # https://crbug.com/736026
+  #[libxml]=libxml2           # https://crbug.com/736026
   [libxslt]=libxslt
   [yasm]=
   [zlib]=minizip
