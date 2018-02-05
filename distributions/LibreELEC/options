@@ -84,7 +84,7 @@
   KODI_UPNP_SUPPORT="no"
 
 # build with MySQL support (mysql / mariadb / none)
-  KODI_MYSQL_SUPPORT="mariadb"
+  KODI_MYSQL_SUPPORT="none"
 
 # build xbmc with sshlib support (yes / no)
   KODI_SSHLIB_SUPPORT="no"
