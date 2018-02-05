@@ -68,7 +68,6 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-cloog-backend=isl \
                               --disable-shared \
                               --disable-threads \
-                              --disable-libffi
                               --disable-libitm \
                               --disable-libgomp \
                               --disable-libquadmath \
