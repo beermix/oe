@@ -18,8 +18,7 @@
 
 PKG_NAME="ffmpeg"
 # Current branch is: release/3.1-xbmc
-PKG_VERSION="9702d0d"
-#PKG_SHA256="c02de2197f8b70544f018e83f48c1bed2a1b47e1a1aa34ef59d9167fb0d2090a"
+PKG_VERSION="30554d7"
 PKG_ARCH="any"
 PKG_LICENSE="LGPLv2.1+"
 PKG_SITE="https://ffmpeg.org"
@@ -155,7 +154,6 @@ configure_target() {
               --disable-dxva2 \
               --enable-runtime-cpudetect \
               $FFMPEG_TABLES \
-              --disable-memalign-hack \
               --disable-encoders \
               --enable-encoder=ac3 \
               --enable-encoder=aac \
@@ -184,7 +182,6 @@ configure_target() {
               --disable-libopencore-amrwb \
               --disable-libopencv \
               --disable-libdc1394 \
-              --disable-libfaac \
               --disable-libfreetype \
               --disable-libgsm \
               --disable-libmp3lame \
