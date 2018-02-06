@@ -136,7 +136,7 @@ readonly -A _system_libs=(
   #[libxml]=libxml2           # https://crbug.com/736026
   [libxslt]=libxslt
   [yasm]=
-  #[zlib]=minizip
+  [zlib]=minizip
   #[re2]=re2
 )
 
