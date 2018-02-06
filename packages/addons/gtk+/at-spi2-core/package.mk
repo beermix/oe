@@ -29,4 +29,4 @@ PKG_SHORTDESC="D-Bus AT-SPI Core"
 PKG_LONGDESC="AT-SPI technologies are currently migrating to D-Bus for their transport technology. As such, this document serves as a tutorial, design document and project update page for the AT-SPI D-Bus project."
 PKG_TOOLCHAIN="configure"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --with-pic"
+#PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --with-pic"

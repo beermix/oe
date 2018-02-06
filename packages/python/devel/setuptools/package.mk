@@ -17,11 +17,11 @@
 ################################################################################
 
 PKG_NAME="setuptools"
-PKG_VERSION="38.2.5"
+PKG_VERSION="38.5.1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://github.com/pypa/setuptools/releases"
-PKG_URL="https://github.com/pypa/setuptools/archive/$PKG_VERSION.tar.gz"
+PKG_URL="https://github.com/pypa/setuptools/archive/v$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="Python2:host six:host packaging:host appdirs:host"
 PKG_DEPENDS_TARGET="toolchain Python2 setuptools:host"
 PKG_SECTION="python/devel"

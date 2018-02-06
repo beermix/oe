@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="glibc"
-PKG_VERSION="26c0717"
+PKG_VERSION="23158b0"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/bminor/glibc/tree/release/2.27/master"
@@ -42,7 +42,9 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-__thread \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
-                           --enable-kernel=3.0.0 \
+                           --enable-kernel=3.10 \
+                           --enable-clocale=gnu \
+                           --enable-tunables \
                            --without-cvs \
                            --without-gd \
                            --enable-obsolete-rpc \
@@ -50,6 +52,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --disable-build-nscd \
                            --disable-nscd \
                            --enable-lock-elision \
+                           --without-selinux
                            --disable-timezone-tools"
 
 if [ "$DEBUG" = yes ]; then
@@ -118,7 +121,8 @@ pre_configure_target() {
 
   # set some CFLAGS we need
 
-  export CFLAGS="-O2 -m64 -march=westmere --param=l1-cache-line-size=64 --param=l1-cache-size=32 --param=l2-cache-size=3072 -g -fno-stack-protector"
+  export CFLAGS="-O2 -march=westmere --param=l1-cache-line-size=64 --param=l1-cache-size=32 --param=l2-cache-size=3072 -fno-stack-protector -g2 -m64  -Wl,-z,max-page-size=0x1000 "
+  export LDFLAGS="-Wl,-z,max-page-size=0x1000 "
 
   export BUILD_CC=$HOST_CC
   export OBJDUMP_FOR_HOST=objdump
