@@ -28,7 +28,7 @@ PKG_LICENSE="Mixed"
 PKG_SITE="http://www.chromium.org/Home"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="pciutils dbus libXcomposite libXcursor libXtst alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk gtk+ libva-vdpau-driver unclutter xdotool freetype harfbuzz libva re2 openjpeg chromium:host"
+PKG_DEPENDS_TARGET="pciutils dbus libXcomposite libXcursor libXtst alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk gtk+ libva-vdpau-driver unclutter xdotool freetype harfbuzz libva chromium:host"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -169,7 +169,7 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
 
-  ninja -j${CONCURRENCY_MAKE_LEVEL} -C out/Release chrome chrome_sandbox widevinecdmadapter
+  ninja -v -j${CONCURRENCY_MAKE_LEVEL} -C out/Release chrome chrome_sandbox widevinecdmadapter
 }
 
 addon() {
@@ -196,7 +196,7 @@ addon() {
   cp -PL $(get_build_dir cairo)/.install_pkg/usr/lib/libcairo-gobject.so.2 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # openjpeg
-  cp -PL $(get_build_dir openjpeg)/.install_pkg/usr/lib/libopenjp2.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  # cp -PL $(get_build_dir openjpeg)/.install_pkg/usr/lib/libopenjp2.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # atk
   cp -PL $(get_build_dir atk)/.install_pkg/usr/lib/libatk-1.0.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
