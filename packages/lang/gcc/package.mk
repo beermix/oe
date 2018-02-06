@@ -59,6 +59,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libssp \
                            --without-cuda-driver \
                            --disable-libsanitizer \
+                           --with-diagnostics-color=always \
                            --with-tune=haswell \
                            --with-arch=westmere"
 
