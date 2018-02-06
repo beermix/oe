@@ -53,7 +53,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
                            --disable-libunwind-exceptions \
-                           --enable-linker-build-id \
                            --with-glibc-version=2.19 \
                            --without-ppl \
                            --without-cloog \
