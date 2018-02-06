@@ -32,6 +32,8 @@ PKG_TOOLCHAIN="configure"
 PKG_CONFIGURE_OPTS_TARGET="--enable-unicode-properties \
 			      --enable-jit \
 			      --enable-utf8 \
+			      --enable-cpp \
+			      --with-match-limit-recursion=16000 \
 			      --enable-pcre16 \
 			      --enable-static \
 			      --with-pic"
