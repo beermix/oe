@@ -34,16 +34,23 @@ post_unpack() {
   cp -r $PKG_BUILD/source/* $PKG_BUILD/
 }
 
+pre_configure_host() {
+  mkdir -p $PKG_BUILD/.$HOST_NAME
+  cp -a $PKG_BUILD/* $PKG_BUILD/.$HOST_NAME/
+}
+
 pre_configure_target() {
   export CFLAGS="$CFLAGS -fPIC"
   export CXXFLAGS="$CXXFLAGS -fPIC"
+  mkdir -p $PKG_BUILD/.$TARGET_NAME
+  cp -a $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME/
 }
 
 configure_host() {
- cd $PKG_BUILD
+ cd $PKG_BUILD/.$HOST_NAME
  ./runConfigureICU Linux/gcc \
- 		     CC=$HOST_CC \
- 		     CXX=$HOST_CXX \
+ 		     CC="$HOST_CC" \
+ 		     CXX="$HOST_CXX" \
  		     --disable-debug \
  		     --enable-release \
  		     --disable-shared \
@@ -57,10 +64,11 @@ configure_host() {
 }
 
 configure_target() {
- cd $PKG_BUILD
+ cd $PKG_BUILD/.$TARGET_NAME
  ./runConfigureICU Linux/gcc \
- 		     CC=$CC \
- 		     CXX=$CXX \
+ 		     CC="$CC" \
+ 		     CXX="$CXX" \
+ 		     AR="$AR" \
  		     --target=$TARGET_NAME \
  		     --build=$TARGET_NAME \
  		     --host=$TARGET_NAME \
@@ -76,7 +84,7 @@ configure_target() {
  		     --disable-tools \
  		     --disable-tests \
  		     --disable-samples \
- 		     --with-cross-build=$PKG_BUILD/.$HOST_NAME
+ 		     --with-cross-build="$PKG_BUILD/.$HOST_NAME"
 }
 
 post_makeinstall_target() {
