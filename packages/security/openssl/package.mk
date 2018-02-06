@@ -44,6 +44,7 @@ makeinstall_host() {
 pre_configure_target() {
   mkdir -p $PKG_BUILD/.$TARGET_NAME
   cp -a $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME/
+  export CFLAGS=`echo $CFLAGS | sed -e "s|--param l1-cache-line-size=64 --param l1-cache-size=32 --param l2-cache-size=3072||g"`
 }
 
 configure_target() {
