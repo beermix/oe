@@ -1,11 +1,9 @@
 PKG_NAME="xcalib"
-PKG_VERSION="95c9329"
+PKG_VERSION="f95abc1"
 PKG_URL="https://github.com/OpenICC/xcalib/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libX11 libXrandr libXxf86vm libxcb libXext"
 PKG_SECTION="graphics"
-
-PKG_USE_CMAKE="yes"
-PKG_USE_NINJA="no"
+PKG_TOOLCHAIN="cmake-make"
 
 #pre_configure_target() {
 #  export LDFLAGS="$LDFLAGS -lX11 -lXext -lm"
