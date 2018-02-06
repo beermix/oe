@@ -1,5 +1,5 @@
 PKG_NAME="hwloc"
-PKG_VERSION="1.11.8"
+PKG_VERSION="2.0.0"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain zlib libevent libpciaccess"
 PKG_SECTION="security"

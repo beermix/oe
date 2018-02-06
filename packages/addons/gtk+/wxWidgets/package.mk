@@ -16,9 +16,10 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 PKG_NAME="wxWidgets"
-PKG_VERSION="3.0.3.1"
+PKG_VERSION="3.1.1-rc"
 PKG_SITE="https://github.com/wxWidgets/wxWidgets"
-PKG_URL="https://github.com/wxWidgets/wxWidgets/releases/download/v$PKG_VERSION/wxWidgets-$PKG_VERSION.tar.bz2"
+#PKG_URL="https://github.com/wxWidgets/wxWidgets/releases/download/v$PKG_VERSION/wxWidgets-$PKG_VERSION.tar.bz2"
+PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain gtk2 libSM tiff libpng gst-plugins-base"
 PKG_SECTION="depends"
 PKG_SHORTDESC="A cross-platform GUI and tools library for GTK, MS Windows, and MacOS."
