@@ -45,4 +45,8 @@ PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared \
                          --disable-csharp \
                          --without-emacs"
                          
-PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
+PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST --with-pic"
+
+post_makeinstall_target() {
+  rm -rf $INSTALL
+}
