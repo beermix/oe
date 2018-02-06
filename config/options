@@ -6,8 +6,8 @@ fi
 
 # set default language for buildsystem
   export LC_ALL=C
-#  export LANGUAGE=C
-#  export LC_ALL=C.UTF-8
+  export LANG=C
+  export TZ=UTC
 
   export CCACHE_DISABLE=1
 #  export CCACHE_HARDLINK=1
