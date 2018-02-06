@@ -84,6 +84,7 @@ configure_target() {
  		     --disable-tools \
  		     --disable-tests \
  		     --disable-samples \
+ 		     --prefix=/usr \
  		     --with-cross-build="$PKG_BUILD/.$HOST_NAME"
 }
 
