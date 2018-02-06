@@ -22,7 +22,7 @@ PKG_LICENSE="OSS"
 PKG_SITE="http://www.boost.org/"
 PKG_URL="https://dl.bintray.com/boostorg/release/1.65.1/source/boost_$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="${PKG_NAME}_${PKG_VERSION}"
-PKG_DEPENDS_TARGET="toolchain boost:host Python2 zlib bzip2"
+PKG_DEPENDS_TARGET="toolchain boost:host Python2 zlib bzip2 xz"
 PKG_LONGDESC="boost: Peer-reviewed STL style libraries for C++"
 PKG_TOOLCHAIN="manual"
 
