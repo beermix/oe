@@ -118,7 +118,7 @@ pre_configure_target() {
 
   # set some CFLAGS we need
 
-  export CFLAGS="-O2 -m64 -march=westmere -g -fno-stack-protector"
+  export CFLAGS="-O2 -m64 -march=westmere --param=l1-cache-line-size=64 --param=l1-cache-size=32 --param=l2-cache-size=3072 -g -fno-stack-protector"
 
   export BUILD_CC=$HOST_CC
   export OBJDUMP_FOR_HOST=objdump

@@ -8,6 +8,6 @@ index 788d0c3509..7df3b33086
  /* This file just defines the current version number of libc.  */
  
 -#define RELEASE "development"
--#define VERSION "2.26.9000"
+-#define VERSION "2.27.9000"
 +#define RELEASE "stable"
-+#define VERSION "2.26"
++#define VERSION "2.27"
