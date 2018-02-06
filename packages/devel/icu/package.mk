@@ -18,7 +18,7 @@
 
 PKG_NAME="icu"
 PKG_VERSION="60.2"
-#PKG_SHA256="ff8c67cb65949b1e7808f2359f2b80f722697048e90e7cfc382ec1fe229e9581"
+PKG_SHA256="f073ea8f35b926d70bb33e6577508aa642a8b316a803f11be20af384811db418"
 PKG_ARCH="any"
 PKG_LICENSE="Custom"
 PKG_SITE="http://www.icu-project.org"
@@ -31,23 +31,53 @@ PKG_LONGDESC="International Components for Unicode library"
 
 post_unpack() {
   sed -i 's/xlocale/locale/' $PKG_BUILD/source/i18n/digitlst.cpp
+  cp -r $PKG_BUILD/source/* $PKG_BUILD/
 }
 
 pre_configure_target() {
-  CFLAGS="$CFLAGS -fPIC"
-  CXXFLAGS="$CXXFLAGS -fPIC"
-#  LIBS="$LIBS -latomic"
+  export CFLAGS="$CFLAGS -fPIC"
+  export CXXFLAGS="$CXXFLAGS -fPIC"
 }
 
-PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared --disable-tests --disable-samples"
-			   
-PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
-			      --enable-release \
-			      --disable-shared \
-			      --enable-static \
-			      --with-cross-build=$PKG_BUILD/.$HOST_NAME"
+configure_host() {
+ cd $PKG_BUILD
+ ./runConfigureICU Linux/gcc \
+ 		     CC=$HOST_CC \
+ 		     CXX=$HOST_CXX \
+ 		     --disable-debug \
+ 		     --enable-release \
+ 		     --disable-shared \
+ 		     --enable-static \
+ 		     --enable-draft \
+ 		     --enable-renaming \
+ 		     --disable-tracing \
+ 		     --disable-extras \
+ 		     --enable-dyload \
+ 		     --prefix=$TOOLCHAIN
+}
 
-PKG_CONFIGURE_SCRIPT="source/configure"
+configure_target() {
+ cd $PKG_BUILD
+ ./runConfigureICU Linux/gcc \
+ 		     CC=$CC \
+ 		     CXX=$CXX \
+ 		     --target=$TARGET_NAME \
+ 		     --build=$TARGET_NAME \
+ 		     --host=$TARGET_NAME \
+ 		     --disable-debug \
+ 		     --enable-release \
+ 		     --disable-shared \
+ 		     --enable-static \
+ 		     --enable-draft \
+ 		     --enable-renaming \
+ 		     --disable-tracing \
+ 		     --disable-extras \
+ 		     --enable-dyload \
+ 		     --disable-tools \
+ 		     --disable-tests \
+ 		     --disable-samples \
+ 		     --with-cross-build=$PKG_BUILD/.$HOST_NAME
+}
 
 post_makeinstall_target() {
   rm -rf $INSTALL
