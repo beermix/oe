@@ -17,16 +17,18 @@
 ################################################################################
 
 PKG_NAME="fixesproto"
-PKG_VERSION="5.0"
-PKG_SHA256="ba2f3f31246bdd3f2a0acf8bd3b09ba99cab965c7fb2c2c92b7dc72870e424ce"
+PKG_VERSION="4292ec1"
+#PKG_SHA256="a6cd46c37061cb401f4a599d5e87a99b2e0021760ffbe3488aacca7607bfd499"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.X.org"
-PKG_URL="http://xorg.freedesktop.org/archive/individual/proto/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_SOURCE_DIR="$PKG_VERSION"
+PKG_URL="https://cgit.freedesktop.org/xorg/proto/fixesproto/snapshot/$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain util-macros"
 PKG_SECTION="x11/proto"
 PKG_SHORTDESC="fixesproto: Fixes extension headers"
 PKG_LONGDESC="Fixes extension headers"
+PKG_TOOLCHAIN="autotools"
 
 # package specific configure options
 PKG_CONFIGURE_OPTS_TARGET="--without-xmlto"
