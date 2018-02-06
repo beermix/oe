@@ -94,7 +94,6 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-clocale=gnu \
                          --enable-libatomic \
                          --disable-libunwind-exceptions \
-                         --enable-linker-build-id \
                          $GCC_OPTS"
 
 pre_configure_host() {
