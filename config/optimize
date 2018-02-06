@@ -1,6 +1,5 @@
 GCC_OPTIM="-O2 -pipe"
 LD_OPTIM="-Wl,--as-needed"
-#LDFLAGS="-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now"
 
 if [ "$LTO_SUPPORT" = yes ];then
   GCC_OPTIM_LTO="-falign-functions=32 -ffat-lto-objects -ffat-lto-objects -flto=$CONCURRENCY_MAKE_LEVEL -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
@@ -16,22 +15,20 @@ if [ "$DEBUG" = yes ]; then
   TARGET_CXXFLAGS="$TARGET_CXXFLAGS -ggdb"
   TARGET_LDFLAGS="$TARGET_LDFLAGS -ggdb"
 else
-  TARGET_CFLAGS="$TARGET_CFLAGS -fomit-frame-pointer"
-  TARGET_CXXFLAGS="$TARGET_CXXFLAGS -fomit-frame-pointer"
+  TARGET_CFLAGS="$TARGET_CFLAGS -fomit-frame-pointer -fdiagnostics-color=always"
+  TARGET_CXXFLAGS="$TARGET_CXXFLAGS -fomit-frame-pointer -fdiagnostics-color=always"
   TARGET_LDFLAGS="$TARGET_LDFLAGS"
 fi
 
-CCACHE_FLAGS="-fdiagnostics-color=always"
-
 TARGET_CPPFLAGS=
-TARGET_CFLAGS="$TARGET_CFLAGS $GCC_OPTIM $GCC_OPTIM_LTO $PROJECT_CFLAGS $CCACHE_FLAGS"
+TARGET_CFLAGS="$TARGET_CFLAGS $GCC_OPTIM $GCC_OPTIM_LTO $PROJECT_CFLAGS"
 TARGET_CXXFLAGS="$TARGET_CFLAGS"
 TARGET_LDFLAGS="$TARGET_LDFLAGS $LD_OPTIM $LD_OPTIM_GOLD $LD_OPTIM_LTO"
 TARGET_LIBDIR="$SYSROOT_PREFIX/lib $SYSROOT_PREFIX/usr/lib"
 TARGET_INCDIR="$SYSROOT_PREFIX/include $SYSROOT_PREFIX/usr/include"
 
 HOST_CPPFLAGS=""
-HOST_CFLAGS="-march=haswell -O2 -pipe $CCACHE_FLAGS -I$TOOLCHAIN/include"
+HOST_CFLAGS="-march=haswell -O2 -pipe -I$TOOLCHAIN/include -fdiagnostics-color=always"
 HOST_CXXFLAGS="$HOST_CFLAGS"
 HOST_LDFLAGS="-Wl,-rpath,$TOOLCHAIN/lib -L$TOOLCHAIN/lib -s"
 HOST_INCDIR="$TOOLCHAIN/include /usr/include"
