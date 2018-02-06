@@ -3,8 +3,6 @@ PKG_VERSION="1.2-rc4"
 PKG_URL="https://github.com/aircrack-ng/aircrack-ng/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain openssl libdnet libnl libpcap openssl pcre usbutils iw"
 
-
-
 pre_configure_target() {
   strip_lto
   strip_gold
