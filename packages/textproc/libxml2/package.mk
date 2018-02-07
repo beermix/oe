@@ -37,6 +37,7 @@ PKG_CONFIGURE_OPTS_ALL="ac_cv_header_ansidecl_h=no \
              --without-debug \
              --without-python \
              --with-zlib=$TOOLCHAIN \
+             --without-iconv \
              --without-lzma"
 
 PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_ALL --with-zlib=$TOOLCHAIN"
