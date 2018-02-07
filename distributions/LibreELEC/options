@@ -23,8 +23,10 @@
 # Install LLVM SUPPORT (yes / no)
   LLVM_SUPPORT="no"
   
+  DEVTOOLS="no"
+  
 # Install glibc locales to the build (yes / no)
-  GLIBC_LOCALES="yes"
+#  GLIBC_LOCALES="yes"
 
 # Mediacenter to use (kodi / no)
   MEDIACENTER="kodi"

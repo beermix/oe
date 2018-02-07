@@ -10,7 +10,7 @@ fi
   export LANG=C
 #  export TZ=UTC
 
-  export CCACHE_DISABLE=1
+#  export CCACHE_DISABLE=1
 #  export CCACHE_HARDLINK=1
 #  export CCACHE_NOSTATS=1
 #  export CCACHE_CPP2=1
@@ -113,9 +113,9 @@ fi
   fi
 
 # install devtools on development builds
-  if [ -z "$DEVTOOLS" -a "$LIBREELEC_VERSION" = "devel" ]; then
-    DEVTOOLS=yes
-  fi
+#  if [ -z "$DEVTOOLS" -a "$LIBREELEC_VERSION" = "devel" ]; then
+#    DEVTOOLS=yes
+#  fi
 
 # overwrite OEM_SUPPORT via commandline
 if [ "$OEM" = yes -o "$OEM" = no ]; then

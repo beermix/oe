@@ -196,7 +196,7 @@ make_target() {
       NO_SDT=1 \
       LDFLAGS="-ldw -ldwfl -lebl -lelf -ldl -lz" \
       EXTRA_PERFLIBS="-lebl" \
-        make
+        make DEBUG=1 LIBUNWIND_DIR=$SYSROOT_PREFIX/usr
       mkdir -p $INSTALL/usr/bin
         cp perf $INSTALL/usr/bin
     )
