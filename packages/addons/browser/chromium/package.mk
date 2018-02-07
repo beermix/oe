@@ -113,7 +113,7 @@ make_target() {
     'use_system_freetype=true'
     'use_system_harfbuzz=true'
     'linux_link_libudev=true'
-    'use_gtk3=false'
+    'use_gtk3=true'
     'use_kerberos=false'
     'use_pulseaudio=false'
     'use_sysroot=true'
