@@ -1,0 +1,21 @@
+diff --git a/build/config/compiler/BUILD.gn b/build/config/compiler/BUILD.gn
+old mode 100644
+new mode 100755
+index ed0b0639a9..1f1228c17a
+--- a/build/config/compiler/BUILD.gn
++++ b/build/config/compiler/BUILD.gn
+@@ -642,14 +642,6 @@ config("compiler_cpu_abi") {
+     # CPU architecture. We may or may not be doing a cross compile now, so for
+     # simplicity we always explicitly set the architecture.
+     if (current_cpu == "x64") {
+-      cflags += [
+-        "-m64",
+-        "-march=x86-64",
+-      ]
+-      ldflags += [ "-m64" ]
+-    } else if (current_cpu == "x86") {
+-      cflags += [ "-m32" ]
+-      ldflags += [ "-m32" ]
+       if (!is_nacl) {
+         cflags += [
+           "-msse2",
