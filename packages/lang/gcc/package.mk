@@ -48,8 +48,8 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-isl \
                            --enable-plugin \
                            --enable-lto \
-                           --enable-ld=default \
-                           --disable-gold \
+                           --enable-ld=yes \
+                           --enable-gold=no \
                            --disable-multilib \
                            --disable-nls \
                            --without-ppl \

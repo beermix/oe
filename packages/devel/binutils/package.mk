@@ -42,7 +42,8 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --disable-lto \
                          --enable-plugins \
                          --disable-nls \
-                         --disable-gold \
+                         --enable-ld=yes \
+                         --enable-gold=no \
                          --enable-poison-system-directories"
 
 PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
