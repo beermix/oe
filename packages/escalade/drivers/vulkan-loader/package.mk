@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="vulkan-loader"
-PKG_VERSION="1.0.61.0"
+PKG_VERSION="1.0.65.1"
 PKG_ARCH="any"
 PKG_LICENSE="Apache 2.0"
 PKG_SITE="https://www.khronos.org"
@@ -27,8 +27,8 @@ PKG_DEPENDS_TARGET="toolchain cmake:host"
 PKG_SECTION="depends"
 PKG_SHORTDESC="Vulkan Installable Client Driver (ICD) Loader."
 
-
-
+PKG_IS_ADDON="no"
+PKG_AUTORECONF="no"
 
 PKG_CMAKE_OPTS_TARGET="-DBUILD_WSI_XLIB_SUPPORT=On \
 		       -DBUILD_TESTS=Off \

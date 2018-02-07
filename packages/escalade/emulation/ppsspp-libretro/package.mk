@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="ppsspp-libretro"
-PKG_VERSION="ab4ae0d"
+PKG_VERSION="dd73f91"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/ppsspp"
@@ -27,7 +27,7 @@ PKG_SHORTDESC="Non-shallow fork of PPSSPP for libretro exclusively."
 PKG_LONGDESC="A fast and portable PSP emulator"
 
 PKG_IS_ADDON="no"
-
+PKG_AUTORECONF="no"
 PKG_USE_CMAKE="no"
 
 pre_build_target() {

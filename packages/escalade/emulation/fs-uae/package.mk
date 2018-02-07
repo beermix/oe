@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="fs-uae"
-PKG_VERSION="92c64a8"
+PKG_VERSION="3155eea"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/FrodeSolheim/fs-uae"
@@ -27,7 +27,7 @@ PKG_SECTION="emulation"
 PKG_SHORTDESC="FS-UAE amiga emulator."
 
 PKG_IS_ADDON="no"
-PKG_TOOLCHAIN="autotools"
+PKG_AUTORECONF="yes"
 
 pre_configure_target() {
   export ac_cv_func_realloc_0_nonnull=yes
@@ -45,12 +45,11 @@ post_makeinstall_target() {
   ln -s /storage/roms/bios $INSTALL/usr/config/fs-uae/Kickstarts
 
   # install capsimg plugin for ipf support
+  mkdir -p $INSTALL/usr/config/fs-uae/Plugins
   wget https://fs-uae.net/devel/plugins/CAPSImg/CAPSImg_5.1fs3.zip
-  unzip -o -d $INSTALL/usr/config/fs-uae CAPSImg_5.1fs3.zip
-  rm -rf $INSTALL/usr/config/fs-uae/Plugins/CAPSImg/OSX
-  rm -rf $INSTALL/usr/config/fs-uae/Plugins/CAPSImg/SteamOS
+  unzip -o -d $INSTALL/usr/config/fs-uae/Plugins CAPSImg_5.1fs3.zip
+  rm -rf $INSTALL/usr/config/fs-uae/Plugins/CAPSImg/macOS
   rm -rf $INSTALL/usr/config/fs-uae/Plugins/CAPSImg/Windows
-  rm -rf $INSTALL/usr/config/fs-uae/Plugins/CAPSImg/Mac
   rm -rf $INSTALL/usr/config/fs-uae/Plugins/CAPSImg/Linux/x86
 
   rm -rf $INSTALL/usr/share/applications

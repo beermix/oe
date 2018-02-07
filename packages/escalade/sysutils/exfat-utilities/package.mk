@@ -12,7 +12,4 @@ PKG_SECTION="escalade"
 PKG_SHORTDESC="Utilities for the exFAT file system"
 
 PKG_IS_ADDON="no"
-PKG_TOOLCHAIN="autotools"
-
-
-PKG_CONFIGURE_OPTS_TARGET="--sbindir=/usr/bin"
+PKG_AUTORECONF="yes"

@@ -17,22 +17,20 @@
 ################################################################################
 
 PKG_NAME="xfsprogs-dev"
-PKG_VERSION="4.14.0"
+PKG_VERSION="53cefc4"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.xfs.org"
 PKG_URL="https://git.kernel.org/cgit/fs/xfs/xfsprogs-dev.git/snapshot/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain util-linux libedit"
+PKG_DEPENDS_TARGET="toolchain util-linux"
 PKG_DEPENDS_INIT="xfsprogs-dev"
 PKG_SECTION="tools"
 PKG_SHORTDESC="xfsprogs: Utilities for use with the xfs filesystem"
+PKG_IS_ADDON="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
-			      --exec-prefix=/ \
-			      --enable-shared=no \
-			      --with-gnu-ld \
-			      --enable-editline=yes \
-			      --enable-lib64=no"
+PKG_AUTORECONF="no"
+
+PKG_CONFIGURE_OPTS_TARGET="--enable-shared=no --with-gnu-ld --host=$TARGET_NAME --build=$HOST_NAME"
 
 pre_configure_target() {
   cd $PKG_BUILD
@@ -42,6 +40,14 @@ pre_configure_target() {
 
 make_target() {
   make SYSROOT_PREFIX=$SYSROOT_PREFIX
+}
+
+configure_init() {
+  : # reuse target
+}
+
+make_init() {
+  : # reuse target
 }
 
 post_makeinstall_target() {

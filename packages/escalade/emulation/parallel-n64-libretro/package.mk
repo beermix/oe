@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="parallel-n64-libretro"
-PKG_VERSION="0cc7f7d"
+PKG_VERSION="30eee2f"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/parallel-n64"
@@ -28,7 +28,7 @@ PKG_SECTION="emulation"
 PKG_SHORTDESC="mupen64plus for libretro with multiple graphic plugins and vulkan support"
 
 PKG_IS_ADDON="no"
-
+PKG_AUTORECONF="no"
 
 pre_configure_target() {
   strip_lto
@@ -36,6 +36,7 @@ pre_configure_target() {
 
 pre_build_target() {
   export GIT_VERSION=$PKG_VERSION
+  export LDFLAGS="$LDFLAGS -lpthread"
 }
 
 make_target() {

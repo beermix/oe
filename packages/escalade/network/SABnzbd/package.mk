@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="SABnzbd"
-PKG_VERSION="2.3.0"
+PKG_VERSION="2.3.2"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://sabnzbd.org/"
@@ -27,8 +27,8 @@ PKG_SECTION="service/downloadmanager"
 PKG_SHORTDESC="SABnzbd makes Usenet as simple and streamlined as possible by automating everything we can."
 PKG_LONGDESC="SABnzbd makes Usenet as simple and streamlined as possible by automating everything we can. All you have to do is add a .nzb file. SABnzbd+ takes over from there, where it will be automatically downloaded, verified, repaired, extracted and filed away with zero human interaction."
 
-
-
+PKG_IS_ADDON="no"
+PKG_AUTORECONF="no"
 
 make_target() {
   : # nothing to do here

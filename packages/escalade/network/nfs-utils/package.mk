@@ -1,6 +1,6 @@
 # Made by github.com/escalade
 PKG_NAME="nfs-utils"
-PKG_VERSION="2.1.1"
+PKG_VERSION="2.2.1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://sourceforge.net/projects/nfs"
@@ -9,8 +9,8 @@ PKG_DEPENDS_TARGET="toolchain libnfsidmap libtirpc libevent"
 PKG_SECTION="escalade"
 PKG_SHORTDESC="Support programs for Network File Systems"
 
-
-
+PKG_IS_ADDON="no"
+PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--without-tcp-wrappers \
 			   --disable-nfsv41 \

@@ -20,25 +20,39 @@ PKG_NAME="xfsprogs"
 PKG_VERSION="4.14.0"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="https://git.kernel.org/cgit/fs/xfs/xfsprogs-dev.git"
+PKG_SITE="http://www.xfs.org"
 PKG_URL="https://git.kernel.org/cgit/fs/xfs/xfsprogs-dev.git/snapshot/xfsprogs-dev-$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="xfsprogs-dev-$PKG_VERSION"
-PKG_DEPENDS_TARGET="toolchain util-linux libedit"
+PKG_DEPENDS_TARGET="toolchain util-linux readline"
 PKG_DEPENDS_INIT="xfsprogs"
 PKG_SECTION="tools"
 PKG_SHORTDESC="xfsprogs: Utilities for use with the xfs filesystem"
+PKG_IS_ADDON="no"
 
-PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
+PKG_AUTORECONF="no"
+
+PKG_CONFIGURE_OPTS_TARGET="AC_HAVE_COPY_FILE_RANGE=no --prefix=/usr \
 			   --exec-prefix=/ \
 			   --enable-shared=no \
 			   --with-gnu-ld \
-			   --enable-editline=yes \
-			   --enable-gettext=no"
-			      
+			   --enable-readline=yes"
+
 pre_configure_target() {
+  $SED -i 's/^HAVE_COPY_FILE_RANGE.*/HAVE_COPY_FILE_RANGE\ =\ no/' include/builddefs.in
   make configure
 }
 
-pre_configure_init() {
-  make configure
+configure_init() {
+  : # reuse target
+}
+
+make_init() {
+  : # reuse target
+}
+
+makeinstall_init() {
+  mkdir -p $INSTALL/usr/sbin
+  cp ../.install_pkg/usr/sbin/xfs_repair $INSTALL/usr/sbin
+  cp ../.install_pkg/usr/sbin/fsck.xfs $INSTALL/usr/sbin
+  cp ../.install_pkg/usr/sbin/mkfs.xfs $INSTALL/usr/sbin
 }

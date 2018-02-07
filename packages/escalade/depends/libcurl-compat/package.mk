@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libcurl-compat"
-PKG_VERSION="7.56.0"
+PKG_VERSION="7.58.0"
 PKG_ARCH="any"
 PKG_LICENSE="MIT"
 PKG_SITE="http://curl.haxx.se"

@@ -1,6 +1,6 @@
 ################################################################################
-#      This file is part of LibreELEC - http://www.libreelec.tv
-#      Copyright (C) 2009-2016 Lukas Rusak (lrusak@libreelec.tv)
+#      This file is part of LibreELEC - https://LibreELEC.tv
+#      Copyright (C) 2016 Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,21 +16,28 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="beetle-saturn-libretro"
-PKG_VERSION="11336f3"
-PKG_ARCH="x86_64"
-PKG_LICENSE="GPLv2"
-PKG_SITE="https://github.com/libretro/beetle-saturn-libretro"
-PKG_URL="https://github.com/libretro/beetle-saturn-libretro/archive/$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain"
-PKG_SECTION="libretro"
-PKG_SHORTDESC="Standalone port of Mednafen Saturn to libretro."
-PKG_LONGDESC="Standalone port of Mednafen Saturn to libretro."
-
+PKG_NAME="scons"
+PKG_VERSION="2.5.0"
+PKG_ARCH="any"
+PKG_LICENSE="OSS"
+PKG_SITE="http://www.scons.org"
+PKG_URL="http://prdownloads.sourceforge.net/scons/scons-$PKG_VERSION.tar.gz"
+PKG_DEPENDS_HOST="toolchain Python:host"
+PKG_SECTION="python"
+PKG_SHORTDESC="scons"
 PKG_IS_ADDON="no"
+
 PKG_AUTORECONF="no"
 
-makeinstall_target() {
-  mkdir -p $INSTALL/usr/lib/libretro
-  cp mednafen_saturn_libretro.so $INSTALL/usr/lib/libretro/
+pre_make_host() {
+  export CFLAGS="-I$TOOLCHAIN/include/python2.7 $CFLAGS"
+  export LDSHARED="$CC -shared"
+}
+
+make_host() {
+  python setup.py build
+}
+
+makeinstall_host() {
+  python setup.py install --prefix=$TOOLCHAIN
 }

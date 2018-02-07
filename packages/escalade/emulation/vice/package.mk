@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="vice"
-PKG_VERSION="33800"
+PKG_VERSION="34379"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv3"
 PKG_SITE="http://vice-emu.sourceforge.net/"
@@ -26,7 +26,7 @@ PKG_SECTION="emulation"
 PKG_SHORTDESC="VICE C64 emulator"
 
 PKG_IS_ADDON="no"
-
+PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_prog_sdl2_config=$SYSROOT_PREFIX/usr/bin/sdl2-config \
 			   toolchain_check=no \

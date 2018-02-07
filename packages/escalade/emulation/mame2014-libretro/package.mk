@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="mame2014-libretro"
-PKG_VERSION="c2438a9"
+PKG_VERSION="62a932c"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/mame2014-libretro"
@@ -27,7 +27,7 @@ PKG_SECTION="libretro"
 PKG_SHORTDESC="Late 2014 version of MAME (0.159-ish) for libretro and MAME 0.159 romsets"
 
 PKG_IS_ADDON="no"
-
+PKG_AUTORECONF="no"
 
 pre_make_target() {
   export REALCC=$CC

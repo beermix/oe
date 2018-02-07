@@ -1,7 +1,7 @@
 # Made by github.com/escalade
 
 PKG_NAME="redream-libretro"
-PKG_VERSION="3ebfbe4"
+PKG_VERSION="e032445"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://redream.io"
@@ -14,8 +14,8 @@ PKG_SHORTDESC="SEGA Dreamcast emulator"
 PKG_USE_CMAKE="no"
 
 make_target() {
-  cd ..
-  make -f deps/libretro/Makefile GIT_VERSION=$PKG_VERSION
+  cd ../deps/libretro
+  make GIT_VERSION=$PKG_VERSION
 }
 
 makeinstall_target() {

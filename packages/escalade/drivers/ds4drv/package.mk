@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="ds4drv"
-PKG_VERSION="fc00652"
+PKG_VERSION="c5b6661"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="https://github.com/chrippa/ds4drv"
@@ -27,7 +27,7 @@ PKG_SECTION="python/devel"
 PKG_SHORTDESC="Sony DualShock 4 userspace driver for Linux."
 PKG_IS_ADDON="no"
 
-
+PKG_AUTORECONF="no"
 
 pre_make_target() {
   export PYTHONXCPREFIX="$SYSROOT_PREFIX/usr"

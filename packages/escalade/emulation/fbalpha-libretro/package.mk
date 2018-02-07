@@ -19,7 +19,7 @@
 ################################################################################
 
 PKG_NAME="fbalpha-libretro"
-PKG_VERSION="c20d719"
+PKG_VERSION="154fb06"
 PKG_ARCH="any"
 PKG_LICENSE="Non-commercial"
 PKG_SITE="https://github.com/libretro/fbalpha"
@@ -31,7 +31,7 @@ PKG_SHORTDESC="Port of Final Burn Alpha to Libretro."
 PKG_LONGDESC="Currently, FB Alpha supports games on Capcom CPS-1 and CPS-2 hardware, SNK Neo-Geo hardware, Toaplan hardware, Cave hardware, and various games on miscellaneous hardware. "
 
 PKG_IS_ADDON="no"
-
+PKG_AUTORECONF="no"
 
 make_target() {
   case $PROJECT in

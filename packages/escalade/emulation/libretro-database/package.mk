@@ -19,7 +19,7 @@
 ################################################################################
 
 PKG_NAME="libretro-database"
-PKG_VERSION="2136f96"
+PKG_VERSION="4478312"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/libretro/libretro-database"
@@ -30,7 +30,7 @@ PKG_SHORTDESC="Repository containing cheatcode files, content data files, etc."
 PKG_LONGDESC="Repository containing cheatcode files, content data files, etc."
 
 PKG_IS_ADDON="no"
-
+PKG_AUTORECONF="no"
 
 pre_configure_target() {
   cd ../
@@ -45,6 +45,12 @@ make_target() {
   :
 }
 
+makeinstall_target() {
+  make install DESTDIR=$INSTALL PREFIX=/usr
+}
+
 post_makeinstall_target() {
   mv $INSTALL/usr/share/libretro $INSTALL/usr/share/retroarch
+  rm $INSTALL/usr/share/retroarch/database/rdb/MAME.rdb
+  rm $INSTALL/usr/share/retroarch/database/rdb/MAME\ 2010.rdb
 }

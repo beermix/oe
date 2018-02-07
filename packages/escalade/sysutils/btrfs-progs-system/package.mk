@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="btrfs-progs-system"
-PKG_VERSION="v4.14"
+PKG_VERSION="v4.15"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/kdave/btrfs-progs"
@@ -29,7 +29,9 @@ PKG_PRIORITY="optional"
 PKG_SECTION="tools"
 PKG_SHORTDESC="f2fs-tools: Utilities for use with the f2fs filesystem"
 PKG_LONGDESC="The filesystem utilities for the f2fs filesystem"
-PKG_TOOLCHAIN="configure"
+PKG_IS_ADDON="no"
+
+PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
                            --disable-option-checking \
