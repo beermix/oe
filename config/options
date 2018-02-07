@@ -5,11 +5,11 @@ if [[ $EUID -eq 0 ]]; then
 fi
 
 # set default language for buildsystem
-  export LC_ALL=C
+  export LC_ALL=C.UTF-8
   export LANG=C
   export TZ=UTC
 
-#  export CCACHE_DISABLE=1
+  export CCACHE_DISABLE=1
 #  export CCACHE_HARDLINK=1
 #  export CCACHE_NOSTATS=1
 #  export CCACHE_CPP2=1
