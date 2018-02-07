@@ -16,6 +16,7 @@
 #  along with OpenELEC.tv; see the file COPYING.  If not, write to
 #  the Free Software Foundation, 51 Franklin Street, Suite 500, Boston, MA 02110, USA.
 #  http://svnweb.mageia.org/packages/cauldron/chromium-browser-stable/current
+#  http://omahaproxy.appspot.com/
 #  https://chromereleases.googleblog.com/
 ################################################################################
 
@@ -28,7 +29,7 @@ PKG_LICENSE="Mixed"
 PKG_SITE="http://www.chromium.org/Home"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="pciutils dbus libevent x11 libXcomposite libXcursor libXtst alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk gtk3 intel-vaapi-driver libva-vdpau-driver unclutter xdotool libinput libxkbcommon libdrm libjpeg-turbo libxslt freetype harfbuzz re2 jsoncpp chromium:host"
+PKG_DEPENDS_TARGET="pciutils dbus libevent x11 libXcomposite libXcursor libXtst alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk gtk3 intel-vaapi-driver libva-vdpau-driver unclutter xdotool libinput libxkbcommon libdrm libjpeg-turbo libxslt freetype harfbuzz re2 chromium:host"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -57,8 +58,8 @@ make_host() {
 
 make_target() {
   strip_lto
-#  export LDFLAGS="$LDFLAGS -ludev"
-#  export LD=$CXX
+  export LDFLAGS="$LDFLAGS -ludev"
+  export LD=$CXX
 
   # https://chromium-review.googlesource.com/c/chromium/src/+/712575
   # _flags+=('exclude_unwind_tables=true')
@@ -72,9 +73,9 @@ make_target() {
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed||"`
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now||"`
   
-  export LDFLAGS="$LDFLAGS -s"
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-fomit-frame-pointer||g"`
-  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-fomit-frame-pointer||g"`
+#  export LDFLAGS="$LDFLAGS -s"
+#  export CFLAGS=`echo $CFLAGS | sed -e "s|-fomit-frame-pointer||g"`
+#  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-fomit-frame-pointer||g"`
   export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations"
   
   export CCACHE_SLOPPINESS=time_macros
@@ -110,9 +111,6 @@ make_target() {
     'use_lld=false'
     'use_system_freetype=true'
     'use_system_harfbuzz=true'
-    'linux_link_libgio=true'
-    'linux_link_libudev=true'
-    'linux_link_libspeechd=true'
     'use_gtk3=false'
     'use_kerberos=false'
     'use_pulseaudio=false'
@@ -133,6 +131,53 @@ make_target() {
     "google_default_client_secret=\"${_google_default_client_secret}\""
   )
 
+# Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
+# Keys are the names in the above script; values are the dependencies in Arch
+readonly -A _system_libs=(
+  #[ffmpeg]=ffmpeg            # https://crbug.com/731766
+  #[flac]=flac
+  #[fontconfig]=fontconfig    # Enable for M65
+  #[freetype]=freetype2       # Using 'use_system_freetype=true' until M65
+  #[harfbuzz-ng]=harfbuzz     # Using 'use_system_harfbuzz=true' until M65
+  [icu]=icu
+  [libdrm]=
+  [libjpeg]=libjpeg
+  #[libpng]=libpng            # https://crbug.com/752403#c10
+  #[libvpx]=libvpx            # https://bugs.gentoo.org/611394
+  #[libwebp]=libwebp
+  #[libxml]=libxml2           # https://crbug.com/736026
+  [libxslt]=libxslt
+  #[opus]=opus
+  [re2]=re2
+  #[snappy]=snappy
+  [yasm]=
+  [zlib]=minizip
+)
+readonly _unwanted_bundled_libs=(
+  ${!_system_libs[@]}
+  ${_system_libs[libjpeg]+libjpeg_turbo}
+  freetype
+  harfbuzz-ng
+)
+depends+=(${_system_libs[@]} freetype2 harfbuzz)
+
+  # Remove bundled libraries for which we will use the system copies; this
+  # *should* do what the remove_bundled_libraries.py script does, with the
+  # added benefit of not having to list all the remaining libraries
+  local _lib
+  for _lib in ${_unwanted_bundled_libs[@]}; do
+    find -type f -path "*third_party/$_lib/*" \
+      \! -path "*third_party/$_lib/chromium/*" \
+      \! -path "*third_party/$_lib/google/*" \
+      \! -path './base/third_party/icu/*' \
+      \! -path './third_party/freetype/src/src/psnames/pstables.h' \
+      \! -path './third_party/yasm/run_yasm.py' \
+      \! -regex '.*\.\(gn\|gni\|isolate\)' \
+      -delete
+  done
+
+  ./build/linux/unbundle/replace_gn_files.py --system-libraries "${!_system_libs[@]}"
+    
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
