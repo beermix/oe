@@ -1,0 +1,7 @@
+--------------------
+/home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/zlib-1.2.8_jtkv4/configure --help
+Wed Feb  7 03:25:28 MSK 2018
+usage:
+  configure [--const] [--zprefix] [--prefix=PREFIX]  [--eprefix=EXPREFIX]
+    [--static] [--64] [--libdir=LIBDIR] [--sharedlibdir=LIBDIR]
+    [--includedir=INCLUDEDIR] [--archs="-arch i386 -arch x86_64"]
