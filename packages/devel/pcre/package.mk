@@ -35,6 +35,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-unicode-properties \
 			      --enable-cpp \
 			      --with-match-limit-recursion=16000 \
 			      --enable-pcre16 \
+			      --enable-pcre32 \
 			      --enable-static \
 			      --with-pic"
 
