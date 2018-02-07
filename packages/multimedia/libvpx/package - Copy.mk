@@ -40,3 +40,30 @@ configure_target() {
   		--disable-decode-perf-tests \
   		--disable-encode-perf-tests
 }
+
+
+
+unpac_target() {
+  ./configure --prefix="/usr" \
+  		--as=yasm \
+  		--enable-pic \
+  		--enable-runtime-cpu-detect \
+  		--disable-shared \
+  		--enable-pic \
+  		--disable-install-docs \
+  		--disable-install-srcs \
+  		--enable-vp8 \
+  		--enable-postproc \
+  		--enable-vp9 \
+  		--enable-vp9-highbitdepth \
+  		--enable-experimental \
+  		--enable-spatial-svc \
+  		--disable-encode-perf-tests \
+  		--disable-decode-perf-tests \
+  		--disable-decode-perf-tests \
+  		--disable-encode-perf-tests \
+  		--disable-unit-tests \
+  		--disable-examples \
+  		--disable-debug-libs \
+  		--disable-docs
+}

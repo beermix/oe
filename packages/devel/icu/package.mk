@@ -74,7 +74,7 @@ configure_target() {
  		     --host=$TARGET_NAME \
  		     --disable-debug \
  		     --enable-release \
- 		     --enable-shared \
+ 		     --disable-shared \
  		     --enable-static \
  		     --enable-draft \
  		     --enable-renaming \
@@ -88,6 +88,6 @@ configure_target() {
  		     --with-cross-build="$PKG_BUILD/.$HOST_NAME"
 }
 
-#post_makeinstall_target() {
-#  rm -rf $INSTALL
-#}
+post_makeinstall_target() {
+  rm -rf $INSTALL
+}
