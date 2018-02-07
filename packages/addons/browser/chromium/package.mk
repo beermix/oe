@@ -29,7 +29,7 @@ PKG_LICENSE="Mixed"
 PKG_SITE="http://www.chromium.org/Home"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="pciutils dbus libevent x11 libXcomposite libXcursor libXtst alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk gtk3 intel-vaapi-driver libva-vdpau-driver unclutter xdotool libinput libxkbcommon libdrm libjpeg-turbo libxslt freetype harfbuzz re2 chromium:host"
+PKG_DEPENDS_TARGET="pciutils dbus libevent x11 libXcomposite libXcursor libXtst alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk gtk3 intel-vaapi-driver libva-vdpau-driver unclutter xdotool libinput libxkbcommon libdrm libjpeg-turbo libxslt freetype harfbuzz re2 snappy chromium:host"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -141,7 +141,7 @@ readonly -A _system_libs=(
   #[fontconfig]=fontconfig    # Enable for M65
   #[freetype]=freetype2       # Using 'use_system_freetype=true' until M65
   #[harfbuzz-ng]=harfbuzz     # Using 'use_system_harfbuzz=true' until M65
-  [icu]=icu
+  #[icu]=icu
   [libdrm]=
   [libjpeg]=libjpeg
   #[libpng]=libpng            # https://crbug.com/752403#c10
@@ -151,7 +151,7 @@ readonly -A _system_libs=(
   [libxslt]=libxslt
   #[opus]=opus
   [re2]=re2
-  #[snappy]=snappy
+  [snappy]=snappy
   [yasm]=
   [zlib]=minizip
 )
