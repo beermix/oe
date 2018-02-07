@@ -28,7 +28,7 @@ PKG_LICENSE="Mixed"
 PKG_SITE="http://www.chromium.org/Home"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="pciutils dbus libevent x11 libXcomposite libXcursor libXtst alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk gtk+ intel-vaapi-driver libva-vdpau-driver unclutter xdotool libinput libxkbcommon libdrm libjpeg-turbo libxslt freetype harfbuzz openjpeg chromium:host"
+PKG_DEPENDS_TARGET="pciutils dbus x11 libXcomposite libXcursor libXtst alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk gtk+ intel-vaapi-driver libva-vdpau-driver unclutter xdotool libinput libxkbcommon libdrm libjpeg-turbo libxslt freetype harfbuzz chromium:host"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -48,7 +48,7 @@ post_patch() {
   # set correct widevine
   sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' ./third_party/widevine/cdm/stub/widevine_cdm_version.h
   
-#  patch -Np4 -i $PKG_DIR/chromium-skia-harmony.patch
+  patch -Np4 -i $PKG_DIR/chromium-skia-harmony.patch
 }
 
 make_host() {
@@ -57,13 +57,11 @@ make_host() {
 
 make_target() {
   strip_lto
-  export LDFLAGS="$LDFLAGS -ludev"
-  export LD=$CXX
+  # export LDFLAGS="$LDFLAGS -ludev"
+  # export LD=$CXX
 
   # https://chromium-review.googlesource.com/c/chromium/src/+/712575
   # _flags+=('exclude_unwind_tables=true')
-  export CFLAGS=$(echo "$CFLAGS"|sed -e 's/-g //')
-  export CXXFLAGS=$(echo "$CXXFLAGS"|sed -e 's/-g //')
   export CFLAGS="$CFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables"
   export CXXFLAGS="$CXXFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables"
   export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
@@ -111,20 +109,21 @@ make_target() {
     'use_system_freetype=true'
     'use_system_harfbuzz=true'
     'use_system_libpng=true'
-    'icu_use_data_file=false'
-    'enable_nacl=false'
-    'is_nacl_glibc=false'
     'use_gtk3=false'
     'use_kerberos=false'
     'use_pulseaudio=false'
     'use_sysroot=true'
     'use_vaapi=true'
+    'linux_link_libgio=true'
+    'linux_link_libudev=true'
+    'use_libpci=true'
     'use_v8_context_snapshot=false'
     'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_hangout_services_extension=true'
     'enable_widevine=true'
     'enable_nacl=false'
+    'enable_nacl_nonsfi=false'
     'enable_swiftshader=false'
     'enable_vulkan=false'
     "google_api_key=\"${_google_api_key}\""
@@ -199,7 +198,7 @@ addon() {
   cp -PL $(get_build_dir cairo)/.install_pkg/usr/lib/libcairo-gobject.so.2 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # atk
-   # cp -PL $(get_build_dir atk)/.install_pkg/usr/lib/libatk-1.0.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
+   cp -PL $(get_build_dir atk)/.install_pkg/usr/lib/libatk-1.0.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # gtk+
    cp -PL $(get_build_dir gtk+)/.install_pkg/usr/lib/libgdk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib

@@ -34,4 +34,5 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --prefix=$TOOLCHAIN \
                          --with-gmp-lib=$TOOLCHAIN/lib \
                          --with-gmp-include=$TOOLCHAIN/include \
-                         --enable-thread-safe"
+                         --enable-thread-safe \
+                         --with-pic"
