@@ -1,0 +1,42 @@
+--- zlib-1.2.8/Makefile.in~	2013-04-28 18:57:11.000000000 -0400
++++ zlib-1.2.8/Makefile.in	2015-04-13 10:54:03.180228619 -0400
+@@ -36,9 +36,9 @@
+ SHAREDLIBM=libz.so.1
+ LIBS=$(STATICLIB) $(SHAREDLIBV)
+ 
+-AR=ar
++AR=gcc-ar
+ ARFLAGS=rc
+-RANLIB=ranlib
++RANLIB=gcc-ranlib
+ LDCONFIG=ldconfig
+ LDSHAREDLIBC=-lc
+ TAR=tar
+--- zlib-1.2.8/configure~	2013-03-24 01:30:09.000000000 -0400
++++ zlib-1.2.8/configure	2015-04-13 11:16:29.375398864 -0400
+@@ -34,19 +34,19 @@
+ VER1=`sed -n -e '/VERSION "/s/.*"\([0-9]*\)\\..*/\1/p' < zlib.h`
+ 
+ # establish commands for library building
+-if "${CROSS_PREFIX}ar" --version >/dev/null 2>/dev/null || test $? -lt 126; then
+-    AR=${AR-"${CROSS_PREFIX}ar"}
++if "${CROSS_PREFIX}gcc-ar" --version >/dev/null 2>/dev/null || test $? -lt 126; then
++    AR=${AR-"${CROSS_PREFIX}gcc-ar"}
+     test -n "${CROSS_PREFIX}" && echo Using ${AR} | tee -a configure.log
+ else
+-    AR=${AR-"ar"}
++    AR=${AR-"gcc-ar"}
+     test -n "${CROSS_PREFIX}" && echo Using ${AR} | tee -a configure.log
+ fi
+ ARFLAGS=${ARFLAGS-"rc"}
+-if "${CROSS_PREFIX}ranlib" --version >/dev/null 2>/dev/null || test $? -lt 126; then
+-    RANLIB=${RANLIB-"${CROSS_PREFIX}ranlib"}
++if "${CROSS_PREFIX}gcc-ranlib" --version >/dev/null 2>/dev/null || test $? -lt 126; then
++    RANLIB=${RANLIB-"${CROSS_PREFIX}gcc-ranlib"}
+     test -n "${CROSS_PREFIX}" && echo Using ${RANLIB} | tee -a configure.log
+ else
+-    RANLIB=${RANLIB-"ranlib"}
++    RANLIB=${RANLIB-"gcc-ranlib"}
+ fi
+ if "${CROSS_PREFIX}nm" --version >/dev/null 2>/dev/null || test $? -lt 126; then
+     NM=${NM-"${CROSS_PREFIX}nm"}

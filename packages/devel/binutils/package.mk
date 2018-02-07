@@ -17,13 +17,13 @@
 ################################################################################
 
 PKG_NAME="binutils"
-PKG_VERSION="2.30"
-PKG_SHA256="6e46b8aeae2f727a36f0bd9505e405768a72218f1796f0d09757d45209871ae6"
+PKG_VERSION="2.29"
+#PKG_SHA256="6e46b8aeae2f727a36f0bd9505e405768a72218f1796f0d09757d45209871ae6"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/binutils/"
 PKG_URL="http://ftpmirror.gnu.org/binutils/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_HOST="ccache:host bison:host flex:host linux:host"
+PKG_DEPENDS_HOST="ccache:host bison:host flex:host quilt:host linux:host"
 PKG_DEPENDS_TARGET="toolchain binutils:host"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="binutils: A GNU collection of binary utilities"
@@ -37,12 +37,11 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --disable-werror \
                          --disable-multilib \
                          --disable-libada \
-                         --enable-libssp \
+                         --disable-libssp \
                          --enable-version-specific-runtime-libs \
                          --enable-lto \
                          --enable-plugins \
                          --disable-nls \
-                         --enable-secureplt \
                          --enable-poison-system-directories"
 
 PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
@@ -68,18 +67,18 @@ pre_configure_host() {
 }
 
 make_host() {
-  make MAKEINFO=true configure-host
-  make MAKEINFO=true
+  make configure-host
+  make
 }
 
 makeinstall_host() {
   cp -v ../include/libiberty.h $SYSROOT_PREFIX/usr/include
-  make MAKEINFO=true install
+  make install
 }
 
 make_target() {
-  make MAKEINFO=true configure-host
-  make -C libiberty MAKEINFO=true libiberty.a
+  make configure-host
+  make -C libiberty libiberty.a
 }
 
 makeinstall_target() {

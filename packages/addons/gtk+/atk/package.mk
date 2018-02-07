@@ -31,4 +31,4 @@ PKG_SHORTDESC="ATK - Accessibility Toolkit"
 PKG_LONGDESC="ATK provides the set of accessibility interfaces that are implemented by other toolkits and applications. Using the ATK interfaces, accessibility tools have full access to view and control running applications."
 PKG_TOOLCHAIN="configure"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-rebuilds --enable-introspection=no"
+PKG_CONFIGURE_OPTS_TARGET="--disable-rebuilds --enable-introspection=no --disable-shared --with-pic"

@@ -7,7 +7,7 @@ index 26171d6afc..f3f9d8004e 100644
        # TODO(phajdan.jr): Use -fstack-protector-strong when our gcc supports it.
        # See also https://crbug.com/533294
 -      cflags += [ "--param=ssp-buffer-size=4" ]
-+      cflags += [ "--param=ssp-buffer-size=32" ]
++      cflags += [ "--param=ssp-buffer-size=16" ]
 +      cflags += [ "-Wl,--copy-dt-needed-entries" ]
  
        # The x86 toolchain currently has problems with stack-protector.

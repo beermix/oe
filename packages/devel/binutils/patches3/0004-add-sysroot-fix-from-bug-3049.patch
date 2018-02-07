@@ -1,4 +1,4 @@
-From 378bda0e19d279535b3f4a0e448a658a534a5d67 Mon Sep 17 00:00:00 2001
+From 20fff697c52e24700e76d64d202ad7a9228b630e Mon Sep 17 00:00:00 2001
 From: Romain Naour <romain.naour@gmail.com>
 Date: Fri, 25 Dec 2015 11:42:48 +0100
 Subject: [PATCH] add sysroot fix from bug #3049
@@ -16,7 +16,7 @@ Signed-off-by: Romain Naour <romain.naour@gmail.com>
  1 file changed, 8 insertions(+), 2 deletions(-)
 
 diff --git a/ld/ldfile.c b/ld/ldfile.c
-index 3b37a0a..f7e5473 100644
+index 6532a57d96..eefc2ebefb 100644
 --- a/ld/ldfile.c
 +++ b/ld/ldfile.c
 @@ -338,18 +338,24 @@ ldfile_open_file_search (const char *arch,
@@ -47,5 +47,5 @@ index 3b37a0a..f7e5473 100644
  
        if (IS_ABSOLUTE_PATH (entry->filename))
 -- 
-2.9.4
+2.14.3
 

@@ -1,4 +1,4 @@
-From b100e9d16bfe6725b2624902af457ecfa490b150 Mon Sep 17 00:00:00 2001
+From 28e0da3dede55d02eb64e015d363747772694566 Mon Sep 17 00:00:00 2001
 From: Romain Naour <romain.naour@gmail.com>
 Date: Fri, 25 Dec 2015 11:45:38 +0100
 Subject: [PATCH] poison-system-directories
@@ -78,10 +78,10 @@ Signed-off-by: Scott Garman <scott.a.garman@intel.com>
  9 files changed, 89 insertions(+)
 
 diff --git a/ld/config.in b/ld/config.in
-index 5d91380..ffe84a7 100644
+index a846743da6..df3cd5fb60 100644
 --- a/ld/config.in
 +++ b/ld/config.in
-@@ -21,6 +21,9 @@
+@@ -27,6 +27,9 @@
     language is requested. */
  #undef ENABLE_NLS
  
@@ -92,7 +92,7 @@ index 5d91380..ffe84a7 100644
  #undef EXTRA_SHLIB_EXTENSION
  
 diff --git a/ld/configure b/ld/configure
-index da20ab5..63e3da7 100755
+index 066b5146c6..11e7402909 100755
 --- a/ld/configure
 +++ b/ld/configure
 @@ -785,6 +785,7 @@ with_lib_path
@@ -103,7 +103,7 @@ index da20ab5..63e3da7 100755
  enable_gold
  enable_got
  enable_compressed_debug_sections
-@@ -1443,6 +1444,8 @@ Optional Features:
+@@ -1444,6 +1445,8 @@ Optional Features:
    --disable-largefile     omit support for large files
    --enable-targets        alternative target configurations
    --enable-64-bit-bfd     64-bit support (on hosts with narrower word sizes)
@@ -112,7 +112,7 @@ index da20ab5..63e3da7 100755
    --enable-gold[=ARG]     build gold [ARG={default,yes,no}]
    --enable-got=<type>     GOT handling scheme (target, single, negative,
                            multigot)
-@@ -15497,7 +15500,18 @@ else
+@@ -15500,7 +15503,18 @@ else
  fi
  
  
@@ -132,7 +132,7 @@ index da20ab5..63e3da7 100755
  # Check whether --enable-got was given.
  if test "${enable_got+set}" = set; then :
 diff --git a/ld/configure.ac b/ld/configure.ac
-index 34315e6..5ade9a0 100644
+index bada1b50b0..d074a3820b 100644
 --- a/ld/configure.ac
 +++ b/ld/configure.ac
 @@ -95,6 +95,16 @@ AC_SUBST(use_sysroot)
@@ -153,10 +153,10 @@ index 34315e6..5ade9a0 100644
  dnl "install_as_default" is set to false if gold is the default linker.
  dnl "installed_linker" is the installed BFD linker name.
 diff --git a/ld/ld.h b/ld/ld.h
-index 162e156..7d6d7ef 100644
+index ba914b921e..9df17dab6c 100644
 --- a/ld/ld.h
 +++ b/ld/ld.h
-@@ -177,6 +177,14 @@ typedef struct
+@@ -180,6 +180,14 @@ typedef struct
       in the linker script.  */
    bfd_boolean force_group_allocation;
  
@@ -172,10 +172,10 @@ index 162e156..7d6d7ef 100644
    enum endian_enum endian;
  
 diff --git a/ld/ld.texinfo b/ld/ld.texinfo
-index bb5f719..78501e4 100644
+index c89915f1aa..df430837e2 100644
 --- a/ld/ld.texinfo
 +++ b/ld/ld.texinfo
-@@ -2480,6 +2480,18 @@ string identifying the original linked file does not change.
+@@ -2498,6 +2498,18 @@ string identifying the original linked file does not change.
  
  Passing @code{none} for @var{style} disables the setting from any
  @code{--build-id} options earlier on the command line.
@@ -195,7 +195,7 @@ index bb5f719..78501e4 100644
  
  @c man end
 diff --git a/ld/ldfile.c b/ld/ldfile.c
-index f7e5473..2cd84d3 100644
+index eefc2ebefb..bf7063ae8c 100644
 --- a/ld/ldfile.c
 +++ b/ld/ldfile.c
 @@ -116,6 +116,23 @@ ldfile_add_library_path (const char *name, bfd_boolean cmdline)
@@ -223,7 +223,7 @@ index f7e5473..2cd84d3 100644
  
  /* Try to open a BFD for a lang_input_statement.  */
 diff --git a/ld/ldlex.h b/ld/ldlex.h
-index 5aa7f6b..cb655e0 100644
+index 140ed1d9da..9965cbc04f 100644
 --- a/ld/ldlex.h
 +++ b/ld/ldlex.h
 @@ -147,6 +147,8 @@ enum option_values
@@ -236,10 +236,10 @@ index 5aa7f6b..cb655e0 100644
  
  /* The initial parser states.  */
 diff --git a/ld/ldmain.c b/ld/ldmain.c
-index ee5ab11..5f6effd 100644
+index e02fd3f1ff..5dfe9ba7e8 100644
 --- a/ld/ldmain.c
 +++ b/ld/ldmain.c
-@@ -270,6 +270,8 @@ main (int argc, char **argv)
+@@ -261,6 +261,8 @@ main (int argc, char **argv)
    command_line.warn_mismatch = TRUE;
    command_line.warn_search_mismatch = TRUE;
    command_line.check_section_addresses = -1;
@@ -249,7 +249,7 @@ index ee5ab11..5f6effd 100644
    /* We initialize DEMANGLING based on the environment variable
       COLLECT_NO_DEMANGLE.  The gcc collect2 program will demangle the
 diff --git a/ld/lexsup.c b/ld/lexsup.c
-index 08106bc..d619d50 100644
+index f2191602d4..037a27a24a 100644
 --- a/ld/lexsup.c
 +++ b/ld/lexsup.c
 @@ -538,6 +538,14 @@ static const struct ld_option ld_options[] =
@@ -276,8 +276,8 @@ index 08106bc..d619d50 100644
    struct option *really_longopts;
    int last_optind;
 @@ -1534,6 +1543,14 @@ parse_args (unsigned argc, char **argv)
-           }
-           break;
+ 	  }
+ 	  break;
  
 +	case OPTION_NO_POISON_SYSTEM_DIRECTORIES:
 +	  command_line.poison_system_directories = FALSE;
@@ -302,5 +302,5 @@ index 08106bc..d619d50 100644
      {
        lang_leave_group ();
 -- 
-2.9.4
+2.14.3
 

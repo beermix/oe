@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="zlib"
-PKG_VERSION="1.2.8_jtkv4"
-PKG_SHA256="b359ef3796f8daa8fe437886164684445a58c65979920127e9df94cb821ed2f0"
+PKG_VERSION="4b9e3f0"
+#PKG_SHA256="b359ef3796f8daa8fe437886164684445a58c65979920127e9df94cb821ed2f0"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="https://github.com/jtkukunas/zlib"
-PKG_URL="https://github.com/jtkukunas/zlib/archive/v1.2.8_jtkv4.tar.gz"
+PKG_URL="https://github.com/jtkukunas/zlib/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST=""
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="compress"
