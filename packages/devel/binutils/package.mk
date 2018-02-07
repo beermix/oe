@@ -67,18 +67,18 @@ pre_configure_host() {
 }
 
 make_host() {
-  make configure-host
-  make
+  make MAKEINFO=true configure-host
+  make MAKEINFO=true
 }
 
 makeinstall_host() {
   cp -v ../include/libiberty.h $SYSROOT_PREFIX/usr/include
-  make install
+  make MAKEINFO=true install
 }
 
 make_target() {
-  make configure-host
-  make -C libiberty libiberty.a
+  make MAKEINFO=true configure-host
+  make -C libiberty MAKEINFO=true libiberty.a
 }
 
 makeinstall_target() {
