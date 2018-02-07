@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="libunwind"
-PKG_VERSION="1.3-rc1"
-PKG_SHA256="e40f49dcbfdea3f4d15fa555fe68958e69a3f410aacf1ec46fd86aeced699773"
+PKG_VERSION="1.2.1"
+PKG_SHA256="3f3ecb90e28cbe53fba7a4a27ccce7aad188d3210bb1964a923a731a27a75acb"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.nongnu.org/libunwind/"
