@@ -1,0 +1,35 @@
+Description: Inhibit example code extraction
+ The Debian bison package cannot extract example code from info
+ documentation because said documentation is moved into the
+ bison-doc pacakge due to DFSG non-compliance.  Leaving
+ example code extraction in the build process breaks parallel
+ builds, so this patch is necessary to make parallel builds work.
+Bug-Debian: http://bugs.debian.org/732034
+Forwarded: not-needed
+Author: Chuan-kai Lin <cklin@debian.org>
+Last-Update: 2013-12-16
+
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -5335,8 +5335,7 @@
+ 	$(AM_V_at)mv $@.tmp $@
+ 
+ $(extracted): examples/extracted.stamp
+-	@test -f $@ || rm -f examples/extracted.stamp
+-	@test -f $@ || $(MAKE) $(AM_MAKEFLAGS) examples/extracted.stamp
++	touch $@
+ 
+ # Don't depend on $(BISON) otherwise we would rebuild these files
+ # in srcdir, including during distcheck, which is forbidden.
+--- a/examples/local.mk
++++ b/examples/local.mk
+@@ -38,8 +38,7 @@
+ 	$(AM_V_at)mv $@.tmp $@
+ 
+ $(extracted): %D%/extracted.stamp
+-	@test -f $@ || rm -f %D%/extracted.stamp
+-	@test -f $@ || $(MAKE) $(AM_MAKEFLAGS) %D%/extracted.stamp
++	touch $@
+ 
+ include %D%/calc++/local.mk
+ include %D%/mfcalc/local.mk

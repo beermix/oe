@@ -17,13 +17,14 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="9af5802"
-#PKG_SHA256="832ca6ae04636adbb430e865a1451adf6979ab44ca1c8374f61fba65645ce15c"
+PKG_VERSION="7.3.0"
+PKG_SHA256="832ca6ae04636adbb430e865a1451adf6979ab44ca1c8374f61fba65645ce15c"
 PKG_ARCH="any"
 PKG_SITE="https://github.com/gcc-mirror/gcc/tree/gcc-7-branch"
 PKG_LICENSE="GPL"
-PKG_URL="https://github.com/gcc-mirror/gcc/archive/$PKG_VERSION.tar.gz"
+#PKG_URL="https://github.com/gcc-mirror/gcc/archive/$PKG_VERSION.tar.gz"
 #PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/LATEST-7/gcc-$PKG_VERSION.tar.xz"
+PKG_URL="ftp://gcc.gnu.org/pub/gcc/releases/gcc-7.3.0/gcc-7.3.0.tar.xz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host"
 PKG_DEPENDS_TARGET="gcc:host"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
@@ -48,32 +49,34 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-plugin \
                            --enable-lto \
                            --enable-ld=default \
-                           --enable-gold=no \
+                           --disable-gold \
                            --disable-multilib \
                            --disable-nls \
+                           --without-ppl \
+                           --without-cloog \
                            --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
                            --disable-libunwind-exceptions \
                            --with-glibc-version=2.19 \
-                           --without-ppl \
-                           --without-cloog \
-                           --disable-libmpx \
                            --disable-libssp \
-                           --without-cuda-driver \
+                           --enable-bootstrap \
+                           --disable-libmudflap \
+                           --disable-libquadmath \
+                           --disable-libmpx \
                            --disable-libsanitizer \
+                           --without-cuda-driver \
+                           --enable-linker-build-id \
                            --with-tune=haswell \
                            --with-arch=westmere"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
-                              --disable-libsanitizer \
                               --enable-cloog-backend=isl \
                               --disable-shared \
                               --disable-threads \
                               --disable-libitm \
                               --disable-libgomp \
-                              --disable-libquadmath \
                               --disable-libada \
                               --disable-libatomic \
                               --without-headers \
