@@ -24,11 +24,11 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/HarfBuzz"
 PKG_URL="http://www.freedesktop.org/software/harfbuzz/release/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain freetype cairo icu pygobject"
+PKG_DEPENDS_TARGET="toolchain glib freetype icu cairo"
 PKG_SECTION="x11/toolkits"
 PKG_SHORTDESC="harfbuzz: an OpenType text shaping engine."
 PKG_LONGDESC="HarfBuzz is an OpenType text shaping engine."
-PKG_TOOLCHAIN="configure"
+PKG_TOOLCHAIN="autotools"
 
 pre_configure_target() {
   export LIBS="$LIBS -ldl"

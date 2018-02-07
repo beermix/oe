@@ -19,16 +19,17 @@
 ################################################################################
 
 PKG_NAME="atk"
-PKG_VERSION="2.26.1"
-PKG_SHA256="ef00ff6b83851dddc8db38b4d9faeffb99572ba150b0664ee02e46f015ea97cb"
+PKG_VERSION="2.27.1"
+PKG_SHA256="673a953987b301ab1e24e7d11677b6e7ba3226411a168449ba946765b6d44297"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://library.gnome.org/devel/atk/"
-PKG_URL="http://ftp.gnome.org/pub/gnome/sources/$PKG_NAME/2.26/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="http://ftp.gnome.org/pub/gnome/sources/$PKG_NAME/2.27/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain glib"
 PKG_SECTION="accessibility"
 PKG_SHORTDESC="ATK - Accessibility Toolkit"
 PKG_LONGDESC="ATK provides the set of accessibility interfaces that are implemented by other toolkits and applications. Using the ATK interfaces, accessibility tools have full access to view and control running applications."
-PKG_TOOLCHAIN="configure"
+PKG_TOOLCHAIN="autotools"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-rebuilds --enable-introspection=no --disable-shared --with-pic"
+PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared \
+                           --disable-rebuilds --enable-introspection=no --with-pic"
