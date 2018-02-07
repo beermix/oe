@@ -28,7 +28,7 @@ PKG_LICENSE="Mixed"
 PKG_SITE="http://www.chromium.org/Home"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="pciutils dbus libevent x11 libXcomposite libXcursor libXtst alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk gtk3 intel-vaapi-driver libva-vdpau-driver unclutter xdotool libinput libxkbcommon libdrm libjpeg-turbo libxslt freetype harfbuzz re2 chromium:host"
+PKG_DEPENDS_TARGET="pciutils dbus libevent x11 libXcomposite libXcursor libXtst alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk gtk3 intel-vaapi-driver libva-vdpau-driver unclutter xdotool libinput libxkbcommon libdrm libjpeg-turbo libxslt freetype harfbuzz re2 jsoncpp chromium:host"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -57,8 +57,8 @@ make_host() {
 
 make_target() {
   strip_lto
-  export LDFLAGS="$LDFLAGS -ludev"
-  export LD=$CXX
+#  export LDFLAGS="$LDFLAGS -ludev"
+#  export LD=$CXX
 
   # https://chromium-review.googlesource.com/c/chromium/src/+/712575
   # _flags+=('exclude_unwind_tables=true')
@@ -110,6 +110,9 @@ make_target() {
     'use_lld=false'
     'use_system_freetype=true'
     'use_system_harfbuzz=true'
+    'linux_link_libgio=true'
+    'linux_link_libudev=true'
+    'linux_link_libspeechd=true'
     'use_gtk3=false'
     'use_kerberos=false'
     'use_pulseaudio=false'

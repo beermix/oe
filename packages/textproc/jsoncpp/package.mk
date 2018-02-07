@@ -27,7 +27,7 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="A C++ library for interacting with JSON."
 PKG_LONGDESC="A C++ library for interacting with JSON."
-PKG_TOOLCHAIN="cmake"
+PKG_TOOLCHAIN="cmake-make"
 
 PKG_CMAKE_OPTS_TARGET="-DJSONCPP_WITH_TESTS=OFF \
 			  -DCMAKE_INSTALL_LIBDIR=lib \
