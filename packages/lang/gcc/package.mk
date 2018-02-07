@@ -13,7 +13,7 @@
 #  GNU General Public License for more details.
 #
 #  You should have received a copy of the GNU General Public License
-#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
+#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.  --enable-bootstrap
 ################################################################################
 
 PKG_NAME="gcc"
@@ -57,9 +57,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
                            --disable-libunwind-exceptions \
-                           --with-glibc-version=2.19 \
                            --disable-libssp \
-                           --enable-bootstrap \
                            --disable-libmudflap \
                            --disable-libquadmath \
                            --disable-libmpx \
