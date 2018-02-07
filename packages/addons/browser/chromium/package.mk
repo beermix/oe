@@ -58,24 +58,25 @@ make_host() {
 
 make_target() {
   strip_lto
-  export LDFLAGS="$LDFLAGS -ludev"
-  export LD=$CXX
+  # export LDFLAGS="$LDFLAGS -ludev"
+  # export LD=$CXX
 
   # https://chromium-review.googlesource.com/c/chromium/src/+/712575
   # _flags+=('exclude_unwind_tables=true')
-#  export CFLAGS=$(echo "$CFLAGS"|sed -e 's/-g //')
-#  export CXXFLAGS=$(echo "$CXXFLAGS"|sed -e 's/-g //')
-#  export CFLAGS="$CFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables"
-#  export CXXFLAGS="$CXXFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables"
-#  export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
+  # export CFLAGS=$(echo "$CFLAGS"|sed -e 's/-g //')
+  # export CXXFLAGS=$(echo "$CXXFLAGS"|sed -e 's/-g //')
+  # export CFLAGS="$CFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables"
+  # export CXXFLAGS="$CXXFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables"
+  # export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
   
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--as-needed||g"`
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed||"`
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now||"`
   
-#  export LDFLAGS="$LDFLAGS -s"
-#  export CFLAGS=`echo $CFLAGS | sed -e "s|-fomit-frame-pointer||g"`
-#  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-fomit-frame-pointer||g"`
+  # export LDFLAGS="$LDFLAGS -s"
+  # export CFLAGS=`echo $CFLAGS | sed -e "s|-fomit-frame-pointer||g"`
+  # export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-fomit-frame-pointer||g"`
+  
   export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations"
   
   export CCACHE_SLOPPINESS=time_macros
@@ -111,6 +112,7 @@ make_target() {
     'use_lld=false'
     'use_system_freetype=true'
     'use_system_harfbuzz=true'
+    'linux_link_libudev=true'
     'use_gtk3=false'
     'use_kerberos=false'
     'use_pulseaudio=false'
