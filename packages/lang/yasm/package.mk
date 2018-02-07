@@ -42,4 +42,4 @@ PKG_CONFIGURE_OPTS_HOST="--disable-debug \
                          --without-libiconv-prefix \
                          --without-libintl-prefix"
 
-#PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
+PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"

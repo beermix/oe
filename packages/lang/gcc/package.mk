@@ -53,6 +53,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-nls \
                            --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
+                           --disable-libunwind-exceptions \
                            --with-glibc-version=2.19 \
                            --without-ppl \
                            --without-cloog \
@@ -94,7 +95,6 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-libstdcxx-time \
                          --enable-clocale=gnu \
                          --enable-libatomic \
-                         --disable-libunwind-exceptions \
                          $GCC_OPTS"
 
 pre_configure_host() {
