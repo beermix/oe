@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="binutils"
-PKG_VERSION="2.29"
-#PKG_SHA256="6e46b8aeae2f727a36f0bd9505e405768a72218f1796f0d09757d45209871ae6"
+PKG_VERSION="2.30"
+PKG_SHA256="6e46b8aeae2f727a36f0bd9505e405768a72218f1796f0d09757d45209871ae6"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/binutils/"
@@ -39,9 +39,10 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --disable-libada \
                          --disable-libssp \
                          --enable-version-specific-runtime-libs \
-                         --enable-lto \
+                         --disable-lto \
                          --enable-plugins \
                          --disable-nls \
+                         --disable-gold \
                          --enable-poison-system-directories"
 
 PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
