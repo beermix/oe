@@ -29,7 +29,7 @@ PKG_LONGDESC="Small build system with a focus on speed"
 PKG_TOOLCHAIN="manual"
 
 make_host() {
-  CXX=/usr/bin/clang++-5.0 CFLAGS="-O3" python3 ./configure.py --bootstrap --verbose
+  CXX=/usr/bin/clang++-5.0 python3 ./configure.py --bootstrap --verbose
 }
 
 makeinstall_host() {
