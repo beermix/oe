@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="glibc"
-PKG_VERSION="56170e0"
+PKG_VERSION="2.27"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/bminor/glibc/tree/release/2.27/master"
-#PKG_URL="http://ftp.gnu.org/gnu/glibc/glibc-2.27.tar.xz"
-PKG_URL="https://github.com/bminor/glibc/archive/$PKG_VERSION.tar.gz"
+PKG_URL="http://ftp.gnu.org/gnu/glibc/glibc-2.27.tar.xz"
+#PKG_URL="https://github.com/bminor/glibc/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap Python3:host"
 PKG_DEPENDS_INIT="glibc"
 PKG_SECTION="toolchain/devel"

@@ -2,9 +2,9 @@
 set -e
 url=git://sourceware.org/git/glibc.git
 package=glibc
-tag=glibc-2.26
-branch=release/2.26/master
-out=$package-git.patch
+tag=glibc-2.27
+branch=release/2.27/master
+out=/home/user/oe/packages/devel/glibc/patches/000-git.patch
 repo=$package.git
 
 # use filterdiff, etc to exclude bad chunks from diff
