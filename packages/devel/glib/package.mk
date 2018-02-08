@@ -18,12 +18,12 @@
 ################################################################################
 
 PKG_NAME="glib"
-PKG_VERSION="2.54.3"
+PKG_VERSION="2.55.2"
 PKG_ARCH="any"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://ftp.gnome.org/pub/gnome/sources/glib/?C=M;O=D"
 PKG_URL="http://ftp.gnome.org/pub/gnome/sources/glib/${PKG_VERSION%.*}/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain zlib libffi pcre Python2:host util-linux"
+PKG_DEPENDS_TARGET="toolchain zlib libffi pcre Python2:host util-linux elfutils"
 PKG_DEPENDS_HOST="libffi:host"
 PKG_SECTION="devel"
 PKG_SHORTDESC="glib: C support library"
@@ -40,16 +40,15 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_snprintf_c99=yes \
                            --disable-selinux \
                            --disable-fam \
                            --enable-xattr \
-                           --disable-libelf \
+                           --enable-libelf \
                            --disable-gtk-doc \
                            --disable-gtk-doc-html \
                            --disable-man \
                            --disable-dtrace \
                            --disable-systemtap \
                            --enable-Bsymbolic \
-                           --with-gnu-ld \
                            --with-threads=posix \
-                           --with-pcre=internal \
+                           --with-pcre=system \
                            --with-python=python"
 
 post_makeinstall_target() {

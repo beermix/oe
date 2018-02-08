@@ -1,0 +1,31 @@
+From e9dd5e18193c6e95b47c9cb9e60803171603270d Mon Sep 17 00:00:00 2001
+From: Philip Withnall <withnall@endlessm.com>
+Date: Thu, 8 Feb 2018 12:28:40 +0000
+Subject: [PATCH] gkeyfile: Fix -Wincompatible-pointer-types warning
+
+Introduced in commit 1574321e51dc20eb2b0fdd699966428be3cc05eb.
+
+This fix introduces no functional changes (just a cast).
+
+Signed-off-by: Philip Withnall <withnall@endlessm.com>
+Reviewed-by: nobody
+---
+ glib/gkeyfile.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/glib/gkeyfile.c b/glib/gkeyfile.c
+index 59730f7c1..ae3bbbc1d 100644
+--- a/glib/gkeyfile.c
++++ b/glib/gkeyfile.c
+@@ -2300,7 +2300,10 @@ g_key_file_get_locale_for_key (GKeyFile    *key_file,
+   g_return_val_if_fail (key != NULL, NULL);
+ 
+   if (locale != NULL)
+-    languages = languages_allocated = g_get_locale_variants (locale);
++    {
++      languages_allocated = g_get_locale_variants (locale);
++      languages = (const gchar * const *) languages_allocated;
++    }
+   else
+     languages = g_get_language_names ();
+ 
