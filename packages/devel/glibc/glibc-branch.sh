@@ -29,3 +29,5 @@ fi
 mv -f $out{.tmp,}
 
 
+#%groupadd -P nscd -g 144 -r nscd
+#%useradd -P nscd -u 144 -r -d /tmp -s /bin/false -c "Name Service Cache Daemon" -g nscd nscd
