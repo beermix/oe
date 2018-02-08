@@ -31494,3 +31494,845 @@ index d4df714818..ebc652ba76 100644
  #define BFD_VERSION @bfd_version@
  #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
  #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 5ffeba4a0955962b773d2ecff34942e37fe4d7ba
+Author: Alan Modra <amodra@gmail.com>
+Date:   Mon Feb 5 13:17:52 2018 +1030
+
+    Revert "PowerPC PLT speculative execution barriers"
+    
+    This reverts most of commit d847d5180e.
+    Left in place are addition of --no-plt-align to some ppc32 ld tests
+    and the ld.texinfo --no-plt-thread-safe fix.
+
+diff --git a/bfd/ChangeLog b/bfd/ChangeLog
+index 9fe447a29e..bff6158834 100644
+--- a/bfd/ChangeLog
++++ b/bfd/ChangeLog
+@@ -1,3 +1,11 @@
++2018-02-07  Alan Modra  <amodra@gmail.com>
++
++	Revert 2018-01-17  Alan Modra  <amodra@gmail.com>
++	* elf32-ppc.c: Remove speculation barrier support.
++	* elf32-ppc.h: Likewise.
++	* elf64-ppc.c: Likewise.
++	* elf64-ppc.h: Likewise.
++
+ 2018-02-05  Renlin Li  <renlin.li@arm.com>
+ 
+ 	PR ld/22764
+diff --git a/bfd/elf32-ppc.c b/bfd/elf32-ppc.c
+index 32104a12fd..092b1ced8d 100644
+--- a/bfd/elf32-ppc.c
++++ b/bfd/elf32-ppc.c
+@@ -69,7 +69,7 @@ static bfd_reloc_status_type ppc_elf_unhandled_reloc
+ /* For new-style .glink and .plt.  */
+ #define GLINK_PLTRESOLVE 16*4
+ #define GLINK_ENTRY_SIZE(htab, h)					\
+-  (((!htab->params->speculate_indirect_jumps ? 6*4 : 4*4)			\
++  ((4*4									\
+     + (h != NULL							\
+        && h == htab->tls_get_addr					\
+        && !htab->params->no_tls_get_addr_opt ? 8*4 : 0)			\
+@@ -155,8 +155,6 @@ static const bfd_vma ppc_elf_vxworks_pic_plt0_entry
+ #define BA		0x48000002
+ #define BCL_20_31	0x429f0005
+ #define BCTR		0x4e800420
+-#define CRSETEQ		0x4c421242
+-#define BEQCTRM		0x4dc20420
+ #define BEQLR		0x4d820020
+ #define CMPWI_11_0	0x2c0b0000
+ #define LIS_11		0x3d600000
+@@ -2880,14 +2878,15 @@ ppc_elf_final_write_processing (bfd *abfd, bfd_boolean linker ATTRIBUTE_UNUSED)
+ static bfd_boolean
+ is_nonpic_glink_stub (bfd *abfd, asection *glink, bfd_vma off)
+ {
+-  bfd_byte buf[3 * 4];
++  bfd_byte buf[4 * 4];
+ 
+   if (!bfd_get_section_contents (abfd, glink, buf, off, sizeof buf))
+     return FALSE;
+ 
+   return ((bfd_get_32 (abfd, buf + 0) & 0xffff0000) == LIS_11
+ 	  && (bfd_get_32 (abfd, buf + 4) & 0xffff0000) == LWZ_11_11
+-	  && bfd_get_32 (abfd, buf + 8) == MTCTR_11);
++	  && bfd_get_32 (abfd, buf + 8) == MTCTR_11
++	  && bfd_get_32 (abfd, buf + 12) == BCTR);
+ }
+ 
+ static bfd_boolean
+@@ -3366,7 +3365,7 @@ ppc_elf_link_hash_table_create (bfd *abfd)
+ {
+   struct ppc_elf_link_hash_table *ret;
+   static struct ppc_elf_params default_params
+-    = { PLT_OLD, 0, 1, 0, 1, 0, 0, 12, 0, 0, 0 };
++    = { PLT_OLD, 0, 0, 1, 0, 0, 12, 0, 0, 0 };
+ 
+   ret = bfd_zmalloc (sizeof (struct ppc_elf_link_hash_table));
+   if (ret == NULL)
+@@ -7171,8 +7170,6 @@ ppc_elf_relax_section (bfd *abfd,
+ 		  size = 4 * ARRAY_SIZE (stub_entry);
+ 		  insn_offset = 0;
+ 		}
+-	      if (!htab->params->speculate_indirect_jumps)
+-		size += 8;
+ 	      stub_rtype = R_PPC_RELAX;
+ 	      if (tsec == htab->elf.splt
+ 		  || tsec == htab->glink)
+@@ -7454,26 +7451,6 @@ elf_finish_pointer_linker_section (bfd *input_bfd,
+ #define PPC_HI(v) (((v) >> 16) & 0xffff)
+ #define PPC_HA(v) PPC_HI ((v) + 0x8000)
+ 
+-static inline bfd_byte *
+-output_bctr (struct ppc_elf_link_hash_table *htab, bfd *obfd, bfd_byte *p)
+-{
+-  if (!htab->params->speculate_indirect_jumps)
+-    {
+-      bfd_put_32 (obfd, CRSETEQ, p);
+-      p += 4;
+-      bfd_put_32 (obfd, BEQCTRM, p);
+-      p += 4;
+-      bfd_put_32 (obfd, B, p);
+-      p += 4;
+-    }
+-  else
+-    {
+-      bfd_put_32 (obfd, BCTR, p);
+-      p += 4;
+-    }
+-  return p;
+-}
+-
+ static void
+ write_glink_stub (struct elf_link_hash_entry *h, struct plt_entry *ent,
+ 		  asection *plt_sec, unsigned char *p,
+@@ -7541,7 +7518,8 @@ write_glink_stub (struct elf_link_hash_entry *h, struct plt_entry *ent,
+   p += 4;
+   bfd_put_32 (output_bfd, MTCTR_11, p);
+   p += 4;
+-  p = output_bctr (htab, output_bfd, p);
++  bfd_put_32 (output_bfd, BCTR, p);
++  p += 4;
+   while (p < end)
+     {
+       bfd_put_32 (output_bfd, htab->params->ppc476_workaround ? BA : NOP, p);
+@@ -8979,7 +8957,6 @@ ppc_elf_relocate_section (bfd *output_bfd,
+ 		stub = stub_entry;
+ 		size = ARRAY_SIZE (stub_entry);
+ 	      }
+-	    --size;
+ 
+ 	    relocation += addend;
+ 	    if (bfd_link_relocatable (info))
+@@ -9004,7 +8981,6 @@ ppc_elf_relocate_section (bfd *output_bfd,
+ 		bfd_put_32 (input_bfd, insn, contents + insn_offset);
+ 		insn_offset += 4;
+ 	      }
+-	    output_bctr (htab, input_bfd, contents + insn_offset);
+ 
+ 	    /* Rewrite the reloc and convert one of the trailing nop
+ 	       relocs to describe this relocation.  */
+@@ -10713,7 +10689,8 @@ ppc_elf_finish_dynamic_sections (bfd *output_bfd,
+       p += 4;
+       bfd_put_32 (output_bfd, ADD_11_0_11, p);
+       p += 4;
+-      p = output_bctr (htab, output_bfd, p);
++      bfd_put_32 (output_bfd, BCTR, p);
++      p += 4;
+       while (p < endp)
+ 	{
+ 	  bfd_put_32 (output_bfd,
+diff --git a/bfd/elf32-ppc.h b/bfd/elf32-ppc.h
+index 8977efa23e..f56d027bf6 100644
+--- a/bfd/elf32-ppc.h
++++ b/bfd/elf32-ppc.h
+@@ -35,9 +35,6 @@ struct ppc_elf_params
+   /* Set if individual PLT call stubs should be aligned.  */
+   int plt_stub_align;
+ 
+-  /* Clear if PLT call stubs should use a speculative execution barrier.  */
+-  int speculate_indirect_jumps;
+-
+   /* Whether to emit symbols for stubs.  */
+   int emit_stub_syms;
+ 
+diff --git a/bfd/elf64-ppc.c b/bfd/elf64-ppc.c
+index 5cbb035532..6fcdff0678 100644
+--- a/bfd/elf64-ppc.c
++++ b/bfd/elf64-ppc.c
+@@ -161,10 +161,6 @@ static bfd_vma opd_entry_value
+ #define LD_R11_0R11	0xe96b0000	/* ld	 %r11,xxx+16@l(%r11) */
+ #define BCTR		0x4e800420	/* bctr			     */
+ 
+-#define CRSETEQ		0x4c421242	/* crset 4*%cr0+%eq	 */
+-#define BEQCTRM		0x4dc20420	/* beqctr-		 */
+-#define BEQCTRLM	0x4dc20421	/* beqctrl-		 */
+-
+ #define ADDI_R11_R11	0x396b0000	/* addi %r11,%r11,off@l	 */
+ #define ADDIS_R2_R2	0x3c420000	/* addis %r2,%r2,off@ha	 */
+ #define ADDI_R2_R2	0x38420000	/* addi	 %r2,%r2,off@l	 */
+@@ -193,8 +189,7 @@ static bfd_vma opd_entry_value
+ 
+ /* __glink_PLTresolve stub instructions.  We enter with the index in R0.  */
+ #define GLINK_PLTRESOLVE_SIZE(htab)			\
+-  (8u + (htab->opd_abi ? 11 * 4 : 14 * 4)		\
+-   + (!htab->params->speculate_indirect_jumps ? 2 * 4 : 0))
++  (8u + (htab->opd_abi ? 11 * 4 : 14 * 4))
+ 					/* 0:				*/
+ 					/*  .quad plt0-1f		*/
+ 					/* __glink:			*/
+@@ -9886,8 +9881,6 @@ size_global_entry_stubs (struct elf_link_hash_entry *h, void *inf)
+ 	unsigned int align_power;
+ 
+ 	stub_size = 16;
+-	if (!htab->params->speculate_indirect_jumps)
+-	  stub_size += 8;
+ 	stub_off = s->size;
+ 	if (htab->params->plt_stub_align >= 0)
+ 	  align_power = htab->params->plt_stub_align;
+@@ -10453,8 +10446,6 @@ plt_stub_size (struct ppc_link_hash_table *htab,
+     size += 4;
+   if (PPC_HA (off) != 0)
+     size += 4;
+-  if (!htab->params->speculate_indirect_jumps)
+-    size += 8;
+   if (htab->opd_abi)
+     {
+       size += 4;
+@@ -10476,11 +10467,7 @@ plt_stub_size (struct ppc_link_hash_table *htab,
+       size += 7 * 4;
+       if (ALWAYS_EMIT_R2SAVE
+ 	  || stub_entry->stub_type == ppc_stub_plt_call_r2save)
+-	{
+-	  size += 6 * 4;
+-	  if (!htab->params->speculate_indirect_jumps)
+-	    size -= 4;
+-	}
++	size += 6 * 4;
+     }
+   return size;
+ }
+@@ -10515,26 +10502,6 @@ plt_stub_pad (struct ppc_link_hash_table *htab,
+   return 0;
+ }
+ 
+-static inline bfd_byte *
+-output_bctr (struct ppc_link_hash_table *htab, bfd *obfd, bfd_byte *p)
+-{
+-  if (!htab->params->speculate_indirect_jumps)
+-    {
+-      bfd_put_32 (obfd, CRSETEQ, p);
+-      p += 4;
+-      bfd_put_32 (obfd, BEQCTRM, p);
+-      p += 4;
+-      bfd_put_32 (obfd, B_DOT, p);
+-      p += 4;
+-    }
+-  else
+-    {
+-      bfd_put_32 (obfd, BCTR, p);
+-      p += 4;
+-    }
+-  return p;
+-}
+-
+ /* Build a .plt call stub.  */
+ 
+ static inline bfd_byte *
+@@ -10555,7 +10522,6 @@ build_plt_stub (struct ppc_link_hash_table *htab,
+   if (!ALWAYS_USE_FAKE_DEP
+       && plt_load_toc
+       && plt_thread_safe
+-      && htab->params->speculate_indirect_jumps
+       && !((stub_entry->h == htab->tls_get_addr_fd
+ 	    || stub_entry->h == htab->tls_get_addr)
+ 	   && htab->params->tls_get_addr_opt))
+@@ -10710,7 +10676,7 @@ build_plt_stub (struct ppc_link_hash_table *htab,
+       bfd_put_32 (obfd, B_DOT | (cmp_branch_off & 0x3fffffc), p), p += 4;
+     }
+   else
+-    p = output_bctr (htab, obfd, p);
++    bfd_put_32 (obfd, BCTR, p),					p += 4;
+   return p;
+ }
+ 
+@@ -10754,13 +10720,7 @@ build_tls_get_addr_stub (struct ppc_link_hash_table *htab,
+   if (r != NULL)
+     r[0].r_offset += 2 * 4;
+   p = build_plt_stub (htab, stub_entry, p, offset, r);
+-  if (!htab->params->speculate_indirect_jumps)
+-    {
+-      p -= 4;
+-      bfd_put_32 (obfd, BEQCTRLM, p - 4);
+-    }
+-  else
+-    bfd_put_32 (obfd, BCTRL, p - 4);
++  bfd_put_32 (obfd, BCTRL, p - 4);
+ 
+   bfd_put_32 (obfd, LD_R2_0R1 + STK_TOC (htab), p),	p += 4;
+   bfd_put_32 (obfd, LD_R11_0R1 + STK_LINKER (htab), p),	p += 4;
+@@ -11113,7 +11073,8 @@ ppc_build_one_stub (struct bfd_hash_entry *gen_entry, void *in_arg)
+       p += 4;
+       bfd_put_32 (htab->params->stub_bfd, MTCTR_R12, p);
+       p += 4;
+-      p = output_bctr (htab, htab->params->stub_bfd, p);
++      bfd_put_32 (htab->params->stub_bfd, BCTR, p);
++      p += 4;
+       break;
+ 
+     case ppc_stub_plt_call:
+@@ -11446,8 +11407,6 @@ ppc_size_one_stub (struct bfd_hash_entry *gen_entry, void *in_arg)
+ 	      if (PPC_LO (r2off) != 0)
+ 		size += 4;
+ 	    }
+-	  if (!htab->params->speculate_indirect_jumps)
+-	    size += 8;
+ 	}
+       else if (info->emitrelocations)
+ 	{
+@@ -13089,7 +13048,7 @@ build_global_entry_stubs (struct elf_link_hash_entry *h, void *inf)
+ 	p += 4;
+ 	bfd_put_32 (s->owner, MTCTR_R12, p);
+ 	p += 4;
+-	output_bctr (htab, s->owner, p);
++	bfd_put_32 (s->owner, BCTR, p);
+ 	break;
+       }
+   return TRUE;
+@@ -13218,7 +13177,8 @@ ppc64_elf_build_stubs (struct bfd_link_info *info,
+ 	  bfd_put_32 (htab->glink->owner, LD_R11_0R11 | 8, p);
+ 	  p += 4;
+ 	}
+-      p = output_bctr (htab, htab->glink->owner, p);
++      bfd_put_32 (htab->glink->owner, BCTR, p);
++      p += 4;
+       BFD_ASSERT (p == htab->glink->contents + GLINK_PLTRESOLVE_SIZE (htab));
+ 
+       /* Build the .glink lazy link call stubs.  */
+diff --git a/bfd/elf64-ppc.h b/bfd/elf64-ppc.h
+index b3d4d599ed..8fa01405ac 100644
+--- a/bfd/elf64-ppc.h
++++ b/bfd/elf64-ppc.h
+@@ -51,9 +51,6 @@ struct ppc64_elf_params
+   /* Set if PLT call stubs for localentry:0 functions should omit r2 save.  */
+   int plt_localentry0;
+ 
+-  /* Clear if PLT call stubs should use a speculative execution barrier.  */
+-  int speculate_indirect_jumps;
+-
+   /* Whether to canonicalize .opd so that there are no overlapping
+      .opd entries.  */
+   int non_overlapping_opd;
+diff --git a/gold/ChangeLog b/gold/ChangeLog
+index 0df5a7e650..dda445f86b 100644
+--- a/gold/ChangeLog
++++ b/gold/ChangeLog
+@@ -1,3 +1,9 @@
++2018-02-07  Alan Modra  <amodra@gmail.com>
++
++	Revert 2018-01-17  Alan Modra  <amodra@gmail.com>
++	* options.h: Remove --speculate-indirect-jumps support.
++	* powerpc.cc: Likewise.
++
+ 2018-02-02  Cary Coutant  <ccoutant@gmail.com>
+ 
+ 	* PR gold/22776
+diff --git a/gold/options.h b/gold/options.h
+index c80cd05fd5..b39d5ff7ba 100644
+--- a/gold/options.h
++++ b/gold/options.h
+@@ -1108,10 +1108,6 @@ class General_options
+ 	      N_("(PowerPC64 only) Optimize calls to ELFv2 localentry:0 functions"),
+ 	      N_("(PowerPC64 only) Don't optimize ELFv2 calls"));
+ 
+-  DEFINE_bool(speculate_indirect_jumps, options::TWO_DASHES, '\0', true,
+-	      N_("(PowerPC only) PLT call stubs without speculation barrier"),
+-	      N_("(PowerPC only) PLT call stubs with speculation barrier"));
+-
+   DEFINE_bool(plt_static_chain, options::TWO_DASHES, '\0', false,
+ 	      N_("(PowerPC64 only) PLT call stubs should load r11"),
+ 	      N_("(PowerPC64 only) PLT call stubs should not load r11"));
+diff --git a/gold/powerpc.cc b/gold/powerpc.cc
+index 3c38a06e83..f6d589c6ea 100644
+--- a/gold/powerpc.cc
++++ b/gold/powerpc.cc
+@@ -3781,8 +3781,6 @@ static const uint32_t b			= 0x48000000;
+ static const uint32_t bcl_20_31		= 0x429f0005;
+ static const uint32_t bctr		= 0x4e800420;
+ static const uint32_t bctrl		= 0x4e800421;
+-static const uint32_t beqctrm		= 0x4dc20420;
+-static const uint32_t beqctrlm		= 0x4dc20421;
+ static const uint32_t beqlr		= 0x4d820020;
+ static const uint32_t blr		= 0x4e800020;
+ static const uint32_t bnectr_p4		= 0x4ce20420;
+@@ -3792,7 +3790,6 @@ static const uint32_t cmpdi_11_0	= 0x2c2b0000;
+ static const uint32_t cmpwi_11_0	= 0x2c0b0000;
+ static const uint32_t cror_15_15_15	= 0x4def7b82;
+ static const uint32_t cror_31_31_31	= 0x4ffffb82;
+-static const uint32_t crseteq		= 0x4c421242;
+ static const uint32_t ld_0_1		= 0xe8010000;
+ static const uint32_t ld_0_12		= 0xe80c0000;
+ static const uint32_t ld_2_1		= 0xe8410000;
+@@ -4168,24 +4165,6 @@ write_insn(unsigned char* p, uint32_t v)
+   elfcpp::Swap<32, big_endian>::writeval(p, v);
+ }
+ 
+-template<bool big_endian>
+-static unsigned char*
+-output_bctr(unsigned char* p)
+-{
+-  if (!parameters->options().speculate_indirect_jumps())
+-    {
+-      write_insn<big_endian>(p, crseteq);
+-      p += 4;
+-      write_insn<big_endian>(p, beqctrm);
+-      p += 4;
+-      write_insn<big_endian>(p, b);
+-    }
+-  else
+-    write_insn<big_endian>(p, bctr);
+-  p += 4;
+-  return p;
+-}
+-
+ template<int size>
+ static inline unsigned int
+ param_plt_align()
+@@ -4454,7 +4433,6 @@ class Stub_table : public Output_relaxed_input_section
+       {
+ 	const Symbol* gsym = p->first.sym_;
+ 	return (4 * 4
+-		+ (!parameters->options().speculate_indirect_jumps() ? 2 * 4 : 0)
+ 		+ (this->targ_->is_tls_get_addr_opt(gsym) ? 8 * 4 : 0));
+       }
+ 
+@@ -4470,8 +4448,6 @@ class Stub_table : public Output_relaxed_input_section
+     got_addr += ppcobj->toc_base_offset();
+     Address off = plt_addr - got_addr;
+     unsigned int bytes = 4 * 4 + 4 * (ha(off) != 0);
+-    if (!parameters->options().speculate_indirect_jumps())
+-      bytes += 2 * 4;
+     const Symbol* gsym = p->first.sym_;
+     if (this->targ_->is_tls_get_addr_opt(gsym))
+       bytes += 13 * 4;
+@@ -4502,8 +4478,6 @@ class Stub_table : public Output_relaxed_input_section
+     if (p->first.dest_ - loc + (1 << 25) < 2 << 25)
+       return 4;
+     unsigned int bytes = 16;
+-    if (!parameters->options().speculate_indirect_jumps())
+-      bytes += 8;
+     if (size == 32 && parameters->options().output_is_position_independent())
+       bytes += 16;
+     return bytes;
+@@ -4955,8 +4929,7 @@ class Output_data_glink : public Output_section_data
+   {
+     if (size == 64)
+       return (8
+-	      + (this->targ_->abiversion() < 2 ? 11 * 4 : 14 * 4)
+-	      + (!parameters->options().speculate_indirect_jumps() ? 2 * 4 : 0));
++	      + (this->targ_->abiversion() < 2 ? 11 * 4 : 14 * 4));
+     return 16 * 4;
+   }
+ 
+@@ -5033,8 +5006,7 @@ Output_data_glink<size, big_endian>::add_global_entry(const Symbol* gsym)
+   std::pair<typename Global_entry_stub_entries::iterator, bool> p
+     = this->global_entry_stubs_.insert(std::make_pair(gsym, off));
+   if (p.second)
+-    this->ge_size_
+-      = off + 16 + (!parameters->options().speculate_indirect_jumps() ? 8 : 0);
++    this->ge_size_ = off + 16;
+ }
+ 
+ template<int size, bool big_endian>
+@@ -5223,10 +5195,7 @@ Stub_table<size, big_endian>::do_write(Output_file* of)
+ 		= plt_load_toc && this->targ_->plt_thread_safe();
+ 	      bool use_fake_dep = false;
+ 	      Address cmp_branch_off = 0;
+-	      if (thread_safe
+-		  && !parameters->options().speculate_indirect_jumps())
+-		use_fake_dep = true;
+-	      else if (thread_safe)
++	      if (thread_safe)
+ 		{
+ 		  unsigned int pltindex
+ 		    = ((pltoff - this->targ_->first_plt_entry_offset())
+@@ -5274,7 +5243,7 @@ Stub_table<size, big_endian>::do_write(Output_file* of)
+ 						 + this->targ_->stk_linker()));
+ 		      p += 4;
+ 		    }
+-		  use_fake_dep |= thread_safe;
++		  use_fake_dep = thread_safe;
+ 		}
+ 	      if (ha(off) != 0)
+ 		{
+@@ -5365,14 +5334,7 @@ Stub_table<size, big_endian>::do_write(Output_file* of)
+ 	      if (!cs->second.localentry0_
+ 		  && this->targ_->is_tls_get_addr_opt(gsym))
+ 		{
+-		  if (!parameters->options().speculate_indirect_jumps())
+-		    {
+-		      write_insn<big_endian>(p, crseteq);
+-		      p += 4;
+-		      write_insn<big_endian>(p, beqctrlm);
+-		    }
+-		  else
+-		    write_insn<big_endian>(p, bctrl);
++		  write_insn<big_endian>(p, bctrl);
+ 		  p += 4;
+ 		  write_insn<big_endian>(p, ld_2_1 + this->targ_->stk_toc());
+ 		  p += 4;
+@@ -5391,7 +5353,7 @@ Stub_table<size, big_endian>::do_write(Output_file* of)
+ 		  write_insn<big_endian>(p, b | (cmp_branch_off & 0x3fffffc));
+ 		}
+ 	      else
+-		output_bctr<big_endian>(p);
++		write_insn<big_endian>(p, bctr);
+ 	    }
+ 	}
+ 
+@@ -5426,7 +5388,7 @@ Stub_table<size, big_endian>::do_write(Output_file* of)
+ 		  write_insn<big_endian>(p, ld_12_12 + l(brltoff)),	p += 4;
+ 		}
+ 	      write_insn<big_endian>(p, mtctr_12),			p += 4;
+-	      output_bctr<big_endian>(p);
++	      write_insn<big_endian>(p, bctr);
+ 	    }
+ 	}
+     }
+@@ -5522,7 +5484,7 @@ Stub_table<size, big_endian>::do_write(Output_file* of)
+ 	      p += 4;
+ 	      write_insn<big_endian>(p, mtctr_11);
+ 	      p += 4;
+-	      output_bctr<big_endian>(p);
++	      write_insn<big_endian>(p, bctr);
+ 	    }
+ 	}
+ 
+@@ -5563,7 +5525,7 @@ Stub_table<size, big_endian>::do_write(Output_file* of)
+ 	  p += 4;
+ 	  write_insn<big_endian>(p, mtctr_12);
+ 	  p += 4;
+-	  output_bctr<big_endian>(p);
++	  write_insn<big_endian>(p, bctr);
+ 	}
+     }
+   if (this->need_save_res_)
+@@ -5630,7 +5592,7 @@ Output_data_glink<size, big_endian>::do_write(Output_file* of)
+ 	      write_insn<big_endian>(p, mtctr_12),		p += 4;
+ 	      write_insn<big_endian>(p, ld_11_11 + 8),		p += 4;
+ 	    }
+-	  p = output_bctr<big_endian>(p);
++	  write_insn<big_endian>(p, bctr),			p += 4;
+ 	  gold_assert(p == oview + this->pltresolve_size());
+ 
+ 	  // Write lazy link call stubs.
+@@ -5686,7 +5648,7 @@ Output_data_glink<size, big_endian>::do_write(Output_file* of)
+ 	  write_insn<big_endian>(p, addis_12_12 + ha(off)),	p += 4;
+ 	  write_insn<big_endian>(p, ld_12_12 + l(off)),		p += 4;
+ 	  write_insn<big_endian>(p, mtctr_12),			p += 4;
+-	  output_bctr<big_endian>(p);
++	  write_insn<big_endian>(p, bctr);
+ 	}
+     }
+   else
+@@ -5778,7 +5740,8 @@ Output_data_glink<size, big_endian>::do_write(Output_file* of)
+ 	  write_insn<big_endian>(p, add_11_0_11);
+ 	}
+       p += 4;
+-      p = output_bctr<big_endian>(p);
++      write_insn<big_endian>(p, bctr);
++      p += 4;
+       while (p < end_p)
+ 	{
+ 	  write_insn<big_endian>(p, nop);
+diff --git a/ld/ChangeLog b/ld/ChangeLog
+index e871cef7c0..5df49e8c0c 100644
+--- a/ld/ChangeLog
++++ b/ld/ChangeLog
+@@ -1,3 +1,14 @@
++2018-02-07  Alan Modra  <amodra@gmail.com>
++
++	Revert 2018-01-17  Alan Modra  <amodra@gmail.com>
++	* emultempl/ppc32elf.em: Remove --speculate-indirect-jumps support.
++	* emultempl/ppc64elf.em: Likesize
++	* ld.texinfo: Likewise
++	* testsuite/ld-powerpc/elfv2exe.d,
++	* testsuite/ld-powerpc/elfv2so.d,
++	* testsuite/ld-powerpc/relbrlt.d,
++	* testsuite/ld-powerpc/powerpc.exp: Likewise.
++
+ 2018-02-05  Renlin Li  <renlin.li@arm.com>
+ 
+ 	PR ld/22764
+diff --git a/ld/emultempl/ppc32elf.em b/ld/emultempl/ppc32elf.em
+index 3007fb2f80..1b6339ea56 100644
+--- a/ld/emultempl/ppc32elf.em
++++ b/ld/emultempl/ppc32elf.em
+@@ -38,7 +38,7 @@ static int notlsopt = 0;
+ /* Choose the correct place for .got.  */
+ static int old_got = 0;
+ 
+-static struct ppc_elf_params params = { PLT_UNSET, 0, 1, -1,
++static struct ppc_elf_params params = { PLT_UNSET, 0, -1,
+ 					0, 0, 0, 0, 0, 0, 0 };
+ 
+ static void
+@@ -246,8 +246,6 @@ enum ppc32_opt
+   OPTION_NO_TLS_GET_ADDR_OPT,
+   OPTION_NEW_PLT,
+   OPTION_OLD_PLT,
+-  OPTION_SPECULATE_INDIRECT_JUMPS,
+-  OPTION_NO_SPECULATE_INDIRECT_JUMPS,
+   OPTION_PLT_ALIGN,
+   OPTION_NO_PLT_ALIGN,
+   OPTION_OLD_GOT,
+@@ -269,8 +267,6 @@ if test -z "$VXWORKS_BASE_EM_FILE" ; then
+   PARSE_AND_LIST_LONGOPTS=${PARSE_AND_LIST_LONGOPTS}'
+   { "secure-plt", no_argument, NULL, OPTION_NEW_PLT },
+   { "bss-plt", no_argument, NULL, OPTION_OLD_PLT },
+-  { "speculate-indirect-jumps", no_argument, NULL, OPTION_SPECULATE_INDIRECT_JUMPS },
+-  { "no-speculate-indirect-jumps", no_argument, NULL, OPTION_NO_SPECULATE_INDIRECT_JUMPS },
+   { "plt-align", optional_argument, NULL, OPTION_PLT_ALIGN },
+   { "no-plt-align", no_argument, NULL, OPTION_NO_PLT_ALIGN },
+   { "sdata-got", no_argument, NULL, OPTION_OLD_GOT },'
+@@ -304,12 +300,6 @@ if test -z "$VXWORKS_BASE_EM_FILE" ; then
+   --bss-plt                   Force old-style BSS PLT.\n"
+ 		   ));
+   fprintf (file, _("\
+-  --speculate-indirect-jumps  PLT call stubs without speculation barrier.\n"
+-		   ));
+-  fprintf (file, _("\
+-  --no-speculate-indirect-jumps PLT call stubs with speculation barrier.\n"
+-		   ));
+-  fprintf (file, _("\
+   --plt-align                 Align PLT call stubs to fit cache lines.\n"
+ 		   ));
+   fprintf (file, _("\
+@@ -360,14 +350,6 @@ PARSE_AND_LIST_ARGS_CASES=${PARSE_AND_LIST_ARGS_CASES}'
+       params.plt_style = PLT_OLD;
+       break;
+ 
+-    case OPTION_SPECULATE_INDIRECT_JUMPS:
+-      params.speculate_indirect_jumps = 1;
+-      break;
+-
+-    case OPTION_NO_SPECULATE_INDIRECT_JUMPS:
+-      params.speculate_indirect_jumps = 0;
+-      break;
+-
+     case OPTION_PLT_ALIGN:
+       if (optarg != NULL)
+ 	{
+diff --git a/ld/emultempl/ppc64elf.em b/ld/emultempl/ppc64elf.em
+index 0baa424339..0f8062a694 100644
+--- a/ld/emultempl/ppc64elf.em
++++ b/ld/emultempl/ppc64elf.em
+@@ -38,7 +38,7 @@ static struct ppc64_elf_params params = { NULL,
+ 					  &ppc_layout_sections_again,
+ 					  1, -1, 0,
+ 					  ${DEFAULT_PLT_STATIC_CHAIN-0}, -1, 5,
+-					  -1, 1, 0, -1, -1, 0};
++					  -1, 0, -1, -1, 0};
+ 
+ /* Fake input file for stubs.  */
+ static lang_input_statement_type *stub_file;
+@@ -692,8 +692,6 @@ enum ppc64_opt
+   OPTION_NO_PLT_STATIC_CHAIN,
+   OPTION_PLT_THREAD_SAFE,
+   OPTION_NO_PLT_THREAD_SAFE,
+-  OPTION_SPECULATE_INDIRECT_JUMPS,
+-  OPTION_NO_SPECULATE_INDIRECT_JUMPS,
+   OPTION_PLT_ALIGN,
+   OPTION_NO_PLT_ALIGN,
+   OPTION_PLT_LOCALENTRY,
+@@ -721,8 +719,6 @@ PARSE_AND_LIST_LONGOPTS=${PARSE_AND_LIST_LONGOPTS}'
+   { "no-plt-static-chain", no_argument, NULL, OPTION_NO_PLT_STATIC_CHAIN },
+   { "plt-thread-safe", no_argument, NULL, OPTION_PLT_THREAD_SAFE },
+   { "no-plt-thread-safe", no_argument, NULL, OPTION_NO_PLT_THREAD_SAFE },
+-  { "speculate-indirect-jumps", no_argument, NULL, OPTION_SPECULATE_INDIRECT_JUMPS },
+-  { "no-speculate-indirect-jumps", no_argument, NULL, OPTION_NO_SPECULATE_INDIRECT_JUMPS },
+   { "plt-align", optional_argument, NULL, OPTION_PLT_ALIGN },
+   { "no-plt-align", no_argument, NULL, OPTION_NO_PLT_ALIGN },
+   { "plt-localentry", optional_argument, NULL, OPTION_PLT_LOCALENTRY },
+@@ -764,13 +760,7 @@ PARSE_AND_LIST_OPTIONS=${PARSE_AND_LIST_OPTIONS}'
+   --plt-thread-safe           PLT call stubs with load-load barrier.\n"
+ 		   ));
+   fprintf (file, _("\
+-  --no-plt-thread-safe        PLT call stubs without load-load barrier.\n"
+-		   ));
+-  fprintf (file, _("\
+-  --speculate-indirect-jumps  PLT call stubs without speculation barrier.\n"
+-		   ));
+-  fprintf (file, _("\
+-  --no-speculate-indirect-jumps PLT call stubs with speculation barrier.\n"
++  --no-plt-thread-safe        PLT call stubs without barrier.\n"
+ 		   ));
+   fprintf (file, _("\
+   --plt-align [=<align>]      Align PLT call stubs to fit cache lines.\n"
+@@ -860,14 +850,6 @@ PARSE_AND_LIST_ARGS_CASES=${PARSE_AND_LIST_ARGS_CASES}'
+       params.plt_thread_safe = 0;
+       break;
+ 
+-    case OPTION_SPECULATE_INDIRECT_JUMPS:
+-      params.speculate_indirect_jumps = 1;
+-      break;
+-
+-    case OPTION_NO_SPECULATE_INDIRECT_JUMPS:
+-      params.speculate_indirect_jumps = 0;
+-      break;
+-
+     case OPTION_PLT_ALIGN:
+       if (optarg != NULL)
+ 	{
+diff --git a/ld/ld.texinfo b/ld/ld.texinfo
+index 764c4017c7..226e2deb32 100644
+--- a/ld/ld.texinfo
++++ b/ld/ld.texinfo
+@@ -7652,15 +7652,6 @@ looks for calls to commonly used functions that create threads, and if
+ seen, adds the necessary barriers.  Use these options to change the
+ default behaviour.
+ 
+-@cindex PowerPC64 PLT call stub speculative execution barrier
+-@kindex --speculate-indirect-jumps
+-@kindex --no-speculate-indirect-jumps
+-@item --speculate-indirect-jumps
+-@itemx --no-speculate-indirect-jumps
+-Use these options to control whether all indirect branch instructions
+-emitted by @code{ld}, such as those in the PLT, have a speculative
+-execution barrier to mitigate Spectre variant 2 attacks.
+-
+ @cindex PowerPC64 ELFv2 PLT localentry optimization
+ @kindex --plt-localentry
+ @kindex --no-plt-localentry
+diff --git a/ld/testsuite/ld-powerpc/elfv2exe.d b/ld/testsuite/ld-powerpc/elfv2exe.d
+index fa5b622827..77bf6e2568 100644
+--- a/ld/testsuite/ld-powerpc/elfv2exe.d
++++ b/ld/testsuite/ld-powerpc/elfv2exe.d
+@@ -1,6 +1,6 @@
+ #source: elfv2.s
+ #as: -a64
+-#ld: -melf64ppc --speculate-indirect-jumps --defsym f2=0x1234 --defsym f3=0x10008888 --defsym f4=0x1200000 --defsym _start=f1
++#ld: -melf64ppc --defsym f2=0x1234 --defsym f3=0x10008888 --defsym f4=0x1200000 --defsym _start=f1
+ #objdump: -dr
+ 
+ .*
+diff --git a/ld/testsuite/ld-powerpc/elfv2so.d b/ld/testsuite/ld-powerpc/elfv2so.d
+index 1c048e170b..e7cd45c9c2 100644
+--- a/ld/testsuite/ld-powerpc/elfv2so.d
++++ b/ld/testsuite/ld-powerpc/elfv2so.d
+@@ -1,6 +1,6 @@
+ #source: elfv2.s
+ #as: -a64
+-#ld: -melf64ppc -shared --speculate-indirect-jumps
++#ld: -melf64ppc -shared
+ #objdump: -dr
+ 
+ .*
+diff --git a/ld/testsuite/ld-powerpc/powerpc.exp b/ld/testsuite/ld-powerpc/powerpc.exp
+index d604787b88..14c9d1751d 100644
+--- a/ld/testsuite/ld-powerpc/powerpc.exp
++++ b/ld/testsuite/ld-powerpc/powerpc.exp
+@@ -121,11 +121,11 @@ set ppcelftests {
+      "tls32"}
+     {"TLS32 helper shared library" "-shared -melf32ppc tmpdir/tlslib32.o" "" "" {}
+      {} "libtlslib32.so"}
+-    {"TLS32 dynamic exec" "-melf32ppc --no-plt-align --speculate-indirect-jumps --no-ld-generated-unwind-info --hash-style=sysv tmpdir/tls32.o tmpdir/libtlslib32.so" "" "" {}
++    {"TLS32 dynamic exec" "-melf32ppc --no-plt-align --no-ld-generated-unwind-info --hash-style=sysv tmpdir/tls32.o tmpdir/libtlslib32.so" "" "" {}
+      {{readelf -WSsrl tlsexe32.r} {objdump -dr tlsexe32.d}
+       {objdump -sj.got tlsexe32.g} {objdump -sj.tdata tlsexe32.t}}
+      "tlsexe32"}
+-    {"TLS32 shared" "-shared -melf32ppc --no-plt-align --speculate-indirect-jumps --no-ld-generated-unwind-info --hash-style=sysv tmpdir/tls32.o" "" "" {}
++    {"TLS32 shared" "-shared -melf32ppc --no-plt-align --no-ld-generated-unwind-info --hash-style=sysv tmpdir/tls32.o" "" "" {}
+      {{readelf -WSsrl tlsso32.r} {objdump -dr tlsso32.d}
+       {objdump -sj.got tlsso32.g} {objdump -sj.tdata tlsso32.t}}
+      "tls32.so"}
+@@ -147,7 +147,7 @@ set ppcelftests {
+     {"TLS32 DLL" "-shared -melf32ppc --version-script tlsdll.ver" ""
+      "-a32" {tlsdll_32.s}
+      {} "tlsdll32.so"}
+-    {"TLS32 opt 5" "-melf32ppc -shared --gc-sections --secure-plt --no-plt-align --speculate-indirect-jumps tmpdir/tlsdll32.so" "" "-a32"  {tlsopt5_32.s}
++    {"TLS32 opt 5" "-melf32ppc -shared --gc-sections --secure-plt --no-plt-align tmpdir/tlsdll32.so" "" "-a32"  {tlsopt5_32.s}
+      {{objdump -dr tlsopt5_32.d}}
+      "tlsopt5_32"}
+     {"Shared library with global symbol" "-shared -melf32ppc" "" "-a32" {sdalib.s}
+@@ -174,15 +174,15 @@ set ppc64elftests {
+      {} "libtlslib.so"}
+     {"TLS helper old shared lib" "-shared -melf64ppc" "" "-a64" {oldtlslib.s}
+      {} "liboldlib.so"}
+-    {"TLS dynamic exec" "-melf64ppc --no-plt-align --speculate-indirect-jumps --no-ld-generated-unwind-info --hash-style=sysv tmpdir/tls.o tmpdir/libtlslib.so" "" "" {}
++    {"TLS dynamic exec" "-melf64ppc --no-plt-align --no-ld-generated-unwind-info --hash-style=sysv tmpdir/tls.o tmpdir/libtlslib.so" "" "" {}
+      {{readelf -WSsrl tlsexe.r} {objdump -dr tlsexe.d}
+       {objdump -sj.got tlsexe.g} {objdump -sj.tdata tlsexe.t}}
+      "tlsexe"}
+-    {"TLS dynamic old" "-melf64ppc --no-plt-align --speculate-indirect-jumps --no-ld-generated-unwind-info --hash-style=sysv tmpdir/tls.o tmpdir/liboldlib.so" "" "" {}
++    {"TLS dynamic old" "-melf64ppc --no-plt-align --no-ld-generated-unwind-info --hash-style=sysv tmpdir/tls.o tmpdir/liboldlib.so" "" "" {}
+      {{readelf -WSsrl tlsexe.r} {objdump -dr tlsexe.d}
+       {objdump -sj.got tlsexe.g} {objdump -sj.tdata tlsexe.t}}
+      "tlsexeold"}
+-    {"TLS shared" "-shared -melf64ppc --no-plt-align --speculate-indirect-jumps --no-ld-generated-unwind-info --hash-style=sysv tmpdir/tls.o" "" "" {}
++    {"TLS shared" "-shared -melf64ppc --no-plt-align --no-ld-generated-unwind-info --hash-style=sysv tmpdir/tls.o" "" "" {}
+      {{readelf -WSsrl tlsso.r} {objdump -dr tlsso.d}
+       {objdump -sj.got tlsso.g} {objdump -sj.tdata tlsso.t}}
+      "tls.so"}
+@@ -190,17 +190,17 @@ set ppc64elftests {
+      {{objdump -dr tlstoc.d} {objdump -sj.got tlstoc.g}
+       {objdump -sj.tdata tlstoc.t}}
+      "tlstoc"}
+-    {"TLSTOC dynamic exec" "-melf64ppc --no-plt-align --speculate-indirect-jumps --no-ld-generated-unwind-info --hash-style=sysv tmpdir/tlstoc.o tmpdir/libtlslib.so" ""
++    {"TLSTOC dynamic exec" "-melf64ppc --no-plt-align --no-ld-generated-unwind-info --hash-style=sysv tmpdir/tlstoc.o tmpdir/libtlslib.so" ""
+      "" {}
+      {{readelf -WSsrl tlsexetoc.r} {objdump -dr tlsexetoc.d}
+       {objdump -sj.got tlsexetoc.g} {objdump -sj.tdata tlsexetoc.t}}
+      "tlsexetoc"}
+-    {"TLSTOC dynamic old" "-melf64ppc --no-plt-align --speculate-indirect-jumps --no-ld-generated-unwind-info --hash-style=sysv tmpdir/tlstoc.o tmpdir/liboldlib.so" ""
++    {"TLSTOC dynamic old" "-melf64ppc --no-plt-align --no-ld-generated-unwind-info --hash-style=sysv tmpdir/tlstoc.o tmpdir/liboldlib.so" ""
+      "" {}
+      {{readelf -WSsrl tlsexetoc.r} {objdump -dr tlsexetoc.d}
+       {objdump -sj.got tlsexetoc.g} {objdump -sj.tdata tlsexetoc.t}}
+      "tlsexetocold"}
+-    {"TLSTOC shared" "-shared -melf64ppc --no-plt-align --speculate-indirect-jumps --no-ld-generated-unwind-info --hash-style=sysv tmpdir/tlstoc.o" "" "" {}
++    {"TLSTOC shared" "-shared -melf64ppc --no-plt-align --no-ld-generated-unwind-info --hash-style=sysv tmpdir/tlstoc.o" "" "" {}
+      {{readelf -WSsrl tlstocso.r} {objdump -dr tlstocso.d}
+       {objdump -sj.got tlstocso.g} {objdump -sj.tdata tlstocso.t}}
+      "tlstoc.so"}
+@@ -221,7 +221,7 @@ set ppc64elftests {
+      "tlsopt4"}
+     {"TLS DLL" "-shared -melf64ppc --version-script tlsdll.ver" "" "-a64" {tlsdll.s}
+      {} "tlsdll.so"}
+-    {"TLS opt 5" "-melf64ppc --no-plt-align --speculate-indirect-jumps -shared --gc-sections --no-plt-localentry tmpdir/tlsdll.so" "" "-a64"  {tlsopt5.s}
++    {"TLS opt 5" "-melf64ppc --no-plt-align -shared --gc-sections --no-plt-localentry tmpdir/tlsdll.so" "" "-a64"  {tlsopt5.s}
+      {{objdump -dr tlsopt5.d} {readelf -wf tlsopt5.wf}}
+      "tlsopt5"}
+     {"sym@tocbase" "-shared -melf64ppc" "" "-a64" {symtocbase-1.s symtocbase-2.s}
+diff --git a/ld/testsuite/ld-powerpc/relbrlt.d b/ld/testsuite/ld-powerpc/relbrlt.d
+index 510ba845ae..6f3db7d014 100644
+--- a/ld/testsuite/ld-powerpc/relbrlt.d
++++ b/ld/testsuite/ld-powerpc/relbrlt.d
+@@ -1,6 +1,6 @@
+ #source: relbrlt.s
+ #as: -a64
+-#ld: -melf64ppc --no-plt-align --speculate-indirect-jumps --no-ld-generated-unwind-info --emit-relocs
++#ld: -melf64ppc --no-plt-align --no-ld-generated-unwind-info --emit-relocs
+ #objdump: -Dr
+ 
+ .*
+
+commit caa839fba66600a6c36d3639906ed9110b79c307
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Thu Feb 8 00:01:38 2018 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index ebc652ba76..e39a32ea69 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20180207
++#define BFD_VERSION_DATE 20180208
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
