@@ -5,3 +5,19 @@ usage:
   configure [--const] [--zprefix] [--prefix=PREFIX]  [--eprefix=EXPREFIX]
     [--static] [--64] [--libdir=LIBDIR] [--sharedlibdir=LIBDIR]
     [--includedir=INCLUDEDIR] [--archs="-arch i386 -arch x86_64"]
+--------------------
+/home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/zlib-a17fefa/configure --help
+Чт фев  8 22:13:14 MSK 2018
+usage:
+  configure [--zlib-compat] [--prefix=PREFIX]  [--eprefix=EXPREFIX]
+    [--static] [--32] [--64] [--libdir=LIBDIR] [--sharedlibdir=LIBDIR]
+    [--includedir=INCLUDEDIR] [--archs="-arch i386 -arch x86_64"]
+    [--acle] [--neon]
+--------------------
+/home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/zlib-a17fefa/configure --help
+Чт фев  8 22:14:47 MSK 2018
+usage:
+  configure [--zlib-compat] [--prefix=PREFIX]  [--eprefix=EXPREFIX]
+    [--static] [--32] [--64] [--libdir=LIBDIR] [--sharedlibdir=LIBDIR]
+    [--includedir=INCLUDEDIR] [--archs="-arch i386 -arch x86_64"]
+    [--acle] [--neon]
