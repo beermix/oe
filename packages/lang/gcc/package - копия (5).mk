@@ -57,6 +57,8 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-default-libstdcxx-abi=gcc4-compatible \
                            --disable-libunwind-exceptions \
                            --disable-libssp \
+                           --disable-libmudflap \
+                           --disable-libquadmath \
                            --disable-libmpx \
                            --disable-libsanitizer \
                            --without-cuda-driver \
@@ -74,8 +76,6 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-libgomp \
                               --disable-libada \
                               --disable-libatomic \
-                              --disable-libmudflap \
-                              --disable-libquadmath \
                               --without-headers \
                               --with-newlib \
                               --disable-decimal-float \

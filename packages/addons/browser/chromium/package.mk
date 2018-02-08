@@ -29,7 +29,7 @@ PKG_LICENSE="Mixed"
 PKG_SITE="http://www.chromium.org/Home"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="pciutils dbus x11 libxss libXcomposite libXcursor libXtst alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk intel-vaapi-driver libva-vdpau-driver unclutter xdotool libinput libxkbcommon libdrm libjpeg-turbo libxslt freetype harfbuzz at-spi2-atk re2 snappy gtk+	chromium:host"
+PKG_DEPENDS_TARGET="pciutils dbus x11 libxss libXcomposite libXcursor libXtst alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk intel-vaapi-driver libva-vdpau-driver unclutter xdotool libinput libxkbcommon libdrm libjpeg-turbo libxslt freetype harfbuzz re2 snappy gtk+ chromium:host"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -226,13 +226,13 @@ addon() {
   cp -PL $(get_build_dir cairo)/.install_pkg/usr/lib/libcairo-gobject.so.2 $ADDON_BUILD/$PKG_ADDON_ID/lib
   
   # atk
-  cp -PL $(get_build_dir atk)/.install_pkg/usr/lib/libatk-1.0.so.0* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  # cp -PL $(get_build_dir atk)/.install_pkg/usr/lib/libatk-1.0.so.0* $ADDON_BUILD/$PKG_ADDON_ID/lib
   
   # at-spi2-atk
-  cp -PL $(get_build_dir at-spi2-atk)/.install_pkg/usr/lib/libatk-bridge-2.0.so.0* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  # cp -PL $(get_build_dir at-spi2-atk)/.install_pkg/usr/lib/libatk-bridge-2.0.so.0* $ADDON_BUILD/$PKG_ADDON_ID/lib
   
   # at-spi2-core
-  cp -PL $(get_build_dir at-spi2-core)/.install_pkg/usr/lib/libatspi.so.0* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  # cp -PL $(get_build_dir at-spi2-core)/.install_pkg/usr/lib/libatspi.so.0* $ADDON_BUILD/$PKG_ADDON_ID/lib
   
   # gtk3
   # cp -PL $(get_build_dir gtk3)/.install_pkg/usr/lib/libgailutil-3.so.0* $ADDON_BUILD/$PKG_ADDON_ID/lib
