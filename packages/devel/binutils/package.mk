@@ -14,7 +14,6 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
-# 
 ################################################################################
 
 PKG_NAME="binutils"
@@ -40,10 +39,11 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --disable-libada \
                          --disable-libssp \
                          --enable-version-specific-runtime-libs \
-                         --disable-lto \
                          --enable-plugins \
-                         --disable-nls \
-                         --enable-poison-system-directories"
+                         --enable-gold=no \
+                         --enable-ld=default \
+                         --enable-lto \
+                         --disable-nls"
 
 PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
                          --with-sysroot=$SYSROOT_PREFIX \

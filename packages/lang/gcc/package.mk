@@ -13,7 +13,7 @@
 #  GNU General Public License for more details.
 #
 #  You should have received a copy of the GNU General Public License
-#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.  --enable-bootstrap
+#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
 PKG_NAME="gcc"
@@ -39,19 +39,20 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-gmp=$TOOLCHAIN \
                            --with-mpfr=$TOOLCHAIN \
                            --with-mpc=$TOOLCHAIN \
+                           --with-gnu-as \
                            --with-gnu-ld \
                            --with-isl \
                            --enable-plugin \
                            --enable-lto \
+                           --enable-gold=no \
+                           --enable-ld=default \
                            --disable-multilib \
                            --disable-nls \
+                           --enable-checking=release \
+                           --with-default-libstdcxx-abi=gcc4-compatible \
                            --without-ppl \
                            --without-cloog \
                            --with-default-libstdcxx-abi=gcc4-compatible \
-                           --enable-gnu-indirect-function \
-                           --disable-vtable-verify \
-                           --enable-linker-build-id \
-                           --disable-libunwind-exceptions \
                            --disable-libssp \
                            --disable-libmpx \
                            --disable-libsanitizer \
@@ -93,6 +94,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          $GCC_OPTS"
 
 pre_configure_host() {
+  export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
 }
 
