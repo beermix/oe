@@ -45,7 +45,7 @@ configure_target() {
   sh bootstrap.sh --prefix=/usr \
                   --with-bjam=$TOOLCHAIN/bin/bjam \
                   --with-python=$TOOLCHAIN/bin/python \
-                  --with-python-root=$SYSROOT_PREFIX/usr
+                  --with-python-root=$SYSROOT_PREFIX/usr link=static
 
   echo "using gcc : `$CC -v 2>&1  | tail -n 1 |awk '{print $3}'` : $CC  : <compileflags>\"$CFLAGS\" <linkflags>\"$LDFLAGS\" ;" \
     > tools/build/src/user-config.jam
