@@ -78,7 +78,7 @@ make_target() {
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed||"`
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now||"`
   
-  #export LDFLAGS="$LDFLAGS -s"
+  # export LDFLAGS="$LDFLAGS -s"
   # export CFLAGS=`echo $CFLAGS | sed -e "s|-fomit-frame-pointer||g"`
   # export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-fomit-frame-pointer||g"`
   
