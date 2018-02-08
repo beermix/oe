@@ -128,6 +128,8 @@ pre_configure_target() {
   export OBJDUMP_FOR_HOST=objdump
 
 cat >config.cache <<EOF
+libc_cv_forced_unwind=yes
+libc_cv_c_cleanup=yes
 libc_cv_ssp=no
 libc_cv_ssp_strong=no
 libc_cv_slibdir=/usr/lib
