@@ -68,17 +68,17 @@ make_target() {
 
   # https://chromium-review.googlesource.com/c/chromium/src/+/712575
   # _flags+=('exclude_unwind_tables=true')
-  export CFLAGS=$(echo "$CFLAGS"|sed -e 's/-g //')
-  export CXXFLAGS=$(echo "$CXXFLAGS"|sed -e 's/-g //')
-  export CFLAGS="$CFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables"
-  export CXXFLAGS="$CXXFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables"
-  export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
+  # export CFLAGS=$(echo "$CFLAGS"|sed -e 's/-g //')
+  # export CXXFLAGS=$(echo "$CXXFLAGS"|sed -e 's/-g //')
+  # export CFLAGS="$CFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables"
+  # export CXXFLAGS="$CXXFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables"
+  # export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
   
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--as-needed||g"`
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed||"`
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now||"`
   
-  export LDFLAGS="$LDFLAGS -s"
+  #export LDFLAGS="$LDFLAGS -s"
   # export CFLAGS=`echo $CFLAGS | sed -e "s|-fomit-frame-pointer||g"`
   # export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-fomit-frame-pointer||g"`
   
@@ -112,23 +112,13 @@ make_target() {
     'use_cups=false'
     'use_custom_libcxx=false'
     'use_gconf=false'
-    'use_gio=false'
     'use_gnome_keyring=false'
     'use_gold=false'
     'use_lld=false'
-    'use_thin_lto=false'
     'use_system_freetype=true'
     'use_system_harfbuzz=true'
     'linux_link_libudev=true'
     'use_gtk3=false'
-    'enable_google_now=false'
-    'enable_mdns=true'
-    'use_alsa=true'
-    'use_dbus=true'
-    'use_glib=true'
-    'use_libpci=true'
-    'optimize_webui=false'
-    'rtc_enable_protobuf=false'
     'use_kerberos=false'
     'use_pulseaudio=false'
     'use_sysroot=true'
@@ -148,23 +138,12 @@ make_target() {
     "google_default_client_secret=\"${_google_default_client_secret}\""
   )
 
-# Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
-# Keys are the names in the above script; values are the dependencies in Arch
 readonly -A _system_libs=(
-  #[ffmpeg]=ffmpeg            # https://crbug.com/731766
-  #[flac]=flac
-  #[fontconfig]=fontconfig    # Enable for M65
-  #[freetype]=freetype2       # Using 'use_system_freetype=true' until M65
-  #[harfbuzz-ng]=harfbuzz     # Using 'use_system_harfbuzz=true' until M65
   [icu]=icu
   [libdrm]=
   [libjpeg]=libjpeg
-  #[libpng]=libpng            # https://crbug.com/752403#c10
-  #[libvpx]=libvpx            # https://bugs.gentoo.org/611394
-  #[libwebp]=libwebp
   #[libxml]=libxml2           # https://crbug.com/736026
   [libxslt]=libxslt
-  #[opus]=opus
   [re2]=re2
   [snappy]=snappy
   [yasm]=
@@ -193,8 +172,7 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
       -delete
   done
 
-  ./build/linux/unbundle/replace_gn_files.py --system-libraries "${!_system_libs[@]}"
-    
+  ./build/linux/unbundle/replace_gn_files.py  --system-libraries "${!_system_libs[@]}"
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
@@ -224,21 +202,21 @@ addon() {
   # cairo
   cp -PL $(get_build_dir cairo)/.install_pkg/usr/lib/libcairo.so.2 $ADDON_BUILD/$PKG_ADDON_ID/lib
   cp -PL $(get_build_dir cairo)/.install_pkg/usr/lib/libcairo-gobject.so.2 $ADDON_BUILD/$PKG_ADDON_ID/lib
-  
+
   # atk
   # cp -PL $(get_build_dir atk)/.install_pkg/usr/lib/libatk-1.0.so.0* $ADDON_BUILD/$PKG_ADDON_ID/lib
-  
+
   # at-spi2-atk
   # cp -PL $(get_build_dir at-spi2-atk)/.install_pkg/usr/lib/libatk-bridge-2.0.so.0* $ADDON_BUILD/$PKG_ADDON_ID/lib
-  
+
   # at-spi2-core
   # cp -PL $(get_build_dir at-spi2-core)/.install_pkg/usr/lib/libatspi.so.0* $ADDON_BUILD/$PKG_ADDON_ID/lib
-  
+
   # gtk3
   # cp -PL $(get_build_dir gtk3)/.install_pkg/usr/lib/libgailutil-3.so.0* $ADDON_BUILD/$PKG_ADDON_ID/lib
   # cp -PL $(get_build_dir gtk3)/.install_pkg/usr/lib/libgdk-3.so.0* $ADDON_BUILD/$PKG_ADDON_ID/lib
   # cp -PL $(get_build_dir gtk3)/.install_pkg/usr/lib/libgtk-3.so.0* $ADDON_BUILD/$PKG_ADDON_ID/lib
-  
+
   # gtk+
   cp -PL $(get_build_dir gtk+)/.install_pkg/usr/lib/libgdk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
   cp -PL $(get_build_dir gtk+)/.install_pkg/usr/lib/libgtk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
@@ -257,7 +235,7 @@ addon() {
 
   # libexif
   cp -PL $(get_build_dir libexif)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
-  
+
   # libxss
   cp -PL $(get_build_dir libxss)/.install_pkg/usr/lib/libXss.so.1* $ADDON_BUILD/$PKG_ADDON_ID/lib
 
