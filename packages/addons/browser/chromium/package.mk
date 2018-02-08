@@ -29,7 +29,7 @@ PKG_LICENSE="Mixed"
 PKG_SITE="http://www.chromium.org/Home"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="pciutils dbus x11 libxss libXcomposite libXcursor libXtst alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk intel-vaapi-driver libva-vdpau-driver unclutter xdotool libinput libxkbcommon libdrm libjpeg-turbo libxslt freetype harfbuzz at-spi2-atk re2 snappy gtk3 chromium:host"
+PKG_DEPENDS_TARGET="pciutils dbus x11 libxss libXcomposite libXcursor libXtst alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk intel-vaapi-driver libva-vdpau-driver unclutter xdotool libinput libxkbcommon libdrm libjpeg-turbo libxslt freetype harfbuzz at-spi2-atk re2 snappy gtk+	chromium:host"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -120,7 +120,7 @@ make_target() {
     'use_system_freetype=true'
     'use_system_harfbuzz=true'
     'linux_link_libudev=true'
-    'use_gtk3=true'
+    'use_gtk3=false'
     'enable_google_now=false'
     'enable_mdns=true'
     'use_alsa=true'
@@ -235,9 +235,13 @@ addon() {
   cp -PL $(get_build_dir at-spi2-core)/.install_pkg/usr/lib/libatspi.so.0* $ADDON_BUILD/$PKG_ADDON_ID/lib
   
   # gtk3
-  cp -PL $(get_build_dir gtk3)/.install_pkg/usr/lib/libgailutil-3.so.0* $ADDON_BUILD/$PKG_ADDON_ID/lib
-  cp -PL $(get_build_dir gtk3)/.install_pkg/usr/lib/libgdk-3.so.0* $ADDON_BUILD/$PKG_ADDON_ID/lib
-  cp -PL $(get_build_dir gtk3)/.install_pkg/usr/lib/libgtk-3.so.0* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  # cp -PL $(get_build_dir gtk3)/.install_pkg/usr/lib/libgailutil-3.so.0* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  # cp -PL $(get_build_dir gtk3)/.install_pkg/usr/lib/libgdk-3.so.0* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  # cp -PL $(get_build_dir gtk3)/.install_pkg/usr/lib/libgtk-3.so.0* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  
+  # gtk+
+  cp -PL $(get_build_dir gtk+)/.install_pkg/usr/lib/libgdk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_build_dir gtk+)/.install_pkg/usr/lib/libgtk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # harfbuzz
   cp -PL $(get_build_dir harfbuzz)/.install_pkg/usr/lib/libharfbuzz.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
