@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/s/gettext/"
 PKG_URL="http://ftp.gnu.org/pub/gnu/gettext/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_HOST="ccache:host m4:host libxml2:host"
+PKG_DEPENDS_HOST="ccache:host libxml2:host"
 PKG_DEPENDS_TARGET="glib libxml2"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="gettext: A program internationalization library and tools"
@@ -36,20 +36,15 @@ post_unpack() {
 
 PKG_CONFIGURE_SCRIPT="gettext-tools/configure"
 
-PKG_CONFIGURE_OPTS_HOST="EMACS="no" \
-			   am_cv_lib_iconv=no \
-			   am_cv_func_iconv=no \
-			   ac_cv_header_iconv_h=no \
-			   --enable-static \
-			   --disable-shared \
-			   --disable-rpath \
-			   --with-gnu-ld \
-			   --disable-java \
-			   --disable-curses \
-			   --disable-native-java \
-			   --with-libxml=$TOOLCHAIN \
-			   --disable-csharp \
-			   --without-emacs"
+PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared \
+                         --disable-rpath \
+                         --with-gnu-ld \
+                         --disable-java \
+                         --disable-curses \
+                         --with-included-libxml \
+                         --disable-native-java \
+                         --disable-csharp \
+                         --without-emacs"
                          
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-static \
@@ -59,9 +54,6 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --disable-native-java \
 			      --disable-openmp \
 			      --disable-curses \
-			      --with-included-gettext \
-			      --without-libintl-prefix \
-			      --without-libexpat-prefix \
 			      --without-emacs \
 			      --with-pic"
 
