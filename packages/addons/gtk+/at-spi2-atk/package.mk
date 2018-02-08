@@ -27,6 +27,6 @@ PKG_DEPENDS_TARGET="toolchain at-spi2-core libxml2"
 PKG_SECTION="accessibility"
 PKG_SHORTDESC="D-Bus AT-SPI ATK"
 PKG_LONGDESC="AT-SPI technologies are currently migrating to D-Bus for their transport technology. As such, this document serves as a tutorial, design document and project update page for the AT-SPI D-Bus project."
-PKG_TOOLCHAIN="autotools"
+PKG_TOOLCHAIN="configure"
 
 #PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --with-pic"

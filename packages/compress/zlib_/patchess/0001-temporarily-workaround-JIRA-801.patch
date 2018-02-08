@@ -1,0 +1,26 @@
+From 62f060c74ded3609fa54641fb0ae11a0234aacc1 Mon Sep 17 00:00:00 2001
+From: Jim Kukunas <james.t.kukunas@linux.intel.com>
+Date: Tue, 3 Nov 2015 18:24:42 +0000
+Subject: [PATCH] temporarily workaround JIRA-801
+
+---
+ match.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/match.c b/match.c
+index 9ad52d0..b3ebbf9 100644
+--- a/match.c
++++ b/match.c
+@@ -216,7 +216,8 @@ local unsigned std2_longest_match(deflate_state *z_const s, IPos cur_match)
+ 		 * put more guard bytes at the end of the window, or to check
+ 		 * more often for insufficient lookahead.
+ 		 */
+-		Assert(scan[2] == match[2], "scan[2]?");
++		if (scan[2] != match[2])
++			continue;
+ 		scan++;
+ 		match++;
+ 
+-- 
+2.5.1
+

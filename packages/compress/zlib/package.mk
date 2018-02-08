@@ -17,13 +17,12 @@
 ################################################################################
 
 PKG_NAME="zlib"
-PKG_VERSION="a17fefa"
-#PKG_SHA256="2ec78c8c13530bffaebfc10be2f4695c47cf50fe2fbc2104606467703836fa0e"
+PKG_VERSION="1.2.11"
+PKG_SHA256="4ff941449631ace0d4d203e3483be9dbc9da454084111f97ea0a2114e19bf066"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
-PKG_SITE="https://github.com/Dead2/zlib-ng"
-PKG_URL="https://github.com/Dead2/zlib-ng/archive/$PKG_VERSION.tar.gz"
-PKG_SOURCE_DIR="zlib-ng-$PKG_VERSION*"
+PKG_SITE="http://www.zlib.net"
+PKG_URL="http://192.168.1.200:8080/%2Fzlib-1.2.11.tar.xz"
 PKG_DEPENDS_HOST=""
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="compress"
@@ -31,44 +30,5 @@ PKG_SHORTDESC="zlib: A general purpose (ZIP) data compression library"
 PKG_LONGDESC="zlib is a general purpose data compression library. All the code is thread safe. The data format used by the zlib library is described by RFCs (Request for Comments) 1950 to 1952 in the files ftp://ds.internic.net/rfc/rfc1950.txt (zlib format), rfc1951.txt (deflate format) and rfc1952.txt (gzip format)."
 PKG_TOOLCHAIN="cmake-make"
 
-PKG_CMAKE_OPTS_TARGET="-DZLIB_COMPAT=1 -DWITH_GZFILEOP=1 -DWITH_OPTIM=1 -DCC=$CC"
-PKG_CMAKE_OPTS_HOST="-DZLIB_COMPAT=1 -DWITH_GZFILEOP=1"
-
-TARGET_CONFIGURE_OPTS="--prefix=/usr --zlib-compat"
-HOST_CONFIGURE_OPTS="--prefix=$TOOLCHAIN --zlib-compat"
-
-#post_configure_target() {
- ## configure minizip
-# (
-#  cd $PKG_BUILD/.$TARGET_NAME/contrib/minizip
-#  rm Makefile
-#  export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:../../"
-#  do_autoreconf
-#  ./configure --host=$TARGET_NAME --build=$HOST_NAME $TARGET_CONFIGURE_OPTS --disable-shared --enable-static
-# )
-#}
-
-pre_build_target() {
-  mkdir -p $PKG_BUILD/.$TARGET_NAME
-  cp -RP $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME
-}
-
-pre_build_host() {
-  mkdir -p $PKG_BUILD/.$HOST_NAME
-  cp -RP $PKG_BUILD/* $PKG_BUILD/.$HOST_NAME
-}
-
-#post_make_target() {
- # make minizip
-# make -C $PKG_BUILD/.$TARGET_NAME/contrib/minizip
-#}
-
-#post_makeinstall_target() {
- # Install minizip
-# make -C $PKG_BUILD/.$TARGET_NAME/contrib/minizip DESTDIR=$SYSROOT_PREFIX install
-#}
-
-pre_configure_target() {
- export CFLAGS="$CFLAGS -O3 -fPIC"
- export CXXFLAGS="$CXXFLAGS -O3 -fPIC"
-}
+PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release"
+PKG_CMAKE_OPTS_HOST="-DCMAKE_BUILD_TYPE=Release"

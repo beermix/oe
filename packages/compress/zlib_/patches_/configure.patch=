@@ -1,0 +1,11 @@
+--- zlib-1.2.8/configure~	2013-03-24 01:30:09.000000000 -0400
++++ zlib-1.2.8/configure	2014-12-11 21:06:13.669678681 -0500
+@@ -124,7 +124,7 @@
+     *)
+       echo "unknown option: $1" | tee -a configure.log
+       echo "$0 --help for help" | tee -a configure.log
+-      leave 1;;
++      shift ;;
+     esac
+ done
+ 

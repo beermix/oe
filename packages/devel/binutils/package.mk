@@ -43,7 +43,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-gold=no \
                          --enable-ld=default \
                          --enable-lto \
-                         --disable-nls"
+                         --disable-nls --enable-poison-system-directories"
 
 PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
                          --with-sysroot=$SYSROOT_PREFIX \
