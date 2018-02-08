@@ -15,11 +15,10 @@
 #  You should have received a copy of the GNU General Public License
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
+
 PKG_NAME="libvpx"
 PKG_VERSION="0fe4371"
 PKG_URL="https://github.com/webmproject/libvpx/archive/${PKG_VERSION}.tar.gz"
-PKG_SITE="https://www.webmproject.org"
-PKG_URL="https://github.com/webmproject/libvpx/archive/v${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain yasm:host"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="WebM VP8/VP9 Codec SDK"
@@ -28,7 +27,7 @@ PKG_LONGDESC="The WebM Project is dedicated to developing a high-quality, open v
 configure_target() {
 
 $PKG_CONFIGURE_SCRIPT --prefix=/usr \
-                        --extra-cflags="$CFLAGS" \
+                        --extra-cflags="$CFLAGS -fPIC" \
                         --as=yasm \
                         --target=x86_64-linux-gcc \
                         --enable-runtime-cpu-detect \
@@ -39,10 +38,7 @@ $PKG_CONFIGURE_SCRIPT --prefix=/usr \
                         --disable-unit-tests \
                         --disable-vp8-decoder \
                         --disable-vp9-decoder \
-                        --enable-ccache \
-                        --enable-pic \
                         --enable-static \
                         --enable-vp8 \
                         --enable-vp9
 }
-
