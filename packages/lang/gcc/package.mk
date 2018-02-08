@@ -52,7 +52,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-default-libstdcxx-abi=gcc4-compatible \
                            --without-ppl \
                            --without-cloog \
-                           --with-default-libstdcxx-abi=gcc4-compatible \
                            --disable-libssp \
                            --disable-libmpx \
                            --disable-libsanitizer \
@@ -94,7 +93,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          $GCC_OPTS"
 
 pre_configure_host() {
-  export CXXFLAGS="$CXXFLAGS -std=gnu++98"
+  # export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
 }
 
