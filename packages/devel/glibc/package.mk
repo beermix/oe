@@ -140,9 +140,6 @@ echo "libdir=/usr/lib" >> configparms
 echo "slibdir=/usr/lib" >> configparms
 echo "sbindir=/usr/bin" >> configparms
 echo "rootsbindir=/usr/bin" >> configparms
-echo "build-programs=yes" >> configparms
-
-GLIBC_INCLUDE_BIN="getent ldd locale"
 }
 
 post_makeinstall_target() {
