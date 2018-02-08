@@ -82,7 +82,7 @@ make_target() {
   # export CFLAGS=`echo $CFLAGS | sed -e "s|-fomit-frame-pointer||g"`
   # export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-fomit-frame-pointer||g"`
   
-  export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations"
+  export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always"
   
   export CCACHE_SLOPPINESS=time_macros
 
@@ -116,10 +116,19 @@ make_target() {
     'use_gnome_keyring=false'
     'use_gold=false'
     'use_lld=false'
+    'use_thin_lto=false'
     'use_system_freetype=true'
     'use_system_harfbuzz=true'
     'linux_link_libudev=true'
     'use_gtk3=false'
+    'enable_google_now=false'
+    'enable_mdns=true'
+    'use_alsa=true'
+    'use_dbus=true'
+    'use_glib=true'
+    'use_libpci=true'
+    'optimize_webui=false'
+    'rtc_enable_protobuf=false'
     'use_kerberos=false'
     'use_pulseaudio=false'
     'use_sysroot=true'

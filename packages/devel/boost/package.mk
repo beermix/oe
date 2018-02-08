@@ -45,7 +45,7 @@ configure_target() {
   sh bootstrap.sh --prefix=/usr \
                   --with-bjam=$TOOLCHAIN/bin/bjam \
                   --with-python=$TOOLCHAIN/bin/python \
-                  --with-python-root=$SYSROOT_PREFIX/usr link=static
+                  --with-python-root=$SYSROOT_PREFIX/usr
 
   echo "using gcc : `$CC -v 2>&1  | tail -n 1 |awk '{print $3}'` : $CC  : <compileflags>\"$CFLAGS\" <linkflags>\"$LDFLAGS\" ;" \
     > tools/build/src/user-config.jam
@@ -57,7 +57,8 @@ makeinstall_target() {
   $TOOLCHAIN/bin/bjam -d2 --ignore-site-config \
                           --layout=system \
                           --prefix=$SYSROOT_PREFIX/usr \
-                          --toolset=gcc link=static \
+                          --toolset=gcc variant=release link=static runtime-link=static threading=multi address-model=64 \
+                          --build-type=minimal \
                           --with-chrono \
                           --with-date_time \
                           --with-filesystem \

@@ -34,7 +34,7 @@ pre_configure_host() {
 
 configure_host() {
   cd $PKG_BUILD/.$HOST_NAME
-  ./Configure --prefix=/ $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $CFLAGS $LDFLAGS
+  ./Configure --prefix=/ $PKG_CONFIGURE_OPTS_SHARED linux-x86_64
 }
 
 makeinstall_host() {
@@ -44,12 +44,11 @@ makeinstall_host() {
 pre_configure_target() {
   mkdir -p $PKG_BUILD/.$TARGET_NAME
   cp -a $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME/
-  export CFLAGS=`echo $CFLAGS | sed -e "s|--param l1-cache-line-size=64 --param l1-cache-size=32 --param l2-cache-size=3072||g"`
 }
 
 configure_target() {
   cd $PKG_BUILD/.$TARGET_NAME
-  ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $CFLAGS $LDFLAGS
+  ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $CFLAGS
 }
 
 makeinstall_target() {
@@ -68,9 +67,9 @@ post_makeinstall_target() {
   # create new cert: ./mkcerts.sh
   # cert from https://curl.haxx.se/docs/caextract.html
   mkdir -p $INSTALL/etc/ssl
-  	perl $PKG_DIR/cert/mk-ca-bundle.pl
-  	cp $PKG_BUILD/.$TARGET_NAME/ca-bundle.crt $INSTALL/etc/ssl/cert.pem
-  #cp $PKG_DIR/cert/cacert.pem $INSTALL/etc/ssl/cert.pem
+  # perl $PKG_DIR/cert/mk-ca-bundle.pl
+  # cp $PKG_BUILD/.$TARGET_NAME/ca-bundle.crt $INSTALL/etc/ssl/cert.pem
+  cp $PKG_DIR/cert/cacert.pem $INSTALL/etc/ssl/cert.pem
 
   # backwards comatibility
   mkdir -p $INSTALL/etc/pki/tls
@@ -79,10 +78,10 @@ post_makeinstall_target() {
     ln -sf /etc/ssl/cert.pem $INSTALL/etc/pki/tls/certs/ca-bundle.crt
   mkdir -p $INSTALL/usr/lib/ssl
     ln -sf /etc/ssl/cert.pem $INSTALL/usr/lib/ssl/cert.pem
-#  mkdir -p $INSTALL/etc/ssl/certs
-#    ln -sf /etc/ssl/cert.pem $INSTALL/etc/ssl/certs/ca-certificates.crt
+  # mkdir -p $INSTALL/etc/ssl/certs
+  # ln -sf /etc/ssl/cert.pem $INSTALL/etc/ssl/certs/ca-certificates.crt
 
-  #for VDR-LIVE
+  # for VDR-LIVE
   # mkdir -p $INSTALL/usr/config/ssl
   # cp $PKG_DIR/config/openssl.cnf $INSTALL/usr/config/ssl
   # ln -sf /storage/.config/ssl/openssl.cnf $INSTALL/etc/ssl/openssl.cnf
