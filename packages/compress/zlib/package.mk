@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="zlib"
-PKG_VERSION="0ba89b1"
+PKG_VERSION="a17fefa"
 #PKG_SHA256="2ec78c8c13530bffaebfc10be2f4695c47cf50fe2fbc2104606467703836fa0e"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
