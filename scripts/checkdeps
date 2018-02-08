@@ -67,7 +67,7 @@ if  [ -f /etc/os-release ]; then
 fi
 
 deps=(wget bash bc gcc sed patch lsdiff tar bzip2 gzip perl gawk gperf zip unzip diff lzop)
-deps_pkg=(wget bash bc gcc sed patch patchutils tar bzip2 gzip perl gawk gperf zip unzip diffutils lzop libpcre16-3 libpcre3-dev libpcre32-3 libpcrecpp0v5)
+deps_pkg=(wget bash bc gcc sed patch patchutils tar bzip2 gzip perl gawk gperf zip unzip diffutils lzop)
 
 files=(/usr/include/stdio.h /usr/include/ncurses.h)
 files_pkg=(libc6-dev libncurses5-dev)
