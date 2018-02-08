@@ -18,7 +18,7 @@ fi
 #  export CCACHE_COMPILERCHECK=mtime
 #  export CCACHE_SLOPPINESS=time_macros
 #  export CCACHE_COMPRESS=0
-#  export CCACHE_OPTIONS="--zero-stats"
+  export CCACHE_OPTIONS="--zero-stats"
 
 # determines DISTRO, if not forced by user
 # default is LibreELEC

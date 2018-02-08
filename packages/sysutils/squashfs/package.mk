@@ -24,7 +24,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="https://git.kernel.org/pub/scm/fs/squashfs/squashfs-tools.git"
 PKG_URL="https://git.kernel.org/pub/scm/fs/squashfs/squashfs-tools.git/snapshot/$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="$PKG_VERSION"
-PKG_DEPENDS_HOST="ccache:host zlib:host lzo:host xz:host zstd:host"
+PKG_DEPENDS_HOST="ccache:host zlib:host lzo:host xz:host lz4:host zstd:host"
 PKG_NEED_UNPACK="$(get_pkg_directory zlib) $(get_pkg_directory lzo) $(get_pkg_directory xz) $(get_pkg_directory zstd)"
 PKG_SECTION="sysutils"
 PKG_SHORTDESC="squashfs-tools: A compressed read-only filesystem for Linux"
@@ -33,7 +33,7 @@ PKG_TOOLCHAIN="manual"
 
 make_host() {
   make -C squashfs-tools mksquashfs \
-       XZ_SUPPORT=1 LZO_SUPPORT=1 ZSTD_SUPPORT=1 \
+       XZ_SUPPORT=1 LZO_SUPPORT=1 LZ4_SUPPORT=1 ZSTD_SUPPORT=1 \
        XATTR_SUPPORT=0 XATTR_DEFAULT=0 \
        INCLUDEDIR="-I. -I$TOOLCHAIN/include"
 }
