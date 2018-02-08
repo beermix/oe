@@ -26,7 +26,7 @@ make_target() {
   make USE_STATIC=no USE_AESNI=yes USE_AVX=yes USE_UPNP=yes \
   	CC=$CC \
   	CXX=$CXX \
-  	LDFLAGS="-lpthread -static-libgcc -lrt -ldl -latomic -s" \
+  	LDFLAGS="-lpthread -static -lrt -ldl -s" \
   	RANLIB="$RANLIB" \
   	AR=$AR
 }
