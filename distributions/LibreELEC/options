@@ -23,7 +23,7 @@
 # Install LLVM SUPPORT (yes / no)
   LLVM_SUPPORT="no"
   
-  DEVTOOLS="yes"
+  DEVTOOLS="no"
   
 # Install glibc locales to the build (yes / no)
 #  GLIBC_LOCALES="yes"
