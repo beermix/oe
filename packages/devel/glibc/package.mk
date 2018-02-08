@@ -52,7 +52,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --enable-obsolete-nsl \
                            --disable-build-nscd \
                            --disable-nscd \
-                           --enable-lock-elision \
+                           --enable-lock-elision=yes \
                            --without-selinux \
                            --disable-timezone-tools"
 
