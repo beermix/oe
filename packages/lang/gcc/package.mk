@@ -17,14 +17,11 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="8-20180204"
-#PKG_SHA256="832ca6ae04636adbb430e865a1451adf6979ab44ca1c8374f61fba65645ce15c"
+PKG_VERSION="7.3.0-92"
+PKG_SHA256="caf07f2bf96c45915954677c2d7ae0f4d3c4d3168b85b5a0277805186beb31d6"
 PKG_ARCH="any"
-PKG_SITE="https://github.com/gcc-mirror/gcc/tree/gcc-7-branch"
 PKG_LICENSE="GPL"
-#PKG_URL="https://github.com/gcc-mirror/gcc/archive/$PKG_VERSION.tar.gz"
-PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/LATEST-8/gcc-$PKG_VERSION.tar.xz"
-#PKG_URL="ftp://gcc.gnu.org/pub/gcc/releases/gcc-$PKG_VERSION/gcc-$PKG_VERSION.tar.xz"
+PKG_URL="http://192.168.1.200:8080/%2Fgcc-7.3.0-92.tar.xz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host"
 PKG_DEPENDS_TARGET="gcc:host"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
@@ -42,7 +39,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-gmp=$TOOLCHAIN \
                            --with-mpfr=$TOOLCHAIN \
                            --with-mpc=$TOOLCHAIN \
-                           --with-gnu-as \
                            --with-gnu-ld \
                            --with-isl \
                            --enable-plugin \
@@ -51,8 +47,10 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-nls \
                            --without-ppl \
                            --without-cloog \
-                           --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
+                           --enable-gnu-indirect-function \
+                           --disable-vtable-verify \
+                           --enable-linker-build-id \
                            --disable-libunwind-exceptions \
                            --disable-libssp \
                            --disable-libmpx \
@@ -64,15 +62,15 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
+                              --disable-libada \
+                              --disable-libmudflap \
+                              --disable-libatomic \
+                              --disable-libitm \
+                              --disable-libquadmath \
                               --enable-cloog-backend=isl \
                               --disable-shared \
                               --disable-threads \
-                              --disable-libitm \
                               --disable-libgomp \
-                              --disable-libada \
-                              --disable-libatomic \
-                              --disable-libmudflap \
-                              --disable-libquadmath \
                               --without-headers \
                               --with-newlib \
                               --disable-decimal-float \
@@ -95,7 +93,6 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          $GCC_OPTS"
 
 pre_configure_host() {
-  # export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
 }
 
