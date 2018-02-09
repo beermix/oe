@@ -1,5 +1,5 @@
 PKG_NAME="isl"
-PKG_VERSION="0.18"
+PKG_VERSION="0.16.1"
 PKG_URL="http://isl.gforge.inria.fr/isl-$PKG_VERSION.tar.xz"
 PKG_SECTION="devel"
 PKG_TOOLCHAIN="manual"

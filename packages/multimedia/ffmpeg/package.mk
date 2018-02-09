@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="ffmpeg"
-# Current branch is: release/3.4-kodi
-PKG_VERSION="f96fd5c"
-PKG_SHA256="35ccc07c72b203101030a35b4bb11779365adb7bbf143ef1d68a1f87c781e38b"
+# Current branch is: release/3.1-xbmc
+PKG_VERSION="9702d0d"
+#PKG_SHA256="c02de2197f8b70544f018e83f48c1bed2a1b47e1a1aa34ef59d9167fb0d2090a"
 PKG_ARCH="any"
 PKG_LICENSE="LGPLv2.1+"
 PKG_SITE="https://ffmpeg.org"
@@ -34,7 +34,7 @@ PKG_LONGDESC="FFmpeg is a complete, cross-platform solution to record, convert a
 get_graphicdrivers
 
 if [ "$VAAPI_SUPPORT" = "yes" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET intel-vaapi-driver"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET intel-vaapi-driver libva-utils"
   FFMPEG_VAAPI="--enable-vaapi"
 else
   FFMPEG_VAAPI="--disable-vaapi"
@@ -72,6 +72,10 @@ else
   FFMPEG_FPU="--disable-neon"
 fi
 
+if [ "$DISPLAYSERVER" = "x11" ]; then
+  FFMPEG_X11GRAB="--enable-indev=x11grab_xcb"
+fi
+
 pre_configure_target() {
   cd $PKG_BUILD
   rm -rf .$TARGET_NAME
@@ -85,9 +89,6 @@ pre_configure_target() {
   if [ "$KODIPLAYER_DRIVER" = "bcm2835-driver" ]; then
     CFLAGS="-I$SYSROOT_PREFIX/usr/include/interface/vcos/pthreads -I$SYSROOT_PREFIX/usr/include/interface/vmcs_host/linux $CFLAGS"
     FFMPEG_LIBS="-lbcm_host -lvcos -lvchiq_arm -lmmal -lmmal_core -lmmal_util -lvcsm"
-    FFMPEG_RPI="--enable-rpi"
-  else
-    FFMPEG_RPI="--disable-rpi"
   fi
 }
 
@@ -148,10 +149,10 @@ configure_target() {
               --disable-crystalhd \
               $FFMPEG_VAAPI \
               $FFMPEG_VDPAU \
-              $FFMPEG_RPI \
               --disable-dxva2 \
               --enable-runtime-cpudetect \
               $FFMPEG_TABLES \
+              --disable-memalign-hack \
               --disable-encoders \
               --enable-encoder=ac3 \
               --enable-encoder=aac \
@@ -160,7 +161,7 @@ configure_target() {
               --enable-encoder=png \
               --disable-decoder=mpeg_xvmc \
               --enable-hwaccels \
-              --disable-muxers \
+              --enable-muxers \
               --enable-muxer=spdif \
               --enable-muxer=adts \
               --enable-muxer=asf \
@@ -175,18 +176,19 @@ configure_target() {
               --enable-filters \
               --disable-avisynth \
               --enable-bzlib \
-              --disable-lzma \
-              --disable-alsa \
               --disable-frei0r \
               --disable-libopencore-amrnb \
               --disable-libopencore-amrwb \
               --disable-libopencv \
               --disable-libdc1394 \
+              --disable-libfaac \
               --disable-libfreetype \
               --disable-libgsm \
               --disable-libmp3lame \
+              --disable-libnut \
               --disable-libopenjpeg \
               --disable-librtmp \
+              --disable-libschroedinger \
               --enable-libspeex \
               --disable-libtheora \
               --disable-libvo-amrwbenc \
@@ -200,7 +202,8 @@ configure_target() {
               --disable-altivec \
               $FFMPEG_FPU \
               --enable-yasm \
-              --disable-symver
+              --disable-symver \
+              $FFMPEG_X11GRAB
 }
 
 post_makeinstall_target() {

@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="e2fsprogs"
-PKG_VERSION="1.43.8"
-PKG_SHA256="0f77f66967a027266cdc3c77d548fde5a2c6f797de5cdb7f8d2171bde5b4aa43"
+PKG_VERSION="1.43.9"
+PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://e2fsprogs.sourceforge.net/"
