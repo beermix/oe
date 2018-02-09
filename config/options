@@ -8,8 +8,7 @@ fi
   export LC_ALL=C
   export LANG=C
 
-
-  export CCACHE_DISABLE=1
+#  export CCACHE_DISABLE=1
 #  export CCACHE_HARDLINK=1
 #  export CCACHE_NOSTATS=1
 #  export CCACHE_CPP2=1

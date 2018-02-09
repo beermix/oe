@@ -1,27 +1,27 @@
-diff -Naur pango-1.38.1/Makefile.am pango-1.38.1.patch/Makefile.am
---- pango-1.38.1/Makefile.am	2015-11-14 23:05:52.000000000 +0100
-+++ pango-1.38.1.patch/Makefile.am	2015-11-14 23:19:07.548943525 +0100
+diff -Naur pango-1.40.14-orig/Makefile.am pango-1.40.14/Makefile.am
+--- pango-1.40.14-orig/Makefile.am	2018-01-01 09:40:47.156372043 +0300
++++ pango-1.40.14/Makefile.am	2018-01-01 09:41:10.832242039 +0300
 @@ -1,6 +1,6 @@
  ## Process this file with automake to create Makefile.in.
  
 -SUBDIRS= pango pango-view examples tools tests win32
 +SUBDIRS= pango win32
  
- EXTRA_DIST = 			\
- 	autogen.sh		\
-diff -Naur pango-1.38.1/pango/Makefile.am pango-1.38.1.patch/pango/Makefile.am
---- pango-1.38.1/pango/Makefile.am	2015-09-01 00:47:11.000000000 +0200
-+++ pango-1.38.1.patch/pango/Makefile.am	2015-11-14 23:21:14.081145117 +0100
-@@ -31,7 +31,7 @@
- 	$(LIBTHAI_CFLAGS)					\
- 	$(X_CFLAGS)
+ meson_dist_files = \
+ 	pango/pango-features.h.meson \
+diff -Naur pango-1.40.14-orig/pango/Makefile.am pango-1.40.14/pango/Makefile.am
+--- pango-1.40.14-orig/pango/Makefile.am	2018-01-01 09:40:47.149705376 +0300
++++ pango-1.40.14/pango/Makefile.am	2018-01-01 09:42:15.248984296 +0300
+@@ -33,7 +33,7 @@
+ 	$(X_CFLAGS)					\
+ 	$(PANGO_HIDDEN_VISIBILITY_CFLAGS)
  
 -BUILT_SOURCES = pango-enum-types.h pango-enum-types.c pango-features.h
 +BUILT_SOURCES = pango-features.h
  
  pangoincludedir=$(includedir)/pango-1.0/pango
  
-@@ -127,22 +127,6 @@
+@@ -134,22 +134,6 @@
  	pango-features.h   \
  	pango-enum-types.h
  
@@ -44,20 +44,20 @@ diff -Naur pango-1.38.1/pango/Makefile.am pango-1.38.1.patch/pango/Makefile.am
  pango-features.h:
  	$(AM_V_GEN) cd $(top_builddir) && ./config.status pango/pango-features.h
  
-diff -Naur pango-1.38.1/pango/pango-context.c pango-1.38.1.patch/pango/pango-context.c
---- pango-1.38.1/pango/pango-context.c	2015-09-13 17:05:39.000000000 +0200
-+++ pango-1.38.1.patch/pango/pango-context.c	2015-11-14 23:22:57.512225981 +0100
-@@ -38,6 +38,7 @@
- 
+diff -Naur pango-1.40.14-orig/pango/pango-context.c pango-1.40.14/pango/pango-context.c
+--- pango-1.40.14-orig/pango/pango-context.c	2018-01-01 09:40:47.153038709 +0300
++++ pango-1.40.14/pango/pango-context.c	2018-01-01 09:42:46.833658796 +0300
+@@ -39,6 +39,7 @@
  #include "pango-engine-private.h"
  #include "pango-script-private.h"
+ #include "pango-emoji-private.h"
 +#include "pango-enum-types.h"
  
  /**
   * PangoContext:
-diff -Naur pango-1.38.1/pango/pangofc-font.c pango-1.38.1.patch/pango/pangofc-font.c
---- pango-1.38.1/pango/pangofc-font.c	2015-04-15 19:37:43.000000000 +0200
-+++ pango-1.38.1.patch/pango/pangofc-font.c	2015-11-14 23:23:49.840316980 +0100
+diff -Naur pango-1.40.14-orig/pango/pangofc-font.c pango-1.40.14/pango/pangofc-font.c
+--- pango-1.40.14-orig/pango/pangofc-font.c	2018-01-01 09:40:47.153038709 +0300
++++ pango-1.40.14/pango/pangofc-font.c	2018-01-01 09:43:36.287884394 +0300
 @@ -45,6 +45,7 @@
  #include "pango-engine.h"
  #include "pango-layout.h"
@@ -66,9 +66,9 @@ diff -Naur pango-1.38.1/pango/pangofc-font.c pango-1.38.1.patch/pango/pangofc-fo
  
  #include <fontconfig/fcfreetype.h>
  
-diff -Naur pango-1.38.1/pango/pango-layout.c pango-1.38.1.patch/pango/pango-layout.c
---- pango-1.38.1/pango/pango-layout.c	2015-09-01 18:20:54.000000000 +0200
-+++ pango-1.38.1.patch/pango/pango-layout.c	2015-11-14 23:23:19.280262638 +0100
+diff -Naur pango-1.40.14-orig/pango/pango-layout.c pango-1.40.14/pango/pango-layout.c
+--- pango-1.40.14-orig/pango/pango-layout.c	2018-01-01 09:40:47.149705376 +0300
++++ pango-1.40.14/pango/pango-layout.c	2018-01-01 09:43:57.841171728 +0300
 @@ -77,6 +77,7 @@
  #include <string.h>
  
@@ -76,4 +76,4 @@ diff -Naur pango-1.38.1/pango/pango-layout.c pango-1.38.1.patch/pango/pango-layo
 +#include "pango-enum-types.h"
  
  
- typedef struct _Extents Extents;
+ typedef struct _ItemProperties ItemProperties;
