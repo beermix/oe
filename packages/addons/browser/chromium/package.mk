@@ -59,13 +59,13 @@ make_host() {
 
 make_target() {
   strip_lto
-  # export LDFLAGS="$LDFLAGS -ludev"
-  # export LD=$CXX
+  export LDFLAGS="$LDFLAGS -ludev"
+  export LD=$CXX
 
-  unset CPPFLAGS
-  unset CFLAGS
-  unset CXXFLAGS
-  unset LDFLAGS
+  # unset CPPFLAGS
+  # unset CFLAGS
+  # unset CXXFLAGS
+  # unset LDFLAGS
 
   # https://chromium-review.googlesource.com/c/chromium/src/+/712575
   # _flags+=('exclude_unwind_tables=true')
@@ -75,9 +75,9 @@ make_target() {
   # export CXXFLAGS="$CXXFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables"
   # export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
   
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--as-needed||g"`
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed||"`
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now||"`
+  # export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--as-needed||g"`
+  # export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed||"`
+  # export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now||"`
   
   # export LDFLAGS="$LDFLAGS -s"
   # export CFLAGS=`echo $CFLAGS | sed -e "s|-fomit-frame-pointer||g"`
@@ -118,10 +118,7 @@ make_target() {
     'use_lld=false'
     'use_system_freetype=true'
     'use_system_harfbuzz=true'
-    'linux_link_libudev=true'
     'use_gtk3=false'
-    'enable_google_now=false'
-    'enable_mdns=true'
     'use_alsa=true'
     'use_dbus=true'
     'use_glib=true'
