@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="nasm"
-PKG_VERSION="2.13.02"
-PKG_SHA256="8ac3235f49a6838ff7a8d7ef7c19a4430d0deecc0c2d3e3e237b5e9f53291757"
+PKG_VERSION="2.13.03"
+PKG_SHA256="812ecfb0dcbc5bd409aaa8f61c7de94c5b8752a7b00c632883d15b2ed6452573"
 PKG_ARCH="any"
 PKG_LICENSE="BSD"
 PKG_SITE="http://www.tortall.net/projects/yasm/"
