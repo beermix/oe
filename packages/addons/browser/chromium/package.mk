@@ -146,13 +146,13 @@ make_target() {
   )
 
 readonly -A _system_libs=(
-  [icu]=icu
+  #[icu]=icu
   [libdrm]=
   [libjpeg]=libjpeg
   #[libxml]=libxml2           # https://crbug.com/736026
-  [libxslt]=libxslt
-  [re2]=re2
-  [snappy]=snappy
+  #[libxslt]=libxslt
+  #[re2]=re2
+  #[snappy]=snappy
   [yasm]=
   #[zlib]=minizip
 )
