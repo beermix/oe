@@ -17,11 +17,13 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="7.3.0-92"
-PKG_SHA256="caf07f2bf96c45915954677c2d7ae0f4d3c4d3168b85b5a0277805186beb31d6"
+PKG_VERSION="7-20180208"
+#PKG_VERSION="7.3.0-92"
+#PKG_URL="http://192.168.1.200:8080/%2Fgcc-7.3.0-92.tar.xz"
+#PKG_SHA256="caf07f2bf96c45915954677c2d7ae0f4d3c4d3168b85b5a0277805186beb31d6"
+PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/LATEST-7/gcc-$PKG_VERSION.tar.xz"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_URL="http://192.168.1.200:8080/%2Fgcc-7.3.0-92.tar.xz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host"
 PKG_DEPENDS_TARGET="gcc:host"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
@@ -48,13 +50,15 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-ld=default \
                            --disable-multilib \
                            --disable-nls \
-                           --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
+                           --disable-libunwind-exceptions \
                            --without-ppl \
                            --without-cloog \
                            --disable-libssp \
                            --disable-libmpx \
                            --disable-libsanitizer \
+                           --disable-libquadmath \
+                           --disable-libmudflap \
                            --without-cuda-driver \
                            --with-tune=haswell \
                            --with-arch=westmere"
@@ -63,10 +67,8 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
                               --disable-libada \
-                              --disable-libmudflap \
                               --disable-libatomic \
                               --disable-libitm \
-                              --disable-libquadmath \
                               --enable-cloog-backend=isl \
                               --disable-shared \
                               --disable-threads \
@@ -93,7 +95,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          $GCC_OPTS"
 
 pre_configure_host() {
-  # export CXXFLAGS="$CXXFLAGS -std=gnu++98"
+  export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
 }
 

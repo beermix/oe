@@ -1,6 +1,7 @@
-PKG_NAME="zlib-ng"
+PKG_NAME="zlib"
 PKG_VERSION="6a877a1"
 PKG_URL="https://github.com/Dead2/zlib-ng/archive/${PKG_VERSION}.tar.gz"
+PKG_SOURCE_DIR="zlib-ng-$PKG_VERSION*"
 PKG_DEPENDS_TARGET=""
 PKG_DEPENDS_HOST=""
 PKG_SECTION="compress"
