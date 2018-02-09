@@ -31,3 +31,4 @@ PKG_LONGDESC="zlib is a general purpose data compression library. All the code i
 PKG_TOOLCHAIN="cmake-make"
 
 PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release"
+PKG_CMAKE_OPTS_HOST="-DCMAKE_BUILD_TYPE=Release"
