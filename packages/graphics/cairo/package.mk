@@ -65,8 +65,12 @@ PKG_CONFIGURE_OPTS_TARGET="$PKG_CAIRO_CONFIG \
                            --disable-static \
                            --disable-gtk-doc \
                            --enable-largefile \
+                           --enable-atomic \
                            --disable-gcov \
                            --disable-valgrind \
+                           --disable-xcb \
+                           --disable-xlib-xcb \
+                           --disable-xcb-shm \
                            --disable-qt \
                            --disable-quartz \
                            --disable-quartz-font \
@@ -77,6 +81,10 @@ PKG_CONFIGURE_OPTS_TARGET="$PKG_CAIRO_CONFIG \
                            --disable-os2 \
                            --disable-beos \
                            --disable-cogl \
+                           --disable-drm \
+                           --disable-drm-xr \
+                           --disable-gallium \
+                           --disable-xcb-drm \
                            --enable-png \
                            --disable-directfb \
                            --disable-vg \
@@ -96,5 +104,4 @@ PKG_CONFIGURE_OPTS_TARGET="$PKG_CAIRO_CONFIG \
                            --enable-interpreter \
                            --disable-symbol-lookup \
                            --enable-some-floating-point \
-                           --disable-interpreter \
                            --with-gnu-ld"
