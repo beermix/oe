@@ -19,24 +19,24 @@
 ################################################################################
 
 PKG_NAME="gdk-pixbuf"
-PKG_VERSION="2.36.11"
-#PKG_SHA256="0b19901c3eb0596141d2d48ddb9dac79ad1524bdf59366af58ab38fcb9ee7463"
+PKG_VERSION="2.35.5"
+PKG_SHA256="108c682022b260c90452f3e83de5faf2e41d5543fc1550e641f3ff9600fde5e6"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.gtk.org/"
-PKG_URL="http://ftp.acc.umu.se/pub/gnome/sources/gdk-pixbuf/2.36/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain glib libjpeg-turbo libpng jasper tiff"
+PKG_URL="http://ftp.acc.umu.se/pub/gnome/sources/gdk-pixbuf/2.35/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_DEPENDS_TARGET="toolchain glib libjpeg-turbo libpng jasper"
 PKG_SECTION="x11/toolkits"
 PKG_SHORTDESC="gdk-pixbuf: a GNOME library for image loading and manipulation."
 PKG_LONGDESC="gdk-pixbuf (GdkPixbuf) is a GNOME library for image loading and manipulation. The GdkPixbuf documentation contains both the programmer's guide and the API reference."
+PKG_TOOLCHAIN="autotools"
 
-
-PKG_CONFIGURE_OPTS_TARGET="--enable-introspection \
---disable-installed-tests \
---enable-nls \
---disable-gio-sniffing \
---with-libjpeg \
---without-libjasper \
---with-libpng \
---without-libtiff \
---with-x11"
+PKG_CONFIGURE_OPTS_TARGET="--disable-introspection \
+			      --disable-installed-tests \
+			      --enable-nls \
+			      --disable-gio-sniffing \
+			      --with-libjpeg \
+			      --without-libjasper \
+			      --with-libpng \
+			      --without-libtiff \
+			      --with-x11"
