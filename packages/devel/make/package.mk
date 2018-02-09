@@ -33,5 +33,5 @@ export CC=$LOCAL_CC
 
 post_makeinstall_host() {
   ln -sf /usr/bin/make $TOOLCHAIN/bin/make
-  ln -sf make $TOOLCHAIN/bin/gmake
+  ln -sf /usr/bin/make $TOOLCHAIN/bin/gmake
 }
