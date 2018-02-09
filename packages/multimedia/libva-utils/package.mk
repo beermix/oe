@@ -17,11 +17,12 @@
 ################################################################################
 
 PKG_NAME="libva-utils"
-PKG_VERSION="fb32e18"
+PKG_VERSION="2.1.0.pre1"
+PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/01org/libva-utils"
-PKG_URL="https://github.com/01org/libva-utils/archive/$PKG_VERSION.tar.gz"
+PKG_URL="https://github.com/01org/libva-utils/releases/download/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_SECTION="debug"
 PKG_SHORTDESC="Libva-utils is a collection of tests for VA-API (VIdeo Acceleration API)"
 PKG_LONGDESC="Libva-utils is a collection of tests for VA-API (VIdeo Acceleration API)"
@@ -35,7 +36,8 @@ else
   DISPLAYSERVER_LIBVA="--disable-x11"
 fi
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-drm \
+PKG_CONFIGURE_OPTS_TARGET="--disable-silent-rules \
+                           --enable-drm \
                            $DISPLAYSERVER_LIBVA \
                            --disable-wayland \
                            --disable-tests"

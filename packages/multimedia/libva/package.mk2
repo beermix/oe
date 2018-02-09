@@ -17,12 +17,11 @@
 ################################################################################
 
 PKG_NAME="libva"
-PKG_VERSION="2.1.0.pre1"
-PKG_SHA256=""
+PKG_VERSION="b2fdaf4"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPL"
-PKG_SITE="https://01.org/linuxmedia"
-PKG_URL="https://github.com/01org/libva/releases/download/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_SITE="https://github.com/01org/libva"
+PKG_URL="https://github.com/01org/libva/archive/$PKG_VERSION.tar.gz"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="Libva is an implementation for VA-API (VIdeo Acceleration API)."
 PKG_LONGDESC="Libva is an open source software library and API specification to provide access to hardware accelerated video decoding/encoding and video processing."
@@ -44,3 +43,4 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-docs \
                            --enable-egl \
                            $DISPLAYSERVER_LIBVA \
                            --disable-dummy-driver"
+
