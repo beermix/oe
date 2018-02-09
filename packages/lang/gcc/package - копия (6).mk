@@ -17,11 +17,13 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="7.3.0"
-PKG_SHA256="832ca6ae04636adbb430e865a1451adf6979ab44ca1c8374f61fba65645ce15c"
+PKG_VERSION="7-20180208"
+#PKG_VERSION="7.3.0-92"
+#PKG_URL="http://192.168.1.200:8080/%2Fgcc-7.3.0-92.tar.xz"
+#PKG_SHA256="caf07f2bf96c45915954677c2d7ae0f4d3c4d3168b85b5a0277805186beb31d6"
+PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/LATEST-7/gcc-$PKG_VERSION.tar.xz"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_URL="http://ftpmirror.gnu.org/gcc/$PKG_NAME-$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host"
 PKG_DEPENDS_TARGET="gcc:host"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
@@ -48,7 +50,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-ld=default \
                            --disable-multilib \
                            --disable-nls \
-                           --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
                            --without-ppl \
                            --without-cloog \
@@ -67,10 +68,10 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-libitm \
                               --disable-libquadmath \
                               --disable-libmudflap \
-                              --disable-libgomp \
                               --enable-cloog-backend=isl \
                               --disable-shared \
                               --disable-threads \
+                              --disable-libgomp \
                               --without-headers \
                               --with-newlib \
                               --disable-decimal-float \
@@ -90,6 +91,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-libstdcxx-time \
                          --enable-clocale=gnu \
                          --enable-libatomic \
+                         --disable-libunwind-exceptions \
                          $GCC_OPTS"
 
 pre_configure_host() {

@@ -1,5 +1,5 @@
---- elf/elf.h
-+++ elf/elf.h
+--- a/elf/elf.h
++++ b/elf/elf.h
 @@ -568,6 +568,7 @@
  #define PT_GNU_EH_FRAME	0x6474e550	/* GCC .eh_frame_hdr segment */
  #define PT_GNU_STACK	0x6474e551	/* Indicates stack executability */

@@ -53,6 +53,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --disable-build-nscd \
                            --disable-nscd \
                            --enable-lock-elision=yes \
+                           --enable-stack-protector=strong \
                            --without-selinux \
                            --disable-timezone-tools"
 
@@ -120,9 +121,7 @@ pre_configure_target() {
 
   unset LD_LIBRARY_PATH
 
-  # set some CFLAGS we need
-
-  export CFLAGS="-O2 -march=westmere -g -m64 -Wl,-z,max-page-size=0x1000 "
+  export CFLAGS="-O2 -march=westmere -g3 -m64 -Wl,-z,max-page-size=0x1000 "
   export LDFLAGS="-Wl,-z,max-page-size=0x1000 "
 
   export BUILD_CC=$HOST_CC

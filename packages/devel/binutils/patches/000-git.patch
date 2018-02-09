@@ -32336,3 +32336,64 @@ index ebc652ba76..e39a32ea69 100644
  #define BFD_VERSION @bfd_version@
  #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
  #define REPORT_BUGS_TO @report_bugs_to@
+
+commit ab97989d5fa9b46fd2ee111b688e607bbd38eb1a
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Fri Feb 9 00:01:42 2018 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index e39a32ea69..0d71f5ed64 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20180208
++#define BFD_VERSION_DATE 20180209
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit d895ef77ffc94e02e748856c2ab54f5bb8cc867e
+Author: Nick Clifton <nickc@redhat.com>
+Date:   Fri Feb 9 09:28:45 2018 +0000
+
+    Import patch from mainline to fix possible seg-fault whilst parsing corrupt ELF notes with extravagent alignments.
+    
+            PR 22788
+            * elf.c (elf_parse_notes): Reject notes with excessuively large
+            alignments.
+
+diff --git a/bfd/ChangeLog b/bfd/ChangeLog
+index bff6158834..3cf9578183 100644
+--- a/bfd/ChangeLog
++++ b/bfd/ChangeLog
+@@ -1,3 +1,12 @@
++2018-02-09  Nick Clifton  <nickc@redhat.com>
++
++	Import patch from mainline:
++	2018-02-08  Nick Clifton  <nickc@redhat.com>
++
++	PR 22788
++	* elf.c (elf_parse_notes): Reject notes with excessuively large
++	alignments.
++
+ 2018-02-07  Alan Modra  <amodra@gmail.com>
+ 
+ 	Revert 2018-01-17  Alan Modra  <amodra@gmail.com>
+diff --git a/bfd/elf.c b/bfd/elf.c
+index 90aef09132..c132098558 100644
+--- a/bfd/elf.c
++++ b/bfd/elf.c
+@@ -11019,6 +11019,8 @@ elf_parse_notes (bfd *abfd, char *buf, size_t size, file_ptr offset,
+      align is less than 4, we use 4 byte alignment.   */
+   if (align < 4)
+     align = 4;
++  if (align != 4 && align != 8)
++    return FALSE;
+ 
+   p = buf;
+   while (p < buf + size)
