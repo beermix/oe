@@ -143,11 +143,11 @@ make_target() {
   )
 
 readonly -A _system_libs=(
-  #[icu]=icu
+  [icu]=icu
   [libdrm]=
   [libjpeg]=libjpeg
   #[libxml]=libxml2           # https://crbug.com/736026
-  #[libxslt]=libxslt
+  [libxslt]=libxslt
   #[re2]=re2
   #[snappy]=snappy
   [yasm]=
@@ -181,7 +181,7 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
 
-  ninja -j${CONCURRENCY_MAKE_LEVEL} -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
+  ninja -j${CONCURRENCY_MAKE_LEVEL} -C out/Release chrome chrome_sandbox chromedriver
 }
 
 addon() {
