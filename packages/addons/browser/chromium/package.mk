@@ -23,14 +23,14 @@
 
 PKG_NAME="chromium"
 PKG_VERSION="64.0.3282.140"
-#PKG_SHA256="146afbab37982c52251e5c71b6e19e6e7053b527217fe1da9966c794478c29ce"
+PKG_SHA256=""
 PKG_REV="140"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_SITE="http://www.chromium.org/Home"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="pciutils dbus x11 libXcomposite libXcursor libXtst alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk intel-vaapi-driver libva-vdpau-driver unclutter xdotool libinput libxkbcommon libdrm libjpeg-turbo libxslt freetype harfbuzz re2 snappy gtk+ chromium:host"
+PKG_DEPENDS_TARGET="pciutils dbus x11 libXcomposite libXcursor libXtst alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk intel-vaapi-driver libva-vdpau-driver unclutter xdotool libinput libxkbcommon libdrm libjpeg-turbo libxslt freetype harfbuzz re2 snappy gtk+ snappy re2 chromium:host"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -59,13 +59,13 @@ make_host() {
 
 make_target() {
   strip_lto
-  export LDFLAGS="$LDFLAGS -ludev"
-  export LD=$CXX
+  # export LDFLAGS="$LDFLAGS -ludev"
+  # export LD=$CXX
 
-  # unset CPPFLAGS
-  # unset CFLAGS
-  # unset CXXFLAGS
-  # unset LDFLAGS
+  unset CPPFLAGS
+  unset CFLAGS
+  unset CXXFLAGS
+  unset LDFLAGS
 
   # https://chromium-review.googlesource.com/c/chromium/src/+/712575
   # _flags+=('exclude_unwind_tables=true')
@@ -118,6 +118,8 @@ make_target() {
     'use_lld=false'
     'use_system_freetype=true'
     'use_system_harfbuzz=true'
+    'linux_link_libgio=true'
+    'linux_link_libudev=true'
     'use_gtk3=false'
     'use_alsa=true'
     'use_dbus=true'
@@ -148,8 +150,8 @@ readonly -A _system_libs=(
   [libjpeg]=libjpeg
   #[libxml]=libxml2           # https://crbug.com/736026
   [libxslt]=libxslt
-  #[re2]=re2
-  #[snappy]=snappy
+  [re2]=re2
+  [snappy]=snappy
   [yasm]=
   #[zlib]=minizip
 )
