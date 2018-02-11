@@ -19,12 +19,12 @@
 ################################################################################
 
 PKG_NAME="atk"
-PKG_VERSION="2.26.1"
-PKG_SHA256="ef00ff6b83851dddc8db38b4d9faeffb99572ba150b0664ee02e46f015ea97cb"
+PKG_VERSION="2.27.1"
+PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://library.gnome.org/devel/atk/"
-PKG_URL="http://ftp.gnome.org/pub/gnome/sources/$PKG_NAME/2.26/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="http://ftp.gnome.org/pub/gnome/sources/$PKG_NAME/2.27/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain glib"
 PKG_SECTION="accessibility"
 PKG_SHORTDESC="ATK - Accessibility Toolkit"
