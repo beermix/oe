@@ -1,22 +1,14 @@
-From 6824d53bd503580226fbea3d9d78b32cab56ae42 Mon Sep 17 00:00:00 2001
-From: MilhouseVH <milhouseVH.github@nmacleod.com>
-Date: Mon, 19 Jun 2017 19:51:27 +0100
-Subject: [PATCH] OUYA controller support
+commit 58c5e239ba0402207cfecef8ea1bf52edea092e4
+Author: Lukas Rusak <lorusak@gmail.com>
+Date:   Mon Jan 15 09:50:43 2018 -0800
 
----
- drivers/hid/Kconfig    |   6 ++
- drivers/hid/Makefile   |   1 +
- drivers/hid/hid-core.c |   1 +
- drivers/hid/hid-ids.h  |   3 +
- drivers/hid/hid-ouya.c | 260 +++++++++++++++++++++++++++++++++++++++++++++++++
- 5 files changed, 271 insertions(+)
- create mode 100644 drivers/hid/hid-ouya.c
+    drivers/hid: add ouya controller driver
 
 diff --git a/drivers/hid/Kconfig b/drivers/hid/Kconfig
-index 687705c..84500fd 100644
+index 779c5ae47..02f79b0a4 100644
 --- a/drivers/hid/Kconfig
 +++ b/drivers/hid/Kconfig
-@@ -625,6 +625,12 @@ config HID_ORTEK
+@@ -633,6 +633,12 @@ config HID_ORTEK
  	   - Ortek WKB-2000
  	   - Skycable wireless presenter
  
@@ -30,10 +22,10 @@ index 687705c..84500fd 100644
  	tristate "Pantherlord/GreenAsia game controller"
  	depends on HID
 diff --git a/drivers/hid/Makefile b/drivers/hid/Makefile
-index fef027b..4e22940 100644
+index 235bd2a7b..d3431f77b 100644
 --- a/drivers/hid/Makefile
 +++ b/drivers/hid/Makefile
-@@ -66,6 +66,7 @@ obj-$(CONFIG_HID_MULTITOUCH)	+= hid-multitouch.o
+@@ -68,6 +68,7 @@ obj-$(CONFIG_HID_MULTITOUCH)	+= hid-multitouch.o
  obj-$(CONFIG_HID_NTI)			+= hid-nti.o
  obj-$(CONFIG_HID_NTRIG)		+= hid-ntrig.o
  obj-$(CONFIG_HID_ORTEK)		+= hid-ortek.o
@@ -42,24 +34,24 @@ index fef027b..4e22940 100644
  obj-$(CONFIG_HID_PANTHERLORD)	+= hid-pl.o
  obj-$(CONFIG_HID_PENMOUNT)	+= hid-penmount.o
 diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
-index 6e04069..32bcb50 100644
+index 0c3f60813..cd64cafe5 100644
 --- a/drivers/hid/hid-core.c
 +++ b/drivers/hid/hid-core.c
-@@ -2290,6 +2290,7 @@ static const struct hid_device_id hid_have_special_driver[] = {
- #if IS_ENABLED(CONFIG_HID_ZYDACRON)
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ZYDACRON, USB_DEVICE_ID_ZYDACRON_REMOTE_CONTROL) },
+@@ -1884,6 +1884,7 @@ static const struct hid_device_id hid_have_special_driver[] = {
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELO, USB_DEVICE_ID_ELO_ACCUTOUCH_2216) },
  #endif
+ #if IS_ENABLED(CONFIG_HID_ACRUX)
 +	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_OUYA, USB_DEVICE_ID_OUYA_CONTROLLER) },
- 	{ }
- };
- 
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_ACRUX, 0x0802) },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_ACRUX, 0xf705) },
+ #endif
 diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
-index 8ca1e8c..f3cd724 100644
+index 5da3d6256..b6bb209ed 100644
 --- a/drivers/hid/hid-ids.h
 +++ b/drivers/hid/hid-ids.h
-@@ -813,6 +813,9 @@
- #define USB_DEVICE_ID_ORTEK_PKB1700	0x1700
+@@ -843,6 +843,9 @@
  #define USB_DEVICE_ID_ORTEK_WKB2000	0x2000
+ #define USB_DEVICE_ID_ORTEK_IHOME_IMAC_A210S	0x8003
  
 +#define USB_VENDOR_ID_OUYA		0x2836
 +#define USB_DEVICE_ID_OUYA_CONTROLLER	0x0001
@@ -69,7 +61,7 @@ index 8ca1e8c..f3cd724 100644
  #define USB_VENDOR_ID_PANASONIC		0x04da
 diff --git a/drivers/hid/hid-ouya.c b/drivers/hid/hid-ouya.c
 new file mode 100644
-index 0000000..7792c23
+index 000000000..7792c23ba
 --- /dev/null
 +++ b/drivers/hid/hid-ouya.c
 @@ -0,0 +1,260 @@
@@ -333,6 +325,3 @@ index 0000000..7792c23
 +
 +module_init(ouya_init);
 +module_exit(ouya_exit);
--- 
-2.7.4
-
