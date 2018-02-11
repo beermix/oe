@@ -31,4 +31,5 @@ PKG_LONGDESC="pc is a C library for the arithmetic of complex numbers with arbit
 PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-static --disable-shared \
                          --with-gmp=$TOOLCHAIN \
-                         --with-mpfr=$TOOLCHAIN"
+                         --with-mpfr=$TOOLCHAIN \
+                         --with-pic"

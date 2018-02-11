@@ -1,5 +1,5 @@
-GCC_OPTIM="-O2 -pipe"
-LD_OPTIM="-Wl,--as-needed"
+GCC_OPTIM="-O2 -pipe -fno-plt"
+LD_OPTIM="-Wl,-O1,--sort-common,--as-needed,-z,relro"
 
 if [ "$LTO_SUPPORT" = yes ];then
   GCC_OPTIM_LTO="-falign-functions=32 -ffat-lto-objects -ffat-lto-objects -flto=$CONCURRENCY_MAKE_LEVEL -fno-math-errno -fno-semantic-interposition -fno-trapping-math"

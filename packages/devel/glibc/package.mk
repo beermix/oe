@@ -43,7 +43,6 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-__thread \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
-                           --enable-kernel=3.10 \
                            --without-cvs \
                            --without-gd \
                            --enable-obsolete-rpc \
@@ -51,6 +50,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --disable-build-nscd \
                            --disable-nscd \
                            --enable-lock-elision \
+                           --disable-werror \
                            --disable-timezone-tools"
 
 if [ "$DEBUG" = yes ]; then
@@ -117,8 +117,11 @@ pre_configure_target() {
 
   unset LD_LIBRARY_PATH
 
-  export CFLAGS="-O2 -march=westmere -g -m64"
-#  export LDFLAGS="-Wl,-z,max-page-size=0x1000 "
+  # set some CFLAGS we need
+
+  export CFLAGS="-O2 -m64 -march=westmere -g"
+#  unset LDFLAGS
+#  export LDFLAGS="-Wl,-z,max-page-size=0x1000"
 
   export BUILD_CC=$HOST_CC
   export OBJDUMP_FOR_HOST=objdump
