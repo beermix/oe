@@ -44,16 +44,13 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
                            --enable-kernel=3.10 \
-                           --enable-clocale=gnu \
-                           --enable-tunables \
                            --without-cvs \
                            --without-gd \
                            --enable-obsolete-rpc \
                            --enable-obsolete-nsl \
                            --disable-build-nscd \
                            --disable-nscd \
-                           --enable-lock-elision=yes \
-                           --without-selinux \
+                           --enable-lock-elision \
                            --disable-timezone-tools"
 
 if [ "$DEBUG" = yes ]; then
@@ -127,6 +124,8 @@ pre_configure_target() {
   export OBJDUMP_FOR_HOST=objdump
 
 cat >config.cache <<EOF
+libc_cv_forced_unwind=yes
+libc_cv_c_cleanup=yes
 libc_cv_ssp=no
 libc_cv_ssp_strong=no
 libc_cv_slibdir=/usr/lib
