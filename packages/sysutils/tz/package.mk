@@ -31,7 +31,15 @@ PKG_LONGDESC="tzdata"
 PKG_MAKE_OPTS_TARGET="CC=$HOST_CC LDFLAGS="
 
 makeinstall_target() {
-  make TOPDIR="$INSTALL" install
+  make TZDIR="$INSTALL/usr/share/zoneinfo" REDO=posix_only TOPDIR="$INSTALL" install
+}
+
+post_makeinstall_target() {
+  rm -rf $INSTALL/usr/bin $INSTALL/usr/sbin
+
+  rm -rf $INSTALL/etc
+  mkdir -p $INSTALL/etc
+    ln -sf /var/run/localtime $INSTALL/etc/localtime
 }
 
 post_install() {
