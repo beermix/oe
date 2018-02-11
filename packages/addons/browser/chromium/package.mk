@@ -121,10 +121,6 @@ make_target() {
     'linux_link_libgio=true'
     'linux_link_libudev=true'
     'use_gtk3=false'
-    'use_alsa=true'
-    'use_dbus=true'
-    'use_glib=true'
-    'use_libpci=true'
     'use_kerberos=false'
     'use_pulseaudio=false'
     'use_sysroot=true'
@@ -145,7 +141,7 @@ make_target() {
   )
 
 readonly -A _system_libs=(
-  [icu]=icu
+  #[icu]=icu
   [libdrm]=
   [libjpeg]=libjpeg
   #[libxml]=libxml2           # https://crbug.com/736026
@@ -190,7 +186,7 @@ addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -P  $PKG_BUILD/out/Release/chrome $ADDON_BUILD/$PKG_ADDON_ID/bin/chromium.bin
   cp -P  $PKG_BUILD/out/Release/chrome_sandbox $ADDON_BUILD/$PKG_ADDON_ID/bin/chrome-sandbox
-  cp -P  $PKG_BUILD/out/Release/{*.pak,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
+  cp -P  $PKG_BUILD/out/Release/{*.pak,*.dat,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -PR $PKG_BUILD/out/Release/locales $ADDON_BUILD/$PKG_ADDON_ID/bin/
   cp -PR $PKG_BUILD/out/Release/gen/content/content_resources.pak $ADDON_BUILD/$PKG_ADDON_ID/bin/
 
