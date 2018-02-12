@@ -42,15 +42,15 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-gmp=$TOOLCHAIN \
                            --with-mpfr=$TOOLCHAIN \
                            --with-mpc=$TOOLCHAIN \
-                           --with-gnu-as \
-                           --with-gnu-ld \
                            --with-isl \
                            --enable-plugin \
                            --enable-lto \
+                           --enable-ld=yes \
+                           --enable-gold=no \
                            --disable-multilib \
                            --disable-nls \
                            --enable-checking=release \
-                           --disable-libunwind-exceptions \
+                           --with-default-libstdcxx-abi=gcc4-compatible \
                            --without-ppl \
                            --without-cloog \
                            --disable-libssp \
