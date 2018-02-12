@@ -18,7 +18,7 @@
 
 PKG_NAME="icu"
 PKG_VERSION="60.2"
-#PKG_SHA256="ff8c67cb65949b1e7808f2359f2b80f722697048e90e7cfc382ec1fe229e9581"
+PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="Custom"
 PKG_SITE="http://www.icu-project.org"
@@ -31,12 +31,14 @@ PKG_LONGDESC="International Components for Unicode library"
 
 post_unpack() {
   sed -i 's/xlocale/locale/' $PKG_BUILD/source/i18n/digitlst.cpp
+  cp -r $PKG_BUILD/source/* $PKG_BUILD/
 }
 
 pre_configure_target() {
   CFLAGS="$CFLAGS -fPIC"
-  CXXFLAGS="$CXXFLAGS -fPIC"
-#  LIBS="$LIBS -latomic"
+  CXXFLAGS="$CXXFLAGS -fPIC -pedantic -Wpointer-arith -Wwrite-strings -Wno-long-long -std=c++11"
+  LDFLAGS="$LDFLAGS -Wl,--gc-sections"
+  LIBS="$LIBS -latomic"
 }
 
 PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared --disable-tests --disable-samples"
@@ -46,11 +48,6 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
 			      --disable-shared \
 			      --enable-static \
 			      --enable-draft \
-			      --enable-renaming \
-			      --disable-tracing \
-			      --disable-extras \
-			      --enable-dyload \
-			      --disable-tools \
 			      --disable-tests \
 			      --disable-samples \
 			      --with-cross-build=$PKG_BUILD/.$HOST_NAME"
