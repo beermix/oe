@@ -69,19 +69,19 @@ make_target() {
 
   # https://chromium-review.googlesource.com/c/chromium/src/+/712575
   # _flags+=('exclude_unwind_tables=true')
-  export CFLAGS=$(echo "$CFLAGS"|sed -e 's/-g //')
-  export CXXFLAGS=$(echo "$CXXFLAGS"|sed -e 's/-g //')
-  export CFLAGS="$CFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables"
-  export CXXFLAGS="$CXXFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables"
-  export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
+  # export CFLAGS=$(echo "$CFLAGS"|sed -e 's/-g //')
+  # export CXXFLAGS=$(echo "$CXXFLAGS"|sed -e 's/-g //')
+  # export CFLAGS="$CFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables"
+  # export CXXFLAGS="$CXXFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables"
+  # export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
   
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-march=westmere -m64  -O2 -pipe||g"`
-  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-march=westmere -m64  -O2 -pipe||g"`
+  # export CFLAGS=`echo $CFLAGS | sed -e "s|-march=westmere -m64  -O2 -pipe||g"`
+  # export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-march=westmere -m64  -O2 -pipe||g"`
 # export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now||"`
   
-  export LDFLAGS="$LDFLAGS -s"
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-fomit-frame-pointer||g"`
-  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-fomit-frame-pointer||g"`
+  # export LDFLAGS="$LDFLAGS -s"
+  # export CFLAGS=`echo $CFLAGS | sed -e "s|-fomit-frame-pointer||g"`
+  # export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-fomit-frame-pointer||g"`
   
   export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always"
   
@@ -120,6 +120,7 @@ make_target() {
     'use_system_harfbuzz=true'
     'linux_link_libgio=true'
     'linux_link_libudev=true'
+    'exclude_unwind_tables=true'
     'use_gtk3=false'
     'use_kerberos=false'
     'use_pulseaudio=false'
@@ -140,7 +141,7 @@ make_target() {
   )
 
 readonly -A _system_libs=(
-  [icu]=icu
+  #[icu]=icu
   [libdrm]=
   [libjpeg]=libjpeg
   #[libxml]=libxml2           # https://crbug.com/736026
@@ -178,14 +179,14 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
 
-  ninja -j${CONCURRENCY_MAKE_LEVEL} -C out/Release chrome chrome_sandbox chromedriver
+  ninja -v -j${CONCURRENCY_MAKE_LEVEL} -C out/Release chrome chrome_sandbox chromedriver
 }
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -P  $PKG_BUILD/out/Release/chrome $ADDON_BUILD/$PKG_ADDON_ID/bin/chromium.bin
   cp -P  $PKG_BUILD/out/Release/chrome_sandbox $ADDON_BUILD/$PKG_ADDON_ID/bin/chrome-sandbox
-  cp -Pf  $PKG_BUILD/out/Release/{*.pak,*.dat,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
+  cp -P  $PKG_BUILD/out/Release/{*.pak,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -PR $PKG_BUILD/out/Release/locales $ADDON_BUILD/$PKG_ADDON_ID/bin/
   cp -PR $PKG_BUILD/out/Release/gen/content/content_resources.pak $ADDON_BUILD/$PKG_ADDON_ID/bin/
 
