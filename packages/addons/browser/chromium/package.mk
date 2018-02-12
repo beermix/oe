@@ -142,7 +142,7 @@ make_target() {
   )
 
 readonly -A _system_libs=(
-  #[icu]=icu
+  [icu]=icu
   [libdrm]=
   [libjpeg]=libjpeg
   #[libxml]=libxml2           # https://crbug.com/736026
