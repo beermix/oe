@@ -62,10 +62,10 @@ make_target() {
   # export LDFLAGS="$LDFLAGS -ludev"
   # export LD=$CXX
 
-  unset CPPFLAGS
-  unset CFLAGS
-  unset CXXFLAGS
-  unset LDFLAGS
+  # unset CPPFLAGS
+  # unset CFLAGS
+  # unset CXXFLAGS
+  # unset LDFLAGS
 
   # https://chromium-review.googlesource.com/c/chromium/src/+/712575
   # _flags+=('exclude_unwind_tables=true')
@@ -141,7 +141,7 @@ make_target() {
   )
 
 readonly -A _system_libs=(
-  #[icu]=icu
+  [icu]=icu
   [libdrm]=
   [libjpeg]=libjpeg
   #[libxml]=libxml2           # https://crbug.com/736026
