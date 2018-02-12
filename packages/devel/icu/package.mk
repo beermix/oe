@@ -40,8 +40,6 @@ pre_configure_host() {
 }
 
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC"
-  export CXXFLAGS="$CXXFLAGS -fPIC"
   mkdir -p $PKG_BUILD/.$TARGET_NAME
   cp -a $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME/
 }
@@ -70,9 +68,10 @@ configure_target() {
  		     CC="$CC" \
  		     CXX="$CXX" \
  		     CPPFLAGS="$CPPFLAGS" \
- 		     CFLAGS="$CFLAGS" \
- 		     CXXFLAGS="$CXXFLAGS" \
+ 		     CFLAGS="$CFLAGS -fPIC" \
+ 		     CXXFLAGS="$CXXFLAGS -fPIC" \
  		     LDFLAGS="$LDFLAGS" \
+ 		     LIBS="-latomic" \
  		     --target=$TARGET_NAME \
  		     --build=$TARGET_NAME \
  		     --host=$TARGET_NAME \
@@ -80,8 +79,6 @@ configure_target() {
  		     --enable-release \
  		     --disable-shared \
  		     --enable-static \
- 		     --disable-tracing \
- 		     --disable-extras \
  		     --disable-tests \
  		     --disable-samples \
  		     --prefix=/usr \
