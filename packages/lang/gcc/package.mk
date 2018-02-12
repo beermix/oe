@@ -33,6 +33,7 @@ PKG_LONGDESC="This package contains the GNU Compiler Collection. It includes com
 post_unpack() {
   mkdir -p $PKG_BUILD/isl
   cp -r -i $(get_build_dir isl)/* $PKG_BUILD/isl
+  rm -rf $PKG_BUILD/isl/.x86_64-linux-gnu
 }
 
 GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
@@ -40,7 +41,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-gmp=$TOOLCHAIN \
                            --with-mpfr=$TOOLCHAIN \
                            --with-mpc=$TOOLCHAIN \
-                           --with-gnu-as \
                            --with-gnu-ld \
                            --with-isl \
                            --enable-plugin \
@@ -51,10 +51,11 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libunwind-exceptions \
                            --enable-gnu-indirect-function \
                            --with-default-libstdcxx-abi=gcc4-compatible \
-                           --without-ppl \
+                           --with-ppl=yes \
                            --without-cloog \
                            --disable-libssp \
                            --disable-libmpx \
+                           --disable-libada \
                            --disable-libsanitizer \
                            --without-cuda-driver \
                            --with-tune=haswell"
@@ -62,13 +63,10 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
-                              --disable-libada \
                               --disable-libatomic \
                               --disable-libitm \
                               --disable-libquadmath \
-                              --disable-libmudflap \
                               --disable-libgomp \
-                              --enable-cloog-backend=isl \
                               --disable-shared \
                               --disable-threads \
                               --without-headers \

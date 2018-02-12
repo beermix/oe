@@ -47,8 +47,9 @@ case "$LINUX" in
     PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET aml-dtbtools:host"
     ;;
   *)
-    PKG_VERSION="4.14.18"
-    PKG_URL="https://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
+    PKG_VERSION="a87ef48"
+    PKG_URL="https://github.com/zen-kernel/zen-kernel/archive/$PKG_VERSION.tar.gz"
+    PKG_SOURCE_DIR="zen-kernel-$PKG_VERSION*"
     PKG_PATCH_DIRS="default"
     ;;
 esac
@@ -96,7 +97,7 @@ post_patch() {
     sed -i -e "s|@DISTRONAME@|$DISTRONAME|g" $PKG_BUILD/.config
 
   # ask for new config options after kernel update
-   # make -C $PKG_BUILD oldconfig
+    make -C $PKG_BUILD oldconfig
 
   # disable swap support if not enabled
   if [ ! "$SWAP_SUPPORT" = yes ]; then
