@@ -35,21 +35,15 @@ post_unpack() {
 }
 
 pre_configure_target() {
-  CXXFLAGS="$CXXFLAGS -O3 -fPIC -pedantic -Wpointer-arith -Wwrite-strings -Wno-long-long -std=c++11"
-  LDFLAGS="$LDFLAGS -Wl,--gc-sections"
-  LIBS="$LIBS -latomic"
-#  CXXFLAGS="$CXXFLAGS -fPIC"
+#  CXXFLAGS="$CXXFLAGS -O3 -fPIC -pedantic -Wpointer-arith -Wwrite-strings -Wno-long-long -std=c++11"
+#  LDFLAGS="$LDFLAGS -Wl,--gc-sections"
+#  LIBS="$LIBS -latomic"
+  CXXFLAGS="$CXXFLAGS -fPIC"
 }
 
-PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared --disable-tests --disable-samples --enable-release"
+PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
 			   
-PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
-			      --enable-release \
-			      --disable-shared \
-			      --enable-static \
-			      --disable-tests \
-			      --disable-samples \
-			      --with-cross-build=$PKG_BUILD/.$HOST_NAME"
+PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --disable-debug --enable-release --with-cross-build=$PKG_BUILD/.$HOST_NAME"
 
 #PKG_CONFIGURE_SCRIPT="source/configure"
 
