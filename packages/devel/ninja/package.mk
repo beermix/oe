@@ -13,7 +13,7 @@
 #  GNU General Public License for more details.
 #
 #  You should have received a copy of the GNU General Public License
-#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
+#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.  --verbose
 ################################################################################
 
 PKG_NAME="ninja"
@@ -29,7 +29,7 @@ PKG_LONGDESC="Small build system with a focus on speed"
 PKG_TOOLCHAIN="manual"
 
 make_host() {
-  CXX=/usr/bin/clang++-5.0 python3 ./configure.py --bootstrap --verbose
+  CXX=/usr/bin/clang++-5.0 python3 ./configure.py --bootstrap
 }
 
 makeinstall_host() {

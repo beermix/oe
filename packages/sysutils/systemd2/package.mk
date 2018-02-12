@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="systemd"
-PKG_VERSION="53e1b683907c2f12330f00feb9630150196f064d"
-PKG_SHA256=""
+PKG_VERSION="237"
+PKG_SHA256="c83dabbe1c9de6b9db1dafdb7e04140c7d0535705c68842f6c0768653ba4913c"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/systemd"
-PKG_URL="https://github.com/systemd/systemd/archive/$PKG_VERSION.tar.gz"
+PKG_URL="https://github.com/systemd/systemd/archive/v$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libcap kmod util-linux entropy"
 PKG_SECTION="system"
 PKG_SHORTDESC="systemd: a system and session manager"
@@ -33,6 +33,7 @@ PKG_MESON_OPTS_TARGET="--libdir=/usr/lib \
                        -Dsplit-usr=false \
                        -Ddefault-hierarchy=hybrid \
                        -Dtty-gid=5 \
+                       -Dtests=false \
                        -Dseccomp=false \
                        -Dselinux=false \
                        -Dapparmor=false \
