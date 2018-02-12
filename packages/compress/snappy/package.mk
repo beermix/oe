@@ -17,15 +17,15 @@
 ################################################################################
 
 PKG_NAME="snappy"
-PKG_VERSION="e69d9f8"
+PKG_VERSION="1.1.7"
 PKG_ARCH="any"
 PKG_LICENSE="BSD/GPLv2"
-PKG_SITE="https://github.com/facebook/zstd/releases"
+PKG_SITE="https://github.com/google/snappy/releases"
 PKG_URL="https://github.com/google/snappy/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="compress"
 PKG_SHORTDESC="fast real-time compression algorithm"
-PKG_TOOLCHAIN="cmake-make"
+PKG_TOOLCHAIN="cmake"
 
 PKG_CMAKE_OPTS_HOST="-DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=0 -DSNAPPY_BUILD_TESTS=0"
 PKG_CMAKE_OPTS_TARGET="$PKG_CMAKE_OPTS_HOST"
