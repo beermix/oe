@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libva-utils"
-PKG_VERSION="2.0.0"
+PKG_VERSION="2.1.0"
 PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
