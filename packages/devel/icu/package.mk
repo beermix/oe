@@ -68,9 +68,8 @@ configure_target() {
  		     CC="$CC" \
  		     CXX="$CXX" \
  		     CPPFLAGS="$CPPFLAGS" \
- 		     CFLAGS="$CFLAGS -fPIC" \
- 		     CXXFLAGS="$CXXFLAGS -fPIC" \
- 		     LDFLAGS="$LDFLAGS" \
+ 		     CFLAGS="-fPIC" \
+ 		     CXXFLAGS="-fPIC" \
  		     LIBS="-latomic" \
  		     --target=$TARGET_NAME \
  		     --build=$TARGET_NAME \
