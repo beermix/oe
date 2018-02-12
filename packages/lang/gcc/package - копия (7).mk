@@ -54,10 +54,9 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-default-libstdcxx-abi=gcc4-compatible \
                            --with-ppl=yes \
                            --without-cloog \
-                           --disable-libmudflap \
-                           --disable-libquadmath \
                            --disable-libssp \
                            --disable-libmpx \
+                           --disable-libada \
                            --disable-libsanitizer \
                            --without-cuda-driver \
                            --with-tune=haswell"
@@ -66,6 +65,8 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
                               --disable-libatomic \
+                              --disable-libitm \
+                              --disable-libquadmath \
                               --disable-libgomp \
                               --disable-shared \
                               --disable-threads \

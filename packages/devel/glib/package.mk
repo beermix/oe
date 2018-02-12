@@ -18,7 +18,7 @@
 ################################################################################
 
 PKG_NAME="glib"
-PKG_VERSION="2.55.1"
+PKG_VERSION="2.54.3"
 PKG_ARCH="any"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://ftp.gnome.org/pub/gnome/sources/glib/?C=M;O=D"
@@ -52,7 +52,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_snprintf_c99=yes \
                            --enable-Bsymbolic \
                            --with-gnu-ld \
                            --with-threads=posix \
-                           --with-pcre=internal \
+                           --with-pcre=system \
                            --with-python=python"
 
 post_makeinstall_target() {
