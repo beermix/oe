@@ -22,8 +22,8 @@
 ################################################################################
 
 PKG_NAME="chromium"
-PKG_VERSION="64.0.3282.140"
-PKG_SHA256="146afbab37982c52251e5c71b6e19e6e7053b527217fe1da9966c794478c29ce"
+PKG_VERSION="63.0.3239.132"
+PKG_SHA256=""
 PKG_REV="140"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
@@ -59,33 +59,20 @@ make_host() {
 
 make_target() {
   strip_lto
-  # export LDFLAGS="$LDFLAGS -ludev"
-  # export LD=$CXX
+#  export LDFLAGS="$LDFLAGS -ludev"
+#  export LD=$CXX
 
-  # unset CPPFLAGS
-  # unset CFLAGS
-  # unset CXXFLAGS
-  # unset LDFLAGS
-
-  # https://chromium-review.googlesource.com/c/chromium/src/+/712575
-  # _flags+=('exclude_unwind_tables=true')
-  # export CFLAGS=$(echo "$CFLAGS"|sed -e 's/-g //')
-  # export CXXFLAGS=$(echo "$CXXFLAGS"|sed -e 's/-g //')
-  # export CFLAGS="$CFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables"
-  # export CXXFLAGS="$CXXFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables"
-  # export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
-  
-  # export CFLAGS=`echo $CFLAGS | sed -e "s|-march=westmere -m64  -O2 -pipe||g"`
-  # export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-march=westmere -m64  -O2 -pipe||g"`
-  # export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now||"`
-  
-  # export LDFLAGS="$LDFLAGS -s"
-  # export CFLAGS=`echo $CFLAGS | sed -e "s|-fomit-frame-pointer||g"`
-  # export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-fomit-frame-pointer||g"`
-  
+ 
   export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always"
   
   export CCACHE_SLOPPINESS=time_macros
+
+  # Fix paths.
+  sed -e 's|i386-linux-gnu/||g' \
+      -e 's|x86_64-linux-gnu/||g' \
+      -e 's|/usr/lib/va/drivers|/usr/lib/dri|g' \
+      -e 's|/usr/lib64/va/drivers|/usr/lib/dri|g' \
+      -i ./content/common/sandbox_linux/bpf_gpu_policy_linux.cc
 
   # Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
   # Note: These are for OpenELEC use ONLY. For your own distribution, please
@@ -118,17 +105,18 @@ make_target() {
     'use_lld=false'
     'use_system_freetype=true'
     'use_system_harfbuzz=true'
-    'linux_link_libgio=true'
-    'linux_link_libudev=true'
-    'exclude_unwind_tables=true'
     'use_gtk3=false'
     'use_kerberos=false'
     'use_pulseaudio=false'
     'use_sysroot=true'
     'use_vaapi=true'
+    'linux_link_libgio=true'
+    'linux_link_libudev=true'
+    'use_libpci=true'
     'use_v8_context_snapshot=false'
     'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
+    'exclude_unwind_tables=true'
     'enable_hangout_services_extension=true'
     'enable_widevine=true'
     'enable_nacl=false'
@@ -141,13 +129,10 @@ make_target() {
   )
 
 readonly -A _system_libs=(
-  #[icu]=icu
   [libdrm]=
   [libjpeg]=libjpeg
-  #[libxml]=libxml2           # https://crbug.com/736026
+  [libxml]=libxml2
   [libxslt]=libxslt
-  #[re2]=re2
-  #[snappy]=snappy
   [yasm]=
   [zlib]=minizip
 )
@@ -179,7 +164,7 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
 
-  ninja -v -j${CONCURRENCY_MAKE_LEVEL} -C out/Release chrome chrome_sandbox chromedriver
+  ninja -j${CONCURRENCY_MAKE_LEVEL} -C out/Release chrome chrome_sandbox widevinecdmadapter
 }
 
 addon() {
