@@ -41,6 +41,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-gmp=$TOOLCHAIN \
                            --with-mpfr=$TOOLCHAIN \
                            --with-mpc=$TOOLCHAIN \
+                           --with-gnu-as \
                            --with-gnu-ld \
                            --with-isl \
                            --enable-plugin \
