@@ -17,11 +17,11 @@
 ################################################################################
 
 PKG_NAME="libva-utils"
-PKG_VERSION="2.1.0.pre1"
+PKG_VERSION="2.0.0"
 PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/01org/libva-utils"
+PKG_SITE="https://github.com/intel/libva-utils/releases"
 PKG_URL="https://github.com/01org/libva-utils/releases/download/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_SECTION="debug"
 PKG_SHORTDESC="Libva-utils is a collection of tests for VA-API (VIdeo Acceleration API)"
