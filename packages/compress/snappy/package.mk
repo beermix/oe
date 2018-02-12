@@ -25,12 +25,12 @@ PKG_URL="https://github.com/google/snappy/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="compress"
 PKG_SHORTDESC="fast real-time compression algorithm"
-PKG_TOOLCHAIN="cmake"
+PKG_TOOLCHAIN="cmake-make"
 
 PKG_CMAKE_OPTS_HOST="-DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=0 -DSNAPPY_BUILD_TESTS=0"
 PKG_CMAKE_OPTS_TARGET="$PKG_CMAKE_OPTS_HOST"
 
 pre_configure_target() {
-  export CFLAGS="-fPIC"
+  export CFLAGS="$CFLAGS -fPIC"
   export CXXFLAGS="$CXXFLAGS -fPIC"
 }
