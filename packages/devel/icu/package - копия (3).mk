@@ -55,24 +55,24 @@ configure_host() {
  		     --enable-release \
  		     --disable-shared \
  		     --enable-static \
+ 		     --enable-draft \
+ 		     --enable-renaming \
  		     --disable-tracing \
  		     --disable-extras \
- 		     --disable-tests \
- 		     --disable-samples \
- 		     --prefix=/usr \
+ 		     --enable-dyload \
  		     --prefix=$TOOLCHAIN
 }
 
 configure_target() {
  cd $PKG_BUILD/.$TARGET_NAME
  ./runConfigureICU Linux/gcc \
- 		     CPP="$CPP" \
- 		     CC="$CC" \
- 		     CXX="$CXX" \
- 		     CPPFLAGS="$CPPFLAGS" \
- 		     CFLAGS="$CFLAGS" \
- 		     CXXFLAGS="$CXXFLAGS" \
- 		     LDFLAGS="$LDFLAGS" \
+ 		     CPP=$CPP \
+ 		     CC=$CC \
+ 		     CXX=$CXX \
+ 		     CPPFLAGS=$CPPFLAGS \
+ 		     CFLAGS=$CFLAGS \
+ 		     CXXFLAGS=$CXXFLAGS \
+ 		     LDFLAGS=$LDFLAGS \
  		     --target=$TARGET_NAME \
  		     --build=$TARGET_NAME \
  		     --host=$TARGET_NAME \
@@ -80,8 +80,12 @@ configure_target() {
  		     --enable-release \
  		     --disable-shared \
  		     --enable-static \
+ 		     --enable-draft \
+ 		     --enable-renaming \
  		     --disable-tracing \
  		     --disable-extras \
+ 		     --enable-dyload \
+ 		     --disable-tools \
  		     --disable-tests \
  		     --disable-samples \
  		     --prefix=/usr \

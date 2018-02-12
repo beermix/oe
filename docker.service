@@ -26,7 +26,8 @@ Delegate=yes
 # kill only the docker process, not all processes in the cgroup
 KillMode=process
 # restart the docker process if it exits prematurely
-Environment="HTTP_PROXY=https://ru-82-204-5.fri-gate0.org:443"
+Environment="HTTPS_PROXY=https://ru-82-204-5.fri-gate0.org:443"
+Environment="NO_PROXY=localhost,127.0.0.0/8,192.168.1.0/24,docker-registry.somecorporation.com"
 Restart=on-failure
 
 StartLimitBurst=3

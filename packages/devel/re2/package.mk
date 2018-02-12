@@ -20,10 +20,10 @@ PKG_NAME="re2"
 PKG_VERSION="2018-02-01"
 PKG_ARCH="any"
 PKG_LICENSE="zlib"
-PKG_SITE="https://github.com/google/re2"
+PKG_SITE="https://github.com/google/re2/releases"
 PKG_URL="https://github.com/google/re2/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET=""
-PKG_SECTION="compress"
+PKG_SECTION="devel"
 PKG_TOOLCHAIN="cmake-make"
 
 pre_configure_target() {
