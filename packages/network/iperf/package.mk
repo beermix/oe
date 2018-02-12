@@ -8,6 +8,6 @@ PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared"
 
-post_install () {
-  enable_service iperf3.service
-}
+#post_install () {
+#  enable_service iperf3.service
+#}

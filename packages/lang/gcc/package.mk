@@ -13,17 +13,17 @@
 #  GNU General Public License for more details.
 #
 #  You should have received a copy of the GNU General Public License
-#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
+#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>. --disable-libmudflap --disable-libquadmath \
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="7.3.0"
+PKG_VERSION="7-20180208"
 PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="ftp://gcc.gnu.org/pub/gcc/snapshots/LATEST-7"
-#PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/$PKG_VERSION/gcc-$PKG_VERSION.tar.xz"
-PKG_URL="ftp://gcc.gnu.org/pub/gcc/releases/gcc-$PKG_VERSION/gcc-$PKG_VERSION.tar.xz"
+PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/$PKG_VERSION/gcc-$PKG_VERSION.tar.xz"
+#PKG_URL="ftp://gcc.gnu.org/pub/gcc/releases/gcc-$PKG_VERSION/gcc-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host"
 PKG_DEPENDS_TARGET="gcc:host"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
@@ -50,15 +50,13 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-multilib \
                            --disable-nls \
                            --enable-checking=release \
-                           --with-default-libstdcxx-abi=gcc4-compatible \
                            --disable-libunwind-exceptions \
-                           --with-ppl=yes \
+                           --without-ppl \
                            --without-cloog \
-                           --disable-libmudflap \
-                           --disable-libquadmath \
                            --disable-libssp \
                            --disable-libmpx \
                            --disable-libsanitizer \
+                           --disable-libquadmath \
                            --without-cuda-driver \
                            --with-tune=haswell"
 
@@ -88,11 +86,10 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-libstdcxx-time \
                          --enable-clocale=gnu \
                          --enable-libatomic \
-                         --enable-gnu-indirect-function \
                          $GCC_OPTS"
 
 pre_configure_host() {
-  export CXXFLAGS="$CXXFLAGS -std=gnu++98"
+#  export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
 }
 
