@@ -1,5 +1,5 @@
 PKG_NAME="pcre2"
-PKG_VERSION="10.30"
+PKG_VERSION="10.31"
 PKG_SITE="http://ftp.csx.cam.ac.uk/pub/software/programming/pcre/?C=M;O=D"
 PKG_URL="http://ftp.csx.cam.ac.uk/pub/software/programming/pcre/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST="zlib:host"
@@ -12,7 +12,6 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-unicode-properties \
 			      --enable-jit \
 			      --enable-utf8 \
 			      --enable-cpp \
-			      --with-match-limit-recursion=16000 \
 			      --enable-pcre2-16 \
 			      --disable-shared \
 			      --with-pic"
