@@ -85,6 +85,7 @@ pre_configure_target() {
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-ffast-math||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|--param l1-cache-line-size=64 --param l1-cache-size=32 --param l2-cache-size=3072||g"`
+  export CFLAGS=`echo $CFLAGS | sed -e "s|--param=l1-cache-line-size=64 --param=l1-cache-size=32 --param=l2-cache-size=3072||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fno-plt||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fno-caller-saves||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fomit-frame-pointer||g"`
@@ -120,7 +121,7 @@ pre_configure_target() {
 
   # set some CFLAGS we need
 
-  export CFLAGS="-O2 -m64 -march=westmere -g"
+  export CFLAGS="-O2 -m64 -march=westmere --param=l1-cache-line-size=64 --param=l1-cache-size=32 --param=l2-cache-size=3072 -g"
 
   export BUILD_CC=$HOST_CC
   export OBJDUMP_FOR_HOST=objdump
