@@ -64,9 +64,12 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
                               --disable-libatomic \
-                              --disable-libgomp \
                               --disable-shared \
                               --disable-threads \
+                              --disable-libitm \
+                              --disable-libquadmath \
+                              --disable-libgomp \
+                              --disable-libada \
                               --without-headers \
                               --with-newlib \
                               --disable-decimal-float \
