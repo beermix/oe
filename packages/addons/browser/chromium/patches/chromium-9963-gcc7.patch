@@ -1,0 +1,143 @@
+--- chromium-63.0.3239.108/third_party/pdfium/fxbarcode/oned/BC_OneDimWriter.cpp.gcc7	2017-12-15 02:05:39.000000000 +0100
++++ chromium-63.0.3239.108/third_party/pdfium/fxbarcode/oned/BC_OneDimWriter.cpp	2017-12-29 07:05:37.949625669 +0100
+@@ -299,11 +299,6 @@
+   m_outputHScale =
+       m_Width > 0 ? static_cast<float>(m_Width) / static_cast<float>(codeLength)
+                   : 1.0;
+-  float dataLengthScale = 1.0;
+-  if (m_iDataLenth > 0 && contents.GetLength() != 0)
+-    dataLengthScale = float(contents.GetLength()) / float(m_iDataLenth);
+-  if (m_iDataLenth > 0 && contents.GetLength() == 0)
+-    dataLengthScale = float(1) / float(m_iDataLenth);
+   m_multiple = 1;
+   const int32_t outputHeight = 1;
+   const int32_t outputWidth = codeLength;
+--- chromium-63.0.3239.108/third_party/webrtc/p2p/base/port.cc.gcc7	2017-12-15 02:05:40.000000000 +0100
++++ chromium-63.0.3239.108/third_party/webrtc/p2p/base/port.cc	2017-12-29 07:24:01.248851177 +0100
+@@ -12,6 +12,7 @@
+ 
+ #include <algorithm>
+ #include <vector>
++#include <cmath>
+ 
+ #include "p2p/base/common.h"
+ #include "p2p/base/portallocator.h"
+--- chromium-63.0.3239.108/third_party/WebKit/Source/platform/graphics/Color.h.gcc7	2017-12-15 02:04:47.000000000 +0100
++++ chromium-63.0.3239.108/third_party/WebKit/Source/platform/graphics/Color.h	2017-12-29 09:01:32.218326587 +0100
+@@ -66,8 +66,8 @@
+   unsigned argb_value;
+ };
+ 
+-PLATFORM_EXPORT const NamedColor* FindColor(register const char* str,
+-                                            register unsigned len);
++PLATFORM_EXPORT const NamedColor* FindColor(const char* str,
++                                            unsigned len);
+ 
+ class PLATFORM_EXPORT Color {
+   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
+--- chromium-63.0.3239.108/third_party/WebKit/Source/core/animation/EffectInput.cpp.gcc7	2017-12-15 02:04:44.000000000 +0100
++++ chromium-63.0.3239.108/third_party/WebKit/Source/core/animation/EffectInput.cpp	2017-12-29 10:53:32.679607021 +0100
+@@ -254,12 +254,12 @@
+         continue;
+       }
+ 
+-      Vector<String> values;
+-      if (DictionaryHelper::Get(keyframe_dictionary, property, values)) {
+-        exception_state.ThrowTypeError(
+-            "Lists of values not permitted in array-form list of keyframes");
+-        return nullptr;
+-      }
++//      Vector<String> values;
++//      if (DictionaryHelper::Get(keyframe_dictionary, property, values)) {
++//        exception_state.ThrowTypeError(
++//            "Lists of values not permitted in array-form list of keyframes");
++//        return nullptr;
++//      }
+ 
+       String value;
+       DictionaryHelper::Get(keyframe_dictionary, property, value);
+@@ -284,8 +284,8 @@
+   DCHECK(result.IsEmpty());
+ 
+   // Array of strings.
+-  if (DictionaryHelper::Get(keyframe_dictionary, property, result))
+-    return true;
++//  if (DictionaryHelper::Get(keyframe_dictionary, property, result))
++//    return true;
+ 
+   Dictionary values_dictionary;
+   if (!keyframe_dictionary.Get(property, values_dictionary) ||
+--- chromium-63.0.3239.108/third_party/WebKit/Source/core/events/TouchEvent.cpp.gcc7	2017-12-15 02:04:45.000000000 +0100
++++ chromium-63.0.3239.108/third_party/WebKit/Source/core/events/TouchEvent.cpp	2017-12-29 14:02:17.811274595 +0100
+@@ -262,7 +262,6 @@
+   // A common developer error is to wait too long before attempting to stop
+   // scrolling by consuming a touchmove event. Generate a warning if this
+   // event is uncancelable.
+-  MessageSource message_source = kJSMessageSource;
+   String warning_message;
+   switch (HandlingPassive()) {
+     case PassiveMode::kNotPassive:
+@@ -285,7 +284,6 @@
+                 WebFeature::
+                     kUncancelableTouchEventDueToMainThreadResponsivenessPreventDefaulted);
+           }
+-          message_source = kInterventionMessageSource;
+           warning_message =
+               "Ignored attempt to cancel a " + type() +
+               " event with cancelable=false. This event was forced to be "
+@@ -305,7 +303,6 @@
+       // an author may use touch action but call preventDefault for interop with
+       // browsers that don't support touch-action.
+       if (current_touch_action_ == TouchAction::kTouchActionAuto) {
+-        message_source = kInterventionMessageSource;
+         warning_message =
+             "Unable to preventDefault inside passive event listener due to "
+             "target being treated as passive. See "
+--- chromium-63.0.3239.108/chrome/browser/ui/libgtkui/app_indicator_icon.cc.gcc7	2017-12-15 02:04:11.000000000 +0100
++++ chromium-63.0.3239.108/chrome/browser/ui/libgtkui/app_indicator_icon.cc	2017-12-29 14:50:07.374508338 +0100
+@@ -98,6 +98,7 @@
+     case base::nix::DESKTOP_ENVIRONMENT_XFCE:
+       return false;
+   }
++  return false;
+ }
+ 
+ void EnsureMethodsLoaded() {
+--- chromium-63.0.3239.108/third_party/WebKit/Source/core/page/FocusController.cpp.gcc7	2017-12-15 02:04:46.000000000 +0100
++++ chromium-63.0.3239.108/third_party/WebKit/Source/core/page/FocusController.cpp	2017-12-29 16:48:59.462554676 +0100
+@@ -217,9 +217,6 @@
+   static ScopedFocusNavigation OwnedByIFrame(const HTMLFrameOwnerElement&,
+                                              FocusController::OwnerMap&);
+   static HTMLSlotElement* FindFallbackScopeOwnerSlot(const Element&);
+-  static bool IsSlotFallbackScoped(const Element&);
+-  static bool IsSlotFallbackScopedForThisSlot(const HTMLSlotElement&,
+-                                              const Element&);
+ 
+  private:
+   ScopedFocusNavigation(ContainerNode& scoping_root_node,
+@@ -361,25 +358,6 @@
+   return nullptr;
+ }
+ 
+-bool ScopedFocusNavigation::IsSlotFallbackScoped(const Element& element) {
+-  return ScopedFocusNavigation::FindFallbackScopeOwnerSlot(element);
+-}
+-
+-bool ScopedFocusNavigation::IsSlotFallbackScopedForThisSlot(
+-    const HTMLSlotElement& slot,
+-    const Element& current) {
+-  Element* parent = current.parentElement();
+-  while (parent) {
+-    if (IsHTMLSlotElement(parent) &&
+-        ToHTMLSlotElement(parent)->AssignedNodes().IsEmpty()) {
+-      return !SlotScopedTraversal::IsSlotScoped(current) &&
+-             ToHTMLSlotElement(parent) == slot;
+-    }
+-    parent = parent->parentElement();
+-  }
+-  return false;
+-}
+-
+ inline void DispatchBlurEvent(const Document& document,
+                               Element& focused_element) {
+   focused_element.DispatchBlurEvent(nullptr, kWebFocusTypePage);

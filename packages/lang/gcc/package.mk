@@ -50,6 +50,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-multilib \
                            --disable-nls \
                            --enable-checking=release \
+                           --disable-libunwind-exceptions \
                            --without-ppl \
                            --without-cloog \
                            --disable-libssp \

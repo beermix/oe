@@ -15,16 +15,14 @@
 #  You should have received a copy of the GNU General Public License
 #  along with OpenELEC.tv; see the file COPYING.  If not, write to
 #  the Free Software Foundation, 51 Franklin Street, Suite 500, Boston, MA 02110, USA.
-#  https://chromereleases.googleblog.com/
 #  http://svnweb.mageia.org/packages/cauldron/chromium-browser-stable/current
-#  http://omahaproxy.appspot.com/
-#  https://www.chromestatus.com/
+#  https://chromereleases.googleblog.com/
 ################################################################################
 
 PKG_NAME="chromium"
-PKG_VERSION="64.0.3282.140"
-PKG_SHA256="146afbab37982c52251e5c71b6e19e6e7053b527217fe1da9966c794478c29ce"
-PKG_REV="140"
+PKG_VERSION="63.0.3239.108"
+PKG_SHA256="47d80798194da78bdd519b7ce012425b13cf89d6eb287e22a34342a245c31a2b"
+PKG_REV="108"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_SITE="http://www.chromium.org/Home"
@@ -49,8 +47,6 @@ post_patch() {
 
   # set correct widevine
   sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' ./third_party/widevine/cdm/stub/widevine_cdm_version.h
-  
-  patch -Np4 -i $PKG_DIR/chromium-skia-harmony.patch
 }
 
 make_host() {
@@ -87,6 +83,13 @@ make_target() {
   
   export CCACHE_SLOPPINESS=time_macros
 
+  # Fix paths.
+  sed -e 's|i386-linux-gnu/||g' \
+      -e 's|x86_64-linux-gnu/||g' \
+      -e 's|/usr/lib/va/drivers|/usr/lib/dri|g' \
+      -e 's|/usr/lib64/va/drivers|/usr/lib/dri|g' \
+      -i ./content/common/sandbox_linux/bpf_gpu_policy_linux.cc
+
   # Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
   # Note: These are for OpenELEC use ONLY. For your own distribution, please
   # get your own set of keys.
@@ -115,7 +118,6 @@ make_target() {
     'use_gconf=false'
     'use_gnome_keyring=false'
     'use_gold=false'
-    'use_lld=false'
     'use_system_freetype=true'
     'use_system_harfbuzz=true'
     'use_gtk3=false'
@@ -142,22 +144,23 @@ make_target() {
   )
 
 readonly -A _system_libs=(
-  #[icu]=icu
   [libdrm]=
   [libjpeg]=libjpeg
-  [libxml]=libxml2           # https://crbug.com/736026
+  [libxml]=libxml2
   [libxslt]=libxslt
   [re2]=re2
   [snappy]=snappy
   [yasm]=
   [zlib]=minizip
 )
+
 readonly _unwanted_bundled_libs=(
   ${!_system_libs[@]}
   ${_system_libs[libjpeg]+libjpeg_turbo}
   freetype
   harfbuzz-ng
 )
+
 depends+=(${_system_libs[@]} freetype2 harfbuzz)
 
   # Remove bundled libraries for which we will use the system copies; this
@@ -187,7 +190,7 @@ addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -P  $PKG_BUILD/out/Release/chrome $ADDON_BUILD/$PKG_ADDON_ID/bin/chromium.bin
   cp -P  $PKG_BUILD/out/Release/chrome_sandbox $ADDON_BUILD/$PKG_ADDON_ID/bin/chrome-sandbox
-  cp -P  $PKG_BUILD/out/Release/{*.pak,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
+  cp -P  $PKG_BUILD/out/Release/{*.pak,*.dat,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -PR $PKG_BUILD/out/Release/locales $ADDON_BUILD/$PKG_ADDON_ID/bin/
   cp -PR $PKG_BUILD/out/Release/gen/content/content_resources.pak $ADDON_BUILD/$PKG_ADDON_ID/bin/
 
