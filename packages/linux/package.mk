@@ -48,6 +48,7 @@ case "$LINUX" in
     ;;
   *)
     PKG_VERSION="a87ef48"
+    PKG_SITE="https://github.com/zen-kernel/zen-kernel/tree/4.14/master"
     PKG_URL="https://github.com/zen-kernel/zen-kernel/archive/$PKG_VERSION.tar.gz"
     PKG_SOURCE_DIR="zen-kernel-$PKG_VERSION*"
     PKG_PATCH_DIRS="default"
