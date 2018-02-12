@@ -21,7 +21,7 @@ PKG_VERSION="7-20180208"
 PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-#PKG_URL="http://ftpmirror.gnu.org/gcc/$PKG_NAME-$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_SITE="ftp://gcc.gnu.org/pub/gcc/snapshots/LATEST-7"
 PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/$PKG_VERSION/gcc-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host"
 PKG_DEPENDS_TARGET="gcc:host"
@@ -49,9 +49,8 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-multilib \
                            --disable-nls \
                            --enable-checking=release \
-                           --disable-libunwind-exceptions \
-                           --enable-gnu-indirect-function \
                            --with-default-libstdcxx-abi=gcc4-compatible \
+                           --disable-libunwind-exceptions \
                            --with-ppl=yes \
                            --without-cloog \
                            --disable-libmudflap \
@@ -88,10 +87,11 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-libstdcxx-time \
                          --enable-clocale=gnu \
                          --enable-libatomic \
+                         --enable-gnu-indirect-function \
                          $GCC_OPTS"
 
 pre_configure_host() {
-#  export CXXFLAGS="$CXXFLAGS -std=gnu++98"
+  export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
 }
 
