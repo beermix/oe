@@ -17,11 +17,11 @@
 ################################################################################
 
 PKG_NAME="glibc"
-PKG_VERSION="2.27"
+PKG_VERSION="2.26"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/bminor/glibc/branches/active"
-PKG_URL="https://github.com/bminor/glibc/archive/$PKG_VERSION.tar.gz"
+PKG_URL="http://ftp.gnu.org/pub/gnu/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap"
 PKG_DEPENDS_INIT="glibc"
 PKG_SECTION="toolchain/devel"
@@ -44,7 +44,6 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
                            --enable-kernel=3.0.0 \
                            --without-cvs \
-                           --enable-static-pie \
                            --without-gd \
                            --enable-obsolete-rpc \
                            --enable-obsolete-nsl \
@@ -64,6 +63,16 @@ NSS_CONF_DIR="$PKG_BUILD/nss"
 GLIBC_EXCLUDE_BIN="catchsegv gencat getconf iconv iconvconfig ldconfig"
 GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN makedb mtrace pcprofiledump"
 GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN pldd rpcgen sln sotruss sprof xtrace"
+
+post_patch() {
+  # Add patches from Clear Linux
+  if [ "$TARGET_ARCH" = "x86_64" ]; then
+    for file in $PKG_DIR/clear/*.patch; do
+      echo Applying patch $file...
+      patch -p1 -d $PKG_BUILD < $file
+    done
+  fi
+}
 
 pre_build_target() {
   cd $PKG_BUILD
