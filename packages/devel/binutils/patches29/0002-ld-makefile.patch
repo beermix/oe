@@ -1,4 +1,4 @@
-From d4e18ebc6ad810167a2de84b185a5f0d65b9ec2d Mon Sep 17 00:00:00 2001
+From bf6f72c4e3c57864417ac1f917404cc83af8ec14 Mon Sep 17 00:00:00 2001
 From: Romain Naour <romain.naour@gmail.com>
 Date: Fri, 25 Dec 2015 11:40:53 +0100
 Subject: [PATCH] ld-makefile
@@ -11,7 +11,7 @@ Signed-off-by: Romain Naour <romain.naour@gmail.com>
  2 files changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/ld/Makefile.am b/ld/Makefile.am
-index 625347f..d5334d2 100644
+index 6243c12528..3c5d6c8202 100644
 --- a/ld/Makefile.am
 +++ b/ld/Makefile.am
 @@ -57,7 +57,7 @@ endif
@@ -24,7 +24,7 @@ index 625347f..d5334d2 100644
  EMUL = @EMUL@
  EMULATION_OFILES = @EMULATION_OFILES@
 diff --git a/ld/Makefile.in b/ld/Makefile.in
-index ba25177..a2cf228 100644
+index 760c037f9d..6dea692869 100644
 --- a/ld/Makefile.in
 +++ b/ld/Makefile.in
 @@ -446,7 +446,7 @@ AM_CFLAGS = $(WARN_CFLAGS) $(ELF_CLFAGS)
@@ -37,5 +37,5 @@ index ba25177..a2cf228 100644
  BFDDIR = $(BASEDIR)/bfd
  INCDIR = $(BASEDIR)/include
 -- 
-2.9.4
+2.14.3
 
