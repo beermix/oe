@@ -21,7 +21,7 @@ PKG_VERSION="glibc-2.27.9000"
 PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/bminor/glibc/tree/release/2.26/master"
+PKG_SITE="https://github.com/bminor/glibc/branches/active"
 PKG_URL="https://github.com/bminor/glibc/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap"
 PKG_DEPENDS_INIT="glibc"
@@ -44,6 +44,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
                            --without-cvs \
+                           --enable-static-pie \
                            --without-gd \
                            --enable-obsolete-rpc \
                            --enable-obsolete-nsl \

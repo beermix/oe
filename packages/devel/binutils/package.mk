@@ -39,7 +39,6 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-libssp \
                          --enable-version-specific-runtime-libs \
                          --enable-plugins \
-                         --enable-lto \
                          --disable-nls"
 
 PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
