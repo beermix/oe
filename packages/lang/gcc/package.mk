@@ -51,13 +51,13 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-nls \
                            --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
+                           --disable-libquadmath-support \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
                            --disable-libmudflap \
                            --disable-libsanitizer \
                            --disable-libitm \
-                           --disable-libquadmath \
                            --disable-libgomp \
                            --disable-libmpx \
                            --disable-libssp"
