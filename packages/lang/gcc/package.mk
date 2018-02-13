@@ -88,6 +88,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-libstdcxx-time \
                          --enable-clocale=gnu \
                          --enable-libatomic \
+                         --enable-gnu-unique-object \
                          $GCC_OPTS"
 
 pre_configure_host() {
