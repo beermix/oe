@@ -36,7 +36,8 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --without-cloog \
                          --disable-werror \
                          --disable-multilib \
-                         --enable-libssp \
+                         --disable-libada \
+                         --disable-libssp \
                          --enable-version-specific-runtime-libs \
                          --enable-plugins \
                          --disable-nls"

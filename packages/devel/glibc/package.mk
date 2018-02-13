@@ -17,8 +17,7 @@
 ################################################################################
 
 PKG_NAME="glibc"
-PKG_VERSION="d300041"
-PKG_SHA256=""
+PKG_VERSION="2.27"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/bminor/glibc/branches/active"
@@ -43,6 +42,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-__thread \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
+                           --enable-kernel=3.0.0 \
                            --without-cvs \
                            --enable-static-pie \
                            --without-gd \
@@ -120,7 +120,7 @@ pre_configure_target() {
 
   # set some CFLAGS we need
 
-  export CFLAGS="-O2 -m64 -march=westmere -g"
+  export CFLAGS="-O2 -m64 -march=westmere -g -fno-stack-protector"
 
   export BUILD_CC=$HOST_CC
   export OBJDUMP_FOR_HOST=objdump
