@@ -209,8 +209,9 @@ addon() {
   cp -PL $(get_build_dir cairo)/.install_pkg/usr/lib/libcairo.so.2 $ADDON_BUILD/$PKG_ADDON_ID/lib
   cp -PL $(get_build_dir cairo)/.install_pkg/usr/lib/libcairo-gobject.so.2 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
-  # atk
-  # cp -PL $(get_build_dir atk)/.install_pkg/usr/lib/libatk-1.0.so.0* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  # icu
+  # cp -PL $(get_build_dir icu)/.install_pkg/usr/lib/llibicuuc.so.60 $ADDON_BUILD/$PKG_ADDON_ID/lib
+  # cp -PL $(get_build_dir icu)/.install_pkg/usr/lib/libicui18n.so.60 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # gtk
   cp -PL $(get_build_dir gtk+)/.install_pkg/usr/lib/libgdk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
