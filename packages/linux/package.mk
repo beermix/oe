@@ -21,7 +21,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kernel.org"
 PKG_DEPENDS_HOST="ccache:host"
-PKG_DEPENDS_TARGET="toolchain cpio:host kmod:host pciutils xz:host wireless-regdb keyutils elfutils $KERNEL_EXTRA_DEPENDS_TARGET"
+PKG_DEPENDS_TARGET="toolchain cpio:host kmod:host pciutils xz:host wireless-regdb keyutils $KERNEL_EXTRA_DEPENDS_TARGET"
 PKG_DEPENDS_INIT="toolchain"
 PKG_NEED_UNPACK="$LINUX_DEPENDS"
 PKG_SECTION="linux"
@@ -38,21 +38,18 @@ case "$LINUX" in
     PKG_PATCH_DIRS="amlogic-3.10"
     PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET aml-dtbtools:host"
     ;;
-  amlogic-3.14)
-    PKG_VERSION="7951748"
-    PKG_SHA256="d90709aae14ac0c2fc64fd8423caa695829dc012f65f42069d27d84095df8137"
-    PKG_URL="https://github.com/LibreELEC/linux-amlogic/archive/$PKG_VERSION.tar.gz"
-    PKG_SOURCE_DIR="$PKG_NAME-amlogic-$PKG_VERSION*"
-    PKG_PATCH_DIRS="amlogic-3.14"
-    PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET aml-dtbtools:host"
-    ;;
-  *)
+  zen)
     PKG_VERSION="a87ef48"
     PKG_SITE="https://github.com/zen-kernel/zen-kernel/tree/4.14/master"
     PKG_URL="https://github.com/zen-kernel/zen-kernel/archive/$PKG_VERSION.tar.gz"
     PKG_SOURCE_DIR="zen-kernel-$PKG_VERSION*"
     PKG_PATCH_DIRS="default"
-    PKG_BUILD_PERF="yes"
+    ;;
+  *)
+    PKG_VERSION="4.14.10"
+    PKG_SHA256=""
+    PKG_URL="https://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
+    PKG_PATCH_DIRS="default"
     ;;
 esac
 

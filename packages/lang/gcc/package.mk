@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="7-20180208"
+PKG_VERSION="8-20180211"
 PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -43,33 +43,35 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-mpfr=$TOOLCHAIN \
                            --with-mpc=$TOOLCHAIN \
                            --with-isl \
+                           --with-gnu-as \
+                           --with-gnu-ld \
                            --enable-plugin \
                            --enable-lto \
-                           --enable-ld=yes \
-                           --enable-gold=no \
+                           --enable-gold \
+                           --enable-ld=default \
                            --disable-multilib \
                            --disable-nls \
                            --enable-checking=release \
-                           --disable-libunwind-exceptions \
+                           --with-default-libstdcxx-abi=gcc4-compatible \
                            --without-ppl \
                            --without-cloog \
-                           --disable-libssp \
-                           --disable-libmpx \
+                           --disable-libada \
+                           --disable-libmudflap \
                            --disable-libsanitizer \
+                           --disable-libitm \
                            --disable-libquadmath \
-                           --without-cuda-driver \
-                           --with-tune=haswell"
+                           --disable-libgomp \
+                           --disable-libmpx \
+                           --disable-libssp"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
-                              --disable-libatomic \
+                              --enable-cloog-backend=isl \
                               --disable-shared \
-                              --disable-threads \
-                              --disable-libitm \
-                              --disable-libquadmath \
                               --disable-libgomp \
-                              --disable-libada \
+                              --disable-libatomic \
+                              --disable-threads \
                               --without-headers \
                               --with-newlib \
                               --disable-decimal-float \
