@@ -52,6 +52,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
                            --disable-libquadmath-support \
+                           --disable-libunwind-exceptions \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
@@ -59,8 +60,10 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libsanitizer \
                            --disable-libitm \
                            --disable-libgomp \
+                           --disable-libquadmath \
                            --disable-libmpx \
-                           --disable-libssp"
+                           --disable-libssp \
+                           --with-tune=haswell"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
