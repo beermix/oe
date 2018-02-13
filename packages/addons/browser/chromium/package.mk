@@ -63,22 +63,6 @@ make_target() {
   # unset CXXFLAGS
   # unset LDFLAGS
 
-  # https://chromium-review.googlesource.com/c/chromium/src/+/712575
-  # _flags+=('exclude_unwind_tables=true')
-  # export CFLAGS=$(echo "$CFLAGS"|sed -e 's/-g //')
-  # export CXXFLAGS=$(echo "$CXXFLAGS"|sed -e 's/-g //')
-  # export CFLAGS="$CFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables"
-  # export CXXFLAGS="$CXXFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables"
-  # export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
-  
-  # export CFLAGS=`echo $CFLAGS | sed -e "s|-march=westmere -m64  -O2 -pipe||g"`
-  # export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-march=westmere -m64  -O2 -pipe||g"`
-  # export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now||"`
-  
-  # export LDFLAGS="$LDFLAGS -s"
-  # export CFLAGS=`echo $CFLAGS | sed -e "s|-fomit-frame-pointer||g"`
-  # export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-fomit-frame-pointer||g"`
-  
   export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always"
   
   export CCACHE_SLOPPINESS=time_macros
