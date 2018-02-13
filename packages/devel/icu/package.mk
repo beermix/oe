@@ -30,7 +30,7 @@ PKG_SHORTDESC="International Components for Unicode library"
 PKG_LONGDESC="International Components for Unicode library"
 
 post_unpack() {
-  sed -i 's/xlocale/locale/' $PKG_BUILD/source/i18n/digitlst.cpp
+#  sed -i 's/xlocale/locale/' $PKG_BUILD/source/i18n/digitlst.cpp
   cp -r $PKG_BUILD/source/* $PKG_BUILD/
 }
 
@@ -43,7 +43,7 @@ pre_configure_target() {
 
 PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
 			   
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --disable-debug --enable-release --with-cross-build=$PKG_BUILD/.$HOST_NAME"
+PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --with-cross-build=$PKG_BUILD/.$HOST_NAME"
 
 #PKG_CONFIGURE_SCRIPT="source/configure"
 
