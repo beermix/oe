@@ -39,5 +39,5 @@ PKG_TOOLCHAIN="autotools"
 #  export CXXFLAGS="$CFLAGS -fno-semantic-interposition"
 #}
 
-PKG_CONFIGURE_OPTS_HOST="--enable-cxx --disable-shared --with-pic --disable-assembly"
+PKG_CONFIGURE_OPTS_HOST="--enable-cxx --disable-shared --with-pic"
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
