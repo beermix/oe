@@ -155,42 +155,6 @@ $SCRIPTS/install util-linux
 $SCRIPTS/install corefonts
 $SCRIPTS/install network
 
-# Graphic support
-[ ! "$DISPLAYSERVER" = "no" ] && $SCRIPTS/install $DISPLAYSERVER
-
-# Multimedia support
-[ ! "$MEDIACENTER" = "no" ] && $SCRIPTS/install mediacenter
-
-# Sound support
-[ "$ALSA_SUPPORT" = "yes" ] && $SCRIPTS/install alsa
-
-# Automounter support
-[ "$UDEVIL" = "yes" ] && $SCRIPTS/install udevil
-
-# NTFS 3G support
-[ "$EXFAT" = "yes" ] && $SCRIPTS/install fuse-exfat
-
-# NTFS 3G support
-[ "$NTFS3G" = "yes" ] && $SCRIPTS/install ntfs-3g_ntfsprogs
-
-# Remote support
-[ "$REMOTE_SUPPORT" = "yes" ] && $SCRIPTS/install remote
-
-# Install miscellaneous packages
-$SCRIPTS/install misc-packages
-
-# Virtual image creation support
-[ "$PROJECT" = "Generic" ] && $SCRIPTS/install virtual
-
-# Installer support
-[ "$INSTALLER_SUPPORT" = "yes" ] && $SCRIPTS/install installer
-
-# Devtools... (not for Release)
-[ "$TESTING" = "yes" ] && $SCRIPTS/install testing
-
-# Install gdb in all builds, including releases
-$SCRIPTS/install debug
-
 # OEM packages
 [ "$OEM_SUPPORT" = "yes" ] && $SCRIPTS/install oem
 

@@ -28,7 +28,7 @@ PKG_DEPENDS_HOST="toolchain e2fsprogs:host Python2:host"
 PKG_SECTION="devel"
 PKG_SHORTDESC="heimdal: Kerberos 5, PKIX, CMS, GSS-API, SPNEGO, NTLM, Digest-MD5 and, SASL implementation."
 PKG_LONGDESC="Heimdal is an implementation of Kerberos 5 (and some more stuff) largely written in Sweden (which was important when we started writing it, less so now). It is freely available under a three clause BSD style license. "
-PKG_TOOLCHAIN="autotools"
+PKG_TOOLCHAIN="manual"
 
 MAKEFLAGS="-j1"
 
@@ -49,5 +49,6 @@ PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared \
 
 makeinstall_host() {
   mkdir -p $TOOLCHAIN/bin
-    cp -PR lib/asn1/asn1_compile $TOOLCHAIN/bin
+  #  cp -PR lib/asn1/asn1_compile $TOOLCHAIN/bin
+    cp $PKG_DIR/asn1_compile $TOOLCHAIN/bin/
 }
