@@ -18,7 +18,7 @@ amlpkg:
 	./scripts/image amlpkg
 
 clean:
-	rm -rf $(BUILD_DIRS)/* $(BUILD_DIRS)/.stamps build.*
+	rm -rf ./$(BUILD_DIRS)
 
 distclean:
 	rm -rf ./.ccache ./$(BUILD_DIRS)

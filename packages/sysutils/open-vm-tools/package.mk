@@ -24,7 +24,7 @@ PKG_ARCH="x86_64"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/vmware/open-vm-tools"
 PKG_URL="https://github.com/vmware/open-vm-tools/releases/download/stable-10.2.0/open-vm-tools-10.2.0-7253323.tar.gz"
-PKG_DEPENDS_TARGET="toolchain glib:host glib libdnet fuse"
+PKG_DEPENDS_TARGET="toolchain procps-ng glib:host glib libdnet fuse"
 PKG_SECTION="virtualization"
 PKG_SHORTDESC="open-vm-tools: open source implementation of VMware Tools"
 PKG_LONGDESC="open-vm-tools: open source implementation of VMware Tools"
@@ -40,7 +40,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-docs \
                            --without-x \
                            --without-xerces \
                            --without-icu \
-                           --without-procps \
+                           --with-procps \
                            --without-kernel-modules \
                            --with-udev-rules-dir=/usr/lib/udev/rules.d/ \
                            --with-sysroot=$SYSROOT_PREFIX"

@@ -18,11 +18,11 @@
 
 PKG_NAME="e2fsprogs"
 PKG_VERSION="1.43.9"
-PKG_SHA256=""
+PKG_SHA256="926f8e8de1ffba55d791f21b71334e8a32b5227257ad370f2bf7e4396629e97f"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://e2fsprogs.sourceforge.net/"
-PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="https://www.kernel.org/pub/linux/kernel/people/tytso/$PKG_NAME/v$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_DEPENDS_INIT="toolchain"
 PKG_SECTION="tools"
@@ -41,8 +41,6 @@ PKG_CONFIGURE_OPTS_TARGET="BUILD_CC=$HOST_CC \
                            --enable-verbose-makecmds \
                            --enable-symlink-install \
                            --enable-symlink-build \
-                           --enable-compression \
-                           --enable-htree \
                            --disable-elf-shlibs \
                            --disable-bsd-shlibs \
                            --disable-profile \

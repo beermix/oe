@@ -1,0 +1,31 @@
+From 4fbbc9e6ac698af59a26761499299a428dee5c7a Mon Sep 17 00:00:00 2001
+From: Dimitri John Ledkov <dimitri.j.ledkov@intel.com>
+Date: Wed, 21 Jan 2015 10:56:46 +0000
+Subject: [PATCH] glib/tests/mappedfile: create runtime_dir before writting to
+ it.
+Organization: Intel Corporation (UK) Ltd. - Co. Reg. #1134945 - Pipers Way, Swindon SN3 1RJ
+
+As it happens, builder environments might not have that directory
+pre-created, as it's not a usual interactive user account.
+
+Signed-off-by: Dimitri John Ledkov <dimitri.j.ledkov@intel.com>
+---
+ glib/tests/mappedfile.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/glib/tests/mappedfile.c b/glib/tests/mappedfile.c
+index ccaea34..dc04706 100644
+--- a/glib/tests/mappedfile.c
++++ b/glib/tests/mappedfile.c
+@@ -85,6 +85,8 @@ test_writable (void)
+   const gchar *new = "abcdefghijklmnopqrstuvxyz";
+   gchar *tmp_copy_path;
+ 
++  g_assert_false( g_mkdir_with_parents (g_get_user_runtime_dir (), 0755));
++
+   tmp_copy_path = g_build_filename (g_get_user_runtime_dir (), "glib-test-4096-random-bytes", NULL);
+ 
+   g_file_get_contents (g_test_get_filename (G_TEST_DIST, "4096-random-bytes", NULL), &contents, &len, &error);
+-- 
+2.1.0
+

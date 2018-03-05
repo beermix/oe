@@ -17,11 +17,12 @@
 ################################################################################
 
 PKG_NAME="glibc"
-PKG_VERSION="2.26"
+PKG_VERSION="d300041"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/bminor/glibc/branches/active"
-PKG_URL="http://ftp.gnu.org/pub/gnu/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_SITE="https://github.com/bminor/glibc/tree/release/2.27/master"
+PKG_URL="https://github.com/bminor/glibc/archive/$PKG_VERSION.tar.gz"
+#PKG_URL="http://ftpmirror.gnu.org/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap"
 PKG_DEPENDS_INIT="glibc"
 PKG_SECTION="toolchain/devel"
@@ -42,9 +43,10 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-__thread \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
-                           --enable-kernel=3.0.0 \
+                           --enable-kernel=3.10 \
                            --without-cvs \
                            --without-gd \
+                           --without-selinux \
                            --enable-obsolete-rpc \
                            --enable-obsolete-nsl \
                            --disable-build-nscd \
@@ -52,7 +54,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --enable-lock-elision \
                            --disable-timezone-tools"
 
-if [ "$DEBUG" = yes ]; then
+if build_with_debug; then
   PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET --enable-debug"
 else
   PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET --disable-debug"
@@ -64,15 +66,15 @@ GLIBC_EXCLUDE_BIN="catchsegv gencat getconf iconv iconvconfig ldconfig"
 GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN makedb mtrace pcprofiledump"
 GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN pldd rpcgen sln sotruss sprof xtrace"
 
-post_patch() {
-  # Add patches from Clear Linux
-  if [ "$TARGET_ARCH" = "x86_64" ]; then
-    for file in $PKG_DIR/clear/*.patch; do
-      echo Applying patch $file...
-      patch -p1 -d $PKG_BUILD < $file
-    done
-  fi
-}
+#post_patch() {
+#  # Add patches from Clear Linux
+#  if [ "$TARGET_ARCH" = "x86_64" ]; then
+#    for file in $PKG_DIR/clear/*.patch; do
+#      echo Applying patch $file...
+#      patch -p1 -d $PKG_BUILD < $file
+#    done
+#  fi
+#}
 
 pre_build_target() {
   cd $PKG_BUILD
@@ -84,14 +86,17 @@ pre_build_target() {
 pre_configure_target() {
 # Fails to compile with GCC's link time optimization.
   strip_lto
+  strip_hard
 
 # glibc dont support GOLD linker.
   strip_gold
+
 
 # Filter out some problematic *FLAGS
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong -D_FORTIFY_SOURCE=2||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fstack-protector-strong||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-ffast-math||g"`
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-Wl,--copy-dt-needed-entries -fasynchronous-unwind-tables -Wp,-D_REENTRANT -ftree-loop-distribute-patterns -malign-data=abi -fno-semantic-interposition -ftree-vectorize -ftree-loop-vectorize||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|--param l1-cache-line-size=64 --param l1-cache-size=32 --param l2-cache-size=3072||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|--param=l1-cache-line-size=64 --param=l1-cache-size=32 --param=l2-cache-size=3072||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fno-plt||g"`
@@ -129,7 +134,9 @@ pre_configure_target() {
 
   # set some CFLAGS we need
 
-  export CFLAGS="-O2 -m64 -march=westmere -g -fno-stack-protector"
+  export CFLAGS="-O2 -march=westmere -g2 -m64  -Wl,-z,max-page-size=0x1000 "
+  unset LDFLAGS
+  export LDFLAGS="-Wl,-z,max-page-size=0x1000 "
 
   export BUILD_CC=$HOST_CC
   export OBJDUMP_FOR_HOST=objdump

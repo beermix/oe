@@ -42,6 +42,4 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-doc \
 			      --enable-threads \
 			      --disable-shared \
 			      --with-pic \
-			      --disable-doc \
-			      --disable-nls \
-			      --disable-lzmadec"
+			      --disable-doc"

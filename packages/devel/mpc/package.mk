@@ -33,3 +33,8 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --with-gmp=$TOOLCHAIN \
                          --with-mpfr=$TOOLCHAIN \
                          --with-pic"
+
+pre_configure_host() {
+  unset CPPFLAGS
+  unset LDFLAGS
+}

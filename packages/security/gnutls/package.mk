@@ -1,5 +1,5 @@
 PKG_NAME="gnutls"
-PKG_VERSION="3.6.1"
+PKG_VERSION="3.6.2"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://www.gnupg.org/ftp/gcrypt/gnutls/v3.6/"
@@ -22,4 +22,5 @@ PKG_CONFIGURE_OPTS_TARGET="--without-p11-kit \
 			      --with-included-unistring \
 			      --without-tpm \
 			      --with-nettle-mini \
+			      --disable-shared \
 			      --with-pic"

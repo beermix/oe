@@ -39,16 +39,16 @@ case "$LINUX" in
     PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET aml-dtbtools:host"
     ;;
   zen)
-    PKG_VERSION="a87ef48"
+    PKG_VERSION="f1375a4"
     PKG_SITE="https://github.com/zen-kernel/zen-kernel/tree/4.14/master"
     PKG_URL="https://github.com/zen-kernel/zen-kernel/archive/$PKG_VERSION.tar.gz"
     PKG_SOURCE_DIR="zen-kernel-$PKG_VERSION*"
     PKG_PATCH_DIRS="default"
     ;;
   *)
-    PKG_VERSION="4.14.10"
+    PKG_VERSION="4.14.24"
     PKG_SHA256=""
-    PKG_URL="https://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
+    PKG_URL="http://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
     PKG_PATCH_DIRS="default"
     ;;
 esac
@@ -149,7 +149,8 @@ pre_make_target() {
   if [ "$TARGET_ARCH" = "x86_64" ]; then
     # copy some extra firmware to linux tree
     mkdir -p $PKG_BUILD/external-firmware
-      cp -a $(get_build_dir kernel-firmware)/i915 $PKG_BUILD/external-firmware
+      #cp -a $(get_build_dir kernel-firmware)/{rtl_bt,i915,intel,e100,rtl_nic} $PKG_BUILD/external-firmware
+      cp -a $(get_build_dir kernel-firmware)/{i915,intel} $PKG_BUILD/external-firmware
 
     cp -a $(get_build_dir intel-ucode)/intel-ucode $PKG_BUILD/external-firmware
 

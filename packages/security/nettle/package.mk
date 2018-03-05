@@ -12,4 +12,6 @@ PKG_TOOLCHAIN="autotools"
 PKG_CONFIGURE_OPTS_TARGET="--disable-openssl \
 			      --enable-x86-aesni \
 			      --disable-documentation \
+			      --disable-shared \
+			      --enable-static \
 			      --enable-mini-gmp"

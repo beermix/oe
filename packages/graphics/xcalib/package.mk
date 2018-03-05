@@ -1,5 +1,5 @@
 PKG_NAME="xcalib"
-PKG_VERSION="f95abc1"
+PKG_VERSION="a70156d"
 PKG_URL="https://github.com/OpenICC/xcalib/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libX11 libXrandr libXxf86vm libxcb libXext"
 PKG_SECTION="graphics"

@@ -8,8 +8,6 @@ fi
   export LC_ALL=C
 #  export LANG=C
 
-  export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
-
   export CCACHE_DISABLE=1
 #  export CCACHE_HARDLINK=1
 #  export CCACHE_NOSTATS=1

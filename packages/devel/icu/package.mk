@@ -18,7 +18,7 @@
 
 PKG_NAME="icu"
 PKG_VERSION="60.2"
-PKG_SHA256=""
+PKG_SHA256="f073ea8f35b926d70bb33e6577508aa642a8b316a803f11be20af384811db418"
 PKG_ARCH="any"
 PKG_LICENSE="Custom"
 PKG_SITE="http://www.icu-project.org"
@@ -30,22 +30,47 @@ PKG_SHORTDESC="International Components for Unicode library"
 PKG_LONGDESC="International Components for Unicode library"
 
 post_unpack() {
-#  sed -i 's/xlocale/locale/' $PKG_BUILD/source/i18n/digitlst.cpp
+  sed -i 's/xlocale/locale/' $PKG_BUILD/source/i18n/digitlst.cpp
   cp -r $PKG_BUILD/source/* $PKG_BUILD/
 }
 
-#pre_configure_target() {
-#  CXXFLAGS="$CXXFLAGS -O3 -fPIC -pedantic -Wpointer-arith -Wwrite-strings -Wno-long-long -std=c++11"
-#  LDFLAGS="$LDFLAGS -Wl,--gc-sections"
-#  LIBS="$LIBS -latomic"
-#  CXXFLAGS="$CXXFLAGS -fPIC"
-#}
+pre_configure_host() {
+  mkdir -p $PKG_BUILD/.$HOST_NAME
+  cp -a $PKG_BUILD/* $PKG_BUILD/.$HOST_NAME/
+}
 
-PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
-			   
-PKG_CONFIGURE_OPTS_TARGET="--with-cross-build=$PKG_BUILD/.$HOST_NAME"
+pre_configure_target() {
+  mkdir -p $PKG_BUILD/.$TARGET_NAME
+  cp -a $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME/
+}
 
-#PKG_CONFIGURE_SCRIPT="source/configure"
+configure_host() {
+ cd $PKG_BUILD/.$HOST_NAME
+ ./runConfigureICU Linux/gcc \
+ 		     CC="$HOST_CC" \
+ 		     CXX="$HOST_CXX" \
+ 		     --disable-shared \
+ 		     --enable-static \
+ 		     --prefix=$TOOLCHAIN
+}
+
+configure_target() {
+ cd $PKG_BUILD/.$TARGET_NAME
+ ./runConfigureICU Linux/gcc \
+ 		     CPP="$CPP" \
+ 		     CC="$CC" \
+ 		     CXX="$CXX" \
+ 		     CFLAGS="-fPIC" \
+ 		     CXXFLAGS="-fPIC" \
+ 		     --target=$TARGET_NAME \
+ 		     --build=$TARGET_NAME \
+ 		     --host=$TARGET_NAME \
+ 		     --disable-shared \
+ 		     --enable-static \
+ 		     --enable-release \
+ 		     --prefix=/usr \
+ 		     --with-cross-build="$PKG_BUILD/.$HOST_NAME"
+}
 
 post_makeinstall_target() {
   rm -rf $INSTALL

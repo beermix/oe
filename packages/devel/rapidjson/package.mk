@@ -27,6 +27,7 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="devel"
 PKG_SHORTDESC="rapidjson: JSON parser/generator"
 PKG_LONGDESC="A fast JSON parser/generator for C++ with both SAX/DOM style API"
+PKG_TOOLCHAIN="cmake-make"
 
 PKG_CMAKE_OPTS_TARGET="-DRAPIDJSON_BUILD_DOC=OFF \
                        -DRAPIDJSON_BUILD_EXAMPLES=OFF
@@ -34,4 +35,5 @@ PKG_CMAKE_OPTS_TARGET="-DRAPIDJSON_BUILD_DOC=OFF \
                        -DRAPIDJSON_BUILD_THIRDPARTY_GTEST=OFF \
                        -DRAPIDJSON_BUILD_ASAN=OFF \
                        -DRAPIDJSON_BUILD_UBSAN=OFF \
-                       -DRAPIDJSON_HAS_STDSTRING=ON"
+                       -DRAPIDJSON_HAS_STDSTRING=ON \
+                       -DCMAKE_BUILD_TYPE=Release"

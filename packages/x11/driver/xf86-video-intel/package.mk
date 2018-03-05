@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="xf86-video-intel"
-PKG_VERSION="5c7e4e0"
+PKG_VERSION="7579552"
 PKG_ARCH="x86_64"
 PKG_LICENSE="OSS"
 PKG_SITE="http://intellinuxgraphics.org/"
@@ -38,6 +38,7 @@ pre_configure_target() {
 # xf86-video-intel is broken enough. dont link with LTO
   strip_lto
   strip_hard
+  CFLAGS=`echo $CFLAGS | sed -e "s|-O3|-O2|" -e "s|-Wl,-z -Wl,now -Wl,-z -Wl,relro|-Wall|"`
 }
 
 post_makeinstall_target() {

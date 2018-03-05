@@ -13,67 +13,76 @@
 #  GNU General Public License for more details.
 #
 #  You should have received a copy of the GNU General Public License
-#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>. --disable-libmudflap --disable-libquadmath \
+#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="7.3.0-RC-20180122"
+PKG_VERSION="7-20180301"
 PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="ftp://gcc.gnu.org/pub/gcc/snapshots/LATEST-7"
+#PKG_URL="https://github.com/gcc-mirror/gcc/archive/$PKG_VERSION.tar.gz"
 PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/$PKG_VERSION/gcc-$PKG_VERSION.tar.xz"
 #PKG_URL="ftp://gcc.gnu.org/pub/gcc/releases/gcc-$PKG_VERSION/gcc-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host"
+PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host"
 PKG_DEPENDS_TARGET="gcc:host"
-PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
+PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host glibc"
 PKG_SECTION="lang"
 PKG_SHORTDESC="gcc: The GNU Compiler Collection Version 4 (aka GNU C Compiler)"
 PKG_LONGDESC="This package contains the GNU Compiler Collection. It includes compilers for the languages C, C++, Objective C, Fortran 95, Java and others ... This GCC contains the Stack-Smashing Protector Patch which can be enabled with the -fstack-protector command-line option. More information about it ca be found at http://www.research.ibm.com/trl/projects/security/ssp/."
 
-post_unpack() {
-  mkdir -p $PKG_BUILD/isl
-  cp -r -i $(get_build_dir isl)/* $PKG_BUILD/isl
-  rm -rf $PKG_BUILD/isl/.x86_64-linux-gnu
-}
+#post_unpack() {
+#  mkdir -p $PKG_BUILD/isl
+#  cp -r -i $(get_build_dir isl)/* $PKG_BUILD/isl
+#  rm -rf $PKG_BUILD/isl/.x86_64-linux-gnu
+#}
+
+#post_patch() {
+#   Add patches from Clear Linux
+#  if [ "$TARGET_ARCH" = "x86_64" ]; then
+#    for file in $PKG_DIR/clear/*.patch; do
+#      echo Applying patch $file...
+#      patch -p1 -d $PKG_BUILD < $file
+#    done
+#  fi
+#}
 
 GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-sysroot=$SYSROOT_PREFIX \
                            --with-gmp=$TOOLCHAIN \
                            --with-mpfr=$TOOLCHAIN \
                            --with-mpc=$TOOLCHAIN \
-                           --with-isl \
+                           --with-isl=$TOOLCHAIN \
                            --with-gnu-as \
                            --with-gnu-ld \
                            --enable-plugin \
                            --enable-lto \
+                           --enable-ld=default \
                            --disable-multilib \
                            --disable-nls \
+                           --disable-libsanitizer \
+                           --disable-libssp \
+                           --disable-libmpx \
                            --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
-                           --disable-libquadmath-support \
-                           --disable-libunwind-exceptions \
-                           --without-ppl \
-                           --without-cloog \
-                           --disable-libada \
-                           --disable-libmudflap \
-                           --disable-libsanitizer \
-                           --disable-libitm \
-                           --disable-libgomp \
-                           --disable-libquadmath \
-                           --disable-libmpx \
-                           --disable-libssp \
                            --with-tune=haswell"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
-                              --enable-languages=c \
+                              --enable-languages=c,c++ \
                               --disable-__cxa_atexit \
-                              --enable-cloog-backend=isl \
                               --disable-shared \
+                              --disable-libitm \
+                              --disable-libquadmath \
+                              --disable-libada \
                               --disable-libatomic \
+                              --disable-libgomp \
+                              --disable-libmudflap \
                               --disable-threads \
                               --without-headers \
                               --with-newlib \
+                              --disable-libvtv \
+                              --disable-libstdcxx \
                               --disable-decimal-float \
                               $GCC_OPTS"
 
@@ -91,7 +100,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-libstdcxx-time \
                          --enable-clocale=gnu \
                          --enable-libatomic \
-                         --enable-gnu-unique-object \
+                         --enable-libgomp \
                          $GCC_OPTS"
 
 pre_configure_host() {
@@ -104,9 +113,9 @@ post_make_host() {
   rm -rf $TARGET_NAME/libgcc/libgcc_s.so
   ln -sf libgcc_s.so.1 $TARGET_NAME/libgcc/libgcc_s.so
 
-  if [ ! "$DEBUG" = yes ]; then
+  if [ ! "${BUILD_WITH_DEBUG}" = "yes" ]; then
     ${TARGET_PREFIX}strip $TARGET_NAME/libgcc/libgcc_s.so*
-#    ${TARGET_PREFIX}strip $TARGET_NAME/libgomp/.libs/libgomp.so*
+    ${TARGET_PREFIX}strip $TARGET_NAME/libgomp/.libs/libgomp.so*
     ${TARGET_PREFIX}strip $TARGET_NAME/libstdc++-v3/src/.libs/libstdc++.so*
   fi
 }
@@ -155,7 +164,7 @@ make_target() {
 makeinstall_target() {
   mkdir -p $INSTALL/usr/lib
     cp -P $PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libgcc/libgcc_s.so* $INSTALL/usr/lib
-#    cp -P $PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libgomp/.libs/libgomp.so* $INSTALL/usr/lib
+    cp -P $PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libgomp/.libs/libgomp.so* $INSTALL/usr/lib
     cp -P $PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libstdc++-v3/src/.libs/libstdc++.so* $INSTALL/usr/lib
     cp -P $PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libatomic/.libs/libatomic.so* $INSTALL/usr/lib
 }
