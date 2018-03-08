@@ -49,6 +49,6 @@ PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared \
 
 makeinstall_host() {
   mkdir -p $TOOLCHAIN/bin
-  #  cp -PR lib/asn1/asn1_compile $TOOLCHAIN/bin
+   # cp -PR lib/asn1/asn1_compile $TOOLCHAIN/bin
     cp $PKG_DIR/asn1_compile $TOOLCHAIN/bin/
 }
