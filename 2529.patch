@@ -1,0 +1,957 @@
+From d048b8880a293c50f17e4f2b4af605177b6056a4 Mon Sep 17 00:00:00 2001
+From: MilhouseVH <milhouseVH.github@nmacleod.com>
+Date: Sun, 25 Feb 2018 11:10:45 +0000
+Subject: [PATCH 1/8] scripts/get: support get handlers, starting with
+ get_archive
+
+---
+ config/path                     | 40 +++++++++--------
+ distributions/LibreELEC/options |  3 ++
+ scripts/get                     | 97 +++++++++++++++--------------------------
+ scripts/get_archive             | 68 +++++++++++++++++++++++++++++
+ 4 files changed, 129 insertions(+), 79 deletions(-)
+ create mode 100755 scripts/get_archive
+
+diff --git a/config/path b/config/path
+index c2a579f9e91..837b69f40a8 100644
+--- a/config/path
++++ b/config/path
+@@ -98,24 +98,28 @@ if [ -n "$PKG_URL" -a -z "$PKG_SOURCE_NAME" ]; then
+     echo "$PKG_URL"
+     exit 1
+   fi
+-  PKG_SOURCE_NAME="${PKG_URL##*/}"
+-  case $PKG_SOURCE_NAME in
+-    ${PKG_NAME}-${PKG_VERSION}.*)
+-      PKG_SOURCE_NAME=$PKG_SOURCE_NAME
+-      ;;
+-    *.tar | *.tbz | *.tgz | *.txz | *.7z | *.zip)
+-      PKG_SOURCE_NAME=${PKG_NAME}-${PKG_VERSION}.${PKG_SOURCE_NAME##*\.}
+-      ;;
+-    *.tar.bz2 | *.tar.gz | *.tar.xz)
+-      PKG_SOURCE_NAME=${PKG_NAME}-${PKG_VERSION}.tar.${PKG_SOURCE_NAME##*\.}
+-      ;;
+-     *.diff | *.patch | *.diff.bz2 | *.patch.bz2 | patch-*.bz2 | *.diff.gz | *.patch.gz | patch-*.gz)
+-      PKG_SOURCE_NAME=$PKG_SOURCE_NAME
+-      ;;
+-    *)
+-      PKG_SOURCE_NAME=${PKG_NAME}-${PKG_VERSION}.${PKG_SOURCE_NAME##*\.}
+-      ;;
+-  esac
++  if [[ ${PKG_URL} =~ .git$ || ${PKG_URL} =~ ^git:// ]]; then
++    PKG_SOURCE_NAME=${PKG_NAME}-${PKG_VERSION}.tar.gz
++  else
++    PKG_SOURCE_NAME="${PKG_URL##*/}"
++    case $PKG_SOURCE_NAME in
++      ${PKG_NAME}-${PKG_VERSION}.*)
++        PKG_SOURCE_NAME=$PKG_SOURCE_NAME
++        ;;
++      *.tar | *.tbz | *.tgz | *.txz | *.7z | *.zip)
++        PKG_SOURCE_NAME=${PKG_NAME}-${PKG_VERSION}.${PKG_SOURCE_NAME##*\.}
++        ;;
++      *.tar.bz2 | *.tar.gz | *.tar.xz)
++        PKG_SOURCE_NAME=${PKG_NAME}-${PKG_VERSION}.tar.${PKG_SOURCE_NAME##*\.}
++        ;;
++      *.diff | *.patch | *.diff.bz2 | *.patch.bz2 | patch-*.bz2 | *.diff.gz | *.patch.gz | patch-*.gz)
++        PKG_SOURCE_NAME=$PKG_SOURCE_NAME
++        ;;
++      *)
++        PKG_SOURCE_NAME=${PKG_NAME}-${PKG_VERSION}.${PKG_SOURCE_NAME##*\.}
++        ;;
++    esac
++  fi
+ fi
+ 
+ PKG_BUILD="$BUILD/${PKG_NAME}-${PKG_VERSION}"
+diff --git a/distributions/LibreELEC/options b/distributions/LibreELEC/options
+index 44c63abf099..8ddfad71a19 100644
+--- a/distributions/LibreELEC/options
++++ b/distributions/LibreELEC/options
+@@ -204,3 +204,6 @@
+ # Configure debug groups (space delimited key=value pairs, with each value comma-delimited) and default group when DEBUG=yes
+   DEBUG_GROUPS="kodi=kodi,kodi-platform,p8-platform,!mesa"
+   DEBUG_GROUP_YES="kodi"
++
++# Default supported get handlers (archive, git, file etc.)
++  GET_HANDLER_SUPPORT="archive"
+diff --git a/scripts/get b/scripts/get
+index 9ae78616e76..8c117203234 100755
+--- a/scripts/get
++++ b/scripts/get
+@@ -20,12 +20,6 @@
+ 
+ . config/options $1
+ 
+-_get_file_already_downloaded() {
+-  [ ! -f $PACKAGE -o ! -f $STAMP_URL -o ! -f $STAMP_SHA ] && return 1
+-  [ -n "${PKG_SHA256}" -a "$(cat $STAMP_SHA 2>/dev/null)" != "${PKG_SHA256}" ] && return 1
+-  return 0
+-}
+-
+ if [ -z "$1" ]; then
+   for i in `find packages/ -type f -name package.mk`; do
+     GET_PKG=`grep ^PKG_NAME= $i | sed -e "s,\",,g" -e "s,PKG_NAME=,,"`
+@@ -33,63 +27,44 @@ if [ -z "$1" ]; then
+   done
+ fi
+ 
+-[ -z "$PKG_URL" -o -z "$PKG_SOURCE_NAME" ] && exit 0
+-
+-mkdir -p $SOURCES/$1
+-
+-PACKAGE="$SOURCES/$1/$PKG_SOURCE_NAME"
+-PACKAGE_MIRROR="$DISTRO_MIRROR/$PKG_NAME/$PKG_SOURCE_NAME"
+-[ "$VERBOSE" != "yes" ] && WGET_OPT=-q
+-WGET_CMD="wget --timeout=30 --tries=3 --passive-ftp --no-check-certificate -c $WGET_OPT -O $PACKAGE"
+-
+-STAMP_URL="$PACKAGE.url"
+-STAMP_SHA="$PACKAGE.sha256"
+-
+-# Latest file already present, exit now...
+-_get_file_already_downloaded $1 && exit 0
+-
+-# Avoid concurrent downloads of the same package
+-_isblocked=N
+-exec 99<$SOURCES/$1
+-while ! flock --nonblock --exclusive 99; do
+-  [ ${_isblocked} == N ] && { echo "Project/Device ${DEVICE:-${PROJECT}} waiting, to avoid concurrent download of ${1}..."; _isblocked=Y; }
+-  sleep 1
+-done
+-
+-# Check again in case of concurrent access - if nothing needs to be downloaded, exit now...
+-_get_file_already_downloaded $1 && exit 0
+-
+-# At this point, we need to download something...
+-printf "%${BUILD_INDENT}c $(print_color CLR_GET "GET")      $1\n" ' '>&$SILENT_OUT
+-export BUILD_INDENT=$((${BUILD_INDENT:-1}+$BUILD_INDENT_SIZE))
+-
+-# unset LD_LIBRARY_PATH to stop wget from using toolchain/lib and loading libssl.so/libcrypto.so instead of host libraries
+-unset LD_LIBRARY_PATH
+-
+-rm -f $STAMP_URL $STAMP_SHA
+-
+-NBWGET=10
+-while [ $NBWGET -gt 0 ]; do
+-  for url in "$PKG_URL" "$PACKAGE_MIRROR"; do
+-    rm -f $PACKAGE
+-    if $WGET_CMD "$url"; then
+-      CALC_SHA256="$(sha256sum $PACKAGE | cut -d" " -f1)"
+-
+-      [ -z "${PKG_SHA256}" -o "${PKG_SHA256}" == "${CALC_SHA256}" ] && break 2
+-
+-      printf "%${BUILD_INDENT}c $(print_color CLR_WARNING "WARNING") Incorrect checksum calculated on downloaded file: got ${CALC_SHA256}, wanted ${PKG_SHA256}\n\n" ' '>&$SILENT_OUT
+-    fi
++# Avoid concurrent processing of the same package
++function lock_source_dir() {
++  local _isblocked=N
++  exec 99<$SOURCES/$1
++  while ! flock --nonblock --exclusive 99; do
++    [ ${_isblocked} == N ] && { echo "Project/Device ${DEVICE:-${PROJECT}} waiting, to avoid concurrent processing of ${1}..."; _isblocked=Y; }
++    sleep 1
+   done
+-  NBWGET=$((NBWGET - 1))
+-done
++}
+ 
+-if [ $NBWGET -eq 0 ]; then
+-  echo -e "\nCant't get $1 sources : $PKG_URL\n Try later !!"
+-  exit 1
+-else
+-  printf "%${BUILD_INDENT}c $(print_color CLR_INFO "INFO") Calculated checksum: ${CALC_SHA256}\n\n" ' '>&$SILENT_OUT
+-  echo "${PKG_URL}" > $STAMP_URL
+-  echo "${CALC_SHA256}" > $STAMP_SHA
++if [ -n "$PKG_URL" -a -n "$PKG_SOURCE_NAME" ]; then
++  mkdir -p $SOURCES/$1
++
++  PACKAGE="$SOURCES/$1/$PKG_SOURCE_NAME"
++
++  STAMP_URL="$PACKAGE.url"
++  STAMP_SHA="$PACKAGE.sha256"
++
++  # determine get handler based on protocol and/or filename
++  case "${PKG_URL}" in
++    git://*|*.git)
++      get_handler="git";;
++    *)
++      get_handler="archive";;
++  esac
++
++  if ! listcontains "${GET_HANDLER_SUPPORT}" "${get_handler}"; then
++    echo "ERROR: get handler \"${get_handler}\" is not supported, unable to get package $1 - aborting!"
++    exit 1
++  else
++    get_handler="${SCRIPTS}/get_${get_handler}"
++    if [ ! -f ${get_handler} ]; then
++      echo "ERROR: get handler \"${get_handler}\" does not exist, unable to get package $1 - aborting!"
++      exit 1
++    else
++      source ${get_handler}
++    fi
++  fi
+ fi
+ 
+ exit 0
+diff --git a/scripts/get_archive b/scripts/get_archive
+new file mode 100755
+index 00000000000..3175baf2a73
+--- /dev/null
++++ b/scripts/get_archive
+@@ -0,0 +1,68 @@
++################################################################################
++#      This file is part of LibreELEC - https://libreelec.tv
++#      Copyright (C) 2018-present Team LibreELEC
++#
++#  LibreELEC is free software: you can redistribute it and/or modify
++#  it under the terms of the GNU General Public License as published by
++#  the Free Software Foundation, either version 2 of the License, or
++#  (at your option) any later version.
++#
++#  LibreELEC is distributed in the hope that it will be useful,
++#  but WITHOUT ANY WARRANTY; without even the implied warranty of
++#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++#  GNU General Public License for more details.
++#
++#  You should have received a copy of the GNU General Public License
++#  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
++################################################################################
++
++_get_file_already_downloaded() {
++  [ ! -f $PACKAGE -o ! -f $STAMP_URL -o ! -f $STAMP_SHA ] && return 1
++  [ -n "${PKG_SHA256}" -a "$(cat $STAMP_SHA 2>/dev/null)" != "${PKG_SHA256}" ] && return 1
++  return 0
++}
++
++# Latest file already present, exit now...
++_get_file_already_downloaded && exit 0
++
++lock_source_dir $1
++
++# Check again in case of concurrent access - if nothing needs to be downloaded, exit now...
++_get_file_already_downloaded && exit 0
++
++# At this point, we need to download something...
++printf "%${BUILD_INDENT}c $(print_color CLR_GET "GET")      $1 (archive)\n" ' '>&$SILENT_OUT
++export BUILD_INDENT=$((${BUILD_INDENT:-1}+$BUILD_INDENT_SIZE))
++
++PACKAGE_MIRROR="$DISTRO_MIRROR/$PKG_NAME/$PKG_SOURCE_NAME"
++[ "$VERBOSE" != "yes" ] && WGET_OPT=-q
++WGET_CMD="wget --timeout=30 --tries=3 --passive-ftp --no-check-certificate -c $WGET_OPT -O $PACKAGE"
++
++# unset LD_LIBRARY_PATH to stop wget from using toolchain/lib and loading libssl.so/libcrypto.so instead of host libraries
++unset LD_LIBRARY_PATH
++
++rm -f $STAMP_URL $STAMP_SHA
++
++NBWGET=10
++while [ $NBWGET -gt 0 ]; do
++  for url in "$PKG_URL" "$PACKAGE_MIRROR"; do
++    rm -f $PACKAGE
++    if $WGET_CMD "$url"; then
++      CALC_SHA256="$(sha256sum $PACKAGE | cut -d" " -f1)"
++
++      [ -z "${PKG_SHA256}" -o "${PKG_SHA256}" == "${CALC_SHA256}" ] && break 2
++
++      printf "%${BUILD_INDENT}c $(print_color CLR_WARNING "WARNING") Incorrect checksum calculated on downloaded file: got ${CALC_SHA256}, wanted ${PKG_SHA256}\n\n" ' '>&$SILENT_OUT
++    fi
++  done
++  NBWGET=$((NBWGET - 1))
++done
++
++if [ $NBWGET -eq 0 ]; then
++  echo -e "\nCant't get $1 sources : $PKG_URL\n Try later !!"
++  exit 1
++else
++  printf "%${BUILD_INDENT}c $(print_color CLR_INFO "INFO") Calculated checksum: ${CALC_SHA256}\n\n" ' '>&$SILENT_OUT
++  echo "${PKG_URL}" > $STAMP_URL
++  echo "${CALC_SHA256}" > $STAMP_SHA
++fi
+
+From da243dc3075368826a1da2bcbb9cc220f889fb79 Mon Sep 17 00:00:00 2001
+From: MilhouseVH <milhouseVH.github@nmacleod.com>
+Date: Sun, 25 Feb 2018 11:39:58 +0000
+Subject: [PATCH 2/8] scripts/unpack: add PKG_SKIP_PATCHES support
+
+---
+ scripts/unpack | 132 +++++++++++++++++++++++++++++----------------------------
+ 1 file changed, 67 insertions(+), 65 deletions(-)
+
+diff --git a/scripts/unpack b/scripts/unpack
+index 322e2da06e5..9e73e9a4d2d 100755
+--- a/scripts/unpack
++++ b/scripts/unpack
+@@ -106,79 +106,81 @@ if [ -d "$SOURCES/$1" -o -d "$PKG_DIR/sources" ]; then
+     post_unpack
+   fi
+ 
+-  if [ "$(type -t pre_patch)" = "function" ]; then
+-    pre_patch
+-  fi
++  if [ "${PKG_SKIP_PATCHES}" != "yes" ]; then
++    if [ "$(type -t pre_patch)" = "function" ]; then
++      pre_patch
++    fi
+ 
+-  if [ "$TARGET_ARCH" = "x86_64" ]; then
+-    PATCH_ARCH="x86"
+-  else
+-    PATCH_ARCH="${TARGET_PATCH_ARCH:-$TARGET_ARCH}"
+-  fi
++    if [ "$TARGET_ARCH" = "x86_64" ]; then
++      PATCH_ARCH="x86"
++    else
++      PATCH_ARCH="${TARGET_PATCH_ARCH:-$TARGET_ARCH}"
++    fi
+ 
+-  PATCH_DIRS_PKG=""
+-  PATCH_DIRS_PRJ=""
+-  if [ -n "$PKG_PATCH_DIRS" ]; then
+-    for patch_dir in $PKG_PATCH_DIRS; do
+-      [ -d $PKG_DIR/patches/$patch_dir ] && PATCH_DIRS_PKG="$PATCH_DIRS_PKG $PKG_DIR/patches/$patch_dir/*.patch"
+-      [ -d $PROJECT_DIR/$PROJECT/patches/$PKG_NAME/$patch_dir ] && PATCH_DIRS_PRJ="$PATCH_DIRS_PRJ $PROJECT_DIR/$PROJECT/patches/$PKG_NAME/$patch_dir/*.patch"
+-      [ -d $PROJECT_DIR/$PROJECT/devices/$DEVICE/patches/$PKG_NAME/$patch_dir ] && PATCH_DIRS_PRJ="$PATCH_DIRS_PRJ $PROJECT_DIR/$PROJECT/devices/$DEVICE/patches/$PKG_NAME/$patch_dir/*.patch"
+-    done
+-  fi
++    PATCH_DIRS_PKG=""
++    PATCH_DIRS_PRJ=""
++    if [ -n "$PKG_PATCH_DIRS" ]; then
++      for patch_dir in $PKG_PATCH_DIRS; do
++        [ -d $PKG_DIR/patches/$patch_dir ] && PATCH_DIRS_PKG="$PATCH_DIRS_PKG $PKG_DIR/patches/$patch_dir/*.patch"
++        [ -d $PROJECT_DIR/$PROJECT/patches/$PKG_NAME/$patch_dir ] && PATCH_DIRS_PRJ="$PATCH_DIRS_PRJ $PROJECT_DIR/$PROJECT/patches/$PKG_NAME/$patch_dir/*.patch"
++        [ -d $PROJECT_DIR/$PROJECT/devices/$DEVICE/patches/$PKG_NAME/$patch_dir ] && PATCH_DIRS_PRJ="$PATCH_DIRS_PRJ $PROJECT_DIR/$PROJECT/devices/$DEVICE/patches/$PKG_NAME/$patch_dir/*.patch"
++      done
++    fi
+ 
+-  for i in $PKG_DIR/patches/*.patch \
+-           $PKG_DIR/patches/$PATCH_ARCH/*.patch \
+-           $PATCH_DIRS_PKG \
+-           $PKG_DIR/patches/$PKG_VERSION/*.patch \
+-           $PKG_DIR/patches/$PKG_VERSION/$PATCH_ARCH/*.patch \
+-           $PROJECT_DIR/$PROJECT/patches/$PKG_NAME/*.patch \
+-           $PROJECT_DIR/$PROJECT/patches/$PKG_NAME/$PATCH_ARCH/*.patch \
+-           $PATCH_DIRS_PRJ \
+-           $PROJECT_DIR/$PROJECT/patches/$PKG_NAME/$PKG_VERSION/*.patch \
+-           $PROJECT_DIR/$PROJECT/devices/$DEVICE/patches/$PKG_NAME/*.patch; do
+-
+-    thisdir="$(dirname "$i")"
+-
+-    if [ "$thisdir" = "$PKG_DIR/patches" ]; then
+-      PATCH_DESC="(common)"
+-    elif [ "$thisdir" = "$PKG_DIR/patches/$PATCH_ARCH" ]; then
+-      PATCH_DESC="(common - $PATCH_ARCH)"
+-    elif [ "$thisdir" = "$PKG_DIR/patches/$PKG_VERSION" ]; then
+-      PATCH_DESC="(common - $PKG_VERSION)"
+-    elif [ "$thisdir" = "$PKG_DIR/patches/$PKG_VERSION/$PATCH_ARCH" ]; then
+-      PATCH_DESC="($PKG_VERSION - $PATCH_ARCH)"
+-    elif [ "$thisdir" = "$PROJECT_DIR/$PROJECT/patches/$PKG_NAME" ]; then
+-      PATCH_DESC="(project)"
+-    elif [ "$thisdir" = "$PROJECT_DIR/$PROJECT/patches/$PKG_NAME/$PATCH_ARCH" ]; then
+-      PATCH_DESC="(project - $PATCH_ARCH)"
+-    elif [ "$thisdir" = "$PROJECT_DIR/$PROJECT/patches/$PKG_NAME/$PKG_VERSION" ]; then
+-      PATCH_DESC="(project - $PKG_VERSION)"
+-    elif [ "$thisdir" = "$PROJECT_DIR/$PROJECT/devices/$DEVICE/patches/$PKG_NAME" ]; then
+-      PATCH_DESC="(device)"
+-    else
+-      if [[ "$thisdir" =~ ^$PKG_DIR/.* ]]; then
+-        PATCH_DESC="(common - $(basename "$thisdir"))"
+-      elif [[ "$thisdir" =~ ^$PROJECT_DIR/.*/devices/.* ]]; then
+-        PATCH_DESC="(device - $(basename "$thisdir"))"
+-      elif [[ "$thisdir" =~ ^$PROJECT_DIR/.* ]]; then
+-        PATCH_DESC="(project - $(basename "$thisdir"))"
++    for i in $PKG_DIR/patches/*.patch \
++             $PKG_DIR/patches/$PATCH_ARCH/*.patch \
++             $PATCH_DIRS_PKG \
++             $PKG_DIR/patches/$PKG_VERSION/*.patch \
++             $PKG_DIR/patches/$PKG_VERSION/$PATCH_ARCH/*.patch \
++             $PROJECT_DIR/$PROJECT/patches/$PKG_NAME/*.patch \
++             $PROJECT_DIR/$PROJECT/patches/$PKG_NAME/$PATCH_ARCH/*.patch \
++             $PATCH_DIRS_PRJ \
++             $PROJECT_DIR/$PROJECT/patches/$PKG_NAME/$PKG_VERSION/*.patch \
++             $PROJECT_DIR/$PROJECT/devices/$DEVICE/patches/$PKG_NAME/*.patch; do
++
++      thisdir="$(dirname "$i")"
++
++      if [ "$thisdir" = "$PKG_DIR/patches" ]; then
++        PATCH_DESC="(common)"
++      elif [ "$thisdir" = "$PKG_DIR/patches/$PATCH_ARCH" ]; then
++        PATCH_DESC="(common - $PATCH_ARCH)"
++      elif [ "$thisdir" = "$PKG_DIR/patches/$PKG_VERSION" ]; then
++        PATCH_DESC="(common - $PKG_VERSION)"
++      elif [ "$thisdir" = "$PKG_DIR/patches/$PKG_VERSION/$PATCH_ARCH" ]; then
++        PATCH_DESC="($PKG_VERSION - $PATCH_ARCH)"
++      elif [ "$thisdir" = "$PROJECT_DIR/$PROJECT/patches/$PKG_NAME" ]; then
++        PATCH_DESC="(project)"
++      elif [ "$thisdir" = "$PROJECT_DIR/$PROJECT/patches/$PKG_NAME/$PATCH_ARCH" ]; then
++        PATCH_DESC="(project - $PATCH_ARCH)"
++      elif [ "$thisdir" = "$PROJECT_DIR/$PROJECT/patches/$PKG_NAME/$PKG_VERSION" ]; then
++        PATCH_DESC="(project - $PKG_VERSION)"
++      elif [ "$thisdir" = "$PROJECT_DIR/$PROJECT/devices/$DEVICE/patches/$PKG_NAME" ]; then
++        PATCH_DESC="(device)"
+       else
+-        PATCH_DESC="(unknown - $(basename "$thisdir"))"
++        if [[ "$thisdir" =~ ^$PKG_DIR/.* ]]; then
++          PATCH_DESC="(common - $(basename "$thisdir"))"
++        elif [[ "$thisdir" =~ ^$PROJECT_DIR/.*/devices/.* ]]; then
++          PATCH_DESC="(device - $(basename "$thisdir"))"
++        elif [[ "$thisdir" =~ ^$PROJECT_DIR/.* ]]; then
++          PATCH_DESC="(project - $(basename "$thisdir"))"
++        else
++          PATCH_DESC="(unknown - $(basename "$thisdir"))"
++        fi
+       fi
+-    fi
+ 
+-    if [ -f "$i" ]; then
+-      printf "%${BUILD_INDENT}c $(print_color CLR_APPLY_PATCH "APPLY PATCH") $(print_color CLR_PATCH_DESC "${PATCH_DESC}")   ${i#$ROOT/}\n" ' '>&$SILENT_OUT
+-      if grep -qE '^GIT binary patch$|^rename from|^rename to' $i; then
+-        cat $i | git apply --directory=`echo "$PKG_BUILD" | cut -f1 -d\ ` -p1 --verbose --whitespace=nowarn --unsafe-paths >&$VERBOSE_OUT
+-      else
+-        cat $i | patch -d `echo "$PKG_BUILD" | cut -f1 -d\ ` -p1 >&$VERBOSE_OUT
++      if [ -f "$i" ]; then
++        printf "%${BUILD_INDENT}c $(print_color CLR_APPLY_PATCH "APPLY PATCH") $(print_color CLR_PATCH_DESC "${PATCH_DESC}")   ${i#$ROOT/}\n" ' '>&$SILENT_OUT
++        if grep -qE '^GIT binary patch$|^rename from|^rename to' $i; then
++          cat $i | git apply --directory=`echo "$PKG_BUILD" | cut -f1 -d\ ` -p1 --verbose --whitespace=nowarn --unsafe-paths >&$VERBOSE_OUT
++        else
++          cat $i | patch -d `echo "$PKG_BUILD" | cut -f1 -d\ ` -p1 >&$VERBOSE_OUT
++        fi
+       fi
+-    fi
+-  done
++    done
+ 
+-  if [ "$(type -t post_patch)" = "function" ]; then
+-    post_patch
++    if [ "$(type -t post_patch)" = "function" ]; then
++      post_patch
++    fi
+   fi
+ 
+   if [ ! "$PKG_NAME" == "configtools" ] ; then
+
+From 94e332e1c35d22b9ba3d3c98b9efc7694bd2626d Mon Sep 17 00:00:00 2001
+From: MilhouseVH <milhouseVH.github@nmacleod.com>
+Date: Sun, 25 Feb 2018 21:48:40 +0000
+Subject: [PATCH 3/8] scripts/get_file: add file:// support - exists only for
+ logging
+
+---
+ config/path      |  2 ++
+ scripts/get      |  2 ++
+ scripts/get_file | 20 ++++++++++++++++++++
+ 3 files changed, 24 insertions(+)
+ create mode 100755 scripts/get_file
+
+diff --git a/config/path b/config/path
+index 837b69f40a8..2491ce8a89c 100644
+--- a/config/path
++++ b/config/path
+@@ -100,6 +100,8 @@ if [ -n "$PKG_URL" -a -z "$PKG_SOURCE_NAME" ]; then
+   fi
+   if [[ ${PKG_URL} =~ .git$ || ${PKG_URL} =~ ^git:// ]]; then
+     PKG_SOURCE_NAME=${PKG_NAME}-${PKG_VERSION}.tar.gz
++  elif [[ ${PKG_URL} =~ ^file:// ]]; then
++    PKG_SOURCE_NAME=${PKG_URL#file://}
+   else
+     PKG_SOURCE_NAME="${PKG_URL##*/}"
+     case $PKG_SOURCE_NAME in
+diff --git a/scripts/get b/scripts/get
+index 8c117203234..320f7c4068a 100755
+--- a/scripts/get
++++ b/scripts/get
+@@ -49,6 +49,8 @@ if [ -n "$PKG_URL" -a -n "$PKG_SOURCE_NAME" ]; then
+   case "${PKG_URL}" in
+     git://*|*.git)
+       get_handler="git";;
++    file://*)
++      get_handler="file";;
+     *)
+       get_handler="archive";;
+   esac
+diff --git a/scripts/get_file b/scripts/get_file
+new file mode 100755
+index 00000000000..bd5841cf654
+--- /dev/null
++++ b/scripts/get_file
+@@ -0,0 +1,20 @@
++################################################################################
++#      This file is part of LibreELEC - https://libreelec.tv
++#      Copyright (C) 2018-present Team LibreELEC
++#
++#  LibreELEC is free software: you can redistribute it and/or modify
++#  it under the terms of the GNU General Public License as published by
++#  the Free Software Foundation, either version 2 of the License, or
++#  (at your option) any later version.
++#
++#  LibreELEC is distributed in the hope that it will be useful,
++#  but WITHOUT ANY WARRANTY; without even the implied warranty of
++#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++#  GNU General Public License for more details.
++#
++#  You should have received a copy of the GNU General Public License
++#  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
++################################################################################
++
++printf "%${BUILD_INDENT}c $(print_color CLR_GET "GET")      $1 (file)\n" ' '>&$SILENT_OUT
++export BUILD_INDENT=$((${BUILD_INDENT:-1}+$BUILD_INDENT_SIZE))
+
+From a860abc1234b64bc3940acf5af816f31097947d3 Mon Sep 17 00:00:00 2001
+From: MilhouseVH <milhouseVH.github@nmacleod.com>
+Date: Tue, 27 Feb 2018 01:35:36 +0000
+Subject: [PATCH 4/8] scripts/extract: simplify, copy file or dir by default
+
+---
+ scripts/extract | 89 +++++++++++++++++++++++++++++----------------------------
+ 1 file changed, 45 insertions(+), 44 deletions(-)
+
+diff --git a/scripts/extract b/scripts/extract
+index f32b3261292..e1a1f5138b7 100755
+--- a/scripts/extract
++++ b/scripts/extract
+@@ -28,47 +28,48 @@ fi
+ [ -z "$PKG_URL" -o -z "$PKG_SOURCE_NAME" ] && exit 1
+ [ ! -d "$SOURCES/$1" -o ! -d "$2" ] && exit 1
+ 
+-for pattern in .tar.gz .tar.xz .tar.bz2 .tgz .txz .tbz .7z .zip; do
+-  if [[ $PKG_SOURCE_NAME =~ ${pattern//./\\.}$ ]]; then
+-    f="$SOURCES/$1/$PKG_SOURCE_NAME"
+-    if [ ! -f $f ]; then
+-      echo "error: File $PKG_SOURCE_NAME doesn't exist in package $1 sources directory"
+-      echo "Have you called scripts/extract before scripts/get ?"
+-      exit 1
+-    fi
+-    case $PKG_SOURCE_NAME in
+-      *.tar)
+-        tar xf $f -C $2
+-        ;;
+-      *.tar.bz2 | *.tbz)
+-        tar xjf $f -C $2
+-        ;;
+-      *.tar.gz | *.tgz)
+-        tar xzf $f -C $2
+-        ;;
+-      *.tar.xz | *.txz)
+-        tar xJf $f -C $2
+-        ;;
+-      *.7z)
+-        mkdir -p $2/$1
+-        7z x -o$2/$1 $f
+-        ;;
+-      *.zip)
+-        unzip -q $f -d $2
+-        ;;
+-      *.diff | *.patch)
+-        cat $f | patch -d $2 -p1
+-        ;;
+-      *.diff.bz2 | *.patch.bz2 | patch-*.bz2)
+-        bzcat $f | patch -d $2 -p1
+-        ;;
+-      *.diff.gz | *.patch.gz | patch-*.gz)
+-        zcat $f | patch -d $2 -p1
+-        ;;
+-      *)
+-        cp -pPR $f $2
+-        ;;
+-    esac
+-    break
+-  fi
+-done
++if [[ ${PKG_URL} =~ ^file:// ]]; then
++  FULL_SOURCE_PATH="$PKG_SOURCE_NAME"
++else
++  FULL_SOURCE_PATH="$SOURCES/$1/$PKG_SOURCE_NAME"
++fi
++
++if [ ! -f "$FULL_SOURCE_PATH" -a ! -d "$FULL_SOURCE_PATH" ]; then
++  echo "error: File $PKG_SOURCE_NAME doesn't exist for package $1"
++  echo "Have you called scripts/extract before scripts/get ?"
++  exit 1
++fi
++
++case $PKG_SOURCE_NAME in
++  *.tar)
++    tar xf $FULL_SOURCE_PATH -C $2
++    ;;
++  *.tar.bz2 | *.tbz)
++    tar xjf $FULL_SOURCE_PATH -C $2
++    ;;
++  *.tar.gz | *.tgz)
++    tar xzf $FULL_SOURCE_PATH -C $2
++    ;;
++  *.tar.xz | *.txz)
++    tar xJf $FULL_SOURCE_PATH -C $2
++    ;;
++  *.7z)
++    mkdir -p $2/$1
++    7z x -o$2/$1 $FULL_SOURCE_PATH
++    ;;
++  *.zip)
++    unzip -q $FULL_SOURCE_PATH -d $2
++    ;;
++  *.diff | *.patch)
++    cat $FULL_SOURCE_PATH | patch -d $2 -p1
++    ;;
++  *.diff.bz2 | *.patch.bz2 | patch-*.bz2)
++    bzcat $FULL_SOURCE_PATH | patch -d $2 -p1
++    ;;
++  *.diff.gz | *.patch.gz | patch-*.gz)
++    zcat $FULL_SOURCE_PATH | patch -d $2 -p1
++    ;;
++  *)
++    cp -pPR $FULL_SOURCE_PATH $2
++    ;;
++esac
+
+From 82cc2099d62ee182170bf9efae1ea508e6c719b0 Mon Sep 17 00:00:00 2001
+From: "Tomas Kelemen (vudiq)" <tomas.kelemen@gmail.com>
+Date: Tue, 27 Feb 2018 09:11:05 +0100
+Subject: [PATCH 5/8] scripts/get_git: add handler for git
+
+---
+ config/path     |   2 +-
+ scripts/get_git | 122 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 123 insertions(+), 1 deletion(-)
+ create mode 100755 scripts/get_git
+
+diff --git a/config/path b/config/path
+index 2491ce8a89c..7d5b56a8bf8 100644
+--- a/config/path
++++ b/config/path
+@@ -99,7 +99,7 @@ if [ -n "$PKG_URL" -a -z "$PKG_SOURCE_NAME" ]; then
+     exit 1
+   fi
+   if [[ ${PKG_URL} =~ .git$ || ${PKG_URL} =~ ^git:// ]]; then
+-    PKG_SOURCE_NAME=${PKG_NAME}-${PKG_VERSION}.tar.gz
++    PKG_SOURCE_NAME=${PKG_NAME}-${PKG_VERSION}
+   elif [[ ${PKG_URL} =~ ^file:// ]]; then
+     PKG_SOURCE_NAME=${PKG_URL#file://}
+   else
+diff --git a/scripts/get_git b/scripts/get_git
+new file mode 100755
+index 00000000000..deef016c5b9
+--- /dev/null
++++ b/scripts/get_git
+@@ -0,0 +1,122 @@
++################################################################################
++#      This file is part of LibreELEC - https://libreelec.tv
++#      Copyright (C) 2018-present Team LibreELEC
++#
++#  LibreELEC is free software: you can redistribute it and/or modify
++#  it under the terms of the GNU General Public License as published by
++#  the Free Software Foundation, either version 2 of the License, or
++#  (at your option) any later version.
++#
++#  LibreELEC is distributed in the hope that it will be useful,
++#  but WITHOUT ANY WARRANTY; without even the implied warranty of
++#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++#  GNU General Public License for more details.
++#
++#  You should have received a copy of the GNU General Public License
++#  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
++################################################################################
++
++# Handler for git
++# usage (in package.mk):
++# PKG_URL (mandatory) must point to a git repository (git://... or https://example.com/repo.git)
++# PKG_VERSION (mandatory) must point to a commit SHA, e.g. a1b2c3d
++# PKG_GIT_SHA (optional) full hash of git commit
++# PKG_GIT_CLONE_BRANCH (optional) clone specific branch
++# PKG_GIT_CLONE_SINGLE (optional) clone single branch only (set to yes)
++# PKG_GIT_CLONE_DEPTH (optional) history to clone, must be a number
++# PKG_GIT_SUBMODULE_DEPTH (optional) history of submodules to clone, must be a number
++
++_get_repo_already_downloaded() {
++  if [ -d $PACKAGE -a -f $STAMP_SHA -a -f $STAMP_URL ]; then
++    GIT_SHA=$(git ls-remote $PACKAGE | grep HEAD | head -n 1 | awk '{print $1;}')
++    [ "$GIT_SHA" = "$(cat $STAMP_SHA 2>/dev/null)" ] && return 0 || return 1
++  else
++    return 1
++  fi
++}
++
++# Latest file already present, exit now...
++_get_repo_already_downloaded && exit 0
++
++lock_source_dir $1
++
++# Check again in case of concurrent access - if nothing needs to be downloaded, exit now...
++_get_repo_already_downloaded && exit 0
++
++# At this point, we need to download something...
++printf "%${BUILD_INDENT}c $(print_color CLR_GET "GET")      $1 (git)\n" ' '>&$SILENT_OUT
++export BUILD_INDENT=$((${BUILD_INDENT:-1}+$BUILD_INDENT_SIZE))
++
++rm -f $STAMP_URL $STAMP_SHA
++
++GIT_CLONE_PARAMS=""
++GIT_SUBMODULE_PARAMS=""
++
++[ -n "$PKG_GIT_CLONE_BRANCH" ] && GIT_CLONE_PARAMS="$GIT_CLONE_PARAMS --branch $PKG_GIT_CLONE_BRANCH"
++[ "$PKG_GIT_CLONE_SINGLE" = "yes" ] && GIT_CLONE_PARAMS="$GIT_CLONE_PARAMS --single-branch"
++
++if [ -n "$PKG_GIT_CLONE_DEPTH" ]; then
++  if [[ $PKG_GIT_CLONE_DEPTH =~ ^[0-9]+$ ]]; then
++    GIT_CLONE_PARAMS="$GIT_CLONE_PARAMS --depth $PKG_GIT_CLONE_DEPTH"
++  else
++    echo "Fatal: PKG_GIT_CLONE_DEPTH is not a number! ($PKG_GIT_CLONE_DEPTH)"
++    exit 1
++  fi
++fi
++
++if [ -n "$PKG_GIT_SUBMODULE_DEPTH" ]; then
++  if [[ $PKG_GIT_SUBMODULE_DEPTH =~ ^[0-9]+$ ]]; then
++    GIT_SUBMODULE_PARAMS="$GIT_SUBMODULE_PARAMS --depth $PKG_GIT_SUBMODULE_DEPTH"
++  else
++    echo "Fatal: PKG_GIT_SUBMODULE_DEPTH is not a number! ($PKG_GIT_SUBMODULE_DEPTH)"
++    exit 1
++  fi
++fi
++
++GIT_FOUND="no"
++for d in $SOURCES/$1/$1-* ; do
++  if [ -d "$d/.git" ] ; then
++    cd $d
++    if [ "$PKG_URL" = "$(git remote get-url origin)" ] ; then
++      if [ "${GIT_FOUND}" = "no" ] ; then
++        printf "%${BUILD_INDENT}c $(print_color CLR_GET "GIT PULL") ($d)\n" ' '>&$SILENT_OUT
++        GIT_FOUND="yes"
++        GIT_DIR="$d"
++        git pull
++        cd -
++      else
++        printf "%${BUILD_INDENT}c $(print_color CLR_CLEAN "DELETE") ($d)\n" ' '>&$SILENT_OUT
++        cd -
++        rm -rf "$d"
++      fi
++    else
++      printf "%${BUILD_INDENT}c $(print_color CLR_CLEAN "DELETE") ($d)\n" ' '>&$SILENT_OUT
++      cd -
++      rm -rf "$d"
++    fi
++  fi
++done
++
++if [ "${GIT_FOUND}" = "no" ] ; then
++  printf "%${BUILD_INDENT}c $(print_color CLR_GET "GIT CLONE") ($PACKAGE)\n" ' '>&$SILENT_OUT
++  git clone $GIT_CLONE_PARAMS $PKG_URL $PACKAGE
++else
++  if [ ! "${GIT_DIR}" = "${PACKAGE}" ] ; then
++    mv "${GIT_DIR}" "${PACKAGE}"
++  fi
++fi
++
++cd $PACKAGE
++git reset --hard $PKG_VERSION
++printf "%${BUILD_INDENT}c $(print_color CLR_GET "GIT SUBMODULE")\n" ' '>&$SILENT_OUT
++git submodule update --init --recursive $GIT_SUBMODULE_PARAMS
++cd -
++
++GIT_SHA=$(git ls-remote $PACKAGE | grep HEAD | head -n 1 | awk '{print $1;}')
++
++if [ -n "$PKG_GIT_SHA" ]; then
++   [ "$PKG_GIT_SHA" = "$GIT_SHA" ] || printf "%${BUILD_INDENT}c $(print_color CLR_WARNING "WARNING") Incorrect git hash in respository: got ${GIT_SHA}, wanted ${PKG_GIT_SHA}\n\n" ' '>&$SILENT_OUT
++fi
++
++echo "${PKG_URL}" > $STAMP_URL
++echo "${GIT_SHA}" > $STAMP_SHA
+
+From 9524cebfc117a0646b1bc188248db88509b99b50 Mon Sep 17 00:00:00 2001
+From: Matthias Reichl <hias@horus.com>
+Date: Thu, 1 Mar 2018 12:04:12 +0100
+Subject: [PATCH 6/8] scripts/extract: use tar to copy to correct directory
+
+also add support for custom tar opt, eg to exclude files
+or directories when copying
+
+This can be set eg with PKG_TAR_COPY_OPTS="--exclude=.git"
+---
+ scripts/extract | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/scripts/extract b/scripts/extract
+index e1a1f5138b7..74a1bc4c6a6 100755
+--- a/scripts/extract
++++ b/scripts/extract
+@@ -70,6 +70,9 @@ case $PKG_SOURCE_NAME in
+     zcat $FULL_SOURCE_PATH | patch -d $2 -p1
+     ;;
+   *)
+-    cp -pPR $FULL_SOURCE_PATH $2
++    FULL_DEST_PATH="$2/$PKG_NAME-$PKG_VERSION"
++    mkdir $FULL_DEST_PATH
++    tar cf - -C $FULL_SOURCE_PATH $PKG_TAR_COPY_OPTS . | \
++      tar xf - -C $FULL_DEST_PATH
+     ;;
+ esac
+
+From 9a50a3c56a465e651383b0ab4f6f8f8b97221ace Mon Sep 17 00:00:00 2001
+From: Matthias Reichl <hias@horus.com>
+Date: Thu, 1 Mar 2018 13:57:24 +0100
+Subject: [PATCH 7/8] config/path: don't copy .git and .svn dirs when using
+ file:///SOMEDIR
+
+packages can override that by setting PKG_TAR_COPY_OPTS. If this
+is set to an empty value everything will be copied.
+---
+ config/path | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/config/path b/config/path
+index 7d5b56a8bf8..1e8a166b85e 100644
+--- a/config/path
++++ b/config/path
+@@ -102,6 +102,8 @@ if [ -n "$PKG_URL" -a -z "$PKG_SOURCE_NAME" ]; then
+     PKG_SOURCE_NAME=${PKG_NAME}-${PKG_VERSION}
+   elif [[ ${PKG_URL} =~ ^file:// ]]; then
+     PKG_SOURCE_NAME=${PKG_URL#file://}
++    # if no specific PKG_TAR_COPY_OPTS then default to excluding .git and .svn as they can be huge
++    [ -z "${PKG_TAR_COPY_OPTS+x}" ] && PKG_TAR_COPY_OPTS="--exclude=.git --exclude=.svn"
+   else
+     PKG_SOURCE_NAME="${PKG_URL##*/}"
+     case $PKG_SOURCE_NAME in
+
+From f97cd06345403b255592e8dd4243eb8cf983ebf6 Mon Sep 17 00:00:00 2001
+From: "Tomas Kelemen (vudiq)" <tomas.kelemen@gmail.com>
+Date: Fri, 2 Mar 2018 00:41:55 +0100
+Subject: [PATCH 8/8] get_git: fixes and enhancements - fix checking of
+ downloaded repo - clean local changes in cloned repo - enhance branch
+ handling - add commit checking on the branch
+
+---
+ scripts/get_git | 86 +++++++++++++++++++++++++++++++++++++++------------------
+ 1 file changed, 59 insertions(+), 27 deletions(-)
+
+diff --git a/scripts/get_git b/scripts/get_git
+index deef016c5b9..a762ad46a5f 100755
+--- a/scripts/get_git
++++ b/scripts/get_git
+@@ -17,7 +17,7 @@
+ ################################################################################
+ 
+ # Handler for git
+-# usage (in package.mk):
++# Usage (in package.mk):
+ # PKG_URL (mandatory) must point to a git repository (git://... or https://example.com/repo.git)
+ # PKG_VERSION (mandatory) must point to a commit SHA, e.g. a1b2c3d
+ # PKG_GIT_SHA (optional) full hash of git commit
+@@ -27,14 +27,27 @@
+ # PKG_GIT_SUBMODULE_DEPTH (optional) history of submodules to clone, must be a number
+ 
+ _get_repo_already_downloaded() {
+-  if [ -d $PACKAGE -a -f $STAMP_SHA -a -f $STAMP_URL ]; then
+-    GIT_SHA=$(git ls-remote $PACKAGE | grep HEAD | head -n 1 | awk '{print $1;}')
+-    [ "$GIT_SHA" = "$(cat $STAMP_SHA 2>/dev/null)" ] && return 0 || return 1
++  if [ -d $PACKAGE ]; then
++    (
++      cd $PACKAGE
++      _get_repo_clean
++      [ -n "$(git ls-remote . | grep -m1 HEAD | awk "/^${PKG_VERSION}/ {print \$1;}")" ] || exit 1
++      [ "$PKG_URL" = "$(git remote get-url origin)" ] || exit 1
++      [ -z "$PKG_GIT_CLONE_BRANCH" ] && exit 0
++      [ "$PKG_GIT_CLONE_BRANCH" = "$(git branch | grep ^\* | cut -d ' ' -f2)" ] || exit 1
++      exit 0
++    )
++    return
+   else
+     return 1
+   fi
+ }
+ 
++_get_repo_clean() {
++  git clean -fdx
++  git checkout -- .
++}
++
+ # Latest file already present, exit now...
+ _get_repo_already_downloaded && exit 0
+ 
+@@ -74,49 +87,68 @@ if [ -n "$PKG_GIT_SUBMODULE_DEPTH" ]; then
+ fi
+ 
+ GIT_FOUND="no"
++opwd=$(pwd)
+ for d in $SOURCES/$1/$1-* ; do
+-  if [ -d "$d/.git" ] ; then
+-    cd $d
+-    if [ "$PKG_URL" = "$(git remote get-url origin)" ] ; then
+-      if [ "${GIT_FOUND}" = "no" ] ; then
+-        printf "%${BUILD_INDENT}c $(print_color CLR_GET "GIT PULL") ($d)\n" ' '>&$SILENT_OUT
+-        GIT_FOUND="yes"
+-        GIT_DIR="$d"
+-        git pull
+-        cd -
++  if [ -d "$d/.git" ]; then
++    if [ "${GIT_FOUND}" = "no" ]; then
++      cd $d
++      if [ "$PKG_URL" = "$(git remote get-url origin)" ]; then
++        if [ -n "$PKG_GIT_CLONE_BRANCH" -a $(git branch | grep "^\* ${PKG_GIT_CLONE_BRANCH}$" | wc -l) -eq 1 -o -z "$PKG_GIT_CLONE_BRANCH" ]; then
++          GIT_FOUND="yes"
++          GIT_DIR="$d"
++          _get_repo_clean
++        elif [ -n "$PKG_GIT_CLONE_BRANCH" -a $(git branch | grep "^  ${PKG_GIT_CLONE_BRANCH}$" | wc -l) -eq 1 ]; then
++          GIT_FOUND="yes"
++          GIT_DIR="$d"
++          _get_repo_clean
++          git checkout $PKG_GIT_CLONE_BRANCH
++        elif [ -n "$PKG_GIT_CLONE_BRANCH" -a $(git branch -a | grep "^  remotes/origin/${PKG_GIT_CLONE_BRANCH}$" | wc -l) -eq 1 ]; then
++          GIT_FOUND="yes"
++          GIT_DIR="$d"
++          _get_repo_clean
++          git checkout -b $PKG_GIT_CLONE_BRANCH origin/$PKG_GIT_CLONE_BRANCH
++        else
++          printf "%${BUILD_INDENT}c $(print_color CLR_CLEAN "DELETE") ($d)\n" ' '>&$SILENT_OUT
++          cd "${opwd}"
++          rm -rf "$d"
++        fi
++        if [ "$GIT_FOUND" = "yes" ]; then
++          printf "%${BUILD_INDENT}c $(print_color CLR_GET "GIT PULL")   $1\n" ' '>&$SILENT_OUT
++          git pull
++          cd "${opwd}"
++        fi
+       else
+         printf "%${BUILD_INDENT}c $(print_color CLR_CLEAN "DELETE") ($d)\n" ' '>&$SILENT_OUT
+-        cd -
++        cd "${opwd}"
+         rm -rf "$d"
+       fi
+     else
+       printf "%${BUILD_INDENT}c $(print_color CLR_CLEAN "DELETE") ($d)\n" ' '>&$SILENT_OUT
+-      cd -
+       rm -rf "$d"
+     fi
+   fi
+ done
++cd "${opwd}"
+ 
+-if [ "${GIT_FOUND}" = "no" ] ; then
+-  printf "%${BUILD_INDENT}c $(print_color CLR_GET "GIT CLONE") ($PACKAGE)\n" ' '>&$SILENT_OUT
++if [ "${GIT_FOUND}" = "no" ]; then
++  printf "%${BUILD_INDENT}c $(print_color CLR_GET "GIT CLONE")   $1\n" ' '>&$SILENT_OUT
+   git clone $GIT_CLONE_PARAMS $PKG_URL $PACKAGE
+ else
+-  if [ ! "${GIT_DIR}" = "${PACKAGE}" ] ; then
++  if [ ! "${GIT_DIR}" = "${PACKAGE}" ]; then
+     mv "${GIT_DIR}" "${PACKAGE}"
+   fi
+ fi
+ 
+-cd $PACKAGE
+-git reset --hard $PKG_VERSION
+-printf "%${BUILD_INDENT}c $(print_color CLR_GET "GIT SUBMODULE")\n" ' '>&$SILENT_OUT
+-git submodule update --init --recursive $GIT_SUBMODULE_PARAMS
+-cd -
++(
++  cd $PACKAGE
++  [ $(git log --oneline --pretty=tformat:"%H" | grep "^$PKG_VERSION" | wc -l) -eq 1 ] || { echo "There is no commit '$PKG_VERSION' on branch '$(git branch | grep ^\* | cut -d ' ' -f2)' of package '$1'! Aborting!" ; exit 1 ; }
++  git reset --hard $PKG_VERSION
++  printf "%${BUILD_INDENT}c $(print_color CLR_GET "GIT SUBMODULE")   $1\n" ' '>&$SILENT_OUT
++  git submodule update --init --recursive $GIT_SUBMODULE_PARAMS
++)
+ 
+-GIT_SHA=$(git ls-remote $PACKAGE | grep HEAD | head -n 1 | awk '{print $1;}')
++GIT_SHA=$(git ls-remote $PACKAGE | grep -m1 HEAD | awk '{print $1;}')
+ 
+ if [ -n "$PKG_GIT_SHA" ]; then
+    [ "$PKG_GIT_SHA" = "$GIT_SHA" ] || printf "%${BUILD_INDENT}c $(print_color CLR_WARNING "WARNING") Incorrect git hash in respository: got ${GIT_SHA}, wanted ${PKG_GIT_SHA}\n\n" ' '>&$SILENT_OUT
+ fi
+-
+-echo "${PKG_URL}" > $STAMP_URL
+-echo "${GIT_SHA}" > $STAMP_SHA

@@ -39,7 +39,7 @@ case "$LINUX" in
     PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET aml-dtbtools:host"
     ;;
   zen)
-    PKG_VERSION="fdf60ef"
+    PKG_VERSION="8cdd36c"
     PKG_SITE="https://github.com/zen-kernel/zen-kernel/tree/4.14/master"
     PKG_URL="https://github.com/zen-kernel/zen-kernel/archive/$PKG_VERSION.tar.gz"
     PKG_SOURCE_DIR="zen-kernel-$PKG_VERSION*"

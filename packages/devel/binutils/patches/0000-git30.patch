@@ -54442,3 +54442,63 @@ index d10a3fab5c..a612b74472 100644
  #define BFD_VERSION @bfd_version@
  #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
  #define REPORT_BUGS_TO @report_bugs_to@
+
+commit e2b97ae6660fda0ee2cf8d6bb991831bef8b8cb1
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Tue Mar 6 00:01:54 2018 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index a612b74472..48380c6073 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20180305
++#define BFD_VERSION_DATE 20180306
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 428b826ff2908174906fc20ff1ae6def4fdcf279
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Wed Mar 7 00:01:36 2018 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 48380c6073..159dfba953 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20180306
++#define BFD_VERSION_DATE 20180307
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit dfd04dd8c09eb3e098bfb7ad47e8df030b978b27
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Thu Mar 8 00:01:34 2018 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 159dfba953..7dcd16f251 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20180307
++#define BFD_VERSION_DATE 20180308
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
