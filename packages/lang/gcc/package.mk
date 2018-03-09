@@ -61,7 +61,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-ld=default \
                            --disable-multilib \
                            --disable-nls \
-                           --disable-libsanitizer \
                            --disable-libssp \
                            --disable-libmpx \
                            --enable-checking=release \
@@ -72,6 +71,7 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c,c++ \
                               --disable-__cxa_atexit \
                               --disable-shared \
+                              --disable-libsanitizer \
                               --disable-libitm \
                               --disable-libquadmath \
                               --disable-libada \
