@@ -29,14 +29,15 @@ PKG_SHORTDESC="linux26: The Linux kernel 2.6 precompiled kernel binary image and
 PKG_LONGDESC="This package contains a precompiled kernel image and the modules."
 PKG_IS_KERNEL_PKG="yes"
 
+PKG_PATCH_DIRS="$LINUX"
 case "$LINUX" in
   amlogic-3.10)
-    PKG_VERSION="02fdb27"
+    PKG_VERSION="02fdb27efcb2940b819fec90d9fb333a57ab9900"
     PKG_SHA256="a4c6a5759ad754109357c1283665498c23796c985fec0b50b18be25f96cf8465"
     PKG_URL="https://github.com/LibreELEC/linux-amlogic/archive/$PKG_VERSION.tar.gz"
-    PKG_SOURCE_DIR="$PKG_NAME-amlogic-$PKG_VERSION*"
-    PKG_PATCH_DIRS="amlogic-3.10"
+    PKG_SOURCE_DIR="linux-amlogic-$PKG_VERSION"
     PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET aml-dtbtools:host"
+    PKG_BUILD_PERF="no"
     ;;
   zen)
     PKG_VERSION="8cdd36c"
@@ -44,30 +45,22 @@ case "$LINUX" in
     PKG_URL="https://github.com/zen-kernel/zen-kernel/archive/$PKG_VERSION.tar.gz"
     PKG_SOURCE_DIR="zen-kernel-$PKG_VERSION*"
     PKG_PATCH_DIRS="default"
+    PKG_BUILD_PERF="no"
     ;;
   *)
     PKG_VERSION="4.14.24"
-    PKG_SHA256=""
-    PKG_URL="http://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
+    PKG_SHA256="ba512d1bd7f5910bae0f5d66554810f097f82e5df6fccb8c7cc4a11410839801"
+    PKG_URL="https://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
     PKG_PATCH_DIRS="default"
     ;;
 esac
 
 PKG_KERNEL_CFG_FILE=$(kernel_config_path)
 
-if [ "$DEVTOOLS" = "yes" ] && grep -q ^CONFIG_PERF_EVENTS= $PKG_KERNEL_CFG_FILE ; then
-  PKG_BUILD_PERF="yes"
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET binutils elfutils libunwind zlib openssl"
-fi
-
 if [ "$TARGET_KERNEL_ARCH" = "arm64" -a "$TARGET_ARCH" = "arm" ]; then
   PKG_DEPENDS_HOST="$PKG_DEPENDS_HOST gcc-linaro-aarch64-linux-gnu:host"
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET gcc-linaro-aarch64-linux-gnu:host"
-  PKG_TARGET_PREFIX=$TOOLCHAIN/lib/gcc-linaro-aarch64-linux-gnu/bin/aarch64-linux-gnu-
   HEADERS_ARCH=$TARGET_ARCH
-  PKG_BUILD_PERF="no"
-else
-  PKG_TARGET_PREFIX=$TARGET_PREFIX
 fi
 
 if [ "$DEVTOOLS" = "yes" -a "$PKG_BUILD_PERF" != "no" ] && grep -q ^CONFIG_PERF_EVENTS= $PKG_KERNEL_CFG_FILE ; then
@@ -89,7 +82,7 @@ post_patch() {
   sed -i -e "s|^HOSTCC[[:space:]]*=.*$|HOSTCC = $TOOLCHAIN/bin/host-gcc|" \
          -e "s|^HOSTCXX[[:space:]]*=.*$|HOSTCXX = $TOOLCHAIN/bin/host-g++|" \
          -e "s|^ARCH[[:space:]]*?=.*$|ARCH = $TARGET_KERNEL_ARCH|" \
-         -e "s|^CROSS_COMPILE[[:space:]]*?=.*$|CROSS_COMPILE = $PKG_TARGET_PREFIX|" \
+         -e "s|^CROSS_COMPILE[[:space:]]*?=.*$|CROSS_COMPILE = $TARGET_KERNEL_PREFIX|" \
          $PKG_BUILD/Makefile
 
   cp $PKG_KERNEL_CFG_FILE $PKG_BUILD/.config
@@ -172,6 +165,20 @@ make_target() {
 
   if [ "$PKG_BUILD_PERF" = "yes" ] ; then
     ( cd tools/perf
+
+      # arch specific perf build args
+      case "$TARGET_ARCH" in
+        x86_64)
+          PERF_BUILD_ARGS="ARCH=x86"
+          ;;
+        aarch64)
+          PERF_BUILD_ARGS="ARCH=arm64"
+          ;;
+        *)
+          PERF_BUILD_ARGS="ARCH=$TARGET_ARCH"
+          ;;
+      esac
+
       WERROR=0 \
       NO_LIBPERL=1 \
       NO_LIBPYTHON=1 \
@@ -181,9 +188,11 @@ make_target() {
       NO_LIBAUDIT=1 \
       NO_LZMA=1 \
       NO_SDT=1 \
-      LDFLAGS="-ldw -ldwfl -lebl -lelf -ldl -lz" \
+      LDFLAGS="$LDFLAGS -ldw -ldwfl -lebl -lelf -ldl -lz" \
       EXTRA_PERFLIBS="-lebl" \
-        make
+      CROSS_COMPILE="$TARGET_PREFIX" \
+      JOBS="$CONCURRENCY_MAKE_LEVEL" \
+        make $PERF_BUILD_ARGS
       mkdir -p $INSTALL/usr/bin
         cp perf $INSTALL/usr/bin
     )
@@ -227,17 +236,23 @@ make_target() {
 makeinstall_target() {
   if [ "$BOOTLOADER" = "u-boot" ]; then
     mkdir -p $INSTALL/usr/share/bootloader
-    for dtb in arch/$TARGET_KERNEL_ARCH/boot/dts/*.dtb arch/$TARGET_KERNEL_ARCH/boot/dts/*/*.dtb; do
-      if [ -f $dtb ]; then
-        cp -v $dtb $INSTALL/usr/share/bootloader
-      fi
-    done
     if [ -d arch/$TARGET_KERNEL_ARCH/boot/dts/amlogic -a -f arch/$TARGET_KERNEL_ARCH/boot/dtb.img ]; then
       cp arch/$TARGET_KERNEL_ARCH/boot/dtb.img $INSTALL/usr/share/bootloader/dtb.img 2>/dev/null || :
+    else
+      for dtb in arch/$TARGET_KERNEL_ARCH/boot/dts/*.dtb arch/$TARGET_KERNEL_ARCH/boot/dts/*/*.dtb; do
+        if [ -f $dtb ]; then
+          cp -v $dtb $INSTALL/usr/share/bootloader
+        fi
+      done
     fi
   elif [ "$BOOTLOADER" = "bcm2835-bootloader" ]; then
     mkdir -p $INSTALL/usr/share/bootloader/overlays
+    # install platform dtbs, but remove upstream kernel dtbs (i.e. without downstream
+    # drivers and decent USB support) as these are not required by LibreELEC
     cp -p arch/$TARGET_KERNEL_ARCH/boot/dts/*.dtb $INSTALL/usr/share/bootloader
+    rm -f $INSTALL/usr/share/bootloader/bcm283*.dtb
+
+    # install overlay dtbs
     for dtb in arch/$TARGET_KERNEL_ARCH/boot/dts/overlays/*.dtbo; do
       cp $dtb $INSTALL/usr/share/bootloader/overlays 2>/dev/null || :
     done

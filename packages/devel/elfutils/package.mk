@@ -23,34 +23,21 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://sourceware.org/elfutils/"
 PKG_URL="https://sourceware.org/elfutils/ftp/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain zlib bzip2"
+PKG_DEPENDS_TARGET="toolchain zlib"
 PKG_SECTION="devel"
 PKG_SHORTDESC="elfutils: collection of utilities to handle ELF objects"
 PKG_LONGDESC="Elfutils is a collection of utilities, including eu-ld (a linker), eu-nm (for listing symbols from object files), eu-size (for listing the section sizes of an object or archive file), eu-strip (for discarding symbols), eu-readelf (to see the raw ELF file structures), and eu-elflint (to check for well-formed ELF files)."
 PKG_TOOLCHAIN="autotools"
 
+PKG_BUILD_FLAGS="+pic"
 
 PKG_CONFIGURE_OPTS_TARGET="utrace_cv_cc_biarch=false \
                            --disable-werror \
                            --disable-progs \
                            --disable-nls \
                            --with-zlib \
-                           --with-bzlib \
-                           --with-lzma"
-                           
-PKG_CONFIGURE_OPTS_HOST="utrace_cv_cc_biarch=false \
-                           --program-prefix="eu-" \
-                           --disable-valgrind \
-                           --disable-werror \
-                           --disable-progs \
-                           --disable-nls \
-                           --with-zlib \
-                           --with-bzlib \
+                           --without-bzlib \
                            --without-lzma"
-
-pre_configure_target() {
-  export CFLAGS="$CFLAGS -fPIC -DPIC"
-}
 
 make_target() {
   make V=1 -C libelf libelf.a

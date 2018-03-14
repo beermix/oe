@@ -49,5 +49,16 @@ unpack() {
     # Copy videobuf-res module
     cp -a "$(kernel_path)/drivers/media/v4l2-core/videobuf-res.c" "$PKG_BUILD/drivers/media/v4l2-core/"
     cp -a "$(kernel_path)/include/media/videobuf-res.h" "$PKG_BUILD/include/media/"
+
+    # Copy WeTek Play DVB driver
+    if [ $LINUX = "amlogic-3.14" ]; then
+      cp -a "$(kernel_path)/drivers/amlogic/wetek" "$PKG_BUILD/drivers/media/amlogic"
+    fi
+
+    # Copy avl6862 driver
+    cp -a $(kernel_path)/drivers/amlogic/dvb-avl "$PKG_BUILD/drivers/media"
+    if listcontains "$ADDITIONAL_DRIVERS" "avl6862-aml"; then
+      echo "obj-y += dvb-aml/" >> "$PKG_BUILD/drivers/media/Makefile"
+    fi
   fi
 }

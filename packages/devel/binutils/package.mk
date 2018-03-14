@@ -45,6 +45,10 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
 PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
                          --with-sysroot=$SYSROOT_PREFIX \
                          --with-lib-path=$SYSROOT_PREFIX/lib:$SYSROOT_PREFIX/usr/lib \
+                         --without-ppl \
+                         --without-cloog \
+                         --enable-static \
+                         --disable-shared \
                          --disable-werror \
                          --disable-multilib \
                          --disable-libada \
@@ -75,11 +79,13 @@ makeinstall_host() {
 }
 
 make_target() {
-  make MAKEINFO=true configure-host
-  make -C libiberty MAKEINFO=true libiberty.a
+  make configure-host
+  make -C libiberty
+  make -C bfd
 }
 
 makeinstall_target() {
   mkdir -p $SYSROOT_PREFIX/usr/lib
     cp libiberty/libiberty.a $SYSROOT_PREFIX/usr/lib
+  make DESTDIR="$SYSROOT_PREFIX" -C bfd install
 }

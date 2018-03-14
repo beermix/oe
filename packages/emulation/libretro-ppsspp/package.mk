@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="libretro-ppsspp"
-PKG_VERSION="5f7bcf7"
-PKG_SHA256="09e61300c05705b1f98e1b575e44d366e5a243cc3be97b3a09ad420581459f87"
+PKG_VERSION="9145287"
+PKG_SHA256="e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/libretro-ppsspp"
@@ -28,6 +28,7 @@ PKG_SECTION="emulation"
 PKG_SHORTDESC="A PSP emulator for Android, Windows, Mac, Linux and Blackberry 10, written in C++."
 PKG_LONGDESC="A PSP emulator for Android, Windows, Mac, Linux and Blackberry 10, written in C++."
 PKG_TOOLCHAIN="make"
+PKG_BUILD_FLAGS="-lto"
 
 PKG_LIBNAME="ppsspp_libretro.so"
 PKG_LIBPATH="libretro/$PKG_LIBNAME"
@@ -42,7 +43,6 @@ pre_configure_target() {
 pre_make_target() {
   export CFLAGS="$CFLAGS -I$SYSROOT_PREFIX/usr/include/interface/vcos/pthreads"
   export CXXFLAGS="$CXXFLAGS -I$SYSROOT_PREFIX/usr/include/interface/vcos/pthreads"
-  strip_lto
 }
 
 make_target() {

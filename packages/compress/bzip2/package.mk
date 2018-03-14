@@ -28,6 +28,7 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="compress"
 PKG_SHORTDESC="bzip2 data compressor"
 PKG_LONGDESC="bzip2 is a freely available, patent free (see below), high-quality data compressor. It typically compresses files to within 10% to 15% of the best available techniques (the PPM family of statistical compressors), whilst being around twice as fast at compression and six times faster at decompression."
+PKG_BUILD_FLAGS="+pic +pic:host"
 
 pre_build_host() {
   mkdir -p $PKG_BUILD/.$HOST_NAME
@@ -36,7 +37,7 @@ pre_build_host() {
 
 make_host() {
   cd $PKG_BUILD/.$HOST_NAME
-  make -f Makefile-libbz2_so CC=$HOST_CC CFLAGS="$CFLAGS -fno-semantic-interposition -ffunction-sections -O3 -Wall -fPIC -DPIC" -j1
+  make -f Makefile-libbz2_so CC=$HOST_CC CFLAGS="$CFLAGS" -j1
 }
 
 makeinstall_host() {
@@ -54,8 +55,8 @@ pre_make_target() {
 }
 
 make_target() {
-  make -f Makefile-libbz2_so CC=$CC CFLAGS="$CFLAGS -fPIC -DPIC" -j1
-  make -f Makefile libbz2.a bzip2 bzip2recover CC="$CC" CFLAGS="$CFLAGS -fno-semantic-interposition -ffunction-sections -O3 -Wall -fPIC -DPIC" -j1
+  make -f Makefile-libbz2_so CC=$CC CFLAGS="$CFLAGS" -j1
+  make -f Makefile libbz2.a bzip2 bzip2recover CC="$CC" CFLAGS="$CFLAGS" -j1
 }
 
 post_make_target() {

@@ -4,6 +4,9 @@
 # GOLD (Google Linker) support
   GOLD_SUPPORT="no"
 
+# HARDENING (security relevant linker and compiler flags) support
+  HARDENING_SUPPORT="no"
+
 # Name of the Distro to build (full name, without special characters)
   DISTRONAME="OE"
 
@@ -20,9 +23,6 @@
 # Root password to integrate in the target system
   ROOT_PASSWORD="libreelec"
 
-# Install LLVM SUPPORT (yes / no)
-  LLVM_SUPPORT="no"
-  
 # Install glibc locales to the build (yes / no)
   GLIBC_LOCALES="yes"
 

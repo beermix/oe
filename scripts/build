@@ -20,6 +20,15 @@
 
 . config/options $1
 
+if [ "$1" = "--all" ]; then
+  if [ ! -z "$2" ]; then
+    for build_dir in $(ls -1d ${ROOT}/build.*); do
+      load_build_config ${build_dir} && ./scripts/build $2
+    done
+  fi
+  exit 0
+fi
+
 if [ -z "$1" ]; then
   echo "usage: $0 package_name[:<host|target|init|bootstrap>]"
   exit 1
@@ -210,13 +219,6 @@ BOOTSTRAP_MESON_OPTS="$HOST_MESON_OPTS"
 # finalise package configuration
 if [ "$(type -t configure_package)" = "function" ]; then
   configure_package
-fi
-
-if [ "$PKG_IS_KERNEL_PKG" = "yes" ]; then
-  if [ "$TARGET_KERNEL_ARCH" = "arm64" -a "$TARGET_ARCH" = "arm" ]; then
-    TARGET_PREFIX=$TOOLCHAIN/lib/gcc-linaro-aarch64-linux-gnu/bin/aarch64-linux-gnu-
-    STRIP=${TARGET_PREFIX}strip
-  fi
 fi
 
 # build dependencies, only when PKG_DEPENDS_? is filled

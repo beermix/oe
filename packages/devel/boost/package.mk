@@ -25,6 +25,7 @@ PKG_SOURCE_DIR="${PKG_NAME}_${PKG_VERSION}"
 PKG_DEPENDS_TARGET="toolchain boost:host Python2 zlib bzip2 xz"
 PKG_LONGDESC="boost: Peer-reviewed STL style libraries for C++"
 PKG_TOOLCHAIN="manual"
+PKG_BUILD_FLAGS="+pic"
 
 make_host() {
   cd tools/build/src/engine
@@ -37,8 +38,8 @@ makeinstall_host() {
 }
 
 pre_configure_target() {
-  export CFLAGS="$CFLAGS -I$SYSROOT_PREFIX/usr/include/$PKG_PYTHON_VERSION -fPIC"
-  export CXXFLAGS="$CXXFLAGS -I$SYSROOT_PREFIX/usr/include/$PKG_PYTHON_VERSION -fPIC"
+  export CFLAGS="$CFLAGS -I$SYSROOT_PREFIX/usr/include/$PKG_PYTHON_VERSION"
+  export CXXFLAGS="$CXXFLAGS -I$SYSROOT_PREFIX/usr/include/$PKG_PYTHON_VERSION"
 }
 
 configure_target() {

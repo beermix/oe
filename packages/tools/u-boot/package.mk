@@ -32,6 +32,14 @@ PKG_NEED_UNPACK="$PROJECT_DIR/$PROJECT/bootloader"
 [ -n "$DEVICE" ] && PKG_NEED_UNPACK+=" $PROJECT_DIR/$PROJECT/devices/$DEVICE/bootloader"
 
 case "$PROJECT" in
+  Rockchip)
+    PKG_VERSION="5ecf0ee"
+    PKG_SHA256="fba1d26583d446a5bbb5713fe37848e05b546d125384c2c2d2883414d61b7cad"
+    PKG_URL="https://github.com/rockchip-linux/u-boot/archive/$PKG_VERSION.tar.gz"
+    PKG_PATCH_DIRS="rockchip"
+    PKG_DEPENDS_TARGET+=" rkbin"
+    PKG_NEED_UNPACK+=" $(get_pkg_directory rkbin)"
+    ;;
   *)
     PKG_VERSION="2017.09"
     PKG_SHA256="b2d15f2cf5f72e706025cde73d67247c6da8cd35f7e10891eefe7d9095089744"
@@ -44,9 +52,9 @@ make_target() {
     echo "UBOOT_SYSTEM must be set to build an image"
     echo "see './scripts/uboot_helper' for more information"
   else
-    CROSS_COMPILE="$TARGET_PREFIX" LDFLAGS="" ARCH=arm make mrproper
-    CROSS_COMPILE="$TARGET_PREFIX" LDFLAGS="" ARCH=arm make $($ROOT/$SCRIPTS/uboot_helper $PROJECT $DEVICE $UBOOT_SYSTEM config)
-    CROSS_COMPILE="$TARGET_PREFIX" LDFLAGS="" ARCH=arm make HOSTCC="$HOST_CC" HOSTSTRIP="true"
+    CROSS_COMPILE="$TARGET_KERNEL_PREFIX" LDFLAGS="" ARCH=arm make mrproper
+    CROSS_COMPILE="$TARGET_KERNEL_PREFIX" LDFLAGS="" ARCH=arm make $($ROOT/$SCRIPTS/uboot_helper $PROJECT $DEVICE $UBOOT_SYSTEM config)
+    CROSS_COMPILE="$TARGET_KERNEL_PREFIX" LDFLAGS="" ARCH=arm make HOSTCC="$HOST_CC" HOSTSTRIP="true"
   fi
 }
 

@@ -29,8 +29,10 @@ PKG_SHORTDESC="Minizip zlib contribution fork with latest bug fixes"
 PKG_LONGDESC="Minizip zlib contribution fork with latest bug fixes"
 PKG_TOOLCHAIN="cmake-make"
 
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release -DUSE_AES=OFF -DBUILD_TEST=ON"
+PKG_CMAKE_OPTS_TARGET="-DUSE_AES=OFF \
+                       -DBUILD_TEST=ON"
 
 makeinstall_target() {
-  cp -v minizip $SYSROOT_PREFIX/usr/bin/minizip
+  cp -v miniunz_exec $SYSROOT_PREFIX/usr/bin/miniunz
+  cp -v minizip_exec $SYSROOT_PREFIX/usr/bin/minizip
 }

@@ -28,6 +28,7 @@ PKG_SECTION="devel"
 PKG_SHORTDESC="libFTDI is an open source library to talk to FTDI chips"
 PKG_LONGDESC="libFTDI is an open source library to talk to FTDI chips"
 PKG_TOOLCHAIN="cmake-make"
+PKG_BUILD_FLAGS="+pic"
 
 PKG_CMAKE_OPTS_TARGET="-DSTATICLIBS=ON \
                        -DDOCUMENTATION=FALSE \
@@ -36,9 +37,6 @@ PKG_CMAKE_OPTS_TARGET="-DSTATICLIBS=ON \
                        -DPYTHON_BINDINGS=FALSE \
                        -DCMAKE_BUILD_TYPE=Release"
 
-pre_configure_target() {
-  CFLAGS="$CFLAGS -fPIC -DPIC"
-}
 
 makeinstall_target() {
   mkdir -p $SYSROOT_PREFIX/usr/include/libftdi1
