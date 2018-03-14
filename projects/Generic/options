@@ -36,6 +36,9 @@
   # Additional kernel make parameters (for example to specify the u-boot loadaddress)
     KERNEL_MAKE_EXTRACMD=""
 
+  # Additional kernel dependencies
+    KERNEL_EXTRA_DEPENDS_TARGET=""
+
   # Kernel to use. values can be:
   # default:  default mainline kernel
     LINUX="zen"
@@ -69,7 +72,7 @@
   # include uvesafb support (yes / no)
     UVESAFB_SUPPORT="yes"
 
-  # Displayserver to use (x11 / weston / no)
+  # Displayserver to use (x11 / no)
     DISPLAYSERVER="x11"
 
   # KODI Player implementation to use (default / bcm2835-driver / libfslvpuwrap)
