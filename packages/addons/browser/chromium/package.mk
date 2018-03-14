@@ -55,8 +55,8 @@ make_host() {
 }
 
 make_target() {
-  # export LDFLAGS="$LDFLAGS -ludev"
-  # export LD=$CXX
+  export LDFLAGS="$LDFLAGS -ludev"
+  export LD=$CXX
 
   # unset CPPFLAGS
   # unset CFLAGS
