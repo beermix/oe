@@ -62,6 +62,10 @@ make_target() {
   # unset CFLAGS
   # unset CXXFLAGS
   # unset LDFLAGS
+  
+  export CFLAGS="$CFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables"
+  export CXXFLAGS="$CXXFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables"
+  export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
 
   export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always"
   
@@ -102,13 +106,10 @@ make_target() {
     'use_pulseaudio=false'
     'use_sysroot=true'
     'use_vaapi=true'
-    'linux_link_libgio=true'
     'linux_link_libudev=true'
-    'use_libpci=true'
     'use_v8_context_snapshot=false'
     'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
-    'exclude_unwind_tables=true'
     'enable_hangout_services_extension=true'
     'enable_widevine=true'
     'enable_nacl=false'
