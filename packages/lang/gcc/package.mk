@@ -63,6 +63,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-nls \
                            --disable-libssp \
                            --disable-libmpx \
+                           --disable-libsanitizer \
                            --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
                            --with-tune=haswell"
@@ -71,7 +72,6 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c,c++ \
                               --disable-__cxa_atexit \
                               --disable-shared \
-                              --disable-libsanitizer \
                               --disable-libitm \
                               --disable-libquadmath \
                               --disable-libada \
@@ -104,7 +104,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          $GCC_OPTS"
 
 pre_configure_host() {
-  export CXXFLAGS="$CXXFLAGS -std=gnu++98"
+#  export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
 }
 
