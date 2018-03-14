@@ -54502,3 +54502,262 @@ index 159dfba953..7dcd16f251 100644
  #define BFD_VERSION @bfd_version@
  #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
  #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 1e7ae909220b96782bd8d15581f74d5660f2db7e
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Fri Mar 9 00:01:48 2018 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 7dcd16f251..da86f4afe9 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20180308
++#define BFD_VERSION_DATE 20180309
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 324457ef9f881aad0f971a6d91a3ab85aaca77ce
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sat Mar 10 00:01:44 2018 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index da86f4afe9..51aa453f85 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20180309
++#define BFD_VERSION_DATE 20180310
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 99ed74fd8717b8231f0fc1f4960e7a436ee50231
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sun Mar 11 00:02:33 2018 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 51aa453f85..4f2ff38504 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20180310
++#define BFD_VERSION_DATE 20180311
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 8b051d44999ac61af289126afc324fcdedbc9b68
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Mon Mar 12 00:01:35 2018 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 4f2ff38504..629c4fe3d6 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20180311
++#define BFD_VERSION_DATE 20180312
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit ff7e1a287ace9c0c492ca059510f3786a0eba16e
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Tue Mar 13 00:01:27 2018 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 629c4fe3d6..26a99ae666 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20180312
++#define BFD_VERSION_DATE 20180313
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 427226ba26fc17127886e09f8a5c32401745a971
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Wed Mar 14 00:01:40 2018 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 26a99ae666..078ad38d77 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20180313
++#define BFD_VERSION_DATE 20180314
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit da8c5cfcc9fa7fc77878ce177d1b52348ae52f26
+Author: H.J. Lu <hjl.tools@gmail.com>
+Date:   Wed Mar 14 04:23:24 2018 -0700
+
+    GC: Also check the local debug definition section
+    
+    Extend
+    
+    commit b7c871edcd83ccdc5fcd8148a7f433efd6b52255
+    Author: H.J. Lu <hjl.tools@gmail.com>
+    Date:   Wed May 17 07:57:15 2017 -0700
+    
+        Mark debug sections referenced by kept debug sections
+    
+    to handle the local debug definition section.
+    
+    bfd/
+    
+            PR ld/20882
+            * elflink.c (elf_gc_mark_debug_section): Also check the local
+            debug definition section.
+    
+    ld/
+    
+            PR ld/20882
+            * testsuite/ld-gc/pr20882.d: Also dump and check .debug_abbrev
+            section.
+            * testsuite/ld-gc/pr20882b.s: Add .debug_abbrev section.
+    
+    (cherry picked from commit 9e223787a474c672c5f1cfd4574857241ae4eafa)
+
+diff --git a/bfd/ChangeLog b/bfd/ChangeLog
+index de354fc50b..6d1a9678a4 100644
+--- a/bfd/ChangeLog
++++ b/bfd/ChangeLog
+@@ -1,3 +1,9 @@
++2018-03-14  H.J. Lu  <hongjiu.lu@intel.com>
++
++	PR ld/20882
++	* elflink.c (elf_gc_mark_debug_section): Also check the local
++	debug definition section.
++
+ 2018-02-28  Jim Wilson  <jimw@sifive.com>
+ 
+ 	Import patch from mainline:
+diff --git a/bfd/elflink.c b/bfd/elflink.c
+index e3751fa122..72aa3ac9c2 100644
+--- a/bfd/elflink.c
++++ b/bfd/elflink.c
+@@ -12785,20 +12785,31 @@ _bfd_elf_gc_mark_hook (asection *sec,
+   return NULL;
+ }
+ 
+-/* Return the global debug definition section.  */
++/* Return the debug definition section.  */
+ 
+ static asection *
+ elf_gc_mark_debug_section (asection *sec ATTRIBUTE_UNUSED,
+ 			   struct bfd_link_info *info ATTRIBUTE_UNUSED,
+ 			   Elf_Internal_Rela *rel ATTRIBUTE_UNUSED,
+ 			   struct elf_link_hash_entry *h,
+-			   Elf_Internal_Sym *sym ATTRIBUTE_UNUSED)
++			   Elf_Internal_Sym *sym)
+ {
+-  if (h != NULL
+-      && (h->root.type == bfd_link_hash_defined
+-	  || h->root.type == bfd_link_hash_defweak)
+-      && (h->root.u.def.section->flags & SEC_DEBUGGING) != 0)
+-    return h->root.u.def.section;
++  if (h != NULL)
++    {
++      /* Return the global debug definition section.  */
++      if ((h->root.type == bfd_link_hash_defined
++	   || h->root.type == bfd_link_hash_defweak)
++	  && (h->root.u.def.section->flags & SEC_DEBUGGING) != 0)
++	return h->root.u.def.section;
++    }
++  else
++    {
++      /* Return the local debug definition section.  */
++      asection *isec = bfd_section_from_elf_index (sec->owner,
++						   sym->st_shndx);
++      if ((isec->flags & SEC_DEBUGGING) != 0)
++	return isec;
++    }
+ 
+   return NULL;
+ }
+diff --git a/ld/ChangeLog b/ld/ChangeLog
+index a4b3639ce6..b5cf58ace2 100644
+--- a/ld/ChangeLog
++++ b/ld/ChangeLog
+@@ -1,3 +1,10 @@
++2018-03-14  H.J. Lu  <hongjiu.lu@intel.com>
++
++	PR ld/20882
++	* testsuite/ld-gc/pr20882.d: Also dump and check .debug_abbrev
++	section.
++	* testsuite/ld-gc/pr20882b.s: Add .debug_abbrev section.
++
+ 2018-02-09  Eric Botcazou  <ebotcazou@adacore.com>
+ 
+ 	* testsuite/ld-elf/pr22450.d: Remove reference to SPARC64.
+diff --git a/ld/testsuite/ld-gc/pr20882.d b/ld/testsuite/ld-gc/pr20882.d
+index dd388c51c9..1d68d05f38 100644
+--- a/ld/testsuite/ld-gc/pr20882.d
++++ b/ld/testsuite/ld-gc/pr20882.d
+@@ -3,7 +3,10 @@
+ #source: pr20882b.s
+ #source: pr20882c.s
+ #ld: --gc-sections -e main
+-#readelf: -x .debug_info
++#readelf: -x .debug_info -x .debug_abbrev
+ 
+-#...
+-  0x0+ (0a000000 00000000 |00000000 0000000a |06000000 |00000006 |0400|0004)28 .*
++Hex dump of section '\.debug_info':
++  0x0+ .*
++
++Hex dump of section '\.debug_abbrev':
++  0x0+ 61626364 +abcd
+diff --git a/ld/testsuite/ld-gc/pr20882b.s b/ld/testsuite/ld-gc/pr20882b.s
+index ea0cf2e4ad..baabf55779 100644
+--- a/ld/testsuite/ld-gc/pr20882b.s
++++ b/ld/testsuite/ld-gc/pr20882b.s
+@@ -2,4 +2,11 @@
+ 	.hidden t.c.4903c230
+ 	.globl t.c.4903c230
+ t.c.4903c230:
+-	.byte 0x28
++	.dc.a  .Ldebug_abbrev0
++
++	.section .debug_abbrev,"",%progbits
++.Ldebug_abbrev0:
++	.byte 0x61
++	.byte 0x62
++	.byte 0x63
++	.byte 0x64
