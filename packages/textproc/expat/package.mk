@@ -30,7 +30,3 @@ PKG_TOOLCHAIN="configure"
 
 PKG_CMAKE_OPTS_TARGET="-BUILD_doc=OFF -DBUILD_tools=OFF -DBUILD_examples=OFF -DBUILD_tests=OFF -DBUILD_shared=ON"
 PKG_CMAKE_OPTS_HOST="$PKG_CMAKE_OPTS_TARGET"
-
-pre_configure_target() {
-  strip_lto
-}
