@@ -96,7 +96,6 @@ make_target() {
     'use_allocator="none"'
     'use_cups=false'
     'use_custom_libcxx=false'
-    'use_gconf=false'
     'use_gnome_keyring=false'
     'use_gold=false'
     'use_system_freetype=true'
@@ -107,7 +106,6 @@ make_target() {
     'use_sysroot=true'
     'use_vaapi=true'
     'linux_link_libudev=true'
-    'use_v8_context_snapshot=false'
     'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_hangout_services_extension=true'
