@@ -6,6 +6,7 @@ PKG_SOURCE_DIR="${PKG_NAME}_${PKG_VERSION}"
 PKG_DEPENDS_TARGET="toolchain zlib"
 PKG_USE_CMAKE="yes"
 PKG_TOOLCHAIN="manual"
+PKG_BUILD_FLAGS="-lto"
 
 pre_configure_target() {
   export CFLAGS="$CFLAGS -O3 -fexpensive-optimizations -fstack-protector-strong"
