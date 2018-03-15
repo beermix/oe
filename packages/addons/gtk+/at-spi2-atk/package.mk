@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="at-spi2-atk"
-PKG_VERSION="2.26.1"
-PKG_SHA256="b4f0c27b61dbffba7a5b5ba2ff88c8cee10ff8dac774fa5b79ce906853623b75"
+PKG_VERSION="2.26.2"
+PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="LGPL-2.1"
 PKG_SITE="http://ftp.acc.umu.se/pub/gnome/sources/at-spi2-atk/?C=M;O=D"
@@ -28,5 +28,6 @@ PKG_SECTION="accessibility"
 PKG_SHORTDESC="D-Bus AT-SPI ATK"
 PKG_LONGDESC="AT-SPI technologies are currently migrating to D-Bus for their transport technology. As such, this document serves as a tutorial, design document and project update page for the AT-SPI D-Bus project."
 PKG_TOOLCHAIN="configure"
+PKG_BUILD_FLAGS="+pic"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --with-pic"
+PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared"

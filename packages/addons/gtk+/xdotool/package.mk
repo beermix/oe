@@ -32,7 +32,7 @@ pre_configure_target() {
 }
 
 make_target() {
-  make LDFLAGS="$LDFLAGS -lXext" xdotool.static
+  make LDFLAGS="-Wl,-z -Wl,now -lXext" xdotool.static
   mv xdotool.static xdotool
 }
 

@@ -34,5 +34,5 @@ pre_configure_target() {
   export LIBS="$LIBS -ldl"
 }
 
-PKG_CONFIGURE_OPTS_TARGET="--with-icu=yes --with-glib --with-freetype --with-cairo --with-icu --with-gobject"
+PKG_CONFIGURE_OPTS_TARGET="--with-glib --with-freetype --with-cairo --with-icu --with-gobject --enable-gtk-doc=no --with-graphite2=no"
 
