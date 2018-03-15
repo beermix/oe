@@ -1,25 +1,3 @@
---- chromium-62.0.3192.0/third_party/angle/src/compiler/translator/ValidateLimitations.cpp.gcc7	2017-08-22 21:06:34.000000000 +0200
-+++ chromium-62.0.3192.0/third_party/angle/src/compiler/translator/ValidateLimitations.cpp	2017-09-08 22:31:37.405728676 +0200
-@@ -82,7 +82,6 @@
-   private:
-     void error(TSourceLoc loc, const char *reason, const char *token);
- 
--    bool withinLoopBody() const;
-     bool isLoopIndex(TIntermSymbol *symbol);
-     bool validateLoopType(TIntermLoop *node);
- 
-@@ -164,11 +163,6 @@
-     mDiagnostics->error(loc, reason, token);
- }
- 
--bool ValidateLimitationsTraverser::withinLoopBody() const
--{
--    return !mLoopSymbolIds.empty();
--}
--
- bool ValidateLimitationsTraverser::isLoopIndex(TIntermSymbol *symbol)
- {
-     return std::find(mLoopSymbolIds.begin(), mLoopSymbolIds.end(), symbol->getId()) !=
 --- chromium-62.0.3192.0/third_party/glslang-angle/src/SPIRV/GlslangToSpv.cpp.gcc7	2017-08-22 21:06:41.000000000 +0200
 +++ chromium-62.0.3192.0/third_party/glslang-angle/src/SPIRV/GlslangToSpv.cpp	2017-09-08 22:38:00.736706539 +0200
 @@ -171,7 +171,9 @@
@@ -48,17 +26,6 @@
  
  };  // end anonymous namespace
  
---- chromium-62.0.3192.0/third_party/libyuv/source/row_any.cc.gcc7	2017-08-22 21:06:36.000000000 +0200
-+++ chromium-62.0.3192.0/third_party/libyuv/source/row_any.cc	2017-09-08 22:54:05.079961882 +0200
-@@ -721,7 +721,7 @@
- #define ANY11P16(NAMEANY, ANY_SIMD, T, SBPP, BPP, MASK)                      \
-   void NAMEANY(const uint16* src_ptr, uint16* dst_ptr, T param, int width) { \
-     SIMD_ALIGNED(uint16 temp[16 * 2]);                                       \
--    memset(temp, 0, 32); /* for msan */                                      \
-+    memset(temp, 0, 32*sizeof(uint16)); /* for msan */                                      \
-     int r = width & MASK;                                                    \
-     int n = width & ~MASK;                                                   \
-     if (n > 0) {                                                             \
 --- chromium-62.0.3192.0/third_party/webrtc/modules/video_coding/rtt_filter.cc.gcc7	2017-08-22 21:06:39.000000000 +0200
 +++ chromium-62.0.3192.0/third_party/webrtc/modules/video_coding/rtt_filter.cc	2017-09-08 23:06:06.529620651 +0200
 @@ -49,8 +49,8 @@
@@ -130,28 +97,6 @@
  
    // Remember the bindings the renderer process has at this point, so that
    // we do not grant this entry additional bindings if we come back to it.
---- chromium-62.0.3192.0/content/browser/frame_host/navigator_impl.cc.gcc7	2017-08-22 21:04:43.000000000 +0200
-+++ chromium-62.0.3192.0/content/browser/frame_host/navigator_impl.cc	2017-09-09 02:05:15.758922091 +0200
-@@ -404,7 +404,9 @@
- 
-     // Make sure no code called via RFHM::Navigate clears the pending entry.
-     if (is_pending_entry)
-+    {
-       CHECK_EQ(controller_->GetPendingEntry(), &entry);
-+    }
- 
-     // For security, we should never send non-Web-UI URLs to a Web UI renderer.
-     // Double check that here.
-@@ -470,7 +472,9 @@
- 
-   // Make sure no code called via RFH::Navigate clears the pending entry.
-   if (is_pending_entry)
-+  {
-     CHECK_EQ(controller_->GetPendingEntry(), &entry);
-+  }
- 
-   if (controller_->GetPendingEntryIndex() == -1 &&
-       dest_url.SchemeIs(url::kJavaScriptScheme)) {
 --- chromium-62.0.3192.0/content/browser/frame_host/render_frame_host_manager.cc.gcc7	2017-08-22 21:04:43.000000000 +0200
 +++ chromium-62.0.3192.0/content/browser/frame_host/render_frame_host_manager.cc	2017-09-09 02:07:40.371353881 +0200
 @@ -1198,7 +1198,9 @@

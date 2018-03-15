@@ -28,6 +28,7 @@ PKG_DEPENDS_TARGET="toolchain icu:host"
 PKG_SECTION="textproc"
 PKG_SHORTDESC="International Components for Unicode library"
 PKG_LONGDESC="International Components for Unicode library"
+PKG_BUILD_FLAGS="+pic"
 
 post_unpack() {
   sed -i 's/xlocale/locale/' $PKG_BUILD/source/i18n/digitlst.cpp
@@ -60,8 +61,6 @@ configure_target() {
  		     CPP="$CPP" \
  		     CC="$CC" \
  		     CXX="$CXX" \
- 		     CFLAGS="-fPIC" \
- 		     CXXFLAGS="-fPIC" \
  		     --target=$TARGET_NAME \
  		     --build=$TARGET_NAME \
  		     --host=$TARGET_NAME \
