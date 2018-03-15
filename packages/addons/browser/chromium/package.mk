@@ -30,7 +30,7 @@ PKG_LICENSE="Mixed"
 PKG_SITE="http://www.chromium.org/Home"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="pciutils libiconv dbus x11 libXcomposite libXcursor libXtst alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk intel-vaapi-driver libva-vdpau-driver unclutter xdotool libdrm libjpeg-turbo libxslt freetype harfbuzz gtk+ re2 snappy chromium:host"
+PKG_DEPENDS_TARGET="pciutils libiconv dbus x11 libXcomposite libXcursor libXtst alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk intel-vaapi-driver libva-vdpau-driver unclutter xdotool libdrm libjpeg-turbo libxslt freetype harfbuzz gtk+ chromium:host"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -59,6 +59,10 @@ make_host() {
 }
 
 make_target() {
+
+  export LDFLAGS="$LDFLAGS -ludev"
+  export LD=$CXX
+
   # https://chromium-review.googlesource.com/c/chromium/src/+/712575
   # _flags+=('exclude_unwind_tables=true')
   export CFLAGS="$CFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables"
@@ -96,14 +100,11 @@ make_target() {
     'use_custom_libcxx=false'
     'use_gnome_keyring=false'
     'use_gold=false'
-    'use_lld=false'
     'use_gtk3=false'
     'use_kerberos=false'
     'use_pulseaudio=false'
     'use_sysroot=true'
     'use_vaapi=true'
-    'linux_link_libudev=true'
-    'use_libpci=true'
     'use_v8_context_snapshot=false'
     'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
@@ -127,8 +128,8 @@ declare -gA _system_libs=(
   [icu]=icu
   #[libxml]=libxml2
   [libxslt]=libxslt
-  [re2]=re2
-  [snappy]=snappy
+  #[re2]=re2
+  #[snappy]=snappy
   [yasm]=
   [zlib]=minizip
 )
@@ -141,17 +142,7 @@ depends+=(${_system_libs[@]})
   # Remove bundled libraries for which we will use the system copies; this
   # *should* do what the remove_bundled_libraries.py script does, with the
   # added benefit of not having to list all the remaining libraries
-  local _lib
-  for _lib in ${_unwanted_bundled_libs[@]}; do
-    find -type f -path "*third_party/$_lib/*" \
-      \! -path "*third_party/$_lib/chromium/*" \
-      \! -path "*third_party/$_lib/google/*" \
-      \! -path './base/third_party/icu/*' \
-      \! -path './third_party/pdfium/third_party/freetype/include/pstables.h' \
-      \! -path './third_party/yasm/run_yasm.py' \
-      \! -regex '.*\.\(gn\|gni\|isolate\)' \
-      -delete
-  done
+
 
   ./build/linux/unbundle/replace_gn_files.py  --system-libraries "${!_system_libs[@]}"
   ./third_party/libaddressinput/chromium/tools/update-strings.py
