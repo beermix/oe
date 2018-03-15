@@ -32,9 +32,9 @@ HOST_CFLAGS="$HOST_CFLAGS -Wno-format-security"
 HOST_CXXFLAGS="$HOST_CXXFLAGS -Wno-format-security" 
 
 # lto flags
-CFLAGS_OPTIM_LTO="-falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -Wno-lto-type-mismatch"
-CXXFLAGS_OPTIM_LTO="-falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -Wno-lto-type-mismatch"
-LDFLAGS_OPTIM_LTO="-fuse-linker-plugin -flto=4"
+CFLAGS_OPTIM_LTO="-falign-functions=32 -ffat-lto-objects -flto=${CONCURRENCY_MAKE_LEVEL} -fno-math-errno -fno-semantic-interposition -fno-trapping-math -Wno-lto-type-mismatch"
+CXXFLAGS_OPTIM_LTO="-falign-functions=32 -ffat-lto-objects -flto=${CONCURRENCY_MAKE_LEVEL} -fno-math-errno -fno-semantic-interposition -fno-trapping-math -Wno-lto-type-mismatch"
+LDFLAGS_OPTIM_LTO="-fuse-linker-plugin -flto=${CONCURRENCY_MAKE_LEVEL}"
 
 # gold flags
 LDFLAGS_OPTIM_GOLD="-fuse-ld=gold"
