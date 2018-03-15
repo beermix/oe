@@ -1,21 +1,21 @@
-# LTO (Link Time Optimization) support
+# LTO (Link Time Optimization) support ( yes / no )
   LTO_SUPPORT="no"
 
-# GOLD (Google Linker) support
+# GOLD (Google Linker) support ( yes / no )
   GOLD_SUPPORT="no"
 
-# HARDENING (security relevant linker and compiler flags) support
+# HARDENING (security relevant linker and compiler flags) support ( yes / no )
   HARDENING_SUPPORT="no"
 
 # Name of the Distro to build (full name, without special characters)
   DISTRONAME="OE"
 
 # short project description
-  DESCRIPTION="LibreELEC is a fast and user-friendly Kodi Entertainment Center distribution."
+  DESCRIPTION="OE is a fast and user-friendly Kodi Entertainment Center distribution."
 
 # Welcome Message for e.g. SSH Server (up to 5 Lines)
   GREETING0="##############################################"
-  GREETING1="#                 LibreELEC                  #"
+  GREETING1="#                    OE                      #"
   GREETING2="#            https://libreelec.tv            #"
   GREETING3="##############################################"
   GREETING4=""
@@ -81,7 +81,7 @@
   AVAHI_DAEMON="no"
 
 # build with UPnP support (yes / no)
-  KODI_UPNP_SUPPORT="no"
+  KODI_UPNP_SUPPORT="yes"
 
 # build with MySQL support (mysql / mariadb / none)
   KODI_MYSQL_SUPPORT="none"
@@ -125,10 +125,10 @@
   UDEVIL="yes"
 
 # build and install exFAT fuse support (yes / no)
-  EXFAT="yes"
+  EXFAT="no"
 
 # build and install NTFS-3G fuse support (yes / no)
-  NTFS3G="yes"
+  NTFS3G="no"
 
 # build and install hfs filesystem utilities (yes / no)
   HFSTOOLS="no"
@@ -139,7 +139,7 @@
 # Xorg Graphic drivers to use (all / i915,i965,r200,r300,r600,nvidia)
 # Space separated list is supported,
 # e.g. GRAPHIC_DRIVERS="r300 r600 radeonsi i915 i965 nvidia nvidia-legacy vmware virtio"
-  GRAPHIC_DRIVERS="i965"
+  GRAPHIC_DRIVERS="i965 vmware"
 
 # build and install remote support (yes / no)
   REMOTE_SUPPORT="no"

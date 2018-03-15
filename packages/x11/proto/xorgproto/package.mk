@@ -16,20 +16,15 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="randrproto"
-PKG_VERSION="master"
+PKG_NAME="xorgproto"
+PKG_VERSION="2018.4"
 PKG_SHA256=""
 PKG_ARCH="any"
-PKG_LICENSE="OSS"
+PKG_LICENSE="OpenSource"
 PKG_SITE="http://www.X.org"
-#PKG_URL="http://xorg.freedesktop.org/archive/individual/proto/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_URL="https://cgit.freedesktop.org/xorg/proto/xorgproto/snapshot/$PKG_VERSION.tar.xz"
-PKG_SOURCE_DIR="$PKG_VERSION*"
+PKG_URL="http://xorg.freedesktop.org/archive/individual/proto/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain util-macros"
 PKG_SECTION="x11/proto"
-PKG_SHORTDESC="randrproto: Randr extension headers"
-PKG_LONGDESC="Randr extension headers"
+PKG_SHORTDESC="xcmiscproto: XCMisc extension headers"
+PKG_LONGDESC="XCMisc extension headers"
 PKG_TOOLCHAIN="autotools"
-
-# package specific configure options
-PKG_CONFIGURE_OPTS_TARGET="--without-xmlto"

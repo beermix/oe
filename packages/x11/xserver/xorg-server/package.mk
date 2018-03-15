@@ -14,24 +14,25 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
-# https://github.com/mirror/xserver/
+# https://github.com/mirror/xserver/branches
 ################################################################################
 
 PKG_NAME="xorg-server"
-PKG_VERSION="xorg-server-1.19.6"
-#PKG_SHA256="a732502f1db000cf36a376cd0c010ffdbf32ecdd7f1fa08ba7f5bdf9601cc197"
+PKG_VERSION="edf08bd"
+PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.X.org"
 #PKG_URL="http://xorg.freedesktop.org/archive/individual/xserver/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_URL="https://github.com/mirror/xserver/archive/${PKG_VERSION}.tar.gz"
 PKG_SOURCE_DIR="xserver-$PKG_VERSION*"
-PKG_DEPENDS_TARGET="toolchain util-macros font-util fontsproto randrproto recordproto renderproto dri2proto dri3proto fixesproto damageproto videoproto inputproto xf86dgaproto xf86vidmodeproto xf86driproto xf86miscproto presentproto libpciaccess libX11 libXfont2 libXinerama libxshmfence libxkbfile libdrm openssl freetype pixman fontsproto systemd xorg-launch-helper libXcursor libXtst libvdpau"
+PKG_DEPENDS_TARGET="toolchain util-macros font-util fontsproto randrproto recordproto renderproto dri2proto xorgproto fixesproto damageproto videoproto inputproto xf86dgaproto xf86vidmodeproto xf86driproto xf86miscproto presentproto libpciaccess libX11 libXfont2 libXinerama libxshmfence libxkbfile libdrm openssl freetype pixman fontsproto systemd xorg-launch-helper libXcursor libXtst libvdpau"
 PKG_NEED_UNPACK="$(get_pkg_directory xf86-video-nvidia) $(get_pkg_directory xf86-video-nvidia-legacy)"
 PKG_SECTION="x11/xserver"
 PKG_SHORTDESC="xorg-server: The Xorg X server"
 PKG_LONGDESC="Xorg is a full featured X server that was originally designed for UNIX and UNIX-like operating systems running on Intel x86 hardware."
 PKG_TOOLCHAIN="autotools"
+PKG_BUILD_FLAGS="-hardening"
 
 get_graphicdrivers
 
@@ -59,7 +60,6 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
                            --disable-xselinux \
                            $XORG_COMPOSITE \
                            --enable-mitshm \
-                           --disable-xres \
                            --enable-record \
                            --enable-xv \
                            --disable-xvmc \
@@ -73,12 +73,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
                            --enable-present \
                            --enable-xinerama \
                            --enable-xf86vidmode \
-                           --disable-xace \
-                           --disable-xselinux \
-                           --disable-xcsecurity \
-                           --disable-tslib \
                            --enable-dbe \
-                           --disable-xf86bigfont \
                            --enable-dpms \
                            --enable-config-udev \
                            --enable-config-udev-kms \
@@ -92,23 +87,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
                            --enable-libdrm \
                            --enable-clientids \
                            --enable-pciaccess \
-                           --disable-linux-acpi \
-                           --disable-linux-apm \
-                           --disable-systemd-logind \
                            --enable-xorg \
-                           --disable-dmx \
-                           --disable-xvfb \
-                           --disable-xnest \
-                           --disable-xquartz \
-                           --disable-standalone-xpbproxy \
-                           --disable-xwin \
-                           --disable-kdrive \
-                           --disable-xephyr \
-                           --disable-xfake \
-                           --disable-xfbdev \
-                           --disable-kdrive-kbd \
-                           --disable-kdrive-mouse \
-                           --disable-kdrive-evdev \
                            --disable-libunwind \
                            --enable-xshmfence \
                            --disable-install-setuid \
@@ -125,7 +104,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
                            --with-gnu-ld \
                            --with-sha1=libcrypto \
                            --without-systemd-daemon \
-                           --with-os-vendor=LibreELEC.tv \
+                           --with-os-vendor=OE \
                            --with-module-dir=$XORG_PATH_MODULES \
                            --with-xkb-path=$XORG_PATH_XKB \
                            --with-xkb-output=/var/cache/xkb \
@@ -138,13 +117,9 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
 
 pre_configure_target() {
 # hack to prevent a build error
-  CFLAGS=`echo $CFLAGS | sed -e "s|-Ofast|-O2|"`
-  LDFLAGS=`echo $LDFLAGS | sed -e "s|-Ofast|-O2|"`
-  CFLAGS=`echo $CFLAGS | sed -e "s|-Ofast|-O2|"`
-  CFLAGS=`echo $CFLAGS | sed  -e "s|-fno-plt||"`
-  LDFLAGS=`echo $LDFLAGS | sed -e "s|,-z,relro,-z,now||"`
-  CFLAGS=`echo $CFLAGS | sed -e "s|-Wl,-z -Wl,now -Wl,-z -Wl,relro||g"`
-  strip_hard
+  CFLAGS=`echo $CFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|"`
+  LDFLAGS=`echo $LDFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|"`
+  unset CFLAGS
 }
 
 post_makeinstall_target() {
