@@ -30,7 +30,7 @@ PKG_LICENSE="Mixed"
 PKG_SITE="http://www.chromium.org/Home"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="pciutils libiconv dbus x11 libXcomposite libXcursor libXtst alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk intel-vaapi-driver libva-vdpau-driver unclutter xdotool libdrm libjpeg-turbo libxslt freetype harfbuzz gtk+ chromium:host"
+PKG_DEPENDS_TARGET="pciutils libiconv dbus libgcrypt x11 libXcomposite libXcursor libXtst alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk intel-vaapi-driver libva-vdpau-driver unclutter xdotool libdrm libjpeg-turbo libxslt freetype harfbuzz gtk+ chromium:host"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -105,6 +105,9 @@ make_target() {
     'use_gconf=false'
     'use_gnome_keyring=false'
     'use_gold=false'
+    'use_system_freetype=true'
+    'use_system_harfbuzz=true'
+    'icu_use_data_file=false'
     'use_gtk3=false'
     'use_kerberos=false'
     'use_pulseaudio=false'
@@ -129,18 +132,19 @@ declare -gA _system_libs=(
   [libdrm]=
   [libjpeg]=libjpeg
   [icu]=icu
-  #[libxml]=libxml2
   [libxslt]=libxslt
   #[re2]=re2
   #[snappy]=snappy
   [yasm]=
   [zlib]=minizip
 )
-_unwanted_bundled_libs=(
+readonly _unwanted_bundled_libs=(
   ${!_system_libs[@]}
   ${_system_libs[libjpeg]+libjpeg_turbo}
+  freetype
+  harfbuzz-ng
 )
-depends+=(${_system_libs[@]})
+depends+=(${_system_libs[@]} freetype2 harfbuzz)
 
   # Remove bundled libraries for which we will use the system copies; this
   # *should* do what the remove_bundled_libraries.py script does, with the
@@ -162,14 +166,14 @@ depends+=(${_system_libs[@]})
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
 
-  ninja -j${CONCURRENCY_MAKE_LEVEL} -C out/Release chrome chrome_sandbox widevinecdmadapter
+  ninja -j${CONCURRENCY_MAKE_LEVEL} -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
 }
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -P  $PKG_BUILD/out/Release/chrome $ADDON_BUILD/$PKG_ADDON_ID/bin/chromium.bin
   cp -P  $PKG_BUILD/out/Release/chrome_sandbox $ADDON_BUILD/$PKG_ADDON_ID/bin/chrome-sandbox
-  cp -P  $PKG_BUILD/out/Release/{*.pak,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
+  cp -P  $PKG_BUILD/out/Release/{*.pak,*.bin,libwidevinecdmadapter.so,chromedriver} $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -PR $PKG_BUILD/out/Release/locales $ADDON_BUILD/$PKG_ADDON_ID/bin/
   cp -PR $PKG_BUILD/out/Release/gen/content/content_resources.pak $ADDON_BUILD/$PKG_ADDON_ID/bin/
   
