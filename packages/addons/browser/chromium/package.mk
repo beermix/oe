@@ -22,9 +22,9 @@
 ################################################################################
 
 PKG_NAME="chromium"
-PKG_VERSION="65.0.3325.162"
-PKG_SHA256="627e7bfd84795de1553fac305239130d25186acf2d3c77d39d824327cd116cce"
-PKG_REV="150"
+PKG_VERSION="64.0.3282.186"
+PKG_SHA256=""
+PKG_REV="140"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_SITE="http://www.chromium.org/Home"
@@ -59,10 +59,11 @@ make_host() {
 }
 
 make_target() {
-
-  export LDFLAGS="$LDFLAGS -ludev"
-  export LD=$CXX
-
+  unset CPPFLAGS
+  unset CFLAGS
+  unset CXXFLAGS
+  unset LDFLAGS
+  
   # https://chromium-review.googlesource.com/c/chromium/src/+/712575
   # _flags+=('exclude_unwind_tables=true')
   export CFLAGS="$CFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables"
@@ -98,6 +99,7 @@ make_target() {
     'use_allocator="none"'
     'use_cups=false'
     'use_custom_libcxx=false'
+    'use_gconf=false'
     'use_gnome_keyring=false'
     'use_gold=false'
     'use_gtk3=false'
@@ -105,6 +107,7 @@ make_target() {
     'use_pulseaudio=false'
     'use_sysroot=true'
     'use_vaapi=true'
+    'linux_link_libudev=true'
     'use_v8_context_snapshot=false'
     'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
@@ -122,9 +125,6 @@ make_target() {
 declare -gA _system_libs=(
   [libdrm]=
   [libjpeg]=libjpeg
-  [fontconfig]=fontconfig
-  [freetype]=freetype2
-  [harfbuzz-ng]=harfbuzz
   [icu]=icu
   #[libxml]=libxml2
   [libxslt]=libxslt
@@ -142,7 +142,17 @@ depends+=(${_system_libs[@]})
   # Remove bundled libraries for which we will use the system copies; this
   # *should* do what the remove_bundled_libraries.py script does, with the
   # added benefit of not having to list all the remaining libraries
-
+  local _lib
+  for _lib in ${_unwanted_bundled_libs[@]}; do
+    find -type f -path "*third_party/$_lib/*" \
+      \! -path "*third_party/$_lib/chromium/*" \
+      \! -path "*third_party/$_lib/google/*" \
+      \! -path './base/third_party/icu/*' \
+      \! -path './third_party/freetype/src/src/psnames/pstables.h' \
+      \! -path './third_party/yasm/run_yasm.py' \
+      \! -regex '.*\.\(gn\|gni\|isolate\)' \
+      -delete
+  done
 
   ./build/linux/unbundle/replace_gn_files.py  --system-libraries "${!_system_libs[@]}"
   ./third_party/libaddressinput/chromium/tools/update-strings.py

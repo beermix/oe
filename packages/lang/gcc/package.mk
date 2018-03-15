@@ -54,7 +54,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libssp \
                            --disable-libmpx \
                            --disable-libsanitizer \
-                           --disable-libmudflap \
                            --with-tune=haswell"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
@@ -66,6 +65,7 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-libatomic \
                               --disable-libgomp \
                               --disable-libquadmath \
+                              --disable-libmudflap \
                               --disable-threads \
                               --without-headers \
                               --with-newlib \
