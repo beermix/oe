@@ -16,18 +16,17 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="randrproto"
-PKG_VERSION="1.5.0"
-PKG_SHA256="4c675533e79cd730997d232c8894b6692174dce58d3e207021b8f860be498468"
+PKG_NAME="dri3proto"
+PKG_VERSION="1.0"
+PKG_SHA256="01be49d70200518b9a6b297131f6cc71f4ea2de17436896af153226a774fc074"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.X.org"
 PKG_URL="http://xorg.freedesktop.org/archive/individual/proto/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain util-macros"
 PKG_SECTION="x11/proto"
-PKG_SHORTDESC="randrproto: Randr extension headers"
-PKG_LONGDESC="Randr extension headers"
-PKG_TOOLCHAIN="autotools"
+PKG_SHORTDESC="dri3proto: X.Org DRI3 protocol headers"
+PKG_LONGDESC="X.Org DRI3 protocol headers."
 
 # package specific configure options
 PKG_CONFIGURE_OPTS_TARGET="--without-xmlto"
