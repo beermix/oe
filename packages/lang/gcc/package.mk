@@ -65,7 +65,7 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-libada \
                               --disable-libatomic \
                               --disable-libgomp \
-                              --disable-libmudflap \
+                              --disable-libquadmath \
                               --disable-threads \
                               --without-headers \
                               --with-newlib \
