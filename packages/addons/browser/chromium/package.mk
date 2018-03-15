@@ -15,14 +15,16 @@
 #  You should have received a copy of the GNU General Public License
 #  along with OpenELEC.tv; see the file COPYING.  If not, write to
 #  the Free Software Foundation, 51 Franklin Street, Suite 500, Boston, MA 02110, USA.
-#  http://svnweb.mageia.org/packages/cauldron/chromium-browser-stable/current
 #  https://chromereleases.googleblog.com/
+#  http://svnweb.mageia.org/packages/cauldron/chromium-browser-stable/current
+#  http://omahaproxy.appspot.com/
+#  https://www.chromestatus.com/
 ################################################################################
 
 PKG_NAME="chromium"
-PKG_VERSION="65.0.3325.162"
-PKG_SHA256="627e7bfd84795de1553fac305239130d25186acf2d3c77d39d824327cd116cce"
-PKG_REV="110"
+PKG_VERSION="64.0.3282.186"
+PKG_SHA256=""
+PKG_REV="140"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_SITE="http://www.chromium.org/Home"
@@ -33,7 +35,7 @@ PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
 PKG_TOOLCHAIN="manual"
-PKG_BUILD_FLAGS="-lto"
+PKG_BUILD_FLAGS="-lto -gold"
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Chromium"
@@ -48,6 +50,8 @@ post_patch() {
 
   # set correct widevine
   sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' ./third_party/widevine/cdm/stub/widevine_cdm_version.h
+  
+  patch -Np4 -i $PKG_DIR/chromium-skia-harmony.patch
 }
 
 make_host() {
@@ -55,18 +59,19 @@ make_host() {
 }
 
 make_target() {
-  export LDFLAGS="$LDFLAGS -ludev"
-  export LD=$CXX
-
-  # unset CPPFLAGS
-  # unset CFLAGS
-  # unset CXXFLAGS
-  # unset LDFLAGS
+  unset CFLAGS
+  unset CXXFLAGS
+  unset LDFLAGS
   
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O3|-O2|" -e "s|-Wl,-z -Wl,now -Wl,-z -Wl,relro||"`
+  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-O3|-O2|" -e "s|-Wl,-z -Wl,now -Wl,-z -Wl,relro||"`
+
+  # https://chromium-review.googlesource.com/c/chromium/src/+/712575
+  # _flags+=('exclude_unwind_tables=true')
   export CFLAGS="$CFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables"
   export CXXFLAGS="$CXXFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables"
   export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
-
+ 
   export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always"
   
   export CCACHE_SLOPPINESS=time_macros
@@ -96,8 +101,10 @@ make_target() {
     'use_allocator="none"'
     'use_cups=false'
     'use_custom_libcxx=false'
+    'use_gconf=false'
     'use_gnome_keyring=false'
     'use_gold=false'
+    'use_lld=false'
     'use_system_freetype=true'
     'use_system_harfbuzz=true'
     'use_gtk3=false'
@@ -105,7 +112,10 @@ make_target() {
     'use_pulseaudio=false'
     'use_sysroot=true'
     'use_vaapi=true'
+    'linux_link_libgio=true'
     'linux_link_libudev=true'
+    'use_libpci=true'
+    'use_v8_context_snapshot=false'
     'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_hangout_services_extension=true'
@@ -121,10 +131,8 @@ make_target() {
 
 readonly -A _system_libs=(
   [libdrm]=
-  [fontconfig]=fontconfig
-  [freetype]=freetype2
-  [harfbuzz-ng]=harfbuzz
   [libjpeg]=libjpeg
+  #[icu]=icu
   [libxml]=libxml2
   [libxslt]=libxslt
   [re2]=re2
@@ -132,14 +140,12 @@ readonly -A _system_libs=(
   [yasm]=
   [zlib]=minizip
 )
-
 readonly _unwanted_bundled_libs=(
   ${!_system_libs[@]}
   ${_system_libs[libjpeg]+libjpeg_turbo}
   freetype
   harfbuzz-ng
 )
-
 depends+=(${_system_libs[@]} freetype2 harfbuzz)
 
   # Remove bundled libraries for which we will use the system copies; this
@@ -169,11 +175,13 @@ addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -P  $PKG_BUILD/out/Release/chrome $ADDON_BUILD/$PKG_ADDON_ID/bin/chromium.bin
   cp -P  $PKG_BUILD/out/Release/chrome_sandbox $ADDON_BUILD/$PKG_ADDON_ID/bin/chrome-sandbox
-  cp -P  $PKG_BUILD/out/Release/{*.pak,*.dat,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
+  cp -P  $PKG_BUILD/out/Release/{*.pak,*.bin,*.dat,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -PR $PKG_BUILD/out/Release/locales $ADDON_BUILD/$PKG_ADDON_ID/bin/
   cp -PR $PKG_BUILD/out/Release/gen/content/content_resources.pak $ADDON_BUILD/$PKG_ADDON_ID/bin/
+  
+  debug_strip $ADDON_BUILD/$PKG_ADDON_ID/bin/
 
-  # config
+  # config ,*.dat
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/config
   cp -P $PKG_DIR/config/* $ADDON_BUILD/$PKG_ADDON_ID/config
 
@@ -187,10 +195,6 @@ addon() {
   # cairo
   cp -PL $(get_build_dir cairo)/.install_pkg/usr/lib/libcairo.so.2 $ADDON_BUILD/$PKG_ADDON_ID/lib
   cp -PL $(get_build_dir cairo)/.install_pkg/usr/lib/libcairo-gobject.so.2 $ADDON_BUILD/$PKG_ADDON_ID/lib
-
-  # icu
-  # cp -PL $(get_build_dir icu)/.install_pkg/usr/lib/llibicuuc.so.60 $ADDON_BUILD/$PKG_ADDON_ID/lib
-  # cp -PL $(get_build_dir icu)/.install_pkg/usr/lib/libicui18n.so.60 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # gtk
   cp -PL $(get_build_dir gtk+)/.install_pkg/usr/lib/libgdk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
@@ -210,12 +214,6 @@ addon() {
 
   # libexif
   cp -PL $(get_build_dir libexif)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
-  
-  # snappy
-  cp -PL $(get_build_dir snappy)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
-  
-  # re2
-  cp -PL $(get_build_dir re2)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # libva-vdpau-driver
   cp -PL $(get_build_dir libva-vdpau-driver)/.install_pkg/usr/lib/dri/*.so $ADDON_BUILD/$PKG_ADDON_ID/lib

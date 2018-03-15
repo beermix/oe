@@ -1,0 +1,33 @@
+diff --git a/build/config/compiler/BUILD.gn b/build/config/compiler/BUILD.gn
+old mode 100644
+new mode 100755
+index 2e37820ad7..793a72ae14
+--- a/build/config/compiler/BUILD.gn
++++ b/build/config/compiler/BUILD.gn
+@@ -257,21 +257,21 @@ config("compiler") {
+       # The strong variant of the stack protector significantly increases
+       # binary size, so only enable it in debug mode.
+       if (is_debug) {
+-        cflags += [ "-fstack-protector-strong" ]
++      # cflags += [ "-fstack-protector-strong" ]
+       } else {
+-        cflags += [ "-fstack-protector" ]
++      # cflags += [ "-fstack-protector" ]
+       }
+     } else if (is_posix && !is_chromeos && !is_nacl) {
+       # TODO(phajdan.jr): Use -fstack-protector-strong when our gcc supports it.
+       # See also https://crbug.com/533294
+-      cflags += [ "--param=ssp-buffer-size=4" ]
++      # cflags += [ "--param=ssp-buffer-size=4" ]
+ 
+       # The x86 toolchain currently has problems with stack-protector.
+       if (is_android && current_cpu == "x86") {
+-        cflags += [ "-fno-stack-protector" ]
++      # cflags += [ "-fno-stack-protector" ]
+       } else if (current_os != "aix") {
+         # Not available on aix.
+-        cflags += [ "-fstack-protector" ]
++      # cflags += [ "-fstack-protector" ]
+       }
+     }
+   }
