@@ -1,0 +1,17 @@
+Description: Expose VMX cpuid feature to the default "qemu64" CPU type,
+ supporting Intel compatible VMX nested virtualization.
+Author: Dave Walker (Daviey) <DaveWalker@ubuntu.com>
+
+Index: qemu/target/i386/cpu.c
+===================================================================
+--- qemu.orig/target/i386/cpu.c
++++ qemu/target/i386/cpu.c
+@@ -673,7 +673,7 @@ static X86CPUDefinition builtin_x86_defs
+             CPUID_MTRR | CPUID_CLFLUSH | CPUID_MCA |
+             CPUID_PSE36,
+         .features[FEAT_1_ECX] =
+-            CPUID_EXT_SSE3 | CPUID_EXT_CX16,
++            CPUID_EXT_SSE3 | CPUID_EXT_CX16 | CPUID_EXT_VMX,
+         .features[FEAT_8000_0001_EDX] =
+             CPUID_EXT2_LM | CPUID_EXT2_SYSCALL | CPUID_EXT2_NX,
+         .features[FEAT_8000_0001_ECX] =

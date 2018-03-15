@@ -1,0 +1,20 @@
+Description: qemu-guest-agent: freeze-hook to ignore dpkg files
+
+Prevent calls to dpkg update artifacts on conffiles.
+
+Forwarded: yes (http://lists.nongnu.org/archive/html/qemu-devel/2017-12/msg02142.html)
+Author: Christian Ehrhardt <christian.ehrhardt@canonical.com>
+Bug-Ubuntu: https://bugs.launchpad.net/bugs/1484990
+Last-Update: 2018-01-22
+
+--- a/scripts/qemu-guest-agent/fsfreeze-hook
++++ b/scripts/qemu-guest-agent/fsfreeze-hook
+@@ -13,7 +13,7 @@ FSFREEZE_D=$(dirname -- "$0")/fsfreeze-h
+ # Check whether file $1 is a backup or rpm-generated file and should be ignored
+ is_ignored_file() {
+     case "$1" in
+-        *~ | *.bak | *.orig | *.rpmnew | *.rpmorig | *.rpmsave | *.sample)
++        *~ | *.bak | *.orig | *.rpmnew | *.rpmorig | *.rpmsave | *.sample | *.dpkg-old | *.dpkg-new | *.dpkg-tmp | *.dpkg-dist | *.dpkg-bak | *.dpkg-backup | *.dpkg-remove)
+             return 0 ;;
+     esac
+     return 1
