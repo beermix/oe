@@ -59,9 +59,9 @@ make_host() {
 }
 
 make_target() {
-  unset CFLAGS
-  unset CXXFLAGS
-  unset LDFLAGS
+  # unset CFLAGS
+  # unset CXXFLAGS
+  # unset LDFLAGS
   
   export CFLAGS=`echo $CFLAGS | sed -e "s|-O3|-O2|" -e "s|-Wl,-z -Wl,now -Wl,-z -Wl,relro||"`
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-O3|-O2|" -e "s|-Wl,-z -Wl,now -Wl,-z -Wl,relro||"`
