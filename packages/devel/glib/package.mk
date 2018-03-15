@@ -48,7 +48,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_snprintf_c99=yes \
                            --disable-systemtap \
                            --enable-Bsymbolic \
                            --with-gnu-ld \
-                           --with-threads=posix \
+                           --with-threads=system \
                            --with-pcre=internal \
                            --with-python=python"
 

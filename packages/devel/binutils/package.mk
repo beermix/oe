@@ -40,8 +40,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --disable-libssp \
                          --enable-version-specific-runtime-libs \
                          --enable-plugins \
-                         --enable-gold \
-                         --enable-ld=default \
+                         --disable-gold \
                          --enable-lto \
                          --disable-nls"
 
