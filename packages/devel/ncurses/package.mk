@@ -8,6 +8,10 @@ PKG_SECTION="devel"
 PKG_SHORTDESC="ncurses: The ncurses (new curses) library"
 PKG_BUILD_FLAGS="-lto +pic"
 
+pre_configure_target() {
+  export CPPFLAGS="$CPPFLAGS -D_GNU_SOURCE -D_DEFAULT_SOURCE -D_FILE_OFFSET_BITS=64"
+}
+
 PKG_CONFIGURE_OPTS_TARGET="--enable-overwrite \
 			      --disable-termcap \
 			      --disable-warnings \
@@ -25,7 +29,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-overwrite \
 			      --enable-pc-files \
 			      --enable-widec \
 			      --with-pkg-config-libdir=/usr/lib/pkgconfig \
-			      --with-build-cppflags=-D_GNU_SOURCE"
+			      --with-build-cppflags=$CPPFLAGS"
 
 post_makeinstall_target() {
   cp misc/ncurses-config $TOOLCHAIN/bin

@@ -33,57 +33,6 @@ index d8205fb0..4b0b4236 100644
      FbTk::TextButton::clear();
  }
  
-diff --git a/src/IconbarTool.cc b/src/IconbarTool.cc
-index 128b71e4..d940b1d3 100644
---- a/src/IconbarTool.cc
-+++ b/src/IconbarTool.cc
-@@ -225,8 +225,6 @@ private:
- 
- } // end anonymous namespace
- 
--std::string IconbarTool::s_iconifiedDecoration[2];
--
- IconbarTool::IconbarTool(const FbTk::FbWindow &parent, IconbarTheme &theme,
-                          FbTk::ThemeProxy<IconbarTheme> &focused_theme,
-                          FbTk::ThemeProxy<IconbarTheme> &unfocused_theme,
-@@ -254,8 +252,6 @@ IconbarTool::IconbarTool(const FbTk::FbWindow &parent, IconbarTheme &theme,
-            *screen.layerManager().getLayer(ResourceLayer::MENU)),
-     m_alpha(255) {
- 
--    updateIconifiedPattern();
--
-     // setup mode menu
-     setupModeMenu(m_menu, *this);
-     _FB_USES_NLS;
-@@ -283,8 +279,6 @@ IconbarTool::IconbarTool(const FbTk::FbWindow &parent, IconbarTheme &theme,
-             FbTk::MemFun(*this, &IconbarTool::themeReconfigured));
-     m_tracker.join(unfocused_theme.reconfigSig(),
-             FbTk::MemFun(*this, &IconbarTool::themeReconfigured));
--    m_tracker.join(screen.reconfigureSig(),
--            FbTk::MemFunIgnoreArgs(*this, &IconbarTool::updateIconifiedPattern));
-     themeReconfigured();
- }
- 
-@@ -445,19 +439,6 @@ void IconbarTool::update(UpdateReason reason, Focusable *win) {
-     renderTheme();
- }
- 
--void IconbarTool::updateIconifiedPattern() {
--    FbTk::Resource<std::string> p(m_screen.resourceManager(), "( %t )",
--                                  m_screen.name() + ".iconbar.iconifiedPattern",
--                                  m_screen.altName() + ".Iconbar.IconifiedPattern");
--    size_t tidx = p->find("%t");
--    s_iconifiedDecoration[0].clear();
--    s_iconifiedDecoration[1].clear();
--    if (tidx != std::string::npos) {
--        s_iconifiedDecoration[0] = p->substr(0, tidx);
--        s_iconifiedDecoration[1] = p->substr(tidx+2);
--    }
--}
--
- void IconbarTool::insertWindow(Focusable &win, int pos) {
-     IconButton *button = 0;
- 
 diff --git a/src/IconbarTool.hh b/src/IconbarTool.hh
 index 60440050..21c8078e 100644
 --- a/src/IconbarTool.hh

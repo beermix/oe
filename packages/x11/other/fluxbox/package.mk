@@ -30,7 +30,12 @@ PKG_TOOLCHAIN="autotools"
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_realloc_0_nonnull=yes \
                            ac_cv_func_malloc_0_nonnull=yes \
                            --disable-toolbar \
+                           --disable-slit \
+                           --disable-systray \
                            --enable-ewmh \
+                           --disable-xpm \
+                           --disable-xft \
+                           --disable-fribidi \
                            --disable-debug \
                            --disable-test \
                            --disable-nls \
