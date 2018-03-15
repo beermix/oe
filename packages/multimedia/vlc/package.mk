@@ -4,11 +4,12 @@
 ################################################################################
 
 PKG_NAME="vlc"
-PKG_VERSION="3.0.0-20180117-0231-rc6"
-PKG_REV="20171107-0242"
-PKG_SITE="https://nightlies.videolan.org/build/source/"
-PKG_URL="https://nightlies.videolan.org/build/source/vlc-3.0.0-$PKG_REV-git.tar.xz"
-PKG_SOURCE_DIR="vlc*"
+PKG_VERSION="3.0.1"
+#PKG_REV="20171107-0242"
+#PKG_SITE="https://nightlies.videolan.org/build/source/"
+#PKG_URL="https://nightlies.videolan.org/build/source/vlc-3.0.0-$PKG_REV-git.tar.xz"
+PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
+#PKG_SOURCE_DIR="vlc*"
 PKG_DEPENDS_TARGET="toolchain dbus ffmpeg libdvbpsi libmpeg2 libogg libvorbis flac libsamplerate zlib lua:host lua gnutls"
 PKG_SECTION="xmedia/tools"
 PKG_SHORTDESC="VideoLAN multimedia player and streamer"
