@@ -28,6 +28,7 @@ PKG_SECTION="lib"
 PKG_SHORTDESC="C/C++ Configuration File Library"
 PKG_LONGDESC="C/C++ Configuration File Library"
 PKG_TOOLCHAIN="autotools"
+PKG_BUILD_FLAGS="+pic"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --disable-shared \

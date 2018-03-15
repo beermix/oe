@@ -26,6 +26,7 @@ PKG_URL="http://download.rsyslog.com/liblogging/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain systemd"
 PKG_SHORTDESC="liblogging"
 PKG_LONGDESC="liblogging"
+PKG_BUILD_FLAGS="+pic"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-man-pages \
                            --enable-static --disable-shared \

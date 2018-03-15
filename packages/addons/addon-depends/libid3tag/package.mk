@@ -29,7 +29,6 @@ PKG_DEPENDS_TARGET="toolchain zlib"
 PKG_SECTION="audio"
 PKG_SHORTDESC="library for id3 tagging"
 PKG_LONGDESC="library for id3 tagging"
-
-PKG_MAINTAINER="Lukas Sabota (LTsmooth42@gmail.com)"
+PKG_BUILD_FLAGS="+pic"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared"
