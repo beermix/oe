@@ -24,11 +24,10 @@ PKG_LICENSE="Custom"
 PKG_SITE="http://www.icu-project.org"
 PKG_URL="http://download.icu-project.org/files/${PKG_NAME}4c/${PKG_VERSION}/${PKG_NAME}4c-${PKG_VERSION//./_}-src.tgz"
 PKG_SOURCE_DIR="icu"
-PKG_DEPENDS_TARGET="toolchain icu:host"
+PKG_DEPENDS_TARGET="toolchain libiconv icu:host"
 PKG_SECTION="textproc"
 PKG_SHORTDESC="International Components for Unicode library"
 PKG_LONGDESC="International Components for Unicode library"
-PKG_BUILD_FLAGS="+pic"
 
 post_unpack() {
   sed -i 's/xlocale/locale/' $PKG_BUILD/source/i18n/digitlst.cpp

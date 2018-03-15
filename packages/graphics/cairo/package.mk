@@ -73,7 +73,6 @@ PKG_CONFIGURE_OPTS_TARGET="$PKG_CAIRO_CONFIG \
                            --disable-static \
                            --disable-gtk-doc \
                            --enable-largefile \
-                           --enable-atomic \
                            --disable-gcov \
                            --disable-valgrind \
                            --disable-xcb \
@@ -104,9 +103,10 @@ PKG_CONFIGURE_OPTS_TARGET="$PKG_CAIRO_CONFIG \
                            --enable-pdf \
                            --enable-svg \
                            --disable-test-surfaces \
-                           --disable-tee \
+                           --enable-tee \
                            --disable-xml \
                            --enable-pthread \
+                           --enable-gobject \
                            --disable-full-testing \
                            --disable-trace \
                            --enable-interpreter \
