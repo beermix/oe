@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="fluxbox"
-PKG_VERSION="facb42f"
+PKG_VERSION="248b15c"
 PKG_REV="1"
 PKG_SITE="http://fluxbox.org/"
 PKG_URL="https://github.com/fluxbox/fluxbox/archive/${PKG_VERSION}.tar.gz"
@@ -30,12 +30,7 @@ PKG_TOOLCHAIN="autotools"
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_realloc_0_nonnull=yes \
                            ac_cv_func_malloc_0_nonnull=yes \
                            --disable-toolbar \
-                           --disable-slit \
-                           --disable-systray \
                            --enable-ewmh \
-                           --disable-xpm \
-                           --disable-xft \
-                           --disable-fribidi \
                            --disable-debug \
                            --disable-test \
                            --disable-nls \
