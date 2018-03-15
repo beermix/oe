@@ -107,7 +107,6 @@ make_target() {
     'use_gold=false'
     'use_system_freetype=true'
     'use_system_harfbuzz=true'
-    'icu_use_data_file=false'
     'use_gtk3=false'
     'use_kerberos=false'
     'use_pulseaudio=false'
@@ -128,7 +127,7 @@ make_target() {
     "google_default_client_secret=\"${_google_default_client_secret}\""
   )
 
-declare -gA _system_libs=(
+readonly -A _system_libs=(
   [libdrm]=
   [libjpeg]=libjpeg
   [icu]=icu
