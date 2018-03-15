@@ -28,7 +28,6 @@ PKG_DEPENDS_TARGET="toolchain libiconv icu:host"
 PKG_SECTION="textproc"
 PKG_SHORTDESC="International Components for Unicode library"
 PKG_LONGDESC="International Components for Unicode library"
-PKG_BUILD_FLAGS="+pic:host +pic"
 
 post_unpack() {
   sed -i 's/xlocale/locale/' $PKG_BUILD/source/i18n/digitlst.cpp
@@ -45,12 +44,31 @@ pre_configure_target() {
   cp -a $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME/
 }
 
-PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
-			   
-PKG_CONFIGURE_OPTS_TARGET="--enable-release \
-			      --disable-shared \
-			      --enable-static \
-			      --with-cross-build=$PKG_BUILD/.$HOST_NAME"
+configure_host() {
+ cd $PKG_BUILD/.$HOST_NAME
+ ./runConfigureICU Linux/gcc \
+ 		     CC="$HOST_CC" \
+ 		     CXX="$HOST_CXX" \
+ 		     --disable-shared \
+ 		     --enable-static \
+ 		     --prefix=$TOOLCHAIN
+}
+
+configure_target() {
+ cd $PKG_BUILD/.$TARGET_NAME
+ ./runConfigureICU Linux/gcc \
+ 		     CPP="$CPP" \
+ 		     CC="$CC" \
+ 		     CXX="$CXX" \
+ 		     --target=$TARGET_NAME \
+ 		     --build=$TARGET_NAME \
+ 		     --host=$TARGET_NAME \
+ 		     --disable-shared \
+ 		     --enable-static \
+ 		     --enable-release \
+ 		     --prefix=/usr \
+ 		     --with-cross-build="$PKG_BUILD/.$HOST_NAME"
+}
 
 post_makeinstall_target() {
   rm -rf $INSTALL
