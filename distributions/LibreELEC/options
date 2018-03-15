@@ -1,10 +1,10 @@
-# LTO (Link Time Optimization) support ( yes / no )
+# LTO (Link Time Optimization) support (yes / no)
   LTO_SUPPORT="no"
 
-# GOLD (Google Linker) support ( yes / no )
+# GOLD (Google Linker) support (yes / no)
   GOLD_SUPPORT="no"
 
-# HARDENING (security relevant linker and compiler flags) support ( yes / no )
+# HARDENING (security relevant linker and compiler flags) support (yes / no)
   HARDENING_SUPPORT="no"
 
 # Name of the Distro to build (full name, without special characters)
@@ -81,7 +81,7 @@
   AVAHI_DAEMON="no"
 
 # build with UPnP support (yes / no)
-  KODI_UPNP_SUPPORT="yes"
+  KODI_UPNP_SUPPORT="no"
 
 # build with MySQL support (mysql / mariadb / none)
   KODI_MYSQL_SUPPORT="none"
@@ -190,7 +190,7 @@
   NANO_EDITOR="no"
 
 # cron support (yes / no)
-  CRON_SUPPORT="yes"
+  CRON_SUPPORT="no"
 
 # Distribution Specific source location
   DISTRO_MIRROR="http://sources.libreelec.tv/mirror"
