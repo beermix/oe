@@ -32,22 +32,6 @@ PKG_SECTION="lang"
 PKG_SHORTDESC="gcc: The GNU Compiler Collection Version 4 (aka GNU C Compiler)"
 PKG_LONGDESC="This package contains the GNU Compiler Collection. It includes compilers for the languages C, C++, Objective C, Fortran 95, Java and others ... This GCC contains the Stack-Smashing Protector Patch which can be enabled with the -fstack-protector command-line option. More information about it ca be found at http://www.research.ibm.com/trl/projects/security/ssp/."
 
-#post_unpack() {
-#  mkdir -p $PKG_BUILD/isl
-#  cp -r -i $(get_build_dir isl)/* $PKG_BUILD/isl
-#  rm -rf $PKG_BUILD/isl/.x86_64-linux-gnu
-#}
-
-#post_patch() {
-#   Add patches from Clear Linux
-#  if [ "$TARGET_ARCH" = "x86_64" ]; then
-#    for file in $PKG_DIR/clear/*.patch; do
-#      echo Applying patch $file...
-#      patch -p1 -d $PKG_BUILD < $file
-#    done
-#  fi
-#}
-
 GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-sysroot=$SYSROOT_PREFIX \
                            --with-gmp=$TOOLCHAIN \
@@ -58,12 +42,17 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-gnu-ld \
                            --enable-plugin \
                            --enable-lto \
+                           --enable-gold \
                            --enable-ld=default \
                            --disable-multilib \
                            --disable-nls \
+                           --without-ppl \
+                           --without-cloog \
+                           --disable-libada \
                            --disable-libssp \
                            --disable-libmpx \
                            --disable-libsanitizer \
+                           --disable-libmudflap \
                            --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
                            --with-tune=haswell"
@@ -73,7 +62,6 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-__cxa_atexit \
                               --disable-shared \
                               --disable-libitm \
-                              --disable-libquadmath \
                               --disable-libada \
                               --disable-libatomic \
                               --disable-libgomp \
@@ -104,7 +92,6 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          $GCC_OPTS"
 
 pre_configure_host() {
-#  export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
 }
 
