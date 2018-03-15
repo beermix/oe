@@ -45,7 +45,7 @@ case "$LINUX" in
     PKG_URL="https://github.com/zen-kernel/zen-kernel/archive/$PKG_VERSION.tar.gz"
     PKG_SOURCE_DIR="zen-kernel-$PKG_VERSION*"
     PKG_PATCH_DIRS="default"
-    PKG_BUILD_PERF="no"
+    PKG_BUILD_PERF="yes"
     ;;
   *)
     PKG_VERSION="4.14.24"
