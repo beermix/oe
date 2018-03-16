@@ -1,4 +1,4 @@
-GCC_OPTIM="-O2 -pipe -fno-plt -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
+GCC_OPTIM="-O2 -pipe -fno-plt"
 LD_OPTIM="-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now" 
 
 if [ "${BUILD_WITH_DEBUG}" = "yes" ]; then
