@@ -49,8 +49,14 @@ for drv in $GRAPHIC_DRIVERS; do
     DRM_CONFIG=`echo $DRM_CONFIG | sed -e 's/disable-vc4/enable-vc4/'`
 done
 
+pre_configure_target() {
+  export LIBS="-lrt -lc -latomic"
+  export CFLAGS="$CFLAGS -std=gnu99"
+}
+
 PKG_CONFIGURE_OPTS_TARGET="--disable-udev \
                            --enable-largefile \
+                           --disable-silent-rules \
                            --with-kernel-source=$(kernel_path) \
                            --disable-libkms \
                            $DRM_CONFIG \

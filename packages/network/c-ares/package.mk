@@ -1,11 +1,10 @@
 PKG_NAME="c-ares"
-PKG_VERSION="79ead9f"
-PKG_GIT_URL="https://github.com/c-ares/c-ares"
-PKG_URL="https://github.com/c-ares/c-ares/archive/${PKG_VERSION}.tar.gz"
+PKG_VERSION="1.14.0"
+PKG_URL="https://c-ares.haxx.se/download/c-ares-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain zlib openssl"
-PKG_SECTION="my"
+PKG_SECTION="network"
+PKG_TOOLCHAIN="autotools"
+PKG_BUILD_FLAGS="+pic"
 
-PKG_USE_CMAKE="yes"
-
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release"
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared --with-pic"
 
