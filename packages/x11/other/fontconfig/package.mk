@@ -14,7 +14,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################ gperf:host
+################################################################################
 
 PKG_NAME="fontconfig"
 PKG_VERSION="2.12.6"
@@ -41,7 +41,6 @@ pre_configure_target() {
   CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O3|-O2|"`
   CFLAGS="$CFLAGS -I$PKG_BUILD"
   CXXFLAGS="$CXXFLAGS -I$PKG_BUILD"
-  CFLAGS=`echo $CFLAGS | sed -e "s|-O3|-O2|" -e "s|-Wl,-z -Wl,now -Wl,-z -Wl,relro|-Wall|"`
 
   # Delete this as a workaround https://bugs.freedesktop.org/show_bug.cgi?id=101280
   rm -f $PKG_BUILD/src/fcobjshash.h

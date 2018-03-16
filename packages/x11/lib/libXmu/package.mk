@@ -28,9 +28,8 @@ PKG_SECTION="x11/lib"
 PKG_SHORTDESC="libxmu: X11 miscellaneous utility library"
 PKG_LONGDESC="LibXmu provides a set of miscellaneous utility convenience functions for X libraries to use."
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --with-gnu-ld --without-xmlto"
+PKG_CONFIGURE_OPTS_TARGET="--without-xmlto"
 
 pre_configure_target() {
    CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"
-   CFLAGS="$CFLAGS -fPIC -DPIC"
 }

@@ -18,7 +18,8 @@
 
 PKG_NAME="fluxbox"
 PKG_VERSION="248b15c"
-PKG_REV="1"
+PKG_ARCH="any"
+PKG_LICENSE="OSS"
 PKG_SITE="http://fluxbox.org/"
 PKG_URL="https://github.com/fluxbox/fluxbox/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libX11 libXrandr libXext libXrender libXext"
