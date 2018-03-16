@@ -233,6 +233,7 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$TOOLCHAIN \
                        -DENABLE_LDGOLD=OFF \
                        -DENABLE_DEBUGFISSION=OFF \
                        -DENABLE_APP_AUTONAME=OFF \
+                       -DKODI_DEPENDSBUILD=OFF \
                        $PKG_KODI_USE_LTO \
                        $KODI_ARCH \
                        $KODI_OPENGL \
@@ -258,6 +259,7 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$TOOLCHAIN \
 
 pre_configure_target() {
   export LIBS="$LIBS -lncurses"
+  export CXXFLAGS="$CXXFLAGS -latomic"
 }
 
 post_makeinstall_target() {

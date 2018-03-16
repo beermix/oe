@@ -3,7 +3,7 @@ PKG_VERSION="0.18"
 PKG_URL="http://isl.gforge.inria.fr/isl-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="libtool:host intltool:host gmp:host"
 PKG_SECTION="devel"
-PKG_TOOLCHAIN="autotools"
+PKG_TOOLCHAIN="configure"
 
 pre_configure_host() {
   unset CPPFLAGS

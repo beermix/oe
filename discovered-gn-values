@@ -1,5 +1,0 @@
-ERROR Not a build directory.
-This command requires an existing build directory. I interpreted your input
-"out/argtest" as:
-  /home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/chromium-64.0.3282.186/out/argtest/
-which doesn't seem to contain a previously-generated build.

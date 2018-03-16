@@ -32,7 +32,7 @@ PKG_BUILD_FLAGS="+pic +pic:host"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_z_zlibVersion=yes --enable-static --enable-hardware-optimizations --enable-intel-sse"
 
-PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
+PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared --enable-intel-sse"
 
 pre_configure_host() {
   export CPPFLAGS="$CPPFLAGS -I$TOOLCHAIN/include"
