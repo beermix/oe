@@ -5,7 +5,3 @@ PKG_URL="http://xorg.freedesktop.org/releases/individual/lib/libXpm-$PKG_VERSION
 PKG_DEPENDS_TARGET="toolchain util-macros randrproto libX11 libXrender libXext"
 PKG_SECTION="x11/lib"
 
-
-
-
-

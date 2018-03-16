@@ -6,6 +6,4 @@ PKG_SECTION="x11/lib"
 PKG_SHORTDESC="libXau: X authorization file management libary"
 PKG_LONGDESC="X authorization file management libary"
 
-
-
 PKG_CONFIGURE_OPTS_TARGET="--enable-malloc0returnsnull"

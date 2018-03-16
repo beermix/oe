@@ -28,7 +28,7 @@ PKG_PRIORITY="optional"
 PKG_SECTION="x11/driver"
 PKG_SHORTDESC="This is an X driver based on libinput."
 PKG_LONGDESC="This is an X driver based on libinput."
-
+PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--with-xorg-module-dir=$XORG_PATH_MODULES"
 
