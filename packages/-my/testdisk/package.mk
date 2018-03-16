@@ -1,7 +1,7 @@
 PKG_NAME="testdisk"
-PKG_VERSION="9897978"
+PKG_VERSION="c0e81e1"
 PKG_SITE="https://git.cgsecurity.org/cgit/testdisk/log/"
-PKG_URL="https://dl.dropboxusercontent.com/s/w40ynmkbc645tgk/testdisk-9897978.tar.xz"
+PKG_URL="https://git.cgsecurity.org/testdisk.git"
 PKG_DEPENDS_TARGET="toolchain readline ncurses"
 PKG_TOOLCHAIN="autotools"
 

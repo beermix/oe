@@ -254,7 +254,7 @@ fi
 
 # create squashfs file, default to gzip if no compression configured
 echo "rm -rf \"$TARGET_IMG/$IMAGE_NAME.system\"" >> $FAKEROOT_SCRIPT
-echo "$TOOLCHAIN/bin/mksquashfs \"$BUILD/image/system\" \"$TARGET_IMG/$IMAGE_NAME.system\" -noappend -comp $SQUASHFS_COMPRESSION $SQUASHFS_COMPRESSION_LEVEL" >> $FAKEROOT_SCRIPT
+echo "$TOOLCHAIN/bin/mksquashfs \"$BUILD/image/system\" \"$TARGET_IMG/$IMAGE_NAME.system\" -noappend -comp ${SQUASHFS_COMPRESSION:-gzip}" >> $FAKEROOT_SCRIPT
 
 # run fakeroot
 $TOOLCHAIN/bin/fakeroot -- $FAKEROOT_SCRIPT
