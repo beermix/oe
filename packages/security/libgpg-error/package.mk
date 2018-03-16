@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="libgpg-error"
-PKG_VERSION="1.27"
-PKG_SHA256="4f93aac6fecb7da2b92871bb9ee33032be6a87b174f54abf8ddf0911a22d29d2"
+PKG_VERSION="1.28"
+PKG_SHA256="3edb957744905412f30de3e25da18682cbe509541e18cd3b8f9df695a075da49"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://www.gnupg.org"

@@ -17,14 +17,15 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="7.3.0"
-PKG_SHA256="832ca6ae04636adbb430e865a1451adf6979ab44ca1c8374f61fba65645ce15c"
+PKG_VERSION="7.3.1-20180312"
+PKG_SHA256="c52618f656f2102b3544419e7d0a8a4f4e6ff052783865202be73edf1a40e28b"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="ftp://gcc.gnu.org/pub/gcc/snapshots/LATEST-7"
 #PKG_URL="https://github.com/gcc-mirror/gcc/archive/$PKG_VERSION.tar.gz"
 #PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/$PKG_VERSION/gcc-$PKG_VERSION.tar.xz"
-PKG_URL="ftp://gcc.gnu.org/pub/gcc/releases/gcc-$PKG_VERSION/gcc-$PKG_VERSION.tar.xz"
+PKG_URL="https://sources.archlinux.org/other/gcc/gcc-$PKG_VERSION.tar.xz"
+#PKG_URL="ftp://gcc.gnu.org/pub/gcc/releases/gcc-$PKG_VERSION/gcc-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host"
 PKG_DEPENDS_TARGET="gcc:host"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host glibc"
@@ -38,22 +39,23 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-mpfr=$TOOLCHAIN \
                            --with-mpc=$TOOLCHAIN \
                            --with-isl=$TOOLCHAIN \
-                           --with-gnu-as \
-                           --with-gnu-ld \
                            --enable-plugin \
                            --enable-lto \
-                           --disable-gold \
-                           --enable-ld=default \
                            --disable-multilib \
                            --disable-nls \
                            --enable-checking=release \
-                           --with-default-libstdcxx-abi=gcc4-compatible \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
                            --disable-libssp \
                            --disable-libmpx \
                            --disable-libsanitizer \
+                           --disable-libunwind-exceptions \
+                           --enable-gnu-unique-object \
+                           --enable-linker-build-id \
+                           --enable-install-libiberty \
+                           --with-linker-hash-style=gnu \
+                           --enable-gnu-indirect-function \
                            --with-tune=haswell"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \

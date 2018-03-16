@@ -132,8 +132,6 @@ readonly -A _system_libs=(
   [libjpeg]=libjpeg
   [icu]=icu
   [libxslt]=libxslt
-  #[re2]=re2
-  #[snappy]=snappy
   [yasm]=
   [zlib]=minizip
 )
@@ -160,9 +158,8 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
       -delete
   done
 
-  ./build/linux/unbundle/replace_gn_files.py  --system-libraries "${!_system_libs[@]}"
+  ./build/linux/unbundle/replace_gn_files.py --system-libraries "${!_system_libs[@]}"
   ./third_party/libaddressinput/chromium/tools/update-strings.py
-
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
 
   ninja -j${CONCURRENCY_MAKE_LEVEL} -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
