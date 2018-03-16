@@ -112,7 +112,7 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --enable-silent-rules \
                            --with-osmesa-lib-name=OSMesa \
                            --with-gallium-drivers=$GALLIUM_DRIVERS \
-                           --with-dri-drivers=$DRI_DRIVERS \
+                           --with-dri-drivers=$DRI_DRIVERS,swrast \
                            --with-vulkan-drivers=intel \
                            --with-sysroot=$SYSROOT_PREFIX"
 

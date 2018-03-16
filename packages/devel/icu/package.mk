@@ -17,12 +17,13 @@
 ################################################################################
 
 PKG_NAME="icu"
-PKG_VERSION="60.2"
-PKG_SHA256="f073ea8f35b926d70bb33e6577508aa642a8b316a803f11be20af384811db418"
+PKG_VERSION="61rc"
+PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="Custom"
 PKG_SITE="http://www.icu-project.org"
 PKG_URL="http://download.icu-project.org/files/${PKG_NAME}4c/${PKG_VERSION}/${PKG_NAME}4c-${PKG_VERSION//./_}-src.tgz"
+PKG_URL="https://fossies.org/linux/misc/icu4c-61rc-src.tar.xz"
 PKG_SOURCE_DIR="icu"
 PKG_DEPENDS_TARGET="toolchain libiconv icu:host"
 PKG_SECTION="textproc"
@@ -47,8 +48,7 @@ pre_configure_target() {
 
 PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
 			   
-PKG_CONFIGURE_OPTS_TARGET="--enable-release \
-			      --disable-shared \
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --enable-static \
 			      --with-cross-build=$PKG_BUILD/.$HOST_NAME"
 
