@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="re2"
-PKG_VERSION="2018-02-01"
+PKG_VERSION="2018-03-01"
 PKG_ARCH="any"
 PKG_LICENSE="zlib"
 PKG_SITE="https://github.com/google/re2/releases"

@@ -17,11 +17,11 @@
 ################################################################################
 
 PKG_NAME="mesa"
-PKG_VERSION="17.3.6"
+PKG_VERSION="18.0.0-rc4"
 PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
-PKG_SITE="http://www.mesa3d.org/"
+PKG_SITE="ftp://freedesktop.org/pub/mesa/"
 PKG_URL="ftp://freedesktop.org/pub/mesa/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain expat libdrm"
 PKG_SECTION="graphics"
@@ -109,7 +109,7 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --disable-gallium-tests \
                            --enable-shared-glapi \
                            $MESA_GALLIUM_LLVM \
-                           --disable-silent-rules \
+                           --enable-silent-rules \
                            --with-osmesa-lib-name=OSMesa \
                            --with-gallium-drivers=$GALLIUM_DRIVERS \
                            --with-dri-drivers=$DRI_DRIVERS \
