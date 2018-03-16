@@ -18,13 +18,14 @@
 ################################################################################
 
 PKG_NAME="open-vm-tools"
-PKG_VERSION="10.2.0-7253323"
-#PKG_SHA256="53c281119a6ef43022853f858f91aa6985baed2e668c85fdfa0eb39c9c2c24a9"
+PKG_VERSION="stable-10.2.0"
+PKG_SHA256=""
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/vmware/open-vm-tools"
-PKG_URL="https://github.com/vmware/open-vm-tools/releases/download/stable-10.2.0/open-vm-tools-10.2.0-7253323.tar.gz"
-PKG_DEPENDS_TARGET="toolchain procps-ng glib:host glib libdnet fuse"
+PKG_URL="https://github.com/vmware/open-vm-tools/releases/download/stable-10.2.0/open-vm-tools-$PKG_VERSION.tar.gz"
+PKG_URL="https://github.com/vmware/open-vm-tools/archive/${PKG_VERSION}.tar.gz"
+PKG_DEPENDS_TARGET="toolchain glib libdnet fuse"
 PKG_SECTION="virtualization"
 PKG_SHORTDESC="open-vm-tools: open source implementation of VMware Tools"
 PKG_LONGDESC="open-vm-tools: open source implementation of VMware Tools"
@@ -37,15 +38,17 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-docs \
                            --without-gtk2 \
                            --without-gtkmm \
                            --without-ssl \
-                           --without-x \
+                           --with-x \
                            --without-xerces \
                            --without-icu \
-                           --with-procps \
+                           --without-procps \
                            --without-kernel-modules \
                            --with-udev-rules-dir=/usr/lib/udev/rules.d/ \
                            --with-sysroot=$SYSROOT_PREFIX"
 
 post_unpack() {
+  mv $PKG_BUILD/$PKG_NAME/* $PKG_BUILD/
+
   sed -i -e 's|.*common-agent/etc/config/Makefile.*||' $PKG_BUILD/configure.ac
   mkdir -p $PKG_BUILD/common-agent/etc/config
 }

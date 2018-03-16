@@ -1,5 +1,5 @@
-GCC_OPTIM="-O2 -pipe"
-LD_OPTIM="-Wl,-O1,--sort-common,--as-needed" 
+GCC_OPTIM="-O2 -pipe -fno-semantic-interposition -ftree-vectorize -ftree-loop-vectorize -Wl,-sort-common"
+LD_OPTIM="-Wl,-O1,--as-needed" 
 
 if [ "${BUILD_WITH_DEBUG}" = "yes" ]; then
   TARGET_CFLAGS="$TARGET_CFLAGS -ggdb"

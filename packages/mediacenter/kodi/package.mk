@@ -231,8 +231,6 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$TOOLCHAIN \
                        -DENABLE_LIRC=ON \
                        -DENABLE_EVENTCLIENTS=OFF \
                        -DENABLE_LDGOLD=OFF \
-                       -DENABLE_DEBUGFISSION=OFF \
-                       -DENABLE_APP_AUTONAME=OFF \
                        -DKODI_DEPENDSBUILD=OFF \
                        $KODI_ARCH \
                        $KODI_OPENGL \

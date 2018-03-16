@@ -29,7 +29,7 @@ PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl speex"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
 PKG_LONGDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
-PKG_BUILD_FLAGS="-gold -lto"
+PKG_BUILD_FLAGS="-gold -lto +pic"
 
 # Dependencies
 get_graphicdrivers
@@ -122,7 +122,6 @@ configure_target() {
               --enable-logging \
               --disable-doc \
               $FFMPEG_DEBUG \
-              --enable-pic \
               --pkg-config="$TOOLCHAIN/bin/pkg-config" \
               --enable-optimizations \
               --disable-extra-warnings \
@@ -180,7 +179,6 @@ configure_target() {
               --enable-bzlib \
               --disable-frei0r \
               --disable-libopencore-amrnb \
-              --disable-libopencore-amrwb \
               --disable-libopencv \
               --disable-libdc1394 \
               --disable-libfaac \
