@@ -44,7 +44,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-__thread \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
-                           --enable-kernel=3.10 \
+                           --enable-kernel=4.4 \
                            --without-cvs \
                            --without-gd \
                            --without-selinux \

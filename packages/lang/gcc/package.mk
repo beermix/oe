@@ -64,7 +64,6 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-__cxa_atexit \
                               --disable-shared \
                               --disable-libitm \
-                              --disable-libada \
                               --disable-libatomic \
                               --disable-libgomp \
                               --disable-libquadmath \
