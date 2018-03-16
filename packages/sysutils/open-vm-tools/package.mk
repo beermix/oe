@@ -38,7 +38,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-docs \
                            --without-gtk2 \
                            --without-gtkmm \
                            --without-ssl \
-                           --with-x \
+                           --without-x \
                            --without-xerces \
                            --without-icu \
                            --without-procps \
