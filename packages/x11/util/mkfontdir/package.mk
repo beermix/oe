@@ -25,6 +25,3 @@ PKG_URL="https://xorg.freedesktop.org/archive/individual/app/$PKG_NAME-$PKG_VERS
 PKG_DEPENDS_HOST="mkfontscale:host"
 PKG_SECTION="x11/util"
 PKG_SHORTDESC="mkfontdir creates the fonts.dir files needed by the legacy X server core font system."
-
-
-

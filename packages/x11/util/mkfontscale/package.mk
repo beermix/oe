@@ -25,6 +25,3 @@ PKG_URL="https://xorg.freedesktop.org/archive/individual/app/$PKG_NAME-$PKG_VERS
 PKG_DEPENDS_HOST="freetype:host libfontenc:host"
 PKG_SECTION="x11/util"
 PKG_SHORTDESC="mkfontscale creates an index of scalable font files for X."
-
-
-
