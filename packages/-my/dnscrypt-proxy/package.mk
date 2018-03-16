@@ -16,7 +16,6 @@ PKG_CONFIGURE_OPTS_TARGET="--datarootdir=/storage/.config/dnscrypt-proxy \
 			      --enable-static \
 			      --disable-shared \
 			      --disable-ssp \
-			      --with-gnu-ld \
 			      --with-systemd \
 			      --enable-plugins"
 			   

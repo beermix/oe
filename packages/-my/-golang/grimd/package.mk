@@ -4,9 +4,7 @@ PKG_GIT_URL="https://github.com/looterz/grimd"
 PKG_DEPENDS_TARGET="toolchain go:host"
 PKG_KEEP_CHECKOUT="no"
 PKG_SECTION="tools"
-
-
-CONCURRENCY_MAKE_LEVEL=1
+PKG_TOOLCHAIN="manual"
 
 pre_make_target() {
   export GOOS=linux
@@ -24,7 +22,7 @@ pre_make_target() {
 make_target() {
   mkdir -p bin
   $GOLANG get -u -v github.com/looterz/grimd
-  $GOLANG build -v -o bin/$PKG_NAME -a -ldflags "$LDFLAGS" ./
+  $GOLANG build -v -o bin/$PKG_NAME -a -ldflags $LDFLAGS ./
   $STRIP bin/$PKG_NAME
 }
 

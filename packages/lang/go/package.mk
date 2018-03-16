@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="go"
-PKG_VERSION="1.10"
+PKG_VERSION="1.9.4"
 PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="BSD"
@@ -33,12 +33,13 @@ PKG_TOOLCHAIN="manual"
 configure_host() {
   export GOOS=linux
   export GOROOT_FINAL=$TOOLCHAIN/lib/golang
+  #export GOROOT_BOOTSTRAP=/usr/lib/golang
   export GOARCH=amd64
 }
 
 make_host() {
   cd $PKG_BUILD/src
-  ./make.bash --no-clean
+  bash make.bash --no-banner -v
 }
 
 pre_makeinstall_host() {

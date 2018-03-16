@@ -1,0 +1,26 @@
+From 257dd6656d53bd3c5a05f2961a0ad10cd76bb70c Mon Sep 17 00:00:00 2001
+From: Arjan van de Ven <arjan@linux.intel.com>
+Date: Sat, 7 Mar 2015 09:26:29 -0500
+Subject: [PATCH 1/6] stateless: fix /etc/services path
+
+fix GO for stateless
+---
+ src/net/parse_test.go | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/net/parse_test.go b/src/net/parse_test.go
+index 0f048fc..8d8dad8 100644
+--- a/src/net/parse_test.go
++++ b/src/net/parse_test.go
+@@ -17,7 +17,7 @@ func TestReadLine(t *testing.T) {
+ 	case "android", "plan9", "windows":
+ 		t.Skipf("not supported on %s", runtime.GOOS)
+ 	}
+-	filename := "/etc/services" // a nice big file
++	filename := "/usr/share/defaults/etc/services" // a nice big file
+ 
+ 	fd, err := os.Open(filename)
+ 	if err != nil {
+-- 
+2.6.4
+

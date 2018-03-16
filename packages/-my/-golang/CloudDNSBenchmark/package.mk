@@ -3,7 +3,7 @@ PKG_VERSION="fb526af"
 PKG_GIT_URL="https://github.com/NeuralSpaz/CloudDNSBenchmark"
 PKG_DEPENDS_TARGET="toolchain go:host"
 PKG_SECTION="tools"
-
+PKG_TOOLCHAIN="manual"
 
 pre_make_target() {
   export GOOS=linux
@@ -20,7 +20,7 @@ pre_make_target() {
  
 make_target() {
   mkdir -p bin
-  go get -u -v -t "github.com/miekg/dns"
+  $GOLANG  get "github.com/miekg/dns"
   $GOLANG build -v -o bin/$PKG_NAME -a -ldflags "$LDFLAGS" ./
   $STRIP bin/$PKG_NAME
 }

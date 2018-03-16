@@ -552,13 +552,13 @@ if [ "$TARGET" = "target" -o "$TARGET" = "init" ]; then
     find $INSTALL -type d -exec rmdir -p {} \; 2>/dev/null || :
 
     if [ ! "${BUILD_WITH_DEBUG}" = "yes" ]; then
-      $STRIP `find $INSTALL \
+      $STRIP --strip-all `find $INSTALL \
         -type f -name "*.so*" \
         2>/dev/null` 2>/dev/null || :
         if [ "$TARGET" = "init" ]; then
-          $STRIP `find $INSTALL -type f -name "*.so*" 2>/dev/null` 2>/dev/null || :
+          $STRIP --strip-all `find $INSTALL -type f -name "*.so*" 2>/dev/null` 2>/dev/null || :
         fi
-        $STRIP `find $INSTALL/bin $INSTALL/usr/bin $INSTALL/sbin $INSTALL/usr/sbin \
+        $STRIP --strip-all `find $INSTALL/bin $INSTALL/usr/bin $INSTALL/sbin $INSTALL/usr/sbin \
           -type f -executable 2>/dev/null` 2>/dev/null || :
     fi
   fi
