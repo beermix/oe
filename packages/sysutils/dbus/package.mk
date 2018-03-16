@@ -17,17 +17,17 @@
 ################################################################################
 
 PKG_NAME="dbus"
-#PKG_VERSION="1.11.22"
-PKG_VERSION="1.13.2"
-#PKG_SHA256="0bd375efd574d3d10d2f154dacad02987a64578531857e13a385936e1119a85b"
+PKG_VERSION="1.10.26"
+PKG_SHA256="358abe5db6a24128c3ffd1242b26774f6c9877429c15aa1df9294e917ae1ac01"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="https://dbus.freedesktop.org"
+PKG_SITE="https://dbus.freedesktop.org/releases/dbus/?C=M;O=D"
 PKG_URL="https://dbus.freedesktop.org/releases/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain expat systemd"
 PKG_SECTION="system"
 PKG_SHORTDESC="dbus: simple interprocess messaging system"
 PKG_LONGDESC="D-Bus is a message bus, used for sending messages between applications. This package contains the D-Bus daemon and related utilities and the dbus shared library."
+PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="export ac_cv_have_abstract_sockets=yes \
                            --with-sysroot=$SYSROOT_PREFIX \

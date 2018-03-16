@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libinput"
-PKG_VERSION="1.10.0"
+PKG_VERSION="1.10.3"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/libinput/"
