@@ -30,9 +30,9 @@ PKG_SHORTDESC="iptables: IP packet filter administration"
 PKG_LONGDESC="Iptables is used to set up, maintain, and inspect the tables of IP packet filter rules in the Linux kernel. There are several different tables which may be defined, and each table contains a number of built-in chains, and may contain user-defined chains."
 PKG_TOOLCHAIN="autotools"
 
-post_unpack() {
-  rm $PKG_BUILD/include/linux/types.h
-}
+#post_unpack() {
+#  rm $PKG_BUILD/include/linux/types.h
+#}
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-bpf-compiler \
 			      --enable-devel \
