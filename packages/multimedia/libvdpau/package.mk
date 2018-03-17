@@ -27,6 +27,7 @@ PKG_DEPENDS_TARGET="toolchain libX11 xorgproto libXext"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="libvdpau: a Video Decode and Presentation API for UNIX."
 PKG_LONGDESC="VDPAU is the Video Decode and Presentation API for UNIX. It provides an interface to video decode acceleration and presentation hardware present in modern GPUs."
+PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-dri2 \
                            --disable-documentation \
