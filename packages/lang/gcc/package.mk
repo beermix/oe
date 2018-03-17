@@ -57,9 +57,10 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libsanitizer \
                            --disable-libunwind-exceptions \
                            --enable-gnu-unique-object \
-                           --enable-linker-build-id \
                            --enable-gnu-indirect-function \
                            --with-system-zlib=$TOOLCHAIN \
+                           --enable-default-pie \
+                           --enable-default-ssp \
                            --with-tune=haswell"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \

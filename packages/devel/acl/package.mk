@@ -5,5 +5,6 @@ PKG_DEPENDS_TARGET="toolchain attr"
 PKG_DEPENDS_HOST="toolchain attr:host"
 PKG_SECTION="tools"
 PKG_TOOLCHAIN="autotools"
+PKG_BUILD_FLAGS="+pic"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared --with-pic"
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static"

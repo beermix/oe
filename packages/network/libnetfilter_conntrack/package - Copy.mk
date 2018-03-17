@@ -5,6 +5,7 @@ PKG_URL="ftp://ftp.netfilter.org/pub/libnetfilter_conntrack/snapshot/libnetfilte
 PKG_DEPENDS_TARGET="toolchain libnfnetlink libnl" 
 PKG_SECTION="my"
 PKG_TOOLCHAIN="autotools"
+PKG_BUILD_FLAGS="+pic"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static --with-pic"
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static"
 

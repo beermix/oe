@@ -25,6 +25,7 @@ PKG_SECTION="depends"
 PKG_SHORTDESC="A cross-platform GUI and tools library for GTK, MS Windows, and MacOS."
 PKG_LONGDESC="A cross-platform GUI and tools library for GTK, MS Windows, and MacOS."
 PKG_TOOLCHAIN="configure"
+PKG_BUILD_FLAGS="+pic"
 
 PKG_CONFIGURE_OPTS_TARGET="--with-gtk=2 \
 			      --with-opengl \
@@ -35,8 +36,7 @@ PKG_CONFIGURE_OPTS_TARGET="--with-gtk=2 \
 			      --with-libjpeg \
 			      --with-libtiff \
 			      --disable-precomp-headers \
-			      --disable-shared \
-			      --with-pic"
+			      --disable-shared"
 
 post_makeinstall_target() {
   ln -sf wx-config $TOOLCHAIN/bin/wx-config
