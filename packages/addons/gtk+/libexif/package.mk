@@ -27,3 +27,5 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="lib"
 PKG_SHORTDESC="A library to parse an EXIF file and read the data from those tags"
 PKG_LONGDESC="A library to parse an EXIF file and read the data from those tags"
+
+PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --with-pic"
