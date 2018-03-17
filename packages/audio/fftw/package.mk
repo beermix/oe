@@ -7,9 +7,9 @@ PKG_SECTION="service/system"
 PKG_TOOLCHAIN="cmake-make"
 
 pre_configure_target() {
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
+#  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
   export CFLAGS="$CFLAGS -fopenmp -fPIC"
-  export CFLAGS="$CFLAGS -fomit-frame-pointer -malign-double -fstrict-aliasing -ffast-math -fopenmp -fPIC"
+#  export CFLAGS="$CFLAGS -fomit-frame-pointer -malign-double -fstrict-aliasing -ffast-math -fopenmp -fPIC"
 }
 
 PKG_CMAKE_OPTS_TARGET="-DBUILD_SHARED_LIBS=0 -DBUILD_TESTS=0"
