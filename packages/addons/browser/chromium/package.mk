@@ -73,8 +73,8 @@ make_target() {
  
   export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always"
   
-  export LDFLAGS="$LDFLAGS -ludev"
-  export LD=$CXX
+#  export LDFLAGS="$LDFLAGS -ludev"
+#  export LD=$CXX
   
   export CCACHE_SLOPPINESS=time_macros
 
@@ -126,38 +126,6 @@ make_target() {
     "google_default_client_secret=\"${_google_default_client_secret}\""
   )
 
-readonly -A _system_libs=(
-  [libdrm]=
-  [libjpeg]=libjpeg
-#  [icu]=icu
-#  [libxslt]=libxslt
-  [yasm]=
-  [zlib]=minizip
-)
-#readonly _unwanted_bundled_libs=(
-#  ${!_system_libs[@]}
-#  ${_system_libs[libjpeg]+libjpeg_turbo}
-#  freetype
-#  harfbuzz-ng
-#)
-#depends+=(${_system_libs[@]} freetype2 harfbuzz)
-
-  # Remove bundled libraries for which we will use the system copies; this
-  # *should* do what the remove_bundled_libraries.py script does, with the
-  # added benefit of not having to list all the remaining libraries
-#  local _lib
-#  for _lib in ${_unwanted_bundled_libs[@]}; do
-#    find -type f -path "*third_party/$_lib/*" \
-#      \! -path "*third_party/$_lib/chromium/*" \
-#      \! -path "*third_party/$_lib/google/*" \
-#      \! -path './base/third_party/icu/*' \
-#      \! -path './third_party/freetype/src/src/psnames/pstables.h' \
-#      \! -path './third_party/yasm/run_yasm.py' \
-#      \! -regex '.*\.\(gn\|gni\|isolate\)' \
-#      -delete
-#  done
-
-  ./build/linux/unbundle/replace_gn_files.py --system-libraries "${!_system_libs[@]}"
   ./third_party/libaddressinput/chromium/tools/update-strings.py
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
 
@@ -168,11 +136,11 @@ addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -P  $PKG_BUILD/out/Release/chrome $ADDON_BUILD/$PKG_ADDON_ID/bin/chromium.bin
   cp -P  $PKG_BUILD/out/Release/chrome_sandbox $ADDON_BUILD/$PKG_ADDON_ID/bin/chrome-sandbox
-  cp -P  $PKG_BUILD/out/Release/{*.pak,*.bin,*.dat,libwidevinecdmadapter.so,chromedriver} $ADDON_BUILD/$PKG_ADDON_ID/bin
+  cp -P  $PKG_BUILD/out/Release/{*.pak,*.dat,*.bin,libwidevinecdmadapter.so,chromedriver} $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -PR $PKG_BUILD/out/Release/locales $ADDON_BUILD/$PKG_ADDON_ID/bin/
   cp -PR $PKG_BUILD/out/Release/gen/content/content_resources.pak $ADDON_BUILD/$PKG_ADDON_ID/bin/
   
-  $STRIP $ADDON_BUILD/$PKG_ADDON_ID/bin/chromium.bin
+#  $STRIP $ADDON_BUILD/$PKG_ADDON_ID/bin/chromium.bin
 
   # config ,*.dat
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/config
@@ -182,7 +150,7 @@ addon() {
 
   # pango
   cp -PL $(get_build_dir pango)/.install_pkg/usr/lib/libpangocairo-1.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
-  cp -PL $(get_build_dir pango)/.install_pkg/usr/lib/libpangocairo-1.0.so $ADDON_BUILD/$PKG_ADDON_ID/lib
+#  cp -PL $(get_build_dir pango)/.install_pkg/usr/lib/libpangocairo-1.0.so $ADDON_BUILD/$PKG_ADDON_ID/lib
   cp -PL $(get_build_dir pango)/.install_pkg/usr/lib/libpango-1.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
   cp -PL $(get_build_dir pango)/.install_pkg/usr/lib/libpangoft2-1.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
@@ -195,8 +163,8 @@ addon() {
   cp -PL $(get_build_dir gtk+)/.install_pkg/usr/lib/libgtk-x11-2.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # harfbuzz
-  cp -PL $(get_build_dir harfbuzz)/.install_pkg/usr/lib/libharfbuzz.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
-  # cp -PL $(get_build_dir harfbuzz)/.install_pkg/usr/lib/libharfbuzz-icu.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_build_dir harfbuzz)/.install_pkg/usr/lib/libharfbuzz.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -PL $(get_build_dir harfbuzz)/.install_pkg/usr/lib/libharfbuzz-icu.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
   # cp -PL $(get_build_dir harfbuzz)/.install_pkg/usr/lib/libharfbuzz-gobject.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
   # cp -PL $(get_build_dir harfbuzz)/.install_pkg/usr/lib/libharfbuzz-subset.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
 
