@@ -59,8 +59,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-gnu-unique-object \
                            --enable-gnu-indirect-function \
                            --with-system-zlib=$TOOLCHAIN \
-                           --enable-default-pie \
-                           --enable-default-ssp \
                            --with-tune=haswell"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \

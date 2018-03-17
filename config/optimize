@@ -34,8 +34,8 @@ HOST_CFLAGS="$HOST_CFLAGS -Wno-format-security"
 HOST_CXXFLAGS="$HOST_CXXFLAGS -Wno-format-security" 
 
 # lto flags
-CFLAGS_OPTIM_LTO="-falign-functions=32 -flto=${CONCURRENCY_MAKE_LEVEL} -ffat-lto-objects -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
-CXXFLAGS_OPTIM_LTO="-falign-functions=32 -flto=${CONCURRENCY_MAKE_LEVEL} -ffat-lto-objects -fno-math-errno -fno-semantic-interposition -fno-trapping-math"
+CFLAGS_OPTIM_LTO="-flto=${CONCURRENCY_MAKE_LEVEL}"
+CXXFLAGS_OPTIM_LTO="-flto=${CONCURRENCY_MAKE_LEVEL}"
 LDFLAGS_OPTIM_LTO="-fuse-linker-plugin -flto=${CONCURRENCY_MAKE_LEVEL}"
 
 # gold flags
@@ -51,7 +51,7 @@ LDFLAGS_OPTIM_PIC="-fPIC"
 CFLAGS_OPTIM_HARDENING="-fstack-protector-strong -Wformat -Werror=format-security -fPIE"
 CXXFLAGS_OPTIM_HARDENING="-fstack-protector-strong -Wformat -Werror=format-security -fPIE"
 CPPFLAGS_OPTIM_HARDENING="-D_FORTIFY_SOURCE=2"
-# LDFLAGS_OPTIM_HARDENING="-Wl,-z,relro -Wl,-z,now"
+LDFLAGS_OPTIM_HARDENING="-Wl,-z,relro -Wl,-z,now"
 
 # add distro specific library dirs
 if [ -z "$HOST_LIBDIR" ]; then
