@@ -27,5 +27,6 @@ PKG_DEPENDS_TARGET="toolchain util-macros libXext libXi libX11"
 PKG_SECTION="x11/lib"
 PKG_SHORTDESC="libxtst: The Xtst Library"
 PKG_LONGDESC="The Xtst Library"
+PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--without-xmlto"

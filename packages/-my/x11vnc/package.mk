@@ -30,8 +30,8 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static \
       --without-ssl \
       --without-avahi \
       --with-jpeg \
-      --without-libz \
-      --without-zlib \
+      --with-libz \
+      --with-zlib \
       --without-gnutls \
       --without-client-tls"
 

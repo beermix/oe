@@ -27,6 +27,7 @@ PKG_DEPENDS_TARGET="toolchain util-macros"
 PKG_SECTION="x11/lib"
 PKG_SHORTDESC="xtrans: Abstract network code for X"
 PKG_LONGDESC="Abstract network code for X."
+PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--without-xmlto"
 
