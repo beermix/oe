@@ -30,12 +30,9 @@ PKG_LONGDESC="A simplified, portable interface to several low-level networking r
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_strlcat=no \
                            ac_cv_func_strlcpy=no \
-                           --enable-static \
-                           --disable-shared \
                            --without-python"
 
 pre_configure_target() {
-  CFLAGS="$CFLAGS -fPIC"
   sed "s|@prefix@|$SYSROOT_PREFIX/usr|g" -i $PKG_BUILD/dnet-config.in
 }
 

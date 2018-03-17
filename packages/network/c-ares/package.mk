@@ -4,7 +4,5 @@ PKG_URL="https://c-ares.haxx.se/download/c-ares-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain zlib openssl"
 PKG_SECTION="network"
 PKG_TOOLCHAIN="autotools"
-PKG_BUILD_FLAGS="+pic"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static"
 

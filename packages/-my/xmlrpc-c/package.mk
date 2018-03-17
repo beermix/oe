@@ -3,9 +3,7 @@ PKG_VERSION="1.16.44"
 PKG_SITE="http://xmlrpc-c.sourceforge.net"
 PKG_URL="http://sources.openelec.tv/mirror/xmlrpc-c/xmlrpc-c-1.16.44.tgz"
 PKG_DEPENDS_TARGET="toolchain openssl curl zlib libxml2 libsigc++"
-
-
-
+PKG_BUILD_FLAGS="+pic"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-libxml2-backend \
             --disable-nls \

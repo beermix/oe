@@ -16,14 +16,17 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="libfontenc"
-PKG_VERSION="1.1.3"
-PKG_SHA256="70588930e6fc9542ff38e0884778fbc6e6febf21adbab92fd8f524fe60aefd21"
+PKG_NAME="cunit"
+PKG_VERSION="2.1-3-dfsg"
+PKG_SHA256=""
 PKG_ARCH="any"
-PKG_LICENSE="OSS"
-PKG_SITE="http://www.X.org"
-PKG_URL="http://xorg.freedesktop.org/archive/individual/lib/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain util-macros zlib font-util"
-PKG_SECTION="x11/lib"
-PKG_SHORTDESC="libfontenc: X11 font encoding library"
-PKG_LONGDESC="Libfontenc is a library which helps font libraries portably determine and deal with different encodings of fonts."
+PKG_LICENSE="LGPL"
+PKG_SITE="http://www.mpfr.org/"
+PKG_URL="http://192.168.1.200:8080/%2Fcunit-2.1-3-dfsg.tar.xz"
+PKG_DEPENDS_HOST=""
+#PKG_SOURCE_DIR="Cunit-$PKG_VERSION"
+PKG_SECTION="devel"
+PKG_BUILD_FLAGS="+pic:host +pic"
+
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static"
+PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
