@@ -30,7 +30,7 @@ PKG_LONGDESC="The userspace interface library to kernel DRM services."
 
 get_graphicdrivers
 
-PKG_MESON_OPTS_TARGET="-Dlibkms=true \
+PKG_MESON_OPTS_TARGET="-Dlibkms=false \
 			  -Dintel=true \
 			  -Dradeon=false \
 			  -Damdgpu=false \
