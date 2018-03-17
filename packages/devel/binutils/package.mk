@@ -39,13 +39,9 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --disable-libada \
                          --disable-libssp \
                          --enable-version-specific-runtime-libs \
-                         --enable-shared \
-                         --enable-ld=default \
-                         --enable-gold \
                          --enable-plugins \
-                         --enable-relro \
-                         --disable-gdb \
-                         --with-system-zlib=$TOOLCHAIN \
+                         --enable-gold \
+                         --enable-ld=default \
                          --enable-lto \
                          --disable-nls"
 
@@ -64,9 +60,7 @@ PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
                          --disable-gold \
                          --disable-ld \
                          --disable-lto \
-                         --disable-nls \
-                         --disable-sim \
-                         --disable-gdb"
+                         --disable-nls"
 
 pre_configure_host() {
   unset CPPFLAGS

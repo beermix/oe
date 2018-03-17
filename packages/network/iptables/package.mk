@@ -29,8 +29,9 @@ PKG_SECTION="network"
 PKG_SHORTDESC="iptables: IP packet filter administration"
 PKG_LONGDESC="Iptables is used to set up, maintain, and inspect the tables of IP packet filter rules in the Linux kernel. There are several different tables which may be defined, and each table contains a number of built-in chains, and may contain user-defined chains."
 PKG_TOOLCHAIN="autotools"
+PKG_BUILD_FLAGS="+pic"
 
-PKG_CONFIGURE_OPTS_TARGET="--with-kernel=$(kernel_path)"
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared --disable-ipv6 --with-kernel=$(kernel_path)"
 
 post_makeinstall_target() {
   mkdir -p $INSTALL/usr/config/iptables/

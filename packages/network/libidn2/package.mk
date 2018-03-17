@@ -4,5 +4,6 @@ PKG_URL="https://ftp.gnu.org/gnu/libidn/libidn2-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="network"
 PKG_TOOLCHAIN="configure"
+PKG_BUILD_FLAGS="+pic"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-java --disable-shared --with-pic"
+PKG_CONFIGURE_OPTS_TARGET="--disable-java --disable-shared"

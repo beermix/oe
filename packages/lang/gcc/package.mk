@@ -39,11 +39,16 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-mpfr=$TOOLCHAIN \
                            --with-mpc=$TOOLCHAIN \
                            --with-isl=$TOOLCHAIN \
+                           --with-gnu-as \
+                           --with-gnu-ld \
                            --enable-plugin \
                            --enable-lto \
+                           --enable-gold \
+                           --enable-ld=default \
                            --disable-multilib \
                            --disable-nls \
                            --enable-checking=release \
+                           --with-default-libstdcxx-abi=gcc4-compatible \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
