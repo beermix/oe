@@ -1,8 +1,6 @@
 GCC_OPTIM="-O2 -pipe -fno-plt"
 LD_OPTIM="-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now" 
 
-# GCC_OPTIM="-O2 -pipe -fno-plt -Wp,-D_FORTIFY_SOURCE=2 --param=ssp-buffer-size=4 -fno-semantic-interposition -ftree-vectorize  -ftree-loop-vectorize"
-
 if [ "${BUILD_WITH_DEBUG}" = "yes" ]; then
   TARGET_CFLAGS="$TARGET_CFLAGS -ggdb"
   TARGET_CXXFLAGS="$TARGET_CXXFLAGS -ggdb"
