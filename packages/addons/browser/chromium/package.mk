@@ -65,9 +65,6 @@ make_target() {
   unset CXXFLAGS
   unset LDFLAGS
 
-#  export LDFLAGS="$LDFLAGS -ludev"
-#  export LD=$CXX
-  
   # https://chromium-review.googlesource.com/c/chromium/src/+/712575
   # _flags+=('exclude_unwind_tables=true')
   export CFLAGS="$CFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables"
@@ -75,6 +72,9 @@ make_target() {
   export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
  
   export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always"
+  
+  export LDFLAGS="$LDFLAGS -ludev"
+  export LD=$CXX
   
   export CCACHE_SLOPPINESS=time_macros
 
@@ -106,8 +106,6 @@ make_target() {
     'use_gconf=false'
     'use_gnome_keyring=false'
     'use_gold=false'
-    'use_system_freetype=true'
-    'use_system_harfbuzz=true'
     'use_gtk3=false'
     'use_kerberos=false'
     'use_pulseaudio=false'
@@ -131,33 +129,33 @@ make_target() {
 readonly -A _system_libs=(
   [libdrm]=
   [libjpeg]=libjpeg
-  [icu]=icu
-  [libxslt]=libxslt
+#  [icu]=icu
+#  [libxslt]=libxslt
   [yasm]=
   [zlib]=minizip
 )
-readonly _unwanted_bundled_libs=(
-  ${!_system_libs[@]}
-  ${_system_libs[libjpeg]+libjpeg_turbo}
-  freetype
-  harfbuzz-ng
-)
-depends+=(${_system_libs[@]} freetype2 harfbuzz)
+#readonly _unwanted_bundled_libs=(
+#  ${!_system_libs[@]}
+#  ${_system_libs[libjpeg]+libjpeg_turbo}
+#  freetype
+#  harfbuzz-ng
+#)
+#depends+=(${_system_libs[@]} freetype2 harfbuzz)
 
   # Remove bundled libraries for which we will use the system copies; this
   # *should* do what the remove_bundled_libraries.py script does, with the
   # added benefit of not having to list all the remaining libraries
-  local _lib
-  for _lib in ${_unwanted_bundled_libs[@]}; do
-    find -type f -path "*third_party/$_lib/*" \
-      \! -path "*third_party/$_lib/chromium/*" \
-      \! -path "*third_party/$_lib/google/*" \
-      \! -path './base/third_party/icu/*' \
-      \! -path './third_party/freetype/src/src/psnames/pstables.h' \
-      \! -path './third_party/yasm/run_yasm.py' \
-      \! -regex '.*\.\(gn\|gni\|isolate\)' \
-      -delete
-  done
+#  local _lib
+#  for _lib in ${_unwanted_bundled_libs[@]}; do
+#    find -type f -path "*third_party/$_lib/*" \
+#      \! -path "*third_party/$_lib/chromium/*" \
+#      \! -path "*third_party/$_lib/google/*" \
+#      \! -path './base/third_party/icu/*' \
+#      \! -path './third_party/freetype/src/src/psnames/pstables.h' \
+#      \! -path './third_party/yasm/run_yasm.py' \
+#      \! -regex '.*\.\(gn\|gni\|isolate\)' \
+#      -delete
+#  done
 
   ./build/linux/unbundle/replace_gn_files.py --system-libraries "${!_system_libs[@]}"
   ./third_party/libaddressinput/chromium/tools/update-strings.py
@@ -170,7 +168,7 @@ addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -P  $PKG_BUILD/out/Release/chrome $ADDON_BUILD/$PKG_ADDON_ID/bin/chromium.bin
   cp -P  $PKG_BUILD/out/Release/chrome_sandbox $ADDON_BUILD/$PKG_ADDON_ID/bin/chrome-sandbox
-  cp -P  $PKG_BUILD/out/Release/{*.pak,*.bin,libwidevinecdmadapter.so,chromedriver} $ADDON_BUILD/$PKG_ADDON_ID/bin
+  cp -P  $PKG_BUILD/out/Release/{*.pak,*.bin,*.dat,libwidevinecdmadapter.so,chromedriver} $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -PR $PKG_BUILD/out/Release/locales $ADDON_BUILD/$PKG_ADDON_ID/bin/
   cp -PR $PKG_BUILD/out/Release/gen/content/content_resources.pak $ADDON_BUILD/$PKG_ADDON_ID/bin/
   
