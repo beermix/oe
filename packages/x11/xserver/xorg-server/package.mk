@@ -48,7 +48,7 @@ else
 fi
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
-                           --disable-silent-rules \
+                           --enable-silent-rules \
                            --disable-strict-compilation \
                            --enable-largefile \
                            --enable-visibility \
@@ -139,8 +139,8 @@ pre_configure_target() {
   CFLAGS=`echo $CFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|"`
   LDFLAGS=`echo $LDFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|"`
   
-  CFLAGS=`echo $CFLAGS | sed -e "s| -fno-plt||"`
-  LDFLAGS=`echo $LDFLAGS | sed -e "s|,-z,now||"`
+  CFLAGS=`echo $CFLAGS | sed -e "s|-fno-plt||"`
+  LDFLAGS=`echo $LDFLAGS | sed -e "s|,-z,relro,-z,now||"`
 }
 
 post_makeinstall_target() {
