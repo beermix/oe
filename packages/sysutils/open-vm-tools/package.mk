@@ -18,7 +18,7 @@
 ################################################################################
 
 PKG_NAME="open-vm-tools"
-PKG_VERSION="stable-10.2.0"
+PKG_VERSION="8c0cc53"
 PKG_SHA256=""
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPL"
@@ -41,7 +41,6 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-docs \
                            --without-x \
                            --without-xerces \
                            --without-icu \
-                           --without-procps \
                            --without-kernel-modules \
                            --with-udev-rules-dir=/usr/lib/udev/rules.d/ \
                            --with-sysroot=$SYSROOT_PREFIX"
