@@ -19,7 +19,7 @@
 #  http://svnweb.mageia.org/packages/cauldron/chromium-browser-stable/current
 #  http://omahaproxy.appspot.com/
 #  https://www.chromestatus.com/
-################################################################################ libXtst libxslt
+################################################################################
 
 PKG_NAME="chromium"
 PKG_VERSION="64.0.3282.186"
@@ -31,7 +31,7 @@ PKG_SITE="http://www.chromium.org/Home"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_URL="https://gsdview.appspot.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="pciutils dbus x11 libXcomposite libXcursor alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk intel-vaapi-driver libva-vdpau-driver unclutter xdotool libdrm libjpeg-turbo freetype harfbuzz gtk+ chromium:host"
+PKG_DEPENDS_TARGET="pciutils dbus x11 libXcomposite libXcursor alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk intel-vaapi-driver libva-vdpau-driver unclutter xdotool libdrm libjpeg-turbo freetype harfbuzz gtk+ libXtst chromium:host"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -75,7 +75,7 @@ make_target() {
   
 #  export LDFLAGS="$LDFLAGS -ludev"
 #  export LD=$CXX
-  
+
   export CCACHE_SLOPPINESS=time_macros
 
   # Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
@@ -176,7 +176,7 @@ addon() {
   cp -PL $(get_build_dir gdk-pixbuf)/.install_pkg/usr/lib/gdk-pixbuf-2.0/2.10.0/loaders/* $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules
 
   # libexif
-  cp -PL $(get_build_dir libexif)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  # cp -PL $(get_build_dir libexif)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # libva-vdpau-driver
   cp -PL $(get_build_dir libva-vdpau-driver)/.install_pkg/usr/lib/dri/*.so $ADDON_BUILD/$PKG_ADDON_ID/lib

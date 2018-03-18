@@ -29,4 +29,4 @@ PKG_SHORTDESC="libxtst: The Xtst Library"
 PKG_LONGDESC="The Xtst Library"
 PKG_TOOLCHAIN="autotools"
 
-PKG_CONFIGURE_OPTS_TARGET="--without-xmlto"
+PKG_CONFIGURE_OPTS_TARGET="--without-xmlto --enable-static --disable-shared --with-pic"
