@@ -254,8 +254,7 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$TOOLCHAIN \
 
 pre_configure_target() {
   export LIBS="$LIBS -lncurses"
-  export CXXFLAGS="$CXXFLAGS -latomic"
-#  -DKODI_DEPENDSBUILD=OFF
+#  export CXXFLAGS="$CXXFLAGS -latomic"
 }
 
 post_makeinstall_target() {
