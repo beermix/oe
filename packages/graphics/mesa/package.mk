@@ -89,6 +89,7 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --enable-texture-float \
                            --enable-asm \
                            --disable-selinux \
+                           --disable-libunwind \
                            $MESA_PLATFORMS \
                            --enable-opengl \
                            $MESA_GLES \

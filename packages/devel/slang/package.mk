@@ -43,3 +43,8 @@ pre_configure_host() {
  cd $PKG_BUILD
  rm -rf .$HOST_NAME
 }
+
+makeinstall_target() {
+  make DESTDIR="$SYSROOT_PREFIX" -C src install-static
+  make DESTDIR="$SYSROOT_PREFIX" -C src pkg-config
+}
