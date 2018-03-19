@@ -1,5 +1,5 @@
 PKG_NAME="ncurses"
-PKG_VERSION="6.1"
+PKG_VERSION="6.0"
 PKG_SITE="http://invisible-mirror.net/archives/ncurses/current/?C=M;O=D"
 PKG_URL="http://invisible-mirror.net/archives/ncurses/ncurses-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain zlib"
@@ -8,9 +8,9 @@ PKG_SECTION="devel"
 PKG_SHORTDESC="ncurses: The ncurses (new curses) library"
 PKG_BUILD_FLAGS="-lto +pic"
 
-#pre_configure_target() {
-#  export CPPFLAGS="$CPPFLAGS -D_GNU_SOURCE -D_DEFAULT_SOURCE -D_FILE_OFFSET_BITS=64"
-#}
+pre_configure_target() {
+  export CPPFLAGS="$CPPFLAGS -D_GNU_SOURCE -D_DEFAULT_SOURCE"
+}
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-overwrite \
 			      --disable-termcap \
