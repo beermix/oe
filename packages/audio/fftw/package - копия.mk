@@ -10,15 +10,16 @@ pre_configure_target() {
   export CFLAGS="$CFLAGS -fomit-frame-pointer -malign-double -fstrict-aliasing -ffast-math -fopenmp -fPIC"
 }
 
-PKG_CMAKE_OPTS_TARGET="-DBUILD_SHARED_LIBS=0 \
-			  -DBUILD_TESTS=0 \
-			  -DENABLE_AVX=1 \
-			  -DENABLE_AVX2=0 \
-			  -DENABLE_FLOAT=1 \
-			  -DENABLE_OPENMP=1 \
-			  -DENABLE_SSE=1 \
-			  -DENABLE_SSE2=2 \
-			  -DENABLE_THREADS=1"
+PKG_CMAKE_OPTS_TARGET="-DBUILD_SHARED_LIBS=0 -DBUILD_TESTS=0"
+
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
+			      --enable-static \
+			      --with-gnu-ld \
+			      --enable-threads \
+			      --enable-openmp \
+			      --enable-silent-rules \
+			      --enable-sse2 \
+			      --enable-avx"
 
 post_makeinstall_target() {
   rm -rf $INSTALL
