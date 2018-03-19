@@ -27,9 +27,8 @@ PKG_DEPENDS_TARGET="toolchain util-macros libXext libX11 libXt"
 PKG_SECTION="x11/lib"
 PKG_SHORTDESC="libxmu: X11 miscellaneous utility library"
 PKG_LONGDESC="LibXmu provides a set of miscellaneous utility convenience functions for X libraries to use."
-PKG_TOOLCHAIN="autotools"
 
-PKG_CONFIGURE_OPTS_TARGET="--without-xmlto"
+PKG_CONFIGURE_OPTS_TARGET="--with-gnu-ld --without-xmlto"
 
 pre_configure_target() {
    CPPFLAGS="$CPPFLAGS -D_DEFAULT_SOURCE"

@@ -27,9 +27,8 @@ PKG_DEPENDS_TARGET="toolchain util-macros zlib"
 PKG_SECTION="x11/lib"
 PKG_SHORTDESC="libpciaccess: X.org libpciaccess library"
 PKG_LONGDESC="X.org libpciaccess library."
-PKG_TOOLCHAIN="autotools"
 
-#CFLAGS="$CFLAGS -D_LARGEFILE64_SOURCE"
+CFLAGS="$CFLAGS -D_LARGEFILE64_SOURCE"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_header_asm_mtrr_h=set \
                            --with-pciids-path=/usr/share \

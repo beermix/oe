@@ -27,6 +27,5 @@ PKG_DEPENDS_TARGET="toolchain util-macros libXext libXi libX11"
 PKG_SECTION="x11/lib"
 PKG_SHORTDESC="libxtst: The Xtst Library"
 PKG_LONGDESC="The Xtst Library"
-PKG_TOOLCHAIN="autotools"
 
-PKG_CONFIGURE_OPTS_TARGET="--without-xmlto --enable-static --disable-shared --with-pic"
+PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --with-gnu-ld --without-xmlto --with-pic"
