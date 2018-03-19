@@ -144,7 +144,8 @@ if [ "${BUILD_WITH_DEBUG}" = "yes" ]; then
   MESON_BUILD_TYPE="debug"
 else
   CMAKE_BUILD_TYPE=""
-  MESON_BUILD_TYPE="plain"
+# MESON_BUILD_TYPE="plain"
+  MESON_BUILD_TYPE="release"
 fi
 
 # configure TARGET build defaults

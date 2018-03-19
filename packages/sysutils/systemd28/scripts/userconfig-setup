@@ -1,6 +1,7 @@
+#!/bin/sh
 ################################################################################
 #      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2016 Team LibreELEC
+#      Copyright (C) 2017-present Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,4 +17,10 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-export SYSTEMD_COLORS=0
+# Remove those sample files that we manage
+for sample in $(find /storage/.config -name '*.sample' 2>/dev/null); do
+  [ -f /usr/config/${sample:16} ] && rm -f ${sample}
+done
+
+# Copy config files, but don't overwrite - this should replace our sample files
+false | cp -iRp /usr/config/* /storage/.config/ &>/dev/null

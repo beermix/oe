@@ -1,6 +1,7 @@
+#!/bin/sh
 ################################################################################
 #      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2016 Team LibreELEC
+#      Copyright (C) 2017-present Team LibreELEC
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,4 +17,22 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-export SYSTEMD_COLORS=0
+# Copy cache files, but don't overwrite
+false | cp -iRp /usr/cache/* /storage/.cache/ &>/dev/null
+
+# Merge default and custom shadow file details
+if [ -f /storage/.cache/shadow -a -f /usr/cache/shadow ]; then
+  # Get existing root details (possibly user defined)
+  userroot="$(grep "^root:" /storage/.cache/shadow)"
+
+  # Overwrite users shadow file with default details, replacing root with any existing value
+  # If current file is garbage (ie. missing root) then replace it
+  if [ -n "${userroot}" ]; then
+    sed -e "s ^root:.* ${userroot} " /usr/cache/shadow >/storage/.cache/shadow
+  else
+    cp -fp /usr/cache/shadow /storage/.cache/shadow
+  fi
+
+  # Make sure we have the correct permission
+  chmod 000 /storage/.cache/shadow
+fi
