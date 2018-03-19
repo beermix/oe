@@ -33,3 +33,5 @@ if [ "$DISPLAYSERVER" = "x11" ]; then
 else
   PKG_CONFIGURE_OPTS_TARGET="--disable-x11"
 fi
+
+PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --with-pic"
