@@ -1,5 +1,5 @@
 PKG_NAME="ncurses"
-PKG_VERSION="6.0"
+PKG_VERSION="6.1"
 PKG_SITE="http://invisible-mirror.net/archives/ncurses/current/?C=M;O=D"
 PKG_URL="http://invisible-mirror.net/archives/ncurses/ncurses-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain zlib"
