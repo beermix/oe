@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="libcdio"
-PKG_VERSION="1.1.0"
-PKG_SHA256="785c32494e4770c38bef09b1a545ef3acec8ccfbf2b799cb7e70dc380cbcf164"
+PKG_VERSION="2.0.0"
+PKG_SHA256="1b481b5da009bea31db875805665974e2fc568e2b2afa516f4036733657cf958"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://www.gnu.org/software/libcdio/"
