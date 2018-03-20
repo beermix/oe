@@ -1,0 +1,48 @@
+#!/bin/sh
+################################################################################
+#      This file is part of OpenELEC - http://www.openelec.tv
+#      Copyright (C) 2009-2017 Stephan Raue (stephan@openelec.tv)
+#
+#  OpenELEC is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  OpenELEC is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
+################################################################################
+
+SMB_USERCONF="/storage/.config/samba.conf"
+SMB_DEFCONF="/etc/samba/smb.conf"
+SMB_CONF="/run/samba/smb.conf"
+
+SMB_USERCONF_IS_VALID=no
+SMB_CONFIG_VERSION=4
+
+# If user config is based on legacy OpenELEC, or old version (or no version)
+# then don't use it, and log a warning.
+if [ -f $SMB_USERCONF ]; then
+  SMB_IS_LEGACY="$(awk 'NR <= 2 && /This file is part of OpenELEC/{ print }' $SMB_USERCONF)"
+  SMB_THIS_VER="$(awk '/^# samba.conf v[0-9\.]*/{ print substr($3,2); exit }' $SMB_USERCONF)"
+  if [ -n "${SMB_IS_LEGACY}" ]; then
+    echo "WARNING: Ignoring user config $SMB_USERCONF due to incompatibility [Old style OpenELEC]"
+  elif [ -z "${SMB_THIS_VER}" ]; then
+    echo "WARNING: Ignoring user config $SMB_USERCONF due to incompatibility [version is unknown or invalid]"
+  elif [ ${SMB_THIS_VER} !=  ${SMB_CONFIG_VERSION} ]; then
+    echo "WARNING: Ignoring user config $SMB_USERCONF due to incompatibility [version ${SMB_THIS_VER} is not the required version $SMB_CONFIG_VERSION]"
+  else
+    SMB_USERCONF_IS_VALID=yes
+  fi
+fi
+
+mkdir -p $(dirname $SMB_CONF)
+  if [ $SMB_USERCONF_IS_VALID = yes ]; then
+    cp $SMB_USERCONF $SMB_CONF
+  else
+    cp $SMB_DEFCONF $SMB_CONF
+  fi
