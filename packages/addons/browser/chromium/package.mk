@@ -133,7 +133,6 @@ declare -gA _system_libs=(
   [libdrm]=
   [libjpeg]=libjpeg
   #[libpng]=libpng            # https://crbug.com/752403#c10
-  #[libwebp]=libwebp
   #[libxml]=libxml2           # https://crbug.com/736026
   [libxslt]=libxslt
   [re2]=re2
@@ -150,12 +149,12 @@ depends+=(${_system_libs[@]})
   # Remove bundled libraries for which we will use the system copies; this
   # *should* do what the remove_bundled_libraries.py script does, with the
   # added benefit of not having to list all the remaining libraries
-  #       \! -path './base/third_party/icu/*' \
   local _lib
   for _lib in ${_unwanted_bundled_libs[@]}; do
     find -type f -path "*third_party/$_lib/*" \
       \! -path "*third_party/$_lib/chromium/*" \
       \! -path "*third_party/$_lib/google/*" \
+      \! -path './base/third_party/icu/*' \
       \! -path './third_party/pdfium/third_party/freetype/include/pstables.h' \
       \! -path './third_party/yasm/run_yasm.py' \
       \! -regex '.*\.\(gn\|gni\|isolate\)' \
