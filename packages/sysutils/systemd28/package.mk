@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="systemd"
-PKG_VERSION="bc33509"
+PKG_VERSION="238"
 PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/systemd/systemd"
-PKG_URL="https://github.com/systemd/systemd/archive/$PKG_VERSION.tar.gz"
+PKG_SITE="http://www.freedesktop.org/wiki/Software/systemd"
+PKG_URL="https://github.com/systemd/systemd/archive/v$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libcap kmod util-linux entropy"
 PKG_SECTION="system"
 PKG_SHORTDESC="systemd: a system and session manager"
@@ -104,8 +104,8 @@ PKG_MESON_OPTS_TARGET="--libdir=/usr/lib \
                        -Dumount-path=/usr/bin/umount"
 
 pre_configure_target() {
-#  export CFLAGS="$CFLAGS -fno-schedule-insns -fno-schedule-insns2"
-  export LC_ALL=en_US.UTF-8
+  # export CFLAGS="$CFLAGS -fno-schedule-insns -fno-schedule-insns2"
+  # export LC_ALL=en_US.UTF-8
 
   # meson needs a host compiler and it's detected through the environment. meh.
   export CC="$HOST_CC"
