@@ -4,3 +4,5 @@ PKG_URL="ftp://ftp.netfilter.org/pub/libnetfilter_conntrack/libnetfilter_conntra
 PKG_DEPENDS_TARGET="toolchain libnfnetlink libnl"
 PKG_SOURCE_DIR="libnetfilter_conntrack*"
 PKG_SECTION="network"
+
+PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --with-pic"
