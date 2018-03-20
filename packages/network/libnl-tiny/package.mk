@@ -25,9 +25,6 @@ PKG_SECTION="network"
 PKG_SHORTDESC="libnl-tiny: tiny replacement for libnl versions 1 and 2"
 PKG_LONGDESC="libnl-tiny is a tiny replacement for libnl versions 1 and 2 whichis a library for applications dealing with netlink socket. It provides an easy to use interface for raw netlink message but also netlink family specific APIs."
 
-
-
-
 LIBNLTINY_MAKE_OPTS="CC=$CC AR=$AR RANLIB=$RANLIB prefix=/usr SHAREDLIB="
 
 PKG_MAKE_OPTS_TARGET="$LIBNLTINY_MAKE_OPTS"

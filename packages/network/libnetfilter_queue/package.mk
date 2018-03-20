@@ -4,4 +4,4 @@ PKG_URL="http://ftp.netfilter.org/pub/libnetfilter_queue/libnetfilter_queue-$PKG
 PKG_DEPENDS_TARGET="toolchain libnfnetlink libnl"
 PKG_SECTION="network"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --with-pic"
+#PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --with-pic"

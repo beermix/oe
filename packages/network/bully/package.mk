@@ -6,8 +6,6 @@ PKG_GIT_URL="https://github.com/Taikson/bully"
 PKG_DEPENDS_TARGET="toolchain libpcap"
 PKG_SECTION="my"
 
-
-
 post_unpack() {
   cp -r $PKG_BUILD/src/* $PKG_BUILD/
 }

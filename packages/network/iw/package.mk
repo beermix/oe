@@ -5,12 +5,6 @@ PKG_URL="https://www.kernel.org/pub/software/network/$PKG_NAME/$PKG_NAME-$PKG_VE
 PKG_DEPENDS_TARGET="toolchain libnl"
 PKG_SECTION="tools"
 
-
-
-configure_target() {
-   strip_lto
-}
-
 make_target() {
   make CC="$CC" AR="$AR" XCFLAGS="$CFLAGS -ffunction-sections -fdata-sections" LDFLAGS="-lm -lpthread" -j1
 }

@@ -5,4 +5,4 @@ PKG_DEPENDS_TARGET="toolchain zlib openssl"
 PKG_SECTION="network"
 PKG_TOOLCHAIN="autotools"
 
-
+PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --with-pic"

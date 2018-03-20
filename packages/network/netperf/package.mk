@@ -22,8 +22,6 @@ PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="network"
 
-
-
 pre_configure_target() {
   export CFLAGS="$CFLAGS -std=gnu89"
 }

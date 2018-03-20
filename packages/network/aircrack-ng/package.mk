@@ -5,16 +5,22 @@ PKG_DEPENDS_TARGET="toolchain openssl libdnet libnl libpcap openssl pcre usbutil
 PKG_TOOLCHAIN="manual"
 
 pre_configure_target() {
-  strip_lto
-  strip_gold
+  cd $PKG_BUILD
+  rm -rf .$TARGET_NAME
 }
 
 #PKG_MAKE_OPTS_TARGET="prefix=/usr sqlite=true unstable=false ext_scripts=true pcre=true libnl=true"
 
 PKG_MAKE_OPTS_TARGET="prefix=/usr libnl=false sqlite=true unstable=false pcre=true ext_scripts=true"
 
-PKG_MAKEINSTALL_OPTS_TARGET="$PKG_MAKE_OPTS_TARGET"
+#PKG_MAKEINSTALL_OPTS_TARGET="$PKG_MAKE_OPTS_TARGET"
 
 make_target() {
+#  cd $PKG_BUILD
   make
+}
+
+make_install_target() {
+#  cd $PKG_BUILD
+  make install
 }
