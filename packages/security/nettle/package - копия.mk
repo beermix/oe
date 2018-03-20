@@ -9,4 +9,9 @@ PKG_SECTION="escalade/depends"
 PKG_SHORTDESC="Nettle is a cryptographic library that is designed to fit easily in more or less any context: In crypto toolkits for object-oriented languages (C++, Python, Pike, ...), in applications like LSH or GNUPG, or even in kernel space."
 PKG_TOOLCHAIN="autotools"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-static --enable-mini-gmp"
+PKG_CONFIGURE_OPTS_TARGET="--disable-openssl \
+			      --enable-x86-aesni \
+			      --disable-documentation \
+			      --disable-shared \
+			      --enable-static \
+			      --enable-mini-gmp"

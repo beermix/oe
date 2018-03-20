@@ -24,7 +24,7 @@ PKG_ARCH="any"
 PKG_LICENSE="Mozilla Public License"
 PKG_SITE="https://ftp.mozilla.org/pub/security/nss/releases/"
 PKG_URL="https://ftp.mozilla.org/pub/security/nss/releases/NSS_3_36_RTM/src/nss-3.36-with-nspr-4.19.tar.gz"
-PKG_DEPENDS_HOST="nspr:host zlib:host"
+PKG_DEPENDS_HOST="nspr:host zlib:host sqlite:host"
 PKG_DEPENDS_TARGET="toolchain nss:host nspr zlib sqlite"
 PKG_SECTION="security"
 PKG_SHORTDESC="The Network Security Services (NSS) package is a set of libraries designed to support cross-platform development of security-enabled client and server applications"
@@ -42,6 +42,7 @@ make_host() {
   make BUILD_OPT=1 USE_64=1 \
      PREFIX=$TOOLCHAIN \
      NSPR_INCLUDE_DIR=$TOOLCHAIN/include/nspr \
+     NSS_USE_SYSTEM_SQLITE=0 \
      USE_SYSTEM_ZLIB=1 ZLIB_LIBS="-lz -L$TOOLCHAIN/lib" \
      SKIP_SHLIBSIGN=1 \
      NSS_ENABLE_WERROR=0 \
@@ -73,7 +74,6 @@ make_target() {
   rm -rf $PKG_BUILD/dist
 
   make BUILD_OPT=1 $TARGET_USE_64 \
-     NSS_USE_SYSTEM_SQLITE=1 \
      NSPR_INCLUDE_DIR=$SYSROOT_PREFIX/usr/include/nspr \
      NSS_USE_SYSTEM_SQLITE=1 \
      USE_SYSTEM_ZLIB=1 ZLIB_LIBS=-lz \
