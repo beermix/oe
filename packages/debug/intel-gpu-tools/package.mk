@@ -6,8 +6,7 @@ PKG_DEPENDS_TARGET="toolchain systemd procps-ng glib mesa libdrm libpciaccess ca
 PKG_SECTION="tools"
 PKG_TOOLCHAIN="autotools"
 
-PKG_CONFIGURE_OPTS_TARGET="enable_gtk_doc=no \
-			      --disable-tests \
+PKG_CONFIGURE_OPTS_TARGET="--disable-tests \
 			      --disable-shared \
 			      --disable-git-hash \
 			      --disable-debug \
