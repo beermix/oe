@@ -27,9 +27,8 @@ PKG_SECTION="debug"
 PKG_SHORTDESC="library to determine the call-chain of a program"
 PKG_LONGDESC="library to determine the call-chain of a program"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static \
-			   --disable-shared"
+PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --with-pic --disable-documentation --enable-cxx-exceptions"
 
-makeinstall_target() {
-  make DESTDIR=$SYSROOT_PREFIX install
-}
+#makeinstall_target() {
+#  make DESTDIR=$SYSROOT_PREFIX install
+#}

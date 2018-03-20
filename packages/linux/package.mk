@@ -21,7 +21,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kernel.org"
 PKG_DEPENDS_HOST="ccache:host"
-PKG_DEPENDS_TARGET="toolchain cpio:host kmod:host pciutils xz:host wireless-regdb keyutils $KERNEL_EXTRA_DEPENDS_TARGET"
+PKG_DEPENDS_TARGET="toolchain cpio:host kmod:host pciutils xz:host wireless-regdb keyutils ncurses $KERNEL_EXTRA_DEPENDS_TARGET"
 PKG_DEPENDS_INIT="toolchain"
 PKG_NEED_UNPACK="$LINUX_DEPENDS"
 PKG_SECTION="linux"
@@ -52,7 +52,8 @@ case "$LINUX" in
     PKG_SHA256=""
     PKG_URL="https://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
     PKG_PATCH_DIRS="default"
-    PKG_BUILD_PERF="no"
+    PKG_BUILD_PERF="yes"
+    PKG_BUILD_POWER="yes"
     ;;
 esac
 
@@ -144,7 +145,7 @@ pre_make_target() {
     # copy some extra firmware to linux tree
     mkdir -p $PKG_BUILD/external-firmware
       #cp -a $(get_build_dir kernel-firmware)/{rtl_bt,i915,intel,e100,rtl_nic} $PKG_BUILD/external-firmware
-      cp -a $(get_build_dir kernel-firmware)/i915 $PKG_BUILD/external-firmware
+      cp -a $(get_build_dir kernel-firmware)/{i915,intel} $PKG_BUILD/external-firmware
 
     cp -a $(get_build_dir intel-ucode)/intel-ucode $PKG_BUILD/external-firmware
 
@@ -189,13 +190,35 @@ make_target() {
       NO_LIBAUDIT=1 \
       NO_LZMA=1 \
       NO_SDT=1 \
-      LDFLAGS="$LDFLAGS -ldw -ldwfl -lebl -lelf -ldl -lz" \
+      LDFLAGS="$LDFLAGS -lunwind -ldw -ldwfl -lebl -lelf -ldl -lz" \
       EXTRA_PERFLIBS="-lebl" \
       CROSS_COMPILE="$TARGET_PREFIX" \
       JOBS="$CONCURRENCY_MAKE_LEVEL" \
         make $PERF_BUILD_ARGS
       mkdir -p $INSTALL/usr/bin
         cp perf $INSTALL/usr/bin
+    )
+  fi
+  
+  if [ "$PKG_BUILD_POWER" = "yes" ] ; then
+    ( cd tools/power/cpupower
+    
+      make CROSS="$TARGET_PREFIX" \
+      CPUFREQ_BENCH=false \
+      NLS=false \
+      DEBUG=false \
+      LDFLAGS="$LDFLAGS -lpci -ldl -lz"
+
+      mkdir -p $INSTALL/usr/bin
+      cp cpupower $INSTALL/usr/bin
+        
+      cd ../../thermal/tmon
+      make CC="$CC" PKG_CONFIG_PATH="$TOOLCHAIN/bin/pkg-config" JOBS="$CONCURRENCY_MAKE_LEVEL"
+      cp tmon $INSTALL/usr/bin
+        
+#      cd ../../iio
+#      make CC="$CC" JOBS="$CONCURRENCY_MAKE_LEVEL"
+#      cp iio $INSTALL/usr/bin
     )
   fi
 

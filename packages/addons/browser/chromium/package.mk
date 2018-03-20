@@ -73,7 +73,7 @@ make_target() {
   export CFLAGS="$CFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables"
   export CXXFLAGS="$CXXFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables"
   export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
- 
+  # -Wno-in-bool-context
   export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always"
   
   export CCACHE_SLOPPINESS=time_macros
