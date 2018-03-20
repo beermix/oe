@@ -17,13 +17,12 @@
 ################################################################################
 
 PKG_NAME="icu"
-PKG_VERSION="61rc"
+PKG_VERSION="60.2"
 PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="Custom"
 PKG_SITE="http://www.icu-project.org"
 PKG_URL="http://download.icu-project.org/files/${PKG_NAME}4c/${PKG_VERSION}/${PKG_NAME}4c-${PKG_VERSION//./_}-src.tgz"
-PKG_URL="https://fossies.org/linux/misc/icu4c-61rc-src.tar.xz"
 PKG_SOURCE_DIR="icu"
 PKG_DEPENDS_TARGET="toolchain icu:host"
 PKG_SECTION="textproc"
@@ -31,20 +30,12 @@ PKG_SHORTDESC="International Components for Unicode library"
 PKG_LONGDESC="International Components for Unicode library"
 PKG_BUILD_FLAGS="+pic:host +pic"
 
-post_unpack() {
-  sed -i 's/xlocale/locale/' $PKG_BUILD/source/i18n/digitlst.cpp
-  cp -r $PKG_BUILD/source/* $PKG_BUILD/
-}
+#post_unpack() {
+#  sed -i 's/xlocale/locale/' $PKG_BUILD/source/i18n/digitlst.cpp
+#  cp -r $PKG_BUILD/source/* $PKG_BUILD/
+#}
 
-pre_configure_host() {
-  mkdir -p $PKG_BUILD/.$HOST_NAME
-  cp -a $PKG_BUILD/* $PKG_BUILD/.$HOST_NAME/
-}
-
-pre_configure_target() {
-  mkdir -p $PKG_BUILD/.$TARGET_NAME
-  cp -a $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME/
-}
+PKG_CONFIGURE_SCRIPT="source/configure"
 
 PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
 			   

@@ -1,0 +1,62 @@
+Description: Adjust Calendar buffer overrun fix
+ Adjust Calendar buffer overrun fix for compatibility with AIX compiler, and
+ with older versions of gcc. Also incorporate Jungshik's review comment.
+Origin: upstream, https://ssl.icu-project.org/trac/changeset/40723
+Author: Andy Heninger <andy.heninger@gmail.com>
+Last-Update: 2017-12-12
+
+---
+
+--- icu-60.2.orig/source/i18n/calendar.cpp
++++ icu-60.2/source/i18n/calendar.cpp
+@@ -706,10 +706,10 @@ fTime(0),
+ fLenient(TRUE),
+ fZone(NULL),
+ fRepeatedWallTime(UCAL_WALLTIME_LAST),
+-fSkippedWallTime(UCAL_WALLTIME_LAST),
+-validLocale(""),
+-actualLocale("")
++fSkippedWallTime(UCAL_WALLTIME_LAST)
+ {
++    validLocale[0] = 0;
++    actualLocale[0] = 0;
+     clear();
+     if (U_FAILURE(success)) {
+         return;
+@@ -734,10 +734,10 @@ fTime(0),
+ fLenient(TRUE),
+ fZone(NULL),
+ fRepeatedWallTime(UCAL_WALLTIME_LAST),
+-fSkippedWallTime(UCAL_WALLTIME_LAST),
+-validLocale(""),
+-actualLocale("")
++fSkippedWallTime(UCAL_WALLTIME_LAST)
+ {
++    validLocale[0] = 0;
++    actualLocale[0] = 0;
+     if (U_FAILURE(success)) {
+         return;
+     }
+@@ -768,10 +768,10 @@ fTime(0),
+ fLenient(TRUE),
+ fZone(NULL),
+ fRepeatedWallTime(UCAL_WALLTIME_LAST),
+-fSkippedWallTime(UCAL_WALLTIME_LAST),
+-validLocale(""),
+-actualLocale("")
++fSkippedWallTime(UCAL_WALLTIME_LAST)
+ {
++    validLocale[0] = 0;
++    actualLocale[0] = 0;
+     if (U_FAILURE(success)) {
+         return;
+     }
+@@ -830,6 +830,8 @@ Calendar::operator=(const Calendar &righ
+         fNextStamp               = right.fNextStamp;
+         uprv_strncpy(validLocale, right.validLocale, sizeof(validLocale));
+         uprv_strncpy(actualLocale, right.actualLocale, sizeof(actualLocale));
++        validLocale[sizeof(validLocale)-1] = 0;
++        actualLocale[sizeof(validLocale)-1] = 0;
+     }
+ 
+     return *this;
