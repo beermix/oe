@@ -1,7 +1,15 @@
-=== modified file 'intltool-update.in'
---- a/intltool-update.in	2014-05-14 02:15:53 +0000
-+++ b/intltool-update.in	2016-01-19 15:59:38 +0000
-@@ -1062,7 +1062,7 @@
+Description: Escape "{", to prevent complaints from perl 5.22 and 5.26
+Author: Roderich Schupp <roderich.schupp@gmail.com>
+Author: gregor herrmann <gregoa@debian.org>
+Bug-Debian: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=788705
+Bug-Debian: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=826471
+Bug-Upstream: https://bugs.launchpad.net/intltool/+bug/1490906
+
+Index: intltool-0.51.0/intltool-update.in
+===================================================================
+--- intltool-0.51.0.orig/intltool-update.in	2017-07-23 17:24:35.113169465 +0200
++++ intltool-0.51.0/intltool-update.in	2017-07-23 17:24:35.109169052 +0200
+@@ -1062,13 +1062,13 @@
  	}
      }
  
@@ -10,6 +18,13 @@
      {
  	my $rest = $3;
  	my $untouched = $1;
+ 	my $sub = "";
+         # Ignore recursive definitions of variables
+-        $sub = $varhash{$2} if defined $varhash{$2} and $varhash{$2} !~ /\${?$2}?/;
++        $sub = $varhash{$2} if defined $varhash{$2} and $varhash{$2} !~ /\$\{?$2}?/;
+ 
+ 	return SubstituteVariable ("$untouched$sub$rest");
+     }
 @@ -1190,10 +1190,10 @@
  	$name    =~ s/\(+$//g;
  	$version =~ s/\(+$//g;
@@ -42,4 +57,3 @@
      }
  
      # \s makes this not work, why?
-

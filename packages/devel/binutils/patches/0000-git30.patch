@@ -55243,3 +55243,23 @@ index 0000000000..30d6fa3f67
 +# Targets using the generic linker don't properly support comdat group sections
 +
 +There are no section groups in this file\.
+
+commit a8c85c8a1fe6663ed86c8deef64ced3cc9c0de9e
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Tue Mar 20 00:01:33 2018 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 4f5f353a54..074f647679 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20180319
++#define BFD_VERSION_DATE 20180320
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@

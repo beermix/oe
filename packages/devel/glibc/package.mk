@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="glibc"
-PKG_VERSION="d300041"
+PKG_VERSION="3b92252"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/bminor/glibc/tree/release/2.27/master"
@@ -128,7 +128,6 @@ pre_configure_target() {
 
   export CFLAGS="-O2 -m64 -march=westmere -g"
   unset LDFLAGS
-#  export LDFLAGS="-Wl,-z,max-page-size=0x1000 "
 
   export BUILD_CC=$HOST_CC
   export OBJDUMP_FOR_HOST=objdump
