@@ -17,10 +17,10 @@
 ################################################################################
 
 PKG_NAME="boost"
-PKG_VERSION="1_65_1"
+PKG_VERSION="1_66_0"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.boost.org/"
-PKG_URL="https://dl.bintray.com/boostorg/release/1.65.1/source/boost_$PKG_VERSION.tar.gz"
+PKG_URL="https://dl.bintray.com/boostorg/release/1.66.0/source/boost_$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="${PKG_NAME}_${PKG_VERSION}"
 PKG_DEPENDS_TARGET="toolchain boost:host Python2 zlib bzip2 xz"
 PKG_LONGDESC="boost: Peer-reviewed STL style libraries for C++"
@@ -67,10 +67,11 @@ makeinstall_target() {
                           --with-program_options \
                           --with-exception \
                           --with-python \
+                          --with-atomic \
                           --with-random \
                           --with-regex -sICU_PATH="$SYSROOT_PREFIX/usr" \
                           --with-serialization \
                           --with-system \
-                          --with-thread \
+                          --with-thread -j4 \
                           install
 }
