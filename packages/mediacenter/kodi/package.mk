@@ -229,7 +229,7 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$TOOLCHAIN \
                        -DENABLE_CCACHE=ON \
                        -DENABLE_LIRC=OFF \
                        -DENABLE_EVENTCLIENTS=OFF \
-                       -DENABLE_LDGOLD=OFF \
+                       -DENABLE_LDGOLD=ON \
                        $KODI_ARCH \
                        $KODI_OPENGL \
                        $KODI_OPENGLES \
@@ -253,7 +253,8 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$TOOLCHAIN \
                        $KODI_PLAYER"
 
 pre_configure_target() {
-  export LIBS="$LIBS -lncursesw -ltinfo"
+  export LIBS="$LIBS -lncurses"
+#  export LIBS="$LIBS -lncursesw -ltinfo"
 #  export CXXFLAGS="$CXXFLAGS -latomic"
 }
 

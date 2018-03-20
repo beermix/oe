@@ -1,19 +1,6 @@
 ################################################################################
-#      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
-#
-#  OpenELEC is free software: you can redistribute it and/or modify
-#  it under the terms of the GNU General Public License as published by
-#  the Free Software Foundation, either version 2 of the License, or
-#  (at your option) any later version.
-#
-#  OpenELEC is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU General Public License for more details.
-#
-#  You should have received a copy of the GNU General Public License
-#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
+#      This file is part of Alex@ELEC - http://www.alexelec.in.ua
+#      Copyright (C) 2011-present Alexandr Zuyev (alex@alexelec.in.ua)
 ################################################################################
 
 PKG_NAME="samba"
@@ -26,7 +13,7 @@ PKG_DEPENDS_TARGET="toolchain zlib libaio connman"
 PKG_SECTION="network"
 PKG_SHORTDESC="samba: The free SMB / CIFS fileserver and client"
 PKG_LONGDESC="Samba is a SMB server that runs on Unix and other operating systems. It allows these operating systems (currently Unix, Netware, OS/2 and AmigaDOS) to act as a file and print server for SMB and CIFS clients. There are many Lan-Manager compatible clients such as LanManager for DOS, Windows for Workgroups, Windows NT, Windows 95, Linux smbfs, OS/2, Pathworks and more."
-PKG_BUILD_FLAGS="+pic"
+#PKG_BUILD_FLAGS="+pic"
 
 if [ "$AVAHI_DAEMON" = yes ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET avahi"
@@ -107,7 +94,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file__proc_sys_kernel_core_pattern=yes \
                            --without-utmp \
                            --without-cluster-support \
                            --without-acl-support \
-                           --with-aio-support \
+                           --without-aio-support \
                            --with-sendfile-support \
                            --without-libtevent \
                            --without-wbclient \
@@ -120,6 +107,7 @@ pre_configure_target() {
     sh autogen.sh
   )
 
+  CFLAGS="$CFLAGS -fPIC -DPIC"
   LDFLAGS="$LDFLAGS -fwhole-program"
 #  CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
 #  CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-Os|"`
