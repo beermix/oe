@@ -17,10 +17,10 @@
 ################################################################################
 
 PKG_NAME="cryptography"
-PKG_VERSION="2.1.4"
-PKG_SHA256="adbb7ddb9623616ea2c0354b7ce0506eee529b7f2d0e3894e513de5b8dce4ef8"
+PKG_VERSION="2.2"
+PKG_SHA256="17b9b98968b958fc0c3e5676e895f9ecdb8c7dcad8a569640e6958bcb2b8a596"
 PKG_LICENSE="BSD"
-PKG_SITE="https://cryptography.io/"
+PKG_SITE="https://github.com/pyca/cryptography/releases"
 PKG_URL="https://github.com/pyca/$PKG_NAME/archive/$PKG_VERSION.tar.gz"
 PKG_PYTHON_DEPENDS_TARGET="asn1crypto cffi enum34 idna ipaddress six"
 PKG_LONGDESC="A package designed to expose cryptographic primitives and recipes to Python developers"

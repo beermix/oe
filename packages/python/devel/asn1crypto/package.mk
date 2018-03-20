@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="asn1crypto"
-PKG_VERSION="0.23.0"
-PKG_SHA256="884b5ba3d9b442c1729f67981d3ddeb85a1d7dbd35199000a0bc8d077548352d"
+PKG_VERSION="0.24.0"
+PKG_SHA256="d2a82bb3c29e1abcb376b59679510b58dd796c813f8983f2db9b45e9ab228190"
 PKG_LICENSE="MIT"
 PKG_SITE="https://github.com/wbond/asn1crypto"
 PKG_URL="https://github.com/wbond/$PKG_NAME/archive/$PKG_VERSION.tar.gz"

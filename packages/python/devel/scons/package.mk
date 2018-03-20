@@ -9,13 +9,6 @@ PKG_SECTION="python/devel"
 PKG_SHORTDESC="Extensible Python-based build utility"
 PKG_LONGDESC="Extensible Python-based build utility"
 
-
-
-
-make_host() {
-  :
-}
-
 makeinstall_host() {
   python setup.py install --prefix=$TOOLCHAIN
 }

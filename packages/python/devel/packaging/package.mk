@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="packaging"
-PKG_VERSION="16.8"
+PKG_VERSION="17.1"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="https://pypi.python.org/pypi/packaging"
-PKG_URL="https://pypi.python.org/packages/c6/70/bb32913de251017e266c5114d0a645f262fb10ebc9bf6de894966d124e35/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_URL="https://pypi.python.org/packages/77/32/439f47be99809c12ef2da8b60a2c47987786d2c6c9205549dd6ef95df8bd/packaging-17.1.tar.gz"
 PKG_DEPENDS_HOST="Python2:host six:host pyparsing:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="python/devel"
