@@ -109,6 +109,19 @@
  
    if (new_instance == current_instance) {
      // If we're navigating to the same site instance, we won't need to use any
+--- chromium-62.0.3192.0/third_party/WebKit/Source/platform/wtf/text/TextCodec.h.gcc7	2017-08-22 21:05:01.000000000 +0200
++++ chromium-62.0.3192.0/third_party/WebKit/Source/platform/wtf/text/TextCodec.h	2017-09-09 03:00:28.743370090 +0200
+@@ -69,8 +69,8 @@
+ };
+ 
+ static_assert(!kDoNotFlush, "DoNotFlush should be falsy");
+-static_assert(kFetchEOF, "FetchEOF should be truthy");
+-static_assert(kDataEOF, "DataEOF should be truthy");
++static_assert(kFetchEOF != 0, "FetchEOF should be truthy");
++static_assert(kDataEOF != 0, "DataEOF should be truthy");
+ 
+ class WTF_EXPORT TextCodec {
+   USING_FAST_MALLOC(TextCodec);
 --- chromium-62.0.3192.0/media/cast/receiver/video_decoder.cc.gcc7	2017-08-22 21:04:45.000000000 +0200
 +++ chromium-62.0.3192.0/media/cast/receiver/video_decoder.cc	2017-09-09 05:02:17.907818439 +0200
 @@ -133,7 +133,9 @@
