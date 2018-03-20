@@ -253,7 +253,7 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$TOOLCHAIN \
                        $KODI_PLAYER"
 
 pre_configure_target() {
-  export LIBS="$LIBS -lncurses"
+  export LIBS="$LIBS -lncursesw -ltinfo"
 #  export CXXFLAGS="$CXXFLAGS -latomic"
 }
 
