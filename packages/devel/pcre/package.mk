@@ -32,7 +32,7 @@ PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-static --enable-jit --enable-utf --enable-unicode-properties --enable-pcre16 --enable-pcre32"
 
-PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
+PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared --with-pic --enable-jit --enable-utf --enable-unicode-properties --enable-pcre16 --enable-pcre32"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
