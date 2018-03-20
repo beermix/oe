@@ -26,6 +26,7 @@ PKG_DEPENDS_TARGET="toolchain zlib libaio connman"
 PKG_SECTION="network"
 PKG_SHORTDESC="samba: The free SMB / CIFS fileserver and client"
 PKG_LONGDESC="Samba is a SMB server that runs on Unix and other operating systems. It allows these operating systems (currently Unix, Netware, OS/2 and AmigaDOS) to act as a file and print server for SMB and CIFS clients. There are many Lan-Manager compatible clients such as LanManager for DOS, Windows for Workgroups, Windows NT, Windows 95, Linux smbfs, OS/2, Pathworks and more."
+PKG_BUILD_FLAGS="+pic"
 
 if [ "$AVAHI_DAEMON" = yes ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET avahi"
@@ -38,7 +39,7 @@ PKG_CONFIGURE_SCRIPT="source3/configure"
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_file__proc_sys_kernel_core_pattern=yes \
                            libreplace_cv_HAVE_C99_VSNPRINTF=yes \
                            libreplace_cv_HAVE_GETADDRINFO=no \
-                           libreplace_cv_HAVE_IFACE_IFCONF=no \
+                           libreplace_cv_HAVE_IFACE_IFCONF=yes \
                            LINUX_LFS_SUPPORT=yes \
                            samba_cv_CC_NEGATIVE_ENUM_VALUES=yes \
                            samba_cv_HAVE_GETTIMEOFDAY_TZ=yes \
@@ -50,6 +51,11 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file__proc_sys_kernel_core_pattern=yes \
                            samba_cv_USE_SETRESUID=yes \
                            samba_cv_have_setreuid=yes \
                            samba_cv_have_setresuid=yes \
+                           ac_cv_lib_attr_getxattr=no \
+                           ac_cv_search_getxattr=no \
+                           ac_cv_header_libunwind_h=no \
+                           ac_cv_header_zlib_h=no \
+                           samba_cv_zlib_1_2_3=no \
                            --with-configdir=/etc/samba \
                            --with-privatedir=/var/run \
                            --with-codepagedir=/etc/samba \
@@ -114,7 +120,6 @@ pre_configure_target() {
     sh autogen.sh
   )
 
-  CFLAGS="$CFLAGS -fPIC -DPIC"
   LDFLAGS="$LDFLAGS -fwhole-program"
 #  CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
 #  CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-Os|"`
