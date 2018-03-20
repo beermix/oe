@@ -14,19 +14,3 @@
      case kColorId_TextOnProminentButtonColor:
        return GetTextColor(GetLabel(), SELECTED);
      case kColorId_ButtonPressedShade:
---- chromium-64.0.3282.71/ui/accessibility/platform/atk_util_auralinux_gtk2.cc.gtk2	2018-01-04 00:06:37.000000000 +0100
-+++ chromium-64.0.3282.71/ui/accessibility/platform/atk_util_auralinux_gtk2.cc	2018-01-08 00:23:41.178494360 +0100
-@@ -56,6 +56,8 @@
-   init_func();
- }
- 
-+namespace ui {
-+
- bool AtkUtilAuraLinux::PlatformShouldEnableAccessibility() {
-   std::unique_ptr<base::Environment> env(base::Environment::Create());
-   std::string gtk_modules;
-@@ -78,3 +80,4 @@
-       base::Bind(&GetAccessibilityModuleInitFunc),
-       base::Bind(&FinishAccessibilityInitOnMainThread));
- }
-+} // namespace ui
