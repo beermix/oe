@@ -1,5 +1,5 @@
 PKG_NAME="lnav"
-PKG_VERSION="7d7060a"
+PKG_VERSION="faf47ca"
 PKG_URL="https://github.com/tstack/lnav/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="toolchain sqlite"
 PKG_SECTION="tools"
