@@ -42,6 +42,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-docs \
                            --without-icu \
                            --without-procps \
                            --without-kernel-modules \
+                           --enable-silent-rules \
                            --with-udev-rules-dir=/usr/lib/udev/rules.d/ \
                            --with-sysroot=$SYSROOT_PREFIX"
 
@@ -52,9 +53,9 @@ post_unpack() {
   mkdir -p $PKG_BUILD/common-agent/etc/config
 }
 
-#pre_configure_target() {
-#  export LIBS="-ldnet"
-#}
+pre_configure_target() {
+  export LIBS="-ldnet"
+}
 
 post_makeinstall_target() {
   rm -rf $INSTALL/sbin
