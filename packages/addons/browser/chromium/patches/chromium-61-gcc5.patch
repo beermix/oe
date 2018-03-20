@@ -1,3 +1,16 @@
+diff --git a/third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.h b/third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.h
+index de63006a4b..8decfc01c0 100644
+--- a/third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.h
++++ b/third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.h
+@@ -63,7 +63,7 @@ class WTF_EXPORT ArrayBufferContents {
+           allocation_length_(length),
+           data_(data),
+           data_length_(length),
+-          kind_(AllocationKind::kNormal),
++          kind_(ArrayBufferContents::AllocationKind::kNormal),
+           deleter_(deleter) {}
+     DataHandle(void* allocation_base,
+                size_t allocation_length,
 --- chromium-61.0.3163.59/third_party/webrtc/modules/audio_processing/aec3/aec_state.cc.bak	2017-08-23 21:08:14.000000000 +0200
 +++ chromium-61.0.3163.59/third_party/webrtc/modules/audio_processing/aec3/aec_state.cc	2017-08-29 13:07:50.789475942 +0200
 @@ -10,7 +10,7 @@
