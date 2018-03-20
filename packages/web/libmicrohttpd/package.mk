@@ -26,7 +26,6 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="web"
 PKG_SHORTDESC="libmicrohttpd: a small webserver C library"
 PKG_LONGDESC="GNU libmicrohttpd is a small C library that is supposed to make it easy to run an HTTP server as part of another application."
-PKG_BUILD_FLAGS="+pic"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
                            --enable-static \
