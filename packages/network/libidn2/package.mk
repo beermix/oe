@@ -5,3 +5,5 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="network"
 PKG_TOOLCHAIN="configure"
 
+PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --with-pic"
+

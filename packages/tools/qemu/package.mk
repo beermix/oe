@@ -17,11 +17,11 @@
 ################################################################################
 
 PKG_NAME="qemu"
-PKG_VERSION="5590190"
+PKG_VERSION="2c8cfc0"
 PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="http://wiki.qemu.org"
+PKG_SITE="https://github.com/qemu/qemu"
 #PKG_URL="http://wiki.qemu-project.org/download/qemu-$PKG_VERSION.tar.xz"
 PKG_URL="https://github.com/qemu/qemu/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_HOST="toolchain Python2:host zlib:host pixman:host"

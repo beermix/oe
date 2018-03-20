@@ -24,7 +24,7 @@ PKG_ARCH="x86_64"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/vmware/open-vm-tools"
 PKG_URL="https://github.com/vmware/open-vm-tools/archive/${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_TARGET="toolchain glib glib libdnet fuse"
+PKG_DEPENDS_TARGET="toolchain glib libdnet fuse"
 PKG_SECTION="virtualization"
 PKG_SHORTDESC="open-vm-tools: open source implementation of VMware Tools"
 PKG_LONGDESC="open-vm-tools: open source implementation of VMware Tools"
@@ -52,9 +52,9 @@ post_unpack() {
   mkdir -p $PKG_BUILD/common-agent/etc/config
 }
 
-pre_configure_target() {
-  export LIBS="-ldnet"
-}
+#pre_configure_target() {
+#  export LIBS="-ldnet"
+#}
 
 post_makeinstall_target() {
   rm -rf $INSTALL/sbin
