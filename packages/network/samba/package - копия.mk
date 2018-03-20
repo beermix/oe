@@ -50,6 +50,11 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file__proc_sys_kernel_core_pattern=yes \
                            samba_cv_USE_SETRESUID=yes \
                            samba_cv_have_setreuid=yes \
                            samba_cv_have_setresuid=yes \
+                           ac_cv_lib_attr_getxattr=no \
+                           ac_cv_search_getxattr=no \
+                           ac_cv_header_libunwind_h=no \
+                           ac_cv_header_zlib_h=no \
+                           samba_cv_zlib_1_2_3=no \
                            --with-configdir=/etc/samba \
                            --with-privatedir=/var/run \
                            --with-codepagedir=/etc/samba \
