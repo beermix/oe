@@ -1,6 +1,9 @@
 PKG_NAME="libnetfilter_queue"
-PKG_VERSION="1.0.2"
-PKG_URL="http://ftp.netfilter.org/pub/libnetfilter_queue/libnetfilter_queue-$PKG_VERSION.tar.bz2"
+PKG_VERSION="20180319"
+PKG_URL="http://ftp.netfilter.org/pub/libnetfilter_queue/snapshot/libnetfilter_queue-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain libnfnetlink libnl"
 PKG_SECTION="my"
-PKG_IS_ADDON="no"
+PKG_TOOLCHAIN="network"
+PKG_TOOLCHAIN="autotools"
+
+#PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static"

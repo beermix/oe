@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.netfilter.org/"
 PKG_URL="http://www.netfilter.org/projects/iptables/files/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain linux libmnl libnftnl libnetfilter_queue libpcap"
+PKG_DEPENDS_TARGET="toolchain linux libmnl libnftnl libnetfilter_queue"
 #PKG_DEPENDS_TARGET="toolchain linux libmnl libnftnl libpcap libnetfilter_conntrack libnetfilter_queue"
 PKG_SECTION="network"
 PKG_SHORTDESC="iptables: IP packet filter administration"
@@ -34,11 +34,7 @@ PKG_TOOLCHAIN="autotools"
 #  rm $PKG_BUILD/include/linux/types.h
 #}
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-bpf-compiler \
-			      --enable-devel \
-			      --enable-shared \
-			      --disable-ipv6 \
-			      --with-kernel=$(kernel_path)"
+PKG_CONFIGURE_OPTS_TARGET="--disable-ipv6 --with-kernel=$(kernel_path)"
 
 post_makeinstall_target() {
   mkdir -p $INSTALL/usr/config/iptables/
