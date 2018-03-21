@@ -52,6 +52,8 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            ac_cv_file__dev_ptc=no \
                            ac_cv_have_long_long_format=yes \
                            --with-threads \
+                           --with-computed-gotos \
+                           --with-lto \
                            --enable-unicode=ucs4 \
                            --disable-ipv6 \
                            --disable-profiling \
@@ -90,6 +92,8 @@ makeinstall_host() {
 
 pre_configure_target() {
   export PYTHON_FOR_BUILD=$TOOLCHAIN/bin/python
+  export CFLAGS="$CFLAGS -O3 -ffunction-sections -fno-semantic-interposition -fopt-info-vec -flto"
+  export CXXFLAGS="$CXXFLAGS -O3 -ffunction-sections -fno-semantic-interposition -fopt-info-vec"
 }
 
 make_target() {

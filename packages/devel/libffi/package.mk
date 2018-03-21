@@ -29,10 +29,7 @@ PKG_SHORTDESC="Foreign Function Interface Library"
 PKG_LONGDESC="The libffi library provides a portable, high level programming interface to various calling conventions. This allows a programmer to call any function specified by a call interface description at run-time."
 PKG_TOOLCHAIN="autotools"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
-                           --enable-static --disable-shared \
-                           --enable-structs \
+PKG_CONFIGURE_OPTS_TARGET="--enable-structs \
                            --enable-raw-api \
-                           --with-pic \
                            --disable-purify-safety \
                            --with-gnu-ld"
