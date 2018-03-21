@@ -34,5 +34,4 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-malloc0returnsnull \
                            --without-xmlto \
                            --without-fop \
                            --without-xsltproc \
-                           --without-asciidoc \
-                           --with-gnu-ld"
+                           --without-asciidoc"

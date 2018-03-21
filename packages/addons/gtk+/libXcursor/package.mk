@@ -28,4 +28,3 @@ PKG_SHORTDESC="libXcursor: X Cursor Library"
 PKG_LONGDESC="X11 Cursor management library"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --with-pic"
-
