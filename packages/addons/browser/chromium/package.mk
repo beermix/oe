@@ -70,8 +70,8 @@ make_target() {
 
   # https://chromium-review.googlesource.com/c/chromium/src/+/712575
   # _flags+=('exclude_unwind_tables=true')
-  export CFLAGS="$CFLAGS1 -fno-unwind-tables -fno-asynchronous-unwind-tables"
-  export CXXFLAGS="$CXXFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables"
+  export CFLAGS="$CFLAGS1 -fno-unwind-tables -fno-asynchronous-unwind-tables -std=gnu11 -fpermissive"
+  export CXXFLAGS="$CXXFLAGS -fno-unwind-tables -fno-asynchronous-unwind-table -std=gnu11 -fpermissives"
   export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
   
   # -Wno-in-bool-context  -fpermissive  -std=c++11  -std=gnu1

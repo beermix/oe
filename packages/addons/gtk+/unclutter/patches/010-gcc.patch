@@ -12,7 +12,7 @@ index a45aff9..1834bf6
 -LD = $(CC)
 -PKG_CONFIG = pkg-config
 +CC = x86_64-libreelec-linux-gnu-gcc
-+LD = x86_64-libreelec-linux-gnu-gcc
++LD = x86_64-libreelec-linux-gnu-gcc -lXext
 +PKG_CONFIG = x86_64-pc-linux-gnu-pkg-config
  
  CPPFLAGS += -D'__VERSION="$(shell git describe --all --long --always)"' "-I$(IDIR)"
