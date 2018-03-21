@@ -31,12 +31,16 @@ PKG_LONGDESC="libxslt"
 PKG_CONFIGURE_OPTS_HOST="  ac_cv_header_ansidecl_h=no \
                            ac_cv_header_xlocale_h=no \
                            --without-python \
+                           --enable-static \
+                           --enable-shared \
                            --with-libxml-prefix=$TOOLCHAIN \
                            --without-crypto"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_header_ansidecl_h=no \
                            ac_cv_header_xlocale_h=no \
                            --without-python \
+                           --enable-static \
+                           --enable-shared \
                            --with-libxml-prefix=$SYSROOT_PREFIX/usr \
                            --with-crypto=$SYSROOT_PREFIX/usr"
 
