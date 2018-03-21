@@ -1,0 +1,12 @@
+diff -Naur make-4.2.1-orig/configure make-4.2.1/configure
+--- make-4.2.1-orig/configure	2018-03-21 07:30:35.816661296 +0300
++++ make-4.2.1/configure	2018-03-21 07:30:19.976917900 +0300
+@@ -2454,7 +2454,7 @@
+ # We have to enable "foreign" because ChangeLog is auto-generated
+ # We cannot enable -Werror because gettext 0.18.1 has invalid content
+ # When we update gettext to 0.18.3 or better we can add it again.
+-am__api_version='1.15'
++am__api_version='1.16'
+ 
+ # Find a good install program.  We prefer a C program (faster),
+ # so one script is as good as another.  But avoid the broken or

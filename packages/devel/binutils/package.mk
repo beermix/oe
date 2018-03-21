@@ -44,6 +44,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-secureplt \
                          --with-system-zlib=$TOOLCHAIN \
                          --enable-version-specific-runtime-libs \
+                         --enable-deterministic-archives \
                          --enable-lto \
                          --disable-nls"
 
