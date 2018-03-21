@@ -2,7 +2,7 @@ PKG_NAME="x11vnc"
 PKG_VERSION="0.9.15"
 PKG_SITE="http://www.karlrunge.com/x11vnc/"
 PKG_URL="http://x11vnc.sourceforge.net/dev/x11vnc-0.9.14-dev.tar.gz"
-PKG_URL="https://github.com/LibVNC/libvncserver/archive/${PKG_VERSION}.tar.gz"
+PKG_URL="https://github.com/LibVNC/x11vnc/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libX11 libXtst libXfixes libjpeg-turbo libvncserver"
 PKG_PRIORITY="optional"
 PKG_SECTION="xmedia/tools"
@@ -10,13 +10,18 @@ PKG_SHORTDESC="x11vnc allows one to view remotely and interact with real X displ
 PKG_LONGDESC="x11vnc allows one to view remotely and interact with real X displays"
 PKG_TOOLCHAIN="autotools"
 
+pre_configure_target() {
+#  export LIBS="$LIBS -pthread"
+  export LIBS="-lxcb -lXau -ljpeg -lz -ldl -lpthread"
+}
+
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \
 			      --with-x11vnc \
 			      --with-x \
-			      --without-xfixes \
+			      --with-xfixes \
 			      --without-xkeyboard \
 			      --without-xinerama \
-			      --without-xrandr \
+			      --with-xrandr \
 			      --without-xdamage \
 			      --without-xtrap \
 			      --without-xrecord \
@@ -29,9 +34,9 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static \
 			      --without-crypto \
 			      --without-ssl \
 			      --without-avahi \
-			      --without-jpeg \
+			      --with-jpeg \
 			      --without-libz \
-			      --without-zlib \
+			      --with-zlib \
 			      --without-gnutls \
 			      --without-client-tls"
 
