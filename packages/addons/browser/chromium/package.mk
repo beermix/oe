@@ -70,11 +70,11 @@ make_target() {
 
   # https://chromium-review.googlesource.com/c/chromium/src/+/712575
   # _flags+=('exclude_unwind_tables=true')
-  export CFLAGS="$CFLAGS -std=gnu11 -fno-unwind-tables -fno-asynchronous-unwind-tables -fpermissive"
-  export CXXFLAGS="$CXXFLAGS -std=c++11 -fno-unwind-tables -fno-asynchronous-unwind-tables -fpermissive"
+  export CFLAGS="$CFLAGS1 -fno-unwind-tables -fno-asynchronous-unwind-tables"
+  export CXXFLAGS="$CXXFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables"
   export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
   
-  # -Wno-in-bool-context
+  # -Wno-in-bool-context  -fpermissive  -std=c++11  -std=gnu1
   export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always"
   
   export CCACHE_SLOPPINESS=time_macros
@@ -140,7 +140,7 @@ declare -gA _system_libs=(
     [libdrm]=
     [libjpeg]=libjpeg
     #[libpng]=libpng            # https://crbug.com/752403#c10
-    #[libvpx]=libvpx
+    [libvpx]=libvpx
     #[libxml]=libxml2           # https://crbug.com/736026
     [libxslt]=libxslt
     [re2]=re2
