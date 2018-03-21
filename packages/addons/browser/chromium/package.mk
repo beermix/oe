@@ -30,7 +30,7 @@ PKG_LICENSE="Mixed"
 PKG_SITE="http://www.chromium.org/Home"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="pciutils dbus libXtst  libXcomposite libXcursor alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk intel-vaapi-driver libva-vdpau-driver unclutter xdotool libdrm libjpeg-turbo freetype harfbuzz gtk+ snappy re2 flac libevent:host chromium:host"
+PKG_DEPENDS_TARGET="pciutils dbus libXtst  libXcomposite libXcursor alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk intel-vaapi-driver libva-vdpau-driver unclutter xdotool libdrm libjpeg-turbo freetype harfbuzz gtk+ snappy re2 flac libvpx libevent:host chromium:host"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -70,8 +70,8 @@ make_target() {
 
   # https://chromium-review.googlesource.com/c/chromium/src/+/712575
   # _flags+=('exclude_unwind_tables=true')
-  export CFLAGS="$CFLAGS1 -fno-unwind-tables -fno-asynchronous-unwind-tables -std=gnu11 -fpermissive"
-  export CXXFLAGS="$CXXFLAGS -fno-unwind-tables -fno-asynchronous-unwind-table -std=gnu11 -fpermissives"
+  export CFLAGS="$CFLAGS1 -fno-unwind-tables -fno-asynchronous-unwind-tables -fpermissive"
+  export CXXFLAGS="$CXXFLAGS -fno-unwind-tables -fno-asynchronous-unwind-table -fpermissives"
   export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
   
   # -Wno-in-bool-context  -fpermissive  -std=c++11  -std=gnu1
