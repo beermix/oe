@@ -125,6 +125,8 @@ make_target() {
     "google_default_client_secret=\"${_google_default_client_secret}\""
   )
   
+
+  
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
