@@ -38,14 +38,10 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --disable-multilib \
                          --disable-libada \
                          --disable-libssp \
-                         --enable-threads \
-                         --enable-shared \
                          --enable-ld=default \
                          --enable-gold \
                          --enable-plugins \
-                         --enable-relro \
-                         --with-pic \
-                         --disable-gdb \
+                         --enable-secureplt \
                          --with-system-zlib=$TOOLCHAIN \
                          --enable-version-specific-runtime-libs \
                          --enable-lto \
