@@ -22,8 +22,8 @@
 ################################################################################
 
 PKG_NAME="chromium"
-PKG_VERSION="65.0.3325.162"
-PKG_SHA256="627e7bfd84795de1553fac305239130d25186acf2d3c77d39d824327cd116cce"
+PKG_VERSION="65.0.3325.181"
+PKG_SHA256="93666448c6b96ec83e6a35a64cff40db4eb92a154fe1db4e7dab4761d0e38687"
 PKG_REV="162"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
@@ -124,11 +124,8 @@ make_target() {
     "google_default_client_id=\"${_google_default_client_id}\""
     "google_default_client_secret=\"${_google_default_client_secret}\""
   )
-  
 
-  
   ./third_party/libaddressinput/chromium/tools/update-strings.py
-
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
 
   ninja -j${CONCURRENCY_MAKE_LEVEL} -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
