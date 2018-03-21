@@ -19,11 +19,11 @@
 PKG_NAME="atkmm"
 PKG_VERSION="2.25.3"
 PKG_SITE="http://www.X.org"
-PKG_URL="http://ftp.gnome.org/pub/GNOME/sources/atkmm/2.25/atkmm-2.25.3.tar.xz"
+PKG_URL="http://ftp.gnome.org/pub/GNOME/sources/atkmm/2.25/atkmm-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain util-macros atk glibmm"
 PKG_SECTION="x11/lib"
-PKG_SHORTDESC="xtrans: Abstract network code for X"
-PKG_LONGDESC="Abstract network code for X."
+PKG_SHORTDESC="C++ wrappers for ATK accessibility toolkit"
+PKG_LONGDESC="C++ wrappers for ATK accessibility toolkit"
 
 
 

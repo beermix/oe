@@ -5,4 +5,4 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="service/system"
 PKG_TOOLCHAIN="autotools"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared --with-gnu-ld"
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared --with-gnu-ld --with-pic"
