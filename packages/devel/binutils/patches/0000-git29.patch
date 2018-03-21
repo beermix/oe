@@ -61220,3 +61220,465 @@ Author: Nick Clifton <nickc@redhat.com>
 Date:   Thu Feb 22 14:39:19 2018 +0000
 
     Another merge
+
+commit c0eed033ffaf330226ab205d31c7b98403e59add
+Author: Sriraman Tallam <tmsriram@google.com>
+Date:   Wed Mar 7 12:15:49 2018 -0800
+
+    New option -z,keep-text-section prefix.
+    
+    This option does not merge certain text sections with prefixes
+    .text.hot, .text.unlikely, .text.startup and .text.exit.
+    
+            * layout.cc (Layout::default_section_order): Check for text section
+            prefixes.
+            (Layout::text_section_name_mapping): New static member.
+            (Layout::text_section_name_mapping_count): New static member.
+            (Layout::match_section_name): New static function.
+            (Layout::output_section_name): Check for text section prefixes.
+            * layout.h (Output_section_order::ORDER_TEXT_HOT): New enum value.
+            (Output_section_order::ORDER_TEXT_STARTUP): New enum value.
+            (Output_section_order::ORDER_TEXT_EXIT): New enum value.
+            (Output_section_order::ORDER_TEXT_UNLIKELY): New enum value.
+            (Layout::text_section_name_mapping): New static member.
+            (Layout::text_section_name_mapping_count): New static member.
+            (Layout::match_section_name): New static function.
+            * options.h (keep_text_section_prefix): New -z option.
+            * testsuite/Makefile.am (keep_text_section_prefix): New test.
+            * testsuite/Makefile.in: Regenerate.
+            * testsuite/keep_text_section_prefix.cc: New test source.
+            * testsuite/keep_text_section_prefix.sh: New test script.
+    
+    (cherry picked from commit 779bdadbea9a62e5a2203651703e15edd321b9d6)
+
+diff --git a/gold/ChangeLog b/gold/ChangeLog
+index 1403db5029..b48c27913a 100644
+--- a/gold/ChangeLog
++++ b/gold/ChangeLog
+@@ -1,3 +1,27 @@
++2018-03-20  Sriraman Tallam  <tmsriram@google.com>
++
++	Apply from master:
++	2018-03-07 Sriraman Tallam <tmsriram@google.com>
++
++	* layout.cc (Layout::default_section_order): Check for text section
++	prefixes.
++	(Layout::text_section_name_mapping): New static member.
++	(Layout::text_section_name_mapping_count): New static member.
++	(Layout::match_section_name): New static function.
++	(Layout::output_section_name): Check for text section prefixes.
++	* layout.h (Output_section_order::ORDER_TEXT_HOT): New enum value.
++	(Output_section_order::ORDER_TEXT_STARTUP): New enum value.
++	(Output_section_order::ORDER_TEXT_EXIT): New enum value.
++	(Output_section_order::ORDER_TEXT_UNLIKELY): New enum value.
++	(Layout::text_section_name_mapping): New static member.
++	(Layout::text_section_name_mapping_count): New static member.
++	(Layout::match_section_name): New static function.
++	* options.h (keep_text_section_prefix): New -z option.
++	* testsuite/Makefile.am (keep_text_section_prefix): New test.
++	* testsuite/Makefile.in: Regenerate.
++	* testsuite/keep_text_section_prefix.cc: New test source.
++	* testsuite/keep_text_section_prefix.sh: New test script.
++
+ 2018-01-12  Eric Christopher  <echristo@gmail.com>
+ 
+ 	Apply from master:
+diff --git a/gold/layout.cc b/gold/layout.cc
+index bb13d7136e..5cfa307d70 100644
+--- a/gold/layout.cc
++++ b/gold/layout.cc
+@@ -1864,6 +1864,19 @@ Layout::default_section_order(Output_section* os, bool is_relro_local)
+ 	    return ORDER_INIT;
+ 	  else if (strcmp(os->name(), ".fini") == 0)
+ 	    return ORDER_FINI;
++	  else if (parameters->options().keep_text_section_prefix())
++	    {
++	      // -z,keep-text-section-prefix introduces additional
++	      // output sections.
++	      if (strcmp(os->name(), ".text.hot") == 0)
++		return ORDER_TEXT_HOT;
++	      else if (strcmp(os->name(), ".text.startup") == 0)
++		return ORDER_TEXT_STARTUP;
++	      else if (strcmp(os->name(), ".text.exit") == 0)
++		return ORDER_TEXT_EXIT;
++	      else if (strcmp(os->name(), ".text.unlikely") == 0)
++		return ORDER_TEXT_UNLIKELY;
++	    }
+ 	}
+       return is_execinstr ? ORDER_TEXT : ORDER_READONLY;
+     }
+@@ -5092,6 +5105,20 @@ const Layout::Section_name_mapping Layout::section_name_mapping[] =
+   MAPPING_INIT(".ARM.exidx", ".ARM.exidx"),
+   MAPPING_INIT(".gnu.linkonce.armexidx.", ".ARM.exidx"),
+ };
++
++// Mapping for ".text" section prefixes with -z,keep-text-section-prefix.
++const Layout::Section_name_mapping Layout::text_section_name_mapping[] =
++{
++  MAPPING_INIT(".text.hot.", ".text.hot"),
++  MAPPING_INIT_EXACT(".text.hot", ".text.hot"),
++  MAPPING_INIT(".text.unlikely.", ".text.unlikely"),
++  MAPPING_INIT_EXACT(".text.unlikely", ".text.unlikely"),
++  MAPPING_INIT(".text.startup.", ".text.startup"),
++  MAPPING_INIT_EXACT(".text.startup", ".text.startup"),
++  MAPPING_INIT(".text.exit.", ".text.exit"),
++  MAPPING_INIT_EXACT(".text.exit", ".text.exit"),
++  MAPPING_INIT(".text.", ".text"),
++};
+ #undef MAPPING_INIT
+ #undef MAPPING_INIT_EXACT
+ 
+@@ -5099,6 +5126,39 @@ const int Layout::section_name_mapping_count =
+   (sizeof(Layout::section_name_mapping)
+    / sizeof(Layout::section_name_mapping[0]));
+ 
++const int Layout::text_section_name_mapping_count =
++  (sizeof(Layout::text_section_name_mapping)
++   / sizeof(Layout::text_section_name_mapping[0]));
++
++// Find section name NAME in PSNM and return the mapped name if found
++// with the length set in PLEN.
++const char *
++Layout::match_section_name(const Layout::Section_name_mapping* psnm,
++			   const int count,
++			   const char* name, size_t* plen)
++{
++  for (int i = 0; i < count; ++i, ++psnm)
++    {
++      if (psnm->fromlen > 0)
++	{
++	  if (strncmp(name, psnm->from, psnm->fromlen) == 0)
++	    {
++	      *plen = psnm->tolen;
++	      return psnm->to;
++	    }
++	}
++      else
++	{
++	  if (strcmp(name, psnm->from) == 0)
++	    {
++	      *plen = psnm->tolen;
++	      return psnm->to;
++	    }
++	}
++    }
++  return NULL;
++}
++
+ // Choose the output section name to use given an input section name.
+ // Set *PLEN to the length of the name.  *PLEN is initialized to the
+ // length of NAME.
+@@ -5142,27 +5202,21 @@ Layout::output_section_name(const Relobj* relobj, const char* name,
+   // not found in the table, we simply use it as the output section
+   // name.
+ 
+-  const Section_name_mapping* psnm = section_name_mapping;
+-  for (int i = 0; i < section_name_mapping_count; ++i, ++psnm)
++  if (parameters->options().keep_text_section_prefix()
++      && is_prefix_of(".text", name))
+     {
+-      if (psnm->fromlen > 0)
+-	{
+-	  if (strncmp(name, psnm->from, psnm->fromlen) == 0)
+-	    {
+-	      *plen = psnm->tolen;
+-	      return psnm->to;
+-	    }
+-	}
+-      else
+-	{
+-	  if (strcmp(name, psnm->from) == 0)
+-	    {
+-	      *plen = psnm->tolen;
+-	      return psnm->to;
+-	    }
+-	}
++      const char* match = match_section_name(text_section_name_mapping,
++					     text_section_name_mapping_count,
++					     name, plen);
++      if (match != NULL)
++	return match;
+     }
+ 
++  const char* match = match_section_name(section_name_mapping,
++					 section_name_mapping_count, name, plen);
++  if (match != NULL)
++    return match;
++
+   // As an additional complication, .ctors sections are output in
+   // either .ctors or .init_array sections, and .dtors sections are
+   // output in either .dtors or .fini_array sections.
+diff --git a/gold/layout.h b/gold/layout.h
+index 5f58c2c67f..ff7f1a4090 100644
+--- a/gold/layout.h
++++ b/gold/layout.h
+@@ -422,9 +422,21 @@ enum Output_section_order
+   // The PLT.
+   ORDER_PLT,
+ 
++  // The hot text sections, prefixed by .text.hot.
++  ORDER_TEXT_HOT,
++
+   // The regular text sections.
+   ORDER_TEXT,
+ 
++  // The startup text sections, prefixed by .text.startup.
++  ORDER_TEXT_STARTUP,
++
++  // The startup text sections, prefixed by .text.startup.
++  ORDER_TEXT_EXIT,
++
++  // The unlikely text sections, prefixed by .text.unlikely.
++  ORDER_TEXT_UNLIKELY,
++
+   // The .fini section.
+   ORDER_FINI,
+ 
+@@ -1008,6 +1020,14 @@ class Layout
+   };
+   static const Section_name_mapping section_name_mapping[];
+   static const int section_name_mapping_count;
++  static const Section_name_mapping text_section_name_mapping[];
++  static const int text_section_name_mapping_count;
++
++  // Find section name NAME in map and return the mapped name if found
++  // with the length set in PLEN.
++  static const char* match_section_name(const Section_name_mapping* map,
++					const int count, const char* name,
++					size_t* plen);
+ 
+   // During a relocatable link, a list of group sections and
+   // signatures.
+diff --git a/gold/options.h b/gold/options.h
+index 4a802cf41f..c22004ade3 100644
+--- a/gold/options.h
++++ b/gold/options.h
+@@ -1485,6 +1485,11 @@ class General_options
+   DEFINE_bool_alias(textoff, text, options::DASH_Z, '\0',
+ 		    N_("Permit relocations in read-only segments"),
+ 		    NULL, true);
++  DEFINE_bool(keep_text_section_prefix, options::DASH_Z, '\0', false,
++	      N_("Keep .text.hot, .text.startup, .text.exit and .text.unlikely "
++		 "as separate sections in the final binary."),
++	      N_("Merge all .text.* prefix sections."));
++
+ 
+  public:
+   typedef options::Dir_list Dir_list;
+diff --git a/gold/testsuite/Makefile.am b/gold/testsuite/Makefile.am
+index 31c3d3e8a0..738adfa875 100644
+--- a/gold/testsuite/Makefile.am
++++ b/gold/testsuite/Makefile.am
+@@ -340,6 +340,18 @@ section_sorting_name: section_sorting_name.o gcctestdir/ld
+ section_sorting_name.stdout: section_sorting_name
+ 	$(TEST_NM) -n --synthetic section_sorting_name > section_sorting_name.stdout
+ 
++check_SCRIPTS += keep_text_section_prefix.sh
++check_DATA += keep_text_section_prefix_readelf.stdout keep_text_section_prefix_nm.stdout
++MOSTLYCLEANFILES += keep_text_section_prefix
++keep_text_section_prefix.o: keep_text_section_prefix.cc
++	$(CXXCOMPILE) -O0 -c -ffunction-sections -g -o $@ $<
++keep_text_section_prefix: keep_text_section_prefix.o gcctestdir/ld
++	$(CXXLINK)  -Bgcctestdir/ -Wl,-z,keep-text-section-prefix keep_text_section_prefix.o
++keep_text_section_prefix_readelf.stdout: keep_text_section_prefix
++	$(TEST_READELF) -Wl $< >$@
++keep_text_section_prefix_nm.stdout: keep_text_section_prefix
++	$(TEST_NM) -n $< >$@
++
+ check_PROGRAMS += icf_virtual_function_folding_test
+ MOSTLYCLEANFILES += icf_virtual_function_folding_test icf_virtual_function_folding_test.map
+ icf_virtual_function_folding_test.o: icf_virtual_function_folding_test.cc
+diff --git a/gold/testsuite/Makefile.in b/gold/testsuite/Makefile.in
+index 1ba382e1c9..2aa273773e 100644
+--- a/gold/testsuite/Makefile.in
++++ b/gold/testsuite/Makefile.in
+@@ -87,6 +87,7 @@ check_PROGRAMS = $(am__EXEEXT_1) $(am__EXEEXT_2) $(am__EXEEXT_3) \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@	final_layout.sh \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@	text_section_grouping.sh \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@	section_sorting_name.sh \
++@GCC_TRUE@@NATIVE_LINKER_TRUE@	keep_text_section_prefix.sh \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@	icf_preemptible_functions_test.sh \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@	icf_string_merge_test.sh \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@	icf_sht_rel_addend_test.sh \
+@@ -114,6 +115,8 @@ check_PROGRAMS = $(am__EXEEXT_1) $(am__EXEEXT_2) $(am__EXEEXT_3) \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@	text_section_grouping.stdout \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@	text_section_no_grouping.stdout \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@	section_sorting_name.stdout \
++@GCC_TRUE@@NATIVE_LINKER_TRUE@	keep_text_section_prefix_readelf.stdout \
++@GCC_TRUE@@NATIVE_LINKER_TRUE@	keep_text_section_prefix_nm.stdout \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@	icf_preemptible_functions_test.stdout \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@	icf_string_merge_test.stdout \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@	icf_sht_rel_addend_test.stdout \
+@@ -139,6 +142,7 @@ check_PROGRAMS = $(am__EXEEXT_1) $(am__EXEEXT_2) $(am__EXEEXT_3) \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@	text_section_grouping \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@	text_section_no_grouping \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@	section_sorting_name \
++@GCC_TRUE@@NATIVE_LINKER_TRUE@	keep_text_section_prefix \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@	icf_virtual_function_folding_test \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@	icf_virtual_function_folding_test.map \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@	icf_preemptible_functions_test \
+@@ -5112,6 +5116,8 @@ text_section_grouping.sh.log: text_section_grouping.sh
+ 	@p='text_section_grouping.sh'; $(am__check_pre) $(LOG_COMPILE) "$$tst" $(am__check_post)
+ section_sorting_name.sh.log: section_sorting_name.sh
+ 	@p='section_sorting_name.sh'; $(am__check_pre) $(LOG_COMPILE) "$$tst" $(am__check_post)
++keep_text_section_prefix.sh.log: keep_text_section_prefix.sh
++	@p='keep_text_section_prefix.sh'; $(am__check_pre) $(LOG_COMPILE) "$$tst" $(am__check_post)
+ icf_preemptible_functions_test.sh.log: icf_preemptible_functions_test.sh
+ 	@p='icf_preemptible_functions_test.sh'; $(am__check_pre) $(LOG_COMPILE) "$$tst" $(am__check_post)
+ icf_string_merge_test.sh.log: icf_string_merge_test.sh
+@@ -5969,6 +5975,14 @@ uninstall-am:
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@	$(CXXLINK)  -Bgcctestdir/ -Wl,--sort-section=name section_sorting_name.o
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@section_sorting_name.stdout: section_sorting_name
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@	$(TEST_NM) -n --synthetic section_sorting_name > section_sorting_name.stdout
++@GCC_TRUE@@NATIVE_LINKER_TRUE@keep_text_section_prefix.o: keep_text_section_prefix.cc
++@GCC_TRUE@@NATIVE_LINKER_TRUE@	$(CXXCOMPILE) -O0 -c -ffunction-sections -g -o $@ $<
++@GCC_TRUE@@NATIVE_LINKER_TRUE@keep_text_section_prefix: keep_text_section_prefix.o gcctestdir/ld
++@GCC_TRUE@@NATIVE_LINKER_TRUE@	$(CXXLINK)  -Bgcctestdir/ -Wl,-z,keep-text-section-prefix keep_text_section_prefix.o
++@GCC_TRUE@@NATIVE_LINKER_TRUE@keep_text_section_prefix_readelf.stdout: keep_text_section_prefix
++@GCC_TRUE@@NATIVE_LINKER_TRUE@	$(TEST_READELF) -Wl $< >$@
++@GCC_TRUE@@NATIVE_LINKER_TRUE@keep_text_section_prefix_nm.stdout: keep_text_section_prefix
++@GCC_TRUE@@NATIVE_LINKER_TRUE@	$(TEST_NM) -n $< >$@
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@icf_virtual_function_folding_test.o: icf_virtual_function_folding_test.cc
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@	$(CXXCOMPILE) -O0 -c -ffunction-sections -fPIE -g -o $@ $<
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@icf_virtual_function_folding_test: icf_virtual_function_folding_test.o gcctestdir/ld
+diff --git a/gold/testsuite/keep_text_section_prefix.cc b/gold/testsuite/keep_text_section_prefix.cc
+new file mode 100644
+index 0000000000..1395d4c20b
+--- /dev/null
++++ b/gold/testsuite/keep_text_section_prefix.cc
+@@ -0,0 +1,52 @@
++/* keep_text_section_prefix.cc -- a test case for gold
++
++   Copyright (C) 2018 onwards Free Software Foundation, Inc.
++   Written by Sriraman Tallam <tmsriram@google.com>
++
++   This file is part of gold.
++
++   This program is free software; you can redistribute it and/or modify
++   it under the terms of the GNU General Public License as published by
++   the Free Software Foundation; either version 3 of the License, or
++   (at your option) any later version.
++
++   This program is distributed in the hope that it will be useful,
++   but WITHOUT ANY WARRANTY; without even the implied warranty of
++   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++   GNU General Public License for more details.
++
++   You should have received a copy of the GNU General Public License
++   along with this program; if not, write to the Free Software
++   Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston,
++   MA 02110-1301, USA.  */
++
++extern "C" {
++__attribute__((section(".text.unlikely.foo")))
++int unlikely_foo(void) {
++  return 0;
++}
++
++__attribute__((section(".text.hot.foo")))
++int hot_foo(void) {
++  return 0;
++}
++
++__attribute__((section(".text.startup.foo")))
++int startup_foo(void) {
++  return 0;
++}
++
++__attribute__((section(".text.exit.foo")))
++int exit_foo(void) {
++  return 0;
++}
++
++__attribute__((section(".text.foo")))
++int regular_foo(void) {
++  return 0;
++}
++
++int main(void) {
++  return 0;
++}
++}
+diff --git a/gold/testsuite/keep_text_section_prefix.sh b/gold/testsuite/keep_text_section_prefix.sh
+new file mode 100755
+index 0000000000..44a2b47494
+--- /dev/null
++++ b/gold/testsuite/keep_text_section_prefix.sh
+@@ -0,0 +1,77 @@
++#!/bin/sh
++
++# keep_text_section_prefix.sh -- test
++
++# Copyright (C) 2018 Free Software Foundation, Inc.
++# Written by Sriraman Tallam <tmsriram@google.com>.
++
++# This file is part of gold.
++
++# This program is free software; you can redistribute it and/or modify
++# it under the terms of the GNU General Public License as published by
++# the Free Software Foundation; either version 3 of the License, or
++# (at your option) any later version.
++
++# This program is distributed in the hope that it will be useful,
++# but WITHOUT ANY WARRANTY; without even the implied warranty of
++# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++# GNU General Public License for more details.
++
++# You should have received a copy of the GNU General Public License
++# along with this program; if not, write to the Free Software
++# Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston,
++# MA 02110-1301, USA.
++
++# The goal of this program is to verify if .text sections are separated
++# according to their prefix. .text.hot, .text.unlikely, .text.startup and
++# .text.exit must be separated in the final binary.
++
++set -e
++
++check()
++{
++    awk "
++BEGIN { saw1 = 0; saw2 = 0; err = 0; }
++/.*$2\$/ { saw1 = 1; }
++/.*$3\$/ {
++     saw2 = 1;
++     if (!saw1)
++       {
++	  printf \"layout of $2 and $3 is not right\\n\";
++	  err = 1;
++	  exit 1;
++       }
++    }
++END {
++      if (!saw1 && !err)
++        {
++	  printf \"did not see $2\\n\";
++	  exit 1;
++	}
++      if (!saw2 && !err)
++	{
++	  printf \"did not see $3\\n\";
++	  exit 1;
++	}
++    }" $1
++}
++
++check_str()
++{
++    if ! grep -q "$2" "$1"
++    then
++	echo "Did not find expected output in $1:"
++	echo "   $2"
++	echo ""
++	echo "Actual output below:"
++	cat "$1"
++	exit 1
++    fi
++}
++
++check_str keep_text_section_prefix_readelf.stdout ".text.hot .text .text.startup .text.exit .text.unlikely"
++
++check keep_text_section_prefix_nm.stdout "hot_foo" "regular_foo"
++check keep_text_section_prefix_nm.stdout "regular_foo" "startup_foo"
++check keep_text_section_prefix_nm.stdout "startup_foo" "exit_foo"
++check keep_text_section_prefix_nm.stdout "exit_foo" "unlikely_foo"

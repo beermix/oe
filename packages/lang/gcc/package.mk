@@ -54,6 +54,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libssp \
                            --disable-libmpx \
                            --disable-libsanitizer \
+                           --enable-linker-build-id \
                            --disable-vtable-verify \
                            --disable-libunwind-exceptions \
                            --enable-gnu-unique-object \
