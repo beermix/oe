@@ -6,7 +6,7 @@ PKG_SECTION="tools"
 PKG_TOOLCHAIN="manual"
 
 make_target() {
-   LIBS="-lncursesw -ltinfo" make CC="$CC" AR="$AR" CFLAGS="$CFLAGS" CPPFLAGS="$CPPFLAGS" LDFLAGS="$LDFLAGS" -j1
+ make LIBS="-lncursesw -ltinfo -ldl -lpthread" CC="$CC -DDEBUG=0 -static-libgcc" AR="$AR" CFLAGS="$CFLAGS" CPPFLAGS="$CPPFLAGS" LDFLAGS="$LDFLAGS -static" -j1
 }
 
 post_make_target() {

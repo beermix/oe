@@ -3,9 +3,7 @@ PKG_VERSION="7d20fa3e"
 PKG_URL="https://github.com/rootlis/ps3remote/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain systemd"
 PKG_SECTION="my"
-
-
-MAKEFLAGS=-j1
+PKG_TOOLCHAIN="make"
 
 post_make_target() {
   mkdir -p $INSTALL/usr/bin/

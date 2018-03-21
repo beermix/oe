@@ -28,4 +28,93 @@ PKG_SHORTDESC="cairo: Multi-platform 2D graphics library"
 PKG_LONGDESC="Cairo is a vector graphics library with cross-device output support. Currently supported output targets include the X Window System and in-memory image buffers. PostScript and PDF file output is planned. Cairo is designed to produce identical output on all output media while taking advantage of display hardware acceleration when available."
 PKG_TOOLCHAIN="configure" # ToDo
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-static --disable-gtk-doc --enable-xlib=yes --enable-xcb=yes --enable-ft=yes --enable-fc=yes --enable-gl --enable-xlib-xcb"
+#PKG_TOOLCHAIN="autotools"
+
+if [ "$OPENGL" != "no" ]; then
+  PKG_DEPENDS_TARGET+=" $OPENGL"
+fi
+
+if [ "$OPENGLES" != "no" ]; then
+  PKG_DEPENDS_TARGET+=" $OPENGLES"
+
+fi
+
+if [ "$DISPLAYSERVER" = "x11" ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libXrender libX11 mesa"
+  PKG_CAIRO_CONFIG="--x-includes="$SYSROOT_PREFIX/usr/include" \
+                    --x-libraries="$SYSROOT_PREFIX/usr/lib" \
+                    --enable-xlib \
+                    --enable-xlib-xrender \
+                    --enable-gl \
+                    --enable-glx \
+                    --disable-glesv2 \
+                    --disable-egl \
+                    --with-x"
+
+elif [ "$DISPLAYSERVER" = "weston" ]; then
+  PKG_CAIRO_CONFIG="--disable-xlib \
+                    --disable-xlib-xrender \
+                    --disable-gl \
+                    --disable-glx \
+                    --enable-glesv2 \
+                    --enable-egl \
+                    --without-x"
+else
+  PKG_CAIRO_CONFIG="--disable-xlib \
+                    --disable-xlib-xrender \
+                    --disable-gl \
+                    --disable-glx \
+                    --disable-glesv2 \
+                    --disable-egl \
+                    --without-x"
+fi
+
+PKG_CONFIGURE_OPTS_TARGET="$PKG_CAIRO_CONFIG \
+                           --enable-silent-rules \
+                           --enable-shared \
+                           --disable-static \
+                           --disable-gtk-doc \
+                           --enable-largefile \
+                           --disable-gcov \
+                           --disable-tee \
+                           --disable-atomic \
+                           --disable-valgrind \
+                           --disable-xcb \
+                           --disable-xlib-xcb \
+                           --disable-xcb-shm \
+                           --disable-qt \
+                           --disable-quartz \
+                           --disable-quartz-font \
+                           --disable-quartz-image \
+                           --disable-win32 \
+                           --disable-win32-font \
+                           --disable-skia \
+                           --disable-os2 \
+                           --disable-beos \
+                           --disable-cogl \
+                           --disable-drm \
+                           --disable-drm-xr \
+                           --disable-gallium \
+                           --disable-xcb-drm \
+                           --enable-png \
+                           --disable-directfb \
+                           --disable-vg \
+                           --disable-wgl \
+                           --disable-script \
+                           --enable-ft \
+                           --enable-fc \
+                           --enable-ps \
+                           --enable-pdf \
+                           --enable-svg \
+                           --disable-test-surfaces \
+                           --enable-tee \
+                           --disable-xml \
+                           --enable-pthread \
+                           --enable-gobject \
+                           --disable-full-testing \
+                           --disable-trace \
+                           --enable-interpreter \
+                           --disable-symbol-lookup \
+                           --enable-some-floating-point \
+                           --disable-interpreter \
+                           --with-gnu-ld"
