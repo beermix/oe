@@ -95,7 +95,7 @@ fi
 # Concurrency make level (-j option)
 #  Try value 1 (default) to 4 on single CPU computer, or more on
 #  multi-processor computer (like hyperthreading SMP CPU)
-  [ -z "${CONCURRENCY_MAKE_LEVEL}" ] && export CONCURRENCY_MAKE_LEVEL=7
+  [ -z "${CONCURRENCY_MAKE_LEVEL}" ] && export CONCURRENCY_MAKE_LEVEL=8
 
 # cache size for ccache
 # Set the maximum size of the files stored in the cache. You can specify a
