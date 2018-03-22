@@ -38,6 +38,7 @@ setup_toolchain() {
   else
     export MAKEFLAGS="-j$CONCURRENCY_MAKE_LEVEL"
   fi
+
   case "$1" in
     target|init)
       export DESTIMAGE="target"
@@ -522,6 +523,7 @@ build_with_debug() {
 
   return 1
 }
+
 install_binary_addon() {
   local addon_id="$1" addon_so
 
@@ -729,14 +731,6 @@ do_autoreconf() {
     fi
     $AUTORECONF $@
   fi
-}
-
-strip_hard() {
-  CFLAGS=`echo $CFLAGS | sed -e "s|-fno-plt||g"`
-  TARGET_CFLAGS=`echo $TARGET_CFLAGS | sed -e "s|-fno-plt||g"`
-  LDFLAGS=`echo $LDFLAGS | sed -e "s|,-z,now||g"`
-  TARGET_LDFLAGS=`echo $TARGET_LDFLAGS | sed -e "s|,-z,now||g"`
-  CFLAGS=`echo $CFLAGS | sed -e "s|-Wl,-z -Wl,now -Wl,-z -Wl,relro||g"`
 }
 
 fix_module_depends() {
