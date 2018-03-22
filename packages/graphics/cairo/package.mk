@@ -77,7 +77,7 @@ PKG_CONFIGURE_OPTS_TARGET="$PKG_CAIRO_CONFIG \
                            --enable-largefile \
                            --disable-gcov \
                            --disable-tee \
-                           --disable-atomic \
+                           --enable-atomic \
                            --disable-valgrind \
                            --disable-xcb \
                            --disable-xlib-xcb \

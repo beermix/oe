@@ -145,23 +145,23 @@ addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/lib
 
 
-  cp -ri $(get_build_dir pango)/.install_pkg/usr/lib/libpango.* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -ri $(get_build_dir pango)/.install_pkg/usr/lib/libpango* $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # cairo
-  cp -ri $(get_build_dir cairo)/.install_pkg/usr/lib/libcairo.* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -ri $(get_build_dir cairo)/.install_pkg/usr/lib/libcairo* $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # harfbuzz
-  cp -ri $(get_build_dir harfbuzz)/.install_pkg/usr/lib/libharfbuzz.* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -ri $(get_build_dir harfbuzz)/.install_pkg/usr/lib/libharfbuzz* $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # gdk-pixbuf
-  cp -ri $(get_build_dir gdk-pixbuf)/.install_pkg/usr/lib/libgdk_pixbuf.* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -ri $(get_build_dir gdk-pixbuf)/.install_pkg/usr/lib/libgdk_pixbuf* $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # pixbuf loaders
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules
   cp -ri $(get_build_dir gdk-pixbuf)/.install_pkg/usr/lib/gdk-pixbuf-2.0/2.10.0/loaders/* $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules
 
   # libva-vdpau-driver
-  cp -ri $(get_build_dir libva-vdpau-driver)/.install_pkg/usr/lib/dri/*.so $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -ri $(get_build_dir libva-vdpau-driver)/.install_pkg/usr/lib/dri/* $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # unclutter
   cp -P $(get_build_dir unclutter)/.install_pkg/usr/bin/unclutter $ADDON_BUILD/$PKG_ADDON_ID/bin
