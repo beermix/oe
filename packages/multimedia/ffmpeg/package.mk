@@ -18,14 +18,13 @@
 
 PKG_NAME="ffmpeg"
 # Current branch is: release/3.1-xbmc
-PKG_VERSION="9702d0d"
-#PKG_SHA256="c02de2197f8b70544f018e83f48c1bed2a1b47e1a1aa34ef59d9167fb0d2090a"
+PKG_VERSION="38c1df1"
 PKG_ARCH="any"
 PKG_LICENSE="LGPLv2.1+"
 PKG_SITE="https://ffmpeg.org"
 PKG_URL="https://github.com/xbmc/FFmpeg/archive/${PKG_VERSION}.tar.gz"
 PKG_SOURCE_DIR="FFmpeg-${PKG_VERSION}*"
-PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl speex"
+PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl speex libvorbis"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
 PKG_LONGDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
@@ -89,7 +88,7 @@ pre_configure_target() {
   rm -rf .$TARGET_NAME
 
   if [ "$KODIPLAYER_DRIVER" = "bcm2835-driver" ]; then
-    CFLAGS="-I$SYSROOT_PREFIX/usr/include/interface/vcos/pthreads -I$SYSROOT_PREFIX/usr/include/interface/vmcs_host/linux $CFLAGS"
+    CFLAGS="-I$SYSROOT_PREFIX/usr/include/interface/vcos/pthreads -I$SYSROOT_PREFIX/usr/include/interface/vmcs_host/linux -DRPI=1 $CFLAGS"
     FFMPEG_LIBS="-lbcm_host -lvcos -lvchiq_arm -lmmal -lmmal_core -lmmal_util -lvcsm"
   fi
 }
@@ -111,8 +110,9 @@ configure_target() {
               --host-cc="$HOST_CC" \
               --host-cflags="$HOST_CFLAGS" \
               --host-ldflags="$HOST_LDFLAGS" \
+              --host-libs="-lm" \
               --extra-cflags="$CFLAGS" \
-              --extra-ldflags="$LDFLAGS" \
+              --extra-ldflags="$LDFLAGS -fPIC" \
               --extra-libs="$FFMPEG_LIBS" \
               --disable-static \
               --enable-shared \
@@ -122,6 +122,7 @@ configure_target() {
               --enable-logging \
               --disable-doc \
               $FFMPEG_DEBUG \
+              --enable-pic \
               --pkg-config="$TOOLCHAIN/bin/pkg-config" \
               --enable-optimizations \
               --disable-extra-warnings \
@@ -179,6 +180,7 @@ configure_target() {
               --enable-bzlib \
               --disable-frei0r \
               --disable-libopencore-amrnb \
+              --disable-libopencore-amrwb \
               --disable-libopencv \
               --disable-libdc1394 \
               --disable-libfaac \
@@ -192,7 +194,7 @@ configure_target() {
               --enable-libspeex \
               --disable-libtheora \
               --disable-libvo-amrwbenc \
-              --disable-libvorbis \
+              --enable-libvorbis --enable-muxer=ogg --enable-encoder=libvorbis \
               --disable-libvpx \
               --disable-libx264 \
               --disable-libxavs \

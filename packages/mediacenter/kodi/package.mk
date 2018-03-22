@@ -217,7 +217,6 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$TOOLCHAIN \
                        -DPYTHON_EXECUTABLE=$TOOLCHAIN/bin/$PKG_PYTHON_VERSION \
                        -DPYTHON_INCLUDE_DIRS=$SYSROOT_PREFIX/usr/include/$PKG_PYTHON_VERSION \
                        -DGIT_VERSION=$PKG_VERSION \
-                       -DWITH_FFMPEG=$(get_build_dir ffmpeg) \
                        -DENABLE_INTERNAL_FFMPEG=OFF \
                        -DFFMPEG_INCLUDE_DIRS=$SYSROOT_PREFIX/usr \
                        -DENABLE_INTERNAL_CROSSGUID=OFF \
@@ -227,8 +226,8 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$TOOLCHAIN \
                        -DENABLE_DBUS=ON \
                        -DENABLE_XSLT=ON \
                        -DENABLE_CCACHE=ON \
-                       -DENABLE_LIRC=OFF \
-                       -DENABLE_EVENTCLIENTS=OFF \
+                       -DENABLE_LIRC=ON \
+                       -DENABLE_EVENTCLIENTS=ON \
                        -DENABLE_LDGOLD=ON \
                        $KODI_ARCH \
                        $KODI_OPENGL \
@@ -252,11 +251,10 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$TOOLCHAIN \
                        $KODI_BLURAY \
                        $KODI_PLAYER"
 
-pre_configure_target() {
-  export LIBS="$LIBS -lncurses"
-#  export LIBS="$LIBS -lncursesw -ltinfo"
-#  export CXXFLAGS="$CXXFLAGS -latomic"
-}
+#pre_configure_target() {
+    #This is needed to avoid using libraries from sysroot if we use TexturePacker from the host
+#  unset LD_LIBRARY_PATH
+#}
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin/kodi
@@ -273,7 +271,7 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/share/kodi/addons/visualization.vortex
   rm -rf $INSTALL/usr/share/xsessions
 
-#  mv $INSTALL/usr/lib/python2.7/dist-packages $INSTALL/usr/lib/python2.7/site-packages
+  mv $INSTALL/usr/lib/python2.7/dist-packages $INSTALL/usr/lib/python2.7/site-packages
 
   mkdir -p $INSTALL/usr/lib/kodi
     cp $PKG_DIR/scripts/kodi-config $INSTALL/usr/lib/kodi

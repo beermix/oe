@@ -1,17 +1,6 @@
-WFrom ee41bc539fa4dd1f69ddc1f5ca98d26371b483cc Mon Sep 17 00:00:00 2001
-From: Rainer Hochecker <fernetmenta@online.de>
-Date: Fri, 16 Dec 2016 17:34:06 +0100
-Subject: [PATCH] vaapi: hevc 10bit
-
----
- xbmc/cores/VideoPlayer/DVDCodecs/Video/VAAPI.cpp | 102 +++++++++++++++++++++--
- 1 file changed, 95 insertions(+), 7 deletions(-)
-
-diff --git a/xbmc/cores/VideoPlayer/DVDCodecs/Video/VAAPI.cpp b/xbmc/cores/VideoPlayer/DVDCodecs/Video/VAAPI.cpp
-index 84743be..b085b8d 100644
---- a/xbmc/cores/VideoPlayer/DVDCodecs/Video/VAAPI.cpp
-+++ b/xbmc/cores/VideoPlayer/DVDCodecs/Video/VAAPI.cpp
-@@ -559,8 +559,8 @@ bool CDecoder::Open(AVCodecContext* avctx, AVCodecContext* mainctx, const enum A
+--- a/xbmc/cores/VideoPlayer/DVDCodecs/Video/VAAPI.cpp	2017-08-02 20:39:40.000000000 +0200
++++ b/xbmc/cores/VideoPlayer/DVDCodecs/Video/VAAPI.cpp	2017-08-04 11:00:52.822065605 +0200
+@@ -500,8 +500,8 @@
    if (!CVAAPIContext::EnsureContext(&m_vaapiConfig.context, this))
      return false;
  
@@ -22,12 +11,16 @@ index 84743be..b085b8d 100644
    {
      CLog::Log(LOGWARNING,"VAAPI::Open: no width/height available, can't init");
      return false;
-@@ -617,7 +617,12 @@ bool CDecoder::Open(AVCodecContext* avctx, AVCodecContext* mainctx, const enum A
+@@ -558,12 +558,12 @@
      }
      case AV_CODEC_ID_HEVC:
      {
+-      // for distributions using far newer ffmpeg
+-      // not available when Krypton was released
+       if (avctx->profile == FF_PROFILE_HEVC_MAIN_10)
+-        return false;
+-
 -      profile = VAProfileHEVCMain;
-+      if (avctx->profile == FF_PROFILE_HEVC_MAIN_10)
 +        profile = VAProfileHEVCMain10;
 +      else if (avctx->profile == FF_PROFILE_HEVC_MAIN)
 +        profile = VAProfileHEVCMain;
@@ -36,7 +29,7 @@ index 84743be..b085b8d 100644
        if (!m_vaapiConfig.context->SupportsProfile(profile))
          return false;
        break;
-@@ -647,7 +652,7 @@ bool CDecoder::Open(AVCodecContext* avctx, AVCodecContext* mainctx, const enum A
+@@ -593,7 +593,7 @@
  
    m_vaapiConfig.profile = profile;
    m_vaapiConfig.attrib = m_vaapiConfig.context->GetAttrib(profile);
@@ -45,16 +38,16 @@ index 84743be..b085b8d 100644
    {
      CLog::Log(LOGERROR, "VAAPI - invalid yuv format %x", m_vaapiConfig.attrib.value);
      return false;
-@@ -1071,7 +1076,7 @@ bool CDecoder::ConfigVAAPI()
- 
+@@ -1018,7 +1018,7 @@
    m_vaapiConfig.dpy = m_vaapiConfig.context->GetDisplay();
+   m_vaapiConfig.x11dsp = m_vaapiConfig.context->GetX11Display();
    m_vaapiConfig.attrib = m_vaapiConfig.context->GetAttrib(m_vaapiConfig.profile);
 -  if ((m_vaapiConfig.attrib.value & VA_RT_FORMAT_YUV420) == 0)
 +  if ((m_vaapiConfig.attrib.value & (VA_RT_FORMAT_YUV420 | VA_RT_FORMAT_YUV420_10BPP)) == 0)
    {
      CLog::Log(LOGERROR, "VAAPI - invalid yuv format %x", m_vaapiConfig.attrib.value);
      return false;
-@@ -1084,9 +1089,12 @@ bool CDecoder::ConfigVAAPI()
+@@ -1031,9 +1031,12 @@
  
    // create surfaces
    VASurfaceID surfaces[32];
@@ -68,7 +61,7 @@ index 84743be..b085b8d 100644
                                       m_vaapiConfig.surfaceWidth,
                                       m_vaapiConfig.surfaceHeight,
                                       surfaces,
-@@ -1361,6 +1369,83 @@ bool CVaapiRenderPicture::GLMapSurface()
+@@ -1308,6 +1311,83 @@
  
        break;
      }
@@ -152,7 +145,7 @@ index 84743be..b085b8d 100644
      case VA_FOURCC('B','G','R','A'):
      {
        attrib = attribs;
-@@ -2605,9 +2690,12 @@ bool CVppPostproc::PreInit(CVaapiConfig &config, SDiMethods *methods)
+@@ -2553,9 +2633,12 @@
  
    // create surfaces
    VASurfaceID surfaces[32];
