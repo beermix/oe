@@ -1,8 +1,0 @@
---------------------
-/home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/zlib-1613dd5/configure --help
-Пт фев  9 09:36:12 MSK 2018
-usage:
-  configure [--zlib-compat] [--prefix=PREFIX]  [--eprefix=EXPREFIX]
-    [--static] [--32] [--64] [--libdir=LIBDIR] [--sharedlibdir=LIBDIR]
-    [--includedir=INCLUDEDIR] [--archs="-arch i386 -arch x86_64"]
-    [--acle] [--neon]
