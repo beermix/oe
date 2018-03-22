@@ -27,5 +27,6 @@ PKG_DEPENDS_TARGET="toolchain util-macros"
 PKG_SECTION="x11/lib"
 PKG_SHORTDESC="libXau: X authorization file management libary"
 PKG_LONGDESC="X authorization file management libary"
+PKG_BUILD_FLAGS="+pic"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --enable-xthreads --with-pic"
+PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --enable-xthreads"

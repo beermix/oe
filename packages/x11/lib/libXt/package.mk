@@ -31,7 +31,7 @@ PKG_LONGDESC="LibXt provides the X Toolkit Intrinsics, an abstract widget librar
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --disable-shared \
                            --with-gnu-ld \
-                           --enable-malloc0returnsnul --with-pic"
+                           --enable-malloc0returnsnull"
 
 pre_make_target() {
   make -C util CC=$HOST_CC \

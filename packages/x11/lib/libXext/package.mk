@@ -29,4 +29,4 @@ PKG_SHORTDESC="libxext: X11 miscellaneous extensions library"
 PKG_LONGDESC="LibXext provides an X Window System client interface to several extensions to the X protocol, iincluding DOUBLE-BUFFER (DBE), DPMS, Extended-Visual-Information (EVI), LBX, MIT-SHM, MIT-SUNDRY-NONSTANDARD, Multi-Buffering, SECURITY, SHAPE, SHAPE, SYNC, TOG-CUP, XC-APPGROUP, XC-MISC, XTEST and possibly others."
 PKG_TOOLCHAIN="autotools"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-malloc0returnsnull"
+PKG_CONFIGURE_OPTS_TARGET="--enable-malloc0returnsnull --without-xmlto"

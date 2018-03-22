@@ -27,6 +27,6 @@ PKG_DEPENDS_TARGET="toolchain util-macros libXfixes libXext libX11"
 PKG_SECTION="x11/lib"
 PKG_SHORTDESC="libxcomposite: X Composite Library"
 PKG_LONGDESC="X Composite Library"
+PKG_BUILD_FLAGS="+pic"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --with-pic"
-
+PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared"
