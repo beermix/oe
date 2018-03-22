@@ -1,5 +1,5 @@
 PKG_NAME="cfe"
-PKG_VERSION="5.0.1"
+PKG_VERSION="6.0.0"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPL"
 PKG_SITE="http://llvm.org/"
@@ -12,12 +12,6 @@ PKG_SHORTDESC="C language family frontend for LLVM"
 #post_unpack() {
 #  ln -sf $PKG_BUILD/.$TARGET_NAME/bin/clang-tblgen $BUILD/toolchain/bin/
 #}
-
-pre_configure_target() {
-  strip_lto
-  strip_gold
-  strip_hard
-}
 
 PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release"
 #PKG_CMAKE_OPTS_HOST="$PKG_CMAKE_OPTS_TARGET"
