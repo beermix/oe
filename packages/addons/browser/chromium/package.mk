@@ -30,7 +30,7 @@ PKG_LICENSE="Mixed"
 PKG_SITE="http://www.chromium.org/Home"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="pciutils dbus libXtst  libXcomposite libXcursor alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk intel-vaapi-driver libva-vdpau-driver unclutter xdotool libdrm libjpeg-turbo freetype harfbuzz gtk+ snappy re2 flac libvpx libevent:host chromium:host"
+PKG_DEPENDS_TARGET="pciutils dbus libXtst  libXcomposite libXcursor alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk intel-vaapi-driver libva-vdpau-driver unclutter xdotool libdrm libjpeg-turbo freetype harfbuzz gtk+ chromium:host"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -70,8 +70,8 @@ make_target() {
 
   # https://chromium-review.googlesource.com/c/chromium/src/+/712575
   # _flags+=('exclude_unwind_tables=true')
-  export CFLAGS="$CFLAGS1 -fno-unwind-tables -fno-asynchronous-unwind-tables -fpermissive"
-  export CXXFLAGS="$CXXFLAGS -fno-unwind-tables -fno-asynchronous-unwind-table -fpermissives"
+  export CFLAGS="$CFLAGS1 -fno-unwind-tables -fno-asynchronous-unwind-tables -std=gnu11"
+  export CXXFLAGS="$CXXFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables -fpermissive"
   export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
   
   # -Wno-in-bool-context  -fpermissive  -std=c++11  -std=gnu1
@@ -132,7 +132,7 @@ make_target() {
   # Possible replacements are listed in build/linux/unbundle/replace_gn_files.p
   # Keys are the names in the above script; values are the dependencies in Arch
 declare -gA _system_libs=(
-    [flac]=flac
+    #[flac]=flac
     [fontconfig]=fontconfig
     [freetype]=freetype2
     [harfbuzz-ng]=harfbuzz
@@ -140,11 +140,11 @@ declare -gA _system_libs=(
     [libdrm]=
     [libjpeg]=libjpeg
     #[libpng]=libpng            # https://crbug.com/752403#c10
-    [libvpx]=libvpx
+    #[libvpx]=libvpx
     #[libxml]=libxml2           # https://crbug.com/736026
     [libxslt]=libxslt
-    [re2]=re2
-    [snappy]=snappy
+    #[re2]=re2
+    #[snappy]=snappy
     [yasm]=
     [zlib]=minizip
 )
