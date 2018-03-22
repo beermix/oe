@@ -1,5 +1,5 @@
 GCC_OPTIM="-O2 -pipe"
-LD_OPTIM="-Wl,--as-needed" 
+LD_OPTIM="-Wl,--as-needed"
 
 if [ "${BUILD_WITH_DEBUG}" = "yes" ]; then
   TARGET_CFLAGS="$TARGET_CFLAGS -ggdb"
@@ -32,9 +32,9 @@ HOST_CFLAGS="$HOST_CFLAGS -Wno-format-security"
 HOST_CXXFLAGS="$HOST_CXXFLAGS -Wno-format-security" 
 
 # lto flags
-CFLAGS_OPTIM_LTO="-flto=${CONCURRENCY_MAKE_LEVEL}"
-CXXFLAGS_OPTIM_LTO="-flto=${CONCURRENCY_MAKE_LEVEL}"
-LDFLAGS_OPTIM_LTO="-fuse-linker-plugin -flto=${CONCURRENCY_MAKE_LEVEL}"
+CFLAGS_OPTIM_LTO="-flto=4 -ffat-lto-objects"
+CXXFLAGS_OPTIM_LTO="-flto=4 -ffat-lto-objects"
+LDFLAGS_OPTIM_LTO="-fuse-linker-plugin -flto=4"
 
 # gold flags
 LDFLAGS_OPTIM_GOLD="-fuse-ld=gold"
