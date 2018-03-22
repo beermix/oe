@@ -48,17 +48,13 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-multilib \
                            --disable-nls \
                            --enable-checking=release \
+                           --with-default-libstdcxx-abi=gcc4-compatible \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
                            --disable-libssp \
                            --disable-libmpx \
                            --disable-libsanitizer \
-                           --enable-linker-build-id \
-                           --disable-vtable-verify \
-                           --disable-libunwind-exceptions \
-                           --enable-gnu-unique-object \
-                           --enable-gnu-indirect-function \
                            --with-system-zlib=$TOOLCHAIN \
                            --with-tune=haswell"
 
@@ -74,8 +70,6 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-threads \
                               --without-headers \
                               --with-newlib \
-                              --disable-libvtv \
-                              --disable-libstdcxx \
                               --disable-decimal-float \
                               $GCC_OPTS"
 
