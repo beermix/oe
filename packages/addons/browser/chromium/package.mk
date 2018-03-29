@@ -132,7 +132,7 @@ make_target() {
     [libjpeg]=libjpeg
     #[libpng]=libpng            # https://crbug.com/752403#c10
     #[libvpx]=libvpx
-    #[libxml]=libxml2           # https://crbug.com/736026
+    [libxml]=libxml2           # https://crbug.com/736026
     [libxslt]=libxslt
     [re2]=re2
     [snappy]=snappy
