@@ -20,7 +20,7 @@ PKG_NAME="glibc"
 PKG_VERSION="d300041"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/bminor/glibc/tree/release/2.27/master"
+PKG_SITE="https://github.com/bminor/glibc/tree/release/2.26/master"
 PKG_URL="https://github.com/bminor/glibc/archive/$PKG_VERSION.tar.gz"
 #PKG_URL="http://ftpmirror.gnu.org/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap"
@@ -126,9 +126,9 @@ pre_configure_target() {
 
   unset LD_LIBRARY_PATH
 
-  export CFLAGS="-O3 -march=westmere -g -m64 -Wl,-z,max-page-size=0x1000 "
+  export CFLAGS="-O3 -march=westmere -g -m64 -Wl,-z,max-page-size=0x1000"
   unset LDFLAGS
-  export LDFLAGS="-Wl,-z,max-page-size=0x1000 "
+  export LDFLAGS="-Wl,-z,max-page-size=0x1000"
 
   export BUILD_CC=$HOST_CC
   export OBJDUMP_FOR_HOST=objdump
