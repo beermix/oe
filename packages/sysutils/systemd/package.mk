@@ -17,13 +17,14 @@
 ################################################################################
 
 PKG_NAME="systemd"
-PKG_VERSION="236"
-PKG_SHA256="0cadccfa7109232ec2a469d41ca595d5595b83b648b534ea669c15dbca904c43"
+PKG_VERSION="238"
+PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/systemd"
 PKG_URL="https://github.com/systemd/systemd/archive/v$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libcap kmod util-linux entropy"
+PKG_NEED_UNPACK="$LINUX_DEPENDS"
 PKG_SECTION="system"
 PKG_SHORTDESC="systemd: a system and session manager"
 PKG_LONGDESC="systemd is a system and session manager for Linux, compatible with SysV and LSB init scripts. systemd provides aggressive parallelization capabilities, uses socket and D-Bus activation for starting services, offers on-demand starting of daemons, keeps track of processes using Linux cgroups, supports snapshotting and restoring of the system state, maintains mount and automount points and implements an elaborate transactional dependency-based service control logic. It can work as a drop-in replacement for sysvinit."
@@ -33,6 +34,7 @@ PKG_MESON_OPTS_TARGET="--libdir=/usr/lib \
                        -Dsplit-usr=false \
                        -Ddefault-hierarchy=hybrid \
                        -Dtty-gid=5 \
+                       -Dtests=false \
                        -Dseccomp=false \
                        -Dselinux=false \
                        -Dapparmor=false \
@@ -102,6 +104,26 @@ PKG_MESON_OPTS_TARGET="--libdir=/usr/lib \
                        -Dmount-path=/usr/bin/mount \
                        -Dumount-path=/usr/bin/umount"
 
+pkg_get_kernel_proc_version() {
+  (
+    INCLUDE=$(kernel_path)/include/generated
+    eval "$(grep -h "^#define " ${INCLUDE}/compile.h ${INCLUDE}/utsrelease.h | sed 's/#define //g;s/\([^ ]*\) /\1=/')"
+    printf "Linux version %s (%s@%s) (%s) %s" "${UTS_RELEASE}" "${LINUX_COMPILE_BY}" "${LINUX_COMPILE_HOST}" "${LINUX_COMPILER}" "${UTS_VERSION}"
+  )
+}
+
+post_patch() {
+  local kernel_version is_release=1
+
+  [ "${LIBREELEC_VERSION}" = "devel" ] && is_release=0
+
+  kernel_version="$(pkg_get_kernel_proc_version)"
+
+  sed -e "s/@@LIBREELEC_IS_RELEASE@@/${is_release}/g" \
+      -e "s/@@LIBREELEC_KERNEL_VERSION@@/${kernel_version//\//\\/}/g" \
+      -e "s/@@DISTRONAME@@/${DISTRONAME}/g" \
+      -i $PKG_BUILD/src/core/main.c
+}
 pre_configure_target() {
   export CFLAGS="$CFLAGS -fno-schedule-insns -fno-schedule-insns2"
   export LC_ALL=en_US.UTF-8
