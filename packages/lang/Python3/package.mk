@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="Python3"
-PKG_VERSION="3.6.4"
-PKG_SHA256="159b932bf56aeaa76fd66e7420522d8c8853d486b8567c459b84fe2ed13bcaba"
+PKG_VERSION="3.6.5"
+PKG_SHA256="f434053ba1b5c8a5cc597e966ead3c5143012af827fd3f0697d21450bb8d87a6"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.python.org/"
