@@ -8,6 +8,8 @@ PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-tests \
 			      --disable-shared \
+			      --enable-static \
+			      --with-gnu-ld \
 			      --disable-git-hash \
 			      --disable-debug \
 			      --disable-vc4 \
