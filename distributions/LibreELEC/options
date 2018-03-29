@@ -2,7 +2,7 @@
   LTO_SUPPORT="no"
 
 # GOLD (Google Linker) support (yes / no)
-  GOLD_SUPPORT="yes"
+  GOLD_SUPPORT="no"
 
 # HARDENING (security relevant linker and compiler flags) support (yes / no)
   HARDENING_SUPPORT="no"
