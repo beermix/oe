@@ -18,7 +18,7 @@
 
 PKG_NAME="ffmpeg"
 # Current branch is: release/3.1-xbmc
-PKG_VERSION="3.1.11-Krypton-17.5"
+PKG_VERSION="9702d0d"
 PKG_ARCH="any"
 PKG_LICENSE="LGPLv2.1+"
 PKG_SITE="https://github.com/xbmc/FFmpeg/releases"
@@ -110,8 +110,9 @@ configure_target() {
               --host-cc="$HOST_CC" \
               --host-cflags="$HOST_CFLAGS" \
               --host-ldflags="$HOST_LDFLAGS" \
+              --host-libs="-lm" \
               --extra-cflags="$CFLAGS" \
-              --extra-ldflags="$LDFLAGS" \
+              --extra-ldflags="$LDFLAGS -fPIC" \
               --extra-libs="$FFMPEG_LIBS" \
               --disable-static \
               --enable-shared \
