@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="tiff"
-#PKG_VERSION="4.0.3"
+#PKG_VERSION="4.0.9"
 PKG_VERSION="3.9.7"
 PKG_SHA256="f5d64dd4ce61c55f5e9f6dc3920fbe5a41e02c2e607da7117a35eb5c320cef6a"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
-PKG_SITE="http://www.remotesensing.org/libtiff/"
+PKG_SITE="http://download.osgeo.org/libtiff/?C=M;O=D"
 PKG_URL="http://download.osgeo.org/libtiff/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libjpeg-turbo zlib"
 PKG_SECTION="graphics"
