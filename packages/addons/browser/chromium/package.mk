@@ -182,7 +182,7 @@ addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # libXtst
-  cp -PL $(get_build_dir libXtst)/.install_pkg/usr/lib/*.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  # cp -PL $(get_build_dir libXtst)/.install_pkg/usr/lib/*.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # pango
   cp -PL $(get_build_dir pango)/.install_pkg/usr/lib/libpangocairo-1.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
