@@ -28,5 +28,3 @@ PKG_SECTION="x11/lib"
 PKG_SHORTDESC="libxshmfence: Shared memory 'SyncFence' synchronization primitive."
 PKG_LONGDESC="libxshmfence is the Shared memory 'SyncFence' synchronization primitive."
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --with-pic"
-
