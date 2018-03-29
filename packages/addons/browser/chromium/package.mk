@@ -47,7 +47,7 @@ post_patch() {
   cd $(get_build_dir chromium)
 
   # Use Python 2
-  find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$TOOLCHAIN/bin/python|g" {} +
+  find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$TOOLCHAIN/bin/python2|g" {} +
 
   # set correct widevine
   sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' ./third_party/widevine/cdm/stub/widevine_cdm_version.h
@@ -123,7 +123,6 @@ make_target() {
   # Possible replacements are listed in build/linux/unbundle/replace_gn_files.p
   # Keys are the names in the above script; values are the dependencies in Arch
   declare -gA _system_libs=(
-    #[flac]=flac
     [fontconfig]=fontconfig
     [freetype]=freetype2
     [harfbuzz-ng]=harfbuzz
