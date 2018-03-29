@@ -17,14 +17,14 @@
 ################################################################################
 
 PKG_NAME="qemu"
-PKG_VERSION="v2.12.0-rc1"
+PKG_VERSION="2.12.0-rc1"
 PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/qemu/qemu"
-#PKG_URL="http://wiki.qemu-project.org/download/qemu-$PKG_VERSION.tar.xz"
-PKG_URL="https://github.com/qemu/qemu/archive/${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_HOST="toolchain Python2:host zlib:host pixman:host"
+PKG_URL="http://wiki.qemu-project.org/download/qemu-$PKG_VERSION.tar.xz"
+#PKG_URL="https://github.com/qemu/qemu/archive/${PKG_VERSION}.tar.gz"
+PKG_DEPENDS_HOST="toolchain Python2:host zlib:host pixman:host glib:host"
 PKG_SECTION="tools"
 PKG_SHORTDESC="QEMU is a generic and open source machine emulator and virtualizer."
 PKG_LONGDESC="QEMU is a generic and open source machine emulator and virtualizer."
