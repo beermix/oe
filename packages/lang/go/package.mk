@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="go"
-PKG_VERSION="1.9.4"
+PKG_VERSION="1.10.1"
 PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="BSD"
