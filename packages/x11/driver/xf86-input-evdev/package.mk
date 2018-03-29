@@ -30,5 +30,4 @@ PKG_LONGDESC="Evdev is an Xorg input driver for Linux's generic event devices. I
 PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
-                           --with-xorg-module-dir=$XORG_PATH_MODULES \
-                           --with-gnu-ld"
+                           --with-xorg-module-dir=$XORG_PATH_MODULES"

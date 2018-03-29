@@ -120,7 +120,6 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
                            --disable-docs \
                            --disable-devel-docs \
                            --with-int10=x86emu \
-                           --with-gnu-ld \
                            --with-sha1=libcrypto \
                            --without-systemd-daemon \
                            --with-os-vendor=OE \

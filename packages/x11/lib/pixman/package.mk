@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.x.org/"
 PKG_URL="http://xorg.freedesktop.org/archive/individual/lib/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain util-macros"
+PKG_DEPENDS_TARGET="toolchain util-macros libpng"
 PKG_SECTION="x11/lib"
 PKG_SHORTDESC="pixman: Pixel manipulation library"
 PKG_LONGDESC="Pixman is a generic library for manipulating pixel regions, contains low-level pixel manipulation routines and is used by both xorg and cairo."
@@ -49,8 +49,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-openmp \
                            --enable-gcc-inline-asm \
                            --disable-timers \
                            --disable-gtk \
-                           --disable-libpng \
-                           --with-gnu-ld"
+                           --enable-libpng"
 
 post_makeinstall_target() {
   cp $SYSROOT_PREFIX/usr/lib/pkgconfig/pixman-1.pc \

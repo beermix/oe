@@ -44,7 +44,6 @@ PKG_CONFIGURE_OPTS_TARGET="--without-xsltproc \
                            --disable-runtime-deps \
                            --enable-nls \
                            --disable-rpath \
-                           --with-gnu-ld \
                            $DISPLAYSERVER_XKEYBOARD"
 
 pre_build_target() {
