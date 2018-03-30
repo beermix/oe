@@ -96,7 +96,6 @@ make_target() {
     'proprietary_codecs=true'
     'link_pulseaudio=true'
     'linux_use_bundled_binutils=false'
-    'use_allocator="none"'
     'use_cups=false'
     'use_custom_libcxx=false'
     'use_gnome_keyring=false'
@@ -105,18 +104,17 @@ make_target() {
     'use_kerberos=false'
     'use_pulseaudio=false'
     'use_sysroot=true'
-    'use_vaapi=true'
     'linux_link_libudev=true'
     'use_v8_context_snapshot=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_hangout_services_extension=true'
     'enable_widevine=true'
     'enable_nacl=false'
-    'enable_nacl_nonsfi=false'
     'enable_swiftshader=false'
     "google_api_key=\"${_google_api_key}\""
     "google_default_client_id=\"${_google_default_client_id}\""
     "google_default_client_secret=\"${_google_default_client_secret}\""
+    'use_vaapi=true'
   )
 
   # Possible replacements are listed in build/linux/unbundle/replace_gn_files.p
@@ -149,14 +147,15 @@ make_target() {
   local _lib
   for _lib in ${_unwanted_bundled_libs[@]}; do
     find -type f -path "*third_party/$_lib/*" \
-    \! -path "*third_party/$_lib/chromium/*" \
-    \! -path "*third_party/$_lib/google/*" \
-    \! -path './base/third_party/icu/*' \
-    \! -path './third_party/pdfium/third_party/freetype/include/pstables.h' \
-    \! -path './third_party/yasm/run_yasm.py' \
-    \! -regex '.*\.\(gn\|gni\|isolate\)' \
-    -delete
+      \! -path "*third_party/$_lib/chromium/*" \
+      \! -path "*third_party/$_lib/google/*" \
+      \! -path './base/third_party/icu/*' \
+      \! -path './third_party/pdfium/third_party/freetype/include/pstables.h' \
+      \! -path './third_party/yasm/run_yasm.py' \
+      \! -regex '.*\.\(gn\|gni\|isolate\)' \
+      -delete
   done
+
 
   ./build/linux/unbundle/replace_gn_files.py --system-libraries "${!_system_libs[@]}"
   ./third_party/libaddressinput/chromium/tools/update-strings.py
