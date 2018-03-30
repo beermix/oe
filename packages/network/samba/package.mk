@@ -66,7 +66,7 @@ PKG_CONFIGURE_OPTS="--prefix=/usr \
                     --disable-rpath-install \
                     --disable-rpath-private-install \
                     $SMB_AVAHI \
-                    $SMB_AESNI \
+                    --accel-aes=none \
                     --disable-cups \
                     --disable-iprint \
                     --disable-gnutls \
