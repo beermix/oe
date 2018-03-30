@@ -1,6 +1,7 @@
+#!/bin/sh
 ################################################################################
 #      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2016-present Team LibreELEC
+#      Copyright (C) 2009-2016 Lukas Rusak (lrusak@libreelec.tv)
 #
 #  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -16,20 +17,21 @@
 #  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-import subprocess
-import xbmc
-import xbmcaddon
+ADDON_DIR="/storage/.kodi/addons/service.system.docker"
+ADDON_HOME_DIR="/storage/.kodi/userdata/addon_data/service.system.docker"
 
+if [ ! -d "$ADDON_HOME_DIR/config" ]; then
+  mkdir -p $ADDON_HOME_DIR/config
+fi
 
-class Monitor(xbmc.Monitor):
+if [ ! -f "$ADDON_HOME_DIR/config/docker.conf" ]; then
+  cp $ADDON_DIR/config/docker.conf $ADDON_HOME_DIR/config/docker.conf
+fi
 
-    def __init__(self, *args, **kwargs):
-        xbmc.Monitor.__init__(self)
-        self.id = xbmcaddon.Addon().getAddonInfo('id')
+if [ ! -d "$ADDON_HOME_DIR/docker" ]; then
+  mkdir -p $ADDON_HOME_DIR/docker
+fi
 
-    def onSettingsChanged(self):
-        subprocess.call(['systemctl', 'restart', self.id])
-
-
-if __name__ == '__main__':
-    Monitor().waitForAbort()
+if [ ! -d /var/lib/docker ]; then
+  ln -sf $ADDON_HOME_DIR/docker /var/lib/docker
+fi
