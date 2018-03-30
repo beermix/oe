@@ -33,6 +33,11 @@ PKG_BUILD_FLAGS="-lto -hardening"
 CC_FOR_BUILD="$HOST_CC"
 CFLAGS_FOR_BUILD="$HOST_CFLAGS"
 
+pre_configure_target() {
+  CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
+  CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-Os|"`
+}
+
 PKG_CONFIGURE_OPTS_TARGET="bash_cv_have_mbstate_t=set \
                            --disable-shared \
                            --enable-static \
