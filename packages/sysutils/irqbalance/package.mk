@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="irqbalance"
-PKG_VERSION="aeb1bbe"
+PKG_VERSION="1.3.0"
 PKG_SITE="https://github.com/Irqbalance/irqbalance"
-PKG_URL="https://github.com/Irqbalance/irqbalance/archive/${PKG_VERSION}.tar.gz"
+PKG_URL="https://github.com/Irqbalance/irqbalance/archive/v${PKG_VERSION}.tar.gz"
 PKG_GIT_BRANCH="master"
 PKG_DEPENDS_TARGET="toolchain glib systemd ncurses"
 PKG_SECTION="system"
