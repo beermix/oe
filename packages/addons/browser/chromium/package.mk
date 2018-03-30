@@ -128,7 +128,7 @@ make_target() {
     [libjpeg]=libjpeg
     #[libpng]=libpng            # https://crbug.com/752403#c10
     #[libvpx]=libvpx
-    [libxml]=libxml2           # https://crbug.com/736026
+    #[libxml]=libxml2           # https://crbug.com/736026
     [libxslt]=libxslt
     [re2]=re2
     [snappy]=snappy
@@ -205,7 +205,7 @@ addon() {
   cp -PL $(get_build_dir gdk-pixbuf)/.install_pkg/usr/lib/gdk-pixbuf-2.0/2.10.0/loaders/* $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules
 
   # libexif
-  cp -PL $(get_build_dir libexif)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  # lcp -PL $(get_build_dir libexif)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # libva-vdpau-driver
   cp -PL $(get_build_dir libva-vdpau-driver)/.install_pkg/usr/lib/dri/*.so $ADDON_BUILD/$PKG_ADDON_ID/lib
