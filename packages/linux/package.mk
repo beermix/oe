@@ -145,7 +145,8 @@ pre_make_target() {
     # copy some extra firmware to linux tree
     mkdir -p $PKG_BUILD/external-firmware
       #cp -a $(get_build_dir kernel-firmware)/{rtl_bt,i915,intel,e100,rtl_nic} $PKG_BUILD/external-firmware
-      cp -a $(get_build_dir kernel-firmware)/{i915,intel} $PKG_BUILD/external-firmware
+      #cp -a $(get_build_dir kernel-firmware)/{i915,intel} $PKG_BUILD/external-firmware
+      cp -a $(get_build_dir kernel-firmware)/i915 $PKG_BUILD/external-firmware
 
     cp -a $(get_build_dir intel-ucode)/intel-ucode $PKG_BUILD/external-firmware
 
