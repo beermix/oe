@@ -108,7 +108,6 @@ make_target() {
     'use_vaapi=true'
     'linux_link_libudev=true'
     'use_v8_context_snapshot=false'
-    'enable_vulkan=true'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_hangout_services_extension=true'
     'enable_widevine=true'
