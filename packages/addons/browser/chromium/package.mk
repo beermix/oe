@@ -96,15 +96,12 @@ make_target() {
     'proprietary_codecs=true'
     'link_pulseaudio=true'
     'linux_use_bundled_binutils=false'
+    'use_allocator="none"'
     'use_cups=false'
     'use_custom_libcxx=false'
     'use_gnome_keyring=false'
     'use_gold=false'
     'use_gtk3=false'
-    'use_system_freetype=true'
-    'use_system_harfbuzz=true'
-    'use_system_libpng=true'
-    'icu_use_data_file=true'
     'use_kerberos=false'
     'use_pulseaudio=false'
     'use_sysroot=true'
@@ -121,22 +118,46 @@ make_target() {
     'use_vaapi=true'
   )
 
+  # Possible replacements are listed in build/linux/unbundle/replace_gn_files.p
+  # Keys are the names in the above script; values are the dependencies in Arch
+  declare -gA _system_libs=(
+    [fontconfig]=fontconfig
+    [freetype]=freetype2
+    [harfbuzz-ng]=harfbuzz
+    #[icu]=icu
+    [libdrm]=
+    [libjpeg]=libjpeg
+    #[libpng]=libpng            # https://crbug.com/752403#c10
+    #[libvpx]=libvpx
+    #[libxml]=libxml2           # https://crbug.com/736026
+    [libxslt]=libxslt
+    [re2]=re2
+    [snappy]=snappy
+    [yasm]=
+    [zlib]=minizip
+  )
+  _unwanted_bundled_libs=(
+    ${!_system_libs[@]}
+    ${_system_libs[libjpeg]+libjpeg_turbo}
+  )
+  depends+=(${_system_libs[@]})
+
   # Remove bundled libraries for which we will use the system copies; this
   # *should* do what the remove_bundled_libraries.py script does, with the
   # added benefit of not having to list all the remaining libraries
+  #              \! -path './base/third_party/icu/*' \
   local _lib
   for _lib in ${_unwanted_bundled_libs[@]}; do
     find -type f -path "*third_party/$_lib/*" \
       \! -path "*third_party/$_lib/chromium/*" \
       \! -path "*third_party/$_lib/google/*" \
-      \! -path './base/third_party/icu/*' \
       \! -path './third_party/pdfium/third_party/freetype/include/pstables.h' \
       \! -path './third_party/yasm/run_yasm.py' \
       \! -regex '.*\.\(gn\|gni\|isolate\)' \
       -delete
   done
 
-#  ./build/linux/unbundle/replace_gn_files.py --system-libraries "${!_system_libs[@]}"
+  ./build/linux/unbundle/replace_gn_files.py --system-libraries "${!_system_libs[@]}"
   ./third_party/libaddressinput/chromium/tools/update-strings.py
   ./out/Release/gn gen out/Release -s --no-clean --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python2
 
