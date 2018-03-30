@@ -31,12 +31,12 @@ PKG_SHORTDESC="gdk-pixbuf: a GNOME library for image loading and manipulation."
 PKG_LONGDESC="gdk-pixbuf (GdkPixbuf) is a GNOME library for image loading and manipulation. The GdkPixbuf documentation contains both the programmer's guide and the API reference."
 PKG_TOOLCHAIN="autotools"
 
-PKG_CONFIGURE_OPTS_TARGET="gio_can_sniff=yes \
-                           --disable-gtk-doc \
-                           --disable-gtk-doc-html \
-                           --disable-gtk-doc-pdf \
-                           --disable-man \
-                           --with-libpng \
-                           --with-libjpeg \
-                           --with-libtiff \
-                           --with-libjasper"
+PKG_CONFIGURE_OPTS_TARGET="--enable-introspection \
+			      --disable-installed-tests \
+			      --enable-nls \
+			      --disable-gio-sniffing \
+			      --with-libjpeg \
+			      --without-libjasper \
+			      --with-libpng \
+			      --without-libtiff \
+			      --with-x11"
