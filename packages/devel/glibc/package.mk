@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="glibc"
-PKG_VERSION="d300041"
+PKG_VERSION="2.26"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/bminor/glibc/tree/release/2.26/master"
 PKG_URL="https://github.com/bminor/glibc/archive/$PKG_VERSION.tar.gz"
-#PKG_URL="http://ftpmirror.gnu.org/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="http://ftpmirror.gnu.org/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap"
 PKG_DEPENDS_INIT="glibc"
 PKG_SECTION="toolchain/devel"
@@ -62,11 +62,44 @@ fi
 
 NSS_CONF_DIR="$PKG_BUILD/nss"
 
-pre_build_target() {
-  cd $PKG_BUILD
-    aclocal --force --verbose
-    autoconf --force --verbose
-  cd -
+post_patch() {
+  # Add patches from Clear Linux
+  if [ "$TARGET_ARCH" = "x86_64" ]; then
+      patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/0001-Set-host.conf-multi-to-on-by-default.patch
+      patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/skip-error-msg-ld.so.conf.patch
+      patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/ldconfig-format-new.patch
+      patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/0001-sysdeps-unix-Add-support-for-usr-lib32-as-a-system-l.patch
+      patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/nsswitch-altfiles.patch
+      #patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/ld-so-cache-in-var.patch
+      #patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/mkdir-ldconfig.patch
+      #patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/locale-var-cache.patch
+      patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/nonscd.patch
+      patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/alternate_trim.patch
+      patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/madvise-bss.patch
+      patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/spinaphore.patch
+      #patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/tzselect-proper-zone-file.patch
+      patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/large-page-huge-page.patch
+      patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/use_madv_free.patch
+      patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/malloc_tune.patch
+      patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/0001-misc-Support-fallback-stateless-shells-path-in-absen.patch
+      patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/ldconfig-Os.patch
+      patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/stateless.patch
+      patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/nsswitch-altfiles-bugfix.patch
+      #patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/math-2.27.patch
+      #patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/exp2.patch
+      patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/mathlto.patch
+      #patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/vzeroupper.patch
+      patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/malloc-relaxed.patch
+      #patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/0001-x86-64-Remove-sysdeps-x86_64-fpu-s_sinf.S.patch
+      #patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/0002-x86-64-Add-sinf-with-FMA.patch
+      patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/CVE-2017-8804.patch
+      patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/malloc-assert-3.patch
+      patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/cve-2017-15804.patch
+      patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/cve-2017-15670.patch
+      patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/cve-2017-15671.patch
+      patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/cve-2017-17426.patch
+      patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/cve-2017-16997.patch
+  fi
 }
 
 pre_configure_target() {
