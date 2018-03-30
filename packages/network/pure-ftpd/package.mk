@@ -23,6 +23,6 @@ post_makeinstall_target() {
   rm -rf $INSTALL/storage
 }
 
-post_install () {
-  enable_service ftpd.service
-}
+#post_install () {
+#  enable_service ftpd.service
+#}
