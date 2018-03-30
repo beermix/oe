@@ -49,7 +49,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-nls \
                            --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
-                           --disable-libmudflap \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
@@ -67,6 +66,7 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-libatomic \
                               --disable-libgomp \
                               --disable-libquadmath \
+                              --disable-libmudflap \
                               --disable-threads \
                               --without-headers \
                               --with-newlib \
