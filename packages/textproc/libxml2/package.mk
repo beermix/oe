@@ -35,13 +35,15 @@ PKG_CONFIGURE_OPTS_ALL="ac_cv_header_ansidecl_h=no \
              --disable-ipv6 \
              --without-debug \
              --without-python \
+             --with-threads \
+             --with-history \
              --with-zlib=$TOOLCHAIN \
              --without-lzma \
              --with-icu=$TOOLCHAIN"
 
 PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_ALL --with-zlib=$TOOLCHAIN"
 
-PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_ALL --with-zlib=$SYSROOT_PREFIX/usr --with-sysroot=$SYSROOT_PREFIX --with-icu=$SYSROOT_PREFIX --without-debug"
+PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_ALL --with-zlib=$SYSROOT_PREFIX/usr --with-sysroot=$SYSROOT_PREFIX --with-icu=$SYSROOT_PREFIX --without-debug --with-threads --with-history"
 
 post_makeinstall_target() {
   $SED "s:\(['= ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" $SYSROOT_PREFIX/usr/bin/xml2-config
