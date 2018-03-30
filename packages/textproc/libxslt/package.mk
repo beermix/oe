@@ -17,16 +17,17 @@
 ################################################################################
 
 PKG_NAME="libxslt"
-PKG_VERSION="1.1.32"
+PKG_VERSION="1.1.33-rc1"
 PKG_ARCH="any"
 PKG_LICENSE="MIT"
-PKG_SITE="http://xmlsoft.org/xslt/"
-PKG_URL="ftp://xmlsoft.org/libxml2/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_SITE="https://git.gnome.org//browse/libxslt/"
+PKG_URL="https://git.gnome.org/browse/libxslt/snapshot/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="libxml2:host"
 PKG_DEPENDS_TARGET="toolchain libxml2"
 PKG_SECTION="textproc"
 PKG_SHORTDESC="libxslt"
 PKG_LONGDESC="libxslt"
+PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_HOST="  ac_cv_header_ansidecl_h=no \
                            ac_cv_header_xlocale_h=no \
