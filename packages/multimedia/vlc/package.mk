@@ -125,10 +125,10 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
 			      --enable-vlc \
 			      --disable-wayland"
 
-pre_configure_target() {
-  export LDFLAGS="$LDFLAGS -lresolv"
-  export LIBS="$LIBS -fopenmp"
-}
+#pre_configure_target() {
+#  export LDFLAGS="$LDFLAGS -lresolv"
+#  export LIBS="$LIBS -fopenmp"
+#}
 
 post_makeinstall_target() {
   rm -fr $INSTALL/usr/share/applications
