@@ -1,0 +1,48 @@
+diff --git a/src/core/main.c b/src/core/main.c
+index 56200a8..aab315c 100644
+--- a/src/core/main.c
++++ b/src/core/main.c
+@@ -2293,6 +2293,34 @@ static bool early_skip_setup_check(int argc, char *argv[]) {
+         return found_deserialize; /* When we are deserializing, then we are reexecuting, hence avoid the extensive setup */
+ }
+ 
++static void verify_libreelec_kernel(void) {
++        int r = 1;
++        FILE* fProcVersion = NULL;
++        const char * LIBREELEC_KERNEL_VERSION = "@@LIBREELEC_KERNEL_VERSION@@";
++        char buf[256];
++
++        memset(buf, 0, sizeof(buf));
++
++        if ((fProcVersion = fopen("/proc/version", "r")) != NULL) {
++                if (fgets(buf, sizeof(buf), fProcVersion)) {
++                        buf[strcspn(buf, "\n")] = 0;
++                        r = strcmp(buf, LIBREELEC_KERNEL_VERSION);
++                }
++                fclose(fProcVersion);
++        }
++
++        if (r != 0) {
++                log_emergency("Incompatible kernel detected - this is not a supported @@DISTRONAME@@ configuration!");
++                log_emergency("Original Kernel: %s", LIBREELEC_KERNEL_VERSION);
++                log_emergency("Current  Kernel: %s", buf);
++#if @@LIBREELEC_IS_RELEASE@@
++                log_emergency("Sleeping for 5 minutes...");
++                (void) sleep(300);
++#endif
++        }
++        return;
++}
++
+ int main(int argc, char *argv[]) {
+ 
+         dual_timestamp initrd_timestamp = DUAL_TIMESTAMP_NULL, userspace_timestamp = DUAL_TIMESTAMP_NULL, kernel_timestamp = DUAL_TIMESTAMP_NULL,
+@@ -2500,6 +2528,8 @@ int main(int argc, char *argv[]) {
+ 
+         log_execution_mode(&first_boot);
+ 
++        verify_libreelec_kernel();
++
+         r = initialize_runtime(skip_setup,
+                                &saved_rlimit_nofile,
+                                &saved_rlimit_memlock,

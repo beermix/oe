@@ -55263,3 +55263,1450 @@ index 4f5f353a54..074f647679 100644
  #define BFD_VERSION @bfd_version@
  #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
  #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 7c78c26eefbb884e63817abe01e2941601e70837
+Author: H.J. Lu <hjl.tools@gmail.com>
+Date:   Tue Mar 20 03:51:26 2018 -0700
+
+    Set non_ir_ref_dynamic if a symbol is made dynamic
+    
+    If a symbol is made dynamic by --dynamic-list, it has non-IR reference.
+    
+    bfd/
+    
+            PR ld/22983
+            * elflink.c (bfd_elf_link_mark_dynamic_symbol): Set
+            non_ir_ref_dynamic if a symbol is made dynamic by --dynamic-list.
+    
+    ld/
+    
+            PR ld/22983
+            * testsuite/ld-plugin/lto.exp: Run PR ld/22983 test.
+            * testsuite/ld-plugin/pr22983.d: New file.
+            * testsuite/ld-plugin/pr22983.t: Likewise.
+            * testsuite/ld-plugin/pr22983a.c: Likewise.
+            * testsuite/ld-plugin/pr22983b.c: Likewise.
+    
+    (cherry picked from commit 416c34d683f2a17aefe19afb466af4316c7c603b)
+
+diff --git a/bfd/ChangeLog b/bfd/ChangeLog
+index 13ccbc5eb0..74d76dce05 100644
+--- a/bfd/ChangeLog
++++ b/bfd/ChangeLog
+@@ -1,3 +1,12 @@
++2018-03-20  H.J. Lu  <hongjiu.lu@intel.com>
++
++	Backport from master branch
++	2018-03-20  H.J. Lu  <hongjiu.lu@intel.com>
++
++	PR ld/22983
++	* elflink.c (bfd_elf_link_mark_dynamic_symbol): Set
++	non_ir_ref_dynamic if a symbol is made dynamic by --dynamic-list.
++
+ 2018-03-19  H.J. Lu  <hongjiu.lu@intel.com>
+ 
+ 	Backport from master branch
+diff --git a/bfd/elflink.c b/bfd/elflink.c
+index 69cb5abbac..6bb4e98ae6 100644
+--- a/bfd/elflink.c
++++ b/bfd/elflink.c
+@@ -586,7 +586,12 @@ bfd_elf_link_mark_dynamic_symbol (struct bfd_link_info *info,
+       || (d != NULL
+ 	  && h->non_elf
+ 	  && (*d->match) (&d->head, NULL, h->root.root.string)))
+-    h->dynamic = 1;
++    {
++      h->dynamic = 1;
++      /* NB: If a symbol is made dynamic by --dynamic-list, it has
++	 non-IR reference.  */
++      h->root.non_ir_ref_dynamic = 1;
++    }
+ }
+ 
+ /* Record an assignment to a symbol made by a linker script.  We need
+diff --git a/ld/ChangeLog b/ld/ChangeLog
+index 6cea82b6ad..b266e2433f 100644
+--- a/ld/ChangeLog
++++ b/ld/ChangeLog
+@@ -1,3 +1,15 @@
++2018-03-20  H.J. Lu  <hongjiu.lu@intel.com>
++
++	Backport from master branch
++	2018-03-20  H.J. Lu  <hongjiu.lu@intel.com>
++
++	PR ld/22983
++	* testsuite/ld-plugin/lto.exp: Run PR ld/22983 test.
++	* testsuite/ld-plugin/pr22983.d: New file.
++	* testsuite/ld-plugin/pr22983.t: Likewise.
++	* testsuite/ld-plugin/pr22983a.c: Likewise.
++	* testsuite/ld-plugin/pr22983b.c: Likewise.
++
+ 2018-03-19  H.J. Lu  <hongjiu.lu@intel.com>
+ 
+ 	Backport from master branch
+diff --git a/ld/testsuite/ld-plugin/lto.exp b/ld/testsuite/ld-plugin/lto.exp
+index 896f453def..4bd2ada0ea 100644
+--- a/ld/testsuite/ld-plugin/lto.exp
++++ b/ld/testsuite/ld-plugin/lto.exp
+@@ -564,6 +564,16 @@ run_ld_link_exec_tests $lto_run_tests
+ 
+ if { [is_elf_format] } {
+     run_ld_link_exec_tests $lto_run_elf_tests
++    run_cc_link_tests [list \
++	[list \
++	    "Build pr22983" \
++	    "-Wl,--dynamic-list,pr22983.t" \
++	    "-flto" \
++	    {pr22983a.c pr22983b.c} \
++	    {{readelf {--dyn-syms --wide} pr22983.d}} \
++	    "pr22983" \
++	] \
++    ]
+ }
+ 
+ if { [is_elf_format] && [check_lto_shared_available] } {
+diff --git a/ld/testsuite/ld-plugin/pr22983.d b/ld/testsuite/ld-plugin/pr22983.d
+new file mode 100644
+index 0000000000..af1d710d3f
+--- /dev/null
++++ b/ld/testsuite/ld-plugin/pr22983.d
+@@ -0,0 +1,9 @@
++Symbol table '\.dynsym' contains [0-9]+ entries:
++ +Num: +Value +Size Type +Bind +Vis +Ndx Name
++#...
++ +[0-9]+: +[0-9a-f]+ +[0-9a-f]+ +OBJECT +GLOBAL +DEFAULT +[0-9]+ +var_attr_used_enabled
++ +[0-9]+: +[0-9a-f]+ +[0-9a-f]+ +OBJECT +GLOBAL +DEFAULT +[0-9]+ +var_attr_used_disabled
++#...
++ +[0-9]+: +[0-9a-f]+ +[0-9a-f]+ +FUNC +GLOBAL +DEFAULT +[0-9]+ +func_attr_used_enabled
++ +[0-9]+: +[0-9a-f]+ +[0-9a-f]+ +FUNC +GLOBAL +DEFAULT +[0-9]+ +func_attr_used_disabled
++#...
+diff --git a/ld/testsuite/ld-plugin/pr22983.t b/ld/testsuite/ld-plugin/pr22983.t
+new file mode 100644
+index 0000000000..ca31f10965
+--- /dev/null
++++ b/ld/testsuite/ld-plugin/pr22983.t
+@@ -0,0 +1,6 @@
++{
++var_attr_used_disabled;
++var_attr_used_enabled;
++func_attr_used_disabled;
++func_attr_used_enabled;
++};
+diff --git a/ld/testsuite/ld-plugin/pr22983a.c b/ld/testsuite/ld-plugin/pr22983a.c
+new file mode 100644
+index 0000000000..283f263bff
+--- /dev/null
++++ b/ld/testsuite/ld-plugin/pr22983a.c
+@@ -0,0 +1,14 @@
++#include <stdio.h>
++
++int func_attr_used_disabled(int val);
++int func_attr_used_enabled(int val);
++extern int var_attr_used_enabled;
++extern int var_attr_used_disabled;
++
++int main(int argc, const char **argv){
++	printf("%d\n", var_attr_used_disabled);
++	printf("%d\n", var_attr_used_enabled);
++	printf("%d\n", func_attr_used_disabled(1));
++	printf("%d\n", func_attr_used_enabled(1));
++	return 0;
++}
+diff --git a/ld/testsuite/ld-plugin/pr22983b.c b/ld/testsuite/ld-plugin/pr22983b.c
+new file mode 100644
+index 0000000000..1b66ed889f
+--- /dev/null
++++ b/ld/testsuite/ld-plugin/pr22983b.c
+@@ -0,0 +1,10 @@
++int func_attr_used_disabled(int val){
++	return val + 1;
++}
++__attribute__((used))
++int func_attr_used_enabled(int val){
++	return val + 1;
++}
++__attribute__((used))
++int var_attr_used_enabled = 0b0101010101;
++int var_attr_used_disabled = 0b0101010101;
+
+commit 444ad76e11b76a7ca74222b5a2d6b66ba8606bf6
+Author: Roland McGrath <mcgrathr@google.com>
+Date:   Tue Mar 20 13:31:35 2018 -0700
+
+    ld/testsuite: XFAIL pr20995-2 on aarch64*-*-elf*
+    
+    ld/
+            * testsuite/ld-elf/elf.exp (pr20995-2): XFAIL on aarch64*-*-elf*,
+            another target without RELRO.
+
+diff --git a/ld/ChangeLog b/ld/ChangeLog
+index b266e2433f..61230789bc 100644
+--- a/ld/ChangeLog
++++ b/ld/ChangeLog
+@@ -1,3 +1,8 @@
++2018-03-20  Roland McGrath  <mcgrathr@google.com>
++
++	* testsuite/ld-elf/elf.exp (pr20995-2): XFAIL on aarch64*-*-elf*,
++	another target without RELRO.
++
+ 2018-03-20  H.J. Lu  <hongjiu.lu@intel.com>
+ 
+ 	Backport from master branch
+diff --git a/ld/testsuite/ld-elf/elf.exp b/ld/testsuite/ld-elf/elf.exp
+index 0b005dea90..bda51de96c 100644
+--- a/ld/testsuite/ld-elf/elf.exp
++++ b/ld/testsuite/ld-elf/elf.exp
+@@ -208,7 +208,7 @@ if { [check_shared_lib_support] } then {
+ 	{"Build pr20995-2.so"
+ 	    "-shared -z relro" "" ""
+ 	    {pr20995c.s} {{readelf {-l --wide} pr20995-2so.r}} "pr20995-2.so"}
+-    } "tic6x-*-*" "arm*-*-eabi*" "hppa*64*-*-hpux*"
++    } "tic6x-*-*" "arm*-*-eabi*" "hppa*64*-*-hpux*" "aarch64*-*-elf*"
+ 
+     # These targets don't copy dynamic variables into .bss.
+     setup_xfail "alpha-*-*" "bfin-*-*" "ia64-*-*" "xtensa-*-*"
+@@ -223,7 +223,7 @@ if { [check_shared_lib_support] } then {
+     # xfail on arm*-*-eabi* is particularly because of no support of GNU_RELRO.
+     # Please see the link above for details.
+     setup_xfail "alpha-*-*" "bfin-*-*" "ia64-*-*" "xtensa-*-*" "arm*-*-eabi*"
+-    setup_xfail "hppa*64*-*-hpux*"
++    setup_xfail "hppa*64*-*-hpux*" "aarch64*-*-elf*"
+     run_ld_link_tests [list \
+ 	[list \
+ 	    "pr20995-2" \
+
+commit e93478c60830b09003153c0618b3fc56955e6b6a
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Wed Mar 21 00:01:49 2018 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 074f647679..6091c0a669 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20180320
++#define BFD_VERSION_DATE 20180321
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 10d2f8bcf800b24d495e48c7c53bfb908376e759
+Author: Alan Modra <amodra@gmail.com>
+Date:   Thu Mar 8 10:17:41 2018 +1030
+
+    Remove unnecessary power9 group terminating nop
+    
+    Power9 doesn't have a group terminating nop, so we may as well emit a
+    normal nop for power9.  Not that it matters a great deal, I believe
+    ori 2,2,0 will be treated exactly as ori 0,0,0 by the hardware.
+    
+            * config/tc-ppc.c (ppc_handle_align): Don't emit a group
+            terminating nop for power9.
+    
+    (cherry picked from commit 3fea0c3b3fe53ea805f1289ec9ff5e785024362f)
+
+diff --git a/gas/ChangeLog b/gas/ChangeLog
+index 16660acf80..2210d16104 100644
+--- a/gas/ChangeLog
++++ b/gas/ChangeLog
+@@ -1,3 +1,10 @@
++2018-03-21  Alan Modra  <amodra@gmail.com>
++
++	Apply from master
++	2018-03-08  Alan Modra  <amodra@gmail.com>
++	* config/tc-ppc.c (ppc_handle_align): Don't emit a group
++	terminating nop for power9.
++
+ 2018-02-28  Nick Clifton  <nickc@redhat.com>
+ 
+ 	* po/ru.po: Updated Russian translation.
+diff --git a/gas/config/tc-ppc.c b/gas/config/tc-ppc.c
+index 35da05c510..dbd0295407 100644
+--- a/gas/config/tc-ppc.c
++++ b/gas/config/tc-ppc.c
+@@ -6556,14 +6556,13 @@ ppc_handle_align (struct frag *fragP)
+ 
+       if ((ppc_cpu & PPC_OPCODE_POWER6) != 0
+ 	  || (ppc_cpu & PPC_OPCODE_POWER7) != 0
+-	  || (ppc_cpu & PPC_OPCODE_POWER8) != 0
+-	  || (ppc_cpu & PPC_OPCODE_POWER9) != 0)
++	  || (ppc_cpu & PPC_OPCODE_POWER8) != 0)
+ 	{
+-	  /* For power6, power7, power8 and power9, we want the last nop to be
+-	     a group terminating one.  Do this by inserting an rs_fill frag
+-	     immediately after this one, with its address set to the last nop
+-	     location.  This will automatically reduce the number of nops in
+-	     the current frag by one.  */
++	  /* For power6, power7, and power8, we want the last nop to
++	     be a group terminating one.  Do this by inserting an
++	     rs_fill frag immediately after this one, with its address
++	     set to the last nop location.  This will automatically
++	     reduce the number of nops in the current frag by one.  */
+ 	  if (count > 4)
+ 	    {
+ 	      struct frag *group_nop = xmalloc (SIZEOF_STRUCT_FRAG + 4);
+@@ -6578,14 +6577,13 @@ ppc_handle_align (struct frag *fragP)
+ 	    }
+ 
+ 	  if ((ppc_cpu & PPC_OPCODE_POWER7) != 0
+-	      || (ppc_cpu & PPC_OPCODE_POWER8) != 0
+-	      || (ppc_cpu & PPC_OPCODE_POWER9) != 0)
++	      || (ppc_cpu & PPC_OPCODE_POWER8) != 0)
+ 	    {
+ 	      if (ppc_cpu & PPC_OPCODE_E500MC)
+ 		/* e500mc group terminating nop: "ori 0,0,0".  */
+ 		md_number_to_chars (dest, 0x60000000, 4);
+ 	      else
+-		/* power7/power8/power9 group terminating nop: "ori 2,2,0".  */
++		/* power7/power8 group terminating nop: "ori 2,2,0".  */
+ 		md_number_to_chars (dest, 0x60420000, 4);
+ 	    }
+ 	  else
+
+commit 345da48bf531f73b87f68b0146f3cb3934a6a069
+Author: Alan Modra <amodra@gmail.com>
+Date:   Thu Mar 8 14:34:09 2018 +1030
+
+    Really remove unnecessary power9 group terminating nop
+    
+    Oops, not tested well enough.  -mpower9 sets all the PPC_OPCODE_POWERn
+    for n <= 9.
+    
+            * config/tc-ppc.c (ppc_handle_align): Correct last patch.  Really
+            don't emit a group terminating nop for power9.  Simplify cpu
+            tests.
+    
+    (cherry picked from commit 6a7524c6aa18f5afa4977314eb01f0360e752789)
+
+diff --git a/gas/ChangeLog b/gas/ChangeLog
+index 2210d16104..c266eb4664 100644
+--- a/gas/ChangeLog
++++ b/gas/ChangeLog
+@@ -1,6 +1,11 @@
+ 2018-03-21  Alan Modra  <amodra@gmail.com>
+ 
+ 	Apply from master
++	2018-03-08  Alan Modra  <amodra@gmail.com>
++	* config/tc-ppc.c (ppc_handle_align): Correct last patch.  Really
++	don't emit a group terminating nop for power9.  Simplify cpu
++	tests.
++
+ 	2018-03-08  Alan Modra  <amodra@gmail.com>
+ 	* config/tc-ppc.c (ppc_handle_align): Don't emit a group
+ 	terminating nop for power9.
+diff --git a/gas/config/tc-ppc.c b/gas/config/tc-ppc.c
+index dbd0295407..353648f018 100644
+--- a/gas/config/tc-ppc.c
++++ b/gas/config/tc-ppc.c
+@@ -6555,8 +6555,7 @@ ppc_handle_align (struct frag *fragP)
+       md_number_to_chars (dest, 0x60000000, 4);
+ 
+       if ((ppc_cpu & PPC_OPCODE_POWER6) != 0
+-	  || (ppc_cpu & PPC_OPCODE_POWER7) != 0
+-	  || (ppc_cpu & PPC_OPCODE_POWER8) != 0)
++	  && (ppc_cpu & PPC_OPCODE_POWER9) == 0)
+ 	{
+ 	  /* For power6, power7, and power8, we want the last nop to
+ 	     be a group terminating one.  Do this by inserting an
+@@ -6576,8 +6575,7 @@ ppc_handle_align (struct frag *fragP)
+ 	      dest = group_nop->fr_literal;
+ 	    }
+ 
+-	  if ((ppc_cpu & PPC_OPCODE_POWER7) != 0
+-	      || (ppc_cpu & PPC_OPCODE_POWER8) != 0)
++	  if ((ppc_cpu & PPC_OPCODE_POWER7) != 0)
+ 	    {
+ 	      if (ppc_cpu & PPC_OPCODE_E500MC)
+ 		/* e500mc group terminating nop: "ori 0,0,0".  */
+
+commit d66deb71f1537e2e30dccdfda22eed5d46ec47eb
+Author: Alan Modra <amodra@gmail.com>
+Date:   Wed Mar 14 22:09:33 2018 +1030
+
+    PowerPC64 debian bug 886264, out-of-line save/restore functions
+    
+    This calculation in relocate_section
+    
+                  if (stub_entry->stub_type == ppc_stub_save_res)
+                    relocation += (stub_sec->output_offset
+                                   + stub_sec->output_section->vma
+                                   + stub_sec->size - htab->sfpr->size
+                                   - htab->sfpr->output_offset
+                                   - htab->sfpr->output_section->vma);
+    
+    to adjust from the original out-of-line save/restore function address
+    in sfpr to a copy at the end of stub_sec goes wrong when stub_sec is
+    padded, because the copy is no longer at the end of stub_sec.  The
+    solution is to pad before copying sfpr, so the copy is always at the
+    end of stub_sec.
+    
+            * elf64-ppc.c (sfpr_define): Adjust for stub_sec size having
+            sfpr size added before defining alias symbols.
+            (ppc64_elf_build_stubs): Add stub section padding before
+            copying sfpr contents and defining save/restore alias symbols.
+    
+    (cherry picked from commit 7dda8d3cf3b089bb7e03c4cdbec827fc6a188c88)
+
+diff --git a/bfd/ChangeLog b/bfd/ChangeLog
+index 74d76dce05..3c9e08beec 100644
+--- a/bfd/ChangeLog
++++ b/bfd/ChangeLog
+@@ -1,3 +1,12 @@
++2018-03-21  Alan Modra  <amodra@gmail.com>
++
++	Apply from master
++	2018-03-14  Alan Modra  <amodra@gmail.com>
++	* elf64-ppc.c (sfpr_define): Adjust for stub_sec size having
++	sfpr size added before defining alias symbols.
++	(ppc64_elf_build_stubs): Add stub section padding before
++	copying sfpr contents and defining save/restore alias symbols.
++
+ 2018-03-20  H.J. Lu  <hongjiu.lu@intel.com>
+ 
+ 	Backport from master branch
+diff --git a/bfd/elf64-ppc.c b/bfd/elf64-ppc.c
+index 6fcdff0678..039294fd1c 100644
+--- a/bfd/elf64-ppc.c
++++ b/bfd/elf64-ppc.c
+@@ -6645,7 +6645,7 @@ sfpr_define (struct bfd_link_info *info,
+ 		{
+ 		  s->root.type = bfd_link_hash_defined;
+ 		  s->root.u.def.section = stub_sec;
+-		  s->root.u.def.value = (stub_sec->size
++		  s->root.u.def.value = (stub_sec->size - htab->sfpr->size
+ 					 + h->elf.root.u.def.value);
+ 		  s->ref_regular = 1;
+ 		  s->def_regular = 1;
+@@ -13232,20 +13232,7 @@ ppc64_elf_build_stubs (struct bfd_link_info *info,
+ 
+   for (group = htab->group; group != NULL; group = group->next)
+     if (group->needs_save_res)
+-      {
+-	stub_sec = group->stub_sec;
+-	memcpy (stub_sec->contents + stub_sec->size, htab->sfpr->contents,
+-		htab->sfpr->size);
+-	if (htab->params->emit_stub_syms)
+-	  {
+-	    unsigned int i;
+-
+-	    for (i = 0; i < ARRAY_SIZE (save_res_funcs); i++)
+-	      if (!sfpr_define (info, &save_res_funcs[i], stub_sec))
+-		return FALSE;
+-	  }
+-	stub_sec->size += htab->sfpr->size;
+-      }
++      group->stub_sec->size += htab->sfpr->size;
+ 
+   if (htab->relbrlt != NULL)
+     htab->relbrlt->reloc_count = 0;
+@@ -13258,6 +13245,22 @@ ppc64_elf_build_stubs (struct bfd_link_info *info,
+ 	  stub_sec->size = (stub_sec->size + (1 << align) - 1) & -(1 << align);
+ 	}
+ 
++  for (group = htab->group; group != NULL; group = group->next)
++    if (group->needs_save_res)
++      {
++	stub_sec = group->stub_sec;
++	memcpy (stub_sec->contents + stub_sec->size - htab->sfpr->size,
++		htab->sfpr->contents, htab->sfpr->size);
++	if (htab->params->emit_stub_syms)
++	  {
++	    unsigned int i;
++
++	    for (i = 0; i < ARRAY_SIZE (save_res_funcs); i++)
++	      if (!sfpr_define (info, &save_res_funcs[i], stub_sec))
++		return FALSE;
++	  }
++      }
++
+   for (group = htab->group; group != NULL; group = group->next)
+     if ((stub_sec = group->stub_sec) != NULL)
+       {
+
+commit 7637f9be5b448bb925b73fc5bc151c7007899d71
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Thu Mar 22 00:02:01 2018 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 6091c0a669..ad5457b223 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20180321
++#define BFD_VERSION_DATE 20180322
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit b9f4e62e1d7b9a0be56bb1df2fadac77351cdc09
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Fri Mar 23 00:01:49 2018 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index ad5457b223..dd42f77e38 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20180322
++#define BFD_VERSION_DATE 20180323
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 02de140113dc69f7f9f9cb6fda749cf6667b17c0
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sat Mar 24 00:01:56 2018 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index dd42f77e38..493acc7c35 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20180323
++#define BFD_VERSION_DATE 20180324
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit dbbdf9a4db48daf3d9ff386c6720b431d4b4bc66
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sun Mar 25 00:02:26 2018 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 493acc7c35..152678249b 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20180324
++#define BFD_VERSION_DATE 20180325
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 5423c6f677a76e846dc8eb0b062aad1aa7b64c1f
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Mon Mar 26 00:01:57 2018 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 152678249b..01f91f880d 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20180325
++#define BFD_VERSION_DATE 20180326
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 963e88c631ad5878d70d055fd8597c83279efe66
+Author: H.J. Lu <hjl.tools@gmail.com>
+Date:   Mon Mar 26 03:57:01 2018 -0700
+
+    x86-64: Add ENDBR64 to the TLSDESC PLT entry
+    
+    The TLSDESC entry in a lazy procedure linkage table is called indirectly
+    with "callq *(%rax)".  This patch adds an ENDBR64 to support indirect
+    branch tracking in Intel CET.  The TLSDESC PLT entry now looks like:
+    
+    0xf3, 0x0f, 0x1e, 0xfa,  /* endbr64             */
+    0xff, 0x35, 8, 0, 0, 0,  /* pushq GOT+8(%rip)   */
+    0xff, 0x25, 16, 0, 0, 0  /* jmpq *GOT+TDG(%rip)  */
+    
+    The BND prefix isn't needed since MPX isn't used for TLSDESC.
+    
+    bfd/
+    
+            PR ld/23000
+            * elf64-x86-64.c (elf_x86_64_finish_dynamic_sections): Add
+            ENDBR64 to the TLSDESC PLT entry.
+    
+    ld/
+    
+            PR ld/23000
+            * testsuite/ld-x86-64/tlsdesc.pd: Updated.
+    
+    (cherry picked from commit bf54968b128a2133174d81c438d402ecfaf83042)
+
+diff --git a/bfd/ChangeLog b/bfd/ChangeLog
+index 3c9e08beec..b6b05ecf10 100644
+--- a/bfd/ChangeLog
++++ b/bfd/ChangeLog
+@@ -1,3 +1,12 @@
++2018-03-26  H.J. Lu  <hongjiu.lu@intel.com>
++
++	Backport from master branch
++	2018-03-25  H.J. Lu  <hongjiu.lu@intel.com>
++
++	PR ld/23000
++	* elf64-x86-64.c (elf_x86_64_finish_dynamic_sections): Add
++	ENDBR64 to the TLSDESC PLT entry.
++
+ 2018-03-21  Alan Modra  <amodra@gmail.com>
+ 
+ 	Apply from master
+diff --git a/bfd/elf64-x86-64.c b/bfd/elf64-x86-64.c
+index ba4f47bff4..30e07c4ef4 100644
+--- a/bfd/elf64-x86-64.c
++++ b/bfd/elf64-x86-64.c
+@@ -4393,15 +4393,23 @@ elf_x86_64_finish_dynamic_sections (bfd *output_bfd,
+ 
+       if (htab->tlsdesc_plt)
+ 	{
++	  /* The TLSDESC entry in a lazy procedure linkage table.  */
++	  static const bfd_byte tlsdesc_plt_entry[LAZY_PLT_ENTRY_SIZE] =
++	    {
++	      0xf3, 0x0f, 0x1e, 0xfa,	/* endbr64		*/
++	      0xff, 0x35, 8, 0, 0, 0,	/* pushq GOT+8(%rip)	*/
++	      0xff, 0x25, 16, 0, 0, 0	/* jmpq *GOT+TDG(%rip)	*/
++	    };
++
+ 	  bfd_put_64 (output_bfd, (bfd_vma) 0,
+ 		      htab->elf.sgot->contents + htab->tlsdesc_got);
+ 
+ 	  memcpy (htab->elf.splt->contents + htab->tlsdesc_plt,
+-		  htab->lazy_plt->plt0_entry,
+-		  htab->lazy_plt->plt0_entry_size);
++		  tlsdesc_plt_entry, LAZY_PLT_ENTRY_SIZE);
+ 
+-	  /* Add offset for pushq GOT+8(%rip), since the
+-	     instruction uses 6 bytes subtract this value.  */
++	  /* Add offset for pushq GOT+8(%rip), since ENDBR64 uses 4
++	     bytes and the instruction uses 6 bytes, subtract these
++	     values.  */
+ 	  bfd_put_32 (output_bfd,
+ 		      (htab->elf.sgotplt->output_section->vma
+ 		       + htab->elf.sgotplt->output_offset
+@@ -4409,14 +4417,13 @@ elf_x86_64_finish_dynamic_sections (bfd *output_bfd,
+ 		       - htab->elf.splt->output_section->vma
+ 		       - htab->elf.splt->output_offset
+ 		       - htab->tlsdesc_plt
+-		       - 6),
++		       - 4 - 6),
+ 		      (htab->elf.splt->contents
+ 		       + htab->tlsdesc_plt
+-		       + htab->lazy_plt->plt0_got1_offset));
+-	  /* Add offset for the PC-relative instruction accessing
+-	     GOT+TDG, where TDG stands for htab->tlsdesc_got,
+-	     subtracting the offset to the end of that
+-	     instruction.  */
++		       + 4 + 2));
++	  /* Add offset for indirect branch via GOT+TDG, where TDG
++	     stands for htab->tlsdesc_got, subtracting the offset
++	     to the end of that instruction.  */
+ 	  bfd_put_32 (output_bfd,
+ 		      (htab->elf.sgot->output_section->vma
+ 		       + htab->elf.sgot->output_offset
+@@ -4424,10 +4431,9 @@ elf_x86_64_finish_dynamic_sections (bfd *output_bfd,
+ 		       - htab->elf.splt->output_section->vma
+ 		       - htab->elf.splt->output_offset
+ 		       - htab->tlsdesc_plt
+-		       - htab->lazy_plt->plt0_got2_insn_end),
++		       - 4 - 6 - 6),
+ 		      (htab->elf.splt->contents
+-		       + htab->tlsdesc_plt
+-		       + htab->lazy_plt->plt0_got2_offset));
++		       + htab->tlsdesc_plt + 4 + 6 + 2));
+ 	}
+     }
+ 
+diff --git a/ld/ChangeLog b/ld/ChangeLog
+index 61230789bc..05223f4a53 100644
+--- a/ld/ChangeLog
++++ b/ld/ChangeLog
+@@ -1,3 +1,11 @@
++2018-03-26  H.J. Lu  <hongjiu.lu@intel.com>
++
++	Backport from master branch
++	2018-03-25  H.J. Lu  <hongjiu.lu@intel.com>
++
++	PR ld/23000
++	* testsuite/ld-x86-64/tlsdesc.pd: Updated.
++
+ 2018-03-20  Roland McGrath  <mcgrathr@google.com>
+ 
+ 	* testsuite/ld-elf/elf.exp (pr20995-2): XFAIL on aarch64*-*-elf*,
+diff --git a/ld/testsuite/ld-x86-64/tlsdesc.pd b/ld/testsuite/ld-x86-64/tlsdesc.pd
+index 0fa36f3273..08b4fa3aef 100644
+--- a/ld/testsuite/ld-x86-64/tlsdesc.pd
++++ b/ld/testsuite/ld-x86-64/tlsdesc.pd
+@@ -13,7 +13,7 @@ Disassembly of section .plt:
+  [0-9a-f]+:	ff 35 .. .. 20 00    	pushq  .*\(%rip\)        # 201358 <_GLOBAL_OFFSET_TABLE_\+0x8>
+  [0-9a-f]+:	ff 25 .. .. 20 00    	jmpq   \*.*\(%rip\)        # 201360 <_GLOBAL_OFFSET_TABLE_\+0x10>
+  [0-9a-f]+:	0f 1f 40 00          	nopl   0x0\(%rax\)
++ [0-9a-f]+:	f3 0f 1e fa          	endbr64 
+  [0-9a-f]+:	ff 35 .. .. 20 00    	pushq  .*\(%rip\)        # 201358 <_GLOBAL_OFFSET_TABLE_\+0x8>
+  [0-9a-f]+:	ff 25 .. .. 20 00    	jmpq   \*.*\(%rip\)        # 201348 <.*>
+- [0-9a-f]+:	0f 1f 40 00          	nopl   0x0\(%rax\)
+ 
+
+commit 5898623efb820fc56123da2e316756a9a32cb59b
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Tue Mar 27 00:01:50 2018 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 01f91f880d..c06f96f995 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20180326
++#define BFD_VERSION_DATE 20180327
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 1377b6a98ece9d04dd873a3df28c8116202906b5
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Wed Mar 28 00:01:36 2018 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index c06f96f995..f6ebea25ca 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20180327
++#define BFD_VERSION_DATE 20180328
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit f14da2782fd25511855048944aecee16864e73ea
+Author: Roland McGrath <mcgrathr@google.com>
+Date:   Tue Mar 27 16:27:03 2018 -0700
+
+    gold/testsuite: Fix bad regexp in split_x86_64.sh
+    
+    gold/
+            * testsuite/split_x86_64.sh: Fix bad regexp.
+
+diff --git a/gold/ChangeLog b/gold/ChangeLog
+index dda445f86b..e787020749 100644
+--- a/gold/ChangeLog
++++ b/gold/ChangeLog
+@@ -1,3 +1,7 @@
++2018-03-27  Roland McGrath  <mcgrathr@google.com>
++
++	* testsuite/split_x86_64.sh: Fix bad regexp.
++
+ 2018-02-07  Alan Modra  <amodra@gmail.com>
+ 
+ 	Revert 2018-01-17  Alan Modra  <amodra@gmail.com>
+diff --git a/gold/testsuite/split_x86_64.sh b/gold/testsuite/split_x86_64.sh
+index e436b51c17..98dc5c55a2 100755
+--- a/gold/testsuite/split_x86_64.sh
++++ b/gold/testsuite/split_x86_64.sh
+@@ -2,7 +2,7 @@
+ 
+ # split_x86_64.sh -- test -fstack-split for x86_64
+ 
+-# Copyright (C) 2009-2017 Free Software Foundation, Inc.
++# Copyright (C) 2009-2018 Free Software Foundation, Inc.
+ # Written by Ian Lance Taylor <iant@google.com>.
+ 
+ # This file is part of gold.
+@@ -38,7 +38,7 @@ nomatch()
+   fi
+ }
+ 
+-match 'cmp.*+%fs:[^,]*,%rsp' split_x86_64_1.stdout
++match 'cmp.*%fs:[^,]*,%rsp' split_x86_64_1.stdout
+ match 'callq.*__morestack>?$' split_x86_64_1.stdout
+ match 'lea.*-0x200\(%rsp\),' split_x86_64_1.stdout
+ 
+
+commit 99181ccac0fc7d82e7dabb05dc7466e91f1645d3
+Author: Eric Botcazou <ebotcazou@gcc.gnu.org>
+Date:   Wed Mar 28 12:17:15 2018 +0200
+
+    PR ld/22972 on SPARC.
+    
+    This is a regression for the corner case of a hidden symbol in a PIC/PIE
+    binary which is subject to both a new-style GOTDATA relocation and an
+    old-style GOT relocation.  In this case, depending  on the link order,
+    the R_SPARC_RELATIVE dynamic relocation for the GOT slot needed because
+    of the old-style relocation can be replaced with R_SPARC_NONE coming
+    from the GOTDATA relocation.
+    
+    The fix simply records whether an old-style GOT relocation is seen for a
+    symbol and prevents the R_SPARC_NONE from being generated in this case.
+    
+    bfd/
+            * elfxx-sparc.c (struct _bfd_sparc_elf_link_hash_entry): Add new flag
+            has_old_style_got_reloc.
+            (_bfd_sparc_elf_check_relocs) <GOT relocations>: Set it for old-style
+            relocations.  Fix a couple of long lines.
+            (_bfd_sparc_elf_relocate_section) <R_SPARC_GOTDATA_OP>: Do not generate
+            a R_SPARC_NONE for the GOT slot if the symbol is also subject to
+            old-style GOT relocations.
+    ld/
+            * testsuite/ld-sparc/sparc.exp: Add test for mixed GOTDATA/GOT relocs.
+            * testsuite/ld-sparc/gotop-hidden.c: New file.
+            * testsuite/ld-sparc/got-hidden32.s: Likewise.
+            * testsuite/ld-sparc/got-hidden64.s: Likewise.
+            * testsuite/ld-sparc/pass.out: Likewise.
+
+diff --git a/bfd/ChangeLog b/bfd/ChangeLog
+index b6b05ecf10..fcb953ab7e 100644
+--- a/bfd/ChangeLog
++++ b/bfd/ChangeLog
+@@ -1,3 +1,14 @@
++2018-03-28  Eric Botcazou  <ebotcazou@adacore.com>
++
++	PR ld/22972
++	* elfxx-sparc.c (struct _bfd_sparc_elf_link_hash_entry): Add new flag
++	has_old_style_got_reloc.
++	(_bfd_sparc_elf_check_relocs) <GOT relocations>: Set it for old-style
++	relocations.  Fix a couple of long lines.
++	(_bfd_sparc_elf_relocate_section) <R_SPARC_GOTDATA_OP>: Do not generate
++	a R_SPARC_NONE for the GOT slot if the symbol is also subject to old-style
++	GOT relocations.
++
+ 2018-03-26  H.J. Lu  <hongjiu.lu@intel.com>
+ 
+ 	Backport from master branch
+diff --git a/bfd/elfxx-sparc.c b/bfd/elfxx-sparc.c
+index bf4d4dc25c..596d71ed88 100644
+--- a/bfd/elfxx-sparc.c
++++ b/bfd/elfxx-sparc.c
+@@ -692,9 +692,12 @@ struct _bfd_sparc_elf_link_hash_entry
+ #define GOT_TLS_IE      3
+   unsigned char tls_type;
+ 
+-    /* Symbol has GOT or PLT relocations.  */
++  /* Symbol has GOT or PLT relocations.  */
+   unsigned int has_got_reloc : 1;
+ 
++  /* Symbol has old-style, non-relaxable GOT relocations.  */
++  unsigned int has_old_style_got_reloc : 1;
++
+   /* Symbol has non-GOT/non-PLT relocations in text sections.  */
+   unsigned int has_non_got_reloc : 1;
+ 
+@@ -1583,7 +1586,8 @@ _bfd_sparc_elf_check_relocs (bfd *abfd, struct bfd_link_info *info,
+ 		    local_got_refcounts[r_symndx] += 1;
+ 		    break;
+ 		  }
+-		old_tls_type = _bfd_sparc_elf_local_got_tls_type (abfd) [r_symndx];
++		old_tls_type
++		  = _bfd_sparc_elf_local_got_tls_type (abfd) [r_symndx];
+ 	      }
+ 
+ 	    /* If a TLS symbol is accessed using IE at least once,
+@@ -1620,7 +1624,13 @@ _bfd_sparc_elf_check_relocs (bfd *abfd, struct bfd_link_info *info,
+ 	    }
+ 
+ 	  if (eh != NULL)
+-	    eh->has_got_reloc = 1;
++	    {
++	      eh->has_got_reloc = 1;
++	      if (r_type == R_SPARC_GOT10
++		  || r_type == R_SPARC_GOT13
++		  || r_type == R_SPARC_GOT22)
++		eh->has_old_style_got_reloc = 1;
++	    }
+ 	  break;
+ 
+ 	case R_SPARC_TLS_GD_CALL:
+@@ -3159,12 +3169,14 @@ _bfd_sparc_elf_relocate_section (bfd *output_bfd,
+ 	      bfd_put_32 (output_bfd, relocation, contents + rel->r_offset);
+ 
+ 	      /* If the symbol is global but not dynamic, an .rela.* slot has
+-		 been allocated for it in the GOT so output R_SPARC_NONE here.
+-		 See also the handling of other GOT relocations just below.  */
++		 been allocated for it in the GOT so output R_SPARC_NONE here,
++		 if it isn't also subject to another, old-style GOT relocation.
++		 See also the handling of these GOT relocations just below.  */
+ 	      if (h != NULL
+ 		  && h->dynindx == -1
+ 		  && !h->forced_local
+ 		  && h->root.type != bfd_link_hash_undefweak
++		  && !eh->has_old_style_got_reloc
+ 		  && (h->got.offset & 1) == 0
+ 		  && bfd_link_pic (info))
+ 		{
+diff --git a/ld/ChangeLog b/ld/ChangeLog
+index 05223f4a53..430f58e61d 100644
+--- a/ld/ChangeLog
++++ b/ld/ChangeLog
+@@ -1,3 +1,12 @@
++2018-03-28  Eric Botcazou  <ebotcazou@adacore.com>
++
++	PR ld/22972
++	* testsuite/ld-sparc/sparc.exp: Add test for mixed GOTDATA/GOT relocs.
++	* testsuite/ld-sparc/gotop-hidden.c: New file.
++	* testsuite/ld-sparc/got-hidden32.s: Likewise.
++	* testsuite/ld-sparc/got-hidden64.s: Likewise.
++	* testsuite/ld-sparc/pass.out: Likewise.
++
+ 2018-03-26  H.J. Lu  <hongjiu.lu@intel.com>
+ 
+ 	Backport from master branch
+diff --git a/ld/testsuite/ld-sparc/got-hidden32.s b/ld/testsuite/ld-sparc/got-hidden32.s
+new file mode 100644
+index 0000000000..cd1ecf2d94
+--- /dev/null
++++ b/ld/testsuite/ld-sparc/got-hidden32.s
+@@ -0,0 +1,18 @@
++	.text
++.LLGETPC0:
++	retl
++	 add	%o7, %l7, %l7
++	.global foo
++	.type foo, #function
++	.proc   04
++foo:
++	save    %sp, -104, %sp
++	sethi	%hi(_GLOBAL_OFFSET_TABLE_-4), %l7
++	call	.LLGETPC0
++	 add	%l7, %lo(_GLOBAL_OFFSET_TABLE_+4), %l7
++	sethi 	%hi(var), %g1
++	or 	%g1, %lo(var), %g1
++	ld 	[%l7+%g1], %g1
++	ld 	[%g1], %i0
++	ret
++	 restore
+diff --git a/ld/testsuite/ld-sparc/got-hidden64.s b/ld/testsuite/ld-sparc/got-hidden64.s
+new file mode 100644
+index 0000000000..50e75ca452
+--- /dev/null
++++ b/ld/testsuite/ld-sparc/got-hidden64.s
+@@ -0,0 +1,18 @@
++	.text
++.LLGETPC0:
++	retl
++	 add	%o7, %l7, %l7
++	.global foo
++	.type foo, #function
++	.proc   04
++foo:
++	save    %sp, -160, %sp
++	sethi	%hi(_GLOBAL_OFFSET_TABLE_-4), %l7
++	call	.LLGETPC0
++	 add	%l7, %lo(_GLOBAL_OFFSET_TABLE_+4), %l7
++	sethi 	%hi(var), %g1
++	or 	%g1, %lo(var), %g1
++	ldx 	[%l7+%g1], %g1
++	ld 	[%g1], %i0
++	ret
++	 restore
+diff --git a/ld/testsuite/ld-sparc/gotop-hidden.c b/ld/testsuite/ld-sparc/gotop-hidden.c
+new file mode 100644
+index 0000000000..d769c6ddc6
+--- /dev/null
++++ b/ld/testsuite/ld-sparc/gotop-hidden.c
+@@ -0,0 +1,13 @@
++#include <stdio.h>
++
++extern unsigned int foo (void);
++
++__attribute__((visibility("hidden"))) unsigned int var = 0xdeadbeef;
++
++int main (void)
++{
++  if (var == foo ())
++    puts ("PASS");
++
++  return 0;
++}
+diff --git a/ld/testsuite/ld-sparc/pass.out b/ld/testsuite/ld-sparc/pass.out
+new file mode 100644
+index 0000000000..7ef22e9a43
+--- /dev/null
++++ b/ld/testsuite/ld-sparc/pass.out
+@@ -0,0 +1 @@
++PASS
+diff --git a/ld/testsuite/ld-sparc/sparc.exp b/ld/testsuite/ld-sparc/sparc.exp
+index e8aa0c284c..41aa2e68b2 100644
+--- a/ld/testsuite/ld-sparc/sparc.exp
++++ b/ld/testsuite/ld-sparc/sparc.exp
+@@ -146,8 +146,37 @@ set sparc64tests {
+ if { ![istarget "sparc64-*-elf*"] } {
+     run_ld_link_tests $sparctests
+ }
++
+ if { !([istarget "sparc-*-elf*"]
+        || [istarget "sparc-sun-solaris2.5*"]
+        || [istarget "sparc-sun-solaris2.6"]) } {
+     run_ld_link_tests $sparc64tests
+ }
++
++if { [istarget "sparc*-*-linux*"] && [isnative] } {
++    run_ld_link_exec_tests [list \
++	[list \
++	    "32-bit: mixed GOTDATA/GOT relocations" \
++	    "-pie -m32" \
++	    "" \
++	    { gotop-hidden.c got-hidden32.s } \
++	    "gotop-hidden32" \
++	    "pass.out" \
++	    "-fPIE -m32" \
++	] \
++    ]
++}
++
++if { [istarget "sparc64-*-linux*"] && [isnative] } {
++    run_ld_link_exec_tests [list \
++	[list \
++	    "64-bit: mixed GOTDATA/GOT relocations" \
++	    "-pie -m64" \
++	    "" \
++	    { gotop-hidden.c got-hidden64.s } \
++	    "gotop-hidden64" \
++	    "pass.out" \
++	    "-fPIE -m64" \
++	] \
++    ]
++}
+
+commit 330b90b5ffbbc20c5de6ae6c7f60c40fab2e7a4f
+Author: Cary Coutant <ccoutant@gmail.com>
+Date:   Fri Mar 23 09:03:34 2018 -0700
+
+    Fix case where IR file provides symbol visibility but replacement file does not.
+    
+    In PR 22868, two IR files provide conflicting visibility for a symbol.
+    When a def with PROTECTED visibility is seen after a def with DEFAULT
+    visibility, gold does not override the visibility. Later, if the
+    replacement object define the symbol with DEFAULT visibility, the symbol
+    remains DEFAULT. This was caused by a recent change to allow multiply-defined
+    absolute symbols, combined with the fact that the plugin framework was using
+    SHN_ABS as the section index for placeholder symbols. The solution is to
+    use a real (but arbitrary) section index.
+    
+    gold/
+            PR gold/22868
+            * plugin.cc (Sized_pluginobj::do_add_symbols): Use a real section
+            index instead of SHN_ABS for defined symbols.
+            * testsuite/Makefile.am (plugin_pr22868): New test case.
+            * testsuite/Makefile.in: Regenerate
+            * testsuite/plugin_pr22868.sh: New test script.
+            * testsuite/plugin_pr22868_a.c: New source file.
+            * testsuite/plugin_pr22868_b.c: New source file.
+
+diff --git a/gold/ChangeLog b/gold/ChangeLog
+index e787020749..891d6a03a2 100644
+--- a/gold/ChangeLog
++++ b/gold/ChangeLog
+@@ -2,6 +2,17 @@
+ 
+ 	* testsuite/split_x86_64.sh: Fix bad regexp.
+ 
++2018-03-26  Cary Coutant  <ccoutant@gmail.com>
++
++	PR gold/22868
++	* plugin.cc (Sized_pluginobj::do_add_symbols): Use a real section
++	index instead of SHN_ABS for defined symbols.
++	* testsuite/Makefile.am (plugin_pr22868): New test case.
++	* testsuite/Makefile.in: Regenerate
++	* testsuite/plugin_pr22868.sh: New test script.
++	* testsuite/plugin_pr22868_a.c: New source file.
++	* testsuite/plugin_pr22868_b.c: New source file.
++
+ 2018-02-07  Alan Modra  <amodra@gmail.com>
+ 
+ 	Revert 2018-01-17  Alan Modra  <amodra@gmail.com>
+diff --git a/gold/plugin.cc b/gold/plugin.cc
+index 02fef25dda..a59f19dcc7 100644
+--- a/gold/plugin.cc
++++ b/gold/plugin.cc
+@@ -1144,7 +1144,8 @@ Sized_pluginobj<size, big_endian>::do_add_symbols(Symbol_table* symtab,
+         {
+         case LDPK_DEF:
+         case LDPK_WEAKDEF:
+-          shndx = elfcpp::SHN_ABS;
++          // We use an arbitrary section number for a defined symbol.
++          shndx = 1;
+           break;
+         case LDPK_COMMON:
+           shndx = elfcpp::SHN_COMMON;
+diff --git a/gold/testsuite/Makefile.am b/gold/testsuite/Makefile.am
+index 16cae8004c..d086dad9c6 100644
+--- a/gold/testsuite/Makefile.am
++++ b/gold/testsuite/Makefile.am
+@@ -2433,6 +2433,27 @@ plugin_section_alignment.so: plugin_section_alignment.o gcctestdir/ld
+ plugin_section_alignment.o: plugin_section_alignment.cc
+ 	$(CXXCOMPILE) -O0 -c -fpic -o $@ $<
+ 
++check_SCRIPTS += plugin_pr22868.sh
++check_DATA += plugin_pr22868.stdout
++MOSTLYCLEANFILES += plugin_pr22868.stdout
++plugin_pr22868.stdout: plugin_pr22868.so
++	$(TEST_READELF) -W --dyn-syms $< >$@ 2>/dev/null
++plugin_pr22868.so: plugin_pr22868_a.o.syms plugin_pr22868_b.o.syms plugin_pr22868_b.o plugin_test.so gcctestdir/ld
++	$(LINK) -Bgcctestdir/ -shared -Wl,--plugin,"./plugin_test.so" plugin_pr22868_a.o.syms plugin_pr22868_b.o.syms
++plugin_pr22868_a.o.syms: plugin_pr22868_a.o
++	$(TEST_READELF) -sW $< >$@ 2>/dev/null
++# Generate the .syms file from an alternate version of the original source
++# file, with a "protected" visibility attribute. We'll link with a
++# "replacement" object that does not have that attribute.
++plugin_pr22868_b.o.syms: plugin_pr22868_b_ir.o
++	$(TEST_READELF) -sW $< >$@ 2>/dev/null
++plugin_pr22868_a.o: plugin_pr22868_a.c
++	$(COMPILE) -c -fpic -o $@ $<
++plugin_pr22868_b_ir.o: plugin_pr22868_b.c
++	$(COMPILE) -c -DIR -fpic -o $@ $<
++plugin_pr22868_b.o: plugin_pr22868_b.c
++	$(COMPILE) -c -fpic -o $@ $<
++
+ endif PLUGINS
+ 
+ check_PROGRAMS += exclude_libs_test
+diff --git a/gold/testsuite/Makefile.in b/gold/testsuite/Makefile.in
+index bbf8dc146b..22940cada2 100644
+--- a/gold/testsuite/Makefile.in
++++ b/gold/testsuite/Makefile.in
+@@ -591,16 +591,19 @@ check_PROGRAMS = $(am__EXEEXT_1) $(am__EXEEXT_2) $(am__EXEEXT_3) \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@am__append_52 = unused.c \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_final_layout \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_layout_new_file \
+-@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_layout_with_alignment
++@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_layout_with_alignment \
++@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_pr22868.stdout
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@am__append_53 = plugin_final_layout.sh \
+-@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_layout_with_alignment.sh
++@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_layout_with_alignment.sh \
++@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_pr22868.sh
+ 
+ # Uses the plugin_final_layout.sh script above to avoid duplication
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@am__append_54 = plugin_final_layout.stdout \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_final_layout_readelf.stdout \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_layout_new_file.stdout \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_layout_new_file_readelf.stdout \
+-@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_layout_with_alignment.stdout
++@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_layout_with_alignment.stdout \
++@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_pr22868.stdout
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@am__append_55 = exclude_libs_test \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@	local_labels_test \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@	discard_locals_test
+@@ -5299,6 +5302,8 @@ plugin_final_layout.sh.log: plugin_final_layout.sh
+ 	@p='plugin_final_layout.sh'; $(am__check_pre) $(LOG_COMPILE) "$$tst" $(am__check_post)
+ plugin_layout_with_alignment.sh.log: plugin_layout_with_alignment.sh
+ 	@p='plugin_layout_with_alignment.sh'; $(am__check_pre) $(LOG_COMPILE) "$$tst" $(am__check_post)
++plugin_pr22868.sh.log: plugin_pr22868.sh
++	@p='plugin_pr22868.sh'; $(am__check_pre) $(LOG_COMPILE) "$$tst" $(am__check_post)
+ exclude_libs_test.sh.log: exclude_libs_test.sh
+ 	@p='exclude_libs_test.sh'; $(am__check_pre) $(LOG_COMPILE) "$$tst" $(am__check_post)
+ discard_locals_test.sh.log: discard_locals_test.sh
+@@ -7086,6 +7091,23 @@ uninstall-am:
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	$(CXXLINK) -Bgcctestdir/ -shared plugin_section_alignment.o
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@plugin_section_alignment.o: plugin_section_alignment.cc
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	$(CXXCOMPILE) -O0 -c -fpic -o $@ $<
++@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@plugin_pr22868.stdout: plugin_pr22868.so
++@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	$(TEST_READELF) -W --dyn-syms $< >$@ 2>/dev/null
++@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@plugin_pr22868.so: plugin_pr22868_a.o.syms plugin_pr22868_b.o.syms plugin_pr22868_b.o plugin_test.so gcctestdir/ld
++@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	$(LINK) -Bgcctestdir/ -shared -Wl,--plugin,"./plugin_test.so" plugin_pr22868_a.o.syms plugin_pr22868_b.o.syms
++@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@plugin_pr22868_a.o.syms: plugin_pr22868_a.o
++@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	$(TEST_READELF) -sW $< >$@ 2>/dev/null
++# Generate the .syms file from an alternate version of the original source
++# file, with a "protected" visibility attribute. We'll link with a
++# "replacement" object that does not have that attribute.
++@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@plugin_pr22868_b.o.syms: plugin_pr22868_b_ir.o
++@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	$(TEST_READELF) -sW $< >$@ 2>/dev/null
++@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@plugin_pr22868_a.o: plugin_pr22868_a.c
++@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	$(COMPILE) -c -fpic -o $@ $<
++@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@plugin_pr22868_b_ir.o: plugin_pr22868_b.c
++@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	$(COMPILE) -c -DIR -fpic -o $@ $<
++@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@plugin_pr22868_b.o: plugin_pr22868_b.c
++@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	$(COMPILE) -c -fpic -o $@ $<
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@exclude_libs_test.syms: exclude_libs_test
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@	$(TEST_READELF) -sW $< >$@ 2>/dev/null
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@libexclude_libs_test_1.a: exclude_libs_test_1.o
+diff --git a/gold/testsuite/plugin_pr22868.sh b/gold/testsuite/plugin_pr22868.sh
+new file mode 100755
+index 0000000000..72f364b9a2
+--- /dev/null
++++ b/gold/testsuite/plugin_pr22868.sh
+@@ -0,0 +1,45 @@
++#!/bin/sh
++
++# plugin_pr22868.sh -- a test case for the plugin API.
++
++# Copyright (C) 2018 Free Software Foundation, Inc.
++# Written by Cary Coutant <ccoutant@google.com>.
++
++# This file is part of gold.
++
++# This program is free software; you can redistribute it and/or modify
++# it under the terms of the GNU General Public License as published by
++# the Free Software Foundation; either version 3 of the License, or
++# (at your option) any later version.
++
++# This program is distributed in the hope that it will be useful,
++# but WITHOUT ANY WARRANTY; without even the implied warranty of
++# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++# GNU General Public License for more details.
++
++# You should have received a copy of the GNU General Public License
++# along with this program; if not, write to the Free Software
++# Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston,
++# MA 02110-1301, USA.
++
++# This file goes with plugin_pr22868_a.c and plugin_pr22868_b.c,
++# which check that if a symbol is declared PROTECTED in any IR file,
++# it will remain PROTECTED in the output even if the replacement file(s)
++# fail to declare it PROTECTED.
++
++check()
++{
++    if ! grep -q "$2" "$1"
++    then
++	echo "Did not find expected output in $1:"
++	echo "   $2"
++	echo ""
++	echo "Actual output below:"
++	cat "$1"
++	exit 1
++    fi
++}
++
++check plugin_pr22868.stdout "PROTECTED.*foo"
++
++exit 0
+diff --git a/gold/testsuite/plugin_pr22868_a.c b/gold/testsuite/plugin_pr22868_a.c
+new file mode 100644
+index 0000000000..86a9843287
+--- /dev/null
++++ b/gold/testsuite/plugin_pr22868_a.c
+@@ -0,0 +1,28 @@
++/* plugin_pr22868_a.c -- a test case for the plugin API with GC.
++
++   Copyright (C) 2018 Free Software Foundation, Inc.
++   Written by Cary Coutant <ccoutant@gmail.com>.
++
++   This file is part of gold.
++
++   This program is free software; you can redistribute it and/or modify
++   it under the terms of the GNU General Public License as published by
++   the Free Software Foundation; either version 3 of the License, or
++   (at your option) any later version.
++
++   This program is distributed in the hope that it will be useful,
++   but WITHOUT ANY WARRANTY; without even the implied warranty of
++   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++   GNU General Public License for more details.
++
++   You should have received a copy of the GNU General Public License
++   along with this program; if not, write to the Free Software
++   Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston,
++   MA 02110-1301, USA.  */
++
++int foo(int i) __attribute__ (( weak ));
++
++int foo(int i)
++{
++  return i + 1;
++}
+diff --git a/gold/testsuite/plugin_pr22868_b.c b/gold/testsuite/plugin_pr22868_b.c
+new file mode 100644
+index 0000000000..92d2145b2d
+--- /dev/null
++++ b/gold/testsuite/plugin_pr22868_b.c
+@@ -0,0 +1,39 @@
++/* plugin_pr22868_b_ir.c -- a test case for the plugin API with GC.
++
++   Copyright (C) 2018 Free Software Foundation, Inc.
++   Written by Cary Coutant <ccoutant@gmail.com>.
++
++   This file is part of gold.
++
++   This program is free software; you can redistribute it and/or modify
++   it under the terms of the GNU General Public License as published by
++   the Free Software Foundation; either version 3 of the License, or
++   (at your option) any later version.
++
++   This program is distributed in the hope that it will be useful,
++   but WITHOUT ANY WARRANTY; without even the implied warranty of
++   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++   GNU General Public License for more details.
++
++   You should have received a copy of the GNU General Public License
++   along with this program; if not, write to the Free Software
++   Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston,
++   MA 02110-1301, USA.  */
++
++/* This file is compiled with -DIR to generate the .syms file,
++   and without -DIR for use as the replacement object.
++   The .syms file declares foo with protected visibility, but
++   the replacement file does not.  */
++
++#ifdef IR
++#define PROTECTED __attribute__ (( visibility ("protected") ))
++#else
++#define PROTECTED
++#endif
++
++int foo(int i) __attribute__ (( weak )) PROTECTED;
++
++int foo(int i)
++{
++  return i + 1;
++}
+
+commit 9f069cf64b3f36200ba1bbd5746b2a023059af53
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Thu Mar 29 00:01:39 2018 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index f6ebea25ca..7a2bd7c485 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20180328
++#define BFD_VERSION_DATE 20180329
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 763e359efaba5cc088604e3f3e1dda40fda06831
+Author: Nick Clifton <nickc@redhat.com>
+Date:   Thu Mar 29 12:31:04 2018 +0100
+
+    Import patch from the mainline that fixes the ARM assembler's parsing of an illegal ORR instruction.
+    
+            PR 22773
+            * config/tc-arm.c (md_apply_fix): Test Rn field of Thumb ORR
+            instruction before assuming that it is a MOV instruction.
+            * testsuite/gas/arm/pr22773.s: New test.
+            * testsuite/gas/arm/pr22773.d: New test driver.
+            * testsuite/gas/arm/pr22773.l: New expected output.
+
+diff --git a/gas/ChangeLog b/gas/ChangeLog
+index c266eb4664..30bc4fd3c7 100644
+--- a/gas/ChangeLog
++++ b/gas/ChangeLog
+@@ -1,3 +1,15 @@
++2018-03-29  Nick Clifton  <nickc@redhat.com>
++
++	Import from mainline:
++	2018-02-13  Nick Clifton  <nickc@redhat.com>
++
++	PR 22773
++	* config/tc-arm.c (md_apply_fix): Test Rn field of Thumb ORR
++	instruction before assuming that it is a MOV instruction.
++	* testsuite/gas/arm/pr22773.s: New test.
++	* testsuite/gas/arm/pr22773.d: New test driver.
++	* testsuite/gas/arm/pr22773.l: New expected output.
++
+ 2018-03-21  Alan Modra  <amodra@gmail.com>
+ 
+ 	Apply from master
+diff --git a/gas/config/tc-arm.c b/gas/config/tc-arm.c
+index 4d82338d6e..2ad3101498 100644
+--- a/gas/config/tc-arm.c
++++ b/gas/config/tc-arm.c
+@@ -23587,12 +23587,14 @@ md_apply_fix (fixS *	fixP,
+ 	      /* MOV accepts both Thumb2 modified immediate (T2 encoding) and
+ 		 UINT16 (T3 encoding), MOVW only accepts UINT16.  When
+ 		 disassembling, MOV is preferred when there is no encoding
+-		 overlap.
+-		 NOTE: MOV is using ORR opcode under Thumb 2 mode.  */
++		 overlap.  */
+ 	      if (((newval >> T2_DATA_OP_SHIFT) & 0xf) == T2_OPCODE_ORR
++		  /* NOTE: MOV uses the ORR opcode in Thumb 2 mode
++		     but with the Rn field [19:16] set to 1111.  */
++		  && (((newval >> 16) & 0xf) == 0xf)
+ 		  && ARM_CPU_HAS_FEATURE (cpu_variant, arm_ext_v6t2_v8m)
+ 		  && !((newval >> T2_SBIT_SHIFT) & 0x1)
+-		  && value >= 0 && value <=0xffff)
++		  && value >= 0 && value <= 0xffff)
+ 		{
+ 		  /* Toggle bit[25] to change encoding from T2 to T3.  */
+ 		  newval ^= 1 << 25;
+diff --git a/gas/testsuite/gas/arm/pr22773.d b/gas/testsuite/gas/arm/pr22773.d
+new file mode 100644
+index 0000000000..adb9681c92
+--- /dev/null
++++ b/gas/testsuite/gas/arm/pr22773.d
+@@ -0,0 +1,2 @@
++# name: PR 22773: Invalid immediate constants produce incorrect instruction
++# error-output: pr22773.l
+diff --git a/gas/testsuite/gas/arm/pr22773.l b/gas/testsuite/gas/arm/pr22773.l
+new file mode 100644
+index 0000000000..587c8a8784
+--- /dev/null
++++ b/gas/testsuite/gas/arm/pr22773.l
+@@ -0,0 +1,3 @@
++[^:]*: Assembler messages:
++[^:]*:8: Error: invalid constant \(3201\) after fixup
++#pass
+diff --git a/gas/testsuite/gas/arm/pr22773.s b/gas/testsuite/gas/arm/pr22773.s
+new file mode 100644
+index 0000000000..9e5767c2a8
+--- /dev/null
++++ b/gas/testsuite/gas/arm/pr22773.s
+@@ -0,0 +1,11 @@
++	.syntax unified
++	.cpu cortex-m4
++	.thumb
++
++	.section  .text
++
++	orr r1, #12800	 	/* This is OK.  */
++	orr r1, #12801		/* This cannot be encoded in Thumb mode.  */
++	/* GAS used to accept it though, and produce a MOV instruction instead.  */
++
++
+
+commit 5f5f8b746b831b7202624f0339113e5c81eb48d2
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Fri Mar 30 00:01:36 2018 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 7a2bd7c485..2ac500439a 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20180329
++#define BFD_VERSION_DATE 20180330
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@

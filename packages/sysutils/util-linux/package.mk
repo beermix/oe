@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="util-linux"
-PKG_VERSION="2.31.1"
+PKG_VERSION="2.32"
 PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="GPL"

@@ -68,8 +68,8 @@ make_target() {
 
   # https://chromium-review.googlesource.com/c/chromium/src/+/712575
   # _flags+=('exclude_unwind_tables=true')
-  export CFLAGS="$CFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables"
-  export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
+  export CFLAGS="$CFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables -Wformat -Werror=format-security"
+  export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables -Wformat -Werror=format-security"
   export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
 
   export CCACHE_SLOPPINESS=time_macros
@@ -179,9 +179,6 @@ addon() {
   cp -P $PKG_DIR/config/* $ADDON_BUILD/$PKG_ADDON_ID/config
 
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/lib
-
-  # libXtst
-  # cp -PL $(get_build_dir libXtst)/.install_pkg/usr/lib/*.so* $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # pango
   cp -PL $(get_build_dir pango)/.install_pkg/usr/lib/libpangocairo-1.0.so.0 $ADDON_BUILD/$PKG_ADDON_ID/lib
