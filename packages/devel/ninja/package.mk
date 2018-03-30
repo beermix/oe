@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="ninja"
-PKG_VERSION="e234a7b"
+PKG_VERSION="v1.8.2"
 PKG_ARCH="any"
 PKG_LICENSE="Apache"
 PKG_SITE="https://github.com/ninja-build/ninja"
