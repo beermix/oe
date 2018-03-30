@@ -32,25 +32,6 @@ diff -Naur kodi-17.1-Krypton/docs/README.ubuntu kodi-17.1-Krypton.patch/docs/REA
  Note: Ubuntu Precise users also need a upgraded GCC, else compile will fail.
  
  For >= 12.10:
-diff -Naur kodi-17.1-Krypton/project/BuildDependencies/scripts/0_package.list kodi-17.1-Krypton.patch/project/BuildDependencies/scripts/0_package.list
---- kodi-17.1-Krypton/project/BuildDependencies/scripts/0_package.list	2017-03-20 17:17:49.000000000 +0100
-+++ kodi-17.1-Krypton.patch/project/BuildDependencies/scripts/0_package.list	2017-03-25 11:51:12.769040700 +0100
-@@ -30,7 +30,6 @@
- libssh-0.7.0-win32-vc140.7z
- libxml2-2.9.4-win32-vc140-v2.7z
- libxslt-1.1.29-win32-vc140.7z
--libyajl-2.0.1-win32.7z
- lzo-2.09-win32-vc140-v3.7z
- mini_wdk-10.0.14393.0-win32.7z
- mysql-connector-c-6.1.6-win32-vc140-v2.7z
-@@ -38,6 +37,7 @@
- pcre-8.37-win32-vc140-v3.7z
- pillow-3.1.0-win32-vc140.7z
- python-2.7.11-win32-vc140-v2.7z
-+rapidjson-1.0.2-win32.7z
- shairplay-0.9.0-win32-vc140-v2.7z
- sqlite-3.10.2-win32-vc140.7z
- swig-3.0.10-win32.7z
 diff -Naur kodi-17.1-Krypton/project/cmake/CMakeLists.txt kodi-17.1-Krypton.patch/project/cmake/CMakeLists.txt
 --- kodi-17.1-Krypton/project/cmake/CMakeLists.txt	2017-03-20 17:17:49.000000000 +0100
 +++ kodi-17.1-Krypton.patch/project/cmake/CMakeLists.txt	2017-03-25 11:52:35.744239243 +0100
