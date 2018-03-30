@@ -28,7 +28,7 @@ makeinstall_target() {
     cp *.xml $INSTALL/usr/config/kodi.skins/skin.confluence
       rm -rf $INSTALL/usr/config/kodi.skins/skin.confluence/media
 
-  mkdir -p $INSeTALL/usr/config/kodi.skins/skin.confluence/media
+  mkdir -p $INSTALL/usr/config/kodi.skins/skin.confluence/media
     cp Textures.xbt $INSTALL/usr/config/kodi.skins/skin.confluence/media
 
   mkdir -p $INSTALL/usr/share/kodi/addons
