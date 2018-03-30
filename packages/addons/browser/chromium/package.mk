@@ -24,7 +24,7 @@
 PKG_NAME="chromium"
 PKG_VERSION="65.0.3325.181"
 PKG_SHA256="93666448c6b96ec83e6a35a64cff40db4eb92a154fe1db4e7dab4761d0e38687"
-PKG_REV="162"
+PKG_REV="181"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_SITE="http://www.chromium.org/Home"
@@ -56,7 +56,7 @@ post_patch() {
 }
 
 make_host() {
-  ./tools/gn/bootstrap/bootstrap.py -s --no-clean ./out/Release/gn gen ./out/Release --script-executable=$TOOLCHAIN/bin/python2
+  ./tools/gn/bootstrap/bootstrap.py --no-rebuild --no-clean
 }
 
 make_target() {
@@ -158,9 +158,9 @@ make_target() {
     -delete
   done
 
-  python2 ./build/linux/unbundle/replace_gn_files.py --system-libraries "${!_system_libs[@]}"
-  python2 ./third_party/libaddressinput/chromium/tools/update-strings.py
-  python2 ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
+  ./build/linux/unbundle/replace_gn_files.py --system-libraries "${!_system_libs[@]}"
+  ./third_party/libaddressinput/chromium/tools/update-strings.py
+  ./out/Release/gn gen out/Release -s --no-clean --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python2
 
   ninja -j${CONCURRENCY_MAKE_LEVEL} -C out/Release chrome chrome_sandbox chromedriver widevinecdmadapter
 }
