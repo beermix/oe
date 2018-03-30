@@ -1,10 +1,12 @@
 PKG_NAME="bwm-ng"
 PKG_VERSION="d9d7f7c"
 PKG_URL="https://github.com/virtualboots/bwm-ng/archive/${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_TARGET="toolchain libstatgrab"
+PKG_DEPENDS_TARGET="toolchain ncurses libstatgrab"
 PKG_TOOLCHAIN="autotools"
 
-CFLAGS="$CFLAGS -static -lpthread -static-libstdc++ -static-libgcc -lrt -ldl"
+pre_configure_target() {
+  export CFLAGS="$CFLAGS -static -lpthread -static-libgcc -lrt -ldl -lm"
+}
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
 			      ac_cv_func_realloc_0_nonnull=yes \
@@ -17,7 +19,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
 			      --with-sysctldisk \
 			      --with-procnetdev \
 			      --with-partitions \ 
-			      --enable-64bit \
 			      --with-ncurses \
 			      --with-getopt_long \
 			      --enable-configfile \

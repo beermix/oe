@@ -15,6 +15,4 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-manpages \
                            --disable-setuid-binaries \
                            --disable-man-build \
-                           --disable-tests \
-                           --with-pic \
-                           --with-gnu-ld"
+                           --disable-tests"
