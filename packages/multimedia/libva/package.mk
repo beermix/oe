@@ -42,5 +42,4 @@ fi
 PKG_CONFIGURE_OPTS_TARGET="--disable-docs \
                            --enable-drm \
                            --enable-egl \
-                           $DISPLAYSERVER_LIBVA \
-                           --disable-dummy-driver"
+                           $DISPLAYSERVER_LIBVA"
