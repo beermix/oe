@@ -28,6 +28,7 @@ PKG_DEPENDS_TARGET="toolchain JsonSchemaBuilder:host TexturePacker:host xmlstarl
 PKG_SECTION="mediacenter"
 PKG_SHORTDESC="kodi: Kodi Mediacenter"
 PKG_LONGDESC="Kodi Media Center (which was formerly named Xbox Media Center or XBMC) is a free and open source cross-platform media player and home entertainment system software with a 10-foot user interface designed for the living-room TV. Its graphical user interface allows the user to easily manage video, photos, podcasts, and music from a computer, optical disk, local network, and the internet using a remote control."
+# Single threaded LTO is very slow so rely on Kodi for LTO support
 PKG_BUILD_FLAGS="-lto"
 PKG_TOOLCHAIN="cmake-make"
 
@@ -198,13 +199,13 @@ fi
 if [ ! "$KODIPLAYER_DRIVER" = default ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET $KODIPLAYER_DRIVER"
   if [ "$KODIPLAYER_DRIVER" = bcm2835-driver ]; then
-    KODI_PLAYER="-DENABLE_MMAL=ON -DCORE_SYSTEM_NAME=rbpi"
-  elif [ "$KODIPLAYER_DRIVER" = libfslvpuwrap ]; then
-    KODI_PLAYER="-DENABLE_IMX=ON"
-    CFLAGS="$CFLAGS -DHAS_IMXVPU -DLINUX -DEGL_API_FB"
-    CXXFLAGS="$CXXFLAGS -DHAS_IMXVPU -DLINUX -DEGL_API_FB"
+    KODI_PLAYER="-DCORE_PLATFORM_NAME=rbpi"
+  elif [ "$KODIPLAYER_DRIVER" = mesa -o "$KODIPLAYER_DRIVER" = rkmpp ]; then
+    KODI_PLAYER="-DCORE_PLATFORM_NAME=gbm"
+    CFLAGS="$CFLAGS -DMESA_EGL_NO_X11_HEADERS"
+    CXXFLAGS="$CXXFLAGS -DMESA_EGL_NO_X11_HEADERS"
   elif [ "$KODIPLAYER_DRIVER" = libamcodec ]; then
-    KODI_PLAYER="-DENABLE_AML=ON"
+    KODI_PLAYER="-DCORE_PLATFORM_NAME=aml"
   fi
 fi
 
@@ -227,7 +228,7 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$TOOLCHAIN \
                        -DENABLE_DBUS=ON \
                        -DENABLE_XSLT=ON \
                        -DENABLE_CCACHE=OFF \
-                       -DENABLE_LIRC=OFF \
+                       -DENABLE_LIRC=ON \
                        -DENABLE_EVENTCLIENTS=OFF \
                        -DENABLE_LDGOLD=ON \
                        $KODI_ARCH \

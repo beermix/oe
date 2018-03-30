@@ -18,9 +18,9 @@
 
 PKG_NAME="LibreELEC-settings"
 PKG_VERSION="0ec74f6"
-PKG_SHA256=""
+PKG_SHA256="f9e5a1ead9c1a3832122deb4831980dac87ec3b8f748e6449b6b090c40f09249"
 PKG_ARCH="any"
-PKG_LICENSE="prop."
+PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/LibreELEC/service.libreelec.settings"
 PKG_URL="https://github.com/LibreELEC/service.libreelec.settings/archive/$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="service.libreelec.settings-$PKG_VERSION*"

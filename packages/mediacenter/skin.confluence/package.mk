@@ -13,7 +13,6 @@ PKG_SHORTDESC="kodi-theme-AeonNox: Kodi Mediacenter theme"
 PKG_LONGDESC="kodi-theme-AeonNox: Kodi Mediacenter theme."
 PKG_IS_ADDON="no"
 
-
 make_target() {
   TexturePacker -input media/ \
                 -output Textures.xbt \
@@ -29,7 +28,7 @@ makeinstall_target() {
     cp *.xml $INSTALL/usr/config/kodi.skins/skin.confluence
       rm -rf $INSTALL/usr/config/kodi.skins/skin.confluence/media
 
-  mkdir -p $INSTALL/usr/config/kodi.skins/skin.confluence/media
+  mkdir -p $INSeTALL/usr/config/kodi.skins/skin.confluence/media
     cp Textures.xbt $INSTALL/usr/config/kodi.skins/skin.confluence/media
 
   mkdir -p $INSTALL/usr/share/kodi/addons
