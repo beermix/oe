@@ -27,13 +27,10 @@ PKG_SECTION="depends"
 PKG_SHORTDESC="X11 Screen Saver extension library"
 PKG_IS_ADDON="no"
 PKG_TOOLCHAIN="autotools"
+PKG_BUILD_FLAGS="+pic"
 
 post_unpack() {
   mv $BUILD/libXScrnSaver-$PKG_VERSION $BUILD/$PKG_NAME-$PKG_VERSION
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-malloc0returnsnull"
-
-pre_configure_target() {
-  CFLAGS="$CFLAGS -fPIC -DPIC"
-}
