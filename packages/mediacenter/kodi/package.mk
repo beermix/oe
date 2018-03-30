@@ -17,7 +17,8 @@
 ################################################################################
 
 PKG_NAME="kodi"
-PKG_VERSION="7e52c1d"
+PKG_VERSION="17.6-Krypton"
+PKG_SHA256="c8312fe92e5bab1cdac1da93d60baed88fa1574146c50c44e3c86d01671c2b1d"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/xbmc/xbmc/tree/Krypton"
@@ -226,8 +227,8 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$TOOLCHAIN \
                        -DENABLE_DBUS=ON \
                        -DENABLE_XSLT=ON \
                        -DENABLE_CCACHE=OFF \
-                       -DENABLE_LIRC=ON \
-                       -DENABLE_EVENTCLIENTS=ON \
+                       -DENABLE_LIRC=OFF \
+                       -DENABLE_EVENTCLIENTS=OFF \
                        -DENABLE_LDGOLD=ON \
                        $KODI_ARCH \
                        $KODI_OPENGL \
@@ -271,7 +272,7 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/share/kodi/addons/visualization.vortex
   rm -rf $INSTALL/usr/share/xsessions
 
-  mv $INSTALL/usr/lib/python2.7/dist-packages $INSTALL/usr/lib/python2.7/site-packages
+#  mv $INSTALL/usr/lib/python2.7/dist-packages $INSTALL/usr/lib/python2.7/site-packages
 
   mkdir -p $INSTALL/usr/lib/kodi
     cp $PKG_DIR/scripts/kodi-config $INSTALL/usr/lib/kodi
