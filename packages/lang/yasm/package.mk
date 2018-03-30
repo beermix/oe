@@ -23,7 +23,7 @@ PKG_URL="https://github.com/yasm/yasm/archive/${PKG_VERSION}.tar.gz"
 PKG_SECTION="toolchain/lang"
 PKG_SHORTDESC="yasm: A complete rewrite of the NASM assembler"
 PKG_LONGDESC="Yasm is a complete rewrite of the NASM assembler under the new BSD License (some portions are under other licenses, see COPYING for details). It is designed from the ground up to allow for multiple assembler syntaxes to be supported (eg, NASM, TASM, GAS, etc.) in addition to multiple output object formats and even multiple instruction sets. Another primary module of the overall design is an optimizer module."
-PKG_TOOLCHAIN="cmake-make"
+PKG_TOOLCHAIN="autotools"
 
 PKG_CMAKE_OPTS_HOST="-DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DYASM_BUILD_TESTS=OFF"
 
