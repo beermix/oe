@@ -180,7 +180,7 @@ else
 fi
 
 if [ "$VAAPI_SUPPORT" = yes ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET intel-vaapi-driver"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libva"
   KODI_VAAPI="-DENABLE_VAAPI=ON"
 else
   KODI_VAAPI="-DENABLE_VAAPI=OFF"
@@ -192,7 +192,7 @@ else
   KODI_ARCH="-DWITH_ARCH=$TARGET_ARCH"
 fi
 
-if [ "$PROJECT" = "Slice" -o "$PROJECT" = "Slice3" ]; then
+if [ "$DEVICE" = "Slice" -o "$DEVICE" = "Slice3" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET led_tools"
 fi
 
