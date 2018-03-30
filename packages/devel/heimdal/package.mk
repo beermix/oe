@@ -21,7 +21,7 @@ PKG_VERSION="3797974"
 PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="BSD-3c"
-PKG_SITE="https://github.com/heimdal/heimdal/releases"
+PKG_SITE="https://github.com/heimdal/heimdal"
 PKG_URL="https://github.com/heimdal/heimdal/archive/$PKG_VERSION.tar.gz"
 #PKG_SOURCE_DIR="$PKG_NAME-$PKG_NAME-$PKG_VERSION"
 PKG_DEPENDS_HOST="toolchain e2fsprogs:host Python2:host"
@@ -29,8 +29,8 @@ PKG_SECTION="devel"
 PKG_SHORTDESC="heimdal: Kerberos 5, PKIX, CMS, GSS-API, SPNEGO, NTLM, Digest-MD5 and, SASL implementation."
 PKG_LONGDESC="Heimdal is an implementation of Kerberos 5 (and some more stuff) largely written in Sweden (which was important when we started writing it, less so now). It is freely available under a three clause BSD style license. "
 PKG_TOOLCHAIN="autotools"
-PKG_TOOLCHAIN="manual"
-PKG_BUILD_FLAGS="-parallel"
+#PKG_TOOLCHAIN="manual"
+#PKG_BUILD_FLAGS="-parallel"
 
 PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared \
                          --without-openldap \
@@ -49,6 +49,6 @@ PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared \
 
 makeinstall_host() {
   mkdir -p $TOOLCHAIN/bin
-   # cp -PR lib/asn1/asn1_compile $TOOLCHAIN/bin
-     cp $PKG_DIR/asn1_compile $TOOLCHAIN/bin/
+    cp -PR lib/asn1/asn1_compile $TOOLCHAIN/bin
+    # cp $PKG_DIR/asn1_compile $TOOLCHAIN/bin/
 }
