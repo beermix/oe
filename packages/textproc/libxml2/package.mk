@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="libxml2"
-PKG_VERSION="2.9.7"
+PKG_VERSION="2.9.8"
 PKG_ARCH="any"
 PKG_LICENSE="MIT"
 PKG_SITE="http://xmlsoft.org"
