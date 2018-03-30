@@ -1,14 +1,3 @@
---- libcap-2.24/Make.Rules~	2014-01-05 20:16:21.000000000 -0500
-+++ libcap-2.24/Make.Rules	2014-12-29 16:33:58.475969493 -0500
-@@ -49,7 +49,7 @@
- IPATH += -fPIC -I$(KERNEL_HEADERS) -I$(topdir)/libcap/include
- 
- CC := gcc
--CFLAGS := -O2 -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64
-+CFLAGS += -O2 -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64
- BUILD_CC := $(CC)
- BUILD_CFLAGS := $(CFLAGS) $(IPATH)
- AR := ar
 --- libcap-2.25/pam_cap/Makefile~	2014-05-31 20:19:10.000000000 +0000
 +++ libcap-2.25/pam_cap/Makefile	2016-12-11 13:04:26.474789283 +0000
 @@ -17,7 +17,7 @@

@@ -42,7 +42,7 @@ make_host() {
   make CC=$CC \
        AR=$AR \
        RANLIB=$RANLIB \
-       CFLAGS="$HOST_CFLAGS" \
+       CFLAGS="$HOST_CFLAGS -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64" \
        BUILD_CFLAGS="$HOST_CFLAGS -I$PKG_BUILD/libcap/include" \
        PAM_CAP=no \
        lib=/lib \
@@ -55,7 +55,7 @@ make_target() {
   make CC=$CC \
        AR=$AR \
        RANLIB=$RANLIB \
-       CFLAGS="$TARGET_CFLAGS" \
+       CFLAGS="$TARGET_CFLAGS -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64" \
        BUILD_CC=$HOST_CC \
        BUILD_CFLAGS="$HOST_CFLAGS -I$PKG_BUILD/libcap/include" \
        PAM_CAP=no \
