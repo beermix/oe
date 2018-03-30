@@ -10,5 +10,5 @@ pre_configure_target() {
   CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-Os|"`
 }
 
-PKG_CONFIGURE_OPTS_HOST="--disable-shared --with-pic --with-gnu-ld"
+PKG_CONFIGURE_OPTS_HOST="--disable-shared --enable-static"
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
