@@ -14,21 +14,21 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
- ################################################################################  libXcursor libSM libXtst
+ ################################################################################  libSM
 
 PKG_NAME="xf86-video-intel"
 PKG_VERSION="7418d53"
 PKG_ARCH="x86_64"
 PKG_LICENSE="OSS"
-PKG_SITE="http://intellinuxgraphics.org/"
+PKG_SITE="https://cgit.freedesktop.org/xorg/driver/xf86-video-intel/log/"
 PKG_URL="https://cgit.freedesktop.org/xorg/driver/xf86-video-intel/snapshot/$PKG_VERSION.tar.xz"
 PKG_SOURCE_DIR="$PKG_VERSION"
-PKG_DEPENDS_TARGET="toolchain libXcomposite libXxf86vm libXdamage util-macros systemd xorg-server libXtst libXcursor libXScrnSaver"
+PKG_DEPENDS_TARGET="toolchain libXcomposite libXxf86vm libXdamage util-macros systemd xorg-server libXvMC libXtst libXcursor libXScrnSaver"
 PKG_SECTION="x11/driver"
 PKG_SHORTDESC="xf86-video-intel: The Xorg driver for Intel video chips"
 PKG_LONGDESC="The Xorg driver for Intel i810, i815, 830M, 845G, 852GM, 855GM, 865G, 915G, 915GM and 965G video chips."
 # xf86-video-intel is broken enough. dont link with LTO
-PKG_BUILD_FLAGS="-lto"
+PKG_BUILD_FLAGS="-lto -gold"
 
 PKG_MESON_OPTS_TARGET="-Ddefault-dri=3 \
 			  -Dxvmc=false \
@@ -38,6 +38,7 @@ PKG_MESON_OPTS_TARGET="-Ddefault-dri=3 \
 			  -Dbacklight=false \
 			  -Dtools=false \
 			  -Ddebug=no \
+			  -Ddefault-accel=sna \
 			  -Dxorg-module-dir=$XORG_PATH_MODULES"
 
 pre_configure_target() {
