@@ -89,6 +89,7 @@ PKG_MESON_OPTS_TARGET="--libdir=/usr/lib \
                        -Drfkill=false \
                        -Dldconfig=false \
                        -Defi=false \
+                       -Dgnu-efi=false \
                        -Dtpm=false \
                        -Dima=false \
                        -Dsmack=false \
@@ -103,6 +104,7 @@ PKG_MESON_OPTS_TARGET="--libdir=/usr/lib \
                        -Dkmod-path=/usr/bin/kmod \
                        -Dmount-path=/usr/bin/mount \
                        -Dumount-path=/usr/bin/umount"
+
 pkg_get_kernel_proc_version() {
   (
     INCLUDE=$(kernel_path)/include/generated
