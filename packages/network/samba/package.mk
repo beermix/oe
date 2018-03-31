@@ -146,11 +146,11 @@ post_make_target() {
 
 makeinstall_target() {
   if [ "$SAMBA_SERVER" = "yes" ]; then
-    mkdir -p $INSTALL/usr/bin
-      cp bin/samba_multicall $INSTALL/usr/bin
-      ln -sf samba_multicall $INSTALL/usr/bin/smbd
-      ln -sf samba_multicall $INSTALL/usr/bin/nmbd
-      ln -sf samba_multicall $INSTALL/usr/bin/smbpasswd
+    mkdir -p $INSTALL/usr/sbin
+      cp bin/samba_multicall $INSTALL/usr/sbin
+      ln -sf samba_multicall $INSTALL/usr/sbin/smbd
+      ln -sf samba_multicall $INSTALL/usr/sbin/nmbd
+      ln -sf samba_multicall $INSTALL/usr/sbin/smbpasswd
 
     mkdir -p $INSTALL/etc/samba
       cp ../codepages/lowcase.dat $INSTALL/etc/samba
@@ -164,26 +164,16 @@ makeinstall_target() {
       cp -P $PKG_DIR/default.d/*.conf $INSTALL/usr/share/services
 
     mkdir -p $INSTALL/usr/lib/samba
-      cp $PKG_DIR/scripts/samba-config $INSTALL/usr/lib/samba
       cp $PKG_DIR/scripts/samba-autoshare $INSTALL/usr/lib/samba
 
-    if [ -f $PROJECT_DIR/$PROJECT/config/smb.conf ]; then
-      mkdir -p $INSTALL/etc/samba
-        cp $PROJECT_DIR/$PROJECT/config/smb.conf $INSTALL/etc/samba
-    elif [ -f $DISTRO_DIR/$DISTRO/config/smb.conf ]; then
-      mkdir -p $INSTALL/etc/samba
-        cp $DISTRO_DIR/$DISTRO/config/smb.conf $INSTALL/etc/samba
-    else
-      mkdir -p $INSTALL/etc/samba
-        cp $PKG_DIR/config/smb.conf $INSTALL/etc/samba
-      mkdir -p $INSTALL/usr/config
-        cp $PKG_DIR/config/smb.conf $INSTALL/usr/config/samba.conf.sample
-    fi
+      cp $PKG_DIR/scripts/smbd-config $INSTALL/usr/lib/samba
 
   fi
 }
 
 post_install() {
+  enable_service samba-config.service
+
   if [ "$SAMBA_SERVER" = "yes" ]; then
     enable_service nmbd.service
     enable_service smbd.service
