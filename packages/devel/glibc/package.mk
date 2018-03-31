@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="glibc"
-PKG_VERSION="2.26"
+PKG_VERSION="d300041"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/bminor/glibc/tree/release/2.26/master"
 PKG_URL="https://github.com/bminor/glibc/archive/$PKG_VERSION.tar.gz"
-PKG_URL="http://ftpmirror.gnu.org/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
+#PKG_URL="http://ftpmirror.gnu.org/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap"
 PKG_DEPENDS_INIT="glibc"
 PKG_SECTION="toolchain/devel"
@@ -82,35 +82,25 @@ post_patch() {
       patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/ldconfig-format-new.patch
       patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/0001-sysdeps-unix-Add-support-for-usr-lib32-as-a-system-l.patch
       patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/nsswitch-altfiles.patch
-      #patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/ld-so-cache-in-var.patch
-      #patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/mkdir-ldconfig.patch
-      #patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/locale-var-cache.patch
       patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/nonscd.patch
-      patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/alternate_trim.patch
+      #patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/alternate_trim.patch
       patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/madvise-bss.patch
       patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/spinaphore.patch
-      #patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/tzselect-proper-zone-file.patch
       patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/large-page-huge-page.patch
       patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/use_madv_free.patch
       patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/malloc_tune.patch
-      patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/0001-misc-Support-fallback-stateless-shells-path-in-absen.patch
       patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/ldconfig-Os.patch
       patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/stateless.patch
       patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/nsswitch-altfiles-bugfix.patch
-      #patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/math-2.27.patch
-      #patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/exp2.patch
       patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/mathlto.patch
-      #patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/vzeroupper.patch
-      patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/malloc-relaxed.patch
-      #patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/0001-x86-64-Remove-sysdeps-x86_64-fpu-s_sinf.S.patch
-      #patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/0002-x86-64-Add-sinf-with-FMA.patch
-      patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/CVE-2017-8804.patch
-      patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/malloc-assert-3.patch
-      patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/cve-2017-15804.patch
-      patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/cve-2017-15670.patch
-      patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/cve-2017-15671.patch
-      patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/cve-2017-17426.patch
-      patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/cve-2017-16997.patch
+      #patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/malloc-relaxed.patch
+      #patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/CVE-2017-8804.patch
+      #patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/malloc-assert-3.patch
+      #patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/cve-2017-15804.patch
+      #patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/cve-2017-15670.patch
+      #patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/cve-2017-15671.patch
+      #patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/cve-2017-17426.patch
+      #patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/cve-2017-16997.patch
   fi
 }
 
@@ -180,6 +170,9 @@ post_makeinstall_target() {
 # xlocale.h was renamed - create symlink for compatibility
   ln -sf $SYSROOT_PREFIX/usr/include/bits/types/__locale_t.h $SYSROOT_PREFIX/usr/include/xlocale.h
 
+# symlink locale directory
+  ln -sf /storage/.config/locale $INSTALL/usr/lib/locale
+
 # we are linking against ld.so, so symlink
   ln -sf $(basename $INSTALL/usr/lib/ld-*.so) $INSTALL/usr/lib/ld.so
 
@@ -194,19 +187,6 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/lib/*.o
   rm -rf $INSTALL/usr/lib/*.map
   rm -rf $INSTALL/var
-# remove locales and charmaps
-  rm -rf $INSTALL/usr/share/i18n/charmaps
-  rm -rf $INSTALL/usr/share/i18n/locales
-
-# add default locale
-if [ "$GLIBC_LOCALES" = yes ]; then
-  mkdir -p $INSTALL/usr/lib/locale
-  mkdir -p $INSTALL/etc/profile.d
-  I18NPATH=../localedata 
-  localedef -i ../localedata/locales/en_US -f ../localedata/charmaps/UTF-8 en_US.UTF-8 --prefix=$INSTALL
-  localedef -i ../localedata/locales/ru_RU -f ../localedata/charmaps/UTF-8 ru_RU.UTF-8 --prefix=$INSTALL
-  echo "export LANG=en_US.UTF-8" > $INSTALL/etc/profile.d/01-locale.conf
-fi
 
 # create default configs
   mkdir -p $INSTALL/etc

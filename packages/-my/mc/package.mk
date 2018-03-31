@@ -1,11 +1,14 @@
 PKG_NAME="mc"
 PKG_VERSION="4.8.20"
 PKG_URL="http://ftp.midnight-commander.org/${PKG_NAME}-${PKG_VERSION}.tar.xz"
-PKG_DEPENDS_TARGET="toolchain libtool:host gettext:host e2fsprogs util-linux glib pcre fuse libssh2 expat"
+PKG_DEPENDS_TARGET="toolchain libtool:host gettext:host e2fsprogs util-linux glib pcre fuse libssh2 libevent expat slang"
 PKG_SECTION="tools"
 PKG_TOOLCHAIN="autotools"
 
-LDFLAGS="$LDFLAGS -lssh2 -lncursesw -ltinfo"
+pre_configure_target() {
+  export LIBS="$LIBS -lssh2"
+}
+
 
 PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config \
                            --datadir=/storage/.config \
@@ -17,7 +20,7 @@ PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config \
                            --oldincludedir=/storage/.config \
                            --datarootdir=/storage/.config \
                            --infodir=/storage/.config \     
-                           --localedir=/storage/.config/mc/locale \
+                           --localedir=/storage/.config \
                            --disable-doxygen-doc \
                            --disable-doxygen-rtf \
                            --disable-doxygen-xml \
@@ -27,23 +30,16 @@ PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config \
                            --disable-doxygen-html \
                            --without-internal-edit \
                            --enable-silent-rules \
+                           --enable-background \
                            --enable-charset \
-                           --enable-largefile \
+                           --without-gpm-mouse \
+                           --with-screen=slang \
+                           --without-x \
+                           --with-subshell \
+                           --enable-vfs-sftp \
                            --enable-vfs-tar \
                            --enable-vfs-extfs \
                            --enable-vfs-cpio \
                            --disable-vfs-smb \
-                           --enable-vfs-ftp \
-                           --enable-vfs-sftp \
-                           --without-gpm-mouse \
-                           --with-screen=ncurses \
-                           --with-gnu-ld \
-                           --with-pcre=$SYSROOT_PREFIX/usr \
-                           --enable-static \
-                           --disable-shared \
-                           --disable-rpath \
-                           --enable-tests=no \
-                           --enable-threads=posix \
-                           --enable-maintainer-mode=no \
-                           --enable-mclib=no \
-                           --enable-assert=no"
+                           --with-mmap \
+                           --with-pcre"

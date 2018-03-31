@@ -3,11 +3,8 @@ Description=AceStream Engine
 Requires=network-online.target
 After=network-online.target
 Before=vdr.service kodi.service
-ConditionPathExists=/storage/.cache/services/acestream.conf
 
 [Service]
-EnvironmentFile=-/run/openelec/acestream.conf
-ExecStartPre=-/usr/bin/ace-config
 ExecStart=/opt/start-engine --client-console --live-cache-type memory --live-buffer 60 --live-cache-size 268435456 --upload-limit 1 --cache-limit 10
 ExecStop=/bin/kill -TERM $MAINPID
 TimeoutStopSec=5
