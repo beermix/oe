@@ -15,5 +15,3 @@ PKG_PRIORITY="optional"
 PKG_SECTION="xmedia/depends"
 PKG_SHORTDESC="utility libraries for X C Binding"
 PKG_LONGDESC="This package contains the library files needed to run software using libxcb utils"
-
-PKG_TOOLCHAIN="autotools"

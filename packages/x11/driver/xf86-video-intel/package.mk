@@ -23,7 +23,7 @@ PKG_LICENSE="OSS"
 PKG_SITE="https://cgit.freedesktop.org/xorg/driver/xf86-video-intel/log/"
 PKG_URL="https://cgit.freedesktop.org/xorg/driver/xf86-video-intel/snapshot/$PKG_VERSION.tar.xz"
 PKG_SOURCE_DIR="$PKG_VERSION"
-PKG_DEPENDS_TARGET="toolchain libXcomposite libXxf86vm libXdamage util-macros systemd xorg-server libXvMC libXtst libXcursor libXScrnSaver"
+PKG_DEPENDS_TARGET="toolchain libXcomposite libXxf86vm libXdamage util-macros systemd xorg-server xcb-util libXvMC libXtst libXcursor libXScrnSaver"
 PKG_SECTION="x11/driver"
 PKG_SHORTDESC="xf86-video-intel: The Xorg driver for Intel video chips"
 PKG_LONGDESC="The Xorg driver for Intel i810, i815, 830M, 845G, 852GM, 855GM, 865G, 915G, 915GM and 965G video chips."
@@ -31,7 +31,7 @@ PKG_LONGDESC="The Xorg driver for Intel i810, i815, 830M, 845G, 852GM, 855GM, 86
 PKG_BUILD_FLAGS="-lto -gold"
 
 PKG_MESON_OPTS_TARGET="-Ddefault-dri=3 \
-			  -Dxvmc=false \
+			  -Dxvmc=true \
 			  -Dvalgrind=false \
 			  -Dxcursor=true \
 			  -Dbacklight-helper=false \
