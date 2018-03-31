@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="Python2"
-PKG_VERSION="2.7.14"
-PKG_SHA256="71ffb26e09e78650e424929b2b457b9c912ac216576e6bd9e7d204ed03296a66"
+PKG_VERSION="2.7.12"
+PKG_SHA256="d7837121dd5652a05fef807c361909d255d173280c4e1a4ded94d73d80a1f978"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.python.org/"
@@ -38,6 +38,8 @@ PKG_PY_DISABLED_MODULES="_tkinter nis gdbm bsddb ossaudiodev"
 PKG_CONFIGURE_OPTS_HOST="--cache-file=config.cache \
                          --without-cxx-main \
                          --with-threads \
+                         --with-pymalloc \
+                         --with-signal-module \
                          --with-computed-gotos \
                          --with-lto \
                          --enable-unicode=ucs4"
@@ -55,8 +57,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            ac_cv_have_long_long_format=yes \
                            --with-threads \
                            --enable-unicode=ucs4 \
-                           --with-computed-gotos \
-                           --with-lto \
                            --disable-ipv6 \
                            --disable-profiling \
                            --without-pydebug \
@@ -67,6 +67,10 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            --with-wctype-functions \
                            --without-cxx-main \
                            --with-system-ffi \
+                           --with-threads \
+                           --with-signal-module \
+                           --with-computed-gotos \
+                           --with-lto \
                            --with-system-expat"
 post_patch() {
   # This is needed to make sure the Python build process doesn't try to
@@ -86,6 +90,10 @@ make_host() {
 }
 
 makeinstall_host() {
+  export HOST_CFLAGS="${flags/-fPIE -pie}"
+  export HOST_CFLAGS="$HOST_CFLAGS -O3 -ffunction-sections -fno-semantic-interposition -fopt-info-vec -flto"
+  export HOST_CXXFLAGS="$HOST_CXXFLAGS -O3 -ffunction-sections -fno-semantic-interposition -fopt-info-vec"
+
   make PYTHON_MODULES_INCLUDE="$HOST_INCDIR" \
        PYTHON_MODULES_LIB="$HOST_LIBDIR" \
        PYTHON_DISABLE_MODULES="readline _curses _curses_panel $PKG_PY_DISABLED_MODULES" \
@@ -94,7 +102,8 @@ makeinstall_host() {
 
 pre_configure_target() {
   export PYTHON_FOR_BUILD=$TOOLCHAIN/bin/python
-  export CFLAGS="$CFLAGS -O3 -ffunction-sections -fno-semantic-interposition -fopt-info-vec"
+  export CFLAGS="${flags/-fPIE -pie}"
+  export CFLAGS="$CFLAGS -O3 -ffunction-sections -fno-semantic-interposition -fopt-info-vec -flto"
   export CXXFLAGS="$CXXFLAGS -O3 -ffunction-sections -fno-semantic-interposition -fopt-info-vec"
 }
 

@@ -17,11 +17,11 @@
 ################################################################################
 
 PKG_NAME="meson"
-PKG_VERSION="0.45.0"
-PKG_SHA256="3455abbc30a3fbd9cc8abb6d5fcdc42ce618665b95ac2c3ad7792a4a6ba47ce4"
+PKG_VERSION="0.45.1"
+PKG_SHA256="4d0bb0dbb1bb556cb7a4092fdfea3d6e76606bd739a4bc97481c2d7bc6200afb"
 PKG_ARCH="any"
 PKG_LICENSE="Apache"
-PKG_SITE="http://mesonbuild.com"
+PKG_SITE="https://github.com/mesonbuild/meson/releases/"
 PKG_URL="https://github.com/mesonbuild/meson/releases/download/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="Python3:host pathlib:host"
 PKG_SECTION="toolchain/devel"

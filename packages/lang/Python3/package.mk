@@ -57,9 +57,11 @@ PKG_CONFIGURE_OPTS_HOST="ac_cv_prog_HAS_HG=/bin/false
                          --with-expat=builtin
                          --with-libmpdec=none
                          --with-doc-strings
-                         --without-pymalloc
                          --without-ensurepi
-                         --with-lto
+                         --with-threads 
+                         --with-pymalloc
+                         --with-lto=8 
+                         --with-computed-gotos
                          --disable-ipv6
 "
 
@@ -96,10 +98,11 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_prog_HAS_HG=/bin/false
                            --with-expat=system
                            --with-libmpdec=none
                            --with-doc-strings
-                           --without-pymalloc
                            --without-ensurepip
                            --with-threads
-                           --with-lto
+                           --with-pymalloc
+                           --with-lto=8 
+                           --with-computed-gotos
                            --disable-ipv6
 "
 

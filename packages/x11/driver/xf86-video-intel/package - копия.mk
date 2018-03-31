@@ -23,30 +23,21 @@ PKG_LICENSE="OSS"
 PKG_SITE="http://intellinuxgraphics.org/"
 PKG_URL="https://cgit.freedesktop.org/xorg/driver/xf86-video-intel/snapshot/$PKG_VERSION.tar.xz"
 PKG_SOURCE_DIR="$PKG_VERSION"
-PKG_DEPENDS_TARGET="toolchain libXcomposite libXxf86vm libXdamage util-macros systemd xorg-server libXtst libXcursor libXScrnSaver"
+PKG_DEPENDS_TARGET="toolchain libXcomposite libXxf86vm libXdamage util-macros systemd xorg-server libXtst"
 PKG_SECTION="x11/driver"
 PKG_SHORTDESC="xf86-video-intel: The Xorg driver for Intel video chips"
 PKG_LONGDESC="The Xorg driver for Intel i810, i815, 830M, 845G, 852GM, 855GM, 865G, 915G, 915GM and 965G video chips."
+PKG_TOOLCHAIN="autotools"
 # xf86-video-intel is broken enough. dont link with LTO
 PKG_BUILD_FLAGS="-lto"
 
-PKG_MESON_OPTS_TARGET="-Ddefault-dri=3 \
-			  -Dxvmc=false \
-			  -Dvalgrind=false \
-			  -Dxcursor=true \
-			  -Dbacklight-helper=false \
-			  -Dbacklight=false \
-			  -Dtools=false \
-			  -Ddebug=no \
-			  -Dxorg-module-dir=$XORG_PATH_MODULES"
-
-pre_configure_target() {
-  export LC_ALL=en_US.UTF-8
-
-  # meson needs a host compiler and it's detected through the environment. meh.
-  export CC="$HOST_CC"
-  export CXX="$HOST_CXX"
-}
+PKG_CONFIGURE_OPTS_TARGET="--disable-backlight \
+                           --disable-backlight-helper \
+                           --disable-gen4asm \
+                           --enable-udev \
+                           --disable-tools \
+                           --with-default-dri=3 \
+                           --with-xorg-module-dir=$XORG_PATH_MODULES"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/share/polkit-1

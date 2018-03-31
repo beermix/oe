@@ -36,7 +36,7 @@ pre_configure_target() {
 }
 
 make_target() {
-  python setup.py build
+  python2 setup.py build --compiler=unix
 }
 
 makeinstall_target() {

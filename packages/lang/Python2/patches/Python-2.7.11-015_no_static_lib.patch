@@ -2,15 +2,6 @@ diff --git a/Makefile.pre.in b/Makefile.pre.in
 index 918f210..eb9ee6b 100644
 --- a/Makefile.pre.in
 +++ b/Makefile.pre.in
-@@ -438,7 +438,7 @@ coverage:
- 
- 
- # Build the interpreter
--$(BUILDPYTHON):	Modules/python.o $(LIBRARY) $(LDLIBRARY)
-+$(BUILDPYTHON):	Modules/python.o $(LDLIBRARY)
- 		$(LINKCC) $(LDFLAGS) $(LINKFORSHARED) -o $@ \
- 			Modules/python.o \
- 			$(BLDLIBRARY) $(LIBS) $(MODLIBS) $(SYSLIBS) $(LDLAST)
 @@ -465,18 +465,6 @@ sharedmods: $(BUILDPYTHON) pybuilddir.txt
  		_TCLTK_INCLUDES='$(TCLTK_INCLUDES)' _TCLTK_LIBS='$(TCLTK_LIBS)' \
  		$(PYTHON_FOR_BUILD) $(srcdir)/setup.py $$quiet build
