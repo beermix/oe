@@ -106,7 +106,7 @@ make_target() {
     'use_kerberos=false'
     'use_pulseaudio=false'
     'use_sysroot=true'
-    'is_official_build=true' # implies is_cfi=true on x86_64
+    'is_official_build=false' # implies is_cfi=true on x86_64
     'linux_link_libudev=true'
     'use_v8_context_snapshot=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
