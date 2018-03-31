@@ -68,11 +68,14 @@ make_target() {
 
   # https://chromium-review.googlesource.com/c/chromium/src/+/712575
   # _flags+=('exclude_unwind_tables=true')
-  export CFLAGS="$CFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables"
-  export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
-  export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
+  export CFLAGS="$CFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables -Wno-builtin-macro-redefined"
+  export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables -Wno-builtin-macro-redefined"
+  export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES -D__DATE__=  -D__TIME__=  -D__TIMESTAMP__="
 
   export CCACHE_SLOPPINESS=time_macros
+  
+  # Allow building against system libraries in official builds
+  sed -i 's/OFFICIAL_BUILD/GOOGLE_CHROME_BUILD/' ./tools/generate_shim_headers/generate_shim_headers.py
 
   # Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
   # Note: These are for OpenELEC use ONLY. For your own distribution, please
@@ -88,7 +91,6 @@ make_target() {
     'clang_use_chrome_plugins=false'
     'symbol_level=0'
     'is_debug=false'
-    'fatal_linker_warnings=false'
     'treat_warnings_as_errors=false'
     'fieldtrial_testing_like_official_build=true'
     'remove_webcore_debug_symbols=true'
@@ -100,11 +102,11 @@ make_target() {
     'use_cups=false'
     'use_custom_libcxx=false'
     'use_gnome_keyring=false'
-    'use_gold=false'
     'use_gtk3=false'
     'use_kerberos=false'
     'use_pulseaudio=false'
     'use_sysroot=true'
+    'is_official_build=true' # implies is_cfi=true on x86_64
     'linux_link_libudev=true'
     'use_v8_context_snapshot=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
@@ -157,6 +159,8 @@ make_target() {
       \! -regex '.*\.\(gn\|gni\|isolate\)' \
       -delete
   done
+  
+  _flags+=('symbol_level=0')
 
   ./build/linux/unbundle/replace_gn_files.py --system-libraries "${!_system_libs[@]}"
   ./third_party/libaddressinput/chromium/tools/update-strings.py
