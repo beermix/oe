@@ -48,8 +48,8 @@ case "$LINUX" in
     PKG_BUILD_PERF="no"
     ;;
   *)
-    PKG_VERSION="4.14.10"
-    PKG_SHA256="86baf1374ca003bdd9a43cae7f59cec02b455a6c38c3705aa46b2b68d91ed110"
+    PKG_VERSION="4.14"
+    #PKG_SHA256="86baf1374ca003bdd9a43cae7f59cec02b455a6c38c3705aa46b2b68d91ed110"
     PKG_URL="https://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
     PKG_PATCH_DIRS="default"
     PKG_BUILD_PERF="no"
@@ -97,7 +97,7 @@ post_patch() {
     sed -i -e "s|@DISTRONAME@|$DISTRONAME|g" $PKG_BUILD/.config
 
   # ask for new config options after kernel update
-  # make -C $PKG_BUILD oldconfig
+   #make -C $PKG_BUILD oldconfig
 
   # disable swap support if not enabled
   if [ ! "$SWAP_SUPPORT" = yes ]; then
