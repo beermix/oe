@@ -11,19 +11,17 @@ PKG_SECTION="security"
 PKG_SHORTDESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"
 PKG_LONGDESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"
 #PKG_BUILD_FLAGS="-parallel"
-PKG_BUILD_FLAGS="+pic"
+#PKG_BUILD_FLAGS="+pic"
 
 PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            --libdir=lib \
                            shared \
                            threads \
+                           enable-camellia \
+                           enable-mdc2 \
                            enable-tlsext \
                            enable-unit-test \
-                           no-ssl2 \
-                           no-ssl3 \
-                           enable-camellia \
-                           no-rc5 \
-                           no-zlib \
+                           no-ssl3-method \
                            enable-ec_nistp_64_gcc_128"
 
 pre_configure_host() {
@@ -33,8 +31,7 @@ pre_configure_host() {
 
 configure_host() {
   cd $PKG_BUILD/.$HOST_NAME
-  ./Configure --prefix=/ $PKG_CONFIGURE_OPTS_SHARED no-zlib no-zlib-dynamic \
-  linux-x86_64 "-Wa,--noexecstack $CFLAGS $LDFLAGS"
+  ./Configure --prefix=/ $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 $CFLAGS
 }
 
 makeinstall_host() {
@@ -44,12 +41,15 @@ makeinstall_host() {
 pre_configure_target() {
   mkdir -p $PKG_BUILD/.$TARGET_NAME
   cp -a $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME/
+  
+  sed -i -e '/^"linux-x86_64"/ s/-m64 -DL_ENDIAN -O3 -Wall//' $PKG_BUILD/.$TARGET_NAME/Configure
+  CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|"`
+  CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3|"`
 }
 
 configure_target() {
   cd $PKG_BUILD/.$TARGET_NAME
-  ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED \
-  linux-x86_64 "-Wa,--noexecstack $CFLAGS $CPPFLAGS $LDFLAGS"
+  ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 "-Wa,--noexecstack $CFLAGS $LDFLAGS $CPPFLAGS"
 }
 
 makeinstall_target() {
@@ -63,13 +63,14 @@ post_makeinstall_target() {
   rm -rf $INSTALL/etc/ssl/misc
   rm -rf $INSTALL/usr/bin/c_rehash
 
-  debug_strip $INSTALL/usr/bin/openssl
+  $STRIP $INSTALL/usr/bin/openssl
 
   # create new cert: ./mkcerts.sh
   # cert from https://curl.haxx.se/docs/caextract.html
+  
   mkdir -p $INSTALL/etc/ssl
-  # perl $PKG_DIR/cert/mk-ca-bundle.pl
-  # cp $PKG_BUILD/.$TARGET_NAME/ca-bundle.crt $INSTALL/etc/ssl/cert.pem
+#  perl $PKG_DIR/cert/mk-ca-bundle.pl
+#  cp $PKG_BUILD/.$TARGET_NAME/ca-bundle.crt $INSTALL/etc/ssl/cert.pem
   cp $PKG_DIR/cert/cacert.pem $INSTALL/etc/ssl/cert.pem
 
   # backwards comatibility
@@ -79,8 +80,8 @@ post_makeinstall_target() {
     ln -sf /etc/ssl/cert.pem $INSTALL/etc/pki/tls/certs/ca-bundle.crt
   mkdir -p $INSTALL/usr/lib/ssl
     ln -sf /etc/ssl/cert.pem $INSTALL/usr/lib/ssl/cert.pem
-  # mkdir -p $INSTALL/etc/ssl/certs
-  # ln -sf /etc/ssl/cert.pem $INSTALL/etc/ssl/certs/ca-certificates.crt
+#  mkdir -p $INSTALL/etc/ssl/certs
+#    ln -sf /etc/ssl/cert.pem $INSTALL/etc/ssl/certs/ca-certificates.crt
 
   # for VDR-LIVE
   # mkdir -p $INSTALL/usr/config/ssl

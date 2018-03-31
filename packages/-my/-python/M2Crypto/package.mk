@@ -4,7 +4,7 @@
 ################################################################################
 
 PKG_NAME="M2Crypto"
-PKG_VERSION="0.25.1"
+PKG_VERSION="top_of_mvyskocil"
 PKG_URL="https://gitlab.com/m2crypto/m2crypto/repository/$PKG_VERSION/archive.tar.gz"
 PKG_SOURCE_DIR="m2crypto-${PKG_VERSION}*"
 PKG_DEPENDS_TARGET="toolchain distutilscross:host openssl:host swig:host"

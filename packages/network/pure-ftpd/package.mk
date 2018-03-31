@@ -4,6 +4,8 @@ PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain libcap"
 #PKG_DEPENDS_TARGET="toolchain libcap libevent libsodium"
 PKG_SECTION="network"
+LTO_SUPPORT="yes"
+GOLD_SUPPORT="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config \
 			      --datadir=/storage/.config \
