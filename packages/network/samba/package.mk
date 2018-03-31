@@ -107,6 +107,8 @@ pre_configure_target() {
     rm -rf .$TARGET_NAME
 # work around link issues
   export LDFLAGS="$LDFLAGS -lreadline"
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
+  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-Os|"`
 
 # support 64-bit offsets and seeks on 32-bit platforms
   if [ "$TARGET_ARCH" = "arm" ]; then
