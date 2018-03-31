@@ -31,7 +31,7 @@ PKG_LONGDESC="The Glibc package contains the main C library. This library provid
 PKG_BUILD_FLAGS="-lto -gold -hardening"
 
 PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
-                           ac_cv_path_PERL=no \
+                           ac_cv_path_PERL= \
                            ac_cv_prog_MAKEINFO= \
                            --libexecdir=/usr/lib/glibc \
                            --cache-file=config.cache \
@@ -48,19 +48,31 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --without-cvs \
                            --without-gd \
                            --enable-obsolete-rpc \
-                           --enable-obsolete-nsl \
+			   --enable-obsolete-nsl \
                            --disable-build-nscd \
                            --disable-nscd \
                            --enable-lock-elision \
                            --disable-timezone-tools"
 
-if build_with_debug; then
+if [ "$DEBUG" = yes ]; then
   PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET --enable-debug"
 else
   PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET --disable-debug"
 fi
 
 NSS_CONF_DIR="$PKG_BUILD/nss"
+
+GLIBC_EXCLUDE_BIN="catchsegv gencat getconf iconv iconvconfig ldconfig"
+GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN makedb mtrace pcprofiledump"
+GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN pldd rpcgen sln sotruss sprof xtrace"
+
+pre_build_target() {
+  cd $PKG_BUILD
+    aclocal --force --verbose
+    autoconf --force --verbose
+  cd -
+}
+
 
 post_patch() {
   # Add patches from Clear Linux
@@ -162,26 +174,18 @@ echo "libdir=/usr/lib" >> configparms
 echo "slibdir=/usr/lib" >> configparms
 echo "sbindir=/usr/bin" >> configparms
 echo "rootsbindir=/usr/bin" >> configparms
-echo "build-programs=yes" >> configparms
-
-GLIBC_INCLUDE_BIN="getent ldd locale"
 }
 
 post_makeinstall_target() {
+# xlocale.h was renamed - create symlink for compatibility
+  ln -sf $SYSROOT_PREFIX/usr/include/bits/types/__locale_t.h $SYSROOT_PREFIX/usr/include/xlocale.h
+
 # we are linking against ld.so, so symlink
   ln -sf $(basename $INSTALL/usr/lib/ld-*.so) $INSTALL/usr/lib/ld.so
 
 # cleanup
-# remove any programs we don't want/need, keeping only those we want
-  for f in $(find $INSTALL/usr/bin -type f); do
-    fb="$(basename "${f}")"
-    for ib in $GLIBC_INCLUDE_BIN; do
-      if [ "${ib}" == "${fb}" ]; then
-        fb=
-        break
-      fi
-    done
-    [ -n "${fb}" ] && rm -rf ${f}
+  for i in $GLIBC_EXCLUDE_BIN; do
+    rm -rf $INSTALL/usr/bin/$i
   done
 
   rm -rf $INSTALL/usr/lib/audit
@@ -192,20 +196,17 @@ post_makeinstall_target() {
   rm -rf $INSTALL/var
 # remove locales and charmaps
   rm -rf $INSTALL/usr/share/i18n/charmaps
+  rm -rf $INSTALL/usr/share/i18n/locales
 
-# add UTF-8 charmap for Generic (charmap is needed for installer)
-  if [ "$PROJECT" = "Generic" ]; then
-    mkdir -p $INSTALL/usr/share/i18n/charmaps
-    cp -PR $PKG_BUILD/localedata/charmaps/UTF-8 $INSTALL/usr/share/i18n/charmaps
-    gzip $INSTALL/usr/share/i18n/charmaps/UTF-8
-  fi
-
-  if [ ! "$GLIBC_LOCALES" = yes ]; then
-    rm -rf $INSTALL/usr/share/i18n/locales
-
-    mkdir -p $INSTALL/usr/share/i18n/locales
-      cp -PR $PKG_BUILD/localedata/locales/POSIX $INSTALL/usr/share/i18n/locales
-  fi
+# add default locale
+if [ "$GLIBC_LOCALES" = yes ]; then
+  mkdir -p $INSTALL/usr/lib/locale
+  mkdir -p $INSTALL/etc/profile.d
+  I18NPATH=../localedata 
+  localedef -i ../localedata/locales/en_US -f ../localedata/charmaps/UTF-8 en_US.UTF-8 --prefix=$INSTALL
+  localedef -i ../localedata/locales/ru_RU -f ../localedata/charmaps/UTF-8 ru_RU.UTF-8 --prefix=$INSTALL
+  echo "export LANG=en_US.UTF-8" > $INSTALL/etc/profile.d/01-locale.conf
+fi
 
 # create default configs
   mkdir -p $INSTALL/etc
