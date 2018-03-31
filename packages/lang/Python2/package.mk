@@ -38,7 +38,6 @@ PKG_PY_DISABLED_MODULES="_tkinter nis gdbm bsddb ossaudiodev"
 PKG_CONFIGURE_OPTS_HOST="--cache-file=config.cache \
                          --without-cxx-main \
                          --with-threads \
-                         --with-computed-gotos \
                          --with-lto \
                          --enable-unicode=ucs4"
 
@@ -55,7 +54,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            ac_cv_have_long_long_format=yes \
                            --with-threads \
                            --enable-unicode=ucs4 \
-                           --with-computed-gotos \
                            --with-lto \
                            --disable-ipv6 \
                            --disable-profiling \
