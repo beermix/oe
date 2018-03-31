@@ -1,0 +1,23 @@
+diff -Nur dbus-glib-0.110-orig/dbus/Makefile.am dbus-glib-0.110/dbus/Makefile.am
+--- dbus-glib-0.110-orig/dbus/Makefile.am	2018-03-31 05:33:35.259212090 +0300
++++ dbus-glib-0.110/dbus/Makefile.am	2018-01-29 13:46:09.000000000 +0300
+@@ -1,4 +1,4 @@
+-SUBDIRS = . examples
++SUBDIRS = .
+ 
+ AM_CPPFLAGS = \
+ 	-I$(top_srcdir)						\
+diff -Nur dbus-glib-0.110-orig/Makefile.am dbus-glib-0.110/Makefile.am
+--- dbus-glib-0.110-orig/Makefile.am	2018-03-31 05:33:35.259212090 +0300
++++ dbus-glib-0.110/Makefile.am	2018-01-29 13:46:09.000000000 +0300
+@@ -1,8 +1,8 @@
+ ACLOCAL_AMFLAGS = -I m4
+ GLIB_PC=dbus-glib-1.pc
+ 
+-SUBDIRS = dbus-gmain dbus tools test doc
+-DIST_SUBDIRS = dbus-gmain dbus tools test doc m4
++SUBDIRS = dbus-gmain dbus tools test
++DIST_SUBDIRS = dbus-gmain dbus tools test m4
+ 
+ pkgconfigdir = $(libdir)/pkgconfig
+ pkgconfig_DATA = $(GLIB_PC)
