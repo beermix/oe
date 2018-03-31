@@ -10,8 +10,6 @@ PKG_TOOLCHAIN="configure"
 pre_configure_target() {
  cd $PKG_BUILD
  rm -rf .$TARGET_NAME
- strip_lto
- strip_gold
 }
 
 configure_target() {
@@ -22,7 +20,7 @@ configure_target() {
 	     -Dlibswanted="dl m c crypt db ndbm gdbm" \
 	     -des \
 	     -Dusethreads \
-	     -Dldflags="$LDFLAGS -lm" \
+	     -Dldflags="$LDFLAGS -lpthread -lrt -lm" \
 	     -Dccflags="$CFLAGS"
 }
 

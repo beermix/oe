@@ -1,19 +1,6 @@
 ################################################################################
-#      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
-#
-#  OpenELEC is free software: you can redistribute it and/or modify
-#  it under the terms of the GNU General Public License as published by
-#  the Free Software Foundation, either version 2 of the License, or
-#  (at your option) any later version.
-#
-#  OpenELEC is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU General Public License for more details.
-#
-#  You should have received a copy of the GNU General Public License
-#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
+#      This file is part of Alex@ELEC - http://www.alexelec.in.ua
+#      Copyright (C) 2011-present Alexandr Zuyev (alex@alexelec.in.ua)
 ################################################################################
 
 PKG_NAME="samba"
@@ -146,11 +133,11 @@ post_make_target() {
 
 makeinstall_target() {
   if [ "$SAMBA_SERVER" = "yes" ]; then
-    mkdir -p $INSTALL/usr/sbin
-      cp bin/samba_multicall $INSTALL/usr/sbin
-      ln -sf samba_multicall $INSTALL/usr/sbin/smbd
-      ln -sf samba_multicall $INSTALL/usr/sbin/nmbd
-      ln -sf samba_multicall $INSTALL/usr/sbin/smbpasswd
+    mkdir -p $INSTALL/usr/bin
+      cp bin/samba_multicall $INSTALL/usr/bin
+      ln -sf samba_multicall $INSTALL/usr/bin/smbd
+      ln -sf samba_multicall $INSTALL/usr/bin/nmbd
+      ln -sf samba_multicall $INSTALL/usr/bin/smbpasswd
 
     mkdir -p $INSTALL/etc/samba
       cp ../codepages/lowcase.dat $INSTALL/etc/samba
@@ -164,16 +151,26 @@ makeinstall_target() {
       cp -P $PKG_DIR/default.d/*.conf $INSTALL/usr/share/services
 
     mkdir -p $INSTALL/usr/lib/samba
+      cp $PKG_DIR/scripts/samba-config $INSTALL/usr/lib/samba
       cp $PKG_DIR/scripts/samba-autoshare $INSTALL/usr/lib/samba
 
-      cp $PKG_DIR/scripts/smbd-config $INSTALL/usr/lib/samba
+    if [ -f $PROJECT_DIR/$PROJECT/config/smb.conf ]; then
+      mkdir -p $INSTALL/etc/samba
+        cp $PROJECT_DIR/$PROJECT/config/smb.conf $INSTALL/etc/samba
+    elif [ -f $DISTRO_DIR/$DISTRO/config/smb.conf ]; then
+      mkdir -p $INSTALL/etc/samba
+        cp $DISTRO_DIR/$DISTRO/config/smb.conf $INSTALL/etc/samba
+    else
+      mkdir -p $INSTALL/etc/samba
+        cp $PKG_DIR/config/smb.conf $INSTALL/etc/samba
+      mkdir -p $INSTALL/usr/config
+        cp $PKG_DIR/config/smb.conf $INSTALL/usr/config/samba.conf.sample
+    fi
 
   fi
 }
 
 post_install() {
-  enable_service samba-config.service
-
   if [ "$SAMBA_SERVER" = "yes" ]; then
     enable_service nmbd.service
     enable_service smbd.service
