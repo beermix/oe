@@ -23,19 +23,19 @@ PKG_LICENSE="MIT"
 PKG_SITE="https://git.gnome.org//browse/libxslt/"
 PKG_URL="https://git.gnome.org/browse/libxslt/snapshot/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="libxml2:host"
-PKG_DEPENDS_TARGET="toolchain libxml2"
+PKG_DEPENDS_TARGET="toolchain libxml2 libgcrypt"
 PKG_SECTION="textproc"
 PKG_SHORTDESC="libxslt"
 PKG_LONGDESC="libxslt"
 PKG_TOOLCHAIN="autotools"
 
-PKG_CONFIGURE_OPTS_HOST="  ac_cv_header_ansidecl_h=no \
-                           ac_cv_header_xlocale_h=no \
-                           --without-python \
-                           --enable-static \
-                           --enable-shared \
-                           --with-libxml-prefix=$TOOLCHAIN \
-                           --without-crypto"
+PKG_CONFIGURE_OPTS_HOST="ac_cv_header_ansidecl_h=no \
+                         ac_cv_header_xlocale_h=no \
+                         --without-python \
+                         --enable-static \
+                         --enable-shared \
+                         --with-libxml-prefix=$TOOLCHAIN \
+                         --without-crypto"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_header_ansidecl_h=no \
                            ac_cv_header_xlocale_h=no \
