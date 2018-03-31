@@ -22,7 +22,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://www.samba.org"
 PKG_URL="https://samba.org/samba/ftp/stable/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain zlib connman libaio"
+PKG_DEPENDS_TARGET="toolchain zlib connman"
 PKG_SECTION="network"
 PKG_SHORTDESC="samba: The free SMB / CIFS fileserver and client"
 PKG_LONGDESC="Samba is a SMB server that runs on Unix and other operating systems. It allows these operating systems (currently Unix, Netware, OS/2 and AmigaDOS) to act as a file and print server for SMB and CIFS clients. There are many Lan-Manager compatible clients such as LanManager for DOS, Windows for Workgroups, Windows NT, Windows 95, Linux smbfs, OS/2, Pathworks and more."
@@ -102,7 +102,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file__proc_sys_kernel_core_pattern=yes \
                            --without-utmp \
                            --without-cluster-support \
                            --without-acl-support \
-                           --with-aio-support \
+                           --without-aio-support \
                            --with-sendfile-support \
                            --without-libtevent \
                            --without-wbclient \
@@ -140,7 +140,7 @@ post_make_target() {
 
   mkdir -p $SYSROOT_PREFIX/usr/lib/pkgconfig
     # talloc/tdb/tevent/wbclient static
-    sed -e "s,^Libs: -lsmbclient$,Libs: -lsmbclient -ltalloc -ltdb -ltevent -laio -lwbclient,g" -i pkgconfig/smbclient.pc
+    sed -e "s,^Libs: -lsmbclient$,Libs: -lsmbclient -ltalloc -ltdb -ltevent -lwbclient,g" -i pkgconfig/smbclient.pc
     cp pkgconfig/smbclient.pc $SYSROOT_PREFIX/usr/lib/pkgconfig
 }
 
