@@ -6,5 +6,5 @@ PKG_DEPENDS_TARGET="toolchain libnl"
 PKG_SECTION="tools"
 
 make_target() {
-  PKG_CONFIG="$TOOLCHAIN/bin/pkg-config" CC="$CC" make CFLAGS="$CFLAGS -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -Werror-implicit-function-declaration -Wsign-compare" -j1
+  make PKG_CONFIG=$TOOLCHAIN/bin/pkg-config CC=$CC
 }

@@ -29,7 +29,12 @@ PKG_SHORTDESC="dbus-glib: A message bus system"
 PKG_LONGDESC="D-BUS is a message bus, used for sending messages between applications. Conceptually, it fits somewhere in between raw sockets and CORBA in terms of complexity."
 PKG_TOOLCHAIN="autotools"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-tests"
+PKG_CONFIGURE_OPTS_TARGET="ac_cv_have_abstract_sockets=yes \
+                           ac_cv_func_posix_getpwnam_r=yes \
+                           have_abstract_sockets=yes \
+                           --disable-tests \
+                           --disable-bash-completion \
+                           --enable-asserts=no"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin/dbus-binding-tool

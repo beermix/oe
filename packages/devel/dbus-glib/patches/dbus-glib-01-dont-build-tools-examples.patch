@@ -16,8 +16,8 @@ diff -Nur dbus-glib-0.110-orig/Makefile.am dbus-glib-0.110/Makefile.am
  
 -SUBDIRS = dbus-gmain dbus tools test doc
 -DIST_SUBDIRS = dbus-gmain dbus tools test doc m4
-+SUBDIRS = dbus-gmain dbus tools test
-+DIST_SUBDIRS = dbus-gmain dbus tools test m4
++SUBDIRS = dbus-gmain dbus test
++DIST_SUBDIRS = dbus-gmain dbus test m4
  
  pkgconfigdir = $(libdir)/pkgconfig
  pkgconfig_DATA = $(GLIB_PC)
