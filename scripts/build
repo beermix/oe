@@ -338,6 +338,7 @@ if [ -f "$PKG_CONFIGURE_SCRIPT" -o -f "$PKG_CMAKE_SCRIPT" -o -f "$PKG_MESON_SCRI
       ;;
   esac
 fi
+
 # configure
 if [ "$(type -t pre_configure_$TARGET)" = "function" ]; then
   pre_configure_$TARGET
