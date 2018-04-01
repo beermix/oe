@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="sed"
-PKG_VERSION="4.4"
+PKG_VERSION="4.5"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/sed/"
