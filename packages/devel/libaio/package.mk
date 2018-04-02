@@ -27,16 +27,4 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="devel"
 PKG_SHORTDESC="libaio: Kernel Asynchronous I/O (AIO) Support for Linux"
 PKG_LONGDESC="AIO enables even a single application thread to overlap I/O operations with other processing, by providing an interface for submitting one or more I/O requests in one system call (io_submit()) without waiting for completion, and a separate interface (io_getevents()) to reap completed I/O operations associated with a given completion group."
-PKG_BUILD_FLAGS="-parallel"
-
-#make_target() {
-#  make -C src
-#}
-
-#makeinstall_target() {
-#  mkdir -p $SYSROOT_PREFIX/usr/lib
-#    cp -PR src/libaio.a $SYSROOT_PREFIX/usr/lib
-#
-#  mkdir -p $SYSROOT_PREFIX/usr/include
-#    cp -PR src/libaio.h $SYSROOT_PREFIX/usr/include
-#}
+PKG_BUILD_FLAGS="-lto -gold -parallel"
