@@ -229,9 +229,12 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$TOOLCHAIN \
                        -DENABLE_DBUS=ON \
                        -DENABLE_XSLT=ON \
                        -DENABLE_CCACHE=ON \
-                       -DENABLE_LIRC=OFF \
+                       -DENABLE_LIRC=ON \
                        -DENABLE_EVENTCLIENTS=ON \
                        -DENABLE_LDGOLD=ON \
+                       -DENABLE_DEBUGFISSION=OFF \
+                       -DENABLE_APP_AUTONAME=OFF \
+                       $PKG_KODI_USE_LTO \
                        $KODI_ARCH \
                        $KODI_OPENGL \
                        $KODI_OPENGLES \
@@ -254,10 +257,9 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$TOOLCHAIN \
                        $KODI_BLURAY \
                        $KODI_PLAYER"
 
-#pre_configure_target() {
-    #This is needed to avoid using libraries from sysroot if we use TexturePacker from the host
-#  unset LD_LIBRARY_PATH
-#}
+pre_configure_target() {
+  export LIBS="$LIBS -lncurses"
+}
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin/kodi
