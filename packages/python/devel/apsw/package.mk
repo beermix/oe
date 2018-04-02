@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="apsw"
-PKG_VERSION="3.21.0"
+PKG_VERSION="3.22.0"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/rogerbinns/apsw"

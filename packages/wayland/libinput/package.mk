@@ -35,6 +35,6 @@ PKG_MESON_OPTS_TARGET="-Ddocumentation=false \
 pre_configure_target() {
   export LC_ALL=en_US.UTF-8
 
-  export CC="$HOST_CC"
-  export CXX="$HOST_CXX"
+#  export CC="$HOST_CC"
+#  export CXX="$HOST_CXX"
 }
