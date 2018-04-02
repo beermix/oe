@@ -79,27 +79,6 @@ setup_toolchain() {
         echo "SET(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)"  >> $CMAKE_CONF
         echo "SET(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)"  >> $CMAKE_CONF
       fi
-      export MESON_CONF=$TOOLCHAIN/etc/meson-$TARGET_NAME.conf
-      if [ ! -f $MESON_CONF ] ; then
-        mkdir -p $TOOLCHAIN/etc
-        echo "[binaries]" >> $MESON_CONF
-        echo "c = '$CC'" >> $MESON_CONF
-        echo "cpp = '$CXX'" >> $MESON_CONF
-        echo "ar = '$AR'" >> $MESON_CONF
-        echo "strip = '$STRIP'" >> $MESON_CONF
-        echo "pkgconfig = '$PKG_CONFIG'" >> $MESON_CONF
-        echo "" >> $MESON_CONF
-        echo "[host_machine]" >> $MESON_CONF
-        echo "system = 'linux'" >> $MESON_CONF
-        echo "cpu_family = '$TARGET_ARCH'" >> $MESON_CONF
-        echo "cpu = '$TARGET_SUBARCH'" >> $MESON_CONF
-        echo "endian = 'little'" >> $MESON_CONF
-        echo "" >> $MESON_CONF
-        echo "[properties]" >> $MESON_CONF
-        echo "root = '$SYSROOT_PREFIX/usr'" >> $MESON_CONF
-        python -c "import os; print('c_args = {}'.format([x for x in os.getenv('CFLAGS').split()]))" >> $MESON_CONF
-        python -c "import os; print('c_link_args = {}'.format([x for x in os.getenv('LDFLAGS').split()]))" >> $MESON_CONF
-      fi
       export HOST_CC="$TOOLCHAIN/bin/host-gcc"
       export HOST_CXX="$TOOLCHAIN/bin/host-g++"
       export HOSTCC="$HOST_CC"
@@ -152,27 +131,6 @@ setup_toolchain() {
         echo "SET(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE BOTH)" >> $CMAKE_CONF
         echo "SET(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE BOTH)" >> $CMAKE_CONF
       fi
-      export MESON_CONF=$TOOLCHAIN/etc/meson-$HOST_NAME.conf
-      if [ ! -f $MESON_CONF ] ; then
-        mkdir -p $TOOLCHAIN/etc
-        echo "[binaries]" >> $MESON_CONF
-        echo "c = '$CC'" >> $MESON_CONF
-        echo "cpp = '$CXX'" >> $MESON_CONF
-        echo "ar = '$AR'" >> $MESON_CONF
-        echo "strip = '$STRIP'" >> $MESON_CONF
-        echo "pkgconfig = '$PKG_CONFIG'" >> $MESON_CONF
-        echo "" >> $MESON_CONF
-        echo "[host_machine]" >> $MESON_CONF
-        echo "system = 'linux'" >> $MESON_CONF
-        echo "cpu_family = '$TARGET_ARCH'" >> $MESON_CONF
-        echo "cpu = '$TARGET_SUBARCH'" >> $MESON_CONF
-        echo "endian = 'big'" >> $MESON_CONF
-        echo ""	>> $MESON_CONF
-        echo "[properties]" >> $MESON_CONF
-        echo "root = '$TOOLCHAIN'" >> $MESON_CONF
-        python -c "import os; print('c_args = {}'.format([x for x in os.getenv('CFLAGS').split()]))" >> $MESON_CONF
-        python -c "import os; print('c_link_args = {}'.format([x for x in os.getenv('LDFLAGS').split()]))" >> $MESON_CONF
-      fi
       export HOST_CC="$CC"
       export HOST_CXX="$CXX"
       export HOSTCC="$CC"
@@ -186,6 +144,38 @@ setup_toolchain() {
       export _python_exec_prefix=/
       ;;
   esac
+}
+
+create_meson_conf() {
+  local endian root
+  case "$1" in
+    target|init)    endian="little"
+                    root="$SYSROOT_PREFIX/usr"
+                    ;;
+    host|bootstrap) endian="big"
+                    root="$TOOLCHAIN"
+                    ;;
+  esac
+
+  cat > $2 <<EOF
+[binaries]
+c = '$CC'
+cpp = '$CXX'
+ar = '$AR'
+strip = '$STRIP'
+pkgconfig = '$PKG_CONFIG'
+
+[host_machine]
+system = 'linux'
+cpu_family = '$TARGET_ARCH'
+cpu = '$TARGET_SUBARCH'
+endian = '$endian'
+
+[properties]
+root = '$root'
+$(python -c "import os; print('c_args = {}'.format([x for x in os.getenv('CFLAGS').split()]))")
+$(python -c "import os; print('c_link_args = {}'.format([x for x in os.getenv('LDFLAGS').split()]))")
+EOF
 }
 
 # unset all PKG_* vars apart from those exported by setup_toolchain, then set default values
@@ -331,6 +321,14 @@ get_pkg_variable() {
     . config/options $1 &>/dev/null
     echo "${!2}"
   fi
+}
+
+calculate_stamp() {
+  local stamp
+  stamp="$PKG_DIR $PROJECT_DIR/$PROJECT/patches/$PKG_NAME"
+  [ -n "$DEVICE" ] && stamp+=" $PROJECT_DIR/$PROJECT/devices/$DEVICE/patches/$PKG_NAME"
+  [ -n "$PKG_NEED_UNPACK" ] && stamp+=" $PKG_NEED_UNPACK"
+  find ${stamp} -exec sha256sum {} \; 2>/dev/null | sed "s/ ${ROOT//\//\\/}\// /" | sort | sha256sum | cut -d" " -f1
 }
 
 # return 0 if $2 in space-separated list $1, otherwise return 1
@@ -512,10 +510,10 @@ build_with_debug() {
     [ "${PKG_NAME}" = "debug" ] && return 0
 
     # Build addons with debug if we're building the mediacenter with debug
-    [ "${PKG_IS_ADDON}" == "yes" ] && listcontains "${_DEBUG_DEPENDS_LIST}" "${MEDIACENTER}" && return 0
+    [ "${PKG_IS_ADDON}" = "yes" ] && listcontains "${_DEBUG_DEPENDS_LIST}" "${MEDIACENTER}" && return 0
 
     # Build kernel packages with debug if we're building the kernel with debug
-    [ "${PKG_IS_KERNEL_PKG}" == "yes" ] && listcontains "${_DEBUG_DEPENDS_LIST}" "linux" && return 0
+    [ "${PKG_IS_KERNEL_PKG}" = "yes" ] && listcontains "${_DEBUG_DEPENDS_LIST}" "linux" && return 0
 
     # Build this package with debug if it's a resolved dependency
     listcontains "${_DEBUG_DEPENDS_LIST}" "${PKG_NAME}" && return 0
@@ -899,7 +897,7 @@ debug_strip() {
 print_color() {
   local clr_name="$1" clr_text="$2" clr_actual
 
-  if [ "$DISABLE_COLORS" == "yes" ]; then
+  if [ "$DISABLE_COLORS" = "yes" ]; then
     [ $# -eq 2 ] && echo -en "${clr_text}"
     return 0
   fi

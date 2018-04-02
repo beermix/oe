@@ -65,13 +65,10 @@ STAMP=$STAMPS/$PACKAGE_NAME/build_$TARGET
 
 $SCRIPTS/unpack $PACKAGE_NAME
 
-STAMP_DEPENDS="$PKG_DIR $PKG_NEED_UNPACK $PROJECT_DIR/$PROJECT/patches/$PKG_NAME"
-[ -n "$DEVICE" ] && STAMP_DEPENDS="$STAMP_DEPENDS $PROJECT_DIR/$PROJECT/devices/$DEVICE/patches/$PKG_NAME"
-
 if [ -f $STAMP ] ; then
   . $STAMP
-  PKG_DEEPMD5=$(find $STAMP_DEPENDS -exec md5sum {} \; 2>/dev/null | sort | md5sum | cut -d" " -f1)
-  if [ ! "$PKG_DEEPMD5" = "$STAMP_PKG_DEEPMD5" ] ; then
+  PKG_DEEPHASH=$(calculate_stamp)
+  if [ ! "$PKG_DEEPHASH" = "$STAMP_PKG_DEEPHASH" ] ; then
     rm -f $STAMP
   fi
 
@@ -173,8 +170,7 @@ TARGET_MESON_OPTS="--prefix=/usr \
                    --libdir=/usr/lib \
                    --libexecdir=/usr/lib \
                    --localstatedir=/var \
-                   --buildtype=$MESON_BUILD_TYPE \
-                   --cross-file=$MESON_CONF"
+                   --buildtype=$MESON_BUILD_TYPE"
 
 # configure HOST build defaults
 HOST_CONFIGURE_OPTS="--host=$HOST_NAME \
@@ -199,8 +195,7 @@ HOST_MESON_OPTS="--prefix=$TOOLCHAIN \
                  --libdir=$TOOLCHAIN/lib \
                  --libexecdir=$TOOLCHAIN/lib \
                  --localstatedir=$TOOLCHAIN/var \
-                 --buildtype=plain \
-                 --cross-file=$MESON_CONF"
+                 --buildtype=plain"
 
 # configure INIT build defaults
 INIT_CONFIGURE_OPTS="$TARGET_CONFIGURE_OPTS"
@@ -241,8 +236,8 @@ export BUILD_INDENT=$((${BUILD_INDENT:-1}+$BUILD_INDENT_SIZE))
 
 # virtual packages dont must be build, they only contains dependencies, so dont go further here
 if [ "$PKG_SECTION" = "virtual" ]; then
-  PKG_DEEPMD5=$(find $STAMP_DEPENDS -exec md5sum {} \; 2>/dev/null | sort | md5sum | cut -d" " -f1)
-  for i in PKG_NAME PKG_DEEPMD5 BUILD_WITH_DEBUG; do
+  PKG_DEEPHASH=$(calculate_stamp)
+  for i in PKG_NAME PKG_DEEPHASH BUILD_WITH_DEBUG; do
     echo "STAMP_$i=\"${!i}\"" >> $STAMP
   done
 
@@ -320,23 +315,15 @@ cd $PKG_BUILD
 
 if [ -f "$PKG_CONFIGURE_SCRIPT" -o -f "$PKG_CMAKE_SCRIPT" -o -f "$PKG_MESON_SCRIPT" ]; then
   case "$TARGET" in
-    "target")
-      mkdir -p .$TARGET_NAME
-      cd .$TARGET_NAME
-      ;;
-    "host")
-      mkdir -p .$HOST_NAME
-      cd .$HOST_NAME
-      ;;
-    "init")
-      mkdir -p .$TARGET_NAME-$TARGET
-      cd .$TARGET_NAME-$TARGET
-      ;;
-    "bootstrap")
-      mkdir -p .$HOST_NAME-$TARGET
-      cd .$HOST_NAME-$TARGET
-      ;;
+    "target")    PKG_REAL_BUILD="$PKG_BUILD/.$TARGET_NAME" ;;
+    "host")      PKG_REAL_BUILD="$PKG_BUILD/.$HOST_NAME" ;;
+    "init")      PKG_REAL_BUILD="$PKG_BUILD/.$TARGET_NAME-$TARGET" ;;
+    "bootstrap") PKG_REAL_BUILD="$PKG_BUILD/.$HOST_NAME-$TARGET" ;;
   esac
+  mkdir -p $PKG_REAL_BUILD
+  cd $PKG_REAL_BUILD
+  
+  MESON_CONF="$PKG_REAL_BUILD/meson.conf"
 fi
 
 # configure
@@ -349,20 +336,24 @@ else
   case "$PKG_TOOLCHAIN:$TARGET" in
     # meson builds
     "meson:target")
-      echo "Executing (target): meson $TARGET_MESON_OPTS $PKG_MESON_OPTS_TARGET $(dirname $PKG_MESON_SCRIPT)" | tr -s " "
-      CC="$HOST_CC" CXX="$HOST_CXX" meson $TARGET_MESON_OPTS $PKG_MESON_OPTS_TARGET $(dirname $PKG_MESON_SCRIPT)
+      create_meson_conf $TARGET $MESON_CONF
+      echo "Executing (target): meson $TARGET_MESON_OPTS --cross-file=$MESON_CONF $PKG_MESON_OPTS_TARGET $(dirname $PKG_MESON_SCRIPT)" | tr -s " "
+      CC="$HOST_CC" CXX="$HOST_CXX" meson $TARGET_MESON_OPTS --cross-file=$MESON_CONF $PKG_MESON_OPTS_TARGET $(dirname $PKG_MESON_SCRIPT)
       ;;
     "meson:host")
-      echo "Executing (host): meson $HOST_MESON_OPTS $PKG_MESON_OPTS_HOST $(dirname $PKG_MESON_SCRIPT)" | tr -s " "
-      meson $HOST_MESON_OPTS $PKG_MESON_OPTS_HOST $(dirname $PKG_MESON_SCRIPT)
+      create_meson_conf $TARGET $MESON_CONF
+      echo "Executing (host): meson $HOST_MESON_OPTS --cross-file=$MESON_CONF $PKG_MESON_OPTS_HOST $(dirname $PKG_MESON_SCRIPT)" | tr -s " "
+      meson $HOST_MESON_OPTS --cross-file=$MESON_CONF $PKG_MESON_OPTS_HOST $(dirname $PKG_MESON_SCRIPT)
       ;;
     "meson:init")
-      echo "Executing (init): meson $INIT_MESON_OPTS $PKG_MESON_OPTS_INIT $(dirname $PKG_MESON_SCRIPT)" | tr -s " "
-      meson $INIT_MESON_OPTS $PKG_MESON_OPTS_INIT $(dirname $PKG_MESON_SCRIPT)
+      create_meson_conf $TARGET $MESON_CONF
+      echo "Executing (init): meson $INIT_MESON_OPTS --cross-file=$MESON_CONF $PKG_MESON_OPTS_INIT $(dirname $PKG_MESON_SCRIPT)" | tr -s " "
+      meson $INIT_MESON_OPTS --cross-file=$MESON_CONF $PKG_MESON_OPTS_INIT $(dirname $PKG_MESON_SCRIPT)
       ;;
     "meson:bootstrap")
-      echo "Executing (bootstrap): meson $BOOTSTRAP_MESON_OPTS $PKG_MESON_OPTS_BOOTSTRAP $(dirname $PKG_MESON_SCRIPT)" | tr -s " "
-      meson $BOOTSTRAP_MESON_OPTS $PKG_MESON_OPTS_BOOTSTRAP $(dirname $PKG_MESON_SCRIPT)
+      create_meson_conf $TARGET $MESON_CONF
+      echo "Executing (bootstrap): meson $BOOTSTRAP_MESON_OPTS --cross-file=$MESON_CONF $PKG_MESON_OPTS_BOOTSTRAP $(dirname $PKG_MESON_SCRIPT)" | tr -s " "
+      meson $BOOTSTRAP_MESON_OPTS --cross-file=$MESON_CONF $PKG_MESON_OPTS_BOOTSTRAP $(dirname $PKG_MESON_SCRIPT)
       ;;
 
     # cmake builds with ninja
@@ -569,10 +560,11 @@ for i in `find $SYSROOT_PREFIX/usr/lib/ -name "*.la" 2>/dev/null`; do \
   $SED "s:\(['= ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" $i; \
 done
 
-PKG_DEEPMD5=$(find $STAMP_DEPENDS -exec md5sum {} \; 2>/dev/null | sort | md5sum | cut -d" " -f1)
-for i in PKG_NAME PKG_DEEPMD5 BUILD_WITH_DEBUG; do
+PKG_DEEPHASH=$(calculate_stamp)
+for i in PKG_NAME PKG_DEEPHASH BUILD_WITH_DEBUG; do
   echo "STAMP_$i=\"${!i}\"" >> $STAMP
 done
+
 if [ "$1" = "u-boot" ]; then
   echo "STAMP_UBOOT_SYSTEM=\"${UBOOT_SYSTEM}\"" >> $STAMP
 fi

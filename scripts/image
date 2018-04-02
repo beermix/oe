@@ -147,8 +147,10 @@ ln -sf /etc/issue $INSTALL/etc/motd
 # Basissystem...
 $SCRIPTS/install libc
 $SCRIPTS/install gcc
+
 $SCRIPTS/install linux
 export _CACHED_KERNEL_MODULE_DIR="$(get_module_dir)"
+
 $SCRIPTS/install linux-drivers
 $SCRIPTS/install linux-firmware
 $SCRIPTS/install $BOOTLOADER
@@ -418,6 +420,7 @@ if [ "$1" = "release" -o "$1" = "mkimage" -o "$1" = "amlpkg" -o "$1" = "noobs" ]
 
     popd > /dev/null
     popd > /dev/null
+
   elif [ "$1" = "noobs" ]; then
     echo "Creating \"$1\" release tarball..."
 
