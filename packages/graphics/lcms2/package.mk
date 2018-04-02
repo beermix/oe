@@ -17,8 +17,7 @@
 ################################################################################
 
 PKG_NAME="lcms2"
-PKG_VERSION="lcms2.9"
-PKG_REV="1"
+PKG_VERSION="29b019f"
 PKG_ARCH="any"
 PKG_LICENSE="MIT"
 PKG_SITE="https://github.com/mm2/Little-CMS/releases"
@@ -30,5 +29,8 @@ PKG_SHORTDESC="lcms2: small-footprint color management engine"
 PKG_LONGDESC="lcms2 is a Small-footprint color management engine."
 PKG_TOOLCHAIN="autotools"
 
-PKG_CONFIGURE_OPTS_TARGET="--with-zlib --with-threads --with-jpeg --with-tiff"
+PKG_CONFIGURE_OPTS_TARGET="--with-zlib \
+			      --with-threads \
+			      --with-jpeg \
+			      --with-tiff"
 
