@@ -34,7 +34,6 @@ fi
 
 if [ "$OPENGLES" != "no" ]; then
   PKG_DEPENDS_TARGET+=" $OPENGLES"
-
 fi
 
 if [ "$DISPLAYSERVER" = "x11" ]; then
@@ -73,9 +72,8 @@ PKG_CONFIGURE_OPTS_TARGET="$PKG_CAIRO_CONFIG \
                            --disable-static \
                            --disable-gtk-doc \
                            --enable-largefile \
-                           --disable-gcov \
-                           --disable-tee \
                            --enable-atomic \
+                           --disable-gcov \
                            --disable-valgrind \
                            --disable-xcb \
                            --disable-xlib-xcb \
@@ -105,7 +103,7 @@ PKG_CONFIGURE_OPTS_TARGET="$PKG_CAIRO_CONFIG \
                            --enable-pdf \
                            --enable-svg \
                            --disable-test-surfaces \
-                           --enable-tee \
+                           --disable-tee \
                            --disable-xml \
                            --enable-pthread \
                            --enable-gobject \
@@ -114,5 +112,4 @@ PKG_CONFIGURE_OPTS_TARGET="$PKG_CAIRO_CONFIG \
                            --enable-interpreter \
                            --disable-symbol-lookup \
                            --enable-some-floating-point \
-                           --disable-interpreter \
                            --with-gnu-ld"

@@ -17,7 +17,8 @@
 ################################################################################
 
 PKG_NAME="libjpeg-turbo"
-PKG_VERSION="1.5.2"
+PKG_VERSION="1.5.3"
+PKG_SHA256="b24890e2bb46e12e72a79f7e965f409f4e16466d00e1dd15d93d73ee6b592523"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://libjpeg-turbo.virtualgl.org/"
@@ -35,9 +36,9 @@ PKG_CONFIGURE_OPTS_HOST="--enable-static \
                          --with-jpeg8 \
                          --without-simd"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --with-jpeg8"
+PKG_CONFIGURE_OPTS_TARGET="--enable-static --enable-shared --with-jpeg8"
 
-if [ "$SIMD_SUPPORT" = "no" ]; then
+if ! target_has_feature "(neon|sse)"; then
   PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET --without-simd"
 fi
 
