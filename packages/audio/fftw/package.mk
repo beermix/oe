@@ -5,6 +5,8 @@ PKG_URL="ftp://ftp.fftw.org/pub/fftw/fftw-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="service/system"
 PKG_TOOLCHAIN="cmake-make"
+LTO_SUPPORT="yes"
+GOLD_SUPPORT="yes"
 
 pre_configure_target() {
   export CFLAGS="$CFLAGS -fomit-frame-pointer -malign-double -fstrict-aliasing -ffast-math -fopenmp -fPIC"
