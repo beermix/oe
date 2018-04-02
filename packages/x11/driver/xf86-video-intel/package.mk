@@ -17,7 +17,7 @@
  ################################################################################  libXcursor libSM libXtst
 
 PKG_NAME="xf86-video-intel"
-PKG_VERSION="7418d53"
+PKG_VERSION="af36a4a"
 PKG_ARCH="x86_64"
 PKG_LICENSE="OSS"
 PKG_SITE="https://cgit.freedesktop.org/xorg/driver/xf86-video-intel/log/"
