@@ -140,7 +140,6 @@ pre_configure_target() {
   
   CFLAGS=`echo $CFLAGS | sed -e "s|-fno-plt||"`
   LDFLAGS=`echo $LDFLAGS | sed -e "s|,-z,relro,-z,now||"`
-  unset LDFLAGS
 }
 
 post_makeinstall_target() {
