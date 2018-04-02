@@ -1,0 +1,109 @@
+From 762829017053e40bb3b86a13de6a5561436ea78c Mon Sep 17 00:00:00 2001
+From: MilhouseVH <milhouseVH.github@nmacleod.com>
+Date: Mon, 2 Apr 2018 10:09:11 +0100
+Subject: [PATCH] buildsystem: add a function to calculate stamps, switch from
+ md5 to sha256
+
+---
+ config/functions |  8 ++++++++
+ scripts/build    | 15 ++++++---------
+ scripts/unpack   | 13 +++++--------
+ 3 files changed, 19 insertions(+), 17 deletions(-)
+
+diff --git a/config/functions b/config/functions
+index 55f6cb3b830..78cb309c95b 100644
+--- a/config/functions
++++ b/config/functions
+@@ -322,6 +322,14 @@ get_pkg_variable() {
+   fi
+ }
+ 
++calculate_stamp() {
++  local stamp
++  stamp="$PKG_DIR $PROJECT_DIR/$PROJECT/patches/$PKG_NAME"
++  [ -n "$DEVICE" ] && stamp+=" $PROJECT_DIR/$PROJECT/devices/$DEVICE/patches/$PKG_NAME"
++  [ -n "$PKG_NEED_UNPACK" ] && stamp+=" $PKG_NEED_UNPACK"
++  find ${stamp} -exec sha256sum {} \; 2>/dev/null | sed "s/ ${ROOT//\//\\/}\// /" | sort | sha256sum | cut -d" " -f1
++}
++
+ # return 0 if $2 in space-separated list $1, otherwise return 1
+ listcontains() {
+   if [ -n "$1" -a -n "$2" ]; then
+diff --git a/scripts/build b/scripts/build
+index d2671267e38..7181dd33363 100755
+--- a/scripts/build
++++ b/scripts/build
+@@ -65,13 +65,10 @@ STAMP=$STAMPS/$PACKAGE_NAME/build_$TARGET
+ 
+ $SCRIPTS/unpack $PACKAGE_NAME
+ 
+-STAMP_DEPENDS="$PKG_DIR $PKG_NEED_UNPACK $PROJECT_DIR/$PROJECT/patches/$PKG_NAME"
+-[ -n "$DEVICE" ] && STAMP_DEPENDS="$STAMP_DEPENDS $PROJECT_DIR/$PROJECT/devices/$DEVICE/patches/$PKG_NAME"
+-
+ if [ -f $STAMP ] ; then
+   . $STAMP
+-  PKG_DEEPMD5=$(find $STAMP_DEPENDS -exec md5sum {} \; 2>/dev/null | sort | md5sum | cut -d" " -f1)
+-  if [ ! "$PKG_DEEPMD5" = "$STAMP_PKG_DEEPMD5" ] ; then
++  PKG_DEEPHASH=$(calculate_stamp)
++  if [ ! "$PKG_DEEPHASH" = "$STAMP_PKG_DEEPHASH" ] ; then
+     rm -f $STAMP
+   fi
+ 
+@@ -240,8 +237,8 @@ export BUILD_INDENT=$((${BUILD_INDENT:-1}+$BUILD_INDENT_SIZE))
+ 
+ # virtual packages dont must be build, they only contains dependencies, so dont go further here
+ if [ "$PKG_SECTION" = "virtual" ]; then
+-  PKG_DEEPMD5=$(find $STAMP_DEPENDS -exec md5sum {} \; 2>/dev/null | sort | md5sum | cut -d" " -f1)
+-  for i in PKG_NAME PKG_DEEPMD5 BUILD_WITH_DEBUG; do
++  PKG_DEEPHASH=$(calculate_stamp)
++  for i in PKG_NAME PKG_DEEPHASH BUILD_WITH_DEBUG; do
+     echo "STAMP_$i=\"${!i}\"" >> $STAMP
+   done
+ 
+@@ -560,8 +557,8 @@ for i in `find $SYSROOT_PREFIX/usr/lib/ -name "*.la" 2>/dev/null`; do \
+   $SED "s:\(['= ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" $i; \
+ done
+ 
+-PKG_DEEPMD5=$(find $STAMP_DEPENDS -exec md5sum {} \; 2>/dev/null | sort | md5sum | cut -d" " -f1)
+-for i in PKG_NAME PKG_DEEPMD5 BUILD_WITH_DEBUG; do
++PKG_DEEPHASH=$(calculate_stamp)
++for i in PKG_NAME PKG_DEEPHASH BUILD_WITH_DEBUG; do
+   echo "STAMP_$i=\"${!i}\"" >> $STAMP
+ done
+ 
+diff --git a/scripts/unpack b/scripts/unpack
+index 9e73e9a4d2d..0615ab0e0e9 100755
+--- a/scripts/unpack
++++ b/scripts/unpack
+@@ -36,17 +36,14 @@ STAMP=$PKG_BUILD/.libreelec-unpack
+ 
+ mkdir -p $BUILD
+ 
+-STAMP_DEPENDS="$PKG_DIR $PKG_NEED_UNPACK $PROJECT_DIR/$PROJECT/patches/$PKG_NAME"
+-[ -n "$DEVICE" ] && STAMP_DEPENDS="$STAMP_DEPENDS $PROJECT_DIR/$PROJECT/devices/$DEVICE/patches/$PKG_NAME"
+-
+ # Perform a wildcard match on the package to ensure old versions are cleaned too
+-PKG_DEEPMD5=
++PKG_DEEPHASH=
+ for i in $BUILD/$1-*; do
+   if [ -d $i -a -f "$i/.libreelec-unpack" ] ; then
+     . "$i/.libreelec-unpack"
+     if [ "$STAMP_PKG_NAME" = "$1" ]; then
+-      [ -z "${PKG_DEEPMD5}" ] && PKG_DEEPMD5=$(find $STAMP_DEPENDS -exec md5sum {} \; 2>/dev/null | sort | md5sum | cut -d" " -f1)
+-      if [ ! "$PKG_DEEPMD5" = "$STAMP_PKG_DEEPMD5" ] ; then
++      [ -z "${PKG_DEEPHASH}" ] && PKG_DEEPHASH=$(calculate_stamp)
++      if [ ! "$PKG_DEEPHASH" = "$STAMP_PKG_DEEPHASH" ] ; then
+         $SCRIPTS/clean $1
+       fi
+     fi
+@@ -200,8 +197,8 @@ if [ "$PKG_SECTION" != "virtual" ]; then
+ 
+   rm -f $STAMPS/$1/build_*
+ 
+-  PKG_DEEPMD5=$(find $STAMP_DEPENDS -exec md5sum {} \; 2>/dev/null | sort | md5sum | cut -d" " -f1)
+-  for i in PKG_NAME PKG_DEEPMD5; do
++  PKG_DEEPHASH=$(calculate_stamp)
++  for i in PKG_NAME PKG_DEEPHASH; do
+     echo "STAMP_$i=\"${!i}\"" >> $STAMP
+   done
+ fi
