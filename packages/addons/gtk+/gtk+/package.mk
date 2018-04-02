@@ -30,6 +30,8 @@ PKG_SECTION="x11/toolkits"
 PKG_SHORTDESC="gtk+: The Gimp ToolKit (GTK)"
 PKG_LONGDESC="This is GTK+. GTK+, which stands for the Gimp ToolKit, is a library for creating graphical user interfaces for the X Window System. It is designed to be small, efficient, and flexible. GTK+ is written in C with a very object-oriented approach."
 PKG_TOOLCHAIN="autotools"
+LTO_SUPPORT="yes"
+GOLD_SUPPORT="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_path_GLIB_GENMARSHAL=$TOOLCHAIN/bin/glib-genmarshal \
                            --disable-glibtest \
