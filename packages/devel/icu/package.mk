@@ -29,6 +29,8 @@ PKG_SECTION="textproc"
 PKG_SHORTDESC="International Components for Unicode library"
 PKG_LONGDESC="International Components for Unicode library"
 PKG_BUILD_FLAGS="+pic:host +pic"
+LTO_SUPPORT="yes"
+GOLD_SUPPORT="yes"
 
 #post_unpack() {
 #  sed -i 's/xlocale/locale/' $PKG_BUILD/source/i18n/digitlst.cpp
