@@ -28,7 +28,7 @@ PKG_SECTION="system"
 PKG_SHORTDESC="pciutils: Linux PCI Utilities"
 PKG_LONGDESC="This package contains various utilities for inspecting and setting of devices connected to the PCI bus and the PCI vendor/product ID database."
 
-PKG_MAKE_OPTS="PREFIX=/usr SHARED=yes STRIP= IDSDIR=/usr/share"
+PKG_MAKE_OPTS="PREFIX=/usr SHARED=no STRIP= IDSDIR=/usr/share"
 
 make_target() {
   make OPT="$CFLAGS" \

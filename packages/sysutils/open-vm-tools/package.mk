@@ -40,6 +40,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-docs \
                            --without-x \
                            --without-xerces \
                            --without-icu \
+                           --without-procps \
                            --without-kernel-modules \
                            --enable-silent-rules \
                            --with-udev-rules-dir=/usr/lib/udev/rules.d/ \

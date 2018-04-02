@@ -38,7 +38,6 @@ PKG_CONFIGURE_OPTS_TARGET="MOUNT_FUSE_PATH=/usr/sbin \
                            --disable-rpath \
                            --with-gnu-ld"
 
-
 post_makeinstall_target() {
   rm -rf $INSTALL/etc/init.d
   rm -rf $INSTALL/etc/udev

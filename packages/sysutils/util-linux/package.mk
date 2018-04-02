@@ -59,7 +59,7 @@ UTILLINUX_CONFIG_DEFAULT="--disable-gtk-doc \
                           --without-systemd \
                           --without-smack \
                           --without-python \
-                          --with-systemdsystemunitdir=no"
+                          --without-systemdsystemunitdir"
 
 PKG_CONFIGURE_OPTS_TARGET="$UTILLINUX_CONFIG_DEFAULT \
                            --enable-libuuid \

@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="dbus"
-PKG_VERSION="1.11.22"
-PKG_SHA256="0bd375efd574d3d10d2f154dacad02987a64578531857e13a385936e1119a85b"
+PKG_VERSION="1.11.16"
+PKG_SHA256="7cf993e97df62c73b939b77dcd920e8883d8e866f9ced1a9b5c715eb28e4b031"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://dbus.freedesktop.org/releases/dbus/?C=M;O=D"
