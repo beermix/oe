@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="7-20180329"
+PKG_VERSION="8-20180401"
 PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -88,8 +88,6 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-clocale=gnu \
                          --enable-libatomic \
                          --enable-libgomp \
-                         --disable-libunwind-exceptions \
-                         --disable-vtable-verify \
                          $GCC_OPTS"
 
 pre_configure_host() {
