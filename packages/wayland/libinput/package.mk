@@ -23,6 +23,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="https://www.freedesktop.org/software/libinput/?C=M;O=D"
 PKG_URL="http://www.freedesktop.org/software/libinput/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain systemd libxkbcommon libevdev mtdev"
+PKG_DEPENDS_TARGET="toolchain libxkbcommon libevdev mtdev"
 PKG_SECTION="wayland"
 PKG_SHORTDESC="libinput is a library to handle input devices in Wayland compositors and to provide a generic X.Org input driver."
 PKG_LONGDESC="libinput is a library to handle input devices in Wayland compositors and to provide a generic X.Org input driver."
@@ -34,7 +35,4 @@ PKG_MESON_OPTS_TARGET="-Ddocumentation=false \
 
 pre_configure_target() {
   export LC_ALL=en_US.UTF-8
-
-#  export CC="$HOST_CC"
-#  export CXX="$HOST_CXX"
 }
