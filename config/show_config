@@ -1,10 +1,21 @@
 show_config() {
+  local tarfile1 tarfile2
+
+  if [ -n "${REUSE_TOOLCHAIN}" ]; then
+    [ -f "${REUSE_TOOLCHAIN}" ] && tarfile1="${REUSE_TOOLCHAIN} (Verified: ${REUSE_VERIFY})"
+    [ -f "${REUSE_TOOLCHAIN}" ] || tarfile1="${REUSE_TOOLCHAIN} (will be created)"
+  fi
+  if [ -n "${REUSE_PACKAGES}"  ]; then
+    [ -f "${REUSE_PACKAGES}" ] && tarfile2="${REUSE_PACKAGES} (Verified: ${REUSE_VERIFY})" && tarfile1=
+    [ -f "${REUSE_PACKAGES}" ] || tarfile2="${REUSE_PACKAGES} (will be created)"
+  fi
+
   # load graphic configuration
     get_graphicdrivers
 
   dashes="==========================="
   config_message="$config_message\n $dashes$dashes$dashes"
-  config_message="$config_message\n Configuration for $DISTRONAME ($([ "$OFFICIAL" = "yes" ] && echo "official" || echo "community"))"
+  config_message="$config_message\n Configuration for $DISTRONAME ($([ "$OFFICIAL" = "yes" ] && echo "official" || echo "community")) - $(date)"
   config_message="$config_message\n $dashes$dashes$dashes"
 
   # Build options
@@ -20,6 +31,8 @@ show_config() {
   config_message="$config_message\n - GOLD (Google Linker) Support:\t $GOLD_SUPPORT"
   config_message="$config_message\n - LLVM support:\t\t\t $LLVM_SUPPORT"
   config_message="$config_message\n - DEBUG:\t\t\t\t ${DEBUG:-no}"
+  config_message="$config_message\n - Reuse Toolchain:\t\t\t ${tarfile1}"
+  config_message="$config_message\n - Reuse Packages:\t\t\t ${tarfile2}"
 
   # config_message="$config_message\n - CFLAGS:\t $TARGET_CFLAGS"
   # config_message="$config_message\n - LDFLAGS:\t $TARGET_LDFLAGS"
