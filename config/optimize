@@ -32,9 +32,9 @@ HOST_CFLAGS="$HOST_CFLAGS -Wno-format-security"
 HOST_CXXFLAGS="$HOST_CXXFLAGS -Wno-format-security" 
 
 # lto flags
-CFLAGS_OPTIM_LTO="-fno-semantic-interposition -ffat-lto-objects -flto=4"
-CXXFLAGS_OPTIM_LTO="-fno-semantic-interposition -ffat-lto-objects -flto=4"
-LDFLAGS_OPTIM_LTO="-fuse-linker-plugin -flto=4"
+CFLAGS_OPTIM_LTO="-fno-semantic-interposition -ffat-lto-objects -flto=${CONCURRENCY_MAKE_LEVEL}"
+CXXFLAGS_OPTIM_LTO="-fno-semantic-interposition -ffat-lto-objects -flto=${CONCURRENCY_MAKE_LEVEL}"
+LDFLAGS_OPTIM_LTO="-fuse-linker-plugin -flto=${CONCURRENCY_MAKE_LEVEL}"
 
 # gold flags
 LDFLAGS_OPTIM_GOLD="-fuse-ld=gold"
