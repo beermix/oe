@@ -101,7 +101,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_prog_HAS_HG=/bin/false
                            --without-ensurepip
                            --with-threads
                            --with-pymalloc
-                           --with-lto=8 
+                           --with-lto=4
                            --with-computed-gotos
                            --disable-ipv6
 "
@@ -120,10 +120,14 @@ post_makeinstall_host() {
   rm -f $TOOLCHAIN/bin/pyvenv
   rm -f $TOOLCHAIN/bin/pydoc*
 
+  rm -fr $PKG_BUILD/.$HOST_NAME/build/temp.*
+
   cp $PKG_BUILD/Tools/scripts/reindent.py $TOOLCHAIN/lib/$PKG_PYTHON_VERSION
 }
 
 post_makeinstall_target() {
+  rm -fr $PKG_BUILD/.$TARGET_NAME/build/temp.*
+
   PKG_INSTALL_PATH_LIB=$INSTALL/usr/lib/$PKG_PYTHON_VERSION
 
   for dir in config compiler sysconfigdata lib-dynload/sysconfigdata lib2to3 test; do

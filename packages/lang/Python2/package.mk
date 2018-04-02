@@ -90,9 +90,9 @@ make_host() {
 }
 
 makeinstall_host() {
-  export HOST_CFLAGS="${flags/-fPIE -pie}"
-  export HOST_CFLAGS="$HOST_CFLAGS -O3 -ffunction-sections -fno-semantic-interposition -fopt-info-vec -flto"
-  export HOST_CXXFLAGS="$HOST_CXXFLAGS -O3 -ffunction-sections -fno-semantic-interposition -fopt-info-vec"
+#  export HOST_CFLAGS="${flags/-fPIE -pie}"
+#  export HOST_CFLAGS="$HOST_CFLAGS -O3 -ffunction-sections -fno-semantic-interposition -fopt-info-vec -flto"
+#  export HOST_CXXFLAGS="$HOST_CXXFLAGS -O3 -ffunction-sections -fno-semantic-interposition -fopt-info-vec"
 
   make PYTHON_MODULES_INCLUDE="$HOST_INCDIR" \
        PYTHON_MODULES_LIB="$HOST_LIBDIR" \
@@ -100,11 +100,15 @@ makeinstall_host() {
        install
 }
 
+post_makeinstall_host() {
+  rm -fr $PKG_BUILD/.$HOST_NAME/build/temp.*
+}
+
 pre_configure_target() {
   export PYTHON_FOR_BUILD=$TOOLCHAIN/bin/python
-  export CFLAGS="${flags/-fPIE -pie}"
-  export CFLAGS="$CFLAGS -O3 -ffunction-sections -fno-semantic-interposition -fopt-info-vec -flto"
-  export CXXFLAGS="$CXXFLAGS -O3 -ffunction-sections -fno-semantic-interposition -fopt-info-vec"
+#  export CFLAGS="${flags/-fPIE -pie}"
+#  export CFLAGS="$CFLAGS -O3 -ffunction-sections -fno-semantic-interposition -fopt-info-vec -flto"
+#  export CXXFLAGS="$CXXFLAGS -O3 -ffunction-sections -fno-semantic-interposition -fopt-info-vec"
 }
 
 make_target() {
@@ -129,6 +133,8 @@ makeinstall_target() {
 }
 
 post_makeinstall_target() {
+  rm -fr $PKG_BUILD/.$TARGET_NAME/build/temp.*
+
   for dir in bsddb idlelib lib-tk lib2to3 msilib pydoc_data test; do
     rm -rf $INSTALL/usr/lib/python*/$dir
   done
