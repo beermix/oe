@@ -44,11 +44,11 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-__thread \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
-                           --enable-kernel=3.10 \
+                           --enable-kernel=4.4 \
                            --without-cvs \
                            --without-gd \
                            --enable-obsolete-rpc \
-                           --enable-obsolete-nsl \
+			   --enable-obsolete-nsl \
                            --disable-build-nscd \
                            --disable-nscd \
                            --enable-lock-elision \
@@ -71,6 +71,37 @@ pre_build_target() {
     aclocal --force --verbose
     autoconf --force --verbose
   cd -
+}
+
+
+post_patch() {
+  # Add patches from Clear Linux
+  if [ "$TARGET_ARCH" = "x86_64" ]; then
+      patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/0001-Set-host.conf-multi-to-on-by-default.patch
+      patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/skip-error-msg-ld.so.conf.patch
+      patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/ldconfig-format-new.patch
+      patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/0001-sysdeps-unix-Add-support-for-usr-lib32-as-a-system-l.patch
+      patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/nsswitch-altfiles.patch
+      patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/nonscd.patch
+      #patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/alternate_trim.patch
+      patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/madvise-bss.patch
+      patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/spinaphore.patch
+      patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/large-page-huge-page.patch
+      patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/use_madv_free.patch
+      patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/malloc_tune.patch
+      patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/ldconfig-Os.patch
+      patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/stateless.patch
+      patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/nsswitch-altfiles-bugfix.patch
+      patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/mathlto.patch
+      #patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/malloc-relaxed.patch
+      #patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/CVE-2017-8804.patch
+      #patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/malloc-assert-3.patch
+      #patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/cve-2017-15804.patch
+      #patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/cve-2017-15670.patch
+      #patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/cve-2017-15671.patch
+      #patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/cve-2017-17426.patch
+      #patch -p1 -d $PKG_BUILD < $PKG_DIR/clear/cve-2017-16997.patch
+  fi
 }
 
 pre_configure_target() {
