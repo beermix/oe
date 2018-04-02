@@ -31,4 +31,6 @@ PKG_SHORTDESC="library for id3 tagging"
 PKG_LONGDESC="library for id3 tagging"
 PKG_BUILD_FLAGS="+pic"
 
+PKG_MAINTAINER="Lukas Sabota (LTsmooth42@gmail.com)"
+
 PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared"
