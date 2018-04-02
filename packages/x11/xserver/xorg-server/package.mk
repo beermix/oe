@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.X.org"
 PKG_URL="http://xorg.freedesktop.org/archive/individual/xserver/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain util-macros font-util xorgproto libpciaccess libX11 libXfont2 libXinerama libxshmfence libxkbfile libdrm openssl freetype pixman systemd xorg-launch-helper"
+PKG_DEPENDS_TARGET="toolchain util-macros font-util xorgproto libpciaccess libX11 libXfont2 libXinerama libxshmfence libxkbfile libdrm openssl freetype pixman systemd xorg-launch-helper libgcrypt"
 PKG_NEED_UNPACK="$(get_pkg_directory xf86-video-nvidia) $(get_pkg_directory xf86-video-nvidia-legacy)"
 PKG_SECTION="x11/xserver"
 PKG_SHORTDESC="xorg-server: The Xorg X server"
@@ -120,7 +120,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
                            --disable-docs \
                            --disable-devel-docs \
                            --with-int10=x86emu \
-                           --with-sha1=libcrypto \
+                           --with-sha1=libgcrypt \
                            --without-systemd-daemon \
                            --with-os-vendor=OE \
                            --with-module-dir=$XORG_PATH_MODULES \
@@ -140,6 +140,7 @@ pre_configure_target() {
   
   CFLAGS=`echo $CFLAGS | sed -e "s|-fno-plt||"`
   LDFLAGS=`echo $LDFLAGS | sed -e "s|,-z,relro,-z,now||"`
+  unset LDFLAGS
 }
 
 post_makeinstall_target() {

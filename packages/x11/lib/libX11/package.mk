@@ -27,7 +27,6 @@ PKG_DEPENDS_TARGET="toolchain xproto:host xproto util-macros xtrans libXau libxc
 PKG_SECTION="x11/lib"
 PKG_SHORTDESC="libx11: The X11 library"
 PKG_LONGDESC="LibX11 is the main X11 library containing all the client-side code to access the X11 windowing system."
-PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-secure-rpc \
                            --disable-loadable-i18n \
