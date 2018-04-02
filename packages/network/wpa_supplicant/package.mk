@@ -33,14 +33,12 @@ PKG_MAKE_OPTS_TARGET="-C wpa_supplicant V=1 LIBDIR=/usr/lib BINDIR=/usr/bin"
 PKG_MAKEINSTALL_OPTS_TARGET="-C wpa_supplicant V=1 LIBDIR=/usr/lib BINDIR=/usr/bin"
 
 configure_target() {
-  export LIBS="$LIBS -lnl-3 -lm -lpthread"
+  export LIBS="$LIBS -lpthread -lrt -lm"
+  export CPPFLAGS="$CPPFLAGS -D_FORTIFY_SOURCE=2"
   export CFLAGS="$CFLAGS -fstack-protector-strong"
   export CXXLAGS="$CXXLAGS -fstack-protector-strong"
 
   cp $PKG_DIR/config/makefile.config wpa_supplicant/.config
-
-# echo "CONFIG_TLS=gnutls" >> .config
-# echo "CONFIG_GNUTLS_EXTRA=y" >> .config
 }
 
 post_makeinstall_target() {

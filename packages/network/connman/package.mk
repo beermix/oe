@@ -32,6 +32,7 @@ PKG_TOOLCHAIN="autotools"
 pre_configure_target() {
   export CFLAGS="$CFLAGS -fstack-protector-strong"
   export CXXFLAGS="$CXXFLAGS -fstack-protector-strong"
+  export CPPFLAGS="$CPPFLAGS -D_FORTIFY_SOURCE=2"
 }
 
 PKG_CONFIGURE_OPTS_TARGET="WPASUPPLICANT=/usr/bin/wpa_supplicant \
