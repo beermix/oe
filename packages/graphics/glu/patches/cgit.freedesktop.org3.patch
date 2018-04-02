@@ -11,6 +11,9 @@ Patch simplified by Brian Paul.
 Bugzilla: https://bugs.freedesktop.org/show_bug.cgi?id=96480
 Signed-off-by: Amarnath Valluri <amarnath.valluri@intel.com>
 Reviewed-by: Brian Paul <brianp@vmware.com>
+---
+ src/libutil/mipmap.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/src/libutil/mipmap.c b/src/libutil/mipmap.c
 index c475c96..483c3fe 100644
@@ -26,5 +29,5 @@ index c475c96..483c3fe 100644
  	  }
  
 -- 
-cgit v0.10.2
+cgit v1.1
 
