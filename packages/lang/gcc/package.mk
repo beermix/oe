@@ -55,6 +55,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libssp \
                            --disable-libmpx \
                            --disable-libsanitizer \
+                           --enable-default-ssp \
                            --with-system-zlib=$TOOLCHAIN \
                            --disable-werror \
                            --with-tune=haswell"
@@ -90,7 +91,6 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-clocale=gnu \
                          --enable-libatomic \
                          --disable-libgomp \
-                         --enable-default-ssp \
                          $GCC_OPTS"
 
 pre_configure_host() {
