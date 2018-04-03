@@ -179,6 +179,7 @@ configure_target() {
               --enable-filters \
               --disable-avisynth \
               --enable-bzlib \
+              --disable-lzma \
               --disable-frei0r \
               --disable-libopencore-amrnb \
               --disable-libopencore-amrwb \
@@ -204,8 +205,7 @@ configure_target() {
               --disable-altivec \
               $FFMPEG_FPU \
               --enable-yasm \
-              --disable-symver \
-              $FFMPEG_X11GRAB
+              --disable-symver
 }
 
 post_makeinstall_target() {
