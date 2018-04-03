@@ -24,6 +24,7 @@ PKG_LICENSE="OSS"
 PKG_SITE="https://www.freedesktop.org/software/fontconfig/release/?C=M;O=D"
 PKG_URL="http://www.freedesktop.org/software/fontconfig/release/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain util-macros freetype libxml2 zlib expat gperf:host"
+PKG_DEPENDS_TARGET="toolchain util-macros freetype libxml2 zlib expat"
 PKG_SECTION="x11/other"
 PKG_SHORTDESC="fontconfig: A library for font customization and configuration"
 PKG_LONGDESC="Fontconfig is a library for font customization and configuration."
@@ -39,8 +40,6 @@ pre_configure_target() {
 # ensure we dont use '-O3' optimization.
   CFLAGS=`echo $CFLAGS | sed -e "s|-O3|-O2|"`
   CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O3|-O2|"`
-  CFLAGS=`echo $CFLAGS | sed -e "s|-fno-plt||"`
-  LDFLAGS=`echo $LDFLAGS | sed -e "s|,-z,relro,-z,now||"`
   CFLAGS="$CFLAGS -I$PKG_BUILD"
   CXXFLAGS="$CXXFLAGS -I$PKG_BUILD"
 
