@@ -18,7 +18,7 @@
 
 PKG_NAME="gcc"
 PKG_VERSION="7.3.0"
-PKG_SHA256=""
+PKG_SHA256="832ca6ae04636adbb430e865a1451adf6979ab44ca1c8374f61fba65645ce15c"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="ftp://gcc.gnu.org/pub/gcc/snapshots/LATEST-7"
@@ -62,6 +62,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
+                              --enable-cloog-backend=isl \
                               --disable-shared \
                               --disable-libitm \
                               --disable-libatomic \
