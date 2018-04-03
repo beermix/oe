@@ -18,7 +18,7 @@
 
 PKG_NAME="binutils"
 PKG_VERSION="2.30"
-PKG_SHA256="8c3850195d1c093d290a716e20ebcaa72eda32abf5e3d8611154b39cff79e9ea"
+PKG_SHA256="b784c3f4c6d8288cfd51d1e85e107b28a350f8773a2a30ca555c6e25791675fa"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://ftp.gnu.org.ua/gnu/binutils/?C=M;O=D"
