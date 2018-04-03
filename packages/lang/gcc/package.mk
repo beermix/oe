@@ -57,6 +57,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libsanitizer \
                            --enable-default-ssp \
                            --enable-gnu-unique-object \
+                           --enable-linker-build-id \
                            --disable-vtable-verify \
                            --disable-libmudflap \
                            --without-cuda-driver \

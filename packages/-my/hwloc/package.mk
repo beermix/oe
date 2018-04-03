@@ -8,8 +8,7 @@ PKG_BUILD_FLAGS="+pic"
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
 			      --disable-cuda \
 			      --disable-nvml \
-			      --enable-plugins \
-			      --enable-pci"
+			      --enable-plugins"
 
 post_makeinstall_target() {
   rm -rf $INSTALL
