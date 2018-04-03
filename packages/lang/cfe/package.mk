@@ -13,5 +13,5 @@ PKG_SHORTDESC="C language family frontend for LLVM"
 #  ln -sf $PKG_BUILD/.$TARGET_NAME/bin/clang-tblgen $BUILD/toolchain/bin/
 #}
 
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release"
+#PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release"
 #PKG_CMAKE_OPTS_HOST="$PKG_CMAKE_OPTS_TARGET"
