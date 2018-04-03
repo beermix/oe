@@ -109,8 +109,8 @@ pre_configure_target() {
     sh autogen.sh
   )
   LDFLAGS="$LDFLAGS -fwhole-program"
-  CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
-  CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-Os|"`
+#  CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
+#  CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-Os|"`
 }
 
 make_target() {
