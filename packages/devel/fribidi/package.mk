@@ -35,7 +35,8 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
                            --enable-malloc \
                            --enable-charsets \
                            --with-gnu-ld \
-                           --without-glib"
+                           --without-glib \
+                           --disable-docs"
 
 pre_configure_target() {
   export CFLAGS="$CFLAGS -DFRIBIDI_CHUNK_SIZE=4080"
