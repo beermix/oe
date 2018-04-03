@@ -56,6 +56,9 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libmpx \
                            --disable-libsanitizer \
                            --enable-default-ssp \
+                           --enable-gnu-unique-object \
+                           --disable-vtable-verify \
+                           --without-cuda-driver \
                            --with-system-zlib=$TOOLCHAIN \
                            --disable-werror \
                            --with-tune=haswell"
