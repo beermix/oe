@@ -36,7 +36,7 @@ PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
 PKG_TOOLCHAIN="manual"
-PKG_BUILD_FLAGS="-lto -gold -hardening"
+PKG_BUILD_FLAGS="-lto -hardening"
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Chromium"
@@ -66,14 +66,14 @@ make_target() {
   unset CXXFLAGS
   unset LDFLAGS
 
-  # https://chromium-review.googlesource.com/c/chromium/src/+/712575
-  # _flags+=('exclude_unwind_tables=true')
-  export CFLAGS="$CFLAGS --param l1-cache-line-size=64 --param l1-cache-size=32 --param l2-cache-size=3072 -fno-unwind-tables -fno-asynchronous-unwind-tables -Wno-builtin-macro-redefined"
-  export CXXFLAGS="$CXXFLAGS --param l1-cache-line-size=64 --param l1-cache-size=32 --param l2-cache-size=3072 -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables -Wno-builtin-macro-redefined"
-  export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES -D__DATE__=  -D__TIME__=  -D__TIMESTAMP__="
+  export CFLAGS="$CFLAGS --param=l1-cache-line-size=64 --param=l1-cache-size=32 --param=l2-cache-size=3072 -fno-unwind-tables -fno-asynchronous-unwind-tables -Wno-builtin-macro-redefined"
+
+  export CXXFLAGS="$CXXFLAGS --param=l1-cache-line-size=64 --param=l1-cache-size=32 --param=l2-cache-size=3072 -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables -Wno-builtin-macro-redefined"
+
+  export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES -D__DATE__= -D__TIME__= -D__TIMESTAMP__="
 
   export CCACHE_SLOPPINESS=time_macros
-  
+
   # Allow building against system libraries in official builds
   sed -i 's/OFFICIAL_BUILD/GOOGLE_CHROME_BUILD/' ./tools/generate_shim_headers/generate_shim_headers.py
 
@@ -106,7 +106,6 @@ make_target() {
     'use_kerberos=false'
     'use_pulseaudio=false'
     'use_sysroot=true'
-    'is_official_build=false' # implies is_cfi=true on x86_64
     'linux_link_libudev=true'
     'use_v8_context_snapshot=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
@@ -139,11 +138,11 @@ make_target() {
     [yasm]=
     [zlib]=minizip
   )
-_unwanted_bundled_libs=(
-  ${!_system_libs[@]}
-  ${_system_libs[libjpeg]+libjpeg_turbo}
-)
-depends+=(${_system_libs[@]})
+  _unwanted_bundled_libs=(
+    ${!_system_libs[@]}
+    ${_system_libs[libjpeg]+libjpeg_turbo}
+  )
+  depends+=(${_system_libs[@]})
 
   # Remove bundled libraries for which we will use the system copies; this
   # *should* do what the remove_bundled_libraries.py script does, with the

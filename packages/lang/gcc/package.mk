@@ -55,8 +55,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libssp \
                            --disable-libmpx \
                            --disable-libsanitizer \
-                           --enable-default-ssp \
-                           --disable-vtable-verify \
                            --disable-libmudflap \
                            --without-cuda-driver \
                            --with-system-zlib=$TOOLCHAIN \
