@@ -32,4 +32,5 @@ PKG_TOOLCHAIN="autotools"
 PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
                            --enable-structs \
                            --enable-raw-api \
-                           --disable-purify-safety"
+                           --disable-purify-safety \
+                           --with-gnu-ld"

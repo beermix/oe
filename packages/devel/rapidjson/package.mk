@@ -35,5 +35,4 @@ PKG_CMAKE_OPTS_TARGET="-DRAPIDJSON_BUILD_DOC=OFF \
                        -DRAPIDJSON_BUILD_THIRDPARTY_GTEST=OFF \
                        -DRAPIDJSON_BUILD_ASAN=OFF \
                        -DRAPIDJSON_BUILD_UBSAN=OFF \
-                       -DRAPIDJSON_HAS_STDSTRING=ON \
-                       -DCMAKE_BUILD_TYPE=Release"
+                       -DRAPIDJSON_HAS_STDSTRING=ON"
