@@ -27,12 +27,11 @@ PKG_DEPENDS_TARGET="toolchain util-macros Python2:host xcb-proto libXau"
 PKG_SECTION="x11/lib"
 PKG_SHORTDESC="libxcb: X C-language Bindings library"
 PKG_LONGDESC="X C-language Bindings library."
-PKG_TOOLCHAIN="autotools"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-xinput \
-			      --enable-xkb \
-			      --disable-selinux \
-			      --enable-xvmc"
+PKG_CONFIGURE_OPTS_TARGET="--disable-screensaver \
+                           --disable-xprint \
+                           --disable-selinux \
+                           --disable-xvmc"
 
 pre_configure_target() {
   PYTHON_LIBDIR=$SYSROOT_PREFIX/usr/lib/$PKG_PYTHON_VERSION

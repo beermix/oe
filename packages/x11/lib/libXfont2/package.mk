@@ -35,4 +35,5 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-ipv6 \
                            --disable-bdfformat \
                            --disable-snfformat \
                            --enable-fc \
+                           --with-gnu-ld \
                            --without-xmlto"
