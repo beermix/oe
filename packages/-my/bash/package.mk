@@ -10,6 +10,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-static \
 			      --enable-history \
 			      --enable-job-control \
 			      --enable-readline \
+			      --with-installed-readline \
 			      --enable-extended-glob \
 			      --enable-progcomp \
 			      --enable-arith-for-command \
