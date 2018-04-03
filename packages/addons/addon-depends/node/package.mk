@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="node"
-PKG_VERSION="8.9.4"
-PKG_SHA256="7dd570b083f75cf2332c42446a01ec140409fa1df46f7af806e0775bdddf6852"
+PKG_VERSION="8.11.1"
+PKG_SHA256="56ca80d50d4b970877994b348e5e3687f3f88cd952c3683e8dd02ac7cad64f41"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://nodejs.org"
@@ -35,7 +35,7 @@ HOST_CONFIGURE_OPTS="--prefix=$TOOLCHAIN \
 
 pre_configure_host() {
   cd ..
-#  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.||"`
-#  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.||"`
-#  export LDFLAGS=`$LDFLAGS -s"`
+  unset CPPFLAGS
+  unset CFLAGS
+  unset CXXFLAGS
 }
