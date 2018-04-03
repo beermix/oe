@@ -1,6 +1,6 @@
 --- chromium-62.0.3192.0/third_party/glslang-angle/src/SPIRV/GlslangToSpv.cpp.gcc7	2017-08-22 21:06:41.000000000 +0200
 +++ chromium-62.0.3192.0/third_party/glslang-angle/src/SPIRV/GlslangToSpv.cpp	2017-09-08 22:38:00.736706539 +0200
-@@ -185,7 +185,9 @@
+@@ -171,7 +171,9 @@
      bool isTrivialLeaf(const glslang::TIntermTyped* node);
      bool isTrivial(const glslang::TIntermTyped* node);
      spv::Id createShortCircuit(glslang::TOperator, glslang::TIntermTyped& left, glslang::TIntermTyped& right);
@@ -8,9 +8,9 @@
      spv::Id getExtBuiltins(const char* name);
 +#endif
  
-     glslang::SpvOptions& options;
      spv::Function* shaderEntry;
-@@ -5928,6 +5930,7 @@
+     spv::Function* currentFunction;
+@@ -5043,6 +5045,7 @@
      return builder.createOp(spv::OpPhi, boolTypeId, phiOperands);
  }
  
@@ -18,7 +18,7 @@
  // Return type Id of the imported set of extended instructions corresponds to the name.
  // Import this set if it has not been imported yet.
  spv::Id TGlslangToSpvTraverser::getExtBuiltins(const char* name)
-@@ -5941,6 +5944,7 @@
+@@ -5056,6 +5059,7 @@
          return extBuiltins;
      }
  }
@@ -26,17 +26,6 @@
  
  };  // end anonymous namespace
  
---- chromium-62.0.3192.0/third_party/libyuv/source/row_any.cc.gcc7	2017-08-22 21:06:36.000000000 +0200
-+++ chromium-62.0.3192.0/third_party/libyuv/source/row_any.cc	2017-09-08 22:54:05.079961882 +0200
-@@ -761,7 +761,7 @@
- #define ANY11P16(NAMEANY, ANY_SIMD, T, SBPP, BPP, MASK)                      \
-   void NAMEANY(const uint16* src_ptr, uint16* dst_ptr, T param, int width) { \
-     SIMD_ALIGNED(uint16 temp[32 * 2]);                                       \
--    memset(temp, 0, 64); /* for msan */                                      \
-+    memset(temp, 0, 64*sizeof(uint16)); /* for msan */                                      \
-     int r = width & MASK;                                                    \
-     int n = width & ~MASK;                                                   \
-     if (n > 0) {                                                             \
 --- chromium-62.0.3192.0/third_party/webrtc/modules/video_coding/rtt_filter.cc.gcc7	2017-08-22 21:06:39.000000000 +0200
 +++ chromium-62.0.3192.0/third_party/webrtc/modules/video_coding/rtt_filter.cc	2017-09-08 23:06:06.529620651 +0200
 @@ -49,8 +49,8 @@
@@ -108,18 +97,6 @@
  
    // Remember the bindings the renderer process has at this point, so that
    // we do not grant this entry additional bindings if we come back to it.
---- chromium-62.0.3192.0/content/browser/frame_host/navigator_impl.cc.gcc7	2017-08-22 21:04:43.000000000 +0200
-+++ chromium-62.0.3192.0/content/browser/frame_host/navigator_impl.cc	2017-09-09 02:05:15.758922091 +0200
-@@ -470,7 +472,9 @@
- 
-   // Make sure no code called via RFH::Navigate clears the pending entry.
-   if (is_pending_entry)
-+  {
-     CHECK_EQ(controller_->GetPendingEntry(), &entry);
-+  }
- 
-   if (controller_->GetPendingEntryIndex() == -1 &&
-       dest_url.SchemeIs(url::kJavaScriptScheme)) {
 --- chromium-62.0.3192.0/content/browser/frame_host/render_frame_host_manager.cc.gcc7	2017-08-22 21:04:43.000000000 +0200
 +++ chromium-62.0.3192.0/content/browser/frame_host/render_frame_host_manager.cc	2017-09-09 02:07:40.371353881 +0200
 @@ -1198,7 +1198,9 @@
@@ -132,19 +109,6 @@
  
    if (new_instance == current_instance) {
      // If we're navigating to the same site instance, we won't need to use any
---- chromium-62.0.3192.0/third_party/WebKit/Source/platform/wtf/text/TextCodec.h.gcc7	2017-08-22 21:05:01.000000000 +0200
-+++ chromium-62.0.3192.0/third_party/WebKit/Source/platform/wtf/text/TextCodec.h	2017-09-09 03:00:28.743370090 +0200
-@@ -69,8 +69,8 @@
- };
- 
- static_assert(!kDoNotFlush, "DoNotFlush should be falsy");
--static_assert(kFetchEOF, "FetchEOF should be truthy");
--static_assert(kDataEOF, "DataEOF should be truthy");
-+static_assert(kFetchEOF != 0, "FetchEOF should be truthy");
-+static_assert(kDataEOF != 0, "DataEOF should be truthy");
- 
- class WTF_EXPORT TextCodec {
-   USING_FAST_MALLOC(TextCodec);
 --- chromium-62.0.3192.0/media/cast/receiver/video_decoder.cc.gcc7	2017-08-22 21:04:45.000000000 +0200
 +++ chromium-62.0.3192.0/media/cast/receiver/video_decoder.cc	2017-09-09 05:02:17.907818439 +0200
 @@ -133,7 +133,9 @@
