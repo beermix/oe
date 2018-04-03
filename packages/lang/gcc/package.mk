@@ -58,6 +58,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-default-ssp \
                            --enable-gnu-unique-object \
                            --disable-vtable-verify \
+                           --disable-libmudflap \
                            --without-cuda-driver \
                            --with-system-zlib=$TOOLCHAIN \
                            --disable-werror \
@@ -72,7 +73,6 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-libatomic \
                               --disable-libgomp \
                               --disable-libquadmath \
-                              --disable-libmudflap \
                               --disable-threads \
                               --without-headers \
                               --with-newlib \
