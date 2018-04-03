@@ -5,14 +5,13 @@ PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_GIT_BRANCH="release/12"
 PKG_DEPENDS_TARGET="toolchain ffmpeg freetype openssl"
 PKG_TOOLCHAIN="manual"
+PKG_BUILD_FLAGS="-gold -lto"
 
 get_graphicdrivers
 
 pre_configure_target() {
   cd $PKG_BUILD
   rm -rf .$TARGET_NAME
-  strip_lto
-  strip_gold
 }
 
 configure_target() {

@@ -31,7 +31,7 @@ PKG_SITE="http://www.chromium.org/Home"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/$PKG_NAME-$PKG_VERSION.tar.xz"
 #PKG_URL="https://gsdview.appspot.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="pciutils gperf:host dbus libXtst libXcomposite libXcursor alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk intel-vaapi-driver libva-vdpau-driver unclutter xdotool libdrm libjpeg-turbo freetype harfbuzz gtk+ libxss chromium:host"
+PKG_DEPENDS_TARGET="pciutils gperf:host dbus libXtst libXcomposite libXcursor alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk intel-vaapi-driver libva-vdpau-driver unclutter xdotool libdrm libjpeg-turbo freetype harfbuzz gtk+ libxss re2 snappy chromium:host"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -68,9 +68,9 @@ make_target() {
 
   # https://chromium-review.googlesource.com/c/chromium/src/+/712575
   # _flags+=('exclude_unwind_tables=true')
-  export CFLAGS="$CFLAGS --param l1-cache-line-size=64 --param l1-cache-size=32 --param l2-cache-size=3072 -fno-unwind-tables -fno-asynchronous-unwind-tables -Wno-builtin-macro-redefined"
-  export CXXFLAGS="$CXXFLAGS --param l1-cache-line-size=64 --param l1-cache-size=32 --param l2-cache-size=3072 -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables -Wno-builtin-macro-redefined"
-  export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES -D__DATE__=  -D__TIME__=  -D__TIMESTAMP__="
+  export CFLAGS="$CFLAGS --param l1-cache-line-size=64 --param l1-cache-size=32 --param l2-cache-size=3072 -fno-unwind-tables -fno-asynchronous-unwind-tables"
+  export CXXFLAGS="$CXXFLAGS --param l1-cache-line-size=64 --param l1-cache-size=32 --param l2-cache-size=3072 -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
+  export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
 
   export CCACHE_SLOPPINESS=time_macros
   
@@ -134,8 +134,8 @@ make_target() {
     #[libvpx]=libvpx
     #[libxml]=libxml2           # https://crbug.com/736026
     [libxslt]=libxslt
-    #[re2]=re2
-    #[snappy]=snappy
+    [re2]=re2
+    [snappy]=snappy
     [yasm]=
     [zlib]=minizip
   )
@@ -148,7 +148,7 @@ make_target() {
   # Remove bundled libraries for which we will use the system copies; this
   # *should* do what the remove_bundled_libraries.py script does, with the
   # added benefit of not having to list all the remaining libraries
-  #              \! -path './base/third_party/icu/*' \
+  #            \! -path './base/third_party/icu/*' \        
   local _lib
   for _lib in ${_unwanted_bundled_libs[@]}; do
     find -type f -path "*third_party/$_lib/*" \
