@@ -8,8 +8,7 @@ PKG_VERSION="e18c12a"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/pepsik-kiev/HTTPAceProxy"
-PKG_URL="$PKG_SITE/archive/$PKG_VERSION.tar.gz"
+PKG_URL="https://github.com/pepsik-kiev/HTTPAceProxy/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain gevent psutil M2Crypto requests"
 PKG_SECTION="xmedia/torrent"
 PKG_SHORTDESC="AceProxy: Ace Stream HTTP Proxy"
@@ -17,6 +16,7 @@ PKG_LONGDESC="AceProxy: Ace Stream HTTP Proxy."
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 #PKG_LOCALE_INSTALL="yes"
+PKG_TOOLCHAIN="manual"
 
 make_target() {
   : # nothing to make here
