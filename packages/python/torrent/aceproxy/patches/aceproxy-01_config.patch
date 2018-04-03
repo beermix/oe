@@ -1,0 +1,60 @@
+diff -Naurp aceproxy-d4a2ee1/aceproxy/aceconfig.py aceproxy-d4a2ee1-patch/aceproxy/aceconfig.py
+--- aceproxy-d4a2ee1/aceproxy/aceconfig.py	2017-10-26 10:08:56.000000000 +0300
++++ aceproxy-d4a2ee1-patch/aceproxy/aceconfig.py	2017-10-26 13:32:15.000000000 +0300
+@@ -3,7 +3,6 @@ AceProxy configuration scrip
+ Edit this file.
+ '''
+ import logging
+-import colorer
+ import acedefconfig
+ from aceclient.acemessages import AceConst
+ 
+@@ -163,7 +162,7 @@ class AceConfig(acedefconfig.AceDefConfi
+     # Prefered audio language in translation on start http://xml.coverpages.org/nisoLang3-1994.html
+     preferred_audio_language = 'rus'
+     # ----------------------------------------------------
+-    videodelay = 0
++    videodelay = 5
+     # Obey PAUSE and RESUME commands from Engine
+     # (stops sending data to client, should prevent annoying buffering)
+     # !!!
+@@ -175,19 +174,19 @@ class AceConfig(acedefconfig.AceDefConfi
+     # !!!
+     # PLEASE set this to 0 if you use VLC
+     # !!!
+-    videopausedelay = 0
++    videopausedelay = 3
+     # Seek back feature.
+     # Seeks stream back for specified amount of seconds.
+     # Greatly helps fighing AceSteam lags, but introduces
+     # video stream delay.
+     # Set it to 30 or so.
+     # Works only with the newest versions of AceEngine!
+-    videoseekback = 0
++    videoseekback = 60
+     # Delay before closing Ace Stream connection when client disconnects
+     # In seconds.
+-    videodestroydelay = 0
++    videodestroydelay = 1
+     # Pre-buffering timeout. In seconds.
+-    videotimeout = 40
++    videotimeout = 60
+     #
+     # If True - use *.aclive/torrent files given in playlist and do START TORRENT acestream command for start translation
+     # If False - then at the beginning we try to obtain CID from *.aclive/torrent file and do START PID for start translation
+@@ -208,13 +207,13 @@ class AceConfig(acedefconfig.AceDefConfi
+     # Logging configuration
+     #
+     # Log level (DEBUG, INFO, WARNING, ERROR, CRITICAL)
+-    loglevel = logging.DEBUG
++    loglevel = logging.INFO
+     # Log message forma
+     logfmt = '%(filename)-20s [LINE:%(lineno)-4s]# %(levelname)-8s [%(asctime)s]  %(message)s'
+     # Log date forma
+     logdatefmt='%d.%m %H:%M:%S'
+     # Full path to a log file
+-    logfile = None
++    logfile = '/var/log/aceproxy.log'
+ 
+     # This method is used to detect fake requests. Some players send such
+     # requests in order to detect the MIME type and/or check the stream availability.

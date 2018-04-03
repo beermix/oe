@@ -33,8 +33,8 @@ PKG_LONGDESC="Python2 is an interpreted object-oriented programming language, an
 PKG_TOOLCHAIN="autotools"
 PKG_BUILD_FLAGS="-parallel"
 
-LTO_SUPPORT="yes"
-GOLD_SUPPORT="yes"
+#LTO_SUPPORT="yes"
+#GOLD_SUPPORT="yes"
 
 PKG_PY_DISABLED_MODULES="_tkinter nis gdbm bsddb ossaudiodev"
 

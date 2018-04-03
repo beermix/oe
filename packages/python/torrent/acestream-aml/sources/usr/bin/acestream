@@ -1,0 +1,29 @@
+#!/bin/sh
+################################################################################
+#      This file is part of Alex@ELEC - http://www.alexelec.in.ua
+#      Copyright (C) 2011-present Alexandr Zuyev (alex@alexelec.in.ua)
+################################################################################
+
+SERVICE_DIR="/storage/.cache/services"
+ACE_DIR="/storage/.config/acestream"
+ACE_ARGS=''
+
+[ -f $SERVICE_DIR/acestream.conf ] && . $SERVICE_DIR/acestream.conf
+
+[ -z $ACE_LOGIN ] && ACE_LOGIN="none"
+[ -z $ACE_PASSW ] && ACE_PASSW="none"
+
+if [ "$ACE_LOGIN" != "none" -a "$ACE_PASSW" != "none" ]; then
+  ACE_ARGS="--login $ACE_LOGIN --password $ACE_PASSW"
+fi
+
+if [ -f $ACE_DIR/acestream-user.conf ]; then
+  . $ACE_DIR/acestream-user.conf
+  if [ -n "$ACE_USER_ARGS" ]; then
+    ACE_ARGS="$ACE_USER_ARGS $ACE_ARGS"
+  fi
+fi
+
+[ "$ACE_DEBUG" == "1" ] && ACE_ARGS="--debug-profile --log-debug 1 --log-modules root:D $ACE_ARGS"
+
+/usr/bin/acestream.start --client-console --cache-dir /media/acecache --state-dir /media/acecache --bind-all --access-token alexelec $ACE_ARGS

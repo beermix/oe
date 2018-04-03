@@ -1,0 +1,29 @@
+#!/bin/sh
+################################################################################
+#      This file is part of Alex@ELEC - http://www.alexelec.in.ua
+#      Copyright (C) 2011-present Alexandr Zuyev (alex@alexelec.in.ua)
+################################################################################
+
+SERVICE_DIR="/storage/.cache/services"
+CHROOT_DIR="/storage/.config/acestream"
+MOUNT_STATE="$CHROOT_DIR/disk.mount"
+
+pkill -9 -f "/acestream.engine/python/bin/python" &>/dev/null
+pkill -9 -f "/system/bin/acestream.sh" &>/dev/null
+ 
+[ -f $SERVICE_DIR/acestream.conf ] && . $SERVICE_DIR/acestream.conf
+[ -f $SERVICE_DIR/acestream.disabled ] && . $SERVICE_DIR/acestream.disabled
+
+if [ -f "$MOUNT_STATE" ]; then
+  /sbin/chroot $CHROOT_DIR /bin/umount /media &>/dev/null
+  rm -fR $CHROOT_DIR/media/acecache &>/dev/null
+fi
+
+umount $CHROOT_DIR/proc &>/dev/null
+umount $CHROOT_DIR/sys &>/dev/null
+umount $CHROOT_DIR/dev &>/dev/null
+
+if [ -f "$MOUNT_STATE" ]; then
+  rm -f $MOUNT_STATE
+  umount $CHROOT_DIR/media &>/dev/null
+fi
