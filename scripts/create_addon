@@ -69,7 +69,7 @@ pack_addon() {
     fi
     cd $ADDON_BUILD
     echo "*** compressing Addon $PKG_ADDON_ID ... ***"
-    7za a -l -mx9 -bsp0 -bso0 -tzip $PKG_ADDON_ID-$ADDONVER.zip $PKG_ADDON_ID
+    $TOOLCHAIN/bin/7za a -l -mx9 -bsp0 -bso0 -tzip $PKG_ADDON_ID-$ADDONVER.zip $PKG_ADDON_ID
     cd - &>/dev/null
 
     mkdir -p $ADDON_INSTALL_DIR
@@ -101,10 +101,6 @@ pack_addon() {
 }
 
 if [ "$PKG_IS_ADDON" = "yes" ] ; then
-  [ ! -f ${BUILD}/.build.conf ] && save_build_config
-
-  restore_toolchain
-
   setup_toolchain target 
 
   $SCRIPTS/build $@

@@ -27,8 +27,6 @@ show_config
 
 save_build_config
 
-restore_toolchain
-
 setup_toolchain target
 
 $SCRIPTS/checkdeps
@@ -146,11 +144,9 @@ echo "$DISTRONAME ($LIBREELEC_BUILD): $LIBREELEC_VERSION git: $GIT_HASH" >> $INS
 
 ln -sf /etc/issue $INSTALL/etc/motd
 
-# Basic system...
+# Basissystem...
 $SCRIPTS/install libc
 $SCRIPTS/install gcc
-
-backup_toolchain $REUSE_TOOLCHAIN
 
 $SCRIPTS/install linux
 export _CACHED_KERNEL_MODULE_DIR="$(get_module_dir)"
