@@ -17,14 +17,13 @@
 ################################################################################
 
 PKG_NAME="re2"
-PKG_VERSION="2018-03-01"
+PKG_VERSION="2018-04-01"
 PKG_ARCH="any"
-PKG_LICENSE="zlib"
 PKG_SITE="https://github.com/google/re2/releases"
 PKG_URL="https://github.com/google/re2/archive/$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET=""
+PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="devel"
 PKG_TOOLCHAIN="cmake-make"
 PKG_BUILD_FLAGS="+pic"
 
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=0 -DBUILD_TESTING=0 -DRE2_BUILD_TESTING=0 -DUSEPCRE=0"
+PKG_CMAKE_OPTS_TARGET="-DBUILD_SHARED_LIBS=0 -DBUILD_TESTING=0 -DRE2_BUILD_TESTING=0 -DUSEPCRE=0"
