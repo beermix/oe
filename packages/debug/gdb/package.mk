@@ -30,13 +30,8 @@ PKG_LONGDESC="The purpose of a debugger such as GDB is to allow you to see what 
 # gdb could fail on runtime if build with LTO support
 PKG_BUILD_FLAGS="-lto -hardening"
 
-
 CC_FOR_BUILD="$HOST_CC"
 CFLAGS_FOR_BUILD="$HOST_CFLAGS"
-
-pre_configure_target() {
-  unset CPPFLAGS
-}
 
 PKG_CONFIGURE_OPTS_TARGET="bash_cv_have_mbstate_t=set \
                            --disable-shared \

@@ -1,4 +1,4 @@
-GCC_OPTIM="-O2 -pipe -Wformat -Werror=format-security"
+GCC_OPTIM="-O2 -pipe"
 LD_OPTIM="-Wl,-O1,--as-needed"
 
 if [ "${BUILD_WITH_DEBUG}" = "yes" ]; then
@@ -13,7 +13,7 @@ fi
 
 NINJA_OPTS=""
 
-TARGET_CPPFLAGS="-D_FORTIFY_SOURCE=2"
+TARGET_CPPFLAGS=""
 TARGET_CFLAGS="$TARGET_CFLAGS $GCC_OPTIM $PROJECT_CFLAGS -fdiagnostics-color=always"
 TARGET_CXXFLAGS="$TARGET_CFLAGS"
 TARGET_LDFLAGS="$TARGET_LDFLAGS $LD_OPTIM"

@@ -17,8 +17,8 @@
 ################################################################################ libXcursor libSM libXt
 
 PKG_NAME="xorg-server"
-PKG_VERSION="1.19.99.902"
-PKG_SHA256="c01ae31a26085da8cdfd1dcef1d2827e710298cb659c744bbb6b46fe121a95e5"
+PKG_VERSION="1.19.99.903"
+PKG_SHA256="84e0895ce72b127cfded4c9c18201a94c806dd53af9c135edcd59947eac1d070"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.X.org"
@@ -29,6 +29,9 @@ PKG_SECTION="x11/xserver"
 PKG_SHORTDESC="xorg-server: The Xorg X server"
 PKG_LONGDESC="Xorg is a full featured X server that was originally designed for UNIX and UNIX-like operating systems running on Intel x86 hardware."
 PKG_TOOLCHAIN="autotools"
+PKG_BUILD_FLAGS="-hardening"
+LTO_SUPPORT="yes"
+GOLD_SUPPORT="yes"
 
 get_graphicdrivers
 
