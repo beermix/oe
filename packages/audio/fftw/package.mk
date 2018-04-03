@@ -5,19 +5,18 @@ PKG_URL="ftp://ftp.fftw.org/pub/fftw/fftw-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="service/system"
 PKG_TOOLCHAIN="cmake-make"
-LTO_SUPPORT="yes"
-GOLD_SUPPORT="yes"
+PKG_BUILD_FLAGS="+pic"
 
-pre_configure_target() {
-  export CFLAGS="$CFLAGS -fomit-frame-pointer -malign-double -fstrict-aliasing -ffast-math -fopenmp -fPIC"
-}
+#pre_configure_target() {
+#  export CFLAGS="$CFLAGS -fomit-frame-pointer -malign-double -fstrict-aliasing -ffast-math -fopenmp -fPIC"
+#}
 
 PKG_CMAKE_OPTS_TARGET="-DBUILD_SHARED_LIBS=0 \
 			  -DBUILD_TESTS=0 \
 			  -DENABLE_AVX=1 \
 			  -DENABLE_AVX2=0 \
 			  -DENABLE_FLOAT=1 \
-			  -DENABLE_OPENMP=1 \
+			  -DENABLE_OPENMP=0 \
 			  -DENABLE_SSE=1 \
 			  -DENABLE_SSE2=2 \
 			  -DENABLE_THREADS=1"
