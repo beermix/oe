@@ -142,7 +142,7 @@
   GRAPHIC_DRIVERS="i965 vmware"
 
 # build and install remote support (yes / no)
-  REMOTE_SUPPORT="yes"
+  REMOTE_SUPPORT="no"
 
 # build and install ATV IR remote support (yes / no)
   ATVCLIENT_SUPPORT="no"
