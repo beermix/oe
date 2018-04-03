@@ -10,7 +10,7 @@ pre_configure_target() {
   #cd $PKG_BUILD
   NOCONFIGURE=1 ./autogen.sh
   
-  LDFLAGS="$LDFLAGS -lpci -ludev"
+  export LIBS="$LIBS -lpci -lz -ludev"
 }
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
