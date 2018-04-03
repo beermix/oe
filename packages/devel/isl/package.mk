@@ -3,12 +3,6 @@ PKG_VERSION="0.18"
 PKG_URL="http://isl.gforge.inria.fr/isl-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="libtool:host intltool:host gmp:host"
 PKG_SECTION="devel"
-PKG_TOOLCHAIN="configure"
-
-pre_configure_host() {
-  unset CPPFLAGS
-  unset CFLAGS
-  unset CXXFLAGS
-}
+PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared --with-gmp-prefix=$TOOLCHAIN --disable-silent-rules"
