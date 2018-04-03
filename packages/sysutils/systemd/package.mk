@@ -126,7 +126,7 @@ post_patch() {
 }
 
 pre_configure_target() {
-#  export CFLAGS="$CFLAGS -fno-schedule-insns -fno-schedule-insns2"
+  export CFLAGS="$CFLAGS -fno-schedule-insns -fno-schedule-insns2"
   export LC_ALL=en_US.UTF-8
 }
 
