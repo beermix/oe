@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="snappy"
-PKG_VERSION="1.1.7"
+PKG_VERSION="4f7bd2d"
 PKG_ARCH="any"
 PKG_LICENSE="BSD/GPLv2"
 PKG_SITE="https://github.com/google/snappy/releases"
