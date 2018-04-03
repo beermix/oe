@@ -22,10 +22,11 @@ PKG_ARCH="any"
 PKG_LICENSE="BSD"
 PKG_SITE="https://pypi.python.org/pypi/requests"
 PKG_URL="https://pypi.python.org/packages/b0/e1/eab4fc3752e3d240468a8c0b284607899d2fbfb236a56b7377a329aa8d09/requests-2.18.4.tar.gz"
-PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"
+PKG_DEPENDS_TARGET="toolchain Python2 distutilscross:host"
 PKG_SECTION="python/security"
 PKG_SHORTDESC="Cryptographic library for Python"
 PKG_LONGDESC="PyCryptodome is a self-contained Python package of low-level cryptographic primitives."
+PKG_TOOLCHAIN="manual"
 
 pre_configure_target() {
   cd $PKG_BUILD

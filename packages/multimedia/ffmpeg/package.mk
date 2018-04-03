@@ -204,7 +204,8 @@ configure_target() {
               --disable-altivec \
               $FFMPEG_FPU \
               --enable-yasm \
-              --disable-symver
+              --disable-symver \
+              $FFMPEG_X11GRAB
 }
 
 post_makeinstall_target() {
