@@ -48,8 +48,8 @@ case "$LINUX" in
     PKG_BUILD_PERF="no"
     ;;
   *)
-    PKG_VERSION="4.14.10"
-    PKG_SHA256="86baf1374ca003bdd9a43cae7f59cec02b455a6c38c3705aa46b2b68d91ed110"
+    PKG_VERSION="4.16"
+    #PKG_SHA256="86baf1374ca003bdd9a43cae7f59cec02b455a6c38c3705aa46b2b68d91ed110"
     PKG_URL="https://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
     PKG_PATCH_DIRS="default"
     PKG_BUILD_PERF="yes"
@@ -145,7 +145,6 @@ pre_make_target() {
     # copy some extra firmware to linux tree
     mkdir -p $PKG_BUILD/external-firmware
       #cp -a $(get_build_dir kernel-firmware)/{rtl_bt,i915,intel,e100,rtl_nic} $PKG_BUILD/external-firmware
-      #cp -a $(get_build_dir kernel-firmware)/{i915,intel} $PKG_BUILD/external-firmware
       cp -a $(get_build_dir kernel-firmware)/i915 $PKG_BUILD/external-firmware
 
     cp -a $(get_build_dir intel-ucode)/intel-ucode $PKG_BUILD/external-firmware
@@ -156,8 +155,10 @@ pre_make_target() {
 
   make oldconfig
 
-  # regdb
-  cp $(get_build_dir wireless-regdb)/db.txt $PKG_BUILD/net/wireless/db.txt
+  # regdb (backward compatability with pre-4.15 kernels)
+  if grep -q ^CONFIG_CFG80211_INTERNAL_REGDB= $PKG_BUILD/.config ; then
+    cp $(get_build_dir wireless-regdb)/db.txt $PKG_BUILD/net/wireless/db.txt
+  fi
 }
 
 make_target() {
@@ -316,4 +317,9 @@ post_install() {
 
   # bluez looks in /etc/firmware/
     ln -sf /$(get_full_firmware_dir)/ $INSTALL/etc/firmware
+
+  # regdb and signature is now loaded as firmware by 4.15+
+    if grep -q ^CONFIG_CFG80211_REQUIRE_SIGNED_REGDB= $PKG_BUILD/.config; then
+      cp $(get_build_dir wireless-regdb)/regulatory.db{,.p7s} $INSTALL/$(get_full_firmware_dir)
+    fi
 }
