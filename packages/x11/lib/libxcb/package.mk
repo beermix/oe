@@ -27,6 +27,7 @@ PKG_DEPENDS_TARGET="toolchain util-macros Python2:host xcb-proto libXau"
 PKG_SECTION="x11/lib"
 PKG_SHORTDESC="libxcb: X C-language Bindings library"
 PKG_LONGDESC="X C-language Bindings library."
+PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-screensaver \
                            --disable-xprint \
