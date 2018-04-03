@@ -18,7 +18,7 @@
 
 PKG_NAME="binutils"
 PKG_VERSION="2.30"
-#PKG_SHA256="0b871e271c4c620444f8264f72143b4d224aa305306d85dd77ab8dce785b1e85"
+PKG_SHA256="8c3850195d1c093d290a716e20ebcaa72eda32abf5e3d8611154b39cff79e9ea"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://ftp.gnu.org.ua/gnu/binutils/?C=M;O=D"
@@ -38,11 +38,11 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --disable-multilib \
                          --disable-libada \
                          --disable-libssp \
-                         --enable-ld=default \
-                         --enable-gold \
-                         --enable-plugins \
                          --with-system-zlib=$TOOLCHAIN \
                          --enable-version-specific-runtime-libs \
+                         --enable-plugins \
+                         --enable-gold \
+                         --enable-ld=default \
                          --enable-lto \
                          --disable-nls"
 
