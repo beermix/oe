@@ -41,7 +41,6 @@ PKG_CONFIGURE_OPTS_HOST="--cache-file=config.cache \
                          --with-pymalloc \
                          --with-signal-module \
                          --with-computed-gotos \
-                         --with-lto \
                          --enable-unicode=ucs4"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
@@ -70,7 +69,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            --with-threads \
                            --with-signal-module \
                            --with-computed-gotos \
-                           --with-lto \
                            --with-system-expat"
 post_patch() {
   # This is needed to make sure the Python build process doesn't try to
