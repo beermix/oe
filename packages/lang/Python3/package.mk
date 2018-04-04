@@ -34,9 +34,6 @@ PKG_PYTHON_VERSION=python3.6
 
 PKG_TOOLCHAIN="autotools"
 
-LTO_SUPPORT="yes"
-GOLD_SUPPORT="yes"
-
 PKG_CONFIGURE_OPTS_HOST="ac_cv_prog_HAS_HG=/bin/false
                          ac_cv_prog_SVNVERSION=/bin/false
                          --disable-pyc-build

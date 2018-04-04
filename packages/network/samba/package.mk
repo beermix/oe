@@ -108,9 +108,11 @@ pre_configure_target() {
   ( cd ../source3
     sh autogen.sh
   )
-  LDFLAGS="$LDFLAGS -fwhole-program"
-#  CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
-#  CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-Os|"`
+  export CFLAGS="$CFLAGS -D__location__=\\\"\\\" -ffunction-sections -fdata-sections"
+  export LDFLAGS="$LDFLAGS -fwhole-program -Wl,--gc-sections"
+  
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
+  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-Os|"`
 }
 
 make_target() {
