@@ -40,7 +40,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --disable-modern-top \
                            --enable-watch8bit \
                            --disable-shared \
-                           --disable-nls \
                            --disable-kill"
 
 post_makeinstall_target() {
