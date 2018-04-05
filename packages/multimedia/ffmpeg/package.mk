@@ -19,7 +19,7 @@
 PKG_NAME="ffmpeg"
 PKG_VERSION="3.1.11-Krypton-17.5"
 PKG_VERSION="3.2.10"
-PKG_VERSION="e2edfff"
+PKG_VERSION="0a34092"
 PKG_ARCH="any"
 PKG_LICENSE="LGPLv2.1+"
 PKG_SITE="https://github.com/FFmpeg/FFmpeg/branches/active"
