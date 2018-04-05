@@ -56790,3 +56790,183 @@ index 2bc04a1a09..467988bf1c 100644
  #define BFD_VERSION @bfd_version@
  #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
  #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 3a9e7a505bec7917f0457379cbe79fe8de165d2e
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Wed Apr 4 00:01:42 2018 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 467988bf1c..6b672b1865 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20180403
++#define BFD_VERSION_DATE 20180404
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit aa15ca261023bb03b22a356787786aa5521ce2f8
+Author: H.J. Lu <hjl.tools@gmail.com>
+Date:   Wed Apr 4 04:36:44 2018 -0700
+
+    i386: Clear vex instead of vex.evex
+    
+    "vex" has many fields to control how to decode an instruction.  Clear
+    all fields in "vex" before decoding an instruction to avoid using values
+    left from the previous instruction.
+    
+    gas/
+    
+            PR binutils/23025
+            * testsuite/gas/i386/prefix.s: Add tests for vcvtpd2dq with
+            VEX and EVEX prefixes.
+            * testsuite/gas/i386/prefix.d: Updated.
+    
+    opcodes/
+    
+            PR binutils/23025
+            * i386-dis.c (get_valid_dis386): Don't set vex.prefix nor vex.w
+            to 0.
+            (print_insn): Clear vex instead of vex.evex.
+    
+    (cherry picked from commit caf0678c84b5b55fbc4bcc853954745a4ad8b658)
+
+diff --git a/gas/ChangeLog b/gas/ChangeLog
+index 30bc4fd3c7..7da124a254 100644
+--- a/gas/ChangeLog
++++ b/gas/ChangeLog
+@@ -1,3 +1,13 @@
++2018-04-04  H.J. Lu  <hongjiu.lu@intel.com>
++
++	Backport from master branch
++	2018-04-04  H.J. Lu  <hongjiu.lu@intel.com>
++
++	PR binutils/23025
++	* testsuite/gas/i386/prefix.s: Add tests for vcvtpd2dq with
++	VEX and EVEX prefixes.
++	* testsuite/gas/i386/prefix.d: Updated.
++
+ 2018-03-29  Nick Clifton  <nickc@redhat.com>
+ 
+ 	Import from mainline:
+diff --git a/gas/testsuite/gas/i386/prefix.d b/gas/testsuite/gas/i386/prefix.d
+index 8dd200be08..e9ad5eb56c 100644
+--- a/gas/testsuite/gas/i386/prefix.d
++++ b/gas/testsuite/gas/i386/prefix.d
+@@ -72,5 +72,8 @@ Disassembly of section .text:
+ [ 	]*[a-f0-9]+:	90                   	nop
+ [ 	]*[a-f0-9]+:	f2 0f c7             	\(bad\)  
+ [ 	]*[a-f0-9]+:	f0 90                	lock nop
++[ 	]*[a-f0-9]+:	c5 fb e6 40 20       	vcvtpd2dqx 0x20\(%eax\),%xmm0
++[ 	]*[a-f0-9]+:	62 f1 ff 18 e6 40 04 	vcvtpd2dq 0x20\(%eax\)\{1to2\},%xmm0
++[ 	]*[a-f0-9]+:	c5 fb e6 40 20       	vcvtpd2dqx 0x20\(%eax\),%xmm0
+ 	...
+ #pass
+diff --git a/gas/testsuite/gas/i386/prefix.s b/gas/testsuite/gas/i386/prefix.s
+index 12d8bbc007..a4c60a7144 100644
+--- a/gas/testsuite/gas/i386/prefix.s
++++ b/gas/testsuite/gas/i386/prefix.s
+@@ -391,5 +391,9 @@
+ 
+ 	nop
+ 
++	vcvtpd2dqx 0x20(%eax),%xmm0
++	vcvtpd2dq 0x20(%eax){1to2},%xmm0
++	vcvtpd2dqx 0x20(%eax),%xmm0
++
+ # Get a good alignment.
+  .p2align	4,0
+diff --git a/opcodes/ChangeLog b/opcodes/ChangeLog
+index cae90ebe12..daa18f67f8 100644
+--- a/opcodes/ChangeLog
++++ b/opcodes/ChangeLog
+@@ -1,3 +1,13 @@
++2018-04-04  H.J. Lu  <hongjiu.lu@intel.com>
++
++	Backport from master branch
++	2018-04-04  H.J. Lu  <hongjiu.lu@intel.com>
++
++	PR binutils/23025
++	* i386-dis.c (get_valid_dis386): Don't set vex.prefix nor vex.w
++	to 0.
++	(print_insn): Clear vex instead of vex.evex.
++
+ 2018-03-16  Thomas Preud'homme  <thomas.preudhomme@arm.com>
+ 
+ 	Backport from mainline
+diff --git a/opcodes/i386-dis.c b/opcodes/i386-dis.c
+index 86a2cdd022..a9874dec96 100644
+--- a/opcodes/i386-dis.c
++++ b/opcodes/i386-dis.c
+@@ -12815,7 +12815,6 @@ get_valid_dis386 (const struct dis386 *dp, disassemble_info *info)
+       switch ((*codep & 0x3))
+ 	{
+ 	case 0:
+-	  vex.prefix = 0;
+ 	  break;
+ 	case 1:
+ 	  vex.prefix = DATA_PREFIX_OPCODE;
+@@ -12880,7 +12879,6 @@ get_valid_dis386 (const struct dis386 *dp, disassemble_info *info)
+       switch ((*codep & 0x3))
+ 	{
+ 	case 0:
+-	  vex.prefix = 0;
+ 	  break;
+ 	case 1:
+ 	  vex.prefix = DATA_PREFIX_OPCODE;
+@@ -12918,12 +12916,10 @@ get_valid_dis386 (const struct dis386 *dp, disassemble_info *info)
+       /* For the 2-byte VEX prefix in 32-bit mode, the highest bit in
+ 	 VEX.vvvv is 1.  */
+       vex.register_specifier = (~(*codep >> 3)) & 0xf;
+-      vex.w = 0;
+       vex.length = (*codep & 0x4) ? 256 : 128;
+       switch ((*codep & 0x3))
+ 	{
+ 	case 0:
+-	  vex.prefix = 0;
+ 	  break;
+ 	case 1:
+ 	  vex.prefix = DATA_PREFIX_OPCODE;
+@@ -12998,7 +12994,6 @@ get_valid_dis386 (const struct dis386 *dp, disassemble_info *info)
+       switch ((*codep & 0x3))
+ 	{
+ 	case 0:
+-	  vex.prefix = 0;
+ 	  break;
+ 	case 1:
+ 	  vex.prefix = DATA_PREFIX_OPCODE;
+@@ -13356,7 +13351,7 @@ print_insn (bfd_vma pc, disassemble_info *info)
+   need_vex = 0;
+   need_vex_reg = 0;
+   vex_w_done = 0;
+-  vex.evex = 0;
++  memset (&vex, 0, sizeof (vex));
+ 
+   if (dp->name == NULL && dp->op[0].bytemode == FLOATCODE)
+     {
+
+commit a8a2873f053639dac7dfe376a13bc021950bb379
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Thu Apr 5 00:01:44 2018 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 6b672b1865..fb64e0fab9 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20180404
++#define BFD_VERSION_DATE 20180405
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@

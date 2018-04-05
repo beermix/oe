@@ -61928,3 +61928,47 @@ index 77829001e8..395c68f64c 100644
 +	] \
 +    ]
 +}
+
+commit af0200d544c0a00a805f2ed86e9e5776cca22266
+Author: Eric Christopher <echristo@gmail.com>
+Date:   Wed Nov 8 14:03:55 2017 -0800
+
+    Apply:
+    
+    2017-11-08  Kyle Butt  <iteratee@google.com>
+    
+            * object.cc (do_find_special_sections): Fix a thinko with memmem return
+            values and check for != NULL rather than == 0.
+
+diff --git a/gold/ChangeLog b/gold/ChangeLog
+index b48c27913a..ddcc0d7fb5 100644
+--- a/gold/ChangeLog
++++ b/gold/ChangeLog
+@@ -1,3 +1,11 @@
++2018-04-04  Eric Christopher  <echristo@gmail.com>
++
++	Apply from master:
++        2017-11-08  Kyle Butt  <iteratee@google.com>
++
++        * object.cc (do_find_special_sections): Fix a thinko with memmem return
++        values and check for !=	NULL rather than == 0.
++
+ 2018-03-20  Sriraman Tallam  <tmsriram@google.com>
+ 
+ 	Apply from master:
+diff --git a/gold/object.cc b/gold/object.cc
+index 4110686ff3..013565103c 100644
+--- a/gold/object.cc
++++ b/gold/object.cc
+@@ -816,9 +816,9 @@ Sized_relobj_file<size, big_endian>::do_find_special_sections(
+   return (this->has_eh_frame_
+ 	  || (!parameters->options().relocatable()
+ 	      && parameters->options().gdb_index()
+-	      && (memmem(names, sd->section_names_size, "debug_info", 11) == 0
++	      && (memmem(names, sd->section_names_size, "debug_info", 11) != NULL
+ 		  || memmem(names, sd->section_names_size,
+-			    "debug_types", 12) == 0)));
++			    "debug_types", 12) != NULL)));
+ }
+ 
+ // Read the sections and symbols from an object file.
