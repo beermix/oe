@@ -48,7 +48,7 @@ case "$LINUX" in
     PKG_BUILD_PERF="no"
     ;;
   *)
-    PKG_VERSION="4.13"
+    PKG_VERSION="4.16.1"
     #PKG_SHA256="86baf1374ca003bdd9a43cae7f59cec02b455a6c38c3705aa46b2b68d91ed110"
     PKG_URL="https://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
     PKG_PATCH_DIRS="default"
@@ -145,7 +145,7 @@ pre_make_target() {
     # copy some extra firmware to linux tree
     mkdir -p $PKG_BUILD/external-firmware
       #cp -a $(get_build_dir kernel-firmware)/{rtl_bt,i915,intel,e100,rtl_nic} $PKG_BUILD/external-firmware
-      cp -a $(get_build_dir kernel-firmware)/i915 $PKG_BUILD/external-firmware
+      #cp -a $(get_build_dir kernel-firmware)/i915 $PKG_BUILD/external-firmware
 
     cp -a $(get_build_dir intel-ucode)/intel-ucode $PKG_BUILD/external-firmware
 

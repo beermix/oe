@@ -52,20 +52,24 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
-                           --disable-libmudflap \
-                           --disable-libatomic \
-                           --disable-libitm \
-                           --disable-libquadmath \
-                           --disable-libgomp \
+                           --disable-libssp \
                            --disable-libmpx \
-                           --disable-libssp"
+                           --disable-libsanitizer \
+                           --disable-libmudflap \
+                           --without-cuda-driver \
+                           --with-system-zlib=$TOOLCHAIN \
+                           --disable-werror \
+                           --with-tune=haswell"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
-                              --disable-libsanitizer \
                               --enable-cloog-backend=isl \
                               --disable-shared \
+                              --disable-libitm \
+                              --disable-libatomic \
+                              --disable-libgomp \
+                              --disable-libquadmath \
                               --disable-threads \
                               --without-headers \
                               --with-newlib \

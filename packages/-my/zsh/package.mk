@@ -1,5 +1,5 @@
 PKG_NAME="zsh"
-PKG_VERSION="5.4.2"
+PKG_VERSION="5.5"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain ncurses pcre readline libcap"
 PKG_SECTION="my"
