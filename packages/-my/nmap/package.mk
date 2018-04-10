@@ -1,10 +1,9 @@
 PKG_NAME="nmap"
-PKG_VERSION="7.60"
+PKG_VERSION="7.70"
 PKG_SITE="http://nmap.org/"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain ncurses libpcap libdnet pcre"
 PKG_SECTION="tools"
-
 
 pre_configure_target() {
   cd $PKG_BUILD
