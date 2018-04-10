@@ -62,8 +62,8 @@ make_host() {
 make_target() {
 
 #  unset CPPFLAGS
-#  unset CFLAGS
-#  unset CXXFLAGS
+  unset CFLAGS
+  unset CXXFLAGS
 #  unset LDFLAGS
 
   export CFLAGS="$CFLAGS --param l1-cache-line-size=64 --param l1-cache-size=32 --paraml2-cache-size=3072 -fno-unwind-tables -fno-asynchronous-unwind-tables -Wno-builtin-macro-redefined"
