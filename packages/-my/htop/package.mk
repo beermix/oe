@@ -1,8 +1,8 @@
 PKG_NAME="htop"
-PKG_VERSION="42c3a1f"
+PKG_VERSION="2.2.0"
 PKG_SITE="https://github.com/hishamhm/htop"
 PKG_URL="https://github.com/hishamhm/htop/archive/${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_TARGET="toolchain ncurses libpciaccess libxml2 udevil hwloc"
+PKG_DEPENDS_TARGET="toolchain ncurses libpciaccess libxml2 hwloc"
 PKG_SECTION="debug/tools"
 PKG_TOOLCHAIN="autotools"
 
