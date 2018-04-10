@@ -58,7 +58,9 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libquadmath \
                            --disable-libgomp \
                            --disable-libmpx \
-                           --disable-libssp"
+                           --disable-libssp \
+                           --with-system-zlib=$TOOLCHAIN \
+                           --with-tune=haswell"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
@@ -90,6 +92,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          $GCC_OPTS"
 
 pre_configure_host() {
+  export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
 }
 
