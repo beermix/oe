@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="weston"
-PKG_VERSION="3.0.0"
-PKG_SHA256="cde1d55e8dd70c3cbb3d1ec72f60e60000041579caa1d6a262bd9c35e93723a5"
+PKG_VERSION="4.0.0"
+PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="https://wayland.freedesktop.org/"

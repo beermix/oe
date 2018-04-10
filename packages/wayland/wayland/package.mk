@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="wayland"
-PKG_VERSION="1.14.0"
-PKG_SHA256="ed80cabc0961a759a42092e2c39aabfc1ec9a13c86c98bbe2b812f008da27ab8"
+PKG_VERSION="1.15.0"
+PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="https://wayland.freedesktop.org/"
