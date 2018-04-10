@@ -1,5 +1,5 @@
 PKG_NAME="x11vnc"
-PKG_VERSION="0.9.15"
+PKG_VERSION="0.9.14"
 PKG_SITE="http://www.karlrunge.com/x11vnc/"
 PKG_URL="http://x11vnc.sourceforge.net/dev/x11vnc-0.9.14-dev.tar.gz"
 PKG_URL="https://github.com/LibVNC/x11vnc/archive/${PKG_VERSION}.tar.gz"
@@ -39,6 +39,11 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static \
 			      --with-zlib \
 			      --without-gnutls \
 			      --without-client-tls"
+
+pre_build_target() {
+  mkdir -p $PKG_BUILD/.$TARGET_NAME
+    cp -RP $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME
+}
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/share
