@@ -27,6 +27,11 @@ PKG_SECTION="web"
 PKG_SHORTDESC="libmicrohttpd: a small webserver C library"
 PKG_LONGDESC="GNU libmicrohttpd is a small C library that is supposed to make it easy to run an HTTP server as part of another application."
 
+pre_configure_target() {
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os -Wall|"`
+  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-Os -Wall|"`
+}
+
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
                            --enable-static \
                            --disable-curl \
