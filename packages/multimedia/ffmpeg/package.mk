@@ -82,10 +82,6 @@ else
   FFMPEG_FPU="--disable-neon"
 fi
 
-if [ "$DISPLAYSERVER" = "x11" ]; then
-  FFMPEG_X11GRAB="--enable-indev=x11grab_xcb"
-fi
-
 pre_configure_target() {
   cd $PKG_BUILD
   rm -rf .$TARGET_NAME
@@ -93,6 +89,9 @@ pre_configure_target() {
   if [ "$KODIPLAYER_DRIVER" = "bcm2835-driver" ]; then
     CFLAGS="-I$SYSROOT_PREFIX/usr/include/interface/vcos/pthreads -I$SYSROOT_PREFIX/usr/include/interface/vmcs_host/linux $CFLAGS"
     FFMPEG_LIBS="-lbcm_host -lvcos -lvchiq_arm -lmmal -lmmal_core -lmmal_util -lvcsm"
+    FFMPEG_RPI="--enable-rpi"
+  else
+    FFMPEG_RPI="--disable-rpi"
   fi
 }
 
@@ -153,6 +152,8 @@ configure_target() {
               --disable-crystalhd \
               $FFMPEG_VAAPI \
               $FFMPEG_VDPAU \
+              $FFMPEG_RPI \
+              $FFMPEG_RKMPP \
               --disable-dxva2 \
               --enable-runtime-cpudetect \
               $FFMPEG_TABLES \
@@ -180,6 +181,7 @@ configure_target() {
               --disable-avisynth \
               --enable-bzlib \
               --disable-lzma \
+              --disable-alsa \
               --disable-frei0r \
               --disable-libopencore-amrnb \
               --disable-libopencore-amrwb \
@@ -188,10 +190,8 @@ configure_target() {
               --disable-libfreetype \
               --disable-libgsm \
               --disable-libmp3lame \
-              --disable-libnut \
               --disable-libopenjpeg \
               --disable-librtmp \
-              --disable-libschroedinger \
               --enable-libspeex \
               --disable-libtheora \
               --disable-libvo-amrwbenc \
