@@ -1,0 +1,13 @@
+diff --git a/config/optimize b/config/optimize
+index 6ca20930d..6e1557ce2 100755
+--- a/config/optimize
++++ b/config/optimize
+@@ -12,7 +12,7 @@ else
+   TARGET_LDFLAGS="$TARGET_LDFLAGS"
+ fi
+ 
+-NINJA_OPTS=""
++NINJA_OPTS="-v"
+ 
+ TARGET_CPPFLAGS=""
+ TARGET_CFLAGS="$TARGET_CFLAGS $GCC_OPTIM $PROJECT_CFLAGS -fdiagnostics-color=always"
