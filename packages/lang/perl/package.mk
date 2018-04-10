@@ -1,9 +1,9 @@
 PKG_NAME="perl"
-PKG_VERSION="5.27.9"
+PKG_VERSION="5.27.10"
 PKG_SITE="http://www.cpan.org/src/5.0/?C=M;O=D"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 #PKG_URL="http://www.cpan.org/src/5.0/perl-${PKG_VERSION}.tar.xz"
-PKG_DEPENDS_TARGET="toolchain openssl bzip2 gdbm"
+PKG_DEPENDS_TARGET="toolchain openssl bzip2 gdbm db"
 PKG_SECTION="lang"
 PKG_TOOLCHAIN="configure"
 
