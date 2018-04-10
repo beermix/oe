@@ -10,7 +10,7 @@ PKG_DEPENDS_TARGET="toolchain yasm:host zlib"
 PKG_SECTION="security"
 PKG_SHORTDESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"
 PKG_LONGDESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"
-PKG_BUILD_FLAGS="-parallel"
+#PKG_BUILD_FLAGS="-parallel"
 #PKG_BUILD_FLAGS="+pic"
 
 PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
