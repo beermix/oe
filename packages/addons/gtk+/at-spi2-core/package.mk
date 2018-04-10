@@ -30,4 +30,4 @@ PKG_LONGDESC="AT-SPI technologies are currently migrating to D-Bus for their tra
 PKG_TOOLCHAIN="configure"
 PKG_BUILD_FLAGS="+pic"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared"
+PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --with-gnu-ld"
