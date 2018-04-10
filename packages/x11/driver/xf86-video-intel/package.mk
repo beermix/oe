@@ -17,7 +17,7 @@
  ################################################################################  libXcursor libSM libXtst libXvMC
 
 PKG_NAME="xf86-video-intel"
-PKG_VERSION="af36a4a"
+PKG_VERSION="84eaaba"
 PKG_ARCH="x86_64"
 PKG_LICENSE="OSS"
 PKG_SITE="https://cgit.freedesktop.org/xorg/driver/xf86-video-intel/log/"
@@ -50,7 +50,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-backlight \
                            --disable-tear-free \
                            --disable-create2 \
                            --disable-async-swap \
-                           --with-default-dri=2 \
+                           --with-default-dri=3 \
                            --with-xorg-module-dir=$XORG_PATH_MODULES"
 
 post_makeinstall_target() {
