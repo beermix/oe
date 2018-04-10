@@ -61,14 +61,14 @@ make_host() {
 
 make_target() {
 
-  unset CPPFLAGS
-  unset CFLAGS
-  unset CXXFLAGS
-  unset LDFLAGS
+#  unset CPPFLAGS
+#  unset CFLAGS
+#  unset CXXFLAGS
+#  unset LDFLAGS
 
-  export CFLAGS="$CFLAGS --param=l1-cache-line-size=64 --param=l1-cache-size=32 --param=l2-cache-size=3072 -fno-unwind-tables -fno-asynchronous-unwind-tables -Wno-builtin-macro-redefined"
+  export CFLAGS="$CFLAGS --param l1-cache-line-size=64 --param l1-cache-size=32 --paraml2-cache-size=3072 -fno-unwind-tables -fno-asynchronous-unwind-tables -Wno-builtin-macro-redefined"
 
-  export CXXFLAGS="$CXXFLAGS --param=l1-cache-line-size=64 --param=l1-cache-size=32 --param=l2-cache-size=3072 -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables -Wno-builtin-macro-redefined"
+  export CXXFLAGS="$CXXFLAGS --paraml1-cache-line-size=64 --paraml1-cache-size=32 --paraml2-cache-size=3072 -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables -Wno-builtin-macro-redefined"
 
   export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES -D__DATE__= -D__TIME__= -D__TIMESTAMP__="
 
@@ -126,7 +126,7 @@ make_target() {
     [fontconfig]=fontconfig
     [freetype]=freetype2
     [harfbuzz-ng]=harfbuzz
-    #[icu]=icu
+    [icu]=icu
     [libdrm]=
     [libjpeg]=libjpeg
     #[libpng]=libpng            # https://crbug.com/752403#c10
@@ -163,14 +163,14 @@ make_target() {
   ./third_party/libaddressinput/chromium/tools/update-strings.py
   ./out/Release/gn gen out/Release -s --no-clean --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python2
 
-  ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox widevinecdmadapter
+  ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -10 -C out/Release chrome chrome_sandbox widevinecdmadapter
 }
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -P  $PKG_BUILD/out/Release/chrome $ADDON_BUILD/$PKG_ADDON_ID/bin/chromium.bin
   cp -P  $PKG_BUILD/out/Release/chrome_sandbox $ADDON_BUILD/$PKG_ADDON_ID/bin/chrome-sandbox
-  cp -P  $PKG_BUILD/out/Release/{*.pak,*.dat,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
+  cp -P  $PKG_BUILD/out/Release/{*.pak,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -PR $PKG_BUILD/out/Release/locales $ADDON_BUILD/$PKG_ADDON_ID/bin/
   cp -PR $PKG_BUILD/out/Release/gen/content/content_resources.pak $ADDON_BUILD/$PKG_ADDON_ID/bin/
 

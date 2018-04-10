@@ -35,6 +35,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-doc-cross-references \
                            --disable-gtk-doc \
                            --disable-man \
                            --enable-debug=no \
+                           --enable-introspection=no \
                            --enable-silent-rules"
 
 if [ "$DISPLAYSERVER" = "x11" ] ; then

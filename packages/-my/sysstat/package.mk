@@ -1,5 +1,5 @@
 PKG_NAME="sysstat"
-PKG_VERSION="11.7.1"
+PKG_VERSION="11.7.3"
 PKG_URL="http://pagesperso-orange.fr/sebastien.godard/sysstat-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain util-linux ncurses lm_sensors"
 PKG_SECTION="devel"
