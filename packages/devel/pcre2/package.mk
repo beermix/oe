@@ -7,12 +7,12 @@ PKG_DEPENDS_TARGET="toolchain zlib"
 PKG_SECTION="devel"
 PKG_USE_CMAKE="no"
 PKG_TOOLCHAIN="configure"
+PKG_BUILD_FLAGS="+pic"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-unicode-properties \
 			      --enable-jit \
 			      --enable-utf8 \
 			      --enable-cpp \
-			      --with-pic \
 			      --enable-pcre2-16 \
 			      --disable-shared \
 			      --with-gnu-ld"
