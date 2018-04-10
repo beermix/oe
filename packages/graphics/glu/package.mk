@@ -28,8 +28,6 @@ PKG_SECTION="graphics"
 PKG_SHORTDESC="glu: The OpenGL utility library"
 PKG_LONGDESC="libglu is the The OpenGL utility library"
 PKG_TOOLCHAIN="autotools"
-LTO_SUPPORT="yes"
-GOLD_SUPPORT="yes"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
             --disable-debug \
