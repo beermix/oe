@@ -30,10 +30,10 @@ PKG_SHORTDESC="glib: C support library"
 PKG_LONGDESC="GLib is a library which includes support routines for C such as lists, trees, hashes, memory allocation, and many other things."
 PKG_TOOLCHAIN="autotools"
 
-#pre_configure_target() {
-#  unset LDFLAGS
-#  export LDFLAGS="-Wl,-O1,--as-needed"
-#}
+pre_configure_target() {
+  unset LDFLAGS
+  export LDFLAGS="-Wl,-O1,--as-needed"
+}
 
 PKG_CONFIGURE_OPTS_HOST="--disable-shared --with-pic --with-pcre=internal --enable-libmount=no --with-python=python"
 
