@@ -7,8 +7,6 @@ PKG_DEPENDS_TARGET="toolchain db miniupnpc libdaemon boost libevent"
 PKG_SECTION="web"
 PKG_TOOLCHAIN="autotools"
 
-#CONCURRENCY_MAKE_LEVEL=3
-
 PKG_CONFIGURE_OPTS_TARGET="--enable-malloc0returnsnull \
 			      --with-boost-libdir=$SYSROOT_PREFIX/usr/lib \
 			      --with-miniupnpc \
