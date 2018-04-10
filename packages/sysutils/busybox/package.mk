@@ -14,7 +14,7 @@
 # grep icu # coreutils findutils sed grep psmisc sysstat gawk
 #  You should have received a copy of the GNU General Public License
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################ hdparm parted
+################################################################################
 
 PKG_NAME="busybox"
 PKG_VERSION="1.28.3"
@@ -24,7 +24,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://www.busybox.net"
 PKG_URL="http://busybox.net/downloads/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_HOST=""
-PKG_DEPENDS_TARGET="toolchain busybox:host dosfstools e2fsprogs zip unzip unrar pcre bzip2 pciutils usbutils procps-ng gptfdisk grep less bash findutils"
+PKG_DEPENDS_TARGET="toolchain busybox:host hdparm dosfstools e2fsprogs zip unzip pciutils usbutils parted procps-ng gptfdisk grep less bash findutils"
 PKG_DEPENDS_INIT="toolchain"
 PKG_SECTION="system"
 PKG_SHORTDESC="BusyBox: The Swiss Army Knife of Embedded Linux"
