@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="mono"
-PKG_VERSION="5.10.1.38"
-PKG_REV="107"
+PKG_VERSION="5.10.1.16"
+PKG_REV="110"
 PKG_ARCH="any"
 PKG_LICENSE="MIT"
 PKG_SITE="http://www.mono-project.com"
@@ -30,6 +30,7 @@ PKG_SECTION="tools"
 PKG_SHORTDESC="Mono: a cross platform, open source .NET framework"
 PKG_LONGDESC="Mono ($PKG_VERSION) is a software platform designed to allow developers to easily create cross platform applications part of the .NET Foundation"
 PKG_TOOLCHAIN="autotools"
+PKG_BUILD_FLAGS="-lto"
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Mono"
@@ -59,7 +60,6 @@ makeinstall_host() {
 
 configure_target() {
   cp -PR ../* .
-  strip_lto
   ./configure $options --host=$TARGET_NAME \
                        --disable-mcs-build
 }
