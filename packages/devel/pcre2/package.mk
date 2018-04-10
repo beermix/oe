@@ -14,7 +14,8 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-unicode-properties \
 			      --enable-cpp \
 			      --with-pic \
 			      --enable-pcre2-16 \
-			      --disable-shared"
+			      --disable-shared \
+			      --with-gnu-ld"
 
 PKG_CONFIGURE_OPTS_HOST="--prefix=$TOOLCHAIN $PKG_CONFIGURE_OPTS_TARGET"
 
