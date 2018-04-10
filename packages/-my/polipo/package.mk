@@ -5,7 +5,6 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="service/proxy"
 
 
-
 pre_configure_target() {
   export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3|g"`
 }
