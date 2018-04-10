@@ -204,7 +204,7 @@ configure_target() {
               --enable-asm \
               --disable-altivec \
               $FFMPEG_FPU \
-              --enable-yasm \
+              --enable-x86asm \
               --disable-symver
 }
 
