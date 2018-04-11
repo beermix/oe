@@ -4,7 +4,7 @@
 ################################################################################
 
 PKG_NAME="skin.xonfluence"
-PKG_VERSION="11af9da"
+PKG_VERSION="ebb0130"
 PKG_SITE="https://github.com/Helly1206/skin.xonfluence"
 PKG_URL="https://github.com/Helly1206/skin.xonfluence/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain kodi"
