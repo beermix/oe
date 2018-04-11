@@ -54,7 +54,3 @@ make_host() {
 	  tools/wmc \
 	  tools/wrc
 }
-
-makeinstall_host() {
- :
-}
