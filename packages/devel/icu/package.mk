@@ -37,19 +37,13 @@ PKG_BUILD_FLAGS="+pic:host +pic"
 
 PKG_CONFIGURE_SCRIPT="source/configure"
 
-PKG_CONFIGURE_OPTS_HOST="--disable-debug \
-			    --enable-shared \
-			    --enable-static \
-			    --disable-extras"
+PKG_CONFIGURE_OPTS_HOST="--disable-shared --enable-static"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
-			      --enable-shared \
-			      --enable-static \
-			      --disable-tools \
-			      --with-cross-build=$PKG_BUILD/.$HOST_NAME"
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static --with-cross-build=$PKG_BUILD/.$HOST_NAME"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
   rm -rf $INSTALL/usr/share
   rm -rf $INSTALL/usr/lib/icu
+  rm -rf $INSTALL
 }
