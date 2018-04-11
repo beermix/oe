@@ -31,18 +31,37 @@ PKG_LONGDESC="International Components for Unicode library"
 PKG_BUILD_FLAGS="+pic:host +pic"
 
 post_unpack() {
-  sed -i 's/xlocale/locale/' $PKG_BUILD/source/i18n/digitlst.cpp
-#  cp -r $PKG_BUILD/source/* $PKG_BUILD/
+#  sed -i 's/xlocale/locale/' $PKG_BUILD/source/i18n/digitlst.cpp
+  cp -r $PKG_BUILD/source/* $PKG_BUILD/
 }
 
 PKG_CONFIGURE_SCRIPT="source/configure"
 
-PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
-			   
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
+PKG_CONFIGURE_OPTS_HOST="--disable-debug \
+			    --enable-release \
+			    --enable-shared \
+			    --enable-static \
+			    --enable-draft \
+			    --enable-renaming \
+			    --disable-tracing \
+			    --disable-extras \
+			    --enable-dyload"
+
+PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
+			      --enable-release \
+			      --enable-shared \
 			      --enable-static \
+			      --enable-draft \
+			      --enable-renaming \
+			      --disable-tracing \
+			      --disable-extras \
+			      --enable-dyload \
+			      --disable-tools \
+			      --disable-tests \
+			      --disable-samples \
 			      --with-cross-build=$PKG_BUILD/.$HOST_NAME"
 
 post_makeinstall_target() {
-  rm -rf $INSTALL
+  rm -rf $INSTALL/usr/bin
+    rm -rf $INSTALL/usr/share
 }
