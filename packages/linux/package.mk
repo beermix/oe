@@ -53,7 +53,7 @@ case "$LINUX" in
     PKG_SHA256=""
     PKG_URL="https://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
     PKG_PATCH_DIRS="default"
-    PKG_BUILD_PERF="yes"
+    PKG_BUILD_PERF="no"
     PKG_BUILD_POWER="no"
     ;;
 esac
