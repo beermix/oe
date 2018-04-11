@@ -6,8 +6,6 @@ PKG_DEPENDS_TARGET="toolchain ragel:host alsa xrandr libXrender libXcursor libdr
 PKG_SECTION="multimedia"
 PKG_TOOLCHAIN="cmake-make"
 PKG_BUILD_FLAGS="-hardening"
-LTO_SUPPORT="yes"
-GOLD_SUPPORT="yes"
 
 PKG_CMAKE_OPTS_TARGET="-DWITH_LIBV4L2=0 \
 			  -DWITH_JACK=0 \
