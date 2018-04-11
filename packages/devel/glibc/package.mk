@@ -32,7 +32,7 @@ PKG_LONGDESC="The Glibc package contains the main C library. This library provid
 PKG_BUILD_FLAGS="-lto -gold -hardening"
 
 PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
-                           ac_cv_path_PERL= \
+                           ac_cv_path_PERL=no \
                            ac_cv_prog_MAKEINFO= \
                            --libexecdir=/usr/lib/glibc \
                            --cache-file=config.cache \
@@ -56,7 +56,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --enable-lock-elision \
                            --disable-timezone-tools"
 
-if [ "$DEBUG" = yes ]; then
+if build_with_debug; then
   PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET --enable-debug"
 else
   PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET --disable-debug"
@@ -110,7 +110,7 @@ pre_configure_target() {
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-ffast-math||g"`
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Ofast|-O2|g"`
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-O.|-O2|g"`
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--as-needed||g"`
+
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed||"`
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now||"`
 
@@ -138,7 +138,7 @@ echo "rootsbindir=/usr/bin" >> configparms
 
 post_makeinstall_target() {
 # xlocale.h was renamed - create symlink for compatibility
-#  ln -sf $SYSROOT_PREFIX/usr/include/bits/types/__locale_t.h $SYSROOT_PREFIX/usr/include/xlocale.h
+  ln -sf $SYSROOT_PREFIX/usr/include/bits/types/__locale_t.h $SYSROOT_PREFIX/usr/include/xlocale.h
 
 # symlink locale directory
   ln -sf /storage/.config/locale $INSTALL/usr/lib/locale

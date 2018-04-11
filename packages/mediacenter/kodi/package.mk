@@ -257,9 +257,9 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$TOOLCHAIN \
                        $KODI_BLURAY \
                        $KODI_PLAYER"
 
-pre_configure_target() {
-  export LIBS="$LIBS -lz -lterminfo"
-}
+#pre_configure_target() {
+#  export LIBS="$LIBS -lz -lterminfo"
+#}
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin/kodi
