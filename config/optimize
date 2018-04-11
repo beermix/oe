@@ -1,5 +1,5 @@
 #GCC_OPTIM="-O2 -pipe --param=l1-cache-line-size=64 --param=l1-cache-size=32 --param=l2-cache-size=3072"
-GCC_OPTIM="-O2 -pipe"
+GCC_OPTIM="-O2 -pipe -fno-caller-saves -fno-plt"
 LD_OPTIM="-Wl,--as-needed"
 
 if [ "${BUILD_WITH_DEBUG}" = "yes" ]; then
