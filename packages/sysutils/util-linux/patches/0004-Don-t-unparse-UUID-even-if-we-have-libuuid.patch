@@ -1,0 +1,40 @@
+From b9541d80548a74723eec035b8d00bbbddfebe0d5 Mon Sep 17 00:00:00 2001
+From: Auke Kok <auke-jan.h.kok@intel.com>
+Date: Mon, 2 Apr 2018 16:32:34 -0700
+Subject: [PATCH 4/4] Don't unparse UUID, even if we have libuuid.
+
+---
+ libblkid/src/probe.c | 10 ----------
+ 1 file changed, 10 deletions(-)
+
+diff --git a/libblkid/src/probe.c b/libblkid/src/probe.c
+index 647ae41..9e12e70 100644
+--- a/libblkid/src/probe.c
++++ b/libblkid/src/probe.c
+@@ -1884,15 +1884,6 @@ struct blkid_prval *__blkid_probe_lookup_value(blkid_probe pr, const char *name)
+ }
+ 
+ 
+-/* converts DCE UUID (uuid[16]) to human readable string
+- * - the @len should be always 37 */
+-#ifdef HAVE_LIBUUID
+-void blkid_unparse_uuid(const unsigned char *uuid, char *str,
+-			size_t len __attribute__((__unused__)))
+-{
+-	uuid_unparse(uuid, str);
+-}
+-#else
+ void blkid_unparse_uuid(const unsigned char *uuid, char *str, size_t len)
+ {
+ 	snprintf(str, len,
+@@ -1903,7 +1894,6 @@ void blkid_unparse_uuid(const unsigned char *uuid, char *str, size_t len)
+ 		uuid[8], uuid[9],
+ 		uuid[10], uuid[11], uuid[12], uuid[13], uuid[14],uuid[15]);
+ }
+-#endif
+ 
+ /* like uuid_is_null() from libuuid, but works with arbitrary size of UUID */
+ int blkid_uuid_is_empty(const unsigned char *buf, size_t len)
+-- 
+2.16.3
+

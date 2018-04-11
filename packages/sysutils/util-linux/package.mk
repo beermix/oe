@@ -60,7 +60,13 @@ UTILLINUX_CONFIG_DEFAULT="--disable-gtk-doc \
                           --without-systemd \
                           --without-smack \
                           --without-python \
-                          --without-systemdsystemunitdir"
+                          --without-systemdsystemunitdir \
+                          --enable-socket-activation \
+                          --disable-kill \
+                          --disable-chfn-chsh \
+                          --disable-nologin \
+                          --enable-libmount-force-mountinfo \
+                          --disable-plymouth_support"
 
 PKG_CONFIGURE_OPTS_TARGET="$UTILLINUX_CONFIG_DEFAULT \
                            --enable-libuuid \
