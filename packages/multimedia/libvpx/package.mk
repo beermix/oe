@@ -27,7 +27,7 @@ PKG_DEPENDS_TARGET="toolchain yasm:host"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="WebM VP8/VP9 Codec SDK"
 PKG_LONGDESC="The WebM Project is dedicated to developing a high-quality, open video format for the web that's freely available to everyone."
-PKG_BUILD_FLAGS="-lto -gold -hardening"
+PKG_BUILD_FLAGS="-lto -gold"
 
 configure_target() {
 
@@ -43,20 +43,26 @@ configure_target() {
       ;;
   esac
 
+  CFLAGS=`echo $CFLAGS | sed -e "s|-D_FORTIFY_SOURCE=2||"`
+  CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=2||"`
+
   $PKG_CONFIGURE_SCRIPT --prefix=/usr \
                         --extra-cflags="$CFLAGS" \
+                        --extra-cxxflags="$CXXFLAGS" \
                         --as=yasm \
                         --target=$PKG_TARGET_NAME_LIBVPX \
                         --disable-docs \
-                        --disable-examples \
-                        --disable-shared \
-                        --disable-tools \
-                        --disable-unit-tests \
-                        --disable-vp8-decoder \
-                        --disable-vp9-decoder \
-                        --enable-ccache \
+                        --enable-runtime-cpu-detect \
+                        --enable-shared \
                         --enable-pic \
-                        --enable-static \
+                        --disable-install-docs \
+                        --disable-install-srcs \
                         --enable-vp8 \
-                        --enable-vp9
+                        --enable-postproc \
+                        --enable-vp9 \
+                        --enable-vp9-highbitdepth \
+                        --enable-experimental \
+                        --enable-spatial-svc \
+                        --disable-unit-tests
+ 
 }
