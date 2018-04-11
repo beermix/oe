@@ -19,8 +19,6 @@ fi
 # export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime
 # export CCACHE_COMPILERCHECK=mtime
 
-
-
 # determines DISTRO, if not forced by user
 # default is LibreELEC
 if [ -z "$DISTRO" ]; then
