@@ -6,7 +6,7 @@ PKG_DEPENDS_TARGET="toolchain zlib"
 PKG_DEPENDS_HOST="zlib:host"
 PKG_SECTION="devel"
 PKG_SHORTDESC="ncurses: The ncurses (new curses) library"
-PKG_BUILD_FLAGS="-lto +pic"
+PKG_BUILD_FLAGS="-lto +pic:host +pic"
 
 #pre_configure_target() {
 #  export CPPFLAGS="$CPPFLAGS -D_GNU_SOURCE"
@@ -30,6 +30,23 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-overwrite \
 			      --enable-widec \
 			      --with-pkg-config-libdir=/usr/lib/pkgconfig \
 			      --with-build-cppflags=-D_GNU_SOURCE"
+			      
+PKG_CONFIGURE_OPTS_HOST="--enable-overwrite \
+			    --disable-termcap \
+			    --disable-warnings \
+			    --without-ncursesw \
+			    --disable-rpath \
+			    --without-ada \
+			    --without-tests \
+			    --without-debug \
+			    --without-manpages \
+			    --without-shared \
+			    --enable-static \
+			    --without-progs \
+			    --enable-pc-files \
+			    --enable-widec \
+			    --with-pkg-config-libdir=$TOOLCHAIN/lib/pkgconfig \
+			    --with-build-cppflags=-D_GNU_SOURCE"
 
 post_makeinstall_target() {
   cp misc/ncurses-config $TOOLCHAIN/bin
@@ -62,9 +79,4 @@ post_makeinstall_target() {
   ln -s ticw.so $INSTALL/usr/lib/tic.so
   
   rm -rf $INSTALL/usr/bin/ncurses*-config
-  #rm -rf $INSTALL/usr/lib/terminfo
-  #rm -rf $INSTALL/usr/lib/libcurses.so
-  #rm -rf $SYSROOT_PREFIX/usr/lib/libncurses.so
-  #rm -rf $INSTALL/usr/lib/libtinfo.so
-  #rm -rf $SYSROOT_PREFIX/usr/lib/libtinfo.so
 }

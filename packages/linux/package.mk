@@ -30,6 +30,7 @@ PKG_LONGDESC="This package contains a precompiled kernel image and the modules."
 PKG_IS_KERNEL_PKG="yes"
 
 PKG_PATCH_DIRS="$LINUX"
+
 case "$LINUX" in
   amlogic-3.10)
     PKG_VERSION="02fdb27efcb2940b819fec90d9fb333a57ab9900"
@@ -37,7 +38,7 @@ case "$LINUX" in
     PKG_URL="https://github.com/LibreELEC/linux-amlogic/archive/$PKG_VERSION.tar.gz"
     PKG_SOURCE_DIR="linux-amlogic-$PKG_VERSION"
     PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET aml-dtbtools:host"
-    PKG_BUILD_PERF="yes"
+    PKG_BUILD_PERF="no"
     ;;
   zen)
     PKG_VERSION="8cdd36c"
@@ -52,8 +53,8 @@ case "$LINUX" in
     #PKG_SHA256="86baf1374ca003bdd9a43cae7f59cec02b455a6c38c3705aa46b2b68d91ed110"
     PKG_URL="https://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
     PKG_PATCH_DIRS="default"
-    PKG_BUILD_PERF="no"
-    PKG_BUILD_POWER="no"
+    PKG_BUILD_PERF="yes"
+    PKG_BUILD_POWER="yes"
     ;;
 esac
 
@@ -144,10 +145,9 @@ pre_make_target() {
   if [ "$TARGET_ARCH" = "x86_64" ]; then
     # copy some extra firmware to linux tree
     mkdir -p $PKG_BUILD/external-firmware
-      #cp -a $(get_build_dir kernel-firmware)/{rtl_bt,i915,intel,e100,rtl_nic} $PKG_BUILD/external-firmware
       cp -a $(get_build_dir kernel-firmware)/i915 $PKG_BUILD/external-firmware
-      
-      cp -a $(get_build_dir intel-ucode)/intel-ucode $PKG_BUILD/external-firmware
+
+    cp -a $(get_build_dir intel-ucode)/intel-ucode $PKG_BUILD/external-firmware
 
     FW_LIST="$(find $PKG_BUILD/external-firmware \( -type f -o -type l \) \( -iname '*.bin' -o -iname '*.fw' -o -path '*/intel-ucode/*' \) | sed 's|.*external-firmware/||' | sort | xargs)"
     sed -i "s|CONFIG_EXTRA_FIRMWARE=.*|CONFIG_EXTRA_FIRMWARE=\"${FW_LIST}\"|" $PKG_BUILD/.config
@@ -156,9 +156,9 @@ pre_make_target() {
   make oldconfig
 
   # regdb (backward compatability with pre-4.15 kernels)
-  if grep -q ^CONFIG_CFG80211_INTERNAL_REGDB= $PKG_BUILD/.config ; then
+  #
     cp $(get_build_dir wireless-regdb)/db.txt $PKG_BUILD/net/wireless/db.txt
-  fi
+  #fi
 }
 
 make_target() {
@@ -192,7 +192,7 @@ make_target() {
       NO_LIBAUDIT=1 \
       NO_LZMA=1 \
       NO_SDT=1 \
-      LDFLAGS="$LDFLAGS -lunwind -ldw -ldwfl -lebl -lelf -ldl -lz" \
+      LDFLAGS="$LDFLAGS -ldw -ldwfl -lebl -lelf -ldl -lz" \
       EXTRA_PERFLIBS="-lebl" \
       CROSS_COMPILE="$TARGET_PREFIX" \
       JOBS="$CONCURRENCY_MAKE_LEVEL" \
@@ -217,10 +217,6 @@ make_target() {
       cd ../../thermal/tmon
       make CC="$CC" PKG_CONFIG_PATH="$TOOLCHAIN/bin/pkg-config" JOBS="$CONCURRENCY_MAKE_LEVEL"
       cp tmon $INSTALL/usr/bin
-        
-#      cd ../../iio
-#      make CC="$CC" JOBS="$CONCURRENCY_MAKE_LEVEL"
-#      cp iio $INSTALL/usr/bin
     )
   fi
 
@@ -273,6 +269,7 @@ makeinstall_target() {
     fi
   elif [ "$BOOTLOADER" = "bcm2835-bootloader" ]; then
     mkdir -p $INSTALL/usr/share/bootloader/overlays
+
     # install platform dtbs, but remove upstream kernel dtbs (i.e. without downstream
     # drivers and decent USB support) as these are not required by LibreELEC
     cp -p arch/$TARGET_KERNEL_ARCH/boot/dts/*.dtb $INSTALL/usr/share/bootloader
@@ -319,7 +316,7 @@ post_install() {
     ln -sf /$(get_full_firmware_dir)/ $INSTALL/etc/firmware
 
   # regdb and signature is now loaded as firmware by 4.15+
-    if grep -q ^CONFIG_CFG80211_REQUIRE_SIGNED_REGDB= $PKG_BUILD/.config; then
-      cp $(get_build_dir wireless-regdb)/regulatory.db{,.p7s} $INSTALL/$(get_full_firmware_dir)
-    fi
+  #if grep -q ^CONFIG_CFG80211_REQUIRE_SIGNED_REGDB= $PKG_BUILD/.config; then
+  #cp $(get_build_dir wireless-regdb)/regulatory.db{,.p7s} $INSTALL/$(get_full_firmware_dir)
+  #fi
 }
