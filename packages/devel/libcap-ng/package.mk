@@ -5,5 +5,6 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="devel"
 PKG_TOOLCHAIN="configure"
 
-PKG_CONFIGURE_OPTS_TARGET="ac_cv_prog_swig_found=no --with-python=no"
+PKG_CONFIGURE_OPTS_TARGET="ac_cv_prog_swig_found=no --with-python=no --disable-shared --enable-static"
 PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
+PKG_CONFIGURE_OPTS_INIT="$PKG_CONFIGURE_OPTS_TARGET"
