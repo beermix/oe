@@ -29,7 +29,7 @@ PKG_SECTION="x11/xserver"
 PKG_SHORTDESC="xorg-server: The Xorg X server"
 PKG_LONGDESC="Xorg is a full featured X server that was originally designed for UNIX and UNIX-like operating systems running on Intel x86 hardware."
 PKG_TOOLCHAIN="autotools"
-#PKG_BUILD_FLAGS="-hardening"
+PKG_BUILD_FLAGS="-hardening"
 
 get_graphicdrivers
 
@@ -139,8 +139,8 @@ pre_configure_target() {
   CFLAGS=`echo $CFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|"`
   LDFLAGS=`echo $LDFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|"`
   
-  CFLAGS=`echo $CFLAGS | sed -e "s|-fno-plt||"`
-  LDFLAGS=`echo $LDFLAGS | sed -e "s|,-z,relro,-z,now||"`
+#  CFLAGS=`echo $CFLAGS | sed -e "s|-fno-plt||"`
+#  LDFLAGS=`echo $LDFLAGS | sed -e "s|,-z,relro,-z,now||"`
 }
 
 post_makeinstall_target() {
