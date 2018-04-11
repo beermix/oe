@@ -1,0 +1,29 @@
+commit ac72624e9c00ba4b9ce7db93ba125a6b03ee6b77
+Author: Marcos Paulo de Souza <marcos.souza.org@gmail.com>
+Date:   Thu Jan 4 20:24:55 2018 -0200
+
+    lib/veth.c: Disassociate link name of peer name
+
+    Based in the function documentation, peer name could be set regardless
+    of the link name being informed of not. These parameters should be
+    checked independently.
+
+    Signed-off-by: Marcos Paulo de Souza <marcos.souza.org@gmail.com>
+
+    https://github.com/thom311/libnl/pull/162
+
+--- a/lib/route/link/veth.c
++++ b/lib/route/link/veth.c
+@@ -282,10 +282,10 @@ int rtnl_link_veth_add(struct nl_sock *s
+ 		return -NLE_NOMEM;
+ 	peer = link->l_info;
+ 
+-	if (name && peer_name) {
++	if (name)
+ 		rtnl_link_set_name(link, name);
++	if (peer_name)
+ 		rtnl_link_set_name(peer, peer_name);
+-	}
+ 
+ 	rtnl_link_set_ns_pid(peer, pid);
+ 	err = rtnl_link_add(sock, link, NLM_F_CREATE | NLM_F_EXCL);

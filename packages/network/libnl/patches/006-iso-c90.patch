@@ -1,0 +1,145 @@
+commit 38baa675cf738df26eac4423a15950d1d0950ca7
+Author: Thomas Haller <thaller@redhat.com>
+Date:   Tue Jan 16 06:45:23 2018 +0100
+
+    all: declare all variables at the beginning of scope (-Wdeclaration-after-statement)
+
+    Avoid gcc warning:
+
+      error: ISO C90 forbids mixed declarations and code [-Werror=declaration-after-statement]
+
+--- a/lib/netfilter/exp.c
++++ b/lib/netfilter/exp.c
+@@ -352,10 +352,11 @@ static int nfnl_exp_build_tuple(struct n
+ 	struct nlattr *tuple, *ip, *proto;
+ 	struct nl_addr *addr;
+ 	int family;
++	int type;
+ 
+ 	family = nfnl_exp_get_family(exp);
+ 
+-	int type = exp_get_tuple_attr(cta);
++	type = exp_get_tuple_attr(cta);
+ 
+ 	if (cta == CTA_EXPECT_NAT)
+ 		tuple = nla_nest_start(msg, CTA_EXPECT_NAT_TUPLE);
+--- a/lib/route/qdisc/netem.c
++++ b/lib/route/qdisc/netem.c
+@@ -215,6 +215,10 @@ static int netem_msg_fill_raw(struct rtn
+ 	unsigned char set_correlation = 0, set_reorder = 0;
+ 	unsigned char set_corrupt = 0, set_dist = 0;
+ 
++	struct nlattr* head;
++	struct nlattr* tail;
++	int old_len;
++
+ 	if (!netem)
+ 		BUG();
+ 
+@@ -319,13 +323,13 @@ static int netem_msg_fill_raw(struct rtn
+ 	 * remainder of the message. That's just the way that sch_netem expects it.
+ 	 * Maybe there's a more succinct way to do this at a higher level.
+ 	 */
+-	struct nlattr* head = (struct nlattr *)(NLMSG_DATA(msg->nm_nlh) +
+-	                      NLMSG_LENGTH(sizeof(struct tcmsg)) - NLMSG_ALIGNTO);
++	head = (struct nlattr *)(NLMSG_DATA(msg->nm_nlh) +
++	                         NLMSG_LENGTH(sizeof(struct tcmsg)) - NLMSG_ALIGNTO);
+ 
+-	struct nlattr* tail = (struct nlattr *)(((void *) (msg->nm_nlh)) +
+-	                      NLMSG_ALIGN(msg->nm_nlh->nlmsg_len));
++	tail = (struct nlattr *)(((void *) (msg->nm_nlh)) +
++	                         NLMSG_ALIGN(msg->nm_nlh->nlmsg_len));
+ 
+-	int old_len = head->nla_len;
++	old_len = head->nla_len;
+ 	head->nla_len = (void *)tail - (void *)head;
+ 	msg->nm_nlh->nlmsg_len += (head->nla_len - old_len);
+ 
+@@ -875,9 +879,6 @@ int rtnl_netem_get_delay_distribution(st
+ int rtnl_netem_set_delay_distribution(struct rtnl_qdisc *qdisc, const char *dist_type) {
+ 	struct rtnl_netem *netem;
+ 
+-	if (!(netem = rtnl_tc_data(TC_CAST(qdisc))))
+-		BUG();
+-
+ 	FILE *f;
+ 	int n = 0;
+ 	size_t i;
+@@ -885,6 +886,7 @@ int rtnl_netem_set_delay_distribution(st
+ 	char *line;
+ 	char name[NAME_MAX];
+ 	char dist_suffix[] = ".dist";
++	char *test_suffix;
+ 
+ 	/* Check several locations for the dist file */
+ 	char *test_path[] = {
+@@ -895,8 +897,12 @@ int rtnl_netem_set_delay_distribution(st
+ 		"/usr/local/lib/tc/",
+ 	};
+ 
++	if (!(netem = rtnl_tc_data(TC_CAST(qdisc))))
++		BUG();
++
+ 	/* If the given filename already ends in .dist, don't append it later */
+-	char *test_suffix = strstr(dist_type, dist_suffix);
++	test_suffix = strstr(dist_type, dist_suffix);
++
+ 	if (test_suffix != NULL && strlen(test_suffix) == 5)
+ 		strcpy(dist_suffix, "");
+ 
+--- a/tests/test-complex-HTB-with-hash-filters.c
++++ b/tests/test-complex-HTB-with-hash-filters.c
+@@ -517,6 +517,8 @@ int main() {
+ 
+     struct nl_cache *link_cache;
+     
++    uint32_t i;
++
+     if (!(sock = nl_socket_alloc())) {
+         printf("Unable to allocate netlink socket\n");
+         exit(1);
+@@ -579,7 +581,6 @@ int main() {
+      * each entry in hash table match a byte from IP address specified later by a hash key
+      */
+ 
+-    uint32_t i;
+     for (i = 1; i <= 0xf; i++) 
+ 	u32_add_ht(sock, link, 1, i, 256);
+ 
+--- a/tests/test-create-bridge.c
++++ b/tests/test-create-bridge.c
+@@ -31,6 +31,7 @@ int main(int argc, char *argv[])
+ 	struct rtnl_link *link;
+ 	struct nl_cache *link_cache;
+ 	struct nl_sock *sk;
++	struct rtnl_link *ltap;
+ 	int err;
+ 
+ 	sk = nl_socket_alloc();
+@@ -52,7 +53,7 @@ int main(int argc, char *argv[])
+ 	nl_cache_refill(sk, link_cache);
+ 
+ 	link = rtnl_link_get_by_name(link_cache, TEST_BRIDGE_NAME);
+-	struct rtnl_link *ltap = rtnl_link_get_by_name(link_cache, TEST_INTERFACE_NAME);
++	ltap = rtnl_link_get_by_name(link_cache, TEST_INTERFACE_NAME);
+ 	if (!ltap) {
+ 		fprintf(stderr, "You should create a tap interface before lunch this test (# tunctl -t %s)\n", TEST_INTERFACE_NAME);
+ 		return -1;
+--- a/tests/test-u32-filter-with-actions.c
++++ b/tests/test-u32-filter-with-actions.c
+@@ -243,6 +243,7 @@ int main(void)
+     int err;
+     struct nl_cache *link_cache;
+     struct rtnl_act *act, *act2;
++    uint32_t i;
+ 
+     if (!(sock = nl_socket_alloc())) {
+         printf("Unable to allocate netlink socket\n");
+@@ -290,7 +291,6 @@ int main(void)
+      * each entry in hash table match a byte from IP address specified later by a hash key
+      */
+ 
+-    uint32_t i;
+     for (i = 1; i <= 0xf; i++) 
+ 	u32_add_ht(sock, link, 1, i, 256);
+ 

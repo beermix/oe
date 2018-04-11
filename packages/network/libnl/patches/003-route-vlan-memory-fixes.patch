@@ -1,0 +1,134 @@
+commit be550df10993c89e9367a860d5060c632ed9afbf
+Author: Thomas Haller <thaller@redhat.com>
+Date:   Mon Oct 23 10:54:10 2017 +0200
+
+    route/vlan: add capability to indicate heap overflow fix in rtnl_link_vlan_set_egress_map()
+
+    Without this fix/capablity, adding more then 4 mappings in
+    rtnl_link_vlan_set_egress_map() overflows the heap.
+
+commit 7ec0fae0df54d4bff4a45bae9a18519e8c03fa89
+Author: Thomas Haller <thaller@redhat.com>
+Date:   Mon Oct 23 11:25:44 2017 +0200
+
+    route/vlan: grow buffer exponentially in rtnl_link_vlan_set_egress_map()
+
+    By a factor of 1.5 instead of 2, to value wasted storage overhead
+    higher then the number of operations.
+
+    Also, check for integer overflows.
+
+commit f9d68741065182f4c75a17426246f12a4aeb3c56
+Author: Thomas Haller <thaller@redhat.com>
+Date:   Mon Oct 23 11:35:32 2017 +0200
+
+    route/vlan: fix cloning vlan link in vlan_clone()
+
+    We need to copy the entire source struct over
+    from source to destination.
+
+    The only thing that needs special handling is
+    to deep-clone the vi_egress_qos buffer.
+
+    Fixes: a7469ce758fac3631df6ce72eb3f89150070e7f8
+
+commit 6dfb40acd9b0b421b587f26840dfc072211976c2
+Author: Sebastian Bixl <sebastianbixl@gmx.de>
+Date:   Sun Oct 15 22:34:01 2017 +0200
+
+    route/vlan: fix memory corruption in rtnl_link_vlan_set_egress_map
+
+    If you set more than four entries for the vlan egress map a memory
+    corruption occurs because the reallocation does not reserve memory
+    for more than four.
+
+    Fixes: a7469ce758fac3631df6ce72eb3f89150070e7f8
+
+    https://github.com/thom311/libnl/pull/155
+
+    [thaller@redhat.com: squashed commits and updated commit message]
+
+--- a/include/netlink/utils.h
++++ b/include/netlink/utils.h
+@@ -286,6 +286,14 @@ enum {
+ 	NL_CAPABILITY_VERSION_3_4_0 = 28,
+ #define NL_CAPABILITY_VERSION_3_4_0 NL_CAPABILITY_VERSION_3_4_0
+ 
++	/**
++	 * Fixed memory corruption in rtnl_link_vlan_set_egress_map(). Previously, if you tried
++	 * to add more then 4 mappings, a buffer overflow occured. Also fixed nl_object_clone()
++	 * for VLAN links.
++	 */
++	NL_CAPABILITY_ROUTE_FIX_VLAN_SET_EGRESS_MAP = 29,
++#define NL_CAPABILITY_ROUTE_FIX_VLAN_SET_EGRESS_MAP NL_CAPABILITY_ROUTE_FIX_VLAN_SET_EGRESS_MAP
++
+ 	__NL_CAPABILITY_MAX,
+ 	NL_CAPABILITY_MAX = (__NL_CAPABILITY_MAX - 1),
+ #define NL_CAPABILITY_MAX NL_CAPABILITY_MAX
+--- a/lib/route/link/vlan.c
++++ b/lib/route/link/vlan.c
+@@ -264,19 +264,28 @@ static int vlan_clone(struct rtnl_link *
+ {
+ 	struct vlan_info *vdst, *vsrc = src->l_info;
+ 	int err;
++	struct vlan_map *p = NULL;
+ 
+ 	dst->l_info = NULL;
+ 	if ((err = rtnl_link_set_type(dst, "vlan")) < 0)
+ 		return err;
+ 	vdst = dst->l_info;
+ 
+-	vdst->vi_egress_qos = calloc(vsrc->vi_egress_size,
+-				     sizeof(struct vlan_map));
+-	if (!vdst->vi_egress_qos)
+-		return -NLE_NOMEM;
++	if (vsrc->vi_negress) {
++		p = calloc(vsrc->vi_negress,
++		           sizeof(struct vlan_map));
++		if (!p)
++			return -NLE_NOMEM;
++	}
++
++	*vdst = *vsrc;
+ 
+-	memcpy(vdst->vi_egress_qos, vsrc->vi_egress_qos,
+-	       vsrc->vi_egress_size * sizeof(struct vlan_map));
++	if (vsrc->vi_negress) {
++		vdst->vi_egress_size = vsrc->vi_negress;
++		vdst->vi_egress_qos = p;
++		memcpy(vdst->vi_egress_qos, vsrc->vi_egress_qos,
++		       vsrc->vi_negress * sizeof(struct vlan_map));
++	}
+ 
+ 	return 0;
+ }
+@@ -586,10 +595,16 @@ int rtnl_link_vlan_set_egress_map(struct
+ 		return -NLE_INVAL;
+ 
+ 	if (vi->vi_negress >= vi->vi_egress_size) {
+-		int new_size = vi->vi_egress_size + 32;
++		uint32_t new_size = vi->vi_egress_size + 1 + vi->vi_egress_size / 2;
++		size_t bytes;
+ 		void *ptr;
+ 
+-		ptr = realloc(vi->vi_egress_qos, new_size);
++		if (new_size < vi->vi_egress_size)
++			return -NLE_NOMEM;
++		bytes = (size_t) new_size * sizeof(struct vlan_map);
++		if (bytes / sizeof (struct vlan_map) != new_size)
++			return -NLE_NOMEM;
++		ptr = realloc(vi->vi_egress_qos, bytes);
+ 		if (!ptr)
+ 			return -NLE_NOMEM;
+ 
+--- a/lib/utils.c
++++ b/lib/utils.c
+@@ -1221,7 +1221,7 @@ int nl_has_capability (int capability)
+ 			NL_CAPABILITY_XFRM_SP_SEC_CTX_LEN,
+ 			NL_CAPABILITY_VERSION_3_3_0,
+ 			NL_CAPABILITY_VERSION_3_4_0,
+-			0,
++			NL_CAPABILITY_ROUTE_FIX_VLAN_SET_EGRESS_MAP,
+ 			0,
+ 			0,
+ 			0),
