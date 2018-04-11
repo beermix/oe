@@ -1,5 +1,5 @@
-#GCC_OPTIM="-O2 -pipe --param=l1-cache-line-size=64 --param=l1-cache-size=32 --param=l2-cache-size=3072"
-GCC_OPTIM="-O2 -pipe -fno-caller-saves -fno-plt"
+#GCC_OPTIM="-O2 -pipe --param=l1-cache-line-size=64 --param=l1-cache-size=32 --param=l2-cache-size=3072  -fno-caller-saves"
+GCC_OPTIM="-O2 -pipe"
 LD_OPTIM="-Wl,--as-needed"
 
 if [ "${BUILD_WITH_DEBUG}" = "yes" ]; then
@@ -47,8 +47,8 @@ LDFLAGS_OPTIM_PIC="-fPIC"
 
 # hardening support
 # TODO: basiclly copied from debian 9, should adjust for LE
-CFLAGS_OPTIM_HARDENING="-fstack-protector --param=ssp-buffer-size=4 -Wformat -Werror=format-security"
-CXXFLAGS_OPTIM_HARDENING="-fstack-protector --param=ssp-buffer-size=4 -Wformat -Werror=format-security"
+CFLAGS_OPTIM_HARDENING="-fstack-protector-strong -Wformat -Werror=format-security -fno-plt"
+CXXFLAGS_OPTIM_HARDENING="-fstack-protector-strong -Wformat -Werror=format-security -fno-plt"
 CPPFLAGS_OPTIM_HARDENING="-D_FORTIFY_SOURCE=2"
 LDFLAGS_OPTIM_HARDENING="-Wl,--sort-common,-z,relro,-z,now"
 
