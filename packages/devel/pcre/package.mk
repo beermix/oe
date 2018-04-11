@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="pcre"
-PKG_VERSION="8.39"
+PKG_VERSION="8.42"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="https://github.com/svn2github/pcre/"

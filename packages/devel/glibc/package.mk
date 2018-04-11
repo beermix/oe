@@ -18,7 +18,7 @@
 
 PKG_NAME="glibc"
 PKG_VERSION="d300041"
-PKG_VERSION="3cab0b7"
+#PKG_VERSION="3cab0b7"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/bminor/glibc/tree/release/2.26/master"
@@ -138,7 +138,7 @@ echo "rootsbindir=/usr/bin" >> configparms
 
 post_makeinstall_target() {
 # xlocale.h was renamed - create symlink for compatibility
-#  ln -sf $SYSROOT_PREFIX/usr/include/bits/types/__locale_t.h $SYSROOT_PREFIX/usr/include/xlocale.h
+  ln -sf $SYSROOT_PREFIX/usr/include/bits/types/__locale_t.h $SYSROOT_PREFIX/usr/include/xlocale.h
 
 # symlink locale directory
   ln -sf /storage/.config/locale $INSTALL/usr/lib/locale
