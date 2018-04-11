@@ -52,14 +52,12 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --without-cloog \
                            --disable-libada \
                            --disable-libmudflap \
-                           --disable-libatomic \
                            --disable-libquadmath \
                            --disable-libmpx \
                            --disable-libssp \
                            --disable-vtable-verify \
                            --disable-libunwind-exceptions \
                            --disable-werror \
-                           --with-system-zlib=$TOOLCHAIN \
                            --with-tune=haswell"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
@@ -71,6 +69,7 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-shared \
                               --disable-threads \
                               --disable-libgomp \
+                              --disable-libatomic \
                               --without-headers \
                               --with-newlib \
                               --disable-decimal-float \
