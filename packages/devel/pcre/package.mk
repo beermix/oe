@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="pcre"
-PKG_VERSION="8.42"
+PKG_VERSION="8.39"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="https://github.com/svn2github/pcre/"
@@ -28,8 +28,14 @@ PKG_SECTION="devel"
 PKG_SHORTDESC="pcre: Perl Compatible Regulat Expressions"
 PKG_LONGDESC="The PCRE library is a set of functions that implement regular expression pattern matching using the same syntax and semantics as Perl 5. PCRE has its own native API, as well as a set of wrapper functions that correspond to the POSIX regular expression API. The PCRE library is free, even for building commercial software."
 PKG_TOOLCHAIN="configure"
+PKG_TOOLCHAIN="autotools"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-static --enable-jit --enable-utf8 --enable-unicode-properties --enable-pcre16 --with-match-limit-recursion=16000 --disable-cpp"
+PKG_CONFIGURE_OPTS_TARGET="--enable-static \
+			      --enable-jit \
+			      --enable-utf8 \
+			      --enable-unicode-properties 
+			      --enable-pcre16 \
+			      --enable-cpp"
 
 PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET --disable-shared --with-gnu-ld"
 
