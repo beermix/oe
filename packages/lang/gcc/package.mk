@@ -46,17 +46,11 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-ld=default \
                            --disable-multilib \
                            --disable-nls \
-                           --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
-                           --without-ppl \
-                           --without-cloog \
-                           --disable-libada \
                            --disable-libmudflap \
                            --disable-libquadmath \
                            --disable-libmpx \
                            --disable-libssp \
-                           --disable-vtable-verify \
-                           --disable-libunwind-exceptions \
                            --disable-werror \
                            --with-tune=haswell"
 
@@ -65,6 +59,7 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-__cxa_atexit \
                               --disable-libsanitizer \
                               --enable-cloog-backend=isl \
+                              --disable-libada \
                               --disable-libitm \
                               --disable-shared \
                               --disable-threads \
