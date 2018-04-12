@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="ffmpeg"
-PKG_VERSION="1b9b469"
+PKG_VERSION="0a34092"
 PKG_ARCH="any"
 PKG_LICENSE="LGPLv2.1+"
 PKG_SITE="https://github.com/FFmpeg/FFmpeg/branches/active"
@@ -150,7 +150,6 @@ configure_target() {
               --disable-crystalhd \
               $FFMPEG_VAAPI \
               $FFMPEG_VDPAU \
-              $FFMPEG_RKMPP \
               --disable-dxva2 \
               --enable-runtime-cpudetect \
               $FFMPEG_TABLES \
@@ -178,7 +177,6 @@ configure_target() {
               --disable-avisynth \
               --enable-bzlib \
               --disable-lzma \
-              --disable-alsa \
               --disable-frei0r \
               --disable-libopencore-amrnb \
               --disable-libopencore-amrwb \
@@ -201,7 +199,7 @@ configure_target() {
               --enable-asm \
               --disable-altivec \
               $FFMPEG_FPU \
-              --enable-x86asm \
+              --enable-yasm \
               --disable-symver
 }
 
