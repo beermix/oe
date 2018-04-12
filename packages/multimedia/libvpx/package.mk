@@ -40,6 +40,5 @@ configure_target() {
                         --disable-install-srcs \
                         --enable-vp9-highbitdepth \
                         --enable-experimental \
-                        --enable-spatial-svc \
                         --disable-unit-tests
 }

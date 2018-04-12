@@ -17,14 +17,14 @@
 ################################################################################
 
 PKG_NAME="ffmpeg"
-PKG_VERSION="1b9b469"
+PKG_VERSION="0a34092"
 PKG_ARCH="any"
 PKG_SITE="https://github.com/FFmpeg/FFmpeg/branches/active"
 PKG_LICENSE="LGPLv2.1+"
 #PKG_URL="https://github.com/xbmc/FFmpeg/archive/${PKG_VERSION}.tar.gz"
 PKG_URL="https://github.com/FFmpeg/FFmpeg/archive/${PKG_VERSION}.tar.gz"
 PKG_SOURCE_DIR="FFmpeg-${PKG_VERSION}*"
-PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl speex"
+PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl speex libvpx fdk-aac"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
 PKG_LONGDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
@@ -154,7 +154,7 @@ configure_target() {
               $FFMPEG_TABLES \
               --disable-encoders \
               --enable-encoder=ac3 \
-              --enable-encoder=aac \
+              --enable-libfdk-aac \
               --enable-encoder=wmav2 \
               --enable-encoder=mjpeg \
               --enable-encoder=png \
@@ -176,7 +176,6 @@ configure_target() {
               --disable-avisynth \
               --enable-bzlib \
               --disable-lzma \
-              --disable-alsa \
               --disable-frei0r \
               --disable-libopencore-amrnb \
               --disable-libopencore-amrwb \
@@ -191,7 +190,7 @@ configure_target() {
               --disable-libtheora \
               --disable-libvo-amrwbenc \
               --disable-libvorbis \
-              --disable-libvpx \
+              --enable-libvpx \
               --disable-libx264 \
               --disable-libxavs \
               --disable-libxvid \
@@ -199,7 +198,7 @@ configure_target() {
               --enable-asm \
               --disable-altivec \
               $FFMPEG_FPU \
-              --enable-x86asm \
+              --enable-yasm \
               --disable-symver
 }
 
