@@ -32,13 +32,14 @@ PKG_IS_KERNEL_PKG="yes"
 PKG_PATCH_DIRS="$LINUX"
 
 case "$LINUX" in
-  amlogic-3.10)
-    PKG_VERSION="02fdb27efcb2940b819fec90d9fb333a57ab9900"
-    PKG_SHA256="a4c6a5759ad754109357c1283665498c23796c985fec0b50b18be25f96cf8465"
-    PKG_URL="https://github.com/LibreELEC/linux-amlogic/archive/$PKG_VERSION.tar.gz"
-    PKG_SOURCE_DIR="linux-amlogic-$PKG_VERSION"
-    PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET aml-dtbtools:host"
+  git)
+    PKG_VERSION="e241e3f"
+    PKG_SITE="https://github.com/zen-kernel/zen-kernel/branches/active"
+    PKG_URL="https://github.com/torvalds/linux/archive/$PKG_VERSION.tar.gz"
+    PKG_SOURCE_DIR="zen-kernel-$PKG_VERSION*"
+    PKG_PATCH_DIRS="4.17"
     PKG_BUILD_PERF="no"
+    PKG_BUILD_POWER="no"
     ;;
   zen)
     PKG_VERSION="2c742cd"
