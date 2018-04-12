@@ -18,17 +18,16 @@
 ################################################################################
 
 PKG_NAME="attr"
-PKG_VERSION="2.4.48"
-PKG_SHA256="095699f71230ace37e5bc680c6f9d15cf8e53eb38d00b2c46db5cc7e0712e5f3"
+PKG_VERSION="2.4.47"
+PKG_SHA256="25772f653ac5b2e3ceeb89df50e4688891e21f723c460636548971652af0a859"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE=""
-PKG_URL="http://git.savannah.nongnu.org/cgit/attr.git/snapshot/attr-$PKG_VERSION.tar.gz"
+PKG_URL="https://mirrors.up.pt/pub/nongnu/attr/attr-$PKG_VERSION.src.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="accessibility"
 PKG_SHORTDESC="attr: Extended Attributes Of Filesystem Objects"
 PKG_LONGDESC="Extended attributes are name:value pairs associated permanently with files and directories, similar to the environment strings associated with a process. An attribute may be defined or undefined. If it is defined, its value may be empty or non-empty. Extended attributes are extensions to the normal attributes which are associated with all inodes in the system (i.e. the stat(2) data). They are often used to provide additional functionality to a filesystem - for example, additional security features such as Access Control Lists (ACLs) may be implemented using extended attributes."
-PKG_TOOLCHAIN="autotools"
 PKG_BUILD_FLAGS="+pic:host +pic"
 
 PKG_CONFIGURE_OPTS_TARGET="OPTIMIZER= \
