@@ -42,4 +42,5 @@ PKG_CONFIGURE_OPTS_HOST="--disable-shared --enable-static \
 PKG_CONFIGURE_OPTS_TARGET="--disable-doc \
 			      --enable-threads \
 			      --disable-shared \
+			      --enable-silent-rules \
 			      --disable-doc"
