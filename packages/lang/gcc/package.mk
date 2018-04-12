@@ -46,7 +46,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-ld=default \
                            --disable-multilib \
                            --disable-nls \
-                           --with-default-libstdcxx-abi=gcc4-compatible \
                            --disable-libmudflap \
                            --disable-libquadmath \
                            --disable-libmpx \
@@ -54,15 +53,14 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-werror \
                            --enable-gnu-indirect-function \
                            --disable-vtable-verify \
-                           --enable-bootstrap \
                            --with-ppl=yes \
-                           --with-glibc-version=2.19 \
                            --disable-libunwind-exceptions \
                            --with-tune=haswell \
                            --with-arch=westmere"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
-                              --enable-languages=c \
+                              --enable-languages=c,c++ \
+                              --with-glibc-version=2.26 \
                               --disable-__cxa_atexit \
                               --disable-libsanitizer \
                               --enable-cloog-backend=isl \
@@ -85,7 +83,6 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-shared \
                          --disable-static \
                          --enable-c99 \
-                         --enable-c89 \
                          --enable-long-long \
                          --enable-threads=posix \
                          --disable-libstdcxx-pch \
