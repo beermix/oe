@@ -35,8 +35,6 @@ PKG_CONFIGURE_OPTS_HOST="PCRE_LIBS=-l:libpcre.a \
                          --disable-shared \
                          --disable-libmount \
                          --with-python=python --with-pic"
-PKG_CONFIGURE_OPTS_HOST="--disable-shared --with-pic --with-pcre=internal --enable-libmount=no --with-python=python"
-
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_snprintf_c99=yes \
                            ac_cv_func_vsnprintf_c99=yes \
                            glib_cv_stack_grows=no \

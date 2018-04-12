@@ -23,7 +23,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://ftp.gnu.org.ua/gnu/binutils/?C=M;O=D"
 PKG_URL="http://ftpmirror.gnu.org/binutils/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_HOST="ccache:host bison:host flex:host zlib:host linux:host"
+PKG_DEPENDS_HOST="ccache:host bison:host flex:host linux:host"
 PKG_DEPENDS_TARGET="toolchain binutils:host"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="binutils: A GNU collection of binary utilities"
@@ -41,9 +41,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --disable-libssp \
                          --enable-version-specific-runtime-libs \
                          --enable-plugins \
-                         --enable-threads \
                          --enable-relro \
-                         --with-pic \
                          --disable-gdb \
                          --enable-gold \
                          --enable-ld=default \
@@ -54,14 +52,13 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
 PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
                          --with-sysroot=$SYSROOT_PREFIX \
                          --with-lib-path=$SYSROOT_PREFIX/lib:$SYSROOT_PREFIX/usr/lib \
+                         --without-ppl \
+                         --without-cloog \
                          --enable-static \
                          --disable-shared \
-                         --enable-threads \
-                         --enable-relro \
-                         --with-pic \
-                         --disable-gdb \
                          --disable-werror \
                          --disable-multilib \
+                         --disable-libada \
                          --disable-libssp \
                          --disable-plugins \
                          --disable-gold \
@@ -78,7 +75,7 @@ pre_configure_host() {
 
 make_host() {
   make MAKEINFO=true configure-host
-  make MAKEINFO=true tooldir=/usr
+  make MAKEINFO=true
 }
 
 makeinstall_host() {
