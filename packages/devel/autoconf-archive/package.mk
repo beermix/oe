@@ -33,7 +33,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME --prefix=$TOOLCHAIN"
 makeinstall_host() {
 # make install
   make prefix=$SYSROOT_PREFIX/usr install
-  make prefix=$TOOLCHAIN/usr install
+# make prefix=$TOOLCHAIN install
 
 # remove problematic m4 file
 #  rm -rf $SYSROOT_PREFIX/usr/share/aclocal/ax_prog_cc_for_build.m4

@@ -25,7 +25,7 @@ PKG_URL="https://github.com/xbmc/FFmpeg/archive/${PKG_VERSION}.tar.gz"
 #PKG_URL="https://ffmpeg.org/releases/${PKG_NAME}-${PKG_VERSION}.tar.gz"
 #PKG_URL="https://github.com/FFmpeg/FFmpeg/archive/${PKG_VERSION}.tar.gz"
 PKG_SOURCE_DIR="FFmpeg-${PKG_VERSION}*"
-PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl speex libvpx fdk-aac libvorbis"
+PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl speex"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
 PKG_LONGDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
@@ -110,7 +110,6 @@ configure_target() {
               --host-cc="$HOST_CC" \
               --host-cflags="$HOST_CFLAGS" \
               --host-ldflags="$HOST_LDFLAGS" \
-              --host-libs="-lm" \
               --extra-cflags="$CFLAGS" \
               --extra-ldflags="$LDFLAGS" \
               --extra-libs="$FFMPEG_LIBS" \
@@ -126,7 +125,7 @@ configure_target() {
               --pkg-config="$TOOLCHAIN/bin/pkg-config" \
               --enable-optimizations \
               --disable-extra-warnings \
-              --enable-ffprobe \
+              --disable-ffprobe \
               --disable-ffplay \
               --disable-ffserver \
               --enable-ffmpeg \
@@ -156,13 +155,13 @@ configure_target() {
               $FFMPEG_TABLES \
               --disable-encoders \
               --enable-encoder=ac3 \
-              --enable-libfdk-aac \
+              --enable-encoder=aac \
               --enable-encoder=wmav2 \
               --enable-encoder=mjpeg \
               --enable-encoder=png \
               --disable-decoder=mpeg_xvmc \
               --enable-hwaccels \
-              --enable-muxers \
+              --disable-muxers \
               --enable-muxer=spdif \
               --enable-muxer=adts \
               --enable-muxer=asf \
@@ -178,6 +177,7 @@ configure_target() {
               --disable-avisynth \
               --enable-bzlib \
               --disable-lzma \
+              --disable-alsa \
               --disable-frei0r \
               --disable-libopencore-amrnb \
               --disable-libopencore-amrwb \
@@ -191,7 +191,7 @@ configure_target() {
               --enable-libspeex \
               --disable-libtheora \
               --disable-libvo-amrwbenc \
-              --disable-libvorbis --enable-muxer=ogg --enable-encoder=libvorbis \
+              --disable-libvorbis \
               --disable-libvpx \
               --disable-libx264 \
               --disable-libxavs \
@@ -200,7 +200,7 @@ configure_target() {
               --enable-asm \
               --disable-altivec \
               $FFMPEG_FPU \
-              --enable-yasm \
+              --enable-x86asm \
               --disable-symver
 }
 
