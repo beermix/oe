@@ -23,19 +23,20 @@ PKG_ARCH="x86_64"
 PKG_LICENSE="GPL"
 PKG_SITE="http://mj.ucw.cz/pciutils.shtml"
 PKG_URL="http://www.kernel.org/pub/software/utils/pciutils/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain kmod systemd zlib"
+PKG_DEPENDS_TARGET="toolchain kmod systemd"
 PKG_SECTION="system"
 PKG_SHORTDESC="pciutils: Linux PCI Utilities"
 PKG_LONGDESC="This package contains various utilities for inspecting and setting of devices connected to the PCI bus and the PCI vendor/product ID database."
+PKG_BUILD_FLAGS="-lto -gold -hardening"
 
 PKG_MAKE_OPTS="PREFIX=/usr SHARED=no STRIP= IDSDIR=/usr/share"
 
 make_target() {
-  make OPT="$CFLAGS" \
+  make OPT="$CFLAGS -fPIC -DPIC" \
        CROSS_COMPILE=${TARGET_PREFIX} \
        HOST=$TARGET_ARCH-linux \
        $PKG_MAKE_OPTS \
-       ZLIB=yes DNS=no LIBKMOD=yes HWDB=yes
+       ZLIB=no DNS=no LIBKMOD=yes HWDB=yes
 }
 
 makeinstall_target() {
@@ -47,8 +48,8 @@ makeinstall_target() {
   fi
 }
 
-post_makeinstall_target() {
-  rm -rf $INSTALL/usr/sbin/setpci
-  rm -rf $INSTALL/usr/sbin/update-pciids
-  rm -rf $INSTALL/usr/share
-}
+#post_makeinstall_target() {
+#  rm -rf $INSTALL/usr/sbin/setpci
+#  rm -rf $INSTALL/usr/sbin/update-pciids
+#  rm -rf $INSTALL/usr/share
+#}

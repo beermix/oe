@@ -41,15 +41,16 @@ case "$LINUX" in
     PKG_BUILD_PERF="no"
     ;;
   zen)
-    PKG_VERSION="8cdd36c"
-    PKG_SITE="https://github.com/zen-kernel/zen-kernel/tree/4.14/master"
+    PKG_VERSION="f20dd4f"
+    PKG_SITE="https://github.com/zen-kernel/zen-kernel/branches/active"
     PKG_URL="https://github.com/zen-kernel/zen-kernel/archive/$PKG_VERSION.tar.gz"
     PKG_SOURCE_DIR="zen-kernel-$PKG_VERSION*"
-    PKG_PATCH_DIRS="default"
-    PKG_BUILD_PERF="yes"
+    PKG_PATCH_DIRS="patches-4.16"
+    PKG_BUILD_PERF="no"
+    PKG_BUILD_POWER="no"
     ;;
   *)
-    PKG_VERSION="4.13.16"
+    PKG_VERSION="4.14.33"
     PKG_SHA256=""
     PKG_URL="https://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
     PKG_PATCH_DIRS="default"
@@ -98,7 +99,7 @@ post_patch() {
     sed -i -e "s|@DISTRONAME@|$DISTRONAME|g" $PKG_BUILD/.config
 
   # ask for new config options after kernel update
-   #make -C $PKG_BUILD oldconfig
+  # make -C $PKG_BUILD oldconfig
 
   # disable swap support if not enabled
   if [ ! "$SWAP_SUPPORT" = yes ]; then
@@ -193,6 +194,7 @@ make_target() {
       NO_LZMA=1 \
       NO_SDT=1 \
       LDFLAGS="$LDFLAGS -ldw -ldwfl -lebl -lelf -ldl -lz" \
+      EXTRA_PERFLIBS="-lebl" \
       CROSS_COMPILE="$TARGET_PREFIX" \
       JOBS="$CONCURRENCY_MAKE_LEVEL" \
         make $PERF_BUILD_ARGS
@@ -203,19 +205,21 @@ make_target() {
   
   if [ "$PKG_BUILD_POWER" = "yes" ] ; then
     ( cd tools/power/cpupower
-    
-      make CROSS="$TARGET_PREFIX" \
+
+      make \
+      CROSS="$TARGET_PREFIX" \
       CPUFREQ_BENCH=false \
-      NLS=false \
+      STATIC=true \
+      NLS=true \
       DEBUG=false \
-      LDFLAGS="$LDFLAGS -lpci -ldl -lz"
+      LDFLAGS="-lrt -lpci" all
 
       mkdir -p $INSTALL/usr/bin
       cp cpupower $INSTALL/usr/bin
         
-      cd ../../thermal/tmon
-      make CC="$CC" PKG_CONFIG_PATH="$TOOLCHAIN/bin/pkg-config" JOBS="$CONCURRENCY_MAKE_LEVEL"
-      cp tmon $INSTALL/usr/bin
+    # cd ../../thermal/tmon
+    # make CC="$CC" PKG_CONFIG_PATH="$TOOLCHAIN/bin/pkg-config" JOBS=1
+    # cp tmon $INSTALL/usr/bin
     )
   fi
 
