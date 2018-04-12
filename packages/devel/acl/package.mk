@@ -1,6 +1,6 @@
 PKG_NAME="acl"
-PKG_VERSION="ea3c6bb"
-PKG_URL="https://dl.dropboxusercontent.com/s/ikoypt4lk5jsz52/acl-ea3c6bb.tar.xz"
+PKG_VERSION="ff3bca"
+PKG_URL="http://git.savannah.nongnu.org/cgit/acl.git/snapshot/acl-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain attr"
 PKG_DEPENDS_HOST="toolchain attr:host"
 PKG_SECTION="tools"

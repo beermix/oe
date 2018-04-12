@@ -18,12 +18,12 @@
 ################################################################################
 
 PKG_NAME="attr"
-PKG_VERSION="2.4.47"
-PKG_SHA256="25772f653ac5b2e3ceeb89df50e4688891e21f723c460636548971652af0a859"
+PKG_VERSION="2.4.48"
+PKG_SHA256="095699f71230ace37e5bc680c6f9d15cf8e53eb38d00b2c46db5cc7e0712e5f3"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE=""
-PKG_URL="http://download.savannah.gnu.org/releases-noredirect/attr/$PKG_NAME-$PKG_VERSION.src.tar.gz"
+PKG_URL="http://git.savannah.nongnu.org/cgit/attr.git/snapshot/attr-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="accessibility"
 PKG_SHORTDESC="attr: Extended Attributes Of Filesystem Objects"
