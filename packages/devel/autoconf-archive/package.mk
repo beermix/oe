@@ -36,4 +36,5 @@ makeinstall_host() {
 
 # remove problematic m4 file
 #  rm -rf $SYSROOT_PREFIX/usr/share/aclocal/ax_prog_cc_for_build.m4
+
 }
