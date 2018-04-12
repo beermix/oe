@@ -52,7 +52,14 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libmpx \
                            --disable-libssp \
                            --disable-werror \
-                           --with-tune=haswell"
+                           --enable-gnu-indirect-function \
+                           --disable-vtable-verify \
+                           --enable-bootstrap \
+                           --with-ppl=yes \
+                           --with-glibc-version=2.19 \
+                           --disable-libunwind-exceptions \
+                           --with-tune=haswell \
+                           --with-arch=westmere"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
