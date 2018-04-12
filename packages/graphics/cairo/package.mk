@@ -17,11 +17,12 @@
 ################################################################################
 
 PKG_NAME="cairo"
-PKG_VERSION="1.15.10"
-PKG_ARCH="any"
+PKG_VERSION="1.15.12"
+PKG_SHA256="7623081b94548a47ee6839a7312af34e9322997806948b6eec421a8c6d0594c9"
 PKG_LICENSE="LGPL"
 PKG_SITE="https://cairographics.org/snapshots/?C=M;O=D"
 PKG_URL="https://cairographics.org/snapshots/cairo-$PKG_VERSION.tar.xz"
+PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain zlib freetype fontconfig libpng pixman"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="cairo: Multi-platform 2D graphics library"
