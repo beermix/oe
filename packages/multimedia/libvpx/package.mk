@@ -53,6 +53,7 @@ configure_target() {
                         --target=$PKG_TARGET_NAME_LIBVPX \
                         --disable-docs \
                         --enable-runtime-cpu-detect \
+                        --disable-examples \
                         --enable-shared \
                         --enable-pic \
                         --disable-install-docs \

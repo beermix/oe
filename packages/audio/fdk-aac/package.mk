@@ -1,8 +1,8 @@
 PKG_NAME="fdk-aac"
-PKG_VERSION="a30bfce"
-PKG_URL="https://github.com/mstorsjo/fdk-aac/archive/${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_TARGET="toolchain libxml2 sqlite"
+PKG_VERSION="0.1.6"
+PKG_URL="https://github.com/mstorsjo/fdk-aac/archive/v${PKG_VERSION}.tar.gz"
+PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="tools"
 PKG_TOOLCHAIN="autotools"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --with-pic"
+#PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --with-pic"
