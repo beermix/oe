@@ -5,21 +5,17 @@ PKG_DEPENDS_TARGET="toolchain libtool:host gettext:host e2fsprogs util-linux gli
 PKG_SECTION="tools"
 PKG_TOOLCHAIN="autotools"
 
-pre_configure_target() {
-  export LIBS="$LIBS -lssh2"
-}
-
-PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config \
-                           --datadir=/storage/.config \
-                           --libdir=/storage/.config \
-                           --libexecdir=/storage/.config \
-                           --sharedstatedir=/storage/.config \
-                           --localstatedir=/storage/.config \
-                           --includedir=/storage/.config \
-                           --oldincludedir=/storage/.config \
-                           --datarootdir=/storage/.config \
-                           --infodir=/storage/.config \     
-                           --localedir=/storage/.config \
+PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/home/user/.bin/mcc \
+                           --datadir=/home/user/.bin/mcc \
+                           --libdir=/home/user/.bin/mcc \
+                           --libexecdir=/home/user/.bin/mcc \
+                           --sharedstatedir=/home/user/.bin/mcc \
+                           --localstatedir=/home/user/.bin/mcc \
+                           --includedir=/home/user/.bin/mcc \
+                           --oldincludedir=/home/user/.bin/mcc \
+                           --datarootdir=/home/user/.bin/mcc \
+                           --infodir=/home/user/.bin/mcc \     
+                           --localedir=/home/user/.bin/mcc \
                            --disable-doxygen-doc \
                            --disable-doxygen-rtf \
                            --disable-doxygen-xml \
@@ -32,13 +28,12 @@ PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config \
                            --enable-background \
                            --enable-charset \
                            --without-gpm-mouse \
-                           --with-screen=ncurses \
-                           --with-x \
+                           --with-screen=slang \
                            --with-subshell=no \
                            --enable-vfs-sftp \
                            --enable-vfs-tar \
                            --enable-vfs-extfs \
                            --enable-vfs-cpio \
-                           --disable-vfs-smb \
-                           --with-mmap \
-                           --with-pcre"
+                           --disable-vfs-smb"
+                           
+PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
