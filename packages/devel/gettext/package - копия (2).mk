@@ -28,6 +28,11 @@ PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="gettext: A program internationalization library and tools"
 PKG_LONGDESC="This is the GNU gettext package. It is interesting for authors or maintainers of other packages or programs which they want to see internationalized. As one step the handling of messages in different languages should be implemented. For this task GNU gettext provides the needed tools and library functions."
 
+post_unpack() {
+  sed '/^SUBDIRS/s/ doc //;/^SUBDIRS/s/examples$$//' $PKG_BUILD/gettext-tools/Makefile.in
+  sed '/^SUBDIRS/s/ doc //;/^SUBDIRS/s/tests$$//' $PKG_BUILD/gettext-runtime/Makefile.in
+}
+
 PKG_CONFIGURE_SCRIPT="gettext-tools/configure"
 
 PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared \
@@ -38,4 +43,7 @@ PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared \
                          --with-included-libxml \
                          --disable-native-java \
                          --disable-csharp \
+                         --without-emacs \
+                         --disable-acl \
+                         --disable-openmp \
                          --without-emacs"
