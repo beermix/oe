@@ -1,5 +1,5 @@
 PKG_NAME="i2pd"
-PKG_VERSION="2cb6283"
+PKG_VERSION="82534ee"
 PKG_URL="https://github.com/PurpleI2P/i2pd/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain boost zlib miniupnpc openssl"
 PKG_SECTION="my"
@@ -10,11 +10,11 @@ make_target() {
   make USE_STATIC=no USE_AESNI=no USE_AVX=no USE_UPNP=no \
   	CC="$CC" \
   	CXX="$CXX -lpthread -fno-omit-frame-pointer -ffunction-sections -fdata-sections" \
-  	LDFLAGS="$LDFLAGS -latomic -Wl,--gc-sections" \
+  	LDFLAGS="$LDFLAGS -lpthread -lm -lrt -latomic -ldl -Wl,--gc-sections" \
   	RANLIB="$RANLIB" \
   	AR="$AR"
 }
 
 post_make_target() {
-  $STRIP --strip-all $PKG_BUILD/i2pd
+  $STRIP $PKG_BUILD/i2pd
 }
