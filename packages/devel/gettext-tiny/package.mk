@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="gettext-tiny"
-PKG_VERSION="63a947a"
+PKG_VERSION="6e12c25"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"

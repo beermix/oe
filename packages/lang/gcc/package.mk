@@ -49,25 +49,21 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libmudflap \
                            --disable-libquadmath \
                            --disable-libmpx \
+                           --with-ppl=yes \
                            --disable-libssp \
                            --disable-werror \
-                           --enable-gnu-indirect-function \
-                           --disable-vtable-verify \
-                           --with-ppl=yes \
-                           --disable-libunwind-exceptions \
                            --with-tune=haswell \
                            --with-arch=westmere"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
-                              --enable-languages=c,c++ \
-                              --with-glibc-version=2.26 \
+                              --enable-languages=c \
                               --disable-__cxa_atexit \
                               --disable-libsanitizer \
                               --enable-cloog-backend=isl \
-                              --disable-libada \
-                              --disable-libitm \
                               --disable-shared \
                               --disable-threads \
+                              --disable-libada \
+                              --disable-libitm \
                               --disable-libgomp \
                               --disable-libatomic \
                               --without-headers \
@@ -88,6 +84,9 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time \
                          --enable-clocale=gnu \
+                         --enable-gnu-indirect-function \
+                         --disable-vtable-verify \
+                         --disable-libunwind-exceptions \
                          --enable-libatomic \
                          $GCC_OPTS"
 
