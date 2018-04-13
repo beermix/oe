@@ -46,11 +46,16 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-ld=default \
                            --disable-multilib \
                            --disable-nls \
-                           --disable-libmudflap \
-                           --disable-libquadmath \
-                           --disable-libmpx \
-                           --with-ppl=yes \
+                           --enable-checking=release \
+                           --with-default-libstdcxx-abi=gcc4-compatible \
+                           --without-ppl \
+                           --without-cloog \
+                           --disable-libada \
                            --disable-libssp \
+                           --disable-libmpx \
+                           --disable-libsanitizer \
+                           --disable-libmudflap \
+                           --without-cuda-driver \
                            --disable-werror \
                            --with-tune=haswell \
                            --with-arch=westmere"
@@ -61,11 +66,9 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-libsanitizer \
                               --enable-cloog-backend=isl \
                               --disable-shared \
-                              --disable-threads \
-                              --disable-libada \
-                              --disable-libitm \
                               --disable-libgomp \
-                              --disable-libatomic \
+                              --disable-libquadmath \
+                              --disable-threads \
                               --without-headers \
                               --with-newlib \
                               --disable-decimal-float \
@@ -85,6 +88,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-libstdcxx-time \
                          --enable-clocale=gnu \
                          --enable-libatomic \
+                         --enable-libgomp \
                          $GCC_OPTS"
 
 pre_configure_host() {
