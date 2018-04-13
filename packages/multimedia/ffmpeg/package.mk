@@ -17,14 +17,14 @@
 ################################################################################
 
 PKG_NAME="ffmpeg"
-PKG_VERSION="0a34092"
+PKG_VERSION="30554d7"
 PKG_ARCH="any"
 PKG_SITE="https://github.com/FFmpeg/FFmpeg/branches/active"
 PKG_LICENSE="LGPLv2.1+"
-#PKG_URL="https://github.com/xbmc/FFmpeg/archive/${PKG_VERSION}.tar.gz"
-PKG_URL="https://github.com/FFmpeg/FFmpeg/archive/${PKG_VERSION}.tar.gz"
+PKG_URL="https://github.com/xbmc/FFmpeg/archive/${PKG_VERSION}.tar.gz"
+#PKG_URL="https://github.com/FFmpeg/FFmpeg/archive/${PKG_VERSION}.tar.gz"
 PKG_SOURCE_DIR="FFmpeg-${PKG_VERSION}*"
-PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl speex libvpx fdk-aac"
+PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl speex libvpx libvorbis"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
 PKG_LONGDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
@@ -109,6 +109,7 @@ configure_target() {
               --host-cc="$HOST_CC" \
               --host-cflags="$HOST_CFLAGS" \
               --host-ldflags="$HOST_LDFLAGS" \
+              --host-libs="-lm" \
               --extra-cflags="$CFLAGS" \
               --extra-ldflags="$LDFLAGS" \
               --extra-libs="$FFMPEG_LIBS" \
@@ -124,7 +125,7 @@ configure_target() {
               --pkg-config="$TOOLCHAIN/bin/pkg-config" \
               --enable-optimizations \
               --disable-extra-warnings \
-              --disable-ffprobe \
+              --enable-ffprobe \
               --disable-ffplay \
               --disable-ffserver \
               --enable-ffmpeg \
@@ -134,7 +135,6 @@ configure_target() {
               --enable-swscale \
               --enable-postproc \
               --enable-avfilter \
-              --disable-devices \
               --enable-pthreads \
               --disable-w32threads \
               --enable-network \
@@ -154,13 +154,13 @@ configure_target() {
               $FFMPEG_TABLES \
               --disable-encoders \
               --enable-encoder=ac3 \
-              --enable-libfdk-aac \
+              --enable-encoder=aac \
               --enable-encoder=wmav2 \
               --enable-encoder=mjpeg \
               --enable-encoder=png \
               --disable-decoder=mpeg_xvmc \
               --enable-hwaccels \
-              --disable-muxers \
+              --enable-muxers \
               --enable-muxer=spdif \
               --enable-muxer=adts \
               --enable-muxer=asf \
@@ -175,7 +175,6 @@ configure_target() {
               --enable-filters \
               --disable-avisynth \
               --enable-bzlib \
-              --disable-lzma \
               --disable-frei0r \
               --disable-libopencore-amrnb \
               --disable-libopencore-amrwb \
@@ -184,12 +183,14 @@ configure_target() {
               --disable-libfreetype \
               --disable-libgsm \
               --disable-libmp3lame \
+              --disable-libnut \
               --disable-libopenjpeg \
               --disable-librtmp \
+              --disable-libschroedinger \
               --enable-libspeex \
               --disable-libtheora \
               --disable-libvo-amrwbenc \
-              --disable-libvorbis \
+              --enable-libvorbis --enable-muxer=ogg --enable-encoder=libvorbis \
               --enable-libvpx \
               --disable-libx264 \
               --disable-libxavs \
