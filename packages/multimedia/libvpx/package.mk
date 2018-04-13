@@ -11,7 +11,7 @@ PKG_DEPENDS_TARGET="toolchain yasm:host"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="WebM VP8/VP9 Codec SDK"
 PKG_LONGDESC="The WebM Project is dedicated to developing a high-quality, open video format for the web that's freely available to everyone."
-PKG_BUILD_FLAGS="-lto -gold -hardening"
+PKG_BUILD_FLAGS="-lto -gold"
 
 configure_target() {
 
@@ -27,7 +27,7 @@ configure_target() {
                         --enable-vp9 \
                         --enable-postproc \
                         --enable-vp9-postproc \
-                        --enable-vp9-temporal-denoising \
+                        --disable-vp9-temporal-denoising \
                         --enable-libyuv \
                         --disable-encode-perf-tests \
                         --disable-decode-perf-tests \
@@ -38,7 +38,7 @@ configure_target() {
                         --enable-runtime-cpu-detect \
                         --disable-shared \
                         --disable-install-srcs \
-                        --enable-vp9-highbitdepth \
+                        --disable-vp9-highbitdepth \
                         --enable-experimental \
                         --disable-unit-tests
 }
