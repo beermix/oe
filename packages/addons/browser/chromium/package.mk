@@ -36,7 +36,7 @@ PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
 PKG_TOOLCHAIN="manual"
-PKG_BUILD_FLAGS="-lto -hardening"
+PKG_BUILD_FLAGS="-lto -gold -hardening"
 GOLD_SUPPORT="yes"
 
 PKG_IS_ADDON="yes"
@@ -70,6 +70,7 @@ make_target() {
   export CFLAGS="$CFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables -Wno-builtin-macro-redefined"
   export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables -Wno-builtin-macro-redefined"
   export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES -D__DATE__= -D__TIME__= -D__TIMESTAMP__="
+  # export LDFLAGS="-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now"
 
   export CCACHE_SLOPPINESS=time_macros
 
