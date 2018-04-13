@@ -84,9 +84,6 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time \
                          --enable-clocale=gnu \
-                         --enable-gnu-indirect-function \
-                         --disable-vtable-verify \
-                         --disable-libunwind-exceptions \
                          --enable-libatomic \
                          $GCC_OPTS"
 
