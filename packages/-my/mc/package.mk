@@ -28,11 +28,11 @@ PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config/mc \
                            --disable-doxygen-dot \
                            --disable-doxygen-html \
                            --without-internal-edit \
-                           --enable-silent-rules \
+                           --disable-silent-rules \
                            --enable-background \
                            --enable-charset \
                            --without-gpm-mouse \
-                           --with-screen=ncursesw \
+                           --with-screen=ncurses \
                            --with-subshell=no \
                            --enable-vfs-sftp \
                            --enable-vfs-tar \
