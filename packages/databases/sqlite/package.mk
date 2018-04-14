@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="sqlite"
-PKG_VERSION="autoconf-3230000"
-PKG_SHA256="b7711a1800a071674c2bf76898ae8584fc6c9643cfe933cfc1bc54361e3a6e49"
+PKG_VERSION="autoconf-3230100"
+PKG_SHA256="92842b283e5e744eff5da29ed3c69391de7368fccc4d0ee6bf62490ce555ef25"
 PKG_ARCH="any"
 PKG_LICENSE="PublicDomain"
 PKG_SITE="https://www.sqlite.org/"
