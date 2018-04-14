@@ -42,7 +42,7 @@ case "$LINUX" in
     PKG_BUILD_POWER="no"
     ;;
   zen)
-    PKG_VERSION="d7a1cfe"
+    PKG_VERSION="c615617"
     PKG_SITE="https://github.com/zen-kernel/zen-kernel/branches/active"
     PKG_URL="https://github.com/zen-kernel/zen-kernel/archive/$PKG_VERSION.tar.gz"
     PKG_SOURCE_DIR="zen-kernel-$PKG_VERSION*"
