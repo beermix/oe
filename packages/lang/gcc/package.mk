@@ -46,13 +46,11 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-ld=default \
                            --disable-multilib \
                            --disable-nls \
-                           --enable-checking=release \
-                           --without-ppl \
-                           --without-cloog \
-                           --disable-libada \
-                           --disable-libssp \
+                           --disable-libmudflap \
+                           --disable-libquadmath \
                            --disable-libmpx \
-                           --without-cuda-driver \
+                           --with-ppl=yes \
+                           --disable-libssp \
                            --disable-werror \
                            --with-tune=haswell \
                            --with-arch=westmere"
@@ -63,13 +61,11 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-libsanitizer \
                               --enable-cloog-backend=isl \
                               --disable-shared \
-                              --disable-libsanitizer \
-                              --disable-libmudflap \
-                              --disable-libatomic \
-                              --disable-libitm \
-                              --disable-libquadmath \
-                              --disable-libgomp \
                               --disable-threads \
+                              --disable-libada \
+                              --disable-libitm \
+                              --disable-libgomp \
+                              --disable-libatomic \
                               --without-headers \
                               --with-newlib \
                               --disable-decimal-float \
@@ -88,6 +84,9 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time \
                          --enable-clocale=gnu \
+                         --enable-gnu-indirect-function \
+                         --disable-vtable-verify \
+                         --disable-libunwind-exceptions \
                          --enable-libatomic \
                          --enable-libgomp \
                          $GCC_OPTS"

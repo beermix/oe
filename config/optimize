@@ -47,8 +47,7 @@ LDFLAGS_OPTIM_PIC="-fPIC"
 
 # hardening support ||| -Wp,-D_REENTRANT -fexceptions  -ftree-loop-distribute-patterns -malign-data=abi -fno-semantic-interposition -ftree-vectorize  -ftree-loop-vectorize
 # TODO: basiclly copied from debian 9, should adjust for LE
-#CFLAGS_OPTIM_HARDENING="-fstack-protector --param=ssp-buffer-size=32 -fasynchronous-unwind-tables"
-CFLAGS_OPTIM_HARDENING="-fstack-protector-strong -fno-plt"
+CFLAGS_OPTIM_HARDENING="-fexceptions -fstack-protector --param=ssp-buffer-size=32 -fasynchronous-unwind-tables -ftree-loop-distribute-patterns -malign-data=abi -fno-semantic-interposition -ftree-vectorize  -ftree-loop-vectorize"
 CXXFLAGS_OPTIM_HARDENING="$CFLAGS_OPTIM_HARDENING"
 CPPFLAGS_OPTIM_HARDENING="-D_FORTIFY_SOURCE=2"
 LDFLAGS_OPTIM_HARDENING="-Wl,--sort-common,-z,relro,-z,now"

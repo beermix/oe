@@ -42,7 +42,7 @@ post_makeinstall_host() {
 
 #  mkdir -p $TOOLCHAIN/share/aclocal/
 
-#  cp -r -i $PKG_DIR/src/bin/* $TOOLCHAIN/bin/
+  cp -r -i $PKG_DIR/src/bin/* $TOOLCHAIN/bin/
 #  cp -r -i $PKG_DIR/src/m4/* $TOOLCHAIN/share/aclocal/
   
 #  mkdir -p $SYSROOT_PREFIX/share/aclocal/
