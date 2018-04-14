@@ -51,7 +51,7 @@ case "$LINUX" in
     PKG_BUILD_POWER="no"
     ;;
   *)
-    PKG_VERSION="4.13.12"
+    PKG_VERSION="4.13.16"
     PKG_SHA256=""
     PKG_URL="https://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
     PKG_PATCH_DIRS="4.13"
