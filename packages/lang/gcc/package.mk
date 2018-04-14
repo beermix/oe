@@ -46,12 +46,18 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-ld=default \
                            --disable-multilib \
                            --disable-nls \
+                           --enable-checking=release \
+                           --with-default-libstdcxx-abi=gcc4-compatible \
+                           --without-ppl \
+                           --without-cloog \
+                           --disable-libada \
                            --disable-libmudflap \
+                           --disable-libatomic \
+                           --disable-libitm \
                            --disable-libquadmath \
+                           --disable-libgomp \
                            --disable-libmpx \
-                           --with-ppl=yes \
-                           --disable-libssp \
-                           --disable-werror \
+                           --disable-libssp \'
                            --with-tune=haswell \
                            --with-arch=westmere"
 
@@ -62,10 +68,6 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-cloog-backend=isl \
                               --disable-shared \
                               --disable-threads \
-                              --disable-libada \
-                              --disable-libitm \
-                              --disable-libgomp \
-                              --disable-libatomic \
                               --without-headers \
                               --with-newlib \
                               --disable-decimal-float \
