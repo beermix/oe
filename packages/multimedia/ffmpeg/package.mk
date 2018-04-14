@@ -151,7 +151,6 @@ configure_target() {
               $FFMPEG_VAAPI \
               $FFMPEG_VDPAU \
               --disable-dxva2 \
-              --enable-runtime-cpudetect \
               $FFMPEG_TABLES \
               --disable-memalign-hack \
               --disable-encoders \
@@ -202,8 +201,31 @@ configure_target() {
               --enable-asm \
               --disable-altivec \
               $FFMPEG_FPU \
-              --enable-yasm \
-              --disable-symver
+              --disable-runtime-cpudetect \
+              --disable-symver \
+              --disable-amd3dnow \
+              --disable-amd3dnowext \
+              --enable-mmx \
+              --enable-mmxext \
+              --enable-sse \
+              --enable-sse2 \
+              --enable-sse3 \
+              --enable-ssse3 \
+              --enable-sse4 \
+              --enable-sse42 \
+              --disable-avx \
+              --disable-xop \
+              --disable-fma3 \
+              --disable-fma4 \
+              --disable-avx2 \
+              --disable-aesni \
+              --disable-armv5te \
+              --disable-armv6 \
+              --disable-armv6t2 \
+              --disable-vfp \
+              --disable-neon \
+              --enable-inline-asm \
+              --enable-yasm
 }
 
 post_makeinstall_target() {
