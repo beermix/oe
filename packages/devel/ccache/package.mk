@@ -18,11 +18,11 @@
 
 PKG_NAME="ccache"
 PKG_VERSION="3.4.2"
-PKG_SHA256="3aa5587793d4c790bd22999bfc678250c029307b3afb9d16f6f4a49c67b78fb3"
+PKG_SHA256="18a8b14367d63d3d37fb6c33cba60e1b7fcd7a63d608df97c9771ae0d234fee2"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://ccache.samba.org/"
-PKG_URL="https://samba.org/ftp/ccache/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_URL="https://samba.org/ftp/ccache/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="make:host"
 PKG_SECTION="devel"
 PKG_SHORTDESC="ccache: A fast compiler cache"
