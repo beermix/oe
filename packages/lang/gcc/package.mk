@@ -47,7 +47,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-multilib \
                            --disable-nls \
                            --enable-checking=release \
-                           --with-default-libstdcxx-abi=gcc4-compatible \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
@@ -63,6 +62,8 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
+                              --enable-bootstrap \
+                              --with-glibc-version=2.19 \
                               --disable-__cxa_atexit \
                               --disable-libsanitizer \
                               --enable-cloog-backend=isl \
@@ -94,7 +95,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          $GCC_OPTS"
 
 pre_configure_host() {
-  export CXXFLAGS="$CXXFLAGS -std=gnu++98"
+#  export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
 }
 
