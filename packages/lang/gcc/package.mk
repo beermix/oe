@@ -56,22 +56,18 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libquadmath \
                            --disable-libgomp \
                            --disable-libmpx \
-                           --disable-libssp \'
+                           --disable-libssp \
                            --with-tune=haswell \
                            --with-arch=westmere"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
-                              --enable-languages=c \
-                              --enable-bootstrap \
-                              --with-glibc-version=2.19 \
-                              --disable-__cxa_atexit \
-                              --disable-libsanitizer \
-                              --enable-cloog-backend=isl \
-                              --disable-shared \
-                              --disable-threads \
-                              --without-headers \
                               --with-newlib \
-                              --disable-decimal-float \
+                              --without-headers \
+                              --enable-languages=c \
+                              --disable-libsanitizer \
+                              --disable-libssp \
+                              --disable-shared \
+                              --disable-threads
                               $GCC_OPTS"
 
 PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
@@ -95,7 +91,7 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          $GCC_OPTS"
 
 pre_configure_host() {
-#  export CXXFLAGS="$CXXFLAGS -std=gnu++98"
+  export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
 }
 
