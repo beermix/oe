@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="binutils"
-PKG_VERSION="2.29"
+PKG_VERSION="2.30"
 #PKG_SHA256="6e46b8aeae2f727a36f0bd9505e405768a72218f1796f0d09757d45209871ae6"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -40,7 +40,6 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --disable-libssp \
                          --enable-version-specific-runtime-libs \
                          --enable-plugins \
-                         --enable-relro \
                          --enable-gold \
                          --enable-ld=default \
                          --enable-lto \

@@ -101237,3 +101237,43 @@ index f5d087f0da..7dd47e8a76 100644
  
  #~ msgid "%s: data size %ld\n"
  #~ msgstr "%s: размер данных %ld\n"
+
+commit 36b64ce40dca6fbdfb945cf877d146b0969d7030
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Fri Apr 13 00:01:45 2018 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 8457ecad64..73c9e25697 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20180412
++#define BFD_VERSION_DATE 20180413
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
+
+commit 754fc4850d349dd236d6dbb57330db01358e937e
+Author: GDB Administrator <gdbadmin@sourceware.org>
+Date:   Sat Apr 14 00:01:45 2018 +0000
+
+    Automatic date update in version.in
+
+diff --git a/bfd/version.h b/bfd/version.h
+index 73c9e25697..befa3ff386 100644
+--- a/bfd/version.h
++++ b/bfd/version.h
+@@ -16,7 +16,7 @@
+ 
+    In releases, the date is not included in either version strings or
+    sonames.  */
+-#define BFD_VERSION_DATE 20180413
++#define BFD_VERSION_DATE 20180414
+ #define BFD_VERSION @bfd_version@
+ #define BFD_VERSION_STRING  @bfd_version_package@ @bfd_version_string@
+ #define REPORT_BUGS_TO @report_bugs_to@
