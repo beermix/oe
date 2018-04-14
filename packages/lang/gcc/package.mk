@@ -61,13 +61,15 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-arch=westmere"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
-                              --with-newlib \
-                              --without-headers \
                               --enable-languages=c \
+                              --disable-__cxa_atexit \
                               --disable-libsanitizer \
-                              --disable-libssp \
+                              --enable-cloog-backend=isl \
                               --disable-shared \
-                              --disable-threads
+                              --disable-threads \
+                              --without-headers \
+                              --with-newlib \
+                              --disable-decimal-float \
                               $GCC_OPTS"
 
 PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
