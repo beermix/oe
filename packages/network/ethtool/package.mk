@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="ethtool"
-PKG_VERSION="4.15"
-PKG_SHA256="71f7fd32483ffdc7c6c4d882e230714eb101df0a46cbe396dbeb8ac78f1ef91a"
+PKG_VERSION="4.16"
+PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kernel.org/pub/software/network/ethtool/"
