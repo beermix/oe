@@ -28,8 +28,7 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-overwrite \
 			      --with-progs \
 			      --enable-pc-files \
 			      --enable-widec \
-			      --with-pkg-config-libdir=/usr/lib/pkgconfig \
-			      --with-build-cppflags=$CPPFLAGS"
+			      --with-pkg-config-libdir=/usr/lib/pkgconfig"
 			      
 PKG_CONFIGURE_OPTS_HOST="--enable-overwrite \
 			    --disable-termcap \
@@ -45,8 +44,7 @@ PKG_CONFIGURE_OPTS_HOST="--enable-overwrite \
 			    --without-progs \
 			    --enable-pc-files \
 			    --enable-widec \
-			    --with-pkg-config-libdir=$TOOLCHAIN/lib/pkgconfig \
-			    --with-build-cppflags=$CPPFLAGS"
+			    --with-pkg-config-libdir=$TOOLCHAIN/lib/pkgconfig"
 
 post_makeinstall_target() {
   cp misc/ncurses-config $TOOLCHAIN/bin
