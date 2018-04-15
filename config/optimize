@@ -1,5 +1,5 @@
 GCC_OPTIM="-O2 -pipe --param l1-cache-size=32 --param l1-cache-line-size=64 --param l2-cache-size=3072 -fno-plt"
-LDFLAGS="-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now"
+LDFLAGS="-Wl,--sort-common,--as-needed,-z,relro,-z,now"
 
 if [ "${BUILD_WITH_DEBUG}" = "yes" ]; then
   TARGET_CFLAGS="$TARGET_CFLAGS -ggdb"
@@ -23,7 +23,7 @@ TARGET_INCDIR="$SYSROOT_PREFIX/include $SYSROOT_PREFIX/usr/include"
 HOST_CPPFLAGS=""
 HOST_CFLAGS="-march=haswell -O2 -pipe -I$TOOLCHAIN/include"
 HOST_CXXFLAGS="$HOST_CFLAGS"
-HOST_LDFLAGS="-Wl,-rpath,$TOOLCHAIN/lib -L$TOOLCHAIN/lib -s"
+HOST_LDFLAGS="-Wl,-rpath,$TOOLCHAIN/lib -L$TOOLCHAIN/lib"
 HOST_INCDIR="$TOOLCHAIN/include /usr/include"
 
 # work around Ubuntu default C*FLAGS 
