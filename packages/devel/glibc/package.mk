@@ -46,6 +46,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
                            --enable-kernel=3.10 \
                            --enable-stack-protector=strong \
+                           --without-selinux \
                            --without-cvs \
                            --without-gd \
                            --enable-obsolete-rpc \
