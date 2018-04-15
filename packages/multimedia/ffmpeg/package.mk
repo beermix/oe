@@ -200,12 +200,11 @@ configure_target() {
               --enable-asm \
               --disable-altivec \
               $FFMPEG_FPU \
-              --disable-runtime-cpudetect \
+              --enable-runtime-cpudetect \
               --disable-symver \
               --disable-amd3dnow \
               --disable-amd3dnowext \
               --enable-mmx \
-              --enable-mmxext \
               --enable-sse \
               --enable-sse2 \
               --enable-sse3 \
@@ -223,7 +222,6 @@ configure_target() {
               --disable-armv6t2 \
               --disable-vfp \
               --disable-neon \
-              --enable-inline-asm \
               --enable-yasm
 }
 
