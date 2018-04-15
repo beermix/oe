@@ -6,7 +6,7 @@ PKG_SECTION="tools"
 PKG_TOOLCHAIN="autotools"
 
 pre_configure_target() {
-  export LIBS="$LIBS -lssh2 -lncursesw -ltinfo"
+  export LIBS="$LIBS -lssh2"
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config/mc \
