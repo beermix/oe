@@ -29,10 +29,10 @@ PKG_SHORTDESC="intel-vaapi-driver: VA-API user mode driver for Intel GEN Graphic
 PKG_LONGDESC="intel-vaapi-driver: VA-API user mode driver for Intel GEN Graphics family"
 PKG_TOOLCHAIN="autotools"
 
-pre_configure_target() {
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3 -Wall|"`
-  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3 -Wall|"`
-}
+#pre_configure_target() {
+#  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3 -Wall|"`
+#  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3 -Wall|"`
+#}
 
 if [ "$DISPLAYSERVER" = "x11" ]; then
   DISPLAYSERVER_LIBVA="--enable-x11 --disable-wayland"
