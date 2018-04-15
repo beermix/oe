@@ -17,12 +17,13 @@
 ################################################################################
 
 PKG_NAME="Python2"
-PKG_VERSION="2.7.14"
+PKG_VERSION="2.7.15rc1"
 PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.python.org/"
 PKG_URL="http://www.python.org/ftp/python/$PKG_VERSION/${PKG_NAME::-1}-$PKG_VERSION.tar.xz"
+PKG_URL="https://fossies.org/linux/misc/Python-2.7.15rc1.tar.xz"
 PKG_SOURCE_DIR="${PKG_NAME::-1}-$PKG_VERSION*"
 PKG_DEPENDS_HOST="zlib:host bzip2:host sqlite:host"
 PKG_DEPENDS_TARGET="toolchain sqlite expat zlib bzip2 openssl libffi Python2:host"
