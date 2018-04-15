@@ -101,10 +101,6 @@ pack_addon() {
 }
 
 if [ "$PKG_IS_ADDON" = "yes" ] ; then
-  [ ! -f ${BUILD}/.build.conf ] && save_build_config
-
-  restore_toolchain
-
   setup_toolchain target 
 
   $SCRIPTS/build $@

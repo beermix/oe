@@ -117,11 +117,6 @@ fi
     DEVTOOLS=yes
   fi
 
-# verify any restored toolchain in release builds
-if [ -z "$REUSE_VERIFY" ]; then
-  [ "$LIBREELEC_VERSION" = "devel" ] && REUSE_VERIFY="no" || REUSE_VERIFY="yes"
-fi
-
 # overwrite OEM_SUPPORT via commandline
 if [ "$OEM" = yes -o "$OEM" = no ]; then
   OEM_SUPPORT=$OEM

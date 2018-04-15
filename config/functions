@@ -731,120 +731,6 @@ do_autoreconf() {
   fi
 }
 
-verify_toolchain() {
-  (
-    local var tvar opkg
-    source ${BUILD}/.build.conf.toolchain
-
-    for var in BUILD ARCH HOST_NAME TARGET_NAME DEBUG; do
-      tvar="TOOLCHAIN_${var}"
-      if [ "${!var}" != "${!tvar}" ]; then
-        echo "ERROR: build.conf mismatch - toolchain ${var} (${!tvar}) does not match current (${!var})"
-        exit 1
-      fi
-    done
-
-    while read -r stamp; do
-      unset STAMP_PKG_NAME STAMP_PKG_DEEPHASH
-      source ${stamp}
-      # only need to verify one stamp per package - either they're all correct, or all incorrect...
-      [ "${opkg}" = "${STAMP_PKG_NAME}" ] && continue || opkg="${STAMP_PKG_NAME}"
-
-      source config/options ${STAMP_PKG_NAME} &>/dev/null
-      if [ "${PKG_NAME}" != "${STAMP_PKG_NAME}" ]; then
-        if [ "${REUSE_VERIFY}" = "yes" ]; then
-          echo "ERROR: .stamps mismatch - current tree does not include package ${STAMP_PKG_NAME}"
-          exit 1
-        else
-          echo "WARNING: .stamps mismatch - current tree does not include package ${STAMP_PKG_NAME}"
-          continue
-        fi
-      fi
-
-      PKG_DEEPHASH=$(calculate_stamp)
-      if [ "${PKG_DEEPHASH}" != "${STAMP_PKG_DEEPHASH}" ]; then
-        if [ "${REUSE_VERIFY}" = "yes" ]; then
-          echo "ERROR: .stamps mismatch - toolchain does not match current tree for package ${STAMP_PKG_NAME}"
-          exit 1
-        else
-          echo "WARNING: .stamps mismatch - toolchain does not match current tree for package ${STAMP_PKG_NAME}"
-        fi
-      fi
-    done <<< "$(find $STAMPS -type f | sort)"
-    exit 0
-  )
-}
-
-restore_toolchain() {
-  local tarfile taropts file start
-
-  if [ -n "${REUSE_PACKAGES}" -a -f "${REUSE_PACKAGES}" ]; then
-    tarfile="${REUSE_PACKAGES}"
-  elif [ -n "${REUSE_TOOLCHAIN}" -a -f "${REUSE_TOOLCHAIN}" ]; then
-    tarfile="${REUSE_TOOLCHAIN}"
-  fi
-
-  [ -z "$tarfile" ] && return 0
-
-  # If directories already exist assume this is an incremental build, and don't restore
-  [ -d $TOOLCHAIN -o -d $STAMPS ] && return 0
-
-  # Avoid concurrent tar restoration when building parallel/concurrent. Restoring multiple
-  # concurrent tar files will be significantly slower (particularly on HDD) than sequentially.
-  (
-    start=$(date +%s)
-    if ! flock --nonblock --exclusive 99; then
-      echo "Project/Device ${DEVICE:-${PROJECT}} waiting, to avoid concurrent tar restore..."
-      while ! flock --nonblock --exclusive 99; do sleep 1; done
-    fi
-    echo "Restoring toolchain from $tarfile - $(date)"
-    command -v pigz >/dev/null && taropts="--use-compress-program=pigz -xf" || taropts="-xzf"
-    tar ${taropts} "$tarfile" --totals --transform "s/^@@BUILD@@\//${BUILD//\//\\/}\//" -C $BUILD
-    echo "Elapsed time restoring toolchain: $(($(date +%s) - start)) seconds"
-
-    # setup ccache
-    if [ -z "$CCACHE_DISABLE" ]; then
-      $TOOLCHAIN/bin/ccache --max-size=$CCACHE_CACHE_SIZE
-    fi
-
-    echo "Verifying toolchain config..."
-    if ! verify_toolchain; then
-      echo
-      echo "Unable to restore toolchain - .build.conf or .stamps no longer match."
-      echo "Aborting build but leaving toolchain in place."
-      echo "Recommendation: perform a clean build, use a different toolchain file,"
-      echo "or (at your own risk) configure REUSE_VERIFY=no to disable .stamps verification."
-      echo
-      exit 1
-    fi
-    exit 0
-  ) 99>/tmp/.libreelec.global.toolchain.lock
-}
-
-backup_toolchain() {
-  local tarfile="$1" taropts start
-
-  [ -z "$tarfile" ] && return 0
-
-  # Do not overwrite existing toolchain file
-  [ -f "$tarfile" ] && return 0
-
-  # Avoid concurrent tar creation when building parallel/concurrent. Creating multiple
-  # concurrent tar files will be significantly slower (particularly on HDD) than sequentially.
-  (
-    start=$(date +%s)
-    if ! flock --nonblock --exclusive 99; then
-      echo "Project/Device ${DEVICE:-${PROJECT}} waiting, to avoid concurrent tar creation..."
-      while ! flock --nonblock --exclusive 99; do sleep 1; done
-    fi
-    echo "Saving toolchain to $tarfile - $(date)"
-    sed 's/export /&TOOLCHAIN_/g' $BUILD/.build.conf >$BUILD/.build.conf.toolchain
-    command -v pigz >/dev/null && taropts="--use-compress-program=pigz -cf" || taropts="-czf"
-    tar ${taropts} "$tarfile" --totals --exclude .ccache --exclude .build.conf --transform "s/^${BUILD//\//\\/}\//@@BUILD@@\//" -C $BUILD .
-    echo "Elapsed time saving toolchain: $(($(date +%s) - start)) seconds"
-  ) 99>/tmp/.libreelec.global.toolchain.lock
-}
-
 fix_module_depends() {
   # modify .modinfo section in kernel module to depends on other required modules
   local MODULE="$1"
@@ -940,7 +826,7 @@ save_build_config() {
   local var
   mkdir -p ${BUILD}
   rm -f ${BUILD}/.build.conf
-  for var in PROJECT DEVICE ARCH HOST_NAME TARGET_NAME DEBUG BUILD_SUFFIX BUILD; do
+  for var in PROJECT DEVICE ARCH DEBUG BUILD_SUFFIX; do
     echo "export ${var}=\"${!var}\"" >> ${BUILD}/.build.conf
   done
 }

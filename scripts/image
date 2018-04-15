@@ -27,8 +27,6 @@ show_config
 
 save_build_config
 
-restore_toolchain
-
 setup_toolchain target
 
 $SCRIPTS/checkdeps
@@ -150,8 +148,6 @@ ln -sf /etc/issue $INSTALL/etc/motd
 $SCRIPTS/install libc
 $SCRIPTS/install gcc
 
-backup_toolchain $REUSE_TOOLCHAIN
-
 $SCRIPTS/install linux
 export _CACHED_KERNEL_MODULE_DIR="$(get_module_dir)"
 
@@ -241,8 +237,6 @@ ln -sT /var/lib/modules $INSTALL/usr/lib/modules
 
 # symlink overlayed firmware to /usr/lib/firmware
 ln -sT /var/lib/firmware $INSTALL/usr/lib/firmware
-
-backup_toolchain $REUSE_PACKAGES
 
 # make target dir
 mkdir -p $TARGET_IMG
