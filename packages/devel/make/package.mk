@@ -27,7 +27,7 @@ PKG_DEPENDS_HOST=""
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="make: GNU make utility to maintain groups of programs"
 PKG_LONGDESC="The 'make' utility automatically determines which pieces of a large program need to be recompiled, and issues commands to recompile them. This is GNU 'make', which was implemented by Richard Stallman and Roland McGrath. GNU 'make' conforms to section 6.2 of EEE Standard 1003.2-1992' (POSIX.2)."
-PKG_TOOLCHAIN="manual"
+#PKG_TOOLCHAIN="manual"
 
 post_unpack() {
   sed -i '211,217 d; 219,229 d; 232 d' $PKG_BUILD/glob/glob.c
@@ -36,12 +36,14 @@ post_unpack() {
 export LDFLAGS="-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now -s"
 export CC=$LOCAL_CC
 
-#PKG_CONFIGURE_OPTS_HOST="--without-guile"
+PKG_CONFIGURE_OPTS_HOST="--without-guile"
 
 post_makeinstall_host() {
-  mkdir -p $TOOLCHAIN/bin
-  ln -sf /usr/bin/make $TOOLCHAIN/bin/gmake
-  ln -sf /usr/bin/make $TOOLCHAIN/bin/make
+#  mkdir -p $TOOLCHAIN/bin
+#  ln -sf /usr/bin/make $TOOLCHAIN/bin/gmake
+#  ln -sf /usr/bin/make $TOOLCHAIN/bin/make
+  
+  ln -sf make $TOOLCHAIN/bin/gmake
 
 #  mkdir -p $TOOLCHAIN/share/aclocal/
 
