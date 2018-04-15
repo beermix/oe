@@ -30,7 +30,7 @@ PKG_TOOLCHAIN="manual"
 
 make_host() {
  export LDFLAGS="-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now -s"
- CXX=/usr/bin/clang++ python3 ./configure.py --bootstrap --verbose
+ CXX=/usr/bin/clang++ python2 ./configure.py --bootstrap --verbose
  # python3./configure.py --bootstrap --verbose
 }
 

@@ -19,7 +19,7 @@
 # libcap,systemd,eudev depends on gperf and must be patched for gperf >= 3.1
 
 PKG_NAME="gperf"
-PKG_VERSION="3.1"
+PKG_VERSION="3.0.4"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
