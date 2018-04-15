@@ -62,7 +62,7 @@ fi
 
 NSS_CONF_DIR="$PKG_BUILD/nss"
 
-GLIBC_EXCLUDE_BIN="catchsegv gencat getconf iconv iconvconfig ldconfig"
+GLIBC_EXCLUDE_BIN="catchsegv gencat getconf iconvconfig ldconfig"
 GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN makedb mtrace pcprofiledump"
 GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN pldd rpcgen sln sotruss sprof xtrace"
 
@@ -136,7 +136,7 @@ echo "rootsbindir=/usr/bin" >> configparms
 
 post_makeinstall_target() {
 # xlocale.h was renamed - create symlink for compatibility
-#  ln -sf $SYSROOT_PREFIX/usr/include/bits/types/__locale_t.h $SYSROOT_PREFIX/usr/include/xlocale.h
+  ln -sf $SYSROOT_PREFIX/usr/include/bits/types/__locale_t.h $SYSROOT_PREFIX/usr/include/xlocale.h
 
 # we are linking against ld.so, so symlink
   ln -sf $(basename $INSTALL/usr/lib/ld-*.so) $INSTALL/usr/lib/ld.so
@@ -153,8 +153,8 @@ post_makeinstall_target() {
   rm -rf $INSTALL/var
 
 # remove locales and charmaps
-  rm -rf $INSTALL/usr/share/i18n/charmaps
-  rm -rf $INSTALL/usr/share/i18n/locales
+#  rm -rf $INSTALL/usr/share/i18n/charmaps
+#  rm -rf $INSTALL/usr/share/i18n/locales
 
 # add default locale
 if [ "$GLIBC_LOCALES" = yes ]; then
