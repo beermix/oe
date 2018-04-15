@@ -52,6 +52,10 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-openmp \
                            --disable-libpng \
                            --with-gnu-ld"
 
+pre_configure_target() {
+  export LIBS="$LIBS -fopenmp"
+}
+
 post_makeinstall_target() {
   cp $SYSROOT_PREFIX/usr/lib/pkgconfig/pixman-1.pc \
      $SYSROOT_PREFIX/usr/lib/pkgconfig/pixman.pc
