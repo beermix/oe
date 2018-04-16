@@ -18,8 +18,8 @@
 
 PKG_NAME="tiff"
 PKG_VERSION="3.9.7"
-PKG_VERSION="4.0.9"
-#PKG_SHA256="f5d64dd4ce61c55f5e9f6dc3920fbe5a41e02c2e607da7117a35eb5c320cef6a"
+#PKG_VERSION="4.0.9"
+PKG_SHA256="f5d64dd4ce61c55f5e9f6dc3920fbe5a41e02c2e607da7117a35eb5c320cef6a"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://download.osgeo.org/libtiff/?C=M;O=D"
@@ -29,6 +29,7 @@ PKG_SECTION="graphics"
 PKG_SHORTDESC="libtiff: A library for reading and writing TIFF files"
 PKG_LONGDESC="libtiff is a library for reading and writing data files encoded with the Tag Image File format, Revision 6.0 (or revision 5.0 or revision 4.0). This file format is suit- able for archiving multi-color and monochromatic image data."
 PKG_TOOLCHAIN="configure"
+#PKG_TOOLCHAIN="cmake-make"
 PKG_BUILD_FLAGS="+pic"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \
@@ -40,6 +41,8 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            --with-jpeg-include-dir=$SYSROOT_PREFIX/usr/include \
                            --without-x"
 
+PKG_CMAKE_OPTS_TARGET="-DBUILD_SHARED_LIBS=0 -Dcxx=1 -Dmdi=0"
+	
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
 }
