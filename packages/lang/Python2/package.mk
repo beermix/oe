@@ -32,7 +32,7 @@ PKG_SHORTDESC="python2: The Python2 programming language"
 PKG_LONGDESC="Python2 is an interpreted object-oriented programming language, and is often compared with Tcl, Perl, Java or Scheme."
 
 PKG_TOOLCHAIN="autotools"
-PKG_BUILD_FLAGS="-parallel"
+PKG_BUILD_FLAGS="-parallel -gold -hardening"
 
 PKG_PY_DISABLED_MODULES="_tkinter nis gdbm bsddb ossaudiodev"
 
