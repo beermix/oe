@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="iwlwifi-firmware"
-PKG_VERSION="d1b3b46"
+PKG_VERSION="b6a1e20"
 PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="Free-to-use"
