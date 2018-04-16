@@ -51,6 +51,8 @@
   # Project CFLAGS
   # PROJECT_CFLAGS="-mmmx -msse -msse2 -msse3 -mssse3 -msse4.2 -msse4.1 -mfpmath=sse"
     PROJECT_CFLAGS="-mmmx -mno-3dnow -msse -msse2 -msse3 -mssse3 -mno-sse4a -mcx16 -msahf -mno-movbe -mno-aes -mno-sha -mno-pclmul -mpopcnt -mno-abm -mno-lwp -mno-fma -mno-fma4 -mno-xop -mno-bmi -mno-sgx -mno-bmi2 -mno-tbm -mno-avx -mno-avx2 -msse4.2 -msse4.1 -mno-lzcnt -mno-rtm -mno-hle -mno-rdrnd -mno-f16c -mno-fsgsbase -mno-rdseed -mno-prfchw -mno-adx -mfxsr -mno-xsave -mno-xsaveopt -mno-avx512f -mno-avx512er -mno-avx512cd -mno-avx512pf -mno-prefetchwt1 -mno-clflushopt -mno-xsavec -mno-xsaves -mno-avx512dq -mno-avx512bw -mno-avx512vl -mno-avx512ifma -mno-avx512vbmi -mno-avx5124fmaps -mno-avx5124vnniw -mno-clwb -mno-mwaitx -mno-clzero -mno-pku -mno-rdpid -mfpmath=sse"
+    
+  # PROJECT_CFLAGS="-mmmx-mno-sse4 -msse -msse2 -msse2avx -msse3 -msse4 -msse4.1 -msse4.2 -msse4a -msse5 -msseregparm -mssse3
 
   # SquashFS compression method (gzip / lzo / xz / lz4 / zstd )
     SQUASHFS_COMPRESSION="gzip"
