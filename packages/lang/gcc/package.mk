@@ -54,6 +54,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
                            --without-ppl \
+                           --without-cloog \
                            --disable-libada \
                            --disable-libmudflap \
                            --disable-libatomic \
@@ -68,6 +69,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
+                              --enable-cloog-backend=isl \
                               --disable-libsanitizer \
                               --disable-shared \
                               --disable-threads \
@@ -89,7 +91,6 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time \
                          --enable-clocale=gnu \
-                         --disable-libunwind-exceptions \
                          --enable-libatomic \
                          --enable-libgomp \
                          $GCC_OPTS"
