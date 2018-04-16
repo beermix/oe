@@ -17,27 +17,33 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="7.3.0"
-#PKG_SHA256="832ca6ae04636adbb430e865a1451adf6979ab44ca1c8374f61fba65645ce15c"
+PKG_VERSION="7.3.0_isl"
+PKG_SHA256="1d72c0757abb58937626ab265b0fd257c56a18d081c56bab24a60232fcbe04db"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="ftp://gcc.gnu.org/pub/gcc/snapshots/LATEST-7"
-#PKG_URL="https://github.com/gcc-mirror/gcc/archive/$PKG_VERSION.tar.gz"
 #PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/$PKG_VERSION/gcc-$PKG_VERSION.tar.xz"
 #PKG_URL="https://sources.archlinux.org/other/gcc/gcc-$PKG_VERSION.tar.xz"
 PKG_URL="ftp://gcc.gnu.org/pub/gcc/releases/gcc-$PKG_VERSION/gcc-$PKG_VERSION.tar.xz"
+PKG_URL="http://192.168.1.200:8080/%2Fgcc-7.3.0_isl.tar.xz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host"
 PKG_DEPENDS_TARGET="gcc:host"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
+#PKG_NEED_UNPACK="$(get_pkg_directory isl)"
 PKG_SECTION="lang"
 PKG_SHORTDESC="gcc: The GNU Compiler Collection Version 4 (aka GNU C Compiler)"
 PKG_LONGDESC="This package contains the GNU Compiler Collection. It includes compilers for the languages C, C++, Objective C, Fortran 95, Java and others ... This GCC contains the Stack-Smashing Protector Patch which can be enabled with the -fstack-protector command-line option. More information about it ca be found at http://www.research.ibm.com/trl/projects/security/ssp/."
+
+#post_unpack() {
+#  tar xvJ /home/user/-f2fs/oe/sources/isl/isl-0.16.1.tar.xz 
+#}
 
 GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-sysroot=$SYSROOT_PREFIX \
                            --with-gmp=$TOOLCHAIN \
                            --with-mpfr=$TOOLCHAIN \
                            --with-mpc=$TOOLCHAIN \
+                           --with-isl \
                            --with-gnu-as \
                            --with-gnu-ld \
                            --enable-plugin \
@@ -49,7 +55,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
                            --without-ppl \
-                           --without-cloog \
                            --disable-libada \
                            --disable-libmudflap \
                            --disable-libatomic \
@@ -64,7 +69,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
-                              --enable-cloog-backend=isl \
                               --disable-libsanitizer \
                               --disable-shared \
                               --disable-threads \
