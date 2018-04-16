@@ -1,7 +1,0 @@
-lib/crtn.o: libc/sysdeps/linux/x86_64/crtn.S include/libc-symbols.h \
- include/bits/uClibc_arch_features.h
-
-include/libc-symbols.h:
-
-include/bits/uClibc_arch_features.h:
-cmd_lib_crtn.o := /home/user/.aa/buildrootx/output/host/bin/x86_64-buildroot-linux-uclibc-gcc -c libc/sysdeps/linux/x86_64/crtn.S -o lib/crtn.o -Wall -Wstrict-prototypes -Wstrict-aliasing -Wno-nonnull-compare -funsigned-char -fno-builtin -fno-asm -fmerge-all-constants -fno-stack-protector -nostdinc -Iinclude -Iinclude -include libc-symbols.h -Ilibc/sysdeps/linux/x86_64 -Ilibc/sysdeps/linux -Ildso/ldso/x86_64 -Ildso/include -I. -Os -fstrict-aliasing -D__USE_STDIO_FUTEXES__ -DHAVE_FORCED_UNWIND -Ilibpthread/nptl -Ilibpthread/nptl -Ilibpthread/nptl/sysdeps/unix/sysv/linux/x86_64 -Ilibpthread/nptl/sysdeps/x86_64 -Ilibpthread/nptl/sysdeps/x86_64 -Ilibpthread/nptl/sysdeps/unix/sysv/linux -Ilibpthread/nptl/sysdeps/unix/sysv/linux -Ilibpthread/nptl/sysdeps/pthread -Ilibpthread/nptl/sysdeps/pthread/bits -Ilibpthread/nptl/sysdeps/generic -Ilibc/sysdeps/linux/common -isystem /home/user/.aa/buildrootx/output/host/lib/gcc/x86_64-buildroot-linux-uclibc/7.3.0/include-fixed -isystem /home/user/.aa/buildrootx/output/host/lib/gcc/x86_64-buildroot-linux-uclibc/7.3.0/include -I/home/user/.aa/buildrootx/output/build/linux-headers-4.16.2/usr/include/ -DNDEBUG -fPIC -MT lib/crtn.o -MD -MP -MF lib/.crtn.o.dep -D__ASSEMBLER__ -Wa,--noexecstack -DUSE___THREAD -fPIC -fno-stack-protector
