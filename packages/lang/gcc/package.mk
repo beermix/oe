@@ -17,15 +17,14 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="7.3.0_isl"
-PKG_SHA256="1d72c0757abb58937626ab265b0fd257c56a18d081c56bab24a60232fcbe04db"
+PKG_VERSION="7.3.0.isl"
+PKG_SHA256="6bdad3d38946ee815357a875623b975af10df7ce42ec2ed68983bfac6f0d6fd8"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="ftp://gcc.gnu.org/pub/gcc/snapshots/LATEST-7"
 #PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/$PKG_VERSION/gcc-$PKG_VERSION.tar.xz"
 #PKG_URL="https://sources.archlinux.org/other/gcc/gcc-$PKG_VERSION.tar.xz"
-PKG_URL="ftp://gcc.gnu.org/pub/gcc/releases/gcc-$PKG_VERSION/gcc-$PKG_VERSION.tar.xz"
-PKG_URL="http://192.168.1.200:8080/%2Fgcc-7.3.0_isl.tar.xz"
+PKG_URL="http://192.168.1.200:8080/%2Fgcc-7.3.0.isl.tar.xz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host"
 PKG_DEPENDS_TARGET="gcc:host"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
