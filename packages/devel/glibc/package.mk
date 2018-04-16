@@ -45,6 +45,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
                            --enable-kernel=3.10 \
+                           --enable-stack-protector=strong \
                            --without-cvs \
                            --without-gd \
                            --enable-obsolete-rpc \
@@ -62,7 +63,7 @@ fi
 
 NSS_CONF_DIR="$PKG_BUILD/nss"
 
-GLIBC_EXCLUDE_BIN="catchsegv gencat getconf iconvconfig ldconfig"
+GLIBC_EXCLUDE_BIN="catchsegv gencat getconf iconv iconvconfig ldconfig"
 GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN makedb mtrace pcprofiledump"
 GLIBC_EXCLUDE_BIN="$GLIBC_EXCLUDE_BIN pldd rpcgen sln sotruss sprof xtrace"
 
@@ -138,6 +139,9 @@ post_makeinstall_target() {
 # xlocale.h was renamed - create symlink for compatibility
   ln -sf $SYSROOT_PREFIX/usr/include/bits/types/__locale_t.h $SYSROOT_PREFIX/usr/include/xlocale.h
 
+# symlink locale directory
+  ln -sf /storage/.config/locale $INSTALL/usr/lib/locale
+
 # we are linking against ld.so, so symlink
   ln -sf $(basename $INSTALL/usr/lib/ld-*.so) $INSTALL/usr/lib/ld.so
 
@@ -157,14 +161,14 @@ post_makeinstall_target() {
 #  rm -rf $INSTALL/usr/share/i18n/locales
 
 # add default locale
-if [ "$GLIBC_LOCALES" = yes ]; then
-  mkdir -p $INSTALL/usr/lib/locale
-  mkdir -p $INSTALL/etc/profile.d
-  I18NPATH=../localedata 
-  localedef -i ../localedata/locales/en_US -f ../localedata/charmaps/UTF-8 en_US.UTF-8 --prefix=$INSTALL
-  localedef -i ../localedata/locales/ru_RU -f ../localedata/charmaps/UTF-8 ru_RU.UTF-8 --prefix=$INSTALL
-  echo "export LANG=en_US.UTF-8" > $INSTALL/etc/profile.d/01-locale.conf
-fi
+#if [ "$GLIBC_LOCALES" = yes ]; then
+#  mkdir -p $INSTALL/usr/lib/locale
+#  mkdir -p $INSTALL/etc/profile.d
+#  I18NPATH=../localedata 
+#  localedef -i ../localedata/locales/en_US -f ../localedata/charmaps/UTF-8 en_US.UTF-8 --prefix=$INSTALL
+#  localedef -i ../localedata/locales/ru_RU -f ../localedata/charmaps/UTF-8 ru_RU.UTF-8 --prefix=$INSTALL
+#  echo "export LANG=en_US.UTF-8" > $INSTALL/etc/profile.d/01-locale.conf
+#fi
 
 # create default configs
   mkdir -p $INSTALL/etc
