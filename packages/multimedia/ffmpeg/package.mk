@@ -185,6 +185,7 @@ configure_target() {
               --disable-libopencore-amrwb \
               --disable-libopencv \
               --disable-libdc1394 \
+              --disable-libfaac \
               --disable-libfreetype \
               --disable-libgsm \
               --disable-libmp3lame \
@@ -204,7 +205,7 @@ configure_target() {
               --enable-asm \
               --disable-altivec \
               $FFMPEG_FPU \
-              --disable-runtime-cpudetect \
+              --enable-runtime-cpudetect \
               --disable-symver \
               --disable-amd3dnow \
               --disable-amd3dnowext \
