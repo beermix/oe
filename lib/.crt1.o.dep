@@ -1,0 +1,16 @@
+lib/crt1.o: libc/sysdeps/linux/x86_64/crt1.S include/libc-symbols.h \
+ include/bits/uClibc_arch_features.h include/features.h \
+ include/bits/uClibc_config.h include/libc-internal.h include/sys/cdefs.h
+
+include/libc-symbols.h:
+
+include/bits/uClibc_arch_features.h:
+
+include/features.h:
+
+include/bits/uClibc_config.h:
+
+include/libc-internal.h:
+
+include/sys/cdefs.h:
+cmd_lib_crt1.o := /home/user/.aa/buildrootx/output/host/bin/x86_64-buildroot-linux-uclibc-gcc -c libc/sysdeps/linux/x86_64/crt1.S -o lib/crt1.o -Wall -Wstrict-prototypes -Wstrict-aliasing -Wno-nonnull-compare -funsigned-char -fno-builtin -fno-asm -fmerge-all-constants -nostdinc -Iinclude -Iinclude -include libc-symbols.h -Ilibc/sysdeps/linux/x86_64 -Ilibc/sysdeps/linux -I. -Os -fstrict-aliasing -D__USE_STDIO_FUTEXES__ -DHAVE_FORCED_UNWIND -Ilibpthread/nptl -Ilibpthread/nptl -Ilibpthread/nptl/sysdeps/unix/sysv/linux/x86_64 -Ilibpthread/nptl/sysdeps/x86_64 -Ilibpthread/nptl/sysdeps/x86_64 -Ilibpthread/nptl/sysdeps/unix/sysv/linux -Ilibpthread/nptl/sysdeps/unix/sysv/linux -Ilibpthread/nptl/sysdeps/pthread -Ilibpthread/nptl/sysdeps/pthread/bits -Ilibpthread/nptl/sysdeps/generic -Ilibc/sysdeps/linux/common -isystem /home/user/.aa/buildrootx/output/host/lib/gcc/x86_64-buildroot-linux-uclibc/7.3.0/include-fixed -isystem /home/user/.aa/buildrootx/output/host/lib/gcc/x86_64-buildroot-linux-uclibc/7.3.0/include -I/home/user/.aa/buildrootx/output/build/linux-headers-4.16.2/usr/include/ -DNDEBUG -MT lib/crt1.o -MD -MP -MF lib/.crt1.o.dep -D__ASSEMBLER__ -Wa,--noexecstack -DUSE___THREAD -DL_crt1
