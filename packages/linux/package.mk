@@ -42,6 +42,15 @@ case "$LINUX" in
     PKG_BUILD_POWER="no"
     ;;
   zen)
+    PKG_VERSION="b87403c"
+    PKG_SITE="https://github.com/zen-kernel/zen-kernel/branches/active"
+    PKG_URL="https://github.com/zen-kernel/zen-kernel/archive/$PKG_VERSION.tar.gz"
+    PKG_SOURCE_DIR="zen-kernel-$PKG_VERSION*"
+    PKG_PATCH_DIRS="4.16"
+    PKG_BUILD_PERF="no"
+    PKG_BUILD_POWER="no"
+    ;;
+  zen14)
     PKG_VERSION="2f75c80"
     PKG_SITE="https://github.com/zen-kernel/zen-kernel/branches/active"
     PKG_URL="https://github.com/zen-kernel/zen-kernel/archive/$PKG_VERSION.tar.gz"
@@ -100,7 +109,7 @@ post_patch() {
     sed -i -e "s|@DISTRONAME@|$DISTRONAME|g" $PKG_BUILD/.config
 
   # ask for new config options after kernel update
-  # make -C $PKG_BUILD oldconfig
+   make -C $PKG_BUILD oldconfig
 
   # disable swap support if not enabled
   if [ ! "$SWAP_SUPPORT" = yes ]; then
