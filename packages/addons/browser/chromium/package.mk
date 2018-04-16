@@ -57,6 +57,7 @@ post_patch() {
 }
 
 make_host() {
+   export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime
   ./tools/gn/bootstrap/bootstrap.py --no-rebuild --no-clean
 }
 
@@ -114,6 +115,7 @@ make_target() {
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_hangout_services_extension=true'
     'enable_widevine=true'
+    'is_desktop_linux=true'
     'enable_vulkan=false'
     'enable_nacl=false'
     'enable_swiftshader=false'
