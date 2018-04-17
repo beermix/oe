@@ -33,7 +33,7 @@ PKG_PATCH_DIRS="$LINUX"
 
 case "$LINUX" in
   git)
-    PKG_VERSION="b87403c"
+    PKG_VERSION="a27fc14"
     PKG_SITE="https://github.com/zen-kernel/zen-kernel/branches/active"
     PKG_URL="https://github.com/torvalds/linux/archive/$PKG_VERSION.tar.gz"
     PKG_SOURCE_DIR="linux-$PKG_VERSION*"
