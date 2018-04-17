@@ -24,7 +24,7 @@
 PKG_NAME="chromium"
 PKG_VERSION="65.0.3325.181"
 PKG_SHA256="93666448c6b96ec83e6a35a64cff40db4eb92a154fe1db4e7dab4761d0e38687"
-PKG_REV="182"
+PKG_REV="183"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_SITE="http://www.chromium.org/Home"
@@ -57,7 +57,7 @@ post_patch() {
 }
 
 make_host() {
-   export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime
+  export CCACHE_SLOPPINESS=time_macros
   ./tools/gn/bootstrap/bootstrap.py --no-rebuild --no-clean
 }
 
