@@ -17,14 +17,13 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="7.3.0.isl"
-PKG_SHA256="6bdad3d38946ee815357a875623b975af10df7ce42ec2ed68983bfac6f0d6fd8"
+PKG_VERSION="7-20180412"
+#PKG_SHA256="6bdad3d38946ee815357a875623b975af10df7ce42ec2ed68983bfac6f0d6fd8"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="ftp://gcc.gnu.org/pub/gcc/snapshots/LATEST-7"
-#PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/$PKG_VERSION/gcc-$PKG_VERSION.tar.xz"
-#PKG_URL="https://sources.archlinux.org/other/gcc/gcc-$PKG_VERSION.tar.xz"
-PKG_URL="http://192.168.1.200:8080/%2Fgcc-7.3.0.isl.tar.xz"
+PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/$PKG_VERSION/gcc-$PKG_VERSION.tar.xz"
+#PKG_URL="http://192.168.1.200:8080/%2Fgcc-7.3.0.isl.tar.xz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host"
 PKG_DEPENDS_TARGET="gcc:host"
 PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
@@ -42,7 +41,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-gmp=$TOOLCHAIN \
                            --with-mpfr=$TOOLCHAIN \
                            --with-mpc=$TOOLCHAIN \
-                           --with-isl \
                            --with-gnu-as \
                            --with-gnu-ld \
                            --enable-plugin \
@@ -55,12 +53,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-default-libstdcxx-abi=gcc4-compatible \
                            --without-ppl \
                            --without-cloog \
-                           --disable-libada \
-                           --disable-libmudflap \
-                           --disable-libatomic \
-                           --disable-libitm \
-                           --disable-libquadmath \
-                           --disable-libgomp \
                            --disable-libmpx \
                            --disable-libssp \
                            --with-tune=haswell \
@@ -71,6 +63,12 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-__cxa_atexit \
                               --enable-cloog-backend=isl \
                               --disable-libsanitizer \
+                              --disable-libada \
+                              --disable-libmudflap \
+                              --disable-libatomic \
+                              --disable-libitm \
+                              --disable-libquadmath \
+                              --disable-libgomp \
                               --disable-shared \
                               --disable-threads \
                               --without-headers \

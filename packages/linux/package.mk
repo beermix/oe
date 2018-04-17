@@ -41,7 +41,7 @@ case "$LINUX" in
     PKG_BUILD_PERF="no"
     PKG_BUILD_POWER="no"
     ;;
-  zen1)
+  zen)
     PKG_VERSION="b87403c"
     PKG_SITE="https://github.com/zen-kernel/zen-kernel/branches/active"
     PKG_URL="https://github.com/zen-kernel/zen-kernel/archive/$PKG_VERSION.tar.gz"
@@ -50,7 +50,7 @@ case "$LINUX" in
     PKG_BUILD_PERF="no"
     PKG_BUILD_POWER="no"
     ;;
-  zen)
+  zen3)
     PKG_VERSION="2f75c80"
     PKG_SITE="https://github.com/zen-kernel/zen-kernel/branches/active"
     PKG_URL="https://github.com/zen-kernel/zen-kernel/archive/$PKG_VERSION.tar.gz"
