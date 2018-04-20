@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="7-20180412"
+PKG_VERSION="7-20180419"
 #PKG_SHA256="6bdad3d38946ee815357a875623b975af10df7ce42ec2ed68983bfac6f0d6fd8"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
