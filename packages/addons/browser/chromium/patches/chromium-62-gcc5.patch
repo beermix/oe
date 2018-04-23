@@ -1,14 +1,3 @@
---- chromium-62.0.3192.0/cc/paint/paint_op_reader.cc.enum	2017-08-22 21:04:38.000000000 +0200
-+++ chromium-62.0.3192.0/cc/paint/paint_op_reader.cc	2017-08-30 19:19:41.082455143 +0200
-@@ -22,7 +22,7 @@
- }
- 
- bool IsValidSkShaderTileMode(SkShader::TileMode mode) {
--  return mode < SkShader::kTileModeCount;
-+  return int(mode) <= SkShader::kTileModeCount;
- }
- 
- bool IsValidPaintShaderScalingBehavior(PaintShader::ScalingBehavior behavior) {
 --- chromium-62.0.3192.0/content/common/unique_name_helper.cc.unused	2017-08-22 21:04:43.000000000 +0200
 +++ chromium-62.0.3192.0/content/common/unique_name_helper.cc	2017-08-31 07:19:40.055964229 +0200
 @@ -219,15 +219,12 @@
