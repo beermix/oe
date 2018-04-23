@@ -140,10 +140,10 @@ pre_configure_target() {
   LDFLAGS=`echo $LDFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|"`
   
   export CFLAGS=`echo $CFLAGS | sed -e "s|-fno-plt||g"`
-#  LDFLAGS=`echo $LDFLAGS | sed -e "s|,-z,relro,-z,now||"`
-  unset LDFLAGS
+# LDFLAGS=`echo $LDFLAGS | sed -e "s|,-z,relro,-z,now||"`
+# unset LDFLAGS
   unset CPPFLAGS
-  export LDFLAGS="-Wl,--as-needed"
+# export LDFLAGS="-Wl,--as-needed"
 }
 
 post_makeinstall_target() {
