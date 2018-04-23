@@ -12,7 +12,7 @@ fi
 # export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime
 # export CCACHE_SLOPPINESS=file_macro
   export CCACHE_COMPRESS=true
-  export CCACHE_COMPRESSLEVEL=9
+  export CCACHE_COMPRESSLEVEL=7
   export CCACHE_NOSTATS=1
   export CCACHE_OPTIONS="--zero-stats"
 # export CCACHE_HARDLINK=1
