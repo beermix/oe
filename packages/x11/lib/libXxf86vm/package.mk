@@ -29,4 +29,3 @@ PKG_SHORTDESC="libxxf86vm: Extension library for the XFree86-VidMode X extension
 PKG_LONGDESC="The libxxf86vm provides an interface to the server extension XFree86-VidModeExtension which allows the video modes to be queried and adjusted dynamically and mode switching to be controlled."
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-malloc0returnsnull"
-

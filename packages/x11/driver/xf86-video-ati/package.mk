@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="xf86-video-ati"
-PKG_VERSION="18.0.0"
-PKG_SHA256="2c0368fb620d1fdfa2b435e672d65444c2fb9df21bbaf979298484b89ef83981"
+PKG_VERSION="18.0.1"
+PKG_SHA256="72ea3b8127d4550b64f797457f5a7851a541fa4ee2cc3f345b6c1886b81714a0"
 PKG_ARCH="x86_64"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.x.org/"

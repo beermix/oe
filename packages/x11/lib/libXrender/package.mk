@@ -29,4 +29,3 @@ PKG_SHORTDESC="libxrender: X Rendering Extension client library"
 PKG_LONGDESC="The X Rendering Extension (Render) introduces digital image composition as the foundation of a new rendering model within the X Window System. Rendering geometric figures is accomplished by client-side tesselation into either triangles or trapezoids."
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-malloc0returnsnull"
-
