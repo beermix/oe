@@ -56,6 +56,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --without-cloog \
                            --disable-libmpx \
                            --disable-libssp \
+                           --disable-libsanitizer \
                            --with-tune=haswell \
                            --with-arch=westmere"
 
@@ -63,7 +64,6 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
                               --enable-cloog-backend=isl \
-                              --disable-libsanitizer \
                               --disable-libada \
                               --disable-libmudflap \
                               --disable-libatomic \
