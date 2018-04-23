@@ -17,12 +17,13 @@
 ################################################################################
 
 PKG_NAME="mesa"
-PKG_VERSION="18.0.1"
+PKG_VERSION="18.1.0-rc1"
 PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="ftp://freedesktop.org/pub/mesa/"
 PKG_URL="ftp://freedesktop.org/pub/mesa/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain expat libdrm"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="mesa: 3-D graphics library with OpenGL API"
@@ -96,8 +97,8 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --enable-texture-float \
                            --enable-asm \
                            --disable-selinux \
-                           --disable-libunwind \
                            $MESA_PLATFORMS \
+                           --disable-libunwind \
                            --enable-opengl \
                            $MESA_GLES \
                            $MESA_DRI \
@@ -130,7 +131,7 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
 # https://github.com/LibreELEC/LibreELEC.tv/pull/2163
 pre_configure_target() {
   if [ "$DISPLAYSERVER" = "x11" ]; then
-    export LIBS="-lxcb-dri3 -lxcb-dri2 -lxcb-xfixes -lxcb-present -lxcb-sync -lxshmfence"
+    export LIBS="-lxcb-dri3 -lxcb-dri2 -lxcb-xfixes -lxcb-present -lxcb-sync -lxshmfence -lz"
   fi
 }
 
