@@ -7,8 +7,8 @@ PKG_TOOLCHAIN="autotools"
 
 pre_configure_target() {
   cd $PKG_BUILD
-  CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
-  CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-Os|"`
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
+  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-Os|"`
  
 #  export NO_EXPAT="YesPlease"
   export NO_ICONV="YesPlease"
