@@ -9,7 +9,7 @@ index 20d504455b..9a58255fa4
        cflags += [
          "-m64",
 -        "-march=x86-64",
-+        "",
++        "-march=westmere",
        ]
        ldflags += [ "-m64" ]
      } else if (current_cpu == "x86") {
