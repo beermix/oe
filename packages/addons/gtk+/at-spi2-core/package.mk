@@ -27,7 +27,4 @@ PKG_DEPENDS_TARGET="toolchain libXtst dbus glib"
 PKG_SECTION="accessibility"
 PKG_SHORTDESC="D-Bus AT-SPI Core"
 PKG_LONGDESC="AT-SPI technologies are currently migrating to D-Bus for their transport technology. As such, this document serves as a tutorial, design document and project update page for the AT-SPI D-Bus project."
-
-pre_configure_target() {
-  export LC_ALL=en_US.UTF-8
-}
+PKG_TOOLCHAIN="autotools"
