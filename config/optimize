@@ -1,4 +1,4 @@
-GCC_OPTIM="-O2 -pipe --param=l1-cache-size=32 --param=l1-cache-line-size=64 --param=l2-cache-size=3072 -fno-caller-saves -fno-plt"
+GCC_OPTIM="-O2 -pipe --param=l1-cache-size=32 --param=l1-cache-line-size=64 --param=l2-cache-size=3072 -fno-plt"
 LD_OPTIM="-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now"
 
 if [ "${BUILD_WITH_DEBUG}" = "yes" ]; then
