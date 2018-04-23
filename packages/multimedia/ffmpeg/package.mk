@@ -206,7 +206,29 @@ configure_target() {
               --disable-altivec \
               $FFMPEG_FPU \
               --enable-yasm \
-              --disable-symver
+              --disable-symver \
+              --disable-symver \
+              --disable-amd3dnow \
+              --disable-amd3dnowext \
+              --enable-mmx \
+              --enable-sse \
+              --enable-sse2 \
+              --enable-sse3 \
+              --enable-ssse3 \
+              --disable-sse4 \
+              --enable-sse42 \
+              --disable-avx \
+              --disable-xop \
+              --disable-fma3 \
+              --disable-fma4 \
+              --disable-avx2 \
+              --disable-aesni \
+              --disable-armv5te \
+              --disable-armv6 \
+              --disable-armv6t2 \
+              --disable-vfp \
+              --disable-neon \
+              $FFMPEG_X11GRAB
 }
 
 post_makeinstall_target() {
