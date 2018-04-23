@@ -17,7 +17,7 @@
  ################################################################################  libXcursor libSM libXtst libXvMC xcb-util
 
 PKG_NAME="xf86-video-intel"
-PKG_VERSION="16820c4"
+PKG_VERSION="02dfb91"
 PKG_ARCH="x86_64"
 PKG_LICENSE="OSS"
 PKG_SITE="https://cgit.freedesktop.org/xorg/driver/xf86-video-intel/log/"
