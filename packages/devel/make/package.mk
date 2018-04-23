@@ -33,7 +33,7 @@ post_unpack() {
   sed -i '211,217 d; 219,229 d; 232 d' $PKG_BUILD/glob/glob.c
 }
 
-export LDFLAGS="-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now -s"
+export LDFLAGS="$LDFLAGS -s"
 export CC=$LOCAL_CC
 
 PKG_CONFIGURE_OPTS_HOST="--without-guile"
