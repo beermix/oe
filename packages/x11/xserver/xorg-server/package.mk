@@ -139,7 +139,7 @@ pre_configure_target() {
   CFLAGS=`echo $CFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|"`
   LDFLAGS=`echo $LDFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|"`
   
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-fno-plt||"`
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-fno-plt||g"`
 #  LDFLAGS=`echo $LDFLAGS | sed -e "s|,-z,relro,-z,now||"`
   unset LDFLAGS
   unset CPPFLAGS
