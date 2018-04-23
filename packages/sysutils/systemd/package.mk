@@ -18,12 +18,11 @@
 
 PKG_NAME="systemd"
 PKG_VERSION="238"
-PKG_SHA256="a65262c9a1398ac4c20ebd58be0da941edb6b356bdc5859bb247a19fef449866"
+PKG_SHA256="bbc8599bab2e3c4273886dfab12464e488ecdaf20b8284949e50f8858de3e022"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/systemd/systemd/"
 PKG_URL="https://github.com/systemd/systemd/archive/v$PKG_VERSION.tar.gz"
-PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain libcap kmod util-linux entropy"
 PKG_NEED_UNPACK="$LINUX_DEPENDS"
 PKG_SECTION="system"
@@ -33,6 +32,7 @@ PKG_LONGDESC="systemd is a system and session manager for Linux, compatible with
 PKG_MESON_OPTS_TARGET="--libdir=/usr/lib \
                        -Drootprefix=/usr \
                        -Dsplit-usr=false \
+                       -Dsplit-bin=true \
                        -Ddefault-hierarchy=hybrid \
                        -Dtty-gid=5 \
                        -Dtests=false \
