@@ -53,6 +53,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-checking=release \
                            --without-ppl \
                            --without-cloog \
+                           --disable-libada \
                            --disable-libmpx \
                            --disable-libssp \
                            --disable-libsanitizer \
@@ -65,7 +66,6 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
                               --enable-cloog-backend=isl \
-                              --disable-libada \
                               --disable-libatomic \
                               --disable-libitm \
                               --disable-libgomp \
