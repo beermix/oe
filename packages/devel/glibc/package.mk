@@ -44,7 +44,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-__thread \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
-                           --enable-kernel=3.10 \
+                           --enable-kernel=4.4 \
                            --without-cvs \
                            --without-gd \
                            --enable-obsolete-rpc \
@@ -114,7 +114,7 @@ pre_configure_target() {
 
   unset LD_LIBRARY_PATH
 
-  export CFLAGS="-O2 -march=westmere --param=l1-cache-line-size=64 --param=l1-cache-size=32 --param=l2-cache-size=3072 -g -m64"
+  export CFLAGS="-O2 -g -m64 -march=westmere --param=l1-cache-line-size=64 --param=l1-cache-size=32 --param=l2-cache-size=3072"
 #  export CFLAGS="-O2 -march=westmere -g -m64"
 
   export BUILD_CC=$HOST_CC
