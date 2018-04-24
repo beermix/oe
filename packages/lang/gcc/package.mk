@@ -51,9 +51,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-multilib \
                            --disable-nls \
                            --enable-checking=release \
-                           --without-ppl \
-                           --without-cloog \
-                           --disable-libada \
                            --disable-libmpx \
                            --disable-libssp \
                            --disable-libsanitizer \
