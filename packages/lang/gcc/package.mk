@@ -51,13 +51,12 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-multilib \
                            --disable-nls \
                            --enable-checking=release \
-                           --with-default-libstdcxx-abi=gcc4-compatible \
                            --without-ppl \
                            --without-cloog \
                            --disable-libmpx \
                            --disable-libssp \
                            --disable-libsanitizer \
-                           --disable-libquadmath \\
+                           --disable-libquadmath \
                            --disable-libmudflap \
                            --with-tune=haswell \
                            --with-arch=westmere"

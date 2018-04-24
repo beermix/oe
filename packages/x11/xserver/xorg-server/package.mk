@@ -136,14 +136,10 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
 
 pre_configure_target() {
 # hack to prevent a build error
-  CFLAGS=`echo $CFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|"`
-  LDFLAGS=`echo $LDFLAGS | sed -e "s|-O3|-O2|" -e "s|-Ofast|-O2|"`
-  
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-fno-plt||g"`
-# LDFLAGS=`echo $LDFLAGS | sed -e "s|,-z,relro,-z,now||"`
-# unset LDFLAGS
-  unset CPPFLAGS
-# export LDFLAGS="-Wl,--as-needed"
+  CFLAGS=`echo $CFLAGS | sed -e "s|-fno-plt||g"`
+  LDFLAGS=`echo $LDFLAGS | sed -e "s|,-z,relro,-z,now||g"`
+  CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=1||g"`
+  CPPFLAGS=`echo $CPPFLAGS | sed -e "s|-D_FORTIFY_SOURCE=2||g"`
 }
 
 post_makeinstall_target() {
