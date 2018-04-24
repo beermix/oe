@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="readline"
-PKG_VERSION="b5bc900"
+PKG_VERSION="6c32f81"
 PKG_SITE="http://www.gnu.org/software/readline/"
 PKG_URL="http://git.savannah.gnu.org/cgit/readline.git/snapshot/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain ncurses"
@@ -26,9 +26,9 @@ PKG_SHORTDESC="readline: The GNU Readline library provides a set of functions fo
 PKG_LONGDESC="The GNU Readline library provides a set of functions for use by applications that allow users to edit command lines as they are typed in."
 PKG_BUILD_FLAGS="+pic:host +pic"
 
-post_unpack() {
-  sed -i 's|-Wl,-rpath,$(libdir) ||g' $PKG_BUILD/support/shobj-conf
-}
+#post_unpack() {
+#  sed -i 's|-Wl,-rpath,$(libdir) ||g' $PKG_BUILD/support/shobj-conf
+#}
 
 PKG_CONFIGURE_OPTS_TARGET="bash_cv_wcwidth_broken=no --with-curses --enable-static"
 PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
