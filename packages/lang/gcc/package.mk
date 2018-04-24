@@ -57,7 +57,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libmpx \
                            --disable-libssp \
                            --disable-libsanitizer \
-                           --disable-libquadmath \
                            --disable-libmudflap \
                            --with-tune=haswell \
                            --with-arch=westmere"
@@ -68,6 +67,7 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-cloog-backend=isl \
                               --disable-libatomic \
                               --disable-libitm \
+                              --disable-libquadmath \
                               --disable-libgomp \
                               --disable-shared \
                               --disable-threads \
