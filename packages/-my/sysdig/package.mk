@@ -1,0 +1,7 @@
+PKG_NAME="sysdig"
+PKG_VERSION="0.21.0"
+PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="https://github.com/draios/sysdig/archive/$PKG_VERSION.tar.gz"
+PKG_DEPENDS_TARGET="toolchain"
+PKG_SECTION="debug/tools"
+PKG_TOOLCHAIN="cmake-make"
