@@ -17,7 +17,8 @@
 ################################################################################
 
 PKG_NAME="libxml2"
-PKG_VERSION="2.9.8"
+PKG_VERSION="2.9.4"
+PKG_SHA256="ffb911191e509b966deb55de705387f14156e1a56b21824357cdf0053233633c"
 PKG_ARCH="any"
 PKG_LICENSE="MIT"
 PKG_SITE="http://xmlsoft.org"
@@ -31,18 +32,15 @@ PKG_LONGDESC="The libxml package contains an XML library, which allows you to ma
 PKG_CONFIGURE_OPTS_ALL="ac_cv_header_ansidecl_h=no \
              --enable-static \
              --enable-shared \
-             --enable-silent-rules \
-             --disable-ipv6 \
-             --without-debug \
+             --disable-silent-rules \
+             --enable-ipv6 \
              --without-python \
-             --with-threads \
-             --with-history \
              --with-zlib=$TOOLCHAIN \
              --without-lzma"
 
 PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_ALL --with-zlib=$TOOLCHAIN"
 
-PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_ALL --with-zlib=$SYSROOT_PREFIX/usr --with-sysroot=$SYSROOT_PREFIX --without-debug --with-threads --with-history"
+PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_ALL --with-zlib=$SYSROOT_PREFIX/usr --with-sysroot=$SYSROOT_PREFIX"
 
 post_makeinstall_target() {
   $SED "s:\(['= ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" $SYSROOT_PREFIX/usr/bin/xml2-config

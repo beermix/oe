@@ -17,15 +17,14 @@
 ################################################################################
 
 PKG_NAME="gst-plugins-good"
-PKG_VERSION="1.12.3"
+PKG_VERSION="$GST_VERSION"
 PKG_SITE="http://gstreamer.freedesktop.org/gstreamer"
 PKG_URL="https://gstreamer.freedesktop.org/src/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain libpng tiff dbus fontconfig eglibc zlib gstreamer gst-plugins-base"
+PKG_DEPENDS_TARGET="toolchain libpng tiff dbus fontconfig zlib gstreamer gst-plugins-base"
 PKG_SECTION="lib"
 PKG_SHORTDESC="gst-plugins-good"
 PKG_LONGDESC="gst-plugins-good"
-
-
+PKG_TOOLCHAIN="configure" # ToDo
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-maintainer-mode \
 			      --disable-dependency-tracking \

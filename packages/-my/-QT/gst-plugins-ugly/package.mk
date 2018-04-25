@@ -17,16 +17,14 @@
 ################################################################################
 
 PKG_NAME="gst-plugins-ugly"
-PKG_VERSION="1.12.3"
+PKG_VERSION="$GST_VERSION"
 PKG_SITE="http://gstreamer.freedesktop.org/gstreamer"
 PKG_URL="http://gstreamer.freedesktop.org/src/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain libpng tiff dbus fontconfig eglibc zlib gstreamer"
+PKG_DEPENDS_TARGET="toolchain libpng tiff dbus fontconfig zlib gstreamer"
 PKG_SECTION="lib"
 PKG_SHORTDESC="gst-plugins-ugly"
 PKG_LONGDESC="gst-plugins-ugly"
-
-
-
+PKG_TOOLCHAIN="configure" # ToDo
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-maintainer-mode \
 			      --disable-dependency-tracking \

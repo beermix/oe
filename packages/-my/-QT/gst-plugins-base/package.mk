@@ -17,16 +17,13 @@
 ################################################################################
 
 PKG_NAME="gst-plugins-base"
-PKG_VERSION="1.12.3"
+PKG_VERSION="$GST_VERSION"
 PKG_SITE="http://gstreamer.freedesktop.org/gstreamer"
 PKG_URL="https://gstreamer.freedesktop.org/src/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain libpng tiff dbus fontconfig zlib gstreamer"
 PKG_SECTION="lib"
 PKG_SHORTDESC="gst-plugins-base"
-PKG_LONGDESC="gst-plugins-base"
-
-
-
+PKG_TOOLCHAIN="configure" # ToDo
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-maintainer-mode \
 			      --enable-silent-rules \

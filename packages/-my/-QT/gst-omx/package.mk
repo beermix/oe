@@ -17,16 +17,14 @@
 ################################################################################
 
 PKG_NAME="gst-omx"
-PKG_VERSION="1.12.3"
+PKG_VERSION="$GST_VERSION"
 PKG_SITE="http://gstreamer.freedesktop.org/gstreamer"
 PKG_URL="https://gstreamer.freedesktop.org/src/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain libpng tiff dbus fontconfig eglibc zlib gstreamer"
+PKG_DEPENDS_TARGET="toolchain libpng tiff dbus fontconfig zlib gstreamer"
 PKG_SECTION="lib"
 PKG_SHORTDESC="gstreamer omx module"
 PKG_LONGDESC="gstreamer omx module"
-
-
-
+PKG_TOOLCHAIN="configure" # ToDo
 
 if [ "$XBMCPLAYER_DRIVER" = "bcm2835-driver" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET bcm2835-driver"
