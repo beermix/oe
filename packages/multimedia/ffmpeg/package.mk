@@ -17,12 +17,11 @@
 ################################################################################
 
 PKG_NAME="ffmpeg"
-PKG_VERSION="3.1.11-Krypton-17.5"
+PKG_VERSION="ac1ddc6"
 PKG_ARCH="any"
 PKG_LICENSE="LGPLv2.1+"
-PKG_SITE="https://github.com/FFmpeg/FFmpeg/branches/active"
-PKG_URL="https://github.com/xbmc/FFmpeg/archive/${PKG_VERSION}.tar.gz"
-#PKG_URL="https://github.com/FFmpeg/FFmpeg/archive/${PKG_VERSION}.tar.gz"
+#PKG_URL="https://github.com/xbmc/FFmpeg/archive/${PKG_VERSION}.tar.gz"
+PKG_URL="https://github.com/FFmpeg/FFmpeg/archive/${PKG_VERSION}.tar.gz"
 PKG_SOURCE_DIR="FFmpeg-${PKG_VERSION}*"
 PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl speex"
 PKG_SECTION="multimedia"
