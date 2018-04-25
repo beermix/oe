@@ -18,7 +18,7 @@ fi
 # export CCACHE_HARDLINK=1
 # export CCACHE_CPP2=1
 # export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime
- export CCACHE_COMPILERCHECK=mtime
+# export CCACHE_COMPILERCHECK=mtime
 
 # determines DISTRO, if not forced by user
 # default is LibreELEC
