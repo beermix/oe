@@ -19,7 +19,7 @@
 #  http://svnweb.mageia.org/packages/cauldron/chromium-browser-stable/current
 #  http://omahaproxy.appspot.com/
 #  https://www.chromestatus.com/
-################################################################################ libevent:host
+################################################################################
 
 PKG_NAME="chromium"
 PKG_VERSION="66.0.3359.117"
@@ -31,7 +31,7 @@ PKG_SITE="http://www.chromium.org/Home"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/$PKG_NAME-$PKG_VERSION.tar.xz"
 #PKG_URL="https://gsdview.appspot.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="pciutils gperf:host dbus libXtst libXcomposite libXcursor alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk intel-vaapi-driver libva-vdpau-driver unclutter xdotool libdrm libjpeg-turbo freetype icu harfbuzz gtk+ libwebp re2 snappy chromium:host"
+PKG_DEPENDS_TARGET="pciutils gperf:host dbus libXtst libXcomposite libXcursor alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk intel-vaapi-driver libva-vdpau-driver unclutter xdotool libdrm libjpeg-turbo freetype icu harfbuzz gtk+ libwebp re2 snappy libevent:host chromium:host"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -54,6 +54,7 @@ post_patch() {
   sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' ./third_party/widevine/cdm/stub/widevine_cdm_version.h
 
   patch -Np4 -i $PKG_DIR/chromium-skia-harmony.patch
+  tar xfC $PKG_DIR/blink-tools-$pkgver.tar.gz ./third_party/blink/tools/
 }
 
 make_host() {
