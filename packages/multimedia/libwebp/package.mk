@@ -10,7 +10,7 @@ PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-swap-16bit-csp \
 			      --enable-experimental \
-			      --disable-libwebp-mux \
+			      --enable-libwebp-mux \
 			      --enable-libwebp-demux \
 			      --enable-libwebp-decoder"
 
