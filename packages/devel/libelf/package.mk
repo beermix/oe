@@ -25,19 +25,8 @@ PKG_DEPENDS_TARGET="libelf:host"
 PKG_SECTION="devel"
 PKG_TOOLCHAIN="autotools"
 
-PKG_CONFIGURE_OPTS_HOST="--enable-compat --enable-elf64 --enable-extended-format --enable-static --disable-shared"
-
-PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"
-
-makeinstall_target() {
-  mkdir -p $INSTALL_DEV/bin
-  mkdir -p $SYSROOT_PREFIX/usr/include
-    cp lib/elf_repl.h $SYSROOT_PREFIX/usr/include
-    cp lib/gelf.h $SYSROOT_PREFIX/usr/include
-    cp lib/libelf.h $SYSROOT_PREFIX/usr/include
-    cp lib/nlist.h $SYSROOT_PREFIX/usr/include
-    cp lib/sys_elf.h $SYSROOT_PREFIX/usr/include
-    
-  mkdir -p $SYSROOT_PREFIX/usr/lib
-    cp lib/libelf.a $SYSROOT_PREFIX/usr/lib
-}
+PKG_CONFIGURE_OPTS_HOST="--enable-compat \
+			    --enable-elf64 \
+			    --enable-extended-format \
+			    --enable-static \
+			    --disable-shared"

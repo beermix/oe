@@ -1,0 +1,46 @@
+commit e23c71330c3b332d19fdf9e48ca8b03680d9ad34
+Author: Mark Wielaard <mark@klomp.org>
+Date:   Thu Nov 2 16:23:24 2017 +0100
+
+    readelf: Handle DW_OP_GNU_variable_value.
+    
+    Also format both DW_OP_call_ref and DW_OP_GNU_variable_value argument
+    as a normal DIE reference.
+    
+    Signed-off-by: Mark Wielaard <mark@klomp.org>
+
+diff --git a/libdw/dwarf.h b/libdw/dwarf.h
+index 902d261..8edf719 100644
+--- a/libdw/dwarf.h
++++ b/libdw/dwarf.h
+@@ -545,6 +545,7 @@ enum
+     DW_OP_GNU_convert = 0xf7,
+     DW_OP_GNU_reinterpret = 0xf9,
+     DW_OP_GNU_parameter_ref = 0xfa,
++    DW_OP_GNU_variable_value = 0xfd,
+ 
+     DW_OP_lo_user = 0xe0,	/* Implementation-defined range start.  */
+     DW_OP_hi_user = 0xff	/* Implementation-defined range end.  */
+diff --git a/src/readelf.c b/src/readelf.c
+index 5e2f3fc..833884b 100644
+--- a/src/readelf.c
++++ b/src/readelf.c
+@@ -4160,6 +4160,7 @@ print_ops (Dwfl_Module *dwflmod, Dwarf *dbg, int indent, int indentrest,
+ 	  break;
+ 
+ 	case DW_OP_call_ref:
++	case DW_OP_GNU_variable_value:
+ 	  /* Offset operand.  */
+ 	  if (ref_size != 4 && ref_size != 8)
+ 	    goto invalid; /* Cannot be used in CFA.  */
+@@ -4170,8 +4171,8 @@ print_ops (Dwfl_Module *dwflmod, Dwarf *dbg, int indent, int indentrest,
+ 	    addr = read_8ubyte_unaligned (dbg, data);
+ 	  data += ref_size;
+ 	  CONSUME (ref_size);
+-
+-	  printf ("%*s[%4" PRIuMAX "] %s %#" PRIxMAX "\n",
++	  /* addr is a DIE offset, so format it as one.  */
++	  printf ("%*s[%4" PRIuMAX "] %s [%6" PRIxMAX "]\n",
+ 		  indent, "", (uintmax_t) offset,
+ 		  op_name, (uintmax_t) addr);
+ 	  offset += 1 + ref_size;
