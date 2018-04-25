@@ -55,7 +55,7 @@ post_patch() {
   # set correct widevine
   sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' ./third_party/widevine/cdm/stub/widevine_cdm_version.h
 
-  patch -Np4 -i $PKG_DIR/chromium-skia-harmony.patch
+  # patch -Np4 -i $PKG_DIR/chromium-skia-harmony.patch
   tar xfC $PKG_DIR/blink-tools-$PKG_VERSION.tar.gz ./third_party/blink/tools/
 }
 
@@ -113,6 +113,9 @@ make_target() {
     'use_gnome_keyring=false'
     'use_gold=false'
     'use_gtk3=false'
+    'linux_link_libgio=true'
+    'linux_link_libudev=true'
+    'linux_link_libspeechd=true'
     'use_kerberos=false'
     'use_pulseaudio=false'
     'use_sysroot=true'
