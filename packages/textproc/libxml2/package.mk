@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="libxml2"
-PKG_VERSION="2.9.4"
-PKG_SHA256="ffb911191e509b966deb55de705387f14156e1a56b21824357cdf0053233633c"
+PKG_VERSION="2.9.7"
+PKG_SHA256="f63c5e7d30362ed28b38bfa1ac6313f9a80230720b7fb6c80575eeab3ff5900c"
 PKG_ARCH="any"
 PKG_LICENSE="MIT"
 PKG_SITE="http://xmlsoft.org"
