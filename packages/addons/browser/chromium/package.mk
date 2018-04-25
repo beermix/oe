@@ -31,7 +31,7 @@ PKG_SITE="http://www.chromium.org/Home"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/$PKG_NAME-$PKG_VERSION.tar.xz"
 #PKG_URL="https://gsdview.appspot.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="pciutils gperf:host dbus libXtst libXcomposite libXcursor alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk intel-vaapi-driver libva-vdpau-driver unclutter xdotool libdrm libjpeg-turbo freetype icu harfbuzz gtk+ libwebp re2 snappy libevent:host chromium:host"
+PKG_DEPENDS_TARGET="pciutils gperf:host dbus libXtst libXcomposite libXcursor alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk intel-vaapi-driver libva-vdpau-driver unclutter xdotool libdrm libjpeg-turbo freetype icu harfbuzz gtk+ re2 snappy libevent:host chromium:host"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -133,7 +133,7 @@ declare -rgA _system_libs=(
   [libjpeg]=libjpeg
   #[libpng]=libpng              # https://crbug.com/752403#c10
   #[libvpx]=libvpx              # https://bugs.gentoo.org/611394
-  [libwebp]=libwebp
+  #[libwebp]=libwebp
   [libxml]=libxml2
   [libxslt]=libxslt
   [re2]=re2
@@ -180,7 +180,7 @@ addon() {
   cp -PL $(get_build_dir cairo)/.install_pkg/usr/lib/libcairo-gobject.so.2 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # libwebp
-  cp -ri $(get_build_dir libwebp)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  # cp -ri $(get_build_dir libwebp)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # atk
   cp -ri $(get_build_dir atk)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
