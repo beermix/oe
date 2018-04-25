@@ -1,6 +1,5 @@
 GCC_OPTIM="-O2 -pipe --param=l1-cache-size=32 --param=l1-cache-line-size=64 --param=l2-cache-size=3072"
 LD_OPTIM="-Wl,--as-needed"
-#CPP_OPTIM="-D_FORTIFY_SOURCE=1"
 
 if [ "${BUILD_WITH_DEBUG}" = "yes" ]; then
   TARGET_CFLAGS="$TARGET_CFLAGS -ggdb"
@@ -47,10 +46,10 @@ LDFLAGS_OPTIM_PIC="-fPIC"
 
 # hardening support ||| -Wp,-D_REENTRANT -fexceptions  -ftree-loop-distribute-patterns -malign-data=abi -fno-semantic-interposition -ftree-vectorize  -ftree-loop-vectorize
 # TODO: basiclly copied from debian 9, should adjust for LE
-CFLAGS_OPTIM_HARDENING="-fexceptions -fstack-protector --param=ssp-buffer-size=32 -fasynchronous-unwind-tables -ftree-loop-distribute-patterns -malign-data=abi -fno-semantic-interposition -ftree-vectorize -ftree-loop-vectorize"
+CFLAGS_OPTIM_HARDENING="-fstack-protector-strong"
 CXXFLAGS_OPTIM_HARDENING="$CFLAGS_OPTIM_HARDENING"
-CPPFLAGS_OPTIM_HARDENING="-D_REENTRANT -D_FORTIFY_SOURCE=2"
-LDFLAGS_OPTIM_HARDENING="-Wl,--sort-common,-z,relro,-z,now"
+CPPFLAGS_OPTIM_HARDENING="-D_FORTIFY_SOURCE=2"
+LDFLAGS_OPTIM_HARDENING="-Wl,-z -Wl,now -Wl,-z -Wl,relro -Wl,-sort-common"
 
 # add distro specific library dirs
 if [ -z "$HOST_LIBDIR" ]; then
