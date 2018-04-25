@@ -33,7 +33,7 @@ PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chro
 PKG_URL="http://192.168.1.200:8080/%2Fchromium-66.0.3359.117.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
 PKG_SOURCE_DIR="chromium-$PKG_VERSION*"
-PKG_DEPENDS_TARGET="pciutils gperf:host dbus libXtst libXcomposite libXcursor alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk intel-vaapi-driver libva-vdpau-driver unclutter xdotool libdrm libjpeg-turbo freetype icu harfbuzz gtk+ libwebp re2 snappy libwebp chromium:host"
+PKG_DEPENDS_TARGET="pciutils gperf:host dbus libXtst libXcomposite libXcursor alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk intel-vaapi-driver libva-vdpau-driver unclutter xdotool libdrm libjpeg-turbo freetype icu harfbuzz gtk+ re2 snappy libwebp chromium2:host"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -47,15 +47,14 @@ PKG_ADDON_TYPE="xbmc.python.script"
 PKG_ADDON_PROVIDES="executable"
 
 post_patch() {
-  cd $(get_build_dir chromium)
+  cd $(get_build_dir chromium2)
 
   # Use Python 2
-  find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$TOOLCHAIN/bin/python|g" {} +
+  find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$TOOLCHAIN/bin/python2|g" {} +
 
   # set correct widevine
   sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' ./third_party/widevine/cdm/stub/widevine_cdm_version.h
 
-  # patch -Np4 -i $PKG_DIR/chromium-skia-harmony.patch
   tar xfC $PKG_DIR/blink-tools-$PKG_VERSION.tar.gz ./third_party/blink/tools/
 }
 
@@ -70,7 +69,7 @@ make_target() {
   unset CFLAGS
   unset CXXFLAGS
   unset LDFLAGS
-  
+
   export CFLAGS="$CFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables -Wno-builtin-macro-redefined"
   export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables -Wno-builtin-macro-redefined"
   export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES -D__DATE__= -D__TIME__= -D__TIMESTAMP__="
@@ -79,7 +78,7 @@ make_target() {
 
   # Allow building against system libraries in official builds
   # sed -i 's/OFFICIAL_BUILD/GOOGLE_CHROME_BUILD/' ./tools/generate_shim_headers/generate_shim_headers.py
-  
+
   # Work around broken screen sharing in Google Meet
   # https://crbug.com/829916#c16
   sed -i 's/"Chromium/"Chrome/' ./chrome/common/chrome_content_client_constants.cc
@@ -87,6 +86,9 @@ make_target() {
   # Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
   # Note: These are for OpenELEC use ONLY. For your own distribution, please
   # get your own set of keys.
+
+  # Force script incompatible with Python 3 to use /usr/bin/python2
+  sed -i '1s|python$|&2|' ./third_party/dom_distiller_js/protoc_plugins/*.py
 
   local _google_api_key=AIzaSyAQ6L9vt9cnN4nM0weaa6Y38K4eyPvtKgI
   local _google_default_client_id=740889307901-4bkm4e0udppnp1lradko85qsbnmkfq3b.apps.googleusercontent.com
@@ -175,9 +177,9 @@ depends+=(${_system_libs[@]})
 
   ./build/linux/unbundle/replace_gn_files.py --system-libraries "${!_system_libs[@]}"
   ./third_party/libaddressinput/chromium/tools/update-strings.py
-  ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
+  ./out/Release/gn gen out/Release -s --no-clean --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python2
 
-  ionice -c3 nice -n20 noti ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox widevinecdmadapter
+  ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox widevinecdmadapter
 }
 
 addon() {
