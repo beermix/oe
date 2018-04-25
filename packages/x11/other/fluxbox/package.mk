@@ -27,6 +27,7 @@ PKG_SECTION="x11/other"
 PKG_SHORTDESC="Fluxbox is a windowmanager for X that was based on the Blackbox 0.61.1 code"
 PKG_LONGDESC="Fluxbox is a windowmanager for X that was based on the Blackbox 0.61.1 code. It is very light on resources and easy to handle but yet full of features to make an easy, and extremely fast, desktop experience. It is built using C++ and licensed under the MIT-License."
 PKG_TOOLCHAIN="autotools"
+PKG_BUILD_FLAGS="-lto -gold -hardening"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_realloc_0_nonnull=yes \
                            ac_cv_func_malloc_0_nonnull=yes \

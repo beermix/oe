@@ -17,7 +17,7 @@
 ################################################################################ libXcursor libSM libXt
 
 PKG_NAME="xorg-server"
-PKG_VERSION="1.19.99.904"
+PKG_VERSION="1.19.99.905"
 PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
