@@ -114,7 +114,6 @@ make_target() {
     'use_gnome_keyring=false'
     'use_gold=false'
     'use_gtk3=false'
-    'linux_link_libgio=true'
     'linux_link_libudev=true'
     'linux_link_libspeechd=true'
     'use_kerberos=false'
