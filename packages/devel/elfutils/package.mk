@@ -23,8 +23,8 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://sourceware.org/elfutils/"
 PKG_URL="https://sourceware.org/elfutils/ftp/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain zlib"
-PKG_DEPENDS_HOST="zlib:host"
+PKG_DEPENDS_TARGET="toolchain zlib bzip2"
+PKG_DEPENDS_HOST="xz:host zlib:host bzip2:host flex:host"
 PKG_SECTION="devel"
 PKG_SHORTDESC="elfutils: collection of utilities to handle ELF objects"
 PKG_LONGDESC="Elfutils is a collection of utilities, including eu-ld (a linker), eu-nm (for listing symbols from object files), eu-size (for listing the section sizes of an object or archive file), eu-strip (for discarding symbols), eu-readelf (to see the raw ELF file structures), and eu-elflint (to check for well-formed ELF files)."
@@ -40,7 +40,24 @@ PKG_CONFIGURE_OPTS_TARGET="utrace_cv_cc_biarch=false \
                            --without-lzma \
                            --enable-maintainer-mode"
 
+PKG_CONFIGURE_OPTS_HOST="utrace_cv_cc_biarch=false \
+                           --disable-werror \
+                           --disable-progs \
+                           --disable-nls \
+                           --with-zlib \
+                           --with-bzlib \
+                           --with-lzma \
+                           --enable-maintainer-mode"
+
 make_target() {
+  make V=1 -C libelf libelf.a
+  make V=1 -C libebl libebl.a
+  make V=1 -C libdwfl libdwfl.a
+  make V=1 -C libdwelf libdwelf.a
+  make V=1 -C libdw libdw.a
+}
+
+make_host() {
   make V=1 -C libelf libelf.a
   make V=1 -C libebl libebl.a
   make V=1 -C libdwfl libdwfl.a
@@ -63,5 +80,17 @@ makeinstall_target() {
     cp version.h $SYSROOT_PREFIX/usr/include/elfutils
 }
 
+makeinstall_host() {
+  make DESTDIR="$TOOLCHAIN" -C libelf install-includeHEADERS install-pkgincludeHEADERS
+  make DESTDIR="$TOOLCHAIN" -C libdwfl install-pkgincludeHEADERS
+  make DESTDIR="$TOOLCHAIN" -C libdw install-includeHEADERS install-pkgincludeHEADERS
 
-PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET --disable-shared --enable-static"
+  mkdir -p $TOOLCHAIN/lib
+    cp libelf/libelf.a $TOOLCHAIN/lib
+    cp libebl/libebl.a $TOOLCHAIN/lib
+    cp libdwfl/libdwfl.a $TOOLCHAIN/lib
+    cp libdw/libdw.a $TOOLCHAIN/lib
+
+  mkdir -p $TOOLCHAIN/include/elfutils
+    cp version.h $TOOLCHAIN/include/elfutils
+}

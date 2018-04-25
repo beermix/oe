@@ -54,7 +54,7 @@ post_patch() {
   sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' ./third_party/widevine/cdm/stub/widevine_cdm_version.h
 
   patch -Np4 -i $PKG_DIR/chromium-skia-harmony.patch
-  tar xfC $PKG_DIR/blink-tools-$pkgver.tar.gz ./third_party/blink/tools/
+  tar xfC $PKG_DIR/blink-tools-$PKG_VERSION.tar.gz ./third_party/blink/tools/
 }
 
 make_host() {
@@ -127,12 +127,10 @@ make_target() {
   )
 
 declare -gA _system_libs=(
-  #[ffmpeg]=ffmpeg            # https://crbug.com/731766
-  #[flac]=flac
   [fontconfig]=fontconfig
   [freetype]=freetype2
   [harfbuzz-ng]=harfbuzz
-  [icu]=icu
+  #[icu]=icu
   [libdrm]=
   [libjpeg]=libjpeg
   #[libpng]=libpng            # https://crbug.com/752403#c10
@@ -140,7 +138,6 @@ declare -gA _system_libs=(
   [libwebp]=libwebp
   #[libxml]=libxml2           # https://crbug.com/736026
   [libxslt]=libxslt
-  #[opus]=opus
   [re2]=re2
   [snappy]=snappy
   [yasm]=
