@@ -52,8 +52,10 @@ post_patch() {
   find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$TOOLCHAIN/bin/python|g" {} +
 
   # set correct widevine
-  mkdir -p third_party/widevine/cdm/linux/x64
-  sed -i -e 's/@WIDEVINE_VERSION@/1.4.8.1008/' ./third_party/widevine/cdm/stub/widevine_cdm_version.h
+  sed 's|@WIDEVINE_VERSION@|The Cake Is a Lie|g' -i ./third_party/widevine/cdm/stub/widevine_cdm_version.h
+  
+  sed 's|//third_party/usb_ids/usb.ids|/usr/share/hwdata/usb.ids|g' -i ./device/usb/BUILD.gn
+  
 
   # tar xfC $PKG_DIR/blink-tools-66.0.3359.117.tar.gz ./third_party/blink/tools/
 }
@@ -73,6 +75,7 @@ make_target() {
   export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
   export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
 
+  export CCACHE_CPP2=yes
   export CCACHE_SLOPPINESS=time_macros
 
   # Allow building against system libraries in official builds
@@ -84,6 +87,18 @@ make_target() {
 
   # Force script incompatible with Python 3 to use /usr/bin/python2
   sed -i '1s|python$|&2|' ./third_party/dom_distiller_js/protoc_plugins/*.py
+  
+  # Use chromium-dev as branch name.
+  sed -e 's|filename = "chromium-browser"|filename = "chromium-dev"|' \
+      -e 's|confdir = "chromium|&-dev|' \
+      -i chrome/BUILD.gn
+  sed -e 's|config_dir.Append("chromium|&-dev|' \
+      -i chrome/common/chrome_paths_linux.cc
+  sed -e 's|/etc/chromium|&-dev|' \
+      -e 's|/usr/share/chromium|&-dev|' \
+      -i chrome/common/chrome_paths.cc
+  sed -e 's|/etc/chromium|&-dev|' \
+      -i ./components/policy/tools/template_writers/writer_configuration.py
 
   local _google_api_key=AIzaSyAQ6L9vt9cnN4nM0weaa6Y38K4eyPvtKgI
   local _google_default_client_id=740889307901-4bkm4e0udppnp1lradko85qsbnmkfq3b.apps.googleusercontent.com
@@ -120,7 +135,7 @@ make_target() {
     'enable_nacl=false'
     'enable_swiftshader=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
-    'enable_widevine=true'
+    'use_jumbo_build=false' # https://chromium.googlesource.com/chromium/src/+/lkcr/docs/jumbo.md
     'enable_nacl_nonsfi=false'
     'enable_vulkan=false'
     "google_api_key=\"${_google_api_key}\""
@@ -153,6 +168,23 @@ _unwanted_bundled_libs=(
 )
 depends+=(${_system_libs[@]})
 
+
+# Force script incompatible with Python 3 to use /usr/bin/python2
+   sed -i '1s|python$|&2|' \
+     -i build/download_nacl_toolchains.py \
+     -i build/linux/unbundle/remove_bundled_libraries.py \
+     -i build/linux/unbundle/replace_gn_files.py \
+     -i tools/clang/scripts/update.py \
+     -i tools/gn/bootstrap/bootstrap.py \
+     -i third_party/dom_distiller_js/protoc_plugins/*.py \
+     -i third_party/ffmpeg/chromium/scripts/build_ffmpeg.py \
+     -i third_party/ffmpeg/chromium/scripts/generate_gn.py
+   export PNACLPYTHON=$TOOLCHAIN/bin/python
+
+   # Setup vulkan
+   export VULKAN_SDK="/usr"
+   sed 's|/x86_64-linux-gnu||' -i ./gpu/vulkan/BUILD.gn
+
   # Remove bundled libraries for which we will use the system copies; this
   # *should* do what the remove_bundled_libraries.py script does, with the
   # added benefit of not having to list all the remaining libraries
@@ -171,9 +203,9 @@ depends+=(${_system_libs[@]})
   ./build/linux/unbundle/replace_gn_files.py --system-libraries "${!_system_libs[@]}"
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
-  ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
+  ./out/Release/gn gen out/Release -v --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
 
-  ionice -c3 nice -n20 noti ninja -j${CONCURRENCY_MAKE_LEVEL} -C out/Release chrome chrome_sandbox
+  LC_ALL=C ionice -c3 nice -n20 noti ninja -j${CONCURRENCY_MAKE_LEVEL} -C out/Release chrome chrome_sandbox
 }
 
 addon() {
