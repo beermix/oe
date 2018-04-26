@@ -40,7 +40,11 @@ PKG_CONFIGURE_OPTS_TARGET="utrace_cv_cc_biarch=false \
                            --without-lzma \
                            --enable-maintainer-mode"
 
-PKG_CONFIGURE_OPTS_HOST="--program-prefix=eu- --disable-silent-rules --enable-maintainer-mode"
+PKG_CONFIGURE_OPTS_HOST="-utrace_cv_cc_biarch=false \
+			    --disable-werror \
+			    --disable-progs \
+			    --disable-silent-rules \
+			    --enable-maintainer-mode"
 
 make_target() {
   make V=1 -C libelf libelf.a
