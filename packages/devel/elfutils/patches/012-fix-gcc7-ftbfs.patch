@@ -1,0 +1,37 @@
+Index: b/backends/parisc_retval.c
+===================================================================
+--- a/backends/parisc_retval.c
++++ b/backends/parisc_retval.c
+@@ -167,6 +167,7 @@ parisc_return_value_location_ (Dwarf_Die
+ 
+ 	/* Else fall through.  */
+       }
++      /* Fall through.  */
+ 
+     case DW_TAG_structure_type:
+     case DW_TAG_class_type:
+Index: b/backends/mips_retval.c
+===================================================================
+--- a/backends/mips_retval.c
++++ b/backends/mips_retval.c
+@@ -390,6 +390,7 @@ mips_return_value_location (Dwarf_Die *f
+         }
+ 
+       /* Fallthrough to handle large types */
++      /* Fall through.  */
+ 
+     case DW_TAG_array_type:
+     large:
+Index: b/src/ar.c
+===================================================================
+--- a/src/ar.c
++++ b/src/ar.c
+@@ -1073,7 +1073,7 @@ do_oper_delete (const char *arfname, cha
+ static void
+ no0print (bool ofmt, char *buf, int bufsize, long int val)
+ {
+-  char tmpbuf[bufsize + 1];
++  char tmpbuf[bufsize + 1 + 4];
+   snprintf (tmpbuf, sizeof (tmpbuf), ofmt ? "%-*lo" : "%-*ld", bufsize, val);
+   memcpy (buf, tmpbuf, bufsize);
+ }
