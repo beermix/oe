@@ -32,7 +32,7 @@ PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chro
 #PKG_URL="https://gsdview.appspot.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 #PKG_URL="http://192.168.1.200:8080/%2Fchromium-66.0.3359.117.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="pciutils dbus libXtst libXcomposite libXcursor alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk unclutter xdotool libdrm libjpeg-turbo freetype icu harfbuzz gtk+ re2 snappy libwebp chromium:host"
+PKG_DEPENDS_TARGET="pciutils dbus libXtst libXcomposite libXcursor alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk unclutter xdotool libdrm libjpeg-turbo freetype icu harfbuzz gtk+ re2 snappy libwebp libvpx chromium:host"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -72,6 +72,10 @@ make_target() {
   export CFLAGS="$CFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables"
   export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
   export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
+  
+  CFLAGS+=' -Wno-builtin-macro-redefined'
+  CXXFLAGS+=' -Wno-builtin-macro-redefined'
+  CPPFLAGS+=' -D__DATE__=  -D__TIME__=  -D__TIMESTAMP__='
 
   export CCACHE_CPP2=yes
   export CCACHE_SLOPPINESS=time_macros
@@ -150,7 +154,7 @@ declare -gA _system_libs=(
   [libdrm]=
   [libjpeg]=libjpeg
   #[libpng]=libpng            # https://crbug.com/752403#c10
-  #[libvpx]=libvpx
+  [libvpx]=libvpx
   [libwebp]=libwebp
   #[libxml]=libxml2           # https://crbug.com/736026
   [libxslt]=libxslt
@@ -177,24 +181,165 @@ depends+=(${_system_libs[@]})
      -i third_party/ffmpeg/chromium/scripts/generate_gn.py
    export PNACLPYTHON=$TOOLCHAIN/bin/python
 
-   # Setup vulkan
+# Setup vulkan
    export VULKAN_SDK="/usr"
    sed 's|/x86_64-linux-gnu||' -i ./gpu/vulkan/BUILD.gn
 
-  # Remove bundled libraries for which we will use the system copies; this
-  # *should* do what the remove_bundled_libraries.py script does, with the
-  # added benefit of not having to list all the remaining libraries
-  local _lib
-  for _lib in ${_unwanted_bundled_libs[@]}; do
-    find -type f -path "*third_party/$_lib/*" \
-      \! -path "*third_party/$_lib/chromium/*" \
-      \! -path "*third_party/$_lib/google/*" \
-      \! -path './third_party/pdfium/third_party/freetype/include/pstables.h' \
-      \! -path './third_party/yasm/run_yasm.py' \
-      \! -regex '.*\.\(gn\|gni\|isolate\)' \
-      -delete
-  done
+_keeplibs=(
+           'base/third_party/dmg_fp'
+           'base/third_party/dynamic_annotations'
+           'base/third_party/icu'
+           'base/third_party/nspr'
+           'base/third_party/superfasthash'
+           'base/third_party/symbolize'
+           'base/third_party/valgrind'
+           'base/third_party/xdg_mime'
+           'base/third_party/xdg_user_dirs'
+           'buildtools/third_party/libc++'
+           'buildtools/third_party/libc++abi'
+           'chrome/third_party/mozilla_security_manager'
+           'courgette/third_party'
+           'native_client/src/third_party/dlmalloc'
+           'native_client_sdk/src/libraries/third_party/newlib-extras'
+           'net/third_party/mozilla_security_manager'
+           'net/third_party/nss'
+           'third_party/WebKit'
+           'third_party/analytics'
+           'third_party/angle'
+           'third_party/angle/src/common/third_party/base'
+           'third_party/angle/src/common/third_party/smhasher'
+           'third_party/angle/src/third_party/compiler'
+           'third_party/angle/src/third_party/libXNVCtrl'
+           'third_party/angle/src/third_party/trace_event'
+           'third_party/angle/third_party/glslang'
+           'third_party/angle/third_party/spirv-headers'
+           'third_party/angle/third_party/spirv-tools'
+           'third_party/angle/third_party/vulkan-validation-layers'
+           'third_party/apple_apsl'
+           'third_party/blink'
+           'third_party/boringssl'
+           'third_party/boringssl/src/third_party/fiat'
+           'third_party/breakpad'
+           'third_party/breakpad/breakpad/src/third_party/curl'
+           'third_party/brotli'
+           'third_party/cacheinvalidation'
+           'third_party/catapult'
+           'third_party/catapult/common/py_vulcanize/third_party/rcssmin'
+           'third_party/catapult/common/py_vulcanize/third_party/rjsmin'
+           'third_party/catapult/third_party/polymer'
+           'third_party/catapult/tracing/third_party/d3'
+           'third_party/catapult/tracing/third_party/gl-matrix'
+           'third_party/catapult/tracing/third_party/jszip'
+           'third_party/catapult/tracing/third_party/mannwhitneyu'
+           'third_party/catapult/tracing/third_party/oboe'
+           'third_party/catapult/tracing/third_party/pako'
+           'third_party/ced'
+           'third_party/cld_3'
+           'third_party/crashpad'
+           'third_party/crashpad/crashpad/third_party/zlib'
+           'third_party/crc32c'
+           'third_party/cros_system_api'
+           'third_party/devscripts'
+           'third_party/dom_distiller_js'
+           'third_party/fips181'
+           'third_party/flatbuffers'
+           'third_party/flot'
+           'third_party/glslang'
+           'third_party/glslang-angle'
+           'third_party/google_input_tools'
+           'third_party/google_input_tools/third_party/closure_library'
+           'third_party/google_input_tools/third_party/closure_library/third_party/closure'
+           'third_party/googletest'
+           'third_party/hunspell'
+           'third_party/iccjpeg'
+           'third_party/inspector_protocol'
+           'third_party/jinja2'
+           'third_party/jstemplate'
+           'third_party/khronos'
+           'third_party/leveldatabase'
+           'third_party/libXNVCtrl'
+           'third_party/libaddressinput'
+           'third_party/libaom'
+           'third_party/libjingle'
+           'third_party/libphonenumber'
+           'third_party/libsecret'
+           'third_party/libsrtp'
+           'third_party/libudev'
+           'third_party/libxml/chromium'
+           'third_party/libyuv'
+           'third_party/llvm'
+           'third_party/lss'
+           'third_party/lzma_sdk'
+           'third_party/markupsafe'
+           'third_party/mesa'
+           'third_party/metrics_proto'
+           'third_party/modp_b64'
+           'third_party/node'
+           'third_party/node/node_modules/polymer-bundler/lib/third_party/UglifyJS2'
+           'third_party/openmax_dl'
+           'third_party/ots'
+           'third_party/pdfium'
+           'third_party/pdfium/third_party/agg23'
+           'third_party/pdfium/third_party/base'
+           'third_party/pdfium/third_party/bigint'
+           'third_party/pdfium/third_party/eu-strip'
+           'third_party/pdfium/third_party/freetype'
+           'third_party/pdfium/third_party/lcms'
+           'third_party/pdfium/third_party/libopenjpeg20'
+           'third_party/pdfium/third_party/libpng16'
+           'third_party/pdfium/third_party/libtiff'
+           'third_party/pdfium/third_party/skia_shared'
+           'third_party/ply'
+           'third_party/polymer'
+           'third_party/protobuf'
+           'third_party/protobuf/third_party/six'
+           'third_party/qcms'
+           'third_party/s2cellid'
+           'third_party/sfntly'
+           'third_party/shaderc'
+           'third_party/skia'
+           'third_party/skia/third_party/gif'
+           'third_party/skia/third_party/spirv-headers'
+           'third_party/skia/third_party/spirv-tools'
+           'third_party/skia/third_party/vulkan'
+           'third_party/smhasher'
+           'third_party/spirv-headers'
+           'third_party/SPIRV-Tools'
+           'third_party/spirv-tools-angle'
+           'third_party/sqlite'
+           'third_party/swiftshader'
+           'third_party/swiftshader/third_party/llvm-subzero'
+           'third_party/swiftshader/third_party/subzero'
+           'third_party/tcmalloc'
+           'third_party/unrar'
+           'third_party/usrsctp'
+           'third_party/vulkan-validation-layers'
+           'third_party/vulkan'
+           'third_party/web-animations-js'
+           'third_party/webdriver'
+           'third_party/webrtc'
+           'third_party/widevine'
+           'third_party/woff2'
+           'third_party/zlib/google'
 
+           'url/third_party/mozilla'
+           'v8/src/third_party/valgrind'
+           'v8/src/third_party/utf8-decoder'
+           'v8/third_party/inspector_protocol'
+
+           # gyp -> gn leftovers
+           'base/third_party/libevent'
+           'third_party/adobe'
+           'third_party/speech-dispatcher'
+           'third_party/usb_ids'
+           'third_party/xdg-utils'
+           )
+
+_keeplibs+=(
+            'third_party/icu'
+            )
+
+#  ./build/linux/unbundle/remove_bundled_libraries.py ${_keeplibs[@]} --do-remove
   ./build/linux/unbundle/replace_gn_files.py --system-libraries "${!_system_libs[@]}"
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 

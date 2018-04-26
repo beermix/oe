@@ -1,7 +1,7 @@
 ################################################################################
 
 PKG_NAME="libvpx"
-PKG_VERSION="3b460db"
+PKG_VERSION="0145b5e"
 #PKG_SHA256="1fec931eb5c94279ad219a5b6e0202358e94a93a90cfb1603578c326abfc1238"
 PKG_ARCH="any"
 PKG_LICENSE="BSD"
