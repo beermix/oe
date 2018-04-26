@@ -21,7 +21,7 @@ PKG_VERSION="3.4.2"
 PKG_SHA256="18a8b14367d63d3d37fb6c33cba60e1b7fcd7a63d608df97c9771ae0d234fee2"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="https://ccache.samba.org/"
+PKG_SITE="https://www.samba.org/ftp/ccache/?C=M;O=D"
 PKG_URL="https://samba.org/ftp/ccache/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="make:host"
 PKG_SECTION="devel"
@@ -31,8 +31,13 @@ PKG_LONGDESC="Ccache is a compiler cache. It speeds up re-compilation of C/C++ c
 export CC=$LOCAL_CC
 export CXX=$LOCAL_CXX
 
-export LDFLAGS="-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now -s"
-export CFFLAGS="-march=native -O2 -fstack-protector-strong -fno-plt"
+pre_configure_host() {
+  unset CPPFLAGS
+  unset CFLAGS
+  unset CXXFLAGS
+  unset LDFLAGS
+}
+
 PKG_CONFIGURE_OPTS_HOST="--with-bundled-zlib"
 
 post_makeinstall_host() {
