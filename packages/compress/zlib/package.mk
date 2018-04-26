@@ -24,7 +24,7 @@ PKG_LICENSE="OSS"
 PKG_SITE="http://www.zlib.net"
 PKG_URL="http://zlib.net/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_URL="https://github.com/sspring/zlib/archive/${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_HOST=""
+PKG_DEPENDS_HOST="cmake:host"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="compress"
 PKG_SHORTDESC="zlib: A general purpose (ZIP) data compression library"
@@ -33,7 +33,8 @@ PKG_TOOLCHAIN="cmake-make"
 PKG_BUILD_FLAGS="+pic:host +pic"
 
 PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release"
-PKG_CMAKE_OPTS_HOST="-DCMAKE_BUILD_TYPE=Release"
+
+PKG_CMAKE_OPTS_HOST="$PKG_CMAKE_OPTS_TARGET"
 
 post_configure_target() {
  ## configure minizip
