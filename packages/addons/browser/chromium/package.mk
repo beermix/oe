@@ -32,7 +32,7 @@ PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chro
 #PKG_URL="https://gsdview.appspot.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 #PKG_URL="http://192.168.1.200:8080/%2Fchromium-66.0.3359.117.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="pciutils dbus libXtst libXcomposite libXcursor alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk unclutter xdotool libdrm libjpeg-turbo freetype icu harfbuzz gtk+ re2 snappy libwebp libvpx chromium:host"
+PKG_DEPENDS_TARGET="pciutils dbus libXtst libXcomposite libXcursor alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk unclutter xdotool libdrm libjpeg-turbo freetype harfbuzz gtk+ re2 snappy chromium:host"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -73,9 +73,9 @@ make_target() {
   export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
   export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
   
-  CFLAGS+=' -Wno-builtin-macro-redefined'
-  CXXFLAGS+=' -Wno-builtin-macro-redefined'
-  CPPFLAGS+=' -D__DATE__=  -D__TIME__=  -D__TIMESTAMP__='
+  export CFLAGS="$CFLAGS -Wno-builtin-macro-redefined"
+  export CXXFLAGS="$CXXFLAGS -Wno-builtin-macro-redefined"
+  export CPPFLAGS="$CPPFLAGS -D__DATE__=  -D__TIME__=  -D__TIMESTAMP__="
 
   export CCACHE_CPP2=yes
   export CCACHE_SLOPPINESS=time_macros
@@ -138,7 +138,7 @@ make_target() {
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'use_jumbo_build=false' # https://chromium.googlesource.com/chromium/src/+/lkcr/docs/jumbo.md
     'enable_nacl_nonsfi=false'
-    'enable_vulkan=true'
+    'enable_vulkan=false'
     "google_api_key=\"${_google_api_key}\""
     "google_default_client_id=\"${_google_default_client_id}\""
     "google_default_client_secret=\"${_google_default_client_secret}\""
@@ -150,13 +150,13 @@ declare -gA _system_libs=(
   [fontconfig]=fontconfig
   [freetype]=freetype2
   [harfbuzz-ng]=harfbuzz
-  #[icu]=icu
+#  [icu]=icu
   [libdrm]=
   [libjpeg]=libjpeg
-  #[libpng]=libpng            # https://crbug.com/752403#c10
-  [libvpx]=libvpx
-  [libwebp]=libwebp
-  #[libxml]=libxml2           # https://crbug.com/736026
+#  [libpng]=libpng            # https://crbug.com/752403#c10
+#  [libvpx]=libvpx
+#  [libwebp]=libwebp
+#  [libxml]=libxml2           # https://crbug.com/736026
   [libxslt]=libxslt
   [re2]=re2
   [snappy]=snappy
@@ -182,8 +182,8 @@ depends+=(${_system_libs[@]})
    export PNACLPYTHON=$TOOLCHAIN/bin/python
 
 # Setup vulkan
-   export VULKAN_SDK="/usr"
-   sed 's|/x86_64-linux-gnu||' -i ./gpu/vulkan/BUILD.gn
+# export VULKAN_SDK="/usr"
+# sed 's|/x86_64-linux-gnu||' -i ./gpu/vulkan/BUILD.gn
 
 _keeplibs=(
            'base/third_party/dmg_fp'
@@ -373,7 +373,7 @@ addon() {
   cp -PL $(get_build_dir cairo)/.install_pkg/usr/lib/libcairo-gobject.so.2 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # libwebp
-  cp -ri $(get_build_dir libwebp)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  # cp -ri $(get_build_dir libwebp)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # atk
   cp -ri $(get_build_dir atk)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
