@@ -40,8 +40,7 @@ PKG_CONFIGURE_OPTS_TARGET="utrace_cv_cc_biarch=false \
                            --without-lzma \
                            --enable-maintainer-mode"
 
-PKG_CONFIGURE_OPTS_HOST="-utrace_cv_cc_biarch=false \
-			    --disable-werror \
+PKG_CONFIGURE_OPTS_HOST="--disable-werror \
 			    --disable-progs \
 			    --disable-silent-rules \
 			    --enable-maintainer-mode"
