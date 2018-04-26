@@ -187,7 +187,8 @@ HOST_CONFIGURE_OPTS="--host=$HOST_NAME \
 
 HOST_CMAKE_OPTS="$CMAKE_GENERATOR \
                  -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
-                 -DCMAKE_INSTALL_PREFIX=$TOOLCHAIN"
+                 -DCMAKE_INSTALL_PREFIX=$TOOLCHAIN \
+                 -DCMAKE_INSTALL_DO_STRIP=1"
 
 HOST_MESON_OPTS="--prefix=$TOOLCHAIN \
                  --bindir=$TOOLCHAIN/bin \
@@ -550,6 +551,20 @@ if [ "$TARGET" = "target" -o "$TARGET" = "init" ]; then
           $STRIP `find $INSTALL -type f -name "*.so*" 2>/dev/null` 2>/dev/null || :
         fi
         $STRIP `find $INSTALL/bin $INSTALL/usr/bin $INSTALL/sbin $INSTALL/usr/sbin \
+          -type f -executable 2>/dev/null` 2>/dev/null || :
+    fi
+  fi
+fi
+
+if [ "$TARGET" = "host" ]; then
+  if [ -d $TOOLCHAIN ] ; then
+    find $TOOLCHAIN -type d -exec rmdir -p {} \; 2>/dev/null || :
+
+    if [ ! "${BUILD_WITH_DEBUG}" = "yes" ]; then
+      strip `find $TOOLCHAIN \
+        -type f -name "*.so*" \
+        2>/dev/null` 2>/dev/null || :
+        strip `find $TOOLCHAIN/bin $TOOLCHAIN/sbin \
           -type f -executable 2>/dev/null` 2>/dev/null || :
     fi
   fi
