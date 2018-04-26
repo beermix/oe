@@ -55,12 +55,10 @@ post_patch() {
   sed 's|@WIDEVINE_VERSION@|The Cake Is a Lie|g' -i ./third_party/widevine/cdm/stub/widevine_cdm_version.h
   
   sed 's|//third_party/usb_ids/usb.ids|/usr/share/hwdata/usb.ids|g' -i ./device/usb/BUILD.gn
-  
-
-  # tar xfC $PKG_DIR/blink-tools-66.0.3359.117.tar.gz ./third_party/blink/tools/
 }
 
 make_host() {
+  export CCACHE_CPP2=yes
   export CCACHE_SLOPPINESS=time_macros
   ./tools/gn/bootstrap/bootstrap.py --no-rebuild --no-clean
 }
@@ -91,12 +89,12 @@ make_target() {
   # Use chromium-dev as branch name.
   sed -e 's|filename = "chromium-browser"|filename = "chromium-dev"|' \
       -e 's|confdir = "chromium|&-dev|' \
-      -i chrome/BUILD.gn
+      -i ./chrome/BUILD.gn
   sed -e 's|config_dir.Append("chromium|&-dev|' \
-      -i chrome/common/chrome_paths_linux.cc
+      -i ./chrome/common/chrome_paths_linux.cc
   sed -e 's|/etc/chromium|&-dev|' \
       -e 's|/usr/share/chromium|&-dev|' \
-      -i chrome/common/chrome_paths.cc
+      -i ./chrome/common/chrome_paths.cc
   sed -e 's|/etc/chromium|&-dev|' \
       -i ./components/policy/tools/template_writers/writer_configuration.py
 
@@ -126,7 +124,6 @@ make_target() {
     'use_gtk3=false'
     'use_kerberos=false'
     'use_pulseaudio=false'
-    'linux_link_libgio=true'
     'linux_link_libudev=true'
     'use_sysroot=true'
     'use_vaapi=true'
@@ -149,7 +146,7 @@ declare -gA _system_libs=(
   [fontconfig]=fontconfig
   [freetype]=freetype2
   [harfbuzz-ng]=harfbuzz
-  [icu]=icu
+  #[icu]=icu
   [libdrm]=
   [libjpeg]=libjpeg
   #[libpng]=libpng            # https://crbug.com/752403#c10
@@ -182,8 +179,8 @@ depends+=(${_system_libs[@]})
    export PNACLPYTHON=$TOOLCHAIN/bin/python
 
    # Setup vulkan
-   export VULKAN_SDK="/usr"
-   sed 's|/x86_64-linux-gnu||' -i ./gpu/vulkan/BUILD.gn
+   # export VULKAN_SDK="/usr"
+   # sed 's|/x86_64-linux-gnu||' -i ./gpu/vulkan/BUILD.gn
 
   # Remove bundled libraries for which we will use the system copies; this
   # *should* do what the remove_bundled_libraries.py script does, with the
@@ -193,7 +190,6 @@ depends+=(${_system_libs[@]})
     find -type f -path "*third_party/$_lib/*" \
       \! -path "*third_party/$_lib/chromium/*" \
       \! -path "*third_party/$_lib/google/*" \
-      \! -path './base/third_party/icu/*' \
       \! -path './third_party/pdfium/third_party/freetype/include/pstables.h' \
       \! -path './third_party/yasm/run_yasm.py' \
       \! -regex '.*\.\(gn\|gni\|isolate\)' \
@@ -203,7 +199,7 @@ depends+=(${_system_libs[@]})
   ./build/linux/unbundle/replace_gn_files.py --system-libraries "${!_system_libs[@]}"
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
-  ./out/Release/gn gen out/Release -v --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
+  ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
 
   LC_ALL=C ionice -c3 nice -n20 noti ninja -j${CONCURRENCY_MAKE_LEVEL} -C out/Release chrome chrome_sandbox
 }
