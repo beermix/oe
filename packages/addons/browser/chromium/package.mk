@@ -165,7 +165,6 @@ _unwanted_bundled_libs=(
 )
 depends+=(${_system_libs[@]})
 
-
 # Force script incompatible with Python 3 to use /usr/bin/python2
    sed -i '1s|python$|&2|' \
      -i build/download_nacl_toolchains.py \
