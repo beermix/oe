@@ -54,7 +54,7 @@ post_patch() {
   # set correct widevine
   sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' ./third_party/widevine/cdm/stub/widevine_cdm_version.h
 
-  tar xfC $PKG_DIR/blink-tools-$PKG_VERSION.tar.gz ./third_party/blink/tools/
+  tar xfC $PKG_DIR/blink-tools-66.0.3359.117.tar.gz ./third_party/blink/tools/
 }
 
 make_host() {
