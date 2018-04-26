@@ -1,5 +1,5 @@
 PKG_NAME="zlib-ng"
-PKG_VERSION="6a877a1"
+PKG_VERSION="df1fd15"
 PKG_URL="https://github.com/Dead2/zlib-ng/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET=""
 PKG_DEPENDS_HOST=""
