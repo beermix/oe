@@ -36,6 +36,5 @@ configure_host() {
                -DCMAKE_CXX_FLAGS="-O2 -Wall -pipe -Wno-format-security" \
                -DCMAKE_EXE_LINKER_FLAGS="$HOST_LDFLAGS" \
                -DCMAKE_USE_OPENSSL=ON \
-               -DBUILD_TESTING=0 \
                -DBUILD_CursesDialog=0
 }
