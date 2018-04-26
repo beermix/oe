@@ -63,15 +63,16 @@ make_host() {
 }
 
 make_target() {
-  export LDFLAGS="$LDFLAGS -ludev"
-  export LD=$CXX
+  unset CPPFLAGS
+  unset CFLAGS
+  unset CXXFLAGS
+  unset LDFLAGS
 
   export CFLAGS="$CFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables"
   export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
   export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
 
   export CCACHE_SLOPPINESS=time_macros
-
 
   # Allow building against system libraries in official builds
   # sed -i 's/OFFICIAL_BUILD/GOOGLE_CHROME_BUILD/' ./tools/generate_shim_headers/generate_shim_headers.py
@@ -113,6 +114,8 @@ make_target() {
     'use_gtk3=false'
     'use_kerberos=false'
     'use_pulseaudio=false'
+    'linux_link_libgio=true'
+    'linux_link_libudev=true'
     'use_sysroot=true'
     'use_vaapi=true'
     'use_v8_context_snapshot=false'
@@ -133,7 +136,7 @@ make_target() {
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
 
-  ninja -j${CONCURRENCY_MAKE_LEVEL} -C out/Release chrome chrome_sandbox widevinecdmadapter
+  ionice -c3 nice -n20 noti ninja -j${CONCURRENCY_MAKE_LEVEL} -C out/Release chrome chrome_sandbox widevinecdmadapter
 }
 
 addon() {
