@@ -21,19 +21,17 @@
 #  https://www.chromestatus.com/
 ################################################################################
 
-PKG_NAME="chromium2"
-PKG_VERSION="67.0.3396.10"
-#PKG_SHA256="77c5a334644fdc303697b3864c9a6b709cee23ee384f4134308e820af4568ed6"
-PKG_REV="200-dev"
+PKG_NAME="chromium"
+PKG_VERSION="63.0.3239.108"
+PKG_SHA256="47d80798194da78bdd519b7ce012425b13cf89d6eb287e22a34342a245c31a2b"
+PKG_REV="63.0.3239.108"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_SITE="http://www.chromium.org/Home"
-PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
+PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/$PKG_NAME-$PKG_VERSION.tar.xz"
 #PKG_URL="https://gsdview.appspot.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
-#PKG_URL="http://192.168.1.200:8080/%2Fchromium-66.0.3359.117.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_SOURCE_DIR="chromium-$PKG_VERSION*"
-PKG_DEPENDS_TARGET="pciutils dbus libXtst libXcomposite libXcursor alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk intel-vaapi-driver libva-vdpau-driver unclutter xdotool libdrm libjpeg-turbo freetype icu harfbuzz gtk+ re2 snappy libwebp chromium2:host"
+PKG_DEPENDS_TARGET="pciutils dbus libXtst libXcomposite libXcursor alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk intel-vaapi-driver libva-vdpau-driver unclutter xdotool libdrm libjpeg-turbo freetype icu harfbuzz gtk+ re2 snappy chromium:host"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -47,22 +45,22 @@ PKG_ADDON_TYPE="xbmc.python.script"
 PKG_ADDON_PROVIDES="executable"
 
 post_patch() {
-  cd $(get_build_dir chromium2)
+  cd $(get_build_dir chromium)
 
   # Use Python 2
   find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$TOOLCHAIN/bin/python|g" {} +
 
   # set correct widevine
   sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' ./third_party/widevine/cdm/stub/widevine_cdm_version.h
-
-  tar xfC $PKG_DIR/blink-tools-$PKG_VERSION.tar.gz ./third_party/blink/tools/
 }
 
 make_host() {
-  ./tools/gn/bootstrap/bootstrap.py --no-rebuild --no-clean --verbose
+  export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime
+  ./tools/gn/bootstrap/bootstrap.py --no-rebuild --no-clean
 }
 
 make_target() {
+
   unset CPPFLAGS
   unset CFLAGS
   unset CXXFLAGS
@@ -73,6 +71,7 @@ make_target() {
   export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
 
   export CCACHE_SLOPPINESS=time_macros
+  # export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime
 
   # Allow building against system libraries in official builds
   # sed -i 's/OFFICIAL_BUILD/GOOGLE_CHROME_BUILD/' ./tools/generate_shim_headers/generate_shim_headers.py
@@ -80,13 +79,6 @@ make_target() {
   # Work around broken screen sharing in Google Meet
   # https://crbug.com/829916#c16
   sed -i 's/"Chromium/"Chrome/' ./chrome/common/chrome_content_client_constants.cc
-
-  # Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
-  # Note: These are for OpenELEC use ONLY. For your own distribution, please
-  # get your own set of keys.
-
-  # Force script incompatible with Python 3 to use /usr/bin/python2
-  sed -i '1s|python$|&2|' ./third_party/dom_distiller_js/protoc_plugins/*.py
 
   local _google_api_key=AIzaSyAQ6L9vt9cnN4nM0weaa6Y38K4eyPvtKgI
   local _google_default_client_id=740889307901-4bkm4e0udppnp1lradko85qsbnmkfq3b.apps.googleusercontent.com
@@ -109,17 +101,19 @@ make_target() {
     'use_allocator="none"'
     'use_cups=false'
     'use_custom_libcxx=false'
+    'use_gconf=false'
     'use_gnome_keyring=false'
     'use_gold=false'
-    'use_gtk3=false'
     'use_kerberos=false'
     'use_pulseaudio=false'
-    'linux_link_libgio=true'
-    'linux_link_libudev=true'
     'use_sysroot=true'
     'use_vaapi=true'
     'use_v8_context_snapshot=false'
     'enable_vulkan=false'
+    'linux_link_libgio=true'
+    'linux_link_libudev=true'
+    'use_gtk3=false'
+    'use_libpci=true'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_hangout_services_extension=true'
     'enable_widevine=true'
@@ -132,22 +126,56 @@ make_target() {
     "google_default_client_secret=\"${_google_default_client_secret}\""
   )
 
+# Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
+# Keys are the names in the above script; values are the dependencies in Arch
+declare -rgA _system_libs=(
+  [freetype]=freetype2         # https://crbug.com/pdfium/733
+  [harfbuzz-ng]=harfbuzz-icu   # https://crbug.com/768938
+  [icu]=icu                    # https://crbug.com/772655
+  [libdrm]=
+  [libjpeg]=libjpeg
+  #[libpng]=libpng           # https://crbug.com/752403#c10
+  #[libvpx]=libvpx              # https://bugs.gentoo.org/611394
+  [libxml]=libxml2
+  [libxslt]=libxslt
+  #[libwebp]=libwebp
+  [re2]=re2
+  [snappy]=snappy
+  [yasm]=
+  [zlib]=minizip
+)
+depends+=(${_system_libs[@]})
+
+  # Remove bundled libraries for which we will use the system copies; this
+  # *should* do what the remove_bundled_libraries.py script does, with the
+  # added benefit of not having to list all the remaining libraries
+  local _lib
+  for _lib in ${!_system_libs[@]} ${_system_libs[libjpeg]+libjpeg_turbo}; do
+    find -type f -path "*third_party/$_lib/*" \
+      \! -path "*third_party/$_lib/chromium/*" \
+      \! -path "*third_party/$_lib/google/*" \
+      \! -path "*base/third_party/icu/*" \
+      \! -regex '.*\.\(gn\|gni\|isolate\|py\)' \
+      -delete
+  done
+
+  ./build/linux/unbundle/replace_gn_files.py --system-libraries "${!_system_libs[@]}"
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
 
-  ionice -c3 nice -n20 noti ninja -j${CONCURRENCY_MAKE_LEVEL} -C out/Release chrome chrome_sandbox widevinecdmadapter
+  ionice -c3 nice -n20 noti ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox widevinecdmadapter
 }
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -P  $PKG_BUILD/out/Release/chrome $ADDON_BUILD/$PKG_ADDON_ID/bin/chromium.bin
   cp -P  $PKG_BUILD/out/Release/chrome_sandbox $ADDON_BUILD/$PKG_ADDON_ID/bin/chrome-sandbox
-  cp -P  $PKG_BUILD/out/Release/{*.pak,*.dat,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
+  cp -P  $PKG_BUILD/out/Release/{*.pak,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -PR $PKG_BUILD/out/Release/locales $ADDON_BUILD/$PKG_ADDON_ID/bin/
   cp -PR $PKG_BUILD/out/Release/gen/content/content_resources.pak $ADDON_BUILD/$PKG_ADDON_ID/bin/
 
-  # config
+  # config *.dat,
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/config
   cp -P $PKG_DIR/config/* $ADDON_BUILD/$PKG_ADDON_ID/config
 
@@ -164,7 +192,7 @@ addon() {
   cp -PL $(get_build_dir cairo)/.install_pkg/usr/lib/libcairo-gobject.so.2 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # libwebp
-  cp -ri $(get_build_dir libwebp)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  # -ri $(get_build_dir libwebp)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # atk
   cp -ri $(get_build_dir atk)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib

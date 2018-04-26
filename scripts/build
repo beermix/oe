@@ -562,7 +562,7 @@ if [ "$TARGET" = "host" ]; then
       strip `find $TOOLCHAIN \
         -type f -cmin -1 -name "*.so*" \
         2>/dev/null` 2>/dev/null || :
-        strip `find $TOOLCHAIN/bin $TOOLCHAIN/sbin $TOOLCHAIN/lib \
+        strip `find $TOOLCHAIN/bin \
           -type f -executable -cmin -1 2>/dev/null` 2>/dev/null || :
     fi
   fi
