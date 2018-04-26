@@ -29,7 +29,6 @@ PKG_LONGDESC="Small build system with a focus on speed"
 PKG_TOOLCHAIN="manual"
 
 make_host() {
- export CFLAGS="-g0 $CFLAGS"
  CXX=/usr/bin/clang++ python3 ./configure.py --bootstrap --verbose
  # python3./configure.py --bootstrap --verbose
 }
