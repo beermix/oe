@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="7.3.0.isl"
-#PKG_SHA256="6bdad3d38946ee815357a875623b975af10df7ce42ec2ed68983bfac6f0d6fd8"
+PKG_VERSION="7.3.0"
+PKG_SHA256="6bdad3d38946ee815357a875623b975af10df7ce42ec2ed68983bfac6f0d6fd8"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="ftp://gcc.gnu.org/pub/gcc/snapshots/LATEST-7"
@@ -36,7 +36,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-gmp=$TOOLCHAIN \
                            --with-mpfr=$TOOLCHAIN \
                            --with-mpc=$TOOLCHAIN \
-                           --with-isl \
                            --with-gnu-as \
                            --with-gnu-ld \
                            --enable-plugin \
