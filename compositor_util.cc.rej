@@ -1,0 +1,14 @@
+--- content/browser/gpu/compositor_util.cc
++++ content/browser/gpu/compositor_util.cc
+@@ -99,7 +99,11 @@ const GpuFeatureData GetGpuFeatureData(s
+       {"video_decode",
+        manager->GetFeatureStatus(
+            gpu::GPU_FEATURE_TYPE_ACCELERATED_VIDEO_DECODE),
++#if defined(OS_LINUX) && !defined(OS_CHROMEOS) && !defined(OS_ANDROID)
++       !command_line.HasSwitch(switches::kEnableAcceleratedVideo),
++#else
+        command_line.HasSwitch(switches::kDisableAcceleratedVideoDecode),
++#endif
+        "Accelerated video decode has been disabled, either via blacklist,"
+        " about:flags or the command line.",
+        true},
