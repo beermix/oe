@@ -58,8 +58,12 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --enable-__cxa_atexit \
+                              --disable-shared \
+                              --without-headers \
+                              --with-newlib \
+                              --enable-threads=no \
+                              --disable-libatomic \
                               --disable-libgomp \
-                              --with-glibc-version=2.27 \
                               $GCC_OPTS"
 
 PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
@@ -83,15 +87,15 @@ pre_configure_host() {
   export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
   
-  export CFLAGS="-march=westmere -g1 -O3 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro  -Wl,-z,max-page-size=0x1000 -mtune=haswell"
-  export CXXFLAGS="-march=westmere -g1 -O3  -Wl,-z,max-page-size=0x1000 -mtune=haswell"
+  export CFLAGS="-march=westmere -g1 -O3 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro  -Wl,-z,max-page-size=0x1000 -mtune=haswell -I$TOOLCHAIN/include"
+  export CXXFLAGS="-march=westmere -g1 -O3  -Wl,-z,max-page-size=0x1000 -mtune=haswell -I$TOOLCHAIN/include"
   export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
   export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
 }
 
 pre_configure_bootstrap() {
-  export CFLAGS="-march=westmere -g1 -O3 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro  -Wl,-z,max-page-size=0x1000 -mtune=haswell"
-  export CXXFLAGS="-march=westmere -g1 -O3  -Wl,-z,max-page-size=0x1000 -mtune=haswell"
+  export CFLAGS="-march=westmere -g1 -O3 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro  -Wl,-z,max-page-size=0x1000 -mtune=haswell -I$TOOLCHAIN/include"
+  export CXXFLAGS="-march=westmere -g1 -O3  -Wl,-z,max-page-size=0x1000 -mtune=haswell -I$TOOLCHAIN/include"
   export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
   export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
 }
