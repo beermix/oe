@@ -114,8 +114,9 @@ pre_configure_target() {
 
   unset LD_LIBRARY_PATH
 
-  export CFLAGS="-O2 -g -m64 -march=westmere --param=l1-cache-line-size=64 --param=l1-cache-size=32 --param=l2-cache-size=3072"
-#  export CFLAGS="-O2 -march=westmere -g -m64"
+  export CFLAGS="-O3 -march=westmere --param=l1-cache-line-size=64 --param=l1-cache-size=32 --param=l2-cache-size=3072 -g2 -m64  -Wl,-z,max-page-size=0x1000 "
+  unset LDFLAGS
+  export LDFLAGS="-Wl,-z,max-page-size=0x1000 "
 
   export BUILD_CC=$HOST_CC
   export OBJDUMP_FOR_HOST=objdump
