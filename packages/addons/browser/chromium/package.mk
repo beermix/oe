@@ -72,7 +72,7 @@ make_target() {
   # export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
   # export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
   
-  # export CCACHE_CPP2=yes
+  export CCACHE_CPP2=yes
   export CCACHE_SLOPPINESS=time_macros
 
   # Allow building against system libraries in official builds
