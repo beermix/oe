@@ -44,8 +44,11 @@ make_host() {
      NSPR_INCLUDE_DIR=$TOOLCHAIN/include/nspr \
      FREEBL_NO_DEPEND=1 \
      USE_SYSTEM_ZLIB=1 ZLIB_LIBS="-lz -L$TOOLCHAIN/lib" \
-     SKIP_SHLIBSIGN=1 \
-     NSS_TESTS="dummy" \
+     PKG_CONFIG_ALLOW_SYSTEM_LIBS=1 \
+     PKG_CONFIG_ALLOW_SYSTEM_CFLAGS=1 \
+     NSS_ENABLE_WERROR=0 \
+     NSS_ENABLE_TLS_1_3=1 \
+     MAKE_FLAGS="BUILD_OPT=1 NSS_ENABLE_ECC=1" \
      CC=$CC LDFLAGS="$LDFLAGS -L$TOOLCHAIN/lib" \
      V=1
 }
@@ -54,6 +57,7 @@ makeinstall_host() {
   cd $PKG_BUILD
   $STRIP dist/Linux*/lib/*.so
   cp -L dist/Linux*/lib/*.so $TOOLCHAIN/lib
+  cp -L dist/Linux*/lib/*.chk $TOOLCHAIN/lib
   cp -L dist/Linux*/lib/libcrmf.a $TOOLCHAIN/lib
   mkdir -p $TOOLCHAIN/include/nss
   cp -RL dist/{public,private}/nss/* $TOOLCHAIN/include/nss
@@ -80,6 +84,11 @@ make_target() {
      NSS_TESTS="dummy" \
      NSINSTALL=$TOOLCHAIN/bin/nsinstall \
      CPU_ARCH_TAG=$TARGET_ARCH \
+     PKG_CONFIG_ALLOW_SYSTEM_LIBS=1 \
+     PKG_CONFIG_ALLOW_SYSTEM_CFLAGS=1 \
+     NSS_ENABLE_WERROR=0 \
+     NSS_ENABLE_TLS_1_3=1 \
+     MAKE_FLAGS="BUILD_OPT=1 NSS_ENABLE_ECC=1" \
      CC=$CC LDFLAGS="$LDFLAGS -L$SYSROOT_PREFIX/usr/lib" \
      V=1
 }
@@ -88,6 +97,7 @@ makeinstall_target() {
   cd $PKG_BUILD
   $STRIP dist/Linux*/lib/*.so
   cp -L dist/Linux*/lib/*.so $SYSROOT_PREFIX/usr/lib
+  cp -L dist/Linux*/lib/*.chk $SYSROOT_PREFIX/usr/lib
   cp -L dist/Linux*/lib/libcrmf.a $SYSROOT_PREFIX/usr/lib
   mkdir -p $SYSROOT_PREFIX/usr/include/nss
   cp -RL dist/{public,private}/nss/* $SYSROOT_PREFIX/usr/include/nss
@@ -95,4 +105,5 @@ makeinstall_target() {
 
   mkdir -p .install_pkg/usr/lib
     cp -PL dist/Linux*/lib/*.so .install_pkg/usr/lib
+    cp -PL dist/Linux*/lib/*.chk .install_pkg/usr/lib
 }
