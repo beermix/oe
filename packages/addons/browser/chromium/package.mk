@@ -58,6 +58,7 @@ post_patch() {
 }
 
 make_host() {
+  export CCACHE_SLOPPINESS=time_macros
   ./tools/gn/bootstrap/bootstrap.py --no-rebuild -s --no-clean
 }
 
