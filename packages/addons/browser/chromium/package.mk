@@ -123,6 +123,22 @@ make_target() {
     'use_kerberos=false'
     'use_pulseaudio=false'
     'use_allocator="none"'
+    'use_libpci=true'
+    'enable_google_now=false'
+    'enable_hangout_services_extension=true'
+    'enable_mdns=true'
+    'enable_nacl=false'
+    'enable_vr=false'
+    'is_desktop_linux=true'
+    'use_bundled_fontconfig=false'
+    'use_dbus=true'
+    'use_gio=true'
+    'use_glib=true'
+    'use_gold=true'
+    'use_libpci=true'
+    'rtc_enable_protobuf=false'
+    'optimize_webui=false'
+    'target_cpu="x64"'
     'linux_link_libudev=true'
     'enable_print_preview=false'
     'enable_remoting=false'
@@ -206,7 +222,7 @@ local _lib
  # ionice -c3 nice -n20 ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release media
  #  ionice -c3 nice -n20 ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Headless headless_shell
 
-  ionice -c3 nice -n20 ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox media
+  ionice -c3 nice -n20 ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox
 }
 
 addon() {
