@@ -134,7 +134,7 @@ make_target() {
     'enable_nacl=false'
     'enable_swiftshader=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
-    'use_jumbo_build=false' # https://chromium.googlesource.com/chromium/src/+/lkcr/docs/jumbo.md
+    'use_jumbo_build=true' # https://chromium.googlesource.com/chromium/src/+/lkcr/docs/jumbo.md
     'enable_nacl_nonsfi=false'
     'enable_vulkan=false'
     "google_api_key=\"${_google_api_key}\""

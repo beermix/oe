@@ -18,7 +18,7 @@
 
 PKG_NAME="iwlwifi-firmware"
 PKG_VERSION="b6a1e20"
-PKG_SHA256=""
+PKG_SHA256="6e508f83d31162f6d9f8976265f3acc3b4f7cd9f5a3c13bf67f9b445a1714120"
 PKG_ARCH="any"
 PKG_LICENSE="Free-to-use"
 PKG_SITE="https://github.com/LibreELEC/iwlwifi-firmware"
