@@ -30,9 +30,6 @@ PKG_LONGDESC="Small build system with a focus on speed"
 PKG_TOOLCHAIN="manual"
 
 make_host() {
- unset CFLAGS
- unset CXXFLAGS
- export CFLAGS="-O3 -march=native -m64 -Wall"
  CXX=/usr/bin/clang++ python2 ./configure.py --bootstrap --verbose
 }
 
