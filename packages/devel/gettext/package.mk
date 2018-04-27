@@ -35,9 +35,7 @@ post_unpack() {
 
 PKG_CONFIGURE_SCRIPT="gettext-tools/configure"
 
-PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared \
-                         --disable-rpath \
-                         --with-gnu-ld \
+PKG_CONFIGURE_OPTS_HOST="--disable-rpath \
                          --disable-java \
                          --disable-curses \
                          --with-included-libxml \
