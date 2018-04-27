@@ -54,7 +54,7 @@ post_patch() {
   # set correct widevine
   sed 's|@WIDEVINE_VERSION@|The Cake Is a Lie|g' -i ./third_party/widevine/cdm/stub/widevine_cdm_version.h
   
-  # sed 's|//third_party/usb_ids/usb.ids|/usr/share/hwdata/usb.ids|g' -i ./device/usb/BUILD.gn
+  sed 's|//third_party/usb_ids/usb.ids|/usr/share/hwdata/usb.ids|g' -i ./device/usb/BUILD.gn
 }
 
 make_host() {

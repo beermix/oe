@@ -33,25 +33,3 @@ diff -up chromium-65.0.3325.146/third_party/WebKit/Source/platform/heap/TraceTra
  // If eager tracing leads to excessively deep |trace()| call chains (and
  // the system stack usage that this brings), the marker implementation will
  // switch to using an explicit mark stack. Recursive and deep object graphs
---- chromium-65.0.3325.146/third_party/WebKit/Source/platform/wtf/Optional.h.orig	2018-03-21 06:00:24.243558800 +0300
---- chromium-65.0.3325.146/third_party/WebKit/Source/platform/wtf/Optional.h	2018-03-21 06:00:24.243558800 +0300
-@@ -6,7 +6,6 @@
- #define Optional_h
- 
- #include "base/optional.h"
--#include "platform/wtf/TypeTraits.h"
- 
- namespace WTF {
- 
-@@ -16,10 +15,7 @@
- // outside of the heap, similarly we enforce that one doesn't create garbage
- // collected types nested inside an Optional.
- template <typename T>
--using Optional =
--    typename std::enable_if<!IsGarbageCollectedType<T>::value ||
--                                IsPersistentReferenceType<T>::value,
--                            base::Optional<T>>::type;
-+using Optional = base::Optional<T>;
- 
- constexpr base::nullopt_t nullopt = base::nullopt;
- constexpr base::in_place_t in_place = base::in_place;
