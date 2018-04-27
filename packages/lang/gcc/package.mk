@@ -88,15 +88,15 @@ pre_configure_host() {
   export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
   
-  export CFLAGS="-march=westmere -g1 -O3 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro  -Wl,-z,max-page-size=0x1000 -mtune=haswell -I$TOOLCHAIN/include"
-  export CXXFLAGS="-march=westmere -g1 -O3  -Wl,-z,max-page-size=0x1000 -mtune=haswell -I$TOOLCHAIN/include"
+  export CFLAGS="-march=westmere -g1 -O2 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro  -Wl,-z,max-page-size=0x1000 -mtune=haswell -I$TOOLCHAIN/include"
+  export CXXFLAGS="-march=westmere -g1 -O2  -Wl,-z,max-page-size=0x1000 -mtune=haswell -I$TOOLCHAIN/include"
   export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
   export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
 }
 
 pre_configure_bootstrap() {
-  export CFLAGS="-march=westmere -g1 -O3 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro  -Wl,-z,max-page-size=0x1000 -mtune=haswell -I$TOOLCHAIN/include"
-  export CXXFLAGS="-march=westmere -g1 -O3  -Wl,-z,max-page-size=0x1000 -mtune=haswell -I$TOOLCHAIN/include"
+  export CFLAGS="-march=westmere -g1 -O2 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro  -Wl,-z,max-page-size=0x1000 -mtune=haswell -I$TOOLCHAIN/include"
+  export CXXFLAGS="-march=westmere -g1 -O2  -Wl,-z,max-page-size=0x1000 -mtune=haswell -I$TOOLCHAIN/include"
   export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
   export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
 }
