@@ -19,6 +19,7 @@ configure_target() {
                         --target="x86_64-linux-gcc" \
                         --cpu="$TARGET_CPU" \
                         --as=yasm \
+                        --enable-pic \
                         --enable-vp8 \
                         --enable-vp9 \
                         --enable-postproc \
@@ -30,9 +31,9 @@ configure_target() {
                         --disable-examples \
                         --disable-debug-libs \
                         --disable-docs \
-                        --enable-pic \
                         --disable-install-docs \
                         --enable-runtime-cpu-detect \
+                        --disable-shared \
                         --disable-install-srcs \
                         --disable-vp9-highbitdepth \
                         --enable-experimental \

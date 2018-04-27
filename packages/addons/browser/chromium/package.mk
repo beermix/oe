@@ -32,7 +32,7 @@ PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chro
 #PKG_URL="https://gsdview.appspot.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 #PKG_URL="http://192.168.1.200:8080/%2Fchromium-66.0.3359.117.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="pciutils dbus libXtst libXcomposite libXcursor alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk unclutter xdotool libdrm libjpeg-turbo freetype harfbuzz gtk+ re2 snappy openjpeg beautifulsoup4:host html5lib:host openjpeg chromium:host"
+PKG_DEPENDS_TARGET="pciutils dbus libXtst libXcomposite libXcursor alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk unclutter xdotool libdrm libjpeg-turbo freetype harfbuzz gtk+ re2 snappy openjpeg beautifulsoup4:host html5lib:host ply:host simplejson:host openjpeg libvpx libwebp chromium:host"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -125,9 +125,7 @@ make_target() {
     'use_gtk3=false'
     'use_kerberos=false'
     'use_pulseaudio=false'
-    'use_system_libjpeg=true'
-    'use_libjpeg_turbo=false'
-    'pdf_enable_xfa=true'
+    'use_allocator="none"'
     'linux_link_libudev=true'
     'use_sysroot=true'
     'use_vaapi=true'
@@ -154,20 +152,20 @@ declare -gA _system_libs=(
   [libdrm]=
   [libjpeg]=libjpeg
 #  [libpng]=libpng            # https://crbug.com/752403#c10
-#  [libvpx]=libvpx
-#  [libwebp]=libwebp
+  [libvpx]=libvpx
+  [libwebp]=libwebp
 #  [libxml]=libxml2           # https://crbug.com/736026
   [libxslt]=libxslt
-#  [re2]=re2
-#  [snappy]=snappy
+  [re2]=re2
+  [snappy]=snappy
   [yasm]=
   [zlib]=minizip
 )
-#_unwanted_bundled_libs=(
-#  ${!_system_libs[@]}
-#  ${_system_libs[libjpeg]+libjpeg_turbo}
-#)
-#depends+=(${_system_libs[@]})
+_unwanted_bundled_libs=(
+  ${!_system_libs[@]}
+  ${_system_libs[libjpeg]+libjpeg_turbo}
+)
+depends+=(${_system_libs[@]})
 
 # Force script incompatible with Python 3 to use $TOOLCHAIN/bin/python
    sed -i '1s|python$|&2|' \
@@ -354,11 +352,11 @@ _keeplibs=(
 
 #  ./build/linux/unbundle/remove_bundled_libraries.py ${_keeplibs[@]} --do-remove
   ./build/linux/unbundle/replace_gn_files.py --system-libraries "${!_system_libs[@]}"
-#  ./third_party/libaddressinput/chromium/tools/update-strings.py
+  ./third_party/libaddressinput/chromium/tools/update-strings.py
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
 
-  LC_ALL=C ionice -c3 nice -n20 noti ninja -j${CONCURRENCY_MAKE_LEVEL} -C out/Release chrome chrome_sandbox
+  ionice -c3 nice -n20 noti ninja -j${CONCURRENCY_MAKE_LEVEL} -C out/Release chrome chrome_sandbox
 }
 
 addon() {

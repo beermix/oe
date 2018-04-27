@@ -17,17 +17,21 @@
 ################################################################################
 
 PKG_NAME="simplejson"
-PKG_VERSION="3.13.2"
+PKG_VERSION="3.14.0"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://pypi.python.org/pypi/simplejson"
-PKG_URL="https://pypi.python.org/packages/0d/3f/3a16847fe5c010110a8f54dd8fe7b091b4e22922def374fe1cce9c1cb7e9/simplejson-3.13.2.tar.gz"
+PKG_URL="https://files.pythonhosted.org/packages/6c/ca/8776e0c494b7f16f98a4f40f1540ed6f7467f75280631d837e9cf3e5796e/simplejson-3.14.0.tar.gz"
 PKG_DEPENDS_TARGET="toolchain Python2 distutilscross:host"
 PKG_SECTION="python/system"
 PKG_SHORTDESC="simplejson: a simple, fast, complete, correct and extensible JSON <http://json.org> encoder and decoder for Python 2.5+."
 PKG_LONGDESC="simplejson is a simple, fast, complete, correct and extensible JSON <http://json.org> encoder and decoder for Python 2.5+. It is pure Python code with no dependencies, but includes an optional C extension for a serious speed boost."
 PKG_TOOLCHAIN="manual"
 PKG_BUILD_FLAGS="-lto"
+
+makeinstall_host() {
+  python setup.py install --prefix=$TOOLCHAIN
+}
 
 pre_make_target() {
   export PYTHONXCPREFIX="$SYSROOT_PREFIX/usr"
