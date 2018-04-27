@@ -109,3 +109,43 @@ index e4cacf2..41bcd41 100644
  @item -mcx16
  @opindex mcx16
  This option enables GCC to generate @code{CMPXCHG16B} instructions in 64-bit
+diff --git a/gcc/testsuite/g++.dg/ext/pr57362.C b/gcc/testsuite/g++.dg/ext/pr57362.C
+index 71c53d3..3613b63 100644
+--- a/gcc/testsuite/g++.dg/ext/pr57362.C
++++ b/gcc/testsuite/g++.dg/ext/pr57362.C
+@@ -81,6 +81,8 @@ __attribute__((target("dispatch-scheduler")))
+ int foo(void) { return 1; }
+ __attribute__((target("prefer-avx128")))
+ int foo(void) { return 1; }
++__attribute__((target("prefer-avx256")))
++int foo(void) { return 1; }
+ __attribute__((target("32")))
+ int foo(void) { return 1; }
+ __attribute__((target("64")))
+diff --git a/gcc/testsuite/gcc.target/i386/avx512f-prefer.c b/gcc/testsuite/gcc.target/i386/avx512f-prefer.c
+new file mode 100644
+index 0000000..defe51e
+--- /dev/null
++++ b/gcc/testsuite/gcc.target/i386/avx512f-prefer.c
+@@ -0,0 +1,18 @@
++/* { dg-do compile } */
++/* { dg-options "-O3 -march=skylake-avx512 -mprefer-avx256" } */
++/* { dg-final { scan-assembler-not "%zmm\[0-9\]+" } } */
++/* { dg-final { scan-assembler "vmulpd" } } */
++
++#define N 1024
++
++double a[N], b[N], c[N];
++
++void
++avx512f_test (void)
++{
++  int i;
++
++  for (i = 0; i < N; i++)
++    c[i] = a[i] * b[i];
++}
++
+-- 
+1.8.3.1
+

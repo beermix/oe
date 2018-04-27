@@ -24,9 +24,9 @@ PKG_LICENSE="GPL"
 PKG_SITE="ftp://gcc.gnu.org/pub/gcc/snapshots/LATEST-7"
 PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/$PKG_VERSION/gcc-$PKG_VERSION.tar.xz"
 PKG_URL="http://192.168.1.200:8080/%2Fgcc-7.3.0.isl.tar.xz"
-PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host"
+PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host"
 PKG_DEPENDS_TARGET="gcc:host"
-PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host glibc"
+PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host glibc"
 PKG_SECTION="lang"
 PKG_SHORTDESC="gcc: The GNU Compiler Collection Version 4 (aka GNU C Compiler)"
 PKG_LONGDESC="This package contains the GNU Compiler Collection. It includes compilers for the languages C, C++, Objective C, Fortran 95, Java and others ... This GCC contains the Stack-Smashing Protector Patch which can be enabled with the -fstack-protector command-line option. More information about it ca be found at http://www.research.ibm.com/trl/projects/security/ssp/."
@@ -36,6 +36,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-gmp=$TOOLCHAIN \
                            --with-mpfr=$TOOLCHAIN \
                            --with-mpc=$TOOLCHAIN \
+                           --with-isl=$TOOLCHAIN \
                            --with-gnu-as \
                            --with-gnu-ld \
                            --enable-plugin \
@@ -45,27 +46,21 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-multilib \
                            --disable-nls \
                            --enable-checking=release \
-                           --with-default-libstdcxx-abi=gcc4-compatible \
-                           --disable-libmpx \
-                           --disable-libssp \
                            --disable-libsanitizer \
                            --disable-libmudflap \
+                           --disable-libmpx \
+                           --disable-libssp \
+                           --disable-libquadmath \
+                           --disable-libquadmath-support \
                            --with-tune=haswell \
                            --with-arch=westmere"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
-                              --disable-__cxa_atexit \
-                              --enable-cloog-backend=isl \
-                              --disable-libatomic \
-                              --disable-libitm \
-                              --disable-libquadmath \
+                              --enable-__cxa_atexit \
                               --disable-libgomp \
-                              --disable-shared \
-                              --disable-threads \
-                              --without-headers \
-                              --with-newlib \
-                              --disable-decimal-float \
+                              --with-host-libstdcxx=-static-libgcc -Wl,-Bstatic,-lstdc++,-Bdynamic -lm \
+                              --with-glibc-version=2.27 \
                               $GCC_OPTS"
 
 PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
