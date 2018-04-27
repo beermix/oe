@@ -25,6 +25,8 @@ PKG_DEPENDS_TARGET="libelf:host"
 PKG_SECTION="devel"
 PKG_TOOLCHAIN="autotools"
 
-PKG_CONFIGURE_OPTS_HOST="mr_cv_target_elf=yes \
-                        --enable-elf64=yes \
-                        --disable-sanity-checks"
+PKG_CONFIGURE_OPTS_HOST="--enable-compat \
+			    --enable-elf64 \
+			    --enable-extended-format \
+			    --enable-static \
+			    --disable-shared"
