@@ -1,0 +1,78 @@
+diff --git a/install.sh b/install.sh
+index 5b65d70..3186d91 100755
+--- a/install.sh
++++ b/install.sh
+@@ -5,7 +5,9 @@ installShared()
+   prg=$1
+   if [ -x bin/${prg} ]
+   then
+-    echo "- installing ${DEST_DIR}${DEST_BIN}/${prg}"
++    echo "- installing shared ${DEST_DIR}${DEST_BIN}/${prg}"
++    mkdir -p "${DEST_DIR}${DEST_SHARE}"
++    echo cp bin/${prg} "${DEST_DIR}${DEST_SHARE}/${prg}"
+     cp bin/${prg} "${DEST_DIR}${DEST_SHARE}/${prg}"
+     chmod 755 "${DEST_DIR}${DEST_SHARE}/${prg}"
+     strip     "${DEST_DIR}${DEST_SHARE}/${prg}"
+diff --git a/makefile.common b/makefile.common
+index 9a12367..fe92339 100644
+--- a/makefile.common
++++ b/makefile.common
+@@ -1,8 +1,8 @@
+ MKDIR = mkdir -p
+ 
+-DEST_HOME=/usr/local
++DEST_HOME=/usr
+ DEST_BIN=$(DEST_HOME)/bin
+-DEST_SHARE=$(DEST_HOME)/lib/p7zip
++DEST_SHARE=$(DEST_HOME)/libexec/p7zip
+ DEST_SHARE_DOC=$(DEST_HOME)/share/doc/p7zip
+ DEST_MAN=$(DEST_HOME)/man
+ 
+@@ -113,7 +113,7 @@ test_Client7z: Client7z
+ 	cd check ; TOOLS="${TOOLS}" ./check_Client7z.sh "`pwd`/../bin/Client7z"
+ 
+ install:
+-	./install.sh $(DEST_BIN) $(DEST_SHARE) $(DEST_MAN) $(DEST_SHARE_DOC) $(DEST_DIR)
++	./install.sh $(DEST_BIN) $(DEST_SHARE) $(DEST_MAN) $(DEST_SHARE_DOC) $(DESTDIR)$(DEST_DIR)
+ 
+ # cppcheck -f : test all flags
+ cppcheck:
+diff --git a/makefile.machine b/makefile.machine
+index 9e34c34..075c6a8 100644
+--- a/makefile.machine
++++ b/makefile.machine
+@@ -1,23 +1,28 @@
+-#
+-# makefile for Linux (x86, PPC, alpha ...)
+-#
+ 
++
++# OPTFLAGS=-Ofast -flto -march=westmere -funroll-loops -s
+ OPTFLAGS=-O -s
+ 
+-ALLFLAGS=${OPTFLAGS} -pipe \
++# use "-m32" to have a 32bits executable
++ALLFLAGS=-m64 ${OPTFLAGS} -pipe \
+     	-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \
+ 	-DNDEBUG -D_REENTRANT -DENV_UNIX \
+ 	-D_7ZIP_LARGE_PAGES \
++	-D_7ZIP_ASM \
+ 	$(LOCAL_FLAGS)
+ 
+ CXX=g++
+ CC=gcc
+ CC_SHARED=-fPIC
+ LINK_SHARED=-fPIC -shared
++ASM=yasm -f elf -m amd64 -Dx64
++
++PRE_COMPILED_HEADER=StdAfx.h.gch
+ 
+ LOCAL_LIBS=-lpthread
+ LOCAL_LIBS_DLL=$(LOCAL_LIBS) -ldl
+ 
+-OBJ_CRC32=$(OBJ_CRC32_C)
+-OBJ_AES=
++CPU=x64
++OBJ_CRC32=$(OBJ_CRC32_x86_64)
++OBJ_AES=AesOpt.o
+ 

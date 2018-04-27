@@ -1,0 +1,17 @@
+diff -Naur p7zip-16.02-orig/makefile.machine p7zip-16.02/makefile.machine
+--- p7zip-16.02-orig/makefile.machine	2018-04-27 10:43:24.157805573 +0300
++++ p7zip-16.02/makefile.machine	2018-04-27 10:43:19.069884600 +0300
+@@ -1,10 +1,10 @@
+ 
+ 
+-# OPTFLAGS=-Ofast -flto -march=westmere -funroll-loops -s
+-OPTFLAGS=-O -s
++OPTFLAGS=-Ofast -march=westmere -m64 -funroll-loops -s
++#OPTFLAGS=-O -s
+ 
+ # use "-m32" to have a 32bits executable
+-ALLFLAGS=-m64 ${OPTFLAGS} -pipe \
++ALLFLAGS=-m64 ${OPTFLAGS} \
+     	-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE \
+ 	-DNDEBUG -D_REENTRANT -DENV_UNIX \
+ 	-D_7ZIP_LARGE_PAGES \

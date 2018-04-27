@@ -35,7 +35,7 @@ make_host() {
 }
 
 make_target() {
-  make CXX=$CXX CC=$CC 7z 7za
+  make CXX=$CXX CC=$CC 7za test
 }
 
 makeinstall_host() {
