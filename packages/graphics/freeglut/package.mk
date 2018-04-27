@@ -17,17 +17,21 @@
 ################################################################################
 
 PKG_NAME="freeglut"
-PKG_VERSION="3.0.0"
+PKG_VERSION="89c58f2"
 PKG_ARCH="any"
 PKG_LICENSE="LGPL"
 #PKG_GIT_URL="https://github.com/dcnieho/FreeGLUT"
 PKG_URL="https://downloads.sourceforge.net/project/freeglut/freeglut/3.0.0/freeglut-3.0.0.tar.gz"
+PKG_URL="https://github.com/dcnieho/FreeGLUT/archive/$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="FreeGLUT-$PKG_VERSION*"
 PKG_GIT_BRANCH="git_master"
 PKG_DEPENDS_TARGET="toolchain mesa libXi"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="A library for reading RAW files obtained from digital photo cameras (CRW/CR2, NEF, RAF, DNG, and others)"
 PKG_LONGDESC="A library for reading RAW files obtained from digital photo cameras (CRW/CR2, NEF, RAF, DNG, and others)"
+PKG_TOOLCHAIN="cmake-make"
+PKG_BUILD_FLAGS="+pic"
 
+PKG_CMAKE_SCRIPT="$PKG_BUILD/freeglut/freeglut/CMakeLists.txt"
 
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release"
+PKG_CMAKE_OPTS_TARGET="-DFREEGLUT_BUILD_SHARED_LIBS=0"
