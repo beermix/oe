@@ -32,7 +32,7 @@ PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chro
 #PKG_URL="https://gsdview.appspot.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 #PKG_URL="http://192.168.1.200:8080/%2Fchromium-66.0.3359.117.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="pciutils dbus libXtst libXcomposite libXcursor alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk unclutter xdotool libdrm libjpeg-turbo freetype harfbuzz gtk+ re2 snappy BeautifulSoup:host beautifulsoup4:host html5lib:host chromium:host"
+PKG_DEPENDS_TARGET="pciutils dbus libXtst libXcomposite libXcursor alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk unclutter xdotool libdrm libjpeg-turbo freetype harfbuzz gtk+ re2 snappy openjpeg beautifulsoup4:host html5lib:host chromium:host"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -58,8 +58,6 @@ post_patch() {
 }
 
 make_host() {
-#  export CCACHE_CPP2=yes
-#  export CCACHE_SLOPPINESS=time_macros
   ./tools/gn/bootstrap/bootstrap.py --no-rebuild -s --no-clean
 }
 
@@ -81,7 +79,7 @@ make_target() {
   export CCACHE_SLOPPINESS=time_macros
 
   # Allow building against system libraries in official builds
-  sed -i 's/OFFICIAL_BUILD/GOOGLE_CHROME_BUILD/' ./tools/generate_shim_headers/generate_shim_headers.py
+  # sed -i 's/OFFICIAL_BUILD/GOOGLE_CHROME_BUILD/' ./tools/generate_shim_headers/generate_shim_headers.py
 
   # Work around broken screen sharing in Google Meet
   # https://crbug.com/829916#c16
@@ -114,7 +112,7 @@ make_target() {
     'is_debug=false'
     'fatal_linker_warnings=false'
     'treat_warnings_as_errors=false'
-    'fieldtrial_testing_like_official_build=true'
+    'fieldtrial_testing_like_official_build=false'
     'remove_webcore_debug_symbols=true'
     'ffmpeg_branding="Chrome"'
     'proprietary_codecs=true'
@@ -127,6 +125,9 @@ make_target() {
     'use_gtk3=false'
     'use_kerberos=false'
     'use_pulseaudio=false'
+    'use_system_libjpeg=true'
+    'use_libjpeg_turbo=false'
+    'pdf_enable_xfa=true'
     'linux_link_libudev=true'
     'use_sysroot=true'
     'use_vaapi=true'
@@ -135,7 +136,7 @@ make_target() {
     'enable_nacl=false'
     'enable_swiftshader=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
-    'use_jumbo_build=false' # https://chromium.googlesource.com/chromium/src/+/lkcr/docs/jumbo.md
+    'use_jumbo_build=true' # https://chromium.googlesource.com/chromium/src/+/lkcr/docs/jumbo.md
     'enable_nacl_nonsfi=false'
     'enable_vulkan=false'
     "google_api_key=\"${_google_api_key}\""
@@ -151,14 +152,14 @@ declare -gA _system_libs=(
   [harfbuzz-ng]=harfbuzz
 #  [icu]=icu
   [libdrm]=
-  [libjpeg]=libjpeg
+#  [libjpeg]=libjpeg
 #  [libpng]=libpng            # https://crbug.com/752403#c10
 #  [libvpx]=libvpx
 #  [libwebp]=libwebp
   [libxml]=libxml2           # https://crbug.com/736026
   [libxslt]=libxslt
-  [re2]=re2
-  [snappy]=snappy
+#  [re2]=re2
+#  [snappy]=snappy
   [yasm]=
   [zlib]=minizip
 )
@@ -337,13 +338,16 @@ _keeplibs=(
            
            'third_party/icu'
            
-           # 'third_party/libjpeg_turbo'
+           #'third_party/libjpeg_turbo'
            'third_party/openh264'
            'third_party/libpng'
            'third_party/flac'
            'third_party/opus'
            'third_party/libwebp'
            'third_party/libvpx'
+           
+           'third_party/re2'
+           'third_party/snappy'
            )
 
   ./build/linux/unbundle/remove_bundled_libraries.py ${_keeplibs[@]} --do-remove

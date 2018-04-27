@@ -18,6 +18,7 @@
 
 PKG_NAME="ninja"
 PKG_VERSION="ca041d8"
+PKG_VERSION="253e94c" # v1.8.2
 PKG_ARCH="any"
 PKG_LICENSE="Apache"
 PKG_SITE="https://github.com/ninjca-build/ninja"
@@ -30,7 +31,6 @@ PKG_TOOLCHAIN="manual"
 
 make_host() {
  CXX=/usr/bin/clang++ python2 ./configure.py --bootstrap --verbose
- # python3./configure.py --bootstrap --verbose
 }
 
 makeinstall_host() {
