@@ -69,11 +69,11 @@ make_target() {
   unset CXXFLAGS
   unset LDFLAGS
 
-  export CFLAGS="$CFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables -Wno-builtin-macro-redefined"
-  export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables -Wno-builtin-macro-redefined"
-  export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES -D__DATE__=  -D__TIME__=  -D__TIMESTAMP__="
+  export CFLAGS="$CFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables"
+  export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
+  export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
   
-  export CCACHE_CPP2=yes
+  # export CCACHE_CPP2=yes
   export CCACHE_SLOPPINESS=time_macros
 
   # Allow building against system libraries in official builds
@@ -125,7 +125,6 @@ make_target() {
     'use_pulseaudio=false'
     'use_allocator="none"'
     'linux_link_libudev=true'
-    'use_gio=true'
     'enable_print_preview=false'
     'enable_remoting=false'
     'headless_use_embedded_resources=true'
@@ -136,7 +135,7 @@ make_target() {
     'enable_nacl=false'
     'enable_swiftshader=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
-    'use_jumbo_build=true' # https://chromium.googlesource.com/chromium/src/+/lkcr/docs/jumbo.md
+    'use_jumbo_build=false' # https://chromium.googlesource.com/chromium/src/+/lkcr/docs/jumbo.md
     'enable_nacl_nonsfi=false'
     'enable_vulkan=false'
     "google_api_key=\"${_google_api_key}\""
@@ -204,12 +203,11 @@ local _lib
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
-  
-  ionice -c3 nice -n20 noti ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release media
-  
-  ionice -c3 nice -n20 noti ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Headless headless_shell
 
-  ionice -c3 nice -n20 noti ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox
+ # ionice -c3 nice -n20 noti ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release media
+ #  ionice -c3 nice -n20 noti ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Headless headless_shell
+
+  ionice -c3 nice -n20 noti ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox media
 }
 
 addon() {
