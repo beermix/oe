@@ -46,6 +46,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-multilib \
                            --disable-nls \
                            --enable-checking=release \
+                           --disable-libada \
                            --disable-libsanitizer \
                            --disable-libmudflap \
                            --disable-libmpx \
