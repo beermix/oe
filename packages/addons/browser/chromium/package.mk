@@ -19,7 +19,7 @@
 #  http://svnweb.mageia.org/packages/cauldron/chromium-browser-stable/current
 #  http://omahaproxy.appspot.com/
 #  https://www.chromestatus.com/
-################################################################################
+################################################################################ beautifulsoup4:host html5lib:host re2 snappy
 
 PKG_NAME="chromium"
 PKG_VERSION="65.0.3325.181"
@@ -32,7 +32,7 @@ PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chro
 #PKG_URL="https://gsdview.appspot.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 #PKG_URL="http://192.168.1.200:8080/%2Fchromium-66.0.3359.117.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="pciutils dbus libXtst libXcomposite libXcursor alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk unclutter xdotool libdrm libjpeg-turbo freetype harfbuzz gtk+ re2 snappy openjpeg beautifulsoup4:host html5lib:host ply:host simplejson:host openjpeg libvpx chromium:host"
+PKG_DEPENDS_TARGET="pciutils dbus libXtst libXcomposite libXcursor alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk unclutter xdotool libdrm libjpeg-turbo freetype harfbuzz gtk+ ply:host simplejson:host chromium:host"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -63,19 +63,16 @@ make_host() {
 }
 
 make_target() {
+
   unset CPPFLAGS
   unset CFLAGS
   unset CXXFLAGS
   unset LDFLAGS
 
-  export CFLAGS="$CFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables"
-  export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
-  export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
+  export CFLAGS="$CFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables -Wno-builtin-macro-redefined"
+  export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables -Wno-builtin-macro-redefined"
+  export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES -D__DATE__=  -D__TIME__=  -D__TIMESTAMP__="
   
-  export CFLAGS="$CFLAGS -Wno-builtin-macro-redefined"
-  export CXXFLAGS="$CXXFLAGS -Wno-builtin-macro-redefined"
-  export CPPFLAGS="$CPPFLAGS -D__DATE__=  -D__TIME__=  -D__TIMESTAMP__="
-
   export CCACHE_CPP2=yes
   export CCACHE_SLOPPINESS=time_macros
 
@@ -128,6 +125,10 @@ make_target() {
     'use_pulseaudio=false'
     'use_allocator="none"'
     'linux_link_libudev=true'
+    'use_gio=true'
+    'enable_print_preview=false'
+    'enable_remoting=false'
+    'headless_use_embedded_resources=true'
     'use_sysroot=true'
     'use_vaapi=true'
     'use_v8_context_snapshot=false'
@@ -153,12 +154,12 @@ declare -gA _system_libs=(
   [libdrm]=
   [libjpeg]=libjpeg
 #  [libpng]=libpng            # https://crbug.com/752403#c10
-  [libvpx]=libvpx
+#  [libvpx]=libvpx
 #  [libwebp]=libwebp
 #  [libxml]=libxml2           # https://crbug.com/736026
   [libxslt]=libxslt
-  [re2]=re2
-  [snappy]=snappy
+#  [re2]=re2
+#  [snappy]=snappy
   [yasm]=
   [zlib]=minizip
 )
@@ -203,8 +204,12 @@ local _lib
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
+  
+  ionice -c3 nice -n20 noti ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release media
+  
+  ionice -c3 nice -n20 noti ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Headless headless_shell
 
-  ionice -c3 nice -n20 noti ninja -j${CONCURRENCY_MAKE_LEVEL} -C out/Release chrome chrome_sandbox
+  ionice -c3 nice -n20 noti ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox
 }
 
 addon() {

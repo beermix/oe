@@ -61,13 +61,13 @@ case $PKG_SOURCE_NAME in
     unzip -q $FULL_SOURCE_PATH -d $2
     ;;
   *.diff | *.patch)
-    cat $FULL_SOURCE_PATH | patch -d $2 -p1
+    cat $FULL_SOURCE_PATH | patch -d $2 --no-backup-if-mismatch -p1 -b --fuzz=0
     ;;
   *.diff.bz2 | *.patch.bz2 | patch-*.bz2)
-    bzcat $FULL_SOURCE_PATH | patch -d $2 -p1
+    bzcat $FULL_SOURCE_PATH | patch -d $2 --no-backup-if-mismatch -p1 -b --fuzz=0
     ;;
   *.diff.gz | *.patch.gz | patch-*.gz)
-    zcat $FULL_SOURCE_PATH | patch -d $2 -p1
+    zcat $FULL_SOURCE_PATH | patch -d $2 --no-backup-if-mismatch -p1 -b --fuzz=0
     ;;
   *)
     FULL_DEST_PATH="$2/$PKG_NAME-$PKG_VERSION"
