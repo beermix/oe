@@ -22,9 +22,9 @@
 ################################################################################
 
 PKG_NAME="chromium"
-PKG_VERSION="67.0.3396.10"
-#PKG_SHA256="77c5a334644fdc303697b3864c9a6b709cee23ee384f4134308e820af4568ed6"
-PKG_REV="202-dev"
+PKG_VERSION="65.0.3325.181"
+PKG_SHA256="93666448c6b96ec83e6a35a64cff40db4eb92a154fe1db4e7dab4761d0e38687"
+PKG_REV="202"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_SITE="http://www.chromium.org/Home"
@@ -32,7 +32,7 @@ PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chro
 #PKG_URL="https://gsdview.appspot.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 #PKG_URL="http://192.168.1.200:8080/%2Fchromium-66.0.3359.117.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="pciutils dbus libXtst libXcomposite libXcursor alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk unclutter xdotool libdrm libjpeg-turbo freetype harfbuzz gtk+ re2 snappy openjpeg beautifulsoup4:host html5lib:host chromium:host"
+PKG_DEPENDS_TARGET="pciutils dbus libXtst libXcomposite libXcursor alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk unclutter xdotool libdrm libjpeg-turbo freetype harfbuzz gtk+ re2 snappy openjpeg beautifulsoup4:host html5lib:host openjpeg chromium:host"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -54,7 +54,7 @@ post_patch() {
   # set correct widevine
   sed 's|@WIDEVINE_VERSION@|The Cake Is a Lie|g' -i ./third_party/widevine/cdm/stub/widevine_cdm_version.h
   
-#  sed 's|//third_party/usb_ids/usb.ids|/usr/share/hwdata/usb.ids|g' -i ./device/usb/BUILD.gn
+  sed 's|//third_party/usb_ids/usb.ids|/usr/share/hwdata/usb.ids|g' -i ./device/usb/BUILD.gn
 }
 
 make_host() {
@@ -79,7 +79,7 @@ make_target() {
   export CCACHE_SLOPPINESS=time_macros
 
   # Allow building against system libraries in official builds
-  # sed -i 's/OFFICIAL_BUILD/GOOGLE_CHROME_BUILD/' ./tools/generate_shim_headers/generate_shim_headers.py
+  sed -i 's/OFFICIAL_BUILD/GOOGLE_CHROME_BUILD/' ./tools/generate_shim_headers/generate_shim_headers.py
 
   # Work around broken screen sharing in Google Meet
   # https://crbug.com/829916#c16
@@ -112,7 +112,7 @@ make_target() {
     'is_debug=false'
     'fatal_linker_warnings=false'
     'treat_warnings_as_errors=false'
-    'fieldtrial_testing_like_official_build=false'
+    'fieldtrial_testing_like_official_build=true'
     'remove_webcore_debug_symbols=true'
     'ffmpeg_branding="Chrome"'
     'proprietary_codecs=true'
@@ -150,9 +150,9 @@ declare -gA _system_libs=(
   [fontconfig]=fontconfig
   [freetype]=freetype2
   [harfbuzz-ng]=harfbuzz
-#  [icu]=icu
+  [icu]=icu
   [libdrm]=
-#  [libjpeg]=libjpeg
+  [libjpeg]=libjpeg
 #  [libpng]=libpng            # https://crbug.com/752403#c10
 #  [libvpx]=libvpx
 #  [libwebp]=libwebp
@@ -336,7 +336,7 @@ _keeplibs=(
            'third_party/xdg-utils'
            'third_party/yasm/run_yasm.py'
            
-           'third_party/icu'
+           #'third_party/icu'
            
            #'third_party/libjpeg_turbo'
            'third_party/openh264'
@@ -348,9 +348,11 @@ _keeplibs=(
            
            'third_party/re2'
            'third_party/snappy'
+           'third_party/libaom'
+           third_party/unrar
            )
 
-  ./build/linux/unbundle/remove_bundled_libraries.py ${_keeplibs[@]} --do-remove
+#  ./build/linux/unbundle/remove_bundled_libraries.py ${_keeplibs[@]} --do-remove
   ./build/linux/unbundle/replace_gn_files.py --system-libraries "${!_system_libs[@]}"
 #  ./third_party/libaddressinput/chromium/tools/update-strings.py
 
@@ -363,11 +365,11 @@ addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -P  $PKG_BUILD/out/Release/chrome $ADDON_BUILD/$PKG_ADDON_ID/bin/chromium.bin
   cp -P  $PKG_BUILD/out/Release/chrome_sandbox $ADDON_BUILD/$PKG_ADDON_ID/bin/chrome-sandbox
-  cp -P  $PKG_BUILD/out/Release/{*.pak,*.dat,*.bin} $ADDON_BUILD/$PKG_ADDON_ID/bin
+  cp -P  $PKG_BUILD/out/Release/{*.pak,*.bin} $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -PR $PKG_BUILD/out/Release/locales $ADDON_BUILD/$PKG_ADDON_ID/bin/
   cp -PR $PKG_BUILD/out/Release/gen/content/content_resources.pak $ADDON_BUILD/$PKG_ADDON_ID/bin/
 
-  # config
+  # config *.dat,
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/config
   cp -P $PKG_DIR/config/* $ADDON_BUILD/$PKG_ADDON_ID/config
 
