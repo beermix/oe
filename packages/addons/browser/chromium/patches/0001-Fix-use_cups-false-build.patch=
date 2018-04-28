@@ -12,10 +12,10 @@ Reviewed-by: Lei Zhang <thestig@chromium.org>
 Commit-Queue: Thomas Anderson <thomasanderson@chromium.org>
 Cr-Commit-Position: refs/heads/master@{#523602}
 
-diff --git a/chrome/service/cloud_print/print_system.cc b/chrome/service/cloud_print/print_system.cc
+diff --git a/service/cloud_print/print_system.cc b/service/cloud_print/print_system.cc
 index ac94c804f9ab..4ceba969194d 100644
---- a/chrome/service/cloud_print/print_system.cc
-+++ b/chrome/service/cloud_print/print_system.cc
+--- a/service/cloud_print/print_system.cc
++++ b/service/cloud_print/print_system.cc
 @@ -5,6 +5,7 @@
  #include "chrome/service/cloud_print/print_system.h"
  

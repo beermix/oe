@@ -44,12 +44,4 @@ index 3dbf872f70..f9cd01c285
      } else if (current_cpu == "x86") {
        cflags += [ "-m32" ]
        ldflags += [ "-m32" ]
-@@ -1463,7 +1482,7 @@ config("chromium_code") {
-       # Non-chromium code is not guaranteed to compile cleanly with
-       # _FORTIFY_SOURCE. Also, fortified build may fail when optimizations are
-       # disabled, so only do that for Release build.
--      defines += [ "_FORTIFY_SOURCE=2" ]
-+      # defines += [ "_FORTIFY_SOURCE=2" ]
-     }
- 
-     if (is_mac || is_ios) {
+
