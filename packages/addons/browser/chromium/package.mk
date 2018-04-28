@@ -22,9 +22,9 @@
 ################################################################################ beautifulsoup4:host html5lib:host re2 snappy
 
 PKG_NAME="chromium"
-PKG_VERSION="65.0.3325.181"
-PKG_SHA256="93666448c6b96ec83e6a35a64cff40db4eb92a154fe1db4e7dab4761d0e38687"
-PKG_REV="202"
+PKG_VERSION="66.0.3359.139"
+#PKG_SHA256="93666448c6b96ec83e6a35a64cff40db4eb92a154fe1db4e7dab4761d0e38687"
+PKG_REV="204"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_SITE="http://www.chromium.org/Home"
@@ -32,7 +32,7 @@ PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chro
 #PKG_URL="https://gsdview.appspot.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 #PKG_URL="http://192.168.1.200:8080/%2Fchromium-66.0.3359.117.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host gperf:host libevent:host"
-PKG_DEPENDS_TARGET="pciutils dbus libXtst libXcomposite libXcursor alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk unclutter xdotool libdrm libjpeg-turbo freetype harfbuzz gtk+ ply:host simplejson:host chromium:host"
+PKG_DEPENDS_TARGET="pciutils dbus libXtst libXcomposite libXcursor alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk unclutter xdotool libdrm libjpeg-turbo freetype harfbuzz gtk+ ply:host simplejson:host re2 snappy chromium:host"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -55,6 +55,8 @@ post_patch() {
   sed 's|@WIDEVINE_VERSION@|The Cake Is a Lie|g' -i ./third_party/widevine/cdm/stub/widevine_cdm_version.h
   
   sed 's|//third_party/usb_ids/usb.ids|/usr/share/hwdata/usb.ids|g' -i ./device/usb/BUILD.gn
+  
+  tar xfC $PKG_DIR/blink-tools-66.0.3359.117.tar.gz ./third_party/blink/tools/
 }
 
 make_host() {
@@ -145,7 +147,7 @@ make_target() {
     'enable_nacl=false'
     'enable_swiftshader=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
-    'use_jumbo_build=false' # https://chromium.googlesource.com/chromium/src/+/lkcr/docs/jumbo.md
+    'use_jumbo_build=true' # https://chromium.googlesource.com/chromium/src/+/lkcr/docs/jumbo.md
     'enable_nacl_nonsfi=false'
     'enable_vulkan=false'
     "google_api_key=\"${_google_api_key}\""
@@ -167,8 +169,8 @@ declare -gA _system_libs=(
 #  [libwebp]=libwebp
 #  [libxml]=libxml2           # https://crbug.com/736026
   [libxslt]=libxslt
-#  [re2]=re2
-#  [snappy]=snappy
+  [re2]=re2
+  [snappy]=snappy
   [yasm]=
   [zlib]=minizip
 )
