@@ -60,7 +60,7 @@ post_patch() {
 }
 
 make_host() {
-  export CCACHE_SLOPPINESS=time_macros
+  export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime
   ./tools/gn/bootstrap/bootstrap.py --no-rebuild --no-clean
 }
 
@@ -73,9 +73,9 @@ make_target() {
   # export CFLAGS="$CFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables"
   # export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
   # export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
-  
-  export CCACHE_CPP2=yes
-  export CCACHE_SLOPPINESS=time_macros
+
+  # export CCACHE_CPP2=yes
+  export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime
 
   # Allow building against system libraries in official builds
   sed -i 's/OFFICIAL_BUILD/GOOGLE_CHROME_BUILD/' ./tools/generate_shim_headers/generate_shim_headers.py
