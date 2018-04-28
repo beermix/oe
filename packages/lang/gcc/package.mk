@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="7-20180426"
+PKG_VERSION="8-20180427"
 #PKG_SHA256="832ca6ae04636adbb430e865a1451adf6979ab44ca1c8374f61fba65645ce15c"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -45,19 +45,20 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-gold \
                            --enable-ld=default \
                            --disable-multilib \
-                           --disable-nls \
+                           --enable-newlib-io-long-long \
+                           --with-gcc-major-version-only \
                            --enable-checking=release \
                            --disable-libada \
                            --disable-libsanitizer \
                            --disable-libmudflap \
                            --disable-libmpx \
                            --disable-libssp \
+                           --with-system-zlib=$TOOLCHAIN \
                            --with-tune=haswell \
                            --with-arch=westmere"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
-                              --enable-__cxa_atexit \
                               --disable-shared \
                               --disable-threads \
                               --without-headers \
@@ -71,8 +72,9 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
 PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-languages=c,c++ \
                          --enable-__cxa_atexit \
-                         --enable-decimal-float \
-                         --enable-tls \
+                         --disable-libunwind-exceptions \
+                         --enable-initfini-array \
+                         --enable-offload-targets=nvptx-none \
                          --enable-shared \
                          --disable-static \
                          --enable-c99 \
@@ -89,11 +91,6 @@ pre_configure_host() {
   export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
   
-  export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
-  export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
-}
-
-pre_configure_bootstrap() {
   export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
   export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
 }
