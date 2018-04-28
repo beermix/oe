@@ -1,0 +1,25 @@
+diff --git a/libebl/eblcheckreloctargettype.c b/libebl/eblcheckreloctargettype.c
+index e0d57c1..068ad8f 100644
+--- a/libebl/eblcheckreloctargettype.c
++++ b/libebl/eblcheckreloctargettype.c
+@@ -46,6 +46,7 @@ ebl_check_reloc_target_type (Ebl *ebl, Elf64_Word sh_type)
+       case SHT_INIT_ARRAY:
+       case SHT_FINI_ARRAY:
+       case SHT_PREINIT_ARRAY:
++      case SHT_NOTE:
+ 	return true;
+ 
+       default:
+diff --git a/src/elflint.c b/src/elflint.c
+index df1b3a0..f4d82d9 100644
+--- a/src/elflint.c
++++ b/src/elflint.c
+@@ -4329,6 +4329,8 @@ section [%2d] '%s': unknown core file note type %" PRIu32
+ 	  case NT_GNU_HWCAP:
+ 	  case NT_GNU_BUILD_ID:
+ 	  case NT_GNU_GOLD_VERSION:
++	  case NT_GNU_PROPERTY_TYPE_0:
++	  case 256:
+ 	    break;
+ 
+ 	  case 0:

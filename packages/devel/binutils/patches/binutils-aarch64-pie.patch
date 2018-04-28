@@ -1,0 +1,193 @@
+Only in binutils-2.29.1/bfd: ChangeLog.orig
+Only in binutils-2.29.1/bfd: ChangeLog.rej
+diff -rup binutils.orig/bfd/elf64-s390.c binutils-2.29.1/bfd/elf64-s390.c
+--- binutils.orig/bfd/elf64-s390.c	2018-01-22 12:10:06.282231202 +0000
++++ binutils-2.29.1/bfd/elf64-s390.c	2018-01-22 12:32:36.743617339 +0000
+@@ -1600,8 +1600,7 @@ elf_s390_adjust_dynamic_symbol (struct b
+     {
+       if (h->plt.refcount <= 0
+ 	  || SYMBOL_CALLS_LOCAL (info, h)
+-	  || (ELF_ST_VISIBILITY (h->other) != STV_DEFAULT
+-	      && h->root.type == bfd_link_hash_undefweak))
++	  || UNDEFWEAK_NO_DYNAMIC_RELOC (info, h))
+ 	{
+ 	  /* This case can occur if we saw a PLT32 reloc in an input
+ 	     file, but the symbol was never referred to by a dynamic
+@@ -1850,8 +1849,7 @@ allocate_dynrelocs (struct elf_link_hash
+ 	htab->elf.srelgot->size += sizeof (Elf64_External_Rela);
+       else if (tls_type == GOT_TLS_GD)
+ 	htab->elf.srelgot->size += 2 * sizeof (Elf64_External_Rela);
+-      else if ((ELF_ST_VISIBILITY (h->other) == STV_DEFAULT
+-		|| h->root.type != bfd_link_hash_undefweak)
++      else if (!UNDEFWEAK_NO_DYNAMIC_RELOC (info, h)
+ 	       && (bfd_link_pic (info)
+ 		   || WILL_CALL_FINISH_DYNAMIC_SYMBOL (dyn, 0, h)))
+ 	htab->elf.srelgot->size += sizeof (Elf64_External_Rela);
+@@ -1890,7 +1888,8 @@ allocate_dynrelocs (struct elf_link_hash
+       if (eh->dyn_relocs != NULL
+ 	  && h->root.type == bfd_link_hash_undefweak)
+ 	{
+-	  if (ELF_ST_VISIBILITY (h->other) != STV_DEFAULT)
++	  if (ELF_ST_VISIBILITY (h->other) != STV_DEFAULT
++	      || UNDEFWEAK_NO_DYNAMIC_RELOC (info, h))
+ 	    eh->dyn_relocs = NULL;
+ 
+ 	  /* Make sure undefined weak symbols are output as a dynamic
+@@ -2307,6 +2306,7 @@ elf_s390_relocate_section (bfd *output_b
+       bfd_reloc_status_type r;
+       int tls_type;
+       asection *base_got = htab->elf.sgot;
++      bfd_boolean resolved_to_zero;
+ 
+       r_type = ELF64_R_TYPE (rel->r_info);
+       if (r_type == (int) R_390_GNU_VTINHERIT
+@@ -2402,6 +2402,9 @@ elf_s390_relocate_section (bfd *output_b
+       if (bfd_link_relocatable (info))
+ 	continue;
+ 
++      resolved_to_zero = (h != NULL
++			  && UNDEFWEAK_NO_DYNAMIC_RELOC (info, h));
++
+       switch (r_type)
+ 	{
+ 	case R_390_GOTPLT12:
+@@ -2489,8 +2492,7 @@ elf_s390_relocate_section (bfd *output_b
+ 							  h)
+ 		       || (bfd_link_pic (info)
+ 			   && SYMBOL_REFERENCES_LOCAL (info, h))
+-		       || (ELF_ST_VISIBILITY (h->other)
+-			   && h->root.type == bfd_link_hash_undefweak))
++		       || resolved_to_zero)
+ 		{
+ 		  /* This is actually a static link, or it is a
+ 		     -Bsymbolic link and the symbol is defined
+@@ -2804,7 +2806,8 @@ elf_s390_relocate_section (bfd *output_b
+ 
+ 	  if ((bfd_link_pic (info)
+ 	       && (h == NULL
+-		   || ELF_ST_VISIBILITY (h->other) == STV_DEFAULT
++		   || (ELF_ST_VISIBILITY (h->other) == STV_DEFAULT
++		       && !resolved_to_zero)
+ 		   || h->root.type != bfd_link_hash_undefweak)
+ 	       && ((r_type != R_390_PC16
+ 		    && r_type != R_390_PC12DBL
+@@ -3592,6 +3595,9 @@ elf_s390_finish_dynamic_symbol (bfd *out
+       else if (bfd_link_pic (info)
+ 	       && SYMBOL_REFERENCES_LOCAL (info, h))
+ 	{
++	  if (UNDEFWEAK_NO_DYNAMIC_RELOC (info, h))
++	    return TRUE;
++
+ 	  /* If this is a static link, or it is a -Bsymbolic link and
+ 	     the symbol is defined locally or was forced to be local
+ 	     because of a version file, we just want to emit a
+Only in binutils-2.29.1/bfd: elf64-s390.c.orig
+diff -rup binutils.orig/bfd/elf-bfd.h binutils-2.29.1/bfd/elf-bfd.h
+--- binutils.orig/bfd/elf-bfd.h	2018-01-22 12:10:06.277231259 +0000
++++ binutils-2.29.1/bfd/elf-bfd.h	2018-01-22 12:30:14.318245660 +0000
+@@ -266,6 +266,13 @@ struct elf_link_hash_entry
+ #define SYMBOL_CALLS_LOCAL(INFO, H) \
+   _bfd_elf_symbol_refs_local_p (H, INFO, 1)
+ 
++/* Whether an undefined weak symbol should resolve to its link-time
++   value, even in PIC or PIE objects.  */
++#define UNDEFWEAK_NO_DYNAMIC_RELOC(INFO, H)		\
++  ((H)->root.type == bfd_link_hash_undefweak		\
++   && (ELF_ST_VISIBILITY ((H)->other) != STV_DEFAULT	\
++       || (INFO)->dynamic_undefined_weak == 0))
++
+ /* Common symbols that are turned into definitions don't have the
+    DEF_REGULAR flag set, so they might appear to be undefined.
+    Symbols defined in linker scripts also don't have DEF_REGULAR set.  */
+diff -rup binutils.orig/bfd/elfnn-aarch64.c binutils-2.29.1/bfd/elfnn-aarch64.c
+--- binutils.orig/bfd/elfnn-aarch64.c	2018-01-22 12:10:06.271231328 +0000
++++ binutils-2.29.1/bfd/elfnn-aarch64.c	2018-01-22 12:35:13.030825190 +0000
+@@ -4578,7 +4578,7 @@ aarch64_can_relax_tls (bfd *input_bfd,
+   if (symbol_got_type == GOT_TLS_IE && GOT_TLS_GD_ANY_P (reloc_got_type))
+     return TRUE;
+ 
+-  if (bfd_link_pic (info))
++  if (!bfd_link_executable (info))
+     return FALSE;
+ 
+   if  (h && h->root.type == bfd_link_hash_undefweak)
+@@ -4951,6 +4951,7 @@ elfNN_aarch64_final_link_relocate (reloc
+   bfd_boolean relative_reloc;
+   asection *base_got;
+   bfd_vma orig_value = value;
++  bfd_boolean resolved_to_zero;
+ 
+   globals = elf_aarch64_hash_table (info);
+ 
+@@ -5176,6 +5177,9 @@ bad_ifunc_reloc:
+ 	}
+     }
+ 
++  resolved_to_zero = (h != NULL
++		      && UNDEFWEAK_NO_DYNAMIC_RELOC (info, h));
++
+   switch (bfd_r_type)
+     {
+     case BFD_RELOC_AARCH64_NONE:
+@@ -5194,7 +5198,8 @@ bad_ifunc_reloc:
+ 	    || globals->root.is_relocatable_executable)
+ 	   && (input_section->flags & SEC_ALLOC)
+ 	   && (h == NULL
+-	       || ELF_ST_VISIBILITY (h->other) == STV_DEFAULT
++	       || (ELF_ST_VISIBILITY (h->other) == STV_DEFAULT
++		   && !resolved_to_zero)
+ 	       || h->root.type != bfd_link_hash_undefweak))
+ 	  /* Or we are creating an executable, we may need to keep relocations
+ 	     for symbols satisfied by a dynamic library if we manage to avoid
+@@ -6246,7 +6251,7 @@ elfNN_aarch64_relocate_section (bfd *out
+ 	      indx = h && h->dynindx != -1 ? h->dynindx : 0;
+ 
+ 	      need_relocs =
+-		(bfd_link_pic (info) || indx != 0) &&
++		(!bfd_link_executable (info) || indx != 0) &&
+ 		(h == NULL
+ 		 || ELF_ST_VISIBILITY (h->other) == STV_DEFAULT
+ 		 || h->root.type != bfd_link_hash_undefweak);
+@@ -6341,7 +6346,7 @@ elfNN_aarch64_relocate_section (bfd *out
+ 	      indx = h && h->dynindx != -1 ? h->dynindx : 0;
+ 
+ 	      need_relocs =
+-		(bfd_link_pic (info) || indx != 0) &&
++		(!bfd_link_executable (info) || indx != 0) &&
+ 		(h == NULL
+ 		 || ELF_ST_VISIBILITY (h->other) == STV_DEFAULT
+ 		 || h->root.type != bfd_link_hash_undefweak);
+@@ -8195,7 +8200,10 @@ elfNN_aarch64_allocate_dynrelocs (struct
+ 	  if ((ELF_ST_VISIBILITY (h->other) == STV_DEFAULT
+ 	       || h->root.type != bfd_link_hash_undefweak)
+ 	      && (bfd_link_pic (info)
+-		  || WILL_CALL_FINISH_DYNAMIC_SYMBOL (dyn, 0, h)))
++		  || WILL_CALL_FINISH_DYNAMIC_SYMBOL (dyn, 0, h))
++	      /* Undefined weak symbol in static PIE resolves to 0 without
++		 any dynamic relocations.  */
++	      && !UNDEFWEAK_NO_DYNAMIC_RELOC (info, h))
+ 	    {
+ 	      htab->root.srelgot->size += RELOC_SIZE (htab);
+ 	    }
+@@ -8227,7 +8235,7 @@ elfNN_aarch64_allocate_dynrelocs (struct
+ 	  indx = h && h->dynindx != -1 ? h->dynindx : 0;
+ 	  if ((ELF_ST_VISIBILITY (h->other) == STV_DEFAULT
+ 	       || h->root.type != bfd_link_hash_undefweak)
+-	      && (bfd_link_pic (info)
++	      && (!bfd_link_executable (info)
+ 		  || indx != 0
+ 		  || WILL_CALL_FINISH_DYNAMIC_SYMBOL (dyn, 0, h)))
+ 	    {
+@@ -8995,7 +9003,10 @@ elfNN_aarch64_finish_dynamic_symbol (bfd
+     }
+ 
+   if (h->got.offset != (bfd_vma) - 1
+-      && elf_aarch64_hash_entry (h)->got_type == GOT_NORMAL)
++      && elf_aarch64_hash_entry (h)->got_type == GOT_NORMAL
++      /* Undefined weak symbol in static PIE resolves to 0 without
++	 any dynamic relocations.  */
++      && !UNDEFWEAK_NO_DYNAMIC_RELOC (info, h))
+     {
+       Elf_Internal_Rela rela;
+       bfd_byte *loc;
+Only in binutils-2.29.1/bfd: elfnn-aarch64.c.orig

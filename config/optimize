@@ -11,7 +11,7 @@ else
   TARGET_LDFLAGS="$TARGET_LDFLAGS"
 fi
 
-NINJA_OPTS="-v"
+NINJA_OPTS=""
 
 TARGET_CPPFLAGS="$CPP_OPTIM"
 TARGET_CFLAGS="$TARGET_CFLAGS $GCC_OPTIM $PROJECT_CFLAGS -fdiagnostics-color=always"
@@ -22,7 +22,7 @@ TARGET_INCDIR="$SYSROOT_PREFIX/include $SYSROOT_PREFIX/usr/include"
 
 #HOST_CPPFLAGS="-fno-stack-protector" -U_FORTIFY_SOURCE
 HOST_CPPFLAGS=""
-HOST_CFLAGS="-march=westmere -mtune=haswell -O2 -pipe -I$TOOLCHAIN/include"
+HOST_CFLAGS="-march=westmere -mtune=haswell -O2 -I$TOOLCHAIN/include"
 HOST_CXXFLAGS="$HOST_CFLAGS"
 HOST_LDFLAGS="-Wl,-rpath,$TOOLCHAIN/lib -L$TOOLCHAIN/lib -s"
 HOST_INCDIR="$TOOLCHAIN/include /usr/include"
@@ -45,11 +45,10 @@ CFLAGS_OPTIM_PIC="-fPIC -DPIC"
 CXXFLAGS_OPTIM_PIC="-fPIC -DPIC"
 LDFLAGS_OPTIM_PIC="-fPIC"
 
-# hardening support ||| -Wp,-D_REENTRANT -fexceptions  -ftree-loop-distribute-patterns -malign-data=abi -fno-semantic-interposition -ftree-vectorize  -ftree-loop-vectorize
-# TODO: basiclly copied from debian 9, should adjust for LE
-#CFLAGS_OPTIM_HARDENING="-fstack-protector-strong"
-#CXXFLAGS_OPTIM_HARDENING="$CFLAGS_OPTIM_HARDENING"
-#CPPFLAGS_OPTIM_HARDENING="-D_FORTIFY_SOURCE=2"
+# hardening support
+CFLAGS_OPTIM_HARDENING="-fexceptions -fstack-protector --param=ssp-buffer-size=4"
+CXXFLAGS_OPTIM_HARDENING="$CFLAGS_OPTIM_HARDENING"
+CPPFLAGS_OPTIM_HARDENING="-Wp,-D_FORTIFY_SOURCE=2"
 LDFLAGS_OPTIM_HARDENING="-Wl,-z -Wl,now -Wl,-z -Wl,relro -Wl,-sort-common"
 
 # add distro specific library dirs

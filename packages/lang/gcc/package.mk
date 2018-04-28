@@ -30,6 +30,7 @@ PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc
 PKG_SECTION="lang"
 PKG_SHORTDESC="gcc: The GNU Compiler Collection Version 4 (aka GNU C Compiler)"
 PKG_LONGDESC="This package contains the GNU Compiler Collection. It includes compilers for the languages C, C++, Objective C, Fortran 95, Java and others ... This GCC contains the Stack-Smashing Protector Patch which can be enabled with the -fstack-protector command-line option. More information about it ca be found at http://www.research.ibm.com/trl/projects/security/ssp/."
+PKG_BUILD_FLAGS="-lto -gold -hardening"
 
 GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-sysroot=$SYSROOT_PREFIX \
@@ -60,11 +61,12 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --enable-__cxa_atexit \
                               --disable-shared \
+                              --disable-threads \
                               --without-headers \
                               --with-newlib \
-                              --enable-threads=no \
                               --disable-libatomic \
                               --disable-libgomp \
+                              --disable-decimal-float \
                               $GCC_OPTS"
 
 PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
@@ -88,15 +90,11 @@ pre_configure_host() {
   export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
   
-  export CFLAGS="-march=westmere -g1 -O2 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro  -Wl,-z,max-page-size=0x1000 -mtune=haswell -I$TOOLCHAIN/include"
-  export CXXFLAGS="-march=westmere -g1 -O2  -Wl,-z,max-page-size=0x1000 -mtune=haswell -I$TOOLCHAIN/include"
   export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
   export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
 }
 
 pre_configure_bootstrap() {
-  export CFLAGS="-march=westmere -g1 -O2 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro  -Wl,-z,max-page-size=0x1000 -mtune=haswell -I$TOOLCHAIN/include"
-  export CXXFLAGS="-march=westmere -g1 -O2  -Wl,-z,max-page-size=0x1000 -mtune=haswell -I$TOOLCHAIN/include"
   export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
   export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
 }

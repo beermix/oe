@@ -23,22 +23,27 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/s/gettext/"
 PKG_URL="http://ftp.gnu.org/pub/gnu/gettext/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_HOST="ccache:host"
+PKG_DEPENDS_HOST="ccache:host libunistring:host icu:host libxml2:host"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="gettext: A program internationalization library and tools"
 PKG_LONGDESC="This is the GNU gettext package. It is interesting for authors or maintainers of other packages or programs which they want to see internationalized. As one step the handling of messages in different languages should be implemented. For this task GNU gettext provides the needed tools and library functions."
 
-post_unpack() {
-  sed '/^SUBDIRS/s/ doc //;/^SUBDIRS/s/examples$$//' $PKG_BUILD/gettext-tools/Makefile.in
-  sed '/^SUBDIRS/s/ doc //;/^SUBDIRS/s/tests$$//' $PKG_BUILD/gettext-runtime/Makefile.in
-}
+#post_unpack() {
+#  sed '/^SUBDIRS/s/ doc //;/^SUBDIRS/s/examples$$//' $PKG_BUILD/gettext-tools/Makefile.in
+#  sed '/^SUBDIRS/s/ doc //;/^SUBDIRS/s/tests$$//' $PKG_BUILD/gettext-runtime/Makefile.in
+#}
 
 PKG_CONFIGURE_SCRIPT="gettext-tools/configure"
 
-PKG_CONFIGURE_OPTS_HOST="--disable-rpath \
-                         --disable-java \
-                         --disable-curses \
-                         --with-included-libxml \
+PKG_CONFIGURE_OPTS_HOST="--disable-curses \
                          --disable-native-java \
+                         --without-emacs \
+                         --without-included-gettext \
+                         --with-libunistring-prefix=$TOOLCHAIN \
+                         --with-libxml2-prefix=$TOOLCHAIN \
+                         --enable-nls \
+                         --disable-static \
+                         --enable-shared \
+                         --with-pic \
                          --disable-csharp \
-                         --without-emacs"
+                         --disable-rpath"

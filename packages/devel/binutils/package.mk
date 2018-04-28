@@ -18,12 +18,13 @@
 
 PKG_NAME="binutils"
 PKG_VERSION="2.29"
-#PKG_SHA256="6e46b8aeae2f727a36f0bd9505e405768a72218f1796f0d09757d45209871ae6"
+PKG_SHA256="0b871e271c4c620444f8264f72143b4d224aa305306d85dd77ab8dce785b1e85"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://ftp.gnu.org.ua/gnu/binutils/?C=M;O=D"
 PKG_URL="http://ftpmirror.gnu.org/binutils/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_HOST="ccache:host bison:host flex:host quilt:host pcre:host libelf:host linux:host"
+PKG_SOURCE_DIR="$PKG_NAME-gdb-$PKG_VERSION*"
+PKG_DEPENDS_HOST="ccache:host bison:host flex:host quilt:host pcre:host elfutils:host linux:host"
 PKG_DEPENDS_TARGET="toolchain binutils:host"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="binutils: A GNU collection of binary utilities"
@@ -40,8 +41,9 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-plugins \
                          --enable-gold \
                          --enable-ld=default \
-                         --enable-targets=x86_64-pep \
                          --enable-lto \
+                         --disable-gdb \
+                         --disable-sim \
                          --disable-nls"
 
 PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
@@ -59,6 +61,8 @@ PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
                          --disable-gold \
                          --disable-ld \
                          --disable-lto \
+                         --disable-gdb \
+                         --disable-sim \
                          --disable-nls"
 
 pre_configure_host() {

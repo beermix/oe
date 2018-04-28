@@ -35,7 +35,6 @@ pre_configure_host() {
   unset CPPFLAGS
   unset CFLAGS
   unset CXXFLAGS
-  unset LDFLAGS
 }
 
 PKG_CONFIGURE_OPTS_HOST="--with-bundled-zlib"
