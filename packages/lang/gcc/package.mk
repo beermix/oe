@@ -52,8 +52,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libmudflap \
                            --disable-libmpx \
                            --disable-libssp \
-                           --disable-libquadmath \
-                           --disable-libquadmath-support \
                            --with-tune=haswell \
                            --with-arch=westmere"
 
@@ -66,6 +64,7 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --with-newlib \
                               --disable-libatomic \
                               --disable-libgomp \
+                              --disable-libquadmath \
                               --disable-decimal-float \
                               $GCC_OPTS"
 
