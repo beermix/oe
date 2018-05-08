@@ -54,7 +54,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libmudflap \
                            --disable-libmpx \
                            --disable-libssp \
-                           --with-system-zlib=$TOOLCHAIN \
                            --with-tune=haswell \
                            --with-arch=westmere"
 
