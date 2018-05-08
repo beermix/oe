@@ -168,9 +168,9 @@ if [ -d "$SOURCES/$1" -o -d "$PKG_DIR/sources" ]; then
       if [ -f "$i" ]; then
         printf "%${BUILD_INDENT}c $(print_color CLR_APPLY_PATCH "APPLY PATCH") $(print_color CLR_PATCH_DESC "${PATCH_DESC}")   ${i#$ROOT/}\n" ' '>&$SILENT_OUT
         if grep -qE '^GIT binary patch$|^rename from|^rename to' $i; then
-          cat $i | git apply --directory=`echo "$PKG_BUILD" | cut -f1 -d\ ` --no-backup-if-mismatch -p1 --whitespace=nowarn --unsafe-paths >&$VERBOSE_OUT
+          cat $i | git apply --directory=`echo "$PKG_BUILD" | cut -f1 -d\ ` -p1 --verbose --whitespace=nowarn --unsafe-paths >&$VERBOSE_OUT
         else
-          cat $i | patch -d `echo "$PKG_BUILD" | cut -f1 -d\ ` --no-backup-if-mismatch -p1 >&$VERBOSE_OUT
+          cat $i | patch -d `echo "$PKG_BUILD" | cut -f1 -d\ ` -p1 >&$VERBOSE_OUT
         fi
       fi
     done
