@@ -1,6 +1,6 @@
 PKG_NAME="squid"
-PKG_VERSION="4.0.20"
-PKG_URL="http://www.squid-cache.org/Versions/v4/squid-$PKG_VERSION.tar.xz"
+PKG_VERSION="3.5.27"
+PKG_URL="http://www3.us.squid-cache.org/Versions/v3/3.5/squid-3.5.27.tar.xz"
 PKG_DEPENDS_TARGET="toolchain fuse ncurses openssl glib libcap libnetfilter_conntrack"
 PKG_SECTION="tools"
 PKG_TOOLCHAIN="autotools"
