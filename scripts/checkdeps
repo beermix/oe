@@ -72,8 +72,8 @@ fi
 
 DISTRO=${DISTRO,,}
 
-deps=(wget bash bc gcc sed patch lsdiff tar bzip2 gzip perl gawk gperf zip unzip diff lzop ed diffstat cmake xgettext)
-deps_pkg=(wget bash bc gcc sed patch patchutils tar bzip2 gzip perl gawk gperf zip unzip diffutils lzop ed diffstat cmake gettext)
+deps=(wget bash bc gcc sed patch lsdiff tar bzip2 gzip perl gawk gperf zip unzip diff lzop ed diffstat cmake xgettext time)
+deps_pkg=(wget bash bc gcc sed patch patchutils tar bzip2 gzip perl gawk gperf zip unzip diffutils lzop ed diffstat cmake gettext time)
 
 files=(/usr/include/stdio.h /usr/include/ncurses.h)
 files_pkg=(libc6-dev libncurses5-dev)

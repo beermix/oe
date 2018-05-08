@@ -18,6 +18,7 @@
 
 PKG_NAME="glibc"
 PKG_VERSION="d300041"
+PKG_VERSION="623f4ae"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/bminor/glibc/tree/release/2.26/master"
@@ -45,6 +46,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
                            --enable-kernel=4.4 \
+                           --enable-stack-protector=strong \
                            --without-cvs \
                            --without-gd \
                            --enable-obsolete-rpc \
