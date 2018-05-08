@@ -1,8 +1,8 @@
 PKG_NAME="wget"
-PKG_VERSION="1.19.4"
+PKG_VERSION="1.19.5"
 PKG_SITE="https://ftp.gnu.org/gnu/wget/?C=M;O=D"
 PKG_URL="https://ftp.gnu.org/gnu/wget/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain openssl libunistring libevent libidn2 libtasn1"
+PKG_DEPENDS_TARGET="toolchain openssl libunistring libidn2 libtasn1"
 PKG_DEPENDS_TARGET="toolchain openssl libidn"
 PKG_SECTION="network"
 
