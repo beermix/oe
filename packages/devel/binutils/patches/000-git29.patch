@@ -61972,3 +61972,1087 @@ index 4110686ff3..013565103c 100644
  }
  
  // Read the sections and symbols from an object file.
+
+commit 4ba9ba2ceb8ca16d414c5ec8f5f48792e60165e5
+Author: Sriraman Tallam <tmsriram@google.com>
+Date:   Thu Feb 15 17:35:16 2018 -0800
+
+    Fix symbol resolution with linker plugins for defsym symbols.
+    
+    2018-02-07  Sriraman Tallam  <tmsriram@google.com>
+    
+            * expression.cc (Symbol_expression::set_expr_sym_in_real_elf):
+            New method.
+            (Unary_expression::set_expr_sym_in_real_elf): New method.
+            (Binary_expression::set_expr_sym_in_real_elf): New method.
+            (Trinary_expression::set_expr_sym_in_real_elf): New method.
+            * plugin.cc (get_symbol_resolution_info): Fix symbol resolution if
+            defined or used in defsyms.
+            * plugin.h (Plugin_manager::is_defsym_def): New method.
+            (Plugin_manager::Plugin_manager): Initialize defsym_defines_set_.
+            (Plugin_manager::defsym_defines_set_): New member.
+            (Plugin_manager::Defsym_defines_set): New typedef.
+            * script.cc (Script_options::set_defsym_uses_in_real_elf): New method.
+            (Script_options::find_defsym_defs): New method.
+            * script.h (Expression::set_expr_sym_in_real_elf): New method.
+            (Symbol_assignment::is_defsym): New method.
+            (Symbol_assignment::value): New method.
+            (Script_options::find_defsym_defs): New method.
+            (Script_options::set_defsym_uses_in_real_elf): New method.
+            * testsuite/Makefile.am (plugin_test_defsym): New test.
+            * testsuite/Makefile.in: Regenerate.
+            * testsuite/plugin_test.c: Check for new symbol resolution.
+            * testsuite/plugin_test_defsym.sh: New script.
+            * testsuite/plugin_test_defsym.c: New test source.
+    
+    (cherry picked from commit 3281b315c89caf1d539a316e41cc095e46482f75)
+
+diff --git a/gold/ChangeLog b/gold/ChangeLog
+index ddcc0d7fb5..b6d08fc685 100644
+--- a/gold/ChangeLog
++++ b/gold/ChangeLog
+@@ -1,3 +1,32 @@
++2018-04-27  Sriraman Tallam  <tmsriram@google.com>
++	Apply from master:
++	2018-02-07  Sriraman Tallam  <tmsriram@google.com>
++
++	* expression.cc (Symbol_expression::set_expr_sym_in_real_elf):
++	New method.
++	(Unary_expression::set_expr_sym_in_real_elf): New method.
++	(Binary_expression::set_expr_sym_in_real_elf): New method.
++	(Trinary_expression::set_expr_sym_in_real_elf): New method.
++	* plugin.cc (get_symbol_resolution_info): Fix symbol resolution if
++	defined or used in defsyms.
++	* plugin.h (Plugin_manager::is_defsym_def): New method.
++	(Plugin_manager::Plugin_manager): Initialize defsym_defines_set_.
++	(Plugin_manager::defsym_defines_set_): New member.
++	(Plugin_manager::Defsym_defines_set): New typedef.
++	* script.cc (Script_options::set_defsym_uses_in_real_elf): New method.
++	(Script_options::find_defsym_defs): New method.
++	* script.h (Expression::set_expr_sym_in_real_elf): New method.
++	(Symbol_assignment::is_defsym): New method.
++	(Symbol_assignment::value): New method.
++	(Script_options::find_defsym_defs): New method.
++	(Script_options::set_defsym_uses_in_real_elf): New method.
++	* testsuite/Makefile.am (plugin_test_defsym): New test.
++	* testsuite/Makefile.in: Regenerate.
++	* testsuite/plugin_test.c: Check for new symbol resolution.
++	* testsuite/plugin_test_defsym.sh: New script.
++	* testsuite/plugin_test_defsym.c: New test source.
++
++
+ 2018-04-04  Eric Christopher  <echristo@gmail.com>
+ 
+ 	Apply from master:
+diff --git a/gold/expression.cc b/gold/expression.cc
+index 2b598cdff4..42c45eb74d 100644
+--- a/gold/expression.cc
++++ b/gold/expression.cc
+@@ -205,6 +205,14 @@ class Symbol_expression : public Expression
+   uint64_t
+   value(const Expression_eval_info*);
+ 
++  void
++  set_expr_sym_in_real_elf(Symbol_table* symtab) const
++  {
++    Symbol* sym = symtab->lookup(this->name_.c_str());
++    if (sym != NULL)
++      sym->set_in_real_elf();
++  }
++
+   void
+   print(FILE* f) const
+   { fprintf(f, "%s", this->name_.c_str()); }
+@@ -318,6 +326,10 @@ class Unary_expression : public Expression
+   arg_print(FILE* f) const
+   { this->arg_->print(f); }
+ 
++  void
++  set_expr_sym_in_real_elf(Symbol_table* symtab) const
++  { return this->arg_->set_expr_sym_in_real_elf(symtab); }
++
+  private:
+   Expression* arg_;
+ };
+@@ -437,6 +449,13 @@ class Binary_expression : public Expression
+     fprintf(f, ")");
+   }
+ 
++  void
++  set_expr_sym_in_real_elf(Symbol_table* symtab) const
++  {
++    this->left_->set_expr_sym_in_real_elf(symtab);
++    this->right_->set_expr_sym_in_real_elf(symtab);
++  }
++
+  private:
+   Expression* left_;
+   Expression* right_;
+@@ -622,6 +641,14 @@ class Trinary_expression : public Expression
+   arg3_print(FILE* f) const
+   { this->arg3_->print(f); }
+ 
++  void
++  set_expr_sym_in_real_elf(Symbol_table* symtab) const
++  {
++    this->arg1_->set_expr_sym_in_real_elf(symtab);
++    this->arg2_->set_expr_sym_in_real_elf(symtab);
++    this->arg3_->set_expr_sym_in_real_elf(symtab);
++  }
++
+  private:
+   Expression* arg1_;
+   Expression* arg2_;
+diff --git a/gold/plugin.cc b/gold/plugin.cc
+index c051805cec..02841627ec 100644
+--- a/gold/plugin.cc
++++ b/gold/plugin.cc
+@@ -557,6 +557,11 @@ Plugin_manager::all_symbols_read(Workqueue* workqueue, Task* task,
+   this->mapfile_ = mapfile;
+   this->this_blocker_ = NULL;
+ 
++  // Set symbols used in defsym expressions as seen in real ELF.
++  Layout *layout = parameters->options().plugins()->layout();
++  layout->script_options()->set_defsym_uses_in_real_elf(symtab);
++  layout->script_options()->find_defsym_defs(this->defsym_defines_set_);
++
+   for (this->current_ = this->plugins_.begin();
+        this->current_ != this->plugins_.end();
+        ++this->current_)
+@@ -964,6 +969,7 @@ Pluginobj::get_symbol_resolution_info(Symbol_table* symtab,
+       return version > 2 ? LDPS_NO_SYMS : LDPS_OK;
+     }
+ 
++  Plugin_manager* plugins = parameters->options().plugins();
+   for (int i = 0; i < nsyms; i++)
+     {
+       ld_plugin_symbol* isym = &syms[i];
+@@ -972,9 +978,16 @@ Pluginobj::get_symbol_resolution_info(Symbol_table* symtab,
+         lsym = symtab->resolve_forwards(lsym);
+       ld_plugin_symbol_resolution res = LDPR_UNKNOWN;
+ 
+-      if (lsym->is_undefined())
+-        // The symbol remains undefined.
+-        res = LDPR_UNDEF;
++      if (plugins->is_defsym_def(lsym->name()))
++	{
++	  // The symbol is redefined via defsym.
++	  res = LDPR_PREEMPTED_REG;
++	}
++      else if (lsym->is_undefined())
++	{
++          // The symbol remains undefined.
++          res = LDPR_UNDEF;
++	}
+       else if (isym->def == LDPK_UNDEF
+                || isym->def == LDPK_WEAKUNDEF
+                || isym->def == LDPK_COMMON)
+diff --git a/gold/plugin.h b/gold/plugin.h
+index 7658668502..71f2c3199d 100644
+--- a/gold/plugin.h
++++ b/gold/plugin.h
+@@ -135,11 +135,18 @@ class Plugin_manager
+       options_(options), workqueue_(NULL), task_(NULL), input_objects_(NULL),
+       symtab_(NULL), layout_(NULL), dirpath_(NULL), mapfile_(NULL),
+       this_blocker_(NULL), extra_search_path_(), lock_(NULL),
+-      initialize_lock_(&lock_)
++      initialize_lock_(&lock_), defsym_defines_set_()
+   { this->current_ = plugins_.end(); }
+ 
+   ~Plugin_manager();
+ 
++  // Returns true if the symbol name is used in the LHS of a defsym.
++  bool
++  is_defsym_def(const char* sym_name) const
++  {
++    return defsym_defines_set_.find(sym_name) != defsym_defines_set_.end();
++  }
++
+   // Add a plugin library.
+   void
+   add_plugin(const char* filename)
+@@ -383,6 +390,10 @@ class Plugin_manager
+   std::string extra_search_path_;
+   Lock* lock_;
+   Initialize_lock initialize_lock_;
++
++  // Keep track of all symbols defined by defsym.
++  typedef Unordered_set<std::string> Defsym_defines_set;
++  Defsym_defines_set defsym_defines_set_;
+ };
+ 
+ 
+diff --git a/gold/script.cc b/gold/script.cc
+index 67540a59a3..f7e0fb6a6a 100644
+--- a/gold/script.cc
++++ b/gold/script.cc
+@@ -1112,6 +1112,29 @@ Script_options::is_pending_assignment(const char* name)
+   return false;
+ }
+ 
++// Populates the set with symbols defined in defsym LHS.
++
++void Script_options::find_defsym_defs(Unordered_set<std::string>& defsym_set)
++{
++  for (Symbol_assignments::const_iterator p = this->symbol_assignments_.begin();
++       p != this->symbol_assignments_.end();
++       ++p)
++    {
++      defsym_set.insert((*p)->name());
++    }
++}
++
++void
++Script_options::set_defsym_uses_in_real_elf(Symbol_table* symtab) const
++{
++  for (Symbol_assignments::const_iterator p = this->symbol_assignments_.begin();
++       p != this->symbol_assignments_.end();
++       ++p)
++    {
++      (*p)->value()->set_expr_sym_in_real_elf(symtab);
++    }
++}
++
+ // Add a symbol to be defined.
+ 
+ void
+diff --git a/gold/script.h b/gold/script.h
+index 4f2f4fd4d6..10f59d23bd 100644
+--- a/gold/script.h
++++ b/gold/script.h
+@@ -129,13 +129,17 @@ class Expression
+   virtual uint64_t
+   value(const Expression_eval_info*) = 0;
+ 
++  // Sets all symbols used in expressions as seen in a real ELF object.
++  virtual void
++  set_expr_sym_in_real_elf(Symbol_table*) const
++  { return; }
++
+  private:
+   // May not be copied.
+   Expression(const Expression&);
+   Expression& operator=(const Expression&);
+ };
+ 
+-
+ // Version_script_info stores information parsed from the version
+ // script, either provided by --version-script or as part of a linker
+ // script.  A single Version_script_info object per target is owned by
+@@ -344,6 +348,14 @@ class Symbol_assignment
+   void
+   finalize(Symbol_table*, const Layout*);
+ 
++  bool
++  is_defsym() const
++  { return is_defsym_; }
++
++  Expression *
++  value() const
++  { return val_; }
++
+   // Finalize the symbol value when it can refer to the dot symbol.
+   void
+   finalize_with_dot(Symbol_table*, const Layout*, uint64_t dot_value,
+@@ -454,6 +466,13 @@ class Script_options
+   bool
+   define_symbol(const char* definition);
+ 
++  // Populates the set with symbol names used in LHS of defsym.
++  void
++  find_defsym_defs(Unordered_set<std::string>&);
++
++  // Set symbols used in defsym expressions as seen in a real ELF object.
++  void set_defsym_uses_in_real_elf(Symbol_table*) const;
++
+   // Create sections required by any linker scripts.
+   void
+   create_script_sections(Layout*);
+diff --git a/gold/testsuite/Makefile.am b/gold/testsuite/Makefile.am
+index 738adfa875..9b7b6bec7f 100644
+--- a/gold/testsuite/Makefile.am
++++ b/gold/testsuite/Makefile.am
+@@ -2318,11 +2318,22 @@ plugin_test_start_lib: unused.o plugin_start_lib_test.o plugin_start_lib_test_2.
+ plugin_test_start_lib.err: plugin_test_start_lib
+ 	@touch plugin_test_start_lib.err
+ 
++check_PROGRAMS += plugin_test_defsym
++check_SCRIPTS += plugin_test_defsym.sh
++check_DATA += plugin_test_defsym.err
++MOSTLYCLEANFILES += plugin_test_defsym.err
++plugin_test_defsym.syms: plugin_test_defsym.o
++	$(TEST_READELF) -sW $< >$@ 2>/dev/null
++plugin_test_defsym.o: plugin_test_defsym.c
++	$(COMPILE) -c -o $@ $<
++plugin_test_defsym: plugin_test_defsym.o plugin_test_defsym.syms gcctestdir/ld plugin_test.so
++	$(CXXLINK) -Bgcctestdir/ -Wl,--no-demangle,--plugin,"./plugin_test.so" -Wl,--defsym,bar=foo plugin_test_defsym.syms 2>plugin_test_defsym.err
++plugin_test_defsym.err: plugin_test_defsym
++	@touch plugin_test_defsym.err
+ 
+ plugin_start_lib_test_2.syms: plugin_start_lib_test_2.o
+ 	$(TEST_READELF) -sW $< >$@ 2>/dev/null
+ 
+-
+ plugin_test.so: plugin_test.o gcctestdir/ld
+ 	$(LINK) -Bgcctestdir/ -shared plugin_test.o
+ plugin_test.o: plugin_test.c
+diff --git a/gold/testsuite/Makefile.in b/gold/testsuite/Makefile.in
+index 2aa273773e..5a828867ca 100644
+--- a/gold/testsuite/Makefile.in
++++ b/gold/testsuite/Makefile.in
+@@ -522,7 +522,8 @@ check_PROGRAMS = $(am__EXEEXT_1) $(am__EXEEXT_2) $(am__EXEEXT_3) \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_8 \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_10 \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_11 \
+-@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_start_lib
++@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_start_lib \
++@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_defsym
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@am__append_45 =  \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_1.sh \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_2.sh \
+@@ -532,7 +533,8 @@ check_PROGRAMS = $(am__EXEEXT_1) $(am__EXEEXT_2) $(am__EXEEXT_3) \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_7.sh \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_10.sh \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_11.sh \
+-@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_start_lib.sh
++@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_start_lib.sh \
++@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_defsym.sh
+ 
+ # Test that symbols known in the IR file but not in the replacement file
+ # produce an unresolved symbol error.
+@@ -551,7 +553,8 @@ check_PROGRAMS = $(am__EXEEXT_1) $(am__EXEEXT_2) $(am__EXEEXT_3) \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_9b.err \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_10.sections \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_11.err \
+-@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_start_lib.err
++@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_start_lib.err \
++@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_defsym.err
+ # Make a copy of two_file_test_1.o, which does not define the symbol _Z4t16av.
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@am__append_47 =  \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_1.err \
+@@ -567,7 +570,8 @@ check_PROGRAMS = $(am__EXEEXT_1) $(am__EXEEXT_2) $(am__EXEEXT_3) \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_10.sections \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_11.err \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_thin.a \
+-@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_start_lib.err
++@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_start_lib.err \
++@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_defsym.err
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@@TLS_TRUE@am__append_48 = plugin_test_tls
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@@TLS_TRUE@am__append_49 = plugin_test_tls.sh
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@@TLS_TRUE@am__append_50 = plugin_test_tls.err
+@@ -1175,7 +1179,8 @@ libgoldtest_a_OBJECTS = $(am_libgoldtest_a_OBJECTS)
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_8$(EXEEXT) \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_10$(EXEEXT) \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_11$(EXEEXT) \
+-@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_start_lib$(EXEEXT)
++@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_start_lib$(EXEEXT) \
++@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_defsym$(EXEEXT)
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@@TLS_TRUE@am__EXEEXT_25 = plugin_test_tls$(EXEEXT)
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@am__EXEEXT_26 =  \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@	exclude_libs_test$(EXEEXT) \
+@@ -1888,6 +1893,13 @@ plugin_test_8_DEPENDENCIES = libgoldtest.a ../libgold.a \
+ 	../../libiberty/libiberty.a $(am__DEPENDENCIES_1) \
+ 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+ 	$(am__DEPENDENCIES_1)
++plugin_test_defsym_SOURCES = plugin_test_defsym.c
++plugin_test_defsym_OBJECTS = plugin_test_defsym.$(OBJEXT)
++plugin_test_defsym_LDADD = $(LDADD)
++plugin_test_defsym_DEPENDENCIES = libgoldtest.a ../libgold.a \
++	../../libiberty/libiberty.a $(am__DEPENDENCIES_1) \
++	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
++	$(am__DEPENDENCIES_1)
+ plugin_test_start_lib_SOURCES = plugin_test_start_lib.c
+ plugin_test_start_lib_OBJECTS = plugin_test_start_lib.$(OBJEXT)
+ plugin_test_start_lib_LDADD = $(LDADD)
+@@ -2421,15 +2433,16 @@ SOURCES = $(libgoldtest_a_SOURCES) basic_pic_test.c basic_pie_test.c \
+ 	$(many_sections_test_SOURCES) $(object_unittest_SOURCES) \
+ 	$(overflow_unittest_SOURCES) permission_test.c \
+ 	$(pie_copyrelocs_test_SOURCES) plugin_test_1.c \
+-	plugin_test_10.c plugin_test_11.c plugin_test_2.c \
+-	plugin_test_3.c plugin_test_4.c plugin_test_5.c \
+-	plugin_test_6.c plugin_test_7.c plugin_test_8.c \
+-	plugin_test_start_lib.c plugin_test_tls.c pr17704a_test.c \
+-	$(pr20216a_test_SOURCES) $(pr20216b_test_SOURCES) \
+-	$(pr20216c_test_SOURCES) $(pr20216d_test_SOURCES) \
+-	$(pr20216e_test_SOURCES) $(pr20308a_test_SOURCES) \
+-	$(pr20308b_test_SOURCES) $(pr20308c_test_SOURCES) \
+-	$(pr20308d_test_SOURCES) $(pr20308e_test_SOURCES) pr20976.c \
++	plugin_test_10.c plugin_test_11.c \
++	plugin_test_2.c plugin_test_3.c plugin_test_4.c \
++	plugin_test_5.c plugin_test_6.c plugin_test_7.c \
++	plugin_test_8.c plugin_test_defsym.c plugin_test_start_lib.c \
++	plugin_test_tls.c pr17704a_test.c $(pr20216a_test_SOURCES) \
++	$(pr20216b_test_SOURCES) $(pr20216c_test_SOURCES) \
++	$(pr20216d_test_SOURCES) $(pr20216e_test_SOURCES) \
++	$(pr20308a_test_SOURCES) $(pr20308b_test_SOURCES) \
++	$(pr20308c_test_SOURCES) $(pr20308d_test_SOURCES) \
++	$(pr20308e_test_SOURCES) pr20976.c pr22266.c \
+ 	$(protected_1_SOURCES) $(protected_2_SOURCES) \
+ 	$(relro_now_test_SOURCES) $(relro_script_test_SOURCES) \
+ 	$(relro_strip_test_SOURCES) $(relro_test_SOURCES) \
+@@ -4047,6 +4060,15 @@ pie_copyrelocs_test$(EXEEXT): $(pie_copyrelocs_test_OBJECTS) $(pie_copyrelocs_te
+ @PLUGINS_FALSE@plugin_test_8$(EXEEXT): $(plugin_test_8_OBJECTS) $(plugin_test_8_DEPENDENCIES) $(EXTRA_plugin_test_8_DEPENDENCIES) 
+ @PLUGINS_FALSE@	@rm -f plugin_test_8$(EXEEXT)
+ @PLUGINS_FALSE@	$(LINK) $(plugin_test_8_OBJECTS) $(plugin_test_8_LDADD) $(LIBS)
++@GCC_FALSE@plugin_test_defsym$(EXEEXT): $(plugin_test_defsym_OBJECTS) $(plugin_test_defsym_DEPENDENCIES) $(EXTRA_plugin_test_defsym_DEPENDENCIES) 
++@GCC_FALSE@	@rm -f plugin_test_defsym$(EXEEXT)
++@GCC_FALSE@	$(LINK) $(plugin_test_defsym_OBJECTS) $(plugin_test_defsym_LDADD) $(LIBS)
++@NATIVE_LINKER_FALSE@plugin_test_defsym$(EXEEXT): $(plugin_test_defsym_OBJECTS) $(plugin_test_defsym_DEPENDENCIES) $(EXTRA_plugin_test_defsym_DEPENDENCIES) 
++@NATIVE_LINKER_FALSE@	@rm -f plugin_test_defsym$(EXEEXT)
++@NATIVE_LINKER_FALSE@	$(LINK) $(plugin_test_defsym_OBJECTS) $(plugin_test_defsym_LDADD) $(LIBS)
++@PLUGINS_FALSE@plugin_test_defsym$(EXEEXT): $(plugin_test_defsym_OBJECTS) $(plugin_test_defsym_DEPENDENCIES) $(EXTRA_plugin_test_defsym_DEPENDENCIES) 
++@PLUGINS_FALSE@	@rm -f plugin_test_defsym$(EXEEXT)
++@PLUGINS_FALSE@	$(LINK) $(plugin_test_defsym_OBJECTS) $(plugin_test_defsym_LDADD) $(LIBS)
+ @GCC_FALSE@plugin_test_start_lib$(EXEEXT): $(plugin_test_start_lib_OBJECTS) $(plugin_test_start_lib_DEPENDENCIES) $(EXTRA_plugin_test_start_lib_DEPENDENCIES) 
+ @GCC_FALSE@	@rm -f plugin_test_start_lib$(EXEEXT)
+ @GCC_FALSE@	$(LINK) $(plugin_test_start_lib_OBJECTS) $(plugin_test_start_lib_LDADD) $(LIBS)
+@@ -4452,6 +4474,7 @@ distclean-compile:
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/plugin_test_6.Po@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/plugin_test_7.Po@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/plugin_test_8.Po@am__quote@
++@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/plugin_test_defsym.Po@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/plugin_test_start_lib.Po@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/plugin_test_tls.Po@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pr17704a_test.Po@am__quote@
+@@ -5220,6 +5243,8 @@ plugin_test_11.sh.log: plugin_test_11.sh
+ 	@p='plugin_test_11.sh'; $(am__check_pre) $(LOG_COMPILE) "$$tst" $(am__check_post)
+ plugin_test_start_lib.sh.log: plugin_test_start_lib.sh
+ 	@p='plugin_test_start_lib.sh'; $(am__check_pre) $(LOG_COMPILE) "$$tst" $(am__check_post)
++plugin_test_defsym.sh.log: plugin_test_defsym.sh
++	@p='plugin_test_defsym.sh'; $(am__check_pre) $(LOG_COMPILE) "$$tst" $(am__check_post)
+ plugin_test_tls.sh.log: plugin_test_tls.sh
+ 	@p='plugin_test_tls.sh'; $(am__check_pre) $(LOG_COMPILE) "$$tst" $(am__check_post)
+ plugin_final_layout.sh.log: plugin_final_layout.sh
+@@ -5580,6 +5605,8 @@ plugin_test_11.log: plugin_test_11$(EXEEXT)
+ 	@p='plugin_test_11$(EXEEXT)'; $(am__check_pre) $(LOG_COMPILE) "$$tst" $(am__check_post)
+ plugin_test_start_lib.log: plugin_test_start_lib$(EXEEXT)
+ 	@p='plugin_test_start_lib$(EXEEXT)'; $(am__check_pre) $(LOG_COMPILE) "$$tst" $(am__check_post)
++plugin_test_defsym.log: plugin_test_defsym$(EXEEXT)
++	@p='plugin_test_defsym$(EXEEXT)'; $(am__check_pre) $(LOG_COMPILE) "$$tst" $(am__check_post)
+ plugin_test_tls.log: plugin_test_tls$(EXEEXT)
+ 	@p='plugin_test_tls$(EXEEXT)'; $(am__check_pre) $(LOG_COMPILE) "$$tst" $(am__check_post)
+ exclude_libs_test.log: exclude_libs_test$(EXEEXT)
+@@ -6929,6 +6956,14 @@ uninstall-am:
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@		-Wl,--start-lib plugin_start_lib_test_2.syms -Wl,--end-lib 2>plugin_test_start_lib.err
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@plugin_test_start_lib.err: plugin_test_start_lib
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	@touch plugin_test_start_lib.err
++@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@plugin_test_defsym.syms: plugin_test_defsym.o
++@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	$(TEST_READELF) -sW $< >$@ 2>/dev/null
++@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@plugin_test_defsym.o: plugin_test_defsym.c
++@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	$(COMPILE) -c -o $@ $<
++@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@plugin_test_defsym: plugin_test_defsym.o plugin_test_defsym.syms gcctestdir/ld plugin_test.so
++@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	$(CXXLINK) -Bgcctestdir/ -Wl,--no-demangle,--plugin,"./plugin_test.so" -Wl,--defsym,bar=foo plugin_test_defsym.syms 2>plugin_test_defsym.err
++@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@plugin_test_defsym.err: plugin_test_defsym
++@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	@touch plugin_test_defsym.err
+ 
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@plugin_start_lib_test_2.syms: plugin_start_lib_test_2.o
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	$(TEST_READELF) -sW $< >$@ 2>/dev/null
+diff --git a/gold/testsuite/plugin_test_defsym.c b/gold/testsuite/plugin_test_defsym.c
+new file mode 100644
+index 0000000000..3b004c6520
+--- /dev/null
++++ b/gold/testsuite/plugin_test_defsym.c
+@@ -0,0 +1,32 @@
++/* plugin_test_defsym.c -- a test case for gold
++
++   Copyright (C) 2018 onwards Free Software Foundation, Inc.
++   Written by Sriraman Tallam <tmsriram@google.com>
++
++   This file is part of gold.
++
++   This program is free software; you can redistribute it and/or modify
++   it under the terms of the GNU General Public License as published by
++   the Free Software Foundation; either version 3 of the License, or
++   (at your option) any later version.
++
++   This program is distributed in the hope that it will be useful,
++   but WITHOUT ANY WARRANTY; without even the implied warranty of
++   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++   GNU General Public License for more details.
++
++   You should have received a copy of the GNU General Public License
++   along with this program; if not, write to the Free Software
++   Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston,
++   MA 02110-1301, USA.  */
++
++int foo(void);
++int foo(void) {
++  return 0;
++}
++
++int bar(void);
++
++int main(void) {
++  return bar();
++}
+diff --git a/gold/testsuite/plugin_test_defsym.sh b/gold/testsuite/plugin_test_defsym.sh
+new file mode 100755
+index 0000000000..6066f9b0c9
+--- /dev/null
++++ b/gold/testsuite/plugin_test_defsym.sh
+@@ -0,0 +1,52 @@
++#!/bin/sh
++
++# plugin_test_defsym.sh -- a test case for the plugin API.
++
++# Copyright (C) 2018 onwards Free Software Foundation, Inc.
++# Written by Sriraman Tallam <tmsriram@google.com>.
++
++# This file is part of gold.
++
++# This program is free software; you can redistribute it and/or modify
++# it under the terms of the GNU General Public License as published by
++# the Free Software Foundation; either version 3 of the License, or
++# (at your option) any later version.
++
++# This program is distributed in the hope that it will be useful,
++# but WITHOUT ANY WARRANTY; without even the implied warranty of
++# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++# GNU General Public License for more details.
++
++# You should have received a copy of the GNU General Public License
++# along with this program; if not, write to the Free Software
++# Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston,
++# MA 02110-1301, USA.
++
++# This file goes with plugin_test.c, a simple plug-in library that
++# exercises the basic interfaces and prints out version numbers and
++# options passed to the plugin.
++
++# This checks if the symbol resolution withe export dynamic symbol is
++# as expected.
++
++check()
++{
++    if ! grep -q "$2" "$1"
++    then
++	echo "Did not find expected output in $1:"
++	echo "   $2"
++	echo ""
++	echo "Actual output below:"
++	cat "$1"
++	exit 1
++    fi
++}
++
++check plugin_test_defsym.err "API version:"
++check plugin_test_defsym.err "gold version:"
++check plugin_test_defsym.err "plugin_test_defsym.syms: claim file hook called"
++check plugin_test_defsym.err "plugin_test_defsym.syms: bar: PREEMPTED_REG"
++check plugin_test_defsym.err "plugin_test_defsym.syms: foo: PREVAILING_DEF_REG"
++check plugin_test_defsym.err "cleanup hook called"
++
++exit 0
+
+commit 8efd17cb25686c51b9db6531ae2fbeb2e6ef2399
+Author: Sriraman Tallam <tmsriram@google.com>
+Date:   Thu Feb 22 13:56:46 2018 -0800
+
+    New plugin interface to get list of symbols wrapped with --wrap option.
+    
+    2018-02-22  Sriraman Tallam  <tmsriram@google.com>
+    
+            * plugin.cc (get_wrap_symbols): New plugin interface.
+            (load): Add get_wrap_symbols to transfer vector.
+            * plugin-api.h (ld_plugin_get_wrap_symbols): New plugin interface.
+            * testsuite/plugin_test.c (onload): Call and check get_wrap_symbols
+            interface.
+            * testsuite/plugin_test_wrap_symbols.sh: New test script.
+            * testsuite/plugin_test_wrap_symbols_1.cc: New file.
+            * testsuite/plugin_test_wrap_symbols_2.cc: New file.
+            * testsuite/Makefile.am (plugin_test_wrap_symbols): New test.
+            * testsuite/Makefile.in: Regenerate.
+    
+    (cherry picked from commit 0b65c07b97c43e8891c2e14061270878a85222c8)
+
+diff --git a/gold/ChangeLog b/gold/ChangeLog
+index b6d08fc685..5a69fd9222 100644
+--- a/gold/ChangeLog
++++ b/gold/ChangeLog
+@@ -1,4 +1,21 @@
+ 2018-04-27  Sriraman Tallam  <tmsriram@google.com>
++
++	Apply from master:
++	2018-02-22  Sriraman Tallam  <tmsriram@google.com>
++
++	* plugin.cc (get_wrap_symbols): New plugin interface.
++	(load): Add get_wrap_symbols to transfer vector.
++	* plugin-api.h (ld_plugin_get_wrap_symbols): New plugin interface.
++	* testsuite/plugin_test.c (onload): Call and check get_wrap_symbols
++	interface.
++	* testsuite/plugin_test_wrap_symbols.sh: New test script.
++	* testsuite/plugin_test_wrap_symbols_1.cc: New file.
++	* testsuite/plugin_test_wrap_symbols_2.cc: New file.
++	* testsuite/Makefile.am (plugin_test_wrap_symbols): New test.
++	* testsuite/Makefile.in: Regenerate.
++
++2018-04-27  Sriraman Tallam  <tmsriram@google.com>
++
+ 	Apply from master:
+ 	2018-02-07  Sriraman Tallam  <tmsriram@google.com>
+ 
+diff --git a/gold/options.h b/gold/options.h
+index c22004ade3..dcd5cc0c9e 100644
+--- a/gold/options.h
++++ b/gold/options.h
+@@ -471,7 +471,11 @@ struct Struct_special : public Struct_var
+ 									  \
+   options::String_set::const_iterator					  \
+   varname__##_end() const						  \
+-  { return this->varname__##_.value.end(); }
++  { return this->varname__##_.value.end(); }                              \
++                                                                          \
++  options::String_set::size_type                                          \
++  varname__##_size() const                                                \
++  { return this->varname__##_.value.size(); }                             \
+ 
+ // When you have a list of possible values (expressed as string)
+ // After helparg__ should come an initializer list, like
+diff --git a/gold/plugin.cc b/gold/plugin.cc
+index 02841627ec..3ebba6202a 100644
+--- a/gold/plugin.cc
++++ b/gold/plugin.cc
+@@ -167,6 +167,9 @@ static enum ld_plugin_status
+ get_input_section_size(const struct ld_plugin_section section,
+                        uint64_t* secsize);
+ 
++static enum ld_plugin_status
++get_wrap_symbols(uint64_t *num_symbols, const char ***wrap_symbol_list);
++
+ };
+ 
+ #endif // ENABLE_PLUGINS
+@@ -211,7 +214,7 @@ Plugin::load()
+   sscanf(ver, "%d.%d", &major, &minor);
+ 
+   // Allocate and populate a transfer vector.
+-  const int tv_fixed_size = 29;
++  const int tv_fixed_size = 30;
+ 
+   int tv_size = this->args_.size() + tv_fixed_size;
+   ld_plugin_tv* tv = new ld_plugin_tv[tv_size];
+@@ -345,6 +348,10 @@ Plugin::load()
+   tv[i].tv_tag = LDPT_GET_INPUT_SECTION_SIZE;
+   tv[i].tv_u.tv_get_input_section_size = get_input_section_size;
+ 
++  ++i;
++  tv[i].tv_tag = LDPT_GET_WRAP_SYMBOLS;
++  tv[i].tv_u.tv_get_wrap_symbols = get_wrap_symbols;
++
+   ++i;
+   tv[i].tv_tag = LDPT_NULL;
+   tv[i].tv_u.tv_val = 0;
+@@ -1808,6 +1815,25 @@ get_input_section_size(const struct ld_plugin_section section,
+   return LDPS_OK;
+ }
+ 
++static enum ld_plugin_status
++get_wrap_symbols(uint64_t *count, const char ***wrap_symbols)
++{
++  gold_assert(parameters->options().has_plugins());
++  *count = parameters->options().wrap_size();
++
++  if (*count == 0)
++    return LDPS_OK;
++
++  *wrap_symbols = new const char *[*count];
++  int i = 0;
++  for (options::String_set::const_iterator
++       it = parameters->options().wrap_begin();
++       it != parameters->options().wrap_end(); ++it, ++i) {
++    (*wrap_symbols)[i] = it->c_str();
++  }
++  return LDPS_OK;
++}
++
+ 
+ // Specify the ordering of sections in the final layout. The sections are
+ // specified as (handle,shndx) pairs in the two arrays in the order in
+diff --git a/gold/testsuite/Makefile.am b/gold/testsuite/Makefile.am
+index 9b7b6bec7f..29609f3ae6 100644
+--- a/gold/testsuite/Makefile.am
++++ b/gold/testsuite/Makefile.am
+@@ -2308,6 +2308,19 @@ plugin_test_thin.a: two_file_test_1.o two_file_test_1b.o two_file_test_2.o
+ 	$(TEST_AR) crT $@ $^
+ 
+ 
++check_PROGRAMS += plugin_test_wrap_symbols
++check_SCRIPTS += plugin_test_wrap_symbols.sh
++check_DATA += plugin_test_wrap_symbols.err
++MOSTLYCLEANFILES += plugin_test_wrap_symbols.err
++plugin_test_wrap_symbols_1.o: plugin_test_wrap_symbols_1.cc
++	$(COMPILE) -c -o $@ $<
++plugin_test_wrap_symbols_2.o: plugin_test_wrap_symbols_2.cc
++	$(COMPILE) -c -o $@ $<
++plugin_test_wrap_symbols: plugin_test_wrap_symbols_1.o plugin_test_wrap_symbols_2.o gcctestdir/ld plugin_test.so
++	$(CXXLINK) -Bgcctestdir/ -Wl,--plugin,"./plugin_test.so" -Wl,--wrap=hello,--wrap=jello plugin_test_wrap_symbols_1.o plugin_test_wrap_symbols_2.o 2>plugin_test_wrap_symbols.err
++plugin_test_wrap_symbols.err: plugin_test_wrap_symbols
++	@touch plugin_test_wrap_symbols.err
++
+ check_PROGRAMS += plugin_test_start_lib
+ check_SCRIPTS += plugin_test_start_lib.sh
+ check_DATA += plugin_test_start_lib.err
+diff --git a/gold/testsuite/Makefile.in b/gold/testsuite/Makefile.in
+index 5a828867ca..7a44d2e42b 100644
+--- a/gold/testsuite/Makefile.in
++++ b/gold/testsuite/Makefile.in
+@@ -522,6 +522,7 @@ check_PROGRAMS = $(am__EXEEXT_1) $(am__EXEEXT_2) $(am__EXEEXT_3) \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_8 \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_10 \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_11 \
++@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_wrap_symbols \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_start_lib \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_defsym
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@am__append_45 =  \
+@@ -533,6 +534,7 @@ check_PROGRAMS = $(am__EXEEXT_1) $(am__EXEEXT_2) $(am__EXEEXT_3) \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_7.sh \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_10.sh \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_11.sh \
++@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_wrap_symbols.sh \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_start_lib.sh \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_defsym.sh
+ 
+@@ -553,6 +555,7 @@ check_PROGRAMS = $(am__EXEEXT_1) $(am__EXEEXT_2) $(am__EXEEXT_3) \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_9b.err \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_10.sections \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_11.err \
++@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_wrap_symbols.err \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_start_lib.err \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_defsym.err
+ # Make a copy of two_file_test_1.o, which does not define the symbol _Z4t16av.
+@@ -570,6 +573,7 @@ check_PROGRAMS = $(am__EXEEXT_1) $(am__EXEEXT_2) $(am__EXEEXT_3) \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_10.sections \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_11.err \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_thin.a \
++@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_wrap_symbols.err \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_start_lib.err \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_defsym.err
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@@TLS_TRUE@am__append_48 = plugin_test_tls
+@@ -1179,6 +1183,7 @@ libgoldtest_a_OBJECTS = $(am_libgoldtest_a_OBJECTS)
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_8$(EXEEXT) \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_10$(EXEEXT) \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_11$(EXEEXT) \
++@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_wrap_symbols$(EXEEXT) \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_start_lib$(EXEEXT) \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	plugin_test_defsym$(EXEEXT)
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@@TLS_TRUE@am__EXEEXT_25 = plugin_test_tls$(EXEEXT)
+@@ -1914,6 +1919,13 @@ plugin_test_tls_DEPENDENCIES = libgoldtest.a ../libgold.a \
+ 	../../libiberty/libiberty.a $(am__DEPENDENCIES_1) \
+ 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+ 	$(am__DEPENDENCIES_1)
++plugin_test_wrap_symbols_SOURCES = plugin_test_wrap_symbols.c
++plugin_test_wrap_symbols_OBJECTS = plugin_test_wrap_symbols.$(OBJEXT)
++plugin_test_wrap_symbols_LDADD = $(LDADD)
++plugin_test_wrap_symbols_DEPENDENCIES = libgoldtest.a ../libgold.a \
++	../../libiberty/libiberty.a $(am__DEPENDENCIES_1) \
++	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
++	$(am__DEPENDENCIES_1)
+ pr17704a_test_SOURCES = pr17704a_test.c
+ pr17704a_test_OBJECTS = pr17704a_test.$(OBJEXT)
+ pr17704a_test_LDADD = $(LDADD)
+@@ -2437,13 +2449,13 @@ SOURCES = $(libgoldtest_a_SOURCES) basic_pic_test.c basic_pie_test.c \
+ 	plugin_test_2.c plugin_test_3.c plugin_test_4.c \
+ 	plugin_test_5.c plugin_test_6.c plugin_test_7.c \
+ 	plugin_test_8.c plugin_test_defsym.c plugin_test_start_lib.c \
+-	plugin_test_tls.c pr17704a_test.c $(pr20216a_test_SOURCES) \
+-	$(pr20216b_test_SOURCES) $(pr20216c_test_SOURCES) \
+-	$(pr20216d_test_SOURCES) $(pr20216e_test_SOURCES) \
+-	$(pr20308a_test_SOURCES) $(pr20308b_test_SOURCES) \
+-	$(pr20308c_test_SOURCES) $(pr20308d_test_SOURCES) \
+-	$(pr20308e_test_SOURCES) pr20976.c pr22266.c \
+-	$(protected_1_SOURCES) $(protected_2_SOURCES) \
++	plugin_test_tls.c plugin_test_wrap_symbols.c pr17704a_test.c \
++	$(pr20216a_test_SOURCES) $(pr20216b_test_SOURCES) \
++	$(pr20216c_test_SOURCES) $(pr20216d_test_SOURCES) \
++	$(pr20216e_test_SOURCES) $(pr20308a_test_SOURCES) \
++	$(pr20308b_test_SOURCES) $(pr20308c_test_SOURCES) \
++	$(pr20308d_test_SOURCES) $(pr20308e_test_SOURCES) pr20976.c \
++	pr22266.c $(protected_1_SOURCES) $(protected_2_SOURCES) \
+ 	$(relro_now_test_SOURCES) $(relro_script_test_SOURCES) \
+ 	$(relro_strip_test_SOURCES) $(relro_test_SOURCES) \
+ 	$(script_test_1_SOURCES) script_test_11.c script_test_12.c \
+@@ -4090,6 +4102,15 @@ pie_copyrelocs_test$(EXEEXT): $(pie_copyrelocs_test_OBJECTS) $(pie_copyrelocs_te
+ @TLS_FALSE@plugin_test_tls$(EXEEXT): $(plugin_test_tls_OBJECTS) $(plugin_test_tls_DEPENDENCIES) $(EXTRA_plugin_test_tls_DEPENDENCIES) 
+ @TLS_FALSE@	@rm -f plugin_test_tls$(EXEEXT)
+ @TLS_FALSE@	$(LINK) $(plugin_test_tls_OBJECTS) $(plugin_test_tls_LDADD) $(LIBS)
++@GCC_FALSE@plugin_test_wrap_symbols$(EXEEXT): $(plugin_test_wrap_symbols_OBJECTS) $(plugin_test_wrap_symbols_DEPENDENCIES) $(EXTRA_plugin_test_wrap_symbols_DEPENDENCIES) 
++@GCC_FALSE@	@rm -f plugin_test_wrap_symbols$(EXEEXT)
++@GCC_FALSE@	$(LINK) $(plugin_test_wrap_symbols_OBJECTS) $(plugin_test_wrap_symbols_LDADD) $(LIBS)
++@NATIVE_LINKER_FALSE@plugin_test_wrap_symbols$(EXEEXT): $(plugin_test_wrap_symbols_OBJECTS) $(plugin_test_wrap_symbols_DEPENDENCIES) $(EXTRA_plugin_test_wrap_symbols_DEPENDENCIES) 
++@NATIVE_LINKER_FALSE@	@rm -f plugin_test_wrap_symbols$(EXEEXT)
++@NATIVE_LINKER_FALSE@	$(LINK) $(plugin_test_wrap_symbols_OBJECTS) $(plugin_test_wrap_symbols_LDADD) $(LIBS)
++@PLUGINS_FALSE@plugin_test_wrap_symbols$(EXEEXT): $(plugin_test_wrap_symbols_OBJECTS) $(plugin_test_wrap_symbols_DEPENDENCIES) $(EXTRA_plugin_test_wrap_symbols_DEPENDENCIES) 
++@PLUGINS_FALSE@	@rm -f plugin_test_wrap_symbols$(EXEEXT)
++@PLUGINS_FALSE@	$(LINK) $(plugin_test_wrap_symbols_OBJECTS) $(plugin_test_wrap_symbols_LDADD) $(LIBS)
+ @DEFAULT_TARGET_X86_64_FALSE@pr17704a_test$(EXEEXT): $(pr17704a_test_OBJECTS) $(pr17704a_test_DEPENDENCIES) $(EXTRA_pr17704a_test_DEPENDENCIES) 
+ @DEFAULT_TARGET_X86_64_FALSE@	@rm -f pr17704a_test$(EXEEXT)
+ @DEFAULT_TARGET_X86_64_FALSE@	$(LINK) $(pr17704a_test_OBJECTS) $(pr17704a_test_LDADD) $(LIBS)
+@@ -4477,6 +4498,7 @@ distclean-compile:
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/plugin_test_defsym.Po@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/plugin_test_start_lib.Po@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/plugin_test_tls.Po@am__quote@
++@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/plugin_test_wrap_symbols.Po@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pr17704a_test.Po@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pr20216a_test-pr20216_def.Po@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pr20216a_test-pr20216_main.Po@am__quote@
+@@ -5241,6 +5263,8 @@ plugin_test_10.sh.log: plugin_test_10.sh
+ 	@p='plugin_test_10.sh'; $(am__check_pre) $(LOG_COMPILE) "$$tst" $(am__check_post)
+ plugin_test_11.sh.log: plugin_test_11.sh
+ 	@p='plugin_test_11.sh'; $(am__check_pre) $(LOG_COMPILE) "$$tst" $(am__check_post)
++plugin_test_wrap_symbols.sh.log: plugin_test_wrap_symbols.sh
++	@p='plugin_test_wrap_symbols.sh'; $(am__check_pre) $(LOG_COMPILE) "$$tst" $(am__check_post)
+ plugin_test_start_lib.sh.log: plugin_test_start_lib.sh
+ 	@p='plugin_test_start_lib.sh'; $(am__check_pre) $(LOG_COMPILE) "$$tst" $(am__check_post)
+ plugin_test_defsym.sh.log: plugin_test_defsym.sh
+@@ -5603,6 +5627,8 @@ plugin_test_10.log: plugin_test_10$(EXEEXT)
+ 	@p='plugin_test_10$(EXEEXT)'; $(am__check_pre) $(LOG_COMPILE) "$$tst" $(am__check_post)
+ plugin_test_11.log: plugin_test_11$(EXEEXT)
+ 	@p='plugin_test_11$(EXEEXT)'; $(am__check_pre) $(LOG_COMPILE) "$$tst" $(am__check_post)
++plugin_test_wrap_symbols.log: plugin_test_wrap_symbols$(EXEEXT)
++	@p='plugin_test_wrap_symbols$(EXEEXT)'; $(am__check_pre) $(LOG_COMPILE) "$$tst" $(am__check_post)
+ plugin_test_start_lib.log: plugin_test_start_lib$(EXEEXT)
+ 	@p='plugin_test_start_lib$(EXEEXT)'; $(am__check_pre) $(LOG_COMPILE) "$$tst" $(am__check_post)
+ plugin_test_defsym.log: plugin_test_defsym$(EXEEXT)
+@@ -6951,6 +6977,14 @@ uninstall-am:
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@plugin_test_thin.a: two_file_test_1.o two_file_test_1b.o two_file_test_2.o
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	rm -f $@
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	$(TEST_AR) crT $@ $^
++@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@plugin_test_wrap_symbols_1.o: plugin_test_wrap_symbols_1.cc
++@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	$(COMPILE) -c -o $@ $<
++@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@plugin_test_wrap_symbols_2.o: plugin_test_wrap_symbols_2.cc
++@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	$(COMPILE) -c -o $@ $<
++@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@plugin_test_wrap_symbols: plugin_test_wrap_symbols_1.o plugin_test_wrap_symbols_2.o gcctestdir/ld plugin_test.so
++@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	$(CXXLINK) -Bgcctestdir/ -Wl,--plugin,"./plugin_test.so" -Wl,--wrap=hello,--wrap=jello plugin_test_wrap_symbols_1.o plugin_test_wrap_symbols_2.o 2>plugin_test_wrap_symbols.err
++@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@plugin_test_wrap_symbols.err: plugin_test_wrap_symbols
++@GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	@touch plugin_test_wrap_symbols.err
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@plugin_test_start_lib: unused.o plugin_start_lib_test.o plugin_start_lib_test_2.syms gcctestdir/ld plugin_test.so
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@	$(CXXLINK) -Bgcctestdir/ -Wl,--no-demangle,--plugin,"./plugin_test.so" plugin_start_lib_test.o \
+ @GCC_TRUE@@NATIVE_LINKER_TRUE@@PLUGINS_TRUE@		-Wl,--start-lib plugin_start_lib_test_2.syms -Wl,--end-lib 2>plugin_test_start_lib.err
+diff --git a/gold/testsuite/plugin_test.c b/gold/testsuite/plugin_test.c
+index e8c8a5dfcf..c6c9923eb8 100644
+--- a/gold/testsuite/plugin_test.c
++++ b/gold/testsuite/plugin_test.c
+@@ -68,6 +68,7 @@ static ld_plugin_get_input_section_name get_input_section_name = NULL;
+ static ld_plugin_get_input_section_contents get_input_section_contents = NULL;
+ static ld_plugin_update_section_order update_section_order = NULL;
+ static ld_plugin_allow_section_ordering allow_section_ordering = NULL;
++static ld_plugin_get_wrap_symbols get_wrap_symbols = NULL;
+ 
+ #define MAXOPTS 10
+ 
+@@ -158,6 +159,9 @@ onload(struct ld_plugin_tv *tv)
+ 	case LDPT_ALLOW_SECTION_ORDERING:
+ 	  allow_section_ordering = *entry->tv_u.tv_allow_section_ordering;
+ 	  break;
++	case LDPT_GET_WRAP_SYMBOLS:
++	  get_wrap_symbols = *entry->tv_u.tv_get_wrap_symbols;
++	  break;
+         default:
+           break;
+         }
+@@ -247,6 +251,28 @@ onload(struct ld_plugin_tv *tv)
+       return LDPS_ERR;
+     }
+ 
++  if (get_wrap_symbols == NULL)
++    {
++      fprintf(stderr, "tv_get_wrap_symbols interface missing\n");
++      return LDPS_ERR;
++    }
++  else
++    {
++      const char **wrap_symbols;
++      uint64_t count = 0;
++      if (get_wrap_symbols(&count, &wrap_symbols) == LDPS_OK)
++	{
++	  (*message)(LDPL_INFO, "Number of wrap symbols = %lu", count);
++	  for (; count > 0; --count)
++            (*message)(LDPL_INFO, "Wrap symbol %s", wrap_symbols[count - 1]);
++	}
++      else
++	{
++          fprintf(stderr, "tv_get_wrap_symbols interface call failed\n");
++          return LDPS_ERR;
++	}
++    }
++
+   return LDPS_OK;
+ }
+ 
+diff --git a/gold/testsuite/plugin_test_wrap_symbols.sh b/gold/testsuite/plugin_test_wrap_symbols.sh
+new file mode 100755
+index 0000000000..2133bf0a82
+--- /dev/null
++++ b/gold/testsuite/plugin_test_wrap_symbols.sh
+@@ -0,0 +1,52 @@
++#!/bin/sh
++
++# plugin_test_wrap_symbols.sh -- a test case for the plugin API.
++
++# Copyright (C) 2017 onwards Free Software Foundation, Inc.
++# Written by Teresa Johnson <tejohnson@google.com>.
++
++# This file is part of gold.
++
++# This program is free software; you can redistribute it and/or modify
++# it under the terms of the GNU General Public License as published by
++# the Free Software Foundation; either version 3 of the License, or
++# (at your option) any later version.
++
++# This program is distributed in the hope that it will be useful,
++# but WITHOUT ANY WARRANTY; without even the implied warranty of
++# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++# GNU General Public License for more details.
++
++# You should have received a copy of the GNU General Public License
++# along with this program; if not, write to the Free Software
++# Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston,
++# MA 02110-1301, USA.
++
++# This file goes with plugin_test.c, a simple plug-in library that
++# exercises the basic interfaces and prints out version numbers and
++# options passed to the plugin.
++
++# This checks if the get_wrap_symbols plugin interface works as
++# expected.
++
++check()
++{
++    if ! grep -q "$2" "$1"
++    then
++	echo "Did not find expected output in $1:"
++	echo "   $2"
++	echo ""
++	echo "Actual output below:"
++	cat "$1"
++	exit 1
++    fi
++}
++
++check plugin_test_wrap_symbols.err "API version:"
++check plugin_test_wrap_symbols.err "gold version:"
++check plugin_test_wrap_symbols.err "Number of wrap symbols = 2"
++check plugin_test_wrap_symbols.err "Wrap symbol hello"
++check plugin_test_wrap_symbols.err "Wrap symbol jello"
++check plugin_test_wrap_symbols.err "cleanup hook called"
++
++exit 0
+diff --git a/gold/testsuite/plugin_test_wrap_symbols_1.cc b/gold/testsuite/plugin_test_wrap_symbols_1.cc
+new file mode 100644
+index 0000000000..90587efbb9
+--- /dev/null
++++ b/gold/testsuite/plugin_test_wrap_symbols_1.cc
+@@ -0,0 +1,40 @@
++/* plugin_test_wrap_symbols -- a test case for gold
++
++   Copyright (C) 2017 onwards Free Software Foundation, Inc.
++   Written by Sriraman Tallam <tmsriram@google.com>.
++
++   This file is part of gold.
++
++   This program is free software; you can redistribute it and/or modify
++   it under the terms of the GNU General Public License as published by
++   the Free Software Foundation; either version 3 of the License, or
++   (at your option) any later version.
++
++   This program is distributed in the hope that it will be useful,
++   but WITHOUT ANY WARRANTY; without even the implied warranty of
++   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++   GNU General Public License for more details.
++
++   You should have received a copy of the GNU General Public License
++   along with this program; if not, write to the Free Software
++   Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston,
++   MA 02110-1301, USA.  */
++
++extern "C" {
++int __real_hello();
++int __wrap_hello()
++{
++  return __real_hello();
++}
++int hello();
++int __real_jello();
++int __wrap_jello()
++{
++  return __real_jello();
++}
++int jello();
++int main()
++{
++  return 0;
++}
++}
+diff --git a/gold/testsuite/plugin_test_wrap_symbols_2.cc b/gold/testsuite/plugin_test_wrap_symbols_2.cc
+new file mode 100644
+index 0000000000..902cc3c076
+--- /dev/null
++++ b/gold/testsuite/plugin_test_wrap_symbols_2.cc
+@@ -0,0 +1,33 @@
++/* plugin_test_wrap_symbols -- a test case for gold
++
++   Copyright (C) 2017 onwards Free Software Foundation, Inc.
++   Written by Sriraman Tallam <tmsriram@google.com>.
++
++   This file is part of gold.
++
++   This program is free software; you can redistribute it and/or modify
++   it under the terms of the GNU General Public License as published by
++   the Free Software Foundation; either version 3 of the License, or
++   (at your option) any later version.
++
++   This program is distributed in the hope that it will be useful,
++   but WITHOUT ANY WARRANTY; without even the implied warranty of
++   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++   GNU General Public License for more details.
++
++   You should have received a copy of the GNU General Public License
++   along with this program; if not, write to the Free Software
++   Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston,
++   MA 02110-1301, USA.  */
++
++extern "C" {
++int hello()
++{
++  return 0;
++}
++
++int jello()
++{
++  return 0;
++}
++}
+diff --git a/include/plugin-api.h b/include/plugin-api.h
+index 3a3e8b456d..e14db1ef8f 100644
+--- a/include/plugin-api.h
++++ b/include/plugin-api.h
+@@ -365,6 +365,11 @@ enum ld_plugin_status
+ (*ld_plugin_get_input_section_size) (const struct ld_plugin_section section,
+                                      uint64_t *secsize);
+ 
++typedef
++enum ld_plugin_status
++(*ld_plugin_get_wrap_symbols) (uint64_t *num_symbols,
++                               const char ***wrap_symbol_list);
++
+ enum ld_plugin_level
+ {
+   LDPL_INFO,
+@@ -407,7 +412,8 @@ enum ld_plugin_tag
+   LDPT_UNIQUE_SEGMENT_FOR_SECTIONS = 27,
+   LDPT_GET_SYMBOLS_V3 = 28,
+   LDPT_GET_INPUT_SECTION_ALIGNMENT = 29,
+-  LDPT_GET_INPUT_SECTION_SIZE = 30
++  LDPT_GET_INPUT_SECTION_SIZE = 30,
++  LDPT_GET_WRAP_SYMBOLS = 32
+ };
+ 
+ /* The plugin transfer vector.  */
+@@ -441,6 +447,7 @@ struct ld_plugin_tv
+     ld_plugin_unique_segment_for_sections tv_unique_segment_for_sections;
+     ld_plugin_get_input_section_alignment tv_get_input_section_alignment;
+     ld_plugin_get_input_section_size tv_get_input_section_size;
++    ld_plugin_get_wrap_symbols tv_get_wrap_symbols;
+   } tv_u;
+ };
+ 

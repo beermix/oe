@@ -17,14 +17,14 @@
 ################################################################################
 
 PKG_NAME="binutils"
-PKG_VERSION="2.30"
+PKG_VERSION="2.29"
 #PKG_SHA256="0b871e271c4c620444f8264f72143b4d224aa305306d85dd77ab8dce785b1e85"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://ftp.gnu.org.ua/gnu/binutils/?C=M;O=D"
 PKG_URL="http://ftpmirror.gnu.org/binutils/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_SOURCE_DIR="$PKG_NAME-gdb-$PKG_VERSION*"
-PKG_DEPENDS_HOST="ccache:host bison:host flex:host zlib:host quilt:host elfutils:host linux:host"
+PKG_DEPENDS_HOST="ccache:host bison:host flex:host quilt:host elfutils:host linux:host"
 PKG_DEPENDS_TARGET="toolchain binutils:host"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="binutils: A GNU collection of binary utilities"
@@ -44,8 +44,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-lto \
                          --disable-gdb \
                          --disable-sim \
-                         --disable-nls \
-                         --with-system-zlib=$TOOLCHAIN"
+                         --disable-nls"
 
 PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
                          --with-sysroot=$SYSROOT_PREFIX \
