@@ -32,20 +32,4 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME --disable-silent-rules"
 
 post_makeinstall_host() {
   make prefix=$SYSROOT_PREFIX/usr install
-  
-#  ln -sf aclocal $TOOLCHAIN/bin/aclocal-1.15
-#  ln -sf aclocal $TOOLCHAIN/bin/aclocal-1.15.1
-#  ln -sf aclocal $TOOLCHAIN/bin/aclocal-1.14
-#  ln -sf aclocal $TOOLCHAIN/bin/aclocal-1.9
-#  ln -sf aclocal $TOOLCHAIN/bin/aclocal-1.10
-#  ln -sf aclocal $TOOLCHAIN/bin/aclocal-1.11
-#  ln -sf aclocal $TOOLCHAIN/bin/aclocal-1.11.6
-  
-#  ln -sf aclocal $TOOLCHAIN/bin/automake-1.15
-#  ln -sf aclocal $TOOLCHAIN/bin/automake-1.15.1
-#  ln -sf aclocal $TOOLCHAIN/bin/automake-1.14
-#  ln -sf aclocal $TOOLCHAIN/bin/automake-1.9
-#  ln -sf aclocal $TOOLCHAIN/bin/automake-1.10
-#  ln -sf aclocal $TOOLCHAIN/bin/automake-1.11
-#  ln -sf aclocal $TOOLCHAIN/bin/automake-1.11.6
 }

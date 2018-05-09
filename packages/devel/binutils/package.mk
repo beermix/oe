@@ -33,6 +33,8 @@ PKG_LONGDESC="The GNU binutils are utilities of use when dealing with object fil
 PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --with-sysroot=$SYSROOT_PREFIX \
                          --with-lib-path=$SYSROOT_PREFIX/lib:$SYSROOT_PREFIX/usr/lib \
+                         --without-ppl \
+                         --without-cloog \
                          --disable-werror \
                          --disable-multilib \
                          --disable-libada \
@@ -42,8 +44,6 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-gold \
                          --enable-ld=default \
                          --enable-lto \
-                         --disable-gdb \
-                         --disable-sim \
                          --disable-nls"
 
 PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
@@ -61,8 +61,6 @@ PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
                          --disable-gold \
                          --disable-ld \
                          --disable-lto \
-                         --disable-gdb \
-                         --disable-sim \
                          --disable-nls"
 
 pre_configure_host() {

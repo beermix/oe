@@ -32,12 +32,6 @@ PKG_LONGDESC="The 'make' utility automatically determines which pieces of a larg
 #  sed -i '211,217 d; 219,229 d; 232 d' $PKG_BUILD/glob/glob.c
 #}
 
-pre_configure_host() {
-  unset CPPFLAGS
-  unset CFLAGS
-  unset CXXFLAGS
-}
-
 export CC=$LOCAL_CC
 
 PKG_CONFIGURE_OPTS_HOST="--without-guile"

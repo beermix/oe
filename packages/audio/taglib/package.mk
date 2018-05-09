@@ -29,11 +29,6 @@ PKG_SHORTDESC="taglib: a library for reading and editing the meta-data of severa
 PKG_LONGDESC="TagLib is a library for reading and editing the meta-data of several popular audio formats."
 PKG_TOOLCHAIN="cmake-make"
 
-pre_configure_target() {
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os -Wall|"`
-  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-Os -Wall|"`
-}
-
 PKG_CMAKE_OPTS_TARGET="-DBUILD_SHARED_LIBS=ON \
                        -DWITH_MP4=ON \
                        -DWITH_ASF=ON \

@@ -37,5 +37,5 @@ pre_configure_target() {
   export CPPFLAGS="$CPPFLAGS -fexceptions"
 }
 
-PKG_CONFIGURE_OPTS_HOST="--enable-cxx"
-PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST --enable-static --disable-shared"
+PKG_CONFIGURE_OPTS_HOST="--enable-cxx --enable-static --disable-shared"
+PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"

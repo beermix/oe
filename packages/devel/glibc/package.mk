@@ -116,7 +116,7 @@ pre_configure_target() {
 
   unset LD_LIBRARY_PATH
 
-  export CFLAGS="-O2 -march=westmere -g2 -m64"
+  export CFLAGS="-O2 -march=westmere -g -m64"
 
   export BUILD_CC=$HOST_CC
   export OBJDUMP_FOR_HOST=objdump
@@ -149,6 +149,7 @@ post_makeinstall_target() {
   for i in $GLIBC_EXCLUDE_BIN; do
     rm -rf $INSTALL/usr/bin/$i
   done
+
   rm -rf $INSTALL/usr/lib/audit
   rm -rf $INSTALL/usr/lib/glibc
   rm -rf $INSTALL/usr/lib/libc_pic
