@@ -42,7 +42,6 @@ PKG_CONFIGURE_OPTS_TARGET="utrace_cv_cc_biarch=false \
 
 PKG_CONFIGURE_OPTS_HOST="--disable-werror \
 			    --disable-progs \
-			    --disable-silent-rules \
 			    --enable-maintainer-mode"
 
 make_target() {
