@@ -554,20 +554,6 @@ if [ "$TARGET" = "target" -o "$TARGET" = "init" ]; then
   fi
 fi
 
-#if [ "$TARGET" = "host" ]; then
-#  if [ -d $TOOLCHAIN ] ; then
-#    find $TOOLCHAIN -type d -exec rmdir -p {} \; 2>/dev/null || :
-#
-#    if [ ! "${BUILD_WITH_DEBUG}" = "yes" ]; then
-#      strip `find $TOOLCHAIN \
-#        -type f -cmin -1 -name "*.so*" \
-#        2>/dev/null` 2>/dev/null || :
-#        strip `find $TOOLCHAIN/bin \
-#          -type f -executable -cmin -1 2>/dev/null` 2>/dev/null || :
-#    fi
-#  fi
-#fi
-
 cd $ROOT
 
 for i in `find $SYSROOT_PREFIX/usr/lib/ -name "*.la" 2>/dev/null`; do \

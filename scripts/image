@@ -140,7 +140,7 @@ echo -e "LIBREELEC_ARCH=\"$LIBREELEC_ARCH\"" >> $INSTALL/etc/os-release
 echo -e "LIBREELEC_BUILD=\"$LIBREELEC_BUILD\"" >> $INSTALL/etc/os-release
 
 # create /etc/issue
-echo "$DISTRONAME ($LIBREELEC_BUILD): $LIBREELEC_VERSION git: $GIT_HASH" >> $INSTALL/etc/issue
+echo "$DISTRONAME ($LIBREELEC_BUILD): $LIBREELEC_VERSION" >> $INSTALL/etc/issue
 
 ln -sf /etc/issue $INSTALL/etc/motd
 
