@@ -36,13 +36,12 @@ post_unpack() {
 
 PKG_CONFIGURE_SCRIPT="gettext-tools/configure"
 
-PKG_CONFIGURE_OPTS_HOST="--disable-curses \
-                         --disable-native-java \
-                         --without-emacs \
+PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared \
+                         --disable-rpath \
+                         --with-gnu-ld \
+                         --disable-java \
+                         --disable-curses \
                          --with-included-libxml \
-                         --enable-nls \
-                         --disable-static \
-                         --enable-shared \
-                         --with-pic \
+                         --disable-native-java \
                          --disable-csharp \
-                         --disable-rpath"
+                         --without-emacs"
