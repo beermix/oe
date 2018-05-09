@@ -228,13 +228,10 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$TOOLCHAIN \
                        -DENABLE_UDEV=ON \
                        -DENABLE_DBUS=ON \
                        -DENABLE_XSLT=ON \
-                       -DENABLE_CCACHE=OFF \
+                       -DENABLE_CCACHE=ON \
                        -DENABLE_LIRC=ON \
                        -DENABLE_EVENTCLIENTS=ON \
                        -DENABLE_LDGOLD=ON \
-                       -DENABLE_DEBUGFISSION=OFF \
-                       -DENABLE_APP_AUTONAME=OFF \
-                       $PKG_KODI_USE_LTO \
                        $KODI_ARCH \
                        $KODI_OPENGL \
                        $KODI_OPENGLES \
@@ -257,9 +254,12 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$TOOLCHAIN \
                        $KODI_BLURAY \
                        $KODI_PLAYER"
 
-#pre_configure_target() {
-#  export LIBS="$LIBS -lz -lterminfo"
-#}
+pre_configure_target() {
+# kodi should never be built with lto
+  strip_lto
+
+  export LIBS="$LIBS -lz -lterminfo"
+}
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin/kodi
