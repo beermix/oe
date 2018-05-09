@@ -8,7 +8,7 @@ fi
   export LC_ALL=C
 # export LC_ALL=en_US.UTF-8
 
-# export CCACHE_DISABLE=1
+ export CCACHE_DISABLE=1
 # export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime
 # export CCACHE_SLOPPINESS=file_macro
 # export CCACHE_COMPRESS=true
@@ -82,7 +82,7 @@ LINUX_DEPENDS="$PROJECT_DIR/$PROJECT/linux $PROJECT_DIR/$PROJECT/patches/linux $
 
 # Need to point to your actual cc
 # If you have ccache installed, take care that LOCAL_CC don't point to it
-  [ -z "${LOCAL_CC}" ] && export LOCAL_CC="$(which gcc)"
+  [ -z "${LOCAL_CC}" ] && export LOCAL_CC="$(which gcc-8)"
 
 if [ -z "$LOCAL_CC" ] ; then
   echo "***** Please install gcc *****"
@@ -91,7 +91,7 @@ fi
 
 # Need to point to your actual g++
 # If you have ccache installed, take care that LOCAL_CXX don't point to it
-  [ -z "${LOCAL_CXX}" ] && export LOCAL_CXX="$(which g++)"
+  [ -z "${LOCAL_CXX}" ] && export LOCAL_CXX="$(which g++-8)"
 
 # verbose compilation mode (yes/no)
   VERBOSE="yes"
