@@ -65,6 +65,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            --without-cxx-main \
                            --with-system-ffi \
                            --with-computed-gotos \
+                           --with-lto \
                            --with-system-expat"
 post_patch() {
   # This is needed to make sure the Python build process doesn't try to

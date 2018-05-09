@@ -101,6 +101,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_prog_HAS_HG=/bin/false
                            --with-threads
                            --with-pymalloc
                            --with-computed-gotos
+                           --with-lto
                            --disable-ipv6
 "
 
