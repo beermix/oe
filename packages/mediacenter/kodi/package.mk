@@ -256,8 +256,6 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$TOOLCHAIN \
 
 pre_configure_target() {
 # kodi should never be built with lto
-  strip_lto
-
   export LIBS="$LIBS -lz -lterminfo"
 }
 
