@@ -38,7 +38,6 @@ PKG_PY_DISABLED_MODULES="_tkinter nis gdbm bsddb ossaudiodev"
 PKG_CONFIGURE_OPTS_HOST="--cache-file=config.cache \
                          --without-cxx-main \
                          --with-threads \
-                         --with-computed-gotos \
                          --enable-unicode=ucs4"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
@@ -123,7 +122,7 @@ makeinstall_target() {
 post_makeinstall_target() {
   rm -fr $PKG_BUILD/.$TARGET_NAME/build/temp.*
 
-  for dir in bsddb idlelib lib-tk lib2to3 msilib pydoc_data test; do
+  for dir in bsddb idlelib lib-tk lib2to3 msilib pydoc_data test unittest; do
     rm -rf $INSTALL/usr/lib/python*/$dir
   done
 
