@@ -48,7 +48,6 @@ make_host() {
      NSS_ENABLE_ECC=1 \
      NSS_ENABLE_WERROR=0 \
      NSS_TESTS="dummy" \
-     CROSS_COMPILE=0 \
      CC=$CC CCC="$CXX" LDFLAGS="$LDFLAGS -L$TOOLCHAIN/lib" \
      V=1
 }
