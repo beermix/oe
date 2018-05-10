@@ -28,7 +28,7 @@ PKG_SHORTDESC="flex: Fast lexical analyzer generator"
 PKG_LONGDESC="flex is a tool for generating programs that perform pattern-matching on text."
 PKG_TOOLCHAIN="autotools"
 
-PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared --disable-rpath --with-gnu-ld"
+PKG_CONFIGURE_OPTS_HOST="ac_cv_path_M4=$TOOLCHAIN/bin/m4 ac_cv_func_reallocarray=no"
 
 post_makeinstall_host() {
   cat > $TOOLCHAIN/bin/lex << "EOF"
