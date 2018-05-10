@@ -2,8 +2,7 @@ PKG_NAME="wine"
 PKG_VERSION="3.7"
 #PKG_URL="https://dl.winehq.org/wine/source/3.0/wine-3.0.tar.xz"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain glib gmp x11 mesa xorg-server pcre libXcursor freetype fontconfig libjpeg-turbo libpng tiff libdrm glu expat harfbuzz libxcb libXrender libX11 libXext cairo unclutter xdotool libexif libXcomposite libXtst libpcap"
-PKG_DEPENDS_TARGET="toolchain gtk3 gstreamer"
+PKG_DEPENDS_TARGET="toolchain glib gmp x11 mesa xorg-server pcre libXcursor freetype fontconfig libjpeg-turbo libpng tiff libdrm glu expat harfbuzz libxcb libXrender libX11 libXext cairo unclutter xdotool libexif libXcomposite libXtst libpcap gtk3 gstreamer wine:host"
 #PKG_TOOLCHAIN="configure"
 #PKG_TOOLCHAIN="autotools"
 
@@ -70,7 +69,11 @@ PKG_CONFIGURE_OPTS_HOST="--disable-tests \
 			    --without-sdl \
 			    --without-udev"
 
-#make_host() {
-#    cd $PKG_BUILD/.$HOST_NAME
-#    make -C tools tools/sfnt2fon tools/widl tools/winebuild tools/winegcc tools/wmc tools/wrc
-#}
+make_host() {
+    cd $PKG_BUILD/.$HOST_NAME
+    make -C tools tools/sfnt2fon tools/widl tools/winebuild tools/winegcc tools/wmc tools/wrc
+}
+
+makeinstall_host() {
+  : # nop
+}
