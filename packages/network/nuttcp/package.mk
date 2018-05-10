@@ -1,11 +1,11 @@
 PKG_NAME="nuttcp"
-PKG_VERSION="8.1.4"
+PKG_VERSION="6.1.2"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="my"
 PKG_TOOLCHAIN="manual"
 
 make_target() {
-  $CC $CFLAGS $LDFLAGS $PKG_DIR/nuttcp-8.1.4.c -o nuttcp -j1
+  $CC $CFLAGS $LDFLAGS $PKG_DIR/nuttcp-$PKG_VERSION.c -o nuttcp -j1
 }
 
 post_make_target() {
@@ -14,6 +14,7 @@ post_make_target() {
   cp $PKG_BUILD/nuttcp $INSTALL/usr/bin/nuttcp
 }
 
-#post_install () {
-#  enable_service nuttcp.service
-#}
+post_install () {
+  enable_service nuttcp.service
+  enable_service nuttcp.socket
+}

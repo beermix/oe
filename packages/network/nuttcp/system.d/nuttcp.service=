@@ -1,0 +1,13 @@
+[Unit]
+Description=nuttcp bandwidth test controller
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/nuttcp -S --nofork
+TimeoutStopSec=1 
+Restart=always
+RestartSec=2
+StartLimitInterval=4
+
+[Install]
+WantedBy=multi-user.target

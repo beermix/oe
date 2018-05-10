@@ -1,13 +1,8 @@
 [Unit]
-Description=nuttcp bandwidth test controller
-After=network.target
+Description=Network Performance Testing Server
+After=local-fs.target
 
 [Service]
-ExecStart=/usr/bin/nuttcp -S --nofork
-TimeoutStopSec=1 
-Restart=always
-RestartSec=2
-StartLimitInterval=4
-
-[Install]
-WantedBy=multi-user.target
+User=nobody
+ExecStart=/usr/bin/nuttcp -S
+StandardInput=socket
