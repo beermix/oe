@@ -27,14 +27,6 @@ index 3dbf872f70..f9cd01c285
 +        "-msse4.2", 
 +        "-msse4.1",
 +        "-mfpmath=sse",
-+        "-Wno-attributes",
-+        "-Wno-comment",
-+        "-Wno-strict-overflow",
-+        "-Wno-deprecated-declarations",
-+        "-fdiagnostics-color=always",
-+        "-fno-unwind-tables",
-+        "-fno-asynchronous-unwind-tables",
-+        "-DNO_UNWIND_TABLES",
 +      ]
 +      ldflags += [
 +        "-m64",

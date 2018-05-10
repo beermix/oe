@@ -38,7 +38,7 @@ PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
 PKG_TOOLCHAIN="manual"
 PKG_BUILD_FLAGS="-lto -hardening"
-GOLD_SUPPORT="yes"
+#GOLD_SUPPORT="yes"
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Chromium"
@@ -49,19 +49,18 @@ post_patch() {
   cd $(get_build_dir chromium)
 
   # Use Python2
-  find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$TOOLCHAIN/bin/python|g" {} +
+  find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$TOOLCHAIN/bin/python2|g" {} +
 
   # set correct widevine
   sed 's|@WIDEVINE_VERSION@|The Cake Is a Lie|g' -i ./third_party/widevine/cdm/stub/widevine_cdm_version.h
   
   # sed 's|//third_party/usb_ids/usb.ids|/usr/share/hwdata/usb.ids|g' -i ./device/usb/BUILD.gn
   
-  tar xfC $PKG_DIR/blink-tools-66.0.3359.117.tar.gz ./third_party/blink/tools/
+  # tar xfC $PKG_DIR/blink-tools-66.0.3359.117.tar.gz ./third_party/blink/tools/
 }
 
 make_host() {
-  export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime
-  ./tools/gn/bootstrap/bootstrap.py --no-rebuild --no-clean
+  ./tools/gn/bootstrap/bootstrap.py --no-rebuild -s --no-clean
 }
 
 make_target() {
@@ -75,11 +74,11 @@ make_target() {
   export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
 
   export CCACHE_CPP2=yes
-  export CCACHE_SLOPPINESS=time_macros
-  # export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime
+  # export CCACHE_SLOPPINESS=time_macros
+  export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime
 
   # Allow building against system libraries in official builds
-  sed -i 's/OFFICIAL_BUILD/GOOGLE_CHROME_BUILD/' ./tools/generate_shim_headers/generate_shim_headers.py
+  # sed -i 's/OFFICIAL_BUILD/GOOGLE_CHROME_BUILD/' ./tools/generate_shim_headers/generate_shim_headers.py
 
   # Work around broken screen sharing in Google Meet
   # https://crbug.com/829916#c16
@@ -126,23 +125,10 @@ make_target() {
     'use_kerberos=false'
     'use_pulseaudio=false'
     'use_allocator="none"'
-    'enable_google_now=false'
-    'enable_mdns=true'
     'linux_link_libudev=true'
-    'enable_nacl=false'
-    'enable_vr=false'
-    'is_desktop_linux=true'
-    'use_dbus=true'
-    'use_glib=true'
-    'use_libpci=true'
-    'rtc_enable_protobuf=false'
-    'optimize_webui=false'
-    'target_cpu="x64"'
-    'enable_print_preview=false'
-    'enable_remoting=false'
-    'headless_use_embedded_resources=true'
     'use_sysroot=true'
     'use_vaapi=true'
+    'enable_widevine=true'
     'use_v8_context_snapshot=false'
     'enable_hangout_services_extension=false'
     'enable_nacl=false'
@@ -181,7 +167,7 @@ _unwanted_bundled_libs=(
 )
 depends+=(${_system_libs[@]})
 
-# Force script incompatible with Python 3 to use $TOOLCHAIN/bin/python
+# Force script incompatible with Python 3 to use $TOOLCHAIN/bin/python2
    sed -i '1s|python$|&2|' \
      -i ./build/download_nacl_toolchains.py \
      -i ./build/linux/unbundle/remove_bundled_libraries.py \
@@ -191,7 +177,7 @@ depends+=(${_system_libs[@]})
      -i ./third_party/dom_distiller_js/protoc_plugins/*.py \
      -i ./third_party/ffmpeg/chromium/scripts/build_ffmpeg.py \
      -i ./third_party/ffmpeg/chromium/scripts/generate_gn.py
-   export PNACLPYTHON=$TOOLCHAIN/bin/python
+   export PNACLPYTHON=$TOOLCHAIN/bin/python2
 
 # Remove bundled libraries for which we will use the system copies; this
 # *should* do what the remove_bundled_libraries.py script does, with the
@@ -208,10 +194,13 @@ local _lib
       -delete
   done
 
-  ./build/linux/unbundle/replace_gn_files.py --system-libraries "${!_system_libs[@]}"
-  ./third_party/libaddressinput/chromium/tools/update-strings.py
+# List of third-party components needed for build chromium. The rest is remove by remove_bundled_libraries srcipt in prepare().
+  ./build/linux/unbundle/remove_bundled_libraries.py 'base/third_party/libevent' --do-remove
 
-  ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
+  ./build/linux/unbundle/replace_gn_files.py --system-libraries "${!_system_libs[@]}"
+#  ./third_party/libaddressinput/chromium/tools/update-strings.py
+
+  ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python2
 
   ionice -c3 nice -n20 ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox
 }
