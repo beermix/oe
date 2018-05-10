@@ -41,16 +41,13 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-isl=$TOOLCHAIN \
                            --with-gnu-as \
                            --with-gnu-ld \
-                           --enable-plugin \
                            --enable-lto \
-                           --enable-gold \
-                           --enable-ld=default \
                            --disable-multilib \
                            --disable-nls \
+                           --enable-lto \
+                           --enable-plugin \
                            --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
-                           --without-ppl \
-                           --without-cloog \
                            --disable-libada \
                            --disable-libsanitizer \
                            --disable-libmudflap \
@@ -88,6 +85,12 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-clocale=gnu \
                          --enable-libatomic \
                          --enable-libgomp \
+                         --disable-libunwind-exceptions \
+                         --enable-gnu-unique-object \
+                         --enable-linker-build-id \
+                         --enable-install-libiberty \
+                         --with-linker-hash-style=gnu \
+                         --enable-gnu-indirect-function \
                          $GCC_OPTS"
 
 pre_configure_host() {
