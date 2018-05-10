@@ -30,4 +30,4 @@ PKG_LONGDESC="libnl is a library for applications dealing with netlink socket. I
 PKG_BUILD_FLAGS="+pic"
 PKG_TOOLCHAIN="autotools"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-cli --disable-debug"
+PKG_CONFIGURE_OPTS_TARGET="--disable-shared --disable-cli --disable-debug"
