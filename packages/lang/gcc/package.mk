@@ -54,7 +54,8 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libmpx \
                            --disable-libssp \
                            --with-tune=haswell \
-                           --with-arch=westmere"
+                           --with-arch=westmere \
+                           --with-diagnostics-color=always"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
