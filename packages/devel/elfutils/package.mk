@@ -33,6 +33,7 @@ PKG_BUILD_FLAGS="+pic"
 
 PKG_CONFIGURE_OPTS_TARGET="utrace_cv_cc_biarch=false \
                            --disable-werror \
+                           --program-prefix=eu- \
                            --disable-progs \
                            --disable-nls \
                            --with-zlib \
@@ -40,6 +41,7 @@ PKG_CONFIGURE_OPTS_TARGET="utrace_cv_cc_biarch=false \
                            --without-lzma"
 
 PKG_CONFIGURE_OPTS_HOST="--disable-werror \
+			    --program-prefix=eu- \
 			    --disable-progs"
 
 make_target() {
