@@ -27,7 +27,7 @@ PKG_DEPENDS_TARGET="toolchain mesa"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="glu: The OpenGL utility library"
 PKG_LONGDESC="libglu is the The OpenGL utility library"
-PKG_TOOLCHAIN="autotools"
+#PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
             --disable-debug \
