@@ -1,34 +1,21 @@
 ################################################################################
-#      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2014 Stephan Raue (stephan@openelec.tv)
-#
-#  OpenELEC is free software: you can redistribute it and/or modify
-#  it under the terms of the GNU General Public License as published by
-#  the Free Software Foundation, either version 2 of the License, or
-#  (at your option) any later version.
-#
-#  OpenELEC is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU General Public License for more details.
-#
-#  You should have received a copy of the GNU General Public License
-#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
+#      This file is part of Alex@ELEC - http://www.alexelec.in.ua
+#      Copyright (C) 2011-present Alexandr Zuyev (alex@alexelec.in.ua)
 ################################################################################
 
 PKG_NAME="apsw"
-PKG_VERSION="3.22.0"
+PKG_VERSION="3.8.11.1-r1"
 PKG_ARCH="any"
-PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/rogerbinns/apsw/releases"
-#PKG_URL="https://github.com/rogerbinns/apsw/archive/${PKG_VERSION}.tar.gz"
-PKG_URL="https://github.com/rogerbinns/apsw/releases/download/$PKG_VERSION-r1/apsw-$PKG_VERSION-r1.zip"
-PKG_DEPENDS_TARGET="toolchain Python2 distutilscross:host expat sqlite"
-PKG_PRIORITY="optional"
-PKG_SECTION="python/devel"
-PKG_SHORTDESC="Mako: A super-fast templating language that borrows the best ideas from the existing templating languages."
-PKG_LONGDESC="Mako is a super-fast templating language that borrows the best ideas from the existing templating languages."
-PKG_TOOLCHAIN="manual"
+PKG_LICENSE="MIT"
+PKG_SITE="https://github.com/rogerbinns/apsw"
+PKG_URL="$PKG_SITE/archive/$PKG_VERSION.tar.gz"
+PKG_URL="https://github.com/rogerbinns/apsw/archive/$PKG_VERSION.tar.gz"
+PKG_DEPENDS_TARGET="toolchain Python sqlite distutilscross:host"
+PKG_SECTION="xmedia/depends"
+PKG_SHORTDESC="APSW stands for Another Python SQLite Wrapper"
+PKG_LONGDESC="APSW stands for Another Python SQLite Wrapper."
+PKG_IS_ADDON="no"
+PKG_AUTORECONF="no"
 
 pre_configure_target() {
   export PYTHONXCPREFIX="$SYSROOT_PREFIX/usr"
@@ -36,10 +23,13 @@ pre_configure_target() {
 }
 
 make_target() {
-  python2 setup.py build --compiler=unix
+  python setup.py build --enable=load_extension
 }
 
 makeinstall_target() {
-  python setup.py install --root=$INSTALL --prefix=/usr
+  python setup.py install --root=$INSTALL --prefix=/usr --optimize=1 --skip-build
 }
 
+post_makeinstall_target() {
+  rm -rf $INSTALL/usr/lib/python*/site-packages/$PKG_NAME-*.egg-info
+}
