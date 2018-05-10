@@ -70,8 +70,8 @@ PKG_CONFIGURE_OPTS_HOST="--disable-tests \
 			    --without-udev"
 
 make_host() {
-    cd $PKG_BUILD/.$HOST_NAME
-    make -C tools tools/sfnt2fon tools/widl tools/winebuild tools/winegcc tools/wmc tools/wrc
+#cd $PKG_BUILD/.$HOST_NAME
+  make -C tools tools/sfnt2fon tools/widl tools/winebuild tools/winegcc tools/wmc tools/wrc
 }
 
 makeinstall_host() {

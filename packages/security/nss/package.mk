@@ -43,13 +43,14 @@ make_host() {
      PREFIX=$TOOLCHAIN \
      NSPR_INCLUDE_DIR=$TOOLCHAIN/include/nspr \
      FREEBL_NO_DEPEND=1 \
+     FREEBL_LOWHASH=1 \
      USE_SYSTEM_ZLIB=1 ZLIB_LIBS="-lz -L$TOOLCHAIN/lib" \
-     PKG_CONFIG_ALLOW_SYSTEM_LIBS=1 \
-     PKG_CONFIG_ALLOW_SYSTEM_CFLAGS=1 \
-     NSS_ENABLE_WERROR=0 \
      NSS_ENABLE_TLS_1_3=1 \
-     MAKE_FLAGS="BUILD_OPT=1 NSS_ENABLE_ECC=1" \
-     CC=$CC LDFLAGS="$LDFLAGS -L$TOOLCHAIN/lib" \
+     NSS_ENABLE_ECC=1 \
+     NSS_ENABLE_WERROR=0 \
+     NSS_TESTS="dummy" \
+     CROSS_COMPILE=0 \
+     CC=$CC CCC="$CXX" LDFLAGS="$LDFLAGS -L$TOOLCHAIN/lib" \
      V=1
 }
 
@@ -57,7 +58,7 @@ makeinstall_host() {
   cd $PKG_BUILD
   $STRIP dist/Linux*/lib/*.so
   cp -L dist/Linux*/lib/*.so $TOOLCHAIN/lib
-#  cp -L dist/Linux*/lib/libcrmf.a $TOOLCHAIN/lib
+  cp -L dist/Linux*/lib/libcrmf.a $TOOLCHAIN/lib
   cp -L dist/Linux*/lib/*.a $TOOLCHAIN/lib
   mkdir -p $TOOLCHAIN/include/nss
   cp -RL dist/{public,private}/nss/* $TOOLCHAIN/include/nss
@@ -80,16 +81,17 @@ make_target() {
      USE_SYSTEM_ZLIB=1 ZLIB_LIBS=-lz \
      SKIP_SHLIBSIGN=1 \
      FREEBL_NO_DEPEND=1 \
+     FREEBL_LOWHASH=1 \
      OS_TEST=$TARGET_ARCH \
      NSS_TESTS="dummy" \
      NSINSTALL=$TOOLCHAIN/bin/nsinstall \
      CPU_ARCH_TAG=$TARGET_ARCH \
-     PKG_CONFIG_ALLOW_SYSTEM_LIBS=1 \
-     PKG_CONFIG_ALLOW_SYSTEM_CFLAGS=1 \
-     NSS_ENABLE_WERROR=0 \
+     MOZILLA_CLIENT=1 \
      NSS_ENABLE_TLS_1_3=1 \
-     MAKE_FLAGS="BUILD_OPT=1 NSS_ENABLE_ECC=1" \
-     CC=$CC LDFLAGS="$LDFLAGS -L$SYSROOT_PREFIX/usr/lib" \
+     NSS_ENABLE_ECC=1 \
+     NSS_ENABLE_WERROR=0 \
+     CROSS_COMPILE=1 \
+     CC=$CC CCC="$CXX" LDFLAGS="$LDFLAGS -L$SYSROOT_PREFIX/usr/lib" \
      V=1
 }
 
@@ -97,7 +99,7 @@ makeinstall_target() {
   cd $PKG_BUILD
   $STRIP dist/Linux*/lib/*.so
   cp -L dist/Linux*/lib/*.so $SYSROOT_PREFIX/usr/lib
-#  cp -L dist/Linux*/lib/libcrmf.a $SYSROOT_PREFIX/usr/lib
+  cp -L dist/Linux*/lib/libcrmf.a $SYSROOT_PREFIX/usr/lib
   cp -L dist/Linux*/lib/*.a $SYSROOT_PREFIX/usr/lib
   mkdir -p $SYSROOT_PREFIX/usr/include/nss
   cp -RL dist/{public,private}/nss/* $SYSROOT_PREFIX/usr/include/nss
