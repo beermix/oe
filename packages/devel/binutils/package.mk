@@ -38,8 +38,8 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --disable-libada \
                          --disable-libssp \
                          --enable-version-specific-runtime-libs \
-                         --enable-lto \
-                         --enable-plugin \
+                         --enable-compressed-debug-sections=all \
+                         --enable-plugins \
                          --disable-nls"
 
 PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
