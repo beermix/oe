@@ -24,7 +24,7 @@ PKG_ARCH="any"
 PKG_LICENSE="Mozilla Public License"
 PKG_SITE="https://ftp.mozilla.org/pub/security/nss/releases/"
 PKG_URL="https://ftp.mozilla.org/pub/security/nss/releases/NSS_3_37_RTM/src/nss-$PKG_VERSION-with-nspr-4.19.tar.gz"
-PKG_DEPENDS_HOST="nspr:host zlib:host sqlite:host"
+PKG_DEPENDS_HOST="nspr:host zlib:host"
 PKG_DEPENDS_TARGET="toolchain nss:host nspr zlib sqlite"
 PKG_SECTION="security"
 PKG_SHORTDESC="The Network Security Services (NSS) package is a set of libraries designed to support cross-platform development of security-enabled client and server applications"
@@ -42,11 +42,11 @@ make_host() {
   make BUILD_OPT=1 USE_64=1 \
      PREFIX=$TOOLCHAIN \
      NSPR_INCLUDE_DIR=$TOOLCHAIN/include/nspr \
-     FREEBL_NO_DEPEND=1 \
      USE_SYSTEM_ZLIB=1 ZLIB_LIBS="-lz -L$TOOLCHAIN/lib" \
      NSS_ENABLE_TLS_1_3=1 \
      NSS_ENABLE_ECC=1 \
      NSS_ENABLE_WERROR=0 \
+     SKIP_SHLIBSIGN=1 \
      NSS_TESTS="dummy" \
      CC=$CC CCC="$CXX" LDFLAGS="$LDFLAGS -L$TOOLCHAIN/lib" \
      V=1
@@ -56,8 +56,7 @@ makeinstall_host() {
   cd $PKG_BUILD
   $STRIP dist/Linux*/lib/*.so
   cp -L dist/Linux*/lib/*.so $TOOLCHAIN/lib
-#  cp -L dist/Linux*/lib/libcrmf.a $TOOLCHAIN/lib
-  cp -L dist/Linux*/lib/*.a $TOOLCHAIN/lib
+  cp -L dist/Linux*/lib/libcrmf.a $TOOLCHAIN/lib
   mkdir -p $TOOLCHAIN/include/nss
   cp -RL dist/{public,private}/nss/* $TOOLCHAIN/include/nss
   cp -L dist/Linux*/lib/pkgconfig/nss.pc $TOOLCHAIN/lib/pkgconfig
@@ -74,16 +73,15 @@ make_target() {
   rm -rf $PKG_BUILD/dist
 
   make BUILD_OPT=1 $TARGET_USE_64 \
+     NSS_USE_SYSTEM_SQLITE=1 \
      NSPR_INCLUDE_DIR=$SYSROOT_PREFIX/usr/include/nspr \
      NSS_USE_SYSTEM_SQLITE=1 \
      USE_SYSTEM_ZLIB=1 ZLIB_LIBS=-lz \
      SKIP_SHLIBSIGN=1 \
-     FREEBL_NO_DEPEND=1 \
      OS_TEST=$TARGET_ARCH \
      NSS_TESTS="dummy" \
      NSINSTALL=$TOOLCHAIN/bin/nsinstall \
      CPU_ARCH_TAG=$TARGET_ARCH \
-     MOZILLA_CLIENT=1 \
      NSS_ENABLE_TLS_1_3=1 \
      NSS_ENABLE_ECC=1 \
      NSS_ENABLE_WERROR=0 \
@@ -96,8 +94,7 @@ makeinstall_target() {
   cd $PKG_BUILD
   $STRIP dist/Linux*/lib/*.so
   cp -L dist/Linux*/lib/*.so $SYSROOT_PREFIX/usr/lib
-#  cp -L dist/Linux*/lib/libcrmf.a $SYSROOT_PREFIX/usr/lib
-  cp -L dist/Linux*/lib/*.a $SYSROOT_PREFIX/usr/lib
+  cp -L dist/Linux*/lib/libcrmf.a $SYSROOT_PREFIX/usr/lib
   mkdir -p $SYSROOT_PREFIX/usr/include/nss
   cp -RL dist/{public,private}/nss/* $SYSROOT_PREFIX/usr/include/nss
   cp -L dist/Linux*/lib/pkgconfig/nss.pc $SYSROOT_PREFIX/usr/lib/pkgconfig

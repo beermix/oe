@@ -1,0 +1,12 @@
+prefix=/home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/toolchain
+exec_prefix=${prefix}
+libdir=${prefix}/lib
+includedir=${prefix}/include/nss
+
+Name: NSS
+Description: Network Security Services
+Version: 3.37.0
+Requires: nspr >= 4.8
+Libs: -L${prefix}/lib -lnss3 -lnssutil3 -lsmime3 -lssl3 -lsoftokn3
+Cflags: -I${includedir}
+
