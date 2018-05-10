@@ -78,9 +78,6 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-__cxa_atexit \
                          --enable-decimal-float \
                          --enable-tls \
-                         --disable-libunwind-exceptions \
-                         --enable-initfini-array \
-                         --enable-offload-targets=nvptx-none \
                          --enable-shared \
                          --disable-static \
                          --enable-c99 \
