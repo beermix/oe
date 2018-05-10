@@ -1,4 +1,0 @@
-repo: 9949429068caa6bb8827a8ceeaa7c605d722f47f
-node: bbaefdf06a992e01a203a0b2e0efc590b9dabe92
-branch: NSS_3_37_BRANCH
-tag: NSS_3_37_RTM
