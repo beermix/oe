@@ -56,7 +56,7 @@ makeinstall_host() {
   cd $PKG_BUILD
   $STRIP dist/Linux*/lib/*.so
   cp -L dist/Linux*/lib/*.so $TOOLCHAIN/lib
-  cp -L dist/Linux*/lib/libcrmf.a $TOOLCHAIN/lib
+#  cp -L dist/Linux*/lib/libcrmf.a $TOOLCHAIN/lib
   cp -L dist/Linux*/lib/*.a $TOOLCHAIN/lib
   mkdir -p $TOOLCHAIN/include/nss
   cp -RL dist/{public,private}/nss/* $TOOLCHAIN/include/nss
@@ -96,7 +96,7 @@ makeinstall_target() {
   cd $PKG_BUILD
   $STRIP dist/Linux*/lib/*.so
   cp -L dist/Linux*/lib/*.so $SYSROOT_PREFIX/usr/lib
-  cp -L dist/Linux*/lib/libcrmf.a $SYSROOT_PREFIX/usr/lib
+#  cp -L dist/Linux*/lib/libcrmf.a $SYSROOT_PREFIX/usr/lib
   cp -L dist/Linux*/lib/*.a $SYSROOT_PREFIX/usr/lib
   mkdir -p $SYSROOT_PREFIX/usr/include/nss
   cp -RL dist/{public,private}/nss/* $SYSROOT_PREFIX/usr/include/nss
