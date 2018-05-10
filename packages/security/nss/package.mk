@@ -43,7 +43,6 @@ make_host() {
      PREFIX=$TOOLCHAIN \
      NSPR_INCLUDE_DIR=$TOOLCHAIN/include/nspr \
      FREEBL_NO_DEPEND=1 \
-     FREEBL_LOWHASH=1 \
      USE_SYSTEM_ZLIB=1 ZLIB_LIBS="-lz -L$TOOLCHAIN/lib" \
      NSS_ENABLE_TLS_1_3=1 \
      NSS_ENABLE_ECC=1 \
@@ -81,7 +80,6 @@ make_target() {
      USE_SYSTEM_ZLIB=1 ZLIB_LIBS=-lz \
      SKIP_SHLIBSIGN=1 \
      FREEBL_NO_DEPEND=1 \
-     FREEBL_LOWHASH=1 \
      OS_TEST=$TARGET_ARCH \
      NSS_TESTS="dummy" \
      NSINSTALL=$TOOLCHAIN/bin/nsinstall \

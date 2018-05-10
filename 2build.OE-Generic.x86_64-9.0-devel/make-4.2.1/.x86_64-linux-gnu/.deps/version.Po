@@ -1,7 +1,0 @@
-version.o: \
- /home/user/-f2fs/oe/build.OE-Generic.x86_64-9.0-devel/make-4.2.1/version.c \
- /usr/include/stdc-predef.h config.h
-
-/usr/include/stdc-predef.h:
-
-config.h:
