@@ -1,0 +1,18 @@
+commit c3db1c47828628413a65786efabe46cffa366c7c
+Author: Jonas Johansson <jonasj76@gmail.com>
+Date:   Mon Mar 12 13:51:36 2018 +0100
+
+    route/vrf: initalize clone destination with NULL in vrf_clone()
+    
+    Signed-off-by: Jonas Johansson <jonasj76@gmail.com>
+
+--- a/lib/route/link/vrf.c
++++ b/lib/route/link/vrf.c
+@@ -107,6 +107,7 @@ static int vrf_clone(struct rtnl_link *d
+ 	struct vrf_info *vdst, *vsrc = src->l_info;
+ 	int err;
+ 
++	dst->l_info = NULL;
+ 	if ((err = rtnl_link_set_type(dst, "vrf")) < 0)
+ 		return err;
+ 	vdst = dst->l_info;

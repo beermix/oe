@@ -1,0 +1,60 @@
+commit 3c96f6513c621ddf229761210c71ab66fcf9ffb7
+Author: Tobias Jungel <tobias.jungel@bisdn.de>
+Date:   Fri Apr 6 09:40:27 2018 +0200
+
+    neigh: support bridge entries for vxlan interfaces
+
+    bridge entries used for switching into vxlan interfaces do not include a
+    vlan. A comparison of such entires currently always fails which leads
+    to an invalid cache. This patch selectively adds the NEIGH_ATTR_VLAN
+    flag based on the passed entry.
+
+    https://github.com/thom311/libnl/pull/182
+
+commit d1bd68d1009601ee4e4217fbad9ad9c33a940a50
+Author: Tobias Jungel <tobias.jungel@bisdn.de>
+Date:   Thu Apr 5 13:24:59 2018 +0200
+
+    neigh: set correct AF for NDA_DST
+
+    In case using a VXLAN interface at a bridge you will set L2 bridging
+    entries using a IP destination to tunnel the according L2 traffic. The
+    current behavior for the dst entries for a neighbor is to use the AF of
+    the neighbor itself thus in this case AF_BRIDGE is set. This is changed
+    in the PR to update the family of the dst using nl_addr_guess_family.
+
+    https://github.com/thom311/libnl/pull/180
+
+--- a/lib/route/neigh.c
++++ b/lib/route/neigh.c
+@@ -319,11 +319,13 @@ static uint32_t neigh_id_attrs_get(struc
+ 
+ 	if (neigh->n_family == AF_BRIDGE) {
+ 		if (neigh->n_flags & NTF_SELF)
+-			return (NEIGH_ATTR_LLADDR | NEIGH_ATTR_FAMILY | NEIGH_ATTR_IFINDEX | NEIGH_ATTR_VLAN);
++			return (NEIGH_ATTR_LLADDR | NEIGH_ATTR_FAMILY | NEIGH_ATTR_IFINDEX |
++				       ((neigh->ce_mask & NEIGH_ATTR_DST) ? NEIGH_ATTR_DST: 0) |
++				       ((neigh->ce_mask & NEIGH_ATTR_VLAN) ? NEIGH_ATTR_VLAN : 0));
+ 		else
+ 			return (NEIGH_ATTR_LLADDR | NEIGH_ATTR_FAMILY | NEIGH_ATTR_MASTER | NEIGH_ATTR_VLAN);
+ 	} else
+-		return (NEIGH_ATTR_IFINDEX | NEIGH_ATTR_DST | NEIGH_ATTR_FAMILY);
++		return neigh_obj_ops.oo_id_attrs;
+ }
+ 
+ static struct nla_policy neigh_policy[NDA_MAX+1] = {
+@@ -389,11 +391,13 @@ int rtnl_neigh_parse(struct nlmsghdr *n,
+ 	}
+ 
+ 	if (tb[NDA_DST]) {
+-		neigh->n_dst = nl_addr_alloc_attr(tb[NDA_DST], neigh->n_family);
++		neigh->n_dst = nl_addr_alloc_attr(tb[NDA_DST], AF_UNSPEC);
+ 		if (!neigh->n_dst) {
+ 			err = -NLE_NOMEM;
+ 			goto errout;
+ 		}
++		nl_addr_set_family(neigh->n_dst,
++				   nl_addr_guess_family(neigh->n_dst));
+ 		neigh->ce_mask |= NEIGH_ATTR_DST;
+ 	}
+ 

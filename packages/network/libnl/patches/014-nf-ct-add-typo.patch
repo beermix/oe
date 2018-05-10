@@ -1,0 +1,15 @@
+commit 3bbbe347d7ad98a2c0eeb92d94e525ea22261772
+Author: Lukáš Karas <karas@avast.com>
+Date:   Fri Feb 23 19:20:38 2018 +0100
+
+    nf-ct-add typo
+
+--- a/src/nf-ct-add.c
++++ b/src/nf-ct-add.c
+@@ -1,5 +1,5 @@
+ /*
+- * src/nf-ct-list.c     List Conntrack Entries
++ * src/nf-ct-add.c     Add Conntrack Entry
+  *
+  *	This library is free software; you can redistribute it and/or
+  *	modify it under the terms of the GNU Lesser General Public
