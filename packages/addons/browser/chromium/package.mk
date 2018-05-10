@@ -23,7 +23,7 @@
 
 PKG_NAME="chromium"
 PKG_VERSION="66.0.3359.139"
-PKG_SHA256="93666448c6b96ec83e6a35a64cff40db4eb92a154fe1db4e7dab4761d0e38687"
+PKG_SHA256="be75a5b5f8c5789d359238f374a43bf52ded49425f13ed68b8021c24e2e264b2"
 PKG_REV="204"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
@@ -65,17 +65,18 @@ make_host() {
 }
 
 make_target() {
-  # unset CPPFLAGS
-  # unset CFLAGS
-  # unset CXXFLAGS
-  # unset LDFLAGS
+  unset CPPFLAGS
+  unset CFLAGS
+  unset CXXFLAGS
+  unset LDFLAGS
 
-  # export CFLAGS="$CFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables"
-  # export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
-  # export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
+  export CFLAGS="$CFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables"
+  export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
+  export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
 
-  # export CCACHE_CPP2=yes
-  export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime
+  export CCACHE_CPP2=yes
+  export CCACHE_SLOPPINESS=time_macros
+  # export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime
 
   # Allow building against system libraries in official builds
   sed -i 's/OFFICIAL_BUILD/GOOGLE_CHROME_BUILD/' ./tools/generate_shim_headers/generate_shim_headers.py
@@ -192,10 +193,6 @@ depends+=(${_system_libs[@]})
      -i ./third_party/ffmpeg/chromium/scripts/generate_gn.py
    export PNACLPYTHON=$TOOLCHAIN/bin/python
 
-# Setup vulkan
-# export VULKAN_SDK="/usr"
-# sed 's|/x86_64-linux-gnu||' -i ./gpu/vulkan/BUILD.gn
-
 # Remove bundled libraries for which we will use the system copies; this
 # *should* do what the remove_bundled_libraries.py script does, with the
 # added benefit of not having to list all the remaining libraries
@@ -216,10 +213,7 @@ local _lib
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
 
- # ionice -c3 nice -n20 ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release media
- #  ionice -c3 nice -n20 ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Headless headless_shell
-
-  ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox
+  ionice -c3 nice -n20 ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox
 }
 
 addon() {
