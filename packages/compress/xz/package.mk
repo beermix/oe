@@ -31,11 +31,10 @@ PKG_BUILD_FLAGS="+pic:host +pic"
 
 # never build shared or k0p happens when building
 # on fedora due to host selinux/liblzma
-PKG_CONFIGURE_OPTS_HOST="--enable-shared --enable-static \
+PKG_CONFIGURE_OPTS_HOST="--disable-shared --enable-static \
                          --disable-lzmadec \
                          --disable-lzmainfo \
                          --enable-lzma-links \
-                         --enable-silent-rules \
                          --disable-scripts \
                          --disable-nls"
 
