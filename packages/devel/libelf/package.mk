@@ -23,8 +23,20 @@ PKG_URL="http://www.mr511.de/software/libelf-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="intltool:host libtool:host bison:host flex:host"
 PKG_DEPENDS_TARGET="libelf:host"
 PKG_SECTION="devel"
-PKG_TOOLCHAIN="autotools"
+#PKG_TOOLCHAIN="autotools"
 
-PKG_CONFIGURE_OPTS_HOST="mr_cv_target_elf=yes \
-                        --enable-elf64=yes \
-                        --disable-sanity-checks"
+PKG_CONFIGURE_OPTS_HOST="--disable-shared --enable-elf64"
+
+#make_host() {
+#  make V=1 -C libelf libelf.a
+#}
+
+#makeinstall_host() {
+#  make DESTDIR="$TOOLCHAIN" -C libelf install-includeHEADERS install-pkgincludeHEADERS
+#
+#  mkdir -p $TOOLCHAIN/lib
+#    cp libelf/libelf.a $TOOLCHAIN/lib
+#
+#  mkdir -p $TOOLCHAIN/include/libelf
+#    cp version.h $TOOLCHAIN/include/libelf
+#}
