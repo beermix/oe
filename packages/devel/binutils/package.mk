@@ -14,7 +14,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+################################################################################ quilt:host bc:host
 
 PKG_NAME="binutils"
 PKG_VERSION="2.30"
@@ -24,7 +24,7 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://ftp.gnu.org.ua/gnu/binutils/?C=M;O=D"
 PKG_URL="http://ftpmirror.gnu.org/binutils/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_SOURCE_DIR="$PKG_NAME-gdb-$PKG_VERSION*"
-PKG_DEPENDS_HOST="ccache:host bison:host flex:host libelf:host quilt:host bc:host linux:host"
+PKG_DEPENDS_HOST="ccache:host bison:host flex:host linux:host"
 PKG_DEPENDS_TARGET="toolchain binutils:host"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="binutils: A GNU collection of binary utilities"
