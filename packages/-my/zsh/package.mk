@@ -7,6 +7,7 @@ PKG_SECTION="my"
 
 pre_configure_target() {
   export LIBS="$LIBS -lncursesw -ltinfo"
+  export CFLAGS="$CFLAGS -fstack-protector-strong -mzero-caller-saved-regs "
 }
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-multibyte \
