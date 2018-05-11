@@ -18,7 +18,7 @@
 
 PKG_NAME="gcc"
 PKG_VERSION="8.1.0"
-PKG_VERSION="7-20180503"
+PKG_VERSION="7-20180510"
 PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -95,10 +95,10 @@ pre_configure_host() {
   export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
 }
 
-pre_configure_bootstrap() {
-  export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
-  export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
-}
+#pre_configure_bootstrap() {
+#  export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
+#  export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
+#}
 
 post_make_host() {
   # fix wrong link
