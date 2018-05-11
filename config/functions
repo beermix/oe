@@ -79,8 +79,8 @@ setup_toolchain() {
         echo "SET(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)"  >> $CMAKE_CONF
         echo "SET(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)"  >> $CMAKE_CONF
       fi
-      export HOST_CC="gcc"
-      export HOST_CXX="g++"
+      export HOST_CC="$TOOLCHAIN/bin/host-gcc"
+      export HOST_CXX="$TOOLCHAIN/bin/host-g++"
       export HOSTCC="$HOST_CC"
       export HOSTCXX="$HOST_CXX"
       export CC_FOR_BUILD="$HOST_CC"
@@ -94,8 +94,8 @@ setup_toolchain() {
     host|bootstrap)
       export DESTIMAGE="host"
       export AWK="gawk"
-      export CC="gcc"
-      export CXX="g++"
+      export CC="$TOOLCHAIN/bin/host-gcc"
+      export CXX="$TOOLCHAIN/bin/host-g++"
       export CPP="cpp"
       export LD="ld"
       export AS="as"
