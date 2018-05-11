@@ -66,5 +66,5 @@ post_make_target() {
 
 post_makeinstall_target() {
  # Install minizip
- make -C $PKG_BUILD/.$TARGET_NAME/contrib/minizip DESTDIR=$SYSROOT_PREFIX install
+ make -C $PKG_BUILD/.$TARGET_NAME/contrib/minizip DESTDIR=$SYSROOT_PREFIX install -j1
 }
