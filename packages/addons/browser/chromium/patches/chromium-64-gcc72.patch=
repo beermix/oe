@@ -25,6 +25,8 @@
  #endif  // USING_SYSTEM_ICU
  
  class TextCodecInput final {
+--- chromium-64.0.3282.71/third_party/pdfium/fxjs/cjs_global.cpp.gcc7	2018-01-04 00:07:27.000000000 +0100
++++ chromium-64.0.3282.71/third_party/pdfium/fxjs/cjs_global.cpp	2018-01-07 11:34:49.106505136 +0100
 --- chromium-64.0.3282.71/cc/layers/surface_layer_impl.cc.gcc7	2018-01-04 00:05:53.000000000 +0100
 +++ chromium-64.0.3282.71/cc/layers/surface_layer_impl.cc	2018-01-07 12:05:40.418968253 +0100
 @@ -111,8 +111,7 @@

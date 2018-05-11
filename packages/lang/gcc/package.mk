@@ -47,10 +47,8 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-lto \
                            --enable-plugin \
                            --enable-checking=release \
-                           --with-default-libstdcxx-abi=gcc4-compatible \
                            --disable-libada \
                            --disable-libsanitizer \
-                           --disable-libmudflap \
                            --disable-libmpx \
                            --disable-libssp \
                            --with-tune=haswell \
@@ -68,6 +66,7 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-libatomic \
                               --disable-libgomp \
                               --disable-libquadmath \
+                              --disable-libmudflap \
                               --disable-decimal-float \
                               $GCC_OPTS"
 
@@ -86,12 +85,6 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-clocale=gnu \
                          --enable-libatomic \
                          --enable-libgomp \
-                         --disable-libunwind-exceptions \
-                         --enable-gnu-unique-object \
-                         --enable-linker-build-id \
-                         --enable-install-libiberty \
-                         --with-linker-hash-style=gnu \
-                         --enable-gnu-indirect-function \
                          $GCC_OPTS"
 
 pre_configure_host() {

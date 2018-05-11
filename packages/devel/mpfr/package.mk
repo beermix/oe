@@ -30,6 +30,7 @@ PKG_LONGDESC="The MPFR library is a C library for multiple-precision floating-po
 PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
+                         --enable-static --disable-shared \
                          --prefix=$TOOLCHAIN \
                          --with-gmp-lib=$TOOLCHAIN/lib \
                          --with-gmp-include=$TOOLCHAIN/include \

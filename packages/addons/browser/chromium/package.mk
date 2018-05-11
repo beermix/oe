@@ -22,8 +22,8 @@
 ################################################################################ beautifulsoup4:host html5lib:host re2 snappy
 
 PKG_NAME="chromium"
-PKG_VERSION="66.0.3359.139"
-PKG_SHA256="be75a5b5f8c5789d359238f374a43bf52ded49425f13ed68b8021c24e2e264b2"
+PKG_VERSION="66.0.3359.170"
+PKG_SHA256="864da6649d19387698e3a89321042193708b2d9f56b3a778fb552166374871de"
 PKG_REV="204"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
@@ -31,8 +31,8 @@ PKG_SITE="http://www.chromium.org/Home"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 #PKG_URL="https://gsdview.appspot.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 #PKG_URL="http://192.168.1.200:8080/%2Fchromium-66.0.3359.117.tar.xz"
-PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="pciutils dbus libXtst libXcomposite libXcursor alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk unclutter xdotool libdrm libjpeg-turbo freetype harfbuzz gtk+ ply:host simplejson:host re2 snappy chromium:host"
+PKG_DEPENDS_HOST="toolchain ninja:host Python2:host gperf:host libevent:host"
+PKG_DEPENDS_TARGET="pciutils dbus libXtst libXcomposite libXcursor alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk unclutter xdotool libdrm libjpeg-turbo freetype harfbuzz gtk+ re2 snappy chromium:host"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -48,19 +48,16 @@ PKG_ADDON_PROVIDES="executable"
 post_patch() {
   cd $(get_build_dir chromium)
 
-  # Use Python2
-  find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$TOOLCHAIN/bin/python2|g" {} +
+  # Use Python 2
+  find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$TOOLCHAIN/bin/python|g" {} +
 
   # set correct widevine
-  sed 's|@WIDEVINE_VERSION@|The Cake Is a Lie|g' -i ./third_party/widevine/cdm/stub/widevine_cdm_version.h
-  
-  # sed 's|//third_party/usb_ids/usb.ids|/usr/share/hwdata/usb.ids|g' -i ./device/usb/BUILD.gn
-  
-  # tar xfC $PKG_DIR/blink-tools-66.0.3359.117.tar.gz ./third_party/blink/tools/
+#  sed 's|@WIDEVINE_VERSION@|The Cake Is a Lie|g' -i ./third_party/widevine/cdm/stub/widevine_cdm_version.h
+  sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' ./third_party/widevine/cdm/stub/widevine_cdm_version.h
 }
 
 make_host() {
-  ./tools/gn/bootstrap/bootstrap.py --no-rebuild -s --no-clean
+  ./tools/gn/bootstrap/bootstrap.py --no-rebuild --no-clean
 }
 
 make_target() {
@@ -69,35 +66,19 @@ make_target() {
   unset CXXFLAGS
   unset LDFLAGS
 
-  export CFLAGS="$CFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables"
-  export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
-  export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
-
-  export CCACHE_CPP2=yes
-  # export CCACHE_SLOPPINESS=time_macros
-  export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime
+  export CFLAGS="$CFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables -Wno-builtin-macro-redefined"
+  export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables -Wno-builtin-macro-redefined"
+  export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES -D__DATE__= -D__TIME__= -D__TIMESTAMP__="
+  
+   export CCACHE_SLOPPINESS=time_macros
+  #   export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime
 
   # Allow building against system libraries in official builds
-  # sed -i 's/OFFICIAL_BUILD/GOOGLE_CHROME_BUILD/' ./tools/generate_shim_headers/generate_shim_headers.py
+  sed -i 's/OFFICIAL_BUILD/GOOGLE_CHROME_BUILD/' ./tools/generate_shim_headers/generate_shim_headers.py
 
   # Work around broken screen sharing in Google Meet
   # https://crbug.com/829916#c16
   sed -i 's/"Chromium/"Chrome/' ./chrome/common/chrome_content_client_constants.cc
-
-  # Force script incompatible with Python 3 to use /usr/bin/python2
-  sed -i '1s|python$|&2|' ./third_party/dom_distiller_js/protoc_plugins/*.py
-  
-  # Use chromium-dev as branch name.
-  sed -e 's|filename = "chromium-browser"|filename = "chromium-dev"|' \
-      -e 's|confdir = "chromium|&-dev|' \
-      -i ./chrome/BUILD.gn
-  sed -e 's|config_dir.Append("chromium|&-dev|' \
-      -i ./chrome/common/chrome_paths_linux.cc
-  sed -e 's|/etc/chromium|&-dev|' \
-      -e 's|/usr/share/chromium|&-dev|' \
-      -i ./chrome/common/chrome_paths.cc
-  sed -e 's|/etc/chromium|&-dev|' \
-      -i ./components/policy/tools/template_writers/writer_configuration.py
 
   local _google_api_key=AIzaSyAQ6L9vt9cnN4nM0weaa6Y38K4eyPvtKgI
   local _google_default_client_id=740889307901-4bkm4e0udppnp1lradko85qsbnmkfq3b.apps.googleusercontent.com
@@ -111,7 +92,7 @@ make_target() {
     'is_debug=false'
     'fatal_linker_warnings=false'
     'treat_warnings_as_errors=false'
-    'fieldtrial_testing_like_official_build=true'
+    'fieldtrial_testing_like_official_build=false'
     'remove_webcore_debug_symbols=true'
     'ffmpeg_branding="Chrome"'
     'proprietary_codecs=true'
@@ -124,92 +105,39 @@ make_target() {
     'use_gtk3=false'
     'use_kerberos=false'
     'use_pulseaudio=false'
-    'use_allocator="none"'
-    'linux_link_libudev=true'
     'use_sysroot=true'
-    'use_vaapi=true'
-    'enable_widevine=true'
+    'linux_link_libudev=true'
     'use_v8_context_snapshot=false'
+    'enable_vulkan=false'
+    "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_hangout_services_extension=false'
+    'enable_widevine=true'
+    'enable_vulkan=false'
     'enable_nacl=false'
     'enable_swiftshader=false'
-    "target_sysroot=\"${SYSROOT_PREFIX}\""
+    'enable_widevine=true'
     'use_jumbo_build=false' # https://chromium.googlesource.com/chromium/src/+/lkcr/docs/jumbo.md
     'enable_nacl_nonsfi=false'
+    'enable_swiftshader=false'
     'enable_vulkan=false'
     "google_api_key=\"${_google_api_key}\""
     "google_default_client_id=\"${_google_default_client_id}\""
     "google_default_client_secret=\"${_google_default_client_secret}\""
+    'use_vaapi=true'
   )
 
-# Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
-# Keys are the names in the above script; values are the dependencies in Arch
-declare -gA _system_libs=(
-  [fontconfig]=fontconfig
-  [freetype]=freetype2
-  [harfbuzz-ng]=harfbuzz
-  [icu]=icu
-  [libdrm]=
-  [libjpeg]=libjpeg
-#  [libpng]=libpng            # https://crbug.com/752403#c10
-#  [libvpx]=libvpx
-#  [libwebp]=libwebp
-#  [libxml]=libxml2           # https://crbug.com/736026
-  [libxslt]=libxslt
-  [re2]=re2
-  [snappy]=snappy
-  [yasm]=
-  [zlib]=minizip
-)
-_unwanted_bundled_libs=(
-  ${!_system_libs[@]}
-  ${_system_libs[libjpeg]+libjpeg_turbo}
-)
-depends+=(${_system_libs[@]})
+  ./third_party/libaddressinput/chromium/tools/update-strings.py
 
-# Force script incompatible with Python 3 to use $TOOLCHAIN/bin/python2
-   sed -i '1s|python$|&2|' \
-     -i ./build/download_nacl_toolchains.py \
-     -i ./build/linux/unbundle/remove_bundled_libraries.py \
-     -i ./build/linux/unbundle/replace_gn_files.py \
-     -i ./tools/clang/scripts/update.py \
-     -i ./tools/gn/bootstrap/bootstrap.py \
-     -i ./third_party/dom_distiller_js/protoc_plugins/*.py \
-     -i ./third_party/ffmpeg/chromium/scripts/build_ffmpeg.py \
-     -i ./third_party/ffmpeg/chromium/scripts/generate_gn.py
-   export PNACLPYTHON=$TOOLCHAIN/bin/python2
-
-# Remove bundled libraries for which we will use the system copies; this
-# *should* do what the remove_bundled_libraries.py script does, with the
-# added benefit of not having to list all the remaining libraries
-local _lib
-  for _lib in ${_unwanted_bundled_libs[@]}; do
-    find -type f -path "*third_party/$_lib/*" \
-      \! -path "*third_party/$_lib/chromium/*" \
-      \! -path "*third_party/$_lib/google/*" \
-      \! -path './base/third_party/icu/*' \
-      \! -path './third_party/pdfium/third_party/freetype/include/pstables.h' \
-      \! -path './third_party/yasm/run_yasm.py' \
-      \! -regex '.*\.\(gn\|gni\|isolate\)' \
-      -delete
-  done
-
-# List of third-party components needed for build chromium. The rest is remove by remove_bundled_libraries srcipt in prepare().
-  ./build/linux/unbundle/remove_bundled_libraries.py 'base/third_party/libevent' --do-remove
-
-  ./build/linux/unbundle/replace_gn_files.py --system-libraries "${!_system_libs[@]}"
-#  ./third_party/libaddressinput/chromium/tools/update-strings.py
-
-  ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python2
-
-  ionice -c3 nice -n20 ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox
+  ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
+  
+  ninja -j${CONCURRENCY_MAKE_LEVEL} -C out/Release chrome chrome_sandbox
 }
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -P  $PKG_BUILD/out/Release/chrome $ADDON_BUILD/$PKG_ADDON_ID/bin/chromium.bin
   cp -P  $PKG_BUILD/out/Release/chrome_sandbox $ADDON_BUILD/$PKG_ADDON_ID/bin/chrome-sandbox
-  cp -P  $PKG_BUILD/out/Release/{*.pak,*.bin} $ADDON_BUILD/$PKG_ADDON_ID/bin
+  cp -P  $PKG_BUILD/out/Release/{*.pak,*.dat,*.bin} $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -PR $PKG_BUILD/out/Release/locales $ADDON_BUILD/$PKG_ADDON_ID/bin/
   cp -PR $PKG_BUILD/out/Release/gen/content/content_resources.pak $ADDON_BUILD/$PKG_ADDON_ID/bin/
 

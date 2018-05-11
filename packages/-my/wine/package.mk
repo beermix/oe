@@ -1,14 +1,13 @@
 PKG_NAME="wine"
 PKG_VERSION="3.7"
-#PKG_URL="https://dl.winehq.org/wine/source/3.0/wine-3.0.tar.xz"
+#PKG_URL="https://dl.winehq.org/wine/source/3.0/wine-3.0.tar.xz" wine:host
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain glib gmp x11 mesa xorg-server pcre libXcursor freetype fontconfig libjpeg-turbo libpng tiff libdrm glu expat harfbuzz libxcb libXrender libX11 libXext cairo unclutter xdotool libexif libXcomposite libXtst libpcap gtk3 gstreamer wine:host"
-#PKG_TOOLCHAIN="configure"
-#PKG_TOOLCHAIN="autotools"
+PKG_DEPENDS_TARGET="toolchain glib x11 mesa xorg-server pcre libXcursor freetype fontconfig libjpeg-turbo libpng tiff libdrm glu expat harfbuzz libxcb libXrender libX11 libXext cairo libexif libXcomposite libXtst libpcap icu xinput imagemagick gstreamer gst-plugins-base"
+PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--with-wine-tools=$PKG_BUILD/.$HOST_NAME \
 			      --disable-tests \
-			      --enable-win64 \
+			      --disable-win16 \
 			      --without-capi \
 			      --without-coreaudio \
 			      --without-gettext \
@@ -17,9 +16,34 @@ PKG_CONFIGURE_OPTS_TARGET="--with-wine-tools=$PKG_BUILD/.$HOST_NAME \
 			      --without-gsm \
 			      --without-hal \
 			      --without-opencl \
-			      --without-oss"
+			      --without-oss \
+			      --with-dbus \
+			      --with-fontconfig \
+			      --with-freetype \
+			      --with-gstreamer \
+			      --with-jpeg \
+			      --with-opengl \
+			      --with-glu \
+			      --with-pcap \
+			      --with-png \
+			      --with-xml \
+			      --with-xslt \
+			      --with-curses \
+			      --with-tiff \
+			      --with-udev \
+			      --with-x \
+			      --with-xcomposite \
+			      --with-xcursor \
+			      --with-xshape --with-xshm \
+			      --with-xinput --with-xinput2 \
+			      --with-xinerama \
+			      --with-xrandr \
+			      --with-xrender \
+			      --with-xxf86vm \
+			      --with-zlib"
 
 PKG_CONFIGURE_OPTS_HOST="--disable-tests \
+			    --disable-win16 \
 			    --enable-win64 \
 			    --without-alsa \
 			    --without-capi \
@@ -67,12 +91,13 @@ PKG_CONFIGURE_OPTS_HOST="--disable-tests \
 			    --without-zlib \
 			    --without-vulkan \
 			    --without-sdl \
-			    --without-udev"
+			    --without-udev \
+			    --with-gettext"
 
-make_host() {
-#cd $PKG_BUILD/.$HOST_NAME
-  make -C tools tools/sfnt2fon tools/widl tools/winebuild tools/winegcc tools/wmc tools/wrc
-}
+#make_host() {
+ # cd $PKG_BUILD/.$HOST_NAME
+#  make -C tools $PKG_BUILD/.$HOST_NAME/tools/sfnt2fon $PKG_BUILD/.$HOST_NAME/tools/widl $PKG_BUILD/.$HOST_NAME/tools/winebuild #$PKG_BUILD/.$HOST_NAME/tools/winegcc $PKG_BUILD/.$HOST_NAME/tools/wmc tools/wrc
+#}
 
 makeinstall_host() {
   : # nop

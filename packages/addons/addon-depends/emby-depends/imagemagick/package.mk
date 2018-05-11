@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="imagemagick"
-PKG_VERSION="7.0.7-1"
-PKG_SHA256="5a45e29509dbb23793a9c8db5c47ef1114c1ee82c9ca60053eaf06b3fc243e2c"
+PKG_VERSION="7.0.7-29"
+PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="http://www.imagemagick.org/script/license.php"
 PKG_SITE="http://www.imagemagick.org/"
@@ -29,11 +29,9 @@ PKG_SECTION="graphics"
 PKG_SHORTDESC="ImageMagick"
 PKG_LONGDESC="Software suite to create, edit, compose, or convert bitmap images"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static \
-                           --enable-shared \
-                           --with-quantum-depth=8 \
+PKG_CONFIGURE_OPTS_TARGET="--with-quantum-depth=8 \
                            --enable-hdri=no \
-                           --disable-openmp"
+                           --enable-openmp"
 
 makeinstall_target() {
   make install DESTDIR=$INSTALL
