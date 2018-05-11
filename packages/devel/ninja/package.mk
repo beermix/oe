@@ -17,7 +17,6 @@
 ################################################################################
 
 PKG_NAME="ninja"
-PKG_VERSION="1.8.2"
 PKG_VERSION="ca041d8"
 PKG_ARCH="any"
 PKG_LICENSE="Apache"
@@ -30,11 +29,10 @@ PKG_LONGDESC="Small build system with a focus on speed"
 PKG_TOOLCHAIN="manual"
 
 make_host() {
-  export LDFLAGS="-Wl,--as-needed"
-  export CFLAGS="-Wdate-time -D_FORTIFY_SOURCE=2"
-  export CXXFLAGS="-Wdate-time -D_FORTIFY_SOURCE=2"
-  CXX=/usr/bin/clang++ python3 ./configure.py --bootstrap
-  # --verbose
+  export LDFLAGS="-Wl,--as-needed -s"
+  unset CFLAGS
+  unset CXXFLAGS
+  CXX=/usr/bin/clang++ $TOOLCHAIN/bin/python3 ./configure.py --bootstrap --verbose
 }
 
 makeinstall_host() {
