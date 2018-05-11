@@ -19,7 +19,6 @@ PKG_CONFIGURE_OPTS_SHARED="--openssldir=/etc/ssl \
                            threads \
                            enable-camellia \
                            enable-mdc2 \
-                           enable-tlsext \
                            enable-unit-test \
                            no-ssl3-method \
                            enable-ec_nistp_64_gcc_128"
@@ -49,7 +48,7 @@ pre_configure_target() {
 
 configure_target() {
   cd $PKG_BUILD/.$TARGET_NAME
-  ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 "-Wa,--noexecstack $CFLAGS $LDFLAGS $CPPFLAGS"
+  ./Configure --prefix=/usr $PKG_CONFIGURE_OPTS_SHARED linux-x86_64 "-Wa,--noexecstack $CFLAGS -ffunction-sections -fsemantic-interposition -falign-functions=32 -falign-loops=32 $CPPFLAGS -Wl,--gc-sections $LDFLAGS"
 }
 
 makeinstall_target() {

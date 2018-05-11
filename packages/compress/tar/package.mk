@@ -1,6 +1,10 @@
 PKG_NAME="tar"
 PKG_VERSION="1.30"
 PKG_URL="http://mirrors.kernel.org/gnu/tar/tar-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain attr acl"
+PKG_DEPENDS_TARGET="toolchain"
 
-PKG_CONFIGURE_OPTS_TARGET="--without-selinux"
+PKG_CONFIGURE_OPTS_TARGET="--without-selinux --without-posix-acls \
+	--without-selinux \
+	--without-xattrs \
+	--disable-acl \
+	--disable-nls"
