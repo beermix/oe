@@ -1,0 +1,13 @@
+diff --git a/tools/objtool/Makefile b/tools/objtool/Makefile
+index e6acc281d..4ff232f3e 100644
+--- a/tools/objtool/Makefile
++++ b/tools/objtool/Makefile
+@@ -32,7 +32,7 @@ INCLUDES := -I$(srctree)/tools/include \
+ 	    -I$(srctree)/tools/objtool/arch/$(ARCH)/include
+ WARNINGS := $(EXTRA_WARNINGS) -Wno-switch-default -Wno-switch-enum -Wno-packed
+ CFLAGS   += -Wall -Werror $(WARNINGS) -fomit-frame-pointer -O2 -g $(INCLUDES)
+-LDFLAGS  += -lelf $(LIBSUBCMD)
++LDFLAGS  += -L$TOOLCHAIN/lib -lelf $(LIBSUBCMD)
+ 
+ # Allow old libelf to be used:
+ elfshdr := $(shell echo '\#include <libelf.h>' | $(CC) $(CFLAGS) -x c -E - | grep elf_getshdr)

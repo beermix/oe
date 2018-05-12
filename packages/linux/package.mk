@@ -32,10 +32,10 @@ PKG_IS_KERNEL_PKG="yes"
 PKG_PATCH_DIRS="$LINUX"
 
 case "$LINUX" in
-  git)
-    PKG_VERSION="4.17-rc2"
+  rc)
+    PKG_VERSION="4.17-rc4"
     PKG_SITE="https://github.com/zen-kernel/zen-kernel/branches/active"
-    PKG_URL="https://git.kernel.org/torvalds/t/linux-4.17-rc2.tar.gz"
+    PKG_URL="https://git.kernel.org/torvalds/t/linux-$PKG_VERSION.tar.gz"
     PKG_PATCH_DIRS="4.17"
     PKG_BUILD_PERF="no"
     PKG_BUILD_POWER="no"
@@ -83,9 +83,8 @@ if [ "$BUILD_ANDROID_BOOTIMG" = "yes" ]; then
 fi
 
 post_patch() {
-  sed -i -e "s|^HOSTCC[[:space:]]*=.*$|HOSTCC = $TOOLCHAIN/bin/host-gcc|" \
+  sed -i -e "s|^HOSTCC[[:space:]]*=.*$|HOSTCC = $TOOLCHAIN/bin/host-gcc $HOST_LDFLAGS|" \
          -e "s|^HOSTCXX[[:space:]]*=.*$|HOSTCXX = $TOOLCHAIN/bin/host-g++|" \
-         -e "s|^HOSTCFLAGS[[:space:]]*=.*$|HOSTCFLAGS = $HOST_CFLAGS|" \
          -e "s|^ARCH[[:space:]]*?=.*$|ARCH = $TARGET_KERNEL_ARCH|" \
          -e "s|^CROSS_COMPILE[[:space:]]*?=.*$|CROSS_COMPILE = $TARGET_KERNEL_PREFIX|" \
          $PKG_BUILD/Makefile
@@ -159,7 +158,7 @@ pre_make_target() {
 
   # regdb (backward compatability with pre-4.15 kernels)
   if grep -q ^CONFIG_CFG80211_INTERNAL_REGDB= $PKG_BUILD/.config ; then
-    cp $(get_build_dir wireless-regdb)/db.txt $PKG_BUILD/net/wireless/db.txt
+  cp $(get_build_dir wireless-regdb)/db.txt $PKG_BUILD/net/wireless/db.txt
   fi
 }
 

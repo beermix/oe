@@ -33,6 +33,21 @@ PKG_SHORTDESC="gcc: The GNU Compiler Collection Version 4 (aka GNU C Compiler)"
 PKG_LONGDESC="This package contains the GNU Compiler Collection. It includes compilers for the languages C, C++, Objective C, Fortran 95, Java and others ... This GCC contains the Stack-Smashing Protector Patch which can be enabled with the -fstack-protector command-line option. More information about it ca be found at http://www.research.ibm.com/trl/projects/security/ssp/."
 PKG_BUILD_FLAGS="-lto -gold -hardening"
 
+post_unpack() {
+  rm -rf $PKG_BUILD/gcc-*/gcc/testsuite/ada
+  rm -rf $PKG_BUILD/gcc-*/gcc/testsuite/brig.dg
+  rm -rf $PKG_BUILD/gcc-*/gcc/testsuite/c-c++-common
+  rm -rf $PKG_BUILD/gcc-*/gcc/testsuite/ChangeLog*
+  rm -rf $PKG_BUILD/gcc-*/gcc/testsuite/config
+  rm -rf $PKG_BUILD/gcc-*/gcc/testsuite/g*
+  rm -rf $PKG_BUILD/gcc-*/gcc/testsuite/jit.dg
+  rm -rf $PKG_BUILD/gcc-*/gcc/testsuite/lib
+  rm -rf $PKG_BUILD/gcc-*/gcc/testsuite/o*
+
+  rm -rf $PKG_BUILD/gcc/ada/*.ad*
+  rm -rf $PKG_BUILD/libjava
+}
+
 GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-sysroot=$SYSROOT_PREFIX \
                            --with-gmp=$TOOLCHAIN \
@@ -44,10 +59,8 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-lto \
                            --disable-multilib \
                            --disable-nls \
-                           --enable-lto \
                            --enable-plugin \
                            --enable-checking=release \
-                           --disable-libada \
                            --disable-libsanitizer \
                            --disable-libmpx \
                            --disable-libssp \
@@ -57,14 +70,13 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
-                              --disable-__cxa_atexit \
-                              --enable-cloog-backend=isl \
                               --disable-shared \
                               --disable-threads \
                               --without-headers \
                               --with-newlib \
                               --disable-libatomic \
                               --disable-libgomp \
+                              --disable-libada \
                               --disable-libquadmath \
                               --disable-libmudflap \
                               --disable-decimal-float \
@@ -72,6 +84,8 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
 
 PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-languages=c,c++ \
+                         --with-headers=$SYSROOT_PREFIX/usr/include \
+                         --with-libelf=$TOOLCHAIN \
                          --enable-__cxa_atexit \
                          --enable-decimal-float \
                          --enable-tls \

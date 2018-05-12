@@ -106,6 +106,8 @@ make_target() {
     'use_kerberos=false'
     'use_pulseaudio=false'
     'use_sysroot=true'
+    'enable_vr=false'
+    'use_allocator=\"tcmalloc\""
     'linux_link_libudev=true'
     'use_v8_context_snapshot=false'
     'enable_vulkan=false'
@@ -115,7 +117,6 @@ make_target() {
     'enable_vulkan=false'
     'enable_nacl=false'
     'enable_swiftshader=false'
-    'enable_widevine=true'
     'use_jumbo_build=false' # https://chromium.googlesource.com/chromium/src/+/lkcr/docs/jumbo.md
     'enable_nacl_nonsfi=false'
     'enable_swiftshader=false'
