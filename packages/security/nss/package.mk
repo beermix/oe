@@ -76,20 +76,16 @@ make_target() {
      NSPR_INCLUDE_DIR=$SYSROOT_PREFIX/usr/include/nspr \
      USE_SYSTEM_ZLIB=1 ZLIB_LIBS=-lz \
      SKIP_SHLIBSIGN=1 \
+     NSS_ENABLE_TLS_1_3=1 \
+     NSS_ENABLE_ECC=1 \
      OS_TEST=$TARGET_ARCH \
      OS_ARCH=Linux \
      OS_TARGET=Linux \
      NSS_TESTS="dummy" \
      NSINSTALL=$TOOLCHAIN/bin/nsinstall \
-     ARTOOL="${TARGET_PREFIX}ar" RANLIB="${TARGET_PREFIX}ranlib"
      CPU_ARCH_TAG=$TARGET_ARCH \
-     NSS_ENABLE_TLS_1_3=1 \
-     NSS_ENABLE_ECC=1 \
-     ARCHFLAG="$TARGET_CFLAGS $TARGET_CPPFLAGS $TARGET_LDFLAGS"
-     NSS_USE_SYSTEM_ZLIB=1 \
-     NSS_ENABLE_WERROR=0 \
-     NSS_DISABLE_DBM=1 \
-     CC=$CC CCC=$CXX LDFLAGS="$LDFLAGS -L$SYSROOT_PREFIX/usr/lib" \
+     CC=$CC XCFLAGS="-Wno-error=stringop-truncation -Wno-error=format-overflow" \
+     LDFLAGS="$LDFLAGS -L$SYSROOT_PREFIX/usr/lib" \
      V=1
 }
 

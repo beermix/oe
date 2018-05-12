@@ -14,7 +14,7 @@ post_make_target() {
   cp $PKG_BUILD/nuttcp $INSTALL/usr/bin/nuttcp
 }
 
-post_install () {
-  enable_service nuttcp.service
-  enable_service nuttcp.socket
-}
+#post_install () {
+#  enable_service nuttcp.service
+#  enable_service nuttcp.socket
+#}
