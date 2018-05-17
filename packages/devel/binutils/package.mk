@@ -14,15 +14,16 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################ quilt:host bc:host
+################################################################################
 
 PKG_NAME="binutils"
-PKG_VERSION="2.30"
+PKG_VERSION="238fb05"
 #PKG_SHA256="0b871e271c4c620444f8264f72143b4d224aa305306d85dd77ab8dce785b1e85"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://ftp.gnu.org.ua/gnu/binutils/?C=M;O=D"
 PKG_URL="http://ftpmirror.gnu.org/binutils/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="https://github.com/bminor/binutils-gdb/archive/${PKG_VERSION}.tar.gz"
 PKG_SOURCE_DIR="$PKG_NAME-gdb-$PKG_VERSION*"
 PKG_DEPENDS_HOST="ccache:host bison:host flex:host elfutils:host linux:host"
 PKG_DEPENDS_TARGET="toolchain binutils:host"
@@ -40,6 +41,11 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-version-specific-runtime-libs \
                          --enable-compressed-debug-sections=all \
                          --enable-plugins \
+                         --enable-gold \
+                         --enable-ld=default \
+                         --enable-lto \
+                         --disable-sim \
+                         --disable-gdb \
                          --disable-nls"
 
 PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
@@ -57,6 +63,8 @@ PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
                          --disable-gold \
                          --disable-ld \
                          --disable-lto \
+                         --disable-sim \
+                         --disable-gdb \
                          --disable-nls"
 
 pre_configure_host() {
