@@ -25,7 +25,7 @@ PKG_SITE="ftp://freedesktop.org/pub/mesa/"
 PKG_URL="ftp://freedesktop.org/pub/mesa/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain expat libdrm Mako:host"
-PKG_DEPENDS_TARGET="toolchain expat libdrm"
+#PKG_DEPENDS_TARGET="toolchain expat libdrm"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="mesa: 3-D graphics library with OpenGL API"
 PKG_LONGDESC="Mesa is a 3-D graphics library with an API which is very similar to that of OpenGL*. To the extent that Mesa utilizes the OpenGL command syntax or state machine, it is being used with authorization from Silicon Graphics, Inc. However, the author makes no claim that Mesa is in any way a compatible replacement for OpenGL or associated with Silicon Graphics, Inc. Those who want a licensed implementation of OpenGL should contact a licensed vendor. While Mesa is not a licensed OpenGL implementation, it is currently being tested with the OpenGL conformance tests. For the current conformance status see the CONFORM file included in the Mesa distribution."
@@ -38,11 +38,18 @@ if [ "$DISPLAYSERVER" = "x11" ]; then
   export X11_INCLUDES=
   MESA_DRI="--enable-dri --enable-dri3"
   MESA_GLX="--enable-glx --enable-driglx-direct --enable-glx-tls"
-  MESA_EGL_PLATFORMS="--with-platforms=x11,drm"
+  MESA_PLATFORMS="--with-platforms=x11,drm"
+elif [ "$DISPLAYSERVER" = "weston" ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET wayland wayland-protocols"
+  MESA_DRI="--enable-dri --disable-dri3"
+  # The glx in glx-tls is a misnomer - there's nothing glx in it.
+  MESA_GLX="--disable-glx --disable-driglx-direct --enable-glx-tls"
+  MESA_PLATFORMS="--with-platforms=drm,wayland"
 else
   MESA_DRI="--enable-dri --disable-dri3"
-  MESA_GLX="--disable-glx --disable-driglx-direct --disable-glx-tls"
-  MESA_EGL_PLATFORMS="--with-platforms=drm"
+  # The glx in glx-tls is a misnomer - there's nothing glx in it.
+  MESA_GLX="--disable-glx --disable-driglx-direct --enable-glx-tls"
+  MESA_PLATFORMS="--with-platforms=drm"
 fi
 
 # configure GPU drivers and dependencies:
@@ -121,6 +128,10 @@ PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
                            --with-vulkan-drivers=intel \
                            --with-sysroot=$SYSROOT_PREFIX"
 
+# Temporary workaround:
+# Listed libraries are static, while mesa expects shared ones. This breaks the
+# dependency tracking. The following has some ideas on how to address that.
+# https://github.com/LibreELEC/LibreELEC.tv/pull/2163
 pre_configure_target() {
   if [ "$DISPLAYSERVER" = "x11" ]; then
     export LIBS="-lxcb-dri3 -lxcb-dri2 -lxcb-xfixes -lxcb-present -lxcb-sync -lxshmfence -lz"
