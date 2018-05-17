@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="residualvm"
-PKG_VERSION="abd8c58"
+PKG_VERSION="755bb87"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/residualvm/residualvm"

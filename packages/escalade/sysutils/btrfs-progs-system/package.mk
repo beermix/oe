@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="btrfs-progs-system"
-PKG_VERSION="v4.15"
+PKG_VERSION="v4.16.1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/kdave/btrfs-progs"
@@ -35,6 +35,7 @@ PKG_AUTORECONF="no"
 
 PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
                            --disable-option-checking \
+			   --disable-python \
                            --disable-documentation"
 
 pre_configure_target() {

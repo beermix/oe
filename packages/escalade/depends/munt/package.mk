@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="munt"
-PKG_VERSION="0ace855"
+PKG_VERSION="939cc98"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/munt/munt"

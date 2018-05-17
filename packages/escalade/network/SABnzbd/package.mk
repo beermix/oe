@@ -17,11 +17,12 @@
 ################################################################################
 
 PKG_NAME="SABnzbd"
-PKG_VERSION="2.3.2"
+PKG_VERSION="2.3.3"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://sabnzbd.org/"
-PKG_URL="https://github.com/sabnzbd/sabnzbd/releases/download/$PKG_VERSION/$PKG_NAME-$PKG_VERSION-src.tar.gz"
+PKG_URL="https://github.com/sabnzbd/sabnzbd/releases/download/2.3.3/SABnzbd-2.3.3-src.tar.gz"
+PKG_SOURCE_DIR="SABnzbd*"
 PKG_DEPENDS_TARGET="toolchain Python Cheetah sabyenc six par2cmdline unrar cryptography p7zip"
 PKG_SECTION="service/downloadmanager"
 PKG_SHORTDESC="SABnzbd makes Usenet as simple and streamlined as possible by automating everything we can."

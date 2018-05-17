@@ -1,6 +1,6 @@
 # Made by github.com/escalade
 PKG_NAME="nfs-utils"
-PKG_VERSION="2.2.1"
+PKG_VERSION="2.3.1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://sourceforge.net/projects/nfs"

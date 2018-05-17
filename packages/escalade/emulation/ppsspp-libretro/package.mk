@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="ppsspp-libretro"
-PKG_VERSION="dd73f91"
+PKG_VERSION="af3a9a1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/ppsspp"
