@@ -62,14 +62,14 @@ make_host() {
 
 make_target() {
 
-#  unset CPPFLAGS
+  unset CPPFLAGS
   unset CFLAGS
   unset CXXFLAGS
-#  unset LDFLAGS
+  unset LDFLAGS
 
-  export CFLAGS="$CFLAGS --param l1-cache-line-size=64 --param l1-cache-size=32 --param l2-cache-size=3072 -fno-unwind-tables -fno-asynchronous-unwind-tables -Wno-builtin-macro-redefined"
-  export CXXFLAGS="$CXXFLAGS --param l1-cache-line-size=64 --param l1-cache-size=32 --param l2-cache-size=3072 -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables -Wno-builtin-macro-redefined"
-  export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES -D__DATE__= -D__TIME__= -D__TIMESTAMP__="
+  export CFLAGS="$CFLAGS --param l1-cache-line-size=64 --param l1-cache-size=32 --param l2-cache-size=3072 -fno-unwind-tables -fno-asynchronous-unwind-tables"
+  export CXXFLAGS="$CXXFLAGS --param l1-cache-line-size=64 --param l1-cache-size=32 --param l2-cache-size=3072 -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
+  export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
 
   export CCACHE_SLOPPINESS=time_macros
 
