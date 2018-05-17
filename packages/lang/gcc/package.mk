@@ -62,10 +62,14 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-ld=default \
                            --disable-multilib \
                            --disable-nls \
-                           --enable-plugin \
-                           --disable-libsanitizer \
+                           --enable-checking=release \
+                           --with-default-libstdcxx-abi=gcc4-compatible \
+                           --without-ppl \
+                           --without-cloog \
+                           --disable-libada \
                            --disable-libmpx \
                            --disable-libssp \
+                           --disable-libsanitizer \
                            --with-tune=haswell \
                            --with-arch=westmere \
                            --with-diagnostics-color=always"
