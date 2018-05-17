@@ -25,7 +25,7 @@ PKG_DEPENDS_TARGET="libelf:host"
 PKG_SECTION="devel"
 #PKG_TOOLCHAIN="autotools"
 
-PKG_CONFIGURE_OPTS_HOST="--disable-shared --enable-elf64"
+PKG_CONFIGURE_OPTS_HOST="--enable-shared --enable-static --enable-elf64"
 
 #make_host() {
 #  make V=1 -C libelf libelf.a
