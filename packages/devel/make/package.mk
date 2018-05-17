@@ -39,11 +39,11 @@ PKG_CONFIGURE_OPTS_HOST="--without-guile"
 post_makeinstall_host() {
   ln -sf make $TOOLCHAIN/bin/gmake
 
-  mkdir -p $TOOLCHAIN/share/aclocal
+#  mkdir -p $TOOLCHAIN/share/aclocal
 
-  cp -r -i $PKG_DIR/src/bin/* $TOOLCHAIN/bin/
-  cp -r -i $PKG_DIR/src/m4/* $TOOLCHAIN/share/aclocal/
+#  cp -r -i $PKG_DIR/src/bin/* $TOOLCHAIN/bin/
+#  cp -r -i $PKG_DIR/src/m4/* $TOOLCHAIN/share/aclocal/
   
-  mkdir -p $TOOLCHAIN/share/include
-  cp -r -i $PKG_DIR/include/* $TOOLCHAIN/share/include
+#  mkdir -p $TOOLCHAIN/share/include
+#  cp -r -i $PKG_DIR/include/* $TOOLCHAIN/share/include
 }
