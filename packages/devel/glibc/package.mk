@@ -18,7 +18,7 @@
 
 PKG_NAME="glibc"
 PKG_VERSION="d300041"
-PKG_VERSION="623f4ae"
+PKG_VERSION="0cd4a5e"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/bminor/glibc/tree/release/2.26/master"
@@ -47,6 +47,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
                            --enable-kernel=4.4 \
                            --enable-stack-protector=strong \
+                           --disable-experimental-malloc \
                            --without-cvs \
                            --without-gd \
                            --enable-obsolete-rpc \
@@ -116,9 +117,9 @@ pre_configure_target() {
 
   unset LD_LIBRARY_PATH
 
-  export CFLAGS="$CFLAGS -Wno-error=stringop-truncation -Wno-error=overflow -Wno-error=format-overflow="	
+#  export CFLAGS="$CFLAGS -Wno-error=stringop-truncation -Wno-error=overflow -Wno-error=format-overflow="	
   export CFLAGS="-O2 -march=westmere --param=l1-cache-size=32 --param=l1-cache-line-size=64 --param=l2-cache-size=3072 -g2 -m64 -Wl,-z,max-page-size=0x1000"
-
+  unset LDFLAGS
   export LDFLAGS="-Wl,-z,max-page-size=0x1000"
 
   export BUILD_CC=$HOST_CC
