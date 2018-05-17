@@ -29,7 +29,7 @@ PKG_SHORTDESC="font-misc-misc: A misc. public domain font"
 PKG_LONGDESC="A misc. public domain font."
 
 PKG_CONFIGURE_OPTS_TARGET="--with-fontrootdir=/usr/share/fonts \
-                           --enable-silent-rules \
+                           --disable-silent-rules \
                            --enable-iso8859-1 \
                            --enable-iso8859-2 \
                            --disable-iso8859-3 \

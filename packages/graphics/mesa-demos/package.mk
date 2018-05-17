@@ -17,7 +17,7 @@
 ################################################################################ freeglut
 
 PKG_NAME="mesa-demos"
-PKG_VERSION="8.3.0"
+PKG_VERSION="8.4.0"
 PKG_ARCH="i386 x86_64"
 PKG_SITE="http://www.mesa3d.org/"
 PKG_URL="ftp://ftp.freedesktop.org/pub/mesa/demos/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
