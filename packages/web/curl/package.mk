@@ -25,8 +25,8 @@
 #   there: http://forum.xbmc.org/showthread.php?tid=177557
 
 PKG_NAME="curl"
-PKG_VERSION="7.59.0"
-PKG_SHA256="b5920ffd6a8c95585fb95070e0ced38322790cb335c39d0dab852d12e157b5a0"
+PKG_VERSION="7.60.0"
+PKG_SHA256="897dfb2204bd99be328279f88f55b7c61592216b0542fcbe995c60aa92871e9b"
 PKG_ARCH="any"
 PKG_LICENSE="MIT"
 PKG_SITE="https://curl.haxx.se/download/?C=M;O=D"
