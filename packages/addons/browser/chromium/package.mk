@@ -22,9 +22,9 @@
 ################################################################################ beautifulsoup4:host html5lib:host re2 snappy
 
 PKG_NAME="chromium"
-PKG_VERSION="66.0.3359.170"
-PKG_SHA256="864da6649d19387698e3a89321042193708b2d9f56b3a778fb552166374871de"
-PKG_REV="204"
+PKG_VERSION="66.0.3359.181"
+PKG_SHA256="37e6673741b365a25a837217b08f77b24b4f5fc4ad88c8581be6a5dae9a9e919"
+PKG_REV="205"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_SITE="http://www.chromium.org/Home"
@@ -48,8 +48,8 @@ PKG_ADDON_PROVIDES="executable"
 post_patch() {
   cd $(get_build_dir chromium)
 
-  # Use Python 2
-  find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$TOOLCHAIN/bin/python|g" {} +
+  # Use Python2
+  find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$TOOLCHAIN/bin/python2|g" {} +
 
   # set correct widevine
 #  sed 's|@WIDEVINE_VERSION@|The Cake Is a Lie|g' -i ./third_party/widevine/cdm/stub/widevine_cdm_version.h
@@ -69,7 +69,7 @@ make_target() {
   export CFLAGS="$CFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables"
   export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
   export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
-  
+
    export CCACHE_SLOPPINESS=time_macros
   #   export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime
 
@@ -79,6 +79,21 @@ make_target() {
   # Work around broken screen sharing in Google Meet
   # https://crbug.com/829916#c16
   sed -i 's/"Chromium/"Chrome/' ./chrome/common/chrome_content_client_constants.cc
+
+  # Force script incompatible with Python 3 to use /usr/bin/python2
+  sed -i '1s|python$|&2|' ./third_party/dom_distiller_js/protoc_plugins/*.py
+  
+  # Use chromium-dev as branch name.
+  sed -e 's|filename = "chromium-browser"|filename = "chromium-dev"|' \
+      -e 's|confdir = "chromium|&-dev|' \
+      -i ./chrome/BUILD.gn
+  sed -e 's|config_dir.Append("chromium|&-dev|' \
+      -i ./chrome/common/chrome_paths_linux.cc
+  sed -e 's|/etc/chromium|&-dev|' \
+      -e 's|/usr/share/chromium|&-dev|' \
+      -i ./chrome/common/chrome_paths.cc
+  sed -e 's|/etc/chromium|&-dev|' \
+      -i ./components/policy/tools/template_writers/writer_configuration.py
 
   local _google_api_key=AIzaSyAQ6L9vt9cnN4nM0weaa6Y38K4eyPvtKgI
   local _google_default_client_id=740889307901-4bkm4e0udppnp1lradko85qsbnmkfq3b.apps.googleusercontent.com
@@ -92,12 +107,13 @@ make_target() {
     'is_debug=false'
     'fatal_linker_warnings=false'
     'treat_warnings_as_errors=false'
-    'fieldtrial_testing_like_official_build=false'
+    'fieldtrial_testing_like_official_build=true'
     'remove_webcore_debug_symbols=true'
     'ffmpeg_branding="Chrome"'
     'proprietary_codecs=true'
     'link_pulseaudio=false'
     'linux_use_bundled_binutils=false'
+    'use_allocator="none"'
     'use_cups=false'
     'use_custom_libcxx=false'
     'use_gnome_keyring=false'
@@ -107,7 +123,6 @@ make_target() {
     'use_pulseaudio=false'
     'use_sysroot=true'
     'enable_vr=false'
-    'use_allocator=\"tcmalloc\""
     'linux_link_libudev=true'
     'use_v8_context_snapshot=false'
     'enable_vulkan=false'
