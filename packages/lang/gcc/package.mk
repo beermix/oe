@@ -19,43 +19,42 @@
 PKG_NAME="gcc"
 PKG_VERSION="8.1.0"
 PKG_VERSION="7.3.1-20180406"
-PKG_VERSION="8-20180511"
+#PKG_VERSION="8-20180511"
 PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="ftp://gcc.gnu.org/pub/gcc/snapshots/LATEST-7"
 PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/$PKG_VERSION/gcc-$PKG_VERSION.tar.xz"
 #PKG_URL="http://ftpmirror.gnu.org/gcc/$PKG_NAME-$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
-#PKG_URL="https://sources.archlinux.org/other/gcc/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host libelf:host"
+PKG_URL="https://sources.archlinux.org/other/gcc/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host libelf:host"
 PKG_DEPENDS_TARGET="gcc:host"
-PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host libelf:host glibc"
+PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host libelf:host glibc"
 PKG_SECTION="lang"
 PKG_SHORTDESC="gcc: The GNU Compiler Collection Version 4 (aka GNU C Compiler)"
 PKG_LONGDESC="This package contains the GNU Compiler Collection. It includes compilers for the languages C, C++, Objective C, Fortran 95, Java and others ... This GCC contains the Stack-Smashing Protector Patch which can be enabled with the -fstack-protector command-line option. More information about it ca be found at http://www.research.ibm.com/trl/projects/security/ssp/."
 PKG_BUILD_FLAGS="-lto -gold -hardening"
 
-post_unpack() {
-  rm -rf $PKG_BUILD/gcc-*/gcc/testsuite/ada
-  rm -rf $PKG_BUILD/gcc-*/gcc/testsuite/brig.dg
-  rm -rf $PKG_BUILD/gcc-*/gcc/testsuite/c-c++-common
-  rm -rf $PKG_BUILD/gcc-*/gcc/testsuite/ChangeLog*
-  rm -rf $PKG_BUILD/gcc-*/gcc/testsuite/config
-  rm -rf $PKG_BUILD/gcc-*/gcc/testsuite/g*
-  rm -rf $PKG_BUILD/gcc-*/gcc/testsuite/jit.dg
-  rm -rf $PKG_BUILD/gcc-*/gcc/testsuite/lib
-  rm -rf $PKG_BUILD/gcc-*/gcc/testsuite/o*
-
-  rm -rf $PKG_BUILD/gcc/ada/*.ad*
-  rm -rf $PKG_BUILD/libjava
-}
+#post_unpack() {
+#  rm -rf $PKG_BUILD/gcc-*/gcc/testsuite/ada
+#  rm -rf $PKG_BUILD/gcc-*/gcc/testsuite/brig.dg
+#  rm -rf $PKG_BUILD/gcc-*/gcc/testsuite/c-c++-common
+#  rm -rf $PKG_BUILD/gcc-*/gcc/testsuite/ChangeLog*
+#  rm -rf $PKG_BUILD/gcc-*/gcc/testsuite/config
+#  rm -rf $PKG_BUILD/gcc-*/gcc/testsuite/g*
+#  rm -rf $PKG_BUILD/gcc-*/gcc/testsuite/jit.dg
+#  rm -rf $PKG_BUILD/gcc-*/gcc/testsuite/lib
+#  rm -rf $PKG_BUILD/gcc-*/gcc/testsuite/o*
+#
+#  rm -rf $PKG_BUILD/gcc/ada/*.ad*
+#  rm -rf $PKG_BUILD/libjava
+#}
 
 GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-sysroot=$SYSROOT_PREFIX \
                            --with-gmp=$TOOLCHAIN \
                            --with-mpfr=$TOOLCHAIN \
                            --with-mpc=$TOOLCHAIN \
-                           --with-isl=$TOOLCHAIN \
                            --with-gnu-as \
                            --with-gnu-ld \
                            --enable-plugin \
