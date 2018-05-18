@@ -46,9 +46,9 @@ CXXFLAGS_OPTIM_PIC="-fPIC -DPIC"
 LDFLAGS_OPTIM_PIC="-fPIC"
 
 # hardening support
-CFLAGS_OPTIM_HARDENING="-fexceptions -fstack-protector --param=ssp-buffer-size=4"
+CFLAGS_OPTIM_HARDENING="-fstack-protector --param=ssp-buffer-size=4"
 CXXFLAGS_OPTIM_HARDENING="$CFLAGS_OPTIM_HARDENING"
-CPPFLAGS_OPTIM_HARDENING="-Wp,-D_FORTIFY_SOURCE=2"
+CPPFLAGS_OPTIM_HARDENING="-D_FORTIFY_SOURCE=2"
 LDFLAGS_OPTIM_HARDENING="-Wl,-z -Wl,now -Wl,-z -Wl,relro -Wl,-sort-common"
 
 # add distro specific library dirs
