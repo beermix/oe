@@ -53,8 +53,33 @@ post_patch() {
   find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$TOOLCHAIN/bin/python|g" {} +
 
   # set correct widevine
-#  sed 's|@WIDEVINE_VERSION@|The Cake Is a Lie|g' -i ./third_party/widevine/cdm/stub/widevine_cdm_version.h
+  # sed 's|@WIDEVINE_VERSION@|The Cake Is a Lie|g' -i ./third_party/widevine/cdm/stub/widevine_cdm_version.h
   sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' ./third_party/widevine/cdm/stub/widevine_cdm_version.h
+  
+  # files we do not want from upstream source bundles
+rm -rf breakpad/src/processor/testdata/
+rm -rf chrome/app/test_data/dlls/
+rm -rf chrome/common/extensions/docs/
+rm -rf ./chrome/test/data/{android,app_shim,apptest,ash,autofill,automation,automation_proxy_snapshot,banners,bookmark_html_reader,bookmarks,captive_portal,chromedriver,chrome_endure,chromeos,chromeproxy,cld2_component,click_modifier,components,constrained_files,content,content_setting_bubble,devtools,diagnostics,dom_automation,dom_checker,dom_distiller,downloads,drive_first_run,dromaeo,durable,edge_database_reader,edge_profile,encoding_tests,extensions,fast_shutdown,fast_tab_close,favicon,feeds,file_select_helper,find_in_page,firefox320_profile,firefox35_profile,firefox3_nss,firefox3_nss_mac,firefox3_profile,firefox_profile,firefox_searchplugins,focus,frame_dom_access,frame_tree,ftp,fullscreen_mouselock,geolocation,google,gpu,History,image_decoding,image_search,import,indexeddb,inspector,installer,interstitial_page,keyboard,login,native_messaging,navigation_interception,notifications,page_cycler,page_load_metrics,panels,password,pdf,pepper,perf,permissions,plugin_power_saver,policy,popup_blocker,predictor,prefs,pref_service,prerender,printing,profiles,push_messaging,referrer_policy,requirements_checker,safe_browsing,SafeBrowsing,save_page,scroll,sdch,search,session_history,session_restore,sessions,settings,speech,ssl,subresource_filter,sunspider,sync,template_url_scraper,textinput,third_party,top_sites,translate,unit,v8_benchmark_v6,viewsource,web_app_info,webapps,webrtc,websocket,webui_test_resources.grd,whitelists,workers}
+rm -rf ./chrome/test/data/nacl/{pnacl_error_handling,cross_origin,irt_exception,pnacl_request_header,nonsfi,pnacl_url_loader,pnacl_hw_eh_disabled,pnacl_nmf_options,pnacl_dyncode_syscall_disabled,extension_mime_handler,ppapi_test_lib,bad,ppapi,ppapi/ppb_instance,ppapi/ppp_instance,ppapi/ppb_core,manifest,manifest/mdir,manifest/ndir,pnacl_debug_url,nacl_test_data.gyp,extension_validation_cache,exit_status,progress_events,manifest_file,sysconf_nprocessors_onln,crash,pnacl_mime_type}
+rmdir ./chrome/test/data/webui/{settings,extensions}/a11y
+rmdir ./chrome/test/data/webui/{engagement,extensions,media_router,print_preview,cr_elements,settings,md_bookmarks,md_downloads,md_history,md_user_manager,net_internals}
+rm -rf ./chrome/tools/test/reference_build/chrome_linux/
+rm -rf ./components/test/data/component_updater/jebgalgnebhfojomionfpkfelancnnkf/component1.dll
+rm -rf ./content/test/data/
+#rm -rf net/data/
+# v the root BUILD.gn includes files from this dir
+#rm -rf ppapi/examples/
+rm -rf ./ppapi/native_client/tests/
+rm -rf ./third_party/apache-win32/
+rm -rf ./third_party/binutils/
+rm -rf ./third_party/expat/files/
+#rm -rf ./third_party/freetype/{src,include}
+#rm -rf ./third_party/icu/{android,linux,mac,patches,public,source,windows}
+rm -rf ./third_party/lcov
+#rm -rf base/third_party/libevent/*/*
+#rm -rf base/third_party/libevent/*.[ch]
+
 }
 
 make_host() {
@@ -67,9 +92,10 @@ make_target() {
   unset CXXFLAGS
   unset LDFLAGS
 
-  export CFLAGS="$CFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables"
-  export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
-  export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
+#  export CFLAGS="$CFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables"
+#  export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
+#  export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
+  export CXXFLAGS="$CXXFLAGS -Wno-error=attributes -Wno-error=comment -Wno-error=unused-variable -Wno-error=noexcept-type -Wno-error=register -Wno-error=strict-overflow -Wno-error=deprecated-declarations"
 
    export CCACHE_SLOPPINESS=time_macros
   # export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime
@@ -144,6 +170,47 @@ make_target() {
     "google_default_client_id=\"${_google_default_client_id}\""
     "google_default_client_secret=\"${_google_default_client_secret}\""
   )
+
+# Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
+# Keys are the names in the above script; values are the dependencies in Arch
+declare -gA _system_libs=(
+  [fontconfig]=fontconfig
+  [freetype]=freetype2
+  [harfbuzz-ng]=harfbuzz
+#  [icu]=icu
+  [libdrm]=
+  [libjpeg]=libjpeg
+#  [libpng]=libpng            # https://crbug.com/752403#c10
+#  [libvpx]=libvpx
+#  [libwebp]=libwebp
+#  [libxml]=libxml2           # https://crbug.com/736026
+  [libxslt]=libxslt
+  [re2]=re2
+  [snappy]=snappy
+  [yasm]=
+  [zlib]=minizip
+)
+_unwanted_bundled_libs=(
+  ${!_system_libs[@]}
+  ${_system_libs[libjpeg]+libjpeg_turbo}
+)
+depends+=(${_system_libs[@]})
+
+  # Remove bundled libraries for which we will use the system copies; this
+  # *should* do what the remove_bundled_libraries.py script does, with the
+  # added benefit of not having to list all the remaining libraries
+  local _lib
+  for _lib in ${_unwanted_bundled_libs[@]}; do
+    find -type f -path "*third_party/$_lib/*" \
+      \! -path "*third_party/$_lib/chromium/*" \
+      \! -path "*third_party/$_lib/google/*" \
+      \! -path './third_party/pdfium/third_party/freetype/include/pstables.h' \
+      \! -path './third_party/yasm/run_yasm.py' \
+      \! -regex '.*\.\(gn\|gni\|isolate\)' \
+      -delete
+  done
+
+  ./build/linux/unbundle/replace_gn_files.py --system-libraries "${!_system_libs[@]}"
 
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 

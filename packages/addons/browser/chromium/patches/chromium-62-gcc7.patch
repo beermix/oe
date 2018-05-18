@@ -139,3 +139,14 @@
      ProcessStartTag(token);
      return;
    }
+--- chromium-62.0.3202.9/third_party/skia/src/ports/SkTLS_pthread.cpp.gcc7	2017-09-11 04:39:22.554714295 +0200
++++ chromium-62.0.3202.9/third_party/skia/src/ports/SkTLS_pthread.cpp	2017-09-11 04:39:45.663296012 +0200
+@@ -16,7 +16,7 @@
+     // should we use forceCreateTheSlot to potentially just return nullptr if
+     // we've never been called with forceCreateTheSlot==true ?
+     static SkOnce once;
+-    once(pthread_key_create, &gSkTLSKey, SkTLS::Destructor);
++    once(&pthread_key_create, &gSkTLSKey, SkTLS::Destructor);
+     return pthread_getspecific(gSkTLSKey);
+ }
+ 

@@ -20,16 +20,21 @@ PKG_NAME="cmake"
 PKG_VERSION="3.11.2"
 PKG_ARCH="any"
 PKG_LICENSE="BSD"
-PKG_SITE="https://cmake.org/files/?C=M;O=D"
-PKG_URL="https://cmake.org/files/v3.11/cmake-$PKG_VERSION-Linux-x86_64.tar.gz"
-PKG_SOURCE_DIR="${PKG_NAME}-${PKG_VERSION}-Linux-x86_64"
+PKG_SITE="https://cmake.org/download/"
+PKG_URL="http://www.cmake.org/files/v${PKG_VERSION%.*}/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_HOST="ccache:host openssl:host bzip2:host"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="cmake: A cross-platform, open-source make system"
 PKG_LONGDESC="CMake is used to control the software compilation process using simple platform and compiler independent configuration files. CMake generates native makefiles and workspaces that can be used in the compiler environment of your choice. CMake is quite sophisticated: it is possible to support complex environments requiring system configuration, preprocessor generation, code generation, and template instantiation."
-PKG_TOOLCHAIN="manual"
+PKG_TOOLCHAIN="configure"
 
-post_unpack() {
-  cp -r $PKG_BUILD/* $TOOLCHAIN/
-  rm -rf $PKG_BUILD/*
+configure_host() {
+  ../configure --prefix=$TOOLCHAIN \
+               --no-qt-gui --no-system-libs \
+               -- \
+               -DCMAKE_C_FLAGS="-O2 -Wall -Wno-format-security" \
+               -DCMAKE_CXX_FLAGS="-O2 -Wall -Wno-format-security" \
+               -DCMAKE_EXE_LINKER_FLAGS="$HOST_LDFLAGS" \
+               -DCMAKE_USE_OPENSSL=ON \
+               -DBUILD_CursesDialog=0
 }
