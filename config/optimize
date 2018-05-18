@@ -22,7 +22,7 @@ TARGET_INCDIR="$SYSROOT_PREFIX/include $SYSROOT_PREFIX/usr/include"
 
 #HOST_CPPFLAGS="-fno-stack-protector" -U_FORTIFY_SOURCE
 HOST_CPPFLAGS=""
-HOST_CFLAGS="-march=haswell -O2 -pipe -I$TOOLCHAIN/include"
+HOST_CFLAGS="-march=westmere -O2 -pipe -I$TOOLCHAIN/include"
 HOST_CXXFLAGS="$HOST_CFLAGS"
 HOST_LDFLAGS="-I$TOOLCHAIN/include -Wl,-rpath,$TOOLCHAIN/lib -L$TOOLCHAIN/lib"
 HOST_INCDIR="$TOOLCHAIN/include /usr/include"
