@@ -47,7 +47,7 @@ make_host() {
      NSS_ENABLE_ECC=1 \
      SKIP_SHLIBSIGN=1 \
      NSS_TESTS="dummy" \
-     CC=$CC CCC=$CXX LDFLAGS="$LDFLAGS -L$TOOLCHAIN/lib" \
+     LDFLAGS="$LDFLAGS -I$TOOLCHAIN/include -Wl,-rpath,$TOOLCHAIN/lib -L$TOOLCHAIN/lib" \
      V=1
 }
 
@@ -84,7 +84,6 @@ make_target() {
      NSS_TESTS="dummy" \
      NSINSTALL=$TOOLCHAIN/bin/nsinstall \
      CPU_ARCH_TAG=$TARGET_ARCH \
-     CC=$CC XCFLAGS="-Wno-error=stringop-truncation -Wno-error=format-overflow" \
      LDFLAGS="$LDFLAGS -L$SYSROOT_PREFIX/usr/lib" \
      V=1
 }
