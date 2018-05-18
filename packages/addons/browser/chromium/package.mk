@@ -49,8 +49,8 @@ PKG_ADDON_PROVIDES="executable"
 post_patch() {
   cd $(get_build_dir chromium)
 
-  # Use Python2
-  find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$TOOLCHAIN/bin/python2|g" {} +
+  # Use Python 2
+  find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$TOOLCHAIN/bin/python|g" {} +
 
   # set correct widevine
 #  sed 's|@WIDEVINE_VERSION@|The Cake Is a Lie|g' -i ./third_party/widevine/cdm/stub/widevine_cdm_version.h
@@ -112,7 +112,7 @@ make_target() {
     'remove_webcore_debug_symbols=true'
     'ffmpeg_branding="Chrome"'
     'proprietary_codecs=true'
-    'link_pulseaudio=false'
+    'link_pulseaudio=true'
     'linux_use_bundled_binutils=false'
     'use_allocator="none"'
     'use_cups=false'
@@ -123,6 +123,9 @@ make_target() {
     'use_kerberos=false'
     'use_pulseaudio=false'
     'use_sysroot=true'
+    'use_vaapi=true'
+    'use_v8_context_snapshot=false'
+    'enable_vulkan=false'
     'linux_link_libudev=true'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_hangout_services_extension=true'
@@ -135,7 +138,6 @@ make_target() {
     "google_api_key=\"${_google_api_key}\""
     "google_default_client_id=\"${_google_default_client_id}\""
     "google_default_client_secret=\"${_google_default_client_secret}\""
-    'use_vaapi=true'
   )
 
 # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
@@ -181,14 +183,18 @@ depends+=(${_system_libs[@]})
   ./third_party/libaddressinput/chromium/tools/update-strings.py
   ./out/Release/gn gen out/Release -s --no-clean --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python2
 
-  ionice -c3 nice -n20 ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox
+  ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
+  mkdir -p $PKG_BUILD/third_party/node/linux/node-linux-x64/bin
+  ln -fs $TOOLCHAIN/bin/node $PKG_BUILD/third_party/node/linux/node-linux-x64/bin/node
+
+  ionice -c3 nice -n20 ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox widevinecdmadapter
 }
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -P  $PKG_BUILD/out/Release/chrome $ADDON_BUILD/$PKG_ADDON_ID/bin/chromium.bin
   cp -P  $PKG_BUILD/out/Release/chrome_sandbox $ADDON_BUILD/$PKG_ADDON_ID/bin/chrome-sandbox
-  cp -P  $PKG_BUILD/out/Release/{*.pak,*.dat,*.bin} $ADDON_BUILD/$PKG_ADDON_ID/bin
+  cp -P  $PKG_BUILD/out/Release/{*.pak,*.dat,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -PR $PKG_BUILD/out/Release/locales $ADDON_BUILD/$PKG_ADDON_ID/bin/
   cp -PR $PKG_BUILD/out/Release/gen/content/content_resources.pak $ADDON_BUILD/$PKG_ADDON_ID/bin/
 
