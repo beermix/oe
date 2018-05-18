@@ -25,7 +25,20 @@ PKG_DEPENDS_TARGET="libelf:host"
 PKG_SECTION="devel"
 PKG_BUILD_FLAGS="+pic:host +pic"
 
-PKG_CONFIGURE_OPTS_HOST="--enable-compat \
-			    --enable-elf64 \
-			    --enable-extended-format \
-			    --enable-static --disable-shared"
+PKG_CONFIGURE_OPTS_HOST="--enable-shared --enable-elf64"
+
+pre_configure_host() {
+  cd $PKG_BUILD
+}
+
+#make_host() {
+#  make V=1 -C lib libelf.a
+#}
+
+#makeinstall_host() {
+#  mkdir -p $TOOLCHAIN/lib
+#  mkdir -p $TOOLCHAIN/include/libelf
+#
+#  cp -r lib/{elf_repl.h,gelf.h,libelf.h,nlist.h,sys_elf.h} $TOOLCHAIN/include/libelf/
+#  cp lib/libelf.a $TOOLCHAIN/lib
+#}

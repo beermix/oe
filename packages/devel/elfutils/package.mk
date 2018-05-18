@@ -29,7 +29,7 @@ PKG_SECTION="devel"
 PKG_SHORTDESC="elfutils: collection of utilities to handle ELF objects"
 PKG_LONGDESC="Elfutils is a collection of utilities, including eu-ld (a linker), eu-nm (for listing symbols from object files), eu-size (for listing the section sizes of an object or archive file), eu-strip (for discarding symbols), eu-readelf (to see the raw ELF file structures), and eu-elflint (to check for well-formed ELF files)."
 PKG_TOOLCHAIN="autotools"
-PKG_BUILD_FLAGS="+pic:host +pic"
+PKG_BUILD_FLAGS="+pic +pic:host"
 
 PKG_CONFIGURE_OPTS_TARGET="utrace_cv_cc_biarch=false \
                            --disable-werror \
@@ -37,15 +37,17 @@ PKG_CONFIGURE_OPTS_TARGET="utrace_cv_cc_biarch=false \
                            --disable-nls \
                            --with-zlib \
                            --without-bzlib \
-                           --without-lzma"
+                           --without-lzma \
+                           --enable-maintainer-mode"
 
 PKG_CONFIGURE_OPTS_HOST="utrace_cv_cc_biarch=false \
                            --disable-werror \
                            --disable-progs \
                            --disable-nls \
                            --with-zlib \
-                           --without-bzlib \
-                           --without-lzma"
+                           --with-bzlib \
+                           --with-lzma \
+                           --enable-maintainer-mode"
 
 make_target() {
   make V=1 -C libelf libelf.a
