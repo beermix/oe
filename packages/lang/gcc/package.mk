@@ -96,17 +96,21 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          $GCC_OPTS"
 
 pre_configure_host() {
+  export CFLAGS="-march=haswell -g -O3 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro"
+  export CXXFLAGS="-march=haswell -g -O3"
+  export CFLAGS_FOR_TARGET="-march=westmere -g -O3 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro"
+  export CXXFLAGS_FOR_TARGET="-march=westmere -g -O3"
+
   export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
-  
-  export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
-  export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
 }
 
-#pre_configure_bootstrap() {
-#  export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
-#  export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
-#}
+pre_configure_bootstrap() {
+  export CFLAGS="-march=haswell -g -O3 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro"
+  export CXXFLAGS="-march=haswell -g -O3"
+  export CFLAGS_FOR_TARGET="-march=westmere -g -O3 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro"
+  export CXXFLAGS_FOR_TARGET="-march=westmere -g -O3"
+}
 
 post_make_host() {
   # fix wrong link
