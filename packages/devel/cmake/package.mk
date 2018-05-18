@@ -20,7 +20,7 @@ PKG_NAME="cmake"
 PKG_VERSION="3.11.2"
 PKG_ARCH="any"
 PKG_LICENSE="BSD"
-PKG_SITE="https://cmake.org/download/"
+PKG_SITE="https://cmake.org/files/?C=M;O=D"
 PKG_URL="https://cmake.org/files/v3.11/cmake-$PKG_VERSION-Linux-x86_64.tar.gz"
 PKG_SOURCE_DIR="${PKG_NAME}-${PKG_VERSION}-Linux-x86_64"
 PKG_DEPENDS_HOST="ccache:host openssl:host bzip2:host"
@@ -31,4 +31,5 @@ PKG_TOOLCHAIN="manual"
 
 post_unpack() {
   cp -r $PKG_BUILD/* $TOOLCHAIN/
+  rm -rf $PKG_BUILD/*
 }
