@@ -40,3 +40,18 @@ index 326c39ae4c9..afcea547e93 100644
  	       PRED_FLAG_FIRST_MATCH)
  
  /* Same as LOOP_EXIT but for loops containing recursive call.  */
+diff --git a/gcc/testsuite/gcc.dg/predict-9.c b/gcc/testsuite/gcc.dg/predict-9.c
+index ec467519504..240fce675db 100644
+--- a/gcc/testsuite/gcc.dg/predict-9.c
++++ b/gcc/testsuite/gcc.dg/predict-9.c
+@@ -19,5 +19,5 @@ void foo (int base)
+   }
+ }
+ 
+-/* { dg-final { scan-tree-dump-times "first match heuristics: 3.0%" 3 "profile_estimate"} } */
+-/* { dg-final { scan-tree-dump-times "first match heuristics: 7.5%" 1 "profile_estimate"} } */
++/* { dg-final { scan-tree-dump-times "first match heuristics: 2.0%" 3 "profile_estimate"} } */
++/* { dg-final { scan-tree-dump-times "first match heuristics: 4.0%" 1 "profile_estimate"} } */
+-- 
+2.12.2
+
