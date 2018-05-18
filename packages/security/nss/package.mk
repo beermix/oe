@@ -47,7 +47,7 @@ make_host() {
      NSS_ENABLE_ECC=1 \
      SKIP_SHLIBSIGN=1 \
      NSS_TESTS="dummy" \
-     CC=$CC CCC=$CXX LDFLAGS="$LDFLAGS -L$TOOLCHAIN/lib" \
+     LDFLAGS="$LDFLAGS -I$TOOLCHAIN/include -Wl,-rpath,$TOOLCHAIN/lib -L$TOOLCHAIN/lib" \
      V=1
 }
 
