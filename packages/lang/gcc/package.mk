@@ -103,10 +103,10 @@ pre_configure_host() {
   export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
 }
 
-pre_configure_bootstrap() {
-  export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
-  export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
-}
+#pre_configure_bootstrap() {
+#  export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
+#  export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
+#}
 
 post_make_host() {
   # fix wrong link
