@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="xf86-video-vmware"
-PKG_VERSION="13.2.1"
-PKG_SHA256="e2f7f7101fba7f53b268e7a25908babbf155b3984fb5268b3d244eb6c11bf62b"
+PKG_VERSION="13.3.0"
+PKG_SHA256="47971924659e51666a757269ad941a059ef5afe7a47b5101c174a6022ac4066c"
 PKG_ARCH="x86_64"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.vmware.com"
