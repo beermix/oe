@@ -187,7 +187,7 @@ depends+=(${_system_libs[@]})
   mkdir -p $PKG_BUILD/third_party/node/linux/node-linux-x64/bin
   ln -fs $TOOLCHAIN/bin/node $PKG_BUILD/third_party/node/linux/node-linux-x64/bin/node
   
-  ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox
+  ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox widevinecdmadapter
 
   #ionice -c3 nice -n20 ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox widevinecdmadapter
 }

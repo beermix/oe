@@ -55,6 +55,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
+                           --disable-libmudflap \
                            --disable-libmpx \
                            --disable-libssp \
                            --disable-libsanitizer \
@@ -72,9 +73,7 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --with-newlib \
                               --disable-libatomic \
                               --disable-libgomp \
-                              --disable-libada \
                               --disable-libquadmath \
-                              --disable-libmudflap \
                               --disable-decimal-float \
                               $GCC_OPTS"
 
