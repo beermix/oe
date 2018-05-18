@@ -4,7 +4,7 @@
 ################################################################################
 
 PKG_NAME="apsw"
-PKG_VERSION="3.8.11.1-r1"
+PKG_VERSION="3.23.1-r1"
 PKG_ARCH="any"
 PKG_LICENSE="MIT"
 PKG_SITE="https://github.com/rogerbinns/apsw"
