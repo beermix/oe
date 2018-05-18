@@ -36,6 +36,7 @@ PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared \
                          --disable-lzmainfo \
                          --enable-lzma-links \
                          --disable-scripts \
+                         --enable-silent-rules \
                          --disable-doc"
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared \
