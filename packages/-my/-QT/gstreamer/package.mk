@@ -17,7 +17,7 @@
 ################################################################################ eglibc
 
 PKG_NAME="gstreamer"
-PKG_VERSION="1.14.0"
+PKG_VERSION="1.14.1"
 PKG_SITE="http://gstreamer.freedesktop.org/gstreamer"
 PKG_URL="https://gstreamer.freedesktop.org/src/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain libpng tiff dbus fontconfig zlib glib"
