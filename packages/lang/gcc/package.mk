@@ -50,7 +50,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-ld=default \
                            --disable-multilib \
                            --disable-nls \
-                           --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
                            --without-ppl \
                            --without-cloog \
@@ -80,7 +79,6 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
 PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-languages=c,c++ \
                          --with-headers=$SYSROOT_PREFIX/usr/include \
-                         --with-libelf=$TOOLCHAIN \
                          --enable-__cxa_atexit \
                          --enable-decimal-float \
                          --enable-tls \
