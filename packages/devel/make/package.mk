@@ -28,10 +28,6 @@ PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="make: GNU make utility to maintain groups of programs"
 PKG_LONGDESC="The 'make' utility automatically determines which pieces of a large program need to be recompiled, and issues commands to recompile them. This is GNU 'make', which was implemented by Richard Stallman and Roland McGrath. GNU 'make' conforms to section 6.2 of EEE Standard 1003.2-1992' (POSIX.2)."
 
-#post_unpack() {
-#  sed -i '211,217 d; 219,229 d; 232 d' $PKG_BUILD/glob/glob.c
-#}
-
 export CC=$LOCAL_CC
 
 PKG_CONFIGURE_OPTS_HOST="--without-guile"

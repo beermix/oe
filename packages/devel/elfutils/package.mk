@@ -69,4 +69,3 @@ makeinstall_target() {
   mkdir -p $SYSROOT_PREFIX/usr/include/elfutils
     cp version.h $SYSROOT_PREFIX/usr/include/elfutils
 }
-
