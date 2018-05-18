@@ -123,16 +123,11 @@ make_target() {
     'use_kerberos=false'
     'use_pulseaudio=false'
     'use_sysroot=true'
-    'enable_vr=false'
     'linux_link_libudev=true'
-    'use_v8_context_snapshot=false'
-    'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
-    'enable_hangout_services_extension=false'
+    'enable_hangout_services_extension=true'
     'enable_widevine=true'
-    'enable_vulkan=false'
     'enable_nacl=false'
-    'enable_swiftshader=false'
     'use_jumbo_build=false' # https://chromium.googlesource.com/chromium/src/+/lkcr/docs/jumbo.md
     'enable_nacl_nonsfi=false'
     'enable_swiftshader=false'

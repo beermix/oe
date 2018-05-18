@@ -39,7 +39,7 @@ if [ "$TARGET_ARCH" = arm ]; then
 elif [ "$TARGET_ARCH" = aarch64 ]; then
   PIXMAN_CONFIG="--disable-mmx --disable-sse2 --disable-vmx --disable-arm-simd --disable-arm-neon --disable-arm-iwmmxt"
 elif [ "$TARGET_ARCH" = x86_64  ]; then
-  PIXMAN_CONFIG="--enable-mmx --enable-sse2 --enable-ssse3 --disable-vmx --disable-arm-simd --disable-arm-neon"
+  PIXMAN_CONFIG="--enable-mmx --enable-sse2 --disable-ssse3 --disable-vmx --disable-arm-simd --disable-arm-neon"
 fi
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-openmp \
