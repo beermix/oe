@@ -36,16 +36,16 @@ PKG_CONFIGURE_OPTS_TARGET="utrace_cv_cc_biarch=false \
                            --disable-progs \
                            --disable-nls \
                            --with-zlib \
-                           --with-bzlib \
-                           --with-lzma"
+                           --without-bzlib \
+                           --without-lzma"
 
 PKG_CONFIGURE_OPTS_HOST="utrace_cv_cc_biarch=false \
                            --disable-werror \
                            --disable-progs \
                            --disable-nls \
                            --with-zlib \
-                           --with-bzlib \
-                           --with-lzma"
+                           --without-bzlib \
+                           --without-lzma"
 
 make_target() {
   make V=1 -C libelf libelf.a
