@@ -47,6 +47,10 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-gold \
                          --enable-ld=default \
                          --enable-lto \
+                         --enable-relro \
+                         --enable-targets=x86_64-pep \
+                         --enable-threads \
+                         --with-pic \
                          --disable-sim \
                          --disable-gdb \
                          --disable-nls"
