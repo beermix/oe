@@ -18,7 +18,7 @@
 
 PKG_NAME="glibc"
 PKG_VERSION="af7519f"
-#PKG_VERSION="0cd4a5e"
+PKG_VERSION="0cd4a5e"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/bminor/glibc/tree/release/2.26/master"
@@ -33,7 +33,6 @@ PKG_BUILD_FLAGS="-lto -gold -hardening"
 
 PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            ac_cv_path_PERL=no \
-                           ac_cv_prog_MAKEINFO= \
                            --libexecdir=/usr/lib/glibc \
                            --cache-file=config.cache \
                            --disable-profile \
@@ -46,7 +45,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
                            --enable-kernel=4.4 \
-                           --enable-stack-protector=strong \
+                           --disable-experimental-malloc \
                            --without-cvs \
                            --without-gd \
                            --enable-obsolete-rpc \
@@ -54,13 +53,9 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --disable-build-nscd \
                            --disable-nscd \
                            --enable-lock-elision \
-                           --disable-timezone-tools"
-
-if build_with_debug; then
-  PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET --enable-debug"
-else
-  PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_TARGET --disable-debug"
-fi
+                           --disable-timezone-tools \
+                           --disable-debug \
+                           --without-selinux"
 
 NSS_CONF_DIR="$PKG_BUILD/nss"
 
@@ -117,9 +112,9 @@ pre_configure_target() {
   unset LD_LIBRARY_PATH
 
   export CFLAGS="$CFLAGS -Wno-error=stringop-truncation -Wno-error=overflow -Wno-error=format-overflow="
-  export CFLAGS="-O2 -march=westmere -g2 -m64  -Wl,-z,max-page-size=0x1000 "
-  unset LDFLAGS
-  export LDFLAGS="-Wl,-z,max-page-size=0x1000 "
+  export CFLAGS="-O2 -march=westmere -g2 -m64"
+#  unset LDFLAGS
+#  export LDFLAGS="-Wl,-z,max-page-size=0x1000 "
 
   export BUILD_CC=$HOST_CC
   export OBJDUMP_FOR_HOST=objdump

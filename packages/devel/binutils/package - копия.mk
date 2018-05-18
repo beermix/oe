@@ -41,11 +41,14 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --disable-libada \
                          --disable-libssp \
                          --enable-version-specific-runtime-libs \
+                         --enable-compressed-debug-sections=all \
+                         --enable-deterministic-archives=no \
                          --enable-plugins \
                          --enable-gold \
                          --enable-ld=default \
                          --enable-lto \
                          --enable-relro \
+                         --enable-targets=x86_64-pep \
                          --enable-threads \
                          --with-pic \
                          --disable-sim \

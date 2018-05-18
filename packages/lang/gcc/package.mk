@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="7.3.0"
+PKG_VERSION="8.1.0"
 #PKG_SHA256="832ca6ae04636adbb430e865a1451adf6979ab44ca1c8374f61fba65645ce15c"
 #PKG_VERSION="7.3.1-20180406"
 PKG_VERSION="8-20180511"
@@ -52,6 +52,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-nls \
                            --enable-checking=release \
                            --with-default-libstdcxx-abi=gcc4-compatible \
+                           --disable-vtable-verify \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
