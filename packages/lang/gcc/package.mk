@@ -96,20 +96,20 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          $GCC_OPTS"
 
 pre_configure_host() {
-  export CFLAGS="-march=haswell -g -O3 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro -I$TOOLCHAIN/include"
-  export CXXFLAGS="-march=haswell -g -O3 -I$TOOLCHAIN/include"
-  export CFLAGS_FOR_TARGET="-march=westmere -g -O3 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro"
-  export CXXFLAGS_FOR_TARGET="-march=westmere -g -O3"
+  export CFLAGS="-march=haswell -g -O2 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro -I$TOOLCHAIN/include"
+  export CXXFLAGS="-march=haswell -g -O2 -I$TOOLCHAIN/include"
+  export CFLAGS_FOR_TARGET="-march=westmere -g -O2 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro"
+  export CXXFLAGS_FOR_TARGET="-march=westmere -g -O2"
 
   export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
 }
 
 pre_configure_bootstrap() {
-  export CFLAGS="-march=haswell -g -O3 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro -I$TOOLCHAIN/include"
-  export CXXFLAGS="-march=haswell -g -O3 -I$TOOLCHAIN/include"
-  export CFLAGS_FOR_TARGET="-march=westmere -g -O3 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro"
-  export CXXFLAGS_FOR_TARGET="-march=westmere -g -O3"
+  export CFLAGS="-march=haswell -g -O2 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro -I$TOOLCHAIN/include"
+  export CXXFLAGS="-march=haswell -g -O2 -I$TOOLCHAIN/include"
+  export CFLAGS_FOR_TARGET="-march=westmere -g -O2 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro"
+  export CXXFLAGS_FOR_TARGET="-march=westmere -g -O2"
 }
 
 post_make_host() {
