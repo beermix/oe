@@ -55,7 +55,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
-                           --disable-libmudflap \
                            --disable-libmpx \
                            --disable-libssp \
                            --with-tune=haswell \
@@ -71,6 +70,7 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --without-headers \
                               --with-newlib \
                               --disable-libatomic \
+                              --disable-libmudflap \
                               --disable-libgomp \
                               --disable-libquadmath \
                               --disable-decimal-float \
@@ -91,25 +91,25 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time \
                          --enable-clocale=gnu \
-                         --disable-libatomic \
+                         --enable-libatomic \
                          --enable-libgomp \
                          $GCC_OPTS"
 
 pre_configure_host() {
-  export CFLAGS="-g -O2 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro -I$TOOLCHAIN/include"
-  export CXXFLAGS="-g -O2 -I$TOOLCHAIN/include"
-  export CFLAGS_FOR_TARGET="-march=westmere -g -O2 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro"
-  export CXXFLAGS_FOR_TARGET="-march=westmere -g -O2"
+  export CFLAGS="-g1 -O2 -I$TOOLCHAIN/include"
+  export CXXFLAGS="-g1 -O2 -I$TOOLCHAIN/include"
+  export CFLAGS_FOR_TARGET="-march=westmere -g1 -O2"
+  export CXXFLAGS_FOR_TARGET="-march=westmere -g1 -O2"
 
   export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
 }
 
 pre_configure_bootstrap() {
-  export CFLAGS="-g -O2 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro -I$TOOLCHAIN/include"
-  export CXXFLAGS="-g -O2 -I$TOOLCHAIN/include"
-  export CFLAGS_FOR_TARGET="-march=westmere -g -O2 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro"
-  export CXXFLAGS_FOR_TARGET="-march=westmere -g -O2"
+  export CFLAGS="-g1 -O2 -I$TOOLCHAIN/include"
+  export CXXFLAGS="-g1 -O2 -I$TOOLCHAIN/include"
+  export CFLAGS_FOR_TARGET="-march=westmere -g1 -O2"
+  export CXXFLAGS_FOR_TARGET="-march=westmere -g1 -O2"
 }
 
 post_make_host() {
@@ -170,7 +170,7 @@ makeinstall_target() {
     cp -P $PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libgcc/libgcc_s.so* $INSTALL/usr/lib
     cp -P $PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libgomp/.libs/libgomp.so* $INSTALL/usr/lib
     cp -P $PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libstdc++-v3/src/.libs/libstdc++.so* $INSTALL/usr/lib
-#    cp -P $PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libatomic/.libs/libatomic.so* $INSTALL/usr/lib
+    cp -P $PKG_BUILD/.$HOST_NAME/$TARGET_NAME/libatomic/.libs/libatomic.so* $INSTALL/usr/lib
 }
 
 configure_init() {
