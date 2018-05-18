@@ -17,13 +17,12 @@
 ################################################################################
 
 PKG_NAME="mesa"
-PKG_VERSION="18.0.3"
+PKG_VERSION="18.0.4"
 PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
-PKG_SITE="ftp://freedesktop.org/pub/mesa/"
+PKG_SITE="https://mesa.freedesktop.org/archive/?C=M;O=D"
 PKG_URL="ftp://freedesktop.org/pub/mesa/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain expat libdrm"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="mesa: 3-D graphics library with OpenGL API"
