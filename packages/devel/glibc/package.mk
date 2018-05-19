@@ -18,7 +18,7 @@
 
 PKG_NAME="glibc"
 PKG_VERSION="af7519f"
-#PKG_VERSION="0cd4a5e=="
+#PKG_VERSION="2.26"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/bminor/glibc/tree/release/2.26/master"
@@ -39,13 +39,10 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --disable-sanity-checks \
                            --enable-add-ons \
                            --enable-bind-now \
-                           --with-elf \
-                           --with-tls \
-                           --with-__thread \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
                            --enable-kernel=4.4 \
-                           --disable-experimental-malloc \
+                           --enable-stack-protector=strong \
                            --without-cvs \
                            --without-gd \
                            --enable-obsolete-rpc \
@@ -53,9 +50,10 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --disable-build-nscd \
                            --disable-nscd \
                            --enable-lock-elision \
-                           --disable-timezone-tools \
                            --disable-debug \
-                           --without-selinux"
+                           --disable-werror \
+                           --without-selinux \
+                           --disable-timezone-tools"
 
 NSS_CONF_DIR="$PKG_BUILD/nss"
 
@@ -111,7 +109,7 @@ pre_configure_target() {
 
   unset LD_LIBRARY_PATH
 
-  export CFLAGS="$CFLAGS -Wno-error=stringop-truncation -Wno-error=overflow -Wno-error=format-overflow="
+  export CFLAGS="$CFLAGS -Wno-error=stringop-truncation -Wno-error=overflow -Wno-error=format-overflow= -Wno-error=format-overflow"
   export CFLAGS="-O2 -march=westmere -g2 -m64"
 
   export BUILD_CC=$HOST_CC
