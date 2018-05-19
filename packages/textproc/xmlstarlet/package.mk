@@ -37,7 +37,8 @@ PKG_CONFIGURE_OPTS_HOST="  ac_cv_func_malloc_0_nonnull=yes \
                            --with-libxml-include-prefix=$TOOLCHAIN/include/libxml2 \
                            --with-libxml-libs-prefix=$TOOLCHAIN/lib \
                            --with-libxslt-include-prefix=$TOOLCHAIN/include \
-                           --with-libxslt-libs-prefix=$TOOLCHAIN/lib"
+                           --with-libxslt-libs-prefix=$TOOLCHAIN/lib \
+                           --enable-build-docs=no"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            ac_cv_func_realloc_0_nonnull=yes \
@@ -47,7 +48,8 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_func_malloc_0_nonnull=yes \
                            --with-libxml-include-prefix=$SYSROOT_PREFIX/usr/include/libxml2 \
                            --with-libxml-libs-prefix=$SYSROOT_PREFIX/usr/lib \
                            --with-libxslt-include-prefix=$SYSROOT_PREFIX/usr/include \
-                           --with-libxslt-libs-prefix=$SYSROOT_PREFIX/usr/lib"
+                           --with-libxslt-libs-prefix=$SYSROOT_PREFIX/usr/lib \
+                           --enable-build-docs=no"
 
 post_makeinstall_host() {
   ln -sf xml $TOOLCHAIN/bin/xmlstarlet

@@ -4,12 +4,9 @@ PKG_URL="http://download.savannah.gnu.org/releases/quilt/quilt-$PKG_VERSION.tar.
 PKG_DEPENDS_TARGET=""
 PKG_DEPENDS_HOST=""
 PKG_SECTION="dev"
-
-
 PKG_TOOLCHAIN="autotools"
 
 pre_configure_host() {
   cd $PKG_BUILD
   rm -rf .$HOST_NAME
-  
 }
