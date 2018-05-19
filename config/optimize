@@ -20,11 +20,10 @@ TARGET_LDFLAGS="$TARGET_LDFLAGS $LD_OPTIM"
 TARGET_LIBDIR="$SYSROOT_PREFIX/lib $SYSROOT_PREFIX/usr/lib"
 TARGET_INCDIR="$SYSROOT_PREFIX/include $SYSROOT_PREFIX/usr/include"
 
-#HOST_CPPFLAGS="-fno-stack-protector" -U_FORTIFY_SOURCE
 HOST_CPPFLAGS=""
 HOST_CFLAGS="-O2 -I$TOOLCHAIN/include"
 HOST_CXXFLAGS="$HOST_CFLAGS"
-HOST_LDFLAGS="-I$TOOLCHAIN/include -Wl,-rpath,$TOOLCHAIN/lib -L$TOOLCHAIN/lib"
+HOST_LDFLAGS="-Wl,-rpath,$TOOLCHAIN/lib -L$TOOLCHAIN/lib"
 HOST_INCDIR="$TOOLCHAIN/include /usr/include"
 
 # work around Ubuntu default C*FLAGS 
@@ -33,9 +32,12 @@ HOST_CFLAGS="$HOST_CFLAGS -Wno-format-security"
 HOST_CXXFLAGS="$HOST_CXXFLAGS -Wno-format-security" 
 
 # lto flags
-CFLAGS_OPTIM_LTO="-fno-semantic-interposition -ffat-lto-objects -flto=${CONCURRENCY_MAKE_LEVEL}"
-CXXFLAGS_OPTIM_LTO="-fno-semantic-interposition -ffat-lto-objects -flto=${CONCURRENCY_MAKE_LEVEL}"
+CFLAGS_OPTIM_LTO="-flto=${CONCURRENCY_MAKE_LEVEL} -ffat-lto-objects"
+CXXFLAGS_OPTIM_LTO="-flto=${CONCURRENCY_MAKE_LEVEL} -ffat-lto-objects"
 LDFLAGS_OPTIM_LTO="-fuse-linker-plugin -flto=${CONCURRENCY_MAKE_LEVEL}"
+CFLAGS_OPTIM_NOLTO="-fno-lto"
+CXXFLAGS_OPTIM_NOLTO="-fno-lto"
+LDFLAGS_OPTIM_NOLTO="-fno-lto"
 
 # gold flags
 LDFLAGS_OPTIM_GOLD="-fuse-ld=gold"
@@ -46,8 +48,9 @@ CXXFLAGS_OPTIM_PIC="-fPIC -DPIC"
 LDFLAGS_OPTIM_PIC="-fPIC"
 
 # hardening support
-CFLAGS_OPTIM_HARDENING="-fstack-protector --param=ssp-buffer-size=4"
-CXXFLAGS_OPTIM_HARDENING="$CFLAGS_OPTIM_HARDENING"
+# TODO: basiclly copied from debian 9, should adjust for LE
+CFLAGS_OPTIM_HARDENING="-fstack-protector-strong -Wformat -Werror=format-security -fPIE"
+CXXFLAGS_OPTIM_HARDENING="-fstack-protector-strong -Wformat -Werror=format-security -fPIE"
 CPPFLAGS_OPTIM_HARDENING="-D_FORTIFY_SOURCE=2"
 LDFLAGS_OPTIM_HARDENING="-Wl,-z -Wl,now -Wl,-z -Wl,relro -Wl,-sort-common"
 
