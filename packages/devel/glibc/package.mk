@@ -18,7 +18,7 @@
 
 PKG_NAME="glibc"
 PKG_VERSION="af7519f"
-PKG_VERSION="0cd4a5e"
+#PKG_VERSION="0cd4a5e=="
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/bminor/glibc/tree/release/2.26/master"
@@ -113,8 +113,6 @@ pre_configure_target() {
 
   export CFLAGS="$CFLAGS -Wno-error=stringop-truncation -Wno-error=overflow -Wno-error=format-overflow="
   export CFLAGS="-O2 -march=westmere -g2 -m64"
-#  unset LDFLAGS
-#  export LDFLAGS="-Wl,-z,max-page-size=0x1000 "
 
   export BUILD_CC=$HOST_CC
   export OBJDUMP_FOR_HOST=objdump

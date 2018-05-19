@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="binutils"
-PKG_VERSION="238fb05"
+PKG_VERSION="97373b2"
 #PKG_SHA256="0b871e271c4c620444f8264f72143b4d224aa305306d85dd77ab8dce785b1e85"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -40,11 +40,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --disable-multilib \
                          --disable-libada \
                          --disable-libssp \
-                         --enable-version-specific-runtime-libs \
                          --enable-plugins \
-                         --enable-gold \
-                         --enable-ld=default \
-                         --enable-lto \
                          --enable-relro \
                          --enable-threads \
                          --with-pic \
