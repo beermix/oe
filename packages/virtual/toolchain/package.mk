@@ -14,7 +14,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################ bc:host libelf:host nasm:host re2c:host cmake:host
+################################################################################ bc:host libelf:host nasm:host re2c:host
 
 PKG_NAME="toolchain"
 PKG_VERSION=""
@@ -22,7 +22,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://libreelec.tv"
 PKG_URL=""
-PKG_DEPENDS_TARGET="configtools:host make:host xz:host sed:host pkg-config:host autoconf:host automake:host intltool:host libtool:host autoconf-archive:host cmake:host xmlstarlet:host re2c:host cmake:host xmlstarlet:host Python2:host ninja:host meson:host mpc:host gcc:host gcc:host nasm:host yasm:host"
+PKG_DEPENDS_TARGET="configtools:host make:host xz:host sed:host pkg-config:host autoconf:host automake:host intltool:host libtool:host autoconf-archive:host mpc:host gcc:host gcc:host re2c:host nasm:host yasm:host cmake:host xmlstarlet:host Python2:host ninja:host meson:host"
 PKG_SECTION="virtual"
 PKG_SHORTDESC="toolchain: LibreELEC.tv' toolchain"
 PKG_LONGDESC="a crosscompiling toolchain to compile all packages"

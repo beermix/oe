@@ -17,13 +17,13 @@
 ################################################################################
 
 PKG_NAME="binutils"
-PKG_VERSION="97373b2"
+PKG_VERSION="2.28.1"
 #PKG_SHA256="0b871e271c4c620444f8264f72143b4d224aa305306d85dd77ab8dce785b1e85"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://ftp.gnu.org.ua/gnu/binutils/?C=M;O=D"
 PKG_URL="http://ftpmirror.gnu.org/binutils/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_URL="https://github.com/bminor/binutils-gdb/archive/${PKG_VERSION}.tar.gz"
+#PKG_URL="https://github.com/bminor/binutils-gdb/archive/${PKG_VERSION}.tar.gz"
 PKG_SOURCE_DIR="$PKG_NAME-gdb-$PKG_VERSION*"
 PKG_DEPENDS_HOST="ccache:host bison:host flex:host elfutils:host linux:host"
 PKG_DEPENDS_TARGET="toolchain binutils:host"
@@ -40,10 +40,11 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --disable-multilib \
                          --disable-libada \
                          --disable-libssp \
+                         --enable-version-specific-runtime-libs \
                          --enable-plugins \
-                         --enable-relro \
-                         --enable-threads \
-                         --with-pic \
+                         --enable-gold \
+                         --enable-ld=default \
+                         --enable-lto \
                          --disable-sim \
                          --disable-gdb \
                          --disable-nls"

@@ -17,15 +17,15 @@
 ################################################################################
 
 PKG_NAME="gcc"
-PKG_VERSION="8.1.0"
+PKG_VERSION="6.4.0"
 #PKG_SHA256="832ca6ae04636adbb430e865a1451adf6979ab44ca1c8374f61fba65645ce15c"
 #PKG_VERSION="7.3.1-20180406"
-PKG_VERSION="8-20180518"
+#PKG_VERSION="8-20180518"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="ftp://gcc.gnu.org/pub/gcc/snapshots/LATEST-7"
 PKG_URL="ftp://gcc.gnu.org/pub/gcc/snapshots/$PKG_VERSION/gcc-$PKG_VERSION.tar.xz"
-#PKG_URL="http://ftpmirror.gnu.org/gcc/$PKG_NAME-$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="http://ftpmirror.gnu.org/gcc/$PKG_NAME-$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
 #PKG_URL="https://sources.archlinux.org/other/gcc/$PKG_NAME-$PKG_VERSION.tar.xz"
 #PKG_URL="http://ftpmirror.gnu.org/gcc/$PKG_NAME-$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_BOOTSTRAP="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc:host isl:host"
@@ -97,8 +97,8 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          $GCC_OPTS"
 
 pre_configure_host() {
-  export CFLAGS="-g1 -O2 -I$TOOLCHAIN/include"
-  export CXXFLAGS="-g1 -O2 -I$TOOLCHAIN/include"
+  export CFLAGS="-g -O2 -I$TOOLCHAIN/include"
+  export CXXFLAGS="-g -O2 -I$TOOLCHAIN/include"
   export CFLAGS_FOR_TARGET="-march=westmere -g1 -O2"
   export CXXFLAGS_FOR_TARGET="-march=westmere -g1 -O2"
 
@@ -107,10 +107,10 @@ pre_configure_host() {
 }
 
 pre_configure_bootstrap() {
-  export CFLAGS="-g1 -O2 -I$TOOLCHAIN/include"
-  export CXXFLAGS="-g1 -O2 -I$TOOLCHAIN/include"
-  export CFLAGS_FOR_TARGET="-march=westmere -g1 -O2"
-  export CXXFLAGS_FOR_TARGET="-march=westmere -g1 -O2"
+  export CFLAGS="-g -O2 -I$TOOLCHAIN/include"
+  export CXXFLAGS="-g -O2 -I$TOOLCHAIN/include"
+  export CFLAGS_FOR_TARGET="-march=westmere -g -O2"
+  export CXXFLAGS_FOR_TARGET="-march=westmere -g -O2"
 }
 
 post_make_host() {
