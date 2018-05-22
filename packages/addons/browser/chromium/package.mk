@@ -73,6 +73,8 @@ make_target() {
   export LDFLAGS="$LDFLAGS -ludev"
   export LD=$CXX
 
+  export CCACHE_SLOPPINESS=time_macros
+
   # Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
   # Note: These are for OpenELEC use ONLY. For your own distribution, please
   # get your own set of keys.
