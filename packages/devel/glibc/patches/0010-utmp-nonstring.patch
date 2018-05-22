@@ -24,7 +24,7 @@ Date:   Wed Nov 15 17:39:59 2017 -0700
 
 --- a/misc/sys/cdefs.h
 +++ b/misc/sys/cdefs.h
-@@ -430,6 +430,15 @@
+@@ -404,6 +404,15 @@
  # endif
  #endif
  

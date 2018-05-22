@@ -19,7 +19,7 @@ Signed-off-by: Alexey Neyman <stilor@att.net>
 
 --- a/configure
 +++ b/configure
-@@ -5804,7 +5804,7 @@
+@@ -5532,7 +5532,7 @@
    $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
    test $ac_status = 0; }; }
  then
@@ -30,7 +30,7 @@ Signed-off-by: Alexey Neyman <stilor@att.net>
      libc_cv_z_combreloc=no
 --- a/configure.ac
 +++ b/configure.ac
-@@ -1391,7 +1391,7 @@
+@@ -1246,7 +1246,7 @@
  dnl introducing new options this is not easily doable.  Instead use a tool
  dnl which always is cross-platform: readelf.  To detect whether -z combreloc
  dnl look for a section named .rel.dyn.
