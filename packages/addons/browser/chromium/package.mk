@@ -112,6 +112,7 @@ make_target() {
     'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_hangout_services_extension=true'
+    'use_jumbo_build=true' # https://chromium.googlesource.com/chromium/src/+/lkcr/docs/jumbo.md
     'enable_widevine=false'
     'enable_nacl=false'
     'enable_nacl_nonsfi=false'
