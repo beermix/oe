@@ -22,17 +22,17 @@
 ################################################################################ beautifulsoup4:host html5lib:host re2 snappy
 
 PKG_NAME="chromium"
-PKG_VERSION="67.0.3396.48"
-#PKG_SHA256="37e6673741b365a25a837217b08f77b24b4f5fc4ad88c8581be6a5dae9a9e919"
-PKG_REV="210"
+PKG_VERSION="63.0.3239.108"
+PKG_SHA256="47d80798194da78bdd519b7ce012425b13cf89d6eb287e22a34342a245c31a2b"
+PKG_REV="108"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_SITE="http://www.chromium.org/Home"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 #PKG_URL="https://gsdview.appspot.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 #PKG_URL="http://192.168.1.200:8080/%2Fchromium-66.0.3359.117.tar.xz"
-#PKG_DEPENDS_HOST="toolchain ninja:host Python2:host gperf:host libevent:host"
-PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
+PKG_DEPENDS_HOST="toolchain ninja:host Python2:host gperf:host libevent:host"
+PKG_DEPENDS_HOST="toolchain ninja:host Python2:host gperf:host"
 PKG_DEPENDS_TARGET="pciutils systemd dbus libXtst libXcomposite libXcursor alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk xdotool libdrm libjpeg-turbo freetype libxslt harfbuzz gtk+ chromium:host"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
@@ -57,24 +57,12 @@ post_patch() {
 }
 
 make_host() {
-  export CCACHE_SLOPPINESS=time_macros
   ./tools/gn/bootstrap/bootstrap.py --no-rebuild --no-clean
 }
 
 make_target() {
-  unset CPPFLAGS
-  unset CFLAGS
-  unset CXXFLAGS
-  unset LDFLAGS
-
-  export CFLAGS="$CFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables -fdiagnostics-color=always"
-  export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
-  export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
-
   export LDFLAGS="$LDFLAGS -ludev"
   export LD=$CXX
-
-  export CCACHE_SLOPPINESS=time_macros
 
   # Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
   # Note: These are for OpenELEC use ONLY. For your own distribution, please
@@ -101,6 +89,7 @@ make_target() {
     'use_allocator="none"'
     'use_cups=false'
     'use_custom_libcxx=false'
+    'use_gconf=false'
     'use_gnome_keyring=false'
     'use_gold=false'
     'use_gtk3=false'
@@ -111,8 +100,8 @@ make_target() {
     'use_v8_context_snapshot=false'
     'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
+    'exclude_unwind_tables=true'
     'enable_hangout_services_extension=true'
-    'use_jumbo_build=true' # https://chromium.googlesource.com/chromium/src/+/lkcr/docs/jumbo.md
     'enable_widevine=false'
     'enable_nacl=false'
     'enable_nacl_nonsfi=false'
