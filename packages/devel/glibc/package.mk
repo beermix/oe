@@ -31,7 +31,7 @@ PKG_LONGDESC="The Glibc package contains the main C library. This library provid
 PKG_BUILD_FLAGS="-parallel -lto -gold -hardening"
 
 PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
-                           ac_cv_path_PERL=no \
+                           ac_cv_path_PERL= \
                            ac_cv_prog_MAKEINFO= \
                            --libexecdir=/usr/lib/glibc \
                            --cache-file=config.cache \
@@ -132,9 +132,6 @@ echo "rootsbindir=/usr/bin" >> configparms
 post_makeinstall_target() {
 # xlocale.h was renamed - create symlink for compatibility
 # ln -sf $SYSROOT_PREFIX/usr/include/bits/types/__locale_t.h $SYSROOT_PREFIX/usr/include/xlocale.h
-
-# symlink locale directory
-  ln -sf /storage/.config/locale $INSTALL/usr/lib/locale
 
 # we are linking against ld.so, so symlink
   ln -sf $(basename $INSTALL/usr/lib/ld-*.so) $INSTALL/usr/lib/ld.so
