@@ -109,8 +109,7 @@ pre_configure_target() {
 
   unset LD_LIBRARY_PATH
 
-#  export CFLAGS="$CFLAGS -Wno-error=stringop-truncation -Wno-error=overflow -Wno-error=format-overflow= -Wno-error=format-overflow"
-  export CFLAGS="-O2 -march=westmere -g -m64"
+  export CFLAGS="-O2 -march=westmere --param=l1-cache-line-size=64 --param=l1-cache-size=32 --param=l2-cache-size=3072 -g -m64"
 
   export BUILD_CC=$HOST_CC
   export OBJDUMP_FOR_HOST=objdump
@@ -131,7 +130,7 @@ echo "rootsbindir=/usr/bin" >> configparms
 
 post_makeinstall_target() {
 # xlocale.h was renamed - create symlink for compatibility
-#  ln -sf $SYSROOT_PREFIX/usr/include/bits/types/__locale_t.h $SYSROOT_PREFIX/usr/include/xlocale.h
+# ln -sf $SYSROOT_PREFIX/usr/include/bits/types/__locale_t.h $SYSROOT_PREFIX/usr/include/xlocale.h
 
 # symlink locale directory
   ln -sf /storage/.config/locale $INSTALL/usr/lib/locale
