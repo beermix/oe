@@ -32,6 +32,7 @@ PKG_BUILD_FLAGS="-parallel -lto -gold -hardening"
 
 PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            ac_cv_path_PERL=no \
+                           ac_cv_prog_MAKEINFO= \
                            --libexecdir=/usr/lib/glibc \
                            --cache-file=config.cache \
                            --disable-profile \
@@ -149,6 +150,17 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/lib/*.o
   rm -rf $INSTALL/usr/lib/*.map
   rm -rf $INSTALL/var
+
+# create locales and charmaps
+  rm -rf $INSTALL/usr/share/i18n/charmaps
+    cp -PR $PKG_BUILD/localedata/charmaps $INSTALL/usr/share/i18n
+    for file_charmap in $(ls $INSTALL/usr/share/i18n/charmaps); do
+      gzip $INSTALL/usr/share/i18n/charmaps/$file_charmap
+    done
+
+  mkdir -p $INSTALL/usr/config/locale
+    [ -e $PKG_DIR/config/locale-archive ] && cp $PKG_DIR/config/locale-archive $INSTALL/usr/config/locale
+    ln -s /storage/.config/locale $INSTALL/usr/lib/locale
 
 # create default configs
   mkdir -p $INSTALL/etc
