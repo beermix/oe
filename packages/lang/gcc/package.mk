@@ -55,9 +55,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
-                           --disable-libmudflap \
-                           --disable-libatomic \
-                           --disable-libgomp \
                            --disable-libmpx \
                            --disable-libssp \
                            --with-tune=haswell \
@@ -74,6 +71,9 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --with-newlib \
                               --disable-libitm \
                               --disable-libquadmath \
+                              --disable-libmudflap \
+                              --disable-libatomic \
+                              --disable-libgomp \
                               --disable-decimal-float \
                               $GCC_OPTS"
 
@@ -99,8 +99,8 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
 pre_configure_host() {
   export CFLAGS="-g -O2 -I$TOOLCHAIN/include"
   export CXXFLAGS="-g -O2 -I$TOOLCHAIN/include"
-  export CFLAGS_FOR_TARGET="-march=westmere -g1 -O2"
-  export CXXFLAGS_FOR_TARGET="-march=westmere -g1 -O2"
+  export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
+  export CXXFLAGS_FOR_TARGET="TARGET_CXXFLAGS"
 
   export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
@@ -109,8 +109,8 @@ pre_configure_host() {
 pre_configure_bootstrap() {
   export CFLAGS="-g -O2 -I$TOOLCHAIN/include"
   export CXXFLAGS="-g -O2 -I$TOOLCHAIN/include"
-  export CFLAGS_FOR_TARGET="-march=westmere -g -O2"
-  export CXXFLAGS_FOR_TARGET="-march=westmere -g -O2"
+  export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
+  export CXXFLAGS_FOR_TARGET="TARGET_CXXFLAGS"
 }
 
 post_make_host() {
