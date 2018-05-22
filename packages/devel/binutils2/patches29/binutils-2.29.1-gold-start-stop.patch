@@ -1,0 +1,153 @@
+diff -rup binutils.orig/gold/layout.cc binutils-2.29.1/gold/layout.cc
+--- binutils.orig/gold/layout.cc	2017-10-18 12:00:31.990714767 +0100
++++ binutils-2.29.1/gold/layout.cc	2017-10-18 12:00:41.351604074 +0100
+@@ -2211,10 +2211,11 @@ Layout::define_section_symbols(Symbol_ta
+ 					0, // symsize
+ 					elfcpp::STT_NOTYPE,
+ 					elfcpp::STB_GLOBAL,
+-					elfcpp::STV_DEFAULT,
++					elfcpp::STV_PROTECTED,
+ 					0, // nonvis
+ 					false, // offset_is_from_end
+-					true); // only_if_ref
++					true, // only_if_ref
++					true); // must_be_in_reg
+ 
+ 	  symtab->define_in_output_data(stop_name.c_str(),
+ 					NULL, // version
+@@ -2224,10 +2225,11 @@ Layout::define_section_symbols(Symbol_ta
+ 					0, // symsize
+ 					elfcpp::STT_NOTYPE,
+ 					elfcpp::STB_GLOBAL,
+-					elfcpp::STV_DEFAULT,
++					elfcpp::STV_PROTECTED,
+ 					0, // nonvis
+ 					true, // offset_is_from_end
+-					true); // only_if_ref
++					true, // only_if_ref
++					true); // must_be_in_reg
+ 	}
+     }
+ }
+Only in binutils-2.29.1/gold: layout.cc.orig
+diff -rup binutils.orig/gold/symtab.cc binutils-2.29.1/gold/symtab.cc
+--- binutils.orig/gold/symtab.cc	2017-10-18 12:00:31.990714767 +0100
++++ binutils-2.29.1/gold/symtab.cc	2017-10-18 12:00:41.352604062 +0100
+@@ -1760,7 +1760,9 @@ Sized_symbol<size>*
+ Symbol_table::define_special_symbol(const char** pname, const char** pversion,
+ 				    bool only_if_ref,
+                                     Sized_symbol<size>** poldsym,
+-				    bool* resolve_oldsym, bool is_forced_local)
++				    bool* resolve_oldsym,
++				    bool is_forced_local,
++				    bool must_be_in_reg)
+ {
+   *resolve_oldsym = false;
+   *poldsym = NULL;
+@@ -1797,7 +1799,11 @@ Symbol_table::define_special_symbol(cons
+       oldsym = this->lookup(*pname, *pversion);
+       if (oldsym == NULL && is_default_version)
+ 	oldsym = this->lookup(*pname, NULL);
+-      if (oldsym == NULL || !oldsym->is_undefined())
++      // If the symbol must be defined in a regular object, ignore
++      // definition from a dynamic object.
++      if (oldsym == NULL
++	  || (!oldsym->is_undefined()
++	      && (!must_be_in_reg || !oldsym->is_from_dynobj())))
+ 	return NULL;
+ 
+       *pname = oldsym->name();
+@@ -1916,7 +1922,8 @@ Symbol_table::define_in_output_data(cons
+ 				    elfcpp::STV visibility,
+ 				    unsigned char nonvis,
+ 				    bool offset_is_from_end,
+-				    bool only_if_ref)
++				    bool only_if_ref,
++				    bool must_be_in_reg)
+ {
+   if (parameters->target().get_size() == 32)
+     {
+@@ -1925,7 +1932,8 @@ Symbol_table::define_in_output_data(cons
+                                                 value, symsize, type, binding,
+                                                 visibility, nonvis,
+                                                 offset_is_from_end,
+-                                                only_if_ref);
++                                                only_if_ref,
++                                                must_be_in_reg);
+ #else
+       gold_unreachable();
+ #endif
+@@ -1937,7 +1945,8 @@ Symbol_table::define_in_output_data(cons
+                                                 value, symsize, type, binding,
+                                                 visibility, nonvis,
+                                                 offset_is_from_end,
+-                                                only_if_ref);
++                                                only_if_ref,
++                                                must_be_in_reg);
+ #else
+       gold_unreachable();
+ #endif
+@@ -1962,7 +1971,8 @@ Symbol_table::do_define_in_output_data(
+     elfcpp::STV visibility,
+     unsigned char nonvis,
+     bool offset_is_from_end,
+-    bool only_if_ref)
++    bool only_if_ref,
++    bool must_be_in_reg)
+ {
+   Sized_symbol<size>* sym;
+   Sized_symbol<size>* oldsym;
+@@ -1975,7 +1985,8 @@ Symbol_table::do_define_in_output_data(
+       sym = this->define_special_symbol<size, true>(&name, &version,
+ 						    only_if_ref, &oldsym,
+ 						    &resolve_oldsym,
+-						    is_forced_local);
++						    is_forced_local,
++						    must_be_in_reg);
+ #else
+       gold_unreachable();
+ #endif
+@@ -1986,7 +1997,8 @@ Symbol_table::do_define_in_output_data(
+       sym = this->define_special_symbol<size, false>(&name, &version,
+ 						     only_if_ref, &oldsym,
+ 						     &resolve_oldsym,
+-						     is_forced_local);
++						     is_forced_local,
++						     must_be_in_reg);
+ #else
+       gold_unreachable();
+ #endif
+diff -rup binutils.orig/gold/symtab.h binutils-2.29.1/gold/symtab.h
+--- binutils.orig/gold/symtab.h	2017-10-18 12:00:32.002714624 +0100
++++ binutils-2.29.1/gold/symtab.h	2017-10-18 12:00:41.352604062 +0100
+@@ -1488,7 +1488,8 @@ class Symbol_table
+ 			Output_data*, uint64_t value, uint64_t symsize,
+ 			elfcpp::STT type, elfcpp::STB binding,
+ 			elfcpp::STV visibility, unsigned char nonvis,
+-			bool offset_is_from_end, bool only_if_ref);
++			bool offset_is_from_end, bool only_if_ref,
++			bool must_be_in_reg = false);
+ 
+   // Define a special symbol based on an Output_segment.  It is a
+   // multiple definition error if this symbol is already defined.
+@@ -1803,7 +1804,8 @@ class Symbol_table
+   Sized_symbol<size>*
+   define_special_symbol(const char** pname, const char** pversion,
+ 			bool only_if_ref, Sized_symbol<size>** poldsym,
+-			bool* resolve_oldsym, bool is_forced_local);
++			bool* resolve_oldsym, bool is_forced_local,
++			bool must_be_in_reg = false);
+ 
+   // Define a symbol in an Output_data, sized version.
+   template<int size>
+@@ -1814,7 +1816,8 @@ class Symbol_table
+ 			   typename elfcpp::Elf_types<size>::Elf_WXword ssize,
+ 			   elfcpp::STT type, elfcpp::STB binding,
+ 			   elfcpp::STV visibility, unsigned char nonvis,
+-			   bool offset_is_from_end, bool only_if_ref);
++			   bool offset_is_from_end, bool only_if_ref,
++			   bool must_be_in_reg = false);
+ 
+   // Define a symbol in an Output_segment, sized version.
+   template<int size>
+Only in binutils-2.29.1/gold: symtab.h.orig

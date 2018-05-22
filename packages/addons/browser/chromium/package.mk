@@ -66,7 +66,7 @@ make_target() {
   unset CXXFLAGS
   unset LDFLAGS
 
-  export CFLAGS="$CFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables"
+  export CFLAGS="$CFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables -fdiagnostics-color=always"
   export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
   export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
 
