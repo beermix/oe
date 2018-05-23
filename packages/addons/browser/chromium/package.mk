@@ -64,6 +64,13 @@ make_target() {
   export LDFLAGS="$LDFLAGS -ludev"
   export LD=$CXX
 
+  # Allow building against system libraries in official builds
+  sed -i 's/OFFICIAL_BUILD/GOOGLE_CHROME_BUILD/' ./tools/generate_shim_headers/generate_shim_headers.py
+
+  # Work around broken screen sharing in Google Meet
+  # https://crbug.com/829916#c16
+  sed -i 's/"Chromium/"Chrome/' ./chrome/common/chrome_content_client_constants.cc
+
   # Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
   # Note: These are for OpenELEC use ONLY. For your own distribution, please
   # get your own set of keys.
