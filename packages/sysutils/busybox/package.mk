@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="busybox"
-PKG_VERSION="1.28.3"
+PKG_VERSION="1.28.4"
 PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
