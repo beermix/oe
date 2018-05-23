@@ -39,7 +39,7 @@ PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
 PKG_TOOLCHAIN="manual"
 PKG_BUILD_FLAGS="-lto -hardening"
-GOLD_SUPPORT="yes"
+#GOLD_SUPPORT="yes"
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Chromium"
@@ -117,7 +117,7 @@ make_target() {
     'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'exclude_unwind_tables=true'
-    'enable_hangout_services_extension=true'
+    'enable_hangout_services_extension=false'
     'enable_widevine=false'
     'enable_nacl=false'
     'enable_nacl_nonsfi=false'
