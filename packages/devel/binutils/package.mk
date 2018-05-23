@@ -17,8 +17,7 @@
 ################################################################################
 
 PKG_NAME="binutils"
-PKG_VERSION="2.28"
-#PKG_SHA256="0b871e271c4c620444f8264f72143b4d224aa305306d85dd77ab8dce785b1e85"
+PKG_VERSION="2.27"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://ftp.gnu.org.ua/gnu/binutils/?C=M;O=D"
@@ -61,8 +60,6 @@ PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
                          --disable-gold \
                          --disable-ld \
                          --disable-lto \
-                         --disable-sim \
-                         --disable-gdb \
                          --disable-nls"
 
 pre_configure_host() {
@@ -73,13 +70,13 @@ pre_configure_host() {
 }
 
 make_host() {
-  make MAKEINFO=true configure-host
-  make MAKEINFO=true
+  make configure-host
+  make
 }
 
 makeinstall_host() {
   cp -v ../include/libiberty.h $SYSROOT_PREFIX/usr/include
-  make MAKEINFO=true install
+  make install
 }
 
 make_target() {

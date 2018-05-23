@@ -51,7 +51,7 @@ case "$LINUX" in
     ;;
   *)
     PKG_VERSION="4.14.20"
-    PKG_SHA256=""
+    PKG_SHA256="4ab7f42aa6af9c1e3b00cba6b1fa305a87407666aaa2fae555f7fbdaafb6d292"
     PKG_URL="https://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
     PKG_PATCH_DIRS="4.14"
     PKG_BUILD_PERF="no"
