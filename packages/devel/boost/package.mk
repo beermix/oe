@@ -52,7 +52,7 @@ makeinstall_target() {
   $TOOLCHAIN/bin/bjam -d2 --ignore-site-config \
                           --layout=system \
                           --prefix=$SYSROOT_PREFIX/usr \
-                          --toolset=gcc variant=release link=static runtime-link=static threading=multi \
+                          --toolset=gcc variant=release link=static threading=multi \
                           --with-chrono \
                           --with-date_time \
                           --with-filesystem \
