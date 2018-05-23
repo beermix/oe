@@ -63,5 +63,6 @@ PKG_BUILD_FLAGS="-parallel"
 # mmap_size pragma.
   CFLAGS="$CFLAGS -DSQLITE_TEMP_STORE=3 -DSQLITE_DEFAULT_MMAP_SIZE=268435456"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-threadsafe --enable-dynamic-extensions"
+PKG_CONFIGURE_OPTS_TARGET="--enable-threadsafe --enable-dynamic-extensions --disable-silent-rules"
+
 PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
