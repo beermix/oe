@@ -17,12 +17,13 @@
 ################################################################################
 
 PKG_NAME="binutils"
-PKG_VERSION="2.28.1"
+PKG_VERSION="2.28-deb"
 #PKG_SHA256="0b871e271c4c620444f8264f72143b4d224aa305306d85dd77ab8dce785b1e85"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://ftp.gnu.org.ua/gnu/binutils/?C=M;O=D"
-PKG_URL="http://ftpmirror.gnu.org/binutils/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="http://ftpmirror.gnu.org/binutils/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_URL="http://192.168.1.200:8080/binutils-2.28-deb.tar.xz"
 PKG_SOURCE_DIR="$PKG_NAME-gdb-$PKG_VERSION*"
 PKG_DEPENDS_HOST="ccache:host bison:host flex:host linux:host"
 PKG_DEPENDS_TARGET="toolchain binutils:host"
@@ -40,6 +41,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --disable-libada \
                          --disable-libssp \
                          --enable-version-specific-runtime-libs \
+                         --enable-deterministic-archives \
                          --enable-compressed-debug-sections=all \
                          --enable-plugins \
                          --enable-gold \
@@ -78,25 +80,19 @@ pre_configure_host() {
 }
 
 make_host() {
-  make MAKEINFO=true configure-host
-  make MAKEINFO=true
+  make configure-host
+  make
 }
 
 makeinstall_host() {
   cp -v ../include/libiberty.h $SYSROOT_PREFIX/usr/include
-  make MAKEINFO=true install
+  make install -j1
 }
 
 make_target() {
   make configure-host
   make -C libiberty
   make -C bfd
-}
-
-makeinstall_target() {
-  mkdir -p $SYSROOT_PREFIX/usr/lib
-    cp libiberty/libiberty.a $SYSROOT_PREFIX/usr/lib
-  make DESTDIR="$SYSROOT_PREFIX" -C bfd install
 }
 
 makeinstall_target() {
