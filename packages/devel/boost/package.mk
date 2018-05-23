@@ -23,7 +23,7 @@ PKG_SITE="http://www.boost.org/"
 PKG_URL="https://dl.bintray.com/boostorg/release/1.67.0/source/boost_$PKG_VERSION.tar.gz"
 PKG_URL="https://fossies.org/linux/misc/boost_1_67_0.tar.xz"
 PKG_SOURCE_DIR="${PKG_NAME}_${PKG_VERSION}"
-PKG_DEPENDS_TARGET="toolchain boost:host zlib bzip2"
+PKG_DEPENDS_TARGET="toolchain boost:host Python2:host zlib bzip2"
 PKG_LONGDESC="boost: Peer-reviewed STL style libraries for C++"
 PKG_TOOLCHAIN="manual"
 PKG_BUILD_FLAGS="+pic"
@@ -40,7 +40,9 @@ makeinstall_host() {
 
 configure_target() {
   sh bootstrap.sh --prefix=/usr \
-                  --with-bjam=$TOOLCHAIN/bin/bjam 
+                  --with-bjam=$TOOLCHAIN/bin/bjam \
+                  --with-python=$TOOLCHAIN/bin/python \
+                  --with-python-root=$SYSROOT_PREFIX/usr
 
   echo "using gcc : `$CC -v 2>&1  | tail -n 1 |awk '{print $3}'` : $CC  : <compileflags>\"$CFLAGS\" <linkflags>\"$LDFLAGS\" ;" \
     > tools/build/src/user-config.jam
