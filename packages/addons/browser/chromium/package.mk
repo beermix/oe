@@ -22,17 +22,17 @@
 ################################################################################ beautifulsoup4:host html5lib:host re2 snappy
 
 PKG_NAME="chromium"
-PKG_VERSION="66.0.3359.181"
-#PKG_SHA256="37e6673741b365a25a837217b08f77b24b4f5fc4ad88c8581be6a5dae9a9e919"
-PKG_REV="210"
+PKG_VERSION="63.0.3239.132"
+PKG_SHA256=""
+PKG_REV="110"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_SITE="http://www.chromium.org/Home"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 #PKG_URL="https://gsdview.appspot.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 #PKG_URL="http://192.168.1.200:8080/%2Fchromium-66.0.3359.117.tar.xz"
-#PKG_DEPENDS_HOST="toolchain ninja:host Python2:host gperf:host libevent:host"
-PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
+PKG_DEPENDS_HOST="toolchain ninja:host Python2:host gperf:host libevent:host"
+PKG_DEPENDS_HOST="toolchain ninja:host Python2:host gperf:host"
 PKG_DEPENDS_TARGET="pciutils systemd dbus libXtst libXcomposite libXcursor alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk xdotool libdrm libjpeg-turbo freetype libxslt harfbuzz gtk+ chromium:host"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
@@ -62,24 +62,21 @@ make_host() {
 }
 
 make_target() {
-  unset CPPFLAGS
-  unset CFLAGS
-  unset CXXFLAGS
-  unset LDFLAGS
-
-  export CFLAGS="$CFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables -fdiagnostics-color=always"
-  export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
-  export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
-
   export LDFLAGS="$LDFLAGS -ludev"
   export LD=$CXX
+
+  # Allow building against system libraries in official builds
+  sed -i 's/OFFICIAL_BUILD/GOOGLE_CHROME_BUILD/' ./tools/generate_shim_headers/generate_shim_headers.py
+
+  # Work around broken screen sharing in Google Meet
+  # https://crbug.com/829916#c16
+  sed -i 's/"Chromium/"Chrome/' ./chrome/common/chrome_content_client_constants.cc
 
   export CCACHE_SLOPPINESS=time_macros
 
   # Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
   # Note: These are for OpenELEC use ONLY. For your own distribution, please
   # get your own set of keys.
-
   local _google_api_key=AIzaSyAQ6L9vt9cnN4nM0weaa6Y38K4eyPvtKgI
   local _google_default_client_id=740889307901-4bkm4e0udppnp1lradko85qsbnmkfq3b.apps.googleusercontent.com
   local _google_default_client_secret=9TJlhL661hvShQub4cWhANXa
@@ -101,6 +98,7 @@ make_target() {
     'use_allocator="none"'
     'use_cups=false'
     'use_custom_libcxx=false'
+    'use_gconf=false'
     'use_gnome_keyring=false'
     'use_gold=false'
     'use_gtk3=false'
@@ -111,8 +109,8 @@ make_target() {
     'use_v8_context_snapshot=false'
     'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
+    'exclude_unwind_tables=true'
     'enable_hangout_services_extension=true'
-    'use_jumbo_build=false' # https://chromium.googlesource.com/chromium/src/+/lkcr/docs/jumbo.md
     'enable_widevine=false'
     'enable_nacl=false'
     'enable_nacl_nonsfi=false'
