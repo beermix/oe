@@ -17,11 +17,11 @@
 ################################################################################
 
 PKG_NAME="go"
-PKG_VERSION="1.9.2"
-PKG_SHA256="5fb19c45d5230a7c2380232c9fb5b7e8d6f45015003f63b1485f78c20f96bce4"
+PKG_VERSION="1.10.2"
+PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="BSD"
-PKG_SITE="https://golang.org"
+PKG_SITE="https://github.com/golang/go/releases"
 PKG_URL="https://github.com/golang/go/archive/${PKG_NAME}${PKG_VERSION}.tar.gz"
 PKG_SOURCE_DIR="${PKG_NAME}-${PKG_NAME}${PKG_VERSION}"
 PKG_DEPENDS_HOST="toolchain"
