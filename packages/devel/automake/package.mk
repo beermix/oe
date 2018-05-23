@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="automake"
-PKG_VERSION="1.15.1"
-PKG_SHA256="af6ba39142220687c500f79b4aa2f181d9b24e4f8d8ec497cea4ba26c64bedaf"
+PKG_VERSION="1.16.1"
+PKG_SHA256="5d05bb38a23fd3312b10aea93840feec685bdf4a41146e78882848165d3ae921"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://sources.redhat.com/automake/"
