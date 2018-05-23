@@ -76,6 +76,9 @@ PROJECT_DIR="$ROOT/projects"
    . $PROJECT_DIR/$PROJECT/devices/$DEVICE/options
  fi
 
+# projects can set KERNEL_NAME (kernel.img)
+[ -z "$KERNEL_NAME" ] && KERNEL_NAME="KERNEL"
+
 LINUX_DEPENDS="$PROJECT_DIR/$PROJECT/linux $PROJECT_DIR/$PROJECT/patches/linux $ROOT/packages/linux"
 [ -n "$DEVICE" ] && LINUX_DEPENDS+=" $PROJECT_DIR/$PROJECT/devices/$DEVICE/linux $PROJECT_DIR/$PROJECT/devices/$DEVICE/patches/linux"
 [ "$TARGET_ARCH" = "x86_64" ] && LINUX_DEPENDS+=" $ROOT/packages/linux-firmware/intel-ucode $ROOT/packages/linux-firmware/kernel-firmware"
@@ -99,7 +102,8 @@ fi
 # Concurrency make level (-j option)
 #  Try value 1 (default) to 4 on single CPU computer, or more on
 #  multi-processor computer (like hyperthreading SMP CPU)
-  [ -z "${CONCURRENCY_MAKE_LEVEL}" ] && export CONCURRENCY_MAKE_LEVEL=7
+#   [ -z "${CONCURRENCY_MAKE_LEVEL}" ] && export CONCURRENCY_MAKE_LEVEL=7
+  [ -z "${CONCURRENCY_MAKE_LEVEL}" ] && export CONCURRENCY_MAKE_LEVEL=$(grep -c '^processor[[:cntrl:]]*:' /proc/cpuinfo)
 
 # cache size for ccache
 # Set the maximum size of the files stored in the cache. You can specify a
@@ -107,7 +111,7 @@ fi
 # value. The default is gigabytes. The actual value stored is rounded down to
 # the nearest multiple of 16 kilobytes.  Keep in mind this per project .ccache
 # directory.
-  CCACHE_CACHE_SIZE="5G"
+  CCACHE_CACHE_SIZE="10G"
 
 # read options from $HOME if available
   if [ -f "$HOME/.libreelec/options" ]; then
