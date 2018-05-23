@@ -62,12 +62,12 @@ make_host() {
 }
 
 make_target() {
-  unset CPPFLAGS
-  unset CFLAGS
-  unset CXXFLAGS
-  unset LDFLAGS
+#  unset CPPFLAGS
+#  unset CFLAGS
+#  unset CXXFLAGS
+#  unset LDFLAGS
 
-  export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always"
+#  export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always"
 
   export LDFLAGS="$LDFLAGS -ludev"
   export LD=$CXX
@@ -79,6 +79,7 @@ make_target() {
   # https://crbug.com/829916#c16
   sed -i 's/"Chromium/"Chrome/' ./chrome/common/chrome_content_client_constants.cc
 
+  export CCACHE_CPP2=yes
   export CCACHE_SLOPPINESS=time_macros
 
   # Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
