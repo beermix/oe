@@ -69,8 +69,8 @@ make_target() {
 
   export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always"
 
-  # export LDFLAGS="$LDFLAGS -ludev"
-  # export LD=$CXX
+  export LDFLAGS="$LDFLAGS -ludev"
+  export LD=$CXX
 
   # Allow building against system libraries in official builds
   sed -i 's/OFFICIAL_BUILD/GOOGLE_CHROME_BUILD/' ./tools/generate_shim_headers/generate_shim_headers.py
@@ -107,7 +107,6 @@ make_target() {
     'use_custom_libcxx=false'
     'use_gconf=false'
     'use_gnome_keyring=false'
-    'linux_link_libudev=true'
     'use_gold=false'
     'use_gtk3=false'
     'use_kerberos=false'
