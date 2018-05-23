@@ -30,7 +30,7 @@ PKG_LONGDESC="GNU MP is a library for arbitrary precision arithmetic, operating 
 PKG_BUILD_FLAGS="+pic:host +pic"
  
 pre_configure_host() {
-  unset CFLAGS
+#  unset CFLAGS
   export CPPFLAGS="$CPPFLAGS -fexceptions"
 }
 

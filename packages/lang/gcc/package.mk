@@ -100,8 +100,8 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          $GCC_OPTS"
 
 pre_configure_host() {
-#  export CFLAGS="-g -O2 -I$TOOLCHAIN/include"
-#  export CXXFLAGS="-g -O2 -I$TOOLCHAIN/include"
+  export CFLAGS="-g -O2 -I$TOOLCHAIN/include"
+  export CXXFLAGS="-g -O2 -I$TOOLCHAIN/include"
 #  export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
 #  export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
 
@@ -110,8 +110,8 @@ pre_configure_host() {
 }
 
 #pre_configure_bootstrap() {
-#  export CFLAGS="-g -O2 -I$TOOLCHAIN/include"
-#  export CXXFLAGS="-g -O2 -I$TOOLCHAIN/include"
+  export CFLAGS="-g -O2 -I$TOOLCHAIN/include"
+  export CXXFLAGS="-g -O2 -I$TOOLCHAIN/include"
 #  export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
 #  export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
 #}
