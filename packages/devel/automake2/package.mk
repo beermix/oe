@@ -16,24 +16,20 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="autoconf-archive"
-PKG_VERSION="2017.09.28"
-PKG_SHA256="5c9fb5845b38b28982a3ef12836f76b35f46799ef4a2e46b48e2bd3c6182fa01"
+PKG_NAME="automake"
+PKG_VERSION="1.16.1"
+PKG_SHA256="5d05bb38a23fd3312b10aea93840feec685bdf4a41146e78882848165d3ae921"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="https://www.gnu.org/software/autoconf-archive/"
-PKG_URL="http://ftpmirror.gnu.org/autoconf-archive/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_HOST="ccache:host"
+PKG_SITE="http://sources.redhat.com/automake/"
+PKG_URL="http://ftpmirror.gnu.org/automake/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_DEPENDS_HOST="ccache:host autoconf:host"
 PKG_SECTION="toolchain/devel"
-PKG_SHORTDESC="autoconf-archive: macros for autoconf"
-PKG_LONGDESC="autoconf-archive is an package of m4 macros"
+PKG_SHORTDESC="automake: A GNU tool for automatically creating Makefiles"
+PKG_LONGDESC="This is Automake, a Makefile generator. It was inspired by the 4.4BSD make and include files, but aims to be portable and to conform to the GNU standards for Makefile variables and targets. Automake is a Perl script. The input files are called Makefile.am. The output files are called Makefile.in; they are intended for use with Autoconf. Automake requires certain things to be done in your configure.in."
 
-PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME --prefix=$TOOLCHAIN"
+PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME --disable-silent-rules"
 
-makeinstall_host() {
-# make install
+post_makeinstall_host() {
   make prefix=$SYSROOT_PREFIX/usr install
-
-# remove problematic m4 file
-  rm -rf $SYSROOT_PREFIX/usr/share/aclocal/ax_prog_cc_for_build.m4
 }
