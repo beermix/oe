@@ -34,8 +34,7 @@ make_host() {
 }
 
 makeinstall_host() {
-  python2 -tt setup.py build -b py2 install --prefix=$TOOLCHAIN --force
-#  python3 -tt setup.py build -b py3 install --prefix=$TOOLCHAIN --force
+  python setup.py install --prefix=$TOOLCHAIN
 }
 
 makeinstall_target() {

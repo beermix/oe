@@ -18,49 +18,22 @@
 
 PKG_NAME="llvm"
 PKG_VERSION="6.0.0"
+PKG_SHA256="1ff53c915b4e761ef400b803f07261ade637b0c269d99569f18040f3dcee4408"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPL"
 PKG_SITE="http://llvm.org/"
 PKG_URL="http://llvm.org/releases/$PKG_VERSION/${PKG_NAME}-${PKG_VERSION}.src.tar.xz"
 PKG_SOURCE_DIR="${PKG_NAME}-${PKG_VERSION}.src"
+PKG_DEPENDS_HOST="toolchain"
 PKG_DEPENDS_TARGET="toolchain llvm:host zlib"
 PKG_SECTION="lang"
 PKG_SHORTDESC="llvm: Low Level Virtual Machine"
 PKG_LONGDESC="Low-Level Virtual Machine (LLVM) is a compiler infrastructure designed for compile-time, link-time, run-time, and idle-time optimization of programs from arbitrary programming languages. It currently supports compilation of C, Objective-C, and C++ programs, using front-ends derived from GCC 4.0, GCC 4.2, and a custom new front-end, "clang". It supports x86, x86-64, ia64, PowerPC, and SPARC, with support for Alpha and ARM under development."
 PKG_BUILD_FLAGS="-lto -gold -hardening"
 PKG_TOOLCHAIN="cmake-make"
-
-PKG_CMAKE_OPTS_COMMON="-DCMAKE_INSTALL_PREFIX=/ \
-                       -DLLVM_BUILD_LLVM_DYLIB=ON \
-                       -DLLVM_TARGETS_TO_BUILD="X86" \
-                       -DLLVM_INSTALL_TOOLCHAIN_ONLY=ON \
-                       -DCMAKE_INSTALL_RPATH=$TOOLCHAIN/lib \
-                       -DLLVM_BUILD_EXAMPLES=OFF \
-                       -DLLVM_INCLUDE_EXAMPLES=OFF \
-                       -DLLVM_BUILD_TESTS=OFF \
-                       -DLLVM_INCLUDE_TESTS=OFF \
-                       -DLLVM_INCLUDE_GO_TESTS=OFF \
-                       -DLLVM_BUILD_DOCS=OFF \
-                       -DLLVM_INCLUDE_DOCS=OFF \
-                       -DLLVM_ENABLE_DOXYGEN=OFF \
-                       -DLLVM_ENABLE_SPHINX=OFF \
-                       -DCMAKE_BUILD_TYPE=Release"
-
-#make_host() {
-#  ninja llvm-config llvm-tblgen
-#}
-
-makeinstall_host() {
-  cp -a bin/llvm-config $SYSROOT_PREFIX/usr/bin/llvm-config-host
-  cp -a bin/llvm-tblgen $TOOLCHAIN/bin
-}
-
-PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=MinSizeRel \
-                       -DCMAKE_C_FLAGS="$CFLAGS" \
-                       -DCMAKE_CXX_FLAGS="$CXXFLAGS" \
-                       -DLLVM_INCLUDE_TOOLS=ON \
+PKG_CMAKE_OPTS_COMMON="-DLLVM_INCLUDE_TOOLS=ON \
                        -DLLVM_BUILD_TOOLS=OFF \
-                       -DLLVM_BUILD_UTILS=ON \
+                       -DLLVM_BUILD_UTILS=OFF \
                        -DLLVM_BUILD_EXAMPLES=OFF \
                        -DLLVM_INCLUDE_EXAMPLES=OFF \
                        -DLLVM_BUILD_TESTS=OFF \
@@ -74,13 +47,31 @@ PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=MinSizeRel \
                        -DLLVM_ENABLE_TERMINFO=OFF \
                        -DLLVM_ENABLE_ASSERTIONS=OFF \
                        -DLLVM_ENABLE_WERROR=OFF \
-                       -DLLVM_TARGET_ARCH="$TARGET_ARCH" \
                        -DLLVM_ENABLE_ZLIB=ON \
                        -DLLVM_BUILD_LLVM_DYLIB=ON \
                        -DLLVM_LINK_LLVM_DYLIB=ON \
                        -DLLVM_OPTIMIZED_TABLEGEN=ON \
-                       -DLLVM_TABLEGEN=$TOOLCHAIN/bin/llvm-tblgen \
-                       -DLLVM_APPEND_VC_REV=OFF"
+                       -DLLVM_APPEND_VC_REV=OFF \
+                       -DLLVM_ENABLE_RTTI=ON"
+
+PKG_CMAKE_OPTS_HOST="$PKG_CMAKE_OPTS_COMMON \
+                     -DCMAKE_INSTALL_RPATH=$TOOLCHAIN/lib"
+
+make_host() {
+  ninja llvm-config llvm-tblgen
+}
+
+makeinstall_host() {
+  cp -a bin/llvm-config $SYSROOT_PREFIX/usr/bin/llvm-config-host
+  cp -a bin/llvm-tblgen $TOOLCHAIN/bin
+}
+
+PKG_CMAKE_OPTS_TARGET="$PKG_CMAKE_OPTS_COMMON \
+                       -DCMAKE_BUILD_TYPE=MinSizeRel \
+                       -DCMAKE_C_FLAGS="$CFLAGS" \
+                       -DCMAKE_CXX_FLAGS="$CXXFLAGS" \
+                       -DLLVM_TARGET_ARCH="$TARGET_ARCH" \
+                       -DLLVM_TABLEGEN=$TOOLCHAIN/bin/llvm-tblgen"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin
