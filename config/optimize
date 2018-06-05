@@ -4,11 +4,11 @@ LD_OPTIM="-Wl,--as-needed"
 if [ "${BUILD_WITH_DEBUG}" = "yes" ]; then
   TARGET_CFLAGS="$TARGET_CFLAGS -ggdb"
   TARGET_CXXFLAGS="$TARGET_CXXFLAGS -ggdb"
-  TARGET_LDFLAGS="$TARGET_LDFLAGS -ggdb"
+  TARGET_LDFLAGS="$TARGET_LDFLAGS -ggdb -Wl,--hash-style=sysv"
 else
   TARGET_CFLAGS="$TARGET_CFLAGS -fomit-frame-pointer"
   TARGET_CXXFLAGS="$TARGET_CXXFLAGS -fomit-frame-pointer"
-  TARGET_LDFLAGS="$TARGET_LDFLAGS"
+  TARGET_LDFLAGS="$TARGET_LDFLAGS -Wl,--hash-style=gnu"
 fi
 
 NINJA_OPTS=""
