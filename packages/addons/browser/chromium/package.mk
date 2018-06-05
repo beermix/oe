@@ -74,13 +74,6 @@ make_target() {
   export LDFLAGS="$LDFLAGS -ludev"
   export LD=$CXX
 
-  # Allow building against system libraries in official builds
-  # sed -i 's/OFFICIAL_BUILD/GOOGLE_CHROME_BUILD/' ./tools/generate_shim_headers/generate_shim_headers.py
-
-  # Work around broken screen sharing in Google Meet
-  # https://crbug.com/829916#c16
-  # sed -i 's/"Chromium/"Chrome/' ./chrome/common/chrome_content_client_constants.cc
-
   export CCACHE_SLOPPINESS=time_macros
   export CCACHE_CPP2=yes
 
@@ -101,7 +94,6 @@ make_target() {
     'fatal_linker_warnings=false'
     'treat_warnings_as_errors=false'
     'fieldtrial_testing_like_official_build=true'
-    'is_official_build=false' # implies is_cfi=true on x86_64
     'remove_webcore_debug_symbols=true'
     'ffmpeg_branding="Chrome"'
     'proprietary_codecs=true'
@@ -121,6 +113,7 @@ make_target() {
     'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_hangout_services_extension=true'
+    'use_jumbo_build=false' # https://chromium.googlesource.com/chromium/src/+/lkcr/docs/jumbo.md
     'enable_widevine=true'
     'enable_nacl=false'
     'enable_nacl_nonsfi=false'
@@ -133,7 +126,7 @@ make_target() {
 
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
-  ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python2
+  ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
 
   ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox
 }
