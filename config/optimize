@@ -1,4 +1,4 @@
-GCC_OPTIM="-O2 -pipe --param=l1-cache-size=32 --param=l1-cache-line-size=64 --param=l2-cache-size=3072"
+GCC_OPTIM="-O2 -pipe"
 LD_OPTIM="-Wl,--as-needed"
 
 if [ "${BUILD_WITH_DEBUG}" = "yes" ]; then
@@ -8,7 +8,8 @@ if [ "${BUILD_WITH_DEBUG}" = "yes" ]; then
 else
   TARGET_CFLAGS="$TARGET_CFLAGS -fomit-frame-pointer"
   TARGET_CXXFLAGS="$TARGET_CXXFLAGS -fomit-frame-pointer"
-  TARGET_LDFLAGS="$TARGET_LDFLAGS -Wl,--hash-style=gnu"
+  TARGET_LDFLAGS="$TARGET_LDFLAGS"
+# TARGET_LDFLAGS="$TARGET_LDFLAGS -Wl,--hash-style=gnu"
 fi
 
 NINJA_OPTS=""
