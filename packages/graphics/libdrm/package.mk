@@ -32,7 +32,7 @@ PKG_TOOLCHAIN="meson"
 
 get_graphicdrivers
 
-PKG_DRM_CONFIG="-Dnouveau=false \
+PKG_DRM_CONFIG="-Dnouveau=true \
                 -Domap=false \
                 -Dexynos=false \
                 -Dfreedreno=false \
