@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="autoconf-archive"
-PKG_VERSION="2017.09.28"
-PKG_SHA256="5c9fb5845b38b28982a3ef12836f76b35f46799ef4a2e46b48e2bd3c6182fa01"
+PKG_VERSION="2018.03.13"
+PKG_SHA256="6175f90d9fa64c4d939bdbb3e8511ae0ee2134863a2c7bf8d9733819efa6e159"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://www.gnu.org/software/autoconf-archive/"
