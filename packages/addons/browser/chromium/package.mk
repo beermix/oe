@@ -62,24 +62,27 @@ make_host() {
 }
 
 make_target() {
-#  unset CPPFLAGS
-#  unset CFLAGS
-#  unset CXXFLAGS
-#  unset LDFLAGS
+  unset CPPFLAGS
+  unset CFLAGS
+  unset CXXFLAGS
+  unset LDFLAGS
 
-#  export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always"
+  export CFLAGS="$CFLAGS -fno-unwind-tables -fno-asynchronous-unwind-tables -fdiagnostics-color=always"
+  export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
+  export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
 
   export LDFLAGS="$LDFLAGS -ludev"
   export LD=$CXX
 
   # Allow building against system libraries in official builds
-  sed -i 's/OFFICIAL_BUILD/GOOGLE_CHROME_BUILD/' ./tools/generate_shim_headers/generate_shim_headers.py
+  # sed -i 's/OFFICIAL_BUILD/GOOGLE_CHROME_BUILD/' ./tools/generate_shim_headers/generate_shim_headers.py
 
   # Work around broken screen sharing in Google Meet
   # https://crbug.com/829916#c16
   # sed -i 's/"Chromium/"Chrome/' ./chrome/common/chrome_content_client_constants.cc
 
   export CCACHE_SLOPPINESS=time_macros
+  export CCACHE_CPP2=yes
 
   # Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
   # Note: These are for OpenELEC use ONLY. For your own distribution, please
@@ -117,7 +120,6 @@ make_target() {
     'use_v8_context_snapshot=false'
     'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
-    'exclude_unwind_tables=true'
     'enable_hangout_services_extension=true'
     'enable_widevine=true'
     'enable_nacl=false'
@@ -128,48 +130,6 @@ make_target() {
     "google_default_client_id=\"${_google_default_client_id}\""
     "google_default_client_secret=\"${_google_default_client_secret}\""
   )
-
-  # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
-  # Keys are the names in the above script; values are the dependencies in Arch
-declare -gA _system_libs=(
-  [ffmpeg]=ffmpeg
-  [fontconfig]=fontconfig
-  [freetype]=freetype2
-  [harfbuzz-ng]=harfbuzz
-  #[icu]=icu
-  [libdrm]=
-  [libjpeg]=libjpeg
-  #[libpng]=libpng            # https://crbug.com/752403#c10
-  #[libvpx]=libvpx            # needs unreleased libvpx
-  #[libwebp]=libwebp
-  #[libxml]=libxml2           # https://crbug.com/736026
-  [libxslt]=libxslt
-  #[re2]=re2
-  #[snappy]=snappy
-  [yasm]=
-  [zlib]=minizip
-)
-_unwanted_bundled_libs=(
-  ${!_system_libs[@]}
-  ${_system_libs[libjpeg]+libjpeg_turbo}
-)
-depends+=(${_system_libs[@]})
-
-  # Remove bundled libraries for which we will use the system copies; this
-  # *should* do what the remove_bundled_libraries.py script does, with the
-  # added benefit of not having to list all the remaining libraries
-  local _lib
-  for _lib in ${_unwanted_bundled_libs[@]}; do
-    find "third_party/$_lib" -type f \
-      \! -path "third_party/$_lib/chromium/*" \
-      \! -path "third_party/$_lib/google/*" \
-      \! -path 'third_party/yasm/run_yasm.py' \
-      \! -regex '.*\.\(gn\|gni\|isolate\)' \
-      -delete
-  done
-
-  python2 ./build/linux/unbundle/replace_gn_files.py \
-    --system-libraries "${!_system_libs[@]}"
 
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
