@@ -56,7 +56,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --without-cloog \
                            --disable-libada \
                            --disable-libmudflap \
-                           --disable-libgomp \
                            --disable-libmpx \
                            --disable-libssp \
                            --disable-libsanitizer \
