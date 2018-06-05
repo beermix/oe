@@ -19,7 +19,7 @@
 ################################################################################
 
 PKG_NAME="nss"
-PKG_VERSION="3.37"
+PKG_VERSION="3.37.1"
 PKG_ARCH="any"
 PKG_LICENSE="Mozilla Public License"
 PKG_SITE="https://ftp.mozilla.org/pub/security/nss/releases/"
