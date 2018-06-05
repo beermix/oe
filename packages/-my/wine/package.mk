@@ -1,5 +1,5 @@
 PKG_NAME="wine"
-PKG_VERSION="3.8"
+PKG_VERSION="3.9"
 #PKG_URL="https://dl.winehq.org/wine/source/3.0/wine-3.0.tar.xz" wine:host
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain glib x11 mesa xorg-server pcre libXcursor freetype fontconfig libjpeg-turbo libpng tiff libdrm glu expat harfbuzz libxcb libXrender libX11 libXext cairo libexif libXcomposite libXtst libpcap icu xinput imagemagick gstreamer gst-plugins-base"
