@@ -31,9 +31,10 @@ PKG_TOOLCHAIN="manual"
 
 make_host() {
   export LDFLAGS="$LDFLAGS -s"
-#  unset CFLAGS
-#  unset CXXFLAGS
-  CXX=/usr/bin/clang++ $TOOLCHAIN/bin/python2 ./configure.py --bootstrap --verbose
+  unset CFLAGS
+  unset CXXFLAGS
+#  CXX=/usr/bin/clang++ $TOOLCHAIN/bin/python2 ./configure.py --bootstrap --verbose
+  $TOOLCHAIN/bin/python2 ./configure.py --bootstrap --verbose
 }
 
 makeinstall_host() {
