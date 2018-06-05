@@ -36,7 +36,6 @@ PKG_MESON_OPTS_TARGET="-Ddri-drivers=$DRI_DRIVERS,swrast \
                        -Ddri-drivers-path=$XORG_PATH_DRI \
                        -Ddri-search-path=$XORG_PATH_DRI \
                        -Dgallium-drivers=$GALLIUM_DRIVERS,nouveau \
-                       -Ddri-drivers=i965 \
                        -Dgallium-extra-hud=false \
                        -Dgallium-xvmc=false \
                        -Dgallium-omx=disabled \
