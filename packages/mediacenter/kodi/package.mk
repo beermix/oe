@@ -232,13 +232,13 @@ PKG_CMAKE_OPTS_TARGET="-DNATIVEPREFIX=$TOOLCHAIN \
                        -DENABLE_LIRC=ON \
                        -DENABLE_EVENTCLIENTS=ON \
                        -DENABLE_LDGOLD=ON \
-                       -DENABLE_AVX=ON \
+                       -DENABLE_AVX=OFF \
                        -DENABLE_AVX2=OFF \
                        -DENABLE_SSE=ON \
                        -DENABLE_SSE2=ON \
                        -DENABLE_SSE3=ON \
                        -DENABLE_SSE4_1=ON \
-                       -DENABLE_SSE4_2=OFF \
+                       -DENABLE_SSE4_2=ON \
                        -DENABLE_SSSE3=ON \
                        -DHAVE_SSE=TRUE \
                        -DHAVE_SSE2=TRUE \
