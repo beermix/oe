@@ -98,7 +98,7 @@ make_target() {
     'fatal_linker_warnings=false'
     'treat_warnings_as_errors=false'
     'fieldtrial_testing_like_official_build=true'
-    'is_official_build=true' # implies is_cfi=true on x86_64
+    'is_official_build=false' # implies is_cfi=true on x86_64
     'remove_webcore_debug_symbols=true'
     'ffmpeg_branding="Chrome"'
     'proprietary_codecs=true'
@@ -107,7 +107,6 @@ make_target() {
     'use_allocator="none"'
     'use_cups=false'
     'use_custom_libcxx=false'
-    'use_gconf=false'
     'use_gnome_keyring=false'
     'use_gold=false'
     'use_gtk3=false'
