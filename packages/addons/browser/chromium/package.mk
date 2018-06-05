@@ -22,9 +22,9 @@
 ################################################################################ beautifulsoup4:host html5lib:host re2 snappy
 
 PKG_NAME="chromium"
-PKG_VERSION="63.0.3239.132"
+PKG_VERSION="67.0.3396.62"
 PKG_SHA256=""
-PKG_REV="123"
+PKG_REV="130"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_SITE="http://www.chromium.org/Home"

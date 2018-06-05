@@ -1,6 +1,6 @@
 # determines TARGET_CPU, if not forced by user
   if [ -z "$TARGET_CPU" ]; then
-    TARGET_CPU=westmere
+    TARGET_CPU=core2
   fi
 
 # determine architecture's family
