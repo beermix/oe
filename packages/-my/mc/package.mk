@@ -1,5 +1,5 @@
 PKG_NAME="mc"
-PKG_VERSION="4.8.20"
+PKG_VERSION="4.8.21"
 PKG_URL="http://ftp.midnight-commander.org/${PKG_NAME}-${PKG_VERSION}.tar.xz"
 PKG_DEPENDS_TARGET="toolchain libtool:host gettext:host e2fsprogs util-linux glib pcre fuse libssh2 libevent expat"
 PKG_SECTION="tools"
