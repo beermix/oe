@@ -37,7 +37,8 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-mdi \
                            --with-gl=no \
                            --with-jpeg-lib-dir=$SYSROOT_PREFIX/usr/lib \
                            --with-jpeg-include-dir=$SYSROOT_PREFIX/usr/include \
-                           --without-x"
+                           --without-x \
+                           --enable-static"
 
 PKG_CMAKE_OPTS_TARGET="-DBUILD_SHARED_LIBS=0 -Dcxx=1 -Dmdi=0"
 	
