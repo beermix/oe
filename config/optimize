@@ -1,5 +1,5 @@
 GCC_OPTIM="-O2 -pipe"
-LD_OPTIM="-Wl,--as-needed"
+LD_OPTIM="-Wl,--as-needed -Wl,--hash-style=gnu"
 
 if [ "${BUILD_WITH_DEBUG}" = "yes" ]; then
   TARGET_CFLAGS="$TARGET_CFLAGS -ggdb"

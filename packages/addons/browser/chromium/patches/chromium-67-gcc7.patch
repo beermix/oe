@@ -160,16 +160,3 @@
  KeyboardHookPosix::~KeyboardHookPosix() = default;
  
  }  // namespace
---- chromium-68.0.3418.2/chrome/browser/ui/views/tabs/new_tab_button.cc.gcc7	2018-05-04 06:05:13.000000000 +0200
-+++ chromium-68.0.3418.2/chrome/browser/ui/views/tabs/new_tab_button.cc	2018-05-08 03:14:41.063153884 +0200
-@@ -495,8 +495,8 @@
-   DCHECK(theme_provider);
-   return theme_provider->GetColor(
-       ui::MaterialDesignController::IsTouchOptimizedUiEnabled()
--          ? ThemeProperties::COLOR_TOOLBAR
--          : ThemeProperties::COLOR_BACKGROUND_TAB);
-+          ? int(ThemeProperties::COLOR_TOOLBAR)
-+          : int(ThemeProperties::COLOR_BACKGROUND_TAB));
- }
- 
- void NewTabButton::InitButtonIcons() {
