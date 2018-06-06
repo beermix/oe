@@ -23,16 +23,58 @@ PKG_LICENSE="LGPL"
 PKG_SITE="https://cairographics.org/snapshots/?C=M;O=D"
 PKG_URL="https://cairographics.org/snapshots/cairo-$PKG_VERSION.tar.xz"
 PKG_URL="https://fossies.org/linux/misc/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain zlib glib lzo libXrender libXext pixman freetype libpng fontconfig"
+PKG_DEPENDS_TARGET="toolchain zlib freetype fontconfig libpng pixman"
 PKG_SECTION="graphics"
 PKG_SHORTDESC="cairo: Multi-platform 2D graphics library"
 PKG_LONGDESC="Cairo is a vector graphics library with cross-device output support. Currently supported output targets include the X Window System and in-memory image buffers. PostScript and PDF file output is planned. Cairo is designed to produce identical output on all output media while taking advantage of display hardware acceleration when available."
 PKG_TOOLCHAIN="configure" # ToDo
-PKG_TOOLCHAIN="autotools"
+#PKG_TOOLCHAIN="autotools"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-shared \
+if [ "$OPENGL" != "no" ]; then
+  PKG_DEPENDS_TARGET+=" $OPENGL"
+fi
+
+if [ "$OPENGLES" != "no" ]; then
+  PKG_DEPENDS_TARGET+=" $OPENGLES"
+fi
+
+if [ "$DISPLAYSERVER" = "x11" ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libXrender libX11 mesa"
+  PKG_CAIRO_CONFIG="--x-includes="$SYSROOT_PREFIX/usr/include" \
+                    --x-libraries="$SYSROOT_PREFIX/usr/lib" \
+                    --enable-xlib \
+                    --enable-xlib-xrender \
+                    --enable-gl \
+                    --enable-glx \
+                    --disable-glesv2 \
+                    --disable-egl \
+                    --with-x"
+
+elif [ "$DISPLAYSERVER" = "weston" ]; then
+  PKG_CAIRO_CONFIG="--disable-xlib \
+                    --disable-xlib-xrender \
+                    --disable-gl \
+                    --disable-glx \
+                    --enable-glesv2 \
+                    --enable-egl \
+                    --without-x"
+else
+  PKG_CAIRO_CONFIG="--disable-xlib \
+                    --disable-xlib-xrender \
+                    --disable-gl \
+                    --disable-glx \
+                    --disable-glesv2 \
+                    --disable-egl \
+                    --without-x"
+fi
+
+PKG_CONFIGURE_OPTS_TARGET="$PKG_CAIRO_CONFIG \
+                           --enable-silent-rules \
+                           --enable-shared \
                            --disable-static \
                            --disable-gtk-doc \
+                           --enable-largefile \
+                           --enable-atomic \
                            --disable-gcov \
                            --disable-valgrind \
                            --disable-xcb \
@@ -48,24 +90,25 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-shared \
                            --disable-os2 \
                            --disable-beos \
                            --disable-cogl \
-                           --disable-gl \
-                           --enable-tee \
-                           --enable-pdf \
-                           --enable-gobject \
-                           --enable-gtk-doc=no \
+                           --disable-drm \
+                           --disable-drm-xr \
+                           --disable-gallium \
+                           --disable-xcb-drm \
                            --enable-png \
                            --disable-directfb \
                            --disable-vg \
                            --disable-wgl \
                            --disable-script \
-                           --disable-gl \
                            --enable-ft \
                            --enable-fc \
                            --enable-ps \
                            --enable-pdf \
                            --enable-svg \
                            --disable-test-surfaces \
+                           --disable-tee \
+                           --disable-xml \
                            --enable-pthread \
+                           --enable-gobject \
                            --disable-full-testing \
                            --disable-trace \
                            --enable-interpreter \

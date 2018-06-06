@@ -29,9 +29,15 @@ PKG_SECTION="x11/toolkits"
 PKG_SHORTDESC="harfbuzz: an OpenType text shaping engine."
 PKG_LONGDESC="HarfBuzz is an OpenType text shaping engine."
 PKG_TOOLCHAIN="configure"
+PKG_TOOLCHAIN="autotools"
 PKG_BUILD_FLAGS="-lto -gold -hardening"
 
-PKG_CONFIGURE_OPTS_TARGET="--with-icu=yes"
+PKG_CONFIGURE_OPTS_TARGET="--with-cairo \
+			      --with-freetype \
+			      --with-glib \
+			      --with-gobject \
+			      --with-icu \
+			      --enable-gtk-doc=no"
 
 if [ "$DISPLAYSERVER" = "x11" ] ; then
   PKG_DEPENDS_TARGET+=" cairo"

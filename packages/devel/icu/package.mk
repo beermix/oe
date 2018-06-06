@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="icu"
-PKG_VERSION="57.1"
+#PKG_VERSION="57.1"
 PKG_VERSION="61.1"
 PKG_SHA256=""
 PKG_ARCH="any"
@@ -43,8 +43,5 @@ PKG_CONFIGURE_OPTS_HOST="--disable-shared --enable-static"
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static --with-cross-build=$PKG_BUILD/.$HOST_NAME"
 
 post_makeinstall_target() {
-  rm -rf $INSTALL/usr/bin
-  rm -rf $INSTALL/usr/share
-  rm -rf $INSTALL/usr/lib/icu
   rm -rf $INSTALL
 }
