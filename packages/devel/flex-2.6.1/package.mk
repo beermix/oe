@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="flex"
-PKG_VERSION="2.6.4"
+PKG_VERSION="2.6.1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/westes/flex/releases/"
@@ -28,9 +28,7 @@ PKG_SHORTDESC="flex: Fast lexical analyzer generator"
 PKG_LONGDESC="flex is a tool for generating programs that perform pattern-matching on text."
 PKG_TOOLCHAIN="autotools"
 
-PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared --disable-rpath --with-gnu-ld --disable-doc"
-
-PKG_CONFIGURE_OPTS_TARGET="--disable-doc"
+PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared --disable-rpath --with-gnu-ld"
 
 post_makeinstall_host() {
   cat > $TOOLCHAIN/bin/lex << "EOF"
