@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="mariadb-connector-c"
-PKG_VERSION="3.0.3"
+PKG_VERSION="3.0.5"
 PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="LGPL"
@@ -27,6 +27,7 @@ PKG_DEPENDS_TARGET="toolchain zlib openssl"
 PKG_SECTION="database"
 PKG_SHORTDESC="mariadb-connector: library to conntect to mariadb/mysql database server"
 PKG_LONGDESC="mariadb-connector: library to conntect to mariadb/mysql database server"
+PKG_TOOLCHAIN="cmake-make"
 
 PKG_CMAKE_OPTS_TARGET="-DWITH_EXTERNAL_ZLIB=ON
                        -DAUTH_CLEARTEXT=STATIC

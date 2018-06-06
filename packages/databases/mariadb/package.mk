@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="mariadb"
-PKG_VERSION="10.1.28"
+PKG_VERSION="10.1.33"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
@@ -29,10 +29,7 @@ PKG_PRIORITY="optional"
 PKG_SECTION="database"
 PKG_SHORTDESC="mariadb: A community developed branch of MySQL"
 PKG_LONGDESC="MariaDB is a community-developed fork and a drop-in replacement for the MySQL relational database management system."
-
-PKG_IS_ADDON="no"
-
-PKG_USE_NINJA="no"
+PKG_TOOLCHAIN="cmake-make"
 
 PKG_MARIADB_SERVER="no"
 
