@@ -1,0 +1,37 @@
+diff --git a/Makefile b/Makefile
+old mode 100644
+new mode 100755
+index 554dcad..615e7a4
+--- a/Makefile
++++ b/Makefile
+@@ -503,13 +503,6 @@ export RETPOLINE_CFLAGS
+ KBUILD_CFLAGS	+= $(call cc-option,-fno-PIE)
+ KBUILD_AFLAGS	+= $(call cc-option,-fno-PIE)
+ 
+-# check for 'asm goto'
+-ifeq ($(call shell-cached,$(CONFIG_SHELL) $(srctree)/scripts/gcc-goto.sh $(CC) $(KBUILD_CFLAGS)), y)
+-  CC_HAVE_ASM_GOTO := 1
+-  KBUILD_CFLAGS += -DCC_HAVE_ASM_GOTO
+-  KBUILD_AFLAGS += -DCC_HAVE_ASM_GOTO
+-endif
+-
+ ifeq ($(config-targets),1)
+ # ===========================================================================
+ # *config targets only - make sure prerequisites are updated, and descend
+diff --git a/arch/x86/Makefile b/arch/x86/Makefile
+old mode 100644
+new mode 100755
+index 60135cb..1439ce2
+--- a/arch/x86/Makefile
++++ b/arch/x86/Makefile
+@@ -180,10 +180,6 @@ ifdef CONFIG_FUNCTION_GRAPH_TRACER
+   endif
+ endif
+ 
+-ifndef CC_HAVE_ASM_GOTO
+-  $(error Compiler lacks asm-goto support.)
+-endif
+-
+ #
+ # Jump labels need '-maccumulate-outgoing-args' for gcc < 4.5.2 to prevent a
+ # GCC bug (https://gcc.gnu.org/bugzilla/show_bug.cgi?id=46226).  There's no way
