@@ -38,8 +38,8 @@ PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
 PKG_TOOLCHAIN="manual"
-PKG_BUILD_FLAGS="-lto -gold -hardening"
-#GOLD_SUPPORT="yes"
+PKG_BUILD_FLAGS="-lto -hardening"
+GOLD_SUPPORT="yes"
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Chromium"
@@ -71,8 +71,8 @@ make_target() {
   export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
   export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
 
-  # export LDFLAGS="$LDFLAGS -ludev"
-  # export LD=$CXX
+  export LDFLAGS="$LDFLAGS -ludev"
+  export LD=$CXX
 
   export CCACHE_SLOPPINESS=time_macros
   # export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime
