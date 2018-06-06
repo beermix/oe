@@ -13,12 +13,3 @@ index 3c638cb2..9d42370f
  IF(DISABLE_SHARED)
    SET(WITHOUT_DYNAMIC_PLUGINS 1)
  ENDIF()
-@@ -216,7 +216,7 @@ IF(SECURITY_HARDENED)
-   # security-enhancing flags
-   MY_CHECK_AND_SET_COMPILER_FLAG("-pie -fPIC")
-   MY_CHECK_AND_SET_COMPILER_FLAG("-Wl,-z,relro,-z,now")
--  MY_CHECK_AND_SET_COMPILER_FLAG("-fstack-protector --param=ssp-buffer-size=4")
-+  MY_CHECK_AND_SET_COMPILER_FLAG("-fstack-protector-strong")
-   MY_CHECK_AND_SET_COMPILER_FLAG("-D_FORTIFY_SOURCE=2" RELEASE RELWITHDEBINFO)
- ENDIF()
- 
