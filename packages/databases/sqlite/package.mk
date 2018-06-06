@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="sqlite"
-PKG_VERSION="autoconf-3230100"
-PKG_SHA256="92842b283e5e744eff5da29ed3c69391de7368fccc4d0ee6bf62490ce555ef25"
+PKG_VERSION="autoconf-3240000"
+PKG_SHA256="d9d14e88c6fb6d68de9ca0d1f9797477d82fc3aed613558f87ffbdbbc5ceb74a"
 PKG_ARCH="any"
 PKG_LICENSE="PublicDomain"
 PKG_SITE="https://www.sqlite.org/"
@@ -29,7 +29,7 @@ PKG_SECTION="database"
 PKG_SHORTDESC="sqlite: An Embeddable SQL Database Engine"
 PKG_LONGDESC="SQLite is a C library that implements an embeddable SQL database engine. Programs that link with the SQLite library can have SQL database access without running a separate RDBMS process. The distribution comes with a standalone command-line access program (sqlite) that can be used to administer an SQLite database and which serves as an example of how to use the SQLite library. SQLite is not a client library used to connect to a big database server. SQLite is the server. The SQLite library reads and writes directly to and from the database files on disk."
 # libsqlite3.a(sqlite3.o): requires dynamic R_X86_64_PC32 reloc against 'sqlite3_stricmp' which may overflow at runtime
-#PKG_TOOLCHAIN="autotools"
+PKG_TOOLCHAIN="autotools"
 PKG_BUILD_FLAGS="-parallel"
 
 # sqlite fails to compile with fast-math link time optimization.
