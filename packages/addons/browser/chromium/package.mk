@@ -76,7 +76,7 @@ make_target() {
 
   export CCACHE_SLOPPINESS=time_macros
   # export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime
-  export CCACHE_CPP2=yes
+  # export CCACHE_CPP2=yes
 
   # Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
   # Note: These are for OpenELEC use ONLY. For your own distribution, please
@@ -98,7 +98,7 @@ make_target() {
     'remove_webcore_debug_symbols=true'
     'ffmpeg_branding="Chrome"'
     'proprietary_codecs=true'
-    'link_pulseaudio=false'
+    'link_pulseaudio=true'
     'use_pulseaudio=false'
     'use_allocator="none"'
     'linux_use_bundled_binutils=false'
