@@ -54,6 +54,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
+                           --disable-libitm \
                            --disable-libmudflap \
                            --disable-libmpx \
                            --disable-libssp \
@@ -68,7 +69,6 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-threads \
                               --without-headers \
                               --with-newlib \
-                              --disable-libitm \
                               --disable-libquadmath \
                               --disable-libatomic \
                               --disable-libgomp \
