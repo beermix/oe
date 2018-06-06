@@ -24,7 +24,7 @@
 PKG_NAME="chromium"
 PKG_VERSION="67.0.3396.62"
 PKG_SHA256="d5ee63932ff1c8c4a5f69c834f6577e7127b416681eddd23bc54886caffd770d"
-PKG_REV="130"
+PKG_REV="131"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_SITE="http://www.chromium.org/Home"
