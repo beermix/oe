@@ -18,7 +18,8 @@
 
 PKG_NAME="node"
 PKG_VERSION="8.11.1"
-PKG_SHA256="56ca80d50d4b970877994b348e5e3687f3f88cd952c3683e8dd02ac7cad64f41"
+#PKG_SHA256="56ca80d50d4b970877994b348e5e3687f3f88cd952c3683e8dd02ac7cad64f41"
+PKG_VERSION="10.3.0"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://nodejs.org"
@@ -38,4 +39,5 @@ pre_configure_host() {
   unset CPPFLAGS
   unset CFLAGS
   unset CXXFLAGS
+  export LDFLAGS="$LDFLAGS -s"
 }
