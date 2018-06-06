@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="readline"
-PKG_VERSION="6c32f81"
+PKG_VERSION="57ea398"
 PKG_SITE="http://www.gnu.org/software/readline/"
 PKG_URL="http://git.savannah.gnu.org/cgit/readline.git/snapshot/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain ncurses"
