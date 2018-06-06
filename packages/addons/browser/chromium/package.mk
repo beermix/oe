@@ -71,8 +71,8 @@ make_target() {
   export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
   export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
 
-  export LDFLAGS="$LDFLAGS -ludev"
-  export LD=$CXX
+  # export LDFLAGS="$LDFLAGS -ludev"
+  # export LD=$CXX
 
   export CCACHE_SLOPPINESS=time_macros
   # export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime
@@ -99,6 +99,7 @@ make_target() {
     'ffmpeg_branding="Chrome"'
     'proprietary_codecs=true'
     'link_pulseaudio=false'
+    'use_pulseaudio=false'
     'use_allocator="none"'
     'linux_use_bundled_binutils=false'
     'use_cups=false'
