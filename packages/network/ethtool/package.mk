@@ -27,3 +27,5 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="network"
 PKG_SHORTDESC="ethtool: Display or change ethernet card settings"
 PKG_LONGDESC="Ethtool is used for querying settings of an ethernet device and changing them."
+
+PKG_CONFIGURE_OPTS_TARGET="--enable-pretty-dump"
