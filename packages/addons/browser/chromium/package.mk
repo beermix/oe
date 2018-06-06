@@ -19,6 +19,7 @@
 #  http://svnweb.mageia.org/packages/cauldron/chromium-browser-stable/current
 #  http://omahaproxy.appspot.com/
 #  https://www.chromestatus.com/
+#  https://bazaar.launchpad.net/~chromium-team/chromium-browser/xenial-stable/files/head:/debian?sort=date
 ################################################################################ beautifulsoup4:host html5lib:host re2 snappy
 
 PKG_NAME="chromium"
@@ -68,10 +69,9 @@ make_target() {
   unset CXXFLAGS
   unset LDFLAGS
 
-  export CFLAGS="$CFLAGS -fdiagnostics-color=always"
-  export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always"
-  
-  # export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
+  export CFLAGS="$CFLAGS -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
+  export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
+  export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
   # -fno-unwind-tables -fno-asynchronous-unwind-tables
 
   # export LDFLAGS="$LDFLAGS -ludev"
@@ -130,7 +130,7 @@ make_target() {
 # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
 # Keys are the names in the above script; values are the dependencies in Arch
 declare -gA _system_libs=(
-  [ffmpeg]=ffmpeg
+  #[ffmpeg]=ffmpeg
   [flac]=flac
   [fontconfig]=fontconfig
   [freetype]=freetype2
