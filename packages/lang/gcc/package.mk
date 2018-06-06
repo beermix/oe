@@ -81,6 +81,7 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
 PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-languages=c,c++ \
                          --enable-__cxa_atexit \
+                         --with-headers=$SYSROOT_PREFIX/usr/include \
                          --enable-decimal-float \
                          --enable-tls \
                          --enable-shared \
