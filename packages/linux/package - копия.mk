@@ -39,6 +39,7 @@ case "$LINUX" in
     PKG_URL="https://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
     PKG_PATCH_DIRS="4.17"
     PKG_BUILD_PERF="no"
+    PKG_BUILD_POWER="no"
     ;;
   zen)
     PKG_VERSION="391c1f7"
@@ -47,6 +48,7 @@ case "$LINUX" in
     PKG_SOURCE_DIR="zen-kernel-$PKG_VERSION*"
     PKG_PATCH_DIRS="4.17"
     PKG_BUILD_PERF="no"
+    PKG_BUILD_POWER="no"
     ;;
   *)
     PKG_VERSION="4.14.48"
@@ -54,6 +56,7 @@ case "$LINUX" in
     PKG_URL="https://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
     PKG_PATCH_DIRS="4.14"
     PKG_BUILD_PERF="no"
+    PKG_BUILD_POWER="no"
     ;;
 esac
 
@@ -86,7 +89,7 @@ if [ "$BUILD_ANDROID_BOOTIMG" = "yes" ]; then
 fi
 
 post_patch() {
-  sed -i -e "s|^HOSTCC[[:space:]]*=.*$|HOSTCC = $TOOLCHAIN/bin/host-gcc|" \
+  sed -i -e "s|^HOSTCC[[:space:]]*=.*$|HOSTCC = $TOOLCHAIN/bin/host-gcc $HOST_LDFLAGS|" \
          -e "s|^HOSTCXX[[:space:]]*=.*$|HOSTCXX = $TOOLCHAIN/bin/host-g++|" \
          -e "s|^ARCH[[:space:]]*?=.*$|ARCH = $TARGET_KERNEL_ARCH|" \
          -e "s|^CROSS_COMPILE[[:space:]]*?=.*$|CROSS_COMPILE = $TARGET_KERNEL_PREFIX|" \
@@ -99,10 +102,10 @@ post_patch() {
   fi
 
   # set default hostname based on $DISTRONAME
-    sed -i -e "s|@DISTRONAME@|$DISTRONAME|g" $PKG_BUILD/.config
+   sed -i -e "s|@DISTRONAME@|$DISTRONAME|g" $PKG_BUILD/.config
 
   # ask for new config options after kernel update
-  # make -C $PKG_BUILD oldconfig
+   make -C $PKG_BUILD oldconfig
 
   # disable swap support if not enabled
   if [ ! "$SWAP_SUPPORT" = yes ]; then
@@ -160,9 +163,9 @@ pre_make_target() {
   make oldconfig
 
   # regdb (backward compatability with pre-4.15 kernels)
-#  if grep -q ^CONFIG_CFG80211_INTERNAL_REGDB= $PKG_BUILD/.config ; then
+  if grep -q ^CONFIG_CFG80211_INTERNAL_REGDB= $PKG_BUILD/.config ; then
   cp $(get_build_dir wireless-regdb)/db.txt $PKG_BUILD/net/wireless/db.txt
-#  fi
+  fi
 }
 
 make_target() {
@@ -203,6 +206,26 @@ make_target() {
         make $PERF_BUILD_ARGS
       mkdir -p $INSTALL/usr/bin
         cp perf $INSTALL/usr/bin
+    )
+  fi
+  
+  if [ "$PKG_BUILD_POWER" = "yes" ] ; then
+    ( cd tools/power/cpupower
+
+      make \
+      CROSS="$TARGET_PREFIX" \
+      CPUFREQ_BENCH=false \
+      STATIC=true \
+      NLS=true \
+      DEBUG=false \
+      LDFLAGS="-lrt -lpci" all
+
+      mkdir -p $INSTALL/usr/bin
+      cp cpupower $INSTALL/usr/bin
+        
+    # cd ../../thermal/tmon
+    # make CC="$CC" PKG_CONFIG_PATH="$TOOLCHAIN/bin/pkg-config" JOBS=1
+    # cp tmon $INSTALL/usr/bin
     )
   fi
 
@@ -302,7 +325,7 @@ post_install() {
     ln -sf /$(get_full_firmware_dir)/ $INSTALL/etc/firmware
 
   # regdb and signature is now loaded as firmware by 4.15+
-  #if grep -q ^CONFIG_CFG80211_REQUIRE_SIGNED_REGDB= $PKG_BUILD/.config; then
-  #cp $(get_build_dir wireless-regdb)/regulatory.db{,.p7s} $INSTALL/$(get_full_firmware_dir)
-  #fi
+    if grep -q ^CONFIG_CFG80211_REQUIRE_SIGNED_REGDB= $PKG_BUILD/.config; then
+      cp $(get_build_dir wireless-regdb)/regulatory.db{,.p7s} $INSTALL/$(get_full_firmware_dir)
+    fi
 }

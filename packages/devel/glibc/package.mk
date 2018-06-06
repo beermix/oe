@@ -17,8 +17,7 @@
 ################################################################################
 
 PKG_NAME="glibc"
-PKG_VERSION="2.24"
-PKG_VERSION="17d5d67"
+PKG_VERSION="71616d5"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/bminor/glibc/tree/release/2.24/master"
@@ -46,7 +45,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-__thread \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
-                           --enable-kernel=4.4 \
+                           --enable-kernel=4.9 \
                            --without-cvs \
                            --without-gd \
                            --enable-obsolete-rpc \
@@ -111,7 +110,7 @@ pre_configure_target() {
 
   unset LD_LIBRARY_PATH
 
-  export CFLAGS="-O2 -march=westmere -g -m64"
+  export CFLAGS="-O2 -march=westmere -g3 -m64"
 
   export BUILD_CC=$HOST_CC
   export OBJDUMP_FOR_HOST=objdump
@@ -174,6 +173,10 @@ post_makeinstall_target() {
     mkdir -p $INSTALL/usr/share/i18n/locales
       cp -PR $PKG_BUILD/localedata/locales/POSIX $INSTALL/usr/share/i18n/locales
   fi
+
+  mkdir -p $INSTALL/usr/config/locale
+    [ -e $PKG_DIR/config/locale-archive ] && cp $PKG_DIR/config/locale-archive $INSTALL/usr/config/locale
+    ln -s /storage/.config/locale $INSTALL/usr/lib/locale
 
 # create default configs
   mkdir -p $INSTALL/etc
