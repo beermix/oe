@@ -99,6 +99,7 @@ make_target() {
     'ffmpeg_branding="Chrome"'
     'proprietary_codecs=true'
     'link_pulseaudio=false'
+    'use_allocator="none"'
     'linux_use_bundled_binutils=false'
     'use_cups=false'
     'use_custom_libcxx=false'

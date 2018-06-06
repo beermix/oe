@@ -79,7 +79,6 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
 PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          --enable-languages=c,c++ \
                          --enable-__cxa_atexit \
-                         --with-headers=$SYSROOT_PREFIX/usr/include \
                          --enable-decimal-float \
                          --enable-tls \
                          --enable-shared \
@@ -107,8 +106,8 @@ pre_configure_host() {
 #pre_configure_bootstrap() {
   # export CFLAGS="-g -O2 -I$TOOLCHAIN/include"
   # export CXXFLAGS="-g -O2 -I$TOOLCHAIN/include"
-  # export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
-  # export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
+  export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
+  export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
 #}
 
 post_make_host() {
