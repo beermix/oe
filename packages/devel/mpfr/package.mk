@@ -17,14 +17,14 @@
 ################################################################################
 
 PKG_NAME="mpfr"
-PKG_VERSION="4.0.1"
+#PKG_VERSION="4.0.1"
 #PKG_SHA256="67874a60826303ee2fb6affc6dc0ddd3e749e9bfcb4c8655e3953d0458a6e16e"
-PKG_VERSION="3.1.5"
+PKG_VERSION="3.1.6"
 PKG_ARCH="any"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://www.mpfr.org/"
 PKG_URL="http://www.mpfr.org/mpfr-current/mpfr-$PKG_VERSION.tar.xz"
-PKG_URL="http://www.mpfr.org/mpfr-$PKG_VERSION.tar.xz"
+PKG_URL="http://sources.buildroot.net/mpfr-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="ccache:host gmp:host"
 PKG_SECTION="devel"
 PKG_SHORTDESC="mpfr: A C library for multiple-precision floating-point computations with exact roundi"
