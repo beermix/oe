@@ -67,9 +67,11 @@ make_target() {
   unset CXXFLAGS
   unset LDFLAGS
 
-  export CFLAGS="$CFLAGS -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
-  export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
-  export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
+  export CFLAGS="$CFLAGS -fdiagnostics-color=always"
+  export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-delete-null-pointer-checks -fpermissive"
+  
+  # export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
+  # -fno-unwind-tables -fno-asynchronous-unwind-tables
 
   # export LDFLAGS="$LDFLAGS -ludev"
   # export LD=$CXX
