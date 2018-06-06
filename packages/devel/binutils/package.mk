@@ -17,12 +17,11 @@
 ################################################################################
 
 PKG_NAME="binutils"
-PKG_VERSION="d739ba9"
-#PKG_SHA256="0b871e271c4c620444f8264f72143b4d224aa305306d85dd77ab8dce785b1e85"
+PKG_VERSION="0e43363"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://ftp.gnu.org.ua/gnu/binutils/?C=M;O=D"
-PKG_URL="http://ftpmirror.gnu.org/binutils/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_URL="http://ftpmirror.gnu.org/binutils/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_URL="https://github.com/bminor/binutils-gdb/archive/${PKG_VERSION}.tar.gz"
 PKG_SOURCE_DIR="$PKG_NAME-gdb-$PKG_VERSION*"
 PKG_DEPENDS_HOST="ccache:host bison:host flex:host linux:host"
@@ -41,15 +40,13 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --disable-libada \
                          --disable-libssp \
                          --enable-version-specific-runtime-libs \
-                         --enable-deterministic-archives \
-                         --enable-compressed-debug-sections=all \
                          --enable-plugins \
                          --enable-gold \
                          --enable-ld=default \
                          --enable-lto \
+                         --disable-nls
                          --disable-sim \
-                         --disable-gdb \
-                         --disable-nls"
+                         --disable-gdb"
 
 PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
                          --with-sysroot=$SYSROOT_PREFIX \
@@ -66,9 +63,9 @@ PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
                          --disable-gold \
                          --disable-ld \
                          --disable-lto \
+                         --disable-nls \
                          --disable-sim \
-                         --disable-gdb \
-                         --disable-nls"
+                         --disable-gdb"
 
 pre_configure_host() {
   unset CPPFLAGS
@@ -84,13 +81,19 @@ make_host() {
 
 makeinstall_host() {
   cp -v ../include/libiberty.h $SYSROOT_PREFIX/usr/include
-  make install -j1
+  make install
 }
 
 make_target() {
   make configure-host
   make -C libiberty
   make -C bfd
+}
+
+makeinstall_target() {
+  mkdir -p $SYSROOT_PREFIX/usr/lib
+    cp libiberty/libiberty.a $SYSROOT_PREFIX/usr/lib
+  make DESTDIR="$SYSROOT_PREFIX" -C bfd install
 }
 
 makeinstall_target() {

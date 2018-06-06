@@ -39,9 +39,9 @@ diff --git a/bfd/ChangeLog b/bfd/ChangeLog
 index 89f4338677..ca2bf2d51a 100644
 --- a/bfd/ChangeLog
 +++ b/bfd/ChangeLog
-@@ -1,3 +1,12 @@
-+2017-07-24  Tristan Gingold  <gingold@adacore.com>
-+
+@@ -1,5 +1,14 @@
+ 2017-07-24  Tristan Gingold  <gingold@adacore.com>
+ 
 +	* version.m4: Bump version to 2.29.0
 +	* configure: Regenerate.
 +
@@ -49,9 +49,11 @@ index 89f4338677..ca2bf2d51a 100644
 +
 +	* development.sh: Set development to true.
 +
- 2017-07-24  Tristan Gingold  <gingold@adacore.com>
- 
++2017-07-24  Tristan Gingold  <gingold@adacore.com>
++
  	* version.m4: Bump version to 2.29
+ 	* configure: Regenerate.
+ 
 diff --git a/bfd/configure b/bfd/configure
 index 7c8ebb1c1c..cda26d8234 100755
 --- a/bfd/configure
@@ -12309,19 +12311,22 @@ diff --git a/bfd/ChangeLog b/bfd/ChangeLog
 index 103334d34e..048bf141c9 100644
 --- a/bfd/ChangeLog
 +++ b/bfd/ChangeLog
-@@ -1,3 +1,12 @@
-+2017-08-01  Andreas Krebbel  <krebbel@linux.vnet.ibm.com>
-+
-+	Backport from mainline
+@@ -1,6 +1,15 @@
+ 2017-08-01  Andreas Krebbel  <krebbel@linux.vnet.ibm.com>
+ 
+ 	Backport from mainline
 +	2017-08-01  Andreas Krebbel  <krebbel@linux.vnet.ibm.com>
 +
 +	* elf32-s390.c (elf_s390_finish_dynamic_sections): Skip if it
 +	isn't the S/390 specific elf data.
 +	* elf64-s390.c (elf_s390_finish_dynamic_sections): Likewise.
 +
- 2017-08-01  Andreas Krebbel  <krebbel@linux.vnet.ibm.com>
++2017-08-01  Andreas Krebbel  <krebbel@linux.vnet.ibm.com>
++
++	Backport from mainline
+ 	2017-07-28  Andreas Krebbel  <krebbel@linux.vnet.ibm.com>
  
- 	Backport from mainline
+ 	* elf32-s390.c (elf_s390_finish_dynamic_sections): Add NULL
 diff --git a/bfd/elf32-s390.c b/bfd/elf32-s390.c
 index 8adf9e4784..4aa3915cb2 100644
 --- a/bfd/elf32-s390.c
@@ -13754,17 +13759,19 @@ diff --git a/ld/ChangeLog b/ld/ChangeLog
 index 61458ebe06..8b656e66eb 100644
 --- a/ld/ChangeLog
 +++ b/ld/ChangeLog
-@@ -1,3 +1,10 @@
-+2017-08-13  H.J. Lu  <hongjiu.lu@intel.com>
-+
+@@ -1,5 +1,12 @@
+ 2017-08-13  H.J. Lu  <hongjiu.lu@intel.com>
+ 
 +	PR ld/21923
 +	* configure.ac (TESTBFDLIB): Replace --rpath with -Wl,--rpath,
 +	for --disable-static.
 +	* configure: Regenerated.
 +
- 2017-08-13  H.J. Lu  <hongjiu.lu@intel.com>
- 
++2017-08-13  H.J. Lu  <hongjiu.lu@intel.com>
++
  	* testsuite/ld-i386/i386.exp: Run pr21884-nacl.
+ 	* testsuite/ld-x86-64/x86-64.exp: Likewise.
+ 	* testsuite/ld-i386/pr21884.d: Don't run on nacl targets.
 diff --git a/ld/configure b/ld/configure
 index 7b66a4f77b..20fb84d036 100755
 --- a/ld/configure
@@ -14107,16 +14114,18 @@ diff --git a/bfd/ChangeLog b/bfd/ChangeLog
 index 497bcbc066..bb40871af2 100644
 --- a/bfd/ChangeLog
 +++ b/bfd/ChangeLog
-@@ -1,3 +1,9 @@
-+2017-08-17  Szabolcs Nagy  <szabolcs.nagy@arm.com>
-+
+@@ -1,5 +1,11 @@
+ 2017-08-17  Szabolcs Nagy  <szabolcs.nagy@arm.com>
+ 
 +	PR ld/18808
 +	* elfnn-aarch64.c (elfNN_aarch64_final_link_relocate): Skip IFUNC
 +	relocations in debug sections, change abort to _bfd_error_handler.
 +
- 2017-08-17  Szabolcs Nagy  <szabolcs.nagy@arm.com>
- 
++2017-08-17  Szabolcs Nagy  <szabolcs.nagy@arm.com>
++
  	PR ld/18841
+ 	* elfnn-aarch64.c (elfNN_aarch64_reloc_type_class): Return
+ 	reloc_class_ifunc for ifunc symbols.
 diff --git a/bfd/elfnn-aarch64.c b/bfd/elfnn-aarch64.c
 index 18db07f8a5..74beaf4f95 100644
 --- a/bfd/elfnn-aarch64.c
@@ -17936,18 +17945,20 @@ diff --git a/gas/ChangeLog b/gas/ChangeLog
 index 028a82c70c..84aad433e2 100644
 --- a/gas/ChangeLog
 +++ b/gas/ChangeLog
-@@ -1,3 +1,11 @@
-+2017-08-30  Maciej W. Rozycki  <macro@imgtec.com>
-+
+@@ -1,5 +1,13 @@
+ 2017-08-30  Maciej W. Rozycki  <macro@imgtec.com>
+ 
 +	* testsuite/gas/mips/branch-addend-micromips.d: New test.
 +	* testsuite/gas/mips/branch-addend-micromips-n32.d: New test.
 +	* testsuite/gas/mips/branch-addend-micromips-n64.d: New test.
 +	* testsuite/gas/mips/branch-addend-micromips.s: New test source.
 +	* testsuite/gas/mips/mips.exp: Run the new tests.
 +
- 2017-08-30  Maciej W. Rozycki  <macro@imgtec.com>
- 
++2017-08-30  Maciej W. Rozycki  <macro@imgtec.com>
++
  	* config/tc-mips.c (md_convert_frag): Respect
+ 	`mips_ignore_branch_isa'.
+ 	* testsuite/gas/mips/branch-local-5.d: New test.
 diff --git a/gas/testsuite/gas/mips/branch-addend-micromips-n32.d b/gas/testsuite/gas/mips/branch-addend-micromips-n32.d
 new file mode 100644
 index 0000000000..085cc2256f
@@ -21220,16 +21231,18 @@ diff --git a/bfd/ChangeLog b/bfd/ChangeLog
 index e9ea6cfdda..8db7080931 100644
 --- a/bfd/ChangeLog
 +++ b/bfd/ChangeLog
-@@ -1,3 +1,9 @@
-+2017-09-01  Nick Clifton  <nickc@redhat.com>
-+
+@@ -1,5 +1,11 @@
+ 2017-09-01  Nick Clifton  <nickc@redhat.com>
+ 
 +	PR 21933
 +	PR 22060
 +	* elf.c (elf_read_notes): Check for a note size of -1.
 +
- 2017-09-01  Nick Clifton  <nickc@redhat.com>
- 
++2017-09-01  Nick Clifton  <nickc@redhat.com>
++
  	PR 22058
+ 	* elf-attrs.c (_bfd_elf_parse_attributes): Ensure that the
+ 	attribute buffer is NUL terminated.
 diff --git a/bfd/elf.c b/bfd/elf.c
 index 063a6e4bb3..fbf639b357 100644
 --- a/bfd/elf.c
@@ -22421,16 +22434,18 @@ diff --git a/bfd/ChangeLog b/bfd/ChangeLog
 index 8db7080931..ce926fe727 100644
 --- a/bfd/ChangeLog
 +++ b/bfd/ChangeLog
-@@ -1,3 +1,9 @@
-+2017-09-01  Nick Clifton  <nickc@redhat.com>
-+
+@@ -1,5 +1,11 @@
+ 2017-09-01  Nick Clifton  <nickc@redhat.com>
+ 
 +	PR 22059
 +	* dwarf2.c (decode_line_info): Fix test for an overlong line info
 +	structure.
 +
- 2017-09-01  Nick Clifton  <nickc@redhat.com>
- 
++2017-09-01  Nick Clifton  <nickc@redhat.com>
++
  	PR 21933
+ 	PR 22060
+ 	* elf.c (elf_read_notes): Check for a note size of -1.
 diff --git a/bfd/dwarf2.c b/bfd/dwarf2.c
 index 04a2585be2..877962783b 100644
 --- a/bfd/dwarf2.c
@@ -23635,16 +23650,18 @@ diff --git a/bfd/ChangeLog b/bfd/ChangeLog
 index 93142541d0..b5f1204e64 100644
 --- a/bfd/ChangeLog
 +++ b/bfd/ChangeLog
-@@ -1,3 +1,9 @@
-+2017-09-01  H.J. Lu  <hongjiu.lu@intel.com>
-+
+@@ -1,5 +1,11 @@
+ 2017-09-01  H.J. Lu  <hongjiu.lu@intel.com>
+ 
 +	PR ld/22064
 +	* elf64-x86-64.c (elf_x86_64_finish_dynamic_symbol): Check
 +	ELF_COMMON_DEF_P for common symbols.
 +
- 2017-09-01  H.J. Lu  <hongjiu.lu@intel.com>
- 
++2017-09-01  H.J. Lu  <hongjiu.lu@intel.com>
++
  	PR ld/22061
+ 	* elf32-i386.c (elf_i386_link_setup_gnu_properties): Create
+ 	.eh_frame section for the second PLT.
 diff --git a/bfd/elf64-x86-64.c b/bfd/elf64-x86-64.c
 index bc60012f1e..59926b6092 100644
 --- a/bfd/elf64-x86-64.c
@@ -23662,17 +23679,19 @@ diff --git a/ld/ChangeLog b/ld/ChangeLog
 index f4335cfe26..24d0ed26a7 100644
 --- a/ld/ChangeLog
 +++ b/ld/ChangeLog
-@@ -1,3 +1,10 @@
-+2017-09-01  H.J. Lu  <hongjiu.lu@intel.com>
-+
+@@ -1,5 +1,12 @@
+ 2017-09-01  H.J. Lu  <hongjiu.lu@intel.com>
+ 
 +	PR ld/22064
 +	* testsuite/ld-x86-64/pr22064a.S: New file.
 +	* testsuite/ld-x86-64/pr22064b.c: Likewise.
 +	* testsuite/ld-x86-64/x86-64.exp: Run PR ld/22064 test.
 +
- 2017-09-01  H.J. Lu  <hongjiu.lu@intel.com>
- 
++2017-09-01  H.J. Lu  <hongjiu.lu@intel.com>
++
  	PR ld/22061
+ 	* testsuite/ld-i386/ibt-plt-1.d: Pass --hash-style=sysv to ld.
+ 	Updated.
 diff --git a/ld/testsuite/ld-x86-64/pr22064a.S b/ld/testsuite/ld-x86-64/pr22064a.S
 new file mode 100644
 index 0000000000..8065a112d7
@@ -54416,7 +54435,7 @@ diff --git a/ld/testsuite/ld-x86-64/tls.exp b/ld/testsuite/ld-x86-64/tls.exp
 index 4263d95bd1..7896451c01 100644
 --- a/ld/testsuite/ld-x86-64/tls.exp
 +++ b/ld/testsuite/ld-x86-64/tls.exp
-@@ -206,16 +206,30 @@ if { ![check_gnu2_tls_available] } {
+@@ -206,17 +206,31 @@ if { ![check_gnu2_tls_available] } {
      return
  }
  
@@ -54444,7 +54463,7 @@ index 4263d95bd1..7896451c01 100644
 +}
 +
  run_ld_link_exec_tests [list \
--    [list \
+     [list \
 -	"Run tlsdesc1" \
 -	"-Wl,--no-as-needed tmpdir/libtlsdesc1.so" \
 -	"" \
@@ -54453,14 +54472,14 @@ index 4263d95bd1..7896451c01 100644
 -	"pass.out" \
 -	"$GNU2_CFLAGS" \
 -    ] \
-     [list \
+-    [list \
  	"Run tlsdesc1 (-z now)" \
  	"-Wl,-z,now -Wl,--no-as-needed tmpdir/libtlsdesc1n.so" \
-@@ -225,15 +239,6 @@ run_ld_link_exec_tests [list \
- 	"pass.out" \
+ 	"" \
+@@ -226,15 +240,6 @@ run_ld_link_exec_tests [list \
  	"$GNU2_CFLAGS" \
      ] \
--    [list \
+     [list \
 -	"Run tlsdesc1 with PIE" \
 -	"-pie -Wl,--no-as-needed tmpdir/libtlsdesc1.so" \
 -	"" \
@@ -54469,9 +54488,10 @@ index 4263d95bd1..7896451c01 100644
 -	"pass.out" \
 -	"-fPIE $GNU2_CFLAGS" \
 -    ] \
-     [list \
+-    [list \
  	"Run tlsdesc1 with PIE (-z now)" \
  	"-pie -Wl,-z,now -Wl,--no-as-needed tmpdir/libtlsdesc1n.so" \
+ 	"" \
 
 commit 583043c2b8c641612e93b02b9266ca8adc349952
 Author: GDB Administrator <gdbadmin@sourceware.org>
@@ -55011,9 +55031,9 @@ diff --git a/bfd/ChangeLog b/bfd/ChangeLog
 index 268f187f56..6dce8cc3a7 100644
 --- a/bfd/ChangeLog
 +++ b/bfd/ChangeLog
-@@ -1,3 +1,12 @@
-+2017-08-31  Alan Modra  <amodra@gmail.com>
-+
+@@ -1,5 +1,14 @@
+ 2017-08-31  Alan Modra  <amodra@gmail.com>
+ 
 +	* elf-eh-frame.c (_bfd_elf_parse_eh_frame): Don't exit early
 +	for a section containing just a terminator.  Allow multiple
 +	terminators at end of section.
@@ -55021,9 +55041,11 @@ index 268f187f56..6dce8cc3a7 100644
 +	sections when not adding alignment.  Assert on terminator in
 +	the middle of FDEs.
 +
- 2017-08-31  Alan Modra  <amodra@gmail.com>
- 
++2017-08-31  Alan Modra  <amodra@gmail.com>
++
  	PR 21441
+ 	PR 22048
+ 	* elflink.c (bfd_elf_discard_info): Don't pad embedded zero
 diff --git a/bfd/elf-eh-frame.c b/bfd/elf-eh-frame.c
 index 7e0d63f569..f0ede2d6f7 100644
 --- a/bfd/elf-eh-frame.c
@@ -55606,16 +55628,18 @@ diff --git a/bfd/ChangeLog b/bfd/ChangeLog
 index fac315012a..87b7973ec1 100644
 --- a/bfd/ChangeLog
 +++ b/bfd/ChangeLog
-@@ -1,3 +1,9 @@
-+2017-09-19  Alan Modra  <amodra@gmail.com>
-+
+@@ -1,5 +1,11 @@
+ 2017-09-19  Alan Modra  <amodra@gmail.com>
+ 
 +	PR 21441
 +	* elf64-ppc.c (ppc64_elf_build_stubs): Don't check glink_eh_frame
 +	size.
 +
- 2017-09-19  Alan Modra  <amodra@gmail.com>
- 
++2017-09-19  Alan Modra  <amodra@gmail.com>
++
  	PR 22150
+ 	* elflink.c (bfd_elf_size_dynamic_sections): Garbage collect
+ 	symbols before calculating verrefs.  Don't renumber dynsyms
 diff --git a/bfd/elf64-ppc.c b/bfd/elf64-ppc.c
 index 3f01ae62a1..277bb0ef5d 100644
 --- a/bfd/elf64-ppc.c
@@ -56252,17 +56276,19 @@ diff --git a/bfd/ChangeLog b/bfd/ChangeLog
 index 31e2a7f9c6..7091d7543f 100644
 --- a/bfd/ChangeLog
 +++ b/bfd/ChangeLog
-@@ -1,3 +1,10 @@
-+2017-09-22  H.J. Lu  <hongjiu.lu@intel.com>
-+
+@@ -1,5 +1,12 @@
+ 2017-09-22  H.J. Lu  <hongjiu.lu@intel.com>
+ 
 +	PR binutils/22170
 +	* elf32-i386.c (elf_i386_get_synthetic_symtab): Guard against
 +	corrupted PLT.
 +	* elf64-x86-64.c (elf_x86_64_get_synthetic_symtab): Likewise.
 +
- 2017-09-22  H.J. Lu  <hongjiu.lu@intel.com>
- 
++2017-09-22  H.J. Lu  <hongjiu.lu@intel.com>
++
  	PR binutils/22163
+ 	* elf32-i386.c (elf_i386_get_synthetic_symtab): Also return -1
+ 	if bfd_canonicalize_dynamic_reloc returns 0.
 diff --git a/bfd/elf32-i386.c b/bfd/elf32-i386.c
 index 9dc2d25863..ba50c93f33 100644
 --- a/bfd/elf32-i386.c
@@ -58047,17 +58073,17 @@ diff --git a/bfd/ChangeLog b/bfd/ChangeLog
 index a86ad613ea..97c4b1d9e8 100644
 --- a/bfd/ChangeLog
 +++ b/bfd/ChangeLog
-@@ -1,6 +1,10 @@
- 2017-11-01  Alan Modra  <amodra@gmail.com>
+@@ -2,6 +2,10 @@
  
  	Apply from master
-+	2017-10-30  Alan Modra  <amodra@gmail.com>
+ 	2017-10-30  Alan Modra  <amodra@gmail.com>
 +	* elf32-frv.c (ELF_TARGET_ID): Don't define for generic
 +	elf target.
 +
- 	2017-10-30  Alan Modra  <amodra@gmail.com>
++	2017-10-30  Alan Modra  <amodra@gmail.com>
  	* elflink.c (elf_gc_sweep): Test elf_object_id in addition to
  	relocs_compatible.
+ 	(bfd_elf_gc_sections): Likewise.
 diff --git a/bfd/elf32-frv.c b/bfd/elf32-frv.c
 index ef609ff540..67b3c6a9eb 100644
 --- a/bfd/elf32-frv.c
@@ -58261,9 +58287,9 @@ diff --git a/bfd/ChangeLog b/bfd/ChangeLog
 index 991648b92a..3ddb1dce73 100644
 --- a/bfd/ChangeLog
 +++ b/bfd/ChangeLog
-@@ -1,3 +1,15 @@
-+2017-11-05  Alan Modra  <amodra@gmail.com>
-+
+@@ -1,5 +1,17 @@
+ 2017-11-05  Alan Modra  <amodra@gmail.com>
+ 
 +	PR 22397
 +	* bfd.c (union _bfd_doprnt_args): New.
 +	(PRINT_TYPE): Add FIELD arg.  Take value from args.
@@ -58274,9 +58300,11 @@ index 991648b92a..3ddb1dce73 100644
 +	(_bfd_doprnt_scan): New function.
 +	(error_handler_internal): Call _bfd_doprnt_scan and read args.
 +
- 2017-11-05  Alan Modra  <amodra@gmail.com>
- 
++2017-11-05  Alan Modra  <amodra@gmail.com>
++
  	Apply from master
+ 	2017-10-11  Pedro Alves  <palves@redhat.com>
+ 	* bfd.c (_doprnt): Rename to ...
 diff --git a/bfd/bfd.c b/bfd/bfd.c
 index 5c6e250a82..0bec897240 100644
 --- a/bfd/bfd.c
@@ -58790,16 +58818,19 @@ diff --git a/bfd/ChangeLog b/bfd/ChangeLog
 index 3ddb1dce73..4ad3675763 100644
 --- a/bfd/ChangeLog
 +++ b/bfd/ChangeLog
-@@ -1,3 +1,9 @@
-+2017-11-05  Alan Modra  <amodra@gmail.com>
-+
-+	PR 22397
-+	* bfd.c (_bfd_doprnt_scan): Check args index before storing, not
-+	after.
-+
+@@ -1,6 +1,12 @@
  2017-11-05  Alan Modra  <amodra@gmail.com>
  
  	PR 22397
++	* bfd.c (_bfd_doprnt_scan): Check args index before storing, not
++	after.
++
++2017-11-05  Alan Modra  <amodra@gmail.com>
++
++	PR 22397
+ 	* bfd.c (union _bfd_doprnt_args): New.
+ 	(PRINT_TYPE): Add FIELD arg.  Take value from args.
+ 	(_bfd_doprnt): Replace ap parameter with args.  Adjust all
 diff --git a/bfd/bfd.c b/bfd/bfd.c
 index 0bec897240..3e882297e0 100644
 --- a/bfd/bfd.c
@@ -59619,8 +59650,8 @@ diff --git a/gold/ChangeLog b/gold/ChangeLog
 index b02dcba5b5..297ffe98c3 100644
 --- a/gold/ChangeLog
 +++ b/gold/ChangeLog
-@@ -1,3 +1,11 @@
-+2017-11-30  Peter Smith  <peter.smith@linaro.org>
+@@ -1,4 +1,12 @@
+ 2017-11-30  Peter Smith  <peter.smith@linaro.org>
 +	    Cary Coutant  <ccoutant@gmail.com>
 +
 +	PR gold/20765
@@ -59628,9 +59659,10 @@ index b02dcba5b5..297ffe98c3 100644
 +	instead of relobj_ to invalidate the stub.
 +	(Erratum_stub::is_invalidated_erratum_stub): Likewise.
 +
- 2017-11-30  Peter Smith  <peter.smith@linaro.org>
++2017-11-30  Peter Smith  <peter.smith@linaro.org>
  
  	PR gold/22233
+ 	* aarch64.cc (AArch64_relobj::fix_errata_and_relocate_erratum_stubs):
 diff --git a/gold/aarch64.cc b/gold/aarch64.cc
 index d0839ce0af..aa7561a69d 100644
 --- a/gold/aarch64.cc
@@ -59672,17 +59704,18 @@ diff --git a/gold/ChangeLog b/gold/ChangeLog
 index 297ffe98c3..94e3f02b9c 100644
 --- a/gold/ChangeLog
 +++ b/gold/ChangeLog
-@@ -1,3 +1,10 @@
-+2017-11-30  Peter Smith  <peter.smith@linaro.org>
+@@ -1,4 +1,11 @@
+ 2017-11-30  Peter Smith  <peter.smith@linaro.org>
 +
 +	PR gold/20765
 +	* aarch64.cc (Aarch64_relobj::update_erratum_address): New method.
 +	(AArch64_relobj::scan_errata): Update addresses in stub table after
 +	relaxation pass.
 +
- 2017-11-30  Peter Smith  <peter.smith@linaro.org>
++2017-11-30  Peter Smith  <peter.smith@linaro.org>
  	    Cary Coutant  <ccoutant@gmail.com>
  
+ 	PR gold/20765
 diff --git a/gold/aarch64.cc b/gold/aarch64.cc
 index aa7561a69d..c7c9279adb 100644
 --- a/gold/aarch64.cc
@@ -62048,11 +62081,10 @@ diff --git a/gold/expression.cc b/gold/expression.cc
 index 2b598cdff4..42c45eb74d 100644
 --- a/gold/expression.cc
 +++ b/gold/expression.cc
-@@ -205,6 +205,14 @@ class Symbol_expression : public Expression
-   uint64_t
+@@ -206,6 +206,14 @@ class Symbol_expression : public Expression
    value(const Expression_eval_info*);
  
-+  void
+   void
 +  set_expr_sym_in_real_elf(Symbol_table* symtab) const
 +  {
 +    Symbol* sym = symtab->lookup(this->name_.c_str());
@@ -62060,9 +62092,10 @@ index 2b598cdff4..42c45eb74d 100644
 +      sym->set_in_real_elf();
 +  }
 +
-   void
++  void
    print(FILE* f) const
    { fprintf(f, "%s", this->name_.c_str()); }
+ 
 @@ -318,6 +326,10 @@ class Unary_expression : public Expression
    arg_print(FILE* f) const
    { this->arg_->print(f); }
@@ -62631,17 +62664,17 @@ index 02841627ec..3ebba6202a 100644
  
    int tv_size = this->args_.size() + tv_fixed_size;
    ld_plugin_tv* tv = new ld_plugin_tv[tv_size];
-@@ -345,6 +348,10 @@ Plugin::load()
-   tv[i].tv_tag = LDPT_GET_INPUT_SECTION_SIZE;
+@@ -346,6 +349,10 @@ Plugin::load()
    tv[i].tv_u.tv_get_input_section_size = get_input_section_size;
  
-+  ++i;
+   ++i;
 +  tv[i].tv_tag = LDPT_GET_WRAP_SYMBOLS;
 +  tv[i].tv_u.tv_get_wrap_symbols = get_wrap_symbols;
 +
-   ++i;
++  ++i;
    tv[i].tv_tag = LDPT_NULL;
    tv[i].tv_u.tv_val = 0;
+ 
 @@ -1808,6 +1815,25 @@ get_input_section_size(const struct ld_plugin_section section,
    return LDPS_OK;
  }
