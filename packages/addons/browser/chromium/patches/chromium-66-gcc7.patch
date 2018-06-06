@@ -23,44 +23,6 @@
  icu::RegexMatcher* AutofillRegexes::GetMatcher(const base::string16& pattern) {
    auto it = matchers_.find(pattern);
    if (it == matchers_.end()) {
---- chromium-66.0.3359.66/base/containers/flat_map.h.gcc7-5	2018-03-28 21:10:47.000000000 +0200
-+++ chromium-66.0.3359.66/base/containers/flat_map.h	2018-04-01 17:53:49.978464246 +0200
-@@ -180,6 +180,11 @@
-   using tree::tree;
-   using tree::operator=;
- 
-+  flat_map(flat_map const &);
-+  flat_map(flat_map &&);
-+  flat_map& operator=(const flat_map&);
-+  flat_map& operator=(flat_map&&);
-+
-   // --------------------------------------------------------------------------
-   // Map-specific insert operations.
-   //
-@@ -216,6 +221,23 @@
- };
- 
- // ----------------------------------------------------------------------------
-+// Copy/move constructors and copy/move assignment operators.
-+
-+template <class Key, class Mapped, class Compare>
-+flat_map<Key, Mapped, Compare>::flat_map(const flat_map &) = default;
-+
-+template <class Key, class Mapped, class Compare>
-+flat_map<Key, Mapped, Compare>::flat_map(flat_map &&) = default;
-+
-+template <class Key, class Mapped, class Compare>
-+auto flat_map<Key, Mapped, Compare>::operator=(
-+    const flat_map&) -> flat_map& = default;
-+
-+template <class Key, class Mapped, class Compare>
-+auto flat_map<Key, Mapped, Compare>::operator=(flat_map &&)
-+    -> flat_map& = default;
-+
-+// ----------------------------------------------------------------------------
- // Insert operations.
- 
- template <class Key, class Mapped, class Compare>
 --- chromium-66.0.3359.66/chrome/browser/notifications/notification_permission_context.cc.gcc7-5	2018-03-28 21:10:50.000000000 +0200
 +++ chromium-66.0.3359.66/chrome/browser/notifications/notification_permission_context.cc	2018-04-01 20:19:51.928280032 +0200
 @@ -42,9 +42,6 @@
