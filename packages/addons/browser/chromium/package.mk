@@ -74,7 +74,8 @@ make_target() {
   # export LDFLAGS="$LDFLAGS -ludev"
   # export LD=$CXX
 
-  export CCACHE_SLOPPINESS=time_macros
+  # export CCACHE_SLOPPINESS=time_macros
+  export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime
   # export CCACHE_CPP2=yes
 
   # Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
