@@ -22,15 +22,15 @@
 ################################################################################ beautifulsoup4:host html5lib:host re2 snappy
 
 PKG_NAME="chromium"
-PKG_VERSION="67.0.3396.79"
-PKG_SHA256="a1a7b706f28f7c89efce472a6ddcf602605d02f48551f47de61606d2d90aae4e"
+PKG_VERSION="67.0.3396.62"
+#PKG_SHA256="a1a7b706f28f7c89efce472a6ddcf602605d02f48551f47de61606d2d90aae4e"
 PKG_REV="140"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_SITE="http://www.chromium.org/Home"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_URL="https://gsdview.appspot.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
-PKG_URL="http://192.168.1.200:8080/chromium-$PKG_VERSION.tar.xz"
+#PKG_URL="http://192.168.1.200:8080/chromium-$PKG_VERSION.tar.xz"
 #PKG_DEPENDS_HOST="toolchain ninja:host Python2:host libevent:host gperf:host"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
 PKG_DEPENDS_TARGET="pciutils systemd dbus libXtst libXcomposite libXcursor unclutter alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk xdotool libdrm libjpeg-turbo freetype libxslt harfbuzz gtk+ chromium:host"
