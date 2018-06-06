@@ -28,19 +28,15 @@ PKG_DEPENDS_TARGET="toolchain glib freetype icu cairo pygobject"
 PKG_SECTION="x11/toolkits"
 PKG_SHORTDESC="harfbuzz: an OpenType text shaping engine."
 PKG_LONGDESC="HarfBuzz is an OpenType text shaping engine."
-PKG_TOOLCHAIN="autotools"
+PKG_TOOLCHAIN="configure"
 PKG_BUILD_FLAGS="-lto -gold -hardening"
 
+PKG_CONFIGURE_OPTS_TARGET="--with-icu=yes"
+
+if [ "$DISPLAYSERVER" = "x11" ] ; then
+  PKG_DEPENDS_TARGET+=" cairo"
+fi
+
 pre_configure_target() {
-  export LIBS="$LIBS -ldl -pthread"
+  export LIBS="-ldl"
 }
-
-PKG_CMAKE_OPTS_TARGET="DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=1 DHB_HAVE_FREETYPE=1 -DHB_HAVE_GLIB=1 -DHB_HAVE_ICU=1"
-
-PKG_CONFIGURE_OPTS_TARGET="--with-glib \
-			      --with-freetype \
-			      --with-cairo \
-			      --with-icu \
-			      --with-gobject \
-			      --enable-gtk-doc=no \
-			      --with-graphite2=no"
