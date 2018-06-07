@@ -18,49 +18,52 @@
 ################################################################################
 
 PKG_NAME="apr-util"
-PKG_VERSION="1.6.1"
+PKG_VERSION="1.5.4"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="Apache License"
 PKG_SITE="http://apr.apache.org/"
 PKG_URL="http://archive.apache.org/dist/apr/$PKG_NAME-$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain apr"
-PKG_PRIORITY="optional"
+# openssl
 PKG_SECTION="web"
 PKG_SHORTDESC="The Apache Portable Runtime Utility Library."
 PKG_LONGDESC="The Apache Portable Runtime Utility Library provides a predictable and consistent interface to underlying client library interfaces."
-PKG_MAINTAINER="ultraman"
-
+PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
+PKG_AUTORECONF="no"
 
 pre_configure_target() {
   cd $PKG_BUILD
   rm -rf .$TARGET_NAME
-  
 
-  
-}
-  
-  PKG_CONFIGURE_OPTS_TARGET="--with-apr=$SYSROOT_PREFIX/usr/bin/apr-1-config \
+  APR_DIR_TARGET=$(get_build_dir apr)/.install_dev
+
+  export APRUTIL_LDFLAGS="-L$APR_DIR_TARGET/usr/lib"
+
+  export CFLAGS="$CFLAGS -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64"
+  export CPPFLAGS="-D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64"
+
+  PKG_CONFIGURE_OPTS_TARGET="--with-apr=$APR_DIR_TARGET/usr/bin/apr-1-config \
                              --with-openssl \
                              --with-crypto \
                              --with-openssl=$SYSROOT_PREFIX/usr \
                              --with-sqlite3=$SYSROOT_PREFIX/usr"
+}
 
 
-
-make_target() {
+makeinstall_target() {
   # use this version only for addon (don't install it to a system)
-  #INSTALL=$PKG_BUILD/.INSTALL
-  make -j1 install DESTDIR=$INSTALL $PKG_MAKEINSTALL_OPTS_TARGET
+  INSTALL_DEV=$PKG_BUILD/.install_dev
+  make -j1 install DESTDIR=$INSTALL_DEV $PKG_MAKEINSTALL_OPTS_TARGET
 
-  $STRIP $(find $INSTALL -name "*.so" 2>/dev/null) 2>/dev/null || :
-  $STRIP $(find $INSTALL -name "*.so.[0-9]*" 2>/dev/null) 2>/dev/null || :
+  $STRIP $(find $INSTALL_DEV -name "*.so" 2>/dev/null) 2>/dev/null || :
+  $STRIP $(find $INSTALL_DEV -name "*.so.[0-9]*" 2>/dev/null) 2>/dev/null || :
 
-  for i in $(find $INSTALL/usr/lib -name "*.la" 2>/dev/null); do
-    $SED "s|\(['= ]\)/usr|\\1$INSTALL/usr|g" $i		#'
+  for i in $(find $INSTALL_DEV/usr/lib -name "*.la" 2>/dev/null); do
+    $SED "s|\(['= ]\)/usr|\\1$INSTALL_DEV/usr|g" $i   #'
   done
 
-  $SED -i "s|^prefix=\"|prefix=\"$INSTALL|" $INSTALL/usr/bin/apu-1-config
-  $SED -i "s|^bindir=\"|bindir=\"$INSTALL|" $INSTALL/usr/bin/apu-1-config
+  $SED -i "s|^prefix=\"|prefix=\"$INSTALL_DEV|" $INSTALL_DEV/usr/bin/apu-1-config
+  $SED -i "s|^bindir=\"|bindir=\"$INSTALL_DEV|" $INSTALL_DEV/usr/bin/apu-1-config
 }

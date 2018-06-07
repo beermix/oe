@@ -19,21 +19,19 @@
 ################################################################################
 
 PKG_NAME="httpd"
-PKG_VERSION="2.4.28"
+#PKG_VERSION="2.4.25"
+PKG_VERSION="2.4.27"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OpenSource"
-PKG_SITE="http://archive.apache.org/dist/httpd/?C=M;O=D"
+PKG_SITE="http://www.linuxfromscratch.org/blfs/view/svn/server/apache.html"
 PKG_URL="http://archive.apache.org/dist/httpd/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain apr-util openssl"
-PKG_PRIORITY="optional"
+PKG_DEPENDS_TARGET="toolchain apr-util openssl pcre libxml2"
 PKG_SECTION="web"
 PKG_SHORTDESC="The Apache web server."
 PKG_LONGDESC="The Apache web server."
-PKG_MAINTAINER="vpeter"
-
-PKG_TOOLCHAIN="autotools"
-PKG_USE_NINJA="no"
+PKG_IS_ADDON="no"
+PKG_AUTORECONF="yes"
 
 # If you still desire to serve pages as root
 APACHE_RUN_AS_ROOT=no
@@ -54,13 +52,16 @@ configure_target() {
   export CFLAGS="$CFLAGS -I$SYSROOT_PREFIX/usr/include"
   export LDFLAGS="$LDFLAGS -L$SYSROOT_PREFIX/usr/lib -lpthread -ldl"
 
+# fix this
+  export LDFLAGS="$LDFLAGS -L$APR_UTIL_DIR_TARGET/usr/lib"
+
 if [ "$TARGET_ARCH" = x86_64 ]; then
-	SIZEOF_SIZES="ac_cv_sizeof_struct_iovec=16"
+  SIZEOF_SIZES="ac_cv_sizeof_struct_iovec=16"
 else
-	SIZEOF_SIZES="ac_cv_sizeof_struct_iovec=8"
+  SIZEOF_SIZES="ac_cv_sizeof_struct_iovec=8"
 fi
 
-  PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=$HOST_CC \
+  PKG_CONFIGURE_OPTS_TARGET="CC_FOR_BUILD=gcc \
                              CFLAGS_FOR_BUILD= \
                              --with-crypto \
                              --enable-ssl \

@@ -14,6 +14,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
+# https://sources.archlinux.org/other/gcc
 ################################################################################
 
 PKG_NAME="gcc"

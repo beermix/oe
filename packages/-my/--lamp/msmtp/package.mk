@@ -18,27 +18,25 @@
 ################################################################################
 
 PKG_NAME="msmtp"
-PKG_VERSION="1.6.1"
+PKG_VERSION="1.6.6"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE=""
 PKG_SITE="http://msmtp.sourceforge.net/"
-PKG_URL="https://dl.dropboxusercontent.com/s/6kuirxc19yje0pr/msmtp-1.6.1.tar.xz"
+PKG_URL="http://sourceforge.net/projects/msmtp/files/msmtp/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_PRIORITY="optional"
 PKG_SECTION="security"
 PKG_SHORTDESC="msmtp is an SMTP client."
 PKG_LONGDESC="msmtp is an SMTP client."
-PKG_MAINTAINER="ultraman"
-
-
+PKG_IS_ADDON="no"
+PKG_AUTORECONF="no"
 
 pre_configure_target() {
   PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.kodi/userdata/addon_data/service.web.lamp/srvroot/conf"
 }
 
-makeinstall_target() { 
+makeinstall_target() {
   # use this version only for addon (don't install it to a system)
-	make -j1 install DESTDIR=$INSTALL $PKG_MAKEINSTALL_OPTS_TARGET
-	$STRIP $INSTALL/usr/bin/msmtp
+  make -j1 install DESTDIR=$INSTALL $PKG_MAKEINSTALL_OPTS_TARGET
+  $STRIP $INSTALL/usr/bin/msmtp
 }

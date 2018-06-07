@@ -18,37 +18,35 @@
 ################################################################################
 
 PKG_NAME="phpMyAdmin"
-PKG_VERSION="4.7.4"
+#PKG_VERSION="4.2.2"
 # needs new mysql
-#PKG_VERSION="4.2.11"
+PKG_VERSION="4.6.6"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL2"
 PKG_SITE="http://www.phpmyadmin.net/home_page/index.php"
 PKG_URL="https://files.phpmyadmin.net/phpMyAdmin/$PKG_VERSION/phpMyAdmin-$PKG_VERSION-all-languages.zip"
 PKG_DEPENDS_TARGET=""
-PKG_PRIORITY="optional"
 PKG_SECTION="tools"
 PKG_SHORTDESC="phpMyAdmin is a tool to handle the administration of MySQL databases."
 PKG_LONGDESC="phpMyAdmin is a free software tool written in PHP, intended to handle the administration of MySQL over the Web."
-PKG_MAINTAINER="ultraman"
-
-
+PKG_IS_ADDON="no"
+PKG_AUTORECONF="no"
 
 configure_target() {
-	: # nothing
+  : # nothing
 }
 
 make_target() {
-	: # nothing
+  : # nothing
 }
 
 makeinstall_target() {
-	: # nothing
+  : # nothing
 }
 
 unpack() {
-  # folder required to make .openelec-unpack file
+  # folder required to make .libreelec-unpack file
   mkdir $PKG_BUILD
   # unpack directly in addon script
 }
