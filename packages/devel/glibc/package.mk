@@ -17,10 +17,10 @@
 ################################################################################
 
 PKG_NAME="glibc"
-PKG_VERSION="1c09524"
+PKG_VERSION="71616d5"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/bminor/glibc/tree/release/2.24/master"
+PKG_SITE="https://github.com/bminor/glibc/tree/release/2.25/master"
 PKG_URL="https://github.com/bminor/glibc/archive/$PKG_VERSION.tar.gz"
 #PKG_URL="http://ftpmirror.gnu.org/glibc/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="ccache:host autotools:host autoconf:host linux:host gcc:bootstrap"

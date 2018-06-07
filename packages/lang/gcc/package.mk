@@ -99,18 +99,21 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          $GCC_OPTS"
 
 pre_configure_host() {
-  export CFLAGS="-g -O2 -I$TOOLCHAIN/include"
-  export CXXFLAGS="-g -O2 -I$TOOLCHAIN/include"
+  # export CFLAGS="-g -O2 -I$TOOLCHAIN/include"
+  # export CXXFLAGS="-g -O2 -I$TOOLCHAIN/include"
   # export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
   # export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
+  
+  export CFLAGS="-march=westmere -g -O2 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro  -Wl,-z,max-page-size=0x1000 -mtune=haswell"
+  export CXXFLAGS="-march=westmere -g -O2  -Wl,-z,max-page-size=0x1000 -mtune=haswell"
 
   export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
 }
 
 pre_configure_bootstrap() {
-  export CFLAGS="-g -O2 -I$TOOLCHAIN/include"
-  export CXXFLAGS="-g -O2 -I$TOOLCHAIN/include"
+  export CFLAGS="-march=westmere -g -O2 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro  -Wl,-z,max-page-size=0x1000 -mtune=haswell"
+  export CXXFLAGS="-march=westmere -g -O2  -Wl,-z,max-page-size=0x1000 -mtune=haswell"
   # export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
   # export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
 }
