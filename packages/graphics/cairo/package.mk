@@ -16,7 +16,7 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="	"
+PKG_NAME="cairo"
 PKG_VERSION="1.15.12"
 PKG_SHA256="7623081b94548a47ee6839a7312af34e9322997806948b6eec421a8c6d0594c9"
 PKG_LICENSE="LGPL"
