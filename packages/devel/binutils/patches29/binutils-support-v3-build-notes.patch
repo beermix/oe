@@ -1,0 +1,1337 @@
+diff -rup binutils.orig/binutils/objcopy.c binutils-2.29.1/binutils/objcopy.c
+--- binutils.orig/binutils/objcopy.c	2018-01-03 16:06:45.005657092 +0000
++++ binutils-2.29.1/binutils/objcopy.c	2018-01-03 16:06:57.927502748 +0000
+@@ -1905,84 +1905,229 @@ num_bytes (unsigned long val)
+   return count;
+ }
+ 
++typedef struct objcopy_internal_note
++{
++  Elf_Internal_Note  note;
++  bfd_vma            start;
++  bfd_vma            end;
++  bfd_boolean        modified;
++} objcopy_internal_note;
++  
++/* Returns TRUE if a gap does, or could, exist between the address range
++   covered by PNOTE1 and PNOTE2.  */
++
++static bfd_boolean
++gap_exists (objcopy_internal_note * pnote1,
++	    objcopy_internal_note * pnote2)
++{
++  /* Without range end notes, we assume that a gap might exist.  */
++  if (pnote1->end == 0 || pnote2->end == 0)
++    return TRUE;
++
++  /* FIXME: Alignment of 16 bytes taken from x86_64 binaries.
++     Really we should extract the alignment of the section covered by the notes.  */
++  return BFD_ALIGN (pnote1->end, 16) < pnote2->start;
++}
++
++static bfd_boolean
++is_open_note (objcopy_internal_note * pnote)
++{
++  return (pnote->note.type == NT_GNU_BUILD_ATTRIBUTE_OPEN);
++}
++
++static bfd_boolean
++is_func_note (objcopy_internal_note * pnote)
++{
++  return (pnote->note.type == NT_GNU_BUILD_ATTRIBUTE_FUNC);
++}
++
++static bfd_boolean
++is_64bit (bfd * abfd)
++{
++  /* Should never happen, but let's be paranoid.  */
++  if (bfd_get_flavour (abfd) != bfd_target_elf_flavour)
++    return FALSE;
++
++  return elf_elfheader (abfd)->e_ident[EI_CLASS] == ELFCLASS64;
++}
++
+ /* Merge the notes on SEC, removing redundant entries.
+    Returns the new, smaller size of the section upon success.  */
+ 
+ static bfd_size_type
+ merge_gnu_build_notes (bfd * abfd, asection * sec, bfd_size_type size, bfd_byte * contents)
+ {
+-  Elf_Internal_Note * pnotes_end;
+-  Elf_Internal_Note * pnotes;
+-  Elf_Internal_Note * pnote;
++  objcopy_internal_note *  pnotes_end;
++  objcopy_internal_note *  pnotes = NULL;
++  objcopy_internal_note *  pnote;
+   bfd_size_type       remain = size;
+   unsigned            version_1_seen = 0;
+   unsigned            version_2_seen = 0;
++  unsigned            version_3_seen = 0;
+   bfd_boolean         duplicate_found = FALSE;
+   const char *        err = NULL;
+   bfd_byte *          in = contents;
+   int                 attribute_type_byte;
+   int                 val_start;
++  unsigned long       previous_func_start = 0;
++  unsigned long       previous_open_start = 0;
++  unsigned long       previous_func_end = 0;
++  unsigned long       previous_open_end = 0;
++  long                relsize;
++
+ 
+-  /* Make a copy of the notes.
++  relsize = bfd_get_reloc_upper_bound (abfd, sec);
++  if (relsize > 0)
++    {
++      arelent **  relpp;
++      long        relcount;
++
++      /* If there are relocs associated with this section then we
++	 cannot safely merge it.  */
++      relpp = (arelent **) xmalloc (relsize);
++      relcount = bfd_canonicalize_reloc (abfd, sec, relpp, isympp);
++      free (relpp);
++      if (relcount != 0)
++	goto done;
++    }
++  
++  /* Make a copy of the notes and convert to our internal format.
+      Minimum size of a note is 12 bytes.  */
+-  pnote = pnotes = (Elf_Internal_Note *) xcalloc ((size / 12), sizeof (Elf_Internal_Note));
++  pnote = pnotes = (objcopy_internal_note *) xcalloc ((size / 12), sizeof (* pnote));
+   while (remain >= 12)
+     {
+-      pnote->namesz = (bfd_get_32 (abfd, in    ) + 3) & ~3;
+-      pnote->descsz = (bfd_get_32 (abfd, in + 4) + 3) & ~3;
+-      pnote->type   =  bfd_get_32 (abfd, in + 8);
++      bfd_vma start, end;
+ 
+-      if (pnote->type    != NT_GNU_BUILD_ATTRIBUTE_OPEN
+-	  && pnote->type != NT_GNU_BUILD_ATTRIBUTE_FUNC)
++      pnote->note.namesz = (bfd_get_32 (abfd, in    ) + 3) & ~3;
++      pnote->note.descsz = (bfd_get_32 (abfd, in + 4) + 3) & ~3;
++      pnote->note.type   =  bfd_get_32 (abfd, in + 8);
++
++      if (pnote->note.type    != NT_GNU_BUILD_ATTRIBUTE_OPEN
++	  && pnote->note.type != NT_GNU_BUILD_ATTRIBUTE_FUNC)
+ 	{
+ 	  err = _("corrupt GNU build attribute note: wrong note type");
+ 	  goto done;
+ 	}
+ 
+-      if (pnote->namesz + pnote->descsz + 12 > remain)
++      if (pnote->note.namesz + pnote->note.descsz + 12 > remain)
+ 	{
+ 	  err = _("corrupt GNU build attribute note: note too big");
+ 	  goto done;
+ 	}
+ 
+-      if (pnote->namesz < 2)
++      if (pnote->note.namesz < 2)
+ 	{
+ 	  err = _("corrupt GNU build attribute note: name too small");
+ 	  goto done;
+ 	}
+ 
+-      if (pnote->descsz != 0
+-	  && pnote->descsz != 4
+-	  && pnote->descsz != 8)
++      pnote->note.namedata = (char *)(in + 12);
++      pnote->note.descdata = (char *)(in + 12 + pnote->note.namesz);
++
++      remain -= 12 + pnote->note.namesz + pnote->note.descsz;
++      in     += 12 + pnote->note.namesz + pnote->note.descsz;
++
++      if (pnote->note.namesz > 2
++	  && pnote->note.namedata[0] == '$'
++	  && pnote->note.namedata[1] == GNU_BUILD_ATTRIBUTE_VERSION
++	  && pnote->note.namedata[2] == '1')
++	++ version_1_seen;
++      else if (pnote->note.namesz > 4
++	       && pnote->note.namedata[0] == 'G'
++	       && pnote->note.namedata[1] == 'A'
++	       && pnote->note.namedata[2] == '$'
++	       && pnote->note.namedata[3] == GNU_BUILD_ATTRIBUTE_VERSION)
+ 	{
++	  if (pnote->note.namedata[4] == '2')
++	    ++ version_2_seen;
++	  else if (pnote->note.namedata[4] == '3')
++	    ++ version_3_seen;
++	  else
++	    {
++	      err = _("corrupt GNU build attribute note: unsupported version");
++	      goto done;
++	    }
++	}
++
++      switch (pnote->note.descsz)
++	{
++	case 0:
++	  start = end = 0;
++	  break;
++
++	case 4:
++	  start = bfd_get_32 (abfd, pnote->note.descdata);
++	  /* FIXME: For version 1 and 2 notes we should try to
++	     calculate the end address by finding a symbol whose
++	     value is START, and then adding in its size.
++
++	     For now though, since v1 and v2 was not intended to
++	     handle gaps, we chose an artificially large end
++	     address.  */
++	  end = 0x7ffffffffffffffUL;
++	  break;
++	  
++	case 8:
++	  if (! is_64bit (abfd))
++	    {
++	      start = bfd_get_32 (abfd, pnote->note.descdata);
++	      end = bfd_get_32 (abfd, pnote->note.descdata + 4);
++	    }
++	  else
++	    {
++	      start = bfd_get_64 (abfd, pnote->note.descdata);
++	      /* FIXME: For version 1 and 2 notes we should try to
++		 calculate the end address by finding a symbol whose
++		 value is START, and then adding in its size.
++
++		 For now though, since v1 and v2 was not intended to
++		 handle gaps, we chose an artificially large end
++		 address.  */
++	      end = 0x7ffffffffffffffUL;
++	    }
++	  break;
++
++	case 16:
++	  start = bfd_get_64 (abfd, pnote->note.descdata);
++	  end = bfd_get_64 (abfd, pnote->note.descdata + 8);
++	  break;
++	  
++	default:
+ 	  err = _("corrupt GNU build attribute note: bad description size");
+ 	  goto done;
+ 	}
+ 
+-      pnote->namedata = (char *)(in + 12);
+-      pnote->descdata = (char *)(in + 12 + pnote->namesz);
++      if (is_open_note (pnote))
++	{
++	  if (start)
++	    previous_open_start = start;
++
++	  pnote->start = previous_open_start;
+ 
+-      remain -= 12 + pnote->namesz + pnote->descsz;
+-      in     += 12 + pnote->namesz + pnote->descsz;
++	  if (end)
++	    previous_open_end = end;
+ 
+-      if (pnote->namedata[pnote->namesz - 1] != 0)
++	  pnote->end = previous_open_end;
++	}
++      else
++	{
++	  if (start)
++	    previous_func_start = start;
++
++	  pnote->start = previous_func_start;
++
++	  if (end)
++	    previous_func_end = end;
++
++	  pnote->end = previous_func_end;
++	}
++
++      if (pnote->note.namedata[pnote->note.namesz - 1] != 0)
+ 	{
+ 	  err = _("corrupt GNU build attribute note: name not NUL terminated");
+ 	  goto done;
+ 	}
+-      
+-      if (pnote->namesz > 2
+-	  && pnote->namedata[0] == '$'
+-	  && pnote->namedata[1] == GNU_BUILD_ATTRIBUTE_VERSION
+-	  && pnote->namedata[2] == '1')
+-	++ version_1_seen;
+-      else if (pnote->namesz > 4
+-	  && pnote->namedata[0] == 'G'
+-	  && pnote->namedata[1] == 'A'
+-	  && pnote->namedata[2] == '$'
+-	  && pnote->namedata[3] == GNU_BUILD_ATTRIBUTE_VERSION
+-	  && pnote->namedata[4] == '2')
+-	++ version_2_seen;
++
+       pnote ++;
+     }
+ 
+@@ -1995,27 +2140,29 @@ merge_gnu_build_notes (bfd * abfd, asect
+       goto done;
+     }
+ 
+-  if (version_1_seen == 0 && version_2_seen == 0)
++  if (version_1_seen == 0 && version_2_seen == 0 && version_3_seen == 0)
+     {
+       err = _("bad GNU build attribute notes: no known versions detected");
+       goto done;
+     }
+ 
+-  if (version_1_seen > 0 && version_2_seen > 0)
++  if ((version_1_seen > 0 && version_2_seen > 0)
++      || (version_1_seen > 0 && version_3_seen > 0)
++      || (version_2_seen > 0 && version_3_seen > 0))
+     {
+       err = _("bad GNU build attribute notes: multiple different versions");
+       goto done;
+     }
+ 
+   /* Merging is only needed if there is more than one version note...  */
+-  if (version_1_seen == 1 || version_2_seen == 1)
++  if (version_1_seen == 1 || version_2_seen == 1 || version_3_seen == 1)
+     goto done;
+ 
+   attribute_type_byte = version_1_seen ? 1 : 3;
+   val_start = attribute_type_byte + 1;
+ 
+   /* The first note should be the first version note.  */
+-  if (pnotes[0].namedata[attribute_type_byte] != GNU_BUILD_ATTRIBUTE_VERSION)
++  if (pnotes[0].note.namedata[attribute_type_byte] != GNU_BUILD_ATTRIBUTE_VERSION)
+     {
+       err = _("bad GNU build attribute notes: first note not version note");
+       goto done;
+@@ -2026,7 +2173,9 @@ merge_gnu_build_notes (bfd * abfd, asect
+      2. Preserve any NT_GNU_BUILD_ATTRIBUTE_FUNC notes.
+      3. Eliminate any NT_GNU_BUILD_ATTRIBUTE_OPEN notes that have the same
+         full name field as the immediately preceeding note with the same type
+-	of name.
++	of name and whose address ranges coincide.
++	IE - it there are gaps in the coverage of the notes, then these gaps
++	must be preserved.
+      4. Combine the numeric value of any NT_GNU_BUILD_ATTRIBUTE_OPEN notes
+         of type GNU_BUILD_ATTRIBUTE_STACK_SIZE.
+      5. If an NT_GNU_BUILD_ATTRIBUTE_OPEN note is going to be preserved and
+@@ -2036,103 +2185,134 @@ merge_gnu_build_notes (bfd * abfd, asect
+ 	address to which it refers.  */
+   for (pnote = pnotes + 1; pnote < pnotes_end; pnote ++)
+     {
+-      Elf_Internal_Note * back;
+-      Elf_Internal_Note * prev_open = NULL;
++      int                      note_type;
++      objcopy_internal_note *  back;
++      objcopy_internal_note *  prev_open_with_range = NULL;
+ 
+-      if (pnote->type == NT_GNU_BUILD_ATTRIBUTE_FUNC)
++      /* Rule 2 - preserve function notes.  */
++      if (! is_open_note (pnote))
+ 	continue;
+ 
+-      /* Scan for duplicates.  Clear the type field of any found - but do not
+-	 delete them just yet.  */
++      note_type = pnote->note.namedata[attribute_type_byte];
++
++      /* Scan backwards from pnote, looking for duplicates.
++	 Clear the type field of any found - but do not delete them just yet.  */
+       for (back = pnote - 1; back >= pnotes; back --)
+ 	{
+-	  if (back->descsz > 0
+-	      && back->type != NT_GNU_BUILD_ATTRIBUTE_FUNC
+-	      && prev_open == NULL)
+-	    prev_open = back;
++	  int back_type = back->note.namedata[attribute_type_byte];
++
++	  /* If this is the first open note with an address
++	     range that	we have encountered then record it.  */
++	  if (prev_open_with_range == NULL
++	      && back->note.descsz > 0
++	      && ! is_func_note (back))
++	    prev_open_with_range = back;
++
++	  if (! is_open_note (back))
++	    continue;
++
++	  /* If the two notes are different then keep on searching.  */
++	  if (back_type != note_type)
++	    continue;
+ 
+-	  if (back->type == pnote->type
+-	      && back->namedata[attribute_type_byte] == pnote->namedata[attribute_type_byte])
++	  /* Rule 4 - combine stack size notes.  */
++	  if (back_type == GNU_BUILD_ATTRIBUTE_STACK_SIZE)
+ 	    {
+-	      if (back->namedata[attribute_type_byte] == GNU_BUILD_ATTRIBUTE_STACK_SIZE)
++	      unsigned char * name;
++	      unsigned long   note_val;
++	      unsigned long   back_val;
++	      unsigned int    shift;
++	      unsigned int    bytes;
++	      unsigned long   byte;
++
++	      for (shift = 0, note_val = 0,
++		     bytes = pnote->note.namesz - val_start,
++		     name = (unsigned char *) pnote->note.namedata + val_start;
++		   bytes--;)
+ 		{
+-		  unsigned char * name;
+-		  unsigned long   note_val;
+-		  unsigned long   back_val;
+-		  unsigned int    shift;
+-		  unsigned int    bytes;
+-		  unsigned long   byte;
+-
+-		  for (shift = 0, note_val = 0,
+-			 bytes = pnote->namesz - val_start,
+-			 name = (unsigned char *) pnote->namedata + val_start;
+-		       bytes--;)
+-		    {
+-		      byte = (* name ++) & 0xff;
+-		      note_val |= byte << shift;
+-		      shift += 8;
+-		    }
+-
+-		  for (shift = 0, back_val = 0,
+-			 bytes = back->namesz - val_start,
+-			 name = (unsigned char *) back->namedata + val_start;
+-		       bytes--;)
+-		    {
+-		      byte = (* name ++) & 0xff;
+-		      back_val |= byte << shift;
+-		      shift += 8;
+-		    }
+-
+-		  back_val += note_val;
+-		  if (num_bytes (back_val) >= back->namesz - val_start)
+-		    {
+-		      /* We have a problem - the new value requires more bytes of
+-			 storage in the name field than are available.  Currently
+-			 we have no way of fixing this, so we just preserve both
+-			 notes.  */
+-		      continue;
+-		    }
+-
+-		  /* Write the new val into back.  */
+-		  name = (unsigned char *) back->namedata + val_start;
+-		  while (name < (unsigned char *) back->namedata + back->namesz)
+-		    {
+-		      byte = back_val & 0xff;
+-		      * name ++ = byte;
+-		      if (back_val == 0)
+-			break;
+-		      back_val >>= 8;
+-		    }
+-
+-		  duplicate_found = TRUE;
+-		  pnote->type = 0;
+-		  break;
++		  byte = (* name ++) & 0xff;
++		  note_val |= byte << shift;
++		  shift += 8;
+ 		}
+-		  
+-	      if (back->namesz == pnote->namesz
+-		  && memcmp (back->namedata, pnote->namedata, back->namesz) == 0)
++
++	      for (shift = 0, back_val = 0,
++		     bytes = back->note.namesz - val_start,
++		     name = (unsigned char *) back->note.namedata + val_start;
++		   bytes--;)
+ 		{
+-		  duplicate_found = TRUE;
+-		  pnote->type = 0;
+-		  break;
++		  byte = (* name ++) & 0xff;
++		  back_val |= byte << shift;
++		  shift += 8;
+ 		}
+ 
+-	      /* If we have found an attribute match then stop searching backwards.  */
+-	      if (! ISPRINT (back->namedata[attribute_type_byte])
+-		  /* Names are NUL terminated, so this is safe.  */
+-		  || strcmp (back->namedata + val_start, pnote->namedata + val_start) == 0)
++	      back_val += note_val;
++	      if (num_bytes (back_val) >= back->note.namesz - val_start)
+ 		{
+-		  /* Since we are keeping this note we must check to see if its
+-		     description refers back to an earlier OPEN version note.  If so
+-		     then we must make sure that version note is also preserved.  */
+-		  if (pnote->descsz == 0
+-		      && prev_open != NULL
+-		      && prev_open->type == 0)
+-		    prev_open->type = NT_GNU_BUILD_ATTRIBUTE_FUNC;
++		  /* We have a problem - the new value requires more bytes of
++		     storage in the name field than are available.  Currently
++		     we have no way of fixing this, so we just preserve both
++		     notes.  */
++		  continue;
++		}
+ 
+-		  break;
++	      /* Write the new val into back.  */
++	      name = (unsigned char *) back->note.namedata + val_start;
++	      while (name < (unsigned char *) back->note.namedata
++		     + back->note.namesz)
++		{
++		  byte = back_val & 0xff;
++		  * name ++ = byte;
++		  if (back_val == 0)
++		    break;
++		  back_val >>= 8;
+ 		}
++
++	      duplicate_found = TRUE;
++	      pnote->note.type = 0;
++	      break;
++	    }
++
++	  /* Rule 3 - combine identical open notes.  */
++	  if (back->note.namesz == pnote->note.namesz
++	      && memcmp (back->note.namedata,
++			 pnote->note.namedata, back->note.namesz) == 0
++	      && ! gap_exists (back, pnote))
++	    {
++	      duplicate_found = TRUE;
++	      pnote->note.type = 0;
++
++	      if (pnote->end > back->end)
++		back->end = pnote->end;
++
++	      if (version_3_seen)
++		back->modified = TRUE;
++	      break;
+ 	    }
++
++	  /* Rule 5 - Since we are keeping this note we must check to see
++	     if its description refers back to an earlier OPEN version
++	     note that has been scheduled for deletion.  If so then we
++	     must make sure that version note is also preserved.  */
++	  if (version_3_seen)
++	    {
++	      /* As of version 3 we can just
++		 move the range into the note.  */
++	      pnote->modified = TRUE;
++	      pnote->note.type = NT_GNU_BUILD_ATTRIBUTE_FUNC;
++	      back->modified = TRUE;
++	      back->note.type = NT_GNU_BUILD_ATTRIBUTE_FUNC;
++	    }
++	  else
++	    {
++	      if (pnote->note.descsz == 0
++		  && prev_open_with_range != NULL
++		  && prev_open_with_range->note.type == 0)
++		prev_open_with_range->note.type = NT_GNU_BUILD_ATTRIBUTE_OPEN;
++	    }
++
++	  /* We have found a similar attribute but the details do not match.
++	     Stop searching backwards.  */
++	  break;
+ 	}
+     }
+ 
+@@ -2142,22 +2322,8 @@ merge_gnu_build_notes (bfd * abfd, asect
+       bfd_byte *     old;
+       bfd_byte *     new;
+       bfd_size_type  new_size;
+-      arelent **     relpp = NULL;
+-      long           relsize;
+-      long           relcount = 0;
+-
+-      relsize = bfd_get_reloc_upper_bound (abfd, sec);
+-      if (relsize > 0)
+-	{
+-	  /* If there are relocs associated with this section then we may
+-	     have to adjust them as well, as we remove notes.  */
+-	  relpp = (arelent **) xmalloc (relsize);
+-	  relcount = bfd_canonicalize_reloc (abfd, sec, relpp, isympp);
+-	  if (relcount < 0)
+-	    /* Do not bother complaining here - copy_relocations_in_section
+-	       will do that for us.  */
+-	    relcount = 0;
+-	}
++      bfd_vma        prev_start = 0;
++      bfd_vma        prev_end = 0;
+ 
+       /* Eliminate the duplicates.  */
+       new = new_contents = xmalloc (size);
+@@ -2165,36 +2331,52 @@ merge_gnu_build_notes (bfd * abfd, asect
+ 	   pnote < pnotes_end;
+ 	   pnote ++)
+ 	{
+-	  bfd_size_type note_size = 12 + pnote->namesz + pnote->descsz;
++	  bfd_size_type note_size = 12 + pnote->note.namesz + pnote->note.descsz;
+ 
+-	  if (pnote->type == 0)
++	  if (pnote->note.type != 0)
+ 	    {
+-	      if (relcount > 0)
++	      if (pnote->modified)
+ 		{
+-		  arelent ** rel;
+-
+-		  /* If there is a reloc at the current offset, delete it.
+-		     Adjust the location of any relocs above the current
+-		     location downwards by the size of the note being deleted.
+-		     FIXME: We could optimize this loop by retaining a pointer to
+-		     the last reloc below the current note.  */
+-		  for (rel = relpp; rel < relpp + relcount; rel ++)
++		  /* If the note has been modified then we must copy it by
++		     hand, potentially adding in a new description field.  */
++		  if (pnote->start == prev_start && pnote->end == prev_end)
+ 		    {
+-		      if ((* rel)->howto == NULL)
+-			continue;
+-		      if ((* rel)->address < (bfd_vma) (new - new_contents))
+-			continue;
+-		      if ((* rel)->address >= (bfd_vma) ((new + note_size) - new_contents))
+-			  (* rel)->address -= note_size;
++		      bfd_put_32 (abfd, pnote->note.namesz, new);
++		      bfd_put_32 (abfd, 0, new + 4);
++		      bfd_put_32 (abfd, pnote->note.type, new + 8);
++		      new += 12;
++		      memcpy (new, pnote->note.namedata, pnote->note.namesz);
++		      new += pnote->note.namesz;
++		    }
++		  else
++		    {
++		      bfd_put_32 (abfd, pnote->note.namesz, new);
++		      bfd_put_32 (abfd, is_64bit (abfd) ? 16 : 8, new + 4);
++		      bfd_put_32 (abfd, pnote->note.type, new + 8);
++		      new += 12;
++		      memcpy (new, pnote->note.namedata, pnote->note.namesz);
++		      new += pnote->note.namesz;
++		      if (is_64bit (abfd))
++			{
++			  bfd_put_64 (abfd, pnote->start, new);
++			  bfd_put_64 (abfd, pnote->end, new + 8);
++			  new += 16;
++			}
+ 		      else
+-			(* rel)->howto = NULL;
++			{
++			  bfd_put_32 (abfd, pnote->start, new);
++			  bfd_put_32 (abfd, pnote->end, new + 4);
++			  new += 8;
++			}
+ 		    }
+ 		}
+-	    }
+-	  else
+-	    {
+-	      memcpy (new, old, note_size);
+-	      new += note_size;
++	      else
++		{
++		  memcpy (new, old, note_size);
++		  new += note_size;
++		}
++	      prev_start = pnote->start;
++	      prev_end = pnote->end;
+ 	    }
+ 
+ 	  old += note_size;
+@@ -2204,24 +2386,6 @@ merge_gnu_build_notes (bfd * abfd, asect
+       memcpy (contents, new_contents, new_size);
+       size = new_size;
+       free (new_contents);
+-
+-      if (relcount > 0)
+-	{
+-	  arelent **rel = relpp;
+-
+-	  while (rel < relpp + relcount)
+-	    if ((*rel)->howto != NULL)
+-	      rel++;
+-	    else
+-	      {
+-		/* Delete eliminated relocs.
+-		   FIXME: There are better ways to do this.  */
+-		memmove (rel, rel + 1,
+-			 ((relcount - (rel - relpp)) - 1) * sizeof (*rel));
+-		relcount--;
+-	      }
+-	  bfd_set_reloc (abfd, sec, relpp, relcount);
+-	}
+     }
+ 
+  done:
+diff -rup binutils.orig/binutils/readelf.c binutils-2.29.1/binutils/readelf.c
+--- binutils.orig/binutils/readelf.c	2018-01-03 16:06:45.005657092 +0000
++++ binutils-2.29.1/binutils/readelf.c	2018-01-03 16:28:24.417115970 +0000
+@@ -16247,9 +16247,9 @@ get_note_type (unsigned e_type)
+       case NT_ARCH:
+ 	return _("NT_ARCH (architecture)");
+       case NT_GNU_BUILD_ATTRIBUTE_OPEN:
+-	return _("NT_GNU_BUILD_ATTRIBUTE_OPEN");
++	return _("OPEN");
+       case NT_GNU_BUILD_ATTRIBUTE_FUNC:
+-	return _("NT_GNU_BUILD_ATTRIBUTE_FUNC");
++	return _("func");
+       default:
+ 	break;
+       }
+@@ -17064,13 +17064,16 @@ print_ia64_vms_note (Elf_Internal_Note *
+   return TRUE;
+ }
+ 
+-/* Print the name of the symbol associated with a build attribute
+-   that is attached to address OFFSET.  */
+-
+-static bfd_boolean
+-print_symbol_for_build_attribute (FILE *         file,
+-				  unsigned long  offset,
+-				  bfd_boolean    is_open_attr)
++/* Find the symbol associated with a build attribute that is attached
++   to address OFFSET.  If PNAME is non-NULL then store the name of
++   the symbol (if found) in the provided pointer,  Returns NULL if a
++   symbol could not be found.  */
++
++static Elf_Internal_Sym *
++get_symbol_for_build_attribute (FILE *           file,
++				unsigned long    offset,
++				bfd_boolean      is_open_attr,
++				const char **    pname)
+ {
+   static FILE *             saved_file = NULL;
+   static char *             strtab;
+@@ -17109,10 +17112,7 @@ print_symbol_for_build_attribute (FILE *
+     }
+ 
+   if (symtab == NULL || strtab == NULL)
+-    {
+-      printf ("\n");
+-      return FALSE;
+-    }
++    return NULL;
+ 
+   /* Find a symbol whose value matches offset.  */
+   for (sym = symtab; sym < symtab + nsyms; sym ++)
+@@ -17132,14 +17132,15 @@ print_symbol_for_build_attribute (FILE *
+ 	       FUNC symbols entirely.  */
+ 	    switch (ELF_ST_TYPE (sym->st_info))
+ 	      {
+-	      case STT_FILE:
+-		saved_sym = sym;
+-		/* We can stop searching now.  */
+-		sym = symtab + nsyms;
+-		continue;
+-
+ 	      case STT_OBJECT:
++	      case STT_FILE:
+ 		saved_sym = sym;
++		if (sym->st_size)
++		  {
++		    /* If the symbol has a size associated
++		       with it then we can stop searching.  */
++		    sym = symtab + nsyms;
++		  }
+ 		continue;
+ 
+ 	      case STT_FUNC:
+@@ -17177,55 +17178,118 @@ print_symbol_for_build_attribute (FILE *
+ 	  }
+       }
+ 
+-  printf (" (%s: %s)\n",
+-	  is_open_attr ? _("file") : _("func"),
+-	  saved_sym ? strtab + saved_sym->st_name : _("<no symbol found>)"));
+-  return TRUE;
++  if (saved_sym && pname)
++    * pname = strtab + saved_sym->st_name;
++
++  return saved_sym;
+ }
+ 
+ static bfd_boolean
+ print_gnu_build_attribute_description (Elf_Internal_Note * pnote,
+ 				       FILE *              file)
+ {
+-  static unsigned long global_offset = 0;
+-  unsigned long        offset;
+-  unsigned int         desc_size = is_32bit_elf ? 4 : 8;
+-  bfd_boolean          is_open_attr = pnote->type == NT_GNU_BUILD_ATTRIBUTE_OPEN;
+-
+-  if (pnote->descsz == 0)
+-    {
++  static unsigned long  global_offset = 0;
++  static unsigned long  global_end = 0;
++  static unsigned long  func_offset = 0;
++  static unsigned long  func_end = 0;
++
++  Elf_Internal_Sym *    sym;
++  const char *          name;
++  unsigned long         start;
++  unsigned long         end;
++  bfd_boolean           is_open_attr = pnote->type == NT_GNU_BUILD_ATTRIBUTE_OPEN;
++
++  switch (pnote->descsz)
++    {
++    case 0:
++      /* A zero-length description means that the range of
++	 the previous note of the same type should be used.  */
+       if (is_open_attr)
+ 	{
+-	  printf (_("    Applies from offset %#lx\n"), global_offset);
+-	  return TRUE;
++	  if (global_end > global_offset)
++	    printf (_("    Applies to region from %#lx to %#lx\n"),
++		    global_offset, global_end);
++	  else
++	    printf (_("    Applies to region from %#lx\n"), global_offset);
+ 	}
+       else
+ 	{
+-	  printf (_("    Applies to func at %#lx"), global_offset);
+-	  return print_symbol_for_build_attribute (file, global_offset, is_open_attr);
++	  if (func_end > func_offset)
++	    printf (_("    Applies to region from %#lx to %#lx\n"), func_offset, func_end);
++	  else
++	    printf (_("    Applies to region from %#lx\n"), func_offset);
+ 	}
+-    }
++      return TRUE;
+ 
+-  if (pnote->descsz != desc_size)
+-    {
++    case 4:
++      start = byte_get ((unsigned char *) pnote->descdata, 4);
++      end = 0;
++      break;
++
++    case 8:
++      if (is_32bit_elf)
++	{
++	  /* FIXME: We should check that version 3+ notes are being used here...  */
++	  start = byte_get ((unsigned char *) pnote->descdata, 4);
++	  end = byte_get ((unsigned char *) pnote->descdata + 4, 4);
++	}
++      else
++	{
++	  start = byte_get ((unsigned char *) pnote->descdata, 8);
++	  end = 0;
++	}
++      break;
++
++    case 16:
++      start = byte_get ((unsigned char *) pnote->descdata, 8);
++      end = byte_get ((unsigned char *) pnote->descdata + 8, 8);
++      break;
++      
++    default:
+       error (_("    <invalid description size: %lx>\n"), pnote->descsz);
+       printf (_("    <invalid descsz>"));
+       return FALSE;
+     }
+ 
+-  offset = byte_get ((unsigned char *) pnote->descdata, desc_size);
++  name = NULL;
++  sym = get_symbol_for_build_attribute (file, start, is_open_attr, & name);
++
++  if (end == 0 && sym != NULL && sym->st_size > 0)
++    end = start + sym->st_size;
+ 
+   if (is_open_attr)
+     {
+-      printf (_("    Applies from offset %#lx"), offset);
+-      global_offset = offset;
++      /* FIXME: Need to properly allow for section alignment.  16 is just the alignment used on x86_64.  */
++      if (global_end > 0 && start > BFD_ALIGN (global_end, 16))
++	warn (_("Gap in build notes detected from %#lx to %#lx\n"),
++	      global_end + 1, start - 1);
++
++      printf (_("    Applies to region from %#lx"), start);
++      global_offset = start;
++
++      if (end)
++	{
++	  printf (_(" to %#lx"), end);
++	  global_end = end;
++	}
+     }
+   else
+     {
+-      printf (_("    Applies to func at %#lx"), offset);
++      printf (_("    Applies to region from %#lx"), start);
++      func_offset = start;
++
++      if (end)
++	{
++	  printf (_(" to %#lx"), end);
++	  func_end = end;
++	}
+     }
+ 
+-  return print_symbol_for_build_attribute (file, offset, is_open_attr);
++  if (sym && name)
++    printf (_(" (%s)"), name);
++
++  printf ("\n");
++  return TRUE;
+ }
+ 
+ static bfd_boolean
+@@ -17248,11 +17312,21 @@ print_gnu_build_attribute_name (Elf_Inte
+       return FALSE;
+     }
+ 
+-  left = 20;
++  if (do_wide)
++    left = 28;
++  else
++    left = 20;
+ 
+   /* Version 2 of the spec adds a "GA" prefix to the name field.  */
+   if (name[0] == 'G' && name[1] == 'A')
+     {
++      if (pnote->namesz < 4)
++	{
++	  error (_("corrupt name field in GNU build attribute note: size = %ld\n"), pnote->namesz);
++	  print_symbol (-20, _("  <corrupt name>"));
++	  return FALSE;
++	}
++
+       printf ("GA");
+       name += 2;
+       left -= 2;
+diff -rup binutils.orig/binutils/testsuite/binutils-all/mips/mips-note-2r.d binutils-2.29.1/binutils/testsuite/binutils-all/mips/mips-note-2r.d
+--- binutils.orig/binutils/testsuite/binutils-all/mips/mips-note-2r.d	2018-01-03 16:06:45.013656996 +0000
++++ binutils-2.29.1/binutils/testsuite/binutils-all/mips/mips-note-2r.d	2018-01-03 16:06:57.927502748 +0000
+@@ -5,7 +5,5 @@
+ #as: -32
+ #source: ../note-2-32.s
+ 
+-Relocation section '\.rel\.gnu\.build\.attributes' at offset .* contains 2 entries:
+- Offset     Info    Type            Sym\.Value  Sym\. Name
+-00000010  ......02 R_MIPS_32         00000100   note1\.s
+-0000006c  ......02 R_MIPS_32         00000104   note2\.s
++There are no relocations in this file.
++#...
+diff -rup binutils.orig/binutils/testsuite/binutils-all/mips/mips-note-2r-n32.d binutils-2.29.1/binutils/testsuite/binutils-all/mips/mips-note-2r-n32.d
+--- binutils.orig/binutils/testsuite/binutils-all/mips/mips-note-2r-n32.d	2018-01-03 16:06:45.014656984 +0000
++++ binutils-2.29.1/binutils/testsuite/binutils-all/mips/mips-note-2r-n32.d	2018-01-03 16:06:57.927502748 +0000
+@@ -5,7 +5,5 @@
+ #as: -n32 -mips3
+ #source: ../note-2-32.s
+ 
+-Relocation section '\.rela\.gnu\.build\.attributes' at offset .* contains 2 entries:
+- Offset     Info    Type            Sym\.Value  Sym\. Name \+ Addend
+-00000010  ......02 R_MIPS_32         00000100   note1\.s \+ 0
+-0000006c  ......02 R_MIPS_32         00000104   note2\.s \+ 0
++There are no relocations in this file.
++#...
+diff -rup binutils.orig/binutils/testsuite/binutils-all/mips/mips-note-2r-n64.d binutils-2.29.1/binutils/testsuite/binutils-all/mips/mips-note-2r-n64.d
+--- binutils.orig/binutils/testsuite/binutils-all/mips/mips-note-2r-n64.d	2018-01-03 16:06:45.014656984 +0000
++++ binutils-2.29.1/binutils/testsuite/binutils-all/mips/mips-note-2r-n64.d	2018-01-03 16:06:57.927502748 +0000
+@@ -5,11 +5,5 @@
+ #as: -64 -mips3
+ #source: ../note-2-64.s
+ 
+-Relocation section '\.rela\.gnu\.build\.attributes' at offset .* contains 2 entries:
+-  Offset          Info           Type           Sym\. Value    Sym\. Name \+ Addend
+-000000000010  ....00000012 R_MIPS_64         0000000000000100 note1\.s \+ 0
+-                    Type2: R_MIPS_NONE      
+-                    Type3: R_MIPS_NONE      
+-000000000070  ....00000012 R_MIPS_64         0000000000000104 note2\.s \+ 0
+-                    Type2: R_MIPS_NONE      
+-                    Type3: R_MIPS_NONE      
++There are no relocations in this file.
++#...
+diff -rup binutils.orig/binutils/testsuite/binutils-all/note-2-32.d binutils-2.29.1/binutils/testsuite/binutils-all/note-2-32.d
+--- binutils.orig/binutils/testsuite/binutils-all/note-2-32.d	2018-01-03 16:06:45.013656996 +0000
++++ binutils-2.29.1/binutils/testsuite/binutils-all/note-2-32.d	2018-01-03 16:06:57.927502748 +0000
+@@ -6,12 +6,12 @@
+ 
+ #...
+   Owner                 Data size	Description
+-[ 	]+\$<version>1[ 	]+0x00000004[ 	]+NT_GNU_BUILD_ATTRIBUTE_OPEN[ 	]+Applies from offset 0x100 \(file: note1.s\)
+-[ 	]+\$<tool>gcc 7.0.1[ 	]+0x00000000[ 	]+NT_GNU_BUILD_ATTRIBUTE_OPEN[ 	]+Applies from offset 0x100
+-[ 	]+\+<stack prot>true[ 	]+0x00000000[ 	]+NT_GNU_BUILD_ATTRIBUTE_OPEN[ 	]+Applies from offset 0x100
+-[ 	]+\*<PIC>static[ 	]+0x00000000[ 	]+NT_GNU_BUILD_ATTRIBUTE_OPEN[ 	]+Applies from offset 0x100
+-[ 	]+\*<ABI>0x0[ 	]+0x00000000[ 	]+NT_GNU_BUILD_ATTRIBUTE_OPEN[ 	]+Applies from offset 0x100
+-[ 	]+\$<version>1[ 	]+0x00000004[ 	]+NT_GNU_BUILD_ATTRIBUTE_OPEN[ 	]+Applies from offset 0x10. \(file: note2.s\)
+-[ 	]+!<stack prot>false[ 	]+0x00000000[ 	]+NT_GNU_BUILD_ATTRIBUTE_OPEN[ 	]+Applies from offset 0x10.
+-[ 	]+\*<PIC>pic[ 	]+0x00000000[ 	]+NT_GNU_BUILD_ATTRIBUTE_FUNC[ 	]+Applies to func at 0x10. \(func: func1\)
++[ 	]+\$<version>1[ 	]+0x00000004[ 	]+OPEN[ 	]+Applies to region from 0x100 \(note1.s\)
++[ 	]+\$<tool>gcc 7.0.1[ 	]+0x00000000[ 	]+OPEN[ 	]+Applies to region from 0x100
++[ 	]+\+<stack prot>true[ 	]+0x00000000[ 	]+OPEN[ 	]+Applies to region from 0x100
++[ 	]+\*<PIC>static[ 	]+0x00000000[ 	]+OPEN[ 	]+Applies to region from 0x100
++[ 	]+\*<ABI>0x0[ 	]+0x00000000[ 	]+OPEN[ 	]+Applies to region from 0x100
++[ 	]+\$<version>1[ 	]+0x00000004[ 	]+OPEN[ 	]+Applies to region from 0x104 \(note2.s\)
++[ 	]+!<stack prot>false[ 	]+0x00000000[ 	]+OPEN[ 	]+Applies to region from 0x104
++[ 	]+\*<PIC>pic[ 	]+0x00000004[ 	]+func[ 	]+Applies to region from 0x104 \(func1\)
+ #...
+diff -rup binutils.orig/binutils/testsuite/binutils-all/note-2-32.s binutils-2.29.1/binutils/testsuite/binutils-all/note-2-32.s
+--- binutils.orig/binutils/testsuite/binutils-all/note-2-32.s	2018-01-03 16:06:45.010657032 +0000
++++ binutils-2.29.1/binutils/testsuite/binutils-all/note-2-32.s	2018-01-03 16:06:57.927502748 +0000
+@@ -2,7 +2,7 @@
+ 	.org 0x100
+ 	.global note1.s
+ note1.s:
+-	.word 0
++	.dc.l 0
+ 	
+ 	.pushsection .gnu.build.attributes, "0x100000", %note
+ 	.balign 4
+@@ -10,7 +10,7 @@ note1.s:
+ 	.dc.l 4
+ 	.dc.l 0x100
+ 	.asciz "$1"
+-	.dc.l note1.s
++	.dc.l 0x100
+ 
+ 	.dc.l 12
+ 	.dc.l 0
+@@ -39,14 +39,14 @@ note1.s:
+ note2.s:
+ 	.type func1, STT_FUNC
+ func1:	
+-	.word 0x100
++	.dc.l 0x100
+ 	
+ 	.pushsection .gnu.build.attributes, "0x100000", %note
+ 	.dc.l 4 	
+ 	.dc.l 4		
+ 	.dc.l 0x100	
+ 	.asciz "$1"	
+-	.dc.l note2.s	
++	.dc.l 0x104	
+ 
+ 	.dc.l 12 	
+ 	.dc.l 0		
+@@ -60,26 +60,28 @@ func1:
+ 	.dc.b 0 	
+ 
+ 	.dc.l 4		
+-	.dc.l 0		
++	.dc.l 4		
+ 	.dc.l 0x101	
+ 	.dc.b 0x2a, 0x7, 1, 0
+-
++	.dc.l 0x104	
++	
+ 	.dc.l 4		
+ 	.dc.l 0		
+ 	.dc.l 0x100	
+ 	.dc.b 0x2a, 0x6, 0, 0
+ 	.popsection
+ 
++	
+ 	.global note3.s
+ note3.s:
+-	.word 0x100
++	.dc.l 0x100
+ 	
+ 	.pushsection .gnu.build.attributes, "0x100000", %note
+ 	.dc.l 4 	
+ 	.dc.l 4		
+ 	.dc.l 0x100	
+ 	.asciz "$1"	
+-	.dc.l note3.s
++	.dc.l 0x108
+ 
+ 	.dc.l 12 	
+ 	.dc.l 0		
+diff -rup binutils.orig/binutils/testsuite/binutils-all/note-2-64.d binutils-2.29.1/binutils/testsuite/binutils-all/note-2-64.d
+--- binutils.orig/binutils/testsuite/binutils-all/note-2-64.d	2018-01-03 16:06:45.010657032 +0000
++++ binutils-2.29.1/binutils/testsuite/binutils-all/note-2-64.d	2018-01-03 16:06:57.927502748 +0000
+@@ -6,12 +6,12 @@
+ 
+ #...
+   Owner                 Data size	Description
+-[ 	]+\$<version>1[ 	]+0x00000008[ 	]+NT_GNU_BUILD_ATTRIBUTE_OPEN[ 	]+Applies from offset 0x100 \(file: note1.s\)
+-[ 	]+\$<tool>gcc 7.0.1[ 	]+0x00000000[ 	]+NT_GNU_BUILD_ATTRIBUTE_OPEN[ 	]+Applies from offset 0x100
+-[ 	]+\+<stack prot>true[ 	]+0x00000000[ 	]+NT_GNU_BUILD_ATTRIBUTE_OPEN[ 	]+Applies from offset 0x100
+-[ 	]+\*<PIC>static[ 	]+0x00000000[ 	]+NT_GNU_BUILD_ATTRIBUTE_OPEN[ 	]+Applies from offset 0x100
+-[ 	]+\*<ABI>0x0[ 	]+0x00000000[ 	]+NT_GNU_BUILD_ATTRIBUTE_OPEN[ 	]+Applies from offset 0x100
+-[ 	]+\$<version>1[ 	]+0x00000008[ 	]+NT_GNU_BUILD_ATTRIBUTE_OPEN[ 	]+Applies from offset 0x10. \(file: note2.s\)
+-[ 	]+!<stack prot>false[ 	]+0x00000000[ 	]+NT_GNU_BUILD_ATTRIBUTE_OPEN[ 	]+Applies from offset 0x10.
+-[ 	]+\*<PIC>pic[ 	]+0x00000000[ 	]+NT_GNU_BUILD_ATTRIBUTE_FUNC[ 	]+Applies to func at 0x10. \(func: func1\)
++[ 	]+\$<version>1[ 	]+0x00000008[ 	]+OPEN[ 	]+Applies to region from 0x100 \(note1.s\)
++[ 	]+\$<tool>gcc 7.0.1[ 	]+0x00000000[ 	]+OPEN[ 	]+Applies to region from 0x100
++[ 	]+\+<stack prot>true[ 	]+0x00000000[ 	]+OPEN[ 	]+Applies to region from 0x100
++[ 	]+\*<PIC>static[ 	]+0x00000000[ 	]+OPEN[ 	]+Applies to region from 0x100
++[ 	]+\*<ABI>0x0[ 	]+0x00000000[ 	]+OPEN[ 	]+Applies to region from 0x100
++[ 	]+\$<version>1[ 	]+0x00000008[ 	]+OPEN[ 	]+Applies to region from 0x104 \(note2.s\)
++[ 	]+!<stack prot>false[ 	]+0x00000000[ 	]+OPEN[ 	]+Applies to region from 0x104
++[ 	]+\*<PIC>pic[ 	]+0x00000008[ 	]+func[ 	]+Applies to region from 0x104 \(func1\)
+ #...
+diff -rup binutils.orig/binutils/testsuite/binutils-all/note-2-64.s binutils-2.29.1/binutils/testsuite/binutils-all/note-2-64.s
+--- binutils.orig/binutils/testsuite/binutils-all/note-2-64.s	2018-01-03 16:06:45.014656984 +0000
++++ binutils-2.29.1/binutils/testsuite/binutils-all/note-2-64.s	2018-01-03 16:06:57.927502748 +0000
+@@ -2,7 +2,7 @@
+ 	.org 0x100
+ 	.global note1.s
+ note1.s:
+-	.word 0
++	.dc.l 0
+ 	
+ 	.pushsection .gnu.build.attributes, "0x100000", %note
+ 	.balign 4
+@@ -10,7 +10,7 @@ note1.s:
+ 	.dc.l 8
+ 	.dc.l 0x100
+ 	.asciz "$1"
+-	.8byte note1.s
++	.8byte 0x100
+ 
+ 	.dc.l 12
+ 	.dc.l 0
+@@ -40,14 +40,14 @@ note2.s:
+ 	.global func1
+ 	.type func1, STT_FUNC
+ func1:	
+-	.word 0x100
++	.dc.l 0x100
+ 
+ 	.pushsection .gnu.build.attributes, "0x100000", %note
+ 	.dc.l 4 	
+ 	.dc.l 8		
+ 	.dc.l 0x100	
+ 	.asciz "$1"	
+-	.8byte note2.s	
++	.8byte 0x104	
+ 
+ 	.dc.l 12 	
+ 	.dc.l 0		
+@@ -61,9 +61,10 @@ func1:
+ 	.dc.b 0 	
+ 
+ 	.dc.l 4
+-	.dc.l 0		
++	.dc.l 8	
+ 	.dc.l 0x101	
+ 	.dc.b 0x2a, 0x7, 1, 0
++	.8byte 0x104	
+ 
+ 	.dc.l 4
+ 	.dc.l 0		
+@@ -74,14 +75,14 @@ func1:
+ 
+ 	.global note3.s
+ note3.s:
+-	.word 0x100
++	.dc.l 0x100
+ 	
+ 	.pushsection .gnu.build.attributes, "0x100000", %note
+ 	.dc.l 4 	
+ 	.dc.l 8		
+ 	.dc.l 0x100	
+ 	.asciz "$1"	
+-	.8byte note3.s
++	.8byte 0x108
+ 
+ 	.dc.l 12 	
+ 	.dc.l 0		
+diff -rup binutils.orig/binutils/testsuite/binutils-all/objcopy.exp binutils-2.29.1/binutils/testsuite/binutils-all/objcopy.exp
+--- binutils.orig/binutils/testsuite/binutils-all/objcopy.exp	2018-01-03 16:06:45.013656996 +0000
++++ binutils-2.29.1/binutils/testsuite/binutils-all/objcopy.exp	2018-01-03 16:21:05.682365371 +0000
+@@ -1056,8 +1056,10 @@ if [is_elf_format] {
+     run_dump_test "note-1"
+     if [is_elf64 tmpdir/bintest.o] {
+ 	run_dump_test "note-2-64"
++	run_dump_test "note-4-64"
+     } else {
+ 	run_dump_test "note-2-32"
++	run_dump_test "note-4-32"
+     }
+ }
+ 
+
+--- /dev/null	2018-01-03 08:45:19.457895336 +0000
++++ binutils-2.29.1/binutils/testsuite/binutils-all/note-4-32.s	2018-01-03 16:36:13.314505682 +0000
+@@ -0,0 +1,74 @@
++	.text
++	.org 0x100
++note_4.s:
++	.dc.l 0
++	.dc.l 0
++
++	.type	bar, STT_FUNC
++bar:
++	.dc.l 0
++bar_end:
++	.dc.l 0
++note_4.s_end:
++	
++	.pushsection .gnu.build.attributes, "", %note
++	.balign 4
++
++	.dc.l 8
++	.dc.l 8
++	.dc.l 0x100
++	.asciz "GA$3p3"
++	.dc.l note_4.s
++	.dc.l note_4.s_end
++
++	.dc.l 23
++	.dc.l 0
++	.dc.l 0x100
++	.asciz "GA$gcc 7.2.1 20170915"
++	.dc.b 0
++
++	.dc.l 10
++	.dc.l 0
++	.dc.l 0x100
++	.dc.b 0x47, 0x41, 0x2a, 0x47, 0x4f, 0x57, 0, 0, 0x7, 0
++	.dc.b 0, 0
++
++	.dc.l 6
++	.dc.l 0
++	.dc.l 0x100
++	.dc.b 0x47, 0x41, 0x2a, 0x2, 0, 0
++	.dc.b 0, 0
++
++	.dc.l 13
++	.dc.l 0
++	.dc.l 0x100
++	.dc.b 0x47, 0x41, 0x2a, 0x46, 0x4f, 0x52, 0x54, 0x49, 0x46, 0x59, 0, 0xff, 0
++	.dc.b 0, 0, 0
++
++	.dc.l 6
++	.dc.l 0
++	.dc.l 0x100
++	.dc.b 0x47, 0x41, 0x2a, 0x7, 0x2, 0
++	.dc.b 0, 0
++
++	.dc.l 5
++	.dc.l 0
++	.dc.l 0x100
++	.dc.b 0x47, 0x41, 0x21, 0x8, 0
++	.dc.b 0, 0, 0
++
++	.dc.l 13
++	.dc.l 0
++	.dc.l 0x100
++	.dc.b 0x47, 0x41, 0x2a, 0x6, 0xf2, 0x3, 0x38, 0xee, 0xce, 0xfa, 0x5e, 0x3c, 0
++	.dc.b 0, 0, 0
++
++	.dc.l 6
++	.dc.l 8
++	.dc.l 0x101
++	.dc.b 0x47, 0x41, 0x2a, 0x2, 0x3, 0
++	.dc.b 0, 0
++	.dc.l bar
++	.dc.l bar_end
++	
++	.popsection
+--- /dev/null	2018-01-03 08:45:19.457895336 +0000
++++ binutils-2.29.1/binutils/testsuite/binutils-all/note-4-32.d	2018-01-03 16:36:13.313505694 +0000
+@@ -0,0 +1,19 @@
++#PROG: objcopy
++#readelf: --notes --wide
++#objcopy: --merge-notes
++#name: v3 gnu build attribute notes (32-bit)
++#source: note-4-32.s
++
++#...
++Displaying notes found in: .gnu.build.attributes
++[ 	]+Owner[ 	]+Data size[ 	]+Description
++[ 	]+GA\$<version>3p3[ 	]+0x00000008[ 	]+OPEN[ 	]+Applies to region from 0x100 to 0x110 \(note_4.s\)
++[ 	]+GA\$<tool>gcc 7.2.1 20170915[ 	]+0x00000000[ 	]+OPEN[ 	]+Applies to region from 0x100 to 0x110
++[ 	]+GA\*GOW:0x700[ 	]+0x00000000[ 	]+OPEN[ 	]+Applies to region from 0x100 to 0x110
++[ 	]+GA\*<stack prot>off[ 	]+0x00000000[ 	]+OPEN[ 	]+Applies to region from 0x100 to 0x110
++[ 	]+GA\*FORTIFY:0xff[ 	]+0x00000000[ 	]+OPEN[ 	]+Applies to region from 0x100 to 0x110
++[ 	]+GA\*<PIC>PIC[ 	]+0x00000000[ 	]+OPEN[ 	]+Applies to region from 0x100 to 0x110
++[ 	]+GA\!<short enum>false[ 	]+0x00000000[ 	]+OPEN[ 	]+Applies to region from 0x100 to 0x110
++[ 	]+GA\*<ABI>0x[0-9a-f]+[ 	]+0x00000000[ 	]+OPEN[ 	]+Applies to region from 0x100 to 0x110
++[ 	]+GA\*<stack prot>strong[ 	]+0x00000008[ 	]+func[ 	]+Applies to region from 0x108 to 0x10c.*
++#...
+--- /dev/null	2018-01-03 08:45:19.457895336 +0000
++++ binutils-2.29.1/binutils/testsuite/binutils-all/note-4-64.s	2018-01-03 16:36:07.041580738 +0000
+@@ -0,0 +1,78 @@
++	.text
++	.org 0x100
++note_4.s:
++	.dc.l 0
++	.dc.l 0
++	.dc.l 0
++	.dc.l 0
++
++	.type	bar, @function
++bar:
++	.dc.l 0
++	.dc.l 0
++	.dc.l 0
++bar_end:
++	.dc.l 0
++note_4.s_end:
++
++	.pushsection .gnu.build.attributes, "", %note
++	.balign 4
++
++	.dc.l 8
++	.dc.l 16
++	.dc.l 0x100
++	.asciz "GA$3p3"
++	.8byte note_4.s
++	.8byte note_4.s_end
++
++	.dc.l 23
++	.dc.l 0
++	.dc.l 0x100
++	.asciz "GA$gcc 7.2.1 20170915"
++	.dc.b 0
++
++	.dc.l 10
++	.dc.l 0
++	.dc.l 0x100
++	.dc.b 0x47, 0x41, 0x2a, 0x47, 0x4f, 0x57, 0, 0, 0x7, 0
++	.dc.b 0, 0
++
++	.dc.l 6
++	.dc.l 0
++	.dc.l 0x100
++	.dc.b 0x47, 0x41, 0x2a, 0x2, 0, 0
++	.dc.b 0, 0
++
++	.dc.l 13
++	.dc.l 0
++	.dc.l 0x100
++	.dc.b 0x47, 0x41, 0x2a, 0x46, 0x4f, 0x52, 0x54, 0x49, 0x46, 0x59, 0, 0xff, 0
++	.dc.b 0, 0, 0
++
++	.dc.l 6
++	.dc.l 0
++	.dc.l 0x100
++	.dc.b 0x47, 0x41, 0x2a, 0x7, 0x2, 0
++	.dc.b 0, 0
++
++	.dc.l 5
++	.dc.l 0
++	.dc.l 0x100
++	.dc.b 0x47, 0x41, 0x21, 0x8, 0
++	.dc.b 0, 0, 0
++
++	.dc.l 13
++	.dc.l 0
++	.dc.l 0x100
++	.dc.b 0x47, 0x41, 0x2a, 0x6, 0xf2, 0x3, 0x38, 0xee, 0xce, 0xfa, 0x5e, 0x3c, 0
++	.dc.b 0, 0, 0
++
++	.dc.l 6
++	.dc.l 16
++	.dc.l 0x101
++	.dc.b 0x47, 0x41, 0x2a, 0x2, 0x3, 0
++	.dc.b 0, 0
++	.8byte bar
++	.8byte bar_end
++	
++	.popsection
+--- /dev/null	2018-01-03 08:45:19.457895336 +0000
++++ binutils-2.29.1/binutils/testsuite/binutils-all/note-4-64.d	2018-01-03 16:36:07.041580738 +0000
+@@ -0,0 +1,19 @@
++#PROG: objcopy
++#readelf: --notes --wide
++#objcopy: --merge-notes
++#name: v3 gnu build attribute notes (64-bit)
++#source: note-4-64.s
++
++#...
++Displaying notes found in: .gnu.build.attributes
++[ 	]+Owner[ 	]+Data size[ 	]+Description
++[ 	]+GA\$<version>3p3[ 	]+0x00000010[ 	]+OPEN[ 	]+Applies to region from 0x100 to 0x120 \(note_4.s\)
++[ 	]+GA\$<tool>gcc 7.2.1 20170915[ 	]+0x00000000[ 	]+OPEN[ 	]+Applies to region from 0x100 to 0x120
++[ 	]+GA\*GOW:0x700[ 	]+0x00000000[ 	]+OPEN[ 	]+Applies to region from 0x100 to 0x120
++[ 	]+GA\*<stack prot>off[ 	]+0x00000000[ 	]+OPEN[ 	]+Applies to region from 0x100 to 0x120
++[ 	]+GA\*FORTIFY:0xff[ 	]+0x00000000[ 	]+OPEN[ 	]+Applies to region from 0x100 to 0x120
++[ 	]+GA\*<PIC>PIC[ 	]+0x00000000[ 	]+OPEN[ 	]+Applies to region from 0x100 to 0x120
++[ 	]+GA\!<short enum>false[ 	]+0x00000000[ 	]+OPEN[ 	]+Applies to region from 0x100 to 0x120
++[ 	]+GA\*<ABI>0x[0-9a-f]+[ 	]+0x00000000[ 	]+OPEN[ 	]+Applies to region from 0x100 to 0x120
++[ 	]+GA\*<stack prot>strong[ 	]+0x00000010[ 	]+func[ 	]+Applies to region from 0x110 to 0x11c.*
++#...
