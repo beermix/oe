@@ -9,6 +9,10 @@ pre_configure_target() {
   export LIBS="$LIBS -lssh2"
 }
 
+pre_configure_host() {
+  export LIBS="$LIBS -lssh2"
+}
+
 PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config/mc \
                            --datadir=/storage/.config/mc \
                            --libdir=/storage/.config/mc \
@@ -29,15 +33,15 @@ PKG_CONFIGURE_OPTS_TARGET="--sysconfdir=/storage/.config/mc \
                            --disable-doxygen-html \
                            --without-internal-edit \
                            --disable-silent-rules \
-                           --enable-background \
+                           --disable-background \
                            --enable-charset \
                            --without-gpm-mouse \
                            --with-screen=ncurses \
                            --with-subshell=no \
-                           --enable-vfs-sftp \
-                           --enable-vfs-tar \
-                           --enable-vfs-extfs \
-                           --enable-vfs-cpio \
+                           --disable-vfs-sftp \
+                           --disable-vfs-tar \
+                           --disable-vfs-extfs \
+                           --disable-vfs-cpio \
                            --disable-vfs-smb"
 
 PKG_CONFIGURE_OPTS_HOST="$PKG_CONFIGURE_OPTS_TARGET"
