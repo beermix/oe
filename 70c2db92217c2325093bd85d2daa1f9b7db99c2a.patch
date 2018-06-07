@@ -1,0 +1,116 @@
+From 70c2db92217c2325093bd85d2daa1f9b7db99c2a Mon Sep 17 00:00:00 2001
+From: Ian Leonard <antonlacon@gmail.com>
+Date: Tue, 27 Mar 2018 22:52:35 -0700
+Subject: [PATCH] build: add config entry for putting Graphite options in
+ CFLAGS
+
+Adds a menuconfig option for putting Graphite build flags to build
+CFLAGS. Option is dependent on GCC7 and glibc. While earlier GCC
+may work, they're prone to Internal Compiler Errors, so have users
+of older GCC versions add necessary flags manually. Currently, musl
+fails to build with Graphite, so require glibc.
+
+The Graphite flags are:
+
+-fgraphite-identity
+-floop-nest-optimize
+
+Additionally, this option adds -ftree-loop-distribution from -O3,
+which splits loops into multiple loops, giving more opportunities
+for Graphite to optimize.
+
+Renames include/hardening.mk to include/package-flags.mk to serve as
+a holder for package CFLAGS / LDFLAGS.
+
+Signed-off-by: Ian Leonard <antonlacon@gmail.com>
+---
+ include/{hardening.mk => package-flags.mk} | 16 ++++++++++++++++
+ include/package.mk                         |  2 +-
+ toolchain/gcc/Config.in                    | 20 +++++++++++++++++++-
+ 3 files changed, 36 insertions(+), 2 deletions(-)
+ rename include/{hardening.mk => package-flags.mk} (82%)
+
+diff --git a/include/hardening.mk b/include/package-flags.mk
+similarity index 82%
+rename from include/hardening.mk
+rename to include/package-flags.mk
+index 06a61789ef6..a0addc6b7b4 100644
+--- a/include/hardening.mk
++++ b/include/package-flags.mk
+@@ -1,16 +1,32 @@
+ #
+ # Copyright (C) 2015 OpenWrt.org
++# Copyright (C) 2018 Ian Leonard <antonlacon@gmail.com>
+ #
+ # This is free software, licensed under the GNU General Public License v2.
+ # See /LICENSE for more information.
+ #
+ 
++# Graphite Options
++
++GCC_USE_GRAPHITE ?= 1
++
++
++ifdef CONFIG_GCC_USE_GRAPHITE
++  ifeq ($(strip $(GCC_USE_GRAPHITE)),1)
++    TARGET_CFLAGS += -fgraphite-identity -floop-nest-optimize -ftree-loop-distribution
++  endif
++endif
++
++
++# Hardening Options
++
+ PKG_CHECK_FORMAT_SECURITY ?= 1
+ PKG_ASLR_PIE ?= 1
+ PKG_SSP ?= 1
+ PKG_FORTIFY_SOURCE ?= 1
+ PKG_RELRO ?= 1
+ 
++
+ ifdef CONFIG_PKG_CHECK_FORMAT_SECURITY
+   ifeq ($(strip $(PKG_CHECK_FORMAT_SECURITY)),1)
+     TARGET_CFLAGS += -Wformat -Werror=format-security
+diff --git a/include/package.mk b/include/package.mk
+index 78ea5d0ef8b..a2e1180971a 100644
+--- a/include/package.mk
++++ b/include/package.mk
+@@ -35,7 +35,7 @@ ifeq ($(strip $(PKG_IREMAP)),1)
+   TARGET_CFLAGS += $(IREMAP_CFLAGS)
+ endif
+ 
+-include $(INCLUDE_DIR)/hardening.mk
++include $(INCLUDE_DIR)/package-flags.mk
+ include $(INCLUDE_DIR)/prereq.mk
+ include $(INCLUDE_DIR)/unpack.mk
+ include $(INCLUDE_DIR)/depends.mk
+diff --git a/toolchain/gcc/Config.in b/toolchain/gcc/Config.in
+index 34db20d3aa7..5a69321a549 100644
+--- a/toolchain/gcc/Config.in
++++ b/toolchain/gcc/Config.in
+@@ -28,7 +28,25 @@ endchoice
+ 
+ config GCC_USE_GRAPHITE
+ 	bool
+-	prompt "Compile in support for the new Graphite framework in GCC 4.4+" if TOOLCHAINOPTS
++	prompt "Compile in support for GCC's Graphite framework" if TOOLCHAINOPTS
++
++config GCC_GRAPHITE_FLAGS
++	bool
++	depends on GCC_USE_GRAPHITE && GCC_USE_VERSION_7 && LIBC_USE_GLIBC
++	prompt "Set CFLAGS to include Graphite options" if TOOLCHAINOPTS
++	default n
++	help
++		Adds standard Graphite options to CFLAGS:
++
++		-fgraphite-identity
++		-floop-nest-optimize
++
++		Also sets -ftree-loop-distribution from -O3 to split
++		loops, allowing for more possible optimizations from
++		Graphite.
++
++		Many, but not all, packages will complie with Graphite.
++		Submit a patch or choose N here if problems arise.
+ 
+ config EXTRA_GCC_CONFIG_OPTIONS
+ 	string

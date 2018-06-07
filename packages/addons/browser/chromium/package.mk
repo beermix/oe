@@ -26,7 +26,7 @@ PKG_NAME="chromium"
 PKG_VERSION="67.0.3396.62"
 PKG_VERSION="67.0.3396.79"
 #PKG_SHA256="d5ee63932ff1c8c4a5f69c834f6577e7127b416681eddd23bc54886caffd770d"
-PKG_REV="140"
+PKG_REV="147"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_SITE="http://www.chromium.org/Home"
@@ -34,8 +34,9 @@ PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chro
 PKG_URL="https://gsdview.appspot.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 #PKG_URL="http://192.168.1.200:8080/chromium-$PKG_VERSION.tar.xz"
 #PKG_DEPENDS_HOST="toolchain ninja:host Python2:host libevent:host gperf:host"
-PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="pciutils systemd dbus libXtst libXcomposite libXcursor unclutter alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk xdotool libdrm libjpeg-turbo freetype libxslt harfbuzz gtk+ chromium:host"
+#PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
+#PKG_DEPENDS_TARGET="pciutils systemd dbus libXtst libXcomposite libXcursor unclutter alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk xdotool libdrm libjpeg-turbo freetype libxslt harfbuzz gtk+ openjpeg chromium:host"
+PKG_DEPENDS_TARGET="chromium:host"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -79,11 +80,7 @@ make_target() {
   export CCACHE_SLOPPINESS=time_macros
   # export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime
   # export CCACHE_CPP2=yes
-
-  # Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
-  # Note: These are for OpenELEC use ONLY. For your own distribution, please
-  # get your own set of keys.
-
+  # ---------------------------------------------------------------------------------------------------------
   local _google_api_key=AIzaSyAQ6L9vt9cnN4nM0weaa6Y38K4eyPvtKgI
   local _google_default_client_id=740889307901-4bkm4e0udppnp1lradko85qsbnmkfq3b.apps.googleusercontent.com
   local _google_default_client_secret=9TJlhL661hvShQub4cWhANXa
@@ -111,15 +108,12 @@ make_target() {
     'use_gtk3=false'
     'use_kerberos=false'
     'linux_link_libudev=true'
-    'optimize_webui=false'
-    'use_system_harfbuzz=true'
-    'pdf_enable_xfa=false'
     'use_sysroot=true'
     'use_vaapi=true'
     'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_hangout_services_extension=true'
-    'enable_widevine=false'
+    'enable_widevine=true'
     'enable_nacl=false'
     'enable_nacl_nonsfi=false'
     'enable_swiftshader=false'
@@ -134,6 +128,7 @@ make_target() {
 
   ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox
   #  -w dupbuild=err
+#---------------------------------------------------------------------------------------------------------
 }
 
 addon() {
