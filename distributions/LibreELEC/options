@@ -46,8 +46,6 @@
 # build and install espeak support (yes / no)
   ESPEAK_SUPPORT="no"
 
-# build and install with non-free support
-# (RAR compression support in KODI) (yes / no)
   KODI_NONFREE_SUPPORT="yes"
 
 # build and install with BluRay support (yes / no)
@@ -81,7 +79,7 @@
   AVAHI_DAEMON="no"
 
 # build with UPnP support (yes / no)
-  KODI_UPNP_SUPPORT="no"
+  KODI_UPNP_SUPPORT="yes"
 
 # build with MySQL support (mysql / mariadb / none)
   KODI_MYSQL_SUPPORT="none"
@@ -214,3 +212,7 @@
 
 # Default supported get handlers (archive, git, file etc.)
   GET_HANDLER_SUPPORT="archive"
+
+# Partition labels for USB/SD installation media
+  DISTRO_BOOTLABEL="LIBREELEC"
+  DISTRO_DISKLABEL="STORAGE"

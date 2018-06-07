@@ -80,9 +80,11 @@ make_target() {
      NSS_TESTS="dummy" \
      NSINSTALL=$TOOLCHAIN/bin/nsinstall \
      CPU_ARCH_TAG=$TARGET_ARCH \
-     CC=$CC XCFLAGS="-Wno-error=stringop-truncation -Wno-error=format-overflow" \
+     CC=$CC  \
      LDFLAGS="$LDFLAGS -L$SYSROOT_PREFIX/usr/lib" \
      V=1
+     
+     # XCFLAGS="-Wno-error=stringop-truncation -Wno-error=format-overflow"
 }
 
 makeinstall_target() {

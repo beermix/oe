@@ -25,9 +25,6 @@ PKG_URL=""
 PKG_DEPENDS_TARGET="toolchain glibc tz"
 PKG_DEPENDS_INIT="toolchain glibc:init"
 PKG_SECTION="virtual"
-PKG_SHORTDESC="libc: Metapackage"
-PKG_LONGDESC=""
-PKG_SHORTDESC="libc: Meta package for installing various tools and libs needed for libc"
 PKG_LONGDESC="Meta package for installing various tools and libs needed for libc"
 
 if [ "$BOOTLOADER" = "bcm2835-bootloader" ]; then
