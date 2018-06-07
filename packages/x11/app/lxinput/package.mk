@@ -22,5 +22,7 @@ PKG_SITE="http://www.freedesktop.org/wiki/Software/libinput/"
 PKG_URL="https://master.dl.sourceforge.net/project/lxde/LXInput%20%28Kbd%20and%20amp_%20mouse%20config%29/LXInput%200.3.x/lxinput-0.3.5.tar.xz"
 PKG_DEPENDS_TARGET="toolchain gtk+"
 PKG_SECTION="x11/driver"
-PKG_SHORTDESC="Small program to configure keyboard and mouse for LXDE."
+PKG_SHORTDESC="This is an X driver based on libinput."
+PKG_LONGDESC="This is an X driver based on libinput."
 PKG_TOOLCHAIN="autotools"
+
