@@ -92,7 +92,7 @@ make_target() {
     "host_toolchain=\"//build/toolchain/linux:x64_host\""
     'is_clang=false'
     'clang_use_chrome_plugins=false'
-    'symbol_level=0'
+    'symbol_level=1'
     'is_debug=false'
     'fatal_linker_warnings=false'
     'treat_warnings_as_errors=false'
@@ -112,7 +112,7 @@ make_target() {
     'use_kerberos=false'
     'linux_link_libudev=true'
     'optimize_webui=false'
-    'use_system_harfbuzz=false'
+    'use_system_harfbuzz=true'
     'pdf_enable_xfa=false'
     'use_sysroot=true'
     'use_vaapi=true'
