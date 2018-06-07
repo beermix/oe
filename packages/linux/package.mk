@@ -223,7 +223,7 @@ make_target() {
     done
   fi
 
-  LDFLAGS="" make $KERNEL_TARGET $KERNEL_MAKE_EXTRACMD
+  LDFLAGS="" make CONFIG_DEBUG_SECTION_MISMATCH=y $KERNEL_TARGET $KERNEL_MAKE_EXTRACMD
 
   if [ "$BUILD_ANDROID_BOOTIMG" = "yes" ]; then
     DTB_BLOBS=($(ls arch/$TARGET_KERNEL_ARCH/boot/dts/amlogic/*.dtb 2>/dev/null || true))
