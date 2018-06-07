@@ -33,19 +33,25 @@ PKG_IS_KERNEL_PKG="yes"
 PKG_PATCH_DIRS="$LINUX"
 
 case "$LINUX" in
-  rc)
+  4.17)
     PKG_VERSION="4.17"
-    PKG_SHA256="9faa1dd896eaea961dc6e886697c0b3301277102e5bc976b2758f9a62d3ccd13"
+    PKG_SHA256=""
     PKG_URL="https://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
     PKG_PATCH_DIRS="4.17"
     PKG_BUILD_PERF="no"
+  ;;
+  4.16)
+    PKG_VERSION="4.16.12"
+    PKG_URL="https://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
+    PKG_PATCH_DIRS="4.16"
+    PKG_BUILD_PERF="no"
     ;;
   zen)
-    PKG_VERSION="391c1f7"
+    PKG_VERSION="d6e4eb2"
     PKG_SITE="https://github.com/zen-kernel/zen-kernel/branches/active"
     PKG_URL="https://github.com/zen-kernel/zen-kernel/archive/$PKG_VERSION.tar.gz"
     PKG_SOURCE_DIR="zen-kernel-$PKG_VERSION*"
-    PKG_PATCH_DIRS="4.17"
+    PKG_PATCH_DIRS="4.16"
     PKG_BUILD_PERF="no"
     ;;
   *)
@@ -102,7 +108,7 @@ post_patch() {
     sed -i -e "s|@DISTRONAME@|$DISTRONAME|g" $PKG_BUILD/.config
 
   # ask for new config options after kernel update
-  # make -C $PKG_BUILD oldconfig
+   make -C $PKG_BUILD oldconfig
 
   # disable swap support if not enabled
   if [ ! "$SWAP_SUPPORT" = yes ]; then
