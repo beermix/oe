@@ -1,4 +1,4 @@
-GCC_OPTIM="-O2 -fgraphite-identity -floop-nest-optimize -ftree-loop-distribution"
+GCC_OPTIM="-O2 -pipe -Wall -fgraphite-identity -floop-nest-optimize -ftree-loop-distribution"
 LD_OPTIM="-Wl,--as-needed -Wl,--hash-style=gnu"
 
 if [ "${BUILD_WITH_DEBUG}" = "yes" ]; then
@@ -14,7 +14,7 @@ fi
 NINJA_OPTS=""
 
 TARGET_CPPFLAGS=""
-TARGET_CFLAGS="$TARGET_CFLAGS -Wall -pipe $GCC_OPTIM $PROJECT_CFLAGS"
+TARGET_CFLAGS="$TARGET_CFLAGS $GCC_OPTIM $PROJECT_CFLAGS"
 TARGET_CXXFLAGS="$TARGET_CFLAGS"
 TARGET_LDFLAGS="$TARGET_LDFLAGS $LD_OPTIM"
 TARGET_LIBDIR="$SYSROOT_PREFIX/lib $SYSROOT_PREFIX/usr/lib"
