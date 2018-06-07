@@ -16,11 +16,18 @@
 #  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-PKG_NAME="lxinput"
-PKG_VERSION="0.3.5"
+PKG_NAME="xrandr"
+PKG_VERSION="1.5.0"
+PKG_SHA256="c1cfd4e1d4d708c031d60801e527abc9b6d34b85f2ffa2cadd21f75ff38151cd"
+PKG_ARCH="any"
+PKG_LICENSE="OSS"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/libinput/"
-PKG_URL="https://master.dl.sourceforge.net/project/lxde/LXInput%20%28Kbd%20and%20amp_%20mouse%20config%29/LXInput%200.3.x/lxinput-0.3.5.tar.xz"
-PKG_DEPENDS_TARGET="toolchain gtk+"
-PKG_SECTION="x11/driver"
-PKG_SHORTDESC="Small program to configure keyboard and mouse for LXDE."
-PKG_TOOLCHAIN="autotools"
+PKG_URL="http://xorg.freedesktop.org/archive/individual/app/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_DEPENDS_TARGET="toolchain util-macros libXrandr"
+PKG_SECTION="x11/app"
+PKG_SHORTDESC="xrandr: A primitive command line interface to RandR extension"
+PKG_LONGDESC="Xrandr is a primitive command line interface to the RandR extension and used to set the screen size, orientation and/or reflection."
+
+post_makeinstall_target() {
+  rm -rf $INSTALL/usr/bin/xkeystone
+}

@@ -24,5 +24,5 @@ PKG_DEPENDS_TARGET="toolchain gtk+"
 PKG_SECTION="x11/driver"
 PKG_SHORTDESC="This is an X driver based on libinput."
 PKG_LONGDESC="This is an X driver based on libinput."
-PKG_TOOLCHAIN="autotools"
+#PKG_TOOLCHAIN="autotools"
 
