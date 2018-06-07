@@ -107,7 +107,6 @@ make_target() {
     'use_gtk3=false'
     'use_kerberos=false'
     'icu_use_data_file=true'
-    'linux_link_libudev=true'
     'use_pulseaudio=false'
     'use_sysroot=true'
     'use_vaapi=true'
