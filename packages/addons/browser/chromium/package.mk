@@ -107,6 +107,7 @@ make_target() {
     'use_gold=false'
     'use_gtk3=false'
     'use_kerberos=false'
+    'icu_use_data_file=true'
     'linux_link_libudev=true'
     'use_sysroot=true'
     'use_vaapi=true'
