@@ -1,0 +1,12 @@
+diff -Naur linux-4.14.15-orig/arch/x86/Makefile linux-4.14.15/arch/x86/Makefile
+--- linux-4.14.15-orig/arch/x86/Makefile	2018-06-07 16:38:32.184611507 +0300
++++ linux-4.14.15/arch/x86/Makefile	2018-06-07 16:37:45.604983700 +0300
+@@ -272,7 +272,7 @@
+ ifdef CONFIG_RETPOLINE
+     RETPOLINE_CFLAGS += $(call cc-option,-mindirect-branch=thunk-extern -mindirect-branch-register)
+     ifneq ($(RETPOLINE_CFLAGS),)
+-        KBUILD_CFLAGS += $(RETPOLINE_CFLAGS) -DRETPOLINE
++        KBUILD_CFLAGS += $(RETPOLINE_CFLAGS) -DRETPOLINE -mzero-caller-saved-regs=used
+     endif
+ endif
+ 
