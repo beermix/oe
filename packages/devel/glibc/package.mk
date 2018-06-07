@@ -97,18 +97,23 @@ pre_configure_target() {
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--sort-common,--as-needed,-z,relro||g"`
   export CFLAGS=`echo $CFLAGS | sed -e "s|-D_FORTIFY_SOURCE=.||g"`
 
+  if [ -n "$PROJECT_CFLAGS" ]; then
+    export CFLAGS=`echo $CFLAGS | sed -e "s|$PROJECT_CFLAGS||g"`
+  fi
+
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-ffast-math||g"`
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Ofast|-O2|g"`
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-O.|-O2|g"`
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--as-needed||g"`
+
   export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,--as-needed||"`
-  export LDFLAGS=`echo $LDFLAGS | sed -e "s|-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now||"`
 
   unset LD_LIBRARY_PATH
 
-  export CFLAGS="-O2 -march=westmere -g -m64 -Wl,-z,max-page-size=0x1000 -Wno-error=stringop-truncation -Wno-error=overflow -Wno-error=format-overflow= "
+  export CFLAGS="-O2 -march=westmere -g -m64 -Wl,-z,max-page-size=0x1000"
+
   unset LDFLAGS
-  export LDFLAGS="-Wl,-z,max-page-size=0x1000 "
+
+  export LDFLAGS="-Wl,-z,max-page-size=0x1000"
 
   export BUILD_CC=$HOST_CC
   export OBJDUMP_FOR_HOST=objdump
