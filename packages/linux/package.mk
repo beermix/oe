@@ -166,9 +166,9 @@ pre_make_target() {
   make oldconfig
 
   # regdb (backward compatability with pre-4.15 kernels)
-#  if grep -q ^CONFIG_CFG80211_INTERNAL_REGDB= $PKG_BUILD/.config ; then
+  if grep -q ^CONFIG_CFG80211_INTERNAL_REGDB= $PKG_BUILD/.config ; then
   cp $(get_build_dir wireless-regdb)/db.txt $PKG_BUILD/net/wireless/db.txt
-#  fi
+  fi
 }
 
 make_target() {
@@ -308,7 +308,7 @@ post_install() {
     ln -sf /$(get_full_firmware_dir)/ $INSTALL/etc/firmware
 
   # regdb and signature is now loaded as firmware by 4.15+
-  #if grep -q ^CONFIG_CFG80211_REQUIRE_SIGNED_REGDB= $PKG_BUILD/.config; then
-  #cp $(get_build_dir wireless-regdb)/regulatory.db{,.p7s} $INSTALL/$(get_full_firmware_dir)
-  #fi
+  if grep -q ^CONFIG_CFG80211_REQUIRE_SIGNED_REGDB= $PKG_BUILD/.config; then
+  cp $(get_build_dir wireless-regdb)/regulatory.db{,.p7s} $INSTALL/$(get_full_firmware_dir)
+  fi
 }
