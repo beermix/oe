@@ -61,6 +61,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libssp \
                            --disable-libsanitizer \
                            --with-linker-hash-style=gnu \
+                           --with-diagnostics-color=always \
                            --with-tune=haswell \
                            --with-arch=westmere"
 
