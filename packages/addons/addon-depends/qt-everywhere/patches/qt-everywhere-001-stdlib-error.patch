@@ -12,10 +12,10 @@ Change-Id: If0595fc2f209a48585e7e9b9a61f11c0d4e0664f
  qmake/generators/win32/mingw_make.cpp |  8 +-------
  5 files changed, 4 insertions(+), 21 deletions(-)
 
-diff --git a/mkspecs/common/clang.conf b/mkspecs/common/clang.conf
+diff --git a/qtbase/mkspecs/common/clang.conf b/qtbase/mkspecs/common/clang.conf
 index ee9c1b8..fbe370e 100644
---- a/mkspecs/common/clang.conf
-+++ b/mkspecs/common/clang.conf
+--- a/qtbase/mkspecs/common/clang.conf
++++ b/qtbase/mkspecs/common/clang.conf
 @@ -16,7 +16,6 @@ QMAKE_LINK_SHLIB        = $$QMAKE_CXX
  CONFIG                 += clang_pch_style
  QMAKE_PCH_OUTPUT_EXT    = .pch
@@ -24,10 +24,10 @@ index ee9c1b8..fbe370e 100644
  QMAKE_CFLAGS_PRECOMPILE          = -x c-header -c ${QMAKE_PCH_INPUT} -o ${QMAKE_PCH_OUTPUT}
  QMAKE_CFLAGS_USE_PRECOMPILE      = -Xclang -include-pch -Xclang ${QMAKE_PCH_OUTPUT}
  QMAKE_CFLAGS_LTCG                = -flto
-diff --git a/mkspecs/common/gcc-base.conf b/mkspecs/common/gcc-base.conf
+diff --git a/qtbase/mkspecs/common/gcc-base.conf b/qtbase/mkspecs/common/gcc-base.conf
 index 6e043f5..df8d314 100644
---- a/mkspecs/common/gcc-base.conf
-+++ b/mkspecs/common/gcc-base.conf
+--- a/qtbase/mkspecs/common/gcc-base.conf
++++ b/qtbase/mkspecs/common/gcc-base.conf
 @@ -44,7 +44,6 @@ QMAKE_CFLAGS_DEBUG         += -g
  QMAKE_CFLAGS_SHLIB         += -fPIC
  QMAKE_CFLAGS_STATIC_LIB    += -fPIC
@@ -36,10 +36,10 @@ index 6e043f5..df8d314 100644
  QMAKE_CFLAGS_YACC          += -Wno-unused -Wno-parentheses
  QMAKE_CFLAGS_HIDESYMS      += -fvisibility=hidden
  QMAKE_CFLAGS_EXCEPTIONS_OFF += -fno-exceptions
-diff --git a/mkspecs/linux-icc/qmake.conf b/mkspecs/linux-icc/qmake.conf
+diff --git a/qtbase/mkspecs/linux-icc/qmake.conf b/qtbase/mkspecs/linux-icc/qmake.conf
 index 495fd15..935833b 100644
---- a/mkspecs/linux-icc/qmake.conf
-+++ b/mkspecs/linux-icc/qmake.conf
+--- a/qtbase/mkspecs/linux-icc/qmake.conf
++++ b/qtbase/mkspecs/linux-icc/qmake.conf
 @@ -21,7 +21,6 @@ QMAKE_CFLAGS_DEBUG      = -O0 -g
  QMAKE_CFLAGS_SHLIB      = -fPIC
  QMAKE_CFLAGS_STATIC_LIB = $$QMAKE_CFLAGS_SHLIB
@@ -48,10 +48,10 @@ index 495fd15..935833b 100644
  QMAKE_CFLAGS_THREAD     = -D_REENTRANT
  QMAKE_CFLAGS_SPLIT_SECTIONS = -ffunction-sections
  QMAKE_CFLAGS_LTCG       = -ipo -fno-fat-lto-objects
-diff --git a/qmake/generators/unix/unixmake2.cpp b/qmake/generators/unix/unixmake2.cpp
+diff --git a/qtbase/qmake/generators/unix/unixmake2.cpp b/qtbase/qmake/generators/unix/unixmake2.cpp
 index 9312f19..009a674 100644
---- a/qmake/generators/unix/unixmake2.cpp
-+++ b/qmake/generators/unix/unixmake2.cpp
+--- a/qtbase/qmake/generators/unix/unixmake2.cpp
++++ b/qtbase/qmake/generators/unix/unixmake2.cpp
 @@ -176,16 +176,10 @@ UnixMakefileGenerator::writeMakeParts(QTextStream &t)
      t << "CXXFLAGS      = " << var("QMAKE_CXXFLAGS") << " $(DEFINES)\n";
      t << "INCPATH       =";
@@ -83,10 +83,10 @@ index 9312f19..009a674 100644
      }
  }
  
-diff --git a/qmake/generators/win32/mingw_make.cpp b/qmake/generators/win32/mingw_make.cpp
+diff --git a/qtbase/qmake/generators/win32/mingw_make.cpp b/qtbase/qmake/generators/win32/mingw_make.cpp
 index 382b10c..c9eebd8 100644
---- a/qmake/generators/win32/mingw_make.cpp
-+++ b/qmake/generators/win32/mingw_make.cpp
+--- a/qtbase/qmake/generators/win32/mingw_make.cpp
++++ b/qtbase/qmake/generators/win32/mingw_make.cpp
 @@ -249,17 +249,11 @@ void MingwMakefileGenerator::writeIncPart(QTextStream &t)
  {
      t << "INCPATH       = ";
