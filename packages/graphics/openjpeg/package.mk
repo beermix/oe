@@ -1,6 +1,6 @@
 PKG_NAME="openjpeg"
-PKG_VERSION="2.3.0"
-PKG_URL="https://github.com/uclouvain/openjpeg/archive/v$PKG_VERSION.tar.gz"
+PKG_VERSION="2c7eb4f"
+PKG_URL="https://github.com/uclouvain/openjpeg/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain zlib libxml2 libpng libjpeg-turbo tiff"
 PKG_SECTION="graphics"
 PKG_TOOLCHAIN="cmake-make"
