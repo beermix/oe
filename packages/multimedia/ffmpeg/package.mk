@@ -19,7 +19,6 @@
 PKG_NAME="ffmpeg"
 PKG_NAME="ffmpeg"
 PKG_VERSION="27fc118"
-PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="LGPLv2.1+"
 PKG_SITE="https://ffmpeg.org"
@@ -31,6 +30,10 @@ PKG_SECTION="multimedia"
 PKG_SHORTDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
 PKG_LONGDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
 PKG_BUILD_FLAGS="-gold -lto"
+
+pre_configure_target() {
+  CFLAGS=`echo $CFLAGS | sed -e "s|-fgraphite-identity -floop-nest-optimize -ftree-loop-distribution||"`
+}
 
 # Dependencies
 get_graphicdrivers
