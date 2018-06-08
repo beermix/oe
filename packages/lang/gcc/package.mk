@@ -66,8 +66,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --without-cloog \
                            --disable-libada \
                            --disable-libmudflap \
-                           --disable-libatomic \
-                           --disable-libgomp \
                            --disable-libmpx \
                            --disable-libssp \
                            --with-linker-hash-style=gnu \
@@ -80,6 +78,8 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --disable-libsanitizer \
                               --disable-libitm \
                               --disable-libquadmath \
+                              --disable-libatomic \
+                              --disable-libgomp \
                               --enable-cloog-backend=isl \
                               --disable-shared \
                               --disable-threads \
@@ -111,19 +111,19 @@ pre_configure_host() {
   # export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
   # export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
   
-  export CFLAGS="-march=westmere -g -O2 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro  -Wl,-z,max-page-size=0x1000 -mtune=haswell"
-  export CXXFLAGS="-march=westmere -g -O2  -Wl,-z,max-page-size=0x1000 -mtune=haswell"
+  # export CFLAGS="-march=westmere -g -O2 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro  -Wl,-z,max-page-size=0x1000 -mtune=haswell"
+  # export CXXFLAGS="-march=westmere -g -O2  -Wl,-z,max-page-size=0x1000 -mtune=haswell"
 
   export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
 }
 
-pre_configure_bootstrap() {
-  export CFLAGS="-march=westmere -g -O2 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro  -Wl,-z,max-page-size=0x1000 -mtune=haswell"
-  export CXXFLAGS="-march=westmere -g -O2  -Wl,-z,max-page-size=0x1000 -mtune=haswell"
+#pre_configure_bootstrap() {
+  # export CFLAGS="-march=westmere -g -O2 -fstack-protector -Wl,-z -Wl,now -Wl,-z -Wl,relro  -Wl,-z,max-page-size=0x1000 -mtune=haswell"
+  # export CXXFLAGS="-march=westmere -g -O2  -Wl,-z,max-page-size=0x1000 -mtune=haswell"
   # export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
   # export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
-}
+#}
 
 post_make_host() {
   # fix wrong link
