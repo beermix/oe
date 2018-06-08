@@ -17,13 +17,14 @@
 ################################################################################
 
 PKG_NAME="ffmpeg"
-PKG_VERSION="3.2.10"
-PKG_REV="1"
+PKG_VERSION="3.1.11-Krypton-17.5"
 PKG_ARCH="any"
 PKG_LICENSE="LGPLv2.1+"
-PKG_SITE="https://ffmpeg.org"
-PKG_URL="https://ffmpeg.org/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl speex libvorbis intel-vaapi-driver libvdpau"
+#PKG_URL="https://github.com/xbmc/FFmpeg/archive/${PKG_VERSION}.tar.gz"
+PKG_URL="https://github.com/FFmpeg/FFmpeg/archive/${PKG_VERSION}.tar.gz"
+PKG_URL="https://github.com/xbmc/FFmpeg/archive/${PKG_VERSION}.tar.gz"
+PKG_SOURCE_DIR="FFmpeg-${PKG_VERSION}*"
+PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl speex"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
 PKG_LONGDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
@@ -59,10 +60,40 @@ else
   FFMPEG_DEBUG="--disable-debug --enable-stripping"
 fi
 
+if [ "$KODIPLAYER_DRIVER" = "bcm2835-driver" ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET bcm2835-driver"
+fi
+
+case "$TARGET_ARCH" in
+  arm)
+    FFMPEG_TABLES="--enable-hardcoded-tables"
+    ;;
+  *)
+    FFMPEG_TABLES="--disable-hardcoded-tables"
+    ;;
+esac
+
+if target_has_feature neon; then
+  FFMPEG_FPU="--enable-neon"
+else
+  FFMPEG_FPU="--disable-neon"
+fi
+
+if [ "$DISPLAYSERVER" = "x11" ]; then
+  FFMPEG_X11GRAB="--enable-indev=x11grab_xcb"
+fi
+
 pre_configure_target() {
   cd $PKG_BUILD
   rm -rf .$TARGET_NAME
 
+  if [ "$KODIPLAYER_DRIVER" = "bcm2835-driver" ]; then
+    CFLAGS="-I$SYSROOT_PREFIX/usr/include/interface/vcos/pthreads -I$SYSROOT_PREFIX/usr/include/interface/vmcs_host/linux $CFLAGS"
+    FFMPEG_LIBS="-lbcm_host -lvcos -lvchiq_arm -lmmal -lmmal_core -lmmal_util -lvcsm"
+    FFMPEG_RPI="--enable-rpi"
+  else
+    FFMPEG_RPI="--disable-rpi"
+  fi
 }
 
 configure_target() {
@@ -85,6 +116,7 @@ configure_target() {
               --host-libs="-lm" \
               --extra-cflags="$CFLAGS" \
               --extra-ldflags="$LDFLAGS" \
+              --extra-libs="$FFMPEG_LIBS" \
               --disable-static \
               --enable-shared \
               --enable-gpl \
@@ -97,7 +129,7 @@ configure_target() {
               --pkg-config="$TOOLCHAIN/bin/pkg-config" \
               --enable-optimizations \
               --disable-extra-warnings \
-              --enable-ffprobe \
+              --disable-ffprobe \
               --disable-ffplay \
               --disable-ffserver \
               --enable-ffmpeg \
@@ -107,6 +139,7 @@ configure_target() {
               --enable-swscale \
               --enable-postproc \
               --enable-avfilter \
+              --disable-devices \
               --enable-pthreads \
               --disable-w32threads \
               --enable-network \
@@ -119,12 +152,12 @@ configure_target() {
               --enable-mdct \
               --enable-rdft \
               --disable-crystalhd \
-              --enable-vaapi \
-              --enable-vdpau \
+              $FFMPEG_VAAPI \
+              $FFMPEG_VDPAU \
               --disable-dxva2 \
               --enable-runtime-cpudetect \
-              --disable-hardcoded-tables \
-              --enable-encoders \
+              $FFMPEG_TABLES \
+              --disable-encoders \
               --enable-encoder=ac3 \
               --enable-encoder=aac \
               --enable-encoder=wmav2 \
@@ -132,7 +165,7 @@ configure_target() {
               --enable-encoder=png \
               --disable-decoder=mpeg_xvmc \
               --enable-hwaccels \
-              --enable-muxers \
+              --disable-muxers \
               --enable-muxer=spdif \
               --enable-muxer=adts \
               --enable-muxer=asf \
@@ -147,11 +180,13 @@ configure_target() {
               --enable-filters \
               --disable-avisynth \
               --enable-bzlib \
+              --disable-lzma \
               --disable-frei0r \
               --disable-libopencore-amrnb \
               --disable-libopencore-amrwb \
               --disable-libopencv \
               --disable-libdc1394 \
+              --disable-libfaac \
               --disable-libfreetype \
               --disable-libgsm \
               --disable-libmp3lame \
@@ -162,7 +197,7 @@ configure_target() {
               --enable-libspeex \
               --disable-libtheora \
               --disable-libvo-amrwbenc \
-              --enable-libvorbis --enable-muxer=ogg --enable-encoder=libvorbis \
+              --disable-libvorbis \
               --disable-libvpx \
               --disable-libx264 \
               --disable-libxavs \
@@ -170,10 +205,10 @@ configure_target() {
               --enable-zlib \
               --enable-asm \
               --disable-altivec \
-              --disable-neon \
+              $FFMPEG_FPU \
               --enable-yasm \
               --disable-symver \
-              --enable-indev=x11grab_xcb
+              $FFMPEG_X11GRAB
 }
 
 post_makeinstall_target() {

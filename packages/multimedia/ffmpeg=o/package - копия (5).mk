@@ -17,16 +17,14 @@
 ################################################################################
 
 PKG_NAME="ffmpeg"
-PKG_NAME="ffmpeg"
-PKG_VERSION="27fc118"
-PKG_REV="1"
+PKG_VERSION="3.1.11-Krypton-17.5"
 PKG_ARCH="any"
+PKG_SITE="https://github.com/FFmpeg/FFmpeg/branches/active"
 PKG_LICENSE="LGPLv2.1+"
-PKG_SITE="https://ffmpeg.org"
-PKG_URL="https://ffmpeg.org/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_URL="https://github.com/FFmpeg/FFmpeg/archive/${PKG_VERSION}.tar.gz"
+PKG_URL="https://github.com/xbmc/FFmpeg/archive/${PKG_VERSION}.tar.gz"
+#PKG_URL="https://github.com/FFmpeg/FFmpeg/archive/${PKG_VERSION}.tar.gz"
 PKG_SOURCE_DIR="FFmpeg-${PKG_VERSION}*"
-PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl speex"
+PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl speex libvorbis x264"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
 PKG_LONGDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
@@ -79,10 +77,6 @@ if target_has_feature neon; then
   FFMPEG_FPU="--enable-neon"
 else
   FFMPEG_FPU="--disable-neon"
-fi
-
-if [ "$DISPLAYSERVER" = "x11" ]; then
-  FFMPEG_X11GRAB="--enable-indev=x11grab_xcb"
 fi
 
 pre_configure_target() {
@@ -157,8 +151,8 @@ configure_target() {
               $FFMPEG_VAAPI \
               $FFMPEG_VDPAU \
               --disable-dxva2 \
-              --enable-runtime-cpudetect \
               $FFMPEG_TABLES \
+              --disable-memalign-hack \
               --disable-encoders \
               --enable-encoder=ac3 \
               --enable-encoder=aac \
@@ -167,7 +161,7 @@ configure_target() {
               --enable-encoder=png \
               --disable-decoder=mpeg_xvmc \
               --enable-hwaccels \
-              --disable-muxers \
+              --enable-muxers \
               --enable-muxer=spdif \
               --enable-muxer=adts \
               --enable-muxer=asf \
@@ -182,7 +176,6 @@ configure_target() {
               --enable-filters \
               --disable-avisynth \
               --enable-bzlib \
-              --disable-lzma \
               --disable-frei0r \
               --disable-libopencore-amrnb \
               --disable-libopencore-amrwb \
@@ -199,18 +192,40 @@ configure_target() {
               --enable-libspeex \
               --disable-libtheora \
               --disable-libvo-amrwbenc \
-              --disable-libvorbis \
+              --enable-libvorbis --enable-muxer=ogg --enable-encoder=libvorbis \
               --disable-libvpx \
-              --disable-libx264 \
+              --enable-libx264 \
               --disable-libxavs \
               --disable-libxvid \
               --enable-zlib \
               --enable-asm \
               --disable-altivec \
               $FFMPEG_FPU \
-              --enable-yasm \
+              --disable-runtime-cpudetect \
               --disable-symver \
-              $FFMPEG_X11GRAB
+              --disable-amd3dnow \
+              --disable-amd3dnowext \
+              --enable-mmx \
+              --enable-mmxext \
+              --enable-sse \
+              --enable-sse2 \
+              --enable-sse3 \
+              --enable-ssse3 \
+              --enable-sse4 \
+              --enable-sse42 \
+              --disable-avx \
+              --disable-xop \
+              --disable-fma3 \
+              --disable-fma4 \
+              --disable-avx2 \
+              --disable-aesni \
+              --disable-armv5te \
+              --disable-armv6 \
+              --disable-armv6t2 \
+              --disable-vfp \
+              --disable-neon \
+              --enable-inline-asm \
+              --enable-yasm
 }
 
 post_makeinstall_target() {
