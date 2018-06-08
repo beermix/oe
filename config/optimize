@@ -1,4 +1,4 @@
-GCC_OPTIM="-O2 -pipe -Wall"
+GCC_OPTIM="-O2 -pipe -Wall  -fgraphite-identity -floop-nest-optimize -ftree-loop-distribution"
 LD_OPTIM="-Wl,--as-needed -Wl,--hash-style=gnu"
 
 if [ "${BUILD_WITH_DEBUG}" = "yes" ]; then
