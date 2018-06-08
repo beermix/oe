@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="cups"
-PKG_VERSION="2.2.1"
+PKG_VERSION="2.2.8"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.cups.org"
 PKG_URL="https://github.com/apple/cups/archive/v$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain avahi zlib openssl"
+PKG_DEPENDS_TARGET="toolchain zlib openssl"
 PKG_SECTION="depends"
 PKG_SHORTDESC="CUPS printing system"
 PKG_LONGDESC="CUPS is the standards-based, open source printing system developed by Apple Inc. for macOS® and other UNIX®-like operating sysms"

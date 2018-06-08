@@ -15,34 +15,31 @@
 #  You should have received a copy of the GNU General Public License
 #  along with OpenELEC.tv; see the file COPYING.  If not, write to
 #  the Free Software Foundation, 51 Franklin Street, Suite 500, Boston, MA 02110, USA.
+###  beautifulsoup4:host html5lib:host re2 snappy
+#  
 #  https://chromereleases.googleblog.com/
 #  http://svnweb.mageia.org/packages/cauldron/chromium-browser-stable/current
 #  http://omahaproxy.appspot.com/
 #  https://www.chromestatus.com/
 #  https://bazaar.launchpad.net/~chromium-team/chromium-browser/xenial-stable/files/head:/debian?sort=date
-################################################################################ beautifulsoup4:host html5lib:host re2 snappy
+################################################################################
 
 PKG_NAME="chromium"
-PKG_VERSION="67.0.3396.62"
-PKG_VERSION="67.0.3396.79"
-#PKG_SHA256="d5ee63932ff1c8c4a5f69c834f6577e7127b416681eddd23bc54886caffd770d"
-PKG_REV="147"
+PKG_VERSION="63.0.3239.108"
+PKG_SHA256="47d80798194da78bdd519b7ce012425b13cf89d6eb287e22a34342a245c31a2b"
+PKG_REV="150"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
-PKG_SITE="http://www.chromium.org/Home"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_URL="https://gsdview.appspot.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
-#PKG_URL="http://192.168.1.200:8080/chromium-$PKG_VERSION.tar.xz"
-#PKG_DEPENDS_HOST="toolchain ninja:host Python2:host libevent:host gperf:host"
-#PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-#PKG_DEPENDS_TARGET="pciutils systemd dbus libXtst libXcomposite libXcursor unclutter alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk xdotool libdrm libjpeg-turbo freetype libxslt harfbuzz gtk+ openjpeg chromium:host"
-PKG_DEPENDS_TARGET="chromium:host"
+PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
+PKG_DEPENDS_TARGET="chromium:host pciutils dbus libXcomposite libXcursor libXtst alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk libdrm freetype libxslt harfbuzz gtk+ libva-vdpau-driver unclutter xdotool re2 snappy"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
 PKG_TOOLCHAIN="manual"
 PKG_BUILD_FLAGS="-lto -hardening"
-#GOLD_SUPPORT="yes"
+GOLD_SUPPORT="yes"
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Chromium"
@@ -74,13 +71,12 @@ make_target() {
 #  export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
 #  export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
 
-  export LDFLAGS="$LDFLAGS -ludev"
-  export LD=$CXX
+#  export LDFLAGS="$LDFLAGS -ludev"
+#  export LD=$CXX
 
   export CCACHE_SLOPPINESS=time_macros
+
   # export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime
-  # export CCACHE_CPP2=yes
-  # ----------------------------------------------------------------------------------------------------
   local _google_api_key=AIzaSyAQ6L9vt9cnN4nM0weaa6Y38K4eyPvtKgI
   local _google_default_client_id=740889307901-4bkm4e0udppnp1lradko85qsbnmkfq3b.apps.googleusercontent.com
   local _google_default_client_secret=9TJlhL661hvShQub4cWhANXa
@@ -89,7 +85,7 @@ make_target() {
     "host_toolchain=\"//build/toolchain/linux:x64_host\""
     'is_clang=false'
     'clang_use_chrome_plugins=false'
-    'symbol_level=1'
+    'symbol_level=0'
     'is_debug=false'
     'fatal_linker_warnings=false'
     'treat_warnings_as_errors=false'
@@ -102,11 +98,12 @@ make_target() {
     'use_allocator="none"'
     'use_cups=false'
     'use_custom_libcxx=false'
+    'use_gconf=false'
     'use_gnome_keyring=false'
     'use_gold=false'
     'use_gtk3=false'
     'use_kerberos=false'
-    'icu_use_data_file=true'
+    'linux_link_libudev = true'
     'use_pulseaudio=false'
     'use_sysroot=true'
     'use_vaapi=true'
@@ -123,12 +120,56 @@ make_target() {
     "google_default_client_secret=\"${_google_default_client_secret}\""
   )
 
+# Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
+# Keys are the names in the above script; values are the dependencies in Arch
+declare -rgA _system_libs=(
+  #[ffmpeg]=ffmpeg              # https://crbug.com/731766
+  #[flac]=flac
+  #[freetype]=freetype2         # https://crbug.com/pdfium/733
+  #[harfbuzz-ng]=harfbuzz-icu   # https://crbug.com/768938
+  #[icu]=icu                    # https://crbug.com/772655
+  [libdrm]=
+  [libjpeg]=libjpeg
+  #[libpng]=libpng              # https://crbug.com/752403#c10
+  #[libvpx]=libvpx              # https://bugs.gentoo.org/611394
+  #[libwebp]=libwebp
+  [libxml]=libxml2
+  [libxslt]=libxslt
+  #[opus]=opus
+  [re2]=re2
+  [snappy]=snappy
+  [yasm]=
+  [zlib]=minizip
+)
+depends+=(${_system_libs[@]})
+
+  # Fix paths.
+  sed -e 's|i386-linux-gnu/||g' \
+      -e 's|x86_64-linux-gnu/||g' \
+      -e 's|/usr/lib/va/drivers|/usr/lib/dri|g' \
+      -e 's|/usr/lib64/va/drivers|/usr/lib/dri|g' \
+      -i ./content/common/sandbox_linux/bpf_gpu_policy_linux.cc
+
+  # Remove bundled libraries for which we will use the system copies; this
+  # *should* do what the remove_bundled_libraries.py script does, with the
+  # added benefit of not having to list all the remaining libraries
+  local _lib
+  for _lib in ${!_system_libs[@]} ${_system_libs[libjpeg]+libjpeg_turbo}; do
+    find -type f -path "*third_party/$_lib/*" \
+      \! -path "*third_party/$_lib/chromium/*" \
+      \! -path "*third_party/$_lib/google/*" \
+      \! -path "*base/third_party/icu/*" \
+      \! -regex '.*\.\(gn\|gni\|isolate\|py\)' \
+      -delete
+  done
+
+  ./build/linux/unbundle/replace_gn_files.py --system-libraries "${!_system_libs[@]}"
+
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
 
-  ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox
-  #  -w dupbuild=err
+  ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS  -C out/Release chrome chrome_sandbox
 }
 
 addon() {
@@ -164,6 +205,9 @@ addon() {
 
   # harfbuzz
   cp -ri $(get_build_dir harfbuzz)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  
+  # icu
+  cp -ri $(get_build_dir icu)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # gdk-pixbuf
   cp -ri $(get_build_dir gdk-pixbuf)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
@@ -183,6 +227,9 @@ addon() {
 
   # libXcursor
   cp -ri $(get_build_dir libXcursor)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
+
+  # libva-vdpau-driver
+  cp -PL $(get_build_dir libva-vdpau-driver)/.install_pkg/usr/lib/dri/*.so $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # unclutter
   cp -P $(get_build_dir unclutter)/.install_pkg/usr/bin/unclutter $ADDON_BUILD/$PKG_ADDON_ID/bin

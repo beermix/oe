@@ -94,7 +94,7 @@ addon() {
   cp $(get_build_dir libxml2)/.install_pkg/usr/lib/libxml2.so.2 $ADDON_BUILD/$PKG_ADDON_ID/lib
   cp $(get_build_dir zlib)/.install_pkg/usr/lib/libz.so.1 $ADDON_BUILD/$PKG_ADDON_ID/lib
   cp $(get_build_dir libgcrypt)/.install_pkg/usr/lib/libgcrypt.so.20 $ADDON_BUILD/$PKG_ADDON_ID/lib
-  cp $(get_build_dir icu4c)/.install_pkg/usr/lib/lib*.so.* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp $(get_build_dir icu)/.install_pkg/usr/lib/lib*.so.* $ADDON_BUILD/$PKG_ADDON_ID/lib
   cp $(get_build_dir libtool)/.install_pkg/usr/lib/libltdl.so.7 $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # locale stuff (en_US.UTF8)

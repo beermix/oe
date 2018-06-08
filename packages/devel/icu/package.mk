@@ -1,47 +1,57 @@
 ################################################################################
-#      This file is part of LibreELEC - https://libreelec.tv
-#      Copyright (C) 2016 Team LibreELEC
+#      This file is part of OpenELEC - http://www.openelec.tv
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
-#  LibreELEC is free software: you can redistribute it and/or modify
+#  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
 #  the Free Software Foundation, either version 2 of the License, or
 #  (at your option) any later version.
 #
-#  LibreELEC is distributed in the hope that it will be useful,
+#  OpenELEC is distributed in the hope that it will be useful,
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
 #
 #  You should have received a copy of the GNU General Public License
-#  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
+#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
 PKG_NAME="icu"
-#PKG_VERSION="57.1"
-PKG_VERSION="61.1"
-PKG_SHA256=""
+PKG_VERSION="58.2"
+PKG_SHA256="2b0a4410153a9b20de0e20c7d8b66049a72aef244b53683d0d7521371683da0c"
 PKG_ARCH="any"
 PKG_LICENSE="Custom"
-PKG_SITE="http://download.icu-project.org/files/icu4c/?C=M;O=D"
+PKG_SITE="http://www.icu-project.org"
 PKG_URL="http://download.icu-project.org/files/${PKG_NAME}4c/${PKG_VERSION}/${PKG_NAME}4c-${PKG_VERSION//./_}-src.tgz"
 PKG_SOURCE_DIR="icu"
-PKG_DEPENDS_TARGET="toolchain icu:host"
+PKG_DEPENDS_TARGET="toolchain libiconv icu:host"
 PKG_SECTION="textproc"
 PKG_SHORTDESC="International Components for Unicode library"
 PKG_LONGDESC="International Components for Unicode library"
-PKG_BUILD_FLAGS="+pic:host +pic"
 
-#post_unpack() {
-#  sed -i 's/xlocale/locale/' $PKG_BUILD/source/i18n/digitlst.cpp
-#  cp -r $PKG_BUILD/source/* $PKG_BUILD/
-#}
+post_unpack() {
+  mv $PKG_BUILD/source/* $PKG_BUILD
+  rmdir $PKG_BUILD/source
+}
 
-PKG_CONFIGURE_SCRIPT="source/configure"
+post_configure_host() {
+  # we are not in source folder
+  sed -i 's|../LICENSE|LICENSE|' Makefile
+}
 
-PKG_CONFIGURE_OPTS_HOST="--disable-shared --enable-static"
+post_configure_target() {
+  # same as above
+  post_configure_host
+}
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static --with-cross-build=$PKG_BUILD/.$HOST_NAME"
+makeinstall_host() {
+  : # not required
+}
 
-post_makeinstall_target() {
-  rm -rf $INSTALL
+
+pre_configure_target() {
+  PKG_CONFIGURE_OPTS_TARGET="--with-cross-build=$(get_build_dir $PKG_NAME)/.$HOST_NAME \
+                             --with-data-packaging=archive \
+                             --disable-samples \
+                             --disable-tests"
 }

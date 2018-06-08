@@ -29,9 +29,9 @@ PKG_DEPENDS_TARGET="toolchain apr"
 PKG_SECTION="web"
 PKG_SHORTDESC="The Apache Portable Runtime Utility Library."
 PKG_LONGDESC="The Apache Portable Runtime Utility Library provides a predictable and consistent interface to underlying client library interfaces."
-PKG_IS_ADDON="no"
-PKG_USE_CMAKE="no"
-PKG_AUTORECONF="no"
+PKG_TOOLCHAIN="configure"
+PKG_BUILD_FLAGS="+pic"
+
 
 pre_configure_target() {
   cd $PKG_BUILD

@@ -22,7 +22,7 @@ PKG_VERSION="6.4.0"
 #PKG_SHA256="832ca6ae04636adbb430e865a1451adf6979ab44ca1c8374f61fba65645ce15c"
 PKG_VERSION="6-20180530"
 PKG_VERSION="8.1.1-20180531"
-PKG_VERSION="7.3.1-20180406"
+#PKG_VERSION="7.3.1-20180406"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="ftp://gcc.gnu.org/pub/gcc/snapshots/LATEST-7"
@@ -38,6 +38,13 @@ PKG_SECTION="lang"
 PKG_SHORTDESC="gcc: The GNU Compiler Collection (aka GNU C Compiler)"
 PKG_LONGDESC="This package contains the GNU Compiler Collection. It includes compilers for the languages C, C++, Objective C, Fortran 95, Java and others ... This GCC contains the Stack-Smashing Protector Patch which can be enabled with the -fstack-protector command-line option. More information about it ca be found at http://www.research.ibm.com/trl/projects/security/ssp/."
 PKG_BUILD_FLAGS="-lto -gold -hardening"
+
+post_unpack() {
+  sed -i 's@\./fixinc\.sh@-c true@' $PKG_BUILD/gcc/Makefile.in
+  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $PKG_BUILD/libiberty/configure
+  sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" $PKG_BUILD/gcc/configure
+  sed -i '/m64=/s/lib64/lib/' $PKG_BUILD/gcc/config/i386/t-linux64
+}
 
 GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --with-sysroot=$SYSROOT_PREFIX \
@@ -58,9 +65,11 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --without-ppl \
                            --without-cloog \
                            --disable-libada \
+                           --disable-libmudflap \
+                           --disable-libatomic \
+                           --disable-libgomp \
                            --disable-libmpx \
                            --disable-libssp \
-                           --disable-libsanitizer \
                            --with-linker-hash-style=gnu \
                            --with-tune=haswell \
                            --with-arch=westmere"
@@ -68,15 +77,14 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
                               --disable-__cxa_atexit \
+                              --disable-libsanitizer \
+                              --disable-libitm \
+                              --disable-libquadmath \
+                              --enable-cloog-backend=isl \
                               --disable-shared \
                               --disable-threads \
                               --without-headers \
                               --with-newlib \
-                              --disable-libquadmath \
-                              --disable-libatomic \
-                              --disable-libgomp \
-                              --disable-libitm \
-                              --disable-libmudflap \
                               --disable-decimal-float \
                               $GCC_OPTS"
 

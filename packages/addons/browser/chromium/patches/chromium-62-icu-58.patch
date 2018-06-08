@@ -1,5 +1,5 @@
---- chromium-62.0.3192.0/third_party/blink/renderer/platform/graphics/logging_canvas.cc.icu59	2017-08-22 21:05:00.000000000 +0200
-+++ chromium-62.0.3192.0/third_party/blink/renderer/platform/graphics/logging_canvas.cc	2017-08-31 17:49:42.668922922 +0200
+--- chromium-62.0.3192.0/third_party/WebKit/Source/platform/graphics/LoggingCanvas.cpp.icu59	2017-08-22 21:05:00.000000000 +0200
++++ chromium-62.0.3192.0/third_party/WebKit/Source/platform/graphics/LoggingCanvas.cpp	2017-08-31 17:49:42.668922922 +0200
 @@ -513,24 +513,6 @@
    return flags_string;
  }
@@ -43,3 +43,19 @@
      }
      default:
        NOTREACHED();
+--- chromium-62.0.3202.9/v8/src/runtime/runtime-intl.cc.icu59	2017-09-06 21:08:05.000000000 +0200
++++ chromium-62.0.3202.9/v8/src/runtime/runtime-intl.cc	2017-09-11 05:57:53.754545013 +0200
+@@ -713,8 +713,13 @@
+   icu::UnicodeString result = plural_rules->select(rounded);
+   return *isolate->factory()
+               ->NewStringFromTwoByte(Vector<const uint16_t>(
++#if U_ICU_VERSION_MAJOR_NUM >= 59
+                   reinterpret_cast<const uint16_t*>(
+                       icu::toUCharPtr(result.getBuffer())),
++#else
++                  reinterpret_cast<const uint16_t*>(
++                      result.getBuffer()),
++#endif
+                   result.length()))
+               .ToHandleChecked();
+ }

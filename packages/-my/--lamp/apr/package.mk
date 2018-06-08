@@ -31,6 +31,8 @@ PKG_LONGDESC="The Apache Portable Runtime (APR) is a supporting library for the 
 PKG_IS_ADDON="no"
 PKG_USE_CMAKE="no"
 PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="configure"
+PKG_BUILD_FLAGS="+pic"
 
 # for largefile seems only important thing are ac_cv_sizeof_*
 # but maybe I'm wrong

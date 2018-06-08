@@ -20,7 +20,7 @@
 
 PKG_NAME="httpd"
 #PKG_VERSION="2.4.25"
-PKG_VERSION="2.4.27"
+PKG_VERSION="2.4.33"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="OpenSource"
@@ -30,8 +30,9 @@ PKG_DEPENDS_TARGET="toolchain apr-util openssl pcre libxml2"
 PKG_SECTION="web"
 PKG_SHORTDESC="The Apache web server."
 PKG_LONGDESC="The Apache web server."
-PKG_IS_ADDON="no"
-PKG_AUTORECONF="yes"
+PKG_TOOLCHAIN="configure"
+PKG_BUILD_FLAGS="+pic"
+
 
 # If you still desire to serve pages as root
 APACHE_RUN_AS_ROOT=no
