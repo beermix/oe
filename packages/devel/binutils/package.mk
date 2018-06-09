@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="binutils"
-PKG_VERSION="6341380"
+PKG_VERSION="3266b12"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://ftp.gnu.org.ua/gnu/binutils/?C=M;O=D"
