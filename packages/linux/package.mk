@@ -44,7 +44,7 @@ case "$LINUX" in
     PKG_VERSION="4.16.14"
     PKG_URL="https://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
     PKG_PATCH_DIRS="4.16"
-    PKG_BUILD_PERF="no"
+    PKG_BUILD_PERF="yes"
     ;;
   zen)
     PKG_VERSION="d6e4eb2"
