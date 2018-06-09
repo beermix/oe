@@ -17,17 +17,23 @@
 ################################################################################
 
 PKG_NAME="intel-vaapi-driver"
+#PKG_VERSION="2.1.0"
+#PKG_SHA256="ecfaf2ccc4b9af7340e002d2ef807d1e33051d4992f1983f5f4d60e516f86bdf"
 PKG_VERSION="1.8.3"
-PKG_SHA256="54411d9e579300ed63f8b9b06152a1a9ec95b7699507d7ffa014cd7b2aeaff6f"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPL"
-PKG_SITE="https://01.org/linuxmedia"
+PKG_SITE="https://github.com/01org/intel-vaapi-driver/releases"
 PKG_URL="https://github.com/01org/intel-vaapi-driver/releases/download/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain libva libdrm"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="intel-vaapi-driver: VA-API user mode driver for Intel GEN Graphics family"
 PKG_LONGDESC="intel-vaapi-driver: VA-API user mode driver for Intel GEN Graphics family"
 PKG_TOOLCHAIN="autotools"
+
+#pre_configure_target() {
+#  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3 -Wall|"`
+#  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3 -Wall|"`
+#}
 
 if [ "$DISPLAYSERVER" = "x11" ]; then
   DISPLAYSERVER_LIBVA="--enable-x11 --disable-wayland"
@@ -37,6 +43,5 @@ else
   DISPLAYSERVER_LIBVA="--disable-x11 --disable-wayland"
 fi
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-silent-rules \
-                           --enable-drm \
+PKG_CONFIGURE_OPTS_TARGET="--enable-drm \
                            $DISPLAYSERVER_LIBVA"
