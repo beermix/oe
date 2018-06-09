@@ -71,8 +71,8 @@ make_target() {
 #  export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
 #  export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
 
-#  export LDFLAGS="$LDFLAGS -ludev"
-#  export LD=$CXX
+  export LDFLAGS="$LDFLAGS -ludev"
+  export LD=$CXX
 
   export CCACHE_SLOPPINESS=time_macros
 
@@ -103,7 +103,6 @@ make_target() {
     'use_gold=false'
     'use_gtk3=false'
     'use_kerberos=false'
-    'linux_link_libudev = true'
     'use_pulseaudio=false'
     'use_sysroot=true'
     'use_vaapi=true'
@@ -127,7 +126,7 @@ declare -rgA _system_libs=(
   #[flac]=flac
   #[freetype]=freetype2         # https://crbug.com/pdfium/733
   #[harfbuzz-ng]=harfbuzz-icu   # https://crbug.com/768938
-  #[icu]=icu                    # https://crbug.com/772655
+  [icu]=icu                    # https://crbug.com/772655
   [libdrm]=
   [libjpeg]=libjpeg
   #[libpng]=libpng              # https://crbug.com/752403#c10
@@ -169,14 +168,14 @@ depends+=(${_system_libs[@]})
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
 
-  ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS  -C out/Release chrome chrome_sandbox
+  ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox widevinecdmadapter
 }
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -P  $PKG_BUILD/out/Release/chrome $ADDON_BUILD/$PKG_ADDON_ID/bin/chromium.bin
   cp -P  $PKG_BUILD/out/Release/chrome_sandbox $ADDON_BUILD/$PKG_ADDON_ID/bin/chrome-sandbox
-  cp -P  $PKG_BUILD/out/Release/{*.pak,*.dat,*.bin} $ADDON_BUILD/$PKG_ADDON_ID/bin
+  cp -ri  $PKG_BUILD/out/Release/{*.pak,*.dat,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -PR $PKG_BUILD/out/Release/locales $ADDON_BUILD/$PKG_ADDON_ID/bin/
   cp -PR $PKG_BUILD/out/Release/gen/content/content_resources.pak $ADDON_BUILD/$PKG_ADDON_ID/bin/
 
