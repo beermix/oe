@@ -71,8 +71,8 @@ make_target() {
 #  export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
 #  export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
 
-  export LDFLAGS="$LDFLAGS -ludev"
-  export LD=$CXX
+  # export LDFLAGS="$LDFLAGS -ludev"
+  # export LD=$CXX
 
   export CCACHE_SLOPPINESS=time_macros
 
@@ -123,7 +123,7 @@ make_target() {
 # Keys are the names in the above script; values are the dependencies in Arch
 declare -gA _system_libs=(
   [ffmpeg]=ffmpeg
-  [flac]=flac
+  #[flac]=flac
   [fontconfig]=fontconfig
   [freetype]=freetype2
   [harfbuzz-ng]=harfbuzz
