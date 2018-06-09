@@ -27,7 +27,7 @@
 PKG_NAME="chromium"
 PKG_VERSION="63.0.3239.108"
 PKG_SHA256="47d80798194da78bdd519b7ce012425b13cf89d6eb287e22a34342a245c31a2b"
-PKG_REV="150"
+PKG_REV="151"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
