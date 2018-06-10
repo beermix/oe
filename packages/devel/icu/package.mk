@@ -28,6 +28,7 @@ PKG_DEPENDS_TARGET="toolchain libiconv icu:host"
 PKG_SECTION="textproc"
 PKG_SHORTDESC="International Components for Unicode library"
 PKG_LONGDESC="International Components for Unicode library"
+PKG_BUILD_FLAGS="+pic"
 
 post_unpack() {
   mv $PKG_BUILD/source/* $PKG_BUILD
@@ -53,5 +54,7 @@ pre_configure_target() {
   PKG_CONFIGURE_OPTS_TARGET="--with-cross-build=$(get_build_dir $PKG_NAME)/.$HOST_NAME \
                              --with-data-packaging=archive \
                              --disable-samples \
-                             --disable-tests"
+                             --disable-tests \
+                             --enable-static \
+                             --disable-shared"
 }
