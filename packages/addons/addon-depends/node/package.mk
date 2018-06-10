@@ -17,9 +17,9 @@
 ################################################################################
 
 PKG_NAME="node"
-PKG_VERSION="8.11.1"
-#PKG_SHA256="56ca80d50d4b970877994b348e5e3687f3f88cd952c3683e8dd02ac7cad64f41"
+#PKG_VERSION="8.11.1"
 PKG_VERSION="10.4.0"
+PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/nodejs/node/releases"

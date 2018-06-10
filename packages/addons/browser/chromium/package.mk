@@ -123,10 +123,10 @@ make_target() {
 # Keys are the names in the above script; values are the dependencies in Arch
 declare -gA _system_libs=(
   #[ffmpeg]=ffmpeg
-  #[fontconfig]=fontconfig
+  [fontconfig]=fontconfig
   #[freetype]=freetype2
   [harfbuzz-ng]=harfbuzz
-  #[icu]=icu
+  [icu]=icu
   [libdrm]=
   [libjpeg]=libjpeg
   #[libpng]=libpng            # https://crbug.com/752403#c10
