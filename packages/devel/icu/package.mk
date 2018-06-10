@@ -58,3 +58,7 @@ pre_configure_target() {
                              --enable-static \
                              --disable-shared"
 }
+
+post_makeinstall_target() {
+  rm -rf $INSTALL
+}
