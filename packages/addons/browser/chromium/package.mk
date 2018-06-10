@@ -53,7 +53,7 @@ post_patch() {
   find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$TOOLCHAIN/bin/python|g" {} +
 
   # set correct widevine
-  sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' ./third_party/widevine/cdm/stub/widevine_cdm_version.h
+  # sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' ./third_party/widevine/cdm/stub/widevine_cdm_version.h
 }
 
 make_host() {
@@ -63,8 +63,8 @@ make_host() {
 
 make_target() {
   export CCACHE_SLOPPINESS=time_macros
-  
   # export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime
+  
   local _google_api_key=AIzaSyAQ6L9vt9cnN4nM0weaa6Y38K4eyPvtKgI
   local _google_default_client_id=740889307901-4bkm4e0udppnp1lradko85qsbnmkfq3b.apps.googleusercontent.com
   local _google_default_client_secret=9TJlhL661hvShQub4cWhANXa
