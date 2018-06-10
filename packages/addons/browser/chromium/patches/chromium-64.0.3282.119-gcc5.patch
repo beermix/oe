@@ -1,0 +1,12 @@
+diff -up chromium-64.0.3282.119/third_party/webgl/src/specs/latest/2.0/webgl2.idl.gcc5 chromium-64.0.3282.119/third_party/webgl/src/specs/latest/2.0/webgl2.idl
+--- chromium-64.0.3282.119/third_party/webgl/src/specs/latest/2.0/webgl2.idl.gcc5	2018-01-25 11:07:27.179175007 -0500
++++ chromium-64.0.3282.119/third_party/webgl/src/specs/latest/2.0/webgl2.idl	2018-01-25 11:07:38.037925336 -0500
+@@ -263,7 +263,7 @@ interface WebGL2RenderingContextBase
+   const GLenum UNIFORM_BLOCK_ACTIVE_UNIFORM_INDICES          = 0x8A43;
+   const GLenum UNIFORM_BLOCK_REFERENCED_BY_VERTEX_SHADER     = 0x8A44;
+   const GLenum UNIFORM_BLOCK_REFERENCED_BY_FRAGMENT_SHADER   = 0x8A46;
+-  const GLenum INVALID_INDEX                                 = 0xFFFFFFFF;
++  const GLenum INVALID_INDEX                                 = 256;
+   const GLenum MAX_VERTEX_OUTPUT_COMPONENTS                  = 0x9122;
+   const GLenum MAX_FRAGMENT_INPUT_COMPONENTS                 = 0x9125;
+   const GLenum MAX_SERVER_WAIT_TIMEOUT                       = 0x9111;
