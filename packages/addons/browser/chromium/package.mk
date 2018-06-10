@@ -52,6 +52,8 @@ post_patch() {
 
   # Use Python 2
   find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$TOOLCHAIN/bin/python2|g" {} +
+  
+  rm -rf ./buildtools/third_party/libc++/BUILD.gn
 
   # cp $PKG_DIR/chromium-latest.py .
   # cp $PKG_DIR/get_linux_tests_names.py .
@@ -98,6 +100,11 @@ make_target() {
     'use_gold=false'
     'use_allocator="none"'
     'use_gtk3=false'
+    'enable_print_preview=false'
+    'enable_remoting=false'
+    'headless_use_embedded_resources=true'
+    'icu_use_data_file=false'
+    'v8_use_external_startup_data=false'
     'use_kerberos=false'
     'use_pulseaudio=false'
     'linux_link_libudev=true'
@@ -116,7 +123,7 @@ make_target() {
   )
 
   # fontconfig freetype harfbuzz-ng icu libdrm harfbuzz-ng libjpeg libpng libxslt re2 snappy yasm zlib
-  ./build/linux/unbundle/replace_gn_files.py --system-libraries libxslt re2 snappy yasm zlib
+  # ./build/linux/unbundle/replace_gn_files.py --system-libraries libjpeg libpng libxslt re2 snappy yasm zlib
   
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
