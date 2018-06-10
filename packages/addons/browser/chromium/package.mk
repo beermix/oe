@@ -107,6 +107,16 @@ make_target() {
     "google_default_client_secret=\"${_google_default_client_secret}\""
   )
 
+  ./build/linux/unbundle/remove_bundled_libraries.py \
+	'third_party/libdrm' \
+	'third_party/mesa' \
+	'base/third_party/nspr' \
+	'net/third_party/nss' \
+	'third_party/tcmalloc' \
+	'third_party/yasm' \
+	'third_party/zlib' \
+	'third_party/zlib/google' \
+	--do-remove
 
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 

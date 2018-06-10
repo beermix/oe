@@ -11532,17 +11532,6 @@ diff -Naur chromium-67.0.3396.62/third_party/widevine/cdm/BUILD.gn.widevine chro
 +    ]
 +  }
 +}
-diff -Naur chromium-67.0.3396.62/third_party/widevine/cdm/stub/widevine_cdm_version.h chromium-67.0.3396.62.patched/third_party/widevine/cdm/stub/widevine_cdm_version.h
---- chromium-67.0.3396.62/third_party/widevine/cdm/stub/widevine_cdm_version.h	2018-05-30 11:43:43.000000000 +0300
-+++ chromium-67.0.3396.62.patched/third_party/widevine/cdm/stub/widevine_cdm_version.h	2018-06-06 10:06:12.377134183 +0300
-@@ -10,6 +10,7 @@
- 
- #include "third_party/widevine/cdm/widevine_cdm_common.h"
- 
-+#define WIDEVINE_CDM_VERSION_STRING "unknown"
- #define WIDEVINE_CDM_AVAILABLE
- 
- #endif  // WIDEVINE_CDM_VERSION_H_
 diff -Naur chromium-67.0.3396.62/third_party/widevine/cdm/stub/widevine_cdm_version.h.widevine chromium-67.0.3396.62.patched/third_party/widevine/cdm/stub/widevine_cdm_version.h.widevine
 --- chromium-67.0.3396.62/third_party/widevine/cdm/stub/widevine_cdm_version.h.widevine	1970-01-01 03:00:00.000000000 +0300
 +++ chromium-67.0.3396.62.patched/third_party/widevine/cdm/stub/widevine_cdm_version.h.widevine	2018-05-30 11:43:43.000000000 +0300
