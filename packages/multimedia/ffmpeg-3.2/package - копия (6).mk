@@ -17,22 +17,18 @@
 ################################################################################
 
 PKG_NAME="ffmpeg"
-PKG_VERSION="ac1ddc6"
+PKG_VERSION="3.1.11-Krypton-17.5"
 PKG_ARCH="any"
 PKG_LICENSE="LGPLv2.1+"
-PKG_SITE="https://ffmpeg.org"
-PKG_URL="https://ffmpeg.org/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_URL="https://github.com/FFmpeg/FFmpeg/archive/${PKG_VERSION}.tar.gz"
+PKG_SITE="https://github.com/FFmpeg/FFmpeg/branches/active"
+PKG_URL="https://github.com/xbmc/FFmpeg/archive/${PKG_VERSION}.tar.gz"
+#PKG_URL="https://github.com/FFmpeg/FFmpeg/archive/${PKG_VERSION}.tar.gz"
 PKG_SOURCE_DIR="FFmpeg-${PKG_VERSION}*"
 PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl speex"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
 PKG_LONGDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
 PKG_BUILD_FLAGS="-gold -lto"
-
-#pre_configure_target() {
-#  CFLAGS=`echo $CFLAGS | sed -e "s|-fgraphite-identity -floop-nest-optimize -ftree-loop-distribution||"`
-#}
 
 # Dependencies
 get_graphicdrivers
@@ -117,7 +113,6 @@ configure_target() {
               --host-cc="$HOST_CC" \
               --host-cflags="$HOST_CFLAGS" \
               --host-ldflags="$HOST_LDFLAGS" \
-              --host-libs="-lm" \
               --extra-cflags="$CFLAGS" \
               --extra-ldflags="$LDFLAGS" \
               --extra-libs="$FFMPEG_LIBS" \
@@ -212,6 +207,27 @@ configure_target() {
               $FFMPEG_FPU \
               --enable-yasm \
               --disable-symver \
+              --disable-symver \
+              --disable-amd3dnow \
+              --disable-amd3dnowext \
+              --enable-mmx \
+              --enable-sse \
+              --enable-sse2 \
+              --enable-sse3 \
+              --enable-ssse3 \
+              --disable-sse4 \
+              --enable-sse42 \
+              --disable-avx \
+              --disable-xop \
+              --disable-fma3 \
+              --disable-fma4 \
+              --disable-avx2 \
+              --disable-aesni \
+              --disable-armv5te \
+              --disable-armv6 \
+              --disable-armv6t2 \
+              --disable-vfp \
+              --disable-neon \
               $FFMPEG_X11GRAB
 }
 

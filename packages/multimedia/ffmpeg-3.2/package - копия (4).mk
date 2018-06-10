@@ -17,22 +17,19 @@
 ################################################################################
 
 PKG_NAME="ffmpeg"
-PKG_VERSION="ac1ddc6"
+PKG_VERSION="0a34092"
 PKG_ARCH="any"
 PKG_LICENSE="LGPLv2.1+"
-PKG_SITE="https://ffmpeg.org"
-PKG_URL="https://ffmpeg.org/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_SITE="https://github.com/FFmpeg/FFmpeg/branches/active"
+PKG_URL="https://github.com/xbmc/FFmpeg/archive/${PKG_VERSION}.tar.gz"
+PKG_URL="https://ffmpeg.org/releases/${PKG_NAME}-${PKG_VERSION}.tar.gz"
 PKG_URL="https://github.com/FFmpeg/FFmpeg/archive/${PKG_VERSION}.tar.gz"
 PKG_SOURCE_DIR="FFmpeg-${PKG_VERSION}*"
-PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl speex"
+PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl speex libvpx fdk-aac"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
 PKG_LONGDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
 PKG_BUILD_FLAGS="-gold -lto"
-
-#pre_configure_target() {
-#  CFLAGS=`echo $CFLAGS | sed -e "s|-fgraphite-identity -floop-nest-optimize -ftree-loop-distribution||"`
-#}
 
 # Dependencies
 get_graphicdrivers
@@ -83,10 +80,6 @@ else
   FFMPEG_FPU="--disable-neon"
 fi
 
-if [ "$DISPLAYSERVER" = "x11" ]; then
-  FFMPEG_X11GRAB="--enable-indev=x11grab_xcb"
-fi
-
 pre_configure_target() {
   cd $PKG_BUILD
   rm -rf .$TARGET_NAME
@@ -117,7 +110,6 @@ configure_target() {
               --host-cc="$HOST_CC" \
               --host-cflags="$HOST_CFLAGS" \
               --host-ldflags="$HOST_LDFLAGS" \
-              --host-libs="-lm" \
               --extra-cflags="$CFLAGS" \
               --extra-ldflags="$LDFLAGS" \
               --extra-libs="$FFMPEG_LIBS" \
@@ -163,7 +155,7 @@ configure_target() {
               $FFMPEG_TABLES \
               --disable-encoders \
               --enable-encoder=ac3 \
-              --enable-encoder=aac \
+              --enable-libfdk-aac \
               --enable-encoder=wmav2 \
               --enable-encoder=mjpeg \
               --enable-encoder=png \
@@ -190,19 +182,16 @@ configure_target() {
               --disable-libopencore-amrwb \
               --disable-libopencv \
               --disable-libdc1394 \
-              --disable-libfaac \
               --disable-libfreetype \
               --disable-libgsm \
               --disable-libmp3lame \
-              --disable-libnut \
               --disable-libopenjpeg \
               --disable-librtmp \
-              --disable-libschroedinger \
               --enable-libspeex \
               --disable-libtheora \
               --disable-libvo-amrwbenc \
               --disable-libvorbis \
-              --disable-libvpx \
+              --enable-libvpx \
               --disable-libx264 \
               --disable-libxavs \
               --disable-libxvid \
@@ -211,8 +200,7 @@ configure_target() {
               --disable-altivec \
               $FFMPEG_FPU \
               --enable-yasm \
-              --disable-symver \
-              $FFMPEG_X11GRAB
+              --disable-symver
 }
 
 post_makeinstall_target() {
