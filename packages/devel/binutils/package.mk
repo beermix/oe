@@ -48,12 +48,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-ld=default \
                          --enable-lto \
                          --enable-plugins \
-                         --enable-relro \
-                         --enable-shared \
-                         --enable-targets=x86_64-pep \
-                         --enable-threads \
                          --disable-gdb \
-                         --with-pic \
                          --disable-nls"
 
 PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
@@ -72,7 +67,6 @@ PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
                          --disable-ld \
                          --disable-lto \
                          --disable-nls \
-                         --disable-sim \
                          --disable-gdb"
 
 pre_configure_host() {
