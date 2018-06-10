@@ -34,7 +34,7 @@ PKG_LICENSE="Mixed"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_URL="https://gsdview.appspot.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="chromium:host pciutils dbus libXcomposite libXcursor libXtst alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk libdrm freetype libxslt harfbuzz gtk+ libva-vdpau-driver libxss unclutter xdotool re2 snappy libgcrypt"
+PKG_DEPENDS_TARGET="chromium:host pciutils dbus libXcomposite libXcursor libXtst alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk libdrm freetype libxslt harfbuzz gtk+ libva-vdpau-driver libxss unclutter xdotool re2 snappy jsoncpp"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -53,13 +53,8 @@ post_patch() {
   # Use Python 2
   find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$TOOLCHAIN/bin/python2|g" {} +
   
-  rm -rf ./buildtools/third_party/libc++/BUILD.gn
-
-  # cp $PKG_DIR/chromium-latest.py .
-  # cp $PKG_DIR/get_linux_tests_names.py .
-  # python2 ./chromium-latest.py
-  # python2 ./get_linux_tests_names.py
-}
+  find ./third_party/icu -type f \! -regex '.*\.\(gn\|gni\|isolate\)' -delete
+}		
 
 make_host() {
   ./tools/gn/bootstrap/bootstrap.py -s --no-clean
@@ -102,7 +97,6 @@ make_target() {
     'use_gtk3=false'
     'enable_print_preview=false'
     'enable_remoting=false'
-    'headless_use_embedded_resources=true'
     'icu_use_data_file=true'
     'v8_use_external_startup_data=false'
     'use_kerberos=false'
@@ -115,6 +109,7 @@ make_target() {
     'enable_hangout_services_extension=true'
     'enable_widevine=true'
     'enable_nacl=false'
+    'is_nacl_glibc=false'
     'enable_nacl_nonsfi=false'
     'enable_swiftshader=false'
     "google_api_key=\"${_google_api_key}\""
@@ -122,14 +117,19 @@ make_target() {
     "google_default_client_secret=\"${_google_default_client_secret}\""
   )
 
-  # fontconfig freetype harfbuzz-ng icu libdrm libjpeg libpng libxslt re2 snappy yasm zlib 
-  ./build/linux/unbundle/replace_gn_files.py --system-libraries libxslt re2 snappy yasm zlib
+  # fontconfig freetype harfbuzz-ng icu libdrm libjpeg libpng libxslt re2 snappy yasm zlib jsoncpp
+   ./build/linux/unbundle/replace_gn_files.py --system-libraries icu libxslt re2 snappy yasm zlib libxml
   
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python2
   
   ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox
+  
+  # ICUDATADIR=$(icuinfo | grep \"icudata.path\" | sed -re 's/^.*>(.*)<.*$/\1/')
+  # ICUDATANAME=$(icuinfo | grep \"icudata.name\" | sed -re 's/^.*>(.*)<.*$/\1/')
+  # ICUDATAFILE=$(realpath --relative-to=%{_crdir}/ ${ICUDATADIR}/${ICUDATANAME}.dat)
+  # ln -s ${ICUDATAFILE} %{buildroot}%{_crdir}/icudtl.dat
 }
 
 addon() {
