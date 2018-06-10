@@ -33,11 +33,12 @@ PKG_IS_KERNEL_PKG="yes"
 PKG_PATCH_DIRS="$LINUX"
 
 case "$LINUX" in
-  4.17)
-    PKG_VERSION="4.17"
-    PKG_SHA256=""
-    PKG_URL="https://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
-    PKG_PATCH_DIRS="4.17"
+  pf)
+    PKG_VERSION="4.16-pf7"
+    PKG_SITE="https://github.com/zen-kernel/zen-kernel/branches/active"
+    PKG_URL="https://github.com/pfactum/pf-kernel/archive/v$PKG_VERSION.tar.gz"
+    PKG_SOURCE_DIR="pf-kernel-$PKG_VERSION*"
+    PKG_PATCH_DIRS="4.16"
     PKG_BUILD_PERF="no"
   ;;
   4.16)

@@ -123,7 +123,7 @@ make_target() {
   )
 
   # fontconfig freetype harfbuzz-ng icu libdrm libjpeg libpng libxslt re2 snappy yasm zlib 
-  ./build/linux/unbundle/replace_gn_files.py --system-libraries libjpeg libpng libxslt re2 snappy yasm zlib
+  ./build/linux/unbundle/replace_gn_files.py --system-libraries libxslt re2 snappy yasm zlib
   
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
