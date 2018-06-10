@@ -33,7 +33,7 @@ PKG_LICENSE="Mixed"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_URL="https://gsdview.appspot.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="chromium:host pciutils dbus libXcomposite libXcursor libXtst alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk libdrm freetype libxslt harfbuzz gtk+ libva-vdpau-driver unclutter xdotool re2 snappy"
+PKG_DEPENDS_TARGET="chromium:host pciutils dbus libXcomposite libXcursor libXtst alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk libdrm freetype libxslt harfbuzz gtk+ libva-vdpau-driver libxss unclutter xdotool re2 snappy"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -224,6 +224,9 @@ addon() {
 
   # libXcursor
   cp -ri $(get_build_dir libXcursor)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
+
+  # libxss
+  cp -ri $(get_build_dir libxss)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # libva-vdpau-driver
   cp -PL $(get_build_dir libva-vdpau-driver)/.install_pkg/usr/lib/dri/*.so $ADDON_BUILD/$PKG_ADDON_ID/lib
