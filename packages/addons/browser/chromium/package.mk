@@ -123,30 +123,28 @@ make_target() {
 # Keys are the names in the above script; values are the dependencies in Arch
 declare -gA _system_libs=(
   #[ffmpeg]=ffmpeg
-  #[flac]=flac
-  #fontconfig]=fontconfig
-  #freetype]=freetype2
-  #harfbuzz-ng]=harfbuzz
-  [icu]=icu
+  #[fontconfig]=fontconfig
+  #[freetype]=freetype2
+  [harfbuzz-ng]=harfbuzz
+  #[icu]=icu
   [libdrm]=
-  #libjpeg]=libjpeg
+  [libjpeg]=libjpeg
   #[libpng]=libpng            # https://crbug.com/752403#c10
-  #libvpx]=libvpx            # needs unreleased libvpx
+  #[libvpx]=libvpx            # needs unreleased libvpx
   #[libwebp]=libwebp
   #[libxml]=libxml2           # https://crbug.com/736026
-  #libxslt]=libxslt
-  #[opus]=opus
-  #re2]=re2
-  #snappy]=snappy
+  #[libxslt]=libxslt
+  [re2]=re2
+  [snappy]=snappy
   [yasm]=
   [zlib]=minizip
 )
 
-#_unwanted_bundled_libs=(
-#  ${!_system_libs[@]}
-#  ${_system_libs[libjpeg]+libjpeg_turbo}
-#)
-#depends+=(${_system_libs[@]})
+_unwanted_bundled_libs=(
+  ${!_system_libs[@]}
+  ${_system_libs[libjpeg]+libjpeg_turbo}
+)
+depends+=(${_system_libs[@]})
 
   # Remove bundled libraries for which we will use the system copies; this
   # *should* do what the remove_bundled_libraries.py script does, with the
