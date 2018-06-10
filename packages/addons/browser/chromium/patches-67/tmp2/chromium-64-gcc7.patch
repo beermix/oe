@@ -37,6 +37,26 @@
  
    PopulateScaledSharedQuadState(shared_quad_state, device_scale_factor,
                                  device_scale_factor, contents_opaque());
+--- chromium-64.0.3282.71/third_party/blink/renderer/core/paint/paint_property_tree_builder.cc.gcc7	2018-01-04 00:06:29.000000000 +0100
++++ chromium-64.0.3282.71/third_party/blink/renderer/core/paint/paint_property_tree_builder.cc	2018-01-07 21:47:33.628080370 +0100
+@@ -1672,17 +1672,14 @@
+ }
+ 
+ void ObjectPaintPropertyTreeBuilder::UpdatePaintingLayer() {
+-  bool changed_painting_layer = false;
+   if (object_.HasLayer() &&
+       ToLayoutBoxModelObject(object_).HasSelfPaintingLayer()) {
+     context_.painting_layer = ToLayoutBoxModelObject(object_).Layer();
+-    changed_painting_layer = true;
+   } else if (object_.IsColumnSpanAll() ||
+              object_.IsFloatingWithNonContainingBlockParent()) {
+     // See LayoutObject::paintingLayer() for the special-cases of floating under
+     // inline and multicolumn.
+     context_.painting_layer = object_.PaintingLayer();
+-    changed_painting_layer = true;
+   }
+   DCHECK(context_.painting_layer == object_.PaintingLayer());
+ }
 --- chromium-64.0.3282.71/third_party/blink/renderer/platform/graphics/highcontrast/highcontrast_classifier.cc.gcc7	2018-01-04 00:06:32.000000000 +0100
 +++ chromium-64.0.3282.71/third_party/blink/renderer/platform/graphics/highcontrast/highcontrast_classifier.cc	2018-01-07 22:06:16.757401299 +0100
 @@ -1127,7 +1127,6 @@

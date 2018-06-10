@@ -56,6 +56,18 @@
  
    // Remember the bindings the renderer process has at this point, so that
    // we do not grant this entry additional bindings if we come back to it.
+--- chromium-62.0.3192.0/content/browser/frame_host/navigator_impl.cc.gcc7	2017-08-22 21:04:43.000000000 +0200
++++ chromium-62.0.3192.0/content/browser/frame_host/navigator_impl.cc	2017-09-09 02:05:15.758922091 +0200
+@@ -470,7 +472,9 @@
+ 
+   // Make sure no code called via RFH::Navigate clears the pending entry.
+   if (is_pending_entry)
++  {
+     CHECK_EQ(controller_->GetPendingEntry(), &entry);
++  }
+ 
+   if (controller_->GetPendingEntryIndex() == -1 &&
+       dest_url.SchemeIs(url::kJavaScriptScheme)) {
 --- chromium-62.0.3192.0/content/browser/frame_host/render_frame_host_manager.cc.gcc7	2017-08-22 21:04:43.000000000 +0200
 +++ chromium-62.0.3192.0/content/browser/frame_host/render_frame_host_manager.cc	2017-09-09 02:07:40.371353881 +0200
 @@ -1030,7 +1030,9 @@

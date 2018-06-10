@@ -174,6 +174,20 @@
  inline void DispatchBlurEvent(const Document& document,
                                Element& focused_element) {
    focused_element.DispatchBlurEvent(nullptr, kWebFocusTypePage);
+--- chromium-67.0.3396.40/ui/events/x/keyboard_hook_posix.cc.gcc7	2018-05-09 21:06:41.000000000 +0200
++++ chromium-67.0.3396.40/ui/events/x/keyboard_hook_posix.cc	2018-05-15 21:43:04.529676041 +0200
+@@ -24,11 +24,6 @@
+   DISALLOW_COPY_AND_ASSIGN(KeyboardHookPosix);
+ };
+ 
+-KeyboardHookPosix::KeyboardHookPosix(
+-    base::Optional<base::flat_set<int>> key_codes,
+-    KeyEventCallback callback)
+-    : KeyboardHookBase(std::move(key_codes), std::move(callback)) {}
+-
+ KeyboardHookPosix::~KeyboardHookPosix() = default;
+ 
+ }  // namespace
 --- chromium-68.0.3418.2/chrome/browser/ui/views/tabs/new_tab_button.cc.gcc7	2018-05-04 06:05:13.000000000 +0200
 +++ chromium-68.0.3418.2/chrome/browser/ui/views/tabs/new_tab_button.cc	2018-05-08 03:14:41.063153884 +0200
 @@ -495,8 +495,8 @@

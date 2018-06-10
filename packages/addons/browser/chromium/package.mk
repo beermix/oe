@@ -26,9 +26,9 @@
 
 PKG_NAME="chromium"
 PKG_VERSION="67.0.3396.79"
-#PKG_VERSION="69.0.3452.0"
+PKG_VERSION="68.0.3440.17"
 PKG_SHA256=""
-PKG_REV="160"
+PKG_REV="170"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
@@ -103,7 +103,7 @@ make_target() {
     'enable_print_preview=false'
     'enable_remoting=false'
     'headless_use_embedded_resources=true'
-    'icu_use_data_file=false'
+    'icu_use_data_file=true'
     'v8_use_external_startup_data=false'
     'use_kerberos=false'
     'use_pulseaudio=false'
@@ -122,14 +122,14 @@ make_target() {
     "google_default_client_secret=\"${_google_default_client_secret}\""
   )
 
-  # fontconfig freetype harfbuzz-ng icu libdrm harfbuzz-ng libjpeg libpng libxslt re2 snappy yasm zlib
-  # ./build/linux/unbundle/replace_gn_files.py --system-libraries libjpeg libpng libxslt re2 snappy yasm zlib
+  # fontconfig freetype harfbuzz-ng icu libdrm libjpeg libpng libxslt re2 snappy yasm zlib 
+  ./build/linux/unbundle/replace_gn_files.py --system-libraries libjpeg libpng libxslt re2 snappy yasm zlib
   
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python2
-
-  ionice -c3 nice -n20 ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox
+  
+  ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox
 }
 
 addon() {

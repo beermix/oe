@@ -17,13 +17,13 @@
 ################################################################################
 
 PKG_NAME="icu"
-PKG_VERSION="54.1"
+PKG_VERSION="60.2"
 #PKG_SHA256="2b0a4410153a9b20de0e20c7d8b66049a72aef244b53683d0d7521371683da0c"
 PKG_ARCH="any"
 PKG_LICENSE="Custom"
 PKG_SITE="http://www.icu-project.org"
 PKG_URL="http://download.icu-project.org/files/${PKG_NAME}4c/${PKG_VERSION}/${PKG_NAME}4c-${PKG_VERSION//./_}-src.tgz"
-PKG_URL="http://192.168.1.200:8080/%2Ficu4c-54_1-src.tgz"
+#PKG_URL="http://192.168.1.200:8080/%2Ficu4c-54_1-src.tgz"
 PKG_SOURCE_DIR="icu"
 PKG_DEPENDS_TARGET="toolchain libiconv icu:host"
 PKG_SECTION="textproc"
