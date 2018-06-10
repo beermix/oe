@@ -63,7 +63,7 @@ make_host() {
 
 make_target() {
   export CCACHE_SLOPPINESS=time_macros
-
+  
   # export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime
   local _google_api_key=AIzaSyAQ6L9vt9cnN4nM0weaa6Y38K4eyPvtKgI
   local _google_default_client_id=740889307901-4bkm4e0udppnp1lradko85qsbnmkfq3b.apps.googleusercontent.com
@@ -106,17 +106,6 @@ make_target() {
     "google_default_client_id=\"${_google_default_client_id}\""
     "google_default_client_secret=\"${_google_default_client_secret}\""
   )
-
-  ./build/linux/unbundle/remove_bundled_libraries.py \
-	'third_party/libdrm' \
-	'third_party/mesa' \
-	'base/third_party/nspr' \
-	'net/third_party/nss' \
-	'third_party/tcmalloc' \
-	'third_party/yasm' \
-	'third_party/zlib' \
-	'third_party/zlib/google' \
-	--do-remove
 
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
