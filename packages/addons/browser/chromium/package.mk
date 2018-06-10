@@ -53,7 +53,7 @@ post_patch() {
   # Use Python 2
   find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$TOOLCHAIN/bin/python2|g" {} +
   
-  find ./third_party/icu -type f \! -regex '.*\.\(gn\|gni\|isolate\)' -delete
+  # find ./third_party/icu -type f \! -regex '.*\.\(gn\|gni\|isolate\)' -delete
 }		
 
 make_host() {
@@ -95,10 +95,6 @@ make_target() {
     'use_gold=false'
     'use_allocator="none"'
     'use_gtk3=false'
-    'enable_print_preview=false'
-    'enable_remoting=false'
-    'icu_use_data_file=true'
-    'v8_use_external_startup_data=false'
     'use_kerberos=false'
     'use_pulseaudio=false'
     'linux_link_libudev=true'
@@ -118,7 +114,7 @@ make_target() {
   )
 
   # fontconfig freetype harfbuzz-ng icu libdrm libjpeg libpng libxslt re2 snappy yasm zlib jsoncpp
-   ./build/linux/unbundle/replace_gn_files.py --system-libraries icu libxslt re2 snappy yasm zlib libxml
+  # ./build/linux/unbundle/replace_gn_files.py --system-libraries  re2 snappy yasm zlib
   
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
