@@ -17,12 +17,12 @@
 ################################################################################
 
 PKG_NAME="ffmpeg"
-PKG_VERSION="3.1.11-Krypton-17.5"
+PKG_VERSION="ac1ddc6"
 PKG_ARCH="any"
 PKG_LICENSE="LGPLv2.1+"
-#PKG_URL="https://github.com/xbmc/FFmpeg/archive/${PKG_VERSION}.tar.gz"
+PKG_SITE="https://ffmpeg.org"
+PKG_URL="https://ffmpeg.org/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_URL="https://github.com/FFmpeg/FFmpeg/archive/${PKG_VERSION}.tar.gz"
-PKG_URL="https://github.com/xbmc/FFmpeg/archive/${PKG_VERSION}.tar.gz"
 PKG_SOURCE_DIR="FFmpeg-${PKG_VERSION}*"
 PKG_DEPENDS_TARGET="toolchain yasm:host zlib bzip2 openssl speex"
 PKG_SECTION="multimedia"
@@ -30,9 +30,9 @@ PKG_SHORTDESC="FFmpeg is a complete, cross-platform solution to record, convert 
 PKG_LONGDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
 PKG_BUILD_FLAGS="-gold -lto"
 
-pre_configure_target() {
-  CFLAGS=`echo $CFLAGS | sed -e "s|-fgraphite-identity -floop-nest-optimize -ftree-loop-distribution||"`
-}
+#pre_configure_target() {
+#  CFLAGS=`echo $CFLAGS | sed -e "s|-fgraphite-identity -floop-nest-optimize -ftree-loop-distribution||"`
+#}
 
 # Dependencies
 get_graphicdrivers
