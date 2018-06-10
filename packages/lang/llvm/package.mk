@@ -68,7 +68,7 @@ makeinstall_host() {
 }
 
 PKG_CMAKE_OPTS_TARGET="$PKG_CMAKE_OPTS_COMMON \
-                       -DCMAKE_BUILD_TYPE=MinSizeRel \
+                       -DCMAKE_BUILD_TYPE=Release \
                        -DCMAKE_C_FLAGS="$CFLAGS" \
                        -DCMAKE_CXX_FLAGS="$CXXFLAGS" \
                        -DLLVM_TARGET_ARCH="$TARGET_ARCH" \
