@@ -106,7 +106,6 @@ make_target() {
     'linux_link_libudev=true'
     'use_sysroot=true'
     'use_vaapi=true'
-    'use_v8_context_snapshot=false'
     'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_hangout_services_extension=true'
@@ -131,7 +130,7 @@ declare -gA _system_libs=(
   [libdrm]=
   [libjpeg]=libjpeg
   #[libpng]=libpng            # https://crbug.com/752403#c10
-  #[libvpx]=libvpx            # needs unreleased libvpx
+  [libvpx]=libvpx            # needs unreleased libvpx
   #[libwebp]=libwebp
   #[libxml]=libxml2           # https://crbug.com/736026
   [libxslt]=libxslt
