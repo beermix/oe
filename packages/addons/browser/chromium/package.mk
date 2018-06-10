@@ -106,6 +106,7 @@ make_target() {
     'linux_link_libudev=true'
     'use_sysroot=true'
     'use_vaapi=true'
+    'use_v8_context_snapshot=false'
     'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_hangout_services_extension=true'
@@ -123,28 +124,29 @@ make_target() {
 declare -gA _system_libs=(
   #[ffmpeg]=ffmpeg
   #[flac]=flac
-  [fontconfig]=fontconfig
-  [freetype]=freetype2
-  [harfbuzz-ng]=harfbuzz
-  #[icu]=icu
+  #fontconfig]=fontconfig
+  #freetype]=freetype2
+  #harfbuzz-ng]=harfbuzz
+  [icu]=icu
   [libdrm]=
-  [libjpeg]=libjpeg
+  #libjpeg]=libjpeg
   #[libpng]=libpng            # https://crbug.com/752403#c10
-  [libvpx]=libvpx            # needs unreleased libvpx
+  #libvpx]=libvpx            # needs unreleased libvpx
   #[libwebp]=libwebp
   #[libxml]=libxml2           # https://crbug.com/736026
-  [libxslt]=libxslt
+  #libxslt]=libxslt
   #[opus]=opus
-  [re2]=re2
-  [snappy]=snappy
+  #re2]=re2
+  #snappy]=snappy
   [yasm]=
   [zlib]=minizip
 )
-_unwanted_bundled_libs=(
-  ${!_system_libs[@]}
-  ${_system_libs[libjpeg]+libjpeg_turbo}
-)
-depends+=(${_system_libs[@]})
+
+#_unwanted_bundled_libs=(
+#  ${!_system_libs[@]}
+#  ${_system_libs[libjpeg]+libjpeg_turbo}
+#)
+#depends+=(${_system_libs[@]})
 
   # Remove bundled libraries for which we will use the system copies; this
   # *should* do what the remove_bundled_libraries.py script does, with the
@@ -172,11 +174,11 @@ addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -P  $PKG_BUILD/out/Release/chrome $ADDON_BUILD/$PKG_ADDON_ID/bin/chromium.bin
   cp -P  $PKG_BUILD/out/Release/chrome_sandbox $ADDON_BUILD/$PKG_ADDON_ID/bin/chrome-sandbox
-  cp -P  $PKG_BUILD/out/Release/{*.pak,*.dat,*.bin} $ADDON_BUILD/$PKG_ADDON_ID/bin
+  cp -P  $PKG_BUILD/out/Release/{*.pak,*.bin} $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -PR $PKG_BUILD/out/Release/locales $ADDON_BUILD/$PKG_ADDON_ID/bin/
   cp -PR $PKG_BUILD/out/Release/gen/content/content_resources.pak $ADDON_BUILD/$PKG_ADDON_ID/bin/
 
-  # config
+  # config *.dat,
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/config
   cp -P $PKG_DIR/config/* $ADDON_BUILD/$PKG_ADDON_ID/config
 
