@@ -35,7 +35,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-installed-tests \
 			      --enable-nls \
 			      --disable-gio-sniffing \
 			      --with-libjpeg \
-			      --without-libjasper \
+			      --with-libjasper \
 			      --with-libpng \
-			      --without-libtiff \
+			      --with-libtiff \
 			      --with-x11"
