@@ -36,9 +36,7 @@ PKG_BUILD_FLAGS="-parallel"
 PKG_PY_DISABLED_MODULES="_tkinter nis gdbm bsddb ossaudiodev"
 
 PKG_CONFIGURE_OPTS_HOST="--cache-file=config.cache \
-                         --without-cxx-main \
                          --with-threads \
-                         --with-computed-gotos \
                          --disable-ipv6 \
                          --enable-unicode=ucs4"
 
