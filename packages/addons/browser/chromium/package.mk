@@ -93,6 +93,7 @@ make_target() {
     'use_pulseaudio=false'
     'linux_link_libudev=true'
     'use_sysroot=true'
+    'optimize_webui=false'
     'use_vaapi=true'
     'use_v8_context_snapshot=false'
     'enable_vulkan=false'

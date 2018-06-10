@@ -146,6 +146,34 @@
      ProcessStartTag(token);
      return;
    }
+--- chromium-67.0.3396.10/third_party/blink/renderer/core/page/focus_controller.cc.gcc7	2018-04-18 21:05:40.000000000 +0200
++++ chromium-67.0.3396.10/third_party/blink/renderer/core/page/focus_controller.cc	2018-04-22 23:10:03.717765400 +0200
+@@ -333,25 +333,6 @@
+   return nullptr;
+ }
+ 
+-bool ScopedFocusNavigation::IsSlotFallbackScoped(const Element& element) {
+-  return ScopedFocusNavigation::FindFallbackScopeOwnerSlot(element);
+-}
+-
+-bool ScopedFocusNavigation::IsSlotFallbackScopedForThisSlot(
+-    const HTMLSlotElement& slot,
+-    const Element& current) {
+-  Element* parent = current.parentElement();
+-  while (parent) {
+-    if (IsHTMLSlotElement(parent) &&
+-        ToHTMLSlotElement(parent)->AssignedNodes().IsEmpty()) {
+-      return !SlotScopedTraversal::IsSlotScoped(current) &&
+-             ToHTMLSlotElement(parent) == slot;
+-    }
+-    parent = parent->parentElement();
+-  }
+-  return false;
+-}
+-
+ inline void DispatchBlurEvent(const Document& document,
+                               Element& focused_element) {
+   focused_element.DispatchBlurEvent(nullptr, kWebFocusTypePage);
 --- chromium-67.0.3396.40/ui/events/x/keyboard_hook_posix.cc.gcc7	2018-05-09 21:06:41.000000000 +0200
 +++ chromium-67.0.3396.40/ui/events/x/keyboard_hook_posix.cc	2018-05-15 21:43:04.529676041 +0200
 @@ -24,11 +24,6 @@
@@ -160,3 +188,16 @@
  KeyboardHookPosix::~KeyboardHookPosix() = default;
  
  }  // namespace
+--- chromium-68.0.3418.2/chrome/browser/ui/views/tabs/new_tab_button.cc.gcc7	2018-05-04 06:05:13.000000000 +0200
++++ chromium-68.0.3418.2/chrome/browser/ui/views/tabs/new_tab_button.cc	2018-05-08 03:14:41.063153884 +0200
+@@ -495,8 +495,8 @@
+   DCHECK(theme_provider);
+   return theme_provider->GetColor(
+       ui::MaterialDesignController::IsTouchOptimizedUiEnabled()
+-          ? ThemeProperties::COLOR_TOOLBAR
+-          : ThemeProperties::COLOR_BACKGROUND_TAB);
++          ? int(ThemeProperties::COLOR_TOOLBAR)
++          : int(ThemeProperties::COLOR_BACKGROUND_TAB));
+ }
+ 
+ void NewTabButton::InitButtonIcons() {
