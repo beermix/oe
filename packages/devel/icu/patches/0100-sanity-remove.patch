@@ -1,5 +1,5 @@
---- a/config/icu-config-bottom1	2016-09-09 23:28:18.000000000 +0200
-+++ b/config/icu-config-bottom	2017-02-23 20:06:51.580401867 +0100
+--- a/source/config/icu-config-bottom1	2016-09-09 23:28:18.000000000 +0200
++++ b/source/config/icu-config-bottom	2017-02-23 20:06:51.580401867 +0100
 @@ -98,15 +98,7 @@
  ## Check the sanity of current variables
  sanity()

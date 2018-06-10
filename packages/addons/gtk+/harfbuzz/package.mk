@@ -36,7 +36,6 @@ PKG_CONFIGURE_OPTS_TARGET="--with-cairo \
 			      --with-freetype \
 			      --with-glib \
 			      --with-gobject \
-			      --with-icu \
 			      --enable-gtk-doc=no"
 
 if [ "$DISPLAYSERVER" = "x11" ] ; then

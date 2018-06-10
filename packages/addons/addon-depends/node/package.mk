@@ -17,8 +17,7 @@
 ################################################################################
 
 PKG_NAME="node"
-#PKG_VERSION="8.11.1"
-PKG_VERSION="10.4.0"
+PKG_VERSION="8.11.2"
 PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -39,5 +38,6 @@ pre_configure_host() {
   unset CPPFLAGS
   unset CFLAGS
   unset CXXFLAGS
-  export LDFLAGS="$LDFLAGS -s"
+  unset LDFLAGS
+  export LDFLAGS="-s"
 }

@@ -26,6 +26,7 @@
 
 PKG_NAME="chromium"
 PKG_VERSION="67.0.3396.79"
+#PKG_VERSION="69.0.3452.0"
 PKG_SHA256=""
 PKG_REV="160"
 PKG_ARCH="x86_64"
@@ -50,21 +51,29 @@ post_patch() {
   cd $(get_build_dir chromium)
 
   # Use Python 2
-  find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$TOOLCHAIN/bin/python|g" {} +
+  find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$TOOLCHAIN/bin/python2|g" {} +
 
-  # set correct widevine
-  # sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' ./third_party/widevine/cdm/stub/widevine_cdm_version.h
+  # cp $PKG_DIR/chromium-latest.py .
+  # cp $PKG_DIR/get_linux_tests_names.py .
+  # python2 ./chromium-latest.py
+  # python2 ./get_linux_tests_names.py
 }
 
 make_host() {
-  export CCACHE_SLOPPINESS=time_macros
-  ./tools/gn/bootstrap/bootstrap.py --no-rebuild --no-clean
+  ./tools/gn/bootstrap/bootstrap.py -s --no-clean
 }
 
 make_target() {
-  export CCACHE_SLOPPINESS=time_macros
-  # export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime
+  # export CCACHE_SLOPPINESS=time_macros
+  export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime
+  export CCACHE_CPP2=yes
   
+  sed -i 's/OFFICIAL_BUILD/GOOGLE_CHROME_BUILD/' ./tools/generate_shim_headers/generate_shim_headers.py
+    
+  sed -i -e '/"-Wno-ignored-pragma-optimize"/d' ./build/config/compiler/BUILD.gn
+    
+  sed -i '1s|python$|&2|' ./third_party/dom_distiller_js/protoc_plugins/*.py
+
   local _google_api_key=AIzaSyAQ6L9vt9cnN4nM0weaa6Y38K4eyPvtKgI
   local _google_default_client_id=740889307901-4bkm4e0udppnp1lradko85qsbnmkfq3b.apps.googleusercontent.com
   local _google_default_client_secret=9TJlhL661hvShQub4cWhANXa
@@ -83,19 +92,17 @@ make_target() {
     'proprietary_codecs=true'
     'link_pulseaudio=true'
     'linux_use_bundled_binutils=false'
-    'use_allocator="none"'
     'use_cups=false'
     'use_custom_libcxx=false'
     'use_gnome_keyring=false'
     'use_gold=false'
+    'use_allocator="none"'
     'use_gtk3=false'
     'use_kerberos=false'
     'use_pulseaudio=false'
     'linux_link_libudev=true'
     'use_sysroot=true'
-    'optimize_webui=false'
     'use_vaapi=true'
-    'use_v8_context_snapshot=false'
     'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_hangout_services_extension=true'
@@ -108,11 +115,14 @@ make_target() {
     "google_default_client_secret=\"${_google_default_client_secret}\""
   )
 
+  # fontconfig freetype harfbuzz-ng icu libdrm harfbuzz-ng libjpeg libpng libxslt re2 snappy yasm zlib
+  ./build/linux/unbundle/replace_gn_files.py --system-libraries libxslt re2 snappy yasm zlib
+  
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
-  ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
+  ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python2
 
-  ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox
+  ionice -c3 nice -n20 ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox
 }
 
 addon() {
