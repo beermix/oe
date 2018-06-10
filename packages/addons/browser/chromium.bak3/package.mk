@@ -148,6 +148,7 @@ declare -gA _system_libs=(
   [yasm]=
   [zlib]=minizip
 )
+
 _unwanted_bundled_libs=(
   ${!_system_libs[@]}
   ${_system_libs[libjpeg]+libjpeg_turbo}

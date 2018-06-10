@@ -62,18 +62,6 @@ make_host() {
 }
 
 make_target() {
-# unset CPPFLAGS
-# unset CFLAGS
-# unset CXXFLAGS
-# unset LDFLAGS
-
-#  export CFLAGS="$CFLAGS -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
-#  export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
-#  export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
-
-#  export LDFLAGS="$LDFLAGS -ludev"
-#  export LD=$CXX
-
   export CCACHE_SLOPPINESS=time_macros
 
   # export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime
