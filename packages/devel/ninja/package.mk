@@ -30,7 +30,7 @@ PKG_TOOLCHAIN="manual"
 
 make_host() {
   #CXX=/usr/bin/clang++-5.0
-  CXX=/usr/bin/clang $TOOLCHAIN/bin/python2 ./configure.py --bootstrap --verbose
+  $TOOLCHAIN/bin/python2 ./configure.py --bootstrap --verbose
 }
 
 makeinstall_host() {
