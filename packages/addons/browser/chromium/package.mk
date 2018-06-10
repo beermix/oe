@@ -112,7 +112,7 @@ make_target() {
 declare -gA _system_libs=(
   #[ffmpeg]=ffmpeg
   [fontconfig]=fontconfig
-  [freetype]=freetype2
+  #[freetype]=freetype2
   [harfbuzz-ng]=harfbuzz
   #[icu]=icu
   [libdrm]=

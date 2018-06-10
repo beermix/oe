@@ -53,7 +53,8 @@ makeinstall_host() {
 pre_configure_target() {
   PKG_CONFIGURE_OPTS_TARGET="--with-cross-build=$(get_build_dir $PKG_NAME)/.$HOST_NAME \
                              --enable-static \
-                             --disable-shared"
+                             --disable-shared \
+                             --with-data-packaging=archive"
 }
 
 post_makeinstall_target() {
