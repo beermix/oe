@@ -60,7 +60,7 @@ post_patch() {
 }		
 
 make_host() {
-  ./tools/gn/bootstrap/bootstrap.py -s -v --no-clean
+  ./tools/gn/bootstrap/bootstrap.py -s --no-clean
 }
 
 make_target() {
@@ -110,6 +110,7 @@ make_target() {
     'use_gtk3=false'
     'use_kerberos=false'
     'use_pulseaudio=false'
+    'use_system_libdrm=true'
     'linux_link_libudev=true'
     'use_sysroot=true'
     'use_vaapi=true'
@@ -125,12 +126,12 @@ make_target() {
     "google_default_client_secret=\"${_google_default_client_secret}\""
   )
 
-  # fontconfig freetype harfbuzz-ng ffmpeg icu libdrm libjpeg libpng libxslt re2 snappy yasm zlib jsoncpp
-  ./build/linux/unbundle/replace_gn_files.py --system-libraries libdrm ffmpeg libxslt re2 snappy yasm zlib opus
+  # fontconfig freetype harfbuzz-ng icu libdrm ffmpeg libjpeg libpng libxslt re2 snappy yasm zlib jsoncpp
+  ./build/linux/unbundle/replace_gn_files.py --system-libraries libxslt re2 snappy yasm zlib opus
   
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
-  ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python2
+  ./out/Release/gn gen out/Release -s --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python2
   
   ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox
   
