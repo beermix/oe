@@ -61,3 +61,27 @@
  }
  
  void AXMenuListPopup::DidShow() {
+diff --git a/third_party/blink/renderer/core/paint/paint_property_tree_builder.cc b/third_party/blink/renderer/core/paint/paint_property_tree_builder.cc
+old mode 100644
+new mode 100755
+index 4b3e9fff34..c246be68ad
+--- a/third_party/blink/renderer/core/paint/paint_property_tree_builder.cc
++++ b/third_party/blink/renderer/core/paint/paint_property_tree_builder.cc
+@@ -2406,17 +2406,14 @@ bool PaintPropertyTreeBuilder::ObjectTypeMightNeedPaintProperties() const {
+ }
+ 
+ void PaintPropertyTreeBuilder::UpdatePaintingLayer() {
+-  bool changed_painting_layer = false;
+   if (object_.HasLayer() &&
+       ToLayoutBoxModelObject(object_).HasSelfPaintingLayer()) {
+     context_.painting_layer = ToLayoutBoxModelObject(object_).Layer();
+-    changed_painting_layer = true;
+   } else if (object_.IsColumnSpanAll() ||
+              object_.IsFloatingWithNonContainingBlockParent()) {
+     // See LayoutObject::paintingLayer() for the special-cases of floating under
+     // inline and multicolumn.
+     context_.painting_layer = object_.PaintingLayer();
+-    changed_painting_layer = true;
+   }
+   DCHECK(context_.painting_layer == object_.PaintingLayer());
+ }

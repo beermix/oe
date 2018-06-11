@@ -88,8 +88,6 @@ make_target() {
   #     'build_ffmpeg_args+=" --disable-asm"'
   local _flags=(
     "host_toolchain=\"//build/toolchain/linux:x64_host\""
-    "v8_snapshot_toolchain=\"//build/toolchain/linux:v8_snapshot\""
-    "target_cpu=\"${TARGET_CPU}\""
     'is_clang=false'
     'clang_use_chrome_plugins=false'
     'symbol_level=0'
@@ -129,7 +127,7 @@ make_target() {
   )
 
   # fontconfig freetype harfbuzz-ng icu libdrm ffmpeg libjpeg libpng libxslt re2 snappy yasm zlib jsoncpp
-  ./build/linux/unbundle/replace_gn_files.py --system-libraries re2 snappy yasm zlib opus
+  ./build/linux/unbundle/replace_gn_files.py --system-libraries opus
   
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
