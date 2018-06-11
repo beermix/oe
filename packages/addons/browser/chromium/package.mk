@@ -88,7 +88,6 @@ make_target() {
   #     'build_ffmpeg_args+=" --disable-asm"'
   local _flags=(
     "host_toolchain=\"//build/toolchain/linux:x64_host\""
-    "v8_snapshot_toolchain=\"//build/toolchain/linux/unbundle:host\""
     'is_clang=false'
     'clang_use_chrome_plugins=false'
     'symbol_level=0'
@@ -127,11 +126,11 @@ make_target() {
   )
 
   # fontconfig freetype harfbuzz-ng icu libdrm ffmpeg libjpeg libpng libxslt re2 snappy yasm zlib jsoncpp
-  ./build/linux/unbundle/replace_gn_files.py --system-libraries libxslt re2 snappy yasm zlib opus
+  ./build/linux/unbundle/replace_gn_files.py --system-libraries re2 snappy yasm zlib opus
   
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
-  ./out/Release/gn gen out/Release -s -v --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python2
+  ./out/Release/gn gen out/Release -s --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python2
   
   ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox
   
