@@ -42,7 +42,7 @@ case "$LINUX" in
     PKG_BUILD_PERF="no"
   ;;
   4.16)
-    PKG_VERSION="4.16.14"
+    PKG_VERSION="4.16.13"
     PKG_URL="https://www.kernel.org/pub/linux/kernel/v4.x/$PKG_NAME-$PKG_VERSION.tar.xz"
     PKG_PATCH_DIRS="4.16"
     PKG_BUILD_PERF="no"

@@ -70,33 +70,25 @@ make_target() {
 
   sed -i 's/OFFICIAL_BUILD/GOOGLE_CHROME_BUILD/' ./tools/generate_shim_headers/generate_shim_headers.py
 
-  #sed -i -e '/"-Wno-ignored-pragma-optimize"/d' ./build/config/compiler/BUILD.gn
+  sed -i -e '/"-Wno-ignored-pragma-optimize"/d' ./build/config/compiler/BUILD.gn
 
-  #sed -i '1s|python$|&2|' ./third_party/dom_distiller_js/protoc_plugins/*.py
+  sed -i '1s|python$|&2|' ./third_party/dom_distiller_js/protoc_plugins/*.py
 
   # Workaround build error caused by debugedit
   # https://bugzilla.redhat.com/show_bug.cgi?id=304121
-#   sed -i "/relpath/s|/'$|'|" ./tools/metrics/ukm/gen_builders.py
-#   sed -i 's|^\(#include "[^"]*\)//\([^"]*"\)|\1/\2|' \
- #    ./third_party/webrtc/modules/audio_processing/utility/ooura_fft.cc \
- #    ./third_party/webrtc/modules/audio_processing/utility/ooura_fft_sse2.cc
+  sed -i "/relpath/s|/'$|'|" ./tools/metrics/ukm/gen_builders.py
+  sed -i 's|^\(#include "[^"]*\)//\([^"]*"\)|\1/\2|' \
+    ./third_party/webrtc/modules/audio_processing/utility/ooura_fft.cc \
+    ./third_party/webrtc/modules/audio_processing/utility/ooura_fft_sse2.cc
 
   local _google_api_key=AIzaSyAQ6L9vt9cnN4nM0weaa6Y38K4eyPvtKgI
   local _google_default_client_id=740889307901-4bkm4e0udppnp1lradko85qsbnmkfq3b.apps.googleusercontent.com
   local _google_default_client_secret=9TJlhL661hvShQub4cWhANXa
-
-  export CC=x86_64-libreelec-linux-gnu-clang
-  export CXX=x86_64-libreelec-linux-gnu-clang++
-  export AR=x86_64-libreelec-linux-gnu-ar
-  export NM=x86_64-libreelec-linux-gnu-nm
-
+	
+  #     'build_ffmpeg_args+=" --disable-asm"'
   local _flags=(
-    'host_toolchain=\"//build/toolchain/:host\" \'
-    'v8_snapshot_toolchain=\"//build/toolchain/:v8_snapshot\" \'
-    'custom_toolchain=\"//build/toolchain/:target\" \'
-    'use_lld=true'
+    "host_toolchain=\"//build/toolchain/clang:x64_host\""
     'is_clang=true'
-    'clang_use_chrome_plugins=false'
     'symbol_level=0'
     'is_debug=false'
     'fatal_linker_warnings=false'
@@ -118,15 +110,6 @@ make_target() {
     'use_kerberos=false'
     'use_pulseaudio=false'
     'linux_link_libudev=true'
-    'enable_nacl=false'
-    'use_dbus=true'
-    'use_cups=false'
-    'use_system_zlib=false'
-    'use_system_libjpeg=false'
-    'use_system_libpng=false'
-    'use_system_libdrm=true'
-    'use_system_harfbuzz=false'
-    'use_system_freetype=false'
     'use_sysroot=true'
     'use_vaapi=true'
     'enable_vulkan=false'
@@ -141,13 +124,54 @@ make_target() {
     "google_default_client_secret=\"${_google_default_client_secret}\""
   )
 
+# Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
+# Keys are the names in the above script; values are the dependencies in Arch
+declare -gA _system_libs=(
+  #[ffmpeg]=ffmpeg
+  #[flac]=flac
+  [fontconfig]=fontconfig
+  [freetype]=freetype2
+  [harfbuzz-ng]=harfbuzz
+  #[icu]=icu
+  [libdrm]=
+  [libjpeg]=libjpeg
+  #[libpng]=libpng            # https://crbug.com/752403#c10
+  #[libvpx]=libvpx            # needs unreleased libvpx
+  #[libwebp]=libwebp
+  #[libxml]=libxml2           # https://crbug.com/736026
+  [libxslt]=libxslt
+  [opus]=opus
+  [re2]=re2
+  [snappy]=snappy
+  [yasm]=
+  [zlib]=minizip
+)
+_unwanted_bundled_libs=(
+  ${!_system_libs[@]}
+  ${_system_libs[libjpeg]+libjpeg_turbo}
+)
+depends+=(${_system_libs[@]})
 
+  # Remove bundled libraries for which we will use the system copies; this
+  # *should* do what the remove_bundled_libraries.py script does, with the
+  # added benefit of not having to list all the remaining libraries
+  local _lib
+  for _lib in ${_unwanted_bundled_libs[@]}; do
+    find "third_party/$_lib" -type f \
+      \! -path "third_party/$_lib/chromium/*" \
+      \! -path "third_party/$_lib/google/*" \
+      \! -path 'third_party/yasm/run_yasm.py' \
+      \! -regex '.*\.\(gn\|gni\|isolate\)' \
+      -delete
+  done
+	
+  ./build/linux/unbundle/replace_gn_files.py --system-libraries "${!_system_libs[@]}"
+  # fontconfig freetype harfbuzz-ng icu libdrm ffmpeg libjpeg libpng libxslt re2 snappy yasm zlib jsoncpp
+  # ./build/linux/unbundle/replace_gn_files.py --system-libraries fontconfig libdrm freetype harfbuzz-ng libjpeg libpng libxslt re2 snappy yasm zlib opus
   
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
-#  python2 tools/gn/bootstrap/bootstrap.py -s --no-clean
-#  out/Release/gn gen out/Release --args="${_flags[*]}" \
-#    -script-executable=/usr/bin/python2
+  ./out/Release/gn gen out/Release -s --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python2
   
   ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox
   
