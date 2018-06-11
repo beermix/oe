@@ -40,17 +40,6 @@
  
    //! \brief The magic number identifying this structure version, the value of
    //!     #kSignature.
---- chromium-62.0.3192.0/third_party/webrtc/modules/video_processing/video_denoiser.cc.gcc7	2017-08-22 21:06:40.000000000 +0200
-+++ chromium-62.0.3192.0/third_party/webrtc/modules/video_processing/video_denoiser.cc	2017-09-08 23:17:25.755051027 +0200
-@@ -183,7 +183,7 @@
-       // artifacts.
-       if (mb_filter_decision_[mb_index] != FILTER_BLOCK ||
-           IsTrailingBlock(moving_edge_, mb_row, mb_col) ||
--          (x_density_[mb_col] * y_density_[mb_row] &&
-+          ((x_density_[mb_col] * y_density_[mb_row] != 0) &&
-            moving_object_[mb_row * mb_cols_ + mb_col])) {
-         // Copy y source.
-         filter_->CopyMem16x16(mb_src, stride_src, mb_dst, stride_dst);
 --- chromium-66.0.3359.66/ui/gfx/ipc/skia/gfx_skia_param_traits_macros.h.gcc7_5	2018-03-30 17:16:10.416384243 +0200
 +++ chromium-66.0.3359.66/ui/gfx/ipc/skia/gfx_skia_param_traits_macros.h	2018-03-30 17:17:45.715797731 +0200
 @@ -10,7 +10,7 @@

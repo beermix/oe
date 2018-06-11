@@ -112,7 +112,7 @@ make_target() {
     'use_pulseaudio=false'
     'linux_link_libudev=true'
     'use_system_freetype=false'
-    'use_system_harfbuzz=true'
+    'use_system_harfbuzz=false'
     'use_system_libpng=false'
     'use_sysroot=true'
     'use_vaapi=true'
