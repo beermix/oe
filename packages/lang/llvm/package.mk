@@ -13,7 +13,7 @@ PKG_SHORTDESC="llvm: Low Level Virtual Machine"
 PKG_LONGDESC="Low-Level Virtual Machine (LLVM) is a compiler infrastructure designed for compile-time, link-time, run-time, and idle-time optimization of programs from arbitrary programming languages. It currently supports compilation of C, Objective-C, and C++ programs, using front-ends derived from GCC 4.0, GCC 4.2, and a custom new front-end, "clang". It supports x86, x86-64, ia64, PowerPC, and SPARC, with support for Alpha and ARM under development."
 PKG_BUILD_FLAGS="-lto -gold -hardening"
 
-PKG_CMAKE_OPTS_COMMON="-DLLVM_ENABLE_PROJECTS="" \
+PKG_CMAKE_OPTS_COMMON="-DLLVM_ENABLE_PROJECTS="cland,lld" \
 			  -DCMAKE_INSTALL_RPATH=$TOOLCHAIN/lib \
 			  -DLLVM_CCACHE_BUILD=ON \
 			  -DLLVM_TARGETS_TO_BUILD="X86" \
