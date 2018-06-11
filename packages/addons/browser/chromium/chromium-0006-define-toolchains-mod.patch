@@ -6,8 +6,8 @@ index 4e9ff44..c928e0d 100644
  }
  
  gcc_toolchain("x64") {
--  cc = "gcc"
--  cxx = "g++"
+-  cc = "clang"
+-  cxx = "clang++"
 +  toolchainprefix = "x86_64-libreelec-linux-gnu-"
 +  cc = "${toolchainprefix}gcc"
 +  cxx = "${toolchainprefix}g++"
@@ -49,7 +49,7 @@ index 4e9ff44..c928e0d 100644
 + toolchain_args = {
 +   current_cpu = "x64"
 +   current_os = "linux"
-+   is_clang = false
++   is_clang = yes
 +  }
 +}
 +

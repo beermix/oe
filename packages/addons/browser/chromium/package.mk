@@ -87,9 +87,8 @@ make_target() {
 	
   #     'build_ffmpeg_args+=" --disable-asm"'
   local _flags=(
-    "host_toolchain=\"//build/toolchain/linux:x64_host\""
-    'is_clang=false'
-    'clang_use_chrome_plugins=false'
+    "host_toolchain=\"//build/toolchain/clang:x64_host\""
+    'is_clang=true'
     'symbol_level=0'
     'is_debug=false'
     'fatal_linker_warnings=false'
@@ -130,11 +129,11 @@ make_target() {
 declare -gA _system_libs=(
   #[ffmpeg]=ffmpeg
   #[flac]=flac
-  #[fontconfig]=fontconfig
-  #[freetype]=freetype2
-  #[harfbuzz-ng]=harfbuzz
+  [fontconfig]=fontconfig
+  [freetype]=freetype2
+  [harfbuzz-ng]=harfbuzz
   #[icu]=icu
-  #[libdrm]=
+  [libdrm]=
   [libjpeg]=libjpeg
   #[libpng]=libpng            # https://crbug.com/752403#c10
   #[libvpx]=libvpx            # needs unreleased libvpx
