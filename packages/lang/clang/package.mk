@@ -10,14 +10,15 @@ PKG_DEPENDS_TARGET="toolchain Python2:host clang:host clang:host libxml2"
 PKG_DEPENDS_HOST="llvm:host libxml2:host"
 PKG_SECTION="lang"
 PKG_SHORTDESC="C language family frontend for LLVM"
-#PKG_TOOLCHAIN="cmake-make"
+PKG_TOOLCHAIN="cmake-make"
+#PKG_TOOLCHAIN="manual"
 
 configure_host() {
-  cmake .. -G Ninja \
+     cmake  \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX=$TOOLCHAIN \
     -DPYTHON_EXECUTABLE=$TOOLCHAIN/bin/python \
-    -DBUILD_SHARED_LIBS=ON \
+    -DBUILD_SHARED_LIBS=OFF \
     -DLLVM_LINK_LLVM_DYLIB=ON \
     -DLLVM_ENABLE_RTTI=OFF \
     -DLLVM_BUILD_TESTS=ON \
@@ -25,8 +26,10 @@ configure_host() {
     -DLLVM_BUILD_DOCS=OFF \
     -DLLVM_ENABLE_SPHINX=OFF \
     -DSPHINX_WARNINGS_AS_ERRORS=OFF \
-    -DLLVM_MAIN_SRC_DIR="$srcdir/llvm-$pkgver.src"
-  ninja
+    -DLLVM_MAIN_SRC_DIR="$srcdir/llvm-$pkgver.src" \
+    -DCMAKE_C_FLAGS="${TARGET_CFLAGS} -Wno-uninitialized" \
+    -DCMAKE_CXX_FLAGS="${TARGET_CXXFLAGS} -Wno-uninitialized" \
+    ..
 }
 
 CCPKG_CMAKE_OPTS_HOST="-DCMAKE_BUILD_TYPE=Release \
