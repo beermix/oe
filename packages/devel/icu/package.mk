@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="icu"
-PKG_VERSION="61.1"
-PKG_SHA256="d007f89ae8a2543a53525c74359b65b36412fa84b3349f1400be6dcf409fafef"
+PKG_VERSION="58.2"
+PKG_SHA256="2b0a4410153a9b20de0e20c7d8b66049a72aef244b53683d0d7521371683da0c"
 PKG_ARCH="any"
 PKG_LICENSE="Custom"
 PKG_SITE="http://download.icu-project.org/files/icu4c/?C=M;O=D"
@@ -37,9 +37,11 @@ pre_configure_target() {
 
 PKG_CONFIGURE_SCRIPT="source/configure"
 
-PKG_CONFIGURE_OPTS_HOST="--disable-tests --disable-samples"
+PKG_CONFIGURE_OPTS_HOST="--disable-shared --enable-static"
 
-PKG_CONFIGURE_OPTS_TARGET="--with-cross-build=$PKG_BUILD/.$HOST_NAME --disable-samples --disable-tests"
+PKG_CONFIGURE_OPTS_TARGET="--with-cross-build=$PKG_BUILD/.$HOST_NAME \
+			      --disable-shared --enable-static \
+			      --with-data-packaging=archive"
 
 post_makeinstall_target() {
   rm -f $INSTALL/usr/bin/{derb,genbrk,gencfu,gencnval,gendict,genrb,icuinfo,makeconv,uconv}

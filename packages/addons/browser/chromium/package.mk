@@ -130,10 +130,10 @@ make_target() {
 declare -gA _system_libs=(
   #[ffmpeg]=ffmpeg
   #[flac]=flac
-  [fontconfig]=fontconfig
-  [freetype]=freetype2
-  [harfbuzz-ng]=harfbuzz
-  [icu]=icu
+  #[fontconfig]=fontconfig
+  #[freetype]=freetype2
+  #[harfbuzz-ng]=harfbuzz
+  #[icu]=icu
   [libdrm]=
   [libjpeg]=libjpeg
   #[libpng]=libpng            # https://crbug.com/752403#c10
@@ -166,7 +166,7 @@ depends+=(${_system_libs[@]})
       -delete
   done
 	
-    ./build/linux/unbundle/replace_gn_files.py --system-libraries "${!_system_libs[@]}"
+  ./build/linux/unbundle/replace_gn_files.py --system-libraries "${!_system_libs[@]}"
   # fontconfig freetype harfbuzz-ng icu libdrm ffmpeg libjpeg libpng libxslt re2 snappy yasm zlib jsoncpp
   # ./build/linux/unbundle/replace_gn_files.py --system-libraries fontconfig libdrm freetype harfbuzz-ng libjpeg libpng libxslt re2 snappy yasm zlib opus
   
