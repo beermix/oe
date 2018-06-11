@@ -84,9 +84,11 @@ make_target() {
   local _google_api_key=AIzaSyAQ6L9vt9cnN4nM0weaa6Y38K4eyPvtKgI
   local _google_default_client_id=740889307901-4bkm4e0udppnp1lradko85qsbnmkfq3b.apps.googleusercontent.com
   local _google_default_client_secret=9TJlhL661hvShQub4cWhANXa
-
+	
+  #     'build_ffmpeg_args+=" --disable-asm"'
   local _flags=(
     "host_toolchain=\"//build/toolchain/linux:x64_host\""
+    "v8_snapshot_toolchain=\"//build/toolchain/linux/unbundle:host\""
     'is_clang=false'
     'clang_use_chrome_plugins=false'
     'symbol_level=0'
@@ -109,6 +111,9 @@ make_target() {
     'use_kerberos=false'
     'use_pulseaudio=false'
     'linux_link_libudev=true'
+    'use_system_freetype=true'
+    'use_system_harfbuzz=true'
+    'use_system_libpng=true'
     'use_sysroot=true'
     'use_vaapi=true'
     'enable_vulkan=false'
