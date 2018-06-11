@@ -55,12 +55,12 @@ post_patch() {
   
   # find ./third_party/icu -type f \! -regex '.*\.\(gn\|gni\|isolate\)' -delete
   
-  ./build/download_nacl_toolchains.py --packages \
-    nacl_x86_glibc,nacl_x86_newlib,pnacl_newlib,pnacl_translator sync --extract
+  # ./build/download_nacl_toolchains.py --packages \
+  # nacl_x86_glibc,nacl_x86_newlib,pnacl_newlib,pnacl_translator sync --extract
 }		
 
 make_host() {
-  ./tools/gn/bootstrap/bootstrap.py -s --no-clean
+  ./tools/gn/bootstrap/bootstrap.py -s -v --no-clean
 }
 
 make_target() {
@@ -113,10 +113,9 @@ make_target() {
     'use_vaapi=true'
     'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
-    'enable_hangout_services_extension=false'
+    'enable_hangout_services_extension=true'
     'enable_widevine=true'
-    'enable_nacl=true'
-    'enable_webrtc=true'
+    'enable_nacl=false'
     'enable_nacl_nonsfi=false'
     'enable_swiftshader=false'
     "google_api_key=\"${_google_api_key}\""
