@@ -109,10 +109,12 @@ pre_configure_target() {
 
   unset LD_LIBRARY_PATH
 
-  export CFLAGS="-O2 -march=$TARGET_CPU -g -m64 -Wl,-z,max-page-size=0x1000 -Wno-error=stringop-truncation -Wno-error=overflow -Wno-error=format-overflow="
+  export CFLAGS="-O2 -march=$TARGET_CPU -g -m64 -Wl,-z,max-page-size=0x1000"
 
   unset LDFLAGS
   export LDFLAGS="-Wl,-z,max-page-size=0x1000"
+  
+  #  -Wno-error=stringop-truncation -Wno-error=overflow -Wno-error=format-overflow=
 
   export BUILD_CC=$HOST_CC
   export OBJDUMP_FOR_HOST=objdump
