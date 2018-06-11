@@ -34,7 +34,7 @@ PKG_LICENSE="Mixed"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_URL="https://gsdview.appspot.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="chromium:host pciutils dbus libXcomposite libXcursor libXtst alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk libdrm freetype libxslt harfbuzz gtk+ libva-vdpau-driver libxss unclutter xdotool re2 snappy jsoncpp"
+PKG_DEPENDS_TARGET="chromium:host pciutils dbus libXcomposite libXcursor libXtst alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk libdrm freetype libxslt harfbuzz gtk+ libva-vdpau-driver libxss unclutter xdotool re2 snappy opus"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -111,9 +111,6 @@ make_target() {
     'use_kerberos=false'
     'use_pulseaudio=false'
     'linux_link_libudev=true'
-    'use_system_freetype=false'
-    'use_system_harfbuzz=false'
-    'use_system_libpng=false'
     'use_sysroot=true'
     'use_vaapi=true'
     'enable_vulkan=false'
@@ -129,7 +126,7 @@ make_target() {
   )
 
   # fontconfig freetype harfbuzz-ng ffmpeg icu libdrm libjpeg libpng libxslt re2 snappy yasm zlib jsoncpp
-  ./build/linux/unbundle/replace_gn_files.py --system-libraries libdrm libxslt re2 snappy yasm zlib
+  ./build/linux/unbundle/replace_gn_files.py --system-libraries libdrm ffmpeg libxslt re2 snappy yasm zlib opus
   
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 

@@ -48,7 +48,6 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-ld=default \
                          --enable-lto \
                          --enable-plugins \
-                         --disable-gdb \
                          --disable-nls"
 
 PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
@@ -66,8 +65,7 @@ PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
                          --disable-gold \
                          --disable-ld \
                          --disable-lto \
-                         --disable-nls \
-                         --disable-gdb"
+                         --disable-nls"
 
 pre_configure_host() {
   unset CPPFLAGS
