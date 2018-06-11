@@ -64,8 +64,8 @@ make_host() {
 }
 
 make_target() {
-  #export CCACHE_SLOPPINESS=time_macros
-  export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime
+  export CCACHE_SLOPPINESS=time_macros
+  #export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime
   export CCACHE_CPP2=yes
 
   sed -i 's/OFFICIAL_BUILD/GOOGLE_CHROME_BUILD/' ./tools/generate_shim_headers/generate_shim_headers.py
@@ -141,7 +141,7 @@ declare -gA _system_libs=(
   #[libwebp]=libwebp
   #[libxml]=libxml2           # https://crbug.com/736026
   [libxslt]=libxslt
-  #[opus]=opus
+  [opus]=opus
   [re2]=re2
   [snappy]=snappy
   [yasm]=
