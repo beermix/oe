@@ -40,7 +40,7 @@ PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
 PKG_TOOLCHAIN="manual"
 PKG_BUILD_FLAGS="-lto -hardening"
-GOLD_SUPPORT="yes"
+#GOLD_SUPPORT="yes"
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Chromium"
@@ -53,7 +53,7 @@ post_patch() {
   # Use Python 2
   find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$TOOLCHAIN/bin/python2|g" {} +
   
-  find ./third_party/icu -type f \! -regex '.*\.\(gn\|gni\|isolate\)' -delete
+  # find ./third_party/icu -type f \! -regex '.*\.\(gn\|gni\|isolate\)' -delete
   
   # ./build/download_nacl_toolchains.py --packages \
   # nacl_x86_glibc,nacl_x86_newlib,pnacl_newlib,pnacl_translator sync --extract
@@ -64,8 +64,8 @@ make_host() {
 }
 
 make_target() {
-  export CCACHE_SLOPPINESS=time_macros
-  # export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime
+  #export CCACHE_SLOPPINESS=time_macros
+  export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime
   export CCACHE_CPP2=yes
 
   sed -i 's/OFFICIAL_BUILD/GOOGLE_CHROME_BUILD/' ./tools/generate_shim_headers/generate_shim_headers.py
@@ -217,7 +217,7 @@ addon() {
   cp -ri $(get_build_dir harfbuzz)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
   
   # icu
-  # cp -ri $(get_build_dir icu)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  cp -ri $(get_build_dir icu)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # gdk-pixbuf
   cp -ri $(get_build_dir gdk-pixbuf)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib

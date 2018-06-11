@@ -18,7 +18,7 @@
 
 PKG_NAME="icu"
 PKG_VERSION="61.1"
-#PKG_SHA256="2b0a4410153a9b20de0e20c7d8b66049a72aef244b53683d0d7521371683da0c"
+PKG_SHA256="d007f89ae8a2543a53525c74359b65b36412fa84b3349f1400be6dcf409fafef"
 PKG_ARCH="any"
 PKG_LICENSE="Custom"
 PKG_SITE="http://download.icu-project.org/files/icu4c/?C=M;O=D"
@@ -28,37 +28,21 @@ PKG_DEPENDS_TARGET="toolchain libiconv icu:host"
 PKG_SECTION="textproc"
 PKG_SHORTDESC="International Components for Unicode library"
 PKG_LONGDESC="International Components for Unicode library"
-PKG_BUILD_FLAGS="+pic"
+PKG_BUILD_FLAGS="+pic:host +pic"
+PKG_TOOLCHAIN="configure"
 
-#post_unpack() {
-  #sed -i 's/xlocale/locale/' $PKG_BUILD/source/i18n/digitlst.cpp
-  #mv $PKG_BUILD/source/* $PKG_BUILD
-  #rmdir $PKG_BUILD/source
-#}
-
-#post_configure_host() {
-  # we are not in source folder
- # sed -i 's|../LICENSE|LICENSE|' Makefile
-#}
-
-#post_configure_target() {
-  # same as above
-#  post_configure_host 
-#}
-
-makeinstall_host() {
-  : # not required
+pre_configure_target() {
+  LIBS="-latomic"
 }
 
 PKG_CONFIGURE_SCRIPT="source/configure"
 
-pre_configure_target() {
-  PKG_CONFIGURE_OPTS_TARGET="--with-cross-build=$(get_build_dir $PKG_NAME)/.$HOST_NAME \
-                             --enable-static \
-                             --disable-shared \
-                             --with-data-packaging=archive"
-}
+PKG_CONFIGURE_OPTS_HOST="--disable-tests --disable-samples"
+
+PKG_CONFIGURE_OPTS_TARGET="--with-cross-build=$PKG_BUILD/.$HOST_NAME --disable-samples --disable-tests"
 
 post_makeinstall_target() {
-  rm -rf $INSTALL
+  rm -f $INSTALL/usr/bin/{derb,genbrk,gencfu,gencnval,gendict,genrb,icuinfo,makeconv,uconv}
+  rm -f $INSTALL/usr/sbin/{genccode,gencmn,gennorm2,gensprep,icupkg}
+  rm -rf $INSTALL/usr/share/icu
 }

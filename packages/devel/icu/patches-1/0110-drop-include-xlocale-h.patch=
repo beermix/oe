@@ -12,10 +12,10 @@ Upstream-Status: Pending
  i18n/digitlst.cpp | 6 +-----
  1 file changed, 1 insertion(+), 5 deletions(-)
 
-Index: source/i18n/digitlst.cpp
+Index: source/source/i18n/digitlst.cpp
 ===================================================================
---- source.orig/i18n/digitlst.cpp
-+++ source/i18n/digitlst.cpp
+--- source.orig/source/i18n/digitlst.cpp
++++ source/source/i18n/digitlst.cpp
 @@ -61,11 +61,7 @@
  #endif
  
