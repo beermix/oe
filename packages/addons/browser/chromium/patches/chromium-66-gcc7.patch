@@ -1,15 +1,3 @@
---- chromium-66.0.3359.66/ui/gfx/ipc/skia/gfx_skia_param_traits_macros.h.gcc7_5	2018-03-30 17:16:10.416384243 +0200
-+++ chromium-66.0.3359.66/ui/gfx/ipc/skia/gfx_skia_param_traits_macros.h	2018-03-30 17:17:45.715797731 +0200
-@@ -10,7 +10,7 @@
- #include "ipc/ipc_message_macros.h"
- #include "third_party/skia/include/core/SkImageInfo.h"
- 
--IPC_ENUM_TRAITS_VALIDATE(SkColorType, kLastEnum_SkColorType);
--IPC_ENUM_TRAITS_VALIDATE(SkAlphaType, kLastEnum_SkAlphaType);
-+IPC_ENUM_TRAITS_VALIDATE(SkColorType, kLastEnum_SkColorType != 0);
-+IPC_ENUM_TRAITS_VALIDATE(SkAlphaType, kLastEnum_SkAlphaType != 0);
- 
- #endif  // UI_GFX_IPC_SKIA_GFX_SKIA_PARAM_TRAITS_MACROS_H_
 --- chromium-66.0.3359.66/components/autofill/core/common/autofill_regexes.cc.gcc7-5	2018-03-28 21:10:54.000000000 +0200
 +++ chromium-66.0.3359.66/components/autofill/core/common/autofill_regexes.cc	2018-03-30 17:59:39.857829411 +0200
 @@ -54,10 +54,6 @@
