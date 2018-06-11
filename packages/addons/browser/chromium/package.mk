@@ -145,9 +145,9 @@ make_target() {
   
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
-#  python2 tools/gn/bootstrap/bootstrap.py -s --no-clean
-#  out/Release/gn gen out/Release --args="${_flags[*]}" \
-#    -script-executable=/usr/bin/python2
+  python2 tools/gn/bootstrap/bootstrap.py -s --no-clean
+  out/Release/gn gen out/Release \
+    -script-executable=/usr/bin/python2
   
   ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox
   
