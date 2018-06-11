@@ -1,5 +1,3 @@
-################################################################################
-
 PKG_NAME="libvpx"
 PKG_VERSION="1.7.0"
 #PKG_SHA256="1fec931eb5c94279ad219a5b6e0202358e94a93a90cfb1603578c326abfc1238"
@@ -31,6 +29,7 @@ configure_target() {
                         --disable-debug-libs \
                         --disable-docs \
                         --enable-pic \
+                        --disable-shared \
                         --disable-install-docs \
                         --enable-runtime-cpu-detect \
                         --disable-install-srcs \
