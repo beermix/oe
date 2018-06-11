@@ -1,3 +1,21 @@
+################################################################################
+#      This file is part of OpenELEC - http://www.openelec.tv
+#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+#
+#  OpenELEC is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  OpenELEC is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
+################################################################################
+
 PKG_NAME="llvm"
 PKG_VERSION="6.0.0"
 PKG_SHA256="1ff53c915b4e761ef400b803f07261ade637b0c269d99569f18040f3dcee4408"
@@ -16,6 +34,7 @@ PKG_TOOLCHAIN="cmake-make"
 
 PKG_CMAKE_OPTS_COMMON="-DLLVM_ENABLE_PROJECTS="" \
 			  -DCMAKE_INSTALL_RPATH=$TOOLCHAIN/lib \
+			  -DLLVM_BUILD_GLOBAL_ISEL=OFF \
 			  -DLLVM_TARGETS_TO_BUILD="X86" \
 			  -DLLVM_TARGET_ARCH="X86" \
 			  -DLLVM_TABLEGEN=$TOOLCHAIN/bin/llvm-tblgen \
@@ -70,6 +89,7 @@ PKG_CMAKE_OPTS_COMMON="-DLLVM_ENABLE_PROJECTS="" \
 			  -DLLVM_INCLUDE_TESTS=OFF"
 
 PKG_CMAKE_OPTS_TARGET="-DLLVM_ENABLE_PROJECTS="" \
+			  -DLLVM_BUILD_GLOBAL_ISEL=OFF \
 			  -DLLVM_TARGETS_TO_BUILD="X86" \
 			  -DLLVM_TARGET_ARCH="X86" \
 			  -DLLVM_TABLEGEN=$TOOLCHAIN/bin/llvm-tblgen \

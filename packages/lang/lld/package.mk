@@ -1,0 +1,14 @@
+PKG_NAME="lld"
+PKG_VERSION="6.0.0"
+PKG_ARCH="x86_64"
+PKG_LICENSE="GPL"
+PKG_SITE="http://llvm.org/"
+PKG_URL="http://releases.llvm.org/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.src.tar.xz"
+PKG_SOURCE_DIR="$PKG_NAME-$PKG_VERSION.src"
+PKG_SECTION="lang"
+PKG_SHORTDESC="C language family frontend for LLVM"
+PKG_TOOLCHAIN="cmake-make"
+
+PKG_CMAKE_OPTS_HOST="-DCMAKE_BUILD_TYPE=Release"
+
+PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release"
