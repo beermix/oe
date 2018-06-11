@@ -6,11 +6,11 @@ PKG_SITE="http://llvm.org/"
 PKG_URL="http://releases.llvm.org/$PKG_VERSION/cfe-$PKG_VERSION.src.tar.xz"
 PKG_URL="https://github.com/llvm-project/clang/archive/${PKG_VERSION}.tar.gz"
 PKG_SOURCE_DIR="$PKG_NAME-$PKG_VERSION*"
-PKG_DEPENDS_TARGET="toolchain llvm clang:host libxml2"
-PKG_DEPENDS_HOST="llvm:host libxml2:host"
+#PKG_DEPENDS_TARGET="toolchain llvm clang:host libxml2"
+#PKG_DEPENDS_HOST="llvm:host libxml2:host"
 PKG_SECTION="lang"
 PKG_SHORTDESC="C language family frontend for LLVM"
-#PKG_TOOLCHAIN="cmake-make"
+PKG_TOOLCHAIN="cmake-make"
 
 PKG_CMAKE_OPTS_HOST="-DCMAKE_BUILD_TYPE=Release \
 			-DCLANG_BUILD_TOOLS=ON \
