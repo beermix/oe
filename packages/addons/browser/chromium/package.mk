@@ -60,7 +60,7 @@ post_patch() {
 }		
 
 make_host() {
-  ./tools/gn/bootstrap/bootstrap.py -s --no-clean
+  ./tools/gn/bootstrap/bootstrap.py -s -v --no-clean
 }
 
 make_target() {
@@ -110,7 +110,7 @@ make_target() {
     'use_gtk3=false'
     'use_kerberos=false'
     'use_pulseaudio=false'
-    'use_system_libdrm=true'
+    'use_system_libdrm=false'
     'linux_link_libudev=true'
     'use_sysroot=true'
     'use_vaapi=true'
