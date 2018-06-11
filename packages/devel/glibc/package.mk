@@ -44,7 +44,8 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-__thread \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
-                           --enable-kernel=4.4.0 \
+                           --enable-stack-protector=strong \
+                           --enable-kernel=4.4 \
                            --without-cvs \
                            --without-gd \
                            --enable-obsolete-rpc \
@@ -109,11 +110,11 @@ pre_configure_target() {
 
   unset LD_LIBRARY_PATH
 
-  export CFLAGS="-O2 -march=$TARGET_CPU -g -m64 -Wl,-z,max-page-size=0x1000"
+  export CFLAGS="-O2 -march=$TARGET_CPU -g -m64"
 
-  unset LDFLAGS
-  export LDFLAGS="-Wl,-z,max-page-size=0x1000"
-  
+#  unset LDFLAGS
+#  export LDFLAGS="-Wl,-z,max-page-size=0x1000"
+
   #  -Wno-error=stringop-truncation -Wno-error=overflow -Wno-error=format-overflow=
 
   export BUILD_CC=$HOST_CC
