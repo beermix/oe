@@ -32,8 +32,10 @@ PKG_LONGDESC="Low-Level Virtual Machine (LLVM) is a compiler infrastructure desi
 PKG_BUILD_FLAGS="-lto -gold -hardening"
 #PKG_TOOLCHAIN="cmake-make"
 
-PKG_CMAKE_OPTS_COMMON="-DLLVM_ENABLE_PROJECTS=""" \
--DCMAKE_INSTALL_RPATH="$TOOLCHAIN/lib"
+PKG_CMAKE_OPTS_COMMON="-DLLVM_ENABLE_PROJECTS= \
+			  -DCMAKE_INSTALL_RPATH=$TOOLCHAIN/lib \
+			  
+			  
 
 PKG_CMAKE_OPTS_HOST="$PKG_CMAKE_OPTS_COMMON \
                      -DCMAKE_INSTALL_RPATH=$TOOLCHAIN/lib"
