@@ -54,6 +54,9 @@ post_patch() {
   find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$TOOLCHAIN/bin/python2|g" {} +
   
   # find ./third_party/icu -type f \! -regex '.*\.\(gn\|gni\|isolate\)' -delete
+  
+  ./build/download_nacl_toolchains.py --packages \
+    nacl_x86_glibc,nacl_x86_newlib,pnacl_newlib,pnacl_translator sync --extract
 }		
 
 make_host() {
@@ -61,15 +64,22 @@ make_host() {
 }
 
 make_target() {
-  # export CCACHE_SLOPPINESS=time_macros
-  export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime
+  export CCACHE_SLOPPINESS=time_macros
+  # export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime
   export CCACHE_CPP2=yes
-  
+
   sed -i 's/OFFICIAL_BUILD/GOOGLE_CHROME_BUILD/' ./tools/generate_shim_headers/generate_shim_headers.py
-    
+
   sed -i -e '/"-Wno-ignored-pragma-optimize"/d' ./build/config/compiler/BUILD.gn
-    
+
   sed -i '1s|python$|&2|' ./third_party/dom_distiller_js/protoc_plugins/*.py
+
+  # Workaround build error caused by debugedit
+  # https://bugzilla.redhat.com/show_bug.cgi?id=304121
+  sed -i "/relpath/s|/'$|'|" ./tools/metrics/ukm/gen_builders.py
+  sed -i 's|^\(#include "[^"]*\)//\([^"]*"\)|\1/\2|' \
+    ./third_party/webrtc/modules/audio_processing/utility/ooura_fft.cc \
+    ./third_party/webrtc/modules/audio_processing/utility/ooura_fft_sse2.cc
 
   local _google_api_key=AIzaSyAQ6L9vt9cnN4nM0weaa6Y38K4eyPvtKgI
   local _google_default_client_id=740889307901-4bkm4e0udppnp1lradko85qsbnmkfq3b.apps.googleusercontent.com
@@ -87,6 +97,7 @@ make_target() {
     'remove_webcore_debug_symbols=true'
     'ffmpeg_branding="Chrome"'
     'proprietary_codecs=true'
+    'is_component_build=false'
     'link_pulseaudio=true'
     'linux_use_bundled_binutils=false'
     'use_cups=false'
@@ -102,10 +113,10 @@ make_target() {
     'use_vaapi=true'
     'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
-    'enable_hangout_services_extension=true'
+    'enable_hangout_services_extension=false'
     'enable_widevine=true'
-    'enable_nacl=false'
-    'is_nacl_glibc=false'
+    'enable_nacl=true'
+    'enable_webrtc=true'
     'enable_nacl_nonsfi=false'
     'enable_swiftshader=false'
     "google_api_key=\"${_google_api_key}\""
@@ -113,8 +124,8 @@ make_target() {
     "google_default_client_secret=\"${_google_default_client_secret}\""
   )
 
-  # fontconfig freetype harfbuzz-ng icu libdrm libjpeg libpng libxslt re2 snappy yasm zlib jsoncpp
-  # ./build/linux/unbundle/replace_gn_files.py --system-libraries  re2 snappy yasm zlib
+  # fontconfig freetype harfbuzz-ng ffmpeg icu libdrm libjpeg libpng libxslt re2 snappy yasm zlib jsoncpp
+  ./build/linux/unbundle/replace_gn_files.py --system-libraries re2 snappy yasm zlib
   
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
