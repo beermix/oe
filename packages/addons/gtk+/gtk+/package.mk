@@ -51,19 +51,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_path_GTK_UPDATE_ICON_CACHE=$TOOLCHAIN/bin/gtk-u
                            --disable-gtk-doc-html \
                            --with-xinput \
                            --enable-silent-rules"
-
-
-PKG_CONFIGURE_OPTS_HOST="--disable-glibtest \
-			    DB2HTML=false \
-			    --with-gdktarget=none \
-			    --disable-debug \
-			    --disable-cups \
-			    --disable-papi \
-			    --disable-xinerama \
-			    --disable-gtk-doc-html \
-			    --disable-cups \
-			    --enable-silent-rules"
-
 make_target() {
   make SRC_SUBDIRS="gdk gtk modules"
   $MAKEINSTALL SRC_SUBDIRS="gdk gtk modules"
