@@ -110,7 +110,6 @@ make_target() {
     'use_dbus=true'
     'use_kerberos=false'
     'use_pulseaudio=false'
-    'use_system_libdrm=false'
     'linux_link_libudev=true'
     'use_sysroot=true'
     'use_vaapi=true'
@@ -127,7 +126,7 @@ make_target() {
   )
 
   # fontconfig freetype harfbuzz-ng icu libdrm ffmpeg libjpeg libpng libxslt re2 snappy yasm zlib jsoncpp
-  ./build/linux/unbundle/replace_gn_files.py --system-libraries fontconfig freetype harfbuzz-ng libjpeg libpng libxslt re2 snappy yasm zlib opus
+  ./build/linux/unbundle/replace_gn_files.py --system-libraries fontconfig libdrm freetype harfbuzz-ng libjpeg libpng libxslt re2 snappy yasm zlib opus
   
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
@@ -176,7 +175,7 @@ addon() {
   cp -ri $(get_build_dir harfbuzz)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
   
   # icu
-  cp -ri $(get_build_dir icu)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  # cp -ri $(get_build_dir icu)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
 
   # gdk-pixbuf
   cp -ri $(get_build_dir gdk-pixbuf)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
