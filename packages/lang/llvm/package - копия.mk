@@ -1,21 +1,3 @@
-################################################################################
-#      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
-#
-#  OpenELEC is free software: you can redistribute it and/or modify
-#  it under the terms of the GNU General Public License as published by
-#  the Free Software Foundation, either version 2 of the License, or
-#  (at your option) any later version.
-#
-#  OpenELEC is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU General Public License for more details.
-#
-#  You should have received a copy of the GNU General Public License
-#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
-
 PKG_NAME="llvm"
 PKG_VERSION="6.0.0"
 PKG_ARCH="x86_64"
@@ -31,6 +13,7 @@ PKG_BUILD_FLAGS="-lto -gold -hardening"
 
 PKG_CMAKE_OPTS_HOST="-DLLVM_INCLUDE_TOOLS=ON \
                      -DLLVM_BUILD_TOOLS=OFF \
+                     -DLLVM_CCACHE_BUILD=ON \
                      -DLLVM_BUILD_UTILS=OFF \
                      -DLLVM_BUILD_EXAMPLES=OFF \
                      -DLLVM_INCLUDE_EXAMPLES=OFF \
@@ -63,6 +46,7 @@ PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=MinSizeRel \
                        -DLLVM_INCLUDE_TOOLS=ON \
                        -DLLVM_BUILD_TOOLS=OFF \
                        -DLLVM_BUILD_UTILS=ON \
+                       -DLLVM_CCACHE_BUILD=ON \
                        -DLLVM_BUILD_EXAMPLES=OFF \
                        -DLLVM_INCLUDE_EXAMPLES=OFF \
                        -DLLVM_BUILD_TESTS=OFF \
