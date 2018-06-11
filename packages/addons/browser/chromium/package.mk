@@ -88,6 +88,8 @@ make_target() {
   #     'build_ffmpeg_args+=" --disable-asm"'
   local _flags=(
     "host_toolchain=\"//build/toolchain/linux:x64_host\""
+    "v8_snapshot_toolchain=\"//build/toolchain/linux:v8_snapshot\""
+    "target_cpu=\"${TARGET_CPU}\""
     'is_clang=false'
     'clang_use_chrome_plugins=false'
     'symbol_level=0'
@@ -107,6 +109,7 @@ make_target() {
     'use_gold=false'
     'use_allocator="none"'
     'use_gtk3=false'
+    'use_dbus=true'
     'use_kerberos=false'
     'use_pulseaudio=false'
     'use_system_libdrm=false'
