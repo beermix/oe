@@ -111,9 +111,9 @@ make_target() {
     'use_kerberos=false'
     'use_pulseaudio=false'
     'linux_link_libudev=true'
-    'use_system_freetype=true'
+    'use_system_freetype=false'
     'use_system_harfbuzz=true'
-    'use_system_libpng=true'
+    'use_system_libpng=false'
     'use_sysroot=true'
     'use_vaapi=true'
     'enable_vulkan=false'
@@ -129,7 +129,7 @@ make_target() {
   )
 
   # fontconfig freetype harfbuzz-ng ffmpeg icu libdrm libjpeg libpng libxslt re2 snappy yasm zlib jsoncpp
-  ./build/linux/unbundle/replace_gn_files.py --system-libraries re2 snappy yasm zlib
+  ./build/linux/unbundle/replace_gn_files.py --system-libraries libdrm libxslt re2 snappy yasm zlib
   
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 

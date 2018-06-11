@@ -21,9 +21,9 @@ index 4e9ff44..c928e0d 100644
    ld = cxx
  
 -  # Output linker map files for binary size analysis.
-+  extra_cflags = "-Wno-builtin-macro-redefined -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
-+  extra_cxxflags = "-Wno-builtin-macro-redefined -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
-+  extra_cppflags = "-D__DATE__=  -D__TIME__=  -D__TIMESTAMP__= -DNO_UNWIND_TABLES"
++  extra_cflags = "-mmmx -msse -msse2 -msse3 -mssse3 -msse4.2 -msse4.1 -mfpmath=sse -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
++  extra_cxxflags = "-mmmx -msse -msse2 -msse3 -mssse3 -msse4.2 -msse4.1 -mfpmath=sse -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-noexcept-type -Wno-register -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
++  extra_cppflags = "-DNO_UNWIND_TABLES"
 +
 +
    enable_linker_map = true

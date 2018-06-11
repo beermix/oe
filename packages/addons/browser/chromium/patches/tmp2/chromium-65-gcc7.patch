@@ -1,3 +1,14 @@
+--- chromium-65.0.3325.51/ui/gfx/ipc/buffer_types/gfx_param_traits.cc.format	2018-02-06 21:06:22.000000000 +0100
++++ chromium-65.0.3325.51/ui/gfx/ipc/buffer_types/gfx_param_traits.cc	2018-02-17 02:35:15.445832776 +0100
+@@ -30,7 +30,7 @@
+ void ParamTraits<gfx::BufferUsageAndFormat>::Log(
+     const gfx::BufferUsageAndFormat& p,
+     std::string* l) {
+-  l->append(base::StringPrintf("(%d, %d)", p.usage, p.format));
++  l->append(base::StringPrintf("(%d, %d)", int(p.usage), int(p.format)));
+ }
+ 
+ }  // namespace IPC
 --- chromium-65.0.3325.51/components/assist_ranker/ranker_example_util.cc.gcc7	2018-02-06 21:05:28.000000000 +0100
 +++ chromium-65.0.3325.51/components/assist_ranker/ranker_example_util.cc	2018-02-17 03:15:17.577865763 +0100
 @@ -9,6 +9,8 @@
