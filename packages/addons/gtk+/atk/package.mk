@@ -19,7 +19,6 @@
 ################################################################################
 
 PKG_NAME="atk"
-PKG_VERSION="2.27.1"
 PKG_VERSION="2.29.1"
 #PKG_SHA256="673a953987b301ab1e24e7d11677b6e7ba3226411a168449ba946765b6d44297"
 PKG_ARCH="any"
@@ -27,11 +26,14 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://library.gnome.org/devel/atk/"
 PKG_URL="http://ftp.gnome.org/pub/gnome/sources/$PKG_NAME/2.29/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain glib glib:host"
+PKG_DEPENDS_TARGET="glib:host pygobject:host"
 PKG_SECTION="accessibility"
 PKG_SHORTDESC="ATK - Accessibility Toolkit"
 PKG_LONGDESC="ATK provides the set of accessibility interfaces that are implemented by other toolkits and applications. Using the ATK interfaces, accessibility tools have full access to view and control running applications."
-#PKG_TOOLCHAIN="autotools"
+PKG_TOOLCHAIN="meson"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-rebuilds --enable-introspection=no"
 
 PKG_MESON_OPTS_TARGET="-Ddocs=false -Dintrospection=false"
+
+PKG_MESON_OPTS_HOST="$PKG_MESON_OPTS_TARGET"

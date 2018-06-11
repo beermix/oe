@@ -56,6 +56,6 @@ PKG_CONFIGURE_OPTS_TARGET="gio_can_sniff=no \
 PKG_CONFIGURE_OPTS_HOST="gio_can_sniff=no \
 			    --disable-glibtest \
 			    --with-libpng=$TOOLCHAIN \
-			    --with-libjpeg=$TOOLCHAIN \
+			    --with-libjpeg=no \
 			    --with-libjasper=$TOOLCHAIN \
 			    --with-libtiff=$TOOLCHAIN"

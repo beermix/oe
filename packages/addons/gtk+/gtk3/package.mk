@@ -6,11 +6,11 @@ PKG_SITE="http://ftp.acc.umu.se/pub/gnome/sources/gtk+/3.22/?C=M;O=D"
 PKG_URL="http://ftp.gnome.org/pub/gnome/sources/gtk+/3.22/gtk+-$PKG_VERSION.tar.xz"
 PKG_SOURCE_DIR="gtk+-$PKG_VERSION"
 PKG_DEPENDS_TARGET="toolchain atk glib:host cairo pango gdk-pixbuf libepoxy fontconfig libX11 libXext libXrender libXi"
-PKG_DEPENDS_HOST="glib:host libpng:host tiff:host libjpeg-turbo:host gtk3:host"
+PKG_DEPENDS_HOST="glib:host libpng:host tiff:host libjpeg-turbo:host" 
 PKG_SECTION="x11/toolkits"
 PKG_SHORTDESC="gtk+: The Gimp ToolKit (GTK)"
 PKG_LONGDESC="This is GTK+. GTK+, which stands for the Gimp ToolKit, is a library for creating graphical user interfaces for the X Window System. It is designed to be small, efficient, and flexible. GTK+ is written in C with a very object-oriented approach."
-PKG_TOOLCHAIN="autotools"
+PKG_TOOLCHAIN="configure"
 
 pre_configure_target() {
    echo "#define GETTEXT_PACKAGE \"gtk30\"" >> $PKGBUILD/gtk/config.h
