@@ -5,17 +5,14 @@ PKG_ARCH="any"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://www.gtk.org/"
 PKG_URL="https://github.com/GNOME/$PKG_NAME/archive/$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain glib qemu:host"
+PKG_DEPENDS_TARGET="toolchain glib qemu:host gobject-introspection:host"
 PKG_DEPENDS_HOST="glib:host"
 PKG_SECTION="devel"
 PKG_SHORTDESC="glib: C support library"
 PKG_LONGDESC="GLib is a library which includes support routines for C such as lists, trees, hashes, memory allocation, and many other things."
-PKG_TOOLCHAIN="meson"
 
-PKG_MESON_OPTS_TARGET="-Dcairo=false \
-			  -Ddoctool=false	 \
-			  -Dglib-src-dir=true \
-			  -Dgtk-doc=false"
+PKG_IS_ADDON="no"
+PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_HOST="--disable-doctool"
 
