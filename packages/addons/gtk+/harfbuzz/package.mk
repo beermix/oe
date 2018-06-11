@@ -19,7 +19,7 @@
 ################################################################################
 
 PKG_NAME="harfbuzz"
-PKG_VERSION="1.8.0"
+PKG_VERSION="1.7.7"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/HarfBuzz"
@@ -32,10 +32,13 @@ PKG_TOOLCHAIN="configure"
 PKG_TOOLCHAIN="autotools"
 PKG_BUILD_FLAGS="-lto -gold -hardening"
 
-PKG_CONFIGURE_OPTS_TARGET="--with-cairo \
-			      --with-freetype \
-			      --with-glib \
-			      --with-gobject \
+PKG_CONFIGURE_OPTS_TARGET="--with-coretext=no \
+			      --with-uniscribe=no \
+			      --with-graphite2=no \
+			      --with-cairo=yes \
+			      --with-icu=yes \
+			      --with-freetype=yes \
+			      --with-glib=yes \
 			      --enable-gtk-doc=no"
 
 if [ "$DISPLAYSERVER" = "x11" ] ; then
@@ -43,5 +46,5 @@ if [ "$DISPLAYSERVER" = "x11" ] ; then
 fi
 
 pre_configure_target() {
-  export LIBS="-ldl"
+  LDFLAGS="$(TARGET_LDFLAGS) -pthread"
 }

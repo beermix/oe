@@ -21,9 +21,8 @@ PKG_VERSION="61.1"
 #PKG_SHA256="2b0a4410153a9b20de0e20c7d8b66049a72aef244b53683d0d7521371683da0c"
 PKG_ARCH="any"
 PKG_LICENSE="Custom"
-PKG_SITE="http://www.icu-project.org"
+PKG_SITE="http://download.icu-project.org/files/icu4c/?C=M;O=D"
 PKG_URL="http://download.icu-project.org/files/${PKG_NAME}4c/${PKG_VERSION}/${PKG_NAME}4c-${PKG_VERSION//./_}-src.tgz"
-#PKG_URL="http://192.168.1.200:8080/%2Ficu4c-54_1-src.tgz"
 PKG_SOURCE_DIR="icu"
 PKG_DEPENDS_TARGET="toolchain libiconv icu:host"
 PKG_SECTION="textproc"
@@ -31,11 +30,11 @@ PKG_SHORTDESC="International Components for Unicode library"
 PKG_LONGDESC="International Components for Unicode library"
 PKG_BUILD_FLAGS="+pic"
 
-post_unpack() {
-  sed -i 's/xlocale/locale/' $PKG_BUILD/source/i18n/digitlst.cpp
+#post_unpack() {
+  #sed -i 's/xlocale/locale/' $PKG_BUILD/source/i18n/digitlst.cpp
   #mv $PKG_BUILD/source/* $PKG_BUILD
   #rmdir $PKG_BUILD/source
-}
+#}
 
 #post_configure_host() {
   # we are not in source folder

@@ -1,0 +1,16 @@
+diff -Naur icu-61.1-orig/source/i18n/digitlst.cpp icu-61.1/source/i18n/digitlst.cpp
+--- icu-61.1-orig/source/i18n/digitlst.cpp	2018-06-11 05:25:30.462329958 +0300
++++ icu-61.1/source/i18n/digitlst.cpp	2018-03-26 16:38:30.000000000 +0300
+@@ -65,11 +65,7 @@
+ #endif
+ 
+ #if U_USE_STRTOD_L
+-# if U_HAVE_XLOCALE_H
+-#   include <xlocale.h>
+-# else
+-#   include <locale.h>
+-# endif
++# include <locale.h>
+ #endif
+ 
+ // ***************************************************************************
