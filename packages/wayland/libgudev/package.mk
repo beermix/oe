@@ -4,5 +4,4 @@ PKG_URL="http://ftp.acc.umu.se/pub/GNOME/sources/libgudev/$PKG_VERSION/libgudev-
 PKG_DEPENDS_TARGET="toolchain glib"
 PKG_SECTION="devel"
 
-
 PKG_CONFIGURE_OPTS_TARGET="--disable-umockdev"
