@@ -26,12 +26,20 @@ PKG_LICENSE="OSS"
 PKG_SITE="http://www.gtk.org/"
 PKG_URL="http://ftp.gnome.org/pub/gnome/sources/gtk+/2.24/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain atk libX11 libXrandr libXi glib pango cairo gdk-pixbuf"
+PKG_DEPENDS_HOST="glib:host libpng:host tiff:host libjpeg-turbo:host gtk+:host"
 PKG_SECTION="x11/toolkits"
 PKG_SHORTDESC="gtk+: The Gimp ToolKit (GTK)"
 PKG_LONGDESC="This is GTK+. GTK+, which stands for the Gimp ToolKit, is a library for creating graphical user interfaces for the X Window System. It is designed to be small, efficient, and flexible. GTK+ is written in C with a very object-oriented approach."
 PKG_TOOLCHAIN="autotools"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-glibtest \
+PKG_CONFIGURE_OPTS_TARGET="ac_cv_path_GTK_UPDATE_ICON_CACHE=$TOOLCHAIN/bin/gtk-update-icon-cache \
+                           ac_cv_path_GDK_PIXBUF_CSOURCE=$TOOLCHAIN/bin/gdk-pixbuf-csource \
+                           DB2HTML=false \
+                           --disable-glibtest \
+                           --with-x \
+                           --x-includes=$SYSROOT/usr/include/X11 \
+                           --x-libraries=$SYSROOT/usr/lib \
+                           --with-gdktarget=x11 \
                            --enable-modules \
                            --enable-explicit-deps=no \
                            --disable-debug \
@@ -46,6 +54,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-glibtest \
 
 PKG_CONFIGURE_OPTS_HOST="--disable-static \
 			    --disable-glibtest \
+			    DB2HTML=false \
 			    --without-libtiff \
 			    --without-libjpeg \
 			    --with-gdktarget=none \

@@ -9,7 +9,10 @@ PKG_DEPENDS_TARGET="toolchain glib gdk-pixbuf libxml2 pango cairo"
 PKG_PRIORITY="optional"
 PKG_SECTION="graphics"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --enable-introspection=no --enable-vala=no --disable-dependency-tracking"
+PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared \
+			--disable-pixbuf-loader --disable-tools --enable-introspection=no"
+			
+PKG_CONFIGURE_OPTS_HOST="--enable-introspection=no"
 
 post_makeinstall_target() {
   rm -rf $INSTALL/usr/bin

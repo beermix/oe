@@ -1,5 +1,5 @@
 PKG_NAME="gobject-introspection"
-PKG_VERSION="1.52.1"
+PKG_VERSION="1.56.1"
 PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="LGPL"

@@ -29,7 +29,6 @@ PKG_SECTION="x11/toolkits"
 PKG_SHORTDESC="harfbuzz: an OpenType text shaping engine."
 PKG_LONGDESC="HarfBuzz is an OpenType text shaping engine."
 PKG_TOOLCHAIN="configure"
-PKG_TOOLCHAIN="autotools"
 PKG_BUILD_FLAGS="-lto -gold -hardening"
 
 PKG_CONFIGURE_OPTS_TARGET="--with-coretext=no \
@@ -46,5 +45,5 @@ if [ "$DISPLAYSERVER" = "x11" ] ; then
 fi
 
 pre_configure_target() {
-  LDFLAGS="$(TARGET_LDFLAGS) -pthread"
+  export LIBS="-ldl"
 }
