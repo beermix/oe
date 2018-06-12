@@ -111,6 +111,7 @@ pre_configure_host() {
   
   export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
+#  unset LDFLAGS
 }
 
 #pre_configure_bootstrap() {
@@ -118,6 +119,7 @@ pre_configure_host() {
  # export CXXFLAGS="-g -O2 -I$TOOLCHAIN/include"
  # export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
  # export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
+ # unset LDFLAGS
 #}
 
 post_make_host() {
