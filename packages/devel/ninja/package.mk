@@ -30,8 +30,9 @@ PKG_LONGDESC="Small build system with a focus on speed"
 PKG_TOOLCHAIN="manual"
 
 make_host() {
-  export CFLAGS="-Wall -O3 -march=native -fstack-protector-strong -Wp,-D_FORTIFY_SOURCE=2"
-  CXX=/usr/bin/clang++ $TOOLCHAIN/bin/python2 ./configure.py --bootstrap --verbose
+  #export CFLAGS="-Wall -O3 -march=native -fstack-protector-strong -Wp,-D_FORTIFY_SOURCE=2"
+  #CXX=/usr/bin/clang++ 
+  python2 ./configure.py --bootstrap --verbose
 }
 
 makeinstall_host() {
