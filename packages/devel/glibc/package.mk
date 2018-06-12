@@ -47,6 +47,8 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --enable-stack-protector=strong \
                            --enable-kernel=4.4 \
                            --without-cvs \
+                           --enable-obsolete-rpc \
+                           --enable-obsolete-nsl \
                            --without-gd \
                            --disable-build-nscd \
                            --disable-nscd \
