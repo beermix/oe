@@ -48,8 +48,6 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --enable-kernel=4.4 \
                            --without-cvs \
                            --without-gd \
-                           --enable-obsolete-rpc \
-                           --enable-obsolete-nsl \
                            --disable-build-nscd \
                            --disable-nscd \
                            --enable-lock-elision \
@@ -111,11 +109,6 @@ pre_configure_target() {
   unset LD_LIBRARY_PATH
 
   export CFLAGS="-O2 -march=$TARGET_CPU -g -m64"
-
-#  unset LDFLAGS
-#  export LDFLAGS="-Wl,-z,max-page-size=0x1000"
-
-  #  -Wno-error=stringop-truncation -Wno-error=overflow -Wno-error=format-overflow=
 
   export BUILD_CC=$HOST_CC
   export OBJDUMP_FOR_HOST=objdump
