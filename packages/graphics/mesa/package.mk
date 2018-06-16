@@ -18,8 +18,8 @@
 ################################################################################
 
 PKG_NAME="mesa"
-PKG_VERSION="18.1.1"
-PKG_SHA256="d3312a2ede5aac14a47476b208b8e3a401367838330197c4588ab8ad420d7781"
+PKG_VERSION="18.1.2"
+PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="https://mesa.freedesktop.org/archive/?C=M;O=D"
