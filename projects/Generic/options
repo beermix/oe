@@ -41,7 +41,7 @@
 
   # Kernel to use. values can be:
   # default:  default mainline kernel zen rc pf
-    LINUX="zen"
+    LINUX="4.14"
 
 
 ################################################################################
