@@ -141,11 +141,6 @@ make_target() {
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python2
 
   ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox
-
-  # ICUDATADIR=$(icuinfo | grep \"icudata.path\" | sed -re 's/^.*>(.*)<.*$/\1/')
-  # ICUDATANAME=$(icuinfo | grep \"icudata.name\" | sed -re 's/^.*>(.*)<.*$/\1/')
-  # ICUDATAFILE=$(realpath --relative-to=%{_crdir}/ ${ICUDATADIR}/${ICUDATANAME}.dat)
-  # ln -s ${ICUDATAFILE} %{buildroot}%{_crdir}/icudtl.dat
 }
 
 addon() {
