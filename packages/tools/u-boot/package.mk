@@ -52,9 +52,10 @@ make_target() {
     echo "UBOOT_SYSTEM must be set to build an image"
     echo "see './scripts/uboot_helper' for more information"
   else
-    CROSS_COMPILE="$TARGET_KERNEL_PREFIX" LDFLAGS="" ARCH=arm make mrproper
-    CROSS_COMPILE="$TARGET_KERNEL_PREFIX" LDFLAGS="" ARCH=arm make $($ROOT/$SCRIPTS/uboot_helper $PROJECT $DEVICE $UBOOT_SYSTEM config)
-    CROSS_COMPILE="$TARGET_KERNEL_PREFIX" LDFLAGS="" ARCH=arm make HOSTCC="$HOST_CC" HOSTSTRIP="true"
+    [ "${BUILD_WITH_DEBUG}" = "yes" ] && PKG_DEBUG=1 || PKG_DEBUG=0
+    DEBUG=${PKG_DEBUG} CROSS_COMPILE="$TARGET_KERNEL_PREFIX" LDFLAGS="" ARCH=arm make mrproper
+    DEBUG=${PKG_DEBUG} CROSS_COMPILE="$TARGET_KERNEL_PREFIX" LDFLAGS="" ARCH=arm make $($ROOT/$SCRIPTS/uboot_helper $PROJECT $DEVICE $UBOOT_SYSTEM config)
+    DEBUG=${PKG_DEBUG} CROSS_COMPILE="$TARGET_KERNEL_PREFIX" LDFLAGS="" ARCH=arm make HOSTCC="$HOST_CC" HOSTSTRIP="true"
   fi
 }
 
@@ -68,6 +69,20 @@ makeinstall_target() {
 
     # Always install the update script
     find_file_path bootloader/update.sh && cp -av ${FOUND_PATH} $INSTALL/usr/share/bootloader
+
+    # Replace partition names in update.sh
+    if [ -f "$INSTALL/usr/share/bootloader/update.sh" ] ; then
+      sed -e "s/@BOOT_LABEL@/$DISTRO_BOOTLABEL/g" \
+          -e "s/@DISK_LABEL@/$DISTRO_DISKLABEL/g" \
+          -i $INSTALL/usr/share/bootloader/update.sh
+    fi
+
+    # Replace labels in boot.ini
+    if [ -f "$INSTALL/usr/share/bootloader/boot.ini" ] ; then
+      sed -e "s/@BOOT_LABEL@/$DISTRO_BOOTLABEL/g" \
+          -e "s/@DISK_LABEL@/$DISTRO_DISKLABEL/g" \
+          -i $INSTALL/usr/share/bootloader/boot.ini
+    fi
 
     # Always install the canupdate script
     if find_file_path bootloader/canupdate.sh; then
