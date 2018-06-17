@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="node"
-PKG_VERSION="8.11.2"
+PKG_VERSION="8.11.3"
 PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -35,9 +35,9 @@ HOST_CONFIGURE_OPTS="--prefix=$TOOLCHAIN \
 
 pre_configure_host() {
   cd ..
-  unset CPPFLAGS
-  unset CFLAGS
-  unset CXXFLAGS
-  unset LDFLAGS
-  export LDFLAGS="-s"
+#  unset CPPFLAGS
+#  unset CFLAGS
+#  unset CXXFLAGS
+#  unset LDFLAGS
+#  export LDFLAGS="-s"
 }
