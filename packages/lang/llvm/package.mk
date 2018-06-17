@@ -13,7 +13,7 @@ PKG_SHORTDESC="llvm: Low Level Virtual Machine"
 PKG_LONGDESC="Low-Level Virtual Machine (LLVM) is a compiler infrastructure designed for compile-time, link-time, run-time, and idle-time optimization of programs from arbitrary programming languages. It currently supports compilation of C, Objective-C, and C++ programs, using front-ends derived from GCC 4.0, GCC 4.2, and a custom new front-end, "clang". It supports x86, x86-64, ia64, PowerPC, and SPARC, with support for Alpha and ARM under development."
 PKG_BUILD_FLAGS="-lto -gold -hardening"
 
-PKG_CMAKE_OPTS_COMMON="-DLLVM_ENABLE_PROJECTS="cland,lld" \
+PKG_CMAKE_OPTS_COMMON="-DLLVM_ENABLE_PROJECTS="" \
 			  -DCMAKE_INSTALL_RPATH=$TOOLCHAIN/lib \
 			  -DLLVM_CCACHE_BUILD=ON \
 			  -DLLVM_TARGETS_TO_BUILD="X86" \
@@ -69,7 +69,7 @@ PKG_CMAKE_OPTS_COMMON="-DLLVM_ENABLE_PROJECTS="cland,lld" \
 			  -DLLVM_INCLUDE_GO_TESTS=OFF \
 			  -DLLVM_INCLUDE_TESTS=OFF"
 
-PKG_CMAKE_OPTS_TARGET="-DLLVM_ENABLE_PROJECTS="cland,lld" \
+PKG_CMAKE_OPTS_TARGET="-DLLVM_ENABLE_PROJECTS="" \
 			  -DLLVM_CCACHE_BUILD=ON \
 			  -DLLVM_TARGETS_TO_BUILD="X86" \
 			  -DLLVM_TARGET_ARCH="$TARGET_ARCH" \
@@ -127,5 +127,5 @@ post_makeinstall_target() {
   rm -rf $INSTALL/usr/lib/libLTO.so
   rm -rf $INSTALL/usr/share
   
-  cp $TOOLCHAIN/bin/llvm-config $SYSROOT_PREFIX/usr/bin/llvm-config
+#  cp $TOOLCHAIN/bin/llvm-config $SYSROOT_PREFIX/usr/bin/llvm-config
 }
