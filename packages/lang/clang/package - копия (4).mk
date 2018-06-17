@@ -4,13 +4,14 @@ PKG_ARCH="x86_64"
 PKG_LICENSE="GPL"
 PKG_SITE="http://llvm.org/"
 PKG_URL="http://releases.llvm.org/$PKG_VERSION/cfe-$PKG_VERSION.src.tar.xz"
+#PKG_URL="https://github.com/llvm-project/clang/archive/${PKG_VERSION}.tar.gz"
 PKG_SOURCE_DIR="cfe-$PKG_VERSION*"
 PKG_DEPENDS_TARGET="toolchain clang:host libxml llvm zlib"
 PKG_DEPENDS_HOST="llvm:host"
+#PKG_TOOLCHAIN="cmake-make"
+#PKG_TOOLCHAIN="manual"
 
-configure_host() {
-     cmake .. -G Ninja \
-    -DCMAKE_BUILD_TYPE=Release \
+PKG_CMAKE_OPTS_HOST="-DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX=$TOOLCHAIN \
     -DPYTHON_EXECUTABLE=$TOOLCHAIN/bin/python \
     -DBUILD_SHARED_LIBS=OFF \
@@ -20,9 +21,7 @@ configure_host() {
     -DLLVM_INCLUDE_DOCS=OFF \
     -DLLVM_BUILD_DOCS=OFF \
     -DLLVM_ENABLE_SPHINX=OFF \
-    -DSPHINX_WARNINGS_AS_ERRORS=OFF \
-    ..
-}
+    -DSPHINX_WARNINGS_AS_ERRORS=OFF"
 
 configure_target() {
      cmake .. -G Ninja \
