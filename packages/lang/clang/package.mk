@@ -5,11 +5,11 @@ PKG_LICENSE="GPL"
 PKG_SITE="http://llvm.org/"
 PKG_URL="http://releases.llvm.org/$PKG_VERSION/cfe-$PKG_VERSION.src.tar.xz"
 PKG_SOURCE_DIR="cfe-$PKG_VERSION*"
-PKG_DEPENDS_TARGET="toolchain clang:host libxml llvm zlib"
+PKG_DEPENDS_TARGET="toolchain lld:host clang:host llvm"
 PKG_DEPENDS_HOST="llvm:host"
 
 configure_host() {
-     cmake .. -G Ninja \
+     cmake -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX=$TOOLCHAIN \
     -DPYTHON_EXECUTABLE=$TOOLCHAIN/bin/python \
@@ -24,8 +24,12 @@ configure_host() {
     ..
 }
 
+post_makeinstall_host() {
+  cp -a bin/clang-tblgen $TOOLCHAIN/bin
+}
+
 configure_target() {
-     cmake .. -G Ninja \
+     cmake -G Ninja \
      -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
      -DBUILD_SHARED_LIBS=OFF \
      -DCMAKE_BUILD_TYPE=Release \
@@ -34,9 +38,9 @@ configure_target() {
      -DCLANG_BUILD_EXAMPLES=OFF \
      -DCLANG_INCLUDE_DOCS=OFF \
      -DCLANG_INCLUDE_TESTS=OFF \
-     -DLLVM_CONFIG:FILEPATH=$SYSROOT/usr/bin/llvm-config \
-     -DCLANG_TABLEGEN:FILEPATH=$TOOLCHAIN/usr/bin/clang-tblgen \
-     -DLLVM_TABLEGEN_EXE:FILEPATH=$TOOLCHAIN/bin/llvm-tblgen \
+     -DLLVM_CONFIG=$SYSROOT/usr/bin/llvm-config \
+     -DCLANG_TABLEGEN=$TOOLCHAIN/bin/clang-tblgen \
+     -DLLVM_TABLEGEN_EXE=$TOOLCHAIN/bin/llvm-tblgen \
      -DLLVM_LINK_LLVM_DYLIB=ON \
      -DLLVM_DYLIB_COMPONENTS=all \
      ..

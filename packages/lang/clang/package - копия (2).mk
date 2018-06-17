@@ -13,7 +13,7 @@ PKG_DEPENDS_HOST="llvm:host"
 
 
 configure_host() {
-     cmake .. -G Ninja  \
+     cmake -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX=$TOOLCHAIN \
     -DPYTHON_EXECUTABLE=$TOOLCHAIN/bin/python \
@@ -30,19 +30,20 @@ configure_host() {
     ..
 }
 
-#post_makeinstall_host() {
-#  cp $PKG_BUILD/../llvm-6.0.0
-#}
-
-PKG_CMAKE_OPTS_TARGET="-DBUILD_SHARED_LIBS=OFF \
-			  -DCMAKE_BUILD_TYPE=Release \
-			  -DCLANG_BUILD_TOOLS=ON \
-			  -DCMAKE_CROSSCOMPILING=1 \
-			  -DCLANG_BUILD_EXAMPLES=OFF \
-			  -DCLANG_INCLUDE_DOCS=OFF \
-			  -DCLANG_INCLUDE_TESTS=OFF \
-			  -DLLVM_CONFIG:FILEPATH=$SYSROOT/usr/bin/llvm-config \
-			  -DCLANG_TABLEGEN:FILEPATH=$TOOLCHAIN/usr/bin/clang-tblgen \
-			  -DLLVM_TABLEGEN_EXE:FILEPATH=$TOOLCHAIN/bin/llvm-tblgen \
-			  -DLLVM_LINK_LLVM_DYLIB=ON \
-			  -DLLVM_DYLIB_COMPONENTS=all"
+configure_target() {
+     cmake -G Ninja \
+     -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
+     -DBUILD_SHARED_LIBS=OFF \
+     -DCMAKE_BUILD_TYPE=Release \
+     -DCLANG_BUILD_TOOLS=ON \
+     -DCMAKE_CROSSCOMPILING=1 \
+     -DCLANG_BUILD_EXAMPLES=OFF \
+     -DCLANG_INCLUDE_DOCS=OFF \
+     -DCLANG_INCLUDE_TESTS=OFF \
+     -DLLVM_CONFIG:FILEPATH=$SYSROOT/usr/bin/llvm-config \
+     -DCLANG_TABLEGEN:FILEPATH=$TOOLCHAIN/usr/bin/clang-tblgen \
+     -DLLVM_TABLEGEN_EXE:FILEPATH=$TOOLCHAIN/bin/llvm-tblgen \
+     -DLLVM_LINK_LLVM_DYLIB=ON \
+     -DLLVM_DYLIB_COMPONENTS=all \
+     ..
+}
