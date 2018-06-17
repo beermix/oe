@@ -118,7 +118,7 @@ make_target() {
     'use_system_libjpeg=false'
     'use_system_libpng=false'
     'use_system_libdrm=true'
-    'use_system_harfbuzz=true'
+    'use_system_harfbuzz=false'
     'use_system_freetype=false'
     'use_sysroot=true'
     'use_vaapi=true'
