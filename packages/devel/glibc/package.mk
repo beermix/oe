@@ -113,7 +113,7 @@ pre_configure_target() {
 
   unset LD_LIBRARY_PATH
 
-  export CFLAGS="-O2 -march=$TARGET_CPU -g -m64"
+  export CFLAGS="-O2 -march=$TARGET_CPU -g -m64 -Wno-error=stringop-truncation -Wno-error=overflow -Wno-error=format-overflow="
 
   export BUILD_CC=$HOST_CC
   export OBJDUMP_FOR_HOST=objdump
