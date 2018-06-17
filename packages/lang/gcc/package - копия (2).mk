@@ -66,10 +66,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --without-cloog \
                            --disable-libada \
                            --disable-libmudflap \
-                           --disable-libatomic \
-                           --disable-libitm \
-                           --disable-libquadmath \
-                           --disable-libgomp \
                            --disable-libmpx \
                            --disable-libssp \
                            --with-tune=haswell \
@@ -109,9 +105,23 @@ PKG_CONFIGURE_OPTS_HOST="$GCC_COMMON_CONFIGURE_OPTS \
                          $GCC_OPTS"
 
 pre_configure_host() {
+  # export CFLAGS="-g -O2 -I$TOOLCHAIN/include"
+  # export CXXFLAGS="-g -O2 -I$TOOLCHAIN/include"
+  # export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
+  # export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
+  
   export CXXFLAGS="$CXXFLAGS -std=gnu++98"
   unset CPP
+#  unset LDFLAGS
 }
+
+#pre_configure_bootstrap() {
+ # export CFLAGS="-g -O2 -I$TOOLCHAIN/include"
+ # export CXXFLAGS="-g -O2 -I$TOOLCHAIN/include"
+ # export CFLAGS_FOR_TARGET="$TARGET_CFLAGS"
+ # export CXXFLAGS_FOR_TARGET="$TARGET_CXXFLAGS"
+ # unset LDFLAGS
+#}
 
 post_make_host() {
   # fix wrong link
