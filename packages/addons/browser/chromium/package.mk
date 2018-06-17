@@ -52,6 +52,9 @@ post_patch() {
   # Use Python 2
   find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$TOOLCHAIN/bin/python2|g" {} +
 
+  # set correct widevine
+  sed -i -e 's/@WIDEVINE_VERSION@/Pinkie Pie/' ./third_party/widevine/cdm/stub/widevine_cdm_version.h
+
   # find ./third_party/icu -type f \! -regex '.*\.\(gn\|gni\|isolate\)' -delete
 
   # ./build/download_nacl_toolchains.py --packages \
@@ -59,7 +62,7 @@ post_patch() {
 }
 
 make_host() {
-  ./tools/gn/bootstrap/bootstrap.py -s -v --no-clean
+  ./tools/gn/bootstrap/bootstrap.py --no-rebuild --no-clean --verbose
 }
 
 make_target() {
@@ -119,6 +122,7 @@ make_target() {
     'use_system_freetype=false'
     'use_sysroot=true'
     'use_vaapi=true'
+    'use_v8_context_snapshot=false'
     'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_hangout_services_extension=true'
@@ -134,12 +138,10 @@ make_target() {
 
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
-  $TOOLCHAIN/bin/python2 tools/gn/bootstrap/bootstrap.py -s --no-clean
-  out/Release/gn gen out/Release \
-    -script-executable=$TOOLCHAIN/bin/python2
-  
+  ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python2
+
   ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox
-  
+
   # ICUDATADIR=$(icuinfo | grep \"icudata.path\" | sed -re 's/^.*>(.*)<.*$/\1/')
   # ICUDATANAME=$(icuinfo | grep \"icudata.name\" | sed -re 's/^.*>(.*)<.*$/\1/')
   # ICUDATAFILE=$(realpath --relative-to=%{_crdir}/ ${ICUDATADIR}/${ICUDATANAME}.dat)
