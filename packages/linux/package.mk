@@ -146,6 +146,9 @@ post_patch() {
       [ -f "$f" ] && cp -v $f $PKG_BUILD/arch/$TARGET_KERNEL_ARCH/boot/dts/overlays || true
     done
   fi
+
+  PKG_KERNEL_VERSION="$(make CROSS_COMPILE= kernelversion)"
+  echo "${PKG_KERNEL_VERSION%.*}.0" >$PKG_BUILD/glibc.version
 }
 
 makeinstall_host() {
@@ -175,8 +178,8 @@ pre_make_target() {
 }
 
 make_target() {
-  LDFLAGS="" make CONFIG_DEBUG_SECTION_MISMATCH=y modules
-  LDFLAGS="" make CONFIG_DEBUG_SECTION_MISMATCH=y INSTALL_MOD_PATH=$INSTALL/$(get_kernel_overlay_dir) DEPMOD="$TOOLCHAIN/bin/depmod" modules_install
+  LDFLAGS="" make modules
+  LDFLAGS="" make INSTALL_MOD_PATH=$INSTALL/$(get_kernel_overlay_dir) DEPMOD="$TOOLCHAIN/bin/depmod" modules_install
   rm -f $INSTALL/$(get_kernel_overlay_dir)/lib/modules/*/build
   rm -f $INSTALL/$(get_kernel_overlay_dir)/lib/modules/*/source
 
@@ -222,11 +225,11 @@ make_target() {
 
   if [ "$BOOTLOADER" = "u-boot" -a -n "$KERNEL_UBOOT_EXTRA_TARGET" ]; then
     for extra_target in "$KERNEL_UBOOT_EXTRA_TARGET"; do
-      LDFLAGS="" make CONFIG_DEBUG_SECTION_MISMATCH=y $extra_target
+      LDFLAGS="" make $extra_target
     done
   fi
 
-  LDFLAGS="" make CONFIG_DEBUG_SECTION_MISMATCH=y $KERNEL_TARGET $KERNEL_MAKE_EXTRACMD
+  LDFLAGS="" make $KERNEL_TARGET $KERNEL_MAKE_EXTRACMD
 
   if [ "$BUILD_ANDROID_BOOTIMG" = "yes" ]; then
     DTB_BLOBS=($(ls arch/$TARGET_KERNEL_ARCH/boot/dts/amlogic/*.dtb 2>/dev/null || true))

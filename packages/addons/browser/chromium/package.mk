@@ -39,7 +39,7 @@ PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
 PKG_TOOLCHAIN="manual"
 PKG_BUILD_FLAGS="-lto -hardening"
-#GOLD_SUPPORT="yes"
+GOLD_SUPPORT="yes"
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Chromium"
@@ -51,12 +51,12 @@ post_patch() {
 
   # Use Python 2
   find . -name '*.py' -exec sed -i -r "s|/usr/bin/python$|$TOOLCHAIN/bin/python2|g" {} +
-  
+
   # find ./third_party/icu -type f \! -regex '.*\.\(gn\|gni\|isolate\)' -delete
-  
+
   # ./build/download_nacl_toolchains.py --packages \
   # nacl_x86_glibc,nacl_x86_newlib,pnacl_newlib,pnacl_translator sync --extract
-}		
+}
 
 make_host() {
   ./tools/gn/bootstrap/bootstrap.py -s -v --no-clean
@@ -83,11 +83,10 @@ make_target() {
   local _google_api_key=AIzaSyAQ6L9vt9cnN4nM0weaa6Y38K4eyPvtKgI
   local _google_default_client_id=740889307901-4bkm4e0udppnp1lradko85qsbnmkfq3b.apps.googleusercontent.com
   local _google_default_client_secret=9TJlhL661hvShQub4cWhANXa
-	
-  #     'build_ffmpeg_args+=" --disable-asm"'
+
   local _flags=(
-    "host_toolchain=\"//build/toolchain/clang:x64_host\""
-    'is_clang=true'
+    "host_toolchain=\"//build/toolchain/linux:x64_host\""
+    'is_clang=false'
     'clang_use_chrome_plugins=false'
     'symbol_level=0'
     'is_debug=false'
@@ -100,11 +99,11 @@ make_target() {
     'is_component_build=false'
     'link_pulseaudio=true'
     'linux_use_bundled_binutils=false'
+    'use_allocator="none"'
     'use_cups=false'
     'use_custom_libcxx=false'
     'use_gnome_keyring=false'
     'use_gold=false'
-    'use_allocator="none"'
     'use_gtk3=false'
     'use_dbus=true'
     'use_kerberos=false'
@@ -127,11 +126,12 @@ make_target() {
     'enable_nacl=false'
     'enable_nacl_nonsfi=false'
     'enable_swiftshader=false'
+    'enable_vulkan=false'
     "google_api_key=\"${_google_api_key}\""
     "google_default_client_id=\"${_google_default_client_id}\""
     "google_default_client_secret=\"${_google_default_client_secret}\""
   )
-  
+
   ./third_party/libaddressinput/chromium/tools/update-strings.py
 
   $TOOLCHAIN/bin/python2 tools/gn/bootstrap/bootstrap.py -s --no-clean
@@ -154,7 +154,7 @@ addon() {
   cp -PR $PKG_BUILD/out/Release/locales $ADDON_BUILD/$PKG_ADDON_ID/bin/
   cp -PR $PKG_BUILD/out/Release/gen/content/content_resources.pak $ADDON_BUILD/$PKG_ADDON_ID/bin/
 
-  # config *.dat,
+  # config
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/config
   cp -P $PKG_DIR/config/* $ADDON_BUILD/$PKG_ADDON_ID/config
 
