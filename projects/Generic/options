@@ -41,7 +41,7 @@
 
   # Kernel to use. values can be:
   # default:  default mainline kernel zen rc pf
-    LINUX="4.14"
+    LINUX="default"
 
 
 ################################################################################
@@ -95,7 +95,7 @@
   # ADDITIONAL_DRIVERS="$ADDITIONAL_DRIVERS bcm_sta intel_nuc_led"
 
   # build and install driver addons (yes / no)
-    DRIVER_ADDONS_SUPPORT="no"
+    DRIVER_ADDONS_SUPPORT="NO"
 
   # driver addons to install:
   # for a list of additinoal drivers see packages/linux-driver-addons

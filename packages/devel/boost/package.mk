@@ -38,6 +38,11 @@ makeinstall_host() {
     cp bin.*/bjam $TOOLCHAIN/bin
 }
 
+pre_configure_target() {
+  export CFLAGS="$CFLAGS -I$SYSROOT_PREFIX/usr/include/$PKG_PYTHON_VERSION"
+  export CXXFLAGS="$CXXFLAGS -I$SYSROOT_PREFIX/usr/include/$PKG_PYTHON_VERSION"
+}
+
 configure_target() {
   sh bootstrap.sh --prefix=/usr \
                   --with-bjam=$TOOLCHAIN/bin/bjam \
@@ -46,6 +51,8 @@ configure_target() {
 
   echo "using gcc : `$CC -v 2>&1  | tail -n 1 |awk '{print $3}'` : $CC  : <compileflags>\"$CFLAGS\" <linkflags>\"$LDFLAGS\" ;" \
     > tools/build/src/user-config.jam
+  echo "using python : ${PKG_PYTHON_VERSION/#python} : $TOOLCHAIN : $SYSROOT_PREFIX/usr/include : $SYSROOT_PREFIX/usr/lib ;" \
+    >> tools/build/src/user-config.jam
 }
 
 makeinstall_target() {
