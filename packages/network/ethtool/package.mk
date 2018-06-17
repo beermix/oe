@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="ethtool"
-PKG_VERSION="4.16"
+PKG_VERSION="4.17"
 PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
