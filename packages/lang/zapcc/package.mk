@@ -1,11 +1,11 @@
-PKG_NAME="clang"
+PKG_NAME="zapcc"
 PKG_VERSION="01"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPL"
 PKG_SITE="http://llvm.org/"
-PKG_URL="http://192.168.1.200:8080/%2Fclang-01.tar.xz"
-#PKG_SOURCE_DIR="clang-$PKG_VERSION"
-PKG_DEPENDS_TARGET="toolchain lld:host clang:host"
+PKG_URL="http://192.168.1.200:8080/%2Fzapcc-clang-01.tar.xz"
+PKG_SOURCE_DIR="zapcc-clang-$PKG_VERSION*"
+PKG_DEPENDS_TARGET="toolchain zapcc:host"
 #PKG_DEPENDS_HOST="llvm:host"
 
 configure_host() {
