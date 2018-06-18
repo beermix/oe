@@ -62,17 +62,17 @@ make_host() {
 }
 
 make_target() {
-# unset CPPFLAGS
-# unset CFLAGS
-# unset CXXFLAGS
-# unset LDFLAGS
+ unset CPPFLAGS
+ unset CFLAGS
+ unset CXXFLAGS
+ unset LDFLAGS
 
-#  export CFLAGS="$CFLAGS -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
-#  export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
-#  export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
+  export CFLAGS="$CFLAGS -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
+  export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
+  export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
 
-  export LDFLAGS="$LDFLAGS -ludev"
-  export LD=$CXX
+#  export LDFLAGS="$LDFLAGS -ludev"
+#  export LD=$CXX
 
   export CCACHE_SLOPPINESS=time_macros
 
@@ -98,6 +98,7 @@ make_target() {
     'use_allocator="none"'
     'use_cups=false'
     'use_custom_libcxx=false'
+    'linux_link_libudev=true'
     'use_gconf=false'
     'use_gnome_keyring=false'
     'use_gold=false'
@@ -124,12 +125,12 @@ make_target() {
 declare -rgA _system_libs=(
   #[ffmpeg]=ffmpeg              # https://crbug.com/731766
   #[flac]=flac
-  [freetype]=freetype2         # https://crbug.com/pdfium/733
-  [harfbuzz-ng]=harfbuzz-icu   # https://crbug.com/768938
+  #[freetype]=freetype2         # https://crbug.com/pdfium/733
+  #[harfbuzz-ng]=harfbuzz-icu   # https://crbug.com/768938
   #[icu]=icu                    # https://crbug.com/772655
   [libdrm]=
   [libjpeg]=libjpeg
-  #[libpng]=libpng              # https://crbug.com/752403#c10
+  [libpng]=libpng              # https://crbug.com/752403#c10
   #[libvpx]=libvpx              # https://bugs.gentoo.org/611394
   #[libwebp]=libwebp
   [libxml]=libxml2
