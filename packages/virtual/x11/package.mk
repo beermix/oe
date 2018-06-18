@@ -47,7 +47,7 @@ get_graphicdrivers
 if [ -n "$LIBINPUT" ]; then
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET xf86-input-libinput"
 else
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET xf86-input-evdev xf86-input-synaptics xinput"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET xf86-input-evdev xf86-input-synaptics"
 fi
 
 for drv in $XORG_DRIVERS; do
