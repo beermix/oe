@@ -1,10 +1,10 @@
 PKG_NAME="zapcc"
-PKG_VERSION="5d3778f"
+PKG_VERSION="01"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPL"
 PKG_SITE="http://llvm.org/"
-PKG_URL="https://github.com/yrnkrn/zapcc/archive/${PKG_VERSION}.tar.gz"
-PKG_SOURCE_DIR="$PKG_NAME-$PKG_VERSION*"
+PKG_URL="http://192.168.1.200:8080/%2Fzapcc-clang-01.tar.xz"
+PKG_SOURCE_DIR="zapcc-clang-$PKG_VERSION*"
 PKG_DEPENDS_TARGET="toolchain zapcc:host"
 #PKG_DEPENDS_HOST="llvm:host"
 
@@ -16,6 +16,7 @@ configure_host() {
     -DPYTHON_EXECUTABLE=$TOOLCHAIN/bin/python \
     -DLLVM_ENABLE_WARNINGS=OFF \
     -DLLVM_TARGETS_TO_BUILD="X86" \
+    -DLLVM_MAIN_SRC_DIR="/home/user/.br/arch-packages/clang/trunk/src/llvm-6.0.0.src" \
     ..
 }
 
@@ -31,6 +32,5 @@ configure_host() {
     -DPYTHON_EXECUTABLE=$TOOLCHAIN/bin/python \
     -DLLVM_ENABLE_WARNINGS=OFF \
     -DLLVM_TARGETS_TO_BUILD="X86" \
-    -DLLVM_HOST_TRIPLE="x86_64-openelec-linux-gnu"
     ../llvm
 }
