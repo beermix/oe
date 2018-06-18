@@ -31,7 +31,7 @@ PKG_TOOLCHAIN="manual"
 
 make_host() {
   #export CFLAGS="-O2 -march=native -Wall -fstack-protector-strong -Wp,-D_FORTIFY_SOURCE=2"
-  CXX=/usr/bin/clang++ $TOOLCHAIN/bin/python2 ./configure.py --bootstrap --verbose
+  CXX=/usr/bin/clang+++ $TOOLCHAIN/bin/python2 ./configure.py --bootstrap --verbose
 }
 
 makeinstall_host() {
