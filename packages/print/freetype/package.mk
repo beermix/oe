@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="freetype"
-PKG_VERSION="2.9.1"
-PKG_SHA256="db8d87ea720ea9d5edc5388fc7a0497bb11ba9fe972245e0f7f4c7e8b1e1e84d"
+PKG_VERSION="2.9"
+PKG_SHA256="e6ffba3c8cef93f557d1f767d7bc3dee860ac7a3aaff588a521e081bc36f4c8a"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.freetype.org"
@@ -43,10 +43,8 @@ PKG_CONFIGURE_OPTS_HOST="LIBPNG_CFLAGS=-I$TOOLCHAIN/include \
                            --with-harfbuzz=no"
 
 post_makeinstall_target() {
-  $SED "s:\(['=\" ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" $PKG_BUILD/.$TARGET_NAME/freetype-config
-  
-  ln -sf $PKG_BUILD/.$TARGET_NAME/freetype-config $SYSROOT_PREFIX/usr/bin/freetype-config
+  $SED "s:\(['=\" ]\)/usr:\\1$SYSROOT_PREFIX/usr:g" $SYSROOT_PREFIX/usr/bin/freetype-config
   ln -v -sf $SYSROOT_PREFIX/usr/include/freetype2 $SYSROOT_PREFIX/usr/include/freetype
-  
+
   rm -rf $INSTALL/usr/bin
 }
