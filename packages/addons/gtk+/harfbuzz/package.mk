@@ -19,7 +19,7 @@
 ################################################################################
 
 PKG_NAME="harfbuzz"
-PKG_VERSION="1.8.1"
+PKG_VERSION="1.7.7"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/HarfBuzz"
