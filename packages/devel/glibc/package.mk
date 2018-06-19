@@ -46,7 +46,6 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-binutils=$BUILD/toolchain/bin \
                            --with-headers=$SYSROOT_PREFIX/usr/include \
                            --enable-kernel=4.14 \
-                           --disable-experimental-malloc \
                            --without-cvs \
                            --without-gd \
                            --enable-obsolete-rpc \
@@ -111,7 +110,7 @@ pre_configure_target() {
 
   unset LD_LIBRARY_PATH
 
-  export CFLAGS="-O2 -march=$TARGET_CPU -g -m64"
+  export CFLAGS="-O2 -march=$TARGET_CPU -g -m64 -Wno-error=stringop-truncation -Wno-error=overflow -Wno-error=format-overflow="
 # -Wno-error=stringop-truncation -Wno-error=overflow -Wno-error=format-overflow=
   export BUILD_CC=$HOST_CC
   export OBJDUMP_FOR_HOST=objdump
