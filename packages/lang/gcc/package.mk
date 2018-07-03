@@ -59,7 +59,6 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --enable-lto \
                            --enable-gold \
                            --enable-ld=default \
-                           --with-linker-hash-style=gnu \
                            --disable-multilib \
                            --disable-nls \
                            --with-default-libstdcxx-abi=gcc4-compatible \
@@ -73,8 +72,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=$TARGET_NAME \
                            --disable-libgomp \
                            --disable-libmpx \
                            --disable-libssp \
-                           --with-tune=haswell \
-                           --with-arch=westmere"
+                           --with-tune=haswell"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="$GCC_COMMON_CONFIGURE_OPTS \
                               --enable-languages=c \
