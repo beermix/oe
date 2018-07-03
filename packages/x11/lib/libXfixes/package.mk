@@ -28,3 +28,6 @@ PKG_DEPENDS_TARGET="toolchain util-macros libX11"
 PKG_SECTION="x11/lib"
 PKG_SHORTDESC="libxfixes: X Fixes Library"
 PKG_LONGDESC="X Fixes Library"
+PKG_BUILD_FLAGS="+pic"
+
+PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared"
