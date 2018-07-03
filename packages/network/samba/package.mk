@@ -24,7 +24,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPLv3+"
 PKG_SITE="https://download.samba.org/pub/samba/stable/?C=M;O=D"
 PKG_URL="https://download.samba.org/pub/samba/stable/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain heimdal:host e2fsprogs Python2 zlib readline popt libaio connman"
+PKG_DEPENDS_TARGET="toolchain heimdal:host e2fsprogs Python2 zlib readline popt libaio connman acl"
 PKG_NEED_UNPACK="$(get_pkg_directory heimdal) $(get_pkg_directory e2fsprogs)"
 PKG_SECTION="network"
 PKG_SHORTDESC="samba: The free SMB / CIFS fileserver and client"
@@ -74,7 +74,7 @@ PKG_CONFIGURE_OPTS="--prefix=/usr \
                     --disable-gnutls \
                     --with-relro \
                     --with-sendfile-support \
-                    --without-acl-support \
+                    --with-acl-support \
                     --without-ads \
                     --without-ad-dc \
                     --without-automount \
