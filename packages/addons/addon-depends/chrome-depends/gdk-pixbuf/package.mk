@@ -18,8 +18,8 @@
 ################################################################################
 
 PKG_NAME="gdk-pixbuf"
-PKG_VERSION="2.36.12"
-PKG_SHA256="fff85cf48223ab60e3c3c8318e2087131b590fd6f1737e42cb3759a3b427a334"
+PKG_VERSION="2.37.0"
+PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.gtk.org/"
