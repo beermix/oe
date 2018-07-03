@@ -28,11 +28,7 @@ PKG_SECTION="graphics"
 PKG_SHORTDESC="cairo: Multi-platform 2D graphics library"
 PKG_LONGDESC="Cairo is a vector graphics library with cross-device output support. Currently supported output targets include the X Window System and in-memory image buffers. PostScript and PDF file output is planned. Cairo is designed to produce identical output on all output media while taking advantage of display hardware acceleration when available."
 PKG_TOOLCHAIN="configure" # ToDo
-PKG_TOOLCHAIN="autotools"
-
-pre_configure_target() {
-  LIBS="-latomic"
-}
+#PKG_TOOLCHAIN="autotools"
 
 if [ "$OPENGL" != "no" ]; then
   PKG_DEPENDS_TARGET+=" $OPENGL"
@@ -73,13 +69,12 @@ else
 fi
 
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CAIRO_CONFIG \
-                           --enable-trace=no \
-                           --enable-interpreter=no \
                            --disable-silent-rules \
                            --enable-shared \
                            --disable-static \
                            --disable-gtk-doc \
                            --enable-largefile \
+                           --enable-atomic \
                            --disable-gcov \
                            --disable-valgrind \
                            --disable-xcb \
@@ -96,11 +91,11 @@ PKG_CONFIGURE_OPTS_TARGET="$PKG_CAIRO_CONFIG \
                            --disable-beos \
                            --disable-cogl \
                            --disable-drm \
-                           --disable-drm-xr \
                            --disable-gallium \
-                           --disable-xcb-drm \
                            --enable-png \
                            --disable-directfb \
+                           --disable-vg \
+                           --disable-wgl \
                            --disable-script \
                            --enable-ft \
                            --enable-fc \
@@ -111,7 +106,7 @@ PKG_CONFIGURE_OPTS_TARGET="$PKG_CAIRO_CONFIG \
                            --disable-tee \
                            --disable-xml \
                            --enable-pthread \
-                           --enable-gobject \
+                           --enable-gobject=yes \
                            --disable-full-testing \
                            --disable-trace \
                            --enable-interpreter \
