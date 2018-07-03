@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="unrar"
-PKG_VERSION="5.6.4"
+PKG_VERSION="5.6.5"
 PKG_SITE="http://www.rarlab.com"
 PKG_URL="http://www.rarlab.com/rar/unrarsrc-$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="${PKG_NAME}"
