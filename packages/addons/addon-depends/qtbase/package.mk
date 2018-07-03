@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="qtbase"
-PKG_VERSION="5.6.3"
-PKG_SHA256="fef48529a6fc2617a30d75d952cb327c6be341fd104154993922184b3b3b4da1"
+PKG_VERSION="5.6.2"
+PKG_SHA256="2f6eae93c5d982fe0a387a01aeb3435571433e23e9d9d9246741faf51f1ee787"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://qt-project.org"
@@ -55,7 +55,6 @@ PKG_CONFIGURE_OPTS_TARGET="-prefix /usr
                            -no-alsa
                            -silent
                            -no-cups
-                           -qt-xcb
                            -no-iconv
                            -no-evdev
                            -no-tslib

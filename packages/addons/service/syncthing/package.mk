@@ -17,7 +17,8 @@
 ################################################################################
 
 PKG_NAME="syncthing"
-PKG_VERSION="0.14.40"
+PKG_VERSION="0.14.29"
+PKG_SHA256="99002701279abedace88283b1381ff7850b6c20df62ae119b271ffd89716fcfd"
 PKG_REV="105"
 PKG_ARCH="any"
 PKG_LICENSE="MPLv2"
@@ -71,6 +72,7 @@ configure_target() {
       ;;
   esac
 }
+
 make_target() {
   cd $PKG_BUILD/src/github.com/syncthing/syncthing
   mkdir -p bin

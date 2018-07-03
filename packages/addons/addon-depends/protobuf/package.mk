@@ -14,8 +14,8 @@
 ################################################################################
 
 PKG_NAME="protobuf"
-PKG_VERSION="3.5.1"
-#PKG_SHA256="51ceea9957c875bdedeb1f64396b5b0f3864fe830eed6a2d9c066448373ea2d6"
+PKG_VERSION="3.1.0"
+PKG_SHA256="51ceea9957c875bdedeb1f64396b5b0f3864fe830eed6a2d9c066448373ea2d6"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="https://developers.google.com/protocol-buffers/"
@@ -25,7 +25,6 @@ PKG_DEPENDS_TARGET="toolchain zlib protobuf:host"
 PKG_SECTION="devel"
 PKG_SHORTDESC="protobuf: Protocol Buffers - Google's data interchange format"
 PKG_LONGDESC="protobuf: Protocol Buffers - Google's data interchange format"
-PKG_TOOLCHAIN="cmake-make"
 
 PKG_CMAKE_SCRIPT="$PKG_BUILD/cmake/CMakeLists.txt"
 
