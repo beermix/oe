@@ -17,8 +17,8 @@
 ################################################################################
 
 PKG_NAME="icu"
-PKG_VERSION="58.2"
-PKG_SHA256="2b0a4410153a9b20de0e20c7d8b66049a72aef244b53683d0d7521371683da0c"
+PKG_VERSION="62.1"
+#PKG_SHA256="2b0a4410153a9b20de0e20c7d8b66049a72aef244b53683d0d7521371683da0c"
 PKG_ARCH="any"
 PKG_LICENSE="Custom"
 PKG_SITE="http://download.icu-project.org/files/icu4c/?C=M;O=D"
