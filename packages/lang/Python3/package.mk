@@ -44,7 +44,7 @@ PKG_CONFIGURE_OPTS_HOST="ac_cv_prog_HAS_HG=/bin/false
                          --enable-unicodedata
                          --enable-openssl
                          --disable-readline
-                         --enable-bzip2
+                         --disable-bzip2
                          --enable-zlib
                          --disable-xz
                          --disable-tk
@@ -58,9 +58,7 @@ PKG_CONFIGURE_OPTS_HOST="ac_cv_prog_HAS_HG=/bin/false
                          --with-libmpdec=none
                          --with-doc-strings
                          --without-pymalloc
-                         --without-ensurepi
-                         --with-computed-gotos
-                         --disable-ipv6
+                         --without-ensurepip
 "
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_prog_HAS_HG=/bin/false
