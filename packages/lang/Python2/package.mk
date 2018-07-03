@@ -31,14 +31,13 @@ PKG_SHORTDESC="python2: The Python2 programming language"
 PKG_LONGDESC="Python2 is an interpreted object-oriented programming language, and is often compared with Tcl, Perl, Java or Scheme."
 
 PKG_TOOLCHAIN="autotools"
-PKG_BUILD_FLAGS="-parallel"
+PKG_BUILD_FLAGS="-parallel +lto-parallel"
 
 PKG_PY_DISABLED_MODULES="_tkinter nis gdbm bsddb ossaudiodev"
 
 PKG_CONFIGURE_OPTS_HOST="--cache-file=config.cache \
                          --without-cxx-main \
                          --with-threads \
-                         --disable-ipv6 \
                          --with-computed-gotos \
                          --enable-unicode=ucs4"
 
@@ -62,7 +61,6 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
                            --without-tsc \
                            --with-pymalloc \
                            --without-fpectl \
-                           --with-wctype-functions \
                            --without-cxx-main \
                            --with-system-ffi \
                            --with-computed-gotos \
