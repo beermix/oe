@@ -1,0 +1,24 @@
+diff -up chromium-65.0.3325.146/gpu/ipc/common/mailbox_struct_traits.h.gcc5-r3 chromium-65.0.3325.146/gpu/ipc/common/mailbox_struct_traits.h
+--- chromium-65.0.3325.146/gpu/ipc/common/mailbox_struct_traits.h.gcc5-r3	2018-03-06 18:04:32.000000000 -0500
++++ chromium-65.0.3325.146/gpu/ipc/common/mailbox_struct_traits.h	2018-03-07 10:42:07.198179638 -0500
+@@ -15,7 +15,7 @@ namespace mojo {
+ template <>
+ struct StructTraits<gpu::mojom::MailboxDataView, gpu::Mailbox> {
+   static base::span<const int8_t> name(const gpu::Mailbox& mailbox) {
+-    return mailbox.name;
++    return base::make_span(mailbox.name);
+   }
+   static bool Read(gpu::mojom::MailboxDataView data, gpu::Mailbox* out);
+ };
+diff -up chromium-65.0.3325.146/serdiff -up chromium-65.0.3325.146/third_party/webrtc/modules/audio_processing/aec3/aec_state.cc.gcc5-r3 chromium-65.0.3325.146/third_party/webrtc/modules/audio_processing/aec3/aec_state.cc
+--- chromium-65.0.3325.146/third_party/webrtc/modules/audio_processing/aec3/aec_state.cc.gcc5-r3	2018-03-06 18:06:09.000000000 -0500
++++ chromium-65.0.3325.146/third_party/webrtc/modules/audio_processing/aec3/aec_state.cc	2018-03-07 10:42:07.199179616 -0500
+@@ -10,7 +10,7 @@
+ 
+ #include "modules/audio_processing/aec3/aec_state.h"
+ 
+-#include <math.h>
++#include <cmath>
+ 
+ #include <numeric>
+ #include <vector>

@@ -1,0 +1,20 @@
+diff --git a/Makefile b/Makefile
+old mode 100644
+new mode 100755
+index 1e462ee..ec4aff0
+--- a/Makefile
++++ b/Makefile
+@@ -1,10 +1,10 @@
+-PREFIX = /usr/local
++PREFIX = /usr
+ 
+ CHROMIUM_SUFFIX  =
+ CHROMIUM_NAME    = chromium$(CHROMIUM_SUFFIX)
+-CHROMIUM_BINARY  = /usr/lib/$(CHROMIUM_NAME)/$(CHROMIUM_NAME)
++CHROMIUM_BINARY  = /storage/.kodi/addons/browser.chromium/bin/chromium.bin
+ CHROMIUM_VENDOR  = $(shell . /etc/os-release; echo $$NAME)
+-PEPPER_FLASH_DIR = /usr/lib/PepperFlash
++PEPPER_FLASH_DIR = /storage/.kodi/addons/browser.chromium/bin/PepperFlash
+ 
+ override CFLAGS += $(shell pkg-config --cflags glib-2.0 json-glib-1.0)
+ override LDLIBS += $(shell pkg-config --libs glib-2.0 json-glib-1.0)

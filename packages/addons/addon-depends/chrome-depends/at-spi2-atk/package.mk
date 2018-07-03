@@ -18,7 +18,7 @@
 ################################################################################
 
 PKG_NAME="at-spi2-atk"
-PKG_VERSION="2.26.2"
+PKG_VERSION="2.29.1"
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.gnome.org/"
