@@ -1,24 +1,25 @@
 ################################################################################
-#      This file is part of OpenELEC - http://www.openelec.tv
+#      This file is part of LibreELEC - https://libreelec.tv
+#      Copyright (C) 2017-present Team LibreELEC
 #      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 #
-#  OpenELEC is free software: you can redistribute it and/or modify
+#  LibreELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
 #  the Free Software Foundation, either version 2 of the License, or
 #  (at your option) any later version.
 #
-#  OpenELEC is distributed in the hope that it will be useful,
+#  LibreELEC is distributed in the hope that it will be useful,
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
 #
 #  You should have received a copy of the GNU General Public License
-#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
+#  along with LibreELEC.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
 PKG_NAME="samba"
 PKG_VERSION="4.8.3"
-PKG_SHA256=""
+PKG_SHA256="e0569a8a605d5dfb49f1fdd11db796f4d36fe0351c4a7f21387ef253010b82ed"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv3+"
 PKG_SITE="https://download.samba.org/pub/samba/stable/?C=M;O=D"
@@ -44,6 +45,7 @@ if [ "$TARGET_ARCH" = x86_64 ]; then
 else
   SMB_AESNI="--accel-aes=none"
 fi
+
 PKG_CONFIGURE_OPTS="--prefix=/usr \
                     --sysconfdir=/etc \
                     --localstatedir=/var \
@@ -96,19 +98,17 @@ PKG_CONFIGURE_OPTS="--prefix=/usr \
                     --with-syslog  \
                     --nopyc --nopyo"
 
-PKG_SAMBA_TARGET="smbclient"
+PKG_SAMBA_TARGET="smbclient,client/smbclient,smbtree,testparm"
 
 [ "$SAMBA_SERVER" = "yes" ] && PKG_SAMBA_TARGET+=",smbd/smbd,nmbd,smbpasswd"
-[ "$DEVTOOLS" = "yes" ] && PKG_SAMBA_TARGET+=",client/smbclient,smbtree,testparm"
 
 pre_configure_target() {
 # samba uses its own build directory
   cd $PKG_BUILD
     rm -rf .$TARGET_NAME
+
 # work around link issues
   export LDFLAGS="$LDFLAGS -lreadline"
-  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-Os|"`
-  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-Os|"`
 
 # support 64-bit offsets and seeks on 32-bit platforms
   if [ "$TARGET_ARCH" = "arm" ]; then
@@ -142,6 +142,8 @@ post_makeinstall_target() {
 
   mkdir -p $INSTALL/usr/lib/samba
     cp $PKG_DIR/scripts/samba-config $INSTALL/usr/lib/samba
+    cp $PKG_DIR/scripts/smbd-config $INSTALL/usr/lib/samba
+    cp $PKG_DIR/scripts/samba-autoshare $INSTALL/usr/lib/samba
 
   if find_file_path config/smb.conf; then
     mkdir -p $INSTALL/etc/samba
@@ -150,12 +152,10 @@ post_makeinstall_target() {
       cp $INSTALL/etc/samba/smb.conf $INSTALL/usr/config/samba.conf.sample
   fi
 
-  if [ "$DEVTOOLS" = "yes" ]; then
-    mkdir -p $INSTALL/usr/bin
-      cp -PR bin/default/source3/client/smbclient $INSTALL/usr/bin
-      cp -PR bin/default/source3/utils/smbtree $INSTALL/usr/bin
-      cp -PR bin/default/source3/utils/testparm $INSTALL/usr/bin
-  fi
+  mkdir -p $INSTALL/usr/bin
+    cp -PR bin/default/source3/client/smbclient $INSTALL/usr/bin
+    cp -PR bin/default/source3/utils/smbtree $INSTALL/usr/bin
+    cp -PR bin/default/source3/utils/testparm $INSTALL/usr/bin
 
   if [ "$SAMBA_SERVER" = "yes" ]; then
     mkdir -p $INSTALL/usr/bin
@@ -166,10 +166,6 @@ post_makeinstall_target() {
 
     mkdir -p $INSTALL/usr/share/services
       cp -P $PKG_DIR/default.d/*.conf $INSTALL/usr/share/services
-
-    mkdir -p $INSTALL/usr/lib/samba
-      cp $PKG_DIR/scripts/samba-autoshare $INSTALL/usr/lib/samba
-      cp $PKG_DIR/scripts/smbd-config $INSTALL/usr/lib/samba
   fi
 }
 
