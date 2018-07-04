@@ -29,55 +29,24 @@ PKG_DEPENDS_TARGET="toolchain icu:host"
 PKG_SECTION="textproc"
 PKG_SHORTDESC="International Components for Unicode library"
 PKG_LONGDESC="International Components for Unicode library"
-PKG_BUILD_FLAGS="+pic"
-#PKG_TOOLCHAIN="configure"
-
-post_unpack() {
- # sed -i 's/xlocale/locale/' $PKG_BUILD/source/i18n/digitlst.cpp
-  cp -r $PKG_BUILD/source/* $PKG_BUILD/
-}
-
-pre_configure_host() {
-  mkdir -p $PKG_BUILD/.$HOST_NAME
-  cp -a $PKG_BUILD/* $PKG_BUILD/.$HOST_NAME/
-  CXXFLAGS="$CXXFLAGS -std=c++11"
-}
+PKG_BUILD_FLAGS="+pic:host +pic"
+PKG_TOOLCHAIN="configure"
 
 pre_configure_target() {
-  mkdir -p $PKG_BUILD/.$TARGET_NAME
-  cp -a $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME/
   LIBS="-latomic"
-  CXXFLAGS="$CXXFLAGS -std=c++11"
 }
 
-configure_host() {
- cd $PKG_BUILD/.$HOST_NAME
- ./runConfigureICU Linux/gcc \
- 		     CC="$HOST_CC" \
- 		     CXX="$HOST_CXX" \
- 		     --disable-samples \
- 		     --disable-tests \
- 		     --disable-extras \
- 		     --disable-icuio \
- 		     --disable-layout \
- 		     --disable-renaming \
- 		     --disable-silent-rules \
- 		     --prefix=$TOOLCHAIN
-}
+PKG_CONFIGURE_SCRIPT="source/configure"
 
-configure_target() {
- cd $PKG_BUILD/.$TARGET_NAME
- ./runConfigureICU Linux/gcc \
- 		     CPP="$CPP" \
- 		     CC="$CC" \
- 		     CXX="$CXX" \
- 		     --prefix=/usr \
- 		     --disable-shared \
- 		     --enable-static \
- 		     --disable-silent-rules \
- 		     --with-cross-build="$PKG_BUILD/.$HOST_NAME"
-}
+PKG_CONFIGURE_OPTS_HOST="--disable-shared --enable-static"
+
+PKG_CONFIGURE_OPTS_TARGET="--with-cross-build=$PKG_BUILD/.$HOST_NAME \
+			      --disable-shared --enable-static \
+			      --with-data-packaging=archive"
 
 post_makeinstall_target() {
+  #rm -f $INSTALL/usr/bin/{derb,genbrk,gencfu,gencnval,gendict,genrb,icuinfo,makeconv,uconv}
+  #rm -f $INSTALL/usr/sbin/{genccode,gencmn,gennorm2,gensprep,icupkg}
+  #rm -rf $INSTALL/usr/share/icu
   rm -rf $INSTALL
 }
