@@ -44,7 +44,8 @@ PKG_CONFIGURE_OPTS_TARGET="--with-cross-build=$PKG_BUILD/.$HOST_NAME \
 			      --with-data-packaging=archive"
 
 post_makeinstall_target() {
-  rm -f $INSTALL/usr/bin/{derb,genbrk,gencfu,gencnval,gendict,genrb,icuinfo,makeconv,uconv}
-  rm -f $INSTALL/usr/sbin/{genccode,gencmn,gennorm2,gensprep,icupkg}
-  rm -rf $INSTALL/usr/share/icu
+  #rm -f $INSTALL/usr/bin/{derb,genbrk,gencfu,gencnval,gendict,genrb,icuinfo,makeconv,uconv}
+  #rm -f $INSTALL/usr/sbin/{genccode,gencmn,gennorm2,gensprep,icupkg}
+  #rm -rf $INSTALL/usr/share/icu
+  rm -rf $INSTALL
 }
