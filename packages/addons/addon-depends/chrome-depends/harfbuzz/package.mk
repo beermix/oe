@@ -42,5 +42,5 @@ if [ "$DISPLAYSERVER" = "x11" ] ; then
 fi
 
 pre_configure_target() {
-  export LIBS="-ldl"
+  export LIBS="-pthread -ldl"
 }
