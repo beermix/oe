@@ -33,7 +33,7 @@ PKG_LICENSE="Mixed"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_URL="https://gsdview.appspot.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="chromium:host chrome unclutter xdotool opus re2 snappy libvpx libwebp libxslt"
+PKG_DEPENDS_TARGET="chromium:host chrome yasm unclutter xdotool opus re2 snappy libvpx libwebp libxslt"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -65,11 +65,11 @@ make_target() {
   # unset CPPFLAGS
   # unset CFLAGS
   # unset CXXFLAGS
-  # unset LDFLAGS
+  unset LDFLAGS
   
-  CFLAGS+='-fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables'
-  CXXFLAGS+='-fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables'
-  CPPFLAGS+='-DNO_UNWIND_TABLES'
+  CFLAGS+=' -fno-unwind-tables -fno-asynchronous-unwind-tables'
+  CXXFLAGS+=' -fno-unwind-tables -fno-asynchronous-unwind-tables'
+  CPPFLAGS+=' -DNO_UNWIND_TABLES'
 
   # export CFLAGS="$CFLAGS -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
   # export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
@@ -112,6 +112,8 @@ make_target() {
     'use_dbus=true'
     'use_cups=false'
     'linux_link_libudev=true'
+    'use_system_freetype=true'
+    'use_system_harfbuzz=true'
     'use_v8_context_snapshot=false'
     'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
@@ -177,7 +179,7 @@ depends+=(${_system_libs[@]} freetype2 harfbuzz)
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
 
-  ninja -v -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox widevinecdmadapter
+  ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox widevinecdmadapter
 }
 
 addon() {
