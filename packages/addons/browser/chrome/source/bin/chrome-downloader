@@ -27,8 +27,8 @@ DATA_FILE=/tmp/curl.data
 # check chrome version
 case "$1" in
   'latest')
-    CHROME_VER="$(curl -s https://dl.google.com/linux/chrome/rpm/beta/x86_64/repodata/other.xml.gz | \
-                gzip -df | awk -F\" '/pkgid.*-beta/{ print $10 }')"
+    CHROME_VER="$(curl -s https://dl.google.com/linux/chrome/rpm/stable/x86_64/repodata/other.xml.gz | \
+                gzip -df | awk -F\" '/pkgid.*-stable/{ print $10 }')"
     ;;
   'repo')
     CHROME_VER="67.0.3396.87"
@@ -67,7 +67,7 @@ echo "Downloading Chrome version $CHROME_VER"
 # download chrome
 rm -f ${CONTROL_FILE} ${DATA_FILE}
 (
-  curl -# -O -C - http://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-beta/google-chrome-beta_$CHROME_VER-1_amd64.deb 2>${DATA_FILE}
+  curl -# -O -C - http://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_$CHROME_VER-1_amd64.deb 2>${DATA_FILE}
   touch ${CONTROL_FILE}
 ) | \
   while [ : ]; do
@@ -82,7 +82,7 @@ rm -f ${CONTROL_FILE} ${DATA_FILE}
 ## extract chrome
 # extrat chrome.deb
 kodi-send --action="Notification(Extracting Chrome,starting,1000,${ICON})" >/dev/null
-ar -x google-chrome-beta_$CHROME_VER-1_amd64.deb
+ar -x google-chrome-stable_$CHROME_VER-1_amd64.deb
 
 # extract data.tar.xz to chrome-bin directory
 mkdir $ADDON_DIR/chrome-bin
