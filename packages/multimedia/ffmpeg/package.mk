@@ -120,7 +120,7 @@ configure_target() {
               --host-libs="-lm" \
               --extra-cflags="$CFLAGS" \
               --extra-ldflags="$LDFLAGS" \
-              --extra-libs="$FFMPEG_LIBS" \
+              --extra-libs="$FFMPEG_LIBS -latomic" \
               --disable-static \
               --enable-shared \
               --enable-gpl \
