@@ -109,7 +109,6 @@ make_target() {
     'use_vaapi=true'
     'use_system_zlib=true'
     'use_system_libjpeg=true'
-    'use_system_libpng=true'
     'use_system_libdrm=true'
     'use_system_harfbuzz=true'
     'use_system_freetype=true'
@@ -132,8 +131,8 @@ make_target() {
 declare -rgA _system_libs=(
   #[ffmpeg]=ffmpeg              # https://crbug.com/731766
   #[flac]=flac
-  [freetype]=freetype2         # https://crbug.com/pdfium/733
-  [harfbuzz-ng]=harfbuzz-icu   # https://crbug.com/768938
+  #[freetype]=freetype2         # https://crbug.com/pdfium/733
+  #[harfbuzz-ng]=harfbuzz-icu   # https://crbug.com/768938
   [icu]=icu                    # https://crbug.com/772655
   [libdrm]=
   [libjpeg]=libjpeg
@@ -149,13 +148,6 @@ declare -rgA _system_libs=(
   [zlib]=minizip
 )
 depends+=(${_system_libs[@]})
-
-  # Fix paths.
-  sed -e 's|i386-linux-gnu/||g' \
-      -e 's|x86_64-linux-gnu/||g' \
-      -e 's|/usr/lib/va/drivers|/usr/lib/dri|g' \
-      -e 's|/usr/lib64/va/drivers|/usr/lib/dri|g' \
-      -i ./content/common/sandbox_linux/bpf_gpu_policy_linux.cc
 
   # Remove bundled libraries for which we will use the system copies; this
   # *should* do what the remove_bundled_libraries.py script does, with the
