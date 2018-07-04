@@ -98,7 +98,7 @@ if [ ! -z $ALSA_DEVICE ]; then
 fi
 
 # HACK!!! to get sound at Chrome stop pulseaudio
-systemctl stop pulseaudio
+# systemctl stop pulseaudio
 
 # start chrome
 LD_PRELOAD=/usr/lib/libGL.so $ADDON_DIR/chrome-bin/chrome \

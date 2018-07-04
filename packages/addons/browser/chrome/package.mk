@@ -18,7 +18,7 @@
 
 PKG_NAME="chrome"
 PKG_VERSION="1.0"
-PKG_REV="120"
+PKG_REV="121"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Custom"
 PKG_SITE="http://www.google.com/chrome"
@@ -48,8 +48,4 @@ addon() {
 
   # config
   cp -P $PKG_DIR/config/* $ADDON_BUILD/$PKG_ADDON_ID/config
-
-  # unclutter
-  cp -P $(get_build_dir unclutter)/.install_pkg/usr/bin/unclutter $ADDON_BUILD/$PKG_ADDON_ID/bin
-
 }
