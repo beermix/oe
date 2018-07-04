@@ -74,7 +74,7 @@ PKG_CONFIGURE_OPTS="--prefix=/usr \
                     --disable-gnutls \
                     --with-relro \
                     --with-sendfile-support \
-                    --with-acl-support \
+                    --without-acl-support \
                     --without-ads \
                     --without-ad-dc \
                     --without-automount \
