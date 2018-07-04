@@ -33,7 +33,7 @@ PKG_LICENSE="Mixed"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_URL="https://gsdview.appspot.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="chromium:host chrome unclutter xdotool opus re2 snappy"
+PKG_DEPENDS_TARGET="chromium:host chrome unclutter xdotool opus re2 snappy libvpx libwebp libxslt"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
@@ -62,21 +62,24 @@ make_host() {
 }
 
 make_target() {
- unset CPPFLAGS
- unset CFLAGS
- unset CXXFLAGS
- unset LDFLAGS
+  # unset CPPFLAGS
+  # unset CFLAGS
+  # unset CXXFLAGS
+  # unset LDFLAGS
+  
+  CFLAGS+='-fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables'
+  CXXFLAGS+='-fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables'
+  CPPFLAGS+='-DNO_UNWIND_TABLES'
 
-  export CFLAGS="$CFLAGS -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
-  export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
-  export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
+  # export CFLAGS="$CFLAGS -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
+  # export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
+  # export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
 
-#  export LDFLAGS="$LDFLAGS -ludev"
-#  export LD=$CXX
+  # export LDFLAGS="$LDFLAGS -ludev"
+  # export LD=$CXX
 
   export CCACHE_SLOPPINESS=time_macros
 
-  # export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime
   local _google_api_key=AIzaSyAQ6L9vt9cnN4nM0weaa6Y38K4eyPvtKgI
   local _google_default_client_id=740889307901-4bkm4e0udppnp1lradko85qsbnmkfq3b.apps.googleusercontent.com
   local _google_default_client_secret=9TJlhL661hvShQub4cWhANXa
@@ -96,7 +99,6 @@ make_target() {
     'link_pulseaudio=true'
     'linux_use_bundled_binutils=false'
     'use_allocator="none"'
-    'use_cups=true'
     'use_custom_libcxx=false'
     'linux_link_libudev=true'
     'use_gconf=false'
@@ -107,10 +109,9 @@ make_target() {
     'use_pulseaudio=false'
     'use_sysroot=true'
     'use_vaapi=true'
-    'use_system_zlib=true'
-    'use_system_libjpeg=true'
-    'use_system_harfbuzz=true'
-    'use_system_freetype=true'
+    'use_dbus=true'
+    'use_cups=false'
+    'linux_link_libudev=true'
     'use_v8_context_snapshot=false'
     'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
@@ -127,18 +128,19 @@ make_target() {
 
 # Possible replacements are listed in build/linux/unbundle/replace_gn_files.py
 # Keys are the names in the above script; values are the dependencies in Arch
-declare -rgA _system_libs=(
-  #[ffmpeg]=ffmpeg              # https://crbug.com/731766
+readonly -A _system_libs=(
+  #[ffmpeg]=ffmpeg            # https://crbug.com/731766
   #[flac]=flac
-  #[freetype]=freetype2         # https://crbug.com/pdfium/733
-  #[harfbuzz-ng]=harfbuzz-icu   # https://crbug.com/768938
-  [icu]=icu                    # https://crbug.com/772655
+  #[fontconfig]=fontconfig    # Enable for M65
+  #[freetype]=freetype2       # Using 'use_system_freetype=true' until M65
+  #[harfbuzz-ng]=harfbuzz     # Using 'use_system_harfbuzz=true' until M65
+  [icu]=icu
   [libdrm]=
   [libjpeg]=libjpeg
-  #[libpng]=libpng              # https://crbug.com/752403#c10
-  #[libvpx]=libvpx              # https://bugs.gentoo.org/611394
-  #[libwebp]=libwebp
-  [libxml]=libxml2
+  #[libpng]=libpng            # https://crbug.com/752403#c10
+  [libvpx]=libvpx
+  [libwebp]=libwebp
+  #[libxml]=libxml2           # https://crbug.com/736026
   [libxslt]=libxslt
   [opus]=opus
   [re2]=re2
@@ -146,22 +148,26 @@ declare -rgA _system_libs=(
   [yasm]=
   [zlib]=minizip
 )
-_unwanted_bundled_libs=(
+readonly _unwanted_bundled_libs=(
   ${!_system_libs[@]}
   ${_system_libs[libjpeg]+libjpeg_turbo}
+  freetype
+  harfbuzz-ng
 )
-depends+=(${_system_libs[@]})
+depends+=(${_system_libs[@]} freetype2 harfbuzz)
 
   # Remove bundled libraries for which we will use the system copies; this
   # *should* do what the remove_bundled_libraries.py script does, with the
   # added benefit of not having to list all the remaining libraries
   local _lib
-  for _lib in ${!_system_libs[@]} ${_system_libs[libjpeg]+libjpeg_turbo}; do
+  for _lib in ${_unwanted_bundled_libs[@]}; do
     find -type f -path "*third_party/$_lib/*" \
       \! -path "*third_party/$_lib/chromium/*" \
       \! -path "*third_party/$_lib/google/*" \
-      \! -path "*base/third_party/icu/*" \
-      \! -regex '.*\.\(gn\|gni\|isolate\|py\)' \
+      \! -path './base/third_party/icu/*' \
+      \! -path './third_party/freetype/src/src/psnames/pstables.h' \
+      \! -path './third_party/yasm/run_yasm.py' \
+      \! -regex '.*\.\(gn\|gni\|isolate\)' \
       -delete
   done
 
@@ -171,7 +177,7 @@ depends+=(${_system_libs[@]})
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
 
-  ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox widevinecdmadapter
+  ninja -v -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox widevinecdmadapter
 }
 
 addon() {
@@ -187,10 +193,4 @@ addon() {
   cp -P $PKG_DIR/config/* $ADDON_BUILD/$PKG_ADDON_ID/config
 
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/lib
-
-   # unclutter
-  cp -P $(get_build_dir unclutter)/.install_pkg/usr/bin/unclutter $ADDON_BUILD/$PKG_ADDON_ID/bin
-
-  # xdotool
-  cp -P $(get_build_dir xdotool)/xdotool $ADDON_BUILD/$PKG_ADDON_ID/bin
 }
