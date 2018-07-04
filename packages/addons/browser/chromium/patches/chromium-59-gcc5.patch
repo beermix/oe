@@ -19,11 +19,11 @@
  #define SUBZERO_TARGET(X)                                                      \
    namespace X {                                                                \
    std::unique_ptr<::Ice::TargetLowering>                                       \
---- chromium-60.0.3112.40/third_party/angle/src/libANGLE/renderer/vulkan/RendererVk.cpp.gcc-5	2017-06-22 00:04:04.000000000 +0200
-+++ chromium-60.0.3112.40/third_party/angle/src/libANGLE/renderer/vulkan/RendererVk.cpp	2017-06-25 19:06:28.341723649 +0200
+--- chromium-64.0.3282.71/third_party/angle/src/libANGLE/renderer/vulkan/RendererVk.cpp.gcc7	2018-01-04 00:07:24.000000000 +0100
++++ chromium-64.0.3282.71/third_party/angle/src/libANGLE/renderer/vulkan/RendererVk.cpp	2018-01-07 10:21:55.519574204 +0100
 @@ -578,11 +578,6 @@
  {
-     ANGLE_TRY(commandBuffer->end());
+     ANGLE_TRY(commandBuffer->ensureFinished());
  
 -    VkFenceCreateInfo fenceInfo;
 -    fenceInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
@@ -42,6 +42,6 @@
 -    uint32_t presentQueue = 0;
 -    ANGLE_TRY_RESULT(renderer->selectPresentQueueForSurface(mSurface), presentQueue);
 -
-     const auto &physicalDevice = renderer->getPhysicalDevice();
+     const VkPhysicalDevice &physicalDevice = renderer->getPhysicalDevice();
  
      VkSurfaceCapabilitiesKHR surfaceCaps;

@@ -25,8 +25,8 @@
 ################################################################################
 
 PKG_NAME="chromium"
-PKG_VERSION="63.0.3239.132"
-PKG_SHA256="84c46c2c42faaa102abe0647ee1213615a2522627124924c2741ddc2161b3d8d"
+PKG_VERSION="64.0.3282.186"
+PKG_SHA256="5fd0218759231ac00cc729235823592f6fd1e4a00ff64780a5fed7ab210f1860"
 PKG_REV="165"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
@@ -107,6 +107,12 @@ make_target() {
     'use_pulseaudio=false'
     'use_sysroot=true'
     'use_vaapi=true'
+    'use_system_zlib=true'
+    'use_system_libjpeg=true'
+    'use_system_libpng=true'
+    'use_system_libdrm=true'
+    'use_system_harfbuzz=true'
+    'use_system_freetype=true'
     'use_v8_context_snapshot=false'
     'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
@@ -115,6 +121,7 @@ make_target() {
     'enable_nacl=false'
     'enable_nacl_nonsfi=false'
     'enable_swiftshader=false'
+    'enable_vulkan=false'
     "google_api_key=\"${_google_api_key}\""
     "google_default_client_id=\"${_google_default_client_id}\""
     "google_default_client_secret=\"${_google_default_client_secret}\""
@@ -125,9 +132,9 @@ make_target() {
 declare -rgA _system_libs=(
   #[ffmpeg]=ffmpeg              # https://crbug.com/731766
   #[flac]=flac
-  #[freetype]=freetype2         # https://crbug.com/pdfium/733
-  #[harfbuzz-ng]=harfbuzz-icu   # https://crbug.com/768938
-  #[icu]=icu                    # https://crbug.com/772655
+  [freetype]=freetype2         # https://crbug.com/pdfium/733
+  [harfbuzz-ng]=harfbuzz-icu   # https://crbug.com/768938
+  [icu]=icu                    # https://crbug.com/772655
   [libdrm]=
   [libjpeg]=libjpeg
   [libpng]=libpng              # https://crbug.com/752403#c10
