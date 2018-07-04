@@ -1,0 +1,28 @@
+diff --git a/configure.py b/configure.py
+index 9e23a5a..573219c 100755
+--- a/configure.py
++++ b/configure.py
+@@ -328,7 +328,7 @@ if platform.is_msvc():
+         cflags += ['/Ox', '/DNDEBUG', '/GL']
+         ldflags += ['/LTCG', '/OPT:REF', '/OPT:ICF']
+ else:
+-    cflags = ['-g', '-Wall', '-Wextra',
++    cflags = ['-g0', '-Wall', '-Wextra',
+               '-Wno-deprecated',
+               '-Wno-missing-field-initializers',
+               '-Wno-unused-parameter',
+@@ -347,12 +347,12 @@ else:
+              '-o', '/dev/null'],
+             stdout=open(os.devnull, 'wb'), stderr=subprocess.STDOUT)
+         if proc.wait() == 0:
+-            cflags += ['-fdiagnostics-color']
++            cflags += ['-fdiagnostics-color=always']
+     except:
+         pass
+     if platform.is_mingw():
+         cflags += ['-D_WIN32_WINNT=0x0501']
+-    ldflags = ['-L$builddir']
++    ldflags = ['-L$builddir -s']
+     if platform.uses_usr_local():
+         cflags.append('-I/usr/local/include')
+         ldflags.append('-L/usr/local/lib')
