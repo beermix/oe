@@ -1,7 +1,7 @@
 diff --git a/Makefile.am b/Makefile.am
 old mode 100644
 new mode 100755
-index 8c254027..13f26785
+index eb5edb7e..64128dfe
 --- a/Makefile.am
 +++ b/Makefile.am
 @@ -39,8 +39,6 @@ endif
@@ -16,7 +16,7 @@ index 8c254027..13f26785
 diff --git a/assembler/Makefile.am b/assembler/Makefile.am
 old mode 100644
 new mode 100755
-index bed6c07c..1e70944c
+index 855e33ab..1c874b4a
 --- a/assembler/Makefile.am
 +++ b/assembler/Makefile.am
 @@ -1,4 +1,4 @@
@@ -28,13 +28,13 @@ index bed6c07c..1e70944c
 diff --git a/configure.ac b/configure.ac
 old mode 100644
 new mode 100755
-index c78f5194..e0d0afc7
+index 53ef704e..e0bef1df
 --- a/configure.ac
 +++ b/configure.ac
-@@ -402,10 +402,6 @@ AC_SUBST(REGISTER_FILES)
- AC_CONFIG_FILES([
- 		 Makefile
+@@ -404,10 +404,6 @@ AC_CONFIG_FILES([
  		 benchmarks/Makefile
+ 		 benchmarks/ezbench.d/Makefile
+ 		 benchmarks/wsim/Makefile
 -		 docs/Makefile
 -		 docs/reference/Makefile
 -		 docs/reference/intel-gpu-tools/Makefile
@@ -42,11 +42,3 @@ index c78f5194..e0d0afc7
  		 lib/Makefile
  		 lib/tests/Makefile
  		 man/Makefile
-@@ -418,7 +414,6 @@ AC_CONFIG_FILES([
- 		 debugger/Makefile
- 		 debugger/system_routine/Makefile
- 		 assembler/Makefile
--		 assembler/doc/Makefile
- 		 assembler/test/Makefile
- 		 assembler/intel-gen4asm.pc
- 		 overlay/Makefile
