@@ -33,13 +33,13 @@ PKG_LICENSE="Mixed"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_URL="https://gsdview.appspot.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="chromium:host chrome unclutter xdotool opus"
+PKG_DEPENDS_TARGET="chromium:host pciutils dbus libXcomposite libXcursor libXtst alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk libdrm freetype libxslt harfbuzz gtk+ libva-vdpau-driver unclutter xdotool"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
 PKG_TOOLCHAIN="manual"
 PKG_BUILD_FLAGS="-lto -hardening"
-GOLD_SUPPORT="yes"
+#GOLD_SUPPORT="yes"
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Chromium"
@@ -102,7 +102,7 @@ make_target() {
     'use_gconf=false'
     'use_gnome_keyring=false'
     'use_gold=false'
-    'use_gtk3=true'
+    'use_gtk3=false'
     'use_kerberos=false'
     'use_pulseaudio=false'
     'use_sysroot=true'
@@ -135,7 +135,7 @@ declare -rgA _system_libs=(
   #[libwebp]=libwebp
   [libxml]=libxml2
   [libxslt]=libxslt
-  [opus]=opus
+  #[opus]=opus
   #[re2]=re2
   #[snappy]=snappy
   [yasm]=
@@ -186,7 +186,52 @@ addon() {
 
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/lib
 
-   # unclutter
+  # pango
+  cp -ri $(get_build_dir pango)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
+
+  # cairo
+  cp -ri $(get_build_dir cairo)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
+
+  # atk
+  cp -ri $(get_build_dir atk)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
+
+  # gtk+
+  cp -ri $(get_build_dir gtk+)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
+
+  # gtk3
+  # cp -ri $(get_build_dir gtk3)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  # cp -ri $(get_build_dir at-spi2-atk)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  # cp -ri $(get_build_dir at-spi2-core)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
+
+  # harfbuzz
+  cp -ri $(get_build_dir harfbuzz)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
+  
+  # icu
+  cp -ri $(get_build_dir icu)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
+
+  # gdk-pixbuf
+  cp -ri $(get_build_dir gdk-pixbuf)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
+
+  # pixbuf loaders
+  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules
+  cp -PL $(get_build_dir gdk-pixbuf)/.install_pkg/usr/lib/gdk-pixbuf-2.0/2.10.0/loaders/* $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules
+
+  # libexif
+  cp -ri $(get_build_dir libexif)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
+
+  # libXScrnSaver
+  cp -ri $(get_build_dir libXScrnSaver)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
+
+  # libXtst
+  cp -ri $(get_build_dir libXtst)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
+
+  # libXcursor
+  cp -ri $(get_build_dir libXcursor)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
+
+  # libva-vdpau-driver
+  cp -PL $(get_build_dir libva-vdpau-driver)/.install_pkg/usr/lib/dri/*.so $ADDON_BUILD/$PKG_ADDON_ID/lib
+
+  # unclutter
   cp -P $(get_build_dir unclutter)/.install_pkg/usr/bin/unclutter $ADDON_BUILD/$PKG_ADDON_ID/bin
 
   # xdotool
