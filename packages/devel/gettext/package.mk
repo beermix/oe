@@ -23,19 +23,23 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/s/gettext/"
 PKG_URL="http://ftp.gnu.org/pub/gnu/gettext/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_HOST="ccache:host m4:host"
+PKG_DEPENDS_HOST="ccache:host autotools:host"
 PKG_SECTION="toolchain/devel"
 PKG_SHORTDESC="gettext: A program internationalization library and tools"
 PKG_LONGDESC="This is the GNU gettext package. It is interesting for authors or maintainers of other packages or programs which they want to see internationalized. As one step the handling of messages in different languages should be implemented. For this task GNU gettext provides the needed tools and library functions."
+PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_SCRIPT="gettext-tools/configure"
 
 PKG_CONFIGURE_OPTS_HOST="--disable-rpath \
-                         --with-gnu-ld \
                          --disable-java \
                          --disable-curses \
-                         --with-included-libxml \
                          --enable-nls \
                          --disable-native-java \
-                         --enable-csharp \
-                         --without-emacs"
+                         --disable-csharp \
+                         --without-emacs \
+                         --disable-libasprintf \
+                         --disable-acl \
+                         --disable-openmp \
+                         --disable-csharp \
+                         --disable-relocatable"

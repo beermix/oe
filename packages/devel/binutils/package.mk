@@ -47,12 +47,12 @@ PKG_CONFIGURE_OPTS_HOST="--target=$TARGET_NAME \
                          --enable-version-specific-runtime-libs \
                          --enable-gold=no \
                          --enable-ld=default \
+                         --enable-targets=x86_64-pep \
                          --enable-lto \
                          --enable-plugins \
                          --enable-threads \
                          --with-pic \
                          --disable-nls \
-                         --disable-sim \
                          --disable-gdb"
 
 PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
