@@ -18,21 +18,21 @@
 
 PKG_NAME="libva"
 PKG_VERSION="2.1.0"
-#PKG_SHA256="f3fa953a11d3210c3a4ee79031abdbe0863d5ce13d9b3f93f315f1eec60a4b0f"
-PKG_VERSION="1.8.3"
+PKG_SHA256="f3fa953a11d3210c3a4ee79031abdbe0863d5ce13d9b3f93f315f1eec60a4b0f"
+#PKG_VERSION="1.8.3"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPL"
-PKG_SITE="https://01.org/linuxmedia"
+PKG_SITE="https://github.com/intel/libva/releases"
 PKG_URL="https://github.com/01org/libva/releases/download/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
 PKG_SECTION="multimedia"
 PKG_SHORTDESC="Libva is an implementation for VA-API (VIdeo Acceleration API)."
 PKG_LONGDESC="Libva is an open source software library and API specification to provide access to hardware accelerated video decoding/encoding and video processing."
 PKG_TOOLCHAIN="autotools"
 
-#pre_configure_target() {
-#  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3 -Wall|"`
-#  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3 -Wall|"`
-#}
+pre_configure_target() {
+  export CFLAGS=`echo $CFLAGS | sed -e "s|-O.|-O3 -Wall|"`
+  export CXXFLAGS=`echo $CXXFLAGS | sed -e "s|-O.|-O3 -Wall|"`
+}
 
 if [ "$DISPLAYSERVER" = "x11" ]; then
   PKG_DEPENDS_TARGET="toolchain libX11 libXext libXfixes libdrm"
@@ -45,8 +45,7 @@ else
   DISPLAYSERVER_LIBVA="--disable-x11 --disable-glx --disable-wayland"
 fi
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-silent-rules \
-                           --disable-docs \
+PKG_CONFIGURE_OPTS_TARGET="--disable-docs \
                            --enable-drm \
                            --enable-egl \
                            $DISPLAYSERVER_LIBVA \
