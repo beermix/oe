@@ -15,11 +15,14 @@
 #  You should have received a copy of the GNU General Public License
 #  along with OpenELEC.tv; see the file COPYING.  If not, write to
 #  the Free Software Foundation, 51 Franklin Street, Suite 500, Boston, MA 02110, USA.
+###  beautifulsoup4:host html5lib:host re2 snappy
+#  
 #  https://chromereleases.googleblog.com/
 #  http://svnweb.mageia.org/packages/cauldron/chromium-browser-stable/current
 #  http://omahaproxy.appspot.com/
 #  https://www.chromestatus.com/
-################################################################################ beautifulsoup4:host html5lib:host re2 snappy
+#  https://bazaar.launchpad.net/~chromium-team/chromium-browser/xenial-stable/files/head:/debian?sort=date
+################################################################################
 
 PKG_NAME="chromium"
 PKG_VERSION="67.0.3396.87"
@@ -27,19 +30,16 @@ PKG_SHA256="5d27a72f0cb8247343034f63fdd9747ff388c05b9fceb541668dd04fb372db1d"
 PKG_REV="190"
 PKG_ARCH="x86_64"
 PKG_LICENSE="Mixed"
-PKG_SITE="http://www.chromium.org/Home"
 PKG_URL="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
 PKG_URL="https://gsdview.appspot.com/chromium-browser-official/chromium-$PKG_VERSION.tar.xz"
-#PKG_URL="http://192.168.1.200:8080/chromium-$PKG_VERSION.tar.xz"
-#PKG_DEPENDS_HOST="toolchain ninja:host Python2:host libevent:host gperf:host"
 PKG_DEPENDS_HOST="toolchain ninja:host Python2:host"
-PKG_DEPENDS_TARGET="pciutils systemd dbus libXtst libXcomposite libXcursor unclutter alsa-lib bzip2 yasm nss libXScrnSaver libexif libpng atk xdotool libdrm libjpeg-turbo freetype libxslt harfbuzz gtk+ chromium:host"
+PKG_DEPENDS_TARGET="chromium:host chrome yasm unclutter xdotool re2 snappy libvpx libxslt"
 PKG_SECTION="browser"
 PKG_SHORTDESC="Chromium Browser: the open-source web browser from Google"
 PKG_LONGDESC="Chromium Browser ($PKG_VERSION): the open-source web browser from Google"
 PKG_TOOLCHAIN="manual"
 PKG_BUILD_FLAGS="-lto -hardening"
-GOLD_SUPPORT="yes"
+#GOLD_SUPPORT="yes"
 
 PKG_IS_ADDON="yes"
 PKG_ADDON_NAME="Chromium"
@@ -62,27 +62,16 @@ make_host() {
 }
 
 make_target() {
-  unset CPPFLAGS
-  unset CFLAGS
-  unset CXXFLAGS
+  # unset CPPFLAGS
+  # unset CFLAGS
+  # unset CXXFLAGS
   unset LDFLAGS
-
-  export CFLAGS="$CFLAGS -fdiagnostics-color=always"
-  export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always"
   
-  # export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
-  # -fno-unwind-tables -fno-asynchronous-unwind-tables
-
-  # export LDFLAGS="$LDFLAGS -ludev"
-  # export LD=$CXX
+  CFLAGS+=' -fno-unwind-tables -fno-asynchronous-unwind-tables'
+  CXXFLAGS+=' -fno-unwind-tables -fno-asynchronous-unwind-tables'
+  CPPFLAGS+=' -DNO_UNWIND_TABLES'
 
   export CCACHE_SLOPPINESS=time_macros
-  # export CCACHE_SLOPPINESS=file_macro,time_macros,include_file_mtime,include_file_ctime
-  # export CCACHE_CPP2=yes
-
-  # Google API keys (see http://www.chromium.org/developers/how-tos/api-keys)
-  # Note: These are for OpenELEC use ONLY. For your own distribution, please
-  # get your own set of keys.
 
   local _google_api_key=AIzaSyAQ6L9vt9cnN4nM0weaa6Y38K4eyPvtKgI
   local _google_default_client_id=740889307901-4bkm4e0udppnp1lradko85qsbnmkfq3b.apps.googleusercontent.com
@@ -106,14 +95,20 @@ make_target() {
     'linux_use_bundled_binutils=false'
     'use_cups=false'
     'use_custom_libcxx=false'
+    'linux_link_libudev=true'
     'use_gnome_keyring=false'
     'use_gold=false'
-    'use_gtk3=false'
+    'use_gtk3=true'
     'use_kerberos=false'
-    'linux_link_libudev=true'
-    'optimize_webui=false'
+    'use_pulseaudio=false'
     'use_sysroot=true'
     'use_vaapi=true'
+    'use_dbus=true'
+    'use_cups=false'
+    'linux_link_libudev=true'
+    'use_system_freetype=true'
+    'use_system_harfbuzz=true'
+    'use_v8_context_snapshot=false'
     'enable_vulkan=false'
     "target_sysroot=\"${SYSROOT_PREFIX}\""
     'enable_hangout_services_extension=true'
@@ -121,6 +116,7 @@ make_target() {
     'enable_nacl=false'
     'enable_nacl_nonsfi=false'
     'enable_swiftshader=false'
+    'enable_vulkan=false'
     "google_api_key=\"${_google_api_key}\""
     "google_default_client_id=\"${_google_default_client_id}\""
     "google_default_client_secret=\"${_google_default_client_secret}\""
@@ -142,7 +138,6 @@ declare -gA _system_libs=(
   #[libwebp]=libwebp
   #[libxml]=libxml2           # https://crbug.com/736026
   [libxslt]=libxslt
-  #[opus]=opus
   [re2]=re2
   [snappy]=snappy
   [yasm]=
@@ -174,14 +169,14 @@ depends+=(${_system_libs[@]})
 
   ./out/Release/gn gen out/Release --args="${_flags[*]}" --script-executable=$TOOLCHAIN/bin/python
 
-  ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox -w dupbuild=err
+  ninja -j${CONCURRENCY_MAKE_LEVEL} $NINJA_OPTS -C out/Release chrome chrome_sandbox widevinecdmadapter -w dupbuild=err
 }
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -P  $PKG_BUILD/out/Release/chrome $ADDON_BUILD/$PKG_ADDON_ID/bin/chromium.bin
   cp -P  $PKG_BUILD/out/Release/chrome_sandbox $ADDON_BUILD/$PKG_ADDON_ID/bin/chrome-sandbox
-  cp -P  $PKG_BUILD/out/Release/{*.pak,*.dat,*.bin} $ADDON_BUILD/$PKG_ADDON_ID/bin
+  cp -ri  $PKG_BUILD/out/Release/{*.pak,*.bin,libwidevinecdmadapter.so} $ADDON_BUILD/$PKG_ADDON_ID/bin
   cp -PR $PKG_BUILD/out/Release/locales $ADDON_BUILD/$PKG_ADDON_ID/bin/
   cp -PR $PKG_BUILD/out/Release/gen/content/content_resources.pak $ADDON_BUILD/$PKG_ADDON_ID/bin/
 
@@ -190,49 +185,4 @@ addon() {
   cp -P $PKG_DIR/config/* $ADDON_BUILD/$PKG_ADDON_ID/config
 
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/lib
-
-  # pango
-  cp -ri $(get_build_dir pango)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
-
-  # cairo
-  cp -ri $(get_build_dir cairo)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
-
-  # atk
-  cp -ri $(get_build_dir atk)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
-
-  # gtk+
-  cp -ri $(get_build_dir gtk+)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
-
-  # gtk3
-  # cp -ri $(get_build_dir gtk3)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
-  # cp -ri $(get_build_dir at-spi2-atk)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
-  # cp -ri $(get_build_dir at-spi2-core)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
-
-  # harfbuzz
-  cp -ri $(get_build_dir harfbuzz)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
-
-  # gdk-pixbuf
-  cp -ri $(get_build_dir gdk-pixbuf)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
-
-  # pixbuf loaders
-  mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules
-  cp -PL $(get_build_dir gdk-pixbuf)/.install_pkg/usr/lib/gdk-pixbuf-2.0/2.10.0/loaders/* $ADDON_BUILD/$PKG_ADDON_ID/gdk-pixbuf-modules
-
-  # libexif
-  cp -ri $(get_build_dir libexif)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
-
-  # libXScrnSaver
-  cp -ri $(get_build_dir libXScrnSaver)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
-
-  # libXtst
-  cp -ri $(get_build_dir libXtst)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
-
-  # libXcursor
-  cp -ri $(get_build_dir libXcursor)/.install_pkg/usr/lib/* $ADDON_BUILD/$PKG_ADDON_ID/lib
-
-  # unclutter
-  cp -P $(get_build_dir unclutter)/.install_pkg/usr/bin/unclutter $ADDON_BUILD/$PKG_ADDON_ID/bin
-
-  # xdotool
-  cp -P $(get_build_dir xdotool)/xdotool $ADDON_BUILD/$PKG_ADDON_ID/bin
 }
