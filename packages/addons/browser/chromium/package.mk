@@ -71,13 +71,6 @@ make_target() {
   CXXFLAGS+=' -fno-unwind-tables -fno-asynchronous-unwind-tables'
   CPPFLAGS+=' -DNO_UNWIND_TABLES'
 
-  # export CFLAGS="$CFLAGS -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
-  # export CXXFLAGS="$CXXFLAGS -Wno-attributes -Wno-comment -Wno-unused-variable -Wno-strict-overflow -Wno-deprecated-declarations -fdiagnostics-color=always -fno-unwind-tables -fno-asynchronous-unwind-tables"
-  # export CPPFLAGS="$CPPFLAGS -DNO_UNWIND_TABLES"
-
-  # export LDFLAGS="$LDFLAGS -ludev"
-  # export LD=$CXX
-
   export CCACHE_SLOPPINESS=time_macros
 
   local _google_api_key=AIzaSyAQ6L9vt9cnN4nM0weaa6Y38K4eyPvtKgI
