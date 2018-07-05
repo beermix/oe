@@ -30,15 +30,12 @@ PKG_LONGDESC="This is the GNU gettext package. It is interesting for authors or 
 
 PKG_CONFIGURE_SCRIPT="gettext-tools/configure"
 
-PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared \
-                         --disable-rpath \
+PKG_CONFIGURE_OPTS_HOST="--disable-rpath \
                          --with-gnu-ld \
                          --disable-java \
                          --disable-curses \
                          --with-included-libxml \
                          --enable-nls \
-                         --without-included-gettext \
-                         --disable-acl \
                          --disable-native-java \
                          --enable-csharp \
                          --without-emacs"
