@@ -5,9 +5,5 @@ PKG_DEPENDS_HOST="bison:host"
 PKG_SECTION="devel"
 PKG_TOOLCHAIN="autotools"
 
-#post_unpack() {
-#  cp -r $PKG_BUILD/re2c/* $PKG_BUILD/
-#}
-
 PKG_CONFIGURE_OPTS_HOST="--disable-docs"
 PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_HOST"

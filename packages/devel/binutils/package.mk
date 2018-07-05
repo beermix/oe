@@ -71,7 +71,6 @@ PKG_CONFIGURE_OPTS_TARGET="--target=$TARGET_NAME \
                          --disable-ld \
                          --disable-lto \
                          --disable-nls \
-                         --disable-sim \
                          --disable-gdb"
 
 pre_configure_host() {
