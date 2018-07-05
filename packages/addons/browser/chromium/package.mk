@@ -95,7 +95,6 @@ make_target() {
     'linux_use_bundled_binutils=false'
     'use_cups=false'
     'use_custom_libcxx=false'
-    'linux_link_libudev=true'
     'use_gnome_keyring=false'
     'use_gold=false'
     'use_gtk3=true'
@@ -116,7 +115,6 @@ make_target() {
     'enable_nacl=false'
     'enable_nacl_nonsfi=false'
     'enable_swiftshader=false'
-    'enable_vulkan=false'
     "google_api_key=\"${_google_api_key}\""
     "google_default_client_id=\"${_google_default_client_id}\""
     "google_default_client_secret=\"${_google_default_client_secret}\""
@@ -130,20 +128,20 @@ declare -gA _system_libs=(
   [fontconfig]=fontconfig
   [freetype]=freetype2
   [harfbuzz-ng]=harfbuzz
-  #[icu]=icu
+  [icu]=icu
   [libdrm]=
   [libjpeg]=libjpeg
   #[libpng]=libpng            # https://crbug.com/752403#c10
   #[libvpx]=libvpx            # needs unreleased libvpx
-  #[libwebp]=libwebp
+  [libwebp]=libwebp
   #[libxml]=libxml2           # https://crbug.com/736026
   [libxslt]=libxslt
+  [opus]=opus
   [re2]=re2
   [snappy]=snappy
   [yasm]=
   [zlib]=minizip
 )
-
 _unwanted_bundled_libs=(
   ${!_system_libs[@]}
   ${_system_libs[libjpeg]+libjpeg_turbo}

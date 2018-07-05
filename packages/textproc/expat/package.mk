@@ -29,5 +29,5 @@ PKG_LONGDESC="Expat is an XML parser library written in C. It is a stream-orient
 PKG_TOOLCHAIN="cmake-make"
 PKG_BUILD_FLAGS="-lto +pic"
 
-PKG_CMAKE_OPTS_TARGET="-BUILD_doc=OFF -DBUILD_tools=OFF -DBUILD_examples=OFF -DBUILD_tests=OFF -DBUILD_shared=ON"
+PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release -BUILD_doc=OFF -DBUILD_tools=OFF -DBUILD_examples=OFF -DBUILD_tests=OFF -DBUILD_shared=ON"
 PKG_CMAKE_OPTS_HOST="$PKG_CMAKE_OPTS_TARGET"
