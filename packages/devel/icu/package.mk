@@ -18,7 +18,7 @@
 
 PKG_NAME="icu"
 PKG_VERSION="62.1"
-#PKG_SHA256="2b0a4410153a9b20de0e20c7d8b66049a72aef244b53683d0d7521371683da0c"
+PKG_SHA256="3dd9868d666350dda66a6e305eecde9d479fb70b30d5b55d78a1deffb97d5aa3"
 PKG_ARCH="any"
 PKG_LICENSE="Custom"
 PKG_SITE="http://download.icu-project.org/files/icu4c/?C=M;O=D"
@@ -30,7 +30,6 @@ PKG_SECTION="textproc"
 PKG_SHORTDESC="International Components for Unicode library"
 PKG_LONGDESC="International Components for Unicode library"
 PKG_BUILD_FLAGS="+pic"
-#PKG_TOOLCHAIN="configure"
 
 post_unpack() {
  # sed -i 's/xlocale/locale/' $PKG_BUILD/source/i18n/digitlst.cpp
@@ -40,14 +39,12 @@ post_unpack() {
 pre_configure_host() {
   mkdir -p $PKG_BUILD/.$HOST_NAME
   cp -a $PKG_BUILD/* $PKG_BUILD/.$HOST_NAME/
-  CXXFLAGS="$CXXFLAGS -std=c++11"
 }
 
 pre_configure_target() {
   mkdir -p $PKG_BUILD/.$TARGET_NAME
   cp -a $PKG_BUILD/* $PKG_BUILD/.$TARGET_NAME/
   LIBS="-latomic"
-  CXXFLAGS="$CXXFLAGS -std=c++11"
 }
 
 configure_host() {
@@ -75,6 +72,7 @@ configure_target() {
  		     --disable-shared \
  		     --enable-static \
  		     --disable-silent-rules \
+ 		     --with-data-packaging=archive \
  		     --with-cross-build="$PKG_BUILD/.$HOST_NAME"
 }
 
